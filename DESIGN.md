@@ -96,8 +96,10 @@ The signature system. A **2×2 grid of four action cells sits on the main board 
 
 ### Two rules to pin down (currently assumed)
 
-- **Both cells in an activated line trigger regardless of which one the worker stands on** — the worker only gates *which line is legal*. (Assumed yes.)
-- **Resolution order within a line:** recommended **fixed/directional** (outer→inner, input flows to output) to keep AP low and the theme legible. Free order buys combo depth at the cost of longer turns.
+- **Both cells in an activated line trigger regardless of which one the worker stands on** — the worker only gates *which line is legal*. (**LOCKED: yes.**)
+- **Resolution order within a line:** **WORKING DECISION — free order for now** (player resolves the up-to-4 stops in any order); revisit if turn length / AP suffers. (Fixed/directional remains the fallback if free order proves too fiddly.)
+
+> **⚠ Kontor model under revision (supersedes the §6 "scoring-pile variant" and §7 "not an action").** The Kontor is a **stood-on action cell whose action is the top tile of its enshrinement stack** — it is simultaneously an action space *and* the score pile, and its action **mutates as casks are enshrined onto it.** Full rules pending; §6/§7/§10 to be reconciled once finalized.
 
 ---
 
