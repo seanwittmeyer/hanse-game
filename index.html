@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brewhouse of the Hanse — Component Visualizer</title>
+<style>
+  :root{
+    --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
+    --red:#7c2128; --red2:#9c3b2e; --gold:#b8860b; --gold2:#d8a72a;
+    --sea:#274b5c; --sea2:#3d6b7e; --green:#4a6b3a; --line:#c8b48a;
+    --grain:#d9b44a; --hops:#6b8e3d;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--parch); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    line-height:1.5;
+  }
+  header{
+    background:linear-gradient(160deg,var(--red) 0%,var(--red2) 100%);
+    color:var(--parch); padding:34px 24px 28px; text-align:center;
+    border-bottom:5px solid var(--gold); box-shadow:0 4px 18px rgba(0,0,0,.25);
+  }
+  header h1{margin:0; font-size:2.5rem; letter-spacing:1px; font-variant:small-caps;}
+  header .sub{opacity:.9; font-style:italic; margin-top:6px; max-width:760px; margin-inline:auto;}
+  header .tag{margin-top:14px; font-size:.8rem; letter-spacing:2px; text-transform:uppercase; opacity:.8;}
+  nav{
+    position:sticky; top:0; z-index:20; background:var(--ink); color:var(--parch);
+    display:flex; flex-wrap:wrap; justify-content:center; gap:4px; padding:8px;
+    box-shadow:0 2px 8px rgba(0,0,0,.3);
+  }
+  nav a{color:var(--parch); text-decoration:none; padding:6px 13px; border-radius:4px; font-size:.9rem; transition:.15s;}
+  nav a:hover{background:var(--red2);}
+  main{max-width:1160px; margin:0 auto; padding:24px 20px 80px;}
+  section{margin:46px 0;}
+  h2{
+    font-variant:small-caps; font-size:1.8rem; color:var(--red); margin:0 0 4px;
+    border-bottom:2px solid var(--gold); padding-bottom:6px; letter-spacing:1px;
+  }
+  h2 .n{color:var(--gold); font-size:1.1rem; margin-right:8px;}
+  .lead{font-style:italic; color:var(--ink2); margin:6px 0 22px; max-width:780px;}
+  .legend{display:flex; gap:18px; flex-wrap:wrap; font-size:.85rem; margin-bottom:16px;}
+  .chip{display:inline-flex; align-items:center; gap:6px;}
+  .dot{width:13px; height:13px; border-radius:3px; display:inline-block; border:1px solid rgba(0,0,0,.25)}
+  .grain{background:var(--grain)} .hops{background:var(--hops)}
+
+  /* ---- ACTION GRID ---- */
+  .gridwrap{display:flex; gap:36px; flex-wrap:wrap; align-items:flex-start;}
+  .actiongrid{
+    display:grid; grid-template-columns:46px 132px 132px 46px;
+    grid-template-rows:46px 132px 132px 46px; gap:8px; flex:0 0 auto;
+  }
+  .cell{
+    border-radius:10px; padding:10px; color:var(--parch); position:relative; cursor:pointer;
+    display:flex; flex-direction:column; justify-content:space-between;
+    box-shadow:0 3px 8px rgba(0,0,0,.2); border:2px solid rgba(0,0,0,.15); transition:.15s;
+  }
+  .cell .lbl{font-size:.7rem; letter-spacing:1px; text-transform:uppercase; opacity:.85}
+  .cell .nm{font-size:1.25rem; font-variant:small-caps; font-weight:bold}
+  .cell .do{font-size:.74rem; opacity:.92}
+  .cell.A{background:var(--gold);} .cell.B{background:var(--red2);}
+  .cell.C{background:var(--sea2);} .cell.D{background:var(--green);}
+  .cell .corner{position:absolute; top:6px; right:9px; font-size:1.3rem; font-weight:bold; opacity:.5}
+  .slot{
+    background:var(--parch2); border:2px dashed var(--line); border-radius:7px;
+    display:flex; align-items:center; justify-content:center; font-size:.7rem; color:var(--ink2);
+    text-align:center; transition:.15s;
+  }
+  /* grid placement */
+  .s1{grid-area:1/2} .s2{grid-area:1/3}
+  .A{grid-area:2/2} .B{grid-area:2/3}
+  .s8{grid-area:2/1} .s3{grid-area:2/4}
+  .s7{grid-area:3/1} .s4{grid-area:3/4}
+  .C{grid-area:3/2} .D{grid-area:3/3}
+  .s6{grid-area:4/2} .s5{grid-area:4/3}
+  .hl{outline:3px solid var(--red); outline-offset:2px; transform:scale(1.03); z-index:5}
+  .gridnote{flex:1 1 280px; min-width:260px;}
+  .gridnote ul{padding-left:18px} .gridnote li{margin:7px 0}
+  .pill{display:inline-block; background:var(--ink); color:var(--parch); border-radius:20px; padding:1px 9px; font-size:.72rem; margin:0 2px}
+
+  /* ---- ROUTE BOARD ---- */
+  .routeboard{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  .route{border-radius:12px; padding:14px; color:var(--parch); box-shadow:0 3px 9px rgba(0,0,0,.2); position:relative; overflow:hidden}
+  .route h3{margin:0 0 2px; font-variant:small-caps; font-size:1.3rem}
+  .route .role{font-size:.78rem; font-style:italic; opacity:.9; margin-bottom:10px}
+  .route .lane{display:flex; align-items:center; gap:4px; margin:12px 0}
+  .route .node{width:18px; height:18px; border-radius:50%; background:rgba(255,255,255,.85); flex:0 0 auto}
+  .route .node.home{background:var(--ink); box-shadow:0 0 0 3px rgba(255,255,255,.4)}
+  .route .seg{flex:1; height:3px; background:rgba(255,255,255,.5)}
+  .route .meta{font-size:.78rem; border-top:1px solid rgba(255,255,255,.35); padding-top:8px}
+  .route .meta b{color:var(--gold2)}
+  .route.bergen{background:linear-gradient(160deg,#4a6b3a,#37502c)}
+  .route.novgorod{background:linear-gradient(160deg,#7c2128,#5a161c)}
+  .route.bruges{background:linear-gradient(160deg,#274b5c,#1d3845)}
+  .route.london{background:linear-gradient(160deg,#b8860b,#8a6408)}
+  .open-badge{position:absolute; top:10px; right:10px; background:var(--parch); color:var(--green); font-size:.62rem; font-weight:bold; padding:2px 7px; border-radius:10px; text-transform:uppercase; letter-spacing:.5px}
+
+  /* ---- BREWING TRACK ---- */
+  .brewtrack{display:flex; align-items:stretch; gap:0; flex-wrap:wrap}
+  .stage{background:var(--parch2); border:2px solid var(--line); padding:12px 16px; flex:1; min-width:120px; text-align:center; position:relative}
+  .stage:not(:last-child){border-right:none}
+  .stage .st{font-variant:small-caps; font-size:1.1rem; font-weight:bold; color:var(--red)}
+  .stage .ds{font-size:.74rem; color:var(--ink2)}
+  .stage .arrow{position:absolute; right:-11px; top:50%; transform:translateY(-50%); z-index:3; color:var(--red); font-size:1.4rem}
+  .age-note{font-size:.8rem; font-style:italic; color:var(--ink2); margin-top:10px}
+
+  /* ---- TILE CARDS ---- */
+  .gallery{display:flex; flex-wrap:wrap; gap:14px}
+  .card{
+    width:185px; background:var(--parch2); border:1px solid var(--line); border-radius:9px;
+    padding:0; box-shadow:0 2px 6px rgba(0,0,0,.15); overflow:hidden;
+  }
+  .card .head{padding:9px 11px 7px; color:var(--parch); position:relative}
+  .card .head .ttl{font-variant:small-caps; font-size:1.06rem; font-weight:bold; line-height:1.15}
+  .card .head .kind{font-size:.66rem; text-transform:uppercase; letter-spacing:1px; opacity:.8}
+  .card .body{padding:9px 11px 11px; font-size:.82rem}
+  .card .qty{position:absolute; bottom:6px; right:9px; font-size:.66rem; opacity:.8}
+  .card .row{display:flex; justify-content:space-between; gap:6px; margin:3px 0; font-size:.78rem}
+  .card .row .k{color:var(--ink2)} .card .row .v{font-weight:bold; text-align:right}
+  .h-cask{background:var(--red2)} .h-route{background:var(--sea2)} .h-ship{background:var(--ink2)}
+  .h-priv{background:var(--gold); color:var(--ink)!important} .h-room{background:var(--green)} .h-kontor{background:var(--red)}
+  .h-priv .kind{opacity:.7}
+  .badge{display:inline-block; font-size:.66rem; padding:1px 6px; border-radius:9px; background:var(--ink); color:var(--parch); margin:2px 2px 0 0}
+  .qg{font-size:.74rem}
+
+  /* flip cask */
+  .flip{width:200px; height:250px; perspective:1100px; cursor:pointer}
+  .flip .inner{position:relative; width:100%; height:100%; transition:transform .6s; transform-style:preserve-3d}
+  .flip.flipped .inner{transform:rotateY(180deg)}
+  .flip .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:11px; overflow:hidden;
+    box-shadow:0 3px 9px rgba(0,0,0,.22); display:flex; flex-direction:column; border:2px solid rgba(0,0,0,.2)}
+  .flip .back{transform:rotateY(180deg)}
+  .face .fhead{padding:9px 11px; color:var(--parch)}
+  .face .fhead .ft{font-variant:small-caps; font-weight:bold; font-size:1.15rem}
+  .face .fhead .fk{font-size:.64rem; text-transform:uppercase; letter-spacing:1.5px; opacity:.85}
+  .face .fbody{padding:10px 12px; font-size:.82rem; background:var(--parch2); flex:1; color:var(--ink)}
+  .work .fhead{background:var(--green)} .stand .fhead{background:var(--gold); color:var(--ink)}
+  .stand .fhead .fk{opacity:.7}
+  .face .qbar{display:flex; gap:3px; margin-top:5px}
+  .face .q{width:13px; height:13px; border-radius:50%; background:var(--gold2); border:1px solid rgba(0,0,0,.25)}
+  .face .q.off{background:rgba(0,0,0,.12)}
+  .flip .hint{position:absolute; bottom:5px; right:9px; font-size:.6rem; color:rgba(255,255,255,.7); z-index:4}
+  .stand .hint{color:rgba(0,0,0,.45)}
+  .inputs{font-size:.8rem; margin:5px 0}
+  .cube{display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-1px; margin-right:1px; border:1px solid rgba(0,0,0,.25)}
+
+  .note{background:#fff7e6; border-left:4px solid var(--gold); padding:10px 14px; font-size:.85rem; border-radius:0 6px 6px 0; margin-top:14px; color:var(--ink2)}
+  footer{text-align:center; color:var(--ink2); font-size:.8rem; padding:30px; border-top:1px solid var(--line)}
+  .small{font-size:.72rem; color:var(--ink2)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Brewhouse of the Hanse</h1>
+  <div class="sub">A theme-first heavy euro. Brew hopped beer — the one cargo that survives the voyage — and push it across the Baltic and North Sea. Every cask you keep working is <b>reach</b>; every cask you commit to a foreign post is <b>standing</b>.</div>
+  <div class="tag">Component Visualizer · v0.1 · all values placeholders</div>
+</header>
+
+<nav>
+  <a href="#grid">Action Grid</a>
+  <a href="#routes">Route Board</a>
+  <a href="#brew">Brewing Track</a>
+  <a href="#casks">Cask Tiles</a>
+  <a href="#routetiles">Routes</a>
+  <a href="#ships">Ships</a>
+  <a href="#privs">Privileges</a>
+  <a href="#rooms">Rooms</a>
+  <a href="#kontor">Kontor Stack</a>
+</nav>
+
+<main>
+
+<!-- ACTION GRID -->
+<section id="grid">
+  <h2><span class="n">§6</span>The Shared Action Grid</h2>
+  <p class="lead">A 2×2 of four action cells, shared by all players. On your turn: move your worker to an orthogonally adjacent cell, then activate its <b>row or column</b> — a 4-stop pipeline (cap · cell · cell · cap). <i>Hover a cell to light its two lines.</i></p>
+  <div class="gridwrap">
+    <div class="actiongrid" id="ag">
+      <div class="slot s1" data-line="col-l">slot s1</div>
+      <div class="slot s2" data-line="col-r">slot s2</div>
+      <div class="slot s8" data-line="row-t">slot s8</div>
+      <div class="cell A" data-row="row-t" data-col="col-l"><div class="corner">A</div><div class="lbl">Market</div><div class="nm">Market</div><div class="do">Take goods &amp; tiles from the supply</div></div>
+      <div class="cell B" data-row="row-t" data-col="col-r"><div class="corner">B</div><div class="lbl">Brewhouse</div><div class="nm">Brewhouse</div><div class="do">Advance all brews + load a recipe</div></div>
+      <div class="slot s3" data-line="row-t">slot s3</div>
+      <div class="slot s7" data-line="row-b">slot s7</div>
+      <div class="cell C" data-row="row-b" data-col="col-l"><div class="corner">C</div><div class="lbl">Harbor</div><div class="nm">Harbor</div><div class="do">Ship a cask → slot + presence</div></div>
+      <div class="cell D" data-row="row-b" data-col="col-r"><div class="corner">D</div><div class="lbl">Kontor</div><div class="nm">Kontor</div><div class="do">Enshrine a cask / top-stack action</div></div>
+      <div class="slot s4" data-line="row-b">slot s4</div>
+      <div class="slot s6" data-line="col-l">slot s6</div>
+      <div class="slot s5" data-line="col-r">slot s5</div>
+    </div>
+    <div class="gridnote">
+      <ul>
+        <li><b>Both cells</b> on an activated line fire — the worker only gates <i>which line is legal</i>.</li>
+        <li>Each of the <b>8 perimeter slots</b> belongs to exactly one line (row <b>xor</b> column). Slots hold a mix of <span class="pill">working casks</span> and <span class="pill">route / ship tiles</span>, competing for space.</li>
+        <li><b>Cells are generalists</b> (in two lines); <b>slot tiles are specialists</b> (one line). Placing a tile commits it to a row or a column.</li>
+        <li>A rival worker on a cell → you take your <b>tableau fallback</b> for it instead.</li>
+        <li>An owned cap tile fires its <b>skim</b> to its owner whenever its line runs — by anyone.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ROUTE BOARD -->
+<section id="routes">
+  <h2><span class="n">§19</span>The Route Board — Reach &amp; Variable Paths</h2>
+  <p class="lead">Home port central, four routes radiating to the kontore. Shipping drops <b>presence</b> along a route (reach + majorities). Each kontor rewards a different thing, so there is no single efficiency line. End-game reach = <b>your presence × the route's slotted value.</b></p>
+  <div class="routeboard" id="rb"></div>
+  <div class="note">Quality gates the destination: a route only accepts casks of sufficient quality — the Quality → Destination interlock that keeps the three scoring axes from becoming a point-salad.</div>
+</section>
+
+<!-- BREWING TRACK -->
+<section id="brew">
+  <h2><span class="n">§11</span>The Brewing Track <span class="small">(private tableau)</span></h2>
+  <p class="lead">Your brewery — not a mirror of the grid, but the vessel the brewing verb acts on. Casks crawl through it; it doubles as the brewing-process tracker. Gruit is fast but perishable (never enshrined); hopped beer takes the extra <b>Age</b> step but travels and earns standing. <b>Gruit/hopped is a tempo decision.</b></p>
+  <div class="brewtrack">
+    <div class="stage"><div class="st">Load</div><div class="ds">commit grain / hops</div><div class="arrow">→</div></div>
+    <div class="stage"><div class="st">Ferment</div><div class="ds">all styles</div><div class="arrow">→</div></div>
+    <div class="stage"><div class="st">Age</div><div class="ds">hopped &amp; premium only</div><div class="arrow">→</div></div>
+    <div class="stage"><div class="st">Ready</div><div class="ds">ship from here</div></div>
+  </div>
+  <div class="age-note">Brew lengths (advances): Gruit 2 · Hopped 3 · Dubbel 3 · Tripel 4 · Bock 5 &nbsp;⚙ &nbsp;— more <b>vessels</b> (Extra Vessel rooms) advance in parallel per Brewhouse fire.</div>
+</section>
+
+<!-- CASK TILES -->
+<section id="casks">
+  <h2><span class="n">A</span>Cask Tiles — the Dual-Role Hero</h2>
+  <p class="lead">Double-sided. <b>Working face</b> (in a slot) fires a line skim = reach engine. <b>Standing face</b> (enshrined) banks points, carries a goal, and sets the Kontor's top action. <i>Click a tile to flip it.</i></p>
+  <div class="legend">
+    <span class="chip"><span class="dot grain"></span> Grain (G)</span>
+    <span class="chip"><span class="dot hops"></span> Hops (H)</span>
+    <span class="chip">● Quality (1–5)</span>
+  </div>
+  <div class="gallery" id="caskGallery"></div>
+  <div class="note" id="goalNote"></div>
+</section>
+
+<!-- ROUTE TILES -->
+<section id="routetiles">
+  <h2><span class="n">B</span>Route Tiles <span class="small">— perimeter infrastructure</span></h2>
+  <p class="lead">Placed in a slot. Two jobs: raise that route's end-game value, and fire a shipping skim. Players <b>author what scores</b> by what they place.</p>
+  <div class="gallery" id="routeGallery"></div>
+</section>
+
+<!-- SHIP TILES -->
+<section id="ships">
+  <h2><span class="n">C</span>Ship Tiles</h2>
+  <div class="gallery" id="shipGallery"></div>
+</section>
+
+<!-- PRIVILEGES -->
+<section id="privs">
+  <h2><span class="n">D</span>Privilege Tiles <span class="small">— Steelyard rewards</span></h2>
+  <p class="lead">Gained chiefly via the London route. Ongoing perks held by the player.</p>
+  <div class="gallery" id="privGallery"></div>
+</section>
+
+<!-- ROOMS -->
+<section id="rooms">
+  <h2><span class="n">E</span>Room / Upgrade Tiles <span class="small">— tableau engine</span></h2>
+  <p class="lead">Installed into the brewery. Where depth lives — and they upgrade the blocked-cell trickle.</p>
+  <div class="gallery" id="roomGallery"></div>
+</section>
+
+<!-- KONTOR -->
+<section id="kontor">
+  <h2><span class="n">F</span>Public Kontor Tiles <span class="small">— the shared stack</span></h2>
+  <p class="lead">Seed the shared stack and interleave with players' enshrined casks. Whichever tile is on top defines the current Kontor action.</p>
+  <div class="gallery" id="kontorGallery"></div>
+</section>
+
+</main>
+
+<footer>
+  Brewhouse of the Hanse · component visualizer generated from <code>TILES.md</code> / <code>RULES.md</code> · all numbers are placeholders for balancing (⚙)
+</footer>
+
+<script>
+const G = '<span class="cube grain" style="background:var(--grain)"></span>';
+const H = '<span class="cube hops" style="background:var(--hops)"></span>';
+function cubes(str){return str.replace(/G/g,G).replace(/H/g,H);}
+
+// ---- ROUTE BOARD ----
+const routes=[
+  {cls:'bruges',name:'Bruges',role:'The Hub — wide, many small payoffs, flexible',nodes:5,gate:'Q1 — takes everything',value:'+1 / +2 / +3',open:true},
+  {cls:'london',name:'London',role:'The Steelyard — pays in Privilege tiles',nodes:4,gate:'Q2',value:'+2 (+privilege)',open:false},
+  {cls:'bergen',name:'Bergen',role:'The Monopoly — short, narrow, contested',nodes:3,gate:'Q2',value:'+2 / +3',open:false},
+  {cls:'novgorod',name:'Novgorod',role:'The Long Haul — slow, highest payout',nodes:6,gate:'Q3 — only premium survives',value:'+3 / +4 / +5',open:false},
+];
+document.getElementById('rb').innerHTML=routes.map(r=>{
+  let lane='<span class="node home"></span>';
+  for(let i=1;i<r.nodes;i++) lane+='<span class="seg"></span><span class="node"></span>';
+  return `<div class="route ${r.cls}">
+    ${r.open?'<span class="open-badge">Open at start</span>':''}
+    <h3>${r.name}</h3><div class="role">${r.role}</div>
+    <div class="lane">${lane}</div>
+    <div class="meta">Quality gate: <b>${r.gate}</b><br>Route value: <b>${r.value}</b></div>
+  </div>`;
+}).join('');
+
+// ---- CASK TILES ----
+const casks=[
+  {style:'Gruit Ale',q:1,inputs:'G',ships:'Bruges / nearest only',enshrine:false,work:'+1 G',stand:'—',goal:'(perishable — never enshrined)',qty:16},
+  {style:'Hopped Beer',q:2,inputs:'G H',ships:'any route',enshrine:true,work:'+1 H',stand:'2',goal:'one goal from the pool',qty:20},
+  {style:'Dubbel',q:3,inputs:'G H H',ships:'London / Bergen / Novgorod',enshrine:true,work:'+1 G or H',stand:'4',goal:'one goal from the pool',qty:12},
+  {style:'Tripel',q:4,inputs:'G G H H',ships:'Bergen / Novgorod',enshrine:true,work:'advance 1 brew',stand:'6',goal:'one goal from the pool',qty:8},
+  {style:'Barrel-aged Bock',q:5,inputs:'premium · needs Aging Cellar',ships:'Novgorod',enshrine:true,work:'+1 presence',stand:'9',goal:'one goal from the pool',qty:4},
+];
+function qbar(q){let s='';for(let i=1;i<=5;i++)s+=`<span class="q ${i<=q?'':'off'}"></span>`;return `<div class="qbar">${s}</div>`;}
+document.getElementById('caskGallery').innerHTML=casks.map(c=>`
+  <div class="flip" onclick="this.classList.toggle('flipped')">
+    <div class="inner">
+      <div class="face work">
+        <div class="fhead"><div class="fk">Working · in slot · REACH</div><div class="ft">${c.style}</div>${qbar(c.q)}</div>
+        <div class="fbody">
+          <div class="inputs">Brew: ${cubes(c.inputs)}</div>
+          <div class="row"><span class="k">Line action</span><span class="v">${c.work}</span></div>
+          <div class="row"><span class="k">Ships to</span><span class="v">${c.ships}</span></div>
+          <div class="badge">×${c.qty}</div>
+        </div>
+        <div class="hint">click to flip ⟳</div>
+      </div>
+      <div class="face back stand">
+        <div class="fhead"><div class="fk">Standing · enshrined</div><div class="ft">${c.style}</div></div>
+        <div class="fbody">
+          ${c.enshrine?
+            `<div class="row"><span class="k">Standing</span><span class="v">${c.stand} VP</span></div>
+             <div class="row"><span class="k">Goal</span><span class="v">${c.goal}</span></div>
+             <div class="row"><span class="k">On top</span><span class="v">small Kontor action</span></div>`
+            :`<div style="font-style:italic;color:var(--red)">Cannot be enshrined.<br>${c.goal}</div>`}
+        </div>
+        <div class="hint">click to flip ⟳</div>
+      </div>
+    </div>
+  </div>`).join('');
+
+const goals=[
+  ['g1','+1 VP per route you hold presence on (max 4)','breadth'],
+  ['g2','+1 VP per 2 presence markers on the board','volume'],
+  ['g3','+2 VP per other enshrined cask of the SAME style','depth/set'],
+  ['g4','+2 VP per enshrined Q4+ cask you own','quality'],
+  ['g5','+2 VP per presence on Novgorod','destination'],
+  ['g6','+4 VP per route majority you hold (max 2)','destination'],
+  ['g7','+1 VP per working cask still in your slots','engine'],
+  ['g8','+2 VP per filled brewery room','tableau'],
+  ['g9','+1 VP per infrastructure tile you own in slots','toll-baron'],
+  ['g10','+3 VP flat (pure standing)','scarcity'],
+];
+document.getElementById('goalNote').innerHTML='<b>Goal pool</b> (standing face): '+
+  goals.map(g=>`<span class="badge" title="${g[2]}">${g[0]}: ${g[1]}</span>`).join(' ');
+
+// ---- ROUTE TILES ----
+const routeTiles=[
+  {name:'Bergen Lane',h:'h-route',v:'+2 / +3',act:'+1 presence on Bergen',qty:4},
+  {name:'Novgorod Lane',h:'h-route',v:'+3 / +4 / +5',act:'+1 presence on Novgorod',qty:5},
+  {name:'Bruges Lane',h:'h-route',v:'+1 / +2 / +3',act:'ship +1 toward Bruges',qty:6},
+  {name:'London Lane',h:'h-route',v:'+2 (+grants Privilege)',act:'+1 G',qty:4},
+];
+document.getElementById('routeGallery').innerHTML=routeTiles.map(t=>`
+  <div class="card"><div class="head h-route"><div class="kind">Route · slot</div><div class="ttl">${t.name}</div></div>
+  <div class="body">
+    <div class="row"><span class="k">Route value</span><span class="v">${t.v}</span></div>
+    <div class="row"><span class="k">Line skim</span><span class="v">${t.act}</span></div>
+    <div class="badge">×${t.qty}</div>
+  </div></div>`).join('');
+
+// ---- SHIP TILES ----
+const ships=[
+  {name:'Cog',d:'Your Harbor action ships +1 step',qty:4},
+  {name:'Hulk',d:'Ship 2 casks in one Harbor action',qty:3},
+  {name:'Toll Exemption',d:'Ignore one toll / skim per turn',qty:3},
+  {name:'Pilot',d:'Ignore one waypoint cost',qty:2},
+];
+document.getElementById('shipGallery').innerHTML=ships.map(t=>`
+  <div class="card"><div class="head h-ship"><div class="kind">Ship · slot</div><div class="ttl">${t.name}</div></div>
+  <div class="body">${t.d}<div class="badge">×${t.qty}</div></div></div>`).join('');
+
+// ---- PRIVILEGES ----
+const privs=[
+  ['Steelyard Charter','Ignore all tolls on one line each turn'],
+  ['Royal Patent','Harbor ships +1 step (stacks with Cog)'],
+  ['Guild Seat','Brewhouse advances +1 extra step'],
+  ['Customs Waiver','Place infrastructure for 1 fewer good'],
+  ["Factor's License",'Draw 1 extra tile at the Market'],
+  ['Letter of Credit','Once/round, treat 1 G as 1 H or vice-versa'],
+  ['Warehouse Right','+2 goods storage'],
+  ['Staple Right','When you ship, +1 presence'],
+  ['Burgher Status','+1 standing each scoring per route majority'],
+  ["Brewers' Privilege",'Gruit may ship one route farther'],
+  ["Patron's Ear",'First to Market each round draws +1'],
+  ['Hanseatic Seal','Endgame: +1 VP per route with presence'],
+];
+document.getElementById('privGallery').innerHTML=privs.map(p=>`
+  <div class="card"><div class="head h-priv"><div class="kind">Privilege</div><div class="ttl">${p[0]}</div></div>
+  <div class="body">${p[1]}</div></div>`).join('');
+
+// ---- ROOMS ----
+const rooms=[
+  ['Extra Vessel','+1 parallel brewing lane',4],
+  ['Faster Fermenter','Ferment auto-advances (skip 1)',3],
+  ['Aging Cellar','Age costs 1 fewer · unlocks Bock',3],
+  ['Warehouse','+goods storage · may store casks',3],
+  ['Larder','Market trickle → +2 G',3],
+  ['Quay','Harbor trickle → ship 2 steps',3],
+  ['Counting-house','On enshrine, +1 standing',3],
+  ['Cooperage','+1 presence when you ship',2],
+];
+document.getElementById('roomGallery').innerHTML=rooms.map(r=>`
+  <div class="card"><div class="head h-room"><div class="kind">Room · tableau</div><div class="ttl">${r[0]}</div></div>
+  <div class="body">${r[1]}<div class="badge">×${r[2]}</div></div></div>`).join('');
+
+// ---- KONTOR ----
+const kontor=[
+  ['Bryggen Wharf','Gain 2 G'],['Steelyard Counting','Draw 1 Privilege'],
+  ['Bruges Cloth Hall','+1 good & +1 presence on Bruges'],['Peterhof Furs','+1 Novgorod presence & advance 1 brew'],
+  ['Grand Enshrinement','Enshrine a cask with +1 standing'],['Market Day','Draw 2 Market tiles'],
+  ["Cooper's Gift",'Advance any 1 brew 1 step'],['Convoy','Place 1 presence free on any open route'],
+  ['Recipe Exchange','Convert up to 3 between G / H'],["Patron's Favor",'Gain 1 any good & draw 1 tile'],
+  ['Diet of the Hanse','+1 standing'],['Sound Passage','Ship 1 cask ignoring waypoint costs'],
+];
+document.getElementById('kontorGallery').innerHTML=kontor.map(k=>`
+  <div class="card"><div class="head h-kontor"><div class="kind">Kontor · stack</div><div class="ttl">${k[0]}</div></div>
+  <div class="body">${k[1]}</div></div>`).join('');
+
+// ---- GRID LINE HIGHLIGHT ----
+const ag=document.getElementById('ag');
+ag.querySelectorAll('.cell').forEach(cell=>{
+  cell.addEventListener('mouseenter',()=>highlight(cell.dataset.row,cell.dataset.col));
+  cell.addEventListener('mouseleave',clearHl);
+  cell.addEventListener('click',()=>{ // click = lock one line (row), shift toggles col
+    clearHl(); cell.classList.add('hl');
+    document.querySelectorAll(`[data-line="${cell.dataset.row}"]`).forEach(e=>e.classList.add('hl'));
+  });
+});
+function highlight(row,col){
+  clearHl();
+  ['row','col'].forEach(()=>{});
+  [row,col].forEach(line=>{
+    document.querySelectorAll(`[data-row="${line}"],[data-col="${line}"],[data-line="${line}"]`).forEach(e=>e.classList.add('hl'));
+  });
+}
+function clearHl(){document.querySelectorAll('.hl').forEach(e=>e.classList.remove('hl'));}
+</script>
+</body>
+</html>
