@@ -322,4 +322,9 @@ This section captures decisions and the working architecture from the live desig
 - **Slots hold a *mix* of working casks + infrastructure (route/ship) tiles**, competing for the same 8 spaces → "row XOR column" commitment now spans the whole strategy. ⚙ load-bearing balance point.
 - **OPEN — presence coupling:** reach (presence markers) and standing (enshrined tiles) as *separate accumulations* (lean: yes, simpler — tension lives in slot-space/turns), **or** enshrining *pulls back* a cask's presence (poetic, but needs marker↔cask bookkeeping).
 - **Cards policy (re: §3 no-cards):** deck is big in *copies*, small in *unique designs* (~45–50 unique faces). Recommendation: **stay all-tiles, served from a face-up Market display** (preserves determinism + the physical flip). Hybrid (one high-variety family as cards) only if a family proves to need card-scale variety. ❓ confirm §3 still sacred.
-- **Next deliverable:** fully spec the **cask tile family** (faces, line-actions, quality, goals) — the core of the game.
+- **Next deliverable:** fully spec the **cask tile family** (faces, line-actions, quality, goals) — the core of the game. → **DONE: see `TILES.md` (v0.1, full 7-family deck).**
+
+### Locked (2026-05-31, cont.)
+- **Presence (reach) and standing accumulate separately** — never convert.
+- **Stay all-tiles**, served from a **face-up Market display** (deterministic, public). No cards.
+- Full tile list drafted in `TILES.md`: ~140 tiles / ~45 unique designs (tile-scale, not card-scale).
