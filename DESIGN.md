@@ -328,3 +328,12 @@ This section captures decisions and the working architecture from the live desig
 - **Presence (reach) and standing accumulate separately** — never convert.
 - **Stay all-tiles**, served from a **face-up Market display** (deterministic, public). No cards.
 - Full tile list drafted in `TILES.md`: ~140 tiles / ~45 unique designs (tile-scale, not card-scale).
+
+### Locked / discovered via pressure-test (2026-05-31, cont.)
+- **Pressure-Test #1** (`PLAYTEST.md`): core loop holds; breadth-vs-depth tension emerges from T1. Three design changes fell out:
+  - **Bruges (home hub) starts OPEN**; far routes require a slotted Route Lane tile (fixes the reach bootstrap).
+  - **Brewhouse fires = advance ALL brews 1 step + optionally load 1** (vessels = throughput; no dead lanes).
+  - **Goods storage cap + tiny skims** to contain rich-get-richer (the #1 tuning risk).
+  - Balance watch: the **depth path is genuinely slower** (premium ties up a vessel) — goal bonuses must compensate.
+- **Turn & round economy drafted** → `RULES.md` (turn = move + activate line; 4 cell actions; round = turn each, first-player passes; **end-game = Kontor stack reaches N OR a route saturates**; scoring sequence reach → majorities → standing → goals).
+- Confirms **mid-heavy / Brass pace (~10–14 turns/player)**, not Lacerda turn-as-puzzle.
