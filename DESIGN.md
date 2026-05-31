@@ -310,3 +310,16 @@ This section captures decisions and the working architecture from the live desig
 - Reconcile **perimeter slot count (6 vs 8)** now that the Kontor is a stood-on action cell (the old s4/s5-dark rule assumed a passive score pile).
 - Tableau room list, conversion rates, vessel capacities.
 - Toll/trickle numbers; end-game trigger; era arc in/out for v1.
+
+### Revision — cask routing, slots & cards (2026-05-31, cont.)
+
+- **Perimeter slots: 8, all open. 2p variant locks some (→ ~6)** to tighten the board. (LOCKED)
+- **Casks restored to the perimeter slots — supersedes the earlier "casks live on the board, not slots" correction.** A working cask tile sits in a slot and **fires a printed action when its line is activated** (the §8 dual-use heart). Lifecycle:
+  `BREW (tableau track) → SHIP into a SLOT (working = reach engine, fires actions) → ENSHRINE into the Kontor stack (flip to standing face = standing, sets new top action)`. Casks move *into and through* slots. (LOCKED)
+- **Cask tiles are double-sided:** working face = a **line action** + style + quality; standing face = **standing value + a goal**. (LOCKED)
+- **Goal-matching DNA stays:** an enshrined cask's goal scores against your working/slotted/board state — the glue that makes reach & standing *interact*. (LOCKED)
+- **Route board = presence *markers*** dropped when shipping (reach score + majorities), now distinct from the cask tile itself.
+- **Slots hold a *mix* of working casks + infrastructure (route/ship) tiles**, competing for the same 8 spaces → "row XOR column" commitment now spans the whole strategy. ⚙ load-bearing balance point.
+- **OPEN — presence coupling:** reach (presence markers) and standing (enshrined tiles) as *separate accumulations* (lean: yes, simpler — tension lives in slot-space/turns), **or** enshrining *pulls back* a cask's presence (poetic, but needs marker↔cask bookkeeping).
+- **Cards policy (re: §3 no-cards):** deck is big in *copies*, small in *unique designs* (~45–50 unique faces). Recommendation: **stay all-tiles, served from a face-up Market display** (preserves determinism + the physical flip). Hybrid (one high-variety family as cards) only if a family proves to need card-scale variety. ❓ confirm §3 still sacred.
+- **Next deliverable:** fully spec the **cask tile family** (faces, line-actions, quality, goals) — the core of the game.
