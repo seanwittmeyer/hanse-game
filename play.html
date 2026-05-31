@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brewhouse of the Hanse — Play (hot-seat)</title>
+<style>
+  :root{
+    --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
+    --red:#7c2128; --red2:#9c3b2e; --gold:#b8860b; --gold2:#d8a72a;
+    --sea:#274b5c; --sea2:#3d6b7e; --green:#4a6b3a; --line:#c8b48a;
+    --grain:#d9b44a; --hops:#6b8e3d;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--parch);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-size:15px}
+  a{color:var(--red)}
+  /* ACTION BAR */
+  #bar{position:sticky;top:0;z-index:40;background:var(--ink);color:var(--parch);
+    border-bottom:4px solid var(--gold);box-shadow:0 3px 12px rgba(0,0,0,.35);padding:8px 14px}
+  #bar .top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  #bar .turn{font-variant:small-caps;letter-spacing:.5px;font-size:.95rem;opacity:.85}
+  #bar .who{font-variant:small-caps;font-weight:bold;font-size:1.25rem;padding:2px 12px;border-radius:6px}
+  #bar .prompt{font-style:italic;opacity:.95;flex:1;min-width:160px}
+  #bar .acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+  #bar .links{margin-left:auto;font-size:.8rem;display:flex;gap:10px}
+  #bar .links a{color:var(--gold2);text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:1px solid rgba(0,0,0,.25);border-radius:6px;
+    padding:6px 12px;font-size:.9rem;background:var(--parch2);color:var(--ink);transition:.12s}
+  button:hover{background:var(--gold2)}
+  button.primary{background:var(--gold);font-weight:bold}
+  button.go{background:var(--green);color:var(--parch)}
+  button.go:hover{background:#5d8549}
+  button.ghost{background:transparent;color:var(--parch);border-color:rgba(255,255,255,.4)}
+  button.ghost:hover{background:rgba(255,255,255,.15)}
+  button:disabled{opacity:.4;cursor:not-allowed}
+  /* LAYOUT */
+  main{max-width:1180px;margin:0 auto;padding:14px}
+  .cols{display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start}
+  @media(max-width:900px){.cols{grid-template-columns:1fr}}
+  .panel{background:var(--parch2);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:14px}
+  .panel h3{margin:0 0 8px;font-variant:small-caps;color:var(--red);font-size:1.1rem;border-bottom:1px solid var(--line);padding-bottom:4px}
+  /* GRID */
+  .agwrap{display:flex;justify-content:center}
+  .ag{display:grid;grid-template-columns:40px 120px 120px 40px;grid-template-rows:40px 120px 120px 40px;gap:6px}
+  .cell{border-radius:9px;padding:7px;color:var(--parch);position:relative;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 2px 6px rgba(0,0,0,.2);border:2px solid transparent}
+  .cell .nm{font-variant:small-caps;font-weight:bold;font-size:1rem;line-height:1}
+  .cell .do{font-size:.62rem;opacity:.9}
+  .cell .ltr{position:absolute;top:4px;right:7px;font-weight:bold;opacity:.45}
+  .cell.A{background:var(--gold);color:var(--ink)} .cell.B{background:var(--red2)}
+  .cell.C{background:var(--sea2)} .cell.D{background:var(--green)}
+  .cell .wk{display:flex;gap:3px;flex-wrap:wrap}
+  .pawn{width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.4)}
+  .cell.legal{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite}
+  @keyframes pulse{50%{outline-color:#fff}}
+  .slot{background:var(--parch);border:2px dashed var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.58rem;text-align:center;color:var(--ink2);padding:2px;overflow:hidden}
+  .slot.filled{border-style:solid;color:var(--parch);font-weight:bold}
+  .slot.place{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite}
+  .s1{grid-area:1/2}.s2{grid-area:1/3}.cA{grid-area:2/2}.cB{grid-area:2/3}
+  .s8{grid-area:2/1}.s3{grid-area:2/4}.s7{grid-area:3/1}.s4{grid-area:3/4}
+  .cC{grid-area:3/2}.cD{grid-area:3/3}.s6{grid-area:4/2}.s5{grid-area:4/3}
+  /* ROUTES */
+  .route{border-radius:8px;padding:8px 10px;color:var(--parch);margin-bottom:7px;position:relative}
+  .route.bruges{background:linear-gradient(160deg,#274b5c,#1d3845)}
+  .route.london{background:linear-gradient(160deg,#b8860b,#8a6408)}
+  .route.bergen{background:linear-gradient(160deg,#4a6b3a,#37502c)}
+  .route.novgorod{background:linear-gradient(160deg,#7c2128,#5a161c)}
+  .route .rh{display:flex;justify-content:space-between;align-items:baseline}
+  .route .rn{font-variant:small-caps;font-weight:bold}
+  .route .rv{font-size:.8rem}
+  .route .spaces{display:flex;gap:3px;margin-top:5px}
+  .sp{width:15px;height:15px;border-radius:3px;background:rgba(255,255,255,.25);font-size:.6rem;display:flex;align-items:center;justify-content:center;color:#fff}
+  .route .gate{font-size:.65rem;opacity:.8}
+  .route.ship{cursor:pointer;outline:3px solid var(--gold2)}
+  .route.closed{filter:grayscale(.6) brightness(.8)}
+  /* MARKET / SHOP */
+  .shop{display:flex;flex-direction:column;gap:5px;max-height:260px;overflow:auto}
+  .item{display:flex;justify-content:space-between;align-items:center;gap:6px;background:var(--parch);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:.82rem}
+  .cost{font-size:.78rem;color:var(--ink2);white-space:nowrap}
+  /* KONTOR */
+  .kontor .stackbox{background:var(--parch);border:1px solid var(--line);border-radius:6px;padding:8px;text-align:center}
+  .kontor .top{font-weight:bold;color:var(--red)}
+  /* TABLEAUS */
+  .tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
+  .tab{padding:5px 12px;border-radius:6px 6px 0 0;cursor:pointer;font-variant:small-caps;font-weight:bold;border:1px solid var(--line);border-bottom:none;background:var(--parch)}
+  .tab.active{color:var(--parch)}
+  .tableau{display:none}
+  .tableau.show{display:block}
+  .brew{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+  .vessel{border:1px solid var(--line);border-radius:6px;padding:5px 8px;min-width:120px;background:var(--parch);font-size:.8rem}
+  .track{display:flex;gap:2px;margin-top:3px}
+  .tstep{flex:1;height:7px;border-radius:2px;background:rgba(0,0,0,.12)}
+  .tstep.on{background:var(--green)}
+  .tstep.ready{background:var(--gold)}
+  .tag{display:inline-block;background:var(--ink);color:var(--parch);border-radius:10px;padding:1px 7px;font-size:.7rem;margin:2px 2px 0 0}
+  .res{display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-weight:bold}
+  .cube{width:13px;height:13px;border-radius:3px;display:inline-block;border:1px solid rgba(0,0,0,.3)}
+  .grain{background:var(--grain)}.hops{background:var(--hops)}
+  /* LOG */
+  #log{font-size:.78rem;max-height:300px;overflow:auto;line-height:1.4}
+  #log div{padding:2px 0;border-bottom:1px solid rgba(0,0,0,.06)}
+  #log .me{color:var(--red)}
+  /* MODAL */
+  .modal{position:fixed;inset:0;background:rgba(20,12,8,.82);z-index:80;display:flex;align-items:center;justify-content:center;padding:20px}
+  .modal .card{background:var(--parch);border:3px solid var(--gold);border-radius:14px;padding:26px;max-width:560px;width:100%;max-height:90vh;overflow:auto}
+  .modal h2{font-variant:small-caps;color:var(--red);margin:0 0 10px}
+  .scoretable{width:100%;border-collapse:collapse;margin:10px 0}
+  .scoretable th,.scoretable td{border:1px solid var(--line);padding:6px 9px;text-align:center}
+  .scoretable th{background:var(--red);color:var(--parch)}
+  .win{background:var(--gold);font-weight:bold}
+  .note{font-size:.78rem;color:var(--ink2);font-style:italic}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+
+<div id="bar">
+  <div class="top">
+    <span class="turn" id="turnlbl">Round 1</span>
+    <span class="who" id="wholbl">—</span>
+    <span class="prompt" id="prompt">Loading…</span>
+    <span class="links">
+      <a href="index.html">Components</a><a href="rulebook.html">Rulebook</a>
+      <a href="#" onclick="newGame();return false">New Game</a>
+    </span>
+  </div>
+  <div class="acts" id="acts"></div>
+</div>
+
+<main>
+  <div class="cols">
+    <div>
+      <div class="panel"><h3>Action Grid</h3><div class="agwrap"><div class="ag" id="ag"></div></div>
+        <div class="note" id="boardnote" style="text-align:center;margin-top:6px"></div>
+      </div>
+      <div class="panel"><h3>Player Breweries</h3>
+        <div class="tabs" id="tabs"></div>
+        <div id="tableaus"></div>
+      </div>
+    </div>
+    <div>
+      <div class="panel"><h3>Trade Routes <span class="note">(reach)</span></h3><div id="routes"></div></div>
+      <div class="panel kontor"><h3>Kontor Stack <span class="note">(standing)</span></h3><div id="kontor"></div></div>
+      <div class="panel"><h3>Market</h3><div class="shop" id="shop"></div></div>
+      <div class="panel"><h3>Log</h3><div id="log"></div></div>
+    </div>
+  </div>
+  <p class="note" style="text-align:center">Prototype v0.1 — implements the core loop. Simplifications: line stops resolve in board order (not free order); some skims auto-resolve to grain; the Market is an always-open shop menu; privileges are not yet implemented; all numbers are placeholders (⚙).</p>
+</main>
+
+<div id="setup" class="modal hidden">
+  <div class="card">
+    <h2>New Game — Brewhouse of the Hanse</h2>
+    <p>Hot-seat. Choose the number of brewing houses.</p>
+    <div id="pcount" style="display:flex;gap:8px;margin:12px 0"></div>
+    <div id="names"></div>
+    <button class="primary" style="margin-top:14px" onclick="startGame()">Start Game</button>
+  </div>
+</div>
+
+<div id="over" class="modal hidden"><div class="card" id="overcard"></div></div>
+
+<script>
+//==================================================================
+// DATA
+//==================================================================
+const COLORS=['#7c2128','#274b5c','#4a6b3a','#b8860b','#5b3a8e'];
+const CNAMES=['Crimson','Azure','Forest','Amber','Violet'];
+
+const STYLES={
+  gruit :{name:'Gruit Ale',     q:1, in:{g:1,h:0}, ready:2, enshrine:false, standing:0, work:{t:'good',good:'g'}},
+  hopped:{name:'Hopped Beer',   q:2, in:{g:1,h:1}, ready:3, enshrine:true,  standing:2, work:{t:'good',good:'h'}},
+  dubbel:{name:'Dubbel',        q:3, in:{g:1,h:2}, ready:3, enshrine:true,  standing:4, work:{t:'good',good:'g'}},
+  tripel:{name:'Tripel',        q:4, in:{g:2,h:2}, ready:4, enshrine:true,  standing:6, work:{t:'advance'}},
+  bock  :{name:'Barrel Bock',   q:5, in:{g:2,h:2}, ready:5, enshrine:true,  standing:9, work:{t:'presence'}, cellar:true},
+};
+const ROUTES={
+  bruges  :{name:'Bruges',  gate:1, cap:5, openStart:true},
+  london  :{name:'London',  gate:2, cap:4, openStart:false},
+  bergen  :{name:'Bergen',  gate:2, cap:3, openStart:false},
+  novgorod:{name:'Novgorod',gate:3, cap:6, openStart:false},
+};
+const SHOP=[
+  {id:'r_hopped',kind:'recipe',style:'hopped',name:'Recipe · Hopped',cost:{g:1}},
+  {id:'r_dubbel',kind:'recipe',style:'dubbel',name:'Recipe · Dubbel',cost:{g:1,h:1}},
+  {id:'r_tripel',kind:'recipe',style:'tripel',name:'Recipe · Tripel',cost:{g:2}},
+  {id:'r_bock',  kind:'recipe',style:'bock',  name:'Recipe · Bock (needs Cellar)',cost:{g:2,h:1}},
+  {id:'l_london',  kind:'route',route:'london',  boost:2,name:'London Lane (+2)',cost:{g:2}},
+  {id:'l_bergen',  kind:'route',route:'bergen',  boost:2,name:'Bergen Lane (+2)',cost:{g:2}},
+  {id:'l_novgorod',kind:'route',route:'novgorod',boost:3,name:'Novgorod Lane (+3)',cost:{g:2,h:1}},
+  {id:'l_bruges',  kind:'route',route:'bruges',  boost:1,name:'Bruges Lane (+1)',cost:{g:1}},
+  {id:'s_cog', kind:'ship',name:'Cog · ship +1 step',cost:{g:2}},
+  {id:'m_vessel',kind:'room',room:'vessel',  name:'Room · Extra Vessel',cost:{g:3}},
+  {id:'m_cellar',kind:'room',room:'cellar',  name:'Room · Aging Cellar',cost:{g:3}},
+  {id:'m_ware',  kind:'room',room:'warehouse',name:'Room · Warehouse (+4 storage)',cost:{g:2}},
+  {id:'m_count', kind:'room',room:'counting', name:'Room · Counting-house',cost:{g:3}},
+];
+const KONTOR_SEED=[
+  {name:'Bryggen Wharf',action:{t:'good',g:2}},
+  {name:'Cloth Hall',action:{t:'good',g:1,h:1}},
+];
+const GOALS=[
+  {id:'g1',text:'+1 / route with presence (max 4)',fn:(p,s)=>Math.min(4,Object.keys(ROUTES).filter(r=>(s.routes[r].pres[p.id]||0)>0).length)},
+  {id:'g2',text:'+1 per 2 presence on board',fn:(p,s)=>Math.floor(totalPresence(p,s)/2)},
+  {id:'g3',text:'+2 / other same-style enshrined',fn:(p,s,c)=>2*Math.max(0,p.enshrined.filter(e=>e.style===c.style).length-1)},
+  {id:'g4',text:'+2 / enshrined Q4+',fn:(p)=>2*p.enshrined.filter(e=>e.q>=4).length},
+  {id:'g5',text:'+2 / Novgorod presence',fn:(p,s)=>2*(s.routes.novgorod.pres[p.id]||0)},
+  {id:'g6',text:'+4 / route majority (max 2)',fn:(p,s)=>4*Math.min(2,majorityCount(p,s))},
+  {id:'g7',text:'+1 / working cask in slots',fn:(p,s)=>workingCount(p,s)},
+  {id:'g8',text:'+2 / brewery room',fn:(p)=>2*p.rooms.length},
+  {id:'g10',text:'+3 flat (pure standing)',fn:()=>3},
+];
+// 8 perimeter slots → the line each belongs to
+const SLOTS=[
+  {id:'s1',line:'colL'},{id:'s2',line:'colR'},{id:'s8',line:'rowT'},{id:'s3',line:'rowT'},
+  {id:'s7',line:'rowB'},{id:'s4',line:'rowB'},{id:'s6',line:'colL'},{id:'s5',line:'colR'},
+];
+const LINES={rowT:{cells:['A','B'],caps:['s8','s3'],label:'Top row · Market+Brewhouse'},
+             rowB:{cells:['C','D'],caps:['s7','s4'],label:'Bottom row · Harbor+Kontor'},
+             colL:{cells:['A','C'],caps:['s1','s6'],label:'Left col · Market+Harbor'},
+             colR:{cells:['B','D'],caps:['s2','s5'],label:'Right col · Brewhouse+Kontor'}};
+const ADJ={A:['B','C'],B:['A','D'],C:['A','D'],D:['B','C']};
+const CELLNAME={A:'Market',B:'Brewhouse',C:'Harbor',D:'Kontor'};
+const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C:{row:'rowB',col:'colL'},D:{row:'rowB',col:'colR'}})[cell];
+
+//==================================================================
+// STATE
+//==================================================================
+let S=null;            // game state
+let UI={sub:'move'};   // interaction state
+let activeTab=0;
+const KEY='hanse-hotseat-v1';
+
+function endN(){return 6+3*S.players.length;}  // end-game stack threshold ⚙
+
+function newPlayer(i,name){
+  return {id:i,name:name||CNAMES[i],color:COLORS[i],grain:2,hops:1,cell:'A',
+    storage:8, recipes:['gruit'], vessels:[null], maxVessels:1,
+    rooms:[],ships:0,privileges:0, enshrined:[]};
+}
+function freshState(n,names){
+  const st={players:[],slots:{},routes:{},stack:KONTOR_SEED.slice(),turn:1,active:0,first:0,ending:false,log:[]};
+  for(let i=0;i<n;i++) st.players.push(newPlayer(i,names[i]));
+  SLOTS.forEach(s=>st.slots[s.id]=null);
+  for(const r in ROUTES) st.routes[r]={value:ROUTES[r].openStart?1:0,open:ROUTES[r].openStart,pres:{}};
+  return st;
+}
+
+//==================================================================
+// HELPERS
+//==================================================================
+function cur(){return S.players[S.active];}
+function gain(p,g=0,h=0){p.grain=Math.min(p.storage,p.grain+g);p.hops=Math.min(p.storage,p.hops+h);}
+function canPay(p,c){return p.grain>=(c.g||0)&&p.hops>=(c.h||0);}
+function pay(p,c){p.grain-=(c.g||0);p.hops-=(c.h||0);}
+function costStr(c){let a=[];if(c.g)a.push(c.g+'G');if(c.h)a.push(c.h+'H');return a.join(' ')||'free';}
+function totalPresence(p,s){let t=0;for(const r in s.routes)t+=(s.routes[r].pres[p.id]||0);return t;}
+function workingCount(p,s){return Object.values(s.slots).filter(t=>t&&t.type==='cask'&&t.owner===p.id).length;}
+function majorityCount(p,s){let c=0;for(const r in s.routes){const pr=s.routes[r].pres;const mine=pr[p.id]||0;if(mine>0&&mine===Math.max(...Object.values(pr),0)&&Object.values(pr).filter(v=>v===mine).length===1)c++;}return c;}
+function readyCasks(p){return p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready);}
+function emptySlots(){return SLOTS.filter(s=>!S.slots[s.id]);}
+function log(msg,me){S.log.unshift('<div class="'+(me?'me':'')+'">'+msg+'</div>');if(S.log.length>120)S.log.pop();}
+
+//==================================================================
+// PERSISTENCE
+//==================================================================
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function load(){try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):null;}catch(e){return null;}}
+function newGame(){document.getElementById('over').classList.add('hidden');openSetup();}
+
+//==================================================================
+// SETUP
+//==================================================================
+function openSetup(){
+  const m=document.getElementById('setup');m.classList.remove('hidden');
+  let pc='';for(let n=2;n<=5;n++)pc+='<button onclick="pickCount('+n+')" id="pc'+n+'">'+n+' players</button>';
+  document.getElementById('pcount').innerHTML=pc;
+  pickCount(2);
+}
+let setupN=2;
+function pickCount(n){setupN=n;for(let i=2;i<=5;i++)document.getElementById('pc'+i).classList.toggle('primary',i===n);
+  let h='<p class="note">Names (optional):</p>';
+  for(let i=0;i<n;i++)h+='<div style="margin:4px 0"><span class="pawn" style="background:'+COLORS[i]+';display:inline-block;vertical-align:middle"></span> <input id="nm'+i+'" placeholder="'+CNAMES[i]+'" style="padding:4px;border:1px solid var(--line);border-radius:5px"></div>';
+  document.getElementById('names').innerHTML=h;
+}
+function startGame(){
+  const names=[];for(let i=0;i<setupN;i++){const v=document.getElementById('nm'+i).value.trim();names.push(v||CNAMES[i]);}
+  S=freshState(setupN,names);UI={sub:'move'};activeTab=0;
+  document.getElementById('setup').classList.add('hidden');
+  log('Game begins — '+setupN+' brewing houses. Bruges is open.');
+  save();render();
+}
+
+//==================================================================
+// TURN MACHINE
+//==================================================================
+function beginTurn(){UI={sub:'move'};render();}
+
+function doMove(cell){
+  const p=cur();p.cell=cell;log(p.name+' moves their worker to <b>'+CELLNAME[cell]+'</b>.',true);
+  UI={sub:'line'};render();
+}
+function chooseLine(which){ // 'row' or 'col'
+  const p=cur();const lk=cellOfLine(p.cell)[which];const L=LINES[lk];
+  log(p.name+' activates the <b>'+L.label+'</b>.',true);
+  // fire cap skims
+  L.caps.forEach(cid=>{const t=S.slots[cid];if(t)fireSkim(t);});
+  // queue the two cells in board order
+  UI={sub:'cell',queue:L.cells.slice(),line:lk,stage:null,tmp:{}};
+  nextCell();
+}
+function fireSkim(t){
+  const o=S.players[t.owner];
+  if(t.type==='cask'){
+    const w=STYLES[t.style].work;
+    if(w.t==='good'){if(w.good==='g')gain(o,1,0);else gain(o,0,1);log('↳ '+o.name+'’s '+STYLES[t.style].name+' skims +1'+(w.good==='g'?'G':'H')+'.');}
+    else if(w.t==='advance'){advanceOne(o);log('↳ '+o.name+'’s Tripel skim advances a brew.');}
+    else if(w.t==='presence'){addPresenceBest(o);log('↳ '+o.name+'’s Bock skim adds +1 presence.');}
+  } else if(t.type==='route'){
+    if(S.routes[t.route]&&S.routes[t.route].open){addPresence(o,t.route);log('↳ '+o.name+'’s '+ROUTES[t.route].name+' Lane skims +1 presence.');}
+  }
+}
+function nextCell(){
+  if(!UI.queue.length){UI={sub:'end'};render();return;}
+  UI.cell=UI.queue.shift();UI.stage='choose';UI.tmp={};
+  // determine if blocked by a rival
+  UI.blocked=S.players.some(pl=>pl.id!==S.active&&pl.cell===UI.cell);
+  // auto-handle fallbacks / empty actions that need no input
+  render();
+}
+function cellDone(){UI.cell=null;nextCell();}
+
+function endTurn(){
+  checkTriggers();
+  S.active=(S.active+1)%S.players.length;
+  if(S.active===S.first){
+    if(S.ending){gameOver();save();return;}
+    S.turn++;
+  }
+  UI={sub:'move'};save();render();
+}
+function checkTriggers(){
+  if(S.ending)return;
+  if(S.stack.length>=endN()){S.ending=true;log('★ The Kontor stack has reached '+endN()+' — final round! (heritage clock)');}
+  for(const r in S.routes){const filled=Object.values(S.routes[r].pres).reduce((a,b)=>a+b,0);
+    if(filled>=ROUTES[r].cap){S.ending=true;log('★ '+ROUTES[r].name+' is saturated — final round! (reach clock)');break;}}
+}
+
+//------- shared mechanics -------
+function advanceAll(p){let any=false;p.vessels.forEach(c=>{if(c&&c.step<c.ready){c.step++;any=true;}});return any;}
+function advanceOne(p){for(const c of p.vessels){if(c&&c.step<c.ready){c.step++;return true;}}return false;}
+function addPresence(p,r){if(!S.routes[r].open)return false;S.routes[r].pres[p.id]=(S.routes[r].pres[p.id]||0)+1;return true;}
+function addPresenceBest(p){const open=Object.keys(ROUTES).filter(r=>S.routes[r].open);if(!open.length)return;
+  open.sort((a,b)=>(S.routes[b].pres[p.id]||0)-(S.routes[a].pres[p.id]||0));addPresence(p,open[0]);}
+
+//------- MARKET -------
+function marketGoods(kind){const p=cur();if(kind==='gg')gain(p,2,0);else if(kind==='gh')gain(p,1,1);else gain(p,0,2);
+  log(p.name+' takes goods at the Market.',true);cellDone();}
+function buyTile(id){
+  const it=SHOP.find(x=>x.id===id);const p=cur();if(!canPay(p,it.cost))return;
+  if(it.kind==='route'){ // must place into an empty slot
+    if(!emptySlots().length){alert('No empty perimeter slot to place the Lane.');return;}
+    pay(p,it.cost);UI.tmp.pendingTile={type:'route',owner:p.id,route:it.route,boost:it.boost,label:ROUTES[it.route].name+' Lane'};
+    UI.stage='place';log(p.name+' buys a '+it.name+' — place it in a slot.',true);render();return;
+  }
+  if(it.kind==='ship'){if(!emptySlots().length){alert('No empty slot for the ship.');return;}
+    pay(p,it.cost);UI.tmp.pendingTile={type:'ship',owner:p.id,label:'Cog'};p.ships++;
+    UI.stage='place';log(p.name+' buys a Cog — place it in a slot.',true);render();return;}
+  pay(p,it.cost);
+  if(it.kind==='recipe'){p.recipes.push(it.style);log(p.name+' acquires '+it.name+'.',true);}
+  if(it.kind==='room'){applyRoom(p,it.room);log(p.name+' builds '+it.name+'.',true);}
+  cellDone();
+}
+function applyRoom(p,room){p.rooms.push(room);
+  if(room==='vessel'){p.maxVessels++;p.vessels.push(null);}
+  if(room==='warehouse'){p.storage+=4;}
+  // cellar (unlock bock), counting (enshrine bonus) handled at point of use
+}
+function placeTile(slotId){
+  const t=UI.tmp.pendingTile;S.slots[slotId]=t;
+  if(t.type==='route'){S.routes[t.route].open=true;S.routes[t.route].value+=t.boost;log('↳ '+ROUTES[t.route].name+' route opens (value '+S.routes[t.route].value+').');}
+  UI.tmp.pendingTile=null;cellDone();
+}
+
+//------- BREWHOUSE -------
+function brewAdvance(){const p=cur();advanceAll(p);log(p.name+' advances all brews.',true);UI.stage='load';render();}
+function brewLoad(style){const p=cur();const st=STYLES[style];
+  if(st.cellar&&!p.rooms.includes('cellar')){alert('Bock needs an Aging Cellar.');return;}
+  const vi=p.vessels.findIndex(v=>v===null);if(vi<0){alert('No empty vessel.');return;}
+  if(!canPay(p,st.in)){alert('Cannot pay brew inputs.');return;}
+  pay(p,st.in);const ri=p.recipes.indexOf(style);if(ri>=0)p.recipes.splice(ri,1);
+  const goal=GOALS[Math.floor(Math.random()*GOALS.length)];
+  p.vessels[vi]={style,q:st.q,step:0,ready:st.ready,standing:st.standing,enshrine:st.enshrine,goal:goal.id};
+  log(p.name+' loads '+st.name+' (goal: '+goal.text+').',true);render();
+}
+
+//------- HARBOR -------
+function shipStart(){UI.stage='ship_pick';render();}
+function shipPick(vi){UI.tmp.vi=vi;UI.stage='ship_route';render();}
+function shipRoute(r){const p=cur();const cask=p.vessels[UI.tmp.vi];
+  if(STYLES[cask.style].q<ROUTES[r].gate){alert('Quality too low for '+ROUTES[r].name+'.');return;}
+  if(!emptySlots().length){alert('No empty slot to place the working cask.');return;}
+  UI.tmp.route=r;UI.stage='ship_slot';log(p.name+' will ship '+STYLES[cask.style].name+' to '+ROUTES[r].name+' — choose a slot.',true);render();}
+function shipSlot(slotId){const p=cur();const cask=p.vessels[UI.tmp.vi];
+  S.slots[slotId]={type:'cask',owner:p.id,style:cask.style,q:cask.q,standing:cask.standing,enshrine:cask.enshrine,goal:cask.goal};
+  p.vessels[UI.tmp.vi]=null;addPresence(p,UI.tmp.route);
+  log(p.name+' ships to '+ROUTES[UI.tmp.route].name+' (+1 presence) and the cask works in a slot.',true);
+  cellDone();}
+
+//------- KONTOR -------
+function kontorTop(){const p=cur();const top=S.stack[S.stack.length-1];const a=top.action||{t:'good',g:1};
+  if(a.t==='good'){gain(p,a.g||0,a.h||0);}else if(a.t==='advance'){advanceOne(p);}else if(a.t==='presence'){addPresenceBest(p);}else if(a.t==='standing'){/* handled as flat at scoring */}
+  log(p.name+' uses the Kontor top action: '+top.name+'.',true);cellDone();}
+function enshrineStart(){UI.stage='enshrine';render();}
+function enshrineDo(slotId){const p=cur();const t=S.slots[slotId];
+  let st=t.standing;if(p.rooms.includes('counting'))st+=1;
+  p.enshrined.push({style:t.style,q:t.q,standing:st,goal:t.goal});
+  S.slots[slotId]=null;
+  S.stack.push({name:STYLES[t.style].name,owner:p.id,action:{t:'good',g:1}});
+  log(p.name+' <b>enshrines</b> '+STYLES[t.style].name+' (+'+st+' standing). Stack height '+S.stack.length+'.',true);
+  cellDone();}
+
+//==================================================================
+// SCORING
+//==================================================================
+function scorePlayer(p){
+  let reach=0,maj=0,stand=0,goals=0;
+  for(const r in S.routes){const pr=S.routes[r].pres[p.id]||0;reach+=pr*S.routes[r].value;}
+  maj=majorityCount(p,S)*3;
+  p.enshrined.forEach(c=>{stand+=c.standing;const G=GOALS.find(g=>g.id===c.goal);if(G)goals+=G.fn(p,S,c);});
+  return {reach,maj,stand,goals,total:reach+maj+stand+goals};
+}
+function gameOver(){
+  const rows=S.players.map(p=>({p,sc:scorePlayer(p)}));
+  const max=Math.max(...rows.map(r=>r.sc.total));
+  let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Reach</th><th>Majorities</th><th>Standing</th><th>Goals</th><th>Total</th></tr>';
+  rows.sort((a,b)=>b.sc.total-a.sc.total).forEach(r=>{h+='<tr class="'+(r.sc.total===max?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+'</td><td>'+r.sc.reach+'</td><td>'+r.sc.maj+'</td><td>'+r.sc.stand+'</td><td>'+r.sc.goals+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
+  h+='</table><p class="note">Reach (presence×route value) and Standing (enshrined casks + goals) are the two competing axes.</p><button class="primary" onclick="newGame()">New Game</button>';
+  document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
+}
+
+//==================================================================
+// RENDER
+//==================================================================
+function render(){
+  if(!S){return;}
+  renderBar();renderGrid();renderRoutes();renderKontor();renderShop();renderTableaus();
+  document.getElementById('log').innerHTML=S.log.join('');
+  document.getElementById('turnlbl').textContent='Round '+S.turn+(S.ending?' · FINAL':'');
+}
+function btn(label,fn,cls){return '<button class="'+(cls||'')+'" onclick="'+fn+'">'+label+'</button>';}
+
+function renderBar(){
+  const p=cur();
+  document.getElementById('wholbl').textContent=p.name;
+  document.getElementById('wholbl').style.background=p.color;
+  document.getElementById('wholbl').style.color='#fff';
+  let prompt='',acts='';
+  if(UI.sub==='move'){prompt='Move your worker to an adjacent cell (click the glowing cell).';
+    acts=ADJ[p.cell].map(c=>btn('→ '+CELLNAME[c],'doMove(\''+c+'\')','primary')).join('');}
+  else if(UI.sub==='line'){const o=cellOfLine(p.cell);
+    prompt='Activate the row or the column of '+CELLNAME[p.cell]+'.';
+    acts=btn(LINES[o.row].label,'chooseLine(\'row\')','go')+btn(LINES[o.col].label,'chooseLine(\'col\')','go');}
+  else if(UI.sub==='cell'){acts=cellActions(p);prompt=cellPrompt(p);}
+  else if(UI.sub==='end'){prompt='Line resolved.';acts=btn('End Turn ▸','endTurn()','primary');}
+  document.getElementById('prompt').innerHTML=prompt;
+  document.getElementById('acts').innerHTML=acts;
+  document.getElementById('boardnote').innerHTML = UI.sub==='cell'? 'Resolving <b>'+CELLNAME[UI.cell]+'</b>'+(UI.blocked?' — blocked by a rival, using your tableau fallback':''):'';
+}
+
+function cellPrompt(p){
+  const c=UI.cell;
+  if(UI.stage==='place')return 'Click an empty slot to place your tile.';
+  if(c==='C'){if(UI.stage==='ship_route')return 'Choose a route to ship to (quality gate applies).';
+    if(UI.stage==='ship_slot')return 'Click an empty slot for the working cask.';}
+  return 'Resolve the '+CELLNAME[c]+' action.';
+}
+function cellActions(p){
+  const c=UI.cell;
+  if(UI.blocked){ // fallback
+    if(c==='A'){return btn('Larder fallback: +1 G','(function(){gain(cur(),1,0);log(cur().name+\' uses the Larder (+1G).\',true);cellDone();})()');}
+    if(c==='B'){return btn('Advance brews (fallback)','(function(){advanceAll(cur());log(cur().name+\' advances brews (fallback).\',true);cellDone();})()');}
+    if(c==='C'){return btn('Quay fallback: +1 Bruges presence','(function(){if(addPresence(cur(),\'bruges\'))log(cur().name+\' uses the Quay (+1 Bruges).\',true);cellDone();})()');}
+    if(c==='D'){return btn('Skip (Kontor open to all)','cellDone()');}
+  }
+  if(c==='A'){
+    if(UI.stage==='place')return '<span class="note">click a glowing slot…</span>';
+    return btn('Take 2 G','marketGoods(\'gg\')')+btn('Take 1G 1H','marketGoods(\'gh\')')+btn('Take 2 H','marketGoods(\'hh\')')
+      +' <span class="note">or buy a tile from the Market →</span> '+btn('Skip','cellDone()','ghost');
+  }
+  if(c==='B'){
+    if(UI.stage==='load'){let b=p.recipes.filter(r=>STYLES[r].enshrine||r==='gruit').map((r,i)=>{
+        const can=p.vessels.includes(null)&&canPay(p,STYLES[r].in)&&!(STYLES[r].cellar&&!p.rooms.includes('cellar'));
+        return '<button '+(can?'':'disabled')+' onclick="brewLoad(\''+r+'\')">Load '+STYLES[r].name+' ('+costStr(STYLES[r].in)+')</button>';}).join('');
+      return b+btn('Done','cellDone()','go');}
+    return btn('Advance all brews','brewAdvance()','primary');
+  }
+  if(c==='C'){
+    const ready=readyCasks(p);
+    if(UI.stage==='ship_pick'){if(!ready.length)return btn('No ready casks — Skip','cellDone()','ghost');
+      return ready.map(o=>btn('Ship '+STYLES[o.c.style].name,'shipPick('+o.i+')')).join('');}
+    if(UI.stage==='ship_route'){const cask=p.vessels[UI.tmp.vi];
+      return Object.keys(ROUTES).filter(r=>S.routes[r].open&&STYLES[cask.style].q>=ROUTES[r].gate)
+        .map(r=>btn('→ '+ROUTES[r].name,'shipRoute(\''+r+'\')','go')).join('')||'<span class="note">no eligible open route</span> '+btn('Cancel','cellDone()','ghost');}
+    if(UI.stage==='ship_slot')return '<span class="note">click a glowing slot…</span>';
+    return (ready.length?btn('Ship a cask','shipStart()','primary'):btn('No ready casks — Skip','cellDone()','ghost'));
+  }
+  if(c==='D'){
+    if(UI.stage==='enshrine'){const mine=SLOTS.filter(s=>{const t=S.slots[s.id];return t&&t.type==='cask'&&t.owner===p.id&&t.enshrine;});
+      if(!mine.length)return '<span class="note">no enshrine-able working casks</span> '+btn('Back','(function(){UI.stage=null;render();})()','ghost');
+      return mine.map(s=>btn('Enshrine '+STYLES[S.slots[s.id].style].name,'enshrineDo(\''+s.id+'\')','primary')).join('')+btn('Back','(function(){UI.stage=null;render();})()','ghost');}
+    const top=S.stack[S.stack.length-1];
+    return btn('Use top: '+top.name,'kontorTop()')+btn('Enshrine a cask','enshrineStart()','primary')+btn('Skip','cellDone()','ghost');
+  }
+  return '';
+}
+
+function renderGrid(){
+  const ag=document.getElementById('ag');let h='';
+  // slots
+  SLOTS.forEach(s=>{const t=S.slots[s.id];let cls='slot '+s.id;let label=s.id;
+    let placing=(UI.sub==='cell'&&(UI.stage==='place'||UI.stage==='ship_slot')&&!t);
+    if(placing)cls+=' place';
+    if(t){cls+=' filled';label=tileLabel(t);}
+    const click=placing?(UI.stage==='place'?'placeTile':'shipSlot'):null;
+    const style=t?'background:'+S.players[t.owner].color:'';
+    h+='<div class="'+cls+'" style="'+style+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+label+'</div>';
+  });
+  // cells
+  ['A','B','C','D'].forEach(c=>{
+    const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'"></span>').join('');
+    let cls='cell '+c+' c'+c;
+    const legal=(UI.sub==='move'&&ADJ[cur().cell].includes(c));
+    if(legal)cls+=' legal';
+    h+='<div class="'+cls+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'><div class="ltr">'+c+'</div><div class="nm">'+CELLNAME[c]+'</div><div class="wk">'+pawns+'</div></div>';
+  });
+  ag.innerHTML=h;
+}
+function tileLabel(t){if(t.type==='cask')return STYLES[t.style].name.split(' ')[0];if(t.type==='route')return t.label.split(' ')[0]+' Lane';return t.label;}
+
+function renderRoutes(){
+  let h='';for(const r in ROUTES){const R=S.routes[r];const def=ROUTES[r];
+    const filled=Object.values(R.pres).reduce((a,b)=>a+b,0);
+    let cls='route '+r+(R.open?'':' closed');
+    const canShip=(UI.sub==='cell'&&UI.stage==='ship_route'&&R.open&&S.players[S.active]&&STYLES[cur().vessels[UI.tmp.vi].style].q>=def.gate);
+    if(canShip)cls+=' ship';
+    let sp='';for(let i=0;i<def.cap;i++){sp+='<div class="sp">'+(i<filled?'●':'')+'</div>';}
+    let pres=S.players.map(p=>(R.pres[p.id]?'<span class="pawn" style="width:11px;height:11px;background:'+p.color+';display:inline-block">'+'</span>'+(R.pres[p.id]):'')).filter(x=>x).join(' &nbsp;');
+    h+='<div class="'+cls+'" '+(canShip?'onclick="shipRoute(\''+r+'\')"':'')+'><div class="rh"><span class="rn">'+def.name+'</span><span class="rv">value '+R.value+(R.open?'':' · closed')+'</span></div><div class="gate">gate Q'+def.gate+' · presence: '+(pres||'—')+'</div><div class="spaces">'+sp+'</div></div>';
+  }
+  document.getElementById('routes').innerHTML=h;
+}
+function renderKontor(){
+  const top=S.stack[S.stack.length-1];
+  document.getElementById('kontor').innerHTML='<div class="stackbox">Height <b>'+S.stack.length+'</b> / '+endN()+'<br><span class="top">top: '+top.name+'</span></div><div class="note" style="margin-top:5px">Enshrined casks (standing) stack here; the top tile is the live action.</div>';
+}
+function renderShop(){
+  const p=cur();const buying=(UI.sub==='cell'&&UI.cell==='A'&&!UI.blocked&&(UI.stage===null||UI.stage==='choose'));
+  let h='';SHOP.forEach(it=>{const aff=canPay(p,it.cost)&&buying;
+    h+='<div class="item"><span>'+it.name+'</span><span class="cost">'+costStr(it.cost)+' '+(buying?'<button '+(aff?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
+  document.getElementById('shop').innerHTML=h+(buying?'':'<div class="note">Buy tiles during your Market action.</div>');
+}
+function renderTableaus(){
+  let tabs='',body='';
+  S.players.forEach((p,i)=>{
+    tabs+='<div class="tab '+(i===activeTab?'active':'')+'" style="'+(i===activeTab?'background:'+p.color:'')+'" onclick="activeTab='+i+';renderTableaus()"><span class="pawn" style="background:'+p.color+';display:inline-block;vertical-align:middle;width:11px;height:11px"></span> '+p.name+'</div>';
+    const sc=scorePlayer(p);
+    let vessels=p.vessels.map(c=>{
+      if(!c)return '<div class="vessel"><i>empty vessel</i></div>';
+      let tr='';for(let s=0;s<=c.ready;s++){tr+='<div class="tstep '+(s<c.step?'on':'')+(c.step>=c.ready&&s===c.ready?'ready':'')+'"></div>';}
+      const ready=c.step>=c.ready;
+      return '<div class="vessel"><b>'+STYLES[c.style].name+'</b> '+(ready?'<span class="tag" style="background:var(--gold);color:#000">READY</span>':'(step '+c.step+'/'+c.ready+')')+'<div class="track">'+tr+'</div></div>';
+    }).join('');
+    let slotsOwned=SLOTS.map(s=>S.slots[s.id]).filter(t=>t&&t.owner===p.id).map(t=>'<span class="tag">'+tileLabel(t)+'</span>').join('')||'<span class="note">none</span>';
+    let ensh=p.enshrined.map(c=>'<span class="tag" style="background:var(--gold);color:#000">'+STYLES[c.style].name.split(' ')[0]+' ·'+c.standing+'</span>').join('')||'<span class="note">none</span>';
+    body+='<div class="tableau '+(i===activeTab?'show':'')+'">'
+      +'<div style="margin-bottom:6px"><span class="res"><span class="cube grain"></span>'+p.grain+'</span><span class="res"><span class="cube hops"></span>'+p.hops+'</span>'
+      +'<span class="note">storage '+p.storage+' · score ~'+sc.total+' (R'+sc.reach+'/M'+sc.maj+'/S'+sc.stand+'/G'+sc.goals+')</span></div>'
+      +'<b class="note">Brewing track ('+p.vessels.length+' vessel'+(p.vessels.length>1?'s':'')+')</b><div class="brew">'+vessels+'</div>'
+      +'<b class="note">Recipes:</b> '+(p.recipes.map(r=>'<span class="tag">'+STYLES[r].name+'</span>').join('')||'—')+'<br>'
+      +'<b class="note">Working casks / tiles in slots:</b> '+slotsOwned+'<br>'
+      +'<b class="note">Enshrined (standing):</b> '+ensh+'<br>'
+      +'<b class="note">Rooms:</b> '+(p.rooms.map(r=>'<span class="tag">'+r+'</span>').join('')||'—')
+      +'</div>';
+  });
+  document.getElementById('tabs').innerHTML=tabs;
+  document.getElementById('tableaus').innerHTML=body;
+}
+
+//==================================================================
+// BOOT
+//==================================================================
+(function boot(){
+  const saved=load();
+  if(saved&&saved.players){S=saved;UI={sub:'move'};
+    // if a turn was mid-resolution we just reset to move for safety
+    render();log('— resumed saved game —');render();
+  } else {openSetup();}
+})();
+</script>
+</body>
+</html>
