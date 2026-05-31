@@ -41,3 +41,32 @@
 ## Verdict
 
 The core loop holds and the intended tension is present. Three changes fall out of the test (Bruges-open, Brewhouse advance-all, skim caps), and one balance watch (depth must be compensated for its tempo cost). These are folded into `RULES.md`.
+
+---
+
+# Game-Mode Alignment Review — `play.html` vs design (2026-05-31)
+
+Audited the hot-seat client against `DESIGN.md` §19, `RULES.md`, and `TILES.md`.
+
+## Faithful to the locked rules ✓
+Adjacency (no diagonals) · activate row/column of the worker's cell · **both cells fire** · cap slots skim to their owner whoever runs the line · brew lengths 2/3/3/4/5 · gruit cannot be enshrined · quality gates Q1/Q2/Q2/Q3 · Bruges open at start, far routes need a slotted Lane · Brewhouse advances **all** brews + optional load · slot↔line mapping (8 slots, 2 caps/line) · storage cap (+Warehouse) · **reach and standing accumulate separately** · route value = sum of slotted Lane boosts · scoring order reach→majorities→standing→goals · dual end-game triggers · cask working actions · goal pool g1–g8/g10.
+
+## Misalignments found & FIXED
+1. **Kontor was blocked when a rival stood on it** — contradicts RULES §2D (Kontor is open to all, never tolled/blocked). → D is now never `blocked`.
+2. **Quay fallback granted free Bruges presence with no cask** — broke the cask lifecycle. → It now ships a real ready cask to Bruges (placed in a slot, vessel consumed, +1 presence), and sits idle if nothing is ready.
+3. **Heritage clock counted the 2 seed tiles**, not enshrinements. → now counts `enshrinedTotal()` vs N.
+4. **First-player marker never rotated.** → passes clockwise each round (RULES §4).
+5. **Tiebreak unimplemented.** → final standings now break ties by goods, then working casks (RULES §6).
+6. **Standing-face Kontor action was generic** (+1G for all). → now style-keyed (Hopped +1G · Dubbel +1H · Tripel +1 presence · Bock advance).
+
+## Remaining intentional simplifications / scope gaps (v0.1, flagged in-page)
+- **Free-order resolution** → currently board order.
+- **Privileges** (Family D) entirely unimplemented; **London delivery grants no Privilege** yet.
+- **Ship range not modelled** (routes count presence, not step-tracks), so **Cog has no effect** yet; **Hulk** (ship 2) absent. Only Cog is purchasable.
+- **Rooms:** only Extra Vessel, Aging Cellar (unlock Bock), Warehouse (+storage), Counting-house (+1 standing) exist; Faster Fermenter / Larder / Quay upgrades / Cooperage absent.
+- **Dubbel "+1 G or H" working skim** auto-resolves to grain.
+- **Market** is an always-open shop menu, not a finite face-up display refilling from supply.
+- **2p slot-locking variant** not implemented (all 8 slots always live).
+- **End-game N** = 6+3×players (12 at 2p), counting enshrinements; tune later.
+
+**Verdict:** after the six fixes, the client is faithful to every *locked* rule. The remaining gaps are unbuilt features (privileges, ship range, more rooms, finite market) rather than contradictions — safe to playtest the core loop now.

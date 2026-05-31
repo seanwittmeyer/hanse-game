@@ -199,6 +199,8 @@ const KONTOR_SEED=[
   {name:'Bryggen Wharf',action:{t:'good',g:2}},
   {name:'Cloth Hall',action:{t:'good',g:1,h:1}},
 ];
+// Standing-face Kontor action a cask sets when enshrined on top (TILES §A)
+const STANDING_ACTION={gruit:{t:'good',g:1},hopped:{t:'good',g:1},dubbel:{t:'good',h:1},tripel:{t:'presence'},bock:{t:'advance'}};
 const GOALS=[
   {id:'g1',text:'+1 / route with presence (max 4)',fn:(p,s)=>Math.min(4,Object.keys(ROUTES).filter(r=>(s.routes[r].pres[p.id]||0)>0).length)},
   {id:'g2',text:'+1 per 2 presence on board',fn:(p,s)=>Math.floor(totalPresence(p,s)/2)},
@@ -256,6 +258,7 @@ function pay(p,c){p.grain-=(c.g||0);p.hops-=(c.h||0);}
 function costStr(c){let a=[];if(c.g)a.push(c.g+'G');if(c.h)a.push(c.h+'H');return a.join(' ')||'free';}
 function totalPresence(p,s){let t=0;for(const r in s.routes)t+=(s.routes[r].pres[p.id]||0);return t;}
 function workingCount(p,s){return Object.values(s.slots).filter(t=>t&&t.type==='cask'&&t.owner===p.id).length;}
+function enshrinedTotal(){return S.players.reduce((a,p)=>a+p.enshrined.length,0);}
 function majorityCount(p,s){let c=0;for(const r in s.routes){const pr=s.routes[r].pres;const mine=pr[p.id]||0;if(mine>0&&mine===Math.max(...Object.values(pr),0)&&Object.values(pr).filter(v=>v===mine).length===1)c++;}return c;}
 function readyCasks(p){return p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready);}
 function emptySlots(){return SLOTS.filter(s=>!S.slots[s.id]);}
@@ -323,8 +326,8 @@ function fireSkim(t){
 function nextCell(){
   if(!UI.queue.length){UI={sub:'end'};render();return;}
   UI.cell=UI.queue.shift();UI.stage='choose';UI.tmp={};
-  // determine if blocked by a rival
-  UI.blocked=S.players.some(pl=>pl.id!==S.active&&pl.cell===UI.cell);
+  // blocked by a rival → tableau fallback. The Kontor (D) is open to all — never blocked (RULES §2D).
+  UI.blocked=(UI.cell!=='D')&&S.players.some(pl=>pl.id!==S.active&&pl.cell===UI.cell);
   // auto-handle fallbacks / empty actions that need no input
   render();
 }
@@ -332,16 +335,17 @@ function cellDone(){UI.cell=null;nextCell();}
 
 function endTurn(){
   checkTriggers();
-  S.active=(S.active+1)%S.players.length;
-  if(S.active===S.first){
+  const n=S.players.length;
+  S.active=(S.active+1)%n;
+  if(S.active===S.first){              // round complete
     if(S.ending){gameOver();save();return;}
-    S.turn++;
+    S.turn++;S.first=(S.first+1)%n;S.active=S.first;   // first-player marker passes (RULES §4)
   }
   UI={sub:'move'};save();render();
 }
 function checkTriggers(){
   if(S.ending)return;
-  if(S.stack.length>=endN()){S.ending=true;log('★ The Kontor stack has reached '+endN()+' — final round! (heritage clock)');}
+  if(enshrinedTotal()>=endN()){S.ending=true;log('★ '+endN()+' casks enshrined — final round! (heritage clock)');}
   for(const r in S.routes){const filled=Object.values(S.routes[r].pres).reduce((a,b)=>a+b,0);
     if(filled>=ROUTES[r].cap){S.ending=true;log('★ '+ROUTES[r].name+' is saturated — final round! (reach clock)');break;}}
 }
@@ -406,6 +410,12 @@ function shipSlot(slotId){const p=cur();const cask=p.vessels[UI.tmp.vi];
   p.vessels[UI.tmp.vi]=null;addPresence(p,UI.tmp.route);
   log(p.name+' ships to '+ROUTES[UI.tmp.route].name+' (+1 presence) and the cask works in a slot.',true);
   cellDone();}
+function quayFallback(){ // blocked-Harbor fallback: ship a ready cask to Bruges only (still a real shipment)
+  const p=cur();const r=readyCasks(p)[0];const slot=emptySlots()[0];
+  if(!r||!slot){log(p.name+'’s Quay sits idle — no ready cask or open slot.',true);cellDone();return;}
+  S.slots[slot.id]={type:'cask',owner:p.id,style:r.c.style,q:r.c.q,standing:r.c.standing,enshrine:r.c.enshrine,goal:r.c.goal};
+  p.vessels[r.i]=null;addPresence(p,'bruges');
+  log(p.name+' uses the Quay: ships '+STYLES[r.c.style].name+' to Bruges (+1 presence).',true);cellDone();}
 
 //------- KONTOR -------
 function kontorTop(){const p=cur();const top=S.stack[S.stack.length-1];const a=top.action||{t:'good',g:1};
@@ -432,9 +442,11 @@ function scorePlayer(p){
 }
 function gameOver(){
   const rows=S.players.map(p=>({p,sc:scorePlayer(p)}));
-  const max=Math.max(...rows.map(r=>r.sc.total));
+  const tb=r=>[r.sc.total,r.p.grain+r.p.hops,workingCount(r.p,S)];  // total, then goods, then working casks (RULES §6)
+  const cmp=(a,b)=>{const A=tb(a),B=tb(b);for(let i=0;i<3;i++)if(B[i]!==A[i])return B[i]-A[i];return 0;};
+  rows.sort(cmp);const win=rows[0];
   let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Reach</th><th>Majorities</th><th>Standing</th><th>Goals</th><th>Total</th></tr>';
-  rows.sort((a,b)=>b.sc.total-a.sc.total).forEach(r=>{h+='<tr class="'+(r.sc.total===max?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+'</td><td>'+r.sc.reach+'</td><td>'+r.sc.maj+'</td><td>'+r.sc.stand+'</td><td>'+r.sc.goals+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
+  rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+'</td><td>'+r.sc.reach+'</td><td>'+r.sc.maj+'</td><td>'+r.sc.stand+'</td><td>'+r.sc.goals+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
   h+='</table><p class="note">Reach (presence×route value) and Standing (enshrined casks + goals) are the two competing axes.</p><button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
 }
@@ -480,7 +492,7 @@ function cellActions(p){
   if(UI.blocked){ // fallback
     if(c==='A'){return btn('Larder fallback: +1 G','(function(){gain(cur(),1,0);log(cur().name+\' uses the Larder (+1G).\',true);cellDone();})()');}
     if(c==='B'){return btn('Advance brews (fallback)','(function(){advanceAll(cur());log(cur().name+\' advances brews (fallback).\',true);cellDone();})()');}
-    if(c==='C'){return btn('Quay fallback: +1 Bruges presence','(function(){if(addPresence(cur(),\'bruges\'))log(cur().name+\' uses the Quay (+1 Bruges).\',true);cellDone();})()');}
+    if(c==='C'){return btn('Quay fallback: ship a cask to Bruges','quayFallback()');}
     if(c==='D'){return btn('Skip (Kontor open to all)','cellDone()');}
   }
   if(c==='A'){
@@ -552,7 +564,7 @@ function renderRoutes(){
 }
 function renderKontor(){
   const top=S.stack[S.stack.length-1];
-  document.getElementById('kontor').innerHTML='<div class="stackbox">Height <b>'+S.stack.length+'</b> / '+endN()+'<br><span class="top">top: '+top.name+'</span></div><div class="note" style="margin-top:5px">Enshrined casks (standing) stack here; the top tile is the live action.</div>';
+  document.getElementById('kontor').innerHTML='<div class="stackbox">Stack height <b>'+S.stack.length+'</b> · enshrined <b>'+enshrinedTotal()+'</b> / '+endN()+'<br><span class="top">top: '+top.name+'</span></div><div class="note" style="margin-top:5px">Enshrined casks (standing) stack here; the top tile is the live action.</div>';
 }
 function renderShop(){
   const p=cur();const buying=(UI.sub==='cell'&&UI.cell==='A'&&!UI.blocked&&(UI.stage===null||UI.stage==='choose'));
