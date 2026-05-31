@@ -244,3 +244,51 @@ Prioritized — top items unblock the most downstream work.
 - **Toll / skim** — goods paid to a resident worker (occupied cell) or to a slot-tile owner (fired line).
 - **Tableau** — your private board of rooms/warehouses; output, fallback actions, and scoring.
 - **Reach** vs **Standing** — the two competing value types: volume/commerce vs scarcity/reputation.
+
+---
+
+## 19. Working Architecture — Session Log (2026-05-31)
+
+This section captures decisions and the working architecture from the live design session. It supersedes earlier sections where they conflict; canonical sections (§1–§18) to be reconciled once the architecture stabilizes.
+
+### Locked decisions
+
+- **Both cells in a fired line trigger** regardless of worker position (§6). Worker position only gates *which line is legal*.
+- **Free resolution order** within a line for now (revisit if AP/turn length suffers).
+- **Cask lifecycle is the core loop, kept deliberately learnable:** `Market (acquire) → Brewhouse (brew) → Harbor (ship = reach) → Kontor (enshrine = standing)`.
+- **Kontor = a stood-on action cell whose action is the top tile of a shared enshrinement stack.** The stack mixes **public and personal tiles**. Enshrining a cask sets the new top (= new Kontor action), burying the previous.
+- **Occupancy fallback = perform the action's private version in your own tableau.** Block-to-tableau, not bump, not pay. This makes walking to a contested cell a *strategic plan* (you'd rather fire your tableau version), not a penalty.
+- **Goods taxonomy:** two cubes — **grain** and **hops** (water cut as dead weight; empty barrels deferred as a possible capacity constraint). **Gruit = grain only** (cheap, local, cannot be enshrined — perishable); **Hopped = grain + hops** (premium, travels, can be shipped & enshrined). The Westvleteren/Leffe axis falls out of the recipe.
+
+### The three-layer object model
+
+- **Perimeter slots = the scoring landscape (owned infrastructure).** Route / ship / recipe tiles. A slotted **route tile** both modifies its line *and* sets/raises that route's end-game value on the board → **players author what scores by what they place.**
+- **Harbor board = execution + presence.** Shipping delivers working casks as **presence** along open routes. Presence = **reach**, now countable.
+- **Kontor stack = standing.** Enshrining **pulls a cask off the board** into the stack: trade live board-presence (reach) for locked, unspendable standing. The reach-vs-standing dilemma is now a physical board→stack migration.
+- **Correction to earlier model:** casks do **not** sit in perimeter slots — slots hold infrastructure; **casks live on the board**, then migrate to the stack when enshrined.
+
+### Harbor / route board (working design)
+
+- Home port (Lübeck/Hamburg) central; four routes radiate to the four kontore through minor-port waypoints.
+- Fire the Harbor line → ship working casks → advance presence along an **open** route (open = a route tile for it sits in a slot), steps modified by ship tiles.
+- **End-game reach score = your presence on each route × that route's slotted value.** Majority of presence on a route = that kontor's standing bonus + the right to enshrine there.
+- **Variable paths to victory via four distinct kontor reward profiles** (no single efficiency line):
+  - **Bergen — Monopoly:** short, narrow, few spaces; control locks a resource/toll → deep defensive standing.
+  - **Novgorod — Long Haul:** longest, highest payout, slow to build → committed reach over time.
+  - **Bruges — Hub:** wide, many small payoffs, flexible → tempo / liquidity.
+  - **London — Privilege:** pays in privilege tiles (engine upgrades, toll exemptions) → engine-builders.
+
+### Stack readability (UX)
+
+- The stack's only live job is its **top tile (current Kontor action).** On enshrining, record the cask's standing **value on a per-kontor track** (markers). Buried tiles are pure thematic sediment, already counted — never referenced again. **Read tracks for value, top-of-stack for action.**
+
+### Emerging: tableau skeleton
+
+- The four cells' tableau-fallbacks define the tableau: a private **Market**, **Brew**, **Harbor**, and (maybe) **Counting-house** room — each a weaker, buildable version of the public action. (Next to lock.)
+
+### Open / next
+
+- Confirm the three-layer model & four-kontor reward profiles.
+- Define tableau room structure, conversion, and scoring.
+- Toll prices & fallback strength (now that occupancy = block-to-tableau).
+- End-game trigger; era arc in/out for v1.
