@@ -282,13 +282,31 @@ This section captures decisions and the working architecture from the live desig
 
 - The stack's only live job is its **top tile (current Kontor action).** On enshrining, record the cask's standing **value on a per-kontor track** (markers). Buried tiles are pure thematic sediment, already counted — never referenced again. **Read tracks for value, top-of-stack for action.**
 
-### Emerging: tableau skeleton
+### Tableau — your private brewery (LOCKED direction)
 
-- The four cells' tableau-fallbacks define the tableau: a private **Market**, **Brew**, **Harbor**, and (maybe) **Counting-house** room — each a weaker, buildable version of the public action. (Next to lock.)
+- The tableau is **not a mirror of the grid.** It is your **brewery** — the vessel the brewing verb acts on. Grid = verbs, tableau = the noun. No duplicated actions.
+- **Brewing track** (doubles as the brewing-process tracker): `LOAD → FERMENT → AGE → READY`. Casks crawl through it.
+  - **Gruit** (grain only): LOAD → FERMENT → READY (skips AGE). Fast, frees the vessel; perishable/local; **cannot be enshrined.**
+  - **Hopped** (grain + hops): LOAD → FERMENT → AGE → READY. Slower — vessel tied up a turn longer (real opportunity cost) — but travels & **can be enshrined.**
+  - → The gruit/hopped choice is a **tempo decision**, not just a resource cost.
+- **Public Brewhouse cell = the verb "advance / load brews"** on your track. Verb public, vessel private.
+- **Two kinds of tableau space:** brewing-track spaces (casks flow through, temporary) vs **room/upgrade slots** (permanent installed engine tiles: extra vessel, faster fermenter, aging cellar, warehouse, larder/dock upgrades). Depth & specialization live here.
+
+### Occupancy fallback (LOCKED)
+
+- **Block-to-tableau via "trickle + upgradable rooms."** Only the Brewhouse has a true private twin (your track, always usable). Market/Harbor when blocked → a weak self-sufficient **trickle** (starting larder yields 1 good; starting dock ships 1 step), upgraded by installed rooms. The more brewery you've built, the less a block stings.
+
+### Scoring — three interlocked axes (LOCKED direction)
+
+- **Volume (reach) × Quality × Destination (market) = brand reputation, modeled.** Not additive silos — they **interlock:**
+  - **Quality gates Destination:** far/rich markets demand high quality (Novgorod takes only premium hopped; Bruges takes middling volume).
+  - **Destination sets Reach value:** a route scores by the value players slotted onto it.
+- Competition between paths enforced by **shared scarcity:** vessel capacity (fast-cheap vs slow-premium), perimeter slots (author few routes), turns (reach keeps casks working vs standing pulls them off the board). → §13 option **(c) forced-commit** is the strategic spine.
+- Player archetypes: **Volume/Bruges** (wide, fast, middling) · **Quality/Novgorod** (deep, slow, premium) · hybrids.
 
 ### Open / next
 
-- Confirm the three-layer model & four-kontor reward profiles.
-- Define tableau room structure, conversion, and scoring.
-- Toll prices & fallback strength (now that occupancy = block-to-tableau).
-- End-game trigger; era arc in/out for v1.
+- **Components & tile deck** → see `COMPONENTS.md` (v0.1 draft).
+- Reconcile **perimeter slot count (6 vs 8)** now that the Kontor is a stood-on action cell (the old s4/s5-dark rule assumed a passive score pile).
+- Tableau room list, conversion rates, vessel capacities.
+- Toll/trickle numbers; end-game trigger; era arc in/out for v1.
