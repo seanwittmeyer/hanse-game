@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brewhouse of the Hanse — Learn to Play</title>
+<style>
+  :root{
+    --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
+    --red:#7c2128; --red2:#9c3b2e; --gold:#b8860b; --gold2:#d8a72a;
+    --sea:#274b5c; --sea2:#3d6b7e; --green:#4a6b3a; --line:#c8b48a;
+    --grain:#d9b44a; --hops:#6b8e3d;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--parch);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;line-height:1.6}
+  header{background:linear-gradient(160deg,var(--red),var(--red2));color:var(--parch);
+    padding:40px 22px 32px;text-align:center;border-bottom:5px solid var(--gold)}
+  header h1{margin:0;font-size:2.7rem;font-variant:small-caps;letter-spacing:1px}
+  header .sub{font-style:italic;opacity:.93;margin-top:8px;max-width:720px;margin-inline:auto}
+  header .tag{margin-top:14px;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;opacity:.85}
+  header a{color:var(--gold2);text-decoration:none;border-bottom:1px dotted}
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px 90px}
+  h2{font-variant:small-caps;color:var(--red);font-size:1.7rem;margin:40px 0 8px;border-bottom:2px solid var(--gold);padding-bottom:5px}
+  h2 .n{color:var(--gold);margin-right:10px;font-size:1.2rem}
+  p{font-size:1.05rem}
+  .big{font-size:1.18rem;font-style:italic;color:var(--ink2)}
+  b{color:var(--ink)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:640px){.two{grid-template-columns:1fr}}
+  .card{background:var(--parch2);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .card h3{margin:0 0 6px;font-variant:small-caps;color:var(--red);font-size:1.2rem}
+  .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin:16px 0}
+  .vs .pole{border-radius:10px;padding:14px 16px;color:var(--parch)}
+  .vs .reach{background:linear-gradient(160deg,var(--sea2),var(--sea))}
+  .vs .stand{background:linear-gradient(160deg,var(--gold),#8a6408)}
+  .vs .pole h3{margin:0 0 4px;font-variant:small-caps;font-size:1.25rem}
+  .vs .mid{font-variant:small-caps;font-weight:bold;color:var(--red);font-size:1.3rem;text-align:center}
+  /* loop */
+  .loop{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:14px 0}
+  .stepc{flex:1;min-width:160px;background:var(--parch2);border:1px solid var(--line);border-radius:10px;padding:12px;position:relative}
+  .stepc .num{position:absolute;top:-10px;left:-10px;width:26px;height:26px;border-radius:50%;background:var(--red);color:var(--parch);display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:.9rem}
+  .stepc h4{margin:2px 0 4px;font-variant:small-caps;font-size:1.1rem}
+  .stepc.m h4{color:var(--gold)} .stepc.b h4{color:var(--red)} .stepc.h h4{color:var(--sea)} .stepc.k h4{color:var(--green)}
+  .stepc .s{font-size:.86rem;color:var(--ink2)}
+  .arrow{display:flex;align-items:center;font-size:1.5rem;color:var(--gold);font-weight:bold}
+  /* grid */
+  .gridfig{display:grid;grid-template-columns:150px 150px;gap:10px;justify-content:center;margin:14px auto}
+  .gcell{border-radius:10px;padding:12px;color:var(--parch);min-height:78px;position:relative;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+  .gcell .nm{font-variant:small-caps;font-weight:bold;font-size:1.15rem}
+  .gcell .role{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;opacity:.85}
+  .gcell .d{font-size:.78rem;opacity:.95}
+  .gm{background:var(--gold);color:var(--ink)} .gh{background:var(--sea2)} .gk{background:var(--green)} .gb{background:var(--red2)}
+  .legend{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:.85rem;margin-top:6px;color:var(--ink2)}
+  .swatch{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}
+  /* board */
+  .board{background:var(--parch2);border:2px solid var(--line);border-radius:10px;padding:14px;font-family:inherit}
+  .board pre{margin:0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem;line-height:1.5;color:var(--ink);overflow:auto}
+  /* glossary */
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:640px){.gloss{grid-template-columns:1fr}}
+  .term{background:var(--parch2);border-left:4px solid var(--gold);border-radius:0 7px 7px 0;padding:8px 12px}
+  .term b{color:var(--red);font-variant:small-caps;font-size:1.05rem}
+  .term span{display:block;font-size:.88rem;color:var(--ink2)}
+  .cube{display:inline-block;width:13px;height:13px;border-radius:3px;vertical-align:-1px;border:1px solid rgba(0,0,0,.3)}
+  .grain{background:var(--grain)} .hops{background:var(--hops)}
+  .pill{display:inline-block;border-radius:18px;padding:1px 10px;font-size:.8rem;color:var(--parch)}
+  .pill.r{background:var(--sea)} .pill.s{background:var(--gold);color:var(--ink)}
+  .next{text-align:center;margin-top:34px}
+  .next a{display:inline-block;margin:4px;padding:9px 18px;border-radius:8px;text-decoration:none;font-weight:bold}
+  .next .play{background:var(--green);color:var(--parch)} .next .rules{background:var(--gold);color:var(--ink)} .next .comp{background:var(--sea2);color:var(--parch)}
+  footer{text-align:center;color:var(--ink2);font-size:.82rem;padding:28px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Brewhouse of the Hanse</h1>
+  <div class="sub">Learn to play in one page — then go brew.</div>
+  <div class="tag"><a href="index.html">Components</a> · <a href="rulebook.html">Full Rulebook</a> · <a href="play.html">Play</a></div>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2><span class="n">1</span>The story</h2>
+  <p class="big">It's around 1350, and the Hanseatic League runs the trade of northern Europe. You've just learned to brew with <b>hops</b> — and unlike old gruit ale, hopped beer survives a sea voyage. For the first time, beer is something you can <b>export</b>.</p>
+  <p>You are a <b>merchant brewing house</b>: a family firm in a League city. You'll buy grain and hops, brew casks, ship them across the Baltic and North Sea to the great foreign trading posts — the <b>kontore</b> at Bergen, London, Bruges, and Novgorod — and build a name for your house.</p>
+</section>
+
+<section>
+  <h2><span class="n">2</span>Your goal — and the one big choice</h2>
+  <p>You win with the most points, and there are <b>two ways to earn them that pull against each other.</b> Every cask you brew poses the same question:</p>
+  <div class="vs">
+    <div class="pole reach"><h3>Reach</h3>Keep the cask <b>working</b> — ship it out and spread your <b>presence</b> across the trade routes. The path of <i>scale &amp; volume</i>.</div>
+    <div class="mid">vs</div>
+    <div class="pole stand"><h3>Standing</h3><b>Enshrine</b> the cask at a kontor — take it out of commerce forever as pure <b>reputation</b>. The path of <i>scarcity &amp; prestige</i>.</div>
+  </div>
+  <p>You can't do both with the same cask, and your space and time are tight — so the game is about <b>how far you lean</b> toward reach or standing (or thread between them). That single tension is the whole game.</p>
+</section>
+
+<section>
+  <h2><span class="n">3</span>How you get there — the loop</h2>
+  <p>Everything flows through four actions. Think of it as a little factory:</p>
+  <div class="loop">
+    <div class="stepc m"><span class="num">1</span><h4>Market</h4><div class="s">Take <span class="cube grain"></span> grain &amp; <span class="cube hops"></span> hops, or buy a tile (a recipe, a trade route, an upgrade).</div></div>
+    <div class="arrow">→</div>
+    <div class="stepc b"><span class="num">2</span><h4>Brewhouse</h4><div class="s">Load a recipe and brew it down your track: cheap <b>gruit</b> is fast; <b>hopped</b> beer takes longer but travels &amp; can be enshrined.</div></div>
+    <div class="arrow">→</div>
+    <div class="stepc h"><span class="num">3</span><h4>Harbor</h4><div class="s">Ship a finished cask: it goes to <b>work in a slot</b> and drops a <b>presence</b> marker on a route. That's <span class="pill r">reach</span>.</div></div>
+    <div class="arrow">→</div>
+    <div class="stepc k"><span class="num">4</span><h4>Kontor</h4><div class="s">Or <b>enshrine</b> a working cask: it leaves the board for the reputation stack. That's <span class="pill s">standing</span>.</div></div>
+  </div>
+  <p class="s" style="color:var(--ink2)"><b>The rhythm:</b> the Market and Brewhouse <i>build you up</i>; the Harbor and Kontor <i>cash you out</i>. Acquire → brew → then either ship for reach or enshrine for standing.</p>
+</section>
+
+<section>
+  <h2><span class="n">4</span>The grid — where you act</h2>
+  <p>All four actions sit on a shared <b>2×2 grid</b>. On your turn you move your worker to a neighbouring cell, then fire that cell's <b>row or column</b> — which triggers <b>both</b> cells on that line. So a turn always does two things.</p>
+  <div class="gridfig">
+    <div class="gcell gm"><div class="role">builder</div><div class="nm">Market</div><div class="d">get goods &amp; tiles</div></div>
+    <div class="gcell gh"><div class="role">cash-out</div><div class="nm">Harbor</div><div class="d">ship → reach</div></div>
+    <div class="gcell gk"><div class="role">cash-out</div><div class="nm">Kontor</div><div class="d">enshrine → standing</div></div>
+    <div class="gcell gb"><div class="role">builder</div><div class="nm">Brewhouse</div><div class="d">brew casks</div></div>
+  </div>
+  <div class="legend"><span><span class="swatch" style="background:var(--gold)"></span>Builders (Market, Brewhouse)</span><span><span class="swatch" style="background:var(--sea2)"></span><span class="swatch" style="background:var(--green)"></span>Cash-outs (Harbor, Kontor)</span></div>
+  <p style="margin-top:12px">The two <b>builders</b> sit on one diagonal and the two <b>cash-outs</b> on the other, so they never share a line. The neat result: <b>every line pairs one builder with one cash-out</b> — so each turn you build <i>and</i> cash out, and you ship for reach <b>or</b> enshrine for standing, <b>never both at once.</b></p>
+  <p>Around the grid are <b>8 slots</b>. When you ship a cask it sits in a slot, <b>working</b> — and a working tile pays its owner a little <b>skim</b> every time its line fires (even on someone else's turn). Park your casks on busy lines and you tax the table.</p>
+</section>
+
+<section>
+  <h2><span class="n">5</span>Your player board — the brewery</h2>
+  <p>The grid is shared; your <b>brewery board</b> is yours alone. It's where brewing actually happens and where you specialise.</p>
+  <div class="board"><pre>┌──────────────────────────────────────────────┐
+│  STORAGE  ▢▢▢▢ ▢▢▢▢   (your goods, capped)     │
+│  BREWING TRACK                                 │
+│   Vessel 1  [Load]→[Ferment]→[Age]→[Ready]     │
+│   Vessel 2  ▒ locked — build an Extra Vessel ▒ │
+│  ROOM SLOTS  ▢  ▢  ▢  ▢   (only four!)          │
+│  LARDER (twin)            QUAY (twin)           │
+└──────────────────────────────────────────────┘</pre></div>
+  <div class="two" style="margin-top:12px">
+    <div class="card"><h3>Brew &amp; vessels</h3>Casks crawl your <b>track</b> (Load→Ferment→Age→Ready). You start with <b>one vessel</b> and can build up to three — more vessels = more casks brewing at once.</div>
+    <div class="card"><h3>Rooms &amp; twins</h3>Just <b>four room slots</b> force you to choose: go wide on vessels, or deep on upgrades. Rooms also power your <b>twins</b> — private versions of Market/Harbor/Brewhouse you fall back to when a rival blocks that cell. Build them up and a crowded cell becomes a chance, not a wall.</div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">6</span>Word primer</h2>
+  <div class="gloss">
+    <div class="term"><b>Hanse / Kontor</b><span>The Hanseatic League — the medieval trade network. A <b>kontor</b> is one of its foreign trading posts (Bergen, London, Bruges, Novgorod).</span></div>
+    <div class="term"><b>Gruit vs. Hopped</b><span>Two beers. <b>Gruit</b> is cheap, fast, local — and can never be enshrined. <b>Hopped</b> beer takes longer to brew but travels and earns standing.</span></div>
+    <div class="term"><b>Goods</b><span><span class="cube grain"></span> grain and <span class="cube hops"></span> hops. Your only currency — spent on tiles and brewing. (There is no money in this game.)</span></div>
+    <div class="term"><b>Cask</b><span>A brewed beer, shown as a double-sided tile: a <b>working</b> face (in a slot, earning reach) and a <b>standing</b> face (enshrined, earning reputation).</span></div>
+    <div class="term"><b>Line</b><span>A row or column of the grid. Activating one fires <b>both</b> its cells plus the slots at each end.</span></div>
+    <div class="term"><b>Slot</b><span>One of the 8 spaces around the grid that holds a working cask or an owned tile. A fired slot pays its owner a <b>skim</b>.</span></div>
+    <div class="term"><b>Presence</b><span>Your markers along a trade route. More presence on higher-value routes = more <span class="pill r">reach</span> points.</span></div>
+    <div class="term"><b>Standing</b><span>Earned, unspendable reputation from enshrined casks. It only ever goes up — it's <span class="pill s">score</span>.</span></div>
+    <div class="term"><b>Enshrine</b><span>Move a working cask off the board onto the shared Kontor stack — trading its reach for permanent standing.</span></div>
+    <div class="term"><b>Route &amp; quality gate</b><span>The four sea lanes. Richer, farther routes (like Novgorod) only accept <b>higher-quality</b> beer.</span></div>
+    <div class="term"><b>Goal</b><span>A scoring condition printed on a cask's standing face — it rewards you at game end for the shape of your empire.</span></div>
+    <div class="term"><b>Twin</b><span>The private version of a grid action on your brewery board, used when a rival blocks the public cell.</span></div>
+  </div>
+</section>
+
+<div class="next">
+  <p class="big">That's the whole game. Ready?</p>
+  <a class="play" href="play.html">▶ Play (hot-seat)</a>
+  <a class="rules" href="rulebook.html">📖 Full Rulebook</a>
+  <a class="comp" href="index.html">Browse Components</a>
+</div>
+
+</div>
+<footer>Brewhouse of the Hanse · learn-to-play · v0.1 prototype — numbers still in balancing</footer>
+</body>
+</html>
