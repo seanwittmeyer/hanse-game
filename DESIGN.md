@@ -356,3 +356,11 @@ This section captures decisions and the working architecture from the live desig
   - Consequence 3 — **reach-vs-standing every turn**: Harbor & Kontor are diagonal, so each turn you ship for reach **or** enshrine for standing, never both. The core tension is now structural, per turn.
 - **Tableau twins (occupancy = opportunity).** Each public verb has a private twin you can upgrade via rooms: **Market→Larder**, **Brewhouse→brew-room (Faster Fermenter)**, **Harbor→Quay**. Kontor is open-to-all (no twin). A twin fires **only when a rival blocks that cell** (locked) — so a developed tableau makes you *want* to step onto crowded cells (you fire your strong twin and still take the line's other cell). With only 4 room slots you specialize one twin → different players value different lines → wide phase-space on a tiny board.
 - The play client + visualizer remapped to this grid; twins (Larder/Quay/Faster Fermenter) implemented as upgrade rooms.
+
+### Balance pass v0.2 — from the 3p engine sim (`playtests/3p-10turn-sim.md`)
+
+The first 3-player simulation broke in three ways; fixes applied to the engine + docs:
+- **Lane presence-skim runaway → fixed.** Lane line-actions paid `+1 presence` to the owner on every fire (uncapped), hitting 12 presence on a cap-4 route and ending the game on turn 4. Now **presence comes only from shipping**, Lane skims pay `+1 G`, and **presence is clamped to route capacity** (caps raised: Bruges 8 · London 6 · Bergen 5 · Novgorod 9 ⚙).
+- **Standing was non-functional (0 enshrinements) → fixed.** You may now **enshrine a Ready cask directly from the brewery** (no mandatory ship step), and standing values were bumped (Hopped 3 · Dubbel 5 · Tripel 7 · Bock 10). Re-sim: standing now scores and goals fire.
+- **Goods faucet throttled.** Kontor seed top-actions cut to `+1 G`.
+- **OPEN — next dials (revealed by the re-sim):** the game is **throughput-bound and slow** — one vessel + 2–5-step brews yields only ~2–4 casks/player in 10 turns, so scores stay low and neither end-clock fires at a good pace. Candidates: faster brewing / passive maturation / cheaper vessels / lower end-clock thresholds. Also **reach-vs-standing fine balance needs a stronger bot or human playtest** (the greedy bot can't execute the multi-step reach plan).

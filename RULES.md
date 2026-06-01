@@ -46,12 +46,13 @@ On your turn, in order:
 
 ### B · Harbor
 - **Ship 1 READY cask** (2 with a Hulk): move its tile into an **open perimeter slot** (now working), and place **1 presence** on a route the cask quality-qualifies for, advancing 1 space (+ range mods: Cog, etc.).
-- **Routes:** **Bruges is open from the start.** Bergen / London / Novgorod open only once a Route Lane tile for them sits in a slot.
+- **Routes:** **Bruges is open from the start.** Bergen / London / Novgorod open only once a Route Lane tile for them sits in a slot. **Presence is clamped to each route's capacity** ⚙ (Bruges 8 · London 6 · Bergen 5 · Novgorod 9) — you cannot ship to a full route. Filling a route fires the reach end-clock.
 - **London delivery** grants a **Privilege tile** (its route payout).
 - **Twin (blocked): Quay** = ship a ready cask to **Bruges only**; a **Quay** room lets it ship to any open qualifying route.
 
 ### C · Kontor
-- Choose one: **use the current top-of-stack action**, **or ENSHRINE** — move one of your working casks from a slot to the **top of the stack**, flipped to its standing face. It stops skimming; you bank its standing; its goal is now live; it sets the new top action.
+- Choose one: **use the current top-of-stack action**, **or ENSHRINE** a cask to the **top of the stack** (standing face). You may enshrine **either a Ready cask straight from your brewery** (pure standing — it was never reached) **or a working cask from a slot** (converting its reach into standing and freeing the slot). You bank its standing; its goal goes live; it sets the new top action.
+  - *(v0.2 balance: direct-from-Ready enshrine was added because the old brew→ship→enshrine chain made standing far too slow — a 3p sim produced **zero** enshrinements in 10 turns.)*
 - Enshrining is bundled by geometry with an **acquire** (left column, Market+Kontor) or a **brew** (bottom row, Brewhouse+Kontor).
 - **Occupancy:** the Kontor is **not** tolled or blocked to a fallback — anyone may fire a Kontor line; the top action / enshrine is available to whoever runs it. ❓ (revisit if it needs contention)
 

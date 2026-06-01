@@ -266,3 +266,22 @@ route london    value 2 open=true presence={"0":12,"2":1}
 route bergen    value 0 open=false presence={}
 route novgorod  value 3 open=true presence={"1":1}
 ```
+
+---
+
+## v0.2 re-run (after balance fixes)
+
+Applied: lane skim → +1G (no presence) · presence clamped to caps (8/6/5/9) · enshrine direct from a Ready cask · standing values 3/5/7/10 · Kontor seed goods cut.
+
+```
+Heritage clock: 2 / 15 enshrined  |  ending=false
+Crimson  TOTAL   1  = reach 1 + maj 0 + standing 0 + goals 0  (enshrined 0)
+Azure    TOTAL   7  = reach 0 + maj 0 + standing 3 + goals 4  (enshrined 1)
+Forest   TOTAL   4  = reach 1 + maj 0 + standing 3 + goals 0  (enshrined 1)
+route bruges    value 1 cap 8 filled 2 pres={"0":1,"2":1}
+route london    value 2 cap 6 filled 0 pres={}
+route bergen    value 0 cap 5 filled 0 pres={}
+route novgorod  value 0 cap 9 filled 0 pres={}
+```
+
+**Outcome:** the runaway is gone (no turn-4 end), standing now functions (enshrinements + goal points appear), and scores are close. **But** the re-run exposed the next problem: the game is **throughput-bound** — 1 vessel + multi-step brews ⇒ only ~2–4 casks/player in 10 turns ⇒ scores stay low (1/7/4) and neither end-clock fires. Fine reach-vs-standing balance still needs a stronger bot or human playtest. Next dials: brewing pace / vessel economy / end-clock thresholds.

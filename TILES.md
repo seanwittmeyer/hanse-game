@@ -26,10 +26,10 @@ A cask tile carries, by face:
 | Style | Q | Brew inputs | Brew path | Ships to | Enshrine? | Working line action ⚙ | Standing ⚙ | Qty |
 |---|---|---|---|---|---|---|---|---|
 | **Gruit Ale** | 1 | `G` | LOAD→FERMENT→READY | Bruges / nearest waypoint only (perishable) | ❌ | `+1 G` | — (single-face) | 16 |
-| **Hopped Beer** | 2 | `G H` | LOAD→FERMENT→AGE→READY | any route | ✅ | `+1 H` | 2 | 20 |
-| **Dubbel** | 3 | `G H H` | + longer AGE | London/Bergen/Novgorod | ✅ | `+1 G or H` | 4 | 12 |
-| **Tripel** | 4 | `G G H H` | + longer AGE | Bergen/Novgorod | ✅ | `advance 1 brew step` | 6 | 8 |
-| **Barrel-aged Bock** | 5 | premium; needs **Aging Cellar** room | longest AGE | Novgorod | ✅ | `+1 presence (any open route)` | 9 | 4 |
+| **Hopped Beer** | 2 | `G H` | LOAD→FERMENT→AGE→READY | any route | ✅ | `+1 H` | 3 | 20 |
+| **Dubbel** | 3 | `G H H` | + longer AGE | London/Bergen/Novgorod | ✅ | `+1 G or H` | 5 | 12 |
+| **Tripel** | 4 | `G G H H` | + longer AGE | Bergen/Novgorod | ✅ | `advance 1 brew step` | 7 | 8 |
+| **Barrel-aged Bock** | 5 | premium; needs **Aging Cellar** room | longest AGE | Novgorod | ✅ | `+1 presence (any open route)` | 10 | 4 |
 
 *Gruit is working-only — perishable, never heritage. It's cheap early-engine fuel and cheap local reach, and it can never be enshrined. That single fact is the Westvleteren/Leffe line drawn in the components.*
 
@@ -74,10 +74,12 @@ Placed in a perimeter slot (committed to row XOR column). **Two jobs:** raise th
 
 | Route tile | Route-value boost ⚙ | Line action (owner) ⚙ | Qty |
 |---|---|---|---|
-| **Bergen Lane** | +2 / +3 | `+1 presence on Bergen` | 4 |
-| **Novgorod Lane** | +3 / +4 / +5 | `+1 presence on Novgorod` | 5 |
-| **Bruges Lane** | +1 / +2 / +3 | `ship +1 step toward Bruges` | 6 |
-| **London Lane** | +2 (+grants a Privilege when placed) | `draw nothing / +1 G` | 4 |
+| **Bergen Lane** | +2 / +3 | `+1 G skim` (owner) | 4 |
+| **Novgorod Lane** | +3 / +4 / +5 | `+1 G skim` (owner) | 5 |
+| **Bruges Lane** | +1 / +2 / +3 | `+1 G skim` (owner) | 6 |
+| **London Lane** | +2 (+grants a Privilege when placed) | `+1 G skim` (owner) | 4 |
+
+> **⚠ Balance fix (v0.2):** Lane line-actions were `+1 presence`, which ran away (a 3p sim hit 12 presence on a cap-4 route and ended the game on turn 4). **Presence now comes only from shipping** and is **clamped to route capacity**; Lane skims pay a tiny `+1 G` instead.
 
 > A route's end-game value = sum of the boosts players slotted onto it. **Players author what scores** by what they place — and rivals decide whether to pile onto a rich route (majority fight) or open a neglected one.
 

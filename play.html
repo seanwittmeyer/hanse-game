@@ -169,16 +169,16 @@ const CNAMES=['Crimson','Azure','Forest','Amber','Violet'];
 
 const STYLES={
   gruit :{name:'Gruit Ale',     q:1, in:{g:1,h:0}, ready:2, enshrine:false, standing:0, work:{t:'good',good:'g'}},
-  hopped:{name:'Hopped Beer',   q:2, in:{g:1,h:1}, ready:3, enshrine:true,  standing:2, work:{t:'good',good:'h'}},
-  dubbel:{name:'Dubbel',        q:3, in:{g:1,h:2}, ready:3, enshrine:true,  standing:4, work:{t:'good',good:'g'}},
-  tripel:{name:'Tripel',        q:4, in:{g:2,h:2}, ready:4, enshrine:true,  standing:6, work:{t:'advance'}},
-  bock  :{name:'Barrel Bock',   q:5, in:{g:2,h:2}, ready:5, enshrine:true,  standing:9, work:{t:'presence'}, cellar:true},
+  hopped:{name:'Hopped Beer',   q:2, in:{g:1,h:1}, ready:3, enshrine:true,  standing:3, work:{t:'good',good:'h'}},
+  dubbel:{name:'Dubbel',        q:3, in:{g:1,h:2}, ready:3, enshrine:true,  standing:5, work:{t:'good',good:'g'}},
+  tripel:{name:'Tripel',        q:4, in:{g:2,h:2}, ready:4, enshrine:true,  standing:7, work:{t:'advance'}},
+  bock  :{name:'Barrel Bock',   q:5, in:{g:2,h:2}, ready:5, enshrine:true,  standing:10, work:{t:'presence'}, cellar:true},
 };
 const ROUTES={
-  bruges  :{name:'Bruges',  gate:1, cap:5, openStart:true},
-  london  :{name:'London',  gate:2, cap:4, openStart:false},
-  bergen  :{name:'Bergen',  gate:2, cap:3, openStart:false},
-  novgorod:{name:'Novgorod',gate:3, cap:6, openStart:false},
+  bruges  :{name:'Bruges',  gate:1, cap:8, openStart:true},
+  london  :{name:'London',  gate:2, cap:6, openStart:false},
+  bergen  :{name:'Bergen',  gate:2, cap:5, openStart:false},
+  novgorod:{name:'Novgorod',gate:3, cap:9, openStart:false},
 };
 const SHOP=[
   {id:'r_hopped',kind:'recipe',style:'hopped',name:'Recipe · Hopped',cost:{g:1}},
@@ -199,8 +199,8 @@ const SHOP=[
   {id:'m_ferment',kind:'room',room:'fermenter',name:'Room · Faster Fermenter (Brew twin keeps load)',cost:{g:3}},
 ];
 const KONTOR_SEED=[
-  {name:'Bryggen Wharf',action:{t:'good',g:2}},
-  {name:'Cloth Hall',action:{t:'good',g:1,h:1}},
+  {name:'Bryggen Wharf',action:{t:'good',g:1}},
+  {name:'Cloth Hall',action:{t:'good',g:1}},
 ];
 // Standing-face Kontor action a cask sets when enshrined on top (TILES §A)
 const STANDING_ACTION={gruit:{t:'good',g:1},hopped:{t:'good',g:1},dubbel:{t:'good',h:1},tripel:{t:'presence'},bock:{t:'advance'}};
@@ -324,7 +324,7 @@ function fireSkim(t){
     else if(w.t==='advance'){advanceOne(o);log('↳ '+o.name+'’s Tripel skim advances a brew.');}
     else if(w.t==='presence'){addPresenceBest(o);log('↳ '+o.name+'’s Bock skim adds +1 presence.');}
   } else if(t.type==='route'){
-    if(S.routes[t.route]&&S.routes[t.route].open){addPresence(o,t.route);log('↳ '+o.name+'’s '+ROUTES[t.route].name+' Lane skims +1 presence.');}
+    gain(o,1,0);log('↳ '+o.name+'’s '+ROUTES[t.route].name+' Lane skims +1G.'); // skim is goods, not presence (presence only from shipping)
   }
 }
 function nextCell(){
@@ -357,7 +357,8 @@ function checkTriggers(){
 //------- shared mechanics -------
 function advanceAll(p){let any=false;p.vessels.forEach(c=>{if(c&&c.step<c.ready){c.step++;any=true;}});return any;}
 function advanceOne(p){for(const c of p.vessels){if(c&&c.step<c.ready){c.step++;return true;}}return false;}
-function addPresence(p,r){if(!S.routes[r].open)return false;S.routes[r].pres[p.id]=(S.routes[r].pres[p.id]||0)+1;return true;}
+function routeFilled(r){return Object.values(S.routes[r].pres).reduce((a,b)=>a+b,0);}
+function addPresence(p,r){if(!S.routes[r].open)return false;if(routeFilled(r)>=ROUTES[r].cap)return false;S.routes[r].pres[p.id]=(S.routes[r].pres[p.id]||0)+1;return true;}
 function addPresenceBest(p){const open=Object.keys(ROUTES).filter(r=>S.routes[r].open);if(!open.length)return;
   open.sort((a,b)=>(S.routes[b].pres[p.id]||0)-(S.routes[a].pres[p.id]||0));addPresence(p,open[0]);}
 
@@ -411,6 +412,7 @@ function shipStart(){UI.stage='ship_pick';render();}
 function shipPick(vi){UI.tmp.vi=vi;UI.stage='ship_route';render();}
 function shipRoute(r){const p=cur();const cask=p.vessels[UI.tmp.vi];
   if(STYLES[cask.style].q<ROUTES[r].gate){alert('Quality too low for '+ROUTES[r].name+'.');return;}
+  if(routeFilled(r)>=ROUTES[r].cap){alert(ROUTES[r].name+' is full.');return;}
   if(!emptySlots().length){alert('No empty slot to place the working cask.');return;}
   UI.tmp.route=r;UI.stage='ship_slot';log(p.name+' will ship '+STYLES[cask.style].name+' to '+ROUTES[r].name+' — choose a slot.',true);render();}
 function shipSlot(slotId){const p=cur();const cask=p.vessels[UI.tmp.vi];
@@ -430,13 +432,16 @@ function kontorTop(){const p=cur();const top=S.stack[S.stack.length-1];const a=t
   if(a.t==='good'){gain(p,a.g||0,a.h||0);}else if(a.t==='advance'){advanceOne(p);}else if(a.t==='presence'){addPresenceBest(p);}else if(a.t==='standing'){/* handled as flat at scoring */}
   log(p.name+' uses the Kontor top action: '+top.name+'.',true);cellDone();}
 function enshrineStart(){UI.stage='enshrine';render();}
-function enshrineDo(slotId){const p=cur();const t=S.slots[slotId];
-  let st=t.standing;if(p.rooms.includes('counting'))st+=1;
-  p.enshrined.push({style:t.style,q:t.q,standing:st,goal:t.goal});
-  S.slots[slotId]=null;
-  S.stack.push({name:STYLES[t.style].name,owner:p.id,action:{t:'good',g:1}});
-  log(p.name+' <b>enshrines</b> '+STYLES[t.style].name+' (+'+st+' standing). Stack height '+S.stack.length+'.',true);
-  cellDone();}
+function enshrineBank(p,c){let st=c.standing;if(p.rooms.includes('counting'))st+=1;
+  p.enshrined.push({style:c.style,q:c.q,standing:st,goal:c.goal});
+  S.stack.push({name:STYLES[c.style].name,owner:p.id,action:STANDING_ACTION[c.style]||{t:'good',g:1}});
+  return st;}
+function enshrineDo(slotId){const p=cur();const st=enshrineBank(p,S.slots[slotId]); // working cask: leaves its slot (reach→standing)
+  const nm=STYLES[S.slots[slotId].style].name;S.slots[slotId]=null;
+  log(p.name+' <b>enshrines</b> '+nm+' from a slot (+'+st+' standing). Stack '+S.stack.length+'.',true);cellDone();}
+function enshrineReady(vi){const p=cur();const c=p.vessels[vi]; // ready cask straight from the brewery — pure standing, never reached
+  const st=enshrineBank(p,c);p.vessels[vi]=null;
+  log(p.name+' <b>enshrines</b> '+STYLES[c.style].name+' straight from the brewery (+'+st+' standing). Stack '+S.stack.length+'.',true);cellDone();}
 
 //==================================================================
 // SCORING
@@ -525,15 +530,19 @@ function cellActions(p){
     if(UI.stage==='ship_pick'){if(!ready.length)return btn('No ready casks — Skip','cellDone()','ghost');
       return ready.map(o=>btn('Ship '+STYLES[o.c.style].name,'shipPick('+o.i+')')).join('');}
     if(UI.stage==='ship_route'){const cask=p.vessels[UI.tmp.vi];
-      return Object.keys(ROUTES).filter(r=>S.routes[r].open&&STYLES[cask.style].q>=ROUTES[r].gate)
+      return Object.keys(ROUTES).filter(r=>S.routes[r].open&&routeFilled(r)<ROUTES[r].cap&&STYLES[cask.style].q>=ROUTES[r].gate)
         .map(r=>btn('→ '+ROUTES[r].name,'shipRoute(\''+r+'\')','go')).join('')||'<span class="note">no eligible open route</span> '+btn('Cancel','cellDone()','ghost');}
     if(UI.stage==='ship_slot')return '<span class="note">click a glowing slot…</span>';
     return (ready.length?btn('Ship a cask','shipStart()','primary'):btn('No ready casks — Skip','cellDone()','ghost'));
   }
   if(act==='Kontor'){
-    if(UI.stage==='enshrine'){const mine=SLOTS.filter(s=>{const t=S.slots[s.id];return t&&t.type==='cask'&&t.owner===p.id&&t.enshrine;});
-      if(!mine.length)return '<span class="note">no enshrine-able working casks</span> '+btn('Back','(function(){UI.stage=null;render();})()','ghost');
-      return mine.map(s=>btn('Enshrine '+STYLES[S.slots[s.id].style].name,'enshrineDo(\''+s.id+'\')','primary')).join('')+btn('Back','(function(){UI.stage=null;render();})()','ghost');}
+    if(UI.stage==='enshrine'){
+      const slots=SLOTS.filter(s=>{const t=S.slots[s.id];return t&&t.type==='cask'&&t.owner===p.id&&t.enshrine;});
+      const ready=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready&&o.c.enshrine);
+      if(!slots.length&&!ready.length)return '<span class="note">nothing enshrine-able (need a Ready or working hopped+ cask)</span> '+btn('Back','(function(){UI.stage=null;render();})()','ghost');
+      let b=slots.map(s=>btn('Enshrine '+STYLES[S.slots[s.id].style].name+' (slot)','enshrineDo(\''+s.id+'\')','primary')).join('');
+      b+=ready.map(o=>btn('Enshrine '+STYLES[o.c.style].name+' (ready)','enshrineReady('+o.i+')','primary')).join('');
+      return b+btn('Back','(function(){UI.stage=null;render();})()','ghost');}
     const top=S.stack[S.stack.length-1];
     return btn('Use top: '+top.name,'kontorTop()')+btn('Enshrine a cask','enshrineStart()','primary')+btn('Skip','cellDone()','ghost');
   }
@@ -567,7 +576,7 @@ function renderRoutes(){
   let h='';for(const r in ROUTES){const R=S.routes[r];const def=ROUTES[r];
     const filled=Object.values(R.pres).reduce((a,b)=>a+b,0);
     let cls='route '+r+(R.open?'':' closed');
-    const canShip=(UI.sub==='cell'&&UI.stage==='ship_route'&&R.open&&S.players[S.active]&&STYLES[cur().vessels[UI.tmp.vi].style].q>=def.gate);
+    const canShip=(UI.sub==='cell'&&UI.stage==='ship_route'&&R.open&&routeFilled(r)<def.cap&&S.players[S.active]&&STYLES[cur().vessels[UI.tmp.vi].style].q>=def.gate);
     if(canShip)cls+=' ship';
     let sp='';for(let i=0;i<def.cap;i++){sp+='<div class="sp">'+(i<filled?'●':'')+'</div>';}
     let pres=S.players.map(p=>(R.pres[p.id]?'<span class="pawn" style="width:11px;height:11px;background:'+p.color+';display:inline-block">'+'</span>'+(R.pres[p.id]):'')).filter(x=>x).join(' &nbsp;');
