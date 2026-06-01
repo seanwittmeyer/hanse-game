@@ -236,8 +236,8 @@ const KEY='hanse-hotseat-v1';
 function endN(){return 6+3*S.players.length;}  // end-game stack threshold ⚙
 
 function newPlayer(i,name){
-  return {id:i,name:name||CNAMES[i],color:COLORS[i],grain:2,hops:1,cell:'A',
-    storage:8, recipes:['gruit'], vessels:[null], maxVessels:1,
+  return {id:i,name:name||CNAMES[i],color:COLORS[i],grain:3,hops:2,cell:null,placed:false,
+    storage:8, recipes:['gruit','hopped'], vessels:[null], maxVessels:1, maxRooms:4,
     rooms:[],ships:0,privileges:0, enshrined:[]};
 }
 function freshState(n,names){
@@ -300,7 +300,8 @@ function startGame(){
 function beginTurn(){UI={sub:'move'};render();}
 
 function doMove(cell){
-  const p=cur();p.cell=cell;log(p.name+' moves their worker to <b>'+CELLNAME[cell]+'</b>.',true);
+  const p=cur();const placing=!p.placed;p.placed=true;p.cell=cell;
+  log(p.name+(placing?' places their worker at <b>':' moves their worker to <b>')+CELLNAME[cell]+'</b>.',true);
   UI={sub:'line'};render();
 }
 function chooseLine(which){ // 'row' or 'col'
@@ -362,6 +363,10 @@ function marketGoods(kind){const p=cur();if(kind==='gg')gain(p,2,0);else if(kind
   log(p.name+' takes goods at the Market.',true);cellDone();}
 function buyTile(id){
   const it=SHOP.find(x=>x.id===id);const p=cur();if(!canPay(p,it.cost))return;
+  if(it.kind==='room'){
+    if(p.rooms.length>=p.maxRooms){alert('No free room slot (max '+p.maxRooms+').');return;}
+    if(it.room==='vessel'&&p.maxVessels>=3){alert('Vessel cap is 3.');return;}
+  }
   if(it.kind==='route'){ // must place into an empty slot
     if(!emptySlots().length){alert('No empty perimeter slot to place the Lane.');return;}
     pay(p,it.cost);UI.tmp.pendingTile={type:'route',owner:p.id,route:it.route,boost:it.boost,label:ROUTES[it.route].name+' Lane'};
@@ -468,8 +473,10 @@ function renderBar(){
   document.getElementById('wholbl').style.background=p.color;
   document.getElementById('wholbl').style.color='#fff';
   let prompt='',acts='';
-  if(UI.sub==='move'){prompt='Move your worker to an adjacent cell (click the glowing cell).';
-    acts=ADJ[p.cell].map(c=>btn('→ '+CELLNAME[c],'doMove(\''+c+'\')','primary')).join('');}
+  if(UI.sub==='move'){const placing=!p.placed;
+    prompt=placing?'<b>Turn 1:</b> place your worker on any cell (click a glowing cell).':'Move your worker to an adjacent cell (click the glowing cell).';
+    const cells=placing?['A','B','C','D']:ADJ[p.cell];
+    acts=cells.map(c=>btn((placing?'⚑ ':'→ ')+CELLNAME[c],'doMove(\''+c+'\')','primary')).join('');}
   else if(UI.sub==='line'){const o=cellOfLine(p.cell);
     prompt='Activate the row or the column of '+CELLNAME[p.cell]+'.';
     acts=btn(LINES[o.row].label,'chooseLine(\'row\')','go')+btn(LINES[o.col].label,'chooseLine(\'col\')','go');}
@@ -542,7 +549,7 @@ function renderGrid(){
   ['A','B','C','D'].forEach(c=>{
     const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'"></span>').join('');
     let cls='cell '+c+' c'+c;
-    const legal=(UI.sub==='move'&&ADJ[cur().cell].includes(c));
+    const legal=(UI.sub==='move'&&(!cur().placed||ADJ[cur().cell].includes(c)));
     if(legal)cls+=' legal';
     h+='<div class="'+cls+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'><div class="ltr">'+c+'</div><div class="nm">'+CELLNAME[c]+'</div><div class="wk">'+pawns+'</div></div>';
   });
@@ -605,6 +612,7 @@ function renderTableaus(){
 (function boot(){
   const saved=load();
   if(saved&&saved.players){S=saved;UI={sub:'move'};
+    S.players.forEach(p=>{if(p.placed===undefined)p.placed=(p.cell!=null);}); // migrate old saves
     // if a turn was mid-resolution we just reset to move for safety
     render();log('— resumed saved game —');render();
   } else {openSetup();}

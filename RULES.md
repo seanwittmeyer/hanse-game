@@ -4,7 +4,15 @@
 
 ---
 
+## 0. Setup (symmetric)
+
+Each house starts with **3 `G`, 2 `H`**, **1 Gruit + 1 Hopped recipe**, **1 open vessel** (lanes 2–3 locked, cap 3), storage 8, and the printed Larder + Quay. Bruges route open; far routes closed. Kontor stack seeded with 2 public tiles. See `PLAYERBOARD.md`.
+
+---
+
 ## 1. The turn
+
+> **Turn 1 only:** *place* your worker on any cell and activate one of its two lines (no move). The move-then-activate sequence below begins on turn 2.
 
 On your turn, in order:
 
@@ -28,7 +36,8 @@ On your turn, in order:
 ### B · Brewhouse
 - **Advance ALL your brews 1 step** on the track, **and** optionally **LOAD** 1 recipe (paying its inputs) into an empty vessel.
 - Brew lengths (LOAD→READY): **Gruit 2 · Hopped 3 · Dubbel 3 · Tripel 4 · Bock 5.** ⚙ (the tempo dial — gruit skips AGE)
-- More **vessels** (Extra Vessel rooms) = more brews advanced per fire = your throughput engine.
+- More **vessels** (Extra Vessel rooms) = more brews advanced per fire = your throughput engine. **Start 1, cap 3.** A Ready cask occupies its vessel until shipped (back-pressure).
+- **Room slots: 4 (scarce).** Extra Vessel is itself a room — so going wide on vessels costs depth elsewhere. This is the forced-commit squeeze (§13c).
 - **Tableau fallback (blocked):** advance brews only (no public load bonus). *Brewing is the one action with a true private twin — it always happens here anyway.*
 
 ### C · Harbor

@@ -337,3 +337,13 @@ This section captures decisions and the working architecture from the live desig
   - Balance watch: the **depth path is genuinely slower** (premium ties up a vessel) — goal bonuses must compensate.
 - **Turn & round economy drafted** → `RULES.md` (turn = move + activate line; 4 cell actions; round = turn each, first-player passes; **end-game = Kontor stack reaches N OR a route saturates**; scoring sequence reach → majorities → standing → goals).
 - Confirms **mid-heavy / Brass pace (~10–14 turns/player)**, not Lacerda turn-as-puzzle.
+
+### Player board & opening (2026-05-31, cont.) — LOCKED
+
+- **Symmetric starts.** No asymmetric houses for v1 (revisitable as a variant). Opening variety comes from Market choice + the gruit/hopped load fork, not from forced cell parity.
+- **Vessels: start 1, cap 3.** Throughput is the central tempo throttle.
+- **Room slots: 4 (scarce).** Extra Vessel is itself a room → wide-vessels-vs-deep-rooms is the forced-commit squeeze (§13c) made physical.
+- **Starting resources:** 3 `G`, 2 `H`, recipes **Gruit + Hopped**, storage 8.
+- **Turn-1 rule:** place worker on any cell + activate (no move); move-then-activate from turn 2. Makes first placement a real decision.
+- **Opening analysis** (`PLAYTEST.md` walkthrough): Top Row (Market+Brewhouse) is the natural opening (Harbor is dead with no ready cask); the bumped start + two recipes put the fast-vs-slow fork on turn 1.
+- Full board spec → **`PLAYERBOARD.md`**.
