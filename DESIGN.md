@@ -347,3 +347,12 @@ This section captures decisions and the working architecture from the live desig
 - **Turn-1 rule:** place worker on any cell + activate (no move); move-then-activate from turn 2. Makes first placement a real decision.
 - **Opening analysis** (`PLAYTEST.md` walkthrough): Top Row (Market+Brewhouse) is the natural opening (Harbor is dead with no ready cask); the bumped start + two recipes put the fast-vs-slow fork on turn 1.
 - Full board spec → **`PLAYERBOARD.md`**.
+
+### Grid topology & tableau twins (2026-05-31, cont.) — LOCKED
+
+- **Build × cash-out grid.** Market & Brewhouse (the *builders*) are placed on one **diagonal**; Harbor & Kontor (the *cash-outs*) on the other. They never share a line. Cell map: `A=Market · B=Harbor · C=Kontor · D=Brewhouse`.
+  - Consequence 1 — **kills the dominant opening**: you can never acquire+brew in one line, so no single turn snowballs (was the first-player problem).
+  - Consequence 2 — **every line = one builder + one cash-out**: `Market+Harbor · Market+Kontor · Brewhouse+Harbor · Brewhouse+Kontor`.
+  - Consequence 3 — **reach-vs-standing every turn**: Harbor & Kontor are diagonal, so each turn you ship for reach **or** enshrine for standing, never both. The core tension is now structural, per turn.
+- **Tableau twins (occupancy = opportunity).** Each public verb has a private twin you can upgrade via rooms: **Market→Larder**, **Brewhouse→brew-room (Faster Fermenter)**, **Harbor→Quay**. Kontor is open-to-all (no twin). A twin fires **only when a rival blocks that cell** (locked) — so a developed tableau makes you *want* to step onto crowded cells (you fire your strong twin and still take the line's other cell). With only 4 room slots you specialize one twin → different players value different lines → wide phase-space on a tiny board.
+- The play client + visualizer remapped to this grid; twins (Larder/Quay/Faster Fermenter) implemented as upgrade rooms.

@@ -59,8 +59,8 @@
   .cell .lbl{font-size:.7rem; letter-spacing:1px; text-transform:uppercase; opacity:.85}
   .cell .nm{font-size:1.25rem; font-variant:small-caps; font-weight:bold}
   .cell .do{font-size:.74rem; opacity:.92}
-  .cell.A{background:var(--gold);} .cell.B{background:var(--red2);}
-  .cell.C{background:var(--sea2);} .cell.D{background:var(--green);}
+  .cell.A{background:var(--gold);} .cell.B{background:var(--sea2);}
+  .cell.C{background:var(--green);} .cell.D{background:var(--red2);}
   .cell .corner{position:absolute; top:6px; right:9px; font-size:1.3rem; font-weight:bold; opacity:.5}
   .slot{
     background:var(--parch2); border:2px dashed var(--line); border-radius:7px;
@@ -177,17 +177,18 @@
 <section id="grid">
   <h2><span class="n">§6</span>The Shared Action Grid</h2>
   <p class="lead">A 2×2 of four action cells, shared by all players. On your turn: move your worker to an orthogonally adjacent cell, then activate its <b>row or column</b> — a 4-stop pipeline (cap · cell · cell · cap). <i>Hover a cell to light its two lines.</i></p>
+  <p class="lead"><b>Build × cash-out:</b> Market &amp; Brewhouse (the two <i>builders</i>) sit on one diagonal; Harbor &amp; Kontor (the two <i>cash-outs</i>) on the other — so they never share a line. Every line is therefore <b>one builder + one cash-out</b>, and each turn you ship for <i>reach</i> OR enshrine for <i>standing</i>, never both.</p>
   <div class="gridwrap">
     <div class="actiongrid" id="ag">
       <div class="slot s1" data-line="col-l">slot s1</div>
       <div class="slot s2" data-line="col-r">slot s2</div>
       <div class="slot s8" data-line="row-t">slot s8</div>
       <div class="cell A" data-row="row-t" data-col="col-l"><div class="corner">A</div><div class="lbl">Market</div><div class="nm">Market</div><div class="do">Take goods &amp; tiles from the supply</div></div>
-      <div class="cell B" data-row="row-t" data-col="col-r"><div class="corner">B</div><div class="lbl">Brewhouse</div><div class="nm">Brewhouse</div><div class="do">Advance all brews + load a recipe</div></div>
+      <div class="cell B" data-row="row-t" data-col="col-r"><div class="corner">B</div><div class="lbl">Harbor</div><div class="nm">Harbor</div><div class="do">Ship a cask → slot + presence (reach)</div></div>
       <div class="slot s3" data-line="row-t">slot s3</div>
       <div class="slot s7" data-line="row-b">slot s7</div>
-      <div class="cell C" data-row="row-b" data-col="col-l"><div class="corner">C</div><div class="lbl">Harbor</div><div class="nm">Harbor</div><div class="do">Ship a cask → slot + presence</div></div>
-      <div class="cell D" data-row="row-b" data-col="col-r"><div class="corner">D</div><div class="lbl">Kontor</div><div class="nm">Kontor</div><div class="do">Enshrine a cask / top-stack action</div></div>
+      <div class="cell C" data-row="row-b" data-col="col-l"><div class="corner">C</div><div class="lbl">Kontor</div><div class="nm">Kontor</div><div class="do">Enshrine a cask / top-stack action (standing)</div></div>
+      <div class="cell D" data-row="row-b" data-col="col-r"><div class="corner">D</div><div class="lbl">Brewhouse</div><div class="nm">Brewhouse</div><div class="do">Advance all brews + load a recipe</div></div>
       <div class="slot s4" data-line="row-b">slot s4</div>
       <div class="slot s6" data-line="col-l">slot s6</div>
       <div class="slot s5" data-line="col-r">slot s5</div>

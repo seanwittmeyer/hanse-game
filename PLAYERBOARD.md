@@ -68,11 +68,15 @@ Grid = the verbs; this board = the noun the brewing verb acts on. No action is d
 
 - Cap **8 goods** ⚙ (a printed track). **Warehouse** room +4 each. Overflow is lost — the cap (with tiny skims) contains the rich-get-richer risk (PLAYTEST F5).
 
-## 5. Larder & Quay — printed fallbacks
+## 5. Tableau twins — occupancy becomes opportunity
 
-- **Larder** (Market blocked): +1 G; a Larder-upgrade room raises it.
-- **Quay** (Harbor blocked): ship **one ready cask to Bruges only** (still a real shipment — placed in a slot, +1 presence); a Quay-upgrade room raises it.
-- The more brewery you've built, the less a block stings.
+Each public **builder** verb has a private **twin** here; the twin fires **only when a rival blocks that cell** (locked). Upgraded, the twin makes you *want* to step onto the crowded cell — you fire your strong twin and still collect the line's cash-out cell. (Kontor has no twin — it's open to all.)
+
+- **Larder** (Market twin): +1 G base; a **Larder** room → +2 G. *Goods only — the public Market's tile-buying stays its unique draw.*
+- **Brew-room** (Brewhouse twin): advance all, no load; a **Faster Fermenter** room restores the load (twin = public).
+- **Quay** (Harbor twin): ship one ready cask **→ Bruges only** (a real shipment — slot + presence); a **Quay** room → ship to any open qualifying route.
+
+Because only **4 room slots** exist, you can develop **one** twin deeply — so different players want different cells jammed, and each walks a different circuit. That's the wide phase-space on a tiny board.
 
 ---
 

@@ -47,8 +47,8 @@
   .cell .nm{font-variant:small-caps;font-weight:bold;font-size:1rem;line-height:1}
   .cell .do{font-size:.62rem;opacity:.9}
   .cell .ltr{position:absolute;top:4px;right:7px;font-weight:bold;opacity:.45}
-  .cell.A{background:var(--gold);color:var(--ink)} .cell.B{background:var(--red2)}
-  .cell.C{background:var(--sea2)} .cell.D{background:var(--green)}
+  .cell.A{background:var(--gold);color:var(--ink)} .cell.B{background:var(--sea2)}
+  .cell.C{background:var(--green)} .cell.D{background:var(--red2)}
   .cell .wk{display:flex;gap:3px;flex-wrap:wrap}
   .pawn{width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.4)}
   .cell.legal{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite}
@@ -193,7 +193,10 @@ const SHOP=[
   {id:'m_vessel',kind:'room',room:'vessel',  name:'Room · Extra Vessel',cost:{g:3}},
   {id:'m_cellar',kind:'room',room:'cellar',  name:'Room · Aging Cellar',cost:{g:3}},
   {id:'m_ware',  kind:'room',room:'warehouse',name:'Room · Warehouse (+4 storage)',cost:{g:2}},
-  {id:'m_count', kind:'room',room:'counting', name:'Room · Counting-house',cost:{g:3}},
+  {id:'m_count', kind:'room',room:'counting', name:'Room · Counting-house (+1 standing/enshrine)',cost:{g:3}},
+  {id:'m_larder',kind:'room',room:'larder',   name:'Room · Larder (Market twin → +2G)',cost:{g:2}},
+  {id:'m_quay',  kind:'room',room:'quay',     name:'Room · Quay (Harbor twin → any open route)',cost:{g:3}},
+  {id:'m_ferment',kind:'room',room:'fermenter',name:'Room · Faster Fermenter (Brew twin keeps load)',cost:{g:3}},
 ];
 const KONTOR_SEED=[
   {name:'Bryggen Wharf',action:{t:'good',g:2}},
@@ -217,12 +220,12 @@ const SLOTS=[
   {id:'s1',line:'colL'},{id:'s2',line:'colR'},{id:'s8',line:'rowT'},{id:'s3',line:'rowT'},
   {id:'s7',line:'rowB'},{id:'s4',line:'rowB'},{id:'s6',line:'colL'},{id:'s5',line:'colR'},
 ];
-const LINES={rowT:{cells:['A','B'],caps:['s8','s3'],label:'Top row · Market+Brewhouse'},
-             rowB:{cells:['C','D'],caps:['s7','s4'],label:'Bottom row · Harbor+Kontor'},
-             colL:{cells:['A','C'],caps:['s1','s6'],label:'Left col · Market+Harbor'},
-             colR:{cells:['B','D'],caps:['s2','s5'],label:'Right col · Brewhouse+Kontor'}};
+const LINES={rowT:{cells:['A','B'],caps:['s8','s3'],label:'Top row · Market + Harbor'},
+             rowB:{cells:['C','D'],caps:['s7','s4'],label:'Bottom row · Kontor + Brewhouse'},
+             colL:{cells:['A','C'],caps:['s1','s6'],label:'Left col · Market + Kontor'},
+             colR:{cells:['B','D'],caps:['s2','s5'],label:'Right col · Harbor + Brewhouse'}};
 const ADJ={A:['B','C'],B:['A','D'],C:['A','D'],D:['B','C']};
-const CELLNAME={A:'Market',B:'Brewhouse',C:'Harbor',D:'Kontor'};
+const CELLNAME={A:'Market',B:'Harbor',C:'Kontor',D:'Brewhouse'};  // build×cash-out grid: Market/Brewhouse diagonal, Harbor/Kontor diagonal
 const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C:{row:'rowB',col:'colL'},D:{row:'rowB',col:'colR'}})[cell];
 
 //==================================================================
@@ -328,7 +331,7 @@ function nextCell(){
   if(!UI.queue.length){UI={sub:'end'};render();return;}
   UI.cell=UI.queue.shift();UI.stage='choose';UI.tmp={};
   // blocked by a rival → tableau fallback. The Kontor (D) is open to all — never blocked (RULES §2D).
-  UI.blocked=(UI.cell!=='D')&&S.players.some(pl=>pl.id!==S.active&&pl.cell===UI.cell);
+  UI.blocked=(CELLNAME[UI.cell]!=='Kontor')&&S.players.some(pl=>pl.id!==S.active&&pl.cell===UI.cell);
   // auto-handle fallbacks / empty actions that need no input
   render();
 }
@@ -488,33 +491,36 @@ function renderBar(){
 }
 
 function cellPrompt(p){
-  const c=UI.cell;
+  const act=CELLNAME[UI.cell];
   if(UI.stage==='place')return 'Click an empty slot to place your tile.';
-  if(c==='C'){if(UI.stage==='ship_route')return 'Choose a route to ship to (quality gate applies).';
+  if(act==='Harbor'){if(UI.stage==='ship_route')return 'Choose a route to ship to (quality gate applies).';
     if(UI.stage==='ship_slot')return 'Click an empty slot for the working cask.';}
-  return 'Resolve the '+CELLNAME[c]+' action.';
+  return 'Resolve the '+act+' action'+(UI.blocked?' — blocked, so you use your tableau twin':'')+'.';
 }
 function cellActions(p){
-  const c=UI.cell;
-  if(UI.blocked){ // fallback
-    if(c==='A'){return btn('Larder fallback: +1 G','(function(){gain(cur(),1,0);log(cur().name+\' uses the Larder (+1G).\',true);cellDone();})()');}
-    if(c==='B'){return btn('Advance brews (fallback)','(function(){advanceAll(cur());log(cur().name+\' advances brews (fallback).\',true);cellDone();})()');}
-    if(c==='C'){return btn('Quay fallback: ship a cask to Bruges','quayFallback()');}
-    if(c==='D'){return btn('Skip (Kontor open to all)','cellDone()');}
+  const act=CELLNAME[UI.cell];
+  if(UI.blocked){ // tableau twin (fires only when a rival blocks the cell). Twins scale with rooms.
+    if(act==='Market'){const n=p.rooms.includes('larder')?2:1;
+      return btn('Larder twin: +'+n+' G','(function(){gain(cur(),'+n+',0);log(cur().name+\' works the Larder (+'+n+'G).\',true);cellDone();})()');}
+    if(act==='Brewhouse'&&!p.rooms.includes('fermenter'))
+      return btn('Brew-room twin: advance all (no load)','(function(){advanceAll(cur());log(cur().name+\' advances brews in the brew-room.\',true);cellDone();})()');
+    if(act==='Harbor'&&!p.rooms.includes('quay'))
+      return btn('Quay twin: ship a cask → Bruges','quayFallback()');
+    // Brewhouse+Faster Fermenter and Harbor+Quay fall through to the full public action below
   }
-  if(c==='A'){
+  if(act==='Market'){
     if(UI.stage==='place')return '<span class="note">click a glowing slot…</span>';
     return btn('Take 2 G','marketGoods(\'gg\')')+btn('Take 1G 1H','marketGoods(\'gh\')')+btn('Take 2 H','marketGoods(\'hh\')')
-      +' <span class="note">or buy a tile from the Market →</span> '+btn('Skip','cellDone()','ghost');
+      +' <span class="note">or buy a tile →</span> '+btn('Skip','cellDone()','ghost');
   }
-  if(c==='B'){
-    if(UI.stage==='load'){let b=p.recipes.filter(r=>STYLES[r].enshrine||r==='gruit').map((r,i)=>{
+  if(act==='Brewhouse'){
+    if(UI.stage==='load'){let b=p.recipes.filter(r=>STYLES[r].enshrine||r==='gruit').map(r=>{
         const can=p.vessels.includes(null)&&canPay(p,STYLES[r].in)&&!(STYLES[r].cellar&&!p.rooms.includes('cellar'));
         return '<button '+(can?'':'disabled')+' onclick="brewLoad(\''+r+'\')">Load '+STYLES[r].name+' ('+costStr(STYLES[r].in)+')</button>';}).join('');
       return b+btn('Done','cellDone()','go');}
-    return btn('Advance all brews','brewAdvance()','primary');
+    return btn('Advance all brews'+(UI.blocked?' (brew-room)':''),'brewAdvance()','primary');
   }
-  if(c==='C'){
+  if(act==='Harbor'){
     const ready=readyCasks(p);
     if(UI.stage==='ship_pick'){if(!ready.length)return btn('No ready casks — Skip','cellDone()','ghost');
       return ready.map(o=>btn('Ship '+STYLES[o.c.style].name,'shipPick('+o.i+')')).join('');}
@@ -524,7 +530,7 @@ function cellActions(p){
     if(UI.stage==='ship_slot')return '<span class="note">click a glowing slot…</span>';
     return (ready.length?btn('Ship a cask','shipStart()','primary'):btn('No ready casks — Skip','cellDone()','ghost'));
   }
-  if(c==='D'){
+  if(act==='Kontor'){
     if(UI.stage==='enshrine'){const mine=SLOTS.filter(s=>{const t=S.slots[s.id];return t&&t.type==='cask'&&t.owner===p.id&&t.enshrine;});
       if(!mine.length)return '<span class="note">no enshrine-able working casks</span> '+btn('Back','(function(){UI.stage=null;render();})()','ghost');
       return mine.map(s=>btn('Enshrine '+STYLES[S.slots[s.id].style].name,'enshrineDo(\''+s.id+'\')','primary')).join('')+btn('Back','(function(){UI.stage=null;render();})()','ghost');}
@@ -574,7 +580,7 @@ function renderKontor(){
   document.getElementById('kontor').innerHTML='<div class="stackbox">Stack height <b>'+S.stack.length+'</b> · enshrined <b>'+enshrinedTotal()+'</b> / '+endN()+'<br><span class="top">top: '+top.name+'</span></div><div class="note" style="margin-top:5px">Enshrined casks (standing) stack here; the top tile is the live action.</div>';
 }
 function renderShop(){
-  const p=cur();const buying=(UI.sub==='cell'&&UI.cell==='A'&&!UI.blocked&&(UI.stage===null||UI.stage==='choose'));
+  const p=cur();const buying=(UI.sub==='cell'&&CELLNAME[UI.cell]==='Market'&&!UI.blocked&&(UI.stage===null||UI.stage==='choose'));
   let h='';SHOP.forEach(it=>{const aff=canPay(p,it.cost)&&buying;
     h+='<div class="item"><span>'+it.name+'</span><span class="cost">'+costStr(it.cost)+' '+(buying?'<button '+(aff?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
   document.getElementById('shop').innerHTML=h+(buying?'':'<div class="note">Buy tiles during your Market action.</div>');

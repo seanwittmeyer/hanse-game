@@ -28,27 +28,31 @@ On your turn, in order:
 
 ## 2. The four cell actions
 
+> **Build × cash-out grid.** The two *builders* (Market, Brewhouse) sit on one diagonal; the two *cash-outs* (Harbor, Kontor) on the other — they never share a line. Cell map: **A=Market · B=Harbor · C=Kontor · D=Brewhouse.** So every line is one builder + one cash-out, and each turn you ship for reach **or** enshrine for standing, never both.
+>
+> **Tableau twins:** the "fallback" for a blocked cell is your **private twin** (Market→Larder, Brewhouse→brew-room, Harbor→Quay), upgradable via rooms. A twin fires **only when a rival blocks the cell** — so a developed tableau makes stepping onto a crowded cell *desirable*. Kontor has no twin (open to all).
+
 ### A · Market
 - Take **2 goods** (any mix `G`/`H`) from the supply, **OR** acquire **1 tile** from the face-up Market display, paying its cost in goods.
 - Tile costs ⚙: recipe 1–2 · route/ship 2 · room 3 · (privileges come from London, §Harbor).
-- **Tableau fallback (blocked):** Larder trickle = +1 `G` (upgradable).
+- **Twin (blocked): Larder** = +1 `G`; a **Larder** room bumps it to +2 `G`. (The public Market's tile-buying is its irreplaceable edge — the Larder is goods only.)
 
-### B · Brewhouse
+### D · Brewhouse
 - **Advance ALL your brews 1 step** on the track, **and** optionally **LOAD** 1 recipe (paying its inputs) into an empty vessel.
 - Brew lengths (LOAD→READY): **Gruit 2 · Hopped 3 · Dubbel 3 · Tripel 4 · Bock 5.** ⚙ (the tempo dial — gruit skips AGE)
 - More **vessels** (Extra Vessel rooms) = more brews advanced per fire = your throughput engine. **Start 1, cap 3.** A Ready cask occupies its vessel until shipped (back-pressure).
 - **Room slots: 4 (scarce).** Extra Vessel is itself a room — so going wide on vessels costs depth elsewhere. This is the forced-commit squeeze (§13c).
-- **Tableau fallback (blocked):** advance brews only (no public load bonus). *Brewing is the one action with a true private twin — it always happens here anyway.*
+- **Twin (blocked): brew-room** = advance all, no load; a **Faster Fermenter** room restores the load so the twin equals the public action.
 
-### C · Harbor
+### B · Harbor
 - **Ship 1 READY cask** (2 with a Hulk): move its tile into an **open perimeter slot** (now working), and place **1 presence** on a route the cask quality-qualifies for, advancing 1 space (+ range mods: Cog, etc.).
 - **Routes:** **Bruges is open from the start.** Bergen / London / Novgorod open only once a Route Lane tile for them sits in a slot.
 - **London delivery** grants a **Privilege tile** (its route payout).
-- **Tableau fallback (blocked):** Quay trickle = ship to Bruges only, 1 step (upgradable).
+- **Twin (blocked): Quay** = ship a ready cask to **Bruges only**; a **Quay** room lets it ship to any open qualifying route.
 
-### D · Kontor
+### C · Kontor
 - Choose one: **use the current top-of-stack action**, **or ENSHRINE** — move one of your working casks from a slot to the **top of the stack**, flipped to its standing face. It stops skimming; you bank its standing; its goal is now live; it sets the new top action.
-- Enshrining is bundled by geometry with a brew (right column B-D) or a ship (bottom row C-D).
+- Enshrining is bundled by geometry with an **acquire** (left column, Market+Kontor) or a **brew** (bottom row, Brewhouse+Kontor).
 - **Occupancy:** the Kontor is **not** tolled or blocked to a fallback — anyone may fire a Kontor line; the top action / enshrine is available to whoever runs it. ❓ (revisit if it needs contention)
 
 ---
