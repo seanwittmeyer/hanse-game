@@ -189,7 +189,10 @@ const ICON={grain:'wheat',hops:'sprout',cask:'beer',vp:'crown',presence:'map-pin
 const YIELD={Market:['wheat','sprout','scroll-text'],Brewhouse:['beer'],Harbor:['ship','map-pin'],Kontor:['crown','layers']};
 const Gi=n=>LU('wheat','i-grain')+(n!==undefined?'<b>'+n+'</b>':''), Hi=n=>LU('sprout','i-hops')+(n!==undefined?'<b>'+n+'</b>':'');
 function tileIcon(t){if(t.type==='cask')return LU('beer')+'<span class="tl">'+STYLES[t.style].name[0]+'</span>';
-  if(t.type==='route')return LU('route');if(t.type==='ship')return LU('sailboat');return LU('package');}
+  if(t.type==='route')return LU('route');
+  if(t.type==='ship')return LU('sailboat')+'<span class="tl">'+t.cargo+'/'+t.cap+'</span>';
+  if(t.type==='recipe')return LU('scroll-text')+'<span class="tl">'+STYLES[t.style].name[0]+'</span>';
+  return LU('package');}
 function refreshIcons(){if(window.lucide)try{lucide.createIcons();}catch(e){}}
 
 const STYLES={
@@ -214,7 +217,8 @@ const SHOP=[
   {id:'l_bergen',  kind:'route',route:'bergen',  boost:2,name:'Bergen Lane (+2)',cost:{g:2}},
   {id:'l_novgorod',kind:'route',route:'novgorod',boost:3,name:'Novgorod Lane (+3)',cost:{g:2,h:1}},
   {id:'l_bruges',  kind:'route',route:'bruges',  boost:1,name:'Bruges Lane (+1)',cost:{g:1}},
-  {id:'s_cog', kind:'ship',name:'Cog · ship +1 step',cost:{g:2}},
+  {id:'s_cog', kind:'ship',name:'Cog · fills then sails (cap 3)',cost:{g:2},cap:3},
+  {id:'s_hulk',kind:'ship',name:'Hulk · fills then sails (cap 4)',cost:{g:3},cap:4},
   {id:'m_vessel',kind:'room',room:'vessel',  name:'Room · Extra Vessel',cost:{g:3}},
   {id:'m_cellar',kind:'room',room:'cellar',  name:'Room · Aging Cellar',cost:{g:3}},
   {id:'m_ware',  kind:'room',room:'warehouse',name:'Room · Warehouse (+4 storage)',cost:{g:2}},
@@ -337,12 +341,12 @@ function chooseLine(which){ // 'row' or 'col'
   const p=cur();const lk=cellOfLine(p.cell)[which];const L=LINES[lk];
   log(p.name+' activates the <b>'+L.label+'</b>.',true);
   // fire cap skims
-  L.caps.forEach(cid=>{const t=S.slots[cid];if(t)fireSkim(t);});
+  L.caps.forEach(cid=>{const t=S.slots[cid];if(t)fireSkim(t,cid);});
   // queue the two cells in board order
   UI={sub:'cell',queue:L.cells.slice(),line:lk,stage:null,tmp:{}};
   nextCell();
 }
-function fireSkim(t){
+function fireSkim(t,slotId){
   const o=S.players[t.owner];
   if(t.type==='cask'){
     const w=STYLES[t.style].work;
@@ -351,6 +355,13 @@ function fireSkim(t){
     else if(w.t==='presence'){addPresenceBest(o);log('↳ '+o.name+'’s Bock skim adds +1 presence.');}
   } else if(t.type==='route'){
     gain(o,1,0);log('↳ '+o.name+'’s '+ROUTES[t.route].name+' Lane skims +1G.'); // skim is goods, not presence (presence only from shipping)
+  } else if(t.type==='ship'){
+    t.cargo++;
+    if(t.cargo>=t.cap){ // ship is full → it sails, delivering a burst of presence, and frees its slot
+      let delivered=0;for(let i=0;i<t.cap;i++){if(addPresenceBest(o))delivered++;}
+      log('⛵ '+o.name+'’s '+t.label+' sails full — delivers '+delivered+' presence!');
+      if(slotId)S.slots[slotId]=null;
+    } else log('↳ '+o.name+'’s '+t.label+' loads cargo ('+t.cargo+'/'+t.cap+').');
   }
 }
 function nextCell(){
@@ -385,8 +396,8 @@ function advanceAll(p){let any=false;p.vessels.forEach(c=>{if(c&&c.step<c.ready)
 function advanceOne(p){for(const c of p.vessels){if(c&&c.step<c.ready){c.step++;return true;}}return false;}
 function routeFilled(r){return Object.values(S.routes[r].pres).reduce((a,b)=>a+b,0);}
 function addPresence(p,r){if(!S.routes[r].open)return false;if(routeFilled(r)>=ROUTES[r].cap)return false;S.routes[r].pres[p.id]=(S.routes[r].pres[p.id]||0)+1;return true;}
-function addPresenceBest(p){const open=Object.keys(ROUTES).filter(r=>S.routes[r].open);if(!open.length)return;
-  open.sort((a,b)=>(S.routes[b].pres[p.id]||0)-(S.routes[a].pres[p.id]||0));addPresence(p,open[0]);}
+function addPresenceBest(p){const open=Object.keys(ROUTES).filter(r=>S.routes[r].open&&routeFilled(r)<ROUTES[r].cap);if(!open.length)return false;
+  open.sort((a,b)=>(S.routes[b].pres[p.id]||0)-(S.routes[a].pres[p.id]||0));return addPresence(p,open[0]);}
 
 //------- MARKET -------
 function marketGoods(kind){const p=cur();if(kind==='gg')gain(p,2,0);else if(kind==='gh')gain(p,1,1);else gain(p,0,2);
@@ -403,8 +414,9 @@ function buyTile(id){
     UI.stage='place';log(p.name+' buys a '+it.name+' — place it in a slot.',true);render();return;
   }
   if(it.kind==='ship'){if(!emptySlots().length){alert('No empty slot for the ship.');return;}
-    pay(p,it.cost);UI.tmp.pendingTile={type:'ship',owner:p.id,label:'Cog'};p.ships++;
-    UI.stage='place';log(p.name+' buys a Cog — place it in a slot.',true);render();return;}
+    const nm=it.name.split(' ')[0];
+    pay(p,it.cost);UI.tmp.pendingTile={type:'ship',owner:p.id,label:nm,cap:it.cap,cargo:0};p.ships++;
+    UI.stage='place';log(p.name+' buys a '+nm+' — place it in a slot; it loads as its line fires, then sails when full.',true);render();return;}
   pay(p,it.cost);
   if(it.kind==='recipe'){p.recipes.push(it.style);log(p.name+' acquires '+it.name+'.',true);}
   if(it.kind==='room'){applyRoom(p,it.room);log(p.name+' builds '+it.name+'.',true);}
