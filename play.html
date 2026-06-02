@@ -520,7 +520,8 @@ function renderBar(){
   else if(UI.sub==='end'){prompt='Line resolved.';acts=btn('End Turn ▸','endTurn()','primary');}
   document.getElementById('prompt').innerHTML=prompt;
   document.getElementById('acts').innerHTML=acts;
-  document.getElementById('boardnote').innerHTML = UI.sub==='cell'? 'Resolving <b>'+CELLNAME[UI.cell]+'</b>'+(UI.blocked?' — blocked by a rival, using your tableau fallback':''):'';
+  document.getElementById('boardnote').innerHTML = UI.sub==='cell'? 'Resolving <b>'+CELLNAME[UI.cell]+'</b>'+(UI.blocked?' — blocked by a rival, using your tableau twin':'')
+    : 'Tip: upgrade your brewery &amp; buy lanes/ships at the '+LU('store')+' Market · ship casks into slots at the '+LU('ship')+' Harbor · enshrine for '+LU('crown')+' at the Kontor.';
 }
 
 function cellPrompt(p){
@@ -629,7 +630,7 @@ function renderShop(){
   const KI={recipe:'scroll-text',route:'route',ship:'sailboat',room:'wrench'};
   let h='';SHOP.forEach(it=>{const aff=canPay(p,it.cost)&&buying;
     h+='<div class="item"><span>'+LU(KI[it.kind]||'package')+' '+it.name+'</span><span class="cost">'+costIcons(it.cost)+' '+(buying?'<button '+(aff?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
-  document.getElementById('shop').innerHTML=h+(buying?'':'<div class="note">Buy tiles during your Market action.</div>');
+  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Pick a tile to buy. '+LU('route')+'/'+LU('sailboat')+' lanes &amp; ships drop into a perimeter slot you click.':'Acquire at your <b>'+LU('store')+' Market</b> action: '+LU('scroll-text')+' recipes · '+LU('route')+' route lanes · '+LU('sailboat')+' ships · '+LU('wrench')+' <b>rooms = brewery upgrades</b> (Extra Vessel, Aging Cellar, Larder…).')+'</div>';
 }
 function renderTableaus(){
   let tabs='',body='';
