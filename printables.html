@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brewhouse of the Hanse — Print &amp; Play Cut Sheet</title>
+<style>
+  :root{--ink:#2b2018;--parch:#f3e9d2;--line:#333;--gold:#b8860b}
+  *{box-sizing:border-box}
+  body{margin:0;background:#e7e2d6;color:var(--ink);font-family:"Iowan Old Style",Georgia,serif}
+  /* ---- screen controls ---- */
+  .bar{position:sticky;top:0;z-index:10;background:var(--ink);color:var(--parch);padding:10px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+  .bar h1{font-size:1.1rem;margin:0;font-variant:small-caps;letter-spacing:.5px}
+  .bar a{color:var(--gold);text-decoration:none;font-size:.85rem}
+  .bar button{font-family:inherit;cursor:pointer;border:none;border-radius:6px;padding:6px 13px;font-weight:bold;background:var(--gold);color:var(--ink)}
+  .bar .seg{display:inline-flex;border:1px solid var(--gold);border-radius:6px;overflow:hidden}
+  .bar .seg button{border-radius:0;background:transparent;color:var(--parch);font-weight:normal}
+  .bar .seg button.on{background:var(--gold);color:var(--ink)}
+  .note{font-size:.78rem;opacity:.85}
+  /* ---- the sheet ---- */
+  .sheet{background:#fff;margin:16px auto;padding:.4in;width:24in;box-shadow:0 3px 14px rgba(0,0,0,.25)}
+  .calib{display:flex;align-items:center;gap:10px;margin-bottom:.18in;font-size:.13in}
+  .calib .box{width:1in;height:1in;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.1in;color:#666}
+  .famlabel{width:100%;font-variant:small-caps;font-weight:bold;font-size:.2in;color:var(--ink);border-bottom:1px solid var(--gold);margin:.16in 0 .06in;letter-spacing:.5px}
+  .grid{display:flex;flex-wrap:wrap;gap:0}
+  /* ---- tiles (cut lines = thin borders; full-bleed colour to each edge) ---- */
+  .tile{width:1.25in;height:1.25in;border:.3pt solid var(--line);background:var(--c,#777);color:#fff;
+    position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:.07in;overflow:hidden;
+    text-shadow:0 1px 1px rgba(0,0,0,.45)}
+  .tile .ic{width:1em;height:1em;vertical-align:-.15em}
+  .tile svg{stroke-width:2}
+  .t-top{display:flex;align-items:center;gap:.04in;font-size:.12in;font-weight:bold;line-height:1.05}
+  .t-top .bigic svg,.t-top .bigic .ic{width:.32in;height:.32in;stroke-width:1.7}
+  .t-nm{font-variant:small-caps}
+  .t-badge{position:absolute;top:.05in;right:.06in;background:#fff;color:#000;border-radius:.1in;font-size:.1in;font-weight:bold;padding:0 .05in;text-shadow:none}
+  .t-sub{font-size:.1in;opacity:.95}
+  .t-bot{display:flex;align-items:center;gap:.03in;font-size:.13in}
+  .pip{display:inline-block;width:.08in;height:.08in;border-radius:50%;border:1px solid rgba(255,255,255,.8);margin-right:.02in}
+  .pip.on{background:#fff}
+  .g,.h{width:.13in;height:.13in;vertical-align:-.02in}
+  /* goods tokens */
+  .tok{width:.7in;height:.7in;border:.3pt solid var(--line);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;background:var(--c);font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4)}
+  .tok svg{width:.26in;height:.26in}
+  @media print{
+    .no-print{display:none}
+    @page{size:24in auto;margin:.35in}
+    body{background:#fff}
+    .sheet{margin:0;box-shadow:none;width:auto;padding:0}
+  }
+</style>
+</head>
+<body>
+<div class="bar no-print">
+  <h1>Brewhouse of the Hanse — Cut Sheet</h1>
+  <button onclick="window.print()">🖨 Print</button>
+  <span class="seg"><button id="bproof" class="on" onclick="setMode('proof')">Proof (1 each)</button><button id="bfull" onclick="setMode('full')">Full set</button></span>
+  <span class="note">Sized for a <b>24″-wide</b> sheet · tiles 1.25″ · <b>print at 100% / no scaling</b> (check the 1-inch box). Cut lines are the tile borders; colour bleeds to each edge.</span>
+  <span style="margin-left:auto"><a href="index.html">Components</a> · <a href="rulebook.html">Rulebook</a> · <a href="play.html">Play</a></span>
+</div>
+
+<div class="sheet" id="sheet"></div>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>
+const LU=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
+const G=LU('wheat','g'),H=LU('sprout','h');
+const rep=(s,n)=>Array(n).fill(s).join('');
+const pips=q=>{let s='';for(let i=1;i<=5;i++)s+='<span class="pip'+(i<=q?' on':'')+'"></span>';return s;};
+
+// ----- component data (mirrors the current build) -----
+const CASKS=[
+  {nm:'Gruit',  c:'#8a949c', q:1, g:1,h:0, badge:'local', n:16},
+  {nm:'Hopped', c:'#c2922f', q:2, g:1,h:1, badge:'3',     n:20},
+  {nm:'Dubbel', c:'#b06a34', q:3, g:1,h:2, badge:'5',     n:12},
+  {nm:'Tripel', c:'#d8a72a', q:4, g:2,h:2, badge:'7',     n:8},
+  {nm:'Bock',   c:'#7c2128', q:5, g:2,h:2, badge:'10',    n:4},
+];
+const FAMS=[
+ {label:'Route Lanes  (perimeter slots — open a route & raise its value)', color:c=>c, items:[
+   {ic:'route',nm:'Bergen',  sub:'+2 · '+G+' skim', c:'#4a6b3a', n:4},
+   {ic:'route',nm:'Novgorod',sub:'+3 · '+G+' skim', c:'#7c2128', n:5},
+   {ic:'route',nm:'Bruges',  sub:'+1 · '+G+' skim', c:'#274b5c', n:6},
+   {ic:'route',nm:'London',  sub:'+2 · Privilege',  c:'#b8860b', n:4},
+ ]},
+ {label:'Ships  (fill as their line fires, then sail full)', color:()=>'#5b4a37', items:[
+   {ic:'sailboat',nm:'Cog', sub:'cap 3 → sails',  c:'#5b4a37', n:4},
+   {ic:'sailboat',nm:'Hulk',sub:'cap 4 → sails',  c:'#3a3026', n:3},
+ ]},
+ {label:'Rooms  (brewery upgrades — installed on your player board)', color:()=>'#4a6b3a', items:[
+   {ic:'wrench',nm:'Extra Vessel',  sub:'+1 brew lane',   c:'#4a6b3a', n:3},
+   {ic:'wrench',nm:'Aging Cellar',  sub:'unlock Bock',    c:'#3f5c30', n:3},
+   {ic:'wrench',nm:'Warehouse',     sub:'+4 storage',     c:'#4a6b3a', n:3},
+   {ic:'wrench',nm:'Counting-hse',  sub:'+1 standing',    c:'#3f5c30', n:3},
+   {ic:'wrench',nm:'Larder',        sub:'Market twin +2'+G, c:'#4a6b3a', n:3},
+   {ic:'wrench',nm:'Quay',          sub:'Harbor twin',    c:'#3f5c30', n:3},
+   {ic:'wrench',nm:'Faster Ferm.',  sub:'brew twin +load',c:'#4a6b3a', n:3},
+ ]},
+ {label:'Public Kontor Tiles  (seed/added to the shared stack — top = the live action)', color:()=>'#7c2128', items:[
+   {ic:'landmark',nm:'Bryggen',  sub:'+1 '+G, c:'#7c2128', n:1},
+   {ic:'landmark',nm:'Steelyard',sub:'draw Priv.', c:'#8a2b30', n:1},
+   {ic:'landmark',nm:'Cloth Hall',sub:'+good +'+LU('map-pin'), c:'#7c2128', n:1},
+   {ic:'landmark',nm:'Peterhof', sub:'+'+LU('map-pin')+' advance', c:'#8a2b30', n:1},
+   {ic:'landmark',nm:'Grand Ensh.',sub:'+1 standing', c:'#7c2128', n:1},
+   {ic:'landmark',nm:'Market Day',sub:'draw 2', c:'#8a2b30', n:1},
+   {ic:'landmark',nm:"Cooper's",  sub:'advance brew', c:'#7c2128', n:1},
+   {ic:'landmark',nm:'Convoy',   sub:'+1 '+LU('map-pin'), c:'#8a2b30', n:1},
+   {ic:'landmark',nm:'Exchange', sub:'swap '+G+'/'+H, c:'#7c2128', n:1},
+   {ic:'landmark',nm:"Patron's", sub:'+good +draw', c:'#8a2b30', n:1},
+   {ic:'landmark',nm:'Diet',     sub:'+1 standing', c:'#7c2128', n:1},
+   {ic:'landmark',nm:'Sound',    sub:'free passage', c:'#8a2b30', n:1},
+ ]},
+ {label:'Privilege Tiles  (Steelyard rewards)', color:()=>'#b8860b', items:[
+   {ic:'award',nm:'Charter',  sub:'ignore tolls', c:'#b8860b', n:1},
+   {ic:'award',nm:'Patent',   sub:'ship +1', c:'#a07a0c', n:1},
+   {ic:'award',nm:'Guild Seat',sub:'brew +1', c:'#b8860b', n:1},
+   {ic:'award',nm:'Customs',  sub:'-1 tile cost', c:'#a07a0c', n:1},
+   {ic:'award',nm:'Factor',   sub:'+1 draw', c:'#b8860b', n:1},
+   {ic:'award',nm:'Credit',   sub:'swap goods', c:'#a07a0c', n:1},
+   {ic:'award',nm:'Warehouse',sub:'+2 storage', c:'#b8860b', n:1},
+   {ic:'award',nm:'Staple',   sub:'ship +'+LU('map-pin'), c:'#a07a0c', n:1},
+   {ic:'award',nm:'Burgher',  sub:'maj→standing', c:'#b8860b', n:1},
+   {ic:'award',nm:'Brewers',  sub:'gruit farther', c:'#a07a0c', n:1},
+   {ic:'award',nm:'Patron Ear',sub:'first draw', c:'#b8860b', n:1},
+   {ic:'award',nm:'Hanse Seal',sub:'+1/route end', c:'#a07a0c', n:1},
+ ]},
+];
+const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:30},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:24}];
+
+let MODE='proof';
+function setMode(m){MODE=m;document.getElementById('bproof').classList.toggle('on',m==='proof');document.getElementById('bfull').classList.toggle('on',m==='full');render();}
+const cnt=n=>MODE==='proof'?1:n;
+
+function caskTile(d){return '<div class="tile" style="--c:'+d.c+'">'
+  +'<div class="t-top"><span class="bigic">'+LU('beer')+'</span><span class="t-nm">'+d.nm+'</span><span class="t-badge">'+(d.badge==='local'?LU('map-pin'):LU('crown')+d.badge)+'</span></div>'
+  +'<div class="t-mid">'+pips(d.q)+'</div>'
+  +'<div class="t-bot">'+rep(G,d.g)+rep(H,d.h)+'</div></div>';}
+function genTile(it){return '<div class="tile" style="--c:'+it.c+'">'
+  +'<div class="t-top"><span class="bigic">'+LU(it.ic)+'</span><span class="t-nm">'+it.nm+'</span></div>'
+  +'<div class="t-sub">'+it.sub+'</div><div></div></div>';}
+function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+d.nm+'</div>';}
+
+function render(){
+  let h='<div class="calib"><div class="box">1 inch<br>(100%)</div><span class="note" style="color:#555">Verify this box measures exactly 1 inch before cutting.</span></div>';
+  h+='<div class="famlabel">Cask Tiles  (the dual-role hero — '+LU('beer')+' working / '+LU('crown')+' standing)</div><div class="grid">';
+  CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+=caskTile(d);});
+  h+='</div>';
+  FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+'</div><div class="grid">';
+    f.items.forEach(it=>{for(let i=0;i<cnt(it.n);i++)h+=genTile(it);});h+='</div>';});
+  h+='<div class="famlabel">Goods Tokens  (or use wooden cubes)</div><div class="grid">';
+  GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+=tok(d);});h+='</div>';
+  document.getElementById('sheet').innerHTML=h;
+  if(window.lucide)lucide.createIcons();
+}
+render();
+</script>
+</body>
+</html>
