@@ -6,7 +6,7 @@ let src=require('fs').readFileSync('/tmp/play.js','utf8').replace(/\(function bo
 src+=`;globalThis.E={get S(){return S},set S(v){S=v},get UI(){return UI},set UI(v){UI=v},
  freshState,cur,CELLNAME,cellOfLine,ADJ,LINES,SLOTS,STYLES,ROUTES,SHOP,routeFilled,
  doMove,chooseLine,marketGoods,buyTile,placeTile,emptySlots,brewAdvance,brewLoad,readyCasks,
- shipStart,shipPick,shipRoute,shipSlot,quayFallback,kontorTop,enshrineStart,enshrineDo,enshrineReady,cellDone,
+ shipStart,shipPick,shipRoute,shipBuyRoute,shipsWithRoom,deliverCask,quayFallback,kontorTop,enshrineStart,enshrineReady,cellDone,
  gain,advanceAll,canPay,scorePlayer,endTurn,enshrinedTotal};`;
 eval(src);
 const E=globalThis.E,{CELLNAME,cellOfLine,ADJ,LINES,SLOTS,STYLES,ROUTES,SHOP}=E;
@@ -20,17 +20,16 @@ const has=(p,id)=>{const it=SHOP.find(x=>x.id===id);if(it.kind==='route')return 
 const rivalOn=(p,c)=>E.S.players.some(q=>q.id!==p.id&&q.cell===c);
 function loadable(p,style){const st=STYLES[style];return p.recipes.includes(style)&&p.vessels.includes(null)&&E.canPay(p,st.in)&&!(st.cellar&&!p.rooms.includes('cellar'));}
 function chooseLoad(p){const pr=PROF[p.id];for(const s of pr.loads)if(loadable(p,s))return s;for(const s of ['hopped','gruit','dubbel','tripel'])if(loadable(p,s))return s;return null;}
-function shipable(p){const ready=E.readyCasks(p);if(!ready.length||!E.emptySlots().length)return null;
+function shipable(p){const ready=E.readyCasks(p);if(!ready.length)return null; // casks now load into ships (or basic shipment) — no slot needed
  for(const o of ready){const open=Object.keys(ROUTES).filter(r=>E.S.routes[r].open&&E.routeFilled(r)<ROUTES[r].cap&&STYLES[o.c.style].q>=ROUTES[r].gate);
-   if(open.length){const r=open.sort((a,b)=>E.S.routes[b].value-E.S.routes[a].value)[0];return {vi:o.i,route:r};}}
+   if(open.length){const r=open.sort((a,b)=>E.shipsWithRoom(b).length-E.shipsWithRoom(a).length||E.S.routes[b].value-E.S.routes[a].value)[0];return {vi:o.i,route:r};}}
  return null;}
-function enshList(p){const slots=SLOTS.filter(s=>{const t=E.S.slots[s.id];return t&&t.type==='cask'&&t.owner===p.id&&t.enshrine;});
- const ready=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready&&o.c.enshrine);return {slots,ready};}
-function wantEnshrine(p){const pr=PROF[p.id];const e=enshList(p);return E.S.turn>=pr.enshrineTurn&&(e.slots.length||e.ready.length);}
+function enshList(p){const ready=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready&&o.c.enshrine);return {ready};} // enshrine only from Ready vessels now
+function wantEnshrine(p){const pr=PROF[p.id];const e=enshList(p);return E.S.turn>=pr.enshrineTurn&&e.ready.length;}
 function marketWish(p){const pr=PROF[p.id];for(const id of pr.wish){const it=SHOP.find(x=>x.id===id);if(!it||!E.canPay(p,it.cost))continue;
    if(it.kind==='route'&&!has(p,id)&&E.emptySlots().length)return{tile:id};
    if(it.kind==='room'){if(it.room==='vessel'&&p.maxVessels<3&&p.rooms.length<4)return{tile:id};if(it.room!=='vessel'&&!has(p,id)&&p.rooms.length<4)return{tile:id};}
-   if(it.kind==='recipe'&&p.recipes.filter(r=>r===it.style).length<1)return{tile:id};
+   if(it.kind==='recipe'&&!p.recipes.includes(it.style)&&!SLOTS.some(s=>{const t=E.S.slots[s.id];return t&&t.type==='recipe'&&t.owner===p.id&&t.style===it.style})&&E.emptySlots().length)return{tile:id};
    if(it.kind==='ship'&&p.ships<1&&E.emptySlots().length)return{tile:id};}
  return null;}
 function cellValue(p,c){const act=CELLNAME[c],blk=rivalOn(p,c),pr=PROF[p.id];
@@ -47,10 +46,12 @@ function resolveCell(p){const act=CELLNAME[E.UI.cell],blk=E.UI.blocked;
   if(blk&&act==='Market'){const n=p.rooms.includes('larder')?2:1;E.gain(p,n,0);E.cellDone();return;}
   if(blk&&act==='Brewhouse'&&!p.rooms.includes('fermenter')){E.advanceAll(p);E.cellDone();return;}
   if(blk&&act==='Harbor'&&!p.rooms.includes('quay')){E.quayFallback();return;}
-  if(act==='Market'){const w=marketWish(p);if(w&&(p.grain+p.hops>=3||SHOP.find(x=>x.id===w.tile).kind!=='goods')){E.buyTile(w.tile);if(E.UI.stage==='place')E.placeTile(E.emptySlots()[0].id);}else{E.marketGoods(p.hops<p.grain-1?'gh':'gg');}return;}
+  if(act==='Market'){const w=marketWish(p);if(w&&(p.grain+p.hops>=3||SHOP.find(x=>x.id===w.tile).kind!=='goods')){E.buyTile(w.tile);
+      if(E.UI.stage==='ship_buy_route'){const r=Object.keys(ROUTES).filter(x=>E.S.routes[x].open).sort((a,b)=>E.S.routes[b].value-E.S.routes[a].value)[0];E.shipBuyRoute(r);}
+      if(E.UI.stage==='place')E.placeTile(E.emptySlots()[0].id);}else{E.marketGoods(p.hops<p.grain-1?'gh':'gg');}return;}
   if(act==='Brewhouse'){E.brewAdvance();const s=chooseLoad(p);if(s)E.brewLoad(s);E.cellDone();return;}
-  if(act==='Harbor'){const s=shipable(p);if(!s){E.cellDone();return;}E.shipStart();E.shipPick(s.vi);E.shipRoute(s.route);E.shipSlot(E.emptySlots()[0].id);return;}
-  if(act==='Kontor'){if(wantEnshrine(p)){const e=enshList(p);E.enshrineStart();if(e.ready.length)E.enshrineReady(e.ready[0].i);else E.enshrineDo(e.slots[0].id);}else E.kontorTop();return;}
+  if(act==='Harbor'){const s=shipable(p);if(!s){E.cellDone();return;}E.shipStart();E.shipPick(s.vi);E.shipRoute(s.route);return;}
+  if(act==='Kontor'){if(wantEnshrine(p)){const e=enshList(p);E.enshrineStart();E.enshrineReady(e.ready[0].i);}else E.kontorTop();return;}
   E.cellDone();
  }catch(e){if(E.UI.sub==='cell')E.cellDone();}}
 function botTurn(){const p=E.cur();const o=pickOption(p);E.doMove(o.cell);E.chooseLine(o.lk);let g=0;while(E.UI.sub==='cell'&&g++<20)resolveCell(p);E.endTurn();}

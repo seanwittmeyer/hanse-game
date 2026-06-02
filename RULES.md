@@ -6,7 +6,9 @@
 
 ## 0. Setup (symmetric)
 
-Each house starts with **3 `G`, 2 `H`**, **1 Gruit + 1 Hopped recipe**, **1 open vessel** (lanes 2–3 locked, cap 3), storage 8, and the printed Larder + Quay. Bruges route open; far routes closed. Kontor stack seeded with 2 public tiles. See `PLAYERBOARD.md`.
+Each house starts with **3 `G`, 2 `H`**, the **Gruit baseline** (always brewable) **+ 1 random premium recipe in hand** (Hopped / Dubbel / Tripel), **1 open vessel** (cap 3), storage 8, and the printed Larder + Quay. Bruges route open; far routes closed. Kontor stack seeded with 2 public tiles. See `PLAYERBOARD.md`.
+
+> **Recipes are held in hand and brewed from hand.** Gruit is universal; every *other* recipe must be acquired as a **recipe tile placed in a perimeter slot**, then **claimed into your hand the next time that slot's line fires** (any player's activation; the owner claims, then the tile is spent and the slot frees). So recipe variety is an engine you build in the slot ring — see §A.
 
 ---
 
@@ -35,6 +37,7 @@ On your turn, in order:
 ### A · Market
 - Take **2 goods** (any mix `G`/`H`) from the supply, **OR** acquire **1 tile** from the face-up Market display, paying its cost in goods.
 - Tile costs ⚙: recipe 1–2 · route/ship 2 · room 3 · (privileges come from London, §Harbor).
+- **Routes, ships, and recipes are placed into an empty perimeter slot** (commit it to that line's row XOR column). A **ship** also names the **route it will support** when placed. Rooms install directly to your tableau.
 - **Twin (blocked): Larder** = +1 `G`; a **Larder** room bumps it to +2 `G`. (The public Market's tile-buying is its irreplaceable edge — the Larder is goods only.)
 
 ### D · Brewhouse
@@ -45,13 +48,17 @@ On your turn, in order:
 - **Twin (blocked): brew-room** = advance all, no load; a **Faster Fermenter** room restores the load so the twin equals the public action.
 
 ### B · Harbor
-- **Ship 1 READY cask** (2 with a Hulk): move its tile into an **open perimeter slot** (now working), and place **1 presence** on a route the cask quality-qualifies for, advancing 1 space (+ range mods: Cog, etc.).
-- **Routes:** **Bruges is open from the start.** Bergen / London / Novgorod open only once a Route Lane tile for them sits in a slot. **Presence is clamped to each route's capacity** ⚙ (Bruges 8 · London 6 · Bergen 5 · Novgorod 9) — you cannot ship to a full route. Filling a route fires the reach end-clock.
+- **Ship 1 READY cask** to a route the cask's quality qualifies for. You gain **1 presence** on that route (reach). The cask itself becomes **cargo:**
+  - **If a ship supporting that route has room, the cask loads aboard it** (preferred). If it's a **rival's** ship, that owner collects a **+1 `G` toll** for the carriage. When a ship is **full it sails** — its cargo is delivered (already counted as each shipper's presence) and the **owner** takes a sail dividend (+1 presence on the route, +1 `G`); the ship leaves its slot (transient).
+  - **If no ship has room on the route, it's a basic shipment** — you still place your 1 presence; the cask is simply delivered. (Ships are a **booster**, not a gate.)
+- **Ships** (§A) are route-bound containers placed in a slot. **A ship's own line-action is to load:** when its cap fires, it pulls one of the **owner's** ready, route-eligible casks aboard (owner +1 presence), sailing when full. So a ship is owned infrastructure that profits from *all* traffic on its route — the toll-baron play.
+- **Routes:** **Bruges is open from the start.** Bergen / London / Novgorod open only once a Route Lane tile for them sits in a slot. **Presence is clamped to each route's capacity** ⚙ (Bruges 8 · London 6 · Bergen 5 · Novgorod 9). Filling a route fires the reach end-clock.
 - **London delivery** grants a **Privilege tile** (its route payout).
-- **Twin (blocked): Quay** = ship a ready cask to **Bruges only**; a **Quay** room lets it ship to any open qualifying route.
+- **Twin (blocked): Quay** = ship a ready cask to **Bruges only** (loading a Bruges ship if one has room, else a basic shipment); a **Quay** room lets it ship to any open qualifying route.
 
 ### C · Kontor
-- Choose one: **use the current top-of-stack action**, **or ENSHRINE** a cask to the **top of the stack** (standing face). You may enshrine **either a Ready cask straight from your brewery** (pure standing — it was never reached) **or a working cask from a slot** (converting its reach into standing and freeing the slot). You bank its standing; its goal goes live; it sets the new top action.
+- Choose one: **use the current top-of-stack action**, **or ENSHRINE a Ready cask straight from your brewery** to the **top of the stack** (standing face). You bank its standing; its goal goes live; it sets the new top action.
+  - This is the **reach-vs-standing fork made physical:** a Ready cask either **ships** (becomes reach — cargo/presence) **or enshrines** (becomes standing). It is never both. *(Casks no longer live as standalone working slot tiles; reach now flows through ships, so enshrining is from the brewery, not from a slot.)*
   - *(v0.2 balance: direct-from-Ready enshrine was added because the old brew→ship→enshrine chain made standing far too slow — a 3p sim produced **zero** enshrinements in 10 turns.)*
 - Enshrining is bundled by geometry with an **acquire** (left column, Market+Kontor) or a **brew** (bottom row, Brewhouse+Kontor).
 - **Occupancy:** the Kontor is **not** tolled or blocked to a fallback — anyone may fire a Kontor line; the top action / enshrine is available to whoever runs it. ❓ (revisit if it needs contention)
@@ -88,7 +95,7 @@ Both archetypes can therefore drive the ending. Finish the current round so all 
 2. **Majorities:** route-majority bonuses at each kontor (most presence; tie = shared/split ⚙).
 3. **Standing:** sum of your enshrined casks' standing values.
 4. **Goals:** resolve each enshrined cask's goal against final state (the goal-matching layer).
-5. **Tiebreak:** most goods, then most working casks in slots.
+5. **Tiebreak:** most goods, then most casks in transit (loaded as cargo in ships).
 
 > Reach (1–2) and Standing (3–4) are **separate accumulations** that never convert — the two real win conditions. Limited slots, vessels, and turns force the lean between them (§13 option c).
 

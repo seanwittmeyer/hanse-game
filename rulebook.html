@@ -155,7 +155,7 @@
     <li>Place the <b>main board</b> and <b>route board</b>. Leave all 8 perimeter slots empty. <b>Bruges</b> begins open; the other three routes are closed.</li>
     <li>Seed the <b>Kontor stack</b> with 2 public Kontor tiles ⚙.</li>
     <li>Build the <b>face-up Market display</b> ⚙ from the tile supply (a row of available tiles, refilled as taken).</li>
-    <li>Each player takes a <b>tableau</b>, a <b>worker</b>, presence + standing markers, and a starting stake: <b>2 <span class="cube g"></span>, 1 <span class="cube h"></span>, and 1 Gruit recipe</b> ⚙. One vessel lane is open.</li>
+    <li>Each player takes a <b>tableau</b>, a <b>worker</b>, presence + standing markers, and a starting stake: <b>3 <span class="cube g"></span>, 2 <span class="cube h"></span>, and the Gruit baseline + 1 random premium recipe</b> in hand ⚙. One vessel lane is open.</li>
     <li>Each player places their worker on any cell. Give the youngest brewer the <b>first-player marker</b>.</li>
   </ol>
 </section>
@@ -183,8 +183,8 @@
     <tr><th>Cell</th><th>Public action ⚙</th><th>Tableau fallback (if a rival is on the cell)</th></tr>
     <tr><td><b>A · Market</b></td><td>Take <b>2 goods</b> (any mix), <b>or</b> acquire <b>1 tile</b> from the Market display, paying its goods cost.</td><td><b>Larder</b>: +1 <span class="cube g"></span> (upgradable).</td></tr>
     <tr><td><b>B · Brewhouse</b></td><td><b>Advance all</b> your brews 1 step, <b>and</b> optionally <b>Load</b> 1 recipe (paying inputs) into an empty vessel.</td><td>Advance brews only (no load bonus). Brewing always happens here.</td></tr>
-    <tr><td><b>C · Harbor</b></td><td><b>Ship 1 ready cask</b>: place its tile in an open slot (now working) and place <b>1 presence</b> on a route it quality-qualifies for.</td><td><b>Quay</b>: ship to Bruges only, 1 step (upgradable).</td></tr>
-    <tr><td><b>D · Kontor</b></td><td>Either <b>use the top-of-stack action</b>, or <b>enshrine</b> a working cask (move it from a slot to the top of the stack).</td><td>— (open to all; not blocked)</td></tr>
+    <tr><td><b>C · Harbor</b></td><td><b>Ship 1 ready cask</b>: gain <b>1 presence</b> on a route it quality-qualifies for; the cask <b>loads as cargo into a ship</b> on that route if one has room (else a basic shipment). Loading a <b>rival's</b> ship pays its owner a <b>1 <span class="cube g"></span> toll</b>; a full ship <b>sails</b> (owner takes a dividend, slot frees).</td><td><b>Quay</b>: ship to Bruges only (upgradable).</td></tr>
+    <tr><td><b>D · Kontor</b></td><td>Either <b>use the top-of-stack action</b>, or <b>enshrine a ready cask straight from your brewery</b> (move it to the top of the stack). A ready cask either ships (reach) <em>or</em> enshrines (standing) — never both.</td><td>— (open to all; not blocked)</td></tr>
   </table>
   <p>Tile costs ⚙: recipe 1–2 goods · route/ship 2 · room 3. London deliveries grant a Privilege tile.</p>
 </section>
@@ -217,8 +217,8 @@
   <h2><span class="nm">10</span>Enshrining &amp; Standing</h2>
   <p>To <b>enshrine</b>, your worker must activate a line containing the <b>Kontor</b> (the bottom row, via Harbor, or the right column, via Brewhouse). Then:</p>
   <ul>
-    <li>Move one of your <b>working casks</b> from its slot to the <b>top of the Kontor stack</b>, flipped to its <b>standing face</b>.</li>
-    <li>It <b>stops skimming</b> (you lose that engine piece and free the slot). You <b>bank its standing value</b>, its <b>goal</b> becomes live for end-game scoring, and it <b>sets the new top-of-stack action</b>.</li>
+    <li>Take a <b>ready cask straight from your brewery</b> and place it on the <b>top of the Kontor stack</b>, flipped to its <b>standing face</b>.</li>
+    <li>That cask is now <b>out of commerce</b> — it could have shipped for reach, but you took the standing instead. You <b>bank its standing value</b>, its <b>goal</b> becomes live for end-game scoring, and it <b>sets the new top-of-stack action</b>.</li>
   </ul>
   <div class="box red"><h4>The spine of the game</h4>Enshrining is a triple choice on one tile: bank points <em>now</em>, commit to a scoring <em>direction</em> (the goal), and reshape the shared Kontor action for whoever banks next. And because the line that lets you enshrine also fires a brew or a ship, you are always trading away one of those for it. <b>Reach (presence) and standing (enshrined casks) accumulate separately and never convert.</b></div>
 </section>
@@ -226,7 +226,7 @@
 <section id="slots">
   <h2><span class="nm">11</span>Slots, Skims &amp; Tolls</h2>
   <ul>
-    <li>The <b>8 perimeter slots</b> hold a mix of <b>working casks</b> and owned <b>infrastructure tiles</b> (Routes, Ships). They compete for the same space — every slot is a row-<em>xor</em>-column commitment.</li>
+    <li>The <b>8 perimeter slots</b> hold a churning mix of owned tiles — <b>Ships</b> (route-bound cargo containers that fill then sail away), <b>Recipe tiles</b> (claimed into hand when fired, then spent), and <b>Route Lanes</b> (permanent value). They compete for the same space — every slot is a row-<em>xor</em>-column commitment.</li>
     <li>An owned slot tile fires its <b>line action</b> whenever its line is activated <em>by anyone</em>; the <b>owner</b> collects (the <b>skim</b>). Parking a tile on a high-traffic line taxes every rival who runs it.</li>
     <li><b>Occupancy:</b> a cell with a rival's worker is not blocked outright — you simply take your <b>tableau fallback</b> for that action instead. The more brewery you have built, the less a block stings.</li>
   </ul>
@@ -255,8 +255,8 @@
     <li><b>Standing</b> — the sum of your enshrined casks' standing values.</li>
     <li><b>Goals</b> — resolve each enshrined cask's goal against the final board state.</li>
   </ol>
-  <p>Highest total wins. <b>Tiebreak:</b> most goods, then most working casks in your slots.</p>
-  <div class="box"><h4>The goal pool (examples ⚙)</h4>Goals are how reach and standing <em>interact</em> rather than run parallel — e.g. <code>+1/route with presence</code>, <code>+2 per same-style enshrined cask</code>, <code>+2 per Q4+ enshrined</code>, <code>+4 per route majority</code>, <code>+1 per working cask</code>, <code>+3 flat</code>. See the <a href="index.html#casks">visualizer</a> for the full list.</div>
+  <p>Highest total wins. <b>Tiebreak:</b> most goods, then most casks in transit (cargo loaded in ships).</p>
+  <div class="box"><h4>The goal pool (examples ⚙)</h4>Goals are how reach and standing <em>interact</em> rather than run parallel — e.g. <code>+1/route with presence</code>, <code>+2 per same-style enshrined cask</code>, <code>+2 per Q4+ enshrined</code>, <code>+4 per route majority</code>, <code>+1 per cask in transit</code>, <code>+3 flat</code>. See the <a href="index.html#casks">visualizer</a> for the full list.</div>
 </section>
 
 <section id="twoplayer">
@@ -271,7 +271,7 @@
     <li><b>Line</b> — a row or column; a 4-stop pipeline.</li>
     <li><b>Slot</b> — a perimeter space holding one owned tile; belongs to one line only.</li>
     <li><b>Cap</b> — the slot tile at either end of an activated line.</li>
-    <li><b>Working / Enshrined</b> — a cask in a slot (reach engine) vs. on the Kontor stack (standing).</li>
+    <li><b>In transit / Enshrined</b> — a cask loaded as cargo in a ship (reach) vs. on the Kontor stack (standing).</li>
     <li><b>Kontor</b> — a foreign trading post; also the shared score-stack cell.</li>
     <li><b>Skim</b> — goods collected by a slot tile's owner when its line fires.</li>
     <li><b>Presence</b> — your markers on a route = reach.</li>

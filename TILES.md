@@ -7,9 +7,9 @@
 ## 0. Conventions
 
 - **Goods:** `G` = grain cube, `H` = hops cube. The only spendable currency (no money).
-- **Faces:** infrastructure tiles are single-face; **cask tiles are double-sided** — **working face** (in a slot) ↔ **standing face** (in the Kontor stack).
-- **Skim rule (§9):** an owned tile in a slot fires its **line action** whenever *any* player activates that line; the **owner** collects. Keep skims small — this is the rich-get-richer dial. ⚙
-- **Acquisition:** all tiles enter from a **face-up Market display** (deterministic, public — no hidden draw), paid in goods at the **Market** cell. Casks are the exception: you don't buy a finished cask, you buy/own a **recipe** and **brew** it.
+- **Faces:** infrastructure tiles are single-face; **cask tiles are double-sided** — **cargo face** (loaded into a ship = reach) ↔ **standing face** (in the Kontor stack = standing). *(2026-06-02: casks are cargo, not standalone working slot tiles — see `DESIGN.md` §19 "living slot ring.")*
+- **Skim rule (§9):** an owned **slot tile** (route lane, ship, recipe) fires its **line action** whenever *any* player activates that line; the **owner** collects. Keep skims small — this is the rich-get-richer dial. ⚙
+- **Acquisition:** all tiles enter from a **face-up Market display** (deterministic, public — no hidden draw), paid in goods at the **Market** cell. Casks are the exception: you don't buy a finished cask, you hold a **recipe** (in hand) and **brew** it. Recipes themselves are gained via **recipe tiles** (Family C′) claimed off the slot ring.
 - **Reach vs Standing accumulate separately:** presence markers (reach) and enshrined casks (standing) never convert into each other.
 
 ---
@@ -18,20 +18,22 @@
 
 A cask tile carries, by face:
 
-- **Working face** (in a slot): `STYLE` · `QUALITY` · a **line action** (the skim its owner collects when the line fires).
+- **Cargo face** (in transit): `STYLE` · `QUALITY`. A Ready cask is **shipped** to a route — gaining you **1 presence** (reach) and loading as **cargo into a ship** on that route (or a basic shipment if none). Casks no longer fire an individual line skim; reach flows through ships (Family C).
 - **Standing face** (enshrined): `STANDING` value · a **goal** (end-game scoring) · a small **Kontor action** (used by anyone while this tile is on top of the stack — this is how personal casks join the public stack as live actions).
+
+> **The dual-role fork** is now per-cask and per-turn: a Ready cask either **ships** (cargo face → reach) **or enshrines** (standing face → standing). Never both.
 
 ### Styles
 
-| Style | Q | Brew inputs | Brew path | Ships to | Enshrine? | Working line action ⚙ | Standing ⚙ | Qty |
-|---|---|---|---|---|---|---|---|---|
-| **Gruit Ale** | 1 | `G` | LOAD→FERMENT→READY | Bruges / nearest waypoint only (perishable) | ❌ | `+1 G` | — (single-face) | 16 |
-| **Hopped Beer** | 2 | `G H` | LOAD→FERMENT→AGE→READY | any route | ✅ | `+1 H` | 3 | 20 |
-| **Dubbel** | 3 | `G H H` | + longer AGE | London/Bergen/Novgorod | ✅ | `+1 G or H` | 5 | 12 |
-| **Tripel** | 4 | `G G H H` | + longer AGE | Bergen/Novgorod | ✅ | `advance 1 brew step` | 7 | 8 |
-| **Barrel-aged Bock** | 5 | premium; needs **Aging Cellar** room | longest AGE | Novgorod | ✅ | `+1 presence (any open route)` | 10 | 4 |
+| Style | Q | Brew inputs | Brew path | Ships to | Enshrine? | Standing ⚙ | Qty |
+|---|---|---|---|---|---|---|---|
+| **Gruit Ale** | 1 | `G` | LOAD→FERMENT→READY | Bruges / nearest waypoint only (perishable) | ❌ | — (single-face) | 16 |
+| **Hopped Beer** | 2 | `G H` | LOAD→FERMENT→AGE→READY | any route | ✅ | 3 | 20 |
+| **Dubbel** | 3 | `G H H` | + longer AGE | London/Bergen/Novgorod | ✅ | 5 | 12 |
+| **Tripel** | 4 | `G G H H` | + longer AGE | Bergen/Novgorod | ✅ | 7 | 8 |
+| **Barrel-aged Bock** | 5 | premium; needs **Aging Cellar** room | longest AGE | Novgorod | ✅ | 10 | 4 |
 
-*Gruit is working-only — perishable, never heritage. It's cheap early-engine fuel and cheap local reach, and it can never be enshrined. That single fact is the Westvleteren/Leffe line drawn in the components.*
+*Gruit is cargo-only — perishable, never heritage. It's cheap early-engine fuel and cheap local reach, and it can never be enshrined. That single fact is the Westvleteren/Leffe line drawn in the components.*
 
 ### Market quality-gates (the Quality → Destination interlock)
 
@@ -56,7 +58,7 @@ Each enshrine-able cask (Q2–Q5, 44 tiles) carries **one** goal, scored at game
 | g4 | `+2 VP per enshrined Q4+ cask you own` | quality | 4 |
 | g5 | `+2 VP per presence on Novgorod` | destination | 4 |
 | g6 | `+4 VP if you hold a route majority (each, max 2)` | destination | 4 |
-| g7 | `+1 VP per working cask still in your slots` | engine/reach | 5 |
+| g7 | `+1 VP per cask in transit (loaded in your/others' ships)` | engine/reach | 5 |
 | g8 | `+2 VP per filled brewery room` | tableau/depth | 4 |
 | g9 | `+1 VP per infrastructure tile you own in slots` | toll-baron | 3 |
 | g10 | `+3 VP flat (pure standing)` | safe/scarcity | 3 |
@@ -85,16 +87,34 @@ Placed in a perimeter slot (committed to row XOR column). **Two jobs:** raise th
 
 ---
 
-## C. Ship tiles — perimeter infrastructure (12 tiles)
+## C. Ship tiles — owned, route-bound cargo containers (12 tiles)
 
-Owned slot tiles that upgrade your shipping. Skim small when fired.
+A ship is a **slot tile with a stack of cask sub-slots**, placed by a player and **bound to one route** when placed (it "supports" that route). It is the **toll-baron** play — owned infrastructure that profits from *everyone's* traffic on its route.
 
-| Ship tile | Effect ⚙ | Qty |
+- **Loading (two ways):** (1) when **any player ships** a Ready cask to the route and the ship has room, the cask **loads aboard** — the shipper gains their +1 presence, and if the ship is a **rival's**, the owner collects a **+1 G toll**; (2) the ship's **own line-action** (when its cap fires) pulls one of the **owner's** ready, route-eligible casks aboard.
+- **Sailing:** when **full**, the ship **sails** — cargo is delivered (already counted as each shipper's presence) and the **owner** takes a **sail dividend** (+1 presence on the route, +1 G); the ship then **leaves its slot** (transient churn).
+
+| Ship tile | Capacity / effect ⚙ | Qty |
 |---|---|---|
-| **Cog (+Range)** | your Harbor action ships +1 step | 4 |
-| **Hulk (+Cargo)** | ship 2 casks in one Harbor action | 3 |
+| **Cog** | cargo container, **cap 3** | 4 |
+| **Hulk** | larger container, **cap 4** | 3 |
 | **Toll Exemption** | ignore one toll/skim per turn | 3 |
 | **Pilot** | ignore one waypoint cost | 2 |
+
+---
+
+## C′. Recipe tiles — claim-on-fire engine (slot ring)
+
+You **hold recipes in hand** and brew from hand. Gruit is the universal baseline; **every other recipe is acquired as a recipe tile placed in a perimeter slot.** The **next time that slot's line fires** (any player's activation), the **owner claims the recipe into hand** and the **tile is spent** (slot frees) — transient, and consistent with the §9 skim model (the recipe tile's "skim" is the recipe itself).
+
+| Recipe tile | Grants (to hand) ⚙ | Cost | Qty |
+|---|---|---|---|
+| **Recipe · Hopped** | Hopped Beer recipe | `1 G` | 5 |
+| **Recipe · Dubbel** | Dubbel recipe | `1 G 1 H` | 4 |
+| **Recipe · Tripel** | Tripel recipe | `2 G` | 3 |
+| **Recipe · Bock** | Barrel-aged Bock (needs Aging Cellar to brew) | `2 G 1 H` | 2 |
+
+> Start of game: **Gruit baseline + 1 random premium recipe** in hand (Hopped / Dubbel / Tripel).
 
 ---
 
@@ -158,7 +178,7 @@ Seed the stack and get added during play; interleave with personal enshrined cas
 - 1 **worker**, placed on the grid.
 - Tableau printed with **Larder** (Market trickle +1 `G`) and **Quay** (Harbor trickle, 1 step) — upgradeable by Family E.
 - **1 vessel lane** open on the brewing track.
-- Starting stake: **2 `G`, 1 `H`**, and **1 Gruit recipe** in hand. ⚙
+- Starting stake: **3 `G`, 2 `H`**, and **the Gruit baseline + 1 random premium recipe** in hand (Hopped / Dubbel / Tripel). ⚙
 - Asymmetric starting brewing-house tiles = possible variant. ❓
 
 ---
@@ -170,12 +190,13 @@ Seed the stack and get added during play; interleave with personal enshrined cas
 | A Casks | ~60 | ~5 styles × ~10 goals |
 | B Routes | 19 | ~4 |
 | C Ships | 12 | 4 |
+| C′ Recipes | 14 | 4 |
 | D Privileges | 12 | 12 |
 | E Rooms | 24 | 8 |
 | F Public Kontor | 12 | 12 |
-| **Total** | **~139** | **~45 unique faces** |
+| **Total** | **~153** | **~49 unique faces** |
 
-**~140 tiles but only ~45 unique designs** — the bulk is *copies* (casks, rooms, ships). That's Castles-of-Burgundy / Carcassonne tile-scale, not card-scale. Cards aren't needed; tiles preserve determinism and the physical working↔standing flip.
+**~150 tiles but only ~49 unique designs** — the bulk is *copies* (casks, rooms, ships). That's Castles-of-Burgundy / Carcassonne tile-scale, not card-scale. Cards aren't needed; tiles preserve determinism and the physical working↔standing flip.
 
 ---
 

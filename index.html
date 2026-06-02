@@ -186,7 +186,7 @@
       <div class="slot s2" data-line="col-r">slot s2</div>
       <div class="slot s8" data-line="row-t">slot s8</div>
       <div class="cell A" data-row="row-t" data-col="col-l"><div class="corner">A</div><div class="lbl">Market</div><div class="nm">Market</div><div class="do">Take goods &amp; tiles from the supply</div></div>
-      <div class="cell B" data-row="row-t" data-col="col-r"><div class="corner">B</div><div class="lbl">Harbor</div><div class="nm">Harbor</div><div class="do">Ship a cask → slot + presence (reach)</div></div>
+      <div class="cell B" data-row="row-t" data-col="col-r"><div class="corner">B</div><div class="lbl">Harbor</div><div class="nm">Harbor</div><div class="do">Ship a cask → loads a ship + presence (reach)</div></div>
       <div class="slot s3" data-line="row-t">slot s3</div>
       <div class="slot s7" data-line="row-b">slot s7</div>
       <div class="cell C" data-row="row-b" data-col="col-l"><div class="corner">C</div><div class="lbl">Kontor</div><div class="nm">Kontor</div><div class="do">Enshrine a cask / top-stack action (standing)</div></div>
@@ -231,7 +231,7 @@
 <!-- CASK TILES -->
 <section id="casks">
   <h2><span class="n">A</span>Cask Tiles — the Dual-Role Hero</h2>
-  <p class="lead">Double-sided. <b>Working face</b> (in a slot) fires a line skim = reach engine. <b>Standing face</b> (enshrined) banks points, carries a goal, and sets the Kontor's top action. <i>Click a tile to flip it.</i></p>
+  <p class="lead">Double-sided. <b>Cargo face</b> (loaded into a ship) = reach: shipping it drops +1 presence on a route. <b>Standing face</b> (enshrined) banks points, carries a goal, and sets the Kontor's top action. A ready cask ships <em>or</em> enshrines, never both. <i>Click a tile to flip it.</i></p>
   <div class="legend">
     <span class="chip"><span class="dot grain"></span> Grain (G)</span>
     <span class="chip"><span class="dot hops"></span> Hops (H)</span>
@@ -250,8 +250,16 @@
 
 <!-- SHIP TILES -->
 <section id="ships">
-  <h2><span class="n">C</span>Ship Tiles</h2>
+  <h2><span class="n">C</span>Ship Tiles <span class="small">— owned, route-bound cargo containers</span></h2>
+  <p class="lead">Placed in a slot and bound to one route. Casks shipped there (by anyone) load aboard — rivals pay the owner a toll; a full ship sails (owner dividend) and frees its slot. The toll-baron play.</p>
   <div class="gallery" id="shipGallery"></div>
+</section>
+
+<!-- RECIPES -->
+<section id="recipes">
+  <h2><span class="n">C′</span>Recipe Tiles <span class="small">— claim-on-fire engine</span></h2>
+  <p class="lead">Recipes are held in hand and brewed from hand (gruit is the baseline). Other recipes are placed as a slot tile, then claimed into the owner's hand the next time that line fires — and the tile is spent.</p>
+  <div class="gallery" id="recipeGallery"></div>
 </section>
 
 <!-- PRIVILEGES -->
@@ -306,21 +314,21 @@ document.getElementById('rb').innerHTML=routes.map(r=>{
 
 // ---- CASK TILES ----
 const casks=[
-  {style:'Gruit Ale',q:1,inputs:'G',ships:'Bruges / nearest only',enshrine:false,work:'+1 G',stand:'—',goal:'(perishable — never enshrined)',qty:16},
-  {style:'Hopped Beer',q:2,inputs:'G H',ships:'any route',enshrine:true,work:'+1 H',stand:'2',goal:'one goal from the pool',qty:20},
-  {style:'Dubbel',q:3,inputs:'G H H',ships:'London / Bergen / Novgorod',enshrine:true,work:'+1 G or H',stand:'4',goal:'one goal from the pool',qty:12},
-  {style:'Tripel',q:4,inputs:'G G H H',ships:'Bergen / Novgorod',enshrine:true,work:'advance 1 brew',stand:'6',goal:'one goal from the pool',qty:8},
-  {style:'Barrel-aged Bock',q:5,inputs:'premium · needs Aging Cellar',ships:'Novgorod',enshrine:true,work:'+1 presence',stand:'9',goal:'one goal from the pool',qty:4},
+  {style:'Gruit Ale',q:1,inputs:'G',ships:'Bruges / nearest only',enshrine:false,stand:'—',goal:'(perishable — never enshrined)',qty:16},
+  {style:'Hopped Beer',q:2,inputs:'G H',ships:'any route',enshrine:true,stand:'3',goal:'one goal from the pool',qty:20},
+  {style:'Dubbel',q:3,inputs:'G H H',ships:'London / Bergen / Novgorod',enshrine:true,stand:'5',goal:'one goal from the pool',qty:12},
+  {style:'Tripel',q:4,inputs:'G G H H',ships:'Bergen / Novgorod',enshrine:true,stand:'7',goal:'one goal from the pool',qty:8},
+  {style:'Barrel-aged Bock',q:5,inputs:'premium · needs Aging Cellar',ships:'Novgorod',enshrine:true,stand:'10',goal:'one goal from the pool',qty:4},
 ];
 function qbar(q){let s='';for(let i=1;i<=5;i++)s+=`<span class="q ${i<=q?'':'off'}"></span>`;return `<div class="qbar">${s}</div>`;}
 document.getElementById('caskGallery').innerHTML=casks.map(c=>`
   <div class="flip" onclick="this.classList.toggle('flipped')">
     <div class="inner">
       <div class="face work">
-        <div class="fhead"><div class="fk">Working · in slot · REACH</div><div class="ft">${c.style}</div>${qbar(c.q)}</div>
+        <div class="fhead"><div class="fk">Cargo · loaded in a ship · REACH</div><div class="ft">${c.style}</div>${qbar(c.q)}</div>
         <div class="fbody">
           <div class="inputs">Brew: ${cubes(c.inputs)}</div>
-          <div class="row"><span class="k">Line action</span><span class="v">${c.work}</span></div>
+          <div class="row"><span class="k">Reach</span><span class="v">+1 presence on its route</span></div>
           <div class="row"><span class="k">Ships to</span><span class="v">${c.ships}</span></div>
           <div class="badge">×${c.qty}</div>
         </div>
@@ -347,7 +355,7 @@ const goals=[
   ['g4','+2 VP per enshrined Q4+ cask you own','quality'],
   ['g5','+2 VP per presence on Novgorod','destination'],
   ['g6','+4 VP per route majority you hold (max 2)','destination'],
-  ['g7','+1 VP per working cask still in your slots','engine'],
+  ['g7','+1 VP per cask in transit (loaded in ships)','engine'],
   ['g8','+2 VP per filled brewery room','tableau'],
   ['g9','+1 VP per infrastructure tile you own in slots','toll-baron'],
   ['g10','+3 VP flat (pure standing)','scarcity'],
@@ -372,14 +380,29 @@ document.getElementById('routeGallery').innerHTML=routeTiles.map(t=>`
 
 // ---- SHIP TILES ----
 const ships=[
-  {name:'Cog',d:'Your Harbor action ships +1 step',qty:4},
-  {name:'Hulk',d:'Ship 2 casks in one Harbor action',qty:3},
+  {name:'Cog',d:'Route-bound cargo container · cap 3. Casks shipped to its route load aboard (rivals pay a toll); sails when full.',qty:4},
+  {name:'Hulk',d:'Larger container · cap 4. Same loading/toll/sail; more cargo before it sails.',qty:3},
   {name:'Toll Exemption',d:'Ignore one toll / skim per turn',qty:3},
   {name:'Pilot',d:'Ignore one waypoint cost',qty:2},
 ];
 document.getElementById('shipGallery').innerHTML=ships.map(t=>`
-  <div class="card"><div class="head h-ship"><div class="kind">Ship · slot</div><div class="ttl">${t.name}</div></div>
+  <div class="card"><div class="head h-ship"><div class="kind">Ship · route-bound container</div><div class="ttl">${t.name}</div></div>
   <div class="body">${t.d}<div class="badge">×${t.qty}</div></div></div>`).join('');
+
+// ---- RECIPE TILES ----
+const recipeTiles=[
+  {name:'Recipe · Hopped',grants:'Hopped Beer recipe → hand',cost:'1 G',qty:5},
+  {name:'Recipe · Dubbel',grants:'Dubbel recipe → hand',cost:'1 G 1 H',qty:4},
+  {name:'Recipe · Tripel',grants:'Tripel recipe → hand',cost:'2 G',qty:3},
+  {name:'Recipe · Bock',grants:'Barrel-aged Bock (needs Aging Cellar)',cost:'2 G 1 H',qty:2},
+];
+document.getElementById('recipeGallery').innerHTML=recipeTiles.map(t=>`
+  <div class="card"><div class="head h-route"><div class="kind">Recipe · slot · claim-on-fire</div><div class="ttl">${t.name}</div></div>
+  <div class="body">
+    <div class="row"><span class="k">Claimed</span><span class="v">${t.grants}</span></div>
+    <div class="row"><span class="k">Cost</span><span class="v">${cubes(t.cost)}</span></div>
+    <div class="badge">×${t.qty}</div>
+  </div></div>`).join('');
 
 // ---- PRIVILEGES ----
 const privs=[

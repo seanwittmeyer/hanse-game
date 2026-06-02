@@ -1,5 +1,7 @@
 # Playtest — 3-Player, 10 Turns Each (engine simulation)
 
+> ⚠ **Historical record (v0.2 engine, pre-2026-06-02).** Captured *before* the "living slot ring" revision (ships as cargo-containers, casks-as-cargo, recipes claim-on-fire — see `DESIGN.md` §19). The driver (`3p-sim-driver.js`) has since been updated to the new model; the throughput/pace findings below still stand, but the cask-in-slot mechanics described are superseded.
+
 > Driven through the **actual `play.html` engine** headlessly (deterministic seed), three scripted strategies. This reflects the real, locked rules — so the problems below are real, not narrative guesses. Bots are greedy 1-ply, so *some* imbalance is bot quality; the items marked **ENGINE** are independent of bot skill.
 
 **Strategies:** Crimson = Volume/reach · Azure = Quality/standing · Forest = Engine/hybrid.

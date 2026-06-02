@@ -40,7 +40,7 @@
 Seven tile families. Families A–C are the content heart; D–G are the engine/economy layer.
 
 ### A. Cask tiles — the dual-role hero (brewing deck)
-Double-sided. **Working face** (on the board = *reach*): style + **quality value** + the market demand it can satisfy. **Standing face** (enshrined in the Kontor stack = *standing*): standing value (+ optional goal/demand, carrying forward the old goal-matching DNA). Acquired as an unbrewed *recipe* at the Market, matured on the brewing track, shipped, then optionally enshrined.
+Double-sided. **Cargo face** (loaded into a ship = *reach*): style + **quality value** + the market demand it can satisfy. **Standing face** (enshrined in the Kontor stack = *standing*): standing value (+ optional goal/demand, carrying forward the old goal-matching DNA). Brewed from a *recipe* held in hand, matured on the brewing track, then a ready cask either **ships** (cargo → reach) or **enshrines** (standing) — never both. *(Recipes are gained from recipe tiles on the slot ring, claimed when their line fires.)*
 
 | Style | Quality ⚙ | Inputs | Brew path | Enshrine? | Qty ⚙ |
 |---|---|---|---|---|---|
@@ -62,9 +62,12 @@ Placed in a perimeter slot (committed to row XOR column). Two jobs: **(1)** rais
 | **Bruges (Hub)** | wide; many small payoffs; takes middling quality | +1 / +2 | ~7 |
 | **London (Steelyard)** | pays in privilege tiles | +2 / +privilege | ~5 |
 
-### C. Ship tiles — perimeter-slot infrastructure
-Modify shipping/Harbor. Owned & taxable.
-- **+1 Range** (advance an extra presence step) · **+1 Cargo** (ship 2 casks) · **Toll Exemption** (ignore one toll/skim) · **Pilot** (reach a waypoint bonus). ~12 total ⚙.
+### C. Ship tiles — owned, route-bound cargo containers
+A slot tile with a stack of cask sub-slots, **bound to one route** when placed. Casks shipped to that route (by anyone) **load aboard** — rivals pay the owner a **toll**; when full the ship **sails** (owner dividend) and frees its slot. Its own line-action loads the owner's ready casks. Owned & taxable — the toll-baron play.
+- **Cog** (cargo cap 3) · **Hulk** (cap 4) · **Toll Exemption** (ignore one toll/skim) · **Pilot** (ignore a waypoint cost). ~12 total ⚙.
+
+### C′. Recipe tiles — claim-on-fire (slot ring)
+Recipes are held in hand and brewed from hand; gruit is the baseline. Other recipes are **placed as a slot tile**, then **claimed into the owner's hand the next time that line fires** (the tile is then spent). ~14 total ⚙.
 
 ### D. Privilege tiles — Steelyard rewards / engine perks
 Gained mainly via the **London** route. Ongoing or one-shot: market discount, free brew-track advance, extra worker move, skim immunity, draw bonus. ~12 ⚙. ❓ slot-resident vs tableau-resident.

@@ -74,7 +74,7 @@ Each public **builder** verb has a private **twin** here; the twin fires **only 
 
 - **Larder** (Market twin): +1 G base; a **Larder** room → +2 G. *Goods only — the public Market's tile-buying stays its unique draw.*
 - **Brew-room** (Brewhouse twin): advance all, no load; a **Faster Fermenter** room restores the load (twin = public).
-- **Quay** (Harbor twin): ship one ready cask **→ Bruges only** (a real shipment — slot + presence); a **Quay** room → ship to any open qualifying route.
+- **Quay** (Harbor twin): ship one ready cask **→ Bruges only** (a real shipment — +1 presence, loading a Bruges ship if one has room, else a basic shipment); a **Quay** room → ship to any open qualifying route.
 
 Because only **4 room slots** exist, you can develop **one** twin deeply — so different players want different cells jammed, and each walks a different circuit. That's the wide phase-space on a tiny board.
 
@@ -85,7 +85,7 @@ Because only **4 room slots** exist, you can develop **one** twin deeply — so 
 | Item | Start ⚙ |
 |---|---|
 | Goods | **3 G, 2 H** |
-| Recipes | **1 Gruit + 1 Hopped** (the fast-vs-slow fork, live turn 1) |
+| Recipes | **Gruit baseline + 1 random premium** (Hopped/Dubbel/Tripel), held in hand; more recipes via recipe tiles on the slot ring |
 | Vessels | 1 open (lanes 2–3 locked) |
 | Rooms | none |
 | Storage | 8 |

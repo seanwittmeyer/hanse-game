@@ -57,9 +57,12 @@
   .pawn{width:15px;height:15px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.4)}
   .cell.legal{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite}
   @keyframes pulse{50%{outline-color:#fff}}
-  .slot{background:var(--parch);border:2px dashed var(--line);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.55rem;text-align:center;color:var(--ink2);padding:2px;overflow:hidden}
+  .slot{background:var(--parch);border:2px dashed var(--line);border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;text-align:center;color:var(--ink2);padding:2px;overflow:hidden}
   .slot .ic,.slot svg{width:1.5em;height:1.5em}
   .slot.filled{border-style:solid;border-width:3px;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.32)}
+  .slot .pips{display:flex;gap:1px;margin-top:1px;flex-wrap:wrap;justify-content:center;max-width:100%}
+  .slot .pip{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.32)}
+  .slot .pip.on{background:#fff;box-shadow:0 0 2px rgba(0,0,0,.4)}
   .slot.place{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite;color:var(--gold);border-color:var(--gold)}
   .s1{grid-area:1/2}.s2{grid-area:1/3}.cA{grid-area:2/2}.cB{grid-area:2/3}
   .s8{grid-area:2/1}.s3{grid-area:2/4}.s7{grid-area:3/1}.s4{grid-area:3/4}
@@ -190,7 +193,8 @@ const YIELD={Market:['wheat','sprout','scroll-text'],Brewhouse:['beer'],Harbor:[
 const Gi=n=>LU('wheat','i-grain')+(n!==undefined?'<b>'+n+'</b>':''), Hi=n=>LU('sprout','i-hops')+(n!==undefined?'<b>'+n+'</b>':'');
 function tileIcon(t){if(t.type==='cask')return LU('beer')+'<span class="tl">'+STYLES[t.style].name[0]+'</span>';
   if(t.type==='route')return LU('route');
-  if(t.type==='ship')return LU('sailboat')+'<span class="tl">'+t.cargo+'/'+t.cap+'</span>';
+  if(t.type==='ship'){let pips='';for(let i=0;i<t.cap;i++)pips+='<span class="pip'+(i<t.cargo.length?' on':'')+'"></span>';
+    return LU('sailboat')+'<span class="tl">'+ROUTES[t.route].name[0]+' '+t.cargo.length+'/'+t.cap+'</span><span class="pips">'+pips+'</span>';}
   if(t.type==='recipe')return LU('scroll-text')+'<span class="tl">'+STYLES[t.style].name[0]+'</span>';
   return LU('package');}
 function refreshIcons(){if(window.lucide)try{lucide.createIcons();}catch(e){}}
@@ -240,7 +244,7 @@ const GOALS=[
   {id:'g4',text:'+2 / enshrined Q4+',fn:(p)=>2*p.enshrined.filter(e=>e.q>=4).length},
   {id:'g5',text:'+2 / Novgorod presence',fn:(p,s)=>2*(s.routes.novgorod.pres[p.id]||0)},
   {id:'g6',text:'+4 / route majority (max 2)',fn:(p,s)=>4*Math.min(2,majorityCount(p,s))},
-  {id:'g7',text:'+1 / working cask in slots',fn:(p,s)=>workingCount(p,s)},
+  {id:'g7',text:'+1 / cask in transit (loaded in ships)',fn:(p,s)=>workingCount(p,s)},
   {id:'g8',text:'+2 / brewery room',fn:(p)=>2*p.rooms.length},
   {id:'g10',text:'+3 flat (pure standing)',fn:()=>3},
 ];
@@ -267,9 +271,11 @@ const KEY='hanse-hotseat-v1';
 
 function endN(){return 6+3*S.players.length;}  // end-game stack threshold ⚙
 
+const START_RECIPES=['hopped','dubbel','tripel'];  // gruit is the universal baseline; you start with one random premium recipe in hand
 function newPlayer(i,name){
+  const r=START_RECIPES[Math.floor(Math.random()*START_RECIPES.length)];
   return {id:i,name:name||CNAMES[i],color:COLORS[i],grain:3,hops:2,cell:null,placed:false,
-    storage:8, recipes:['gruit','hopped'], vessels:[null], maxVessels:1, maxRooms:4,
+    storage:8, recipes:['gruit',r], vessels:[null], maxVessels:1, maxRooms:4,
     rooms:[],ships:0,privileges:0, enshrined:[]};
 }
 function freshState(n,names){
@@ -290,7 +296,7 @@ function pay(p,c){p.grain-=(c.g||0);p.hops-=(c.h||0);}
 function costStr(c){let a=[];if(c.g)a.push(c.g+'G');if(c.h)a.push(c.h+'H');return a.join(' ')||'free';}
 function costIcons(c){let a=[];if(c.g)a.push(Gi(c.g));if(c.h)a.push(Hi(c.h));return a.join(' ')||'<span class="note">free</span>';}
 function totalPresence(p,s){let t=0;for(const r in s.routes)t+=(s.routes[r].pres[p.id]||0);return t;}
-function workingCount(p,s){return Object.values(s.slots).filter(t=>t&&t.type==='cask'&&t.owner===p.id).length;}
+function workingCount(p,s){let n=0;for(const id in s.slots){const t=s.slots[id];if(t&&t.type==='ship')n+=t.cargo.filter(c=>c.by===p.id).length;}return n;} // casks in transit = loaded as cargo in ships
 function enshrinedTotal(){return S.players.reduce((a,p)=>a+p.enshrined.length,0);}
 function majorityCount(p,s){let c=0;for(const r in s.routes){const pr=s.routes[r].pres;const mine=pr[p.id]||0;if(mine>0&&mine===Math.max(...Object.values(pr),0)&&Object.values(pr).filter(v=>v===mine).length===1)c++;}return c;}
 function readyCasks(p){return p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready);}
@@ -348,21 +354,27 @@ function chooseLine(which){ // 'row' or 'col'
 }
 function fireSkim(t,slotId){
   const o=S.players[t.owner];
-  if(t.type==='cask'){
-    const w=STYLES[t.style].work;
-    if(w.t==='good'){if(w.good==='g')gain(o,1,0);else gain(o,0,1);log('↳ '+o.name+'’s '+STYLES[t.style].name+' skims +1'+(w.good==='g'?'G':'H')+'.');}
-    else if(w.t==='advance'){advanceOne(o);log('↳ '+o.name+'’s Tripel skim advances a brew.');}
-    else if(w.t==='presence'){addPresenceBest(o);log('↳ '+o.name+'’s Bock skim adds +1 presence.');}
-  } else if(t.type==='route'){
+  if(t.type==='route'){
     gain(o,1,0);log('↳ '+o.name+'’s '+ROUTES[t.route].name+' Lane skims +1G.'); // skim is goods, not presence (presence only from shipping)
-  } else if(t.type==='ship'){
-    t.cargo++;
-    if(t.cargo>=t.cap){ // ship is full → it sails, delivering a burst of presence, and frees its slot
-      let delivered=0;for(let i=0;i<t.cap;i++){if(addPresenceBest(o))delivered++;}
-      log('⛵ '+o.name+'’s '+t.label+' sails full — delivers '+delivered+' presence!');
-      if(slotId)S.slots[slotId]=null;
-    } else log('↳ '+o.name+'’s '+t.label+' loads cargo ('+t.cargo+'/'+t.cap+').');
+  } else if(t.type==='recipe'){ // recipe tile: claimed into the owner's hand when its line fires, then the tile is spent (slot freed)
+    o.recipes.push(t.style);
+    log('↳ '+o.name+' claims the '+STYLES[t.style].name+' recipe into hand — the tile is spent.');
+    if(slotId)S.slots[slotId]=null;
+  } else if(t.type==='ship'){ // a ship's action is to LOAD: pull one of the owner's ready, route-eligible casks aboard
+    const ready=readyCasks(o).filter(rc=>STYLES[rc.c.style].q>=ROUTES[t.route].gate);
+    if(ready.length && t.cargo.length<t.cap){
+      const rc=ready[0];t.cargo.push({style:rc.c.style,q:rc.c.q,by:o.id});o.vessels[rc.i]=null;
+      const got=addPresence(o,t.route)?', +1 presence':'';
+      log('↳ '+o.name+'’s '+t.label+' loads '+STYLES[rc.c.style].name+' ('+t.cargo.length+'/'+t.cap+got+').');
+      if(t.cargo.length>=t.cap)sailShip(t,slotId);
+    } else { gain(o,1,0);log('↳ '+o.name+'’s '+t.label+' waits at the '+ROUTES[t.route].name+' dock (+1G).'); }
   }
+}
+function sailShip(ship,slotId){ // ship full → it sails; cargo (already counted as each shipper's presence) is delivered; owner takes a dividend; slot frees (transient)
+  const o=S.players[ship.owner];
+  const got=addPresence(o,ship.route)?1:0;gain(o,1,0);
+  log('⛵ '+o.name+'’s '+ship.label+' sails full from '+ROUTES[ship.route].name+' — '+ship.cargo.length+' casks delivered (owner +'+got+' presence, +1G).');
+  if(slotId)S.slots[slotId]=null;
 }
 function nextCell(){
   if(!UI.queue.length){UI={sub:'end'};render();return;}
@@ -398,6 +410,17 @@ function routeFilled(r){return Object.values(S.routes[r].pres).reduce((a,b)=>a+b
 function addPresence(p,r){if(!S.routes[r].open)return false;if(routeFilled(r)>=ROUTES[r].cap)return false;S.routes[r].pres[p.id]=(S.routes[r].pres[p.id]||0)+1;return true;}
 function addPresenceBest(p){const open=Object.keys(ROUTES).filter(r=>S.routes[r].open&&routeFilled(r)<ROUTES[r].cap);if(!open.length)return false;
   open.sort((a,b)=>(S.routes[b].pres[p.id]||0)-(S.routes[a].pres[p.id]||0));return addPresence(p,open[0]);}
+function shipsWithRoom(r){const out=[];for(const s of SLOTS){const t=S.slots[s.id];if(t&&t.type==='ship'&&t.route===r&&t.cargo.length<t.cap)out.push({ship:t,slotId:s.id});}
+  out.sort((a,b)=>(b.ship.owner===S.active?1:0)-(a.ship.owner===S.active?1:0));return out;} // prefer your own ship (fill it toward its sail dividend)
+function deliverCask(p,cask,vi,r){ // ship a ready cask to route r: load into a ship if one has room (preferred), else a basic shipment. Shipper always gains +1 presence.
+  const ships=shipsWithRoom(r);const got=addPresence(p,r);
+  if(ships.length){const {ship,slotId}=ships[0];ship.cargo.push({style:cask.style,q:cask.q,by:p.id});
+    if(ship.owner!==p.id){gain(S.players[ship.owner],1,0);log('↳ '+S.players[ship.owner].name+' collects a +1G toll as the cask loads into their '+ship.label+'.');}
+    log(p.name+' ships '+STYLES[cask.style].name+' to '+ROUTES[r].name+' — loads into '+S.players[ship.owner].name+'’s '+ship.label+' ('+ship.cargo.length+'/'+ship.cap+')'+(got?', +1 presence':'')+'.',true);
+    if(ship.cargo.length>=ship.cap)sailShip(ship,slotId);
+  } else log(p.name+' ships '+STYLES[cask.style].name+' to '+ROUTES[r].name+(got?' (+1 presence':' (')+' · no ship on the route, basic shipment).',true);
+  p.vessels[vi]=null;
+}
 
 //------- MARKET -------
 function marketGoods(kind){const p=cur();if(kind==='gg')gain(p,2,0);else if(kind==='gh')gain(p,1,1);else gain(p,0,2);
@@ -414,11 +437,14 @@ function buyTile(id){
     UI.stage='place';log(p.name+' buys a '+it.name+' — place it in a slot.',true);render();return;
   }
   if(it.kind==='ship'){if(!emptySlots().length){alert('No empty slot for the ship.');return;}
+    if(!Object.keys(ROUTES).some(r=>S.routes[r].open)){alert('No open route for a ship to support.');return;}
     const nm=it.name.split(' ')[0];
-    pay(p,it.cost);UI.tmp.pendingTile={type:'ship',owner:p.id,label:nm,cap:it.cap,cargo:0};p.ships++;
-    UI.stage='place';log(p.name+' buys a '+nm+' — place it in a slot; it loads as its line fires, then sails when full.',true);render();return;}
+    pay(p,it.cost);UI.tmp.pendingShip={label:nm,cap:it.cap};p.ships++;
+    UI.stage='ship_buy_route';log(p.name+' buys a '+nm+' — choose the route it will support.',true);render();return;}
+  if(it.kind==='recipe'){if(!emptySlots().length){alert('No empty perimeter slot for the recipe tile.');return;}
+    pay(p,it.cost);UI.tmp.pendingTile={type:'recipe',owner:p.id,style:it.style,label:it.name};
+    UI.stage='place';log(p.name+' buys a '+it.name+' — place it in a slot; you claim the recipe when its line next fires.',true);render();return;}
   pay(p,it.cost);
-  if(it.kind==='recipe'){p.recipes.push(it.style);log(p.name+' acquires '+it.name+'.',true);}
   if(it.kind==='room'){applyRoom(p,it.room);log(p.name+' builds '+it.name+'.',true);}
   cellDone();
 }
@@ -427,9 +453,15 @@ function applyRoom(p,room){p.rooms.push(room);
   if(room==='warehouse'){p.storage+=4;}
   // cellar (unlock bock), counting (enshrine bonus) handled at point of use
 }
+function shipBuyRoute(r){const p=cur();const ps=UI.tmp.pendingShip;
+  UI.tmp.pendingTile={type:'ship',owner:p.id,label:ps.label,cap:ps.cap,cargo:[],route:r};
+  UI.tmp.pendingShip=null;UI.stage='place';
+  log(p.name+'’s '+ps.label+' will support '+ROUTES[r].name+' — place it in a slot.',true);render();
+}
 function placeTile(slotId){
   const t=UI.tmp.pendingTile;S.slots[slotId]=t;
   if(t.type==='route'){S.routes[t.route].open=true;S.routes[t.route].value+=t.boost;log('↳ '+ROUTES[t.route].name+' route opens (value '+S.routes[t.route].value+').');}
+  if(t.type==='ship')log('↳ '+t.label+' docks to support '+ROUTES[t.route].name+'; casks shipped there load aboard, and its line-action loads your ready casks.');
   UI.tmp.pendingTile=null;cellDone();
 }
 
@@ -451,19 +483,12 @@ function shipPick(vi){UI.tmp.vi=vi;UI.stage='ship_route';render();}
 function shipRoute(r){const p=cur();const cask=p.vessels[UI.tmp.vi];
   if(STYLES[cask.style].q<ROUTES[r].gate){alert('Quality too low for '+ROUTES[r].name+'.');return;}
   if(routeFilled(r)>=ROUTES[r].cap){alert(ROUTES[r].name+' is full.');return;}
-  if(!emptySlots().length){alert('No empty slot to place the working cask.');return;}
-  UI.tmp.route=r;UI.stage='ship_slot';log(p.name+' will ship '+STYLES[cask.style].name+' to '+ROUTES[r].name+' — choose a slot.',true);render();}
-function shipSlot(slotId){const p=cur();const cask=p.vessels[UI.tmp.vi];
-  S.slots[slotId]={type:'cask',owner:p.id,style:cask.style,q:cask.q,standing:cask.standing,enshrine:cask.enshrine,goal:cask.goal};
-  p.vessels[UI.tmp.vi]=null;addPresence(p,UI.tmp.route);
-  log(p.name+' ships to '+ROUTES[UI.tmp.route].name+' (+1 presence) and the cask works in a slot.',true);
-  cellDone();}
-function quayFallback(){ // blocked-Harbor fallback: ship a ready cask to Bruges only (still a real shipment)
-  const p=cur();const r=readyCasks(p)[0];const slot=emptySlots()[0];
-  if(!r||!slot){log(p.name+'’s Quay sits idle — no ready cask or open slot.',true);cellDone();return;}
-  S.slots[slot.id]={type:'cask',owner:p.id,style:r.c.style,q:r.c.q,standing:r.c.standing,enshrine:r.c.enshrine,goal:r.c.goal};
-  p.vessels[r.i]=null;addPresence(p,'bruges');
-  log(p.name+' uses the Quay: ships '+STYLES[r.c.style].name+' to Bruges (+1 presence).',true);cellDone();}
+  deliverCask(p,cask,UI.tmp.vi,r);cellDone();}
+function quayFallback(){ // blocked-Harbor fallback: ship a ready cask to Bruges (loads into a Bruges ship if one has room, else a basic shipment)
+  const p=cur();const r=readyCasks(p)[0];
+  if(!r){log(p.name+'’s Quay sits idle — no ready cask to ship.',true);cellDone();return;}
+  if(routeFilled('bruges')>=ROUTES.bruges.cap){log(p.name+'’s Quay sits idle — Bruges is saturated.',true);cellDone();return;}
+  log(p.name+' uses the Quay → Bruges:',true);deliverCask(p,r.c,r.i,'bruges');cellDone();}
 
 //------- KONTOR -------
 function kontorTop(){const p=cur();const top=S.stack[S.stack.length-1];const a=top.action||{t:'good',g:1};
@@ -474,10 +499,7 @@ function enshrineBank(p,c){let st=c.standing;if(p.rooms.includes('counting'))st+
   p.enshrined.push({style:c.style,q:c.q,standing:st,goal:c.goal});
   S.stack.push({name:STYLES[c.style].name,owner:p.id,action:STANDING_ACTION[c.style]||{t:'good',g:1}});
   return st;}
-function enshrineDo(slotId){const p=cur();const st=enshrineBank(p,S.slots[slotId]); // working cask: leaves its slot (reach→standing)
-  const nm=STYLES[S.slots[slotId].style].name;S.slots[slotId]=null;
-  log(p.name+' <b>enshrines</b> '+nm+' from a slot (+'+st+' standing). Stack '+S.stack.length+'.',true);cellDone();}
-function enshrineReady(vi){const p=cur();const c=p.vessels[vi]; // ready cask straight from the brewery — pure standing, never reached
+function enshrineReady(vi){const p=cur();const c=p.vessels[vi]; // ready cask straight from the brewery — pure standing (the reach-vs-standing fork: ship it for reach, or enshrine it here)
   const st=enshrineBank(p,c);p.vessels[vi]=null;
   log(p.name+' <b>enshrines</b> '+STYLES[c.style].name+' straight from the brewery (+'+st+' standing). Stack '+S.stack.length+'.',true);cellDone();}
 
@@ -533,14 +555,14 @@ function renderBar(){
   document.getElementById('prompt').innerHTML=prompt;
   document.getElementById('acts').innerHTML=acts;
   document.getElementById('boardnote').innerHTML = UI.sub==='cell'? 'Resolving <b>'+CELLNAME[UI.cell]+'</b>'+(UI.blocked?' — blocked by a rival, using your tableau twin':'')
-    : 'Tip: upgrade your brewery &amp; buy lanes/ships at the '+LU('store')+' Market · ship casks into slots at the '+LU('ship')+' Harbor · enshrine for '+LU('crown')+' at the Kontor.';
+    : 'Tip: at the '+LU('store')+' Market buy lanes/ships/recipes &amp; rooms · at the '+LU('ship')+' Harbor ship casks (they load into a ship on the route) · enshrine a Ready cask for '+LU('crown')+' at the Kontor.';
 }
 
 function cellPrompt(p){
   const act=CELLNAME[UI.cell];
   if(UI.stage==='place')return 'Click an empty slot to place your tile.';
-  if(act==='Harbor'){if(UI.stage==='ship_route')return 'Choose a route to ship to (quality gate applies).';
-    if(UI.stage==='ship_slot')return 'Click an empty slot for the working cask.';}
+  if(UI.stage==='ship_buy_route')return 'Choose the route this ship will support.';
+  if(act==='Harbor'&&UI.stage==='ship_route')return 'Choose a route — your cask loads into a ship there if one has room (quality gate applies).';
   return 'Resolve the '+act+' action'+(UI.blocked?' — blocked, so you use your tableau twin':'')+'.';
 }
 function cellActions(p){
@@ -556,6 +578,8 @@ function cellActions(p){
   }
   if(act==='Market'){
     if(UI.stage==='place')return '<span class="note">click a glowing slot…</span>';
+    if(UI.stage==='ship_buy_route')return Object.keys(ROUTES).filter(r=>S.routes[r].open)
+        .map(r=>btn(LU('map-pin')+' Support '+ROUTES[r].name,'shipBuyRoute(\''+r+'\')','go')).join('');
     return btn('Take '+Gi(2),'marketGoods(\'gg\')')+btn('Take '+Gi(1)+' '+Hi(1),'marketGoods(\'gh\')')+btn('Take '+Hi(2),'marketGoods(\'hh\')')
       +' <span class="note">or buy a tile →</span> '+btn('Skip','cellDone()','ghost');
   }
@@ -572,17 +596,14 @@ function cellActions(p){
       return ready.map(o=>btn(LU('beer')+' Ship '+STYLES[o.c.style].name,'shipPick('+o.i+')')).join('');}
     if(UI.stage==='ship_route'){const cask=p.vessels[UI.tmp.vi];
       return Object.keys(ROUTES).filter(r=>S.routes[r].open&&routeFilled(r)<ROUTES[r].cap&&STYLES[cask.style].q>=ROUTES[r].gate)
-        .map(r=>btn(LU('map-pin')+' '+ROUTES[r].name,'shipRoute(\''+r+'\')','go')).join('')||'<span class="note">no eligible open route</span> '+btn('Cancel','cellDone()','ghost');}
-    if(UI.stage==='ship_slot')return '<span class="note">click a glowing slot…</span>';
+        .map(r=>{const sh=shipsWithRoom(r).length;return btn(LU('map-pin')+' '+ROUTES[r].name+(sh?' '+LU('sailboat'):''),'shipRoute(\''+r+'\')','go');}).join('')||'<span class="note">no eligible open route</span> '+btn('Cancel','cellDone()','ghost');}
     return (ready.length?btn(LU('ship')+' Ship a cask','shipStart()','primary'):btn('No ready casks — Skip','cellDone()','ghost'));
   }
   if(act==='Kontor'){
     if(UI.stage==='enshrine'){
-      const slots=SLOTS.filter(s=>{const t=S.slots[s.id];return t&&t.type==='cask'&&t.owner===p.id&&t.enshrine;});
       const ready=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready&&o.c.enshrine);
-      if(!slots.length&&!ready.length)return '<span class="note">nothing enshrine-able (need a Ready or working hopped+ cask)</span> '+btn('Back','(function(){UI.stage=null;render();})()','ghost');
-      let b=slots.map(s=>btn(LU('crown')+' Enshrine '+STYLES[S.slots[s.id].style].name+' (slot)','enshrineDo(\''+s.id+'\')','primary')).join('');
-      b+=ready.map(o=>btn(LU('crown')+' Enshrine '+STYLES[o.c.style].name+' (ready)','enshrineReady('+o.i+')','primary')).join('');
+      if(!ready.length)return '<span class="note">nothing enshrine-able (need a Ready hopped+ cask in a vessel)</span> '+btn('Back','(function(){UI.stage=null;render();})()','ghost');
+      let b=ready.map(o=>btn(LU('crown')+' Enshrine '+STYLES[o.c.style].name+' (ready)','enshrineReady('+o.i+')','primary')).join('');
       return b+btn('Back','(function(){UI.stage=null;render();})()','ghost');}
     const top=S.stack[S.stack.length-1];
     return btn(LU('layers')+' Use top: '+top.name,'kontorTop()')+btn(LU('crown')+' Enshrine a cask','enshrineStart()','primary')+btn('Skip','cellDone()','ghost');
@@ -594,12 +615,12 @@ function renderGrid(){
   const ag=document.getElementById('ag');let h='';
   // slots — icon tiles, owner-coloured when filled
   SLOTS.forEach(s=>{const t=S.slots[s.id];let cls='slot '+s.id;
-    let placing=(UI.sub==='cell'&&(UI.stage==='place'||UI.stage==='ship_slot')&&!t);
+    let placing=(UI.sub==='cell'&&UI.stage==='place'&&!t);
     if(placing)cls+=' place';
     let inner;
     if(t){cls+=' filled';inner=tileIcon(t);}
     else inner=placing?LU('plus'):'<span style="opacity:.45">'+s.id+'</span>';
-    const click=placing?(UI.stage==='place'?'placeTile':'shipSlot'):null;
+    const click=placing?'placeTile':null;
     const style=t?'background:'+S.players[t.owner].color+';border-color:'+S.players[t.owner].color:'';
     h+='<div class="'+cls+'" style="'+style+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
   });
@@ -629,7 +650,9 @@ function renderRoutes(){
     if(canShip)cls+=' ship';
     let sp='';for(let i=0;i<def.cap;i++){sp+='<div class="sp">'+(i<filled?'●':'')+'</div>';}
     let pres=S.players.map(p=>(R.pres[p.id]?'<span style="color:'+p.color+';font-weight:bold">'+LU('map-pin')+(R.pres[p.id])+'</span>':'')).filter(x=>x).join(' ');
-    h+='<div class="'+cls+'" '+(canShip?'onclick="shipRoute(\''+r+'\')"':'')+'><div class="rh"><span class="rn">'+LU('landmark')+' '+def.name+'</span><span class="rv">'+(R.open?LU('star')+' val '+R.value:LU('lock')+' closed')+'</span></div><div class="gate">gate Q'+def.gate+' · '+(pres||'—')+'</div><div class="spaces">'+sp+'</div></div>';
+    let ships=SLOTS.map(s=>S.slots[s.id]).filter(t=>t&&t.type==='ship'&&t.route===r)
+      .map(t=>'<span class="tag" style="background:'+S.players[t.owner].color+';color:#fff">'+LU('sailboat')+t.cargo.length+'/'+t.cap+'</span>').join('');
+    h+='<div class="'+cls+'" '+(canShip?'onclick="shipRoute(\''+r+'\')"':'')+'><div class="rh"><span class="rn">'+LU('landmark')+' '+def.name+'</span><span class="rv">'+(R.open?LU('star')+' val '+R.value:LU('lock')+' closed')+'</span></div><div class="gate">gate Q'+def.gate+' · '+(pres||'—')+'</div>'+(ships?'<div class="gate">'+ships+'</div>':'')+'<div class="spaces">'+sp+'</div></div>';
   }
   document.getElementById('routes').innerHTML=h;
 }
@@ -642,7 +665,7 @@ function renderShop(){
   const KI={recipe:'scroll-text',route:'route',ship:'sailboat',room:'wrench'};
   let h='';SHOP.forEach(it=>{const aff=canPay(p,it.cost)&&buying;
     h+='<div class="item"><span>'+LU(KI[it.kind]||'package')+' '+it.name+'</span><span class="cost">'+costIcons(it.cost)+' '+(buying?'<button '+(aff?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
-  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Pick a tile to buy. '+LU('route')+'/'+LU('sailboat')+' lanes &amp; ships drop into a perimeter slot you click.':'Acquire at your <b>'+LU('store')+' Market</b> action: '+LU('scroll-text')+' recipes · '+LU('route')+' route lanes · '+LU('sailboat')+' ships · '+LU('wrench')+' <b>rooms = brewery upgrades</b> (Extra Vessel, Aging Cellar, Larder…).')+'</div>';
+  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Pick a tile to buy. '+LU('route')+' lanes, '+LU('sailboat')+' ships (pick a route) &amp; '+LU('scroll-text')+' recipes drop into a perimeter slot you click; recipes are claimed to hand when their line next fires.':'Acquire at your <b>'+LU('store')+' Market</b> action: '+LU('scroll-text')+' recipes · '+LU('route')+' route lanes · '+LU('sailboat')+' ships · '+LU('wrench')+' <b>rooms = brewery upgrades</b> (Extra Vessel, Aging Cellar, Larder…).')+'</div>';
 }
 function renderTableaus(){
   let tabs='',body='';
@@ -662,8 +685,8 @@ function renderTableaus(){
       +'<span class="chip">'+LU('package')+p.storage+'</span><span class="chip">'+LU('crown')+sc.total+'</span>'
       +' <span class="note">R'+sc.reach+'/M'+sc.maj+'/S'+sc.stand+'/G'+sc.goals+'</span></div>'
       +'<b class="note">'+LU('flask-conical')+' Brewing track ('+p.vessels.length+' vessel'+(p.vessels.length>1?'s':'')+')</b><div class="brew">'+vessels+'</div>'
-      +'<b class="note">'+LU('scroll-text')+' Recipes:</b> '+(p.recipes.map(r=>'<span class="tag">'+LU('beer')+STYLES[r].name+'</span>').join('')||'—')+'<br>'
-      +'<b class="note">'+LU('map-pin')+' In slots (reach engine):</b> '+slotsOwned+'<br>'
+      +'<b class="note">'+LU('scroll-text')+' Recipes in hand:</b> '+(p.recipes.map(r=>'<span class="tag">'+LU('beer')+STYLES[r].name+'</span>').join('')||'—')+'<br>'
+      +'<b class="note">'+LU('sailboat')+' Owned slot tiles (ships · lanes · recipes):</b> '+slotsOwned+'<br>'
       +'<b class="note">'+LU('crown')+' Enshrined (standing):</b> '+ensh+'<br>'
       +'<b class="note">'+LU('wrench')+' Rooms:</b> '+(p.rooms.map(r=>'<span class="tag">'+LU('wrench')+r+'</span>').join('')||'—')
       +'</div>';
