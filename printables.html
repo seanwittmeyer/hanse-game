@@ -41,6 +41,21 @@
   /* goods tokens */
   .tok{width:.7in;height:.7in;border:.3pt solid var(--line);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;background:var(--c);font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4)}
   .tok svg{width:.26in;height:.26in}
+  /* ---- duplex backs (double-sided cask tiles) ---- */
+  .sheet{position:relative}
+  .regmark{position:absolute;width:.3in;height:.3in;pointer-events:none;z-index:3}
+  .regmark::before,.regmark::after{content:"";position:absolute;background:#000}
+  .regmark::before{left:50%;top:0;width:.6pt;height:100%;transform:translateX(-50%)}
+  .regmark::after{top:50%;left:0;height:.6pt;width:100%;transform:translateY(-50%)}
+  .rm-tl{top:.04in;left:.04in}.rm-tr{top:.04in;right:.04in}.rm-bl{bottom:.04in;left:.04in}.rm-br{bottom:.04in;right:.04in}
+  /* flip each grid for mirror positioning, then counter-flip each tile so its content reads normally */
+  .sheet.backs .grid{transform:scaleX(-1)}
+  .sheet.backs .tile,.sheet.backs .tok{transform:scaleX(-1)}
+  .t-stand{font-size:.4in;font-weight:bold;display:flex;align-items:center;justify-content:center;gap:.04in;line-height:1;margin:.04in 0}
+  .t-stand svg,.t-stand .ic{width:.34in;height:.34in}
+  .t-goal{font-size:.098in;line-height:1.1;opacity:.96}
+  .tile.blank{background:#fff;color:#9a9a9a;border-color:#bdbdbd;text-shadow:none}
+  .tok.blank{background:#fff;border-color:#bdbdbd;border-style:dashed;color:#bbb;text-shadow:none}
   @media print{
     .no-print{display:none}
     @page{size:24in auto;margin:.35in}
@@ -54,7 +69,8 @@
   <h1>Brewhouse of the Hanse — Cut Sheet</h1>
   <button onclick="window.print()">🖨 Print</button>
   <span class="seg"><button id="bproof" class="on" onclick="setMode('proof')">Proof (1 each)</button><button id="bfull" onclick="setMode('full')">Full set</button></span>
-  <span class="note">Sized for a <b>24″-wide</b> sheet · tiles 1.25″ · <b>print at 100% / no scaling</b> (check the 1-inch box). Cut lines are the tile borders; colour bleeds to each edge.</span>
+  <span class="seg"><button id="sfront" class="on" onclick="setSide('front')">Fronts</button><button id="sback" onclick="setSide('back')">Backs (duplex)</button></span>
+  <span class="note">Sized for a <b>24″-wide</b> sheet · tiles 1.25″ · <b>print at 100% / no scaling</b> (check the 1-inch box). Cut lines are the tile borders; colour bleeds to each edge. <b>Duplex:</b> print Fronts, flip the paper on its <b>long edge</b>, print Backs — the corner ✛ marks register the two passes.</span>
   <span style="margin-left:auto"><a href="index.html">Components</a> · <a href="rulebook.html">Rulebook</a> · <a href="play.html">Play</a></span>
 </div>
 
@@ -82,9 +98,15 @@ const FAMS=[
    {ic:'route',nm:'Bruges',  sub:'+1 · '+G+' skim', c:'#274b5c', n:6},
    {ic:'route',nm:'London',  sub:'+2 · Privilege',  c:'#b8860b', n:4},
  ]},
- {label:'Ships  (fill as their line fires, then sail full)', color:()=>'#5b4a37', items:[
+ {label:'Ships  (route-bound cargo holds — load casks, sail when full)', color:()=>'#5b4a37', items:[
    {ic:'sailboat',nm:'Cog', sub:'cap 3 → sails',  c:'#5b4a37', n:4},
    {ic:'sailboat',nm:'Hulk',sub:'cap 4 → sails',  c:'#3a3026', n:3},
+ ]},
+ {label:'Recipe Tiles  (perimeter slots — claimed to hand when the line fires)', color:()=>'#8a6408', items:[
+   {ic:'scroll-text',nm:'Hopped', sub:'recipe → hand', c:'#8a6408', n:5},
+   {ic:'scroll-text',nm:'Dubbel', sub:'recipe → hand', c:'#a07a0c', n:4},
+   {ic:'scroll-text',nm:'Tripel', sub:'recipe → hand', c:'#8a6408', n:3},
+   {ic:'scroll-text',nm:'Bock',   sub:'needs Cellar',  c:'#a07a0c', n:2},
  ]},
  {label:'Rooms  (brewery upgrades — installed on your player board)', color:()=>'#4a6b3a', items:[
    {ic:'wrench',nm:'Extra Vessel',  sub:'+1 brew lane',   c:'#4a6b3a', n:3},
@@ -126,10 +148,16 @@ const FAMS=[
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:30},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:24}];
 
-let MODE='proof';
+// short goal texts (the standing face carries one) — cycled across cask copies for deck variety
+const GOALSHORT=['+1 / route w/ presence','+1 / 2 presence','+2 / same-style ensh.','+2 / Q4+ ensh.',
+  '+2 / Novgorod pres.','+4 / route majority','+1 / cask in transit','+2 / brewery room','+1 / infra tile','+3 flat'];
+
+let MODE='proof', SIDE='front', gi=0;
 function setMode(m){MODE=m;document.getElementById('bproof').classList.toggle('on',m==='proof');document.getElementById('bfull').classList.toggle('on',m==='full');render();}
+function setSide(s){SIDE=s;document.getElementById('sfront').classList.toggle('on',s==='front');document.getElementById('sback').classList.toggle('on',s==='back');render();}
 const cnt=n=>MODE==='proof'?1:n;
 
+// ----- FRONT faces -----
 function caskTile(d){return '<div class="tile" style="--c:'+d.c+'">'
   +'<div class="t-top"><span class="bigic">'+LU('beer')+'</span><span class="t-nm">'+d.nm+'</span><span class="t-badge">'+(d.badge==='local'?LU('map-pin'):LU('crown')+d.badge)+'</span></div>'
   +'<div class="t-mid">'+pips(d.q)+'</div>'
@@ -139,15 +167,34 @@ function genTile(it){return '<div class="tile" style="--c:'+it.c+'">'
   +'<div class="t-sub">'+it.sub+'</div><div></div></div>';}
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+d.nm+'</div>';}
 
+// ----- BACK faces (only casks are double-sided; everything else gets a blank back to keep geometry identical) -----
+function caskBack(d){
+  if(d.q<2) return '<div class="tile blank"><div class="t-top"><span class="t-nm">'+d.nm+'</span></div>'
+    +'<div class="t-sub" style="text-align:center">perishable —<br>no standing</div><div></div></div>';
+  const goal=GOALSHORT[gi++%GOALSHORT.length];
+  return '<div class="tile" style="--c:'+d.c+'">'
+    +'<div class="t-top"><span class="bigic">'+LU('crown')+'</span><span class="t-nm">'+d.nm+'</span><span class="t-badge">Q'+d.q+'</span></div>'
+    +'<div class="t-stand">'+LU('crown')+d.badge+'</div>'
+    +'<div class="t-goal">'+goal+'</div></div>';}
+function blankTile(){return '<div class="tile blank"></div>';}
+function blankTok(){return '<div class="tok blank"></div>';}
+
+const REGMARKS='<div class="regmark rm-tl"></div><div class="regmark rm-tr"></div><div class="regmark rm-bl"></div><div class="regmark rm-br"></div>';
+
 function render(){
-  let h='<div class="calib"><div class="box">1 inch<br>(100%)</div><span class="note" style="color:#555">Verify this box measures exactly 1 inch before cutting.</span></div>';
-  h+='<div class="famlabel">Cask Tiles  (the dual-role hero — '+LU('beer')+' working / '+LU('crown')+' standing)</div><div class="grid">';
-  CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+=caskTile(d);});
+  const back=SIDE==='back';
+  document.getElementById('sheet').classList.toggle('backs',back);
+  gi=0;
+  let h=REGMARKS;
+  h+='<div class="calib"><div class="box">1 inch<br>(100%)</div><span class="note" style="color:#555">'
+    +(back?'<b>BACKS</b> — print after Fronts; flip the paper on its long edge. Corner ✛ marks register the two passes at 100%.':'Verify this box measures exactly 1 inch before cutting.')+'</span></div>';
+  h+='<div class="famlabel">Cask Tiles  (the dual-role hero — '+LU('beer')+' cargo / '+LU('crown')+' standing)'+(back?'  · standing faces (mirrored)':'')+'</div><div class="grid">';
+  CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?caskBack(d):caskTile(d);});
   h+='</div>';
-  FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+'</div><div class="grid">';
-    f.items.forEach(it=>{for(let i=0;i<cnt(it.n);i++)h+=genTile(it);});h+='</div>';});
+  FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+(back?'  · single-sided (blank back)':'')+'</div><div class="grid">';
+    f.items.forEach(it=>{for(let i=0;i<cnt(it.n);i++)h+= back?blankTile():genTile(it);});h+='</div>';});
   h+='<div class="famlabel">Goods Tokens  (or use wooden cubes)</div><div class="grid">';
-  GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+=tok(d);});h+='</div>';
+  GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTok():tok(d);});h+='</div>';
   document.getElementById('sheet').innerHTML=h;
   if(window.lucide)lucide.createIcons();
 }
