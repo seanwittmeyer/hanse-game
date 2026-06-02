@@ -118,6 +118,8 @@ The signature system. A **2×2 grid of four action cells sits on the main board 
 
 ## 8. Dual-Role Tiles — The Heart
 
+> **⚠ Updated (2026-06-02, see §19 "living slot ring").** The dual role is now **per-cask, per-turn**: a Ready cask either **ships** (cargo loaded into a ship = reach) **or enshrines** (= standing). Casks are **cargo, not standalone working slot tiles**, so the "working face fires a line skim from a slot" framing below is superseded — reach now flows through ships. The reach-vs-standing tension it describes is unchanged.
+
 The single most important object. **Double-sided tiles** that are either engine or score depending on *where they sit*:
 
 - **In a perimeter slot (action face out):** the tile is **working** — it modifies/adds output when its line fires. This is **reach** (the Leffe move): the cask is in commerce, driving the business.
@@ -314,7 +316,7 @@ This section captures decisions and the working architecture from the live desig
 ### Revision — cask routing, slots & cards (2026-05-31, cont.)
 
 - **Perimeter slots: 8, all open. 2p variant locks some (→ ~6)** to tighten the board. (LOCKED)
-- **Casks restored to the perimeter slots — supersedes the earlier "casks live on the board, not slots" correction.** A working cask tile sits in a slot and **fires a printed action when its line is activated** (the §8 dual-use heart). Lifecycle:
+- **[SUPERSEDED 2026-06-02 — see "living slot ring" below: casks are now cargo inside ships, not standalone working slot tiles, and fire no individual skim.]** **Casks restored to the perimeter slots — supersedes the earlier "casks live on the board, not slots" correction.** A working cask tile sits in a slot and **fires a printed action when its line is activated** (the §8 dual-use heart). Lifecycle:
   `BREW (tableau track) → SHIP into a SLOT (working = reach engine, fires actions) → ENSHRINE into the Kontor stack (flip to standing face = standing, sets new top action)`. Casks move *into and through* slots. (LOCKED)
 - **Cask tiles are double-sided:** working face = a **line action** + style + quality; standing face = **standing value + a goal**. (LOCKED)
 - **Goal-matching DNA stays:** an enshrined cask's goal scores against your working/slotted/board state — the glue that makes reach & standing *interact*. (LOCKED)

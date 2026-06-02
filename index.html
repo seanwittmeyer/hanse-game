@@ -315,7 +315,7 @@ document.getElementById('rb').innerHTML=routes.map(r=>{
 // ---- CASK TILES ----
 const casks=[
   {style:'Gruit Ale',q:1,inputs:'G',ships:'Bruges / nearest only',enshrine:false,stand:'—',goal:'(perishable — never enshrined)',qty:16},
-  {style:'Hopped Beer',q:2,inputs:'G H',ships:'any route',enshrine:true,stand:'3',goal:'one goal from the pool',qty:20},
+  {style:'Hopped Beer',q:2,inputs:'G H',ships:'Bruges / London / Bergen',enshrine:true,stand:'3',goal:'one goal from the pool',qty:20},
   {style:'Dubbel',q:3,inputs:'G H H',ships:'London / Bergen / Novgorod',enshrine:true,stand:'5',goal:'one goal from the pool',qty:12},
   {style:'Tripel',q:4,inputs:'G G H H',ships:'Bergen / Novgorod',enshrine:true,stand:'7',goal:'one goal from the pool',qty:8},
   {style:'Barrel-aged Bock',q:5,inputs:'premium · needs Aging Cellar',ships:'Novgorod',enshrine:true,stand:'10',goal:'one goal from the pool',qty:4},
@@ -365,10 +365,10 @@ document.getElementById('goalNote').innerHTML='<b>Goal pool</b> (standing face):
 
 // ---- ROUTE TILES ----
 const routeTiles=[
-  {name:'Bergen Lane',h:'h-route',v:'+2 / +3',act:'+1 presence on Bergen',qty:4},
-  {name:'Novgorod Lane',h:'h-route',v:'+3 / +4 / +5',act:'+1 presence on Novgorod',qty:5},
-  {name:'Bruges Lane',h:'h-route',v:'+1 / +2 / +3',act:'ship +1 toward Bruges',qty:6},
-  {name:'London Lane',h:'h-route',v:'+2 (+grants Privilege)',act:'+1 G',qty:4},
+  {name:'Bergen Lane',h:'h-route',v:'+2 / +3',act:'+1 G skim',qty:4},
+  {name:'Novgorod Lane',h:'h-route',v:'+3 / +4 / +5',act:'+1 G skim',qty:5},
+  {name:'Bruges Lane',h:'h-route',v:'+1 / +2 / +3',act:'+1 G skim',qty:6},
+  {name:'London Lane',h:'h-route',v:'+2 (+grants Privilege)',act:'+1 G skim',qty:4},
 ];
 document.getElementById('routeGallery').innerHTML=routeTiles.map(t=>`
   <div class="card"><div class="head h-route"><div class="kind">Route · slot</div><div class="ttl">${t.name}</div></div>

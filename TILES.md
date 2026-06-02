@@ -28,7 +28,7 @@ A cask tile carries, by face:
 | Style | Q | Brew inputs | Brew path | Ships to | Enshrine? | Standing ⚙ | Qty |
 |---|---|---|---|---|---|---|---|
 | **Gruit Ale** | 1 | `G` | LOAD→FERMENT→READY | Bruges / nearest waypoint only (perishable) | ❌ | — (single-face) | 16 |
-| **Hopped Beer** | 2 | `G H` | LOAD→FERMENT→AGE→READY | any route | ✅ | 3 | 20 |
+| **Hopped Beer** | 2 | `G H` | LOAD→FERMENT→AGE→READY | Bruges / London / Bergen (Q2 — not Novgorod) | ✅ | 3 | 20 |
 | **Dubbel** | 3 | `G H H` | + longer AGE | London/Bergen/Novgorod | ✅ | 5 | 12 |
 | **Tripel** | 4 | `G G H H` | + longer AGE | Bergen/Novgorod | ✅ | 7 | 8 |
 | **Barrel-aged Bock** | 5 | premium; needs **Aging Cellar** room | longest AGE | Novgorod | ✅ | 10 | 4 |
