@@ -42,20 +42,25 @@
   .panel h3{margin:0 0 8px;font-variant:small-caps;color:var(--red);font-size:1.1rem;border-bottom:1px solid var(--line);padding-bottom:4px}
   /* GRID */
   .agwrap{display:flex;justify-content:center}
-  .ag{display:grid;grid-template-columns:40px 120px 120px 40px;grid-template-rows:40px 120px 120px 40px;gap:6px}
-  .cell{border-radius:9px;padding:7px;color:var(--parch);position:relative;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 2px 6px rgba(0,0,0,.2);border:2px solid transparent}
-  .cell .nm{font-variant:small-caps;font-weight:bold;font-size:1rem;line-height:1}
-  .cell .do{font-size:.62rem;opacity:.9}
-  .cell .ltr{position:absolute;top:4px;right:7px;font-weight:bold;opacity:.45}
-  .cell.A{background:var(--gold);color:var(--ink)} .cell.B{background:var(--sea2)}
-  .cell.C{background:var(--green)} .cell.D{background:var(--red2)}
-  .cell .wk{display:flex;gap:3px;flex-wrap:wrap}
-  .pawn{width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.4)}
+  .ag{display:grid;grid-template-columns:48px 146px 146px 48px;grid-template-rows:48px 146px 146px 48px;gap:7px}
+  .cell{border-radius:12px;padding:10px;color:var(--parch);position:relative;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 3px 9px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14)}
+  .cell .head{display:flex;align-items:center;gap:8px}
+  .cell .bigic .ic,.cell .bigic svg{width:2em;height:2em;stroke-width:1.7}
+  .cell .role{font-size:.56rem;text-transform:uppercase;letter-spacing:1.2px;opacity:.82}
+  .cell .nm{font-variant:small-caps;font-weight:bold;font-size:1.18rem;line-height:1}
+  .cell .yield{display:flex;gap:7px;align-items:center;margin-top:3px}
+  .cell .yield .ic,.cell .yield svg{width:1.25em;height:1.25em;opacity:.95}
+  .cell .ltr{position:absolute;top:5px;right:8px;font-weight:bold;opacity:.38;font-size:.78rem}
+  .cell.A{background:linear-gradient(155deg,#cda522,#9c7414);color:#2b2018} .cell.B{background:linear-gradient(155deg,#3d6b7e,#244554)}
+  .cell.C{background:linear-gradient(155deg,#5a7e46,#34492a)} .cell.D{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
+  .cell .wk{display:flex;gap:3px;flex-wrap:wrap;align-items:center;min-height:15px}
+  .pawn{width:15px;height:15px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.4)}
   .cell.legal{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite}
   @keyframes pulse{50%{outline-color:#fff}}
-  .slot{background:var(--parch);border:2px dashed var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.58rem;text-align:center;color:var(--ink2);padding:2px;overflow:hidden}
-  .slot.filled{border-style:solid;color:var(--parch);font-weight:bold}
-  .slot.place{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite}
+  .slot{background:var(--parch);border:2px dashed var(--line);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.55rem;text-align:center;color:var(--ink2);padding:2px;overflow:hidden}
+  .slot .ic,.slot svg{width:1.5em;height:1.5em}
+  .slot.filled{border-style:solid;border-width:3px;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.32)}
+  .slot.place{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite;color:var(--gold);border-color:var(--gold)}
   .s1{grid-area:1/2}.s2{grid-area:1/3}.cA{grid-area:2/2}.cB{grid-area:2/3}
   .s8{grid-area:2/1}.s3{grid-area:2/4}.s7{grid-area:3/1}.s4{grid-area:3/4}
   .cC{grid-area:3/2}.cD{grid-area:3/3}.s6{grid-area:4/2}.s5{grid-area:4/3}
@@ -95,6 +100,13 @@
   .tag{display:inline-block;background:var(--ink);color:var(--parch);border-radius:10px;padding:1px 7px;font-size:.7rem;margin:2px 2px 0 0}
   .res{display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-weight:bold}
   .cube{width:13px;height:13px;border-radius:3px;display:inline-block;border:1px solid rgba(0,0,0,.3)}
+  /* ---- ICONS ---- */
+  .ic{width:1.05em;height:1.05em;vertical-align:-0.18em;stroke-width:2}
+  svg.lucide{width:1.05em;height:1.05em;vertical-align:-0.18em}
+  .i-grain{color:#9c7414} .i-hops{color:#5d7d34}
+  .chip{display:inline-flex;align-items:center;gap:3px;background:var(--parch);border:1px solid var(--line);border-radius:14px;padding:1px 8px;font-weight:bold;margin-right:5px}
+  .chip .ic{width:1em;height:1em}
+  .tl{font-size:.62rem;font-weight:bold;margin-left:1px}
   .grain{background:var(--grain)}.hops{background:var(--hops)}
   /* LOG */
   #log{font-size:.78rem;max-height:300px;overflow:auto;line-height:1.4}
@@ -118,6 +130,7 @@
   <div class="top">
     <span class="turn" id="turnlbl">Round 1</span>
     <span class="who" id="wholbl">—</span>
+    <span id="barres"></span>
     <span class="prompt" id="prompt">Loading…</span>
     <span class="links">
       <a href="learn.html">Learn</a><a href="index.html">Components</a><a href="rulebook.html">Rulebook</a>
@@ -160,12 +173,24 @@
 
 <div id="over" class="modal hidden"><div class="card" id="overcard"></div></div>
 
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>
 //==================================================================
 // DATA
 //==================================================================
 const COLORS=['#7c2128','#274b5c','#4a6b3a','#b8860b','#5b3a8e'];
 const CNAMES=['Crimson','Azure','Forest','Amber','Violet'];
+
+// ---- ICONS (lucide.dev) ----
+const LU=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="ic '+cls+'"':' class="ic"')+'></i>';
+const ICON={grain:'wheat',hops:'sprout',cask:'beer',vp:'crown',presence:'map-pin',coin:'coins',
+  Market:'store',Brewhouse:'flask-conical',Harbor:'ship',Kontor:'landmark',
+  route:'route',ship:'sailboat',room:'wrench',recipe:'scroll-text',goal:'target',stack:'layers',worker:'user-round',storage:'package'};
+const YIELD={Market:['wheat','sprout','scroll-text'],Brewhouse:['beer'],Harbor:['ship','map-pin'],Kontor:['crown','layers']};
+const Gi=n=>LU('wheat','i-grain')+(n!==undefined?'<b>'+n+'</b>':''), Hi=n=>LU('sprout','i-hops')+(n!==undefined?'<b>'+n+'</b>':'');
+function tileIcon(t){if(t.type==='cask')return LU('beer')+'<span class="tl">'+STYLES[t.style].name[0]+'</span>';
+  if(t.type==='route')return LU('route');if(t.type==='ship')return LU('sailboat');return LU('package');}
+function refreshIcons(){if(window.lucide)try{lucide.createIcons();}catch(e){}}
 
 const STYLES={
   gruit :{name:'Gruit Ale',     q:1, in:{g:1,h:0}, ready:2, enshrine:false, standing:0, work:{t:'good',good:'g'}},
@@ -259,6 +284,7 @@ function gain(p,g=0,h=0){p.grain=Math.min(p.storage,p.grain+g);p.hops=Math.min(p
 function canPay(p,c){return p.grain>=(c.g||0)&&p.hops>=(c.h||0);}
 function pay(p,c){p.grain-=(c.g||0);p.hops-=(c.h||0);}
 function costStr(c){let a=[];if(c.g)a.push(c.g+'G');if(c.h)a.push(c.h+'H');return a.join(' ')||'free';}
+function costIcons(c){let a=[];if(c.g)a.push(Gi(c.g));if(c.h)a.push(Hi(c.h));return a.join(' ')||'<span class="note">free</span>';}
 function totalPresence(p,s){let t=0;for(const r in s.routes)t+=(s.routes[r].pres[p.id]||0);return t;}
 function workingCount(p,s){return Object.values(s.slots).filter(t=>t&&t.type==='cask'&&t.owner===p.id).length;}
 function enshrinedTotal(){return S.players.reduce((a,p)=>a+p.enshrined.length,0);}
@@ -472,6 +498,7 @@ function render(){
   renderBar();renderGrid();renderRoutes();renderKontor();renderShop();renderTableaus();
   document.getElementById('log').innerHTML=S.log.join('');
   document.getElementById('turnlbl').textContent='Round '+S.turn+(S.ending?' · FINAL':'');
+  refreshIcons();
 }
 function btn(label,fn,cls){return '<button class="'+(cls||'')+'" onclick="'+fn+'">'+label+'</button>';}
 
@@ -480,6 +507,7 @@ function renderBar(){
   document.getElementById('wholbl').textContent=p.name;
   document.getElementById('wholbl').style.background=p.color;
   document.getElementById('wholbl').style.color='#fff';
+  document.getElementById('barres').innerHTML='<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span><span class="chip">'+LU('crown')+scorePlayer(p).total+'</span>';
   let prompt='',acts='';
   if(UI.sub==='move'){const placing=!p.placed;
     prompt=placing?'<b>Turn 1:</b> place your worker on any cell (click a glowing cell).':'Move your worker to an adjacent cell (click the glowing cell).';
@@ -515,58 +543,66 @@ function cellActions(p){
   }
   if(act==='Market'){
     if(UI.stage==='place')return '<span class="note">click a glowing slot…</span>';
-    return btn('Take 2 G','marketGoods(\'gg\')')+btn('Take 1G 1H','marketGoods(\'gh\')')+btn('Take 2 H','marketGoods(\'hh\')')
+    return btn('Take '+Gi(2),'marketGoods(\'gg\')')+btn('Take '+Gi(1)+' '+Hi(1),'marketGoods(\'gh\')')+btn('Take '+Hi(2),'marketGoods(\'hh\')')
       +' <span class="note">or buy a tile →</span> '+btn('Skip','cellDone()','ghost');
   }
   if(act==='Brewhouse'){
     if(UI.stage==='load'){let b=p.recipes.filter(r=>STYLES[r].enshrine||r==='gruit').map(r=>{
         const can=p.vessels.includes(null)&&canPay(p,STYLES[r].in)&&!(STYLES[r].cellar&&!p.rooms.includes('cellar'));
-        return '<button '+(can?'':'disabled')+' onclick="brewLoad(\''+r+'\')">Load '+STYLES[r].name+' ('+costStr(STYLES[r].in)+')</button>';}).join('');
+        return '<button '+(can?'':'disabled')+' onclick="brewLoad(\''+r+'\')">'+LU('beer')+' Load '+STYLES[r].name+' '+costIcons(STYLES[r].in)+'</button>';}).join('');
       return b+btn('Done','cellDone()','go');}
     return btn('Advance all brews'+(UI.blocked?' (brew-room)':''),'brewAdvance()','primary');
   }
   if(act==='Harbor'){
     const ready=readyCasks(p);
     if(UI.stage==='ship_pick'){if(!ready.length)return btn('No ready casks — Skip','cellDone()','ghost');
-      return ready.map(o=>btn('Ship '+STYLES[o.c.style].name,'shipPick('+o.i+')')).join('');}
+      return ready.map(o=>btn(LU('beer')+' Ship '+STYLES[o.c.style].name,'shipPick('+o.i+')')).join('');}
     if(UI.stage==='ship_route'){const cask=p.vessels[UI.tmp.vi];
       return Object.keys(ROUTES).filter(r=>S.routes[r].open&&routeFilled(r)<ROUTES[r].cap&&STYLES[cask.style].q>=ROUTES[r].gate)
-        .map(r=>btn('→ '+ROUTES[r].name,'shipRoute(\''+r+'\')','go')).join('')||'<span class="note">no eligible open route</span> '+btn('Cancel','cellDone()','ghost');}
+        .map(r=>btn(LU('map-pin')+' '+ROUTES[r].name,'shipRoute(\''+r+'\')','go')).join('')||'<span class="note">no eligible open route</span> '+btn('Cancel','cellDone()','ghost');}
     if(UI.stage==='ship_slot')return '<span class="note">click a glowing slot…</span>';
-    return (ready.length?btn('Ship a cask','shipStart()','primary'):btn('No ready casks — Skip','cellDone()','ghost'));
+    return (ready.length?btn(LU('ship')+' Ship a cask','shipStart()','primary'):btn('No ready casks — Skip','cellDone()','ghost'));
   }
   if(act==='Kontor'){
     if(UI.stage==='enshrine'){
       const slots=SLOTS.filter(s=>{const t=S.slots[s.id];return t&&t.type==='cask'&&t.owner===p.id&&t.enshrine;});
       const ready=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready&&o.c.enshrine);
       if(!slots.length&&!ready.length)return '<span class="note">nothing enshrine-able (need a Ready or working hopped+ cask)</span> '+btn('Back','(function(){UI.stage=null;render();})()','ghost');
-      let b=slots.map(s=>btn('Enshrine '+STYLES[S.slots[s.id].style].name+' (slot)','enshrineDo(\''+s.id+'\')','primary')).join('');
-      b+=ready.map(o=>btn('Enshrine '+STYLES[o.c.style].name+' (ready)','enshrineReady('+o.i+')','primary')).join('');
+      let b=slots.map(s=>btn(LU('crown')+' Enshrine '+STYLES[S.slots[s.id].style].name+' (slot)','enshrineDo(\''+s.id+'\')','primary')).join('');
+      b+=ready.map(o=>btn(LU('crown')+' Enshrine '+STYLES[o.c.style].name+' (ready)','enshrineReady('+o.i+')','primary')).join('');
       return b+btn('Back','(function(){UI.stage=null;render();})()','ghost');}
     const top=S.stack[S.stack.length-1];
-    return btn('Use top: '+top.name,'kontorTop()')+btn('Enshrine a cask','enshrineStart()','primary')+btn('Skip','cellDone()','ghost');
+    return btn(LU('layers')+' Use top: '+top.name,'kontorTop()')+btn(LU('crown')+' Enshrine a cask','enshrineStart()','primary')+btn('Skip','cellDone()','ghost');
   }
   return '';
 }
 
 function renderGrid(){
   const ag=document.getElementById('ag');let h='';
-  // slots
-  SLOTS.forEach(s=>{const t=S.slots[s.id];let cls='slot '+s.id;let label=s.id;
+  // slots — icon tiles, owner-coloured when filled
+  SLOTS.forEach(s=>{const t=S.slots[s.id];let cls='slot '+s.id;
     let placing=(UI.sub==='cell'&&(UI.stage==='place'||UI.stage==='ship_slot')&&!t);
     if(placing)cls+=' place';
-    if(t){cls+=' filled';label=tileLabel(t);}
+    let inner;
+    if(t){cls+=' filled';inner=tileIcon(t);}
+    else inner=placing?LU('plus'):'<span style="opacity:.45">'+s.id+'</span>';
     const click=placing?(UI.stage==='place'?'placeTile':'shipSlot'):null;
-    const style=t?'background:'+S.players[t.owner].color:'';
-    h+='<div class="'+cls+'" style="'+style+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+label+'</div>';
+    const style=t?'background:'+S.players[t.owner].color+';border-color:'+S.players[t.owner].color:'';
+    h+='<div class="'+cls+'" style="'+style+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
   });
-  // cells
-  ['A','B','C','D'].forEach(c=>{
-    const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'"></span>').join('');
+  // cells — big action icon + role + "what you get" yields + workers
+  ['A','B','C','D'].forEach(c=>{const act=CELLNAME[c];
+    const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'" title="'+p.name+'"></span>').join('');
     let cls='cell '+c+' c'+c;
     const legal=(UI.sub==='move'&&(!cur().placed||ADJ[cur().cell].includes(c)));
     if(legal)cls+=' legal';
-    h+='<div class="'+cls+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'><div class="ltr">'+c+'</div><div class="nm">'+CELLNAME[c]+'</div><div class="wk">'+pawns+'</div></div>';
+    const role=(act==='Market'||act==='Brewhouse')?'builder':'cash-out';
+    const yields=(YIELD[act]||[]).map(n=>LU(n)).join('');
+    h+='<div class="'+cls+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'>'
+      +'<div class="ltr">'+c+'</div>'
+      +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="role">'+role+'</div><div class="nm">'+act+'</div></div></div>'
+      +'<div class="yield">'+yields+'</div>'
+      +'<div class="wk">'+pawns+'</div></div>';
   });
   ag.innerHTML=h;
 }
@@ -579,19 +615,20 @@ function renderRoutes(){
     const canShip=(UI.sub==='cell'&&UI.stage==='ship_route'&&R.open&&routeFilled(r)<def.cap&&S.players[S.active]&&STYLES[cur().vessels[UI.tmp.vi].style].q>=def.gate);
     if(canShip)cls+=' ship';
     let sp='';for(let i=0;i<def.cap;i++){sp+='<div class="sp">'+(i<filled?'●':'')+'</div>';}
-    let pres=S.players.map(p=>(R.pres[p.id]?'<span class="pawn" style="width:11px;height:11px;background:'+p.color+';display:inline-block">'+'</span>'+(R.pres[p.id]):'')).filter(x=>x).join(' &nbsp;');
-    h+='<div class="'+cls+'" '+(canShip?'onclick="shipRoute(\''+r+'\')"':'')+'><div class="rh"><span class="rn">'+def.name+'</span><span class="rv">value '+R.value+(R.open?'':' · closed')+'</span></div><div class="gate">gate Q'+def.gate+' · presence: '+(pres||'—')+'</div><div class="spaces">'+sp+'</div></div>';
+    let pres=S.players.map(p=>(R.pres[p.id]?'<span style="color:'+p.color+';font-weight:bold">'+LU('map-pin')+(R.pres[p.id])+'</span>':'')).filter(x=>x).join(' ');
+    h+='<div class="'+cls+'" '+(canShip?'onclick="shipRoute(\''+r+'\')"':'')+'><div class="rh"><span class="rn">'+LU('landmark')+' '+def.name+'</span><span class="rv">'+(R.open?LU('star')+' val '+R.value:LU('lock')+' closed')+'</span></div><div class="gate">gate Q'+def.gate+' · '+(pres||'—')+'</div><div class="spaces">'+sp+'</div></div>';
   }
   document.getElementById('routes').innerHTML=h;
 }
 function renderKontor(){
   const top=S.stack[S.stack.length-1];
-  document.getElementById('kontor').innerHTML='<div class="stackbox">Stack height <b>'+S.stack.length+'</b> · enshrined <b>'+enshrinedTotal()+'</b> / '+endN()+'<br><span class="top">top: '+top.name+'</span></div><div class="note" style="margin-top:5px">Enshrined casks (standing) stack here; the top tile is the live action.</div>';
+  document.getElementById('kontor').innerHTML='<div class="stackbox">'+LU('layers')+' Stack <b>'+S.stack.length+'</b> &nbsp; '+LU('crown')+' enshrined <b>'+enshrinedTotal()+'</b> / '+endN()+'<br><span class="top">top: '+top.name+'</span></div><div class="note" style="margin-top:5px">Enshrined casks ('+LU('crown')+' standing) stack here; the top tile is the live action.</div>';
 }
 function renderShop(){
   const p=cur();const buying=(UI.sub==='cell'&&CELLNAME[UI.cell]==='Market'&&!UI.blocked&&(UI.stage===null||UI.stage==='choose'));
+  const KI={recipe:'scroll-text',route:'route',ship:'sailboat',room:'wrench'};
   let h='';SHOP.forEach(it=>{const aff=canPay(p,it.cost)&&buying;
-    h+='<div class="item"><span>'+it.name+'</span><span class="cost">'+costStr(it.cost)+' '+(buying?'<button '+(aff?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
+    h+='<div class="item"><span>'+LU(KI[it.kind]||'package')+' '+it.name+'</span><span class="cost">'+costIcons(it.cost)+' '+(buying?'<button '+(aff?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
   document.getElementById('shop').innerHTML=h+(buying?'':'<div class="note">Buy tiles during your Market action.</div>');
 }
 function renderTableaus(){
@@ -600,21 +637,22 @@ function renderTableaus(){
     tabs+='<div class="tab '+(i===activeTab?'active':'')+'" style="'+(i===activeTab?'background:'+p.color:'')+'" onclick="activeTab='+i+';renderTableaus()"><span class="pawn" style="background:'+p.color+';display:inline-block;vertical-align:middle;width:11px;height:11px"></span> '+p.name+'</div>';
     const sc=scorePlayer(p);
     let vessels=p.vessels.map(c=>{
-      if(!c)return '<div class="vessel"><i>empty vessel</i></div>';
+      if(!c)return '<div class="vessel" style="opacity:.6">'+LU('flask-conical')+' <i>empty vessel</i></div>';
       let tr='';for(let s=0;s<=c.ready;s++){tr+='<div class="tstep '+(s<c.step?'on':'')+(c.step>=c.ready&&s===c.ready?'ready':'')+'"></div>';}
       const ready=c.step>=c.ready;
-      return '<div class="vessel"><b>'+STYLES[c.style].name+'</b> '+(ready?'<span class="tag" style="background:var(--gold);color:#000">READY</span>':'(step '+c.step+'/'+c.ready+')')+'<div class="track">'+tr+'</div></div>';
+      return '<div class="vessel">'+LU('beer')+' <b>'+STYLES[c.style].name+'</b> '+(ready?'<span class="tag" style="background:var(--gold);color:#000">'+LU('check')+' READY</span>':'<span class="note">step '+c.step+'/'+c.ready+'</span>')+'<div class="track">'+tr+'</div></div>';
     }).join('');
-    let slotsOwned=SLOTS.map(s=>S.slots[s.id]).filter(t=>t&&t.owner===p.id).map(t=>'<span class="tag">'+tileLabel(t)+'</span>').join('')||'<span class="note">none</span>';
-    let ensh=p.enshrined.map(c=>'<span class="tag" style="background:var(--gold);color:#000">'+STYLES[c.style].name.split(' ')[0]+' ·'+c.standing+'</span>').join('')||'<span class="note">none</span>';
+    let slotsOwned=SLOTS.map(s=>S.slots[s.id]).filter(t=>t&&t.owner===p.id).map(t=>'<span class="tag">'+tileIcon(t)+'</span>').join('')||'<span class="note">none</span>';
+    let ensh=p.enshrined.map(c=>'<span class="tag" style="background:var(--gold);color:#000">'+LU('crown')+STYLES[c.style].name.split(' ')[0]+'·'+c.standing+'</span>').join('')||'<span class="note">none</span>';
     body+='<div class="tableau '+(i===activeTab?'show':'')+'">'
-      +'<div style="margin-bottom:6px"><span class="res"><span class="cube grain"></span>'+p.grain+'</span><span class="res"><span class="cube hops"></span>'+p.hops+'</span>'
-      +'<span class="note">storage '+p.storage+' · score ~'+sc.total+' (R'+sc.reach+'/M'+sc.maj+'/S'+sc.stand+'/G'+sc.goals+')</span></div>'
-      +'<b class="note">Brewing track ('+p.vessels.length+' vessel'+(p.vessels.length>1?'s':'')+')</b><div class="brew">'+vessels+'</div>'
-      +'<b class="note">Recipes:</b> '+(p.recipes.map(r=>'<span class="tag">'+STYLES[r].name+'</span>').join('')||'—')+'<br>'
-      +'<b class="note">Working casks / tiles in slots:</b> '+slotsOwned+'<br>'
-      +'<b class="note">Enshrined (standing):</b> '+ensh+'<br>'
-      +'<b class="note">Rooms:</b> '+(p.rooms.map(r=>'<span class="tag">'+r+'</span>').join('')||'—')
+      +'<div style="margin-bottom:6px"><span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
+      +'<span class="chip">'+LU('package')+p.storage+'</span><span class="chip">'+LU('crown')+sc.total+'</span>'
+      +' <span class="note">R'+sc.reach+'/M'+sc.maj+'/S'+sc.stand+'/G'+sc.goals+'</span></div>'
+      +'<b class="note">'+LU('flask-conical')+' Brewing track ('+p.vessels.length+' vessel'+(p.vessels.length>1?'s':'')+')</b><div class="brew">'+vessels+'</div>'
+      +'<b class="note">'+LU('scroll-text')+' Recipes:</b> '+(p.recipes.map(r=>'<span class="tag">'+LU('beer')+STYLES[r].name+'</span>').join('')||'—')+'<br>'
+      +'<b class="note">'+LU('map-pin')+' In slots (reach engine):</b> '+slotsOwned+'<br>'
+      +'<b class="note">'+LU('crown')+' Enshrined (standing):</b> '+ensh+'<br>'
+      +'<b class="note">'+LU('wrench')+' Rooms:</b> '+(p.rooms.map(r=>'<span class="tag">'+LU('wrench')+r+'</span>').join('')||'—')
       +'</div>';
   });
   document.getElementById('tabs').innerHTML=tabs;
