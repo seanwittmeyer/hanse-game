@@ -271,11 +271,11 @@ const KEY='hanse-hotseat-v1';
 
 function endN(){return 6+3*S.players.length;}  // end-game stack threshold ⚙
 
-const START_RECIPES=['hopped','dubbel','tripel'];  // gruit is the universal baseline; you start with one random premium recipe in hand
+const START_RECIPES=['hopped','dubbel','tripel'];  // gruit is the universal baseline; you start with TWO random premium recipes in hand
+function startRecipes(){const a=START_RECIPES.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,2);}
 function newPlayer(i,name){
-  const r=START_RECIPES[Math.floor(Math.random()*START_RECIPES.length)];
   return {id:i,name:name||CNAMES[i],color:COLORS[i],grain:3,hops:2,cell:null,placed:false,
-    storage:8, recipes:['gruit',r], vessels:[null], maxVessels:1, maxRooms:4,
+    storage:8, recipes:['gruit',...startRecipes()], vessels:[null], maxVessels:1, maxRooms:4,
     rooms:[],ships:0,privileges:0, enshrined:[]};
 }
 function freshState(n,names){
@@ -367,7 +367,7 @@ function fireSkim(t,slotId){
       const got=addPresence(o,t.route)?', +1 presence':'';
       log('↳ '+o.name+'’s '+t.label+' loads '+STYLES[rc.c.style].name+' ('+t.cargo.length+'/'+t.cap+got+').');
       if(t.cargo.length>=t.cap)sailShip(t,slotId);
-    } else { gain(o,1,0);log('↳ '+o.name+'’s '+t.label+' waits at the '+ROUTES[t.route].name+' dock (+1G).'); }
+    } // else: no eligible cask aboard — the ship simply waits (no idle income; a ship earns only via tolls + the sail dividend)
   }
 }
 function sailShip(ship,slotId){ // ship full → it sails; cargo (already counted as each shipper's presence) is delivered; owner takes a dividend; slot frees (transient)

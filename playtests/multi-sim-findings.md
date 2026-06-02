@@ -60,3 +60,14 @@ A **Tripel** opening wins ~1.7× as often as a **Hopped** opening, because stand
 4. **Re-fair the opening:** fixed symmetric start, OR start with 2 recipes, OR a small draft — anything that removes the Tripel-luck swing (or accept it once standing no longer dominates).
 
 > Findings 1 & 3 are the same throughput knot the v0.2 re-sim already flagged; the slot-ring rework didn't address pace and (via the idle fee) added passive income. A dedicated throughput/economy pass is the highest-leverage next step.
+
+---
+
+## Applied after this sim (2026-06-02)
+
+Two of the four dials were decided and applied; the big rebalance (Findings 1 & 3) was **deferred** by choice.
+
+- **Removed the ship idle dock-fee** (Finding 2). A ship with no eligible cask now simply waits — it earns only via tolls + the sail dividend, so it's a genuine speculative container, not a passive +1 G generator. Re-sim: idle dock-fees **8.9 → 0.0** per game; ship income is now tolls (~0.5) + sails only.
+- **Opening is now 2 random premium recipes** (a random pair from Hopped/Dubbel/Tripel) instead of 1 (Finding 4). Re-sim win% by starting pair: `dubbel+hopped` 28% · `hopped+tripel` 33% · `dubbel+tripel` 39% — the swing narrowed from ~1.7× (single recipe) to ~1.4×.
+
+**Known consequence (deferred):** removing the idle fee — which had been quietly propping up the ship-building reach archetypes — **sharpened standing-dominance** (QUALITY/standing 50% → **72%** at 3p; reach archetypes now win 3–8%). This is expected and lands squarely in the deferred **throughput + reach** rebalance (Findings 1 & 3), which remains the top open balance task. The heritage clock still never fires; the reach clock now fires ~10% (3p) thanks to slightly more early brewing options from the second recipe.

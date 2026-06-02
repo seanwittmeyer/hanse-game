@@ -6,7 +6,7 @@
 
 ## 0. Setup (symmetric)
 
-Each house starts with **3 `G`, 2 `H`**, the **Gruit baseline** (always brewable) **+ 1 random premium recipe in hand** (Hopped / Dubbel / Tripel), **1 open vessel** (cap 3), storage 8, and the printed Larder + Quay. Bruges route open; far routes closed. Kontor stack seeded with 2 public tiles. See `PLAYERBOARD.md`.
+Each house starts with **3 `G`, 2 `H`**, the **Gruit baseline** (always brewable) **+ 2 random premium recipes in hand** (a random pair from Hopped / Dubbel / Tripel), **1 open vessel** (cap 3), storage 8, and the printed Larder + Quay. Bruges route open; far routes closed. Kontor stack seeded with 2 public tiles. See `PLAYERBOARD.md`.
 
 > **Recipes are held in hand and brewed from hand.** Gruit is universal; every *other* recipe must be acquired as a **recipe tile placed in a perimeter slot**, then **claimed into your hand the next time that slot's line fires** (any player's activation; the owner claims, then the tile is spent and the slot frees). So recipe variety is an engine you build in the slot ring — see §A.
 

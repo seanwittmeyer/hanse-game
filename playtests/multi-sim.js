@@ -113,7 +113,7 @@ function playGame(n,gseed){
  PROF={};const names=[];
  for(let i=0;i<n;i++){PROF[i]=ARCH[order[i%order.length]];names.push(CN[i]);}
  E.S=E.freshState(n,names);E.UI={sub:'move'};
- const starts=E.S.players.map(p=>p.recipes[1]); // the random premium each got
+ const starts=E.S.players.map(p=>p.recipes.slice(1).sort().join('+')); // the random premium pair each got
  const T={tolls:0,harborLoads:0,basicShips:0,capLoads:0,shipIdle:0,sails:0,cargo:0,shipsBuilt:0,recipePlaced:0,recipeClaims:0,endType:'none',rounds:0};
  const CAP=parseInt(process.argv[3]||'24',10);
  for(let round=1;round<=CAP;round++){
@@ -169,8 +169,8 @@ function report(n,a){
  out.push(`    tolls collected ${avg(a.T.tolls,G)} · cap-fire auto-loads ${avg(a.T.capLoads,G)} · idle dock-fees ${avg(a.T.shipIdle,G)}`);
  out.push('\n  Recipe economy (per game):');
  out.push(`    recipe tiles placed ${avg(a.T.recipePlaced,G)} · recipes claimed ${avg(a.T.recipeClaims,G)}`);
- out.push('\n  Random opening — win% by starting premium recipe:');
- ['hopped','dubbel','tripel'].forEach(s=>{out.push(`    ${s.padEnd(7)} played ${a.playByStart[s]||0}  ·  wins ${a.winsByStart[s]||0}  (${pct(a.winsByStart[s]||0,a.playByStart[s]||0)} of its games won)`);});
+ out.push('\n  Random opening — win% by starting premium recipe set:');
+ Object.keys(a.playByStart).sort().forEach(s=>{out.push(`    ${s.padEnd(14)} played ${a.playByStart[s]||0}  ·  wins ${a.winsByStart[s]||0}  (${pct(a.winsByStart[s]||0,a.playByStart[s]||0)} of its games won)`);});
  return out.join('\n');
 }
 

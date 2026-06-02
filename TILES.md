@@ -114,7 +114,7 @@ You **hold recipes in hand** and brew from hand. Gruit is the universal baseline
 | **Recipe · Tripel** | Tripel recipe | `2 G` | 3 |
 | **Recipe · Bock** | Barrel-aged Bock (needs Aging Cellar to brew) | `2 G 1 H` | 2 |
 
-> Start of game: **Gruit baseline + 1 random premium recipe** in hand (Hopped / Dubbel / Tripel).
+> Start of game: **Gruit baseline + 2 random premium recipes** in hand (a random pair from Hopped / Dubbel / Tripel).
 
 ---
 
@@ -178,7 +178,7 @@ Seed the stack and get added during play; interleave with personal enshrined cas
 - 1 **worker**, placed on the grid.
 - Tableau printed with **Larder** (Market trickle +1 `G`) and **Quay** (Harbor trickle, 1 step) — upgradeable by Family E.
 - **1 vessel lane** open on the brewing track.
-- Starting stake: **3 `G`, 2 `H`**, and **the Gruit baseline + 1 random premium recipe** in hand (Hopped / Dubbel / Tripel). ⚙
+- Starting stake: **3 `G`, 2 `H`**, and **the Gruit baseline + 2 random premium recipes** in hand (a random pair from Hopped / Dubbel / Tripel). ⚙
 - Asymmetric starting brewing-house tiles = possible variant. ❓
 
 ---

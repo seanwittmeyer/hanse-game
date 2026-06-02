@@ -85,7 +85,7 @@ Because only **4 room slots** exist, you can develop **one** twin deeply — so 
 | Item | Start ⚙ |
 |---|---|
 | Goods | **3 G, 2 H** |
-| Recipes | **Gruit baseline + 1 random premium** (Hopped/Dubbel/Tripel), held in hand; more recipes via recipe tiles on the slot ring |
+| Recipes | **Gruit baseline + 2 random premiums** (a random pair from Hopped/Dubbel/Tripel), held in hand; more recipes via recipe tiles on the slot ring |
 | Vessels | 1 open (lanes 2–3 locked) |
 | Rooms | none |
 | Storage | 8 |
