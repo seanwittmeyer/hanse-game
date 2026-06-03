@@ -675,9 +675,9 @@ function renderRoutes(){
   let h='';for(const r in ROUTES){const R=S.routes[r];const def=ROUTES[r];
     const filled=Object.values(R.pres).reduce((a,b)=>a+b,0);
     let cls='route '+r+(R.open?'':' closed');
-    const canShip=(UI.sub==='cell'&&UI.stage==='ship_route'&&R.open&&routeFilled(r)<def.cap&&S.players[S.active]&&STYLES[cur().vessels[UI.tmp.vi].style].q>=def.gate);
+    const canShip=(UI.sub==='cell'&&UI.stage==='ship_route'&&R.open&&routeFilled(r)<R.cap&&S.players[S.active]&&STYLES[cur().vessels[UI.tmp.vi].style].q>=def.gate);
     if(canShip)cls+=' ship';
-    let sp='';for(let i=0;i<def.cap;i++){sp+='<div class="sp">'+(i<filled?'●':'')+'</div>';}
+    let sp='';for(let i=0;i<R.cap;i++){sp+='<div class="sp">'+(i<filled?'●':'')+'</div>';}
     let pres=S.players.map(p=>(R.pres[p.id]?'<span style="color:'+p.color+';font-weight:bold">'+LU('map-pin')+(R.pres[p.id])+'</span>':'')).filter(x=>x).join(' ');
     let ships=SLOTS.map(s=>S.slots[s.id]).filter(t=>t&&t.type==='ship'&&t.route===r)
       .map(t=>'<span class="tag" style="background:'+S.players[t.owner].color+';color:#fff">'+LU('sailboat')+t.cargo.length+'/'+t.cap+'</span>').join('');
