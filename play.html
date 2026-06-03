@@ -164,7 +164,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center">Prototype v0.5 — the dual-role cask in 3 states (working / deploy=reach / enshrine=standing), the demand market that drives standing, the any-player enshrine, and the Fair pump lever. Simplifications: line stops resolve in board order; working casks don't yet add a station boost (they just hold/relieve back-pressure); privileges unimplemented; all numbers are placeholders (⚙).</p>
+  <p class="note" style="text-align:center">Prototype v0.5 — the dual-role cask in 3 states (working / deploy=reach / enshrine=standing), the demand market that drives standing, the any-player enshrine, and the Fair pump lever. Line stops resolve in <b>any order you choose</b> (pump-and-dump &amp; brew-then-enshrine both work); a <b>working cask</b> installed to a personal slot is assigned to a station and fires its work action whenever you use that station (or its twin). Single-level <b>Undo</b> is in the bar. Simplifications: privileges unimplemented; all numbers are placeholders (⚙).</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -290,7 +290,12 @@ const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v5';  // v5: 3-state casks (deploy/enshrine), demand market = standing, Fair lever (old saves incompatible)
+const KEY='hanse-hotseat-v6';  // v6: working casks carry a station boost (cask.station); v5: 3-state casks + demand market (old saves incompatible)
+
+// ---- UNDO ---- snapshot the (serializable) game + interaction state before each action; one Undo button rolls back.
+let undoStack=[];
+function snapshot(){if(!S)return;undoStack.push({S:JSON.stringify(S),UI:JSON.stringify(UI),tab:activeTab});if(undoStack.length>40)undoStack.shift();}
+function doUndo(){if(!undoStack.length)return;const u=undoStack.pop();S=JSON.parse(u.S);UI=JSON.parse(u.UI);activeTab=u.tab;save();render();}
 
 function endN(){return 6+3*S.players.length;}  // end-game stack threshold ⚙
 
@@ -338,6 +343,29 @@ function majorityCount(p,s){let c=0;for(const r in s.routes){const pr=s.routes[r
 function readyCasks(p){return p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready);}
 function emptySlots(){return SLOTS.filter(s=>!S.slots[s.id]);}
 function log(msg,me){S.log.unshift('<div class="'+(me?'me':'')+'">'+msg+'</div>');if(S.log.length>120)S.log.pop();}
+// ---- TOOLTIPS: plain-text descriptions of what a space gives / what you do there ----
+function workDesc(style){const w=STYLES[style].work||{t:'good',good:'g'};
+  if(w.t==='good')return '+1 '+(w.good==='h'?'hops':'grain');
+  if(w.t==='advance')return 'advance a brew';
+  if(w.t==='presence')return '+1 presence';return '—';}
+const CELLTIP={
+  Market:'Market · builder. Visit to take 2 goods (any mix), OR buy one tile — a recipe (→ your book; pumps that type +1), a route lane / ship faucet / Fair (→ a perimeter slot), or a room (→ your brewery). Blocked by a rival → Larder twin (+1 grain, +2 with the Larder room).',
+  Harbor:'Harbor · cash-out (REACH). Visit to deploy a Ready cask into a route slot — you gain +1 presence and that type’s market drops −1 — or install a cask into a personal slot as a working cask. Blocked → Quay twin (deploy to Bruges only).',
+  Hall:'Hall · cash-out (STANDING). Visit to enshrine a cask — your Ready/working cask, OR any deployed cask on the board (yours or a rival’s). Its owner banks that type’s current market value as standing; the market drops −1. No twin, never blocked.',
+  Brewhouse:'Brewhouse · builder. Visit to advance ALL your brews 1 step and optionally load a recipe (paying its inputs) into an empty vessel. Blocked → brew-room twin (advance only, no load; Faster Fermenter restores the load).',
+};
+function cellTip(cell){let t=CELLTIP[CELLNAME[cell]];
+  const p=cur();const boosts=(p?p.pslots:[]).filter(c=>c&&c.station===CELLNAME[cell]);
+  if(boosts.length)t+=' Working casks installed here: '+boosts.map(c=>STYLES[c.style].name+' ('+workDesc(c.style)+')').join(', ')+'.';
+  return t;}
+function tileTip(t){if(!t)return 'Empty perimeter slot — deployed casks (reach), route lanes, ship faucets and Fair tiles sit here and fire when their line is run.';
+  const o=S.players[t.owner];
+  if(t.type==='cask')return o.name+'’s deployed '+STYLES[t.style].name+' on '+ROUTES[t.route].name+' — counts as reach presence; fires '+workDesc(t.style)+' for whoever runs its line. Any player may enshrine it (owner banks standing, slot frees).';
+  if(t.type==='ship')return o.name+'’s '+t.label+' faucet — skims +1'+(t.res==='h'?' hops':' grain')+' to '+o.name+' whenever its line is run.';
+  if(t.type==='route')return o.name+'’s '+ROUTES[t.route].name+' Lane — opened the route; skims +1 grain to '+o.name+' whenever its line is run.';
+  if(t.type==='fair')return o.name+'’s Fair — on its line, the active player may pay 1 grain to pump one type’s market +1 (fee to '+o.name+'). Place on a Hall line for pump-and-dump.';
+  return t.label||'';}
+function attr(s){return String(s).replace(/"/g,'&quot;');} // safe for title="…"
 
 //==================================================================
 // PERSISTENCE
@@ -363,7 +391,7 @@ function pickCount(n){setupN=n;for(let i=2;i<=5;i++)document.getElementById('pc'
 }
 function startGame(){
   const names=[];for(let i=0;i<setupN;i++){const v=document.getElementById('nm'+i).value.trim();names.push(v||CNAMES[i]);}
-  S=freshState(setupN,names);UI={sub:'move'};activeTab=0;
+  S=freshState(setupN,names);UI={sub:'move'};activeTab=0;undoStack=[];
   document.getElementById('setup').classList.add('hidden');
   log('Game begins — '+setupN+' brewing houses. Bruges is open.');
   save();render();
@@ -375,47 +403,72 @@ function startGame(){
 function beginTurn(){UI={sub:'move'};render();}
 
 function doMove(cell){
+  snapshot();
   const p=cur();const placing=!p.placed;p.placed=true;p.cell=cell;
   log(p.name+(placing?' places their worker at <b>':' moves their worker to <b>')+CELLNAME[cell]+'</b>.',true);
   UI={sub:'line'};render();
 }
+// ① Free-order line resolution: build the up-to-4 stops (2 cells + up to 2 caps) as a SET; the player picks order.
 function chooseLine(which){ // 'row' or 'col'
+  snapshot();
   const p=cur();const lk=cellOfLine(p.cell)[which];const L=LINES[lk];
   log(p.name+' activates the <b>'+L.label+'</b>.',true);
-  UI={sub:'cell',queue:L.cells.slice(),line:lk,stage:null,tmp:{},fair:null};
-  // fire cap tiles: casks → ACTION (active player); lanes/ships → RESOURCE (owner); a Fair is offered after the cells.
-  L.caps.forEach(cid=>{const t=S.slots[cid];if(!t)return; if(t.type==='fair'){UI.fair={tile:t,slot:cid};} else fireSkim(t,cid);});
-  nextCell();
+  const stops=[];
+  L.cells.forEach(c=>stops.push({kind:'cell',cell:c}));
+  L.caps.forEach(cid=>{if(S.slots[cid])stops.push({kind:'cap',slot:cid});}); // empty caps do nothing → omit
+  UI={sub:stops.length?'stops':'end',line:lk,stops,stage:null,tmp:{},fair:null};
+  render();
+}
+// Resolve ONE chosen stop, then return to the picker until all are done.
+function resolveStop(i){
+  const stop=UI.stops[i];if(!stop)return;
+  snapshot();
+  UI.stops.splice(i,1);
+  if(stop.kind==='cap'){
+    const cid=stop.slot;const t=S.slots[cid];
+    if(t&&t.type==='fair'){UI.fair={tile:t,slot:cid};UI.sub='fair';UI.stage=null;render();return;}
+    if(t)fireSkim(t,cid);
+    backToStops();return;
+  }
+  // a cell stop
+  UI.sub='cell';UI.cell=stop.cell;UI.stage='choose';UI.tmp={};
+  // blocked by a rival → tableau twin. The Hall (C) is open to all — never blocked.
+  UI.blocked=(CELLNAME[UI.cell]!=='Hall')&&S.players.some(pl=>pl.id!==S.active&&pl.cell===UI.cell);
+  fireStationBoost(UI.cell); // ② working casks assigned to this station fire their work action (twin too)
+  render();
+}
+function backToStops(){UI.cell=null;UI.stage=null;UI.tmp={};UI.sub=UI.stops.length?'stops':'end';render();}
+// A working cask's payoff: when you USE the station it's assigned to (or its twin when blocked), it fires its work action.
+function applyWork(p,w,label){
+  w=w||{t:'good',good:'g'};
+  if(w.t==='good'){gain(p,w.good==='h'?0:1,w.good==='h'?1:0);log('↳ '+label+' → +1'+(w.good==='h'?'H':'G')+'.');}
+  else if(w.t==='advance'){const ok=advanceOne(p);log('↳ '+label+' → advance a brew'+(ok?'':' (no brew)')+'.');}
+  else if(w.t==='presence'){const ok=addPresenceBest(p);log('↳ '+label+' → +1 presence'+(ok?'':' (no open route)')+'.');}
+}
+function fireStationBoost(cell){
+  const stn=CELLNAME[cell];if(stn==='Hall')return; // Hall has no twin → no working-cask slot
+  const p=cur();
+  p.pslots.forEach(c=>{if(c&&c.station===stn)applyWork(p,STYLES[c.style].work,'⌂ working '+STYLES[c.style].name+' boosts your '+stn);});
 }
 function fireSkim(t,slotId){
   const o=S.players[t.owner];
   if(t.type==='route'){ gain(o,1,0); log('↳ '+o.name+'’s '+ROUTES[t.route].name+' Lane skims +1G.'); }
   else if(t.type==='ship'){ gain(o, t.res==='h'?0:1, t.res==='h'?1:0); log('↳ '+o.name+'’s '+t.label+' faucet skims +1'+(t.res==='h'?'H':'G')+'.'); }
   else if(t.type==='cask'){ // a deployed cask fires its ACTION, resolved for the active player
-    const act=cur(); const w=STYLES[t.style].work||{t:'good',good:'g'};
-    if(w.t==='good'){gain(act, w.good==='h'?0:1, w.good==='h'?1:0);}
-    else if(w.t==='advance'){advanceOne(act);}
-    else if(w.t==='presence'){addPresenceBest(act);}
-    log('↳ '+act.name+' works '+o.name+'’s deployed '+STYLES[t.style].name+' (its line action).');
+    applyWork(cur(),STYLES[t.style].work,cur().name+' works '+o.name+'’s deployed '+STYLES[t.style].name);
   }
 }
-function nextCell(){
-  if(!UI.queue.length){ if(UI.fair){UI.sub='fair';UI.stage=null;render();return;} UI={sub:'end'};render();return; }
-  UI.cell=UI.queue.shift();UI.stage='choose';UI.tmp={};
-  // blocked by a rival → tableau twin. The Hall (C) is open to all — never blocked.
-  UI.blocked=(CELLNAME[UI.cell]!=='Hall')&&S.players.some(pl=>pl.id!==S.active&&pl.cell===UI.cell);
-  render();
-}
 // The Fair lever: the active player may pay 1G to pump a type +1; the fee goes to the Fair's owner.
-function fairPump(style){const p=cur();if(!canPay(p,{g:1}))return;pay(p,{g:1});
+function fairPump(style){const p=cur();if(!canPay(p,{g:1}))return;snapshot();pay(p,{g:1});
   const o=S.players[UI.fair.tile.owner];
   if(o.id!==p.id){gain(o,1,0);log('↳ '+o.name+' collects a +1G Fair fee.');}
   marketPump(style);log(p.name+' pays 1G at the Fair → pumps '+STYLES[style].name+' to '+S.value[style]+'.',true);
-  UI.fair=null;UI={sub:'end'};render();}
-function fairSkip(){UI.fair=null;UI={sub:'end'};render();}
-function cellDone(){UI.cell=null;nextCell();}
+  UI.fair=null;backToStops();}
+function fairSkip(){snapshot();UI.fair=null;backToStops();}
+function cellDone(){backToStops();}
 
 function endTurn(){
+  snapshot();
   checkTriggers();
   const n=S.players.length;
   S.active=(S.active+1)%n;
@@ -452,10 +505,11 @@ function deployCask(p,cask,slotId,r){
 }
 
 //------- MARKET -------
-function marketGoods(kind){const p=cur();if(kind==='gg')gain(p,2,0);else if(kind==='gh')gain(p,1,1);else gain(p,0,2);
+function marketGoods(kind){snapshot();const p=cur();if(kind==='gg')gain(p,2,0);else if(kind==='gh')gain(p,1,1);else gain(p,0,2);
   log(p.name+' takes goods at the Market.',true);cellDone();}
 function buyTile(id){
   const it=SHOP.find(x=>x.id===id);const p=cur();if(!canPay(p,it.cost))return;
+  snapshot();
   if(it.kind==='room'){
     if(p.rooms.length>=p.maxRooms){alert('No free room slot (max '+p.maxRooms+').');return;}
     if(it.room==='vessel'&&p.maxVessels>=3){alert('Vessel cap is 3.');return;}
@@ -484,12 +538,8 @@ function applyRoom(p,room){p.rooms.push(room);
   if(room==='warehouse'){p.storage+=4;}
   // cellar (unlock bock), counting (enshrine bonus) handled at point of use
 }
-function shipBuyRoute(r){const p=cur();const ps=UI.tmp.pendingShip;
-  UI.tmp.pendingTile={type:'ship',owner:p.id,label:ps.label,cap:ps.cap,cargo:[],route:r};
-  UI.tmp.pendingShip=null;UI.stage='place';
-  log(p.name+'’s '+ps.label+' will support '+ROUTES[r].name+' — place it in a slot.',true);render();
-}
 function placeTile(slotId){
+  snapshot();
   const t=UI.tmp.pendingTile;
   if(t.type==='cask'){ deployCask(S.players[t.owner],t,slotId,t.route); }
   else { S.slots[slotId]=t;
@@ -501,12 +551,12 @@ function placeTile(slotId){
 }
 
 //------- BREWHOUSE -------
-function brewAdvance(){const p=cur();advanceAll(p);log(p.name+' advances all brews.',true);UI.stage='load';render();}
+function brewAdvance(){snapshot();const p=cur();advanceAll(p);log(p.name+' advances all brews.',true);UI.stage='load';render();}
 function brewLoad(style){const p=cur();const st=STYLES[style];
   if(st.cellar&&!p.rooms.includes('cellar')){alert('Bock needs an Aging Cellar.');return;}
   const vi=p.vessels.findIndex(v=>v===null);if(vi<0){alert('No empty vessel.');return;}
   if(!canPay(p,st.in)){alert('Cannot pay brew inputs.');return;}
-  pay(p,st.in);const ri=p.recipes.indexOf(style);if(ri>=0)p.recipes.splice(ri,1);
+  snapshot();pay(p,st.in);const ri=p.recipes.indexOf(style);if(ri>=0)p.recipes.splice(ri,1);
   const goal=GOALS[Math.floor(Math.random()*GOALS.length)];
   p.vessels[vi]={style,q:st.q,step:0,ready:st.ready,standing:st.standing,enshrine:st.enshrine,goal:goal.id};
   log(p.name+' loads '+st.name+' (goal: '+goal.text+').',true);render();
@@ -520,27 +570,30 @@ function shipRoute(r){const p=cur();const o=UI.tmp.cask;const c=o.src==='v'?p.ve
   if(!S.routes[r].open){alert(ROUTES[r].name+' is not open.');return;}
   if(routeFilled(r)>=S.routes[r].cap){alert(ROUTES[r].name+' is full.');return;}
   if(!emptySlots().length){alert('No empty perimeter slot to deploy into.');return;}
-  const cask=takeCask(p,o.src,o.i);
+  snapshot();const cask=takeCask(p,o.src,o.i);
   UI.tmp.pendingTile={type:'cask',owner:p.id,style:cask.style,q:cask.q,route:r,goal:cask.goal};
   UI.stage='place';log(p.name+' deploys to '+ROUTES[r].name+' — choose a slot.',true);render();}
-function installCask(src,i){const p=cur();const pi=p.pslots.indexOf(null);
+// ② Stash a Ready cask into a personal slot as a WORKING cask — pick which cask, then which station it boosts.
+function stashPick(src,i){UI.tmp.stashCask={src,i};UI.stage='stash_station';render();}
+function installCask(station){const p=cur();const o=UI.tmp.stashCask;if(!o)return;const pi=p.pslots.indexOf(null);
   if(pi<0){alert('No free personal slot.');return;}
-  const c=takeCask(p,src,i);p.pslots[pi]=c;
-  log(p.name+' stashes '+STYLES[c.style].name+' into a personal slot (working).',true);cellDone();}
+  snapshot();const c=takeCask(p,o.src,o.i);c.station=station;p.pslots[pi]=c;UI.tmp.stashCask=null;
+  log(p.name+' installs '+STYLES[c.style].name+' as a working cask at the <b>'+station+'</b> (fires '+workDesc(c.style)+' when you use it).',true);cellDone();}
 function quayFallback(){const p=cur();const d=deployable(p)[0]; // blocked-Harbor twin: deploy a ready cask to Bruges
   if(!d){log(p.name+'’s Quay sits idle — no ready cask.',true);cellDone();return;}
   if(!emptySlots().length||routeFilled('bruges')>=S.routes.bruges.cap){log(p.name+'’s Quay sits idle.',true);cellDone();return;}
-  const cask=takeCask(p,d.src,d.i);deployCask(p,cask,emptySlots()[0].id,'bruges');cellDone();}
+  snapshot();const cask=takeCask(p,d.src,d.i);deployCask(p,cask,emptySlots()[0].id,'bruges');cellDone();}
 
 //------- HALL (enshrine = standing) -------
 function enshrineStart(){UI.stage='enshrine';render();}
 function enshrineBank(p,c){const v=S.value[c.style]||0;let add=v;if(p.rooms.includes('counting'))add+=1; // payout = type's market value
   p.standing+=add;p.enshrined.push({style:c.style,q:c.q,standing:add,goal:c.goal});
   S.stack.push({style:c.style,owner:p.id});marketDrop(c.style);return add;}
-function enshrineReady(src,i){const p=cur();const c=takeCask(p,src,i); // enshrine from your own brewery/personal slot
+function enshrineReady(src,i){snapshot();const p=cur();const c=takeCask(p,src,i); // enshrine from your own brewery/personal slot
   const add=enshrineBank(p,c);
   log(p.name+' <b>enshrines</b> '+STYLES[c.style].name+' (+'+add+' standing · market → '+S.value[c.style]+').',true);cellDone();}
 function enshrineDeployed(slotId){ // ANY player may enshrine a deployed cask from a shared slot — standing goes to its OWNER, the slot frees
+  snapshot();
   const t=S.slots[slotId];const o=S.players[t.owner];
   if((S.routes[t.route].pres[o.id]||0)>0)S.routes[t.route].pres[o.id]--; // its presence (reach) leaves the board
   S.slots[slotId]=null;
@@ -598,12 +651,29 @@ function renderBar(){
     prompt='Activate the row or the column of '+CELLNAME[p.cell]+'.';
     acts=btn(LINES[o.row].label,'chooseLine(\'row\')','go')+btn(LINES[o.col].label,'chooseLine(\'col\')','go');}
   else if(UI.sub==='cell'){acts=cellActions(p);prompt=cellPrompt(p);}
+  else if(UI.sub==='stops'){ // ① pick the next stop to resolve, in any order
+    prompt='Resolve this line’s stops <b>in any order</b> — pick the next one ('+UI.stops.length+' left).';
+    acts=UI.stops.map((s,i)=>{
+      let lbl;
+      if(s.kind==='cell'){const blk=(CELLNAME[s.cell]!=='Hall')&&S.players.some(pl=>pl.id!==S.active&&pl.cell===s.cell);
+        lbl=LU(ICON[CELLNAME[s.cell]])+' '+CELLNAME[s.cell]+(blk?' (twin)':'');}
+      else{const t=S.slots[s.slot];
+        if(!t)lbl='(empty)';
+        else if(t.type==='fair')lbl=LU('tent')+' Fair · pump lever';
+        else if(t.type==='cask')lbl=LU('beer')+' Cap · work '+STYLES[t.style].name;
+        else if(t.type==='ship')lbl=LU('sailboat')+' Cap · '+t.label+' skim';
+        else lbl=LU('route')+' Cap · '+ROUTES[t.route].name+' Lane skim';}
+      return btn(lbl,'resolveStop('+i+')','go');
+    }).join('');}
   else if(UI.sub==='fair'){prompt='A '+LU('tent')+' Fair fired on this line — pay 1G to pump a type +1 (fee to its owner)?';
     acts=Object.keys(STYLES).filter(s=>STYLES[s].lvl<=S.frontier).map(s=>btn(LU('tent')+' Pump '+STYLES[s].name+' ('+S.value[s]+'→'+Math.min(VAL_CEIL[s],S.value[s]+1)+')','fairPump(\''+s+'\')',canPay(p,{g:1})?'go':'')).join('')+btn('Skip','fairSkip()','ghost');}
   else if(UI.sub==='end'){prompt='Line resolved.';acts=btn('End Turn ▸','endTurn()','primary');}
+  if(undoStack.length)acts+=btn('↶ Undo','doUndo()','ghost');
   document.getElementById('prompt').innerHTML=prompt;
   document.getElementById('acts').innerHTML=acts;
-  document.getElementById('boardnote').innerHTML = UI.sub==='cell'? 'Resolving <b>'+CELLNAME[UI.cell]+'</b>'+(UI.blocked?' — blocked by a rival, using your tableau twin':'')
+  document.getElementById('boardnote').innerHTML =
+      UI.sub==='cell'? 'Resolving <b>'+CELLNAME[UI.cell]+'</b>'+(UI.blocked?' — blocked by a rival, using your tableau twin':'')
+    : UI.sub==='stops'? 'Line stops resolve in <b>any order you choose</b> (cap · cell · cell · cap) — e.g. Fair-pump <i>then</i> enshrine high, or brew-to-Ready <i>then</i> enshrine.'
     : 'Tip: '+LU('store')+' Market buys lanes/ships/Fairs/recipes &amp; rooms · '+LU('ship')+' Harbor <b>deploys</b> a cask to a slot (= reach) · '+LU('landmark')+' Hall <b>enshrines</b> a cask (yours or a deployed one) for '+LU('crown')+' standing.';
 }
 
@@ -620,9 +690,9 @@ function cellActions(p){
   const act=CELLNAME[UI.cell];
   if(UI.blocked){ // tableau twin (fires only when a rival blocks the cell)
     if(act==='Market'){const n=p.rooms.includes('larder')?2:1;
-      return btn('Larder twin: +'+n+' G','(function(){gain(cur(),'+n+',0);log(cur().name+\' works the Larder (+'+n+'G).\',true);cellDone();})()');}
+      return btn('Larder twin: +'+n+' G','(function(){snapshot();gain(cur(),'+n+',0);log(cur().name+\' works the Larder (+'+n+'G).\',true);cellDone();})()');}
     if(act==='Brewhouse'&&!p.rooms.includes('fermenter'))
-      return btn('Brew-room twin: advance all (no load)','(function(){advanceAll(cur());log(cur().name+\' advances brews in the brew-room.\',true);cellDone();})()');
+      return btn('Brew-room twin: advance all (no load)','(function(){snapshot();advanceAll(cur());log(cur().name+\' advances brews in the brew-room.\',true);cellDone();})()');
     if(act==='Harbor'&&!p.rooms.includes('quay'))
       return btn('Quay twin: deploy a cask → Bruges','quayFallback()');
   }
@@ -639,15 +709,21 @@ function cellActions(p){
     return btn('Advance all brews'+(UI.blocked?' (brew-room)':''),'brewAdvance()','primary');
   }
   if(act==='Harbor'){
-    const d=deployable(p);
+    const d=deployable(p);const freeSlot=p.pslots.includes(null);
     if(UI.stage==='deploy_pick'){if(!d.length)return btn('No casks — Skip','cellDone()','ghost');
-      return caskBtns(p,'shipPick',false)+btn('Back','cellDone()','ghost');}
+      return caskBtns(p,'shipPick',false)+btn('Back','(function(){UI.stage=null;render();})()','ghost');}
     if(UI.stage==='stash_pick'){if(!d.length)return btn('No casks — Skip','cellDone()','ghost');
-      return caskBtns(p,'installCask',false)+btn('Back','cellDone()','ghost');}
+      return caskBtns(p,'stashPick',false)+btn('Back','(function(){UI.stage=null;render();})()','ghost');}
+    if(UI.stage==='stash_station'){ // ② assign the working cask to a station it will boost
+      return '<span class="note">Assign it to a station — using that station (or its twin) also fires its work action:</span> '
+        +['Market','Brewhouse','Harbor'].map(s=>btn(LU(ICON[s])+' '+s,'installCask(\''+s+'\')','go')).join('')
+        +btn('Back','(function(){UI.stage=\'stash_pick\';render();})()','ghost');}
     if(UI.stage==='deploy_route'){const o=UI.tmp.cask;const c=o.src==='v'?p.vessels[o.i]:p.pslots[o.i];
       return Object.keys(ROUTES).filter(r=>S.routes[r].open&&routeFilled(r)<S.routes[r].cap&&STYLES[c.style].q>=ROUTES[r].gate)
-        .map(r=>btn(LU('map-pin')+' '+ROUTES[r].name,'shipRoute(\''+r+'\')','go')).join('')||'<span class="note">no eligible open route</span> '+btn('Cancel','cellDone()','ghost');}
-    return (d.length?btn(LU('ship')+' Deploy a cask (reach)','shipStart()','primary')+btn(LU('package')+' Stash → personal slot','(function(){UI.stage=\'stash_pick\';render();})()')+btn('Skip','cellDone()','ghost')
+        .map(r=>btn(LU('map-pin')+' '+ROUTES[r].name,'shipRoute(\''+r+'\')','go')).join('')||'<span class="note">no eligible open route</span> '+btn('Cancel','(function(){UI.stage=null;render();})()','ghost');}
+    return (d.length?btn(LU('ship')+' Deploy a cask (reach)','shipStart()','primary')
+      +(freeSlot?btn(LU('package')+' Install → working cask','(function(){UI.stage=\'stash_pick\';render();})()'):'')
+      +btn('Skip','cellDone()','ghost')
       :btn('No casks — Skip','cellDone()','ghost'));
   }
   if(act==='Hall'){
@@ -677,7 +753,7 @@ function renderGrid(){
     else inner=placing?LU('plus'):'<span style="opacity:.45">'+s.id+'</span>';
     const click=placing?'placeTile':(enshrining?'enshrineDeployed':null);
     const style=t?'background:'+S.players[t.owner].color+';border-color:'+S.players[t.owner].color:'';
-    h+='<div class="'+cls+'" style="'+style+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
+    h+='<div class="'+cls+'" style="'+style+'" title="'+attr(tileTip(t))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
   });
   // cells — big action icon + role + "what you get" yields + workers
   ['A','B','C','D'].forEach(c=>{const act=CELLNAME[c];
@@ -687,7 +763,7 @@ function renderGrid(){
     if(legal)cls+=' legal';
     const role=(act==='Market'||act==='Brewhouse')?'builder':'cash-out';
     const yields=(YIELD[act]||[]).map(n=>LU(n)).join('');
-    h+='<div class="'+cls+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'>'
+    h+='<div class="'+cls+'" title="'+attr(cellTip(c))+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'>'
       +'<div class="ltr">'+c+'</div>'
       +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="role">'+role+'</div><div class="nm">'+act+'</div></div></div>'
       +'<div class="yield">'+yields+'</div>'
@@ -706,7 +782,8 @@ function renderRoutes(){
     if(canShip)cls+=' ship';
     let sp='';for(let i=0;i<R.cap;i++){sp+='<div class="sp">'+(i<filled?'●':'')+'</div>';}
     let pres=S.players.map(p=>(R.pres[p.id]?'<span style="color:'+p.color+';font-weight:bold">'+LU('map-pin')+(R.pres[p.id])+'</span>':'')).filter(x=>x).join(' ');
-    h+='<div class="'+cls+'" '+(canShip?'onclick="shipRoute(\''+r+'\')"':'')+'><div class="rh"><span class="rn">'+LU('landmark')+' '+def.name+'</span><span class="rv">'+(R.open?LU('star')+' val '+R.value:LU('lock')+' closed')+'</span></div><div class="gate">gate Q'+def.gate+' · '+(pres||'—')+'</div><div class="spaces">'+sp+'</div></div>';
+    const rtip=R.open?def.name+' — open. Deploy casks (quality gate Q'+def.gate+'+) here for reach: each = +1 presence; '+filled+'/'+R.cap+' filled (saturates at '+R.cap+'). Scores presence × slotted value ('+R.value+') plus a route-majority bonus.':def.name+' — closed. Buy & place its Route Lane at the Market to open it (gate Q'+def.gate+').';
+    h+='<div class="'+cls+'" title="'+attr(rtip)+'" '+(canShip?'onclick="shipRoute(\''+r+'\')"':'')+'><div class="rh"><span class="rn">'+LU('landmark')+' '+def.name+'</span><span class="rv">'+(R.open?LU('star')+' val '+R.value:LU('lock')+' closed')+'</span></div><div class="gate">gate Q'+def.gate+' · '+(pres||'—')+'</div><div class="spaces">'+sp+'</div></div>';
   }
   document.getElementById('routes').innerHTML=h;
 }
@@ -745,7 +822,7 @@ function renderTableaus(){
       +'<span class="chip">'+LU('package')+p.storage+'</span><span class="chip" title="banked standing">'+LU('crown')+(p.standing||0)+'</span><span class="chip" title="total">Σ '+sc.total+'</span>'
       +' <span class="note">R'+sc.reach+'/M'+sc.maj+'/S'+sc.stand+'/G'+sc.goals+'</span></div>'
       +'<b class="note">'+LU('flask-conical')+' Brewing track ('+p.vessels.length+' vessel'+(p.vessels.length>1?'s':'')+')</b><div class="brew">'+vessels+'</div>'
-      +'<b class="note">'+LU('package')+' Personal slots (working casks):</b> '+(p.pslots.map(c=>c?'<span class="tag">'+LU('beer')+STYLES[c.style].name.split(' ')[0]+'</span>':'<span class="note">▢</span>').join(' '))+'<br>'
+      +'<b class="note">'+LU('package')+' Personal slots (working casks):</b> '+(p.pslots.map(c=>c?'<span class="tag" title="'+attr(STYLES[c.style].name+' working at the '+(c.station||'—')+': fires '+workDesc(c.style)+' whenever '+p.name+' uses that station (or its twin).')+'">'+LU('beer')+STYLES[c.style].name.split(' ')[0]+(c.station?' →'+c.station[0]:'')+'</span>':'<span class="note">▢</span>').join(' '))+'<br>'
       +'<b class="note">'+LU('scroll-text')+' Recipe book:</b> '+(p.recipes.map(r=>'<span class="tag">'+LU('beer')+STYLES[r].name+'</span>').join('')||'—')+'<br>'
       +'<b class="note">'+LU('sailboat')+' Deployed casks · lanes · ships · Fairs:</b> '+slotsOwned+'<br>'
       +'<b class="note">'+LU('crown')+' Enshrined (standing):</b> '+ensh+'<br>'
