@@ -1,3 +1,5 @@
+// ⚠ STALE (pre-v0.5): targets the retired ship-cargo/deliverCask API. Needs a rewrite to the v0.5
+// deploy/enshrine + demand-market engine before it will run. See DESIGN.md §19 v0.5.
 const elm=()=>({classList:{add(){},remove(){},toggle(){}},style:{},set innerHTML(v){},get innerHTML(){return''},set textContent(v){},value:''});
 global.document={getElementById:()=>elm()};global.localStorage={getItem(){return null},setItem(){}};
 global.alert=m=>{throw new Error('ALERT:'+m)};global.window={};

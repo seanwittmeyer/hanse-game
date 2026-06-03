@@ -98,9 +98,9 @@
   <h2><span class="n">2</span>Your goal — and the one big choice</h2>
   <p>You win with the most points, and there are <b>two ways to earn them that pull against each other.</b> Every cask you brew poses the same question:</p>
   <div class="vs">
-    <div class="pole reach"><h3>Reach</h3><b>Ship</b> the cask out into commerce and spread your <b>presence</b> across the trade routes. The path of <i>scale &amp; volume</i>.</div>
+    <div class="pole reach"><h3>Reach</h3><b>Deploy</b> the cask out into commerce — it spreads your <b>presence</b> across the trade routes to the kontore. The path of <i>scale &amp; volume</i>.</div>
     <div class="mid">vs</div>
-    <div class="pole stand"><h3>Standing</h3><b>Enshrine</b> the cask at a kontor — take it out of commerce forever as pure <b>reputation</b>. The path of <i>scarcity &amp; prestige</i>.</div>
+    <div class="pole stand"><h3>Standing</h3><b>Enshrine</b> the cask in the <b>Hall</b> — take it out of commerce forever as pure <b>reputation</b>. The path of <i>scarcity &amp; prestige</i>.</div>
   </div>
   <p>You can't do both with the same cask, and your space and time are tight — so the game is about <b>how far you lean</b> toward reach or standing (or thread between them). That single tension is the whole game.</p>
 </section>
@@ -113,12 +113,12 @@
     <div class="arrow">→</div>
     <div class="stepc b"><span class="num">2</span><h4>Brewhouse</h4><div class="s">Load a recipe and brew it down your track: cheap <b>gruit</b> is fast; <b>hopped</b> beer takes longer but travels &amp; can be enshrined.</div></div>
     <div class="arrow">→</div>
-    <div class="stepc h"><span class="num">3</span><h4>Harbor</h4><div class="s">Ship a finished cask: it <b>loads as cargo into a ship</b> on a route (or a plain shipment if none) and drops a <b>presence</b> marker. That's <span class="pill r">reach</span>.</div></div>
+    <div class="stepc h"><span class="num">3</span><h4>Harbor</h4><div class="s"><b>Deploy</b> a finished cask into a board slot on a route: it drops a <b>presence</b> marker and <i>is</i> your <b>reach</b> there. <span class="pill r">reach</span></div></div>
     <div class="arrow">→</div>
-    <div class="stepc k"><span class="num">4</span><h4>Kontor</h4><div class="s">Or <b>enshrine</b> a ready cask straight from your brewery: it goes to the reputation stack. That's <span class="pill s">standing</span>.</div></div>
+    <div class="stepc k"><span class="num">4</span><h4>Hall</h4><div class="s">Or <b>enshrine</b> a cask (a fresh one, or one of yours already deployed) into the Hall — out of commerce, pure <span class="pill s">standing</span>.</div></div>
   </div>
-  <p class="s" style="color:var(--ink2)"><b>The rhythm:</b> the Market and Brewhouse <i>build you up</i>; the Harbor and Kontor <i>cash you out</i>. Acquire → brew → then either ship for reach or enshrine for standing.</p>
-  <p class="s" style="color:var(--ink2)"><b>One more thing — value &amp; tokens.</b> Every sale (ship <i>or</i> enshrine) also mints you <b>VP tokens</b> based on how valuable that beer <i>type</i> is right now. But each sale of a type nudges its value <b>down</b> — so selling a hot type early pays, and flooding it tanks it. Tokens are bonus points at game end. It's a gentle race layered over the big reach-vs-standing choice.</p>
+  <p class="s" style="color:var(--ink2)"><b>The rhythm:</b> the Market and Brewhouse <i>build you up</i>; the Harbor and Hall <i>cash you out</i>. Acquire → brew → then deploy for reach or enshrine for standing.</p>
+  <p class="s" style="color:var(--ink2)"><b>The market is the timer.</b> Each beer <i>type</i> has a value. When you enshrine a cask you bank that value as standing — but every cask of a type that's <b>sold</b> (deployed <i>or</i> enshrined) nudges its value <b>down</b>, while <b>buying its recipe</b> or paying at a <b>Fair</b> nudges it <b>up</b>. So the whole reach-vs-standing choice becomes a question of <i>timing</i>: cash your type while it's high, before rivals flood it.</p>
 </section>
 
 <section>
@@ -126,13 +126,13 @@
   <p>All four actions sit on a shared <b>2×2 grid</b>. On your turn you move your worker to a neighbouring cell, then fire that cell's <b>row or column</b> — which triggers <b>both</b> cells on that line. So a turn always does two things.</p>
   <div class="gridfig">
     <div class="gcell gm"><div class="role">builder</div><div class="nm">Market</div><div class="d">get goods &amp; tiles</div></div>
-    <div class="gcell gh"><div class="role">cash-out</div><div class="nm">Harbor</div><div class="d">ship → reach</div></div>
-    <div class="gcell gk"><div class="role">cash-out</div><div class="nm">Kontor</div><div class="d">enshrine → standing</div></div>
+    <div class="gcell gh"><div class="role">cash-out</div><div class="nm">Harbor</div><div class="d">deploy → reach</div></div>
+    <div class="gcell gk"><div class="role">cash-out</div><div class="nm">Hall</div><div class="d">enshrine → standing</div></div>
     <div class="gcell gb"><div class="role">builder</div><div class="nm">Brewhouse</div><div class="d">brew casks</div></div>
   </div>
-  <div class="legend"><span><span class="swatch" style="background:var(--gold)"></span>Builders (Market, Brewhouse)</span><span><span class="swatch" style="background:var(--sea2)"></span><span class="swatch" style="background:var(--green)"></span>Cash-outs (Harbor, Kontor)</span></div>
-  <p style="margin-top:12px">The two <b>builders</b> sit on one diagonal and the two <b>cash-outs</b> on the other, so they never share a line. The neat result: <b>every line pairs one builder with one cash-out</b> — so each turn you build <i>and</i> cash out, and you ship for reach <b>or</b> enshrine for standing, <b>never both at once.</b></p>
-  <p>Around the grid are <b>8 slots</b>, and you fill them with <b>owned tiles</b> — <b>route lanes</b> and <b>ships</b>. Each pays its owner a little <b>skim</b> when its line fires (even on someone else's turn): a lane pays goods, and a <b>ship loads cargo</b> — including casks <i>rivals</i> ship to its route, who then pay you a <b>toll</b>. Park a ship on a busy route and you tax the table; when it fills, it sails and frees the slot. <i>(Recipes you buy don't go in a slot — they go straight into your private <b>recipe book</b>.)</i></p>
+  <div class="legend"><span><span class="swatch" style="background:var(--gold)"></span>Builders (Market, Brewhouse)</span><span><span class="swatch" style="background:var(--sea2)"></span><span class="swatch" style="background:var(--green)"></span>Cash-outs (Harbor, Hall)</span></div>
+  <p style="margin-top:12px">The two <b>builders</b> sit on one diagonal and the two <b>cash-outs</b> on the other, so they never share a line. The neat result: <b>every line pairs one builder with one cash-out</b> — and builders <b>pump</b> the market while cash-outs <b>realize</b> it, so you can <b>pump a type then enshrine it high in one turn.</b> Reach <b>or</b> standing each turn, never both at once.</p>
+  <p>Around the grid are <b>8 slots</b>. Your <b>deployed casks</b> live here (that's your reach), alongside <b>route lanes</b>, <b>ships</b> (little goods faucets), and <b>Fairs</b>. Here's the spicy part: <b>any player can enshrine a deployed cask</b> on a Hall line — they grab the slot, you get the standing (but less than you were holding out for). So slots keep churning, and "you're taking my space" becomes a real, friendly tug-of-war. <i>(Recipes you buy don't go in a slot — they go into your private <b>recipe book</b>.)</i></p>
 </section>
 
 <section>
@@ -157,8 +157,8 @@
   <p>The game has a <b>visible clock</b>: the moment <b>2 of the 4 kontor cities fill up</b> with presence, the round finishes and the game is over. So a reach player can <i>race to end it</i> by slamming cities full, while a standing player <i>stalls</i> by spreading presence thin to buy more turns.</p>
   <p>Then everyone tallies up — and you score on <b>every</b> axis you touched:</p>
   <div class="two">
-    <div class="card"><h3>The two big piles</h3><b><span class="pill r">Reach</span></b> = your <b>presence × each route's value</b>, plus <b>majority</b> bonuses for leading a route. <b><span class="pill s">Standing</span></b> = the value of your <b>enshrined casks</b>.</div>
-    <div class="card"><h3>The bonuses</h3><b>Goals</b> — each enshrined cask's printed goal (your best 3 score). <b>VP tokens</b> — 1 point each, the value you locked in on every sale. Most total points wins.</div>
+    <div class="card"><h3>The two big piles</h3><b><span class="pill r">Reach</span></b> = your <b>presence (deployed casks) × each route's value</b>, plus <b>majority</b> bonuses for leading a route. <b><span class="pill s">Standing</span></b> = your <b>standing track</b> — the market value you banked each time you enshrined.</div>
+    <div class="card"><h3>The bonuses</h3><b>Goals</b> — each enshrined cask carries a goal (your best 3 score). The trick: goals reward the axis you <i>didn't</i> bank, so they nudge you to blend reach and standing. Most total points wins.</div>
   </div>
   <p class="s" style="color:var(--ink2)">The trick: <b>goals reward the axis you <i>didn't</i> just bank</b> — a pure-standing hoard draws goals that need reach to pay off. That's the game nudging you to <b>blend</b> the two rather than tunnel one.</p>
 </section>
@@ -172,33 +172,35 @@
     <div class="ikey"><i data-lucide="beer" class="ic ird"></i><span class="t"><b>Cask</b>a brewed beer (the dual-role tile)</span></div>
     <div class="ikey"><i data-lucide="map-pin" class="ic ised"></i><span class="t"><b>Presence</b>your marker on a route = reach</span></div>
     <div class="ikey"><i data-lucide="crown" class="ic igd"></i><span class="t"><b>Standing</b>reputation from enshrined casks</span></div>
-    <div class="ikey"><i data-lucide="coins" class="ic igd"></i><span class="t"><b>VP token</b>bonus points, minted on every sale</span></div>
+    <div class="ikey"><i data-lucide="coins" class="ic igd"></i><span class="t"><b>Demand market</b>each type's value — sets enshrine payout</span></div>
     <div class="ikey"><i data-lucide="store" class="ic igd"></i><span class="t"><b>Market</b>(cell A) get goods, recipes, tiles</span></div>
-    <div class="ikey"><i data-lucide="ship" class="ic ised"></i><span class="t"><b>Harbor</b>(cell B) ship casks for reach</span></div>
-    <div class="ikey"><i data-lucide="landmark" class="ic igr"></i><span class="t"><b>Kontor</b>(cell C) enshrine for standing</span></div>
+    <div class="ikey"><i data-lucide="ship" class="ic ised"></i><span class="t"><b>Harbor</b>(cell B) deploy casks for reach</span></div>
+    <div class="ikey"><i data-lucide="landmark" class="ic igr"></i><span class="t"><b>Hall</b>(cell C) enshrine for standing</span></div>
     <div class="ikey"><i data-lucide="flask-conical" class="ic ird"></i><span class="t"><b>Brewhouse</b>(cell D) brew your casks</span></div>
-    <div class="ikey"><i data-lucide="sailboat" class="ic ised"></i><span class="t"><b>Ship</b>a slot tile — cargo hold on a route</span></div>
+    <div class="ikey"><i data-lucide="sailboat" class="ic ised"></i><span class="t"><b>Ship</b>a slot tile — a goods faucet</span></div>
+    <div class="ikey"><i data-lucide="tent" class="ic igd"></i><span class="t"><b>Fair</b>a slot tile — pay to pump a type's value</span></div>
     <div class="ikey"><i data-lucide="route" class="ic ised"></i><span class="t"><b>Route lane</b>a slot tile — opens &amp; values a route</span></div>
     <div class="ikey"><i data-lucide="scroll-text" class="ic igd"></i><span class="t"><b>Recipe</b>collected into your recipe book</span></div>
     <div class="ikey"><i data-lucide="wrench" class="ic igr"></i><span class="t"><b>Room</b>a brewery upgrade tile</span></div>
-    <div class="ikey"><i data-lucide="layers" class="ic ird"></i><span class="t"><b>Kontor stack</b>where enshrined casks pile up</span></div>
+    <div class="ikey"><i data-lucide="layers" class="ic ird"></i><span class="t"><b>Standing stack</b>where enshrined casks pile up</span></div>
   </div>
   <p>And the words:</p>
   <div class="gloss">
     <div class="term"><b>Hanse / Kontor</b><span>The Hanseatic League — the medieval trade network. A <b>kontor</b> is one of its foreign trading posts (Bergen, London, Bruges, Novgorod).</span></div>
     <div class="term"><b>Gruit vs. Hopped</b><span>Two beers. <b>Gruit</b> is cheap, fast, local — and can never be enshrined. <b>Hopped</b> beer takes longer to brew but travels and earns standing.</span></div>
     <div class="term"><b>Goods</b><span><span class="cube grain"></span> grain and <span class="cube hops"></span> hops. Your only currency — spent on tiles and brewing. (There is no money in this game.)</span></div>
-    <div class="term"><b>Cask</b><span>A brewed beer, shown as a double-sided tile: a <b>cargo</b> face (loaded into a ship, earning reach) and a <b>standing</b> face (enshrined, earning reputation).</span></div>
+    <div class="term"><b>Cask</b><span>A brewed beer (a double-sided tile) that lives in one of three states: <b>working</b> (a personal slot), <b>deployed</b> (a board slot = your reach), or <b>enshrined</b> (the Hall = standing).</span></div>
     <div class="term"><b>Line</b><span>A row or column of the grid. Activating one fires <b>both</b> its cells plus the slots at each end.</span></div>
-    <div class="term"><b>Slot</b><span>One of the 8 spaces around the grid, holding an owned tile — a ship or a route lane. A fired slot pays its owner a <b>skim</b>.</span></div>
+    <div class="term"><b>Slot</b><span>One of the 8 spaces around the grid, holding a deployed cask, a route lane, a ship, or a Fair. When its line fires it does its thing (action, skim, or pump).</span></div>
     <div class="term"><b>Presence</b><span>Your markers along a trade route. More presence on higher-value routes = more <span class="pill r">reach</span> points.</span></div>
     <div class="term"><b>Standing</b><span>Earned, unspendable reputation from enshrined casks. It only ever goes up — it's <span class="pill s">score</span>.</span></div>
-    <div class="term"><b>Enshrine</b><span>Move a ready cask from your brewery onto the shared Kontor stack — taking it out of commerce for permanent standing (instead of shipping it for reach).</span></div>
+    <div class="term"><b>Enshrine</b><span>Move a cask (fresh, or one already deployed) onto the standing stack for permanent standing. <b>Any</b> player can enshrine a deployed cask on a Hall line — the owner always gets the points.</span></div>
     <div class="term"><b>Route &amp; quality gate</b><span>The four sea lanes. Richer, farther routes (like Novgorod) only accept <b>higher-quality</b> beer.</span></div>
     <div class="term"><b>Goal</b><span>A scoring condition printed on a cask's standing face — it rewards you at game end for the shape of your empire.</span></div>
     <div class="term"><b>Twin</b><span>The private version of a grid action on your brewery board, used when a rival blocks the public cell.</span></div>
     <div class="term"><b>Recipe book</b><span>Your private list of recipes. You can only brew a beer type you hold a recipe for; you collect more from the Market. Gruit is always in the book.</span></div>
-    <div class="term"><b>VP tokens</b><span>Bonus points minted on every sale, scaled by the beer type's current value (which falls as that type is sold). Worth 1 point each at game end.</span></div>
+    <div class="term"><b>Demand market</b><span>Each beer type's current value. Enshrining banks that value as standing. It falls as a type is sold (deploy/enshrine) and rises on recipe-buys and Fair pumps — so timing matters.</span></div>
+    <div class="term"><b>Hall</b><span>Cell C — where you enshrine casks for standing (the prestige sink). Distinct from the <b>kontore</b>, the reach destinations your Harbor ships to.</span></div>
   </div>
 </section>
 
@@ -210,7 +212,7 @@
 </div>
 
 </div>
-<footer>Brewhouse of the Hanse · learn-to-play · v0.4 prototype — numbers still in balancing</footer>
+<footer>Brewhouse of the Hanse · learn-to-play · v0.5 prototype — numbers still in balancing</footer>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>if(window.lucide)lucide.createIcons();</script>
 </body>

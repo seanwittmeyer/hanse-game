@@ -153,8 +153,8 @@
 <body>
 <header>
   <h1>Brewhouse of the Hanse</h1>
-  <div class="sub">A theme-first heavy euro. Brew hopped beer — the one cargo that survives the voyage — and push it across the Baltic and North Sea. Every cask you keep working is <b>reach</b>; every cask you commit to a foreign post is <b>standing</b>.</div>
-  <div class="tag">Component Visualizer · v0.4 · all values placeholders</div>
+  <div class="sub">A theme-first heavy euro. Brew hopped beer — the one cargo that survives the voyage — and push it across the Baltic and North Sea. Every cask you <b>deploy</b> to the kontore is <b>reach</b>; every cask you <b>enshrine</b> in the Hall is <b>standing</b>.</div>
+  <div class="tag">Component Visualizer · v0.5 · all values placeholders</div>
 </header>
 
 <nav>
@@ -171,7 +171,7 @@
   <a href="#ships">Ships</a>
   <a href="#privs">Privileges</a>
   <a href="#rooms">Rooms</a>
-  <a href="#kontor">Kontor Stack</a>
+  <a href="#kontor">Hall &amp; Standing</a>
 </nav>
 
 <main>
@@ -180,17 +180,17 @@
 <section id="grid">
   <h2><span class="n">§6</span>The Shared Action Grid</h2>
   <p class="lead">A 2×2 of four action cells, shared by all players. On your turn: move your worker to an orthogonally adjacent cell, then activate its <b>row or column</b> — a 4-stop pipeline (cap · cell · cell · cap). <i>Hover a cell to light its two lines.</i></p>
-  <p class="lead"><b>Build × cash-out:</b> Market &amp; Brewhouse (the two <i>builders</i>) sit on one diagonal; Harbor &amp; Kontor (the two <i>cash-outs</i>) on the other — so they never share a line. Every line is therefore <b>one builder + one cash-out</b>, and each turn you ship for <i>reach</i> OR enshrine for <i>standing</i>, never both.</p>
+  <p class="lead"><b>Build × cash-out:</b> Market &amp; Brewhouse (<i>builders</i>) sit on one diagonal; Harbor &amp; Hall (<i>cash-outs</i>) on the other — never sharing a line. Builders <b>pump</b> the demand market; cash-outs <b>realize</b> it and pull it down. Each turn you deploy for <i>reach</i> OR enshrine for <i>standing</i>, never both.</p>
   <div class="gridwrap">
     <div class="actiongrid" id="ag">
       <div class="slot s1" data-line="col-l">slot s1</div>
       <div class="slot s2" data-line="col-r">slot s2</div>
       <div class="slot s8" data-line="row-t">slot s8</div>
       <div class="cell A" data-row="row-t" data-col="col-l"><div class="corner">A</div><div class="lbl">Market</div><div class="nm">Market</div><div class="do">Take goods &amp; tiles from the supply</div></div>
-      <div class="cell B" data-row="row-t" data-col="col-r"><div class="corner">B</div><div class="lbl">Harbor</div><div class="nm">Harbor</div><div class="do">Ship a cask → loads a ship + presence (reach)</div></div>
+      <div class="cell B" data-row="row-t" data-col="col-r"><div class="corner">B</div><div class="lbl">Harbor</div><div class="nm">Harbor</div><div class="do">Deploy a cask → presence in a slot (reach)</div></div>
       <div class="slot s3" data-line="row-t">slot s3</div>
       <div class="slot s7" data-line="row-b">slot s7</div>
-      <div class="cell C" data-row="row-b" data-col="col-l"><div class="corner">C</div><div class="lbl">Kontor</div><div class="nm">Kontor</div><div class="do">Enshrine a cask / top-stack action (standing)</div></div>
+      <div class="cell C" data-row="row-b" data-col="col-l"><div class="corner">C</div><div class="lbl">Hall</div><div class="nm">Hall</div><div class="do">Enshrine a cask — yours or any deployed (standing)</div></div>
       <div class="cell D" data-row="row-b" data-col="col-r"><div class="corner">D</div><div class="lbl">Brewhouse</div><div class="nm">Brewhouse</div><div class="do">Advance all brews + load a recipe</div></div>
       <div class="slot s4" data-line="row-b">slot s4</div>
       <div class="slot s6" data-line="col-l">slot s6</div>
@@ -199,7 +199,8 @@
     <div class="gridnote">
       <ul>
         <li><b>Both cells</b> on an activated line fire — the worker only gates <i>which line is legal</i>.</li>
-        <li>Each of the <b>8 perimeter slots</b> belongs to exactly one line (row <b>xor</b> column). Slots hold a mix of <span class="pill">ships</span> and <span class="pill">route lanes</span>, competing for space. <i>(Casks are cargo inside ships; recipes live in your private book — neither sits in a slot.)</i></li>
+        <li>Each of the <b>8 perimeter slots</b> belongs to exactly one line (row <b>xor</b> column). Slots hold a churning mix of <span class="pill">deployed casks</span> (your reach), <span class="pill">Fairs</span>, <span class="pill">route lanes</span> and <span class="pill">ships</span>. <i>(Recipes live in your private book, not a slot.)</i></li>
+        <li>On a Hall line, <b>any player may enshrine a deployed cask</b> — the owner banks standing, the slot frees. Casks churn; nobody hoards.</li>
         <li><b>Cells are generalists</b> (in two lines); <b>slot tiles are specialists</b> (one line). Placing a tile commits it to a row or a column.</li>
         <li>A rival worker on a cell → you take your <b>tableau fallback</b> for it instead.</li>
         <li>An owned cap tile fires its <b>skim</b> to its owner whenever its line runs — by anyone.</li>
@@ -224,7 +225,7 @@
     <div class="stage"><div class="st">Load</div><div class="ds">commit grain / hops</div><div class="arrow">→</div></div>
     <div class="stage"><div class="st">Ferment</div><div class="ds">all styles</div><div class="arrow">→</div></div>
     <div class="stage"><div class="st">Age</div><div class="ds">hopped &amp; premium only</div><div class="arrow">→</div></div>
-    <div class="stage"><div class="st">Ready</div><div class="ds">ship from here</div></div>
+    <div class="stage"><div class="st">Ready</div><div class="ds">deploy or enshrine</div></div>
   </div>
   <div class="age-note">Brew lengths (advances), by type level: L1 Gruit 2 · L2 Hopped 3 · L3 3 · L4 4 · L5 5 &nbsp;⚙ &nbsp;— more <b>vessels</b> (Extra Vessel rooms) advance in parallel per Brewhouse fire. <i>(L3–L5 summit names — Bock / Mumme / Broyhan / Keut — are dealt to the rungs each game.)</i></div>
 </section>
@@ -232,7 +233,7 @@
 <!-- CASK TILES -->
 <section id="casks">
   <h2><span class="n">A</span>Cask Tiles — the Dual-Role Hero</h2>
-  <p class="lead">Double-sided. <b>Cargo face</b> (loaded into a ship) = reach: shipping it drops +1 presence on a route. <b>Standing face</b> (enshrined) banks points, carries a goal, and sets the Kontor's top action. A ready cask ships <em>or</em> enshrines, never both — and <b>either sale mints VP tokens</b> off the type's value track. Beer is <b>two layers — type</b> (a global quality rung) <b>+ recipe</b> (a collected instance in your book). The ladder is an anchored spine (<b>Gruit→Hopped</b>) + a <b>variable summit</b> (L3–L5 dealt each game from the historical Hanse beers). <i>Click a tile to flip it.</i></p>
+  <p class="lead">Double-sided, and it lives in one of <b>three states</b>: <b>working</b> (a personal slot — engine), <b>deployed</b> (a board slot — it <i>is</i> your reach/presence and fires an action), or <b>enshrined</b> (the Hall — standing, banked at the type's current market value). Enshrining converts a deployed cask: its presence leaves the board. Beer is <b>two layers — type</b> (a global quality rung) <b>+ recipe</b> (a collected instance in your book). The ladder is an anchored spine (<b>Gruit→Hopped</b>) + a <b>variable summit</b> (L3–L5 dealt each game). <i>Click a tile to flip it.</i></p>
   <div class="legend">
     <span class="chip"><span class="dot grain"></span> Grain (G)</span>
     <span class="chip"><span class="dot hops"></span> Hops (H)</span>
@@ -242,10 +243,10 @@
   <div class="note" id="goalNote"></div>
 </section>
 
-<!-- VALUE TRACK & VP TOKENS -->
+<!-- THE DEMAND MARKET -->
 <section id="value">
-  <h2><span class="n">A′</span>Value Track &amp; VP Tokens <span class="small">— the variable-value economy</span></h2>
-  <p class="lead">Each beer <b>type</b> sits on a linear <b>value track</b>. <b>Every sale — ship (reach) or enshrine (standing) — mints VP tokens equal to that type's current value, and then that type ticks down</b> (the market saturates). Sell a hot type early and you bank big; flood it and you tank it for everyone. VP tokens are a <b>spendable 3rd resource</b> (spend sinks ⚙) or banked <b>1 VP each</b> at game end. They are a <b>modifier on top of</b> a cask's printed value — never a replacement — so they reward <i>timing</i> without destabilizing the two real paths. Both reach and standing mint them.</p>
+  <h2><span class="n">A′</span>The Demand Market <span class="small">— the value-over-time signal</span></h2>
+  <p class="lead">Each beer <b>type</b> sits on a shared <b>value track</b>, and <b>a cask's enshrine payout = its type's value at that instant</b> (banked on your standing track — this one number is the whole variable-value layer; no separate tokens). It <b>drops −1</b> every time a type is realized — <b>deployed for reach OR enshrined for standing</b> — so the volume crowd erodes the prestige crowd's payout. It <b>rises +1</b> when you <b>buy that type's recipe</b> or pay at a <b>Fair</b>. New tiers enter high, then erode. The whole reach-vs-standing tension becomes a question of <b>timing</b> — cash your type while it's high.</p>
   <div class="routeboard" id="valtrack"></div>
   <div class="note">Saturation does double duty: as a type floods, its value drops <b>and</b> the <b>type frontier</b> advances — the next premium tier's recipes enter the Market. One causal loop: flood gruit → gruit cheapens → the summit opens → the market tempts you upward. <i>(This is a pacing clock, not an end-game trigger — the game ends on 2 of 4 cities saturated.)</i></div>
 </section>
@@ -259,8 +260,8 @@
 
 <!-- SHIP TILES -->
 <section id="ships">
-  <h2><span class="n">C</span>Ship Tiles <span class="small">— owned, route-bound cargo containers</span></h2>
-  <p class="lead">Placed in a slot and bound to one route. Casks shipped there (by anyone) load aboard — rivals pay the owner a toll; a full ship sails (owner dividend) and frees its slot. The toll-baron play.</p>
+  <h2><span class="n">C</span>Ship Tiles <span class="small">— owned resource faucets</span></h2>
+  <p class="lead">Placed in a slot. When its line fires (any activator), a ship skims a good to its owner — sticky infrastructure that pays you while it sits. <i>(v0.5 retires the cargo-container/sail mechanic — casks deploy directly into slots now.)</i></p>
   <div class="gallery" id="shipGallery"></div>
 </section>
 
@@ -287,8 +288,8 @@
 
 <!-- KONTOR -->
 <section id="kontor">
-  <h2><span class="n">F</span>Public Kontor Tiles <span class="small">— the shared stack</span></h2>
-  <p class="lead">Seed the shared stack and interleave with players' enshrined casks. Whichever tile is on top defines the current Kontor action.</p>
+  <h2><span class="n">F</span>The Hall &amp; Standing <span class="small">— retired: shared-stack actions</span></h2>
+  <p class="lead"><b>Deprecated in v0.5.</b> The old "top-of-stack = a live action" mechanic is gone — the standing stack is now tactile sediment (colored edges to eyeball it), while the scoring-relevant value lives on each player's <b>standing track</b> and goals sit <b>face-up</b> in a personal row. Nothing is hidden in the pile. The ideas below are kept only as optional setup-bonus flavor. ⚙</p>
   <div class="gallery" id="kontorGallery"></div>
 </section>
 
@@ -334,11 +335,11 @@ document.getElementById('caskGallery').innerHTML=casks.map(c=>`
   <div class="flip" onclick="this.classList.toggle('flipped')">
     <div class="inner">
       <div class="face work">
-        <div class="fhead"><div class="fk">Cargo · loaded in a ship · REACH</div><div class="ft">${c.style}</div>${qbar(c.q)}</div>
+        <div class="fhead"><div class="fk">Working / Deployed · REACH</div><div class="ft">${c.style}</div>${qbar(c.q)}</div>
         <div class="fbody">
           <div class="inputs">Brew: ${cubes(c.inputs)}</div>
-          <div class="row"><span class="k">Reach</span><span class="v">+1 presence on its route</span></div>
-          <div class="row"><span class="k">Ships to</span><span class="v">${c.ships}</span></div>
+          <div class="row"><span class="k">Reach</span><span class="v">deployed = +1 presence</span></div>
+          <div class="row"><span class="k">Deploys to</span><span class="v">${c.ships}</span></div>
           <div class="badge">×${c.qty}</div>
         </div>
         <div class="hint">click to flip ⟳</div>
@@ -347,9 +348,9 @@ document.getElementById('caskGallery').innerHTML=casks.map(c=>`
         <div class="fhead"><div class="fk">Standing · enshrined</div><div class="ft">${c.style}</div></div>
         <div class="fbody">
           ${c.enshrine?
-            `<div class="row"><span class="k">Standing</span><span class="v">${c.stand} VP</span></div>
+            `<div class="row"><span class="k">Standing</span><span class="v">market value (start ${c.stand})</span></div>
              <div class="row"><span class="k">Goal</span><span class="v">${c.goal}</span></div>
-             <div class="row"><span class="k">On top</span><span class="v">small Kontor action</span></div>`
+             <div class="row"><span class="k">Enshrine</span><span class="v">by you or any rival</span></div>`
             :`<div style="font-style:italic;color:var(--red)">Cannot be enshrined.<br>${c.goal}</div>`}
         </div>
         <div class="hint">click to flip ⟳</div>
@@ -382,7 +383,7 @@ const valTypes=[
 document.getElementById('valtrack').innerHTML=valTypes.map(t=>`
   <div class="route ${t.cls}">
     <h3>${t.nm}</h3>
-    <div class="role">VP tokens minted per sale, then –1 toward the floor</div>
+    <div class="role">enshrine payout = this value · −1 each realize, +1 recipe-buy/Fair</div>
     <div class="meta">Starts at <b>${t.start}</b> · floor <b>${t.floor}</b> ⚙</div>
   </div>`).join('');
 
@@ -403,13 +404,13 @@ document.getElementById('routeGallery').innerHTML=routeTiles.map(t=>`
 
 // ---- SHIP TILES ----
 const ships=[
-  {name:'Cog',d:'Route-bound cargo container · cap 3. Casks shipped to its route load aboard (rivals pay a toll); sails when full.',qty:4},
-  {name:'Hulk',d:'Larger container · cap 4. Same loading/toll/sail; more cargo before it sails.',qty:3},
+  {name:'Cog',d:'Resource faucet — when its line fires, its owner gains +1 grain.',qty:4},
+  {name:'Hulk',d:'Bigger faucet — owner gains +1 grain or hops when its line fires.',qty:3},
   {name:'Toll Exemption',d:'Ignore one toll / skim per turn',qty:3},
   {name:'Pilot',d:'Ignore one waypoint cost',qty:2},
 ];
 document.getElementById('shipGallery').innerHTML=ships.map(t=>`
-  <div class="card"><div class="head h-ship"><div class="kind">Ship · route-bound container</div><div class="ttl">${t.name}</div></div>
+  <div class="card"><div class="head h-ship"><div class="kind">Ship · resource faucet</div><div class="ttl">${t.name}</div></div>
   <div class="body">${t.d}<div class="badge">×${t.qty}</div></div></div>`).join('');
 
 // ---- RECIPE TILES ----

@@ -98,9 +98,13 @@ const FAMS=[
    {ic:'route',nm:'Bruges',  sub:'+1 · '+G+' skim', c:'#274b5c', n:6},
    {ic:'route',nm:'London',  sub:'+2 · Privilege',  c:'#b8860b', n:4},
  ]},
- {label:'Ships  (route-bound cargo holds — load casks, sail when full)', color:()=>'#5b4a37', items:[
-   {ic:'sailboat',nm:'Cog', sub:'cap 3 → sails',  c:'#5b4a37', n:4},
-   {ic:'sailboat',nm:'Hulk',sub:'cap 4 → sails',  c:'#3a3026', n:3},
+ {label:'Ships  (perimeter slots — resource faucets: line-fire → owner skims a good)', color:()=>'#5b4a37', items:[
+   {ic:'sailboat',nm:'Cog', sub:'→ owner +1'+G,  c:'#5b4a37', n:4},
+   {ic:'sailboat',nm:'Hulk',sub:'→ owner +1'+G+'/'+H,  c:'#3a3026', n:3},
+ ]},
+ {label:'Fairs  (perimeter slots — pay 1'+G+' on its line → pump a type +1, fee to owner)', color:()=>'#8a6408', items:[
+   {ic:'tent',nm:'Town Fair', sub:'pump a type +1', c:'#8a6408', n:3},
+   {ic:'tent',nm:'Hansetag',  sub:'pump +1 (×2)',  c:'#a07a0c', n:1},
  ]},
  {label:'Recipe Tiles  (collected into your private recipe book — not slots)', color:()=>'#8a6408', items:[
    {ic:'scroll-text',nm:'L2 Hopped', sub:'→ recipe book', c:'#8a6408', n:5},
@@ -118,20 +122,6 @@ const FAMS=[
    {ic:'wrench',nm:'Faster Ferm.',  sub:'brew twin +load',c:'#4a6b3a', n:3},
    {ic:'wrench',nm:'Cooperage',     sub:'+1 pres. on ship',c:'#3f5c30', n:2},
  ]},
- {label:'Public Kontor Tiles  (seed/added to the shared stack — top = the live action)', color:()=>'#7c2128', items:[
-   {ic:'landmark',nm:'Bryggen',  sub:'+1 '+G, c:'#7c2128', n:1},
-   {ic:'landmark',nm:'Steelyard',sub:'draw Priv.', c:'#8a2b30', n:1},
-   {ic:'landmark',nm:'Cloth Hall',sub:'+good +'+LU('map-pin'), c:'#7c2128', n:1},
-   {ic:'landmark',nm:'Peterhof', sub:'+'+LU('map-pin')+' advance', c:'#8a2b30', n:1},
-   {ic:'landmark',nm:'Grand Ensh.',sub:'+1 standing', c:'#7c2128', n:1},
-   {ic:'landmark',nm:'Market Day',sub:'draw 2', c:'#8a2b30', n:1},
-   {ic:'landmark',nm:"Cooper's",  sub:'advance brew', c:'#7c2128', n:1},
-   {ic:'landmark',nm:'Convoy',   sub:'+1 '+LU('map-pin'), c:'#8a2b30', n:1},
-   {ic:'landmark',nm:'Exchange', sub:'swap '+G+'/'+H, c:'#7c2128', n:1},
-   {ic:'landmark',nm:"Patron's", sub:'+good +draw', c:'#8a2b30', n:1},
-   {ic:'landmark',nm:'Diet',     sub:'+1 standing', c:'#7c2128', n:1},
-   {ic:'landmark',nm:'Sound',    sub:'free passage', c:'#8a2b30', n:1},
- ]},
  {label:'Privilege Tiles  (Steelyard rewards)', color:()=>'#b8860b', items:[
    {ic:'award',nm:'Charter',  sub:'ignore tolls', c:'#b8860b', n:1},
    {ic:'award',nm:'Patent',   sub:'ship +1', c:'#a07a0c', n:1},
@@ -147,7 +137,7 @@ const FAMS=[
    {ic:'award',nm:'Hanse Seal',sub:'+1/route end', c:'#a07a0c', n:1},
  ]},
 ];
-const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:30},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:24},{ic:'coins',nm:'VP',c:'#b8860b',n:40}];
+const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:30},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:24}];
 
 // short goal texts (the standing face carries one) — the 3-way cycle (3 reach · 3 standing · 3 engine), cycled across cask copies; best 3 score
 const GOALSHORT=['R +1/route w pres.','R +1/2 presence','R +4/route majority',
@@ -190,12 +180,12 @@ function render(){
   let h=REGMARKS;
   h+='<div class="calib"><div class="box">1 inch<br>(100%)</div><span class="note" style="color:#555">'
     +(back?'<b>BACKS</b> — print after Fronts; flip the paper on its long edge. Corner ✛ marks register the two passes at 100%.':'Verify this box measures exactly 1 inch before cutting.')+'</span></div>';
-  h+='<div class="famlabel">Cask Tiles  (the dual-role hero — '+LU('beer')+' cargo / '+LU('crown')+' standing · L3–L5 summit dealt from Bock / Mumme / Broyhan / Keut each game)'+(back?'  · standing faces (mirrored)':'')+'</div><div class="grid">';
+  h+='<div class="famlabel">Cask Tiles  (the dual-role hero — '+LU('beer')+' working/reach / '+LU('crown')+' standing · 3 states: work / deploy / enshrine · L3–L5 summit dealt from Bock / Mumme / Broyhan / Keut)'+(back?'  · standing faces (mirrored)':'')+'</div><div class="grid">';
   CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?caskBack(d):caskTile(d);});
   h+='</div>';
   FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+(back?'  · single-sided (blank back)':'')+'</div><div class="grid">';
     f.items.forEach(it=>{for(let i=0;i<cnt(it.n);i++)h+= back?blankTile():genTile(it);});h+='</div>';});
-  h+='<div class="famlabel">Goods Tokens  (Grain / Hops — or use wooden cubes) &amp; VP Tokens  (minted on every sale, 1 VP each at end)</div><div class="grid">';
+  h+='<div class="famlabel">Goods Tokens  (Grain / Hops — or use wooden cubes; standing &amp; the demand market use sliders, not chits)</div><div class="grid">';
   GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTok():tok(d);});h+='</div>';
   document.getElementById('sheet').innerHTML=h;
   if(window.lucide)lucide.createIcons();

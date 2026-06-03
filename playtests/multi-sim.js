@@ -1,3 +1,5 @@
+// ⚠ STALE (pre-v0.5): targets the retired ship-cargo/deliverCask API. Needs a rewrite to the v0.5
+// deploy/enshrine + demand-market engine before it will run. See DESIGN.md §19 v0.5.
 // Multi-game engine simulation for Brewhouse of the Hanse.
 // Runs many games (each a distinct seed → distinct random openings + bot tie-breaks)
 // against the REAL play.html engine, headlessly. Aggregates the ship-toll economy,
