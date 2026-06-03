@@ -32,7 +32,7 @@ On your turn, in order:
 
 A brewed cask, once **Ready** in a vessel, lives in exactly one of three states. This is the whole game in one object:
 
-- **Working** — installed in one of your scarce **personal slots**. Private, uncontested. It **soups up a station**: its action is added to that station when you use it (and is your fallback there when a rival blocks the cell). Scores nothing on its own. Pull it out later to deploy or enshrine.
+- **Working** — installed in one of your scarce **personal slots**, and **assigned to a station (Market / Brewhouse / Harbor) when you install it**. Private, uncontested. It **soups up that station**: its `work` action fires whenever you use the station — or its **twin** when a rival blocks the cell. Scores nothing on its own. Pull it out later to deploy or enshrine.
 - **Reach** — **deployed into a shared perimeter slot**, bound to a route it quality-qualifies for. **The cask *is* your presence** on that route (= reach) while it sits there, and it yields a **line action** when its line fires. It is exposed — any player may enshrine it.
 - **Standing** — **enshrined**: pulled off the board to the standing stack; the owner banks the type's current **market value** on their standing track. The cask's board presence is gone — **reach and standing never co-exist on one cask; enshrining converts it.**
 

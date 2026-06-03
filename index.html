@@ -338,6 +338,7 @@ document.getElementById('caskGallery').innerHTML=casks.map(c=>`
         <div class="fhead"><div class="fk">Working / Deployed · REACH</div><div class="ft">${c.style}</div>${qbar(c.q)}</div>
         <div class="fbody">
           <div class="inputs">Brew: ${cubes(c.inputs)}</div>
+          <div class="row"><span class="k">Working</span><span class="v">install → boosts a station</span></div>
           <div class="row"><span class="k">Reach</span><span class="v">deployed = +1 presence</span></div>
           <div class="row"><span class="k">Deploys to</span><span class="v">${c.ships}</span></div>
           <div class="badge">×${c.qty}</div>
