@@ -164,7 +164,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center">Prototype v0.1 — implements the core loop. Simplifications: line stops resolve in board order (not free order); some skims auto-resolve to grain; the Market is an always-open shop menu; privileges are not yet implemented; all numbers are placeholders (⚙).</p>
+  <p class="note" style="text-align:center">Prototype v0.4 — recipe book + type frontier + value tokens + 2-of-4-cities clock. Simplifications: line stops resolve in board order (not free order); some skims auto-resolve to grain; the Market is an always-open shop menu (frontier-gated for recipes); privileges are not yet implemented; VP tokens bank only (no spend sinks yet); all numbers are placeholders (⚙).</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -202,13 +202,21 @@ function tileIcon(t){if(t.type==='cask')return LU('beer')+'<span class="tl">'+ST
   return LU('package');}
 function refreshIcons(){if(window.lucide)try{lucide.createIcons();}catch(e){}}
 
+// Beer = two layers: a TYPE (a global quality rung, L1–L5) and a RECIPE (a collected instance of a type, in your book).
+// L1 Gruit → L2 Hopped is the fixed historical spine; L3/L4/L5 are a SUMMIT dealt from the roster below each game.
 const STYLES={
-  gruit :{name:'Gruit Ale',     q:1, in:{g:1,h:0}, ready:2, enshrine:false, standing:0, work:{t:'good',good:'g'}},
-  hopped:{name:'Hopped Beer',   q:2, in:{g:1,h:1}, ready:3, enshrine:true,  standing:3, work:{t:'good',good:'h'}},
-  dubbel:{name:'Dubbel',        q:3, in:{g:1,h:2}, ready:3, enshrine:true,  standing:5, work:{t:'good',good:'g'}},
-  tripel:{name:'Tripel',        q:4, in:{g:2,h:2}, ready:4, enshrine:true,  standing:7, work:{t:'advance'}},
-  bock  :{name:'Barrel Bock',   q:5, in:{g:2,h:2}, ready:5, enshrine:true,  standing:10, work:{t:'presence'}, cellar:true},
+  gruit :{name:'Gruit Ale',     lvl:1, q:1, in:{g:1,h:0}, ready:2, enshrine:false, standing:0, work:{t:'good',good:'g'}},
+  hopped:{name:'Hopped Beer',   lvl:2, q:2, in:{g:1,h:1}, ready:3, enshrine:true,  standing:3, work:{t:'good',good:'h'}},
+  dubbel:{name:'Dubbel',        lvl:3, q:3, in:{g:1,h:2}, ready:3, enshrine:true,  standing:5, work:{t:'good',good:'g'}},
+  tripel:{name:'Tripel',        lvl:4, q:4, in:{g:2,h:2}, ready:4, enshrine:true,  standing:7, work:{t:'advance'}},
+  bock  :{name:'Barrel Bock',   lvl:5, q:5, in:{g:2,h:2}, ready:5, enshrine:true,  standing:10, work:{t:'presence'}, cellar:true},
 };
+// The historical Hanse summit roster — 3 of these 4 are dealt onto the L3/L4/L5 rungs each game (variable summit).
+const SUMMIT_ROSTER=['Bock','Mumme','Broyhan','Keut'];
+const SUMMIT_KEYS=['dubbel','tripel','bock']; // the three premium rungs (L3,L4,L5) the roster names are dealt onto
+// Type frontier: the Market only sells recipes for unlocked types. Frontier starts at Hopped (L2) and advances
+// production-driven — when cumulative league sales cross a threshold the next premium tier unlocks (§5b).
+const FRONTIER_AT={3:6, 4:14, 5:24}; // soldTotal needed to unlock L3 / L4 / L5 ⚙
 const ROUTES={
   bruges  :{name:'Bruges',  gate:1, cap:8, openStart:true},
   london  :{name:'London',  gate:2, cap:6, openStart:false},
@@ -241,6 +249,7 @@ const SHOP=[
   {id:'m_larder',kind:'room',room:'larder',   name:'Room · Larder (Market twin → +2G)',cost:{g:2}},
   {id:'m_quay',  kind:'room',room:'quay',     name:'Room · Quay (Harbor twin → any open route)',cost:{g:3}},
   {id:'m_ferment',kind:'room',room:'fermenter',name:'Room · Faster Fermenter (Brew twin keeps load)',cost:{g:3}},
+  {id:'m_cooper', kind:'room',room:'cooperage', name:'Room · Cooperage (+1 presence when you ship)',cost:{g:2}},
 ];
 const KONTOR_SEED=[
   {name:'Bryggen Wharf',action:{t:'good',g:1}},
@@ -286,27 +295,35 @@ const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v3';  // v3: value track + VP tokens + 2-of-4-cities clock + cycled goals (old saves incompatible)
+const KEY='hanse-hotseat-v4';  // v4: recipe book + type frontier + summit deal (old saves incompatible)
 
 function endN(){return 6+3*S.players.length;}  // end-game stack threshold ⚙
 
-const START_RECIPES=['hopped','dubbel','tripel'];  // gruit is the universal baseline; you start with TWO random premium recipes in hand
+const START_RECIPES=['hopped','dubbel','tripel'];  // gruit is the universal baseline; you start with TWO random premium recipes in your book
 function startRecipes(){const a=START_RECIPES.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,2);}
 function newPlayer(i,name){
   return {id:i,name:name||CNAMES[i],color:COLORS[i],grain:3,hops:2,cell:null,placed:false,
     storage:8, recipes:['gruit',...startRecipes()], vessels:[null], maxVessels:1, maxRooms:4,
     rooms:[],ships:0,privileges:0, enshrined:[], vp:0};
 }
+// Deal 3 of the 4 summit beers onto the L3/L4/L5 rungs, recording the names so they survive a reload.
+function dealSummit(){const a=SUMMIT_ROSTER.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  const map={};SUMMIT_KEYS.forEach((k,i)=>map[k]=a[i]);return map;}
+function applySummit(map){if(!map)return;SUMMIT_KEYS.forEach(k=>{if(map[k])STYLES[k].name=map[k];});}
 function freshState(n,names){
   const st={players:[],slots:{},routes:{},stack:KONTOR_SEED.slice(),turn:1,active:0,first:0,ending:false,log:[],
-    value:Object.assign({},START_VAL),soldTotal:0};
+    value:Object.assign({},START_VAL),soldTotal:0,frontier:2,summit:dealSummit()};
+  applySummit(st.summit);
   for(let i=0;i<n;i++) st.players.push(newPlayer(i,names[i]));
   SLOTS.forEach(s=>st.slots[s.id]=null);
   for(const r in ROUTES) st.routes[r]={value:ROUTES[r].openStart?1:0,open:ROUTES[r].openStart,pres:{},cap:ROUTE_CAP_BASE[r]+n};
   return st;
 }
-// Mint VP tokens for a sale of `style` (ship or enshrine), then decay that type's value toward its floor.
-function mint(p,style){const v=S.value[style]||0;p.vp=(p.vp||0)+v;S.value[style]=Math.max(VAL_FLOOR[style],v-1);S.soldTotal++;return v;}
+// Mint VP tokens for a sale of `style` (ship or enshrine), decay that type's value toward its floor, then advance the type frontier.
+function mint(p,style){const v=S.value[style]||0;p.vp=(p.vp||0)+v;S.value[style]=Math.max(VAL_FLOOR[style],v-1);S.soldTotal++;advanceFrontier();return v;}
+// Production-driven type frontier: cumulative league sales unlock the next premium tier (and that flood is what cheapened the lower tiers).
+function advanceFrontier(){for(let L=S.frontier+1;L<=5;L++){if(S.soldTotal>=FRONTIER_AT[L]){S.frontier=L;
+  const key=Object.keys(STYLES).find(k=>STYLES[k].lvl===L);log('▲ The type frontier advances to '+STYLES[key].name+' (L'+L+') — its recipes now appear at the Market.');}else break;}}
 
 //==================================================================
 // HELPERS
@@ -378,10 +395,6 @@ function fireSkim(t,slotId){
   const o=S.players[t.owner];
   if(t.type==='route'){
     gain(o,1,0);log('↳ '+o.name+'’s '+ROUTES[t.route].name+' Lane skims +1G.'); // skim is goods, not presence (presence only from shipping)
-  } else if(t.type==='recipe'){ // recipe tile: claimed into the owner's hand when its line fires, then the tile is spent (slot freed)
-    o.recipes.push(t.style);
-    log('↳ '+o.name+' claims the '+STYLES[t.style].name+' recipe into hand — the tile is spent.');
-    if(slotId)S.slots[slotId]=null;
   } else if(t.type==='ship'){ // a ship's action is to LOAD: pull one of the owner's ready, route-eligible casks aboard
     const ready=readyCasks(o).filter(rc=>STYLES[rc.c.style].q>=ROUTES[t.route].gate);
     if(ready.length && t.cargo.length<t.cap){
@@ -437,7 +450,7 @@ function addPresenceBest(p){const open=Object.keys(ROUTES).filter(r=>S.routes[r]
 function shipsWithRoom(r){const out=[];for(const s of SLOTS){const t=S.slots[s.id];if(t&&t.type==='ship'&&t.route===r&&t.cargo.length<t.cap)out.push({ship:t,slotId:s.id});}
   out.sort((a,b)=>(b.ship.owner===S.active?1:0)-(a.ship.owner===S.active?1:0));return out;} // prefer your own ship (fill it toward its sail dividend)
 function deliverCask(p,cask,vi,r){ // ship a ready cask to route r: load into a ship if one has room (preferred), else a basic shipment. Shipper always gains +1 presence + sale tokens.
-  const ships=shipsWithRoom(r);const got=addPresence(p,r);const tok=mint(p,cask.style);
+  const ships=shipsWithRoom(r);const got=addPresence(p,r);if(p.rooms.includes('cooperage'))addPresence(p,r);const tok=mint(p,cask.style);
   if(ships.length){const {ship,slotId}=ships[0];ship.cargo.push({style:cask.style,q:cask.q,by:p.id});
     if(ship.owner!==p.id){gain(S.players[ship.owner],1,0);log('↳ '+S.players[ship.owner].name+' collects a +1G toll as the cask loads into their '+ship.label+'.');}
     log(p.name+' ships '+STYLES[cask.style].name+' to '+ROUTES[r].name+' — loads into '+S.players[ship.owner].name+'’s '+ship.label+' ('+ship.cargo.length+'/'+ship.cap+')'+(got?', +1 presence':'')+', +'+tok+' tokens.',true);
@@ -465,9 +478,10 @@ function buyTile(id){
     const nm=it.name.split(' ')[0];
     pay(p,it.cost);UI.tmp.pendingShip={label:nm,cap:it.cap};p.ships++;
     UI.stage='ship_buy_route';log(p.name+' buys a '+nm+' — choose the route it will support.',true);render();return;}
-  if(it.kind==='recipe'){if(!emptySlots().length){alert('No empty perimeter slot for the recipe tile.');return;}
-    pay(p,it.cost);UI.tmp.pendingTile={type:'recipe',owner:p.id,style:it.style,label:it.name};
-    UI.stage='place';log(p.name+' buys a '+it.name+' — place it in a slot; you claim the recipe when its line next fires.',true);render();return;}
+  if(it.kind==='recipe'){ // recipes are a private book — buying one adds it straight to your book (no slot, no claim-on-fire)
+    if(STYLES[it.style].lvl>S.frontier){alert(STYLES[it.style].name+' is not unlocked yet (type frontier is L'+S.frontier+').');return;}
+    pay(p,it.cost);p.recipes.push(it.style);
+    log(p.name+' collects the '+STYLES[it.style].name+' recipe into the book.',true);cellDone();return;}
   pay(p,it.cost);
   if(it.kind==='room'){applyRoom(p,it.room);log(p.name+' builds '+it.name+'.',true);}
   cellDone();
@@ -696,9 +710,12 @@ function renderKontor(){
 function renderShop(){
   const p=cur();const buying=(UI.sub==='cell'&&CELLNAME[UI.cell]==='Market'&&!UI.blocked&&(UI.stage===null||UI.stage==='choose'));
   const KI={recipe:'scroll-text',route:'route',ship:'sailboat',room:'wrench'};
-  let h='';SHOP.forEach(it=>{const aff=canPay(p,it.cost)&&buying;
-    h+='<div class="item"><span>'+LU(KI[it.kind]||'package')+' '+it.name+'</span><span class="cost">'+costIcons(it.cost)+' '+(buying?'<button '+(aff?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
-  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Pick a tile to buy. '+LU('route')+' lanes, '+LU('sailboat')+' ships (pick a route) &amp; '+LU('scroll-text')+' recipes drop into a perimeter slot you click; recipes are claimed to hand when their line next fires.':'Acquire at your <b>'+LU('store')+' Market</b> action: '+LU('scroll-text')+' recipes · '+LU('route')+' route lanes · '+LU('sailboat')+' ships · '+LU('wrench')+' <b>rooms = brewery upgrades</b> (Extra Vessel, Aging Cellar, Larder…).')+'</div>';
+  let h='';SHOP.forEach(it=>{
+    if(it.kind==='recipe'&&STYLES[it.style].lvl>S.frontier)return; // frontier-gated: locked tiers aren't sold yet
+    const nm=it.kind==='recipe'?('Recipe · '+STYLES[it.style].name+(STYLES[it.style].cellar?' (needs Cellar)':'')):it.name;
+    const aff=canPay(p,it.cost)&&buying;
+    h+='<div class="item"><span>'+LU(KI[it.kind]||'package')+' '+nm+'</span><span class="cost">'+costIcons(it.cost)+' '+(buying?'<button '+(aff?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
+  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Pick a tile to buy. '+LU('scroll-text')+' recipes go straight to your <b>book</b>; '+LU('route')+' lanes &amp; '+LU('sailboat')+' ships (pick a route) drop into a perimeter slot you click; '+LU('wrench')+' rooms install on your brewery.':'Acquire at your <b>'+LU('store')+' Market</b> action: '+LU('scroll-text')+' recipes (→ book, gated by the type frontier · now <b>L'+S.frontier+'</b>) · '+LU('route')+' route lanes · '+LU('sailboat')+' ships · '+LU('wrench')+' <b>rooms = brewery upgrades</b> (Extra Vessel, Aging Cellar, Larder…).')+'</div>';
 }
 function renderTableaus(){
   let tabs='',body='';
@@ -718,8 +735,8 @@ function renderTableaus(){
       +'<span class="chip">'+LU('package')+p.storage+'</span><span class="chip" title="VP tokens">'+LU('coins')+(p.vp||0)+'</span><span class="chip">'+LU('crown')+sc.total+'</span>'
       +' <span class="note">R'+sc.reach+'/M'+sc.maj+'/S'+sc.stand+'/G'+sc.goals+'/T'+sc.tokens+'</span></div>'
       +'<b class="note">'+LU('flask-conical')+' Brewing track ('+p.vessels.length+' vessel'+(p.vessels.length>1?'s':'')+')</b><div class="brew">'+vessels+'</div>'
-      +'<b class="note">'+LU('scroll-text')+' Recipes in hand:</b> '+(p.recipes.map(r=>'<span class="tag">'+LU('beer')+STYLES[r].name+'</span>').join('')||'—')+'<br>'
-      +'<b class="note">'+LU('sailboat')+' Owned slot tiles (ships · lanes · recipes):</b> '+slotsOwned+'<br>'
+      +'<b class="note">'+LU('scroll-text')+' Recipe book:</b> '+(p.recipes.map(r=>'<span class="tag">'+LU('beer')+STYLES[r].name+'</span>').join('')||'—')+'<br>'
+      +'<b class="note">'+LU('sailboat')+' Owned slot tiles (ships · lanes):</b> '+slotsOwned+'<br>'
       +'<b class="note">'+LU('crown')+' Enshrined (standing):</b> '+ensh+'<br>'
       +'<b class="note">'+LU('wrench')+' Rooms:</b> '+(p.rooms.map(r=>'<span class="tag">'+LU('wrench')+r+'</span>').join('')||'—')
       +'</div>';
@@ -734,6 +751,7 @@ function renderTableaus(){
 (function boot(){
   const saved=load();
   if(saved&&saved.players){S=saved;UI={sub:'move'};
+    if(S.frontier===undefined)S.frontier=2; applySummit(S.summit); // restore the dealt summit names onto the rungs
     S.players.forEach(p=>{if(p.placed===undefined)p.placed=(p.cell!=null);}); // migrate old saves
     // if a turn was mid-resolution we just reset to move for safety
     render();log('— resumed saved game —');render();

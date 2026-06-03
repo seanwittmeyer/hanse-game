@@ -154,7 +154,7 @@
 <header>
   <h1>Brewhouse of the Hanse</h1>
   <div class="sub">A theme-first heavy euro. Brew hopped beer — the one cargo that survives the voyage — and push it across the Baltic and North Sea. Every cask you keep working is <b>reach</b>; every cask you commit to a foreign post is <b>standing</b>.</div>
-  <div class="tag">Component Visualizer · v0.1 · all values placeholders</div>
+  <div class="tag">Component Visualizer · v0.4 · all values placeholders</div>
 </header>
 
 <nav>
@@ -166,6 +166,7 @@
   <a href="#routes">Route Board</a>
   <a href="#brew">Brewing Track</a>
   <a href="#casks">Cask Tiles</a>
+  <a href="#value">Value &amp; Tokens</a>
   <a href="#routetiles">Routes</a>
   <a href="#ships">Ships</a>
   <a href="#privs">Privileges</a>
@@ -198,7 +199,7 @@
     <div class="gridnote">
       <ul>
         <li><b>Both cells</b> on an activated line fire — the worker only gates <i>which line is legal</i>.</li>
-        <li>Each of the <b>8 perimeter slots</b> belongs to exactly one line (row <b>xor</b> column). Slots hold a mix of <span class="pill">working casks</span> and <span class="pill">route / ship tiles</span>, competing for space.</li>
+        <li>Each of the <b>8 perimeter slots</b> belongs to exactly one line (row <b>xor</b> column). Slots hold a mix of <span class="pill">ships</span> and <span class="pill">route lanes</span>, competing for space. <i>(Casks are cargo inside ships; recipes live in your private book — neither sits in a slot.)</i></li>
         <li><b>Cells are generalists</b> (in two lines); <b>slot tiles are specialists</b> (one line). Placing a tile commits it to a row or a column.</li>
         <li>A rival worker on a cell → you take your <b>tableau fallback</b> for it instead.</li>
         <li>An owned cap tile fires its <b>skim</b> to its owner whenever its line runs — by anyone.</li>
@@ -225,13 +226,13 @@
     <div class="stage"><div class="st">Age</div><div class="ds">hopped &amp; premium only</div><div class="arrow">→</div></div>
     <div class="stage"><div class="st">Ready</div><div class="ds">ship from here</div></div>
   </div>
-  <div class="age-note">Brew lengths (advances): Gruit 2 · Hopped 3 · Dubbel 3 · Tripel 4 · Bock 5 &nbsp;⚙ &nbsp;— more <b>vessels</b> (Extra Vessel rooms) advance in parallel per Brewhouse fire.</div>
+  <div class="age-note">Brew lengths (advances), by type level: L1 Gruit 2 · L2 Hopped 3 · L3 3 · L4 4 · L5 5 &nbsp;⚙ &nbsp;— more <b>vessels</b> (Extra Vessel rooms) advance in parallel per Brewhouse fire. <i>(L3–L5 summit names — Bock / Mumme / Broyhan / Keut — are dealt to the rungs each game.)</i></div>
 </section>
 
 <!-- CASK TILES -->
 <section id="casks">
   <h2><span class="n">A</span>Cask Tiles — the Dual-Role Hero</h2>
-  <p class="lead">Double-sided. <b>Cargo face</b> (loaded into a ship) = reach: shipping it drops +1 presence on a route. <b>Standing face</b> (enshrined) banks points, carries a goal, and sets the Kontor's top action. A ready cask ships <em>or</em> enshrines, never both. <i>Click a tile to flip it.</i></p>
+  <p class="lead">Double-sided. <b>Cargo face</b> (loaded into a ship) = reach: shipping it drops +1 presence on a route. <b>Standing face</b> (enshrined) banks points, carries a goal, and sets the Kontor's top action. A ready cask ships <em>or</em> enshrines, never both — and <b>either sale mints VP tokens</b> off the type's value track. Beer is <b>two layers — type</b> (a global quality rung) <b>+ recipe</b> (a collected instance in your book). The ladder is an anchored spine (<b>Gruit→Hopped</b>) + a <b>variable summit</b> (L3–L5 dealt each game from the historical Hanse beers). <i>Click a tile to flip it.</i></p>
   <div class="legend">
     <span class="chip"><span class="dot grain"></span> Grain (G)</span>
     <span class="chip"><span class="dot hops"></span> Hops (H)</span>
@@ -239,6 +240,14 @@
   </div>
   <div class="gallery" id="caskGallery"></div>
   <div class="note" id="goalNote"></div>
+</section>
+
+<!-- VALUE TRACK & VP TOKENS -->
+<section id="value">
+  <h2><span class="n">A′</span>Value Track &amp; VP Tokens <span class="small">— the variable-value economy</span></h2>
+  <p class="lead">Each beer <b>type</b> sits on a linear <b>value track</b>. <b>Every sale — ship (reach) or enshrine (standing) — mints VP tokens equal to that type's current value, and then that type ticks down</b> (the market saturates). Sell a hot type early and you bank big; flood it and you tank it for everyone. VP tokens are a <b>spendable 3rd resource</b> (spend sinks ⚙) or banked <b>1 VP each</b> at game end. They are a <b>modifier on top of</b> a cask's printed value — never a replacement — so they reward <i>timing</i> without destabilizing the two real paths. Both reach and standing mint them.</p>
+  <div class="routeboard" id="valtrack"></div>
+  <div class="note">Saturation does double duty: as a type floods, its value drops <b>and</b> the <b>type frontier</b> advances — the next premium tier's recipes enter the Market. One causal loop: flood gruit → gruit cheapens → the summit opens → the market tempts you upward. <i>(This is a pacing clock, not an end-game trigger — the game ends on 2 of 4 cities saturated.)</i></div>
 </section>
 
 <!-- ROUTE TILES -->
@@ -257,8 +266,8 @@
 
 <!-- RECIPES -->
 <section id="recipes">
-  <h2><span class="n">C′</span>Recipe Tiles <span class="small">— claim-on-fire engine</span></h2>
-  <p class="lead">Recipes are held in hand and brewed from hand (gruit is the baseline). Other recipes are placed as a slot tile, then claimed into the owner's hand the next time that line fires — and the tile is spent.</p>
+  <h2><span class="n">C′</span>Recipe Tiles <span class="small">— your private book</span></h2>
+  <p class="lead">Recipes are a <b>private book</b>, not slot tiles. Gruit is the universal baseline; every other recipe is <b>collected from the Market straight into your book</b> and brewed from there. Each carries its own <b>cost profile</b> (two recipes of one type can cost differently). The Market's recipe supply is gated by the current <b>type frontier</b>, so higher tiers appear only as types saturate.</p>
   <div class="gallery" id="recipeGallery"></div>
 </section>
 
@@ -314,11 +323,11 @@ document.getElementById('rb').innerHTML=routes.map(r=>{
 
 // ---- CASK TILES ----
 const casks=[
-  {style:'Gruit Ale',q:1,inputs:'G',ships:'Bruges / nearest only',enshrine:false,stand:'—',goal:'(perishable — never enshrined)',qty:16},
-  {style:'Hopped Beer',q:2,inputs:'G H',ships:'Bruges / London / Bergen',enshrine:true,stand:'3',goal:'one goal from the pool',qty:20},
-  {style:'Dubbel',q:3,inputs:'G H H',ships:'London / Bergen / Novgorod',enshrine:true,stand:'5',goal:'one goal from the pool',qty:12},
-  {style:'Tripel',q:4,inputs:'G G H H',ships:'Bergen / Novgorod',enshrine:true,stand:'7',goal:'one goal from the pool',qty:8},
-  {style:'Barrel-aged Bock',q:5,inputs:'premium · needs Aging Cellar',ships:'Novgorod',enshrine:true,stand:'10',goal:'one goal from the pool',qty:4},
+  {style:'L1 · Gruit Ale',q:1,inputs:'G',ships:'Bruges / nearest only',enshrine:false,stand:'—',goal:'(perishable — never enshrined)',qty:16},
+  {style:'L2 · Hopped Beer',q:2,inputs:'G H',ships:'Bruges / London / Bergen',enshrine:true,stand:'3',goal:'one goal from the cycle',qty:20},
+  {style:'L3 · Summit',q:3,inputs:'G H H',ships:'London / Bergen / Novgorod',enshrine:true,stand:'5',goal:'one goal from the cycle',qty:12},
+  {style:'L4 · Summit',q:4,inputs:'G G H H',ships:'Bergen / Novgorod',enshrine:true,stand:'7',goal:'one goal from the cycle',qty:8},
+  {style:'L5 · Summit',q:5,inputs:'premium · needs Aging Cellar',ships:'Novgorod',enshrine:true,stand:'10',goal:'one goal from the cycle',qty:4},
 ];
 function qbar(q){let s='';for(let i=1;i<=5;i++)s+=`<span class="q ${i<=q?'':'off'}"></span>`;return `<div class="qbar">${s}</div>`;}
 document.getElementById('caskGallery').innerHTML=casks.map(c=>`
@@ -349,19 +358,33 @@ document.getElementById('caskGallery').innerHTML=casks.map(c=>`
   </div>`).join('');
 
 const goals=[
-  ['g1','+1 VP per route you hold presence on (max 4)','breadth'],
-  ['g2','+1 VP per 2 presence markers on the board','volume'],
-  ['g3','+2 VP per other enshrined cask of the SAME style','depth/set'],
-  ['g4','+2 VP per enshrined Q4+ cask you own','quality'],
-  ['g5','+2 VP per presence on Novgorod','destination'],
-  ['g6','+4 VP per route majority you hold (max 2)','destination'],
-  ['g7','+1 VP per cask in transit (loaded in ships)','engine'],
-  ['g8','+2 VP per filled brewery room','tableau'],
-  ['g9','+1 VP per infrastructure tile you own in slots','toll-baron'],
-  ['g10','+3 VP flat (pure standing)','scarcity'],
+  ['g1','+1 / route with presence (max 4)','REACH'],
+  ['g2','+1 per 2 presence on board','REACH'],
+  ['g6','+4 / route majority (max 2)','REACH'],
+  ['g3','+2 / other same-style enshrined (max 6)','STANDING'],
+  ['g4','+2 / enshrined Q3+ (max 6)','STANDING'],
+  ['g10','+3 flat','STANDING'],
+  ['gV','+2 / distinct enshrined style','ENGINE'],
+  ['gC','+2 / top enshrined quality reached','ENGINE'],
+  ['g8','+2 / filled brewery room','ENGINE'],
 ];
-document.getElementById('goalNote').innerHTML='<b>Goal pool</b> (standing face): '+
-  goals.map(g=>`<span class="badge" title="${g[2]}">${g[0]}: ${g[1]}</span>`).join(' ');
+document.getElementById('goalNote').innerHTML='<b>Goal pool — the 3-way cycle</b> (standing face; <b>only your best 3 score</b>): a symmetric <b>3 reach · 3 standing · 3 engine</b>, all capped, authored so no goal rewards the axis the enshrine act already paid — which is what makes blending pay.<br>'+
+  goals.map(g=>`<span class="badge" title="${g[2]}">${g[2][0]}·${g[0]}: ${g[1]}</span>`).join(' ');
+
+// ---- VALUE TRACK ----
+const valTypes=[
+  {nm:'L1 Gruit',start:3,floor:1,cls:'bruges'},
+  {nm:'L2 Hopped',start:4,floor:1,cls:'london'},
+  {nm:'L3 Summit',start:6,floor:2,cls:'bergen'},
+  {nm:'L4 Summit',start:8,floor:3,cls:'novgorod'},
+  {nm:'L5 Summit',start:11,floor:4,cls:'novgorod'},
+];
+document.getElementById('valtrack').innerHTML=valTypes.map(t=>`
+  <div class="route ${t.cls}">
+    <h3>${t.nm}</h3>
+    <div class="role">VP tokens minted per sale, then –1 toward the floor</div>
+    <div class="meta">Starts at <b>${t.start}</b> · floor <b>${t.floor}</b> ⚙</div>
+  </div>`).join('');
 
 // ---- ROUTE TILES ----
 const routeTiles=[
@@ -391,16 +414,16 @@ document.getElementById('shipGallery').innerHTML=ships.map(t=>`
 
 // ---- RECIPE TILES ----
 const recipeTiles=[
-  {name:'Recipe · Hopped',grants:'Hopped Beer recipe → hand',cost:'1 G',qty:5},
-  {name:'Recipe · Dubbel',grants:'Dubbel recipe → hand',cost:'1 G 1 H',qty:4},
-  {name:'Recipe · Tripel',grants:'Tripel recipe → hand',cost:'2 G',qty:3},
-  {name:'Recipe · Bock',grants:'Barrel-aged Bock (needs Aging Cellar)',cost:'2 G 1 H',qty:2},
+  {name:'Recipe · L2 Hopped',grants:'→ your book',cost:'1 G',qty:5},
+  {name:'Recipe · L3 Summit',grants:'→ your book',cost:'1 G 1 H',qty:4},
+  {name:'Recipe · L4 Summit',grants:'→ your book',cost:'2 G',qty:3},
+  {name:'Recipe · L5 Summit',grants:'→ your book (needs Aging Cellar to brew)',cost:'2 G 1 H',qty:2},
 ];
 document.getElementById('recipeGallery').innerHTML=recipeTiles.map(t=>`
-  <div class="card"><div class="head h-route"><div class="kind">Recipe · slot · claim-on-fire</div><div class="ttl">${t.name}</div></div>
+  <div class="card"><div class="head h-route"><div class="kind">Recipe · to your book</div><div class="ttl">${t.name}</div></div>
   <div class="body">
-    <div class="row"><span class="k">Claimed</span><span class="v">${t.grants}</span></div>
-    <div class="row"><span class="k">Cost</span><span class="v">${cubes(t.cost)}</span></div>
+    <div class="row"><span class="k">Collected</span><span class="v">${t.grants}</span></div>
+    <div class="row"><span class="k">Buy cost</span><span class="v">${cubes(t.cost)}</span></div>
     <div class="badge">×${t.qty}</div>
   </div></div>`).join('');
 

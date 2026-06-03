@@ -42,7 +42,7 @@ On your turn, in order:
 
 ### D · Brewhouse
 - **Advance ALL your brews 1 step** on the track, **and** optionally **LOAD** 1 recipe (paying its inputs) into an empty vessel.
-- Brew lengths (LOAD→READY): **Gruit 2 · Hopped 3 · Dubbel 3 · Tripel 4 · Bock 5.** ⚙ (the tempo dial — gruit skips AGE)
+- Brew lengths (LOAD→READY), by type level: **L1 Gruit 2 · L2 Hopped 3 · L3 3 · L4 4 · L5 5.** ⚙ (the tempo dial — gruit skips AGE; the L3–L5 summit names are dealt per game, `TILES.md` §A)
 - More **vessels** (Extra Vessel rooms) = more brews advanced per fire = your throughput engine. **Start 1, cap 3.** A Ready cask occupies its vessel until shipped (back-pressure).
 - **Room slots: 4 (scarce).** Extra Vessel is itself a room — so going wide on vessels costs depth elsewhere. This is the forced-commit squeeze (§13c).
 - **Twin (blocked): brew-room** = advance all, no load; a **Faster Fermenter** room restores the load so the twin equals the public action.
@@ -52,7 +52,7 @@ On your turn, in order:
   - **If a ship supporting that route has room, the cask loads aboard it** (preferred). If it's a **rival's** ship, that owner collects a **+1 `G` toll** for the carriage. When a ship is **full it sails** — its cargo is delivered (already counted as each shipper's presence) and the **owner** takes a sail dividend (+1 presence on the route, +1 `G`); the ship leaves its slot (transient).
   - **If no ship has room on the route, it's a basic shipment** — you still place your 1 presence; the cask is simply delivered. (Ships are a **booster**, not a gate.)
 - **Ships** (§A) are route-bound containers placed in a slot. **A ship's own line-action is to load:** when its cap fires, it pulls one of the **owner's** ready, route-eligible casks aboard (owner +1 presence), sailing when full. So a ship is owned infrastructure that profits from *all* traffic on its route — the toll-baron play.
-- **Routes:** **Bruges is open from the start.** Bergen / London / Novgorod open only once a Route Lane tile for them sits in a slot. **Presence is clamped to each route's capacity** ⚙ (Bruges 8 · London 6 · Bergen 5 · Novgorod 9). Filling a route fires the reach end-clock.
+- **Routes:** **Bruges is open from the start.** Bergen / London / Novgorod open only once a Route Lane tile for them sits in a slot. **Presence is clamped to each route's capacity**, which is **player-scaled** ⚙: `base {Bruges 2 · London 1 · Bergen 0 · Novgorod 2} + player count` (so 2p → `{4, 3, 2, 4}`, 4p → `{6, 5, 4, 6}`). Filling routes fires the reach end-clock (2-of-4 cities, §5). *(v0.3 — supersedes the old fixed 8/6/5/9 caps, which paced 2p far too slowly.)*
 - **London delivery** grants a **Privilege tile** (its route payout).
 - **Twin (blocked): Quay** = ship a ready cask to **Bruges only** (loading a Bruges ship if one has room, else a basic shipment); a **Quay** room lets it ship to any open qualifying route.
 
@@ -85,7 +85,7 @@ On your turn, in order:
 
 ## 5. End-game trigger
 
-The game enters its **final round** the moment **2 of the 4 kontor cities are saturated** — a city is saturated when its route's presence spaces are full (capacities ⚙: Bruges 8 · London 6 · Bergen 5 · Novgorod 9). This is the **visible, player-steerable clock**: reach players race to slam a second city full and **end it**; standing players, wanting more turns to enshrine, **deliver to the empty cities** to keep both from filling. Finish the current round so all players have equal turns, then score.
+The game enters its **final round** the moment **2 of the 4 kontor cities are saturated** — a city is saturated when its route's presence spaces are full (player-scaled capacities ⚙, §2 Harbor: `base {Bruges 2 · London 1 · Bergen 0 · Novgorod 2} + player count`). This is the **visible, player-steerable clock**: reach players race to slam a second city full and **end it**; standing players, wanting more turns to enshrine, **deliver to the empty cities** to keep both from filling. Finish the current round so all players have equal turns, then score.
 
 *(v0.3 — supersedes the v0.1 twin clocks: Kontor-stack-N and single-route-full.)*
 

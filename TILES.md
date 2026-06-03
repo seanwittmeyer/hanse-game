@@ -52,24 +52,23 @@ A route only accepts presence from casks of sufficient quality:
 | **Bergen (Monopoly)** | Q2 | narrow, contested |
 | **Novgorod (Long Haul)** | Q3 | only the premium survives the voyage |
 
-### Goal pool (standing face — the goal-matching DNA)
+### Goal pool (standing face — the goal-matching DNA, the 3-way cycle)
 
-Each enshrine-able cask (Q2–Q5, 44 tiles) carries **one** goal, scored at game end. Distribution spreads the three axes so no single line dominates:
+> **v0.3 — cycled goals + best-3 cap (`DESIGN.md` §19, 2026-06-03, "fix D").** Every enshrine-able cask carries **one** goal. The pool is a **3-way symmetric cycle — 3 reach-rewarding · 3 standing-rewarding · 3 engine-rewarding, all capped** — deliberately authored so **no goal rewards the axis the enshrine act already pays.** A pure-standing player therefore draws goals that score ~0 without reach/engine, which is what makes blending pay (the GWT ideal). **Only your best 3 enshrined goals score**, so the goal axis stays a bonus (~one-third of a typical score), not the game. *(Supersedes the old g1–g10 single-axis pool.)*
 
-| # | Goal (end-game) ⚙ | Axis | ~Qty carrying it |
+| # | Goal (end-game) ⚙ | Rewards | Pulls you toward |
 |---|---|---|---|
-| g1 | `+1 VP per route you hold presence on (max 4)` | breadth/reach | 6 |
-| g2 | `+1 VP per 2 presence markers on the board` | volume/reach | 6 |
-| g3 | `+2 VP per other enshrined cask of the SAME style` | depth/set | 5 |
-| g4 | `+2 VP per enshrined Q4+ cask you own` | quality | 4 |
-| g5 | `+2 VP per presence on Novgorod` | destination | 4 |
-| g6 | `+4 VP if you hold a route majority (each, max 2)` | destination | 4 |
-| g7 | `+1 VP per cask in transit (loaded in your/others' ships)` | engine/reach | 5 |
-| g8 | `+2 VP per filled brewery room` | tableau/depth | 4 |
-| g9 | `+1 VP per infrastructure tile you own in slots` | toll-baron | 3 |
-| g10 | `+3 VP flat (pure standing)` | safe/scarcity | 3 |
+| g1 | `+1 / route you hold presence on (max 4)` | **Reach** | breadth |
+| g2 | `+1 per 2 presence markers on the board` | **Reach** | volume |
+| g6 | `+4 / route majority you hold (max 2)` | **Reach** | destination/commitment |
+| g3 | `+2 / other enshrined cask of the SAME style (max 6)` | **Standing** | depth/set |
+| g4 | `+2 / enshrined Q3+ cask you own (max 6)` | **Standing** | quality |
+| g10 | `+3 flat` | **Standing** | safe/scarcity |
+| gV | `+2 / distinct enshrined style` | **Engine** | spread/climb |
+| gC | `+2 / top enshrined quality reached` | **Engine** | summit |
+| g8 | `+2 / filled brewery room` | **Engine** | tableau depth |
 
-> Enshrining is therefore a **triple choice**: bank `STANDING` now, commit to a scoring *direction* (the goal), and set the shared Kontor's top action. That's the spine of the game on one tile.
+> Enshrining is therefore a **triple choice**: bank `STANDING` now, commit to a scoring *direction* (the goal), and set the shared Kontor's top action. That's the spine of the game on one tile — and because the goal points usually live on a *different* axis than the standing you just banked, the goal is what tempts a one-note player to blend.
 
 ### Standing-face Kontor actions (while on top of stack) ⚙
 Small, keyed loosely to type: Hopped → `+1 G`; L3 → `draw 1 Market tile`; L4 → `+1 presence`; L5 → `advance any 1 brew`. (Public Kontor tiles, Family F, carry the stronger ones.)
@@ -228,6 +227,6 @@ Seed the stack and get added during play; interleave with personal enshrined cas
 1. **Skim strength** (A working actions, B/C line actions) — the central rich-get-richer dial.
 2. **Goal distribution** — are the three axes balanced, or does one goal dominate?
 3. **Quality-gate severity** — does Q3-gating Novgorod choke the long-haul path too hard?
-4. **Standing curve** (2/4/6/9) vs goal bonuses — keep enshrining-for-goals competitive with enshrining-for-flat-standing (g10).
+4. **Standing curve** (3/5/7/10 by level L2–L5) vs goal bonuses — keep enshrining-for-goals competitive with enshrining-for-flat-standing (g10).
 5. **Privilege/room acquisition** — Market display for all, or thematic sources (London for privileges, a build action for rooms)?
 6. **Brewing-step counts** — exact length of FERMENT/AGE per style sets the whole tempo economy.

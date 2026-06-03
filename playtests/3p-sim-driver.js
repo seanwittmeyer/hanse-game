@@ -21,7 +21,7 @@ const rivalOn=(p,c)=>E.S.players.some(q=>q.id!==p.id&&q.cell===c);
 function loadable(p,style){const st=STYLES[style];return p.recipes.includes(style)&&p.vessels.includes(null)&&E.canPay(p,st.in)&&!(st.cellar&&!p.rooms.includes('cellar'));}
 function chooseLoad(p){const pr=PROF[p.id];for(const s of pr.loads)if(loadable(p,s))return s;for(const s of ['hopped','gruit','dubbel','tripel'])if(loadable(p,s))return s;return null;}
 function shipable(p){const ready=E.readyCasks(p);if(!ready.length)return null; // casks now load into ships (or basic shipment) — no slot needed
- for(const o of ready){const open=Object.keys(ROUTES).filter(r=>E.S.routes[r].open&&E.routeFilled(r)<ROUTES[r].cap&&STYLES[o.c.style].q>=ROUTES[r].gate);
+ for(const o of ready){const open=Object.keys(ROUTES).filter(r=>E.S.routes[r].open&&E.routeFilled(r)<E.S.routes[r].cap&&STYLES[o.c.style].q>=ROUTES[r].gate);
    if(open.length){const r=open.sort((a,b)=>E.shipsWithRoom(b).length-E.shipsWithRoom(a).length||E.S.routes[b].value-E.S.routes[a].value)[0];return {vi:o.i,route:r};}}
  return null;}
 function enshList(p){const ready=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready&&o.c.enshrine);return {ready};} // enshrine only from Ready vessels now
@@ -29,7 +29,7 @@ function wantEnshrine(p){const pr=PROF[p.id];const e=enshList(p);return E.S.turn
 function marketWish(p){const pr=PROF[p.id];for(const id of pr.wish){const it=SHOP.find(x=>x.id===id);if(!it||!E.canPay(p,it.cost))continue;
    if(it.kind==='route'&&!has(p,id)&&E.emptySlots().length)return{tile:id};
    if(it.kind==='room'){if(it.room==='vessel'&&p.maxVessels<3&&p.rooms.length<4)return{tile:id};if(it.room!=='vessel'&&!has(p,id)&&p.rooms.length<4)return{tile:id};}
-   if(it.kind==='recipe'&&!p.recipes.includes(it.style)&&!SLOTS.some(s=>{const t=E.S.slots[s.id];return t&&t.type==='recipe'&&t.owner===p.id&&t.style===it.style})&&E.emptySlots().length)return{tile:id};
+   if(it.kind==='recipe'&&!p.recipes.includes(it.style)&&STYLES[it.style].lvl<=E.S.frontier)return{tile:id}; // recipes → book, frontier-gated
    if(it.kind==='ship'&&p.ships<1&&E.emptySlots().length)return{tile:id};}
  return null;}
 function cellValue(p,c){const act=CELLNAME[c],blk=rivalOn(p,c),pr=PROF[p.id];
@@ -69,5 +69,5 @@ for(let round=1;round<=10;round++)for(let seat=0;seat<3;seat++){
 out.push('\n================ FINAL ================');
 out.push(`Heritage clock: ${E.enshrinedTotal()} / ${6+3*3} enshrined  |  ending=${E.S.ending}`);
 E.S.players.forEach(p=>{const sc=E.scorePlayer(p);out.push(`${PROF[p.id].name.padEnd(8)} TOTAL ${String(sc.total).padStart(3)}  = reach ${sc.reach} + maj ${sc.maj} + standing ${sc.stand} + goals ${sc.goals}  (enshrined ${p.enshrined.length})`);});
-Object.keys(ROUTES).forEach(r=>{const R=E.S.routes[r];out.push(`route ${r.padEnd(9)} value ${R.value} cap ${ROUTES[r].cap} filled ${E.routeFilled(r)} pres=${JSON.stringify(R.pres)}`);});
+Object.keys(ROUTES).forEach(r=>{const R=E.S.routes[r];out.push(`route ${r.padEnd(9)} value ${R.value} cap ${R.cap} filled ${E.routeFilled(r)} pres=${JSON.stringify(R.pres)}`);});
 console.log(out.join('\n'));

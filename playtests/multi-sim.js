@@ -60,7 +60,7 @@ function shipCount(p){return SLOTS.filter(s=>{const t=E.S.slots[s.id];return t&&
 function marketWish(p){const pr=PROF[p.id];for(const id of pr.wish){const it=SHOP.find(x=>x.id===id);if(!it||!E.canPay(p,it.cost))continue;
    if(it.kind==='route'&&!has(p,id)&&E.emptySlots().length)return{tile:id};
    if(it.kind==='room'){if(it.room==='vessel'&&p.maxVessels<3&&p.rooms.length<4)return{tile:id};if(it.room!=='vessel'&&!has(p,id)&&p.rooms.length<4)return{tile:id};}
-   if(it.kind==='recipe'&&!p.recipes.includes(it.style)&&!SLOTS.some(s=>{const t=E.S.slots[s.id];return t&&t.type==='recipe'&&t.owner===p.id&&t.style===it.style})&&E.emptySlots().length)return{tile:id};
+   if(it.kind==='recipe'&&!p.recipes.includes(it.style)&&STYLES[it.style].lvl<=E.S.frontier)return{tile:id}; // recipes → book, frontier-gated
    if(it.kind==='ship'&&shipCount(p)<pr.maxShips&&E.emptySlots().length&&Object.keys(ROUTES).some(r=>E.S.routes[r].open))return{tile:id};}
  return null;}
 function cellValue(p,c){const act=CELLNAME[c],blk=rivalOn(p,c),pr=PROF[p.id];
@@ -99,8 +99,7 @@ function tally(lines,T){
   if(/waits at the .* dock/.test(l)) T.shipIdle++;
   if(/sails full from/.test(l)){T.sails++;const m=l.match(/— (\d+) casks delivered/);if(m)T.cargo+=+m[1];}
   if(/docks to support/.test(l)) T.shipsBuilt++;
-  if(/buys a Recipe/.test(l)) T.recipePlaced++;
-  if(/claims the .* recipe into hand/.test(l)) T.recipeClaims++;
+  if(/collects the .* recipe into the book/.test(l)) T.recipePlaced++; // recipes → book (v0.4)
   if(/final round! \(heritage clock\)/.test(l)) T.endType='heritage';
   if(/final round! \(reach clock\)/.test(l)) T.endType='reach';
  }
@@ -168,7 +167,7 @@ function report(n,a){
  out.push(`    shipments: loaded-a-ship ${avg(a.T.harborLoads,G)} (${pct(a.T.harborLoads,totalShipments)}) · basic/no-ship ${avg(a.T.basicShips,G)} (${pct(a.T.basicShips,totalShipments)})`);
  out.push(`    tolls collected ${avg(a.T.tolls,G)} · cap-fire auto-loads ${avg(a.T.capLoads,G)} · idle dock-fees ${avg(a.T.shipIdle,G)}`);
  out.push('\n  Recipe economy (per game):');
- out.push(`    recipe tiles placed ${avg(a.T.recipePlaced,G)} · recipes claimed ${avg(a.T.recipeClaims,G)}`);
+ out.push(`    recipes collected to book ${avg(a.T.recipePlaced,G)}`);
  out.push('\n  Random opening — win% by starting premium recipe set:');
  Object.keys(a.playByStart).sort().forEach(s=>{out.push(`    ${s.padEnd(14)} played ${a.playByStart[s]||0}  ·  wins ${a.winsByStart[s]||0}  (${pct(a.winsByStart[s]||0,a.playByStart[s]||0)} of its games won)`);});
  return out.join('\n');

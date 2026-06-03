@@ -425,3 +425,18 @@ Two threads closed here: the GWT balance investigation (`playtests/blend-balance
 - **Deltas from the locked v0.3 spec, on purpose:** the **recipe model stays claim-on-fire slot tiles** (not the book/frontier) — functionally a frontier for human play, and swapping it is pure churn that doesn't touch the two-axis balance; logged for a later pass. **VP tokens bank only** (no mid-game spend sinks yet).
 - **Verified:** engine parses, 600 headless games run crash-free (`multi-sim.js`, updated to the live cap + token readout), and a render-path smoke test confirms value decay, token accrual, the best-3 goal cap, and 2p caps. `multi-sim`'s legacy v0.2 bots barely ship, so **`blend-sim.js` remains the balance authority**, not `multi-sim`.
 - **Still open:** recipe-book/type-frontier port; VP-token spend sinks; tuning pure-Reach/pure-Engine down under the two-axis target; human playtest of reach's real multipliers (vessels, cap-fire, sail dividends, tolls) now that they're in the playable build.
+
+### Revision — v0.4 consistency pass: recipe book made canonical, claim-on-fire retired, all pages aligned (2026-06-03) — LOCKED
+
+A full-table reconciliation. Every page (the 5 HTML deliverables + the markdown record) was drifting against the others; the worst gaps were in `rulebook.html` (pre-remap cell map, casks-into-slots shipping, the old twin end-clocks, no VP tokens). Decision: **bring everything up to the latest state — no backlog — and resolve the one logged fork (recipes) in favor of the book.**
+
+- **Recipe model: the private book is now canonical; claim-on-fire is retired everywhere — including `play.html`.** Rationale (designer call): placing a recipe in a slot just to claim it back later isn't intuitive and serves no gameplay purpose that the book doesn't. **Buying a recipe sends it straight to your book.** This closes the 2026-06-02 "claim-on-fire slot model" and the `play.html` delta logged in the previous revision. Recipes no longer occupy perimeter slots → the slot ring now holds **only ships + route lanes** (cleaner row-xor-column tension).
+- **Type frontier + recipe book ported into `play.html`.** Market recipe supply is gated by the global type frontier (opens at Hopped; advances production-driven as a type's league sales cross a threshold ⚙, also ticking that type's value down — the one causal loop). The summit (L3–L5) is **dealt from {Bock, Mumme, Broyhan, Keut}** each game (3 of 4) over the fixed L3/L4/L5 rung stats; the top rung needs the Aging Cellar.
+- **All pages now agree on the canonical constants** (the single source of truth for the visualizer, rulebook, printables, and engine):
+  - Cell map **A=Market · B=Harbor · C=Kontor · D=Brewhouse** (build×cash-out diagonals).
+  - Type ladder: Q **1/2/3/4/5**, brew steps **2/3/3/4/5**, base standing **—/3/5/7/10**, value-track start **3/4/6/8/11** → floors **1/1/2/3/4**.
+  - Route caps **player-scaled** `base{2,1,0,2}+playerCount`; quality gates **Bruges 1 · London 2 · Bergen 2 · Novgorod 3**.
+  - Goals: the **cycled 9** (g1/g2/g6 reach · g3/g4/g10 standing · gV/gC/g8 engine), **best-3 score**.
+  - End-game: **2 of 4 cities saturated**. Scoring: Reach → Majorities → Standing → Goals(best-3) → VP tokens.
+- **Casks are cargo, never slot tiles; shipping loads them into ships** — the §9 "cask into a working slot" framing is purged from every page.
+- **Still open (unchanged):** type-frontier threshold tuning; VP-token spend sinks (bank-only for now); per-beer summit hooks; pure-Reach/pure-Engine balance under the two-axis target; human playtest.

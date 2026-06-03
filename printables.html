@@ -85,11 +85,11 @@ const pips=q=>{let s='';for(let i=1;i<=5;i++)s+='<span class="pip'+(i<=q?' on':'
 
 // ----- component data (mirrors the current build) -----
 const CASKS=[
-  {nm:'Gruit',  c:'#8a949c', q:1, g:1,h:0, badge:'local', n:16},
-  {nm:'Hopped', c:'#c2922f', q:2, g:1,h:1, badge:'3',     n:20},
-  {nm:'Dubbel', c:'#b06a34', q:3, g:1,h:2, badge:'5',     n:12},
-  {nm:'Tripel', c:'#d8a72a', q:4, g:2,h:2, badge:'7',     n:8},
-  {nm:'Bock',   c:'#7c2128', q:5, g:2,h:2, badge:'10',    n:4},
+  {nm:'L1 Gruit',  c:'#8a949c', q:1, g:1,h:0, badge:'local', n:16},
+  {nm:'L2 Hopped', c:'#c2922f', q:2, g:1,h:1, badge:'3',     n:20},
+  {nm:'L3 Summit', c:'#b06a34', q:3, g:1,h:2, badge:'5',     n:12},
+  {nm:'L4 Summit', c:'#d8a72a', q:4, g:2,h:2, badge:'7',     n:8},
+  {nm:'L5 Summit', c:'#7c2128', q:5, g:2,h:2, badge:'10',    n:4},
 ];
 const FAMS=[
  {label:'Route Lanes  (perimeter slots — open a route & raise its value)', color:c=>c, items:[
@@ -102,11 +102,11 @@ const FAMS=[
    {ic:'sailboat',nm:'Cog', sub:'cap 3 → sails',  c:'#5b4a37', n:4},
    {ic:'sailboat',nm:'Hulk',sub:'cap 4 → sails',  c:'#3a3026', n:3},
  ]},
- {label:'Recipe Tiles  (perimeter slots — claimed to hand when the line fires)', color:()=>'#8a6408', items:[
-   {ic:'scroll-text',nm:'Hopped', sub:'recipe → hand', c:'#8a6408', n:5},
-   {ic:'scroll-text',nm:'Dubbel', sub:'recipe → hand', c:'#a07a0c', n:4},
-   {ic:'scroll-text',nm:'Tripel', sub:'recipe → hand', c:'#8a6408', n:3},
-   {ic:'scroll-text',nm:'Bock',   sub:'needs Cellar',  c:'#a07a0c', n:2},
+ {label:'Recipe Tiles  (collected into your private recipe book — not slots)', color:()=>'#8a6408', items:[
+   {ic:'scroll-text',nm:'L2 Hopped', sub:'→ recipe book', c:'#8a6408', n:5},
+   {ic:'scroll-text',nm:'L3 Summit', sub:'→ recipe book', c:'#a07a0c', n:4},
+   {ic:'scroll-text',nm:'L4 Summit', sub:'→ recipe book', c:'#8a6408', n:3},
+   {ic:'scroll-text',nm:'L5 Summit', sub:'needs Cellar',  c:'#a07a0c', n:2},
  ]},
  {label:'Rooms  (brewery upgrades — installed on your player board)', color:()=>'#4a6b3a', items:[
    {ic:'wrench',nm:'Extra Vessel',  sub:'+1 brew lane',   c:'#4a6b3a', n:3},
@@ -116,6 +116,7 @@ const FAMS=[
    {ic:'wrench',nm:'Larder',        sub:'Market twin +2'+G, c:'#4a6b3a', n:3},
    {ic:'wrench',nm:'Quay',          sub:'Harbor twin',    c:'#3f5c30', n:3},
    {ic:'wrench',nm:'Faster Ferm.',  sub:'brew twin +load',c:'#4a6b3a', n:3},
+   {ic:'wrench',nm:'Cooperage',     sub:'+1 pres. on ship',c:'#3f5c30', n:2},
  ]},
  {label:'Public Kontor Tiles  (seed/added to the shared stack — top = the live action)', color:()=>'#7c2128', items:[
    {ic:'landmark',nm:'Bryggen',  sub:'+1 '+G, c:'#7c2128', n:1},
@@ -146,11 +147,12 @@ const FAMS=[
    {ic:'award',nm:'Hanse Seal',sub:'+1/route end', c:'#a07a0c', n:1},
  ]},
 ];
-const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:30},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:24}];
+const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:30},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:24},{ic:'coins',nm:'VP',c:'#b8860b',n:40}];
 
-// short goal texts (the standing face carries one) — cycled across cask copies for deck variety
-const GOALSHORT=['+1 / route w/ presence','+1 / 2 presence','+2 / same-style ensh.','+2 / Q4+ ensh.',
-  '+2 / Novgorod pres.','+4 / route majority','+1 / cask in transit','+2 / brewery room','+1 / infra tile','+3 flat'];
+// short goal texts (the standing face carries one) — the 3-way cycle (3 reach · 3 standing · 3 engine), cycled across cask copies; best 3 score
+const GOALSHORT=['R +1/route w pres.','R +1/2 presence','R +4/route majority',
+  'S +2/same-style ensh.','S +2/Q3+ ensh.','S +3 flat',
+  'E +2/distinct style','E +2/top quality','E +2/brewery room'];
 
 let MODE='proof', SIDE='front', gi=0;
 function setMode(m){MODE=m;document.getElementById('bproof').classList.toggle('on',m==='proof');document.getElementById('bfull').classList.toggle('on',m==='full');render();}
@@ -188,12 +190,12 @@ function render(){
   let h=REGMARKS;
   h+='<div class="calib"><div class="box">1 inch<br>(100%)</div><span class="note" style="color:#555">'
     +(back?'<b>BACKS</b> — print after Fronts; flip the paper on its long edge. Corner ✛ marks register the two passes at 100%.':'Verify this box measures exactly 1 inch before cutting.')+'</span></div>';
-  h+='<div class="famlabel">Cask Tiles  (the dual-role hero — '+LU('beer')+' cargo / '+LU('crown')+' standing)'+(back?'  · standing faces (mirrored)':'')+'</div><div class="grid">';
+  h+='<div class="famlabel">Cask Tiles  (the dual-role hero — '+LU('beer')+' cargo / '+LU('crown')+' standing · L3–L5 summit dealt from Bock / Mumme / Broyhan / Keut each game)'+(back?'  · standing faces (mirrored)':'')+'</div><div class="grid">';
   CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?caskBack(d):caskTile(d);});
   h+='</div>';
   FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+(back?'  · single-sided (blank back)':'')+'</div><div class="grid">';
     f.items.forEach(it=>{for(let i=0;i<cnt(it.n);i++)h+= back?blankTile():genTile(it);});h+='</div>';});
-  h+='<div class="famlabel">Goods Tokens  (or use wooden cubes)</div><div class="grid">';
+  h+='<div class="famlabel">Goods Tokens  (Grain / Hops — or use wooden cubes) &amp; VP Tokens  (minted on every sale, 1 VP each at end)</div><div class="grid">';
   GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTok():tok(d);});h+='</div>';
   document.getElementById('sheet').innerHTML=h;
   if(window.lucide)lucide.createIcons();
