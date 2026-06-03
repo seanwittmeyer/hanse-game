@@ -16,7 +16,7 @@
 // ---------------- tunable constants (⚙) ----------------
 const TYPES=['Gruit','Hopped','L3','L4','L5'], Q=[1,2,3,4,5];
 const STEPS=[2,3,3,4,5], STANDING=[0,3,5,7,10];
-const START_VAL=[3,4,5,6,8], VAL_FLOOR=[1,1,2,2,3], DECAY=1; // tokens are a MODIFIER, not the game ⚙
+const START_VAL=[3,4,6,8,11], VAL_FLOOR=[1,1,2,3,4], DECAY=1; // gradient restored: high types mint more → Engine's primary ⚙
 const FRONTIER_UNLOCK=[0,0,6,14,24];
 const SUMMIT=['Bock','Mumme','Broyhan','Keut'];
 const COST=[ [{g:1,h:0,steps:2}],
@@ -44,22 +44,25 @@ const LANE_MAX={bruges:4,london:5,bergen:5,novgorod:6};         // cap stacking 
 const totalPres=p=>ROUTE_KEYS.reduce((a,r)=>a+(p.pres[r]||0),0);
 const majorities=(G,p)=>ROUTE_KEYS.filter(r=>{const v=Object.values(G.pres[r]);const mine=G.pres[r][p.id]||0;
   return mine>0&&mine===Math.max(...v)&&v.filter(x=>x===mine).length===1;}).length;
-// Rebalanced to 3 Reach / 3 Standing / 2 Engine / 1 neutral so the WINNING BLEND can vary
-// (was 5R/2S/1E/1N, which made reach near-mandatory). This is the GWT rock-paper-scissors fix.
+// D — CYCLE THE COUPLINGS (full 3-way symmetric pool). Goals ride on enshrined casks, but
+// the pool is balanced 3 reach-rewarding + 3 standing-rewarding + 3 engine-rewarding, all
+// modest and capped (best-3 score). Every PURE path is missing two of three legs, so it
+// can only fill ~1/3 of its drawn goals → must blend; which blend wins varies by the deal.
+const distinctEnsh=p=>new Set(p.enshrined.map(e=>e.t)).size;
+const topEnsh=p=>p.enshrined.reduce((m,e)=>Math.max(m,e.t),0);
 const GOALS=[
-  // Reach
-  {id:'g1',need:'R',fn:(G,p)=>Math.min(4,ROUTE_KEYS.filter(r=>(p.pres[r]||0)>0).length)},
-  {id:'g2',need:'R',fn:(G,p)=>Math.floor(totalPres(p)/2)},
-  {id:'g6',need:'R',fn:(G,p)=>4*Math.min(2,majorities(G,p))},
-  // Standing
-  {id:'g3',need:'S',fn:(G,p,c)=>2*Math.max(0,p.enshrined.filter(e=>e.t===c.t).length-1)},
-  {id:'g4',need:'S',fn:(G,p)=>2*p.enshrined.filter(e=>e.t>=3).length},
-  {id:'gS',need:'S',fn:(G,p)=>1*p.enshrined.length},
-  // Engine
-  {id:'g8',need:'E',fn:(G,p)=>2*p.rooms},
-  {id:'gE',need:'E',fn:(G,p)=>2*Math.max(0,Object.keys(p.book).length-1)},
-  // neutral
-  {id:'g10',need:'-',fn:()=>3},
+  // reward REACH (presence / majorities) — pushes a Standing holder toward RS
+  {id:'g1',rew:'R',fn:(G,p)=>Math.min(4,ROUTE_KEYS.filter(r=>(p.pres[r]||0)>0).length)},
+  {id:'g2',rew:'R',fn:(G,p)=>Math.floor(totalPres(p)/2)},
+  {id:'g6',rew:'R',fn:(G,p)=>4*Math.min(2,majorities(G,p))},
+  // reward STANDING (quality / sets — capped, NOT raw volume) — pushes Engine/Reach holder toward S
+  {id:'g3',rew:'S',fn:(G,p,c)=>Math.min(6,2*Math.max(0,p.enshrined.filter(e=>e.t===c.t).length-1))},
+  {id:'g4',rew:'S',fn:(G,p)=>Math.min(6,2*p.enshrined.filter(e=>e.t>=3).length)},
+  {id:'g10',rew:'S',fn:()=>3},
+  // reward ENGINE (book / variety / climb) — pushes a Standing holder toward SE
+  {id:'gE',rew:'E',fn:(G,p)=>2*Math.max(0,Object.keys(p.book).length-1)},
+  {id:'gV',rew:'E',fn:(G,p)=>2*distinctEnsh(p)},
+  {id:'g8',rew:'E',fn:(G,p)=>2*p.rooms},
 ];
 
 // ---------------- RNG ----------------

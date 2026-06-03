@@ -44,6 +44,20 @@ To make *any two of three* viable and board-dependent, one of these structural m
 
 My lean: **D + a capped version of A's spirit** — keep goals on casks (thematic, self-documenting) but (i) make the couplings a cycle so no single leg is mandatory, and (ii) keep the best-N goal cap so standing-spam can't run the goal axis away. **B** is a strong complement to give reach its own second axis.
 
+## Fix D applied (cycle the couplings) — result + the deeper realization
+
+Re-authored the goal pool to a **3-way symmetric cycle** (3 reach-rewarding + 3 standing-rewarding + 3 engine-rewarding, all capped, best-3 score), removing the pure-standing volume amplifiers.
+
+**It worked on its target:** pure **Standing** dropped from dominant (89%) to **6–49%** — the goal axis no longer funnels through standing-spam. Blends RS and SE are healthy and the winning blend varies by the goal deal.
+
+**But pure Engine (38–83%) and pure Reach (39–48%) are now the over-performers, which exposed the real structural truth:**
+
+> **The three leanings are NOT orthogonal.** You climb the type ladder *by brewing & banking higher casks* — so an "Engine" player inherently does **Standing** too (pure-E is a disguised SE: it posts stand ≈ 20 and fills both the engine- and standing-rewarding goals). And **both sell-modes mint tokens** (ship → reach + tokens; enshrine → standing + tokens), so "Engine" is not a third *action* — it is a **timing multiplier** on the two real paths.
+
+**Reframed model:** Breweries is **two paths — Reach vs Standing — with engine/value-timing as connective tissue both use.** The GWT "three legs" maps imperfectly; the achievable ideal is **"Reach + Standing, tempo-tuned by engine,"** where pure-Reach and pure-Standing both underperform a reach/standing blend. By that two-axis target the current state is close (RS healthy, both pure extremes beatable); "pure Engine" being strong is an artifact of E overlapping Standing.
+
+**Open design question this raises:** keep Engine as a *multiplier* (accept two scored axes + timing), or make Engine a genuinely *orthogonal third* (e.g. engine = value-timing that scores tokens but does **not** enshrine, with its own non-standing payoff)? This is a conceptual fork, logged for decision.
+
 ## What's solid regardless of the fork
 
 - The **v0.3 mechanics interlock** (value decay, frontier loop, 2-of-4 end). Confirmed across all passes.
