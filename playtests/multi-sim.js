@@ -45,7 +45,7 @@ const rivalOn=(p,c)=>E.S.players.some(q=>q.id!==p.id&&q.cell===c);
 function loadable(p,style){const st=STYLES[style];return p.recipes.includes(style)&&p.vessels.includes(null)&&E.canPay(p,st.in)&&!(st.cellar&&!p.rooms.includes('cellar'));}
 function chooseLoad(p){const pr=PROF[p.id];for(const s of pr.loads)if(loadable(p,s))return s;for(const s of ['hopped','gruit','dubbel','tripel'])if(loadable(p,s))return s;return null;}
 function shipable(p){const ready=E.readyCasks(p);if(!ready.length)return null;
- for(const o of ready){const open=Object.keys(ROUTES).filter(r=>E.S.routes[r].open&&E.routeFilled(r)<ROUTES[r].cap&&STYLES[o.c.style].q>=ROUTES[r].gate);
+ for(const o of ready){const open=Object.keys(ROUTES).filter(r=>E.S.routes[r].open&&E.routeFilled(r)<E.S.routes[r].cap&&STYLES[o.c.style].q>=ROUTES[r].gate);
    if(open.length){ // prefer a route where I own a ship with room (fill it → sail dividend); else any ship with room; else highest value
      const r=open.sort((a,b)=>{
        const am=E.shipsWithRoom(a).filter(s=>s.ship.owner===p.id).length, bm=E.shipsWithRoom(b).filter(s=>s.ship.owner===p.id).length;
@@ -134,7 +134,7 @@ function batch(n){
  const agg={games:0,winsByArch:{},playByArch:{},scoreByArch:{},breakByArch:{},
    end:{heritage:0,reach:0,none:0},endRound:[],T:{tolls:0,harborLoads:0,basicShips:0,capLoads:0,shipIdle:0,sails:0,cargo:0,shipsBuilt:0,recipePlaced:0,recipeClaims:0},
    winsByStart:{},playByStart:{},topScores:[]};
- ARCH.forEach(a=>{agg.winsByArch[a.tag]=0;agg.playByArch[a.tag]=0;agg.scoreByArch[a.tag]=0;agg.breakByArch[a.tag]={reach:0,maj:0,stand:0,goals:0};});
+ ARCH.forEach(a=>{agg.winsByArch[a.tag]=0;agg.playByArch[a.tag]=0;agg.scoreByArch[a.tag]=0;agg.breakByArch[a.tag]={reach:0,maj:0,stand:0,goals:0,tokens:0};});
  for(let g=0;g<GAMES;g++){
    const R=playGame(n, (g+1)*2654435761 + n*40503);
    agg.games++;
@@ -142,7 +142,7 @@ function batch(n){
    agg.end[R.T.endType==='none'?'none':R.T.endType]++;
    if(R.reachedEnd) agg.endRound.push(R.T.rounds);
    R.rows.forEach((r,i)=>{agg.playByArch[r.arch]++;agg.scoreByArch[r.arch]+=r.sc.total;
-     ['reach','maj','stand','goals'].forEach(k=>agg.breakByArch[r.arch][k]+=r.sc[k]);
+     ['reach','maj','stand','goals','tokens'].forEach(k=>agg.breakByArch[r.arch][k]+=r.sc[k]);
      agg.playByStart[r.start]=(agg.playByStart[r.start]||0)+1;});
    const win=R.rows[0];agg.winsByArch[win.arch]++;agg.winsByStart[win.start]=(agg.winsByStart[win.start]||0)+1;
    agg.topScores.push(win.sc.total);
@@ -157,11 +157,11 @@ function report(n,a){
  const winScores=a.topScores.slice().sort((x,y)=>x-y);
  out.push(`Winning score: avg ${avg(a.topScores.reduce((x,y)=>x+y,0),G)} · median ${winScores[Math.floor(G/2)]} · min ${winScores[0]} · max ${winScores[G-1]}`);
  out.push(`End clock: heritage ${pct(a.end.heritage,G)} · reach ${pct(a.end.reach,G)} · neither/cap ${pct(a.end.none,G)}` + (a.endRound.length?`  (avg ending round ${avg(a.endRound.reduce((x,y)=>x+y,0),a.endRound.length)})`:''));
- out.push('\n  Archetype          play   wins   win%   avgScore   (reach/maj/stand/goals)');
+ out.push('\n  Archetype          play   wins   win%   avgScore   (reach/maj/stand/goals/tokens)');
  Object.keys(a.winsByArch).forEach(tag=>{const pl=a.playByArch[tag];if(!pl)return;
    const b=a.breakByArch[tag];
    out.push('  '+tag.padEnd(18)+String(pl).padStart(4)+String(a.winsByArch[tag]).padStart(7)+pct(a.winsByArch[tag],pl).padStart(7)
-     +avg(a.scoreByArch[tag],pl).padStart(11)+'   '+`${avg(b.reach,pl)}/${avg(b.maj,pl)}/${avg(b.stand,pl)}/${avg(b.goals,pl)}`);});
+     +avg(a.scoreByArch[tag],pl).padStart(11)+'   '+`${avg(b.reach,pl)}/${avg(b.maj,pl)}/${avg(b.stand,pl)}/${avg(b.goals,pl)}/${avg(b.tokens,pl)}`);});
  out.push('\n  Ship-toll economy (per game):');
  out.push(`    ships built ${avg(a.T.shipsBuilt,G)} · ships sailed ${avg(a.T.sails,G)} · cargo delivered ${avg(a.T.cargo,G)}`);
  const totalShipments=a.T.harborLoads+a.T.basicShips;

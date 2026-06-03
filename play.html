@@ -215,6 +215,14 @@ const ROUTES={
   bergen  :{name:'Bergen',  gate:2, cap:5, openStart:false},
   novgorod:{name:'Novgorod',gate:3, cap:9, openStart:false},
 };
+// v0.3 reach clock: each city saturates at a player-scaled cap; the game ends the round 2 of 4 are full.
+const ROUTE_CAP_BASE={bruges:2,london:1,bergen:0,novgorod:2}; // S.routes[r].cap = base + playerCount (2p→{4,3,2,4})
+const END_CITIES=2;          // saturate this many cities → final round (reach clock) ⚙
+const MAX_TURN=30;           // safety round cap ⚙
+// v0.3 value track: every sale (ship OR enshrine) mints VP tokens = the type's current value, then that value decays.
+// Tokens are a MODIFIER on the two real paths (reach & standing), not a third path — high types mint more, so climbing pays.
+const START_VAL={gruit:3,hopped:4,dubbel:6,tripel:8,bock:11};
+const VAL_FLOOR={gruit:1,hopped:1,dubbel:2,tripel:3,bock:4};
 const SHOP=[
   {id:'r_hopped',kind:'recipe',style:'hopped',name:'Recipe · Hopped',cost:{g:1}},
   {id:'r_dubbel',kind:'recipe',style:'dubbel',name:'Recipe · Dubbel',cost:{g:1,h:1}},
@@ -240,16 +248,24 @@ const KONTOR_SEED=[
 ];
 // Standing-face Kontor action a cask sets when enshrined on top (TILES §A)
 const STANDING_ACTION={gruit:{t:'good',g:1},hopped:{t:'good',g:1},dubbel:{t:'good',h:1},tripel:{t:'presence'},bock:{t:'advance'}};
+// v0.3 CYCLED GOALS — 3 reach-rewarding + 3 standing-rewarding + 3 engine-rewarding, all capped.
+// Goals ride on enshrined casks, but no goal rewards the same axis that the enshrine act already pays,
+// so every PURE path can only fill ~1/3 of its draws → blending pays. Which blend wins varies by the deal.
+const distinctEnshrined=p=>new Set(p.enshrined.map(e=>e.style)).size;
+const topEnshrined=p=>p.enshrined.reduce((m,e)=>Math.max(m,e.q),0);
 const GOALS=[
-  {id:'g1',text:'+1 / route with presence (max 4)',fn:(p,s)=>Math.min(4,Object.keys(ROUTES).filter(r=>(s.routes[r].pres[p.id]||0)>0).length)},
-  {id:'g2',text:'+1 per 2 presence on board',fn:(p,s)=>Math.floor(totalPresence(p,s)/2)},
-  {id:'g3',text:'+2 / other same-style enshrined',fn:(p,s,c)=>2*Math.max(0,p.enshrined.filter(e=>e.style===c.style).length-1)},
-  {id:'g4',text:'+2 / enshrined Q4+',fn:(p)=>2*p.enshrined.filter(e=>e.q>=4).length},
-  {id:'g5',text:'+2 / Novgorod presence',fn:(p,s)=>2*(s.routes.novgorod.pres[p.id]||0)},
-  {id:'g6',text:'+4 / route majority (max 2)',fn:(p,s)=>4*Math.min(2,majorityCount(p,s))},
-  {id:'g7',text:'+1 / cask in transit (loaded in ships)',fn:(p,s)=>workingCount(p,s)},
-  {id:'g8',text:'+2 / brewery room',fn:(p)=>2*p.rooms.length},
-  {id:'g10',text:'+3 flat (pure standing)',fn:()=>3},
+  // reward REACH → pushes a Standing holder toward RS
+  {id:'g1',rew:'reach',text:'+1 / route with presence (max 4)',fn:(p,s)=>Math.min(4,Object.keys(ROUTES).filter(r=>(s.routes[r].pres[p.id]||0)>0).length)},
+  {id:'g2',rew:'reach',text:'+1 per 2 presence on board',fn:(p,s)=>Math.floor(totalPresence(p,s)/2)},
+  {id:'g6',rew:'reach',text:'+4 / route majority (max 2)',fn:(p,s)=>4*Math.min(2,majorityCount(p,s))},
+  // reward STANDING quality (capped — not raw volume) → pushes a Reach/Engine holder toward S
+  {id:'g3',rew:'stand',text:'+2 / other same-style enshrined (max 6)',fn:(p,s,c)=>Math.min(6,2*Math.max(0,p.enshrined.filter(e=>e.style===c.style).length-1))},
+  {id:'g4',rew:'stand',text:'+2 / enshrined Q3+ (max 6)',fn:(p)=>Math.min(6,2*p.enshrined.filter(e=>e.q>=3).length)},
+  {id:'g10',rew:'stand',text:'+3 flat',fn:()=>3},
+  // reward ENGINE (variety / climb / brewery depth) → pushes a Standing holder toward SE
+  {id:'gV',rew:'engine',text:'+2 / distinct enshrined style',fn:(p)=>2*distinctEnshrined(p)},
+  {id:'gC',rew:'engine',text:'+2 / top enshrined quality reached',fn:(p)=>2*topEnshrined(p)},
+  {id:'g8',rew:'engine',text:'+2 / brewery room',fn:(p)=>2*p.rooms.length},
 ];
 // 8 perimeter slots → the line each belongs to
 const SLOTS=[
@@ -270,7 +286,7 @@ const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v1';
+const KEY='hanse-hotseat-v3';  // v3: value track + VP tokens + 2-of-4-cities clock + cycled goals (old saves incompatible)
 
 function endN(){return 6+3*S.players.length;}  // end-game stack threshold ⚙
 
@@ -279,15 +295,18 @@ function startRecipes(){const a=START_RECIPES.slice();for(let i=a.length-1;i>0;i
 function newPlayer(i,name){
   return {id:i,name:name||CNAMES[i],color:COLORS[i],grain:3,hops:2,cell:null,placed:false,
     storage:8, recipes:['gruit',...startRecipes()], vessels:[null], maxVessels:1, maxRooms:4,
-    rooms:[],ships:0,privileges:0, enshrined:[]};
+    rooms:[],ships:0,privileges:0, enshrined:[], vp:0};
 }
 function freshState(n,names){
-  const st={players:[],slots:{},routes:{},stack:KONTOR_SEED.slice(),turn:1,active:0,first:0,ending:false,log:[]};
+  const st={players:[],slots:{},routes:{},stack:KONTOR_SEED.slice(),turn:1,active:0,first:0,ending:false,log:[],
+    value:Object.assign({},START_VAL),soldTotal:0};
   for(let i=0;i<n;i++) st.players.push(newPlayer(i,names[i]));
   SLOTS.forEach(s=>st.slots[s.id]=null);
-  for(const r in ROUTES) st.routes[r]={value:ROUTES[r].openStart?1:0,open:ROUTES[r].openStart,pres:{}};
+  for(const r in ROUTES) st.routes[r]={value:ROUTES[r].openStart?1:0,open:ROUTES[r].openStart,pres:{},cap:ROUTE_CAP_BASE[r]+n};
   return st;
 }
+// Mint VP tokens for a sale of `style` (ship or enshrine), then decay that type's value toward its floor.
+function mint(p,style){const v=S.value[style]||0;p.vp=(p.vp||0)+v;S.value[style]=Math.max(VAL_FLOOR[style],v-1);S.soldTotal++;return v;}
 
 //==================================================================
 // HELPERS
@@ -367,8 +386,9 @@ function fireSkim(t,slotId){
     const ready=readyCasks(o).filter(rc=>STYLES[rc.c.style].q>=ROUTES[t.route].gate);
     if(ready.length && t.cargo.length<t.cap){
       const rc=ready[0];t.cargo.push({style:rc.c.style,q:rc.c.q,by:o.id});o.vessels[rc.i]=null;
+      const tok=mint(o,rc.c.style);
       const got=addPresence(o,t.route)?', +1 presence':'';
-      log('↳ '+o.name+'’s '+t.label+' loads '+STYLES[rc.c.style].name+' ('+t.cargo.length+'/'+t.cap+got+').');
+      log('↳ '+o.name+'’s '+t.label+' loads '+STYLES[rc.c.style].name+' (+'+tok+' tokens'+got+', '+t.cargo.length+'/'+t.cap+').');
       if(t.cargo.length>=t.cap)sailShip(t,slotId);
     } // else: no eligible cask aboard — the ship simply waits (no idle income; a ship earns only via tolls + the sail dividend)
   }
@@ -401,27 +421,28 @@ function endTurn(){
 }
 function checkTriggers(){
   if(S.ending)return;
-  if(enshrinedTotal()>=endN()){S.ending=true;log('★ '+endN()+' casks enshrined — final round! (heritage clock)');}
-  for(const r in S.routes){const filled=Object.values(S.routes[r].pres).reduce((a,b)=>a+b,0);
-    if(filled>=ROUTES[r].cap){S.ending=true;log('★ '+ROUTES[r].name+' is saturated — final round! (reach clock)');break;}}
+  // v0.3 reach clock: the round 2 of 4 cities are saturated, the game enters its final round.
+  const full=Object.keys(S.routes).filter(r=>routeFilled(r)>=S.routes[r].cap);
+  if(full.length>=END_CITIES){S.ending=true;log('★ '+full.map(r=>ROUTES[r].name).join(' & ')+' saturated — '+full.length+' of 4 cities full, final round! (reach clock)');return;}
+  if(S.turn>=MAX_TURN){S.ending=true;log('★ Round '+MAX_TURN+' reached — final round.');}
 }
 
 //------- shared mechanics -------
 function advanceAll(p){let any=false;p.vessels.forEach(c=>{if(c&&c.step<c.ready){c.step++;any=true;}});return any;}
 function advanceOne(p){for(const c of p.vessels){if(c&&c.step<c.ready){c.step++;return true;}}return false;}
 function routeFilled(r){return Object.values(S.routes[r].pres).reduce((a,b)=>a+b,0);}
-function addPresence(p,r){if(!S.routes[r].open)return false;if(routeFilled(r)>=ROUTES[r].cap)return false;S.routes[r].pres[p.id]=(S.routes[r].pres[p.id]||0)+1;return true;}
-function addPresenceBest(p){const open=Object.keys(ROUTES).filter(r=>S.routes[r].open&&routeFilled(r)<ROUTES[r].cap);if(!open.length)return false;
+function addPresence(p,r){if(!S.routes[r].open)return false;if(routeFilled(r)>=S.routes[r].cap)return false;S.routes[r].pres[p.id]=(S.routes[r].pres[p.id]||0)+1;return true;}
+function addPresenceBest(p){const open=Object.keys(ROUTES).filter(r=>S.routes[r].open&&routeFilled(r)<S.routes[r].cap);if(!open.length)return false;
   open.sort((a,b)=>(S.routes[b].pres[p.id]||0)-(S.routes[a].pres[p.id]||0));return addPresence(p,open[0]);}
 function shipsWithRoom(r){const out=[];for(const s of SLOTS){const t=S.slots[s.id];if(t&&t.type==='ship'&&t.route===r&&t.cargo.length<t.cap)out.push({ship:t,slotId:s.id});}
   out.sort((a,b)=>(b.ship.owner===S.active?1:0)-(a.ship.owner===S.active?1:0));return out;} // prefer your own ship (fill it toward its sail dividend)
-function deliverCask(p,cask,vi,r){ // ship a ready cask to route r: load into a ship if one has room (preferred), else a basic shipment. Shipper always gains +1 presence.
-  const ships=shipsWithRoom(r);const got=addPresence(p,r);
+function deliverCask(p,cask,vi,r){ // ship a ready cask to route r: load into a ship if one has room (preferred), else a basic shipment. Shipper always gains +1 presence + sale tokens.
+  const ships=shipsWithRoom(r);const got=addPresence(p,r);const tok=mint(p,cask.style);
   if(ships.length){const {ship,slotId}=ships[0];ship.cargo.push({style:cask.style,q:cask.q,by:p.id});
     if(ship.owner!==p.id){gain(S.players[ship.owner],1,0);log('↳ '+S.players[ship.owner].name+' collects a +1G toll as the cask loads into their '+ship.label+'.');}
-    log(p.name+' ships '+STYLES[cask.style].name+' to '+ROUTES[r].name+' — loads into '+S.players[ship.owner].name+'’s '+ship.label+' ('+ship.cargo.length+'/'+ship.cap+')'+(got?', +1 presence':'')+'.',true);
+    log(p.name+' ships '+STYLES[cask.style].name+' to '+ROUTES[r].name+' — loads into '+S.players[ship.owner].name+'’s '+ship.label+' ('+ship.cargo.length+'/'+ship.cap+')'+(got?', +1 presence':'')+', +'+tok+' tokens.',true);
     if(ship.cargo.length>=ship.cap)sailShip(ship,slotId);
-  } else log(p.name+' ships '+STYLES[cask.style].name+' to '+ROUTES[r].name+(got?' (+1 presence':' (')+' · no ship on the route, basic shipment).',true);
+  } else log(p.name+' ships '+STYLES[cask.style].name+' to '+ROUTES[r].name+(got?' (+1 presence':' (')+', +'+tok+' tokens · no ship on the route, basic shipment).',true);
   p.vessels[vi]=null;
 }
 
@@ -485,12 +506,12 @@ function shipStart(){UI.stage='ship_pick';render();}
 function shipPick(vi){UI.tmp.vi=vi;UI.stage='ship_route';render();}
 function shipRoute(r){const p=cur();const cask=p.vessels[UI.tmp.vi];
   if(STYLES[cask.style].q<ROUTES[r].gate){alert('Quality too low for '+ROUTES[r].name+'.');return;}
-  if(routeFilled(r)>=ROUTES[r].cap){alert(ROUTES[r].name+' is full.');return;}
+  if(routeFilled(r)>=S.routes[r].cap){alert(ROUTES[r].name+' is full.');return;}
   deliverCask(p,cask,UI.tmp.vi,r);cellDone();}
 function quayFallback(){ // blocked-Harbor fallback: ship a ready cask to Bruges (loads into a Bruges ship if one has room, else a basic shipment)
   const p=cur();const r=readyCasks(p)[0];
   if(!r){log(p.name+'’s Quay sits idle — no ready cask to ship.',true);cellDone();return;}
-  if(routeFilled('bruges')>=ROUTES.bruges.cap){log(p.name+'’s Quay sits idle — Bruges is saturated.',true);cellDone();return;}
+  if(routeFilled('bruges')>=S.routes.bruges.cap){log(p.name+'’s Quay sits idle — Bruges is saturated.',true);cellDone();return;}
   log(p.name+' uses the Quay → Bruges:',true);deliverCask(p,r.c,r.i,'bruges');cellDone();}
 
 //------- KONTOR -------
@@ -499,12 +520,13 @@ function kontorTop(){const p=cur();const top=S.stack[S.stack.length-1];const a=t
   log(p.name+' uses the Kontor top action: '+top.name+'.',true);cellDone();}
 function enshrineStart(){UI.stage='enshrine';render();}
 function enshrineBank(p,c){let st=c.standing;if(p.rooms.includes('counting'))st+=1;
+  const tok=mint(p,c.style); // enshrining is also a sale: it mints tokens off the value track, then that type decays
   p.enshrined.push({style:c.style,q:c.q,standing:st,goal:c.goal});
   S.stack.push({name:STYLES[c.style].name,owner:p.id,action:STANDING_ACTION[c.style]||{t:'good',g:1}});
-  return st;}
+  c._tok=tok;return st;}
 function enshrineReady(vi){const p=cur();const c=p.vessels[vi]; // ready cask straight from the brewery — pure standing (the reach-vs-standing fork: ship it for reach, or enshrine it here)
   const st=enshrineBank(p,c);p.vessels[vi]=null;
-  log(p.name+' <b>enshrines</b> '+STYLES[c.style].name+' straight from the brewery (+'+st+' standing). Stack '+S.stack.length+'.',true);cellDone();}
+  log(p.name+' <b>enshrines</b> '+STYLES[c.style].name+' straight from the brewery (+'+st+' standing, +'+(c._tok||0)+' tokens). Stack '+S.stack.length+'.',true);cellDone();}
 
 //==================================================================
 // SCORING
@@ -513,17 +535,21 @@ function scorePlayer(p){
   let reach=0,maj=0,stand=0,goals=0;
   for(const r in S.routes){const pr=S.routes[r].pres[p.id]||0;reach+=pr*S.routes[r].value;}
   maj=majorityCount(p,S)*3;
-  p.enshrined.forEach(c=>{stand+=c.standing;const G=GOALS.find(g=>g.id===c.goal);if(G)goals+=G.fn(p,S,c);});
-  return {reach,maj,stand,goals,total:reach+maj+stand+goals};
+  // goals are capped: only a player's best 3 enshrined-goal payoffs score (keeps the goal axis a bonus, not the game)
+  const gv=p.enshrined.map(c=>{const G=GOALS.find(g=>g.id===c.goal);return G?G.fn(p,S,c):0;}).sort((a,b)=>b-a);
+  goals=gv.slice(0,3).reduce((a,b)=>a+b,0);
+  p.enshrined.forEach(c=>{stand+=c.standing;});
+  const tokens=p.vp||0;
+  return {reach,maj,stand,goals,tokens,total:reach+maj+stand+goals+tokens};
 }
 function gameOver(){
   const rows=S.players.map(p=>({p,sc:scorePlayer(p)}));
   const tb=r=>[r.sc.total,r.p.grain+r.p.hops,workingCount(r.p,S)];  // total, then goods, then working casks (RULES §6)
   const cmp=(a,b)=>{const A=tb(a),B=tb(b);for(let i=0;i<3;i++)if(B[i]!==A[i])return B[i]-A[i];return 0;};
   rows.sort(cmp);const win=rows[0];
-  let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Reach</th><th>Majorities</th><th>Standing</th><th>Goals</th><th>Total</th></tr>';
-  rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+'</td><td>'+r.sc.reach+'</td><td>'+r.sc.maj+'</td><td>'+r.sc.stand+'</td><td>'+r.sc.goals+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
-  h+='</table><p class="note">Reach (presence×route value) and Standing (enshrined casks + goals) are the two competing axes.</p><button class="primary" onclick="newGame()">New Game</button>';
+  let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Reach</th><th>Majorities</th><th>Standing</th><th>Goals</th><th>Tokens</th><th>Total</th></tr>';
+  rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+'</td><td>'+r.sc.reach+'</td><td>'+r.sc.maj+'</td><td>'+r.sc.stand+'</td><td>'+r.sc.goals+'</td><td>'+r.sc.tokens+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
+  h+='</table><p class="note">Reach (presence×route value) and Standing (enshrined casks + best-3 goals) are the two competing axes; Tokens, minted by every sale off the value track, are the engine/tempo modifier both paths use.</p><button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
 }
 
@@ -544,7 +570,7 @@ function renderBar(){
   document.getElementById('wholbl').textContent=p.name;
   document.getElementById('wholbl').style.background=p.color;
   document.getElementById('wholbl').style.color='#fff';
-  document.getElementById('barres').innerHTML='<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span><span class="chip">'+LU('crown')+scorePlayer(p).total+'</span>';
+  document.getElementById('barres').innerHTML='<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span><span class="chip" title="VP tokens from sales">'+LU('coins')+(p.vp||0)+'</span><span class="chip">'+LU('crown')+scorePlayer(p).total+'</span>';
   let prompt='',acts='';
   if(UI.sub==='move'){const placing=!p.placed;
     prompt=placing?'<b>Turn 1:</b> place your worker on any cell (click a glowing cell).':'Move your worker to an adjacent cell (click the glowing cell).';
@@ -598,7 +624,7 @@ function cellActions(p){
     if(UI.stage==='ship_pick'){if(!ready.length)return btn('No ready casks — Skip','cellDone()','ghost');
       return ready.map(o=>btn(LU('beer')+' Ship '+STYLES[o.c.style].name,'shipPick('+o.i+')')).join('');}
     if(UI.stage==='ship_route'){const cask=p.vessels[UI.tmp.vi];
-      return Object.keys(ROUTES).filter(r=>S.routes[r].open&&routeFilled(r)<ROUTES[r].cap&&STYLES[cask.style].q>=ROUTES[r].gate)
+      return Object.keys(ROUTES).filter(r=>S.routes[r].open&&routeFilled(r)<S.routes[r].cap&&STYLES[cask.style].q>=ROUTES[r].gate)
         .map(r=>{const sh=shipsWithRoom(r).length;return btn(LU('map-pin')+' '+ROUTES[r].name+(sh?' '+LU('sailboat'):''),'shipRoute(\''+r+'\')','go');}).join('')||'<span class="note">no eligible open route</span> '+btn('Cancel','cellDone()','ghost');}
     return (ready.length?btn(LU('ship')+' Ship a cask','shipStart()','primary'):btn('No ready casks — Skip','cellDone()','ghost'));
   }
@@ -661,7 +687,11 @@ function renderRoutes(){
 }
 function renderKontor(){
   const top=S.stack[S.stack.length-1];
-  document.getElementById('kontor').innerHTML='<div class="stackbox">'+LU('layers')+' Stack <b>'+S.stack.length+'</b> &nbsp; '+LU('crown')+' enshrined <b>'+enshrinedTotal()+'</b> / '+endN()+'<br><span class="top">top: '+top.name+'</span></div><div class="note" style="margin-top:5px">Enshrined casks ('+LU('crown')+' standing) stack here; the top tile is the live action.</div>';
+  const cityClock=Object.keys(S.routes).filter(r=>routeFilled(r)>=S.routes[r].cap).length;
+  const valTrack=Object.keys(START_VAL).map(s=>STYLES[s].name.split(' ')[0][0]+(STYLES[s].name.split(' ')[1]?STYLES[s].name.split(' ')[1][0]:'')+':'+S.value[s]).join('  ');
+  document.getElementById('kontor').innerHTML='<div class="stackbox">'+LU('layers')+' Stack <b>'+S.stack.length+'</b> &nbsp; '+LU('map-pin')+' cities full <b>'+cityClock+'</b> / '+END_CITIES+' <span class="note">(reach clock)</span><br><span class="top">top: '+top.name+'</span></div>'
+    +'<div class="note" style="margin-top:5px">Value track ('+LU('coins')+' tokens per sale, then decays): '+valTrack+'</div>'
+    +'<div class="note" style="margin-top:3px">Enshrined casks ('+LU('crown')+' standing) stack here; the top tile is the live action.</div>';
 }
 function renderShop(){
   const p=cur();const buying=(UI.sub==='cell'&&CELLNAME[UI.cell]==='Market'&&!UI.blocked&&(UI.stage===null||UI.stage==='choose'));
@@ -685,8 +715,8 @@ function renderTableaus(){
     let ensh=p.enshrined.map(c=>'<span class="tag" style="background:var(--gold);color:#000">'+LU('crown')+STYLES[c.style].name.split(' ')[0]+'·'+c.standing+'</span>').join('')||'<span class="note">none</span>';
     body+='<div class="tableau '+(i===activeTab?'show':'')+'">'
       +'<div style="margin-bottom:6px"><span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
-      +'<span class="chip">'+LU('package')+p.storage+'</span><span class="chip">'+LU('crown')+sc.total+'</span>'
-      +' <span class="note">R'+sc.reach+'/M'+sc.maj+'/S'+sc.stand+'/G'+sc.goals+'</span></div>'
+      +'<span class="chip">'+LU('package')+p.storage+'</span><span class="chip" title="VP tokens">'+LU('coins')+(p.vp||0)+'</span><span class="chip">'+LU('crown')+sc.total+'</span>'
+      +' <span class="note">R'+sc.reach+'/M'+sc.maj+'/S'+sc.stand+'/G'+sc.goals+'/T'+sc.tokens+'</span></div>'
       +'<b class="note">'+LU('flask-conical')+' Brewing track ('+p.vessels.length+' vessel'+(p.vessels.length>1?'s':'')+')</b><div class="brew">'+vessels+'</div>'
       +'<b class="note">'+LU('scroll-text')+' Recipes in hand:</b> '+(p.recipes.map(r=>'<span class="tag">'+LU('beer')+STYLES[r].name+'</span>').join('')||'—')+'<br>'
       +'<b class="note">'+LU('sailboat')+' Owned slot tiles (ships · lanes · recipes):</b> '+slotsOwned+'<br>'
