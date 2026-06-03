@@ -56,6 +56,13 @@
   /* board */
   .board{background:var(--parch2);border:2px solid var(--line);border-radius:10px;padding:14px;font-family:inherit}
   .board pre{margin:0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem;line-height:1.5;color:var(--ink);overflow:auto}
+  /* icon legend */
+  .icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:8px 0 18px}
+  .ikey{display:flex;align-items:center;gap:9px;background:var(--parch2);border:1px solid var(--line);border-radius:8px;padding:7px 10px}
+  .ikey .ic{width:1.4em;height:1.4em;stroke-width:1.8;flex:0 0 auto}
+  .ikey .t{font-size:.86rem;line-height:1.25}
+  .ikey .t b{font-variant:small-caps;color:var(--red);font-size:.98rem;display:block}
+  .ig{color:#9c7414} .ih{color:#5d7d34} .ised{color:var(--sea)} .igd{color:var(--gold)} .igr{color:var(--green)} .ird{color:var(--red)}
   /* glossary */
   .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   @media(max-width:640px){.gloss{grid-template-columns:1fr}}
@@ -76,7 +83,7 @@
 <header>
   <h1>Brewhouse of the Hanse</h1>
   <div class="sub">Learn to play in one page — then go brew.</div>
-  <div class="tag"><a href="index.html">Components</a> · <a href="rulebook.html">Full Rulebook</a> · <a href="play.html">Play</a></div>
+  <div class="tag">2–5 players · ~15–20 min each · <a href="index.html">Components</a> · <a href="rulebook.html">Full Rulebook</a> · <a href="play.html">Play</a></div>
 </header>
 
 <div class="wrap">
@@ -91,7 +98,7 @@
   <h2><span class="n">2</span>Your goal — and the one big choice</h2>
   <p>You win with the most points, and there are <b>two ways to earn them that pull against each other.</b> Every cask you brew poses the same question:</p>
   <div class="vs">
-    <div class="pole reach"><h3>Reach</h3>Keep the cask <b>working</b> — ship it out and spread your <b>presence</b> across the trade routes. The path of <i>scale &amp; volume</i>.</div>
+    <div class="pole reach"><h3>Reach</h3><b>Ship</b> the cask out into commerce and spread your <b>presence</b> across the trade routes. The path of <i>scale &amp; volume</i>.</div>
     <div class="mid">vs</div>
     <div class="pole stand"><h3>Standing</h3><b>Enshrine</b> the cask at a kontor — take it out of commerce forever as pure <b>reputation</b>. The path of <i>scarcity &amp; prestige</i>.</div>
   </div>
@@ -106,7 +113,7 @@
     <div class="arrow">→</div>
     <div class="stepc b"><span class="num">2</span><h4>Brewhouse</h4><div class="s">Load a recipe and brew it down your track: cheap <b>gruit</b> is fast; <b>hopped</b> beer takes longer but travels &amp; can be enshrined.</div></div>
     <div class="arrow">→</div>
-    <div class="stepc h"><span class="num">3</span><h4>Harbor</h4><div class="s">Ship a finished cask: it <b>loads as cargo into a ship</b> on a route (or sails on its own) and drops a <b>presence</b> marker. That's <span class="pill r">reach</span>.</div></div>
+    <div class="stepc h"><span class="num">3</span><h4>Harbor</h4><div class="s">Ship a finished cask: it <b>loads as cargo into a ship</b> on a route (or a plain shipment if none) and drops a <b>presence</b> marker. That's <span class="pill r">reach</span>.</div></div>
     <div class="arrow">→</div>
     <div class="stepc k"><span class="num">4</span><h4>Kontor</h4><div class="s">Or <b>enshrine</b> a ready cask straight from your brewery: it goes to the reputation stack. That's <span class="pill s">standing</span>.</div></div>
   </div>
@@ -146,7 +153,37 @@
 </section>
 
 <section>
-  <h2><span class="n">6</span>Word primer</h2>
+  <h2><span class="n">6</span>How a game ends — and how you win</h2>
+  <p>The game has a <b>visible clock</b>: the moment <b>2 of the 4 kontor cities fill up</b> with presence, the round finishes and the game is over. So a reach player can <i>race to end it</i> by slamming cities full, while a standing player <i>stalls</i> by spreading presence thin to buy more turns.</p>
+  <p>Then everyone tallies up — and you score on <b>every</b> axis you touched:</p>
+  <div class="two">
+    <div class="card"><h3>The two big piles</h3><b><span class="pill r">Reach</span></b> = your <b>presence × each route's value</b>, plus <b>majority</b> bonuses for leading a route. <b><span class="pill s">Standing</span></b> = the value of your <b>enshrined casks</b>.</div>
+    <div class="card"><h3>The bonuses</h3><b>Goals</b> — each enshrined cask's printed goal (your best 3 score). <b>VP tokens</b> — 1 point each, the value you locked in on every sale. Most total points wins.</div>
+  </div>
+  <p class="s" style="color:var(--ink2)">The trick: <b>goals reward the axis you <i>didn't</i> just bank</b> — a pure-standing hoard draws goals that need reach to pay off. That's the game nudging you to <b>blend</b> the two rather than tunnel one.</p>
+</section>
+
+<section>
+  <h2><span class="n">7</span>Icons &amp; words</h2>
+  <p>These are the symbols you'll see on the board and tiles:</p>
+  <div class="icons">
+    <div class="ikey"><i data-lucide="wheat" class="ic ig"></i><span class="t"><b>Grain (G)</b>a goods cube — currency &amp; brew input</span></div>
+    <div class="ikey"><i data-lucide="sprout" class="ic ih"></i><span class="t"><b>Hops (H)</b>goods cube — needed for beer that travels</span></div>
+    <div class="ikey"><i data-lucide="beer" class="ic ird"></i><span class="t"><b>Cask</b>a brewed beer (the dual-role tile)</span></div>
+    <div class="ikey"><i data-lucide="map-pin" class="ic ised"></i><span class="t"><b>Presence</b>your marker on a route = reach</span></div>
+    <div class="ikey"><i data-lucide="crown" class="ic igd"></i><span class="t"><b>Standing</b>reputation from enshrined casks</span></div>
+    <div class="ikey"><i data-lucide="coins" class="ic igd"></i><span class="t"><b>VP token</b>bonus points, minted on every sale</span></div>
+    <div class="ikey"><i data-lucide="store" class="ic igd"></i><span class="t"><b>Market</b>(cell A) get goods, recipes, tiles</span></div>
+    <div class="ikey"><i data-lucide="ship" class="ic ised"></i><span class="t"><b>Harbor</b>(cell B) ship casks for reach</span></div>
+    <div class="ikey"><i data-lucide="landmark" class="ic igr"></i><span class="t"><b>Kontor</b>(cell C) enshrine for standing</span></div>
+    <div class="ikey"><i data-lucide="flask-conical" class="ic ird"></i><span class="t"><b>Brewhouse</b>(cell D) brew your casks</span></div>
+    <div class="ikey"><i data-lucide="sailboat" class="ic ised"></i><span class="t"><b>Ship</b>a slot tile — cargo hold on a route</span></div>
+    <div class="ikey"><i data-lucide="route" class="ic ised"></i><span class="t"><b>Route lane</b>a slot tile — opens &amp; values a route</span></div>
+    <div class="ikey"><i data-lucide="scroll-text" class="ic igd"></i><span class="t"><b>Recipe</b>collected into your recipe book</span></div>
+    <div class="ikey"><i data-lucide="wrench" class="ic igr"></i><span class="t"><b>Room</b>a brewery upgrade tile</span></div>
+    <div class="ikey"><i data-lucide="layers" class="ic ird"></i><span class="t"><b>Kontor stack</b>where enshrined casks pile up</span></div>
+  </div>
+  <p>And the words:</p>
   <div class="gloss">
     <div class="term"><b>Hanse / Kontor</b><span>The Hanseatic League — the medieval trade network. A <b>kontor</b> is one of its foreign trading posts (Bergen, London, Bruges, Novgorod).</span></div>
     <div class="term"><b>Gruit vs. Hopped</b><span>Two beers. <b>Gruit</b> is cheap, fast, local — and can never be enshrined. <b>Hopped</b> beer takes longer to brew but travels and earns standing.</span></div>
@@ -174,5 +211,7 @@
 
 </div>
 <footer>Brewhouse of the Hanse · learn-to-play · v0.4 prototype — numbers still in balancing</footer>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>if(window.lucide)lucide.createIcons();</script>
 </body>
 </html>
