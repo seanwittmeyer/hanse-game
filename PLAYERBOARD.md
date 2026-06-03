@@ -6,12 +6,14 @@
 
 ## Purpose
 
-The board must hold five things legibly and **doubles as the brewing-process tracker**:
+The board must hold these things legibly and **doubles as the brewing-process tracker**:
 1. the **brewing track** (Load → Ferment → Age → Ready),
 2. **vessel lanes** (start 1, cap 3 — throughput),
 3. **room slots** (installed upgrades — depth),
 4. **goods storage** (with its cap),
-5. the printed **Larder + Quay** fallbacks.
+5. the **recipe book** (collected recipe cost-cards — v0.3),
+6. the **VP-token bin** (spendable 3rd resource — v0.3),
+7. the printed **Larder + Quay** fallbacks.
 
 Grid = the verbs; this board = the noun the brewing verb acts on. No action is duplicated from the grid.
 
@@ -21,7 +23,7 @@ Grid = the verbs; this board = the noun the brewing verb acts on. No action is d
 
 ```
 ┌────────────────────────────────────────────────────────────┐
-│  ⚑ HOUSE crest            STORAGE  ▢▢▢▢ ▢▢▢▢   (cap 8, +Warehouse) │
+│  ⚑ HOUSE crest    STORAGE ▢▢▢▢ ▢▢▢▢ (cap 8)   VP ⬡⬡⬡ (bin)  │
 │                                                              │
 │  BREWING TRACK                                               │
 │   Vessel 1  [ LOAD ]→[ FERMENT ]→[ AGE • • ]→[ READY ]       │
@@ -30,6 +32,8 @@ Grid = the verbs; this board = the noun the brewing verb acts on. No action is d
 │        (gruit skips AGE: Ferment → Ready)                    │
 │                                                              │
 │  ROOM SLOTS   ▢   ▢   ▢   ▢      (4 — scarce: forces a lean) │
+│                                                              │
+│  RECIPE BOOK  [Gruit] [▤ recipe: cost · steps] [▤] …  (open) │
 │                                                              │
 │  LARDER  (Market fallback: +1 G)   QUAY (Harbor fallback:    │
 │                                     ship 1 cask → Bruges)    │
@@ -68,6 +72,17 @@ Grid = the verbs; this board = the noun the brewing verb acts on. No action is d
 
 - Cap **8 goods** ⚙ (a printed track). **Warehouse** room +4 each. Overflow is lost — the cap (with tiny skims) contains the rich-get-richer risk (PLAYTEST F5).
 
+## 4a. Recipe book (v0.3)
+
+- A **printed strip of recipe slots** (open-ended). Holds the **Gruit baseline** (printed) plus every recipe you **collect** from the Market. Each collected recipe is a small card showing its **type** and **cost profile** (`n G · n H · n brew-steps`).
+- You **brew from the book** (no slot-ring claim). You **cannot brew a type you hold no recipe for.** Two recipes of the same type can differ — *which* you collect is your engine's shape.
+- The book is **private and permanent** (recipes don't churn) — the counterweight to the transient slot ring (`TILES.md` §C′).
+
+## 4b. VP-token bin (v0.3)
+
+- A small **bin for VP tokens** — the spendable 3rd resource minted on each sale (scaled by the type's value-track position, `RULES.md` §6). **Not** subject to the goods storage cap.
+- **Spend** for tempo/power (sinks ⚙) **or** keep as **1 VP each** at end — the "lock value at its peak" fork.
+
 ## 5. Tableau twins — occupancy becomes opportunity
 
 Each public **builder** verb has a private **twin** here; the twin fires **only when a rival blocks that cell** (locked). Upgraded, the twin makes you *want* to step onto the crowded cell — you fire your strong twin and still collect the line's cash-out cell. (Kontor has no twin — it's open to all.)
@@ -85,7 +100,8 @@ Because only **4 room slots** exist, you can develop **one** twin deeply — so 
 | Item | Start ⚙ |
 |---|---|
 | Goods | **3 G, 2 H** |
-| Recipes | **Gruit baseline + 2 random premiums** (a random pair from Hopped/Dubbel/Tripel), held in hand; more recipes via recipe tiles on the slot ring |
+| Recipes | **Gruit baseline + 2 random premiums** (a random pair from the unlocked tiers), in your **recipe book**; more recipes collected from the Market display |
+| VP tokens | **0** (minted on sales; spend or bank for 1 VP each) |
 | Vessels | 1 open (lanes 2–3 locked) |
 | Rooms | none |
 | Storage | 8 |
