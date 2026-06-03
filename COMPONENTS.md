@@ -8,14 +8,13 @@
 
 | Component | Qty | Purpose |
 |---|---|---|
-| **Main board** | 1 | The 2×2 action grid — **A Market · B Harbor · C Kontor · D Brewhouse** (build×cash-out diagonals: Market+Brewhouse build, Harbor+Kontor cash out) — the 8 perimeter slots, and the Kontor stack area. |
-| **Harbor / Route board** | 1 | Home port + four routes radiating to the kontore through waypoints; presence spaces; per-route value tracks; per-kontor majority & standing tracks. May be one board with the main board or a separate panel. ❓ |
-| **Player tableau boards** | 5 | Each: the **brewing track** (LOAD → FERMENT → AGE → READY), **vessel lanes** (start 1, cap 3), **room/upgrade slots** (4), the **recipe book**, the **VP-token bin**, goods storage, and the printed **Larder** (Market twin) + **Quay** (Harbor twin). |
-| **Type value track** | 1 | A linear value track with **one marker per beer type** — every sale (ship *or* enshrine) mints VP tokens equal to that type's current position, then the marker ticks down (saturation). Doubles as the type-frontier display. |
-| **Scoring track** | 1 | Standing/score margin track (around the route board or its own strip). |
+| **Main board** | 1 | The 2×2 action grid — **A Market · B Harbor · C Hall · D Brewhouse** (build×cash-out diagonals: builders Market+Brewhouse *pump* the market, cash-outs Harbor+Hall *realize & lower* it) — the 8 shared perimeter slots, and the standing-stack area. |
+| **Harbor / Route board** | 1 | Home port + four routes radiating to the **kontore** (Bergen/London/Bruges/Novgorod = reach destinations) through waypoints; presence spaces; per-route value tracks; per-kontor majority tracks. |
+| **Player tableau boards** | 5 | Each: the **brewing track** (LOAD → FERMENT → AGE → READY), **vessel lanes** (start 1, cap 3), **room slots** (4), **personal cask slots** (3, for *working* casks), the **recipe book**, a **standing track** (your banked standing total) + a small **goal row** (enshrined casks' face-up goals), goods storage, and the printed **Larder** (Market twin) + **Quay** (Harbor twin). |
+| **Demand market track** | 1 | A shared value track with **one marker per beer type** — a cask's enshrine payout = its type's current value. Realizing a type (deploy *or* enshrine) ticks it **down**; buying its recipe or a Fair pump ticks it **up**. Doubles as the type-frontier display. |
 
 ### Perimeter slots
-- **8 live slots, all open** (the old "scoring-pile variant" that darkened s4/s5 assumed a *passive* score pile; the Kontor is now a stood-on action cell, so all 8 stay live). **2-player locks some down to ~6** to tighten placement competition. Slots hold a **churning mix of ships** (fill → sail away) and **route lanes** (permanent value) — *not* casks (casks are cargo inside ships) and *not* recipes (recipes go to your private book).
+- **8 live slots, all open** (**2-player locks some to ~6**). They hold a **churning mix**: **deployed casks** (your *reach* — they fire actions and are enshrine-able by anyone), **Fair tiles** (the paid market-pump lever), **route lanes** (open & value a route, skim resources), and **ships** (resource faucets). Casks are the transient flow (enshrined off the board); infrastructure is sticky. Recipes are **not** slot tiles (they go to your book).
 
 ---
 
@@ -29,8 +28,8 @@
 | **Presence markers** | ~20 / player color | Placed on routes = reach. |
 | **Standing markers** | ~10 / player color | Track value banked on per-kontor standing tracks. |
 | **Majority markers** | per kontor | Resolve route majorities. |
-| **VP tokens** | ~60 | The spendable 3rd resource (§A′ in `TILES.md`). Minted on every sale, scaled by the type's value-track position; banked **1 VP each** at end (spend sinks ⚙). Not subject to the goods storage cap. |
-| **Value-track markers** | 1 / type | Sit on the type value track; tick down as a type saturates. |
+| **Standing track markers** | 1 / player | Sit on each player's standing track; advance by a type's market value at each enshrine. *(Standing is the variable value, banked — there are no separate VP tokens in v0.5; the demand market drives this number directly.)* |
+| **Demand-market markers** | 1 / type | Sit on the shared value track; move up (recipe-buy / Fair pump) and down (realize a type). |
 | **First-player / round marker** | 1 | Turn order / round clock. |
 | **Empty barrels** | deferred ❓ | Optional capacity constraint (Vinhos-style) — held for later. |
 
@@ -43,7 +42,7 @@
 Seven tile families. Families A–C are the content heart; D–G are the engine/economy layer.
 
 ### A. Cask tiles — the dual-role hero (brewing deck)
-Double-sided. **Cargo face** (loaded into a ship = *reach*): type + **quality value** + the markets it can satisfy. **Standing face** (enshrined in the Kontor stack = *standing*): standing value + a **goal** (the cycled goal-matching DNA) + a small Kontor action. Brewed from a *recipe in your private book*, matured on the brewing track, then a ready cask either **ships** (cargo → reach) or **enshrines** (standing) — never both. *(Recipes are **collected from the Market straight into your book** and brewed from there — not slot tiles. Supply is gated by the current type frontier.)*
+Double-sided. **Working/reach face**: type + **quality** + a **line action**. **Standing face** (enshrined): a **goal** (the cycled goal-matching DNA). Brewed from a *recipe in your private book*, then a Ready cask lives in one of **three states** (`RULES.md` §2): **working** (a personal slot — engine, soups up a station), **reach** (deployed to a shared perimeter slot — it *is* your presence and fires an action; enshrine-able by anyone), or **standing** (enshrined to the stack — the owner banks the type's current **market value**). A cask is only ever one at a time; enshrining converts it (its board presence leaves).
 
 Beer is **two layers — type + recipe** (`TILES.md` §A): a **type** is a global quality rung; a **recipe** is a collected instance of a type with its own cost profile. The ladder is **anchored spine + variable summit** — **L1 Gruit → L2 Hopped** is fixed and historical (hops is the preservation tech that opens the sea routes), and **L3–L5 are dealt each game** from the historical Hanse summit roster.
 
@@ -69,9 +68,12 @@ Placed in a perimeter slot (committed to row XOR column). Two jobs: **(1)** rais
 | **Bruges (Hub)** | wide; many small payoffs; takes middling quality | +1 / +2 | ~7 |
 | **London (Steelyard)** | pays in privilege tiles | +2 / +privilege | ~5 |
 
-### C. Ship tiles — owned, route-bound cargo containers
-A slot tile with a stack of cask sub-slots, **bound to one route** when placed. Casks shipped to that route (by anyone) **load aboard** — rivals pay the owner a **toll**; when full the ship **sails** (owner dividend) and frees its slot. Its own line-action loads the owner's ready casks. Owned & taxable — the toll-baron play.
-- **Cog** (cargo cap 3) · **Hulk** (cap 4) · **Toll Exemption** (ignore one toll/skim) · **Pilot** (ignore a waypoint cost). ~12 total ⚙.
+### B′. Fair tiles — the paid market lever (NEW v0.5)
+A slot tile. Its **line action lets the active player pay 1 `G` to raise one beer type's market value +1**; the **fee goes to the Fair's owner** (the owner pays the supply when self-using). The toll-baron stall: build it on a line you run — ideally a **Hall line**, so you can **pump → enshrine high in one activation** before rivals react. ~4 ⚙.
+
+### C. Ship tiles — owned resource faucets
+A slot tile. When its line fires (any activator), it **skims a resource** (`G`/`H`) to its **owner** — sticky infrastructure that pays you while it sits. *(v0.5 retires the cargo-container/sail mechanic: casks deploy directly into slots now, so ships are simple faucets, not cargo holds.)*
+- **Cog** · **Hulk** (bigger skim) · **Toll Exemption** (ignore one skim you'd owe) · **Pilot** (ignore a waypoint cost). ~10 total ⚙.
 
 ### C′. Recipe tiles — your private book (collected, not slotted)
 Recipes are a **private book**, not slot tiles. Gruit is the universal baseline (always in the book). Every other recipe is **collected from the Market display straight into your book** and brewed from there; the Market's recipe supply is gated by the current **type frontier**. Each recipe names a **type** and carries its **own cost profile** (`n G · n H · n brew-steps`) — two recipes of the same type can cost differently, so *which recipes you draw* is your engine's shape. ~14 total ⚙.
@@ -83,9 +85,8 @@ Gained mainly via the **London** route. Ongoing or one-shot: market discount, fr
 Installed into tableau room slots; this is where **depth** lives.
 - **Extra Vessel** (parallel brewing capacity) · **Faster Fermenter** (auto-advance FERMENT) · **Aging Cellar** (shortens AGE; unlocks Barrel-aged) · **Warehouse** (goods/cask storage) · **Larder** (upgrades Market trickle) · **Quay** (upgrades Harbor trickle) · **Counting-house** (enshrine/standing bonus) · **Cooperage** (barrel capacity, if barrels adopted). ~3 each, ~24 ⚙.
 
-### F. Public Kontor tiles — the shared stack
-Strong **public** actions seeded into / added to the shared Kontor stack, interleaved with players' personal enshrined casks. Whichever is on top defines the current Kontor action; enshrining buries it.
-- Examples: "*Enshrine +1 standing*", "*Draw 2 recipes*", "*Advance any one brew*", "*Place 1 presence free*", "*Convert grain↔hops*". ~12–16 ⚙.
+### F. Public Hall tiles — *deprecated in v0.5* ❓
+The old shared-stack "top tile = current action" mechanic is **retired** — the standing stack is now pure sediment (value lives on each player's standing track; goals sit face-up in a personal row). These public-action tiles are cut, or kept only as optional **one-time setup bonuses** if a shared-action element is wanted back. ⚙
 
 ### G. Starting / setup tiles
 Per player: printed **Larder + Quay** twins (on the tableau), the **Gruit baseline + 2 random premium recipes** in the book, **3 `G` · 2 `H`**, **0 VP tokens**. Asymmetric starting brewing-house tiles are a possible variant. ❓

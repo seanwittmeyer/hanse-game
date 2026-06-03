@@ -1,117 +1,127 @@
-# Brewhouse of the Hanse — Turn & Round Economy (v0.1)
+# Brewhouse of the Hanse — Turn & Round Economy (v0.5)
 
-> Operational rules. Numbers are placeholders ⚙. Incorporates the fixes from `PLAYTEST.md` (Bruges-open, Brewhouse advance-all, skim caps).
+> Operational rules. Numbers are placeholders ⚙. v0.5 rebuilds the core loop around the **dual-role cask tile** and the **demand market** (`DESIGN.md` §19, 2026-06-03). Supersedes the v0.3/v0.4 ship-cargo + VP-token framing where they conflict.
 
 ---
 
 ## 0. Setup (symmetric)
 
-Each house starts with **3 `G`, 2 `H`**, **0 VP tokens**, the **Gruit baseline** (always brewable) **+ 2 random premium recipes in its book** (a random pair from the unlocked tiers), **1 open vessel** (cap 3), storage 8, and the printed Larder + Quay. Bruges route open; far routes closed. **Type frontier opens at Gruit→Hopped; the premium summit (L3–L5) is dealt in a variable order each game.** Kontor stack seeded with 2 public tiles. See `PLAYERBOARD.md`.
+Each house starts with **3 `G`, 2 `H`**, the **Gruit baseline** (always brewable) **+ 2 random premium recipes in its book**, **1 open vessel** (cap 3), **3 personal slots** (empty), storage 8, and the printed Larder + Quay twins. Bruges route open; far routes closed. **Type frontier opens at Hopped; the premium summit (L3–L5) is dealt in a variable order each game.** Set each type's marker to its starting **market value**. See `PLAYERBOARD.md`.
 
-> **Recipes are a private book, brewed from the book (v0.3).** Gruit is the universal baseline; every *other* recipe is **collected from the Market display into your book** and carries its **own cost profile** (`n G · n H · n brew-steps`) — two recipes of the same type can cost differently. You **can't brew a type you hold no recipe for.** The Market's recipe supply is gated by the current **type frontier**, which advances as a type's market saturates (§5b · §A/A′ in `TILES.md`). *(Supersedes the claim-on-fire slot model.)*
+> **Recipes are a private book.** Gruit is the universal baseline; every *other* recipe is **collected from the Market into your book** and carries its own cost profile (`n G · n H · n brew-steps`). You **can't brew a type you hold no recipe for.** The Market's recipe supply is gated by the current **type frontier**.
 
 ---
 
 ## 1. The turn
 
-> **Turn 1 only:** *place* your worker on any cell and activate one of its two lines (no move). The move-then-activate sequence below begins on turn 2.
+> **Turn 1 only:** *place* your worker on any cell and activate one of its two lines (no move). Move-then-activate begins on turn 2.
 
 On your turn, in order:
 
 1. **Move** your worker to an **orthogonally adjacent** cell (A↔B, A↔C, B↔D, C↔D — never diagonal). Mandatory.
 2. **Activate** the **row OR column** of your worker's cell.
 3. **Resolve** that line's up-to-4 stops — **cap slot · cell · cell · cap slot** — in **any order**:
-   - **Each cell:** take its public action if the cell is free or holds *your* worker; if a **rival** worker sits there, take your **tableau fallback** for that action instead.
-   - **Each cap slot:** if it holds an owned tile, that tile fires its line action; the **owner** collects (the skim), whoever activated the line.
+   - **Each cell:** take its public action if free or holding *your* worker; if a **rival** worker sits there, take your **tableau twin** instead.
+   - **Each cap slot:** the owned tile in it fires its line action (skim to the owner / paid lever for the active player — §3).
 
 > Both cells on the line always fire. The worker's position only gates *which line is legal* and *which cells are blocked to you*.
 
 ---
 
-## 2. The four cell actions
+## 2. The cask's three states (the spine)
 
-> **Build × cash-out grid.** The two *builders* (Market, Brewhouse) sit on one diagonal; the two *cash-outs* (Harbor, Kontor) on the other — they never share a line. Cell map: **A=Market · B=Harbor · C=Kontor · D=Brewhouse.** So every line is one builder + one cash-out, and each turn you ship for reach **or** enshrine for standing, never both.
+A brewed cask, once **Ready** in a vessel, lives in exactly one of three states. This is the whole game in one object:
+
+- **Working** — installed in one of your scarce **personal slots**. Private, uncontested. It **soups up a station**: its action is added to that station when you use it (and is your fallback there when a rival blocks the cell). Scores nothing on its own. Pull it out later to deploy or enshrine.
+- **Reach** — **deployed into a shared perimeter slot**, bound to a route it quality-qualifies for. **The cask *is* your presence** on that route (= reach) while it sits there, and it yields a **line action** when its line fires. It is exposed — any player may enshrine it.
+- **Standing** — **enshrined**: pulled off the board to the standing stack; the owner banks the type's current **market value** on their standing track. The cask's board presence is gone — **reach and standing never co-exist on one cask; enshrining converts it.**
+
+---
+
+## 3. The four cell actions
+
+> **Build × cash-out grid.** Builders (Market, Brewhouse) sit on one diagonal; cash-outs (Harbor, Hall) on the other. Cell map: **A=Market · B=Harbor · C=Hall · D=Brewhouse.** Every line is one builder + one cash-out — and **builders pump the market up, cash-outs realize value and pull it down.**
 >
-> **Tableau twins:** the "fallback" for a blocked cell is your **private twin** (Market→Larder, Brewhouse→brew-room, Harbor→Quay), upgradable via rooms. A twin fires **only when a rival blocks the cell** — so a developed tableau makes stepping onto a crowded cell *desirable*. Kontor has no twin (open to all).
+> **Tableau twins:** the fallback for a rival-blocked cell is your private twin (Market→Larder, Brewhouse→brew-room, Harbor→Quay), upgradable via rooms and your installed **working casks**. The Hall has no twin.
 
-### A · Market
-- Take **2 goods** (any mix `G`/`H`) from the supply, **OR** acquire **1 tile** from the face-up Market display, paying its cost in goods.
-- Tile costs ⚙: recipe 1–2 · route/ship 2 · room 3 · (privileges come from London, §Harbor).
-- **Routes and ships are placed into an empty perimeter slot** (commit it to that line's row XOR column). A **ship** also names the **route it will support** when placed. **Recipes are collected straight into your book** (not a slot, §0); rooms install directly to your tableau.
-- **Twin (blocked): Larder** = +1 `G`; a **Larder** room bumps it to +2 `G`. (The public Market's tile-buying is its irreplaceable edge — the Larder is goods only.)
+### A · Market *(builder)*
+- Take **2 goods** (any mix), **OR** acquire **1 tile** from the face-up display, paying its goods cost.
+- **Recipes** go straight into your **book** — and **buying a recipe raises that type's market value +1** (investment stokes demand). **Route lanes, ships, and Fair tiles** go into an empty perimeter slot; **rooms** install on your tableau. Tile costs ⚙: recipe 1–2 · lane/ship/Fair 2 · room 3.
+- **Twin (blocked): Larder** = +1 `G` (Larder room → +2 `G`).
 
-### D · Brewhouse
-- **Advance ALL your brews 1 step** on the track, **and** optionally **LOAD** 1 recipe (paying its inputs) into an empty vessel.
-- Brew lengths (LOAD→READY), by type level: **L1 Gruit 2 · L2 Hopped 3 · L3 3 · L4 4 · L5 5.** ⚙ (the tempo dial — gruit skips AGE; the L3–L5 summit names are dealt per game, `TILES.md` §A)
-- More **vessels** (Extra Vessel rooms) = more brews advanced per fire = your throughput engine. **Start 1, cap 3.** A Ready cask occupies its vessel until shipped (back-pressure).
-- **Room slots: 4 (scarce).** Extra Vessel is itself a room — so going wide on vessels costs depth elsewhere. This is the forced-commit squeeze (§13c).
-- **Twin (blocked): brew-room** = advance all, no load; a **Faster Fermenter** room restores the load so the twin equals the public action.
+### D · Brewhouse *(builder)*
+- **Advance ALL your brews 1 step**, **and** optionally **LOAD** 1 recipe from your book (paying inputs) into an empty vessel.
+- Brew lengths (LOAD→READY), by level: **L1 Gruit 2 · L2 Hopped 3 · L3 3 · L4 4 · L5 5** ⚙ (gruit skips AGE; L3–L5 summit names dealt per game).
+- More **vessels** = more throughput. **Start 1, cap 3.** A Ready cask occupies its vessel until you move it to a personal slot, deploy it, or enshrine it (back-pressure).
+- **Twin (blocked): brew-room** = advance all, no load (Faster Fermenter room restores the load).
 
-### B · Harbor
-- **Ship 1 READY cask** to a route the cask's quality qualifies for. You gain **1 presence** on that route (reach) **and mint VP tokens for the sale** (the cask's type value on the value track, §6). The cask itself becomes **cargo:**
-  - **If a ship supporting that route has room, the cask loads aboard it** (preferred). If it's a **rival's** ship, that owner collects a **+1 `G` toll** for the carriage. When a ship is **full it sails** — its cargo is delivered (already counted as each shipper's presence) and the **owner** takes a sail dividend (+1 presence on the route, +1 `G`); the ship leaves its slot (transient).
-  - **If no ship has room on the route, it's a basic shipment** — you still place your 1 presence; the cask is simply delivered. (Ships are a **booster**, not a gate.)
-- **Ships** (§A) are route-bound containers placed in a slot. **A ship's own line-action is to load:** when its cap fires, it pulls one of the **owner's** ready, route-eligible casks aboard (owner +1 presence), sailing when full. So a ship is owned infrastructure that profits from *all* traffic on its route — the toll-baron play.
-- **Routes:** **Bruges is open from the start.** Bergen / London / Novgorod open only once a Route Lane tile for them sits in a slot. **Presence is clamped to each route's capacity**, which is **player-scaled** ⚙: `base {Bruges 2 · London 1 · Bergen 0 · Novgorod 2} + player count` (so 2p → `{4, 3, 2, 4}`, 4p → `{6, 5, 4, 6}`). Filling routes fires the reach end-clock (2-of-4 cities, §5). *(v0.3 — supersedes the old fixed 8/6/5/9 caps, which paced 2p far too slowly.)*
-- **London delivery** grants a **Privilege tile** (its route payout).
-- **Twin (blocked): Quay** = ship a ready cask to **Bruges only** (loading a Bruges ship if one has room, else a basic shipment); a **Quay** room lets it ship to any open qualifying route.
+### B · Harbor *(cash-out — REACH)*
+- **Deploy 1 Ready cask** into an **empty perimeter slot**, bound to a route the cask's quality qualifies for. You gain **1 presence** on that route (reach), and **that type's market value drops −1** (you've put stock on the shelf).
+- While deployed, the cask **fires a line action** when its line runs (whoever runs it — §4), and it **counts as your presence** for route value & majorities until it is enshrined.
+- **Routes:** **Bruges open from start.** Bergen / London / Novgorod open only once a **Route Lane** tile for them sits in a slot. Presence is clamped to each route's **player-scaled** capacity ⚙: `base {Bruges 2 · London 1 · Bergen 0 · Novgorod 2} + player count`.
+- **Twin (blocked): Quay** = deploy a ready cask to **Bruges only** (Quay room → any open qualifying route).
 
-### C · Kontor
-- Choose one: **use the current top-of-stack action**, **or ENSHRINE a Ready cask straight from your brewery** to the **top of the stack** (standing face). You bank its standing; its goal goes live; it sets the new top action.
-  - You bank its standing, **mint VP tokens for the enshrinement** (its type value on the value track, §6), set its goal live, and set the new top action.
-  - This is the **reach-vs-standing fork made physical:** a Ready cask either **ships** (becomes reach — cargo/presence) **or enshrines** (becomes standing). It is never both. *(Casks no longer live as standalone working slot tiles; reach now flows through ships, so enshrining is from the brewery, not from a slot.)*
-  - *(v0.2 balance: direct-from-Ready enshrine was added because the old brew→ship→enshrine chain made standing far too slow — a 3p sim produced **zero** enshrinements in 10 turns.)*
-- Enshrining is bundled by geometry with an **acquire** (left column, Market+Kontor) or a **brew** (bottom row, Brewhouse+Kontor).
-- **Occupancy:** the Kontor is **not** tolled or blocked to a fallback — anyone may fire a Kontor line; the top action / enshrine is available to whoever runs it. ❓ (revisit if it needs contention)
+### C · Hall *(cash-out — STANDING)*
+- **Enshrine one cask** — either a Ready cask from your brewery **or a deployed cask sitting in *any* shared slot** (yours or a rival's). The cask goes to the standing stack; **its owner** advances their **standing track by that type's current market value**, the cask's **goal flips face-up** in the owner's row, and that type's market value drops **−1**.
+- **Any player may enshrine any deployed cask.** Doing so frees the slot for you and pays the owner standing — but **caps what the owner was holding out for**. This is the positive-interaction / transience engine: nobody hoards a slot forever, and nobody gets attacked.
+- The Hall has **no twin** and is never blocked — anyone running a Hall line may enshrine.
+- *(Self-enshrine when the market favors your type; force a rival's cask down when you want the slot or want to cap their upside.)*
 
 ---
 
-## 3. Goods, storage & skims
+## 4. Slot tiles & the demand market
 
-- `G` grain and `H` hops are the only currency. Spent on tiles, brewing inputs, tolls.
-- **Storage cap:** ⚙ ~8 goods, raised by **Warehouse**. Caps the skim-runaway risk (PLAYTEST F5).
-- **Skims kept tiny** (typically +1 good or a non-goods nudge) for the same reason. The rich-get-richer dial.
-- **VP tokens** are a **spendable 3rd resource** (v0.3), minted on a sale (ship or enshrine) scaled by the type's value-track position. Spend for tempo/power (sinks ⚙) **or** bank as **1 VP each** at end (§6). They modify value; they never replace printed cask VP. Not subject to the storage cap. ⚙
+The **8 shared perimeter slots** hold a churning mix — **deployed casks** (reach + actions, enshrine-able), **Fair tiles**, **route lanes**, and **ships** (resource faucets). Casks are the transient flow (enshrined off); infrastructure is sticky.
 
----
+- **Casks → fire an ACTION** when their line runs (advance a brew, +1 presence, pump a type ⚙ — kept simple, resolved for the active player). **Ships & lanes → fire RESOURCES** (a small `G`/`H` skim to the **owner**, whoever runs the line). The split gives the two families distinct identities.
+- **The Fair tile → the paid market lever.** A Fair's line action lets the **active player pay 1 `G` to raise one type's market value +1**; the **fee goes to the Fair's owner** (the owner pays the supply when self-using — never free). Because pumping is a *line* action, placement matters: a Fair on a Hall line lets you **pay → pump → enshrine high in one activation** (pump-and-dump) before rivals react.
 
-## 4. Round & turn order
-
-- Play proceeds in **seating order**; one **turn each = one round**.
-- **First-player marker** passes clockwise each round.
-- Single era for v1 (era arc deferred, §14).
+### The market (one shared value track per type)
+- A cask's **enshrine payout = its type's market value at that instant** (banked on the owner's standing track). This single number replaces the old printed-standing + VP-token split.
+- **DOWN −1:** each time a type is realized — **deployed (reach) OR enshrined (standing)**. So volume floods erode the prestige payout: every turn you leave a cask out reaching, others selling your type may be bleeding its value down.
+- **UP +1:** **buying a recipe** of a type (auto), or a **Fair** pump (paid). A new tier **enters high** (frontier unlock), then erodes.
+- **Guardrail ⚙:** a pump (+1) is never larger than a realize-drop (−1), and the track has a floor & ceiling, so the market can't be farmed into inflation.
 
 ---
 
-## 5. End-game trigger
+## 5. Goods & storage
 
-The game enters its **final round** the moment **2 of the 4 kontor cities are saturated** — a city is saturated when its route's presence spaces are full (player-scaled capacities ⚙, §2 Harbor: `base {Bruges 2 · London 1 · Bergen 0 · Novgorod 2} + player count`). This is the **visible, player-steerable clock**: reach players race to slam a second city full and **end it**; standing players, wanting more turns to enshrine, **deliver to the empty cities** to keep both from filling. Finish the current round so all players have equal turns, then score.
+- `G` grain and `H` hops are the only currency — tiles, brew inputs, tolls, Fair pumps. Storage cap **8 ⚙** (Warehouse +4). Skims kept tiny. Standing is **never** spent.
 
-*(v0.3 — supersedes the v0.1 twin clocks: Kontor-stack-N and single-route-full.)*
+---
 
-### 5b. Type frontier (the value/era clock)
+## 6. Round & turn order
 
-Separately, the **type frontier** advances as a type's market **saturates** — once **⚙ N casks of the current frontier type have been sold league-wide** (shipped + enshrined), that type's value-track marker ticks **down** and the **next premium tier unlocks** (its recipes enter the Market). One causal loop: production drops value *and* opens the summit. This is not an end-game trigger — it paces the value economy through the game.
+- Seating order; one **turn each = one round**. **First-player marker** passes clockwise each round. Single era for v1.
 
-## 6. Scoring sequence (end-game)
+---
 
-1. **Reach / Destination:** for each route, **your presence × that route's slotted value.**
-2. **Majorities:** route-majority bonuses at each kontor (most presence; tie = shared/split ⚙).
-3. **Standing:** sum of your enshrined casks' printed standing values.
-4. **Goals:** resolve each enshrined cask's goal against final state (the goal-matching layer).
-5. **VP tokens:** **+1 VP per banked token.** Tokens are minted at each **sale** (ship or enshrine) scaled by that type's position on the **value track** at that moment — the variable-value layer, **captured live and locked in metal**, but tallied here (or spent mid-game instead, §3). *Cask tiles keep their printed VP; tokens are a modifier on top, never a replacement.*
-6. **Tiebreak:** most goods, then most casks in transit (loaded as cargo in ships).
+## 7. End of the game
 
-> Reach (1–2) and Standing (3–4) are **separate accumulations** that never convert — the two real win conditions. VP tokens (5) are minted by **both** paths (every sale), so the variable-value race rewards either archetype. Limited slots, vessels, and turns force the lean between them (§13 option c).
+The game enters its **final round** the moment **2 of the 4 kontor cities are saturated** — a route is saturated when its presence (deployed casks) fills its capacity. Reach players race to slam a second city full and **end it**; standing players **enshrine casks back off the routes** to keep them from filling and buy more turns. Finish the round so all have equal turns, then score. ⚙ *(under review for the deploy-then-enshrine model — enshrining a deployed cask now un-saturates a route.)*
+
+### 7b. Type frontier (the value/era clock)
+The **type frontier** advances as a type saturates — once ⚙ N realizations of the current frontier type have happened league-wide, the **next premium tier unlocks** (its recipes enter the Market). Paces the value economy; not an end trigger.
+
+---
+
+## 8. Scoring (end-game)
+
+1. **Reach:** for each route, **your presence (deployed casks) × that route's slotted value.**
+2. **Majorities:** route-majority bonus at each kontor (most presence; tie split ⚙).
+3. **Standing:** your **standing track** total (sum of market values banked at enshrine).
+4. **Goals:** resolve your enshrined casks' face-up goals against final state — **best 3 score** (the cycled pool, `TILES.md`).
+5. **Tiebreak:** most goods, then most deployed casks.
+
+> **Reach** (1–2) and **Standing** (3) are separate accumulations that never convert — but the **market couples them**: realizing a type either way pulls its value down, so the volume crowd erodes the prestige crowd's payout. The lean between them is a *timing* decision, not a silo.
 
 ---
 
 ## Open / to tune
 
-- Brew lengths & vessel count — the master tempo dials.
-- **End trigger:** does **2-of-4 cities** fire too early/late at different player counts; route capacities.
-- **Type frontier (§5b):** the saturation threshold N that flips a tier — paces the whole value economy.
-- **Value track:** length & step size; **VP-token yield curve** per type/value position; the 1–2 token **spend sinks**.
-- Whether the Kontor needs contention (currently open to all).
-- Skim values & storage cap (the runaway dial).
-- Compensation for the depth path's tempo cost (goal bonuses g3/g4 vs volume).
+- Market step sizes, floor/ceiling, Fair cost (the variable-value dials).
+- Personal-slot count (3?) and how strong a working cask's station boost is.
+- Cost / action-economy of enshrining a *rival's* deployed cask (watch eviction-timing kingmaking).
+- Whether ships stay as faucets or fold into lanes.
+- End trigger under the deploy-then-enshrine reach model (§7).
+- Brew lengths, vessel cap, route capacities — the tempo dials.

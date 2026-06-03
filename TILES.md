@@ -7,10 +7,10 @@
 ## 0. Conventions
 
 - **Goods:** `G` = grain cube, `H` = hops cube. The only spendable currency (no money).
-- **Faces:** infrastructure tiles are single-face; **cask tiles are double-sided** — **cargo face** (loaded into a ship = reach) ↔ **standing face** (in the Kontor stack = standing). *(2026-06-02: casks are cargo, not standalone working slot tiles — see `DESIGN.md` §19 "living slot ring.")*
-- **Skim rule (§9):** an owned **slot tile** (route lane, ship) fires its **line action** whenever *any* player activates that line; the **owner** collects. Keep skims small — this is the rich-get-richer dial. ⚙
-- **Acquisition:** all tiles enter from a **face-up Market display** (deterministic, public — no hidden draw), paid in goods at the **Market** cell. Casks are the exception: you don't buy a finished cask, you **collect a recipe into your private book** (§C′) and **brew** it. Recipe tiles are bought from the display like any tile, but the supply is gated by the current **type frontier** (§A) — which advances as a type's market saturates ⚙. *(v0.3: recipes are a book, not slot tiles.)*
-- **Reach vs Standing accumulate separately:** presence markers (reach) and enshrined casks (standing) never convert into each other.
+- **Faces:** infrastructure tiles are single-face; **cask tiles are double-sided** — **working/reach face** (in a slot: type · quality · a **line action**) ↔ **standing face** (enshrined: a **goal**). v0.5: a cask lives **working** (personal slot), **reach** (deployed to a shared slot = your presence) or **standing** (enshrined) — see `DESIGN.md` §19.
+- **Line-fire rule:** an owned **slot tile** fires when *any* player activates that line. **Casks fire an ACTION** (resolved for the active player); **lanes & ships fire a RESOURCE skim** (to the owner); the **Fair** fires a **paid market pump** (active player pays, fee to owner). Keep payoffs small — the rich-get-richer dial. ⚙
+- **Acquisition:** all tiles enter from a **face-up Market display**, paid in goods at the **Market** cell. Casks are the exception: you collect a **recipe into your book** (§C′) and **brew** it — and **buying a recipe raises that type's market value +1**. Recipe supply is gated by the current **type frontier** (§A).
+- **Reach vs Standing accumulate separately** but the **demand market couples them** (§A′): realizing a type either way pulls its value down. The two never convert; the *timing* between them is the game.
 
 ---
 
@@ -18,28 +18,28 @@
 
 A cask tile carries, by face:
 
-- **Cargo face** (in transit): `STYLE` · `QUALITY`. A Ready cask is **shipped** to a route — gaining you **1 presence** (reach) and loading as **cargo into a ship** on that route (or a basic shipment if none). Casks no longer fire an individual line skim; reach flows through ships (Family C).
-- **Standing face** (enshrined): `STANDING` value · a **goal** (end-game scoring) · a small **Kontor action** (used by anyone while this tile is on top of the stack — this is how personal casks join the public stack as live actions).
+- **Working/reach face**: `TYPE` · `QUALITY` · a **line action**. Installed in a **personal slot** it soups up a station (engine); **deployed** to a shared perimeter slot it **is your presence** on a route (reach) and **fires its action** when the line runs (resolved for the active player). A deployed cask is **enshrine-able by any player**.
+- **Standing face** (enshrined): a **goal** (end-game scoring). The cask is pulled off the board; the owner banks the type's current **market value** (§A′) on their standing track and the goal flips face-up in their row.
 
-> **The dual-role fork** is now per-cask and per-turn: a Ready cask either **ships** (cargo face → reach) **or enshrines** (standing face → standing). Never both.
+> **The three-state fork** (`RULES.md` §2): a Ready cask is **working** (engine), **reach** (deployed = presence), or **standing** (enshrined) — only one at a time. Enshrining converts it: the board presence leaves, the value is banked.
 
 ### Types & recipes (two layers)
 
 > **v0.3 — the recipe book (2026-06-03).** A **type** is a global quality rung (below); a **recipe** is a *collected instance* of a type with its own cost profile, held in your private **book** (§C′). You can't brew a type you hold no recipe for. The ladder is **anchored spine + variable summit**: Gruit→Hopped are fixed and historical (hops is what opens the sea routes), and the premium tiers **L3–L5 are filled by historical Hanse beers dealt in a variable order/subset each game** — so the efficient path differs every game.
 
-| Level | Type | Q | Typical inputs ⚙ | Brew path | Ships to | Enshrine? | Base standing ⚙ | Qty |
+| Level | Type | Q | Typical inputs ⚙ | Brew path | Deploys to (reach) | Enshrine? | Start market value ⚙ | Qty |
 |---|---|---|---|---|---|---|---|---|
 | **L1** | **Gruit Ale** | 1 | `G` | LOAD→FERMENT→READY (skips AGE) | Bruges / nearest only (perishable) | ❌ | — (single-face) | 16 |
-| **L2** | **Hopped Beer** | 2 | `G H` | LOAD→FERMENT→AGE→READY | Bruges / London / Bergen | ✅ | 3 | 20 |
-| **L3** | *summit ⚙* | 3 | `G H H` ⚙ | + longer AGE | London / Bergen / Novgorod | ✅ | 5 | 12 |
-| **L4** | *summit ⚙* | 4 | `G G H H` ⚙ | + longer AGE | Bergen / Novgorod | ✅ | 7 | 8 |
-| **L5** | *summit ⚙* | 5 | premium; needs **Aging Cellar** | longest AGE | Novgorod | ✅ | 10 | 4 |
+| **L2** | **Hopped Beer** | 2 | `G H` | LOAD→FERMENT→AGE→READY | Bruges / London / Bergen | ✅ | 4 | 20 |
+| **L3** | *summit ⚙* | 3 | `G H H` ⚙ | + longer AGE | London / Bergen / Novgorod | ✅ | 6 | 12 |
+| **L4** | *summit ⚙* | 4 | `G G H H` ⚙ | + longer AGE | Bergen / Novgorod | ✅ | 8 | 8 |
+| **L5** | *summit ⚙* | 5 | premium; needs **Aging Cellar** | longest AGE | Novgorod | ✅ | 11 | 4 |
 
 > **Summit roster (dealt to L3–L5 in variable order each game) ⚙:** real Hanse export beers — **Bock** (Einbeck, the origin of the word "bock"), **Mumme** (Braunschweig, thick dark prestige export shipped absurdly far), **Broyhan** (Hannover), **Keut** (Low Countries). Reskins the anachronistic *Dubbel/Tripel* placeholders. Each carries a light mechanical hook (e.g. Bock needs the Aging Cellar; Mumme = slow but high-standing). ⚙
 >
 > **Typical inputs are the *type's* baseline; the actual cost is on the collected recipe** — two L3 recipes can read `G H H` vs `G G` vs a faster-but-pricier mix. *Which recipes you draw*, not just which type, defines your engine — the diceless variability + asymmetry lever.
 
-*Gruit is cargo-only — perishable, never heritage. It's cheap early-engine fuel and cheap local reach, and it can never be enshrined. That single fact is the Westvleteren/Leffe line drawn in the components.*
+*Gruit is reach-only — perishable, never heritage. It's cheap early-engine fuel and cheap local reach, and it can never be enshrined. That single fact is the Westvleteren/Leffe line drawn in the components.*
 
 ### Market quality-gates (the Quality → Destination interlock)
 
@@ -68,23 +68,22 @@ A route only accepts presence from casks of sufficient quality:
 | gC | `+2 / top enshrined quality reached` | **Engine** | summit |
 | g8 | `+2 / filled brewery room` | **Engine** | tableau depth |
 
-> Enshrining is therefore a **triple choice**: bank `STANDING` now, commit to a scoring *direction* (the goal), and set the shared Kontor's top action. That's the spine of the game on one tile — and because the goal points usually live on a *different* axis than the standing you just banked, the goal is what tempts a one-note player to blend.
-
-### Standing-face Kontor actions (while on top of stack) ⚙
-Small, keyed loosely to type: Hopped → `+1 G`; L3 → `draw 1 Market tile`; L4 → `+1 presence`; L5 → `advance any 1 brew`. (Public Kontor tiles, Family F, carry the stronger ones.)
+> Enshrining is therefore a **double choice**: bank the type's **market value** now (timing — §A′), and commit to a scoring *direction* (the goal). Because the goal usually rewards a *different* axis than the standing you just banked, the goal is what tempts a one-note player to blend. *(The old "set the shared stack's top action" role is retired — the stack is sediment; value lives on tracks, goals face-up.)*
 
 ---
 
-## A′. VP tokens & the value track — the variable-value economy (v0.3)
+## A′. The demand market — the value-over-time signal (v0.5)
 
-Cask tiles keep their **printed base VP** (scored at end, §6 in `RULES.md`). On top sits a variable-value layer that never destabilizes the backbone:
+One shared **value track**, one marker per type. **A cask's enshrine payout = its type's market value at that instant** (banked on the owner's standing track). This single number is the whole variable-value layer — it folds in the old "printed standing + VP tokens" (both retired).
 
-- **Value rides on types** — a **linear value track**, one marker per type ⚙. Routes stay the **access / majorities** axis (the quality→destination gate, §A). The combination is the **race condition**.
-- **Reach floods a type → its track marker ticks down** (saturation); the quality player betting on that type wants to cash in *before* the volume player tanks it. Neither perfectly times the other — the unsolvable, diceless tension. Saturation also **advances the type frontier** (§A): the same flooding that drops value unlocks the next tier. ⚙
-- **VP tokens** are a **spendable 3rd resource**, minted on a sale (ship *or* enshrine) **scaled by the type's current track position** — sell high = more tokens, the value *locked in metal* at that moment. Tokens are a **modifier on top of**, never a replacement for, printed cask VP.
-  - **Spend** them mid-game for tempo/power (sinks ⚙), **or bank** them as bonus points (**1 VP each** at end). That spend-vs-keep fork is the new home for "lock in value at its peak."
+- **DOWN −1:** each time a type is **realized** — **deployed for reach OR enshrined for standing.** So the volume crowd flooding a type erodes the prestige crowd's payout. Every turn you leave a cask out reaching, others selling your type may be bleeding its value down. *(This is also the type-frontier driver — enough realizations of the frontier type unlocks the next tier, §A.)*
+- **UP +1 (auto):** **buying a recipe** of a type (your engine investment stokes demand).
+- **UP +1 (paid):** a **Fair** pump (§B′) — pay a good to raise a type.
+- A new tier **enters high** (frontier unlock) then erodes. **Guardrail ⚙:** a pump (+1) is never larger than a realize-drop (−1), and the track has a floor & ceiling, so it can't be farmed into inflation.
 
-> **Components:** a value-track marker per live type + a pile of VP tokens. Neither adds to the unique-tile-faces count below.
+> **The self-enshrine timer:** cash your type while it's high; don't get caught holding when reach-floods or a rival's enshrine tank it. **Builders pump, cash-outs dump** — and because pumping (recipe-buy / Fair) and dumping (enshrine) can both sit on one line, you can **pump-and-dump in a single activation**.
+>
+> **Components:** one market marker per live type. No VP tokens.
 
 ---
 
@@ -105,19 +104,27 @@ Placed in a perimeter slot (committed to row XOR column). **Two jobs:** raise th
 
 ---
 
-## C. Ship tiles — owned, route-bound cargo containers (12 tiles)
+## B′. Fair tiles — the paid market lever (~4 tiles, NEW v0.5)
 
-A ship is a **slot tile with a stack of cask sub-slots**, placed by a player and **bound to one route** when placed (it "supports" that route). It is the **toll-baron** play — owned infrastructure that profits from *everyone's* traffic on its route.
+A slot tile. Its **line action lets the active player pay 1 `G` to raise one beer type's market value +1**; the **fee goes to the Fair's owner** (the owner pays the supply when self-using — never free). The toll-baron market stall: build it on a line you run, ideally a **Hall line**, to **pump → enshrine high in one activation** before rivals react. Placement (which line) is the decision.
 
-- **Loading (two ways):** (1) when **any player ships** a Ready cask to the route and the ship has room, the cask **loads aboard** — the shipper gains their +1 presence, and if the ship is a **rival's**, the owner collects a **+1 G toll**; (2) the ship's **own line-action** (when its cap fires) pulls one of the **owner's** ready, route-eligible casks aboard.
-- **Sailing:** when **full**, the ship **sails** — cargo is delivered (already counted as each shipper's presence) and the **owner** takes a **sail dividend** (+1 presence on the route, +1 G); the ship then **leaves its slot** (transient churn).
-
-| Ship tile | Capacity / effect ⚙ | Qty |
+| Fair tile | Effect ⚙ | Qty |
 |---|---|---|
-| **Cog** | cargo container, **cap 3** | 4 |
-| **Hulk** | larger container, **cap 4** | 3 |
-| **Toll Exemption** | ignore one toll/skim per turn | 3 |
-| **Pilot** | ignore one waypoint cost | 2 |
+| **Town Fair** | pay 1 `G` → +1 a type's market value (fee to owner) | 3 |
+| **Hansetag** | pay 1 `G` → +1, and +1 to a *second* type at half-step ⚙ | 1 |
+
+---
+
+## C. Ship tiles — owned resource faucets (~10 tiles)
+
+A ship is a **slot tile** that, when its line fires (any activator), **skims a resource (`G`/`H`) to its owner** — sticky infrastructure that pays you while it sits. *(v0.5 retires the route-bound cargo-container / sail mechanic — casks now deploy directly into slots, so ships are simple faucets.)*
+
+| Ship tile | Effect ⚙ | Qty |
+|---|---|---|
+| **Cog** | line-fire → owner +1 `G` | 4 |
+| **Hulk** | line-fire → owner +1 `G` or `H` (bigger faucet) | 3 |
+| **Toll Exemption** | ignore one skim/fee you'd owe per turn | 2 |
+| **Pilot** | ignore one waypoint cost | 1 |
 
 ---
 
@@ -176,22 +183,9 @@ Installed into tableau room slots. Where **depth** lives. Also upgrade the block
 
 ---
 
-## F. Public Kontor tiles — the shared stack (12 unique)
+## F. Public Hall tiles — *deprecated in v0.5* ❓
 
-Seed the stack and get added during play; interleave with personal enshrined casks. **Top tile = the current Kontor action** for whoever banks there.
-
-1. **Bryggen Wharf** — gain 2 `G`.
-2. **Steelyard Counting** — draw 1 Privilege.
-3. **Bruges Cloth Hall** — gain 1 good + 1 presence on Bruges.
-4. **Peterhof Furs** — +1 presence on Novgorod + advance 1 brew.
-5. **Grand Enshrinement** — enshrine a cask with +1 extra standing.
-6. **Market Day** — draw 2 Market tiles.
-7. **Cooper's Gift** — advance any 1 brew 1 step.
-8. **Convoy** — place 1 presence free on any open route.
-9. **Recipe Exchange** — convert up to 3 between `G`/`H`.
-10. **Patron's Favor** — gain 1 any good + draw 1 tile.
-11. **Diet of the Hanse** — +1 standing.
-12. **Sound Passage** — ship 1 cask ignoring all waypoint costs.
+The shared-stack "top tile = current action" mechanic is **retired** — the standing stack is pure sediment now (value lives on each player's standing track; goals sit face-up in a personal row, best 3 score). These public-action tiles are cut, or kept only as optional **one-time setup bonuses** if a shared-action element is wanted back. ⚙
 
 ---
 
@@ -200,7 +194,7 @@ Seed the stack and get added during play; interleave with personal enshrined cas
 - 1 **worker**, placed on the grid.
 - Tableau printed with **Larder** (Market trickle +1 `G`) and **Quay** (Harbor trickle, 1 step) — upgradeable by Family E.
 - **1 vessel lane** open on the brewing track.
-- Starting stake: **3 `G`, 2 `H`**, **0 VP tokens**, and **the Gruit baseline + 2 random premium recipes** in your **recipe book** (a random pair from the unlocked tiers). ⚙
+- Starting stake: **3 `G`, 2 `H`**, **standing 0**, **3 empty personal cask slots**, and **the Gruit baseline + 2 random premium recipes** in your **recipe book**. ⚙
 - Asymmetric starting brewing-house tiles = possible variant. ❓
 
 ---
@@ -209,16 +203,16 @@ Seed the stack and get added during play; interleave with personal enshrined cas
 
 | Family | Tiles | Unique designs |
 |---|---|---|
-| A Casks | ~60 | ~5 styles × ~10 goals |
-| B Routes | 19 | ~4 |
-| C Ships | 12 | 4 |
+| A Casks | ~60 | ~5 types × ~9 goals |
+| B Routes (lanes) | 19 | ~4 |
+| B′ Fair | 4 | 2 |
+| C Ships (faucets) | 10 | 4 |
 | C′ Recipes (book) | 14 | 4 (variants per type) |
 | D Privileges | 12 | 12 |
 | E Rooms | 24 | 8 |
-| F Public Kontor | 12 | 12 |
-| **Total** | **~153** | **~49 unique faces** |
+| **Total** | **~145** | **~38 unique faces** |
 
-**~150 tiles but only ~49 unique designs** — the bulk is *copies* (casks, rooms, ships). That's Castles-of-Burgundy / Carcassonne tile-scale, not card-scale. Cards aren't needed; tiles preserve determinism and the physical working↔standing flip.
+**~145 tiles but only ~38 unique designs** — the bulk is *copies* (casks, rooms). That's Castles-of-Burgundy / Carcassonne tile-scale, not card-scale. Cards aren't needed; tiles preserve determinism and the physical working↔standing flip.
 
 ---
 
