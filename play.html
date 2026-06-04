@@ -164,7 +164,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center">Prototype v0.5 — the dual-role cask in 3 states (working / deploy=reach / enshrine=standing), the demand market that drives standing, the any-player enshrine, and the Fair pump lever. Line stops resolve in <b>any order you choose</b> (pump-and-dump &amp; brew-then-enshrine both work); a <b>working cask</b> installed to a personal slot is assigned to a station and fires its work action whenever you use that station (or its twin). Single-level <b>Undo</b> is in the bar. Simplifications: privileges unimplemented; all numbers are placeholders (⚙).</p>
+  <p class="note" style="text-align:center">Prototype v0.5 — the dual-role cask in 3 states (working / deploy=reach / enshrine=standing), the demand market that drives standing, the any-player enshrine, and the Fair pump lever. Line stops resolve in <b>any order you choose</b> (pump-and-dump &amp; brew-then-enshrine both work); a <b>working cask</b> installed to a personal slot is assigned to a station and fires its work action whenever you use that station (or its twin). Single-level <b>Undo</b> is in the bar. Brewing is greased: brews <b>age +1 each turn automatically</b>, and the Brewhouse gives a pool of advance points you <b>allocate</b> across vessels (boosted by working casks installed there). Simplifications: privileges unimplemented; all numbers are placeholders (⚙).</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -206,10 +206,15 @@ function refreshIcons(){if(window.lucide)try{lucide.createIcons();}catch(e){}}
 const STYLES={
   gruit :{name:'Gruit Ale',     lvl:1, q:1, in:{g:1,h:0}, ready:2, enshrine:false, standing:0, work:{t:'good',good:'g'}},
   hopped:{name:'Hopped Beer',   lvl:2, q:2, in:{g:1,h:1}, ready:3, enshrine:true,  standing:3, work:{t:'good',good:'h'}},
-  dubbel:{name:'Dubbel',        lvl:3, q:3, in:{g:1,h:2}, ready:3, enshrine:true,  standing:5, work:{t:'good',good:'g'}},
+  dubbel:{name:'Dubbel',        lvl:3, q:3, in:{g:1,h:2}, ready:3, enshrine:true,  standing:5, work:{t:'advance'}},
   tripel:{name:'Tripel',        lvl:4, q:4, in:{g:2,h:2}, ready:4, enshrine:true,  standing:7, work:{t:'advance'}},
-  bock  :{name:'Barrel Bock',   lvl:5, q:5, in:{g:2,h:2}, ready:5, enshrine:true,  standing:10, work:{t:'presence'}, cellar:true},
+  bock  :{name:'Barrel Bock',   lvl:5, q:5, in:{g:2,h:2}, ready:4, enshrine:true,  standing:10, work:{t:'presence'}, cellar:true},
 };
+// Brewing tempo dials ⚙ — brewing was the bottleneck; these grease it (RULES §3).
+const BREW_POOL=3;       // Brewhouse action: advance points you allocate freely across your brews
+const BREW_POOL_TWIN=2;  // brew-room twin (Brewhouse blocked): allocate this many, no Load
+const BREW_WORKBONUS=2;  // each working cask installed at the Brewhouse adds this to the advance pool
+const PASSIVE_FERMENT=1; // every turn, all your brews advance this many steps automatically (beer ages over time)
 // The historical Hanse summit roster — 3 of these 4 are dealt onto the L3/L4/L5 rungs each game (variable summit).
 const SUMMIT_ROSTER=['Bock','Mumme','Broyhan','Keut'];
 const SUMMIT_KEYS=['dubbel','tripel','bock']; // the three premium rungs (L3,L4,L5) the roster names are dealt onto
@@ -352,7 +357,7 @@ const CELLTIP={
   Market:'Market · builder. Visit to take 2 goods (any mix), OR buy one tile — a recipe (→ your book; pumps that type +1), a route lane / ship faucet / Fair (→ a perimeter slot), or a room (→ your brewery). Blocked by a rival → Larder twin (+1 grain, +2 with the Larder room).',
   Harbor:'Harbor · cash-out (REACH). Visit to deploy a Ready cask into a route slot — you gain +1 presence and that type’s market drops −1 — or install a cask into a personal slot as a working cask. Blocked → Quay twin (deploy to Bruges only).',
   Hall:'Hall · cash-out (STANDING). Visit to enshrine a cask — your Ready/working cask, OR any deployed cask on the board (yours or a rival’s). Its owner banks that type’s current market value as standing; the market drops −1. No twin, never blocked.',
-  Brewhouse:'Brewhouse · builder. Visit to advance ALL your brews 1 step and optionally load a recipe (paying its inputs) into an empty vessel. Blocked → brew-room twin (advance only, no load; Faster Fermenter restores the load).',
+  Brewhouse:'Brewhouse · builder. Your brews also age +1 step automatically every turn. Visiting gives '+BREW_POOL+' advance points to allocate freely across your vessels (+2 per working cask installed here) and an optional Load. Blocked → brew-room twin ('+BREW_POOL_TWIN+' advance, no load; Faster Fermenter gives the full pool + load).',
 };
 function cellTip(cell){let t=CELLTIP[CELLNAME[cell]];
   const p=cur();const boosts=(p?p.pslots:[]).filter(c=>c&&c.station===CELLNAME[cell]);
@@ -446,7 +451,7 @@ function applyWork(p,w,label){
   else if(w.t==='presence'){const ok=addPresenceBest(p);log('↳ '+label+' → +1 presence'+(ok?'':' (no open route)')+'.');}
 }
 function fireStationBoost(cell){
-  const stn=CELLNAME[cell];if(stn==='Hall')return; // Hall has no twin → no working-cask slot
+  const stn=CELLNAME[cell];if(stn==='Hall'||stn==='Brewhouse')return; // Hall: no twin; Brewhouse: its boost folds into the advance pool
   const p=cur();
   p.pslots.forEach(c=>{if(c&&c.station===stn)applyWork(p,STYLES[c.style].work,'⌂ working '+STYLES[c.style].name+' boosts your '+stn);});
 }
@@ -476,6 +481,7 @@ function endTurn(){
     if(S.ending){gameOver();save();return;}
     S.turn++;S.first=(S.first+1)%n;S.active=S.first;   // first-player marker passes (RULES §4)
   }
+  passiveFerment(cur());  // the incoming player's brews age over their turn
   UI={sub:'move'};save();render();
 }
 function checkTriggers(){
@@ -489,6 +495,9 @@ function checkTriggers(){
 //------- shared mechanics -------
 function advanceAll(p){let any=false;p.vessels.forEach(c=>{if(c&&c.step<c.ready){c.step++;any=true;}});return any;}
 function advanceOne(p){for(const c of p.vessels){if(c&&c.step<c.ready){c.step++;return true;}}return false;}
+// Passive fermentation: beer ages over time, so brewing no longer depends on reaching the Brewhouse cell.
+function passiveFerment(p){let any=false;for(let k=0;k<PASSIVE_FERMENT;k++)if(advanceAll(p))any=true;
+  if(any)log(p.name+'’s brews ferment (+'+PASSIVE_FERMENT+' step) over the turn.');}
 function routeFilled(r){return Object.values(S.routes[r].pres).reduce((a,b)=>a+b,0);}
 function addPresence(p,r){if(!S.routes[r].open)return false;if(routeFilled(r)>=S.routes[r].cap)return false;S.routes[r].pres[p.id]=(S.routes[r].pres[p.id]||0)+1;return true;}
 function addPresenceBest(p){const open=Object.keys(ROUTES).filter(r=>S.routes[r].open&&routeFilled(r)<S.routes[r].cap);if(!open.length)return false;
@@ -551,7 +560,30 @@ function placeTile(slotId){
 }
 
 //------- BREWHOUSE -------
-function brewAdvance(){snapshot();const p=cur();advanceAll(p);log(p.name+' advances all brews.',true);UI.stage='load';render();}
+function brewWorkBonus(p){return BREW_WORKBONUS*p.pslots.filter(c=>c&&c.station==='Brewhouse').length;}
+// Brewhouse action: a pool of advance points the player allocates across their brews, then optionally Load.
+function brewAdvance(){snapshot();const p=cur();const wb=brewWorkBonus(p);const pool=BREW_POOL+wb;
+  log(p.name+' works the Brewhouse — '+pool+' advance point'+(pool===1?'':'s')+(wb?' (incl. +'+wb+' from working casks)':'')+' to allocate, then optionally load.',true);
+  UI.tmp.brewPool=pool;UI.tmp.brewLoad=true;
+  UI.stage=p.vessels.some(c=>c&&c.step<c.ready)?'allocate':'load'; // nothing to advance → straight to load
+  render();}
+// Brew-room twin (Brewhouse blocked): a smaller built-in pool, no load (Faster Fermenter restores the load).
+function brewRoom(){snapshot();const p=cur();const wb=brewWorkBonus(p);const canLoad=p.rooms.includes('fermenter');
+  const pool=(canLoad?BREW_POOL:BREW_POOL_TWIN)+wb;
+  log(p.name+' works the brew-room — '+pool+' advance point'+(pool===1?'':'s')+(wb?' (incl. +'+wb+')':'')+(canLoad?'':' (no load)')+'.',true);
+  UI.tmp.brewPool=pool;UI.tmp.brewLoad=canLoad;
+  if(!p.vessels.some(c=>c&&c.step<c.ready)){if(canLoad){UI.stage='load';render();return;}log('↳ nothing to ferment.');cellDone();return;}
+  UI.stage='allocate';render();}
+function brewAllot(vi,all){const p=cur();const c=p.vessels[vi];if(!c||c.step>=c.ready||UI.tmp.brewPool<=0)return;
+  const n=all?Math.min(UI.tmp.brewPool,c.ready-c.step):1;
+  c.step+=n;UI.tmp.brewPool-=n;
+  log('↳ '+STYLES[c.style].name+' advances +'+n+' → step '+c.step+'/'+c.ready+(c.step>=c.ready?' (READY)':'')+'.');
+  brewAllotCheck();}
+function brewAllotCheck(){const p=cur();
+  const done=UI.tmp.brewPool<=0 || !p.vessels.some(c=>c&&c.step<c.ready);
+  if(done){if(UI.tmp.brewLoad){UI.stage='load';render();}else cellDone();return;}
+  render();}
+function brewAllotDone(){if(UI.tmp.brewLoad){UI.stage='load';render();}else cellDone();}
 function brewLoad(style){const p=cur();const st=STYLES[style];
   if(st.cellar&&!p.rooms.includes('cellar')){alert('Bock needs an Aging Cellar.');return;}
   const vi=p.vessels.findIndex(v=>v===null);if(vi<0){alert('No empty vessel.');return;}
@@ -682,6 +714,8 @@ function cellPrompt(p){
   if(UI.stage==='place')return 'Click an empty slot to place the tile (a deployed cask commits to that line).';
   if(act==='Harbor'&&UI.stage==='deploy_route')return 'Choose a route to deploy to (quality gate applies), then a slot.';
   if(act==='Hall'&&UI.stage==='enshrine_slot')return 'Click a deployed cask on the board to enshrine it — its owner banks standing, the slot frees.';
+  if(act==='Brewhouse'&&UI.stage==='allocate')return 'Allocate your advance points across your brews (+1, or ≫ to finish a cask).';
+  if(act==='Brewhouse'&&UI.stage==='load')return 'Optionally load a recipe into an empty vessel, or finish.';
   return 'Resolve the '+act+' action'+(UI.blocked?' — blocked, so you use your tableau twin':'')+'.';
 }
 function caskBtns(p,fnName,filterEnshrine){return deployable(p).filter(o=>!filterEnshrine||STYLES[o.c.style].enshrine)
@@ -691,8 +725,8 @@ function cellActions(p){
   if(UI.blocked){ // tableau twin (fires only when a rival blocks the cell)
     if(act==='Market'){const n=p.rooms.includes('larder')?2:1;
       return btn('Larder twin: +'+n+' G','(function(){snapshot();gain(cur(),'+n+',0);log(cur().name+\' works the Larder (+'+n+'G).\',true);cellDone();})()');}
-    if(act==='Brewhouse'&&!p.rooms.includes('fermenter'))
-      return btn('Brew-room twin: advance all (no load)','(function(){snapshot();advanceAll(cur());log(cur().name+\' advances brews in the brew-room.\',true);cellDone();})()');
+    if(act==='Brewhouse'&&(UI.stage==='choose'||!UI.stage)){const ferm=p.rooms.includes('fermenter'); // entry only — allocate/load fall through to the main Brewhouse handler
+      return btn('Brew-room twin: '+((ferm?BREW_POOL:BREW_POOL_TWIN)+brewWorkBonus(p))+' advance'+(ferm?' + load':' (no load)'),'brewRoom()','primary');}
     if(act==='Harbor'&&!p.rooms.includes('quay'))
       return btn('Quay twin: deploy a cask → Bruges','quayFallback()');
   }
@@ -702,11 +736,16 @@ function cellActions(p){
       +' <span class="note">or buy a tile →</span> '+btn('Skip','cellDone()','ghost');
   }
   if(act==='Brewhouse'){
+    if(UI.stage==='allocate'){const pool=UI.tmp.brewPool;
+      const rows=p.vessels.map((c,vi)=>{if(!c||c.step>=c.ready)return '';
+        return '<span class="tag">'+LU('beer')+STYLES[c.style].name.split(' ')[0]+' '+c.step+'/'+c.ready+'</span>'
+          +btn('+1','brewAllot('+vi+',false)','go')+(c.ready-c.step>1?btn('≫ Ready','brewAllot('+vi+',true)'):'');}).filter(x=>x).join(' &nbsp; ');
+      return '<b class="note">'+pool+' advance point'+(pool===1?'':'s')+' left:</b> '+rows+' '+btn(UI.tmp.brewLoad?'Done → Load':'Done','brewAllotDone()','primary');}
     if(UI.stage==='load'){let b=p.recipes.map(r=>{
         const can=p.vessels.includes(null)&&canPay(p,STYLES[r].in)&&!(STYLES[r].cellar&&!p.rooms.includes('cellar'));
         return '<button '+(can?'':'disabled')+' onclick="brewLoad(\''+r+'\')">'+LU('beer')+' Load '+STYLES[r].name+' '+costIcons(STYLES[r].in)+'</button>';}).join('');
       return b+btn('Done','cellDone()','go');}
-    return btn('Advance all brews'+(UI.blocked?' (brew-room)':''),'brewAdvance()','primary');
+    return btn('Work the Brewhouse ('+(BREW_POOL+brewWorkBonus(p))+' advance + load)','brewAdvance()','primary');
   }
   if(act==='Harbor'){
     const d=deployable(p);const freeSlot=p.pslots.includes(null);

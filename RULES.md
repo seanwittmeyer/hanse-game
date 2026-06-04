@@ -32,7 +32,7 @@ On your turn, in order:
 
 A brewed cask, once **Ready** in a vessel, lives in exactly one of three states. This is the whole game in one object:
 
-- **Working** — installed in one of your scarce **personal slots**, and **assigned to a station (Market / Brewhouse / Harbor) when you install it**. Private, uncontested. It **soups up that station**: its `work` action fires whenever you use the station — or its **twin** when a rival blocks the cell. Scores nothing on its own. Pull it out later to deploy or enshrine.
+- **Working** — installed in one of your scarce **personal slots**, and **assigned to a station (Market / Brewhouse / Harbor) when you install it**. Private, uncontested. It **soups up that station**: its `work` action fires whenever you use the station — or its **twin** when a rival blocks the cell (at the **Brewhouse** the boost is a flat **+2 to the advance pool**). Scores nothing on its own. Pull it out later to deploy or enshrine.
 - **Reach** — **deployed into a shared perimeter slot**, bound to a route it quality-qualifies for. **The cask *is* your presence** on that route (= reach) while it sits there, and it yields a **line action** when its line fires. It is exposed — any player may enshrine it.
 - **Standing** — **enshrined**: pulled off the board to the standing stack; the owner banks the type's current **market value** on their standing track. The cask's board presence is gone — **reach and standing never co-exist on one cask; enshrining converts it.**
 
@@ -50,10 +50,11 @@ A brewed cask, once **Ready** in a vessel, lives in exactly one of three states.
 - **Twin (blocked): Larder** = +1 `G` (Larder room → +2 `G`).
 
 ### D · Brewhouse *(builder)*
-- **Advance ALL your brews 1 step**, **and** optionally **LOAD** 1 recipe from your book (paying inputs) into an empty vessel.
-- Brew lengths (LOAD→READY), by level: **L1 Gruit 2 · L2 Hopped 3 · L3 3 · L4 4 · L5 5** ⚙ (gruit skips AGE; L3–L5 summit names dealt per game).
+- **Passive aging:** at the start of your turn, **all your brews advance 1 step automatically** ⚙ — beer ages over time, so brewing no longer depends on reaching this cell.
+- **The action:** gain a **pool of 3 advance points** ⚙ and **allocate them freely across your vessels** (pour them all into one cask or spread them), **and** optionally **LOAD** 1 recipe from your book (paying inputs) into an empty vessel. Each **working cask installed at the Brewhouse adds +2** to the pool ⚙.
+- Brew lengths (LOAD→READY), by level: **L1 Gruit 2 · L2 Hopped 3 · L3 3 · L4 4 · L5 4** ⚙ (gruit skips AGE; L3–L5 summit names dealt per game).
 - More **vessels** = more throughput. **Start 1, cap 3.** A Ready cask occupies its vessel until you move it to a personal slot, deploy it, or enshrine it (back-pressure).
-- **Twin (blocked): brew-room** = advance all, no load (Faster Fermenter room restores the load).
+- **Twin (blocked): brew-room** = a smaller built-in pool of **2** advance points, no load (Faster Fermenter room gives the full pool + load).
 
 ### B · Harbor *(cash-out — REACH)*
 - **Deploy 1 Ready cask** into an **empty perimeter slot**, bound to a route the cask's quality qualifies for. You gain **1 presence** on that route (reach), and **that type's market value drops −1** (you've put stock on the shelf).
