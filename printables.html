@@ -112,10 +112,12 @@
   .stage .arr{position:absolute;right:-.085in;top:50%;transform:translateY(-50%);z-index:3;color:var(--pc);font-size:.18in;font-weight:bold}
   .agepips{display:flex;gap:.03in;margin-top:.04in}
   .agepips .p{width:.075in;height:.075in;border-radius:50%;background:var(--pc)}
-  .vlockmsg{flex:1;display:flex;align-items:center;justify-content:center;gap:.07in;height:var(--T);
-    border:1.4px dashed var(--pc);border-radius:.06in;font-style:italic;font-size:.115in;color:var(--pc);
-    background:repeating-linear-gradient(45deg,rgba(0,0,0,.045),rgba(0,0,0,.045) .09in,transparent .09in,transparent .18in)}
-  .vlockmsg svg,.vlockmsg .ic{width:.2in;height:.2in}
+  .stages.locked .stage{color:rgba(0,0,0,.28);border-color:rgba(0,0,0,.3);
+    background:repeating-linear-gradient(45deg,rgba(0,0,0,.05),rgba(0,0,0,.05) .09in,transparent .09in,transparent .18in)}
+  .stages.locked .stage .arr,.stages.locked .agepips{visibility:hidden}
+  .lockoverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:.08in;z-index:4;
+    font-style:italic;font-size:.12in;color:var(--pc);background:rgba(243,233,210,.66)}
+  .lockoverlay svg,.lockoverlay .ic{width:.2in;height:.2in}
   .gruitnote{font-size:.095in;font-style:italic;color:var(--ink2,#5b4a37);margin-top:.07in;line-height:1.25}
   /* rooms + casks — two labelled groups pushed to the band edges */
   .pb-cols{display:flex;justify-content:space-between;gap:.3in}
@@ -296,16 +298,18 @@ const PLAYERS=[
   {nm:'Violet',  c:'#5b3a8e'},
 ];
 // one vessel row: label + 4 connected tile-sized stage spaces (the cask advances along them)
-function vesselRow(n,open){
-  if(!open) return '<div class="vessel"><span class="vtag">Vessel '+n+'</span>'
-    +'<div class="vlockmsg">'+LU('lock')+' locked — install an Extra Vessel room</div></div>';
+function stagesInner(){
   const agepips='<span class="agepips"><span class="p"></span><span class="p"></span><span class="p"></span></span>';
-  return '<div class="vessel"><span class="vtag">Vessel '+n+'</span><div class="stages">'
-    +'<div class="stage"><span class="sn">Load</span><span class="sd">commit '+G+'/'+H+'</span><span class="arr">›</span></div>'
+  return '<div class="stage"><span class="sn">Load</span><span class="sd">commit '+G+'/'+H+'</span><span class="arr">›</span></div>'
     +'<div class="stage"><span class="sn">Ferment</span><span class="sd">all styles</span><span class="arr">›</span></div>'
     +'<div class="stage age"><span class="sn">Age</span>'+agepips+'<span class="arr">›</span></div>'
-    +'<div class="stage ready"><span class="sn">Ready</span><span class="sd">deploy · enshrine</span></div>'
-    +'</div></div>';
+    +'<div class="stage ready"><span class="sn">Ready</span><span class="sd">deploy · enshrine</span></div>';
+}
+function vesselRow(n,open){
+  if(!open) return '<div class="vessel"><span class="vtag">Vessel '+n+'</span>'
+    +'<div class="stages locked">'+stagesInner()
+    +'<div class="lockoverlay">'+LU('lock')+' locked — install an Extra Vessel room</div></div></div>';
+  return '<div class="vessel"><span class="vtag">Vessel '+n+'</span><div class="stages">'+stagesInner()+'</div></div>';
 }
 // standing track — a marker advances by a type's market value at each enshrine (no separate VP tokens)
 function standtrack(){
