@@ -469,3 +469,67 @@ A long design-conversation pass rebuilt the heart of the game around the origina
 **Engine deltas (`play.html`) intended this pass:** cask 3-state lifecycle (deploy / install / enshrine); cask = presence on deploy; any-player enshrine from a slot; market value drives the single standing payout (tokens removed); recipe-buy +1 and the Fair pump tile; Kontor→Hall rename; cargo/sail ship mechanic retired (ships become resource faucets). Personal-slot "working" state may ship simplified first and is flagged in-page.
 
 **Still open / next dials:** market step sizes, floor/ceiling, and the Fair cost; how strong a working-cask's station boost is; cost to enshrine a *rival's* cask (an action — watch mild kingmaking on eviction timing); whether ships stay as faucets or fold into lanes; end-game trigger under the new reach model; human playtest.
+
+---
+
+## 20. Working Architecture — v0.6: the Brewhouse Floor, recipe cards, ships as single-use carriers, the Sailed-Ships clock (2026-06-04) — LOCKED
+
+A design-conversation pass tightened the player board and rebuilt the **reach** half of the game so it has a real engine (ships + routes) to mirror the **standing** engine (rooms + summit brewing). The trigger was a print-prep observation: the player board had **too many dedicated slots** that never fill, so placement was rarely a sacrifice. The fix is the euro move — **scarcity + multi-use** (Brass / Ark Nova / Vinhos) — plus a Lisboa-style card tuck for recipes and a Hanseatic shipping loop that doubles as the game clock. This supersedes v0.5 where they conflict; the **spine (dual-role cask · demand market · 2×2 build×cash-out grid · reach vs standing as timing)** is unchanged.
+
+### A. The Brewhouse Floor (LOCKED) — replaces the 4 room slots + 3 personal cask slots
+- One row of **4 multi-use Floor slots.** Each holds **either a Room** (permanent depth) **or a working Cask** (temporary engine) — never "a place for each kind of thing."
+- **Vessels stay separate** (start 1, cap 3). **Extra Vessel is a Room**, so it costs a Floor slot *and* unlocks a brewing lane — running 3 vessels spends 2 of your 4 Floor slots (the Brass "can't build wide and deep" squeeze, now constant and visible).
+- **Installing a Ready cask as working is free but needs an open Floor slot.** If the Floor is full, the Ready cask **clogs its vessel** until you deploy/enshrine something — so Floor scarcity and brewing back-pressure become *one* tension. A working cask is still assigned to a station (Market/Brewhouse/Harbor) and souped/twin-sharpening as in v0.5.
+- *Why:* every parked engine-cask is a room you didn't build, and vice versa. ~7 dead slots → 4 live, contested squares.
+
+### B. Recipes → dual-use cards (LOCKED) — the Lisboa tuck
+Recipes stop being tiles in a "book" and become **cards** acquired **only at the Market** (unchanged acquisition point). Each card is dual-use, rhyming with the dual-role cask:
+- **Acquisition boon (one-time, on collect) — made deliberately BIG (≈ a free action), scaling by tier:**
+  - **L2 Hopped — *Stocked Pantry:*** +2`G` 2`H`
+  - **L3 — *Brewmaster's Push:*** advance 3 across your vessels (a free Brewhouse)
+  - **L4 — *Grand Market:*** take 2 goods **and** buy one slot tile (lane/ship/Fair/room) at **−1**
+  - **L5 — *Master's Privilege:*** **choose one** — advance 3 / +2`G`2`H` / a free Market / a free Harbor deploy of a Ready cask
+- **Permanent brew strip:** the card **tucks under the bottom edge of the player board** (Lisboa-style), only its **type + cost profile** (`n G · n H · n steps`) showing. Your fanned row of strips **is** your recipe book; you brew from any tucked strip forever.
+- **Soft cap = the board edge:** **6 tuck guides.** Collecting a 7th forces you to **discard a strip** (lose that brewable type) — Brass hand-management, softened because you already banked the card's boon.
+- **Still pumps its type +1 on collect** (unchanged); boon-pumps respect the `pump ≤ drop` guardrail.
+- **Guardrail:** boons grant **resources / tempo / small presence only — never standing or raw VP** (only L5 offers a single *reach* assist), so the cash-out cells keep their job and the two axes stay earned.
+- **Founding-style order hook (optional):** your **first/bottom** strip is your *founding style*; **one** optional Goal rewards casks of that type — a cheap reason to commit early and to care about acquisition order.
+- *Component shift:* recipes move **tile → a small face-up Market deck** (frontier-gated). Good for the paper copy and removes recipe tiles from the box. Start: **Gruit baseline** (printed on the board, always brewable) **+ 2 random premium recipe cards.**
+
+### C. Ships → single-use carriers + the Sailed-Ships clock (LOCKED) — reach gets an engine
+v0.5 ships were passive faucets (the cargo/sail mechanic having been cut for speed). v0.6 brings back **transport without leg-by-leg movement** — a clean **load → fill → sail** lifecycle:
+- **Build** (Market): a ship goes in a perimeter slot, **assigned to a destination kontor**, with **capacity Cog 2 / Hulk 3**, inheriting that route's **quality gate**.
+- **Load** (when the ship's line fires — by *anyone*): the active player may put one **Ready** cask that meets the gate aboard. The **loader takes a small benefit**; the **owner skims a good** (toll-baron, like a Fair). *(Realizing −1 on the type happens when the cask becomes presence, i.e. on sail.)*
+- **Sail** (the answer to "what makes a ship leave its slot"): the instant a ship is **full**, it casts off — every cask aboard **drops as presence (reach)** at the destination, the **owner banks a per-kontor destination bonus**, and the **ship tile moves to the shared Sailed-Ships track** (it is *consumed* — single-use; a new ship must be built). *(Relief valve: the owner may launch a partial ship early via a Harbor action.)*
+- **Destination bonuses (owner, on delivery) ⚙:** **Bruges** +2`G` · **London** a Privilege · **Bergen** a monopoly toll / majority help · **Novgorod** the biggest (a presence/standing kicker).
+- **Ships are the way to reach the far kontore.** **Harbor direct-deploy reaches Bruges only**; London/Bergen/Novgorod presence comes through a ship (the **Quay room** upgrades direct-deploy to any open route, as a deliberate Floor investment — the builder's alternative to the merchant's ships).
+- **The merchant archetype** is now a first-class *reach* lean: open routes (author their value), run ships (skim every load + destination bonuses + your own casks delivered for presence), recycle goods/Privileges into more routes and ships — all still fed by brewing (you must brew to have casks to load). Guardrail: destination bonuses are mostly **engine fuel**, so the merchant converts into reach/standing rather than minting a separate point pile.
+
+### D. Differentiated route lanes (LOCKED)
+A lane still raises its route's end value **and** fires a skim — but the skim is now **per-kontor and authorial**, not a flat +1`G`:
+- **Bruges:** +1`G` (liquidity) · **Bergen:** a toll (a rival who delivers/loads to Bergen pays the lane owner a good) · **London:** advance/draw on the Privilege track · **Novgorod:** +1`H` or advance a brew a step.
+
+### E. Weak alternates at the cash-out cells (LOCKED)
+Both cash-outs stay intentionally weak/situational (dead-on-turn-1 is a *feature* that pushes opening variety onto the builder lines), but get a small fallback so an empty visit isn't wasted:
+- **Harbor (no deploy/load): *dockwork*** — +1 good (or +1 to one open route's value).
+- **Hall (no enshrine): *petition*** — +1 flat standing, or peek/swap one of your face-up goals.
+
+### F. End triggers (LOCKED) — the Sailed-Ships clock replaces city-saturation; a standing trigger replaces the turn cap
+- **Primary — the Sailed-Ships track fills.** Each voyage = one slot; **shared, visible, self-accelerating** (the more the table ships, the sooner it ends — a self-balancing reach clock). Slot count is the master length dial: **~6 / 8 / 10 / 12 for 2 / 3 / 4 / 5p ⚙.** Smoother than city-saturation (a Hulk's 3-presence burst is still just one slot).
+- **Backup — N casks enshrined total** (player-scaled ⚙). Replaces the arbitrary turn cap: any enshrine advances it, so it can't deadlock, and with the Floor only 4 slots (vessels clog) players are *forced* to cash out — one clock always moves.
+- **Whichever fires first → finish the round → score.** No turn limit.
+- **City saturation is no longer an end trigger** — route caps remain only to clamp presence and settle majorities. *(Optional flourish ⚙: milestone slots on the Sailed-Ships track advance the type frontier / refill the Market, tying shipping tempo to the market boom.)*
+
+### G. Casks — shared pool, ownership discs, age vs quality (LOCKED, clarified)
+- Casks are **brewed, never bought**, from a **shared supply with fixed global counts** (~L1×16 · L2×20 · L3×12 · L4×8 · L5×4) — so the rare summit casks are a **contested** resource. A player's cap is "what's left to brew," not a personal allotment.
+- **Ownership** needs marking only for a **deployed cask in a shared slot** → a **colored disc**. Working casks (your Floor) and enshrined casks (your goal row) are owned by location.
+- **Quality is printed on the tile** (Q1–Q5, static, set at brew). **Age is tracked by the cask's position** on its vessel's Load→Ferment→Age→Ready track, plus **one aging cube** per brew to count the Age dwell (Gruit skip · L2/L3 1 · L4 2 · L5 3 pips). Per-player colored cask sets were rejected (5× printing, kills shared-pool scarcity and the cycled-goal pool).
+
+### Scoring (v0.6) — unchanged structure, now two real engines
+**Reach** = presence × route value + majorities (engine: **routes + ships**) · **Standing** = standing track (engine: **rooms + summit brewing**) · **Goals** = best-3. Both run on brewed casks; the demand market still couples them as a timing decision.
+
+### Engine deltas (`play.html`) intended this pass
+Floor = 4 multi-use Room|Cask slots (rooms + working casks share them; Extra Vessel consumes one); free install gated by Floor space + vessel clog; recipes become dual-use cards (big on-collect boon + permanent brew strip + 6-cap discard); ships become single-use destination carriers (load-on-line-fire by anyone, owner skim, fill→sail→presence+destination bonus→Sailed-Ships track); Harbor direct-deploy limited to Bruges (Quay room → any); differentiated lane skims; weak Harbor/Hall alts; **end triggers = Sailed-Ships track full OR N enshrined → finish round** (city-saturation & turn-cap retired). Bump the save `KEY` (state shape changes).
+
+### Still open / next dials (v0.6)
+Sailed-Ships slot counts & the enshrined backstop number; ship build cost vs single-use payoff; destination-bonus magnitudes; how hard the 6-card recipe cap should bite; whether realize −1 fires per cask on a multi-cask sail; the optional Sailed-Ships milestone flourish; human playtest of the merchant lean vs the prestige lean.
