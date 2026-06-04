@@ -635,7 +635,7 @@ function resolveRecipeBoon(p,lvl){
   if(lvl<=2){gain(p,2,2);return '(Stocked Pantry: +2G 2H)';}
   if(lvl===3){let n=0;for(let k=0;k<3;k++)if(advanceOne(p))n++;return '(Brewmaster’s Push: advanced '+n+')';}
   if(lvl===4){gain(p,2,0);UI.tmp.discountNext=true;return '(Grand Market: +2G & −1 on your next tile this turn)';}
-  // L5 Master's Privilege — default to advance 3 (bot-safe; UI offers the choice menu)
+  // L5 Master's Privilege — design intent is "choose one"; this prototype auto-resolves to advance 3 (⚙ choice menu TBD)
   let n=0;for(let k=0;k<3;k++)if(advanceOne(p))n++;return '(Master’s Privilege: advanced '+n+')';}
 // Ship build: after paying, choose a destination kontor (any of the 4 — even if closed, the ship reaches it), then place it.
 function shipDest(dest){const p=cur();const b=UI.tmp.shipBuild;if(!b)return;

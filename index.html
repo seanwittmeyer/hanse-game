@@ -415,8 +415,8 @@ document.getElementById('routeGallery').innerHTML=routeTiles.map(t=>`
 
 // ---- SHIP TILES ----
 const ships=[
-  {name:'Cog',cap:'2 casks',d:'Small single-use carrier. Built tied to a destination kontor; inherits that route\'s quality gate. Fills with 2 Ready casks, then sails.',qty:4},
-  {name:'Hulk',cap:'3 casks',d:'Large single-use carrier — a 3-presence burst in one voyage. Built tied to a destination kontor; inherits its quality gate. Fills with 3, then sails.',qty:3},
+  {name:'Cog',cap:'2 casks',d:'Small single-use carrier. Built tied to a destination kontor; inherits that route\'s quality gate. Fills with 2 Ready casks, then sails. Single-use → many copies.',qty:8},
+  {name:'Hulk',cap:'3 casks',d:'Large single-use carrier — a 3-presence burst in one voyage. Built tied to a destination kontor; inherits its quality gate. Fills with 3, then sails.',qty:5},
 ];
 document.getElementById('shipGallery').innerHTML=ships.map(t=>`
   <div class="card"><div class="head h-ship"><div class="kind">Ship · single-use carrier</div><div class="ttl">${t.name}</div></div>

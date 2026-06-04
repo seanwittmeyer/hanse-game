@@ -22,7 +22,7 @@
 
 A cask tile carries, by face:
 
-- **Working/reach face**: `TYPE` · `QUALITY` (printed Q1–Q5, static, set at brew) · a **line action**. Installed in a **Brewhouse Floor slot** (one of 4, shared with rooms) it soups up a station (engine); **deployed/sailed** to a shared perimeter or route slot it **is your presence** on a route (reach, owner marked by an **ownership disc**) and **fires its action** when the line runs (resolved for the active player). A deployed cask is **enshrine-able by any player**.
+- **Working/reach face**: `TYPE` · `QUALITY` (printed Q1–Q5, static, set at brew) · a **line action**. Installed in a **Brewhouse Floor slot** (one of 4, shared with rooms) it soups up a station (engine). As **reach** it **is your presence** on a route, two ways: **Harbor direct-deploy** (Bruges, or any route with a Quay room) puts the cask in a **shared perimeter slot** (owner marked by a **disc**), where it **fires its action** when the line runs *and* is **enshrine-able by any player**; **ship delivery** drops it as a **committed presence marker** on the route — *not* a slot, so it fires no action and **cannot be enshrined** (locked-in reach).
 - **Standing face** (enshrined): a **goal** (end-game scoring). The cask is pulled off the board; the owner banks the type's current **market value** (§A′) on their standing track and the goal flips face-up in their row.
 
 > **The three-state fork** (`RULES.md` §2): a Ready cask is **working** (engine, on the Floor), **reach** (deployed or ship-delivered = presence), or **standing** (enshrined) — only one at a time. Enshrining converts it: the board presence leaves, the value is banked. **Age** is tracked by position on the brewing track plus one **aging cube**; **quality** is fixed at brew.

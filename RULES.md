@@ -33,7 +33,10 @@ On your turn, in order:
 A brewed cask, once **Ready** in a vessel, lives in exactly one of three states. This is the whole game in one object:
 
 - **Working** — **installed into an open Brewhouse Floor slot**, and **assigned to a station (Market / Brewhouse / Harbor) when you install it**. Installing a Ready cask as working is **free, but needs an open Floor slot.** If the Floor is full (4 slots, shared with rooms), the Ready cask **clogs its vessel** until you free a slot or move the cask out — so Floor scarcity and brewing back-pressure are *one* tension. Private, uncontested. It **soups up that station**: its `work` action fires whenever you use the station — or its **twin** when a rival blocks the cell (at the **Brewhouse** the boost is a flat **+2 to the advance pool**). Scores nothing on its own. Pull it out later to deploy or enshrine.
-- **Reach** — **made presence in a shared slot** — either **deployed** at the Harbor (Bruges only without a Quay room) or **delivered by a ship** when it sails to its destination kontor. **The cask *is* your presence** on that route (= reach) while it sits there, and a deployed cask yields a **line action** when its line fires. It is exposed — any player may enshrine it. *(Ownership in a shared slot is shown by your colored disc.)*
+- **Reach** — your cask becomes **presence on a route**, in one of two ways with different exposure:
+  - **Harbor direct-deploy** (Bruges only, or any open route with a **Quay room**): the cask sits in a **shared perimeter slot** (ownership shown by your colored disc). It counts as your presence **and** yields a **line action** when its line fires — but it is **exposed**: any player may **enshrine it** straight off the slot.
+  - **Ship delivery**: when a ship **sails**, each cask aboard becomes a **committed presence marker** on the destination route — it is **not** placed in a perimeter slot, so it **cannot be enshrined** and fires no line action. Locked-in reach (the merchant's presence is safe from eviction).
+  Either way **the cask *is* your presence** for route value & majorities. **Reach and standing never co-exist on one cask** — enshrining (possible only from a perimeter slot or straight from your brewery) converts a cask and removes its presence.
 - **Standing** — **enshrined**: pulled off the board to the standing stack; the owner banks the type's current **market value** on their standing track. The cask's board presence is gone — **reach and standing never co-exist on one cask; enshrining converts it.**
 
 ---
@@ -136,7 +139,7 @@ The **type frontier** advances as a type saturates — once ⚙ N realizations o
 
 ## 8. Scoring (end-game)
 
-1. **Reach:** for each route, **your presence (deployed casks) × that route's slotted value.**
+1. **Reach:** for each route, **your presence × that route's slotted value** (presence = your casks on the route — Harbor-deployed to Bruges *and* ship-delivered to the far kontore).
 2. **Majorities:** route-majority bonus at each kontor (most presence; tie split ⚙).
 3. **Standing:** your **standing track** total (sum of market values banked at enshrine).
 4. **Goals:** resolve your enshrined casks' face-up goals against final state — **best 3 score** (the cycled pool, `TILES.md`).
