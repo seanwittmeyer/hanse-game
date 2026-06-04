@@ -57,93 +57,82 @@
   .tile.blank{background:#fff;color:#9a9a9a;border-color:#bdbdbd;text-shadow:none}
   .tok.blank{background:#fff;border-color:#bdbdbd;border-style:dashed;color:#bbb;text-shadow:none}
   /* ---- player boards (one per colour) ---- */
-  .sheet.boardsheet{width:11in;background:transparent;box-shadow:none;padding:0;margin:0 auto}
-  .board{--pc:#7c2128;width:10.5in;height:8in;margin:.18in auto;background:var(--parch);color:var(--ink);
-    border:3px solid var(--pc);border-radius:.14in;padding:.22in;box-shadow:0 3px 14px rgba(0,0,0,.25);
-    display:flex;flex-direction:column;gap:.1in;position:relative;overflow:hidden}
-  .board::before{content:"";position:absolute;inset:0;border:1.5px solid rgba(0,0,0,.18);
-    border-radius:.1in;margin:.06in;pointer-events:none}
+  /* --T = a tile slot: holds the 1.25in square tiles (casks, rooms, recipes, goals) with a hair of tolerance */
+  .sheet.boardsheet{width:auto;background:transparent;box-shadow:none;padding:0;margin:0}
+  .board{--pc:#7c2128;--T:1.28in;width:10.4in;margin:.12in auto;background:var(--parch);color:var(--ink);
+    border:2.5px solid var(--pc);border-radius:.12in;padding:.16in;box-shadow:0 3px 14px rgba(0,0,0,.25);
+    display:flex;flex-direction:column;gap:.1in;position:relative}
   .board svg,.board .ic{stroke-width:1.8}
-  .pb-head{display:flex;align-items:stretch;gap:.16in}
-  .crest{width:.86in;height:.86in;flex:0 0 auto;border-radius:.1in;background:var(--pc);color:#fff;
+  /* header: crest · title+twins · storage · standing */
+  .pb-head{display:flex;align-items:stretch;gap:.14in}
+  .crest{width:.78in;flex:0 0 auto;border-radius:.09in;background:var(--pc);color:#fff;
     display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.35)}
-  .crest svg,.crest .ic{width:.5in;height:.5in;stroke-width:1.6}
-  .pb-title{flex:0 0 2.5in;display:flex;flex-direction:column;justify-content:center}
-  .pb-name{font-variant:small-caps;font-weight:bold;font-size:.24in;color:var(--pc);line-height:1.05;letter-spacing:.4px}
-  .pb-sub{font-size:.11in;color:var(--ink2,#5b4a37);font-style:italic}
-  .pb-storage{flex:1;display:flex;flex-direction:column;justify-content:center;gap:.04in}
-  .pb-lbl{font-variant:small-caps;font-weight:bold;font-size:.12in;letter-spacing:.5px;color:var(--pc);
+  .crest svg,.crest .ic{width:.46in;height:.46in;stroke-width:1.6}
+  .pb-title{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:.03in;min-width:2.6in}
+  .pb-name{font-variant:small-caps;font-weight:bold;font-size:.22in;color:var(--pc);line-height:1.02;letter-spacing:.4px}
+  .pb-sub{font-size:.1in;color:var(--ink2,#5b4a37);font-style:italic}
+  .twinchips{display:flex;gap:.06in;margin-top:.02in;flex-wrap:wrap}
+  .twinchip{border:1px solid var(--pc);border-radius:.05in;padding:.015in .05in;font-size:.082in;color:var(--ink);
+    background:rgba(255,255,255,.5);display:flex;align-items:center;gap:.03in;line-height:1.1}
+  .twinchip b{color:var(--pc);font-variant:small-caps}
+  .twinchip svg,.twinchip .ic{width:.12in;height:.12in}
+  .pb-storage,.pb-standing{flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:.05in}
+  .pb-lbl{font-variant:small-caps;font-weight:bold;font-size:.11in;letter-spacing:.4px;color:var(--pc);
     display:flex;align-items:center;gap:.04in}
-  .pb-lbl svg,.pb-lbl .ic{width:.15in;height:.15in}
-  .boxrow{display:flex;gap:.05in;flex-wrap:wrap}
-  .gbox{width:.3in;height:.3in;border:1.2px solid var(--pc);border-radius:.04in;background:rgba(255,255,255,.45);
+  .pb-lbl svg,.pb-lbl .ic{width:.14in;height:.14in}
+  .pb-lbl .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.09in;color:var(--ink2,#5b4a37)}
+  .boxrow{display:flex;gap:.045in}
+  .gbox{width:.34in;height:.34in;border:1.2px solid var(--pc);border-radius:.04in;background:rgba(255,255,255,.45);
     display:flex;align-items:center;justify-content:center;color:var(--pc)}
-  .gbox svg,.gbox .ic{width:.16in;height:.16in;opacity:.5}
-  /* standing track */
-  .standrow{display:flex;align-items:center;gap:.06in}
-  .standtrack{display:flex;flex:1;border:1.2px solid var(--pc);border-radius:.05in;overflow:hidden}
-  .stcell{flex:1;text-align:center;font-size:.092in;padding:.035in 0;border-right:1px solid rgba(0,0,0,.18);
+  .gbox svg,.gbox .ic{width:.16in;height:.16in;opacity:.45}
+  /* standing milestone track (a marker advances along it) */
+  .standtrack{display:flex;border:1.2px solid var(--pc);border-radius:.05in;overflow:hidden}
+  .stcell{width:.4in;text-align:center;font-size:.1in;padding:.05in 0;border-right:1px solid rgba(0,0,0,.2);
     color:var(--ink);background:rgba(255,255,255,.4)}
   .stcell:last-child{border-right:none}
-  .stcell.tens{background:var(--pc);color:#fff;font-weight:bold}
-  .stcell.zero{background:rgba(0,0,0,.1);font-weight:bold}
-  /* section headers */
-  .pb-sect{font-variant:small-caps;font-weight:bold;font-size:.13in;letter-spacing:.5px;color:var(--pc);
-    border-bottom:1px solid var(--pc);padding-bottom:.02in;margin-bottom:.04in;display:flex;align-items:center;gap:.05in}
-  .pb-sect svg,.pb-sect .ic{width:.16in;height:.16in}
-  .pb-sect .hint{font-variant:normal;font-weight:normal;font-style:italic;font-size:.1in;color:var(--ink2,#5b4a37);margin-left:auto}
-  /* brewing track */
-  .vessel{display:flex;align-items:center;gap:.06in;margin:.045in 0}
-  .vtag{flex:0 0 .82in;font-size:.1in;font-variant:small-caps;font-weight:bold;color:var(--pc)}
-  .stages{flex:1;display:flex;align-items:stretch;gap:0;position:relative}
-  .stage{flex:1;border:1.2px solid var(--pc);background:rgba(255,255,255,.5);padding:.05in .04in;text-align:center;
-    position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:.5in}
-  .stage:not(:last-child){border-right:none}
-  .stage .sn{font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--ink)}
-  .stage .sd{font-size:.082in;color:var(--ink2,#5b4a37);line-height:1.05}
-  .stage .arr{position:absolute;right:-.07in;top:50%;transform:translateY(-50%);z-index:2;color:var(--pc);font-size:.14in;font-weight:bold}
-  .stage.age{background:rgba(184,134,11,.16)}
-  .stage.ready{background:rgba(74,107,58,.16)}
-  .agepips{display:flex;gap:.03in;margin-top:.02in}
-  .agepips .p{width:.07in;height:.07in;border-radius:50%;border:1px solid var(--pc)}
-  .vessel.locked .stages{opacity:.42}
-  .vessel.locked{position:relative}
-  .vlock{flex:1;border:1.4px dashed var(--pc);border-radius:.05in;min-height:.5in;display:flex;align-items:center;
-    justify-content:center;gap:.05in;font-size:.1in;font-style:italic;color:var(--pc);
-    background:repeating-linear-gradient(45deg,rgba(0,0,0,.04),rgba(0,0,0,.04) .08in,transparent .08in,transparent .16in)}
-  .vlock svg,.vlock .ic{width:.16in;height:.16in}
-  .gruitnote{font-size:.092in;font-style:italic;color:var(--ink2,#5b4a37);margin-top:.02in}
-  /* two-column row: rooms + casks */
-  .pb-cols{display:flex;gap:.18in}
-  .pb-col{flex:1;display:flex;flex-direction:column}
-  .slotrow{display:flex;gap:.07in;flex-wrap:wrap}
-  .pslot{width:.62in;height:.62in;border:1.4px dashed var(--pc);border-radius:.06in;background:rgba(255,255,255,.4);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.082in;text-align:center;gap:.02in}
-  .pslot svg,.pslot .ic{width:.2in;height:.2in;opacity:.6}
+  .stcell.zero{background:rgba(0,0,0,.12);font-weight:bold}
+  /* section header (slim) */
+  .pb-sect{font-variant:small-caps;font-weight:bold;font-size:.115in;letter-spacing:.4px;color:var(--pc);
+    display:flex;align-items:center;gap:.05in;margin-bottom:.04in}
+  .pb-sect svg,.pb-sect .ic{width:.15in;height:.15in}
+  .pb-sect .hint{font-variant:normal;font-weight:normal;font-style:italic;font-size:.092in;color:var(--ink2,#5b4a37);margin-left:auto}
+  /* mid band: brewing (left) + rooms & casks (right) */
+  .pb-mid{display:flex;gap:.18in;align-items:flex-start}
+  .brewbox{flex:0 0 auto}
+  .rcbox{flex:1;display:flex;flex-direction:column;gap:.08in}
+  /* brewing: 3 vessels side by side; each = a tile-sized cask space + a 4-step progress track */
+  .vessels{display:flex;gap:.12in}
+  .vessel{display:flex;flex-direction:column;gap:.04in;width:var(--T)}
+  .vcap{font-size:.09in;font-variant:small-caps;font-weight:bold;color:var(--pc);text-align:center}
+  .vcask{width:var(--T);height:var(--T);border:1.5px dashed var(--pc);border-radius:.06in;background:rgba(255,255,255,.4);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.02in;color:var(--pc);font-size:.085in;text-align:center}
+  .vcask svg,.vcask .ic{width:.26in;height:.26in;opacity:.55}
+  .vcask.locked{border-style:solid;border-color:rgba(0,0,0,.3);color:rgba(0,0,0,.45);
+    background:repeating-linear-gradient(45deg,rgba(0,0,0,.05),rgba(0,0,0,.05) .07in,transparent .07in,transparent .14in)}
+  .vsteps{display:flex;width:var(--T);border:1.2px solid var(--pc);border-radius:.04in;overflow:hidden}
+  .vstep{flex:1;text-align:center;font-size:.072in;padding:.03in 0;border-right:1px solid rgba(0,0,0,.2);
+    color:var(--ink);background:rgba(255,255,255,.45);line-height:1}
+  .vstep:last-child{border-right:none}
+  .vstep.age{background:rgba(184,134,11,.18)}
+  .vstep.ready{background:rgba(74,107,58,.18)}
+  .agepips{display:flex;gap:.015in;justify-content:center;margin-top:.01in}
+  .agepips .p{width:.04in;height:.04in;border-radius:50%;background:var(--pc)}
+  .gruitnote{font-size:.085in;font-style:italic;color:var(--ink2,#5b4a37);margin-top:.05in;max-width:5in;line-height:1.2}
+  /* tile-sized slots (rooms, casks, recipes, goals) */
+  .slotrow{display:flex;gap:.08in;flex-wrap:wrap}
+  .pslot{width:var(--T);height:var(--T);border:1.5px dashed var(--pc);border-radius:.06in;background:rgba(255,255,255,.4);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.088in;text-align:center;gap:.02in}
+  .pslot svg,.pslot .ic{width:.24in;height:.24in;opacity:.55}
   .pslot.cask{border-style:solid}
-  /* recipe book + goals */
-  .strip{display:flex;gap:.06in;align-items:stretch}
-  .rslot{flex:1;height:.5in;border:1.2px solid var(--pc);border-radius:.05in;background:rgba(255,255,255,.4);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.085in;text-align:center;gap:.02in}
-  .rslot.printed{background:var(--pc);color:#fff;border-style:solid}
-  .rslot.empty{border-style:dashed;color:rgba(0,0,0,.4)}
-  .rslot svg,.rslot .ic{width:.16in;height:.16in}
-  .goalslot{flex:1;height:.46in;border:1.2px dashed var(--pc);border-radius:.05in;background:rgba(184,134,11,.1);
-    display:flex;align-items:center;justify-content:center;color:var(--pc);font-size:.085in;text-align:center;gap:.03in}
-  .goalslot.best{border-style:solid;background:rgba(184,134,11,.2);font-weight:bold}
-  /* twins */
-  .pb-twins{display:flex;gap:.14in;margin-top:auto}
-  .twin{flex:1;border:1.4px solid var(--pc);border-radius:.07in;padding:.07in .09in;background:rgba(255,255,255,.42);
-    display:flex;flex-direction:column;gap:.02in}
-  .twin .tw-h{font-variant:small-caps;font-weight:bold;font-size:.12in;color:var(--pc);display:flex;align-items:center;gap:.04in}
-  .twin .tw-h svg,.twin .tw-h .ic{width:.15in;height:.15in}
-  .twin .tw-d{font-size:.092in;color:var(--ink2,#5b4a37);line-height:1.15}
-  .twin .tw-up{font-size:.082in;color:var(--pc);font-style:italic}
+  .pslot.printed{background:var(--pc);color:#fff;border-style:solid}
+  .pslot.printed svg,.pslot.printed .ic{opacity:.9}
+  .pslot.goal{background:rgba(184,134,11,.1)}
+  .pslot.goal.best{background:rgba(184,134,11,.22);border-style:solid;font-weight:bold}
   @media print{
     .no-print{display:none}
     body{background:#fff}
     .sheet{margin:0;box-shadow:none;width:auto;padding:0}
-    .board{break-after:page;box-shadow:none;margin:0 auto}
+    .board{break-after:page;box-shadow:none;border-width:2px;margin:0 auto}
     .board:last-child{break-after:auto}
   }
 </style>
@@ -297,65 +286,58 @@ const PLAYERS=[
   {nm:'Amber',   c:'#b8860b'},
   {nm:'Violet',  c:'#5b3a8e'},
 ];
-// brewing track: Load → Ferment → Age(pips) → Ready  (PLAYERBOARD.md §1)
-function stages(){
-  const agepips='<span class="agepips"><span class="p"></span><span class="p"></span><span class="p"></span></span>';
-  return '<div class="stages">'
-    +'<div class="stage"><span class="sn">Load</span><span class="sd">commit '+G+'/'+H+'</span><span class="arr">›</span></div>'
-    +'<div class="stage"><span class="sn">Ferment</span><span class="sd">all styles</span><span class="arr">›</span></div>'
-    +'<div class="stage age"><span class="sn">Age</span><span class="sd">hopped+</span>'+agepips+'<span class="arr">›</span></div>'
-    +'<div class="stage ready"><span class="sn">Ready</span><span class="sd">deploy · enshrine</span></div>'
-    +'</div>';
+// one vessel: a tile-sized cask space + a 4-step progress track (Load→Ferment→Age→Ready)
+function vessel(n,open){
+  const agepips='<div class="agepips"><span class="p"></span><span class="p"></span><span class="p"></span></div>';
+  const steps='<div class="vsteps">'
+    +'<div class="vstep">Load</div>'
+    +'<div class="vstep">Ferm</div>'
+    +'<div class="vstep age">Age'+agepips+'</div>'
+    +'<div class="vstep ready">Rdy</div></div>';
+  const cask=open
+    ? '<div class="vcask">'+LU('beer')+'cask</div>'
+    : '<div class="vcask locked">'+LU('lock')+'add a<br>Vessel</div>';
+  return '<div class="vessel"><div class="vcap">Vessel '+n+'</div>'+cask+steps+'</div>';
 }
-function vesselRow(n,open){
-  if(open) return '<div class="vessel"><span class="vtag">Vessel '+n+'</span>'+stages()+'</div>';
-  return '<div class="vessel locked"><span class="vtag">Vessel '+n+'</span>'
-    +'<span class="vlock">'+LU('lock')+' locked — install an Extra Vessel room</span></div>';
-}
-// standing track 0 → 40 (banked market value at each enshrine; no separate VP tokens)
+// standing milestone track (a marker advances by a type's market value at each enshrine)
 function standtrack(){
-  let s='';
-  for(let v=0;v<=40;v++){const cls=v===0?'zero':(v%10===0?'tens':'');s+='<span class="stcell '+cls+'">'+v+'</span>';}
-  return '<div class="standrow"><span class="pb-lbl">'+LU('crown')+'Standing</span><div class="standtrack">'+s+'</div></div>';
+  let s='';for(let v=0;v<=50;v+=5)s+='<div class="stcell'+(v===0?' zero':'')+'">'+v+'</div>';
+  return '<div class="standtrack">'+s+'</div>';
 }
 function pboard(p){
-  // storage cap 8 (PLAYERBOARD.md §4) — Warehouse rooms extend it
   let store='';for(let i=0;i<8;i++)store+='<div class="gbox">'+LU('package')+'</div>';
-  // room slots (4, scarce) + cask slots (3, working)
   let rooms='';for(let i=0;i<4;i++)rooms+='<div class="pslot">'+LU('wrench')+'room</div>';
   let casks='';for(let i=0;i<3;i++)casks+='<div class="pslot cask">'+LU('beer')+'working</div>';
-  // recipe book: Gruit baseline printed + open recipe slots
-  let book='<div class="rslot printed">'+LU('scroll-text')+'Gruit<br>baseline</div>';
-  for(let i=0;i<5;i++)book+='<div class="rslot empty">'+LU('plus')+'recipe</div>';
-  // goal row: enshrined casks face-up, best 3 score
-  let goals='';for(let i=0;i<6;i++)goals+='<div class="goalslot'+(i<3?' best':'')+'">'+LU('diamond')+(i<3?'best 3':'goal')+'</div>';
-  // twins (Market/Brewhouse/Harbor — Hall has no twin); fire only when a rival blocks the cell
+  let book='<div class="pslot printed">'+LU('scroll-text')+'Gruit<br>(base)</div>';
+  for(let i=0;i<5;i++)book+='<div class="pslot">'+LU('plus')+'recipe</div>';
+  let goals='';for(let i=0;i<6;i++)goals+='<div class="pslot goal'+(i<3?' best':'')+'">'+LU('diamond')+(i<3?'best 3':'goal')+'</div>';
+  // twins (Market/Brewhouse/Harbor — Hall has no twin); fire only when a rival blocks that cell
   const twins=[
-    {h:'Larder',ic:'wheat',d:'Market twin — +1 '+G+' when a rival blocks Market.',up:'Larder room → +2 '+G},
-    {h:'Brew-room',ic:'flame',d:'Brewhouse twin — advance all vessels, no load.',up:'Faster Fermenter → keep the load'},
-    {h:'Quay',ic:'anchor',d:'Harbor twin — deploy one Ready cask → Bruges only.',up:'Quay room → any open route'},
+    {ic:'wheat', t:'<b>Larder</b> Market twin · +1'+G+' (room → +2)'},
+    {ic:'flame', t:'<b>Brew-room</b> Brewhouse twin · advance all, no load'},
+    {ic:'anchor',t:'<b>Quay</b> Harbor twin · deploy → Bruges (room → any)'},
   ];
-  let twh=twins.map(t=>'<div class="twin"><div class="tw-h">'+LU(t.ic)+t.h+'</div>'
-    +'<div class="tw-d">'+t.d+'</div><div class="tw-up">'+LU('arrow-up')+' '+t.up+'</div></div>').join('');
+  let chips=twins.map(t=>'<span class="twinchip">'+LU(t.ic)+t.t+'</span>').join('');
   return '<div class="board" style="--pc:'+p.c+'">'
     +'<div class="pb-head">'
       +'<div class="crest">'+LU('beer')+'</div>'
       +'<div class="pb-title"><div class="pb-name">Brewhouse · '+p.nm+'</div>'
-        +'<div class="pb-sub">private tableau · Brewhouse of the Hanse · v0.5</div></div>'
-      +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Goods storage <span style="font-style:italic;font-weight:normal">(cap 8 · +4 per Warehouse)</span></span>'
-        +'<div class="boxrow">'+store+'</div></div>'
+        +'<div class="pb-sub">private tableau · Brewhouse of the Hanse · v0.5</div>'
+        +'<div class="twinchips">'+chips+'</div></div>'
+      +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Storage <span class="sm">cap 8 · +4/Warehouse</span></span><div class="boxrow">'+store+'</div></div>'
+      +'<div class="pb-standing"><span class="pb-lbl">'+LU('crown')+'Standing</span>'+standtrack()+'</div>'
     +'</div>'
-    +standtrack()
-    +'<div><div class="pb-sect">'+LU('hammer')+'Brewing Track<span class="hint">a Brewhouse action advances your vessels; each open lane multiplies it</span></div>'
-      +vesselRow(1,true)+vesselRow(2,false)+vesselRow(3,false)
-      +'<div class="gruitnote">Gruit (L1) skips Age: Ferment → Ready. A finished cask clogs its vessel until you install, deploy, or enshrine it.</div></div>'
-    +'<div class="pb-cols">'
-      +'<div class="pb-col"><div class="pb-sect">'+LU('wrench')+'Room Slots<span class="hint">4 · scarce — forces a lean</span></div><div class="slotrow">'+rooms+'</div></div>'
-      +'<div class="pb-col"><div class="pb-sect">'+LU('beer')+'Cask Slots<span class="hint">3 · working casks soup up a station</span></div><div class="slotrow">'+casks+'</div></div>'
+    +'<div class="pb-mid">'
+      +'<div class="brewbox"><div class="pb-sect">'+LU('hammer')+'Brewing Track<span class="hint">advance via Brewhouse</span></div>'
+        +'<div class="vessels">'+vessel(1,true)+vessel(2,false)+vessel(3,false)+'</div>'
+        +'<div class="gruitnote">A cask sits in its vessel; the marker tracks Load → Ferment → Age → Ready. Gruit skips Age. A Ready cask clogs the vessel until installed, deployed, or enshrined.</div></div>'
+      +'<div class="rcbox">'
+        +'<div><div class="pb-sect">'+LU('wrench')+'Room Slots<span class="hint">4 · scarce — forces a lean</span></div><div class="slotrow">'+rooms+'</div></div>'
+        +'<div><div class="pb-sect">'+LU('beer')+'Cask Slots<span class="hint">3 · working casks soup up a station</span></div><div class="slotrow">'+casks+'</div></div>'
+      +'</div>'
     +'</div>'
-    +'<div><div class="pb-sect">'+LU('scroll-text')+'Recipe Book<span class="hint">private &amp; permanent — collect from the Market</span></div><div class="strip">'+book+'</div></div>'
-    +'<div><div class="pb-sect">'+LU('diamond')+'Goal Row<span class="hint">enshrined casks, face-up · best 3 score</span></div><div class="strip">'+goals+'</div></div>'
-    +'<div class="pb-twins">'+twh+'</div>'
+    +'<div><div class="pb-sect">'+LU('scroll-text')+'Recipe Book<span class="hint">private · Gruit baseline + recipes collected from the Market</span></div><div class="slotrow">'+book+'</div></div>'
+    +'<div><div class="pb-sect">'+LU('diamond')+'Goal Row<span class="hint">enshrined casks, face-up · best 3 score</span></div><div class="slotrow">'+goals+'</div></div>'
   +'</div>';
 }
 function renderBoards(){
