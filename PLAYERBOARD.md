@@ -42,6 +42,8 @@ Grid = the verbs; this board = the noun the brewing verb acts on. No action is d
 └────────────────────────────────────────────────────────────┘
 ```
 
+> A **print-ready visual** of this layout lives in `printables.html` → **Player Boards** view (one board per player colour, Letter/A4 landscape). It is generated from this spec; keep the two in sync.
+
 ---
 
 ## 1. Brewing track

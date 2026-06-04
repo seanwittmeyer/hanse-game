@@ -56,21 +56,108 @@
   .t-goal{font-size:.098in;line-height:1.1;opacity:.96}
   .tile.blank{background:#fff;color:#9a9a9a;border-color:#bdbdbd;text-shadow:none}
   .tok.blank{background:#fff;border-color:#bdbdbd;border-style:dashed;color:#bbb;text-shadow:none}
+  /* ---- player boards (one per colour) ---- */
+  .sheet.boardsheet{width:11in;background:transparent;box-shadow:none;padding:0;margin:0 auto}
+  .board{--pc:#7c2128;width:10.5in;height:8in;margin:.18in auto;background:var(--parch);color:var(--ink);
+    border:3px solid var(--pc);border-radius:.14in;padding:.22in;box-shadow:0 3px 14px rgba(0,0,0,.25);
+    display:flex;flex-direction:column;gap:.1in;position:relative;overflow:hidden}
+  .board::before{content:"";position:absolute;inset:0;border:1.5px solid rgba(0,0,0,.18);
+    border-radius:.1in;margin:.06in;pointer-events:none}
+  .board svg,.board .ic{stroke-width:1.8}
+  .pb-head{display:flex;align-items:stretch;gap:.16in}
+  .crest{width:.86in;height:.86in;flex:0 0 auto;border-radius:.1in;background:var(--pc);color:#fff;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.35)}
+  .crest svg,.crest .ic{width:.5in;height:.5in;stroke-width:1.6}
+  .pb-title{flex:0 0 2.5in;display:flex;flex-direction:column;justify-content:center}
+  .pb-name{font-variant:small-caps;font-weight:bold;font-size:.24in;color:var(--pc);line-height:1.05;letter-spacing:.4px}
+  .pb-sub{font-size:.11in;color:var(--ink2,#5b4a37);font-style:italic}
+  .pb-storage{flex:1;display:flex;flex-direction:column;justify-content:center;gap:.04in}
+  .pb-lbl{font-variant:small-caps;font-weight:bold;font-size:.12in;letter-spacing:.5px;color:var(--pc);
+    display:flex;align-items:center;gap:.04in}
+  .pb-lbl svg,.pb-lbl .ic{width:.15in;height:.15in}
+  .boxrow{display:flex;gap:.05in;flex-wrap:wrap}
+  .gbox{width:.3in;height:.3in;border:1.2px solid var(--pc);border-radius:.04in;background:rgba(255,255,255,.45);
+    display:flex;align-items:center;justify-content:center;color:var(--pc)}
+  .gbox svg,.gbox .ic{width:.16in;height:.16in;opacity:.5}
+  /* standing track */
+  .standrow{display:flex;align-items:center;gap:.06in}
+  .standtrack{display:flex;flex:1;border:1.2px solid var(--pc);border-radius:.05in;overflow:hidden}
+  .stcell{flex:1;text-align:center;font-size:.092in;padding:.035in 0;border-right:1px solid rgba(0,0,0,.18);
+    color:var(--ink);background:rgba(255,255,255,.4)}
+  .stcell:last-child{border-right:none}
+  .stcell.tens{background:var(--pc);color:#fff;font-weight:bold}
+  .stcell.zero{background:rgba(0,0,0,.1);font-weight:bold}
+  /* section headers */
+  .pb-sect{font-variant:small-caps;font-weight:bold;font-size:.13in;letter-spacing:.5px;color:var(--pc);
+    border-bottom:1px solid var(--pc);padding-bottom:.02in;margin-bottom:.04in;display:flex;align-items:center;gap:.05in}
+  .pb-sect svg,.pb-sect .ic{width:.16in;height:.16in}
+  .pb-sect .hint{font-variant:normal;font-weight:normal;font-style:italic;font-size:.1in;color:var(--ink2,#5b4a37);margin-left:auto}
+  /* brewing track */
+  .vessel{display:flex;align-items:center;gap:.06in;margin:.045in 0}
+  .vtag{flex:0 0 .82in;font-size:.1in;font-variant:small-caps;font-weight:bold;color:var(--pc)}
+  .stages{flex:1;display:flex;align-items:stretch;gap:0;position:relative}
+  .stage{flex:1;border:1.2px solid var(--pc);background:rgba(255,255,255,.5);padding:.05in .04in;text-align:center;
+    position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:.5in}
+  .stage:not(:last-child){border-right:none}
+  .stage .sn{font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--ink)}
+  .stage .sd{font-size:.082in;color:var(--ink2,#5b4a37);line-height:1.05}
+  .stage .arr{position:absolute;right:-.07in;top:50%;transform:translateY(-50%);z-index:2;color:var(--pc);font-size:.14in;font-weight:bold}
+  .stage.age{background:rgba(184,134,11,.16)}
+  .stage.ready{background:rgba(74,107,58,.16)}
+  .agepips{display:flex;gap:.03in;margin-top:.02in}
+  .agepips .p{width:.07in;height:.07in;border-radius:50%;border:1px solid var(--pc)}
+  .vessel.locked .stages{opacity:.42}
+  .vessel.locked{position:relative}
+  .vlock{flex:1;border:1.4px dashed var(--pc);border-radius:.05in;min-height:.5in;display:flex;align-items:center;
+    justify-content:center;gap:.05in;font-size:.1in;font-style:italic;color:var(--pc);
+    background:repeating-linear-gradient(45deg,rgba(0,0,0,.04),rgba(0,0,0,.04) .08in,transparent .08in,transparent .16in)}
+  .vlock svg,.vlock .ic{width:.16in;height:.16in}
+  .gruitnote{font-size:.092in;font-style:italic;color:var(--ink2,#5b4a37);margin-top:.02in}
+  /* two-column row: rooms + casks */
+  .pb-cols{display:flex;gap:.18in}
+  .pb-col{flex:1;display:flex;flex-direction:column}
+  .slotrow{display:flex;gap:.07in;flex-wrap:wrap}
+  .pslot{width:.62in;height:.62in;border:1.4px dashed var(--pc);border-radius:.06in;background:rgba(255,255,255,.4);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.082in;text-align:center;gap:.02in}
+  .pslot svg,.pslot .ic{width:.2in;height:.2in;opacity:.6}
+  .pslot.cask{border-style:solid}
+  /* recipe book + goals */
+  .strip{display:flex;gap:.06in;align-items:stretch}
+  .rslot{flex:1;height:.5in;border:1.2px solid var(--pc);border-radius:.05in;background:rgba(255,255,255,.4);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.085in;text-align:center;gap:.02in}
+  .rslot.printed{background:var(--pc);color:#fff;border-style:solid}
+  .rslot.empty{border-style:dashed;color:rgba(0,0,0,.4)}
+  .rslot svg,.rslot .ic{width:.16in;height:.16in}
+  .goalslot{flex:1;height:.46in;border:1.2px dashed var(--pc);border-radius:.05in;background:rgba(184,134,11,.1);
+    display:flex;align-items:center;justify-content:center;color:var(--pc);font-size:.085in;text-align:center;gap:.03in}
+  .goalslot.best{border-style:solid;background:rgba(184,134,11,.2);font-weight:bold}
+  /* twins */
+  .pb-twins{display:flex;gap:.14in;margin-top:auto}
+  .twin{flex:1;border:1.4px solid var(--pc);border-radius:.07in;padding:.07in .09in;background:rgba(255,255,255,.42);
+    display:flex;flex-direction:column;gap:.02in}
+  .twin .tw-h{font-variant:small-caps;font-weight:bold;font-size:.12in;color:var(--pc);display:flex;align-items:center;gap:.04in}
+  .twin .tw-h svg,.twin .tw-h .ic{width:.15in;height:.15in}
+  .twin .tw-d{font-size:.092in;color:var(--ink2,#5b4a37);line-height:1.15}
+  .twin .tw-up{font-size:.082in;color:var(--pc);font-style:italic}
   @media print{
     .no-print{display:none}
-    @page{size:24in auto;margin:.35in}
     body{background:#fff}
     .sheet{margin:0;box-shadow:none;width:auto;padding:0}
+    .board{break-after:page;box-shadow:none;margin:0 auto}
+    .board:last-child{break-after:auto}
   }
 </style>
+<style id="pgstyle">@page{size:24in auto;margin:.35in}</style>
 </head>
 <body>
 <div class="bar no-print">
   <h1>Brewhouse of the Hanse — Cut Sheet</h1>
   <button onclick="window.print()">🖨 Print</button>
-  <span class="seg"><button id="bproof" class="on" onclick="setMode('proof')">Proof (1 each)</button><button id="bfull" onclick="setMode('full')">Full set</button></span>
-  <span class="seg"><button id="sfront" class="on" onclick="setSide('front')">Fronts</button><button id="sback" onclick="setSide('back')">Backs (duplex)</button></span>
-  <span class="note">Sized for a <b>24″-wide</b> sheet · tiles 1.25″ · <b>print at 100% / no scaling</b> (check the 1-inch box). Cut lines are the tile borders; colour bleeds to each edge. <b>Duplex:</b> print Fronts, flip the paper on its <b>long edge</b>, print Backs — the corner ✛ marks register the two passes.</span>
+  <span class="seg"><button id="vtiles" class="on" onclick="setView('tiles')">Tiles</button><button id="vboards" onclick="setView('boards')">Player Boards</button></span>
+  <span class="seg tilectrl"><button id="bproof" class="on" onclick="setMode('proof')">Proof (1 each)</button><button id="bfull" onclick="setMode('full')">Full set</button></span>
+  <span class="seg tilectrl"><button id="sfront" class="on" onclick="setSide('front')">Fronts</button><button id="sback" onclick="setSide('back')">Backs (duplex)</button></span>
+  <span class="note tilectrl">Sized for a <b>24″-wide</b> sheet · tiles 1.25″ · <b>print at 100% / no scaling</b> (check the 1-inch box). Cut lines are the tile borders; colour bleeds to each edge. <b>Duplex:</b> print Fronts, flip the paper on its <b>long edge</b>, print Backs — the corner ✛ marks register the two passes.</span>
+  <span class="note boardctrl" style="display:none">One <b>player board per colour</b> (5) — each prints on its own page. Set your printer to <b>Landscape, 100% / no scaling</b>; board is sized for <b>Letter/A4 landscape</b>. Cut out or sleeve; slots are printed guides, not cut lines.</span>
   <span style="margin-left:auto"><a href="index.html">Components</a> · <a href="rulebook.html">Rulebook</a> · <a href="play.html">Play</a></span>
 </div>
 
@@ -144,9 +231,18 @@ const GOALSHORT=['R +1/route w pres.','R +1/2 presence','R +4/route majority',
   'S +2/same-style ensh.','S +2/Q3+ ensh.','S +3 flat',
   'E +2/distinct style','E +2/top quality','E +2/brewery room'];
 
-let MODE='proof', SIDE='front', gi=0;
+let MODE='proof', SIDE='front', VIEW='tiles', gi=0;
 function setMode(m){MODE=m;document.getElementById('bproof').classList.toggle('on',m==='proof');document.getElementById('bfull').classList.toggle('on',m==='full');render();}
 function setSide(s){SIDE=s;document.getElementById('sfront').classList.toggle('on',s==='front');document.getElementById('sback').classList.toggle('on',s==='back');render();}
+function setView(v){VIEW=v;
+  document.getElementById('vtiles').classList.toggle('on',v==='tiles');
+  document.getElementById('vboards').classList.toggle('on',v==='boards');
+  document.querySelectorAll('.tilectrl').forEach(e=>e.style.display=v==='tiles'?'':'none');
+  document.querySelectorAll('.boardctrl').forEach(e=>e.style.display=v==='boards'?'':'none');
+  // letter/A4 landscape for boards; the wide cut sheet for tiles
+  document.getElementById('pgstyle').textContent = v==='boards'
+    ? '@page{size:11in 8.5in;margin:.3in}' : '@page{size:24in auto;margin:.35in}';
+  v==='boards'?renderBoards():render();}
 const cnt=n=>MODE==='proof'?1:n;
 
 // ----- FRONT faces -----
@@ -175,7 +271,9 @@ const REGMARKS='<div class="regmark rm-tl"></div><div class="regmark rm-tr"></di
 
 function render(){
   const back=SIDE==='back';
-  document.getElementById('sheet').classList.toggle('backs',back);
+  const sheet=document.getElementById('sheet');
+  sheet.classList.remove('boardsheet');
+  sheet.classList.toggle('backs',back);
   gi=0;
   let h=REGMARKS;
   h+='<div class="calib"><div class="box">1 inch<br>(100%)</div><span class="note" style="color:#555">'
@@ -188,6 +286,83 @@ function render(){
   h+='<div class="famlabel">Goods Tokens  (Grain / Hops — or use wooden cubes; standing &amp; the demand market use sliders, not chits)</div><div class="grid">';
   GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTok():tok(d);});h+='</div>';
   document.getElementById('sheet').innerHTML=h;
+  if(window.lucide)lucide.createIcons();
+}
+
+// ===== PLAYER BOARDS (one per colour) =====
+const PLAYERS=[
+  {nm:'Crimson', c:'#7c2128'},
+  {nm:'Azure',   c:'#274b5c'},
+  {nm:'Forest',  c:'#4a6b3a'},
+  {nm:'Amber',   c:'#b8860b'},
+  {nm:'Violet',  c:'#5b3a8e'},
+];
+// brewing track: Load → Ferment → Age(pips) → Ready  (PLAYERBOARD.md §1)
+function stages(){
+  const agepips='<span class="agepips"><span class="p"></span><span class="p"></span><span class="p"></span></span>';
+  return '<div class="stages">'
+    +'<div class="stage"><span class="sn">Load</span><span class="sd">commit '+G+'/'+H+'</span><span class="arr">›</span></div>'
+    +'<div class="stage"><span class="sn">Ferment</span><span class="sd">all styles</span><span class="arr">›</span></div>'
+    +'<div class="stage age"><span class="sn">Age</span><span class="sd">hopped+</span>'+agepips+'<span class="arr">›</span></div>'
+    +'<div class="stage ready"><span class="sn">Ready</span><span class="sd">deploy · enshrine</span></div>'
+    +'</div>';
+}
+function vesselRow(n,open){
+  if(open) return '<div class="vessel"><span class="vtag">Vessel '+n+'</span>'+stages()+'</div>';
+  return '<div class="vessel locked"><span class="vtag">Vessel '+n+'</span>'
+    +'<span class="vlock">'+LU('lock')+' locked — install an Extra Vessel room</span></div>';
+}
+// standing track 0 → 40 (banked market value at each enshrine; no separate VP tokens)
+function standtrack(){
+  let s='';
+  for(let v=0;v<=40;v++){const cls=v===0?'zero':(v%10===0?'tens':'');s+='<span class="stcell '+cls+'">'+v+'</span>';}
+  return '<div class="standrow"><span class="pb-lbl">'+LU('crown')+'Standing</span><div class="standtrack">'+s+'</div></div>';
+}
+function pboard(p){
+  // storage cap 8 (PLAYERBOARD.md §4) — Warehouse rooms extend it
+  let store='';for(let i=0;i<8;i++)store+='<div class="gbox">'+LU('package')+'</div>';
+  // room slots (4, scarce) + cask slots (3, working)
+  let rooms='';for(let i=0;i<4;i++)rooms+='<div class="pslot">'+LU('wrench')+'room</div>';
+  let casks='';for(let i=0;i<3;i++)casks+='<div class="pslot cask">'+LU('beer')+'working</div>';
+  // recipe book: Gruit baseline printed + open recipe slots
+  let book='<div class="rslot printed">'+LU('scroll-text')+'Gruit<br>baseline</div>';
+  for(let i=0;i<5;i++)book+='<div class="rslot empty">'+LU('plus')+'recipe</div>';
+  // goal row: enshrined casks face-up, best 3 score
+  let goals='';for(let i=0;i<6;i++)goals+='<div class="goalslot'+(i<3?' best':'')+'">'+LU('diamond')+(i<3?'best 3':'goal')+'</div>';
+  // twins (Market/Brewhouse/Harbor — Hall has no twin); fire only when a rival blocks the cell
+  const twins=[
+    {h:'Larder',ic:'wheat',d:'Market twin — +1 '+G+' when a rival blocks Market.',up:'Larder room → +2 '+G},
+    {h:'Brew-room',ic:'flame',d:'Brewhouse twin — advance all vessels, no load.',up:'Faster Fermenter → keep the load'},
+    {h:'Quay',ic:'anchor',d:'Harbor twin — deploy one Ready cask → Bruges only.',up:'Quay room → any open route'},
+  ];
+  let twh=twins.map(t=>'<div class="twin"><div class="tw-h">'+LU(t.ic)+t.h+'</div>'
+    +'<div class="tw-d">'+t.d+'</div><div class="tw-up">'+LU('arrow-up')+' '+t.up+'</div></div>').join('');
+  return '<div class="board" style="--pc:'+p.c+'">'
+    +'<div class="pb-head">'
+      +'<div class="crest">'+LU('beer')+'</div>'
+      +'<div class="pb-title"><div class="pb-name">Brewhouse · '+p.nm+'</div>'
+        +'<div class="pb-sub">private tableau · Brewhouse of the Hanse · v0.5</div></div>'
+      +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Goods storage <span style="font-style:italic;font-weight:normal">(cap 8 · +4 per Warehouse)</span></span>'
+        +'<div class="boxrow">'+store+'</div></div>'
+    +'</div>'
+    +standtrack()
+    +'<div><div class="pb-sect">'+LU('hammer')+'Brewing Track<span class="hint">a Brewhouse action advances your vessels; each open lane multiplies it</span></div>'
+      +vesselRow(1,true)+vesselRow(2,false)+vesselRow(3,false)
+      +'<div class="gruitnote">Gruit (L1) skips Age: Ferment → Ready. A finished cask clogs its vessel until you install, deploy, or enshrine it.</div></div>'
+    +'<div class="pb-cols">'
+      +'<div class="pb-col"><div class="pb-sect">'+LU('wrench')+'Room Slots<span class="hint">4 · scarce — forces a lean</span></div><div class="slotrow">'+rooms+'</div></div>'
+      +'<div class="pb-col"><div class="pb-sect">'+LU('beer')+'Cask Slots<span class="hint">3 · working casks soup up a station</span></div><div class="slotrow">'+casks+'</div></div>'
+    +'</div>'
+    +'<div><div class="pb-sect">'+LU('scroll-text')+'Recipe Book<span class="hint">private &amp; permanent — collect from the Market</span></div><div class="strip">'+book+'</div></div>'
+    +'<div><div class="pb-sect">'+LU('diamond')+'Goal Row<span class="hint">enshrined casks, face-up · best 3 score</span></div><div class="strip">'+goals+'</div></div>'
+    +'<div class="pb-twins">'+twh+'</div>'
+  +'</div>';
+}
+function renderBoards(){
+  const sheet=document.getElementById('sheet');
+  sheet.classList.remove('backs');
+  sheet.classList.add('boardsheet');
+  sheet.innerHTML=PLAYERS.map(pboard).join('');
   if(window.lucide)lucide.createIcons();
 }
 render();
