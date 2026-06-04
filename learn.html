@@ -109,11 +109,11 @@
   <h2><span class="n">3</span>How you get there — the loop</h2>
   <p>Everything flows through four actions. Think of it as a little factory:</p>
   <div class="loop">
-    <div class="stepc m"><span class="num">1</span><h4>Market</h4><div class="s">Take <span class="cube grain"></span> grain &amp; <span class="cube hops"></span> hops, or buy a tile (a recipe, a trade route, an upgrade).</div></div>
+    <div class="stepc m"><span class="num">1</span><h4>Market</h4><div class="s">Take <span class="cube grain"></span> grain &amp; <span class="cube hops"></span> hops, or buy a tile (a trade route, a ship, an upgrade) or collect a <b>recipe card</b> (which pays a <b>big one-time boon</b>).</div></div>
     <div class="arrow">→</div>
     <div class="stepc b"><span class="num">2</span><h4>Brewhouse</h4><div class="s">Load a recipe and brew it down your track: cheap <b>gruit</b> is fast; <b>hopped</b> beer takes longer but travels &amp; can be enshrined.</div></div>
     <div class="arrow">→</div>
-    <div class="stepc h"><span class="num">3</span><h4>Harbor</h4><div class="s"><b>Deploy</b> a finished cask into a board slot on a route: it drops a <b>presence</b> marker and <i>is</i> your <b>reach</b> there. <span class="pill r">reach</span></div></div>
+    <div class="stepc h"><span class="num">3</span><h4>Harbor</h4><div class="s"><b>Deploy</b> a finished cask: straight to <b>Bruges</b>, or <b>load it on a ship</b> bound for a far kontor. It becomes a <b>presence</b> marker — your <b>reach</b>. <span class="pill r">reach</span></div></div>
     <div class="arrow">→</div>
     <div class="stepc k"><span class="num">4</span><h4>Hall</h4><div class="s">Or <b>enshrine</b> a cask (a fresh one, or one of yours already deployed) into the Hall — out of commerce, pure <span class="pill s">standing</span>.</div></div>
   </div>
@@ -132,7 +132,7 @@
   </div>
   <div class="legend"><span><span class="swatch" style="background:var(--gold)"></span>Builders (Market, Brewhouse)</span><span><span class="swatch" style="background:var(--sea2)"></span><span class="swatch" style="background:var(--green)"></span>Cash-outs (Harbor, Hall)</span></div>
   <p style="margin-top:12px">The two <b>builders</b> sit on one diagonal and the two <b>cash-outs</b> on the other, so they never share a line. The neat result: <b>every line pairs one builder with one cash-out</b> — and builders <b>pump</b> the market while cash-outs <b>realize</b> it, so you can <b>pump a type then enshrine it high in one turn.</b> Reach <b>or</b> standing each turn, never both at once.</p>
-  <p>Around the grid are <b>8 slots</b>. Your <b>deployed casks</b> live here (that's your reach), alongside <b>route lanes</b>, <b>ships</b> (little goods faucets), and <b>Fairs</b>. Here's the spicy part: <b>any player can enshrine a deployed cask</b> on a Hall line — they grab the slot, you get the standing (but less than you were holding out for). So slots keep churning, and "you're taking my space" becomes a real, friendly tug-of-war. <i>(Recipes you buy don't go in a slot — they go into your private <b>recipe book</b>.)</i></p>
+  <p>Around the grid are <b>8 slots</b>. Your <b>deployed casks</b> live here (that's your reach), alongside <b>route lanes</b>, <b>ships</b> (single-use carriers to the far kontore), and <b>Fairs</b>. Here's the spicy part: <b>any player can enshrine a deployed cask</b> on a Hall line — they grab the slot, you get the standing (but less than you were holding out for). So slots keep churning, and "you're taking my space" becomes a real, friendly tug-of-war. <i>(Recipe cards you collect don't go in a slot — their brew strips tuck under the bottom edge of your board.)</i></p>
 </section>
 
 <section>
@@ -143,18 +143,20 @@
 │  BREWING TRACK                                 │
 │   Vessel 1  [Load]→[Ferment]→[Age]→[Ready]     │
 │   Vessel 2  ▒ locked — build an Extra Vessel ▒ │
-│  ROOM SLOTS  ▢  ▢  ▢  ▢   (only four!)          │
+│  BREWHOUSE FLOOR  ▢  ▢  ▢  ▢   (only four!)     │
+│       each holds a ROOM  -or-  a working CASK   │
 │  LARDER (twin)            QUAY (twin)           │
+│  ── recipe brew strips tuck under here ──       │
 └──────────────────────────────────────────────┘</pre></div>
   <div class="two" style="margin-top:12px">
-    <div class="card"><h3>Brew &amp; vessels</h3>Casks crawl your <b>track</b> (Load→Ferment→Age→Ready). Beer <b>ages a step on its own every turn</b>, and a <b>Brewhouse</b> action gives you advance points to push brews along faster (allocate them however you like). You start with <b>one vessel</b> and can build up to three — more vessels = more casks brewing at once.</div>
-    <div class="card"><h3>Rooms &amp; twins</h3>Just <b>four room slots</b> force you to choose: go wide on vessels, or deep on upgrades. Rooms also power your <b>twins</b> — private versions of Market/Harbor/Brewhouse you fall back to when a rival blocks that cell. Build them up and a crowded cell becomes a chance, not a wall.</div>
+    <div class="card"><h3>Brew &amp; vessels</h3>Casks crawl your <b>track</b> (Load→Ferment→Age→Ready). Beer <b>ages a step on its own every turn</b>, and a <b>Brewhouse</b> action gives you advance points to push brews along faster (allocate them however you like). You start with <b>one vessel</b> and can build up to three — more vessels = more casks brewing at once. But an <b>Extra Vessel is a Room</b>, so going wide eats a Floor slot.</div>
+    <div class="card"><h3>The Floor &amp; twins</h3>Your <b>Brewhouse Floor</b> has just <b>four multi-use slots</b>, each holding <b>a Room (permanent) or a working Cask (temporary)</b> — so every parked engine-cask is a room you didn't build. Installing a Ready cask as working is free <i>but needs an open Floor slot</i> — if the Floor is full, that cask <b>clogs its vessel</b>. Rooms also power your <b>twins</b> — private fallbacks for Market/Harbor/Brewhouse when a rival blocks the public cell.</div>
   </div>
 </section>
 
 <section>
   <h2><span class="n">6</span>How a game ends — and how you win</h2>
-  <p>The game has a <b>visible clock</b>: the moment <b>2 of the 4 kontor cities fill up</b> with presence, the round finishes and the game is over. So a reach player can <i>race to end it</i> by slamming cities full, while a standing player <i>stalls</i> by spreading presence thin to buy more turns.</p>
+  <p>The game has a <b>visible clock</b>: the shared <b>Sailed-Ships track</b>. Every ship that sails adds one slot to it, and when it <b>fills</b>, the round finishes and the game is over — the more the table ships, the sooner it ends, so it's self-accelerating. (A backstop catches a slow table: once a player-scaled <b>total number of casks have been enshrined</b>, that ends it instead. Whichever fires first.) So a reach player can <i>race to end it</i> by sailing ships fast, while a standing player keeps a steadier pace to buy more enshrining turns.</p>
   <p>Then everyone tallies up — and you score on <b>every</b> axis you touched:</p>
   <div class="two">
     <div class="card"><h3>The two big piles</h3><b><span class="pill r">Reach</span></b> = your <b>presence (deployed casks) × each route's value</b>, plus <b>majority</b> bonuses for leading a route. <b><span class="pill s">Standing</span></b> = your <b>standing track</b> — the market value you banked each time you enshrined.</div>
@@ -177,10 +179,10 @@
     <div class="ikey"><i data-lucide="ship" class="ic ised"></i><span class="t"><b>Harbor</b>(cell B) deploy casks for reach</span></div>
     <div class="ikey"><i data-lucide="landmark" class="ic igr"></i><span class="t"><b>Hall</b>(cell C) enshrine for standing</span></div>
     <div class="ikey"><i data-lucide="flask-conical" class="ic ird"></i><span class="t"><b>Brewhouse</b>(cell D) brew your casks</span></div>
-    <div class="ikey"><i data-lucide="sailboat" class="ic ised"></i><span class="t"><b>Ship</b>a slot tile — a goods faucet</span></div>
+    <div class="ikey"><i data-lucide="sailboat" class="ic ised"></i><span class="t"><b>Ship</b>a single-use carrier to a far kontor</span></div>
     <div class="ikey"><i data-lucide="tent" class="ic igd"></i><span class="t"><b>Fair</b>a slot tile — pay to pump a type's value</span></div>
     <div class="ikey"><i data-lucide="route" class="ic ised"></i><span class="t"><b>Route lane</b>a slot tile — opens &amp; values a route</span></div>
-    <div class="ikey"><i data-lucide="scroll-text" class="ic igd"></i><span class="t"><b>Recipe</b>collected into your recipe book</span></div>
+    <div class="ikey"><i data-lucide="scroll-text" class="ic igd"></i><span class="t"><b>Recipe card</b>a boon on collect + a brew strip tucked under your board</span></div>
     <div class="ikey"><i data-lucide="wrench" class="ic igr"></i><span class="t"><b>Room</b>a brewery upgrade tile</span></div>
     <div class="ikey"><i data-lucide="layers" class="ic ird"></i><span class="t"><b>Standing stack</b>where enshrined casks pile up</span></div>
   </div>
@@ -189,16 +191,16 @@
     <div class="term"><b>Hanse / Kontor</b><span>The Hanseatic League — the medieval trade network. A <b>kontor</b> is one of its foreign trading posts (Bergen, London, Bruges, Novgorod).</span></div>
     <div class="term"><b>Gruit vs. Hopped</b><span>Two beers. <b>Gruit</b> is cheap, fast, local — and can never be enshrined. <b>Hopped</b> beer takes longer to brew but travels and earns standing.</span></div>
     <div class="term"><b>Goods</b><span><span class="cube grain"></span> grain and <span class="cube hops"></span> hops. Your only currency — spent on tiles and brewing. (There is no money in this game.)</span></div>
-    <div class="term"><b>Cask</b><span>A brewed beer (a double-sided tile) that lives in one of three states: <b>working</b> (installed in a personal slot and assigned to a station, which it soups up whenever you use it), <b>deployed</b> (a board slot = your reach), or <b>enshrined</b> (the Hall = standing).</span></div>
+    <div class="term"><b>Cask</b><span>A brewed beer (a double-sided tile) that lives in one of three states: <b>working</b> (installed in a Brewhouse Floor slot and assigned to a station, which it soups up whenever you use it), <b>deployed</b> (a board slot or aboard a ship = your reach), or <b>enshrined</b> (the Hall = standing).</span></div>
     <div class="term"><b>Line</b><span>A row or column of the grid. Activating one fires <b>both</b> its cells plus the slots at each end.</span></div>
-    <div class="term"><b>Slot</b><span>One of the 8 spaces around the grid, holding a deployed cask, a route lane, a ship, or a Fair. When its line fires it does its thing (action, skim, or pump).</span></div>
+    <div class="term"><b>Slot</b><span>One of the 8 spaces around the grid, holding a deployed cask, a route lane, a ship, or a Fair. When its line fires it does its thing (action, skim, load a ship, or pump).</span></div>
     <div class="term"><b>Presence</b><span>Your markers along a trade route. More presence on higher-value routes = more <span class="pill r">reach</span> points.</span></div>
     <div class="term"><b>Standing</b><span>Earned, unspendable reputation from enshrined casks. It only ever goes up — it's <span class="pill s">score</span>.</span></div>
     <div class="term"><b>Enshrine</b><span>Move a cask (fresh, or one already deployed) onto the standing stack for permanent standing. <b>Any</b> player can enshrine a deployed cask on a Hall line — the owner always gets the points.</span></div>
     <div class="term"><b>Route &amp; quality gate</b><span>The four sea lanes. Richer, farther routes (like Novgorod) only accept <b>higher-quality</b> beer.</span></div>
     <div class="term"><b>Goal</b><span>A scoring condition printed on a cask's standing face — it rewards you at game end for the shape of your empire.</span></div>
     <div class="term"><b>Twin</b><span>The private version of a grid action on your brewery board, used when a rival blocks the public cell.</span></div>
-    <div class="term"><b>Recipe book</b><span>Your private list of recipes. You can only brew a beer type you hold a recipe for; you collect more from the Market. Gruit is always in the book.</span></div>
+    <div class="term"><b>Recipe cards</b><span>Collected at the Market — each pays a big one-time <b>boon</b>, then its brew strip <b>tucks under your board's bottom edge</b> as a permanent recipe. You can only brew a type you hold a strip for; Gruit is always brewable. Soft cap of 6 strips.</span></div>
     <div class="term"><b>Demand market</b><span>Each beer type's current value. Enshrining banks that value as standing. It falls as a type is sold (deploy/enshrine) and rises on recipe-buys and Fair pumps — so timing matters.</span></div>
     <div class="term"><b>Hall</b><span>Cell C — where you enshrine casks for standing (the prestige sink). Distinct from the <b>kontore</b>, the reach destinations your Harbor ships to.</span></div>
   </div>
@@ -212,7 +214,7 @@
 </div>
 
 </div>
-<footer>Brewhouse of the Hanse · learn-to-play · v0.5 prototype — numbers still in balancing</footer>
+<footer>Brewhouse of the Hanse · learn-to-play · v0.6 prototype — numbers still in balancing</footer>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>if(window.lucide)lucide.createIcons();</script>
 </body>
