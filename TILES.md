@@ -44,7 +44,7 @@ A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATU
 ## B. Ship tiles — owned single-use carriers (~13 tiles)
 
 Built at the **Market** into a wharf slot, **bound to a destination** (inheriting its quality gate). Lifecycle **load → fill → sail:**
-- **Load** — via the **Harbor verb** (always available) or a **bonus free load when the ship's line fires** (so you're motivated to place ships on lines you run and to get ships out). You may load **your own** Ready/wharf casks or a **rival's wharf cask** (§ interaction in `RULES.md` §5).
+- **Load** — via the **Harbor verb** (always available) or a **bonus free load when the ship's line fires** (so you're motivated to place ships on lines you run and to get ships out). You load a **wharf** cask — **your own** or a **rival's** (§ interaction in `RULES.md` §5). *(A cask must be deployed to the wharf first — the gateway; the **Charter** is the only way to ship straight from a vessel.)*
 - **Sail** — the instant the ship is **full** (or you **launch it early** at the Harbor): every cask aboard is **delivered** to the bound destination (scores for its owner), and the **ship tile is consumed onto the Sailed-Ships track** (the end clock). Build another to ship again.
 
 | Ship | Capacity | Build cost ⚙ | Qty ⚙ |

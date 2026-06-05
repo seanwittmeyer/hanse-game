@@ -282,7 +282,7 @@ const NEUTRALS={
   crane   :{name:'Crane',         icon:'anchor',        act:'load a Ready cask onto a ship, free'},
   counting:{name:'Counting-House',icon:'coins',         act:'convert up to 2 goods G↔H'},
 };
-const NEUTRAL_SEED=['stall','cooper'];   // 2 seeded each game ⚙
+// 2 of these are seeded onto the wharf at setup, chosen at random each game (variety) ⚙
 
 // ---- UPGRADES: Rooms (capability) + Modifiers (asymmetric perks) ----
 const ROOMS={
@@ -322,7 +322,7 @@ const SHOP=[
 
 // ---- GOALS (deal 3 per player; best 2 score) ----
 const GOALS={
-  g1:{text:'+2 / distinct destination delivered to', fn:p=>2*new Set(p.delivered.map(d=>d.dest)).size},
+  g1:{text:'+2 / distinct beer type delivered',      fn:p=>2*new Set(p.delivered.map(d=>d.style)).size},
   g2:{text:'+2 / cask in your biggest kontor',       fn:p=>2*KONTORE.reduce((m,k)=>Math.max(m,deliveredAt(p,k)),0)},
   g3:{text:'+2 / Q3+ cask delivered',                fn:p=>2*p.delivered.filter(d=>d.q>=3).length},
   g4:{text:'+3 / ship you sailed',                   fn:p=>3*(p.shipsSailed||0)},
@@ -396,8 +396,10 @@ function freshState(n,names){
   const open=SLOTS.map(s=>s.id);
   const place=t=>{const id=open.shift();if(id)st.slots[id]=t;return !!id;};
   st.players.forEach(p=>place({type:'ship',owner:p.id,ship:'cog',dest:'bruges',load:[]}));
-  const nNeutral=Math.min(NEUTRAL_SEED.length,Math.max(0,open.length-2));
-  for(let i=0;i<nNeutral;i++)place({type:'neutral',b:NEUTRAL_SEED[i]});
+  // 2 neutral buildings, picked at random from the pool each game (variety), keeping ≥2 slots open.
+  const npool=Object.keys(NEUTRALS).slice();for(let i=npool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[npool[i],npool[j]]=[npool[j],npool[i]];}
+  const nNeutral=Math.min(2,Math.max(0,open.length-2));
+  for(let i=0;i<nNeutral;i++)place({type:'neutral',b:npool[i]});
   st.players.forEach(p=>{ if(open.length>2){ place({type:'cask',owner:p.id,style:'gruit',q:1}); p.vessels[0]=null; } });
   // any house whose Ready Gruit didn't fit the wharf keeps it in its vessel (deploy it turn 1).
   return st;
@@ -710,8 +712,8 @@ function charterDest(dest){const p=cur();snapshot();pay(p,CHARTER_COST);
   if(ref[0]==='v'){const i=+ref.slice(2);c=p.vessels[i];p.vessels[i]=null;}else{c=S.slots[ref];S.slots[ref]=null;}
   // A charter is a single-cask voyage on an outside hull — pricier per cask than owning a Cog, but it
   // delivers (scores + benefit), frees the slot/vessel (the relief valve), and — being a voyage — advances
-  // the Sailed-Ships clock, so leaning on it still drives the game toward its end.
-  p.shipsSailed=(p.shipsSailed||0)+1;p.delivered.push({style:c.style,q:c.q,dest});
+  // the Sailed-Ships clock. It is NOT your fleet, so it does not count for the "ships you sailed" goal.
+  p.delivered.push({style:c.style,q:c.q,dest});
   log(p.name+' charters a single voyage ('+costStr(CHARTER_COST)+') — '+styleShort(c.style)+' → '+DEST[dest].name+'. (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')',true);
   grantBenefit(p,dest,c.q);S.sailed++;afterSail('stops');
 }
