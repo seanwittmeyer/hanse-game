@@ -253,7 +253,7 @@
   <h2><span class="n">F</span>Destinations — Where You Ship Is the Lean</h2>
   <p class="lead">The two old value tracks are gone; <b>where you ship</b> is the volume-vs-prestige choice. Every destination is <b>open from the start</b> and differentiated by a <b>quality gate</b> (the only climb-limiter — better places want better beer) and a unique <b>benefit</b>. <b>The cask's owner always scores the delivery and picks any offered benefit — even when a rival shipped it.</b></p>
   <div class="routeboard" id="destBoard"></div>
-  <div class="note"><b>Reach</b> = your delivered casks across the kontore (value + majorities — the volume lean). <b>Prestige</b> = casks shipped to the <b>Hall</b> (the scarcity lean). They never convert; you lean, reading the board. Delivering to London / Bergen / Novgorod also hands you a <b>brewery upgrade</b> — so shipping makes you stronger, closing the loop <i>deliver → upgrade → brew better → deliver better</i>.</div>
+  <div class="note"><b>Reach</b> = your delivered casks across the kontore (value + majorities — the volume lean). <b>Prestige</b> = casks shipped to the <b>Hall</b> (the scarcity lean). They never convert; you lean, reading the board. Delivering to London / Bergen / Novgorod lets you <b>take an Upgrade from the Market's face-up display</b> (free) — so shipping makes you stronger, closing the loop <i>deliver → upgrade → brew better → deliver better</i>. You don't fully know which upgrades will be on offer when your cask arrives.</div>
 </section>
 
 <!-- SHIP TILES -->
@@ -281,7 +281,7 @@
 <!-- UPGRADES -->
 <section id="upgrades">
   <h2><span class="n">E</span>Upgrade Tiles — the Private Brewery Engine</h2>
-  <p class="lead">Where <b>depth</b> lives — installed on your brewery board. <b>Rooms</b> are permanent capability; <b>Modifiers</b> are asymmetric perks (these subsume v0.6's Privileges). <b>Most are earned by delivering</b> (London / Bergen / Novgorod hand them out), some bought at the Market — so your engine grows by shipping, and different players grow different engines.</p>
+  <p class="lead">Where <b>depth</b> lives — installed on your brewery board. <b>Rooms</b> are permanent capability; <b>Modifiers</b> are asymmetric perks (these subsume v0.6's Privileges). <b>They sit in a face-up Market display</b> (option B): <b>buy</b> one (pay its cost) <b>or earn</b> one free by delivering to <b>London / Bergen / Novgorod</b> — the same display, so what you can grab depends on what is face-up. Recipes &amp; ships are a separate always-available supply.</p>
   <h3 style="font-variant:small-caps;color:var(--green);margin:10px 0 4px">Rooms — capability</h3>
   <div class="gallery" id="roomGallery"></div>
   <h3 style="font-variant:small-caps;color:#6e4ea0;margin:18px 0 4px">Modifiers — asymmetric perks</h3>
@@ -322,9 +322,9 @@ function cubes(str){return str.replace(/G/g,G).replace(/H/g,H);}
 // ---- DESTINATIONS (kontore + the Hall) ----
 const destinations=[
   {cls:'bruges',  name:'Bruges',   role:'The Hub — wide, takes any beer (the volume on-ramp)', gate:'Q1', value:'low (≈ +2 ⚙)', benefit:'liquidity — gain goods', maj:'small'},
-  {cls:'london',  name:'London',   role:'The Steelyard — the engine destination',            gate:'Q2', value:'mid (≈ +3 ⚙)', benefit:'a brewery Upgrade', maj:'mid'},
-  {cls:'bergen',  name:'Bergen',   role:'The Monopoly — narrow &amp; contested',              gate:'Q2', value:'mid (≈ +3 ⚙)', benefit:'a Modifier + the richest majority', maj:'biggest'},
-  {cls:'novgorod',name:'Novgorod', role:'The Long Haul — premium only',                       gate:'Q3', value:'high (≈ +5 ⚙)', benefit:'top value + a Modifier', maj:'mid'},
+  {cls:'london',  name:'London',   role:'The Steelyard — the engine destination',            gate:'Q2', value:'mid (≈ +3 ⚙)', benefit:'take an Upgrade from the display', maj:'mid'},
+  {cls:'bergen',  name:'Bergen',   role:'The Monopoly — narrow &amp; contested',              gate:'Q2', value:'mid (≈ +3 ⚙)', benefit:'Upgrade (display) + richest majority', maj:'biggest'},
+  {cls:'novgorod',name:'Novgorod', role:'The Long Haul — premium only',                       gate:'Q3', value:'high (≈ +5 ⚙)', benefit:'top value + an Upgrade (display)', maj:'mid'},
   {cls:'hall',    name:'The Hall', role:'Prestige — out of commerce (the Westvleteren move)',  gate:'Q2', value:'prestige ∝ quality (≈ Q×2 ⚙)', benefit:'the scarcity payout', maj:'—'},
 ];
 document.getElementById('destBoard').innerHTML=destinations.map(d=>`

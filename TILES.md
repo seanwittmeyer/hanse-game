@@ -11,7 +11,7 @@
 - **Goods:** `G` = grain, `H` = hops. The only currency (no money; no spendable prestige).
 - **Faces:** infrastructure is single-face. **Cask tiles are single working face** now (type · quality · signature action); there is no separate "standing face" — a cask is **scored at its destination**, not flipped. (The v0.6 working↔standing flip is retired with the two value tracks.)
 - **The fire rule (one rule for the whole ring):** when a line is activated, the active player **may use each building on it** — a **cask** (its signature action), a **ship** (a free load), or a **neutral building** (its base action). All resolve **on the active player's turn, for the active player** — **no out-of-turn skims.** Cask & neutral actions are **free and public**.
-- **Acquisition:** recipes, ships, and (some) upgrades enter from a **face-up Market row**, paid in goods at the **Market** cell. Casks are the exception — you **brew** them from a recipe you hold, out of the shared supply.
+- **Acquisition (Market, option B):** **recipes & ships** are an *always-available* supply; **upgrades** sit in a small **face-up display** (a row of ~4 ⚙ drawn from a shuffled Upgrade supply, refilling as taken). You **buy** from the display (pay its cost) **or earn** one free by delivering to London/Bergen/Novgorod — the *same* display, so what you can grab depends on what is face-up. Casks are the exception — you **brew** them from a recipe you hold.
 - **The lean (volume vs prestige) is a destination choice,** not a track: ship to a **kontor** for trade value + majorities, or to the **Hall** for prestige. Coupled by shared casks, scarce wharf slots, scarce ships, and the one shared end clock.
 - **End clock:** the **Sailed-Ships track fills** → finish the round → score.
 
@@ -122,9 +122,9 @@ All **open from the start** (route-lane tiles cut — variety over limitation). 
 | Destination | Gate ⚙ | Delivery value ⚙ | Benefit (owner picks where offered) ⚙ | Majority ⚙ |
 |---|---|---|---|---|
 | **Bruges** (Hub) | Q1 | low (e.g. +2) | **liquidity** — gain goods | small |
-| **London** (Steelyard) | Q2 | mid (e.g. +3) | **a brewery Upgrade** (Room/Modifier) | mid |
-| **Bergen** (Monopoly) | Q2 | mid (e.g. +3) | **a Modifier** + the richest **majority** | **biggest** |
-| **Novgorod** (Long Haul) | Q3 | **high** (e.g. +5) | premium-only — top value **+ a Modifier** | mid |
+| **London** (Steelyard) | Q2 | mid (e.g. +3) | **take an Upgrade from the display** | mid |
+| **Bergen** (Monopoly) | Q2 | mid (e.g. +3) | **take an Upgrade from the display** + richest **majority** | **biggest** |
+| **Novgorod** (Long Haul) | Q3 | **high** (e.g. +5) | premium — top value **+ take an Upgrade from the display** | mid |
 | **The Hall** (Prestige) | Q2 | **prestige** ∝ quality (e.g. Q×2) | out of commerce — the scarcity/Westvleteren payout | — |
 
 > **Reach** = your delivered casks across the kontore (value + majorities, the volume lean). **Prestige** = casks shipped to the Hall (the scarcity lean). They never convert; the lean is chosen as you read the board.

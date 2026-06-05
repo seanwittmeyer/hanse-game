@@ -141,9 +141,9 @@
   <table>
     <tr><th>Destination</th><th>Character</th><th>Gate ⚙</th><th>Delivery value ⚙</th><th>Benefit / majority ⚙</th></tr>
     <tr><td><b>Bruges</b> (Hub)</td><td>Wide; takes any beer</td><td>Q1</td><td>low (≈ +2)</td><td>liquidity (goods) · small majority</td></tr>
-    <tr><td><b>London</b> (Steelyard)</td><td>The engine destination</td><td>Q2</td><td>mid (≈ +3)</td><td>a brewery Upgrade · mid majority</td></tr>
-    <tr><td><b>Bergen</b> (Monopoly)</td><td>Narrow, contested</td><td>Q2</td><td>mid (≈ +3)</td><td>a Modifier · the <b>richest</b> majority</td></tr>
-    <tr><td><b>Novgorod</b> (Long Haul)</td><td>Premium only, biggest value</td><td>Q3</td><td>high (≈ +5)</td><td>a Modifier · mid majority</td></tr>
+    <tr><td><b>London</b> (Steelyard)</td><td>The engine destination</td><td>Q2</td><td>mid (≈ +3)</td><td>take an Upgrade from the display · mid majority</td></tr>
+    <tr><td><b>Bergen</b> (Monopoly)</td><td>Narrow, contested</td><td>Q2</td><td>mid (≈ +3)</td><td>take an Upgrade from the display · the <b>richest</b> majority</td></tr>
+    <tr><td><b>Novgorod</b> (Long Haul)</td><td>Premium only, biggest value</td><td>Q3</td><td>high (≈ +5)</td><td>take an Upgrade from the display · mid majority</td></tr>
     <tr><td><b>The Hall</b> (Prestige)</td><td>Out of commerce</td><td>Q2</td><td>prestige ∝ quality (≈ Q×2)</td><td>the scarcity payout · no majority</td></tr>
   </table>
   <h3>Your Brewery (private, untouchable)</h3>
@@ -239,12 +239,26 @@
 
 <section id="brewery">
   <h2><span class="nm">11</span>The Brewery &amp; Upgrades</h2>
-  <p>Your brewery is private and safe. It holds your <b>vessels</b> (start 2, cap 4 — throughput), your <b>recipes</b>, and your <b>upgrade slots</b>. Upgrades are the engine-building / "get ahead" layer, and where strategies diverge:</p>
-  <ul>
-    <li><b>Rooms</b> (permanent capability): <b>Extra Vessel</b> (a brewing lane), <b>Aging Cellar</b> (faster maturation; unlocks the L5 summit), <b>Warehouse</b> (+4 storage), <b>Quay</b> (a stronger Harbor), <b>Cooperage</b> (a free load each turn). ⚙</li>
-    <li><b>Modifiers</b> (asymmetric perks — these subsume v0.6's Privileges): e.g. <em>"when you gain hops, +1 extra,"</em> <em>"your ships sail with +1 capacity,"</em> <em>"+1 good when you deliver to a kontor,"</em> <em>"+1 advance point at the Cellar."</em> ⚙</li>
-  </ul>
-  <p>Most upgrades are <b>earned by delivering</b> (the London / Bergen / Novgorod benefits), some bought at the Market. <b>Goals</b> (§14) reward different brewery/delivery shapes, so the winning engine varies by game — the <em>Great Western Trail</em> ideal that a blend, chosen as you read the board, beats a one-note rush.</p>
+  <p>Your brewery is private and safe. It holds your <b>vessels</b> (start 2, cap 4 — throughput), your <b>recipes</b>, and your <b>upgrades</b>. Upgrades are the engine-building / "get ahead" layer and where strategies diverge. They come from the Market's <b>face-up Upgrade display</b> (§7): <b>buy</b> one (pay its goods cost) <b>or earn</b> one free by delivering to London / Bergen / Novgorod (§10). Two families — <b>Rooms</b> (capability) and <b>Modifiers</b> (asymmetric perks).</p>
+  <h3>Upgrade reference — every variant ⚙</h3>
+  <table>
+    <tr><th>Room (capability)</th><th>Effect ⚙</th><th>Buy ⚙</th></tr>
+    <tr><td><b>Extra Vessel</b></td><td>+1 brewing lane (start 2, cap <b>4</b>) — repeatable</td><td>2 G</td></tr>
+    <tr><td><b>Aging Cellar</b></td><td>maturation <b>−1 step</b>; <b>unlocks the L5 summit</b></td><td>3 G</td></tr>
+    <tr><td><b>Warehouse</b></td><td>goods storage <b>8 → 12</b></td><td>2 G</td></tr>
+    <tr><td><b>Quay</b></td><td>load <b>2 casks</b> in one Harbor visit</td><td>3 G</td></tr>
+    <tr><td><b>Cooperage</b></td><td><b>+1 cask loaded</b> per Harbor visit (stacks with Quay)</td><td>2 G</td></tr>
+  </table>
+  <table>
+    <tr><th>Modifier (asymmetric perk)</th><th>Effect ⚙</th><th>Buy ⚙</th></tr>
+    <tr><td><b>Granary Right</b></td><td>gain grain → <b>+1 extra</b></td><td>2 G</td></tr>
+    <tr><td><b>Hop Garden</b></td><td>gain hops → <b>+1 extra</b></td><td>2 G</td></tr>
+    <tr><td><b>Royal Patent</b></td><td>your ships sail with <b>+1 capacity</b></td><td>3 G</td></tr>
+    <tr><td><b>Staple Right</b></td><td><b>+1 good</b> when you deliver to a kontor</td><td>3 G</td></tr>
+    <tr><td><b>Guild Seat</b></td><td><b>+1 advance point</b> at the Cellar</td><td>2 G</td></tr>
+    <tr><td><b>Burgher Status</b></td><td><b>+1 presence</b> at every kontor you've reached (majority help)</td><td>3 G</td></tr>
+  </table>
+  <p><b>Goals</b> (§14) reward different brewery/delivery shapes, so the winning engine varies by game — the <em>Great Western Trail</em> ideal that a blend, chosen as you read the board, beats a one-note rush.</p>
 </section>
 
 <section id="goods">
