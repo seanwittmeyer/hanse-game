@@ -1,4 +1,4 @@
-# Brewhouse of the Hanse — Components & Tile Deck (v0.7 — "The Wharf")
+# Brewhouses of the Hanse — Components & Tile Deck (v0.7 — "The Wharf")
 
 > Manifest for the v0.7 reel-in (`DESIGN.md` §21, 2026-06-05 — **supersedes v0.6/§20 where they conflict**). **All counts and values are placeholders ⚙;** the goal here is to enumerate *what objects exist and what each does*. Anything ⚙ is a tuning dial; ❓ is open.
 >

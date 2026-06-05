@@ -1,4 +1,4 @@
-# Brewhouse of the Hanse — Turn & Round Economy (v0.7 — "The Wharf")
+# Brewhouses of the Hanse — Turn & Round Economy (v0.7 — "The Wharf")
 
 > Operational rules. Numbers are placeholders ⚙. **v0.7 is a ground-up reel-in to *Great Western Trail / Distilled* weight.** It keeps what was loved — the shared 2×2 grid, owned/transient tiles in the perimeter ring, the dual-role cask, the merchant-shipping fantasy, and the theme — and sheds about half the rules. The whole game is now **one legible production loop, walked on the grid: Source → Brew → Age → Ship.** A brewed cask is the hero tile: it matures privately, then sits on the shared **wharf** as a public **action-building** *and* your cargo-in-waiting, then **ships to a destination** for points and leaves. The two old value tracks (reach/standing) are gone — **the volume-vs-prestige lean now lives in *where you ship*.** Supersedes v0.6 (`DESIGN.md` §21, 2026-06-05).
 

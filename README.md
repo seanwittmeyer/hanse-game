@@ -1,4 +1,4 @@
-# Brewhouse of the Hanse
+# Brewhouses of the Hanse
 
 A theme-first **medium euro** for **2–5 players** (~45–60 min at 2p). It's c. 1350: you run a Hanseatic **merchant brewing house**. The whole game is **one legible loop — Source → Brew → Age → Ship — walked on a shared 2×2 action grid.** A brewed **cask** is the hero: it matures in your private brewery, then sits on the shared **wharf** (the perimeter ring) as a public **action-building** *and* your cargo-in-waiting, then **ships to a destination** for points and leaves. Where you ship is the choice — the **kontore** (volume & majorities) or the **Hall** (prestige). No dice, no money; goods are the only currency. *(Prototype — **v0.7 "The Wharf"**; all numbers are tunable `⚙` placeholders.)*
 

@@ -1,4 +1,4 @@
-# Working Title: *Brewhouse of the Hanse*
+# Working Title: *Brewhouses of the Hanse*
 
 > A theme-first medium euro about a merchant brewing house in the Hanseatic League. You brew beer — hopped beer is the cargo that survives the voyage — and push it across the Baltic and North Sea trade network. **One legible loop — Source → Brew → Age → Ship — walked on a shared grid;** a brewed cask is a dual-role tile (engine on the shared wharf, then points when shipped); ships are owned infrastructure; **where you ship is the volume-vs-prestige choice.**
 >

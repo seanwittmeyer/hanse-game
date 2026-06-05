@@ -1,4 +1,4 @@
-# Brewhouse of the Hanse — Tile List (v0.7 — "The Wharf")
+# Brewhouses of the Hanse — Tile List (v0.7 — "The Wharf")
 
 > The full deck. Derived from the locked architecture in `DESIGN.md` (**§21, v0.7 — supersedes v0.6/§20 where they conflict**). **Every number is a placeholder ⚙** — this fixes *what each tile is and does*, not final balance. **Five tile families (A casks · B ships · C neutral buildings · D recipes · E upgrades) + the destination board (F) + goals (G).** Casks (A) are the heart; everything else is the lean economy around the **Source → Brew → Age → Ship** loop.
 >

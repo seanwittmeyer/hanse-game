@@ -11,7 +11,7 @@
 **A change is never local.** This is a tightly-coupled euro game: theme, mechanics, components, and the published pages all reinforce each other. Before touching anything, build the whole picture — a tweak to one number or rule ripples through scoring balance, the theme's logic, the component counts, and several docs. If you can't explain how a change affects each axis below, you don't understand it yet.
 
 ### What the game is
-*Brewhouse of the Hanse* — a 2–5p medieval-Hanseatic brewing euro (c. 1350), **medium / *Great Western Trail*–*Distilled* weight** (v0.7 reeled it in from a Lacerda-grade v0.6). You run a merchant brewing house and walk **one loop on a shared 2×2 grid: Source → Brew → Age → Ship.** No dice, no money (goods are the only currency), no spendable prestige. *(v0.7 "The Wharf" — see `DESIGN.md` §21.)*
+*Brewhouses of the Hanse* — a 2–5p medieval-Hanseatic brewing euro (c. 1350), **medium / *Great Western Trail*–*Distilled* weight** (v0.7 reeled it in from a Lacerda-grade v0.6). You run a merchant brewing house and walk **one loop on a shared 2×2 grid: Source → Brew → Age → Ship.** No dice, no money (goods are the only currency), no spendable prestige. *(v0.7 "The Wharf" — see `DESIGN.md` §21.)*
 
 ### The spine (internalize this — everything hangs off it)
 - **The loop IS the grid, and the forced-move circuit walks it.** Cells: **A Market (Source) · B Brewhouse (Brew) · D Cellar (Age) · C Harbor (Ship)**; the clockwise circuit A→B→D→C→A = Source→Brew→Age→Ship. A turn = move to an adjacent cell, activate its row XOR column, resolve up to 4 stops (cap·cell·cell·cap) **in any (player-chosen) order**. Both cells fire; **cells are never blocked** (no twins). Every base verb always works; ring buildings only *add*.

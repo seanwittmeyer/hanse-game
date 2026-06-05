@@ -3,349 +3,358 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouse of the Hanse — Print &amp; Play Cut Sheet</title>
+<title>Brewhouses of the Hanse — Print &amp; Play (Letter landscape)</title>
 <style>
-  :root{--ink:#2b2018;--parch:#f3e9d2;--line:#333;--gold:#b8860b}
+  :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
+    --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;}
   *{box-sizing:border-box}
   body{margin:0;background:#e7e2d6;color:var(--ink);font-family:"Iowan Old Style",Georgia,serif}
   /* ---- screen controls ---- */
   .bar{position:sticky;top:0;z-index:10;background:var(--ink);color:var(--parch);padding:10px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-  .bar h1{font-size:1.1rem;margin:0;font-variant:small-caps;letter-spacing:.5px}
+  .bar h1{font-size:1.05rem;margin:0;font-variant:small-caps;letter-spacing:.5px}
   .bar a{color:var(--gold);text-decoration:none;font-size:.85rem}
   .bar button{font-family:inherit;cursor:pointer;border:none;border-radius:6px;padding:6px 13px;font-weight:bold;background:var(--gold);color:var(--ink)}
   .bar .seg{display:inline-flex;border:1px solid var(--gold);border-radius:6px;overflow:hidden}
   .bar .seg button{border-radius:0;background:transparent;color:var(--parch);font-weight:normal}
   .bar .seg button.on{background:var(--gold);color:var(--ink)}
   .note{font-size:.78rem;opacity:.85}
-  /* ---- the sheet ---- */
-  .sheet{background:#fff;margin:16px auto;padding:.4in;width:24in;box-shadow:0 3px 14px rgba(0,0,0,.25)}
-  .calib{display:flex;align-items:center;gap:10px;margin-bottom:.18in;font-size:.13in}
-  .calib .box{width:1in;height:1in;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.1in;color:#666}
-  .famlabel{width:100%;font-variant:small-caps;font-weight:bold;font-size:.2in;color:var(--ink);border-bottom:1px solid var(--gold);margin:.16in 0 .06in;letter-spacing:.5px}
+  /* ====================================================================
+     PAGE = US Letter, LANDSCAPE (11in × 8.5in). Printable area ≈ 10.4 × 7.9in.
+     ==================================================================== */
+  @media print{ @page{size:letter landscape;margin:.3in} }
+  .page{width:10.4in;background:#fff;margin:14px auto;padding:.18in;box-shadow:0 3px 14px rgba(0,0,0,.25);position:relative}
+  .page.flow{min-height:auto}                 /* tile sheets flow across pages */
+  .page.fixed{height:7.9in;break-after:page}  /* boards: exactly one landscape page */
+  .calib{display:flex;align-items:center;gap:10px;margin-bottom:.12in;font-size:.12in}
+  .calib .box{width:1in;height:1in;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.1in;color:#666;flex:0 0 auto}
+  .famlabel{width:100%;font-variant:small-caps;font-weight:bold;font-size:.17in;color:var(--ink);border-bottom:1px solid var(--gold);margin:.14in 0 .06in;letter-spacing:.4px;break-after:avoid}
+  .famlabel .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.1in;color:var(--ink2)}
   .grid{display:flex;flex-wrap:wrap;gap:0}
-  /* ---- tiles (cut lines = thin borders; full-bleed colour to each edge) ---- */
+  /* ---- TILES — 1.25in squares, cut lines = borders, colour bleeds to the edge ---- */
   .tile{width:1.25in;height:1.25in;border:.3pt solid var(--line);background:var(--c,#777);color:#fff;
-    position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:.07in;overflow:hidden;
-    text-shadow:0 1px 1px rgba(0,0,0,.45)}
+    position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:.06in;overflow:hidden;
+    text-shadow:0 1px 1.5px rgba(0,0,0,.5);break-inside:avoid}
   .tile .ic{width:1em;height:1em;vertical-align:-.15em}
   .tile svg{stroke-width:2}
-  .t-top{display:flex;align-items:center;gap:.04in;font-size:.12in;font-weight:bold;line-height:1.05}
-  .t-top .bigic svg,.t-top .bigic .ic{width:.32in;height:.32in;stroke-width:1.7}
-  .t-nm{font-variant:small-caps}
-  .t-badge{position:absolute;top:.05in;right:.06in;background:#fff;color:#000;border-radius:.1in;font-size:.1in;font-weight:bold;padding:0 .05in;text-shadow:none}
-  .t-sub{font-size:.1in;opacity:.95}
-  .t-bot{display:flex;align-items:center;gap:.03in;font-size:.13in}
-  .pip{display:inline-block;width:.08in;height:.08in;border-radius:50%;border:1px solid rgba(255,255,255,.8);margin-right:.02in}
-  .pip.on{background:#fff}
-  .g,.h{width:.13in;height:.13in;vertical-align:-.02in}
-  /* goods tokens */
-  .tok{width:.7in;height:.7in;border:.3pt solid var(--line);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;background:var(--c);font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4)}
+  /* big card-corner QUALITY index (the cask's point value — readable when fanned/stacked) */
+  .q{position:absolute;top:-.03in;left:.02in;font-weight:900;font-size:.62in;line-height:1;letter-spacing:-.03in}
+  .q .qx{font-size:.13in;font-weight:bold;vertical-align:.34in;margin-left:.01in}
+  .t-nm{position:absolute;top:.05in;right:.07in;max-width:.74in;text-align:right;font-variant:small-caps;font-weight:bold;font-size:.135in;line-height:1.0}
+  .t-nm .bi{display:block;font-size:.18in;line-height:1}
+  .t-act{font-size:.1in;line-height:1.1;background:rgba(0,0,0,.22);border-radius:.04in;padding:.025in .04in;margin-bottom:.03in;display:flex;align-items:center;gap:.03in}
+  .t-act svg,.t-act .ic{width:.13in;height:.13in;flex:0 0 auto}
+  .t-cost{font-size:.12in;font-weight:bold;display:flex;align-items:center;gap:.06in;line-height:1}
+  .t-cost .gc{display:inline-flex;align-items:center;gap:.01in}
+  .t-cost svg,.t-cost .ic{width:.15in;height:.15in}
+  .g{color:#ffe08a} .h{color:#bfe39a}
+  /* generic tiles (ships · neutrals · recipes · upgrades · goals) — icon + name + sub, with a big corner # when useful */
+  .tile.gen{justify-content:flex-start;text-shadow:0 1px 1px rgba(0,0,0,.4)}
+  .gen .g-head{display:flex;align-items:center;gap:.05in;font-variant:small-caps;font-weight:bold;font-size:.135in;line-height:1.05}
+  .gen .g-head .bigic svg,.gen .g-head .bigic .ic{width:.3in;height:.3in;stroke-width:1.7;flex:0 0 auto}
+  .gen .g-sub{font-size:.108in;line-height:1.18;margin-top:.05in;opacity:.97}
+  .gen .g-big{position:absolute;bottom:.04in;right:.07in;font-weight:900;font-size:.5in;line-height:.8;opacity:.9}
+  .gen .g-big small{font-size:.11in;font-weight:bold;vertical-align:.3in}
+  /* goods tokens (or use cubes) */
+  .tok{width:.7in;height:.7in;border:.3pt solid var(--line);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;background:var(--c);font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4);break-inside:avoid}
   .tok svg{width:.26in;height:.26in}
-  /* ---- duplex backs (v0.7: all tiles are single-face, so backs print blank) ---- */
-  .sheet{position:relative}
-  .regmark{position:absolute;width:.3in;height:.3in;pointer-events:none;z-index:3}
+  .tile.blank{background:#fff;color:#9a9a9a;border-color:#bdbdbd;text-shadow:none}
+  .tok.blank{background:#fff;border-color:#bdbdbd;border-style:dashed;color:#bbb;text-shadow:none}
+  /* duplex registration marks (backs print blank — v0.7 tiles are single-face) */
+  .regmark{position:absolute;width:.26in;height:.26in;pointer-events:none;z-index:3}
   .regmark::before,.regmark::after{content:"";position:absolute;background:#000}
   .regmark::before{left:50%;top:0;width:.6pt;height:100%;transform:translateX(-50%)}
   .regmark::after{top:50%;left:0;height:.6pt;width:100%;transform:translateY(-50%)}
-  .rm-tl{top:.04in;left:.04in}.rm-tr{top:.04in;right:.04in}.rm-bl{bottom:.04in;left:.04in}.rm-br{bottom:.04in;right:.04in}
-  /* flip each grid for mirror positioning, then counter-flip each tile so its content reads normally */
-  .sheet.backs .grid{transform:scaleX(-1)}
-  .sheet.backs .tile,.sheet.backs .tok{transform:scaleX(-1)}
-  .t-stand{font-size:.4in;font-weight:bold;display:flex;align-items:center;justify-content:center;gap:.04in;line-height:1;margin:.04in 0}
-  .t-stand svg,.t-stand .ic{width:.34in;height:.34in}
-  .t-goal{font-size:.098in;line-height:1.1;opacity:.96}
-  .tile.blank{background:#fff;color:#9a9a9a;border-color:#bdbdbd;text-shadow:none}
-  .tok.blank{background:#fff;border-color:#bdbdbd;border-style:dashed;color:#bbb;text-shadow:none}
-  /* ---- player boards (one per colour) ---- */
-  /* --T = a tile space: holds the 1.25in square tiles (casks, upgrades, recipes, goals, brew stages) */
-  .sheet.boardsheet{width:auto;background:transparent;box-shadow:none;padding:0;margin:0}
-  .board{--pc:#7c2128;--T:1.3in;width:10.5in;margin:.2in auto;background:var(--parch);color:var(--ink);
-    border:2.5px solid var(--pc);border-radius:.14in;padding:.24in;box-shadow:0 3px 14px rgba(0,0,0,.25);
-    display:flex;flex-direction:column;gap:.14in;position:relative}
+  .rm-tl{top:.03in;left:.03in}.rm-tr{top:.03in;right:.03in}.rm-bl{bottom:.03in;left:.03in}.rm-br{bottom:.03in;right:.03in}
+  .page.backs .grid{transform:scaleX(-1)} .page.backs .tile,.page.backs .tok{transform:scaleX(-1)}
+  /* ====================================================================
+     PLAYER BOARD — fits one Letter-landscape page (10.4 × 7.9in), 2-column
+     ==================================================================== */
+  .board{--pc:#7c2128;height:7.54in;background:var(--parch);color:var(--ink);border:2.5px solid var(--pc);
+    border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in}
   .board svg,.board .ic{stroke-width:1.8}
-  /* header: crest · title · storage */
-  .pb-head{display:flex;align-items:stretch;gap:.18in}
-  .crest{width:.9in;flex:0 0 auto;border-radius:.1in;background:var(--pc);color:#fff;
-    display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.35)}
-  .crest svg,.crest .ic{width:.54in;height:.54in;stroke-width:1.6}
-  .pb-title{flex:1;display:flex;flex-direction:column;justify-content:center;gap:.04in}
-  .pb-name{font-variant:small-caps;font-weight:bold;font-size:.26in;color:var(--pc);line-height:1.02;letter-spacing:.5px}
-  .pb-sub{font-size:.11in;color:var(--ink2,#5b4a37);font-style:italic}
-  .twinchips{display:flex;gap:.08in;margin-top:.05in;flex-wrap:wrap}
-  .twinchip{border:1px solid var(--pc);border-radius:.05in;padding:.02in .07in;font-size:.092in;color:var(--ink);
-    background:rgba(255,255,255,.5);display:flex;align-items:center;gap:.04in;line-height:1.1}
-  .twinchip b{color:var(--pc);font-variant:small-caps}
-  .twinchip svg,.twinchip .ic{width:.13in;height:.13in}
-  .pb-storage{flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:.06in}
-  .pb-lbl{font-variant:small-caps;font-weight:bold;font-size:.12in;letter-spacing:.4px;color:var(--pc);
-    display:flex;align-items:center;gap:.05in}
-  .pb-lbl svg,.pb-lbl .ic{width:.15in;height:.15in}
-  .pb-lbl .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.092in;color:var(--ink2,#5b4a37)}
-  .boxrow{display:flex;gap:.05in}
-  .gbox{width:.38in;height:.38in;border:1.3px solid var(--pc);border-radius:.04in;background:rgba(255,255,255,.45);
-    display:flex;align-items:center;justify-content:center;color:var(--pc)}
-  .gbox svg,.gbox .ic{width:.18in;height:.18in;opacity:.45}
-  /* section header */
-  .pb-sect{font-variant:small-caps;font-weight:bold;font-size:.13in;letter-spacing:.4px;color:var(--pc);
-    border-bottom:1px solid var(--pc);padding-bottom:.03in;margin-bottom:.07in;display:flex;align-items:center;gap:.05in}
-  .pb-sect svg,.pb-sect .ic{width:.16in;height:.16in}
-  .pb-sect .hint{font-variant:normal;font-weight:normal;font-style:italic;font-size:.098in;color:var(--ink2,#5b4a37);margin-left:auto}
-  /* standing track — full width, cells flex to fill (never overflows) */
-  .standtrack{display:flex;border:1.3px solid var(--pc);border-radius:.05in;overflow:hidden}
-  .stcell{flex:1;text-align:center;font-size:.1in;padding:.06in 0;border-right:1px solid rgba(0,0,0,.18);
-    color:var(--ink);background:rgba(255,255,255,.4)}
-  .stcell:last-child{border-right:none}
-  .stcell.zero{background:rgba(0,0,0,.12);font-weight:bold}
-  .stcell.tens{background:var(--pc);color:#fff;font-weight:bold}
-  /* maturation track — vessel rows, each = label + 4 connected tile-sized stage spaces */
-  .vessel{display:flex;align-items:stretch;gap:.1in;margin-bottom:.1in}
-  .vessel:last-child{margin-bottom:0}
-  .vtag{flex:0 0 .85in;display:flex;align-items:center;font-variant:small-caps;font-weight:bold;font-size:.115in;color:var(--pc)}
-  .stages{flex:1;display:flex;position:relative}
-  .stage{flex:1;min-width:var(--T);height:var(--T);border:1.4px solid var(--pc);background:rgba(255,255,255,.5);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative}
-  .stage:not(:last-child){border-right:none}
-  .stage .sn{font-variant:small-caps;font-weight:bold;font-size:.12in;color:var(--ink)}
-  .stage .sd{font-size:.088in;color:var(--ink2,#5b4a37);line-height:1.05}
-  .stage.age{background:rgba(184,134,11,.16)}
-  .stage.ready{background:rgba(74,107,58,.16)}
-  .stage .arr{position:absolute;right:-.085in;top:50%;transform:translateY(-50%);z-index:3;color:var(--pc);font-size:.18in;font-weight:bold}
-  .agepips{display:flex;gap:.03in;margin-top:.04in}
-  .agepips .p{width:.075in;height:.075in;border-radius:50%;background:var(--pc)}
-  .stages.locked .stage{color:rgba(0,0,0,.28);border-color:rgba(0,0,0,.3);
-    background:repeating-linear-gradient(45deg,rgba(0,0,0,.05),rgba(0,0,0,.05) .09in,transparent .09in,transparent .18in)}
-  .stages.locked .stage .arr,.stages.locked .agepips{visibility:hidden}
-  .lockoverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:.08in;z-index:4;
-    font-style:italic;font-size:.12in;color:var(--pc);background:rgba(243,233,210,.66)}
-  .lockoverlay svg,.lockoverlay .ic{width:.2in;height:.2in}
-  .gruitnote{font-size:.095in;font-style:italic;color:var(--ink2,#5b4a37);margin-top:.07in;line-height:1.25}
-  /* rooms + casks — two labelled groups pushed to the band edges */
-  .pb-cols{display:flex;justify-content:space-between;gap:.3in}
-  .slotrow{display:flex;gap:.1in}
-  .pslot{width:var(--T);height:var(--T);border:1.4px dashed var(--pc);border-radius:.06in;background:rgba(255,255,255,.4);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.095in;text-align:center;gap:.03in}
-  .pslot svg,.pslot .ic{width:.28in;height:.28in;opacity:.55}
-  .pslot.cask{border-style:solid}
-  /* recipe + goal — full-width strips of tile-sized slots */
-  .strip{display:flex;gap:.1in}
-  .rslot{flex:1;min-width:var(--T);height:var(--T);border:1.4px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.4);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.095in;text-align:center;gap:.03in}
-  .rslot svg,.rslot .ic{width:.26in;height:.26in;opacity:.6}
-  .rslot.printed{background:var(--pc);color:#fff}
-  .rslot.printed svg,.rslot.printed .ic{opacity:.95}
-  .rslot.empty{border-style:dashed;color:rgba(0,0,0,.45)}
-  .goalslot{flex:1;min-width:var(--T);height:var(--T);border:1.4px dashed var(--pc);border-radius:.06in;
-    background:rgba(184,134,11,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;
-    color:var(--pc);font-size:.095in;text-align:center;gap:.03in}
-  .goalslot svg,.goalslot .ic{width:.24in;height:.24in;opacity:.7}
-  .goalslot.best{border-style:solid;background:rgba(184,134,11,.22);font-weight:bold}
-  /* upgrade slots — Room OR Modifier */
-  .floorrow{display:flex;gap:.12in}
-  .fslot{width:var(--T);height:var(--T);border:1.6px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.42);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;color:var(--pc);font-size:.092in;text-align:center}
-  .fslot .duo{display:flex;align-items:center;gap:.06in;opacity:.6}
-  .fslot .duo svg,.fslot .duo .ic{width:.24in;height:.24in}
-  .fslot .duo .sl{font-size:.12in;font-weight:bold}
-  /* leftover-zone styles retained for layout compatibility */
-  .tuckzone{margin:.06in -.24in -.24in;padding:.08in .24in .12in;border-top:1.5px dashed var(--pc);
-    background:repeating-linear-gradient(90deg,rgba(0,0,0,.025),rgba(0,0,0,.025) .9in,transparent .9in,transparent 1.8in)}
-  .tuckrow{display:flex;gap:.1in}
-  .tslot{flex:1;min-width:1.2in;height:.62in;border:1.3px solid var(--pc);border-top:none;border-radius:0 0 .07in .07in;
-    background:rgba(255,255,255,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:.02in;color:var(--pc);font-size:.092in;text-align:center}
-  .tslot svg,.tslot .ic{width:.2in;height:.2in;opacity:.6}
-  .tslot.printed{background:var(--pc);color:#fff}
-  .tslot.printed svg,.tslot.printed .ic{opacity:.95}
-  .tslot.empty{border-style:dashed;color:rgba(0,0,0,.45)}
-  @media print{
-    .no-print{display:none}
-    body{background:#fff}
-    .sheet{margin:0;box-shadow:none;width:auto;padding:0}
-    .board{break-after:page;box-shadow:none;border-width:2px;margin:0 auto}
-    .board:last-child{break-after:auto}
-  }
+  .pb-head{display:flex;align-items:stretch;gap:.16in}
+  .crest{width:.8in;flex:0 0 auto;border-radius:.08in;background:var(--pc);color:#fff;display:flex;align-items:center;justify-content:center}
+  .crest svg,.crest .ic{width:.48in;height:.48in;stroke-width:1.6}
+  .pb-title{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .pb-name{font-variant:small-caps;font-weight:bold;font-size:.26in;color:var(--pc);line-height:1}
+  .pb-sub{font-size:.105in;color:var(--ink2);font-style:italic}
+  .pb-storage{flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:.05in}
+  .pb-lbl{font-variant:small-caps;font-weight:bold;font-size:.115in;letter-spacing:.3px;color:var(--pc);display:flex;align-items:center;gap:.05in}
+  .pb-lbl .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.088in;color:var(--ink2)}
+  .boxrow{display:flex;gap:.04in;flex-wrap:wrap;max-width:3.2in}
+  .gbox{width:.32in;height:.32in;border:1.2px solid var(--pc);border-radius:.03in;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;color:var(--pc)}
+  .gbox svg,.gbox .ic{width:.15in;height:.15in;opacity:.45}
+  .pb-body{flex:1;display:flex;gap:.16in;min-height:0}
+  .pb-col{display:flex;flex-direction:column;gap:.1in}
+  .pb-col.left{flex:0 0 5.35in} .pb-col.right{flex:1}
+  .pb-sect{font-variant:small-caps;font-weight:bold;font-size:.12in;letter-spacing:.3px;color:var(--pc);
+    border-bottom:1px solid var(--pc);padding-bottom:.02in;margin-bottom:.04in;display:flex;align-items:center;gap:.05in}
+  .pb-sect svg,.pb-sect .ic{width:.15in;height:.15in}
+  .pb-sect .hint{font-variant:normal;font-weight:normal;font-style:italic;font-size:.088in;color:var(--ink2);margin-left:auto}
+  /* a vessel = a cask slot (1.25in) + a maturation step track */
+  .vessel{display:flex;align-items:center;gap:.1in;margin-bottom:.08in}
+  .vtag{flex:0 0 .7in;font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--pc);line-height:1.05}
+  .vslot{width:1.25in;height:1.25in;flex:0 0 auto;border:1.5px solid var(--pc);border-radius:.05in;background:rgba(255,255,255,.5);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.092in;text-align:center;gap:.02in}
+  .vslot svg,.vslot .ic{width:.26in;height:.26in;opacity:.5}
+  .vtrack{flex:1;display:flex;align-items:center;gap:.05in}
+  .vstep{flex:1;height:.5in;border:1.3px solid var(--pc);border-radius:.04in;background:rgba(255,255,255,.45);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:.082in;color:var(--ink2);line-height:1.0;position:relative}
+  .vstep .sn{font-variant:small-caps;font-weight:bold;font-size:.092in;color:var(--ink)}
+  .vstep.age{background:rgba(184,134,11,.18)} .vstep.ready{background:rgba(74,107,58,.2)}
+  .vstep .arr{position:absolute;right:-.07in;top:50%;transform:translateY(-50%);color:var(--pc);font-weight:bold;font-size:.13in;z-index:2}
+  .vessel.locked .vslot,.vessel.locked .vstep{border-style:dashed;color:rgba(0,0,0,.32);
+    background:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 .08in,transparent .08in .16in)}
+  .vessel.locked .vtag::after{content:" — needs Extra Vessel";font-variant:normal;font-weight:normal;font-style:italic;font-size:.08in;color:var(--ink2)}
+  .strip{display:flex;gap:.08in;flex-wrap:wrap}
+  .pslot{width:1.25in;height:1.25in;border:1.4px dashed var(--pc);border-radius:.05in;background:rgba(255,255,255,.4);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.09in;text-align:center;gap:.02in}
+  .pslot svg,.pslot .ic{width:.26in;height:.26in;opacity:.55}
+  .pslot.printed{background:var(--pc);color:#fff;border-style:solid} .pslot.printed svg,.pslot.printed .ic{opacity:.95}
+  .pslot.best{border-style:solid;background:rgba(184,134,11,.2);font-weight:bold}
+  .pb-foot{font-size:.092in;font-style:italic;color:var(--ink2);line-height:1.25}
+  /* ====================================================================
+     DESTINATIONS / SHARED BOARD — one Letter-landscape page
+     ==================================================================== */
+  .dboard{height:7.54in;background:var(--parch);border:2.5px solid var(--gold);border-radius:.12in;padding:.16in;
+    display:flex;flex-direction:column;gap:.12in;color:var(--ink)}
+  .dboard svg,.dboard .ic{stroke-width:1.8}
+  .db-head{display:flex;align-items:baseline;gap:.16in;border-bottom:2px solid var(--gold);padding-bottom:.05in}
+  .db-head h2{margin:0;font-variant:small-caps;color:var(--red);font-size:.26in;letter-spacing:.5px}
+  .db-head .sub{font-size:.1in;font-style:italic;color:var(--ink2)}
+  .kontor-row{display:flex;gap:.12in;flex:1;min-height:0}
+  .kpanel{flex:1;border:2.5px solid var(--kc);border-radius:.1in;background:#fff;padding:.09in;
+    display:flex;flex-direction:column;gap:.04in;color:var(--ink);position:relative;overflow:hidden}
+  .kpanel .ribbon{position:absolute;top:0;left:0;right:0;height:.34in;background:var(--kc);opacity:.14}
+  .khead{display:flex;justify-content:space-between;align-items:center;z-index:1}
+  .kname{font-variant:small-caps;font-weight:bold;color:var(--kc);font-size:.16in;line-height:1;display:flex;align-items:center;gap:.04in}
+  .kname svg,.kname .ic{width:.18in;height:.18in}
+  .kgate{font-size:.092in;font-weight:bold;background:var(--kc);color:#fff;border-radius:.04in;padding:.01in .05in}
+  .krole{font-size:.085in;font-style:italic;color:var(--ink2);line-height:1.05;min-height:.2in}
+  .kval{text-align:center;font-weight:900;color:var(--kc);font-size:.42in;line-height:.95;margin:.02in 0}
+  .kval small{font-size:.1in;font-weight:bold;display:block;color:var(--ink2);font-variant:small-caps;line-height:1}
+  .kben{font-size:.092in;line-height:1.1;display:flex;align-items:center;gap:.03in;background:rgba(0,0,0,.04);border-radius:.04in;padding:.02in .04in}
+  .kben svg,.kben .ic{width:.13in;height:.13in;flex:0 0 auto;color:var(--kc)}
+  .kmaj{font-size:.088in;display:flex;align-items:center;justify-content:space-between;color:var(--ink2)}
+  .kmaj b{color:var(--kc)}
+  .kzone{flex:1;border:1.4px dashed var(--kc);border-radius:.05in;margin-top:.02in;position:relative;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.03) 0 1.18in,rgba(0,0,0,.07) 1.18in 1.2in);min-height:.6in}
+  .kzone .zl{position:absolute;top:.02in;left:.04in;font-size:.078in;font-style:italic;color:var(--ink2)}
+  .db-bottom{display:flex;gap:.12in;height:1.95in}
+  .hallpanel{flex:0 0 2.6in}
+  .sharedbox{flex:1;border:2px solid var(--gold);border-radius:.1in;background:#fff;padding:.09in;display:flex;flex-direction:column;gap:.05in}
+  .sb-h{font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.13in;display:flex;align-items:center;gap:.05in;border-bottom:1px solid var(--gold);padding-bottom:.02in}
+  .sb-h svg,.sb-h .ic{width:.15in;height:.15in}
+  .sb-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.085in;color:var(--ink2);margin-left:auto}
+  .updisplay{display:flex;gap:.08in}
+  .uslot{flex:1;height:1.05in;border:1.5px solid var(--gold);border-radius:.05in;background:rgba(184,134,11,.08);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.02in;color:#8a6408;font-size:.088in;text-align:center}
+  .uslot svg,.uslot .ic{width:.28in;height:.28in;opacity:.6}
+  .uslot.supply{border-style:dashed;background:repeating-linear-gradient(45deg,rgba(0,0,0,.04) 0 .08in,transparent .08in .16in)}
+  .clock{display:flex;gap:0;border:1.5px solid var(--sea);border-radius:.05in;overflow:hidden}
+  .cslot{flex:1;min-width:.34in;height:.46in;border-right:1px solid rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.085in;color:var(--ink2);background:rgba(255,255,255,.4);position:relative}
+  .cslot:last-child{border-right:none}
+  .cslot .n{font-size:.078in;color:#999}
+  .cslot.end{background:var(--sea);color:#fff;font-weight:bold;font-size:.082in;text-align:center;line-height:1}
+  @media print{.no-print{display:none} body{background:#fff} .page{margin:0;box-shadow:none}}
 </style>
-<style id="pgstyle">@page{size:24in auto;margin:.35in}</style>
 </head>
 <body>
 <div class="bar no-print">
-  <h1>Brewhouse of the Hanse — Cut Sheet · v0.7</h1>
+  <h1>Brewhouses of the Hanse — Print &amp; Play</h1>
   <button onclick="window.print()">🖨 Print</button>
-  <span class="seg"><button id="vtiles" class="on" onclick="setView('tiles')">Tiles</button><button id="vboards" onclick="setView('boards')">Player Boards</button></span>
+  <span class="seg"><button id="vtiles" class="on" onclick="setView('tiles')">Tiles</button><button id="vboards" onclick="setView('boards')">Player Boards</button><button id="vdest" onclick="setView('dest')">Destinations Board</button></span>
   <span class="seg tilectrl"><button id="bproof" class="on" onclick="setMode('proof')">Proof (1 each)</button><button id="bfull" onclick="setMode('full')">Full set</button></span>
   <span class="seg tilectrl"><button id="sfront" class="on" onclick="setSide('front')">Fronts</button><button id="sback" onclick="setSide('back')">Backs (blank)</button></span>
-  <span class="note tilectrl">Sized for a <b>24″-wide</b> sheet · tiles 1.25″ · <b>print at 100% / no scaling</b> (check the 1-inch box). Cut lines are the tile borders; colour bleeds to each edge. <b>v0.7: every tile is single-face</b>, so “Backs” prints blank tile-backs (optional; the corner ✛ marks register a duplex pass at 100%).</span>
-  <span class="note boardctrl" style="display:none">One <b>player board per colour</b> (5) — each on its own page. Slots are true-to-component (they hold the 1.25″ tiles), so a board is mat-sized: print on <b>A3 / Tabloid portrait at 100%</b>, or choose <b>“Fit to page”</b> for Letter/A4. Slots are printed guides, not cut lines.</span>
+  <span class="note">Everything is laid out for <b>US Letter · LANDSCAPE</b>. Print at <b>100% / no scaling</b> (verify the 1-inch box). Cask tiles carry a big corner <b>quality index</b> = their point value. <b>Backs are blank</b> (v0.7 tiles are single-face) — a later pass may add art there.</span>
   <span style="margin-left:auto"><a href="learn.html">Learn</a> · <a href="index.html">Components</a> · <a href="rulebook.html">Rulebook</a> · <a href="play.html">Play</a></span>
 </div>
 
-<div class="sheet" id="sheet"></div>
+<div id="out"></div>
 
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>
 const LU=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const G=LU('wheat','g'),H=LU('sprout','h');
-const rep=(s,n)=>Array(n).fill(s).join('');
-const pips=q=>{let s='';for(let i=1;i<=5;i++)s+='<span class="pip'+(i<=q?' on':'')+'"></span>';return s;};
+const cnt=n=>MODE==='proof'?1:n;
+// brew cost as legible icon+count (e.g. 🌾3 🌿2) instead of many tiny glyphs
+const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc">'+LU('sprout','h')+h+'</span>');return a.join('');};
 
 // ----- component data (mirrors the v0.7 spec — TILES.md / RULES.md) -----
-// Cask tiles are SINGLE-FACE now: type · quality · brew cost · a signature wharf-action.
 const CASKS=[
-  {nm:'Gruit',     c:'#8a949c', q:1, g:1,h:0,             act:'Source +2 goods',  n:16},
-  {nm:'Hopped',    c:'#c2922f', q:2, g:1,h:1,             act:'Age a cask +2',    n:20},
-  {nm:'Summit L3', c:'#b06a34', q:3, g:1,h:2,             act:'free Load',        n:12},
-  {nm:'Summit L4', c:'#d8a72a', q:4, g:2,h:2,             act:'+1 presence',      n:8},
-  {nm:'Summit L5', c:'#7c2128', q:5, premium:true,        act:'Wild — any verb',  n:4},
+  {nm:'Gruit',     c:'#8a949c', q:1, g:1,h:0,       act:'Source +2 goods', n:16},
+  {nm:'Hopped',    c:'#c2922f', q:2, g:1,h:1,       act:'Age a cask +2',   n:20},
+  {nm:'Summit L3', c:'#b06a34', q:3, g:1,h:2,       act:'free Load',       n:12},
+  {nm:'Summit L4', c:'#caa12a', q:4, g:2,h:2,       act:'+1 presence',     n:8},
+  {nm:'Summit L5', c:'#7c2128', q:5, premium:true,  act:'Wild — any verb', n:4},
 ];
 const FAMS=[
- {label:'Ships  (owned single-use carriers — built to a destination · load via Harbor or line-fire · full → sail → Sailed-Ships track · or Charter one cask for 2 G, the no-tile relief valve)', items:[
-   {ic:'sailboat',nm:'Cog',  sub:'cap 2 · '+G+G,   c:'#5b4a37', n:8},
-   {ic:'sailboat',nm:'Hulk', sub:'cap 3 · '+G+G+G, c:'#3a3026', n:5},
+ {label:'Ships — owned single-use carriers', sm:'built to a destination · load via Harbor or line-fire · full → sail → Sailed-Ships track · (Charter = 1 cask for 2 G, no tile)', items:[
+   {ic:'sailboat',nm:'Cog',  sub:'capacity · cost '+cost(2,0), big:'2', c:'#5b4a37', n:8},
+   {ic:'sailboat',nm:'Hulk', sub:'capacity · cost '+cost(3,0), big:'3', c:'#3a3026', n:5},
  ]},
- {label:'Neutral Buildings  (shared base actions — seeded in the wharf at setup · 2–3 in play)', items:[
-   {ic:'store',     nm:'Market Stall', sub:'take 1 good',         c:'#5b4a37', n:1},
-   {ic:'hammer',    nm:'Cooper',       sub:'advance a cask 1',    c:'#4a4034', n:1},
-   {ic:'anchor',    nm:'Crane',        sub:'free load to a ship', c:'#5b4a37', n:1},
-   {ic:'coins',     nm:'Counting-Hse', sub:'convert 2 '+G+'↔'+H,  c:'#4a4034', n:1},
-   {ic:'megaphone', nm:'Towncrier',    sub:'draw a goal',         c:'#5b4a37', n:1},
-   {ic:'heart',     nm:'Almshouse',    sub:'+1 a held majority',  c:'#4a4034', n:1},
+ {label:'Neutral Buildings — shared base actions', sm:'seeded on the wharf at setup · 2 in play (random)', items:[
+   {ic:'store',     nm:'Market Stall', sub:'take 1 good',           c:'#5b4a37', n:1},
+   {ic:'hammer',    nm:'Cooper',       sub:'advance a cask 1 step', c:'#4a4034', n:1},
+   {ic:'anchor',    nm:'Crane',        sub:'free load onto a ship', c:'#5b4a37', n:1},
+   {ic:'coins',     nm:'Counting-Hse', sub:'convert up to 2 '+G+'↔'+H, c:'#4a4034', n:1},
+   {ic:'megaphone', nm:'Towncrier',    sub:'draw a goal',           c:'#5b4a37', n:1},
+   {ic:'heart',     nm:'Almshouse',    sub:'+1 a held majority',    c:'#4a4034', n:1},
  ]},
- {label:'Recipe Tiles  (face-up Market supply — permission to brew a type · permanent · no boons / no tuck)', items:[
-   {ic:'scroll-text',nm:'Hopped',    sub:'brew '+G+H,        c:'#8a6408', n:2},
-   {ic:'scroll-text',nm:'Summit L3', sub:'brew '+G+H+H,      c:'#a07a0c', n:2},
-   {ic:'scroll-text',nm:'Summit L4', sub:'brew '+G+G+H+H,    c:'#8a6408', n:2},
-   {ic:'scroll-text',nm:'Summit L5', sub:'premium · cellar', c:'#a07a0c', n:2},
+ {label:'Recipe Tiles — permission to brew a type', sm:'always-available Market supply · permanent · start with Gruit + Hopped', items:[
+   {ic:'scroll-text',nm:'Hopped',    sub:'brew '+cost(1,1), c:'#8a6408', n:2},
+   {ic:'scroll-text',nm:'Summit L3', sub:'brew '+cost(1,2), c:'#a07a0c', n:2},
+   {ic:'scroll-text',nm:'Summit L4', sub:'brew '+cost(2,2), c:'#8a6408', n:2},
+   {ic:'scroll-text',nm:'Summit L5', sub:'premium · needs Cellar', c:'#a07a0c', n:2},
  ]},
- {label:'Upgrades · Rooms  (permanent capability — on your brewery · mostly earned by delivering)', items:[
-   {ic:'wrench',nm:'Extra Vessel', sub:'+1 lane (cap 4)',     c:'#4a6b3a', n:3},
-   {ic:'wrench',nm:'Aging Cellar', sub:'−1 step · unlock L5', c:'#3f5c30', n:3},
-   {ic:'wrench',nm:'Warehouse',    sub:'+4 storage',          c:'#4a6b3a', n:3},
-   {ic:'wrench',nm:'Quay',         sub:'stronger Harbor',     c:'#3f5c30', n:3},
-   {ic:'wrench',nm:'Cooperage',    sub:'a free load/turn',    c:'#4a6b3a', n:2},
+ {label:'Upgrades · Rooms — permanent capability', sm:'in the face-up Market display · buy, or earn free by delivering', items:[
+   {ic:'wrench',nm:'Extra Vessel', sub:'+1 lane (cap 4) · '+cost(2,0), c:'#4a6b3a', n:3},
+   {ic:'wrench',nm:'Aging Cellar', sub:'−1 step · unlock L5 · '+cost(3,0), c:'#3f5c30', n:2},
+   {ic:'wrench',nm:'Warehouse',    sub:'storage 8→12 · '+cost(2,0), c:'#4a6b3a', n:2},
+   {ic:'wrench',nm:'Quay',         sub:'load 2/Harbor · '+cost(3,0), c:'#3f5c30', n:2},
+   {ic:'wrench',nm:'Cooperage',    sub:'+1 load/Harbor · '+cost(2,0), c:'#4a6b3a', n:2},
  ]},
- {label:'Upgrades · Modifiers  (asymmetric perks — on your brewery · subsume the old Privileges)', items:[
-   {ic:'sparkles',nm:'Granary Right', sub:'+1 grain on gain',   c:'#6e4ea0', n:1},
-   {ic:'sparkles',nm:'Hop Garden',    sub:'+1 hops on gain',    c:'#5a3f86', n:1},
-   {ic:'sparkles',nm:'Royal Patent',  sub:'ships +1 capacity',  c:'#6e4ea0', n:1},
-   {ic:'sparkles',nm:'Staple Right',  sub:'+1 good / kontor',   c:'#5a3f86', n:1},
-   {ic:'sparkles',nm:'Guild Seat',    sub:'+1 Cellar advance',  c:'#6e4ea0', n:1},
-   {ic:'sparkles',nm:'Burgher Status',sub:'majority help',      c:'#5a3f86', n:1},
+ {label:'Upgrades · Modifiers — asymmetric perks', sm:'in the same Market display', items:[
+   {ic:'sparkles',nm:'Granary Right', sub:'gain grain +1 · '+cost(2,0), c:'#6e4ea0', n:2},
+   {ic:'sparkles',nm:'Hop Garden',    sub:'gain hops +1 · '+cost(2,0),  c:'#5a3f86', n:2},
+   {ic:'sparkles',nm:'Royal Patent',  sub:'ships +1 cap · '+cost(3,0),  c:'#6e4ea0', n:2},
+   {ic:'sparkles',nm:'Staple Right',  sub:'+1 good/kontor · '+cost(3,0),c:'#5a3f86', n:2},
+   {ic:'sparkles',nm:'Guild Seat',    sub:'+1 Cellar adv · '+cost(2,0), c:'#6e4ea0', n:2},
+   {ic:'sparkles',nm:'Burgher Status',sub:'+1 presence/kontor · '+cost(3,0),c:'#5a3f86', n:2},
  ]},
- {label:'Goal Tiles  (the variety layer — best few score · authored so a one-note rush fills few)', items:[
-   {ic:'target',nm:'Variety',  sub:'/ distinct type',    c:'#7c2128', n:1},
-   {ic:'target',nm:'Focus',    sub:'/ cask to 1 kontor', c:'#7c2128', n:1},
-   {ic:'target',nm:'Summit',   sub:'/ Q3+ delivered',    c:'#7c2128', n:1},
-   {ic:'target',nm:'Merchant', sub:'/ ship sailed',      c:'#7c2128', n:1},
-   {ic:'target',nm:'Prestige', sub:'/ cask to the Hall', c:'#7c2128', n:1},
-   {ic:'target',nm:'Spread',   sub:'/ kontor held',      c:'#7c2128', n:1},
-   {ic:'target',nm:'Engine',   sub:'/ Upgrade',          c:'#7c2128', n:1},
-   {ic:'target',nm:'Commit',   sub:'/ majority',         c:'#7c2128', n:1},
-   {ic:'target',nm:'Steady',   sub:'+X flat',            c:'#7c2128', n:1},
+ {label:'Goal Tiles — the variety layer', sm:'deal 3 per player · your best 2 score', items:[
+   {ic:'target',nm:'Variety',  sub:'+2 / distinct type',  c:'#7c2128', n:1},
+   {ic:'target',nm:'Focus',    sub:'+2 / cask, 1 kontor', c:'#7c2128', n:1},
+   {ic:'target',nm:'Summit',   sub:'+2 / Q3+ delivered',  c:'#7c2128', n:1},
+   {ic:'target',nm:'Merchant', sub:'+3 / ship sailed',    c:'#7c2128', n:1},
+   {ic:'target',nm:'Prestige', sub:'+3 / cask to Hall',   c:'#7c2128', n:1},
+   {ic:'target',nm:'Spread',   sub:'+3 / kontor held',    c:'#7c2128', n:1},
+   {ic:'target',nm:'Engine',   sub:'+2 / Upgrade',        c:'#7c2128', n:1},
+   {ic:'target',nm:'Commit',   sub:'+4 / majority',       c:'#7c2128', n:1},
+   {ic:'target',nm:'Steady',   sub:'+6 flat',             c:'#7c2128', n:1},
  ]},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:30},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:24}];
+const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'},{nm:'Violet',c:'#5b3a8e'}];
+const DESTS=[
+  {nm:'Bruges',  ic:'landmark', kc:'#274b5c', gate:1, val:'+2', maj:'+2', role:'The Hub — takes any beer (the volume on-ramp)', ben:'gain 2 goods', kontor:true},
+  {nm:'London',  ic:'landmark', kc:'#b8860b', gate:2, val:'+3', maj:'+3', role:'The Steelyard — the engine destination',       ben:'take 1 Upgrade from the display', kontor:true},
+  {nm:'Bergen',  ic:'landmark', kc:'#4a6b3a', gate:2, val:'+3', maj:'+5', role:'The Monopoly — narrow &amp; contested',         ben:'take 1 Upgrade from the display', kontor:true},
+  {nm:'Novgorod',ic:'landmark', kc:'#7c2128', gate:3, val:'+5', maj:'+3', role:'The Long Haul — premium only, top value',       ben:'take 1 Upgrade from the display', kontor:true},
+];
+const HALL={nm:'The Hall', ic:'crown', kc:'#5b3a8e', gate:2, val:'Q×2', role:'Prestige — out of commerce (scarcity)', ben:'banks prestige ∝ quality'};
+const SAILED={2:7,3:11,4:15,5:19};
 
 let MODE='proof', SIDE='front', VIEW='tiles';
 function setMode(m){MODE=m;document.getElementById('bproof').classList.toggle('on',m==='proof');document.getElementById('bfull').classList.toggle('on',m==='full');render();}
 function setSide(s){SIDE=s;document.getElementById('sfront').classList.toggle('on',s==='front');document.getElementById('sback').classList.toggle('on',s==='back');render();}
 function setView(v){VIEW=v;
-  document.getElementById('vtiles').classList.toggle('on',v==='tiles');
-  document.getElementById('vboards').classList.toggle('on',v==='boards');
+  ['tiles','boards','dest'].forEach(x=>document.getElementById('v'+x).classList.toggle('on',v===x));
   document.querySelectorAll('.tilectrl').forEach(e=>e.style.display=v==='tiles'?'':'none');
-  document.querySelectorAll('.boardctrl').forEach(e=>e.style.display=v==='boards'?'':'none');
-  // A3 portrait for boards; the wide cut sheet for tiles
-  document.getElementById('pgstyle').textContent = v==='boards'
-    ? '@page{size:A3 portrait;margin:.4in}' : '@page{size:24in auto;margin:.35in}';
-  v==='boards'?renderBoards():render();}
-const cnt=n=>MODE==='proof'?1:n;
+  render();}
 
-// ----- FRONT faces -----
+// ---------- TILE FACES ----------
+const REG='<div class="regmark rm-tl"></div><div class="regmark rm-tr"></div><div class="regmark rm-bl"></div><div class="regmark rm-br"></div>';
 function caskTile(d){return '<div class="tile" style="--c:'+d.c+'">'
-  +'<div class="t-top"><span class="bigic">'+LU('beer')+'</span><span class="t-nm">'+d.nm+'</span><span class="t-badge">Q'+d.q+'</span></div>'
-  +'<div>'+pips(d.q)+'</div>'
-  +'<div class="t-sub">'+LU('zap')+' '+d.act+'</div>'
-  +'<div class="t-bot">'+(d.premium?'premium ⚙':rep(G,d.g)+rep(H,d.h))+'</div></div>';}
-function genTile(it){return '<div class="tile" style="--c:'+it.c+'">'
-  +'<div class="t-top"><span class="bigic">'+LU(it.ic)+'</span><span class="t-nm">'+it.nm+'</span></div>'
-  +'<div class="t-sub">'+it.sub+'</div><div></div></div>';}
+  +'<div class="q">'+d.q+'<span class="qx">Q</span></div>'
+  +'<div class="t-nm"><span class="bi">'+LU('beer')+'</span>'+d.nm+'</div>'
+  +'<div class="t-act">'+LU('zap')+'<span>'+d.act+'</span></div>'
+  +'<div class="t-cost">'+(d.premium?'<span style="font-size:.1in">premium ⚙ · needs Cellar</span>':'brew '+cost(d.g,d.h))+'</div></div>';}
+function genTile(it){return '<div class="tile gen" style="--c:'+it.c+'">'
+  +'<div class="g-head"><span class="bigic">'+LU(it.ic)+'</span>'+it.nm+'</div>'
+  +'<div class="g-sub">'+it.sub+'</div>'
+  +(it.big?'<div class="g-big">'+it.big+'</div>':'')+'</div>';}
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+d.nm+'</div>';}
+const blankTile='<div class="tile blank"></div>', blankTok='<div class="tok blank"></div>';
 
-// ----- BACK faces (v0.7: all tiles single-face → blank backs, keeping geometry identical) -----
-function caskBack(){return blankTile();}
-function blankTile(){return '<div class="tile blank"></div>';}
-function blankTok(){return '<div class="tok blank"></div>';}
-
-const REGMARKS='<div class="regmark rm-tl"></div><div class="regmark rm-tr"></div><div class="regmark rm-bl"></div><div class="regmark rm-br"></div>';
-
-function render(){
+function renderTiles(){
   const back=SIDE==='back';
-  const sheet=document.getElementById('sheet');
-  sheet.classList.remove('boardsheet');
-  sheet.classList.toggle('backs',back);
-  let h=REGMARKS;
-  h+='<div class="calib"><div class="box">1 inch<br>(100%)</div><span class="note" style="color:#555">'
-    +(back?'<b>BACKS</b> — v0.7 tiles are single-face, so this prints blank tile-backs (optional). Corner ✛ marks register a duplex pass at 100%.':'Verify this box measures exactly 1 inch before cutting.')+'</span></div>';
-  h+='<div class="famlabel">Cask Tiles  (the dual-role hero — single working face: '+LU('beer')+' type · quality · a signature '+LU('zap')+' wharf-action · L3–L5 summit dealt from Bock / Mumme / Broyhan / Keut)'+(back?'  · single-face (blank back)':'')+'</div><div class="grid">';
-  CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?caskBack(d):caskTile(d);});
+  let h='<div class="page flow'+(back?' backs':'')+'">'+REG;
+  h+='<div class="calib"><div class="box">1 inch<br>100%</div><span class="note" style="color:#555">'
+    +(back?'<b>BACKS</b> — single-face tiles print blank; corner ✛ marks register a duplex pass at 100%.':'Verify this box is exactly 1 inch before cutting. Cut on the tile borders.')+'</span></div>';
+  h+='<div class="famlabel">Cask Tiles — the dual-role hero <span class="sm">'+LU('beer')+' type · the big corner number is the QUALITY (its value: gate to destinations, and Q×2 at the Hall) · '+LU('zap')+' signature wharf-action · summit L3–L5 dealt from Bock / Mumme / Broyhan / Keut</span></div><div class="grid">';
+  CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTile:caskTile(d);});
   h+='</div>';
-  FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+(back?'  · single-face (blank back)':'')+'</div><div class="grid">';
-    f.items.forEach(it=>{for(let i=0;i<cnt(it.n);i++)h+= back?blankTile():genTile(it);});h+='</div>';});
-  h+='<div class="famlabel">Goods Tokens  (Grain / Hops — or use wooden cubes)</div><div class="grid">';
-  GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTok():tok(d);});h+='</div>';
-  document.getElementById('sheet').innerHTML=h;
-  if(window.lucide)lucide.createIcons();
+  FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+(f.sm?' <span class="sm">'+f.sm+'</span>':'')+'</div><div class="grid">';
+    f.items.forEach(it=>{for(let i=0;i<cnt(it.n);i++)h+= back?blankTile:genTile(it);});h+='</div>';});
+  h+='<div class="famlabel">Goods Tokens <span class="sm">Grain / Hops — or use wooden cubes</span></div><div class="grid">';
+  GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTok:tok(d);});h+='</div></div>';
+  return h;
 }
 
-// ===== PLAYER BOARDS (one per colour) =====
-const PLAYERS=[
-  {nm:'Crimson', c:'#7c2128'},
-  {nm:'Azure',   c:'#274b5c'},
-  {nm:'Forest',  c:'#4a6b3a'},
-  {nm:'Amber',   c:'#b8860b'},
-  {nm:'Violet',  c:'#5b3a8e'},
-];
-// one vessel row: label + 4 connected tile-sized stage spaces (the cask matures along them)
-function stagesInner(){
-  return '<div class="stage"><span class="sn">Brew</span><span class="sd">load a recipe</span><span class="arr">›</span></div>'
-    +'<div class="stage"><span class="sn">Ferment</span><span class="sd">all styles</span><span class="arr">›</span></div>'
-    +'<div class="stage age"><span class="sn">Age</span><span class="sd">Cellar + 1/turn</span><span class="arr">›</span></div>'
-    +'<div class="stage ready"><span class="sn">Ready</span><span class="sd">deploy to the wharf</span></div>';
-}
-function vesselRow(n,open){
-  if(!open) return '<div class="vessel"><span class="vtag">Vessel '+n+'</span>'
-    +'<div class="stages locked">'+stagesInner()
-    +'<div class="lockoverlay">'+LU('lock')+' locked — install an Extra Vessel</div></div></div>';
-  return '<div class="vessel"><span class="vtag">Vessel '+n+'</span><div class="stages">'+stagesInner()+'</div></div>';
+// ---------- PLAYER BOARD (landscape) ----------
+function vessel(n,open){
+  const steps='<div class="vstep"><span class="sn">Brew</span>step 0<span class="arr">›</span></div>'
+    +'<div class="vstep"><span class="sn">Ferment</span><span class="arr">›</span></div>'
+    +'<div class="vstep age"><span class="sn">Age</span>Cellar +1/turn<span class="arr">›</span></div>'
+    +'<div class="vstep ready"><span class="sn">Ready</span>→ wharf</div>';
+  return '<div class="vessel'+(open?'':' locked')+'"><span class="vtag">Vessel '+n+'</span>'
+    +'<div class="vslot">'+LU('beer')+'cask</div><div class="vtrack">'+steps+'</div></div>';
 }
 function pboard(p){
-  let store='';for(let i=0;i<8;i++)store+='<div class="gbox">'+LU('package')+'</div>';
-  // recipe rack — Gruit + Hopped printed, then collected-recipe slots
-  let recipes='<div class="rslot printed">'+LU('scroll-text')+'Gruit</div><div class="rslot printed">'+LU('scroll-text')+'Hopped</div>';
-  for(let i=0;i<4;i++)recipes+='<div class="rslot empty">'+LU('plus')+'recipe</div>';
-  // upgrade slots — each a Room OR a Modifier
-  let ups='';for(let i=0;i<5;i++)ups+='<div class="fslot"><span class="duo">'+LU('wrench')+'<span class="sl">/</span>'+LU('sparkles')+'</span><span>Room <i>or</i> Modifier</span></div>';
-  // goals held in front of you
-  let goals='';for(let i=0;i<3;i++)goals+='<div class="goalslot'+(i<2?' best':'')+'">'+LU('target')+(i<2?'best few':'goal')+'</div>';
-  return '<div class="board" style="--pc:'+p.c+'">'
-    +'<div class="pb-head">'
-      +'<div class="crest">'+LU('beer')+'</div>'
+  let store='';for(let i=0;i<12;i++)store+='<div class="gbox">'+LU('package')+'</div>';
+  let recipes='<div class="pslot printed">'+LU('scroll-text')+'Gruit</div><div class="pslot printed">'+LU('scroll-text')+'Hopped</div>';
+  for(let i=0;i<2;i++)recipes+='<div class="pslot">'+LU('plus')+'summit recipe</div>';
+  let ups='';for(let i=0;i<3;i++)ups+='<div class="pslot">'+LU('wrench')+'Room / Modifier</div>';
+  let goals='';for(let i=0;i<3;i++)goals+='<div class="pslot'+(i<2?' best':'')+'">'+LU('target')+(i<2?'goal (scores)':'goal')+'</div>';
+  return '<div class="page fixed"><div class="board" style="--pc:'+p.c+'">'
+    +'<div class="pb-head"><div class="crest">'+LU('beer')+'</div>'
       +'<div class="pb-title"><div class="pb-name">Brewhouse · '+p.nm+'</div>'
-        +'<div class="pb-sub">private brewery · Source → Brew → Age → Ship · Brewhouse of the Hanse · v0.7 “The Wharf”</div></div>'
-      +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Storage <span class="sm">cap 8 · +4/Warehouse</span></span><div class="boxrow">'+store+'</div></div>'
-    +'</div>'
-    +'<div><div class="pb-sect">'+LU('hammer')+'Vessels &amp; Maturation<span class="hint">start 2 open · cap 4 · a cask ages +1/turn + via the Cellar</span></div>'
-      +vesselRow(1,true)+vesselRow(2,true)+vesselRow(3,false)+vesselRow(4,false)
-      +'<div class="gruitnote">Brew a recipe into an open vessel; it matures to <b>Ready</b>, then deploy it to an open <b>wharf</b> slot (its action fires there; it can be shipped). <b>Warm start:</b> begin with 2 vessels, one built Cog bound to Bruges on the wharf, and one Ready cask on the wharf.</div></div>'
-    +'<div><div class="pb-sect">'+LU('scroll-text')+'Recipes<span class="hint">the types you may brew · Gruit + Hopped printed · collect summit at the Market</span></div><div class="strip">'+recipes+'</div></div>'
-    +'<div><div class="pb-sect">'+LU('wrench')+'Upgrades — Rooms &amp; Modifiers<span class="hint">your private engine · mostly earned by delivering (London / Bergen)</span></div><div class="slotrow">'+ups+'</div></div>'
-    +'<div><div class="pb-sect">'+LU('target')+'Goals<span class="hint">held in front of you · best few score</span></div><div class="strip">'+goals+'</div></div>'
-  +'</div>';
+        +'<div class="pb-sub">your private brewery · Source → Brew → Age → Ship · Brewhouses of the Hanse · v0.7 “The Wharf”</div></div>'
+      +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Storage <span class="sm">cap 8 · +4 with a Warehouse</span></span><div class="boxrow">'+store+'</div></div></div>'
+    +'<div class="pb-body">'
+      +'<div class="pb-col left">'
+        +'<div class="pb-sect">'+LU('flask-conical')+'Vessels &amp; Maturation<span class="hint">start 2 open · cap 4 · a cask ages +1/turn + the Cellar</span></div>'
+        +vessel(1,true)+vessel(2,true)+vessel(3,false)+vessel(4,false)
+        +'<div class="pb-foot">Brew a recipe into an open vessel (step 0); it matures to <b>Ready</b>, then you deploy it to an open <b>wharf</b> slot on the main board (its action fires there; it can be shipped). <b>Warm start:</b> 2 vessels + a built Cog (→ Bruges) on the wharf.</div>'
+      +'</div>'
+      +'<div class="pb-col right">'
+        +'<div><div class="pb-sect">'+LU('scroll-text')+'Recipes<span class="hint">types you may brew</span></div><div class="strip">'+recipes+'</div></div>'
+        +'<div><div class="pb-sect">'+LU('wrench')+'Upgrades<span class="hint">Rooms &amp; Modifiers</span></div><div class="strip">'+ups+'</div></div>'
+        +'<div><div class="pb-sect">'+LU('target')+'Goals<span class="hint">best 2 score</span></div><div class="strip">'+goals+'</div></div>'
+      +'</div>'
+    +'</div></div></div>';
 }
-function renderBoards(){
-  const sheet=document.getElementById('sheet');
-  sheet.classList.remove('backs');
-  sheet.classList.add('boardsheet');
-  sheet.innerHTML=PLAYERS.map(pboard).join('');
+function renderBoards(){return PLAYERS.map(pboard).join('');}
+
+// ---------- DESTINATIONS / SHARED BOARD ----------
+function kpanel(d){return '<div class="kpanel" style="--kc:'+d.kc+'"><div class="ribbon"></div>'
+  +'<div class="khead"><span class="kname">'+LU(d.ic)+d.nm+'</span><span class="kgate">gate Q'+d.gate+'</span></div>'
+  +'<div class="krole">'+d.role+'</div>'
+  +'<div class="kval">'+d.val+'<small>per delivered cask</small></div>'
+  +'<div class="kben">'+LU('gift')+'<span>'+d.ben+'</span></div>'
+  +'<div class="kmaj"><span>Most casks here →</span><b>majority '+d.maj+'</b></div>'
+  +'<div class="kzone"><span class="zl">stack your delivered casks here (count = presence)</span></div></div>';}
+function renderDest(){
+  let clock='';for(let i=1;i<=19;i++){let end='';for(const p in SAILED)if(SAILED[p]===i)end=p+'p';
+    clock+='<div class="cslot'+(end?' end':'')+'">'+(end?end+'<br>END':'<span class="n">'+i+'</span>')+'</div>';}
+  let disp='';for(let i=0;i<4;i++)disp+='<div class="uslot">'+LU('wrench')+'upgrade</div>';
+  disp+='<div class="uslot supply">'+LU('layers')+'supply<br>(face-down)</div>';
+  const hall='<div class="kpanel hallpanel" style="--kc:'+HALL.kc+'"><div class="ribbon"></div>'
+    +'<div class="khead"><span class="kname">'+LU(HALL.ic)+HALL.nm+'</span><span class="kgate">gate Q'+HALL.gate+'</span></div>'
+    +'<div class="krole">'+HALL.role+'</div>'
+    +'<div class="kval">'+HALL.val+'<small>prestige per cask</small></div>'
+    +'<div class="kben">'+LU('crown')+'<span>'+HALL.ben+' — no majority</span></div>'
+    +'<div class="kzone"><span class="zl">enshrined casks (out of commerce)</span></div></div>';
+  return '<div class="page fixed"><div class="dboard">'
+    +'<div class="db-head"><h2>'+LU('landmark')+' Destinations &amp; Shared Board</h2>'
+      +'<span class="sub">where you ship — kontore pay trade value + majorities (volume) · the Hall pays prestige (scarcity) · all open from the start</span></div>'
+    +'<div class="kontor-row">'+DESTS.map(kpanel).join('')+'</div>'
+    +'<div class="db-bottom">'+hall
+      +'<div class="sharedbox"><div class="sb-h">'+LU('wrench')+' Market — Upgrade display <span class="sm">buy one (pay its cost), or earn one free by delivering to London / Bergen / Novgorod</span></div>'
+        +'<div class="updisplay">'+disp+'</div>'
+        +'<div class="sb-h" style="margin-top:.04in">'+LU('sailboat')+' Sailed-Ships track <span class="sm">each voyage (a ship sailing, or a Charter) fills one slot → when it reaches your player-count marker, finish the round &amp; score</span></div>'
+        +'<div class="clock">'+clock+'</div>'
+      +'</div>'
+    +'</div></div></div>';
+}
+
+function render(){
+  let h;
+  if(VIEW==='tiles') h=renderTiles();
+  else if(VIEW==='boards') h=renderBoards();
+  else h=renderDest();
+  document.getElementById('out').innerHTML=h;
   if(window.lucide)lucide.createIcons();
 }
 render();

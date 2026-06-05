@@ -1,4 +1,4 @@
-# Brewhouse of the Hanse — The Player Board (Brewery) v0.7 — "The Wharf"
+# Brewhouses of the Hanse — The Player Board (Brewery) v0.7 — "The Wharf"
 
 > The private tableau. Symmetric for all players. Numbers ⚙ are placeholders. **v0.7 reels the brewery back to one clean job — it is where casks are *made and matured* (the private half of the loop), and where your *upgrades* compound.** Everything contested now lives on the shared **wharf** (the perimeter ring), not here, so the brewery is **private and untouchable** (`DESIGN.md` §21). Supersedes v0.6.
 >
