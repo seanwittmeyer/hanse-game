@@ -10,10 +10,10 @@ Each house starts with:
 - **3 `G` (grain), 2 `H` (hops).** Storage cap 8 ⚙.
 - The **Gruit** and **Hopped** recipes (the on-ramp — fixed, symmetric, so everyone can brew immediately and *gaining a export recipe means more*). More recipes are acquired at the Market.
 - **2 open vessels** (the brewing throughput; cap 4 ⚙ via upgrades).
-- A **warm start so the loop is live on turn 1:** one built **Cog** placed in a ring slot (bound to **Bruges**), and **one Ready cask on the wharf** (a Gruit) ⚙. First voyage is reachable by turn 2–3, not turn 6.
+- A **warm start so the loop is live on turn 1:** one built **Cog** placed in a ring slot (bound to **Bruges**), and **one Ready Gruit in a vessel** (deploy it to the wharf on turn 1) ⚙ — no starting cask sits on the shared ring. First voyage is reachable by turn 2–3, not turn 6.
 - An empty **brewery board** (vessels + upgrade slots — see `PLAYERBOARD.md`).
 
-The shared board is seeded so the ring is **alive from turn 1:** all four **destinations are open**, and **2–3 neutral buildings** ⚙ are placed in perimeter slots (shared base actions everyone may use). Deal the **export roster** (Bock / Mumme / Broyhan / Keut) onto the L3–L5 rungs in a random order each game (the variable export tier). Set the **Sailed-Ships track** to its player-scaled length.
+The shared board is seeded so the ring is **alive from turn 1:** all four **destinations are open**, and **2–3 neutral buildings** ⚙ are placed in perimeter slots (shared base actions everyone may use). Deal the **export roster** (Bock / Mumme / Broyhan / Keut) onto the L3–L5 rungs in a random order each game (the variable export tier). Set the **Sailed-Ships track** to its player-scaled length. **Choose a first player — fixed for the whole game (turn order does not rotate ⚙; seat compensation for later seats is TBD).**
 
 > **What's gone from v0.6** (the reel-in): the demand-market value track, the type frontier, Fairs, route-lane tiles, the Hall as an action cell, the working-cask Floor state, the fires-when-blocked tableau twins, differentiated lane skims, recipe on-collect boons / the 6-card tuck, and aging cubes. **Casks are no longer presence while they sit; presence/standing happens at *delivery*.** Cells are never blocked (no twins) — interaction lives on the shared wharf.
 
@@ -210,7 +210,7 @@ No separate reach/standing tracks. You score from **what you delivered**:
 
 ## Open / to tune
 
-- **Warm-start contents** (1 Cog + 1 Ready cask?) and **starting vessels** (2?) vs the **Sailed-Ships length** — the joint pace dials; target first voyage ≈ turn 2–3, a **12–25-round game**, and a 2p game ≈ 45–60 min.
+- **Warm-start contents** (1 Cog on the wharf; the Gruit starts Ready in a vessel) and **starting vessels** (2?) vs the **Sailed-Ships length** — the joint pace dials; target first voyage ≈ turn 2–3, a **12–25-round game**, and a 2p game ≈ 45–60 min.
 - **Charter cost** (⚙2 `G`) and whether it advances the clock — the relief-valve dials. Too cheap and it eclipses owning ships (the merchant fantasy); too dear and the deadlock guard bites. It must stay *strictly worse per cask* than a Cog/Hulk.
 - **Cask-action strengths** (free Source 2 / Age 2 / free Load / +1 presence / Wild) — keep them chunky without making the ring swingy. Whether *every* cask bears an action or only "set-working" ones.
 - **Destination values, gates, and majority bonuses** — the heart of the variety; how hard to gate the rich destinations behind quality (the climb) vs leaving them open (variety).

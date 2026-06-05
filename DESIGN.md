@@ -564,7 +564,7 @@ A design-conversation pass that **re-targets the whole game** and rebuilds it ar
 - **Cells are never blocked** (twins cut). The only contested space is the shared wharf.
 
 ### E. Pace fixes (LOCKED) — so the fun starts turn 1
-- **Warm start:** begin with one built Cog (bound to Bruges) and one Ready cask on the wharf → first voyage by turn 2–3.
+- **Warm start:** begin with one built Cog (bound to Bruges) and one Ready Gruit **in a vessel** (deploy it turn 1) → first voyage by turn 2–3. *(2026-06-06: the starting Gruit moved off the shared wharf into the vessel — de-jams the ring at setup, uniform at all counts.)*
 - **Start with 2 vessels** (cap 4), **base verbs always work** (ring buildings only *add*), and **all destinations open** → the goods/geometry bootstrap the model exposed is gone.
 - **Recipes reel in hard:** start **Gruit + Hopped** (fixed, symmetric, fair — and so *gaining a export recipe means more*); recipes are just *permission + cost to brew a type* — the on-collect boons, the 6-card tuck, and frontier-gating are cut.
 - **Game-length target: ~12–25 rounds** (the `MAX_ROUND` ceiling sits at the top of that band, ≈25 ⚙; good play ends earlier on the Sailed-Ships clock). The Sailed-Ships length is the primary pace dial.
@@ -603,3 +603,10 @@ Pinning down the Market's table presence: **recipes & ships are an always-availa
 - **Footprint:** the Market is then a few always-stocked supply stacks (recipes, ships) + a **4-tile face-up upgrade row** + a small facedown bag — tight, *Great Western Trail*-scale. Verified in `play.html` (160-game headless: 0 violations, all 11 upgrades reached via 504 buys + 591 delivery-earns). Save `KEY → v9`.
 - **⚙ Open idea (parked):** **evolve recipe acquisition** — recipes are presently a flat always-available supply; there's room to give them a display/tension of their own (a recipe row, a draft, or a frontier-lite) rather than "always buy any export recipe." Left as-is for now.
 - **⚙ Open:** display size (4?), supply counts/contestation, whether a delivery should let you draw deeper if no grantable tile is face-up (currently the benefit can whiff), and whether some upgrades should be delivery-*only* again (currently all are both buyable & earnable).
+
+### Terminology + setup trims (2026-06-06)
+Three small, player-tested-by-feel calls:
+- **"Summit" tier → "Export."** The premium L3–L5 beers were a *design* placeholder ("Summit" = ladder position, nothing to do with beer). Renamed to **Export** — Bock/Mumme/Broyhan/Keut were literally the Hanse's famous *export* beers, and it ties to the game's export-trade spine. (Player-facing labels + spec + printables; the dealt names still show in play.)
+- **Starting Gruit moved off the shared wharf into a vessel.** It begins **Ready in Vessel 1** (deploy it turn 1) rather than pre-placed on the 8-slot ring — de-jams the wharf at setup and is uniform at every count. The **Cog** stays the load-bearing warm-start piece.
+- **First-player rotation removed.** Turn order is **fixed** for the whole game (one fewer round-bookkeeping bit players found easy to forget). This concentrates any first-mover edge (notably first pick of the shared Upgrade display) on seat 1, so **seat compensation** — likely extra starting goods for later seats — is now an **open ⚙** to size at human playtest. (Argued both ways first; the designer chose simplicity now, compensation later.)
+- **Print &amp; Play redesign:** everything re-laid for **US Letter landscape**; casks carry a big card-corner quality index (a `gem` icon + number, no "Q"); tiles get a 1/8″ bleed past an inner safe-frame, tokens a bleed ring for laser cutting; **recipes became cards** (a board tuck strip; a dual-purpose acquire bonus is TBD); and a redesigned **Destinations** board (clean title bars, `L#+` quality gates with a quality icon, a `★` VP icon on every value, one cask slot + a per-player presence/majority marker track).

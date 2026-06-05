@@ -125,7 +125,7 @@
       </ul>
     </li>
     <li><b>Goods cubes</b> — <span class="cube g"></span> grain (G) and <span class="cube h"></span> hops (H), the only currency.</li>
-    <li><b>Per player:</b> 1 worker pawn, ownership discs. <b>1 first-player marker.</b></li>
+    <li><b>Per player:</b> 1 worker pawn, ownership discs. <b>1 first-player marker</b> (fixed — it does <b>not</b> pass).</li>
   </ul>
   <div class="box"><h4>What v0.7 cut from v0.6</h4>No demand-market track, no type-frontier display, no Fair tiles, no route-lane tiles, no Privilege tiles (folded into Modifiers), no recipe card deck (recipes are plain permission tiles), no aging cubes, and no VP/standing markers. Score is tallied at the end from delivered casks + majorities + goals.</div>
 </section>
@@ -156,7 +156,7 @@
     <li>Place the <b>main board</b> and <b>destination board</b>. Seed the wharf with <b>2–3 neutral buildings</b> ⚙ so the ring is alive from turn 1. All five destinations begin <b>open</b>.</li>
     <li>Deal the <b>export roster</b> (Bock / Mumme / Broyhan / Keut) onto the L3–L5 rungs in a random order ⚙ (the variable export). Build the <b>face-up Market row</b> of recipes / ships / upgrades.</li>
     <li>Set the <b>Sailed-Ships track</b> to its player-scaled length (it scales steeply — the clock fills faster with more players): <b>~7 / 11 / 15 / 19 slots for 2 / 3 / 4 / 5 players</b> ⚙.</li>
-    <li>Each player takes a <b>brewery board</b>, a <b>worker</b>, ownership discs, and a starting stake ⚙: <b>3 <span class="cube g"></span>, 2 <span class="cube h"></span></b>, the <b>Gruit + Hopped</b> recipes (printed), <b>2 open vessels</b> (lanes 3–4 locked), and a <b>warm start</b> — one built <b>Cog</b> in a wharf slot bound to <b>Bruges</b>, and <b>one Ready cask</b> (a Gruit) already on the wharf.</li>
+    <li>Each player takes a <b>brewery board</b>, a <b>worker</b>, ownership discs, and a starting stake ⚙: <b>3 <span class="cube g"></span>, 2 <span class="cube h"></span></b>, the <b>Gruit + Hopped</b> recipes (printed), <b>2 open vessels</b> (lanes 3–4 locked), and a <b>warm start</b> — one built <b>Cog</b> in a wharf slot bound to <b>Bruges</b>, and <b>one Ready Gruit</b> in Vessel 1 (deploy it turn 1).</li>
     <li>Each player places their worker on any cell. Give the youngest brewer the <b>first-player marker</b>.</li>
   </ol>
   <div class="box"><h4>Why the warm start</h4>A headless pace model put v0.6's first voyage at <b>turn 6</b> (goods- and geometry-bound). v0.7 starts you <b>mid-loop</b> — 2 vessels, a Cog + a Ready cask, all destinations open, base verbs always usable — so a first voyage is reachable by turn 2–3 and the fun starts at once.</div>
@@ -176,7 +176,7 @@
     </li>
   </ol>
   <div class="box"><h4>Both cells always fire</h4>Activating a line triggers <em>both</em> of its cells. Your worker's position only determines <b>which line is legal</b>. Because base verbs are always available and wharf buildings only <em>add</em>, you are never stalled waiting for the board to align — a populated ring makes your turns bigger.</div>
-  <p>Play passes clockwise. When every player has taken a turn, the round ends and the first-player marker passes left.</p>
+  <p>Play passes clockwise. When every player has taken a turn, the round ends and a new round begins. <b>The first player is fixed for the whole game — turn order does not rotate</b> (one fewer thing to track). Any first-player edge will be handled by <b>seat compensation</b> ⚙ (e.g. extra starting goods for later seats) — TBD.</p>
 </section>
 
 <section id="actions">

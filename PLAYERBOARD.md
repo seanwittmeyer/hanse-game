@@ -74,7 +74,7 @@ No grid action is duplicated here. Nothing on this board is contestable by rival
 | Vessels | **2 open** (lanes 3–4 locked behind Extra Vessel) |
 | Upgrades | none |
 | Storage | 8 |
-| **Warm start** | **1 built Cog** (in a ring slot, bound to Bruges) **+ 1 Ready cask on the wharf** ⚙ — so the loop is live and a first voyage is reachable turn 2–3 |
+| **Warm start** | **1 built Cog** (in a ring slot, bound to Bruges) **+ 1 Ready Gruit in a vessel** (deploy it turn 1) ⚙ — so the loop is live and a first voyage is reachable turn 2–3 |
 | Worker | placed turn 1 (see Turn-1 rule, `RULES.md` §1) |
 
 > **Why these starting numbers** (`DESIGN.md` §21E): the pace model showed v0.6's first voyage at **turn 6** (goods- and geometry-bound, not brew-bound), so v0.7 starts you **mid-loop** — 2 vessels, a warm Cog + cask, all destinations open, base verbs always usable. *Gaining a export recipe means more* because you start with only the on-ramp.
