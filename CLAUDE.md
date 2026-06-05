@@ -26,11 +26,11 @@
 - `COMPONENTS.md` / `TILES.md` — the full object manifest and the tile families (six tile families + the recipe-card deck).
 - `PLAYERBOARD.md` — the private tableau (brewing track + aging cube, vessels, the 4-slot Brewhouse Floor, twins, recipe-card tuck zone, standing track).
 - `learn.html` (beginner), `rulebook.html` (full rules), `index.html` (component visualizer), `printables.html` — the published pages; they restate the rules and **must stay aligned** with `play.html`/`RULES.md`.
-- `PLAY-TODO.md` — running improvement brief for the client. `PLAYTEST.md` is a dated v0.1 snapshot (stale in places).
+- `CHANGELOG.md` — compact version history (v0.1→v0.6) + the balance lessons carried forward (distilled from the now-retired playtest sims). `README.md` orients the repo.
 
 ### Before you commit any game change, check the interlocks
 1. **Theme** — does it still make medieval-brewing sense? Mechanics are dressed as brewing/trade for a reason.
 2. **The two axes** — does it shift the reach↔standing balance or the demand-market coupling? That's the heart; don't unbalance it accidentally.
 3. **Components/tiles** — does it change counts, tile families, costs, or the type ladder (`COMPONENTS.md`/`TILES.md`)?
 4. **All surfaces** — update `RULES.md` AND the affected pages AND `play.html` together. Numbers are tunable `⚙` placeholders kept in the `DATA` block; doc tables restate them, so a number change is a multi-file edit.
-5. **Smoke-test `play.html` headlessly** before merge (see `PLAY-TODO.md` §0): extract the inline `<script>`, run it in a mocked-DOM `vm` context, drive a bot via the rendered buttons' `onclick` strings, and assert 2–5p games run crash-free to game-over. Bump the save `KEY` only on a saved-state *shape* change.
+5. **Smoke-test `play.html` headlessly** before merge: extract the inline `<script>`, run it in a mocked-DOM `vm` context, drive a bot via the rendered buttons' `onclick` strings, and assert 2–5p games run crash-free to game-over. Bump the save `KEY` only on a saved-state *shape* change. *(See `CHANGELOG.md` → "Working the repo.")*
