@@ -47,12 +47,12 @@ No grid action is duplicated here. Nothing on this board is contestable by rival
 
 - **Two vessel lanes open at start** (the v0.6 single-vessel bootleneck is gone — parallel brewing from turn 1). Lanes 3 & 4 are unlocked by the **Extra Vessel** upgrade. More vessels = more casks maturing at once = the core throughput dial.
 - A **Brew** action (cell B) loads a recipe you hold into an open vessel as a young cask at **step 0**.
-- The cask **matures along its track to Ready:** it advances **+1 automatically at the start of each of your turns** (maturing never depends on reaching a cell), and the **Cellar** action (cell D) gives a **pool of advance points** ⚙ you allocate across your vessels. Maturation length is set by type (Gruit 1 · Hopped 2 · summit 2–3 ⚙).
+- The cask **matures along its track to Ready:** it advances **+1 automatically at the start of each of your turns** (maturing never depends on reaching a cell), and the **Cellar** action (cell D) gives a **pool of advance points** ⚙ you allocate across your vessels. Maturation length is set by type (Gruit 1 · Hopped 2 · export 2–3 ⚙).
 - When a cask reaches **Ready**, you **deploy it to an open wharf slot** you choose (free) — now it is public (its action fires; it can be shipped, by you or a rival). **If the wharf is full, the Ready cask clogs its vessel** until you free a wharf slot or ship something — the back-pressure that keeps the loop moving and forces cash-outs.
 
 ## 2. Recipes (the types you may brew)
 
-- A **recipe rack** holds the types you can brew. You **start with Gruit + Hopped** (fixed, symmetric); collect **summit recipes** at the Market to climb. A recipe is permanent and is **only** *type + brew cost* — no boons, no tuck, no discard cap (the v0.6 recipe-card machinery is cut). You cannot brew a type you hold no recipe for; Gruit & Hopped are always available.
+- A **recipe rack** holds the types you can brew. You **start with Gruit + Hopped** (fixed, symmetric); collect **export recipes** at the Market to climb. A recipe is permanent and is **only** *type + brew cost* — no boons, no tuck, no discard cap (the v0.6 recipe-card machinery is cut). You cannot brew a type you hold no recipe for; Gruit & Hopped are always available.
 
 ## 3. Upgrades (the private engine — where you "get ahead")
 
@@ -77,7 +77,7 @@ No grid action is duplicated here. Nothing on this board is contestable by rival
 | **Warm start** | **1 built Cog** (in a ring slot, bound to Bruges) **+ 1 Ready cask on the wharf** ⚙ — so the loop is live and a first voyage is reachable turn 2–3 |
 | Worker | placed turn 1 (see Turn-1 rule, `RULES.md` §1) |
 
-> **Why these starting numbers** (`DESIGN.md` §21E): the pace model showed v0.6's first voyage at **turn 6** (goods- and geometry-bound, not brew-bound), so v0.7 starts you **mid-loop** — 2 vessels, a warm Cog + cask, all destinations open, base verbs always usable. *Gaining a summit recipe means more* because you start with only the on-ramp.
+> **Why these starting numbers** (`DESIGN.md` §21E): the pace model showed v0.6's first voyage at **turn 6** (goods- and geometry-bound, not brew-bound), so v0.7 starts you **mid-loop** — 2 vessels, a warm Cog + cask, all destinations open, base verbs always usable. *Gaining a export recipe means more* because you start with only the on-ramp.
 
 ---
 

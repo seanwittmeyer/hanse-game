@@ -19,23 +19,23 @@
 
 ## A. Cask tiles — the dual-role hero (~60 tiles)
 
-A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATURE ACTION`.** Brewed from a recipe you hold (never bought), out of the **shared supply with fixed global counts**, so the rare summit casks are contested.
+A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATURE ACTION`.** Brewed from a recipe you hold (never bought), out of the **shared supply with fixed global counts**, so the rare export casks are contested.
 
 **Three states** (`RULES.md` §2): **maturing** (private vessel, ages to Ready) → **on the wharf** (a shared ring slot — your cargo-in-waiting + private inventory + a **public action-building** whose action fires when its line runs) → **delivered** (loaded on a ship, shipped to a destination → scores for its owner → leaves). Shipping converts it; only wharf casks are public/contestable.
 
 ### Types, costs & signature actions
 
-> The ladder is **anchored spine + variable summit**: **Gruit → Hopped** is fixed and historical (hops is the preservation tech that opens the sea routes); **L3–L5 are dealt** from the Hanse summit roster each game. *Which type you brew is an engine choice* — you're deciding which action-building goes on your circuit and which destinations you can reach.
+> The ladder is **anchored spine + variable export**: **Gruit → Hopped** is fixed and historical (hops is the preservation tech that opens the sea routes); **L3–L5 are dealt** from the Hanse export roster each game. *Which type you brew is an engine choice* — you're deciding which action-building goes on your circuit and which destinations you can reach.
 
 | Level | Type | Q | Brew inputs ⚙ | Maturation ⚙ | Signature wharf-action ⚙ | Reaches (gate) | Qty |
 |---|---|---|---|---|---|---|---|
 | **L1** | **Gruit Ale** | 1 | `G` | 1 step | **Source** — take 2 goods | Bruges only | 16 |
 | **L2** | **Hopped Beer** | 2 | `G H` | 2 | **Age** — advance any 1 of your casks 2 steps | Bruges · London · Bergen · Hall | 20 |
-| **L3** | *summit ⚙* | 3 | `G H H` | 2 | **Load** — load a Ready cask onto a ship for free | + Novgorod | 12 |
-| **L4** | *summit ⚙* | 4 | `G G H H` | 3 | **Reach** — +1 presence at a kontor you've delivered to | all | 8 |
-| **L5** | *summit ⚙* | 5 | premium; needs **Aging Cellar** | 3 | **Wild** — take any one base verb (Source/Brew/Age/Ship) | all | 4 |
+| **L3** | *export ⚙* | 3 | `G H H` | 2 | **Load** — load a Ready cask onto a ship for free | + Novgorod | 12 |
+| **L4** | *export ⚙* | 4 | `G G H H` | 3 | **Reach** — +1 presence at a kontor you've delivered to | all | 8 |
+| **L5** | *export ⚙* | 5 | premium; needs **Aging Cellar** | 3 | **Wild** — take any one base verb (Source/Brew/Age/Ship) | all | 4 |
 
-> **Summit roster (dealt to L3–L5 each game) ⚙:** **Bock** (Einbeck), **Mumme** (Braunschweig), **Broyhan** (Hannover), **Keut** (Low Countries) — each could carry a light hook (e.g. Bock needs the Aging Cellar; Mumme = slow but rich). The generic "summit" labels above are reskinned per game.
+> **Export roster (dealt to L3–L5 each game) ⚙:** **Bock** (Einbeck), **Mumme** (Braunschweig), **Broyhan** (Hannover), **Keut** (Low Countries) — each could carry a light hook (e.g. Bock needs the Aging Cellar; Mumme = slow but rich). The generic "export" labels above are reskinned per game.
 
 *Gruit is reach-only and never prestige — cheap engine fuel (its Source action) and cheap local reach (Bruges). That single fact is the Leffe/Westvleteren line drawn in the components.*
 
@@ -82,11 +82,11 @@ A small face-up Market supply. A recipe is **only** *a brewable type + its `G/H`
 |---|---|---|---|
 | *(start, printed)* | **Gruit** | — | `G` |
 | *(start, printed)* | **Hopped** | — | `G H` |
-| **Recipe · Summit L3** | L3 | `1 G` | `G H H` |
-| **Recipe · Summit L4** | L4 | `1 G 1 H` | `G G H H` |
-| **Recipe · Summit L5** | L5 | `2 G` | premium (needs Aging Cellar) |
+| **Recipe · Export L3** | L3 | `1 G` | `G H H` |
+| **Recipe · Export L4** | L4 | `1 G 1 H` | `G G H H` |
+| **Recipe · Export L5** | L5 | `2 G` | premium (needs Aging Cellar) |
 
-> Start of game: **Gruit + Hopped** (fixed, symmetric — everyone brews turn 1, and *gaining a summit recipe means more*). The summit recipes are the climb to the rich destinations.
+> Start of game: **Gruit + Hopped** (fixed, symmetric — everyone brews turn 1, and *gaining a export recipe means more*). The export recipes are the climb to the rich destinations.
 
 ---
 
@@ -98,7 +98,7 @@ Installed on your brewery board. **Earned mainly by delivering** (the London / B
 | Room | Effect ⚙ |
 |---|---|
 | **Extra Vessel** | +1 brewing lane (start 2, cap 4) |
-| **Aging Cellar** | maturation costs 1 fewer step; **unlocks the L5 summit** |
+| **Aging Cellar** | maturation costs 1 fewer step; **unlocks the L5 export** |
 | **Warehouse** | +4 goods storage |
 | **Quay** | a stronger Harbor (e.g., load 2 in one Harbor visit, or deploy further) ⚙ |
 | **Cooperage** | a free load each turn ⚙ |
@@ -139,7 +139,7 @@ A small pool (shared draft or per-player ⚙) rewarding different shapes, so the
 |---|---|---|
 | 1 | +X per **distinct type** delivered | breadth / climb |
 | 2 | +X per cask delivered to **one** kontor | focus / majority |
-| 3 | +X per **Q3+** cask delivered | the summit |
+| 3 | +X per **Q3+** cask delivered | the export |
 | 4 | +X per **ship you sailed** | the merchant engine |
 | 5 | +X per cask shipped to the **Hall** | prestige |
 | 6 | +X per **kontor where you hold presence** | spread |

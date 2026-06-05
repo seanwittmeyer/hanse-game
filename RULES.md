@@ -8,12 +8,12 @@
 
 Each house starts with:
 - **3 `G` (grain), 2 `H` (hops).** Storage cap 8 ⚙.
-- The **Gruit** and **Hopped** recipes (the on-ramp — fixed, symmetric, so everyone can brew immediately and *gaining a summit recipe means more*). More recipes are acquired at the Market.
+- The **Gruit** and **Hopped** recipes (the on-ramp — fixed, symmetric, so everyone can brew immediately and *gaining a export recipe means more*). More recipes are acquired at the Market.
 - **2 open vessels** (the brewing throughput; cap 4 ⚙ via upgrades).
 - A **warm start so the loop is live on turn 1:** one built **Cog** placed in a ring slot (bound to **Bruges**), and **one Ready cask on the wharf** (a Gruit) ⚙. First voyage is reachable by turn 2–3, not turn 6.
 - An empty **brewery board** (vessels + upgrade slots — see `PLAYERBOARD.md`).
 
-The shared board is seeded so the ring is **alive from turn 1:** all four **destinations are open**, and **2–3 neutral buildings** ⚙ are placed in perimeter slots (shared base actions everyone may use). Deal the **summit roster** (Bock / Mumme / Broyhan / Keut) onto the L3–L5 rungs in a random order each game (the variable summit). Set the **Sailed-Ships track** to its player-scaled length.
+The shared board is seeded so the ring is **alive from turn 1:** all four **destinations are open**, and **2–3 neutral buildings** ⚙ are placed in perimeter slots (shared base actions everyone may use). Deal the **export roster** (Bock / Mumme / Broyhan / Keut) onto the L3–L5 rungs in a random order each game (the variable export tier). Set the **Sailed-Ships track** to its player-scaled length.
 
 > **What's gone from v0.6** (the reel-in): the demand-market value track, the type frontier, Fairs, route-lane tiles, the Hall as an action cell, the working-cask Floor state, the fires-when-blocked tableau twins, differentiated lane skims, recipe on-collect boons / the 6-card tuck, and aging cubes. **Casks are no longer presence while they sit; presence/standing happens at *delivery*.** Cells are never blocked (no twins) — interaction lives on the shared wharf.
 
@@ -72,7 +72,7 @@ Every base verb **always works**; ring buildings only add bonus copies of these 
 
 ### A · Market — *Source*
 Take **2 goods** (any mix), **OR** acquire **one** tile, paying its goods cost ⚙:
-- a **recipe** (a new brewable type — your climb to the summit; summit recipes cost more) — *always-available supply*,
+- a **recipe** (a new brewable type — your climb to the export tier; export recipes cost more) — *always-available supply*,
 - a **ship** (a Cog or Hulk → placed into a ring slot, bound to a destination; §5) — *always-available supply*,
 - an **upgrade** (a Room/Modifier → installed on your brewery; §6) — taken from the **face-up Upgrade display**.
 
@@ -110,9 +110,9 @@ Each is a "support action" in the Lisboa sense — it pushes the loop forward, a
 |---|---|---|
 | **Gruit** | 1 | **Source** — take 2 goods |
 | **Hopped** | 2 | **Age** — advance any 1 of your casks 2 steps |
-| **Summit L3** | 3 | **Load** — load a Ready cask onto a ship for free |
-| **Summit L4** | 4 | **Reach** — +1 presence at a kontor you've delivered to (majority help) |
-| **Summit L5** | 5 | **Wild** — take any one base verb (Source / Brew / Age / Ship) as a bonus |
+| **Export L3** | 3 | **Load** — load a Ready cask onto a ship for free |
+| **Export L4** | 4 | **Reach** — +1 presence at a kontor you've delivered to (majority help) |
+| **Export L5** | 5 | **Wild** — take any one base verb (Source / Brew / Age / Ship) as a bonus |
 
 > *Why this fixes the old "lackluster tile":* the action is chunky and advances *your* loop, and **which type you brew is now an engine choice** — you're deciding which action-building to put on your circuit, not just paying a cost.
 
@@ -162,7 +162,7 @@ Your brewery board is private and safe. It holds your **vessels** (start 2, cap 
 | # | Room (capability) | Effect ⚙ | Buy cost ⚙ |
 |---|---|---|---|
 | 1 | **Extra Vessel** | +1 brewing lane (vessels start 2, cap **4**) — repeatable | `2 G` |
-| 2 | **Aging Cellar** | maturation **−1 step**; **unlocks the L5 summit** beer | `3 G` |
+| 2 | **Aging Cellar** | maturation **−1 step**; **unlocks the L5 export** beer | `3 G` |
 | 3 | **Warehouse** | goods storage **8 → 12** | `2 G` |
 | 4 | **Quay** | load **2 casks** in one Harbor visit (instead of 1) | `3 G` |
 | 5 | **Cooperage** | **+1 cask loaded** per Harbor visit (stacks with Quay) | `2 G` |

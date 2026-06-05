@@ -247,9 +247,9 @@ function refreshIcons(){if(window.lucide)try{lucide.createIcons();}catch(e){}}
 const STYLES={
   gruit :{name:'Gruit Ale',   lvl:1, q:1, in:{g:1},      ready:1, act:'source'},
   hopped:{name:'Hopped Beer', lvl:2, q:2, in:{g:1,h:1},  ready:2, act:'age'},
-  l3    :{name:'Summit L3',   lvl:3, q:3, in:{g:1,h:2},  ready:2, act:'load'},
-  l4    :{name:'Summit L4',   lvl:4, q:4, in:{g:2,h:2},  ready:3, act:'reach'},
-  l5    :{name:'Summit L5',   lvl:5, q:5, in:{g:3,h:2},  ready:3, act:'wild', cellar:true},
+  l3    :{name:'Export L3',   lvl:3, q:3, in:{g:1,h:2},  ready:2, act:'load'},
+  l4    :{name:'Export L4',   lvl:4, q:4, in:{g:2,h:2},  ready:3, act:'reach'},
+  l5    :{name:'Export L5',   lvl:5, q:5, in:{g:3,h:2},  ready:3, act:'wild', cellar:true},
 };
 const SUMMIT_ROSTER=['Bock','Mumme','Broyhan','Keut'];   // 3 of 4 dealt onto L3/L4/L5 each game
 const SUMMIT_KEYS=['l3','l4','l5'];
@@ -287,7 +287,7 @@ const NEUTRALS={
 // ---- UPGRADES: Rooms (capability) + Modifiers (asymmetric perks) ----
 const ROOMS={
   vessel   :{name:'Extra Vessel',  desc:'+1 brewing lane (cap 4)'},
-  cellar   :{name:'Aging Cellar',  desc:'maturation −1 step; unlocks the L5 summit'},
+  cellar   :{name:'Aging Cellar',  desc:'maturation −1 step; unlocks the L5 export'},
   warehouse:{name:'Warehouse',     desc:'+4 goods storage'},
   quay     :{name:'Quay',          desc:'load up to 2 casks in one Harbor visit'},
   cooperage:{name:'Cooperage',     desc:'+1 cask loaded per Harbor visit (stacks with Quay)'},
@@ -384,8 +384,8 @@ function newPlayer(i,name){
 }
 function freshState(n,names){
   const st={players:[],slots:{},turn:1,active:0,first:0,ending:false,log:[],
-    summit:dealSummit(), sailed:0, sailedCap:(SAILED_CAP[n]||10), upgradeSupply:[], upgradeDisplay:[]};
-  applySummit(st.summit);
+    export:dealSummit(), sailed:0, sailedCap:(SAILED_CAP[n]||10), upgradeSupply:[], upgradeDisplay:[]};
+  applySummit(st.export);
   for(let i=0;i<n;i++) st.players.push(newPlayer(i,names[i]));
   SLOTS.forEach(s=>st.slots[s.id]=null);
   // ---- Upgrade supply (facedown) + face-up display (Market option B) ----
@@ -499,7 +499,7 @@ function startGame(){
   const names=[];for(let i=0;i<setupN;i++){const v=document.getElementById('nm'+i).value.trim();names.push(v||CNAMES[i]);}
   S=freshState(setupN,names);UI={sub:'move'};activeTab=0;undoStack=[];
   document.getElementById('setup').classList.add('hidden');
-  log('Game begins — '+setupN+' brewing houses. The summit this game: L3 '+STYLES.l3.name+' · L4 '+STYLES.l4.name+' · L5 '+STYLES.l5.name+'.');
+  log('Game begins — '+setupN+' brewing houses. The export this game: L3 '+STYLES.l3.name+' · L4 '+STYLES.l4.name+' · L5 '+STYLES.l5.name+'.');
   log('Warm start: each house has a Cog (→ Bruges) on the wharf and a Ready Gruit to deploy.');
   save();render();
 }
@@ -942,7 +942,7 @@ function renderShop(){
 function renderVoyage(){
   let trk='';for(let i=0;i<S.sailedCap;i++)trk+='<div class="sp'+(i<S.sailed?' on':'')+'">'+(i<S.sailed?'⛵':'')+'</div>';
   let h='<div class="voybox">'+LU('sailboat')+' <b>Sailed-Ships</b> '+S.sailed+' / '+S.sailedCap+(S.ending?' · <b style="color:var(--red)">FINAL ROUND</b>':'')+'<div class="track">'+trk+'</div></div>';
-  h+='<div class="note" style="margin-top:6px"><b>Summit this game:</b> L3 '+STYLES.l3.name+' · L4 '+STYLES.l4.name+' · L5 '+STYLES.l5.name+'.</div>';
+  h+='<div class="note" style="margin-top:6px"><b>Export this game:</b> L3 '+STYLES.l3.name+' · L4 '+STYLES.l4.name+' · L5 '+STYLES.l5.name+'.</div>';
   h+='<div class="note" style="margin-top:4px">Delivered value: '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+scorePlayer(p).deliv+'</span>').join(' · ')+'</div>';
   document.getElementById('voyage').innerHTML=h;
 }
@@ -1012,7 +1012,7 @@ function renderTableaus(){
 //==================================================================
 (function boot(){
   const saved=load();
-  if(saved&&saved.players){S=saved;UI={sub:'move'};applySummit(S.summit);
+  if(saved&&saved.players){S=saved;UI={sub:'move'};applySummit(S.export);
     render();log('— resumed saved game —');render();
   } else {openSetup();}
 })();

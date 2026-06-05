@@ -24,7 +24,7 @@
 | Component | Qty (⚙) | Notes |
 |---|---|---|
 | **Grain cubes** | ~60 | Brewing input #1; the medium of exchange. |
-| **Hops cubes** | ~40 | Brewing input #2; needed for Hopped & the summit (the beer that travels). |
+| **Hops cubes** | ~40 | Brewing input #2; needed for Hopped & the export (the beer that travels). |
 | **Worker pawns** | 1 / player | The grid worker that walks the loop. |
 | **Ownership discs** | ~20 / player color | Mark a cask's owner once it sits on the **wharf** or is **delivered** (casks are a shared-pool tile, so ownership is by disc, not by color set). |
 | **Majority markers** | per kontor | Resolve route majorities at scoring. |
@@ -32,7 +32,7 @@
 
 > **No VP tokens, no standing markers, no demand-market markers, no aging cubes** (all retired). Score is tallied at game end from delivered casks + majorities + goals — there is no running points track to maintain mid-game beyond the **Sailed-Ships** end clock.
 
-> **Casks are a shared supply with fixed global counts** (L1×16 · L2×20 · L3×12 · L4×8 · L5×4 ⚙) drawn from by all players — you **brew** them (never buy), so the rare summit casks are a **contested** resource. A player's cap is "what's left to brew." No per-player cask colors; ownership is a disc once a cask hits the wharf.
+> **Casks are a shared supply with fixed global counts** (L1×16 · L2×20 · L3×12 · L4×8 · L5×4 ⚙) drawn from by all players — you **brew** them (never buy), so the rare export casks are a **contested** resource. A player's cap is "what's left to brew." No per-player cask colors; ownership is a disc once a cask hits the wharf.
 
 ---
 
@@ -47,13 +47,13 @@ Single working face: **type · quality (Q1–Q5, printed) · one signature actio
 |---|---|---|---|---|---|---|
 | **L1** | **Gruit Ale** | 1 | `G` | 1 | **Source** — take 2 goods | 16 |
 | **L2** | **Hopped Beer** | 2 | `G H` | 2 | **Age** — advance a cask 2 steps | 20 |
-| **L3** | *summit ⚙* | 3 | `G H H` | 2 | **Load** — load a Ready cask onto a ship free | 12 |
-| **L4** | *summit ⚙* | 4 | `G G H H` | 3 | **Reach** — +1 presence at a kontor you've delivered to | 8 |
-| **L5** | *summit ⚙* | 5 | premium; needs Aging Cellar | 3 | **Wild** — take any one base verb as a bonus | 4 |
+| **L3** | *export ⚙* | 3 | `G H H` | 2 | **Load** — load a Ready cask onto a ship free | 12 |
+| **L4** | *export ⚙* | 4 | `G G H H` | 3 | **Reach** — +1 presence at a kontor you've delivered to | 8 |
+| **L5** | *export ⚙* | 5 | premium; needs Aging Cellar | 3 | **Wild** — take any one base verb as a bonus | 4 |
 
-> **Summit roster (dealt to L3–L5 in a variable order each game) ⚙:** real Hanse export beers — **Bock** (Einbeck), **Mumme** (Braunschweig), **Broyhan** (Hannover), **Keut** (Low Countries). The fixed on-ramp is **Gruit → Hopped**; the summit is variable, so the efficient climb differs every game.
+> **Export roster (dealt to L3–L5 in a variable order each game) ⚙:** real Hanse export beers — **Bock** (Einbeck), **Mumme** (Braunschweig), **Broyhan** (Hannover), **Keut** (Low Countries). The fixed on-ramp is **Gruit → Hopped**; the export is variable, so the efficient climb differs every game.
 
-*Gruit is the cheap, fast workhorse — it keeps your goods flowing (its action) and reaches Bruges, but it never makes prestige. The summit casks are scarce, slow, and the key to the rich destinations.*
+*Gruit is the cheap, fast workhorse — it keeps your goods flowing (its action) and reaches Bruges, but it never makes prestige. The export casks are scarce, slow, and the key to the rich destinations.*
 
 ### B. Ship tiles — owned single-use carriers (~13 tiles)
 Built at the **Market**, placed in a wharf slot, **bound to a destination** (inheriting its quality gate). **Load → fill → sail:** loaded via the Harbor verb or a bonus load when the ship's line fires; the instant it is **full** (or launched early) it **sails** — casks deliver, the **ship is consumed onto the Sailed-Ships track** (the end clock). Build another to ship again.
@@ -69,11 +69,11 @@ Built at the **Market**, placed in a wharf slot, **bound to a destination** (inh
 A small set placed in perimeter slots **at setup** (shared, permanent). They keep the wharf alive from turn 1 and give everyone a base action where they sit — e.g., **Market Stall** (+1 good), **Cooper** (advance a cask 1), **Crane** (free load onto a ship), **Counting-House** (convert/relabel goods). The active player may use the one on their line, free. ~2–3 in play per game ⚙.
 
 ### D. Recipe tiles — permission to brew a type (~10 tiles ⚙)
-A small face-up Market supply. A recipe = **a type you may brew + its `G/H` cost** — nothing more (the v0.6 on-collect boons, the 6-card tuck, and frontier-gating are **cut**). Acquired at the Market; **permanent** (brewing never consumes it). Start: **Gruit + Hopped** (fixed); collect summit recipes to climb. ❓ light hand limit.
+A small face-up Market supply. A recipe = **a type you may brew + its `G/H` cost** — nothing more (the v0.6 on-collect boons, the 6-card tuck, and frontier-gating are **cut**). Acquired at the Market; **permanent** (brewing never consumes it). Start: **Gruit + Hopped** (fixed); collect export recipes to climb. ❓ light hand limit.
 
 ### E. Upgrade tiles — the private brewery engine (Rooms + Modifiers, ~24 ⚙)
 Installed on your brewery board. They come from the Market's **face-up Upgrade display** (option B): a row of ~4 ⚙ tiles drawn from a shuffled Upgrade supply, refilling as taken. **Buy** one (pay its cost) **or earn** one *free* by delivering to **London / Bergen / Novgorod** — the *same* display — closing the loop (deliver → upgrade → brew better → deliver better). (Recipes & ships are a separate always-available supply.)
-- **Rooms** (permanent capability): **Extra Vessel** (+1 brewing lane), **Aging Cellar** (faster maturation; unlocks the L5 summit), **Warehouse** (+storage), **Quay** (a stronger Harbor / deploy reach), **Cooperage**, etc.
+- **Rooms** (permanent capability): **Extra Vessel** (+1 brewing lane), **Aging Cellar** (faster maturation; unlocks the L5 export), **Warehouse** (+storage), **Quay** (a stronger Harbor / deploy reach), **Cooperage**, etc.
 - **Modifiers** (asymmetric, permanent perks — these subsume v0.6's Privileges): e.g., *"when you gain hops, +1 extra,"* *"your ships sail with +1 capacity,"* *"+1 good when you deliver to Bruges."* The variety levers that make different players' engines diverge.
 
 ### F. Destination board (not tiles) + majority markers

@@ -232,13 +232,13 @@
     <div class="stage"><div class="st">Age</div><div class="ds">via the Cellar + 1/turn</div><div class="arrow">→</div></div>
     <div class="stage"><div class="st">Ready</div><div class="ds">deploy to the wharf</div></div>
   </div>
-  <div class="age-note">A cask matures <b>+1 step automatically each turn</b>, and the <b>Cellar</b> action (cell D) gives a <b>pool of advance points</b> ⚙ across your vessels. Maturation length is set by type — <b>Gruit 1 · Hopped 2 · summit 2–3 steps ⚙</b>. When a cask reaches <b>Ready</b> it deploys to an open wharf slot; if the wharf is full it <b>clogs its vessel</b> until you free a slot (the back-pressure that keeps the loop moving). <i>(Warm start: each house begins with 2 vessels, one built Cog bound to Bruges, and one Ready cask already on the wharf.)</i></div>
+  <div class="age-note">A cask matures <b>+1 step automatically each turn</b>, and the <b>Cellar</b> action (cell D) gives a <b>pool of advance points</b> ⚙ across your vessels. Maturation length is set by type — <b>Gruit 1 · Hopped 2 · export 2–3 steps ⚙</b>. When a cask reaches <b>Ready</b> it deploys to an open wharf slot; if the wharf is full it <b>clogs its vessel</b> until you free a slot (the back-pressure that keeps the loop moving). <i>(Warm start: each house begins with 2 vessels, one built Cog bound to Bruges, and one Ready cask already on the wharf.)</i></div>
 </section>
 
 <!-- CASK TILES -->
 <section id="casks">
   <h2><span class="n">A</span>Cask Tiles — the Dual-Role Hero</h2>
-  <p class="lead">The one piece that does everything, living <b>three lives</b>: <b>maturing</b> (in a private vessel) → <b>on the wharf</b> (a shared slot — cargo + a public action) → <b>delivered</b> (shipped to a destination → it <i>scores</i> and leaves). Beer is <b>two layers — type</b> (a global quality rung, Q1–Q5) <b>+ recipe</b> (permission to brew it). The ladder is an anchored spine (<b>Gruit → Hopped</b>) + a <b>variable summit</b> (L3–L5 dealt each game). <i>Click a tile to flip it.</i></p>
+  <p class="lead">The one piece that does everything, living <b>three lives</b>: <b>maturing</b> (in a private vessel) → <b>on the wharf</b> (a shared slot — cargo + a public action) → <b>delivered</b> (shipped to a destination → it <i>scores</i> and leaves). Beer is <b>two layers — type</b> (a global quality rung, Q1–Q5) <b>+ recipe</b> (permission to brew it). The ladder is an anchored spine (<b>Gruit → Hopped</b>) + a <b>variable export</b> (L3–L5 dealt each game). <i>Click a tile to flip it.</i></p>
   <div class="legend">
     <span class="chip"><span class="dot grain"></span> Grain (G)</span>
     <span class="chip"><span class="dot hops"></span> Hops (H)</span>
@@ -274,7 +274,7 @@
 <!-- RECIPES -->
 <section id="recipes">
   <h2><span class="n">D</span>Recipe Tiles — Permission to Brew a Type</h2>
-  <p class="lead">A small face-up Market supply. A recipe is <b>only</b> <i>a brewable type + its brew cost</i> — the v0.6 on-collect boons, the 6-card tuck, and frontier-gating are <b>cut</b>. Acquired at the Market; <b>permanent</b> (brewing never consumes it). Start with <b>Gruit + Hopped</b> (fixed, symmetric — so <i>gaining a summit recipe means more</i>); collect summit recipes to climb to the rich destinations.</p>
+  <p class="lead">A small face-up Market supply. A recipe is <b>only</b> <i>a brewable type + its brew cost</i> — the v0.6 on-collect boons, the 6-card tuck, and frontier-gating are <b>cut</b>. Acquired at the Market; <b>permanent</b> (brewing never consumes it). Start with <b>Gruit + Hopped</b> (fixed, symmetric — so <i>gaining a export recipe means more</i>); collect export recipes to climb to the rich destinations.</p>
   <div class="gallery" id="recipeGallery"></div>
 </section>
 
@@ -338,9 +338,9 @@ document.getElementById('destBoard').innerHTML=destinations.map(d=>`
 const casks=[
   {style:'L1 · Gruit Ale',q:1,inputs:'G',mature:'1 step',action:'Source — take 2 goods',reaches:'Bruges only',qty:16},
   {style:'L2 · Hopped Beer',q:2,inputs:'G H',mature:'2 steps',action:'Age — advance any 1 cask 2 steps',reaches:'Bruges · London · Bergen · Hall',qty:20},
-  {style:'L3 · Summit',q:3,inputs:'G H H',mature:'2 steps',action:'Load — a Ready cask onto a ship, free',reaches:'+ Novgorod',qty:12},
-  {style:'L4 · Summit',q:4,inputs:'G G H H',mature:'3 steps',action:'Reach — +1 presence at a kontor you hold',reaches:'all',qty:8},
-  {style:'L5 · Summit',q:5,inputs:'premium · needs Aging Cellar',mature:'3 steps',action:'Wild — take any one base verb',reaches:'all',qty:4},
+  {style:'L3 · Export',q:3,inputs:'G H H',mature:'2 steps',action:'Load — a Ready cask onto a ship, free',reaches:'+ Novgorod',qty:12},
+  {style:'L4 · Export',q:4,inputs:'G G H H',mature:'3 steps',action:'Reach — +1 presence at a kontor you hold',reaches:'all',qty:8},
+  {style:'L5 · Export',q:5,inputs:'premium · needs Aging Cellar',mature:'3 steps',action:'Wild — take any one base verb',reaches:'all',qty:4},
 ];
 function qbar(q){let s='';for(let i=1;i<=5;i++)s+=`<span class="q ${i<=q?'':'off'}"></span>`;return `<div class="qbar">${s}</div>`;}
 document.getElementById('caskGallery').innerHTML=casks.map(c=>`
@@ -403,9 +403,9 @@ document.getElementById('neutralGallery').innerHTML=neutrals.map(n=>`
 const recipeTiles=[
   {name:'Gruit',type:'L1 · start',buy:'printed',brew:'G'},
   {name:'Hopped',type:'L2 · start',buy:'printed',brew:'G H'},
-  {name:'Recipe · Summit L3',type:'L3',buy:'1 G',brew:'G H H'},
-  {name:'Recipe · Summit L4',type:'L4',buy:'1 G 1 H',brew:'G G H H'},
-  {name:'Recipe · Summit L5',type:'L5',buy:'2 G',brew:'premium (needs Aging Cellar)'},
+  {name:'Recipe · Export L3',type:'L3',buy:'1 G',brew:'G H H'},
+  {name:'Recipe · Export L4',type:'L4',buy:'1 G 1 H',brew:'G G H H'},
+  {name:'Recipe · Export L5',type:'L5',buy:'2 G',brew:'premium (needs Aging Cellar)'},
 ];
 document.getElementById('recipeGallery').innerHTML=recipeTiles.map(t=>`
   <div class="card"><div class="head h-route"><div class="kind">Recipe · ${t.type}</div><div class="ttl">${t.name}</div></div>
@@ -418,7 +418,7 @@ document.getElementById('recipeGallery').innerHTML=recipeTiles.map(t=>`
 // ---- UPGRADES: ROOMS ----
 const rooms=[
   ['Extra Vessel','+1 brewing lane (start 2, cap 4)'],
-  ['Aging Cellar','maturation −1 step · unlocks the L5 summit'],
+  ['Aging Cellar','maturation −1 step · unlocks the L5 export'],
   ['Warehouse','+4 goods storage'],
   ['Quay','a stronger Harbor (load 2 / deploy further) ⚙'],
   ['Cooperage','a free load each turn ⚙'],
@@ -444,7 +444,7 @@ document.getElementById('modGallery').innerHTML=mods.map(m=>`
 const goals=[
   ['+X per distinct type delivered','breadth / climb'],
   ['+X per cask delivered to one kontor','focus / majority'],
-  ['+X per Q3+ cask delivered','the summit'],
+  ['+X per Q3+ cask delivered','the export'],
   ['+X per ship you sailed','the merchant engine'],
   ['+X per cask shipped to the Hall','prestige'],
   ['+X per kontor where you hold presence','spread'],

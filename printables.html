@@ -184,9 +184,9 @@ const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc">'+LU('wheat','g')+g+'<
 const CASKS=[
   {nm:'Gruit',     c:'#8a949c', q:1, g:1,h:0,       act:'Source +2 goods', n:16},
   {nm:'Hopped',    c:'#c2922f', q:2, g:1,h:1,       act:'Age a cask +2',   n:20},
-  {nm:'Summit L3', c:'#b06a34', q:3, g:1,h:2,       act:'free Load',       n:12},
-  {nm:'Summit L4', c:'#caa12a', q:4, g:2,h:2,       act:'+1 presence',     n:8},
-  {nm:'Summit L5', c:'#7c2128', q:5, premium:true,  act:'Wild — any verb', n:4},
+  {nm:'Export L3', c:'#b06a34', q:3, g:1,h:2,       act:'free Load',       n:12},
+  {nm:'Export L4', c:'#caa12a', q:4, g:2,h:2,       act:'+1 presence',     n:8},
+  {nm:'Export L5', c:'#7c2128', q:5, premium:true,  act:'Wild — any verb', n:4},
 ];
 const FAMS=[
  {label:'Ships — owned single-use carriers', sm:'built to a destination · load via Harbor or line-fire · full → sail → Sailed-Ships track · (Charter = 1 cask for 2 G, no tile)', items:[
@@ -203,9 +203,9 @@ const FAMS=[
  ]},
  {label:'Recipe Tiles — permission to brew a type', sm:'always-available Market supply · permanent · start with Gruit + Hopped', items:[
    {ic:'scroll-text',nm:'Hopped',    sub:'brew '+cost(1,1), c:'#8a6408', n:2},
-   {ic:'scroll-text',nm:'Summit L3', sub:'brew '+cost(1,2), c:'#a07a0c', n:2},
-   {ic:'scroll-text',nm:'Summit L4', sub:'brew '+cost(2,2), c:'#8a6408', n:2},
-   {ic:'scroll-text',nm:'Summit L5', sub:'premium · needs Cellar', c:'#a07a0c', n:2},
+   {ic:'scroll-text',nm:'Export L3', sub:'brew '+cost(1,2), c:'#a07a0c', n:2},
+   {ic:'scroll-text',nm:'Export L4', sub:'brew '+cost(2,2), c:'#8a6408', n:2},
+   {ic:'scroll-text',nm:'Export L5', sub:'premium · needs Cellar', c:'#a07a0c', n:2},
  ]},
  {label:'Upgrades · Rooms — permanent capability', sm:'in the face-up Market display · buy, or earn free by delivering', items:[
    {ic:'wrench',nm:'Extra Vessel', sub:'+1 lane (cap 4) · '+cost(2,0), c:'#4a6b3a', n:3},
@@ -225,7 +225,7 @@ const FAMS=[
  {label:'Goal Tiles — the variety layer', sm:'deal 3 per player · your best 2 score', items:[
    {ic:'target',nm:'Variety',  sub:'+2 / distinct type',  c:'#7c2128', n:1},
    {ic:'target',nm:'Focus',    sub:'+2 / cask, 1 kontor', c:'#7c2128', n:1},
-   {ic:'target',nm:'Summit',   sub:'+2 / Q3+ delivered',  c:'#7c2128', n:1},
+   {ic:'target',nm:'Export',   sub:'+2 / Q3+ delivered',  c:'#7c2128', n:1},
    {ic:'target',nm:'Merchant', sub:'+3 / ship sailed',    c:'#7c2128', n:1},
    {ic:'target',nm:'Prestige', sub:'+3 / cask to Hall',   c:'#7c2128', n:1},
    {ic:'target',nm:'Spread',   sub:'+3 / kontor held',    c:'#7c2128', n:1},
@@ -272,7 +272,7 @@ function renderTiles(){
   let h='<div class="page flow'+(back?' backs':'')+'">'+REG;
   h+='<div class="calib"><div class="box">1 inch<br>100%</div><span class="note" style="color:#555">'
     +(back?'<b>BACKS</b> — single-face tiles print blank; corner ✛ marks register a duplex pass at 100%.':'Verify this box is exactly 1 inch before cutting. Cut on the tile borders.')+'</span></div>';
-  h+='<div class="famlabel">Cask Tiles — the dual-role hero <span class="sm">'+LU('beer')+' type · the big corner number is the QUALITY (its value: gate to destinations, and Q×2 at the Hall) · '+LU('zap')+' signature wharf-action · summit L3–L5 dealt from Bock / Mumme / Broyhan / Keut</span></div><div class="grid">';
+  h+='<div class="famlabel">Cask Tiles — the dual-role hero <span class="sm">'+LU('beer')+' type · the big corner number is the QUALITY (its value: gate to destinations, and Q×2 at the Hall) · '+LU('zap')+' signature wharf-action · export L3–L5 dealt from Bock / Mumme / Broyhan / Keut</span></div><div class="grid">';
   CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTile:caskTile(d);});
   h+='</div>';
   FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+(f.sm?' <span class="sm">'+f.sm+'</span>':'')+'</div><div class="grid">';
@@ -294,7 +294,7 @@ function vessel(n,open){
 function pboard(p){
   let store='';for(let i=0;i<12;i++)store+='<div class="gbox">'+LU('package')+'</div>';
   let recipes='<div class="pslot printed">'+LU('scroll-text')+'Gruit</div><div class="pslot printed">'+LU('scroll-text')+'Hopped</div>';
-  for(let i=0;i<2;i++)recipes+='<div class="pslot">'+LU('plus')+'summit recipe</div>';
+  for(let i=0;i<2;i++)recipes+='<div class="pslot">'+LU('plus')+'export recipe</div>';
   let ups='';for(let i=0;i<3;i++)ups+='<div class="pslot">'+LU('wrench')+'Room / Modifier</div>';
   let goals='';for(let i=0;i<3;i++)goals+='<div class="pslot'+(i<2?' best':'')+'">'+LU('target')+(i<2?'goal (scores)':'goal')+'</div>';
   return '<div class="page fixed"><div class="board" style="--pc:'+p.c+'">'
