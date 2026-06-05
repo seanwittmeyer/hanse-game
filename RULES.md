@@ -83,7 +83,9 @@ Take **2 goods** (any mix), **OR** acquire **one** tile from the face-up market 
 Gain a **pool of 3 advance points** ⚙ and **allocate them freely across your vessels** (pour into one cask or spread). Each cask also ages **+1 automatically at the start of your turn** ⚙, so maturing never depends on reaching this cell. When a cask reaches **Ready**, deploy it to an open wharf slot (§2).
 
 ### C · Harbor — *Ship*
-**Load** one of your **Ready/wharf casks** onto one of **your ships** (any ship — no line-coincidence needed). A ship **sails the instant it is full** (§5); you may also **launch a partial ship early** here (the relief valve). *(A cask must be on the wharf to be shipped — that is what makes deploying it the gateway to scoring.)*
+**Load** one of your **wharf casks** onto one of **your ships** (any ship — no line-coincidence needed). A ship **sails the instant it is full** (§5); you may also **launch a partial ship early** here (the relief valve). *(A cask must be on the wharf to be loaded onto an owned ship — that is what makes deploying it the gateway to scoring.)*
+
+Or **Charter** (the always-available relief valve, §5): pay **⚙2 `G`** to send **one** Ready cask — from a vessel **or** the wharf — on an immediate **single-cask voyage** to a destination it qualifies for. It delivers normally (scores + the destination benefit) and, being a voyage, **advances the Sailed-Ships clock**. One cask for the price keeps owned Cogs/Hulks the efficient path, but the Charter guarantees the loop never deadlocks (when the ring is full and you hold no ship, or a Ready cask clogs a vessel, you can always charter your way out).
 
 > **Builders & cash-outs blur on purpose now.** v0.6's "every line is one builder + one cash-out" rule is retired in favor of the **walkable loop**: legibility (the board teaches the loop) beat the old anti-snowball constraint, which the warm start and faster pace made unnecessary.
 
@@ -118,8 +120,11 @@ Each is a "support action" in the Lisboa sense — it pushes the loop forward, a
 
 ### Ships — owned, single-use carriers (build → load → sail)
 - **Build** (Market): a **Cog** (capacity **2**) or **Hulk** (capacity **3**) ⚙ goes into a perimeter slot, **bound to a destination** of your choice, inheriting that destination's **quality gate**.
-- **Load:** put a Ready/wharf cask aboard — via the **Harbor verb** (always available) **or** when the **ship's line fires** (a bonus free load). Loading is not restricted by where the cask sits on the wharf.
+- **Load:** put a **wharf** cask aboard — via the **Harbor verb** (always available) **or** when the **ship's line fires** (a bonus free load). Loading is not restricted by where the cask sits on the wharf, and may take a **rival's** wharf cask (§ below).
 - **Sail** (the instant it is **full**, or via an early **Harbor launch**): every cask aboard is **delivered** to the ship's destination → it **scores for its owner** (§9) and leaves the board; the **ship tile is consumed onto the shared Sailed-Ships track** (§8) — single-use, build another to ship again.
+
+### Charter — the single-cask relief valve (no tile; an outside hull)
+Owned ships are consumed when they sail, and the wharf is tight, so the loop needs an escape that can't be locked out. At the **Harbor** you may always **Charter**: pay **⚙2 `G`** to ship **one** Ready cask — from a **vessel** *or* the **wharf** — on an **immediate single-cask voyage** to a destination it qualifies for. It **delivers** (scores + benefit, §9) and **advances the Sailed-Ships clock** (§8) like any voyage; it just carries one cask for the fare, so building Cogs/Hulks stays the efficient race. The Charter is the **deadlock guard**: when the ring is full and you own no ship, or a Ready cask clogs a vessel, a charter always frees you (you can always Source the 2 `G`). *(Theme: a 1350 brewmaster who hasn't a hull of their own books space on someone else's.)*
 
 ### Destinations — *where you ship is the strategic lean* (all open from start)
 The old two value tracks are replaced by destinations, each with a distinct **benefit** and a **quality gate** (the only "level-up" limiter — better places want better beer):
@@ -164,8 +169,8 @@ Goals (§9) reward different brewery/delivery shapes, so the winning engine vari
 
 ## 8. End of the game
 
-- **The Sailed-Ships track fills.** Each voyage (a ship sailing, full or launched) moves its consumed tile to the shared, visible **Sailed-Ships track**. When it fills, the end is triggered — **finish the round** (equal turns for all) → **score**. It is **self-accelerating** (the more the table ships, the sooner it ends) and the master length dial: **~6 / 8 / 10 / 12 slots for 2 / 3 / 4 / 5 players ⚙.**
-- A **MAX_ROUND safety** ⚙ backstops a pathologically slow table — it must never be the normal end.
+- **The Sailed-Ships track fills.** Each voyage (a ship sailing full or launched, **or a Charter §5**) advances the shared, visible **Sailed-Ships track** by one. When it fills, the end is triggered — **finish the round** (equal turns for all) → **score**. It is **self-accelerating** (the more the table ships, the sooner it ends) and the master length dial: **~6 / 8 / 10 / 12 slots for 2 / 3 / 4 / 5 players ⚙.**
+- A **MAX_ROUND ceiling** ⚙ backstops a slow table at the top of the **12–25-round target band** (**≈25 ⚙**). Good play ends earlier on the clock; the ceiling just guarantees no game drags. *(Pace tuning — the Sailed-Ships length is the primary dial, the Charter cost and `MAX_ROUND` the secondary ones — wants a human playtest.)*
 
 > A reach-leaning player can **race** the clock by sailing ships fast; a prestige-leaning player keeps a steadier pace to buy more delivering turns. The clock is on the table, shared and steerable.
 
@@ -186,7 +191,8 @@ No separate reach/standing tracks. You score from **what you delivered**:
 
 ## Open / to tune
 
-- **Warm-start contents** (1 Cog + 1 Ready cask?) and **starting vessels** (2?) vs the **Sailed-Ships length** — the joint pace dials; target first voyage ≈ turn 2–3 and a 2p game ≈ 45–60 min.
+- **Warm-start contents** (1 Cog + 1 Ready cask?) and **starting vessels** (2?) vs the **Sailed-Ships length** — the joint pace dials; target first voyage ≈ turn 2–3, a **12–25-round game**, and a 2p game ≈ 45–60 min.
+- **Charter cost** (⚙2 `G`) and whether it advances the clock — the relief-valve dials. Too cheap and it eclipses owning ships (the merchant fantasy); too dear and the deadlock guard bites. It must stay *strictly worse per cask* than a Cog/Hulk.
 - **Cask-action strengths** (free Source 2 / Age 2 / free Load / +1 presence / Wild) — keep them chunky without making the ring swingy. Whether *every* cask bears an action or only "set-working" ones.
 - **Destination values, gates, and majority bonuses** — the heart of the variety; how hard to gate the rich destinations behind quality (the climb) vs leaving them open (variety).
 - **Shipping a rival's cask:** the **loader bonus** size and the **best-vs-forced destination value gap** — the non-destructive interaction dials (watch mild kingmaking on who you help).

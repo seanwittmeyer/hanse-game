@@ -6,14 +6,14 @@ A theme-first **medium euro** for **2–5 players** (~45–60 min at 2p). It's c
 
 Published from `main` via GitHub Pages.
 
-## Play & browse (the pages)
-- **`learn.html`** — learn-to-play in one page. **(v0.7 — current.)**
-- **`play.html`** — the playable hot-seat client & de-facto reference implementation. **(still v0.6 — port pending.)**
-- **`rulebook.html`** — the full rules. **(still v0.6 — port pending.)**
-- **`index.html`** — component visualizer. **(still v0.6 — port pending.)**
-- **`printables.html`** — print-&-play cut sheets + player boards. **(still v0.6 — port pending.)**
+## Play & browse (the pages — all v0.7 "The Wharf")
+- **`learn.html`** — learn-to-play in one page.
+- **`play.html`** — the playable hot-seat client & de-facto reference implementation.
+- **`rulebook.html`** — the full rules.
+- **`index.html`** — component visualizer.
+- **`printables.html`** — print-&-play cut sheets + player boards.
 
-> **⚠ During the v0.7 transition:** the **markdown specs + `learn.html`** are canonical; the other four HTML pages still reflect v0.6 and are scheduled for a follow-up pass.
+> **✅ v0.7 is complete repo-wide:** the markdown specs **and all five HTML pages** are on v0.7. (The playable `play.html` adds one engine-level relief valve, the **Charter** — a `2 G` single-cask Harbor voyage that keeps the tight wharf from deadlocking; see `RULES.md` §5.)
 
 ## Design docs (the canonical picture — read these to understand the whole game)
 - **`DESIGN.md`** — pillars, rationale, dated session log (the *why*). **§21 = v0.7 "The Wharf"** (the live design); §1–§20 are the record of how we got here.

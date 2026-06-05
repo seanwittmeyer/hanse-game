@@ -51,8 +51,11 @@ Built at the **Market** into a wharf slot, **bound to a destination** (inheritin
 |---|---|---|---|
 | **Cog** | 2 | `2 G` | ~8 |
 | **Hulk** | 3 | `3 G` | ~5 |
+| **Charter** *(no tile — an outside hull)* | 1 | `2 G` per voyage | — |
 
 > Owning ships is the merchant fantasy the design protects: you build the infrastructure, choose its destination, and a full Hulk is a 3-cask burst — still just **one** Sailed-Ships slot, so the clock stays smooth.
+>
+> **Charter** is the Harbor's always-available relief valve (`RULES.md` §5): pay `2 G` to ship **one** Ready cask (vessel *or* wharf) on an immediate single-cask voyage — it delivers and consumes one Sailed-Ships slot like any voyage. At one cask for the fare it's **strictly worse per cask** than a Cog/Hulk, so it never displaces owning ships; it exists so the tight ring can't deadlock. No tile, no qty — just an action.
 
 ---
 

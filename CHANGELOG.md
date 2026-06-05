@@ -2,7 +2,7 @@
 
 Compact version history. The **full rationale ("the why")** lives in `DESIGN.md` (§21 = v0.7, §20 = v0.6, §19 = v0.5, and the dated entries before them); the **current rules** are `RULES.md`. This file also compacts the retired `PLAY-TODO.md` brief, the `PLAYTEST.md` v0.1 snapshot, and the `playtests/` sim write-ups — the originals remain in git history if ever needed.
 
-> **⚠ v0.7 doc/code split:** v0.7 lands in the **markdown specs + `learn.html`** first. **`play.html`, `rulebook.html`, `index.html`, and `printables.html` still reflect v0.6** and are scheduled for a follow-up pass. Until then, the markdown is the source of truth; the older pages are knowingly stale.
+> **✅ v0.7 is now complete across the whole repo (2026-06-05):** the markdown specs **and all five HTML pages** (`learn` · `index` · `rulebook` · `printables` · `play`) are on v0.7 "The Wharf." The doc/code split is closed.
 
 ---
 
@@ -16,7 +16,9 @@ A near-total redesign that re-targets the game from "Lacerda-grade" to **Great W
 - **Deliver → earn an Upgrade → brew better → deliver better** (Distilled-style). Upgrades (Rooms + Modifiers) subsume v0.6's Privileges; **Fairs, route-lane tiles, the recipe card deck/boons/tuck, twins, and aging cubes are cut.**
 - **Pace fixes** (the model put v0.6's first voyage at turn 6): **warm start** (1 Cog + 1 Ready cask), **start with 2 vessels**, **base verbs always work**, **all destinations open** → first voyage ≈ turn 2–3. **Recipes reel in to Gruit + Hopped start + plain permission tiles.**
 - **Scoring:** delivery value (by destination) + majorities + goals (best few). No reach/standing tracks.
-- **This pass:** markdown specs + `learn.html` updated to v0.7; `play.html` + the other pages follow.
+- **The Charter relief valve (added in the `play.html` port).** Porting the engine exposed a hard deadlock the bare wharf model allows (all your ships sailed + the ring full + vessels clogged = no legal move). Fix: at the Harbor you may always pay **⚙2 `G`** to ship **one** Ready cask (vessel *or* wharf) on an immediate single-cask voyage — it delivers and advances the Sailed-Ships clock, but at one cask for the fare it's strictly worse per cask than a Cog/Hulk, so owning ships stays the race. The deadlock guard; folded into `RULES.md`/`DESIGN.md §21·E′`/`COMPONENTS.md`/`TILES.md`.
+- **Pace target ~12–25 rounds:** the `MAX_ROUND` ceiling reeled from 40 → **25** (top of the band); good play ends earlier on the Sailed-Ships clock. Clock caps (~6/8/10/12 ⚙) stay the primary dial for human playtest.
+- **Done this pass:** **all five HTML pages now on v0.7.** The `play.html` rewrite was **smoke-tested headlessly** (mocked-DOM `vm`, bot off the engine): 100+ games at 2–5p reach game-over crash-free & deadlock-free; a targeted test covers every cask action, the convert, the London/Bergen benefit pickers, and scoring. Save `KEY` → `hanse-hotseat-v8`.
 
 ## v0.6 — the Brewhouse Floor · recipe cards · single-use ships · the Sailed-Ships clock (2026-06-04)
 - **Player board → the Brewhouse Floor.** One row of **4 multi-use slots**, each a **Room** (permanent) *or* a **working Cask** (temporary) — replaces the old separate room slots + personal cask slots. **Extra Vessel is a Room** that eats a Floor slot; a Ready cask with no open slot **clogs its vessel** (Floor scarcity and brewing back-pressure are now one tension).
@@ -64,6 +66,6 @@ These are *why the current rules look the way they do* — keep them in mind bef
 
 ## Working the repo
 - **Source of truth order:** `DESIGN.md` (why) → `RULES.md` (spec) → `play.html` (the de-facto reference implementation — correctness fixes here are rules fixes). Keep the docs, the published pages (`index`/`learn`/`rulebook`/`printables`), and `play.html` **in sync** — a change is never local.
-- **⚠ During the v0.7 transition (2026-06-05):** the **markdown specs + `learn.html` are canonical (v0.7)**; `play.html`, `rulebook.html`, `index.html`, and `printables.html` are **still v0.6** and must be ported in a follow-up pass before they're trusted. The v0.7 `play.html` rewrite is specced in `DESIGN.md` §21 "Engine deltas."
-- **Smoke-test `play.html` before merge:** extract the inline `<script>`, run it in a mocked-DOM node `vm`, drive a bot off the rendered buttons' `onclick` strings, and assert **2–5p games run crash-free to game-over** (expect the Sailed-Ships or enshrine clock, or the `MAX_TURN` safety). **Bump the save `KEY`** on any state-shape change.
+- **✅ v0.7 is complete repo-wide (2026-06-05):** the markdown specs **and all five HTML pages** are on v0.7. `play.html` is canonical again (the de-facto reference implementation).
+- **Smoke-test `play.html` before merge:** extract the inline `<script>`, run it in a mocked-DOM node `vm`, drive a bot off the engine (the rendered buttons' `onclick` handlers), and assert **2–5p games run crash-free *and deadlock-free* to game-over** (expect the **Sailed-Ships clock**, or the `MAX_ROUND` ≈25 ceiling). **Bump the save `KEY`** on any state-shape change.
 - **Publish:** develop on the feature branch, then fast-forward `main` (GitHub Pages serves `main`).

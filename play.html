@@ -290,6 +290,7 @@ const ROOMS={
   cellar   :{name:'Aging Cellar',  desc:'maturation −1 step; unlocks the L5 summit'},
   warehouse:{name:'Warehouse',     desc:'+4 goods storage'},
   quay     :{name:'Quay',          desc:'load up to 2 casks in one Harbor visit'},
+  cooperage:{name:'Cooperage',     desc:'+1 cask loaded per Harbor visit (stacks with Quay)'},
 };
 const MODS={
   granary  :{name:'Granary Right', desc:'when you gain grain, +1 extra'},
@@ -314,6 +315,7 @@ const SHOP=[
   {id:'u_cellar',   kind:'up',key:'cellar',   cost:{g:3}},
   {id:'u_warehouse',kind:'up',key:'warehouse',cost:{g:2}},
   {id:'u_quay',     kind:'up',key:'quay',     cost:{g:3}},
+  {id:'u_cooperage',kind:'up',key:'cooperage',cost:{g:2}},
   {id:'u_granary',  kind:'up',key:'granary',  cost:{g:2}},
   {id:'u_hopgarden',kind:'up',key:'hopgarden',cost:{g:2}},
 ];
@@ -349,8 +351,8 @@ const CELLROLE={A:'Source',B:'Brew',C:'Ship',D:'Age'};
 const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C:{row:'rowB',col:'colL'},D:{row:'rowB',col:'colR'}})[cell];
 
 // ---- pace dials ⚙ ----
-const SAILED_CAP={2:6,3:8,4:10,5:12};   // the Sailed-Ships end clock (per RULES §8)
-const MAX_ROUND=40;                      // safety only — must not be the normal end
+const SAILED_CAP={2:6,3:8,4:10,5:12};   // the Sailed-Ships end clock (per RULES §8) — the primary pace dial ⚙
+const MAX_ROUND=25;                      // round ceiling / backstop ⚙ — the top of the 12–25-round target band (good play ends earlier on the clock)
 const CELLAR_POOL=3;                     // Cellar advance points (+1 with Guild Seat)
 const START_GOODS={g:3,h:2};
 const START_STORAGE=8;
@@ -698,7 +700,7 @@ function benefitPick(key){snapshot();const b=UI.pendingBenefits[0];grantUpgrade(
 }
 
 // ---------- HARBOR menu ----------
-function harborLoad(){const p=cur();enterLoad(myShips(p),wharfLoadableCasks(p),false,'stops',hasUpgrade(p,'quay')?2:1);}
+function harborLoad(){const p=cur();const loads=1+(hasUpgrade(p,'quay')?1:0)+(hasUpgrade(p,'cooperage')?1:0);enterLoad(myShips(p),wharfLoadableCasks(p),false,'stops',loads);}
 function harborLaunch(slot){snapshot();sailShip(slot);afterSail('stops');}
 // Charter — the relief valve: pay to send ONE of your Ready casks (vessel or wharf) on a single-cask voyage now.
 function harborCharter(){UI.stage='charter_cask';render();}

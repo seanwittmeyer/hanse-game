@@ -63,6 +63,8 @@ Built at the **Market**, placed in a wharf slot, **bound to a destination** (inh
 | **Cog** | 2 | ~8 |
 | **Hulk** | 3 | ~5 |
 
+> **Charter** (no tile — an outside hull): at the Harbor you may always pay **⚙2 `G`** to ship **one** Ready cask (vessel or wharf) on an immediate single-cask voyage (it still consumes a Sailed-Ships slot). Strictly worse per cask than owning a Cog/Hulk, it's the relief valve that keeps the tight ring from ever deadlocking (`RULES.md` §5). It adds **no component** — just an action on the board.
+
 ### C. Neutral building tiles — the shared base, seeded in the ring (~6 designs ⚙)
 A small set placed in perimeter slots **at setup** (shared, permanent). They keep the wharf alive from turn 1 and give everyone a base action where they sit — e.g., **Market Stall** (+1 good), **Cooper** (advance a cask 1), **Crane** (free load onto a ship), **Counting-House** (convert/relabel goods). The active player may use the one on their line, free. ~2–3 in play per game ⚙.
 
