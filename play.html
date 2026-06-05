@@ -43,15 +43,15 @@
   /* GRID */
   .agwrap{display:flex;justify-content:center}
   .ag{display:grid;max-width:100%;
-    --corner:clamp(30px,8.5vw,48px); --cellsz:clamp(98px,29vw,146px); gap:clamp(4px,1.4vw,7px);
+    --corner:clamp(46px,12vw,66px); --cellsz:clamp(98px,29vw,146px); gap:clamp(4px,1.4vw,7px);
     grid-template-columns:var(--corner) var(--cellsz) var(--cellsz) var(--corner);
     grid-template-rows:var(--corner) var(--cellsz) var(--cellsz) var(--corner)}
   .cell{border-radius:12px;padding:clamp(6px,2.1vw,10px);color:var(--parch);position:relative;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 3px 9px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14);overflow:hidden}
-  .cell .head{display:flex;align-items:center;gap:clamp(4px,1.4vw,8px)}
-  .cell .bigic .ic,.cell .bigic svg{width:clamp(1.3em,5vw,2em);height:clamp(1.3em,5vw,2em);stroke-width:1.7}
-  .cell .head>div{min-width:0}
+  .cell .head{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(2px,1vw,5px)}
+  .cell .bigic .ic,.cell .bigic svg{width:clamp(2em,9vw,3.1em);height:clamp(2em,9vw,3.1em);stroke-width:1.6}
+  .cell .head>div{min-width:0;max-width:100%}
   .cell .role{font-size:.56rem;text-transform:uppercase;letter-spacing:1.2px;opacity:.82}
-  .cell .nm{font-variant:small-caps;font-weight:bold;font-size:clamp(.72rem,2.4vw,1.02rem);line-height:1.04;word-break:break-word;hyphens:auto}
+  .cell .nm{font-variant:small-caps;font-weight:bold;font-size:clamp(.8rem,3.4vw,1.2rem);line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
   .cell .yield{display:flex;gap:7px;align-items:center;margin-top:3px}
   .cell .yield .ic,.cell .yield svg{width:1.25em;height:1.25em;opacity:.95}
   .cell .ltr{position:absolute;top:5px;right:8px;font-weight:bold;opacity:.38;font-size:.78rem}
@@ -63,7 +63,16 @@
   @keyframes pulse{50%{outline-color:#fff}}
   .slot{background:var(--parch);border:2px dashed var(--line);border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;text-align:center;color:var(--ink2);padding:2px;overflow:hidden}
   .slot .ic,.slot svg{width:1.5em;height:1.5em}
-  .slot.filled{border-style:solid;border-width:3px;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.32)}
+  .slot.filled{border-style:solid;border-width:3px;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.32);padding:3px}
+  /* filled-slot tile face — reads as the designed square tile (icon · name · pips/info) */
+  .slot .tface{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:100%;height:100%;text-align:center;line-height:1.05}
+  .slot .tface .bigic .ic,.slot .tface .bigic svg{width:clamp(1.4em,5.5vw,2em);height:clamp(1.4em,5.5vw,2em);stroke-width:1.8}
+  .slot .tnm{font-size:.6rem;font-weight:bold;font-variant:small-caps;white-space:nowrap;letter-spacing:.3px}
+  .slot .tinfo{font-size:.52rem;opacity:.92;display:inline-flex;align-items:center;gap:1px;white-space:nowrap}
+  .slot .tinfo .ic,.slot .tinfo svg{width:.95em;height:.95em}
+  .slot .tpips{display:flex;gap:1.5px;margin:1px 0}
+  .slot .tpip{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.32)}
+  .slot .tpip.on{background:#fff;box-shadow:0 0 2px rgba(0,0,0,.4)}
   .slot .pips{display:flex;gap:1px;margin-top:1px;flex-wrap:wrap;justify-content:center;max-width:100%}
   .slot .pip{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.32)}
   .slot .pip.on{background:#fff;box-shadow:0 0 2px rgba(0,0,0,.4)}
@@ -234,6 +243,17 @@ function tileIcon(t){if(t.type==='cask')return LU('beer')+'<span class="tl">'+ST
   if(t.type==='ship')return LU('sailboat');
   if(t.type==='fair')return LU('tent');
   return LU('package');}
+function slotPips(q){let s='';for(let i=1;i<=5;i++)s+='<span class="tpip'+(i<=q?' on':'')+'"></span>';return s;}
+// A filled perimeter slot rendered as the designed square tile face (icon · name · pips/info).
+function slotFace(t){
+  let icon='package',nm=t.label||'',info='',pips='';
+  if(t.type==='cask'){icon='beer';nm=STYLES[t.style].name.split(' ')[0];info=LU('map-pin')+ROUTES[t.route].name.slice(0,3);pips=slotPips(t.q);}
+  else if(t.type==='route'){icon='route';nm=ROUTES[t.route].name;info='Lane +'+t.boost;}
+  else if(t.type==='ship'){icon='sailboat';nm=t.label;info=LU('map-pin')+ROUTES[t.dest].name.slice(0,3)+' '+t.load.length+'/'+t.cap;}
+  else if(t.type==='fair'){icon='tent';nm=t.label||'Fair';info='pump +1';}
+  return '<div class="tface"><span class="bigic">'+LU(icon)+'</span><span class="tnm">'+nm+'</span>'
+    +(pips?'<span class="tpips">'+pips+'</span>':'')+(info?'<span class="tinfo">'+info+'</span>':'')+'</div>';
+}
 function refreshIcons(){if(window.lucide)try{lucide.createIcons();}catch(e){}}
 
 // Beer = two layers: a TYPE (a global quality rung, L1–L5) and a RECIPE (a collected instance of a type, in your book).
@@ -968,7 +988,7 @@ function renderGrid(){
     let enshrining=(UI.sub==='cell'&&UI.stage==='enshrine_slot'&&t&&t.type==='cask'); // any deployed cask is enshrine-able
     if(placing||enshrining)cls+=' place';
     let inner;
-    if(t){cls+=' filled';inner=tileIcon(t);}
+    if(t){cls+=' filled';inner=slotFace(t);}
     else inner=placing?LU('plus'):'<span style="opacity:.45">'+s.id+'</span>';
     const click=placing?'placeTile':(enshrining?'enshrineDeployed':null);
     const style=t?'background:'+S.players[t.owner].color+';border-color:'+S.players[t.owner].color:'';
