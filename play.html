@@ -206,10 +206,11 @@ function refreshIcons(){if(window.lucide)try{lucide.createIcons();}catch(e){}}
 const STYLES={
   gruit :{name:'Gruit Ale',     lvl:1, q:1, in:{g:1,h:0}, ready:2, enshrine:false, standing:0, work:{t:'good',good:'g'}},
   hopped:{name:'Hopped Beer',   lvl:2, q:2, in:{g:1,h:1}, ready:3, enshrine:true,  standing:3, work:{t:'good',good:'h'}},
-  dubbel:{name:'Dubbel',        lvl:3, q:3, in:{g:1,h:2}, ready:3, enshrine:true,  standing:5, work:{t:'advance'}},
-  tripel:{name:'Tripel',        lvl:4, q:4, in:{g:2,h:2}, ready:4, enshrine:true,  standing:7, work:{t:'advance'}},
-  bock  :{name:'Barrel Bock',   lvl:5, q:5, in:{g:2,h:2}, ready:4, enshrine:true,  standing:10, work:{t:'presence'}, cellar:true},
+  dubbel:{name:'Summit L3',     lvl:3, q:3, in:{g:1,h:2}, ready:3, enshrine:true,  standing:5, work:{t:'advance'}},
+  tripel:{name:'Summit L4',     lvl:4, q:4, in:{g:2,h:2}, ready:4, enshrine:true,  standing:7, work:{t:'advance'}},
+  bock  :{name:'Summit L5',     lvl:5, q:5, in:{g:2,h:2}, ready:4, enshrine:true,  standing:10, work:{t:'presence'}, cellar:true},
 };
+// L3/L4/L5 display names are dealt from SUMMIT_ROSTER each game (applySummit) — the generic labels above are never shown in play.
 // Brewing tempo dials ⚙ — brewing was the bottleneck; these grease it (RULES §3).
 const BREW_POOL=3;       // Brewhouse action: advance points you allocate freely across your brews
 const BREW_POOL_TWIN=2;  // brew-room twin (Brewhouse blocked): allocate this many, no Load
@@ -234,7 +235,7 @@ const SAILED_CAP={2:6,3:8,4:10,5:12};      // ships that must sail → final rou
 const ENSHRINE_CAP={2:14,3:18,4:22,5:26};  // backup: total enshrined casks across all players → final round ⚙
 const MAX_TURN=60;           // ultimate safety only — must NOT be the normal end ⚙
 const SHIP_CAP={cog:2,hulk:3};             // single-use carrier capacities (DESIGN §20C)
-// v0.5 demand market: each TYPE has a value. A cask's ENSHRINE payout = its type's value at that instant (banked as standing).
+// demand market: each TYPE has a value. A cask's ENSHRINE payout = its type's value at that instant (banked as standing).
 // DOWN −1 when a type is realized (deploy for reach OR enshrine). UP +1 on recipe-buy or a Fair pump. Guardrail: pump ≤ drop.
 // v0.6 destination bonuses (owner banks, on a ship's delivery) ⚙ — engine fuel, mostly goods/privilege.
 const DEST_BONUS={
@@ -248,9 +249,9 @@ const VAL_FLOOR={gruit:1,hopped:1,dubbel:2,tripel:3,bock:4};
 const VAL_CEIL={gruit:5,hopped:7,dubbel:9,tripel:12,bock:15}; // demand ceiling ⚙
 const SHOP=[
   {id:'r_hopped',kind:'recipe',style:'hopped',name:'Recipe · Hopped',cost:{g:1}},
-  {id:'r_dubbel',kind:'recipe',style:'dubbel',name:'Recipe · Dubbel',cost:{g:1,h:1}},
-  {id:'r_tripel',kind:'recipe',style:'tripel',name:'Recipe · Tripel',cost:{g:2}},
-  {id:'r_bock',  kind:'recipe',style:'bock',  name:'Recipe · Bock (needs Cellar)',cost:{g:2,h:1}},
+  {id:'r_dubbel',kind:'recipe',style:'dubbel',name:'Recipe · Summit L3',cost:{g:1,h:1}},
+  {id:'r_tripel',kind:'recipe',style:'tripel',name:'Recipe · Summit L4',cost:{g:2}},
+  {id:'r_bock',  kind:'recipe',style:'bock',  name:'Recipe · Summit L5 (needs Cellar)',cost:{g:2,h:1}},
   {id:'l_london',  kind:'route',route:'london',  boost:2,name:'London Lane (+2)',cost:{g:2}},
   {id:'l_bergen',  kind:'route',route:'bergen',  boost:2,name:'Bergen Lane (+2)',cost:{g:2}},
   {id:'l_novgorod',kind:'route',route:'novgorod',boost:3,name:'Novgorod Lane (+3)',cost:{g:2,h:1}},
@@ -617,9 +618,11 @@ function buyTile(id){
     const premium=()=>p.recipes.filter(r=>r!=='gruit');
     if(premium().length>=6){const di=p.recipes.findIndex(r=>r!=='gruit');if(di>=0){log('↳ recipe book full (6) — '+p.name+' discards '+STYLES[p.recipes[di]].name+'.');p.recipes.splice(di,1);}}
     p.recipes.push(it.style);
-    const boon=resolveRecipeBoon(p,STYLES[it.style].lvl);
     marketPump(it.style);
-    log(p.name+' collects the '+STYLES[it.style].name+' recipe '+boon+' (market → '+S.value[it.style]+').',true);cellDone();return;}
+    const lvl=STYLES[it.style].lvl;
+    log(p.name+' collects the '+STYLES[it.style].name+' recipe (market → '+S.value[it.style]+').',true);
+    if(lvl>=5){UI.stage='l5boon';render();return;}   // Master's Privilege — choose one (the l5boon picker)
+    log('↳ '+resolveRecipeBoon(p,lvl));cellDone();return;}
   spend();
   if(it.kind==='room'){applyRoom(p,it.room);log(p.name+' builds '+it.name+' on the Floor.',true);}
   cellDone();
@@ -630,13 +633,24 @@ function applyRoom(p,room){const idx=floorEmptyIdx(p);if(idx<0)return;p.floor[id
   if(room==='warehouse'){p.storage+=4;}
   // cellar (unlock bock/L5 + shorten Age), counting (enshrine +1), larder/quay/fermenter/cooperage = handled at point of use
 }
-// Recipe-card on-collect boon (DESIGN §20B) — resources/tempo/small presence only; bot-safe defaults.
+// Recipe-card on-collect boon (DESIGN §20B) — resources/tempo/small presence only. L2–L4 auto-resolve; L5 uses the l5boon picker.
 function resolveRecipeBoon(p,lvl){
   if(lvl<=2){gain(p,2,2);return '(Stocked Pantry: +2G 2H)';}
   if(lvl===3){let n=0;for(let k=0;k<3;k++)if(advanceOne(p))n++;return '(Brewmaster’s Push: advanced '+n+')';}
-  if(lvl===4){gain(p,2,0);UI.tmp.discountNext=true;return '(Grand Market: +2G & −1 on your next tile this turn)';}
-  // L5 Master's Privilege — design intent is "choose one"; this prototype auto-resolves to advance 3 (⚙ choice menu TBD)
-  let n=0;for(let k=0;k<3;k++)if(advanceOne(p))n++;return '(Master’s Privilege: advanced '+n+')';}
+  gain(p,2,0);UI.tmp.discountNext=true;return '(Grand Market: +2G & −1 on your next tile this turn)';} // L4
+// L5 Master's Privilege — choose one (DESIGN §20B). Each option resolves in one click (bot-safe).
+function l5DeployTarget(p){const slots=emptySlots();if(!slots.length)return null;
+  const d=deployable(p);let best=null;
+  deployRoutes(p).sort((a,b)=>S.routes[b].value-S.routes[a].value).forEach(r=>{if(best)return;
+    const o=d.find(o=>STYLES[o.c.style].q>=ROUTES[r].gate);if(o)best={r,o,slot:slots[0].id};});
+  return best;}
+function l5Pick(opt){const p=cur();
+  if(opt==='adv'){let n=0;for(let k=0;k<3;k++)if(advanceOne(p))n++;log('↳ Master’s Privilege: advanced '+n+' brew step'+(n===1?'':'s')+'.',true);cellDone();return;}
+  if(opt==='goods'){gain(p,2,2);log('↳ Master’s Privilege: +2 grain, +2 hops.',true);cellDone();return;}
+  if(opt==='market'){gain(p,2,0);UI.tmp.discountNext=true;UI.stage=null;
+    log('↳ Master’s Privilege: a free Market — +2 grain, and one more tile this turn at −1.',true);render();return;}
+  if(opt==='deploy'){const t=l5DeployTarget(p);if(t){const cask=takeCask(p,t.o.src,t.o.i);deployCask(p,cask,t.slot,t.r);
+      log('↳ Master’s Privilege: a free Harbor deploy.',true);}cellDone();return;}}
 // Ship build: after paying, choose a destination kontor (any of the 4 — even if closed, the ship reaches it), then place it.
 function shipDest(dest){const p=cur();const b=UI.tmp.shipBuild;if(!b)return;
   UI.tmp.pendingTile={type:'ship',owner:p.id,dest,cap:b.cap,load:[],label:b.label};
@@ -729,7 +743,7 @@ function enshrineStart(){UI.stage='enshrine';render();}
 function enshrineBank(p,c){const v=S.value[c.style]||0;let add=v;if(hasRoom(p,'counting'))add+=1; // payout = type's market value
   p.standing+=add;p.enshrined.push({style:c.style,q:c.q,standing:add,goal:c.goal});
   S.stack.push({style:c.style,owner:p.id});marketDrop(c.style);return add;}
-function enshrineReady(src,i){snapshot();const p=cur();const c=takeCask(p,src,i); // enshrine from your own brewery/personal slot
+function enshrineReady(src,i){snapshot();const p=cur();const c=takeCask(p,src,i); // enshrine from your own brewery (Ready vessel) or a working cask on the Floor
   const add=enshrineBank(p,c);
   log(p.name+' <b>enshrines</b> '+STYLES[c.style].name+' (+'+add+' standing · market → '+S.value[c.style]+').',true);cellDone();}
 function enshrineDeployed(slotId){ // ANY player may enshrine a deployed cask from a shared slot — standing goes to its OWNER, the slot frees
@@ -824,6 +838,7 @@ function renderBar(){
 
 function cellPrompt(p){
   const act=CELLNAME[UI.cell];
+  if(act==='Market'&&UI.stage==='l5boon')return 'Master’s Privilege (your L5 recipe) — pick one boon.';
   if(UI.stage==='place')return 'Click an empty slot to place the tile (a deployed cask commits to that line).';
   if(act==='Harbor'&&UI.stage==='deploy_route')return 'Choose a route to deploy to (quality gate applies), then a slot.';
   if(act==='Hall'&&UI.stage==='enshrine_slot')return 'Click a deployed cask on the board to enshrine it — its owner banks standing, the slot frees.';
@@ -844,6 +859,12 @@ function cellActions(p){
       return btn('Quay twin: deploy a cask → Bruges','quayFallback()');
   }
   if(act==='Market'){
+    if(UI.stage==='l5boon'){ // Master's Privilege — choose one
+      return '<span class="note">'+LU('scroll-text')+' <b>Master’s Privilege</b> — choose one boon:</span> '
+        +btn(LU('hammer')+' Advance 3','l5Pick(\'adv\')','go')
+        +btn(LU('wheat')+' +2 grain 2 hops','l5Pick(\'goods\')','go')
+        +btn(LU('store')+' Free Market (+2G · next tile −1)','l5Pick(\'market\')','go')
+        +(l5DeployTarget(p)?btn(LU('ship')+' Free deploy a Ready cask','l5Pick(\'deploy\')','go'):'');}
     if(UI.stage==='place')return '<span class="note">click a glowing slot…</span>';
     if(UI.stage==='ship_dest'){const b=UI.tmp.shipBuild; // choose the ship's destination kontor
       return '<span class="note">Bound for which kontor? (cap '+b.cap+'; owner banks the destination bonus on delivery)</span> '
