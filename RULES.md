@@ -155,28 +155,28 @@ On your turn you may load a **rival's wharf cask** onto **your** ship (only whar
 
 ## 6. The brewery & upgrades (your private engine)
 
-Your brewery board is private and safe. It holds your **vessels** (start 2, cap 4 ⚙ — throughput), your **recipes**, and your **upgrades**. Upgrades are the engine-building / "get ahead" layer and where strategies diverge. They come from the Market's **face-up Upgrade display** (§3): **buy** one (pay its goods cost) **or earn** one free by delivering to London / Bergen / Novgorod (§5). There are two families — **Rooms** (permanent capability) and **Modifiers** (asymmetric perks).
+Your brewery board is private and safe. It holds your **vessels** (start 2, cap 4 ⚙ — throughput), your **recipes**, and your **upgrades**. Upgrades are the engine-building / "get ahead" layer and where strategies diverge. They come from the Market's **face-up Upgrade display** (§3): **buy** one (pay its goods cost) **or earn** one free by delivering to London / Bergen / Novgorod (§5). **Buying is deliberately dear (4–5 `G` ⚙) — about a kontor delivery's worth of goods — so the *deliver → earn an upgrade → brew better* loop is the privileged path and buying is a costed bootstrap/fallback, not a shortcut.** There are two families — **Rooms** (permanent capability) and **Modifiers** (asymmetric perks).
 
 #### Upgrade reference — every variant ⚙ (this is the full set the display draws from)
 
 | # | Room (capability) | Effect ⚙ | Buy cost ⚙ |
 |---|---|---|---|
-| 1 | **Extra Vessel** | +1 brewing lane (vessels start 2, cap **4**) — repeatable | `2 G` |
-| 2 | **Aging Cellar** | maturation **−1 step**; **unlocks the L5 export** beer | `3 G` |
-| 3 | **Warehouse** | goods storage **8 → 12** | `2 G` |
-| 4 | **Quay** | load **2 casks** in one Harbor visit (instead of 1) | `3 G` |
-| 5 | **Cooperage** | **+1 cask loaded** per Harbor visit (stacks with Quay) | `2 G` |
+| 1 | **Extra Vessel** | +1 brewing lane (vessels start 2, cap **4**) — repeatable | `5 G` |
+| 2 | **Aging Cellar** | maturation **−1 step**; **unlocks the L5 export** beer | `5 G` |
+| 3 | **Warehouse** | goods storage **8 → 12** | `4 G` |
+| 4 | **Quay** | load **2 casks** in one Harbor visit (instead of 1) | `5 G` |
+| 5 | **Cooperage** | **+1 cask loaded** per Harbor visit (stacks with Quay) | `4 G` |
 
 | # | Modifier (asymmetric perk) | Effect ⚙ | Buy cost ⚙ |
 |---|---|---|---|
-| 6 | **Granary Right** | whenever you gain grain, **+1 extra** | `2 G` |
-| 7 | **Hop Garden** | whenever you gain hops, **+1 extra** | `2 G` |
-| 8 | **Royal Patent** | your ships sail with **+1 capacity** | `3 G` |
-| 9 | **Staple Right** | **+1 good** whenever you deliver to a kontor | `3 G` |
-| 10 | **Guild Seat** | **+1 advance point** at the Cellar | `2 G` |
-| 11 | **Burgher Status** | **+1 presence** at every kontor you've reached (majority help) | `3 G` |
+| 6 | **Granary Right** | whenever you gain grain, **+1 extra** | `4 G` |
+| 7 | **Hop Garden** | whenever you gain hops, **+1 extra** | `4 G` |
+| 8 | **Royal Patent** | your ships sail with **+1 capacity** | `5 G` |
+| 9 | **Staple Right** | **+1 good** whenever you deliver to a kontor | `5 G` |
+| 10 | **Guild Seat** | **+1 advance point** at the Cellar | `4 G` |
+| 11 | **Burgher Status** | **+1 presence** at every kontor you've reached (majority help) | `5 G` |
 
-> Supply: **~2 copies of each ⚙** (more Extra Vessels, the repeatable one) — so an upgrade can be **contested** (only so many copies exist). Goals (§9) reward different brewery/delivery shapes, so the winning engine varies by game — the *Great Western Trail* ideal (a blend beats a one-note rush).
+> **Buy cost vs. earning:** delivering to a kontor hands you a display tile **free** (riding a voyage that already pays value + a majority), so buying — which yields *only* the upgrade — is priced at a comparable **4–5 `G` ⚙** to stay competitive without dominating. Supply: **~2 copies of each ⚙** (more Extra Vessels, the repeatable one) — so an upgrade can be **contested** (only so many copies exist). Goals (§9) reward different brewery/delivery shapes, so the winning engine varies by game — the *Great Western Trail* ideal (a blend beats a one-note rush).
 
 ---
 

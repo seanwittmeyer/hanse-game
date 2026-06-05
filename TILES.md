@@ -92,7 +92,7 @@ A small face-up Market supply. A recipe is **only** *a brewable type + its `G/H`
 
 ## E. Upgrade tiles — the private brewery engine (Rooms + Modifiers, ~24 ⚙)
 
-Installed on your brewery board. **Earned mainly by delivering** (the London / Bergen / Novgorod destination benefits) and partly bought at the Market — closing the loop **deliver → upgrade → brew better → deliver better**.
+Installed on your brewery board. **Earned mainly by delivering** (the London / Bergen / Novgorod destination benefits) and bought only at a **dear price (4–5 `G` ⚙**, ≈ a kontor delivery's goods) at the Market — so the loop **deliver → upgrade → brew better → deliver better** is the privileged path, with buying a costed bootstrap/fallback.
 
 ### Rooms (permanent capability)
 | Room | Effect ⚙ |

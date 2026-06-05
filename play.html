@@ -312,9 +312,10 @@ const SHOP=[   // always-available supply (no display): recipes + ships
   {id:'s_cog', kind:'ship',ship:'cog', cost:{g:2}},
   {id:'s_hulk',kind:'ship',ship:'hulk',cost:{g:3}},
 ];
-// Upgrade buy cost (when bought from the face-up display); delivering to a kontor takes one FREE.
-const UPGRADE_BUY={vessel:{g:3},cellar:{g:3},warehouse:{g:2},quay:{g:3},cooperage:{g:2},
-  granary:{g:2},hopgarden:{g:2},royal:{g:3},staple:{g:3},guild:{g:2},burgher:{g:3}};
+// Upgrade buy cost (when bought from the face-up display) — priced to ~a kontor delivery's goods cost so
+// buying competes with, but doesn't dominate, EARNING one free by delivering to London/Bergen/Novgorod.
+const UPGRADE_BUY={vessel:{g:5},cellar:{g:5},warehouse:{g:4},quay:{g:5},cooperage:{g:4},
+  granary:{g:4},hopgarden:{g:4},royal:{g:5},staple:{g:5},guild:{g:4},burgher:{g:5}};
 const DISPLAY_SIZE=4;   // face-up Upgrade display (Market option B) ⚙
 
 // ---- GOALS (deal 3 per player; best 2 score) ----
@@ -360,7 +361,7 @@ const START_STORAGE=8;
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v11'; // v0.7 + Option-B display (4 face-up + face-down deck); Gruit starts in a vessel; no first-player rotation (bump discards stale displays)
+const KEY='hanse-hotseat-v12'; // v0.7 + Option-B display (4 face-up + face-down deck); upgrade buys dearer (4-5G, compete with earning free via ships); bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -937,7 +938,7 @@ function renderShop(){
   if(!(S.upgradeDisplay||[]).length)h+='<div class="note">(no upgrades face-up)</div>';
   // the face-down Upgrade deck — the 5th stack that refills the display
   h+='<div class="item" style="opacity:.7"><span data-tip="'+attr('Face-down Upgrade deck. Refills the face-up display from its top as tiles are taken.')+'">🂠 Upgrade deck <span class="note">(face-down)</span></span><span class="cost">'+(S.upgradeSupply||[]).length+' left</span></div>';
-  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Take goods (left) or buy a tile. The upgrade display refreshes from a shuffled supply as tiles are taken.':'Visit the '+LU('store')+' <b>Market</b>: recipes &amp; ships are always stocked; upgrades come from the face-up display — buy one, or earn one free by delivering to '+LU('landmark')+' London/Bergen/Novgorod.')+'</div>';
+  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Take goods (left) or buy a tile. Buying an upgrade is dear (4–5G) — about a delivery’s goods cost; delivering to a kontor earns one free.':'Visit the '+LU('store')+' <b>Market</b>: recipes &amp; ships are always stocked; upgrades come from the face-up display — buy one (dear, 4–5G), or earn one free by delivering to '+LU('landmark')+' London/Bergen/Novgorod.')+'</div>';
 }
 
 function renderVoyage(){
