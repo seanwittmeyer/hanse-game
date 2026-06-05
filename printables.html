@@ -41,7 +41,7 @@
   /* goods tokens */
   .tok{width:.7in;height:.7in;border:.3pt solid var(--line);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;background:var(--c);font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4)}
   .tok svg{width:.26in;height:.26in}
-  /* ---- duplex backs (double-sided cask tiles) ---- */
+  /* ---- duplex backs (v0.7: all tiles are single-face, so backs print blank) ---- */
   .sheet{position:relative}
   .regmark{position:absolute;width:.3in;height:.3in;pointer-events:none;z-index:3}
   .regmark::before,.regmark::after{content:"";position:absolute;background:#000}
@@ -57,13 +57,13 @@
   .tile.blank{background:#fff;color:#9a9a9a;border-color:#bdbdbd;text-shadow:none}
   .tok.blank{background:#fff;border-color:#bdbdbd;border-style:dashed;color:#bbb;text-shadow:none}
   /* ---- player boards (one per colour) ---- */
-  /* --T = a tile space: holds the 1.25in square tiles (casks, rooms, recipes, goals, brew stages) */
+  /* --T = a tile space: holds the 1.25in square tiles (casks, upgrades, recipes, goals, brew stages) */
   .sheet.boardsheet{width:auto;background:transparent;box-shadow:none;padding:0;margin:0}
   .board{--pc:#7c2128;--T:1.3in;width:10.5in;margin:.2in auto;background:var(--parch);color:var(--ink);
     border:2.5px solid var(--pc);border-radius:.14in;padding:.24in;box-shadow:0 3px 14px rgba(0,0,0,.25);
     display:flex;flex-direction:column;gap:.14in;position:relative}
   .board svg,.board .ic{stroke-width:1.8}
-  /* header: crest · title + twin chips · storage */
+  /* header: crest · title · storage */
   .pb-head{display:flex;align-items:stretch;gap:.18in}
   .crest{width:.9in;flex:0 0 auto;border-radius:.1in;background:var(--pc);color:#fff;
     display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.35)}
@@ -97,7 +97,7 @@
   .stcell:last-child{border-right:none}
   .stcell.zero{background:rgba(0,0,0,.12);font-weight:bold}
   .stcell.tens{background:var(--pc);color:#fff;font-weight:bold}
-  /* brewing track — 3 vessel rows, each = label + 4 connected tile-sized stage spaces */
+  /* maturation track — vessel rows, each = label + 4 connected tile-sized stage spaces */
   .vessel{display:flex;align-items:stretch;gap:.1in;margin-bottom:.1in}
   .vessel:last-child{margin-bottom:0}
   .vtag{flex:0 0 .85in;display:flex;align-items:center;font-variant:small-caps;font-weight:bold;font-size:.115in;color:var(--pc)}
@@ -139,14 +139,14 @@
     color:var(--pc);font-size:.095in;text-align:center;gap:.03in}
   .goalslot svg,.goalslot .ic{width:.24in;height:.24in;opacity:.7}
   .goalslot.best{border-style:solid;background:rgba(184,134,11,.22);font-weight:bold}
-  /* Brewhouse Floor — 4 multi-use slots (Room OR working Cask) */
+  /* upgrade slots — Room OR Modifier */
   .floorrow{display:flex;gap:.12in}
   .fslot{width:var(--T);height:var(--T);border:1.6px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.42);
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;color:var(--pc);font-size:.092in;text-align:center}
   .fslot .duo{display:flex;align-items:center;gap:.06in;opacity:.6}
   .fslot .duo svg,.fslot .duo .ic{width:.24in;height:.24in}
   .fslot .duo .sl{font-size:.12in;font-weight:bold}
-  /* recipe-card tuck zone — strips peeking under the board's bottom edge (Lisboa) */
+  /* leftover-zone styles retained for layout compatibility */
   .tuckzone{margin:.06in -.24in -.24in;padding:.08in .24in .12in;border-top:1.5px dashed var(--pc);
     background:repeating-linear-gradient(90deg,rgba(0,0,0,.025),rgba(0,0,0,.025) .9in,transparent .9in,transparent 1.8in)}
   .tuckrow{display:flex;gap:.1in}
@@ -169,14 +169,14 @@
 </head>
 <body>
 <div class="bar no-print">
-  <h1>Brewhouse of the Hanse — Cut Sheet</h1>
+  <h1>Brewhouse of the Hanse — Cut Sheet · v0.7</h1>
   <button onclick="window.print()">🖨 Print</button>
   <span class="seg"><button id="vtiles" class="on" onclick="setView('tiles')">Tiles</button><button id="vboards" onclick="setView('boards')">Player Boards</button></span>
   <span class="seg tilectrl"><button id="bproof" class="on" onclick="setMode('proof')">Proof (1 each)</button><button id="bfull" onclick="setMode('full')">Full set</button></span>
-  <span class="seg tilectrl"><button id="sfront" class="on" onclick="setSide('front')">Fronts</button><button id="sback" onclick="setSide('back')">Backs (duplex)</button></span>
-  <span class="note tilectrl">Sized for a <b>24″-wide</b> sheet · tiles 1.25″ · <b>print at 100% / no scaling</b> (check the 1-inch box). Cut lines are the tile borders; colour bleeds to each edge. <b>Duplex:</b> print Fronts, flip the paper on its <b>long edge</b>, print Backs — the corner ✛ marks register the two passes.</span>
-  <span class="note boardctrl" style="display:none">One <b>player board per colour</b> (5) — each on its own page. Every slot is <b>true-to-component</b> (holds the 1.25″ tiles), so a board is mat-sized: print on <b>A3 / Tabloid portrait at 100%</b>, or choose <b>“Fit to page”</b> to scale onto Letter/A4 (slots shrink to ~85%). Slots are printed guides, not cut lines.</span>
-  <span style="margin-left:auto"><a href="index.html">Components</a> · <a href="rulebook.html">Rulebook</a> · <a href="play.html">Play</a></span>
+  <span class="seg tilectrl"><button id="sfront" class="on" onclick="setSide('front')">Fronts</button><button id="sback" onclick="setSide('back')">Backs (blank)</button></span>
+  <span class="note tilectrl">Sized for a <b>24″-wide</b> sheet · tiles 1.25″ · <b>print at 100% / no scaling</b> (check the 1-inch box). Cut lines are the tile borders; colour bleeds to each edge. <b>v0.7: every tile is single-face</b>, so “Backs” prints blank tile-backs (optional; the corner ✛ marks register a duplex pass at 100%).</span>
+  <span class="note boardctrl" style="display:none">One <b>player board per colour</b> (5) — each on its own page. Slots are true-to-component (they hold the 1.25″ tiles), so a board is mat-sized: print on <b>A3 / Tabloid portrait at 100%</b>, or choose <b>“Fit to page”</b> for Letter/A4. Slots are printed guides, not cut lines.</span>
+  <span style="margin-left:auto"><a href="learn.html">Learn</a> · <a href="index.html">Components</a> · <a href="rulebook.html">Rulebook</a> · <a href="play.html">Play</a></span>
 </div>
 
 <div class="sheet" id="sheet"></div>
@@ -188,68 +188,64 @@ const G=LU('wheat','g'),H=LU('sprout','h');
 const rep=(s,n)=>Array(n).fill(s).join('');
 const pips=q=>{let s='';for(let i=1;i<=5;i++)s+='<span class="pip'+(i<=q?' on':'')+'"></span>';return s;};
 
-// ----- component data (mirrors the current build) -----
+// ----- component data (mirrors the v0.7 spec — TILES.md / RULES.md) -----
+// Cask tiles are SINGLE-FACE now: type · quality · brew cost · a signature wharf-action.
 const CASKS=[
-  {nm:'L1 Gruit',  c:'#8a949c', q:1, g:1,h:0, badge:'local', n:16},
-  {nm:'L2 Hopped', c:'#c2922f', q:2, g:1,h:1, badge:'3',     n:20},
-  {nm:'L3 Summit', c:'#b06a34', q:3, g:1,h:2, badge:'5',     n:12},
-  {nm:'L4 Summit', c:'#d8a72a', q:4, g:2,h:2, badge:'7',     n:8},
-  {nm:'L5 Summit', c:'#7c2128', q:5, g:2,h:2, badge:'10',    n:4},
+  {nm:'Gruit',     c:'#8a949c', q:1, g:1,h:0,             act:'Source +2 goods',  n:16},
+  {nm:'Hopped',    c:'#c2922f', q:2, g:1,h:1,             act:'Age a cask +2',    n:20},
+  {nm:'Summit L3', c:'#b06a34', q:3, g:1,h:2,             act:'free Load',        n:12},
+  {nm:'Summit L4', c:'#d8a72a', q:4, g:2,h:2,             act:'+1 presence',      n:8},
+  {nm:'Summit L5', c:'#7c2128', q:5, premium:true,        act:'Wild — any verb',  n:4},
 ];
 const FAMS=[
- {label:'Route Lanes  (perimeter slots — open a route, raise its value & fire a per-kontor skim)', color:c=>c, items:[
-   {ic:'route',nm:'Bruges',  sub:'+1 · '+G+' skim',     c:'#274b5c', n:6},
-   {ic:'route',nm:'Bergen',  sub:'+2 · toll a rival',   c:'#4a6b3a', n:4},
-   {ic:'route',nm:'London',  sub:'+2 · Privilege',      c:'#b8860b', n:4},
-   {ic:'route',nm:'Novgorod',sub:'+3 · '+H+' / advance',c:'#7c2128', n:5},
+ {label:'Ships  (owned single-use carriers — built to a destination · load via Harbor or line-fire · full → sail → Sailed-Ships track)', items:[
+   {ic:'sailboat',nm:'Cog',  sub:'cap 2 · '+G+G,   c:'#5b4a37', n:8},
+   {ic:'sailboat',nm:'Hulk', sub:'cap 3 · '+G+G+G, c:'#3a3026', n:5},
  ]},
- {label:'Ships  (single-use carriers — built to a kontor · load on line-fire · full → sail → Sailed-Ships track)', color:()=>'#5b4a37', items:[
-   {ic:'sailboat',nm:'Cog',  sub:'cap 2 · owner skims', c:'#5b4a37', n:8},
-   {ic:'sailboat',nm:'Hulk', sub:'cap 3 · owner skims', c:'#3a3026', n:5},
+ {label:'Neutral Buildings  (shared base actions — seeded in the wharf at setup · 2–3 in play)', items:[
+   {ic:'store',     nm:'Market Stall', sub:'take 1 good',         c:'#5b4a37', n:1},
+   {ic:'hammer',    nm:'Cooper',       sub:'advance a cask 1',    c:'#4a4034', n:1},
+   {ic:'anchor',    nm:'Crane',        sub:'free load to a ship', c:'#5b4a37', n:1},
+   {ic:'coins',     nm:'Counting-Hse', sub:'convert 2 '+G+'↔'+H,  c:'#4a4034', n:1},
+   {ic:'megaphone', nm:'Towncrier',    sub:'draw a goal',         c:'#5b4a37', n:1},
+   {ic:'heart',     nm:'Almshouse',    sub:'+1 a held majority',  c:'#4a4034', n:1},
  ]},
- {label:'Fairs  (perimeter slots — pay 1'+G+' on its line → pump a type +1, fee to owner)', color:()=>'#8a6408', items:[
-   {ic:'tent',nm:'Town Fair', sub:'pump a type +1', c:'#8a6408', n:3},
-   {ic:'tent',nm:'Hansetag',  sub:'pump +1 (×2)',  c:'#a07a0c', n:1},
+ {label:'Recipe Tiles  (face-up Market supply — permission to brew a type · permanent · no boons / no tuck)', items:[
+   {ic:'scroll-text',nm:'Hopped',    sub:'brew '+G+H,        c:'#8a6408', n:2},
+   {ic:'scroll-text',nm:'Summit L3', sub:'brew '+G+H+H,      c:'#a07a0c', n:2},
+   {ic:'scroll-text',nm:'Summit L4', sub:'brew '+G+G+H+H,    c:'#8a6408', n:2},
+   {ic:'scroll-text',nm:'Summit L5', sub:'premium · cellar', c:'#a07a0c', n:2},
  ]},
- {label:'Recipe Cards  (face-up Market deck — one-time boon on collect + a permanent tucked brew strip · 6-card cap)', color:()=>'#8a6408', items:[
-   {ic:'scroll-text',nm:'L2 Hopped', sub:'boon: +2'+G+'2'+H, c:'#8a6408', n:5},
-   {ic:'scroll-text',nm:'L3 Summit', sub:'boon: advance 3',  c:'#a07a0c', n:4},
-   {ic:'scroll-text',nm:'L4 Summit', sub:'boon: free Market',c:'#8a6408', n:3},
-   {ic:'scroll-text',nm:'L5 Summit', sub:'boon: choose one', c:'#a07a0c', n:2},
+ {label:'Upgrades · Rooms  (permanent capability — on your brewery · mostly earned by delivering)', items:[
+   {ic:'wrench',nm:'Extra Vessel', sub:'+1 lane (cap 4)',     c:'#4a6b3a', n:3},
+   {ic:'wrench',nm:'Aging Cellar', sub:'−1 step · unlock L5', c:'#3f5c30', n:3},
+   {ic:'wrench',nm:'Warehouse',    sub:'+4 storage',          c:'#4a6b3a', n:3},
+   {ic:'wrench',nm:'Quay',         sub:'stronger Harbor',     c:'#3f5c30', n:3},
+   {ic:'wrench',nm:'Cooperage',    sub:'a free load/turn',    c:'#4a6b3a', n:2},
  ]},
- {label:'Rooms  (brewery upgrades — installed on your player board)', color:()=>'#4a6b3a', items:[
-   {ic:'wrench',nm:'Extra Vessel',  sub:'+1 brew lane',   c:'#4a6b3a', n:3},
-   {ic:'wrench',nm:'Aging Cellar',  sub:'unlock Bock',    c:'#3f5c30', n:3},
-   {ic:'wrench',nm:'Warehouse',     sub:'+4 storage',     c:'#4a6b3a', n:3},
-   {ic:'wrench',nm:'Counting-hse',  sub:'+1 standing',    c:'#3f5c30', n:3},
-   {ic:'wrench',nm:'Larder',        sub:'Market twin +2'+G, c:'#4a6b3a', n:3},
-   {ic:'wrench',nm:'Quay',          sub:'deploy any route',c:'#3f5c30', n:3},
-   {ic:'wrench',nm:'Faster Ferm.',  sub:'brew twin +load',c:'#4a6b3a', n:3},
-   {ic:'wrench',nm:'Cooperage',     sub:'+1 pres./load',  c:'#3f5c30', n:2},
+ {label:'Upgrades · Modifiers  (asymmetric perks — on your brewery · subsume the old Privileges)', items:[
+   {ic:'sparkles',nm:'Granary Right', sub:'+1 grain on gain',   c:'#6e4ea0', n:1},
+   {ic:'sparkles',nm:'Hop Garden',    sub:'+1 hops on gain',    c:'#5a3f86', n:1},
+   {ic:'sparkles',nm:'Royal Patent',  sub:'ships +1 capacity',  c:'#6e4ea0', n:1},
+   {ic:'sparkles',nm:'Staple Right',  sub:'+1 good / kontor',   c:'#5a3f86', n:1},
+   {ic:'sparkles',nm:'Guild Seat',    sub:'+1 Cellar advance',  c:'#6e4ea0', n:1},
+   {ic:'sparkles',nm:'Burgher Status',sub:'majority help',      c:'#5a3f86', n:1},
  ]},
- {label:'Privilege Tiles  (Steelyard rewards)', color:()=>'#b8860b', items:[
-   {ic:'award',nm:'Charter',  sub:'ignore tolls', c:'#b8860b', n:1},
-   {ic:'award',nm:'Patent',   sub:'+1 ship cap', c:'#a07a0c', n:1},
-   {ic:'award',nm:'Guild Seat',sub:'brew +1', c:'#b8860b', n:1},
-   {ic:'award',nm:'Customs',  sub:'-1 tile cost', c:'#a07a0c', n:1},
-   {ic:'award',nm:'Factor',   sub:'+1 draw', c:'#b8860b', n:1},
-   {ic:'award',nm:'Credit',   sub:'swap goods', c:'#a07a0c', n:1},
-   {ic:'award',nm:'Warehouse',sub:'+2 storage', c:'#b8860b', n:1},
-   {ic:'award',nm:'Staple',   sub:'sail → +pres', c:'#a07a0c', n:1},
-   {ic:'award',nm:'Burgher',  sub:'maj→standing', c:'#b8860b', n:1},
-   {ic:'award',nm:'Brewers',  sub:'ignore a gate', c:'#a07a0c', n:1},
-   {ic:'award',nm:'Patron Ear',sub:'first draw', c:'#b8860b', n:1},
-   {ic:'award',nm:'Hanse Seal',sub:'+1/route end', c:'#a07a0c', n:1},
+ {label:'Goal Tiles  (the variety layer — best few score · authored so a one-note rush fills few)', items:[
+   {ic:'target',nm:'Variety',  sub:'/ distinct type',    c:'#7c2128', n:1},
+   {ic:'target',nm:'Focus',    sub:'/ cask to 1 kontor', c:'#7c2128', n:1},
+   {ic:'target',nm:'Summit',   sub:'/ Q3+ delivered',    c:'#7c2128', n:1},
+   {ic:'target',nm:'Merchant', sub:'/ ship sailed',      c:'#7c2128', n:1},
+   {ic:'target',nm:'Prestige', sub:'/ cask to the Hall', c:'#7c2128', n:1},
+   {ic:'target',nm:'Spread',   sub:'/ kontor held',      c:'#7c2128', n:1},
+   {ic:'target',nm:'Engine',   sub:'/ Upgrade',          c:'#7c2128', n:1},
+   {ic:'target',nm:'Commit',   sub:'/ majority',         c:'#7c2128', n:1},
+   {ic:'target',nm:'Steady',   sub:'+X flat',            c:'#7c2128', n:1},
  ]},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:30},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:24}];
 
-// short goal texts (the standing face carries one) — the 3-way cycle (3 reach · 3 standing · 3 engine), cycled across cask copies; best 3 score
-const GOALSHORT=['R +1/route w pres.','R +1/2 presence','R +4/route majority',
-  'S +2/same-style ensh.','S +2/Q3+ ensh.','S +3 flat',
-  'E +2/distinct style','E +2/top quality','E +2/brewery room'];
-
-let MODE='proof', SIDE='front', VIEW='tiles', gi=0;
+let MODE='proof', SIDE='front', VIEW='tiles';
 function setMode(m){MODE=m;document.getElementById('bproof').classList.toggle('on',m==='proof');document.getElementById('bfull').classList.toggle('on',m==='full');render();}
 function setSide(s){SIDE=s;document.getElementById('sfront').classList.toggle('on',s==='front');document.getElementById('sback').classList.toggle('on',s==='back');render();}
 function setView(v){VIEW=v;
@@ -257,7 +253,7 @@ function setView(v){VIEW=v;
   document.getElementById('vboards').classList.toggle('on',v==='boards');
   document.querySelectorAll('.tilectrl').forEach(e=>e.style.display=v==='tiles'?'':'none');
   document.querySelectorAll('.boardctrl').forEach(e=>e.style.display=v==='boards'?'':'none');
-  // letter/A4 landscape for boards; the wide cut sheet for tiles
+  // A3 portrait for boards; the wide cut sheet for tiles
   document.getElementById('pgstyle').textContent = v==='boards'
     ? '@page{size:A3 portrait;margin:.4in}' : '@page{size:24in auto;margin:.35in}';
   v==='boards'?renderBoards():render();}
@@ -265,23 +261,17 @@ const cnt=n=>MODE==='proof'?1:n;
 
 // ----- FRONT faces -----
 function caskTile(d){return '<div class="tile" style="--c:'+d.c+'">'
-  +'<div class="t-top"><span class="bigic">'+LU('beer')+'</span><span class="t-nm">'+d.nm+'</span><span class="t-badge">'+(d.badge==='local'?LU('map-pin'):LU('crown')+d.badge)+'</span></div>'
-  +'<div class="t-mid">'+pips(d.q)+'</div>'
-  +'<div class="t-bot">'+rep(G,d.g)+rep(H,d.h)+'</div></div>';}
+  +'<div class="t-top"><span class="bigic">'+LU('beer')+'</span><span class="t-nm">'+d.nm+'</span><span class="t-badge">Q'+d.q+'</span></div>'
+  +'<div>'+pips(d.q)+'</div>'
+  +'<div class="t-sub">'+LU('zap')+' '+d.act+'</div>'
+  +'<div class="t-bot">'+(d.premium?'premium ⚙':rep(G,d.g)+rep(H,d.h))+'</div></div>';}
 function genTile(it){return '<div class="tile" style="--c:'+it.c+'">'
   +'<div class="t-top"><span class="bigic">'+LU(it.ic)+'</span><span class="t-nm">'+it.nm+'</span></div>'
   +'<div class="t-sub">'+it.sub+'</div><div></div></div>';}
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+d.nm+'</div>';}
 
-// ----- BACK faces (only casks are double-sided; everything else gets a blank back to keep geometry identical) -----
-function caskBack(d){
-  if(d.q<2) return '<div class="tile blank"><div class="t-top"><span class="t-nm">'+d.nm+'</span></div>'
-    +'<div class="t-sub" style="text-align:center">perishable —<br>no standing</div><div></div></div>';
-  const goal=GOALSHORT[gi++%GOALSHORT.length];
-  return '<div class="tile" style="--c:'+d.c+'">'
-    +'<div class="t-top"><span class="bigic">'+LU('crown')+'</span><span class="t-nm">'+d.nm+'</span><span class="t-badge">Q'+d.q+'</span></div>'
-    +'<div class="t-stand">'+LU('crown')+d.badge+'</div>'
-    +'<div class="t-goal">'+goal+'</div></div>';}
+// ----- BACK faces (v0.7: all tiles single-face → blank backs, keeping geometry identical) -----
+function caskBack(){return blankTile();}
 function blankTile(){return '<div class="tile blank"></div>';}
 function blankTok(){return '<div class="tok blank"></div>';}
 
@@ -292,16 +282,15 @@ function render(){
   const sheet=document.getElementById('sheet');
   sheet.classList.remove('boardsheet');
   sheet.classList.toggle('backs',back);
-  gi=0;
   let h=REGMARKS;
   h+='<div class="calib"><div class="box">1 inch<br>(100%)</div><span class="note" style="color:#555">'
-    +(back?'<b>BACKS</b> — print after Fronts; flip the paper on its long edge. Corner ✛ marks register the two passes at 100%.':'Verify this box measures exactly 1 inch before cutting.')+'</span></div>';
-  h+='<div class="famlabel">Cask Tiles  (the dual-role hero — '+LU('beer')+' working/reach / '+LU('crown')+' standing · 3 states: work / deploy / enshrine · L3–L5 summit dealt from Bock / Mumme / Broyhan / Keut)'+(back?'  · standing faces (mirrored)':'')+'</div><div class="grid">';
+    +(back?'<b>BACKS</b> — v0.7 tiles are single-face, so this prints blank tile-backs (optional). Corner ✛ marks register a duplex pass at 100%.':'Verify this box measures exactly 1 inch before cutting.')+'</span></div>';
+  h+='<div class="famlabel">Cask Tiles  (the dual-role hero — single working face: '+LU('beer')+' type · quality · a signature '+LU('zap')+' wharf-action · L3–L5 summit dealt from Bock / Mumme / Broyhan / Keut)'+(back?'  · single-face (blank back)':'')+'</div><div class="grid">';
   CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?caskBack(d):caskTile(d);});
   h+='</div>';
-  FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+(back?'  · single-sided (blank back)':'')+'</div><div class="grid">';
+  FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+(back?'  · single-face (blank back)':'')+'</div><div class="grid">';
     f.items.forEach(it=>{for(let i=0;i<cnt(it.n);i++)h+= back?blankTile():genTile(it);});h+='</div>';});
-  h+='<div class="famlabel">Goods Tokens  (Grain / Hops — or use wooden cubes; standing &amp; the demand market use sliders, not chits)</div><div class="grid">';
+  h+='<div class="famlabel">Goods Tokens  (Grain / Hops — or use wooden cubes)</div><div class="grid">';
   GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTok():tok(d);});h+='</div>';
   document.getElementById('sheet').innerHTML=h;
   if(window.lucide)lucide.createIcons();
@@ -315,55 +304,41 @@ const PLAYERS=[
   {nm:'Amber',   c:'#b8860b'},
   {nm:'Violet',  c:'#5b3a8e'},
 ];
-// one vessel row: label + 4 connected tile-sized stage spaces (the cask advances along them)
+// one vessel row: label + 4 connected tile-sized stage spaces (the cask matures along them)
 function stagesInner(){
-  const agecube='<span class="agepips"><span class="p"></span><span class="p"></span><span class="p"></span></span>';
-  return '<div class="stage"><span class="sn">Load</span><span class="sd">commit '+G+'/'+H+'</span><span class="arr">›</span></div>'
+  return '<div class="stage"><span class="sn">Brew</span><span class="sd">load a recipe</span><span class="arr">›</span></div>'
     +'<div class="stage"><span class="sn">Ferment</span><span class="sd">all styles</span><span class="arr">›</span></div>'
-    +'<div class="stage age"><span class="sn">Age</span><span class="sd">◉ cube</span>'+agecube+'<span class="arr">›</span></div>'
-    +'<div class="stage ready"><span class="sn">Ready</span><span class="sd">install · ship · enshrine</span></div>';
+    +'<div class="stage age"><span class="sn">Age</span><span class="sd">Cellar + 1/turn</span><span class="arr">›</span></div>'
+    +'<div class="stage ready"><span class="sn">Ready</span><span class="sd">deploy to the wharf</span></div>';
 }
 function vesselRow(n,open){
   if(!open) return '<div class="vessel"><span class="vtag">Vessel '+n+'</span>'
     +'<div class="stages locked">'+stagesInner()
-    +'<div class="lockoverlay">'+LU('lock')+' locked — install an Extra Vessel room</div></div></div>';
+    +'<div class="lockoverlay">'+LU('lock')+' locked — install an Extra Vessel</div></div></div>';
   return '<div class="vessel"><span class="vtag">Vessel '+n+'</span><div class="stages">'+stagesInner()+'</div></div>';
-}
-// standing track — a marker advances by a type's market value at each enshrine (no separate VP tokens)
-function standtrack(){
-  let s='';for(let v=0;v<=50;v+=5){const c=v===0?'zero':(v%10===0?'tens':'');s+='<div class="stcell '+c+'">'+v+'</div>';}
-  return '<div class="standtrack">'+s+'</div>';
 }
 function pboard(p){
   let store='';for(let i=0;i<8;i++)store+='<div class="gbox">'+LU('package')+'</div>';
-  // 4 multi-use Floor slots — each a Room OR a working Cask
-  let floor='';for(let i=0;i<4;i++)floor+='<div class="fslot"><span class="duo">'+LU('wrench')+'<span class="sl">/</span>'+LU('beer')+'</span><span>Room <i>or</i> working Cask</span></div>';
-  // recipe-card tuck zone — Gruit printed + 5 tuck guides (6-card soft cap)
-  let tuck='<div class="tslot printed">'+LU('scroll-text')+'Gruit<br>(founding)</div>';
-  for(let i=0;i<5;i++)tuck+='<div class="tslot empty">'+LU('plus')+'tuck a<br>recipe card</div>';
-  let goals='';for(let i=0;i<6;i++)goals+='<div class="goalslot'+(i<3?' best':'')+'">'+LU('diamond')+(i<3?'best 3':'goal')+'</div>';
-  // twins (Market/Brewhouse/Harbor — Hall has no twin); fire only when a rival blocks that cell
-  const twins=[
-    {ic:'wheat', t:'<b>Larder</b> Market twin · +1'+G+' (room → +2)'},
-    {ic:'flame', t:'<b>Brew-room</b> Brewhouse twin · advance pool 2, no load'},
-    {ic:'anchor',t:'<b>Quay</b> Harbor twin · deploy → Bruges (room → any)'},
-  ];
-  let chips=twins.map(t=>'<span class="twinchip">'+LU(t.ic)+t.t+'</span>').join('');
+  // recipe rack — Gruit + Hopped printed, then collected-recipe slots
+  let recipes='<div class="rslot printed">'+LU('scroll-text')+'Gruit</div><div class="rslot printed">'+LU('scroll-text')+'Hopped</div>';
+  for(let i=0;i<4;i++)recipes+='<div class="rslot empty">'+LU('plus')+'recipe</div>';
+  // upgrade slots — each a Room OR a Modifier
+  let ups='';for(let i=0;i<5;i++)ups+='<div class="fslot"><span class="duo">'+LU('wrench')+'<span class="sl">/</span>'+LU('sparkles')+'</span><span>Room <i>or</i> Modifier</span></div>';
+  // goals held in front of you
+  let goals='';for(let i=0;i<3;i++)goals+='<div class="goalslot'+(i<2?' best':'')+'">'+LU('target')+(i<2?'best few':'goal')+'</div>';
   return '<div class="board" style="--pc:'+p.c+'">'
     +'<div class="pb-head">'
       +'<div class="crest">'+LU('beer')+'</div>'
       +'<div class="pb-title"><div class="pb-name">Brewhouse · '+p.nm+'</div>'
-        +'<div class="pb-sub">private tableau · Brewhouse of the Hanse · v0.6</div>'
-        +'<div class="twinchips">'+chips+'</div></div>'
+        +'<div class="pb-sub">private brewery · Source → Brew → Age → Ship · Brewhouse of the Hanse · v0.7 “The Wharf”</div></div>'
       +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Storage <span class="sm">cap 8 · +4/Warehouse</span></span><div class="boxrow">'+store+'</div></div>'
     +'</div>'
-    +'<div><div class="pb-sect">'+LU('crown')+'Standing Track<span class="hint">banked market value at each enshrine — no separate VP tokens</span></div>'+standtrack()+'</div>'
-    +'<div><div class="pb-sect">'+LU('hammer')+'Brewing Track<span class="hint">advance via Brewhouse · ◉ aging cube counts the Age dwell</span></div>'
-      +vesselRow(1,true)+vesselRow(2,false)+vesselRow(3,false)
-      +'<div class="gruitnote">A cask advances one space per Brewhouse step (quality is printed; the ◉ aging cube counts its Age dwell). Gruit skips Age. A Ready cask clogs its vessel until you install it on the Floor, ship/deploy it, or enshrine it.</div></div>'
-    +'<div><div class="pb-sect">'+LU('layout-grid')+'Brewhouse Floor<span class="hint">4 slots · each a Room OR a working Cask — depth vs engine, contested</span></div><div class="floorrow">'+floor+'</div></div>'
-    +'<div><div class="pb-sect">'+LU('diamond')+'Goal Row<span class="hint">enshrined casks, face-up · best 3 score</span></div><div class="strip">'+goals+'</div></div>'
-    +'<div class="tuckzone"><div class="pb-sect" style="border-color:rgba(0,0,0,.3)">'+LU('scroll-text')+'Recipe Cards — tuck under this edge<span class="hint">one-time boon on collect · permanent brew strip shows · 6 max</span></div><div class="tuckrow">'+tuck+'</div></div>'
+    +'<div><div class="pb-sect">'+LU('hammer')+'Vessels &amp; Maturation<span class="hint">start 2 open · cap 4 · a cask ages +1/turn + via the Cellar</span></div>'
+      +vesselRow(1,true)+vesselRow(2,true)+vesselRow(3,false)+vesselRow(4,false)
+      +'<div class="gruitnote">Brew a recipe into an open vessel; it matures to <b>Ready</b>, then deploy it to an open <b>wharf</b> slot (its action fires there; it can be shipped). <b>Warm start:</b> begin with 2 vessels, one built Cog bound to Bruges on the wharf, and one Ready cask on the wharf.</div></div>'
+    +'<div><div class="pb-sect">'+LU('scroll-text')+'Recipes<span class="hint">the types you may brew · Gruit + Hopped printed · collect summit at the Market</span></div><div class="strip">'+recipes+'</div></div>'
+    +'<div><div class="pb-sect">'+LU('wrench')+'Upgrades — Rooms &amp; Modifiers<span class="hint">your private engine · mostly earned by delivering (London / Bergen)</span></div><div class="slotrow">'+ups+'</div></div>'
+    +'<div><div class="pb-sect">'+LU('target')+'Goals<span class="hint">held in front of you · best few score</span></div><div class="strip">'+goals+'</div></div>'
   +'</div>';
 }
 function renderBoards(){
