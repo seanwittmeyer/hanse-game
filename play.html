@@ -351,7 +351,7 @@ const CELLROLE={A:'Source',B:'Brew',C:'Ship',D:'Age'};
 const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C:{row:'rowB',col:'colL'},D:{row:'rowB',col:'colR'}})[cell];
 
 // ---- pace dials ⚙ ----
-const SAILED_CAP={2:6,3:8,4:10,5:12};   // the Sailed-Ships end clock (per RULES §8) — the primary pace dial ⚙
+const SAILED_CAP={2:7,3:11,4:15,5:19};  // the Sailed-Ships end clock (per RULES §8) — the primary pace dial ⚙ (scales steeply: the shared clock fills faster with more players)
 const MAX_ROUND=25;                      // round ceiling / backstop ⚙ — the top of the 12–25-round target band (good play ends earlier on the clock)
 const CELLAR_POOL=3;                     // Cellar advance points (+1 with Guild Seat)
 const START_GOODS={g:3,h:2};

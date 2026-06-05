@@ -169,7 +169,7 @@ Goals (§9) reward different brewery/delivery shapes, so the winning engine vari
 
 ## 8. End of the game
 
-- **The Sailed-Ships track fills.** Each voyage (a ship sailing full or launched, **or a Charter §5**) advances the shared, visible **Sailed-Ships track** by one. When it fills, the end is triggered — **finish the round** (equal turns for all) → **score**. It is **self-accelerating** (the more the table ships, the sooner it ends) and the master length dial: **~6 / 8 / 10 / 12 slots for 2 / 3 / 4 / 5 players ⚙.**
+- **The Sailed-Ships track fills.** Each voyage (a ship sailing full or launched, **or a Charter §5**) advances the shared, visible **Sailed-Ships track** by one. When it fills, the end is triggered — **finish the round** (equal turns for all) → **score**. It is **self-accelerating** (the more the table ships, the sooner it ends) and the master length dial. Because the shared clock fills *faster* with more players, its length **scales steeply: ~7 / 11 / 15 / 19 slots for 2 / 3 / 4 / 5 players ⚙** (≈ +4 per player; a 500-game sim showed the old linear ~6/8/10/12 ended 4–5p games in ~8 rounds, under the target band).
 - A **MAX_ROUND ceiling** ⚙ backstops a slow table at the top of the **12–25-round target band** (**≈25 ⚙**). Good play ends earlier on the clock; the ceiling just guarantees no game drags. *(Pace tuning — the Sailed-Ships length is the primary dial, the Charter cost and `MAX_ROUND` the secondary ones — wants a human playtest.)*
 
 > A reach-leaning player can **race** the clock by sailing ships fast; a prestige-leaning player keeps a steadier pace to buy more delivering turns. The clock is on the table, shared and steerable.
