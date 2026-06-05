@@ -1,6 +1,8 @@
 # Working Title: *Brewhouse of the Hanse*
 
-> A theme-first heavy euro about a merchant brewing house in the Hanseatic League. You brew hopped beer — the one cargo that survives the voyage — and push it across the Baltic and North Sea trade network. Every cask you keep working is **reach**; every cask you commit to a foreign post is **standing**. The whole game is the tension between the two.
+> A theme-first medium euro about a merchant brewing house in the Hanseatic League. You brew beer — hopped beer is the cargo that survives the voyage — and push it across the Baltic and North Sea trade network. **One legible loop — Source → Brew → Age → Ship — walked on a shared grid;** a brewed cask is a dual-role tile (engine on the shared wharf, then points when shipped); ships are owned infrastructure; **where you ship is the volume-vs-prestige choice.**
+>
+> **⚠ v0.7 "The Wharf" (2026-06-05, `§21`) is the current design and supersedes the v0.5/v0.6 reach-vs-standing/demand-market architecture below where they conflict.** §1–§20 are kept as the design record (the *why* we got here); read §21 for the live game, then `RULES.md`.
 
 ---
 
@@ -9,10 +11,11 @@
 |               |                                                                                     |
 |---------------|-------------------------------------------------------------------------------------|
 |**Players**    |2–5                                                                                  |
-|**Length**     |15–20 min / player (≈ 30 min at 2p, ≈ 100 min at 5p)                                 |
-|**Genre**      |Heavy euro · engine building · shared action grid + private tableau                  |
-|**Sensibility**|Theme-at-the-heart, Lacerda-grade interlocking systems (*Vinhos*, *Lisboa*, *Kanban*)|
-|**Status**     |Core mechanic + theme locked. Scoring axis and era structure still open.             |
+|**Length**     |≈ 45–60 min at 2p (medium — was billed 15–20 min/player at heavier weights)           |
+|**Genre**      |Medium euro · engine building · shared action grid + private brewery                 |
+|**Weight**     |GWT/Distilled (v0.7) — *not* Lacerda                                                 |
+|**Sensibility**|Theme-at-the-heart, *Great Western Trail* / *Distilled* legibility (was Lacerda — see §21)|
+|**Status**     |v0.7 "The Wharf" — full reel-in to medium weight; rules locked, numbers ⚙ open.       |
 
 ---
 
@@ -533,3 +536,46 @@ Floor = 4 multi-use Room|Cask slots (rooms + working casks share them; Extra Ves
 
 ### Still open / next dials (v0.6)
 Sailed-Ships slot counts & the enshrined backstop number; ship build cost vs single-use payoff; destination-bonus magnitudes; how hard the 6-card recipe cap should bite; whether realize −1 fires per cask on a multi-cask sail; the optional Sailed-Ships milestone flourish; human playtest of the merchant lean vs the prestige lean.
+
+---
+
+## 21. Working Architecture — v0.7: "The Wharf" — a ground-up reel-in to GWT/Distilled weight (2026-06-05) — LOCKED
+
+A design-conversation pass that **re-targets the whole game** and rebuilds it around what the designer actually found fun. v0.6 was honest about its ambition — "Lacerda-grade interlocking systems" — but a play-through and a headless pace model showed that ambition was the problem: **too much game, the right amount of theme.** This section supersedes §5–§20 where they conflict. The grid, the perimeter ring, the dual-role cask, the merchant-shipping fantasy, and the theme survive; roughly **half the rules are cut.**
+
+### A. The diagnosis we acted on
+- **Weight mismatch.** The target is now explicitly **Great Western Trail / Distilled** (medium, theme-rich, *actions simple — depth in placement, timing, and interaction*), **not** Lacerda. The v0.6 stack (demand market + type frontier + single-use ships + Fairs + Privileges + 4 differentiated lane skims + 4 destination bonuses + working casks + twins + a 3-way goal cycle) was a Lisboa teach for a game that wants to be a great *second* heavy euro after Wingspan.
+- **The actions were inverted.** In the comps the **actions are simple** and depth lives in how they combine. v0.6 made each of the four cells a multi-stage sub-game and capped *stops* (4) without capping *decisions* (6–8) → "fragmented."
+- **The bootstrap was brutal — measured, not guessed.** A faithful legality-checking pace model (real constants, solo, perfect play) put **first Bruges deploy at turn 2** but **first *voyage* at turn 6** (matching the designer's playtest), and the real far-kontor fantasy at ~turn 7 *and goods-bankrupt without dedicated goods-turns.* Three structural truths: the first voyage was gated at **two casks** (Cog cap 2); the bootstrap was **goods-bound, not brew-bound** (so extra vessels barely helped); and the optimal line was **invisible**, so a real explorer experienced "never." *(Model in `/tmp` during the session; the punchline is what's recorded here.)*
+- **The tiles had lost their fun.** Slot tiles fired tiny `+1 good` skims **out of turn** (counter-intuitive), empty caps were skipped (so early lines were just two cells — "slots feel unused"), and the working-cask Floor state paid `+1 good` for a brewed cask + a contested slot (dominated → "lackluster"). The designer's instinct — *make casks the tiles that bear real actions* (the way ships already bear the load action) — is the founding §8 dual-role vision, finally made fun.
+
+### B. The spine (LOCKED) — one loop, walked on the grid
+- **The four cells ARE the loop, and the forced-move circuit walks it:** **A Market (Source) → B Brewhouse (Brew) → D Cellar (Age) → C Harbor (Ship) → repeat** (clockwise A→B→D→C→A). Every line is two adjacent loop-steps (`Market+Brewhouse`, `Brewhouse+Cellar`, `Harbor+Cellar`, `Market+Harbor`) — each activation is a useful segment. The v0.6 build×cash-out diagonal is **retired** in favor of legibility (the warm start + faster pace made its anti-snowball job unnecessary).
+- **The dual-role cask in three states** (the §8 heart, restored): **maturing** (private, in a vessel) → **on the wharf** (a shared ring slot — simultaneously your cargo-in-waiting, private inventory, *and* a public action-building) → **delivered** (shipped to a destination → scores → gone). Shipping converts it.
+- **The wharf = the perimeter ring, GWT-style.** The 8 slots hold a transient mix — **deployed casks** (public action-buildings), **owned ships**, and **2–3 neutral buildings** seeded at setup (so the ring is alive turn 1). **One fire rule:** on a line, the active player may use each building on it; cask/neutral actions are **free and public** and resolve **on the active player's turn** (no out-of-turn gains — the v0.6 thing that felt wrong is gone). Cask actions are **chunky and loop-advancing**, keyed to type (Gruit→Source 2 · Hopped→Age 2 · L3→free Load · L4→+1 presence · L5→Wild), so *which type you brew is an engine choice.*
+
+### C. Where the value lives now (LOCKED) — the big simplification
+- **The two value tracks (reach/standing) and the whole demand market are cut.** The **volume-vs-prestige lean is expressed as *where you ship*:** kontore (Bruges/London/Bergen/Novgorod) pay trade value + majorities (the Leffe/volume move); **the Hall** is a *destination* that pays prestige for taking a cask out of commerce (the Westvleteren move). Same verb (ship), different destination. This deletes a cell, a value track, and the frontier in one move.
+- **Aging replaces the demand market as the value-over-time signal** — intuitive (you must mature beer before it ships) — and cross-player coupling now comes from **destination scarcity** (kontor caps + majorities), **shared wharf slots**, and the **one shared end clock**, not a market track.
+- **Destinations differentiate by a quality *gate* (the climb — better places want better beer) and a unique *benefit*** (often a brewery upgrade/modifier), closing the engine loop **deliver → earn upgrade → brew better → deliver better** (the Distilled "selling funds your next still" feel). All destinations are **open from the start** (route-lane tiles cut) — variety over limitation.
+
+### D. Interaction (LOCKED) — non-destructive, and a little out of your hands
+- **Shipping a rival's cask:** on your turn you may load a **rival's wharf cask** (never their brewery) onto **your** ship. The destination is **your ship's binding**; the **owner still scores it and picks its benefit** (never purely harmful); **you** get the freed slot, the filled ship toward your end-clock, a small loader bonus, and the timing. Positive-sum with a twist — and thematically *a 1350 brewmaster doesn't fully control where their casks end up.*
+- **Cells are never blocked** (twins cut). The only contested space is the shared wharf.
+
+### E. Pace fixes (LOCKED) — so the fun starts turn 1
+- **Warm start:** begin with one built Cog (bound to Bruges) and one Ready cask on the wharf → first voyage by turn 2–3.
+- **Start with 2 vessels** (cap 4), **base verbs always work** (ring buildings only *add*), and **all destinations open** → the goods/geometry bootstrap the model exposed is gone.
+- **Recipes reel in hard:** start **Gruit + Hopped** (fixed, symmetric, fair — and so *gaining a summit recipe means more*); recipes are just *permission + cost to brew a type* — the on-collect boons, the 6-card tuck, and frontier-gating are cut.
+
+### F. Scoring (v0.7)
+**Delivery value** (your delivered casks, by destination — kontore trade value + the Hall's prestige) **+ majorities + goals (best few).** No separate tracks; the lean is a strategy, not a silo.
+
+### G. What this cut (the reel-in tally)
+Out: the **demand-market track**, the **type frontier**, **Fairs**, **route-lane tiles**, the **Hall action cell**, the **working-cask Floor state**, the **fires-when-blocked twins**, **differentiated lane skims**, **recipe boons / the 6-card tuck**, **aging cubes**, and **casks-as-presence-while-they-sit**. In their place, four ideas do the work: **aging** (the value clock), **destinations** (the two value styles), **the shared wharf with one fire rule** (engine + interaction), and **deliver-to-upgrade** (the engine loop). Theme fully intact; ~half the rules gone.
+
+### Engine deltas (`play.html`) intended for this pass
+Full rewrite: grid relabel to the loop (Market/Brewhouse/Cellar/Harbor); cask 3-state lifecycle (mature → deploy to wharf → ship); the wharf ring with one fire rule + chunky public cask-actions + seeded neutral buildings; ships build/load(base-verb or line-fire)/sail → Sailed-Ships clock; destinations with gates + benefits + majorities; owner-scores-and-picks even on a rival ship; brewery = vessels + upgrades; warm start; **no demand market / frontier / Fairs / twins / Hall cell**; scoring = delivery + majorities + goals. Bump the save `KEY`. *(This pass updates the markdown + `learn.html` only; `play.html` and the other pages follow in a later session.)*
+
+### Still open / next dials (v0.7)
+Warm-start contents & starting vessels vs Sailed-Ships length (the joint pace dials); cask-action strengths & whether every cask bears one; destination values/gates/majority bonuses (the variety heart); the rival-ship loader bonus & best-vs-forced destination gap; ring pressure at 2p/5p; which upgrades come from deliveries vs Market; goal count & best-few cap. **Wants a human playtest of the loop's feel and a `play.html` port** before the numbers are trusted.
