@@ -81,7 +81,9 @@
   .s8{grid-area:2/1}.s3{grid-area:2/4}.s7{grid-area:3/1}.s4{grid-area:3/4}
   .cC{grid-area:3/2}.cD{grid-area:3/3}.s6{grid-area:4/2}.s5{grid-area:4/3}
   /* ROUTES */
-  .route{border-radius:8px;padding:8px 10px;color:var(--parch);margin-bottom:7px;position:relative}
+  #routes{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px}
+  @media(max-width:600px){#routes{grid-template-columns:1fr}}
+  .route{border-radius:8px;padding:8px 10px;color:var(--parch);position:relative}
   .route.bruges{background:linear-gradient(160deg,#274b5c,#1d3845)}
   .route.london{background:linear-gradient(160deg,#b8860b,#8a6408)}
   .route.bergen{background:linear-gradient(160deg,#4a6b3a,#37502c)}
