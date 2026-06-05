@@ -186,7 +186,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>Prototype v0.7 “The Wharf”.</b> One loop walked on the grid — <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor). A <b>cask</b> matures privately, <b>deploys to the shared wharf</b> (the 8 ring slots) as a public action-building, then <b>ships to a destination</b> and scores. A line fires <b>both its cells</b> plus any wharf building at each end (cap·cell·cell·cap), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s wharf cask</b> on your ship — they still score it. Deliver to <b>London</b> (any upgrade), <b>Bergen</b> or <b>Novgorod</b> (a modifier) to earn upgrades. The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the pricey relief valve when the wharf jams). Cells are never blocked; your brewery is private. Single-level <b>Undo</b> is in the bar. All numbers are placeholders (⚙); the Sailed-Ships clock length &amp; charter cost are the top pace dials for playtest.</p>
+  <p class="note" style="text-align:center"><b>Prototype v0.7 “The Wharf”.</b> One loop walked on the grid — <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor). A <b>cask</b> matures privately, <b>deploys to the shared wharf</b> (the 8 ring slots) as a public action-building, then <b>ships to a destination</b> and scores. A line fires <b>both its cells</b> plus any wharf building at each end (cap·cell·cell·cap), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s wharf cask</b> on your ship — they still score it. Deliver to <b>London / Bergen / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b> (the same row you buy from — you don’t fully know what’ll be on offer when you sail). The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the relief valve when the wharf jams). Cells are never blocked; your brewery is private. Single-level <b>Undo</b> is in the bar. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -260,17 +260,15 @@ const CASK_ACT={source:'Source — take 2 goods',age:'Age — advance any 1 cask
 
 // ---- DESTINATIONS (4 kontore + the Hall) — all open from start ----
 const DEST={
-  bruges  :{name:'Bruges',  gate:1, value:2, maj:2, benefit:'goods', kontor:true,  role:'Hub · liquidity'},
-  london  :{name:'London',  gate:2, value:3, maj:3, benefit:'room',  kontor:true,  role:'Steelyard · an Upgrade'},
-  bergen  :{name:'Bergen',  gate:2, value:3, maj:5, benefit:'mod',   kontor:true,  role:'Monopoly · a Modifier + richest majority'},
-  novgorod:{name:'Novgorod',gate:3, value:5, maj:3, benefit:'mod',   kontor:true,  role:'Long Haul · top value + a Modifier'},
-  hall    :{name:'The Hall',gate:2, value:0, maj:0, benefit:'none',  kontor:false, role:'Prestige · pays Q×2'},
+  bruges  :{name:'Bruges',  gate:1, value:2, maj:2, benefit:'goods',   kontor:true,  role:'Hub · gain goods'},
+  london  :{name:'London',  gate:2, value:3, maj:3, benefit:'upgrade', kontor:true,  role:'Steelyard · an Upgrade'},
+  bergen  :{name:'Bergen',  gate:2, value:3, maj:5, benefit:'upgrade', kontor:true,  role:'Monopoly · Upgrade + richest majority'},
+  novgorod:{name:'Novgorod',gate:3, value:5, maj:3, benefit:'upgrade', kontor:true,  role:'Long Haul · top value + an Upgrade'},
+  hall    :{name:'The Hall',gate:2, value:0, maj:0, benefit:'none',    kontor:false, role:'Prestige · pays Q×2'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
 const DESTS=['bruges','london','bergen','novgorod','hall'];
 function destValue(dest,q){return dest==='hall'?q*2:DEST[dest].value;}
-// Which upgrade pool a destination's benefit draws from: London = any (room or mod); Bergen & Novgorod = a Modifier.
-function benefitPool(dest){return (dest==='bergen'||dest==='novgorod')?'mods':'all';}
 
 // ---- SHIPS (owned single-use carriers) ----
 const SHIP_CAP={cog:2,hulk:3};
@@ -284,7 +282,7 @@ const NEUTRALS={
   crane   :{name:'Crane',         icon:'anchor',        act:'load a Ready cask onto a ship, free'},
   counting:{name:'Counting-House',icon:'coins',         act:'convert up to 2 goods G↔H'},
 };
-// 2 of these are seeded onto the wharf at setup, chosen at random each game (variety) ⚙
+// 2 neutral buildings are seeded onto the wharf at setup, picked at random from the pool each game (variety) ⚙
 
 // ---- UPGRADES: Rooms (capability) + Modifiers (asymmetric perks) ----
 const ROOMS={
@@ -306,21 +304,18 @@ const UP=Object.assign({},ROOMS,MODS);
 function upName(k){return (UP[k]||{name:k}).name;}
 function upDesc(k){return (UP[k]||{desc:''}).desc;}
 
-// ---- MARKET SHOP (recipes · ships · some upgrades; richer modifiers are earned by delivering) ----
-const SHOP=[
+// ---- MARKET (Option B): recipes & ships are an always-available supply; UPGRADES are a face-up display ----
+const SHOP=[   // always-available supply (no display): recipes + ships
   {id:'r_l3',kind:'recipe',style:'l3'},
   {id:'r_l4',kind:'recipe',style:'l4'},
   {id:'r_l5',kind:'recipe',style:'l5'},
   {id:'s_cog', kind:'ship',ship:'cog', cost:{g:2}},
   {id:'s_hulk',kind:'ship',ship:'hulk',cost:{g:3}},
-  {id:'u_vessel',   kind:'up',key:'vessel',   cost:{g:3}},
-  {id:'u_cellar',   kind:'up',key:'cellar',   cost:{g:3}},
-  {id:'u_warehouse',kind:'up',key:'warehouse',cost:{g:2}},
-  {id:'u_quay',     kind:'up',key:'quay',     cost:{g:3}},
-  {id:'u_cooperage',kind:'up',key:'cooperage',cost:{g:2}},
-  {id:'u_granary',  kind:'up',key:'granary',  cost:{g:2}},
-  {id:'u_hopgarden',kind:'up',key:'hopgarden',cost:{g:2}},
 ];
+// Upgrade buy cost (when bought from the face-up display); delivering to a kontor takes one FREE.
+const UPGRADE_BUY={vessel:{g:3},cellar:{g:3},warehouse:{g:2},quay:{g:3},cooperage:{g:2},
+  granary:{g:2},hopgarden:{g:2},royal:{g:3},staple:{g:3},guild:{g:2},burgher:{g:3}};
+const DISPLAY_SIZE=4;   // face-up Upgrade display (Market option B) ⚙
 
 // ---- GOALS (deal 3 per player; best 2 score) ----
 const GOALS={
@@ -353,8 +348,8 @@ const CELLROLE={A:'Source',B:'Brew',C:'Ship',D:'Age'};
 const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C:{row:'rowB',col:'colL'},D:{row:'rowB',col:'colR'}})[cell];
 
 // ---- pace dials ⚙ ----
-const SAILED_CAP={2:7,3:11,4:15,5:19};  // the Sailed-Ships end clock (per RULES §8) — the primary pace dial ⚙ (scales steeply: the shared clock fills faster with more players)
-const MAX_ROUND=25;                      // round ceiling / backstop ⚙ — the top of the 12–25-round target band (good play ends earlier on the clock)
+const SAILED_CAP={2:7,3:11,4:15,5:19};  // the Sailed-Ships end clock (per RULES §8) — primary pace dial ⚙ (scales steeply: the shared clock fills faster with more players)
+const MAX_ROUND=25;                      // round ceiling / backstop ⚙ — top of the 12–25-round target band (good play ends earlier on the clock)
 const CELLAR_POOL=3;                     // Cellar advance points (+1 with Guild Seat)
 const START_GOODS={g:3,h:2};
 const START_STORAGE=8;
@@ -365,14 +360,15 @@ const START_STORAGE=8;
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v8';  // v0.7 "The Wharf" — full state-shape change (old saves incompatible)
+const KEY='hanse-hotseat-v9';  // v0.7 "The Wharf" + Option-B upgrade display (state-shape change; old saves incompatible)
 
 // ---- UNDO ----
 let undoStack=[];
 function snapshot(){if(!S)return;undoStack.push({S:JSON.stringify(S),UI:JSON.stringify(UI),tab:activeTab});if(undoStack.length>40)undoStack.shift();}
 function doUndo(){if(!undoStack.length)return;const u=undoStack.pop();S=JSON.parse(u.S);UI=JSON.parse(u.UI);activeTab=u.tab;save();render();}
 
-function dealSummit(){const a=SUMMIT_ROSTER.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function dealSummit(){const a=shuffle(SUMMIT_ROSTER.slice());
   const map={};SUMMIT_KEYS.forEach((k,i)=>map[k]=a[i]);return map;}
 function applySummit(map){if(!map)return;SUMMIT_KEYS.forEach(k=>{if(map[k])STYLES[k].name=map[k];});}
 function dealGoals(){const a=GOAL_KEYS.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,3);}
@@ -388,18 +384,22 @@ function newPlayer(i,name){
 }
 function freshState(n,names){
   const st={players:[],slots:{},turn:1,active:0,first:0,ending:false,log:[],
-    summit:dealSummit(), sailed:0, sailedCap:(SAILED_CAP[n]||10)};
+    summit:dealSummit(), sailed:0, sailedCap:(SAILED_CAP[n]||10), upgradeSupply:[], upgradeDisplay:[]};
   applySummit(st.summit);
   for(let i=0;i<n;i++) st.players.push(newPlayer(i,names[i]));
   SLOTS.forEach(s=>st.slots[s.id]=null);
+  // ---- Upgrade supply (facedown) + face-up display (Market option B) ----
+  // ~2 copies of each upgrade type (+ extra Extra Vessels, the repeatable one); flip DISPLAY_SIZE face-up.
+  Object.keys(UP).forEach(k=>{const c=(k==='vessel')?(n+1):2;for(let i=0;i<c;i++)st.upgradeSupply.push(k);});
+  shuffle(st.upgradeSupply);
+  while(st.upgradeDisplay.length<DISPLAY_SIZE&&st.upgradeSupply.length)st.upgradeDisplay.push(st.upgradeSupply.shift());
   // ---- seed the wharf so the ring is alive turn 1 (warm start) ----
-  // Priority: each house's Cog (bound Bruges) · neutral buildings · each house's Ready Gruit —
-  // but always keep ≥2 slots open (and ≥1 neutral) so the ring never starts jammed, at any count.
+  // Each house's Cog (bound Bruges) · 2 random neutral buildings · each house's Ready Gruit —
+  // always keep ≥2 slots open (and ≥1 neutral) so the ring never starts jammed, at any count.
   const open=SLOTS.map(s=>s.id);
   const place=t=>{const id=open.shift();if(id)st.slots[id]=t;return !!id;};
   st.players.forEach(p=>place({type:'ship',owner:p.id,ship:'cog',dest:'bruges',load:[]}));
-  // 2 neutral buildings, picked at random from the pool each game (variety), keeping ≥2 slots open.
-  const npool=Object.keys(NEUTRALS).slice();for(let i=npool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[npool[i],npool[j]]=[npool[j],npool[i]];}
+  const npool=shuffle(Object.keys(NEUTRALS).slice());
   const nNeutral=Math.min(2,Math.max(0,open.length-2));
   for(let i=0;i<nNeutral;i++)place({type:'neutral',b:npool[i]});
   st.players.forEach(p=>{ if(open.length>2){ place({type:'cask',owner:p.id,style:'gruit',q:1}); p.vessels[0]=null; } });
@@ -433,12 +433,12 @@ function myShips(p){return SLOTS.map(s=>s.id).filter(id=>{const t=S.slots[id];re
 function canTake(shipSlot,caskSlot){const sh=S.slots[shipSlot],ct=S.slots[caskSlot];
   return sh&&ct&&sh.type==='ship'&&ct.type==='cask'&&sh.load.length<effCap(sh)&&STYLES[ct.style].q>=DEST[sh.dest].gate;}
 function readyInVessels(p){return p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready);}
-function charterCasks(p){const out=readyInVessels(p).map(o=>({ref:'v:'+o.i,style:o.c.style,q:o.c.q}));
-  wharfCaskSlots().forEach(id=>{if(S.slots[id].owner===p.id)out.push({ref:id,style:S.slots[id].style,q:S.slots[id].q});});return out;}
 function canBrew(p,style){const st=STYLES[style];if(st.cellar&&!hasUpgrade(p,'cellar'))return false;return canPay(p,st.in);}
 function grantableBuy(p,key){return key==='vessel'?p.maxVessels<4:!hasUpgrade(p,key);}
-function grantable(p,pool){const keys=pool==='mods'?Object.keys(MODS):Object.keys(UP);
-  return keys.filter(k=>grantableBuy(p,k));}
+// ---- Upgrade display (Market option B): face-up row drawn from a shuffled supply ----
+function refillDisplay(){while(S.upgradeDisplay.length<DISPLAY_SIZE&&S.upgradeSupply.length)S.upgradeDisplay.push(S.upgradeSupply.shift());}
+function takeFromDisplay(key){const i=S.upgradeDisplay.indexOf(key);if(i>=0)S.upgradeDisplay.splice(i,1);refillDisplay();}
+function displayGrantable(p){return S.upgradeDisplay.filter(k=>grantableBuy(p,k));}
 function deliveredAt(p,dest){return p.delivered.filter(d=>d.dest===dest).length;}
 function presenceAt(p,dest){return deliveredAt(p,dest)+(p.presBonus[dest]||0)+((hasUpgrade(p,'burgher')&&deliveredAt(p,dest)>0)?1:0);}
 function leadersAt(dest){let best=0;S.players.forEach(p=>best=Math.max(best,presenceAt(p,dest)));
@@ -565,11 +565,11 @@ function buyTile(id){
     if(!canPay(p,it.cost))return;
     snapshot();pay(p,it.cost);UI.tmp.shipBuild={ship:it.ship};UI.stage='shipdest';
     log(p.name+' builds a '+SHIP_NAME[it.ship]+' — bind it to a destination.',true);render();return;}
-  if(it.kind==='up'){
-    if(!grantableBuy(p,it.key))return;if(!canPay(p,it.cost))return;
-    snapshot();pay(p,it.cost);grantUpgrade(p,it.key);
-    log(p.name+' installs '+upName(it.key)+'.',true);cellDone();return;}
 }
+// Buy an upgrade from the face-up display (Market option B): pay its cost, take it, refill.
+function buyDisplayUp(key){const p=cur();if(!grantableBuy(p,key))return;const c=UPGRADE_BUY[key];if(!canPay(p,c))return;
+  snapshot();pay(p,c);grantUpgrade(p,key);takeFromDisplay(key);
+  log(p.name+' buys '+upName(key)+' from the Market display.',true);cellDone();}
 function shipDest(dest){const p=cur();
   UI.tmp.placeTile={type:'ship',owner:p.id,ship:UI.tmp.shipBuild.ship,dest,load:[]};UI.stage='place';
   log(p.name+'’s '+SHIP_NAME[UI.tmp.shipBuild.ship]+' is bound for '+DEST[dest].name+' (cap '+effCap(UI.tmp.placeTile)+') — place it on the wharf.',true);render();}
@@ -680,27 +680,27 @@ function sailShip(slot){const t=S.slots[slot];const o=S.players[t.owner];
   S.slots[slot]=null;S.sailed++;
 }
 function grantBenefit(lp,dest,q){
-  if(DEST[dest].kontor&&hasUpgrade(lp,'staple'))gain(lp,1,0);
+  if(DEST[dest].kontor&&hasUpgrade(lp,'staple'))gain(lp,1,0);   // Staple Right: +1 good on any kontor delivery
   if(dest==='bruges'){gain(lp,2,0);log('↳ '+lp.name+' delivers to Bruges (+'+destValue('bruges',q)+' value, +2G liquidity).');}
-  else if(dest==='london'){log('↳ '+lp.name+' delivers to London (+'+destValue('london',q)+' value, earns an Upgrade).');
-    if(lp.id===S.active)UI.pendingBenefits.push({pid:lp.id,dest:'london'});else autoGrant(lp,'all');}
-  else if(dest==='bergen'){log('↳ '+lp.name+' delivers to Bergen (+'+destValue('bergen',q)+' value, earns a Modifier).');
-    if(lp.id===S.active)UI.pendingBenefits.push({pid:lp.id,dest:'bergen'});else autoGrant(lp,'mods');}
-  else if(dest==='novgorod'){log('↳ '+lp.name+' delivers to Novgorod (+'+destValue('novgorod',q)+' value, earns a Modifier).');
-    if(lp.id===S.active)UI.pendingBenefits.push({pid:lp.id,dest:'novgorod'});else autoGrant(lp,'mods');}
+  else if(dest==='london'||dest==='bergen'||dest==='novgorod'){
+    // The three engine-kontore each let the owner take ONE tile from the shared face-up Upgrade display (free).
+    log('↳ '+lp.name+' delivers to '+DEST[dest].name+' (+'+destValue(dest,q)+' value, earns an Upgrade from the display).');
+    if(lp.id===S.active)UI.pendingBenefits.push({pid:lp.id,dest});else autoGrantDisplay(lp,dest);}
   else if(dest==='hall')log('↳ '+lp.name+' enshrines at the Hall (+'+destValue('hall',q)+' prestige).');
 }
-function autoGrant(p,pool){const g=grantable(p,pool);if(!g.length)return;const k=g[Math.floor(Math.random()*g.length)];grantUpgrade(p,k);log('↳ '+p.name+' earns '+upName(k)+'.');}
+// A rival (non-active) owner auto-takes a random grantable face-up upgrade (they can't pick mid-turn).
+function autoGrantDisplay(p,dest){const g=displayGrantable(p);if(!g.length)return;const k=g[Math.floor(Math.random()*g.length)];
+  grantUpgrade(p,k);takeFromDisplay(k);log('↳ '+p.name+' earns '+upName(k)+' (from '+DEST[dest].name+', via the display).');}
 function grantUpgrade(p,key){
   if(key==='vessel'){if(p.maxVessels<4){p.maxVessels++;p.vessels.push(null);p.upgrades.push('vessel');}return;}
   if(!p.upgrades.includes(key)){p.upgrades.push(key);if(key==='warehouse')p.storage+=4;}
 }
 function afterSail(rt){
-  UI.pendingBenefits=(UI.pendingBenefits||[]).filter(b=>grantable(S.players[b.pid],benefitPool(b.dest)).length>0);
+  UI.pendingBenefits=(UI.pendingBenefits||[]).filter(b=>displayGrantable(S.players[b.pid]).length>0);
   if(UI.pendingBenefits.length){UI.sub='benefit';UI.benefit={returnTo:rt};render();}else resume(rt);
 }
-function benefitPick(key){snapshot();const b=UI.pendingBenefits[0];grantUpgrade(S.players[b.pid],key);
-  log('↳ '+S.players[b.pid].name+' earns '+upName(key)+' (from '+DEST[b.dest].name+').');
+function benefitPick(key){snapshot();const b=UI.pendingBenefits[0];grantUpgrade(S.players[b.pid],key);takeFromDisplay(key);
+  log('↳ '+S.players[b.pid].name+' earns '+upName(key)+' (from '+DEST[b.dest].name+', via the Market display).');
   UI.pendingBenefits.shift();const rt=UI.benefit.returnTo;UI.benefit=null;afterSail(rt);
 }
 
@@ -708,14 +708,15 @@ function benefitPick(key){snapshot();const b=UI.pendingBenefits[0];grantUpgrade(
 function harborLoad(){const p=cur();const loads=1+(hasUpgrade(p,'quay')?1:0)+(hasUpgrade(p,'cooperage')?1:0);enterLoad(myShips(p),wharfLoadableCasks(p),false,'stops',loads);}
 function harborLaunch(slot){snapshot();sailShip(slot);afterSail('stops');}
 // Charter — the relief valve: pay to send ONE of your Ready casks (vessel or wharf) on a single-cask voyage now.
+function charterCasks(p){const out=readyInVessels(p).map(o=>({ref:'v:'+o.i,style:o.c.style,q:o.c.q}));
+  wharfCaskSlots().forEach(id=>{if(S.slots[id].owner===p.id)out.push({ref:id,style:S.slots[id].style,q:S.slots[id].q});});return out;}
 function harborCharter(){UI.stage='charter_cask';render();}
 function charterPickCask(ref){UI.tmp.charterCask=ref;UI.stage='charter_dest';render();}
 function charterDest(dest){const p=cur();snapshot();pay(p,CHARTER_COST);
   const ref=UI.tmp.charterCask;let c;
   if(ref[0]==='v'){const i=+ref.slice(2);c=p.vessels[i];p.vessels[i]=null;}else{c=S.slots[ref];S.slots[ref]=null;}
-  // A charter is a single-cask voyage on an outside hull — pricier per cask than owning a Cog, but it
-  // delivers (scores + benefit), frees the slot/vessel (the relief valve), and — being a voyage — advances
-  // the Sailed-Ships clock. It is NOT your fleet, so it does not count for the "ships you sailed" goal.
+  // A charter is a single-cask voyage on an outside hull — it delivers (scores + benefit) and advances the
+  // Sailed-Ships clock, but it is NOT your fleet, so it does not count for the "ships you sailed" goal.
   p.delivered.push({style:c.style,q:c.q,dest});
   log(p.name+' charters a single voyage ('+costStr(CHARTER_COST)+') — '+styleShort(c.style)+' → '+DEST[dest].name+'. (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')',true);
   grantBenefit(p,dest,c.q);S.sailed++;afterSail('stops');
@@ -832,9 +833,9 @@ function renderBar(){
   else if(U==='deploy'){const vi=UI.deploy.queue[0];const c=p.vessels[vi];
     prompt='Set Ready <b>'+styleShort(c.style)+'</b> on the wharf — click an open slot.';
     acts=btn('Leave in vessel','deploySkipOne()','ghost')+(UI.deploy.queue.length>1?btn('Skip rest','deploySkipAll()','ghost'):'');}
-  else if(U==='benefit'){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];const pool=benefitPool(b.dest);
-    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — choose '+(pool==='mods'?'a Modifier':'an Upgrade')+'.';
-    acts=grantable(lp,pool).map(k=>btn(LU('wrench')+upName(k),'benefitPick(\''+k+'\')','go')).join('');}
+  else if(U==='benefit'){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];
+    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take an Upgrade from the Market display (free).';
+    acts=displayGrantable(lp).map(k=>btn(LU('wrench')+upName(k),'benefitPick(\''+k+'\')','go')).join('');}
   else if(U==='end'){prompt='Line resolved.';acts=deployButtons('end')+btn('End Turn ▸','endTurn()','primary');}
   if(undoStack.length)acts+=btn('↶ Undo','doUndo()','ghost');
   document.getElementById('prompt').innerHTML=prompt;
@@ -924,13 +925,18 @@ function renderDests(){
 
 function renderShop(){
   const p=cur();const buying=(UI.sub==='cell'&&UI.cell==='A'&&UI.stage===null);
+  // always-available supply: recipes + ships
   let h='';SHOP.forEach(it=>{
     let nm,cost,can=false;
     if(it.kind==='recipe'){if(p.recipes.includes(it.style))return;nm=LU('scroll-text')+' Recipe · '+STYLES[it.style].name+(STYLES[it.style].cellar?' (needs Cellar to brew)':'');cost=RECIPE_BUY[it.style];can=canPay(p,cost);}
-    else if(it.kind==='ship'){nm=LU('sailboat')+' '+SHIP_NAME[it.ship]+' (cap '+SHIP_CAP[it.ship]+')';cost=it.cost;can=canPay(p,cost)&&emptySlots().length>0;}
-    else{if(!grantableBuy(p,it.key))return;nm=LU('wrench')+' '+upName(it.key);cost=it.cost;can=canPay(p,cost);}
-    h+='<div class="item"><span data-tip="'+attr(it.kind==='up'?upDesc(it.key):(it.kind==='ship'?'Owned carrier bound to a destination; sails when full onto the Sailed-Ships track.':'Permission to brew this type (permanent).'))+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
-  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Pick a tile to buy (or take goods).':'Visit the '+LU('store')+' <b>Market</b> to buy: '+LU('scroll-text')+' recipes · '+LU('sailboat')+' ships · '+LU('wrench')+' upgrades. Richer Modifiers (Royal Patent, Staple Right…) are earned by delivering to London / Bergen / Novgorod.')+'</div>';
+    else{nm=LU('sailboat')+' '+SHIP_NAME[it.ship]+' (cap '+SHIP_CAP[it.ship]+')';cost=it.cost;can=canPay(p,cost)&&emptySlots().length>0;}
+    h+='<div class="item"><span data-tip="'+attr(it.kind==='ship'?'Owned carrier bound to a destination; sails when full onto the Sailed-Ships track.':'Permission to brew this type (permanent).')+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
+  // the face-up Upgrade DISPLAY (option B) — buy one here, or earn one free by delivering to London/Bergen/Novgorod
+  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Upgrade display</b> <span class="note">(face-up — buy one, or earn one free by delivering to London/Bergen/Novgorod)</span></div>';
+  (S.upgradeDisplay||[]).forEach(key=>{const c=UPGRADE_BUY[key];const owned=!grantableBuy(p,key);const can=!owned&&canPay(p,c)&&buying;
+    h+='<div class="item"><span data-tip="'+attr(upDesc(key))+'">'+LU('wrench')+' '+upName(key)+(owned?' <span class="note">(have)</span>':'')+'</span><span class="cost">'+costIcons(c)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyDisplayUp(\''+key+'\')">buy</button>':'')+'</span></div>';});
+  if(!(S.upgradeDisplay||[]).length)h+='<div class="note">(upgrade supply exhausted)</div>';
+  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Take goods (left) or buy a tile. The upgrade display refreshes from a shuffled supply as tiles are taken.':'Visit the '+LU('store')+' <b>Market</b>: recipes &amp; ships are always stocked; upgrades come from the face-up display — buy one, or earn one free by delivering to '+LU('landmark')+' London/Bergen/Novgorod.')+'</div>';
 }
 
 function renderVoyage(){
@@ -953,7 +959,7 @@ function renderTableaus(){
       return '<div class="vessel">'+LU('beer')+' <b>'+styleShort(c.style)+'</b> '+(ready?'<span class="tag good">'+LU('check')+' READY</span>':'<span class="note">'+c.step+'/'+c.ready+'</span>')+'<div class="vtrack">'+tr+'</div></div>';
     }).join('');
     const recipes=p.recipes.map(r=>'<span class="tag dim">'+LU('beer')+STYLES[r].name+'</span>').join('');
-    const ups=p.upgrades.length?p.upgrades.map(k=>'<span class="tag" data-tip="'+attr(upDesc(k))+'">'+LU('wrench')+upName(k)+'</span>').join(''):'<span class="note">none yet — deliver to London/Bergen/Novgorod</span>';
+    const ups=p.upgrades.length?p.upgrades.map(k=>'<span class="tag" data-tip="'+attr(upDesc(k))+'">'+LU('wrench')+upName(k)+'</span>').join(''):'<span class="note">none yet — buy from the display, or deliver to London/Bergen/Novgorod</span>';
     const wharf=SLOTS.map(s=>S.slots[s.id]).filter(t=>t&&t.owner===p.id).map(t=>'<span class="tag">'+(t.type==='ship'?LU('sailboat')+shipName(t)+'→'+DEST[t.dest].name.slice(0,3)+' '+t.load.length+'/'+effCap(t):LU('beer')+styleShort(t.style))+'</span>').join('')||'<span class="note">none</span>';
     const delivered=DESTS.map(d=>{const n=deliveredAt(p,d);return n?'<span class="tag good">'+(DEST[d].kontor?LU('landmark'):LU('crown'))+DEST[d].name.slice(0,4)+'×'+n+'</span>':'';}).filter(x=>x).join('')||'<span class="note">none</span>';
     const gv=p.goals.map(g=>({g,v:GOALS[g].fn(p)})).sort((a,b)=>b.v-a.v);
