@@ -49,8 +49,9 @@
   .cell{border-radius:12px;padding:clamp(6px,2.1vw,10px);color:var(--parch);position:relative;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 3px 9px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14);overflow:hidden}
   .cell .head{display:flex;align-items:center;gap:clamp(4px,1.4vw,8px)}
   .cell .bigic .ic,.cell .bigic svg{width:clamp(1.3em,5vw,2em);height:clamp(1.3em,5vw,2em);stroke-width:1.7}
+  .cell .head>div{min-width:0}
   .cell .role{font-size:.56rem;text-transform:uppercase;letter-spacing:1.2px;opacity:.82}
-  .cell .nm{font-variant:small-caps;font-weight:bold;font-size:clamp(.8rem,2.9vw,1.18rem);line-height:1}
+  .cell .nm{font-variant:small-caps;font-weight:bold;font-size:clamp(.72rem,2.4vw,1.02rem);line-height:1.04;word-break:break-word;hyphens:auto}
   .cell .yield{display:flex;gap:7px;align-items:center;margin-top:3px}
   .cell .yield .ic,.cell .yield svg{width:1.25em;height:1.25em;opacity:.95}
   .cell .ltr{position:absolute;top:5px;right:8px;font-weight:bold;opacity:.38;font-size:.78rem}
@@ -127,6 +128,14 @@
   .scoretable th{background:var(--red);color:var(--parch)}
   .win{background:var(--gold);font-weight:bold}
   .note{font-size:.78rem;color:var(--ink2);font-style:italic}
+  /* TOOLTIPS — custom 300ms popovers */
+  #tip{position:fixed;z-index:200;max-width:300px;background:var(--ink);color:var(--parch);
+    border:1px solid var(--gold2);border-radius:8px;padding:7px 10px;font-size:.74rem;line-height:1.4;
+    box-shadow:0 5px 16px rgba(0,0,0,.45);pointer-events:none;opacity:0;display:none}
+  #tip.on{display:block;opacity:1}
+  #tip b{color:var(--gold2)}
+  #tip .ic,#tip svg.lucide{width:1em;height:1em;vertical-align:-.13em}
+  .iw{display:inline}
   .hidden{display:none}
 </style>
 </head>
@@ -152,15 +161,15 @@
       <div class="panel"><h3>Action Grid</h3><div class="agwrap"><div class="ag" id="ag"></div></div>
         <div class="note" id="boardnote" style="text-align:center;margin-top:6px"></div>
       </div>
+      <div class="panel"><h3>Trade Routes <span class="note">(reach)</span></h3><div id="routes"></div></div>
       <div class="panel"><h3>Player Breweries</h3>
         <div class="tabs" id="tabs"></div>
         <div id="tableaus"></div>
       </div>
     </div>
     <div>
-      <div class="panel"><h3>Trade Routes <span class="note">(reach)</span></h3><div id="routes"></div></div>
-      <div class="panel kontor"><h3>Hall &amp; Demand Market <span class="note">(standing)</span></h3><div id="kontor"></div></div>
       <div class="panel"><h3>Market</h3><div class="shop" id="shop"></div></div>
+      <div class="panel kontor"><h3>Hall &amp; Demand Market <span class="note">(standing)</span></h3><div id="kontor"></div></div>
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
@@ -188,7 +197,33 @@ const COLORS=['#7c2128','#274b5c','#4a6b3a','#b8860b','#5b3a8e'];
 const CNAMES=['Crimson','Azure','Forest','Amber','Violet'];
 
 // ---- ICONS (lucide.dev) ----
-const LU=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="ic '+cls+'"':' class="ic"')+'></i>';
+// Per-icon tooltip text — "what this icon is". LU wraps any tipped icon so the 300ms popover engine can find it.
+const ICONTIP={
+  wheat:'Grain — a brewing input (one of two raw goods).',
+  sprout:'Hops — a brewing input, needed for higher styles.',
+  beer:'Cask of beer — your dual-role piece (working → reach → standing).',
+  crown:'Standing — prestige banked by enshrining (never spent).',
+  'map-pin':'Presence — your reach on a trade route.',
+  coins:'Goods / coin.',
+  store:'Market — builder station: take 2 goods or buy one tile.',
+  'flask-conical':'Brewhouse — builder station: advance & load your brews.',
+  ship:'Harbor — cash-out station: deploy a Ready cask as reach.',
+  landmark:'Hall / kontor — enshrine a cask to bank its market value as standing.',
+  tent:'Fair — on its line, pay 1G to pump a type’s value +1 (fee to owner).',
+  route:'Route lane — opens a kontor and skims for its owner when its line fires.',
+  sailboat:'Ship — single-use carrier: load Ready casks; sails to its kontor when full.',
+  wrench:'Room — a permanent upgrade on your Brewhouse Floor.',
+  'scroll-text':'Recipe card — a permanent brew strip plus a one-time on-collect boon.',
+  target:'Goal — scores on an enshrined cask.',
+  package:'Storage — how many goods you can hold.',
+  star:'Route value — multiplies your presence there at scoring.',
+  lock:'Closed route — buy & place its lane to open it.',
+  check:'Ready — this cask is brewed; deploy or enshrine it.',
+  'user-round':'Worker.',
+  hammer:'Advance — push a brew along its track.',
+};
+const LU=(n,cls)=>{const i='<i data-lucide="'+n+'"'+(cls?' class="ic '+cls+'"':' class="ic"')+'></i>';
+  return ICONTIP[n]?'<span class="iw" data-tip="'+attr(ICONTIP[n])+'">'+i+'</span>':i;};
 const ICON={grain:'wheat',hops:'sprout',cask:'beer',vp:'crown',presence:'map-pin',coin:'coins',
   Market:'store',Brewhouse:'flask-conical',Harbor:'ship',Hall:'landmark',fair:'tent',
   route:'route',ship:'sailboat',room:'wrench',recipe:'scroll-text',goal:'target',stack:'layers',worker:'user-round',storage:'package'};
@@ -797,7 +832,7 @@ function renderBar(){
   document.getElementById('wholbl').textContent=p.name;
   document.getElementById('wholbl').style.background=p.color;
   document.getElementById('wholbl').style.color='#fff';
-  document.getElementById('barres').innerHTML='<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span><span class="chip" title="banked standing">'+LU('crown')+(p.standing||0)+'</span><span class="chip" title="total score">Σ '+scorePlayer(p).total+'</span>';
+  document.getElementById('barres').innerHTML='<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span><span class="chip" data-tip="Standing — prestige banked from enshrining.">'+LU('crown')+'<b>'+(p.standing||0)+'</b></span><span class="chip" data-tip="Total score so far.">Σ <b>'+scorePlayer(p).total+'</b></span>';
   let prompt='',acts='';
   if(UI.sub==='move'){const placing=!p.placed;
     prompt=placing?'<b>Turn 1:</b> place your worker on any cell (click a glowing cell).':'Move your worker to an adjacent cell (click the glowing cell).';
@@ -937,17 +972,17 @@ function renderGrid(){
     else inner=placing?LU('plus'):'<span style="opacity:.45">'+s.id+'</span>';
     const click=placing?'placeTile':(enshrining?'enshrineDeployed':null);
     const style=t?'background:'+S.players[t.owner].color+';border-color:'+S.players[t.owner].color:'';
-    h+='<div class="'+cls+'" style="'+style+'" title="'+attr(tileTip(t))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
+    h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
   });
   // cells — big action icon + role + "what you get" yields + workers
   ['A','B','C','D'].forEach(c=>{const act=CELLNAME[c];
-    const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'" title="'+p.name+'"></span>').join('');
+    const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+p.name+'"></span>').join('');
     let cls='cell '+c+' c'+c;
     const legal=(UI.sub==='move'&&(!cur().placed||ADJ[cur().cell].includes(c)));
     if(legal)cls+=' legal';
     const role=(act==='Market'||act==='Brewhouse')?'builder':'cash-out';
     const yields=(YIELD[act]||[]).map(n=>LU(n)).join('');
-    h+='<div class="'+cls+'" title="'+attr(cellTip(c))+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'>'
+    h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'>'
       +'<div class="ltr">'+c+'</div>'
       +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="role">'+role+'</div><div class="nm">'+act+'</div></div></div>'
       +'<div class="yield">'+yields+'</div>'
@@ -967,7 +1002,7 @@ function renderRoutes(){
     let sp='';for(let i=0;i<R.cap;i++){sp+='<div class="sp">'+(i<filled?'●':'')+'</div>';}
     let pres=S.players.map(p=>(R.pres[p.id]?'<span style="color:'+p.color+';font-weight:bold">'+LU('map-pin')+(R.pres[p.id])+'</span>':'')).filter(x=>x).join(' ');
     const rtip=R.open?def.name+' — open. Deploy casks (quality gate Q'+def.gate+'+) here for reach: each = +1 presence; '+filled+'/'+R.cap+' filled (saturates at '+R.cap+'). Scores presence × slotted value ('+R.value+') plus a route-majority bonus.':def.name+' — closed. Buy & place its Route Lane at the Market to open it (gate Q'+def.gate+').';
-    h+='<div class="'+cls+'" title="'+attr(rtip)+'" '+(canShip?'onclick="shipRoute(\''+r+'\')"':'')+'><div class="rh"><span class="rn">'+LU('landmark')+' '+def.name+'</span><span class="rv">'+(R.open?LU('star')+' val '+R.value:LU('lock')+' closed')+'</span></div><div class="gate">gate Q'+def.gate+' · '+(pres||'—')+'</div><div class="spaces">'+sp+'</div></div>';
+    h+='<div class="'+cls+'" data-tip="'+attr(rtip)+'" '+(canShip?'onclick="shipRoute(\''+r+'\')"':'')+'><div class="rh"><span class="rn">'+LU('landmark')+' '+def.name+'</span><span class="rv">'+(R.open?LU('star')+' val '+R.value:LU('lock')+' closed')+'</span></div><div class="gate">gate Q'+def.gate+' · '+(pres||'—')+'</div><div class="spaces">'+sp+'</div></div>';
   }
   document.getElementById('routes').innerHTML=h;
 }
@@ -1003,12 +1038,12 @@ function renderTableaus(){
     // v0.6 Brewhouse Floor: 4 multi-use slots — each empty / a Room / a working Cask
     let floorHtml=(p.floor||[]).map(f=>{
       if(!f)return '<span class="note">▢</span>';
-      if(f.kind==='room')return '<span class="tag" title="'+attr('Room: '+f.room)+'">'+LU('wrench')+f.room+'</span>';
-      return '<span class="tag" title="'+attr(STYLES[f.style].name+' working at the '+(f.station||'—')+': fires '+workDesc(f.style)+' whenever '+p.name+' uses that station (or its twin).')+'">'+LU('beer')+STYLES[f.style].name.split(' ')[0]+(f.station?' →'+f.station[0]:'')+'</span>';
+      if(f.kind==='room')return '<span class="tag" data-tip="'+attr('Room: '+f.room)+'">'+LU('wrench')+f.room+'</span>';
+      return '<span class="tag" data-tip="'+attr(STYLES[f.style].name+' working at the '+(f.station||'—')+': fires '+workDesc(f.style)+' whenever '+p.name+' uses that station (or its twin).')+'">'+LU('beer')+STYLES[f.style].name.split(' ')[0]+(f.station?' →'+f.station[0]:'')+'</span>';
     }).join(' ');
     body+='<div class="tableau '+(i===activeTab?'show':'')+'">'
       +'<div style="margin-bottom:6px"><span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
-      +'<span class="chip">'+LU('package')+p.storage+'</span><span class="chip" title="banked standing">'+LU('crown')+(p.standing||0)+'</span>'+(p.priv?'<span class="chip" title="Privileges">'+LU('scroll-text')+p.priv+'</span>':'')+'<span class="chip" title="total">Σ '+sc.total+'</span>'
+      +'<span class="chip" data-tip="Storage capacity.">'+LU('package')+'<b>'+p.storage+'</b></span><span class="chip" data-tip="Standing — prestige banked from enshrining.">'+LU('crown')+'<b>'+(p.standing||0)+'</b></span>'+(p.priv?'<span class="chip" data-tip="Privileges.">'+LU('scroll-text')+'<b>'+p.priv+'</b></span>':'')+'<span class="chip" data-tip="Total score.">Σ <b>'+sc.total+'</b></span>'
       +' <span class="note">R'+sc.reach+'/M'+sc.maj+'/S'+sc.stand+'/G'+sc.goals+'</span></div>'
       +'<b class="note">'+LU('flask-conical')+' Brewing track ('+p.vessels.length+' vessel'+(p.vessels.length>1?'s':'')+')</b><div class="brew">'+vessels+'</div>'
       +'<b class="note">'+LU('wrench')+' Brewhouse Floor (4 slots — Rooms / working Casks):</b> '+floorHtml+'<br>'
@@ -1020,6 +1055,34 @@ function renderTableaus(){
   document.getElementById('tabs').innerHTML=tabs;
   document.getElementById('tableaus').innerHTML=body;
 }
+
+//==================================================================
+// TOOLTIPS — custom 300ms-delay popovers (driven by data-tip attributes)
+//==================================================================
+(function initTips(){
+  const TIP=document.createElement('div');TIP.id='tip';document.body.appendChild(TIP);
+  let timer=null,curEl=null,pending=null;
+  function place(el){
+    const r=el.getBoundingClientRect();TIP.classList.add('on');
+    const w=TIP.offsetWidth,h=TIP.offsetHeight;
+    const left=Math.min(window.innerWidth-w-8,Math.max(8,r.left));
+    let top=r.bottom+8;if(top+h>window.innerHeight-8)top=Math.max(8,r.top-h-8);
+    TIP.style.left=left+'px';TIP.style.top=top+'px';
+  }
+  function show(el){const tip=el.getAttribute('data-tip');if(!tip)return;
+    curEl=el;TIP.innerHTML=tip;if(tip.indexOf('data-lucide')>=0)refreshIcons();place(el);}
+  function hide(){clearTimeout(timer);timer=null;pending=null;curEl=null;TIP.classList.remove('on');}
+  document.addEventListener('mouseover',e=>{
+    const el=e.target.closest?e.target.closest('[data-tip]'):null;
+    if(el===curEl&&!timer)return;          // already showing this element
+    if(el===pending&&timer)return;          // already counting down for it
+    clearTimeout(timer);timer=null;
+    if(!el){pending=null;if(curEl)hide();return;}
+    pending=el;timer=setTimeout(()=>{timer=null;pending=null;show(el);},300);
+  });
+  document.addEventListener('click',hide,true);
+  window.addEventListener('scroll',hide,true);
+})();
 
 //==================================================================
 // BOOT
