@@ -129,13 +129,13 @@ Owned ships are consumed when they sail, and the wharf is tight, so the loop nee
 ### Destinations — *where you ship is the strategic lean* (all open from start)
 The old two value tracks are replaced by destinations, each with a distinct **benefit** and a **quality gate** (the only "level-up" limiter — better places want better beer):
 
-| Destination | Gate ⚙ | Identity — value + benefit (owner picks where a choice is offered) ⚙ |
-|---|---|---|
-| **Bruges** (Hub) | Q1 | low value · **liquidity:** gain goods. Takes any beer — the volume on-ramp. |
-| **London** (Steelyard) | Q2 | mid value · **a brewery upgrade** (the engine destination). |
-| **Bergen** (Monopoly) | Q2 | mid value · **a modifier tile** + the richest **majority** (narrow & contested). |
-| **Novgorod** (Long Haul) | Q3 | **highest value + a modifier tile** · premium only — the volume summit (the climb pays the most *and* earns a perk). |
-| **The Hall** (Prestige) | Q2 | **prestige points** scaling with the cask's quality — taken *out of commerce* (the scarcity/Westvleteren lean). |
+| Destination | Gate ⚙ | Value ⚙ | Majority ⚙ | Benefit on delivery (owner picks where a choice is offered) ⚙ |
+|---|---|---|---|---|
+| **Bruges** (Hub) | Q1 | low (+2) | small | **gain goods** (liquidity) — takes any beer, the volume on-ramp |
+| **London** (Steelyard) | Q2 | mid (+3) | mid | **any Upgrade** — a Room *or* a Modifier (the engine destination) |
+| **Bergen** (Monopoly) | Q2 | mid (+3) | **biggest** | **a Modifier** — narrow & contested (its draw is the richest majority) |
+| **Novgorod** (Long Haul) | Q3 | **high (+5)** | mid | **a Modifier** — premium only; pays the most *and* earns a perk |
+| **The Hall** (Prestige) | Q2 | **prestige ∝ quality (Q×2)** | — | *(none)* — out of commerce (the scarcity/Westvleteren lean) |
 
 - **Most delivered casks at a kontor = its majority bonus** ⚙ (Bergen rewards this most). Presence at a kontor = your delivered casks there.
 - **The cask's owner always scores the delivery and picks any offered benefit** — even when a **rival** shipped it (§ below). This is the climb-and-variety engine: deliver → earn an upgrade/modifier → brew better → deliver better (the Distilled "selling funds your next still" loop).
