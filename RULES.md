@@ -71,10 +71,12 @@ A cask carries a **type** (a quality rung Q1–Q5, printed) and one **signature 
 Every base verb **always works**; ring buildings only add bonus copies of these verbs (§4).
 
 ### A · Market — *Source*
-Take **2 goods** (any mix), **OR** acquire **one** tile from the face-up market row, paying its goods cost ⚙:
-- a **recipe** (a new brewable type — your climb to the summit; summit recipes cost more),
-- a **ship** (a Cog or Hulk → placed into a ring slot, bound to a destination; §5),
-- an **upgrade** (a Room/modifier → installed on your brewery; §6).
+Take **2 goods** (any mix), **OR** acquire **one** tile, paying its goods cost ⚙:
+- a **recipe** (a new brewable type — your climb to the summit; summit recipes cost more) — *always-available supply*,
+- a **ship** (a Cog or Hulk → placed into a ring slot, bound to a destination; §5) — *always-available supply*,
+- an **upgrade** (a Room/Modifier → installed on your brewery; §6) — taken from the **face-up Upgrade display**.
+
+> **The Market display (Option B).** Recipes and ships are always in stock (you can always buy a build option). **Upgrades, by contrast, sit in a small face-up display** — a row of **4 ⚙** tiles drawn from a shuffled Upgrade supply; buy one (pay its cost) and the row **refills** from the supply. The *same display* is what the engine-kontore hand out free on delivery (§5) — so the Upgrade you can grab, by buying or by shipping, depends on **what's currently face-up.** This is the contested "what's in store" tension; recipes/ships stay reliable so your build plan never stalls.
 
 ### B · Brewhouse — *Brew*
 **Load** one recipe you hold (paying its `G/H` cost) into an **open vessel** — a young cask at step 0. (Recipes are permanent; brewing never consumes them.) One load per Brewhouse.
@@ -129,16 +131,17 @@ Owned ships are consumed when they sail, and the wharf is tight, so the loop nee
 ### Destinations — *where you ship is the strategic lean* (all open from start)
 The old two value tracks are replaced by destinations, each with a distinct **benefit** and a **quality gate** (the only "level-up" limiter — better places want better beer):
 
-| Destination | Gate ⚙ | Value ⚙ | Majority ⚙ | Benefit on delivery (owner picks where a choice is offered) ⚙ |
+| Destination | Gate ⚙ | Value ⚙ | Majority ⚙ | Benefit on delivery (the owner takes it) ⚙ |
 |---|---|---|---|---|
-| **Bruges** (Hub) | Q1 | low (+2) | small | **gain goods** (liquidity) — takes any beer, the volume on-ramp |
-| **London** (Steelyard) | Q2 | mid (+3) | mid | **any Upgrade** — a Room *or* a Modifier (the engine destination) |
-| **Bergen** (Monopoly) | Q2 | mid (+3) | **biggest** | **a Modifier** — narrow & contested (its draw is the richest majority) |
-| **Novgorod** (Long Haul) | Q3 | **high (+5)** | mid | **a Modifier** — premium only; pays the most *and* earns a perk |
+| **Bruges** (Hub) | Q1 | low (+2) | small | **gain 2 goods** (liquidity) — takes any beer, the volume on-ramp |
+| **London** (Steelyard) | Q2 | mid (+3) | mid | **take 1 Upgrade from the face-up display** (§3) — the engine destination |
+| **Bergen** (Monopoly) | Q2 | mid (+3) | **biggest** | **take 1 Upgrade from the display** — its real draw is the richest **majority** |
+| **Novgorod** (Long Haul) | Q3 | **high (+5)** | mid | **take 1 Upgrade from the display** — premium only; pays the most *and* a perk |
 | **The Hall** (Prestige) | Q2 | **prestige ∝ quality (Q×2)** | — | *(none)* — out of commerce (the scarcity/Westvleteren lean) |
 
+- **The three engine-kontore (London · Bergen · Novgorod) each let the owner take one tile from the Market's shared face-up Upgrade display** (§3) — *free*, where buying it would cost goods. Because the display is a small, churning row, **you don't fully know which Upgrade will be on offer when your cask arrives** — that uncertainty is the point. They differ by **value · majority · gate**, not by which upgrades they offer.
 - **Most delivered casks at a kontor = its majority bonus** ⚙ (Bergen rewards this most). Presence at a kontor = your delivered casks there.
-- **The cask's owner always scores the delivery and picks any offered benefit** — even when a **rival** shipped it (§ below). This is the climb-and-variety engine: deliver → earn an upgrade/modifier → brew better → deliver better (the Distilled "selling funds your next still" loop).
+- **The cask's owner always scores the delivery and takes any benefit** — even when a **rival** shipped it (§ below). This is the climb-and-variety engine: deliver → earn an upgrade → brew better → deliver better (the Distilled "selling funds your next still" loop).
 
 ### Shipping a rival's cask (the non-destructive interaction)
 On your turn you may load a **rival's wharf cask** onto **your** ship (only wharf casks — never their brewery). When it sails:
@@ -152,12 +155,28 @@ On your turn you may load a **rival's wharf cask** onto **your** ship (only whar
 
 ## 6. The brewery & upgrades (your private engine)
 
-Your brewery board is private and safe. It holds your **vessels** (start 2, cap 4 ⚙ — throughput), your **recipes**, and your **upgrade slots**. Upgrades are the engine-building / "get ahead" layer and where strategies diverge:
+Your brewery board is private and safe. It holds your **vessels** (start 2, cap 4 ⚙ — throughput), your **recipes**, and your **upgrades**. Upgrades are the engine-building / "get ahead" layer and where strategies diverge. They come from the Market's **face-up Upgrade display** (§3): **buy** one (pay its goods cost) **or earn** one free by delivering to London / Bergen / Novgorod (§5). There are two families — **Rooms** (permanent capability) and **Modifiers** (asymmetric perks).
 
-- **Rooms** (permanent): **Extra Vessel** (a brewing lane), **Aging Cellar** (faster maturation; unlocks the L5 summit), **Warehouse** (+storage), **Quay** (a stronger Harbor), etc. ⚙
-- **Modifiers** (asymmetric, permanent): e.g., *"when you gain hops, +1 extra"* — the variety levers, mostly **earned by delivering** (London / Bergen / Novgorod rewards), some buyable at the Market.
+#### Upgrade reference — every variant ⚙ (this is the full set the display draws from)
 
-Goals (§9) reward different brewery/delivery shapes, so the winning engine varies by game — the *Great Western Trail* ideal (a blend, chosen as you read the board, beats a one-note rush).
+| # | Room (capability) | Effect ⚙ | Buy cost ⚙ |
+|---|---|---|---|
+| 1 | **Extra Vessel** | +1 brewing lane (vessels start 2, cap **4**) — repeatable | `2 G` |
+| 2 | **Aging Cellar** | maturation **−1 step**; **unlocks the L5 summit** beer | `3 G` |
+| 3 | **Warehouse** | goods storage **8 → 12** | `2 G` |
+| 4 | **Quay** | load **2 casks** in one Harbor visit (instead of 1) | `3 G` |
+| 5 | **Cooperage** | **+1 cask loaded** per Harbor visit (stacks with Quay) | `2 G` |
+
+| # | Modifier (asymmetric perk) | Effect ⚙ | Buy cost ⚙ |
+|---|---|---|---|
+| 6 | **Granary Right** | whenever you gain grain, **+1 extra** | `2 G` |
+| 7 | **Hop Garden** | whenever you gain hops, **+1 extra** | `2 G` |
+| 8 | **Royal Patent** | your ships sail with **+1 capacity** | `3 G` |
+| 9 | **Staple Right** | **+1 good** whenever you deliver to a kontor | `3 G` |
+| 10 | **Guild Seat** | **+1 advance point** at the Cellar | `2 G` |
+| 11 | **Burgher Status** | **+1 presence** at every kontor you've reached (majority help) | `3 G` |
+
+> Supply: **~2 copies of each ⚙** (more Extra Vessels, the repeatable one) — so an upgrade can be **contested** (only so many copies exist). Goals (§9) reward different brewery/delivery shapes, so the winning engine varies by game — the *Great Western Trail* ideal (a blend beats a one-note rush).
 
 ---
 
