@@ -72,7 +72,7 @@ A small set placed in perimeter slots **at setup** (shared, permanent). They kee
 A small face-up Market supply. A recipe = **a type you may brew + its `G/H` cost** — nothing more (the v0.6 on-collect boons, the 6-card tuck, and frontier-gating are **cut**). Acquired at the Market; **permanent** (brewing never consumes it). Start: **Gruit + Hopped** (fixed); collect summit recipes to climb. ❓ light hand limit.
 
 ### E. Upgrade tiles — the private brewery engine (Rooms + Modifiers, ~24 ⚙)
-Installed on your brewery board's upgrade slots. **Earned mainly by delivering** (London / Bergen destination benefits) and partly bought at the Market — this closes the engine loop (deliver → upgrade → brew better → deliver better).
+Installed on your brewery board's upgrade slots. **Earned mainly by delivering** (London / Bergen / Novgorod destination benefits) and partly bought at the Market — this closes the engine loop (deliver → upgrade → brew better → deliver better).
 - **Rooms** (permanent capability): **Extra Vessel** (+1 brewing lane), **Aging Cellar** (faster maturation; unlocks the L5 summit), **Warehouse** (+storage), **Quay** (a stronger Harbor / deploy reach), **Cooperage**, etc.
 - **Modifiers** (asymmetric, permanent perks — these subsume v0.6's Privileges): e.g., *"when you gain hops, +1 extra,"* *"your ships sail with +1 capacity,"* *"+1 good when you deliver to Bruges."* The variety levers that make different players' engines diverge.
 

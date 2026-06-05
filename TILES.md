@@ -92,7 +92,7 @@ A small face-up Market supply. A recipe is **only** *a brewable type + its `G/H`
 
 ## E. Upgrade tiles — the private brewery engine (Rooms + Modifiers, ~24 ⚙)
 
-Installed on your brewery board. **Earned mainly by delivering** (the London / Bergen destination benefits) and partly bought at the Market — closing the loop **deliver → upgrade → brew better → deliver better**.
+Installed on your brewery board. **Earned mainly by delivering** (the London / Bergen / Novgorod destination benefits) and partly bought at the Market — closing the loop **deliver → upgrade → brew better → deliver better**.
 
 ### Rooms (permanent capability)
 | Room | Effect ⚙ |
@@ -124,7 +124,7 @@ All **open from the start** (route-lane tiles cut — variety over limitation). 
 | **Bruges** (Hub) | Q1 | low (e.g. +2) | **liquidity** — gain goods | small |
 | **London** (Steelyard) | Q2 | mid (e.g. +3) | **a brewery Upgrade** (Room/Modifier) | mid |
 | **Bergen** (Monopoly) | Q2 | mid (e.g. +3) | **a Modifier** + the richest **majority** | **biggest** |
-| **Novgorod** (Long Haul) | Q3 | **high** (e.g. +5) | premium-only — pure value | mid |
+| **Novgorod** (Long Haul) | Q3 | **high** (e.g. +5) | premium-only — top value **+ a Modifier** | mid |
 | **The Hall** (Prestige) | Q2 | **prestige** ∝ quality (e.g. Q×2) | out of commerce — the scarcity/Westvleteren payout | — |
 
 > **Reach** = your delivered casks across the kontore (value + majorities, the volume lean). **Prestige** = casks shipped to the Hall (the scarcity lean). They never convert; the lean is chosen as you read the board.
@@ -168,7 +168,7 @@ A small pool (shared draft or per-player ⚙) rewarding different shapes, so the
 ## Open tuning notes
 
 1. **Cask action strengths** (Source 2 / Age 2 / free Load / +1 presence / Wild) — chunky without making the ring swingy; whether *every* cask bears an action.
-2. **Destination values / gates / majority bonuses** and the **upgrade/modifier** payouts from London/Bergen — the variety heart.
+2. **Destination values / gates / majority bonuses** and the **upgrade/modifier** payouts from London/Bergen/Novgorod — the variety heart.
 3. **Neutral-building set & count in play**, scaling by player count (ring pressure).
 4. **Maturation lengths** vs the Sailed-Ships clock — the pace economy.
 5. **Goal count & best-few cap** — the blend lever; shared vs personal.

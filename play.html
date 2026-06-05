@@ -186,7 +186,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>Prototype v0.7 “The Wharf”.</b> One loop walked on the grid — <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor). A <b>cask</b> matures privately, <b>deploys to the shared wharf</b> (the 8 ring slots) as a public action-building, then <b>ships to a destination</b> and scores. A line fires <b>both its cells</b> plus any wharf building at each end (cap·cell·cell·cap), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s wharf cask</b> on your ship — they still score it. Deliver to <b>London/Bergen</b> to earn upgrades. The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the pricey relief valve when the wharf jams). Cells are never blocked; your brewery is private. Single-level <b>Undo</b> is in the bar. All numbers are placeholders (⚙); the Sailed-Ships clock length &amp; charter cost are the top pace dials for playtest.</p>
+  <p class="note" style="text-align:center"><b>Prototype v0.7 “The Wharf”.</b> One loop walked on the grid — <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor). A <b>cask</b> matures privately, <b>deploys to the shared wharf</b> (the 8 ring slots) as a public action-building, then <b>ships to a destination</b> and scores. A line fires <b>both its cells</b> plus any wharf building at each end (cap·cell·cell·cap), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s wharf cask</b> on your ship — they still score it. Deliver to <b>London</b> (any upgrade), <b>Bergen</b> or <b>Novgorod</b> (a modifier) to earn upgrades. The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the pricey relief valve when the wharf jams). Cells are never blocked; your brewery is private. Single-level <b>Undo</b> is in the bar. All numbers are placeholders (⚙); the Sailed-Ships clock length &amp; charter cost are the top pace dials for playtest.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -263,12 +263,14 @@ const DEST={
   bruges  :{name:'Bruges',  gate:1, value:2, maj:2, benefit:'goods', kontor:true,  role:'Hub · liquidity'},
   london  :{name:'London',  gate:2, value:3, maj:3, benefit:'room',  kontor:true,  role:'Steelyard · an Upgrade'},
   bergen  :{name:'Bergen',  gate:2, value:3, maj:5, benefit:'mod',   kontor:true,  role:'Monopoly · a Modifier + richest majority'},
-  novgorod:{name:'Novgorod',gate:3, value:5, maj:3, benefit:'none',  kontor:true,  role:'Long Haul · pure value'},
+  novgorod:{name:'Novgorod',gate:3, value:5, maj:3, benefit:'mod',   kontor:true,  role:'Long Haul · top value + a Modifier'},
   hall    :{name:'The Hall',gate:2, value:0, maj:0, benefit:'none',  kontor:false, role:'Prestige · pays Q×2'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
 const DESTS=['bruges','london','bergen','novgorod','hall'];
 function destValue(dest,q){return dest==='hall'?q*2:DEST[dest].value;}
+// Which upgrade pool a destination's benefit draws from: London = any (room or mod); Bergen & Novgorod = a Modifier.
+function benefitPool(dest){return (dest==='bergen'||dest==='novgorod')?'mods':'all';}
 
 // ---- SHIPS (owned single-use carriers) ----
 const SHIP_CAP={cog:2,hulk:3};
@@ -684,7 +686,8 @@ function grantBenefit(lp,dest,q){
     if(lp.id===S.active)UI.pendingBenefits.push({pid:lp.id,dest:'london'});else autoGrant(lp,'all');}
   else if(dest==='bergen'){log('↳ '+lp.name+' delivers to Bergen (+'+destValue('bergen',q)+' value, earns a Modifier).');
     if(lp.id===S.active)UI.pendingBenefits.push({pid:lp.id,dest:'bergen'});else autoGrant(lp,'mods');}
-  else if(dest==='novgorod')log('↳ '+lp.name+' delivers to Novgorod (+'+destValue('novgorod',q)+' value).');
+  else if(dest==='novgorod'){log('↳ '+lp.name+' delivers to Novgorod (+'+destValue('novgorod',q)+' value, earns a Modifier).');
+    if(lp.id===S.active)UI.pendingBenefits.push({pid:lp.id,dest:'novgorod'});else autoGrant(lp,'mods');}
   else if(dest==='hall')log('↳ '+lp.name+' enshrines at the Hall (+'+destValue('hall',q)+' prestige).');
 }
 function autoGrant(p,pool){const g=grantable(p,pool);if(!g.length)return;const k=g[Math.floor(Math.random()*g.length)];grantUpgrade(p,k);log('↳ '+p.name+' earns '+upName(k)+'.');}
@@ -693,7 +696,7 @@ function grantUpgrade(p,key){
   if(!p.upgrades.includes(key)){p.upgrades.push(key);if(key==='warehouse')p.storage+=4;}
 }
 function afterSail(rt){
-  UI.pendingBenefits=(UI.pendingBenefits||[]).filter(b=>grantable(S.players[b.pid],b.dest==='bergen'?'mods':'all').length>0);
+  UI.pendingBenefits=(UI.pendingBenefits||[]).filter(b=>grantable(S.players[b.pid],benefitPool(b.dest)).length>0);
   if(UI.pendingBenefits.length){UI.sub='benefit';UI.benefit={returnTo:rt};render();}else resume(rt);
 }
 function benefitPick(key){snapshot();const b=UI.pendingBenefits[0];grantUpgrade(S.players[b.pid],key);
@@ -829,8 +832,8 @@ function renderBar(){
   else if(U==='deploy'){const vi=UI.deploy.queue[0];const c=p.vessels[vi];
     prompt='Set Ready <b>'+styleShort(c.style)+'</b> on the wharf — click an open slot.';
     acts=btn('Leave in vessel','deploySkipOne()','ghost')+(UI.deploy.queue.length>1?btn('Skip rest','deploySkipAll()','ghost'):'');}
-  else if(U==='benefit'){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];const pool=b.dest==='bergen'?'mods':'all';
-    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — choose '+(b.dest==='bergen'?'a Modifier':'an Upgrade')+'.';
+  else if(U==='benefit'){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];const pool=benefitPool(b.dest);
+    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — choose '+(pool==='mods'?'a Modifier':'an Upgrade')+'.';
     acts=grantable(lp,pool).map(k=>btn(LU('wrench')+upName(k),'benefitPick(\''+k+'\')','go')).join('');}
   else if(U==='end'){prompt='Line resolved.';acts=deployButtons('end')+btn('End Turn ▸','endTurn()','primary');}
   if(undoStack.length)acts+=btn('↶ Undo','doUndo()','ghost');
@@ -927,7 +930,7 @@ function renderShop(){
     else if(it.kind==='ship'){nm=LU('sailboat')+' '+SHIP_NAME[it.ship]+' (cap '+SHIP_CAP[it.ship]+')';cost=it.cost;can=canPay(p,cost)&&emptySlots().length>0;}
     else{if(!grantableBuy(p,it.key))return;nm=LU('wrench')+' '+upName(it.key);cost=it.cost;can=canPay(p,cost);}
     h+='<div class="item"><span data-tip="'+attr(it.kind==='up'?upDesc(it.key):(it.kind==='ship'?'Owned carrier bound to a destination; sails when full onto the Sailed-Ships track.':'Permission to brew this type (permanent).'))+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
-  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Pick a tile to buy (or take goods).':'Visit the '+LU('store')+' <b>Market</b> to buy: '+LU('scroll-text')+' recipes · '+LU('sailboat')+' ships · '+LU('wrench')+' upgrades. Richer Modifiers (Royal Patent, Staple Right…) are earned by delivering to London / Bergen.')+'</div>';
+  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Pick a tile to buy (or take goods).':'Visit the '+LU('store')+' <b>Market</b> to buy: '+LU('scroll-text')+' recipes · '+LU('sailboat')+' ships · '+LU('wrench')+' upgrades. Richer Modifiers (Royal Patent, Staple Right…) are earned by delivering to London / Bergen / Novgorod.')+'</div>';
 }
 
 function renderVoyage(){
@@ -950,7 +953,7 @@ function renderTableaus(){
       return '<div class="vessel">'+LU('beer')+' <b>'+styleShort(c.style)+'</b> '+(ready?'<span class="tag good">'+LU('check')+' READY</span>':'<span class="note">'+c.step+'/'+c.ready+'</span>')+'<div class="vtrack">'+tr+'</div></div>';
     }).join('');
     const recipes=p.recipes.map(r=>'<span class="tag dim">'+LU('beer')+STYLES[r].name+'</span>').join('');
-    const ups=p.upgrades.length?p.upgrades.map(k=>'<span class="tag" data-tip="'+attr(upDesc(k))+'">'+LU('wrench')+upName(k)+'</span>').join(''):'<span class="note">none yet — deliver to London/Bergen</span>';
+    const ups=p.upgrades.length?p.upgrades.map(k=>'<span class="tag" data-tip="'+attr(upDesc(k))+'">'+LU('wrench')+upName(k)+'</span>').join(''):'<span class="note">none yet — deliver to London/Bergen/Novgorod</span>';
     const wharf=SLOTS.map(s=>S.slots[s.id]).filter(t=>t&&t.owner===p.id).map(t=>'<span class="tag">'+(t.type==='ship'?LU('sailboat')+shipName(t)+'→'+DEST[t.dest].name.slice(0,3)+' '+t.load.length+'/'+effCap(t):LU('beer')+styleShort(t.style))+'</span>').join('')||'<span class="note">none</span>';
     const delivered=DESTS.map(d=>{const n=deliveredAt(p,d);return n?'<span class="tag good">'+(DEST[d].kontor?LU('landmark'):LU('crown'))+DEST[d].name.slice(0,4)+'×'+n+'</span>':'';}).filter(x=>x).join('')||'<span class="note">none</span>';
     const gv=p.goals.map(g=>({g,v:GOALS[g].fn(p)})).sort((a,b)=>b.v-a.v);

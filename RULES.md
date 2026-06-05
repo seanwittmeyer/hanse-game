@@ -134,7 +134,7 @@ The old two value tracks are replaced by destinations, each with a distinct **be
 | **Bruges** (Hub) | Q1 | low value · **liquidity:** gain goods. Takes any beer — the volume on-ramp. |
 | **London** (Steelyard) | Q2 | mid value · **a brewery upgrade** (the engine destination). |
 | **Bergen** (Monopoly) | Q2 | mid value · **a modifier tile** + the richest **majority** (narrow & contested). |
-| **Novgorod** (Long Haul) | Q3 | **highest value** · premium only — the volume summit. |
+| **Novgorod** (Long Haul) | Q3 | **highest value + a modifier tile** · premium only — the volume summit (the climb pays the most *and* earns a perk). |
 | **The Hall** (Prestige) | Q2 | **prestige points** scaling with the cask's quality — taken *out of commerce* (the scarcity/Westvleteren lean). |
 
 - **Most delivered casks at a kontor = its majority bonus** ⚙ (Bergen rewards this most). Presence at a kontor = your delivered casks there.
@@ -155,7 +155,7 @@ On your turn you may load a **rival's wharf cask** onto **your** ship (only whar
 Your brewery board is private and safe. It holds your **vessels** (start 2, cap 4 ⚙ — throughput), your **recipes**, and your **upgrade slots**. Upgrades are the engine-building / "get ahead" layer and where strategies diverge:
 
 - **Rooms** (permanent): **Extra Vessel** (a brewing lane), **Aging Cellar** (faster maturation; unlocks the L5 summit), **Warehouse** (+storage), **Quay** (a stronger Harbor), etc. ⚙
-- **Modifiers** (asymmetric, permanent): e.g., *"when you gain hops, +1 extra"* — the variety levers, mostly **earned by delivering** (London / Bergen rewards), some buyable at the Market.
+- **Modifiers** (asymmetric, permanent): e.g., *"when you gain hops, +1 extra"* — the variety levers, mostly **earned by delivering** (London / Bergen / Novgorod rewards), some buyable at the Market.
 
 Goals (§9) reward different brewery/delivery shapes, so the winning engine varies by game — the *Great Western Trail* ideal (a blend, chosen as you read the board, beats a one-note rush).
 
