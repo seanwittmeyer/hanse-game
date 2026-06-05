@@ -68,7 +68,7 @@
   .slot .tface{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:100%;height:100%;text-align:center;line-height:1.05}
   .slot .tface .bigic .ic,.slot .tface .bigic svg{width:clamp(1.4em,5.5vw,2em);height:clamp(1.4em,5.5vw,2em);stroke-width:1.8}
   .slot .tnm{font-size:.6rem;font-weight:bold;font-variant:small-caps;white-space:nowrap;letter-spacing:.3px}
-  .slot .tinfo{font-size:.52rem;opacity:.92;display:inline-flex;align-items:center;gap:1px;white-space:nowrap}
+  .slot .tinfo{font-size:.52rem;opacity:.92;display:inline-flex;align-items:center;gap:1px;flex-wrap:wrap;justify-content:center;max-width:100%}
   .slot .tinfo .ic,.slot .tinfo svg{width:.95em;height:.95em}
   .slot .tpips{display:flex;gap:1.5px;margin:1px 0}
   .slot .tpip{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.32)}
@@ -247,9 +247,9 @@ function slotPips(q){let s='';for(let i=1;i<=5;i++)s+='<span class="tpip'+(i<=q?
 // A filled perimeter slot rendered as the designed square tile face (icon · name · pips/info).
 function slotFace(t){
   let icon='package',nm=t.label||'',info='',pips='';
-  if(t.type==='cask'){icon='beer';nm=STYLES[t.style].name.split(' ')[0];info=LU('map-pin')+ROUTES[t.route].name.slice(0,3);pips=slotPips(t.q);}
+  if(t.type==='cask'){icon='beer';nm=STYLES[t.style].name.split(' ')[0];info=LU('map-pin')+ROUTES[t.route].name;pips=slotPips(t.q);}
   else if(t.type==='route'){icon='route';nm=ROUTES[t.route].name;info='Lane +'+t.boost;}
-  else if(t.type==='ship'){icon='sailboat';nm=t.label;info=LU('map-pin')+ROUTES[t.dest].name.slice(0,3)+' '+t.load.length+'/'+t.cap;}
+  else if(t.type==='ship'){icon='sailboat';nm=t.label;info=LU('map-pin')+ROUTES[t.dest].name+' '+t.load.length+'/'+t.cap;}
   else if(t.type==='fair'){icon='tent';nm=t.label||'Fair';info='pump +1';}
   return '<div class="tface"><span class="bigic">'+LU(icon)+'</span><span class="tnm">'+nm+'</span>'
     +(pips?'<span class="tpips">'+pips+'</span>':'')+(info?'<span class="tinfo">'+info+'</span>':'')+'</div>';
