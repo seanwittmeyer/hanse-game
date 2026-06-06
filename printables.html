@@ -67,7 +67,7 @@
   /* ---- goods TOKENS — laser-cut circle (.7in) printed with a 1/8in BLEED ring (.95in art disc) ---- */
   .tok{width:.95in;height:.95in;border-radius:50%;background:var(--c);color:#fff;position:relative;
     display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4);break-inside:avoid}
-  .tok::after{content:"";position:absolute;inset:.125in;border:.8pt dashed rgba(255,255,255,.75);border-radius:50%}
+  .tok::after{content:"";position:absolute;inset:.125in;border:.8pt solid rgba(255,255,255,.75);border-radius:50%}
   .tok svg{width:.26in;height:.26in}
   .tile.blank{background:#fff;color:#9a9a9a;border-color:#bdbdbd;text-shadow:none} .tile.blank::after{border-color:#d8d8d8}
   .tok.blank{background:#fff;color:#bbb;text-shadow:none} .tok.blank::after{border-color:#cfcfcf}
@@ -282,7 +282,7 @@ function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--
   +(it.sub?'<div class="g-sub">'+it.sub+'</div>':'')
   +(it.big?'<div class="g-big">'+it.big+'</div>':'')
   +(it.cost?'<div class="g-cost">'+it.cost+'</div>':'')+'</div>';}
-function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+d.nm+'</div>';}
+function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
 const blankTile='<div class="tile blank"></div>', blankTok='<div class="tok blank"></div>';
 
 function renderTiles(){const back=SIDE==='back';
