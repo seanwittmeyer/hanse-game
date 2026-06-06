@@ -140,13 +140,13 @@
   <table>
     <tr><th>Destination</th><th>Character</th><th>Gate ⚙</th><th>Delivery value ⚙</th><th>Benefit / majority ⚙</th></tr>
     <tr><td><b>Bruges</b> (Hub)</td><td>Wide; takes any beer</td><td>Q1</td><td>low (≈ +2)</td><td>liquidity (goods) · small majority</td></tr>
-    <tr><td><b>London</b> (Steelyard)</td><td>The engine destination</td><td>Q2</td><td>mid (≈ +3)</td><td>take an Upgrade from the display · mid majority</td></tr>
+    <tr><td><b>London</b> (Steelyard)</td><td>Mid value; delivers an upgrade</td><td>Q2</td><td>mid (≈ +3)</td><td>take an Upgrade from the display · mid majority</td></tr>
     <tr><td><b>Bergen</b> (Monopoly)</td><td>Narrow, contested</td><td>Q2</td><td>mid (≈ +3)</td><td>take an Upgrade from the display · the <b>richest</b> majority</td></tr>
     <tr><td><b>Novgorod</b> (Long Haul)</td><td>Premium only, biggest value</td><td>Q3</td><td>high (≈ +5)</td><td>take an Upgrade from the display · mid majority</td></tr>
     <tr><td><b>The Hall</b> (Prestige)</td><td>Out of commerce</td><td>Q2</td><td>prestige ∝ quality (≈ Q×2)</td><td>the scarcity payout · no majority</td></tr>
   </table>
   <h3>Your Brewery (private, untouchable)</h3>
-  <p>Not a copy of the grid — it is the <b>vessel the brewing happens in</b>. The maturation track carries casks Brew → … → Ready across your <b>vessels</b> (start <b>2</b>, cap <b>4</b> — each a parallel lane); a <b>recipe rack</b> holds the types you may brew; and <b>upgrade slots</b> hold the Rooms &amp; Modifiers you build (mostly earned by delivering). Rivals can only ever act on your casks once they're on the wharf.</p>
+  <p>Your brewery board holds the maturation track, which carries casks Brew → … → Ready across your <b>vessels</b> (start <b>2</b>, cap <b>4</b> — each a parallel lane); a <b>recipe rack</b> holds the types you may brew; and <b>upgrade slots</b> hold the Rooms &amp; Modifiers you build (mostly earned by delivering). Rivals can only ever act on your casks once they're on the wharf.</p>
 </section>
 
 <section id="setup">
@@ -187,7 +187,7 @@
     <tr><td><b>D · Cellar</b> <span class="pill">Age</span></td><td>Gain a <b>pool of 3 advance points</b> ⚙ and <b>allocate them freely across your vessels</b>. (Casks also age <b>+1 automatically at the start of your turn</b>.) When a cask reaches <b>Ready</b>, deploy it to an open wharf slot you choose.</td></tr>
     <tr><td><b>C · Harbor</b> <span class="pill">Ship</span></td><td><b>Load</b> one wharf cask onto one of <b>your ships</b> (any ship — no line-coincidence needed). A ship <b>sails the instant it is full</b>; or <b>launch a partial ship early</b>, or use a <b>Charter Voyage</b> (pay 2 G to ship one Ready cask now — §10).</td></tr>
   </table>
-  <p>Tile costs ⚙: recipe 1–2 goods · ship 2–3 · upgrades vary (many are <em>earned by delivering</em>, not bought). The v0.6 build×cash-out diagonal is retired — the cells are arranged so the circuit <b>walks the loop</b> instead.</p>
+  <p>Tile costs ⚙: recipe 1–2 goods · ship 2–3 · upgrades vary (many are <em>earned by delivering</em>, not bought).</p>
 </section>
 
 <section id="cask">
@@ -214,11 +214,8 @@
 
 <section id="wharf">
   <h2><span class="nm">9</span>The Wharf</h2>
-  <h3>Using Wharf Slots</h3>
-  <ul>
-    <li>The <b>8 perimeter slots</b> hold your <b>deployed casks</b> (cargo + a public action), your <b>ships</b> (single-use; consumed when they sail), and <b>2–3 neutral buildings</b> seeded at setup. Every slot belongs to exactly one line. <em>(Recipes &amp; upgrades live on your board, not a slot.)</em></li>
-    <li>When a line fires, the active player may use each building on it: a <b>cask</b> fires its signature action; a <b>ship</b> offers a free load; a <b>neutral building</b> gives its base action (e.g. <em>Market Stall</em> +1 good, <em>Cooper</em> advance a cask, <em>Crane</em> a free load). All resolve <b>on the active player's turn</b> — cask &amp; neutral actions are <b>free and public</b>. When a rival uses your cask's action, you still own the cask and will still score it when shipped.</li>
-  </ul>
+  <p>The <b>8 perimeter slots</b> hold your <b>deployed casks</b> (cargo + a public action), your <b>ships</b> (single-use; consumed when they sail), and <b>2–3 neutral buildings</b> seeded at setup. Every slot belongs to exactly one line. <em>(Recipes &amp; upgrades live on your board, not a slot.)</em></p>
+  <p>When a line fires, the active player may use each building on it: a <b>cask</b> fires its signature action; a <b>ship</b> offers a free load; a <b>neutral building</b> gives its base action (e.g. <em>Market Stall</em> +1 good, <em>Cooper</em> advance a cask, <em>Crane</em> a free load). All resolve <b>on the active player's turn</b> — cask &amp; neutral actions are <b>free and public</b>. When a rival uses your cask's action, you still own the cask and will still score it when shipped.</p>
   <div class="box red"><h4>Shipping a rival's cask</h4>On your turn you may load a <b>rival's wharf cask</b> onto <b>your</b> ship (only wharf casks — never their brewery). When it sails, the <b>destination is your ship's binding</b> (it must be legal for that cask's quality). The <b>owner still scores the delivery and picks its benefit</b>, and <b>you</b> take the freed slot, the filled ship (advancing the end clock), and a small loader bonus ⚙.</div>
 </section>
 
@@ -269,7 +266,7 @@
 
 <section id="endgame">
   <h2><span class="nm">13</span>End of the Game</h2>
-  <p>There is <b>no turn limit</b>. The game ends when the <b>Sailed-Ships track fills</b>.</p>
+  <p>The game ends when the <b>Sailed-Ships track fills</b>.</p>
   <ul>
     <li>Every <b>voyage</b> — a ship sailing (full or launched) <b>or a Charter</b> (§10) — moves one slot onto the shared, visible <b>Sailed-Ships track</b>. When the track fills, the game ends. Track length scales with player count (the more players ship, the faster the clock fills): <b>~7 / 11 / 15 / 19 slots for 2 / 3 / 4 / 5 players</b> ⚙. The more ships sail, the faster the game ends — a full Hulk's 3-cask burst still advances only one slot. A <b>round limit</b> (≈25 ⚙) prevents the game from running too long.</li>
   </ul>
@@ -282,7 +279,7 @@
   <ol>
     <li><b>Delivery value</b> — sum your delivered casks' values at each destination (kontore = trade value; <b>the Hall = prestige</b>, scaling with quality).</li>
     <li><b>Majorities</b> — the route-majority bonus at each kontor (most delivered casks; ties split ⚙).</li>
-    <li><b>Goals</b> — resolve your goal tiles; <b>only your best few score</b> ⚙ (the variety layer).</li>
+    <li><b>Goals</b> — resolve your goal tiles; <b>only your best few score</b> ⚙.</li>
   </ol>
   <p>Highest total wins. <b>Tiebreak:</b> most goods, then most casks on the wharf.</p>
   <div class="box"><h4>The goal pool (⚙)</h4>A small pool (shared draft or per-player) rewards different strategies — most distinct types delivered, most casks to one kontor, most Q3+ delivered, most ships sailed, most to the Hall, most kontore held, a fullest brewery, a flat safe goal. <b>Only your best few count.</b> Goals are designed so a single-strategy approach fills few of them. See the <a href="index.html#goals">visualizer</a> for the full list.</div>
@@ -300,7 +297,7 @@
     <li><b>Cell</b> — one of the four shared action spaces (A Market · B Brewhouse · D Cellar · C Harbor).</li>
     <li><b>Line</b> — a row or column; a 4-stop pipeline. Firing one triggers both its cells plus the slots at each end.</li>
     <li><b>Wharf</b> — the 8 shared perimeter slots; holds deployed casks, ships, and neutral buildings.</li>
-    <li><b>Cask</b> — a brewed beer that lives three lives: <b>maturing</b> (vessel) → <b>on the wharf</b> (cargo + a public action) → <b>delivered</b> (shipped → scores).</li>
+    <li><b>Cask</b> — a brewed beer that moves through three states: <b>maturing</b> (vessel) → <b>on the wharf</b> (cargo + a public action) → <b>delivered</b> (shipped → scores).</li>
     <li><b>Deploy</b> — place a Ready cask from your brewery onto an open wharf slot.</li>
     <li><b>Ship</b> — owned infrastructure (Cog 2 / Hulk 3) bound to a destination; loads casks and <b>sails when full</b>, then is consumed to the Sailed-Ships track.</li>
     <li><b>Charter Voyage</b> — a Harbor option (no tile): pay 2 G to ship one Ready cask (vessel or wharf) on a single-cask voyage now. Less efficient per cask than a Cog/Hulk, but prevents being stuck when the wharf is full or a vessel is blocked.</li>
