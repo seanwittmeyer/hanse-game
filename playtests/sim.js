@@ -35,22 +35,28 @@ function destFor(p,q,konPref){var elig=DESTS.filter(function(d){return q>=DEST[d
   pool.sort(function(a,b){return DEST[b].value-DEST[a].value;});return pool[0];}
 
 function cellValue(c,p){
-  if(c==='A')return 1+(needShip(p)?1.5:0)+(wantRecipe(p)?0.4:0);
-  if(c==='B')return (openVessel(p)>=0 && p.recipes.some(function(r){return canBrew(p,r);}))?3:0.1;
-  if(c==='D'){var mat=p.vessels.filter(function(v){return v&&v.step<v.ready;});if(!mat.length)return 0.1;
+  var role=CELLROLE[c];
+  if(role==='Source')return 1+(needShip(p)?1.5:0)+(wantRecipe(p)?0.4:0);
+  if(role==='Brew')return (openVessel(p)>=0 && p.recipes.some(function(r){return canBrew(p,r);}))?3:0.1;
+  if(role==='Age'){var mat=p.vessels.filter(function(v){return v&&v.step<v.ready;});if(!mat.length)return 0.1;
     return 2+(mat.some(function(v){return v.ready-v.step<=3;})?1:0);}
-  if(c==='C'){var load=myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});});
+  if(role==='Ship'){var load=myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});});
     if(load)return 4;
     var rdy=readyInVessels(p).length||wharfCaskSlots().some(function(id){return S.slots[id].owner===p.id;});
     return (rdy&&canPay(p,CHARTER_COST))?2:0.1;}
   return 0;
+}
+// Expected occupancy toll for activating line lk (0 unless an engine defines OCCUPANCY_TOLL).
+function lineToll(lk,p){
+  if(typeof OCCUPANCY_TOLL==='undefined'||!OCCUPANCY_TOLL)return 0;
+  return LINES[lk].cells.filter(function(c){return S.players.some(function(q){return q.id!==p.id&&q.cell===c;});}).length*OCCUPANCY_TOLL;
 }
 function botMove(p){
   var placing=!p.placed;var cands=placing?['A','B','C','D']:ADJ[p.cell];
   var best=null,bestv=-1,which='row';
   cands.forEach(function(tc){['row','col'].forEach(function(w){
     var lk=cellOfLine(tc)[w];var cells=LINES[lk].cells;
-    var v=cells.reduce(function(a,c){return a+cellValue(c,p);},0)+Math.random()*0.4;
+    var v=cells.reduce(function(a,c){return a+cellValue(c,p);},0)-lineToll(lk,p)+Math.random()*0.4;
     if(v>bestv){bestv=v;best=tc;which=w;}});});
   __chosenWhich=which;doMove(best);
 }
@@ -59,7 +65,7 @@ function botLine(p){
   chooseLine(__chosenWhich||'row');
 }
 function stopPrio(s){
-  if(s.kind==='cell')return {A:0,B:1,D:2,C:4}[s.cell];
+  if(s.kind==='cell')return {Source:0,Brew:1,Age:2,Ship:4}[CELLROLE[s.cell]];
   var t=S.slots[s.slot];if(!t)return 99;
   if(t.type==='cask'){var a=STYLES[t.style].act;return {source:0,wild:1,age:2,reach:2,load:4}[a];}
   if(t.type==='ship')return 4;
@@ -95,7 +101,7 @@ function botHarbor(p){
 function qRefBind(p){var qs=[];p.vessels.forEach(function(c){if(c)qs.push(c.q);});
   wharfCaskSlots().forEach(function(id){if(S.slots[id].owner===p.id)qs.push(S.slots[id].q);});
   return qs.length?Math.max.apply(null,qs):achQ(p);}
-function botCell(p){if(UI.cell==='A')botMarket(p);else if(UI.cell==='C')botHarbor(p);else cellDone();}
+function botCell(p){var role=CELLROLE[UI.cell];if(role==='Source')botMarket(p);else if(role==='Ship')botHarbor(p);else cellDone();}
 function botBrew(p){var aff=p.recipes.filter(function(r){return canBrew(p,r)&&openVessel(p)>=0;});
   if(!aff.length){resume(UI.brew.returnTo);return;}aff.sort(function(a,b){return STYLES[b].q-STYLES[a].q;});brewPick(aff[0]);}
 function botAge(p){var mat=p.vessels.map(function(c,i){return {c:c,i:i};}).filter(function(o){return o.c&&o.c.step<o.c.ready;});
@@ -262,6 +268,7 @@ function summarize(n, arr) {
   console.log(`seat win-rate:        ` + Object.keys(seatWins).map(s => `P${+s + 1} ${pct(seatWins[s], ok.length)}`).join('   '));
   console.log(`winner lean:          prestige(Hall>kontor) ${pct(prestigeWins, ok.length)}   blended(both>0) ${pct(balancedWins, ok.length)}`);
   console.log(`UPGRADES (all plyrs): total/game ${fmt(totalUp)}   earned-via-ship ${fmt(earned)} (${pct(earned, totalUp)})   bought ${fmt(buys)} (${pct(buys, totalUp)})`);
+  console.log(`upgrades per WINNER:  avg ${fmt(avg(ok.map(r => r.winUpgrades)))}   (max ${Math.max(...ok.map(r => r.winUpgrades))})`);
   console.log(`charters/game:        avg ${fmt(charters)}`);
   console.log(`winner deliveries by destination (share of winners' casks):`);
   console.log(`   ` + Object.keys(winByDest).map(k => `${k} ${pct(winByDest[k], totalWinDeliv)}`).join('   '));
