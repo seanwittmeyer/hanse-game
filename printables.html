@@ -80,14 +80,18 @@
   .page.backs .grid{transform:scaleX(-1)} .page.backs .tile,.page.backs .tok{transform:scaleX(-1)}
   /* ---- RECIPE CARDS (recipes are CARDS now — they slide into the board's tuck strip) ---- */
   .card{width:2.4in;height:1.55in;border:1px solid var(--line);border-radius:.08in;background:#f7efdc;color:var(--ink);
-    position:relative;padding:.12in .14in;display:flex;flex-direction:column;gap:.04in;break-inside:avoid;overflow:hidden}
-  .card .c-edge{position:absolute;top:0;left:0;right:0;height:.34in;background:var(--cc,#8a6408);color:#fff;
-    display:flex;align-items:center;gap:.05in;padding:0 .12in;font-variant:small-caps;font-weight:bold;font-size:.15in}
-  .card .c-edge svg,.card .c-edge .ic{width:.18in;height:.18in}
-  .card .c-body{margin-top:.36in;display:flex;flex-direction:column;gap:.05in;font-size:.1in;line-height:1.18}
-  .card .c-cost{font-weight:bold;font-size:.12in;display:flex;align-items:center;gap:.06in}
-  .card .c-cost .gc{display:inline-flex;align-items:center;gap:.01in} .card .c-cost svg{width:.15in;height:.15in}
-  .card .c-bonus{margin-top:auto;font-style:italic;font-size:.092in;color:var(--ink2);border-top:1px dashed #c9ba93;padding-top:.04in}
+    position:relative;padding:0;display:flex;flex-direction:column;break-inside:avoid;overflow:hidden}
+  .card .c-reach{padding:.07in .14in 0;font-size:.092in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.15}
+  /* acquire bonus — centered rounded rectangle (same treatment as the cask/upgrade action chips) */
+  .card .c-bonus{flex:1;margin:.06in .14in;display:flex;align-items:center;justify-content:center;gap:.05in;
+    background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.14);border-radius:.06in;padding:.06in .1in;
+    font-size:.1in;line-height:1.2;text-align:center}
+  .card .c-bonus svg,.card .c-bonus .ic{width:.2in;height:.2in;flex:0 0 auto}
+  /* title + cost strip — the visible edge when the card is tucked up under the board */
+  .card .c-strip{background:var(--cc,#8a6408);color:#fff;display:flex;align-items:center;gap:.06in;
+    padding:.07in .12in;font-variant:small-caps;font-weight:bold;font-size:.15in;line-height:1}
+  .card .c-strip svg,.card .c-strip .ic{width:.18in;height:.18in;flex:0 0 auto}
+  .card .c-strip .c-cost{margin-left:auto;font-variant:normal;font-weight:bold;font-size:.115in;display:inline-flex;align-items:center;gap:.04in}
   /* ====================== PLAYER BOARD (landscape) ====================== */
   .board{--pc:#7c2128;height:7.54in;background:var(--parch);color:var(--ink);border:2.5px solid var(--pc);
     border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in}
@@ -298,10 +302,11 @@ function renderTiles(){const back=SIDE==='back';
   return h;}
 
 function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
-  +'<div class="c-edge">'+LU('scroll-text')+r.nm+(r.start?' <span style="font-size:.09in;opacity:.85">(start)</span>':'')+'</div>'
-  +'<div class="c-body"><div class="c-cost">brew '+(r.premium?'<span style="font-size:.1in">premium · needs Aging Cellar</span>':cost(r.g,r.h))+'</div>'
-  +'<div>reaches: '+r.reach+'</div></div>'
-  +'<div class="c-bonus">'+LU('gift')+' acquire bonus: <b>(dual-purpose — TBD)</b> · then a permanent brew permission</div></div>';}
+  +'<div class="c-reach">reaches: '+r.reach+'</div>'
+  +'<div class="c-bonus">'+LU('gift')+'<span>acquire bonus — <b>dual-purpose (TBD)</b></span></div>'
+  +'<div class="c-strip">'+LU('scroll-text')+'<span>'+r.nm+(r.start?' · start':'')+'</span>'
+  +'<span class="c-cost">'+(r.premium?'needs Cellar':'brew '+cost(r.g,r.h))+'</span></div>'
+  +'</div>';}
 function renderCards(){let h='<div class="page">'
   +'<div class="famlabel">Recipe Cards <span class="sm">recipes are CARDS now — slide them into the tuck strip at the bottom of your player board. Each will gain a one-time acquire bonus (dual-purpose) in a later pass; for now it is simply a permanent brew permission. Start with Gruit (printed on the board) + Hopped.</span></div>'
   +'<div class="grid" style="gap:.14in">';
