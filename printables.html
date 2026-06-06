@@ -39,6 +39,8 @@
   .t-nm .bi{display:block;font-size:.17in;line-height:1}
   .t-act{font-size:.1in;line-height:1.12;background:rgba(0,0,0,.24);border-radius:.04in;padding:.025in .04in;margin-bottom:.03in;display:flex;align-items:center;gap:.03in}
   .t-act svg,.t-act .ic{width:.13in;height:.13in;flex:0 0 auto}
+  .t-act .ac{display:inline-flex;align-items:center;justify-content:center;width:.2in;height:.2in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
+  .t-act .ac svg,.t-act .ac .ic{width:.13in;height:.13in;stroke-width:2.1;color:#23201c}
   .t-cost{font-size:.12in;font-weight:bold;display:flex;align-items:center;gap:.06in;line-height:1}
   .t-cost .gc{display:inline-flex;align-items:center;gap:.01in}
   .t-cost svg,.t-cost .ic{width:.15in;height:.15in}
@@ -187,11 +189,11 @@ const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc">'+LU('wheat','g')+g+'<
 const QI='gem', VP='star';  // quality icon · victory-point icon
 
 const CASKS=[
-  {nm:'Gruit',  c:'#8a949c', q:1, g:1,h:0,      act:'Source +2 goods', n:16},
-  {nm:'Hopped', c:'#c2922f', q:2, g:1,h:1,      act:'Age a cask +2',   n:20},
-  {nm:'Export', c:'#b06a34', q:3, g:1,h:2,      act:'free Load',       n:12},
-  {nm:'Export', c:'#caa12a', q:4, g:2,h:2,      act:'+1 presence',     n:8},
-  {nm:'Export', c:'#7c2128', q:5, premium:true, act:'Wild — any verb', n:4},
+  {nm:'Gruit',  c:'#8a949c', q:1, g:1,h:0,      ai:'store',     act:'Source +2 goods', n:16},
+  {nm:'Hopped', c:'#c2922f', q:2, g:1,h:1,      ai:'hourglass', act:'Age a cask +2',   n:20},
+  {nm:'Export', c:'#b06a34', q:3, g:1,h:2,      ai:'ship',      act:'free Load',       n:12},
+  {nm:'Export', c:'#caa12a', q:4, g:2,h:2,      ai:'map-pin',   act:'+1 presence',     n:8},
+  {nm:'Export', c:'#7c2128', q:5, premium:true, ai:'sparkles',  act:'Wild — any verb', n:4},
 ];
 const FAMS=[
  {label:'Ships — owned single-use carriers', sm:'built to a destination · full → sail → Sailed-Ships track · (Charter = 1 cask for 2 G, no tile)', items:[
@@ -201,8 +203,8 @@ const FAMS=[
  {label:'Neutral Buildings — shared base actions', sm:'2 seeded on the wharf at setup (random)', items:[
    {ic:'store',     nm:'Market Stall', sub:'take 1 good',           c:'#5b4a37', n:1},
    {ic:'hammer',    nm:'Cooper',       sub:'advance a cask 1 step', c:'#4a4034', n:1},
-   {ic:'anchor',    nm:'Crane',        sub:'free load onto a ship', c:'#5b4a37', n:1},
-   {ic:'coins',     nm:'Counting House', sub:'convert up to 2 goods', c:'#4a4034', n:1},
+   {ic:'package-plus', nm:'Crane',        sub:'free load onto a ship', c:'#5b4a37', n:1},
+   {ic:'arrow-left-right', nm:'Counting House', sub:'convert up to 2 goods', c:'#4a4034', n:1},
    {ic:'megaphone', nm:'Towncrier',    sub:'draw a goal',           c:'#5b4a37', n:1},
    {ic:'heart',     nm:'Almshouse',    sub:'+1 a held majority',    c:'#4a4034', n:1},
  ]},
@@ -214,12 +216,12 @@ const FAMS=[
    {ic:'wrench',nm:'Cooperage',    sub:'+1 load / Harbor · '+cost(2,0), c:'#4a6b3a', n:2},
  ]},
  {label:'Upgrades · Modifiers — asymmetric perks', sm:'in the same Market display', items:[
-   {ic:'sparkles',nm:'Granary Right', sub:'gain grain +1 · '+cost(2,0), c:'#6e4ea0', n:2},
-   {ic:'sparkles',nm:'Hop Garden',    sub:'gain hops +1 · '+cost(2,0),  c:'#5a3f86', n:2},
-   {ic:'sparkles',nm:'Royal Patent',  sub:'ships +1 cap · '+cost(3,0),  c:'#6e4ea0', n:2},
-   {ic:'sparkles',nm:'Staple Right',  sub:'+1 good / kontor · '+cost(3,0),c:'#5a3f86', n:2},
-   {ic:'sparkles',nm:'Guild Seat',    sub:'+1 Cellar adv · '+cost(2,0), c:'#6e4ea0', n:2},
-   {ic:'sparkles',nm:'Burgher Status',sub:'+1 presence / kontor · '+cost(3,0),c:'#5a3f86', n:2},
+   {ic:'badge-plus',nm:'Granary Right', sub:'gain grain +1 · '+cost(2,0), c:'#6e4ea0', n:2},
+   {ic:'badge-plus',nm:'Hop Garden',    sub:'gain hops +1 · '+cost(2,0),  c:'#5a3f86', n:2},
+   {ic:'badge-plus',nm:'Royal Patent',  sub:'ships +1 cap · '+cost(3,0),  c:'#6e4ea0', n:2},
+   {ic:'badge-plus',nm:'Staple Right',  sub:'+1 good / kontor · '+cost(3,0),c:'#5a3f86', n:2},
+   {ic:'badge-plus',nm:'Guild Seat',    sub:'+1 Cellar adv · '+cost(2,0), c:'#6e4ea0', n:2},
+   {ic:'badge-plus',nm:'Burgher Status',sub:'+1 presence / kontor · '+cost(3,0),c:'#5a3f86', n:2},
  ]},
  {label:'Goal Tiles — the variety layer', sm:'deal 3 per player · your best 2 score', items:[
    {ic:'target',nm:'Variety',  sub:'+2 / distinct type',  c:'#7c2128', n:1},
@@ -260,7 +262,7 @@ const REG='<div class="regmark rm-tl"></div><div class="regmark rm-tr"></div><di
 function caskTile(d){return '<div class="tile" style="--c:'+d.c+'">'
   +'<div class="q">'+LU(QI)+d.q+'</div>'
   +'<div class="t-nm"><span class="bi">'+LU('beer')+'</span>'+d.nm+'</div>'
-  +'<div class="t-act">'+LU('zap')+'<span>'+d.act+'</span></div>'
+  +'<div class="t-act"><span class="ac">'+LU(d.ai)+'</span><span>'+d.act+'</span></div>'
   +'<div class="t-cost">'+(d.premium?'<span style="font-size:.1in">premium · needs Cellar</span>':'brew '+cost(d.g,d.h))+'</div></div>';}
 function genTile(it){return '<div class="tile gen" style="--c:'+it.c+'">'
   +'<div class="g-head"><span class="bigic">'+LU(it.ic)+'</span><span class="g-nm">'+it.nm+'</span></div>'
@@ -284,7 +286,7 @@ function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
   +'<div class="c-edge">'+LU('scroll-text')+r.nm+(r.start?' <span style="font-size:.09in;opacity:.85">(start)</span>':'')+'</div>'
   +'<div class="c-body"><div class="c-cost">brew '+(r.premium?'<span style="font-size:.1in">premium · needs Aging Cellar</span>':cost(r.g,r.h))+'</div>'
   +'<div>reaches: '+r.reach+'</div></div>'
-  +'<div class="c-bonus">'+LU('sparkles')+' acquire bonus: <b>(dual-purpose — TBD)</b> · then a permanent brew permission</div></div>';}
+  +'<div class="c-bonus">'+LU('gift')+' acquire bonus: <b>(dual-purpose — TBD)</b> · then a permanent brew permission</div></div>';}
 function renderCards(){let h='<div class="page">'
   +'<div class="famlabel">Recipe Cards <span class="sm">recipes are CARDS now — slide them into the tuck strip at the bottom of your player board. Each will gain a one-time acquire bonus (dual-purpose) in a later pass; for now it is simply a permanent brew permission. Start with Gruit (printed on the board) + Hopped.</span></div>'
   +'<div class="grid" style="gap:.14in">';

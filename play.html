@@ -218,7 +218,7 @@ const ICONTIP={
   'flask-conical':'Brewhouse — Brew: load a recipe into an open vessel.',
   hourglass:'Cellar — Age: a pool of advance points across your vessels.',
   ship:'Harbor — Ship: load a Ready cask from a slot onto one of your ships.',
-  anchor:'Wharf — the 8 shared ring slots (casks · ships · town buildings).',
+  anchor:'Slot — one of the 8 shared perimeter spaces (casks · ships · town buildings).',
   sailboat:'Ship — owned carrier; loads casks and sails to its destination when full.',
   landmark:'Kontor — a trade destination (volume + majorities).',
   crown:'The Hall — the prestige destination (scarcity; pays ∝ quality).',
@@ -279,8 +279,8 @@ const CHARTER_COST={g:2};   // Harbor relief valve: ship ONE Ready cask on a sin
 const NEUTRALS={
   stall   :{name:'Market Stall',  icon:'store',         act:'take 1 good'},
   cooper  :{name:'Cooper',        icon:'hammer',        act:'advance one of your casks 1 step'},
-  crane   :{name:'Crane',         icon:'anchor',        act:'load a Ready cask onto a ship, free'},
-  counting:{name:'Counting-House',icon:'coins',         act:'convert up to 2 goods G↔H'},
+  crane   :{name:'Crane',         icon:'package-plus',  act:'load a Ready cask onto a ship, free'},
+  counting:{name:'Counting House',icon:'arrow-left-right',act:'convert up to 2 goods G↔H'},
 };
 // 2 neutral buildings are seeded onto the wharf at setup, picked at random from the pool each game (variety) ⚙
 

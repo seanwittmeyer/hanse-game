@@ -158,7 +158,7 @@
 <body>
 <header>
   <h1>Brewhouses of the Hanse</h1>
-  <div class="sub">A theme-first <b>medium euro</b>. Walk one loop — <b>Source → Brew → Age → Ship</b> — on a shared grid. A brewed <b>cask</b> matures in your brewery, sits on the shared <b>wharf</b> as a public action, then <b>ships to a destination</b> for points. The <b>kontore</b> pay volume; the <b>Hall</b> pays prestige.</div>
+  <div class="sub">A theme-first <b>medium euro</b>. At <b>the Wharf</b> — four stations ringed by slots — you <b>Source → Brew → Age → Ship</b>. A brewed <b>cask</b> matures in your brewery, sits on a <b>slot</b> as a public action, then <b>ships to a destination</b> for points. The <b>kontore</b> pay volume; the <b>Hall</b> pays prestige.</div>
   <div class="tag">Component Visualizer · v0.7 “The Wharf” · all values placeholders ⚙</div>
 </header>
 
@@ -167,8 +167,8 @@
   <a href="play.html" style="background:var(--green);color:var(--parch);font-weight:bold">▶ Play (hot-seat)</a>
   <a href="printables.html" style="background:var(--ink);color:var(--parch);font-weight:bold">🖨 Print &amp; Play</a>
   <a href="rulebook.html" style="background:var(--gold);color:var(--ink);font-weight:bold">📖 Rulebook</a>
-  <a href="#grid">Grid &amp; Loop</a>
-  <a href="#wharf">The Wharf</a>
+  <a href="#grid">Stations &amp; Lines</a>
+  <a href="#wharf">The Slots</a>
   <a href="#brew">Brewery</a>
   <a href="#casks">Casks</a>
   <a href="#destinations">Destinations</a>
@@ -184,32 +184,32 @@
 
 <!-- ACTION GRID -->
 <section id="grid">
-  <h2><span class="n">§1</span>The Shared Action Grid — the Loop</h2>
-  <p class="lead">A 2×2 of four action cells, shared by all players. On your turn: move your worker to an orthogonally adjacent cell, then activate its <b>row or column</b> — a 4-stop pipeline (cap · cell · cell · cap). <i>Hover a cell to light its two lines.</i></p>
-  <p class="lead"><b>The four cells ARE the loop, and the clockwise circuit walks it:</b> <b>A Market (Source) → B Brewhouse (Brew) → D Cellar (Age) → C Harbor (Ship)</b> → repeat. Every line is two adjacent loop-steps, so each activation is a useful segment. Cells are <b>never blocked</b> — interaction lives on the wharf, not the cells.</p>
+  <h2><span class="n">§1</span>The Wharf — Stations &amp; Lines</h2>
+  <p class="lead">A 2×2 of four action <b>stations</b>, shared by all players, ringed by 8 slots. On your turn: move your worker to an orthogonally adjacent station, then activate its <b>row or column</b> — a line of up to 4 stops (slot · station · station · slot). <i>Hover a station to light its two lines.</i></p>
+  <p class="lead">The production order is <b>A Market (Source) → B Brewhouse (Brew) → D Cellar (Age) → C Harbor (Ship)</b>, but you move where the board is best — not simply round a circle. A <b>line is its two stations plus any tiles in their two slots.</b> Stations are <b>never closed</b> — moving onto a station a rival occupies costs 1 G; interaction lives on the slots, not on blocking.</p>
   <div class="gridwrap">
     <div class="actiongrid" id="ag">
-      <div class="slot s1" data-line="col-l">wharf</div>
-      <div class="slot s2" data-line="col-r">wharf</div>
-      <div class="slot s8" data-line="row-t">wharf</div>
+      <div class="slot s1" data-line="col-l">slot</div>
+      <div class="slot s2" data-line="col-r">slot</div>
+      <div class="slot s8" data-line="row-t">slot</div>
       <div class="cell A" data-row="row-t" data-col="col-l"><div class="corner">A</div><div class="lbl">① Source</div><div class="nm">Market</div><div class="do">Take goods, or buy a recipe / ship / upgrade</div></div>
       <div class="cell B" data-row="row-t" data-col="col-r"><div class="corner">B</div><div class="lbl">② Brew</div><div class="nm">Brewhouse</div><div class="do">Spend a recipe + goods → a young cask in a vessel</div></div>
-      <div class="slot s3" data-line="row-t">wharf</div>
-      <div class="slot s7" data-line="row-b">wharf</div>
+      <div class="slot s3" data-line="row-t">slot</div>
+      <div class="slot s7" data-line="row-b">slot</div>
       <div class="cell C" data-row="row-b" data-col="col-l"><div class="corner">C</div><div class="lbl">④ Ship</div><div class="nm">Harbor</div><div class="do">Load a Ready cask onto your ship (sails when full)</div></div>
       <div class="cell D" data-row="row-b" data-col="col-r"><div class="corner">D</div><div class="lbl">③ Age</div><div class="nm">Cellar</div><div class="do">Mature your casks toward Ready</div></div>
-      <div class="slot s4" data-line="row-b">wharf</div>
-      <div class="slot s6" data-line="col-l">wharf</div>
-      <div class="slot s5" data-line="col-r">wharf</div>
+      <div class="slot s4" data-line="row-b">slot</div>
+      <div class="slot s6" data-line="col-l">slot</div>
+      <div class="slot s5" data-line="col-r">slot</div>
     </div>
     <div class="gridnote">
       <p class="loopline">Source → Brew → Age → Ship → (repeat)</p>
       <ul>
-        <li><b>Both cells</b> on an activated line fire — the worker only gates <i>which line is legal</i>.</li>
-        <li><b>Lines pair two loop-steps:</b> <span class="pill">Market+Brewhouse</span> <span class="pill">Brewhouse+Cellar</span> <span class="pill">Harbor+Cellar</span> <span class="pill">Market+Harbor</span>.</li>
-        <li>The <b>8 perimeter slots = the wharf.</b> They hold a churning mix of <span class="pill">deployed casks</span> (your reach + a public action), <span class="pill">owned ships</span>, and a few <span class="pill">neutral buildings</span> seeded at setup. <i>(Recipes &amp; upgrades live on your private board, not a slot.)</i></li>
-        <li><b>One fire rule:</b> when a line runs, the active player may use each building on it — a cask's action, a ship's load, or a neutral building. All on <b>your turn</b> (no out-of-turn skims).</li>
-        <li><b>Base verbs always work;</b> wharf buildings only <i>add</i> — so a busy ring makes your turns bigger and you're never stalled.</li>
+        <li><b>Both stations</b> on an activated line fire — the worker only gates <i>which line is legal</i>.</li>
+        <li><b>Lines pair two stations:</b> <span class="pill">Market+Brewhouse</span> <span class="pill">Brewhouse+Cellar</span> <span class="pill">Harbor+Cellar</span> <span class="pill">Market+Harbor</span>.</li>
+        <li>The <b>8 perimeter slots</b> hold a churning mix of <span class="pill">deployed casks</span> (cargo + a public action), <span class="pill">owned ships</span>, and a few <span class="pill">neutral buildings</span> seeded at setup. <i>(Recipes &amp; upgrades live on your private board, not a slot.)</i></li>
+        <li><b>One fire rule:</b> when a line runs, the active player may use each building in its two slots — a cask's action, a ship's load, or a neutral building. All on <b>your turn</b> (no out-of-turn skims).</li>
+        <li><b>Base verbs always work;</b> slot buildings only <i>add</i> — so a busy line makes your turns bigger and you're never stalled.</li>
       </ul>
     </div>
   </div>
@@ -217,9 +217,9 @@
 
 <!-- THE WHARF -->
 <section id="wharf">
-  <h2><span class="n">§4</span>The Wharf — the Perimeter Ring</h2>
+  <h2><span class="n">§4</span>The Slots — the Perimeter Ring</h2>
   <p class="lead">The 8 shared slots are the only contested space in the game. A Ready cask <b>deploys here</b> (you pick the slot) and becomes three things at once — your cargo-in-waiting, your private inventory, and a <b>public action-building</b>. Ships you build sit here too, and sail away when full. The transience is the churn: casks arrive Ready and leave when shipped; ships fill and sail.</p>
-  <div class="note"><b>Non-destructive interaction lives here.</b> On your turn you may load a <b>rival's wharf cask</b> onto <b>your</b> ship — they still score the delivery and pick its benefit, but on <i>your</i> timing, and you take the freed slot + the sailing. Your private brewery is never touchable. <i>A 1350 brewmaster doesn't fully control where their casks end up.</i></div>
+  <div class="note"><b>Non-destructive interaction lives here.</b> On your turn you may load a <b>rival's deployed cask</b> (on a slot) onto <b>your</b> ship — they still score the delivery and pick its benefit, but on <i>your</i> timing, and you take the freed slot + the sailing. Your private brewery is never touchable.</div>
 </section>
 
 <!-- BREWING TRACK / PLAYER BOARD -->
@@ -230,22 +230,22 @@
     <div class="stage"><div class="st">Brew</div><div class="ds">spend a recipe + goods</div><div class="arrow">→</div></div>
     <div class="stage"><div class="st">Ferment</div><div class="ds">all styles</div><div class="arrow">→</div></div>
     <div class="stage"><div class="st">Age</div><div class="ds">via the Cellar + 1/turn</div><div class="arrow">→</div></div>
-    <div class="stage"><div class="st">Ready</div><div class="ds">deploy to the wharf</div></div>
+    <div class="stage"><div class="st">Ready</div><div class="ds">deploy to a slot</div></div>
   </div>
-  <div class="age-note">A cask matures <b>+1 step automatically each turn</b>, and the <b>Cellar</b> action (cell D) gives a <b>pool of advance points</b> ⚙ across your vessels. Maturation length is set by type — <b>Gruit 1 · Hopped 2 · export 2–3 steps ⚙</b>. When a cask reaches <b>Ready</b> it deploys to an open wharf slot; if the wharf is full it <b>clogs its vessel</b> until you free a slot (the back-pressure that keeps the loop moving). <i>(Warm start: each house begins with 2 vessels, one built Cog bound to Bruges, and one Ready Gruit in a vessel (deploy it turn 1).)</i></div>
+  <div class="age-note">A cask matures <b>+1 step automatically each turn</b>, and the <b>Cellar</b> action (station D) gives a <b>pool of advance points</b> ⚙ across your vessels. Maturation length is set by type — <b>Gruit 1 · Hopped 2 · export 2–3 steps ⚙</b>. When a cask reaches <b>Ready</b> it deploys to an open slot; if every slot is full it <b>clogs its vessel</b> until you free one (the back-pressure that keeps you moving). <i>(Warm start: each house begins with 2 vessels, one built Cog bound to Bruges, and one Ready Gruit in a vessel (deploy it turn 1).)</i></div>
 </section>
 
 <!-- CASK TILES -->
 <section id="casks">
   <h2><span class="n">A</span>Cask Tiles — the Dual-Role Hero</h2>
-  <p class="lead">The one piece that does everything, living <b>three lives</b>: <b>maturing</b> (in a private vessel) → <b>on the wharf</b> (a shared slot — cargo + a public action) → <b>delivered</b> (shipped to a destination → it <i>scores</i> and leaves). Beer is <b>two layers — type</b> (a global quality rung, Q1–Q5) <b>+ recipe</b> (permission to brew it). The ladder is an anchored spine (<b>Gruit → Hopped</b>) + a <b>variable export</b> (L3–L5 dealt each game). <i>Click a tile to flip it.</i></p>
+  <p class="lead">The tile the whole game turns on, moving through <b>three states</b>: <b>maturing</b> (in a private vessel) → <b>on a slot</b> (cargo + a public action) → <b>delivered</b> (shipped to a destination → it <i>scores</i> and leaves). Beer is <b>two layers — type</b> (a global quality rung, Q1–Q5) <b>+ recipe</b> (permission to brew it). The ladder is a fixed spine (<b>Gruit → Hopped</b>) + a <b>variable export</b> (L3–L5 dealt each game). <i>Click a tile to flip it.</i></p>
   <div class="legend">
     <span class="chip"><span class="dot grain"></span> Grain (G)</span>
     <span class="chip"><span class="dot hops"></span> Hops (H)</span>
     <span class="chip">● Quality (1–5) — gates which destinations accept it</span>
   </div>
   <div class="gallery" id="caskGallery"></div>
-  <div class="note">The <b>signature action</b> is what makes choosing a type an <i>engine</i> choice, not just a cost — you're deciding which action-building to put on your circuit. Higher types carry stronger actions (the climb).</div>
+  <div class="note">The <b>signature action</b> is what makes choosing a type an <i>engine</i> choice, not just a cost — you're deciding which action-building to put on your lines. Higher types carry stronger actions (the climb).</div>
 </section>
 
 <!-- DESTINATIONS -->
@@ -253,21 +253,21 @@
   <h2><span class="n">F</span>Destinations — Where You Ship Is the Lean</h2>
   <p class="lead">The two old value tracks are gone; <b>where you ship</b> is the volume-vs-prestige choice. Every destination is <b>open from the start</b> and differentiated by a <b>quality gate</b> (the only climb-limiter — better places want better beer) and a unique <b>benefit</b>. <b>The cask's owner always scores the delivery and picks any offered benefit — even when a rival shipped it.</b></p>
   <div class="routeboard" id="destBoard"></div>
-  <div class="note"><b>Reach</b> = your delivered casks across the kontore (value + majorities — the volume lean). <b>Prestige</b> = casks shipped to the <b>Hall</b> (the scarcity lean). They never convert; you lean, reading the board. Delivering to London / Bergen / Novgorod lets you <b>take an Upgrade from the Market's face-up display</b> (free) — so shipping makes you stronger, closing the loop <i>deliver → upgrade → brew better → deliver better</i>. You don't fully know which upgrades will be on offer when your cask arrives.</div>
+  <div class="note"><b>Reach</b> = your delivered casks across the kontore (value + majorities — the volume lean). <b>Prestige</b> = casks shipped to the <b>Hall</b> (the scarcity lean). They never convert; you lean, reading the board. Delivering to London / Bergen / Novgorod lets you <b>take an Upgrade from the Market's face-up display</b> (free) — so shipping makes you stronger, closing the cycle <i>deliver → upgrade → brew better → deliver better</i>. You don't fully know which upgrades will be on offer when your cask arrives.</div>
 </section>
 
 <!-- SHIP TILES -->
 <section id="ships">
   <h2><span class="n">B</span>Ship Tiles — Owned Single-Use Carriers</h2>
-  <p class="lead"><b>The merchant fantasy.</b> You <b>build and own</b> ships (at the Market) into a wharf slot, <b>bound to a destination</b> (inheriting its quality gate). Lifecycle <b>load → fill → sail:</b> load via the Harbor verb (always) or a <b>bonus free load when the ship's line fires</b>; the instant it is <b>full it sails</b> — every cask aboard is delivered, and the <b>ship is consumed onto the Sailed-Ships track</b> (the end clock). Build another to ship again.</p>
+  <p class="lead"><b>The merchant fantasy.</b> You <b>build and own</b> ships (at the Market) onto a slot, <b>bound to a destination</b> (inheriting its quality gate). Lifecycle <b>load → fill → sail:</b> load via the Harbor verb (always) or a <b>bonus free load when the ship's line fires</b>; the instant it is <b>full it sails</b> — every cask aboard is delivered, and the <b>ship is consumed onto the Sailed-Ships track</b> (the end clock). Build another to ship again.</p>
   <div class="gallery" id="shipGallery"></div>
-  <div class="note">You may load <b>your own</b> Ready casks <b>or a rival's wharf cask</b> aboard your ship. Relief valves: <b>launch a partial ship early</b>, or <b>Charter</b> — pay <b>2 G ⚙</b> to ship one Ready cask (vessel or wharf) on an immediate single-cask voyage (no tile, an outside hull). The Charter advances the clock like any voyage but is strictly worse per cask than owning a Cog/Hulk, so it never displaces the fleet; it just keeps the tight ring from deadlocking. A full Hulk is a 3-cask burst — still just <b>one</b> Sailed-Ships slot, so the clock stays smooth.</div>
+  <div class="note">You may load <b>your own</b> Ready casks <b>or a rival's deployed cask</b> aboard your ship. Relief valves: <b>launch a partial ship early</b>, or <b>Charter</b> — pay <b>2 G ⚙</b> to ship one Ready cask (vessel or slot) on an immediate single-cask voyage (no tile, an outside hull). The Charter advances the clock like any voyage but is strictly worse per cask than owning a Cog/Hulk, so it never displaces the fleet; it just keeps the tight slots from deadlocking. A full Hulk is a 3-cask burst — still just <b>one</b> Sailed-Ships slot, so the clock stays smooth.</div>
 </section>
 
 <!-- NEUTRAL BUILDINGS -->
 <section id="neutrals">
   <h2><span class="n">C</span>Neutral Buildings — the Shared Base</h2>
-  <p class="lead">A small set placed in perimeter slots <b>at setup</b> (shared, permanent — <b>2–3 in play per game ⚙</b>). They keep the wharf alive from turn 1: whoever runs their line may use the action, free. This is the “everyone has the base; your casks &amp; ships are the better versions” floor.</p>
+  <p class="lead">A small set placed on slots <b>at setup</b> (shared, permanent — <b>2–3 in play per game ⚙</b>). They keep the slots alive from turn 1: whoever runs their line may use the action, free. This is the “everyone has the base; your casks &amp; ships are the better versions” floor.</p>
   <div class="gallery" id="neutralGallery"></div>
 </section>
 
@@ -302,9 +302,9 @@
   <div class="routeboard" style="grid-template-columns:repeat(3,1fr)">
     <div class="route bruges"><h3>1 · Deliveries</h3><div class="meta">Sum your delivered casks' values by destination — <b>kontore</b> trade value + the <b>Hall's</b> prestige (∝ quality).</div></div>
     <div class="route bergen"><h3>2 · Majorities</h3><div class="meta">The route-majority bonus at each kontor (most delivered casks; ties split ⚙). Bergen rewards this most.</div></div>
-    <div class="route london"><h3>3 · Goals</h3><div class="meta">Your <b>best few</b> goal tiles ⚙. Tiebreak: most goods, then most casks on the wharf.</div></div>
+    <div class="route london"><h3>3 · Goals</h3><div class="meta">Your <b>best few</b> goal tiles ⚙. Tiebreak: most goods, then most casks on slots.</div></div>
   </div>
-  <div class="note">No separate reach/standing tracks — the volume-vs-prestige tension lives entirely as a <b>lean</b> across destinations, coupled by shared casks, scarce wharf slots, scarce ships, and the one shared clock.</div>
+  <div class="note">No separate reach/standing tracks — the volume-vs-prestige tension lives entirely as a <b>lean</b> across destinations, coupled by shared casks, scarce slots, scarce ships, and the one shared clock.</div>
 </section>
 
 </main>
@@ -351,17 +351,17 @@ document.getElementById('caskGallery').innerHTML=casks.map(c=>`
         <div class="fbody">
           <div class="inputs">Brew: ${cubes(c.inputs)}</div>
           <div class="row"><span class="k">Matures</span><span class="v">${c.mature}</span></div>
-          <div class="row"><span class="k">Wharf action</span><span class="v">${c.action}</span></div>
+          <div class="row"><span class="k">Slot action</span><span class="v">${c.action}</span></div>
           <div class="row"><span class="k">Can ship to</span><span class="v">${c.reaches}</span></div>
           <div class="badge">×${c.qty}</div>
         </div>
         <div class="hint">click to flip ⟳</div>
       </div>
       <div class="face back stand">
-        <div class="fhead"><div class="fk">Its three lives</div><div class="ft">${c.style}</div></div>
+        <div class="fhead"><div class="fk">Its three states</div><div class="ft">${c.style}</div></div>
         <div class="fbody">
           <div class="row"><span class="k">① Maturing</span><span class="v">private vessel</span></div>
-          <div class="row"><span class="k">② On the wharf</span><span class="v">cargo + this action</span></div>
+          <div class="row"><span class="k">② On a slot</span><span class="v">cargo + this action</span></div>
           <div class="row"><span class="k">③ Delivered</span><span class="v">shipped → scores → gone</span></div>
           <div style="font-style:italic;color:var(--ink2);margin-top:6px">Single face — a cask is <b>scored at its destination</b>, not flipped.</div>
         </div>
@@ -381,7 +381,7 @@ document.getElementById('shipGallery').innerHTML=ships.map(t=>`
     <div class="row"><span class="k">Capacity</span><span class="v">${t.cap}</span></div>
     <div class="row"><span class="k">Build cost</span><span class="v">${cubes(t.cost)}</span></div>
     ${t.d}
-    <div class="row"><span class="k">Load (any player)</span><span class="v">your casks or a rival's wharf cask</span></div>
+    <div class="row"><span class="k">Load (any player)</span><span class="v">your casks or a rival's deployed cask</span></div>
     <div class="row"><span class="k">Full → sails</span><span class="v">casks delivered · ship → Sailed-Ships track</span></div>
     <div class="badge">×${t.qty}</div>
   </div></div>`).join('');
@@ -396,7 +396,7 @@ const neutrals=[
   ['Almshouse','+1 toward a majority you already hold'],
 ];
 document.getElementById('neutralGallery').innerHTML=neutrals.map(n=>`
-  <div class="card"><div class="head h-neutral"><div class="kind">Neutral · seeded in the ring</div><div class="ttl">${n[0]}</div></div>
+  <div class="card"><div class="head h-neutral"><div class="kind">Neutral · seeded on a slot</div><div class="ttl">${n[0]}</div></div>
   <div class="body">${n[1]}<div class="badge">shared · ~2–3 in play</div></div></div>`).join('');
 
 // ---- RECIPE TILES ----
