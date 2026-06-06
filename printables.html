@@ -28,14 +28,13 @@
   .grid{display:flex;flex-wrap:wrap;gap:0}
   /* ---- TILES — 1.25in cut size; colour bleeds to the edge; a 1/8in inner SAFE FRAME + padding ---- */
   .tile{width:1.25in;height:1.25in;border:.3pt solid var(--line);background:var(--c,#777);color:#fff;
-    position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:.16in;overflow:hidden;
+    position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:.096in;overflow:hidden;
     text-shadow:0 1px 1.5px rgba(0,0,0,.5);break-inside:avoid}
-  .tile::after{content:"";position:absolute;inset:.11in;border:.6pt solid rgba(255,255,255,.5);border-radius:.04in;pointer-events:none}
   .tile .ic{width:1em;height:1em;vertical-align:-.15em} .tile svg{stroke-width:2}
   /* card-corner QUALITY = a gem icon + the number (no "Q"; we know the number is quality) */
-  .q{position:absolute;top:.1in;left:.13in;display:flex;align-items:center;gap:.02in;font-weight:900;font-size:.34in;line-height:1}
+  .q{position:absolute;top:.06in;left:.08in;display:flex;align-items:center;gap:.02in;font-weight:900;font-size:.34in;line-height:1}
   .q svg,.q .ic{width:.2in;height:.2in;stroke-width:2.2}
-  .t-nm{position:absolute;top:.14in;right:.15in;max-width:.72in;text-align:right;font-variant:small-caps;font-weight:bold;font-size:.135in;line-height:1}
+  .t-nm{position:absolute;top:.085in;right:.09in;max-width:.78in;text-align:right;font-variant:small-caps;font-weight:bold;font-size:.135in;line-height:1}
   .t-nm .bi{display:block;font-size:.17in;line-height:1}
   .t-act{font-size:.1in;line-height:1.12;background:rgba(0,0,0,.24);border-radius:.04in;padding:.025in .04in;margin-bottom:.03in;display:flex;align-items:center;gap:.03in}
   .t-act svg,.t-act .ic{width:.13in;height:.13in;flex:0 0 auto}
@@ -54,12 +53,12 @@
   .gen .g-head .bigic svg,.gen .g-head .bigic .ic{width:.27in;height:.27in;stroke-width:1.7}
   .gen .g-head .g-nm{min-width:0;overflow-wrap:break-word;hyphens:auto}
   .gen .g-sub{font-size:.108in;line-height:1.2;margin-top:.05in;opacity:.97}
-  .gen .g-big{position:absolute;bottom:.12in;right:.16in;font-weight:900;font-size:.46in;line-height:.8;opacity:.92}
-  .gen .g-cost{position:absolute;bottom:.13in;left:.16in}
-  /* neutral + upgrade layout: icon on its own line, title beneath */
-  .gen.tn .g-head, .gen.tu .g-head{flex-direction:column;align-items:flex-start;gap:.05in}
+  .gen .g-big{position:absolute;bottom:.072in;right:.096in;font-weight:900;font-size:.46in;line-height:.8;opacity:.92}
+  .gen .g-cost{position:absolute;bottom:.078in;left:.096in}
+  /* neutral + upgrade layout: icon on its own line in the TOP-RIGHT, title beneath */
+  .gen.tn .g-head, .gen.tu .g-head{flex-direction:column;align-items:flex-end;text-align:right;gap:.05in}
   /* neutral bonus pinned to the bottom */
-  .gen.tn .g-sub{position:absolute;left:.16in;right:.16in;bottom:.14in;margin-top:0}
+  .gen.tn .g-sub{position:absolute;left:.096in;right:.096in;bottom:.084in;margin-top:0}
   /* upgrade bonus in a rounded rectangle (matching the cask action chip) */
   .gen .g-act{background:rgba(0,0,0,.22);border-radius:.04in;padding:.04in .055in;font-size:.105in;line-height:1.16;margin-top:.06in;align-self:stretch}
   /* ---- goods TOKENS — laser-cut circle (.7in) printed with a 1/8in BLEED ring (.95in art disc) ---- */
