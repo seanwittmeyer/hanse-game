@@ -367,7 +367,7 @@ const START_STORAGE=8;
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v14-occ2'; // v0.8 EXPERIMENT: occupancy pressure (toll only when you move onto a rival-occupied cell); bump discards stale state
+const KEY='hanse-hotseat-v14-occ3'; // v0.8 EXPERIMENT: occupancy toll on move-onto-occupied + tax-free round-1 placement (seat balancer); bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -533,8 +533,10 @@ function doMove(cell){
 function chooseLine(which){
   snapshot();
   const p=cur();const lk=cellOfLine(p.cell)[which];const L=LINES[lk];
-  // occupancy pressure: pay a toll only if you moved onto a cell a RIVAL already occupies (capped, never blocks)
-  const shared=S.players.some(q=>q.id!==p.id&&q.cell===p.cell);
+  // occupancy pressure: pay a toll only if you MOVED onto a cell a rival already occupies (capped, never
+  // blocks). Round-1 placement is FREE — every player may choose any starting space tax-free, a seat
+  // balancer that blunts the first player's free pick of the best opening cell.
+  const shared=S.turn>1 && S.players.some(q=>q.id!==p.id&&q.cell===p.cell);
   const toll=shared?Math.min(OCCUPANCY_TOLL,p.grain):0;
   if(toll>0){p.grain-=toll;log(p.name+' pays a '+toll+'G toll for sharing <b>'+CELLNAME[p.cell]+'</b>.',true);}
   log(p.name+' activates the <b>'+L.label+'</b>.',true);

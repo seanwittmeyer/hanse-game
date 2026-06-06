@@ -55,7 +55,7 @@ function cellToll(c,p){
 function botMove(p){
   var placing=!p.placed;var cands=placing?['A','B','C','D']:ADJ[p.cell];
   var best=null,bestv=-1,which='row';
-  cands.forEach(function(tc){var toll=cellToll(tc,p);['row','col'].forEach(function(w){
+  cands.forEach(function(tc){var toll=placing?0:cellToll(tc,p);['row','col'].forEach(function(w){
     var lk=cellOfLine(tc)[w];var cells=LINES[lk].cells;
     var v=cells.reduce(function(a,c){return a+cellValue(c,p);},0)-toll+Math.random()*0.4;
     if(v>bestv){bestv=v;best=tc;which=w;}});});
