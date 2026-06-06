@@ -55,6 +55,13 @@
   .gen .g-head .g-nm{min-width:0;overflow-wrap:break-word;hyphens:auto}
   .gen .g-sub{font-size:.108in;line-height:1.2;margin-top:.05in;opacity:.97}
   .gen .g-big{position:absolute;bottom:.12in;right:.16in;font-weight:900;font-size:.46in;line-height:.8;opacity:.92}
+  .gen .g-cost{position:absolute;bottom:.13in;left:.16in}
+  /* neutral + upgrade layout: icon on its own line, title beneath */
+  .gen.tn .g-head, .gen.tu .g-head{flex-direction:column;align-items:flex-start;gap:.05in}
+  /* neutral bonus pinned to the bottom */
+  .gen.tn .g-sub{position:absolute;left:.16in;right:.16in;bottom:.14in;margin-top:0}
+  /* upgrade bonus in a rounded rectangle (matching the cask action chip) */
+  .gen .g-act{background:rgba(0,0,0,.22);border-radius:.04in;padding:.04in .055in;font-size:.105in;line-height:1.16;margin-top:.06in;align-self:stretch}
   /* ---- goods TOKENS — laser-cut circle (.7in) printed with a 1/8in BLEED ring (.95in art disc) ---- */
   .tok{width:.95in;height:.95in;border-radius:50%;background:var(--c);color:#fff;position:relative;
     display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4);break-inside:avoid}
@@ -200,10 +207,10 @@ const CASKS=[
 ];
 const FAMS=[
  {label:'Ships — owned single-use carriers', sm:'built to a destination · full → sail → Sailed-Ships track · (Charter = 1 cask for 2 G, no tile)', items:[
-   {ic:'sailboat',nm:'Cog',  sub:'capacity · cost '+cost(2,0), big:'2', c:'#5b4a37', n:8},
-   {ic:'sailboat',nm:'Hulk', sub:'capacity · cost '+cost(3,0), big:'3', c:'#3a3026', n:5},
+   {ic:'sailboat',nm:'Cog',  big:'2', cost:cost(2,0), c:'#5b4a37', n:8},
+   {ic:'sailboat',nm:'Hulk', big:'3', cost:cost(3,0), c:'#3a3026', n:5},
  ]},
- {label:'Neutral Buildings — shared base actions', sm:'2 seeded on the wharf at setup (random)', items:[
+ {label:'Neutral Buildings — shared base actions', sm:'2 seeded on the slots at setup (random)', cls:'tn', items:[
    {ic:'store',     nm:'Market Stall', sub:'take 1 good',           c:'#5b4a37', n:1},
    {ic:'hammer',    nm:'Cooper',       sub:'advance a cask 1 step', c:'#4a4034', n:1},
    {ic:'package-plus', nm:'Crane',        sub:'free load onto a ship', c:'#5b4a37', n:1},
@@ -211,20 +218,20 @@ const FAMS=[
    {ic:'megaphone', nm:'Towncrier',    sub:'draw a goal',           c:'#5b4a37', n:1},
    {ic:'heart',     nm:'Almshouse',    sub:'+1 a held majority',    c:'#4a4034', n:1},
  ]},
- {label:'Upgrades · Rooms — permanent capability', sm:'in the face-up Market display · buy, or earn free by delivering', items:[
-   {ic:'wrench',nm:'Extra Vessel', sub:'+1 lane (cap 4) · '+cost(2,0), c:'#4a6b3a', n:3},
-   {ic:'wrench',nm:'Aging Cellar', sub:'−1 step · unlock L5 · '+cost(3,0), c:'#3f5c30', n:2},
-   {ic:'wrench',nm:'Warehouse',    sub:'storage 8→12 · '+cost(2,0), c:'#4a6b3a', n:2},
-   {ic:'wrench',nm:'Quay',         sub:'load 2 / Harbor · '+cost(3,0), c:'#3f5c30', n:2},
-   {ic:'wrench',nm:'Cooperage',    sub:'+1 load / Harbor · '+cost(2,0), c:'#4a6b3a', n:2},
+ {label:'Upgrades · Rooms — permanent capability', sm:'in the face-up Market display · buy, or earn free by delivering', cls:'tu', items:[
+   {ic:'wrench',nm:'Extra Vessel', act:'+1 lane (cap 4)',     cost:cost(2,0), c:'#4a6b3a', n:3},
+   {ic:'wrench',nm:'Aging Cellar', act:'−1 step · unlock L5',  cost:cost(3,0), c:'#3f5c30', n:2},
+   {ic:'wrench',nm:'Warehouse',    act:'storage 8→12',         cost:cost(2,0), c:'#4a6b3a', n:2},
+   {ic:'wrench',nm:'Quay',         act:'load 2 / Harbor',      cost:cost(3,0), c:'#3f5c30', n:2},
+   {ic:'wrench',nm:'Cooperage',    act:'+1 load / Harbor',     cost:cost(2,0), c:'#4a6b3a', n:2},
  ]},
- {label:'Upgrades · Modifiers — asymmetric perks', sm:'in the same Market display', items:[
-   {ic:'badge-plus',nm:'Granary Right', sub:'gain grain +1 · '+cost(2,0), c:'#6e4ea0', n:2},
-   {ic:'badge-plus',nm:'Hop Garden',    sub:'gain hops +1 · '+cost(2,0),  c:'#5a3f86', n:2},
-   {ic:'badge-plus',nm:'Royal Patent',  sub:'ships +1 cap · '+cost(3,0),  c:'#6e4ea0', n:2},
-   {ic:'badge-plus',nm:'Staple Right',  sub:'+1 good / kontor · '+cost(3,0),c:'#5a3f86', n:2},
-   {ic:'badge-plus',nm:'Guild Seat',    sub:'+1 Cellar adv · '+cost(2,0), c:'#6e4ea0', n:2},
-   {ic:'badge-plus',nm:'Burgher Status',sub:'+1 presence / kontor · '+cost(3,0),c:'#5a3f86', n:2},
+ {label:'Upgrades · Modifiers — asymmetric perks', sm:'in the same Market display', cls:'tu', items:[
+   {ic:'badge-plus',nm:'Granary Right', act:'gain grain +1',       cost:cost(2,0), c:'#6e4ea0', n:2},
+   {ic:'badge-plus',nm:'Hop Garden',    act:'gain hops +1',        cost:cost(2,0), c:'#5a3f86', n:2},
+   {ic:'badge-plus',nm:'Royal Patent',  act:'ships +1 cap',        cost:cost(3,0), c:'#6e4ea0', n:2},
+   {ic:'badge-plus',nm:'Staple Right',  act:'+1 good / kontor',    cost:cost(3,0), c:'#5a3f86', n:2},
+   {ic:'badge-plus',nm:'Guild Seat',    act:'+1 Cellar adv',       cost:cost(2,0), c:'#6e4ea0', n:2},
+   {ic:'badge-plus',nm:'Burgher Status',act:'+1 presence / kontor',cost:cost(3,0), c:'#5a3f86', n:2},
  ]},
  {label:'Goal Tiles — the variety layer', sm:'deal 3 per player · your best 2 score', items:[
    {ic:'target',nm:'Variety',  sub:'+2 / distinct type',  c:'#7c2128', n:1},
@@ -267,9 +274,12 @@ function caskTile(d){return '<div class="tile" style="--c:'+d.c+'">'
   +'<div class="t-nm"><span class="bi">'+LU('beer')+'</span>'+d.nm+'</div>'
   +'<div class="t-act"><span class="ac">'+LU(d.ai)+'</span><span>'+d.act+'</span></div>'
   +'<div class="t-cost">'+(d.premium?'<span style="font-size:.1in">premium · needs Cellar</span>':'brew '+cost(d.g,d.h))+'</div></div>';}
-function genTile(it){return '<div class="tile gen" style="--c:'+it.c+'">'
+function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--c:'+it.c+'">'
   +'<div class="g-head"><span class="bigic">'+LU(it.ic)+'</span><span class="g-nm">'+it.nm+'</span></div>'
-  +'<div class="g-sub">'+it.sub+'</div>'+(it.big?'<div class="g-big">'+it.big+'</div>':'')+'</div>';}
+  +(it.act?'<div class="g-act">'+it.act+'</div>':'')
+  +(it.sub?'<div class="g-sub">'+it.sub+'</div>':'')
+  +(it.big?'<div class="g-big">'+it.big+'</div>':'')
+  +(it.cost?'<div class="g-cost">'+it.cost+'</div>':'')+'</div>';}
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+d.nm+'</div>';}
 const blankTile='<div class="tile blank"></div>', blankTok='<div class="tok blank"></div>';
 
@@ -277,10 +287,10 @@ function renderTiles(){const back=SIDE==='back';
   let h='<div class="page'+(back?' backs':'')+'">'+REG;
   h+='<div class="calib"><div class="box">1 inch<br>100%</div><span class="note" style="color:#555">'
     +(back?'<b>BACKS</b> blank (single-face). Corner ✛ register a duplex pass.':'Verify exactly 1 inch. Colour bleeds to the edge; cut on the inner frame.')+'</span></div>';
-  h+='<div class="famlabel">Cask Tiles — the dual-role hero <span class="sm">'+LU('beer')+' type · the big corner number is QUALITY ('+LU(QI)+' = gate to destinations, and ×2 prestige at the Hall) · '+LU('zap')+' signature wharf-action · L3–L5 are the EXPORT beers, dealt Bock / Mumme / Broyhan / Keut</span></div><div class="grid">';
+  h+='<div class="famlabel">Cask Tiles — the dual-role hero <span class="sm">'+LU('beer')+' type · the big corner number is QUALITY ('+LU(QI)+' = gate to destinations, and ×2 prestige at the Hall) · '+LU('zap')+' signature slot action · L3–L5 are the EXPORT beers, dealt Bock / Mumme / Broyhan / Keut</span></div><div class="grid">';
   CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTile:caskTile(d);}); h+='</div>';
   FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+(f.sm?' <span class="sm">'+f.sm+'</span>':'')+'</div><div class="grid">';
-    f.items.forEach(it=>{for(let i=0;i<cnt(it.n);i++)h+= back?blankTile:genTile(it);});h+='</div>';});
+    f.items.forEach(it=>{for(let i=0;i<cnt(it.n);i++)h+= back?blankTile:genTile(it,f.cls);});h+='</div>';});
   h+='<div class="famlabel">Goods Tokens <span class="sm">Grain / Hops — laser-cut on the dashed circle; the colour ring outside it is bleed (or just use wooden cubes)</span></div><div class="grid">';
   GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTok:tok(d);}); h+='</div></div>';
   return h;}
@@ -300,7 +310,7 @@ function vessel(n,open){
   const steps='<div class="vstep"><span class="sn">Brew</span>step 0<span class="arr">›</span></div>'
     +'<div class="vstep"><span class="sn">Ferment</span><span class="arr">›</span></div>'
     +'<div class="vstep age"><span class="sn">Age</span>Cellar +1/turn<span class="arr">›</span></div>'
-    +'<div class="vstep ready"><span class="sn">Ready</span>→ wharf</div>';
+    +'<div class="vstep ready"><span class="sn">Ready</span>→ a slot</div>';
   return '<div class="vessel'+(open?'':' locked')+'"><span class="vtag">Vessel '+n+'</span><div class="vslot">'+LU('beer')+'cask</div><div class="vtrack">'+steps+'</div></div>';}
 function pboard(p){
   let store='';for(let i=0;i<12;i++)store+='<div class="gbox">'+LU('package')+'</div>';
@@ -316,7 +326,7 @@ function pboard(p){
     +'<div class="pb-body">'
       +'<div class="pb-col left"><div class="pb-sect">'+LU('flask-conical')+'Vessels &amp; Maturation<span class="hint">start 2 open · cap 4 · ages +1/turn + the Cellar</span></div>'
         +vessel(1,true)+vessel(2,true)+vessel(3,false)+vessel(4,false)
-        +'<div class="pb-sub" style="margin-top:.02in">Warm start: a Ready Gruit sits in Vessel 1 — deploy it to the wharf on turn 1. (Your Cog is on the wharf.)</div></div>'
+        +'<div class="pb-sub" style="margin-top:.02in">Warm start: a Ready Gruit sits in Vessel 1 — deploy it to a slot on turn 1. (Your Cog is on a slot.)</div></div>'
       +'<div class="pb-col right">'
         +'<div><div class="pb-sect">'+LU('wrench')+'Upgrades<span class="hint">Rooms &amp; Modifiers</span></div><div class="strip">'+ups+'</div></div>'
         +'<div><div class="pb-sect">'+LU('target')+'Goals<span class="hint">best 2 score</span></div><div class="strip">'+goals+'</div></div></div>'
