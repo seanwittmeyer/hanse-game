@@ -347,10 +347,11 @@ const ADJ={A:['B','C'],B:['A','D'],C:['A','D'],D:['B','C']};   // orthogonal onl
 const CELLNAME={A:'Market',B:'Brewhouse',C:'Harbor',D:'Cellar'};
 const CELLROLE={A:'Source',B:'Brew',C:'Ship',D:'Age'};
 const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C:{row:'rowB',col:'colL'},D:{row:'rowB',col:'colR'}})[cell];
-// v0.8 EXPERIMENT — occupancy pressure: activating a line costs this many G per cell on it that a RIVAL
-// worker occupies (paid to the supply, capped at goods held; never blocks). Makes camping a busy line a
-// resource drain, so the worker spreads out instead of walking the same edge as a rondel. Loop layout
-// (A=Market·B=Brewhouse·C=Harbor·D=Cellar) is UNCHANGED — only this congestion cost is added. ⚙
+// v0.8 EXPERIMENT — occupancy pressure: you pay this many G when you ACTIVATE from a cell that a RIVAL
+// worker is already on (i.e. you moved onto an occupied space) — paid to the supply, capped at goods held,
+// never blocks. Only your own destination cell is tolled (not the far cell of the line), and only the
+// joiner pays (the resident sat there first), so it's a gentle nudge to step onto empty cells when goods
+// are tight — not a dominant tax handed back and forth. Loop layout is UNCHANGED. ⚙
 const OCCUPANCY_TOLL=1;
 
 // ---- pace dials ⚙ ----
@@ -366,7 +367,7 @@ const START_STORAGE=8;
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v14-occ'; // v0.8 EXPERIMENT: occupancy pressure (congestion toll per rival-occupied cell); bump discards stale state
+const KEY='hanse-hotseat-v14-occ2'; // v0.8 EXPERIMENT: occupancy pressure (toll only when you move onto a rival-occupied cell); bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -532,10 +533,10 @@ function doMove(cell){
 function chooseLine(which){
   snapshot();
   const p=cur();const lk=cellOfLine(p.cell)[which];const L=LINES[lk];
-  // occupancy pressure: pay a congestion toll for each rival-occupied cell on this line (capped, never blocks)
-  const occ=L.cells.filter(c=>S.players.some(q=>q.id!==p.id&&q.cell===c)).length;
-  const toll=Math.min(occ*OCCUPANCY_TOLL,p.grain);
-  if(toll>0){p.grain-=toll;log(p.name+' pays a '+toll+'G congestion toll ('+occ+' rival-occupied cell'+(occ>1?'s':'')+').',true);}
+  // occupancy pressure: pay a toll only if you moved onto a cell a RIVAL already occupies (capped, never blocks)
+  const shared=S.players.some(q=>q.id!==p.id&&q.cell===p.cell);
+  const toll=shared?Math.min(OCCUPANCY_TOLL,p.grain):0;
+  if(toll>0){p.grain-=toll;log(p.name+' pays a '+toll+'G toll for sharing <b>'+CELLNAME[p.cell]+'</b>.',true);}
   log(p.name+' activates the <b>'+L.label+'</b>.',true);
   const stops=[];
   L.cells.forEach(c=>stops.push({kind:'cell',cell:c}));

@@ -46,17 +46,18 @@ function cellValue(c,p){
     return (rdy&&canPay(p,CHARTER_COST))?2:0.1;}
   return 0;
 }
-// Expected occupancy toll for activating line lk (0 unless an engine defines OCCUPANCY_TOLL).
-function lineToll(lk,p){
+// Occupancy toll the bot would pay for MOVING onto cell c (0 unless an engine defines OCCUPANCY_TOLL):
+// only the destination cell is tolled, and only if a rival sits there.
+function cellToll(c,p){
   if(typeof OCCUPANCY_TOLL==='undefined'||!OCCUPANCY_TOLL)return 0;
-  return LINES[lk].cells.filter(function(c){return S.players.some(function(q){return q.id!==p.id&&q.cell===c;});}).length*OCCUPANCY_TOLL;
+  return S.players.some(function(q){return q.id!==p.id&&q.cell===c;})?OCCUPANCY_TOLL:0;
 }
 function botMove(p){
   var placing=!p.placed;var cands=placing?['A','B','C','D']:ADJ[p.cell];
   var best=null,bestv=-1,which='row';
-  cands.forEach(function(tc){['row','col'].forEach(function(w){
+  cands.forEach(function(tc){var toll=cellToll(tc,p);['row','col'].forEach(function(w){
     var lk=cellOfLine(tc)[w];var cells=LINES[lk].cells;
-    var v=cells.reduce(function(a,c){return a+cellValue(c,p);},0)-lineToll(lk,p)+Math.random()*0.4;
+    var v=cells.reduce(function(a,c){return a+cellValue(c,p);},0)-toll+Math.random()*0.4;
     if(v>bestv){bestv=v;best=tc;which=w;}});});
   __chosenWhich=which;doMove(best);
 }
