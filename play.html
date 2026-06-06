@@ -361,7 +361,7 @@ const START_STORAGE=8;
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v12'; // v0.7 + Option-B display (4 face-up + face-down deck); upgrade buys dearer (4-5G, compete with earning free via ships); bump discards stale state
+const KEY='hanse-hotseat-v13'; // v0.7 + balanced wharf seeding (warm-start tiles spread across weakest lines, no fixed opening camp); bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -395,14 +395,26 @@ function freshState(n,names){
   shuffle(st.upgradeSupply);
   while(st.upgradeDisplay.length<DISPLAY_SIZE&&st.upgradeSupply.length)st.upgradeDisplay.push(st.upgradeSupply.shift());
   // ---- seed the wharf so the ring is alive turn 1 (warm start) ----
-  // Each house's Cog (bound Bruges) + 2 random neutral buildings. The Ready Gruit stays in the house's
-  // own vessel 1 (deploy it to the wharf on turn 1) — no starting cask is pre-placed on the shared ring.
-  const open=SLOTS.map(s=>s.id);
-  const place=t=>{const id=open.shift();if(id)st.slots[id]=t;return !!id;};
-  st.players.forEach(p=>place({type:'ship',owner:p.id,ship:'cog',dest:'bruges',load:[]}));
+  // Each house's Cog (bound Bruges) + 2 neutral buildings, SPREAD across the weakest lines so no single
+  // line is the obvious opening camp: each tile goes on the currently lightest-weighted line that still
+  // has an open slot (neutrals weigh more — shared, usable by all — so two never stack while a lighter
+  // line is open). Random tie-breaks + random slot-within-line vary the opening every game. The Ready
+  // Gruit stays in the house's vessel 1 (deploy it turn 1) — no starting cask sits on the shared ring.
+  const lineSlots={};SLOTS.forEach(s=>{(lineSlots[s.line]=lineSlots[s.line]||[]).push(s.id);});
+  Object.keys(lineSlots).forEach(L=>shuffle(lineSlots[L]));
+  const lineWt={colL:0,colR:0,rowT:0,rowB:0};
+  const placeBalanced=(t,wt)=>{
+    const cands=Object.keys(lineWt)
+      .filter(L=>lineSlots[L].some(id=>!st.slots[id]))
+      .sort((a,b)=>(lineWt[a]-lineWt[b])||(Math.random()-0.5));
+    if(!cands.length)return false;
+    const L=cands[0], id=lineSlots[L].find(id=>!st.slots[id]);
+    st.slots[id]=t; lineWt[L]+=wt; return true;
+  };
+  st.players.forEach(p=>placeBalanced({type:'ship',owner:p.id,ship:'cog',dest:'bruges',load:[]},1));
   const npool=shuffle(Object.keys(NEUTRALS).slice());
-  const nNeutral=Math.min(2,Math.max(0,open.length-2));
-  for(let i=0;i<nNeutral;i++)place({type:'neutral',b:npool[i]});
+  const nNeutral=Math.min(2,Math.max(0, SLOTS.length - st.players.length - 2));
+  for(let i=0;i<nNeutral;i++)placeBalanced({type:'neutral',b:npool[i]},2);
   return st;
 }
 

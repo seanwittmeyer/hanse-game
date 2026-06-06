@@ -15,7 +15,7 @@
 | **Player brewery boards** | 5 | Each private & untouchable: **vessel lanes** (start 2, cap 4 ⚙ — brewing throughput), the **maturation track** (Brew → … → Ready, per cask), a **recipe rack** (the types you may brew), **upgrade slots** (Rooms + Modifiers), and **goods storage** (cap 8). No grid actions are duplicated here — the brewery is the *noun* the loop's verbs act on. |
 
 ### The wharf — the perimeter ring (8 slots)
-- **8 live slots, 2 capping each line** (**2-player may lock some to ~6 ⚙**). They hold a **churning mix**: **deployed casks** (your Ready casks = public action-buildings + cargo-in-waiting; they leave when shipped), **ships** (owned single-use carriers; they sail away), and **2–3 neutral buildings** (shared base actions, seeded at setup so the ring is alive turn 1). **One fire rule:** on a line, the active player may use each building on it — all resolving **on the active player's turn** (no out-of-turn skims). Recipes and upgrades are **not** wharf tiles (they live on your brewery board).
+- **8 live slots, 2 capping each line** (**2-player may lock some to ~6 ⚙**). They hold a **churning mix**: **deployed casks** (your Ready casks = public action-buildings + cargo-in-waiting; they leave when shipped), **ships** (owned single-use carriers; they sail away), and **2–3 neutral buildings** (shared base actions, seeded at setup so the ring is alive turn 1 — **spread with the warm-start Cogs across different lines** so no single line is the obvious opening camp ⚙). **One fire rule:** on a line, the active player may use each building on it — all resolving **on the active player's turn** (no out-of-turn skims). Recipes and upgrades are **not** wharf tiles (they live on your brewery board).
 
 ---
 
