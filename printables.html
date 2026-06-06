@@ -44,8 +44,10 @@
   .t-cost svg,.t-cost .ic{width:.15in;height:.15in}
   .g{color:#ffe08a} .h{color:#c4e69c}
   .tile.gen{justify-content:flex-start;text-shadow:0 1px 1px rgba(0,0,0,.4)}
-  .gen .g-head{display:flex;align-items:center;gap:.05in;font-variant:small-caps;font-weight:bold;font-size:.135in;line-height:1.05}
-  .gen .g-head .bigic svg,.gen .g-head .bigic .ic{width:.3in;height:.3in;stroke-width:1.7;flex:0 0 auto}
+  .gen .g-head{display:flex;align-items:center;gap:.06in;font-variant:small-caps;font-weight:bold;font-size:.125in;line-height:1.02;min-width:0}
+  .gen .g-head .bigic{flex:0 0 auto}
+  .gen .g-head .bigic svg,.gen .g-head .bigic .ic{width:.27in;height:.27in;stroke-width:1.7}
+  .gen .g-head .g-nm{min-width:0;overflow-wrap:break-word;hyphens:auto}
   .gen .g-sub{font-size:.108in;line-height:1.2;margin-top:.05in;opacity:.97}
   .gen .g-big{position:absolute;bottom:.12in;right:.16in;font-weight:900;font-size:.46in;line-height:.8;opacity:.92}
   /* ---- goods TOKENS — laser-cut circle (.7in) printed with a 1/8in BLEED ring (.95in art disc) ---- */
@@ -200,7 +202,7 @@ const FAMS=[
    {ic:'store',     nm:'Market Stall', sub:'take 1 good',           c:'#5b4a37', n:1},
    {ic:'hammer',    nm:'Cooper',       sub:'advance a cask 1 step', c:'#4a4034', n:1},
    {ic:'anchor',    nm:'Crane',        sub:'free load onto a ship', c:'#5b4a37', n:1},
-   {ic:'coins',     nm:'Counting-Hse', sub:'convert up to 2 goods', c:'#4a4034', n:1},
+   {ic:'coins',     nm:'Counting House', sub:'convert up to 2 goods', c:'#4a4034', n:1},
    {ic:'megaphone', nm:'Towncrier',    sub:'draw a goal',           c:'#5b4a37', n:1},
    {ic:'heart',     nm:'Almshouse',    sub:'+1 a held majority',    c:'#4a4034', n:1},
  ]},
@@ -261,7 +263,7 @@ function caskTile(d){return '<div class="tile" style="--c:'+d.c+'">'
   +'<div class="t-act">'+LU('zap')+'<span>'+d.act+'</span></div>'
   +'<div class="t-cost">'+(d.premium?'<span style="font-size:.1in">premium · needs Cellar</span>':'brew '+cost(d.g,d.h))+'</div></div>';}
 function genTile(it){return '<div class="tile gen" style="--c:'+it.c+'">'
-  +'<div class="g-head"><span class="bigic">'+LU(it.ic)+'</span>'+it.nm+'</div>'
+  +'<div class="g-head"><span class="bigic">'+LU(it.ic)+'</span><span class="g-nm">'+it.nm+'</span></div>'
   +'<div class="g-sub">'+it.sub+'</div>'+(it.big?'<div class="g-big">'+it.big+'</div>':'')+'</div>';}
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+d.nm+'</div>';}
 const blankTile='<div class="tile blank"></div>', blankTok='<div class="tok blank"></div>';
