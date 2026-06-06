@@ -186,7 +186,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>Prototype v0.7 “The Wharf”.</b> One loop walked on the grid — <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor). A <b>cask</b> matures privately, <b>deploys to the shared wharf</b> (the 8 ring slots) as a public action-building, then <b>ships to a destination</b> and scores. A line fires <b>both its cells</b> plus any wharf building at each end (cap·cell·cell·cap), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s wharf cask</b> on your ship — they still score it. Deliver to <b>London / Bergen / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b> (the same row you buy from — you don’t fully know what’ll be on offer when you sail). The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the relief valve when the wharf jams). Cells are never blocked; your brewery is private. Single-level <b>Undo</b> is in the bar. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
+  <p class="note" style="text-align:center"><b>Prototype v0.7 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s deployed cask</b> on your ship — they still score it. Deliver to <b>London / Bergen / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b> (the same row you buy from — you don’t fully know what’ll be on offer when you sail). The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the relief valve when slots jam). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -213,11 +213,11 @@ const CNAMES=['Crimson','Azure','Forest','Amber','Violet'];
 const ICONTIP={
   wheat:'Grain (G) — a brewing input and the medium of exchange.',
   sprout:'Hops (H) — a brewing input; the beer that travels.',
-  beer:'Cask — your hero piece (matures → wharf → delivered).',
+  beer:'Cask — a brewed beer tile (matures → slot → delivered).',
   store:'Market — Source: take 2 goods, or buy a recipe / ship / upgrade.',
   'flask-conical':'Brewhouse — Brew: load a recipe into an open vessel.',
   hourglass:'Cellar — Age: a pool of advance points across your vessels.',
-  ship:'Harbor — Ship: load a Ready wharf cask onto one of your ships.',
+  ship:'Harbor — Ship: load a Ready cask from a slot onto one of your ships.',
   anchor:'Wharf — the 8 shared ring slots (casks · ships · town buildings).',
   sailboat:'Ship — owned carrier; loads casks and sails to its destination when full.',
   landmark:'Kontor — a trade destination (volume + majorities).',
@@ -229,8 +229,8 @@ const ICONTIP={
   package:'Storage — how many goods you can hold.',
   target:'Goal — an end-game objective; your best few score.',
   hammer:'Cooper — advance one of your casks a step.',
-  check:'Ready — this cask is matured; deploy it to the wharf.',
-  'user-round':'Worker — walks the loop on the grid.',
+  check:'Ready — this cask is matured; deploy it to a slot.',
+  'user-round':'Worker — move it between the four stations.',
 };
 const LU=(n,cls)=>{const i='<i data-lucide="'+n+'"'+(cls?' class="ic '+cls+'"':' class="ic"')+'></i>';
   return ICONTIP[n]?'<span class="iw" data-tip="'+attr(ICONTIP[n])+'">'+i+'</span>':i;};
@@ -367,7 +367,7 @@ const START_STORAGE=8;
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v14-occ3'; // v0.8 EXPERIMENT: occupancy toll on move-onto-occupied + tax-free round-1 placement (seat balancer); bump discards stale state
+const KEY='hanse-hotseat-v15'; // v0.8: occupancy toll (move onto a rival station = 1G; opening placement free) + "Wharf/stations/slots" naming now canonical; bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -464,19 +464,19 @@ function majorityCount(p){return KONTORE.filter(k=>leadersAt(k).some(x=>x.id===p
 function log(msg,me){S.log.unshift('<div class="'+(me?'me':'')+'">'+msg+'</div>');if(S.log.length>140)S.log.pop();}
 function attr(s){return String(s).replace(/"/g,'&quot;');}
 
-// ---- tooltips for grid spaces ----
+// ---- tooltips for stations & slots ----
 const CELLTIP={
-  Market:'Market · Source. Take 2 goods (any mix), OR buy one tile from the Market — a recipe, a ship, or a brewery upgrade. Never blocked.',
-  Brewhouse:'Brewhouse · Brew. Load one recipe you hold (paying its G/H) into an open vessel as a young cask. Never blocked.',
-  Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' advance points to allocate across your vessels (your casks also age +1 automatically each turn). When a cask is Ready, set it on the wharf.',
-  Harbor:'Harbor · Ship. Load a Ready wharf cask (yours, or a rival’s) onto one of your ships; a ship sails the instant it is full. You may also launch a partial ship early. Never blocked.',
+  Market:'Market · Source. Take 2 goods (any mix), OR buy one tile from the Market — a recipe, a ship, or a brewery upgrade. Never closed (move onto a rival here for 1G).',
+  Brewhouse:'Brewhouse · Brew. Load one recipe you hold (paying its G/H) into an open vessel as a young cask. Never closed (move onto a rival here for 1G).',
+  Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' advance points to allocate across your vessels (your casks also age +1 automatically each turn). When a cask is Ready, set it on a slot.',
+  Harbor:'Harbor · Ship. Load a Ready cask from a slot (yours, or a rival’s) onto one of your ships; a ship sails the instant it is full. You may also launch a partial ship early. Never closed.',
 };
 function tileTip(t){
-  if(!t)return 'An open wharf slot — Ready casks deploy here (becoming public action-buildings + cargo), and you build ships here.';
+  if(!t)return 'An open slot — Ready casks deploy here (becoming public action-buildings + cargo), and you build ships here.';
   if(t.type==='cask'){const o=S.players[t.owner];
-    return o.name+'’s deployed '+STYLES[t.style].name+' (Q'+t.q+') on the wharf — cargo-in-waiting + a public action ('+CASK_ACT[STYLES[t.style].act]+'). Any line it caps lets the active player use that action; load it on a ship to deliver it.';}
+    return o.name+'’s deployed '+STYLES[t.style].name+' (Q'+t.q+') on a slot — cargo-in-waiting + a public action ('+CASK_ACT[STYLES[t.style].act]+'). When its line fires the active player may use that action; load it on a ship to deliver it.';}
   if(t.type==='ship'){const o=S.players[t.owner];
-    return o.name+'’s '+shipName(t)+' bound for '+DEST[t.dest].name+' ('+t.load.length+'/'+effCap(t)+' aboard, gate Q'+DEST[t.dest].gate+'). Load Ready wharf casks via the Harbor or when its line fires; full → it sails, delivering every cask, and is consumed onto the Sailed-Ships track.';}
+    return o.name+'’s '+shipName(t)+' bound for '+DEST[t.dest].name+' ('+t.load.length+'/'+effCap(t)+' aboard, gate Q'+DEST[t.dest].gate+'). Load Ready casks from slots via the Harbor or when its line fires; full → it sails, delivering every cask, and is consumed onto the Sailed-Ships track.';}
   if(t.type==='neutral')return 'Town building · '+NEUTRALS[t.b].name+' (shared) — when its line fires, the active player may '+NEUTRALS[t.b].act+'.';
   return '';
 }
@@ -517,7 +517,7 @@ function startGame(){
   S=freshState(setupN,names);UI={sub:'move'};activeTab=0;undoStack=[];
   document.getElementById('setup').classList.add('hidden');
   log('Game begins — '+setupN+' brewing houses. The export this game: L3 '+STYLES.l3.name+' · L4 '+STYLES.l4.name+' · L5 '+STYLES.l5.name+'.');
-  log('Warm start: each house has a Cog (→ Bruges) on the wharf and a Ready Gruit in vessel 1 (deploy it turn 1).');
+  log('Warm start: each house has a Cog (→ Bruges) on a slot and a Ready Gruit in vessel 1 (deploy it turn 1).');
   save();render();
 }
 
@@ -584,7 +584,7 @@ function buyTile(id){
     snapshot();pay(p,c);p.recipes.push(it.style);
     log(p.name+' buys the '+STYLES[it.style].name+' recipe.',true);cellDone();return;}
   if(it.kind==='ship'){
-    if(!emptySlots().length){alert('No open wharf slot to build a ship.');return;}
+    if(!emptySlots().length){alert('No open slot to build a ship.');return;}
     if(!canPay(p,it.cost))return;
     snapshot();pay(p,it.cost);UI.tmp.shipBuild={ship:it.ship};UI.stage='shipdest';
     log(p.name+' builds a '+SHIP_NAME[it.ship]+' — bind it to a destination.',true);render();return;}
@@ -595,9 +595,9 @@ function buyDisplayUp(key){const p=cur();if(!grantableBuy(p,key))return;const c=
   log(p.name+' buys '+upName(key)+' from the Market display.',true);cellDone();}
 function shipDest(dest){const p=cur();
   UI.tmp.placeTile={type:'ship',owner:p.id,ship:UI.tmp.shipBuild.ship,dest,load:[]};UI.stage='place';
-  log(p.name+'’s '+SHIP_NAME[UI.tmp.shipBuild.ship]+' is bound for '+DEST[dest].name+' (cap '+effCap(UI.tmp.placeTile)+') — place it on the wharf.',true);render();}
+  log(p.name+'’s '+SHIP_NAME[UI.tmp.shipBuild.ship]+' is bound for '+DEST[dest].name+' (cap '+effCap(UI.tmp.placeTile)+') — place it on a slot.',true);render();}
 function placeSlot(slot){const t=UI.tmp.placeTile;S.slots[slot]=t;
-  log('↳ '+SHIP_NAME[t.ship]+' placed on the wharf, bound for '+DEST[t.dest].name+'.');cellDone();}
+  log('↳ '+SHIP_NAME[t.ship]+' placed on a slot, bound for '+DEST[t.dest].name+'.');cellDone();}
 
 // ---------- BREW ----------
 function enterBrew(rt){const p=cur();
@@ -630,12 +630,12 @@ function ageSkip(){const rt=UI.age.returnTo;UI.age=null;offerDeploy(rt);}
 // ---------- DEPLOY (Ready cask → wharf) ----------
 function offerDeploy(rt){const p=cur();const ready=readyInVessels(p);
   if(ready.length&&emptySlots().length){UI.sub='deploy';UI.deploy={queue:ready.map(o=>o.i),returnTo:rt};render();}
-  else{if(ready.length)log('↳ Ready cask(s) clog the brewery — no open wharf slot.');resume(rt);}
+  else{if(ready.length)log('↳ Ready cask(s) clog the brewery — no open slot.');resume(rt);}
 }
 function startDeploy(vi,phase){snapshot();UI.sub='deploy';UI.deploy={queue:[vi],returnTo:phase};render();}
 function deployTo(slot){snapshot();const p=cur();const vi=UI.deploy.queue[0];const c=p.vessels[vi];p.vessels[vi]=null;
   S.slots[slot]={type:'cask',owner:p.id,style:c.style,q:c.q};
-  log(p.name+' sets a Ready '+styleShort(c.style)+' on the wharf.',true);
+  log(p.name+' sets a Ready '+styleShort(c.style)+' on a slot.',true);
   UI.deploy.queue.shift();deployNext();
 }
 function deployNext(){if(!UI.deploy.queue.length||!emptySlots().length){const rt=UI.deploy.returnTo;UI.deploy=null;resume(rt);}else render();}
@@ -796,7 +796,7 @@ function gameOver(){
   rows.sort(cmp);const win=rows[0];
   let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries</th><th>Majorities</th><th>Goals (best '+GOAL_BEST+')</th><th>Total</th></tr>';
   rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+'</td><td>'+r.sc.deliv+'</td><td>'+r.sc.maj+'</td><td>'+r.sc.goals+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
-  h+='</table><p class="note">Score = delivery value (kontore trade value + the Hall’s prestige ∝ quality) + kontor majorities + your best '+GOAL_BEST+' goals. The volume-vs-prestige lean lives in <b>where you shipped</b>, not in separate tracks. (Tiebreak: goods, then casks on the wharf.)</p><button class="primary" onclick="newGame()">New Game</button>';
+  h+='</table><p class="note">Score = delivery value (kontore trade value + the Hall’s prestige ∝ quality) + kontor majorities + your best '+GOAL_BEST+' goals. The volume-vs-prestige lean lives in <b>where you shipped</b>, not in separate tracks. (Tiebreak: goods, then casks on slots.)</p><button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
 }
 
@@ -812,7 +812,7 @@ function render(){
 }
 function btn(label,fn,cls){return '<button class="'+(cls||'')+'" onclick="'+fn+'">'+label+'</button>';}
 function deployButtons(phase){const p=cur();if(!emptySlots().length)return '';
-  return readyInVessels(p).map(o=>btn('▸ Deploy '+styleShort(o.c.style)+' to wharf','startDeploy('+o.i+',\''+phase+'\')','ghost')).join('');}
+  return readyInVessels(p).map(o=>btn('▸ Deploy '+styleShort(o.c.style)+' to a slot','startDeploy('+o.i+',\''+phase+'\')','ghost')).join('');}
 
 function renderBar(){
   const p=cur();
@@ -827,7 +827,7 @@ function renderBar(){
     const cells=placing?['A','B','C','D']:ADJ[p.cell];
     acts=cells.map(c=>btn((placing?'⚑ ':'→ ')+CELLNAME[c],'doMove(\''+c+'\')','primary')).join('');}
   else if(U==='line'){const o=cellOfLine(p.cell);
-    prompt='Activate the row or the column of '+CELLNAME[p.cell]+'. <span class="note">(You may first set any Ready casks on the wharf.)</span>';
+    prompt='Activate the row or the column of '+CELLNAME[p.cell]+'. <span class="note">(You may first set any Ready casks on a slot.)</span>';
     acts=deployButtons('line')+btn(LINES[o.row].label,'chooseLine(\'row\')','go')+btn(LINES[o.col].label,'chooseLine(\'col\')','go');}
   else if(U==='stops'){
     prompt='Resolve this line’s stops <b>in any order</b> — pick the next ('+UI.stops.length+' left).';
@@ -855,7 +855,7 @@ function renderBar(){
       const ships=L.ships.filter(s=>canTake(s,L.cask));
       acts=ships.map(s=>{const sh=S.slots[s];return btn(LU('sailboat')+(sh.owner!==p.id?S.players[sh.owner].name+'’s ':'')+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+')','loadOnto(\''+s+'\')','go');}).join('')+btn('Back','loadBack()','ghost')+btn('Skip','loadSkip()','ghost');}}
   else if(U==='deploy'){const vi=UI.deploy.queue[0];const c=p.vessels[vi];
-    prompt='Set Ready <b>'+styleShort(c.style)+'</b> on the wharf — click an open slot.';
+    prompt='Set Ready <b>'+styleShort(c.style)+'</b> on a slot — click an open slot.';
     acts=btn('Leave in vessel','deploySkipOne()','ghost')+(UI.deploy.queue.length>1?btn('Skip rest','deploySkipAll()','ghost'):'');}
   else if(U==='benefit'){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];
     prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take an Upgrade from the Market display (free).';
@@ -865,9 +865,9 @@ function renderBar(){
   document.getElementById('prompt').innerHTML=prompt;
   document.getElementById('acts').innerHTML=acts;
   document.getElementById('boardnote').innerHTML =
-      U==='stops'? 'A line fires <b>both cells</b> + any wharf building at each end (cap·cell·cell·cap), in <b>any order</b>. Cells are never blocked.'
-    : U==='deploy'||(U==='cell'&&UI.stage==='place')? 'Click a glowing wharf slot.'
-    : 'Loop: '+LU('store')+' <b>Source</b> → '+LU('flask-conical')+' <b>Brew</b> → '+LU('hourglass')+' <b>Age</b> → '+LU('ship')+' <b>Ship</b>. A Ready cask deploys to the '+LU('anchor')+' wharf, then ships on a '+LU('sailboat')+' to a destination for points.';
+      U==='stops'? 'A line fires <b>both stations</b> + any building in its two slots (slot·station·station·slot), in <b>any order</b>. Stations are never closed.'
+    : U==='deploy'||(U==='cell'&&UI.stage==='place')? 'Click a glowing slot.'
+    : 'The Wharf: '+LU('store')+' <b>Source</b> → '+LU('flask-conical')+' <b>Brew</b> → '+LU('hourglass')+' <b>Age</b> → '+LU('ship')+' <b>Ship</b>. A Ready cask deploys to a '+LU('anchor')+' slot, then ships on a '+LU('sailboat')+' to a destination for points.';
 }
 function stopLabel(s){
   if(s.kind==='cell')return LU(ICON[CELLNAME[s.cell]])+' '+CELLNAME[s.cell];
@@ -881,14 +881,14 @@ function cellRender(p){
   if(UI.cell==='A'){
     if(UI.stage==='shipdest')return {prompt:'Bind your ship to a destination (it inherits that gate).',
       acts:DESTS.map(d=>btn((DEST[d].kontor?LU('landmark'):LU('crown'))+' '+DEST[d].name+' (Q'+DEST[d].gate+')','shipDest(\''+d+'\')','go')).join('')};
-    if(UI.stage==='place')return {prompt:'Click an open wharf slot to place your ship.',acts:''};
+    if(UI.stage==='place')return {prompt:'Click an open slot to place your ship.',acts:''};
     return {prompt:'Source — take 2 goods, or buy a tile from the Market →',
       acts:btn('Take '+Gi(2),'marketGoods(2,0)','go')+btn('Take '+Gi(1)+Hi(1),'marketGoods(1,1)','go')+btn('Take '+Hi(2),'marketGoods(0,2)','go')+btn('Skip','cellDone()','ghost')};
   }
   if(UI.cell==='C'){
     if(UI.stage==='charter_cask'){const cs=charterCasks(p);
       return {prompt:'Charter — pick a Ready cask to ship now ('+costStr(CHARTER_COST)+').',
-        acts:cs.map(o=>btn(LU('beer')+styleShort(o.style)+' Q'+o.q+(o.ref[0]==='v'?' · vessel':' · wharf'),'charterPickCask(\''+o.ref+'\')','go')).join('')+btn('Back','(function(){UI.stage=\'harbor\';render();})()','ghost')};}
+        acts:cs.map(o=>btn(LU('beer')+styleShort(o.style)+' Q'+o.q+(o.ref[0]==='v'?' · vessel':' · slot'),'charterPickCask(\''+o.ref+'\')','go')).join('')+btn('Back','(function(){UI.stage=\'harbor\';render();})()','ghost')};}
     if(UI.stage==='charter_dest'){const ref=UI.tmp.charterCask;const c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
       const ds=DESTS.filter(d=>c.q>=DEST[d].gate);
       return {prompt:'Charter '+styleShort(c.style)+' (Q'+c.q+') → which destination?',
@@ -900,7 +900,7 @@ function cellRender(p){
     launch.forEach(s=>{const sh=S.slots[s];acts+=btn(LU('sailboat')+' Launch '+shipName(sh)+' early ('+sh.load.length+'/'+effCap(sh)+')','harborLaunch(\''+s+'\')');});
     if(canCharter)acts+=btn(LU('sailboat')+' Charter a voyage ('+costStr(CHARTER_COST)+')','harborCharter()');
     if(!canLoad&&!launch.length&&!canCharter)acts+='<span class="note">nothing to ship yet</span> ';
-    return {prompt:'Ship — load a Ready wharf cask onto a ship, launch one early, or charter a single-cask voyage.',acts:acts+btn('Skip','cellDone()','ghost')};
+    return {prompt:'Ship — load a Ready cask from a slot onto a ship, launch one early, or charter a single-cask voyage.',acts:acts+btn('Skip','cellDone()','ghost')};
   }
   return {prompt:'',acts:''};
 }
@@ -998,7 +998,7 @@ function renderTableaus(){
       +'<b class="note">'+LU('flask-conical')+' Vessels ('+p.vessels.length+'/'+p.maxVessels+'):</b><div class="brew">'+vessels+'</div>'
       +'<b class="note">'+LU('scroll-text')+' Recipes:</b> '+recipes+'<br>'
       +'<b class="note">'+LU('wrench')+' Upgrades:</b> '+ups+'<br>'
-      +'<b class="note">'+LU('anchor')+' On the wharf (yours):</b> '+wharf+'<br>'
+      +'<b class="note">'+LU('anchor')+' On slots (yours):</b> '+wharf+'<br>'
       +'<b class="note">'+LU('landmark')+' Delivered:</b> '+delivered+'<br>'
       +'<b class="note">'+LU('target')+' Goals (best '+GOAL_BEST+' score):</b> '+goals
       +'</div>';

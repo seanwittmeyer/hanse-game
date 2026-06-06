@@ -8,11 +8,11 @@ Compact version history. The **full rationale ("the why")** lives in `DESIGN.md`
 
 ## v0.7 — "The Wharf": a ground-up reel-in to GWT/Distilled weight (2026-06-05)
 A near-total redesign that re-targets the game from "Lacerda-grade" to **Great Western Trail / Distilled** weight — *too much game, the right amount of theme.* Keeps the grid, the perimeter ring, the dual-role cask, the merchant-shipping fantasy, and the theme; **cuts roughly half the rules.** (Full rationale + the pace-model findings: `DESIGN.md` §21.)
-- **One legible loop, walked on the grid.** The four cells **are** the loop and the forced-move circuit walks it: **A Market (Source) → B Brewhouse (Brew) → D Cellar (Age) → C Harbor (Ship)**. Every line is two adjacent loop-steps. (The v0.6 build×cash-out diagonal is retired for legibility.)
-- **The cask is a dual-role action-tile in 3 states:** **maturing** (private vessel) → **on the wharf** (a shared ring slot — your cargo + a **public, chunky, loop-advancing action** by type: Gruit→Source · Hopped→Age · L3→free Load · L4→+presence · L5→Wild) → **delivered** (shipped → scores → gone). Only wharf casks are public/contestable; the brewery is private.
+- **One legible loop, walked on the grid.** The four stations **are** the loop and the forced-move circuit walks it: **A Market (Source) → B Brewhouse (Brew) → D Cellar (Age) → C Harbor (Ship)**. Every line is two adjacent loop-steps. (The v0.6 build×cash-out diagonal is retired for legibility.)
+- **The cask is a dual-role action-tile in 3 states:** **maturing** (private vessel) → **on a slot** (a shared ring slot — your cargo + a **public, chunky, loop-advancing action** by type: Gruit→Source · Hopped→Age · L3→free Load · L4→+presence · L5→Wild) → **delivered** (shipped → scores → gone). Only cask on a slot are public/contestable; the brewery is private.
 - **The wharf = the perimeter ring,** a transient mix of **deployed casks + owned ships + 2–3 seeded neutral buildings.** **One fire rule,** everything **on the active player's turn** (no out-of-turn skims — the v0.6 thing that felt wrong).
-- **Value lives in *destinations*, not two tracks.** Ship to **kontore** for trade value + majorities (volume), or to **the Hall** for prestige (scarcity). Same verb, different destination. **Aging** is the new value-over-time signal. **Demand market, type frontier, and the Hall cell are cut.**
-- **Non-destructive interaction:** you may **ship a rival's wharf cask** on your ship — they score it & pick the benefit; you get the slot/ship/timing. *A 1350 brewmaster doesn't fully control where their casks go.*
+- **Value lives in *destinations*, not two tracks.** Ship to **kontore** for trade value + majorities (volume), or to **the Hall** for prestige (scarcity). Same verb, different destination. **Aging** is the new value-over-time signal. **Demand market, type frontier, and the Hall station are cut.**
+- **Non-destructive interaction:** you may **ship a rival's cask on a slot** on your ship — they score it & pick the benefit; you get the slot/ship/timing. *A 1350 brewmaster doesn't fully control where their casks go.*
 - **Deliver → earn an Upgrade → brew better → deliver better** (Distilled-style). Upgrades (Rooms + Modifiers) subsume v0.6's Privileges; **Fairs, route-lane tiles, the recipe card deck/boons/tuck, twins, and aging cubes are cut.**
 - **Pace fixes** (the model put v0.6's first voyage at turn 6): **warm start** (1 Cog + 1 Ready cask), **start with 2 vessels**, **base verbs always work**, **all destinations open** → first voyage ≈ turn 2–3. **Recipes reel in to Gruit + Hopped start + plain permission tiles.**
 - **Scoring:** delivery value (by destination) + majorities + goals (best few). No reach/standing tracks.
@@ -24,7 +24,7 @@ A near-total redesign that re-targets the game from "Lacerda-grade" to **Great W
 
 ## v0.7.1 — terminology + setup trims + Letter-landscape PnP (2026-06-06)
 - Game title pluralized → **Brewhouses of the Hanse**. Premium beer tier **"Summit" → "Export"** (theme, not design jargon; the dealt Bock/Mumme/Broyhan/Keut still show in play).
-- **Starting Gruit** now begins **Ready in a vessel** (deploy turn 1) instead of pre-placed on the shared wharf — de-jams the ring at setup. The Cog stays the warm-start anchor.
+- **Starting Gruit** now begins **Ready in a vessel** (deploy turn 1) instead of pre-placed on the shared slots — de-jams the ring at setup. The Cog stays the warm-start anchor.
 - **First-player rotation removed** — turn order is **fixed** all game. Seat compensation (likely extra starting goods for later seats) is an open ⚙, to size at playtest.
 - **Print & Play** fully redesigned for **US Letter landscape**: legible card-corner quality on casks (gem icon + number, no "Q"), 1/8″ tile/token bleed for cutting, recipes as **cards** (board tuck strip + a TBD dual-purpose bonus), and a reworked **Destinations** board (clean title bars · `L#+` gates with a quality icon · `★` VP icons · one cask slot + a per-player presence/majority marker track). Save `KEY → v10`.
 
@@ -40,7 +40,7 @@ A near-total redesign that re-targets the game from "Lacerda-grade" to **Great W
 ## v0.5 — the dual-role cask restored as the spine; the demand market (2026-06-03)
 - The **cask in 3 states** — *working* (engine) / *reach* (presence) / *standing* (enshrined); enshrining **converts** a cask and removes its presence.
 - **The demand market:** one shared value per beer type; a cask's enshrine payout = its type's value **at that instant**. Realizing a type **either way** drops it −1; a recipe-buy or Fair pump raises it +1. **VP tokens retired** (folded into this one number).
-- **Any player may enshrine a deployed cask** (the positive-interaction churn). Cell **C: Kontor → Hall** (the standing sink, distinct from the reach kontore).
+- **Any player may enshrine a deployed cask** (the positive-interaction churn). Station **C: Kontor → Hall** (the standing sink, distinct from the reach kontore).
 
 ## v0.4 — consistency pass (2026-06-03)
 - Recipe **book** made canonical (claim-on-fire slot model retired); all pages re-aligned to the v0.3 model.

@@ -56,6 +56,10 @@
   footer{text-align:center; color:var(--ink2); font-size:.82rem; padding:30px; border-top:1px solid var(--line);}
   .backlink{display:inline-block; margin:18px 0; color:var(--red); text-decoration:none; font-weight:bold;}
   .backlink:hover{text-decoration:underline;}
+  .atbl td:first-child{text-align:center; width:40px;}
+  .atbl i{width:1.25em; height:1.25em; stroke-width:1.9; vertical-align:-3px; color:var(--red);}
+  .atbl th:first-child{width:40px;}
+  .acat{font-variant:small-caps; color:var(--red); font-weight:bold; letter-spacing:.5px; margin:20px 0 2px; font-size:1.05rem;}
   @media(max-width:620px){.toc{column-count:1}}
 </style>
 </head>
@@ -73,14 +77,14 @@
 <nav class="toc">
   <h3>Contents</h3>
   <a href="#intro"><span class="nm">1</span>The Brewing House</a>
-  <a href="#idea"><span class="nm">2</span>Core Loop</a>
+  <a href="#idea"><span class="nm">2</span>The Wharf</a>
   <a href="#components"><span class="nm">3</span>Components</a>
   <a href="#anatomy"><span class="nm">4</span>Anatomy of the Game</a>
   <a href="#setup"><span class="nm">5</span>Setup</a>
   <a href="#turn"><span class="nm">6</span>A Turn</a>
-  <a href="#actions"><span class="nm">7</span>The Four Cells</a>
+  <a href="#actions"><span class="nm">7</span>The Four Stations</a>
   <a href="#cask"><span class="nm">8</span>The Cask &amp; Brewing</a>
-  <a href="#wharf"><span class="nm">9</span>The Wharf</a>
+  <a href="#wharf"><span class="nm">9</span>The Slots</a>
   <a href="#shipping"><span class="nm">10</span>Ships &amp; Destinations</a>
   <a href="#brewery"><span class="nm">11</span>The Brewery &amp; Upgrades</a>
   <a href="#goods"><span class="nm">12</span>Goods &amp; Storage</a>
@@ -88,26 +92,27 @@
   <a href="#scoring"><span class="nm">14</span>Scoring</a>
   <a href="#twoplayer"><span class="nm">15</span>2-Player</a>
   <a href="#glossary"><span class="nm">16</span>Glossary</a>
-  <a href="#quickref"><span class="nm">17</span>Quick Reference</a>
+  <a href="#actionref"><span class="nm">17</span>Action Reference</a>
+  <a href="#quickref"><span class="nm">18</span>Quick Reference</a>
 </nav>
 
 <section id="intro">
   <h2><span class="nm">1</span>The Brewing House</h2>
   <p class="lead">Hamburg was called <em>the brewhouse of the Hanse</em>. You are a merchant brewing house in the League, c. 1350.</p>
   <p>The pivotal innovation of your age is <b>hopped beer</b>. Unlike perishable gruit ale, hopped beer survives a sea voyage — so beer becomes a <em>shippable export</em>. You will source grain and hops, brew casks, mature them, and push them across the Baltic and North Sea to the great foreign trading posts (the <b>kontore</b>: Bergen, London, Bruges, Novgorod) — or withdraw your finest into the brewers' <b>Hall</b>.</p>
-  <p>The whole game is <b>one production loop you walk over and over — Source → Brew → Age → Ship —</b> getting a little stronger each lap. Whoever has shipped the most valuable casks when the last ship sails wins.</p>
+  <p>Everything happens at <b>the Wharf</b> — your stretch of harbor where you source grain and hops, brew, age, and ship. The work runs <b>Source → Brew → Age → Ship</b>, and you get a little stronger each time around. Whoever has shipped the most valuable casks when the last ship sails wins.</p>
 </section>
 
 <section id="idea">
-  <h2><span class="nm">2</span>Core Loop</h2>
-  <p>Everything you do is one loop, walked on a shared grid:</p>
-  <p style="text-align:center;font-variant:small-caps;font-weight:bold;color:var(--red);font-size:1.15rem;letter-spacing:1px">Source → Brew → Age → Ship → (repeat)</p>
-  <p>Each turn you brew casks, mature them, and ship them to destinations for points. <b>Where you ship is the key decision:</b></p>
+  <h2><span class="nm">2</span>The Wharf</h2>
+  <p>The whole game takes place at <b>the Wharf</b>: four action <b>stations</b> — <b>Market</b>, <b>Brewhouse</b>, <b>Cellar</b>, <b>Harbor</b> — ringed by <b>eight slots</b>. Your worker moves between the stations; the work of the Wharf runs:</p>
+  <p style="text-align:center;font-variant:small-caps;font-weight:bold;color:var(--red);font-size:1.15rem;letter-spacing:1px">Source → Brew → Age → Ship</p>
+  <p>You brew casks, mature them, and ship them to destinations for points. <b>Where you ship is the key decision:</b></p>
   <ul>
     <li><span class="pill">VOLUME</span> — ship to the <b>kontore</b> (Bruges, London, Bergen, Novgorod) for trade value and <b>majorities</b>. Kontore reward volume.</li>
     <li><span class="pill r">PRESTIGE</span> — send your finest to the <b>Hall</b>, out of commerce, for prestige scaled to quality. The Hall rewards quality.</li>
   </ul>
-  <p>Both use the same verb — <b>ship a cask</b> — to different destinations. You may pursue either approach as the board develops. They compete for the same casks, wharf slots, ships, and end clock.</p>
+  <p>Both use the same verb — <b>ship a cask</b> — to different destinations. You may pursue either approach as the board develops. They compete for the same casks, slots, ships, and end clock.</p>
   <div class="box red"><h4>Three rules constraints</h4>
     <b>No dice</b> (fully deterministic) · <b>No hidden draws</b> (everything you acquire is taken from a <em>face-up</em> supply, never a blind deck) · <b>No money</b> (goods are the only currency; there is no spendable prestige — delivered points are score only).</div>
 </section>
@@ -115,12 +120,12 @@
 <section id="components">
   <h2><span class="nm">3</span>Components</h2>
   <ul>
-    <li><b>1 Main board</b> — the 2×2 action grid (<b>A Market · B Brewhouse · D Cellar · C Harbor</b>), the <b>8 perimeter slots = the wharf</b>, and the shared <b>Sailed-Ships track</b> (the end clock).</li>
+    <li><b>1 Main board</b> — <b>the Wharf</b>: a 2×2 of four action stations (<b>A Market · B Brewhouse · D Cellar · C Harbor</b>) ringed by <b>8 slots</b>, plus the shared <b>Sailed-Ships track</b> (the end clock).</li>
     <li><b>1 Destination board</b> — the four kontore (Bruges · London · Bergen · Novgorod) and the <b>Hall</b>, each with its quality gate, delivery value, benefit, and (kontore) a majority track. Delivered cask tiles sit at their destination.</li>
     <li><b>5 Player brewery boards</b> — each private &amp; untouchable: <b>vessel lanes</b> (start 2, cap 4), the <b>maturation track</b> (Brew → … → Ready), a <b>recipe rack</b>, <b>upgrade slots</b> (Rooms + Modifiers), and goods storage (cap 8).</li>
     <li><b>The tile supply</b> (see the <a href="index.html">visualizer</a>):
       <ul>
-        <li><b>Cask tiles</b> — single working face: type · quality · a signature action; brewed from a shared pool with fixed counts (~L1×16 · L2×20 · L3×12 · L4×8 · L5×4); a <b>colored ownership disc</b> marks a cask once it's on the wharf or delivered.</li>
+        <li><b>Cask tiles</b> — single working face: type · quality · a signature action; brewed from a shared pool with fixed counts (~L1×16 · L2×20 · L3×12 · L4×8 · L5×4); a <b>colored ownership disc</b> marks a cask once it's on a slot or delivered.</li>
         <li><b>Ship</b> tiles (Cog · Hulk), <b>neutral building</b> tiles, <b>recipe</b> tiles, <b>upgrade</b> tiles (Rooms + Modifiers), and <b>goal</b> tiles.</li>
       </ul>
     </li>
@@ -131,10 +136,10 @@
 
 <section id="anatomy">
   <h2><span class="nm">4</span>Anatomy of the Game</h2>
-  <h3>The Action Grid — the Loop</h3>
-  <p>Four action cells in a 2×2: <b>A Market</b> (Source) &amp; <b>B Brewhouse</b> (Brew) on the top row, <b>C Harbor</b> (Ship) &amp; <b>D Cellar</b> (Age) on the bottom. The <b>clockwise circuit A→B→D→C walks the loop</b> Source→Brew→Age→Ship. Each cell belongs to one <b>row</b> and one <b>column</b> — a <b>line</b> — and every line pairs two adjacent loop-steps (<code>Market+Brewhouse</code>, <code>Brewhouse+Cellar</code>, <code>Harbor+Cellar</code>, <code>Market+Harbor</code>). Around the grid sit <b>8 perimeter slots</b>, two capping each line.</p>
-  <h3>The Wharf (the perimeter ring)</h3>
-  <p>The 8 slots are the shared commons. A line is a 4-stop pipeline: <code>cap slot · cell · cell · cap slot</code>. Each slot belongs to <b>exactly one line</b>. The wharf holds your <b>deployed casks</b> (public action-buildings + cargo), your <b>ships</b>, and <b>2–3 neutral buildings</b> seeded at setup. <em>(Recipes &amp; upgrades live on your private board, not a slot.)</em></p>
+  <h3>The Stations</h3>
+  <p>Four action stations sit in a 2×2: <b>A Market</b> (Source) &amp; <b>B Brewhouse</b> (Brew) on the top row, <b>C Harbor</b> (Ship) &amp; <b>D Cellar</b> (Age) on the bottom. The production order is Source→Brew→Age→Ship, but you don't simply circle the board — you move where the work and the board are best. Each station belongs to one <b>row</b> and one <b>column</b>; activating either is a <b>line</b>.</p>
+  <h3>The Slots &amp; Lines</h3>
+  <p>Eight <b>slots</b> ring the stations — two beside each line. <b>A line is its two stations plus any tiles in their two slots</b> (<code>slot · station · station · slot</code>). Each slot belongs to <b>exactly one line</b>. The slots hold your <b>deployed casks</b> (public action-buildings + cargo), your <b>ships</b>, and <b>2–3 neutral buildings</b> seeded at setup. <em>(Recipes &amp; upgrades live on your private board, not a slot.)</em></p>
   <h3>The Destinations (where value lives)</h3>
   <p>The four kontore radiate from the home port; the Hall is the prestige destination. All are <b>open from the start.</b> Each wants a certain <b>quality</b> of beer and pays differently — so there is no single best line of play:</p>
   <table>
@@ -146,56 +151,56 @@
     <tr><td><b>The Hall</b> (Prestige)</td><td>Out of commerce</td><td>Q2</td><td>prestige ∝ quality (≈ Q×2)</td><td>the scarcity payout · no majority</td></tr>
   </table>
   <h3>Your Brewery (private, untouchable)</h3>
-  <p>Your brewery board holds the maturation track, which carries casks Brew → … → Ready across your <b>vessels</b> (start <b>2</b>, cap <b>4</b> — each a parallel lane); a <b>recipe rack</b> holds the types you may brew; and <b>upgrade slots</b> hold the Rooms &amp; Modifiers you build (mostly earned by delivering). Rivals can only ever act on your casks once they're on the wharf.</p>
+  <p>Your brewery board holds the maturation track, which carries casks Brew → … → Ready across your <b>vessels</b> (start <b>2</b>, cap <b>4</b> — each a parallel lane); a <b>recipe rack</b> holds the types you may brew; and <b>upgrade slots</b> hold the Rooms &amp; Modifiers you build (mostly earned by delivering). Rivals can only ever act on your casks once they're on a slot.</p>
 </section>
 
 <section id="setup">
   <h2><span class="nm">5</span>Setup</h2>
   <ol>
-    <li>Place the <b>main board</b> and <b>destination board</b>. Seed the wharf with <b>2–3 neutral buildings</b> ⚙ and the warm-start Cogs, <b>spread across different lines</b> so no single line is the obvious opening. All five destinations begin <b>open</b>.</li>
+    <li>Place the <b>main board</b> and <b>destination board</b>. Seed the slots with <b>2–3 neutral buildings</b> ⚙ and the warm-start Cogs, <b>spread across different lines</b> so no single line is the obvious opening. All five destinations begin <b>open</b>.</li>
     <li>Deal the <b>export roster</b> (Bock / Mumme / Broyhan / Keut) onto the L3–L5 rungs in a random order ⚙. Recipes &amp; ships are an always-available Market supply; for upgrades, <b>shuffle all Upgrade tiles into a face-down deck and deal 4 ⚙ face-up beside it</b> — the <b>Upgrade display</b>. The deck stays face-down as a <b>face-down draw stack</b> and refills the display as tiles are taken (§11).</li>
     <li>Set the <b>Sailed-Ships track</b> to its player-scaled length (it scales steeply — the clock fills faster with more players): <b>~7 / 11 / 15 / 19 slots for 2 / 3 / 4 / 5 players</b> ⚙.</li>
-    <li>Each player takes a <b>brewery board</b>, a <b>worker</b>, ownership discs, and a starting stake ⚙: <b>3 <span class="cube g"></span>, 2 <span class="cube h"></span></b>, the <b>Gruit + Hopped</b> recipes (printed), <b>2 open vessels</b> (lanes 3–4 locked), and a <b>warm start</b> — one built <b>Cog</b> in a wharf slot bound to <b>Bruges</b>, and <b>one Ready Gruit</b> in Vessel 1 (deploy it turn 1).</li>
-    <li>Each player places their worker on any cell. Give the youngest brewer the <b>first-player marker</b>.</li>
+    <li>Each player takes a <b>brewery board</b>, a <b>worker</b>, ownership discs, and a starting stake ⚙: <b>3 <span class="cube g"></span>, 2 <span class="cube h"></span></b>, the <b>Gruit + Hopped</b> recipes (printed), <b>2 open vessels</b> (lanes 3–4 locked), and a <b>warm start</b> — one built <b>Cog</b> on a slot bound to <b>Bruges</b>, and <b>one Ready Gruit</b> in Vessel 1 (deploy it turn 1).</li>
+    <li>Each player places their worker on any station — <b>your opening placement is free</b> (no occupancy toll, §6). Give the youngest brewer the <b>first-player marker</b>.</li>
   </ol>
   <div class="box"><h4>Warm start</h4>Starting with 2 vessels, a built Cog, and a Ready cask means a first voyage is reachable by turn 2–3.</div>
 </section>
 
 <section id="turn">
   <h2><span class="nm">6</span>A Turn</h2>
-  <p><b>Turn 1 only:</b> <em>place</em> your worker on any cell and activate one of its two lines (no move). From turn 2, in order:</p>
+  <p><b>Turn 1 only:</b> <em>place</em> your worker on any station (free) and activate one of its two lines (no move). From turn 2, in order:</p>
   <ol>
-    <li><b>Move</b> your worker to an <b>orthogonally adjacent</b> cell (A↔B, A↔C, B↔D, C↔D — <b>never the diagonal</b>). Mandatory.</li>
-    <li><b>Activate</b> the <b>row OR the column</b> of your worker's new cell.</li>
-    <li><b>Resolve</b> the line's up-to-4 stops — <code>cap · cell · cell · cap</code> — in <b>any order</b>:
+    <li><b>Move</b> your worker to an <b>orthogonally adjacent</b> station (A↔B, A↔C, B↔D, C↔D — <b>never the diagonal</b>). Mandatory. <b>If you move onto a station a rival already occupies, pay 1 <span class="cube g"></span></b> ⚙ to the supply (the <b>occupancy toll</b> — a gentle nudge to spread out; you pay nothing if you can't, and it never blocks you).</li>
+    <li><b>Activate</b> the <b>row OR the column</b> of your worker's new station.</li>
+    <li><b>Resolve</b> the line's up-to-4 stops — <code>slot · station · station · slot</code> — in <b>any order</b>:
       <ul>
-        <li><b>Each cell</b>: take its action. <b>Cells are never blocked</b> — a rival's worker on a cell does not stop you. Players interact through wharf slots and loaded casks.</li>
-        <li><b>Each cap slot</b>: if it holds a building, you <b>may use its action</b> — a <b>cask</b>'s signature action, a <b>ship</b>'s free load, or a <b>neutral building</b>. All resolve <b>on your turn, for you</b>; there are <b>no out-of-turn gains</b>.</li>
+        <li><b>Each station</b>: take its action. <b>Stations are never closed</b> — a rival's worker never stops you using one (you only ever pay the occupancy toll above for moving onto it).</li>
+        <li><b>Each slot</b>: if it holds a building, you <b>may use its action</b> — a <b>cask</b>'s signature action, a <b>ship</b>'s free load, or a <b>neutral building</b>. All resolve <b>on your turn, for you</b>; there are <b>no out-of-turn gains</b>.</li>
       </ul>
     </li>
   </ol>
-  <div class="box"><h4>Both cells always fire</h4>Activating a line triggers <em>both</em> of its cells. Your worker's position only determines <b>which line is legal</b>. Because base verbs are always available and wharf buildings only <em>add</em>, you are never stalled waiting for the board to align — a populated ring makes your turns bigger.</div>
-  <p>Play passes clockwise. When every player has taken a turn, the round ends and a new round begins. <b>The first player is fixed for the whole game — turn order does not rotate</b> (one fewer thing to track). Any first-player edge will be handled by <b>seat compensation</b> ⚙ (e.g. extra starting goods for later seats) — TBD.</p>
+  <div class="box"><h4>Both stations always fire</h4>Activating a line triggers <em>both</em> of its stations. Your worker's position only determines <b>which line is legal</b>. Because base verbs are always available and slot buildings only <em>add</em>, you are never stalled waiting for the board to align — a populated Wharf makes your turns bigger.</div>
+  <p>Play passes clockwise. When every player has taken a turn, the round ends and a new round begins. <b>The first player is fixed for the whole game — turn order does not rotate</b> (one fewer thing to track). The <b>free opening placement</b> (any station, no toll) is the first seat balancer; further <b>seat compensation</b> ⚙ (e.g. extra starting goods for later seats) is an open dial.</p>
 </section>
 
 <section id="actions">
-  <h2><span class="nm">7</span>The Four Cells</h2>
+  <h2><span class="nm">7</span>The Four Stations</h2>
   <table>
-    <tr><th>Cell</th><th>Action ⚙</th></tr>
-    <tr><td><b>A · Market</b> <span class="pill">Source</span></td><td>Take <b>2 goods</b> (any mix), <b>or</b> acquire <b>one</b> tile from the face-up Market row: a <b>recipe</b> (a new brewable type), a <b>ship</b> (a Cog/Hulk → a wharf slot, bound to a destination), or an <b>upgrade</b> (a Room/Modifier → your brewery).</td></tr>
+    <tr><th>Station</th><th>Action ⚙</th></tr>
+    <tr><td><b>A · Market</b> <span class="pill">Source</span></td><td>Take <b>2 goods</b> (any mix), <b>or</b> acquire <b>one</b> tile from the face-up Market row: a <b>recipe</b> (a new brewable type), a <b>ship</b> (a Cog/Hulk → a slot, bound to a destination), or an <b>upgrade</b> (a Room/Modifier → your brewery).</td></tr>
     <tr><td><b>B · Brewhouse</b> <span class="pill">Brew</span></td><td><b>Load</b> one recipe you hold (paying its <span class="cube g"></span>/<span class="cube h"></span> cost) into an <b>open vessel</b> — a young cask at step 0. Recipes are permanent; brewing never consumes them. One load per Brewhouse.</td></tr>
-    <tr><td><b>D · Cellar</b> <span class="pill">Age</span></td><td>Gain a <b>pool of 3 advance points</b> ⚙ and <b>allocate them freely across your vessels</b>. (Casks also age <b>+1 automatically at the start of your turn</b>.) When a cask reaches <b>Ready</b>, deploy it to an open wharf slot you choose.</td></tr>
-    <tr><td><b>C · Harbor</b> <span class="pill">Ship</span></td><td><b>Load</b> one wharf cask onto one of <b>your ships</b> (any ship — no line-coincidence needed). A ship <b>sails the instant it is full</b>; or <b>launch a partial ship early</b>, or use a <b>Charter Voyage</b> (pay 2 G to ship one Ready cask now — §10).</td></tr>
+    <tr><td><b>D · Cellar</b> <span class="pill">Age</span></td><td>Gain a <b>pool of 3 advance points</b> ⚙ and <b>allocate them freely across your vessels</b>. (Casks also age <b>+1 automatically at the start of your turn</b>.) When a cask reaches <b>Ready</b>, deploy it to an open slot you choose.</td></tr>
+    <tr><td><b>C · Harbor</b> <span class="pill">Ship</span></td><td><b>Load</b> one cask from a slot onto one of <b>your ships</b> (any ship — no line-coincidence needed). A ship <b>sails the instant it is full</b>; or <b>launch a partial ship early</b>, or use a <b>Charter Voyage</b> (pay 2 G to ship one Ready cask now — §10).</td></tr>
   </table>
   <p>Tile costs ⚙: recipe 1–2 goods · ship 2–3 · upgrades vary (many are <em>earned by delivering</em>, not bought).</p>
 </section>
 
 <section id="cask">
   <h2><span class="nm">8</span>The Cask &amp; Brewing</h2>
-  <p>Cask tiles have two roles: they mature privately, then serve as both cargo and a public action-building on the wharf. Each cask moves through <b>three states</b>:</p>
+  <p>Cask tiles have two roles: they mature privately, then serve as both cargo and a public action-building on a slot. Each cask moves through <b>three states</b>:</p>
   <ol>
     <li><b>Maturing</b> (private, in a vessel) — brewed at step 0, ageing toward <b>Ready</b>. Safe; scores nothing.</li>
-    <li><b>On the wharf</b> (public, a shared slot) — once Ready, <b>deploy it</b> to an open slot you choose. It is now your <b>cargo-in-waiting</b> and a <b>public action-building</b> whose signature action fires when its line runs (for whoever runs it). <em>If the wharf is full, a Ready cask remains in its vessel until a slot opens.</em></li>
+    <li><b>On a slot</b> (public) — once Ready, <b>deploy it</b> to an open slot you choose. It is now your <b>cargo-in-waiting</b> and a <b>public action-building</b> whose signature action fires when its line runs (for whoever runs it). <em>If every slot is full, a Ready cask remains in its vessel until one opens.</em></li>
     <li><b>Delivered</b> (scored, gone) — loaded onto a ship and <b>shipped to a destination</b>, where it scores for its owner and leaves. A cask is only ever one state; shipping converts it.</li>
   </ol>
   <h3>Brewing — types &amp; quality progression</h3>
@@ -213,25 +218,25 @@
 </section>
 
 <section id="wharf">
-  <h2><span class="nm">9</span>The Wharf</h2>
-  <p>The <b>8 perimeter slots</b> hold your <b>deployed casks</b> (cargo + a public action), your <b>ships</b> (single-use; consumed when they sail), and <b>2–3 neutral buildings</b> seeded at setup. Every slot belongs to exactly one line. <em>(Recipes &amp; upgrades live on your board, not a slot.)</em></p>
-  <p>When a line fires, the active player may use each building on it: a <b>cask</b> fires its signature action; a <b>ship</b> offers a free load; a <b>neutral building</b> gives its base action (e.g. <em>Market Stall</em> +1 good, <em>Cooper</em> advance a cask, <em>Crane</em> a free load). All resolve <b>on the active player's turn</b> — cask &amp; neutral actions are <b>free and public</b>. When a rival uses your cask's action, you still own the cask and will still score it when shipped.</p>
-  <div class="box red"><h4>Shipping a rival's cask</h4>On your turn you may load a <b>rival's wharf cask</b> onto <b>your</b> ship (only wharf casks — never their brewery). When it sails, the <b>destination is your ship's binding</b> (it must be legal for that cask's quality). The <b>owner still scores the delivery and picks its benefit</b>, and <b>you</b> take the freed slot, the filled ship (advancing the end clock), and a small loader bonus ⚙.</div>
+  <h2><span class="nm">9</span>The Slots</h2>
+  <p>The <b>8 slots</b> ringing the stations hold your <b>deployed casks</b> (cargo + a public action), your <b>ships</b> (single-use; consumed when they sail), and <b>2–3 neutral buildings</b> seeded at setup. Every slot belongs to exactly one line. <em>(Recipes &amp; upgrades live on your board, not a slot.)</em></p>
+  <p>When a line fires, the active player may use each building in its two slots: a <b>cask</b> fires its signature action; a <b>ship</b> offers a free load; a <b>neutral building</b> gives its base action (e.g. <em>Market Stall</em> +1 good, <em>Cooper</em> advance a cask, <em>Crane</em> a free load). All resolve <b>on the active player's turn</b> — cask &amp; neutral actions are <b>free and public</b>. When a rival uses your cask's action, you still own the cask and will still score it when shipped.</p>
+  <div class="box red"><h4>Shipping a rival's cask</h4>On your turn you may load a <b>rival's deployed cask</b> (on a slot) onto <b>your</b> ship — only casks on slots, never their brewery. When it sails, the <b>destination is your ship's binding</b> (it must be legal for that cask's quality). The <b>owner still scores the delivery and picks its benefit</b>, and <b>you</b> take the freed slot, the filled ship (advancing the end clock), and a small loader bonus ⚙.</div>
 </section>
 
 <section id="shipping">
   <h2><span class="nm">10</span>Ships &amp; Destinations</h2>
   <h3>Ships — owned, single-use carriers</h3>
   <ol>
-    <li><b>Build</b> (at the Market): a ship goes into a wharf slot, <b>bound to a destination</b>, with capacity <b>Cog 2 / Hulk 3</b> ⚙, inheriting that destination's <b>quality gate</b>.</li>
-    <li><b>Load</b> (the Harbor verb, always available — or a <b>bonus free load when the ship's line fires</b>): put one <b>wharf</b> cask aboard that meets the gate — your own or a rival's. <em>(A cask must be deployed to the wharf first; the Charter is the only way to ship straight from a vessel.)</em></li>
+    <li><b>Build</b> (at the Market): a ship goes onto a slot, <b>bound to a destination</b>, with capacity <b>Cog 2 / Hulk 3</b> ⚙, inheriting that destination's <b>quality gate</b>.</li>
+    <li><b>Load</b> (the Harbor verb, always available — or a <b>bonus free load when the ship's line fires</b>): put one cask <b>from a slot</b> aboard that meets the gate — your own or a rival's. <em>(A cask must be deployed to a slot first; the Charter is the only way to ship straight from a vessel.)</em></li>
     <li><b>Sail</b> (the instant it is <b>full</b>, or you <b>launch it early</b>): every cask aboard is <b>delivered</b> to the bound destination (it scores for its owner), and the <b>ship tile is consumed onto the Sailed-Ships track</b> — single-use; build another to ship again.</li>
   </ol>
   <h3>Charter Voyage</h3>
-  <p>The Harbor always offers a <b>Charter</b> (no tile — an outside hull): pay <b>2 G</b> ⚙ to send <b>one</b> Ready cask — from a <b>vessel</b> or the <b>wharf</b> — on an immediate <b>single-cask voyage</b> to a destination it qualifies for. It <b>delivers</b> normally (scores + the destination benefit) and <b>advances the Sailed-Ships clock</b> like any voyage. Less efficient than using your own ship per cask, so owning ships is the better approach — but a Charter prevents you from being stuck when the wharf is full with no ship of your own or a Ready cask is blocking a vessel.</p>
+  <p>The Harbor always offers a <b>Charter</b> (no tile — an outside hull): pay <b>2 G</b> ⚙ to send <b>one</b> Ready cask — from a <b>vessel</b> or the <b>wharf</b> — on an immediate <b>single-cask voyage</b> to a destination it qualifies for. It <b>delivers</b> normally (scores + the destination benefit) and <b>advances the Sailed-Ships clock</b> like any voyage. Less efficient than using your own ship per cask, so owning ships is the better approach — but a Charter prevents you from being stuck when every slot is full with no ship of your own, or a Ready cask is blocking a vessel.</p>
   <h3>Destinations</h3>
   <p>All destinations are <b>open from the start</b>; they differ by a <b>quality gate</b> (higher-value destinations require better beer) and a unique <b>benefit</b> (see §4). The <b>kontore</b> pay trade value + majorities; the <b>Hall</b> pays prestige for taking a cask out of commerce. <b>Most delivered casks at a kontor = its majority bonus</b> (Bergen rewards this most). <b>The cask's owner always scores the delivery and picks any offered benefit — even when a rival shipped it.</b></p>
-  <div class="box"><h4>Delivery Benefits</h4>Delivering to <b>London / Bergen / Novgorod</b> hands you a brewery upgrade from the display at no goods cost. The loop reinforces itself: <em>deliver → earn an upgrade → brew better → deliver better.</em> You must still brew to have casks to load.</div>
+  <div class="box"><h4>Delivery Benefits</h4>Delivering to <b>London / Bergen / Novgorod</b> hands you a brewery upgrade from the display at no goods cost. The cycle reinforces itself: <em>deliver → earn an upgrade → brew better → deliver better.</em> You must still brew to have casks to load.</div>
 </section>
 
 <section id="brewery">
@@ -281,46 +286,101 @@
     <li><b>Majorities</b> — the route-majority bonus at each kontor (most delivered casks; ties split ⚙).</li>
     <li><b>Goals</b> — resolve your goal tiles; <b>only your best few score</b> ⚙.</li>
   </ol>
-  <p>Highest total wins. <b>Tiebreak:</b> most goods, then most casks on the wharf.</p>
+  <p>Highest total wins. <b>Tiebreak:</b> most goods, then most casks on slots.</p>
   <div class="box"><h4>The goal pool (⚙)</h4>A small pool (shared draft or per-player) rewards different strategies — most distinct types delivered, most casks to one kontor, most Q3+ delivered, most ships sailed, most to the Hall, most kontore held, a fullest brewery, a flat safe goal. <b>Only your best few count.</b> Goals are designed so a single-strategy approach fills few of them. See the <a href="index.html#goals">visualizer</a> for the full list.</div>
 </section>
 
 <section id="twoplayer">
   <h2><span class="nm">15</span>2-Player Variant</h2>
-  <p>With fewer workers the wharf feels loose, so <b>lock some perimeter slots</b> (down to ~6 ⚙) to tighten the slot competition that drives "ship a rival's cask to free a slot." The <b>Sailed-Ships track</b> is shortest at 2p (~6 slots ⚙), so the clock stays brisk. Everything else plays identically.</p>
+  <p>With fewer workers the slots feel loose, so <b>lock some slots</b> (down to ~6 ⚙) to tighten the competition that drives "ship a rival's cask to free a slot." The <b>Sailed-Ships track</b> is shortest at 2p (~6 slots ⚙), so the clock stays brisk. Everything else plays identically.</p>
 </section>
 
 <section id="glossary">
   <h2><span class="nm">16</span>Glossary</h2>
   <ul>
-    <li><b>The loop</b> — Source → Brew → Age → Ship, the four cells walked as a clockwise circuit.</li>
-    <li><b>Cell</b> — one of the four shared action spaces (A Market · B Brewhouse · D Cellar · C Harbor).</li>
-    <li><b>Line</b> — a row or column; a 4-stop pipeline. Firing one triggers both its cells plus the slots at each end.</li>
-    <li><b>Wharf</b> — the 8 shared perimeter slots; holds deployed casks, ships, and neutral buildings.</li>
-    <li><b>Cask</b> — a brewed beer that moves through three states: <b>maturing</b> (vessel) → <b>on the wharf</b> (cargo + a public action) → <b>delivered</b> (shipped → scores).</li>
-    <li><b>Deploy</b> — place a Ready cask from your brewery onto an open wharf slot.</li>
+    <li><b>The Wharf</b> — the whole core area: four action stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots. Where the game happens.</li>
+    <li><b>Station</b> — one of the four shared action spaces (A Market · B Brewhouse · D Cellar · C Harbor). The work runs Source → Brew → Age → Ship.</li>
+    <li><b>Slot</b> — one of the 8 shared spaces ringing the stations; holds a deployed cask, a ship, or a neutral building.</li>
+    <li><b>Line</b> — a row or column: <b>its two stations plus any tiles in their two slots</b>. Firing one triggers both stations and lets you use the buildings in those slots.</li>
+    <li><b>Occupancy toll</b> — 1 G ⚙ paid to the supply when you move onto a station a rival already occupies (your opening placement is free). Never blocks you.</li>
+    <li><b>Cask</b> — a brewed beer that moves through three states: <b>maturing</b> (vessel) → <b>on a slot</b> (cargo + a public action) → <b>delivered</b> (shipped → scores).</li>
+    <li><b>Deploy</b> — place a Ready cask from your brewery onto an open slot.</li>
     <li><b>Ship</b> — owned infrastructure (Cog 2 / Hulk 3) bound to a destination; loads casks and <b>sails when full</b>, then is consumed to the Sailed-Ships track.</li>
-    <li><b>Charter Voyage</b> — a Harbor option (no tile): pay 2 G to ship one Ready cask (vessel or wharf) on a single-cask voyage now. Less efficient per cask than a Cog/Hulk, but prevents being stuck when the wharf is full or a vessel is blocked.</li>
+    <li><b>Charter Voyage</b> — a Harbor option (no tile): pay 2 G to ship one Ready cask (vessel or slot) on a single-cask voyage now. Less efficient per cask than a Cog/Hulk, but prevents being stuck when every slot is full or a vessel is blocked.</li>
     <li><b>Destination / kontor / the Hall</b> — where a ship delivers. <b>Kontore</b> pay trade value + majorities (volume); <b>the Hall</b> pays prestige (scarcity).</li>
     <li><b>Majority</b> — most delivered casks at a kontor; a scoring bonus.</li>
     <li><b>Recipe</b> — permission to brew a type (type + brew cost), on your rack. Start with Gruit + Hopped.</li>
     <li><b>Upgrade</b> — a Room (capability) or Modifier (asymmetric perk) on your brewery, mostly earned by delivering.</li>
-    <li><b>Neutral building</b> — a shared base action seeded in the wharf at setup.</li>
+    <li><b>Neutral building</b> — a shared base action seeded on a slot at setup.</li>
     <li><b>Sailed-Ships track</b> — the shared end clock; each voyage fills one slot. When full → finish the round → score.</li>
   </ul>
 </section>
 
+<section id="actionref">
+  <h2><span class="nm">17</span>Action Reference</h2>
+  <p><b>The goal:</b> ship valuable casks to destinations before the Sailed-Ships track fills — <b>kontore</b> for trade value + majorities (volume), the <b>Hall</b> for prestige (quality). Below is every action you can take to get there. The four <b>station verbs</b> are always available on the line you activate; <b>slot buildings</b> add bonus copies and special actions.</p>
+
+  <div class="acat">Each turn</div>
+  <table class="atbl">
+    <tr><th></th><th>Action</th><th>What it does</th></tr>
+    <tr><td><i data-lucide="footprints"></i></td><td><b>Move</b></td><td>Move your worker to an orthogonally adjacent station (mandatory from turn 2; turn 1 you just place).</td></tr>
+    <tr><td><i data-lucide="coins"></i></td><td><b>Occupancy toll</b></td><td>If you moved onto a station a <b>rival</b> already occupies, pay <b>1 <span class="cube g"></span></b> ⚙ to the supply. Opening placement is free; never blocks you.</td></tr>
+    <tr><td><i data-lucide="layout-grid"></i></td><td><b>Activate a line</b></td><td>Choose your station's <b>row or column</b>, then resolve its <b>two stations + the buildings in its two slots</b>, in any order.</td></tr>
+    <tr><td><i data-lucide="beer"></i></td><td><b>Deploy</b></td><td>When a cask becomes <b>Ready</b>, place it from a vessel onto an open <b>slot</b> (free) — it becomes cargo + a public action.</td></tr>
+  </table>
+
+  <div class="acat">Station verbs (always available on the line you fire)</div>
+  <table class="atbl">
+    <tr><th></th><th>Action</th><th>What it does</th></tr>
+    <tr><td><i data-lucide="wheat"></i></td><td><b>Source — gain grain</b></td><td><b>Market.</b> Take a <span class="cube g"></span> grain cube. (Source = <b>2 goods</b>, any mix of grain/hops.)</td></tr>
+    <tr><td><i data-lucide="sprout"></i></td><td><b>Source — gain hops</b></td><td><b>Market.</b> Take a <span class="cube h"></span> hops cube. (The other half of the 2-goods Source.)</td></tr>
+    <tr><td><i data-lucide="scroll-text"></i></td><td><b>Source — buy recipe</b></td><td><b>Market.</b> Pay <span class="cube g"></span>/<span class="cube h"></span> to add a brewable type to your rack (permanent). <em>(One acquire per Market, instead of taking goods.)</em></td></tr>
+    <tr><td><i data-lucide="sailboat"></i></td><td><b>Source — build ship</b></td><td><b>Market.</b> Pay its cost; place a <b>Cog</b> (cap 2) or <b>Hulk</b> (cap 3) on a slot, bound to a destination.</td></tr>
+    <tr><td><i data-lucide="wrench"></i></td><td><b>Source — take upgrade</b></td><td><b>Market.</b> Pay <b>4–5 G</b> for a Room/Modifier from the face-up display (or earn one <b>free</b> by delivering).</td></tr>
+    <tr><td><i data-lucide="flask-conical"></i></td><td><b>Brew</b></td><td><b>Brewhouse.</b> Pay a recipe's <span class="cube g"></span>/<span class="cube h"></span>; start a young cask in an open <b>vessel</b>.</td></tr>
+    <tr><td><i data-lucide="hourglass"></i></td><td><b>Age</b></td><td><b>Cellar.</b> Gain <b>3 advance points</b> ⚙; allocate across your vessels. (Casks also age <b>+1 each turn</b> automatically.)</td></tr>
+    <tr><td><i data-lucide="ship"></i></td><td><b>Ship — load</b></td><td><b>Harbor.</b> Load a Ready cask from a slot onto one of <b>your ships</b>. A full ship <b>sails</b> at once.</td></tr>
+  </table>
+
+  <div class="acat">Cask signature actions (a deployed cask on a slot, when its line fires)</div>
+  <table class="atbl">
+    <tr><th></th><th>Cask</th><th>What it does</th></tr>
+    <tr><td><i data-lucide="wheat"></i></td><td><b>Gruit → Source</b></td><td>Take <b>2 goods</b>.</td></tr>
+    <tr><td><i data-lucide="hourglass"></i></td><td><b>Hopped → Age</b></td><td>Advance any <b>1 cask 2 steps</b>.</td></tr>
+    <tr><td><i data-lucide="anchor"></i></td><td><b>Export L3 → Load</b></td><td>Load a Ready cask onto a ship, <b>free</b>.</td></tr>
+    <tr><td><i data-lucide="map-pin"></i></td><td><b>Export L4 → Reach</b></td><td><b>+1 presence</b> at a kontor you've delivered to (majority help).</td></tr>
+    <tr><td><i data-lucide="star"></i></td><td><b>Export L5 → Wild</b></td><td>Take any <b>one base verb</b> (Source / Brew / Age / Ship).</td></tr>
+  </table>
+
+  <div class="acat">Neutral buildings (shared, seeded on slots — use the one on your line)</div>
+  <table class="atbl">
+    <tr><th></th><th>Building</th><th>What it does</th></tr>
+    <tr><td><i data-lucide="store"></i></td><td><b>Market Stall</b></td><td><b>+1 good</b>.</td></tr>
+    <tr><td><i data-lucide="hammer"></i></td><td><b>Cooper</b></td><td>Advance a cask <b>1 step</b>.</td></tr>
+    <tr><td><i data-lucide="anchor"></i></td><td><b>Crane</b></td><td><b>Free load</b> a cask onto a ship.</td></tr>
+    <tr><td><i data-lucide="coins"></i></td><td><b>Counting-House</b></td><td>Convert / relabel goods.</td></tr>
+  </table>
+
+  <div class="acat">Shipping &amp; voyages</div>
+  <table class="atbl">
+    <tr><th></th><th>Action</th><th>What it does</th></tr>
+    <tr><td><i data-lucide="ship"></i></td><td><b>Sail</b> (automatic)</td><td>A ship sails the instant it is <b>full</b>: every cask aboard delivers (owner scores + picks the benefit), then the ship moves to the <b>Sailed-Ships track</b>.</td></tr>
+    <tr><td><i data-lucide="sailboat"></i></td><td><b>Launch early</b></td><td><b>Harbor.</b> Sail one of your partially-loaded ships now.</td></tr>
+    <tr><td><i data-lucide="sailboat"></i></td><td><b>Charter Voyage</b></td><td><b>Harbor.</b> Pay <b>2 G</b> ⚙ to ship <b>one</b> Ready cask (vessel or slot) on a single-cask voyage. Advances the clock; less efficient than your own ship.</td></tr>
+  </table>
+</section>
+
 <section id="quickref">
-  <h2><span class="nm">17</span>Quick Reference</h2>
+  <h2><span class="nm">18</span>Quick Reference</h2>
   <div class="ref">
     <h4>Your turn</h4>
     <ol>
-      <li><b>Move</b> worker to an orthogonally adjacent cell (mandatory).</li>
+      <li><b>Move</b> worker to an orthogonally adjacent station (mandatory) — pay <b>1 G</b> if a rival is already there.</li>
       <li><b>Activate</b> its row or column.</li>
-      <li><b>Resolve</b> 4 stops (cap · cell · cell · cap), any order. Both cells fire; cells are never blocked; you may use any wharf building on the line (on your turn).</li>
+      <li><b>Resolve</b> the line (slot · station · station · slot), any order. Both stations fire; stations are never closed; you may use the buildings in the line's two slots (on your turn).</li>
     </ol>
-    <h4>The loop</h4>
-    <p>Market (Source: goods/recipes/ships/upgrades) → Brewhouse (Brew a cask) → Cellar (Age to Ready → deploy to the wharf) → Harbor (Ship a cask onto a ship → sails when full → delivers).</p>
+    <h4>At the Wharf</h4>
+    <p>Market (Source: goods/recipes/ships/upgrades) → Brewhouse (Brew a cask) → Cellar (Age to Ready → deploy to a slot) → Harbor (Ship a cask onto a ship → sails when full → delivers).</p>
     <h4>Where to ship</h4>
     <p>Kontore = trade value + majorities (volume). The Hall = prestige (scarcity). Gate by quality; owner scores &amp; picks the benefit even on a rival's ship.</p>
     <h4>Game ends</h4>
@@ -335,5 +395,7 @@
   Brewhouses of the Hanse · rulebook <b>v0.7 “The Wharf”</b> draft · all numbers (⚙) are placeholders for balancing<br>
   <span style="font-size:.78rem">The Play client (<code>play.html</code>) is now v0.7 too — go play.</span>
 </footer>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>if(window.lucide)lucide.createIcons();</script>
 </body>
 </html>
