@@ -56,9 +56,11 @@
   footer{text-align:center; color:var(--ink2); font-size:.82rem; padding:30px; border-top:1px solid var(--line);}
   .backlink{display:inline-block; margin:18px 0; color:var(--red); text-decoration:none; font-weight:bold;}
   .backlink:hover{text-decoration:underline;}
-  .atbl td:first-child{text-align:center; width:40px;}
-  .atbl i{width:1.25em; height:1.25em; stroke-width:1.9; vertical-align:-3px; color:var(--red);}
-  .atbl th:first-child{width:40px;}
+  .atbl td:first-child{text-align:center; width:48px;}
+  .atbl .act-ic{display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; background:var(--parch2); border:1px solid var(--line);}
+  .atbl .act-ic i{width:1.05em; height:1.05em; stroke-width:1.9; color:var(--red); vertical-align:0;}
+  .atbl .gi{color:#9c7414;} .atbl .hi{color:#5d7d34;}
+  .atbl .gi, .atbl .hi{width:1em; height:1em; stroke-width:2.1; vertical-align:-2px;}
   .acat{font-variant:small-caps; color:var(--red); font-weight:bold; letter-spacing:.5px; margin:20px 0 2px; font-size:1.05rem;}
   @media(max-width:620px){.toc{column-count:1}}
 </style>
@@ -318,55 +320,51 @@
 
 <section id="actionref">
   <h2><span class="nm">17</span>Action Reference</h2>
-  <p><b>The goal:</b> ship valuable casks to destinations before the Sailed-Ships track fills — <b>kontore</b> for trade value + majorities (volume), the <b>Hall</b> for prestige (quality). Below is every action you can take to get there. The four <b>station verbs</b> are always available on the line you activate; <b>slot buildings</b> add bonus copies and special actions.</p>
+  <p><b>The goal:</b> ship valuable casks to destinations before the Sailed-Ships track fills — <b>kontore</b> for trade value + majorities (volume), the <b>Hall</b> for prestige (quality). Below is every action. <b>Station verbs</b> are always available on the line you activate; <b>slot buildings</b> add bonus copies and special actions. <span class="note">Costs read as <i data-lucide="wheat" class="gi"></i>2; gains as +2 <i data-lucide="wheat" class="gi"></i>.</span></p>
 
   <div class="acat">Each turn</div>
   <table class="atbl">
-    <tr><th></th><th>Action</th><th>What it does</th></tr>
-    <tr><td><i data-lucide="footprints"></i></td><td><b>Move</b></td><td>Move your worker to an orthogonally adjacent station (mandatory from turn 2; turn 1 you just place).</td></tr>
-    <tr><td><i data-lucide="coins"></i></td><td><b>Occupancy toll</b></td><td>If you moved onto a station a <b>rival</b> already occupies, pay <b>1 <span class="cube g"></span></b> ⚙ to the supply. Opening placement is free; never blocks you.</td></tr>
-    <tr><td><i data-lucide="layout-grid"></i></td><td><b>Activate a line</b></td><td>Choose your station's <b>row or column</b>, then resolve its <b>two stations + the buildings in its two slots</b>, in any order.</td></tr>
-    <tr><td><i data-lucide="beer"></i></td><td><b>Deploy</b></td><td>When a cask becomes <b>Ready</b>, place it from a vessel onto an open <b>slot</b> (free) — it becomes cargo + a public action.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="footprints"></i></span></td><td><b>Move</b></td><td>Move your worker to an orthogonally adjacent station (mandatory from turn 2; turn 1 you place).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="coins"></i></span></td><td><b>Occupancy toll</b></td><td>Moved onto a station a <b>rival</b> occupies? Pay <b><i data-lucide="wheat" class="gi"></i>1</b> ⚙ to the supply. Opening placement free; never blocks.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="layout-grid"></i></span></td><td><b>Activate a line</b></td><td>Choose your station's <b>row or column</b>; resolve its two stations + the buildings in its two slots, any order.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="circle-arrow-down"></i></span></td><td><b>Deploy</b></td><td>When a cask is <b>Ready</b>, place it from a vessel onto an open <b>slot</b> (free) — it becomes cargo + a public action.</td></tr>
   </table>
 
-  <div class="acat">Station verbs (always available on the line you fire)</div>
+  <div class="acat">Station verbs (the line you fire)</div>
   <table class="atbl">
-    <tr><th></th><th>Action</th><th>What it does</th></tr>
-    <tr><td><i data-lucide="wheat"></i></td><td><b>Source — gain grain</b></td><td><b>Market.</b> Take a <span class="cube g"></span> grain cube. (Source = <b>2 goods</b>, any mix of grain/hops.)</td></tr>
-    <tr><td><i data-lucide="sprout"></i></td><td><b>Source — gain hops</b></td><td><b>Market.</b> Take a <span class="cube h"></span> hops cube. (The other half of the 2-goods Source.)</td></tr>
-    <tr><td><i data-lucide="scroll-text"></i></td><td><b>Source — buy recipe</b></td><td><b>Market.</b> Pay <span class="cube g"></span>/<span class="cube h"></span> to add a brewable type to your rack (permanent). <em>(One acquire per Market, instead of taking goods.)</em></td></tr>
-    <tr><td><i data-lucide="sailboat"></i></td><td><b>Source — build ship</b></td><td><b>Market.</b> Pay its cost; place a <b>Cog</b> (cap 2) or <b>Hulk</b> (cap 3) on a slot, bound to a destination.</td></tr>
-    <tr><td><i data-lucide="wrench"></i></td><td><b>Source — take upgrade</b></td><td><b>Market.</b> Pay <b>4–5 G</b> for a Room/Modifier from the face-up display (or earn one <b>free</b> by delivering).</td></tr>
-    <tr><td><i data-lucide="flask-conical"></i></td><td><b>Brew</b></td><td><b>Brewhouse.</b> Pay a recipe's <span class="cube g"></span>/<span class="cube h"></span>; start a young cask in an open <b>vessel</b>.</td></tr>
-    <tr><td><i data-lucide="hourglass"></i></td><td><b>Age</b></td><td><b>Cellar.</b> Gain <b>3 advance points</b> ⚙; allocate across your vessels. (Casks also age <b>+1 each turn</b> automatically.)</td></tr>
-    <tr><td><i data-lucide="ship"></i></td><td><b>Ship — load</b></td><td><b>Harbor.</b> Load a Ready cask from a slot onto one of <b>your ships</b>. A full ship <b>sails</b> at once.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="wheat"></i></span></td><td><b>Source — grain</b></td><td><b>Market.</b> Gain <b>+2 <i data-lucide="wheat" class="gi"></i></b> (Source = 2 goods, any mix).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="sprout"></i></span></td><td><b>Source — hops</b></td><td><b>Market.</b> Gain <b>+2 <i data-lucide="sprout" class="hi"></i></b> (the other half of Source).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="scroll-text"></i></span></td><td><b>Source — buy recipe</b></td><td><b>Market.</b> Cost <i data-lucide="wheat" class="gi"></i>1–<i data-lucide="wheat" class="gi"></i>2; add a brewable type (permanent). <em>(One acquire per Market, instead of goods.)</em></td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="sailboat"></i></span></td><td><b>Source — build ship</b></td><td><b>Market.</b> Cost <i data-lucide="wheat" class="gi"></i>2 (Cog · cap 2) / <i data-lucide="wheat" class="gi"></i>3 (Hulk · cap 3); place on a slot, bound to a destination.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="wrench"></i></span></td><td><b>Source — take upgrade</b></td><td><b>Market.</b> Cost <i data-lucide="wheat" class="gi"></i>4–<i data-lucide="wheat" class="gi"></i>5 — or <b>free</b> by delivering.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brew</b></td><td><b>Brewhouse.</b> Pay the recipe's cost (e.g. <i data-lucide="wheat" class="gi"></i>1 <i data-lucide="sprout" class="hi"></i>1); start a young cask in an open vessel.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Age</b></td><td><b>Cellar.</b> Gain <b>3 advance points</b> ⚙ across your vessels. (Casks also age +1 each turn.)</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>Ship — load</b></td><td><b>Harbor.</b> Load a Ready cask from a slot onto one of your ships. A full ship sails at once.</td></tr>
   </table>
 
-  <div class="acat">Cask signature actions (a deployed cask on a slot, when its line fires)</div>
+  <div class="acat">Cask signature actions (a deployed cask, when its line fires)</div>
   <table class="atbl">
-    <tr><th></th><th>Cask</th><th>What it does</th></tr>
-    <tr><td><i data-lucide="wheat"></i></td><td><b>Gruit → Source</b></td><td>Take <b>2 goods</b>.</td></tr>
-    <tr><td><i data-lucide="hourglass"></i></td><td><b>Hopped → Age</b></td><td>Advance any <b>1 cask 2 steps</b>.</td></tr>
-    <tr><td><i data-lucide="anchor"></i></td><td><b>Export L3 → Load</b></td><td>Load a Ready cask onto a ship, <b>free</b>.</td></tr>
-    <tr><td><i data-lucide="map-pin"></i></td><td><b>Export L4 → Reach</b></td><td><b>+1 presence</b> at a kontor you've delivered to (majority help).</td></tr>
-    <tr><td><i data-lucide="star"></i></td><td><b>Export L5 → Wild</b></td><td>Take any <b>one base verb</b> (Source / Brew / Age / Ship).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="store"></i></span></td><td><b>Gruit → Source</b></td><td>Gain <b>+2</b> goods.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Hopped → Age</b></td><td>Advance any <b>1 cask 2 steps</b>.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>Export L3 → Load</b></td><td>Load a Ready cask onto a ship, <b>free</b>.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="map-pin"></i></span></td><td><b>Export L4 → Reach</b></td><td><b>+1 presence</b> at a kontor you've delivered to.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="sparkles"></i></span></td><td><b>Export L5 → Wild</b></td><td>Take any <b>one base verb</b> (Source / Brew / Age / Ship).</td></tr>
   </table>
 
-  <div class="acat">Neutral buildings (shared, seeded on slots — use the one on your line)</div>
+  <div class="acat">Neutral buildings (shared, seeded on slots)</div>
   <table class="atbl">
-    <tr><th></th><th>Building</th><th>What it does</th></tr>
-    <tr><td><i data-lucide="store"></i></td><td><b>Market Stall</b></td><td><b>+1 good</b>.</td></tr>
-    <tr><td><i data-lucide="hammer"></i></td><td><b>Cooper</b></td><td>Advance a cask <b>1 step</b>.</td></tr>
-    <tr><td><i data-lucide="anchor"></i></td><td><b>Crane</b></td><td><b>Free load</b> a cask onto a ship.</td></tr>
-    <tr><td><i data-lucide="coins"></i></td><td><b>Counting-House</b></td><td>Convert / relabel goods.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="store"></i></span></td><td><b>Market Stall</b></td><td>Gain <b>+1</b> good.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="hammer"></i></span></td><td><b>Cooper</b></td><td>Advance a cask <b>1 step</b>.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="package-plus"></i></span></td><td><b>Crane</b></td><td><b>Free load</b> a cask onto a ship.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="arrow-left-right"></i></span></td><td><b>Counting House</b></td><td>Convert up to 2 goods (<i data-lucide="wheat" class="gi"></i>↔<i data-lucide="sprout" class="hi"></i>).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="megaphone"></i></span></td><td><b>Towncrier</b></td><td>Draw a goal.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="heart"></i></span></td><td><b>Almshouse</b></td><td><b>+1</b> to a majority you hold.</td></tr>
   </table>
 
   <div class="acat">Shipping &amp; voyages</div>
   <table class="atbl">
-    <tr><th></th><th>Action</th><th>What it does</th></tr>
-    <tr><td><i data-lucide="ship"></i></td><td><b>Sail</b> (automatic)</td><td>A ship sails the instant it is <b>full</b>: every cask aboard delivers (owner scores + picks the benefit), then the ship moves to the <b>Sailed-Ships track</b>.</td></tr>
-    <tr><td><i data-lucide="sailboat"></i></td><td><b>Launch early</b></td><td><b>Harbor.</b> Sail one of your partially-loaded ships now.</td></tr>
-    <tr><td><i data-lucide="sailboat"></i></td><td><b>Charter Voyage</b></td><td><b>Harbor.</b> Pay <b>2 G</b> ⚙ to ship <b>one</b> Ready cask (vessel or slot) on a single-cask voyage. Advances the clock; less efficient than your own ship.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="sailboat"></i></span></td><td><b>Sail</b> (auto / launch early)</td><td>A ship sails the instant it is <b>full</b> (or launch a partial one at the Harbor): every cask aboard delivers (owner scores + picks the benefit), then the ship moves to the <b>Sailed-Ships track</b>.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="ticket"></i></span></td><td><b>Charter</b></td><td><b>Harbor.</b> Pay <b><i data-lucide="wheat" class="gi"></i>2</b> ⚙ to ship <b>one</b> Ready cask (vessel or slot) on a single-cask voyage. Advances the clock; less efficient than your own ship.</td></tr>
   </table>
 </section>
 
