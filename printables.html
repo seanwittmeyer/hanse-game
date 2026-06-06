@@ -34,8 +34,8 @@
   /* card-corner QUALITY = a gem icon + the number (no "Q"; we know the number is quality) */
   .q{position:absolute;top:.06in;left:.08in;display:flex;align-items:center;gap:.02in;font-weight:900;font-size:.34in;line-height:1}
   .q svg,.q .ic{width:.2in;height:.2in;stroke-width:2.2}
-  .t-nm{position:absolute;top:.085in;right:.09in;max-width:.78in;text-align:right;font-variant:small-caps;font-weight:bold;font-size:.135in;line-height:1}
-  .t-nm .bi{display:block;font-size:.17in;line-height:1}
+  /* title sits just below the quality value, top-left */
+  .t-nm{position:absolute;top:.46in;left:.1in;max-width:1.05in;text-align:left;font-variant:small-caps;font-weight:bold;font-size:.155in;line-height:1.05}
   .t-act{font-size:.1in;line-height:1.12;background:rgba(0,0,0,.24);border-radius:.04in;padding:.025in .04in;margin-bottom:.03in;display:flex;align-items:center;gap:.03in}
   .t-act svg,.t-act .ic{width:.13in;height:.13in;flex:0 0 auto}
   .t-act .ac{display:inline-flex;align-items:center;justify-content:center;width:.22in;height:.22in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
@@ -198,7 +198,7 @@
 const LU=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const cnt=n=>MODE==='proof'?1:n;
 const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc">'+LU('sprout','h')+h+'</span>');return a.join('');};
-const QI='gem', VP='star';  // quality icon · victory-point icon
+const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · victory-point icon
 
 const CASKS=[
   {nm:'Gruit',  c:'#8a949c', q:1, g:1,h:0,      ai:'store',     act:'Source +2 goods', n:16},
@@ -273,7 +273,7 @@ function setView(v){VIEW=v;['tiles','cards','boards','dest'].forEach(x=>document
 const REG='<div class="regmark rm-tl"></div><div class="regmark rm-tr"></div><div class="regmark rm-bl"></div><div class="regmark rm-br"></div>';
 function caskTile(d){return '<div class="tile" style="--c:'+d.c+'">'
   +'<div class="q">'+LU(QI)+d.q+'</div>'
-  +'<div class="t-nm"><span class="bi">'+LU('beer')+'</span>'+d.nm+'</div>'
+  +'<div class="t-nm">'+d.nm+'</div>'
   +'<div class="t-act"><span class="ac">'+LU(d.ai)+'</span><span>'+d.act+'</span></div>'
   +'<div class="t-cost">'+(d.premium?'<span style="font-size:.1in">premium · needs Cellar</span>':'brew '+cost(d.g,d.h))+'</div></div>';}
 function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--c:'+it.c+'">'
@@ -289,7 +289,7 @@ function renderTiles(){const back=SIDE==='back';
   let h='<div class="page'+(back?' backs':'')+'">'+REG;
   h+='<div class="calib"><div class="box">1 inch<br>100%</div><span class="note" style="color:#555">'
     +(back?'<b>BACKS</b> blank (single-face). Corner ✛ register a duplex pass.':'Verify exactly 1 inch. Colour bleeds to the edge; cut on the inner frame.')+'</span></div>';
-  h+='<div class="famlabel">Cask Tiles — the dual-role hero <span class="sm">'+LU('beer')+' type · the big corner number is QUALITY ('+LU(QI)+' = gate to destinations, and ×2 prestige at the Hall) · '+LU('zap')+' signature slot action · L3–L5 are the EXPORT beers, dealt Bock / Mumme / Broyhan / Keut</span></div><div class="grid">';
+  h+='<div class="famlabel">Cask Tiles — the dual-role hero <span class="sm">the big corner is the cask\'s QUALITY ('+LU(QI)+' = its level; gates destinations, and ×2 prestige at the Hall) · '+LU('zap')+' signature slot action · L3–L5 are the EXPORT beers, dealt Bock / Mumme / Broyhan / Keut</span></div><div class="grid">';
   CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTile:caskTile(d);}); h+='</div>';
   FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+(f.sm?' <span class="sm">'+f.sm+'</span>':'')+'</div><div class="grid">';
     f.items.forEach(it=>{for(let i=0;i<cnt(it.n);i++)h+= back?blankTile:genTile(it,f.cls);});h+='</div>';});
