@@ -339,13 +339,18 @@ const SLOTS=[
   {id:'s1',line:'colL'},{id:'s2',line:'colR'},{id:'s8',line:'rowT'},{id:'s3',line:'rowT'},
   {id:'s7',line:'rowB'},{id:'s4',line:'rowB'},{id:'s6',line:'colL'},{id:'s5',line:'colR'},
 ];
-const LINES={rowT:{cells:['A','B'],caps:['s8','s3'],label:'Top row · Market + Brewhouse'},
-             rowB:{cells:['C','D'],caps:['s7','s4'],label:'Bottom row · Harbor + Cellar'},
+// v0.8 BUILD×CASH-OUT diagonal: the two BUILDERS (Market·Brewhouse) sit on the A–D diagonal and the two
+// CASH-OUTS (Cellar·Harbor) on the B–C diagonal, so neither builder pair nor cash-out pair is ever co-linear.
+// Every line is one builder + one cash-out → you can't Source+Brew (or Age+Ship) in a single turn, which
+// forces the worker to actually walk rather than camp one edge as a rondel. (Brewhouse↔Cellar swapped
+// vs the v0.7 loop layout; geometry/caps/render unchanged.)
+const LINES={rowT:{cells:['A','B'],caps:['s8','s3'],label:'Top row · Market + Cellar'},
+             rowB:{cells:['C','D'],caps:['s7','s4'],label:'Bottom row · Harbor + Brewhouse'},
              colL:{cells:['A','C'],caps:['s1','s6'],label:'Left col · Market + Harbor'},
-             colR:{cells:['B','D'],caps:['s2','s5'],label:'Right col · Brewhouse + Cellar'}};
+             colR:{cells:['B','D'],caps:['s2','s5'],label:'Right col · Cellar + Brewhouse'}};
 const ADJ={A:['B','C'],B:['A','D'],C:['A','D'],D:['B','C']};   // orthogonal only — never the diagonal
-const CELLNAME={A:'Market',B:'Brewhouse',C:'Harbor',D:'Cellar'};
-const CELLROLE={A:'Source',B:'Brew',C:'Ship',D:'Age'};
+const CELLNAME={A:'Market',B:'Cellar',C:'Harbor',D:'Brewhouse'};
+const CELLROLE={A:'Source',B:'Age',C:'Ship',D:'Brew'};
 const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C:{row:'rowB',col:'colL'},D:{row:'rowB',col:'colR'}})[cell];
 
 // ---- pace dials ⚙ ----
@@ -361,7 +366,7 @@ const START_STORAGE=8;
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v13'; // v0.7 + balanced wharf seeding (warm-start tiles spread across weakest lines, no fixed opening camp); bump discards stale state
+const KEY='hanse-hotseat-v14-bxc'; // v0.8 EXPERIMENT: build×cash-out diagonal (Brewhouse↔Cellar swapped); bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -558,9 +563,9 @@ function cellDone(){resume('stops');}
 
 function enterCell(cell){
   if(cell==='A'){UI.sub='cell';UI.cell='A';UI.stage=null;UI.tmp={};render();}
-  else if(cell==='B'){enterBrew('stops');}
+  else if(cell==='B'){enterAge(CELLAR_POOL+(hasUpgrade(cur(),'guild')?1:0),'pool','stops');}   // v0.8: B = Cellar (Age)
   else if(cell==='C'){UI.sub='cell';UI.cell='C';UI.stage='harbor';UI.tmp={};render();}
-  else if(cell==='D'){enterAge(CELLAR_POOL+(hasUpgrade(cur(),'guild')?1:0),'pool','stops');}
+  else if(cell==='D'){enterBrew('stops');}                                                     // v0.8: D = Brewhouse (Brew)
 }
 
 // ---------- MARKET (Source) ----------
