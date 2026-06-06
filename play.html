@@ -347,6 +347,11 @@ const ADJ={A:['B','C'],B:['A','D'],C:['A','D'],D:['B','C']};   // orthogonal onl
 const CELLNAME={A:'Market',B:'Brewhouse',C:'Harbor',D:'Cellar'};
 const CELLROLE={A:'Source',B:'Brew',C:'Ship',D:'Age'};
 const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C:{row:'rowB',col:'colL'},D:{row:'rowB',col:'colR'}})[cell];
+// v0.8 EXPERIMENT — occupancy pressure: activating a line costs this many G per cell on it that a RIVAL
+// worker occupies (paid to the supply, capped at goods held; never blocks). Makes camping a busy line a
+// resource drain, so the worker spreads out instead of walking the same edge as a rondel. Loop layout
+// (A=Market·B=Brewhouse·C=Harbor·D=Cellar) is UNCHANGED — only this congestion cost is added. ⚙
+const OCCUPANCY_TOLL=1;
 
 // ---- pace dials ⚙ ----
 const SAILED_CAP={2:7,3:11,4:15,5:19};  // the Sailed-Ships end clock (per RULES §8) — primary pace dial ⚙ (scales steeply: the shared clock fills faster with more players)
@@ -361,7 +366,7 @@ const START_STORAGE=8;
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v13'; // v0.7 + balanced wharf seeding (warm-start tiles spread across weakest lines, no fixed opening camp); bump discards stale state
+const KEY='hanse-hotseat-v14-occ'; // v0.8 EXPERIMENT: occupancy pressure (congestion toll per rival-occupied cell); bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -527,6 +532,10 @@ function doMove(cell){
 function chooseLine(which){
   snapshot();
   const p=cur();const lk=cellOfLine(p.cell)[which];const L=LINES[lk];
+  // occupancy pressure: pay a congestion toll for each rival-occupied cell on this line (capped, never blocks)
+  const occ=L.cells.filter(c=>S.players.some(q=>q.id!==p.id&&q.cell===c)).length;
+  const toll=Math.min(occ*OCCUPANCY_TOLL,p.grain);
+  if(toll>0){p.grain-=toll;log(p.name+' pays a '+toll+'G congestion toll ('+occ+' rival-occupied cell'+(occ>1?'s':'')+').',true);}
   log(p.name+' activates the <b>'+L.label+'</b>.',true);
   const stops=[];
   L.cells.forEach(c=>stops.push({kind:'cell',cell:c}));
