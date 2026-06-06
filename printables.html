@@ -253,10 +253,11 @@ const FAMS=[
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:30},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:24}];
 const RECIPES=[
-  {nm:'Hopped', cc:'#8a6408', g:1,h:1, reach:'London · Bergen · Hall', start:true},
-  {nm:'Export L3', cc:'#a07a0c', g:1,h:2, reach:'+ Novgorod'},
-  {nm:'Export L4', cc:'#8a6408', g:2,h:2, reach:'all kontore + Hall'},
-  {nm:'Export L5', cc:'#7c2128', premium:true, reach:'all · needs Aging Cellar'},
+  {nm:'Hopped',  cc:'#8a6408', g:1,h:1, reach:'L2 · London · Bergen · Hall', start:true},
+  {nm:'Broyhan', cc:'#a07a0c', g:1,h:2, reach:'L3 · adds Novgorod'},
+  {nm:'Keut',    cc:'#b8860b', g:2,h:1, reach:'L3 · adds Novgorod'},
+  {nm:'Mumme',   cc:'#b06a34', g:2,h:2, reach:'L4 · all kontore + Hall'},
+  {nm:'Bock',    cc:'#7c2128', premium:true, reach:'L5 · all · needs Aging Cellar'},
 ];
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'},{nm:'Violet',c:'#5b3a8e'}];
 const DESTS=[
@@ -308,7 +309,7 @@ function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
   +'<span class="c-cost">'+(r.premium?'needs Cellar':'brew '+cost(r.g,r.h))+'</span></div>'
   +'</div>';}
 function renderCards(){let h='<div class="page">'
-  +'<div class="famlabel">Recipe Cards <span class="sm">recipes are CARDS now — slide them into the tuck strip at the bottom of your player board. Each will gain a one-time acquire bonus (dual-purpose) in a later pass; for now it is simply a permanent brew permission. Start with Gruit (printed on the board) + Hopped.</span></div>'
+  +'<div class="famlabel">Recipe Cards <span class="sm">slide them into the tuck strip under your player board — the title + cost stay visible on the edge. Start with Gruit (printed) + Hopped; collect the export beers — Bock · Mumme · Broyhan · Keut — to climb. (Acquire bonus is dual-purpose, TBD.)</span></div>'
   +'<div class="grid" style="gap:.14in">';
   RECIPES.forEach(r=>{for(let i=0;i<(MODE==='proof'?1:3);i++)h+=recipeCard(r);});
   h+='</div></div>'; return h;}
