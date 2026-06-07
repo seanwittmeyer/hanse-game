@@ -210,7 +210,7 @@ const CASKS=[
   {nm:'Hopped', c:'#c2922f', q:2, g:1,h:1,      ai:'hourglass', act:'Age a cask +2',   n:20},
   {nm:'Export', c:'#b06a34', q:3, g:1,h:2,      ai:'ship',      act:'free Load',       n:12},
   {nm:'Export', c:'#caa12a', q:4, g:2,h:2,      ai:'map-pin',   act:'+1 presence',     n:8},
-  {nm:'Export', c:'#7c2128', q:5, premium:true, ai:'sparkles',  act:'Wild — any verb', n:4},
+  {nm:'Export', c:'#7c2128', q:5, g:3,h:2, cellar:true, ai:'sparkles',  act:'Wild — any verb', n:4},
 ];
 const FAMS=[
  {label:'Ships — owned single-use carriers', sm:'built to a destination · full → sail → Sailed-Ships track · (Charter = 1 cask for 2 G, no tile)', items:[
@@ -258,7 +258,7 @@ const RECIPES=[
   {nm:'Broyhan', cc:'#a07a0c', g:1,h:2, reach:'L3 · adds Novgorod'},
   {nm:'Keut',    cc:'#b8860b', g:2,h:1, reach:'L3 · adds Novgorod'},
   {nm:'Mumme',   cc:'#b06a34', g:2,h:2, reach:'L4 · all kontore + Hall'},
-  {nm:'Bock',    cc:'#7c2128', premium:true, reach:'L5 · all · needs Aging Cellar'},
+  {nm:'Bock',    cc:'#7c2128', g:3,h:2, cellar:true, reach:'L5 · all · needs Aging Cellar'},
 ];
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'},{nm:'Violet',c:'#5b3a8e'}];
 const DESTS=[
@@ -281,7 +281,7 @@ function caskTile(d){return '<div class="tile" style="--c:'+d.c+'">'
   +'<div class="q">'+LU(QI)+d.q+'</div>'
   +'<div class="t-nm">'+d.nm+'</div>'
   +'<div class="t-act"><span class="ac">'+LU(d.ai)+'</span><span>'+d.act+'</span></div>'
-  +'<div class="t-cost">'+(d.premium?'<span style="font-size:.1in">premium · needs Cellar</span>':'brew '+cost(d.g,d.h))+'</div></div>';}
+  +'<div class="t-cost">brew '+cost(d.g,d.h)+(d.cellar?' <span style="font-size:.1in">· Cellar</span>':'')+'</div></div>';}
 function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--c:'+it.c+'">'
   +'<div class="g-head"><span class="bigic">'+LU(it.ic)+'</span><span class="g-nm">'+it.nm+'</span></div>'
   +(it.act?'<div class="g-act">'+it.act+'</div>':'')
@@ -307,7 +307,7 @@ function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
   +'<div class="c-reach">reaches: '+r.reach+'</div>'
   +'<div class="c-bonus">'+LU('gift')+'<span>acquire bonus — <b>dual-purpose (TBD)</b></span></div>'
   +'<div class="c-strip">'+LU('scroll-text')+'<span>'+r.nm+(r.start?' · start':'')+'</span>'
-  +'<span class="c-cost">'+(r.premium?'needs Cellar':'brew '+cost(r.g,r.h))+'</span></div>'
+  +'<span class="c-cost">brew '+cost(r.g,r.h)+(r.cellar?' · Cellar':'')+'</span></div>'
   +'</div>';}
 function renderCards(){let h='<div class="page">'
   +'<div class="famlabel">Recipe Cards <span class="sm">portrait cards — slide them up into the tuck strip under your player board (title + cost stay visible on the edge). Start with Gruit (printed) + Hopped; collect the export beers — Bock · Mumme · Broyhan · Keut — to climb. '+(MODE==='proof'?'(proof: one set shown — full mode prints a complete set per player.)':'one complete set per player ('+PLAYERS.length+' total).')+' (Acquire bonus is dual-purpose, TBD.)</span></div>';
