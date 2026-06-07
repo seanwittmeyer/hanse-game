@@ -214,7 +214,7 @@ const ICONTIP={
   wheat:'Grain (G) — a brewing input and the medium of exchange.',
   sprout:'Hops (H) — a brewing input; the beer that travels.',
   beer:'Cask — a brewed beer tile (matures → slot → delivered).',
-  store:'Market — Source: take 2 goods, or buy a recipe / ship / upgrade.',
+  store:'Market — Source: gain 2 goods, or buy a recipe / ship / upgrade.',
   'flask-conical':'Brewhouse — Brew: load a recipe into an open vessel.',
   hourglass:'Cellar — Age: a pool of age points across your vessels.',
   ship:'Harbor — Ship: load a Ready cask from a slot onto one of your ships.',
@@ -227,7 +227,7 @@ const ICONTIP={
   'map-pin':'Presence — your delivered casks at a kontor (counts for majorities).',
   coins:'Goods.',
   package:'Storage — how many goods you can hold.',
-  target:'Goal — an end-game objective; your best few score.',
+  target:'Goal — an end-game objective; deal 3 per player, your best 2 score.',
   hammer:'Cooper — age one of your casks a step.',
   check:'Ready — this cask is matured; deploy it to a slot.',
   'user-round':'Worker — move it between the four stations.',
@@ -262,7 +262,7 @@ const CASK_ACT={source:'gain 2 goods',age:'Age a cask 2 steps',
 
 // ---- DESTINATIONS (4 kontore + the Hall) — all open from start ----
 // maj is a TIERED majority payout [1st,2nd,3rd] (Lacerda-style); 2-player games skip 2nd (winner-take-all).
-// Tunable per destination ⚙. Bergen is THE majority kontor (15/10/5); London is the engine/upgrade kontor
+// Tunable per destination ⚙. Bergen is THE majority kontor (10/6/3); London is the engine/upgrade kontor
 // (Bergen no longer grants an upgrade, so the two are no longer clones).
 const DEST={
   bruges  :{name:'Bruges',  gate:1, value:2, maj:[2],       benefit:'goods',   kontor:true,  role:'Hub · gain goods'},
@@ -935,7 +935,7 @@ function cellRender(p){
     if(UI.stage==='shipdest')return {prompt:'Bind your ship to a destination (it inherits that gate).',
       acts:DESTS.map(d=>btn((DEST[d].kontor?LU('landmark'):LU('crown'))+' '+DEST[d].name+' (Q'+DEST[d].gate+')','shipDest(\''+d+'\')','go')).join('')};
     if(UI.stage==='place')return {prompt:'Click an open slot to place your ship.',acts:''};
-    return {prompt:'Source — take 2 goods, or buy a tile from the Market →',
+    return {prompt:'Gain 2 goods, or buy a tile from the Market →',
       acts:btn('Take '+Gi(2),'marketGoods(2,0)','go')+btn('Take '+Gi(1)+Hi(1),'marketGoods(1,1)','go')+btn('Take '+Hi(2),'marketGoods(0,2)','go')+btn('Skip','cellDone()','ghost')};
   }
   if(UI.cell==='C'){

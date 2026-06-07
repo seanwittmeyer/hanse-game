@@ -144,8 +144,8 @@ All **open from the start**. Differentiated by a **quality gate** (the climb-lim
 
 > **Majorities are tiered & ranked (Lacerda-style):** 1st/2nd/3rd by delivered-cask count take the kontor's tiers; **2-player games skip 2nd** (winner-take-all); ties split the occupied tiers ⚙. The **rich majority is concentrated at Bergen** (its monopoly identity) so the majority *lean* is viable without broad tiered payouts over-feeding the volume lean and starving prestige (sim-validated, `DESIGN.md` §21 v0.9). **London (engine — accessible upgrades)** and **Bergen (majority, no upgrade)** are now distinct, not clones. Delivery value is **flat per kontor regardless of quality** (only the Hall scales with Q) — so a high-Q cask is wasted at Bruges and shines at Novgorod or the Hall.
 
-### G. Goal / objective tiles — the variety layer (~9 ⚙, best few score)
-A small pool (shared draft or per-player ⚙) rewarding different shapes, so the winning engine varies by game (the *GWT* blend ideal). **Only your best few score** ⚙ (keeps goals ~⅓ of a score, not the game); authored so a one-note rush fills few of them.
+### G. Goal / objective tiles — the variety layer (~9 in box; deal 3 per player, best 2 score ⚙)
+A small pool (~9 ⚙) rewarding different shapes, so the winning engine varies by game (the *GWT* blend ideal). **Deal 3 per player; your best 2 score** ⚙ (keeps goals ~⅓ of a score, not the game); authored so a one-note rush fills few of them.
 
 | # | Goal (end-game) ⚙ | Pulls you toward |
 |---|---|---|

@@ -203,7 +203,7 @@
 
 <div class="wrap">
 
-<p class="disclaimer">This is a living prototype — the single rulebook <em>and</em> component reference. Every specific number (costs, maturation, destination values, scoring) is marked ⚙ and is a placeholder for balancing; the <em>rules structure</em> is what is pinned down here. The design rationale (the <em>why</em>) lives in <code>DESIGN.md</code>. <span class="small">Jump to any section with <b>📖 Contents</b> in the bar above — it tracks where you are.</span></p>
+<p class="disclaimer"><b>New to the game?</b> Start with the gentle <a href="learn.html">🎓 Learn</a> primer — this page is the <em>complete</em> rulebook &amp; component reference. Every specific number (costs, maturation, destination values, scoring) is marked ⚙ — a placeholder for balancing; the <em>rules structure</em> is what's pinned down. The design rationale (the <em>why</em>) lives in <code>DESIGN.md</code>. <span class="small">Jump to any section with <b>📖 Contents</b> in the bar above — it tracks where you are.</span></p>
 
 <section id="intro">
   <h2><span class="nm">1</span>The Brewing House</h2>
@@ -386,7 +386,7 @@
   <ol>
     <li><b>Delivery value</b> — sum your delivered casks' values at each destination (kontore = trade value; <b>the Hall = prestige</b>, scaling with quality, Q×2).</li>
     <li><b>Majorities</b> — at each kontor, by delivered-cask count, <b>1st / 2nd / 3rd</b> place take that kontor's tiers (Bergen <b>10 / 6 / 3</b> ⚙ is the rich one; Bruges/London <b>2</b>, Novgorod <b>3</b> — minor, 1st-place-only). <b>2-player games skip 2nd</b> (winner-take-all); tied players split the sum of the tiers they occupy ⚙.</li>
-    <li><b>Goals</b> — resolve your goal tiles; <b>only your best few score</b> ⚙.</li>
+    <li><b>Goals</b> — you hold <b>3 goal tiles</b> (dealt at setup); <b>your best 2 score</b> ⚙.</li>
   </ol>
   <p>Highest total wins. <b>Tiebreak:</b> most goods, then most casks on slots.</p>
   <div class="gallery" id="goalGallery"></div>
@@ -476,7 +476,7 @@
     <h4>Where to ship</h4>
     <p>Bruges (+2, goods) · London (+3, an upgrade) · Bergen (+3, the big majority 10/6/3) · Novgorod (+5, an upgrade) · the Hall (Q×2, prestige). Gate by quality; owner scores &amp; picks the benefit even on a rival's ship.</p>
     <h4>Game ends</h4>
-    <p><b>The Sailed-Ships track fills</b> (each voyage = 1 slot) → finish the round → score: Deliveries + Majorities (tiered; 2p skips 2nd) + Goals (best few).</p>
+    <p><b>The Sailed-Ships track fills</b> (each voyage = 1 slot) → finish the round → score: Deliveries + Majorities (tiered; 2p skips 2nd) + Goals (best 2 of your 3).</p>
   </div>
 </section>
 
@@ -566,7 +566,7 @@ const goals=[
   ['+X flat','safe / scarcity'],
 ];
 document.getElementById('goalGallery').innerHTML=goals.map(g=>`
-  <div class="card"><div class="head h-kontor"><div class="kind">Goal · best few score</div><div class="ttl">${g[0]}</div></div>
+  <div class="card"><div class="head h-kontor"><div class="kind">Goal · deal 3, best 2 score</div><div class="ttl">${g[0]}</div></div>
   <div class="body"><span class="badge">pulls you toward ${g[1]}</span></div></div>`).join('');
 
 // ---- GRID LINE HIGHLIGHT ----

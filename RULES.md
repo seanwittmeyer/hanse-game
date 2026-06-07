@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Turn & Round Economy (v0.8 — "The Wharf")
+# Brewhouses of the Hanse — Turn & Round Economy (v0.9 — "The Wharf")
 
 > Operational rules. Numbers are placeholders ⚙. **v0.7 is a ground-up reel-in to *Great Western Trail / Distilled* weight.** It keeps what was loved — the shared 2×2 of stations ringed by slots, the dual-role cask, the merchant-shipping fantasy, and the theme — and sheds about half the rules. The whole game now happens at **the Wharf**: four stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots, where the work runs **Source → Brew → Age → Ship.** A brewed cask matures privately, then sits on a shared **slot** as a public **action-building** *and* your cargo-in-waiting, then **ships to a destination** for points and leaves. The two old value tracks (reach/standing) are gone — **the volume-vs-prestige lean now lives in *where you ship*.** Supersedes v0.6 (`DESIGN.md` §21, 2026-06-05).
 
@@ -203,7 +203,7 @@ No separate reach/standing tracks. You score from **what you delivered**:
 
 1. **Delivery value** — sum your delivered casks' values at each destination (kontore = trade value; **the Hall = prestige**, scaling with quality).
 2. **Majorities** — the **tiered, ranked** route-majority at each kontor: by delivered-cask count, **1st/2nd/3rd place take that kontor's majority tiers** (§5 — Bergen **10/6/3** ⚙ is the rich one; the others minor). **2-player games skip 2nd** (winner-take-all); tied players split the sum of the tiers they occupy ⚙.
-3. **Goals** — resolve your goal/objective tiles; **best few score** ⚙ (the variety layer).
+3. **Goals** — you hold **3 goal tiles** (dealt at setup); **your best 2 score** ⚙ (the variety layer).
 4. **Tiebreak:** most goods, then most casks on slots.
 
 > The volume-vs-prestige tension lives here as a **lean**, not two silos: spread casks wide across kontore for value + majorities, *or* send your best out of commerce to the Hall for big single hits — coupled by shared casks, scarce slots, scarce ships, and the one shared end clock.
