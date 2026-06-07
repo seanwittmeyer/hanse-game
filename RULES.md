@@ -7,13 +7,13 @@
 ## 0. Setup (symmetric)
 
 Each house starts with:
-- **3 `G` (grain), 2 `H` (hops).** Storage cap 8 ⚙.
+- **3 `G` (grain), 2 `H` (hops)** — plus **seat compensation: +1 `G` for every seat after the first** ⚙ (so seats P1…P5 start with 3/4/4/4/4 `G`). Turn order is fixed, which gives the first player a small structural edge; the free opening placement plus this +1 `G` neutralize it (sim-validated: it flattens the first-player win-rate at 2–3p essentially to fair). Storage cap 8 ⚙.
 - The **Gruit** and **Hopped** recipes (the on-ramp — fixed, symmetric, so everyone can brew immediately and *gaining an export recipe means more*). More recipes are acquired at the Market.
 - **2 open vessels** (the brewing throughput; cap 4 ⚙ via upgrades).
 - A **warm start so the Wharf is live on turn 1:** one built **Cog** placed on a slot (bound to **Bruges**), and **one Ready Gruit in a vessel** (deploy it to a slot on turn 1) ⚙ — no starting cask sits on the shared slots. First voyage is reachable by turn 2–3, not turn 6.
 - An empty **brewery board** (vessels + upgrade slots — see `PLAYERBOARD.md`).
 
-The shared board is seeded so the ring is **alive from turn 1:** all four **destinations are open**, and **2–3 neutral buildings** ⚙ plus the warm-start **Cogs** are placed in perimeter slots **spread across different lines** (no single line is stacked with the shared tiles ⚙) so there is no obvious opening camp — every direction is worth something on turn 1. **Deal 3 of the 4 export beers** into play this game. Each beer carries a **fixed quality** — **Broyhan** and **Keut** are Q3, **Mumme** is Q4, **Bock** is Q5 — so dropping one varies the *ladder shape*: drop a Q3 beer → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4 tier; drop **Bock** → no Q5 tier (the variable export tier). **Shuffle all Upgrade tiles into a face-down Upgrade deck and deal 4 ⚙ face-up beside it (randomly placed) — the Upgrade display; the deck stays face-down as a 5th stack and refills the display as tiles are taken (§3).** Set the **Sailed-Ships track** to its player-scaled length. Each player places a worker on any station — **opening placement is free** (no occupancy toll, §1). **Choose a first player — fixed for the whole game** (turn order does not rotate ⚙; the free opening placement is the first seat balancer, further seat compensation is an open ⚙).
+The shared board is seeded so the ring is **alive from turn 1:** all four **destinations are open**, and **2–3 neutral buildings** ⚙ plus the warm-start **Cogs** are placed in perimeter slots **spread across different lines** (no single line is stacked with the shared tiles ⚙) so there is no obvious opening camp — every direction is worth something on turn 1. **Deal 3 of the 4 export beers** into play this game. Each beer carries a **fixed quality** — **Broyhan** and **Keut** are Q3, **Mumme** is Q4, **Bock** is Q5 — so dropping one varies the *ladder shape*: drop a Q3 beer → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4 tier; drop **Bock** → no Q5 tier (the variable export tier). **Shuffle all Upgrade tiles into a face-down Upgrade deck and deal 4 ⚙ face-up beside it (randomly placed) — the Upgrade display; the deck stays face-down as a 5th stack and refills the display as tiles are taken (§3).** Set the **Sailed-Ships track** to its player-scaled length. Each player places a worker on any station — **opening placement is free** (no occupancy toll, §1). **Choose a first player — fixed for the whole game** (turn order does not rotate ⚙; the free opening placement **and the +1 `G` per later seat** above are the seat balancers).
 
 > **What's gone from v0.6** (the reel-in): the demand-market value track, the type frontier, Fairs, route-lane tiles, the Hall as an action station, the working-cask Floor state, the fires-when-blocked tableau twins, differentiated lane skims, recipe on-collect boons / the 6-card tuck, and aging cubes. **Casks are no longer presence while they sit; presence/standing happens at *delivery*.** Stations are never closed (no twins; the only station cost is a small occupancy toll, §1) — interaction lives on the slots and the loaded casks.
 
@@ -133,16 +133,16 @@ Owned ships are consumed when they sail, and the slots are tight, so you always 
 ### Destinations — *where you ship is the strategic lean* (all open from start)
 The old two value tracks are replaced by destinations, each with a distinct **benefit** and a **quality gate** (the only "level-up" limiter — better places want better beer):
 
-| Destination | Gate ⚙ | Value ⚙ | Majority ⚙ | Benefit on delivery (the owner takes it) ⚙ |
+| Destination | Gate ⚙ | Value ⚙ | Majority (1st/2nd/3rd) ⚙ | Benefit on delivery (the owner takes it) ⚙ |
 |---|---|---|---|---|
-| **Bruges** (Hub) | Q1 | low (+2) | small | **gain 2 goods** (liquidity) — takes any beer, the volume on-ramp |
-| **London** (Steelyard) | Q2 | mid (+3) | mid | **take 1 Upgrade from the face-up display** (§3) — the engine destination |
-| **Bergen** (Monopoly) | Q2 | mid (+3) | **biggest** | **take 1 Upgrade from the display** — its real draw is the richest **majority** |
-| **Novgorod** (Long Haul) | Q3 | **high (+5)** | mid | **take 1 Upgrade from the display** — premium only; pays the most *and* a perk |
+| **Bruges** (Hub) | Q1 | low (+2) | small (2) | **gain 2 goods** (liquidity) — takes any beer, the volume on-ramp |
+| **London** (Steelyard) | Q2 | mid (+3) | small (2) | **take 1 Upgrade from the face-up display** (§3) — *the engine destination* (accessible upgrades) |
+| **Bergen** (Monopoly) | Q2 | mid (+3) | **richest (10/6/3)** | *(no upgrade)* — its whole draw is the **biggest majority** (the monopoly play) |
+| **Novgorod** (Long Haul) | Q3 | **high (+5)** | small (3) | **take 1 Upgrade from the display** — premium only; pays the most *and* a perk |
 | **The Hall** (Prestige) | Q2 | **prestige ∝ quality (Q×2)** | — | *(none)* — out of commerce (the scarcity/Westvleteren lean) |
 
-- **The three engine-kontore (London · Bergen · Novgorod) each let the owner take one tile from the Market's shared face-up Upgrade display** (§3) — *free*, where buying it would cost goods. Because the display is a small, churning row, **you don't fully know which Upgrade will be on offer when your cask arrives** — that uncertainty is the point. They differ by **value · majority · gate**, not by which upgrades they offer.
-- **Most delivered casks at a kontor = its majority bonus** ⚙ (Bergen rewards this most). Presence at a kontor = your delivered casks there.
+- **London & Novgorod each let the owner take one tile from the Market's shared face-up Upgrade display** (§3) — *free*, where buying it would cost goods. Because the display is a small, churning row, **you don't fully know which Upgrade will be on offer when your cask arrives** — that uncertainty is the point. **London is the *engine* destination** (the accessible Q2 upgrade kontor); **Bergen no longer grants an upgrade** — its draw is the rich majority, so the two are no longer clones.
+- **Majorities are tiered & ranked (Lacerda-style):** at each kontor, count delivered casks; **1st/2nd/3rd place take the destination's majority tiers** (Bergen **10/6/3** ⚙; Bruges/London **2**, Novgorod **3** ⚙ — minor, 1st-place-only, so the majority *lean* lives at Bergen while the others stay value-led). **In a 2-player game, 2nd place is skipped** (winner-take-all at each kontor). Tied players split the sum of the tiers they collectively occupy ⚙. Presence at a kontor = your delivered casks there. *(Concentrating the rich majority at Bergen keeps the three leans — volume / prestige / majority — balanced; broad tiered majorities at every kontor were found to over-feed the volume lean and starve prestige.)*
 - **The cask's owner always scores the delivery and takes any benefit** — even when a **rival** shipped it (§ below). This is the climb-and-variety engine: deliver → earn an upgrade → brew better → deliver better (the Distilled "selling funds your next still" feel).
 
 ### Shipping a rival's cask (the non-destructive interaction)
@@ -157,7 +157,7 @@ On your turn you may load a **rival's deployed cask** onto **your** ship (only c
 
 ## 6. The brewery & upgrades (your private engine)
 
-Your brewery board is private and safe. It holds your **vessels** (start 2, cap 4 ⚙ — throughput), your **recipes**, and your **upgrades**. Upgrades are the engine-building / "get ahead" layer and where strategies diverge. They come from the Market's **face-up Upgrade display** (§3): **buy** one (pay its goods cost) **or earn** one free by delivering to London / Bergen / Novgorod (§5). **Buying is deliberately dear (4–5 `G` ⚙) — about a kontor delivery's worth of goods — so the *deliver → earn an upgrade → brew better* cycle is the privileged path and buying is a costed bootstrap/fallback, not a shortcut.** There are two families — **Rooms** (permanent capability) and **Modifiers** (asymmetric perks).
+Your brewery board is private and safe. It holds your **vessels** (start 2, cap 4 ⚙ — throughput), your **recipes**, and your **upgrades**. Upgrades are the engine-building / "get ahead" layer and where strategies diverge. They come from the Market's **face-up Upgrade display** (§3): **buy** one (pay its goods cost) **or earn** one free by delivering to London / Novgorod (§5; Bergen's draw is its majority, not an upgrade). **Buying is deliberately dear (4–5 `G` ⚙) — about a kontor delivery's worth of goods — so the *deliver → earn an upgrade → brew better* cycle is the privileged path and buying is a costed bootstrap/fallback, not a shortcut.** There are two families — **Rooms** (permanent capability) and **Modifiers** (asymmetric perks).
 
 #### Upgrade reference — every variant ⚙ (this is the full set the display draws from)
 
@@ -202,7 +202,7 @@ Your brewery board is private and safe. It holds your **vessels** (start 2, cap 
 No separate reach/standing tracks. You score from **what you delivered**:
 
 1. **Delivery value** — sum your delivered casks' values at each destination (kontore = trade value; **the Hall = prestige**, scaling with quality).
-2. **Majorities** — the route-majority bonus at each kontor (most delivered casks; ties split ⚙).
+2. **Majorities** — the **tiered, ranked** route-majority at each kontor: by delivered-cask count, **1st/2nd/3rd place take that kontor's majority tiers** (§5 — Bergen **10/6/3** ⚙ is the rich one; the others minor). **2-player games skip 2nd** (winner-take-all); tied players split the sum of the tiers they occupy ⚙.
 3. **Goals** — resolve your goal/objective tiles; **best few score** ⚙ (the variety layer).
 4. **Tiebreak:** most goods, then most casks on slots.
 

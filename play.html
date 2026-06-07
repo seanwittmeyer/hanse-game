@@ -261,12 +261,15 @@ const CASK_ACT={source:'Source — take 2 goods',age:'Age — advance any 1 cask
   wild:'Wild — take any one base verb'};
 
 // ---- DESTINATIONS (4 kontore + the Hall) — all open from start ----
+// maj is a TIERED majority payout [1st,2nd,3rd] (Lacerda-style); 2-player games skip 2nd (winner-take-all).
+// Tunable per destination ⚙. Bergen is THE majority kontor (15/10/5); London is the engine/upgrade kontor
+// (Bergen no longer grants an upgrade, so the two are no longer clones).
 const DEST={
-  bruges  :{name:'Bruges',  gate:1, value:2, maj:2, benefit:'goods',   kontor:true,  role:'Hub · gain goods'},
-  london  :{name:'London',  gate:2, value:3, maj:3, benefit:'upgrade', kontor:true,  role:'Steelyard · an Upgrade'},
-  bergen  :{name:'Bergen',  gate:2, value:3, maj:5, benefit:'upgrade', kontor:true,  role:'Monopoly · Upgrade + richest majority'},
-  novgorod:{name:'Novgorod',gate:3, value:5, maj:3, benefit:'upgrade', kontor:true,  role:'Long Haul · top value + an Upgrade'},
-  hall    :{name:'The Hall',gate:2, value:0, maj:0, benefit:'none',    kontor:false, role:'Prestige · pays Q×2'},
+  bruges  :{name:'Bruges',  gate:1, value:2, maj:[2],       benefit:'goods',   kontor:true,  role:'Hub · gain goods'},
+  london  :{name:'London',  gate:2, value:3, maj:[2],       benefit:'upgrade', kontor:true,  role:'Steelyard · the engine — an Upgrade'},
+  bergen  :{name:'Bergen',  gate:2, value:3, maj:[10,6,3],  benefit:'none',    kontor:true,  role:'Monopoly · the richest majority (10/6/3)'},
+  novgorod:{name:'Novgorod',gate:3, value:5, maj:[3],       benefit:'upgrade', kontor:true,  role:'Long Haul · top value + an Upgrade'},
+  hall    :{name:'The Hall',gate:2, value:0, maj:[],        benefit:'none',    kontor:false, role:'Prestige · pays Q×2'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
 const DESTS=['bruges','london','bergen','novgorod','hall'];
@@ -361,6 +364,8 @@ const MAX_ROUND=25;                      // round ceiling / backstop ⚙ — top
 const CELLAR_POOL=3;                     // Cellar advance points (+1 with Guild Seat)
 const START_GOODS={g:3,h:2};
 const START_STORAGE=8;
+const SEAT_COMP=1;                       // seat compensation ⚙ — +this much grain to EACH seat after the first
+                                         // (fixed turn order gives P1 a structural edge; sim-validated +1G ≈ neutral)
 
 //==================================================================
 // STATE
@@ -368,7 +373,7 @@ const START_STORAGE=8;
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v18'; // v0.8: fixed-quality exports (3 of 4 dealt) + all 6 neutral buildings live (Towncrier · Almshouse) + seed 2–3 neutrals (was 2); bump discards stale state
+const KEY='hanse-hotseat-v19'; // v0.9: tiered ranked majorities (2p skips 2nd) + London=engine / Bergen=majority split + seat compensation; bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -383,7 +388,8 @@ function dealGoals(){const a=GOAL_KEYS.slice();for(let i=a.length-1;i>0;i--){con
 
 function newPlayer(i,name){
   return {id:i,name:name||CNAMES[i],color:COLORS[i],
-    grain:START_GOODS.g,hops:START_GOODS.h,storage:START_STORAGE,cell:null,placed:false,
+    // seat compensation: +SEAT_COMP grain to every seat after the first (fixed turn order; P1 edge)
+    grain:START_GOODS.g+(i>0?SEAT_COMP:0),hops:START_GOODS.h,storage:START_STORAGE,cell:null,placed:false,
     // start 2 vessels; one holds the warm Ready Gruit (deploy it turn 1)
     vessels:[{style:'gruit',q:1,step:1,ready:1},null], maxVessels:2,
     recipes:['gruit','hopped'], upgrades:[], delivered:[],
@@ -461,6 +467,24 @@ function presenceAt(p,dest){return deliveredAt(p,dest)+(p.presBonus[dest]||0)+((
 function leadersAt(dest){let best=0;S.players.forEach(p=>best=Math.max(best,presenceAt(p,dest)));
   if(best<=0)return [];return S.players.filter(p=>presenceAt(p,dest)===best);}
 function majorityCount(p){return KONTORE.filter(k=>leadersAt(k).some(x=>x.id===p.id)).length;}
+// Tiered, ranked majority payout for a kontor (Lacerda-style): the DEST[dest].maj tiers go to 1st/2nd/3rd
+// by delivered-cask presence. 2-player games SKIP 2nd (winner-take-all). Tied players split the sum of the
+// tiers they collectively occupy (floor). Returns {playerId: points}.
+function majorityAwards(dest){
+  let tiers=(DEST[dest].maj||[]).slice();
+  if(S.players.length===2)tiers=tiers.slice(0,1);
+  if(!tiers.length)return {};
+  const pres=S.players.map(p=>({id:p.id,pr:presenceAt(p,dest)})).filter(o=>o.pr>0).sort((a,b)=>b.pr-a.pr);
+  const out={};let i=0,rank=0;
+  while(i<pres.length&&rank<tiers.length){
+    let j=i;while(j<pres.length&&pres[j].pr===pres[i].pr)j++;   // group of players tied at this presence
+    const g=j-i;let sum=0;for(let r=rank;r<rank+g&&r<tiers.length;r++)sum+=tiers[r];
+    const share=Math.floor(sum/g);
+    for(let k=i;k<j;k++)out[pres[k].id]=share;
+    rank+=g;i=j;
+  }
+  return out;
+}
 function log(msg,me){S.log.unshift('<div class="'+(me?'me':'')+'">'+msg+'</div>');if(S.log.length>140)S.log.pop();}
 function attr(s){return String(s).replace(/"/g,'&quot;');}
 
@@ -727,10 +751,11 @@ function sailShip(slot){const t=S.slots[slot];const o=S.players[t.owner];
 function grantBenefit(lp,dest,q){
   if(DEST[dest].kontor&&hasUpgrade(lp,'staple'))gain(lp,1,0);   // Staple Right: +1 good on any kontor delivery
   if(dest==='bruges'){gain(lp,2,0);log('↳ '+lp.name+' delivers to Bruges (+'+destValue('bruges',q)+' value, +2G liquidity).');}
-  else if(dest==='london'||dest==='bergen'||dest==='novgorod'){
-    // The three engine-kontore each let the owner take ONE tile from the shared face-up Upgrade display (free).
+  else if(dest==='london'||dest==='novgorod'){
+    // London (the engine kontor) & Novgorod (premium) let the owner take ONE tile from the face-up Upgrade display (free).
     log('↳ '+lp.name+' delivers to '+DEST[dest].name+' (+'+destValue(dest,q)+' value, earns an Upgrade from the display).');
     if(lp.id===S.active)UI.pendingBenefits.push({pid:lp.id,dest});else autoGrantDisplay(lp,dest);}
+  else if(dest==='bergen')log('↳ '+lp.name+' delivers to Bergen (+'+destValue('bergen',q)+' value; builds toward the Monopoly majority).');
   else if(dest==='hall')log('↳ '+lp.name+' enshrines at the Hall (+'+destValue('hall',q)+' prestige).');
 }
 // A rival (non-active) owner auto-takes a random grantable face-up upgrade (they can't pick mid-turn).
@@ -808,7 +833,7 @@ function checkTriggers(){if(S.ending)return;
 //==================================================================
 function scorePlayer(p){
   let deliv=0;p.delivered.forEach(d=>deliv+=destValue(d.dest,d.q));
-  let maj=0;KONTORE.forEach(k=>{const L=leadersAt(k);if(L.some(x=>x.id===p.id))maj+=Math.floor(DEST[k].maj/L.length);});
+  let maj=0;KONTORE.forEach(k=>{const a=majorityAwards(k);if(a[p.id])maj+=a[p.id];});
   const gv=p.goals.map(g=>GOALS[g].fn(p)).sort((a,b)=>b-a);
   const goals=gv.slice(0,GOAL_BEST).reduce((a,b)=>a+b,0);
   return {deliv,maj,goals,total:deliv+maj+goals};
@@ -966,8 +991,9 @@ function renderDests(){
     const pres=S.players.map(p=>{const n=presenceAt(p,d);if(!n&&!deliveredAt(p,d))return '';
       const lead=leaders.some(x=>x.id===p.id);
       return '<span style="color:'+p.color+';font-weight:bold">'+(lead?'★':'')+LU('map-pin')+n+'</span>';}).filter(x=>x).join(' ');
-    const val=d==='hall'?'prestige Q×2':('val '+D.value+' · maj '+D.maj);
-    const tip=D.name+' — '+D.role+'. Gate Q'+D.gate+'. '+(d==='hall'?'Ship a cask here to bank prestige (Q×2) — out of commerce.':'Delivered casks score '+D.value+' each; lead the count for the '+D.maj+'-pt majority.');
+    const majStr=(D.maj&&D.maj.length)?D.maj.join('/'):'—';
+    const val=d==='hall'?'prestige Q×2':('val '+D.value+' · maj '+majStr);
+    const tip=D.name+' — '+D.role+'. Gate Q'+D.gate+'. '+(d==='hall'?'Ship a cask here to bank prestige (Q×2) — out of commerce.':'Delivered casks score '+D.value+' each; place in the cask-count race for the majority ('+majStr+' to 1st/2nd/3rd; 2-player skips 2nd).');
     h+='<div class="route '+d+'" data-tip="'+attr(tip)+'"><div class="rh"><span class="rn">'+(D.kontor?LU('landmark'):LU('crown'))+' '+D.name+'</span><span class="rv">'+val+'</span></div>'
       +'<div class="gate">gate Q'+D.gate+' · '+D.role+'</div>'
       +'<div class="pres">'+(pres||'<span class="note">no deliveries</span>')+'</div></div>';

@@ -57,7 +57,7 @@ No grid action is duplicated here. Nothing on this board is contestable by rival
 ## 3. Upgrades (the private engine — where you "get ahead")
 
 - An **upgrade area** holds **Rooms** (permanent capability — Extra Vessel, Aging Cellar, Warehouse, Quay, Cooperage) and **Modifiers** (asymmetric perks — *"when you gain hops, +1,"* *"ships +1 capacity,"* etc.). See `TILES.md` §E.
-- Upgrades are the engine-building layer and where strategies diverge. **Most are earned by *delivering*** (the London / Bergen / Novgorod destination benefits), some bought at the Market — closing the cycle **deliver → upgrade → brew better → deliver better** (the Distilled "selling funds your next still" feel). ❓ whether the upgrade area is capped or open.
+- Upgrades are the engine-building layer and where strategies diverge. **Most are earned by *delivering*** (the London / Novgorod destination benefits; Bergen now pays a majority, not an upgrade), some bought at the Market — closing the cycle **deliver → upgrade → brew better → deliver better** (the Distilled "selling funds your next still" feel). ❓ whether the upgrade area is capped or open.
 
 ## 4. Storage
 
@@ -65,11 +65,11 @@ No grid action is duplicated here. Nothing on this board is contestable by rival
 
 ---
 
-## Starting setup (symmetric)
+## Starting setup (symmetric, except seat compensation)
 
 | Item | Start ⚙ |
 |---|---|
-| Goods | **3 G, 2 H** |
+| Goods | **3 G, 2 H** — **+1 G per seat after the first** (P1…P5 → 3/4/4/4/4 G) ⚙, the seat balancer for fixed turn order |
 | Recipes | **Gruit + Hopped** (printed/fixed); more collected at the Market |
 | Vessels | **2 open** (lanes 3–4 locked behind Extra Vessel) |
 | Upgrades | none |

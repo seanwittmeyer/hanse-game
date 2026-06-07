@@ -11,7 +11,7 @@
 - **Goods:** `G` = grain, `H` = hops. The only currency (no money; no spendable prestige).
 - **Faces:** infrastructure is single-face. **Cask tiles are single working face** now (type · quality · signature action); there is no separate "standing face" — a cask is **scored at its destination**, not flipped. (The v0.6 working↔standing flip is retired with the two value tracks.)
 - **The fire rule (one rule for all slots):** when a line is activated, the active player **may use each building in its two slots** — a **cask** (its signature action), a **ship** (a free load), or a **neutral building** (its base action). All resolve **on the active player's turn, for the active player** — **no out-of-turn skims.** Cask & neutral actions are **free and public**.
-- **Acquisition (Market, option B):** **recipes & ships** are an *always-available* supply; **upgrades** sit in a small **face-up display** (a row of ~4 ⚙ drawn from a shuffled Upgrade supply, refilling as taken). You **buy** from the display (pay its cost) **or earn** one free by delivering to London/Bergen/Novgorod — the *same* display, so what you can grab depends on what is face-up. Casks are the exception — you **brew** them from a recipe you hold.
+- **Acquisition (Market, option B):** **recipes & ships** are an *always-available* supply; **upgrades** sit in a small **face-up display** (a row of ~4 ⚙ drawn from a shuffled Upgrade supply, refilling as taken). You **buy** from the display (pay its cost) **or earn** one free by delivering to London/Novgorod — the *same* display, so what you can grab depends on what is face-up. Casks are the exception — you **brew** them from a recipe you hold.
 - **The lean (volume vs prestige) is a destination choice,** not a track: ship to a **kontor** for trade value + majorities, or to the **Hall** for prestige. Coupled by shared casks, scarce slots, scarce ships, and the one shared end clock.
 - **End clock:** the **Sailed-Ships track fills** → finish the round → score.
 
@@ -93,7 +93,7 @@ A small face-up Market supply. A recipe is **only** *a brewable type + its `G/H`
 
 ## E. Upgrade tiles — the private brewery engine (Rooms + Modifiers, ~24 ⚙)
 
-Installed on your brewery board. **Earned mainly by delivering** (the London / Bergen / Novgorod destination benefits) and bought only at a **dear price (4–5 `G` ⚙**, ≈ a kontor delivery's goods) at the Market — so the cycle **deliver → upgrade → brew better → deliver better** is the privileged path, with buying a costed bootstrap/fallback.
+Installed on your brewery board. **Earned mainly by delivering** (the London / Novgorod destination benefits) and bought only at a **dear price (4–5 `G` ⚙**, ≈ a kontor delivery's goods) at the Market — so the cycle **deliver → upgrade → brew better → deliver better** is the privileged path, with buying a costed bootstrap/fallback.
 
 ### Rooms (permanent capability)
 | Room | Effect ⚙ |
@@ -120,14 +120,15 @@ Installed on your brewery board. **Earned mainly by delivering** (the London / B
 
 All **open from the start** (route-lane tiles cut — variety over limitation). Differentiated by a **quality gate** (the only climb-limiter — better places want better beer) and a unique **benefit**. **The cask's owner always scores the delivery and picks any offered benefit — even when a rival shipped it.**
 
-| Destination | Gate ⚙ | Delivery value ⚙ | Benefit (owner picks where offered) ⚙ | Majority ⚙ |
+| Destination | Gate ⚙ | Delivery value ⚙ | Benefit (owner picks where offered) ⚙ | Majority — 1st/2nd/3rd ⚙ |
 |---|---|---|---|---|
-| **Bruges** (Hub) | Q1 | low (e.g. +2) | **liquidity** — gain goods | small |
-| **London** (Steelyard) | Q2 | mid (e.g. +3) | **take an Upgrade from the display** | mid |
-| **Bergen** (Monopoly) | Q2 | mid (e.g. +3) | **take an Upgrade from the display** + richest **majority** | **biggest** |
-| **Novgorod** (Long Haul) | Q3 | **high** (e.g. +5) | premium — top value **+ take an Upgrade from the display** | mid |
+| **Bruges** (Hub) | Q1 | low (e.g. +2) | **liquidity** — gain goods | small (2) |
+| **London** (Steelyard) | Q2 | mid (e.g. +3) | **the engine** — take an Upgrade from the display | small (2) |
+| **Bergen** (Monopoly) | Q2 | mid (e.g. +3) | *(no upgrade)* — its whole draw is the majority | **richest (10/6/3)** |
+| **Novgorod** (Long Haul) | Q3 | **high** (e.g. +5) | premium — top value **+ take an Upgrade from the display** | small (3) |
 | **The Hall** (Prestige) | Q2 | **prestige** ∝ quality (e.g. Q×2) | out of commerce — the scarcity/Westvleteren payout | — |
 
+> **Majorities are tiered & ranked (Lacerda-style):** 1st/2nd/3rd by delivered-cask count take the kontor's tiers; **2-player skips 2nd** (winner-take-all); ties split the occupied tiers ⚙. The rich majority is **concentrated at Bergen** (its monopoly identity) so the majority *lean* is viable without the broad tiered payouts over-feeding the volume lean and starving prestige (sim-validated). **London (engine — accessible upgrades)** and **Bergen (majority, no upgrade)** are now distinct, not clones.
 > **Reach** = your delivered casks across the kontore (value + majorities, the volume lean). **Prestige** = casks shipped to the Hall (the scarcity lean). They never convert; the lean is chosen as you read the board.
 
 ---
@@ -169,7 +170,7 @@ A small pool (shared draft or per-player ⚙) rewarding different shapes, so the
 ## Open tuning notes
 
 1. **Cask action strengths** (Source 2 / Age 2 / free Load / +1 presence / Wild) — chunky without making the slots swingy; whether *every* cask bears an action.
-2. **Destination values / gates / majority bonuses** and the **upgrade/modifier** payouts from London/Bergen/Novgorod — the variety heart.
+2. **Destination values / gates / tiered-majority tiers** and the **upgrade** payouts from London/Novgorod (Bergen = majority, no upgrade) — the variety heart. *(v0.9: majorities are tiered/ranked, concentrated at Bergen; see `CHANGELOG`/`DESIGN §21`.)*
 3. **Neutral-building set & count in play**, scaling by player count (ring pressure).
 4. **Maturation lengths** vs the Sailed-Ships clock — the pace economy.
 5. **Goal count & best-few cap** — the blend lever; shared vs personal.

@@ -279,12 +279,13 @@ const PERSONAS = process.env.PERSONAS === '1';
 // touching play.html. Identity goal: 4 distinct kontore — Bruges (liquidity), London (mid-high value),
 // Bergen (majority king), Novgorod (premium) — + the Hall (prestige).
 const TUNES = {
-  none       : {},
-  londonVal4 : { dest: { london: { value: 4 } } },                       // give London its own value rung (vs Bergen)
-  bergenMaj8 : { dest: { bergen: { maj: 8 } } },                         // buff the majority lean
-  bergenMaj10: { dest: { bergen: { maj: 10 } } },
-  combo      : { dest: { london: { value: 4 }, bergen: { maj: 8 } } },   // the combined proposal
-  comboBig   : { dest: { london: { value: 4 }, bergen: { maj: 10 } } },
+  none  : {},
+  // concentrate majority at Bergen (its identity); minimize the other kontore's majorities so the
+  // tiered system doesn't broadly feed kontor-contesters and nerf the prestige (Hall) lean.
+  concB : { dest: { bruges:{maj:[2]}, london:{maj:[2]}, bergen:{maj:[12,8,4]}, novgorod:{maj:[3]} } },
+  concD : { dest: { bruges:{maj:[2]}, london:{maj:[2]}, bergen:{maj:[10,6,3]}, novgorod:{maj:[3]} } },
+  concE : { dest: { bruges:{maj:[2]}, london:{maj:[2]}, bergen:{maj:[14,9,5]}, novgorod:{maj:[3]} } },
+  concC : { dest: { bruges:{maj:[]},  london:{maj:[]},  bergen:{maj:[12,8,4]}, novgorod:{maj:[]}  } },
 };
 const __TUNE = TUNES[process.env.TUNE || 'none'] || TUNES.none;
 
