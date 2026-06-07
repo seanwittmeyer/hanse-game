@@ -88,10 +88,21 @@
     font-size:.1in;line-height:1.2;text-align:center}
   .card .c-bonus svg,.card .c-bonus .ic{width:.2in;height:.2in;flex:0 0 auto}
   /* title + cost strip — the visible edge when the card is tucked up under the board */
-  .card .c-strip{background:var(--cc,#8a6408);color:#fff;display:flex;align-items:center;gap:.06in;
-    padding:.07in .12in;font-variant:small-caps;font-weight:bold;font-size:.15in;line-height:1}
-  .card .c-strip svg,.card .c-strip .ic{width:.18in;height:.18in;flex:0 0 auto}
-  .card .c-strip .c-cost{margin-left:auto;font-variant:normal;font-weight:bold;font-size:.115in;display:inline-flex;align-items:center;gap:.04in}
+  .card .c-strip{background:var(--cc,#8a6408);color:#fff;display:flex;align-items:center;gap:.07in;
+    padding:.08in .12in;font-variant:small-caps;font-weight:bold;font-size:.15in;line-height:1;
+    text-shadow:0 1px 1.5px rgba(0,0,0,.45)}
+  .card .c-strip svg,.card .c-strip .ic{width:.15in;height:.15in;flex:0 0 auto}
+  /* L# rung badge — high-contrast box so the tier survives on the tucked edge */
+  .card .c-strip .c-rung{flex:0 0 auto;display:inline-flex;align-items:center;gap:.015in;font-variant:normal;
+    background:rgba(255,255,255,.92);color:var(--cc);border-radius:.04in;padding:.025in .05in;font-size:.115in;text-shadow:none}
+  .card .c-strip .c-rung svg,.card .c-strip .c-rung .ic{width:.13in;height:.13in}
+  /* name takes the slack and ellipsizes — it never pushes the cost off the card */
+  .card .c-strip .c-nm{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* cost block is protected (never clipped); numerals dominate the icons */
+  .card .c-strip .c-cost{flex:0 0 auto;font-variant:normal;font-weight:bold;font-size:.135in;display:inline-flex;align-items:center;gap:.06in}
+  .card .c-strip .c-cost .gc{font-size:.135in;gap:.015in}
+  .card .c-strip .c-cost .gc svg,.card .c-strip .c-cost .gc .ic{width:.135in;height:.135in}
+  .card .c-strip .c-gate{display:inline-flex} .card .c-strip .c-gate svg,.card .c-strip .c-gate .ic{width:.13in;height:.13in}
   /* ====================== PLAYER BOARD (landscape) ====================== */
   .board{--pc:#7c2128;height:7.54in;background:var(--parch);color:var(--ink);border:2.5px solid var(--pc);
     border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in}
@@ -254,11 +265,11 @@ const FAMS=[
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:30},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:24}];
 const RECIPES=[
-  {nm:'Hopped',  cc:'#8a6408', g:1,h:1, reach:'L2 · London · Bergen · Hall', start:true},
-  {nm:'Broyhan', cc:'#a07a0c', g:1,h:2, reach:'L3 · adds Novgorod'},
-  {nm:'Keut',    cc:'#b8860b', g:2,h:1, reach:'L3 · adds Novgorod'},
-  {nm:'Mumme',   cc:'#b06a34', g:2,h:2, reach:'L4 · all kontore + Hall'},
-  {nm:'Bock',    cc:'#7c2128', g:3,h:2, cellar:true, reach:'L5 · all · needs Aging Cellar'},
+  {nm:'Hopped',  cc:'#7a5606', L:2, g:1,h:1, reach:'L2 · London · Bergen · Hall', start:true},
+  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, reach:'L3 · adds Novgorod'},
+  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, reach:'L3 · adds Novgorod'},
+  {nm:'Mumme',   cc:'#9a5526', L:4, g:2,h:2, reach:'L4 · all kontore + Hall'},
+  {nm:'Bock',    cc:'#7c2128', L:5, g:3,h:2, cellar:true, reach:'L5 · all · needs Aging Cellar'},
 ];
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'},{nm:'Violet',c:'#5b3a8e'}];
 const DESTS=[
@@ -304,10 +315,11 @@ function renderTiles(){const back=SIDE==='back';
   return h;}
 
 function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
-  +'<div class="c-reach">reaches: '+r.reach+'</div>'
+  +'<div class="c-reach">'+(r.start?'<b>start recipe</b> · ':'')+'reaches: '+r.reach+'</div>'
   +'<div class="c-bonus">'+LU('gift')+'<span>acquire bonus — <b>dual-purpose (TBD)</b></span></div>'
-  +'<div class="c-strip">'+LU('scroll-text')+'<span>'+r.nm+(r.start?' · start':'')+'</span>'
-  +'<span class="c-cost">brew '+cost(r.g,r.h)+(r.cellar?' · Cellar':'')+'</span></div>'
+  +'<div class="c-strip"><span class="c-rung">'+LU(QI)+r.L+'</span>'
+  +'<span class="c-nm">'+r.nm+'</span>'
+  +'<span class="c-cost">'+cost(r.g,r.h)+(r.cellar?'<span class="c-gate" title="needs Aging Cellar">'+LU('lock')+'</span>':'')+'</span></div>'
   +'</div>';}
 function renderCards(){let h='<div class="page">'
   +'<div class="famlabel">Recipe Cards <span class="sm">portrait cards — slide them up into the tuck strip under your player board (title + cost stay visible on the edge). Start with Gruit (printed) + Hopped; collect the export beers — Bock · Mumme · Broyhan · Keut — to climb. '+(MODE==='proof'?'(proof: one set shown — full mode prints a complete set per player.)':'one complete set per player ('+PLAYERS.length+' total).')+' (Acquire bonus is dual-purpose, TBD.)</span></div>';
