@@ -6,11 +6,10 @@ A theme-first **medium euro** for **2–5 players** (~45–60 min at 2p). It's c
 
 Published from `main` via GitHub Pages.
 
-## Play & browse (the pages — all v0.8 "The Wharf")
-- **`learn.html`** — learn-to-play in one page.
+## Play & browse (the pages — four, all "The Wharf")
+- **`learn.html`** — learn-to-play primer in one page.
+- **`index.html`** — the **Rulebook & Components** page: the complete rules + the visual component reference (absorbs the former separate rulebook).
 - **`play.html`** — the playable hot-seat client & de-facto reference implementation.
-- **`rulebook.html`** — the full rules.
-- **`index.html`** — component visualizer.
 - **`printables.html`** — print-&-play cut sheets + player boards.
 
 > **✅ v0.8 is complete repo-wide:** the markdown specs **and all five HTML pages** are on v0.8. (The playable `play.html` adds one engine-level relief valve, the **Charter** — a `2 G` single-cask Harbor voyage that keeps the tight slots from deadlocking; see `RULES.md` §5.)

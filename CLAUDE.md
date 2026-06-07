@@ -26,7 +26,7 @@
 - `RULES.md` — operational turn/economy rules (the v0.8 spec).
 - `DESIGN.md` — pillars, rationale, dated session log (the *why*). **§21 = "The Wharf"** (live, v0.7 origin → v0.8 refinements); §1–§20 = how we got here.
 - `COMPONENTS.md` — the single physical manifest: boards · tokens · the five tile families (casks · ships · neutral buildings · recipes · upgrades) · the **player brewery board** (§4) · destinations · goals. *(Absorbs the former `TILES.md` + `PLAYERBOARD.md`.)*
-- **All five HTML pages are v0.8, current** (2026-06-07): `learn.html` (beginner) · `index.html` (components) · `rulebook.html` (full rules) · `printables.html` (cut sheets) · `play.html` (the playable reference implementation: DATA → STATE → TURN MACHINE → CELL HANDLERS → SCORING → RENDER). `play.html` is canonical again — correctness fixes there are rules fixes.
+- **Four HTML pages** (consolidated from five): `learn.html` (beginner primer) · `index.html` (**Rulebook & Components** — the complete rules + the visual component reference; absorbed the former `rulebook.html`) · `printables.html` (cut sheets) · `play.html` (the playable reference implementation: DATA → STATE → TURN MACHINE → CELL HANDLERS → SCORING → RENDER). `play.html` is canonical — correctness fixes there are rules fixes.
 - `CHANGELOG.md` — compact version history (v0.1→v0.8) + the balance lessons carried forward. `README.md` orients the repo.
 
 ### Before you commit any game change, check the interlocks

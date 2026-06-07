@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Component Visualizer</title>
+<title>Brewhouses of the Hanse — Rulebook &amp; Components</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -12,86 +12,89 @@
     --grain:#d9b44a; --hops:#6b8e3d;
   }
   *{box-sizing:border-box}
-  body{
-    margin:0; background:var(--parch); color:var(--ink);
-    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-    line-height:1.5;
-  }
-  header{
-    background:linear-gradient(160deg,var(--red) 0%,var(--red2) 100%);
-    color:var(--parch); padding:34px 24px 28px; text-align:center;
-    border-bottom:5px solid var(--gold); box-shadow:0 4px 18px rgba(0,0,0,.25);
-  }
-  header h1{margin:0; font-size:2.5rem; letter-spacing:1px; font-variant:small-caps;}
-  header .sub{opacity:.9; font-style:italic; margin-top:6px; max-width:760px; margin-inline:auto;}
-  header .tag{margin-top:14px; font-size:.8rem; letter-spacing:2px; text-transform:uppercase; opacity:.8;}
-  nav{
-    position:sticky; top:0; z-index:20; background:var(--ink); color:var(--parch);
-    display:flex; flex-wrap:wrap; justify-content:center; gap:4px; padding:8px;
-    box-shadow:0 2px 8px rgba(0,0,0,.3);
-  }
-  nav a{color:var(--parch); text-decoration:none; padding:6px 13px; border-radius:4px; font-size:.9rem; transition:.15s;}
+  body{margin:0; background:var(--parch); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; line-height:1.6;}
+  header{background:linear-gradient(160deg,var(--red),var(--red2)); color:var(--parch);
+    padding:34px 24px 28px; text-align:center; border-bottom:5px solid var(--gold); box-shadow:0 4px 18px rgba(0,0,0,.25);}
+  header h1{margin:0; font-size:2.6rem; font-variant:small-caps; letter-spacing:1px;}
+  header .sub{font-style:italic; opacity:.92; margin-top:8px; max-width:780px; margin-inline:auto;}
+  header .tag{margin-top:14px; font-size:.78rem; letter-spacing:2px; text-transform:uppercase; opacity:.82;}
+  nav{position:sticky; top:0; z-index:20; background:var(--ink); color:var(--parch);
+    display:flex; flex-wrap:wrap; justify-content:center; gap:4px; padding:8px; box-shadow:0 2px 8px rgba(0,0,0,.3);}
+  nav a{color:var(--parch); text-decoration:none; padding:6px 12px; border-radius:4px; font-size:.88rem; transition:.15s;}
   nav a:hover{background:var(--red2);}
-  main{max-width:1160px; margin:0 auto; padding:24px 20px 80px;}
-  section{margin:46px 0;}
-  h2{
-    font-variant:small-caps; font-size:1.8rem; color:var(--red); margin:0 0 4px;
-    border-bottom:2px solid var(--gold); padding-bottom:6px; letter-spacing:1px;
-  }
-  h2 .n{color:var(--gold); font-size:1.1rem; margin-right:8px;}
-  .lead{font-style:italic; color:var(--ink2); margin:6px 0 22px; max-width:780px;}
-  .legend{display:flex; gap:18px; flex-wrap:wrap; font-size:.85rem; margin-bottom:16px;}
-  .chip{display:inline-flex; align-items:center; gap:6px;}
-  .dot{width:13px; height:13px; border-radius:3px; display:inline-block; border:1px solid rgba(0,0,0,.25)}
-  .grain{background:var(--grain)} .hops{background:var(--hops)}
+  .wrap{max-width:980px; margin:0 auto; padding:0 22px 90px;}
+  .disclaimer{font-size:.85rem; color:var(--ink2); font-style:italic; text-align:center; margin:22px 0 0;}
+  .toc{background:var(--parch2); border:1px solid var(--line); border-radius:10px;
+    padding:18px 24px; margin:24px 0; column-count:2; column-gap:36px;}
+  .toc h3{margin:0 0 10px; column-span:all; font-variant:small-caps; color:var(--red); font-size:1.1rem;}
+  .toc a{display:block; color:var(--ink); text-decoration:none; padding:3px 0; font-size:.92rem;}
+  .toc a:hover{color:var(--red);}
+  .toc .nm{color:var(--gold); font-weight:bold; margin-right:6px;}
+  h2{font-variant:small-caps; color:var(--red); font-size:1.7rem; margin:42px 0 6px;
+    border-bottom:2px solid var(--gold); padding-bottom:5px;}
+  h2 .nm{color:var(--gold); margin-right:10px;}
+  h3{font-variant:small-caps; color:var(--ink); font-size:1.25rem; margin:24px 0 4px; letter-spacing:.5px;}
+  p,li{font-size:1rem;}
+  ul,ol{padding-left:22px;} li{margin:5px 0;}
+  b,strong{color:var(--ink);}
+  .lead{font-style:italic; color:var(--ink2); font-size:1.05rem;}
+  table{border-collapse:collapse; width:100%; margin:14px 0; font-size:.92rem;}
+  th,td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top;}
+  th{background:var(--red); color:var(--parch); font-variant:small-caps; letter-spacing:.5px;}
+  tr:nth-child(even) td{background:var(--parch2);}
+  .box{background:#fff7e6; border-left:4px solid var(--gold); padding:12px 18px; border-radius:0 8px 8px 0; margin:16px 0;}
+  .box.red{background:#fbeae8; border-color:var(--red);}
+  .box h4{margin:0 0 6px; font-variant:small-caps; color:var(--red); font-size:1.05rem;}
+  .ref{background:var(--ink); color:var(--parch); border-radius:10px; padding:18px 24px; margin:20px 0;}
+  .ref h4{margin:0 0 8px; color:var(--gold2); font-variant:small-caps; font-size:1.15rem;}
+  .ref ol{padding-left:20px;} .ref li{margin:4px 0;}
+  .ref b,.ref strong{color:var(--parch);}
+  .ref code{background:rgba(255,255,255,.16); color:var(--parch);}
+  .cube{display:inline-block; width:13px; height:13px; border-radius:3px; vertical-align:-1px; border:1px solid rgba(0,0,0,.3);}
+  .g{background:var(--grain);} .h{background:var(--hops);}
+  .pill{display:inline-block; background:var(--green); color:var(--parch); border-radius:18px; padding:1px 9px; font-size:.78rem;}
+  .pill.r{background:var(--gold); color:var(--ink);}
+  code{background:var(--parch2); padding:1px 5px; border-radius:4px; font-size:.9em;}
+  footer{text-align:center; color:var(--ink2); font-size:.82rem; padding:30px; border-top:1px solid var(--line);}
+  .note{background:#fff7e6; border-left:4px solid var(--gold); padding:10px 14px; font-size:.88rem; border-radius:0 6px 6px 0; margin-top:14px; color:var(--ink2);}
+  .small{font-size:.72rem; color:var(--ink2);}
+  .acat{font-variant:small-caps; color:var(--red); font-weight:bold; letter-spacing:.5px; margin:20px 0 2px; font-size:1.05rem;}
+  .atbl td:first-child{text-align:center; width:48px;}
+  .atbl .act-ic{display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:var(--parch2); border:1px solid var(--line);}
+  .atbl .act-ic svg, .atbl .act-ic i{width:15px; height:15px; stroke-width:1.9; color:var(--red); vertical-align:0;}
+  .atbl .gi{color:#9c7414;} .atbl .hi{color:#5d7d34;}
+  .atbl .gi, .atbl .hi{width:1em; height:1em; stroke-width:2.1; vertical-align:-2px;}
 
-  /* ---- ACTION GRID ---- */
-  .gridwrap{display:flex; gap:36px; flex-wrap:wrap; align-items:flex-start;}
-  .actiongrid{
-    display:grid; grid-template-columns:46px 132px 132px 46px;
-    grid-template-rows:46px 132px 132px 46px; gap:8px; flex:0 0 auto;
-  }
-  .cell{
-    border-radius:10px; padding:10px; color:var(--parch); position:relative; cursor:pointer;
-    display:flex; flex-direction:column; justify-content:space-between;
-    box-shadow:0 3px 8px rgba(0,0,0,.2); border:2px solid rgba(0,0,0,.15); transition:.15s;
-  }
+  /* ---- INTERACTIVE 2×2 GRID ---- */
+  .gridwrap{display:flex; gap:36px; flex-wrap:wrap; align-items:flex-start; margin:18px 0;}
+  .actiongrid{display:grid; grid-template-columns:46px 132px 132px 46px; grid-template-rows:46px 132px 132px 46px; gap:8px; flex:0 0 auto;}
+  .cell{border-radius:10px; padding:10px; color:var(--parch); position:relative; cursor:pointer;
+    display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 3px 8px rgba(0,0,0,.2); border:2px solid rgba(0,0,0,.15); transition:.15s;}
   .cell .lbl{font-size:.7rem; letter-spacing:1px; text-transform:uppercase; opacity:.85}
   .cell .nm{font-size:1.25rem; font-variant:small-caps; font-weight:bold}
   .cell .do{font-size:.74rem; opacity:.92}
   .cell.A{background:var(--gold); color:var(--ink);} .cell.B{background:var(--red2);}
   .cell.C{background:var(--sea2);} .cell.D{background:var(--green);}
   .cell .corner{position:absolute; top:6px; right:9px; font-size:1.3rem; font-weight:bold; opacity:.5}
-  .slot{
-    background:var(--parch2); border:2px dashed var(--line); border-radius:7px;
-    display:flex; align-items:center; justify-content:center; font-size:.62rem; color:var(--ink2);
-    text-align:center; transition:.15s;
-  }
-  /* grid placement */
-  .s1{grid-area:1/2} .s2{grid-area:1/3}
-  .A{grid-area:2/2} .B{grid-area:2/3}
-  .s8{grid-area:2/1} .s3{grid-area:2/4}
-  .s7{grid-area:3/1} .s4{grid-area:3/4}
-  .C{grid-area:3/2} .D{grid-area:3/3}
-  .s6{grid-area:4/2} .s5{grid-area:4/3}
+  .slot{background:var(--parch2); border:2px dashed var(--line); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:.62rem; color:var(--ink2); text-align:center; transition:.15s;}
+  .s1{grid-area:1/2} .s2{grid-area:1/3} .A{grid-area:2/2} .B{grid-area:2/3}
+  .s8{grid-area:2/1} .s3{grid-area:2/4} .s7{grid-area:3/1} .s4{grid-area:3/4}
+  .C{grid-area:3/2} .D{grid-area:3/3} .s6{grid-area:4/2} .s5{grid-area:4/3}
   .hl{outline:3px solid var(--red); outline-offset:2px; transform:scale(1.03); z-index:5}
   .gridnote{flex:1 1 280px; min-width:260px;}
   .gridnote ul{padding-left:18px} .gridnote li{margin:7px 0}
-  .pill{display:inline-block; background:var(--ink); color:var(--parch); border-radius:20px; padding:1px 9px; font-size:.72rem; margin:0 2px}
+  .gpill{display:inline-block; background:var(--ink); color:var(--parch); border-radius:20px; padding:1px 9px; font-size:.72rem; margin:0 2px}
   .loopline{font-variant:small-caps; font-weight:bold; color:var(--red); letter-spacing:1px; margin:6px 0 0}
 
-  /* ---- ROUTE / DESTINATION BOARD ---- */
-  .routeboard{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  /* ---- ROUTE / DESTINATION CARDS ---- */
+  .routeboard{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:16px 0;}
   @media(max-width:760px){.routeboard{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:480px){.routeboard{grid-template-columns:1fr}}
   .route{border-radius:12px; padding:14px; color:var(--parch); box-shadow:0 3px 9px rgba(0,0,0,.2); position:relative; overflow:hidden}
-  .route h3{margin:0 0 2px; font-variant:small-caps; font-size:1.3rem}
+  .route h3{margin:0 0 2px; font-variant:small-caps; font-size:1.3rem; color:var(--parch)}
   .route .role{font-size:.78rem; font-style:italic; opacity:.9; margin-bottom:10px}
-  .route .lane{display:flex; align-items:center; gap:4px; margin:12px 0}
-  .route .node{width:18px; height:18px; border-radius:50%; background:rgba(255,255,255,.85); flex:0 0 auto}
-  .route .node.home{background:var(--ink); box-shadow:0 0 0 3px rgba(255,255,255,.4)}
-  .route .seg{flex:1; height:3px; background:rgba(255,255,255,.5)}
-  .route .meta{font-size:.78rem; border-top:1px solid rgba(255,255,255,.35); padding-top:8px}
+  .route .meta{font-size:.82rem; border-top:1px solid rgba(255,255,255,.35); padding-top:8px}
   .route .meta b{color:var(--gold2)}
   .route.bergen{background:linear-gradient(160deg,#4a6b3a,#37502c)}
   .route.novgorod{background:linear-gradient(160deg,#7c2128,#5a161c)}
@@ -100,41 +103,22 @@
   .route.hall{background:linear-gradient(160deg,#6e4ea0,#3f2c66)}
   .open-badge{position:absolute; top:10px; right:10px; background:var(--parch); color:var(--green); font-size:.62rem; font-weight:bold; padding:2px 7px; border-radius:10px; text-transform:uppercase; letter-spacing:.5px}
 
-  /* ---- BREWING TRACK ---- */
-  .brewtrack{display:flex; align-items:stretch; gap:0; flex-wrap:wrap}
-  .stage{background:var(--parch2); border:2px solid var(--line); padding:12px 16px; flex:1; min-width:120px; text-align:center; position:relative}
-  .stage:not(:last-child){border-right:none}
-  .stage .st{font-variant:small-caps; font-size:1.1rem; font-weight:bold; color:var(--red)}
-  .stage .ds{font-size:.74rem; color:var(--ink2)}
-  .stage .arrow{position:absolute; right:-11px; top:50%; transform:translateY(-50%); z-index:3; color:var(--red); font-size:1.4rem}
-  .age-note{font-size:.8rem; font-style:italic; color:var(--ink2); margin-top:10px}
-
-  /* ---- TILE CARDS ---- */
-  .gallery{display:flex; flex-wrap:wrap; gap:14px}
-  .card{
-    width:185px; background:var(--parch2); border:1px solid var(--line); border-radius:9px;
-    padding:0; box-shadow:0 2px 6px rgba(0,0,0,.15); overflow:hidden;
-  }
+  /* ---- TILE CARDS / GALLERIES ---- */
+  .gallery{display:flex; flex-wrap:wrap; gap:14px; margin:14px 0}
+  .card{width:185px; background:var(--parch2); border:1px solid var(--line); border-radius:9px; padding:0; box-shadow:0 2px 6px rgba(0,0,0,.15); overflow:hidden;}
   .card .head{padding:9px 11px 7px; color:var(--parch); position:relative}
   .card .head .ttl{font-variant:small-caps; font-size:1.06rem; font-weight:bold; line-height:1.15}
   .card .head .kind{font-size:.66rem; text-transform:uppercase; letter-spacing:1px; opacity:.8}
   .card .body{padding:9px 11px 11px; font-size:.82rem}
-  .card .qty{position:absolute; bottom:6px; right:9px; font-size:.66rem; opacity:.8}
   .card .row{display:flex; justify-content:space-between; gap:6px; margin:3px 0; font-size:.78rem}
   .card .row .k{color:var(--ink2)} .card .row .v{font-weight:bold; text-align:right}
-  .h-cask{background:var(--red2)} .h-route{background:var(--sea2)} .h-ship{background:var(--ink2)}
-  .h-priv{background:var(--gold); color:var(--ink)!important} .h-room{background:var(--green)} .h-kontor{background:var(--red)}
-  .h-mod{background:#6e4ea0} .h-neutral{background:var(--ink2)}
-  .h-priv .kind{opacity:.7}
+  .h-ship{background:var(--ink2)} .h-room{background:var(--green)} .h-kontor{background:var(--red)}
+  .h-mod{background:#6e4ea0} .h-neutral{background:var(--ink2)} .h-route{background:var(--sea2)}
   .badge{display:inline-block; font-size:.66rem; padding:1px 6px; border-radius:9px; background:var(--ink); color:var(--parch); margin:2px 2px 0 0}
-  .qg{font-size:.74rem}
-
-  /* flip cask */
   .flip{width:200px; height:262px; perspective:1100px; cursor:pointer}
   .flip .inner{position:relative; width:100%; height:100%; transition:transform .6s; transform-style:preserve-3d}
   .flip.flipped .inner{transform:rotateY(180deg)}
-  .flip .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:11px; overflow:hidden;
-    box-shadow:0 3px 9px rgba(0,0,0,.22); display:flex; flex-direction:column; border:2px solid rgba(0,0,0,.2)}
+  .flip .face{position:absolute; inset:0; backface-visibility:hidden; border-radius:11px; overflow:hidden; box-shadow:0 3px 9px rgba(0,0,0,.22); display:flex; flex-direction:column; border:2px solid rgba(0,0,0,.2)}
   .flip .back{transform:rotateY(180deg)}
   .face .fhead{padding:9px 11px; color:var(--parch)}
   .face .fhead .ft{font-variant:small-caps; font-weight:bold; font-size:1.15rem}
@@ -148,45 +132,69 @@
   .flip .hint{position:absolute; bottom:5px; right:9px; font-size:.6rem; color:rgba(255,255,255,.7); z-index:4}
   .stand .hint{color:rgba(0,0,0,.45)}
   .inputs{font-size:.8rem; margin:5px 0}
-  .cube{display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-1px; margin-right:1px; border:1px solid rgba(0,0,0,.25)}
-
-  .note{background:#fff7e6; border-left:4px solid var(--gold); padding:10px 14px; font-size:.85rem; border-radius:0 6px 6px 0; margin-top:14px; color:var(--ink2)}
-  footer{text-align:center; color:var(--ink2); font-size:.8rem; padding:30px; border-top:1px solid var(--line)}
-  .small{font-size:.72rem; color:var(--ink2)}
+  .gcube{display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:-1px; margin-right:1px; border:1px solid rgba(0,0,0,.25)}
+  .backlink{display:inline-block; margin:18px 0; color:var(--red); text-decoration:none; font-weight:bold;}
+  .backlink:hover{text-decoration:underline;}
+  @media(max-width:620px){.toc{column-count:1}}
 </style>
 </head>
 <body>
 <header>
   <h1>Brewhouses of the Hanse</h1>
-  <div class="sub">A theme-first <b>medium euro</b>. At <b>the Wharf</b> — four stations ringed by slots — you <b>Source → Brew → Age → Ship</b>. A brewed <b>cask</b> matures in your brewery, sits on a <b>slot</b> as a public action, then <b>ships to a destination</b> for points. The <b>kontore</b> pay volume; the <b>Hall</b> pays prestige.</div>
-  <div class="tag">Component Visualizer · v0.8 “The Wharf” · all values placeholders ⚙</div>
+  <div class="sub">Rulebook &amp; Components · A merchant brewing house in the Hanseatic League. At <b>the Wharf</b> you <b>Source → Brew → Age → Ship</b> — the <b>kontore</b> pay volume, the <b>Hall</b> pays prestige.</div>
+  <div class="tag">v0.9 “The Wharf” prototype draft · all numbers placeholders ⚙</div>
 </header>
 
 <nav>
   <a href="learn.html" style="background:var(--sea2);color:var(--parch);font-weight:bold">🎓 Learn</a>
   <a href="play.html" style="background:var(--green);color:var(--parch);font-weight:bold">▶ Play (hot-seat)</a>
-  <a href="printables.html" style="background:var(--ink);color:var(--parch);font-weight:bold">🖨 Print &amp; Play</a>
-  <a href="rulebook.html" style="background:var(--gold);color:var(--ink);font-weight:bold">📖 Rulebook</a>
-  <a href="#grid">Stations &amp; Lines</a>
-  <a href="#wharf">The Slots</a>
-  <a href="#brew">Brewery</a>
-  <a href="#casks">Casks</a>
-  <a href="#destinations">Destinations</a>
-  <a href="#ships">Ships</a>
-  <a href="#neutrals">Buildings</a>
-  <a href="#recipes">Recipes</a>
-  <a href="#upgrades">Upgrades</a>
-  <a href="#goals">Goals</a>
-  <a href="#end">End &amp; Scoring</a>
+  <a href="printables.html" style="background:var(--gold);color:var(--ink);font-weight:bold">🖨 Print &amp; Play</a>
+  <a href="#idea">The Wharf</a>
+  <a href="#setup">Setup</a>
+  <a href="#turn">A Turn</a>
+  <a href="#cask">Casks</a>
+  <a href="#shipping">Destinations</a>
+  <a href="#brewery">Upgrades</a>
+  <a href="#scoring">Scoring</a>
+  <a href="#actionref">Action Reference</a>
 </nav>
 
-<main>
+<div class="wrap">
 
-<!-- ACTION GRID -->
-<section id="grid">
-  <h2><span class="n">§1</span>The Wharf — Stations &amp; Lines</h2>
-  <p class="lead">A 2×2 of four action <b>stations</b>, shared by all players, ringed by 8 slots. On your turn: move your worker to an orthogonally adjacent station, then activate its <b>row or column</b> — a line of up to 4 stops (slot · station · station · slot). <i>Hover a station to light its two lines.</i></p>
-  <p class="lead">The production order is <b>A Market (Source) → B Brewhouse (Brew) → D Cellar (Age) → C Harbor (Ship)</b>, but you move where the board is best — not simply round a circle. A <b>line is its two stations plus any tiles in their two slots.</b> Stations are <b>never closed</b> — moving onto a station a rival occupies costs 1 G; interaction lives on the slots, not on blocking.</p>
+<p class="disclaimer">This is a living prototype — the single rulebook <em>and</em> component reference. Every specific number (costs, maturation, destination values, scoring) is marked ⚙ and is a placeholder for balancing; the <em>rules structure</em> is what is pinned down here. The design rationale (the <em>why</em>) lives in <code>DESIGN.md</code>.</p>
+
+<nav class="toc">
+  <h3>Contents</h3>
+  <a href="#intro"><span class="nm">1</span>The Brewing House</a>
+  <a href="#idea"><span class="nm">2</span>The Wharf</a>
+  <a href="#components"><span class="nm">3</span>Components</a>
+  <a href="#anatomy"><span class="nm">4</span>Anatomy of the Game</a>
+  <a href="#setup"><span class="nm">5</span>Setup</a>
+  <a href="#turn"><span class="nm">6</span>A Turn</a>
+  <a href="#actions"><span class="nm">7</span>The Four Stations</a>
+  <a href="#cask"><span class="nm">8</span>The Cask &amp; Brewing</a>
+  <a href="#wharf"><span class="nm">9</span>The Slots</a>
+  <a href="#shipping"><span class="nm">10</span>Ships &amp; Destinations</a>
+  <a href="#brewery"><span class="nm">11</span>The Brewery &amp; Upgrades</a>
+  <a href="#goods"><span class="nm">12</span>Goods &amp; Storage</a>
+  <a href="#endgame"><span class="nm">13</span>End of the Game</a>
+  <a href="#scoring"><span class="nm">14</span>Scoring</a>
+  <a href="#twoplayer"><span class="nm">15</span>2-Player</a>
+  <a href="#glossary"><span class="nm">16</span>Glossary</a>
+  <a href="#actionref"><span class="nm">17</span>Action Reference</a>
+  <a href="#quickref"><span class="nm">18</span>Quick Reference</a>
+</nav>
+
+<section id="intro">
+  <h2><span class="nm">1</span>The Brewing House</h2>
+  <p class="lead">Hamburg was called <em>the brewhouse of the Hanse</em>. You are a merchant brewing house in the League, c. 1350.</p>
+  <p>The pivotal innovation of your age is <b>hopped beer</b>. Unlike perishable gruit ale, hopped beer survives a sea voyage — so beer becomes a <em>shippable export</em>. You will source grain and hops, brew casks, mature them, and push them across the Baltic and North Sea to the great foreign trading posts (the <b>kontore</b>: Bergen, London, Bruges, Novgorod) — or withdraw your finest into the brewers' <b>Hall</b>. Whoever has shipped the most valuable casks when the last ship sails wins.</p>
+</section>
+
+<section id="idea">
+  <h2><span class="nm">2</span>The Wharf</h2>
+  <p>The Wharf is four action <b>stations</b> — <b>Market</b>, <b>Brewhouse</b>, <b>Cellar</b>, <b>Harbor</b> — ringed by <b>eight slots</b>. Your worker moves between the stations; the work runs:</p>
+  <p style="text-align:center;font-variant:small-caps;font-weight:bold;color:var(--red);font-size:1.15rem;letter-spacing:1px">Source → Brew → Age → Ship</p>
   <div class="gridwrap">
     <div class="actiongrid" id="ag">
       <div class="slot s1" data-line="col-l">slot</div>
@@ -205,133 +213,264 @@
     <div class="gridnote">
       <p class="loopline">Source → Brew → Age → Ship → (repeat)</p>
       <ul>
-        <li><b>Both stations</b> on an activated line fire — the worker only gates <i>which line is legal</i>.</li>
-        <li><b>Lines pair two stations:</b> <span class="pill">Market+Brewhouse</span> <span class="pill">Brewhouse+Cellar</span> <span class="pill">Harbor+Cellar</span> <span class="pill">Market+Harbor</span>.</li>
-        <li>The <b>8 perimeter slots</b> hold a churning mix of <span class="pill">deployed casks</span> (cargo + a public action), <span class="pill">owned ships</span>, and a few <span class="pill">neutral buildings</span> seeded at setup. <i>(Recipes &amp; upgrades live on your private board, not a slot.)</i></li>
-        <li><b>One fire rule:</b> when a line runs, the active player may use each building in its two slots — a cask's action, a ship's load, or a neutral building. All on <b>your turn</b> (no out-of-turn skims).</li>
-        <li><b>Base verbs always work;</b> slot buildings only <i>add</i> — so a busy line makes your turns bigger and you're never stalled.</li>
+        <li>You brew casks, mature them, and ship them to destinations for points. <b>Where you ship is the key decision:</b> <span class="pill">VOLUME</span> the <b>kontore</b> (value + majorities) vs <span class="pill r">PRESTIGE</span> the <b>Hall</b> (quality, out of commerce).</li>
+        <li><b>Both stations</b> on an activated line fire — the worker only gates <i>which line is legal</i>. <i>(Hover a station to light its two lines.)</i></li>
+        <li><b>Lines pair two stations:</b> <span class="gpill">Market+Brewhouse</span> <span class="gpill">Brewhouse+Cellar</span> <span class="gpill">Harbor+Cellar</span> <span class="gpill">Market+Harbor</span>.</li>
+        <li>The <b>8 slots</b> hold a churning mix of <span class="gpill">deployed casks</span> (cargo + a public action), <span class="gpill">owned ships</span>, and <span class="gpill">2–3 neutral buildings</span>. <b>Base verbs always work;</b> slot buildings only <i>add</i>.</li>
       </ul>
     </div>
   </div>
+  <div class="box red"><h4>Three rules constraints</h4>
+    <b>No dice</b> (fully deterministic) · <b>No hidden draws</b> (everything you acquire is taken from a <em>face-up</em> supply) · <b>No money</b> (goods are the only currency; delivered points are score only).</div>
 </section>
 
-<!-- THE WHARF -->
-<section id="wharf">
-  <h2><span class="n">§4</span>The Slots — the Perimeter Ring</h2>
-  <p class="lead">The 8 shared slots are the only contested space in the game. A Ready cask <b>deploys here</b> (you pick the slot) and becomes three things at once — your cargo-in-waiting, your private inventory, and a <b>public action-building</b>. Ships you build sit here too, and sail away when full. The transience is the churn: casks arrive Ready and leave when shipped; ships fill and sail.</p>
-  <div class="note"><b>Non-destructive interaction lives here.</b> On your turn you may load a <b>rival's deployed cask</b> (on a slot) onto <b>your</b> ship — they still score the delivery and pick its benefit, but on <i>your</i> timing, and you take the freed slot + the sailing. Your private brewery is never touchable.</div>
+<section id="components">
+  <h2><span class="nm">3</span>Components</h2>
+  <ul>
+    <li><b>1 Main board</b> — <b>the Wharf</b>: a 2×2 of four stations (<b>A Market · B Brewhouse · D Cellar · C Harbor</b>) ringed by <b>8 slots</b>, plus the shared <b>Sailed-Ships track</b> (the end clock).</li>
+    <li><b>1 Destination board</b> — the four kontore + the <b>Hall</b>, each with its quality gate, delivery value, benefit, and (kontore) a majority track (§4, §10).</li>
+    <li><b>5 Player brewery boards</b> — each private &amp; untouchable: <b>vessel lanes</b> (start 2, cap 4), the <b>maturation track</b>, a <b>recipe rack</b>, <b>upgrade slots</b>, and goods storage (cap 8).</li>
+    <li><b>The tile supply</b> — <b>cask</b> tiles (a shared pool with fixed counts; an ownership disc marks one on a slot or delivered), <b>ship</b> tiles (Cog · Hulk), <b>neutral building</b> tiles, <b>recipe</b> tiles, <b>upgrade</b> tiles (Rooms + Modifiers), and <b>goal</b> tiles. Each family is shown in its section below.</li>
+    <li><b>Goods cubes</b> — <span class="cube g"></span> grain (G) and <span class="cube h"></span> hops (H), the only currency. <b>Per player:</b> 1 worker, ownership discs. <b>1 first-player marker</b> (fixed — it does <b>not</b> pass).</li>
+  </ul>
 </section>
 
-<!-- BREWING TRACK / PLAYER BOARD -->
-<section id="brew">
-  <h2><span class="n">§6</span>The Brewery — Vessels, Maturation &amp; Upgrades <span class="small">(private, untouchable)</span></h2>
-  <p class="lead">The grid is the <b>verbs</b>; your brewery is the <b>noun</b> they act on — your kettles and cellar. It holds your <b>vessels</b> (start 2, cap 4 — brewing throughput), the <b>maturation track</b> each cask crawls, your <b>recipes</b>, and your <b>upgrades</b>. Nothing here is contestable.</p>
-  <div class="brewtrack">
-    <div class="stage"><div class="st">Brew</div><div class="ds">spend a recipe + goods</div><div class="arrow">→</div></div>
-    <div class="stage"><div class="st">Ferment</div><div class="ds">all styles</div><div class="arrow">→</div></div>
-    <div class="stage"><div class="st">Age</div><div class="ds">via the Cellar + 1/turn</div><div class="arrow">→</div></div>
-    <div class="stage"><div class="st">Ready</div><div class="ds">deploy to a slot</div></div>
-  </div>
-  <div class="age-note">A cask matures <b>+1 step automatically each turn</b>, and the <b>Cellar</b> action (station D) gives a <b>pool of advance points</b> ⚙ across your vessels. Maturation length is set by type — <b>Gruit 1 · Hopped 2 · export 2–3 steps ⚙</b>. When a cask reaches <b>Ready</b> it deploys to an open slot; if every slot is full it <b>clogs its vessel</b> until you free one (the back-pressure that keeps you moving). <i>(Warm start: each house begins with 2 vessels, one built Cog bound to Bruges, and one Ready Gruit in a vessel (deploy it turn 1).)</i></div>
-</section>
-
-<!-- CASK TILES -->
-<section id="casks">
-  <h2><span class="n">A</span>Cask Tiles — the Dual-Role Hero</h2>
-  <p class="lead">The tile the whole game turns on, moving through <b>three states</b>: <b>maturing</b> (in a private vessel) → <b>on a slot</b> (cargo + a public action) → <b>delivered</b> (shipped to a destination → it <i>scores</i> and leaves). Beer is <b>two layers — type</b> (a global quality rung, Q1–Q5) <b>+ recipe</b> (permission to brew it). The ladder is a fixed spine (<b>Gruit → Hopped</b>) + a <b>variable export</b> — the four export beers carry fixed quality (Broyhan/Keut Q3 · Mumme Q4 · Bock Q5) and <b>3 of the 4 are dealt each game</b>, so the ladder shape varies. <i>Click a tile to flip it.</i></p>
-  <div class="legend">
-    <span class="chip"><span class="dot grain"></span> Grain (G)</span>
-    <span class="chip"><span class="dot hops"></span> Hops (H)</span>
-    <span class="chip">● Quality (1–5) — gates which destinations accept it</span>
-  </div>
-  <div class="gallery" id="caskGallery"></div>
-  <div class="note">The <b>signature action</b> is what makes choosing a type an <i>engine</i> choice, not just a cost — you're deciding which action-building to put on your lines. Higher types carry stronger actions (the climb).</div>
-</section>
-
-<!-- DESTINATIONS -->
-<section id="destinations">
-  <h2><span class="n">F</span>Destinations — Where You Ship Is the Lean</h2>
-  <p class="lead">The two old value tracks are gone; <b>where you ship</b> is the volume-vs-prestige choice. Every destination is <b>open from the start</b> and differentiated by a <b>quality gate</b> (the only climb-limiter — better places want better beer) and a unique <b>benefit</b>. <b>The cask's owner always scores the delivery and picks any offered benefit — even when a rival shipped it.</b></p>
+<section id="anatomy">
+  <h2><span class="nm">4</span>Anatomy of the Game</h2>
+  <h3>The Stations &amp; Lines</h3>
+  <p>Four stations sit in a 2×2: <b>A Market</b> (Source) &amp; <b>B Brewhouse</b> (Brew) on top, <b>C Harbor</b> (Ship) &amp; <b>D Cellar</b> (Age) below. You don't simply circle the board — you move where the board is best. Eight <b>slots</b> ring the stations, two beside each line. <b>A line is its two stations plus any tiles in their two slots</b> (<code>slot · station · station · slot</code>); each slot belongs to <b>exactly one line</b>. <em>(Recipes &amp; upgrades live on your private board, not a slot.)</em></p>
+  <h3>The Destinations (where value lives)</h3>
+  <p>The four kontore + the Hall are all <b>open from the start</b>. Each wants a certain <b>quality</b> of beer and pays differently — so there is no single best line of play. Delivery value is <b>flat per kontor regardless of quality</b> (only the Hall scales with Q), so a high-quality cask is wasted at Bruges and shines at Novgorod or the Hall.</p>
   <div class="routeboard" id="destBoard"></div>
-  <div class="note"><b>Reach</b> = your delivered casks across the kontore (value + majorities — the volume lean). <b>Prestige</b> = casks shipped to the <b>Hall</b> (the scarcity lean). They never convert; you lean, reading the board. Delivering to London / Bergen / Novgorod lets you <b>take an Upgrade from the Market's face-up display</b> (free) — so shipping makes you stronger, closing the cycle <i>deliver → upgrade → brew better → deliver better</i>. You don't fully know which upgrades will be on offer when your cask arrives.</div>
+  <div class="note"><b>Majorities are tiered &amp; ranked</b> (Lacerda-style): by delivered-cask count, <b>1st / 2nd / 3rd</b> place take a kontor's majority tiers; <b>2-player games skip 2nd</b> (winner-take-all); ties split the occupied tiers. The rich majority is <b>concentrated at Bergen</b> (its monopoly identity) — <b>Bergen no longer grants an upgrade;</b> its whole draw is the majority. <b>London</b> is the accessible <b>engine</b> kontor (an upgrade). The cask's owner always scores the delivery and takes any benefit — even when a rival shipped it.</div>
+  <h3>Your Brewery (private, untouchable)</h3>
+  <p>Your brewery board holds the <b>maturation track</b> (casks crawl Brew → … → Ready across your <b>vessels</b> — start <b>2</b>, cap <b>4</b>, each a parallel lane), a <b>recipe rack</b>, and <b>upgrade slots</b> (Rooms &amp; Modifiers, mostly earned by delivering). Rivals can only act on your casks once they're on a slot.</p>
 </section>
 
-<!-- SHIP TILES -->
-<section id="ships">
-  <h2><span class="n">B</span>Ship Tiles — Owned Single-Use Carriers</h2>
-  <p class="lead"><b>The merchant fantasy.</b> You <b>build and own</b> ships (at the Market) onto a slot, <b>bound to a destination</b> (inheriting its quality gate). Lifecycle <b>load → fill → sail:</b> load via the Harbor verb (always) or a <b>bonus free load when the ship's line fires</b>; the instant it is <b>full it sails</b> — every cask aboard is delivered, and the <b>ship is consumed onto the Sailed-Ships track</b> (the end clock). Build another to ship again.</p>
-  <div class="gallery" id="shipGallery"></div>
-  <div class="note">You may load <b>your own</b> Ready casks <b>or a rival's deployed cask</b> aboard your ship. Relief valves: <b>launch a partial ship early</b>, or <b>Charter</b> — pay <b>2 G ⚙</b> to ship one Ready cask (vessel or slot) on an immediate single-cask voyage (no tile, an outside hull). The Charter advances the clock like any voyage but is strictly worse per cask than owning a Cog/Hulk, so it never displaces the fleet; it just keeps the tight slots from deadlocking. A full Hulk is a 3-cask burst — still just <b>one</b> Sailed-Ships slot, so the clock stays smooth.</div>
+<section id="setup">
+  <h2><span class="nm">5</span>Setup</h2>
+  <ol>
+    <li>Place the <b>main board</b> and <b>destination board</b>. Seed the slots with <b>2–3 neutral buildings</b> ⚙ and the warm-start Cogs, <b>spread across different lines</b> so no single line is the obvious opening. All five destinations begin <b>open</b>.</li>
+    <li><b>Deal 3 of the 4 export beers</b> ⚙. Each carries a <b>fixed quality</b> — <b>Broyhan</b> Q3 · <b>Keut</b> Q3 · <b>Mumme</b> Q4 · <b>Bock</b> Q5 — so dropping one varies the ladder: drop a Q3 → the full Q3→Q5 climb; drop Mumme → no Q4; drop Bock → no Q5. Recipes &amp; ships are an always-available Market supply; for upgrades, <b>shuffle all Upgrade tiles into a face-down deck and deal 4 ⚙ face-up</b> — the <b>Upgrade display</b> (refills from the deck as tiles are taken, §11).</li>
+    <li>Set the <b>Sailed-Ships track</b> to its player-scaled length (it scales steeply): <b>~7 / 11 / 15 / 19 slots for 2 / 3 / 4 / 5 players</b> ⚙.</li>
+    <li>Each player takes a <b>brewery board</b>, a <b>worker</b>, ownership discs, and a starting stake: the <b>Gruit + Hopped</b> recipes (printed), <b>2 open vessels</b> (lanes 3–4 locked), and a <b>warm start</b> — one built <b>Cog</b> on a slot bound to <b>Bruges</b>, and <b>one Ready Gruit</b> in Vessel 1 (deploy it turn 1).</li>
+    <li><b>Starting goods (with seat compensation):</b> <b>3 <span class="cube g"></span>, 2 <span class="cube h"></span></b>, plus <b>+1 <span class="cube g"></span> for every seat after the first</b> ⚙ — so seats P1…P5 start with <b>3 / 4 / 4 / 4 / 4 G</b>. (Turn order is fixed, which gives the first player a small edge; the free opening placement + this +1 G neutralize it.)</li>
+    <li>Each player places their worker on any station — <b>your opening placement is free</b> (no occupancy toll, §6). Give the first-player marker to any player (it does not pass).</li>
+  </ol>
+  <div class="box"><h4>Warm start</h4>Starting with 2 vessels, a built Cog, and a Ready cask means a first voyage is reachable by turn 2–3.</div>
 </section>
 
-<!-- NEUTRAL BUILDINGS -->
-<section id="neutrals">
-  <h2><span class="n">C</span>Neutral Buildings — the Shared Base</h2>
-  <p class="lead">A small set placed on slots <b>at setup</b> (shared, permanent — <b>2–3 in play per game ⚙</b>). They keep the slots alive from turn 1: whoever runs their line may use the action, free. This is the “everyone has the base; your casks &amp; ships are the better versions” floor.</p>
-  <div class="gallery" id="neutralGallery"></div>
+<section id="turn">
+  <h2><span class="nm">6</span>A Turn</h2>
+  <p><b>Turn 1 only:</b> <em>place</em> your worker on any station (free) and activate one of its two lines (no move). From turn 2, in order:</p>
+  <ol>
+    <li><b>Move</b> your worker to an <b>orthogonally adjacent</b> station (A↔B, A↔C, B↔D, C↔D — <b>never the diagonal</b>). Mandatory. <b>If you move onto a station a rival already occupies, pay 1 <span class="cube g"></span></b> ⚙ to the supply (the <b>occupancy toll</b> — capped at what you hold, never blocks).</li>
+    <li><b>Activate</b> the <b>row OR the column</b> of your worker's new station.</li>
+    <li><b>Resolve</b> the line's up-to-4 stops — <code>slot · station · station · slot</code> — in <b>any order</b>:
+      <ul>
+        <li><b>Each station</b>: take its action. <b>Stations are never closed</b> — a rival's worker never stops you using one.</li>
+        <li><b>Each slot</b>: if it holds a building, you <b>may use its action</b> — a <b>cask</b>'s signature action, a <b>ship</b>'s free load, or a <b>neutral building</b>. All resolve <b>on your turn, for you</b> — <b>no out-of-turn gains</b>.</li>
+      </ul>
+    </li>
+  </ol>
+  <div class="box"><h4>Both stations always fire</h4>Activating a line triggers <em>both</em> stations; your worker only determines <b>which line is legal</b>. Because base verbs are always available and slot buildings only <em>add</em>, you are never stalled — a populated Wharf makes your turns bigger.</div>
+  <p>Play passes clockwise. <b>The first player is fixed for the whole game — turn order does not rotate.</b> The <b>free opening placement</b> and the <b>+1 G per later seat</b> (§5) are the seat balancers.</p>
 </section>
 
-<!-- RECIPES -->
-<section id="recipes">
-  <h2><span class="n">D</span>Recipe Tiles — Permission to Brew a Type</h2>
-  <p class="lead">A small face-up Market supply. A recipe is <b>only</b> <i>a brewable type + its brew cost</i> — the v0.6 on-collect boons, the 6-card tuck, and frontier-gating are <b>cut</b>. Acquired at the Market; <b>permanent</b> (brewing never consumes it). Start with <b>Gruit + Hopped</b> (fixed, symmetric — so <i>gaining an export recipe means more</i>); collect export recipes to climb. The four export beers carry <b>fixed quality</b> (Broyhan/Keut Q3 · Mumme Q4 · Bock Q5) and <b>3 of the 4 are dealt each game</b>, so the ladder shape varies.</p>
+<section id="actions">
+  <h2><span class="nm">7</span>The Four Stations</h2>
+  <table>
+    <tr><th>Station</th><th>Action ⚙</th></tr>
+    <tr><td><b>A · Market</b> <span class="pill">Source</span></td><td>Take <b>2 goods</b> (any mix), <b>or</b> acquire <b>one</b> tile: a <b>recipe</b> (a brewable type), a <b>ship</b> (Cog/Hulk → a slot, bound to a destination), or an <b>upgrade</b> (a Room/Modifier → your brewery, from the face-up display).</td></tr>
+    <tr><td><b>B · Brewhouse</b> <span class="pill">Brew</span></td><td><b>Load</b> one recipe you hold (paying its <span class="cube g"></span>/<span class="cube h"></span> cost) into an <b>open vessel</b> — a young cask at step 0. Recipes are permanent. One load per Brewhouse.</td></tr>
+    <tr><td><b>D · Cellar</b> <span class="pill">Age</span></td><td>Gain a <b>pool of 3 advance points</b> ⚙ and <b>allocate freely across your vessels</b>. (Casks also age <b>+1 automatically each turn</b>.) When a cask is <b>Ready</b>, deploy it to an open slot.</td></tr>
+    <tr><td><b>C · Harbor</b> <span class="pill">Ship</span></td><td><b>Load</b> one cask from a slot onto one of <b>your ships</b> (any ship). A ship <b>sails the instant it is full</b>; or <b>launch a partial ship early</b>, or use a <b>Charter</b> (pay 2 G to ship one Ready cask now — §10).</td></tr>
+  </table>
+</section>
+
+<section id="cask">
+  <h2><span class="nm">8</span>The Cask &amp; Brewing</h2>
+  <p>The tile the whole game turns on, moving through <b>three states</b>: <b>maturing</b> (private vessel) → <b>on a slot</b> (cargo + a public action) → <b>delivered</b> (shipped → it scores and leaves). Beer is <b>two layers — a type</b> (quality rung Q1–Q5) <b>+ a recipe</b> (permission to brew it). Casks are <b>brewed, not bought</b>, from a shared pool with fixed counts, so the rare export casks are contested. A loaded recipe crawls the maturation track — casks <b>age 1 step automatically every turn</b>, plus the Cellar pool. <i>Click a tile to flip it.</i></p>
+  <div class="gallery" id="caskGallery"></div>
+  <p>The ladder is a fixed spine (<b>Gruit → Hopped</b>) + a <b>variable export</b>: the four historical Hanse export beers carry a <b>fixed quality</b> (Broyhan/Keut Q3 · Mumme Q4 · Bock Q5) and <b>3 of the 4 are dealt each game</b>, so the climb differs every game. The <b>signature action follows the quality</b>, not the name. <b>Recipes</b> (permission to brew) are a face-up Market supply:</p>
   <div class="gallery" id="recipeGallery"></div>
 </section>
 
-<!-- UPGRADES -->
-<section id="upgrades">
-  <h2><span class="n">E</span>Upgrade Tiles — the Private Brewery Engine</h2>
-  <p class="lead">Where <b>depth</b> lives — installed on your brewery board. <b>Rooms</b> are permanent capability; <b>Modifiers</b> are asymmetric perks (these subsume v0.6's Privileges). <b>They sit in a face-up Market display</b> (option B): <b>buy</b> one (pay its cost) <b>or earn</b> one free by delivering to <b>London / Bergen / Novgorod</b> — the same display, so what you can grab depends on what is face-up. Recipes &amp; ships are a separate always-available supply.</p>
-  <h3 style="font-variant:small-caps;color:var(--green);margin:10px 0 4px">Rooms — capability</h3>
-  <div class="gallery" id="roomGallery"></div>
-  <h3 style="font-variant:small-caps;color:#6e4ea0;margin:18px 0 4px">Modifiers — asymmetric perks</h3>
-  <div class="gallery" id="modGallery"></div>
+<section id="wharf">
+  <h2><span class="nm">9</span>The Slots</h2>
+  <p>The <b>8 slots</b> hold your <b>deployed casks</b> (cargo + a public action), your <b>ships</b> (single-use; consumed when they sail), and <b>2–3 neutral buildings</b> seeded at setup. When a line fires, the active player may use each building in its two slots: a <b>cask</b> fires its signature action, a <b>ship</b> offers a free load, a <b>neutral building</b> gives its base action. All resolve <b>on the active player's turn</b>. When a rival uses your cask's action, you still own the cask and score it when shipped.</p>
+  <div class="gallery" id="neutralGallery"></div>
+  <div class="box red"><h4>Shipping a rival's cask</h4>On your turn you may load a <b>rival's deployed cask</b> (on a slot) onto <b>your</b> ship — never their brewery. The <b>destination is your ship's binding</b> (it must be legal for that cask's quality). The <b>owner still scores the delivery and picks its benefit</b>; <b>you</b> take the freed slot, the filled ship (advancing the clock), and a small loader bonus ⚙.</div>
 </section>
 
-<!-- GOALS -->
-<section id="goals">
-  <h2><span class="n">G</span>Goal Tiles — the Variety Layer</h2>
-  <p class="lead">A small pool (shared draft or per-player ⚙) rewarding different shapes, so the winning engine varies by game — the <i>Great Western Trail</i> blend ideal. <b>Only your best few score</b> ⚙, and they're authored so a one-note rush fills few of them.</p>
+<section id="shipping">
+  <h2><span class="nm">10</span>Ships &amp; Destinations</h2>
+  <p><b>The merchant fantasy.</b> Build &amp; own ships at the Market onto a slot, <b>bound to a destination</b> (inheriting its gate). Lifecycle <b>load → fill → sail:</b> load via the Harbor verb or a bonus free load when the ship's line fires (your own cask or a rival's); the instant it is <b>full it sails</b> — every cask delivers, and the ship is consumed onto the Sailed-Ships track.</p>
+  <div class="gallery" id="shipGallery"></div>
+  <h3>Charter Voyage</h3>
+  <p>The Harbor always offers a <b>Charter</b> (no tile — an outside hull): pay <b>2 G</b> ⚙ to send <b>one</b> Ready cask — from a vessel or a slot — on an immediate <b>single-cask voyage</b> to a destination it qualifies for. It delivers normally and advances the clock, but is <b>strictly worse per cask</b> than a Cog/Hulk — so owning ships stays the better plan; the Charter just keeps the tight slots from ever deadlocking.</p>
+  <div class="box"><h4>Delivery Benefits</h4>Delivering to <b>London / Novgorod</b> hands you a brewery upgrade from the display at no goods cost (<b>Bergen</b> pays its big majority instead; <b>Bruges</b> pays goods; the <b>Hall</b> pays prestige). The cycle reinforces itself: <em>deliver → earn an upgrade → brew better → deliver better.</em></div>
+</section>
+
+<section id="brewery">
+  <h2><span class="nm">11</span>The Brewery &amp; Upgrades</h2>
+  <p>Your brewery holds your <b>vessels</b> (start 2, cap 4), your <b>recipes</b>, and your <b>upgrades</b> — where strategies diverge. Upgrades come from the Market's <b>face-up Upgrade display</b> (a row of <b>4 ⚙</b> dealt from a shuffled face-down deck, refilling as taken): <b>buy</b> one (pay its goods cost) <b>or earn</b> one free by delivering to <b>London / Novgorod</b>. Two families — <b>Rooms</b> (capability) and <b>Modifiers</b> (asymmetric perks).</p>
+  <table>
+    <tr><th>Room (capability)</th><th>Effect ⚙</th><th>Buy ⚙</th></tr>
+    <tr><td><b>Extra Vessel</b></td><td>+1 brewing lane (start 2, cap <b>4</b>) — repeatable</td><td>5 G</td></tr>
+    <tr><td><b>Aging Cellar</b></td><td>maturation <b>−1 step</b>; <b>unlocks the L5 export (Bock)</b></td><td>5 G</td></tr>
+    <tr><td><b>Warehouse</b></td><td>goods storage <b>8 → 12</b></td><td>4 G</td></tr>
+    <tr><td><b>Quay</b></td><td>load <b>2 casks</b> in one Harbor visit</td><td>5 G</td></tr>
+    <tr><td><b>Cooperage</b></td><td><b>+1 cask loaded</b> per Harbor visit (stacks with Quay)</td><td>4 G</td></tr>
+  </table>
+  <table>
+    <tr><th>Modifier (asymmetric perk)</th><th>Effect ⚙</th><th>Buy ⚙</th></tr>
+    <tr><td><b>Granary Right</b></td><td>gain grain → <b>+1 extra</b></td><td>4 G</td></tr>
+    <tr><td><b>Hop Garden</b></td><td>gain hops → <b>+1 extra</b></td><td>4 G</td></tr>
+    <tr><td><b>Royal Patent</b></td><td>your ships sail with <b>+1 capacity</b></td><td>5 G</td></tr>
+    <tr><td><b>Staple Right</b></td><td><b>+1 good</b> when you deliver to a kontor</td><td>5 G</td></tr>
+    <tr><td><b>Guild Seat</b></td><td><b>+1 advance point</b> at the Cellar</td><td>4 G</td></tr>
+    <tr><td><b>Burgher Status</b></td><td><b>+1 presence</b> at every kontor you've reached (majority help)</td><td>5 G</td></tr>
+  </table>
+  <div class="box"><h4>Buying Upgrades (4–5 G)</h4>Delivering to London / Novgorod hands you a display tile <b>free</b> — on top of the voyage's value. Buying yields only the upgrade, so it is priced at a comparable <b>4–5 G ⚙</b>: a real option for bootstrapping, but the primary path is <em>deliver → earn an upgrade → brew better.</em></div>
+</section>
+
+<section id="goods">
+  <h2><span class="nm">12</span>Goods &amp; Storage</h2>
+  <p><span class="cube g"></span> grain and <span class="cube h"></span> hops are the only currency — recipes, brew inputs, ships, upgrades, loader benefits. You may hold up to <b>8 goods ⚙</b> (raised by the Warehouse room). There is <b>no money</b> and <b>no spendable prestige</b> — delivered points are score only.</p>
+</section>
+
+<section id="endgame">
+  <h2><span class="nm">13</span>End of the Game</h2>
+  <p>The game ends when the <b>Sailed-Ships track fills</b>. Every <b>voyage</b> — a ship sailing (full or launched) <b>or a Charter</b> — moves one slot onto the shared, visible track. Length scales with player count (<b>~7 / 11 / 15 / 19</b> for 2 / 3 / 4 / 5p ⚙); a <b>round limit</b> (≈25 ⚙) backstops a slow table. This is a <b>visible, steerable clock</b>: a volume player races to sail ships fast and end it; a prestige player keeps a steadier pace. When it fires, <b>finish the current round</b> (equal turns for all), then score.</p>
+</section>
+
+<section id="scoring">
+  <h2><span class="nm">14</span>Scoring</h2>
+  <p>No separate reach/standing tracks. You score from <b>what you delivered</b>:</p>
+  <ol>
+    <li><b>Delivery value</b> — sum your delivered casks' values at each destination (kontore = trade value; <b>the Hall = prestige</b>, scaling with quality, Q×2).</li>
+    <li><b>Majorities</b> — at each kontor, by delivered-cask count, <b>1st / 2nd / 3rd</b> place take that kontor's tiers (Bergen <b>10 / 6 / 3</b> ⚙ is the rich one; Bruges/London <b>2</b>, Novgorod <b>3</b> — minor, 1st-place-only). <b>2-player games skip 2nd</b> (winner-take-all); tied players split the sum of the tiers they occupy ⚙.</li>
+    <li><b>Goals</b> — resolve your goal tiles; <b>only your best few score</b> ⚙.</li>
+  </ol>
+  <p>Highest total wins. <b>Tiebreak:</b> most goods, then most casks on slots.</p>
   <div class="gallery" id="goalGallery"></div>
 </section>
 
-<!-- END / SCORING -->
-<section id="end">
-  <h2><span class="n">§8</span>The Sailed-Ships Track — End Clock &amp; Scoring</h2>
-  <p class="lead"><b>End:</b> each voyage — a ship sailing <b>or a Charter</b> — moves one slot onto the <b>shared, visible Sailed-Ships track</b>; when it <b>fills</b>, finish the round → score. Self-accelerating (the more the table ships, the sooner it ends), the master length dial — it scales <b>steeply</b> (the clock fills faster with more players): <b>~7 / 11 / 15 / 19 slots for 2 / 3 / 4 / 5 players ⚙</b> (≈ +4 per player), with a <b>MAX_ROUND ceiling (≈25 ⚙)</b> backstopping the <b>~12–25-round target</b>. A volume player can <b>race</b> the clock; a prestige player keeps a steadier pace to buy more delivering turns.</p>
-  <div class="routeboard" style="grid-template-columns:repeat(3,1fr)">
-    <div class="route bruges"><h3>1 · Deliveries</h3><div class="meta">Sum your delivered casks' values by destination — <b>kontore</b> trade value + the <b>Hall's</b> prestige (∝ quality).</div></div>
-    <div class="route bergen"><h3>2 · Majorities</h3><div class="meta">The route-majority bonus at each kontor (most delivered casks; ties split ⚙). Bergen rewards this most.</div></div>
-    <div class="route london"><h3>3 · Goals</h3><div class="meta">Your <b>best few</b> goal tiles ⚙. Tiebreak: most goods, then most casks on slots.</div></div>
-  </div>
-  <div class="note">No separate reach/standing tracks — the volume-vs-prestige tension lives entirely as a <b>lean</b> across destinations, coupled by shared casks, scarce slots, scarce ships, and the one shared clock.</div>
+<section id="twoplayer">
+  <h2><span class="nm">15</span>2-Player Variant</h2>
+  <p>With fewer workers the slots feel loose, so <b>lock some slots</b> (down to ~6 ⚙) to tighten the competition that drives "ship a rival's cask to free a slot." The <b>Sailed-Ships track</b> is shortest at 2p (~7 slots ⚙), so the clock stays brisk. Majorities are <b>winner-take-all</b> at 2p (2nd place is skipped). Everything else plays identically.</p>
 </section>
 
-</main>
+<section id="glossary">
+  <h2><span class="nm">16</span>Glossary</h2>
+  <ul>
+    <li><b>The Wharf</b> — the whole core area: four stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots.</li>
+    <li><b>Station / Slot / Line</b> — a station is one of the four action spaces; a slot is one of the 8 spaces ringing them (a deployed cask, a ship, or a neutral building); a <b>line</b> is a row or column = <b>its two stations plus any tiles in their two slots</b>.</li>
+    <li><b>Occupancy toll</b> — 1 G ⚙ paid to the supply when you move onto a station a rival occupies (opening placement free). Never blocks.</li>
+    <li><b>Seat compensation</b> — later seats start with +1 G each (the fixed-turn-order balancer).</li>
+    <li><b>Cask</b> — a brewed beer in one of three states: <b>maturing</b> (vessel) → <b>on a slot</b> (cargo + a public action) → <b>delivered</b> (shipped → scores). <b>Deploy</b> = place a Ready cask onto an open slot.</li>
+    <li><b>Ship / Charter</b> — a Ship is owned infrastructure (Cog 2 / Hulk 3) bound to a destination, consumed when it sails; a <b>Charter</b> is a Harbor option (pay 2 G to ship one Ready cask now), less efficient per cask but a deadlock guard.</li>
+    <li><b>Destination / kontor / the Hall</b> — where a ship delivers. <b>Kontore</b> pay trade value + tiered majorities (volume); <b>the Hall</b> pays prestige (scarcity).</li>
+    <li><b>Majority</b> — tiered, ranked by delivered casks at a kontor (1st/2nd/3rd take the tiers; 2p skips 2nd). Concentrated at Bergen.</li>
+    <li><b>Recipe / Upgrade / Neutral building</b> — permission to brew a type / a Room or Modifier on your brewery (mostly earned by delivering) / a shared base action seeded on a slot.</li>
+    <li><b>Sailed-Ships track</b> — the shared end clock; each voyage fills one slot. When full → finish the round → score.</li>
+  </ul>
+</section>
+
+<section id="actionref">
+  <h2><span class="nm">17</span>Action Reference</h2>
+  <p><b>The goal:</b> ship valuable casks before the Sailed-Ships track fills — <b>kontore</b> for value + majorities (volume), the <b>Hall</b> for prestige (quality). <span class="small">Costs read as <i data-lucide="wheat" class="gi"></i>2; gains as +2 <i data-lucide="wheat" class="gi"></i>.</span></p>
+
+  <div class="acat">Each turn</div>
+  <table class="atbl">
+    <tr><td><span class="act-ic"><i data-lucide="footprints"></i></span></td><td><b>Move</b></td><td>Move to an orthogonally adjacent station (mandatory from turn 2; turn 1 you place).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="coins"></i></span></td><td><b>Occupancy toll</b></td><td>Moved onto a station a <b>rival</b> occupies? Pay <b><i data-lucide="wheat" class="gi"></i>1</b> ⚙. Opening placement free; never blocks.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="layout-grid"></i></span></td><td><b>Activate a line</b></td><td>Choose your station's <b>row or column</b>; resolve its two stations + the buildings in its two slots, any order.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="circle-arrow-down"></i></span></td><td><b>Deploy</b></td><td>When a cask is <b>Ready</b>, place it onto an open <b>slot</b> (free) — it becomes cargo + a public action.</td></tr>
+  </table>
+
+  <div class="acat">Station verbs (the line you fire)</div>
+  <table class="atbl">
+    <tr><td><span class="act-ic"><i data-lucide="wheat"></i></span></td><td><b>Source — grain / hops</b></td><td><b>Market.</b> Gain <b>+2</b> goods, any mix (<i data-lucide="wheat" class="gi"></i>/<i data-lucide="sprout" class="hi"></i>).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="scroll-text"></i></span></td><td><b>Source — buy recipe</b></td><td><b>Market.</b> Cost <i data-lucide="wheat" class="gi"></i>1–<i data-lucide="wheat" class="gi"></i>2; add a brewable type (permanent).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="sailboat"></i></span></td><td><b>Source — build ship</b></td><td><b>Market.</b> <i data-lucide="wheat" class="gi"></i>2 (Cog · 2) / <i data-lucide="wheat" class="gi"></i>3 (Hulk · 3); place on a slot, bound to a destination.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="wrench"></i></span></td><td><b>Source — take upgrade</b></td><td><b>Market.</b> Cost <i data-lucide="wheat" class="gi"></i>4–<i data-lucide="wheat" class="gi"></i>5 — or <b>free</b> by delivering.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brew</b></td><td><b>Brewhouse.</b> Pay the recipe's cost; start a young cask in an open vessel.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Age</b></td><td><b>Cellar.</b> Gain <b>3 advance points</b> ⚙ across your vessels. (Casks also age +1 each turn.)</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>Ship — load</b></td><td><b>Harbor.</b> Load a Ready cask from a slot onto one of your ships. A full ship sails at once.</td></tr>
+  </table>
+
+  <div class="acat">Cask signature actions (a deployed cask, when its line fires)</div>
+  <table class="atbl">
+    <tr><td><span class="act-ic"><i data-lucide="store"></i></span></td><td><b>Gruit → Source</b></td><td>Gain <b>+2</b> goods.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Hopped → Age</b></td><td>Advance any <b>1 cask 2 steps</b>.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>Q3 (Broyhan/Keut) → Load</b></td><td>Load a Ready cask onto a ship, <b>free</b>.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="map-pin"></i></span></td><td><b>Q4 (Mumme) → Reach</b></td><td><b>+1 presence</b> at a kontor you've delivered to.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="sparkles"></i></span></td><td><b>Q5 (Bock) → Wild</b></td><td>Take any <b>one base verb</b> (Source / Brew / Age / Ship).</td></tr>
+  </table>
+
+  <div class="acat">Neutral buildings (shared, seeded on slots)</div>
+  <table class="atbl">
+    <tr><td><span class="act-ic"><i data-lucide="store"></i></span></td><td><b>Market Stall</b></td><td>Gain <b>+1</b> good.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="hammer"></i></span></td><td><b>Cooper</b></td><td>Advance a cask <b>1 step</b>.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="package-plus"></i></span></td><td><b>Crane</b></td><td><b>Free load</b> a cask onto a ship.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="arrow-left-right"></i></span></td><td><b>Counting House</b></td><td>Convert up to 2 goods (<i data-lucide="wheat" class="gi"></i>↔<i data-lucide="sprout" class="hi"></i>).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="megaphone"></i></span></td><td><b>Towncrier</b></td><td>Draw a goal from the face-up goal supply.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="heart"></i></span></td><td><b>Almshouse</b></td><td><b>+1 presence</b> at a kontor you already lead.</td></tr>
+  </table>
+
+  <div class="acat">Shipping &amp; voyages</div>
+  <table class="atbl">
+    <tr><td><span class="act-ic"><i data-lucide="sailboat"></i></span></td><td><b>Sail</b> (auto / launch early)</td><td>A ship sails the instant it is <b>full</b> (or launch a partial one): every cask delivers (owner scores + picks the benefit), then the ship moves to the <b>Sailed-Ships track</b>.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="ticket"></i></span></td><td><b>Charter</b></td><td><b>Harbor.</b> Pay <b><i data-lucide="wheat" class="gi"></i>2</b> ⚙ to ship <b>one</b> Ready cask (vessel or slot) on a single-cask voyage. Advances the clock; less efficient than your own ship.</td></tr>
+  </table>
+</section>
+
+<section id="quickref">
+  <h2><span class="nm">18</span>Quick Reference</h2>
+  <div class="ref">
+    <h4>Your turn</h4>
+    <ol>
+      <li><b>Move</b> to an orthogonally adjacent station (mandatory) — pay <b>1 G</b> if a rival is already there.</li>
+      <li><b>Activate</b> its row or column.</li>
+      <li><b>Resolve</b> the line (slot · station · station · slot), any order. Both stations fire; stations never closed; use the buildings in the line's two slots (on your turn).</li>
+    </ol>
+    <h4>At the Wharf</h4>
+    <p>Market (Source: goods/recipes/ships/upgrades) → Brewhouse (Brew a cask) → Cellar (Age to Ready → deploy to a slot) → Harbor (Ship → sails when full → delivers).</p>
+    <h4>Where to ship</h4>
+    <p>Bruges (+2, goods) · London (+3, an upgrade) · Bergen (+3, the big majority 10/6/3) · Novgorod (+5, an upgrade) · the Hall (Q×2, prestige). Gate by quality; owner scores &amp; picks the benefit even on a rival's ship.</p>
+    <h4>Game ends</h4>
+    <p><b>The Sailed-Ships track fills</b> (each voyage = 1 slot) → finish the round → score: Deliveries + Majorities (tiered; 2p skips 2nd) + Goals (best few).</p>
+  </div>
+</section>
+
+</div>
 
 <footer>
-  Brewhouses of the Hanse · component visualizer · <b>v0.8 “The Wharf”</b> · generated from <code>TILES.md</code> / <code>COMPONENTS.md</code> / <code>RULES.md</code> · all numbers are placeholders ⚙<br>
-  <span class="small">The Play client (<code>play.html</code>) is now v0.8 as well — all pages are current.</span>
+  Brewhouses of the Hanse · rulebook &amp; components · <b>v0.9 “The Wharf”</b> · generated from <code>RULES.md</code> / <code>COMPONENTS.md</code> · all numbers are placeholders ⚙<br>
+  <span class="small">The Play client (<code>play.html</code>) is the de-facto reference implementation.</span>
 </footer>
 
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>
-const G = '<span class="cube grain" style="background:var(--grain)"></span>';
-const H = '<span class="cube hops" style="background:var(--hops)"></span>';
+const G = '<span class="gcube" style="background:var(--grain)"></span>';
+const H = '<span class="gcube" style="background:var(--hops)"></span>';
 function cubes(str){return str.replace(/G/g,G).replace(/H/g,H);}
 
-// ---- DESTINATIONS (kontore + the Hall) ----
+// ---- DESTINATIONS (v0.9: tiered majorities · London=engine · Bergen=majority) ----
 const destinations=[
-  {cls:'bruges',  name:'Bruges',   role:'The Hub — wide, takes any beer (the volume on-ramp)', gate:'Q1', value:'low (≈ +2 ⚙)', benefit:'liquidity — gain goods', maj:'small'},
-  {cls:'london',  name:'London',   role:'The Steelyard — the engine destination',            gate:'Q2', value:'mid (≈ +3 ⚙)', benefit:'take an Upgrade from the display', maj:'mid'},
-  {cls:'bergen',  name:'Bergen',   role:'The Monopoly — narrow &amp; contested',              gate:'Q2', value:'mid (≈ +3 ⚙)', benefit:'Upgrade (display) + richest majority', maj:'biggest'},
-  {cls:'novgorod',name:'Novgorod', role:'The Long Haul — premium only',                       gate:'Q3', value:'high (≈ +5 ⚙)', benefit:'top value + an Upgrade (display)', maj:'mid'},
-  {cls:'hall',    name:'The Hall', role:'Prestige — out of commerce (the Westvleteren move)',  gate:'Q2', value:'prestige ∝ quality (≈ Q×2 ⚙)', benefit:'the scarcity payout', maj:'—'},
+  {cls:'bruges',  name:'Bruges',   role:'The Hub — wide, takes any beer (the volume on-ramp)', gate:'Q1', value:'+2', benefit:'gain 2 goods (liquidity)', maj:'2 (1st only)'},
+  {cls:'london',  name:'London',   role:'The Steelyard — the engine destination',             gate:'Q2', value:'+3', benefit:'take an Upgrade from the display', maj:'2 (1st only)'},
+  {cls:'bergen',  name:'Bergen',   role:'The Monopoly — narrow &amp; contested',               gate:'Q2', value:'+3', benefit:'<i>none — the majority is the draw</i>', maj:'<b>10 / 6 / 3</b>'},
+  {cls:'novgorod',name:'Novgorod', role:'The Long Haul — premium only',                        gate:'Q3', value:'+5', benefit:'top value + take an Upgrade', maj:'3 (1st only)'},
+  {cls:'hall',    name:'The Hall', role:'Prestige — out of commerce (the Westvleteren move)',  gate:'Q2', value:'Q×2 (Q2→4 … Q5→10)', benefit:'the scarcity payout', maj:'—'},
 ];
 document.getElementById('destBoard').innerHTML=destinations.map(d=>`
   <div class="route ${d.cls}">
     <span class="open-badge">Open at start</span>
     <h3>${d.name}</h3><div class="role">${d.role}</div>
-    <div class="meta">Quality gate: <b>${d.gate}</b><br>Delivery value: <b>${d.value}</b><br>Benefit: <b>${d.benefit}</b><br>Majority: <b>${d.maj}</b></div>
+    <div class="meta">Quality gate: <b>${d.gate}</b><br>Per-cask value: <b>${d.value}</b><br>Benefit: <b>${d.benefit}</b><br>Majority (1st/2nd/3rd): <b>${d.maj}</b></div>
   </div>`).join('');
 
 // ---- CASK TILES ----
@@ -370,35 +509,6 @@ document.getElementById('caskGallery').innerHTML=casks.map(c=>`
     </div>
   </div>`).join('');
 
-// ---- SHIP TILES ----
-const ships=[
-  {name:'Cog',cap:'2 casks',cost:'2 G',d:'Small single-use carrier. Built tied to a destination; inherits its quality gate. Fills with 2 casks, then sails.',qty:8},
-  {name:'Hulk',cap:'3 casks',cost:'3 G',d:'Large single-use carrier — a 3-cask burst in one voyage. Built tied to a destination; inherits its gate. Fills with 3, then sails.',qty:5},
-];
-document.getElementById('shipGallery').innerHTML=ships.map(t=>`
-  <div class="card"><div class="head h-ship"><div class="kind">Ship · owned, single-use</div><div class="ttl">${t.name}</div></div>
-  <div class="body">
-    <div class="row"><span class="k">Capacity</span><span class="v">${t.cap}</span></div>
-    <div class="row"><span class="k">Build cost</span><span class="v">${cubes(t.cost)}</span></div>
-    ${t.d}
-    <div class="row"><span class="k">Load (any player)</span><span class="v">your casks or a rival's deployed cask</span></div>
-    <div class="row"><span class="k">Full → sails</span><span class="v">casks delivered · ship → Sailed-Ships track</span></div>
-    <div class="badge">×${t.qty}</div>
-  </div></div>`).join('');
-
-// ---- NEUTRAL BUILDINGS ----
-const neutrals=[
-  ['Market Stall','take 1 good'],
-  ['Cooper','advance one of your casks 1 step'],
-  ['Crane','load a Ready cask onto a ship, free'],
-  ['Counting-House','convert up to 2 goods G↔H'],
-  ['Towncrier','look at / draw a goal'],
-  ['Almshouse','+1 toward a majority you already hold'],
-];
-document.getElementById('neutralGallery').innerHTML=neutrals.map(n=>`
-  <div class="card"><div class="head h-neutral"><div class="kind">Neutral · seeded on a slot</div><div class="ttl">${n[0]}</div></div>
-  <div class="body">${n[1]}<div class="badge">shared · ~2–3 in play</div></div></div>`).join('');
-
 // ---- RECIPE TILES ----
 const recipeTiles=[
   {name:'Gruit',type:'L1 · start',buy:'printed',brew:'G'},
@@ -413,33 +523,36 @@ document.getElementById('recipeGallery').innerHTML=recipeTiles.map(t=>`
   <div class="body">
     <div class="row"><span class="k">Buy cost</span><span class="v">${t.buy==='printed'?'<i>printed (start)</i>':cubes(t.buy)}</span></div>
     <div class="row"><span class="k">Brew cost</span><span class="v">${t.brew.includes('premium')?t.brew:cubes(t.brew)}</span></div>
-    <div class="row"><span class="k">Permanent</span><span class="v">brewing never consumes it</span></div>
+    <div class="row"><span class="k">Permanent</span><span class="v">never consumed</span></div>
   </div></div>`).join('');
 
-// ---- UPGRADES: ROOMS ----
-const rooms=[
-  ['Extra Vessel','+1 brewing lane (start 2, cap 4)'],
-  ['Aging Cellar','maturation −1 step · unlocks the L5 export'],
-  ['Warehouse','+4 goods storage'],
-  ['Quay','a stronger Harbor (load 2 / deploy further) ⚙'],
-  ['Cooperage','a free load each turn ⚙'],
+// ---- SHIP TILES ----
+const ships=[
+  {name:'Cog',cap:'2 casks',cost:'2 G',d:'Small single-use carrier. Built tied to a destination; fills with 2 casks, then sails.',qty:8},
+  {name:'Hulk',cap:'3 casks',cost:'3 G',d:'Large single-use carrier — a 3-cask burst in one voyage. Built tied to a destination; fills with 3, then sails.',qty:5},
 ];
-document.getElementById('roomGallery').innerHTML=rooms.map(r=>`
-  <div class="card"><div class="head h-room"><div class="kind">Room · capability</div><div class="ttl">${r[0]}</div></div>
-  <div class="body">${r[1]}</div></div>`).join('');
+document.getElementById('shipGallery').innerHTML=ships.map(t=>`
+  <div class="card"><div class="head h-ship"><div class="kind">Ship · owned, single-use</div><div class="ttl">${t.name}</div></div>
+  <div class="body">
+    <div class="row"><span class="k">Capacity</span><span class="v">${t.cap}</span></div>
+    <div class="row"><span class="k">Build cost</span><span class="v">${cubes(t.cost)}</span></div>
+    ${t.d}
+    <div class="row"><span class="k">Full → sails</span><span class="v">casks delivered · ship → track</span></div>
+    <div class="badge">×${t.qty}</div>
+  </div></div>`).join('');
 
-// ---- UPGRADES: MODIFIERS ----
-const mods=[
-  ['Granary Right','when you gain grain, +1 extra'],
-  ['Hop Garden','when you gain hops, +1 extra'],
-  ['Royal Patent','your ships sail with +1 capacity'],
-  ['Staple Right','+1 good when you deliver to a kontor'],
-  ['Guild Seat','+1 advance point at the Cellar'],
-  ['Burgher Status','+majority help at scoring ⚙'],
+// ---- NEUTRAL BUILDINGS ----
+const neutrals=[
+  ['Market Stall','take 1 good'],
+  ['Cooper','advance one of your casks 1 step'],
+  ['Crane','load a Ready cask onto a ship, free'],
+  ['Counting-House','convert up to 2 goods G↔H'],
+  ['Towncrier','draw a goal from the face-up supply'],
+  ['Almshouse','+1 presence at a kontor you already lead'],
 ];
-document.getElementById('modGallery').innerHTML=mods.map(m=>`
-  <div class="card"><div class="head h-mod"><div class="kind">Modifier · asymmetric perk</div><div class="ttl">${m[0]}</div></div>
-  <div class="body">${m[1]}</div></div>`).join('');
+document.getElementById('neutralGallery').innerHTML=neutrals.map(n=>`
+  <div class="card"><div class="head h-neutral"><div class="kind">Neutral · seeded on a slot</div><div class="ttl">${n[0]}</div></div>
+  <div class="body">${n[1]}<div class="badge">shared · ~2–3 in play</div></div></div>`).join('');
 
 // ---- GOALS ----
 const goals=[
@@ -462,18 +575,13 @@ const ag=document.getElementById('ag');
 ag.querySelectorAll('.cell').forEach(cell=>{
   cell.addEventListener('mouseenter',()=>highlight(cell.dataset.row,cell.dataset.col));
   cell.addEventListener('mouseleave',clearHl);
-  cell.addEventListener('click',()=>{ // click = lock one line (row)
-    clearHl(); cell.classList.add('hl');
-    document.querySelectorAll(`[data-line="${cell.dataset.row}"]`).forEach(e=>e.classList.add('hl'));
-  });
+  cell.addEventListener('click',()=>{ clearHl(); cell.classList.add('hl');
+    document.querySelectorAll(`[data-line="${cell.dataset.row}"]`).forEach(e=>e.classList.add('hl')); });
 });
-function highlight(row,col){
-  clearHl();
-  [row,col].forEach(line=>{
-    document.querySelectorAll(`[data-row="${line}"],[data-col="${line}"],[data-line="${line}"]`).forEach(e=>e.classList.add('hl'));
-  });
-}
+function highlight(row,col){clearHl();[row,col].forEach(line=>{
+  document.querySelectorAll(`[data-row="${line}"],[data-col="${line}"],[data-line="${line}"]`).forEach(e=>e.classList.add('hl'));});}
 function clearHl(){document.querySelectorAll('.hl').forEach(e=>e.classList.remove('hl'));}
+if(window.lucide)lucide.createIcons();
 </script>
 </body>
 </html>

@@ -205,7 +205,7 @@
   <span class="seg tilectrl"><button id="bproof" class="on" onclick="setMode('proof')">Proof (1 each)</button><button id="bfull" onclick="setMode('full')">Full set</button></span>
   <span class="seg tilectrl"><button id="sfront" class="on" onclick="setSide('front')">Fronts</button><button id="sback" onclick="setSide('back')">Backs (blank)</button></span>
   <span class="note">Laid out for <b>US Letter · LANDSCAPE</b>, print at <b>100%</b> (check the 1-inch box). Colour <b>bleeds 1/8″</b> past the inner frame — straight-cut tiles on the frame, laser-cut tokens inside the dashed circle. <b>Backs blank</b> (single-face).</span>
-  <span style="margin-left:auto"><a href="learn.html">Learn</a> · <a href="index.html">Components</a> · <a href="rulebook.html">Rulebook</a> · <a href="play.html">Play</a></span>
+  <span style="margin-left:auto"><a href="learn.html">Learn</a> · <a href="index.html">Rulebook &amp; Components</a> · <a href="play.html">Play</a></span>
 </div>
 <div id="out"></div>
 
@@ -234,7 +234,7 @@ const FAMS=[
    {ic:'package-plus', nm:'Crane',        sub:'free load onto a ship', c:'#5b4a37', n:1},
    {ic:'arrow-left-right', nm:'Counting House', sub:'convert up to 2 goods', c:'#4a4034', n:1},
    {ic:'megaphone', nm:'Towncrier',    sub:'draw a goal',           c:'#5b4a37', n:1},
-   {ic:'heart',     nm:'Almshouse',    sub:'+1 a held majority',    c:'#4a4034', n:1},
+   {ic:'heart',     nm:'Almshouse',    sub:'+1 at a kontor you lead', c:'#4a4034', n:1},
  ]},
  {label:'Upgrades · Rooms — permanent capability', sm:'in the face-up Market display · buy, or earn free by delivering', cls:'tu', items:[
    {ic:'wrench',nm:'Extra Vessel', act:'+1 vessel',                       cost:cost(5,0), c:'#4a6b3a', n:3},
@@ -273,10 +273,10 @@ const RECIPES=[
 ];
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'},{nm:'Violet',c:'#5b3a8e'}];
 const DESTS=[
-  {nm:'Bruges',  kc:'#274b5c', req:1, val:'+2', maj:'+2', role:'The Hub — takes any beer (volume on-ramp)', ben:'gain 2 goods'},
-  {nm:'London',  kc:'#b8860b', req:2, val:'+3', maj:'+3', role:'The Steelyard — the engine destination',     ben:'take 1 Upgrade from the display'},
-  {nm:'Bergen',  kc:'#4a6b3a', req:2, val:'+3', maj:'+5', role:'The Monopoly — narrow &amp; contested',       ben:'take 1 Upgrade from the display'},
-  {nm:'Novgorod',kc:'#7c2128', req:3, val:'+5', maj:'+3', role:'The Long Haul — premium only, top value',     ben:'take 1 Upgrade from the display'},
+  {nm:'Bruges',  kc:'#274b5c', req:1, val:'+2', maj:'2',      role:'The Hub — takes any beer (volume on-ramp)', ben:'gain 2 goods'},
+  {nm:'London',  kc:'#b8860b', req:2, val:'+3', maj:'2',      role:'The Steelyard — the engine destination',     ben:'take 1 Upgrade from the display'},
+  {nm:'Bergen',  kc:'#4a6b3a', req:2, val:'+3', maj:'10/6/3', role:'The Monopoly — the richest majority',        ben:'no upgrade — the majority is the draw'},
+  {nm:'Novgorod',kc:'#7c2128', req:3, val:'+5', maj:'3',      role:'The Long Haul — premium only, top value',     ben:'take 1 Upgrade from the display'},
 ];
 const HALL={nm:'The Hall', kc:'#5b3a8e', req:2, role:'Prestige — out of commerce (scarcity)', ben:'banks prestige ∝ quality'};
 const SAILED={2:7,3:11,4:15,5:19};
@@ -347,7 +347,7 @@ function pboard(p){
   return '<div class="page fixed"><div class="board" style="--pc:'+p.c+'">'
     +'<div class="pb-head"><div class="crest">'+LU('beer')+'</div>'
       +'<div class="pb-title"><div class="pb-name">Brewhouse · '+p.nm+'</div>'
-        +'<div class="pb-sub">your private brewery · Source → Brew → Age → Ship · Brewhouses of the Hanse · v0.8</div></div>'
+        +'<div class="pb-sub">your private brewery · Source → Brew → Age → Ship · Brewhouses of the Hanse · v0.9</div></div>'
       +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Storage <span class="sm">cap 8 · +4 with a Warehouse</span></span><div class="boxrow">'+store+'</div></div></div>'
     +'<div class="pb-body">'
       +'<div class="pb-col left"><div class="pb-sect">'+LU('flask-conical')+'Vessels &amp; Maturation<span class="hint">start 2 open · cap 4 · ages +1/turn + the Cellar</span></div>'
@@ -368,7 +368,7 @@ function kpanel(d,hall){const kc=d.kc;
     : '<div class="kval">'+LU(VP)+d.val+'<span class="per">VP per delivered cask</span></div>';
   const majline = hall
     ? '<div class="kmaj"><span>prestige — out of commerce</span><b>no majority</b></div>'
-    : '<div class="kmaj"><span>most casks →</span><b>'+LU(VP)+' majority '+d.maj+'</b></div>';
+    : '<div class="kmaj"><span>majority 1st/2nd/3rd →</span><b>'+LU(VP)+' '+d.maj+'</b></div>';
   return '<div class="kpanel" style="--kc:'+kc+'">'
     +'<div class="ktitle"><span class="kname">'+LU(hall?'crown':'landmark')+d.nm+'</span><span class="kreq">'+LU(QI)+'L'+d.req+'+</span></div>'
     +'<div class="kbody"><div class="krole">'+d.role+'</div>'
@@ -390,7 +390,7 @@ function renderDest(){
       +'<span class="legend"><span><b>'+LU(QI,'ql')+'</b> quality level — a cask of level ≥ the L# may ship there</span><span><b>'+LU(VP,'vp')+'</b> victory points</span></span></div>'
     +'<div class="kontor-row">'+DESTS.map(d=>kpanel(d,false)).join('')+kpanel(HALL,true)+'</div>'
     +'<div class="db-bottom">'
-      +'<div class="sbox disp"><div class="sb-h">'+LU('wrench')+'Market — Upgrade display<span class="sm">buy one (pay its cost) · or earn free by delivering to London / Bergen / Novgorod</span></div><div class="uprow">'+disp+'</div></div>'
+      +'<div class="sbox disp"><div class="sb-h">'+LU('wrench')+'Market — Upgrade display<span class="sm">buy one (pay its cost) · or earn free by delivering to London / Novgorod</span></div><div class="uprow">'+disp+'</div></div>'
       +'<div class="sbox clock"><div class="sb-h">'+LU('sailboat')+'Sailed-Ships track<span class="sm">each voyage (a ship sailing, or a Charter) fills one slot → at your player-count marker, finish the round &amp; score</span></div><div class="ctrack">'+clk+'</div></div>'
     +'</div></div></div>';}
 
