@@ -217,11 +217,11 @@ const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc">'+LU('wheat','g')+g+'<
 const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · victory-point icon
 
 const CASKS=[
-  {nm:'Gruit',  c:'#8a949c', q:1, g:1,h:0,      ai:'store',     act:'Source +2 goods', n:16},
+  {nm:'Gruit',  c:'#8a949c', q:1, g:1,h:0,      ai:'store',     act:'+2 goods',     n:16},
   {nm:'Hopped', c:'#c2922f', q:2, g:1,h:1,      ai:'hourglass', act:'Age a cask +2',   n:20},
   {nm:'Export', c:'#b06a34', q:3, g:1,h:2,      ai:'ship',      act:'free Load',       n:12},
   {nm:'Export', c:'#caa12a', q:4, g:2,h:2,      ai:'map-pin',   act:'+1 presence',     n:8},
-  {nm:'Export', c:'#7c2128', q:5, g:3,h:2, cellar:true, ai:'sparkles',  act:'Wild — any verb', n:4},
+  {nm:'Export', c:'#7c2128', q:5, g:3,h:2, cellar:true, ai:'sparkles',  act:'any action', n:4},
 ];
 const FAMS=[
  {label:'Ships — owned single-use carriers', sm:'built to a destination · full → sail → Sailed-Ships track · (Charter = 1 cask for 2 G, no tile)', items:[
@@ -244,12 +244,12 @@ const FAMS=[
    {ic:'wrench',nm:'Cooperage',    act:'+1 cask loaded per Harbor',       cost:cost(4,0), c:'#4a6b3a', n:2},
  ]},
  {label:'Upgrades · Modifiers — asymmetric perks', sm:'in the same Market display', cls:'tu', items:[
-   {ic:'badge-plus',nm:'Granary Right', act:'+1 extra grain gained',      cost:cost(4,0), c:'#6e4ea0', n:2},
-   {ic:'badge-plus',nm:'Hop Garden',    act:'+1 extra hops gained',       cost:cost(4,0), c:'#5a3f86', n:2},
-   {ic:'badge-plus',nm:'Royal Patent',  act:'+1 ship capacity',           cost:cost(5,0), c:'#6e4ea0', n:2},
-   {ic:'badge-plus',nm:'Staple Right',  act:'+1 good per kontor delivery', cost:cost(5,0), c:'#5a3f86', n:2},
-   {ic:'badge-plus',nm:'Guild Seat',    act:'+1 Cellar advance point',    cost:cost(4,0), c:'#6e4ea0', n:2},
-   {ic:'badge-plus',nm:'Burgher Status',act:'+1 presence at each kontor', cost:cost(5,0), c:'#5a3f86', n:2},
+   {ic:'badge-plus',nm:'Granary Right', act:'+1 '+LU('wheat','g ic'),              cost:cost(4,0), c:'#6e4ea0', n:2},
+   {ic:'badge-plus',nm:'Hop Garden',    act:'+1 '+LU('sprout','h ic'),             cost:cost(4,0), c:'#5a3f86', n:2},
+   {ic:'badge-plus',nm:'Royal Patent',  act:'+1 '+LU('sailboat','ic')+' capacity', cost:cost(5,0), c:'#6e4ea0', n:2},
+   {ic:'badge-plus',nm:'Staple Right',  act:'+1 '+LU('wheat','g ic')+' / kontor',  cost:cost(5,0), c:'#5a3f86', n:2},
+   {ic:'badge-plus',nm:'Guild Seat',    act:'advance +1',                          cost:cost(4,0), c:'#6e4ea0', n:2},
+   {ic:'badge-plus',nm:'Burgher Status',act:'+1 '+LU('map-pin','ic')+' / kontor',  cost:cost(5,0), c:'#5a3f86', n:2},
  ]},
  {label:'Goal Tiles — the variety layer', sm:'deal 3 per player · your best 2 score', cls:'tg', items:[
    {ic:'target',nm:'Variety',  sub:'+2 / distinct type',  c:'#7c2128', n:1},
@@ -291,8 +291,7 @@ const REG='<div class="regmark rm-tl"></div><div class="regmark rm-tr"></div><di
 function caskTile(d){return '<div class="tile" style="--c:'+d.c+'">'
   +'<div class="q">'+LU(QI)+d.q+'</div>'
   +'<div class="t-nm">'+d.nm+'</div>'
-  +'<div class="t-act"><span class="ac">'+LU(d.ai)+'</span><span>'+d.act+'</span></div>'
-  +'<div class="t-cost">brew '+cost(d.g,d.h)+(d.cellar?' <span style="font-size:.1in">· Cellar</span>':'')+'</div></div>';}
+  +'<div class="t-act"><span class="ac">'+LU(d.ai)+'</span><span>'+d.act+'</span></div></div>';}
 function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--c:'+it.c+'">'
   +'<div class="g-head"><span class="bigic">'+LU(it.ic)+'</span><span class="g-nm">'+it.nm+'</span></div>'
   +(it.act?'<div class="g-act">'+it.act+'</div>':'')
