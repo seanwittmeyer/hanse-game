@@ -35,6 +35,24 @@ function destFor(p,q,konPref){var elig=DESTS.filter(function(d){return q>=DEST[d
   var kon=elig.filter(function(d){return DEST[d].kontor;});var pool=(konPref&&kon.length)?kon:elig;
   pool.sort(function(a,b){return DEST[b].value-DEST[a].value;});return pool[0];}
 
+// ---- STRATEGY PERSONAS (opt-in via __PERSONAS) ----
+// The greedy default value-ranks kontore, so it NEVER ships prestige (Hall) or stacks Bergen's big
+// majority — the design's headline volume-vs-prestige axis goes untested. Personas let a bot COMMIT to a
+// lean so we can measure whether each lean can win (the GWT blend thesis). 'volume' == the exact greedy
+// baseline (so __PERSONAS off reproduces prior results); 'prestige' ships to the Hall (Q×2); 'majority'
+// stacks one kontor (Bergen, the richest majority) to win it.
+var __PERSON=(typeof __PERSONAS!=='undefined')?__PERSONAS:false;
+function persona(p){return p.__persona||'volume';}
+function bestKon(elig){var k=elig.filter(function(d){return DEST[d].kontor;});
+  k.sort(function(a,b){return DEST[b].value-DEST[a].value;});return k[0];}
+function personaDest(p,q){
+  if(!__PERSON||persona(p)==='volume')return destFor(p,q,true);   // baseline-preserving
+  var elig=DESTS.filter(function(d){return q>=DEST[d].gate;});
+  if(persona(p)==='prestige')return (elig.indexOf('hall')>=0)?'hall':(bestKon(elig)||elig[0]);
+  var tgt=p.__majTarget||'bergen';                                // 'majority'
+  return (q>=DEST[tgt].gate)?tgt:(bestKon(elig)||elig[0]);
+}
+
 function cellValue(c,p){
   var role=CELLROLE[c];
   if(role==='Source')return 1+(needShip(p)?1.5:0)+(wantRecipe(p)?0.4:0);
@@ -76,7 +94,7 @@ function stopPrio(s){
 }
 function botStops(){var bi=0,bp=1e9;UI.stops.forEach(function(s,i){var pr=stopPrio(s);if(pr<bp){bp=pr;bi=i;}});resolveStop(bi);}
 function botMarket(p){
-  if(UI.stage==='shipdest'){shipDest(destFor(p,qRefBind(p),true));return;}
+  if(UI.stage==='shipdest'){shipDest(personaDest(p,qRefBind(p)));return;}
   if(UI.stage==='place'){placeSlot(emptySlots()[0].id);return;}
   if(needShip(p)){buyTile('s_cog');return;}
   var ex=buyableExports(p);
@@ -87,7 +105,7 @@ function botMarket(p){
 }
 function botHarbor(p){
   if(UI.stage==='charter_cask'){var cs=charterCasks(p).slice().sort(function(a,b){return b.q-a.q;});charterPickCask(cs[0].ref);return;}
-  if(UI.stage==='charter_dest'){var ref=UI.tmp.charterCask;var c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];charterDest(destFor(p,c.q,true));return;}
+  if(UI.stage==='charter_dest'){var ref=UI.tmp.charterCask;var c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];charterDest(personaDest(p,c.q));return;}
   var canLoad=myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});});
   if(canLoad){harborLoad();return;}
   // Charter only as a genuine relief valve: wharf jammed, end-game rush, or no hull & can't build one.
@@ -166,6 +184,10 @@ function runGame(n){
     if(__SC.comp)p.grain+=(__SC.comp[seat]||0);
     if(p.grain>p.storage)p.grain=p.storage; if(p.hops>p.storage)p.hops=p.storage;
   });}
+  // ---- assign strategy personas (opt-in), shuffled so persona is decoupled from seat ----
+  if(__PERSON){var pool=shuffle(['volume','prestige','majority']);var base=[];
+    for(var i=0;i<n;i++)base.push(pool[i%3]);   // shuffled pool → all 3 leans appear even at 2p (random 2-of-3)
+    shuffle(base);S.players.forEach(function(pl,seat){pl.__persona=base[seat];if(pl.__persona==='majority')pl.__majTarget='bergen';});}
   __buys=0;__charters=0;var guard=0;
   while(true){
     botActOnce();
@@ -183,17 +205,25 @@ function runGame(n){
   wp.delivered.forEach(function(d){byDest[d.dest]++;var v=destValue(d.dest,d.q);if(d.dest==='hall')valDest.hall+=v;else valDest.kontor+=v;});
   var totalUpgrades=S.players.reduce(function(a,p){return a+p.upgrades.length;},0);
   var totalDeliv=S.players.reduce(function(a,p){return a+p.delivered.length;},0);
+  // all-deliveries destination tally (to confirm prestige/majority leans are actually exercised)
+  var allByDest={bruges:0,london:0,bergen:0,novgorod:0,hall:0};
+  S.players.forEach(function(p){p.delivered.forEach(function(d){allByDest[d.dest]++;});});
+  var playerStats=S.players.map(function(p,i){return {persona:persona(p),total:scores[i].total,won:(i===win)};});
   return {
     n:n, round:S.turn, sailed:S.sailed, sailedCap:S.sailedCap,
     trigger:(S.sailed>=S.sailedCap?'clock':(S.turn>=MAX_ROUND?'ceiling':'other')),
     winSeat:win, winTotal:scores[win].total, secondTotal:scores[second].total,
     winDeliv:scores[win].deliv, winMaj:scores[win].maj, winGoals:scores[win].goals,
     winByDest:byDest, winValKontor:valDest.kontor, winValHall:valDest.hall,
-    winShips:wp.shipsSailed, winUpgrades:wp.upgrades.length,
-    totalUpgrades:totalUpgrades, buys:__buys, totalDeliv:totalDeliv, charters:__charters
+    winShips:wp.shipsSailed, winUpgrades:wp.upgrades.length, winPersona:persona(wp),
+    totalUpgrades:totalUpgrades, buys:__buys, totalDeliv:totalDeliv, charters:__charters,
+    allByDest:allByDest, playerStats:playerStats
   };
 }
 
+// apply DEST re-stat tuning (mutates the engine's DEST object properties in-place; play.html untouched)
+if(typeof __TUNE!=='undefined'&&__TUNE&&__TUNE.dest){Object.keys(__TUNE.dest).forEach(function(d){
+  if(DEST[d])Object.assign(DEST[d],__TUNE.dest[d]);});}
 var __NRUN = (typeof __N!=='undefined')?__N:200;
 var __CNT  = (typeof __COUNTS!=='undefined')?__COUNTS:[2,3,4];
 var __RESULTS={};
@@ -243,13 +273,27 @@ const SCENARIOS = {
 const SCEN = process.env.SCEN || 'base';
 const SC = SCENARIOS[SCEN] || SCENARIOS.base;
 const __SC = (SC.g!=null || SC.h!=null || SC.comp) ? { g:SC.g, h:SC.h, comp:SC.comp } : null;
+// PERSONAS=1 makes each bot COMMIT to a lean (volume/prestige/majority) so the Hall & Bergen get exercised.
+const PERSONAS = process.env.PERSONAS === '1';
+// TUNE: mutate DEST properties (delivery value / majority bonus / gate) to test kontore re-stats without
+// touching play.html. Identity goal: 4 distinct kontore — Bruges (liquidity), London (mid-high value),
+// Bergen (majority king), Novgorod (premium) — + the Hall (prestige).
+const TUNES = {
+  none       : {},
+  londonVal4 : { dest: { london: { value: 4 } } },                       // give London its own value rung (vs Bergen)
+  bergenMaj8 : { dest: { bergen: { maj: 8 } } },                         // buff the majority lean
+  bergenMaj10: { dest: { bergen: { maj: 10 } } },
+  combo      : { dest: { london: { value: 4 }, bergen: { maj: 8 } } },   // the combined proposal
+  comboBig   : { dest: { london: { value: 4 }, bergen: { maj: 10 } } },
+};
+const __TUNE = TUNES[process.env.TUNE || 'none'] || TUNES.none;
 
 const ctx = {
   document, localStorage, console, Math, JSON, Date, Set, Map, Array, Object, String, Number, Boolean,
   parseInt, parseFloat, isNaN, alert: noop,
   setTimeout: noop, clearTimeout: noop,
   lucide: { createIcons: noop },
-  __N: N, __COUNTS: COUNTS, __SC,
+  __N: N, __COUNTS: COUNTS, __SC, __PERSONAS: PERSONAS, __TUNE,
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;
@@ -307,9 +351,22 @@ function summarize(n, arr) {
   console.log(`charters/game:        avg ${fmt(charters)}`);
   console.log(`winner deliveries by destination (share of winners' casks):`);
   console.log(`   ` + Object.keys(winByDest).map(k => `${k} ${pct(winByDest[k], totalWinDeliv)}`).join('   '));
+  // ALL deliveries (every player) — confirms the Hall/Bergen leans are actually exercised
+  const allByDest = { bruges: 0, london: 0, bergen: 0, novgorod: 0, hall: 0 };
+  ok.forEach(r => Object.keys(allByDest).forEach(k => allByDest[k] += r.allByDest[k]));
+  const totalAll = Object.values(allByDest).reduce((a, b) => a + b, 0);
+  console.log(`ALL deliveries by destination (every player):`);
+  console.log(`   ` + Object.keys(allByDest).map(k => `${k} ${pct(allByDest[k], totalAll)}`).join('   '));
+  // per-persona win-rate & avg score (only meaningful with PERSONAS=1; baseline shows all-volume)
+  if (PERSONAS) {
+    const P = {}; ['volume','prestige','majority'].forEach(k => P[k] = { wins:0, n:0, sum:0 });
+    ok.forEach(r => r.playerStats.forEach(s => { P[s.persona].wins += s.won?1:0; P[s.persona].n++; P[s.persona].sum += s.total; }));
+    console.log(`persona win-rate (per-capita; fair = ${fmt(100/n)}%):`);
+    console.log(`   ` + ['volume','prestige','majority'].map(k => `${k} ${P[k].n?pct(P[k].wins,P[k].n):'—'} (score ${P[k].n?fmt(P[k].sum/P[k].n):'—'})`).join('   '));
+  }
 }
 
 console.log(`Brewhouses of the Hanse — headless sim (KEY ${R.KEY})  |  N=${N} games per player count`);
-console.log(`scenario: ${SCEN} — ${SC.label}`);
+console.log(`scenario: ${SCEN} — ${SC.label}` + (PERSONAS ? `  |  PERSONAS on` : ``) + (process.env.TUNE && process.env.TUNE!=='none' ? `  |  TUNE=${process.env.TUNE} ${JSON.stringify(__TUNE.dest)}` : ``));
 (R.counts || COUNTS).forEach(n => summarize(n, R[n]));
 console.log('');
