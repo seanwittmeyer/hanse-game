@@ -216,7 +216,7 @@ const ICONTIP={
   beer:'Cask — a brewed beer tile (matures → slot → delivered).',
   store:'Market — Source: take 2 goods, or buy a recipe / ship / upgrade.',
   'flask-conical':'Brewhouse — Brew: load a recipe into an open vessel.',
-  hourglass:'Cellar — Age: a pool of advance points across your vessels.',
+  hourglass:'Cellar — Age: a pool of age points across your vessels.',
   ship:'Harbor — Ship: load a Ready cask from a slot onto one of your ships.',
   anchor:'Slot — one of the 8 shared perimeter spaces (casks · ships · town buildings).',
   sailboat:'Ship — owned carrier; loads casks and sails to its destination when full.',
@@ -228,7 +228,7 @@ const ICONTIP={
   coins:'Goods.',
   package:'Storage — how many goods you can hold.',
   target:'Goal — an end-game objective; your best few score.',
-  hammer:'Cooper — advance one of your casks a step.',
+  hammer:'Cooper — age one of your casks a step.',
   check:'Ready — this cask is matured; deploy it to a slot.',
   'user-round':'Worker — move it between the four stations.',
 };
@@ -256,9 +256,9 @@ const STYLES={
 };
 const EXPORT_ROSTER=['broyhan','keut','mumme','bock'];   // 3 of 4 dealt each game; each keeps its fixed quality
 const RECIPE_BUY={broyhan:{g:1},keut:{g:1},mumme:{g:1,h:1},bock:{g:2}};  // Market buy cost (Gruit+Hopped are free starters)
-const CASK_ACT={source:'Source — take 2 goods',age:'Age — advance any 1 cask 2 steps',
+const CASK_ACT={source:'gain 2 goods',age:'Age a cask 2 steps',
   load:'Load — a Ready cask onto a ship, free',reach:'Reach — +1 presence at a kontor',
-  wild:'Wild — take any one base verb'};
+  wild:'Wild — take any base action'};
 
 // ---- DESTINATIONS (4 kontore + the Hall) — all open from start ----
 // maj is a TIERED majority payout [1st,2nd,3rd] (Lacerda-style); 2-player games skip 2nd (winner-take-all).
@@ -283,7 +283,7 @@ const CHARTER_COST={g:2};   // Harbor relief valve: ship ONE Ready cask on a sin
 // ---- NEUTRAL BUILDINGS (seeded on the wharf at setup; shared base actions) ----
 const NEUTRALS={
   stall   :{name:'Market Stall',  icon:'store',         act:'take 1 good'},
-  cooper  :{name:'Cooper',        icon:'hammer',        act:'advance one of your casks 1 step'},
+  cooper  :{name:'Cooper',        icon:'hammer',        act:'age one of your casks 1 step'},
   crane   :{name:'Crane',         icon:'package-plus',  act:'load a Ready cask onto a ship, free'},
   counting:{name:'Counting House',icon:'arrow-left-right',act:'convert up to 2 goods G↔H'},
   towncrier:{name:'Towncrier',    icon:'megaphone',     act:'draw a goal from the face-up goal supply'},
@@ -304,7 +304,7 @@ const MODS={
   hopgarden:{name:'Hop Garden',    desc:'when you gain hops, +1 extra'},
   royal    :{name:'Royal Patent',  desc:'your ships sail with +1 capacity'},
   staple   :{name:'Staple Right',  desc:'+1 good when you deliver to a kontor'},
-  guild    :{name:'Guild Seat',    desc:'+1 advance point at the Cellar'},
+  guild    :{name:'Guild Seat',    desc:'+1 age point at the Cellar'},
   burgher  :{name:'Burgher Status',desc:'+1 presence at every kontor you reach (majorities)'},
 };
 const UP=Object.assign({},ROOMS,MODS);
@@ -361,7 +361,7 @@ const OCCUPANCY_TOLL=1;
 // ---- pace dials ⚙ ----
 const SAILED_CAP={2:7,3:11,4:15,5:19};  // the Sailed-Ships end clock (per RULES §8) — primary pace dial ⚙ (scales steeply: the shared clock fills faster with more players)
 const MAX_ROUND=25;                      // round ceiling / backstop ⚙ — top of the 12–25-round target band (good play ends earlier on the clock)
-const CELLAR_POOL=3;                     // Cellar advance points (+1 with Guild Seat)
+const CELLAR_POOL=3;                     // Cellar age points (+1 with Guild Seat)
 const START_GOODS={g:3,h:2};
 const START_STORAGE=8;
 const SEAT_COMP=1;                       // seat compensation ⚙ — +this much grain to EACH seat after the first
@@ -492,7 +492,7 @@ function attr(s){return String(s).replace(/"/g,'&quot;');}
 const CELLTIP={
   Market:'Market · Source. Take 2 goods (any mix), OR buy one tile from the Market — a recipe, a ship, or a brewery upgrade. Never closed (move onto a rival here for 1G).',
   Brewhouse:'Brewhouse · Brew. Load one recipe you hold (paying its G/H) into an open vessel as a young cask. Never closed (move onto a rival here for 1G).',
-  Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' advance points to allocate across your vessels (your casks also age +1 automatically each turn). When a cask is Ready, set it on a slot.',
+  Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' age points to allocate across your vessels (your casks also age +1 automatically each turn). When a cask is Ready, set it on a slot.',
   Harbor:'Harbor · Ship. Load a Ready cask from a slot (yours, or a rival’s) onto one of your ships; a ship sails the instant it is full. You may also launch a partial ship early. Never closed.',
 };
 function tileTip(t){
@@ -884,7 +884,7 @@ function renderBar(){
   else if(U==='cell'){const r=cellRender(p);prompt=r.prompt;acts=r.acts;}
   else if(U==='brew'){prompt='Brew — load a recipe into an open vessel.';
     acts=p.recipes.map(r=>'<button '+(canBrew(p,r)&&openVessel(p)>=0?'':'disabled')+' onclick="brewPick(\''+r+'\')">'+LU('beer')+' '+STYLES[r].name+' '+costIcons(STYLES[r].in)+'</button>').join('')+btn('Skip','resume(\''+UI.brew.returnTo+'\')','ghost');}
-  else if(U==='age'){const a=UI.age;prompt=(a.mode==='single'?'Advance one cask '+a.pool+' step'+(a.pool===1?'':'s'):'Allocate '+a.pool+' advance point'+(a.pool===1?'':'s')+' across your vessels')+'.';
+  else if(U==='age'){const a=UI.age;prompt=(a.mode==='single'?'Age one cask '+a.pool+' step'+(a.pool===1?'':'s'):'Allocate '+a.pool+' age point'+(a.pool===1?'':'s')+' across your vessels')+'.';
     acts=p.vessels.map((c,i)=>(c&&c.step<c.ready)?btn(LU('beer')+styleShort(c.style)+' '+c.step+'/'+c.ready,'ageAllot('+i+')','go'):'').filter(x=>x).join('')
       +(a.mode==='pool'?btn('Done','ageDone()','primary'):'')+btn('Skip','ageSkip()','ghost');}
   else if(U==='source'){const n=UI.src.n;prompt='Take '+n+' good'+(n===1?'':'s')+'.';
@@ -898,7 +898,7 @@ function renderBar(){
     acts=UI.alms.ks.map(k=>btn(LU('map-pin')+DEST[k].name,'almsPick(\''+k+'\')','go')).join('')+btn('Skip','almsSkip()','ghost');}
   else if(U==='goaldraw'){prompt='Towncrier — draw a goal (pick one to add; your best 2 score).';
     acts=UI.draw.avail.map(g=>btn(LU('target')+GOALS[g].text,'drawPick(\''+g+'\')','go')).join('')+btn('Skip','drawSkip()','ghost');}
-  else if(U==='wild'){prompt='Wild — take any one base verb as a bonus.';
+  else if(U==='wild'){prompt='Wild — take any base action as a bonus.';
     acts=btn(LU('store')+' Source','wildPick(\'source\')','go')+btn(LU('flask-conical')+' Brew','wildPick(\'brew\')','go')+btn(LU('hourglass')+' Age','wildPick(\'age\')','go')+btn(LU('ship')+' Ship','wildPick(\'ship\')','go')+btn('Skip','wildSkip()','ghost');}
   else if(U==='load'){const L=UI.load;
     if(!L.cask){prompt='Load a cask onto a ship — pick the cask.';

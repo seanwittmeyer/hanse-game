@@ -25,7 +25,7 @@
 |---|---|---|
 | **Main board** | 1 | **The Wharf** — a 2×2 of four stations **A Market (Source) · B Brewhouse (Brew) · D Cellar (Age) · C Harbor (Ship)** ringed by **8 slots** (deployed casks, owned ships, seeded neutral buildings), plus the shared **Sailed-Ships track** (the end clock). |
 | **Destination / Route board** | 1 | The four **kontore** (Bruges · London · Bergen · Novgorod) and the **Hall**, each with its **quality gate**, **delivery value**, **benefit**, and (kontore) a **majority track**. Delivered cask tiles sit at their destination; this is where volume (kontore) and prestige (the Hall) are tallied. |
-| **Player brewery boards** | 5 | Each private & untouchable — vessels + maturation + recipes + upgrades + storage. The *noun* the Wharf's verbs act on (full spec in §4). |
+| **Player brewery boards** | 5 | Each private & untouchable — vessels + maturation + recipes + upgrades + storage. The *noun* the Wharf's actions act on (full spec in §4). |
 
 ### The slots — the ring around the stations (8 slots)
 - **8 live slots, 2 beside each line** (**2-player may lock some to ~6 ⚙**). They hold a **churning mix**: **deployed casks** (your Ready casks = public action-buildings + cargo-in-waiting; they leave when shipped), **ships** (owned single-use carriers; they sail away), and **2–3 neutral buildings** (shared base actions, seeded at setup — **spread with the warm-start Cogs across different lines** so no single line is the obvious opening camp ⚙). **One fire rule** (§0). Recipes and upgrades are **not** slot tiles (they live on your brewery board).
@@ -58,18 +58,18 @@ A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATU
 
 | Level | Type | Q | Brew inputs ⚙ | Maturation ⚙ | Signature slot action ⚙ | Reaches (gate) | Qty |
 |---|---|---|---|---|---|---|---|
-| **L1** | **Gruit Ale** | 1 | `G` | 1 step | **Source** — take 2 goods | Bruges only | 16 |
-| **L2** | **Hopped Beer** | 2 | `G H` | 2 | **Age** — advance any 1 of your casks 2 steps | Bruges · London · Bergen · Hall | 20 |
+| **L1** | **Gruit Ale** | 1 | `G` | 1 step | **gain** 2 goods | Bruges only | 16 |
+| **L2** | **Hopped Beer** | 2 | `G H` | 2 | **Age** any 1 of your casks 2 steps | Bruges · London · Bergen · Hall | 20 |
 | **L3** | **Broyhan / Keut** | 3 | `G H H` / `G G H` | 2 | **Load** — load a Ready cask onto a ship for free | + Novgorod | 12 |
 | **L4** | **Mumme** | 4 | `G G H H` | 3 | **Reach** — +1 presence at a kontor you've delivered to | all | 8 |
-| **L5** | **Bock** | 5 | premium; needs **Aging Cellar** | 3 | **Wild** — take any one base verb (Source/Brew/Age/Ship) | all | 4 |
+| **L5** | **Bock** | 5 | premium; needs **Aging Cellar** | 3 | **Wild** — take any one base action (Market/Brewhouse/Cellar/Harbor) | all | 4 |
 
 > **Export beers — fixed quality; deal 3 of 4 each game ⚙:** **Broyhan** (Q3, `G H H`) · **Keut** (Q3, `G G H`, a costlier-in-grain alt) · **Mumme** (Q4, Braunschweig) · **Bock** (Q5, Einbeck — needs the Aging Cellar). One is left undealt each game, so the **ladder shape varies**: drop a Q3 → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4; drop **Bock** → no Q5. The signature action follows the **quality**, not the beer (Q3 Load · Q4 Reach · Q5 Wild); the two Q3 beers share the Q3 cask pool — only their recipe cost differs. The fixed on-ramp is **Gruit → Hopped**.
 
 *Gruit is the cheap, fast workhorse — it keeps your goods flowing (its Source action) and reaches Bruges, but never makes prestige. The export casks are scarce, slow, and the key to the rich destinations — the Leffe/Westvleteren line drawn in the components.*
 
 ### B. Ship tiles — owned single-use carriers (~13 tiles)
-Built at the **Market** into a slot, **bound to a destination** (inheriting its quality gate). Lifecycle **load → fill → sail:** loaded via the **Harbor verb** or a **bonus free load when the ship's line fires** (your own or a **rival's** slot cask, `RULES.md` §5); the instant it is **full** (or launched early) it **sails** — every cask aboard delivers (scores for its owner) and the **ship is consumed onto the Sailed-Ships track**. Build another to ship again.
+Built at the **Market** into a slot, **bound to a destination** (inheriting its quality gate). Lifecycle **load → fill → sail:** loaded via the **Harbor action** or a **bonus free load when the ship's line fires** (your own or a **rival's** slot cask, `RULES.md` §5); the instant it is **full** (or launched early) it **sails** — every cask aboard delivers (scores for its owner) and the **ship is consumed onto the Sailed-Ships track**. Build another to ship again.
 
 | Ship | Capacity | Build cost ⚙ | Qty ⚙ |
 |---|---|---|---|
@@ -87,7 +87,7 @@ Placed in perimeter slots **at setup** (shared, permanent). They keep the slots 
 | Neutral building | Action (active player) ⚙ |
 |---|---|
 | **Market Stall** | take 1 good |
-| **Cooper** | advance one of your casks 1 step |
+| **Cooper** | age one of your casks 1 step |
 | **Crane** | load one Ready cask onto a ship, free |
 | **Counting-House** | convert up to 2 goods `G↔H` |
 | **Towncrier** | draw a goal from the face-up goal supply |
@@ -126,7 +126,7 @@ Installed on your brewery board. **Earned mainly by delivering** (the **London /
 | **Hop Garden** | when you gain hops, +1 extra | `4 G` |
 | **Royal Patent** | your ships sail with +1 capacity | `5 G` |
 | **Staple Right** | +1 good when you deliver to a kontor | `5 G` |
-| **Guild Seat** | +1 advance point at the Cellar | `4 G` |
+| **Guild Seat** | +1 age point at the Cellar | `4 G` |
 | **Burgher Status** | +1 presence at every kontor you reach (majority help) | `5 G` |
 
 > Supply ~2 copies of each (more Extra Vessels, the repeatable one), so an upgrade can be **contested**.
@@ -163,7 +163,7 @@ A small pool (shared draft or per-player ⚙) rewarding different shapes, so the
 
 ## 4. The player board — the private brewery
 
-Symmetric for all players (except seat compensation, below). The grid is the **verbs** (Source / Brew / Age / Ship); the brewery is the **noun** they act on — your kettles and cellar. **Nothing here is contestable** — rivals can only act on your casks once they're on a slot.
+Symmetric for all players (except seat compensation, below). The stations are the **actions** (Source → Brew → Age → Ship); the brewery is the **noun** they act on — your kettles and cellar. **Nothing here is contestable** — rivals can only act on your casks once they're on a slot.
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -174,7 +174,7 @@ Symmetric for all players (except seat compensation, below). The grid is the **v
 │   Vessel 2  [ BREW ]→[ ferment ]→[ AGE ]→[ READY ▸ slots ]     │
 │   Vessel 3  ▒▒ locked — add an Extra Vessel (upgrade) ▒▒       │
 │   Vessel 4  ▒▒ locked — add an Extra Vessel (upgrade) ▒▒       │
-│        (a cask advances 1/turn passively + via the Cellar)     │
+│        (a cask ages 1/turn passively + via the Cellar)         │
 │                                                                │
 │  RECIPES  ▤Gruit ▤Hopped  ▤ ▤ …   (the types you may brew)     │
 │                                                                │
@@ -199,7 +199,7 @@ Symmetric for all players (except seat compensation, below). The grid is the **v
 | **Warm start** | **1 built Cog** (on a slot, bound to Bruges) **+ 1 Ready Gruit in a vessel** (deploy it turn 1) ⚙ — the Wharf is live and a first voyage is reachable turn 2–3 |
 | Worker | placed turn 1 (free, no toll — `RULES.md` §1) |
 
-> **Why mid-stream:** the pace model showed v0.6's first voyage at **turn 6** (goods-/geometry-bound), so v0.9 starts you with 2 vessels, a warm Cog + cask, all destinations open, base verbs always usable. *Gaining an export recipe means more* because you start with only the on-ramp.
+> **Why mid-stream:** the pace model showed v0.6's first voyage at **turn 6** (goods-/geometry-bound), so v0.9 starts you with 2 vessels, a warm Cog + cask, all destinations open, base actions always usable. *Gaining an export recipe means more* because you start with only the on-ramp.
 
 ---
 

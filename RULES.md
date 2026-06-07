@@ -50,7 +50,7 @@ The four action stations sit in a 2×2 ringed by 8 slots — together, **the Wha
    - **Each station:** take its action (below). **Stations are never closed** — a rival never stops you using one (you only pay the occupancy toll above for *moving onto* it; no twins). Interaction lives on the slots and the loaded casks.
    - **Each slot:** if it holds a building (a deployed cask, a ship, or a neutral building), you **may use its action** — see §4.
 
-> **Both stations on the line always fire; the worker only gates *which line is legal*.** Because base verbs are always available and the cask/ship actions only *add*, you are never stalled waiting for the board to align — a populated Wharf **accelerates** your turns.
+> **Both stations on the line always fire; the worker only gates *which line is legal*.** Because base actions are always available and the cask/ship actions only *add*, you are never stalled waiting for the board to align — a populated Wharf **accelerates** your turns.
 
 ---
 
@@ -66,9 +66,9 @@ A cask carries a **type** (a quality rung Q1–Q5, printed) and one **signature 
 
 ---
 
-## 3. The four stations (the verbs)
+## 3. The four stations (the actions)
 
-Every base verb **always works**; slot buildings only add bonus copies of these verbs (§4).
+Every base action **always works**; slot buildings only add bonus copies of these actions (§4).
 
 ### A · Market — *Source*
 Take **2 goods** (any mix), **OR** acquire **one** tile, paying its goods cost ⚙:
@@ -82,7 +82,7 @@ Take **2 goods** (any mix), **OR** acquire **one** tile, paying its goods cost �
 **Load** one recipe you hold (paying its `G/H` cost) into an **open vessel** — a young cask at step 0. (Recipes are permanent; brewing never consumes them.) One load per Brewhouse.
 
 ### D · Cellar — *Age*
-Gain a **pool of 3 advance points** ⚙ and **allocate them freely across your vessels** (pour into one cask or spread). Each cask also ages **+1 automatically at the start of your turn** ⚙, so maturing never depends on reaching this station. When a cask reaches **Ready**, deploy it to an open slot (§2).
+Gain a **pool of 3 age points** ⚙ and **allocate them freely across your vessels** (pour into one cask or spread). Each cask also ages **+1 automatically at the start of your turn** ⚙, so maturing never depends on reaching this station. When a cask reaches **Ready**, deploy it to an open slot (§2).
 
 ### C · Harbor — *Ship*
 **Load** one of your **deployed casks** (sitting on a slot) onto one of **your ships** (any ship — no line-coincidence needed). A ship **sails the instant it is full** (§5); you may also **launch a partial ship early** here (the relief valve). *(A cask must be on a slot to be loaded onto an owned ship — that is what makes deploying it the gateway to scoring.)*
@@ -108,11 +108,11 @@ Each is a "support action" in the Lisboa sense — it pushes production forward,
 
 | Type | Q | Signature slot action |
 |---|---|---|
-| **Gruit** | 1 | **Source** — take 2 goods |
-| **Hopped** | 2 | **Age** — advance any 1 of your casks 2 steps |
+| **Gruit** | 1 | **gain** 2 goods |
+| **Hopped** | 2 | **Age** any 1 of your casks 2 steps |
 | **Export Q3** *(Broyhan · Keut)* | 3 | **Load** — load a Ready cask onto a ship for free |
 | **Export Q4** *(Mumme)* | 4 | **Reach** — +1 presence at a kontor you've delivered to (majority help) |
-| **Export Q5** *(Bock)* | 5 | **Wild** — take any one base verb (Source / Brew / Age / Ship) as a bonus |
+| **Export Q5** *(Bock)* | 5 | **Wild** — take any one base action (Market / Brewhouse / Cellar / Harbor) as a bonus |
 
 > The action follows the **quality**, not the name: whichever export beers are dealt this game, a Q3 cask always grants **Load**, a Q4 (Mumme) **Reach**, a Q5 (Bock) **Wild**. If Mumme or Bock is the undealt beer, that action simply isn't available this game.
 
@@ -124,11 +124,11 @@ Each is a "support action" in the Lisboa sense — it pushes production forward,
 
 ### Ships — owned, single-use carriers (build → load → sail)
 - **Build** (Market): a **Cog** (capacity **2**) or **Hulk** (capacity **3**) ⚙ goes on a slot, **bound to a destination** of your choice, inheriting that destination's **quality gate**.
-- **Load:** put a cask **from a slot** aboard — via the **Harbor verb** (always available) **or** when the **ship's line fires** (a bonus free load). It may be your own or a **rival's** deployed cask (§ below).
+- **Load:** put a cask **from a slot** aboard — via the **Harbor action** (always available) **or** when the **ship's line fires** (a bonus free load). It may be your own or a **rival's** deployed cask (§ below).
 - **Sail** (the instant it is **full**, or via an early **Harbor launch**): every cask aboard is **delivered** to the ship's destination → it **scores for its owner** (§9) and leaves the board; the **ship tile is consumed onto the shared Sailed-Ships track** (§8) — single-use, build another to ship again.
 
 ### Charter — the single-cask relief valve (no tile; an outside hull)
-Owned ships are consumed when they sail, and the slots are tight, so you always need an escape that can't be locked out. At the **Harbor** you may always **Charter**: pay **⚙2 `G`** to ship **one** Ready cask — from a **vessel** *or* a **slot** — on an **immediate single-cask voyage** to a destination it qualifies for. It **delivers** (scores + benefit, §9) and **advances the Sailed-Ships clock** (§8) like any voyage; it just carries one cask for the fare, so building Cogs/Hulks stays the efficient race. The Charter is the **deadlock guard**: when every slot is full and you own no ship, or a Ready cask clogs a vessel, a charter always frees you (you can always Source the 2 `G`). *(Theme: a 1350 brewmaster who hasn't a hull of their own books space on someone else's.)*
+Owned ships are consumed when they sail, and the slots are tight, so you always need an escape that can't be locked out. At the **Harbor** you may always **Charter**: pay **⚙2 `G`** to ship **one** Ready cask — from a **vessel** *or* a **slot** — on an **immediate single-cask voyage** to a destination it qualifies for. It **delivers** (scores + benefit, §9) and **advances the Sailed-Ships clock** (§8) like any voyage; it just carries one cask for the fare, so building Cogs/Hulks stays the efficient race. The Charter is the **deadlock guard**: when every slot is full and you own no ship, or a Ready cask clogs a vessel, a charter always frees you (you can always gain the 2 `G`). *(Theme: a 1350 brewmaster who hasn't a hull of their own books space on someone else's.)*
 
 ### Destinations — *where you ship is the strategic lean* (all open from start)
 The old two value tracks are replaced by destinations, each with a distinct **benefit** and a **quality gate** (the only "level-up" limiter — better places want better beer):
@@ -175,7 +175,7 @@ Your brewery board is private and safe. It holds your **vessels** (start 2, cap 
 | 7 | **Hop Garden** | whenever you gain hops, **+1 extra** | `4 G` |
 | 8 | **Royal Patent** | your ships sail with **+1 capacity** | `5 G` |
 | 9 | **Staple Right** | **+1 good** whenever you deliver to a kontor | `5 G` |
-| 10 | **Guild Seat** | **+1 advance point** at the Cellar | `4 G` |
+| 10 | **Guild Seat** | **+1 age point** at the Cellar | `4 G` |
 | 11 | **Burgher Status** | **+1 presence** at every kontor you've reached (majority help) | `5 G` |
 
 > **Buy cost vs. earning:** delivering to a kontor hands you a display tile **free** (riding a voyage that already pays value + a majority), so buying — which yields *only* the upgrade — is priced at a comparable **4–5 `G` ⚙** to stay competitive without dominating. Supply: **~2 copies of each ⚙** (more Extra Vessels, the repeatable one) — so an upgrade can be **contested** (only so many copies exist). Goals (§9) reward different brewery/delivery shapes, so the winning engine varies by game — the *Great Western Trail* ideal (a blend beats a one-note rush).
