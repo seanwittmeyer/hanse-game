@@ -25,15 +25,14 @@
 ### Doc map — where the canonical picture lives
 - `RULES.md` — operational turn/economy rules (the v0.8 spec).
 - `DESIGN.md` — pillars, rationale, dated session log (the *why*). **§21 = "The Wharf"** (live, v0.7 origin → v0.8 refinements); §1–§20 = how we got here.
-- `COMPONENTS.md` / `TILES.md` — the object manifest and the five tile families (casks · ships · neutral buildings · recipes · upgrades) + destinations + goals.
-- `PLAYERBOARD.md` — the private brewery (vessels, the maturation track, recipes, upgrades).
+- `COMPONENTS.md` — the single physical manifest: boards · tokens · the five tile families (casks · ships · neutral buildings · recipes · upgrades) · the **player brewery board** (§4) · destinations · goals. *(Absorbs the former `TILES.md` + `PLAYERBOARD.md`.)*
 - **All five HTML pages are v0.8, current** (2026-06-07): `learn.html` (beginner) · `index.html` (components) · `rulebook.html` (full rules) · `printables.html` (cut sheets) · `play.html` (the playable reference implementation: DATA → STATE → TURN MACHINE → CELL HANDLERS → SCORING → RENDER). `play.html` is canonical again — correctness fixes there are rules fixes.
 - `CHANGELOG.md` — compact version history (v0.1→v0.8) + the balance lessons carried forward. `README.md` orients the repo.
 
 ### Before you commit any game change, check the interlocks
 1. **Theme** — does it still make medieval-brewing sense? Mechanics are dressed as brewing/trade for a reason.
 2. **The Wharf & the lean** — does it keep the Source→Brew→Age→Ship flow legible, and does it shift the volume(kontore)-vs-prestige(Hall) lean? That's the heart; keep it medium-weight (interesting choices, not mental burden).
-3. **Components/tiles** — does it change counts, tile families, costs, or the type/destination ladders (`COMPONENTS.md`/`TILES.md`)?
+3. **Components/tiles** — does it change counts, tile families, costs, or the type/destination ladders (`COMPONENTS.md`)?
 4. **All surfaces** — update `RULES.md` AND the affected docs together; then the pages. Numbers are tunable `⚙` placeholders; doc tables restate them, so a number change is a multi-file edit.
 5. **`play.html` is the v0.8 reference implementation** (all pages are v0.8). It carries one engine-level addition beyond the prose spec — the **Charter** relief valve (`RULES.md` §5, `DESIGN.md` §21·E′): a `2 G` single-cask Harbor voyage that keeps the tight slots from ever deadlocking. It also carries the **occupancy toll** (`chooseLine`: 1 `G` to move onto a rival-occupied station; opening placement free) and **balanced warm-start seeding**. After any engine change, **smoke-test headlessly** (see below) and **bump the save `KEY`**. Pace target: **~12–25 rounds** (`MAX_ROUND` ceiling ≈25; the Sailed-Ships length is the primary dial).
 

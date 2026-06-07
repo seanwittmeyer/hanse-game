@@ -18,8 +18,7 @@ Published from `main` via GitHub Pages.
 ## Design docs (the canonical picture — read these to understand the whole game)
 - **`DESIGN.md`** — pillars, rationale, dated session log (the *why*). **§21 = "The Wharf"** (the live design, v0.7 origin → v0.8 refinements); §1–§20 are the record of how we got here.
 - **`RULES.md`** — the operational turn/economy spec (v0.8).
-- **`PLAYERBOARD.md`** — the private brewery (vessels, the maturation track, recipes, upgrades).
-- **`COMPONENTS.md`** / **`TILES.md`** — the object manifest and the tile families (casks · ships · neutral buildings · recipes · upgrades · destinations · goals).
+- **`COMPONENTS.md`** — the single physical manifest: boards · tokens · the five tile families (casks · ships · neutral buildings · recipes · upgrades) · the **player brewery board** · destinations · goals. *(Absorbs the former `TILES.md` + `PLAYERBOARD.md`.)*
 - **`CHANGELOG.md`** — compact version history (v0.1→v0.8) + the balance lessons carried forward.
 - **`CLAUDE.md`** — how to work in this repo (the interlocks; a change is never local).
 
