@@ -158,6 +158,14 @@ function botActOnce(){var p=cur();var U=UI.sub;
 function tbVec(p){var sc=scorePlayer(p);return [sc.total, p.grain+p.hops, wharfCaskSlots().filter(function(id){return S.slots[id].owner===p.id;}).length];}
 function runGame(n){
   S=freshState(n,NAMES.slice(0,n));UI={sub:'move'};undoStack=[];activeTab=0;
+  // ---- starting-token override hook (balance testing; null = canonical 3G/2H, equal seats) ----
+  // __SC.g/__SC.h override the flat start; __SC.comp[seat] adds per-seat grain (seat compensation
+  // for the FIXED first-player order). Capped at storage. Does not touch play.html's constants.
+  if(typeof __SC!=='undefined'&&__SC){S.players.forEach(function(p,seat){
+    if(__SC.g!=null)p.grain=__SC.g; if(__SC.h!=null)p.hops=__SC.h;
+    if(__SC.comp)p.grain+=(__SC.comp[seat]||0);
+    if(p.grain>p.storage)p.grain=p.storage; if(p.hops>p.storage)p.hops=p.storage;
+  });}
   __buys=0;__charters=0;var guard=0;
   while(true){
     botActOnce();
@@ -187,14 +195,15 @@ function runGame(n){
 }
 
 var __NRUN = (typeof __N!=='undefined')?__N:200;
+var __CNT  = (typeof __COUNTS!=='undefined')?__COUNTS:[2,3,4];
 var __RESULTS={};
-[2,3,4].forEach(function(n){
+__CNT.forEach(function(n){
   var arr=[];for(var g=0;g<__NRUN;g++){
     try{arr.push(runGame(n));}catch(e){arr.push({error:String(e&&e.message||e),n:n});}
   }
   __RESULTS[n]=arr;
 });
-__RESULTS.KEY=KEY;
+__RESULTS.KEY=KEY; __RESULTS.counts=__CNT;
 `;
 
 const noop = () => {};
@@ -217,12 +226,30 @@ const document = {
 const store = {};
 const localStorage = { getItem: k => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); }, removeItem: k => { delete store[k]; } };
 
+// ---- player counts & starting-token scenario (balance testing) ----
+// COUNTS env: comma list of player counts (default the full 2–5p range).
+const COUNTS = (process.env.COUNTS ? process.env.COUNTS.split(',').map(s=>parseInt(s,10)) : [2,3,4,5]);
+// Named starting-token scenarios. base => canonical 3G/2H, equal seats (no override).
+const SCENARIOS = {
+  base : { label:'Baseline — 3G/2H, equal seats (canonical)' },
+  rich : { label:'Richer flat start — 5G/3H',          g:5, h:3 },
+  lean : { label:'Leaner flat start — 2G/1H',          g:2, h:1 },
+  g4h2 : { label:'Flat start — 4G/2H',                 g:4, h:2 },
+  g3h3 : { label:'Flat start — 3G/3H (more hops)',     g:3, h:3 },
+  comp1: { label:'Seat comp — +1G to every later seat (0,1,1,1,1)', comp:[0,1,1,1,1] },
+  compH: { label:'Seat comp — half ladder (0,1,1,2,2)',            comp:[0,1,1,2,2] },
+  compL: { label:'Seat comp — full ladder (0,1,2,3,4)',            comp:[0,1,2,3,4] },
+};
+const SCEN = process.env.SCEN || 'base';
+const SC = SCENARIOS[SCEN] || SCENARIOS.base;
+const __SC = (SC.g!=null || SC.h!=null || SC.comp) ? { g:SC.g, h:SC.h, comp:SC.comp } : null;
+
 const ctx = {
   document, localStorage, console, Math, JSON, Date, Set, Map, Array, Object, String, Number, Boolean,
   parseInt, parseFloat, isNaN, alert: noop,
   setTimeout: noop, clearTimeout: noop,
   lucide: { createIcons: noop },
-  __N: N,
+  __N: N, __COUNTS: COUNTS, __SC,
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;
@@ -271,7 +298,9 @@ function summarize(n, arr) {
   console.log(`winner total score:   avg ${fmt(avg(winTotals))}   min ${Math.min(...winTotals)}   max ${Math.max(...winTotals)}`);
   console.log(`win margin (1st-2nd): avg ${fmt(avg(margins))}   (ties: ${margins.filter(m => m === 0).length})`);
   console.log(`winner score split:   deliv ${fmt(avg(ok.map(r => r.winDeliv)))}   maj ${fmt(avg(ok.map(r => r.winMaj)))}   goals ${fmt(avg(ok.map(r => r.winGoals)))}`);
-  console.log(`seat win-rate:        ` + Object.keys(seatWins).map(s => `P${+s + 1} ${pct(seatWins[s], ok.length)}`).join('   '));
+  const seatRates = Object.keys(seatWins).map(s => 100 * seatWins[s] / ok.length);
+  const seatSpread = Math.max(...seatRates) - Math.min(...seatRates);
+  console.log(`seat win-rate:        ` + Object.keys(seatWins).map(s => `P${+s + 1} ${pct(seatWins[s], ok.length)}`).join('   ') + `   (ideal ${fmt(100/n)}%, spread ${fmt(seatSpread)}pts)`);
   console.log(`winner lean:          prestige(Hall>kontor) ${pct(prestigeWins, ok.length)}   blended(both>0) ${pct(balancedWins, ok.length)}`);
   console.log(`UPGRADES (all plyrs): total/game ${fmt(totalUp)}   earned-via-ship ${fmt(earned)} (${pct(earned, totalUp)})   bought ${fmt(buys)} (${pct(buys, totalUp)})`);
   console.log(`upgrades per WINNER:  avg ${fmt(avg(ok.map(r => r.winUpgrades)))}   (max ${Math.max(...ok.map(r => r.winUpgrades))})`);
@@ -280,6 +309,7 @@ function summarize(n, arr) {
   console.log(`   ` + Object.keys(winByDest).map(k => `${k} ${pct(winByDest[k], totalWinDeliv)}`).join('   '));
 }
 
-console.log(`Brewhouses of the Hanse — headless sim (v0.7, KEY ${R.KEY})  |  N=${N} games per player count`);
-[2, 3, 4].forEach(n => summarize(n, R[n]));
+console.log(`Brewhouses of the Hanse — headless sim (KEY ${R.KEY})  |  N=${N} games per player count`);
+console.log(`scenario: ${SCEN} — ${SC.label}`);
+(R.counts || COUNTS).forEach(n => summarize(n, R[n]));
 console.log('');
