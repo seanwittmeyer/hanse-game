@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Tile List (v0.7 — "The Wharf")
+# Brewhouses of the Hanse — Tile List (v0.8 — "The Wharf")
 
 > The full deck. Derived from the locked architecture in `DESIGN.md` (**§21, v0.7 — supersedes v0.6/§20 where they conflict**). **Every number is a placeholder ⚙** — this fixes *what each tile is and does*, not final balance. **Five tile families (A casks · B ships · C neutral buildings · D recipes · E upgrades) + the destination board (F) + goals (G).** Casks (A) are the heart; everything else is the lean economy around the **Source → Brew → Age → Ship** work at the Wharf.
 >
@@ -25,17 +25,17 @@ A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATU
 
 ### Types, costs & signature actions
 
-> The ladder is **anchored spine + variable export**: **Gruit → Hopped** is fixed and historical (hops is the preservation tech that opens the sea routes); **L3–L5 are dealt** from the Hanse export roster each game. *Which type you brew is an engine choice* — you're deciding which action-building goes on your lines and which destinations you can reach.
+> The ladder is **anchored spine + variable export**: **Gruit → Hopped** is fixed and historical (hops is the preservation tech that opens the sea routes); the **export beers each carry a fixed quality** and **3 of the 4 are dealt** each game, so the ladder shape varies. *Which type you brew is an engine choice* — you're deciding which action-building goes on your lines and which destinations you can reach.
 
 | Level | Type | Q | Brew inputs ⚙ | Maturation ⚙ | Signature slot action ⚙ | Reaches (gate) | Qty |
 |---|---|---|---|---|---|---|---|
 | **L1** | **Gruit Ale** | 1 | `G` | 1 step | **Source** — take 2 goods | Bruges only | 16 |
 | **L2** | **Hopped Beer** | 2 | `G H` | 2 | **Age** — advance any 1 of your casks 2 steps | Bruges · London · Bergen · Hall | 20 |
-| **L3** | *export ⚙* | 3 | `G H H` | 2 | **Load** — load a Ready cask onto a ship for free | + Novgorod | 12 |
-| **L4** | *export ⚙* | 4 | `G G H H` | 3 | **Reach** — +1 presence at a kontor you've delivered to | all | 8 |
-| **L5** | *export ⚙* | 5 | premium; needs **Aging Cellar** | 3 | **Wild** — take any one base verb (Source/Brew/Age/Ship) | all | 4 |
+| **L3** | **Broyhan / Keut** | 3 | `G H H` / `G G H` | 2 | **Load** — load a Ready cask onto a ship for free | + Novgorod | 12 |
+| **L4** | **Mumme** | 4 | `G G H H` | 3 | **Reach** — +1 presence at a kontor you've delivered to | all | 8 |
+| **L5** | **Bock** | 5 | premium; needs **Aging Cellar** | 3 | **Wild** — take any one base verb (Source/Brew/Age/Ship) | all | 4 |
 
-> **Export roster (dealt to L3–L5 each game) ⚙:** **Bock** (Einbeck), **Mumme** (Braunschweig), **Broyhan** (Hannover), **Keut** (Low Countries) — each could carry a light hook (e.g. Bock needs the Aging Cellar; Mumme = slow but rich). The generic "export" labels above are reskinned per game.
+> **Export beers — fixed quality; deal 3 of 4 each game ⚙:** **Broyhan** (Q3) · **Keut** (Q3, a costlier-in-grain alt) · **Mumme** (Q4, Braunschweig) · **Bock** (Q5, Einbeck — needs the Aging Cellar). One is left undealt each game, so the **ladder shape varies**: drop a Q3 → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4 tier; drop **Bock** → no Q5 tier. The signature action follows the **quality**, not the beer (Q3 Load · Q4 Reach · Q5 Wild), and the two Q3 beers share the Q3 cask pool — only their recipe cost differs.
 
 *Gruit is reach-only and never prestige — cheap engine fuel (its Source action) and cheap local reach (Bruges). That single fact is the Leffe/Westvleteren line drawn in the components.*
 
@@ -43,7 +43,7 @@ A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATU
 
 ## B. Ship tiles — owned single-use carriers (~13 tiles)
 
-Built at the **Market** into a slots, **bound to a destination** (inheriting its quality gate). Lifecycle **load → fill → sail:**
+Built at the **Market** into a slot, **bound to a destination** (inheriting its quality gate). Lifecycle **load → fill → sail:**
 - **Load** — via the **Harbor verb** (always available) or a **bonus free load when the ship's line fires** (so you're motivated to place ships on lines you run and to get ships out). You load a cask from a slot — **your own** or a **rival's** (§ interaction in `RULES.md` §5). *(A cask must be deployed to a slot first — the gateway; the **Charter** is the only way to ship straight from a vessel.)*
 - **Sail** — the instant the ship is **full** (or you **launch it early** at the Harbor): every cask aboard is **delivered** to the bound destination (scores for its owner), and the **ship tile is consumed onto the Sailed-Ships track** (the end clock). Build another to ship again.
 
@@ -82,11 +82,12 @@ A small face-up Market supply. A recipe is **only** *a brewable type + its `G/H`
 |---|---|---|---|
 | *(start, printed)* | **Gruit** | — | `G` |
 | *(start, printed)* | **Hopped** | — | `G H` |
-| **Recipe · Export L3** | L3 | `1 G` | `G H H` |
-| **Recipe · Export L4** | L4 | `1 G 1 H` | `G G H H` |
-| **Recipe · Export L5** | L5 | `2 G` | premium (needs Aging Cellar) |
+| **Broyhan** | Q3 export | `1 G` | `G H H` |
+| **Keut** | Q3 export | `1 G` | `G G H` |
+| **Mumme** | Q4 export | `1 G 1 H` | `G G H H` |
+| **Bock** | Q5 export | `2 G` | premium (needs Aging Cellar) |
 
-> Start of game: **Gruit + Hopped** (fixed, symmetric — everyone brews turn 1, and *gaining a export recipe means more*). The export recipes are the climb to the rich destinations.
+> Start of game: **Gruit + Hopped** (fixed, symmetric — everyone brews turn 1, and *gaining an export recipe means more*). **Print all four export recipes** (you need the physical card for each), but **only 3 of the 4 are dealt into any given game** — the recipes you can buy at the Market this game are the dealt three. They are the climb to the rich destinations.
 
 ---
 
@@ -156,7 +157,7 @@ A small pool (shared draft or per-player ⚙) rewarding different shapes, so the
 | A Casks | ~60 | ~5 types × actions |
 | B Ships | ~13 | 2 (Cog · Hulk) |
 | C Neutral buildings | ~6 in box (2–3 in play) | ~6 |
-| D Recipes | ~10 | ~5 |
+| D Recipes | ~10 | ~6 (Gruit · Hopped · Broyhan · Keut · Mumme · Bock) |
 | E Upgrades (Rooms + Modifiers) | ~24 | ~11 |
 | G Goals | ~9 | ~9 |
 | **Tile total** | **~120** | **~30 unique** |

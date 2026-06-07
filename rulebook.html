@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Rulebook (v0.7 draft)</title>
+<title>Brewhouses of the Hanse — Rulebook (v0.8 draft)</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -69,7 +69,7 @@
 <header>
   <h1>Brewhouses of the Hanse</h1>
   <div class="sub">Rulebook · A merchant brewing house in the Hanseatic League</div>
-  <div class="tag">v0.7 “The Wharf” prototype draft · <a href="learn.html">🎓 Learn</a> · <a href="index.html">→ Components</a> · <a href="play.html">▶ Play (hot-seat)</a></div>
+  <div class="tag">v0.8 “The Wharf” prototype draft · <a href="learn.html">🎓 Learn</a> · <a href="index.html">→ Components</a> · <a href="play.html">▶ Play (hot-seat)</a></div>
 </header>
 
 <div class="wrap">
@@ -160,7 +160,7 @@
   <h2><span class="nm">5</span>Setup</h2>
   <ol>
     <li>Place the <b>main board</b> and <b>destination board</b>. Seed the slots with <b>2–3 neutral buildings</b> ⚙ and the warm-start Cogs, <b>spread across different lines</b> so no single line is the obvious opening. All five destinations begin <b>open</b>.</li>
-    <li>Deal the <b>export roster</b> (Bock / Mumme / Broyhan / Keut) onto the L3–L5 rungs in a random order ⚙. Recipes &amp; ships are an always-available Market supply; for upgrades, <b>shuffle all Upgrade tiles into a face-down deck and deal 4 ⚙ face-up beside it</b> — the <b>Upgrade display</b>. The deck stays face-down as a <b>face-down draw stack</b> and refills the display as tiles are taken (§11).</li>
+    <li><b>Deal 3 of the 4 export beers</b> into play this game ⚙. Each carries a <b>fixed quality</b> — <b>Broyhan</b> Q3 · <b>Keut</b> Q3 · <b>Mumme</b> Q4 · <b>Bock</b> Q5 — so dropping one varies the ladder: drop a Q3 → the full Q3→Q4→Q5 climb; drop Mumme → no Q4; drop Bock → no Q5. Recipes &amp; ships are an always-available Market supply; for upgrades, <b>shuffle all Upgrade tiles into a face-down deck and deal 4 ⚙ face-up beside it</b> — the <b>Upgrade display</b>. The deck stays face-down as a <b>face-down draw stack</b> and refills the display as tiles are taken (§11).</li>
     <li>Set the <b>Sailed-Ships track</b> to its player-scaled length (it scales steeply — the clock fills faster with more players): <b>~7 / 11 / 15 / 19 slots for 2 / 3 / 4 / 5 players</b> ⚙.</li>
     <li>Each player takes a <b>brewery board</b>, a <b>worker</b>, ownership discs, and a starting stake ⚙: <b>3 <span class="cube g"></span>, 2 <span class="cube h"></span></b>, the <b>Gruit + Hopped</b> recipes (printed), <b>2 open vessels</b> (lanes 3–4 locked), and a <b>warm start</b> — one built <b>Cog</b> on a slot bound to <b>Bruges</b>, and <b>one Ready Gruit</b> in Vessel 1 (deploy it turn 1).</li>
     <li>Each player places their worker on any station — <b>your opening placement is free</b> (no occupancy toll, §6). Give the youngest brewer the <b>first-player marker</b>.</li>
@@ -211,11 +211,11 @@
     <tr><th>Level</th><th>Type</th><th>Quality</th><th>Brew inputs ⚙</th><th>Maturation ⚙</th><th>Signature wharf-action ⚙</th></tr>
     <tr><td>L1</td><td>Gruit Ale</td><td>1</td><td><span class="cube g"></span></td><td>1 step</td><td><b>Source</b> — take 2 goods</td></tr>
     <tr><td>L2</td><td>Hopped Beer</td><td>2</td><td><span class="cube g"></span><span class="cube h"></span></td><td>2</td><td><b>Age</b> — advance any 1 cask 2 steps</td></tr>
-    <tr><td>L3</td><td><i>export</i> ⚙</td><td>3</td><td><span class="cube g"></span><span class="cube h"></span><span class="cube h"></span></td><td>2</td><td><b>Load</b> — a Ready cask onto a ship, free</td></tr>
-    <tr><td>L4</td><td><i>export</i> ⚙</td><td>4</td><td><span class="cube g"></span><span class="cube g"></span><span class="cube h"></span><span class="cube h"></span></td><td>3</td><td><b>Reach</b> — +1 presence at a kontor you hold</td></tr>
-    <tr><td>L5</td><td><i>export</i> ⚙</td><td>5</td><td>premium · needs Aging Cellar</td><td>3</td><td><b>Wild</b> — take any one base verb</td></tr>
+    <tr><td>L3</td><td><b>Broyhan / Keut</b></td><td>3</td><td><span class="cube g"></span><span class="cube h"></span><span class="cube h"></span> / <span class="cube g"></span><span class="cube g"></span><span class="cube h"></span></td><td>2</td><td><b>Load</b> — a Ready cask onto a ship, free</td></tr>
+    <tr><td>L4</td><td><b>Mumme</b></td><td>4</td><td><span class="cube g"></span><span class="cube g"></span><span class="cube h"></span><span class="cube h"></span></td><td>3</td><td><b>Reach</b> — +1 presence at a kontor you hold</td></tr>
+    <tr><td>L5</td><td><b>Bock</b></td><td>5</td><td>premium · needs Aging Cellar</td><td>3</td><td><b>Wild</b> — take any one base verb</td></tr>
   </table>
-  <p><b>The first two beer types are fixed; higher tiers vary by game.</b> L1 Gruit → L2 Hopped is fixed and historical (hops is the preservation tech that opens the sea routes). The export tiers <b>L3–L5 are dealt each game</b> from the historical Hanse export beers — <b>Bock</b> (Einbeck), <b>Mumme</b> (Braunschweig), <b>Broyhan</b> (Hannover), <b>Keut</b> (Low Countries) — so the most efficient quality progression differs every game.</p>
+  <p><b>The first two beer types are fixed; the export tier varies by game.</b> L1 Gruit → L2 Hopped is fixed and historical (hops is the preservation tech that opens the sea routes). The four historical Hanse export beers each carry a <b>fixed quality</b> — <b>Broyhan</b> (Hannover, Q3), <b>Keut</b> (Low Countries, Q3), <b>Mumme</b> (Braunschweig, Q4), <b>Bock</b> (Einbeck, Q5) — and <b>3 of the 4 are dealt each game</b>, so the ladder shape (and the most efficient climb) differs every game: drop a Q3 → the full Q3→Q5 ladder; drop Mumme → no Q4 tier; drop Bock → no Q5 tier. The action follows the <b>quality</b>, not the name.</p>
   <div class="box"><h4>Which type to brew</h4>Each type carries a different <b>signature action</b> and reaches different destinations. Gruit is cheap and fast but only reaches Bruges; export types are slow and scarce but unlock the richer destinations and the Hall.</div>
 </section>
 
@@ -346,9 +346,9 @@
   <table class="atbl">
     <tr><td><span class="act-ic"><i data-lucide="store"></i></span></td><td><b>Gruit → Source</b></td><td>Gain <b>+2</b> goods.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Hopped → Age</b></td><td>Advance any <b>1 cask 2 steps</b>.</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>Export L3 → Load</b></td><td>Load a Ready cask onto a ship, <b>free</b>.</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="map-pin"></i></span></td><td><b>Export L4 → Reach</b></td><td><b>+1 presence</b> at a kontor you've delivered to.</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="sparkles"></i></span></td><td><b>Export L5 → Wild</b></td><td>Take any <b>one base verb</b> (Source / Brew / Age / Ship).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>Q3 (Broyhan/Keut) → Load</b></td><td>Load a Ready cask onto a ship, <b>free</b>.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="map-pin"></i></span></td><td><b>Q4 (Mumme) → Reach</b></td><td><b>+1 presence</b> at a kontor you've delivered to.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="sparkles"></i></span></td><td><b>Q5 (Bock) → Wild</b></td><td>Take any <b>one base verb</b> (Source / Brew / Age / Ship).</td></tr>
   </table>
 
   <div class="acat">Neutral buildings (shared, seeded on slots)</div>
@@ -390,8 +390,8 @@
 </div>
 
 <footer>
-  Brewhouses of the Hanse · rulebook <b>v0.7 “The Wharf”</b> draft · all numbers (⚙) are placeholders for balancing<br>
-  <span style="font-size:.78rem">The Play client (<code>play.html</code>) is now v0.7 too — go play.</span>
+  Brewhouses of the Hanse · rulebook <b>v0.8 “The Wharf”</b> draft · all numbers (⚙) are placeholders for balancing<br>
+  <span style="font-size:.78rem">The Play client (<code>play.html</code>) is now v0.8 too — go play.</span>
 </footer>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>if(window.lucide)lucide.createIcons();</script>

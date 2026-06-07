@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — The Player Board (Brewery) v0.7 — "The Wharf"
+# Brewhouses of the Hanse — The Player Board (Brewery) v0.8 — "The Wharf"
 
 > The private tableau. Symmetric for all players. Numbers ⚙ are placeholders. **v0.7 reels the brewery back to one clean job — it is where casks are *made and matured* (the private half of the game), and where your *upgrades* compound.** Everything contested now lives on the shared **slots** (the perimeter ring around the stations), not here, so the brewery is **private and untouchable** (`DESIGN.md` §21). Supersedes v0.6.
 >
@@ -77,7 +77,7 @@ No grid action is duplicated here. Nothing on this board is contestable by rival
 | **Warm start** | **1 built Cog** (on a slot, bound to Bruges) **+ 1 Ready Gruit in a vessel** (deploy it turn 1) ⚙ — so the Wharf is live and a first voyage is reachable turn 2–3 |
 | Worker | placed turn 1 (see Turn-1 rule, `RULES.md` §1) |
 
-> **Why these starting numbers** (`DESIGN.md` §21E): the pace model showed v0.6's first voyage at **turn 6** (goods- and geometry-bound, not brew-bound), so v0.7 starts you **mid-stream** — 2 vessels, a warm Cog + cask, all destinations open, base verbs always usable. *Gaining a export recipe means more* because you start with only the on-ramp.
+> **Why these starting numbers** (`DESIGN.md` §21E): the pace model showed v0.6's first voyage at **turn 6** (goods- and geometry-bound, not brew-bound), so v0.7 starts you **mid-stream** — 2 vessels, a warm Cog + cask, all destinations open, base verbs always usable. *Gaining an export recipe means more* because you start with only the on-ramp.
 
 ---
 

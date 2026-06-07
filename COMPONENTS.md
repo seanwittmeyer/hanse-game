@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Components & Tile Deck (v0.7 — "The Wharf")
+# Brewhouses of the Hanse — Components & Tile Deck (v0.8 — "The Wharf")
 
 > Manifest for the v0.7 reel-in (`DESIGN.md` §21, 2026-06-05 — **supersedes v0.6/§20 where they conflict**). **All counts and values are placeholders ⚙;** the goal here is to enumerate *what objects exist and what each does*. Anything ⚙ is a tuning dial; ❓ is open.
 >
@@ -47,11 +47,11 @@ Single working face: **type · quality (Q1–Q5, printed) · one signature actio
 |---|---|---|---|---|---|---|
 | **L1** | **Gruit Ale** | 1 | `G` | 1 | **Source** — take 2 goods | 16 |
 | **L2** | **Hopped Beer** | 2 | `G H` | 2 | **Age** — advance a cask 2 steps | 20 |
-| **L3** | *export ⚙* | 3 | `G H H` | 2 | **Load** — load a Ready cask onto a ship free | 12 |
-| **L4** | *export ⚙* | 4 | `G G H H` | 3 | **Reach** — +1 presence at a kontor you've delivered to | 8 |
-| **L5** | *export ⚙* | 5 | premium; needs Aging Cellar | 3 | **Wild** — take any one base verb as a bonus | 4 |
+| **L3** | **Broyhan / Keut** | 3 | `G H H` / `G G H` | 2 | **Load** — load a Ready cask onto a ship free | 12 |
+| **L4** | **Mumme** | 4 | `G G H H` | 3 | **Reach** — +1 presence at a kontor you've delivered to | 8 |
+| **L5** | **Bock** | 5 | premium; needs Aging Cellar | 3 | **Wild** — take any one base verb as a bonus | 4 |
 
-> **Export roster (dealt to L3–L5 in a variable order each game) ⚙:** real Hanse export beers — **Bock** (Einbeck), **Mumme** (Braunschweig), **Broyhan** (Hannover), **Keut** (Low Countries). The fixed on-ramp is **Gruit → Hopped**; the export is variable, so the efficient climb differs every game.
+> **Export beers — fixed quality; deal 3 of 4 each game ⚙:** real Hanse export beers — **Broyhan** (Q3, `G H H`), **Keut** (Q3, `G G H`), **Mumme** (Q4, Braunschweig), **Bock** (Q5, Einbeck — needs the Aging Cellar). One of the four is left undealt each game, so the **ladder shape varies**: drop a Q3 → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4 tier; drop **Bock** → no Q5 tier. (The cask tiles themselves are by **quality** — Q3 Load · Q4 Reach · Q5 Wild — so the two Q3 beers draw from the same 12-cask pool; only their recipe cost differs.) The fixed on-ramp is **Gruit → Hopped**.
 
 *Gruit is the cheap, fast workhorse — it keeps your goods flowing (its action) and reaches Bruges, but it never makes prestige. The export casks are scarce, slow, and the key to the rich destinations.*
 
@@ -69,7 +69,7 @@ Built at the **Market**, placed on a slot, **bound to a destination** (inheritin
 A small set placed on slots **at setup** (shared, permanent). They keep the slots alive from turn 1 and give everyone a base action where they sit — e.g., **Market Stall** (+1 good), **Cooper** (advance a cask 1), **Crane** (free load onto a ship), **Counting-House** (convert/relabel goods). The active player may use the one on their line, free. ~2–3 in play per game ⚙.
 
 ### D. Recipe tiles — permission to brew a type (~10 tiles ⚙)
-A small face-up Market supply. A recipe = **a type you may brew + its `G/H` cost** — nothing more (the v0.6 on-collect boons, the 6-card tuck, and frontier-gating are **cut**). Acquired at the Market; **permanent** (brewing never consumes it). Start: **Gruit + Hopped** (fixed); collect export recipes to climb. ❓ light hand limit.
+A small face-up Market supply. A recipe = **a type you may brew + its `G/H` cost** — nothing more (the v0.6 on-collect boons, the 6-card tuck, and frontier-gating are **cut**). Acquired at the Market; **permanent** (brewing never consumes it). Start: **Gruit + Hopped** (fixed); collect export recipes to climb. The four export recipes (**Broyhan · Keut · Mumme · Bock**) all ship in the box, but **only 3 of the 4 are dealt into any game** (the buyable export set). ❓ light hand limit.
 
 ### E. Upgrade tiles — the private brewery engine (Rooms + Modifiers, ~24 ⚙)
 Installed on your brewery board. They come from the Market's **face-up Upgrade display** (option B): a row of ~4 ⚙ tiles drawn from a shuffled Upgrade supply, refilling as taken. **Buy** one (pay its cost — deliberately **dear at 4–5 `G` ⚙**, about a kontor delivery's worth of goods) **or earn** one *free* by delivering to **London / Bergen / Novgorod** — the *same* display — so the cycle (deliver → upgrade → brew better → deliver better) is the privileged path and buying is a costed bootstrap, not a shortcut. (Recipes & ships are a separate always-available supply.)

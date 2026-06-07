@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Turn & Round Economy (v0.7 — "The Wharf")
+# Brewhouses of the Hanse — Turn & Round Economy (v0.8 — "The Wharf")
 
 > Operational rules. Numbers are placeholders ⚙. **v0.7 is a ground-up reel-in to *Great Western Trail / Distilled* weight.** It keeps what was loved — the shared 2×2 of stations ringed by slots, the dual-role cask, the merchant-shipping fantasy, and the theme — and sheds about half the rules. The whole game now happens at **the Wharf**: four stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots, where the work runs **Source → Brew → Age → Ship.** A brewed cask matures privately, then sits on a shared **slot** as a public **action-building** *and* your cargo-in-waiting, then **ships to a destination** for points and leaves. The two old value tracks (reach/standing) are gone — **the volume-vs-prestige lean now lives in *where you ship*.** Supersedes v0.6 (`DESIGN.md` §21, 2026-06-05).
 
@@ -8,12 +8,12 @@
 
 Each house starts with:
 - **3 `G` (grain), 2 `H` (hops).** Storage cap 8 ⚙.
-- The **Gruit** and **Hopped** recipes (the on-ramp — fixed, symmetric, so everyone can brew immediately and *gaining a export recipe means more*). More recipes are acquired at the Market.
+- The **Gruit** and **Hopped** recipes (the on-ramp — fixed, symmetric, so everyone can brew immediately and *gaining an export recipe means more*). More recipes are acquired at the Market.
 - **2 open vessels** (the brewing throughput; cap 4 ⚙ via upgrades).
 - A **warm start so the Wharf is live on turn 1:** one built **Cog** placed on a slot (bound to **Bruges**), and **one Ready Gruit in a vessel** (deploy it to a slot on turn 1) ⚙ — no starting cask sits on the shared slots. First voyage is reachable by turn 2–3, not turn 6.
 - An empty **brewery board** (vessels + upgrade slots — see `PLAYERBOARD.md`).
 
-The shared board is seeded so the ring is **alive from turn 1:** all four **destinations are open**, and **2–3 neutral buildings** ⚙ plus the warm-start **Cogs** are placed in perimeter slots **spread across different lines** (no single line is stacked with the shared tiles ⚙) so there is no obvious opening camp — every direction is worth something on turn 1. Deal the **export roster** (Bock / Mumme / Broyhan / Keut) onto the L3–L5 rungs in a random order each game (the variable export tier). **Shuffle all Upgrade tiles into a face-down Upgrade deck and deal 4 ⚙ face-up beside it (randomly placed) — the Upgrade display; the deck stays face-down as a 5th stack and refills the display as tiles are taken (§3).** Set the **Sailed-Ships track** to its player-scaled length. Each player places a worker on any station — **opening placement is free** (no occupancy toll, §1). **Choose a first player — fixed for the whole game** (turn order does not rotate ⚙; the free opening placement is the first seat balancer, further seat compensation is an open ⚙).
+The shared board is seeded so the ring is **alive from turn 1:** all four **destinations are open**, and **2–3 neutral buildings** ⚙ plus the warm-start **Cogs** are placed in perimeter slots **spread across different lines** (no single line is stacked with the shared tiles ⚙) so there is no obvious opening camp — every direction is worth something on turn 1. **Deal 3 of the 4 export beers** into play this game. Each beer carries a **fixed quality** — **Broyhan** and **Keut** are Q3, **Mumme** is Q4, **Bock** is Q5 — so dropping one varies the *ladder shape*: drop a Q3 beer → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4 tier; drop **Bock** → no Q5 tier (the variable export tier). **Shuffle all Upgrade tiles into a face-down Upgrade deck and deal 4 ⚙ face-up beside it (randomly placed) — the Upgrade display; the deck stays face-down as a 5th stack and refills the display as tiles are taken (§3).** Set the **Sailed-Ships track** to its player-scaled length. Each player places a worker on any station — **opening placement is free** (no occupancy toll, §1). **Choose a first player — fixed for the whole game** (turn order does not rotate ⚙; the free opening placement is the first seat balancer, further seat compensation is an open ⚙).
 
 > **What's gone from v0.6** (the reel-in): the demand-market value track, the type frontier, Fairs, route-lane tiles, the Hall as an action station, the working-cask Floor state, the fires-when-blocked tableau twins, differentiated lane skims, recipe on-collect boons / the 6-card tuck, and aging cubes. **Casks are no longer presence while they sit; presence/standing happens at *delivery*.** Stations are never closed (no twins; the only station cost is a small occupancy toll, §1) — interaction lives on the slots and the loaded casks.
 
@@ -110,9 +110,11 @@ Each is a "support action" in the Lisboa sense — it pushes production forward,
 |---|---|---|
 | **Gruit** | 1 | **Source** — take 2 goods |
 | **Hopped** | 2 | **Age** — advance any 1 of your casks 2 steps |
-| **Export L3** | 3 | **Load** — load a Ready cask onto a ship for free |
-| **Export L4** | 4 | **Reach** — +1 presence at a kontor you've delivered to (majority help) |
-| **Export L5** | 5 | **Wild** — take any one base verb (Source / Brew / Age / Ship) as a bonus |
+| **Export Q3** *(Broyhan · Keut)* | 3 | **Load** — load a Ready cask onto a ship for free |
+| **Export Q4** *(Mumme)* | 4 | **Reach** — +1 presence at a kontor you've delivered to (majority help) |
+| **Export Q5** *(Bock)* | 5 | **Wild** — take any one base verb (Source / Brew / Age / Ship) as a bonus |
+
+> The action follows the **quality**, not the name: whichever export beers are dealt this game, a Q3 cask always grants **Load**, a Q4 (Mumme) **Reach**, a Q5 (Bock) **Wild**. If Mumme or Bock is the undealt beer, that action simply isn't available this game.
 
 > *Why this fixes the old "lackluster tile":* the action is chunky and advances *your* turn, and **which type you brew is now an engine choice** — you're deciding which action-building to put on your lines, not just paying a cost.
 

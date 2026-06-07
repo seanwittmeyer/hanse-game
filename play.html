@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v0.7</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v0.8</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -186,7 +186,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>Prototype v0.7 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s deployed cask</b> on your ship — they still score it. Deliver to <b>London / Bergen / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b> (the same row you buy from — you don’t fully know what’ll be on offer when you sail). The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the relief valve when slots jam). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
+  <p class="note" style="text-align:center"><b>Prototype v0.8 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s deployed cask</b> on your ship — they still score it. Deliver to <b>London / Bergen / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b> (the same row you buy from — you don’t fully know what’ll be on offer when you sail). The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the relief valve when slots jam). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -243,17 +243,19 @@ const Gi=n=>LU('wheat','i-grain')+(n!==undefined?'<b>'+n+'</b>':''), Hi=n=>LU('s
 function refreshIcons(){if(window.lucide)try{lucide.createIcons();}catch(e){}}
 
 // ---- CASK TYPES: a TYPE (quality rung L1–L5) + brew cost + maturation + a signature wharf-action ----
-// Gruit → Hopped is the fixed historical spine; L3–L5 (the export tier) are dealt names each game.
+// Gruit → Hopped is the fixed historical spine. The four export beers each carry a FIXED quality
+// (Broyhan/Keut Q3 · Mumme Q4 · Bock Q5); 3 of the 4 are dealt in each game, so the ladder shape varies
+// (drop a Q3 → full Q3–Q5 climb; drop Mumme → no Q4; drop Bock → no Q5).
 const STYLES={
-  gruit :{name:'Gruit Ale',   lvl:1, q:1, in:{g:1},      ready:1, act:'source'},
-  hopped:{name:'Hopped Beer', lvl:2, q:2, in:{g:1,h:1},  ready:2, act:'age'},
-  l3    :{name:'Export L3',   lvl:3, q:3, in:{g:1,h:2},  ready:2, act:'load'},
-  l4    :{name:'Export L4',   lvl:4, q:4, in:{g:2,h:2},  ready:3, act:'reach'},
-  l5    :{name:'Export L5',   lvl:5, q:5, in:{g:3,h:2},  ready:3, act:'wild', cellar:true},
+  gruit  :{name:'Gruit Ale',   lvl:1, q:1, in:{g:1},      ready:1, act:'source'},
+  hopped :{name:'Hopped Beer', lvl:2, q:2, in:{g:1,h:1},  ready:2, act:'age'},
+  broyhan:{name:'Broyhan',     lvl:3, q:3, in:{g:1,h:2},  ready:2, act:'load',  export:true},
+  keut   :{name:'Keut',        lvl:3, q:3, in:{g:2,h:1},  ready:2, act:'load',  export:true},
+  mumme  :{name:'Mumme',       lvl:4, q:4, in:{g:2,h:2},  ready:3, act:'reach', export:true},
+  bock   :{name:'Bock',        lvl:5, q:5, in:{g:3,h:2},  ready:3, act:'wild',  export:true, cellar:true},
 };
-const EXPORT_ROSTER=['Bock','Mumme','Broyhan','Keut'];   // 3 of 4 dealt onto L3/L4/L5 each game
-const EXPORT_KEYS=['l3','l4','l5'];
-const RECIPE_BUY={l3:{g:1},l4:{g:1,h:1},l5:{g:2}};       // Market buy cost (Gruit+Hopped are free starters)
+const EXPORT_ROSTER=['broyhan','keut','mumme','bock'];   // 3 of 4 dealt each game; each keeps its fixed quality
+const RECIPE_BUY={broyhan:{g:1},keut:{g:1},mumme:{g:1,h:1},bock:{g:2}};  // Market buy cost (Gruit+Hopped are free starters)
 const CASK_ACT={source:'Source — take 2 goods',age:'Age — advance any 1 cask 2 steps',
   load:'Load — a Ready cask onto a ship, free',reach:'Reach — +1 presence at a kontor',
   wild:'Wild — take any one base verb'};
@@ -281,8 +283,10 @@ const NEUTRALS={
   cooper  :{name:'Cooper',        icon:'hammer',        act:'advance one of your casks 1 step'},
   crane   :{name:'Crane',         icon:'package-plus',  act:'load a Ready cask onto a ship, free'},
   counting:{name:'Counting House',icon:'arrow-left-right',act:'convert up to 2 goods G↔H'},
+  towncrier:{name:'Towncrier',    icon:'megaphone',     act:'draw a goal from the face-up goal supply'},
+  almshouse:{name:'Almshouse',    icon:'heart',         act:'+1 presence at a kontor you already lead'},
 };
-// 2 neutral buildings are seeded onto the wharf at setup, picked at random from the pool each game (variety) ⚙
+// 2 neutral buildings are seeded onto the wharf at setup, picked at random from the 6-design pool each game (variety) ⚙
 
 // ---- UPGRADES: Rooms (capability) + Modifiers (asymmetric perks) ----
 const ROOMS={
@@ -305,10 +309,7 @@ function upName(k){return (UP[k]||{name:k}).name;}
 function upDesc(k){return (UP[k]||{desc:''}).desc;}
 
 // ---- MARKET (Option B): recipes & ships are an always-available supply; UPGRADES are a face-up display ----
-const SHOP=[   // always-available supply (no display): recipes + ships
-  {id:'r_l3',kind:'recipe',style:'l3'},
-  {id:'r_l4',kind:'recipe',style:'l4'},
-  {id:'r_l5',kind:'recipe',style:'l5'},
+const SHOP=[   // always-available supply (no display): ships (export-recipe buys come from this game's export set)
   {id:'s_cog', kind:'ship',ship:'cog', cost:{g:2}},
   {id:'s_hulk',kind:'ship',ship:'hulk',cost:{g:3}},
 ];
@@ -367,7 +368,7 @@ const START_STORAGE=8;
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v15'; // v0.8: occupancy toll (move onto a rival station = 1G; opening placement free) + "Wharf/stations/slots" naming now canonical; bump discards stale state
+const KEY='hanse-hotseat-v17'; // v0.8: fixed-quality exports (3 of 4 dealt) + all 6 neutral buildings live (added Towncrier draw-a-goal & Almshouse reinforce-a-lead); bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -375,9 +376,9 @@ function snapshot(){if(!S)return;undoStack.push({S:JSON.stringify(S),UI:JSON.str
 function doUndo(){if(!undoStack.length)return;const u=undoStack.pop();S=JSON.parse(u.S);UI=JSON.parse(u.UI);activeTab=u.tab;save();render();}
 
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function dealRoster(){const a=shuffle(EXPORT_ROSTER.slice());
-  const map={};EXPORT_KEYS.forEach((k,i)=>map[k]=a[i]);return map;}
-function applyRoster(map){if(!map)return;EXPORT_KEYS.forEach(k=>{if(map[k])STYLES[k].name=map[k];});}
+function dealExports(){return shuffle(EXPORT_ROSTER.slice()).slice(0,3);}  // 3 of the 4 fixed-quality export beers; ladder shape varies
+function exportLabel(){return (S.exports||[]).slice().sort((a,b)=>STYLES[a].lvl-STYLES[b].lvl)
+  .map(k=>'Q'+STYLES[k].q+' '+STYLES[k].name).join(' · ');}
 function dealGoals(){const a=GOAL_KEYS.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,3);}
 
 function newPlayer(i,name){
@@ -391,8 +392,7 @@ function newPlayer(i,name){
 }
 function freshState(n,names){
   const st={players:[],slots:{},turn:1,active:0,first:0,ending:false,log:[],
-    roster:dealRoster(), sailed:0, sailedCap:(SAILED_CAP[n]||10), upgradeSupply:[], upgradeDisplay:[]};
-  applyRoster(st.roster);
+    exports:dealExports(), sailed:0, sailedCap:(SAILED_CAP[n]||10), upgradeSupply:[], upgradeDisplay:[]};
   for(let i=0;i<n;i++) st.players.push(newPlayer(i,names[i]));
   SLOTS.forEach(s=>st.slots[s.id]=null);
   // ---- Upgrade supply (facedown) + face-up display (Market option B) ----
@@ -516,7 +516,7 @@ function startGame(){
   const names=[];for(let i=0;i<setupN;i++){const v=document.getElementById('nm'+i).value.trim();names.push(v||CNAMES[i]);}
   S=freshState(setupN,names);UI={sub:'move'};activeTab=0;undoStack=[];
   document.getElementById('setup').classList.add('hidden');
-  log('Game begins — '+setupN+' brewing houses. The export this game: L3 '+STYLES.l3.name+' · L4 '+STYLES.l4.name+' · L5 '+STYLES.l5.name+'.');
+  log('Game begins — '+setupN+' brewing houses. The export beers this game (3 of 4): '+exportLabel()+'.');
   log('Warm start: each house has a Cog (→ Bruges) on a slot and a Ready Gruit in vessel 1 (deploy it turn 1).');
   save();render();
 }
@@ -559,7 +559,7 @@ function resolveStop(i){
 }
 // resume / return helpers — clear the sub-flow fields, then route to the right phase
 function resume(rt){
-  UI.cell=null;UI.stage=null;UI.tmp=null;UI.age=UI.brew=UI.src=UI.load=UI.cvt=UI.reach=UI.wild=UI.deploy=UI.benefit=null;
+  UI.cell=null;UI.stage=null;UI.tmp=null;UI.age=UI.brew=UI.src=UI.load=UI.cvt=UI.reach=UI.wild=UI.deploy=UI.benefit=UI.alms=UI.draw=null;
   if(rt==='line')UI.sub='line';
   else if(rt==='end')UI.sub='end';
   else UI.sub=(UI.stops&&UI.stops.length)?'stops':'end';
@@ -577,12 +577,14 @@ function enterCell(cell){
 
 // ---------- MARKET (Source) ----------
 function marketGoods(g,h){snapshot();gain(cur(),g,h);log(cur().name+' sources '+(g?g+'G':'')+(g&&h?' ':'')+(h?h+'H':'')+'.',true);cellDone();}
+// Buy one of this game's export recipes (the 3 dealt beers): pay its cost, gain the permission.
+function buyRecipe(style){const p=cur();
+  if(!(S.exports||[]).includes(style)||p.recipes.includes(style))return;
+  const c=RECIPE_BUY[style];if(!canPay(p,c))return;
+  snapshot();pay(p,c);p.recipes.push(style);
+  log(p.name+' buys the '+STYLES[style].name+' recipe.',true);cellDone();}
 function buyTile(id){
   const it=SHOP.find(x=>x.id===id);const p=cur();
-  if(it.kind==='recipe'){
-    if(p.recipes.includes(it.style))return;const c=RECIPE_BUY[it.style];if(!canPay(p,c))return;
-    snapshot();pay(p,c);p.recipes.push(it.style);
-    log(p.name+' buys the '+STYLES[it.style].name+' recipe.',true);cellDone();return;}
   if(it.kind==='ship'){
     if(!emptySlots().length){alert('No open slot to build a ship.');return;}
     if(!canPay(p,it.cost))return;
@@ -664,6 +666,26 @@ function reachPick(k){snapshot();const p=cur();p.presBonus[k]=(p.presBonus[k]||0
   const rt=UI.reach.returnTo;UI.reach=null;resume(rt);
 }
 function reachSkip(){const rt=UI.reach.returnTo;UI.reach=null;resume(rt);}
+
+// Almshouse (neutral): +1 presence at a kontor where you already lead — reinforce a majority you hold.
+function enterAlms(rt){const p=cur();const ks=KONTORE.filter(k=>leadersAt(k).some(x=>x.id===p.id));
+  if(!ks.length){log('↳ Almshouse: you hold no majority to reinforce.');resume(rt);return;}
+  UI.sub='alms';UI.alms={ks,returnTo:rt};render();
+}
+function almsPick(k){snapshot();const p=cur();p.presBonus[k]=(p.presBonus[k]||0)+1;
+  log('↳ '+p.name+' reinforces its lead at '+DEST[k].name+' (+1 presence, Almshouse).');
+  const rt=UI.alms.returnTo;UI.alms=null;resume(rt);}
+function almsSkip(){const rt=UI.alms.returnTo;UI.alms=null;resume(rt);}
+
+// Towncrier (neutral): draw a goal — pick one from the face-up goal supply (goals not already in your row).
+function enterTowncrier(rt){const p=cur();const avail=GOAL_KEYS.filter(g=>!p.goals.includes(g));
+  if(!avail.length){log('↳ Towncrier: no new goal to draw.');resume(rt);return;}
+  UI.sub='goaldraw';UI.draw={avail,returnTo:rt};render();
+}
+function drawPick(g){snapshot();const p=cur();if(!p.goals.includes(g))p.goals.push(g);
+  log('↳ '+p.name+' takes a goal (Towncrier): '+GOALS[g].text+'.');
+  const rt=UI.draw.returnTo;UI.draw=null;resume(rt);}
+function drawSkip(){const rt=UI.draw.returnTo;UI.draw=null;resume(rt);}
 
 function enterWild(rt){UI.sub='wild';UI.wild={returnTo:rt};render();}
 function wildPick(verb){const rt=UI.wild.returnTo;UI.wild=null;const p=cur();
@@ -763,6 +785,8 @@ function enterNeutral(slot,t){const p=cur();
   else if(t.b==='cooper')enterAge(1,'single','stops');
   else if(t.b==='crane')enterLoad(myShips(p),wharfLoadableCasks(p),true,'stops',1);
   else if(t.b==='counting')enterConvert('stops');
+  else if(t.b==='towncrier')enterTowncrier('stops');
+  else if(t.b==='almshouse')enterAlms('stops');
 }
 
 // ---------- end of turn ----------
@@ -845,6 +869,10 @@ function renderBar(){
     acts=btn(Gi(1)+'→'+Hi(1),'convertDo(\'g\',1)','go')+btn(Gi(2)+'→'+Hi(2),'convertDo(\'g\',2)','go')+btn(Hi(1)+'→'+Gi(1),'convertDo(\'h\',1)','go')+btn(Hi(2)+'→'+Gi(2),'convertDo(\'h\',2)','go')+btn('Skip','convertSkip()','ghost');}
   else if(U==='reach'){prompt='Reach — +1 presence at a kontor you’ve delivered to.';
     acts=UI.reach.ks.map(k=>btn(LU('map-pin')+DEST[k].name,'reachPick(\''+k+'\')','go')).join('')+btn('Skip','reachSkip()','ghost');}
+  else if(U==='alms'){prompt='Almshouse — +1 presence at a kontor you already lead.';
+    acts=UI.alms.ks.map(k=>btn(LU('map-pin')+DEST[k].name,'almsPick(\''+k+'\')','go')).join('')+btn('Skip','almsSkip()','ghost');}
+  else if(U==='goaldraw'){prompt='Towncrier — draw a goal (pick one to add; your best 2 score).';
+    acts=UI.draw.avail.map(g=>btn(LU('target')+GOALS[g].text,'drawPick(\''+g+'\')','go')).join('')+btn('Skip','drawSkip()','ghost');}
   else if(U==='wild'){prompt='Wild — take any one base verb as a bonus.';
     acts=btn(LU('store')+' Source','wildPick(\'source\')','go')+btn(LU('flask-conical')+' Brew','wildPick(\'brew\')','go')+btn(LU('hourglass')+' Age','wildPick(\'age\')','go')+btn(LU('ship')+' Ship','wildPick(\'ship\')','go')+btn('Skip','wildSkip()','ghost');}
   else if(U==='load'){const L=UI.load;
@@ -949,12 +977,15 @@ function renderDests(){
 
 function renderShop(){
   const p=cur();const buying=(UI.sub==='cell'&&UI.cell==='A'&&UI.stage===null);
-  // always-available supply: recipes + ships
-  let h='';SHOP.forEach(it=>{
-    let nm,cost,can=false;
-    if(it.kind==='recipe'){if(p.recipes.includes(it.style))return;nm=LU('scroll-text')+' Recipe · '+STYLES[it.style].name+(STYLES[it.style].cellar?' (needs Cellar to brew)':'');cost=RECIPE_BUY[it.style];can=canPay(p,cost);}
-    else{nm=LU('sailboat')+' '+SHIP_NAME[it.ship]+' (cap '+SHIP_CAP[it.ship]+')';cost=it.cost;can=canPay(p,cost)&&emptySlots().length>0;}
-    h+='<div class="item"><span data-tip="'+attr(it.kind==='ship'?'Owned carrier bound to a destination; sails when full onto the Sailed-Ships track.':'Permission to brew this type (permanent).')+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
+  // export recipes (this game's 3 dealt beers, by quality) + always-available ships
+  let h='';(S.exports||[]).slice().sort((a,b)=>STYLES[a].lvl-STYLES[b].lvl).forEach(style=>{
+    if(p.recipes.includes(style))return;
+    const nm=LU('scroll-text')+' Recipe · '+STYLES[style].name+' (Q'+STYLES[style].q+')'+(STYLES[style].cellar?' (needs Cellar to brew)':'');
+    const cost=RECIPE_BUY[style];const can=canPay(p,cost);
+    h+='<div class="item"><span data-tip="'+attr('Permission to brew this type (permanent).')+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyRecipe(\''+style+'\')">buy</button>':'')+'</span></div>';});
+  SHOP.forEach(it=>{
+    const nm=LU('sailboat')+' '+SHIP_NAME[it.ship]+' (cap '+SHIP_CAP[it.ship]+')';const cost=it.cost;const can=canPay(p,cost)&&emptySlots().length>0;
+    h+='<div class="item"><span data-tip="'+attr('Owned carrier bound to a destination; sails when full onto the Sailed-Ships track.')+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
   // the face-up Upgrade DISPLAY (option B) — buy one here, or earn one free by delivering to London/Bergen/Novgorod
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Upgrade display</b> <span class="note">('+DISPLAY_SIZE+' face-up + a face-down deck — buy one, or earn one free by delivering to London/Bergen/Novgorod)</span></div>';
   (S.upgradeDisplay||[]).forEach(key=>{const c=UPGRADE_BUY[key];const owned=!grantableBuy(p,key);const can=!owned&&canPay(p,c)&&buying;
@@ -968,7 +999,7 @@ function renderShop(){
 function renderVoyage(){
   let trk='';for(let i=0;i<S.sailedCap;i++)trk+='<div class="sp'+(i<S.sailed?' on':'')+'">'+(i<S.sailed?'⛵':'')+'</div>';
   let h='<div class="voybox">'+LU('sailboat')+' <b>Sailed-Ships</b> '+S.sailed+' / '+S.sailedCap+(S.ending?' · <b style="color:var(--red)">FINAL ROUND</b>':'')+'<div class="track">'+trk+'</div></div>';
-  h+='<div class="note" style="margin-top:6px"><b>Export this game:</b> L3 '+STYLES.l3.name+' · L4 '+STYLES.l4.name+' · L5 '+STYLES.l5.name+'.</div>';
+  h+='<div class="note" style="margin-top:6px"><b>Export beers this game (3 of 4):</b> '+exportLabel()+'.</div>';
   h+='<div class="note" style="margin-top:4px">Delivered value: '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+scorePlayer(p).deliv+'</span>').join(' · ')+'</div>';
   document.getElementById('voyage').innerHTML=h;
 }
@@ -1038,7 +1069,7 @@ function renderTableaus(){
 //==================================================================
 (function boot(){
   const saved=load();
-  if(saved&&saved.players){S=saved;UI={sub:'move'};applyRoster(S.roster);
+  if(saved&&saved.players){S=saved;UI={sub:'move'};
     render();log('— resumed saved game —');render();
   } else {openSetup();}
 })();

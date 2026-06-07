@@ -23,10 +23,11 @@ snapshot=function(){};      // bot never undoes
 var __chosenWhich='row', __buys=0, __charters=0;
 var NAMES=['P1','P2','P3','P4','P5'];
 
-function achQ(p){var qs=p.recipes.map(function(r){return (r==='l5'&&!hasUpgrade(p,'cellar'))?0:STYLES[r].q;});return Math.max.apply(null,qs);}
+function achQ(p){var qs=p.recipes.map(function(r){return (STYLES[r].cellar&&!hasUpgrade(p,'cellar'))?0:STYLES[r].q;});return Math.max.apply(null,qs);}
 function needShip(p){return myShips(p).length===0 && emptySlots().length>0 && canPay(p,{g:2});}
-function wantRecipe(p){return (!p.recipes.includes('l3')&&canPay(p,RECIPE_BUY.l3)) ||
-  (p.recipes.includes('l3')&&!p.recipes.includes('l4')&&canPay(p,RECIPE_BUY.l4));}
+// This game's dealt export beers the bot will climb (skips the Q5 cellar beer — a known greedy blind spot).
+function buyableExports(p){return (S.exports||[]).filter(function(s){return !p.recipes.includes(s)&&!STYLES[s].cellar&&canPay(p,RECIPE_BUY[s]);});}
+function wantRecipe(p){return buyableExports(p).length>0;}
 function pickUpgrade(list){var pref=['vessel','cellar','quay','cooperage','royal','staple','guild','warehouse','granary','hopgarden','burgher'];
   for(var i=0;i<pref.length;i++)if(list.indexOf(pref[i])>=0)return pref[i];return list[0];}
 function destFor(p,q,konPref){var elig=DESTS.filter(function(d){return q>=DEST[d].gate;});
@@ -70,7 +71,7 @@ function stopPrio(s){
   var t=S.slots[s.slot];if(!t)return 99;
   if(t.type==='cask'){var a=STYLES[t.style].act;return {source:0,wild:1,age:2,reach:2,load:4}[a];}
   if(t.type==='ship')return 4;
-  if(t.type==='neutral')return {stall:0,counting:1,cooper:2,crane:4}[t.b];
+  if(t.type==='neutral')return {stall:0,counting:1,towncrier:1,cooper:2,almshouse:2,crane:4}[t.b];
   return 50;
 }
 function botStops(){var bi=0,bp=1e9;UI.stops.forEach(function(s,i){var pr=stopPrio(s);if(pr<bp){bp=pr;bi=i;}});resolveStop(bi);}
@@ -78,8 +79,8 @@ function botMarket(p){
   if(UI.stage==='shipdest'){shipDest(destFor(p,qRefBind(p),true));return;}
   if(UI.stage==='place'){placeSlot(emptySlots()[0].id);return;}
   if(needShip(p)){buyTile('s_cog');return;}
-  if(!p.recipes.includes('l3')&&canPay(p,RECIPE_BUY.l3)){buyTile('r_l3');return;}
-  if(p.recipes.includes('l3')&&!p.recipes.includes('l4')&&canPay(p,RECIPE_BUY.l4)){buyTile('r_l4');return;}
+  var ex=buyableExports(p);
+  if(ex.length){ex.sort(function(a,b){return STYLES[a].q-STYLES[b].q;});buyRecipe(ex[0]);return;}
   var buyable=displayGrantable(p).filter(function(k){return canPay(p,UPGRADE_BUY[k]);});
   if(buyable.length&&p.grain>=5&&Math.random()<0.5){__buys++;buyDisplayUp(pickUpgrade(buyable));return;}
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
@@ -110,6 +111,8 @@ function botAge(p){var mat=p.vessels.map(function(c,i){return {c:c,i:i};}).filte
   mat.sort(function(a,b){return (a.c.ready-a.c.step)-(b.c.ready-b.c.step);});ageAllot(mat[0].i);}
 function botSource(p){var n=UI.src.n;if(n>=2){if(p.hops<2)srcTake(1,1);else srcTake(2,0);}else{if(p.hops<1)srcTake(0,1);else srcTake(1,0);}}
 function botReach(){reachPick(UI.reach.ks[0]);}
+function botAlms(){almsPick(UI.alms.ks[0]);}                 // reinforce wherever you already lead
+function botGoalDraw(p){var a=UI.draw.avail.slice().sort(function(x,y){return GOALS[y].fn(p)-GOALS[x].fn(p);});drawPick(a[0]);}
 function botWild(p){
   if(myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});}))wildPick('ship');
   else if(p.vessels.some(function(c){return c&&c.step<c.ready;}))wildPick('age');
@@ -141,6 +144,8 @@ function botActOnce(){var p=cur();var U=UI.sub;
     case 'source':return botSource(p);
     case 'convert':return convertSkip();
     case 'reach':return botReach();
+    case 'alms':return botAlms();
+    case 'goaldraw':return botGoalDraw(p);
     case 'wild':return botWild(p);
     case 'load':return botLoad(p);
     case 'deploy':return botDeploy();

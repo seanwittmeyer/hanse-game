@@ -88,7 +88,7 @@
     font-size:.1in;line-height:1.2;text-align:center}
   .card .c-bonus svg,.card .c-bonus .ic{width:.2in;height:.2in;flex:0 0 auto}
   /* title + cost strip — the visible edge when the card is tucked up under the board */
-  .card .c-strip{background:var(--cc,#8a6408);color:#fff;display:flex;align-items:center;gap:.07in;
+  .card .c-strip{background:var(--cc,#8a6408);color:#fff;display:flex;align-items:center;gap:.07in;flex-wrap:wrap;
     padding:.08in .12in;font-variant:small-caps;font-weight:bold;font-size:.15in;line-height:1;
     text-shadow:0 1px 1.5px rgba(0,0,0,.45)}
   .card .c-strip svg,.card .c-strip .ic{width:.15in;height:.15in;flex:0 0 auto}
@@ -96,8 +96,8 @@
   .card .c-strip .c-rung{flex:0 0 auto;display:inline-flex;align-items:center;gap:.015in;font-variant:normal;
     background:rgba(255,255,255,.92);color:var(--cc);border-radius:.04in;padding:.025in .05in;font-size:.115in;text-shadow:none}
   .card .c-strip .c-rung svg,.card .c-strip .c-rung .ic{width:.13in;height:.13in}
-  /* name takes the slack and ellipsizes — it never pushes the cost off the card */
-  .card .c-strip .c-nm{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* name always prints in full — if the strip is tight the cost wraps to a second line rather than the name clipping */
+  .card .c-strip .c-nm{flex:1 1 auto;white-space:nowrap}
   /* cost block is protected (never clipped); numerals dominate the icons */
   .card .c-strip .c-cost{flex:0 0 auto;font-variant:normal;font-weight:bold;font-size:.135in;display:inline-flex;align-items:center;gap:.06in}
   .card .c-strip .c-cost .gc{font-size:.135in;gap:.015in}
@@ -185,7 +185,7 @@
   .sbox.disp,.sbox.clock{flex:0 0 auto}
   .sb-h{font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.13in;display:flex;align-items:center;gap:.05in;border-bottom:1px solid var(--gold);padding-bottom:.02in}
   .sb-h svg,.sb-h .ic{width:.15in;height:.15in} .sb-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;color:var(--ink2);margin-left:auto}
-  .uprow{display:flex;gap:.12in;flex-wrap:wrap}
+  .uprow{display:flex;gap:.109in;flex-wrap:wrap}
   .uslot{flex:0 0 auto;width:1.25in;height:1.25in;border:1.5px solid var(--gold);border-radius:.05in;background:rgba(184,134,11,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;color:#8a6408;font-size:.092in;text-align:center}
   .uslot svg,.uslot .ic{width:.28in;height:.28in;opacity:.6}
   .uslot.supply{border-style:dashed;background:repeating-linear-gradient(45deg,rgba(0,0,0,.04) 0 .08in,transparent .08in .16in)}
@@ -237,19 +237,19 @@ const FAMS=[
    {ic:'heart',     nm:'Almshouse',    sub:'+1 a held majority',    c:'#4a4034', n:1},
  ]},
  {label:'Upgrades · Rooms — permanent capability', sm:'in the face-up Market display · buy, or earn free by delivering', cls:'tu', items:[
-   {ic:'wrench',nm:'Extra Vessel', act:'+1 vessel',                       cost:cost(2,0), c:'#4a6b3a', n:3},
-   {ic:'wrench',nm:'Aging Cellar', act:'mature 1 step faster · unlock L5', cost:cost(3,0), c:'#3f5c30', n:2},
-   {ic:'wrench',nm:'Warehouse',    act:'+4 storage',                      cost:cost(2,0), c:'#4a6b3a', n:2},
-   {ic:'wrench',nm:'Quay',         act:'load 2 casks per Harbor',         cost:cost(3,0), c:'#3f5c30', n:2},
-   {ic:'wrench',nm:'Cooperage',    act:'+1 cask loaded per Harbor',       cost:cost(2,0), c:'#4a6b3a', n:2},
+   {ic:'wrench',nm:'Extra Vessel', act:'+1 vessel',                       cost:cost(5,0), c:'#4a6b3a', n:3},
+   {ic:'wrench',nm:'Aging Cellar', act:'mature 1 step faster · unlock L5', cost:cost(5,0), c:'#3f5c30', n:2},
+   {ic:'wrench',nm:'Warehouse',    act:'+4 storage',                      cost:cost(4,0), c:'#4a6b3a', n:2},
+   {ic:'wrench',nm:'Quay',         act:'load 2 casks per Harbor',         cost:cost(5,0), c:'#3f5c30', n:2},
+   {ic:'wrench',nm:'Cooperage',    act:'+1 cask loaded per Harbor',       cost:cost(4,0), c:'#4a6b3a', n:2},
  ]},
  {label:'Upgrades · Modifiers — asymmetric perks', sm:'in the same Market display', cls:'tu', items:[
-   {ic:'badge-plus',nm:'Granary Right', act:'+1 extra grain gained',      cost:cost(2,0), c:'#6e4ea0', n:2},
-   {ic:'badge-plus',nm:'Hop Garden',    act:'+1 extra hops gained',       cost:cost(2,0), c:'#5a3f86', n:2},
-   {ic:'badge-plus',nm:'Royal Patent',  act:'+1 ship capacity',           cost:cost(3,0), c:'#6e4ea0', n:2},
-   {ic:'badge-plus',nm:'Staple Right',  act:'+1 good per kontor delivery', cost:cost(3,0), c:'#5a3f86', n:2},
-   {ic:'badge-plus',nm:'Guild Seat',    act:'+1 Cellar advance point',    cost:cost(2,0), c:'#6e4ea0', n:2},
-   {ic:'badge-plus',nm:'Burgher Status',act:'+1 presence at each kontor', cost:cost(3,0), c:'#5a3f86', n:2},
+   {ic:'badge-plus',nm:'Granary Right', act:'+1 extra grain gained',      cost:cost(4,0), c:'#6e4ea0', n:2},
+   {ic:'badge-plus',nm:'Hop Garden',    act:'+1 extra hops gained',       cost:cost(4,0), c:'#5a3f86', n:2},
+   {ic:'badge-plus',nm:'Royal Patent',  act:'+1 ship capacity',           cost:cost(5,0), c:'#6e4ea0', n:2},
+   {ic:'badge-plus',nm:'Staple Right',  act:'+1 good per kontor delivery', cost:cost(5,0), c:'#5a3f86', n:2},
+   {ic:'badge-plus',nm:'Guild Seat',    act:'+1 Cellar advance point',    cost:cost(4,0), c:'#6e4ea0', n:2},
+   {ic:'badge-plus',nm:'Burgher Status',act:'+1 presence at each kontor', cost:cost(5,0), c:'#5a3f86', n:2},
  ]},
  {label:'Goal Tiles — the variety layer', sm:'deal 3 per player · your best 2 score', cls:'tg', items:[
    {ic:'target',nm:'Variety',  sub:'+2 / distinct type',  c:'#7c2128', n:1},
@@ -306,7 +306,7 @@ function renderTiles(){const back=SIDE==='back';
   let h='<div class="page'+(back?' backs':'')+'">'+REG;
   h+='<div class="calib"><div class="box">1 inch<br>100%</div><span class="note" style="color:#555">'
     +(back?'<b>BACKS</b> blank (single-face). Corner ✛ register a duplex pass.':'Verify exactly 1 inch. Colour bleeds to the edge; cut on the inner frame.')+'</span></div>';
-  h+='<div class="famlabel">Cask Tiles — the dual-role hero <span class="sm">the big corner is the cask\'s QUALITY ('+LU(QI)+' = its level; gates destinations, and ×2 prestige at the Hall) · '+LU('zap')+' signature slot action · L3–L5 are the EXPORT beers, dealt Bock / Mumme / Broyhan / Keut</span></div><div class="grid">';
+  h+='<div class="famlabel">Cask Tiles — the dual-role hero <span class="sm">the big corner is the cask\'s QUALITY ('+LU(QI)+' = its level; gates destinations, and ×2 prestige at the Hall) · '+LU('zap')+' signature slot action · L3–L5 are the EXPORT beers (fixed quality: Broyhan/Keut Q3 · Mumme Q4 · Bock Q5 — 3 of 4 dealt each game)</span></div><div class="grid">';
   CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTile:caskTile(d);}); h+='</div>';
   FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+(f.sm?' <span class="sm">'+f.sm+'</span>':'')+'</div><div class="grid">';
     f.items.forEach(it=>{for(let i=0;i<cnt(it.n);i++)h+= back?blankTile:genTile(it,f.cls);});h+='</div>';});
@@ -322,7 +322,7 @@ function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
   +'<span class="c-cost">'+cost(r.g,r.h)+(r.cellar?'<span class="c-gate" title="needs Aging Cellar">'+LU('lock')+'</span>':'')+'</span></div>'
   +'</div>';}
 function renderCards(){let h='<div class="page">'
-  +'<div class="famlabel">Recipe Cards <span class="sm">portrait cards — slide them up into the tuck strip under your player board (title + cost stay visible on the edge). Start with Gruit (printed) + Hopped; collect the export beers — Bock · Mumme · Broyhan · Keut — to climb. '+(MODE==='proof'?'(proof: one set shown — full mode prints a complete set per player.)':'one complete set per player ('+PLAYERS.length+' total).')+' (Acquire bonus is dual-purpose, TBD.)</span></div>';
+  +'<div class="famlabel">Recipe Cards <span class="sm">portrait cards — slide them up into the tuck strip under your player board (title + cost stay visible on the edge). Start with Gruit (printed) + Hopped; collect the export beers — Broyhan/Keut (Q3) · Mumme (Q4) · Bock (Q5) — to climb. Print all four; only 3 of the 4 are dealt into any game.'+(MODE==='proof'?'(proof: one set shown — full mode prints a complete set per player.)':'one complete set per player ('+PLAYERS.length+' total).')+' (Acquire bonus is dual-purpose, TBD.)</span></div>';
   const sets=MODE==='proof'?1:PLAYERS.length;
   for(let s=0;s<sets;s++){
     if(MODE!=='proof')h+='<div class="famlabel" style="color:'+PLAYERS[s].c+';border-color:'+PLAYERS[s].c+'">'+PLAYERS[s].nm+' — complete recipe set</div>';
@@ -347,7 +347,7 @@ function pboard(p){
   return '<div class="page fixed"><div class="board" style="--pc:'+p.c+'">'
     +'<div class="pb-head"><div class="crest">'+LU('beer')+'</div>'
       +'<div class="pb-title"><div class="pb-name">Brewhouse · '+p.nm+'</div>'
-        +'<div class="pb-sub">your private brewery · Source → Brew → Age → Ship · Brewhouses of the Hanse · v0.7</div></div>'
+        +'<div class="pb-sub">your private brewery · Source → Brew → Age → Ship · Brewhouses of the Hanse · v0.8</div></div>'
       +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Storage <span class="sm">cap 8 · +4 with a Warehouse</span></span><div class="boxrow">'+store+'</div></div></div>'
     +'<div class="pb-body">'
       +'<div class="pb-col left"><div class="pb-sect">'+LU('flask-conical')+'Vessels &amp; Maturation<span class="hint">start 2 open · cap 4 · ages +1/turn + the Cellar</span></div>'

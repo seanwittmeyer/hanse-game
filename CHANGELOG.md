@@ -2,7 +2,19 @@
 
 Compact version history. The **full rationale ("the why")** lives in `DESIGN.md` (§21 = v0.7, §20 = v0.6, §19 = v0.5, and the dated entries before them); the **current rules** are `RULES.md`. This file also compacts the retired `PLAY-TODO.md` brief, the `PLAYTEST.md` v0.1 snapshot, and the `playtests/` sim write-ups — the originals remain in git history if ever needed.
 
-> **✅ v0.7 is now complete across the whole repo (2026-06-05):** the markdown specs **and all five HTML pages** (`learn` · `index` · `rulebook` · `printables` · `play`) are on v0.7 "The Wharf." The doc/code split is closed.
+> **✅ v0.8 is now complete across the whole repo (2026-06-07):** the markdown specs **and all five HTML pages** (`learn` · `index` · `rulebook` · `printables` · `play`) are on v0.8 "The Wharf." The doc/code split is closed.
+
+---
+
+## v0.8 — occupancy pressure · the "Wharf" naming · fixed-quality exports · all six neutral buildings (2026-06-06 → 06-07)
+Incremental refinements on the v0.7 "The Wharf" architecture (full rationale: `DESIGN.md` §21, dated entries).
+- **Occupancy pressure (the de-rondel dial).** Moving onto a station a **rival already occupies** costs **1 `G`** to the supply (only your destination station, never the line; opening placement free; capped, never blocks). Chosen over the build×cash-out diagonal (prototyped, parked) because it keeps the loop legible while making position matter; it's also the first **seat balancer**. `KEY → v15`.
+- **Naming locked.** "The Loop" → retired. **The Wharf** = the whole core area; **stations** = the four action spaces (was "cells"); **slots** = the 8 perimeter spaces (was "the wharf"/"ring"); **a line** = two stations + their two slots. Migrated across every page + doc; an **Action Reference** table was added to `rulebook.html`.
+- **Export beers now carry fixed quality; deal 3 of 4 (variable ladder shape).** Was: four names shuffled onto fixed L3–L5 rungs (full ladder every game). Now: **Broyhan** Q3 · **Keut** Q3 · **Mumme** Q4 · **Bock** Q5, with **3 of the 4 dealt** each game — drop a Q3 → full Q3→Q5 climb; drop Mumme → no Q4; drop Bock → no Q5. The action follows the **quality** (Q3 Load · Q4 Reach · Q5 Wild); Hall (Q2) and Novgorod (Q3, always ≥1 Q3 present) are never locked out. `KEY → v16`.
+- **All six neutral buildings now live in the engine.** Added **Towncrier** (draw a goal from the face-up goal supply — your best 2 still score) and **Almshouse** (+1 presence at a kontor you already lead) to `play.html` alongside Market Stall / Cooper / Crane / Counting House; 2 of the 6 are seeded each game. `KEY → v17`.
+- **Verified:** 500-game headless sims (2/3/4p) at each KEY — **0 crashes / 0 deadlocks**, pace **14.3–15.1 rounds** (in the 12–25 band), ~99–100% clock-ended (`playtests/sim-results-v17.txt`).
+- **Print & Play fixes:** recipe-card title strip no longer ellipsizes (full beer name always prints — cost wraps instead); destinations-board upgrade row tightened (`.uprow` gap `.109in`) so the tiles stay on one row; **upgrade buy costs corrected to 4–5 `G`** to match the engine/spec (were stale at 2–3 G).
+- **⚙ Parked for a later pass (noted in `DESIGN.md` §21):** the recipe-card **"acquire bonus"** stays a printed *placeholder* (not active) — to be designed and reintroduced after a human playtest.
 
 ---
 
@@ -74,6 +86,6 @@ These are *why the current rules look the way they do* — keep them in mind bef
 
 ## Working the repo
 - **Source of truth order:** `DESIGN.md` (why) → `RULES.md` (spec) → `play.html` (the de-facto reference implementation — correctness fixes here are rules fixes). Keep the docs, the published pages (`index`/`learn`/`rulebook`/`printables`), and `play.html` **in sync** — a change is never local.
-- **✅ v0.7 is complete repo-wide (2026-06-05):** the markdown specs **and all five HTML pages** are on v0.7. `play.html` is canonical again (the de-facto reference implementation).
+- **✅ v0.8 is complete repo-wide (2026-06-07):** the markdown specs **and all five HTML pages** are on v0.8. `play.html` is canonical again (the de-facto reference implementation).
 - **Smoke-test `play.html` before merge:** extract the inline `<script>`, run it in a mocked-DOM node `vm`, drive a bot off the engine (the rendered buttons' `onclick` handlers), and assert **2–5p games run crash-free *and deadlock-free* to game-over** (expect the **Sailed-Ships clock**, or the `MAX_ROUND` ≈25 ceiling). **Bump the save `KEY`** on any state-shape change.
 - **Publish:** develop on the feature branch, then fast-forward `main` (GitHub Pages serves `main`).
