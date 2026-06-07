@@ -1,0 +1,50 @@
+Brewhouses of the Hanse — headless sim (v0.7, KEY hanse-hotseat-v18)  |  N=500 games per player count
+
+================  2 PLAYERS  (500 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 14.8   min 9   max 25   in 12-25 band: 90.0%
+end trigger:          clock 99.8%   ceiling 0.2%
+sailed/cap at end:    avg 7.1 / 7
+winner total score:   avg 45.7   min 25   max 91
+win margin (1st-2nd): avg 12.1   (ties: 17)
+winner score split:   deliv 24.0   maj 3.9   goals 17.8
+seat win-rate:        P1 53.0%   P2 47.0%
+winner lean:          prestige(Hall>kontor) 4.2%   blended(both>0) 24.0%
+UPGRADES (all plyrs): total/game 5.9   earned-via-ship 5.6 (94.3%)   bought 0.3 (5.7%)
+upgrades per WINNER:  avg 3.5   (max 9)
+charters/game:        avg 2.2
+winner deliveries by destination (share of winners' casks):
+   bruges 46.8%   london 9.2%   bergen 0.0%   novgorod 39.1%   hall 4.9%
+
+================  3 PLAYERS  (500 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 14.5   min 10   max 25   in 12-25 band: 92.0%
+end trigger:          clock 99.8%   ceiling 0.2%
+sailed/cap at end:    avg 11.2 / 11
+winner total score:   avg 44.9   min 27   max 89
+win margin (1st-2nd): avg 8.6   (ties: 27)
+winner score split:   deliv 24.3   maj 3.4   goals 17.2
+seat win-rate:        P1 33.2%   P2 39.6%   P3 27.2%
+winner lean:          prestige(Hall>kontor) 2.4%   blended(both>0) 23.2%
+UPGRADES (all plyrs): total/game 8.6   earned-via-ship 8.2 (95.4%)   bought 0.4 (4.6%)
+upgrades per WINNER:  avg 3.6   (max 9)
+charters/game:        avg 4.8
+winner deliveries by destination (share of winners' casks):
+   bruges 44.2%   london 10.3%   bergen 0.0%   novgorod 41.2%   hall 4.3%
+
+================  4 PLAYERS  (500 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 14.5   min 10   max 25   in 12-25 band: 91.0%
+end trigger:          clock 100.0%   ceiling 0.0%
+sailed/cap at end:    avg 15.4 / 15
+winner total score:   avg 44.6   min 31   max 85
+win margin (1st-2nd): avg 6.8   (ties: 38)
+winner score split:   deliv 24.8   maj 3.0   goals 16.8
+seat win-rate:        P1 30.6%   P2 21.2%   P3 22.8%   P4 25.4%
+winner lean:          prestige(Hall>kontor) 2.8%   blended(both>0) 22.4%
+UPGRADES (all plyrs): total/game 11.8   earned-via-ship 11.3 (95.9%)   bought 0.5 (4.1%)
+upgrades per WINNER:  avg 3.9   (max 8)
+charters/game:        avg 7.6
+winner deliveries by destination (share of winners' casks):
+   bruges 40.8%   london 10.4%   bergen 0.0%   novgorod 44.8%   hall 4.1%
+

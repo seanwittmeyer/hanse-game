@@ -286,7 +286,7 @@ const NEUTRALS={
   towncrier:{name:'Towncrier',    icon:'megaphone',     act:'draw a goal from the face-up goal supply'},
   almshouse:{name:'Almshouse',    icon:'heart',         act:'+1 presence at a kontor you already lead'},
 };
-// 2 neutral buildings are seeded onto the wharf at setup, picked at random from the 6-design pool each game (variety) ⚙
+// 2–3 neutral buildings are seeded onto the wharf at setup, picked at random from the 6-design pool each game (variety) ⚙
 
 // ---- UPGRADES: Rooms (capability) + Modifiers (asymmetric perks) ----
 const ROOMS={
@@ -368,7 +368,7 @@ const START_STORAGE=8;
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v17'; // v0.8: fixed-quality exports (3 of 4 dealt) + all 6 neutral buildings live (added Towncrier draw-a-goal & Almshouse reinforce-a-lead); bump discards stale state
+const KEY='hanse-hotseat-v18'; // v0.8: fixed-quality exports (3 of 4 dealt) + all 6 neutral buildings live (Towncrier · Almshouse) + seed 2–3 neutrals (was 2); bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -401,7 +401,7 @@ function freshState(n,names){
   shuffle(st.upgradeSupply);
   while(st.upgradeDisplay.length<DISPLAY_SIZE&&st.upgradeSupply.length)st.upgradeDisplay.push(st.upgradeSupply.shift());
   // ---- seed the wharf so the ring is alive turn 1 (warm start) ----
-  // Each house's Cog (bound Bruges) + 2 neutral buildings, SPREAD across the weakest lines so no single
+  // Each house's Cog (bound Bruges) + 2–3 neutral buildings, SPREAD across the weakest lines so no single
   // line is the obvious opening camp: each tile goes on the currently lightest-weighted line that still
   // has an open slot (neutrals weigh more — shared, usable by all — so two never stack while a lighter
   // line is open). Random tie-breaks + random slot-within-line vary the opening every game. The Ready
@@ -419,7 +419,7 @@ function freshState(n,names){
   };
   st.players.forEach(p=>placeBalanced({type:'ship',owner:p.id,ship:'cog',dest:'bruges',load:[]},1));
   const npool=shuffle(Object.keys(NEUTRALS).slice());
-  const nNeutral=Math.min(2,Math.max(0, SLOTS.length - st.players.length - 2));
+  const nNeutral=Math.min(3,npool.length,Math.max(1, SLOTS.length - st.players.length - 2));  // 2–3 in play (scales with open slots; tightest at 5p)
   for(let i=0;i<nNeutral;i++)placeBalanced({type:'neutral',b:npool[i]},2);
   return st;
 }
