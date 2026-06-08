@@ -49,8 +49,18 @@ function personaDest(p,q){
   if(!__PERSON||persona(p)==='volume')return destFor(p,q,true);   // baseline-preserving
   var elig=DESTS.filter(function(d){return q>=DEST[d].gate;});
   if(persona(p)==='prestige')return (elig.indexOf('hall')>=0)?'hall':(bestKon(elig)||elig[0]);
-  var tgt=p.__majTarget||'bergen';                                // 'majority'
-  return (q>=DEST[tgt].gate)?tgt:(bestKon(elig)||elig[0]);
+  // 'majority': contest the RICHEST reachable majorities (by 1st-tier payout). A real majority player
+  // doesn't camp one fixed kontor while rivals sweep the rest — it locks the best, then shifts to the next
+  // once it safely leads, denying a scatter-shipper free 1st places. (v0.10: majorities live at all four.)
+  var ks=elig.filter(function(d){return DEST[d].kontor;})
+             .sort(function(a,b){return (DEST[b].maj[0]||0)-(DEST[a].maj[0]||0);});
+  if(!ks.length)return elig[0];
+  var top=ks[0];
+  if(ks[1]){                                                      // already safely leading the richest? build the next
+    var others=0;S.players.forEach(function(q2){if(q2.id!==p.id)others=Math.max(others,presenceAt(q2,top));});
+    if(presenceAt(p,top)-others>=2)top=ks[1];
+  }
+  return top;
 }
 
 function cellValue(c,p){

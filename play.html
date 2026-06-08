@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v0.9</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v0.10</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -186,7 +186,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>Prototype v0.9 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s deployed cask</b> on your ship — they still score it. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b> (the same row you buy from); <b>Bergen</b> pays its rich <b>tiered majority</b> (10/6/3 to 1st/2nd/3rd) instead. The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the relief valve when slots jam). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
+  <p class="note" style="text-align:center"><b>Prototype v0.10 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s deployed cask</b> on your ship — they still score it. <b>Every kontor pays a tiered majority</b> (1st/2nd/3rd), laddered by reach — Bruges <b>2/1/1</b> · London <b>3/1/1</b> · Bergen <b>4/2/1</b> · Novgorod <b>5/2/1</b> ⚙. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b>; <b>Bruges / Bergen</b> hand you <b>2 goods</b> instead. The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the relief valve when slots jam). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -262,13 +262,16 @@ const CASK_ACT={source:'gain 2 goods',age:'Age a cask 2 steps',
 
 // ---- DESTINATIONS (4 kontore + the Hall) — all open from start ----
 // maj is a TIERED majority payout [1st,2nd,3rd] (Lacerda-style); 2-player games skip 2nd (winner-take-all).
-// Tunable per destination ⚙. Bergen is THE majority kontor (10/6/3); London is the engine/upgrade kontor
-// (Bergen no longer grants an upgrade, so the two are no longer clones).
+// Tunable per destination ⚙. v0.10: EVERY kontor now has a competitive 3-tier majority, laddered
+// DESCENDING BY REACH — richer the harder a kontor is to reach (Bruges 5/3/1 → Novgorod 11/6/3) — so the
+// majority lean is viable at all four, not just one. Benefits pair off: LIQUIDITY (Bruges/Bergen → goods)
+// vs UPGRADE (London/Novgorod → display tile). Bergen is normalized (gains goods) so it's no longer the
+// odd benefit-less kontor; London (engine, accessible upgrade) and Bergen (rich majority + goods) stay distinct.
 const DEST={
-  bruges  :{name:'Bruges',  gate:1, value:2, maj:[2],       benefit:'goods',   kontor:true,  role:'Hub · gain goods'},
-  london  :{name:'London',  gate:2, value:3, maj:[2],       benefit:'upgrade', kontor:true,  role:'Steelyard · the engine — an Upgrade'},
-  bergen  :{name:'Bergen',  gate:2, value:3, maj:[10,6,3],  benefit:'none',    kontor:true,  role:'Monopoly · the richest majority (10/6/3)'},
-  novgorod:{name:'Novgorod',gate:3, value:5, maj:[3],       benefit:'upgrade', kontor:true,  role:'Long Haul · top value + an Upgrade'},
+  bruges  :{name:'Bruges',  gate:1, value:2, maj:[2,1,1],   benefit:'goods',   kontor:true,  role:'Hub · gain goods + a light majority'},
+  london  :{name:'London',  gate:2, value:3, maj:[3,1,1],   benefit:'upgrade', kontor:true,  role:'Steelyard · the engine — an Upgrade + a mid majority'},
+  bergen  :{name:'Bergen',  gate:2, value:3, maj:[4,2,1],   benefit:'goods',   kontor:true,  role:'Bryggen · gain goods + a rich majority'},
+  novgorod:{name:'Novgorod',gate:3, value:5, maj:[5,2,1],   benefit:'upgrade', kontor:true,  role:'Long Haul · top value + an Upgrade + the richest majority'},
   hall    :{name:'The Hall',gate:2, value:0, maj:[],        benefit:'none',    kontor:false, role:'Prestige · pays Q×2'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
@@ -373,7 +376,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v19'; // v0.9: tiered ranked majorities (2p skips 2nd) + London=engine / Bergen=majority split + seat compensation; bump discards stale state
+const KEY='hanse-hotseat-v20'; // v0.10: every kontor a competitive 3-tier majority (descending by reach, Bruges 5/3/1 → Novgorod 11/6/3) + Bergen normalized (gains goods); bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -755,7 +758,7 @@ function grantBenefit(lp,dest,q){
     // London (the engine kontor) & Novgorod (premium) let the owner take ONE tile from the face-up Upgrade display (free).
     log('↳ '+lp.name+' delivers to '+DEST[dest].name+' (+'+destValue(dest,q)+' value, earns an Upgrade from the display).');
     if(lp.id===S.active)UI.pendingBenefits.push({pid:lp.id,dest});else autoGrantDisplay(lp,dest);}
-  else if(dest==='bergen')log('↳ '+lp.name+' delivers to Bergen (+'+destValue('bergen',q)+' value; builds toward the Monopoly majority).');
+  else if(dest==='bergen'){gain(lp,2,0);log('↳ '+lp.name+' delivers to Bergen (+'+destValue('bergen',q)+' value, +2G liquidity; builds toward its rich majority).');}
   else if(dest==='hall')log('↳ '+lp.name+' enshrines at the Hall (+'+destValue('hall',q)+' prestige).');
 }
 // A rival (non-active) owner auto-takes a random grantable face-up upgrade (they can't pick mid-turn).

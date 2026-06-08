@@ -4,7 +4,7 @@
 >
 > *(This file absorbs the former `TILES.md` and `PLAYERBOARD.md` — one lean manifest instead of three overlapping ones.)*
 >
-> **The Wharf in one breath:** the game happens at **the Wharf** — four stations (**Source → Brew → Age → Ship**) ringed by 8 slots. A cask is a **dual-role action-tile** that matures privately, sits on a shared **slot** as a public **action-building**, then **ships to a destination** for points and leaves. **v0.9 updates:** tiered/ranked majorities (concentrated at Bergen), the **London = engine / Bergen = majority** identity split, and **seat compensation**. Squarely *Great Western Trail* footprint, not Lacerda.
+> **The Wharf in one breath:** the game happens at **the Wharf** — four stations (**Source → Brew → Age → Ship**) ringed by 8 slots. A cask is a **dual-role action-tile** that matures privately, sits on a shared **slot** as a public **action-building**, then **ships to a destination** for points and leaves. **v0.10:** every kontor pays a tiered/ranked majority, laddered by reach (Bruges 2/1/1 → Novgorod 5/2/1), with Bergen normalized to give goods (liquidity). **v0.9:** the **London = engine** identity, tiered majorities, and **seat compensation**. Squarely *Great Western Trail* footprint, not Lacerda.
 
 ---
 
@@ -108,7 +108,7 @@ A small face-up Market supply. A recipe is **only** *a brewable type + its `G/H`
 > Start: **Gruit + Hopped** (fixed, symmetric — everyone brews turn 1, and *gaining an export recipe means more*). **All four export recipes print**, but **only 3 of the 4 are dealt** into any game — the buyable export set this game is those three. ❓ light hand limit.
 
 ### E. Upgrade tiles — the private brewery engine (Rooms + Modifiers, ~24 ⚙)
-Installed on your brewery board. **Earned mainly by delivering** (the **London / Novgorod** benefits — Bergen's draw is its majority, not an upgrade) and bought only at a **dear price (4–5 `G` ⚙**, ≈ a kontor delivery's goods) at the Market — so the cycle **deliver → upgrade → brew better → deliver better** is the privileged path, with buying a costed bootstrap/fallback.
+Installed on your brewery board. **Earned mainly by delivering** (the **London / Novgorod** benefits — Bruges & Bergen hand you goods instead) and bought only at a **dear price (4–5 `G` ⚙**, ≈ a kontor delivery's goods) at the Market — so the cycle **deliver → upgrade → brew better → deliver better** is the privileged path, with buying a costed bootstrap/fallback.
 
 **Rooms (permanent capability)**
 | Room | Effect ⚙ | Buy ⚙ |
@@ -136,13 +136,13 @@ All **open from the start**. Differentiated by a **quality gate** (the climb-lim
 
 | Destination | Gate ⚙ | Per-cask value ⚙ | Majority — 1st/2nd/3rd ⚙ | Benefit on delivery ⚙ |
 |---|---|---|---|---|
-| **Bruges** (Hub) | Q1 | **+2** | **2** / – / – | **liquidity** — gain 2 goods |
-| **London** (Steelyard) | Q2 | **+3** | **2** / – / – | **the engine** — take an Upgrade from the display |
-| **Bergen** (Monopoly) | Q2 | **+3** | **10 / 6 / 3** | *(no upgrade)* — its whole draw is the majority |
-| **Novgorod** (Long Haul) | Q3 | **+5** | **3** / – / – | premium — top value **+ take an Upgrade** |
+| **Bruges** (Hub) | Q1 | **+2** | **2 / 1 / 1** | **liquidity** — gain 2 goods |
+| **London** (Steelyard) | Q2 | **+3** | **3 / 1 / 1** | **the engine** — take an Upgrade from the display |
+| **Bergen** (Bryggen) | Q2 | **+3** | **4 / 2 / 1** | **liquidity** — gain 2 goods; the rich-majority kontor |
+| **Novgorod** (Long Haul) | Q3 | **+5** | **5 / 2 / 1** | premium — top value **+ take an Upgrade** |
 | **The Hall** (Prestige) | Q2 | **Q×2** (Q2→4 … Q5→10) | — | out of commerce — the scarcity/Westvleteren payout |
 
-> **Majorities are tiered & ranked (Lacerda-style):** 1st/2nd/3rd by delivered-cask count take the kontor's tiers; **2-player games skip 2nd** (winner-take-all); ties split the occupied tiers ⚙. The **rich majority is concentrated at Bergen** (its monopoly identity) so the majority *lean* is viable without broad tiered payouts over-feeding the volume lean and starving prestige (sim-validated, `DESIGN.md` §21 v0.9). **London (engine — accessible upgrades)** and **Bergen (majority, no upgrade)** are now distinct, not clones. Delivery value is **flat per kontor regardless of quality** (only the Hall scales with Q) — so a high-Q cask is wasted at Bruges and shines at Novgorod or the Hall.
+> **Majorities are tiered & ranked (Lacerda-style), at every kontor and laddered by reach:** 1st/2nd/3rd by delivered-cask count take the kontor's tiers; **2-player games skip 2nd** (winner-take-all); ties split the occupied tiers ⚙. The harder a kontor is to reach, the richer its majority — **Bruges 2/1/1 · London 3/1/1 · Bergen 4/2/1 · Novgorod 5/2/1** ⚙ — so the majority *lean* is a live choice at all four. The ladder is **modest and steep** (rich 1st, thin 2nd/3rd) so a broad volume shipper can't harvest majority points everywhere as a byproduct (sim-validated all three leans land near fair, `DESIGN.md` §21 v0.10). **Benefits pair off:** Bruges & **Bergen** give **goods** (liquidity); **London** (engine) & Novgorod give an **Upgrade** — so London and Bergen stay distinct. Delivery value is **flat per kontor regardless of quality** (only the Hall scales with Q) — so a high-Q cask is wasted at Bruges and shines at Novgorod or the Hall.
 
 ### G. Goal / objective tiles — the variety layer (~9 in box; deal 3 per player, best 2 score ⚙)
 A small pool (~9 ⚙) rewarding different shapes, so the winning engine varies by game (the *GWT* blend ideal). **Deal 3 per player; your best 2 score** ⚙ (keeps goals ~⅓ of a score, not the game); authored so a one-note rush fills few of them.
@@ -225,12 +225,12 @@ Plus **1 main board · 1 destination board · 5 brewery boards**, **~100 wooden 
 - **The Wharf = stations + slots;** stations never closed (occupancy toll only).
 - **The cask = a dual-role action-tile** in three states (mature → slot → delivered); only casks on slots are public/contestable.
 - **The slots = the ring** of casks + ships + seeded neutral buildings; one fire rule; no out-of-turn gains.
-- **Value lives in destinations,** not two tracks: kontore (volume + tiered majorities) vs the Hall (prestige). **v0.9:** majorities tiered/ranked & concentrated at Bergen; **London = engine, Bergen = majority;** **seat compensation** +1 G per later seat.
+- **Value lives in destinations,** not two tracks: kontore (volume + tiered majorities) vs the Hall (prestige). **v0.10:** every kontor pays a tiered majority laddered by reach (Bruges 2/1/1 → Novgorod 5/2/1), Bergen normalized to goods. **v0.9:** tiered/ranked majorities, **London = engine**, **seat compensation** +1 G per later seat.
 - **Recipes are plain permission tiles;** Privileges fold into Upgrades/Modifiers; Fairs, lanes, the demand market, twins, and aging cubes are **cut**.
 
 **Still open ⚙ / ❓:**
 1. **Cask counts & maturation lengths** vs the Sailed-Ships clock — the joint pace dials.
-2. **Destination values / gates / tiered-majority tiers** — the variety heart (v0.9 numbers sim-balanced; want a human playtest).
+2. **Destination values / gates / tiered-majority tiers** — the variety heart (v0.10 numbers sim-balanced; want a human playtest).
 3. **Neutral-building set & count in play**, scaling by player count (ring pressure).
 4. **Slot pressure** at 2p (lock slots?) and 5p (relief?); whether a clogged vessel is too punishing.
 5. **Goals:** count, shared vs personal, best-few cap.

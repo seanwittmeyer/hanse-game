@@ -2,7 +2,16 @@
 
 Compact version history. The **full rationale ("the why")** lives in `DESIGN.md` (§21 = v0.7, §20 = v0.6, §19 = v0.5, and the dated entries before them); the **current rules** are `RULES.md`. This file also compacts the retired `PLAY-TODO.md` brief, the `PLAYTEST.md` v0.1 snapshot, and the `playtests/` sim write-ups — the originals remain in git history if ever needed.
 
-> **✅ v0.9 is live across the whole repo:** the markdown specs **and all four HTML pages** (`learn` · `index` · `printables` · `play`) are on v0.9 "The Wharf." *(The docs were also consolidated this cycle — `TILES.md` + `PLAYERBOARD.md` folded into `COMPONENTS.md`, and the former `rulebook.html` merged into `index.html` as "Rulebook & Components.")*
+> **✅ v0.10 is live across the whole repo:** the markdown specs **and all four HTML pages** (`learn` · `index` · `printables` · `play`) are on v0.10 "The Wharf." *(Docs were consolidated back in v0.9 — `TILES.md` + `PLAYERBOARD.md` folded into `COMPONENTS.md`, and the former `rulebook.html` merged into `index.html` as "Rulebook & Components.")*
+
+---
+
+## v0.10 — every kontor a competitive majority: the laddered majority spread (2026-06-08)
+A deliberate **partial revert** of v0.9's "concentrate the majority at Bergen": give **all four kontore** a 3-tier majority worth contesting, so the majority lean is a live choice everywhere — while keeping the three leans balanced (the v0.9 warning that broad majorities starve prestige was answered, not ignored). Engine (`play.html`, `KEY → v20`) + all docs and pages updated.
+- **Every kontor now pays a tiered majority, laddered by reach:** **Bruges 2/1/1 · London 3/1/1 · Bergen 4/2/1 · Novgorod 5/2/1** ⚙ (richer the harder to reach). The ladder is **modest (total pool ≈ v0.9's) and steep** (rich 1st, thin 2nd/3rd) on purpose: a broad volume shipper mostly lands 2nd/3rd at posts a specialist has locked, so it can't harvest majority points everywhere as a byproduct. *Lesson re-learned:* the first attempt (a big 5/7/9/11 ladder, pool ~2.2×) shoved volume to 48–64% and starved prestige/majority — exactly the v0.9 failure mode. Shrink + steepen fixed it.
+- **Bergen normalized → goods.** Bergen is no longer the odd benefit-less kontor: it now hands **+2 goods** on delivery (an *upgrade* would have re-cloned it with London). Clean benefit pairing now: **liquidity (Bruges/Bergen → goods)** vs **engine (London/Novgorod → an Upgrade)**. Flavor renamed **Monopoly → Bryggen** (Bergen's Hanseatic wharf), since it's no longer *the* monopoly majority.
+- **Harness fix (required for a fair test):** the persona *majority* bot used to camp one fixed kontor (Bergen) — a v0.9 relic that, in a four-kontor world, let the volume bot sweep the other three uncontested and falsely read as "volume dominates." It now **contests the richest reachable majorities** (lock the best, shift to the next once safely ahead).
+- **Verified.** PERSONAS (N=500 × 2–5p): leans near fair at the high-contention counts (**4p 23/25/27, 5p 21/17/22**, fair 25/20), prestige no longer starved; 2p/3p majority a touch hot (2p winner-take-all artifact — flagged for human playtest). Greedy (N=500 × 2–5p): **0 crashes / 0 deadlocks, ~100% clock-ended, pace 13.8–14.8 (in band)**, seats fair. Sim outputs: `playtests/sim-results-v20.txt`, `sim-results-v20-personas.txt`.
 
 ---
 
