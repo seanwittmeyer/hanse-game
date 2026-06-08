@@ -262,21 +262,22 @@ const CASK_ACT={source:'gain 2 goods',age:'Age a cask 2 steps',
 
 // ---- DESTINATIONS (4 kontore + the Hall) — all open from start ----
 // maj is a TIERED majority payout [1st,2nd,3rd] (Lacerda-style); 2-player games skip 2nd (winner-take-all).
-// Tunable per destination ⚙. v0.10: EVERY kontor now has a competitive 3-tier majority, laddered
-// DESCENDING BY REACH — richer the harder a kontor is to reach (Bruges 5/3/1 → Novgorod 11/6/3) — so the
-// majority lean is viable at all four, not just one. Benefits pair off: LIQUIDITY (Bruges/Bergen → goods)
-// vs UPGRADE (London/Novgorod → display tile). Bergen is normalized (gains goods) so it's no longer the
-// odd benefit-less kontor; London (engine, accessible upgrade) and Bergen (rich majority + goods) stay distinct.
+// Tunable per destination ⚙. v0.10: EVERY kontor has a competitive 3-tier majority — the majority is meant to be
+// a BIG motivator (the engine-building benefit is separate). Bergen is the rich majority anchor (10/6/3); its goods
+// benefit is intentionally weak, so the majority is its draw. Ladder: Bruges 5/3/0 · London 6/4/2 · Novgorod 8/5/2
+// · Bergen 10/6/3. Benefits pair off: LIQUIDITY (Bruges/Bergen → goods) vs UPGRADE (London/Novgorod → display tile).
 const DEST={
-  bruges  :{name:'Bruges',  gate:1, value:2, maj:[2,1,1],   benefit:'goods',   kontor:true,  role:'Hub · gain goods + a light majority'},
-  london  :{name:'London',  gate:2, value:3, maj:[3,1,1],   benefit:'upgrade', kontor:true,  role:'Steelyard · the engine — an Upgrade + a mid majority'},
-  bergen  :{name:'Bergen',  gate:2, value:3, maj:[4,2,1],   benefit:'goods',   kontor:true,  role:'Bryggen · gain goods + a rich majority'},
-  novgorod:{name:'Novgorod',gate:3, value:5, maj:[5,2,1],   benefit:'upgrade', kontor:true,  role:'Long Haul · top value + an Upgrade + the richest majority'},
-  hall    :{name:'The Hall',gate:2, value:0, maj:[],        benefit:'none',    kontor:false, role:'Prestige · pays Q×2'},
+  bruges  :{name:'Bruges',  gate:1, value:1, maj:[5,3,0],   benefit:'goods',   kontor:true,  role:'Hub · gain goods + a starter majority'},
+  london  :{name:'London',  gate:2, value:2, maj:[6,4,2],   benefit:'upgrade', kontor:true,  role:'Steelyard · the engine — an Upgrade + a solid majority'},
+  bergen  :{name:'Bergen',  gate:2, value:2, maj:[10,6,3],  benefit:'goods',   kontor:true,  role:'Bryggen · gain goods + THE rich majority'},
+  novgorod:{name:'Novgorod',gate:3, value:4, maj:[8,5,2],   benefit:'upgrade', kontor:true,  role:'Long Haul · top value + an Upgrade + a rich majority'},
+  hall    :{name:'The Hall',gate:2, value:0, maj:[],        benefit:'none',    kontor:false, role:'Prestige · pays Q×2.5'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
 const DESTS=['bruges','london','bergen','novgorod','hall'];
-function destValue(dest,q){return dest==='hall'?q*2:DEST[dest].value;}
+const HALL_MULT=2.5; // ⚙ prestige scaling at the Hall (Q×HALL_MULT, floored). v0.10: raised 2→2.5 to keep the prestige
+// lean competitive now that majorities are big motivators (the Hall contests no majority → it needs a bigger per-cask hit).
+function destValue(dest,q){return dest==='hall'?Math.floor(q*HALL_MULT):DEST[dest].value;}
 
 // ---- SHIPS (owned single-use carriers) ----
 const SHIP_CAP={cog:2,hulk:3};
@@ -376,7 +377,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v20'; // v0.10: every kontor a competitive 3-tier majority (descending by reach, Bruges 5/3/1 → Novgorod 11/6/3) + Bergen normalized (gains goods); bump discards stale state
+const KEY='hanse-hotseat-v21'; // v0.10: big motivating majorities (Bruges 5/3/0 · London 6/4/2 · Novgorod 8/5/2 · Bergen 10/6/3) + Bergen goods; bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -995,8 +996,8 @@ function renderDests(){
       const lead=leaders.some(x=>x.id===p.id);
       return '<span style="color:'+p.color+';font-weight:bold">'+(lead?'★':'')+LU('map-pin')+n+'</span>';}).filter(x=>x).join(' ');
     const majStr=(D.maj&&D.maj.length)?D.maj.join('/'):'—';
-    const val=d==='hall'?'prestige Q×2':('val '+D.value+' · maj '+majStr);
-    const tip=D.name+' — '+D.role+'. Gate Q'+D.gate+'. '+(d==='hall'?'Ship a cask here to bank prestige (Q×2) — out of commerce.':'Delivered casks score '+D.value+' each; place in the cask-count race for the majority ('+majStr+' to 1st/2nd/3rd; 2-player skips 2nd).');
+    const val=d==='hall'?'prestige Q×2.5':('val '+D.value+' · maj '+majStr);
+    const tip=D.name+' — '+D.role+'. Gate Q'+D.gate+'. '+(d==='hall'?'Ship a cask here to bank prestige (Q×2.5, floored) — out of commerce.':'Delivered casks score '+D.value+' each; place in the cask-count race for the majority ('+majStr+' to 1st/2nd/3rd; 2-player skips 2nd).');
     h+='<div class="route '+d+'" data-tip="'+attr(tip)+'"><div class="rh"><span class="rn">'+(D.kontor?LU('landmark'):LU('crown'))+' '+D.name+'</span><span class="rv">'+val+'</span></div>'
       +'<div class="gate">gate Q'+D.gate+' · '+D.role+'</div>'
       +'<div class="pres">'+(pres||'<span class="note">no deliveries</span>')+'</div></div>';
