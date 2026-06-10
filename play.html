@@ -321,7 +321,7 @@ const SHOP=[   // always-available supply (no display): ships (export-recipe buy
   {id:'s_hulk',kind:'ship',ship:'hulk',cost:{g:3}},
 ];
 // Upgrade buy cost (when bought from the face-up display) — priced to ~a kontor delivery's goods cost so
-// buying competes with, but doesn't dominate, EARNING one free by delivering to London/Bergen/Novgorod.
+// buying competes with, but doesn't dominate, EARNING one free by delivering to London/Novgorod.
 const UPGRADE_BUY={vessel:{g:5},cellar:{g:5},warehouse:{g:4},quay:{g:5},cooperage:{g:4},
   granary:{g:4},hopgarden:{g:4},royal:{g:5},staple:{g:5},guild:{g:4},burgher:{g:5}};
 const DISPLAY_SIZE=4;   // face-up Upgrade display (Market option B) ⚙
@@ -1016,14 +1016,14 @@ function renderShop(){
   SHOP.forEach(it=>{
     const nm=LU('sailboat')+' '+SHIP_NAME[it.ship]+' (cap '+SHIP_CAP[it.ship]+')';const cost=it.cost;const can=canPay(p,cost)&&emptySlots().length>0;
     h+='<div class="item"><span data-tip="'+attr('Owned carrier bound to a destination; sails when full onto the Sailed-Ships track.')+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
-  // the face-up Upgrade DISPLAY (option B) — buy one here, or earn one free by delivering to London/Bergen/Novgorod
-  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Upgrade display</b> <span class="note">('+DISPLAY_SIZE+' face-up + a face-down deck — buy one, or earn one free by delivering to London/Bergen/Novgorod)</span></div>';
+  // the face-up Upgrade DISPLAY (option B) — buy one here, or earn one free by delivering to London/Novgorod
+  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Upgrade display</b> <span class="note">('+DISPLAY_SIZE+' face-up + a face-down deck — buy one, or earn one free by delivering to London/Novgorod)</span></div>';
   (S.upgradeDisplay||[]).forEach(key=>{const c=UPGRADE_BUY[key];const owned=!grantableBuy(p,key);const can=!owned&&canPay(p,c)&&buying;
     h+='<div class="item"><span data-tip="'+attr(upDesc(key))+'">'+LU('wrench')+' '+upName(key)+(owned?' <span class="note">(have)</span>':'')+'</span><span class="cost">'+costIcons(c)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyDisplayUp(\''+key+'\')">buy</button>':'')+'</span></div>';});
   if(!(S.upgradeDisplay||[]).length)h+='<div class="note">(no upgrades face-up)</div>';
   // the face-down Upgrade deck — the 5th stack that refills the display
   h+='<div class="item" style="opacity:.7"><span data-tip="'+attr('Face-down Upgrade deck. Refills the face-up display from its top as tiles are taken.')+'">🂠 Upgrade deck <span class="note">(face-down)</span></span><span class="cost">'+(S.upgradeSupply||[]).length+' left</span></div>';
-  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Take goods (left) or buy a tile. Buying an upgrade is dear (4–5G) — about a delivery’s goods cost; delivering to a kontor earns one free.':'Visit the '+LU('store')+' <b>Market</b>: recipes &amp; ships are always stocked; upgrades come from the face-up display — buy one (dear, 4–5G), or earn one free by delivering to '+LU('landmark')+' London/Bergen/Novgorod.')+'</div>';
+  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Take goods (left) or buy a tile. Buying an upgrade is dear (4–5G) — about a delivery’s goods cost; delivering to a kontor earns one free.':'Visit the '+LU('store')+' <b>Market</b>: recipes &amp; ships are always stocked; upgrades come from the face-up display — buy one (dear, 4–5G), or earn one free by delivering to '+LU('landmark')+' London/Novgorod.')+'</div>';
 }
 
 function renderVoyage(){
@@ -1046,7 +1046,7 @@ function renderTableaus(){
       return '<div class="vessel">'+LU('beer')+' <b>'+styleShort(c.style)+'</b> '+(ready?'<span class="tag good">'+LU('check')+' READY</span>':'<span class="note">'+c.step+'/'+c.ready+'</span>')+'<div class="vtrack">'+tr+'</div></div>';
     }).join('');
     const recipes=p.recipes.map(r=>'<span class="tag dim">'+LU('beer')+STYLES[r].name+'</span>').join('');
-    const ups=p.upgrades.length?p.upgrades.map(k=>'<span class="tag" data-tip="'+attr(upDesc(k))+'">'+LU('wrench')+upName(k)+'</span>').join(''):'<span class="note">none yet — buy from the display, or deliver to London/Bergen/Novgorod</span>';
+    const ups=p.upgrades.length?p.upgrades.map(k=>'<span class="tag" data-tip="'+attr(upDesc(k))+'">'+LU('wrench')+upName(k)+'</span>').join(''):'<span class="note">none yet — buy from the display, or deliver to London/Novgorod</span>';
     const wharf=SLOTS.map(s=>S.slots[s.id]).filter(t=>t&&t.owner===p.id).map(t=>'<span class="tag">'+(t.type==='ship'?LU('sailboat')+shipName(t)+'→'+DEST[t.dest].name.slice(0,3)+' '+t.load.length+'/'+effCap(t):LU('beer')+styleShort(t.style))+'</span>').join('')||'<span class="note">none</span>';
     const delivered=DESTS.map(d=>{const n=deliveredAt(p,d);return n?'<span class="tag good">'+(DEST[d].kontor?LU('landmark'):LU('crown'))+DEST[d].name.slice(0,4)+'×'+n+'</span>':'';}).filter(x=>x).join('')||'<span class="note">none</span>';
     const gv=p.goals.map(g=>({g,v:GOALS[g].fn(p)})).sort((a,b)=>b.v-a.v);

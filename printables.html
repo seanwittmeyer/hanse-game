@@ -8,8 +8,9 @@
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
   *{box-sizing:border-box}
-  body{margin:0;background:#e7e2d6;color:var(--ink);font-family:"Iowan Old Style",Georgia,serif}
-  .bar{position:sticky;top:0;z-index:10;background:var(--ink);color:var(--parch);padding:10px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+  body{margin:0;background:#e7e2d6;color:var(--ink);font-family:"Iowan Old Style",Georgia,serif;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .bar{position:sticky;top:0;z-index:10;background:var(--ink);color:var(--parch);padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,.3)}
   .bar h1{font-size:1.05rem;margin:0;font-variant:small-caps;letter-spacing:.5px}
   .bar a{color:var(--gold);text-decoration:none;font-size:.85rem}
   .bar button{font-family:inherit;cursor:pointer;border:none;border-radius:6px;padding:6px 13px;font-weight:bold;background:var(--gold);color:var(--ink)}
@@ -17,34 +18,32 @@
   .bar .seg button{border-radius:0;background:transparent;color:var(--parch);font-weight:normal}
   .bar .seg button.on{background:var(--gold);color:var(--ink)}
   .note{font-size:.78rem;opacity:.85}
-  /* PAGE = US Letter, LANDSCAPE (11in × 8.5in). Printable ≈ 10.4 × 7.9in. */
+  /* ====== PAGE = US Letter LANDSCAPE (11×8.5in, .3in margins → 10.4×7.9in canvas) ====== */
   @media print{ @page{size:letter landscape;margin:.3in} }
-  .page{width:10.4in;background:#fff;margin:14px auto;padding:.18in;box-shadow:0 3px 14px rgba(0,0,0,.25);position:relative}
-  .page.fixed{height:7.9in;break-after:page}
-  .calib{display:flex;align-items:center;gap:10px;margin-bottom:.1in;font-size:.12in}
-  .calib .box{width:1in;height:1in;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.1in;color:#666;flex:0 0 auto}
-  .famlabel{width:100%;font-variant:small-caps;font-weight:bold;font-size:.17in;color:var(--ink);border-bottom:1px solid var(--gold);margin:.13in 0 .06in;letter-spacing:.4px;break-after:avoid}
-  .famlabel .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.1in;color:var(--ink2)}
-  .grid{display:flex;flex-wrap:wrap;gap:0}
-  /* ---- TILES — 1.25in cut size; colour bleeds to the edge; a 1/8in inner SAFE FRAME + padding ---- */
-  .tile{width:1.25in;height:1.25in;border:.3pt solid var(--line);background:var(--c,#777);color:#fff;
+  .page{width:10.4in;height:7.9in;background:#fff;margin:14px auto;box-shadow:0 3px 14px rgba(0,0,0,.25);position:relative;overflow:hidden}
+  @media print{.no-print{display:none} body{background:#fff} .page{margin:0;box-shadow:none;break-after:page}}
+  /* every printed piece sits in an absolutely positioned .it box (inches) — layout is identical in
+     ART and CUT layers; the CUT layer only hides the art and reveals the cut strokes in the overlay svg */
+  .it{position:absolute}
+  body.cut .it{visibility:hidden}
+  .ov{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+  .ov .cuts{display:none}
+  body.cut .ov .cuts{display:block}
+  .dl{position:absolute;top:.32in;right:.45in;z-index:6;font-size:.7rem;background:var(--sea);color:#fff;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;font-family:inherit;opacity:.85}
+  /* ====== TILES — 1.25in cut squares, gapless grid (a neighbour's colour is the bleed) ====== */
+  .tile{width:1.25in;height:1.25in;background:var(--c,#777);color:#fff;
     position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:.096in;overflow:hidden;
-    text-shadow:0 1px 1.5px rgba(0,0,0,.5);break-inside:avoid}
+    text-shadow:0 1px 1.5px rgba(0,0,0,.5)}
   .tile .ic{width:1em;height:1em;vertical-align:-.15em} .tile svg{stroke-width:2}
-  /* card-corner QUALITY = a gem icon + the number (no "Q"; we know the number is quality) */
   .q{position:absolute;top:.06in;left:.08in;display:flex;align-items:center;gap:.02in;font-weight:900;font-size:.34in;line-height:1}
   .q svg,.q .ic{width:.2in;height:.2in;stroke-width:2.2}
-  /* title sits just below the quality value, top-left */
   .t-nm{position:absolute;top:.46in;left:.1in;max-width:1.05in;text-align:left;font-variant:small-caps;font-weight:bold;font-size:.155in;line-height:1.05}
   .t-act{font-size:.1in;line-height:1.12;background:rgba(0,0,0,.24);border-radius:.04in;padding:.025in .04in;margin-bottom:.03in;display:flex;align-items:center;gap:.03in}
   .t-act svg,.t-act .ic{width:.13in;height:.13in;flex:0 0 auto}
   .t-act .ac{display:inline-flex;align-items:center;justify-content:center;width:.22in;height:.22in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
   .t-act .ac svg,.t-act .ac .ic{width:.12in;height:.12in;stroke-width:2.1;color:#23201c}
-  .t-cost{font-size:.12in;font-weight:bold;display:flex;align-items:center;gap:.06in;line-height:1}
-  .t-cost .gc{display:inline-flex;align-items:center;gap:.01in}
-  .t-cost svg,.t-cost .ic{width:.15in;height:.15in}
+  .t-cost{font-size:.12in;font-weight:bold;display:flex;align-items:center;gap:.04in;line-height:1;flex-wrap:wrap}
   .g{color:#ffe08a} .h{color:#c4e69c}
-  /* shared COST chip — same icon + number size everywhere cost() is used (casks, ships, upgrades, recipes) */
   .gc{display:inline-flex;align-items:center;gap:.02in;font-size:.12in;font-weight:bold}
   .gc svg,.gc .ic{width:.15in;height:.15in;flex:0 0 auto}
   .tile.gen{justify-content:flex-start;text-shadow:0 1px 1px rgba(0,0,0,.4)}
@@ -55,56 +54,58 @@
   .gen .g-sub{font-size:.108in;line-height:1.2;margin-top:.05in;opacity:.97}
   .gen .g-big{position:absolute;bottom:.072in;right:.096in;font-weight:900;font-size:.46in;line-height:.8;opacity:.92}
   .gen .g-cost{position:absolute;bottom:.078in;left:.096in}
-  /* neutral + upgrade layout: icon on its own line in the TOP-RIGHT, title beneath */
   .gen.tn .g-head, .gen.tu .g-head{flex-direction:column;align-items:flex-end;text-align:right;gap:.05in}
-  /* neutral bonus pinned to the bottom */
   .gen.tn .g-sub{position:absolute;left:.096in;right:.096in;bottom:.084in;margin-top:0}
-  /* upgrade bonus in a rounded rectangle (matching the cask action chip) */
   .gen .g-act{background:rgba(0,0,0,.22);border-radius:.04in;padding:.04in .055in;font-size:.105in;line-height:1.16;margin-top:.06in;align-self:stretch}
-  /* goal tile: title top-left, condition below, icon in the bottom-right corner */
   .gen.tg .g-head .bigic{position:absolute;right:.1in;bottom:.08in}
   .gen.tg .g-head .bigic svg,.gen.tg .g-head .bigic .ic{width:.34in;height:.34in;opacity:.9}
-  /* ---- goods TOKENS — laser-cut circle (.7in) printed with a 1/8in BLEED ring (.95in art disc) ---- */
+  /* ====== goods TOKENS — laser-cut .7in circle inside a .95in bleed disc ====== */
   .tok{width:.95in;height:.95in;border-radius:50%;background:var(--c);color:#fff;position:relative;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4);break-inside:avoid}
+    display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4)}
   .tok::after{content:"";position:absolute;inset:.125in;border:.8pt solid rgba(255,255,255,.75);border-radius:50%}
   .tok svg{width:.26in;height:.26in}
-  .tile.blank{background:#fff;color:#9a9a9a;border-color:#bdbdbd;text-shadow:none} .tile.blank::after{border-color:#d8d8d8}
-  .tok.blank{background:#fff;color:#bbb;text-shadow:none} .tok.blank::after{border-color:#cfcfcf}
-  /* registration marks (backs blank) */
-  .regmark{position:absolute;width:.26in;height:.26in;pointer-events:none;z-index:3}
-  .regmark::before,.regmark::after{content:"";position:absolute;background:#000}
-  .regmark::before{left:50%;top:0;width:.6pt;height:100%;transform:translateX(-50%)}
-  .regmark::after{top:50%;left:0;height:.6pt;width:100%;transform:translateY(-50%)}
-  .rm-tl{top:.03in;left:.03in}.rm-tr{top:.03in;right:.03in}.rm-bl{bottom:.03in;left:.03in}.rm-br{bottom:.03in;right:.03in}
-  .page.backs .grid{transform:scaleX(-1)} .page.backs .tile,.page.backs .tok{transform:scaleX(-1)}
-  /* ---- RECIPE CARDS (recipes are CARDS now — they slide into the board's tuck strip) ---- */
-  .card{width:1.85in;height:2.55in;border:1px solid var(--line);border-radius:.08in;background:#f7efdc;color:var(--ink);
-    position:relative;padding:0;display:flex;flex-direction:column;break-inside:avoid;overflow:hidden}
+  /* ownership DISCS — .5in cut circle inside a .65in bleed disc */
+  .disc{width:.65in;height:.65in;border-radius:50%;background:var(--c);color:#fff;position:relative;
+    display:flex;align-items:center;justify-content:center}
+  .disc::after{content:"";position:absolute;inset:.075in;border:.6pt solid rgba(255,255,255,.7);border-radius:50%}
+  .disc svg{width:.2in;height:.2in}
+  /* worker / marker DISCS — .8in cut circle inside a 1in bleed disc */
+  .wtok{width:1in;height:1in;border-radius:50%;background:var(--c);color:#fff;position:relative;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.02in;font-size:.085in;font-variant:small-caps;font-weight:bold;text-align:center;line-height:1;text-shadow:0 1px 1px rgba(0,0,0,.4)}
+  .wtok::after{content:"";position:absolute;inset:.1in;border:.8pt solid rgba(255,255,255,.75);border-radius:50%}
+  .wtok svg{width:.3in;height:.3in}
+  /* majority CHIPS — .8in cut squares (set aside; awarded at final scoring) */
+  .chip{width:.8in;height:.8in;background:var(--c);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-size:.09in;font-variant:small-caps;font-weight:bold;text-align:center;line-height:1.05;text-shadow:0 1px 1px rgba(0,0,0,.4);gap:.015in}
+  .chip .cv{font-size:.24in;font-weight:900;display:flex;align-items:center;gap:.02in}
+  .chip .cv svg,.chip .cv .ic{width:.16in;height:.16in}
+  .chip .ct{opacity:.9}
+  /* ====== RECIPE CARDS — 1.85×2.55in, square corners, gapless grid ====== */
+  .card{width:1.85in;height:2.55in;background:#f7efdc;color:var(--ink);
+    position:relative;padding:0;display:flex;flex-direction:column;overflow:hidden}
   .card .c-reach{padding:.07in .14in 0;font-size:.092in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.15}
-  /* acquire bonus — centered rounded rectangle (same treatment as the cask/upgrade action chips) */
-  .card .c-bonus{flex:1;margin:.06in .14in;display:flex;align-items:center;justify-content:center;gap:.05in;
+  .card .c-buy{flex:1;margin:.06in .14in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;
     background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.14);border-radius:.06in;padding:.06in .1in;
     font-size:.1in;line-height:1.2;text-align:center}
-  .card .c-bonus svg,.card .c-bonus .ic{width:.2in;height:.2in;flex:0 0 auto}
-  /* title + cost strip — the visible edge when the card is tucked up under the board */
+  .card .c-buy .lbl{font-variant:small-caps;font-weight:bold;color:var(--ink2)}
+  .card .c-buy .gc{font-size:.14in} .card .c-buy .gc svg,.card .c-buy .gc .ic{width:.17in;height:.17in}
+  .card .c-buy .gate{font-size:.09in;font-style:italic;color:var(--red);display:flex;align-items:center;gap:.03in}
+  .card .c-buy .gate svg,.card .c-buy .gate .ic{width:.12in;height:.12in}
+  /* title + BREW-cost strip — the visible edge when the card is tucked up under the board */
   .card .c-strip{background:var(--cc,#8a6408);color:#fff;display:flex;align-items:center;gap:.07in;flex-wrap:wrap;
     padding:.08in .12in;font-variant:small-caps;font-weight:bold;font-size:.15in;line-height:1;
     text-shadow:0 1px 1.5px rgba(0,0,0,.45)}
   .card .c-strip svg,.card .c-strip .ic{width:.15in;height:.15in;flex:0 0 auto}
-  /* L# rung badge — high-contrast box so the tier survives on the tucked edge */
   .card .c-strip .c-rung{flex:0 0 auto;display:inline-flex;align-items:center;gap:.015in;font-variant:normal;
     background:rgba(255,255,255,.92);color:var(--cc);border-radius:.04in;padding:.025in .05in;font-size:.115in;text-shadow:none}
   .card .c-strip .c-rung svg,.card .c-strip .c-rung .ic{width:.13in;height:.13in}
-  /* name always prints in full — if the strip is tight the cost wraps to a second line rather than the name clipping */
   .card .c-strip .c-nm{flex:1 1 auto;white-space:nowrap}
-  /* cost block is protected (never clipped); numerals dominate the icons */
   .card .c-strip .c-cost{flex:0 0 auto;font-variant:normal;font-weight:bold;font-size:.135in;display:inline-flex;align-items:center;gap:.06in}
   .card .c-strip .c-cost .gc{font-size:.135in;gap:.015in}
   .card .c-strip .c-cost .gc svg,.card .c-strip .c-cost .gc .ic{width:.135in;height:.135in}
   .card .c-strip .c-gate{display:inline-flex} .card .c-strip .c-gate svg,.card .c-strip .c-gate .ic{width:.13in;height:.13in}
-  /* ====================== PLAYER BOARD (landscape) ====================== */
-  .board{--pc:#7c2128;height:7.54in;background:var(--parch);color:var(--ink);border:2.5px solid var(--pc);
+  /* ====================== PLAYER BOARD ====================== */
+  .board{--pc:#7c2128;width:100%;height:100%;background:var(--parch);color:var(--ink);border:2.5px solid var(--pc);
     border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in}
   .board svg,.board .ic{stroke-width:1.8}
   .pb-head{display:flex;align-items:stretch;gap:.16in}
@@ -117,8 +118,10 @@
   .pb-lbl{font-variant:small-caps;font-weight:bold;font-size:.115in;color:var(--pc);display:flex;align-items:center;gap:.05in}
   .pb-lbl .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.088in;color:var(--ink2)}
   .boxrow{display:flex;gap:.04in;flex-wrap:wrap;max-width:3.2in}
-  .gbox{width:.32in;height:.32in;border:1.2px solid var(--pc);border-radius:.03in;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;color:var(--pc)}
+  .gbox{width:.32in;height:.32in;border:1.2px solid var(--pc);border-radius:.03in;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;color:var(--pc);position:relative}
   .gbox svg,.gbox .ic{width:.15in;height:.15in;opacity:.45}
+  .gbox.wh{border-style:dashed;background:repeating-linear-gradient(45deg,rgba(0,0,0,.04) 0 .06in,transparent .06in .12in)}
+  .gbox.wh::after{content:"W";position:absolute;bottom:0;right:.015in;font-size:.07in;font-weight:bold;color:var(--ink2)}
   .pb-body{flex:1;display:flex;gap:.16in;min-height:0}
   .pb-col{display:flex;flex-direction:column;gap:.08in} .pb-col.left{flex:0 0 5.35in} .pb-col.right{flex:1}
   .pb-sect{font-variant:small-caps;font-weight:bold;font-size:.12in;color:var(--pc);border-bottom:1px solid var(--pc);padding-bottom:.02in;margin-bottom:.04in;display:flex;align-items:center;gap:.05in}
@@ -126,29 +129,30 @@
   .pb-sect .hint{font-variant:normal;font-weight:normal;font-style:italic;font-size:.088in;color:var(--ink2);margin-left:auto}
   .vessel{display:flex;align-items:center;gap:.1in;margin-bottom:.07in}
   .vtag{flex:0 0 .7in;font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--pc);line-height:1.05}
-  .vslot{width:1.2in;height:1.2in;flex:0 0 auto;border:1.5px solid var(--pc);border-radius:.05in;background:rgba(255,255,255,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.092in;text-align:center;gap:.02in}
-  .vslot svg,.vslot .ic{width:.26in;height:.26in;opacity:.5}
+  .vslot{width:1.05in;height:1.05in;flex:0 0 auto;border:1.5px solid var(--pc);border-radius:.05in;background:rgba(255,255,255,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.092in;text-align:center;gap:.02in}
+  .vslot svg,.vslot .ic{width:.24in;height:.24in;opacity:.5}
   .vtrack{flex:1;display:flex;align-items:center;gap:.05in}
-  .vstep{flex:1;height:.5in;border:1.3px solid var(--pc);border-radius:.04in;background:rgba(255,255,255,.45);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:.082in;color:var(--ink2);line-height:1;position:relative}
+  .vstep{flex:1;height:.5in;border:1.3px solid var(--pc);border-radius:.04in;background:rgba(255,255,255,.45);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:.078in;color:var(--ink2);line-height:1.05;position:relative}
   .vstep .sn{font-variant:small-caps;font-weight:bold;font-size:.092in;color:var(--ink)}
   .vstep.age{background:rgba(184,134,11,.18)} .vstep.ready{background:rgba(74,107,58,.2)}
   .vstep .arr{position:absolute;right:-.07in;top:50%;transform:translateY(-50%);color:var(--pc);font-weight:bold;font-size:.13in;z-index:2}
   .vessel.locked .vslot,.vessel.locked .vstep{border-style:dashed;color:rgba(0,0,0,.32);background:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 .08in,transparent .08in .16in)}
   .vessel.locked .vtag::after{content:" — needs Extra Vessel";font-variant:normal;font-weight:normal;font-style:italic;font-size:.08in;color:var(--ink2)}
   .strip{display:flex;gap:.08in;flex-wrap:wrap}
-  .pslot{width:1.2in;height:1.2in;border:1.4px dashed var(--pc);border-radius:.05in;background:rgba(255,255,255,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.09in;text-align:center;gap:.02in}
+  .pslot{width:1.25in;height:1.25in;border:1.4px dashed var(--pc);border-radius:.05in;background:rgba(255,255,255,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.09in;text-align:center;gap:.02in}
   .pslot svg,.pslot .ic{width:.26in;height:.26in;opacity:.55}
   .pslot.best{border-style:solid;background:rgba(184,134,11,.2);font-weight:bold}
-  /* recipe tuck strip at the board's bottom edge — cards slide UP into these */
   .tuck{margin:.04in -.16in -.16in;padding:.06in .16in .04in;border-top:1.5px dashed var(--pc);background:repeating-linear-gradient(90deg,rgba(0,0,0,.02) 0 1.2in,transparent 1.2in 2.4in)}
   .tuck-h{font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--pc);display:flex;align-items:center;gap:.05in;margin-bottom:.04in}
   .tuck-h svg,.tuck-h .ic{width:.14in;height:.14in} .tuck-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.085in;color:var(--ink2);margin-left:auto}
   .tuckrow{display:flex;gap:.1in}
-  .tslot{flex:1;min-width:1.1in;height:.5in;border:1.3px solid var(--pc);border-bottom:none;border-radius:.06in .06in 0 0;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;gap:.04in;color:var(--pc);font-size:.092in;text-align:center}
-  .tslot svg,.tslot .ic{width:.16in;height:.16in;opacity:.6}
+  .tslot{flex:1;min-width:1.1in;height:.5in;border:1.3px solid var(--pc);border-bottom:none;border-radius:.06in .06in 0 0;background:rgba(255,255,255,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.02in;color:var(--pc);font-size:.092in;text-align:center;line-height:1}
+  .tslot svg,.tslot .ic{width:.14in;height:.14in;opacity:.6}
   .tslot.printed{background:var(--pc);color:#fff} .tslot.printed svg,.tslot.printed .ic{opacity:.95}
+  .tslot.printed .gc{font-size:.095in} .tslot.printed .gc svg,.tslot.printed .gc .ic{width:.11in;height:.11in}
+  .tslot .tline{display:flex;align-items:center;gap:.03in;font-weight:bold;font-variant:small-caps}
   /* ====================== DESTINATIONS BOARD ====================== */
-  .dboard{height:7.54in;background:var(--parch);border:2.5px solid var(--gold);border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in;color:var(--ink)}
+  .dboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--gold);border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in;color:var(--ink)}
   .dboard svg,.dboard .ic{stroke-width:1.8}
   .db-head{display:flex;align-items:baseline;gap:.16in;border-bottom:2px solid var(--gold);padding-bottom:.05in}
   .db-head h2{margin:0;font-variant:small-caps;color:var(--red);font-size:.28in;letter-spacing:.5px;display:flex;align-items:center;gap:.06in}
@@ -158,7 +162,6 @@
   .vp{color:var(--vp)} .ql{color:var(--ink)}
   .kontor-row{display:flex;gap:.1in;flex:1;min-height:0}
   .kpanel{flex:1;border:2px solid var(--kc);border-radius:.1in;background:#fff;display:flex;flex-direction:column;overflow:hidden;color:var(--ink)}
-  /* clean full-width TITLE BAR (fixes the half-ribbon look) */
   .ktitle{background:var(--kc);color:#fff;padding:.06in .1in;display:flex;justify-content:space-between;align-items:center}
   .kname{font-variant:small-caps;font-weight:bold;font-size:.16in;display:flex;align-items:center;gap:.04in;line-height:1}
   .kname svg,.kname .ic{width:.18in;height:.18in}
@@ -168,207 +171,264 @@
   .krole{font-size:.088in;font-style:italic;color:var(--ink2);line-height:1.05;min-height:.18in}
   .kval{text-align:center;font-weight:900;color:var(--kc);font-size:.4in;line-height:.95;display:flex;align-items:center;justify-content:center;gap:.04in}
   .kval svg,.kval .ic{width:.26in;height:.26in;color:var(--vp);stroke-width:2.4}
-  .kval .per{display:block;font-size:.085in;font-weight:bold;color:var(--ink2);font-variant:small-caps}
+  .kval .per{display:block;font-size:.082in;font-weight:bold;color:var(--ink2);font-variant:small-caps}
   .kben{font-size:.092in;line-height:1.1;display:flex;align-items:center;gap:.03in;background:rgba(0,0,0,.04);border-radius:.04in;padding:.025in .04in}
   .kben svg,.kben .ic{width:.13in;height:.13in;flex:0 0 auto;color:var(--kc)}
   .kmaj{font-size:.092in;display:flex;align-items:center;justify-content:space-between;color:var(--ink2)}
   .kmaj b{color:var(--kc);display:inline-flex;align-items:center;gap:.02in} .kmaj svg,.kmaj .ic{width:.12in;height:.12in;color:var(--vp)}
-  .kslot{align-self:center;width:1.05in;height:1.05in;border:1.5px dashed var(--kc);border-radius:.06in;background:rgba(0,0,0,.03);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--kc);font-size:.082in;text-align:center;gap:.02in;line-height:1.05}
-  .kslot svg,.kslot .ic{width:.24in;height:.24in;opacity:.5}
-  .ptrack{display:flex;border:1px solid var(--kc);border-radius:.04in;overflow:hidden;margin-top:auto}
-  .ptrack .pc{flex:1;min-width:.2in;height:.28in;border-right:1px solid rgba(0,0,0,.14);display:flex;align-items:center;justify-content:center;font-size:.082in;color:var(--ink2);background:rgba(255,255,255,.5)}
+  .kslot{align-self:center;width:1.05in;height:.92in;border:1.5px dashed var(--kc);border-radius:.06in;background:rgba(0,0,0,.03);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--kc);font-size:.082in;text-align:center;gap:.02in;line-height:1.05}
+  .kslot svg,.kslot .ic{width:.22in;height:.22in;opacity:.5}
+  .ptrack{display:flex;border:1px solid var(--kc);border-radius:.04in;overflow:hidden}
+  .ptrack.pt1{margin-top:auto}
+  .ptrack .pc{flex:1;min-width:.18in;height:.24in;border-right:1px solid rgba(0,0,0,.14);display:flex;align-items:center;justify-content:center;font-size:.08in;color:var(--ink2);background:rgba(255,255,255,.5)}
   .ptrack .pc:last-child{border-right:none} .ptrack .pc.z{background:rgba(0,0,0,.08);font-weight:bold}
-  .ptrack-l{font-size:.08in;font-style:italic;color:var(--ink2);margin-top:.02in;text-align:center;display:flex;align-items:center;justify-content:center;gap:.03in}
+  .ptrack-l{font-size:.078in;font-style:italic;color:var(--ink2);margin-top:.02in;text-align:center;display:flex;align-items:center;justify-content:center;gap:.03in}
   .ptrack-l svg,.ptrack-l .ic{width:.1in;height:.1in}
-  .db-bottom{display:flex;flex-direction:column;gap:.12in}
+  .db-bottom{display:flex;flex-direction:column;gap:.08in}
   .sbox{border:2px solid var(--gold);border-radius:.1in;background:#fff;padding:.08in;display:flex;flex-direction:column;gap:.05in}
-  .sbox.disp,.sbox.clock{flex:0 0 auto}
+  .sbox.disp,.sbox.maj{flex:0 0 auto}
   .sb-h{font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.13in;display:flex;align-items:center;gap:.05in;border-bottom:1px solid var(--gold);padding-bottom:.02in}
   .sb-h svg,.sb-h .ic{width:.15in;height:.15in} .sb-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;color:var(--ink2);margin-left:auto}
-  .uprow{display:flex;gap:.109in;flex-wrap:wrap}
-  .uslot{flex:0 0 auto;width:1.25in;height:1.25in;border:1.5px solid var(--gold);border-radius:.05in;background:rgba(184,134,11,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;color:#8a6408;font-size:.092in;text-align:center}
-  .uslot svg,.uslot .ic{width:.28in;height:.28in;opacity:.6}
-  .uslot.supply{border-style:dashed;background:repeating-linear-gradient(45deg,rgba(0,0,0,.04) 0 .08in,transparent .08in .16in)}
+  .uprow{display:flex;gap:.05in;align-items:flex-end}
+  .uslot{flex:0 0 auto;width:1.28in;height:1.28in;border:1.5px solid var(--gold);border-radius:.05in;background:rgba(184,134,11,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;color:#8a6408;font-size:.092in;text-align:center}
+  .uslot svg,.uslot .ic{width:.26in;height:.26in;opacity:.6}
+  .uslot.supply{width:1in;height:1in;border-style:dashed;background:repeating-linear-gradient(45deg,rgba(0,0,0,.04) 0 .08in,transparent .08in .16in)}
   .uslot.supply.faceup{border-style:solid;background:rgba(184,134,11,.08)}
-  .ctrack{display:flex;height:.64in;border:1.5px solid var(--sea);border-radius:.05in;overflow:hidden}
-  .cc{flex:1;min-width:0;border-right:1px solid rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.085in;color:var(--ink2);background:rgba(255,255,255,.4)}
-  .cc:last-child{border-right:none} .cc .n{font-size:.075in;color:#aaa}
-  .cc.end{background:var(--sea);color:#fff;font-weight:bold;font-size:.08in;text-align:center;line-height:1}
-  @media print{.no-print{display:none} body{background:#fff} .page{margin:0;box-shadow:none}}
+  .majnote{font-size:.098in;line-height:1.35}
+  .majnote b{color:var(--red)}
+  .majnote .ic,.majnote svg{width:.12in;height:.12in;vertical-align:-.02in}
+  /* ====================== MAIN BOARD — THE WHARF ====================== */
+  .mboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--sea);border-radius:.12in;padding:.14in .16in;display:flex;flex-direction:column;gap:.04in;color:var(--ink)}
+  .mboard svg,.mboard .ic{stroke-width:1.8}
+  .mb-head{display:flex;align-items:baseline;gap:.16in;border-bottom:2px solid var(--sea);padding-bottom:.03in}
+  .mb-head h2{margin:0;font-variant:small-caps;color:var(--sea);font-size:.2in;letter-spacing:.5px;display:flex;align-items:center;gap:.06in}
+  .mb-head h2 svg,.mb-head h2 .ic{width:.2in;height:.2in}
+  .mb-head .sub{font-size:.095in;font-style:italic;color:var(--ink2);margin-left:auto}
+  .mb-main{flex:1;display:flex;gap:.14in;min-height:0}
+  .wharf{flex:0 0 auto;display:grid;gap:.05in;
+    grid-template-columns:1.3in 1.38in 1.38in 1.3in;
+    grid-template-rows:1.3in 1.38in 1.38in 1.3in}
+  .wslot{border:2px dashed var(--ink2);border-radius:.07in;background:rgba(255,255,255,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--ink2);font-size:.08in;text-align:center;gap:.015in;line-height:1.1;padding:.04in}
+  .wslot svg,.wslot .ic{width:.2in;height:.2in;opacity:.55}
+  .wslot b{font-variant:small-caps;font-size:.09in}
+  .stn{border-radius:.09in;color:#fff;padding:.07in;display:flex;flex-direction:column;gap:.02in;position:relative;overflow:hidden;text-shadow:0 1px 1.5px rgba(0,0,0,.4)}
+  .stn .ltr{position:absolute;top:.04in;right:.06in;font-weight:900;font-size:.16in;opacity:.45}
+  .stn .role{font-size:.078in;text-transform:uppercase;letter-spacing:.5px;opacity:.85}
+  .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.16in;line-height:1;display:flex;align-items:center;gap:.04in}
+  .stn .nm svg,.stn .nm .ic{width:.16in;height:.16in}
+  .stn .acts{font-size:.085in;line-height:1.22;margin-top:.02in}
+  .stn .wkspot{margin-top:auto;align-self:flex-start;display:flex;align-items:center;gap:.03in;font-size:.072in;opacity:.85;border:1px dashed rgba(255,255,255,.6);border-radius:.04in;padding:.015in .04in}
+  .stn .wkspot svg,.stn .wkspot .ic{width:.1in;height:.1in}
+  .stn.A{background:linear-gradient(155deg,#cda522,#9c7414)} .stn.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
+  .stn.C{background:linear-gradient(155deg,#3d6b7e,#244554)} .stn.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
+  .wcorner{display:flex;align-items:center;justify-content:center;color:var(--ink2);font-size:.085in;font-style:italic;text-align:center;line-height:1.2}
+  .warr{position:absolute;font-weight:900;color:var(--sea);font-size:.18in;z-index:2;background:var(--parch);border-radius:50%;width:.26in;height:.26in;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--sea);line-height:1}
+  .mb-side{flex:1;display:flex;flex-direction:column;gap:.07in;min-width:0}
+  .mbox{border:1.5px solid var(--sea);border-radius:.07in;background:#fff;padding:.06in .08in}
+  .mbox h4{margin:0 0 .03in;font-variant:small-caps;font-size:.115in;color:var(--sea);display:flex;align-items:center;gap:.04in;border-bottom:1px solid rgba(0,0,0,.15);padding-bottom:.02in}
+  .mbox h4 svg,.mbox h4 .ic{width:.13in;height:.13in}
+  .mbox .b{font-size:.092in;line-height:1.3}
+  .mbox .b b{color:var(--red)}
+  .mbox ol{margin:.02in 0 0;padding-left:.16in;font-size:.092in;line-height:1.35}
+  .mtrack-l{font-size:.082in;font-style:italic;color:var(--ink2);text-align:center}
+  .ctrack{display:flex;height:.42in;border:1.5px solid var(--sea);border-radius:.05in;overflow:hidden}
+  .cc{flex:1;min-width:0;border-right:1px solid rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.08in;color:var(--ink2);background:rgba(255,255,255,.4)}
+  .cc:last-child{border-right:none} .cc .n{font-size:.075in;color:#999}
+  .cc.end{background:var(--sea);color:#fff;font-weight:bold;font-size:.075in;text-align:center;line-height:1}
+  .rtrack{display:flex;height:.3in;border:1.5px solid var(--gold);border-radius:.05in;overflow:hidden}
+  .rc{flex:1;min-width:0;border-right:1px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:.078in;color:var(--ink2);background:rgba(255,255,255,.4)}
+  .rc:last-child{border-right:none} .rc.band{background:rgba(184,134,11,.16)}
+  .rc.cap{background:var(--gold);color:#fff;font-weight:bold;font-size:.07in;text-align:center;line-height:1}
+  /* ====================== CHECKLIST ====================== */
+  .check{position:absolute;left:.35in;top:.4in;width:9.7in;height:7.1in;font-size:.1in;display:flex;flex-direction:column;gap:.06in}
+  .check h2{margin:0;font-variant:small-caps;color:var(--red);font-size:.2in;border-bottom:2px solid var(--gold);padding-bottom:.03in}
+  .check .cols2{columns:2;column-gap:.3in;flex:1}
+  .check table{width:100%;border-collapse:collapse;margin-bottom:.1in;break-inside:avoid}
+  .check th{font-variant:small-caps;text-align:left;color:var(--red);border-bottom:1px solid var(--gold);font-size:.1in;padding:.015in .03in}
+  .check td{border-bottom:1px solid rgba(0,0,0,.12);padding:.018in .03in;vertical-align:top}
+  .check td.n{text-align:right;font-weight:bold;white-space:nowrap}
+  .check td.bx::before{content:"☐";font-size:.13in}
+  .check .tot{font-weight:bold;background:rgba(184,134,11,.12)}
+  .check .wf{font-size:.092in;line-height:1.4;border:1.5px solid var(--sea);border-radius:.06in;padding:.05in .08in;background:#fff;break-inside:avoid}
+  .check .wf b{color:var(--sea)}
 </style>
 </head>
 <body>
 <div class="bar no-print">
-  <h1>Brewhouses of the Hanse — Print &amp; Play</h1>
+  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v0.10</span></h1>
   <button onclick="window.print()">🖨 Print</button>
-  <span class="seg"><button id="vtiles" class="on" onclick="setView('tiles')">Tiles</button><button id="vcards" onclick="setView('cards')">Recipe Cards</button><button id="vboards" onclick="setView('boards')">Player Boards</button><button id="vdest" onclick="setView('dest')">Destinations</button></span>
-  <span class="seg tilectrl"><button id="bproof" class="on" onclick="setMode('proof')">Proof (1 each)</button><button id="bfull" onclick="setMode('full')">Full set</button></span>
-  <span class="seg tilectrl"><button id="sfront" class="on" onclick="setSide('front')">Fronts</button><button id="sback" onclick="setSide('back')">Backs (blank)</button></span>
-  <span class="note">Laid out for <b>US Letter · LANDSCAPE</b>, print at <b>100%</b> (check the 1-inch box). Colour <b>bleeds 1/8″</b> past the inner frame — straight-cut tiles on the frame, laser-cut tokens inside the dashed circle. <b>Backs blank</b> (single-face).</span>
+  <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
+  <span class="seg"><button id="bfull" class="on" onclick="setMode('full')">Full set</button><button id="bproof" onclick="setMode('proof')">Proof (1 each)</button></span>
+  <span class="seg"><button id="lart" class="on" onclick="setLayer('art')">ART layer</button><button id="lcut" onclick="setLayer('cut')">CUT layer</button></span>
+  <button onclick="downloadAll()" style="background:var(--sea);color:#fff">⬇ Cut SVGs</button>
+  <span class="note"><b>US Letter · LANDSCAPE · 100%</b> (verify the 3-inch bar). Workflow: print <b>ART</b> (no cut lines) → print/export <b>CUT</b> (art hidden) → both carry the <b>same registration marks</b>, page for page → glue art to chipboard, align the laser on the marks, cut on the red lines. Tiles are one unbroken grid — neighbours are the bleed.</span>
   <span style="margin-left:auto"><a href="learn.html">Learn</a> · <a href="index.html">Rulebook &amp; Components</a> · <a href="play.html">Play</a></span>
 </div>
 <div id="out"></div>
 
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>
+//==================================================================
+// DATA — mirrors play.html (the canonical engine) & COMPONENTS.md
+//==================================================================
 const LU=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
-const cnt=n=>MODE==='proof'?1:n;
 const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc">'+LU('sprout','h')+h+'</span>');return a.join('');};
 const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · victory-point icon
 
-const CASKS=[
-  {nm:'Gruit',  c:'#8a949c', q:1, g:1,h:0,      ai:'store',     act:'+2 goods',     n:16},
-  {nm:'Hopped', c:'#c2922f', q:2, g:1,h:1,      ai:'hourglass', act:'Age a cask +2',   n:20},
-  {nm:'Export', c:'#b06a34', q:3, g:1,h:2,      ai:'ship',      act:'free Load',       n:12},
-  {nm:'Export', c:'#caa12a', q:4, g:2,h:2,      ai:'map-pin',   act:'+1 presence',     n:8},
-  {nm:'Export', c:'#7c2128', q:5, g:3,h:2, cellar:true, ai:'sparkles',  act:'any action', n:4},
+const CASKS=[  // shared cask pool — fixed global counts (COMPONENTS §3A)
+  {nm:'Gruit',  c:'#8a949c', q:1, g:1,h:0,      ai:'store',     act:'+2 goods',      n:16},
+  {nm:'Hopped', c:'#c2922f', q:2, g:1,h:1,      ai:'hourglass', act:'Age a cask +2', n:20},
+  {nm:'Export', c:'#b06a34', q:3, g:1,h:2, alt:[2,1], ai:'ship', act:'free Load',    n:12},  // Broyhan G H H · Keut G G H
+  {nm:'Export', c:'#caa12a', q:4, g:2,h:2,      ai:'map-pin',   act:'+1 presence',   n:8},
+  {nm:'Export', c:'#7c2128', q:5, g:3,h:2, cellar:true, ai:'sparkles', act:'Wild — any base action', n:4},
 ];
-const FAMS=[
- {label:'Ships — owned single-use carriers', sm:'built to a destination · full → sail → Sailed-Ships track · (Charter = 1 cask for 2 G, no tile)', items:[
-   {ic:'sailboat',nm:'Cog',  big:'2', cost:cost(2,0), c:'#2f5566', n:8},
-   {ic:'sailboat',nm:'Hulk', big:'3', cost:cost(3,0), c:'#1f3e4a', n:5},
- ]},
- {label:'Neutral Buildings — shared base actions', sm:'2 seeded on the slots at setup (random)', cls:'tn', items:[
-   {ic:'store',     nm:'Market Stall', sub:'take 1 good',           c:'#5b4a37', n:1},
-   {ic:'hammer',    nm:'Cooper',       sub:'age a cask 1 step', c:'#4a4034', n:1},
-   {ic:'package-plus', nm:'Crane',        sub:'free load onto a ship', c:'#5b4a37', n:1},
-   {ic:'arrow-left-right', nm:'Counting House', sub:'convert up to 2 goods', c:'#4a4034', n:1},
-   {ic:'megaphone', nm:'Towncrier',    sub:'draw a goal',           c:'#5b4a37', n:1},
-   {ic:'heart',     nm:'Almshouse',    sub:'+1 at a kontor you lead', c:'#4a4034', n:1},
- ]},
- {label:'Upgrades · Rooms — permanent capability', sm:'in the face-up Market display · buy, or earn free by delivering', cls:'tu', items:[
-   {ic:'wrench',nm:'Extra Vessel', act:'+1 vessel',                       cost:cost(5,0), c:'#4a6b3a', n:3},
-   {ic:'wrench',nm:'Aging Cellar', act:'mature 1 step faster · unlock L5', cost:cost(5,0), c:'#3f5c30', n:2},
-   {ic:'wrench',nm:'Warehouse',    act:'+4 storage',                      cost:cost(4,0), c:'#4a6b3a', n:2},
-   {ic:'wrench',nm:'Quay',         act:'load 2 casks per Harbor',         cost:cost(5,0), c:'#3f5c30', n:2},
-   {ic:'wrench',nm:'Cooperage',    act:'+1 cask loaded per Harbor',       cost:cost(4,0), c:'#4a6b3a', n:2},
- ]},
- {label:'Upgrades · Modifiers — asymmetric perks', sm:'in the same Market display', cls:'tu', items:[
-   {ic:'badge-plus',nm:'Granary Right', act:'+1 '+LU('wheat','g ic'),              cost:cost(4,0), c:'#6e4ea0', n:2},
-   {ic:'badge-plus',nm:'Hop Garden',    act:'+1 '+LU('sprout','h ic'),             cost:cost(4,0), c:'#5a3f86', n:2},
-   {ic:'badge-plus',nm:'Royal Patent',  act:'+1 '+LU('sailboat','ic')+' capacity', cost:cost(5,0), c:'#6e4ea0', n:2},
-   {ic:'badge-plus',nm:'Staple Right',  act:'+1 '+LU('wheat','g ic')+' / kontor',  cost:cost(5,0), c:'#5a3f86', n:2},
-   {ic:'badge-plus',nm:'Guild Seat',    act:'age +1',                              cost:cost(4,0), c:'#6e4ea0', n:2},
-   {ic:'badge-plus',nm:'Burgher Status',act:'+1 '+LU('map-pin','ic')+' / kontor',  cost:cost(5,0), c:'#5a3f86', n:2},
- ]},
- {label:'Goal Tiles — the variety layer', sm:'deal 3 per player · your best 2 score', cls:'tg', items:[
-   {ic:'target',nm:'Variety',  sub:'+2 / distinct type',  c:'#7c2128', n:1},
-   {ic:'target',nm:'Focus',    sub:'+2 / cask, 1 kontor', c:'#7c2128', n:1},
-   {ic:'target',nm:'Export',   sub:'+2 / Q3+ delivered',  c:'#7c2128', n:1},
-   {ic:'target',nm:'Merchant', sub:'+3 / ship sailed',    c:'#7c2128', n:1},
-   {ic:'target',nm:'Prestige', sub:'+3 / cask to Hall',   c:'#7c2128', n:1},
-   {ic:'target',nm:'Spread',   sub:'+3 / kontor held',    c:'#7c2128', n:1},
-   {ic:'target',nm:'Engine',   sub:'+2 / Upgrade',        c:'#7c2128', n:1},
-   {ic:'target',nm:'Commit',   sub:'+4 / majority',       c:'#7c2128', n:1},
-   {ic:'target',nm:'Steady',   sub:'+6 flat',             c:'#7c2128', n:1},
- ]},
+const SHIPS=[
+  {ic:'sailboat',nm:'Cog',  big:'2', g:2, c:'#2f5566', n:8},
+  {ic:'sailboat',nm:'Hulk', big:'3', g:3, c:'#1f3e4a', n:5},
 ];
-const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:30},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:24}];
-const RECIPES=[
-  {nm:'Hopped',  cc:'#7a5606', L:2, g:1,h:1, reach:'L2 · London · Bergen · Hall', start:true},
-  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, reach:'L3 · adds Novgorod'},
-  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, reach:'L3 · adds Novgorod'},
-  {nm:'Mumme',   cc:'#9a5526', L:4, g:2,h:2, reach:'L4 · all kontore + Hall'},
-  {nm:'Bock',    cc:'#7c2128', L:5, g:3,h:2, cellar:true, reach:'L5 · all · needs Aging Cellar'},
+const NEUTRALS=[  // 6 designs; 2–3 seeded on the slots at setup (random)
+  {ic:'store',     nm:'Market Stall', sub:'take 1 good',            c:'#5b4a37', n:1},
+  {ic:'hammer',    nm:'Cooper',       sub:'age a cask 1 step',      c:'#4a4034', n:1},
+  {ic:'package-plus', nm:'Crane',     sub:'free load onto a ship',  c:'#5b4a37', n:1},
+  {ic:'arrow-left-right', nm:'Counting House', sub:'convert up to 2 goods', c:'#4a4034', n:1},
+  {ic:'megaphone', nm:'Towncrier',    sub:'draw a goal',            c:'#5b4a37', n:1},
+  {ic:'heart',     nm:'Almshouse',    sub:'+1 at a kontor you lead',c:'#4a4034', n:1},
+];
+const ROOMS=[  // Extra Vessel supply = players+1 (play.html) ⚙ — 6 supports 5p
+  {ic:'wrench',nm:'Extra Vessel', act:'+1 vessel',                        g:5, c:'#4a6b3a', n:6},
+  {ic:'wrench',nm:'Aging Cellar', act:'mature 1 step faster · unlock L5', g:5, c:'#3f5c30', n:2},
+  {ic:'wrench',nm:'Warehouse',    act:'+4 storage',                       g:4, c:'#4a6b3a', n:2},
+  {ic:'wrench',nm:'Quay',         act:'load 2 casks per Harbor',          g:5, c:'#3f5c30', n:2},
+  {ic:'wrench',nm:'Cooperage',    act:'+1 cask loaded per Harbor',        g:4, c:'#4a6b3a', n:2},
+];
+const MODS=[
+  {ic:'badge-plus',nm:'Granary Right', act:'+1 '+LU('wheat','g ic'),              g:4, c:'#6e4ea0', n:2},
+  {ic:'badge-plus',nm:'Hop Garden',    act:'+1 '+LU('sprout','h ic'),             g:4, c:'#5a3f86', n:2},
+  {ic:'badge-plus',nm:'Royal Patent',  act:'+1 '+LU('sailboat','ic')+' capacity', g:5, c:'#6e4ea0', n:2},
+  {ic:'badge-plus',nm:'Staple Right',  act:'+1 good / kontor delivery',           g:5, c:'#5a3f86', n:2},
+  {ic:'badge-plus',nm:'Guild Seat',    act:'age +1 at the Cellar',                g:4, c:'#6e4ea0', n:2},
+  {ic:'badge-plus',nm:'Burgher Status',act:'+1 '+LU('map-pin','ic')+' / kontor',  g:5, c:'#5a3f86', n:2},
+];
+const GOALS=[  // 9 designs ×2 copies ⚙ so 4–5p can deal 3 each (values match play.html)
+  {ic:'target',nm:'Variety',  sub:'+2 / distinct type',  c:'#7c2128', n:2},
+  {ic:'target',nm:'Focus',    sub:'+2 / cask, 1 kontor', c:'#7c2128', n:2},
+  {ic:'target',nm:'Export',   sub:'+2 / Q3+ delivered',  c:'#7c2128', n:2},
+  {ic:'target',nm:'Merchant', sub:'+3 / ship sailed',    c:'#7c2128', n:2},
+  {ic:'target',nm:'Prestige', sub:'+3 / cask to Hall',   c:'#7c2128', n:2},
+  {ic:'target',nm:'Spread',   sub:'+3 / kontor held',    c:'#7c2128', n:2},
+  {ic:'target',nm:'Engine',   sub:'+2 / Upgrade',        c:'#7c2128', n:2},
+  {ic:'target',nm:'Commit',   sub:'+4 / majority',       c:'#7c2128', n:2},
+  {ic:'target',nm:'Steady',   sub:'+6 flat',             c:'#7c2128', n:2},
+];
+const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
+const RECIPES=[  // EXPORT recipe cards only — Gruit & Hopped are printed on the brewery board's tuck strip.
+  // buy = Market acquire cost (RECIPE_BUY in play.html) · g/h = the BREW cost on the tucked edge.
+  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{g:1},     reach:'L3 · Bruges · London · Bergen · Novgorod · Hall'},
+  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'L3 · Bruges · London · Bergen · Novgorod · Hall'},
+  {nm:'Mumme',   cc:'#9a5526', L:4, g:2,h:2, buy:{g:1,h:1}, reach:'L4 · all kontore + Hall'},
+  {nm:'Bock',    cc:'#7c2128', L:5, g:3,h:2, buy:{g:2}, cellar:true, reach:'L5 · all · needs the Aging Cellar'},
 ];
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'},{nm:'Violet',c:'#5b3a8e'}];
 const DESTS=[
-  {nm:'Bruges',  kc:'#274b5c', req:1, val:'+1', maj:'5/3/0',  role:'The Hub — takes any beer (volume on-ramp)', ben:'gain 2 goods'},
-  {nm:'London',  kc:'#b8860b', req:2, val:'+2', maj:'6/4/2',  role:'The Steelyard — the engine destination',     ben:'take 1 Upgrade from the display'},
-  {nm:'Bergen',  kc:'#4a6b3a', req:2, val:'+2', maj:'10/6/3', role:'Bryggen — the rich-majority anchor',         ben:'gain 2 goods (token — the majority is the draw)'},
-  {nm:'Novgorod',kc:'#7c2128', req:3, val:'+4', maj:'8/5/2',  role:'The Long Haul — premium only, top value',     ben:'take 1 Upgrade from the display'},
+  {nm:'Bruges',  kc:'#274b5c', req:1, val:'+1', maj:[5,3,0],  role:'The Hub — takes any beer (volume on-ramp)', ben:'gain 2 goods'},
+  {nm:'London',  kc:'#b8860b', req:2, val:'+2', maj:[6,4,2],  role:'The Steelyard — the engine destination',    ben:'take 1 Upgrade from the display'},
+  {nm:'Bergen',  kc:'#4a6b3a', req:2, val:'+2', maj:[10,6,3], role:'Bryggen — the rich-majority anchor',        ben:'gain 2 goods (token — the majority is the draw)'},
+  {nm:'Novgorod',kc:'#7c2128', req:3, val:'+4', maj:[8,5,2],  role:'The Long Haul — premium only, top value',   ben:'take 1 Upgrade from the display'},
 ];
 const HALL={nm:'The Hall', kc:'#5b3a8e', req:2, role:'Prestige — out of commerce (scarcity)', ben:'banks prestige ∝ quality (Q×2.5)'};
-const SAILED={2:7,3:11,4:15,5:19};
+const SAILED={2:7,3:11,4:15,5:19};   // Sailed-Ships end clock per player count ⚙ (RULES §8)
+const MAX_ROUND=25;                  // round ceiling ⚙ — top of the 12–25-round target band
+const OWN_DISCS=20;                  // ownership discs per colour ⚙ (COMPONENTS §2)
 
-let MODE='proof', SIDE='front', VIEW='tiles';
+//==================================================================
+// GEOMETRY — one coordinate system (inches) drives the HTML layout,
+// the cut overlay, and the SVG export, so the layers always align.
+//==================================================================
+const PG={w:10.4,h:7.9,y0:0.45,yMax:7.62};
+const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres
+const SIZE={tile:[1.25,1.25],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],chip:[0.8,0.8],card:[1.85,2.55]};
+const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
+
+let MODE='full', VIEW='all', LAYER='art';
+const cnt=n=>MODE==='proof'?1:n;
 function setMode(m){MODE=m;document.getElementById('bproof').classList.toggle('on',m==='proof');document.getElementById('bfull').classList.toggle('on',m==='full');render();}
-function setSide(s){SIDE=s;document.getElementById('sfront').classList.toggle('on',s==='front');document.getElementById('sback').classList.toggle('on',s==='back');render();}
-function setView(v){VIEW=v;['tiles','cards','boards','dest'].forEach(x=>document.getElementById('v'+x).classList.toggle('on',v===x));
-  document.querySelectorAll('.tilectrl').forEach(e=>e.style.display=v==='tiles'?'':'none');render();}
+function setView(v){VIEW=v;['all','boards','tiles','bits','cards','list'].forEach(x=>document.getElementById('v'+x).classList.toggle('on',v===x));render();}
+function setLayer(l){LAYER=l;document.getElementById('lart').classList.toggle('on',l==='art');document.getElementById('lcut').classList.toggle('on',l==='cut');
+  document.body.classList.toggle('cut',l==='cut');}   // pure CSS — layout never changes between layers
 
-const REG='<div class="regmark rm-tl"></div><div class="regmark rm-tr"></div><div class="regmark rm-bl"></div><div class="regmark rm-br"></div>';
-function caskTile(d){return '<div class="tile" style="--c:'+d.c+'">'
+//==================================================================
+// ART — piece face generators (the scrutinized tile/card/board art)
+//==================================================================
+function caskTile(d){
+  let c=cost(d.g,d.h); if(d.alt)c+='<span style="font-size:.1in;opacity:.85">/</span>'+cost(d.alt[0],d.alt[1]);
+  return '<div class="tile" style="--c:'+d.c+'">'
   +'<div class="q">'+LU(QI)+d.q+'</div>'
   +'<div class="t-nm">'+d.nm+'</div>'
   +'<div class="t-act"><span class="ac">'+LU(d.ai)+'</span><span>'+d.act+'</span></div>'
-  +'<div class="t-cost">'+cost(d.g,d.h)+(d.cellar?' <span style="font-size:.1in">· Cellar</span>':'')+'</div></div>';}
+  +'<div class="t-cost">'+c+(d.cellar?' <span style="font-size:.1in">· Cellar</span>':'')+'</div></div>';}
 function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--c:'+it.c+'">'
   +'<div class="g-head"><span class="bigic">'+LU(it.ic)+'</span><span class="g-nm">'+it.nm+'</span></div>'
   +(it.act?'<div class="g-act">'+it.act+'</div>':'')
   +(it.sub?'<div class="g-sub">'+it.sub+'</div>':'')
   +(it.big?'<div class="g-big">'+it.big+'</div>':'')
-  +(it.cost?'<div class="g-cost">'+it.cost+'</div>':'')+'</div>';}
+  +(it.g?'<div class="g-cost">'+cost(it.g,it.h)+'</div>':'')+'</div>';}
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
-const blankTile='<div class="tile blank"></div>', blankTok='<div class="tok blank"></div>';
-
-function renderTiles(){const back=SIDE==='back';
-  let h='<div class="page'+(back?' backs':'')+'">'+REG;
-  h+='<div class="calib"><div class="box">1 inch<br>100%</div><span class="note" style="color:#555">'
-    +(back?'<b>BACKS</b> blank (single-face). Corner ✛ register a duplex pass.':'Verify exactly 1 inch. Colour bleeds to the edge; cut on the inner frame.')+'</span></div>';
-  h+='<div class="famlabel">Cask Tiles — the dual-role hero <span class="sm">the big corner is the cask\'s QUALITY ('+LU(QI)+' = its level; gates destinations, and ×2 prestige at the Hall) · '+LU('zap')+' signature slot action · L3–L5 are the EXPORT beers (fixed quality: Broyhan/Keut Q3 · Mumme Q4 · Bock Q5 — 3 of 4 dealt each game)</span></div><div class="grid">';
-  CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTile:caskTile(d);}); h+='</div>';
-  FAMS.forEach(f=>{h+='<div class="famlabel">'+f.label+(f.sm?' <span class="sm">'+f.sm+'</span>':'')+'</div><div class="grid">';
-    f.items.forEach(it=>{for(let i=0;i<cnt(it.n);i++)h+= back?blankTile:genTile(it,f.cls);});h+='</div>';});
-  h+='<div class="famlabel">Goods Tokens <span class="sm">Grain / Hops — laser-cut on the dashed circle; the colour ring outside it is bleed (or just use wooden cubes)</span></div><div class="grid">';
-  GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)h+= back?blankTok:tok(d);}); h+='</div></div>';
-  return h;}
+function disc(c){return '<div class="disc" style="--c:'+c+'">'+LU('circle')+'</div>';}
+function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+'<span>'+d.nm+'</span></div>';}
+function chip(d){return '<div class="chip" style="--c:'+d.c+'"><span class="ct">'+d.nm+'</span>'
+  +'<span class="cv">'+LU(VP)+'+'+d.v+'</span><span class="ct">'+d.t+'</span></div>';}
 
 function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
-  +'<div class="c-reach">'+(r.start?'<b>start recipe</b> · ':'')+'reaches: '+r.reach+'</div>'
-  +'<div class="c-bonus">'+LU('gift')+'<span>acquire bonus — <b>dual-purpose (TBD)</b></span></div>'
+  +'<div class="c-reach">reaches: '+r.reach+'</div>'
+  +'<div class="c-buy"><span class="lbl">'+LU('store')+' acquire at the Market</span>'
+    +'<span class="gc">'+cost(r.buy.g,r.buy.h)+'</span>'
+    +'<span>permanent — brewing never consumes it</span>'
+    +(r.cellar?'<span class="gate">'+LU('lock')+'brewing needs the Aging Cellar</span>':'')+'</div>'
   +'<div class="c-strip"><span class="c-rung">'+LU(QI)+r.L+'</span>'
   +'<span class="c-nm">'+r.nm+'</span>'
   +'<span class="c-cost">'+cost(r.g,r.h)+(r.cellar?'<span class="c-gate" title="needs Aging Cellar">'+LU('lock')+'</span>':'')+'</span></div>'
   +'</div>';}
-function renderCards(){let h='<div class="page">'
-  +'<div class="famlabel">Recipe Cards <span class="sm">portrait cards — slide them up into the tuck strip under your player board (title + cost stay visible on the edge). Start with Gruit (printed) + Hopped; collect the export beers — Broyhan/Keut (Q3) · Mumme (Q4) · Bock (Q5) — to climb. Print all four; only 3 of the 4 are dealt into any game.'+(MODE==='proof'?'(proof: one set shown — full mode prints a complete set per player.)':'one complete set per player ('+PLAYERS.length+' total).')+' (Acquire bonus is dual-purpose, TBD.)</span></div>';
-  const sets=MODE==='proof'?1:PLAYERS.length;
-  for(let s=0;s<sets;s++){
-    if(MODE!=='proof')h+='<div class="famlabel" style="color:'+PLAYERS[s].c+';border-color:'+PLAYERS[s].c+'">'+PLAYERS[s].nm+' — complete recipe set</div>';
-    h+='<div class="grid" style="gap:.14in">';
-    RECIPES.forEach(r=>{h+=recipeCard(r);});
-    h+='</div>';
-  }
-  return h+'</div>';}
 
+// ---- player brewery board ----
 function vessel(n,open){
-  const steps='<div class="vstep"><span class="sn">Brew</span>step 0<span class="arr">›</span></div>'
-    +'<div class="vstep"><span class="sn">Ferment</span><span class="arr">›</span></div>'
-    +'<div class="vstep age"><span class="sn">Age</span>Cellar +1/turn<span class="arr">›</span></div>'
-    +'<div class="vstep ready"><span class="sn">Ready</span>→ a slot</div>';
+  const steps='<div class="vstep"><span class="sn">Brew · 0</span><span class="arr">›</span></div>'
+    +'<div class="vstep"><span class="sn">1</span>Gruit Ready<span class="arr">›</span></div>'
+    +'<div class="vstep age"><span class="sn">2</span>Hopped · Q3 Ready<span class="arr">›</span></div>'
+    +'<div class="vstep ready"><span class="sn">3</span>Q4 · Q5 Ready → slot</div>';
   return '<div class="vessel'+(open?'':' locked')+'"><span class="vtag">Vessel '+n+'</span><div class="vslot">'+LU('beer')+'cask</div><div class="vtrack">'+steps+'</div></div>';}
 function pboard(p){
-  let store='';for(let i=0;i<12;i++)store+='<div class="gbox">'+LU('package')+'</div>';
+  let store='';for(let i=0;i<12;i++)store+='<div class="gbox'+(i>=8?' wh':'')+'">'+LU('package')+'</div>';
   let ups='';for(let i=0;i<3;i++)ups+='<div class="pslot">'+LU('wrench')+'Room / Modifier</div>';
   let goals='';for(let i=0;i<3;i++)goals+='<div class="pslot'+(i<2?' best':'')+'">'+LU('target')+(i<2?'goal (scores)':'goal')+'</div>';
-  let tuck='<div class="tslot printed">'+LU('scroll-text')+'Gruit</div><div class="tslot printed">'+LU('scroll-text')+'Hopped</div>';
-  for(let i=0;i<3;i++)tuck+='<div class="tslot">'+LU('plus')+'recipe card</div>';
-  return '<div class="page fixed"><div class="board" style="--pc:'+p.c+'">'
+  let tuck='<div class="tslot printed"><span class="tline">'+LU('scroll-text')+'Gruit</span>'+cost(1,0)+'</div>'
+    +'<div class="tslot printed"><span class="tline">'+LU('scroll-text')+'Hopped</span>'+cost(1,1)+'</div>';
+  for(let i=0;i<3;i++)tuck+='<div class="tslot"><span class="tline">'+LU('plus')+'recipe card</span></div>';
+  return '<div class="board" style="--pc:'+p.c+'">'
     +'<div class="pb-head"><div class="crest">'+LU('beer')+'</div>'
       +'<div class="pb-title"><div class="pb-name">Brewhouse · '+p.nm+'</div>'
         +'<div class="pb-sub">your private brewery · Source → Brew → Age → Ship · Brewhouses of the Hanse · v0.10</div></div>'
-      +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Storage <span class="sm">cap 8 · +4 with a Warehouse</span></span><div class="boxrow">'+store+'</div></div></div>'
+      +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Storage <span class="sm">cap 8 · the W boxes need a Warehouse</span></span><div class="boxrow">'+store+'</div></div></div>'
     +'<div class="pb-body">'
-      +'<div class="pb-col left"><div class="pb-sect">'+LU('flask-conical')+'Vessels &amp; Maturation<span class="hint">start 2 open · cap 4 · ages +1/turn + the Cellar</span></div>'
+      +'<div class="pb-col left"><div class="pb-sect">'+LU('flask-conical')+'Vessels &amp; Maturation<span class="hint">start 2 open · cap 4 · +1/turn auto + the Cellar · Aging Cellar −1 step</span></div>'
         +vessel(1,true)+vessel(2,true)+vessel(3,false)+vessel(4,false)
-        +'<div class="pb-sub" style="margin-top:.02in">Warm start: a Ready Gruit sits in Vessel 1 — deploy it to a slot on turn 1. (Your Cog is on a slot.)</div></div>'
+        +'<div class="pb-sub" style="margin-top:.02in">Warm start: a Ready Gruit sits in Vessel 1 — deploy it to a slot on turn 1. (Your Cog is on a slot, bound to Bruges.) Seats after the first start +1 '+LU('wheat','g ic')+'.</div></div>'
       +'<div class="pb-col right">'
-        +'<div><div class="pb-sect">'+LU('wrench')+'Upgrades<span class="hint">Rooms &amp; Modifiers</span></div><div class="strip">'+ups+'</div></div>'
-        +'<div><div class="pb-sect">'+LU('target')+'Goals<span class="hint">best 2 score</span></div><div class="strip">'+goals+'</div></div></div>'
+        +'<div><div class="pb-sect">'+LU('wrench')+'Upgrades<span class="hint">Rooms &amp; Modifiers · earn by delivering, or buy</span></div><div class="strip">'+ups+'</div></div>'
+        +'<div><div class="pb-sect">'+LU('target')+'Goals<span class="hint">hold 3 · best 2 score</span></div><div class="strip">'+goals+'</div></div></div>'
     +'</div>'
-    +'<div class="tuck"><div class="tuck-h">'+LU('scroll-text')+'Recipe Cards<span class="sm">slide cards up into these — the types you may brew</span></div><div class="tuckrow">'+tuck+'</div></div>'
-  +'</div></div>';}
-function renderBoards(){return PLAYERS.map(pboard).join('');}
+    +'<div class="tuck"><div class="tuck-h">'+LU('scroll-text')+'Recipe Cards<span class="sm">slide cards up into these — the types you may brew (strip shows the BREW cost)</span></div><div class="tuckrow">'+tuck+'</div></div>'
+  +'</div>';}
 
+// ---- destinations board ----
 function kpanel(d,hall){const kc=d.kc;
-  let track='';for(let i=0;i<=6;i++)track+='<div class="pc'+(i===0?' z':'')+'">'+i+'</div>';
+  let t1='',t2='';for(let i=0;i<=6;i++)t1+='<div class="pc'+(i===0?' z':'')+'">'+i+'</div>';
+  for(let i=7;i<=13;i++)t2+='<div class="pc">'+i+'</div>';
   const valbody = hall
-    ? '<div class="kval">'+LU(VP)+'×2<span class="per">VP per quality (L5 = 10)</span></div>'
+    ? '<div class="kval">'+LU(VP)+'×2.5<span class="per">per quality — Q2→5 · Q3→7 · Q4→10 · Q5→12</span></div>'
     : '<div class="kval">'+LU(VP)+d.val+'<span class="per">VP per delivered cask</span></div>';
   const majline = hall
     ? '<div class="kmaj"><span>prestige — out of commerce</span><b>no majority</b></div>'
-    : '<div class="kmaj"><span>majority 1st/2nd/3rd →</span><b>'+LU(VP)+' '+d.maj+'</b></div>';
+    : '<div class="kmaj"><span>majority 1st/2nd/3rd →</span><b>'+LU(VP)+' '+d.maj.join('/')+'</b></div>';
   return '<div class="kpanel" style="--kc:'+kc+'">'
     +'<div class="ktitle"><span class="kname">'+LU(hall?'crown':'landmark')+d.nm+'</span><span class="kreq">'+LU(QI)+'L'+d.req+'+</span></div>'
     +'<div class="kbody"><div class="krole">'+d.role+'</div>'
@@ -376,29 +436,255 @@ function kpanel(d,hall){const kc=d.kc;
       +'<div class="kben">'+LU('gift')+'<span>'+d.ben+'</span></div>'
       +majline
       +'<div class="kslot">'+LU('beer')+'delivered<br>casks (stack)</div>'
-      +'<div class="ptrack">'+track+'</div><div class="ptrack-l">presence — advance your '+LU('circle')+' disc per cask; furthest = majority</div>'
+      +'<div class="ptrack pt1">'+t1+'</div><div class="ptrack">'+t2+'</div>'
+      +'<div class="ptrack-l">presence — advance your '+LU('circle')+' disc per cask; ranks → majority</div>'
     +'</div></div>';}
-function renderDest(){
-  let clk='';for(let i=1;i<=19;i++){let end='';for(const p in SAILED)if(SAILED[p]===i)end=p+'p';
-    clk+='<div class="cc'+(end?' end':'')+'">'+(end?end+'<br>END':'<span class="n">'+i+'</span>')+'</div>';}
-  let disp='';for(let i=0;i<4;i++)disp+='<div class="uslot">'+LU('wrench')+'upgrade</div>';
-  disp+='<div class="uslot supply">'+LU('layers')+'supply<br>(face-down)</div>';
-  disp+='<div class="uslot supply faceup">'+LU('sailboat')+'ships<br>(face-up)</div>';
-  disp+='<div class="uslot supply">'+LU('target')+'goal tiles<br>(face-down)</div>';
-  return '<div class="page fixed"><div class="dboard">'
+function dboard(){
+  let disp='';for(let i=0;i<4;i++)disp+='<div class="uslot">'+LU('wrench')+'upgrade<br>(face-up)</div>';
+  disp+='<div class="uslot supply">'+LU('layers')+'upgrade deck<br>(face-down)</div>';
+  disp+='<div class="uslot supply faceup">'+LU('sailboat')+'ship supply<br>(face-up)</div>';
+  disp+='<div class="uslot supply faceup">'+LU('scroll-text')+'export recipes<br>(3 of 4 dealt)</div>';
+  disp+='<div class="uslot supply faceup">'+LU('target')+'goal supply<br>(face-up)</div>';
+  return '<div class="dboard">'
     +'<div class="db-head"><h2>'+LU('landmark')+'Destinations</h2>'
       +'<span class="legend"><span><b>'+LU(QI,'ql')+'</b> quality level — a cask of level ≥ the L# may ship there</span><span><b>'+LU(VP,'vp')+'</b> victory points</span></span></div>'
     +'<div class="kontor-row">'+DESTS.map(d=>kpanel(d,false)).join('')+kpanel(HALL,true)+'</div>'
     +'<div class="db-bottom">'
-      +'<div class="sbox disp"><div class="sb-h">'+LU('wrench')+'Market — Upgrade display<span class="sm">buy one (pay its cost) · or earn free by delivering to London / Novgorod</span></div><div class="uprow">'+disp+'</div></div>'
-      +'<div class="sbox clock"><div class="sb-h">'+LU('sailboat')+'Sailed-Ships track<span class="sm">each voyage (a ship sailing, or a Charter) fills one slot → at your player-count marker, finish the round &amp; score</span></div><div class="ctrack">'+clk+'</div></div>'
-    +'</div></div></div>';}
+      +'<div class="sbox disp"><div class="sb-h">'+LU('store')+'Market — shared supply<span class="sm">upgrades: buy one (4–5 G) or earn one free by delivering to London / Novgorod · recipes &amp; ships always stocked</span></div><div class="uprow">'+disp+'</div></div>'
+      +'<div class="sbox maj"><div class="sb-h">'+LU(VP)+'Majorities at scoring</div><div class="majnote">'
+        +'At <b>each kontor</b>, rank players by delivered casks; 1st/2nd/3rd take the tiers (award the majority chips).<br>'
+        +'<b>2-player:</b> skip 2nd (winner-take-all). <b>Ties:</b> split the occupied tiers, rounded down.<br>'
+        +'Then add delivery values + your best 2 goals. Tiebreak: goods, then casks on slots.</div></div>'
+    +'</div></div>';}
 
-function render(){let h;
-  if(VIEW==='tiles')h=renderTiles(); else if(VIEW==='cards')h=renderCards();
-  else if(VIEW==='boards')h=renderBoards(); else h=renderDest();
-  document.getElementById('out').innerHTML=h;
-  if(window.lucide)lucide.createIcons();}
+// ---- MAIN BOARD — the Wharf (stations + 8 slots + both shared tracks) ----
+function slotCell(area,lineLbl){return '<div class="wslot" style="grid-area:'+area+'">'+LU('layout-grid')
+  +'<b>slot</b><span>'+lineLbl+' line</span><span>cask · ship · neutral</span></div>';}
+function station(L,nm,role,ic,acts,extra){return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
+  +'<span class="ltr">'+L+'</span><span class="role">'+role+'</span>'
+  +'<span class="nm">'+LU(ic)+nm+'</span><div class="acts">'+acts+'</div>'
+  +(extra||'')+'<div class="wkspot">'+LU('user-round')+'worker</div></div>';}
+function mboard(){
+  // production-order arrows A→B→D→C, pinned between the stations
+  const arr=(t,l,g)=>'<div class="warr" style="top:'+t+'in;left:'+l+'in">'+g+'</div>';
+  const wharf='<div class="wharf" style="position:relative">'
+    +'<div class="wcorner" style="grid-area:1/1">the Wharf<br>—<br>8 slots ring<br>4 stations</div>'
+    +slotCell('1/2','Market + Harbor')+slotCell('1/3','Brewhouse + Cellar')
+    +'<div class="wcorner" style="grid-area:1/4">a line =<br>slot · station<br>· station · slot</div>'
+    +slotCell('2/1','Market + Brewhouse')
+    +station('A','Market','1 · Source','store','Take <b>2 goods</b> (any mix), <i>or</i> buy 1: recipe · ship (→ a slot, bound to a destination) · upgrade (from the display).')
+    +station('B','Brewhouse','2 · Brew','flask-conical','Pay a recipe’s cost → a young cask at step 0 in an <b>open vessel</b>. One brew per visit.')
+    +slotCell('2/4','Market + Brewhouse')
+    +slotCell('3/1','Harbor + Cellar')
+    +station('C','Harbor','4 · Ship','ship','Load a deployed cask onto <b>your</b> ship (yours or a rival’s cask) · launch a partial ship early · or <b>Charter</b>: 2 '+LU('wheat','g ic')+' ships 1 Ready cask now (advances the clock).')
+    +station('D','Cellar','3 · Age','hourglass','Gain <b>3 age points</b>, split freely across your vessels. (Every cask also ages +1 automatically each of your turns.)')
+    +slotCell('3/4','Harbor + Cellar')
+    +'<div class="wcorner" style="grid-area:4/1">stations are<br>never closed</div>'
+    +slotCell('4/2','Market + Harbor')+slotCell('4/3','Brewhouse + Cellar')
+    +'<div class="wcorner" style="grid-area:4/4">orthogonal<br>moves only —<br>never diagonal</div>'
+    +arr(1.91,2.625,'→')+arr(2.625,3.34,'↓')+arr(3.34,2.625,'←')
+    +'</div>';
+  const side='<div class="mb-side">'
+    +'<div class="mbox"><h4>'+LU('list-ordered')+'Your turn</h4><ol>'
+      +'<li><b>Move</b> to an adjacent station (mandatory from turn 2). Moving onto a <b>rival-occupied</b> station costs <b>1 '+LU('wheat','g ic')+'</b> — the occupancy toll (opening placement free).</li>'
+      +'<li><b>Activate</b> your station’s row <b>or</b> column.</li>'
+      +'<li><b>Resolve</b> its 4 stops — slot · station · station · slot — in <b>any order</b>. You may use every building on the line (casks, ships, neutrals): free, on your turn only.</li></ol></div>'
+    +'<div class="mbox"><h4>'+LU('beer')+'The cask’s three states</h4><div class="b">'
+      +'<b>Maturing</b> (private vessel) → Ready → <b>deploy to a slot</b> (public action-building + cargo) → <b>shipped</b> to a destination (scores for its owner, leaves). '
+      +'A rival may ship your slot cask — <b>you</b> score it &amp; take its benefit.</div></div>'
+    +'<div class="mbox"><h4>'+LU('settings')+'Setup seeding</h4><div class="b">'
+      +'Each house: 3 '+LU('wheat','g ic')+' 2 '+LU('sprout','h ic')+' (+1 '+LU('wheat','g ic')+' per seat after the first) · Gruit + Hopped · 2 vessels · a Ready Gruit · a Cog on a slot (→ Bruges).<br>'
+      +'Shared: <b>2–3 neutral buildings</b> + the Cogs spread across different lines · deal <b>3 of the 4 export beers</b> · 4 upgrades face-up · 3 goals per player. '
+      +'First player is <b>fixed all game</b>. <i>2p: lock 2 slots ⚙.</i></div></div>'
+    +'</div>';
+  let clk='';for(let i=1;i<=19;i++){let end='';for(const p in SAILED)if(SAILED[p]===i)end=p+'p';
+    clk+='<div class="cc'+(end?' end':'')+'">'+(end?end+'<br>END':'<span class="n">'+i+'</span>')+'</div>';}
+  let rt='';for(let i=1;i<=MAX_ROUND;i++)rt+='<div class="rc'+(i===MAX_ROUND?' cap':(i>=12?' band':''))+'">'+(i===MAX_ROUND?'25<br>CAP':i)+'</div>';
+  return '<div class="mboard">'
+    +'<div class="mb-head"><h2>'+LU('anchor')+'The Wharf</h2><span class="sub">Brewhouses of the Hanse · main board · v0.10 — Source → Brew → Age → Ship</span></div>'
+    +'<div class="mb-main">'+wharf+side+'</div>'
+    +'<div><div class="ctrack">'+clk+'</div><div class="mtrack-l">'+'Sailed-Ships track — every voyage (a ship sailing, or a Charter) fills one slot; at your player-count END, finish the round &amp; score</div></div>'
+    +'<div><div class="rtrack">'+rt+'</div><div class="mtrack-l">round track — move the marker each round; the shaded 12–25 band is the target pace; the game never passes 25</div></div>'
+  +'</div>';}
+
+//==================================================================
+// PAGINATION — deterministic sheets of absolutely positioned items
+//==================================================================
+function newPage(pages,section,label){const p={section,label,items:[],cuts:[],circles:[]};pages.push(p);return p;}
+function packRun(pages,section,label,kind,htmlList,famTag,famPages){
+  // pack same-size items in gapless rows; rows flow page to page (one unbroken grid)
+  const [w,h]=SIZE[kind];const cols=Math.floor((PG.w-0.4)/w);const x0=+( (PG.w-cols*w)/2 ).toFixed(4);
+  let pg=pages.length&&pages[pages.length-1].section===section?pages[pages.length-1]:newPage(pages,section,label);
+  let cx=pg._cx!==undefined?pg._cx:x0, cy=pg._cy!==undefined?pg._cy:PG.y0, rh=pg._rh||0;
+  if(pg._kind&&pg._kind!==kind){cx=x0;cy=cy+rh;rh=0;}   // a new size always starts a fresh row
+  htmlList.forEach(html=>{
+    if(cx+w>x0+cols*w+0.001){cx=x0;cy+=h;}
+    if(cy+h>PG.yMax){pg._cx=undefined;pg=newPage(pages,section,label);cx=x0;cy=PG.y0;}
+    pg.items.push({x:cx,y:cy,w,h,html});
+    if(kind==='tok'||kind==='disc'||kind==='wtok')pg.circles.push({cx:cx+w/2,cy:cy+h/2,r:CUTR[kind]});
+    else addRectCut(pg,cx,cy,w,h);
+    if(famTag)(famPages[famTag]=famPages[famTag]||new Set()).add(pages.indexOf(pg));
+    cx+=w;rh=h;
+  });
+  pg._cx=cx;pg._cy=cy;pg._rh=rh;pg._kind=kind;
+}
+function addRectCut(pg,x,y,w,h){  // dedupe shared edges → each grid line cuts ONCE
+  const seg=(x1,y1,x2,y2)=>{const k=[x1,y1,x2,y2].map(v=>v.toFixed(3)).join(',');
+    if(!pg._segs)pg._segs={};if(pg._segs[k])return;pg._segs[k]=1;pg.cuts.push([x1,y1,x2,y2]);};
+  seg(x,y,x+w,y);seg(x,y+h,x+w,y+h);seg(x,y,x,y+h);seg(x+w,y,x+w,y+h);
+}
+function boardPage(pages,section,label,html){
+  const pg=newPage(pages,section,label);
+  pg.items.push({x:0.3,y:0.32,w:9.8,h:7.3,html});
+  pg.rrect={x:0.3,y:0.32,w:9.8,h:7.3,r:0.12};
+}
+
+function buildPages(){
+  const pages=[],famPages={};
+  // --- BOARDS ---
+  boardPage(pages,'boards','Main board — the Wharf',mboard());
+  boardPage(pages,'boards','Destinations board',dboard());
+  PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p)));
+  // --- TILES (one unbroken 1.25in grid — no family breaks) ---
+  const tiles=[];
+  CASKS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push(['Casks',caskTile(d)]);});
+  SHIPS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push(['Ships',genTile({ic:d.ic,nm:d.nm,big:d.big,g:d.g,c:d.c})]);});
+  NEUTRALS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push(['Neutral buildings',genTile(d,'tn')]);});
+  ROOMS.concat(MODS).forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push(['Upgrades',genTile(d,'tu')]);});
+  GOALS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push(['Goals',genTile(d,'tg')]);});
+  // group page-assignment by family for the checklist, but pack as ONE run
+  packRun(pages,'tiles','Tiles — unbroken 1.25″ grid','tile',tiles.map(t=>t[1]),null,famPages);
+  // re-walk to tag families by index
+  (function(){let idx=0;pages.filter(p=>p.section==='tiles').forEach(pg=>{pg.items.forEach(()=>{
+    const fam=tiles[idx++][0];(famPages[fam]=famPages[fam]||new Set()).add(pages.indexOf(pg));});});})();
+  // --- TOKENS & BITS ---
+  const BL='Tokens & markers — circles cut on the inner ring';
+  const toks=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)toks.push(tok(d));});
+  packRun(pages,'bits',BL,'tok',toks,'Goods tokens',famPages);
+  const chips=[];DESTS.forEach(d=>['1st','2nd','3rd'].forEach((t,i)=>chips.push(chip({nm:d.nm,c:d.kc,t,v:d.maj[i]}))));
+  packRun(pages,'bits',BL,'chip',MODE==='proof'?chips.slice(0,4):chips,'Majority chips',famPages);
+  const wt=[];PLAYERS.forEach(p=>wt.push(wtok({ic:'user-round',nm:p.nm+' worker',c:p.c})));
+  wt.push(wtok({ic:'anchor',nm:'first player (fixed)',c:'#b8860b'}));
+  wt.push(wtok({ic:'hourglass',nm:'round marker',c:'#5b4a37'}));
+  packRun(pages,'bits',BL,'wtok',MODE==='proof'?wt.slice(0,3):wt,'Workers & markers',famPages);
+  const ds=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(OWN_DISCS);i++)ds.push(disc(p.c));});
+  packRun(pages,'bits',BL,'disc',ds,'Ownership discs',famPages);
+  // --- RECIPE CARDS (cardstock — do not mount; they tuck under the board edge) ---
+  const cards=[];const sets=MODE==='proof'?1:PLAYERS.length;
+  for(let s=0;s<sets;s++)RECIPES.forEach(r=>cards.push(recipeCard(r)));
+  packRun(pages,'cards','Export recipe cards — 1 set per player','card',cards,'Recipe cards',famPages);
+  // --- CHECKLIST (always last; carries no cuts, so earlier sheets stay page-aligned) ---
+  const pg=newPage(pages,'list','Component checklist');
+  pages.forEach((p,i)=>p.no=i+1);   // number sheets BEFORE building the checklist's sheet refs
+  pg.items.push({x:0,y:0,w:10.4,h:7.9,html:checklist(pages,famPages)});
+  return pages;
+}
+
+//==================================================================
+// CHECKLIST — the manufacturing manifest (full-set counts, always)
+//==================================================================
+function pgRef(pages,famPages,fam){const s=famPages[fam];if(!s)return '—';
+  return 'S'+[...s].map(i=>pages[i].no).sort((a,b)=>a-b).join(', S');}
+function checklist(pages,famPages){
+  const tileTotal=CASKS.reduce((a,d)=>a+d.n,0)+SHIPS.reduce((a,d)=>a+d.n,0)+NEUTRALS.length
+    +ROOMS.concat(MODS).reduce((a,d)=>a+d.n,0)+GOALS.reduce((a,d)=>a+d.n,0);
+  const row=(bx,nm,n,note)=>'<tr>'+(bx?'<td class="bx"></td>':'<td></td>')+'<td>'+nm+'</td><td class="n">'+n+'</td><td>'+(note||'')+'</td></tr>';
+  const bp=pages.filter(p=>p.section==='boards');
+  const pbRef=bp.length>3?'S'+bp[2].no+'–S'+bp[bp.length-1].no:'S'+bp[2].no+' (proof: 1 of 5 shown)';
+  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v0.10)</h2><div class="cols2">';
+  h+='<table><tr><th></th><th>Boards (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
+    +row(1,'Main board — the Wharf (stations · 8 slots · Sailed-Ships + round tracks)','1','S'+bp[0].no)
+    +row(1,'Destinations board (4 kontore + the Hall · Market display · majority chart)','1','S'+bp[1].no)
+    +row(1,'Player brewery boards (Crimson · Azure · Forest · Amber · Violet)','5',pbRef)
+    +'</table>';
+  h+='<table><tr><th></th><th>Tiles — 1.25″ squares (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
+    +row(1,'Cask · Gruit Q1','16',pgRef(pages,famPages,'Casks'))
+    +row(1,'Cask · Hopped Q2','20','')
+    +row(1,'Cask · Export Q3 (Broyhan / Keut share the pool)','12','')
+    +row(1,'Cask · Export Q4 (Mumme)','8','')
+    +row(1,'Cask · Export Q5 (Bock — needs Aging Cellar)','4','')
+    +row(1,'Ship · Cog (cap 2)','8',pgRef(pages,famPages,'Ships'))
+    +row(1,'Ship · Hulk (cap 3)','5','')
+    +row(1,'Neutral buildings (6 designs ×1 — seed 2–3 per game)','6',pgRef(pages,famPages,'Neutral buildings'))
+    +row(1,'Upgrade · Extra Vessel ⚙ (supply = players+1)','6',pgRef(pages,famPages,'Upgrades'))
+    +row(1,'Upgrades · 10 other designs ×2','20','')
+    +row(1,'Goals (9 designs ×2 ⚙ — 4–5p deal 3 each)','18',pgRef(pages,famPages,'Goals'))
+    +'<tr class="tot"><td></td><td>Tile total</td><td class="n">'+tileTotal+'</td><td></td></tr></table>';
+  h+='<table><tr><th></th><th>Cards — 1.85×2.55″ (cardstock, do NOT mount)</th><th>qty</th><th>sheet</th></tr>'
+    +row(1,'Export recipes · Broyhan / Keut / Mumme / Bock ×5 (1 per player ⚙)','20',pgRef(pages,famPages,'Recipe cards'))
+    +row(0,'<i>Gruit &amp; Hopped — printed on every brewery board (no card)</i>','—','')
+    +'</table>';
+  h+='<table><tr><th></th><th>Tokens &amp; markers (chipboard discs/squares)</th><th>qty</th><th>sheet</th></tr>'
+    +row(1,'Grain tokens 0.7″ (or ~60 wooden cubes)','60',pgRef(pages,famPages,'Goods tokens'))
+    +row(1,'Hops tokens 0.7″ (or ~40 wooden cubes)','40','')
+    +row(1,'Ownership discs 0.5″ — 20 per colour','100',pgRef(pages,famPages,'Ownership discs'))
+    +row(1,'Worker discs 0.8″ — 1 per colour (or meeples)','5',pgRef(pages,famPages,'Workers & markers'))
+    +row(1,'First-player marker 0.8″ (fixed all game)','1','')
+    +row(1,'Round marker 0.8″ (the 1–25 track on the main board)','1','')
+    +row(1,'Majority chips 0.8″ — 4 kontore × 1st/2nd/3rd','12',pgRef(pages,famPages,'Majority chips'))
+    +'</table>';
+  h+='<div class="wf"><b>Prototype workflow.</b> 1) Toggle <b>ART</b>, print all sheets at 100% (registration marks on, no cut lines — verify the 3″ bar). '
+    +'2) Toggle <b>CUT</b>, print to PDF (art hidden; red cut lines + the same marks) or use the per-sheet ⬇ SVG buttons. '
+    +'3) Spray-glue the art sheets to chipboard. 4) Import the cut file into the laser, align on the registration marks, cut the red lines. '
+    +'Tiles &amp; cards are gapless grids — every internal line is drawn once. Tokens cut on the inner circle; the ring outside is bleed. '
+    +'Backs are bare chipboard (every component is single-faced; the face-down upgrade deck &amp; goal deals work by flipping). '
+    +'Cards print on cardstock and stay unmounted so they tuck under the brewery board.</div>';
+  h+='</div></div>';
+  return h;}
+
+//==================================================================
+// OVERLAY SVG — registration marks (both layers) + cut lines (CUT)
+//==================================================================
+function regmarkSvg(){let s='';REGS.forEach(([x,y])=>{
+  s+='<line x1="'+(x-0.15)+'" y1="'+y+'" x2="'+(x+0.15)+'" y2="'+y+'" stroke="#000" stroke-width="0.012" fill="none"/>'
+    +'<line x1="'+x+'" y1="'+(y-0.15)+'" x2="'+x+'" y2="'+(y+0.15)+'" stroke="#000" stroke-width="0.012" fill="none"/>'
+    +'<circle cx="'+x+'" cy="'+y+'" r="0.07" stroke="#000" stroke-width="0.012" fill="none"/>';});
+  return s;}
+function overlaySvg(pg){
+  let s='<svg class="ov" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+PG.w+' '+PG.h+'">';
+  s+='<g class="marks">'+regmarkSvg();
+  s+='<text x="0.45" y="0.22" font-size="0.11" font-family="Georgia,serif" fill="#000">Brewhouses of the Hanse · S'+pg.no+' · '+MODE+' · '+esc(pg.label)+'</text>';
+  s+='<line x1="6.9" y1="0.16" x2="9.9" y2="0.16" stroke="#000" stroke-width="0.014"/>'
+    +'<line x1="6.9" y1="0.1" x2="6.9" y2="0.22" stroke="#000" stroke-width="0.014"/>'
+    +'<line x1="9.9" y1="0.1" x2="9.9" y2="0.22" stroke="#000" stroke-width="0.014"/>'
+    +'<text x="8.18" y="0.12" font-size="0.09" font-family="Georgia,serif" fill="#000">3.00 in</text>';
+  s+='</g><g class="cuts">';
+  pg.cuts.forEach(c=>{s+='<line x1="'+c[0]+'" y1="'+c[1]+'" x2="'+c[2]+'" y2="'+c[3]+'" stroke="#f00" stroke-width="0.008" fill="none"/>';});
+  pg.circles.forEach(c=>{s+='<circle cx="'+c.cx+'" cy="'+c.cy+'" r="'+c.r+'" stroke="#f00" stroke-width="0.008" fill="none"/>';});
+  if(pg.rrect){const r=pg.rrect;s+='<rect x="'+r.x+'" y="'+r.y+'" width="'+r.w+'" height="'+r.h+'" rx="'+r.r+'" stroke="#f00" stroke-width="0.008" fill="none"/>';}
+  s+='</g></svg>';
+  return s;}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+
+//==================================================================
+// RENDER + SVG DOWNLOAD
+//==================================================================
+let PAGES=[];
+function render(){
+  PAGES=buildPages();
+  const show=PAGES.filter(p=>VIEW==='all'||p.section===VIEW);
+  let h='';
+  show.forEach(pg=>{
+    h+='<div class="page" id="pg'+pg.no+'">';
+    pg.items.forEach(it=>{h+='<div class="it" style="left:'+it.x+'in;top:'+it.y+'in;width:'+it.w+'in;height:'+it.h+'in">'+it.html+'</div>';});
+    h+=overlaySvg(pg);
+    h+='<button class="dl no-print" onclick="dlSvg('+pg.no+')">⬇ S'+pg.no+' cut SVG</button>';
+    h+='</div>';
+  });
+  document.getElementById('out').innerHTML=h||'<p style="text-align:center;padding:2em">no sheets in this view</p>';
+  if(window.lucide)lucide.createIcons();
+}
+function svgFile(pg){  // standalone cut file: marks + cuts, no CSS needed (laser-ready)
+  return '<?xml version="1.0" encoding="UTF-8"?>\n'
+    +'<svg xmlns="http://www.w3.org/2000/svg" width="'+PG.w+'in" height="'+PG.h+'in" viewBox="0 0 '+PG.w+' '+PG.h+'">'
+    +overlaySvg(pg).replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'')
+    +'</svg>';}
+function dlSvg(no){const pg=PAGES.find(p=>p.no===no);if(!pg)return;
+  const blob=new Blob([svgFile(pg)],{type:'image/svg+xml'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='hanse-'+MODE+'-S'+String(no).padStart(2,'0')+'-cut.svg';a.click();URL.revokeObjectURL(a.href);}
+function downloadAll(){const show=PAGES.filter(p=>(VIEW==='all'||p.section===VIEW)&&p.section!=='list');
+  show.forEach((pg,i)=>setTimeout(()=>dlSvg(pg.no),i*350));}
 render();
 </script>
 </body>

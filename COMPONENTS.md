@@ -40,7 +40,7 @@
 | **Hops cubes** | ~40 | Brewing input #2; needed for Hopped & the export (the beer that travels). |
 | **Worker pawns** | 1 / player | The worker you move between stations. |
 | **Ownership discs** | ~20 / player color | Mark a cask's owner once it sits on a **slot** or is **delivered** (casks are a shared-pool tile, so ownership is by disc). |
-| **Majority markers** | per kontor | Resolve the tiered route majorities at scoring (§3F). |
+| **Majority chips** | 12 (4 kontore × 1st/2nd/3rd, values printed) | Awarded when the tiered route majorities resolve at scoring (§3F). |
 | **First-player / round marker** | 1 | Turn order (fixed all game) / round clock. |
 
 > **No VP tokens, no standing markers, no demand-market markers, no aging cubes** (all retired). Score is tallied at game end from delivered casks + majorities + goals — no running points track beyond the **Sailed-Ships** end clock.
@@ -93,8 +93,8 @@ Placed in perimeter slots **at setup** (shared, permanent). They keep the slots 
 | **Towncrier** | draw a goal from the face-up goal supply |
 | **Almshouse** | +1 presence at a kontor you already lead |
 
-### D. Recipe tiles — permission to brew a type (~10 tiles ⚙)
-A small face-up Market supply. A recipe is **only** *a brewable type + its `G/H` cost* (the v0.6 on-collect boons, the 6-card tuck, and frontier-gating are **cut**). Acquired at the **Market**; **permanent** (brewing never consumes it).
+### D. Recipe tiles — permission to brew a type (4 export designs × 1/player = 20 cards ⚙; Gruit + Hopped print on the board)
+A small face-up Market supply. A recipe is **only** *a brewable type + its `G/H` cost* (the v0.6 on-collect boons and frontier-gating are **cut**). Acquired at the **Market**; **permanent** (brewing never consumes it). *(Physical form: **cards** that tuck under the brewery board's bottom edge — the title + brew cost stay visible; the supply is uncontested ⚙, so one copy per player covers the worst case. See `printables.html`.)*
 
 | Recipe | Type | Buy cost ⚙ | Brew cost ⚙ |
 |---|---|---|---|
@@ -129,7 +129,7 @@ Installed on your brewery board. **Earned mainly by delivering** (the **London /
 | **Guild Seat** | +1 age point at the Cellar | `4 G` |
 | **Burgher Status** | +1 presence at every kontor you reach (majority help) | `5 G` |
 
-> Supply ~2 copies of each (more Extra Vessels, the repeatable one), so an upgrade can be **contested**.
+> Supply ~2 copies of each — except **Extra Vessel** (the repeatable one): **players + 1 copies ⚙** (so 6 in the box for 5p, matching `play.html`) — so an upgrade can be **contested**.
 
 ### F. Destinations — *where you ship is the lean* (the destination board)
 All **open from the start**. Differentiated by a **quality gate** (the climb-limiter — better places want better beer) and a unique **benefit / majority**. **The cask's owner always scores the delivery and takes any offered benefit — even when a rival shipped it.**
@@ -144,8 +144,8 @@ All **open from the start**. Differentiated by a **quality gate** (the climb-lim
 
 > **The majority is a big end-game motivator — tiered & ranked (Lacerda-style) at every kontor:** 1st/2nd/3rd by delivered-cask count take the kontor's tiers; **2-player games skip 2nd** (winner-take-all); ties split the occupied tiers ⚙. **Bruges 5/3/0 · London 6/4/2 · Novgorod 8/5/2 · Bergen 10/6/3** ⚙ — **Bergen is the rich anchor** (its token goods benefit is offset by the biggest majority); Novgorod rides high for its hard Q3 reach. **Per-cask delivery value is deliberately low** so the points live in the majority race; this tilts scoring toward the kontore, so the **Hall's prestige was bumped to Q×2.5** to keep the volume-vs-prestige axis balanced (sim-validated near fair at 2–5p, `DESIGN.md` §21 v0.10). **Benefits pair off:** Bruges & **Bergen** give **goods** (liquidity); **London** (engine) & Novgorod give an **Upgrade**. Delivery value is **flat per kontor regardless of quality** (only the Hall scales with Q). *Because presence = cask count, majorities reward shipping **wide** — "go for majorities" is a volume play, not a separate concentrate-on-one strategy.*
 
-### G. Goal / objective tiles — the variety layer (~9 in box; deal 3 per player, best 2 score ⚙)
-A small pool (~9 ⚙) rewarding different shapes, so the winning engine varies by game (the *GWT* blend ideal). **Deal 3 per player; your best 2 score** ⚙ (keeps goals ~⅓ of a score, not the game); authored so a one-note rush fills few of them.
+### G. Goal / objective tiles — the variety layer (9 designs × 2 copies = 18 in box ⚙; deal 3 per player, best 2 score)
+A small pool of **9 designs** rewarding different shapes, so the winning engine varies by game (the *GWT* blend ideal). **Two copies of each print ⚙** — dealing 3 per player needs 15 tiles at 5p, and `play.html` deals duplicates across players freely. **Deal 3 per player; your best 2 score** ⚙ (keeps goals ~⅓ of a score, not the game); authored so a one-note rush fills few of them.
 
 | # | Goal (end-game) ⚙ | Pulls you toward |
 |---|---|---|
@@ -207,15 +207,15 @@ Symmetric for all players (except seat compensation, below). The stations are th
 
 | Family | Count ⚙ | Unique designs |
 |---|---|---|
-| A Casks | ~60 | ~5 types × actions |
-| B Ships | ~13 | 2 (Cog · Hulk) |
-| C Neutral buildings | ~6 in box (2–3 in play) | ~6 |
-| D Recipes | ~10 | ~6 |
-| E Upgrades (Rooms + Modifiers) | ~24 | ~11 |
-| G Goals | ~9 | ~9 |
-| **Tile total** | **~120** | **~30 unique** |
+| A Casks | 60 | 5 types × actions |
+| B Ships | 13 | 2 (Cog · Hulk) |
+| C Neutral buildings | 6 in box (2–3 in play) | 6 |
+| D Recipes (cards) | 20 (4 exports × 1/player) | 4 (+2 printed starts) |
+| E Upgrades (Rooms + Modifiers) | 26 (Extra Vessel ×6, others ×2) | 11 |
+| G Goals | 18 (9 designs ×2) | 9 |
+| **Tile total** | **~123 + 20 recipe cards** | **~33 unique** |
 
-Plus **1 main board · 1 destination board · 5 brewery boards**, **~100 wooden cubes** (grain/hops), **~20 ownership discs / color**, **5 workers**, majority + first-player markers. **No VP/standing/demand/aging tokens.** Squarely **medium *Great Western Trail* footprint** — substantial table presence, far short of a Lacerda sprawl (`DESIGN.md` §21A).
+Plus **1 main board · 1 destination board · 5 brewery boards**, **~100 wooden cubes** (grain/hops — or the printed 0.7″ tokens), **20 ownership discs / color**, **5 workers**, **12 majority chips** (4 kontore × 1st/2nd/3rd), first-player + round markers. **No VP/standing/demand/aging tokens.** Squarely **medium *Great Western Trail* footprint** — substantial table presence, far short of a Lacerda sprawl (`DESIGN.md` §21A). *(The full print-and-cut manifest, with sheet references, is the checklist page of `printables.html`.)*
 
 ---
 

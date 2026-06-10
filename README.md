@@ -10,7 +10,7 @@ Published from `main` via GitHub Pages.
 - **`learn.html`** — learn-to-play primer in one page.
 - **`index.html`** — the **Rulebook & Components** page: the complete rules + the visual component reference (absorbs the former separate rulebook).
 - **`play.html`** — the playable hot-seat client & de-facto reference implementation.
-- **`printables.html`** — print-&-play cut sheets + player boards.
+- **`printables.html`** — the full print-&-play kit: every board, tile, card, and token on deterministic Letter-landscape sheets with an **ART / CUT layer toggle** (shared registration marks for laser cutting), per-sheet SVG cut export, and a manufacturing checklist.
 
 > **✅ v0.10 is live repo-wide:** the markdown specs **and all four HTML pages** are on v0.10 "The Wharf." (The playable `play.html` adds one engine-level relief valve, the **Charter** — a `2 G` single-cask Harbor voyage that keeps the tight slots from deadlocking; see `RULES.md` §5.)
 
