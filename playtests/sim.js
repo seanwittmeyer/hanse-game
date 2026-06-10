@@ -296,6 +296,10 @@ const TUNES = {
   concD : { dest: { bruges:{maj:[2]}, london:{maj:[2]}, bergen:{maj:[10,6,3]}, novgorod:{maj:[3]} } },
   concE : { dest: { bruges:{maj:[2]}, london:{maj:[2]}, bergen:{maj:[14,9,5]}, novgorod:{maj:[3]} } },
   concC : { dest: { bruges:{maj:[]},  london:{maj:[]},  bergen:{maj:[12,8,4]}, novgorod:{maj:[]}  } },
+  // the "pure split" question: kontore pay NO per-cask value (benefit + majority only); the Hall stays
+  // the only per-cask payout. Epsilon values keep the greedy/volume bot's destination ORDER intact
+  // (novgorod > london/bergen > bruges) while contributing ~0 to scores.
+  noval : { dest: { bruges:{value:0.01}, london:{value:0.02}, bergen:{value:0.03}, novgorod:{value:0.04} } },
 };
 const __TUNE = TUNES[process.env.TUNE || 'none'] || TUNES.none;
 
