@@ -40,7 +40,6 @@
 | **Hops cubes** | ~40 | Brewing input #2; needed for Hopped & the export (the beer that travels). |
 | **Worker pawns** | 1 / player | The worker you move between stations. |
 | **Ownership discs** | ~20 / player color | Mark a cask's owner once it sits on a **slot** or is **delivered** (casks are a shared-pool tile, so ownership is by disc). |
-| **Majority chips** | 12 (4 kontore × 1st/2nd/3rd, values printed) | Awarded when the tiered route majorities resolve at scoring (§3F). |
 | **First-player / round marker** | 1 | Turn order (fixed all game) / round clock. |
 
 > **No VP tokens, no standing markers, no demand-market markers, no aging cubes** (all retired). Score is tallied at game end from delivered casks + majorities + goals — no running points track beyond the **Sailed-Ships** end clock.
@@ -215,7 +214,7 @@ Symmetric for all players (except seat compensation, below). The stations are th
 | G Goals | 18 (9 designs ×2) | 9 |
 | **Tile total** | **~123 + 20 recipe cards** | **~33 unique** |
 
-Plus **1 main board · 1 destination board · 5 brewery boards**, **~100 wooden cubes** (grain/hops — or the printed 0.7″ tokens), **20 ownership discs / color**, **5 workers**, **12 majority chips** (4 kontore × 1st/2nd/3rd), first-player + round markers. **No VP/standing/demand/aging tokens.** Squarely **medium *Great Western Trail* footprint** — substantial table presence, far short of a Lacerda sprawl (`DESIGN.md` §21A). *(The full print-and-cut manifest, with sheet references, is the checklist page of `printables.html`.)*
+Plus **1 main board · 1 destination board · 5 brewery boards**, **~100 wooden cubes** (grain/hops — or the printed 0.7″ tokens), **20 ownership discs / color**, **5 workers**, first-player + round markers. **No VP/standing/demand/aging tokens — and no majority markers** (the delivered-cask stacks + ownership discs *are* the standings; tiers pay out at scoring).  Squarely **medium *Great Western Trail* footprint** — substantial table presence, far short of a Lacerda sprawl (`DESIGN.md` §21A). *(The full print-and-cut manifest, with sheet references, is the checklist page of `printables.html`.)*
 
 ---
 

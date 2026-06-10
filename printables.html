@@ -48,6 +48,9 @@
   .t-act .ac{display:inline-flex;align-items:center;justify-content:center;width:.22in;height:.22in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
   .t-act .ac svg,.t-act .ac .ic{width:.12in;height:.12in;stroke-width:2.1;color:#23201c}
   .t-cost{font-size:.12in;font-weight:bold;display:flex;align-items:center;gap:.04in;line-height:1;flex-wrap:wrap}
+  /* dual brew cost (the shared Q3 pool: Broyhan / Keut) — tightened so both costs sit on one line */
+  .t-cost.dual{gap:.015in;font-size:.11in}
+  .t-cost.dual .gc{gap:.008in;font-size:.11in} .t-cost.dual .gc svg,.t-cost.dual .gc .ic{width:.125in;height:.125in}
   .g{color:#ffe08a} .h{color:#c4e69c}
   .gc{display:inline-flex;align-items:center;gap:.02in;font-size:.12in;font-weight:bold}
   .gc svg,.gc .ic{width:.15in;height:.15in;flex:0 0 auto}
@@ -79,12 +82,6 @@
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.02in;font-size:.085in;font-variant:small-caps;font-weight:bold;text-align:center;line-height:1;text-shadow:0 1px 1px rgba(0,0,0,.4)}
   .wtok::after{content:"";position:absolute;inset:.1in;border:.8pt solid rgba(255,255,255,.75);border-radius:50%}
   .wtok svg{width:.3in;height:.3in}
-  /* majority CHIPS — .8in cut squares (set aside; awarded at final scoring) */
-  .chip{width:.8in;height:.8in;background:var(--c);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    font-size:.09in;font-variant:small-caps;font-weight:bold;text-align:center;line-height:1.05;text-shadow:0 1px 1px rgba(0,0,0,.4);gap:.015in}
-  .chip .cv{font-size:.24in;font-weight:900;display:flex;align-items:center;gap:.02in}
-  .chip .cv svg,.chip .cv .ic{width:.16in;height:.16in}
-  .chip .ct{opacity:.9}
   /* ====== RECIPE CARDS — 1.85×2.55in, square corners, gapless grid ====== */
   .card{width:1.85in;height:2.55in;background:#f7efdc;color:var(--ink);
     position:relative;padding:0;display:flex;flex-direction:column;overflow:hidden}
@@ -345,7 +342,7 @@ const OWN_DISCS=20;                  // ownership discs per colour ⚙ (COMPONEN
 //==================================================================
 const PG={w:10.4,h:7.9,y0:0.45,yMax:7.62};
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres
-const SIZE={tile:[1.25,1.25],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],chip:[0.8,0.8],card:[1.85,2.55]};
+const SIZE={tile:[1.25,1.25],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
@@ -359,12 +356,12 @@ function setLayer(l){LAYER=l;document.getElementById('lart').classList.toggle('o
 // ART — piece face generators (the scrutinized tile/card/board art)
 //==================================================================
 function caskTile(d){
-  let c=cost(d.g,d.h); if(d.alt)c+='<span style="font-size:.1in;opacity:.85">/</span>'+cost(d.alt[0],d.alt[1]);
+  let c=cost(d.g,d.h); if(d.alt)c+='<span style="opacity:.85">/</span>'+cost(d.alt[0],d.alt[1]);
   return '<div class="tile" style="--c:'+d.c+'">'
   +'<div class="q">'+LU(QI)+d.q+'</div>'
   +'<div class="t-nm">'+d.nm+'</div>'
   +'<div class="t-act"><span class="ac">'+LU(d.ai)+'</span><span>'+d.act+'</span></div>'
-  +'<div class="t-cost">'+c+(d.cellar?' <span style="font-size:.1in">· Cellar</span>':'')+'</div></div>';}
+  +'<div class="t-cost'+(d.alt?' dual':'')+'">'+c+(d.cellar?' <span style="font-size:.1in">· Cellar</span>':'')+'</div></div>';}
 function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--c:'+it.c+'">'
   +'<div class="g-head"><span class="bigic">'+LU(it.ic)+'</span><span class="g-nm">'+it.nm+'</span></div>'
   +(it.act?'<div class="g-act">'+it.act+'</div>':'')
@@ -373,9 +370,7 @@ function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--
   +(it.g?'<div class="g-cost">'+cost(it.g,it.h)+'</div>':'')+'</div>';}
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
 function disc(c){return '<div class="disc" style="--c:'+c+'">'+LU('circle')+'</div>';}
-function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+'<span>'+d.nm+'</span></div>';}
-function chip(d){return '<div class="chip" style="--c:'+d.c+'"><span class="ct">'+d.nm+'</span>'
-  +'<span class="cv">'+LU(VP)+'+'+d.v+'</span><span class="ct">'+d.t+'</span></div>';}
+function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?'<span>'+d.nm+'</span>':'')+'</div>';}
 
 function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
   +'<div class="c-reach">reaches: '+r.reach+'</div>'
@@ -551,9 +546,7 @@ function buildPages(){
   const BL='Tokens & markers — circles cut on the inner ring';
   const toks=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)toks.push(tok(d));});
   packRun(pages,'bits',BL,'tok',toks,'Goods tokens',famPages);
-  const chips=[];DESTS.forEach(d=>['1st','2nd','3rd'].forEach((t,i)=>chips.push(chip({nm:d.nm,c:d.kc,t,v:d.maj[i]}))));
-  packRun(pages,'bits',BL,'chip',MODE==='proof'?chips.slice(0,4):chips,'Majority chips',famPages);
-  const wt=[];PLAYERS.forEach(p=>wt.push(wtok({ic:'user-round',nm:p.nm+' worker',c:p.c})));
+  const wt=[];PLAYERS.forEach(p=>wt.push(wtok({ic:'user-round',c:p.c})));
   wt.push(wtok({ic:'anchor',nm:'first player (fixed)',c:'#b8860b'}));
   wt.push(wtok({ic:'hourglass',nm:'round marker',c:'#5b4a37'}));
   packRun(pages,'bits',BL,'wtok',MODE==='proof'?wt.slice(0,3):wt,'Workers & markers',famPages);
@@ -611,7 +604,6 @@ function checklist(pages,famPages){
     +row(1,'Worker discs 0.8″ — 1 per colour (or meeples)','5',pgRef(pages,famPages,'Workers & markers'))
     +row(1,'First-player marker 0.8″ (fixed all game)','1','')
     +row(1,'Round marker 0.8″ (the 1–25 track on the main board)','1','')
-    +row(1,'Majority chips 0.8″ — 4 kontore × 1st/2nd/3rd','12',pgRef(pages,famPages,'Majority chips'))
     +'</table>';
   h+='<div class="wf"><b>Prototype workflow.</b> 1) Toggle <b>ART</b>, print all sheets at 100% (registration marks on, no cut lines — verify the 3″ bar). '
     +'2) Toggle <b>CUT</b>, print to PDF (art hidden; red cut lines + the same marks) or use the per-sheet ⬇ SVG buttons. '

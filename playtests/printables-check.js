@@ -37,8 +37,8 @@ for(const mode of ['full','proof']){
     ok(tiles===123,'full: 123 tiles packed (got '+tiles+')');
     const circles=pages.filter(p=>p.section==='bits').reduce((a,p)=>a+p.circles.length,0);
     ok(circles===100+100+7,'full: 207 circle cuts — 100 goods + 100 discs + 7 workers/markers (got '+circles+')');
-    const chips=pages.filter(p=>p.section==='bits').reduce((a,p)=>a+p.items.length,0)-circles;
-    ok(chips===12,'full: 12 majority chips (got '+chips+')');
+    const rects=pages.filter(p=>p.section==='bits').reduce((a,p)=>a+p.items.length,0)-circles;
+    ok(rects===0,'full: bits sheets are circles only — no square chips (got '+rects+' rects)');
     const cards=pages.filter(p=>p.section==='cards').reduce((a,p)=>a+p.items.length,0);
     ok(cards===20,'full: 20 recipe cards (got '+cards+')');
   }
