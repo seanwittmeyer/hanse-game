@@ -179,29 +179,26 @@
   .kval .per{display:block;font-size:.082in;font-weight:bold;color:var(--ink2);font-variant:small-caps}
   .kben{font-size:.092in;line-height:1.1;display:flex;align-items:center;gap:.03in;background:rgba(0,0,0,.04);border-radius:.04in;padding:.025in .04in}
   .kben svg,.kben .ic{width:.13in;height:.13in;flex:0 0 auto;color:var(--kc)}
-  .kmaj{font-size:.092in;display:flex;align-items:center;justify-content:space-between;color:var(--ink2)}
-  .kmaj b{color:var(--kc);display:inline-flex;align-items:center;gap:.02in} .kmaj svg,.kmaj .ic{width:.12in;height:.12in;color:var(--vp)}
-  .kslot{align-self:center;width:1.05in;height:.92in;border:1.5px dashed var(--kc);border-radius:.06in;background:rgba(0,0,0,.03);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--kc);font-size:.082in;text-align:center;gap:.02in;line-height:1.05}
+  .kmaj{font-size:.14in;font-weight:bold;display:flex;align-items:center;justify-content:center;gap:.04in;color:var(--kc)}
+  .kmaj svg,.kmaj .ic{width:.15in;height:.15in;color:var(--vp)}
+  /* the delivered-cask stack space is TILE-TRUE: exactly 1.25in, the cask tile's footprint */
+  .kslot{align-self:center;width:1.25in;height:1.25in;border:1.5px dashed var(--kc);border-radius:.06in;background:rgba(0,0,0,.03);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--kc);font-size:.082in;text-align:center;gap:.02in;line-height:1.05}
   .kslot svg,.kslot .ic{width:.22in;height:.22in;opacity:.5}
   .ptrack{display:flex;border:1px solid var(--kc);border-radius:.04in;overflow:hidden}
   .ptrack.pt1{margin-top:auto}
   .ptrack .pc{flex:1;min-width:.18in;height:.24in;border-right:1px solid rgba(0,0,0,.14);display:flex;align-items:center;justify-content:center;font-size:.08in;color:var(--ink2);background:rgba(255,255,255,.5)}
   .ptrack .pc:last-child{border-right:none} .ptrack .pc.z{background:rgba(0,0,0,.08);font-weight:bold}
-  .ptrack-l{font-size:.078in;font-style:italic;color:var(--ink2);margin-top:.02in;text-align:center;display:flex;align-items:center;justify-content:center;gap:.03in}
-  .ptrack-l svg,.ptrack-l .ic{width:.1in;height:.1in}
   .db-bottom{display:flex;flex-direction:column;gap:.08in}
   .sbox{border:2px solid var(--gold);border-radius:.1in;background:#fff;padding:.08in;display:flex;flex-direction:column;gap:.05in}
-  .sbox.disp,.sbox.maj{flex:0 0 auto}
+  .sbox.disp{flex:0 0 auto}
   .sb-h{font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.13in;display:flex;align-items:center;gap:.05in;border-bottom:1px solid var(--gold);padding-bottom:.02in}
   .sb-h svg,.sb-h .ic{width:.15in;height:.15in} .sb-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;color:var(--ink2);margin-left:auto}
-  .uprow{display:flex;gap:.05in;align-items:flex-end}
-  .uslot{flex:0 0 auto;width:1.28in;height:1.28in;border:1.5px solid var(--gold);border-radius:.05in;background:rgba(184,134,11,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;color:#8a6408;font-size:.092in;text-align:center}
+  /* Market spaces are TILE-TRUE: exactly 1.25in squares, minimal gaps */
+  .uprow{display:flex;gap:.05in}
+  .uslot{flex:0 0 auto;width:1.25in;height:1.25in;border:1.5px solid var(--gold);border-radius:.05in;background:rgba(184,134,11,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;color:#8a6408;font-size:.092in;text-align:center}
   .uslot svg,.uslot .ic{width:.26in;height:.26in;opacity:.6}
-  .uslot.supply{width:1in;height:1in;border-style:dashed;background:repeating-linear-gradient(45deg,rgba(0,0,0,.04) 0 .08in,transparent .08in .16in)}
+  .uslot.supply{border-style:dashed;background:repeating-linear-gradient(45deg,rgba(0,0,0,.04) 0 .08in,transparent .08in .16in)}
   .uslot.supply.faceup{border-style:solid;background:rgba(184,134,11,.08)}
-  .majnote{font-size:.098in;line-height:1.35}
-  .majnote b{color:var(--red)}
-  .majnote .ic,.majnote svg{width:.12in;height:.12in;vertical-align:-.02in}
   /* ====================== MAIN BOARD — THE WHARF ====================== */
   .mboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--sea);border-radius:.12in;padding:.14in .16in;display:flex;flex-direction:column;gap:.04in;color:var(--ink)}
   .mboard svg,.mboard .ic{stroke-width:1.8}
@@ -428,9 +425,7 @@ function kpanel(d,hall){const kc=d.kc;
   const valbody = hall
     ? '<div class="kval">'+LU(VP)+'×2.5<span class="per">per quality — Q2→5 · Q3→7 · Q4→10 · Q5→12</span></div>'
     : '<div class="kval">'+LU(VP)+d.val+'<span class="per">VP per delivered cask</span></div>';
-  const majline = hall
-    ? '<div class="kmaj"><span>prestige — out of commerce</span><b>no majority</b></div>'
-    : '<div class="kmaj"><span>majority 1st/2nd/3rd →</span><b>'+LU(VP)+' '+d.maj.join('/')+'</b></div>';
+  const majline = hall ? '' : '<div class="kmaj">'+LU(VP)+d.maj.join(' / ')+'</div>';
   return '<div class="kpanel" style="--kc:'+kc+'">'
     +'<div class="ktitle"><span class="kname">'+LU(hall?'crown':'landmark')+d.nm+'</span><span class="kreq">'+LU(QI)+'L'+d.req+'+</span></div>'
     +'<div class="kbody"><div class="krole">'+d.role+'</div>'
@@ -439,13 +434,11 @@ function kpanel(d,hall){const kc=d.kc;
       +majline
       +'<div class="kslot">'+LU('beer')+'delivered<br>casks (stack)</div>'
       +'<div class="ptrack pt1">'+t1+'</div><div class="ptrack">'+t2+'</div>'
-      +'<div class="ptrack-l">presence — advance your '+LU('circle')+' disc per cask; ranks → majority</div>'
     +'</div></div>';}
 function dboard(){
   let disp='';for(let i=0;i<4;i++)disp+='<div class="uslot">'+LU('wrench')+'upgrade<br>(face-up)</div>';
   disp+='<div class="uslot supply">'+LU('layers')+'upgrade deck<br>(face-down)</div>';
   disp+='<div class="uslot supply faceup">'+LU('sailboat')+'ship supply<br>(face-up)</div>';
-  disp+='<div class="uslot supply faceup">'+LU('scroll-text')+'export recipes<br>(3 of 4 dealt)</div>';
   disp+='<div class="uslot supply faceup">'+LU('target')+'goal supply<br>(face-up)</div>';
   return '<div class="dboard">'
     +'<div class="db-head"><h2>'+LU('landmark')+'Destinations</h2>'
@@ -453,10 +446,6 @@ function dboard(){
     +'<div class="kontor-row">'+DESTS.map(d=>kpanel(d,false)).join('')+kpanel(HALL,true)+'</div>'
     +'<div class="db-bottom">'
       +'<div class="sbox disp"><div class="sb-h">'+LU('store')+'Market — shared supply<span class="sm">upgrades: buy one (4–5 G) or earn one free by delivering to London / Novgorod · recipes &amp; ships always stocked</span></div><div class="uprow">'+disp+'</div></div>'
-      +'<div class="sbox maj"><div class="sb-h">'+LU(VP)+'Majorities at scoring</div><div class="majnote">'
-        +'At <b>each kontor</b>, rank players by delivered casks; 1st/2nd/3rd take the tiers (award the majority chips).<br>'
-        +'<b>2-player:</b> skip 2nd (winner-take-all). <b>Ties:</b> split the occupied tiers, rounded down.<br>'
-        +'Then add delivery values + your best 2 goals. Tiebreak: goods, then casks on slots.</div></div>'
     +'</div></div>';}
 
 // ---- MAIN BOARD — the Wharf (stations + 8 slots + both shared tracks) ----
