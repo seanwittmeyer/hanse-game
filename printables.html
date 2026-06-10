@@ -26,6 +26,11 @@
      ART and CUT layers; the CUT layer only hides the art and reveals the cut strokes in the overlay svg */
   .it{position:absolute}
   body.cut .it{visibility:hidden}
+  /* baseline inline-icon size — body-text icons track the local font; component CSS overrides with explicit sizes */
+  .ic{width:1em;height:1em;vertical-align:-.13em}
+  /* goods-icon colours: the pale palette is for dark tile faces; use the token colours on light text panels */
+  .mbox .g,.pb-sub .g,.card .c-buy .g{color:#9c7414}
+  .mbox .h,.pb-sub .h,.card .c-buy .h{color:#5d7d34}
   .ov{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
   .ov .cuts{display:none}
   body.cut .ov .cuts{display:block}
