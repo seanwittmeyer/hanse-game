@@ -211,8 +211,11 @@
   .stn{border-radius:.09in;color:#fff;padding:.07in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.06in;position:relative;overflow:hidden;text-shadow:0 1px 1.5px rgba(0,0,0,.4)}
   .stn .bigic svg,.stn .bigic .ic{width:.44in;height:.44in;stroke-width:1.6}
   .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.18in;line-height:1}
-  .stn .yield{display:flex;align-items:center;gap:.07in;margin-top:.03in;opacity:.95}
-  .stn .yield svg,.stn .yield .ic{width:.2in;height:.2in}
+  /* the action line, in the board's icon grammar: "/" = or · juxtaposed = both · ":" = per-each */
+  .stn .yield{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.035in;margin-top:.03in;opacity:.95}
+  .stn .yield svg,.stn .yield .ic{width:.19in;height:.19in}
+  .stn .yield b{font-size:.17in;font-weight:900;line-height:1}
+  .stn .yield .sep{font-weight:bold;font-size:.15in;opacity:.85;line-height:1}
   .stn.A{background:linear-gradient(155deg,#cda522,#9c7414)} .stn.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .stn.C{background:linear-gradient(155deg,#3d6b7e,#244554)} .stn.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
   .mb-side{flex:1;display:flex;flex-direction:column;gap:.07in;min-width:0}
@@ -451,14 +454,15 @@ function station(L,nm,ic,yield_){return '<div class="stn '+L+'" style="grid-area
   +'<span class="yield">'+yield_+'</span></div>';}
 function mboard(){
   const slot='<div class="wslot"></div>';
+  const OR='<span class="sep">/</span>';
   const wharf='<div class="wharf">'
     +'<div></div>'+slot+slot+'<div></div>'
     +slot
-    +station('A','Market','store',LU('wheat')+LU('sprout'))
+    +station('A','Market','store','<b>2</b>'+LU('package')+OR+LU('scroll-text')+OR+LU('sailboat')+OR+LU('wrench'))
     +station('B','Brewhouse','flask-conical',LU('beer'))
     +slot+slot
-    +station('C','Harbor','ship',LU('sailboat'))
-    +station('D','Cellar','hourglass',LU('hourglass'))
+    +station('C','Harbor','ship',LU('package-plus')+OR+LU('sailboat')+OR+LU('ticket'))
+    +station('D','Cellar','hourglass','<b>3</b>'+LU('hourglass'))
     +slot
     +'<div></div>'+slot+slot+'<div></div>'
     +'</div>';
@@ -469,10 +473,10 @@ function mboard(){
       +'<li><b>Activate</b> your station’s row <b>or</b> column.</li>'
       +'<li><b>Resolve</b> its 4 stops — slot · station · station · slot — in <b>any order</b>. You may use every building on the line (casks, ships, neutrals): free, on your turn only.</li></ol></div>'
     +'<div class="mbox"><h4>'+LU('anchor')+'The four stations</h4>'
-      +srow('store','Market · Source','take <b>2 goods</b> (any mix), <i>or</i> buy 1: recipe · ship (→ a slot, bound to a destination) · upgrade (from the display).')
-      +srow('flask-conical','Brewhouse · Brew','pay a recipe’s cost → a young cask at step 0 in an <b>open vessel</b>. One brew per visit.')
-      +srow('hourglass','Cellar · Age','gain <b>3 age points</b>, split freely across your vessels. (Every cask also ages +1 automatically each of your turns.)')
-      +srow('ship','Harbor · Ship','load a deployed cask onto <b>your</b> ship (yours or a rival’s cask) · launch a partial ship early · or <b>Charter</b>: 2 '+LU('wheat','g ic')+' ships 1 Ready cask now (advances the clock).')
+      +srow('store','Market · Source','take <b>2 goods</b> '+LU('package')+' (any mix), <i>or</i> buy 1: recipe '+LU('scroll-text')+' · ship '+LU('sailboat')+' (→ a slot, bound to a destination) · upgrade '+LU('wrench')+' (from the display).')
+      +srow('flask-conical','Brewhouse · Brew','pay a recipe’s cost → a young cask '+LU('beer')+' at step 0 in an <b>open vessel</b>. One brew per visit.')
+      +srow('hourglass','Cellar · Age','gain <b>3 age points</b> '+LU('hourglass')+', split freely across your vessels. (Every cask also ages +1 automatically each of your turns.)')
+      +srow('ship','Harbor · Ship','load '+LU('package-plus')+' a deployed cask onto <b>your</b> ship (yours or a rival’s cask) · launch '+LU('sailboat')+' a partial ship early · or <b>Charter</b> '+LU('ticket')+': 2 '+LU('wheat','g ic')+' ships 1 Ready cask now (advances the clock).')
       +'</div>'
     +'<div class="mbox"><h4>'+LU('beer')+'The cask’s three states</h4><div class="b">'
       +'<b>Maturing</b> (private vessel) → Ready → <b>deploy to a slot</b> (public action-building + cargo) → <b>shipped</b> to a destination (scores for its owner, leaves). '
