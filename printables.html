@@ -208,21 +208,14 @@
   .wharf{flex:0 0 auto;display:grid;gap:.05in;
     grid-template-columns:1.3in 1.38in 1.38in 1.3in;
     grid-template-rows:1.3in 1.38in 1.38in 1.3in}
-  .wslot{border:2px dashed var(--ink2);border-radius:.07in;background:rgba(255,255,255,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--ink2);font-size:.08in;text-align:center;gap:.015in;line-height:1.1;padding:.04in}
-  .wslot svg,.wslot .ic{width:.2in;height:.2in;opacity:.55}
-  .wslot b{font-variant:small-caps;font-size:.09in}
-  .stn{border-radius:.09in;color:#fff;padding:.07in;display:flex;flex-direction:column;gap:.02in;position:relative;overflow:hidden;text-shadow:0 1px 1.5px rgba(0,0,0,.4)}
-  .stn .ltr{position:absolute;top:.04in;right:.06in;font-weight:900;font-size:.16in;opacity:.45}
-  .stn .role{font-size:.078in;text-transform:uppercase;letter-spacing:.5px;opacity:.85}
-  .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.16in;line-height:1;display:flex;align-items:center;gap:.04in}
-  .stn .nm svg,.stn .nm .ic{width:.16in;height:.16in}
-  .stn .acts{font-size:.085in;line-height:1.22;margin-top:.02in}
-  .stn .wkspot{margin-top:auto;align-self:flex-start;display:flex;align-items:center;gap:.03in;font-size:.072in;opacity:.85;border:1px dashed rgba(255,255,255,.6);border-radius:.04in;padding:.015in .04in}
-  .stn .wkspot svg,.stn .wkspot .ic{width:.1in;height:.1in}
+  .wslot{border:2px dashed var(--ink2);border-radius:.07in;background:rgba(255,255,255,.55)}
+  .stn{border-radius:.09in;color:#fff;padding:.07in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.06in;position:relative;overflow:hidden;text-shadow:0 1px 1.5px rgba(0,0,0,.4)}
+  .stn .bigic svg,.stn .bigic .ic{width:.44in;height:.44in;stroke-width:1.6}
+  .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.18in;line-height:1}
+  .stn .yield{display:flex;align-items:center;gap:.07in;margin-top:.03in;opacity:.95}
+  .stn .yield svg,.stn .yield .ic{width:.2in;height:.2in}
   .stn.A{background:linear-gradient(155deg,#cda522,#9c7414)} .stn.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .stn.C{background:linear-gradient(155deg,#3d6b7e,#244554)} .stn.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
-  .wcorner{display:flex;align-items:center;justify-content:center;color:var(--ink2);font-size:.085in;font-style:italic;text-align:center;line-height:1.2}
-  .warr{position:absolute;font-weight:900;color:var(--sea);font-size:.18in;z-index:2;background:var(--parch);border-radius:50%;width:.26in;height:.26in;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--sea);line-height:1}
   .mb-side{flex:1;display:flex;flex-direction:column;gap:.07in;min-width:0}
   .mbox{border:1.5px solid var(--sea);border-radius:.07in;background:#fff;padding:.06in .08in}
   .mbox h4{margin:0 0 .03in;font-variant:small-caps;font-size:.115in;color:var(--sea);display:flex;align-items:center;gap:.04in;border-bottom:1px solid rgba(0,0,0,.15);padding-bottom:.02in}
@@ -230,6 +223,10 @@
   .mbox .b{font-size:.092in;line-height:1.3}
   .mbox .b b{color:var(--red)}
   .mbox ol{margin:.02in 0 0;padding-left:.16in;font-size:.092in;line-height:1.35}
+  .srow{display:flex;gap:.05in;font-size:.09in;line-height:1.28;margin-bottom:.035in}
+  .srow:last-child{margin-bottom:0}
+  .srow .sic{flex:0 0 auto;margin-top:.005in} .srow .sic svg,.srow .sic .ic{width:.14in;height:.14in}
+  .srow b{font-variant:small-caps}
   .mtrack-l{font-size:.082in;font-style:italic;color:var(--ink2);text-align:center}
   .ctrack{display:flex;height:.42in;border:1.5px solid var(--sea);border-radius:.05in;overflow:hidden}
   .cc{flex:1;min-width:0;border-right:1px solid rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.08in;color:var(--ink2);background:rgba(255,255,255,.4)}
@@ -458,37 +455,36 @@ function dboard(){
     +'</div></div>';}
 
 // ---- MAIN BOARD — the Wharf (stations + 8 slots + both shared tracks) ----
-function slotCell(area,lineLbl){return '<div class="wslot" style="grid-area:'+area+'">'+LU('layout-grid')
-  +'<b>slot</b><span>'+lineLbl+' line</span><span>cask · ship · neutral</span></div>';}
-function station(L,nm,role,ic,acts,extra){return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
-  +'<span class="ltr">'+L+'</span><span class="role">'+role+'</span>'
-  +'<span class="nm">'+LU(ic)+nm+'</span><div class="acts">'+acts+'</div>'
-  +(extra||'')+'<div class="wkspot">'+LU('user-round')+'worker</div></div>';}
+// Board-design principle: the board carries shapes & icons only (a 1.25" tile fits a 1.3" dashed
+// square; that's the affordance) — the verbose station reference lives in the side column.
+function station(L,nm,ic,yield_){return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
+  +'<span class="bigic">'+LU(ic)+'</span><span class="nm">'+nm+'</span>'
+  +'<span class="yield">'+yield_+'</span></div>';}
 function mboard(){
-  // production-order arrows A→B→D→C, pinned between the stations
-  const arr=(t,l,g)=>'<div class="warr" style="top:'+t+'in;left:'+l+'in">'+g+'</div>';
-  const wharf='<div class="wharf" style="position:relative">'
-    +'<div class="wcorner" style="grid-area:1/1">the Wharf<br>—<br>8 slots ring<br>4 stations</div>'
-    +slotCell('1/2','Market + Harbor')+slotCell('1/3','Brewhouse + Cellar')
-    +'<div class="wcorner" style="grid-area:1/4">a line =<br>slot · station<br>· station · slot</div>'
-    +slotCell('2/1','Market + Brewhouse')
-    +station('A','Market','1 · Source','store','Take <b>2 goods</b> (any mix), <i>or</i> buy 1: recipe · ship (→ a slot, bound to a destination) · upgrade (from the display).')
-    +station('B','Brewhouse','2 · Brew','flask-conical','Pay a recipe’s cost → a young cask at step 0 in an <b>open vessel</b>. One brew per visit.')
-    +slotCell('2/4','Market + Brewhouse')
-    +slotCell('3/1','Harbor + Cellar')
-    +station('C','Harbor','4 · Ship','ship','Load a deployed cask onto <b>your</b> ship (yours or a rival’s cask) · launch a partial ship early · or <b>Charter</b>: 2 '+LU('wheat','g ic')+' ships 1 Ready cask now (advances the clock).')
-    +station('D','Cellar','3 · Age','hourglass','Gain <b>3 age points</b>, split freely across your vessels. (Every cask also ages +1 automatically each of your turns.)')
-    +slotCell('3/4','Harbor + Cellar')
-    +'<div class="wcorner" style="grid-area:4/1">stations are<br>never closed</div>'
-    +slotCell('4/2','Market + Harbor')+slotCell('4/3','Brewhouse + Cellar')
-    +'<div class="wcorner" style="grid-area:4/4">orthogonal<br>moves only —<br>never diagonal</div>'
-    +arr(1.91,2.625,'→')+arr(2.625,3.34,'↓')+arr(3.34,2.625,'←')
+  const slot='<div class="wslot"></div>';
+  const wharf='<div class="wharf">'
+    +'<div></div>'+slot+slot+'<div></div>'
+    +slot
+    +station('A','Market','store',LU('wheat')+LU('sprout'))
+    +station('B','Brewhouse','flask-conical',LU('beer'))
+    +slot+slot
+    +station('C','Harbor','ship',LU('sailboat'))
+    +station('D','Cellar','hourglass',LU('hourglass'))
+    +slot
+    +'<div></div>'+slot+slot+'<div></div>'
     +'</div>';
+  const srow=(ic,nm,txt)=>'<div class="srow"><span class="sic">'+LU(ic)+'</span><span><b>'+nm+'</b> — '+txt+'</span></div>';
   const side='<div class="mb-side">'
     +'<div class="mbox"><h4>'+LU('list-ordered')+'Your turn</h4><ol>'
-      +'<li><b>Move</b> to an adjacent station (mandatory from turn 2). Moving onto a <b>rival-occupied</b> station costs <b>1 '+LU('wheat','g ic')+'</b> — the occupancy toll (opening placement free).</li>'
+      +'<li><b>Move</b> to an adjacent station — orthogonal only (mandatory from turn 2). Moving onto a <b>rival-occupied</b> station costs <b>1 '+LU('wheat','g ic')+'</b> (opening placement free).</li>'
       +'<li><b>Activate</b> your station’s row <b>or</b> column.</li>'
       +'<li><b>Resolve</b> its 4 stops — slot · station · station · slot — in <b>any order</b>. You may use every building on the line (casks, ships, neutrals): free, on your turn only.</li></ol></div>'
+    +'<div class="mbox"><h4>'+LU('anchor')+'The four stations</h4>'
+      +srow('store','Market · Source','take <b>2 goods</b> (any mix), <i>or</i> buy 1: recipe · ship (→ a slot, bound to a destination) · upgrade (from the display).')
+      +srow('flask-conical','Brewhouse · Brew','pay a recipe’s cost → a young cask at step 0 in an <b>open vessel</b>. One brew per visit.')
+      +srow('hourglass','Cellar · Age','gain <b>3 age points</b>, split freely across your vessels. (Every cask also ages +1 automatically each of your turns.)')
+      +srow('ship','Harbor · Ship','load a deployed cask onto <b>your</b> ship (yours or a rival’s cask) · launch a partial ship early · or <b>Charter</b>: 2 '+LU('wheat','g ic')+' ships 1 Ready cask now (advances the clock).')
+      +'</div>'
     +'<div class="mbox"><h4>'+LU('beer')+'The cask’s three states</h4><div class="b">'
       +'<b>Maturing</b> (private vessel) → Ready → <b>deploy to a slot</b> (public action-building + cargo) → <b>shipped</b> to a destination (scores for its owner, leaves). '
       +'A rival may ship your slot cask — <b>you</b> score it &amp; take its benefit.</div></div>'
