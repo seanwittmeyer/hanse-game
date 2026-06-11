@@ -1,6 +1,8 @@
-# Automa / AI Opponent — Proposal (pre-implementation)
+# Automa / AI Opponent — Plan & Status
 
-> A design proposal for an AI opponent you can play against in `play.html`, with **variable difficulty** and **any mix of humans and AIs at 2–5p** — plus a derived **physical automa deck** for tabletop solo play. Nothing here is implemented yet; this doc compares the candidate systems (heuristic policy, flat Monte Carlo, MCTS, depth-limited search, learning) and recommends a staged path. Queued in `DESIGN.md` §21 (v0.9 "Still open / next": *"a solo Automa from the existing bot"*).
+> The plan for an AI opponent you can play against in `play.html`, with **variable difficulty** and **any mix of humans and AIs at 2–5p** — plus a derived **physical automa deck** for tabletop solo play. Compares the candidate systems (heuristic policy, flat Monte Carlo, MCTS, depth-limited search, learning) and lays out a staged path. Queued in `DESIGN.md` §21 (v0.9 "Still open / next": *"a solo Automa from the existing bot"*).
+>
+> **STATUS — Phase 1 SHIPPED (2026-06-11, `play.html` `KEY → v22`).** AI seats with the **Apprentice / Journeyman / Trader** ladder are live: per-seat selection in New Game, paced/instant turns, human-input lockout, no-cheating tiers. The §6 ladder gate is **validated** — at 2p (N=1000/pairing): Journeyman > Apprentice 66.7%, Trader > Journeyman 62.7% (every lean ≥60%), Trader > Apprentice 73.0%; 0 crashes/deadlocks across all harness runs. Validation harnesses: `playtests/ai-ladder.js` (the ladder + mixed-table gates) and `playtests/ai-render-smoke.js` (full AI games through the real render layer). Details: `CHANGELOG.md` "AI opponents — Phase 1". **Phases 2 (harness-tuned weights) and 3 (Monte Carlo "Guildmaster") remain open.** Phase 1 notes vs the plan below: the Trader tier gained more than a persona lean to make the ladder real — a majority-*swing* destination score (own delta + rivals' loss), exact goal marginals, an end-weighted Hall, the Q5 climb, and an own-casks-first load policy; hand-tuning those weights took several sweep iterations, which is precisely the Phase 2 argument.
 
 ---
 
