@@ -377,7 +377,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v22'; // v0.10 + AI seats (Phase 1, AUTOMA.md): players carry an ai{tier,persona} flag, S gains over; bump discards stale state
+const KEY='hanse-hotseat-v23'; // v0.10 + AI seats (AUTOMA.md): Phase 2 — trader weights centralized in AI_W with a per-seat p.ai.w override (the offline tuning surface); bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -901,6 +901,23 @@ const AI_TIERS={
   trader    :{label:'Trader',     noise:0},
 };
 const AI_PERSONAS=['volume','prestige','majority'];
+// ⚙ Trader policy weights — the PHASE 2 tuning surface (AUTOMA.md). Optimized offline by
+// playtests/ai-tune.js (CEM: candidate vs these incumbent defaults + Journeyman, fitness = win-rate);
+// the values below are the adopted set. A per-seat override rides on p.ai.w — that is how the tuner
+// pits two weight sets inside one game. Apprentice/Journeyman read NONE of these (frozen baselines).
+const AI_W={
+  swing   :0.75,   // majority-swing weight in the destination score
+  upBen   :1.5,    // an upgrade benefit's worth (London/Novgorod) in the destination score
+  goodsBen:1.0,    // a goods benefit's worth (Bruges/Bergen)
+  hallBase:0.75,   // Hall multiplier at clock 0 …
+  hallRamp:0.55,   // … rising to hallBase+hallRamp as the Sailed-Ships clock fills
+  leanVal :1.05,   // volume lean: kontor-value tilt (CEM consistently pulled this toward 1 — a big tilt is a handicap)
+  leanSwing:1.2,   // majority lean: swing tilt
+  leanHall:1.15,   // prestige lean: Hall tilt
+  goalW   :1.0,    // weight on the exact goal marginal
+  buyFlush:7,      // grain threshold for buying a non-tempo upgrade at the Market
+};
+function aiW(p){return (p.ai&&p.ai.w)||AI_W;}
 const AI_DELAYS={slow:900,normal:450,instant:0};   // ms between AI decisions ⚙
 const AI_SPEED_KEY='hanse-ai-speed';
 let aiTimer=null,aiActing=false,aiLoopActive=false,aiChosenWhich='row';
@@ -961,17 +978,18 @@ function aiDest(p,q,style){
     const kon=elig.filter(d=>DEST[d].kontor);const pool=kon.length?kon:elig;
     pool.sort((a,b)=>DEST[b].value-DEST[a].value);return pool[0];
   }
+  const W=aiW(p);
   const lean=p.ai.persona||'volume';
   // The Hall pays score only (no benefit, no majority position), so it is END-weighted: engine and
   // kontor races compound early, prestige banks late. prog runs the clock 0 → 1.
   const prog=Math.min(1,S.sailed/Math.max(1,S.sailedCap));
   let best=elig[0],bv=-1e9;
   elig.forEach(d=>{let s;
-    if(d==='hall')s=destValue('hall',q)*(0.75+0.55*prog)*(lean==='prestige'?1.15:1);
-    else s=DEST[d].value*(lean==='volume'?1.15:1)
-          +aiMajSwing(p,d)*0.75*(lean==='majority'?1.2:1)
-          +(DEST[d].benefit==='upgrade'?1.5:1);   // a kontor delivery's benefit is real tempo the score line misses
-    if(style)s+=aiGoalGain(p,style,q,d);          // play toward the goals you hold
+    if(d==='hall')s=destValue('hall',q)*(W.hallBase+W.hallRamp*prog)*(lean==='prestige'?W.leanHall:1);
+    else s=DEST[d].value*(lean==='volume'?W.leanVal:1)
+          +aiMajSwing(p,d)*W.swing*(lean==='majority'?W.leanSwing:1)
+          +(DEST[d].benefit==='upgrade'?W.upBen:W.goodsBen);   // a kontor delivery's benefit is real tempo the score line misses
+    if(style)s+=W.goalW*aiGoalGain(p,style,q,d);               // play toward the goals you hold
     s+=Math.random()*0.3;
     if(s>bv){bv=s;best=d;}});
   return best;
@@ -1029,7 +1047,7 @@ function aiMarket(p){
       // trader: always take the tempo rooms (Extra Vessel / Aging Cellar) when affordable; the rest only when flush
       if(aiIsTrader(p)){const tempo=buyable.filter(k=>k==='vessel'||k==='cellar');
         if(tempo.length){buyDisplayUp(aiPickUpgrade(p,tempo));return;}
-        if(p.grain>=7){buyDisplayUp(aiPickUpgrade(p,buyable));return;}}
+        if(p.grain>=aiW(p).buyFlush){buyDisplayUp(aiPickUpgrade(p,buyable));return;}}
       else if(p.grain>=5&&Math.random()<0.5){buyDisplayUp(aiPickUpgrade(p,buyable));return;}}}
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
@@ -1090,7 +1108,13 @@ function aiLoad(p){const L=UI.load;
     const oa=sa.owner===p.id?1:0,ob=sb.owner===p.id?1:0;if(oa!==ob)return ob-oa;
     return DEST[sb.dest].value-DEST[sa.dest].value;});
   loadOnto(ships[0]);}
-function aiDeploy(p){const es=emptySlots();if(!es.length){deploySkipAll();return;}deployTo(aiNoisy(p)?aiRandOf(es).id:es[0].id);}
+function aiDeploy(p){const es=emptySlots();if(!es.length){deploySkipAll();return;}
+  if(aiNoisy(p)){deployTo(aiRandOf(es).id);return;}
+  // trader: deploy onto the line it is about to activate — aiLine deploys BEFORE chooseLine, so the
+  // cask lands in that line's stops and its action fires THIS turn (a free tempo gain every deploy).
+  if(aiIsTrader(p)&&p.cell){const lk=cellOfLine(p.cell)[aiChosenWhich||'row'];
+    const on=es.find(s=>s.line===lk);if(on){deployTo(on.id);return;}}
+  deployTo(es[0].id);}
 function aiBenefit(){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];const g=displayGrantable(lp);
   if(!g.length){UI.pendingBenefits.shift();afterSail(UI.benefit.returnTo);return;}
   benefitPick(aiPickUpgrade(lp,g));}
