@@ -186,7 +186,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>Prototype v0.10 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s deployed cask</b> on your ship — they still score it. <b>Every kontor pays a tiered majority</b> (1st/2nd/3rd), laddered by reach — Bruges <b>2/1/1</b> · London <b>3/1/1</b> · Bergen <b>4/2/1</b> · Novgorod <b>5/2/1</b> ⚙. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b>; <b>Bruges / Bergen</b> hand you <b>2 goods</b> instead. The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the relief valve when slots jam). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
+  <p class="note" style="text-align:center"><b>Prototype v0.10 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s deployed cask</b> on your ship — they still score it. <b>Every kontor pays a tiered majority</b> (1st/2nd/3rd), laddered by reach — Bruges <b>2/1/1</b> · London <b>3/1/1</b> · Bergen <b>4/2/1</b> · Novgorod <b>5/2/1</b> ⚙. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b>; <b>Bruges / Bergen</b> hand you <b>2 goods</b> instead. The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the relief valve when slots jam). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. Any seat can be an <b>AI opponent</b> — pick a tier per seat in New Game (<b>Apprentice / Journeyman / Trader</b>, in rising strength; Traders commit to a volume/prestige/majority lean). AI seats play by the same rules with the same information and never cheat; their turns play out in the log at an adjustable speed. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -377,12 +377,12 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v21'; // v0.10: big motivating majorities (Bruges 5/3/0 · London 6/4/2 · Novgorod 8/5/2 · Bergen 10/6/3) + Bergen goods; bump discards stale state
+const KEY='hanse-hotseat-v22'; // v0.10 + AI seats (Phase 1, AUTOMA.md): players carry an ai{tier,persona} flag, S gains over; bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
-function snapshot(){if(!S)return;undoStack.push({S:JSON.stringify(S),UI:JSON.stringify(UI),tab:activeTab});if(undoStack.length>40)undoStack.shift();}
-function doUndo(){if(!undoStack.length)return;const u=undoStack.pop();S=JSON.parse(u.S);UI=JSON.parse(u.UI);activeTab=u.tab;save();render();}
+function snapshot(){if(!S||aiActing)return;undoStack.push({S:JSON.stringify(S),UI:JSON.stringify(UI),tab:activeTab});if(undoStack.length>40)undoStack.shift();}
+function doUndo(){if(!undoStack.length)return;const u=undoStack.pop();S=JSON.parse(u.S);UI=JSON.parse(u.UI);activeTab=u.tab;save();render();maybeRunAI();}
 
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function dealExports(){return shuffle(EXPORT_ROSTER.slice()).slice(0,3);}  // 3 of the 4 fixed-quality export beers; ladder shape varies
@@ -392,6 +392,7 @@ function dealGoals(){const a=GOAL_KEYS.slice();for(let i=a.length-1;i>0;i--){con
 
 function newPlayer(i,name){
   return {id:i,name:name||CNAMES[i],color:COLORS[i],
+    ai:null,   // null = a human seat; {tier,persona} = an AI seat (assigned at startGame; see the AI section)
     // seat compensation: +SEAT_COMP grain to every seat after the first (fixed turn order; P1 edge)
     grain:START_GOODS.g+(i>0?SEAT_COMP:0),hops:START_GOODS.h,storage:START_STORAGE,cell:null,placed:false,
     // start 2 vessels; one holds the warm Ready Gruit (deploy it turn 1)
@@ -530,23 +531,43 @@ function newGame(){document.getElementById('over').classList.add('hidden');openS
 // SETUP
 //==================================================================
 function openSetup(){
+  aiCancel();
   const m=document.getElementById('setup');m.classList.remove('hidden');
   let pc='';for(let n=2;n<=5;n++)pc+='<button onclick="pickCount('+n+')" id="pc'+n+'">'+n+' players</button>';
   document.getElementById('pcount').innerHTML=pc;pickCount(2);
 }
 let setupN=2;
 function pickCount(n){setupN=n;for(let i=2;i<=5;i++)document.getElementById('pc'+i).classList.toggle('primary',i===n);
-  let h='<p class="note">Names (optional):</p>';
-  for(let i=0;i<n;i++)h+='<div style="margin:4px 0"><span class="pawn" style="background:'+COLORS[i]+';display:inline-block;vertical-align:middle"></span> <input id="nm'+i+'" placeholder="'+CNAMES[i]+'" style="padding:4px;border:1px solid var(--line);border-radius:5px"></div>';
+  let h='<p class="note">Each seat: a name (optional) and who plays it. AI seats never cheat — the tiers differ only in decision quality.</p>';
+  for(let i=0;i<n;i++)h+='<div style="margin:4px 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap">'
+    +'<span class="pawn" style="background:'+COLORS[i]+';display:inline-block;flex:none"></span>'
+    +'<input id="nm'+i+'" placeholder="'+CNAMES[i]+'" style="padding:4px;border:1px solid var(--line);border-radius:5px;width:120px">'
+    +'<select id="ai'+i+'" style="padding:4px;border:1px solid var(--line);border-radius:5px;font-family:inherit;background:var(--parch)">'
+    +'<option value="human">Human</option>'
+    +'<option value="apprentice">AI · Apprentice (easy)</option>'
+    +'<option value="journeyman">AI · Journeyman (standard)</option>'
+    +'<option value="trader">AI · Trader (hard — random lean)</option>'
+    +'<option value="trader-volume">AI · Trader — volume lean</option>'
+    +'<option value="trader-prestige">AI · Trader — prestige lean</option>'
+    +'<option value="trader-majority">AI · Trader — majority lean</option>'
+    +'</select></div>';
   document.getElementById('names').innerHTML=h;
 }
 function startGame(){
-  const names=[];for(let i=0;i<setupN;i++){const v=document.getElementById('nm'+i).value.trim();names.push(v||CNAMES[i]);}
+  const names=[],ais=[];
+  for(let i=0;i<setupN;i++){
+    const v=document.getElementById('nm'+i).value.trim();names.push(v||CNAMES[i]);
+    const el=document.getElementById('ai'+i);const av=(el&&el.value)||'human';
+    if(av==='human')ais.push(null);
+    else{const parts=av.split('-');
+      ais.push({tier:parts[0],persona:parts[0]==='trader'?(parts[1]||aiRandOf(AI_PERSONAS)):null});}
+  }
   S=freshState(setupN,names);UI={sub:'move'};activeTab=0;undoStack=[];
+  S.players.forEach((p,i)=>{p.ai=ais[i];});
   document.getElementById('setup').classList.add('hidden');
-  log('Game begins — '+setupN+' brewing houses. The export beers this game (3 of 4): '+exportLabel()+'.');
+  log('Game begins — '+setupN+' brewing houses'+(ais.some(a=>a)?' · AI seats: '+S.players.filter(p=>p.ai).map(p=>p.name+' ('+aiLabel(p)+')').join(', '):'')+'. The export beers this game (3 of 4): '+exportLabel()+'.');
   log('Warm start: each house has a Cog (→ Bruges) on a slot and a Ready Gruit in vessel 1 (deploy it turn 1).');
-  save();render();
+  save();render();maybeRunAI();
 }
 
 //==================================================================
@@ -821,10 +842,15 @@ function enterNeutral(slot,t){const p=cur();
 // ---------- end of turn ----------
 function endTurn(){
   snapshot();checkTriggers();
+  const wasAI=!!cur().ai;
   const n=S.players.length;S.active=(S.active+1)%n;
   // first player is FIXED (no rotation — one fewer thing to track; seat compensation is TBD ⚙)
   if(S.active===S.first){if(S.ending){gameOver();save();return;}S.turn++;}
+  // AI turns take no snapshots, and the boundary into a human turn clears the stack —
+  // a human can undo within their own turn, never back into (or across) an AI's.
+  if(wasAI&&!cur().ai)undoStack.length=0;
   passiveFerment(cur());UI={sub:'move'};save();render();
+  maybeRunAI();
 }
 function passiveFerment(p){let any=false;p.vessels.forEach(c=>{if(c&&c.step<c.ready){c.step++;any=true;}});if(any)log(p.name+'’s casks mature (+1) over the turn.');}
 function checkTriggers(){if(S.ending)return;
@@ -843,15 +869,282 @@ function scorePlayer(p){
   return {deliv,maj,goals,total:deliv+maj+goals};
 }
 function gameOver(){
+  S.over=true;aiCancel();
   const rows=S.players.map(p=>({p,sc:scorePlayer(p)}));
   const tb=r=>[r.sc.total,r.p.grain+r.p.hops,wharfCaskSlots().filter(id=>S.slots[id].owner===r.p.id).length];
   const cmp=(a,b)=>{const A=tb(a),B=tb(b);for(let i=0;i<3;i++)if(B[i]!==A[i])return B[i]-A[i];return 0;};
   rows.sort(cmp);const win=rows[0];
   let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries</th><th>Majorities</th><th>Goals (best '+GOAL_BEST+')</th><th>Total</th></tr>';
-  rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+'</td><td>'+r.sc.deliv+'</td><td>'+r.sc.maj+'</td><td>'+r.sc.goals+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
+  rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+'</td><td>'+r.sc.maj+'</td><td>'+r.sc.goals+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
   h+='</table><p class="note">Score = delivery value (kontore trade value + the Hall’s prestige ∝ quality) + kontor majorities + your best '+GOAL_BEST+' goals. The volume-vs-prestige lean lives in <b>where you shipped</b>, not in separate tracks. (Tiebreak: goods, then casks on slots.)</p><button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
 }
+
+//==================================================================
+// AI OPPONENTS — Phase 1 (the sim-harness bot, ported in; see AUTOMA.md)
+//==================================================================
+// Any seat may be an AI: p.ai = {tier, persona}. The driver resolves ONE UI.sub decision per tick,
+// paced and narrated by the normal log, by calling the SAME functions the buttons call — never a
+// reimplementation, so rules revisions to the engine flow into every tier automatically.
+// Tiers differ ONLY in decision quality (an AI never cheats on the economy):
+//   apprentice — the greedy policy + decision noise, majority-blind (skips Reach/Alms), never buys
+//                upgrades, value-only destinations: deliberately beatable.
+//   journeyman — the verified playtests/sim.js greedy bot, verbatim (the robustness baseline).
+//   trader     — journeyman + a majority-margin destination score (it contests the kontor races and
+//                ships the Hall when prestige pays), the Q5/Bock climb via the Aging Cellar, and a
+//                committed persona lean (volume / prestige / majority) as table personality.
+// Every name here is ai-prefixed so the headless harness (playtests/sim.js), which appends its own
+// bot into this same scope, never collides. playtests/ai-ladder.js drives aiStep() directly.
+const AI_TIERS={
+  apprentice:{label:'Apprentice', noise:0.45},   // ⚙ noise = chance of a random legal pick per decision
+  journeyman:{label:'Journeyman', noise:0},
+  trader    :{label:'Trader',     noise:0},
+};
+const AI_PERSONAS=['volume','prestige','majority'];
+const AI_DELAYS={slow:900,normal:450,instant:0};   // ms between AI decisions ⚙
+const AI_SPEED_KEY='hanse-ai-speed';
+let aiTimer=null,aiActing=false,aiLoopActive=false,aiChosenWhich='row';
+
+function aiTurn(){return !!(S&&!S.over&&cur()&&cur().ai);}
+function aiLabel(p){return AI_TIERS[p.ai.tier].label+(p.ai.persona?' · '+p.ai.persona:'');}
+function aiCancel(){if(aiTimer){clearTimeout(aiTimer);aiTimer=null;}}
+function aiSpeed(){try{const v=localStorage.getItem(AI_SPEED_KEY);return AI_DELAYS[v]!==undefined?v:'normal';}catch(e){return 'normal';}}
+function aiSetSpeed(v){try{localStorage.setItem(AI_SPEED_KEY,v);}catch(e){}render();maybeRunAI();}
+function aiRandOf(a){return a[Math.floor(Math.random()*a.length)];}
+function aiNoisy(p){return Math.random()<(AI_TIERS[p.ai.tier].noise||0);}
+function aiIsApp(p){return p.ai.tier==='apprentice';}
+function aiIsTrader(p){return p.ai.tier==='trader';}
+
+// ---- shared heuristics (ported from playtests/sim.js; journeyman = that bot verbatim) ----
+function aiAchQ(p){const qs=p.recipes.map(r=>(STYLES[r].cellar&&!hasUpgrade(p,'cellar'))?0:STYLES[r].q);return Math.max(...qs);}
+function aiNeedShip(p){return myShips(p).length===0&&emptySlots().length>0&&canPay(p,{g:2});}
+// Trader climbs to the cellar-gated Q5 once it holds the Aging Cellar; the lower tiers keep the
+// documented greedy blind spot (never the cellar beer) on purpose.
+function aiBuyableExports(p){return (S.exports||[]).filter(s=>!p.recipes.includes(s)
+  &&(aiIsTrader(p)?(!STYLES[s].cellar||hasUpgrade(p,'cellar')):!STYLES[s].cellar)
+  &&canPay(p,RECIPE_BUY[s]));}
+function aiPickUpgrade(p,list){
+  if(aiIsApp(p))return aiRandOf(list);
+  if(aiIsTrader(p)&&(S.exports||[]).includes('bock')&&!hasUpgrade(p,'cellar')&&list.includes('cellar'))return 'cellar';
+  const pref=['vessel','cellar','quay','cooperage','royal','staple','guild','warehouse','granary','hopgarden','burgher'];
+  for(const k of pref)if(list.includes(k))return k;return list[0];}
+// Majority SWING for one more cask of presence at kontor k: my award delta PLUS what rivals lose.
+// (A pure own-margin never contests a race you trail; the swing is what a delivery actually moves —
+// catching a rival's lead both gains your tier and strips theirs.) Myopic by design (Phase 1).
+function aiMajSwing(p,k){
+  const before=majorityAwards(k);
+  p.presBonus[k]=(p.presBonus[k]||0)+1;
+  const after=majorityAwards(k);
+  p.presBonus[k]--;
+  let s=(after[p.id]||0)-(before[p.id]||0);
+  S.players.forEach(q=>{if(q.id!==p.id)s+=((before[q.id]||0)-(after[q.id]||0));});
+  return s;
+}
+// Exact goal marginal of a hypothetical delivery {style,q,dest} against p's held goals (best-2 cap).
+function aiGoalGain(p,style,q,d){
+  const sum=()=>p.goals.map(g=>GOALS[g].fn(p)).sort((a,b)=>b-a).slice(0,GOAL_BEST).reduce((a,b)=>a+b,0);
+  const now=sum();
+  p.delivered.push({style,q,dest:d});
+  const after=sum();
+  p.delivered.pop();
+  return after-now;
+}
+// Destination choice, by tier. apprentice: top kontor value, never the Hall on purpose.
+// journeyman: the sim greedy verbatim (value-ranked kontore; 30% Hall dabble at Q4+).
+// trader: value + majority swing + the delivery benefit + the goal marginal, with the persona lean
+// as a gentle tilt — the tier that actually fights the kontor races and banks prestige when it pays.
+function aiDest(p,q,style){
+  const elig=DESTS.filter(d=>q>=DEST[d].gate);
+  if(aiNoisy(p))return aiRandOf(elig);
+  if(!aiIsTrader(p)){
+    if(!aiIsApp(p)&&q>=4&&Math.random()<0.3&&elig.includes('hall'))return 'hall';
+    const kon=elig.filter(d=>DEST[d].kontor);const pool=kon.length?kon:elig;
+    pool.sort((a,b)=>DEST[b].value-DEST[a].value);return pool[0];
+  }
+  const lean=p.ai.persona||'volume';
+  // The Hall pays score only (no benefit, no majority position), so it is END-weighted: engine and
+  // kontor races compound early, prestige banks late. prog runs the clock 0 → 1.
+  const prog=Math.min(1,S.sailed/Math.max(1,S.sailedCap));
+  let best=elig[0],bv=-1e9;
+  elig.forEach(d=>{let s;
+    if(d==='hall')s=destValue('hall',q)*(0.75+0.55*prog)*(lean==='prestige'?1.15:1);
+    else s=DEST[d].value*(lean==='volume'?1.15:1)
+          +aiMajSwing(p,d)*0.75*(lean==='majority'?1.2:1)
+          +(DEST[d].benefit==='upgrade'?1.5:1);   // a kontor delivery's benefit is real tempo the score line misses
+    if(style)s+=aiGoalGain(p,style,q,d);          // play toward the goals you hold
+    s+=Math.random()*0.3;
+    if(s>bv){bv=s;best=d;}});
+  return best;
+}
+// Bind a new ship to what the bot's CURRENT casks can actually fill (best cask = the likely cargo).
+function aiBestCargo(p){let best=null;
+  p.vessels.forEach(c=>{if(c&&(!best||c.q>best.q))best={q:c.q,style:c.style};});
+  wharfCaskSlots().forEach(id=>{const t=S.slots[id];if(t.owner===p.id&&(!best||t.q>best.q))best={q:t.q,style:t.style};});
+  return best||{q:aiAchQ(p),style:null};}
+
+// ---- per-prompt decisions ----
+function aiCellValue(c,p){const role=CELLROLE[c];
+  if(role==='Source')return 1+(aiNeedShip(p)?1.5:0)+(aiBuyableExports(p).length?0.4:0);
+  if(role==='Brew')return (openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)))?3:0.1;
+  if(role==='Age'){const mat=p.vessels.filter(v=>v&&v.step<v.ready);if(!mat.length)return 0.1;
+    return 2+(mat.some(v=>v.ready-v.step<=3)?1:0);}
+  if(role==='Ship'){const load=myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs)));
+    if(load)return 4;
+    const rdy=readyInVessels(p).length||wharfCaskSlots().some(id=>S.slots[id].owner===p.id);
+    return (rdy&&canPay(p,CHARTER_COST))?2:0.1;}
+  return 0;}
+function aiCellToll(c,p){return S.players.some(q=>q.id!==p.id&&q.cell===c)?OCCUPANCY_TOLL:0;}
+function aiMove(p){
+  const placing=!p.placed;const cands=placing?['A','B','C','D']:ADJ[p.cell];
+  if(aiNoisy(p)){aiChosenWhich=aiRandOf(['row','col']);doMove(aiRandOf(cands));return;}
+  let best=cands[0],bestv=-1e9,which='row';
+  cands.forEach(tc=>{const toll=placing?0:aiCellToll(tc,p);['row','col'].forEach(w=>{
+    const lk=cellOfLine(tc)[w];
+    const v=LINES[lk].cells.reduce((a,c)=>a+aiCellValue(c,p),0)-toll+Math.random()*0.4;
+    if(v>bestv){bestv=v;best=tc;which=w;}});});
+  aiChosenWhich=which;doMove(best);
+}
+function aiLine(p){
+  if(readyInVessels(p).length&&emptySlots().length){startDeploy(readyInVessels(p)[0].i,'line');return;}
+  chooseLine(aiChosenWhich||'row');
+}
+function aiStopPrio(s){
+  if(s.kind==='cell')return {Source:0,Brew:1,Age:2,Ship:4}[CELLROLE[s.cell]];
+  const t=S.slots[s.slot];if(!t)return 99;
+  if(t.type==='cask')return {source:0,wild:1,age:2,reach:2,load:4}[STYLES[t.style].act];
+  if(t.type==='ship')return 4;
+  if(t.type==='neutral')return {stall:0,counting:1,towncrier:1,cooper:2,almshouse:2,crane:4}[t.b];
+  return 50;}
+function aiStops(p){
+  if(aiNoisy(p)){resolveStop(Math.floor(Math.random()*UI.stops.length));return;}
+  let bi=0,bp=1e9;UI.stops.forEach((s,i)=>{const pr=aiStopPrio(s);if(pr<bp){bp=pr;bi=i;}});resolveStop(bi);}
+function aiMarket(p){
+  if(UI.stage==='shipdest'){const bc=aiBestCargo(p);shipDest(aiDest(p,bc.q,bc.style));return;}
+  if(UI.stage==='place'){placeSlot(emptySlots()[0].id);return;}
+  if(aiNeedShip(p)){buyTile('s_cog');return;}
+  const ex=aiBuyableExports(p);
+  if(ex.length){ex.sort((a,b)=>STYLES[a].q-STYLES[b].q);buyRecipe(ex[0]);return;}
+  if(!aiIsApp(p)){const buyable=displayGrantable(p).filter(k=>canPay(p,UPGRADE_BUY[k]));
+    if(buyable.length){
+      // trader: always take the tempo rooms (Extra Vessel / Aging Cellar) when affordable; the rest only when flush
+      if(aiIsTrader(p)){const tempo=buyable.filter(k=>k==='vessel'||k==='cellar');
+        if(tempo.length){buyDisplayUp(aiPickUpgrade(p,tempo));return;}
+        if(p.grain>=7){buyDisplayUp(aiPickUpgrade(p,buyable));return;}}
+      else if(p.grain>=5&&Math.random()<0.5){buyDisplayUp(aiPickUpgrade(p,buyable));return;}}}
+  if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
+}
+function aiHarbor(p){
+  if(UI.stage==='charter_cask'){const cs=charterCasks(p).slice().sort((a,b)=>b.q-a.q);charterPickCask(cs[0].ref);return;}
+  if(UI.stage==='charter_dest'){const ref=UI.tmp.charterCask;const c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];charterDest(aiDest(p,c.q,c.style));return;}
+  const canLoad=myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs)));
+  if(canLoad){harborLoad();return;}
+  // Charter only as a genuine relief valve: slots jammed, the end-game rush, or no hull & can't build.
+  const canCh=canPay(p,CHARTER_COST)&&charterCasks(p).length>0;
+  const jammed=emptySlots().length===0;
+  const noHull=myShips(p).length===0&&!canPay(p,{g:2});
+  if(canCh&&(jammed||S.ending||noHull)){harborCharter();return;}
+  const launch=myShips(p).filter(s=>S.slots[s].load.length>0);
+  if(launch.length&&(S.ending||jammed)){harborLaunch(launch[0]);return;}
+  cellDone();
+}
+function aiCellAct(p){const role=CELLROLE[UI.cell];if(role==='Source')aiMarket(p);else if(role==='Ship')aiHarbor(p);else cellDone();}
+function aiBrew(p){const aff=p.recipes.filter(r=>canBrew(p,r)&&openVessel(p)>=0);
+  if(!aff.length){resume(UI.brew.returnTo);return;}
+  if(aiNoisy(p)){brewPick(aiRandOf(aff));return;}
+  aff.sort((a,b)=>STYLES[b].q-STYLES[a].q);brewPick(aff[0]);}
+function aiAge(p){const mat=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step<o.c.ready);
+  if(!mat.length){if(UI.age.mode==='pool')ageDone();else ageSkip();return;}
+  if(aiNoisy(p)){ageAllot(aiRandOf(mat).i);return;}
+  mat.sort((a,b)=>(a.c.ready-a.c.step)-(b.c.ready-b.c.step));ageAllot(mat[0].i);}
+function aiSource(p){const n=UI.src.n;if(n>=2){if(p.hops<2)srcTake(1,1);else srcTake(2,0);}else{if(p.hops<1)srcTake(0,1);else srcTake(1,0);}}
+function aiReach(p){if(aiIsApp(p)){reachSkip();return;}
+  let best=UI.reach.ks[0],bv=-1e9;
+  UI.reach.ks.forEach(k=>{const m=aiMajSwing(p,k)+Math.random()*0.2;if(m>bv){bv=m;best=k;}});
+  reachPick(best);}
+function aiAlms(p){if(aiIsApp(p)){almsSkip();return;}almsPick(UI.alms.ks[0]);}
+function aiGoalDraw(p){if(aiNoisy(p)){drawPick(aiRandOf(UI.draw.avail));return;}
+  const a=UI.draw.avail.slice().sort((x,y)=>GOALS[y].fn(p)-GOALS[x].fn(p));drawPick(a[0]);}
+function aiWild(p){
+  if(myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs))))wildPick('ship');
+  else if(p.vessels.some(c=>c&&c.step<c.ready))wildPick('age');
+  else if(openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)))wildPick('brew');
+  else wildPick('source');}
+function aiLoad(p){const L=UI.load;
+  if(!L.cask){const elig=L.casks.filter(cs=>L.ships.some(s=>canTake(s,cs)));
+    if(!elig.length){loadSkip();return;}
+    if(aiNoisy(p)){loadPickCask(aiRandOf(elig));return;}
+    const own=elig.filter(cs=>S.slots[cs].owner===p.id);
+    if(own.length){own.sort((a,b)=>S.slots[b].q-S.slots[a].q);loadPickCask(own[0]);return;}
+    // Only rival casks are loadable. Loading one GIFTS its owner the delivery (value + benefit +
+    // majority presence) — the trader does it only when the move pays for itself: it completes one
+    // of MY ships' sails (clock + slot + tempo), or the slots are jammed and I need the space.
+    if(aiIsTrader(p)){
+      const completes=elig.some(cs=>L.ships.some(s=>{const sh=S.slots[s];
+        return canTake(s,cs)&&sh.owner===p.id&&sh.load.length+1>=effCap(sh);}));
+      if(!completes&&emptySlots().length>0){loadSkip();return;}}
+    elig.sort((a,b)=>S.slots[b].q-S.slots[a].q);loadPickCask(elig[0]);return;}
+  const ships=L.ships.filter(s=>canTake(s,L.cask));
+  if(!ships.length){loadBack();return;}
+  ships.sort((a,b)=>{const sa=S.slots[a],sb=S.slots[b];
+    const fa=(sa.load.length+1>=effCap(sa))?1:0,fb=(sb.load.length+1>=effCap(sb))?1:0;if(fa!==fb)return fb-fa;
+    const oa=sa.owner===p.id?1:0,ob=sb.owner===p.id?1:0;if(oa!==ob)return ob-oa;
+    return DEST[sb.dest].value-DEST[sa.dest].value;});
+  loadOnto(ships[0]);}
+function aiDeploy(p){const es=emptySlots();if(!es.length){deploySkipAll();return;}deployTo(aiNoisy(p)?aiRandOf(es).id:es[0].id);}
+function aiBenefit(){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];const g=displayGrantable(lp);
+  if(!g.length){UI.pendingBenefits.shift();afterSail(UI.benefit.returnTo);return;}
+  benefitPick(aiPickUpgrade(lp,g));}
+
+// ---- one decision per call, via the engine's own state machine ----
+function aiStep(){
+  if(!S||S.over)return;
+  const p=cur();if(!p.ai)return;
+  aiActing=true;   // AI decisions take no undo snapshots (the human-turn boundary clears the stack)
+  try{
+    switch(UI.sub){
+      case 'move':return aiMove(p);
+      case 'line':return aiLine(p);
+      case 'stops':return aiStops(p);
+      case 'cell':return aiCellAct(p);
+      case 'brew':return aiBrew(p);
+      case 'age':return aiAge(p);
+      case 'source':return aiSource(p);
+      case 'convert':return convertSkip();
+      case 'reach':return aiReach(p);
+      case 'alms':return aiAlms(p);
+      case 'goaldraw':return aiGoalDraw(p);
+      case 'wild':return aiWild(p);
+      case 'load':return aiLoad(p);
+      case 'deploy':return aiDeploy(p);
+      case 'benefit':return aiBenefit();
+      case 'end':return endTurn();
+      default:
+        log('⚠ '+p.name+' (AI) hit an unknown prompt ('+UI.sub+') — ending its turn.');
+        resume('end');return;
+    }
+  }catch(e){
+    if(typeof console!=='undefined')console.error('AI error',e);
+    log('⚠ AI error — '+p.name+' ends its turn ('+(e&&e.message||e)+').');
+    try{UI={sub:'end'};endTurn();}catch(e2){}
+  }finally{aiActing=false;}
+}
+// The scheduler: one paced step per tick while it is an AI's turn; 'instant' resolves all
+// consecutive AI turns synchronously (render suppressed, one repaint at the end).
+function maybeRunAI(){
+  aiCancel();
+  if(!aiTurn()||aiLoopActive)return;
+  if(AI_DELAYS[aiSpeed()]===0){
+    aiLoopActive=true;
+    const realRender=render;render=function(){};
+    let guard=0;
+    try{while(aiTurn()){aiStep();if(++guard>200000)break;}}
+    finally{render=realRender;aiLoopActive=false;}
+    render();return;
+  }
+  aiTimer=setTimeout(function(){aiTimer=null;if(!aiTurn())return;aiStep();maybeRunAI();},AI_DELAYS[aiSpeed()]);
+}
+function aiSpeedButtons(){const sp=aiSpeed();
+  return ['slow','normal','instant'].map(v=>btn((v===sp?'● ':'')+v,'aiSetSpeed(\''+v+'\')',v===sp?'primary':'ghost')).join('');}
 
 //==================================================================
 // RENDER
@@ -869,10 +1162,17 @@ function deployButtons(phase){const p=cur();if(!emptySlots().length)return '';
 
 function renderBar(){
   const p=cur();
-  document.getElementById('wholbl').textContent=p.name;
+  document.getElementById('wholbl').textContent=p.name+(p.ai?' · AI':'');
   document.getElementById('wholbl').style.background=p.color;
   document.getElementById('wholbl').style.color='#fff';
   document.getElementById('barres').innerHTML='<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span><span class="chip" data-tip="Total score so far (deliveries + majorities + best goals).">Σ <b>'+scorePlayer(p).total+'</b></span>';
+  // During an AI's turn the bar narrates instead of offering actions — humans only set the pace.
+  if(aiTurn()){
+    document.getElementById('prompt').innerHTML='<b>'+p.name+'</b> — '+aiLabel(p)+' AI is taking its turn… <span class="note">(the log narrates each action)</span>';
+    document.getElementById('acts').innerHTML='<span class="note" style="align-self:center;color:var(--parch);opacity:.8">AI speed:</span> '+aiSpeedButtons();
+    document.getElementById('boardnote').innerHTML='AI seats play by the same rules with the same information — the tiers differ only in decision quality.';
+    return;
+  }
   let prompt='',acts='';
   const U=UI.sub;
   if(U==='move'){const placing=!p.placed;
@@ -965,7 +1265,7 @@ function cellRender(p){
 function renderGrid(){
   const ag=document.getElementById('ag');let h='';
   SLOTS.forEach(s=>{const t=S.slots[s.id];let cls='slot '+s.id;
-    const placing=(UI.sub==='deploy'&&!t)||(UI.sub==='cell'&&UI.cell==='A'&&UI.stage==='place'&&!t);
+    const placing=!aiTurn()&&((UI.sub==='deploy'&&!t)||(UI.sub==='cell'&&UI.cell==='A'&&UI.stage==='place'&&!t));
     if(placing)cls+=' place';
     let inner;let style='';
     if(t){cls+=' filled';inner=slotFace(t);
@@ -977,7 +1277,7 @@ function renderGrid(){
   ['A','B','C','D'].forEach(c=>{const act=CELLNAME[c];
     const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+p.name+'"></span>').join('');
     let cls='cell '+c+' c'+c;
-    const legal=(UI.sub==='move'&&(!cur().placed||ADJ[cur().cell].includes(c)));
+    const legal=(UI.sub==='move'&&!aiTurn()&&(!cur().placed||ADJ[cur().cell].includes(c)));
     if(legal)cls+=' legal';
     const yields=(YIELD[act]||[]).map(n=>LU(n)).join('');
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'>'
@@ -1006,7 +1306,7 @@ function renderDests(){
 }
 
 function renderShop(){
-  const p=cur();const buying=(UI.sub==='cell'&&UI.cell==='A'&&UI.stage===null);
+  const p=cur();const buying=!aiTurn()&&(UI.sub==='cell'&&UI.cell==='A'&&UI.stage===null);
   // export recipes (this game's 3 dealt beers, by quality) + always-available ships
   let h='';(S.exports||[]).slice().sort((a,b)=>STYLES[a].lvl-STYLES[b].lvl).forEach(style=>{
     if(p.recipes.includes(style))return;
@@ -1037,7 +1337,7 @@ function renderVoyage(){
 function renderTableaus(){
   let tabs='',body='';
   S.players.forEach((p,i)=>{
-    tabs+='<div class="tab '+(i===activeTab?'active':'')+'" style="'+(i===activeTab?'background:'+p.color:'')+'" onclick="activeTab='+i+';renderTableaus();refreshIcons()"><span class="pawn" style="background:'+p.color+';display:inline-block;vertical-align:middle;width:11px;height:11px"></span> '+p.name+'</div>';
+    tabs+='<div class="tab '+(i===activeTab?'active':'')+'" style="'+(i===activeTab?'background:'+p.color:'')+'" onclick="activeTab='+i+';renderTableaus();refreshIcons()"><span class="pawn" style="background:'+p.color+';display:inline-block;vertical-align:middle;width:11px;height:11px"></span> '+p.name+(p.ai?' <span style="opacity:.75;font-size:.72rem" data-tip="'+attr(aiLabel(p)+' AI seat — plays by the same rules; tiers differ only in decision quality.')+'">· AI</span>':'')+'</div>';
     const sc=scorePlayer(p);
     const vessels=p.vessels.map(c=>{
       if(!c)return '<div class="vessel" style="opacity:.6">'+LU('flask-conical')+' <i>empty vessel</i></div>';
@@ -1052,7 +1352,7 @@ function renderTableaus(){
     const gv=p.goals.map(g=>({g,v:GOALS[g].fn(p)})).sort((a,b)=>b.v-a.v);
     const goals=gv.map((o,idx)=>'<span class="tag'+(idx<GOAL_BEST?' good':' dim')+'" data-tip="'+attr(GOALS[o.g].text)+'">'+LU('target')+GOALS[o.g].text+' = '+o.v+(idx<GOAL_BEST?' ✓':'')+'</span>').join('');
     body+='<div class="tableau '+(i===activeTab?'show':'')+'">'
-      +'<div style="margin-bottom:6px"><span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
+      +'<div style="margin-bottom:6px">'+(p.ai?'<span class="tag" data-tip="An AI seat — same rules, same information; the tiers differ only in decision quality.">'+aiLabel(p)+' AI</span> ':'')+'<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
       +'<span class="chip" data-tip="Storage cap.">'+LU('package')+'<b>'+p.storage+'</b></span>'
       +'<span class="chip" data-tip="Ships you have sailed.">'+LU('sailboat')+'<b>'+(p.shipsSailed||0)+'</b></span>'
       +'<span class="chip" data-tip="Total score.">Σ <b>'+sc.total+'</b></span> <span class="note">deliveries '+sc.deliv+' · maj '+sc.maj+' · goals '+sc.goals+'</span></div>'
@@ -1101,6 +1401,7 @@ function renderTableaus(){
   const saved=load();
   if(saved&&saved.players){S=saved;UI={sub:'move'};
     render();log('— resumed saved game —');render();
+    if(S.over)gameOver();else maybeRunAI();
   } else {openSetup();}
 })();
 </script>
