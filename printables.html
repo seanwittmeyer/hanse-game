@@ -34,7 +34,10 @@
   .ov{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
   .ov .cuts{display:none}
   body.cut .ov .cuts{display:block}
-  .dl{position:absolute;top:.32in;right:.45in;z-index:6;font-size:.7rem;background:var(--sea);color:#fff;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;font-family:inherit;opacity:.85}
+  /* card sheets are cut with a paper cutter, not the laser — their cut lines print WITH the art */
+  .ov .cuts.always{display:block}
+  .dl{position:absolute;top:.32in;right:.45in;z-index:6;display:flex;gap:4px}
+  .dl button{font-size:.7rem;background:var(--sea);color:#fff;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;font-family:inherit;opacity:.85}
   /* ====== TILES — 1.25in cut squares, gapless grid (a neighbour's colour is the bleed) ====== */
   .tile{width:1.25in;height:1.25in;background:var(--c,#777);color:#fff;
     position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:.096in;overflow:hidden;
@@ -93,19 +96,22 @@
   .card .c-buy .gc{font-size:.14in} .card .c-buy .gc svg,.card .c-buy .gc .ic{width:.17in;height:.17in}
   .card .c-buy .gate{font-size:.09in;font-style:italic;color:var(--red);display:flex;align-items:center;gap:.03in}
   .card .c-buy .gate svg,.card .c-buy .gate .ic{width:.12in;height:.12in}
-  /* title + BREW-cost strip — the visible edge when the card is tucked up under the board */
-  .card .c-strip{background:var(--cc,#8a6408);color:#fff;display:flex;align-items:center;gap:.07in;flex-wrap:wrap;
-    padding:.08in .12in;font-variant:small-caps;font-weight:bold;font-size:.15in;line-height:1;
-    text-shadow:0 1px 1.5px rgba(0,0,0,.45)}
-  .card .c-strip svg,.card .c-strip .ic{width:.15in;height:.15in;flex:0 0 auto}
-  .card .c-strip .c-rung{flex:0 0 auto;display:inline-flex;align-items:center;gap:.015in;font-variant:normal;
-    background:rgba(255,255,255,.92);color:var(--cc);border-radius:.04in;padding:.025in .05in;font-size:.115in;text-shadow:none}
+  /* title + BREW-cost strip — the visible edge when the card is tucked up under the board.
+     FIXED two-row layout (rung+name / cost) so every card's bottom edge reads identically. */
+  .card .c-strip{flex:0 0 .56in;background:var(--cc,#8a6408);color:#fff;display:flex;flex-direction:column;justify-content:center;gap:.035in;
+    padding:.05in .12in;text-shadow:0 1px 1.5px rgba(0,0,0,.45)}
+  .card .c-strip .c-row{display:flex;align-items:center;gap:.06in;line-height:1;white-space:nowrap}
+  .card .c-strip svg,.card .c-strip .ic{width:.14in;height:.14in;flex:0 0 auto}
+  .card .c-strip .c-rung{flex:0 0 auto;display:inline-flex;align-items:center;gap:.015in;
+    background:rgba(255,255,255,.92);color:var(--cc);border-radius:.04in;padding:.025in .05in;font-size:.115in;font-weight:bold;text-shadow:none}
   .card .c-strip .c-rung svg,.card .c-strip .c-rung .ic{width:.13in;height:.13in}
-  .card .c-strip .c-nm{flex:1 1 auto;white-space:nowrap}
-  .card .c-strip .c-cost{flex:0 0 auto;font-variant:normal;font-weight:bold;font-size:.135in;display:inline-flex;align-items:center;gap:.06in}
-  .card .c-strip .c-cost .gc{font-size:.135in;gap:.015in}
-  .card .c-strip .c-cost .gc svg,.card .c-strip .c-cost .gc .ic{width:.135in;height:.135in}
-  .card .c-strip .c-gate{display:inline-flex} .card .c-strip .c-gate svg,.card .c-strip .c-gate .ic{width:.13in;height:.13in}
+  .card .c-strip .c-nm{font-variant:small-caps;font-weight:bold;font-size:.16in}
+  .card .c-strip .c-cost{display:inline-flex;align-items:center;gap:.06in;font-weight:bold;font-size:.13in}
+  .card .c-strip .c-cost .gc{font-size:.13in;gap:.015in}
+  .card .c-strip .c-cost .gc svg,.card .c-strip .c-cost .gc .ic{width:.13in;height:.13in}
+  .card .c-strip .c-lbl{font-size:.085in;font-style:italic;opacity:.85}
+  .card .c-strip .c-gate{display:inline-flex;align-items:center;gap:.02in;font-size:.085in;font-style:italic}
+  .card .c-strip .c-gate svg,.card .c-strip .c-gate .ic{width:.12in;height:.12in}
   /* ====================== PLAYER BOARD ====================== */
   .board{--pc:#7c2128;width:100%;height:100%;background:var(--parch);color:var(--ink);border:2.5px solid var(--pc);
     border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in}
@@ -259,8 +265,9 @@
   <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
   <span class="seg"><button id="bfull" class="on" onclick="setMode('full')">Full set</button><button id="bproof" onclick="setMode('proof')">Proof (1 each)</button></span>
   <span class="seg"><button id="lart" class="on" onclick="setLayer('art')">ART layer</button><button id="lcut" onclick="setLayer('cut')">CUT layer</button></span>
+  <button onclick="downloadAllArt()" style="background:var(--sea);color:#fff">⬇ Art SVGs</button>
   <button onclick="downloadAll()" style="background:var(--sea);color:#fff">⬇ Cut SVGs</button>
-  <span class="note"><b>US Letter · LANDSCAPE · 100%</b> (verify the 3-inch bar). Workflow: print <b>ART</b> (no cut lines) → print/export <b>CUT</b> (art hidden) → both carry the <b>same registration marks</b>, page for page → glue art to chipboard, align the laser on the marks, cut on the red lines. Tiles are one unbroken grid — neighbours are the bleed.</span>
+  <span class="note"><b>US Letter · LANDSCAPE · 100%</b> (verify the 3-inch bar). Workflow: export <b>art SVGs</b> → place in Affinity → print at 100% → glue to chipboard → export <b>cut SVGs</b> → Affinity → PDF → laser, aligned on the shared registration marks. Card sheets print their grey cut guides with the art (paper cutter, no laser). Tiles are one unbroken grid — neighbours are the bleed.</span>
   <span style="margin-left:auto"><a href="learn.html">Learn</a> · <a href="index.html">Rulebook &amp; Components</a> · <a href="play.html">Play</a></span>
 </div>
 <div id="out"></div>
@@ -381,9 +388,11 @@ function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
     +'<span class="gc">'+cost(r.buy.g,r.buy.h)+'</span>'
     +'<span>permanent — brewing never consumes it</span>'
     +(r.cellar?'<span class="gate">'+LU('lock')+'brewing needs the Aging Cellar</span>':'')+'</div>'
-  +'<div class="c-strip"><span class="c-rung">'+LU(QI)+r.L+'</span>'
-  +'<span class="c-nm">'+r.nm+'</span>'
-  +'<span class="c-cost">'+cost(r.g,r.h)+(r.cellar?'<span class="c-gate" title="needs Aging Cellar">'+LU('lock')+'</span>':'')+'</span></div>'
+  +'<div class="c-strip">'
+    +'<div class="c-row"><span class="c-rung">'+LU(QI)+r.L+'</span><span class="c-nm">'+r.nm+'</span></div>'
+    +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(r.g,r.h)+'</span>'
+      +(r.cellar?'<span class="c-gate">'+LU('lock')+'Aging Cellar</span>':'')+'</div>'
+  +'</div>'
   +'</div>';}
 
 // ---- player brewery board ----
@@ -560,6 +569,8 @@ function buildPages(){
   const cards=[];const sets=MODE==='proof'?1:PLAYERS.length;
   for(let s=0;s<sets;s++)RECIPES.forEach(r=>cards.push(recipeCard(r)));
   packRun(pages,'cards','Export recipe cards — 1 set per player','card',cards,'Recipe cards',famPages);
+  // cardstock + paper cutter: cut lines print on the ART layer as grey guides (no laser pass)
+  pages.filter(p=>p.section==='cards').forEach(p=>p.papercut=true);
   // --- CHECKLIST (always last; carries no cuts, so earlier sheets stay page-aligned) ---
   const pg=newPage(pages,'list','Component checklist');
   pages.forEach((p,i)=>p.no=i+1);   // number sheets BEFORE building the checklist's sheet refs
@@ -609,12 +620,12 @@ function checklist(pages,famPages){
     +row(1,'First-player marker 0.8″ (fixed all game)','1','')
     +row(1,'Round marker 0.8″ (the 1–25 track on the main board)','1','')
     +'</table>';
-  h+='<div class="wf"><b>Prototype workflow.</b> 1) Toggle <b>ART</b>, print all sheets at 100% (registration marks on, no cut lines — verify the 3″ bar). '
-    +'2) Toggle <b>CUT</b>, print to PDF (art hidden; red cut lines + the same marks) or use the per-sheet ⬇ SVG buttons. '
-    +'3) Spray-glue the art sheets to chipboard. 4) Import the cut file into the laser, align on the registration marks, cut the red lines. '
+  h+='<div class="wf"><b>Prototype workflow.</b> 1) Export the <b>art SVGs</b> (⬇ per sheet or the toolbar batch), place in Affinity Publisher, print at 100% (verify the 3″ bar). '
+    +'2) Spray-glue the art sheets to chipboard. 3) Export the <b>cut SVGs</b> → Affinity → PDF → the laser; align on the registration marks (identical in both files), cut the red lines. '
+    +'(Printing the page directly in the ART/CUT layer toggle works too.) '
+    +'<b>Card sheets are the exception:</b> print on cardstock — their grey cut guides print with the art — and cut with a paper cutter; no laser pass, no mounting (they tuck under the brewery board). '
     +'Tiles &amp; cards are gapless grids — every internal line is drawn once. Tokens cut on the inner circle; the ring outside is bleed. '
-    +'Backs are bare chipboard (every component is single-faced; the face-down upgrade deck &amp; goal deals work by flipping). '
-    +'Cards print on cardstock and stay unmounted so they tuck under the brewery board.</div>';
+    +'Backs are bare chipboard (every component is single-faced; the face-down upgrade deck &amp; goal deals work by flipping).</div>';
   h+='</div></div>';
   return h;}
 
@@ -626,24 +637,136 @@ function regmarkSvg(){let s='';REGS.forEach(([x,y])=>{
     +'<line x1="'+x+'" y1="'+(y-0.15)+'" x2="'+x+'" y2="'+(y+0.15)+'" stroke="#000" stroke-width="0.012" fill="none"/>'
     +'<circle cx="'+x+'" cy="'+y+'" r="0.07" stroke="#000" stroke-width="0.012" fill="none"/>';});
   return s;}
-function overlaySvg(pg){
-  let s='<svg class="ov" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+PG.w+' '+PG.h+'">';
-  s+='<g class="marks">'+regmarkSvg();
-  s+='<text x="0.45" y="0.22" font-size="0.11" font-family="Georgia,serif" fill="#000">Brewhouses of the Hanse · S'+pg.no+' · '+MODE+' · '+esc(pg.label)+'</text>';
-  s+='<line x1="6.9" y1="0.16" x2="9.9" y2="0.16" stroke="#000" stroke-width="0.014"/>'
+function marksSvg(pg){  // ONE fragment shared by the on-page overlay and BOTH SVG exports → guaranteed alignment
+  return regmarkSvg()
+    +'<text x="0.45" y="0.22" font-size="0.11" font-family="Georgia,serif" fill="#000">Brewhouses of the Hanse · S'+pg.no+' · '+MODE+' · '+esc(pg.label)+'</text>'
+    +'<line x1="6.9" y1="0.16" x2="9.9" y2="0.16" stroke="#000" stroke-width="0.014"/>'
     +'<line x1="6.9" y1="0.1" x2="6.9" y2="0.22" stroke="#000" stroke-width="0.014"/>'
     +'<line x1="9.9" y1="0.1" x2="9.9" y2="0.22" stroke="#000" stroke-width="0.014"/>'
-    +'<text x="8.18" y="0.12" font-size="0.09" font-family="Georgia,serif" fill="#000">3.00 in</text>';
-  s+='</g><g class="cuts">';
-  pg.cuts.forEach(c=>{s+='<line x1="'+c[0]+'" y1="'+c[1]+'" x2="'+c[2]+'" y2="'+c[3]+'" stroke="#f00" stroke-width="0.008" fill="none"/>';});
-  pg.circles.forEach(c=>{s+='<circle cx="'+c.cx+'" cy="'+c.cy+'" r="'+c.r+'" stroke="#f00" stroke-width="0.008" fill="none"/>';});
-  if(pg.rrect){const r=pg.rrect;s+='<rect x="'+r.x+'" y="'+r.y+'" width="'+r.w+'" height="'+r.h+'" rx="'+r.r+'" stroke="#f00" stroke-width="0.008" fill="none"/>';}
-  s+='</g></svg>';
+    +'<text x="8.18" y="0.12" font-size="0.09" font-family="Georgia,serif" fill="#000">3.00 in</text>';}
+function cutsSvg(pg){
+  const cc=pg.papercut?'#888':'#f00';   // paper-cutter guides print grey with the art; laser cuts are red
+  let s='';
+  pg.cuts.forEach(c=>{s+='<line x1="'+c[0]+'" y1="'+c[1]+'" x2="'+c[2]+'" y2="'+c[3]+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';});
+  pg.circles.forEach(c=>{s+='<circle cx="'+c.cx+'" cy="'+c.cy+'" r="'+c.r+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';});
+  if(pg.rrect){const r=pg.rrect;s+='<rect x="'+r.x+'" y="'+r.y+'" width="'+r.w+'" height="'+r.h+'" rx="'+r.r+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';}
   return s;}
+function overlaySvg(pg){
+  return '<svg class="ov" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+PG.w+' '+PG.h+'">'
+    +'<g class="marks">'+marksSvg(pg)+'</g>'
+    +'<g class="cuts'+(pg.papercut?' always':'')+'">'+cutsSvg(pg)+'</g></svg>';}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
 
 //==================================================================
-// RENDER + SVG DOWNLOAD
+// ART SVG EXPORT — serialize the RENDERED page DOM into native SVG
+// (rects/circles/gradients, per-line text runs, embedded icon vectors)
+// so Affinity Publisher can place the art at exact 100% scale.
+// Same registration marks as the cut export → the two files align.
+//==================================================================
+const PXI=96;  // CSS px per inch
+function n3(v){return Math.round(v*1000)/1000;}
+function parseLinGrad(bgi){  // '^linear-gradient(155deg, c1, c2)' → {angle, stops[]}
+  const m=/^linear-gradient\(\s*([-\d.]+)deg\s*,(.+)\)\s*$/.exec(bgi||'');if(!m)return null;
+  const parts=[];let d=0,cur='';
+  for(const ch of m[2]){if(ch==='(')d++;if(ch===')')d--;
+    if(ch===','&&d===0){parts.push(cur.trim());cur='';}else cur+=ch;}
+  if(cur.trim())parts.push(cur.trim());
+  return {angle:parseFloat(m[1]),stops:parts.map(p=>p.replace(/\s+[\d.]+%\s*$/,''))};}
+let __grad=0;
+function artSvgPage(no){
+  const pageEl=document.getElementById('pg'+no), pg=PAGES.find(p=>p.no===no);
+  if(!pageEl||!pg)return null;
+  const wasCut=document.body.classList.contains('cut');
+  if(wasCut)document.body.classList.remove('cut');     // measure with the art visible
+  const o=pageEl.getBoundingClientRect();
+  const X=px=>n3((px-o.left)/PXI), Y=px=>n3((px-o.top)/PXI), L=px=>n3(px/PXI);
+  const defs=[];let body='';
+  const dash=st=>st==='dashed'?' stroke-dasharray="0.045,0.03"':(st==='dotted'?' stroke-dasharray="0.012,0.024"':'');
+  function shape(el,cs,r){
+    if(r.width<0.5||r.height<0.5)return '';
+    let s='',fill='none';
+    const grad=parseLinGrad(cs.backgroundImage);
+    if(grad&&grad.stops.length>1){const id='ag'+(__grad++);
+      const a=(grad.angle-90)*Math.PI/180,dx=Math.cos(a)/2,dy=Math.sin(a)/2;
+      defs.push('<linearGradient id="'+id+'" x1="'+n3(.5-dx)+'" y1="'+n3(.5-dy)+'" x2="'+n3(.5+dx)+'" y2="'+n3(.5+dy)+'">'
+        +grad.stops.map((c,i)=>'<stop offset="'+n3(i/(grad.stops.length-1))+'" stop-color="'+c+'"/>').join('')+'</linearGradient>');
+      fill='url(#'+id+')';}
+    else if(cs.backgroundColor&&cs.backgroundColor!=='rgba(0, 0, 0, 0)'&&cs.backgroundColor!=='transparent')fill=cs.backgroundColor;
+    const op=parseFloat(cs.opacity);
+    const oattr=op<1?' opacity="'+n3(op)+'"':'';
+    const bw=parseFloat(cs.borderTopWidth)||0;
+    const uniform=cs.borderTopWidth===cs.borderBottomWidth&&cs.borderTopWidth===cs.borderLeftWidth&&cs.borderTopWidth===cs.borderRightWidth
+      &&cs.borderTopStyle===cs.borderBottomStyle&&cs.borderTopStyle===cs.borderLeftStyle&&cs.borderTopStyle===cs.borderRightStyle;
+    const isCircle=(cs.borderTopLeftRadius||'').includes('%')&&parseFloat(cs.borderTopLeftRadius)>=50;
+    const rx=parseFloat(cs.borderTopLeftRadius)||0;
+    let stroke='';
+    if(uniform&&bw>0&&cs.borderTopStyle!=='none')stroke=' stroke="'+cs.borderTopColor+'" stroke-width="'+L(bw)+'"'+dash(cs.borderTopStyle);
+    if(fill!=='none'||stroke){
+      if(isCircle)s+='<circle cx="'+n3(X(r.left)+L(r.width)/2)+'" cy="'+n3(Y(r.top)+L(r.height)/2)+'" r="'+n3(L(Math.min(r.width,r.height))/2)+'" fill="'+fill+'"'+stroke+oattr+'/>';
+      else s+='<rect x="'+X(r.left)+'" y="'+Y(r.top)+'" width="'+L(r.width)+'" height="'+L(r.height)+'"'+(rx&&!isCircle?' rx="'+L(rx)+'"':'')+' fill="'+fill+'"'+stroke+oattr+'/>';}
+    if(!uniform){  // per-side borders (e.g. tuck slots have no bottom border)
+      [['Top',r.left,r.top,r.right,r.top],['Bottom',r.left,r.bottom,r.right,r.bottom],
+       ['Left',r.left,r.top,r.left,r.bottom],['Right',r.right,r.top,r.right,r.bottom]].forEach(d4=>{
+        const w=parseFloat(cs['border'+d4[0]+'Width'])||0,st=cs['border'+d4[0]+'Style'];
+        if(w>0&&st!=='none')s+='<line x1="'+X(d4[1])+'" y1="'+Y(d4[2])+'" x2="'+X(d4[3])+'" y2="'+Y(d4[4])+'" stroke="'+cs['border'+d4[0]+'Color']+'" stroke-width="'+L(w)+'"'+dash(st)+'/>';});}
+    return s;}
+  function ringFor(el,r){  // the ::after inner ring on tokens/discs/workers (pseudo-elements aren't in the DOM walk)
+    const inset={tok:.125,disc:.075,wtok:.1};const k=['tok','disc','wtok'].find(c=>el.classList.contains(c));
+    if(!k)return '';
+    return '<circle cx="'+n3(X(r.left)+L(r.width)/2)+'" cy="'+n3(Y(r.top)+L(r.height)/2)+'" r="'+n3(L(Math.min(r.width,r.height))/2-inset[k])+'" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="0.011"/>';}
+  function textRuns(node){  // split a (possibly wrapped) text node into per-line runs with rects
+    const str=node.textContent;if(!str.trim())return[];
+    const rg=document.createRange();rg.setStart(node,0);rg.setEnd(node,str.length);
+    if(rg.getClientRects().length<=1){const r=rg.getBoundingClientRect();return (r.width&&r.height)?[{r,t:str}]:[];}
+    const runs=[];let lineStart=0,prev=1;
+    for(let i=1;i<=str.length;i++){rg.setEnd(node,i);const k=rg.getClientRects().length;
+      if(k>prev){const lr=document.createRange();lr.setStart(node,lineStart);lr.setEnd(node,i-1);
+        runs.push({r:lr.getBoundingClientRect(),t:str.slice(lineStart,i-1)});lineStart=i-1;prev=k;}}
+    const lr=document.createRange();lr.setStart(node,lineStart);lr.setEnd(node,str.length);
+    runs.push({r:lr.getBoundingClientRect(),t:str.slice(lineStart)});
+    return runs;}
+  function emitText(run,cs){
+    const t=run.t.replace(/\s+/g,' ');if(!t.trim())return;
+    const fs=parseFloat(cs.fontSize);
+    const sc=(cs.fontVariant||'').includes('small-caps')||(cs.fontVariantCaps||'')==='small-caps';
+    body+='<text x="'+X(run.r.left)+'" y="'+n3(Y(run.r.bottom)-0.22*L(fs))+'" font-size="'+L(fs)+'"'
+      +' font-family="'+esc(cs.fontFamily)+'" font-weight="'+cs.fontWeight+'"'
+      +(cs.fontStyle!=='normal'?' font-style="'+cs.fontStyle+'"':'')
+      +(sc?' style="font-variant:small-caps"':'')
+      +(cs.letterSpacing!=='normal'?' letter-spacing="'+L(parseFloat(cs.letterSpacing))+'"':'')
+      +' fill="'+cs.color+'">'+esc(t)+'</text>';}
+  function emitIcon(el,cs,r){
+    const clone=el.cloneNode(true);
+    clone.setAttribute('x',X(r.left));clone.setAttribute('y',Y(r.top));
+    clone.setAttribute('width',L(r.width));clone.setAttribute('height',L(r.height));
+    clone.setAttribute('stroke',cs.color);                     // resolve lucide's currentColor
+    const op=parseFloat(cs.opacity);if(op<1)clone.setAttribute('opacity',n3(op));
+    clone.removeAttribute('class');
+    body+=clone.outerHTML;}
+  function walk(el){
+    if(el.classList&&(el.classList.contains('no-print')||el.classList.contains('ov')))return;
+    const cs=getComputedStyle(el);
+    if(cs.display==='none'||cs.visibility==='hidden')return;
+    const r=el.getBoundingClientRect();
+    if(el.tagName.toLowerCase()==='svg'){emitIcon(el,cs,r);return;}
+    body+=shape(el,cs,r);
+    body+=ringFor(el,r);
+    for(const ch of el.childNodes){
+      if(ch.nodeType===3)textRuns(ch).forEach(run=>emitText(run,cs));
+      else if(ch.nodeType===1)walk(ch);}}
+  try{ for(const ch of pageEl.children)if(ch.nodeType===1)walk(ch); }
+  finally{ if(wasCut)document.body.classList.add('cut'); }
+  return '<?xml version="1.0" encoding="UTF-8"?>\n'
+    +'<svg xmlns="http://www.w3.org/2000/svg" width="'+PG.w+'in" height="'+PG.h+'in" viewBox="0 0 '+PG.w+' '+PG.h+'" font-family="Iowan Old Style,Georgia,serif">'
+    +'<defs>'+defs.join('')+'</defs>'
+    +'<rect x="0" y="0" width="'+PG.w+'" height="'+PG.h+'" fill="#fff"/>'
+    +body
+    +'<g>'+marksSvg(pg)+'</g>'
+    +(pg.papercut?'<g>'+cutsSvg(pg)+'</g>':'')   // card sheets carry their paper-cutter guides in the art
+    +'</svg>';}
+
+//==================================================================
+// RENDER + DOWNLOADS
 //==================================================================
 let PAGES=[];
 function render(){
@@ -654,23 +777,26 @@ function render(){
     h+='<div class="page" id="pg'+pg.no+'">';
     pg.items.forEach(it=>{h+='<div class="it" style="left:'+it.x+'in;top:'+it.y+'in;width:'+it.w+'in;height:'+it.h+'in">'+it.html+'</div>';});
     h+=overlaySvg(pg);
-    h+='<button class="dl no-print" onclick="dlSvg('+pg.no+')">⬇ S'+pg.no+' cut SVG</button>';
+    h+='<span class="dl no-print"><button onclick="dlArt('+pg.no+')">⬇ S'+pg.no+' art</button> <button onclick="dlCut('+pg.no+')">⬇ S'+pg.no+' cut</button></span>';
     h+='</div>';
   });
   document.getElementById('out').innerHTML=h||'<p style="text-align:center;padding:2em">no sheets in this view</p>';
   if(window.lucide)lucide.createIcons();
 }
-function svgFile(pg){  // standalone cut file: marks + cuts, no CSS needed (laser-ready)
+function cutFile(pg){  // standalone cut file: marks + cuts, no CSS needed (laser-ready)
   return '<?xml version="1.0" encoding="UTF-8"?>\n'
     +'<svg xmlns="http://www.w3.org/2000/svg" width="'+PG.w+'in" height="'+PG.h+'in" viewBox="0 0 '+PG.w+' '+PG.h+'">'
-    +overlaySvg(pg).replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'')
-    +'</svg>';}
-function dlSvg(no){const pg=PAGES.find(p=>p.no===no);if(!pg)return;
-  const blob=new Blob([svgFile(pg)],{type:'image/svg+xml'});
+    +'<g>'+marksSvg(pg)+'</g><g>'+cutsSvg(pg)+'</g></svg>';}
+function dlBlob(s,name){const blob=new Blob([s],{type:'image/svg+xml'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download='hanse-'+MODE+'-S'+String(no).padStart(2,'0')+'-cut.svg';a.click();URL.revokeObjectURL(a.href);}
-function downloadAll(){const show=PAGES.filter(p=>(VIEW==='all'||p.section===VIEW)&&p.section!=='list');
-  show.forEach((pg,i)=>setTimeout(()=>dlSvg(pg.no),i*350));}
+  a.download=name;a.click();URL.revokeObjectURL(a.href);}
+function dlCut(no){const pg=PAGES.find(p=>p.no===no);if(!pg)return;
+  dlBlob(cutFile(pg),'hanse-'+MODE+'-S'+String(no).padStart(2,'0')+'-cut.svg');}
+function dlArt(no){const s=artSvgPage(no);if(!s)return;
+  dlBlob(s,'hanse-'+MODE+'-S'+String(no).padStart(2,'0')+'-art.svg');}
+function shownPages(){return PAGES.filter(p=>(VIEW==='all'||p.section===VIEW)&&p.section!=='list');}
+function downloadAll(){shownPages().forEach((pg,i)=>setTimeout(()=>dlCut(pg.no),i*350));}
+function downloadAllArt(){shownPages().forEach((pg,i)=>setTimeout(()=>dlArt(pg.no),i*450));}
 render();
 </script>
 </body>
