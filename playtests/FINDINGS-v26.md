@@ -41,3 +41,14 @@
 ## C. What this can't tell you
 
 The bots maximize points without table-talk, spite, or risk preference; humans use the interactive tools (rival-loads, slot blocking, toll pressure) differently. The Guildmaster oracle is n=30 at a reduced think budget. Every FLAG above is a *hypothesis with a measurement attached* — the human playtests (now flowing to Waterworks Studio) are the arbiter, and `sim-analyze.js` re-runs in minutes after any dial change to check the shape moved the way you wanted.
+
+---
+
+## Addendum (2026-06-12, later) — GM oracle at 3p & 4p (30 games each; `analysis-gm3p/-gm4p-v26.txt`)
+
+Run to test the designer's table observation that the rival-load aversion is a 2p-density/majority effect. **Confirmed:**
+
+1. **B1 is count-dependent, structural to 2p.** GM rival-loads/game: **0.6 (2p) → 0.9 (3p) → 1.2 (4p)** — at 4p the strongest player uses the interaction as often as the heuristics do. At 2p (winner-take-all majorities, one rival) every gift is a direct transfer to your only opponent; at 3–4p it's rationally played. **B1 reduces from "interaction anti-optimal as designed" to "interaction dead at 2p specifically"** — if a dial is wanted at all, it's a 2p-scoped one (or accept it: 2p games of interaction-light euros are common).
+2. **B2 (Q4+ climb skipped) extends beyond 2p** — GM brews 0.4–0.5 Q4+/game at 3–4p (traders 0.8–1.3) while winning 77%/67%. It banks the Hall late with cheap Q2–Q3 casks instead. **Budget caveat now load-bearing:** flat MC at 40ms with greedy rollouts systematically undervalues long multi-turn plans (the rollout policy executes a half-built Q5 engine badly), so the oracle is biased *against* the climb. Needs the full-budget run before this graduates from hypothesis.
+3. **NEW sub-flag for B3: the GM prefers charters to ships at 3–4p** — charters/game **1.4 (2p) → 2.6 (3p) → 3.3 (4p)** while its sails *drop* to 1.6–1.7 (below the traders' 2.0–2.6). Optimal-ish play treats the relief valve as a primary road: immediate delivery, no slot spent on a ship tile, no waiting to fill a hull, clock control. Strengthens the case for the parked **escalating charter fare** (`DESIGN.md` §21) at higher counts.
+4. **Unchanged across counts:** GM feeds London 0.9/game (traders 0.2–0.3); majorities are the dominant win correlate and grow with skill (Δ +9.4 at 3p, **+11.4 at 4p**); GM win-rate 96.7/76.7/66.7% vs fair 50/33/25 — search advantage dilutes with more players but stays ~2–2.7× fair.
