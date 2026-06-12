@@ -658,3 +658,66 @@ A designer call to make the majority game live at **all four kontore**, not just
 - **Result (PERSONAS, N=500 × 2–5p).** The real axis is **balanced**: volume vs prestige are within ~1–3 pts of fair at every count (**4p 26/26/23, 5p 21/24/15**, fair 25/20; 2p 52/51/47). Prestige healthy everywhere; the concentrate-`majority` persona trails at 3p/5p (the structural point above). Robustness (greedy, N=500 × 2–5p): **0 crashes / 0 deadlocks, ~100% clock-ended, pace 13.8–14.4 (in band)**, winner scores ~45–47. Saved `playtests/sim-results-v21*.txt`.
 - **Engine.** `play.html` `KEY → v21`: `DEST.maj` triples (big), kontor `value`s cut, `HALL_MULT=2.5`, Bergen `goods` benefit + **Monopoly → Bryggen** rename. `majorityAwards()`/tie/2p-skip unchanged.
 - **Still open / next.** Wants a **human playtest** — especially whether big majorities + low delivery values make the *feel* of a kontor delivery satisfying (the points come at game-end, not on the ship), and whether Bergen's token goods read as "weak benefit, big payoff" rather than just weak. ⚙ open: `HALL_MULT` (2.5 is sim-balanced but untested by humans); whether the `5/3/0` zero-third-tier at Bruges should be a flat `5/3` (functionally identical).
+
+### v0.11 candidates — consolidated findings → themes → proposals to test (2026-06-12)
+
+The first **human playtests** (5 games vs the AI seats, designer notes) landed alongside the **simulation corpus** (`playtests/FINDINGS-v26.md`: 1,200+ trader games, journeyman & 5p probes, Guildmaster oracles at 2/3/4p). This entry consolidates BOTH into themes with testable proposals. **Discipline: one change per test batch** — too many simultaneous changes and you can't attribute the effect. Each proposal names its measurement (the sim suite + `sim-analyze` deltas + Studio-tracked human games). Nothing below is decided.
+
+**Where human feel and simulation agree (highest confidence, act first):**
+- **The Q4–Q5 climb doesn't pay** — designer: "race nature and pace don't support going that path"; oracle: the GM wins while skipping Q4+ at every count (with a flat-MC bias caveat). → Theme T4.
+- **Charters undercut owned ships** — designer: "felt like cheating… why bother with a larger ship"; oracle: the GM charters 3.3×/game at 4p while sailing fewer ships than the heuristics. → Theme T5.
+- **Cross-player loading is unmotivated/confusing** — designer: never saw rival-ship loads, wants loading to be a decision; oracle: rival-loading is structurally dead at 2p (0.6/game) and only converges to normal at 4p. → Theme T2.
+
+---
+
+**T1 · The slot ecology & tile families** *(notes: town buildings carry replayability but players have no agency over them; 8 slots over-subscribed at 4p; merge buildings/upgrades?)*
+- **P1a — Buildings become player-built.** Merge the 6 neutral buildings + the 11 upgrade designs into ONE town-building family: bought at the Market / earned at the engine-kontore, **placed on a slot by the buyer** (public action per the fire rule; owner gets a private kicker ⚙). Setup seeds only 1–2. Gives the "reason to put them out," keeps the replayability lever in player hands, thins the three-family collision.
+- **P1b — Dedicated building sites.** The 4 corner-adjacent slots become **building sites** ("port slots"), the 4 others **berths** (casks/ships only). Geometry relieves 4p pressure without new components.
+- *Measure:* slot-jam rate & charter count at 4–5p (sim), building-use events/game, human "did placement feel like a decision."
+
+**T2 · Ships as shared destination infrastructure** *(notes: ownership tracking finicky; rival-ship line-fire confusing & never used; "ships tied to destinations, not players"; the filler/all-aboard benefit ideas)* — the big structural candidate.
+- **P2a — Neutral ships (Imhotep-style).** Ship tiles are printed with destination+capacity and spawn into berths; **nobody owns them** — loading your cask is claiming cargo space; full ⇒ it sails; every cask owner scores their own casks; the **filler** (or cargo-majority holder ⚙) takes the destination benefit/kicker; "build a ship" becomes **commission** (pick & place the next tile, commission kicker on sail ⚙). Dissolves: ownership tracking, the rival-ship confusion, the B1 gifting paradox (loading is now self-interested by construction), and the loader-bonus dial entirely. Risks: loses the "my fleet" merchant fantasy; sail-timing becomes a race (mitigate: the filler choice is the new timing lever).
+- **P2b — Value-tweak fallback (keep owned ships):** full-ship sail bonus scaling with capacity (Hulk > Cog ⚙) + loader bonus 1G→2G. Answers "bigger ships should pay" without surgery.
+- *Measure:* loads-on-others/game by count, ship-vs-charter mix, human confusion reports. Test P2b first (cheap); prototype P2a behind a setup variant toggle in `play.html`.
+
+**T3 · Cask lifecycle legibility & intentionality** *(notes: slotted-vs-loaded-vs-aging confusion; auto-aging = auto-calculation, bad on the table; "when can a cask be slotted?"; mid-turn slot-then-fire)*
+- **P3a — Formal turn phases:** **(1) Deploy Ready casks → (2) Move → (3) Activate & resolve → (4) End.** Slot tiles fire only if present at activation — kills the mid-turn deploy-then-fire ambiguity (which the GM exploits today as a free same-turn action) and gives the turn a teachable shape.
+- **P3b — Physical state grammar** (components/printables/app): maturing = flat in vessel · Ready = rotated 45° · slotted = on the ring · loaded = physically ON the ship tile. No state lives in memory.
+- **P3c — Intentional aging:** drop the **+1 auto-age per turn** (the auto-calculation); compensate with a richer Cellar (pool 3→4 ⚙) and/or shorter maturations. Aging becomes something you DO. *Big pace lever — sim before table.*
+- *Measure:* pace band (sim — P3c shifts it), human confusion reports, GM exploit gone (analyze: deploy-line correlation).
+
+**T4 · The quality climb must pay** *(notes: Q4/Q5 attract but don't reward; sim FLAG B2 at all counts)*
+- **P4a — Quality pays at the kontore:** delivery value = base **+1 per Q above the gate** ⚙ (majorities still the volume race; quality earns its freight on the same voyage).
+- **P4b — Hall scaling up** (Q×3 for Q4+ only ⚙ — a top-end kink, not a flat bump, so Q2-spam at the Hall doesn't return).
+- **P4c — Premium cask actions on delivery:** Q4/Q5 casks trigger their signature action FOR THE OWNER when delivered ⚙ (a parting gift — ties to T9's variable benefits).
+- *Measure:* Q4+ brews/game (currently GM 0.3–0.5, traders ~1.0), persona balance (prestige must not run away), full-budget GM verification. **Pick ONE dial per test.**
+
+**T5 · Charter & ship economics** *(notes: charters felt like cheating, want variable cost; sim B3 + GM charter-highway)*
+- **P5a — Escalating fare** (the parked §21 idea, now doubly evidenced): charter cost = **2G + 1G per charter you have already taken** ⚙ (per-player; resets never). First one stays the relief valve; the highway gets tolls.
+- **P5b — Destination-priced fares** (Bruges 2G … Novgorod 4G ⚙) — thematic (longer voyage, dearer passage), also nerfs charter-sniping the rich kontore.
+- *Measure:* charters/game by count (target: ≤1/player at 2–4p, ~1.5 at 5p), deadlock still impossible (the first charter must stay affordable), GM ship-vs-charter mix normalizes.
+
+**T6 · Brewhouse engine agency** *(note: upgrades are passive; want active powers — carefully, this was cut in v0.7 for weight)*
+- **P6a — One active Room per turn:** each Room gains a small ACTIVE power usable **once on your turn when your activated line includes the matching station** ⚙ (e.g., Cooperage: free load when Harbor fires). No new phases, no twins — just a reason to look at your board during a line.
+- *Measure:* turn length (human), weight feel, win-correlate shift toward upgrades.
+
+**T7 · Goals economy** *(note: Towncrier → 6+ goals, excessive)* — smallest fix, first batch.
+- **P7 — Towncrier costs 1G and you hold max 4 goals** (draw beyond cap ⇒ discard down) ⚙. Best-2 scoring unchanged.
+- *Measure:* goals drawn/game, goal-pts share stays ~⅓.
+
+**T8 · Board layout question** *(note: is Market+Brewhouse on one line right?)* — experiment, not a change.
+- **P8 — Re-run the build×cash-out A/B with modern instruments.** The v0.8 diagonal test was rejected partly on greedy-bot artifacts; we now have personas, the Trader, the Guildmaster, and `sim-analyze`. Data-only: revive the parked branch logic under a sim flag, compare pace/openings/climb. No table change unless data AND feel agree.
+
+**T9 · Variable cask benefits** *(note: casks need variable benefits)* — component-level, decide after T1/T2 settle the families.
+- **P9 — Action variants within quality bands:** each quality band prints 2–3 signature-action variants across its tile pool ⚙ (drawn blind at brew). Power stays banded; texture and tile identity go up. Pairs with P4c.
+
+---
+
+**Test sequencing (one lever at a time):**
+1. **Batch A — value tweaks, each its own KEY + sim suite + a couple of Studio games:** P7 (goals) → P5a (charter fare) → ONE of P4a/P4b (quality).
+2. **Batch B — the structural fork:** prototype **P2a neutral ships** behind a `play.html` setup variant (A/B in the same build); sim + human side-by-side vs P2b.
+3. **Batch C — turn shape:** P3a phases (+P3b visuals), then P3c aging only after pace re-simmed.
+4. **Parallel, no product risk:** P8 layout A/B; P1 decisions after T2 resolves (the families depend on whether ships stay owned).
+5. **Last:** T6, T9 (weight & components — once the structure is stable).
+
+*Every batch: bump `KEY`, run `sim.js 500` + `ai-ladder 600` + `ai-render-smoke` + `sim-analyze` (target metric), then table games → Studio. The AI tiers absorb every change automatically (they drive the engine), so the same Guildmaster verifies each batch.*
