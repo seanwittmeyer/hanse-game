@@ -153,10 +153,13 @@
   .lg{display:inline-grid;grid-template-columns:7px 7px;gap:1px;vertical-align:-2px;margin:0 3px}
   .lg span{width:7px;height:7px;border-radius:1.5px;background:rgba(0,0,0,.14)}
   .lg span.on{background:var(--gold)}
-  /* quality pips on LIGHT backgrounds (market items, brewery recipe cards) */
+  /* quality pips outside the board tiles (.tpip is otherwise scoped to .slot) */
   .qpd{display:inline-flex;gap:1.5px;align-items:center;vertical-align:-1px}
-  .qpd .tpip{background:rgba(0,0,0,.14)}
-  .qpd .tpip.on{background:var(--gold);box-shadow:none}
+  .qpd .tpip{width:6px;height:6px;border-radius:50%;display:inline-block;background:rgba(0,0,0,.14);box-shadow:none}
+  .qpd .tpip.on{background:var(--gold)}
+  .rgate .tpip{width:6px;height:6px;border-radius:50%;display:inline-block;background:rgba(255,255,255,.30)}
+  .rgate .tpip.on{background:#fff;box-shadow:0 0 2px rgba(0,0,0,.4)}
+  .qpd b,.rgate b{margin-left:3px}
   /* brewery recipe cards */
   .rcard{display:inline-flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:7px;padding:4px 9px;background:var(--parch);margin:3px 5px 0 0;font-size:.74rem;box-shadow:0 1px 3px rgba(0,0,0,.12);vertical-align:top}
   .rcard .rcn{font-weight:bold;font-variant:small-caps;white-space:nowrap}
@@ -1479,15 +1482,15 @@ function renderDests(){
       return '<span class="dprow" data-tip="'+attr(p.name+': '+del+' delivered'+(bon?' + '+bon+' bonus presence':'')+(lead?' — current leader':''))+'">'+(lead?'<span class="dlead">★</span>':'')+sq+'</span>';
     }).filter(x=>x).join('');
     const valStr=d==='hall'
-      ?'<span data-tip="'+attr('Prestige: each cask scores its quality ×2.5 (Q2→5 · Q3→7 · Q4→10 · Q5→12). No majority, no benefit — out of commerce.')+'"><b>Q×2.5</b><span class="vstar">★</span></span>'
-      :'<span data-tip="'+attr('Each delivered cask scores '+D.value+' at game end.')+'"><b>'+D.value+'</b><span class="vstar">★</span></span>';
-    const ben=D.benefit==='upgrade'?'<span data-tip="'+attr('On delivery the owner takes one Upgrade from the Market display, free.')+'">+'+LU('wrench')+'</span>'
-      :D.benefit==='goods'?'<span data-tip="'+attr('On delivery the owner gains 2 grain.')+'">+'+Gi(2)+'</span>':'';
-    h+='<div class="route '+d+'" data-tip="'+attr(D.name+' — '+D.role+'.')+'">'
+      ?'<span data-tip="'+attr('★ = points per delivered cask. The Hall pays prestige: quality ×2.5 (Q2→5 · Q3→7 · Q4→10 · Q5→12). No majority, no benefit — out of commerce.')+'"><b>Q×2.5</b><span class="vstar">★</span></span>'
+      :'<span data-tip="'+attr('★ = points per delivered cask: each cask delivered here scores '+D.value+' at game end.')+'"><b>'+D.value+'</b><span class="vstar">★</span></span>';
+    const ben=D.benefit==='upgrade'?'<span data-tip="'+attr('The wrench = the delivery benefit: on each delivery the owner takes one Upgrade from the Market display, free.')+'">+'+LU('wrench')+'</span>'
+      :D.benefit==='goods'?'<span data-tip="'+attr('The grain = the delivery benefit: on each delivery the owner gains 2 grain.')+'">+'+Gi(2)+'</span>':'';
+    h+='<div class="route '+d+'" data-tip="'+attr(D.name+' — '+D.role+'. Legend: pips+Q = minimum cask quality · N★ = points per delivered cask · top corner = end-game majority (1st/2nd/3rd) · +icon = the owner’s benefit on each delivery · squares = delivered casks (outline = bonus presence, ★ = current leader).')+'">'
       +'<div class="rh"><span class="rn">'+(D.kontor?LU('landmark'):LU('crown'))+' '+D.name+'</span>'
-      +((D.maj&&D.maj.length)?'<span class="rmaj" data-tip="'+attr('End-game majority: '+D.maj.join('/')+' to 1st/2nd/3rd by delivered casks (2-player skips 2nd; ties split).')+'">'+D.maj.join('/')+'</span>':'')+'</div>'
+      +((D.maj&&D.maj.length)?'<span class="rmaj" data-tip="'+attr(D.maj.join('/')+' = the end-game majority: '+D.maj.join('/')+' points to 1st/2nd/3rd place by delivered-cask count here (2-player skips 2nd; ties split).')+'">'+D.maj.join('/')+'</span>':'')+'</div>'
       +'<div class="rstats">'
-      +'<span class="rgate" data-tip="'+attr('Minimum cask quality to deliver here: Q'+D.gate+' or better.')+'">'+qPips(D.gate)+'<b>+</b></span>'
+      +'<span class="rgate" data-tip="'+attr('The pips = the cask-quality minimum (as printed on the cask tiles): only casks of Q'+D.gate+' or better may deliver here.')+'">'+qPips(D.gate)+'<b>Q'+D.gate+'+</b></span>'
       +valStr+ben+'</div>'
       +'<div class="pres">'+pres+'</div></div>';
   });
@@ -1500,7 +1503,7 @@ function renderShop(){
   let h='';(S.exports||[]).slice().sort((a,b)=>STYLES[a].lvl-STYLES[b].lvl).forEach(style=>{
     if(p.recipes.includes(style))return;
     const st=STYLES[style];
-    const nm=LU('scroll-text')+' <b>'+st.name+'</b> <span class="qpd">'+qPips(st.q)+'</span>'
+    const nm=LU('scroll-text')+' <b>'+st.name+'</b> <span class="qpd">'+qPips(st.q)+'<b>Q'+st.q+'</b></span>'
       +' <span class="note" style="font-size:.72rem">brew '+costIcons(st.in)+'</span>'
       +(st.cellar?' <span class="note" style="font-size:.72rem">(needs Aging Cellar)</span>':'');
     const cost=RECIPE_BUY[style];const can=canPay(p,cost);
@@ -1540,7 +1543,7 @@ function renderTableaus(){
     const recipes=p.recipes.map(r=>{const st=STYLES[r];const locked=st.cellar&&!hasUpgrade(p,'cellar');
       return '<span class="rcard"'+(locked?' style="opacity:.55"':'')+' data-tip="'+attr(st.name+' — quality Q'+st.q+', brew cost '+costStr(st.in)+(locked?'. Needs the Aging Cellar to brew.':'.'))+'">'
         +'<span class="rcn">'+LU('beer')+' '+st.name+'</span>'
-        +'<span class="qpd">'+qPips(st.q)+'</span>'
+        +'<span class="qpd">'+qPips(st.q)+'<b>Q'+st.q+'</b></span>'
         +'<span>'+costIcons(st.in)+(locked?' <span class="note" style="font-size:.66rem">needs Cellar</span>':'')+'</span></span>';
     }).join('');
     const ups=p.upgrades.length?p.upgrades.map(k=>'<span class="tag" data-tip="'+attr(upDesc(k))+'">'+LU('wrench')+upName(k)+'</span>').join(''):'<span class="note">none yet — buy from the display, or deliver to London/Novgorod</span>';
