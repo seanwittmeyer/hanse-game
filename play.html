@@ -900,6 +900,9 @@ function scorePlayer(p){
   const goals=gv.slice(0,GOAL_BEST).reduce((a,b)=>a+b,0);
   return {deliv,maj,goals,total:deliv+maj+goals};
 }
+// the final-standing panel can be dismissed to review the end-game board; the bar brings it back
+function hideOver(){document.getElementById('over').classList.add('hidden');render();}
+function showOver(){document.getElementById('over').classList.remove('hidden');}
 function gameOver(){
   S.over=true;
   if(aiSimulating)return;   // a playout reaching game end must not touch the DOM or the timers
@@ -910,7 +913,8 @@ function gameOver(){
   rows.sort(cmp);const win=rows[0];
   let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries</th><th>Majorities</th><th>Goals (best '+GOAL_BEST+')</th><th>Total</th></tr>';
   rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+'</td><td>'+r.sc.maj+'</td><td>'+r.sc.goals+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
-  h+='</table><p class="note">Score = delivery value (kontore trade value + the Hall’s prestige ∝ quality) + kontor majorities + your best '+GOAL_BEST+' goals. The volume-vs-prestige lean lives in <b>where you shipped</b>, not in separate tracks. (Tiebreak: goods, then casks on slots.)</p><button class="primary" onclick="newGame()">New Game</button>';
+  h+='</table><p class="note">Score = delivery value (kontore trade value + the Hall’s prestige ∝ quality) + kontor majorities + your best '+GOAL_BEST+' goals. The volume-vs-prestige lean lives in <b>where you shipped</b>, not in separate tracks. (Tiebreak: goods, then casks on slots.)</p>'
+    +'<button onclick="hideOver()">⚓ View the final board</button> <button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
 }
 
@@ -1332,6 +1336,12 @@ function renderBar(){
   document.getElementById('wholbl').style.background=p.color;
   document.getElementById('wholbl').style.color='#fff';
   document.getElementById('barres').innerHTML='<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span><span class="chip" data-tip="Total score so far (deliveries + majorities + best goals).">Σ <b>'+scorePlayer(p).total+'</b></span>';
+  if(S.over){
+    document.getElementById('prompt').innerHTML='<b>Game over</b> — the final board stands for review.';
+    document.getElementById('acts').innerHTML=btn('★ Final Standing','showOver()','primary')+btn('New Game','newGame()','ghost');
+    document.getElementById('boardnote').innerHTML='The end-game state: hover slots, destinations, and the brewery tabs for the full detail behind the scores.';
+    return;
+  }
   // During an AI's turn the bar narrates instead of offering actions — humans only set the pace.
   if(aiTurn()){
     document.getElementById('prompt').innerHTML='<b>'+p.name+'</b> — '+aiLabel(p)+' AI is taking its turn… <span class="note">(the log narrates each action)</span>';
