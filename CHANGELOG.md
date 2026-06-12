@@ -6,6 +6,13 @@ Compact version history. The **full rationale ("the why")** lives in `DESIGN.md`
 
 ---
 
+## play.html — "Send to Studio": playtest ingest to Waterworks Studio (2026-06-12)
+Completed games can now be recorded to the **Waterworks Studio** publishing platform (`KEY → v26`). The final-standing panel (and the game-over bar) gains **⇪ Send to Studio**: a dialog takes the per-game **API key once** (saved to `localStorage.playtest_api_key`), plus the spec's optional session fields (notes · what was new · changes to make), and POSTs the playtest.
+- **Payload:** the hard-coded `game_id` (never user-editable), a **stable per-session `external_game_id`** minted at game start (`S.sessionId` — retries/dedupe are idempotent), `app_version` (= the save `KEY`), completion timestamp (`S.endedAt`, stamped in `gameOver`), `total_turns`, the **full plain-text log** + a `rich_log` of sequenced lines, and per-player entries — `is_winner` via the engine tiebreak (co-winners on exact ties), AI seats annotated by tier/lean in `notes`, and scores mapped to the studio's configured categories **Deliveries / Majorities / Goal Cards**.
+- **Error handling per spec:** non-2xx responses surface the server's error in the dialog with a retry (401/403 prompt an API-key check); success/duplicate status is stored on the session (`S.studioSent`) and shown as ✓ on the button.
+
+---
+
 ## play.html UI/UX pass — table-readable, data-first (2026-06-12)
 A designer pass on the playable client (`KEY → v25`): *visuals over text, data over flavor* — the screen should read like the printed components, not a video game. Rules untouched.
 - **Destinations rebuilt as data cards.** Majority tiers sit alone in the top corner as **`5/3/0`** (players know what that means); per-cask value reads **`2★`**; the quality minimum uses the **cask pip notation** from the tiles (e.g. `▰▰▢▢▢+`) — the word "gate" is gone; the benefit is an **icon** (`+🔧` upgrade / `+2🌾` goods). Flavor text ("Bryggen · THE rich majority") moved to hover tooltips. **Deliveries are little squares** — one filled square per delivered cask in the owner's colour, outlined squares for bonus presence (Reach/Almshouse/Burgher), **★** on the current leader; the low-contrast "no deliveries" text is gone entirely.

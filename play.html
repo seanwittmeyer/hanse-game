@@ -225,6 +225,7 @@
 </div>
 
 <div id="over" class="modal hidden"><div class="card" id="overcard"></div></div>
+<div id="studio" class="modal hidden"><div class="card" id="studiocard"></div></div>
 
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>
@@ -402,7 +403,18 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v25'; // v0.10 + AI seats: UI/UX pass — data-first destinations (squares/pips/★), recipe cards, log board-glyphs + the icon resource ledger; bump discards stale state
+const KEY='hanse-hotseat-v26'; // + Waterworks Studio playtest ingest: S gains sessionId/endedAt/studioSent; bump discards stale state
+
+// ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
+// game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
+// localStorage under playtest_api_key (pasted once in the Send dialog).
+const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
+const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
+const STUDIO_KEY_LS='playtest_api_key';
+const APP_VERSION='v0.10 · '+KEY;
+// a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
+function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
+  return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
 
 // ---- UNDO ----
 let undoStack=[];
@@ -428,7 +440,8 @@ function newPlayer(i,name){
 }
 function freshState(n,names){
   const st={players:[],slots:{},turn:1,active:0,first:0,ending:false,log:[],
-    exports:dealExports(), sailed:0, sailedCap:(SAILED_CAP[n]||10), upgradeSupply:[], upgradeDisplay:[]};
+    exports:dealExports(), sailed:0, sailedCap:(SAILED_CAP[n]||10), upgradeSupply:[], upgradeDisplay:[],
+    sessionId:newSessionId(), endedAt:null, studioSent:null};
   for(let i=0;i<n;i++) st.players.push(newPlayer(i,names[i]));
   SLOTS.forEach(s=>st.slots[s.id]=null);
   // ---- Upgrade supply (facedown) + face-up display (Market option B) ----
@@ -905,6 +918,14 @@ function scorePlayer(p){
   const goals=gv.slice(0,GOAL_BEST).reduce((a,b)=>a+b,0);
   return {deliv,maj,goals,total:deliv+maj+goals};
 }
+// the final ranking under the engine's tiebreak (total, goods, casks on slots) — shared by the
+// standings table and the studio payload
+function finalRows(){
+  const rows=S.players.map(p=>({p,sc:scorePlayer(p)}));
+  const tb=r=>[r.sc.total,r.p.grain+r.p.hops,wharfCaskSlots().filter(id=>S.slots[id].owner===r.p.id).length];
+  const cmp=(a,b)=>{const A=tb(a),B=tb(b);for(let i=0;i<3;i++)if(B[i]!==A[i])return B[i]-A[i];return 0;};
+  rows.sort(cmp);return {rows,cmp};
+}
 // the final-standing panel can be dismissed to review the end-game board; the bar brings it back
 function hideOver(){document.getElementById('over').classList.add('hidden');render();}
 function showOver(){document.getElementById('over').classList.remove('hidden');}
@@ -912,15 +933,92 @@ function gameOver(){
   S.over=true;
   if(aiSimulating)return;   // a playout reaching game end must not touch the DOM or the timers
   aiCancel();
-  const rows=S.players.map(p=>({p,sc:scorePlayer(p)}));
-  const tb=r=>[r.sc.total,r.p.grain+r.p.hops,wharfCaskSlots().filter(id=>S.slots[id].owner===r.p.id).length];
-  const cmp=(a,b)=>{const A=tb(a),B=tb(b);for(let i=0;i<3;i++)if(B[i]!==A[i])return B[i]-A[i];return 0;};
-  rows.sort(cmp);const win=rows[0];
+  if(!S.endedAt)S.endedAt=new Date().toISOString();
+  const {rows,cmp}=finalRows();const win=rows[0];
   let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries</th><th>Majorities</th><th>Goals (best '+GOAL_BEST+')</th><th>Total</th></tr>';
   rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+'</td><td>'+r.sc.maj+'</td><td>'+r.sc.goals+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
   h+='</table><p class="note">Score = delivery value (kontore trade value + the Hall’s prestige ∝ quality) + kontor majorities + your best '+GOAL_BEST+' goals. The volume-vs-prestige lean lives in <b>where you shipped</b>, not in separate tracks. (Tiebreak: goods, then casks on slots.)</p>'
-    +'<button onclick="hideOver()">⚓ View the final board</button> <button class="primary" onclick="newGame()">New Game</button>';
+    +'<button onclick="hideOver()">⚓ View the final board</button> <button onclick="openStudio()">⇪ Send to Studio'+(S.studioSent?' ✓':'')+'</button> <button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
+}
+
+//==================================================================
+// SEND TO STUDIO — Waterworks Studio playtest ingest
+//==================================================================
+function openStudio(){
+  if(!S||!S.over)return;
+  let k='';try{k=localStorage.getItem(STUDIO_KEY_LS)||'';}catch(e){}
+  const ta='width:100%;padding:6px;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:.85rem;box-sizing:border-box';
+  let h='<h2>⇪ Send to Studio</h2>'
+    +'<p class="note">Records this playtest — players, scores, and the full log — to <b>Waterworks Studio</b>.'
+    +(S.studioSent?' <b>This session is already recorded'+(S.studioSent.playtest_number!=null?' (playtest #'+S.studioSent.playtest_number+')':'')+'</b> — sending again is safe (the studio dedupes by session).':'')+'</p>'
+    +'<p style="margin:8px 0 4px"><span class="note">API key '+(k?'(saved on this device)':'— paste it once; it is saved on this device')+'</span><br>'
+    +'<input id="stKey" type="text" value="'+attr(k)+'" placeholder="pt_…" autocomplete="off" spellcheck="false" style="'+ta+';font-family:monospace"></p>'
+    +'<p style="margin:8px 0 4px"><span class="note">Session notes (optional)</span><br><textarea id="stNotes" rows="2" style="'+ta+'"></textarea></p>'
+    +'<p style="margin:8px 0 4px"><span class="note">What was new this session (optional)</span><br><textarea id="stNew" rows="2" style="'+ta+'"></textarea></p>'
+    +'<p style="margin:8px 0 4px"><span class="note">Changes to make (optional)</span><br><textarea id="stTodo" rows="2" style="'+ta+'"></textarea></p>'
+    +'<div id="stStatus" class="note" style="min-height:1.2em;margin-top:6px"></div>'
+    +'<div style="display:flex;gap:8px;margin-top:10px"><button class="primary" id="stSend" onclick="studioSend()">⇪ Send playtest</button><button onclick="closeStudio()">Close</button></div>';
+  document.getElementById('studiocard').innerHTML=h;
+  document.getElementById('studio').classList.remove('hidden');
+  if(!k)document.getElementById('stKey').focus();
+}
+function closeStudio(){document.getElementById('studio').classList.add('hidden');}
+function studioPlainLog(){return S.log.slice().reverse()
+  .map(l=>l.replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim()).filter(x=>x);}
+function studioPayload(){
+  const {rows,cmp}=finalRows();const win=rows[0];
+  if(!S.sessionId)S.sessionId=newSessionId();   // resumed pre-v26 saves
+  const v=id=>{const el=document.getElementById(id);return el?String(el.value||'').trim():'';};
+  const lines=studioPlainLog();
+  const body={
+    game_id:STUDIO_GAME_ID,
+    external_game_id:S.sessionId,
+    app_version:APP_VERSION,
+    playtest_date:(S.endedAt||new Date().toISOString()).slice(0,10),
+    game_completed_at:S.endedAt||new Date().toISOString(),
+    total_turns:S.turn,
+    game_log_text:lines.join('\n'),
+    rich_log:lines.map((t,i)=>({seq:i+1,text:t})),
+    players:rows.map(r=>({
+      name:r.p.name,
+      is_winner:cmp(r,win)===0,   // co-winners on an exact tie all count
+      notes:r.p.ai?(aiLabel(r.p)+' AI'):'human',
+      scores:{'Deliveries':r.sc.deliv,'Majorities':r.sc.maj,'Goal Cards':r.sc.goals},
+    })),
+  };
+  const notes=v('stNotes'),wasNew=v('stNew'),todo=v('stTodo');
+  if(notes)body.notes=notes;
+  if(wasNew)body.changes_in_playtest=wasNew;
+  if(todo)body.changes_to_make=todo;
+  return body;
+}
+async function studioSend(){
+  const key=String(document.getElementById('stKey').value||'').trim();
+  const st=document.getElementById('stStatus');
+  if(!key){st.innerHTML='<b style="color:var(--red)">Paste the API key first.</b>';return;}
+  try{localStorage.setItem(STUDIO_KEY_LS,key);}catch(e){}
+  const sendBtn=document.getElementById('stSend');sendBtn.disabled=true;
+  st.textContent='Sending…';
+  try{
+    const res=await fetch(STUDIO_URL,{method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key},
+      body:JSON.stringify(studioPayload())});
+    let data=null;try{data=await res.json();}catch(e){}
+    if(res.ok&&data&&(data.status==='created'||data.status==='duplicate')){
+      S.studioSent={playtest_id:data.playtest_id||null,playtest_number:(data.playtest_number!=null?data.playtest_number:null),status:data.status};
+      save();
+      st.innerHTML='<b style="color:var(--green)">✓ '+(data.status==='created'
+        ?('Recorded'+(S.studioSent.playtest_number!=null?' as playtest #'+S.studioSent.playtest_number:''))
+        :'Already recorded for this session (duplicate)')+'</b>';
+    }else{
+      const msg=(data&&data.error)?data.error:('HTTP '+res.status);
+      st.innerHTML='<b style="color:var(--red)">✗ '+attr(msg)+'</b> — '
+        +((res.status===401||res.status===403)?'check the API key, then ':'')+'press Send to retry. Nothing was lost.';
+    }
+  }catch(e){
+    st.innerHTML='<b style="color:var(--red)">✗ Network error</b> ('+attr((e&&e.message)||e)+') — press Send to retry. Nothing was lost.';
+  }finally{sendBtn.disabled=false;}
 }
 
 //==================================================================
@@ -1343,7 +1441,7 @@ function renderBar(){
   document.getElementById('barres').innerHTML='<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span><span class="chip" data-tip="Total score so far (deliveries + majorities + best goals).">Σ <b>'+scorePlayer(p).total+'</b></span>';
   if(S.over){
     document.getElementById('prompt').innerHTML='<b>Game over</b> — the final board stands for review.';
-    document.getElementById('acts').innerHTML=btn('★ Final Standing','showOver()','primary')+btn('New Game','newGame()','ghost');
+    document.getElementById('acts').innerHTML=btn('★ Final Standing','showOver()','primary')+btn('⇪ Send to Studio'+(S.studioSent?' ✓':''),'openStudio()','ghost')+btn('New Game','newGame()','ghost');
     document.getElementById('boardnote').innerHTML='The end-game state: hover slots, destinations, and the brewery tabs for the full detail behind the scores.';
     return;
   }
