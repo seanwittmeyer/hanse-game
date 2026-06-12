@@ -260,7 +260,7 @@
   <h3>The Stations &amp; Lines</h3>
   <p>Four stations sit in a 2×2: <b>A Market</b> (Source) &amp; <b>B Brewhouse</b> (Brew) on top, <b>C Harbor</b> (Ship) &amp; <b>D Cellar</b> (Age) below. You don't simply circle the board — you move where the board is best. Eight <b>slots</b> ring the stations, two beside each line. <b>A line is its two stations plus any tiles in their two slots</b> (<code>slot · station · station · slot</code>); each slot belongs to <b>exactly one line</b>. <em>(Recipes &amp; upgrades live on your private board, not a slot.)</em></p>
   <h3>The Destinations (where value lives)</h3>
-  <p>The four kontore + the Hall are all <b>open from the start</b>. Each wants a certain <b>quality</b> of beer and pays differently — so there is no single best line of play. Delivery value is <b>flat per kontor regardless of quality</b> (only the Hall scales with Q), so a high-quality cask is wasted at Bruges and shines at Novgorod or the Hall.</p>
+  <p>The four kontore + the Hall are all <b>open from the start</b>. Each wants a certain <b>quality</b> of beer and pays differently — so there is no single best line of play. Delivery value is flat per kontor for Q1–Q3, and an <b>export premium</b> ⚙ adds <b>+1 for a Q4 cask, +2 for a Q5</b>, at any kontor (the Hall scales with quality throughout) — so the high climb pays wherever it ships.</p>
   <div class="routeboard" id="destBoard"></div>
   <div class="note"><b>The majority is a big end-game motivator</b> — every kontor pays a tiered, ranked majority (Lacerda-style): by delivered-cask count, <b>1st / 2nd / 3rd</b> place take a kontor's tiers — Bruges <b>5/3/0</b> · London <b>6/4/2</b> · Novgorod <b>8/5/2</b> · <b>Bergen 10/6/3</b> ⚙ (Bergen the rich anchor). Per-cask delivery values are kept low so the points live in the majority race; the Hall's prestige is <b>Q×2.5</b> to balance the tilt toward the kontore. <b>2-player games skip 2nd</b> (winner-take-all); ties split the occupied tiers. Benefits pair off: <b>Bruges &amp; Bergen</b> give goods (liquidity); <b>London &amp; Novgorod</b> give an Upgrade (the engine). The cask's owner always scores the delivery and takes any benefit — even when a rival shipped it.</div>
   <h3>Your Brewery (private, untouchable)</h3>
@@ -384,7 +384,7 @@
   <h2><span class="nm">14</span>Scoring</h2>
   <p>No separate reach/standing tracks. You score from <b>what you delivered</b>:</p>
   <ol>
-    <li><b>Delivery value</b> — sum your delivered casks' values at each destination (kontore = trade value, kept low; <b>the Hall = prestige</b>, scaling with quality, Q×2.5).</li>
+    <li><b>Delivery value</b> — sum your delivered casks' values at each destination (kontore = trade value, kept low, <b>plus the export premium ⚙: Q4 +1, Q5 +2</b>; <b>the Hall = prestige</b>, scaling with quality, Q×2.5).</li>
     <li><b>Majorities</b> (a big chunk of the score) — at <i>every</i> kontor, by delivered-cask count, <b>1st / 2nd / 3rd</b> place take that kontor's tiers: Bruges <b>5/3/0</b> · London <b>6/4/2</b> · Novgorod <b>8/5/2</b> · <b>Bergen 10/6/3</b> ⚙. <b>2-player games skip 2nd</b> (winner-take-all); tied players split the sum of the tiers they occupy ⚙.</li>
     <li><b>Goals</b> — you hold <b>3 goal tiles</b> (dealt at setup; hand cap <b>4</b> ⚙ via the Towncrier); <b>your best 2 score</b> ⚙.</li>
   </ol>

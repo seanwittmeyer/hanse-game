@@ -342,6 +342,7 @@ const DESTS=[
   {nm:'Novgorod',kc:'#7c2128', req:3, val:'+4', maj:[8,5,2],  role:'The Long Haul — premium only, top value',   ben:'take 1 Upgrade from the display'},
 ];
 const HALL={nm:'The Hall', kc:'#5b3a8e', req:2, role:'Prestige — out of commerce (scarcity)', ben:'banks prestige ∝ quality (Q×2.5)'};
+const DEST_PREM='Export premium: Q4 casks +1★ · Q5 +2★ at any kontor';   // ⚙ v0.11 A3 — printed once on the destination board
 const SAILED={2:7,3:11,4:15,5:19};   // Sailed-Ships end clock per player count ⚙ (RULES §8)
 const MAX_ROUND=25;                  // round ceiling ⚙ — top of the 12–25-round target band
 const OWN_DISCS=20;                  // ownership discs per colour ⚙ (COMPONENTS §2)
@@ -449,7 +450,7 @@ function dboard(){
   disp+='<div class="uslot supply faceup">'+LU('target')+'goal supply<br>(face-up)</div>';
   return '<div class="dboard">'
     +'<div class="db-head"><h2>'+LU('landmark')+'Destinations</h2>'
-      +'<span class="legend"><span><b>'+LU(QI,'ql')+'</b> quality level — a cask of level ≥ the L# may ship there</span><span><b>'+LU(VP,'vp')+'</b> victory points</span></span></div>'
+      +'<span class="legend"><span><b>'+LU(QI,'ql')+'</b> quality level — a cask of level ≥ the L# may ship there</span><span><b>'+LU(VP,'vp')+'</b> victory points</span><span><b>'+DEST_PREM+'</b></span></span></div>'
     +'<div class="kontor-row">'+DESTS.map(d=>kpanel(d,false)).join('')+kpanel(HALL,true)+'</div>'
     +'<div class="db-bottom">'
       +'<div class="sbox disp"><div class="sb-h">'+LU('store')+'Market — shared supply<span class="sm">upgrades: buy one (4–5 G) or earn one free by delivering to London / Novgorod · recipes &amp; ships always stocked</span></div><div class="uprow">'+disp+'</div></div>'

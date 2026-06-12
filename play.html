@@ -304,7 +304,11 @@ const KONTORE=['bruges','london','bergen','novgorod'];
 const DESTS=['bruges','london','bergen','novgorod','hall'];
 const HALL_MULT=2.5; // ⚙ prestige scaling at the Hall (Q×HALL_MULT, floored). v0.10: raised 2→2.5 to keep the prestige
 // lean competitive now that majorities are big motivators (the Hall contests no majority → it needs a bigger per-cask hit).
-function destValue(dest,q){return dest==='hall'?Math.floor(q*HALL_MULT):DEST[dest].value;}
+// ⚙ A3 (Batch A): the EXPORT PREMIUM — a delivered Q4 cask scores +1, a Q5 +2, at ANY kontor
+// (the Hall already scales with quality). Answers the convergent finding that the Q4-Q5 climb
+// underpaid: human feel ("the race doesn't support the path") + the search AI skipping it.
+const EXPORT_PREM=q=>q>=4?q-3:0;
+function destValue(dest,q){return dest==='hall'?Math.floor(q*HALL_MULT):DEST[dest].value+EXPORT_PREM(q);}
 
 // ---- SHIPS (owned single-use carriers) ----
 const SHIP_CAP={cog:2,hulk:3};
@@ -410,7 +414,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v28'; // Batch A2 ⚙: escalating charter fare (2G +1G per charter taken, max 5G; p.charters counter); bump discards stale state
+const KEY='hanse-hotseat-v29'; // Batch A3 ⚙: export premium — delivered Q4 +1★ / Q5 +2★ at any kontor; bump discards stale state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1147,7 +1151,7 @@ function aiDest(p,q,style){
   let best=elig[0],bv=-1e9;
   elig.forEach(d=>{let s;
     if(d==='hall')s=destValue('hall',q)*(W.hallBase+W.hallRamp*prog)*(lean==='prestige'?W.leanHall:1);
-    else s=DEST[d].value*(lean==='volume'?W.leanVal:1)
+    else s=destValue(d,q)*(lean==='volume'?W.leanVal:1)
           +aiMajSwing(p,d)*W.swing*(lean==='majority'?W.leanSwing:1)
           +(DEST[d].benefit==='upgrade'?W.upBen:W.goodsBen);   // a kontor delivery's benefit is real tempo the score line misses
     if(style)s+=W.goalW*aiGoalGain(p,style,q,d);               // play toward the goals you hold
@@ -1597,7 +1601,7 @@ function renderDests(){
     }).filter(x=>x).join('');
     const valStr=d==='hall'
       ?'<span data-tip="'+attr('★ = points per delivered cask. The Hall pays prestige: quality ×2.5 (Q2→5 · Q3→7 · Q4→10 · Q5→12). No majority, no benefit — out of commerce.')+'"><b>Q×2.5</b><span class="vstar">★</span></span>'
-      :'<span data-tip="'+attr('★ = points per delivered cask: each cask delivered here scores '+D.value+' at game end.')+'"><b>'+D.value+'</b><span class="vstar">★</span></span>';
+      :'<span data-tip="'+attr('★ = points per delivered cask: '+D.value+' at game end — plus the export premium: a Q4 cask +1★, a Q5 +2★, at any kontor.')+'"><b>'+D.value+'</b><span class="vstar">★</span><span style="font-size:.68rem;opacity:.8;margin-left:1px">+Q</span></span>';
     const ben=D.benefit==='upgrade'?'<span data-tip="'+attr('The wrench = the delivery benefit: on each delivery the owner takes one Upgrade from the Market display, free.')+'">+'+LU('wrench')+'</span>'
       :D.benefit==='goods'?'<span data-tip="'+attr('The grain = the delivery benefit: on each delivery the owner gains 2 grain.')+'">+'+Gi(2)+'</span>':'';
     h+='<div class="route '+d+'" data-tip="'+attr(D.name+' — '+D.role+'. Legend: Q# = minimum cask quality · N★ = points per delivered cask · top corner = end-game majority (1st/2nd/3rd) · +icon = the owner’s benefit on each delivery · squares = delivered casks (outline = bonus presence, ★ = current leader).')+'">'
