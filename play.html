@@ -174,6 +174,7 @@
   .dsq.bon{background:transparent!important;border-width:2.5px}
   .dlead{color:var(--gold2);margin-right:2px;font-size:.95rem}
   .dprow{margin-right:8px;white-space:nowrap}
+  .osq{width:10px;height:10px;border-radius:2px;display:inline-block;margin:0 3px 0 1px;vertical-align:-1px;border:1px solid rgba(0,0,0,.35);box-sizing:border-box}
   .hidden{display:none}
 </style>
 </head>
@@ -540,6 +541,7 @@ function log(msg,me){S.log.unshift('<div class="'+(me?'me':'')+'">'+msg+'</div>'
 function attr(s){return String(s).replace(/"/g,'&quot;');}
 // mini board-glyphs for the log: a 2×2 of the Wharf with the chosen station / line lit
 function cellGlyph(cell){return '<span class="lg" data-tip="'+attr(CELLNAME[cell])+'">'+['A','B','C','D'].map(c=>'<span class="'+(c===cell?'on':'')+'"></span>').join('')+'</span>';}
+function ownSq(pid){const o=S.players[pid];return '<span class="osq" style="background:'+o.color+'" data-tip="'+attr(o.name+'’s')+'"></span>';}
 function lineGlyph(lk){const lit=LINES[lk].cells;return '<span class="lg" data-tip="'+attr(LINES[lk].label)+'">'+['A','B','C','D'].map(c=>'<span class="'+(lit.includes(c)?'on':'')+'"></span>').join('')+'</span>';}
 
 // ---- tooltips for stations & slots ----
@@ -1486,10 +1488,10 @@ function renderBar(){
   else if(U==='load'){const L=UI.load;
     if(!L.cask){prompt='Load a cask onto a ship — pick the cask.';
       const elig=L.casks.filter(cs=>L.ships.some(s=>canTake(s,cs)));
-      acts=elig.map(cs=>{const ct=S.slots[cs];return btn(LU('beer')+styleShort(ct.style)+' Q'+ct.q+(ct.owner!==p.id?' ('+S.players[ct.owner].name+'’s)':''),'loadPickCask(\''+cs+'\')','go');}).join('')+btn('Skip','loadSkip()','ghost');}
+      acts=elig.map(cs=>{const ct=S.slots[cs];return btn(LU('beer')+ownSq(ct.owner)+styleShort(ct.style)+' Q'+ct.q,'loadPickCask(\''+cs+'\')','go');}).join('')+btn('Skip','loadSkip()','ghost');}
     else{prompt='Load '+styleShort(S.slots[L.cask].style)+' onto which ship?';
       const ships=L.ships.filter(s=>canTake(s,L.cask));
-      acts=ships.map(s=>{const sh=S.slots[s];return btn(LU('sailboat')+(sh.owner!==p.id?S.players[sh.owner].name+'’s ':'')+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+')','loadOnto(\''+s+'\')','go');}).join('')+btn('Back','loadBack()','ghost')+btn('Skip','loadSkip()','ghost');}}
+      acts=ships.map(s=>{const sh=S.slots[s];return btn(LU('sailboat')+ownSq(sh.owner)+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+')','loadOnto(\''+s+'\')','go');}).join('')+btn('Back','loadBack()','ghost')+btn('Skip','loadSkip()','ghost');}}
   else if(U==='deploy'){const vi=UI.deploy.queue[0];const c=p.vessels[vi];
     prompt='Set Ready <b>'+styleShort(c.style)+'</b> on a slot — click an open slot.';
     acts=btn('Leave in vessel','deploySkipOne()','ghost')+(UI.deploy.queue.length>1?btn('Skip rest','deploySkipAll()','ghost'):'');}
@@ -1508,8 +1510,8 @@ function renderBar(){
 function stopLabel(s){
   if(s.kind==='cell')return LU(ICON[CELLNAME[s.cell]])+' '+CELLNAME[s.cell];
   const t=S.slots[s.slot];if(!t)return '(empty)';
-  if(t.type==='cask')return LU('beer')+' Cask · '+styleShort(t.style)+(t.owner!==S.active?' ('+S.players[t.owner].name+'’s)':'');
-  if(t.type==='ship')return LU('sailboat')+' Ship · load '+shipName(t)+'→'+DEST[t.dest].name;
+  if(t.type==='cask')return LU('beer')+ownSq(t.owner)+'Cask · '+styleShort(t.style);
+  if(t.type==='ship')return LU('sailboat')+ownSq(t.owner)+'Ship · load '+shipName(t)+'→'+DEST[t.dest].name;
   if(t.type==='neutral')return LU(NEUTRALS[t.b].icon)+' '+NEUTRALS[t.b].name;
   return '';
 }
@@ -1533,7 +1535,7 @@ function cellRender(p){
     const launch=myShips(p).filter(s=>S.slots[s].load.length>0);
     const canCharter=canPay(p,CHARTER_COST)&&charterCasks(p).length>0;
     let acts=(canLoad?btn(LU('ship')+' Load a cask → ship','harborLoad()','primary'):'');
-    launch.forEach(s=>{const sh=S.slots[s];acts+=btn(LU('sailboat')+' Launch '+shipName(sh)+' early ('+sh.load.length+'/'+effCap(sh)+')','harborLaunch(\''+s+'\')');});
+    launch.forEach(s=>{const sh=S.slots[s];acts+=btn(LU('sailboat')+ownSq(sh.owner)+'Launch '+shipName(sh)+' early ('+sh.load.length+'/'+effCap(sh)+')','harborLaunch(\''+s+'\')');});
     if(canCharter)acts+=btn(LU('sailboat')+' Charter a voyage ('+costStr(CHARTER_COST)+')','harborCharter()');
     if(!canLoad&&!launch.length&&!canCharter)acts+='<span class="note">nothing to ship yet</span> ';
     return {prompt:'Ship — load a Ready cask from a slot onto a ship, launch one early, or charter a single-cask voyage.',acts:acts+btn('Skip','cellDone()','ghost')};
