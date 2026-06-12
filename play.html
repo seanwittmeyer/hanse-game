@@ -103,6 +103,9 @@
   .track{display:flex;gap:3px;justify-content:center;flex-wrap:wrap;margin-top:6px}
   .sp{width:15px;height:15px;border-radius:3px;background:rgba(0,0,0,.12);font-size:.6rem;display:flex;align-items:center;justify-content:center}
   .sp.on{background:var(--sea2);color:#fff}
+  .spw{display:flex;flex-direction:column;align-items:center;gap:1px}
+  .spf{font-size:.6rem;opacity:.6;line-height:1}
+  .spf.cur{font-weight:bold;opacity:1;color:var(--red)}
   /* TABLEAUS */
   .tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
   .tab{padding:5px 12px;border-radius:6px 6px 0 0;cursor:pointer;font-variant:small-caps;font-weight:bold;border:1px solid var(--line);border-bottom:none;background:var(--parch)}
@@ -212,7 +215,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>Prototype v0.10 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s deployed cask</b> on your ship — they still score it. <b>Every kontor pays a tiered majority</b> (1st/2nd/3rd) — Bruges <b>5/3/0</b> · London <b>6/4/2</b> · Novgorod <b>8/5/2</b> · Bergen <b>10/6/3</b> ⚙. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b>; <b>Bruges / Bergen</b> hand you <b>2 goods</b> instead. The Harbor also offers a <b>Charter</b> (ship one Ready cask now; the fare starts at 2⚙G and rises 1G with each charter you take, max 5G — a relief valve, not a highway). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. Any seat can be an <b>AI opponent</b> — pick a tier per seat in New Game (<b>Apprentice / Journeyman / Trader / Guildmaster</b>, in rising strength; Traders commit to a volume/prestige/majority lean, and the Guildmaster evaluates its options by <i>playing each one out</i> hundreds of times — expect a brief think per decision). AI seats play by the same rules with the same information and never cheat; their turns play out in the log at an adjustable speed. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
+  <p class="note" style="text-align:center"><b>Prototype v0.10 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s deployed cask</b> on your ship — they still score it. <b>Every kontor pays a tiered majority</b> (1st/2nd/3rd) — Bruges <b>5/3/0</b> · London <b>6/4/2</b> · Novgorod <b>8/5/2</b> · Bergen <b>10/6/3</b> ⚙. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b>; <b>Bruges / Bergen</b> hand you <b>2 goods</b> instead. The Harbor also offers a <b>Charter</b> (ship one Ready cask now; the <b>fare is a shared market price printed under the Sailed-Ships track</b> ⚙ — cheap early, 4–5G in the closing stretch). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. Any seat can be an <b>AI opponent</b> — pick a tier per seat in New Game (<b>Apprentice / Journeyman / Trader / Guildmaster</b>, in rising strength; Traders commit to a volume/prestige/majority lean, and the Guildmaster evaluates its options by <i>playing each one out</i> hundreds of times — expect a brief think per decision). AI seats play by the same rules with the same information and never cheat; their turns play out in the log at an adjustable speed. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -313,11 +316,21 @@ function destValue(dest,q){return dest==='hall'?Math.floor(q*HALL_MULT):DEST[des
 // ---- SHIPS (owned single-use carriers) ----
 const SHIP_CAP={cog:2,hulk:3};
 const SHIP_NAME={cog:'Cog',hulk:'Hulk'};
-const CHARTER_COST={g:2};   // legacy base fare (kept for the headless harness; use charterCost(p))
-// ⚙ A2 (Batch A): the charter fare ESCALATES — 2G + 1G per charter you have already taken, capped at
-// 5G (always reachable under the storage cap, so the deadlock guard holds; the highway gets tolls).
-const CHARTER_BASE=2, CHARTER_STEP=1, CHARTER_MAX=5;
-function charterCost(p){return {g:Math.min(CHARTER_MAX,CHARTER_BASE+CHARTER_STEP*(p.charters||0))};}
+const CHARTER_COST={g:2};   // legacy floor fare (kept for the headless harness; use charterCost())
+// ⚙ A2′ (v0.11, supersedes the per-player escalation): the charter fare is a SHARED MARKET PRICE
+// set by the Sailed-Ships track — one fare row printed under the clock (GWT-hiring-market style,
+// radically simplified). Indexed by voyages delivered (S.sailed), per player count: cheap early
+// (charters open the game), a small mid bump, dear in the closing stretch (the endgame charter
+// rush pays full freight). One price for the whole table; max 5G keeps the deadlock guard intact.
+const CHARTER_FARES={
+  2:[2,2,3,2,2,4,5,5],
+  3:[2,2,2,3,2,2,3,3,4,5,5],
+  4:[2,2,2,3,2,2,2,3,3,3,4,4,5,5,5],
+  5:[2,2,2,2,3,2,2,2,3,3,3,3,4,4,4,5,5,5,5],
+};
+function charterFare(){const row=CHARTER_FARES[S.players.length]||CHARTER_FARES[4];
+  return row[Math.min(S.sailed,row.length-1)];}
+function charterCost(p){return {g:charterFare()};}   // (p unused — the fare is the table's, not yours)
 
 // ---- NEUTRAL BUILDINGS (seeded on the wharf at setup; shared base actions) ----
 const NEUTRALS={
@@ -414,7 +427,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v29'; // Batch A3 ⚙: export premium — delivered Q4 +1★ / Q5 +2★ at any kontor; bump discards stale state
+const KEY='hanse-hotseat-v30'; // A2′ ⚙: the charter fare is a shared market price indexed by the Sailed-Ships track (per-count fare rows; supersedes the per-player escalation); bump discards stale state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -445,7 +458,7 @@ function newPlayer(i,name){
     grain:START_GOODS.g+(i>0?SEAT_COMP:0),hops:START_GOODS.h,storage:START_STORAGE,cell:null,placed:false,
     // start 2 vessels; one holds the warm Ready Gruit (deploy it turn 1)
     vessels:[{style:'gruit',q:1,step:1,ready:1},null], maxVessels:2,
-    recipes:['gruit','hopped'], upgrades:[], delivered:[], charters:0,
+    recipes:['gruit','hopped'], upgrades:[], delivered:[],
     presBonus:{bruges:0,london:0,bergen:0,novgorod:0}, shipsSailed:0,
     goals:dealGoals()};
 }
@@ -875,7 +888,7 @@ function harborCharter(){UI.stage='charter_cask';render();}
 function charterPickCask(ref){UI.tmp.charterCask=ref;UI.stage='charter_dest';render();}
 function charterDest(dest){const p=cur();
   if(!canPay(p,charterCost(p))){log('↳ cannot afford the '+costStr(charterCost(p))+' charter fare.');resume('stops');return;}
-  snapshot();pay(p,charterCost(p));p.charters=(p.charters||0)+1;
+  snapshot();pay(p,charterCost(p));
   const ref=UI.tmp.charterCask;let c;
   if(ref[0]==='v'){const i=+ref.slice(2);c=p.vessels[i];p.vessels[i]=null;}else{c=S.slots[ref];S.slots[ref]=null;}
   // A charter is a single-cask voyage on an outside hull — it delivers (scores + benefit) and advances the
@@ -1541,7 +1554,7 @@ function cellRender(p){
   }
   if(UI.cell==='C'){
     if(UI.stage==='charter_cask'){const cs=charterCasks(p);
-      return {prompt:'Charter — pick a Ready cask to ship now ('+costStr(charterCost(p))+' fare — it rises 1G per charter you take, max '+CHARTER_MAX+'G).',
+      return {prompt:'Charter — pick a Ready cask to ship now ('+costStr(charterCost(p))+' — the fare is set by the Sailed-Ships track).',
         acts:cs.map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.style)+' Q'+o.q+(o.ref[0]==='v'?' · vessel':' · slot'),'charterPickCask(\''+o.ref+'\')','go')).join('')+btn('Back','(function(){UI.stage=\'harbor\';render();})()','ghost')};}
     if(UI.stage==='charter_dest'){const ref=UI.tmp.charterCask;const c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
       const ds=DESTS.filter(d=>c.q>=DEST[d].gate);
@@ -1641,8 +1654,13 @@ function renderShop(){
 }
 
 function renderVoyage(){
-  let trk='';for(let i=0;i<S.sailedCap;i++)trk+='<div class="sp'+(i<S.sailed?' on':'')+'">'+(i<S.sailed?'⛵':'')+'</div>';
-  let h='<div class="voybox">'+LU('sailboat')+' <b>Sailed-Ships</b> '+S.sailed+' / '+S.sailedCap+(S.ending?' · <b style="color:var(--red)">FINAL ROUND</b>':'')+'<div class="track">'+trk+'</div></div>';
+  const frow=CHARTER_FARES[S.players.length]||CHARTER_FARES[4];
+  let trk='';for(let i=0;i<S.sailedCap;i++){
+    const fare=frow[Math.min(i,frow.length-1)];
+    trk+='<div class="spw"><div class="sp'+(i<S.sailed?' on':'')+'">'+(i<S.sailed?'⛵':'')+'</div>'
+      +'<div class="spf'+(i===S.sailed?' cur':'')+'" data-tip="'+attr('Charter fare while the track stands at '+i+': '+fare+' grain. One shared price — printed under the clock.')+'">'+fare+'</div></div>';}
+  let h='<div class="voybox">'+LU('sailboat')+' <b>Sailed-Ships</b> '+S.sailed+' / '+S.sailedCap+(S.ending?' · <b style="color:var(--red)">FINAL ROUND</b>':'')
+    +'<div class="track">'+trk+'</div><div class="note" style="font-size:.66rem;margin-top:2px">⛵ the clock · digits = the charter fare at that position (now: <b>'+charterFare()+'G</b>)</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game (3 of 4):</b> '+exportLabel()+'.</div>';
   h+='<div class="note" style="margin-top:4px">Delivered value: '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+scorePlayer(p).deliv+'</span>').join(' · ')+'</div>';
   document.getElementById('voyage').innerHTML=h;

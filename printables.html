@@ -486,7 +486,7 @@ function mboard(){
       +srow('store','Market · Source','take <b>2 goods</b> '+LU('package')+' (any mix), <i>or</i> buy 1: recipe '+LU('scroll-text')+' · ship '+LU('sailboat')+' (→ a slot, bound to a destination) · upgrade '+LU('wrench')+' (from the display).')
       +srow('flask-conical','Brewhouse · Brew','pay a recipe’s cost → a young cask '+LU('beer')+' at step 0 in an <b>open vessel</b>. One brew per visit.')
       +srow('hourglass','Cellar · Age','gain <b>3 age points</b> '+LU('hourglass')+', split freely across your vessels. (Every cask also ages +1 automatically each of your turns.)')
-      +srow('ship','Harbor · Ship','load '+LU('package-plus')+' a deployed cask onto <b>your</b> ship (yours or a rival’s cask) · launch '+LU('sailboat')+' a partial ship early · or <b>Charter</b> '+LU('ticket')+': fare 2 '+LU('wheat','g ic')+' +1/charter taken (max 5) ships 1 Ready cask now (advances the clock).')
+      +srow('ship','Harbor · Ship','load '+LU('package-plus')+' a deployed cask onto <b>your</b> ship (yours or a rival’s cask) · launch '+LU('sailboat')+' a partial ship early · or <b>Charter</b> '+LU('ticket')+': pay the fare printed under the Sailed-Ships track (2–5 '+LU('wheat','g ic')+') to ship 1 Ready cask now (advances the clock).')
       +'</div>'
     +'<div class="mbox"><h4>'+LU('beer')+'The cask’s three states</h4><div class="b">'
       +'<b>Maturing</b> (private vessel) → Ready → <b>deploy to a slot</b> (public action-building + cargo) → <b>shipped</b> to a destination (scores for its owner, leaves). '
@@ -502,7 +502,7 @@ function mboard(){
   return '<div class="mboard">'
     +'<div class="mb-head"><h2>'+LU('anchor')+'The Wharf</h2><span class="sub">Brewhouses of the Hanse · main board · v0.10 — Source → Brew → Age → Ship</span></div>'
     +'<div class="mb-main">'+wharf+side+'</div>'
-    +'<div><div class="ctrack">'+clk+'</div><div class="mtrack-l">'+'Sailed-Ships track — every voyage (a ship sailing, or a Charter) fills one slot; at your player-count END, finish the round &amp; score</div></div>'
+    +'<div><div class="ctrack">'+clk+'</div><div class="mtrack-l">'+'Sailed-Ships track — every voyage (a ship sailing, or a Charter) fills one slot; at your player-count END, finish the round &amp; score<br><b>Charter fare by position ⚙</b> — 2p 2·2·3·2·2·4·5·5 &nbsp; 3p 2·2·2·3·2·2·3·3·4·5·5 &nbsp; 4p 2·2·2·3·2·2·2·3·3·3·4·4·5·5·5 &nbsp; 5p 2·2·2·2·3·2·2·2·3·3·3·3·4·4·4·5·5·5·5</div></div>'
     +'<div><div class="rtrack">'+rt+'</div><div class="mtrack-l">round track — move the marker each round; the shaded 12–25 band is the target pace; the game never passes 25</div></div>'
   +'</div>';}
 

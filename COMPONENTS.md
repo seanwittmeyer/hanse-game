@@ -23,7 +23,7 @@
 
 | Component | Qty | Purpose |
 |---|---|---|
-| **Main board** | 1 | **The Wharf** — a 2×2 of four stations **A Market (Source) · B Brewhouse (Brew) · D Cellar (Age) · C Harbor (Ship)** ringed by **8 slots** (deployed casks, owned ships, seeded neutral buildings), plus the shared **Sailed-Ships track** (the end clock). |
+| **Main board** | 1 | **The Wharf** — a 2×2 of four stations **A Market (Source) · B Brewhouse (Brew) · D Cellar (Age) · C Harbor (Ship)** ringed by **8 slots** (deployed casks, owned ships, seeded neutral buildings), plus the shared **Sailed-Ships track** (the end clock) with the **charter-fare row** printed beneath it ⚙. |
 | **Destination / Route board** | 1 | The four **kontore** (Bruges · London · Bergen · Novgorod) and the **Hall**, each with its **quality gate**, **delivery value**, **benefit**, and (kontore) a **majority track**. Delivered cask tiles sit at their destination; this is where volume (kontore) and prestige (the Hall) are tallied. |
 | **Player brewery boards** | 5 | Each private & untouchable — vessels + maturation + recipes + upgrades + storage. The *noun* the Wharf's actions act on (full spec in §4). |
 
@@ -74,11 +74,11 @@ Built at the **Market** into a slot, **bound to a destination** (inheriting its 
 |---|---|---|---|
 | **Cog** | 2 | `2 G` | ~8 |
 | **Hulk** | 3 | `3 G` | ~5 |
-| **Charter** *(no tile — an outside hull)* | 1 | `2 G` **+1 `G` per prior charter, max `5 G`** ⚙ | — |
+| **Charter** *(no tile — an outside hull)* | 1 | **the fare row under the Sailed-Ships track** ⚙ (`2–5 G` by track position) | — |
 
 > Owning ships is the merchant fantasy: build the infrastructure, choose its destination, and a full Hulk is a 3-cask burst — still just **one** Sailed-Ships slot, so the clock stays smooth.
 >
-> **Charter** is the Harbor's always-available relief valve (`RULES.md` §5): pay your **escalating fare** (`2 G` +1 `G` per charter you've taken, max `5 G` ⚙ — a fare disc on a small personal track) to ship **one** Ready cask (vessel *or* slot) on an immediate single-cask voyage — it delivers and consumes one Sailed-Ships slot. **Strictly worse per cask** than a Cog/Hulk, so it never displaces owning ships; it exists so the tight slots can't deadlock. No tile, no qty — just an action.
+> **Charter** is the Harbor's always-available relief valve (`RULES.md` §5): pay the **charter fare — a shared market price printed under the Sailed-Ships track** (indexed by voyages delivered; per-count rows ⚙, e.g. 2p `2·2·3·2·2·4·5·5`, max `5 G`) to ship **one** Ready cask (vessel *or* slot) on an immediate single-cask voyage — it delivers and consumes one Sailed-Ships slot. **Strictly worse per cask** than a Cog/Hulk, so it never displaces owning ships; it exists so the tight slots can't deadlock. No tile, no qty — just an action.
 
 ### C. Neutral building tiles — the shared base, seeded on the slots (6 designs, 2–3 in play ⚙)
 Placed in perimeter slots **at setup** (shared, permanent). They keep the slots alive from turn 1 — whoever runs their line may use the action, free. The "everyone has the base; your casks/ships are the better versions" floor (the *GWT* neutral-building idea).
