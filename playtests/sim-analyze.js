@@ -9,7 +9,10 @@
 //                             e.g. trader | journeyman | guildmaster,trader      (default trader)
 //           SAVE=1            also write the raw event stream to playtests/analysis/events.jsonl
 //
-// Guildmaster seats run at the reduced GUILD_MS=40 bulk budget (~2-4s/game) — size N accordingly.
+// Guildmaster seats run at the reduced GUILD_MS=40 bulk budget. KNOWN ISSUE: long GM runs degrade
+// well past the early-game rate (~5s/game early, slowing several-fold over a long run — V8/heap
+// behaviour under the wrapper layer; cause not yet isolated). Keep GM cohorts small (N<=50) or
+// watch the stderr heartbeat; the trader/journeyman cohorts are unaffected (thousands of games/min).
 // Events fired inside Guildmaster Monte Carlo playouts are excluded (aiSimulating guard).
 'use strict';
 const fs = require('fs');
@@ -75,7 +78,9 @@ function anGame(np,tierList,gi){
   var ev=__EV;__EV=null;
   __AN.push({out:out,ev:ev});
 }
-COUNTSX.forEach(function(np){for(var g=0;g<NX;g++)anGame(np,TIERSX,g);});
+var __done=0,__t0=Date.now();
+COUNTSX.forEach(function(np){for(var g=0;g<NX;g++){anGame(np,TIERSX,g);
+  if(++__done%10===0)console.error('  …'+__done+' games ('+((Date.now()-__t0)/1000|0)+'s)');}});
 `;
 
 const noop = () => {};

@@ -6,6 +6,14 @@ Compact version history. The **full rationale ("the why")** lives in `DESIGN.md`
 
 ---
 
+## playtests/sim-analyze.js — the strategy-analysis harness + first findings (2026-06-12)
+New harness: headless cohorts with a **structured event stream hooked on the engine's own functions** (openings → win-rates · timing curves · per-tier action profiles · destination sequencing · win correlates; `TIERS`/`COUNTS`/`SAVE` knobs; GM playout events excluded). First corpora committed: `analysis-trader-v26.txt` (1,200 trader games, 2–4p) and `analysis-gm-v26.txt` (30 Guildmaster-vs-Trader oracle games).
+- **Findings (trader corpus):** at 2p the **Brewhouse-first opening beats Market-first 57.4% vs 42.4%** (the start goods already cover a brew — sourcing first is a wasted tempo); winners' separators are **early upgrades** (round 6.6; losers never-rate 3×) and **Bergen presence** (86% of winners deliver there vs 67% of losers); **majority points are the largest winner-vs-loser gap** (+6.2, ahead of delivery +5.5 and goals +3.9); destination arcs match design intent — Bruges early (83%), Bergen/Novgorod mid, **London (62%) and the Hall (86%) late**.
+- **Findings (GM oracle, directional n=30):** the search player **opens at the Cellar/colR** (brew+age in one activation off the warm start) where the heuristics open rowT; it **feeds London** (1.0 casks/game vs the traders' 0.2 — the engine-kontor identity works when played well), takes **3.4 upgrades/game**, **avoids gifting rival-loads** (0.6 vs 1.4–2.7), charters freely as tempo — and at 2p it **skips the Q4+ climb almost entirely** (⚙ flag: wide volume may dominate the export climb at 2p; verify at full GUILD_MS before acting).
+- Known issue: long Guildmaster cohorts degrade well past the early ~5s/game rate — keep GM runs ≤50 games (stderr heartbeat added); trader/journeyman cohorts run thousands of games per minute.
+
+---
+
 ## play.html — "Send to Studio": playtest ingest to Waterworks Studio (2026-06-12)
 Completed games can now be recorded to the **Waterworks Studio** publishing platform (`KEY → v26`). The final-standing panel (and the game-over bar) gains **⇪ Send to Studio**: a dialog takes the per-game **API key once** (saved to `localStorage.playtest_api_key`), plus the spec's optional session fields (notes · what was new · changes to make), and POSTs the playtest.
 - **Payload:** the hard-coded `game_id` (never user-editable), a **stable per-session `external_game_id`** minted at game start (`S.sessionId` — retries/dedupe are idempotent), `app_version` (= the save `KEY`), completion timestamp (`S.endedAt`, stamped in `gameOver`), `total_turns`, the **full plain-text log** + a `rich_log` of sequenced lines, and per-player entries — `is_winner` via the engine tiebreak (co-winners on exact ties), AI seats annotated by tier/lean in `notes`, and scores mapped to the studio's configured categories **Deliveries / Majorities / Goal Cards**.

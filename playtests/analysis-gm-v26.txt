@@ -1,0 +1,58 @@
+Brewhouses of the Hanse — strategy analysis  |  30 games  |  tiers=guildmaster,trader  counts=2  N=30/count  [238s]
+winner avg score 61.2  ·  avg rounds 14.5
+
+==== OPENINGS (turn-1 placement + first line; win-rate vs fair share) ====
+-- 2p (fair = 50.0%):
+   Brewhouse + rowT       picked    15×   wins  33.3%   (-16.7 vs fair)
+   Market + rowT          picked    11×   wins  18.2%   (-31.8 vs fair)
+   Market + colL          picked    10×   wins  50.0%   (+0.0 vs fair)
+   Cellar + colR          picked     7×   wins 100.0%   (+50.0 vs fair)
+   Harbor + colL          picked     5×   wins   0.0%   (-50.0 vs fair)
+   Cellar + rowB          picked     4×   wins 100.0%   (+50.0 vs fair)
+   Brewhouse + colR       picked     4×   wins  75.0%   (+25.0 vs fair)
+   Harbor + rowB          picked     4×   wins 100.0%   (+50.0 vs fair)
+
+==== TIMING (avg round of first …; winners vs losers; %never in parens) ====
+   first voyage (sail/charter)  winners 2.7 (0.0% never)     losers 2.6 (0.0% never)
+   first export recipe          winners 3.0 (0.0% never)     losers 1.1 (0.0% never)
+   first upgrade                winners 5.9 (3.3% never)     losers 7.2 (16.7% never)
+   first Hall delivery          winners 14.5 (66.7% never)   losers 12.7 (90.0% never)
+   first Bergen delivery        winners 11.2 (20.0% never)   losers 10.8 (73.3% never)
+   first Q4+ brew               winners 14.6 (76.7% never)   losers 10.0 (53.3% never)
+
+==== ACTION PROFILE by tier (avg per player per game) ====
+-- guildmaster  (n=30, win 96.7%)
+   stations/game: Mkt 4.7 · Brw 4.2 · Hbr 2.9 · Clr 2.7    brews 7.7 (Q4+ 0.3)
+   deliveries/game: brug 2.9 · lond 1.0 · berg 1.3 · novg 1.8 · hall 0.7
+   sails 2.5 · charters 1.4 · rival-loads 0.6 · presence-actions 1.4 · upgrades 3.4 (bought 0.6)
+-- trader·p  (n=11, win 0.0%)
+   stations/game: Mkt 4.9 · Brw 3.8 · Hbr 3.2 · Clr 2.2    brews 7.5 (Q4+ 1.1)
+   deliveries/game: brug 2.9 · lond 0.2 · berg 0.2 · novg 1.5 · hall 0.2
+   sails 3.1 · charters 0.4 · rival-loads 2.7 · presence-actions 1.2 · upgrades 1.9 (bought 0.3)
+-- trader·v  (n=10, win 0.0%)
+   stations/game: Mkt 3.1 · Brw 4.3 · Hbr 3.0 · Clr 3.8    brews 7.8 (Q4+ 0.9)
+   deliveries/game: brug 3.1 · lond 0.2 · berg 0.8 · novg 1.2 · hall 0.1
+   sails 3.0 · charters 0.5 · rival-loads 1.6 · presence-actions 0.6 · upgrades 1.4 (bought 0.0)
+-- trader·m  (n=9, win 11.1%)
+   stations/game: Mkt 3.9 · Brw 5.3 · Hbr 2.3 · Clr 3.9    brews 8.0 (Q4+ 0.8)
+   deliveries/game: brug 2.6 · lond 0.2 · berg 0.1 · novg 1.2 · hall 0.1
+   sails 2.4 · charters 0.2 · rival-loads 1.4 · presence-actions 2.1 · upgrades 1.4 (bought 0.0)
+
+==== DESTINATION TIMING (share of deliveries by phase: rounds 1-5 / 6-10 / 11+) ====
+   bruges       172 casks   early  67.4%   mid  21.5%   late  11.0%
+   london        36 casks   early   2.8%   mid  63.9%   late  33.3%
+   bergen        50 casks   early   0.0%   mid  46.0%   late  54.0%
+   novgorod      94 casks   early  11.7%   mid  50.0%   late  38.3%
+   hall          25 casks   early   0.0%   mid  20.0%   late  80.0%
+
+==== WIN CORRELATES (avg, winners vs losers) ====
+   total score              winners   61.2   losers   28.1   (Δ +33.2)
+   delivery pts             winners   20.0   losers   10.0   (Δ +10.0)
+   majority pts             winners   19.8   losers    4.4   (Δ +15.4)
+   goal pts                 winners   21.5   losers   13.7   (Δ +7.7)
+   casks delivered          winners    7.7   losers    4.9   (Δ +2.8)
+   distinct destinations    winners    3.5   losers    2.3   (Δ +1.2)
+   Hall casks               winners    0.7   losers    0.1   (Δ +0.6)
+   upgrades                 winners    3.4   losers    1.6   (Δ +1.8)
+   ships sailed             winners    2.5   losers    2.9   (Δ -0.4)
+
