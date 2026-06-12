@@ -6,6 +6,16 @@ Compact version history. The **full rationale ("the why")** lives in `DESIGN.md`
 
 ---
 
+## play.html UI/UX pass — table-readable, data-first (2026-06-12)
+A designer pass on the playable client (`KEY → v25`): *visuals over text, data over flavor* — the screen should read like the printed components, not a video game. Rules untouched.
+- **Destinations rebuilt as data cards.** Majority tiers sit alone in the top corner as **`5/3/0`** (players know what that means); per-cask value reads **`2★`**; the quality minimum uses the **cask pip notation** from the tiles (e.g. `▰▰▢▢▢+`) — the word "gate" is gone; the benefit is an **icon** (`+🔧` upgrade / `+2🌾` goods). Flavor text ("Bryggen · THE rich majority") moved to hover tooltips. **Deliveries are little squares** — one filled square per delivered cask in the owner's colour, outlined squares for bonus presence (Reach/Almshouse/Burgher), **★** on the current leader; the low-contrast "no deliveries" text is gone entirely.
+- **Recipes show as cards.** In the **player breweries**, each recipe is a mini card — name · **quality pips** · **brew cost icons** (cellar-locked Bock dimmed with a note) — so choosing what to brew needs no memory. The **Market** recipe rows gained the same pips + an inline brew-cost preview alongside the buy cost.
+- **The log is visual.** Move/activate lines carry a **mini 2×2 board-glyph** with the chosen station/line lit, plus station icons; every action logs with its icon (brew 🧪, age ⏳, deploy ⚓, load/sail ⛵, upgrade 🔧, presence 📍, goal 🎯 — the same icon grammar as the rulebook/printables). **Every good gained or spent, by anyone, now logs as an icon ledger line** (`↳ Crimson +2🌾`, `↳ −1🌾 −1🌿`), implemented once inside `gain()`/`pay()` so upgrade bonuses, loader bonuses, tolls, and storage-capped overflow are all captured.
+- **Breweries panel:** each tab now shows the player's **score** (`Σ NN`) for at-a-glance comparison; the **AI tier tag moved to the end of the stats line** so goods/score chips align across players.
+- **Verified:** render smoke green (incl. a Guildmaster game), sim 500 clean at 2–5p (`sim-results-v25.txt`), ladder PASS (`ai-ladder-v25.txt`: 66.3 / 61.3 / 91.7 GM-at-test-budget).
+
+---
+
 ## AI opponents — Phase 3: the Monte Carlo "Guildmaster" (2026-06-12)
 A fourth, expert AI tier (`KEY → v24`): the **Guildmaster** plays **flat Monte Carlo over the canonical engine itself**. At each enumerable prompt it lists the legal options; for each option it clones `(S, UI)` (the undo JSON trick), applies it, hands every seat to the **Journeyman rollout policy**, plays to game end, and scores the final **margin** (own total minus best rival — the anti-kingmaking objective). Round-robin playouts under a time budget (`GUILD_MS` ⚙ 250ms/decision in-page, capped 120ms at instant speed; the harnesses lower it to 40ms for bulk runs); best mean margin wins. Phase 3 of `AUTOMA.md`.
 - **Result: a step-change in strength.** At 2p the Guildmaster beats the Trader **99.0%** (n=200, seats swapped), average score **63.4 vs 26.8** — it both out-scores the Trader's normal output (~46) *and* suppresses it, because the margin objective denies majorities and snipes upgrades. This is the flat-MC prediction from the original proposal, measured: the playouts *discover* value (Bergen races, Hall timing, slot/clock pressure) that no hand-written rule encoded.

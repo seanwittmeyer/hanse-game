@@ -149,6 +149,26 @@
   #tip b{color:var(--gold2)}
   #tip .ic,#tip svg.lucide{width:1em;height:1em;vertical-align:-.13em}
   .iw{display:inline}
+  /* LOG board-glyphs (mini 2×2 of the Wharf with the chosen station/line lit) */
+  .lg{display:inline-grid;grid-template-columns:7px 7px;gap:1px;vertical-align:-2px;margin:0 3px}
+  .lg span{width:7px;height:7px;border-radius:1.5px;background:rgba(0,0,0,.14)}
+  .lg span.on{background:var(--gold)}
+  /* quality pips on LIGHT backgrounds (market items, brewery recipe cards) */
+  .qpd{display:inline-flex;gap:1.5px;align-items:center;vertical-align:-1px}
+  .qpd .tpip{background:rgba(0,0,0,.14)}
+  .qpd .tpip.on{background:var(--gold);box-shadow:none}
+  /* brewery recipe cards */
+  .rcard{display:inline-flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:7px;padding:4px 9px;background:var(--parch);margin:3px 5px 0 0;font-size:.74rem;box-shadow:0 1px 3px rgba(0,0,0,.12);vertical-align:top}
+  .rcard .rcn{font-weight:bold;font-variant:small-caps;white-space:nowrap}
+  /* destinations: data row + delivery squares */
+  .rmaj{font-weight:bold;font-size:.95rem;letter-spacing:.5px}
+  .rstats{display:flex;gap:12px;align-items:center;margin-top:5px;font-size:.88rem}
+  .rstats .rgate{display:inline-flex;gap:1.5px;align-items:center}
+  .vstar{color:var(--gold2);margin-left:1px}
+  .dsq{width:9px;height:9px;border-radius:2px;display:inline-block;margin:0 1px;vertical-align:middle;border:1px solid rgba(0,0,0,.35);box-sizing:border-box}
+  .dsq.bon{background:transparent!important;border-width:2px}
+  .dlead{color:var(--gold2);margin-right:2px}
+  .dprow{margin-right:7px;white-space:nowrap}
   .hidden{display:none}
 </style>
 </head>
@@ -377,7 +397,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v24'; // v0.10 + AI seats (AUTOMA.md): Phase 3 — the Guildmaster tier (flat Monte Carlo over the trader policy); bump discards stale state
+const KEY='hanse-hotseat-v25'; // v0.10 + AI seats: UI/UX pass — data-first destinations (squares/pips/★), recipe cards, log board-glyphs + the icon resource ledger; bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -440,13 +460,21 @@ function freshState(n,names){
 //==================================================================
 function cur(){return S.players[S.active];}
 function hasUpgrade(p,key){return (p.upgrades||[]).includes(key);}
+// gain/pay are the ONLY goods faucets/drains, so they double as the log's resource LEDGER:
+// every gain and every spend, by anyone, shows up with icons (the actual applied amounts —
+// upgrade bonuses included, storage-capped overflow noted).
 function gain(p,g=0,h=0){
   if(g>0&&hasUpgrade(p,'granary'))g++;
   if(h>0&&hasUpgrade(p,'hopgarden'))h++;
+  const g0=p.grain,h0=p.hops;
   p.grain=Math.min(p.storage,p.grain+g);p.hops=Math.min(p.storage,p.hops+h);
+  const dg=p.grain-g0,dh=p.hops-h0;
+  if(dg>0||dh>0)log('↳ '+p.name+' gains '+(dg>0?'+'+Gi(dg):'')+(dg>0&&dh>0?' ':'')+(dh>0?'+'+Hi(dh):'')
+    +((dg<g||dh<h)?' <span class="note">(storage full)</span>':''));
 }
 function canPay(p,c){return p.grain>=(c.g||0)&&p.hops>=(c.h||0);}
-function pay(p,c){p.grain-=(c.g||0);p.hops-=(c.h||0);}
+function pay(p,c){p.grain-=(c.g||0);p.hops-=(c.h||0);
+  if((c.g||0)>0||(c.h||0)>0)log('↳ '+p.name+' spends '+(c.g?'−'+Gi(c.g):'')+(c.g&&c.h?' ':'')+(c.h?'−'+Hi(c.h):''));}
 function costStr(c){let a=[];if(c.g)a.push(c.g+'G');if(c.h)a.push(c.h+'H');return a.join(' ')||'free';}
 function costIcons(c){let a=[];if(c.g)a.push(Gi(c.g));if(c.h)a.push(Hi(c.h));return a.join(' ')||'<span class="note">free</span>';}
 function styleShort(style){return STYLES[style].name.split(' ')[0];}
@@ -492,6 +520,9 @@ function majorityAwards(dest){
 }
 function log(msg,me){S.log.unshift('<div class="'+(me?'me':'')+'">'+msg+'</div>');if(S.log.length>140)S.log.pop();}
 function attr(s){return String(s).replace(/"/g,'&quot;');}
+// mini board-glyphs for the log: a 2×2 of the Wharf with the chosen station / line lit
+function cellGlyph(cell){return '<span class="lg" data-tip="'+attr(CELLNAME[cell])+'">'+['A','B','C','D'].map(c=>'<span class="'+(c===cell?'on':'')+'"></span>').join('')+'</span>';}
+function lineGlyph(lk){const lit=LINES[lk].cells;return '<span class="lg" data-tip="'+attr(LINES[lk].label)+'">'+['A','B','C','D'].map(c=>'<span class="'+(lit.includes(c)?'on':'')+'"></span>').join('')+'</span>';}
 
 // ---- tooltips for stations & slots ----
 const CELLTIP={
@@ -577,7 +608,7 @@ function startGame(){
 function doMove(cell){
   snapshot();
   const p=cur();const placing=!p.placed;p.placed=true;p.cell=cell;
-  log(p.name+(placing?' places their worker at <b>':' moves to <b>')+CELLNAME[cell]+'</b>.',true);
+  log(p.name+(placing?' places their worker at ':' moves to ')+LU(ICON[CELLNAME[cell]])+' <b>'+CELLNAME[cell]+'</b> '+cellGlyph(cell),true);
   UI={sub:'line'};render();
 }
 function chooseLine(which){
@@ -588,8 +619,8 @@ function chooseLine(which){
   // balancer that blunts the first player's free pick of the best opening cell.
   const shared=S.turn>1 && S.players.some(q=>q.id!==p.id&&q.cell===p.cell);
   const toll=shared?Math.min(OCCUPANCY_TOLL,p.grain):0;
-  if(toll>0){p.grain-=toll;log(p.name+' pays a '+toll+'G toll for sharing <b>'+CELLNAME[p.cell]+'</b>.',true);}
-  log(p.name+' activates the <b>'+L.label+'</b>.',true);
+  if(toll>0){p.grain-=toll;log(p.name+' pays −'+Gi(toll)+' occupancy toll for sharing <b>'+CELLNAME[p.cell]+'</b>.',true);}
+  log(p.name+' activates '+lineGlyph(lk)+' <b>'+L.label+'</b> '+L.cells.map(c=>LU(ICON[CELLNAME[c]])).join(''),true);
   const stops=[];
   L.cells.forEach(c=>stops.push({kind:'cell',cell:c}));
   L.caps.forEach(cid=>{if(S.slots[cid])stops.push({kind:'cap',slot:cid});});
@@ -626,30 +657,30 @@ function enterCell(cell){
 }
 
 // ---------- MARKET (Source) ----------
-function marketGoods(g,h){snapshot();gain(cur(),g,h);log(cur().name+' sources '+(g?g+'G':'')+(g&&h?' ':'')+(h?h+'H':'')+'.',true);cellDone();}
+function marketGoods(g,h){snapshot();gain(cur(),g,h);log(cur().name+' sources goods at the '+LU('store')+' <b>Market</b>.',true);cellDone();}
 // Buy one of this game's export recipes (the 3 dealt beers): pay its cost, gain the permission.
 function buyRecipe(style){const p=cur();
   if(!(S.exports||[]).includes(style)||p.recipes.includes(style))return;
   const c=RECIPE_BUY[style];if(!canPay(p,c))return;
   snapshot();pay(p,c);p.recipes.push(style);
-  log(p.name+' buys the '+STYLES[style].name+' recipe.',true);cellDone();}
+  log(p.name+' buys the '+LU('scroll-text')+' <b>'+STYLES[style].name+'</b> recipe (Q'+STYLES[style].q+').',true);cellDone();}
 function buyTile(id){
   const it=SHOP.find(x=>x.id===id);const p=cur();
   if(it.kind==='ship'){
     if(!emptySlots().length){alert('No open slot to build a ship.');return;}
     if(!canPay(p,it.cost))return;
     snapshot();pay(p,it.cost);UI.tmp.shipBuild={ship:it.ship};UI.stage='shipdest';
-    log(p.name+' builds a '+SHIP_NAME[it.ship]+' — bind it to a destination.',true);render();return;}
+    log(p.name+' builds a '+LU('sailboat')+' <b>'+SHIP_NAME[it.ship]+'</b> — bind it to a destination.',true);render();return;}
 }
 // Buy an upgrade from the face-up display (Market option B): pay its cost, take it, refill.
 function buyDisplayUp(key){const p=cur();if(!grantableBuy(p,key))return;const c=UPGRADE_BUY[key];if(!canPay(p,c))return;
   snapshot();pay(p,c);grantUpgrade(p,key);takeFromDisplay(key);
-  log(p.name+' buys '+upName(key)+' from the Market display.',true);cellDone();}
+  log(p.name+' buys '+LU('wrench')+' <b>'+upName(key)+'</b> from the Market display.',true);cellDone();}
 function shipDest(dest){const p=cur();
   UI.tmp.placeTile={type:'ship',owner:p.id,ship:UI.tmp.shipBuild.ship,dest,load:[]};UI.stage='place';
-  log(p.name+'’s '+SHIP_NAME[UI.tmp.shipBuild.ship]+' is bound for '+DEST[dest].name+' (cap '+effCap(UI.tmp.placeTile)+') — place it on a slot.',true);render();}
+  log(p.name+'’s '+LU('sailboat')+' '+SHIP_NAME[UI.tmp.shipBuild.ship]+' is bound for '+LU(DEST[dest].kontor?'landmark':'crown')+' <b>'+DEST[dest].name+'</b> (cap '+effCap(UI.tmp.placeTile)+') — place it on a slot.',true);render();}
 function placeSlot(slot){const t=UI.tmp.placeTile;S.slots[slot]=t;
-  log('↳ '+SHIP_NAME[t.ship]+' placed on a slot, bound for '+DEST[t.dest].name+'.');cellDone();}
+  log('↳ '+LU('sailboat')+' '+SHIP_NAME[t.ship]+' placed on a '+LU('anchor')+' slot, bound for '+DEST[t.dest].name+'.');cellDone();}
 
 // ---------- BREW ----------
 function enterBrew(rt){const p=cur();
@@ -659,7 +690,7 @@ function enterBrew(rt){const p=cur();
 function brewPick(style){const p=cur();if(!canBrew(p,style))return;const vi=openVessel(p);if(vi<0){alert('No open vessel.');return;}
   snapshot();pay(p,STYLES[style].in);
   p.vessels[vi]={style,q:STYLES[style].q,step:0,ready:effReady(p,style)};
-  log(p.name+' brews '+STYLES[style].name+' (matures in '+effReady(p,style)+' step'+(effReady(p,style)===1?'':'s')+').',true);
+  log(p.name+' '+LU('flask-conical')+' brews '+LU('beer')+' <b>'+STYLES[style].name+'</b> (Q'+STYLES[style].q+' · matures in '+effReady(p,style)+' step'+(effReady(p,style)===1?'':'s')+').',true);
   const rt=UI.brew.returnTo;UI.brew=null;resume(rt);
 }
 
@@ -671,9 +702,9 @@ function enterAge(amount,mode,rt){const p=cur();
 function ageAllot(vi){const p=cur();const c=p.vessels[vi];if(!c||c.step>=c.ready||UI.age.pool<=0)return;
   snapshot();
   if(UI.age.mode==='single'){const n=Math.min(UI.age.pool,c.ready-c.step);c.step+=n;UI.age.pool=0;
-    log('↳ '+styleShort(c.style)+' ages +'+n+' → '+c.step+'/'+c.ready+(c.step>=c.ready?' (READY)':'')+'.');ageDone();return;}
+    log('↳ '+LU('hourglass')+' '+styleShort(c.style)+' ages +'+n+' → '+c.step+'/'+c.ready+(c.step>=c.ready?' '+LU('check')+' <b>READY</b>':'')+'.');ageDone();return;}
   c.step++;UI.age.pool--;
-  log('↳ '+styleShort(c.style)+' ages +1 → '+c.step+'/'+c.ready+(c.step>=c.ready?' (READY)':'')+'.');
+  log('↳ '+LU('hourglass')+' '+styleShort(c.style)+' ages +1 → '+c.step+'/'+c.ready+(c.step>=c.ready?' '+LU('check')+' <b>READY</b>':'')+'.');
   if(UI.age.pool<=0||!p.vessels.some(x=>x&&x.step<x.ready))ageDone();else render();
 }
 function ageDone(){const rt=UI.age.returnTo;UI.age=null;offerDeploy(rt);}
@@ -687,7 +718,7 @@ function offerDeploy(rt){const p=cur();const ready=readyInVessels(p);
 function startDeploy(vi,phase){snapshot();UI.sub='deploy';UI.deploy={queue:[vi],returnTo:phase};render();}
 function deployTo(slot){snapshot();const p=cur();const vi=UI.deploy.queue[0];const c=p.vessels[vi];p.vessels[vi]=null;
   S.slots[slot]={type:'cask',owner:p.id,style:c.style,q:c.q};
-  log(p.name+' sets a Ready '+styleShort(c.style)+' on a slot.',true);
+  log(p.name+' sets a Ready '+LU('beer')+' <b>'+styleShort(c.style)+'</b> on a '+LU('anchor')+' slot.',true);
   UI.deploy.queue.shift();deployNext();
 }
 function deployNext(){if(!UI.deploy.queue.length||!emptySlots().length){const rt=UI.deploy.returnTo;UI.deploy=null;resume(rt);}else render();}
@@ -696,13 +727,13 @@ function deploySkipAll(){const rt=UI.deploy.returnTo;UI.deploy=null;resume(rt);}
 
 // ---------- SOURCE / CONVERT / REACH / WILD (cask + neutral actions) ----------
 function enterSource(n,rt){UI.sub='source';UI.src={n,returnTo:rt};render();}
-function srcTake(g,h){snapshot();gain(cur(),g,h);log('↳ '+cur().name+' gains '+(g?g+'G':'')+(g&&h?' ':'')+(h?h+'H':'')+'.');const rt=UI.src.returnTo;UI.src=null;resume(rt);}
+function srcTake(g,h){snapshot();gain(cur(),g,h);const rt=UI.src.returnTo;UI.src=null;resume(rt);}
 function srcSkip(){const rt=UI.src.returnTo;UI.src=null;resume(rt);}
 
 function enterConvert(rt){const p=cur();if(p.grain<=0&&p.hops<=0){log('↳ nothing to convert.');resume(rt);return;}UI.sub='convert';UI.cvt={returnTo:rt};render();}
 function convertDo(from,amt){snapshot();const p=cur();
-  if(from==='g'){const a=Math.min(amt,p.grain);p.grain-=a;p.hops=Math.min(p.storage,p.hops+a);log('↳ convert '+a+'G → '+a+'H.');}
-  else{const a=Math.min(amt,p.hops);p.hops-=a;p.grain=Math.min(p.storage,p.grain+a);log('↳ convert '+a+'H → '+a+'G.');}
+  if(from==='g'){const a=Math.min(amt,p.grain);p.grain-=a;p.hops=Math.min(p.storage,p.hops+a);log('↳ '+p.name+' converts −'+Gi(a)+' → +'+Hi(a)+'.');}
+  else{const a=Math.min(amt,p.hops);p.hops-=a;p.grain=Math.min(p.storage,p.grain+a);log('↳ '+p.name+' converts −'+Hi(a)+' → +'+Gi(a)+'.');}
   const rt=UI.cvt.returnTo;UI.cvt=null;resume(rt);
 }
 function convertSkip(){const rt=UI.cvt.returnTo;UI.cvt=null;resume(rt);}
@@ -712,7 +743,7 @@ function enterReach(rt){const p=cur();const ks=KONTORE.filter(k=>deliveredAt(p,k
   UI.sub='reach';UI.reach={ks,returnTo:rt};render();
 }
 function reachPick(k){snapshot();const p=cur();p.presBonus[k]=(p.presBonus[k]||0)+1;
-  log('↳ '+p.name+' gains +1 presence at '+DEST[k].name+' (majority help).');
+  log('↳ '+p.name+' gains +1 '+LU('map-pin')+' presence at <b>'+DEST[k].name+'</b> (majority help).');
   const rt=UI.reach.returnTo;UI.reach=null;resume(rt);
 }
 function reachSkip(){const rt=UI.reach.returnTo;UI.reach=null;resume(rt);}
@@ -723,7 +754,7 @@ function enterAlms(rt){const p=cur();const ks=KONTORE.filter(k=>leadersAt(k).som
   UI.sub='alms';UI.alms={ks,returnTo:rt};render();
 }
 function almsPick(k){snapshot();const p=cur();p.presBonus[k]=(p.presBonus[k]||0)+1;
-  log('↳ '+p.name+' reinforces its lead at '+DEST[k].name+' (+1 presence, Almshouse).');
+  log('↳ '+p.name+' reinforces its lead at <b>'+DEST[k].name+'</b> (+1 '+LU('map-pin')+' presence, Almshouse).');
   const rt=UI.alms.returnTo;UI.alms=null;resume(rt);}
 function almsSkip(){const rt=UI.alms.returnTo;UI.alms=null;resume(rt);}
 
@@ -733,7 +764,7 @@ function enterTowncrier(rt){const p=cur();const avail=GOAL_KEYS.filter(g=>!p.goa
   UI.sub='goaldraw';UI.draw={avail,returnTo:rt};render();
 }
 function drawPick(g){snapshot();const p=cur();if(!p.goals.includes(g))p.goals.push(g);
-  log('↳ '+p.name+' takes a goal (Towncrier): '+GOALS[g].text+'.');
+  log('↳ '+p.name+' takes a '+LU('target')+' goal (Towncrier): '+GOALS[g].text+'.');
   const rt=UI.draw.returnTo;UI.draw=null;resume(rt);}
 function drawSkip(){const rt=UI.draw.returnTo;UI.draw=null;resume(rt);}
 
@@ -756,8 +787,8 @@ function loadPickCask(slot){UI.load.cask=slot;render();}
 function loadOnto(shipSlot){const p=cur();const caskSlot=UI.load.cask;const sh=S.slots[shipSlot];const ct=S.slots[caskSlot];
   snapshot();
   sh.load.push({owner:ct.owner,style:ct.style,q:ct.q});S.slots[caskSlot]=null;
-  let extra='';if(ct.owner!==p.id){gain(p,1,0);extra=' (loader +1G)';}
-  log(p.name+' loads '+styleShort(ct.style)+(ct.owner!==p.id?' ('+S.players[ct.owner].name+'’s)':'')+' onto '+(sh.owner!==p.id?S.players[sh.owner].name+'’s ':'')+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+')'+extra+'.',true);
+  if(ct.owner!==p.id)gain(p,1,0);   // the loader bonus (shows in the ledger)
+  log(p.name+' '+LU('ship')+' loads '+LU('beer')+' '+styleShort(ct.style)+(ct.owner!==p.id?' ('+S.players[ct.owner].name+'’s)':'')+' onto '+(sh.owner!==p.id?S.players[sh.owner].name+'’s ':'')+LU('sailboat')+' '+shipName(sh)+' → <b>'+DEST[sh.dest].name+'</b> ('+sh.load.length+'/'+effCap(sh)+').',true);
   const rt=UI.load.returnTo;
   if(sh.load.length>=effCap(sh)){UI.load=null;sailShip(shipSlot);afterSail(rt);return;}
   if(UI.load.loadsLeft>1){const more=wharfLoadableCasks(p).filter(cs=>UI.load.ships.some(s=>canTake(s,cs)));
@@ -771,22 +802,22 @@ function loadSkip(){const rt=UI.load.returnTo;UI.load=null;resume(rt);}
 function sailShip(slot){const t=S.slots[slot];const o=S.players[t.owner];
   o.shipsSailed=(o.shipsSailed||0)+1;
   t.load.forEach(L=>{const lp=S.players[L.owner];lp.delivered.push({style:L.style,q:L.q,dest:t.dest});grantBenefit(lp,t.dest,L.q);});
-  log('★ '+o.name+'’s '+shipName(t)+' sails to '+DEST[t.dest].name+' with '+t.load.length+' cask'+(t.load.length===1?'':'s')+'! (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')');
+  log('★ '+o.name+'’s '+LU('sailboat')+' <b>'+shipName(t)+'</b> sails to <b>'+DEST[t.dest].name+'</b> with '+t.load.length+' '+LU('beer')+' cask'+(t.load.length===1?'':'s')+'! (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')');
   S.slots[slot]=null;S.sailed++;
 }
 function grantBenefit(lp,dest,q){
   if(DEST[dest].kontor&&hasUpgrade(lp,'staple'))gain(lp,1,0);   // Staple Right: +1 good on any kontor delivery
-  if(dest==='bruges'){gain(lp,2,0);log('↳ '+lp.name+' delivers to Bruges (+'+destValue('bruges',q)+' value, +2G liquidity).');}
+  if(dest==='bruges'){gain(lp,2,0);log('↳ '+lp.name+' delivers to '+LU('landmark')+' <b>Bruges</b> — <b>+'+destValue('bruges',q)+'</b><span class="vstar">★</span>.');}
   else if(dest==='london'||dest==='novgorod'){
     // London (the engine kontor) & Novgorod (premium) let the owner take ONE tile from the face-up Upgrade display (free).
-    log('↳ '+lp.name+' delivers to '+DEST[dest].name+' (+'+destValue(dest,q)+' value, earns an Upgrade from the display).');
+    log('↳ '+lp.name+' delivers to '+LU('landmark')+' <b>'+DEST[dest].name+'</b> — <b>+'+destValue(dest,q)+'</b><span class="vstar">★</span> and earns a free '+LU('wrench')+' Upgrade.');
     if(lp.id===S.active)UI.pendingBenefits.push({pid:lp.id,dest});else autoGrantDisplay(lp,dest);}
-  else if(dest==='bergen'){gain(lp,2,0);log('↳ '+lp.name+' delivers to Bergen (+'+destValue('bergen',q)+' value, +2G liquidity; builds toward its rich majority).');}
-  else if(dest==='hall')log('↳ '+lp.name+' enshrines at the Hall (+'+destValue('hall',q)+' prestige).');
+  else if(dest==='bergen'){gain(lp,2,0);log('↳ '+lp.name+' delivers to '+LU('landmark')+' <b>Bergen</b> — <b>+'+destValue('bergen',q)+'</b><span class="vstar">★</span>.');}
+  else if(dest==='hall')log('↳ '+lp.name+' enshrines at the '+LU('crown')+' <b>Hall</b> — <b>+'+destValue('hall',q)+'</b><span class="vstar">★</span> prestige.');
 }
 // A rival (non-active) owner auto-takes a random grantable face-up upgrade (they can't pick mid-turn).
 function autoGrantDisplay(p,dest){const g=displayGrantable(p);if(!g.length)return;const k=g[Math.floor(Math.random()*g.length)];
-  grantUpgrade(p,k);takeFromDisplay(k);log('↳ '+p.name+' earns '+upName(k)+' (from '+DEST[dest].name+', via the display).');}
+  grantUpgrade(p,k);takeFromDisplay(k);log('↳ '+p.name+' earns '+LU('wrench')+' <b>'+upName(k)+'</b> (from '+DEST[dest].name+', via the display).');}
 function grantUpgrade(p,key){
   if(key==='vessel'){if(p.maxVessels<4){p.maxVessels++;p.vessels.push(null);p.upgrades.push('vessel');}return;}
   if(!p.upgrades.includes(key)){p.upgrades.push(key);if(key==='warehouse')p.storage+=4;}
@@ -796,7 +827,7 @@ function afterSail(rt){
   if(UI.pendingBenefits.length){UI.sub='benefit';UI.benefit={returnTo:rt};render();}else resume(rt);
 }
 function benefitPick(key){snapshot();const b=UI.pendingBenefits[0];grantUpgrade(S.players[b.pid],key);takeFromDisplay(key);
-  log('↳ '+S.players[b.pid].name+' earns '+upName(key)+' (from '+DEST[b.dest].name+', via the Market display).');
+  log('↳ '+S.players[b.pid].name+' earns '+LU('wrench')+' <b>'+upName(key)+'</b> (from '+DEST[b.dest].name+', via the Market display).');
   UI.pendingBenefits.shift();const rt=UI.benefit.returnTo;UI.benefit=null;afterSail(rt);
 }
 
@@ -814,7 +845,7 @@ function charterDest(dest){const p=cur();snapshot();pay(p,CHARTER_COST);
   // A charter is a single-cask voyage on an outside hull — it delivers (scores + benefit) and advances the
   // Sailed-Ships clock, but it is NOT your fleet, so it does not count for the "ships you sailed" goal.
   p.delivered.push({style:c.style,q:c.q,dest});
-  log(p.name+' charters a single voyage ('+costStr(CHARTER_COST)+') — '+styleShort(c.style)+' → '+DEST[dest].name+'. (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')',true);
+  log(p.name+' charters a '+LU('sailboat')+' single voyage — '+LU('beer')+' '+styleShort(c.style)+' → <b>'+DEST[dest].name+'</b>. (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')',true);
   grantBenefit(p,dest,c.q);S.sailed++;afterSail('stops');
 }
 
@@ -853,7 +884,7 @@ function endTurn(){
   passiveFerment(cur());UI={sub:'move'};save();render();
   maybeRunAI();
 }
-function passiveFerment(p){let any=false;p.vessels.forEach(c=>{if(c&&c.step<c.ready){c.step++;any=true;}});if(any)log(p.name+'’s casks mature (+1) over the turn.');}
+function passiveFerment(p){let any=false;p.vessels.forEach(c=>{if(c&&c.step<c.ready){c.step++;any=true;}});if(any)log(p.name+'’s casks '+LU('hourglass')+' mature (+1) over the turn.');}
 function checkTriggers(){if(S.ending)return;
   if(S.sailed>=S.sailedCap){S.ending=true;log('★ The Sailed-Ships track is full ('+S.sailed+'/'+S.sailedCap+') — final round!');return;}
   if(S.turn>=MAX_ROUND){S.ending=true;log('★ Round '+MAX_ROUND+' reached — final round (safety).');}
@@ -1427,15 +1458,28 @@ function renderGrid(){
 function renderDests(){
   let h='';DESTS.forEach(d=>{const D=DEST[d];
     const leaders=D.kontor?leadersAt(d):[];
-    const pres=S.players.map(p=>{const n=presenceAt(p,d);if(!n&&!deliveredAt(p,d))return '';
-      const lead=leaders.some(x=>x.id===p.id);
-      return '<span style="color:'+p.color+';font-weight:bold">'+(lead?'★':'')+LU('map-pin')+n+'</span>';}).filter(x=>x).join(' ');
-    const majStr=(D.maj&&D.maj.length)?D.maj.join('/'):'—';
-    const val=d==='hall'?'prestige Q×2.5':('val '+D.value+' · maj '+majStr);
-    const tip=D.name+' — '+D.role+'. Gate Q'+D.gate+'. '+(d==='hall'?'Ship a cask here to bank prestige (Q×2.5, floored) — out of commerce.':'Delivered casks score '+D.value+' each; place in the cask-count race for the majority ('+majStr+' to 1st/2nd/3rd; 2-player skips 2nd).');
-    h+='<div class="route '+d+'" data-tip="'+attr(tip)+'"><div class="rh"><span class="rn">'+(D.kontor?LU('landmark'):LU('crown'))+' '+D.name+'</span><span class="rv">'+val+'</span></div>'
-      +'<div class="gate">gate Q'+D.gate+' · '+D.role+'</div>'
-      +'<div class="pres">'+(pres||'<span class="note">no deliveries</span>')+'</div></div>';
+    // deliveries as SQUARES: one filled square per delivered cask (player colour), outlined squares
+    // for bonus presence (Reach / Almshouse / Burgher), ★ on the current majority leader(s).
+    const pres=S.players.map(p=>{
+      const del=deliveredAt(p,d);const bon=D.kontor?Math.max(0,presenceAt(p,d)-del):0;
+      if(!del&&!bon)return '';
+      const lead=D.kontor&&leaders.some(x=>x.id===p.id);
+      let sq='';for(let i=0;i<del;i++)sq+='<span class="dsq" style="background:'+p.color+'"></span>';
+      for(let i=0;i<bon;i++)sq+='<span class="dsq bon" style="border-color:'+p.color+'"></span>';
+      return '<span class="dprow" data-tip="'+attr(p.name+': '+del+' delivered'+(bon?' + '+bon+' bonus presence':'')+(lead?' — current leader':''))+'">'+(lead?'<span class="dlead">★</span>':'')+sq+'</span>';
+    }).filter(x=>x).join('');
+    const valStr=d==='hall'
+      ?'<span data-tip="'+attr('Prestige: each cask scores its quality ×2.5 (Q2→5 · Q3→7 · Q4→10 · Q5→12). No majority, no benefit — out of commerce.')+'"><b>Q×2.5</b><span class="vstar">★</span></span>'
+      :'<span data-tip="'+attr('Each delivered cask scores '+D.value+' at game end.')+'"><b>'+D.value+'</b><span class="vstar">★</span></span>';
+    const ben=D.benefit==='upgrade'?'<span data-tip="'+attr('On delivery the owner takes one Upgrade from the Market display, free.')+'">+'+LU('wrench')+'</span>'
+      :D.benefit==='goods'?'<span data-tip="'+attr('On delivery the owner gains 2 grain.')+'">+'+Gi(2)+'</span>':'';
+    h+='<div class="route '+d+'" data-tip="'+attr(D.name+' — '+D.role+'.')+'">'
+      +'<div class="rh"><span class="rn">'+(D.kontor?LU('landmark'):LU('crown'))+' '+D.name+'</span>'
+      +((D.maj&&D.maj.length)?'<span class="rmaj" data-tip="'+attr('End-game majority: '+D.maj.join('/')+' to 1st/2nd/3rd by delivered casks (2-player skips 2nd; ties split).')+'">'+D.maj.join('/')+'</span>':'')+'</div>'
+      +'<div class="rstats">'
+      +'<span class="rgate" data-tip="'+attr('Minimum cask quality to deliver here: Q'+D.gate+' or better.')+'">'+qPips(D.gate)+'<b>+</b></span>'
+      +valStr+ben+'</div>'
+      +'<div class="pres">'+pres+'</div></div>';
   });
   document.getElementById('dests').innerHTML=h;
 }
@@ -1445,9 +1489,12 @@ function renderShop(){
   // export recipes (this game's 3 dealt beers, by quality) + always-available ships
   let h='';(S.exports||[]).slice().sort((a,b)=>STYLES[a].lvl-STYLES[b].lvl).forEach(style=>{
     if(p.recipes.includes(style))return;
-    const nm=LU('scroll-text')+' Recipe · '+STYLES[style].name+' (Q'+STYLES[style].q+')'+(STYLES[style].cellar?' (needs Cellar to brew)':'');
+    const st=STYLES[style];
+    const nm=LU('scroll-text')+' <b>'+st.name+'</b> <span class="qpd">'+qPips(st.q)+'</span>'
+      +' <span class="note" style="font-size:.72rem">brew '+costIcons(st.in)+'</span>'
+      +(st.cellar?' <span class="note" style="font-size:.72rem">(needs Aging Cellar)</span>':'');
     const cost=RECIPE_BUY[style];const can=canPay(p,cost);
-    h+='<div class="item"><span data-tip="'+attr('Permission to brew this type (permanent).')+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyRecipe(\''+style+'\')">buy</button>':'')+'</span></div>';});
+    h+='<div class="item"><span data-tip="'+attr('Permission to brew '+st.name+' (Q'+st.q+'), permanent. Brew cost: '+costStr(st.in)+'.')+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyRecipe(\''+style+'\')">buy</button>':'')+'</span></div>';});
   SHOP.forEach(it=>{
     const nm=LU('sailboat')+' '+SHIP_NAME[it.ship]+' (cap '+SHIP_CAP[it.ship]+')';const cost=it.cost;const can=canPay(p,cost)&&emptySlots().length>0;
     h+='<div class="item"><span data-tip="'+attr('Owned carrier bound to a destination; sails when full onto the Sailed-Ships track.')+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
@@ -1472,25 +1519,30 @@ function renderVoyage(){
 function renderTableaus(){
   let tabs='',body='';
   S.players.forEach((p,i)=>{
-    tabs+='<div class="tab '+(i===activeTab?'active':'')+'" style="'+(i===activeTab?'background:'+p.color:'')+'" onclick="activeTab='+i+';renderTableaus();refreshIcons()"><span class="pawn" style="background:'+p.color+';display:inline-block;vertical-align:middle;width:11px;height:11px"></span> '+p.name+(p.ai?' <span style="opacity:.75;font-size:.72rem" data-tip="'+attr(aiLabel(p)+' AI seat — plays by the same rules; tiers differ only in decision quality.')+'">· AI</span>':'')+'</div>';
     const sc=scorePlayer(p);
+    tabs+='<div class="tab '+(i===activeTab?'active':'')+'" style="'+(i===activeTab?'background:'+p.color:'')+'" onclick="activeTab='+i+';renderTableaus();refreshIcons()"><span class="pawn" style="background:'+p.color+';display:inline-block;vertical-align:middle;width:11px;height:11px"></span> '+p.name+' <span style="opacity:.85;font-size:.74rem" data-tip="Total score so far.">Σ'+sc.total+'</span>'+(p.ai?' <span style="opacity:.75;font-size:.72rem" data-tip="'+attr(aiLabel(p)+' AI seat — plays by the same rules; tiers differ only in decision quality.')+'">· AI</span>':'')+'</div>';
     const vessels=p.vessels.map(c=>{
       if(!c)return '<div class="vessel" style="opacity:.6">'+LU('flask-conical')+' <i>empty vessel</i></div>';
       let tr='';for(let s=0;s<=c.ready;s++)tr+='<div class="tstep '+(s<c.step?'on':'')+(c.step>=c.ready&&s===c.ready?'rdy':'')+'"></div>';
       const ready=c.step>=c.ready;
       return '<div class="vessel">'+LU('beer')+' <b>'+styleShort(c.style)+'</b> '+(ready?'<span class="tag good">'+LU('check')+' READY</span>':'<span class="note">'+c.step+'/'+c.ready+'</span>')+'<div class="vtrack">'+tr+'</div></div>';
     }).join('');
-    const recipes=p.recipes.map(r=>'<span class="tag dim">'+LU('beer')+STYLES[r].name+'</span>').join('');
+    const recipes=p.recipes.map(r=>{const st=STYLES[r];const locked=st.cellar&&!hasUpgrade(p,'cellar');
+      return '<span class="rcard"'+(locked?' style="opacity:.55"':'')+' data-tip="'+attr(st.name+' — quality Q'+st.q+', brew cost '+costStr(st.in)+(locked?'. Needs the Aging Cellar to brew.':'.'))+'">'
+        +'<span class="rcn">'+LU('beer')+' '+st.name+'</span>'
+        +'<span class="qpd">'+qPips(st.q)+'</span>'
+        +'<span>'+costIcons(st.in)+(locked?' <span class="note" style="font-size:.66rem">needs Cellar</span>':'')+'</span></span>';
+    }).join('');
     const ups=p.upgrades.length?p.upgrades.map(k=>'<span class="tag" data-tip="'+attr(upDesc(k))+'">'+LU('wrench')+upName(k)+'</span>').join(''):'<span class="note">none yet — buy from the display, or deliver to London/Novgorod</span>';
     const wharf=SLOTS.map(s=>S.slots[s.id]).filter(t=>t&&t.owner===p.id).map(t=>'<span class="tag">'+(t.type==='ship'?LU('sailboat')+shipName(t)+'→'+DEST[t.dest].name.slice(0,3)+' '+t.load.length+'/'+effCap(t):LU('beer')+styleShort(t.style))+'</span>').join('')||'<span class="note">none</span>';
     const delivered=DESTS.map(d=>{const n=deliveredAt(p,d);return n?'<span class="tag good">'+(DEST[d].kontor?LU('landmark'):LU('crown'))+DEST[d].name.slice(0,4)+'×'+n+'</span>':'';}).filter(x=>x).join('')||'<span class="note">none</span>';
     const gv=p.goals.map(g=>({g,v:GOALS[g].fn(p)})).sort((a,b)=>b.v-a.v);
     const goals=gv.map((o,idx)=>'<span class="tag'+(idx<GOAL_BEST?' good':' dim')+'" data-tip="'+attr(GOALS[o.g].text)+'">'+LU('target')+GOALS[o.g].text+' = '+o.v+(idx<GOAL_BEST?' ✓':'')+'</span>').join('');
     body+='<div class="tableau '+(i===activeTab?'show':'')+'">'
-      +'<div style="margin-bottom:6px">'+(p.ai?'<span class="tag" data-tip="An AI seat — same rules, same information; the tiers differ only in decision quality.">'+aiLabel(p)+' AI</span> ':'')+'<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
+      +'<div style="margin-bottom:6px"><span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
       +'<span class="chip" data-tip="Storage cap.">'+LU('package')+'<b>'+p.storage+'</b></span>'
       +'<span class="chip" data-tip="Ships you have sailed.">'+LU('sailboat')+'<b>'+(p.shipsSailed||0)+'</b></span>'
-      +'<span class="chip" data-tip="Total score.">Σ <b>'+sc.total+'</b></span> <span class="note">deliveries '+sc.deliv+' · maj '+sc.maj+' · goals '+sc.goals+'</span></div>'
+      +'<span class="chip" data-tip="Total score.">Σ <b>'+sc.total+'</b></span> <span class="note">deliveries '+sc.deliv+' · maj '+sc.maj+' · goals '+sc.goals+'</span>'+(p.ai?' <span class="tag" data-tip="An AI seat — same rules, same information; the tiers differ only in decision quality.">'+aiLabel(p)+' AI</span>':'')+'</div>'
       +'<b class="note">'+LU('flask-conical')+' Vessels ('+p.vessels.length+'/'+p.maxVessels+'):</b><div class="brew">'+vessels+'</div>'
       +'<b class="note">'+LU('scroll-text')+' Recipes:</b> '+recipes+'<br>'
       +'<b class="note">'+LU('wrench')+' Upgrades:</b> '+ups+'<br>'
