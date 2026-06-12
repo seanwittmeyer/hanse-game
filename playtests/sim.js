@@ -72,7 +72,7 @@ function cellValue(c,p){
   if(role==='Ship'){var load=myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});});
     if(load)return 4;
     var rdy=readyInVessels(p).length||wharfCaskSlots().some(function(id){return S.slots[id].owner===p.id;});
-    return (rdy&&canPay(p,CHARTER_COST))?2:0.1;}
+    return (rdy&&canPay(p,charterCost(p)))?2:0.1;}
   return 0;
 }
 // Occupancy toll the bot would pay for MOVING onto cell c (0 unless an engine defines OCCUPANCY_TOLL):
@@ -119,7 +119,7 @@ function botHarbor(p){
   var canLoad=myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});});
   if(canLoad){harborLoad();return;}
   // Charter only as a genuine relief valve: wharf jammed, end-game rush, or no hull & can't build one.
-  var canCharter=canPay(p,CHARTER_COST)&&charterCasks(p).length>0;
+  var canCharter=canPay(p,charterCost(p))&&charterCasks(p).length>0;
   var jammed=emptySlots().length===0;
   var noHull=myShips(p).length===0 && !canPay(p,{g:2});
   if(canCharter && (jammed || S.ending || noHull)){__charters++;harborCharter();return;}
