@@ -808,7 +808,7 @@ function loadOnto(shipSlot){const p=cur();const caskSlot=UI.load.cask;const sh=S
   snapshot();
   sh.load.push({owner:ct.owner,style:ct.style,q:ct.q});S.slots[caskSlot]=null;
   if(ct.owner!==p.id)gain(p,1,0);   // the loader bonus (shows in the ledger)
-  log(p.name+' '+LU('ship')+' loads '+LU('beer')+' '+styleShort(ct.style)+(ct.owner!==p.id?' ('+S.players[ct.owner].name+'’s)':'')+' onto '+(sh.owner!==p.id?S.players[sh.owner].name+'’s ':'')+LU('sailboat')+' '+shipName(sh)+' → <b>'+DEST[sh.dest].name+'</b> ('+sh.load.length+'/'+effCap(sh)+').',true);
+  log(p.name+' '+LU('ship')+' loads '+LU('beer')+ownSq(ct.owner)+styleShort(ct.style)+' onto '+LU('sailboat')+ownSq(sh.owner)+shipName(sh)+' → <b>'+DEST[sh.dest].name+'</b> ('+sh.load.length+'/'+effCap(sh)+').',true);
   const rt=UI.load.returnTo;
   if(sh.load.length>=effCap(sh)){UI.load=null;sailShip(shipSlot);afterSail(rt);return;}
   if(UI.load.loadsLeft>1){const more=wharfLoadableCasks(p).filter(cs=>UI.load.ships.some(s=>canTake(s,cs)));
@@ -822,7 +822,7 @@ function loadSkip(){const rt=UI.load.returnTo;UI.load=null;resume(rt);}
 function sailShip(slot){const t=S.slots[slot];const o=S.players[t.owner];
   o.shipsSailed=(o.shipsSailed||0)+1;
   t.load.forEach(L=>{const lp=S.players[L.owner];lp.delivered.push({style:L.style,q:L.q,dest:t.dest});grantBenefit(lp,t.dest,L.q);});
-  log('★ '+o.name+'’s '+LU('sailboat')+' <b>'+shipName(t)+'</b> sails to <b>'+DEST[t.dest].name+'</b> with '+t.load.length+' '+LU('beer')+' cask'+(t.load.length===1?'':'s')+'! (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')');
+  log('★ '+o.name+'’s '+LU('sailboat')+ownSq(t.owner)+'<b>'+shipName(t)+'</b> sails to <b>'+DEST[t.dest].name+'</b> with '+t.load.length+' '+LU('beer')+' cask'+(t.load.length===1?'':'s')+'! (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')');
   S.slots[slot]=null;S.sailed++;
 }
 function grantBenefit(lp,dest,q){
@@ -1433,7 +1433,7 @@ function render(){
 }
 function btn(label,fn,cls){return '<button class="'+(cls||'')+'" onclick="'+fn+'">'+label+'</button>';}
 function deployButtons(phase){const p=cur();if(!emptySlots().length)return '';
-  return readyInVessels(p).map(o=>btn('▸ Deploy '+styleShort(o.c.style)+' to a slot','startDeploy('+o.i+',\''+phase+'\')','ghost')).join('');}
+  return readyInVessels(p).map(o=>btn('▸ Deploy '+LU('beer')+ownSq(p.id)+styleShort(o.c.style)+' to a slot','startDeploy('+o.i+',\''+phase+'\')','ghost')).join('');}
 
 function renderBar(){
   const p=cur();
@@ -1489,7 +1489,7 @@ function renderBar(){
     if(!L.cask){prompt='Load a cask onto a ship — pick the cask.';
       const elig=L.casks.filter(cs=>L.ships.some(s=>canTake(s,cs)));
       acts=elig.map(cs=>{const ct=S.slots[cs];return btn(LU('beer')+ownSq(ct.owner)+styleShort(ct.style)+' Q'+ct.q,'loadPickCask(\''+cs+'\')','go');}).join('')+btn('Skip','loadSkip()','ghost');}
-    else{prompt='Load '+styleShort(S.slots[L.cask].style)+' onto which ship?';
+    else{const lc=S.slots[L.cask];prompt='Load '+LU('beer')+ownSq(lc.owner)+styleShort(lc.style)+' onto which ship?';
       const ships=L.ships.filter(s=>canTake(s,L.cask));
       acts=ships.map(s=>{const sh=S.slots[s];return btn(LU('sailboat')+ownSq(sh.owner)+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+')','loadOnto(\''+s+'\')','go');}).join('')+btn('Back','loadBack()','ghost')+btn('Skip','loadSkip()','ghost');}}
   else if(U==='deploy'){const vi=UI.deploy.queue[0];const c=p.vessels[vi];
@@ -1526,7 +1526,7 @@ function cellRender(p){
   if(UI.cell==='C'){
     if(UI.stage==='charter_cask'){const cs=charterCasks(p);
       return {prompt:'Charter — pick a Ready cask to ship now ('+costStr(CHARTER_COST)+').',
-        acts:cs.map(o=>btn(LU('beer')+styleShort(o.style)+' Q'+o.q+(o.ref[0]==='v'?' · vessel':' · slot'),'charterPickCask(\''+o.ref+'\')','go')).join('')+btn('Back','(function(){UI.stage=\'harbor\';render();})()','ghost')};}
+        acts:cs.map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.style)+' Q'+o.q+(o.ref[0]==='v'?' · vessel':' · slot'),'charterPickCask(\''+o.ref+'\')','go')).join('')+btn('Back','(function(){UI.stage=\'harbor\';render();})()','ghost')};}
     if(UI.stage==='charter_dest'){const ref=UI.tmp.charterCask;const c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
       const ds=DESTS.filter(d=>c.q>=DEST[d].gate);
       return {prompt:'Charter '+styleShort(c.style)+' (Q'+c.q+') → which destination?',
