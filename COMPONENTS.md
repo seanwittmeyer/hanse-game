@@ -89,7 +89,7 @@ Placed in perimeter slots **at setup** (shared, permanent). They keep the slots 
 | **Cooper** | age one of your casks 1 step |
 | **Crane** | load one Ready cask onto a ship, free |
 | **Counting-House** | convert up to 2 goods `G↔H` |
-| **Towncrier** | draw a goal from the face-up goal supply |
+| **Towncrier** | pay **1 `G`** ⚙ to draw a goal from the face-up supply (**hand cap 4** ⚙); at the cap, **gain 1 good** instead |
 | **Almshouse** | +1 presence at a kontor you already lead |
 
 ### D. Recipe tiles — permission to brew a type (4 export designs × 1/player = 20 cards ⚙; Gruit + Hopped print on the board)
@@ -144,7 +144,7 @@ All **open from the start**. Differentiated by a **quality gate** (the climb-lim
 > **The majority is a big end-game motivator — tiered & ranked (Lacerda-style) at every kontor:** 1st/2nd/3rd by delivered-cask count take the kontor's tiers; **2-player games skip 2nd** (winner-take-all); ties split the occupied tiers ⚙. **Bruges 5/3/0 · London 6/4/2 · Novgorod 8/5/2 · Bergen 10/6/3** ⚙ — **Bergen is the rich anchor** (its token goods benefit is offset by the biggest majority); Novgorod rides high for its hard Q3 reach. **Per-cask delivery value is deliberately low** so the points live in the majority race; this tilts scoring toward the kontore, so the **Hall's prestige was bumped to Q×2.5** to keep the volume-vs-prestige axis balanced (sim-validated near fair at 2–5p, `DESIGN.md` §21 v0.10). **Benefits pair off:** Bruges & **Bergen** give **goods** (liquidity); **London** (engine) & Novgorod give an **Upgrade**. Delivery value is **flat per kontor regardless of quality** (only the Hall scales with Q). *Because presence = cask count, majorities reward shipping **wide** — "go for majorities" is a volume play, not a separate concentrate-on-one strategy.*
 
 ### G. Goal / objective tiles — the variety layer (9 designs × 2 copies = 18 in box ⚙; deal 3 per player, best 2 score)
-A small pool of **9 designs** rewarding different shapes, so the winning engine varies by game (the *GWT* blend ideal). **Two copies of each print ⚙** — dealing 3 per player needs 15 tiles at 5p, and `play.html` deals duplicates across players freely. **Deal 3 per player; your best 2 score** ⚙ (keeps goals ~⅓ of a score, not the game); authored so a one-note rush fills few of them.
+A small pool of **9 designs** rewarding different shapes, so the winning engine varies by game (the *GWT* blend ideal). **Two copies of each print ⚙** — dealing 3 per player needs 15 tiles at 5p, and `play.html` deals duplicates across players freely. **Deal 3 per player; hand cap 4 ⚙ (the Towncrier adds at most one, for a 1 `G` fee); your best 2 score** ⚙ (keeps goals ~⅓ of a score, not the game); authored so a one-note rush fills few of them. *(v0.11 Batch A1 — free unlimited draws let playtesters bank 6+ goals.)*
 
 | # | Goal (end-game) ⚙ | Pulls you toward |
 |---|---|---|

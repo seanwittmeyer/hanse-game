@@ -203,7 +203,7 @@ No separate reach/standing tracks. You score from **what you delivered**:
 
 1. **Delivery value** — sum your delivered casks' values at each destination (kontore = trade value; **the Hall = prestige**, scaling with quality).
 2. **Majorities** — the **tiered, ranked** route-majority at *every* kontor: by delivered-cask count, **1st/2nd/3rd place take that kontor's majority tiers** (§5 — Bruges 5/3/0 · London 6/4/2 · Novgorod 8/5/2 · Bergen 10/6/3 ⚙; Bergen the rich anchor). **This is a big chunk of the score** — the per-cask delivery values are low on purpose. **2-player games skip 2nd** (winner-take-all); tied players split the sum of the tiers they occupy ⚙.
-3. **Goals** — you hold **3 goal tiles** (dealt at setup); **your best 2 score** ⚙ (the variety layer).
+3. **Goals** — you hold **3 goal tiles** (dealt at setup; **hand cap 4** ⚙ — the Towncrier can add a 4th); **your best 2 score** ⚙ (the variety layer).
 4. **Tiebreak:** most goods, then most casks on slots.
 
 > The volume-vs-prestige tension lives here as a **lean**, not two silos: spread casks wide across kontore for value + majorities, *or* send your best out of commerce to the Hall for big single hits — coupled by shared casks, scarce slots, scarce ships, and the one shared end clock.

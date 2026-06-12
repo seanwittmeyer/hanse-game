@@ -53,6 +53,7 @@ var _grantBenefit=grantBenefit;grantBenefit=function(lp,dest,q){if(REC())EV('del
 var _sailShip=sailShip;      sailShip=function(sl){if(REC()){var t=S.slots[sl];if(t)EV('sail',{pid:t.owner,dest:t.dest,ncask:t.load.length});}return _sailShip(sl);};
 var _loadOnto=loadOnto;      loadOnto=function(ss){if(REC()){var ct=S.slots[UI.load.cask];if(ct&&ct.owner!==S.active)EV('rivalload',{owner:ct.owner});}return _loadOnto(ss);};
 var _reachPick=reachPick;    reachPick=function(k){if(REC())EV('pres',{dest:k});return _reachPick(k);};
+var _drawPick=drawPick;      drawPick=function(g){if(REC())EV('goaldraw',{goal:g});return _drawPick(g);};
 var _almsPick=almsPick;      almsPick=function(k){if(REC())EV('pres',{dest:k});return _almsPick(k);};
 
 function mkAI(t){
@@ -74,7 +75,8 @@ function anGame(np,tierList,gi){
     return {pid:p.id,tier:p.ai.tier,persona:p.ai.persona,winner:fr.cmp({p:p,sc:sc},win)===0,
             total:sc.total,deliv:sc.deliv,maj:sc.maj,goals:sc.goals,
             ndeliv:p.delivered.length,ndest:KONTORE.concat(['hall']).filter(function(d){return deliveredAt(p,d)>0;}).length,
-            hall:deliveredAt(p,'hall'),upgrades:p.upgrades.length,ships:p.shipsSailed||0};})};
+            hall:deliveredAt(p,'hall'),upgrades:p.upgrades.length,ships:p.shipsSailed||0,
+            goalsHeld:p.goals.length};})};
   var ev=__EV;__EV=null;
   __AN.push({out:out,ev:ev});
 }
@@ -238,6 +240,7 @@ const C = [
   ['total score', pl => pl.total], ['delivery pts', pl => pl.deliv], ['majority pts', pl => pl.maj],
   ['goal pts', pl => pl.goals], ['casks delivered', pl => pl.ndeliv], ['distinct destinations', pl => pl.ndest],
   ['Hall casks', pl => pl.hall], ['upgrades', pl => pl.upgrades], ['ships sailed', pl => pl.ships],
+  ['goals held at end', pl => pl.goalsHeld],
 ];
 const allP = []; GAMES.forEach(g => g.out.players.forEach(pl => allP.push(pl)));
 C.forEach(([label, fn]) => {

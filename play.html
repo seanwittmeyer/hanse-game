@@ -254,7 +254,7 @@ const ICONTIP={
   'map-pin':'Presence — your delivered casks at a kontor (counts for majorities).',
   coins:'Goods.',
   package:'Storage — how many goods you can hold.',
-  target:'Goal — an end-game objective; deal 3 per player, your best 2 score.',
+  target:'Goal — an end-game objective; deal 3 per player (hand cap 4), your best 2 score.',
   hammer:'Cooper — age one of your casks a step.',
   check:'Ready — this cask is matured; deploy it to a slot.',
   'user-round':'Worker — move it between the four stations.',
@@ -317,7 +317,7 @@ const NEUTRALS={
   cooper  :{name:'Cooper',        icon:'hammer',        act:'age one of your casks 1 step'},
   crane   :{name:'Crane',         icon:'package-plus',  act:'load a Ready cask onto a ship, free'},
   counting:{name:'Counting House',icon:'arrow-left-right',act:'convert up to 2 goods G↔H'},
-  towncrier:{name:'Towncrier',    icon:'megaphone',     act:'draw a goal from the face-up goal supply'},
+  towncrier:{name:'Towncrier',    icon:'megaphone',     act:'pay 1G to draw a goal (hand cap 4); at the cap, gain 1 good instead'},
   almshouse:{name:'Almshouse',    icon:'heart',         act:'+1 presence at a kontor you already lead'},
 };
 // 2–3 neutral buildings are seeded onto the wharf at setup, picked at random from the 6-design pool each game (variety) ⚙
@@ -367,6 +367,8 @@ const GOALS={
 };
 const GOAL_KEYS=Object.keys(GOALS);
 const GOAL_BEST=2;
+const GOAL_CAP=4;               // ⚙ goal hand cap — deal 3 at setup, the Towncrier can add up to the cap
+const TOWNCRIER_COST={g:1};     // ⚙ the crier's fee per goal drawn (A1, Batch A)
 
 // ---- THE GRID (positions identical to the box; v0.7 loop labels) ----
 // 8 perimeter slots → the line each belongs to
@@ -404,7 +406,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v26'; // + Waterworks Studio playtest ingest: S gains sessionId/endedAt/studioSent; bump discards stale state
+const KEY='hanse-hotseat-v27'; // Batch A1 ⚙: Towncrier costs 1G, goal hand cap 4 (at cap → gain 1 good); bump discards stale state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -778,12 +780,16 @@ function almsPick(k){snapshot();const p=cur();p.presBonus[k]=(p.presBonus[k]||0)
   const rt=UI.alms.returnTo;UI.alms=null;resume(rt);}
 function almsSkip(){const rt=UI.alms.returnTo;UI.alms=null;resume(rt);}
 
-// Towncrier (neutral): draw a goal — pick one from the face-up goal supply (goals not already in your row).
-function enterTowncrier(rt){const p=cur();const avail=GOAL_KEYS.filter(g=>!p.goals.includes(g));
+// Towncrier (neutral): pay 1G to draw a goal from the face-up supply — HAND CAP 4 (A1, Batch A);
+// at the cap the crier hands you a good instead (the building never goes dead).
+function enterTowncrier(rt){const p=cur();
+  if(p.goals.length>=GOAL_CAP){log('↳ Towncrier: at the goal cap ('+GOAL_CAP+') — takes a good instead.');enterSource(1,rt);return;}
+  if(!canPay(p,TOWNCRIER_COST)){log('↳ Towncrier: cannot afford the crier’s '+costStr(TOWNCRIER_COST)+' fee.');resume(rt);return;}
+  const avail=GOAL_KEYS.filter(g=>!p.goals.includes(g));
   if(!avail.length){log('↳ Towncrier: no new goal to draw.');resume(rt);return;}
   UI.sub='goaldraw';UI.draw={avail,returnTo:rt};render();
 }
-function drawPick(g){snapshot();const p=cur();if(!p.goals.includes(g))p.goals.push(g);
+function drawPick(g){snapshot();const p=cur();pay(p,TOWNCRIER_COST);if(!p.goals.includes(g))p.goals.push(g);
   log('↳ '+p.name+' takes a '+LU('target')+' goal (Towncrier): '+GOALS[g].text+'.');
   const rt=UI.draw.returnTo;UI.draw=null;resume(rt);}
 function drawSkip(){const rt=UI.draw.returnTo;UI.draw=null;resume(rt);}
@@ -1481,7 +1487,7 @@ function renderBar(){
     acts=UI.reach.ks.map(k=>btn(LU('map-pin')+DEST[k].name,'reachPick(\''+k+'\')','go')).join('')+btn('Skip','reachSkip()','ghost');}
   else if(U==='alms'){prompt='Almshouse — +1 presence at a kontor you already lead.';
     acts=UI.alms.ks.map(k=>btn(LU('map-pin')+DEST[k].name,'almsPick(\''+k+'\')','go')).join('')+btn('Skip','almsSkip()','ghost');}
-  else if(U==='goaldraw'){prompt='Towncrier — draw a goal (pick one to add; your best 2 score).';
+  else if(U==='goaldraw'){prompt='Towncrier — pay '+costStr(TOWNCRIER_COST)+' and draw a goal (hand cap '+GOAL_CAP+'; your best 2 score).';
     acts=UI.draw.avail.map(g=>btn(LU('target')+GOALS[g].text,'drawPick(\''+g+'\')','go')).join('')+btn('Skip','drawSkip()','ghost');}
   else if(U==='wild'){prompt='Wild — take any base action as a bonus.';
     acts=btn(LU('store')+' Source','wildPick(\'source\')','go')+btn(LU('flask-conical')+' Brew','wildPick(\'brew\')','go')+btn(LU('hourglass')+' Age','wildPick(\'age\')','go')+btn(LU('ship')+' Ship','wildPick(\'ship\')','go')+btn('Skip','wildSkip()','ghost');}
