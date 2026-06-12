@@ -9,7 +9,7 @@ Published from `main` via GitHub Pages.
 ## Play & browse (the pages — four, all "The Wharf")
 - **`learn.html`** — learn-to-play primer in one page.
 - **`index.html`** — the **Rulebook & Components** page: the complete rules + the visual component reference (absorbs the former separate rulebook).
-- **`play.html`** — the playable hot-seat client & de-facto reference implementation. **Any seat can be an AI opponent** (per-seat in New Game): **Apprentice / Journeyman / Trader** in rising strength, Traders with a committed volume/prestige/majority lean — same rules, same information, no cheating; turns narrated in the log at an adjustable speed. (Phase 1 of `AUTOMA.md`.)
+- **`play.html`** — the playable hot-seat client & de-facto reference implementation. **Any seat can be an AI opponent** (per-seat in New Game): **Apprentice / Journeyman / Trader / Guildmaster** in rising strength — Traders commit to a volume/prestige/majority lean; the Guildmaster evaluates each option by Monte Carlo playouts (expect a brief think per decision) — same rules, same information, no cheating; turns narrated in the log at an adjustable speed. (`AUTOMA.md` Phases 1–3.)
 - **`printables.html`** — the full print-&-play kit: every board, tile, card, and token on deterministic Letter-landscape sheets with an **ART / CUT layer toggle** (shared registration marks for laser cutting), per-sheet SVG cut export, and a manufacturing checklist.
 
 > **✅ v0.10 is live repo-wide:** the markdown specs **and all four HTML pages** are on v0.10 "The Wharf." (The playable `play.html` adds one engine-level relief valve, the **Charter** — a `2 G` single-cask Harbor voyage that keeps the tight slots from deadlocking; see `RULES.md` §5.)
@@ -18,7 +18,7 @@ Published from `main` via GitHub Pages.
 - **`DESIGN.md`** — pillars, rationale, dated session log (the *why*). **§21 = "The Wharf"** (the live design, v0.7 origin → v0.8 → v0.9 → v0.10 refinements); §1–§20 are the record of how we got here.
 - **`RULES.md`** — the operational turn/economy spec (v0.10).
 - **`COMPONENTS.md`** — the single physical manifest: boards · tokens · the five tile families (casks · ships · neutral buildings · recipes · upgrades) · the **player brewery board** · destinations · goals. *(Absorbs the former `TILES.md` + `PLAYERBOARD.md`.)*
-- **`AUTOMA.md`** — the AI-opponent plan: system comparison (heuristic / Monte Carlo / MCTS / …) + the staged path. **Phase 1 (AI seats in `play.html`) is shipped.**
+- **`AUTOMA.md`** — the AI-opponent plan: system comparison (heuristic / Monte Carlo / MCTS / …) + the staged path. **Phases 1–3 are shipped** (AI seats · the offline weight tuner · the Monte Carlo Guildmaster).
 - **`CHANGELOG.md`** — compact version history (v0.1→v0.10) + the balance lessons carried forward.
 - **`CLAUDE.md`** — how to work in this repo (the interlocks; a change is never local).
 

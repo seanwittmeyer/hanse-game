@@ -20,6 +20,9 @@ render=function(){};        // silence the UI layer for speed
 save=function(){};
 log=function(){};
 snapshot=function(){};
+// bulk-run budget for the guildmaster's Monte Carlo (the page default is 250ms/decision — far too
+// slow for thousands of games; 40ms still gives it ~10-20 playouts per decision)
+GUILD_MS=40;GUILD_MIN=1;
 
 function aiTestGame(tiers){
   S=freshState(tiers.length,['P1','P2','P3','P4','P5'].slice(0,tiers.length));
@@ -40,12 +43,16 @@ function mkAI(t){
 }
 var __OUT={pairs:{},mixed:{}};
 // ---- head-to-head ladder at 2p (seats swapped every other game so turn order washes out) ----
-[['apprentice','journeyman'],['journeyman','trader'],['apprentice','trader']].forEach(function(pair){
+// guildmaster games cost ~seconds each (Monte Carlo), so its pairing runs at a reduced count.
+var __NGM=Math.max(40,Math.floor(__N/5));
+[['apprentice','journeyman'],['journeyman','trader'],['apprentice','trader'],
+ ['trader','guildmaster']].forEach(function(pair){
+  var __n=(pair[1]==='guildmaster')?__NGM:__N;
   var w={};w[pair[0]]=0;w[pair[1]]=0;
   var sum={};sum[pair[0]]=0;sum[pair[1]]=0;
   var errs=0,rounds=0,n=0,clock=0;
   var perPersona={volume:{w:0,n:0},prestige:{w:0,n:0},majority:{w:0,n:0}};   // trader-lean diagnostics
-  for(var g=0;g<__N;g++){
+  for(var g=0;g<__n;g++){
     var flip=(g%2===1);
     var seatTier=[flip?pair[1]:pair[0], flip?pair[0]:pair[1]];
     var ais=[mkAI(seatTier[0]),mkAI(seatTier[1])];

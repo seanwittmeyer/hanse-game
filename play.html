@@ -186,7 +186,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>Prototype v0.10 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s deployed cask</b> on your ship — they still score it. <b>Every kontor pays a tiered majority</b> (1st/2nd/3rd), laddered by reach — Bruges <b>2/1/1</b> · London <b>3/1/1</b> · Bergen <b>4/2/1</b> · Novgorod <b>5/2/1</b> ⚙. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b>; <b>Bruges / Bergen</b> hand you <b>2 goods</b> instead. The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the relief valve when slots jam). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. Any seat can be an <b>AI opponent</b> — pick a tier per seat in New Game (<b>Apprentice / Journeyman / Trader</b>, in rising strength; Traders commit to a volume/prestige/majority lean). AI seats play by the same rules with the same information and never cheat; their turns play out in the log at an adjustable speed. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
+  <p class="note" style="text-align:center"><b>Prototype v0.10 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s deployed cask</b> on your ship — they still score it. <b>Every kontor pays a tiered majority</b> (1st/2nd/3rd), laddered by reach — Bruges <b>2/1/1</b> · London <b>3/1/1</b> · Bergen <b>4/2/1</b> · Novgorod <b>5/2/1</b> ⚙. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b>; <b>Bruges / Bergen</b> hand you <b>2 goods</b> instead. The Harbor also offers a <b>Charter</b> (pay 2⚙G to ship one Ready cask now — the relief valve when slots jam). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. Any seat can be an <b>AI opponent</b> — pick a tier per seat in New Game (<b>Apprentice / Journeyman / Trader / Guildmaster</b>, in rising strength; Traders commit to a volume/prestige/majority lean, and the Guildmaster evaluates its options by <i>playing each one out</i> hundreds of times — expect a brief think per decision). AI seats play by the same rules with the same information and never cheat; their turns play out in the log at an adjustable speed. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -377,7 +377,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v23'; // v0.10 + AI seats (AUTOMA.md): Phase 2 — trader weights centralized in AI_W with a per-seat p.ai.w override (the offline tuning surface); bump discards stale state
+const KEY='hanse-hotseat-v24'; // v0.10 + AI seats (AUTOMA.md): Phase 3 — the Guildmaster tier (flat Monte Carlo over the trader policy); bump discards stale state
 
 // ---- UNDO ----
 let undoStack=[];
@@ -550,6 +550,7 @@ function pickCount(n){setupN=n;for(let i=2;i<=5;i++)document.getElementById('pc'
     +'<option value="trader-volume">AI · Trader — volume lean</option>'
     +'<option value="trader-prestige">AI · Trader — prestige lean</option>'
     +'<option value="trader-majority">AI · Trader — majority lean</option>'
+    +'<option value="guildmaster">AI · Guildmaster (expert — thinks via playouts; slower turns)</option>'
     +'</select></div>';
   document.getElementById('names').innerHTML=h;
 }
@@ -869,7 +870,9 @@ function scorePlayer(p){
   return {deliv,maj,goals,total:deliv+maj+goals};
 }
 function gameOver(){
-  S.over=true;aiCancel();
+  S.over=true;
+  if(aiSimulating)return;   // a playout reaching game end must not touch the DOM or the timers
+  aiCancel();
   const rows=S.players.map(p=>({p,sc:scorePlayer(p)}));
   const tb=r=>[r.sc.total,r.p.grain+r.p.hops,wharfCaskSlots().filter(id=>S.slots[id].owner===r.p.id).length];
   const cmp=(a,b)=>{const A=tb(a),B=tb(b);for(let i=0;i<3;i++)if(B[i]!==A[i])return B[i]-A[i];return 0;};
@@ -899,6 +902,7 @@ const AI_TIERS={
   apprentice:{label:'Apprentice', noise:0.45},   // ⚙ noise = chance of a random legal pick per decision
   journeyman:{label:'Journeyman', noise:0},
   trader    :{label:'Trader',     noise:0},
+  guildmaster:{label:'Guildmaster',noise:0},     // Phase 3: flat Monte Carlo on top of the trader policy
 };
 const AI_PERSONAS=['volume','prestige','majority'];
 // ⚙ Trader policy weights — the PHASE 2 tuning surface (AUTOMA.md). Optimized offline by
@@ -920,7 +924,10 @@ const AI_W={
 function aiW(p){return (p.ai&&p.ai.w)||AI_W;}
 const AI_DELAYS={slow:900,normal:450,instant:0};   // ms between AI decisions ⚙
 const AI_SPEED_KEY='hanse-ai-speed';
-let aiTimer=null,aiActing=false,aiLoopActive=false,aiChosenWhich='row';
+// ⚙ Guildmaster (Phase 3) dials — `let` so the headless harnesses can lower them for bulk runs.
+let GUILD_MS=250;    // Monte Carlo time budget per decision (ms); 'instant' speed caps it at 120
+let GUILD_MIN=2;     // minimum playouts per option (so no option goes unsampled)
+let aiTimer=null,aiActing=false,aiLoopActive=false,aiChosenWhich='row',aiSimulating=false;
 
 function aiTurn(){return !!(S&&!S.over&&cur()&&cur().ai);}
 function aiLabel(p){return AI_TIERS[p.ai.tier].label+(p.ai.persona?' · '+p.ai.persona:'');}
@@ -930,7 +937,9 @@ function aiSetSpeed(v){try{localStorage.setItem(AI_SPEED_KEY,v);}catch(e){}rende
 function aiRandOf(a){return a[Math.floor(Math.random()*a.length)];}
 function aiNoisy(p){return Math.random()<(AI_TIERS[p.ai.tier].noise||0);}
 function aiIsApp(p){return p.ai.tier==='apprentice';}
-function aiIsTrader(p){return p.ai.tier==='trader';}
+// guildmaster inherits the full trader policy — as its fallback at un-sampled prompts AND as the
+// rollout policy inside its playouts.
+function aiIsTrader(p){return p.ai.tier==='trader'||p.ai.tier==='guildmaster';}
 
 // ---- shared heuristics (ported from playtests/sim.js; journeyman = that bot verbatim) ----
 function aiAchQ(p){const qs=p.recipes.map(r=>(STYLES[r].cellar&&!hasUpgrade(p,'cellar'))?0:STYLES[r].q);return Math.max(...qs);}
@@ -1119,12 +1128,113 @@ function aiBenefit(){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];con
   if(!g.length){UI.pendingBenefits.shift();afterSail(UI.benefit.returnTo);return;}
   benefitPick(aiPickUpgrade(lp,g));}
 
+//================= GUILDMASTER — flat Monte Carlo (Phase 3, AUTOMA.md) =================
+// At each high-leverage prompt the guildmaster ENUMERATES the legal options, and for each one:
+// clone (S,UI) by JSON (the undo trick), apply the option, hand every seat to the TRADER policy,
+// play to game end, and score the final MARGIN (own total minus best rival — the anti-kingmaking
+// objective). Round-robin playouts under a time budget; best mean margin wins; the option is then
+// applied for real. Same-scope global swap with restore — the engine needs no refactor, and because
+// playouts run the live rules, every future rules revision is absorbed automatically.
+function aiMCMargin(meId){
+  const sc=S.players.map(q=>scorePlayer(q).total);
+  let best=-1e9;sc.forEach((v,i)=>{if(i!==meId&&v>best)best=v;});
+  return sc[meId]-best;
+}
+function aiMC(p,options){
+  if(options.length===1){options[0]();return;}
+  const meId=p.id;
+  const snapS=JSON.stringify(S),snapUI=JSON.stringify(UI);
+  const rr=render,ll=log,sv=save;
+  const stats=options.map(()=>({n:0,sum:0}));
+  const budget=(aiSpeed()==='instant')?Math.min(GUILD_MS,120):GUILD_MS;
+  aiSimulating=true;render=function(){};log=function(){};save=function(){};
+  const t0=Date.now();let done=0;
+  try{
+    while(done<options.length*GUILD_MIN||Date.now()-t0<budget){
+      const oi=done%options.length;done++;
+      S=JSON.parse(snapS);UI=JSON.parse(snapUI);
+      let m;
+      try{
+        options[oi]();
+        // rollout: every seat plays the JOURNEYMAN (greedy) policy to game end — ~10x cheaper per
+        // playout than trader (no goal-marginal/swing math), and the SCORER still prices majorities
+        // and the Hall correctly, which is what the Monte Carlo evaluation actually needs.
+        S.players.forEach(q=>{q.ai={tier:'journeyman',persona:null,w:null};});
+        let g=0;while(!S.over&&g++<30000)aiStep();
+        m=aiMCMargin(meId);
+      }catch(e){m=aiMCMargin(meId)-5;}   // a crashed playout scores what it has, minus a penalty
+      stats[oi].n++;stats[oi].sum+=m;
+      if(done>4000)break;                 // hard cap, however cheap the playouts
+    }
+  }finally{
+    S=JSON.parse(snapS);UI=JSON.parse(snapUI);
+    render=rr;log=ll;save=sv;aiSimulating=false;
+  }
+  let bi=0,bv=-1e9;
+  stats.forEach((st,i)=>{const v=st.n?st.sum/st.n:-1e9;if(v>bv){bv=v;bi=i;}});
+  options[bi]();   // apply the winner for real
+}
+// The option enumerator: a list of zero-arg thunks calling the SAME functions the buttons call.
+// Returns null for prompts left to the trader fallback (line · age · source · convert · end).
+function aiGmOptions(p){
+  const U=UI.sub;
+  if(U==='move'){
+    const cands=(!p.placed)?['A','B','C','D']:ADJ[p.cell];
+    const o=[];cands.forEach(c=>['row','col'].forEach(w=>o.push(()=>{aiChosenWhich=w;doMove(c);})));
+    return o;}
+  if(U==='stops')return UI.stops.map((s,i)=>()=>resolveStop(i));
+  if(U==='cell'&&UI.cell==='A'){
+    if(UI.stage==='shipdest')return DESTS.map(d=>()=>shipDest(d));
+    if(UI.stage==='place')return emptySlots().map(s=>()=>placeSlot(s.id));
+    const o=[()=>marketGoods(2,0),()=>marketGoods(1,1),()=>marketGoods(0,2)];
+    (S.exports||[]).forEach(st=>{if(!p.recipes.includes(st)&&canPay(p,RECIPE_BUY[st]))o.push(()=>buyRecipe(st));});
+    if(emptySlots().length)SHOP.forEach(it=>{if(canPay(p,it.cost))o.push(()=>buyTile(it.id));});
+    Array.from(new Set(S.upgradeDisplay||[])).forEach(k=>{if(grantableBuy(p,k)&&canPay(p,UPGRADE_BUY[k]))o.push(()=>buyDisplayUp(k));});
+    return o;}
+  if(U==='cell'&&UI.cell==='C'){
+    if(UI.stage==='charter_cask')return charterCasks(p).map(c=>()=>charterPickCask(c.ref));
+    if(UI.stage==='charter_dest'){const ref=UI.tmp.charterCask;const c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
+      return DESTS.filter(d=>c.q>=DEST[d].gate).map(d=>()=>charterDest(d));}
+    const o=[];
+    if(myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs))))o.push(()=>harborLoad());
+    myShips(p).filter(s=>S.slots[s].load.length>0).forEach(s=>o.push(()=>harborLaunch(s)));
+    if(canPay(p,CHARTER_COST)&&charterCasks(p).length>0)o.push(()=>harborCharter());
+    o.push(()=>cellDone());
+    return o;}
+  if(U==='brew'){const aff=p.recipes.filter(r=>canBrew(p,r)&&openVessel(p)>=0);
+    if(!aff.length)return null;
+    const o=aff.map(r=>()=>brewPick(r));o.push(()=>resume(UI.brew.returnTo));return o;}
+  if(U==='load'){const L=UI.load;
+    if(!L.cask){const elig=L.casks.filter(cs=>L.ships.some(s=>canTake(s,cs)));
+      if(!elig.length)return null;
+      const o=elig.map(cs=>()=>loadPickCask(cs));o.push(()=>loadSkip());return o;}
+    const ships=L.ships.filter(s=>canTake(s,L.cask));
+    if(!ships.length)return null;
+    const o=ships.map(s=>()=>loadOnto(s));o.push(()=>loadSkip());return o;}
+  if(U==='deploy'){const es=emptySlots();if(!es.length)return null;
+    const o=es.map(s=>()=>deployTo(s.id));o.push(()=>deploySkipOne());return o;}
+  if(U==='benefit'){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];
+    const g=Array.from(new Set(displayGrantable(lp)));
+    return g.length?g.map(k=>()=>benefitPick(k)):null;}
+  if(U==='wild')return [()=>wildPick('source'),()=>wildPick('brew'),()=>wildPick('age'),()=>wildPick('ship'),()=>wildSkip()];
+  if(U==='reach')return UI.reach.ks.map(k=>()=>reachPick(k));
+  if(U==='alms')return UI.alms.ks.map(k=>()=>almsPick(k));
+  if(U==='goaldraw'){const o=UI.draw.avail.map(g=>()=>drawPick(g));o.push(()=>drawSkip());return o;}
+  return null;   // trader fallback handles the rest
+}
+
 // ---- one decision per call, via the engine's own state machine ----
 function aiStep(){
   if(!S||S.over)return;
   const p=cur();if(!p.ai)return;
   aiActing=true;   // AI decisions take no undo snapshots (the human-turn boundary clears the stack)
   try{
+    // guildmaster: Monte Carlo at enumerable prompts; everything else falls through to the trader
+    // policy below (aiIsTrader treats guildmaster as a trader). Never recurses inside playouts.
+    if(p.ai.tier==='guildmaster'&&!aiSimulating){
+      const opts=aiGmOptions(p);
+      if(opts&&opts.length)return aiMC(p,opts);
+    }
     switch(UI.sub){
       case 'move':return aiMove(p);
       case 'line':return aiLine(p);
@@ -1155,6 +1265,7 @@ function aiStep(){
 // The scheduler: one paced step per tick while it is an AI's turn; 'instant' resolves all
 // consecutive AI turns synchronously (render suppressed, one repaint at the end).
 function maybeRunAI(){
+  if(aiSimulating)return;   // playouts must never schedule real-game ticks
   aiCancel();
   if(!aiTurn()||aiLoopActive)return;
   if(AI_DELAYS[aiSpeed()]===0){

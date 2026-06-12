@@ -29,6 +29,15 @@ aiSpeedButtons();aiSetSpeed('slow');aiSetSpeed('normal');
   if(S.turn<5)throw new Error('suspiciously short game at '+n+'p');
   console.log('render smoke '+n+'p OK — rounds '+S.turn+', sailed '+S.sailed+'/'+S.sailedCap);
 });
+// 3b) a guildmaster mini-game through the real render layer (tiny Monte Carlo budget)
+GUILD_MS=10;GUILD_MIN=1;
+S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;
+S.players[0].ai={tier:'guildmaster',persona:null};
+S.players[1].ai={tier:'trader',persona:'volume'};
+render();
+var gguard=0;
+while(!S.over){aiStep();render();if(++gguard>100000)throw new Error('guard tripped in GM game');}
+console.log('render smoke guildmaster OK — rounds '+S.turn);
 // 4) the instant-speed driver path (synchronous whole-game loop with render swap/restore)
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];
 S.players.forEach(function(p){p.ai={tier:'journeyman',persona:null};});
