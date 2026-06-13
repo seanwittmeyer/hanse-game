@@ -67,7 +67,7 @@ A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATU
 
 *Gruit is the cheap, fast workhorse — it keeps your goods flowing (its Source action) and reaches Bruges, but never makes prestige. The export casks are scarce, slow, and the key to the rich destinations — the Leffe/Westvleteren line drawn in the components.*
 
-### B. Ship tiles — NEUTRAL, destination-bound shared hulls (the ship deck, ~14 tiles ⚙ — v0.11 Batch B)
+### B. Ship tiles — NEUTRAL, destination-bound shared hulls (the ship deck, ~20 tiles ⚙ — v0.11)
 **Nobody owns a ship.** Each tile is **printed** with its hull and **destination** (inheriting that destination's quality minimum). A shuffled **ship deck** sits by the Market with a **face-up display of 3 ⚙** (refilled from the deck as taken); **2 more are dealt to slots at setup** (the warm start). **Commission** (Market, `2 G` ⚙): place **any one of the 3** face-up ships on an open slot **and free-load one of your Ready casks** (slot *or* vessel) aboard — the commissioner's berth. **Load your own casks only.** **The destination's immediate benefit is paid the moment a cask is LOADED** (`v0.11.2`): **Bruges/Bergen → 2 goods · London/Novgorod → an Upgrade · Hall → none**. The cask's **points** (value ★ + majority) seal only on **delivery** (when the hull sails). **Filling earns no bonus**; any player with a cask aboard may **launch it early**. The voyage **advances the Sailed-Ships marker**, and the **hull returns to the bottom of the deck**. *(The old "ship a rival's cask" rule is cut — v0.11.)*
 
 | Ship | Capacity | Commission ⚙ | In deck ⚙ |
@@ -207,7 +207,7 @@ Symmetric for all players (except seat compensation, below). The stations are th
 | Family | Count ⚙ | Unique designs |
 |---|---|---|
 | A Casks | 60 | 5 types × actions |
-| B Ships (the deck) | ~14 | 2 (Cog · Hulk) × destinations printed |
+| B Ships (the deck) | ~20 | 2 (Cog · Hulk) × destinations printed |
 | C Neutral buildings | 6 in box (2–3 in play) | 6 |
 | D Recipes (cards) | 20 (4 exports × 1/player) | 4 (+2 printed starts) |
 | E Upgrades (Rooms + Modifiers) | 26 (Extra Vessel ×6, others ×2) | 11 |

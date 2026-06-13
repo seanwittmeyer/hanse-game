@@ -327,10 +327,14 @@ const SHIP_CAP={cog:2,hulk:3};
 const SHIP_NAME={cog:'Cog',hulk:'Hulk'};
 const COMMISSION_COST={g:2};   // ⚙ flat — the face-up tile decides hull & destination
 const SHIP_DISPLAY=3;          // ⚙ face-up ship-market size — pick from this many (avoids a single bad-destination tile stalling the yard)
-const SHIP_DECK_MIX=[          // ⚙ 14 hulls; every destination (incl. the Hall) appears in the deck
-  ['cog','bruges'],['cog','bruges'],['cog','london'],['cog','london'],['cog','bergen'],
-  ['cog','bergen'],['cog','novgorod'],['cog','hall'],
-  ['hulk','bruges'],['hulk','london'],['hulk','bergen'],['hulk','novgorod'],['hulk','novgorod'],['hulk','hall'],
+const SHIP_DECK_MIX=[          // ⚙ 20 hulls (v0.11.3, up from 14) — enlarged so the 4–5p clock rarely
+  // recycles (less deterministic); recycling kept as a safety. Per dest: Bruges 4 · London 4 · Bergen 4
+  // · Novgorod 5 (premium, hard gate) · Hall 3 (~15%). 11 Cogs / 9 Hulks.
+  ['cog','bruges'],['cog','bruges'],['cog','bruges'],['hulk','bruges'],
+  ['cog','london'],['cog','london'],['hulk','london'],['hulk','london'],
+  ['cog','bergen'],['cog','bergen'],['hulk','bergen'],['hulk','bergen'],
+  ['cog','novgorod'],['cog','novgorod'],['hulk','novgorod'],['hulk','novgorod'],['hulk','novgorod'],
+  ['cog','hall'],['cog','hall'],['hulk','hall'],
 ];
 const CHARTER_COST={g:2};   // legacy floor fare (kept for the headless harness; use charterCost())
 // ⚙ A2′ (v0.11, supersedes the per-player escalation): the charter fare is a SHARED MARKET PRICE
@@ -440,7 +444,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v33'; // v0.11.2 ⚙: ship economy v2 — benefit-on-load (not on sail), commissioner's free load, no fill fee, merchant goal = commissioning; ★ for points; bump discards stale state
+const KEY='hanse-hotseat-v34'; // v0.11.3 ⚙: ship deck enlarged 14→20 hulls (less deterministic at 4–5p; recycling kept); bump discards stale state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in

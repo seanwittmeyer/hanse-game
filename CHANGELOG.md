@@ -6,6 +6,11 @@ Compact version history. The **full rationale ("the why")** lives in `DESIGN.md`
 
 ---
 
+## v0.11.3 — ship deck 14 → 20 hulls (2026-06-13)
+The 14-tile deck must recycle at 4–5p (clocks 15/19), which read as deterministic. Enlarged to **20 ⚙** (Bruges/London/Bergen 4 · Novgorod 5 · Hall 3; 11 Cog/9 Hulk), recycling kept as a safety (`KEY → v34`). Verified: sim 500 clean 2–5p (pace in band), persona balance held (prestige healthy), ladder PASS (66.5/67.0 + GM 97.5%). `DESIGN.md` §21 v0.11.3.
+
+---
+
 ## v0.11.2 — ship economy v2: benefit-on-load · commissioner's berth · no fill fee (2026-06-13)
 A coherent retiming of the ship economy from designer table-feel notes (`KEY → v33`; full rationale in `DESIGN.md` §21 v0.11.2). The old "resolve every cask's benefit when the hull sails" was messy on the table; this fixes it and answers the prisoner's dilemma.
 - **Benefit-on-load, points-on-delivery.** The destination's immediate benefit (Bruges/Bergen → 2 goods · London/Novgorod → an Upgrade · Hall → none) is paid **when a cask is LOADED** (one at a time — clean); the cask's **points** (value ★ + majorities) seal only on **delivery** (when the ship sails). A benefit kept on a hull that never sails earns no points.
