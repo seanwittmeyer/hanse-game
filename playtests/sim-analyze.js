@@ -56,6 +56,8 @@ var _commLoad=commLoad;      commLoad=function(ref){if(REC())EV('load',{src:'com
 var _reachPick=reachPick;    reachPick=function(k){if(REC())EV('pres',{dest:k});return _reachPick(k);};
 var _drawPick=drawPick;      drawPick=function(g){if(REC())EV('goaldraw',{goal:g});return _drawPick(g);};
 var _almsPick=almsPick;      almsPick=function(k){if(REC())EV('pres',{dest:k});return _almsPick(k);};
+var _pickCaskAct=pickCaskAct; pickCaskAct=function(q){var a=_pickCaskAct(q);if(REC())EV('caskdraw',{act:a,q:q});return a;};
+var _enterCaskAct=enterCaskAct; enterCaskAct=function(slot,t){if(REC())EV('caskfire',{act:caskAct(t)});return _enterCaskAct(slot,t);};
 
 function mkAI(t){
   if(t==='trader')return {tier:'trader',persona:['volume','prestige','majority'][Math.floor(Math.random()*3)]};
@@ -259,6 +261,22 @@ console.log('\n==== LOAD SOURCE (share of cask-onto-ship loads by method; commis
   const play = all - tot.commission;   // loads "during play" (excludes the commission free berth)
   console.log('   of ALL loads:   ' + SRC.map(k => `${k} ${pct(tot[k], all)}`).join('   '));
   console.log('   LINE-FIRE share of in-play loads (Harbor/linefire/crane/l3cask/wild): ' + pct(tot.linefire, play));
+}
+
+// ---- 4d. VARIABLE CASK ACTIONS: which of the 7-action pool gets drawn vs actually fired ----
+// (the design question: is the pool too rich? drawn = supply; fired = the bot chose to use it;
+//  fire/draw = how often a given action is worth firing. Low-fire actions are pool dead-weight.)
+console.log('\n==== CASK ACTIONS (drawn = dealt at brew · fired = bot chose to activate it · fire/draw = utility) ====');
+{
+  const POOL = ['source','age','load','reach','convert','draw','wild'];
+  const drawn = {}, fired = {}; POOL.forEach(k => { drawn[k] = 0; fired[k] = 0; });
+  let totDraw = 0, totFire = 0;
+  GAMES.forEach(g => g.ev.forEach(e => {
+    if (e.t === 'caskdraw') { drawn[e.act] = (drawn[e.act]||0)+1; totDraw++; }
+    else if (e.t === 'caskfire') { fired[e.act] = (fired[e.act]||0)+1; totFire++; }
+  }));
+  console.log(`   total drawn ${totDraw}  ·  total fired ${totFire}  ·  overall fire rate ${pct(totFire,totDraw)}`);
+  POOL.forEach(k => console.log(`   ${k.padEnd(8)} drawn ${pct(drawn[k],totDraw).padStart(6)} (${String(drawn[k]).padStart(5)})   fired ${pct(fired[k],totFire).padStart(6)} (${String(fired[k]).padStart(5)})   fire/draw ${pct(fired[k],drawn[k]).padStart(6)}`));
 }
 
 // ---- 5. WIN CORRELATES ----
