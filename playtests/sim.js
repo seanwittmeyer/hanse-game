@@ -128,9 +128,9 @@ function botHarbor(p){
   var canCharter=canPay(p,charterCost(p))&&charterCasks(p).length>0;
   var jammed=emptySlots().length===0;
   var noHull=myShips(p).length===0 && !canPay(p,{g:2});
-  if(canCharter && (jammed || S.ending || noHull)){__charters++;harborCharter();return;}
   var launch=myShips(p).filter(function(s){return S.slots[s].load.some(function(L){return L.owner===p.id;});});
-  if(launch.length&&(S.ending||emptySlots().length===0)){harborLaunch(launch[0]);return;}
+  if(launch.length){harborLaunch(launch[0]);return;}   // free delivery beats a paid charter
+  if(canCharter && (jammed || S.ending || noHull)){__charters++;harborCharter();return;}
   cellDone();
 }
 // Bind a new ship to the best-value destination its CURRENT casks can actually fill.

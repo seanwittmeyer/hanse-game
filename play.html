@@ -1322,12 +1322,15 @@ function aiHarbor(p){
   const canLoad=myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs)));
   if(canLoad){harborLoad();return;}
   // Charter only as a genuine relief valve: slots jammed, the end-game rush, or no hull & can't build.
+  // prefer EARLY-LAUNCHING a ship that carries your cask (a free delivery + frees the slot) over a
+  // PAID charter — same clock cost, but the launch costs no fare and seals your points (correct play
+  // the no-fill-fee economy doesn't signal). If a ship were fillable, canLoad above already fired.
+  const launch=myShips(p).filter(s=>S.slots[s].load.some(L=>L.owner===p.id));
+  if(launch.length){harborLaunch(launch[0]);return;}
   const canCh=canPay(p,charterCost(p))&&charterCasks(p).length>0;
   const jammed=emptySlots().length===0;
   const noHull=myShips(p).length===0&&!canPay(p,{g:2});
   if(canCh&&(jammed||S.ending||noHull)){harborCharter();return;}
-  const launch=myShips(p).filter(s=>S.slots[s].load.some(L=>L.owner===p.id));
-  if(launch.length&&(S.ending||jammed)){harborLaunch(launch[0]);return;}
   cellDone();
 }
 function aiCellAct(p){const role=CELLROLE[UI.cell];if(role==='Source')aiMarket(p);else if(role==='Ship')aiHarbor(p);else cellDone();}

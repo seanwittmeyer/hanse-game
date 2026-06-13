@@ -234,6 +234,20 @@ DESTS.forEach(d => {
   console.log(`   ${d.padEnd(9)} ${String(tot).padStart(6)} casks   early ${pct(e1, tot).padStart(6)}   mid ${pct(e2, tot).padStart(6)}   late ${pct(e3, tot).padStart(6)}`);
 });
 
+// ---- 4b. DELIVERY METHOD: casks delivered by HULL (a ship sailing) vs CHARTER ----
+console.log('\n==== DELIVERY METHOD (casks delivered by hull vs charter; per count) ====');
+COUNTS.forEach(np => {
+  let hull = 0, charter = 0, sails = 0;
+  GAMES.filter(g => g.out.n === np).forEach(g => g.ev.forEach(e => {
+    if (e.t === 'sail') { hull += (e.ncask || 0); sails++; }
+    else if (e.t === 'charter') charter++;
+  }));
+  let comm = 0, ng = 0; GAMES.filter(g=>g.out.n===np).forEach(g=>{ng++;g.ev.forEach(e=>{if(e.t==='shipbuild')comm++;});});
+  const tot = hull + charter;
+  console.log(`   ${np}p   hull ${String(hull).padStart(6)} (${pct(hull, tot)})   charter ${String(charter).padStart(6)} (${pct(charter, tot)})   ` +
+    `avg casks/sail ${fmt(hull / Math.max(1, sails))}   commissions/game ${fmt(comm/Math.max(1,ng))}   total deliveries ${tot}`);
+});
+
 // ---- 5. WIN CORRELATES ----
 console.log('\n==== WIN CORRELATES (avg, winners vs losers) ====');
 const C = [
