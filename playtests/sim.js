@@ -31,8 +31,9 @@ function needShip(p){
   var bq=qs.length?Math.max.apply(null,qs):achQ(p);
   return !myShips(p).some(function(sid){var t=S.slots[sid];return t.load.length<effCap(t)&&bq>=DEST[t.dest].gate;});
 }
-// This game's dealt export beers the bot will climb (skips the Q5 cellar beer — a known greedy blind spot).
-function buyableExports(p){return (S.exports||[]).filter(function(s){return !p.recipes.includes(s)&&!STYLES[s].cellar&&canPay(p,RECIPE_BUY[s]);});}
+// This game's dealt export beers the bot will climb (skips the Q5 cellar beer — a known greedy blind spot;
+// a CELLARMASTER seat (__cellar) INCLUDES it, to diagnose whether a well-played Q5 path is competitive).
+function buyableExports(p){return (S.exports||[]).filter(function(s){return !p.recipes.includes(s)&&(p.__cellar||!STYLES[s].cellar)&&canPay(p,RECIPE_BUY[s]);});}
 function wantRecipe(p){return buyableExports(p).length>0;}
 function pickUpgrade(list){var pref=['vessel','cellar','quay','cooperage','royal','staple','guild','warehouse','granary','hopgarden','burgher'];
   for(var i=0;i<pref.length;i++)if(list.indexOf(pref[i])>=0)return pref[i];return list[0];}
@@ -52,6 +53,13 @@ function persona(p){return p.__persona||'volume';}
 function bestKon(elig){var k=elig.filter(function(d){return DEST[d].kontor;});
   k.sort(function(a,b){return DEST[b].value-DEST[a].value;});return k[0];}
 function personaDest(p,q){
+  if(p.__cellar){                                   // CELLARMASTER: earn the Aging Cellar early (London/Novgorod),
+    var ce=DESTS.filter(function(d){return q>=DEST[d].gate;});   // then ship the high end to the Hall (prestige + the Flight's top tiers)
+    if(q>=4&&ce.indexOf('hall')>=0)return 'hall';
+    if(q>=3&&ce.indexOf('novgorod')>=0)return 'novgorod';
+    if(q>=2&&ce.indexOf('london')>=0)return 'london';
+    return ce[0]||'bruges';
+  }
   if(!__PERSON||persona(p)==='volume')return destFor(p,q,true);   // baseline-preserving
   var elig=DESTS.filter(function(d){return q>=DEST[d].gate;});
   if(persona(p)==='prestige')return (elig.indexOf('hall')>=0)?'hall':(bestKon(elig)||elig[0]);
@@ -164,7 +172,9 @@ function botLoad(p){var L=UI.load;
   loadOnto(ships[0]);
 }
 function botDeploy(){var es=emptySlots();if(!es.length){deploySkipAll();return;}deployTo(es[0].id);}
-function botBenefit(){var lp=S.players[UI.pendingBenefits[0].pid];var g=displayGrantable(lp);if(!g.length){UI.pendingBenefits.shift();afterSail(UI.benefit.returnTo);return;}benefitPick(pickUpgrade(g));}
+function botBenefit(){var lp=S.players[UI.pendingBenefits[0].pid];var g=displayGrantable(lp);if(!g.length){UI.pendingBenefits.shift();afterSail(UI.benefit.returnTo);return;}
+  var pick=(lp.__cellar&&!hasUpgrade(lp,'cellar')&&g.indexOf('cellar')>=0)?'cellar':pickUpgrade(g);   // cellarmaster grabs the Aging Cellar first
+  benefitPick(pick);}
 
 function botActOnce(){var p=cur();var U=UI.sub;
   switch(U){
@@ -203,6 +213,9 @@ function runGame(n){
   if(__PERSON){var pool=shuffle(['volume','prestige','majority']);var base=[];
     for(var i=0;i<n;i++)base.push(pool[i%3]);   // shuffled pool → all 3 leans appear even at 2p (random 2-of-3)
     shuffle(base);S.players.forEach(function(pl,seat){pl.__persona=base[seat];if(pl.__persona==='majority')pl.__majTarget='bergen';});}
+  // CELLARMASTER diagnostic: mark __CELLAR random seats as Q5-committed (decoupled from seat order)
+  if(typeof __CELLAR!=='undefined'&&__CELLAR>0){var cs2=shuffle(S.players.map(function(_,i){return i;}));
+    for(var ci=0;ci<Math.min(__CELLAR,n);ci++)S.players[cs2[ci]].__cellar=true;}
   __buys=0;__charters=0;var guard=0;
   while(true){
     botActOnce();
@@ -223,7 +236,11 @@ function runGame(n){
   // all-deliveries destination tally (to confirm prestige/majority leans are actually exercised)
   var allByDest={bruges:0,london:0,bergen:0,novgorod:0,hall:0};
   S.players.forEach(function(p){p.delivered.forEach(function(d){allByDest[d.dest]++;});});
-  var playerStats=S.players.map(function(p,i){return {persona:persona(p),total:scores[i].total,won:(i===win)};});
+  var playerStats=S.players.map(function(p,i){var ts={};p.delivered.forEach(function(d){ts[d.q]=1;});
+    return {persona:persona(p),cellar:!!p.__cellar,total:scores[i].total,won:(i===win),
+      q5:p.delivered.filter(function(d){return d.q===5;}).length,
+      q4plus:p.delivered.filter(function(d){return d.q>=4;}).length,
+      tiers:Object.keys(ts).length,flight:scores[i].flight,master:scores[i].master};});
   return {
     n:n, round:S.turn, sailed:S.sailed, sailedCap:S.sailedCap,
     trigger:(S.sailed>=S.sailedCap?'clock':(S.turn>=MAX_ROUND?'ceiling':'other')),
@@ -290,6 +307,7 @@ const SC = SCENARIOS[SCEN] || SCENARIOS.base;
 const __SC = (SC.g!=null || SC.h!=null || SC.comp) ? { g:SC.g, h:SC.h, comp:SC.comp } : null;
 // PERSONAS=1 makes each bot COMMIT to a lean (volume/prestige/majority) so the Hall & Bergen get exercised.
 const PERSONAS = process.env.PERSONAS === '1';
+const CELLAR = parseInt(process.env.CELLAR || '0', 10);   // CELLARMASTER diagnostic: N Q5-committed seats per game
 // TUNE: mutate DEST properties (delivery value / majority bonus / gate) to test kontore re-stats without
 // touching play.html. Identity goal: 4 distinct kontore — Bruges (liquidity), London (mid-high value),
 // Bergen (majority king), Novgorod (premium) — + the Hall (prestige).
@@ -313,7 +331,7 @@ const ctx = {
   parseInt, parseFloat, isNaN, alert: noop,
   setTimeout: noop, clearTimeout: noop,
   lucide: { createIcons: noop },
-  __N: N, __COUNTS: COUNTS, __SC, __PERSONAS: PERSONAS, __TUNE,
+  __N: N, __COUNTS: COUNTS, __SC, __PERSONAS: PERSONAS, __CELLAR: CELLAR, __TUNE,
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;
@@ -383,6 +401,14 @@ function summarize(n, arr) {
     ok.forEach(r => r.playerStats.forEach(s => { P[s.persona].wins += s.won?1:0; P[s.persona].n++; P[s.persona].sum += s.total; }));
     console.log(`persona win-rate (per-capita; fair = ${fmt(100/n)}%):`);
     console.log(`   ` + ['volume','prestige','majority'].map(k => `${k} ${P[k].n?pct(P[k].wins,P[k].n):'—'} (score ${P[k].n?fmt(P[k].sum/P[k].n):'—'})`).join('   '));
+  }
+  // CELLARMASTER diagnostic: is a well-played Q5/range strategy competitive? (tool-vs-game fork)
+  const cm = { wins:0, n:0, sum:0, q5:0, q4:0, tiers:0, flight:0, master:0 }, bl = { wins:0, n:0, sum:0, q5:0, q4:0, tiers:0, flight:0 };
+  ok.forEach(r => r.playerStats.forEach(s => { const g = s.cellar ? cm : bl; g.wins += s.won?1:0; g.n++; g.sum += s.total; g.q5 += s.q5; g.q4 += s.q4plus; g.tiers += s.tiers; g.flight += s.flight||0; if (s.cellar) cm.master += s.master||0; }));
+  if (cm.n) {
+    console.log(`CELLARMASTER (Q5-committed) vs baseline — fair win = ${fmt(100/n)}%:`);
+    console.log(`   cellarmaster: win ${pct(cm.wins,cm.n)}  score ${fmt(cm.sum/cm.n)}  ·  Q5 deliv/game ${fmt(cm.q5/cm.n)}  Q4+ ${fmt(cm.q4/cm.n)}  tiers ${fmt(cm.tiers/cm.n)}  flight★ ${fmt(cm.flight/cm.n)}  master★ ${fmt(cm.master/cm.n)}`);
+    console.log(`   baseline:     win ${pct(bl.wins,bl.n)}  score ${fmt(bl.sum/bl.n)}  ·  Q5 deliv/game ${fmt(bl.q5/bl.n)}  Q4+ ${fmt(bl.q4/bl.n)}  tiers ${fmt(bl.tiers/bl.n)}  flight★ ${fmt(bl.flight/bl.n)}`);
   }
 }
 
