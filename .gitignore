@@ -1,2 +1,5 @@
 playtests/analysis/events.jsonl
 playtests/*.err
+playtests/analysis/*shard*.jsonl
+playtests/gm*-shard*.txt
+playtests/gm*-shard*.err

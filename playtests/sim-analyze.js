@@ -128,7 +128,7 @@ const GAMES = ctx.__AN;
 if (SAVE) {
   const dir = path.join(__dirname, 'analysis');
   fs.mkdirSync(dir, { recursive: true });
-  const f = path.join(dir, 'events.jsonl');
+  const f = path.join(dir, process.env.EVENTS_OUT || 'events.jsonl');   // EVENTS_OUT lets concurrent shards write distinct files
   const ws = fs.createWriteStream(f);
   GAMES.forEach((g, gi) => {
     ws.write(JSON.stringify({ game: gi, out: g.out }) + '\n');
