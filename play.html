@@ -1243,11 +1243,14 @@ function aiNeedShip(p){return aiCommissionIdx(p)>=0;}   // for the Source-cell h
 // Trader climbs to the cellar-gated Q5 once it holds the Aging Cellar; the lower tiers keep the
 // documented greedy blind spot (never the cellar beer) on purpose.
 function aiBuyableExports(p){return (S.exports||[]).filter(s=>!p.recipes.includes(s)
-  &&(aiIsTrader(p)?(!STYLES[s].cellar||hasUpgrade(p,'cellar')):!STYLES[s].cellar)
+  // completion-biased rollout (aiSimulating): the GM's playouts may climb to Bock (if cellar-equipped),
+  // so the Monte Carlo can actually PRICE the Q5/full-flight payoff — otherwise the greedy rollout never
+  // makes a Bock and the deep path is invisible (the real journeyman tier stays cellar-blind).
+  &&((aiIsTrader(p)||aiSimulating)?(!STYLES[s].cellar||hasUpgrade(p,'cellar')):!STYLES[s].cellar)
   &&canPay(p,RECIPE_BUY[s]));}
 function aiPickUpgrade(p,list){
   if(aiIsApp(p))return aiRandOf(list);
-  if(aiIsTrader(p)&&(S.exports||[]).includes('bock')&&!hasUpgrade(p,'cellar')&&list.includes('cellar'))return 'cellar';
+  if((aiIsTrader(p)||aiSimulating)&&(S.exports||[]).includes('bock')&&!hasUpgrade(p,'cellar')&&list.includes('cellar'))return 'cellar';  // rollout grabs the Aging Cellar to enable the Bock climb
   const pref=['vessel','cellar','quay','cooperage','royal','staple','guild','warehouse','granary','hopgarden','burgher'];
   for(const k of pref)if(list.includes(k))return k;return list[0];}
 // Majority SWING for one more cask of presence at kontor k: my award delta PLUS what rivals lose.
@@ -1278,6 +1281,10 @@ function aiGoalGain(p,style,q,d){
 function aiDest(p,q,style){
   const elig=DESTS.filter(d=>q>=DEST[d].gate);
   if(aiNoisy(p))return aiRandOf(elig);
+  // completion-biased rollout: realize the DEEP payoff so the GM can price it — ship the top tiers to the
+  // Hall (prestige + the Flight's top tier + the Masterpiece). Only bites once a player has climbed (q>=4),
+  // so it credits deep play that's actually set up rather than force-feeding prestige into volume games.
+  if(aiSimulating&&q>=4&&elig.includes('hall')&&Math.random()<0.6)return 'hall';
   if(!aiIsTrader(p)){
     if(!aiIsApp(p)&&q>=4&&Math.random()<0.3&&elig.includes('hall'))return 'hall';
     const kon=elig.filter(d=>DEST[d].kontor);const pool=kon.length?kon:elig;
