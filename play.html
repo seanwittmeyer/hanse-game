@@ -300,7 +300,7 @@ const CASK_ACT_ICON={source:'coins',age:'hourglass',load:'package-plus',reach:'m
 function pickCaskAct(q,style){if(style&&STYLES[style]&&STYLES[style].pin)return STYLES[style].act;const pool=CASK_ACT_POOL.filter(a=>a!=='wild'||q>=4);return pool[Math.floor(Math.random()*pool.length)];}
 function caskAct(t){return t.act||STYLES[t.style].act;}   // t.act = the drawn action (fallback: the old fixed one)
 // ⚙ the four stations' FULL action sets, shown as icons on the board (no hover needed)
-const STATION_ACTS={Market:['coins','scroll-text','sailboat','wrench'],Brewhouse:['flask-conical'],Cellar:['hourglass'],Harbor:['package-plus','ticket','sailboat']};
+const STATION_ACTS={Market:['coins','scroll-text','sailboat'],Brewhouse:['flask-conical'],Cellar:['hourglass'],Harbor:['package-plus','ticket','sailboat']};   // Market: goods · recipe · commission (no wrench — upgrades are earned by delivery, not bought, v0.12.3)
 
 // ---- DESTINATIONS (4 kontore + the Hall) — all open from start ----
 // maj is a TIERED majority payout [1st,2nd,3rd] (Lacerda-style); 2-player games skip 2nd (winner-take-all).
