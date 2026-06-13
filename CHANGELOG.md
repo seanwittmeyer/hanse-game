@@ -6,6 +6,14 @@ Compact version history. The **full rationale ("the why")** lives in `DESIGN.md`
 
 ---
 
+## v0.13 — The Flight + Masterpiece + majority cooldown (2026-06-13)
+Making the **quality climb worth it** (the data: even the oracle never reaches Q5, Q4 = 7% of brews), and cooling the slightly-hot majorities — a coordinated batch (`KEY → v39`).
+- **The Flight ⚙** — an end-game bonus for your **range**: distinct quality tiers delivered, scored **(tiers − 1)² with a min of 3** (3 → 4 · 4 → 9 · 5 → 16). Two tiers (free Gruit + Hopped) score 0, so it's a true climber's reward; the full flight needs a Bock. The **quality pole** of the reach-vs-quality lean — *"not how high, but how complete the range of the house."* (Inspired by the Orléans/Lisboa set-and-value-scoring the designer admires.)
+- **The Masterpiece ⚙** — first delivery of the game's top export tier (Q5 if Bock dealt, else Q4) → one-time **+3 ★ + 3 goods**, the magnum-opus moment that pays the climb's tempo back.
+- **Majority cooldown ⚙** — the non-Q3 kontore shaved −1/tier: **Bruges 5/3/0 → 4/2/0 · London 6/4/2 → 5/3/1 · Bergen 10/6/3 → 9/5/2**; **Novgorod 8/5/2 unchanged** (the hard Q3 reach keeps its majority). Cools the 2p/3p winner-take-all hotness; Bergen stays the anchor.
+- **Housekeeping** — repo re-scoped to **2–4 players** (5p runs but isn't balance-tuned). Analysis harness gained Flight metrics (distinct-tiers distribution, full-flight rate, multi-set potential, win-correlates) and `analysis-combine.js` now reports per player-count.
+- *Pitch 3 (quality-weighted majorities) deferred — kept the system stable per the design call.*
+
 ## v0.12.3 — Hall ladder printed · upgrades earned-only · clock re-centered (2026-06-13)
 Three coordinated clarity/economy moves (`KEY → v38`):
 - **Hall = a printed point ladder** ⚙ — **5 / 7 / 10 / 12 by quality** (Q2/Q3/Q4/Q5), replacing the `Q×2.5`-floored *formula*. Identical values, **zero balance change** — pure "no in-game math, read it off the tile."

@@ -353,9 +353,9 @@ const RECIPES=[  // EXPORT recipe cards only — Gruit & Hopped are printed on t
 ];
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'},{nm:'Violet',c:'#5b3a8e'}];
 const DESTS=[
-  {nm:'Bruges',  kc:'#274b5c', req:1, val:'+1', maj:[5,3,0],  role:'The Hub — takes any beer (volume on-ramp)', ben:'gain 2 goods'},
-  {nm:'London',  kc:'#b8860b', req:2, val:'+2', maj:[6,4,2],  role:'The Steelyard — the engine destination',    ben:'take 1 Upgrade from the display'},
-  {nm:'Bergen',  kc:'#4a6b3a', req:2, val:'+2', maj:[10,6,3], role:'Bryggen — the rich-majority anchor',        ben:'gain 2 goods (token — the majority is the draw)'},
+  {nm:'Bruges',  kc:'#274b5c', req:1, val:'+1', maj:[4,2,0],  role:'The Hub — takes any beer (volume on-ramp)', ben:'gain 2 goods'},
+  {nm:'London',  kc:'#b8860b', req:2, val:'+2', maj:[5,3,1],  role:'The Steelyard — the engine destination',    ben:'take 1 Upgrade from the display'},
+  {nm:'Bergen',  kc:'#4a6b3a', req:2, val:'+2', maj:[9,5,2], role:'Bryggen — the rich-majority anchor',        ben:'gain 2 goods (token — the majority is the draw)'},
   {nm:'Novgorod',kc:'#7c2128', req:3, val:'+4', maj:[8,5,2],  role:'The Long Haul — premium only, top value',   ben:'take 1 Upgrade from the display'},
 ];
 const HALL={nm:'The Hall', kc:'#5b3a8e', req:2, role:'Prestige — out of commerce (scarcity)', ben:'banks prestige by quality (a printed ladder)'};
@@ -445,7 +445,8 @@ function pboard(p){
         +'<div class="pb-sub" style="margin-top:.02in">Warm start: a Ready Gruit sits in Vessel 1 — deploy it to a slot on turn 1. (A neutral Hulk → Bruges is on a slot for the table.) Seats after the first start +1 '+LU('wheat','g ic')+'.</div></div>'
       +'<div class="pb-col right">'
         +'<div><div class="pb-sect">'+LU('wrench')+'Upgrades<span class="hint">Rooms &amp; Modifiers · earned only by delivering to London / Novgorod</span></div><div class="strip">'+ups+'</div></div>'
-        +'<div><div class="pb-sect">'+LU('target')+'Goals<span class="hint">hold 3 · best 2 score</span></div><div class="strip">'+goals+'</div></div></div>'
+        +'<div><div class="pb-sect">'+LU('target')+'Goals<span class="hint">hold 3 · best 2 score</span></div><div class="strip">'+goals+'</div></div>'
+        +'<div class="pb-sub" style="margin-top:.04in"><b>The Flight</b> (v0.13): score your <b>range</b> — distinct quality tiers delivered, (tiers−1)², min 3 → <b>3:4 · 4:9 · 5:16</b>. <b>Masterpiece</b>: first delivery of the top tier (Bock, else Q4) → +3 '+LU('star')+' +3 '+LU('package')+'.</div></div>'
     +'</div>'
     +'<div class="tuck"><div class="tuck-h">'+LU('scroll-text')+'Recipe Cards<span class="sm">slide cards up into these — the types you may brew (strip shows the BREW cost)</span></div><div class="tuckrow">'+tuck+'</div></div>'
   +'</div>';}

@@ -1,64 +1,73 @@
-// Combine multiple sim-analyze event-shard files (events written with EVENTS_OUT) into one
-// headline-findings report. Lets us PARALLELIZE the slow Guildmaster oracle: run N short shards
-// concurrently (each dodges the long-run GM degradation), then aggregate here.
+// Combine multiple sim-analyze event-shard files (EVENTS_OUT) into a per-player-count findings report.
+// Built for the parallel oracle: run many short shards concurrently, then aggregate here.
+// Reports core health + a dedicated FLIGHT/Masterpiece block (v0.13) to evaluate the range strategy.
 // Usage: node playtests/analysis-combine.js shard1.jsonl shard2.jsonl ...
 'use strict';
 const fs = require('fs');
 const path = require('path');
 const files = process.argv.slice(2).map(f => path.isAbsolute(f) ? f : path.join(process.cwd(), f));
-
-const POOL = ['source', 'age', 'load', 'reach', 'convert', 'draw', 'wild'];
 const DESTS = ['bruges', 'london', 'bergen', 'novgorod', 'hall'];
-let games = 0, rounds = 0, winScore = 0, playersTotal = 0;
-let hull = 0, charter = 0, sails = 0, comm = 0, rivalload = 0, brews = 0, q4 = 0;
-const deliv = {}; let brEarly = 0, brTot = 0;
-const drawn = {}, fired = {}; let totDraw = 0, totFire = 0;
-POOL.forEach(k => { drawn[k] = 0; fired[k] = 0; });
-const players = [];           // every player-row across all games
-const q4set = new Set();      // (shard:game:pid) that brewed a Q4+ cask
+
+// gather rows, keyed by player count
+const byCount = {};   // n -> {games, rounds, winScore, players:[], hull, charter, sails, comm, brewQ{}, brews}
+function bucket(n) { return byCount[n] = byCount[n] || { games: 0, rounds: 0, winScore: 0, players: [], hull: 0, charter: 0, sails: 0, comm: 0, brewQ: {}, brews: 0, deliv: {} }; }
 
 files.forEach((f, fi) => {
-  const lines = fs.readFileSync(f, 'utf8').split('\n').filter(Boolean);
-  lines.forEach(l => {
+  let curN = null;
+  fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).forEach(l => {
     const e = JSON.parse(l);
-    if (e.out) {                              // game header row
-      games++; rounds += e.out.rounds;
-      const w = e.out.players.find(p => p.winner); if (w) winScore += w.total;
-      e.out.players.forEach(p => { players.push(p); playersTotal++; });
+    if (e.out) {                       // game header
+      const b = bucket(e.out.n); curN = e.out.n;
+      b.games++; b.rounds += e.out.rounds;
+      const w = e.out.players.find(p => p.winner); if (w) b.winScore += w.total;
+      e.out.players.forEach(p => b.players.push(p));
       return;
     }
-    switch (e.t) {                            // event row
-      case 'sail': hull += (e.ncask || 0); sails++; break;
-      case 'charter': charter++; break;
-      case 'shipbuild': comm++; break;
-      case 'deliver': deliv[e.dest] = (deliv[e.dest] || 0) + 1;
-        if (e.dest === 'bruges') { brTot++; if (e.r <= 5) brEarly++; } break;
-      case 'caskdraw': drawn[e.act] = (drawn[e.act] || 0) + 1; totDraw++; break;
-      case 'caskfire': fired[e.act] = (fired[e.act] || 0) + 1; totFire++; break;
-      case 'brew': brews++; if (e.q >= 4) { q4++; q4set.add(fi + ':' + e.game + ':' + e.pid); } break;
-      case 'rivalload': rivalload++; break;
-    }
+    const b = curN != null ? byCount[curN] : null; if (!b) return;
+    if (e.t === 'sail') { b.hull += (e.ncask || 0); b.sails++; }
+    else if (e.t === 'charter') b.charter++;
+    else if (e.t === 'shipbuild') b.comm++;
+    else if (e.t === 'brew') { b.brewQ[e.q] = (b.brewQ[e.q] || 0) + 1; b.brews++; }
+    else if (e.t === 'deliver') b.deliv[e.dest] = (b.deliv[e.dest] || 0) + 1;
   });
 });
 
 const fmt = (x, d = 1) => (x == null || Number.isNaN(x)) ? '—' : Number(x).toFixed(d);
 const pct = (a, b) => b ? fmt(100 * a / b, 1) + '%' : '—';
 const mean = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : NaN;
-const W = players.filter(p => p.winner), L = players.filter(p => !p.winner);
-const totDeliv = hull + charter;
-const totDelByDest = DESTS.reduce((a, d) => a + (deliv[d] || 0), 0);
 
-console.log(`COMBINED ORACLE FINDINGS — ${files.length} shards · ${games} games · ${playersTotal} player-rows`);
-console.log(`avg rounds ${fmt(rounds / games)}   winner avg score ${fmt(winScore / games)}`);
-console.log(`\nDELIVERY METHOD:  hull ${hull} (${pct(hull, totDeliv)})   charter ${charter} (${pct(charter, totDeliv)})   avg casks/sail ${fmt(hull / Math.max(1, sails))}   commissions/game ${fmt(comm / games)}`);
-console.log(`\nDESTINATION SHARE (of ${totDelByDest} delivered casks):`);
-console.log('   ' + DESTS.map(d => `${d.slice(0, 4)} ${pct(deliv[d] || 0, totDelByDest)}`).join('   '));
-console.log(`   Bruges delivered EARLY (rounds 1-5): ${pct(brEarly, brTot)} of its ${brTot} casks`);
-console.log(`\nCASK ACTIONS (drawn vs fired; fire/draw = re-use utility):  overall fire rate ${pct(totFire, totDraw)}`);
-POOL.forEach(k => console.log(`   ${k.padEnd(8)} drawn ${pct(drawn[k], totDraw).padStart(6)}   fired ${pct(fired[k], totFire).padStart(6)}   fire/draw ${pct(fired[k], drawn[k]).padStart(7)}`));
-console.log(`\nQUALITY CLIMB:  Q4+ brews/game ${fmt(q4 / games)}   players who NEVER brew Q4+ ${pct(playersTotal - q4set.size, playersTotal)}`);
-console.log(`\nWIN CORRELATES (winners vs losers):`);
-[['total', p => p.total], ['delivery', p => p.deliv], ['majority', p => p.maj], ['goals', p => p.goals],
- ['casks deliv', p => p.ndeliv], ['distinct dests', p => p.ndest], ['Hall casks', p => p.hall], ['upgrades', p => p.upgrades]]
-  .forEach(([lab, fn]) => { const w = mean(W.map(fn)), l = mean(L.map(fn)); console.log(`   ${lab.padEnd(16)} W ${fmt(w).padStart(6)}  L ${fmt(l).padStart(6)}  (Δ ${(w - l >= 0 ? '+' : '') + fmt(w - l)})`); });
-console.log(`\nrival-loads/game ${fmt(rivalload / games)}`);
+console.log(`COMBINED ORACLE FINDINGS — ${files.length} shards · counts: ${Object.keys(byCount).join('/')}p\n`);
+
+Object.keys(byCount).map(Number).sort((a, b) => a - b).forEach(n => {
+  const b = byCount[n], P = b.players, W = P.filter(p => p.winner), L = P.filter(p => !p.winner);
+  const totDeliv = b.hull + b.charter;
+  console.log(`================  ${n} PLAYERS  (${b.games} games, ${P.length} player-rows)  ================`);
+  console.log(`avg rounds ${fmt(b.rounds / b.games)}   winner avg score ${fmt(b.winScore / b.games)}`);
+  console.log(`DELIVERY:  hull ${pct(b.hull, totDeliv)}  charter ${pct(b.charter, totDeliv)}  casks/sail ${fmt(b.hull / Math.max(1, b.sails))}  commissions/game ${fmt(b.comm / b.games)}`);
+  const dTot = DESTS.reduce((a, d) => a + (b.deliv[d] || 0), 0);
+  console.log(`DEST SHARE:  ` + DESTS.map(d => `${d.slice(0, 4)} ${pct(b.deliv[d] || 0, dTot)}`).join('  '));
+  // quality climb (from brew events) + per-player delivered-tier facts
+  const q4 = (b.brewQ[4] || 0) + (b.brewQ[5] || 0);
+  console.log(`CLIMB:     chosen brews/game ${fmt(b.brews / b.games)}  ·  Q4+ ${pct(q4, b.brews)} of brews (${fmt(q4 / b.games)}/game)  ·  Q5 brews/game ${fmt((b.brewQ[5] || 0) / b.games)}`);
+  // ---- THE FLIGHT ----
+  const tierDist = [0, 0, 0, 0, 0, 0];   // index = distinct tiers (0..5)
+  P.forEach(p => tierDist[p.tiers || 0]++);
+  const fullFlight = P.filter(p => p.tiers >= 5).length, qualFlight = P.filter(p => p.tiers >= 3).length;
+  const mastered = P.filter(p => p.mastered).length;
+  console.log(`FLIGHT:    distinct tiers delivered →  ` + [1, 2, 3, 4, 5].map(t => `${t}:${pct(tierDist[t], P.length)}`).join('  '));
+  console.log(`           qualifying flight (≥3 tiers) ${pct(qualFlight, P.length)}   full flight (5) ${pct(fullFlight, P.length)}   Masterpiece earned ${pct(mastered, P.length)}`);
+  console.log(`           avg Flight ★:  winners ${fmt(mean(W.map(p => p.flight || 0)))}   losers ${fmt(mean(L.map(p => p.flight || 0)))}     avg Master ★: W ${fmt(mean(W.map(p => p.master || 0)))} L ${fmt(mean(L.map(p => p.master || 0)))}`);
+  // win-rate by distinct-tier bucket
+  const wr = {}; [2, 3, 4, 5].forEach(t => { const set = P.filter(p => p.tiers === t); wr[t] = set.length ? pct(set.filter(p => p.winner).length, set.length) : '—'; });
+  console.log(`           win-rate by tiers:  ` + [2, 3, 4, 5].map(t => `${t}-tier ${wr[t]} (n=${P.filter(p => p.tiers === t).length})`).join('   '));
+  // multiple-sets potential: min count across a player's delivered tiers = complete copies of their range
+  const setsOf = p => { const qs = [1, 2, 3, 4, 5].filter(q => (p.delivByQ || {})[q] > 0); return qs.length ? Math.min(...qs.map(q => p.delivByQ[q])) : 0; };
+  const setBuckets = { 1: 0, 2: 0, 3: 0 };
+  P.filter(p => p.tiers >= 3).forEach(p => { const s = setsOf(p); if (s >= 3) setBuckets[3]++; else if (s >= 1) setBuckets[s]++; });
+  const fln = P.filter(p => p.tiers >= 3).length;
+  console.log(`           MULTI-SET potential (≥3-tier players, copies of full range):  1 set ${pct(setBuckets[1], fln)}   2 sets ${pct(setBuckets[2], fln)}   3+ ${pct(setBuckets[3], fln)}`);
+  // win correlates (incl new dimensions)
+  const C = [['total', p => p.total], ['delivery', p => p.deliv], ['majority', p => p.maj], ['goals', p => p.goals], ['flight', p => p.flight || 0], ['master', p => p.master || 0], ['casks', p => p.ndeliv], ['distinct dests', p => p.ndest]];
+  console.log(`WIN CORRELATES (W vs L):  ` + C.map(([lab, fn]) => `${lab} ${fmt(mean(W.map(fn)))}/${fmt(mean(L.map(fn)))}`).join('   '));
+  console.log('');
+});

@@ -3,3 +3,6 @@ playtests/*.err
 playtests/analysis/*shard*.jsonl
 playtests/gm*-shard*.txt
 playtests/gm*-shard*.err
+playtests/analysis/*.jsonl
+playtests/gmF-*.txt
+playtests/gmF-*.err

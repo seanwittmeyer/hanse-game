@@ -73,10 +73,13 @@ function anGame(np,tierList,gi){
   var guard=0;
   while(!S.over){aiStep();if(++guard>300000)throw new Error('guard-tripped');}
   var fr=finalRows();var win=fr.rows[0];
-  var out={n:np,rounds:S.turn,players:S.players.map(function(p){
+  var out={n:np,rounds:S.turn,pinnacleQ:S.pinnacleQ,players:S.players.map(function(p){
     var sc=scorePlayer(p);
+    var byQ={1:0,2:0,3:0,4:0,5:0};p.delivered.forEach(function(d){byQ[d.q]=(byQ[d.q]||0)+1;});
+    var tierSet={};p.delivered.forEach(function(d){tierSet[d.q]=1;});
     return {pid:p.id,tier:p.ai.tier,persona:p.ai.persona,winner:fr.cmp({p:p,sc:sc},win)===0,
-            total:sc.total,deliv:sc.deliv,maj:sc.maj,goals:sc.goals,
+            total:sc.total,deliv:sc.deliv,maj:sc.maj,goals:sc.goals,flight:sc.flight,master:sc.master,
+            tiers:Object.keys(tierSet).length, delivByQ:byQ, mastered:p.masterpiece?1:0,
             ndeliv:p.delivered.length,ndest:KONTORE.concat(['hall']).filter(function(d){return deliveredAt(p,d)>0;}).length,
             hall:deliveredAt(p,'hall'),upgrades:p.upgrades.length,ships:p.shipsSailed||0,
             goalsHeld:p.goals.length};})};

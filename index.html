@@ -262,7 +262,7 @@
   <h3>The Destinations (where value lives)</h3>
   <p>The four kontore + the Hall are all <b>open from the start</b>. Each wants a certain <b>quality</b> of beer and pays differently — so there is no single best line of play. Delivery value is flat per kontor for Q1–Q3, and an <b>export premium</b> ⚙ adds <b>+1 for a Q4 cask, +2 for a Q5</b>, at any kontor (the Hall scales with quality throughout) — so the high climb pays wherever it ships.</p>
   <div class="routeboard" id="destBoard"></div>
-  <div class="note"><b>The majority is a big end-game motivator</b> — every kontor pays a tiered, ranked majority (Lacerda-style): by delivered-cask count, <b>1st / 2nd / 3rd</b> place take a kontor's tiers — Bruges <b>5/3/0</b> · London <b>6/4/2</b> · Novgorod <b>8/5/2</b> · <b>Bergen 10/6/3</b> ⚙ (Bergen the rich anchor). Per-cask delivery values are kept low so the points live in the majority race; the Hall's prestige is a printed ladder <b>5/7/10/12</b> (by quality) to balance the tilt toward the kontore. <b>2-player games skip 2nd</b> (winner-take-all); ties split the occupied tiers. Benefits pair off: <b>Bruges &amp; Bergen</b> give goods (liquidity); <b>London &amp; Novgorod</b> give an Upgrade (the engine). The cask's owner always scores the delivery and takes any benefit.</div>
+  <div class="note"><b>The majority is a big end-game motivator</b> — every kontor pays a tiered, ranked majority (Lacerda-style): by delivered-cask count, <b>1st / 2nd / 3rd</b> place take a kontor's tiers — Bruges <b>4/2/0</b> · London <b>5/3/1</b> · Novgorod <b>8/5/2</b> · <b>Bergen 9/5/2</b> ⚙ (Bergen the rich anchor). Per-cask delivery values are kept low so the points live in the majority race; the Hall's prestige is a printed ladder <b>5/7/10/12</b> (by quality) to balance the tilt toward the kontore. <b>2-player games skip 2nd</b> (winner-take-all); ties split the occupied tiers. Benefits pair off: <b>Bruges &amp; Bergen</b> give goods (liquidity); <b>London &amp; Novgorod</b> give an Upgrade (the engine). The cask's owner always scores the delivery and takes any benefit.</div>
   <h3>Your Brewery (private, untouchable)</h3>
   <p>Your brewery board holds the <b>maturation track</b> (casks crawl Brew → … → Ready across your <b>vessels</b> — start <b>2</b>, cap <b>4</b>, each a parallel lane), a <b>recipe rack</b>, and <b>upgrade slots</b> (Rooms &amp; Modifiers, mostly earned by delivering). Rivals can only act on your casks once they're on a slot.</p>
 </section>
@@ -385,8 +385,10 @@
   <p>No separate reach/standing tracks. You score from <b>what you delivered</b>:</p>
   <ol>
     <li><b>Delivery value</b> — sum your delivered casks' values at each destination (kontore = trade value, kept low, <b>plus the export premium ⚙: Q4 +1, Q5 +2</b>; <b>the Hall = prestige</b>, a printed ladder by quality: 5/7/10/12).</li>
-    <li><b>Majorities</b> (a big chunk of the score) — at <i>every</i> kontor, by delivered-cask count, <b>1st / 2nd / 3rd</b> place take that kontor's tiers: Bruges <b>5/3/0</b> · London <b>6/4/2</b> · Novgorod <b>8/5/2</b> · <b>Bergen 10/6/3</b> ⚙. <b>2-player games skip 2nd</b> (winner-take-all); tied players split the sum of the tiers they occupy ⚙.</li>
+    <li><b>Majorities</b> (a big chunk of the score) — at <i>every</i> kontor, by delivered-cask count, <b>1st / 2nd / 3rd</b> place take that kontor's tiers: Bruges <b>4/2/0</b> · London <b>5/3/1</b> · Novgorod <b>8/5/2</b> · <b>Bergen 9/5/2</b> ⚙. <b>2-player games skip 2nd</b> (winner-take-all); tied players split the sum of the tiers they occupy ⚙.</li>
     <li><b>Goals</b> — you hold <b>3 goal tiles</b> (dealt at setup; hand cap <b>4</b> ⚙ via the Towncrier); <b>your best 2 score</b> ⚙.</li>
+    <li><b>The Flight ⚙ (v0.13) — your range</b>: count the <b>distinct quality tiers (Q1–Q5) you delivered</b> and score <b>(tiers − 1)², min 3 to score</b> → <b>3→4 · 4→9 · 5→16</b>. Two tiers (free Gruit + Hopped) score 0, so it's a true climber's reward — <em>not how high, but how complete the range of the house</em>. The full flight needs a Bock. This is the <b>quality pole</b> of the reach-vs-quality lean.</li>
+    <li><b>The Masterpiece ⚙ (v0.13)</b> — the first time you deliver the game's <b>top export tier</b> (Q5 if Bock is dealt, else Q4): one-time <b>+3 ★ and +3 goods</b>.</li>
   </ol>
   <p>Highest total wins. <b>Tiebreak:</b> most goods, then most casks on slots.</p>
   <div class="gallery" id="goalGallery"></div>
@@ -476,7 +478,7 @@
     <h4>At the Wharf</h4>
     <p>Market (gain goods, or buy a recipe / ship / upgrade) → Brewhouse (Brew a cask) → Cellar (Age to Ready → deploy to a slot) → Harbor (Ship → sails when full → delivers).</p>
     <h4>Where to ship</h4>
-    <p>Bruges (+1, goods, maj 5/3/0) · London (+2, an upgrade, maj 6/4/2) · Bergen (+2, goods, maj 10/6/3 — the anchor) · Novgorod (+4, an upgrade, maj 8/5/2) · the Hall (prestige — 5/7/10/12 by quality). Majorities are the big motivator (delivery values kept low); gate by quality; each cask owner scores &amp; takes the benefit when the shared hull sails.</p>
+    <p>Bruges (+1, goods, maj 4/2/0) · London (+2, an upgrade, maj 5/3/1) · Bergen (+2, goods, maj 9/5/2 — the anchor) · Novgorod (+4, an upgrade, maj 8/5/2) · the Hall (prestige — 5/7/10/12 by quality). Majorities are the big motivator (delivery values kept low); gate by quality; each cask owner scores &amp; takes the benefit when the shared hull sails.</p>
     <h4>Game ends</h4>
     <p><b>The Sailed-Ships track fills</b> (each voyage = 1 slot) → finish the round → score: Deliveries + Majorities (tiered; 2p skips 2nd) + Goals (best 2 of your 3).</p>
   </div>
@@ -497,9 +499,9 @@ function cubes(str){return str.replace(/G/g,G).replace(/H/g,H);}
 
 // ---- DESTINATIONS (v0.10: every kontor a BIG tiered majority — Bergen the anchor · low delivery values · Hall ladder 5/7/10/12) ----
 const destinations=[
-  {cls:'bruges',  name:'Bruges',   role:'The Hub — wide, takes any beer (the volume on-ramp)', gate:'Q1', value:'+1', benefit:'gain 2 goods (liquidity)', maj:'<b>5 / 3 / 0</b>'},
-  {cls:'london',  name:'London',   role:'The Steelyard — the engine destination',             gate:'Q2', value:'+2', benefit:'take an Upgrade from the display', maj:'<b>6 / 4 / 2</b>'},
-  {cls:'bergen',  name:'Bergen',   role:'Bryggen — the rich-majority anchor',                  gate:'Q2', value:'+2', benefit:'gain 2 goods (token — the majority is the draw)', maj:'<b>10 / 6 / 3</b>'},
+  {cls:'bruges',  name:'Bruges',   role:'The Hub — wide, takes any beer (the volume on-ramp)', gate:'Q1', value:'+1', benefit:'gain 2 goods (liquidity)', maj:'<b>4 / 2 / 0</b>'},
+  {cls:'london',  name:'London',   role:'The Steelyard — the engine destination',             gate:'Q2', value:'+2', benefit:'take an Upgrade from the display', maj:'<b>5 / 3 / 1</b>'},
+  {cls:'bergen',  name:'Bergen',   role:'Bryggen — the rich-majority anchor',                  gate:'Q2', value:'+2', benefit:'gain 2 goods (token — the majority is the draw)', maj:'<b>9 / 5 / 2</b>'},
   {cls:'novgorod',name:'Novgorod', role:'The Long Haul — premium only',                        gate:'Q3', value:'+4', benefit:'top value + take an Upgrade', maj:'<b>8 / 5 / 2</b>'},
   {cls:'hall',    name:'The Hall', role:'Prestige — out of commerce (the Westvleteren move)',  gate:'Q2', value:'5·7·10·12 (Q2→5 · Q3→7 · Q4→10 · Q5→12)', benefit:'the scarcity payout', maj:'—'},
 ];

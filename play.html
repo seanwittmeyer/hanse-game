@@ -215,7 +215,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>Prototype v0.10 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. <b>Ships are neutral</b> (v0.11): destination-bound hulls (Cog 2 / Hulk 3) off a shuffled <b>ship deck</b> — <b>Commission</b> the face-up one at the Market (2⚙G) to place it; anyone loads <b>their own</b> casks (taking that destination’s benefit — goods / an Upgrade — <b>on loading</b>); commissioning also grants a <b>free load</b>. Full → it <b>sails</b> onto the Sailed-Ships track (the clock), delivering every cask for points. Filling a ship earns no bonus; the <b>merchant goal rewards commissioning</b>. <b>Every kontor pays a tiered majority</b> (1st/2nd/3rd) — Bruges <b>5/3/0</b> · London <b>6/4/2</b> · Novgorod <b>8/5/2</b> · Bergen <b>10/6/3</b> ⚙. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b>; <b>Bruges / Bergen</b> hand you <b>2 goods</b> instead. The Harbor also offers a <b>Charter</b> (ship one Ready cask now; the <b>fare is a shared market price printed under the Sailed-Ships track</b> ⚙ — cheap early, 4–5G in the closing stretch). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. Any seat can be an <b>AI opponent</b> — pick a tier per seat in New Game (<b>Apprentice / Journeyman / Trader / Guildmaster</b>, in rising strength; Traders commit to a volume/prestige/majority lean, and the Guildmaster evaluates its options by <i>playing each one out</i> hundreds of times — expect a brief think per decision). AI seats play by the same rules with the same information and never cheat; their turns play out in the log at an adjustable speed. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/14/17) &amp; charter cost are the top pace dials.</p>
+  <p class="note" style="text-align:center"><b>Prototype v0.13 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. <b>Ships are neutral</b> (v0.11): destination-bound hulls (Cog 2 / Hulk 3) off a shuffled <b>ship deck</b> — <b>Commission</b> the face-up one at the Market (2⚙G) to place it; anyone loads <b>their own</b> casks (taking that destination’s benefit — goods / an Upgrade — <b>on loading</b>); commissioning also grants a <b>free load</b>. Full → it <b>sails</b> onto the Sailed-Ships track (the clock), delivering every cask for points. Filling a ship earns no bonus; the <b>merchant goal rewards commissioning</b>. <b>Every kontor pays a tiered majority</b> (1st/2nd/3rd) — Bruges <b>4/2/0</b> · London <b>5/3/1</b> · Novgorod <b>8/5/2</b> · Bergen <b>9/5/2</b> ⚙. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b>; <b>Bruges / Bergen</b> hand you <b>2 goods</b> instead. <b>Score the climb (v0.13):</b> the <b>Flight</b> rewards your <i>range</i> — distinct quality tiers delivered, (tiers−1)² with a min of 3 (3→4·4→9·5→16); and a one-time <b>Masterpiece</b> (+3★ +3 goods) for first delivering the game's top tier. The Harbor also offers a <b>Charter</b> (ship one Ready cask now; the <b>fare is a shared market price printed under the Sailed-Ships track</b> ⚙ — cheap early, 4–5G in the closing stretch). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. Any seat can be an <b>AI opponent</b> — pick a tier per seat in New Game (<b>Apprentice / Journeyman / Trader / Guildmaster</b>, in rising strength; Traders commit to a volume/prestige/majority lean, and the Guildmaster evaluates its options by <i>playing each one out</i> hundreds of times — expect a brief think per decision). AI seats play by the same rules with the same information and never cheat; their turns play out in the log at an adjustable speed. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/14/17) &amp; charter cost are the top pace dials.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -305,13 +305,13 @@ const STATION_ACTS={Market:['coins','scroll-text','sailboat'],Brewhouse:['flask-
 // ---- DESTINATIONS (4 kontore + the Hall) — all open from start ----
 // maj is a TIERED majority payout [1st,2nd,3rd] (Lacerda-style); 2-player games skip 2nd (winner-take-all).
 // Tunable per destination ⚙. v0.10: EVERY kontor has a competitive 3-tier majority — the majority is meant to be
-// a BIG motivator (the engine-building benefit is separate). Bergen is the rich majority anchor (10/6/3); its goods
-// benefit is intentionally weak, so the majority is its draw. Ladder: Bruges 5/3/0 · London 6/4/2 · Novgorod 8/5/2
-// · Bergen 10/6/3. Benefits pair off: LIQUIDITY (Bruges/Bergen → goods) vs UPGRADE (London/Novgorod → display tile).
+// a BIG motivator (the engine-building benefit is separate). Bergen is the rich majority anchor (9/5/2); its goods
+// benefit is intentionally weak, so the majority is its draw. Ladder: Bruges 4/2/0 · London 5/3/1 · Novgorod 8/5/2
+// · Bergen 9/5/2. Benefits pair off: LIQUIDITY (Bruges/Bergen → goods) vs UPGRADE (London/Novgorod → display tile).
 const DEST={
-  bruges  :{name:'Bruges',  gate:1, value:1, maj:[5,3,0],   benefit:'goods',   kontor:true,  role:'Hub · gain goods + a starter majority'},
-  london  :{name:'London',  gate:2, value:2, maj:[6,4,2],   benefit:'upgrade', kontor:true,  role:'Steelyard · the engine — an Upgrade + a solid majority'},
-  bergen  :{name:'Bergen',  gate:2, value:2, maj:[10,6,3],  benefit:'goods',   kontor:true,  role:'Bryggen · gain goods + THE rich majority'},
+  bruges  :{name:'Bruges',  gate:1, value:1, maj:[4,2,0],   benefit:'goods',   kontor:true,  role:'Hub · gain goods + a starter majority'},
+  london  :{name:'London',  gate:2, value:2, maj:[5,3,1],   benefit:'upgrade', kontor:true,  role:'Steelyard · the engine — an Upgrade + a solid majority'},
+  bergen  :{name:'Bergen',  gate:2, value:2, maj:[9,5,2],   benefit:'goods',   kontor:true,  role:'Bryggen · gain goods + THE rich majority'},
   novgorod:{name:'Novgorod',gate:3, value:4, maj:[8,5,2],   benefit:'upgrade', kontor:true,  role:'Long Haul · top value + an Upgrade + a rich majority'},
   hall    :{name:'The Hall',gate:2, value:0, maj:[],        benefit:'none',    kontor:false, role:'Prestige · 5/7/10/12 by quality'},
 };
@@ -325,6 +325,17 @@ const HALL_PTS={2:5,3:7,4:10,5:12}; // ⚙ prestige points at the Hall, a PRINTE
 // underpaid: human feel ("the race doesn't support the path") + the search AI skipping it.
 const EXPORT_PREM=q=>q>=4?q-3:0;
 function destValue(dest,q){return dest==='hall'?(HALL_PTS[q]||0):DEST[dest].value+EXPORT_PREM(q);}
+// ---- THE FLIGHT (v0.13 ⚙): an end-game bonus for your *range* — the count of DISTINCT quality tiers
+// you delivered, scored on a back-loaded ladder = (tiers-1)² with a MIN of 3 tiers to score (2 tiers =
+// the free Gruit+Hopped baseline everyone has, so it's a true climber's reward). "Full range of the
+// house" — the quality pole of the reach-vs-quality axis; needs a Bock for the full 5-tier flight.
+const FLIGHT_MIN=3;
+const FLIGHT_PTS={1:0,2:0,3:4,4:9,5:16};   // ⚙ Lisboa-style heavy back-loading: the points are in tiers 4 & 5
+function flightTiers(p){return new Set(p.delivered.map(d=>d.q)).size;}
+function flightScore(p){const t=flightTiers(p);return (t>=FLIGHT_MIN)?(FLIGHT_PTS[t]||0):0;}
+// ---- MASTERPIECE (v0.13 ⚙): the first time you deliver the game's TOP export tier (Q5 Bock when dealt,
+// else the highest dealt = Q4) — a one-time +3★ and +3 goods, the magnum-opus moment that pays the climb back.
+const MASTERPIECE={star:3, goods:3};
 
 // ---- SHIPS (v0.11 Batch B ⚙): NEUTRAL, destination-bound shared hulls ----
 // Nobody owns a ship. Each tile is PRINTED with hull + destination and comes off a shuffled SHIP
@@ -458,7 +469,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v38'; // v0.12.3 ⚙: Hall = printed point ladder (5/7/10/12, no ×2.5 math); upgrades earned ONLY by delivery (Market-buy removed); bump discards stale state
+const KEY='hanse-hotseat-v39'; // v0.13 ⚙: The Flight (range-of-tiers end bonus) + Masterpiece (top-tier first-delivery) + majority cooldown (Bruges/London/Bergen −1/tier); bump discards stale state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -490,7 +501,7 @@ function newPlayer(i,name){
     // start 2 vessels; one holds the warm Ready Gruit (deploy it turn 1)
     vessels:[{style:'gruit',q:1,step:1,ready:1},null], maxVessels:2,
     recipes:['gruit','hopped'], upgrades:[], delivered:[],
-    presBonus:{bruges:0,london:0,bergen:0,novgorod:0}, commissioned:0,
+    presBonus:{bruges:0,london:0,bergen:0,novgorod:0}, commissioned:0, masterpiece:false,
     goals:dealGoals()};
 }
 function freshState(n,names){
@@ -499,6 +510,7 @@ function freshState(n,names){
     shipDeck:[], shipDisplay:[],
     sessionId:newSessionId(), endedAt:null, studioSent:null};
   for(let i=0;i<n;i++) st.players.push(newPlayer(i,names[i]));
+  st.pinnacleQ=Math.max(...st.exports.map(s=>STYLES[s].q));   // the game's top export tier (Q5 if Bock dealt, else Q4) — the Masterpiece trigger
   SLOTS.forEach(s=>st.slots[s.id]=null);
   // ---- Upgrade supply (facedown) + face-up display (Market option B) ----
   // ~2 copies of each upgrade type (+ extra Extra Vessels, the repeatable one); flip DISPLAY_SIZE face-up.
@@ -944,7 +956,11 @@ function grantImmediate(lp,dest){
   // the Hall pays no immediate benefit — only prestige points, sealed on delivery
 }
 // the cask is DELIVERED (its points count at game end): recorded on sail, or on an instant charter.
-function deliverCask(lp,style,q,dest){lp.delivered.push({style,q,dest});}
+function deliverCask(lp,style,q,dest){lp.delivered.push({style,q,dest});
+  // MASTERPIECE: first delivery of the game's top export tier → one-time +3★ (sealed at scoring) + 3 goods now
+  if(!lp.masterpiece && q>=S.pinnacleQ){lp.masterpiece=true; gain(lp,MASTERPIECE.goods,0);
+    if(!aiSimulating)log('★ '+lp.name+' delivers a <b>Masterpiece</b> '+LU('sparkles')+' ('+styleShort(style)+' Q'+q+') — magnum opus! +'+MASTERPIECE.star+' '+LU('star')+' &amp; '+MASTERPIECE.goods+' '+LU('package')+'.',true);}
+}
 // A rival (non-active) owner auto-takes a random grantable face-up upgrade (they can't pick mid-turn).
 function autoGrantDisplay(p,dest){const g=displayGrantable(p);if(!g.length)return;const k=g[Math.floor(Math.random()*g.length)];
   grantUpgrade(p,k);takeFromDisplay(k);log('↳ '+p.name+' earns '+LU('wrench')+' <b>'+upName(k)+'</b> (from '+DEST[dest].name+', via the display).');}
@@ -1033,7 +1049,9 @@ function scorePlayer(p){
   let maj=0;KONTORE.forEach(k=>{const a=majorityAwards(k);if(a[p.id])maj+=a[p.id];});
   const gv=p.goals.map(g=>GOALS[g].fn(p)).sort((a,b)=>b-a);
   const goals=gv.slice(0,GOAL_BEST).reduce((a,b)=>a+b,0);
-  return {deliv,maj,goals,total:deliv+maj+goals};
+  const flight=flightScore(p);                          // v0.13: range-of-tiers bonus
+  const master=p.masterpiece?MASTERPIECE.star:0;        // v0.13: top-tier first-delivery bonus
+  return {deliv,maj,goals,flight,master,total:deliv+maj+goals+flight+master};
 }
 // the final ranking under the engine's tiebreak (total, goods, casks on slots) — shared by the
 // standings table and the studio payload
@@ -1052,9 +1070,9 @@ function gameOver(){
   aiCancel();
   if(!S.endedAt)S.endedAt=new Date().toISOString();
   const {rows,cmp}=finalRows();const win=rows[0];
-  let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries</th><th>Majorities</th><th>Goals (best '+GOAL_BEST+')</th><th>Total</th></tr>';
-  rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+'</td><td>'+r.sc.maj+'</td><td>'+r.sc.goals+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
-  h+='</table><p class="note">Score = delivery value (kontore trade value + the Hall’s prestige ∝ quality) + kontor majorities + your best '+GOAL_BEST+' goals. The volume-vs-prestige lean lives in <b>where you shipped</b>, not in separate tracks. (Tiebreak: goods, then casks on slots.)</p>'
+  let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries</th><th>Majorities</th><th>Goals (best '+GOAL_BEST+')</th><th>Flight</th><th>Master</th><th>Total</th></tr>';
+  rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+'</td><td>'+r.sc.maj+'</td><td>'+r.sc.goals+'</td><td>'+(r.sc.flight||'·')+'</td><td>'+(r.sc.master||'·')+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
+  h+='</table><p class="note">Score = delivery value (kontore trade value + the Hall’s prestige by quality) + kontor majorities + your best '+GOAL_BEST+' goals + the <b>Flight</b> (your range of distinct quality tiers delivered — '+FLIGHT_MIN+'+ to score) + a one-time <b>Masterpiece</b> for the top tier. The reach-vs-quality lean lives in <b>where and how high you shipped</b>. (Tiebreak: goods, then casks on slots.)</p>'
     +'<button onclick="hideOver()">⚓ View the final board</button> <button onclick="openStudio()">⇪ Send to Studio'+(S.studioSent?' ✓':'')+'</button> <button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
 }
@@ -1101,7 +1119,7 @@ function studioPayload(){
       name:r.p.name,
       is_winner:cmp(r,win)===0,   // co-winners on an exact tie all count
       notes:r.p.ai?(aiLabel(r.p)+' AI'):'human',
-      scores:{'Deliveries':r.sc.deliv,'Majorities':r.sc.maj,'Goal Cards':r.sc.goals},
+      scores:{'Deliveries':r.sc.deliv,'Majorities':r.sc.maj,'Goal Cards':r.sc.goals,'Flight':r.sc.flight,'Masterpiece':r.sc.master},
     })),
   };
   const notes=v('stNotes'),wasNew=v('stNew'),todo=v('stTodo');
@@ -1811,7 +1829,7 @@ function renderTableaus(){
       +'<div style="margin-bottom:6px"><span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
       +'<span class="chip" data-tip="Storage cap.">'+LU('package')+'<b>'+p.storage+'</b></span>'
       +'<span class="chip" data-tip="Ships you have commissioned (the merchant goal).">'+LU('sailboat')+'<b>'+(p.commissioned||0)+'</b></span>'
-      +'<span class="chip" data-tip="Total score.">★ <b>'+sc.total+'</b></span> <span class="note">deliveries '+sc.deliv+' · maj '+sc.maj+' · goals '+sc.goals+'</span>'+(p.ai?' <span class="tag" data-tip="An AI seat — same rules, same information; the tiers differ only in decision quality.">'+aiLabel(p)+' AI</span>':'')+'</div>'
+      +'<span class="chip" data-tip="Total score.">★ <b>'+sc.total+'</b></span> <span class="note">deliveries '+sc.deliv+' · maj '+sc.maj+' · goals '+sc.goals+(sc.flight?' · flight '+sc.flight:'')+(sc.master?' · master '+sc.master:'')+'</span>'+(p.ai?' <span class="tag" data-tip="An AI seat — same rules, same information; the tiers differ only in decision quality.">'+aiLabel(p)+' AI</span>':'')+'</div>'
       +'<b class="note">'+LU('flask-conical')+' Vessels ('+p.vessels.length+'/'+p.maxVessels+'):</b><div class="brew">'+vessels+'</div>'
       +'<b class="note">'+LU('scroll-text')+' Recipes:</b> '+recipes+'<br>'
       +'<b class="note">'+LU('wrench')+' Upgrades:</b> '+ups+'<br>'
