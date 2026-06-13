@@ -277,7 +277,7 @@ function refreshIcons(){if(window.lucide)try{lucide.createIcons();}catch(e){}}
 // (Broyhan/Keut Q3 · Mumme Q4 · Bock Q5); 3 of the 4 are dealt in each game, so the ladder shape varies
 // (drop a Q3 → full Q3–Q5 climb; drop Mumme → no Q4; drop Bock → no Q5).
 const STYLES={
-  gruit  :{name:'Gruit Ale',   lvl:1, q:1, in:{g:1},      ready:1, act:'source'},
+  gruit  :{name:'Gruit Ale',   lvl:1, q:1, in:{g:1},      ready:1, act:'source', pin:true},
   hopped :{name:'Hopped Beer', lvl:2, q:2, in:{g:1,h:1},  ready:2, act:'age'},
   broyhan:{name:'Broyhan',     lvl:3, q:3, in:{g:1,h:2},  ready:2, act:'load',  export:true},
   keut   :{name:'Keut',        lvl:3, q:3, in:{g:2,h:1},  ready:2, act:'load',  export:true},
@@ -293,10 +293,11 @@ const CASK_ACT={source:'gain 2 goods',age:'Age a cask 2 steps',
 // ⚙ v0.12 — VARIABLE cask actions: a cask's signature slot-action is drawn at brew from this pool,
 // decoupled from quality, so casks reliably carry useful actions (you no longer depend on the random
 // Crane). Wild is reserved for Q4+ (too strong on a cheap cask). Random at brew = no brew-AP; the
-// tactics come from using/placing what you drew.
+// tactics come from using/placing what you drew. v0.12.2: styles flagged pin:true keep a FIXED action
+// (Gruit → Source/+2 goods) — the simple on-ramp stays legible & thematic; only Q2+ casks draw.
 const CASK_ACT_POOL=['source','age','load','reach','convert','draw','wild'];
 const CASK_ACT_ICON={source:'coins',age:'hourglass',load:'package-plus',reach:'map-pin',convert:'arrow-left-right',draw:'target',wild:'sparkles'};
-function pickCaskAct(q){const pool=CASK_ACT_POOL.filter(a=>a!=='wild'||q>=4);return pool[Math.floor(Math.random()*pool.length)];}
+function pickCaskAct(q,style){if(style&&STYLES[style]&&STYLES[style].pin)return STYLES[style].act;const pool=CASK_ACT_POOL.filter(a=>a!=='wild'||q>=4);return pool[Math.floor(Math.random()*pool.length)];}
 function caskAct(t){return t.act||STYLES[t.style].act;}   // t.act = the drawn action (fallback: the old fixed one)
 // ⚙ the four stations' FULL action sets, shown as icons on the board (no hover needed)
 const STATION_ACTS={Market:['coins','scroll-text','sailboat','wrench'],Brewhouse:['flask-conical'],Cellar:['hourglass'],Harbor:['package-plus','ticket','sailboat']};
@@ -456,7 +457,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v36'; // v0.12.1 ⚙: Sailed-Ships clock trimmed (6/10/13/16) to re-land pace on the clock; bump discards stale state
+const KEY='hanse-hotseat-v37'; // v0.12.2 ⚙: Gruit pinned to its Source (+2 goods) action (the on-ramp is fixed/thematic; only Q2+ casks draw variable); bump discards stale state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -799,7 +800,7 @@ function enterBrew(rt){const p=cur();
 }
 function brewPick(style){const p=cur();if(!canBrew(p,style))return;const vi=openVessel(p);if(vi<0){alert('No open vessel.');return;}
   snapshot();pay(p,STYLES[style].in);
-  p.vessels[vi]={style,q:STYLES[style].q,step:0,ready:effReady(p,style),act:pickCaskAct(STYLES[style].q)};
+  p.vessels[vi]={style,q:STYLES[style].q,step:0,ready:effReady(p,style),act:pickCaskAct(STYLES[style].q,style)};
   log(p.name+' '+LU('flask-conical')+' brews '+LU('beer')+' <b>'+STYLES[style].name+'</b> (Q'+STYLES[style].q+' · matures in '+effReady(p,style)+' step'+(effReady(p,style)===1?'':'s')+').',true);
   const rt=UI.brew.returnTo;UI.brew=null;resume(rt);
 }
@@ -827,7 +828,7 @@ function offerDeploy(rt){const p=cur();const ready=readyInVessels(p);
 }
 function startDeploy(vi,phase){snapshot();UI.sub='deploy';UI.deploy={queue:[vi],returnTo:phase};render();}
 function deployTo(slot){snapshot();const p=cur();const vi=UI.deploy.queue[0];const c=p.vessels[vi];p.vessels[vi]=null;
-  S.slots[slot]={type:'cask',owner:p.id,style:c.style,q:c.q,act:c.act||pickCaskAct(c.q)};
+  S.slots[slot]={type:'cask',owner:p.id,style:c.style,q:c.q,act:c.act||pickCaskAct(c.q,c.style)};
   log(p.name+' sets a Ready '+LU('beer')+' <b>'+styleShort(c.style)+'</b> on a '+LU('anchor')+' slot.',true);
   UI.deploy.queue.shift();deployNext();
 }

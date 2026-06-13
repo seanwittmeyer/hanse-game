@@ -57,13 +57,13 @@ A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATU
 
 | Level | Type | Q | Brew inputs ⚙ | Maturation ⚙ | Signature slot action ⚙ | Reaches (gate) | Qty |
 |---|---|---|---|---|---|---|---|
-| **L1** | **Gruit Ale** | 1 | `G` | 1 step | *(variable — drawn at brew)* | Bruges only | 16 |
-| **L2** | **Hopped Beer** | 2 | `G H` | 2 | **Age** any 1 of your casks 2 steps | Bruges · London · Bergen · Hall | 20 |
-| **L3** | **Broyhan / Keut** | 3 | `G H H` / `G G H` | 2 | **Load** — load a Ready cask onto a ship for free | + Novgorod | 12 |
-| **L4** | **Mumme** | 4 | `G G H H` | 3 | **Reach** — +1 presence at a kontor you've delivered to | all | 8 |
-| **L5** | **Bock** | 5 | premium; needs **Aging Cellar** | 3 | **Wild** — take any one base action (Market/Brewhouse/Cellar/Harbor) | all | 4 |
+| **L1** | **Gruit Ale** | 1 | `G` | 1 step | **Source — +2 goods** *(fixed ⚙ v0.12.2)* | Bruges only | 16 |
+| **L2** | **Hopped Beer** | 2 | `G H` | 2 | *drawn at brew* (pool below) | Bruges · London · Bergen · Hall | 20 |
+| **L3** | **Broyhan / Keut** | 3 | `G H H` / `G G H` | 2 | *drawn at brew* | + Novgorod | 12 |
+| **L4** | **Mumme** | 4 | `G G H H` | 3 | *drawn at brew* | all | 8 |
+| **L5** | **Bock** | 5 | premium; needs **Aging Cellar** | 3 | *drawn at brew* (**Wild** possible — Q4+) | all | 4 |
 
-> **Export beers — fixed quality; deal 3 of 4 each game ⚙:** **Broyhan** (Q3, `G H H`) · **Keut** (Q3, `G G H`, a costlier-in-grain alt) · **Mumme** (Q4, Braunschweig) · **Bock** (Q5, Einbeck — needs the Aging Cellar). One is left undealt each game, so the **ladder shape varies**: drop a Q3 → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4; drop **Bock** → no Q5. The signature action follows the **quality**, not the beer (Q3 Load · Q4 Reach · Q5 Wild); the two Q3 beers share the Q3 cask pool — only their recipe cost differs. The fixed on-ramp is **Gruit → Hopped**.
+> **Export beers — fixed quality; deal 3 of 4 each game ⚙:** **Broyhan** (Q3, `G H H`) · **Keut** (Q3, `G G H`, a costlier-in-grain alt) · **Mumme** (Q4, Braunschweig) · **Bock** (Q5, Einbeck — needs the Aging Cellar). One is left undealt each game, so the **ladder shape varies**: drop a Q3 → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4; drop **Bock** → no Q5. Each cask's **signature slot-action is drawn at brew** (v0.12 — from the pool below; **Wild** only for Q4+), **decoupled from the beer/quality** — *except* **Gruit, which is pinned to Source** (v0.12.2). The fixed on-ramp is **Gruit → Hopped**.
 
 *Gruit is the cheap, fast workhorse — it keeps your goods flowing (its Source action) and reaches Bruges, but never makes prestige. The export casks are scarce, slow, and the key to the rich destinations — the Leffe/Westvleteren line drawn in the components.*
 

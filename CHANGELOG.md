@@ -6,6 +6,9 @@ Compact version history. The **full rationale ("the why")** lives in `DESIGN.md`
 
 ---
 
+## v0.12.2 — Gruit pinned to Source (2026-06-13)
+A legibility/theme simplification: **Gruit (Q1 on-ramp) no longer draws a random slot-action — it's fixed to Source (+2 goods)** ⚙ (`KEY → v37`; `pin:true` in `STYLES`, only Q2+ casks draw). Thematic (basic ale sold local for goods) and it removes the per-brew action-read on the *most-brewed* cask, trimming AP where it's highest-volume. Side-benefits in sim: more goods in hand → **upgrade-buying ~doubled** (2p 7→15% of upgrades), and a pace nudge (rounds ~16→~14 — the clock trim + Gruit-goods stack; flagged, in-band but watch 5p). Sim 500×2–5p clean (0 crashes, 100% clock); ladder PASS (journeyman 68.5 / trader 62.0·76.5). Docs synced (RULES §variable, COMPONENTS cask table — also corrected a stale v0.12 fixed-by-quality table, index). 
+
 ## v0.12.1 — pace re-trim (2026-06-13)
 The single follow-up lever to v0.12's flagged **pace overshoot** (variable cask actions stretched rounds-per-voyage, so the round ceiling was firing 4–12% across 2–4p). **Shortened the Sailed-Ships clock** ⚙ — `SAILED_CAP` **7/11/15/19 → 6/10/13/16** (`KEY → v36`). One lever, nothing else touched. Re-sim 500×2–5p: rounds back to **~16–18**, ceiling-firing collapsed (2p 4.4→**0.6%**, 3p 6.2→**1.8%**, 4p 11.6→**2.0%**, 5p **5.0%**), all clock-driven, 0 crashes/deadlocks. Ladder PASS (journeyman 62.5 / trader 66.0·73.8 / GM 95.0%); personas balanced. Docs synced (RULES §8 · index setup/end · play.html note).
 

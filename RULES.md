@@ -104,7 +104,7 @@ The **8 slots** (2 beside each line) are the shared commons. They hold a churnin
 **One rule for all of them:** when a line fires, the active player **may use each building in its two slots.** All building actions resolve **on the active player's turn, for the active player** — there are **no out-of-turn gains** (the thing that felt counter-intuitive in v0.6 is gone). Cask and neutral actions are **free and public** (a rival using your cask's action is incidental — it is on *your* line, doing *your* work, while you wait to ship it).
 
 ### Variable cask actions (drawn at brew — public, chunky, production-advancing) ⚙ (v0.12)
-Each cask carries **one signature slot-action**, **drawn at brew from the pool below** — *decoupled from quality* (a Gruit might carry **Load**; a Bock might carry **Source**). The action is **printed on the cask tile** so you read it without a tooltip. *Why variable:* casks now reliably bear useful actions, so you no longer depend on whether the random **Crane** building came out — it loosens the slot/loading bottleneck.
+Each cask carries **one signature slot-action**, **drawn at brew from the pool below** — *decoupled from quality* (a Bock might carry **Source**; a Keut might carry **Reach**). The action is **printed on the cask tile** so you read it without a tooltip. *Why variable:* casks now reliably bear useful actions, so you no longer depend on whether the random **Crane** building came out — it loosens the slot/loading bottleneck. **Exception — Gruit is fixed to Source (+2 goods)** ⚙ (v0.12.2): the Q1 on-ramp keeps a simple, legible, thematic action (sold local for goods); only **Q2+ casks draw** from the pool.
 
 | Action | Effect ⚙ |
 |---|---|
