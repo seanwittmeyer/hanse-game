@@ -6,13 +6,16 @@ Compact version history. The **full rationale ("the why")** lives in `DESIGN.md`
 
 ---
 
+## v0.12.1 — pace re-trim (2026-06-13)
+The single follow-up lever to v0.12's flagged **pace overshoot** (variable cask actions stretched rounds-per-voyage, so the round ceiling was firing 4–12% across 2–4p). **Shortened the Sailed-Ships clock** ⚙ — `SAILED_CAP` **7/11/15/19 → 6/10/13/16** (`KEY → v36`). One lever, nothing else touched. Re-sim 500×2–5p: rounds back to **~16–18**, ceiling-firing collapsed (2p 4.4→**0.6%**, 3p 6.2→**1.8%**, 4p 11.6→**2.0%**, 5p **5.0%**), all clock-driven, 0 crashes/deadlocks. Ladder PASS (journeyman 62.5 / trader 66.0·73.8 / GM 95.0%); personas balanced. Docs synced (RULES §8 · index setup/end · play.html note).
+
 ## v0.12 — loading v2 + variable cask actions (2026-06-13)
 A coordinated batch (`KEY → v35`; full rationale `DESIGN.md` §21 v0.12) after a human GM playtest + a line-fire audit. **The audit refuted the "dock" idea:** the line-fire ship-load is the *primary* loader (Guildmaster **48%** of in-play loads, Harbor only 19%), so moving ships off slots would gut loading — the dock was rejected, slot pressure is the price of that interaction. 5p dropped (pipe dream on a 2×2).
 - **Rival loading restored** ⚙ — load a rival's deployed cask onto a ship, **you choose the destination**; the owner scores it + benefit, you take a `1 G` loader bonus + free the slot. The human wanted it for tactical denial — the value the margin-maximizing bots can't see (B1 was a bot artifact).
 - **Guaranteed Hulk → Bruges at setup** ⚙ — the Q1 Gruit on-ramp always has a hull (no stranded-into-charter start).
 - **Variable cask actions** ⚙ — each cask's slot-action is **drawn at brew** from a 7-action pool (Source · Age · Load · Reach · Convert · Draw · Wild[Q4+]), **decoupled from quality**, **printed on the tile** — so casks reliably carry useful actions and you don't depend on a random Crane.
 - **Action icons on the board** — casks show their drawn action; the **four stations show their full action set** (no tooltip needed; matching printables).
-- **Measured:** the core problem improved — hull-share up at every count (2p 74→**79%**, 3p 48→**57%**, 4p 41→**45%**). **⚠ Pace overshoot:** variable actions slowed the clock — games run **~19–20 rounds**, round-ceiling fires **4–12% across 2–4p** (was ~0%); the dial is a **shorter Sailed-Ships clock**, flagged for next pass. Personas balanced (prestige healthy); sim robustness clean. Docs synced (RULES · COMPONENTS · index · learn · DESIGN); `printables.html` stale (queued).
+- **Measured:** the core problem improved — hull-share up at every count (2p 74→**79%**, 3p 48→**57%**, 4p 41→**45%**). **⚠ Pace overshoot:** variable actions slowed the clock — games run **~19–20 rounds**, round-ceiling fires **4–12% across 2–4p** (was ~0%); the dial is a **shorter Sailed-Ships clock** *(pulled in v0.12.1 — clock trimmed to 6/10/13/16, pace re-landed)*. Personas balanced (prestige healthy); sim robustness clean. Docs synced (RULES · COMPONENTS · index · learn · DESIGN); `printables.html` stale (queued).
 
 ---
 
