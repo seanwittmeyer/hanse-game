@@ -24,7 +24,13 @@ var __chosenWhich='row', __buys=0, __charters=0;
 var NAMES=['P1','P2','P3','P4','P5'];
 
 function achQ(p){var qs=p.recipes.map(function(r){return (STYLES[r].cellar&&!hasUpgrade(p,'cellar'))?0:STYLES[r].q;});return Math.max.apply(null,qs);}
-function needShip(p){return myShips(p).length===0 && emptySlots().length>0 && canPay(p,{g:2});}
+function needShip(p){
+  if(!S.shipNext||emptySlots().length===0||!canPay(p,{g:2}))return false;
+  var qs=[];p.vessels.forEach(function(c){if(c)qs.push(c.q);});
+  wharfCaskSlots().forEach(function(id){var t=S.slots[id];if(t.owner===p.id)qs.push(t.q);});
+  var bq=qs.length?Math.max.apply(null,qs):achQ(p);
+  return !myShips(p).some(function(sid){var t=S.slots[sid];return t.load.length<effCap(t)&&bq>=DEST[t.dest].gate;});
+}
 // This game's dealt export beers the bot will climb (skips the Q5 cellar beer — a known greedy blind spot).
 function buyableExports(p){return (S.exports||[]).filter(function(s){return !p.recipes.includes(s)&&!STYLES[s].cellar&&canPay(p,RECIPE_BUY[s]);});}
 function wantRecipe(p){return buyableExports(p).length>0;}
@@ -123,7 +129,7 @@ function botHarbor(p){
   var jammed=emptySlots().length===0;
   var noHull=myShips(p).length===0 && !canPay(p,{g:2});
   if(canCharter && (jammed || S.ending || noHull)){__charters++;harborCharter();return;}
-  var launch=myShips(p).filter(function(s){return S.slots[s].load.length>0;});
+  var launch=myShips(p).filter(function(s){return S.slots[s].load.some(function(L){return L.owner===p.id;});});
   if(launch.length&&(S.ending||emptySlots().length===0)){harborLaunch(launch[0]);return;}
   cellDone();
 }

@@ -215,7 +215,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>Prototype v0.10 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. Build &amp; own <b>ships</b> (Cog 2 / Hulk 3) bound to a destination; full → it <b>sails</b> onto the Sailed-Ships track (the clock). You may load a <b>rival’s deployed cask</b> on your ship — they still score it. <b>Every kontor pays a tiered majority</b> (1st/2nd/3rd) — Bruges <b>5/3/0</b> · London <b>6/4/2</b> · Novgorod <b>8/5/2</b> · Bergen <b>10/6/3</b> ⚙. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b>; <b>Bruges / Bergen</b> hand you <b>2 goods</b> instead. The Harbor also offers a <b>Charter</b> (ship one Ready cask now; the <b>fare is a shared market price printed under the Sailed-Ships track</b> ⚙ — cheap early, 4–5G in the closing stretch). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. Any seat can be an <b>AI opponent</b> — pick a tier per seat in New Game (<b>Apprentice / Journeyman / Trader / Guildmaster</b>, in rising strength; Traders commit to a volume/prestige/majority lean, and the Guildmaster evaluates its options by <i>playing each one out</i> hundreds of times — expect a brief think per decision). AI seats play by the same rules with the same information and never cheat; their turns play out in the log at an adjustable speed. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
+  <p class="note" style="text-align:center"><b>Prototype v0.10 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. <b>Ships are neutral</b> (v0.11): destination-bound hulls (Cog 2 / Hulk 3) off a shuffled <b>ship deck</b> — <b>Commission</b> the face-up one at the Market (2⚙G) to place it; anyone loads <b>their own</b> casks; full → it <b>sails</b> onto the Sailed-Ships track (the clock), every cask owner scores, and the <b>filler</b> takes a 2⚙G dispatch fee. <b>Every kontor pays a tiered majority</b> (1st/2nd/3rd) — Bruges <b>5/3/0</b> · London <b>6/4/2</b> · Novgorod <b>8/5/2</b> · Bergen <b>10/6/3</b> ⚙. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b>; <b>Bruges / Bergen</b> hand you <b>2 goods</b> instead. The Harbor also offers a <b>Charter</b> (ship one Ready cask now; the <b>fare is a shared market price printed under the Sailed-Ships track</b> ⚙ — cheap early, 4–5G in the closing stretch). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. Any seat can be an <b>AI opponent</b> — pick a tier per seat in New Game (<b>Apprentice / Journeyman / Trader / Guildmaster</b>, in rising strength; Traders commit to a volume/prestige/majority lean, and the Guildmaster evaluates its options by <i>playing each one out</i> hundreds of times — expect a brief think per decision). AI seats play by the same rules with the same information and never cheat; their turns play out in the log at an adjustable speed. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/15/19) &amp; charter cost are the top pace dials.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -249,7 +249,7 @@ const ICONTIP={
   hourglass:'Cellar — Age: a pool of age points across your vessels.',
   ship:'Harbor — Ship: load a Ready cask from a slot onto one of your ships.',
   anchor:'Slot — one of the 8 shared perimeter spaces (casks · ships · town buildings).',
-  sailboat:'Ship — owned carrier; loads casks and sails to its destination when full.',
+  sailboat:'Ship — a neutral, destination-bound hull (from the ship deck); anyone loads their own casks; it sails when full.',
   landmark:'Kontor — a trade destination (volume + majorities).',
   crown:'The Hall — the prestige destination (scarcity; pays ∝ quality).',
   'scroll-text':'Recipe — permission to brew a type of beer.',
@@ -313,9 +313,24 @@ const HALL_MULT=2.5; // ⚙ prestige scaling at the Hall (Q×HALL_MULT, floored)
 const EXPORT_PREM=q=>q>=4?q-3:0;
 function destValue(dest,q){return dest==='hall'?Math.floor(q*HALL_MULT):DEST[dest].value+EXPORT_PREM(q);}
 
-// ---- SHIPS (owned single-use carriers) ----
+// ---- SHIPS (v0.11 Batch B ⚙): NEUTRAL, destination-bound shared hulls ----
+// Nobody owns a ship. Each tile is PRINTED with hull + destination and comes off a shuffled SHIP
+// DECK (the next tile always face-up beside the Market). COMMISSION at the Market (2G ⚙): place
+// the face-up ship on any open slot. You load YOUR OWN casks only (Harbor / line-fire / Crane /
+// L3); full → it sails — every cask owner scores + takes the benefit; the FILLER (whose cask
+// completed it) gains the dispatch fee and credit toward the ships goal. Partial launch (Harbor):
+// any player with a cask aboard. The old "ship a rival's cask" rule is CUT (measured-dead at 2p,
+// confusing at the table — FINDINGS-v26 B1); the interaction is now racing for cargo space and
+// sail timing on shared hulls.
 const SHIP_CAP={cog:2,hulk:3};
 const SHIP_NAME={cog:'Cog',hulk:'Hulk'};
+const COMMISSION_COST={g:2};   // ⚙ flat — the face-up tile decides hull & destination
+const FILL_BONUS={g:2};        // ⚙ the dispatch fee for the player whose cask fills a ship
+const SHIP_DECK_MIX=[          // ⚙ 14 hulls; every destination (incl. the Hall) appears in the deck
+  ['cog','bruges'],['cog','bruges'],['cog','london'],['cog','london'],['cog','bergen'],
+  ['cog','bergen'],['cog','novgorod'],['cog','hall'],
+  ['hulk','bruges'],['hulk','london'],['hulk','bergen'],['hulk','novgorod'],['hulk','novgorod'],['hulk','hall'],
+];
 const CHARTER_COST={g:2};   // legacy floor fare (kept for the headless harness; use charterCost())
 // ⚙ A2′ (v0.11, supersedes the per-player escalation): the charter fare is a SHARED MARKET PRICE
 // set by the Sailed-Ships track — one fare row printed under the clock (GWT-hiring-market style,
@@ -330,7 +345,7 @@ const CHARTER_FARES={
 };
 function charterFare(){const row=CHARTER_FARES[S.players.length]||CHARTER_FARES[4];
   return row[Math.min(S.sailed,row.length-1)];}
-function charterCost(p){return {g:charterFare()};}   // (p unused — the fare is the table's, not yours)
+function charterCost(p){let g=charterFare();if(p&&hasUpgrade(p,'royal'))g=Math.max(1,g-1);return {g};}   // shared fare; Royal Patent −1 ⚙
 
 // ---- NEUTRAL BUILDINGS (seeded on the wharf at setup; shared base actions) ----
 const NEUTRALS={
@@ -354,7 +369,7 @@ const ROOMS={
 const MODS={
   granary  :{name:'Granary Right', desc:'when you gain grain, +1 extra'},
   hopgarden:{name:'Hop Garden',    desc:'when you gain hops, +1 extra'},
-  royal    :{name:'Royal Patent',  desc:'your ships sail with +1 capacity'},
+  royal    :{name:'Royal Patent',  desc:'your charter fare is 1G cheaper (min 1)'},
   staple   :{name:'Staple Right',  desc:'+1 good when you deliver to a kontor'},
   guild    :{name:'Guild Seat',    desc:'+1 age point at the Cellar'},
   burgher  :{name:'Burgher Status',desc:'+1 presence at every kontor you reach (majorities)'},
@@ -364,14 +379,11 @@ function upName(k){return (UP[k]||{name:k}).name;}
 function upDesc(k){return (UP[k]||{desc:''}).desc;}
 
 // ---- MARKET (Option B): recipes & ships are an always-available supply; UPGRADES are a face-up display ----
-const SHOP=[   // always-available supply (no display): ships (export-recipe buys come from this game's export set)
-  {id:'s_cog', kind:'ship',ship:'cog', cost:{g:2}},
-  {id:'s_hulk',kind:'ship',ship:'hulk',cost:{g:3}},
-];
+// (v0.11 B: the old always-stocked ship supply is gone — ships come off the SHIP DECK via Commission)
 // Upgrade buy cost (when bought from the face-up display) — priced to ~a kontor delivery's goods cost so
 // buying competes with, but doesn't dominate, EARNING one free by delivering to London/Novgorod.
 const UPGRADE_BUY={vessel:{g:5},cellar:{g:5},warehouse:{g:4},quay:{g:5},cooperage:{g:4},
-  granary:{g:4},hopgarden:{g:4},royal:{g:5},staple:{g:5},guild:{g:4},burgher:{g:5}};
+  granary:{g:4},hopgarden:{g:4},royal:{g:4},staple:{g:5},guild:{g:4},burgher:{g:5}};
 const DISPLAY_SIZE=4;   // face-up Upgrade display (Market option B) ⚙
 
 // ---- GOALS (deal 3 per player; best 2 score) ----
@@ -379,7 +391,7 @@ const GOALS={
   g1:{text:'+2 / distinct beer type delivered',      fn:p=>2*new Set(p.delivered.map(d=>d.style)).size},
   g2:{text:'+2 / cask in your biggest kontor',       fn:p=>2*KONTORE.reduce((m,k)=>Math.max(m,deliveredAt(p,k)),0)},
   g3:{text:'+2 / Q3+ cask delivered',                fn:p=>2*p.delivered.filter(d=>d.q>=3).length},
-  g4:{text:'+3 / ship you sailed',                   fn:p=>3*(p.shipsSailed||0)},
+  g4:{text:'+3 / ship you filled or launched',       fn:p=>3*(p.shipsSailed||0)},
   g5:{text:'+3 / cask shipped to the Hall',          fn:p=>3*p.delivered.filter(d=>d.dest==='hall').length},
   g6:{text:'+3 / kontor where you have presence',    fn:p=>3*KONTORE.filter(k=>deliveredAt(p,k)>0).length},
   g7:{text:'+2 / upgrade on your brewery',           fn:p=>2*p.upgrades.length},
@@ -427,7 +439,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v30'; // A2′ ⚙: the charter fare is a shared market price indexed by the Sailed-Ships track (per-count fare rows; supersedes the per-player escalation); bump discards stale state
+const KEY='hanse-hotseat-v31'; // v0.11 Batch B ⚙: NEUTRAL destination-bound ships (ship deck + Commission + own-casks loading + filler dispatch fee; rival-cask shipping CUT); bump discards stale state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -465,6 +477,7 @@ function newPlayer(i,name){
 function freshState(n,names){
   const st={players:[],slots:{},turn:1,active:0,first:0,ending:false,log:[],
     exports:dealExports(), sailed:0, sailedCap:(SAILED_CAP[n]||10), upgradeSupply:[], upgradeDisplay:[],
+    shipDeck:[], shipNext:null,
     sessionId:newSessionId(), endedAt:null, studioSent:null};
   for(let i=0;i<n;i++) st.players.push(newPlayer(i,names[i]));
   SLOTS.forEach(s=>st.slots[s.id]=null);
@@ -490,7 +503,10 @@ function freshState(n,names){
     const L=cands[0], id=lineSlots[L].find(id=>!st.slots[id]);
     st.slots[id]=t; lineWt[L]+=wt; return true;
   };
-  st.players.forEach(p=>placeBalanced({type:'ship',owner:p.id,ship:'cog',dest:'bruges',load:[]},1));
+  // v0.11 Batch B: the ship deck (neutral hulls, destination printed); 2 seeded, next face-up ⚙
+  st.shipDeck=shuffle(SHIP_DECK_MIX.map(x=>({ship:x[0],dest:x[1]})));
+  for(let i=0;i<2;i++){const sh=st.shipDeck.shift();placeBalanced({type:'ship',ship:sh.ship,dest:sh.dest,load:[]},1);}
+  st.shipNext=st.shipDeck.shift()||null;
   const npool=shuffle(Object.keys(NEUTRALS).slice());
   const nNeutral=Math.min(3,npool.length,Math.max(1, SLOTS.length - st.players.length - 2));  // 2–3 in play (scales with open slots; tightest at 5p)
   for(let i=0;i<nNeutral;i++)placeBalanced({type:'neutral',b:npool[i]},2);
@@ -522,12 +538,12 @@ function costIcons(c){let a=[];if(c.g)a.push(Gi(c.g));if(c.h)a.push(Hi(c.h));ret
 function styleShort(style){return STYLES[style].name.split(' ')[0];}
 function shipName(t){return SHIP_NAME[t.ship];}
 function effReady(p,style){return Math.max(1,STYLES[style].ready-(hasUpgrade(p,'cellar')?1:0));}
-function effCap(t){return SHIP_CAP[t.ship]+(hasUpgrade(S.players[t.owner],'royal')?1:0);}
+function effCap(t){return SHIP_CAP[t.ship];}
 function openVessel(p){return p.vessels.findIndex(v=>v===null);}
 function emptySlots(){return SLOTS.filter(s=>!S.slots[s.id]);}
 function wharfCaskSlots(){return SLOTS.map(s=>s.id).filter(id=>{const t=S.slots[id];return t&&t.type==='cask';});}
-function wharfLoadableCasks(p){return wharfCaskSlots();}   // you may load your own OR a rival's wharf cask
-function myShips(p){return SLOTS.map(s=>s.id).filter(id=>{const t=S.slots[id];return t&&t.type==='ship'&&t.owner===p.id;});}
+function wharfLoadableCasks(p){return wharfCaskSlots().filter(id=>S.slots[id].owner===p.id);}   // YOUR casks only (v0.11 B)
+function myShips(p){return SLOTS.map(s=>s.id).filter(id=>{const t=S.slots[id];return t&&t.type==='ship';});}   // ships are neutral — 'mine' = loadable by me (name kept for the harnesses)
 function canTake(shipSlot,caskSlot){const sh=S.slots[shipSlot],ct=S.slots[caskSlot];
   return sh&&ct&&sh.type==='ship'&&ct.type==='cask'&&sh.load.length<effCap(sh)&&STYLES[ct.style].q>=DEST[sh.dest].gate;}
 function readyInVessels(p){return p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready);}
@@ -572,14 +588,15 @@ const CELLTIP={
   Market:'Market · Source. Take 2 goods (any mix), OR buy one tile from the Market — a recipe, a ship, or a brewery upgrade. Never closed (move onto a rival here for 1G).',
   Brewhouse:'Brewhouse · Brew. Load one recipe you hold (paying its G/H) into an open vessel as a young cask. Never closed (move onto a rival here for 1G).',
   Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' age points to allocate across your vessels (your casks also age +1 automatically each turn). When a cask is Ready, set it on a slot.',
-  Harbor:'Harbor · Ship. Load a Ready cask from a slot (yours, or a rival’s) onto one of your ships; a ship sails the instant it is full. You may also launch a partial ship early. Never closed.',
+  Harbor:'Harbor · Ship. Load one of YOUR Ready casks from a slot onto any ship on the Wharf; a ship sails the instant it is full (the filler takes the dispatch fee). You may launch a ship early if it carries one of your casks. Never closed.',
 };
 function tileTip(t){
   if(!t)return 'An open slot — Ready casks deploy here (becoming public action-buildings + cargo), and you build ships here.';
   if(t.type==='cask'){const o=S.players[t.owner];
     return o.name+'’s deployed '+STYLES[t.style].name+' (Q'+t.q+') on a slot — cargo-in-waiting + a public action ('+CASK_ACT[STYLES[t.style].act]+'). When its line fires the active player may use that action; load it on a ship to deliver it.';}
-  if(t.type==='ship'){const o=S.players[t.owner];
-    return o.name+'’s '+shipName(t)+' bound for '+DEST[t.dest].name+' ('+t.load.length+'/'+effCap(t)+' aboard, gate Q'+DEST[t.dest].gate+'). Load Ready casks from slots via the Harbor or when its line fires; full → it sails, delivering every cask, and is consumed onto the Sailed-Ships track.';}
+  if(t.type==='ship'){
+    const cargo=t.load.length?(' Aboard: '+t.load.map(L=>S.players[L.owner].name+'’s '+styleShort(L.style)).join(', ')+'.'):'';
+    return 'A neutral '+shipName(t)+' bound for '+DEST[t.dest].name+' ('+t.load.length+'/'+effCap(t)+' aboard, Q'+DEST[t.dest].gate+'+ casks only). Anyone may load THEIR OWN casks via the Harbor or when its line fires; full → it sails (the filler gains the dispatch fee), every cask owner scores, and the hull is consumed onto the Sailed-Ships track.'+cargo;}
   if(t.type==='neutral')return 'Town building · '+NEUTRALS[t.b].name+' (shared) — when its line fires, the active player may '+NEUTRALS[t.b].act+'.';
   return '';
 }
@@ -589,7 +606,7 @@ function cellTip(cell){return CELLTIP[CELLNAME[cell]];}
 function qPips(q){let s='';for(let i=1;i<=5;i++)s+='<span class="tpip'+(i<=q?' on':'')+'"></span>';return s;}
 function slotFace(t){
   if(t.type==='cask')return '<div class="tface"><span class="bigic">'+LU('beer')+'</span><span class="tnm">'+styleShort(t.style)+'</span><span class="tpips">'+qPips(t.q)+'</span></div>';
-  if(t.type==='ship')return '<div class="tface"><span class="bigic">'+LU('sailboat')+'</span><span class="tnm">'+shipName(t)+'</span><span class="tinfo">'+LU('map-pin')+DEST[t.dest].name+' '+t.load.length+'/'+effCap(t)+'</span></div>';
+  if(t.type==='ship')return '<div class="tface"><span class="bigic">'+LU('sailboat')+'</span><span class="tnm">'+shipName(t)+'</span><span class="tinfo">'+LU('map-pin')+DEST[t.dest].name+' '+t.load.length+'/'+effCap(t)+'</span><span class="tinfo">'+t.load.map(L=>'<span class="dsq" style="width:7px;height:7px;background:'+S.players[L.owner].color+'"></span>').join('')+'</span></div>';
   if(t.type==='neutral')return '<div class="tface"><span class="bigic">'+LU(NEUTRALS[t.b].icon)+'</span><span class="tnm">'+NEUTRALS[t.b].name+'</span></div>';
   return '';
 }
@@ -641,7 +658,7 @@ function startGame(){
   S.players.forEach((p,i)=>{p.ai=ais[i];});
   document.getElementById('setup').classList.add('hidden');
   log('Game begins — '+setupN+' brewing houses'+(ais.some(a=>a)?' · AI seats: '+S.players.filter(p=>p.ai).map(p=>p.name+' ('+aiLabel(p)+')').join(', '):'')+'. The export beers this game (3 of 4): '+exportLabel()+'.');
-  log('Warm start: each house has a Cog (→ Bruges) on a slot and a Ready Gruit in vessel 1 (deploy it turn 1).');
+  log('Warm start: two neutral ships from the deck sit on the slots (the next is face-up at the Market), and every house holds a Ready Gruit in vessel 1 (deploy it turn 1).');
   save();render();maybeRunAI();
 }
 
@@ -707,21 +724,25 @@ function buyRecipe(style){const p=cur();
   const c=RECIPE_BUY[style];if(!canPay(p,c))return;
   snapshot();pay(p,c);p.recipes.push(style);
   log(p.name+' buys the '+LU('scroll-text')+' <b>'+STYLES[style].name+'</b> recipe (Q'+STYLES[style].q+').',true);cellDone();}
-function buyTile(id){
-  const it=SHOP.find(x=>x.id===id);const p=cur();
-  if(it.kind==='ship'){
-    if(!emptySlots().length){alert('No open slot to build a ship.');return;}
-    if(!canPay(p,it.cost))return;
-    snapshot();pay(p,it.cost);UI.tmp.shipBuild={ship:it.ship};UI.stage='shipdest';
-    log(p.name+' builds a '+LU('sailboat')+' <b>'+SHIP_NAME[it.ship]+'</b> — bind it to a destination.',true);render();return;}
+// Commission the face-up ship of the deck (v0.11 B): pay the fee, place it on any open slot.
+// The hull & destination are printed on the tile — what you buy is tempo and placement.
+function commissionShip(){const p=cur();
+  if(!S.shipNext){log('↳ the ship deck is empty — only charters sail now.');cellDone();return;}   // graceful: always progresses the turn
+  if(!emptySlots().length){alert('No open slot to place a ship.');return;}
+  if(!canPay(p,COMMISSION_COST))return;
+  snapshot();pay(p,COMMISSION_COST);
+  UI.tmp.placeTile={type:'ship',ship:S.shipNext.ship,dest:S.shipNext.dest,load:[]};
+  S.shipNext=S.shipDeck.length?S.shipDeck.shift():null;
+  UI.stage='place';
+  log(p.name+' commissions the '+LU('sailboat')+' <b>'+SHIP_NAME[UI.tmp.placeTile.ship]+'</b> bound for '+LU(DEST[UI.tmp.placeTile.dest].kontor?'landmark':'crown')+' <b>'+DEST[UI.tmp.placeTile.dest].name+'</b> — place it on a slot.',true);
+  render();
 }
+function buyTile(id){commissionShip();}   // legacy alias (the headless harness bot calls buyTile('s_cog'))
 // Buy an upgrade from the face-up display (Market option B): pay its cost, take it, refill.
 function buyDisplayUp(key){const p=cur();if(!grantableBuy(p,key))return;const c=UPGRADE_BUY[key];if(!canPay(p,c))return;
   snapshot();pay(p,c);grantUpgrade(p,key);takeFromDisplay(key);
   log(p.name+' buys '+LU('wrench')+' <b>'+upName(key)+'</b> from the Market display.',true);cellDone();}
-function shipDest(dest){const p=cur();
-  UI.tmp.placeTile={type:'ship',owner:p.id,ship:UI.tmp.shipBuild.ship,dest,load:[]};UI.stage='place';
-  log(p.name+'’s '+LU('sailboat')+' '+SHIP_NAME[UI.tmp.shipBuild.ship]+' is bound for '+LU(DEST[dest].kontor?'landmark':'crown')+' <b>'+DEST[dest].name+'</b> (cap '+effCap(UI.tmp.placeTile)+') — place it on a slot.',true);render();}
+
 function placeSlot(slot){const t=UI.tmp.placeTile;S.slots[slot]=t;
   log('↳ '+LU('sailboat')+' '+SHIP_NAME[t.ship]+' placed on a '+LU('anchor')+' slot, bound for '+DEST[t.dest].name+'.');cellDone();}
 
@@ -834,10 +855,10 @@ function loadPickCask(slot){UI.load.cask=slot;render();}
 function loadOnto(shipSlot){const p=cur();const caskSlot=UI.load.cask;const sh=S.slots[shipSlot];const ct=S.slots[caskSlot];
   snapshot();
   sh.load.push({owner:ct.owner,style:ct.style,q:ct.q});S.slots[caskSlot]=null;
-  if(ct.owner!==p.id)gain(p,1,0);   // the loader bonus (shows in the ledger)
-  log(p.name+' '+LU('ship')+' loads '+LU('beer')+ownSq(ct.owner)+styleShort(ct.style)+' onto '+LU('sailboat')+ownSq(sh.owner)+shipName(sh)+' → <b>'+DEST[sh.dest].name+'</b> ('+sh.load.length+'/'+effCap(sh)+').',true);
+  sh.lastLoader=p.id;
+  log(p.name+' '+LU('ship')+' loads '+LU('beer')+ownSq(ct.owner)+styleShort(ct.style)+' onto the '+LU('sailboat')+shipName(sh)+' → <b>'+DEST[sh.dest].name+'</b> ('+sh.load.length+'/'+effCap(sh)+').',true);
   const rt=UI.load.returnTo;
-  if(sh.load.length>=effCap(sh)){UI.load=null;sailShip(shipSlot);afterSail(rt);return;}
+  if(sh.load.length>=effCap(sh)){UI.load=null;sailShip(shipSlot,p.id);afterSail(rt);return;}
   if(UI.load.loadsLeft>1){const more=wharfLoadableCasks(p).filter(cs=>UI.load.ships.some(s=>canTake(s,cs)));
     if(more.length){UI.load.loadsLeft--;UI.load.cask=null;render();return;}}
   UI.load=null;resume(rt);
@@ -845,12 +866,20 @@ function loadOnto(shipSlot){const p=cur();const caskSlot=UI.load.cask;const sh=S
 function loadBack(){UI.load.cask=null;render();}
 function loadSkip(){const rt=UI.load.returnTo;UI.load=null;resume(rt);}
 
-// ---------- SHIPS: sail & deliver ----------
-function sailShip(slot){const t=S.slots[slot];const o=S.players[t.owner];
-  o.shipsSailed=(o.shipsSailed||0)+1;
+// ---------- SHIPS: sail & deliver (neutral hulls — v0.11 B) ----------
+// creditId: the player whose action sent it off — the FILLER (full ship: + the dispatch fee ⚙)
+// or the LAUNCHER (partial: goal credit only).
+function sailShip(slot,creditId){const t=S.slots[slot];
+  const full=t.load.length>=effCap(t);
+  const cp=(creditId!=null)?S.players[creditId]:(t.lastLoader!=null?S.players[t.lastLoader]:null);
+  log('★ the '+LU('sailboat')+' <b>'+shipName(t)+'</b> sails to <b>'+DEST[t.dest].name+'</b> with '+t.load.length+' '+LU('beer')+' cask'+(t.load.length===1?'':'s')+(cp?' — dispatched by '+cp.name:'')+'! (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')');
+  if(cp){cp.shipsSailed=(cp.shipsSailed||0)+1;if(full)gain(cp,FILL_BONUS.g,0);}   // the dispatch fee ⚙
   t.load.forEach(L=>{const lp=S.players[L.owner];lp.delivered.push({style:L.style,q:L.q,dest:t.dest});grantBenefit(lp,t.dest,L.q);});
-  log('★ '+o.name+'’s '+LU('sailboat')+ownSq(t.owner)+'<b>'+shipName(t)+'</b> sails to <b>'+DEST[t.dest].name+'</b> with '+t.load.length+' '+LU('beer')+' cask'+(t.load.length===1?'':'s')+'! (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')');
   S.slots[slot]=null;S.sailed++;
+  // the hull returns to the yard: sailed ships go to the BOTTOM of the ship deck (the supply never
+  // dries up); the Sailed-Ships clock advances by marker, not by consumed tiles ⚙
+  S.shipDeck.push({ship:t.ship,dest:t.dest});
+  if(!S.shipNext)S.shipNext=S.shipDeck.shift();
 }
 function grantBenefit(lp,dest,q){
   if(DEST[dest].kontor&&hasUpgrade(lp,'staple'))gain(lp,1,0);   // Staple Right: +1 good on any kontor delivery
@@ -880,7 +909,9 @@ function benefitPick(key){snapshot();const b=UI.pendingBenefits[0];grantUpgrade(
 
 // ---------- HARBOR menu ----------
 function harborLoad(){const p=cur();const loads=1+(hasUpgrade(p,'quay')?1:0)+(hasUpgrade(p,'cooperage')?1:0);enterLoad(myShips(p),wharfLoadableCasks(p),false,'stops',loads);}
-function harborLaunch(slot){snapshot();sailShip(slot);afterSail('stops');}
+function harborLaunch(slot){const p=cur();const t=S.slots[slot];
+  if(!t||!t.load.some(L=>L.owner===p.id)){log('↳ you may only launch a ship carrying one of your casks.');cellDone();return;}
+  snapshot();sailShip(slot,p.id);afterSail('stops');}
 // Charter — the relief valve: pay to send ONE of your Ready casks (vessel or wharf) on a single-cask voyage now.
 function charterCasks(p){const out=readyInVessels(p).map(o=>({ref:'v:'+o.i,style:o.c.style,q:o.c.q}));
   wharfCaskSlots().forEach(id=>{if(S.slots[id].owner===p.id)out.push({ref:id,style:S.slots[id].style,q:S.slots[id].q});});return out;}
@@ -1068,7 +1099,7 @@ async function studioSend(){
 // Every name here is ai-prefixed so the headless harness (playtests/sim.js), which appends its own
 // bot into this same scope, never collides. playtests/ai-ladder.js drives aiStep() directly.
 const AI_TIERS={
-  apprentice:{label:'Apprentice', noise:0.45},   // ⚙ noise = chance of a random legal pick per decision
+  apprentice:{label:'Apprentice', noise:0.65},   // ⚙ noise = chance of a random legal pick per decision
   journeyman:{label:'Journeyman', noise:0},
   trader    :{label:'Trader',     noise:0},
   guildmaster:{label:'Guildmaster',noise:0},     // Phase 3: flat Monte Carlo on top of the trader policy
@@ -1078,17 +1109,17 @@ const AI_PERSONAS=['volume','prestige','majority'];
 // playtests/ai-tune.js (CEM: candidate vs these incumbent defaults + Journeyman, fitness = win-rate);
 // the values below are the adopted set. A per-seat override rides on p.ai.w — that is how the tuner
 // pits two weight sets inside one game. Apprentice/Journeyman read NONE of these (frozen baselines).
-const AI_W={
-  swing   :0.75,   // majority-swing weight in the destination score
-  upBen   :1.5,    // an upgrade benefit's worth (London/Novgorod) in the destination score
-  goodsBen:1.0,    // a goods benefit's worth (Bruges/Bergen)
-  hallBase:0.75,   // Hall multiplier at clock 0 …
-  hallRamp:0.55,   // … rising to hallBase+hallRamp as the Sailed-Ships clock fills
-  leanVal :1.05,   // volume lean: kontor-value tilt (CEM consistently pulled this toward 1 — a big tilt is a handicap)
-  leanSwing:1.2,   // majority lean: swing tilt
-  leanHall:1.15,   // prestige lean: Hall tilt
-  goalW   :1.0,    // weight on the exact goal marginal
-  buyFlush:7,      // grain threshold for buying a non-tempo upgrade at the Market
+const AI_W={   // v0.11 Batch B re-tune (ai-tune-v31: ADOPT, 54.1% vs the owned-world incumbent)
+  swing   :1.0,    // majority-swing weight in the destination score (up — swings rule the shared world)
+  upBen   :1.45,   // an upgrade benefit's worth (London/Novgorod) in the destination score
+  goodsBen:1.4,    // a goods benefit's worth (Bruges/Bergen)
+  hallBase:0.45,   // Hall multiplier at clock 0 …
+  hallRamp:0.9,    // … rising to hallBase+hallRamp as the clock fills (Hall even more end-loaded)
+  leanVal :0.91,   // the persona tilts flattened to ≈1 — leans are flavour, the core does the work
+  leanSwing:1.01,
+  leanHall:0.91,
+  goalW   :1.94,   // goals weigh DOUBLE now that ship-selection scores them (the new dest decision)
+  buyFlush:8.68,   // grain threshold for buying a non-tempo upgrade at the Market
 };
 function aiW(p){return (p.ai&&p.ai.w)||AI_W;}
 const AI_DELAYS={slow:900,normal:450,instant:0};   // ms between AI decisions ⚙
@@ -1112,7 +1143,22 @@ function aiIsTrader(p){return p.ai.tier==='trader'||p.ai.tier==='guildmaster';}
 
 // ---- shared heuristics (ported from playtests/sim.js; journeyman = that bot verbatim) ----
 function aiAchQ(p){const qs=p.recipes.map(r=>(STYLES[r].cellar&&!hasUpgrade(p,'cellar'))?0:STYLES[r].q);return Math.max(...qs);}
-function aiNeedShip(p){return myShips(p).length===0&&emptySlots().length>0&&canPay(p,{g:2});}
+// trader: ALSO commission when the face-up hull is bound where my lean would ship my best cargo
+function aiWantCommission(p){
+  if(aiNeedShip(p))return true;
+  if(!aiIsTrader(p)||!S.shipNext||!emptySlots().length||!canPay(p,COMMISSION_COST))return false;
+  const bc=aiBestCargo(p);
+  if(bc.q<DEST[S.shipNext.dest].gate)return false;
+  return p.grain>=4&&aiDest(p,bc.q,bc.style)===S.shipNext.dest;
+}
+// commission when NO hull on the board has room for my best cargo (shared-ship world)
+function aiNeedShip(p){
+  if(!S.shipNext||!emptySlots().length||!canPay(p,COMMISSION_COST))return false;
+  const qs=[];p.vessels.forEach(c=>{if(c)qs.push(c.q);});
+  wharfCaskSlots().forEach(id=>{const t=S.slots[id];if(t.owner===p.id)qs.push(t.q);});
+  const bq=qs.length?Math.max(...qs):aiAchQ(p);
+  return !myShips(p).some(sid=>{const t=S.slots[sid];return t.load.length<effCap(t)&&bq>=DEST[t.dest].gate;});
+}
 // Trader climbs to the cellar-gated Q5 once it holds the Aging Cellar; the lower tiers keep the
 // documented greedy blind spot (never the cellar beer) on purpose.
 function aiBuyableExports(p){return (S.exports||[]).filter(s=>!p.recipes.includes(s)
@@ -1212,12 +1258,11 @@ function aiStopPrio(s){
   if(t.type==='neutral')return {stall:0,counting:1,towncrier:1,cooper:2,almshouse:2,crane:4}[t.b];
   return 50;}
 function aiStops(p){
-  if(aiNoisy(p)){resolveStop(Math.floor(Math.random()*UI.stops.length));return;}
+  if(aiIsApp(p)||aiNoisy(p)){resolveStop(Math.floor(Math.random()*UI.stops.length));return;}   // the apprentice wanders
   let bi=0,bp=1e9;UI.stops.forEach((s,i)=>{const pr=aiStopPrio(s);if(pr<bp){bp=pr;bi=i;}});resolveStop(bi);}
 function aiMarket(p){
-  if(UI.stage==='shipdest'){const bc=aiBestCargo(p);shipDest(aiDest(p,bc.q,bc.style));return;}
   if(UI.stage==='place'){placeSlot(emptySlots()[0].id);return;}
-  if(aiNeedShip(p)){buyTile('s_cog');return;}
+  if(!aiIsApp(p)&&aiWantCommission(p)){commissionShip();return;}   // apprentice never commissions ⚙
   const ex=aiBuyableExports(p);
   if(ex.length){ex.sort((a,b)=>STYLES[a].q-STYLES[b].q);buyRecipe(ex[0]);return;}
   if(!aiIsApp(p)){const buyable=displayGrantable(p).filter(k=>canPay(p,UPGRADE_BUY[k]));
@@ -1239,18 +1284,18 @@ function aiHarbor(p){
   const jammed=emptySlots().length===0;
   const noHull=myShips(p).length===0&&!canPay(p,{g:2});
   if(canCh&&(jammed||S.ending||noHull)){harborCharter();return;}
-  const launch=myShips(p).filter(s=>S.slots[s].load.length>0);
+  const launch=myShips(p).filter(s=>S.slots[s].load.some(L=>L.owner===p.id));
   if(launch.length&&(S.ending||jammed)){harborLaunch(launch[0]);return;}
   cellDone();
 }
 function aiCellAct(p){const role=CELLROLE[UI.cell];if(role==='Source')aiMarket(p);else if(role==='Ship')aiHarbor(p);else cellDone();}
 function aiBrew(p){const aff=p.recipes.filter(r=>canBrew(p,r)&&openVessel(p)>=0);
   if(!aff.length){resume(UI.brew.returnTo);return;}
-  if(aiNoisy(p)){brewPick(aiRandOf(aff));return;}
+  if(aiIsApp(p)||aiNoisy(p)){brewPick(aiRandOf(aff));return;}   // the apprentice brews whatever
   aff.sort((a,b)=>STYLES[b].q-STYLES[a].q);brewPick(aff[0]);}
 function aiAge(p){const mat=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step<o.c.ready);
   if(!mat.length){if(UI.age.mode==='pool')ageDone();else ageSkip();return;}
-  if(aiNoisy(p)){ageAllot(aiRandOf(mat).i);return;}
+  if(aiIsApp(p)||aiNoisy(p)){ageAllot(aiRandOf(mat).i);return;}   // the apprentice ages whatever
   mat.sort((a,b)=>(a.c.ready-a.c.step)-(b.c.ready-b.c.step));ageAllot(mat[0].i);}
 function aiSource(p){const n=UI.src.n;if(n>=2){if(p.hops<2)srcTake(1,1);else srcTake(2,0);}else{if(p.hops<1)srcTake(0,1);else srcTake(1,0);}}
 function aiReach(p){if(aiIsApp(p)){reachSkip();return;}
@@ -1268,7 +1313,7 @@ function aiWild(p){
 function aiLoad(p){const L=UI.load;
   if(!L.cask){const elig=L.casks.filter(cs=>L.ships.some(s=>canTake(s,cs)));
     if(!elig.length){loadSkip();return;}
-    if(aiNoisy(p)){loadPickCask(aiRandOf(elig));return;}
+    if(aiIsApp(p)||aiNoisy(p)){loadPickCask(aiRandOf(elig));return;}   // the apprentice loads whatever
     const own=elig.filter(cs=>S.slots[cs].owner===p.id);
     if(own.length){own.sort((a,b)=>S.slots[b].q-S.slots[a].q);loadPickCask(own[0]);return;}
     // Only rival casks are loadable. Loading one GIFTS its owner the delivery (value + benefit +
@@ -1281,10 +1326,15 @@ function aiLoad(p){const L=UI.load;
     elig.sort((a,b)=>S.slots[b].q-S.slots[a].q);loadPickCask(elig[0]);return;}
   const ships=L.ships.filter(s=>canTake(s,L.cask));
   if(!ships.length){loadBack();return;}
+  const lc=S.slots[UI.load.cask];
+  // choosing WHICH hull to feed is the destination decision now (bindings are printed) — the
+  // trader scores it like a delivery (value + majority swing + goal marginal); lower tiers by value.
+  const shipScore=sid=>{const sh=S.slots[sid];let v=destValue(sh.dest,lc.q);
+    if(aiIsTrader(p)){if(DEST[sh.dest].kontor)v+=0.75*aiMajSwing(p,sh.dest);v+=aiGoalGain(p,lc.style,lc.q,sh.dest);}
+    return v;};
   ships.sort((a,b)=>{const sa=S.slots[a],sb=S.slots[b];
-    const fa=(sa.load.length+1>=effCap(sa))?1:0,fb=(sb.load.length+1>=effCap(sb))?1:0;if(fa!==fb)return fb-fa;
-    const oa=sa.owner===p.id?1:0,ob=sb.owner===p.id?1:0;if(oa!==ob)return ob-oa;
-    return DEST[sb.dest].value-DEST[sa.dest].value;});
+    const fa=(sa.load.length+1>=effCap(sa))?1:0,fb=(sb.load.length+1>=effCap(sb))?1:0;if(fa!==fb)return fb-fa;   // completing a sail first (the dispatch fee)
+    return shipScore(b)-shipScore(a);});
   loadOnto(ships[0]);}
 function aiDeploy(p){const es=emptySlots();if(!es.length){deploySkipAll();return;}
   if(aiNoisy(p)){deployTo(aiRandOf(es).id);return;}
@@ -1353,11 +1403,10 @@ function aiGmOptions(p){
     return o;}
   if(U==='stops')return UI.stops.map((s,i)=>()=>resolveStop(i));
   if(U==='cell'&&UI.cell==='A'){
-    if(UI.stage==='shipdest')return DESTS.map(d=>()=>shipDest(d));
     if(UI.stage==='place')return emptySlots().map(s=>()=>placeSlot(s.id));
     const o=[()=>marketGoods(2,0),()=>marketGoods(1,1),()=>marketGoods(0,2)];
     (S.exports||[]).forEach(st=>{if(!p.recipes.includes(st)&&canPay(p,RECIPE_BUY[st]))o.push(()=>buyRecipe(st));});
-    if(emptySlots().length)SHOP.forEach(it=>{if(canPay(p,it.cost))o.push(()=>buyTile(it.id));});
+    if(S.shipNext&&emptySlots().length&&canPay(p,COMMISSION_COST))o.push(()=>commissionShip());
     Array.from(new Set(S.upgradeDisplay||[])).forEach(k=>{if(grantableBuy(p,k)&&canPay(p,UPGRADE_BUY[k]))o.push(()=>buyDisplayUp(k));});
     return o;}
   if(U==='cell'&&UI.cell==='C'){
@@ -1366,7 +1415,7 @@ function aiGmOptions(p){
       return DESTS.filter(d=>c.q>=DEST[d].gate).map(d=>()=>charterDest(d));}
     const o=[];
     if(myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs))))o.push(()=>harborLoad());
-    myShips(p).filter(s=>S.slots[s].load.length>0).forEach(s=>o.push(()=>harborLaunch(s)));
+    myShips(p).filter(s=>S.slots[s].load.some(L=>L.owner===p.id)).forEach(s=>o.push(()=>harborLaunch(s)));
     if(canPay(p,charterCost(p))&&charterCasks(p).length>0)o.push(()=>harborCharter());
     o.push(()=>cellDone());
     return o;}
@@ -1520,7 +1569,7 @@ function renderBar(){
       acts=elig.map(cs=>{const ct=S.slots[cs];return btn(LU('beer')+ownSq(ct.owner)+styleShort(ct.style)+' Q'+ct.q,'loadPickCask(\''+cs+'\')','go');}).join('')+btn('Skip','loadSkip()','ghost');}
     else{const lc=S.slots[L.cask];prompt='Load '+LU('beer')+ownSq(lc.owner)+styleShort(lc.style)+' onto which ship?';
       const ships=L.ships.filter(s=>canTake(s,L.cask));
-      acts=ships.map(s=>{const sh=S.slots[s];return btn(LU('sailboat')+ownSq(sh.owner)+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+')','loadOnto(\''+s+'\')','go');}).join('')+btn('Back','loadBack()','ghost')+btn('Skip','loadSkip()','ghost');}}
+      acts=ships.map(s=>{const sh=S.slots[s];return btn(LU('sailboat')+' '+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+')','loadOnto(\''+s+'\')','go');}).join('')+btn('Back','loadBack()','ghost')+btn('Skip','loadSkip()','ghost');}}
   else if(U==='deploy'){const vi=UI.deploy.queue[0];const c=p.vessels[vi];
     prompt='Set Ready <b>'+styleShort(c.style)+'</b> on a slot — click an open slot.';
     acts=btn('Leave in vessel','deploySkipOne()','ghost')+(UI.deploy.queue.length>1?btn('Skip rest','deploySkipAll()','ghost'):'');}
@@ -1540,15 +1589,13 @@ function stopLabel(s){
   if(s.kind==='cell')return LU(ICON[CELLNAME[s.cell]])+' '+CELLNAME[s.cell];
   const t=S.slots[s.slot];if(!t)return '(empty)';
   if(t.type==='cask')return LU('beer')+ownSq(t.owner)+'Cask · '+styleShort(t.style);
-  if(t.type==='ship')return LU('sailboat')+ownSq(t.owner)+'Ship · load '+shipName(t)+'→'+DEST[t.dest].name;
+  if(t.type==='ship')return LU('sailboat')+' Ship · load '+shipName(t)+'→'+DEST[t.dest].name;
   if(t.type==='neutral')return LU(NEUTRALS[t.b].icon)+' '+NEUTRALS[t.b].name;
   return '';
 }
 function cellRender(p){
   if(UI.cell==='A'){
-    if(UI.stage==='shipdest')return {prompt:'Bind your ship to a destination (it inherits that gate).',
-      acts:DESTS.map(d=>btn((DEST[d].kontor?LU('landmark'):LU('crown'))+' '+DEST[d].name+' (Q'+DEST[d].gate+')','shipDest(\''+d+'\')','go')).join('')};
-    if(UI.stage==='place')return {prompt:'Click an open slot to place your ship.',acts:''};
+    if(UI.stage==='place')return {prompt:'Click an open slot to place the commissioned ship.',acts:''};
     return {prompt:'Gain 2 goods, or buy a tile from the Market →',
       acts:btn('Take '+Gi(2),'marketGoods(2,0)','go')+btn('Take '+Gi(1)+Hi(1),'marketGoods(1,1)','go')+btn('Take '+Hi(2),'marketGoods(0,2)','go')+btn('Skip','cellDone()','ghost')};
   }
@@ -1561,10 +1608,10 @@ function cellRender(p){
       return {prompt:'Charter '+styleShort(c.style)+' (Q'+c.q+') → which destination?',
         acts:ds.map(d=>btn((DEST[d].kontor?LU('landmark'):LU('crown'))+' '+DEST[d].name,'charterDest(\''+d+'\')','go')).join('')+btn('Back','(function(){UI.stage=\'charter_cask\';render();})()','ghost')};}
     const canLoad=myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs)));
-    const launch=myShips(p).filter(s=>S.slots[s].load.length>0);
+    const launch=myShips(p).filter(s=>S.slots[s].load.some(L=>L.owner===p.id));
     const canCharter=canPay(p,charterCost(p))&&charterCasks(p).length>0;
     let acts=(canLoad?btn(LU('ship')+' Load a cask → ship','harborLoad()','primary'):'');
-    launch.forEach(s=>{const sh=S.slots[s];acts+=btn(LU('sailboat')+ownSq(sh.owner)+'Launch '+shipName(sh)+' early ('+sh.load.length+'/'+effCap(sh)+')','harborLaunch(\''+s+'\')');});
+    launch.forEach(s=>{const sh=S.slots[s];acts+=btn(LU('sailboat')+' Launch '+shipName(sh)+'→'+DEST[sh.dest].name+' early ('+sh.load.length+'/'+effCap(sh)+')','harborLaunch(\''+s+'\')');});
     if(canCharter)acts+=btn(LU('sailboat')+' Charter a voyage ('+costStr(charterCost(p))+')','harborCharter()');
     if(!canLoad&&!launch.length&&!canCharter)acts+='<span class="note">nothing to ship yet</span> ';
     return {prompt:'Ship — load a Ready cask from a slot onto a ship, launch one early, or charter a single-cask voyage.',acts:acts+btn('Skip','cellDone()','ghost')};
@@ -1579,7 +1626,7 @@ function renderGrid(){
     if(placing)cls+=' place';
     let inner;let style='';
     if(t){cls+=' filled';inner=slotFace(t);
-      style=t.type==='neutral'?'background:var(--slate);border-color:var(--slate)':'background:'+S.players[t.owner].color+';border-color:'+S.players[t.owner].color;}
+      style=t.type==='neutral'?'background:var(--slate);border-color:var(--slate)':t.type==='ship'?'background:var(--sea);border-color:var(--sea2)':'background:'+S.players[t.owner].color+';border-color:'+S.players[t.owner].color;}
     else inner='<span style="opacity:.45">'+s.id+'</span>';
     const click=placing?(UI.sub==='deploy'?'deployTo':'placeSlot'):null;
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
@@ -1640,9 +1687,11 @@ function renderShop(){
       +(st.cellar?' <span class="note" style="font-size:.72rem">(needs Aging Cellar)</span>':'');
     const cost=RECIPE_BUY[style];const can=canPay(p,cost);
     h+='<div class="item"><span data-tip="'+attr('Permission to brew '+st.name+' (Q'+st.q+'), permanent. Brew cost: '+costStr(st.in)+'.')+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyRecipe(\''+style+'\')">buy</button>':'')+'</span></div>';});
-  SHOP.forEach(it=>{
-    const nm=LU('sailboat')+' '+SHIP_NAME[it.ship]+' (cap '+SHIP_CAP[it.ship]+')';const cost=it.cost;const can=canPay(p,cost)&&emptySlots().length>0;
-    h+='<div class="item"><span data-tip="'+attr('Owned carrier bound to a destination; sails when full onto the Sailed-Ships track.')+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyTile(\''+it.id+'\')">buy</button>':'')+'</span></div>';});
+  // the SHIP DECK (v0.11 B): the next neutral hull face-up — Commission places it on a slot
+  if(S.shipNext){
+    const sn=S.shipNext;const can=canPay(p,COMMISSION_COST)&&emptySlots().length>0;
+    h+='<div class="item"><span data-tip="'+attr('The face-up ship of the deck: a neutral '+SHIP_NAME[sn.ship]+' (cap '+SHIP_CAP[sn.ship]+') bound for '+DEST[sn.dest].name+'. Commission: pay '+costStr(COMMISSION_COST)+', place it on any open slot. Nobody owns it — anyone loads their own casks.')+'">'+LU('sailboat')+' <b>'+SHIP_NAME[sn.ship]+'</b> → '+(DEST[sn.dest].kontor?LU('landmark'):LU('crown'))+' '+DEST[sn.dest].name+' (cap '+SHIP_CAP[sn.ship]+') <span class="note" style="font-size:.7rem">· next of the ship deck ('+S.shipDeck.length+' below)</span></span><span class="cost">'+costIcons(COMMISSION_COST)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="commissionShip()">commission</button>':'')+'</span></div>';
+  }else h+='<div class="item" style="opacity:.7"><span>'+LU('sailboat')+' ship deck exhausted <span class="note">(charters still sail)</span></span></div>';
   // the face-up Upgrade DISPLAY (option B) — buy one here, or earn one free by delivering to London/Novgorod
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Upgrade display</b> <span class="note">('+DISPLAY_SIZE+' face-up + a face-down deck — buy one, or earn one free by delivering to London/Novgorod)</span></div>';
   (S.upgradeDisplay||[]).forEach(key=>{const c=UPGRADE_BUY[key];const owned=!grantableBuy(p,key);const can=!owned&&canPay(p,c)&&buying;

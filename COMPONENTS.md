@@ -23,12 +23,12 @@
 
 | Component | Qty | Purpose |
 |---|---|---|
-| **Main board** | 1 | **The Wharf** — a 2×2 of four stations **A Market (Source) · B Brewhouse (Brew) · D Cellar (Age) · C Harbor (Ship)** ringed by **8 slots** (deployed casks, owned ships, seeded neutral buildings), plus the shared **Sailed-Ships track** (the end clock) with the **charter-fare row** printed beneath it ⚙. |
+| **Main board** | 1 | **The Wharf** — a 2×2 of four stations **A Market (Source) · B Brewhouse (Brew) · D Cellar (Age) · C Harbor (Ship)** ringed by **8 slots** (deployed casks, neutral ships, seeded neutral buildings), plus the shared **Sailed-Ships track** (the end clock — advanced by a **marker**, one step per voyage) with the **charter-fare row** printed beneath it ⚙. |
 | **Destination / Route board** | 1 | The four **kontore** (Bruges · London · Bergen · Novgorod) and the **Hall**, each with its **quality gate**, **delivery value**, **benefit**, and (kontore) a **majority track**. Delivered cask tiles sit at their destination; this is where volume (kontore) and prestige (the Hall) are tallied. |
 | **Player brewery boards** | 5 | Each private & untouchable — vessels + maturation + recipes + upgrades + storage. The *noun* the Wharf's actions act on (full spec in §4). |
 
 ### The slots — the ring around the stations (8 slots)
-- **8 live slots, 2 beside each line** (**2-player may lock some to ~6 ⚙**). They hold a **churning mix**: **deployed casks** (your Ready casks = public action-buildings + cargo-in-waiting; they leave when shipped), **ships** (owned single-use carriers; they sail away), and **2–3 neutral buildings** (shared base actions, seeded at setup — **spread with the warm-start Cogs across different lines** so no single line is the obvious opening camp ⚙). **One fire rule** (§0). Recipes and upgrades are **not** slot tiles (they live on your brewery board).
+- **8 live slots, 2 beside each line** (**2-player may lock some to ~6 ⚙**). They hold a **churning mix**: **deployed casks** (your Ready casks = public action-buildings + cargo-in-waiting; they leave when shipped), **ships** (neutral destination-bound hulls from the shared deck; they sail away and return to the deck), and **2–3 neutral buildings** (shared base actions, seeded at setup — **spread with the two warm-start ships across different lines** so no single line is the obvious opening camp ⚙). **One fire rule** (§0). Recipes and upgrades are **not** slot tiles (they live on your brewery board).
 
 ---
 
@@ -67,18 +67,18 @@ A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATU
 
 *Gruit is the cheap, fast workhorse — it keeps your goods flowing (its Source action) and reaches Bruges, but never makes prestige. The export casks are scarce, slow, and the key to the rich destinations — the Leffe/Westvleteren line drawn in the components.*
 
-### B. Ship tiles — owned single-use carriers (~13 tiles)
-Built at the **Market** into a slot, **bound to a destination** (inheriting its quality gate). Lifecycle **load → fill → sail:** loaded via the **Harbor action** or a **bonus free load when the ship's line fires** (your own or a **rival's** slot cask, `RULES.md` §5); the instant it is **full** (or launched early) it **sails** — every cask aboard delivers (scores for its owner) and the **ship is consumed onto the Sailed-Ships track**. Build another to ship again.
+### B. Ship tiles — NEUTRAL, destination-bound shared hulls (the ship deck, ~14 tiles ⚙ — v0.11 Batch B)
+**Nobody owns a ship.** Each tile is **printed** with its hull and **destination** (inheriting that destination's quality minimum). A shuffled **ship deck** sits by the Market with the **next ship face-up**; **2 are dealt to slots at setup** (the warm start). **Commission** (Market, `2 G` ⚙): place the face-up ship on any open slot. **Load your own casks only** — via the Harbor action or a bonus free load when the ship's line fires. The instant it is **full** it **sails** — every cask aboard delivers (scores for its owner + benefit), the **filler takes the dispatch fee (`2 G` ⚙)** and ships-goal credit; any player with a cask aboard may **launch it early** at the Harbor (credit, no fee). The voyage **advances the Sailed-Ships marker**, and the **hull returns to the bottom of the deck** (the supply never dries up). *(The old "ship a rival's cask" rule is cut — v0.11.)*
 
-| Ship | Capacity | Build cost ⚙ | Qty ⚙ |
+| Ship | Capacity | Commission ⚙ | In deck ⚙ |
 |---|---|---|---|
 | **Cog** | 2 | `2 G` | ~8 |
-| **Hulk** | 3 | `3 G` | ~5 |
+| **Hulk** | 3 | `2 G` | ~6 |
 | **Charter** *(no tile — an outside hull)* | 1 | **the fare row under the Sailed-Ships track** ⚙ (`2–5 G` by track position) | — |
 
 > Owning ships is the merchant fantasy: build the infrastructure, choose its destination, and a full Hulk is a 3-cask burst — still just **one** Sailed-Ships slot, so the clock stays smooth.
 >
-> **Charter** is the Harbor's always-available relief valve (`RULES.md` §5): pay the **charter fare — a shared market price printed under the Sailed-Ships track** (indexed by voyages delivered; per-count rows ⚙, e.g. 2p `2·2·3·2·2·4·5·5`, max `5 G`) to ship **one** Ready cask (vessel *or* slot) on an immediate single-cask voyage — it delivers and consumes one Sailed-Ships slot. **Strictly worse per cask** than a Cog/Hulk, so it never displaces owning ships; it exists so the tight slots can't deadlock. No tile, no qty — just an action.
+> **Charter** is the Harbor's always-available relief valve (`RULES.md` §5): pay the **charter fare — a shared market price printed under the Sailed-Ships track** (indexed by voyages delivered; per-count rows ⚙, e.g. 2p `2·2·3·2·2·4·5·5`, max `5 G`) to ship **one** Ready cask (vessel *or* slot) on an immediate single-cask voyage — it delivers and consumes one Sailed-Ships slot. **Strictly worse per cask** than filling a shared Cog/Hulk, so it never displaces the ships; it exists so the tight slots can't deadlock. No tile, no qty — just an action.
 
 ### C. Neutral building tiles — the shared base, seeded on the slots (6 designs, 2–3 in play ⚙)
 Placed in perimeter slots **at setup** (shared, permanent). They keep the slots alive from turn 1 — whoever runs their line may use the action, free. The "everyone has the base; your casks/ships are the better versions" floor (the *GWT* neutral-building idea).
@@ -123,7 +123,7 @@ Installed on your brewery board. **Earned mainly by delivering** (the **London /
 |---|---|---|
 | **Granary Right** | when you gain grain, +1 extra | `4 G` |
 | **Hop Garden** | when you gain hops, +1 extra | `4 G` |
-| **Royal Patent** | your ships sail with +1 capacity | `5 G` |
+| **Royal Patent** | your **charter fare is 1 `G` cheaper** (min 1) | `4 G` |
 | **Staple Right** | +1 good when you deliver to a kontor | `5 G` |
 | **Guild Seat** | +1 age point at the Cellar | `4 G` |
 | **Burgher Status** | +1 presence at every kontor you reach (majority help) | `5 G` |
@@ -131,7 +131,7 @@ Installed on your brewery board. **Earned mainly by delivering** (the **London /
 > Supply ~2 copies of each — except **Extra Vessel** (the repeatable one): **players + 1 copies ⚙** (so 6 in the box for 5p, matching `play.html`) — so an upgrade can be **contested**.
 
 ### F. Destinations — *where you ship is the lean* (the destination board)
-All **open from the start**. Differentiated by a **quality gate** (the climb-limiter — better places want better beer) and a unique **benefit / majority**. **The cask's owner always scores the delivery and takes any offered benefit — even when a rival shipped it.**
+All **open from the start**. Differentiated by a **quality gate** (the climb-limiter — better places want better beer) and a unique **benefit / majority**. **The cask's owner always scores the delivery and takes any offered benefit.**
 
 | Destination | Gate ⚙ | Per-cask value ⚙ | Majority — 1st/2nd/3rd ⚙ | Benefit on delivery ⚙ |
 |---|---|---|---|---|
@@ -151,7 +151,7 @@ A small pool of **9 designs** rewarding different shapes, so the winning engine 
 | 1 | +X per **distinct type** delivered | breadth / climb |
 | 2 | +X per cask delivered to **one** kontor | focus / majority |
 | 3 | +X per **Q3+** cask delivered | the export |
-| 4 | +X per **ship you sailed** | the merchant engine |
+| 4 | +X per **ship you filled or launched** | the merchant engine |
 | 5 | +X per cask shipped to the **Hall** | prestige |
 | 6 | +X per **kontor where you hold presence** | spread |
 | 7 | +X per **Upgrade** on your brewery | engine depth |
@@ -195,10 +195,10 @@ Symmetric for all players (except seat compensation, below). The stations are th
 | Recipes | **Gruit + Hopped** (fixed); more collected at the Market |
 | Vessels | **2 open** (lanes 3–4 locked behind Extra Vessel) |
 | Upgrades | none · Storage 8 |
-| **Warm start** | **1 built Cog** (on a slot, bound to Bruges) **+ 1 Ready Gruit in a vessel** (deploy it turn 1) ⚙ — the Wharf is live and a first voyage is reachable turn 2–3 |
+| **Warm start** | **2 neutral ships dealt from the ship deck** to slots (next face-up by the Market) **+ 1 Ready Gruit in a vessel** per player (deploy it turn 1) ⚙ — the Wharf is live and a first voyage is reachable turn 2–3 |
 | Worker | placed turn 1 (free, no toll — `RULES.md` §1) |
 
-> **Why mid-stream:** the pace model showed v0.6's first voyage at **turn 6** (goods-/geometry-bound), so v0.9 starts you with 2 vessels, a warm Cog + cask, all destinations open, base actions always usable. *Gaining an export recipe means more* because you start with only the on-ramp.
+> **Why mid-stream:** the pace model showed v0.6's first voyage at **turn 6** (goods-/geometry-bound), so v0.9+ starts you with 2 vessels, warm shared hulls + a Ready cask, all destinations open, base actions always usable. *Gaining an export recipe means more* because you start with only the on-ramp.
 
 ---
 
@@ -207,7 +207,7 @@ Symmetric for all players (except seat compensation, below). The stations are th
 | Family | Count ⚙ | Unique designs |
 |---|---|---|
 | A Casks | 60 | 5 types × actions |
-| B Ships | 13 | 2 (Cog · Hulk) |
+| B Ships (the deck) | ~14 | 2 (Cog · Hulk) × destinations printed |
 | C Neutral buildings | 6 in box (2–3 in play) | 6 |
 | D Recipes (cards) | 20 (4 exports × 1/player) | 4 (+2 printed starts) |
 | E Upgrades (Rooms + Modifiers) | 26 (Extra Vessel ×6, others ×2) | 11 |

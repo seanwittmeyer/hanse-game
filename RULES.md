@@ -10,10 +10,10 @@ Each house starts with:
 - **3 `G` (grain), 2 `H` (hops)** — plus **seat compensation: +1 `G` for every seat after the first** ⚙ (so seats P1…P5 start with 3/4/4/4/4 `G`). Turn order is fixed, which gives the first player a small structural edge; the free opening placement plus this +1 `G` neutralize it (sim-validated: it flattens the first-player win-rate at 2–3p essentially to fair). Storage cap 8 ⚙.
 - The **Gruit** and **Hopped** recipes (the on-ramp — fixed, symmetric, so everyone can brew immediately and *gaining an export recipe means more*). More recipes are acquired at the Market.
 - **2 open vessels** (the brewing throughput; cap 4 ⚙ via upgrades).
-- A **warm start so the Wharf is live on turn 1:** one built **Cog** placed on a slot (bound to **Bruges**), and **one Ready Gruit in a vessel** (deploy it to a slot on turn 1) ⚙ — no starting cask sits on the shared slots. First voyage is reachable by turn 2–3, not turn 6.
+- A **warm start so the Wharf is live on turn 1:** **two neutral ships** dealt from the **ship deck** onto slots (§5 — the next ship sits face-up beside the Market), and **one Ready Gruit in a vessel** per player (deploy it to a slot on turn 1) ⚙ — no starting cask sits on the shared slots. First voyage is reachable by turn 2–3, not turn 6.
 - An empty **brewery board** (vessels + upgrade slots — see `COMPONENTS.md` §4).
 
-The shared board is seeded so the ring is **alive from turn 1:** all four **destinations are open**, and **2–3 neutral buildings** ⚙ plus the warm-start **Cogs** are placed in perimeter slots **spread across different lines** (no single line is stacked with the shared tiles ⚙) so there is no obvious opening camp — every direction is worth something on turn 1. **Deal 3 of the 4 export beers** into play this game. Each beer carries a **fixed quality** — **Broyhan** and **Keut** are Q3, **Mumme** is Q4, **Bock** is Q5 — so dropping one varies the *ladder shape*: drop a Q3 beer → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4 tier; drop **Bock** → no Q5 tier (the variable export tier). **Shuffle all Upgrade tiles into a face-down Upgrade deck and deal 4 ⚙ face-up beside it (randomly placed) — the Upgrade display; the deck stays face-down as a 5th stack and refills the display as tiles are taken (§3).** Set the **Sailed-Ships track** to its player-scaled length. Each player places a worker on any station — **opening placement is free** (no occupancy toll, §1). **Choose a first player — fixed for the whole game** (turn order does not rotate ⚙; the free opening placement **and the +1 `G` per later seat** above are the seat balancers).
+The shared board is seeded so the ring is **alive from turn 1:** all four **destinations are open**, and **2–3 neutral buildings** ⚙ plus the **two warm-start ships** are placed in perimeter slots **spread across different lines** (no single line is stacked with the shared tiles ⚙) so there is no obvious opening camp — every direction is worth something on turn 1. **Deal 3 of the 4 export beers** into play this game. Each beer carries a **fixed quality** — **Broyhan** and **Keut** are Q3, **Mumme** is Q4, **Bock** is Q5 — so dropping one varies the *ladder shape*: drop a Q3 beer → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4 tier; drop **Bock** → no Q5 tier (the variable export tier). **Shuffle all Upgrade tiles into a face-down Upgrade deck and deal 4 ⚙ face-up beside it (randomly placed) — the Upgrade display; the deck stays face-down as a 5th stack and refills the display as tiles are taken (§3).** Set the **Sailed-Ships track** to its player-scaled length. Each player places a worker on any station — **opening placement is free** (no occupancy toll, §1). **Choose a first player — fixed for the whole game** (turn order does not rotate ⚙; the free opening placement **and the +1 `G` per later seat** above are the seat balancers).
 
 > **What's gone from v0.6** (the reel-in): the demand-market value track, the type frontier, Fairs, route-lane tiles, the Hall as an action station, the working-cask Floor state, the fires-when-blocked tableau twins, differentiated lane skims, recipe on-collect boons / the 6-card tuck, and aging cubes. **Casks are no longer presence while they sit; presence/standing happens at *delivery*.** Stations are never closed (no twins; the only station cost is a small occupancy toll, §1) — interaction lives on the slots and the loaded casks.
 
@@ -35,7 +35,7 @@ The four action stations sit in a 2×2 ringed by 8 slots — together, **the Wha
 - **A · Market** — *Source:* gain goods, or acquire a recipe / ship / upgrade.
 - **B · Brewhouse** — *Brew:* turn a recipe + goods into a young cask in a vessel.
 - **D · Cellar** — *Age:* mature your casks toward Ready.
-- **C · Harbor** — *Ship:* load Ready casks onto your ships; they deliver when full.
+- **C · Harbor** — *Ship:* load your Ready casks onto the shared ships; they deliver when full.
 
 **A line** (a row or a column) is its **two stations plus any tiles in their two slots**; every activation is a useful two-step segment:
 `rowT = Market+Brewhouse` · `colR = Brewhouse+Cellar` · `rowB = Harbor+Cellar` · `colL = Market+Harbor`.
@@ -73,7 +73,7 @@ Every base action **always works**; slot buildings only add bonus copies of thes
 ### A · Market — *Source*
 Take **2 goods** (any mix), **OR** acquire **one** tile, paying its goods cost ⚙:
 - a **recipe** (a new brewable type — your climb to the export tier; export recipes cost more) — *always-available supply*,
-- a **ship** (a Cog or Hulk → placed on a slot, bound to a destination; §5) — *always-available supply*,
+- a **commission** (place the **face-up ship of the ship deck** — a neutral hull, destination printed — on any open slot; §5),
 - an **upgrade** (a Room/Modifier → installed on your brewery; §6) — taken from the **face-up Upgrade display**.
 
 > **The Market display (Option B).** Recipes and ships are always in stock (you can always buy a build option). **Upgrades, by contrast, sit in a small face-up display** — a row of **4 ⚙** tiles dealt (randomly placed) from a shuffled **Upgrade deck that sits face-down beside them as a 5th stack**; buy one (pay its cost) and the row **refills** from the top of the deck. The *same display* is what the engine-kontore hand out free on delivery (§5) — so the Upgrade you can grab, by buying or by shipping, depends on **what's currently face-up.** This is the contested "what's in store" tension; recipes/ships stay reliable so your build plan never stalls.
@@ -85,9 +85,9 @@ Take **2 goods** (any mix), **OR** acquire **one** tile, paying its goods cost �
 Gain a **pool of 3 age points** ⚙ and **allocate them freely across your vessels** (pour into one cask or spread). Each cask also ages **+1 automatically at the start of your turn** ⚙, so maturing never depends on reaching this station. When a cask reaches **Ready**, deploy it to an open slot (§2).
 
 ### C · Harbor — *Ship*
-**Load** one of your **deployed casks** (sitting on a slot) onto one of **your ships** (any ship — no line-coincidence needed). A ship **sails the instant it is full** (§5); you may also **launch a partial ship early** here (the relief valve). *(A cask must be on a slot to be loaded onto an owned ship — that is what makes deploying it the gateway to scoring.)*
+**Load** one of your **deployed casks** (sitting on a slot) onto **any ship on the Wharf** whose quality minimum it meets (no line-coincidence needed). A ship **sails the instant it is full** (§5 — the filler takes the dispatch fee); you may also **launch a ship early** here if it carries **at least one of your casks**. *(A cask must be on a slot to be loaded — that is what makes deploying it the gateway to scoring.)*
 
-Or **Charter** (the always-available relief valve, §5): pay the **charter fare — a shared market price printed under the Sailed-Ships track**, set by how many voyages the table has delivered ⚙ (2p row: `2·2·3·2·2·4·5·5` — cheap early, a small mid bump, `4–5 G` in the closing stretch; one price for everyone, GWT-market style much simplified) — to send **one** Ready cask — from a vessel **or** a slot — on an immediate **single-cask voyage** to a destination it qualifies for. It delivers normally (scores + the destination benefit) and, being a voyage, **advances the Sailed-Ships clock**. One cask for the price keeps owned Cogs/Hulks the efficient path, but the Charter guarantees you **never deadlock** (when every slot is full and you hold no ship, or a Ready cask clogs a vessel, you can always charter your way out).
+Or **Charter** (the always-available relief valve, §5): pay the **charter fare — a shared market price printed under the Sailed-Ships track**, set by how many voyages the table has delivered ⚙ (2p row: `2·2·3·2·2·4·5·5` — cheap early, a small mid bump, `4–5 G` in the closing stretch; one price for everyone, GWT-market style much simplified) — to send **one** Ready cask — from a vessel **or** a slot — on an immediate **single-cask voyage** to a destination it qualifies for. It delivers normally (scores + the destination benefit) and, being a voyage, **advances the Sailed-Ships clock**. One cask for the price keeps the shared Cogs/Hulks the efficient path, but the Charter guarantees you **never deadlock** (when every slot is jammed, no hull fits your cargo, or a Ready cask clogs a vessel, you can always charter your way out).
 
 > **Why the stations aren't split builder/cash-out.** v0.6 put builders and cash-outs on opposite diagonals so they never shared a line. v0.7 keeps the legible Source → Brew → Age → Ship layout and instead leans on the **occupancy toll** (§1) to keep players from camping one spot. *(The diagonal was prototyped in v0.8 testing; the occupancy toll preserved legibility better while still making position matter.)*
 
@@ -98,7 +98,7 @@ Or **Charter** (the always-available relief valve, §5): pay the **charter fare 
 The **8 slots** (2 beside each line) are the shared commons. They hold a churning mix:
 
 - **Casks** (your deployed Ready casks — public action-buildings + your cargo; they leave when shipped).
-- **Ships** (owned infrastructure you built; they load casks and sail away — §5).
+- **Ships** (neutral, destination-bound hulls from the shared deck; anyone loads their own casks; they sail away — §5).
 - **Neutral buildings** (2–3 seeded at setup; shared base actions; permanent) — so the slots are alive from turn 1.
 
 **One rule for all of them:** when a line fires, the active player **may use each building in its two slots.** All building actions resolve **on the active player's turn, for the active player** — there are **no out-of-turn gains** (the thing that felt counter-intuitive in v0.6 is gone). Cask and neutral actions are **free and public** (a rival using your cask's action is incidental — it is on *your* line, doing *your* work, while you wait to ship it).
@@ -122,10 +122,13 @@ Each is a "support action" in the Lisboa sense — it pushes production forward,
 
 ## 5. Ships & destinations (the cash-out)
 
-### Ships — owned, single-use carriers (build → load → sail)
-- **Build** (Market): a **Cog** (capacity **2**) or **Hulk** (capacity **3**) ⚙ goes on a slot, **bound to a destination** of your choice, inheriting that destination's **quality gate**.
-- **Load:** put a cask **from a slot** aboard — via the **Harbor action** (always available) **or** when the **ship's line fires** (a bonus free load). It may be your own or a **rival's** deployed cask (§ below).
-- **Sail** (the instant it is **full**, or via an early **Harbor launch**): every cask aboard is **delivered** to the ship's destination → it **scores for its owner** (§9) and leaves the board; the **ship tile is consumed onto the shared Sailed-Ships track** (§8) — single-use, build another to ship again.
+### Ships — neutral, destination-bound shared hulls (v0.11 Batch B: commission → load → sail)
+**Nobody owns a ship.** Each tile is **printed** with its hull (**Cog** cap 2 · **Hulk** cap 3 ⚙) and its **destination** (inheriting that destination's quality minimum), and comes off a shuffled **ship deck** (~14 hulls ⚙, every destination represented; the **next ship is always face-up** beside the Market).
+- **Commission** (Market): pay **2 `G`** ⚙ and place the **face-up ship** on any open slot (then flip the next). What you buy is **tempo and placement** — the hull exists where you want it and you are positioned to feed it first.
+- **Load:** put **one of your own casks** from a slot aboard any ship it qualifies for — via the **Harbor action** (always available) **or** when the **ship's line fires** (a bonus free load). *(You may never load another player's cask — loading is always self-interested.)*
+- **Sail** (the instant it is **full**): every cask aboard is **delivered** → it **scores for its owner** (§9) with the destination's benefit; the **filler** (whose cask completed the load) takes the **dispatch fee — 2 `G` ⚙** — and credit toward the ships goal. **Early launch** (Harbor): any player with **at least one cask aboard** may send a part-loaded ship off (no fee, goal credit only).
+- The voyage **advances the Sailed-Ships clock by one** (a marker — §8), and the **hull returns to the bottom of the ship deck** (the yard refits it; the supply never dries up).
+- **The interaction:** shared hulls make cargo space and sail timing the contest — racing to fill a rich-bound ship, commissioning where *your* casks (not your rivals') can reach, or launching early to deny a fuller load. *(The old "ship a rival's cask" rule is cut — v0.11; it measured anti-optimal and read as confusing at the table.)*
 
 ### Charter — the single-cask relief valve (no tile; an outside hull)
 Owned ships are consumed when they sail, and the slots are tight, so you always need an escape that can't be locked out. At the **Harbor** you may always **Charter**: pay the **charter fare** — a **shared market price printed under the Sailed-Ships track**, indexed by voyages delivered ⚙ (per-count rows, e.g. 2p `2·2·3·2·2·4·5·5`; cheap early, dear in the closing stretch; max `5 G`) — to ship **one** Ready cask — from a **vessel** *or* a **slot** — on an **immediate single-cask voyage** to a destination it qualifies for. It **delivers** (scores + benefit, §9) and **advances the Sailed-Ships clock** (§8) like any voyage; it just carries one cask for the fare, so building Cogs/Hulks stays the efficient race. The Charter is the **deadlock guard**: when every slot is full and you own no ship, or a Ready cask clogs a vessel, a charter always frees you (the fare never exceeds ⚙5 `G`, always reachable under the storage cap — the deadlock guard holds; pricing the closing stretch stops the relief valve becoming an endgame highway — v0.11 A2′, after both human play and the search AI leaned on charters over ships). *(Theme: a 1350 brewmaster who hasn't a hull of their own books space on someone else's.)*
@@ -144,15 +147,9 @@ The old two value tracks are replaced by destinations, each with a distinct **be
 - **Export premium ⚙ (v0.11 Batch A3):** a delivered **Q4** cask scores **+1** and a **Q5** cask **+2** at **any kontor**, on top of the kontor's value (the Hall already scales with quality). The high climb earns its freight on the same voyage that builds your majorities.
 - **Benefits pair off: liquidity vs the engine.** **Bruges & Bergen** each hand the owner **2 goods** on delivery (liquidity); **London & Novgorod** each let the owner **take one tile from the Market's shared face-up Upgrade display** (§3) — *free*, where buying it would cost goods. Because the display is a small, churning row, **you don't fully know which Upgrade will be on offer when your cask arrives** — that uncertainty is the point. **London is the *engine* destination** (the accessible Q2 upgrade kontor); **Bergen's** goods are deliberately token (≈ a Market visit) — **its draw is the richest majority**, so the two stay distinct.
 - **The majority is a *big* end-game motivator — every kontor pays a tiered, ranked majority (Lacerda-style):** at each kontor, count delivered casks; **1st/2nd/3rd place take the destination's majority tiers**. **Bruges 5/3/0 · London 6/4/2 · Novgorod 8/5/2 · Bergen 10/6/3** ⚙ — **Bergen is the rich anchor** (its weak goods benefit is offset by the biggest majority); Novgorod rides high for its hard Q3 reach. Delivery *value* is deliberately low (so the points live in the majority race, not in flat per-cask value). **In a 2-player game, 2nd place is skipped** (winner-take-all at each kontor). Tied players split the sum of the tiers they collectively occupy ⚙. Presence at a kontor = your delivered casks there. *(Big majorities tilt scoring toward the kontore, so the **Hall's prestige was bumped to Q×2.5** to keep the volume-vs-prestige axis balanced — sim-validated near fair at 2–5p, `DESIGN.md` §21 v0.10. **Note:** because presence = cask count, **majorities reward shipping wide**, so "go for majorities" is a *volume* play — there is no separate concentrate-on-one specialist that beats it.)*
-- **The cask's owner always scores the delivery and takes any benefit** — even when a **rival** shipped it (§ below). This is the climb-and-variety engine: deliver → earn an upgrade → brew better → deliver better (the Distilled "selling funds your next still" feel).
+- **The cask's owner always scores the delivery and takes the benefit.** This is the climb-and-variety engine: deliver → earn an upgrade → brew better → deliver better (the Distilled "selling funds your next still" feel).
 
-### Shipping a rival's cask (the non-destructive interaction)
-On your turn you may load a **rival's deployed cask** onto **your** ship (only casks on slots — never their brewery). When it sails:
-- the **destination is your ship's binding** (you chose where), but it must be **legal for that cask's quality**;
-- the **owner scores the delivery and picks its benefit** — they always gain (it is never purely harmful);
-- **you** get the freed slot, the filled ship (toward *your* end-clock), a small **loader bonus** ⚙, and you control the **timing**.
-
-> Net positive-sum with a timing twist: you help a rival a little, on *your* schedule, while capping what they were holding out for and advancing your own game. Theme cover: *a 1350 brewmaster does not fully control where their casks end up.* The tuning knobs are the **loader bonus** and the **value gap** between a cask's best destination and where a rival can force it (§ Open).
+> **Cut in v0.11:** the old "ship a rival's cask" rule. The simulation oracle showed optimal play declines it (a pure gift at 2p), and the table found it confusing. The non-destructive interaction now lives **on the shared hulls**: the race for cargo space, the dispatch fee, commission placement, and early-launch timing — every load is self-interested, and rivals collide over the same ships instead of each other's casks.
 
 ---
 
@@ -174,7 +171,7 @@ Your brewery board is private and safe. It holds your **vessels** (start 2, cap 
 |---|---|---|---|
 | 6 | **Granary Right** | whenever you gain grain, **+1 extra** | `4 G` |
 | 7 | **Hop Garden** | whenever you gain hops, **+1 extra** | `4 G` |
-| 8 | **Royal Patent** | your ships sail with **+1 capacity** | `5 G` |
+| 8 | **Royal Patent** | your **charter fare is 1 `G` cheaper** (min 1) | `4 G` |
 | 9 | **Staple Right** | **+1 good** whenever you deliver to a kontor | `5 G` |
 | 10 | **Guild Seat** | **+1 age point** at the Cellar | `4 G` |
 | 11 | **Burgher Status** | **+1 presence** at every kontor you've reached (majority help) | `5 G` |
@@ -213,12 +210,12 @@ No separate reach/standing tracks. You score from **what you delivered**:
 
 ## Open / to tune
 
-- **Warm-start contents** (1 Cog on a slot; the Gruit starts Ready in a vessel) and **starting vessels** (2?) vs the **Sailed-Ships length** — the joint pace dials; target first voyage ≈ turn 2–3, a **12–25-round game**, and a 2p game ≈ 45–60 min.
+- **Warm-start contents** (2 ships dealt from the deck; the Gruit starts Ready in a vessel), the **ship-deck mix** (~14 hulls ⚙ — size, Cog/Hulk ratio, destination spread), the **commission fee** (2 `G` ⚙) and **dispatch fee** (2 `G` ⚙) vs the **Sailed-Ships length** — the joint pace dials; target first voyage ≈ turn 2–3, a **12–25-round game**. ⚙ watch: shared hulls run charter-heavier at 4–5p than the old owned fleets (the fare row taxes it) — deck mix per count is the ready dial.
 - **The charter fare rows** (⚙ per player count, printed under the Sailed-Ships track — v0.11 A2′; 2p `2·2·3·2·2·4·5·5`) and whether a charter advances the clock — the relief-valve dials. Tune the rows to *when* charters should be welcome (cheap stretches) vs taxed (the closing rush); the fare answers the v26 finding that charters out-competed owning ships, and its `5 G` cap keeps the deadlock guard safe.
 - **Cask-action strengths** (free Source 2 / Age 2 / free Load / +1 presence / Wild) — keep them chunky without making the slots swingy. Whether *every* cask bears an action or only "set-working" ones.
 - **Occupancy toll** (⚙1 `G` to move onto a rival-occupied station; opening placement free) — the de-rondel / seat-balance dial. Gentle by design; watch that it never becomes a dominant tax handed back and forth, and confirm it actually spreads players in human play (the greedy sim can't show this).
 - **Destination values, gates, and majority bonuses** — the heart of the variety; how hard to gate the rich destinations behind quality (the climb) vs leaving them open (variety).
-- **Shipping a rival's cask:** the **loader bonus** size and the **best-vs-forced destination value gap** — the non-destructive interaction dials (watch mild kingmaking on who you help).
+- **The shared-hull interaction:** dispatch-fee size, whether the early launch needs a fee, and whether the filler (vs every cask owner) is the right beneficiary — the v0.11 interaction dials.
 - **Slot pressure:** 8 slots shared by casks + ships + neutral buildings — tight by design; whether 2p locks some and 5p needs relief; whether a clogged vessel is too punishing.
 - **Upgrades/modifiers:** which come from deliveries vs the Market; how asymmetric the modifiers run.
 - **Goals:** how many, shared vs personal, and the best-few cap (the GWT blend lever).

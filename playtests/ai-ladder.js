@@ -45,8 +45,9 @@ var __OUT={pairs:{},mixed:{}};
 // ---- head-to-head ladder at 2p (seats swapped every other game so turn order washes out) ----
 // guildmaster games cost ~seconds each (Monte Carlo), so its pairing runs at a reduced count.
 var __NGM=Math.max(40,Math.floor(__N/5));
-[['apprentice','journeyman'],['journeyman','trader'],['apprentice','trader'],
- ['trader','guildmaster']].forEach(function(pair){
+var __PAIRS=[['apprentice','journeyman'],['journeyman','trader'],['apprentice','trader']];
+if(!__NOGM)__PAIRS.push(['trader','guildmaster']);   // NOGM=1 skips the slow Monte Carlo pairing
+__PAIRS.forEach(function(pair){
   var __n=(pair[1]==='guildmaster')?__NGM:__N;
   var w={};w[pair[0]]=0;w[pair[1]]=0;
   var sum={};sum[pair[0]]=0;sum[pair[1]]=0;
@@ -106,7 +107,7 @@ const ctx = {
   parseInt, parseFloat, isNaN, alert: noop,
   setTimeout: noop, clearTimeout: noop,
   lucide: { createIcons: noop },
-  __N: N,
+  __N: N, __NOGM: process.env.NOGM==='1',
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;

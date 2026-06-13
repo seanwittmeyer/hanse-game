@@ -115,8 +115,8 @@ const DIMS = [
   ['goalW',     0.0, 2.5],
   ['buyFlush',  4.0, 10.0],
 ];
-const DEFAULTS = { swing: 0.75, upBen: 1.5, goodsBen: 1.0, hallBase: 0.75, hallRamp: 0.55,
-  leanVal: 1.05, leanSwing: 1.2, leanHall: 1.15, goalW: 1.0, buyFlush: 7 };   // keep in sync with AI_W in play.html
+const DEFAULTS = { swing: 1.0, upBen: 1.45, goodsBen: 1.4, hallBase: 0.45, hallRamp: 0.9,
+  leanVal: 0.91, leanSwing: 1.01, leanHall: 0.91, goalW: 1.94, buyFlush: 8.68 };   // keep in sync with AI_W in play.html
 
 const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
 const gauss = () => { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random();
