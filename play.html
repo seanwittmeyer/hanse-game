@@ -215,7 +215,7 @@
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>Prototype v0.10 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. <b>Ships are neutral</b> (v0.11): destination-bound hulls (Cog 2 / Hulk 3) off a shuffled <b>ship deck</b> — <b>Commission</b> the face-up one at the Market (2⚙G) to place it; anyone loads <b>their own</b> casks (taking that destination’s benefit — goods / an Upgrade — <b>on loading</b>); commissioning also grants a <b>free load</b>. Full → it <b>sails</b> onto the Sailed-Ships track (the clock), delivering every cask for points. Filling a ship earns no bonus; the <b>merchant goal rewards commissioning</b>. <b>Every kontor pays a tiered majority</b> (1st/2nd/3rd) — Bruges <b>5/3/0</b> · London <b>6/4/2</b> · Novgorod <b>8/5/2</b> · Bergen <b>10/6/3</b> ⚙. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b>; <b>Bruges / Bergen</b> hand you <b>2 goods</b> instead. The Harbor also offers a <b>Charter</b> (ship one Ready cask now; the <b>fare is a shared market price printed under the Sailed-Ships track</b> ⚙ — cheap early, 4–5G in the closing stretch). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. Any seat can be an <b>AI opponent</b> — pick a tier per seat in New Game (<b>Apprentice / Journeyman / Trader / Guildmaster</b>, in rising strength; Traders commit to a volume/prestige/majority lean, and the Guildmaster evaluates its options by <i>playing each one out</i> hundreds of times — expect a brief think per decision). AI seats play by the same rules with the same information and never cheat; their turns play out in the log at an adjustable speed. All numbers are placeholders (⚙); the Sailed-Ships clock (≈6/10/13/16) &amp; charter cost are the top pace dials.</p>
+  <p class="note" style="text-align:center"><b>Prototype v0.10 “The Wharf”.</b> Everything happens at <b>the Wharf</b> — four stations <b>Source → Brew → Age → Ship</b> (A Market · B Brewhouse · D Cellar · C Harbor) ringed by 8 slots. A <b>cask</b> matures privately, <b>deploys to a slot</b> as a public action-building, then <b>ships to a destination</b> and scores. A line is its <b>two stations plus any tiles in their two slots</b> (slot·station·station·slot), resolved in <b>any order</b>. <b>Ships are neutral</b> (v0.11): destination-bound hulls (Cog 2 / Hulk 3) off a shuffled <b>ship deck</b> — <b>Commission</b> the face-up one at the Market (2⚙G) to place it; anyone loads <b>their own</b> casks (taking that destination’s benefit — goods / an Upgrade — <b>on loading</b>); commissioning also grants a <b>free load</b>. Full → it <b>sails</b> onto the Sailed-Ships track (the clock), delivering every cask for points. Filling a ship earns no bonus; the <b>merchant goal rewards commissioning</b>. <b>Every kontor pays a tiered majority</b> (1st/2nd/3rd) — Bruges <b>5/3/0</b> · London <b>6/4/2</b> · Novgorod <b>8/5/2</b> · Bergen <b>10/6/3</b> ⚙. Deliver to <b>London / Novgorod</b> to take an Upgrade from the Market’s <b>face-up display</b>; <b>Bruges / Bergen</b> hand you <b>2 goods</b> instead. The Harbor also offers a <b>Charter</b> (ship one Ready cask now; the <b>fare is a shared market price printed under the Sailed-Ships track</b> ⚙ — cheap early, 4–5G in the closing stretch). Stations are never closed (move onto a rival’s station for 1G); your brewery is private. Single-level <b>Undo</b> is in the bar. Any seat can be an <b>AI opponent</b> — pick a tier per seat in New Game (<b>Apprentice / Journeyman / Trader / Guildmaster</b>, in rising strength; Traders commit to a volume/prestige/majority lean, and the Guildmaster evaluates its options by <i>playing each one out</i> hundreds of times — expect a brief think per decision). AI seats play by the same rules with the same information and never cheat; their turns play out in the log at an adjustable speed. All numbers are placeholders (⚙); the Sailed-Ships clock (≈7/11/14/17) &amp; charter cost are the top pace dials.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -313,17 +313,18 @@ const DEST={
   london  :{name:'London',  gate:2, value:2, maj:[6,4,2],   benefit:'upgrade', kontor:true,  role:'Steelyard · the engine — an Upgrade + a solid majority'},
   bergen  :{name:'Bergen',  gate:2, value:2, maj:[10,6,3],  benefit:'goods',   kontor:true,  role:'Bryggen · gain goods + THE rich majority'},
   novgorod:{name:'Novgorod',gate:3, value:4, maj:[8,5,2],   benefit:'upgrade', kontor:true,  role:'Long Haul · top value + an Upgrade + a rich majority'},
-  hall    :{name:'The Hall',gate:2, value:0, maj:[],        benefit:'none',    kontor:false, role:'Prestige · pays Q×2.5'},
+  hall    :{name:'The Hall',gate:2, value:0, maj:[],        benefit:'none',    kontor:false, role:'Prestige · 5/7/10/12 by quality'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
 const DESTS=['bruges','london','bergen','novgorod','hall'];
-const HALL_MULT=2.5; // ⚙ prestige scaling at the Hall (Q×HALL_MULT, floored). v0.10: raised 2→2.5 to keep the prestige
-// lean competitive now that majorities are big motivators (the Hall contests no majority → it needs a bigger per-cask hit).
+const HALL_PTS={2:5,3:7,4:10,5:12}; // ⚙ prestige points at the Hall, a PRINTED ladder by quality (v0.12.3: was the
+// formula Q×2.5-floored = these same integers; replaced with the explicit table — no in-game math, read it off the tile).
+// v0.10 set the curve to keep the prestige lean competitive vs the big kontor majorities (the Hall contests no majority → bigger per-cask hit).
 // ⚙ A3 (Batch A): the EXPORT PREMIUM — a delivered Q4 cask scores +1, a Q5 +2, at ANY kontor
 // (the Hall already scales with quality). Answers the convergent finding that the Q4-Q5 climb
 // underpaid: human feel ("the race doesn't support the path") + the search AI skipping it.
 const EXPORT_PREM=q=>q>=4?q-3:0;
-function destValue(dest,q){return dest==='hall'?Math.floor(q*HALL_MULT):DEST[dest].value+EXPORT_PREM(q);}
+function destValue(dest,q){return dest==='hall'?(HALL_PTS[q]||0):DEST[dest].value+EXPORT_PREM(q);}
 
 // ---- SHIPS (v0.11 Batch B ⚙): NEUTRAL, destination-bound shared hulls ----
 // Nobody owns a ship. Each tile is PRINTED with hull + destination and comes off a shuffled SHIP
@@ -443,7 +444,7 @@ const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C
 const OCCUPANCY_TOLL=1;
 
 // ---- pace dials ⚙ ----
-const SAILED_CAP={2:6,3:10,4:13,5:16};  // the Sailed-Ships end clock (per RULES §8) — primary pace dial ⚙ (scales steeply: the shared clock fills faster with more players). v0.12.1: trimmed (was 7/11/15/19) — variable cask actions stretched rounds-per-voyage, so the round ceiling was firing; shorter clock re-lands pace in-band on the clock.
+const SAILED_CAP={2:7,3:11,4:14,5:17};  // the Sailed-Ships end clock (per RULES §8) — primary pace dial ⚙ (scales steeply: the shared clock fills faster with more players). v0.12.3: re-centered (v0.12.1 had trimmed to 6/10/13/16 for v0.12's slow rounds, but Gruit-Source goods + removing the upgrade-buy sink sped rounds back up, dropping ~15% of games below the 12-round floor — so the clock is lengthened again to re-land pace mid-band ~15-16).
 const MAX_ROUND=25;                      // round ceiling / backstop ⚙ — top of the 12–25-round target band (good play ends earlier on the clock)
 const CELLAR_POOL=3;                     // Cellar age points (+1 with Guild Seat)
 const START_GOODS={g:3,h:2};
@@ -457,7 +458,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v37'; // v0.12.2 ⚙: Gruit pinned to its Source (+2 goods) action (the on-ramp is fixed/thematic; only Q2+ casks draw variable); bump discards stale state
+const KEY='hanse-hotseat-v38'; // v0.12.3 ⚙: Hall = printed point ladder (5/7/10/12, no ×2.5 math); upgrades earned ONLY by delivery (Market-buy removed); bump discards stale state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1329,13 +1330,7 @@ function aiMarket(p){
   if(!aiIsApp(p)){const ci=aiCommissionIdx(p);if(ci>=0){commissionShip(ci);return;}}   // apprentice never commissions ⚙
   const ex=aiBuyableExports(p);
   if(ex.length){ex.sort((a,b)=>STYLES[a].q-STYLES[b].q);buyRecipe(ex[0]);return;}
-  if(!aiIsApp(p)){const buyable=displayGrantable(p).filter(k=>canPay(p,UPGRADE_BUY[k]));
-    if(buyable.length){
-      // trader: always take the tempo rooms (Extra Vessel / Aging Cellar) when affordable; the rest only when flush
-      if(aiIsTrader(p)){const tempo=buyable.filter(k=>k==='vessel'||k==='cellar');
-        if(tempo.length){buyDisplayUp(aiPickUpgrade(p,tempo));return;}
-        if(p.grain>=aiW(p).buyFlush){buyDisplayUp(aiPickUpgrade(p,buyable));return;}}
-      else if(p.grain>=5&&Math.random()<0.5){buyDisplayUp(aiPickUpgrade(p,buyable));return;}}}
+  // v0.12.3: upgrades are no longer bought at the Market — they're earned ONLY by delivering to London/Novgorod.
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
 function aiHarbor(p){
@@ -1478,7 +1473,7 @@ function aiGmOptions(p){
     const o=[()=>marketGoods(2,0),()=>marketGoods(1,1),()=>marketGoods(0,2)];
     (S.exports||[]).forEach(st=>{if(!p.recipes.includes(st)&&canPay(p,RECIPE_BUY[st]))o.push(()=>buyRecipe(st));});
     if(emptySlots().length&&canPay(p,COMMISSION_COST))(S.shipDisplay||[]).forEach((sn,i)=>o.push(()=>commissionShip(i)));
-    Array.from(new Set(S.upgradeDisplay||[])).forEach(k=>{if(grantableBuy(p,k)&&canPay(p,UPGRADE_BUY[k]))o.push(()=>buyDisplayUp(k));});
+    // v0.12.3: no Market upgrade-buy — upgrades are earned only via London/Novgorod delivery.
     return o;}
   if(U==='cell'&&UI.cell==='C'){
     if(UI.stage==='charter_cask')return charterCasks(p).map(c=>()=>charterPickCask(c.ref));
@@ -1734,7 +1729,7 @@ function renderDests(){
       return '<span class="dprow" data-tip="'+attr(p.name+': '+del+' delivered'+(bon?' + '+bon+' bonus presence':'')+(lead?' — current leader':''))+'">'+(lead?'<span class="dlead">★</span>':'')+sq+'</span>';
     }).filter(x=>x).join('');
     const valStr=d==='hall'
-      ?'<span data-tip="'+attr('★ = points per delivered cask. The Hall pays prestige: quality ×2.5 (Q2→5 · Q3→7 · Q4→10 · Q5→12). No majority, no benefit — out of commerce.')+'"><b>Q×2.5</b><span class="vstar">★</span></span>'
+      ?'<span data-tip="'+attr('★ = prestige points per delivered cask, by quality: Q2→5 · Q3→7 · Q4→10 · Q5→12. No majority, no benefit — out of commerce.')+'"><b>5·7·10·12</b><span class="vstar">★</span></span>'
       :'<span data-tip="'+attr('★ = points per delivered cask: '+D.value+' at game end — plus the export premium: a Q4 cask +1★, a Q5 +2★, at any kontor.')+'"><b>'+D.value+'</b><span class="vstar">★</span><span style="font-size:.68rem;opacity:.8;margin-left:1px">+Q</span></span>';
     const ben=D.benefit==='upgrade'?'<span data-tip="'+attr('The wrench = the delivery benefit: on each delivery the owner takes one Upgrade from the Market display, free.')+'">+'+LU('wrench')+'</span>'
       :D.benefit==='goods'?'<span data-tip="'+attr('The grain = the delivery benefit: on each delivery the owner gains 2 grain.')+'">+'+Gi(2)+'</span>':'';
@@ -1767,14 +1762,14 @@ function renderShop(){
   if(sdisp.length)sdisp.forEach((sn,i)=>{const can=canPay(p,COMMISSION_COST)&&emptySlots().length>0;
     h+='<div class="item"><span data-tip="'+attr('A neutral '+SHIP_NAME[sn.ship]+' (cap '+SHIP_CAP[sn.ship]+') bound for '+DEST[sn.dest].name+'. Commission: pay '+costStr(COMMISSION_COST)+', place it on any open slot and load one of your Ready casks aboard for free; it then becomes a shared hull anyone loads their OWN casks onto (taking the destination benefit on loading).')+'">'+LU('sailboat')+' <b>'+SHIP_NAME[sn.ship]+'</b> → '+(DEST[sn.dest].kontor?LU('landmark'):LU('crown'))+' '+DEST[sn.dest].name+' (cap '+SHIP_CAP[sn.ship]+')</span><span class="cost">'+costIcons(COMMISSION_COST)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="commissionShip('+i+')">commission</button>':'')+'</span></div>';});
   else h+='<div class="item" style="opacity:.7"><span>'+LU('sailboat')+' ship market empty <span class="note">(charters still sail)</span></span></div>';
-  // the face-up Upgrade DISPLAY (option B) — buy one here, or earn one free by delivering to London/Novgorod
-  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Upgrade display</b> <span class="note">('+DISPLAY_SIZE+' face-up + a face-down deck — buy one, or earn one free by delivering to London/Novgorod)</span></div>';
-  (S.upgradeDisplay||[]).forEach(key=>{const c=UPGRADE_BUY[key];const owned=!grantableBuy(p,key);const can=!owned&&canPay(p,c)&&buying;
-    h+='<div class="item"><span data-tip="'+attr(upDesc(key))+'">'+LU('wrench')+' '+upName(key)+(owned?' <span class="note">(have)</span>':'')+'</span><span class="cost">'+costIcons(c)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyDisplayUp(\''+key+'\')">buy</button>':'')+'</span></div>';});
+  // the face-up Upgrade DISPLAY — v0.12.3: NOT for sale. You take one free by delivering to London/Novgorod.
+  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Upgrade display</b> <span class="note">('+DISPLAY_SIZE+' face-up + a face-down deck — <b>earned only</b> by delivering to '+LU('landmark')+' London/Novgorod)</span></div>';
+  (S.upgradeDisplay||[]).forEach(key=>{const owned=!grantableBuy(p,key);
+    h+='<div class="item"><span data-tip="'+attr(upDesc(key))+'">'+LU('wrench')+' '+upName(key)+(owned?' <span class="note">(have)</span>':'')+'</span><span class="cost"><span class="note">deliver to earn</span></span></div>';});
   if(!(S.upgradeDisplay||[]).length)h+='<div class="note">(no upgrades face-up)</div>';
   // the face-down Upgrade deck — the 5th stack that refills the display
   h+='<div class="item" style="opacity:.7"><span data-tip="'+attr('Face-down Upgrade deck. Refills the face-up display from its top as tiles are taken.')+'">🂠 Upgrade deck <span class="note">(face-down)</span></span><span class="cost">'+(S.upgradeSupply||[]).length+' left</span></div>';
-  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">'+(buying?'Take goods (left) or buy a tile. Buying an upgrade is dear (4–5G) — about a delivery’s goods cost; delivering to a kontor earns one free.':'Visit the '+LU('store')+' <b>Market</b>: recipes &amp; ships are always stocked; upgrades come from the face-up display — buy one (dear, 4–5G), or earn one free by delivering to '+LU('landmark')+' London/Novgorod.')+'</div>';
+  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">Visit the '+LU('store')+' <b>Market</b>: take goods, buy a recipe, or commission a ship. <b>Upgrades aren\'t for sale</b> — earn one free by delivering to '+LU('landmark')+' London/Novgorod.</div>';
 }
 
 function renderVoyage(){

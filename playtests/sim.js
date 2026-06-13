@@ -115,8 +115,7 @@ function botMarket(p){
   if(needShip(p)){buyTile('s_cog');return;}
   var ex=buyableExports(p);
   if(ex.length){ex.sort(function(a,b){return STYLES[a].q-STYLES[b].q;});buyRecipe(ex[0]);return;}
-  var buyable=displayGrantable(p).filter(function(k){return canPay(p,UPGRADE_BUY[k]);});
-  if(buyable.length&&p.grain>=5&&Math.random()<0.5){__buys++;buyDisplayUp(pickUpgrade(buyable));return;}
+  // v0.12.3: upgrades are no longer buyable — earned only via London/Novgorod delivery.
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
 function botHarbor(p){

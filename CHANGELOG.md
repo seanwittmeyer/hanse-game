@@ -6,6 +6,14 @@ Compact version history. The **full rationale ("the why")** lives in `DESIGN.md`
 
 ---
 
+## v0.12.3 — Hall ladder printed · upgrades earned-only · clock re-centered (2026-06-13)
+Three coordinated clarity/economy moves (`KEY → v38`):
+- **Hall = a printed point ladder** ⚙ — **5 / 7 / 10 / 12 by quality** (Q2/Q3/Q4/Q5), replacing the `Q×2.5`-floored *formula*. Identical values, **zero balance change** — pure "no in-game math, read it off the tile."
+- **Upgrades are earned-only** ⚙ — the Market goods-buy is **removed**; you gain an upgrade *only* by delivering to **London / Novgorod**. The data backed it: buying was ~5–8% of upgrades (and *0%* once Gruit-Source made goods plentiful in the v37 sim), dominated by chartering-to-earn — so cutting it simplifies (one fewer action, no price column) and makes the two upgrade-kontore the essential engine route. Sim confirms **100% earned-via-delivery**, and the destination spread tightened further (Bruges 31/23/20/19% by count; Hall up to 13–15%; blended winners 55–61%).
+- **Clock re-centered** ⚙ — `SAILED_CAP` **6/10/13/16 → 7/11/14/17**. The Gruit-Source goods + removing the upgrade goods-sink sped rounds back up, dropping ~15% of games below the 12-round floor; the longer clock re-lands 2–4p mid-band at **~15–16 rounds** (99/99/97% in-band; 5p the dropped count a touch fast at 13.6).
+
+Gates: sim 500×2–5p clean (0 crashes, ~100% clock); ladder PASS (70.0 / 65.3 / 77.8); render smoke PASS. Docs synced (RULES §3/§4/§6/§8, COMPONENTS, index, learn).
+
 ## v0.12.2 — Gruit pinned to Source (2026-06-13)
 A legibility/theme simplification: **Gruit (Q1 on-ramp) no longer draws a random slot-action — it's fixed to Source (+2 goods)** ⚙ (`KEY → v37`; `pin:true` in `STYLES`, only Q2+ casks draw). Thematic (basic ale sold local for goods) and it removes the per-brew action-read on the *most-brewed* cask, trimming AP where it's highest-volume. Side-benefits in sim: more goods in hand → **upgrade-buying ~doubled** (2p 7→15% of upgrades), and a pace nudge (rounds ~16→~14 — the clock trim + Gruit-goods stack; flagged, in-band but watch 5p). Sim 500×2–5p clean (0 crashes, 100% clock); ladder PASS (journeyman 68.5 / trader 62.0·76.5). Docs synced (RULES §variable, COMPONENTS cask table — also corrected a stale v0.12 fixed-by-quality table, index). 
 
