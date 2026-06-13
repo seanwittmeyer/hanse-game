@@ -57,7 +57,7 @@ A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATU
 
 | Level | Type | Q | Brew inputs ⚙ | Maturation ⚙ | Signature slot action ⚙ | Reaches (gate) | Qty |
 |---|---|---|---|---|---|---|---|
-| **L1** | **Gruit Ale** | 1 | `G` | 1 step | **gain** 2 goods | Bruges only | 16 |
+| **L1** | **Gruit Ale** | 1 | `G` | 1 step | *(variable — drawn at brew)* | Bruges only | 16 |
 | **L2** | **Hopped Beer** | 2 | `G H` | 2 | **Age** any 1 of your casks 2 steps | Bruges · London · Bergen · Hall | 20 |
 | **L3** | **Broyhan / Keut** | 3 | `G H H` / `G G H` | 2 | **Load** — load a Ready cask onto a ship for free | + Novgorod | 12 |
 | **L4** | **Mumme** | 4 | `G G H H` | 3 | **Reach** — +1 presence at a kontor you've delivered to | all | 8 |
@@ -68,7 +68,7 @@ A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATU
 *Gruit is the cheap, fast workhorse — it keeps your goods flowing (its Source action) and reaches Bruges, but never makes prestige. The export casks are scarce, slow, and the key to the rich destinations — the Leffe/Westvleteren line drawn in the components.*
 
 ### B. Ship tiles — NEUTRAL, destination-bound shared hulls (the ship deck, ~20 tiles ⚙ — v0.11)
-**Nobody owns a ship.** Each tile is **printed** with its hull and **destination** (inheriting that destination's quality minimum). A shuffled **ship deck** sits by the Market with a **face-up display of 3 ⚙** (refilled from the deck as taken); **2 more are dealt to slots at setup** (the warm start). **Commission** (Market, `2 G` ⚙): place **any one of the 3** face-up ships on an open slot **and free-load one of your Ready casks** (slot *or* vessel) aboard — the commissioner's berth. **Load your own casks only.** **The destination's immediate benefit is paid the moment a cask is LOADED** (`v0.11.2`): **Bruges/Bergen → 2 goods · London/Novgorod → an Upgrade · Hall → none**. The cask's **points** (value ★ + majority) seal only on **delivery** (when the hull sails). **Filling earns no bonus**; any player with a cask aboard may **launch it early**. The voyage **advances the Sailed-Ships marker**, and the **hull returns to the bottom of the deck**. *(The old "ship a rival's cask" rule is cut — v0.11.)*
+**Nobody owns a ship.** Each tile is **printed** with its hull and **destination** (inheriting that destination's quality minimum). A shuffled **ship deck** sits by the Market with a **face-up display of 3 ⚙** (refilled from the deck as taken); **2 more are dealt to slots at setup** — a **guaranteed Hulk → Bruges** + 1 random ⚙ (the Gruit on-ramp always has a hull). **Commission** (Market, `2 G` ⚙): place **any one of the 3** face-up ships on an open slot **and free-load one of your Ready casks** (slot *or* vessel) aboard — the commissioner's berth. **Load any cask — yours or a rival's** (v0.12: you choose the destination; the owner scores it + banks the benefit, you take a `1 G` loader bonus). **The destination's immediate benefit is paid the moment a cask is LOADED** (`v0.11.2`): **Bruges/Bergen → 2 goods · London/Novgorod → an Upgrade · Hall → none**. The cask's **points** (value ★ + majority) seal only on **delivery** (when the hull sails). **Filling earns no bonus**; any player with a cask aboard may **launch it early**. The voyage **advances the Sailed-Ships marker**, and the **hull returns to the bottom of the deck**. *(The old "ship a rival's cask" rule is cut — v0.11.)*
 
 | Ship | Capacity | Commission ⚙ | In deck ⚙ |
 |---|---|---|---|

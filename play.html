@@ -288,7 +288,18 @@ const EXPORT_ROSTER=['broyhan','keut','mumme','bock'];   // 3 of 4 dealt each ga
 const RECIPE_BUY={broyhan:{g:1},keut:{g:1},mumme:{g:1,h:1},bock:{g:2}};  // Market buy cost (Gruit+Hopped are free starters)
 const CASK_ACT={source:'gain 2 goods',age:'Age a cask 2 steps',
   load:'Load — a Ready cask onto a ship, free',reach:'Reach — +1 presence at a kontor',
+  convert:'Convert — up to 2 goods G↔H',draw:'Draw — a goal from the supply (1G)',
   wild:'Wild — take any base action'};
+// ⚙ v0.12 — VARIABLE cask actions: a cask's signature slot-action is drawn at brew from this pool,
+// decoupled from quality, so casks reliably carry useful actions (you no longer depend on the random
+// Crane). Wild is reserved for Q4+ (too strong on a cheap cask). Random at brew = no brew-AP; the
+// tactics come from using/placing what you drew.
+const CASK_ACT_POOL=['source','age','load','reach','convert','draw','wild'];
+const CASK_ACT_ICON={source:'coins',age:'hourglass',load:'package-plus',reach:'map-pin',convert:'arrow-left-right',draw:'target',wild:'sparkles'};
+function pickCaskAct(q){const pool=CASK_ACT_POOL.filter(a=>a!=='wild'||q>=4);return pool[Math.floor(Math.random()*pool.length)];}
+function caskAct(t){return t.act||STYLES[t.style].act;}   // t.act = the drawn action (fallback: the old fixed one)
+// ⚙ the four stations' FULL action sets, shown as icons on the board (no hover needed)
+const STATION_ACTS={Market:['coins','scroll-text','sailboat','wrench'],Brewhouse:['flask-conical'],Cellar:['hourglass'],Harbor:['package-plus','ticket','sailboat']};
 
 // ---- DESTINATIONS (4 kontore + the Hall) — all open from start ----
 // maj is a TIERED majority payout [1st,2nd,3rd] (Lacerda-style); 2-player games skip 2nd (winner-take-all).
@@ -326,6 +337,7 @@ function destValue(dest,q){return dest==='hall'?Math.floor(q*HALL_MULT):DEST[des
 const SHIP_CAP={cog:2,hulk:3};
 const SHIP_NAME={cog:'Cog',hulk:'Hulk'};
 const COMMISSION_COST={g:2};   // ⚙ flat — the face-up tile decides hull & destination
+const LOADER_BONUS={g:1};       // ⚙ v0.12: you may load a RIVAL's cask onto a ship (you choose the destination); the owner scores it, you take this loader bonus
 const SHIP_DISPLAY=3;          // ⚙ face-up ship-market size — pick from this many (avoids a single bad-destination tile stalling the yard)
 const SHIP_DECK_MIX=[          // ⚙ 20 hulls (v0.11.3, up from 14) — enlarged so the 4–5p clock rarely
   // recycles (less deterministic); recycling kept as a safety. Per dest: Bruges 4 · London 4 · Bergen 4
@@ -444,7 +456,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v34'; // v0.11.3 ⚙: ship deck enlarged 14→20 hulls (less deterministic at 4–5p; recycling kept); bump discards stale state
+const KEY='hanse-hotseat-v35'; // v0.12 ⚙: VARIABLE cask actions (drawn at brew) + station/cask action icons; bump discards stale state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -510,7 +522,11 @@ function freshState(n,names){
   };
   // v0.11 Batch B: the ship deck (neutral hulls, destination printed); 2 seeded, next face-up ⚙
   st.shipDeck=shuffle(SHIP_DECK_MIX.map(x=>({ship:x[0],dest:x[1]})));
-  for(let i=0;i<2;i++){const sh=st.shipDeck.shift();placeBalanced({type:'ship',ship:sh.ship,dest:sh.dest,load:[]},1);}
+  // v0.12: a guaranteed Hulk → Bruges at setup (the Gruit on-ramp always has a hull), + 1 random ⚙
+  const bi=st.shipDeck.findIndex(x=>x.ship==='hulk'&&x.dest==='bruges');
+  const hb=(bi>=0)?st.shipDeck.splice(bi,1)[0]:{ship:'hulk',dest:'bruges'};
+  placeBalanced({type:'ship',ship:hb.ship,dest:hb.dest,load:[]},1);
+  {const sh=st.shipDeck.shift();if(sh)placeBalanced({type:'ship',ship:sh.ship,dest:sh.dest,load:[]},1);}
   st.shipDisplay=[];while(st.shipDisplay.length<SHIP_DISPLAY&&st.shipDeck.length)st.shipDisplay.push(st.shipDeck.shift());
   const npool=shuffle(Object.keys(NEUTRALS).slice());
   const nNeutral=Math.min(3,npool.length,Math.max(1, SLOTS.length - st.players.length - 2));  // 2–3 in play (scales with open slots; tightest at 5p)
@@ -547,7 +563,8 @@ function effCap(t){return SHIP_CAP[t.ship];}
 function openVessel(p){return p.vessels.findIndex(v=>v===null);}
 function emptySlots(){return SLOTS.filter(s=>!S.slots[s.id]);}
 function wharfCaskSlots(){return SLOTS.map(s=>s.id).filter(id=>{const t=S.slots[id];return t&&t.type==='cask';});}
-function wharfLoadableCasks(p){return wharfCaskSlots().filter(id=>S.slots[id].owner===p.id);}   // YOUR casks only (v0.11 B)
+function wharfLoadableCasks(p){return wharfCaskSlots().filter(id=>S.slots[id].owner===p.id);}   // YOUR casks (heuristics, commission free-load)
+function shipLoadableCasks(p){return wharfCaskSlots();}   // v0.12: ANY cask — you may ship a rival's (you pick the destination; owner scores it + benefit, you get a loader bonus)
 function myShips(p){return SLOTS.map(s=>s.id).filter(id=>{const t=S.slots[id];return t&&t.type==='ship';});}   // ships are neutral — 'mine' = loadable by me (name kept for the harnesses)
 function canTake(shipSlot,caskSlot){const sh=S.slots[shipSlot],ct=S.slots[caskSlot];
   return sh&&ct&&sh.type==='ship'&&ct.type==='cask'&&sh.load.length<effCap(sh)&&STYLES[ct.style].q>=DEST[sh.dest].gate;}
@@ -593,12 +610,12 @@ const CELLTIP={
   Market:'Market · Source. Take 2 goods (any mix), OR buy one tile from the Market — a recipe, a ship, or a brewery upgrade. Never closed (move onto a rival here for 1G).',
   Brewhouse:'Brewhouse · Brew. Load one recipe you hold (paying its G/H) into an open vessel as a young cask. Never closed (move onto a rival here for 1G).',
   Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' age points to allocate across your vessels (your casks also age +1 automatically each turn). When a cask is Ready, set it on a slot.',
-  Harbor:'Harbor · Ship. Load one of YOUR Ready casks from a slot onto any ship on the Wharf — you take that destination’s benefit (goods / an Upgrade) the moment you load. A ship sails the instant it is full (delivering every cask for points). You may launch a ship early if it carries one of your casks. Never closed.',
+  Harbor:'Harbor · Ship — your ship-options hub. Load ANY cask (yours or a rival’s — you pick the destination; the owner scores it, you take a loader bonus) onto any ship it qualifies for; the owner banks that destination’s benefit on loading. Launch a ship early, or Charter a single cask. A ship sails full, delivering every cask for points. Never closed.',
 };
 function tileTip(t){
   if(!t)return 'An open slot — Ready casks deploy here (becoming public action-buildings + cargo), and you build ships here.';
   if(t.type==='cask'){const o=S.players[t.owner];
-    return o.name+'’s deployed '+STYLES[t.style].name+' (Q'+t.q+') on a slot — cargo-in-waiting + a public action ('+CASK_ACT[STYLES[t.style].act]+'). When its line fires the active player may use that action; load it on a ship to deliver it.';}
+    return o.name+'’s deployed '+STYLES[t.style].name+' (Q'+t.q+') on a slot — cargo-in-waiting + a public action ('+CASK_ACT[caskAct(t)]+'). When its line fires the active player may use that action; load it on a ship to deliver it.';}
   if(t.type==='ship'){
     const cargo=t.load.length?(' Aboard: '+t.load.map(L=>S.players[L.owner].name+'’s '+styleShort(L.style)).join(', ')+'.'):'';
     return 'A neutral '+shipName(t)+' bound for '+DEST[t.dest].name+' ('+t.load.length+'/'+effCap(t)+' aboard, Q'+DEST[t.dest].gate+'+ casks only). Anyone may load THEIR OWN casks via the Harbor or when its line fires — taking the destination benefit on loading; full → it sails, delivering every cask for points, and the hull returns to the ship deck.'+cargo;}
@@ -610,7 +627,7 @@ function cellTip(cell){return CELLTIP[CELLNAME[cell]];}
 // ---- tile faces on the wharf ----
 function qPips(q){let s='';for(let i=1;i<=5;i++)s+='<span class="tpip'+(i<=q?' on':'')+'"></span>';return s;}
 function slotFace(t){
-  if(t.type==='cask')return '<div class="tface"><span class="bigic">'+LU('beer')+'</span><span class="tnm">'+styleShort(t.style)+'</span><span class="tpips">'+qPips(t.q)+'</span></div>';
+  if(t.type==='cask')return '<div class="tface"><span class="bigic">'+LU('beer')+'</span><span class="tnm">'+styleShort(t.style)+'</span><span class="tpips">'+qPips(t.q)+'</span><span class="tinfo" data-tip="'+attr(CASK_ACT[caskAct(t)])+'">'+LU(CASK_ACT_ICON[caskAct(t)]||'')+'</span></div>';
   if(t.type==='ship')return '<div class="tface"><span class="bigic">'+LU('sailboat')+'</span><span class="tnm">'+shipName(t)+'</span><span class="tinfo">'+LU('map-pin')+DEST[t.dest].name+' '+t.load.length+'/'+effCap(t)+'</span><span class="tinfo">'+t.load.map(L=>'<span class="dsq" style="width:7px;height:7px;background:'+S.players[L.owner].color+'"></span>').join('')+'</span></div>';
   if(t.type==='neutral')return '<div class="tface"><span class="bigic">'+LU(NEUTRALS[t.b].icon)+'</span><span class="tnm">'+NEUTRALS[t.b].name+'</span></div>';
   return '';
@@ -663,7 +680,7 @@ function startGame(){
   S.players.forEach((p,i)=>{p.ai=ais[i];});
   document.getElementById('setup').classList.add('hidden');
   log('Game begins — '+setupN+' brewing houses'+(ais.some(a=>a)?' · AI seats: '+S.players.filter(p=>p.ai).map(p=>p.name+' ('+aiLabel(p)+')').join(', '):'')+'. The export beers this game (3 of 4): '+exportLabel()+'.');
-  log('Warm start: two neutral ships from the deck sit on the slots (the next is face-up at the Market), and every house holds a Ready Gruit in vessel 1 (deploy it turn 1).');
+  log('Warm start: a Hulk → Bruges plus one more ship sit on the slots, a ship market of 3 is face-up at the Market, and every house holds a Ready Gruit in vessel 1 (deploy it turn 1).');
   save();render();maybeRunAI();
 }
 
@@ -782,7 +799,7 @@ function enterBrew(rt){const p=cur();
 }
 function brewPick(style){const p=cur();if(!canBrew(p,style))return;const vi=openVessel(p);if(vi<0){alert('No open vessel.');return;}
   snapshot();pay(p,STYLES[style].in);
-  p.vessels[vi]={style,q:STYLES[style].q,step:0,ready:effReady(p,style)};
+  p.vessels[vi]={style,q:STYLES[style].q,step:0,ready:effReady(p,style),act:pickCaskAct(STYLES[style].q)};
   log(p.name+' '+LU('flask-conical')+' brews '+LU('beer')+' <b>'+STYLES[style].name+'</b> (Q'+STYLES[style].q+' · matures in '+effReady(p,style)+' step'+(effReady(p,style)===1?'':'s')+').',true);
   const rt=UI.brew.returnTo;UI.brew=null;resume(rt);
 }
@@ -810,7 +827,7 @@ function offerDeploy(rt){const p=cur();const ready=readyInVessels(p);
 }
 function startDeploy(vi,phase){snapshot();UI.sub='deploy';UI.deploy={queue:[vi],returnTo:phase};render();}
 function deployTo(slot){snapshot();const p=cur();const vi=UI.deploy.queue[0];const c=p.vessels[vi];p.vessels[vi]=null;
-  S.slots[slot]={type:'cask',owner:p.id,style:c.style,q:c.q};
+  S.slots[slot]={type:'cask',owner:p.id,style:c.style,q:c.q,act:c.act||pickCaskAct(c.q)};
   log(p.name+' sets a Ready '+LU('beer')+' <b>'+styleShort(c.style)+'</b> on a '+LU('anchor')+' slot.',true);
   UI.deploy.queue.shift();deployNext();
 }
@@ -870,7 +887,7 @@ function wildPick(verb){const rt=UI.wild.returnTo;UI.wild=null;const p=cur();
   if(verb==='source')enterSource(2,rt);
   else if(verb==='brew')enterBrew(rt);
   else if(verb==='age')enterAge(3,'pool',rt);
-  else enterLoad(myShips(p),wharfLoadableCasks(p),true,rt,1,'wild');
+  else enterLoad(myShips(p),shipLoadableCasks(p),true,rt,1,'wild');
 }
 function wildSkip(){const rt=UI.wild.returnTo;UI.wild=null;resume(rt);}
 
@@ -886,7 +903,8 @@ function loadOnto(shipSlot){const p=cur();const caskSlot=UI.load.cask;const sh=S
   sh.load.push({owner:ct.owner,style:ct.style,q:ct.q});S.slots[caskSlot]=null;
   sh.lastLoader=p.id;
   log(p.name+' '+LU('ship')+' loads '+LU('beer')+ownSq(ct.owner)+styleShort(ct.style)+' onto the '+LU('sailboat')+shipName(sh)+' → <b>'+DEST[sh.dest].name+'</b> ('+sh.load.length+'/'+effCap(sh)+').',true);
-  grantImmediate(p,sh.dest);   // ← the immediate destination benefit, on LOAD (v0.11.2)
+  grantImmediate(S.players[ct.owner],sh.dest);   // benefit to the cask's OWNER, on LOAD
+  if(ct.owner!==p.id){gain(p,LOADER_BONUS.g,0);log('↳ '+p.name+' takes a loader bonus for shipping '+S.players[ct.owner].name+'’s cask (and chose the destination).');}
   const rt=UI.load.returnTo;
   if(sh.load.length>=effCap(sh)){UI.load=null;sailShip(shipSlot,p.id);afterSail(rt);return;}
   if(UI.load.loadsLeft>1){const more=wharfLoadableCasks(p).filter(cs=>UI.load.ships.some(s=>canTake(s,cs)));
@@ -919,7 +937,8 @@ function grantImmediate(lp,dest){
   if(dest==='bruges'||dest==='bergen'){gain(lp,2,0);log('↳ '+lp.name+' takes the '+DEST[dest].name+' liquidity benefit on loading.');}
   else if(dest==='london'||dest==='novgorod'){
     log('↳ '+lp.name+' earns a free '+LU('wrench')+' Upgrade (loading toward '+DEST[dest].name+').');
-    (UI.pendingBenefits=UI.pendingBenefits||[]).push({pid:lp.id,dest});}
+    if(lp.id===S.active)(UI.pendingBenefits=UI.pendingBenefits||[]).push({pid:lp.id,dest});
+    else autoGrantDisplay(lp,dest);}   // a rival owner (their cask was loaded on your turn) auto-takes one
   // the Hall pays no immediate benefit — only prestige points, sealed on delivery
 }
 // the cask is DELIVERED (its points count at game end): recorded on sail, or on an instant charter.
@@ -941,7 +960,7 @@ function benefitPick(key){snapshot();const b=UI.pendingBenefits[0];grantUpgrade(
 }
 
 // ---------- HARBOR menu ----------
-function harborLoad(){const p=cur();const loads=1+(hasUpgrade(p,'quay')?1:0)+(hasUpgrade(p,'cooperage')?1:0);enterLoad(myShips(p),wharfLoadableCasks(p),false,'stops',loads,'harbor');}
+function harborLoad(){const p=cur();const loads=1+(hasUpgrade(p,'quay')?1:0)+(hasUpgrade(p,'cooperage')?1:0);enterLoad(myShips(p),shipLoadableCasks(p),false,'stops',loads,'harbor');}
 function harborLaunch(slot){const p=cur();const t=S.slots[slot];
   if(!t||!t.load.some(L=>L.owner===p.id)){log('↳ you may only launch a ship carrying one of your casks.');cellDone();return;}
   snapshot();sailShip(slot,p.id);afterSail('stops');}
@@ -962,22 +981,24 @@ function charterDest(dest){const p=cur();
 }
 
 // ---------- cap dispatchers ----------
-function enterCaskAct(slot,t){const p=cur();const act=STYLES[t.style].act;
+function enterCaskAct(slot,t){const p=cur();const act=caskAct(t);
   if(act==='source')enterSource(2,'stops');
   else if(act==='age')enterAge(2,'single','stops');
-  else if(act==='load')enterLoad(myShips(p),wharfLoadableCasks(p),true,'stops',1,'l3cask');
+  else if(act==='load')enterLoad(myShips(p),shipLoadableCasks(p),true,'stops',1,'l3cask');
   else if(act==='reach')enterReach('stops');
+  else if(act==='convert')enterConvert('stops');
+  else if(act==='draw')enterTowncrier('stops');
   else if(act==='wild')enterWild('stops');
 }
 function enterShipLineFire(slot,t){const p=cur();
-  const casks=wharfLoadableCasks(p).filter(cs=>canTake(slot,cs));
+  const casks=shipLoadableCasks(p).filter(cs=>canTake(slot,cs));
   if(t.load.length>=effCap(t)||!casks.length){log('↳ '+shipName(t)+' (→ '+DEST[t.dest].name+') — nothing eligible to load.');backToStops();return;}
-  enterLoad([slot],wharfLoadableCasks(p),true,'stops',1,'linefire');
+  enterLoad([slot],shipLoadableCasks(p),true,'stops',1,'linefire');
 }
 function enterNeutral(slot,t){const p=cur();
   if(t.b==='stall')enterSource(1,'stops');
   else if(t.b==='cooper')enterAge(1,'single','stops');
-  else if(t.b==='crane')enterLoad(myShips(p),wharfLoadableCasks(p),true,'stops',1,'crane');
+  else if(t.b==='crane')enterLoad(myShips(p),shipLoadableCasks(p),true,'stops',1,'crane');
   else if(t.b==='counting')enterConvert('stops');
   else if(t.b==='towncrier')enterTowncrier('stops');
   else if(t.b==='almshouse')enterAlms('stops');
@@ -1293,7 +1314,7 @@ function aiLine(p){
 function aiStopPrio(s){
   if(s.kind==='cell')return {Source:0,Brew:1,Age:2,Ship:4}[CELLROLE[s.cell]];
   const t=S.slots[s.slot];if(!t)return 99;
-  if(t.type==='cask')return {source:0,wild:1,age:2,reach:2,load:4}[STYLES[t.style].act];
+  if(t.type==='cask')return {source:0,wild:1,age:2,reach:2,load:4,convert:1,draw:1}[caskAct(t)];
   if(t.type==='ship')return 4;
   if(t.type==='neutral')return {stall:0,counting:1,towncrier:1,cooper:2,almshouse:2,crane:4}[t.b];
   return 50;}
@@ -1688,7 +1709,7 @@ function renderGrid(){
     let cls='cell '+c+' c'+c;
     const legal=(UI.sub==='move'&&!aiTurn()&&(!cur().placed||ADJ[cur().cell].includes(c)));
     if(legal)cls+=' legal';
-    const yields=(YIELD[act]||[]).map(n=>LU(n)).join('');
+    const yields=(STATION_ACTS[act]||YIELD[act]||[]).map(n=>LU(n)).join('');
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'>'
       +'<div class="ltr">'+c+'</div>'
       +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="role">'+CELLROLE[c]+'</div><div class="nm">'+act+'</div></div></div>'

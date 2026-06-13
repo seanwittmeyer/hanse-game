@@ -103,7 +103,7 @@ function botLine(p){
 function stopPrio(s){
   if(s.kind==='cell')return {Source:0,Brew:1,Age:2,Ship:4}[CELLROLE[s.cell]];
   var t=S.slots[s.slot];if(!t)return 99;
-  if(t.type==='cask'){var a=STYLES[t.style].act;return {source:0,wild:1,age:2,reach:2,load:4}[a];}
+  if(t.type==='cask'){var a=t.act||STYLES[t.style].act;return {source:0,wild:1,age:2,reach:2,load:4,convert:1,draw:1}[a];}
   if(t.type==='ship')return 4;
   if(t.type==='neutral')return {stall:0,counting:1,towncrier:1,cooper:2,almshouse:2,crane:4}[t.b];
   return 50;

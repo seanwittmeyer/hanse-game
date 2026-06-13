@@ -312,15 +312,15 @@
   <h2><span class="nm">8</span>The Cask &amp; Brewing</h2>
   <p>The tile the whole game turns on, moving through <b>three states</b>: <b>maturing</b> (private vessel) → <b>on a slot</b> (cargo + a public action) → <b>delivered</b> (shipped → it scores and leaves). Beer is <b>two layers — a type</b> (a quality rung) <b>+ a recipe</b> (permission to brew it). Casks are <b>brewed, not bought</b>, from a shared pool with fixed counts, so the rare export casks are contested. A loaded recipe crawls the maturation track — casks <b>age 1 step automatically every turn</b>, plus the Cellar pool.</p>
   <table>
-    <tr><th>Quality</th><th>Beer</th><th>Brew</th><th>Matures</th><th>Slot action</th><th>Ships to</th></tr>
-    <tr><td><b>Q1</b></td><td><b>Gruit Ale</b></td><td><span class="cube g"></span></td><td>1 step</td><td>gain 2 goods</td><td>Bruges</td></tr>
-    <tr><td><b>Q2</b></td><td><b>Hopped Beer</b></td><td><span class="cube g"></span> <span class="cube h"></span></td><td>2</td><td>Age a cask 2 steps</td><td>+ London · Bergen · Hall</td></tr>
-    <tr><td><b>Q3</b></td><td><b>Broyhan</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span></td><td>2</td><td>free Load (a cask onto a ship)</td><td>+ Novgorod</td></tr>
-    <tr><td><b>Q3</b></td><td><b>Keut</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span></td><td>2</td><td>free Load (a cask onto a ship)</td><td>+ Novgorod</td></tr>
-    <tr><td><b>Q4</b></td><td><b>Mumme</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span></td><td>3</td><td>+1 presence at a kontor you've reached</td><td>all</td></tr>
-    <tr><td><b>Q5</b></td><td><b>Bock</b> <span class="small">(export)</span></td><td>premium · needs Aging Cellar</td><td>3</td><td>Wild — take any base action</td><td>all</td></tr>
+    <tr><th>Quality</th><th>Beer</th><th>Brew</th><th>Matures</th><th>Slot action ⚙</th><th>Ships to</th></tr>
+    <tr><td><b>Q1</b></td><td><b>Gruit Ale</b></td><td><span class="cube g"></span></td><td>1 step</td><td><i>drawn at brew</i></td><td>Bruges</td></tr>
+    <tr><td><b>Q2</b></td><td><b>Hopped Beer</b></td><td><span class="cube g"></span> <span class="cube h"></span></td><td>2</td><td><i>drawn at brew</i></td><td>+ London · Bergen · Hall</td></tr>
+    <tr><td><b>Q3</b></td><td><b>Broyhan</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span></td><td>2</td><td><i>drawn at brew</i></td><td>+ Novgorod</td></tr>
+    <tr><td><b>Q3</b></td><td><b>Keut</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span></td><td>2</td><td><i>drawn at brew</i></td><td>+ Novgorod</td></tr>
+    <tr><td><b>Q4</b></td><td><b>Mumme</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span></td><td>3</td><td><i>drawn at brew</i></td><td>all</td></tr>
+    <tr><td><b>Q5</b></td><td><b>Bock</b> <span class="small">(export)</span></td><td>premium · needs Aging Cellar</td><td>3</td><td><i>drawn at brew (Wild possible)</i></td><td>all</td></tr>
   </table>
-  <p>The ladder is a fixed spine (<b>Gruit → Hopped</b>) + a <b>variable export</b>: the four historical Hanse export beers carry a <b>fixed quality</b> (Broyhan/Keut Q3 · Mumme Q4 · Bock Q5) and <b>3 of the 4 are dealt each game</b>, so the climb differs every game. The <b>signature action follows the quality</b>, not the name. <b>Recipes</b> (permission to brew) are a face-up Market supply:</p>
+  <p>The ladder is a fixed spine (<b>Gruit → Hopped</b>) + a <b>variable export</b>: the four historical Hanse export beers carry a <b>fixed quality</b> (Broyhan/Keut Q3 · Mumme Q4 · Bock Q5) and <b>3 of the 4 are dealt each game</b>, so the climb differs every game. Each cask's <b>slot action is drawn at brew from a pool</b> (v0.12 — Source · Age · Load · Reach · Convert · Draw · Wild[Q4+]), <b>decoupled from quality</b> and printed on the tile — so casks reliably bear useful actions and you don't depend on a random Crane. <b>Recipes</b> (permission to brew) are a face-up Market supply:</p>
   <div class="gallery" id="recipeGallery"></div>
 </section>
 
@@ -328,7 +328,7 @@
   <h2><span class="nm">9</span>The Slots</h2>
   <p>The <b>8 slots</b> hold <b>deployed casks</b> (cargo + a public action), the <b>shared ships</b> (neutral hulls; they sail away and return to the deck), and <b>2–3 neutral buildings</b> seeded at setup. When a line fires, the active player may use each building in its two slots: a <b>cask</b> fires its signature action, a <b>ship</b> offers a free load, a <b>neutral building</b> gives its base action. All resolve <b>on the active player's turn</b>. When a rival uses your cask's action, you still own the cask and score it when shipped.</p>
   <div class="gallery" id="neutralGallery"></div>
-  <div class="box red"><h4>The race for cargo space</h4>Everyone loads the <b>same neutral ships</b> — <b>your own casks only</b>. <b>Commissioning</b> grants a <b>free load</b> (a secured berth) and feeds the merchant goal; <b>loading</b> banks the destination's immediate benefit (goods / an Upgrade) on the spot; <b>filling or early-launching</b> sails the hull and seals the <b>points</b>. Filling earns no bonus — the contest is berths on the rich routes and the timing of the send-off.</div>
+  <div class="box red"><h4>The race for cargo space</h4>Everyone loads the <b>same neutral ships</b> — and (v0.12) you may load a <b>rival's</b> cask too, <b>choosing its destination</b> (the owner scores it + banks the benefit; you take a <b>1&nbsp;G loader bonus</b> and free the slot). <b>Commissioning</b> grants a <b>free load</b> (a secured berth) and feeds the merchant goal; <b>loading</b> banks the destination's immediate benefit (goods / an Upgrade) on the spot; <b>filling or early-launching</b> sails the hull and seals the <b>points</b>. Filling earns no bonus — the contest is berths on the rich routes and the timing of the send-off.</div>
 </section>
 
 <section id="shipping">
@@ -436,13 +436,15 @@
     <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>Ship — load</b></td><td><b>Harbor.</b> Load one of <b>your</b> Ready casks onto any qualifying ship — take the destination benefit on loading. A full ship sails at once, delivering every cask for points (no fill bonus).</td></tr>
   </table>
 
-  <div class="acat">Cask signature actions (a deployed cask, when its line fires)</div>
+  <div class="acat">Cask slot actions — <b>drawn at brew</b> (v0.12), printed on the cask, used when its line fires</div>
   <table class="atbl">
-    <tr><td><span class="act-ic"><i data-lucide="store"></i></span></td><td><b>Gruit · gain goods</b></td><td>Gain <b>+2</b> goods.</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Hopped · Age</b></td><td><b>Age</b> any 1 cask <b>2 steps</b>.</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>Q3 (Broyhan/Keut) · Load</b></td><td>Load a Ready cask onto a ship, <b>free</b>.</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="map-pin"></i></span></td><td><b>Q4 (Mumme) · Reach</b></td><td><b>+1 presence</b> at a kontor you've delivered to.</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="sparkles"></i></span></td><td><b>Q5 (Bock) · Wild</b></td><td>Take any <b>one base action</b> (Market · Brewhouse · Cellar · Harbor).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="coins"></i></span></td><td><b>Source</b></td><td>Gain <b>+2</b> goods.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Age</b></td><td><b>Age</b> any 1 cask <b>2 steps</b>.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="package-plus"></i></span></td><td><b>Load</b></td><td>Load a Ready cask onto a ship, <b>free</b>.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="map-pin"></i></span></td><td><b>Reach</b></td><td><b>+1 presence</b> at a kontor you've reached.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="arrow-left-right"></i></span></td><td><b>Convert</b></td><td>Convert up to <b>2 goods</b> G↔H.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="target"></i></span></td><td><b>Draw</b></td><td>Pay 1&nbsp;G, <b>draw a goal</b> (hand cap 4).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="sparkles"></i></span></td><td><b>Wild</b> <span class="small">(Q4+ only)</span></td><td>Take any <b>one base action</b>.</td></tr>
   </table>
 
   <div class="acat">Neutral buildings (shared, seeded on slots)</div>

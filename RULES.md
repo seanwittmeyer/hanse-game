@@ -10,7 +10,7 @@ Each house starts with:
 - **3 `G` (grain), 2 `H` (hops)** — plus **seat compensation: +1 `G` for every seat after the first** ⚙ (so seats P1…P5 start with 3/4/4/4/4 `G`). Turn order is fixed, which gives the first player a small structural edge; the free opening placement plus this +1 `G` neutralize it (sim-validated: it flattens the first-player win-rate at 2–3p essentially to fair). Storage cap 8 ⚙.
 - The **Gruit** and **Hopped** recipes (the on-ramp — fixed, symmetric, so everyone can brew immediately and *gaining an export recipe means more*). More recipes are acquired at the Market.
 - **2 open vessels** (the brewing throughput; cap 4 ⚙ via upgrades).
-- A **warm start so the Wharf is live on turn 1:** **two neutral ships** dealt from the **ship deck** onto slots (§5 — and a **ship market of 3** ⚙ sits face-up beside the Market), and **one Ready Gruit in a vessel** per player (deploy it to a slot on turn 1) ⚙ — no starting cask sits on the shared slots. First voyage is reachable by turn 2–3, not turn 6.
+- A **warm start so the Wharf is live on turn 1:** **a guaranteed Hulk → Bruges plus one more ship** ⚙ dealt from the **ship deck** onto slots (§5 — so the Gruit on-ramp always has a hull; a **ship market of 3** ⚙ sits face-up beside the Market), and **one Ready Gruit in a vessel** per player (deploy it to a slot on turn 1) ⚙ — no starting cask sits on the shared slots. First voyage is reachable by turn 2–3, not turn 6.
 - An empty **brewery board** (vessels + upgrade slots — see `COMPONENTS.md` §4).
 
 The shared board is seeded so the ring is **alive from turn 1:** all four **destinations are open**, and **2–3 neutral buildings** ⚙ plus the **two warm-start ships** are placed in perimeter slots **spread across different lines** (no single line is stacked with the shared tiles ⚙) so there is no obvious opening camp — every direction is worth something on turn 1. **Deal 3 of the 4 export beers** into play this game. Each beer carries a **fixed quality** — **Broyhan** and **Keut** are Q3, **Mumme** is Q4, **Bock** is Q5 — so dropping one varies the *ladder shape*: drop a Q3 beer → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4 tier; drop **Bock** → no Q5 tier (the variable export tier). **Shuffle all Upgrade tiles into a face-down Upgrade deck and deal 4 ⚙ face-up beside it (randomly placed) — the Upgrade display; the deck stays face-down as a 5th stack and refills the display as tiles are taken (§3).** Set the **Sailed-Ships track** to its player-scaled length. Each player places a worker on any station — **opening placement is free** (no occupancy toll, §1). **Choose a first player — fixed for the whole game** (turn order does not rotate ⚙; the free opening placement **and the +1 `G` per later seat** above are the seat balancers).
@@ -85,7 +85,7 @@ Take **2 goods** (any mix), **OR** acquire **one** tile, paying its goods cost �
 Gain a **pool of 3 age points** ⚙ and **allocate them freely across your vessels** (pour into one cask or spread). Each cask also ages **+1 automatically at the start of your turn** ⚙, so maturing never depends on reaching this station. When a cask reaches **Ready**, deploy it to an open slot (§2).
 
 ### C · Harbor — *Ship*
-**Load** one of your **deployed casks** (sitting on a slot) onto **any ship on the Wharf** whose quality minimum it meets (no line-coincidence needed). **The moment you load, you take that destination's immediate benefit** (goods, or an Upgrade — §5). A ship **sails the instant it is full**; you may also **launch a ship early** here if it carries **at least one of your casks** (delivering your casks for points). *(A cask must be on a slot — or, for the commissioner's free load, a vessel — to board a ship.)*
+**Load** a **deployed cask** (sitting on a slot — **yours or a rival's**, v0.12) onto **any ship on the Wharf** whose quality minimum it meets (no line-coincidence needed). **You choose the ship/destination.** **The cask's owner banks that destination's immediate benefit** (goods, or an Upgrade — §5) the moment it is loaded; if you loaded a **rival's** cask, **you** take a **loader bonus** (`1 G` ⚙) for choosing where it goes. A ship **sails the instant it is full**; you may also **launch a ship early** here if it carries **at least one of your casks** (delivering your casks for points). *(A cask must be on a slot — or, for the commissioner's free load, a vessel — to board a ship.)*
 
 Or **Charter** (the always-available relief valve, §5): pay the **charter fare — a shared market price printed under the Sailed-Ships track**, set by how many voyages the table has delivered ⚙ (2p row: `2·2·3·2·2·4·5·5` — cheap early, a small mid bump, `4–5 G` in the closing stretch; one price for everyone, GWT-market style much simplified) — to send **one** Ready cask — from a vessel **or** a slot — on an immediate **single-cask voyage** to a destination it qualifies for. It delivers normally (scores + the destination benefit) and, being a voyage, **advances the Sailed-Ships clock**. One cask for the price keeps the shared Cogs/Hulks the efficient path, but the Charter guarantees you **never deadlock** (when every slot is jammed, no hull fits your cargo, or a Ready cask clogs a vessel, you can always charter your way out).
 
@@ -103,20 +103,22 @@ The **8 slots** (2 beside each line) are the shared commons. They hold a churnin
 
 **One rule for all of them:** when a line fires, the active player **may use each building in its two slots.** All building actions resolve **on the active player's turn, for the active player** — there are **no out-of-turn gains** (the thing that felt counter-intuitive in v0.6 is gone). Cask and neutral actions are **free and public** (a rival using your cask's action is incidental — it is on *your* line, doing *your* work, while you wait to ship it).
 
-### Signature cask actions (by type — public, chunky, production-advancing) ⚙
-Each is a "support action" in the Lisboa sense — it pushes production forward, and the climb makes higher types stronger:
+### Variable cask actions (drawn at brew — public, chunky, production-advancing) ⚙ (v0.12)
+Each cask carries **one signature slot-action**, **drawn at brew from the pool below** — *decoupled from quality* (a Gruit might carry **Load**; a Bock might carry **Source**). The action is **printed on the cask tile** so you read it without a tooltip. *Why variable:* casks now reliably bear useful actions, so you no longer depend on whether the random **Crane** building came out — it loosens the slot/loading bottleneck.
 
-| Type | Q | Signature slot action |
-|---|---|---|
-| **Gruit** | 1 | **gain** 2 goods |
-| **Hopped** | 2 | **Age** any 1 of your casks 2 steps |
-| **Export Q3** *(Broyhan · Keut)* | 3 | **Load** — load a Ready cask onto a ship for free |
-| **Export Q4** *(Mumme)* | 4 | **Reach** — +1 presence at a kontor you've delivered to (majority help) |
-| **Export Q5** *(Bock)* | 5 | **Wild** — take any one base action (Market / Brewhouse / Cellar / Harbor) as a bonus |
+| Action | Effect ⚙ |
+|---|---|
+| **Source** | **gain** 2 goods |
+| **Age** | **age** any 1 of your casks 2 steps |
+| **Load** | **load** a Ready cask onto a ship for free |
+| **Reach** | **+1 presence** at a kontor you've reached (majority help) |
+| **Convert** | **convert** up to 2 goods `G ↔ H` |
+| **Draw** | **draw** a goal from the supply (pay `1 G`, hand cap 4) |
+| **Wild** | take any one **base action** — *Q4+ casks only* (too strong on a cheap cask) |
 
-> The action follows the **quality**, not the name: whichever export beers are dealt this game, a Q3 cask always grants **Load**, a Q4 (Mumme) **Reach**, a Q5 (Bock) **Wild**. If Mumme or Bock is the undealt beer, that action simply isn't available this game.
+> The action is **independent of the beer type/quality** (only **Wild** is gated, to Q4+). The pace dial to watch: more cask actions means more to *do* per cask, which slows the Sailed-Ships clock — the clock length compensates ⚙.
 
-> *Why this fixes the old "lackluster tile":* the action is chunky and advances *your* turn, and **which type you brew is now an engine choice** — you're deciding which action-building to put on your lines, not just paying a cost.
+> *Why this fixes the old "lackluster tile":* the action is chunky and advances *your* turn; **what you draw shapes your engine**, and a useful action no longer depends on a random building being in the game.
 
 ---
 
