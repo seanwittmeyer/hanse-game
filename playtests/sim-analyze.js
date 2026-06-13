@@ -51,7 +51,8 @@ var _commissionShip=commissionShip;commissionShip=function(idx){var sn=(S.shipDi
 var _charterDest=charterDest;charterDest=function(d){if(REC())EV('charter',{dest:d});return _charterDest(d);};
 var _deliverCask=deliverCask;deliverCask=function(lp,style,q,dest){if(REC())EV('deliver',{pid:lp.id,dest:dest,q:q});return _deliverCask(lp,style,q,dest);};
 var _sailShip=sailShip;      sailShip=function(sl,cid){if(REC()){var t=S.slots[sl];if(t)EV('sail',{pid:(cid!=null?cid:S.active),dest:t.dest,ncask:t.load.length});}return _sailShip(sl,cid);};
-var _loadOnto=loadOnto;      loadOnto=function(ss){if(REC()){var ct=S.slots[UI.load.cask];if(ct&&ct.owner!==S.active)EV('rivalload',{owner:ct.owner});}return _loadOnto(ss);};
+var _loadOnto=loadOnto;      loadOnto=function(ss){if(REC()){EV('load',{src:(UI.load&&UI.load.src)||'harbor'});var ct=S.slots[UI.load.cask];if(ct&&ct.owner!==S.active)EV('rivalload',{owner:ct.owner});}return _loadOnto(ss);};
+var _commLoad=commLoad;      commLoad=function(ref){if(REC())EV('load',{src:'commission'});return _commLoad(ref);};
 var _reachPick=reachPick;    reachPick=function(k){if(REC())EV('pres',{dest:k});return _reachPick(k);};
 var _drawPick=drawPick;      drawPick=function(g){if(REC())EV('goaldraw',{goal:g});return _drawPick(g);};
 var _almsPick=almsPick;      almsPick=function(k){if(REC())EV('pres',{dest:k});return _almsPick(k);};
@@ -247,6 +248,18 @@ COUNTS.forEach(np => {
   console.log(`   ${np}p   hull ${String(hull).padStart(6)} (${pct(hull, tot)})   charter ${String(charter).padStart(6)} (${pct(charter, tot)})   ` +
     `avg casks/sail ${fmt(hull / Math.max(1, sails))}   commissions/game ${fmt(comm/Math.max(1,ng))}   total deliveries ${tot}`);
 });
+
+// ---- 4c. LOAD SOURCE: how ship-loads happen (is the line-fire ship-load a minor bonus?) ----
+console.log('\n==== LOAD SOURCE (share of cask-onto-ship loads by method; commission free-load excluded from \"during play\") ====');
+{
+  const SRC = ['harbor','linefire','crane','l3cask','wild','commission'];
+  const tot = {}; SRC.forEach(k => tot[k] = 0);
+  GAMES.forEach(g => g.ev.forEach(e => { if (e.t === 'load') tot[e.src] = (tot[e.src] || 0) + 1; }));
+  const all = SRC.reduce((a, k) => a + tot[k], 0);
+  const play = all - tot.commission;   // loads "during play" (excludes the commission free berth)
+  console.log('   of ALL loads:   ' + SRC.map(k => `${k} ${pct(tot[k], all)}`).join('   '));
+  console.log('   LINE-FIRE share of in-play loads (Harbor/linefire/crane/l3cask/wild): ' + pct(tot.linefire, play));
+}
 
 // ---- 5. WIN CORRELATES ----
 console.log('\n==== WIN CORRELATES (avg, winners vs losers) ====');

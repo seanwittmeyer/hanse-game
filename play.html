@@ -870,15 +870,15 @@ function wildPick(verb){const rt=UI.wild.returnTo;UI.wild=null;const p=cur();
   if(verb==='source')enterSource(2,rt);
   else if(verb==='brew')enterBrew(rt);
   else if(verb==='age')enterAge(3,'pool',rt);
-  else enterLoad(myShips(p),wharfLoadableCasks(p),true,rt,1);
+  else enterLoad(myShips(p),wharfLoadableCasks(p),true,rt,1,'wild');
 }
 function wildSkip(){const rt=UI.wild.returnTo;UI.wild=null;resume(rt);}
 
 // ---------- LOAD a cask onto a ship (Harbor verb · ship line-fire · L3 cask · Crane · Wild) ----------
-function enterLoad(ships,casks,free,rt,loadsLeft){
+function enterLoad(ships,casks,free,rt,loadsLeft,src){
   const elig=casks.filter(cs=>ships.some(s=>canTake(s,cs)));
   if(!ships.length||!elig.length){log('↳ nothing to load.');resume(rt);return;}
-  UI.sub='load';UI.load={ships,casks,free,returnTo:rt,loadsLeft:loadsLeft||1,cask:null};render();
+  UI.sub='load';UI.load={ships,casks,free,returnTo:rt,loadsLeft:loadsLeft||1,cask:null,src:src||'harbor'};render();
 }
 function loadPickCask(slot){UI.load.cask=slot;render();}
 function loadOnto(shipSlot){const p=cur();const caskSlot=UI.load.cask;const sh=S.slots[shipSlot];const ct=S.slots[caskSlot];
@@ -941,7 +941,7 @@ function benefitPick(key){snapshot();const b=UI.pendingBenefits[0];grantUpgrade(
 }
 
 // ---------- HARBOR menu ----------
-function harborLoad(){const p=cur();const loads=1+(hasUpgrade(p,'quay')?1:0)+(hasUpgrade(p,'cooperage')?1:0);enterLoad(myShips(p),wharfLoadableCasks(p),false,'stops',loads);}
+function harborLoad(){const p=cur();const loads=1+(hasUpgrade(p,'quay')?1:0)+(hasUpgrade(p,'cooperage')?1:0);enterLoad(myShips(p),wharfLoadableCasks(p),false,'stops',loads,'harbor');}
 function harborLaunch(slot){const p=cur();const t=S.slots[slot];
   if(!t||!t.load.some(L=>L.owner===p.id)){log('↳ you may only launch a ship carrying one of your casks.');cellDone();return;}
   snapshot();sailShip(slot,p.id);afterSail('stops');}
@@ -965,19 +965,19 @@ function charterDest(dest){const p=cur();
 function enterCaskAct(slot,t){const p=cur();const act=STYLES[t.style].act;
   if(act==='source')enterSource(2,'stops');
   else if(act==='age')enterAge(2,'single','stops');
-  else if(act==='load')enterLoad(myShips(p),wharfLoadableCasks(p),true,'stops',1);
+  else if(act==='load')enterLoad(myShips(p),wharfLoadableCasks(p),true,'stops',1,'l3cask');
   else if(act==='reach')enterReach('stops');
   else if(act==='wild')enterWild('stops');
 }
 function enterShipLineFire(slot,t){const p=cur();
   const casks=wharfLoadableCasks(p).filter(cs=>canTake(slot,cs));
   if(t.load.length>=effCap(t)||!casks.length){log('↳ '+shipName(t)+' (→ '+DEST[t.dest].name+') — nothing eligible to load.');backToStops();return;}
-  enterLoad([slot],wharfLoadableCasks(p),true,'stops',1);
+  enterLoad([slot],wharfLoadableCasks(p),true,'stops',1,'linefire');
 }
 function enterNeutral(slot,t){const p=cur();
   if(t.b==='stall')enterSource(1,'stops');
   else if(t.b==='cooper')enterAge(1,'single','stops');
-  else if(t.b==='crane')enterLoad(myShips(p),wharfLoadableCasks(p),true,'stops',1);
+  else if(t.b==='crane')enterLoad(myShips(p),wharfLoadableCasks(p),true,'stops',1,'crane');
   else if(t.b==='counting')enterConvert('stops');
   else if(t.b==='towncrier')enterTowncrier('stops');
   else if(t.b==='almshouse')enterAlms('stops');
