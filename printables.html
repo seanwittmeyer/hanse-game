@@ -266,8 +266,7 @@
   <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
   <span class="seg"><button id="bfull" class="on" onclick="setMode('full')">Full set</button><button id="bproof" onclick="setMode('proof')">Proof (1 each)</button></span>
   <span class="seg"><button id="lart" class="on" onclick="setLayer('art')">ART layer</button><button id="lcut" onclick="setLayer('cut')">CUT layer</button></span>
-  <button onclick="downloadAll()" style="background:var(--sea);color:#fff">⬇ Cut SVGs</button>
-  <span class="note"><b>US Letter · LANDSCAPE · 100%</b> (verify the 3-inch bar). <b>ART = print to PDF</b> (the 🖨 buttons; in the dialog: Save as PDF, scale 100%, margins default, <b>“Background graphics” ON</b>) — vector-perfect, places in Affinity at exact size. <b>CUT = the SVGs</b> → Affinity → PDF → laser. Both carry the same registration marks. Card sheets print their grey cut guides with the art (paper cutter, no laser). Tiles are one unbroken grid — neighbours are the bleed.</span>
+  <span class="note"><b>US Letter · LANDSCAPE · 100%</b> (verify the 3-inch bar). <b>Print to PDF</b> (the 🖨 buttons; in the dialog: Save as PDF, scale 100%, margins default, <b>“Background graphics” ON</b>) — vector-perfect, places in Affinity at exact size. The cut guides &amp; registration marks print with the art; toggle the <b>CUT layer</b> to print a guide-only sheet. Card sheets print their grey cut guides with the art. Tiles are one unbroken grid — neighbours are the bleed.</span>
   <span style="margin-left:auto"><a href="learn.html">Learn</a> · <a href="index.html">Rulebook &amp; Components</a> · <a href="play.html">Play</a></span>
 </div>
 <div id="out"></div>
@@ -652,9 +651,9 @@ function checklist(pages,famPages){
     +row(1,'First-player marker 0.8″ (fixed all game)','1','')
     +row(1,'Round marker 0.8″ (the 1–25 track on the main board)','1','')
     +'</table>';
-  h+='<div class="wf"><b>Prototype workflow.</b> 1) <b>ART = print to PDF</b> in the ART layer — the whole view, or a 🖨 button for a one-sheet PDF. In the print dialog: Save as PDF · scale 100% · margins default · <b>“Background graphics” ON</b>. Place in Affinity Publisher (passthrough renders exactly) and print at 100% (verify the 3″ bar). '
-    +'2) Spray-glue the art sheets to chipboard. 3) <b>CUT = the ⬇ SVGs</b> (pure vector geometry) → Affinity → PDF → the laser; align on the registration marks (identical in both files), cut the red lines. '
-    +'<b>Card sheets are the exception:</b> print on cardstock — their grey cut guides print with the art — and cut with a paper cutter; no laser pass, no mounting (they tuck under the brewery board). '
+  h+='<div class="wf"><b>Prototype workflow.</b> 1) <b>Print to PDF</b> — the whole view, or a 🖨 button for a one-sheet PDF. In the print dialog: Save as PDF · scale 100% · margins default · <b>“Background graphics” ON</b>. Place in Affinity Publisher (passthrough renders exactly) and print at 100% (verify the 3″ bar). '
+    +'2) Spray-glue the art sheets to chipboard. 3) <b>Cut on the printed guides</b> — the cut lines &amp; registration marks print with the art; cut the lines by hand or paper cutter. (Toggle the <b>CUT layer</b> first to print a guide-only sheet if you want a separate cutting template.) '
+    +'<b>Card sheets:</b> print on cardstock and cut with a paper cutter; no mounting (they tuck under the brewery board). '
     +'Tiles &amp; cards are gapless grids — every internal line is drawn once. Tokens cut on the inner circle; the ring outside is bleed. '
     +'Backs are bare chipboard (every component is single-faced; the face-down upgrade deck &amp; goal deals work by flipping).</div>';
   h+='</div></div>';
@@ -700,24 +699,13 @@ function render(){
     h+='<div class="page" id="pg'+pg.no+'">';
     pg.items.forEach(it=>{h+='<div class="it" style="left:'+it.x+'in;top:'+it.y+'in;width:'+it.w+'in;height:'+it.h+'in">'+it.html+'</div>';});
     h+=overlaySvg(pg);
-    h+='<span class="dl no-print"><button onclick="printOne('+pg.no+')">🖨 S'+pg.no+' PDF</button> <button onclick="dlCut('+pg.no+')">⬇ S'+pg.no+' cut</button></span>';
+    h+='<span class="dl no-print"><button onclick="printOne('+pg.no+')">🖨 S'+pg.no+' PDF</button></span>';
     h+='</div>';
   });
   document.getElementById('out').innerHTML=h||'<p style="text-align:center;padding:2em">no sheets in this view</p>';
   if(window.lucide)lucide.createIcons();
 }
-function cutFile(pg){  // standalone cut file: marks + cuts, no CSS needed (laser-ready)
-  return '<?xml version="1.0" encoding="UTF-8"?>\n'
-    +'<svg xmlns="http://www.w3.org/2000/svg" width="'+PG.w+'in" height="'+PG.h+'in" viewBox="0 0 '+PG.w+' '+PG.h+'">'
-    +'<g>'+marksSvg(pg)+'</g><g>'+cutsSvg(pg)+'</g></svg>';}
-function dlBlob(s,name){const blob=new Blob([s],{type:'image/svg+xml'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download=name;a.click();URL.revokeObjectURL(a.href);}
-function dlCut(no){const pg=PAGES.find(p=>p.no===no);if(!pg)return;
-  dlBlob(cutFile(pg),'hanse-'+MODE+'-S'+String(no).padStart(2,'0')+'-cut.svg');}
-function shownPages(){return PAGES.filter(p=>(VIEW==='all'||p.section===VIEW)&&p.section!=='list');}
-function downloadAll(){shownPages().forEach((pg,i)=>setTimeout(()=>dlCut(pg.no),i*350));}
-// ART export = the browser's own print engine (vector-perfect PDF; "Save as PDF" in the dialog).
+// Export = the browser's own print engine (vector-perfect PDF; "Save as PDF" in the dialog).
 // printOne solos a sheet so each sheet can be saved as its own one-page PDF for Affinity placement.
 function printOne(no){
   const el=document.getElementById('pg'+no);if(!el)return;
