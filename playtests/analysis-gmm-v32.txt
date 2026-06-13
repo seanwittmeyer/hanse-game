@@ -1,0 +1,47 @@
+Brewhouses of the Hanse — strategy analysis  |  30 games  |  tiers=guildmaster  counts=2  N=30/count  [278s]
+winner avg score 46.6  ·  avg rounds 18.5
+
+==== OPENINGS (turn-1 placement + first line; win-rate vs fair share) ====
+-- 2p (fair = 50.0%):
+   Cellar + rowB          picked    13×   wins  46.2%   (-3.8 vs fair)
+   Harbor + colL          picked    11×   wins  45.5%   (-4.5 vs fair)
+   Market + colL          picked    10×   wins  30.0%   (-20.0 vs fair)
+   Brewhouse + rowT       picked     6×   wins  33.3%   (-16.7 vs fair)
+   Cellar + colR          picked     6×   wins  50.0%   (+0.0 vs fair)
+   Harbor + rowB          picked     5×   wins 100.0%   (+50.0 vs fair)
+   Market + rowT          picked     5×   wins  60.0%   (+10.0 vs fair)
+   Brewhouse + colR       picked     4×   wins  75.0%   (+25.0 vs fair)
+
+==== TIMING (avg round of first …; winners vs losers; %never in parens) ====
+   first voyage (sail/charter)  winners 4.0 (0.0% never)     losers 6.5 (0.0% never)
+   first export recipe          winners 4.9 (10.0% never)    losers 4.8 (3.3% never)
+   first upgrade                winners 7.5 (13.3% never)    losers 8.3 (13.3% never)
+   first Hall delivery          winners 11.2 (46.7% never)   losers 11.4 (46.7% never)
+   first Bergen delivery        winners 10.4 (16.7% never)   losers 12.5 (40.0% never)
+   first Q4+ brew               winners 12.3 (76.7% never)   losers 11.0 (60.0% never)
+
+==== ACTION PROFILE by tier (avg per player per game) ====
+-- guildmaster  (n=60, win 50.0%)
+   stations/game: Mkt 5.3 · Brw 5.1 · Hbr 4.1 · Clr 4.0    brews 6.2 (Q4+ 0.5)
+   deliveries/game: brug 2.0 · lond 0.9 · berg 1.1 · novg 0.4 · hall 0.7
+   sails 1.6 · charters 2.0 · rival-loads 0.0 · presence-actions 2.1 · upgrades 2.5 (bought 1.3)
+
+==== DESTINATION TIMING (share of deliveries by phase: rounds 1-5 / 6-10 / 11+) ====
+   bruges       119 casks   early  34.5%   mid  25.2%   late  40.3%
+   london        52 casks   early  17.3%   mid   3.8%   late  78.8%
+   bergen        64 casks   early  14.1%   mid  34.4%   late  51.6%
+   novgorod      22 casks   early   0.0%   mid  18.2%   late  81.8%
+   hall          42 casks   early  11.9%   mid  33.3%   late  54.8%
+
+==== WIN CORRELATES (avg, winners vs losers) ====
+   total score              winners   46.6   losers   28.5   (Δ +18.1)
+   delivery pts             winners   12.9   losers   10.9   (Δ +2.0)
+   majority pts             winners   17.0   losers    6.3   (Δ +10.7)
+   goal pts                 winners   16.7   losers   11.3   (Δ +5.4)
+   casks delivered          winners    5.5   losers    4.5   (Δ +1.0)
+   distinct destinations    winners    3.4   losers    2.8   (Δ +0.6)
+   Hall casks               winners    0.6   losers    0.8   (Δ -0.1)
+   upgrades                 winners    2.9   losers    2.2   (Δ +0.7)
+   ships sailed             winners    1.9   losers    1.3   (Δ +0.6)
+   goals held at end        winners    3.4   losers    3.4   (Δ +0.0)
+

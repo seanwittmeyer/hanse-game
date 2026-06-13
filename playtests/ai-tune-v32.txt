@@ -1,0 +1,26 @@
+Brewhouses of the Hanse — Trader weight tuner (CEM)  |  gens=6 pop=12 elite=3
+fitness = 0.5*WR(2p vs incumbent, n=160) + 0.25*WR(2p vs journeyman, n=80) + 0.25*min(1, 2*WR(4p vs 3 incumbents, n=60))
+incumbent/defaults: swing=1 upBen=1.45 goodsBen=1.4 hallBase=0.45 hallRamp=0.9 leanVal=0.91 leanSwing=1.01 leanHall=0.91 goalW=1.94 buyFlush=8.68
+
+gen  1  best f=0.561 (inc 54% jour 53% 4p 32%)  elite-mean f=0.537  [11s]
+        mean: swing=0.976 upBen=0.719 goodsBen=0.849 hallBase=0.502 hallRamp=0.781 leanVal=0.949 leanSwing=1.141 leanHall=0.926 goalW=2.046 buyFlush=9.536
+gen  2  best f=0.541 (inc 44% jour 57% 4p 35%)  elite-mean f=0.531  [21s]
+        mean: swing=0.736 upBen=1.008 goodsBen=0.675 hallBase=0.65 hallRamp=0.742 leanVal=0.958 leanSwing=1.158 leanHall=0.957 goalW=2.079 buyFlush=9.949
+gen  3  best f=0.576 (inc 48% jour 59% 4p 38%)  elite-mean f=0.536  [31s]
+        mean: swing=0.752 upBen=0.949 goodsBen=0.749 hallBase=0.555 hallRamp=0.663 leanVal=0.938 leanSwing=1.15 leanHall=0.953 goalW=2.022 buyFlush=9.968
+gen  4  best f=0.590 (inc 56% jour 60% 4p 32%)  elite-mean f=0.572  [41s]
+        mean: swing=0.81 upBen=1.016 goodsBen=0.74 hallBase=0.528 hallRamp=0.673 leanVal=0.929 leanSwing=1.155 leanHall=0.948 goalW=1.866 buyFlush=9.978
+gen  5  best f=0.556 (inc 51% jour 50% 4p 35%)  elite-mean f=0.544  [51s]
+        mean: swing=0.846 upBen=1.072 goodsBen=0.749 hallBase=0.495 hallRamp=0.644 leanVal=0.934 leanSwing=1.16 leanHall=0.957 goalW=1.79 buyFlush=9.971
+gen  6  best f=0.550 (inc 51% jour 49% 4p 35%)  elite-mean f=0.542  [61s]
+        mean: swing=0.843 upBen=1.076 goodsBen=0.726 hallBase=0.514 hallRamp=0.639 leanVal=0.927 leanSwing=1.169 leanHall=0.953 goalW=1.867 buyFlush=9.987
+
+---- confirmation (2p n=2000 each + 4p n=600) ----
+final-mean  vs incumbent 50.2% (±2.2)  vs journeyman 53.7%  4p share 22.3% (fair 25)
+            swing=0.843 upBen=1.076 goodsBen=0.726 hallBase=0.514 hallRamp=0.639 leanVal=0.927 leanSwing=1.169 leanHall=0.953 goalW=1.867 buyFlush=9.987
+best-ever   vs incumbent 51.6% (±2.2)  vs journeyman 54.6%  4p share 26.2% (fair 25)
+            swing=0.793 upBen=1.043 goodsBen=0.575 hallBase=0.58 hallRamp=0.686 leanVal=0.916 leanSwing=1.148 leanHall=0.943 goalW=1.711 buyFlush=9.971
+
+RECOMMENDATION: KEEP the incumbent — no candidate beats it significantly (best: best-ever at 51.6%). The shipped AI_W stands.
+winner weights: swing=0.793 upBen=1.043 goodsBen=0.575 hallBase=0.58 hallRamp=0.686 leanVal=0.916 leanSwing=1.148 leanHall=0.943 goalW=1.711 buyFlush=9.971
+

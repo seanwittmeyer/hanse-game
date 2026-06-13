@@ -68,7 +68,7 @@ A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATU
 *Gruit is the cheap, fast workhorse — it keeps your goods flowing (its Source action) and reaches Bruges, but never makes prestige. The export casks are scarce, slow, and the key to the rich destinations — the Leffe/Westvleteren line drawn in the components.*
 
 ### B. Ship tiles — NEUTRAL, destination-bound shared hulls (the ship deck, ~14 tiles ⚙ — v0.11 Batch B)
-**Nobody owns a ship.** Each tile is **printed** with its hull and **destination** (inheriting that destination's quality minimum). A shuffled **ship deck** sits by the Market with the **next ship face-up**; **2 are dealt to slots at setup** (the warm start). **Commission** (Market, `2 G` ⚙): place the face-up ship on any open slot. **Load your own casks only** — via the Harbor action or a bonus free load when the ship's line fires. The instant it is **full** it **sails** — every cask aboard delivers (scores for its owner + benefit), the **filler takes the dispatch fee (`2 G` ⚙)** and ships-goal credit; any player with a cask aboard may **launch it early** at the Harbor (credit, no fee). The voyage **advances the Sailed-Ships marker**, and the **hull returns to the bottom of the deck** (the supply never dries up). *(The old "ship a rival's cask" rule is cut — v0.11.)*
+**Nobody owns a ship.** Each tile is **printed** with its hull and **destination** (inheriting that destination's quality minimum). A shuffled **ship deck** sits by the Market with a **face-up display of 3 ⚙** (refilled from the deck as taken); **2 more are dealt to slots at setup** (the warm start). **Commission** (Market, `2 G` ⚙): place **any one of the 3** face-up ships on an open slot. **Load your own casks only** — via the Harbor action or a bonus free load when the ship's line fires. The instant it is **full** it **sails** — every cask aboard delivers (scores for its owner + benefit), the **filler takes the dispatch fee (`2 G` ⚙)** and ships-goal credit; any player with a cask aboard may **launch it early** at the Harbor (credit, no fee). The voyage **advances the Sailed-Ships marker**, and the **hull returns to the bottom of the deck** (the supply never dries up). *(The old "ship a rival's cask" rule is cut — v0.11.)*
 
 | Ship | Capacity | Commission ⚙ | In deck ⚙ |
 |---|---|---|---|
@@ -195,7 +195,7 @@ Symmetric for all players (except seat compensation, below). The stations are th
 | Recipes | **Gruit + Hopped** (fixed); more collected at the Market |
 | Vessels | **2 open** (lanes 3–4 locked behind Extra Vessel) |
 | Upgrades | none · Storage 8 |
-| **Warm start** | **2 neutral ships dealt from the ship deck** to slots (next face-up by the Market) **+ 1 Ready Gruit in a vessel** per player (deploy it turn 1) ⚙ — the Wharf is live and a first voyage is reachable turn 2–3 |
+| **Warm start** | **2 neutral ships dealt from the ship deck** to slots (a **ship market of 3** ⚙ face-up by the Market) **+ 1 Ready Gruit in a vessel** per player (deploy it turn 1) ⚙ — the Wharf is live and a first voyage is reachable turn 2–3 |
 | Worker | placed turn 1 (free, no toll — `RULES.md` §1) |
 
 > **Why mid-stream:** the pace model showed v0.6's first voyage at **turn 6** (goods-/geometry-bound), so v0.9+ starts you with 2 vessels, warm shared hulls + a Ready cask, all destinations open, base actions always usable. *Gaining an export recipe means more* because you start with only the on-ramp.

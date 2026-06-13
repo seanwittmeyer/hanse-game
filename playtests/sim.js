@@ -25,7 +25,7 @@ var NAMES=['P1','P2','P3','P4','P5'];
 
 function achQ(p){var qs=p.recipes.map(function(r){return (STYLES[r].cellar&&!hasUpgrade(p,'cellar'))?0:STYLES[r].q;});return Math.max.apply(null,qs);}
 function needShip(p){
-  if(!S.shipNext||emptySlots().length===0||!canPay(p,{g:2}))return false;
+  if(!(S.shipDisplay&&S.shipDisplay.length)||emptySlots().length===0||!canPay(p,{g:2}))return false;
   var qs=[];p.vessels.forEach(function(c){if(c)qs.push(c.q);});
   wharfCaskSlots().forEach(function(id){var t=S.slots[id];if(t.owner===p.id)qs.push(t.q);});
   var bq=qs.length?Math.max.apply(null,qs):achQ(p);

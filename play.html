@@ -326,6 +326,7 @@ const SHIP_CAP={cog:2,hulk:3};
 const SHIP_NAME={cog:'Cog',hulk:'Hulk'};
 const COMMISSION_COST={g:2};   // ⚙ flat — the face-up tile decides hull & destination
 const FILL_BONUS={g:2};        // ⚙ the dispatch fee for the player whose cask fills a ship
+const SHIP_DISPLAY=3;          // ⚙ face-up ship-market size — pick from this many (avoids a single bad-destination tile stalling the yard)
 const SHIP_DECK_MIX=[          // ⚙ 14 hulls; every destination (incl. the Hall) appears in the deck
   ['cog','bruges'],['cog','bruges'],['cog','london'],['cog','london'],['cog','bergen'],
   ['cog','bergen'],['cog','novgorod'],['cog','hall'],
@@ -439,7 +440,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v31'; // v0.11 Batch B ⚙: NEUTRAL destination-bound ships (ship deck + Commission + own-casks loading + filler dispatch fee; rival-cask shipping CUT); bump discards stale state
+const KEY='hanse-hotseat-v32'; // ⚙ ship market = display of 3 face-up hulls (was a single face-up tile); bump discards stale state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -477,7 +478,7 @@ function newPlayer(i,name){
 function freshState(n,names){
   const st={players:[],slots:{},turn:1,active:0,first:0,ending:false,log:[],
     exports:dealExports(), sailed:0, sailedCap:(SAILED_CAP[n]||10), upgradeSupply:[], upgradeDisplay:[],
-    shipDeck:[], shipNext:null,
+    shipDeck:[], shipDisplay:[],
     sessionId:newSessionId(), endedAt:null, studioSent:null};
   for(let i=0;i<n;i++) st.players.push(newPlayer(i,names[i]));
   SLOTS.forEach(s=>st.slots[s.id]=null);
@@ -506,7 +507,7 @@ function freshState(n,names){
   // v0.11 Batch B: the ship deck (neutral hulls, destination printed); 2 seeded, next face-up ⚙
   st.shipDeck=shuffle(SHIP_DECK_MIX.map(x=>({ship:x[0],dest:x[1]})));
   for(let i=0;i<2;i++){const sh=st.shipDeck.shift();placeBalanced({type:'ship',ship:sh.ship,dest:sh.dest,load:[]},1);}
-  st.shipNext=st.shipDeck.shift()||null;
+  st.shipDisplay=[];while(st.shipDisplay.length<SHIP_DISPLAY&&st.shipDeck.length)st.shipDisplay.push(st.shipDeck.shift());
   const npool=shuffle(Object.keys(NEUTRALS).slice());
   const nNeutral=Math.min(3,npool.length,Math.max(1, SLOTS.length - st.players.length - 2));  // 2–3 in play (scales with open slots; tightest at 5p)
   for(let i=0;i<nNeutral;i++)placeBalanced({type:'neutral',b:npool[i]},2);
@@ -726,17 +727,21 @@ function buyRecipe(style){const p=cur();
   log(p.name+' buys the '+LU('scroll-text')+' <b>'+STYLES[style].name+'</b> recipe (Q'+STYLES[style].q+').',true);cellDone();}
 // Commission the face-up ship of the deck (v0.11 B): pay the fee, place it on any open slot.
 // The hull & destination are printed on the tile — what you buy is tempo and placement.
-function commissionShip(){const p=cur();
-  if(!S.shipNext){log('↳ the ship deck is empty — only charters sail now.');cellDone();return;}   // graceful: always progresses the turn
+function commissionShip(idx){const p=cur();
+  const disp=S.shipDisplay||[];
+  if(!disp.length){log('↳ the ship market is empty — only charters sail now.');cellDone();return;}   // graceful: always progresses the turn
   if(!emptySlots().length){alert('No open slot to place a ship.');return;}
   if(!canPay(p,COMMISSION_COST))return;
+  const i=(idx!=null&&disp[idx])?idx:0;   // default to the first (legacy/robustness callers)
+  const sn=disp[i];
   snapshot();pay(p,COMMISSION_COST);
-  UI.tmp.placeTile={type:'ship',ship:S.shipNext.ship,dest:S.shipNext.dest,load:[]};
-  S.shipNext=S.shipDeck.length?S.shipDeck.shift():null;
+  UI.tmp.placeTile={type:'ship',ship:sn.ship,dest:sn.dest,load:[]};
+  disp.splice(i,1);refillShipDisplay();
   UI.stage='place';
   log(p.name+' commissions the '+LU('sailboat')+' <b>'+SHIP_NAME[UI.tmp.placeTile.ship]+'</b> bound for '+LU(DEST[UI.tmp.placeTile.dest].kontor?'landmark':'crown')+' <b>'+DEST[UI.tmp.placeTile.dest].name+'</b> — place it on a slot.',true);
   render();
 }
+function refillShipDisplay(){while(S.shipDisplay.length<SHIP_DISPLAY&&S.shipDeck.length)S.shipDisplay.push(S.shipDeck.shift());}
 function buyTile(id){commissionShip();}   // legacy alias (the headless harness bot calls buyTile('s_cog'))
 // Buy an upgrade from the face-up display (Market option B): pay its cost, take it, refill.
 function buyDisplayUp(key){const p=cur();if(!grantableBuy(p,key))return;const c=UPGRADE_BUY[key];if(!canPay(p,c))return;
@@ -879,7 +884,7 @@ function sailShip(slot,creditId){const t=S.slots[slot];
   // the hull returns to the yard: sailed ships go to the BOTTOM of the ship deck (the supply never
   // dries up); the Sailed-Ships clock advances by marker, not by consumed tiles ⚙
   S.shipDeck.push({ship:t.ship,dest:t.dest});
-  if(!S.shipNext)S.shipNext=S.shipDeck.shift();
+  refillShipDisplay();
 }
 function grantBenefit(lp,dest,q){
   if(DEST[dest].kontor&&hasUpgrade(lp,'staple'))gain(lp,1,0);   // Staple Right: +1 good on any kontor delivery
@@ -1143,22 +1148,30 @@ function aiIsTrader(p){return p.ai.tier==='trader'||p.ai.tier==='guildmaster';}
 
 // ---- shared heuristics (ported from playtests/sim.js; journeyman = that bot verbatim) ----
 function aiAchQ(p){const qs=p.recipes.map(r=>(STYLES[r].cellar&&!hasUpgrade(p,'cellar'))?0:STYLES[r].q);return Math.max(...qs);}
-// trader: ALSO commission when the face-up hull is bound where my lean would ship my best cargo
-function aiWantCommission(p){
-  if(aiNeedShip(p))return true;
-  if(!aiIsTrader(p)||!S.shipNext||!emptySlots().length||!canPay(p,COMMISSION_COST))return false;
+// Which of the (up to 3) displayed hulls to commission, or -1. The display of 3 means the bot can
+// pick a destination that actually suits its cargo — no single bad tile forces a stall.
+function aiCommissionIdx(p){
+  const disp=S.shipDisplay||[];
+  if(!disp.length||!emptySlots().length||!canPay(p,COMMISSION_COST))return -1;
   const bc=aiBestCargo(p);
-  if(bc.q<DEST[S.shipNext.dest].gate)return false;
-  return p.grain>=4&&aiDest(p,bc.q,bc.style)===S.shipNext.dest;
+  // do I already have a berth on the board that fits my best cargo?
+  const haveBerth=myShips(p).some(sid=>{const t=S.slots[sid];return t.load.length<effCap(t)&&bc.q>=DEST[t.dest].gate;});
+  // WHICH of the 3 hulls is a trader skill: it scores each like a delivery (value + majority swing +
+  // goal marginal) and picks the best; the journeyman just grabs the first qualifying hull (serviceable,
+  // not optimal) — that strategic-destination choice is the tier's edge in the shared-hull world.
+  let best=-1,bv=-1e9;
+  disp.forEach((sn,i)=>{if(bc.q<DEST[sn.dest].gate)return;
+    if(!aiIsTrader(p)){if(best<0)best=i;return;}
+    let v=destValue(sn.dest,bc.q)+(DEST[sn.dest].kontor?0.75*aiMajSwing(p,sn.dest):0)+aiGoalGain(p,bc.style,bc.q,sn.dest);
+    if(v>bv){bv=v;best=i;}});
+  if(best<0)return -1;
+  if(haveBerth){   // already have a hull — only a trader commissions extra, and only when flush + on-lean
+    if(aiIsTrader(p)&&p.grain>=4&&aiDest(p,bc.q,bc.style)===disp[best].dest)return best;
+    return -1;
+  }
+  return best;   // no berth fits my cargo → commission the best-matching hull
 }
-// commission when NO hull on the board has room for my best cargo (shared-ship world)
-function aiNeedShip(p){
-  if(!S.shipNext||!emptySlots().length||!canPay(p,COMMISSION_COST))return false;
-  const qs=[];p.vessels.forEach(c=>{if(c)qs.push(c.q);});
-  wharfCaskSlots().forEach(id=>{const t=S.slots[id];if(t.owner===p.id)qs.push(t.q);});
-  const bq=qs.length?Math.max(...qs):aiAchQ(p);
-  return !myShips(p).some(sid=>{const t=S.slots[sid];return t.load.length<effCap(t)&&bq>=DEST[t.dest].gate;});
-}
+function aiNeedShip(p){return aiCommissionIdx(p)>=0;}   // for the Source-cell heuristic value
 // Trader climbs to the cellar-gated Q5 once it holds the Aging Cellar; the lower tiers keep the
 // documented greedy blind spot (never the cellar beer) on purpose.
 function aiBuyableExports(p){return (S.exports||[]).filter(s=>!p.recipes.includes(s)
@@ -1262,7 +1275,7 @@ function aiStops(p){
   let bi=0,bp=1e9;UI.stops.forEach((s,i)=>{const pr=aiStopPrio(s);if(pr<bp){bp=pr;bi=i;}});resolveStop(bi);}
 function aiMarket(p){
   if(UI.stage==='place'){placeSlot(emptySlots()[0].id);return;}
-  if(!aiIsApp(p)&&aiWantCommission(p)){commissionShip();return;}   // apprentice never commissions ⚙
+  if(!aiIsApp(p)){const ci=aiCommissionIdx(p);if(ci>=0){commissionShip(ci);return;}}   // apprentice never commissions ⚙
   const ex=aiBuyableExports(p);
   if(ex.length){ex.sort((a,b)=>STYLES[a].q-STYLES[b].q);buyRecipe(ex[0]);return;}
   if(!aiIsApp(p)){const buyable=displayGrantable(p).filter(k=>canPay(p,UPGRADE_BUY[k]));
@@ -1299,6 +1312,7 @@ function aiAge(p){const mat=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.ste
   mat.sort((a,b)=>(a.c.ready-a.c.step)-(b.c.ready-b.c.step));ageAllot(mat[0].i);}
 function aiSource(p){const n=UI.src.n;if(n>=2){if(p.hops<2)srcTake(1,1);else srcTake(2,0);}else{if(p.hops<1)srcTake(0,1);else srcTake(1,0);}}
 function aiReach(p){if(aiIsApp(p)){reachSkip();return;}
+  if(!aiIsTrader(p)){reachPick(UI.reach.ks[0]);return;}   // journeyman: greedy first kontor
   let best=UI.reach.ks[0],bv=-1e9;
   UI.reach.ks.forEach(k=>{const m=aiMajSwing(p,k)+Math.random()*0.2;if(m>bv){bv=m;best=k;}});
   reachPick(best);}
@@ -1327,14 +1341,16 @@ function aiLoad(p){const L=UI.load;
   const ships=L.ships.filter(s=>canTake(s,L.cask));
   if(!ships.length){loadBack();return;}
   const lc=S.slots[UI.load.cask];
-  // choosing WHICH hull to feed is the destination decision now (bindings are printed) — the
-  // trader scores it like a delivery (value + majority swing + goal marginal); lower tiers by value.
-  const shipScore=sid=>{const sh=S.slots[sid];let v=destValue(sh.dest,lc.q);
-    if(aiIsTrader(p)){if(DEST[sh.dest].kontor)v+=0.75*aiMajSwing(p,sh.dest);v+=aiGoalGain(p,lc.style,lc.q,sh.dest);}
-    return v;};
-  ships.sort((a,b)=>{const sa=S.slots[a],sb=S.slots[b];
-    const fa=(sa.load.length+1>=effCap(sa))?1:0,fb=(sb.load.length+1>=effCap(sb))?1:0;if(fa!==fb)return fb-fa;   // completing a sail first (the dispatch fee)
-    return shipScore(b)-shipScore(a);});
+  // choosing WHICH hull to feed is the destination decision now (bindings are printed). The TRADER
+  // scores it like a delivery (value + majority swing + goal marginal) and chooses well; the
+  // journeyman only prefers completing a sail (the fee), else takes the first fillable hull — so
+  // load-destination judgement is, like commissioning, the trader's edge in the shared-hull world.
+  const fillRank=sid=>{const sh=S.slots[sid];return (sh.load.length+1>=effCap(sh))?1:0;};
+  if(aiIsTrader(p)){
+    const shipScore=sid=>{const sh=S.slots[sid];return destValue(sh.dest,lc.q)
+      +(DEST[sh.dest].kontor?0.75*aiMajSwing(p,sh.dest):0)+aiGoalGain(p,lc.style,lc.q,sh.dest);};
+    ships.sort((a,b)=>{const f=fillRank(b)-fillRank(a);return f||(shipScore(b)-shipScore(a));});
+  }else ships.sort((a,b)=>fillRank(b)-fillRank(a));   // journeyman: complete-a-sail, else first
   loadOnto(ships[0]);}
 function aiDeploy(p){const es=emptySlots();if(!es.length){deploySkipAll();return;}
   if(aiNoisy(p)){deployTo(aiRandOf(es).id);return;}
@@ -1406,7 +1422,7 @@ function aiGmOptions(p){
     if(UI.stage==='place')return emptySlots().map(s=>()=>placeSlot(s.id));
     const o=[()=>marketGoods(2,0),()=>marketGoods(1,1),()=>marketGoods(0,2)];
     (S.exports||[]).forEach(st=>{if(!p.recipes.includes(st)&&canPay(p,RECIPE_BUY[st]))o.push(()=>buyRecipe(st));});
-    if(S.shipNext&&emptySlots().length&&canPay(p,COMMISSION_COST))o.push(()=>commissionShip());
+    if(emptySlots().length&&canPay(p,COMMISSION_COST))(S.shipDisplay||[]).forEach((sn,i)=>o.push(()=>commissionShip(i)));
     Array.from(new Set(S.upgradeDisplay||[])).forEach(k=>{if(grantableBuy(p,k)&&canPay(p,UPGRADE_BUY[k]))o.push(()=>buyDisplayUp(k));});
     return o;}
   if(U==='cell'&&UI.cell==='C'){
@@ -1687,11 +1703,12 @@ function renderShop(){
       +(st.cellar?' <span class="note" style="font-size:.72rem">(needs Aging Cellar)</span>':'');
     const cost=RECIPE_BUY[style];const can=canPay(p,cost);
     h+='<div class="item"><span data-tip="'+attr('Permission to brew '+st.name+' (Q'+st.q+'), permanent. Brew cost: '+costStr(st.in)+'.')+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyRecipe(\''+style+'\')">buy</button>':'')+'</span></div>';});
-  // the SHIP DECK (v0.11 B): the next neutral hull face-up — Commission places it on a slot
-  if(S.shipNext){
-    const sn=S.shipNext;const can=canPay(p,COMMISSION_COST)&&emptySlots().length>0;
-    h+='<div class="item"><span data-tip="'+attr('The face-up ship of the deck: a neutral '+SHIP_NAME[sn.ship]+' (cap '+SHIP_CAP[sn.ship]+') bound for '+DEST[sn.dest].name+'. Commission: pay '+costStr(COMMISSION_COST)+', place it on any open slot. Nobody owns it — anyone loads their own casks.')+'">'+LU('sailboat')+' <b>'+SHIP_NAME[sn.ship]+'</b> → '+(DEST[sn.dest].kontor?LU('landmark'):LU('crown'))+' '+DEST[sn.dest].name+' (cap '+SHIP_CAP[sn.ship]+') <span class="note" style="font-size:.7rem">· next of the ship deck ('+S.shipDeck.length+' below)</span></span><span class="cost">'+costIcons(COMMISSION_COST)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="commissionShip()">commission</button>':'')+'</span></div>';
-  }else h+='<div class="item" style="opacity:.7"><span>'+LU('sailboat')+' ship deck exhausted <span class="note">(charters still sail)</span></span></div>';
+  // the SHIP MARKET (v0.11 B, display of 3): face-up neutral hulls — Commission one onto a slot
+  const sdisp=S.shipDisplay||[];
+  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('sailboat')+' Ship market</b> <span class="note">('+sdisp.length+' face-up · neutral hulls, destination printed · '+S.shipDeck.length+' in the deck)</span></div>';
+  if(sdisp.length)sdisp.forEach((sn,i)=>{const can=canPay(p,COMMISSION_COST)&&emptySlots().length>0;
+    h+='<div class="item"><span data-tip="'+attr('A neutral '+SHIP_NAME[sn.ship]+' (cap '+SHIP_CAP[sn.ship]+') bound for '+DEST[sn.dest].name+'. Commission: pay '+costStr(COMMISSION_COST)+', place it on any open slot, and it becomes a shared hull — anyone loads their OWN casks; the player who fills it takes the dispatch fee.')+'">'+LU('sailboat')+' <b>'+SHIP_NAME[sn.ship]+'</b> → '+(DEST[sn.dest].kontor?LU('landmark'):LU('crown'))+' '+DEST[sn.dest].name+' (cap '+SHIP_CAP[sn.ship]+')</span><span class="cost">'+costIcons(COMMISSION_COST)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="commissionShip('+i+')">commission</button>':'')+'</span></div>';});
+  else h+='<div class="item" style="opacity:.7"><span>'+LU('sailboat')+' ship market empty <span class="note">(charters still sail)</span></span></div>';
   // the face-up Upgrade DISPLAY (option B) — buy one here, or earn one free by delivering to London/Novgorod
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Upgrade display</b> <span class="note">('+DISPLAY_SIZE+' face-up + a face-down deck — buy one, or earn one free by delivering to London/Novgorod)</span></div>';
   (S.upgradeDisplay||[]).forEach(key=>{const c=UPGRADE_BUY[key];const owned=!grantableBuy(p,key);const can=!owned&&canPay(p,c)&&buying;

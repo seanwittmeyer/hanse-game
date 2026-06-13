@@ -47,7 +47,7 @@ var _buyRecipe=buyRecipe;    buyRecipe=function(st){if(REC())EV('recipe',{style:
 var _buyDisplayUp=buyDisplayUp;buyDisplayUp=function(k){if(REC())EV('buyup',{key:k});return _buyDisplayUp(k);};
 var _grantUpgrade=grantUpgrade;grantUpgrade=function(p,k){if(REC())EV('up',{pid:p.id,key:k});return _grantUpgrade(p,k);};
 var _deployTo=deployTo;      deployTo=function(sl){if(REC())EV('deploy',{slot:sl});return _deployTo(sl);};
-var _commissionShip=commissionShip;commissionShip=function(){if(REC()&&S.shipNext)EV('shipbuild',{dest:S.shipNext.dest,ship:S.shipNext.ship});return _commissionShip();};
+var _commissionShip=commissionShip;commissionShip=function(idx){var sn=(S.shipDisplay&&S.shipDisplay[(idx!=null&&S.shipDisplay[idx])?idx:0]);if(REC()&&sn)EV('shipbuild',{dest:sn.dest,ship:sn.ship});return _commissionShip(idx);};
 var _charterDest=charterDest;charterDest=function(d){if(REC())EV('charter',{dest:d});return _charterDest(d);};
 var _grantBenefit=grantBenefit;grantBenefit=function(lp,dest,q){if(REC())EV('deliver',{pid:lp.id,dest:dest,q:q});return _grantBenefit(lp,dest,q);};
 var _sailShip=sailShip;      sailShip=function(sl,cid){if(REC()){var t=S.slots[sl];if(t)EV('sail',{pid:(cid!=null?cid:S.active),dest:t.dest,ncask:t.load.length});}return _sailShip(sl,cid);};
