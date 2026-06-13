@@ -68,7 +68,7 @@ A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATU
 *Gruit is the cheap, fast workhorse — it keeps your goods flowing (its Source action) and reaches Bruges, but never makes prestige. The export casks are scarce, slow, and the key to the rich destinations — the Leffe/Westvleteren line drawn in the components.*
 
 ### B. Ship tiles — NEUTRAL, destination-bound shared hulls (the ship deck, ~14 tiles ⚙ — v0.11 Batch B)
-**Nobody owns a ship.** Each tile is **printed** with its hull and **destination** (inheriting that destination's quality minimum). A shuffled **ship deck** sits by the Market with a **face-up display of 3 ⚙** (refilled from the deck as taken); **2 more are dealt to slots at setup** (the warm start). **Commission** (Market, `2 G` ⚙): place **any one of the 3** face-up ships on an open slot. **Load your own casks only** — via the Harbor action or a bonus free load when the ship's line fires. The instant it is **full** it **sails** — every cask aboard delivers (scores for its owner + benefit), the **filler takes the dispatch fee (`2 G` ⚙)** and ships-goal credit; any player with a cask aboard may **launch it early** at the Harbor (credit, no fee). The voyage **advances the Sailed-Ships marker**, and the **hull returns to the bottom of the deck** (the supply never dries up). *(The old "ship a rival's cask" rule is cut — v0.11.)*
+**Nobody owns a ship.** Each tile is **printed** with its hull and **destination** (inheriting that destination's quality minimum). A shuffled **ship deck** sits by the Market with a **face-up display of 3 ⚙** (refilled from the deck as taken); **2 more are dealt to slots at setup** (the warm start). **Commission** (Market, `2 G` ⚙): place **any one of the 3** face-up ships on an open slot **and free-load one of your Ready casks** (slot *or* vessel) aboard — the commissioner's berth. **Load your own casks only.** **The destination's immediate benefit is paid the moment a cask is LOADED** (`v0.11.2`): **Bruges/Bergen → 2 goods · London/Novgorod → an Upgrade · Hall → none**. The cask's **points** (value ★ + majority) seal only on **delivery** (when the hull sails). **Filling earns no bonus**; any player with a cask aboard may **launch it early**. The voyage **advances the Sailed-Ships marker**, and the **hull returns to the bottom of the deck**. *(The old "ship a rival's cask" rule is cut — v0.11.)*
 
 | Ship | Capacity | Commission ⚙ | In deck ⚙ |
 |---|---|---|---|
@@ -151,7 +151,7 @@ A small pool of **9 designs** rewarding different shapes, so the winning engine 
 | 1 | +X per **distinct type** delivered | breadth / climb |
 | 2 | +X per cask delivered to **one** kontor | focus / majority |
 | 3 | +X per **Q3+** cask delivered | the export |
-| 4 | +X per **ship you filled or launched** | the merchant engine |
+| 4 | +X per **ship you commissioned** | the merchant engine |
 | 5 | +X per cask shipped to the **Hall** | prestige |
 | 6 | +X per **kontor where you hold presence** | spread |
 | 7 | +X per **Upgrade** on your brewery | engine depth |

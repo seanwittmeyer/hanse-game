@@ -6,6 +6,15 @@ Compact version history. The **full rationale ("the why")** lives in `DESIGN.md`
 
 ---
 
+## v0.11.2 — ship economy v2: benefit-on-load · commissioner's berth · no fill fee (2026-06-13)
+A coherent retiming of the ship economy from designer table-feel notes (`KEY → v33`; full rationale in `DESIGN.md` §21 v0.11.2). The old "resolve every cask's benefit when the hull sails" was messy on the table; this fixes it and answers the prisoner's dilemma.
+- **Benefit-on-load, points-on-delivery.** The destination's immediate benefit (Bruges/Bergen → 2 goods · London/Novgorod → an Upgrade · Hall → none) is paid **when a cask is LOADED** (one at a time — clean); the cask's **points** (value ★ + majorities) seal only on **delivery** (when the ship sails). A benefit kept on a hull that never sails earns no points.
+- **The commissioner's berth.** Commissioning (2 `G`) now **includes a free immediate load** of a Ready cask — from a slot *or straight from a vessel* — onto the new hull. This is the prisoner's-dilemma answer: commissioning secures *your* berth, not a public good.
+- **No fill fee.** The 2 `G` dispatch fee is removed (the filler only chooses the completing cask). **Merchant goal g4 → "ship you commissioned."** Score icon unified to **★** (was a stray Σ on the total).
+- **Verified:** sim 500 clean 2–5p (pace 16–17 in band); ladder PASS with **wider margins** (66.8 / 66.8 / 75.8 + GM 92.5%, `ai-ladder-v33.txt`) — the new destination decisions gave the Trader more leverage. **⚠ Flag:** greedy bots load-for-benefit but under-fill (sails ~1.2, charters ~2.5) — a bot artifact (no fill-fee signal) to watch at the human table; early-launch always converts a stranded cask. All surfaces synced (RULES · COMPONENTS · index · learn · CLAUDE · DESIGN); `printables.html` stays stale (queued).
+
+---
+
 ## v0.11.1 — the ship market grew from 1 face-up tile to a display of 3 (2026-06-13)
 A targeted follow-up to Batch B (`KEY → v32`). **Two problems with the single face-up ship:** (1) one ill-bound hull could **stall the yard** (nobody commissions a destination they don't want); (2) the **prisoner's dilemma** of neutral hulls — *why spend my 2 `G` on a ship others will load?* **Fix: a face-up ship market of 3 ⚙** — commission any one, refill from the deck. Kills the stall and blunts the dilemma via **destination control** (you commission the hull bound where *your* cargo goes, so it's worth more to you than to a rival). Full rationale + the residual free-rider dials (commissioner's berth / dividend / fee-to-commissioner — parked, "test the 3-market first") in `DESIGN.md` §21 v0.11.1.
 - **Measured:** sails rose **~1.0 → ~1.5/game**, charters fell **~2.7 → ~2.2** (the intent — real ships used over the relief valve); sim 500 clean 2–5p (`sim-results-v32.txt`, pace 15–16 in band); GM still dominates (97.5% over Trader, `ai-ladder-v32.txt`).
