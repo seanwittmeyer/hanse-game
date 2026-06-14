@@ -6,3 +6,7 @@ playtests/gm*-shard*.err
 playtests/analysis/*.jsonl
 playtests/gmF-*.txt
 playtests/gmF-*.err
+playtests/v40gm-*.txt
+playtests/v40gm-*.err
+playtests/fix1*.err
+playtests/*hot.err
