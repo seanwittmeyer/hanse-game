@@ -1,0 +1,63 @@
+# v0.14 strategy analysis — pathways (personas+cellarmaster) + GM oracle (6x25)
+
+## PATHWAYS (CELLAR=1 PERSONAS=1, N=600/count)
+PATHWAYS TO A WIN (per-capita win-rate; fair = 50.0%):
+   volume    win  48.7%  score  61.3  |  deliv 24.7 · maj 10.7 · goals 16.9 · flight 6.7 · master 2.2  |  Hall/g 1.1 · Q4+/g 2.0 · Q5/g 1.3 · tiers 3.5  (n=195)
+   prestige  win  44.6%  score  59.6  |  deliv 25.8 · maj 8.8 · goals 16.5 · flight 6.3 · master 2.2  |  Hall/g 1.5 · Q4+/g 1.8 · Q5/g 1.2 · tiers 3.4  (n=193)
+   majority  win  55.2%  score  60.1  |  deliv 20.3 · maj 13.6 · goals 17.2 · flight 6.8 · master 2.3  |  Hall/g 0.6 · Q4+/g 1.8 · Q5/g 1.1 · tiers 3.5  (n=212)
+   deep      win  50.3%  score  59.8  |  deliv 25.8 · maj 9.1 · goals 16.5 · flight 6.2 · master 2.2  |  Hall/g 1.4 · Q4+/g 1.8 · Q5/g 1.1 · tiers 3.4  (n=600)
+
+--
+PATHWAYS TO A WIN (per-capita win-rate; fair = 33.3%):
+   volume    win  25.8%  score  57.5  |  deliv 22.4 · maj 12.2 · goals 15.5 · flight 5.2 · master 2.2  |  Hall/g 0.8 · Q4+/g 1.8 · Q5/g 1.1 · tiers 3.2  (n=427)
+   prestige  win  35.8%  score  61.5  |  deliv 31.0 · maj 8.2 · goals 15.1 · flight 5.0 · master 2.2  |  Hall/g 2.5 · Q4+/g 1.9 · Q5/g 1.2 · tiers 3.1  (n=377)
+   majority  win  31.8%  score  59.2  |  deliv 19.3 · maj 15.5 · goals 16.3 · flight 5.7 · master 2.4  |  Hall/g 0.5 · Q4+/g 2.1 · Q5/g 1.3 · tiers 3.3  (n=396)
+   deep      win  38.2%  score  61.3  |  deliv 28.9 · maj 9.8 · goals 15.1 · flight 5.2 · master 2.2  |  Hall/g 1.9 · Q4+/g 1.9 · Q5/g 1.2 · tiers 3.2  (n=600)
+
+--
+PATHWAYS TO A WIN (per-capita win-rate; fair = 25.0%):
+   volume    win  19.0%  score  52.3  |  deliv 21.6 · maj 10.0 · goals 14.5 · flight 4.0 · master 2.0  |  Hall/g 0.8 · Q4+/g 1.7 · Q5/g 1.0 · tiers 2.9  (n=589)
+   prestige  win  31.0%  score  55.8  |  deliv 30.0 · maj 5.5 · goals 14.2 · flight 4.1 · master 2.1  |  Hall/g 2.6 · Q4+/g 1.8 · Q5/g 1.1 · tiers 2.9  (n=590)
+   majority  win  17.6%  score  51.6  |  deliv 16.9 · maj 12.9 · goals 14.9 · flight 4.4 · master 2.5  |  Hall/g 0.3 · Q4+/g 2.0 · Q5/g 1.3 · tiers 3.0  (n=621)
+   deep      win  32.7%  score  56.4  |  deliv 28.0 · maj 7.8 · goals 14.3 · flight 4.3 · master 2.1  |  Hall/g 1.8 · Q4+/g 1.8 · Q5/g 1.1 · tiers 2.9  (n=600)
+
+
+## GM ORACLE (6x25)
+COMBINED ORACLE FINDINGS — 6 shards · counts: 2/3/4p
+
+================  2 PLAYERS  (50 games, 100 player-rows)  ================
+avg rounds 17.4   winner avg score 55.6
+DELIVERY:  hull 72.6%  charter 27.4%  casks/sail 1.7  commissions/game 3.0
+DEST SHARE:  brug 43.6%  lond 14.5%  berg 16.8%  novg 12.7%  hall 12.5%
+CLIMB:     chosen brews/game 11.9  ·  Q4+ 13.3% of brews (1.6/game)  ·  Q5 brews/game 0.8
+FLIGHT:    distinct tiers delivered →  1:1.0%  2:20.0%  3:53.0%  4:25.0%  5:1.0%
+           qualifying flight (≥3 tiers) 79.0%   full flight (5) 1.0%   Masterpiece earned 37.0%
+           avg Flight ★:  winners 5.8   losers 3.3     avg Master ★: W 1.6 L 0.7
+           win-rate by tiers:  2-tier 15.0% (n=20)   3-tier 52.8% (n=53)   4-tier 72.0% (n=25)   5-tier 100.0% (n=1)
+           MULTI-SET potential (≥3-tier players, copies of full range):  1 set 94.9%   2 sets 5.1%   3+ 0.0%
+WIN CORRELATES (W vs L):  total 55.6/35.7   delivery 16.5/11.8   majority 14.6/6.8   goals 17.1/13.2   flight 5.8/3.3   master 1.6/0.7   casks 5.9/4.8   distinct dests 3.5/2.8
+
+================  3 PLAYERS  (50 games, 150 player-rows)  ================
+avg rounds 18.6   winner avg score 57.8
+DELIVERY:  hull 58.7%  charter 41.3%  casks/sail 1.8  commissions/game 3.4
+DEST SHARE:  brug 41.7%  lond 14.4%  berg 18.4%  novg 14.1%  hall 11.4%
+CLIMB:     chosen brews/game 18.0  ·  Q4+ 13.6% of brews (2.4/game)  ·  Q5 brews/game 1.5
+FLIGHT:    distinct tiers delivered →  1:1.3%  2:22.0%  3:49.3%  4:24.0%  5:3.3%
+           qualifying flight (≥3 tiers) 76.7%   full flight (5) 3.3%   Masterpiece earned 40.7%
+           avg Flight ★:  winners 6.7   losers 3.6     avg Master ★: W 1.9 L 0.9
+           win-rate by tiers:  2-tier 9.1% (n=33)   3-tier 31.1% (n=74)   4-tier 55.6% (n=36)   5-tier 80.0% (n=5)
+           MULTI-SET potential (≥3-tier players, copies of full range):  1 set 93.9%   2 sets 6.1%   3+ 0.0%
+WIN CORRELATES (W vs L):  total 57.8/39.3   delivery 16.6/11.5   majority 16.1/10.4   goals 16.5/13.0   flight 6.7/3.6   master 1.9/0.9   casks 5.9/4.6   distinct dests 3.7/3.1
+
+================  4 PLAYERS  (50 games, 200 player-rows)  ================
+avg rounds 19.1   winner avg score 58.1
+DELIVERY:  hull 53.2%  charter 46.8%  casks/sail 1.9  commissions/game 3.8
+DEST SHARE:  brug 38.8%  lond 14.3%  berg 18.9%  novg 14.9%  hall 13.0%
+CLIMB:     chosen brews/game 24.5  ·  Q4+ 14.1% of brews (3.5/game)  ·  Q5 brews/game 1.4
+FLIGHT:    distinct tiers delivered →  1:1.5%  2:20.0%  3:52.0%  4:23.5%  5:3.0%
+           qualifying flight (≥3 tiers) 78.5%   full flight (5) 3.0%   Masterpiece earned 40.0%
+           avg Flight ★:  winners 7.5   losers 3.7     avg Master ★: W 1.7 L 1.0
+           win-rate by tiers:  2-tier 5.0% (n=40)   3-tier 17.3% (n=104)   4-tier 53.2% (n=47)   5-tier 83.3% (n=6)
+           MULTI-SET potential (≥3-tier players, copies of full range):  1 set 94.9%   2 sets 5.1%   3+ 0.0%
+WIN CORRELATES (W vs L):  total 58.1/38.2   delivery 18.1/12.1   majority 15.1/8.7   goals 15.7/12.6   flight 7.5/3.7   master 1.7/1.0   casks 6.0/4.5   distinct dests 4.0/3.0
+
