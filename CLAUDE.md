@@ -4,8 +4,11 @@
 - Be concise. Keep feedback efficient.
 - Don't put text, data, or code inline unless necessary — reference files/locations instead of pasting their contents.
 
-## Deploy
-- The site is published from the `main` branch via GitHub Pages (classic, no workflow). Develop on the feature branch, then fast-forward `main` to publish.
+## Deploy — READ THIS: the user can only see work that is on `main`
+- **The user plays/reviews the LIVE GitHub Pages site, which is served from the `main` branch only.** Anything that is merely committed to the feature branch — or just edited in the working tree — is **invisible to the user.** "Pushed" is not enough; it must be on `main`.
+- **Therefore: after ANY change the user needs to see or test, publish it to `main` in the same turn.** The flow is always: commit on the feature branch → `git push -u origin <branch>` → **fast-forward `main`** (`git push origin <branch>:main`). Do not end a turn with user-visible work stranded on the feature branch. If you're unsure whether to publish, publish.
+- The site is published from `main` via GitHub Pages (classic, no workflow). After a push to `main`, GitHub Pages takes ~1–2 min to rebuild, and the user must **hard-refresh** (Cmd/Ctrl+Shift+R) to beat the CDN/browser cache. A save-`KEY` bump also clears any in-progress game (expected after a rules change).
+- **This is a tabletop board game, not a web app.** Design for PRINT: if information isn't printed on a physical component, the player doesn't have it. Tooltips/hover are a design smell — they flag info with no home on a piece. In `play.html`, essential info is shown INLINE because it is printed on the tile; tooltips may carry only flavor/reminders. Every change must work as cardboard, not just on screen.
 
 ## Working on this game — read this first
 **A change is never local.** This is a tightly-coupled euro game: theme, mechanics, components, and the published pages all reinforce each other. Before touching anything, build the whole picture — a tweak to one number or rule ripples through scoring balance, the theme's logic, the component counts, and several docs. If you can't explain how a change affects each axis below, you don't understand it yet.
