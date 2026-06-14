@@ -171,7 +171,7 @@ Your brewery board is private and safe. It holds your **vessels** (start 2, cap 
 | # | Room (capability) | Effect ⚙ | Buy cost ⚙ |
 |---|---|---|---|
 | 1 | **Extra Vessel** | +1 brewing lane (vessels start 2, cap **4**) — repeatable | `5 G` |
-| 2 | **Aging Cellar** | maturation **−1 step**; **unlocks the L5 export** beer | `5 G` |
+| 2 | **Aging Cellar** | maturation **−1 step** (a Bock matures in 2) — a *pathway*, not a gate (v0.14) | `5 G` |
 | 3 | **Warehouse** | goods storage **8 → 12** | `4 G` |
 | 4 | **Quay** | load **2 casks** in one Harbor visit (instead of 1) | `5 G` |
 | 5 | **Cooperage** | **+1 cask loaded** per Harbor visit (stacks with Quay) | `4 G` |

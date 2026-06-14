@@ -282,7 +282,7 @@ const STYLES={
   broyhan:{name:'Broyhan',     lvl:3, q:3, in:{g:1,h:2},  ready:2, act:'load',  export:true},
   keut   :{name:'Keut',        lvl:3, q:3, in:{g:2,h:1},  ready:2, act:'load',  export:true},
   mumme  :{name:'Mumme',       lvl:4, q:4, in:{g:2,h:2},  ready:3, act:'reach', export:true},
-  bock   :{name:'Bock',        lvl:5, q:5, in:{g:3,h:2},  ready:3, act:'wild',  export:true, cellar:true},
+  bock   :{name:'Bock',        lvl:5, q:5, in:{g:3,h:2},  ready:3, act:'wild',  export:true, premium:true},   // v0.14: UNGATED (was cellar:true), cost 3G2H — Aging Cellar now a pathway (−1 step → 2-step Bock), not a gate. (premium = AI-skill flag: only the Trader+ climb to Q5; not a game rule)
 };
 const EXPORT_ROSTER=['broyhan','keut','mumme','bock'];   // 3 of 4 dealt each game; each keeps its fixed quality
 const RECIPE_BUY={broyhan:{g:1},keut:{g:1},mumme:{g:1,h:1},bock:{g:2}};  // Market buy cost (Gruit+Hopped are free starters)
@@ -391,7 +391,7 @@ const NEUTRALS={
 // ---- UPGRADES: Rooms (capability) + Modifiers (asymmetric perks) ----
 const ROOMS={
   vessel   :{name:'Extra Vessel',  desc:'+1 brewing lane (cap 4)'},
-  cellar   :{name:'Aging Cellar',  desc:'maturation −1 step; unlocks the L5 export'},
+  cellar   :{name:'Aging Cellar',  desc:'maturation −1 step (e.g. a Bock matures in 2) — a pathway, not a gate'},
   warehouse:{name:'Warehouse',     desc:'+4 goods storage'},
   quay     :{name:'Quay',          desc:'load up to 2 casks in one Harbor visit'},
   cooperage:{name:'Cooperage',     desc:'+1 cask loaded per Harbor visit (stacks with Quay)'},
@@ -469,7 +469,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v39'; // v0.13 ⚙: The Flight (range-of-tiers end bonus) + Masterpiece (top-tier first-delivery) + majority cooldown (Bruges/London/Bergen −1/tier); bump discards stale state
+const KEY='hanse-hotseat-v40'; // v0.14 ⚙: Bock UNGATED + 3G3H (Aging Cellar now a pathway: −1 step, not a requirement) — makes the Q5/full-flight reachable; bump discards stale state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1245,13 +1245,12 @@ function aiCommissionIdx(p){
   return best;   // no berth fits my cargo → commission the best-matching hull
 }
 function aiNeedShip(p){return aiCommissionIdx(p)>=0;}   // for the Source-cell heuristic value
-// Trader climbs to the cellar-gated Q5 once it holds the Aging Cellar; the lower tiers keep the
-// documented greedy blind spot (never the cellar beer) on purpose.
+// Skill ladder (v0.14): only the Trader+ (and the GM's deep rollout) climb to the PREMIUM Bock (Q5);
+// apprentice/journeyman keep the documented greedy blind spot (never the premium beer) on purpose, so
+// the trader's Q5/full-flight edge keeps the tiers ordered. `premium` is an AI-only flag — humans and
+// the headless sim bot brew Bock freely (it's ungated in the game).
 function aiBuyableExports(p){return (S.exports||[]).filter(s=>!p.recipes.includes(s)
-  // completion-biased rollout (aiSimulating): the GM's playouts may climb to Bock (if cellar-equipped),
-  // so the Monte Carlo can actually PRICE the Q5/full-flight payoff — otherwise the greedy rollout never
-  // makes a Bock and the deep path is invisible (the real journeyman tier stays cellar-blind).
-  &&((aiIsTrader(p)||aiDeepRollout())?(!STYLES[s].cellar||hasUpgrade(p,'cellar')):!STYLES[s].cellar)
+  &&((aiIsTrader(p)||aiDeepRollout())||!STYLES[s].premium)
   &&canPay(p,RECIPE_BUY[s]));}
 function aiPickUpgrade(p,list){
   if(aiIsApp(p))return aiRandOf(list);
@@ -1291,7 +1290,8 @@ function aiDest(p,q,style){
   // so it credits deep play that's actually set up rather than force-feeding prestige into volume games.
   if(aiDeepRollout()&&q>=4&&elig.includes("hall")&&Math.random()<0.6)return "hall";
   if(!aiIsTrader(p)){
-    if(!aiIsApp(p)&&q>=4&&Math.random()<0.3&&elig.includes('hall'))return 'hall';
+    // v0.14: the journeyman NEVER ships the Hall — prestige + the deep Flight is the Trader's exclusive edge,
+    // which keeps the tiers cleanly ordered now that both climb the quality ladder for the Flight bonus.
     const kon=elig.filter(d=>DEST[d].kontor);const pool=kon.length?kon:elig;
     pool.sort((a,b)=>DEST[b].value-DEST[a].value);return pool[0];
   }

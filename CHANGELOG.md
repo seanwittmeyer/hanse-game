@@ -6,6 +6,13 @@ Compact version history. The **full rationale ("the why")** lives in `DESIGN.md`
 
 ---
 
+## v0.14 — Bock un-gated: the Q5 climb made reachable (2026-06-14)
+v0.13 made "go deep" a winning strategy, but **Q5/Bock stayed at 0%** — the Aging-Cellar *prerequisite* (a delivery-earned upgrade that might not even be dealt) was an impassable dependency. A diagnostic settled it (`KEY → v40`):
+- **The Cellarmaster probe** (`CELLAR=N` in sim.js — a Q5-committed bot) proved the deep/range path is **competitive (~fair win-rate)**, so the bots merely *undervalued* it (tooling), but **Bock specifically was a real reachability wall** (0.2–0.3/game even when committed). Fork resolved: tooling gap *and* a genuine Bock barrier.
+- **Bock un-gated** ⚙ — `cellar:true` removed; the **Aging Cellar is now a pathway** (its −1 step makes a Bock mature in 2), not a requirement. Tested costs: **3G3H was *worse* than the old gate** (Q5 still 0% — the 3rd hop is a cliff); **3G2H** (the original cost, now ungated) lands it: **Q5 brews 0.0 → ~2–4/game, Masterpiece-earned 15% → 53–58%.** The single hop was the whole wall.
+- **AI ladder restored** — un-gating compressed the journeyman↔trader gap (both now climb). Re-separated by flagging Bock **`premium`** (an AI-skill flag, not a game rule — only the Trader+ and the GM's deep rollout climb to Q5; humans & the sim bot brew it freely) and having the **journeyman cede the Hall** to the trader. Ladder PASS (apprentice/journeyman/trader 71/64/75%), sim 500×2–5p clean.
+- **Tooling:** added the **completion-biased GM rollout** behind an opt-in **`GM_DEEP`** flag (default off — it lengthens rollouts ~2.5×, so flat-MC trades sample count for realism; the default oracle stays fast). Confirmed flat MC can't reliably navigate the multi-turn Q5 plan at practical budgets — the Cellarmaster/personas are the strategy tools.
+
 ## v0.13 — The Flight + Masterpiece + majority cooldown (2026-06-13)
 Making the **quality climb worth it** (the data: even the oracle never reaches Q5, Q4 = 7% of brews), and cooling the slightly-hot majorities — a coordinated batch (`KEY → v39`).
 - **The Flight ⚙** — an end-game bonus for your **range**: distinct quality tiers delivered, scored **(tiers − 1)² with a min of 3** (3 → 4 · 4 → 9 · 5 → 16). Two tiers (free Gruit + Hopped) score 0, so it's a true climber's reward; the full flight needs a Bock. The **quality pole** of the reach-vs-quality lean — *"not how high, but how complete the range of the house."* (Inspired by the Orléans/Lisboa set-and-value-scoring the designer admires.)

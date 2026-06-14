@@ -296,7 +296,7 @@ const CASKS=[  // shared cask pool — fixed global counts (COMPONENTS §3A). Gr
   {nm:'Hopped', c:'#c2922f', q:2, g:1,h:1,                 n:20},
   {nm:'Export', c:'#b06a34', q:3, g:1,h:2, alt:[2,1],      n:12},  // Broyhan G H H · Keut G G H
   {nm:'Export', c:'#caa12a', q:4, g:2,h:2,                 n:8,  wild:true},
-  {nm:'Export', c:'#7c2128', q:5, g:3,h:2, cellar:true,    n:4,  wild:true},
+  {nm:'Export', c:'#7c2128', q:5, g:3,h:2,                 n:4,  wild:true},
 ];
 // v0.11 — NEUTRAL, destination-bound hulls (the destination is PRINTED on the tile). The ~20-tile deck
 // mirrors play.html SHIP_DECK_MIX: Bruges 4 · London 4 · Bergen 4 · Novgorod 5 · Hall 3  (11 Cog / 9 Hulk).
@@ -319,7 +319,7 @@ const NEUTRALS=[  // 6 designs; 2–3 seeded on the slots at setup (random)
 ];
 const ROOMS=[  // Extra Vessel supply = players+1 (play.html) ⚙ — 6 supports 5p
   {ic:'wrench',nm:'Extra Vessel', act:'+1 vessel',                        g:5, c:'#4a6b3a', n:6},
-  {ic:'wrench',nm:'Aging Cellar', act:'mature 1 step faster · unlock L5', g:5, c:'#3f5c30', n:2},
+  {ic:'wrench',nm:'Aging Cellar', act:'mature 1 step faster (a pathway, not a gate)', g:5, c:'#3f5c30', n:2},
   {ic:'wrench',nm:'Warehouse',    act:'+4 storage',                       g:4, c:'#4a6b3a', n:2},
   {ic:'wrench',nm:'Quay',         act:'load 2 casks per Harbor',          g:5, c:'#3f5c30', n:2},
   {ic:'wrench',nm:'Cooperage',    act:'+1 cask loaded per Harbor',        g:4, c:'#4a6b3a', n:2},
@@ -349,7 +349,7 @@ const RECIPES=[  // EXPORT recipe cards only — Gruit & Hopped are printed on t
   {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{g:1},     reach:'L3 · Bruges · London · Bergen · Novgorod · Hall'},
   {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'L3 · Bruges · London · Bergen · Novgorod · Hall'},
   {nm:'Mumme',   cc:'#9a5526', L:4, g:2,h:2, buy:{g:1,h:1}, reach:'L4 · all kontore + Hall'},
-  {nm:'Bock',    cc:'#7c2128', L:5, g:3,h:2, buy:{g:2}, cellar:true, reach:'L5 · all · needs the Aging Cellar'},
+  {nm:'Bock',    cc:'#7c2128', L:5, g:3,h:2, buy:{g:2}, reach:'L5 · all kontore + Hall (ungated v0.14)'},
 ];
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'},{nm:'Violet',c:'#5b3a8e'}];
 const DESTS=[
@@ -631,7 +631,7 @@ function checklist(pages,famPages){
     +row(1,'Cask · Hopped Q2 (action drawn at brew)','20','')
     +row(1,'Cask · Export Q3 (Broyhan / Keut share the pool)','12','')
     +row(1,'Cask · Export Q4 (Mumme · Wild possible)','8','')
-    +row(1,'Cask · Export Q5 (Bock — needs Aging Cellar · Wild possible)','4','')
+    +row(1,'Cask · Export Q5 (Bock — 3G2H, ungated · Wild possible)','4','')
     +row(0,'<i>Q2+ casks: the slot-action is drawn at brew — print the supply as a MIX of the 6-action pool (Q4/Q5 add Wild)</i>','','')
     +row(1,'Ships · NEUTRAL, destination-bound hulls (~20 deck: 11 Cog cap 2 / 9 Hulk cap 3)','20',pgRef(pages,famPages,'Ships'))
     +row(0,'<i>destination printed on each: Bruges 4 · London 4 · Bergen 4 · Novgorod 5 · Hall 3</i>','','')

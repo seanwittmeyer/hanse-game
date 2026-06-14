@@ -61,9 +61,9 @@ A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATU
 | **L2** | **Hopped Beer** | 2 | `G H` | 2 | *drawn at brew* (pool below) | Bruges · London · Bergen · Hall | 20 |
 | **L3** | **Broyhan / Keut** | 3 | `G H H` / `G G H` | 2 | *drawn at brew* | + Novgorod | 12 |
 | **L4** | **Mumme** | 4 | `G G H H` | 3 | *drawn at brew* | all | 8 |
-| **L5** | **Bock** | 5 | premium; needs **Aging Cellar** | 3 | *drawn at brew* (**Wild** possible — Q4+) | all | 4 |
+| **L5** | **Bock** | 5 | `G G G H H` *(ungated v0.14)* | 3 *(2 w/ Aging Cellar)* | *drawn at brew* (**Wild** possible — Q4+) | all | 4 |
 
-> **Export beers — fixed quality; deal 3 of 4 each game ⚙:** **Broyhan** (Q3, `G H H`) · **Keut** (Q3, `G G H`, a costlier-in-grain alt) · **Mumme** (Q4, Braunschweig) · **Bock** (Q5, Einbeck — needs the Aging Cellar). One is left undealt each game, so the **ladder shape varies**: drop a Q3 → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4; drop **Bock** → no Q5. Each cask's **signature slot-action is drawn at brew** (v0.12 — from the pool below; **Wild** only for Q4+), **decoupled from the beer/quality** — *except* **Gruit, which is pinned to Source** (v0.12.2). The fixed on-ramp is **Gruit → Hopped**.
+> **Export beers — fixed quality; deal 3 of 4 each game ⚙:** **Broyhan** (Q3, `G H H`) · **Keut** (Q3, `G G H`, a costlier-in-grain alt) · **Mumme** (Q4, Braunschweig) · **Bock** (Q5, Einbeck — `G G G H H`, **ungated v0.14**; the Aging Cellar just speeds it). One is left undealt each game, so the **ladder shape varies**: drop a Q3 → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4; drop **Bock** → no Q5. Each cask's **signature slot-action is drawn at brew** (v0.12 — from the pool below; **Wild** only for Q4+), **decoupled from the beer/quality** — *except* **Gruit, which is pinned to Source** (v0.12.2). The fixed on-ramp is **Gruit → Hopped**.
 
 *Gruit is the cheap, fast workhorse — it keeps your goods flowing (its Source action) and reaches Bruges, but never makes prestige. The export casks are scarce, slow, and the key to the rich destinations — the Leffe/Westvleteren line drawn in the components.*
 
@@ -102,7 +102,7 @@ A small face-up Market supply. A recipe is **only** *a brewable type + its `G/H`
 | **Broyhan** | Q3 export | `1 G` | `G H H` |
 | **Keut** | Q3 export | `1 G` | `G G H` |
 | **Mumme** | Q4 export | `1 G 1 H` | `G G H H` |
-| **Bock** | Q5 export | `2 G` | premium (needs Aging Cellar) |
+| **Bock** | Q5 export | `2 G` | `G G G H H` *(ungated v0.14)* |
 
 > Start: **Gruit + Hopped** (fixed, symmetric — everyone brews turn 1, and *gaining an export recipe means more*). **All four export recipes print**, but **only 3 of the 4 are dealt** into any game — the buyable export set this game is those three. ❓ light hand limit.
 
@@ -113,7 +113,7 @@ Installed on your brewery board. **Earned only by delivering** (the **London / N
 | Room | Effect ⚙ | Buy ⚙ |
 |---|---|---|
 | **Extra Vessel** | +1 brewing lane (start 2, cap 4) — repeatable | `5 G` |
-| **Aging Cellar** | maturation −1 step; **unlocks the L5 export (Bock)** | `5 G` |
+| **Aging Cellar** | maturation −1 step (a Bock matures in 2) — a **pathway**, not a gate (v0.14) | `5 G` |
 | **Warehouse** | goods storage 8 → 12 | `4 G` |
 | **Quay** | load **2 casks** in one Harbor visit | `5 G` |
 | **Cooperage** | **+1 cask loaded** per Harbor visit (stacks with Quay) | `4 G` |
