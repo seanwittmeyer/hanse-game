@@ -238,8 +238,9 @@ function runGame(n){
   S.players.forEach(function(p){p.delivered.forEach(function(d){allByDest[d.dest]++;});});
   var playerStats=S.players.map(function(p,i){var ts={};p.delivered.forEach(function(d){ts[d.q]=1;});
     return {persona:persona(p),cellar:!!p.__cellar,total:scores[i].total,won:(i===win),
+      deliv:scores[i].deliv,maj:scores[i].maj,goals:scores[i].goals,
       q5:p.delivered.filter(function(d){return d.q===5;}).length,
-      q4plus:p.delivered.filter(function(d){return d.q>=4;}).length,
+      q4plus:p.delivered.filter(function(d){return d.q>=4;}).length, hall:p.delivered.filter(function(d){return d.dest==='hall';}).length,
       tiers:Object.keys(ts).length,flight:scores[i].flight,master:scores[i].master};});
   return {
     n:n, round:S.turn, sailed:S.sailed, sailedCap:S.sailedCap,
@@ -395,20 +396,23 @@ function summarize(n, arr) {
   const totalAll = Object.values(allByDest).reduce((a, b) => a + b, 0);
   console.log(`ALL deliveries by destination (every player):`);
   console.log(`   ` + Object.keys(allByDest).map(k => `${k} ${pct(allByDest[k], totalAll)}`).join('   '));
-  // per-persona win-rate & avg score (only meaningful with PERSONAS=1; baseline shows all-volume)
-  if (PERSONAS) {
-    const P = {}; ['volume','prestige','majority'].forEach(k => P[k] = { wins:0, n:0, sum:0 });
-    ok.forEach(r => r.playerStats.forEach(s => { P[s.persona].wins += s.won?1:0; P[s.persona].n++; P[s.persona].sum += s.total; }));
-    console.log(`persona win-rate (per-capita; fair = ${fmt(100/n)}%):`);
-    console.log(`   ` + ['volume','prestige','majority'].map(k => `${k} ${P[k].n?pct(P[k].wins,P[k].n):'—'} (score ${P[k].n?fmt(P[k].sum/P[k].n):'—'})`).join('   '));
-  }
-  // CELLARMASTER diagnostic: is a well-played Q5/range strategy competitive? (tool-vs-game fork)
-  const cm = { wins:0, n:0, sum:0, q5:0, q4:0, tiers:0, flight:0, master:0 }, bl = { wins:0, n:0, sum:0, q5:0, q4:0, tiers:0, flight:0 };
-  ok.forEach(r => r.playerStats.forEach(s => { const g = s.cellar ? cm : bl; g.wins += s.won?1:0; g.n++; g.sum += s.total; g.q5 += s.q5; g.q4 += s.q4plus; g.tiers += s.tiers; g.flight += s.flight||0; if (s.cellar) cm.master += s.master||0; }));
-  if (cm.n) {
-    console.log(`CELLARMASTER (Q5-committed) vs baseline — fair win = ${fmt(100/n)}%:`);
-    console.log(`   cellarmaster: win ${pct(cm.wins,cm.n)}  score ${fmt(cm.sum/cm.n)}  ·  Q5 deliv/game ${fmt(cm.q5/cm.n)}  Q4+ ${fmt(cm.q4/cm.n)}  tiers ${fmt(cm.tiers/cm.n)}  flight★ ${fmt(cm.flight/cm.n)}  master★ ${fmt(cm.master/cm.n)}`);
-    console.log(`   baseline:     win ${pct(bl.wins,bl.n)}  score ${fmt(bl.sum/bl.n)}  ·  Q5 deliv/game ${fmt(bl.q5/bl.n)}  Q4+ ${fmt(bl.q4/bl.n)}  tiers ${fmt(bl.tiers/bl.n)}  flight★ ${fmt(bl.flight/bl.n)}`);
+  // ===== PATHWAYS TO A WIN — per-strategy win-rate + score composition =====
+  // Pathways: volume / prestige / majority (personas) + deep (cellarmaster). A cellar seat is reported
+  // ONLY as 'deep' (its assigned persona is ignored, since it plays the deep policy).
+  if (PERSONAS || CELLAR) {
+    const blank = () => ({ wins:0, n:0, total:0, deliv:0, maj:0, goals:0, flight:0, master:0, hall:0, q4:0, q5:0, tiers:0 });
+    const lanes = { volume:blank(), prestige:blank(), majority:blank(), deep:blank() };
+    ok.forEach(r => r.playerStats.forEach(s => {
+      const lane = s.cellar ? 'deep' : (PERSONAS ? s.persona : null); if (!lane || !lanes[lane]) return;
+      const g = lanes[lane];
+      g.wins += s.won?1:0; g.n++; g.total += s.total; g.deliv += s.deliv; g.maj += s.maj; g.goals += s.goals;
+      g.flight += s.flight||0; g.master += s.master||0; g.hall += s.hall||0; g.q4 += s.q4plus; g.q5 += s.q5; g.tiers += s.tiers;
+    }));
+    console.log(`PATHWAYS TO A WIN (per-capita win-rate; fair = ${fmt(100/n)}%):`);
+    ['volume','prestige','majority','deep'].forEach(k => { const g = lanes[k]; if (!g.n) return;
+      const a = x => fmt(g[x]/g.n);
+      console.log(`   ${k.padEnd(9)} win ${pct(g.wins,g.n).padStart(6)}  score ${a('total').padStart(5)}  |  deliv ${a('deliv')} · maj ${a('maj')} · goals ${a('goals')} · flight ${a('flight')} · master ${a('master')}  |  Hall/g ${a('hall')} · Q4+/g ${a('q4')} · Q5/g ${a('q5')} · tiers ${a('tiers')}  (n=${g.n})`);
+    });
   }
 }
 
