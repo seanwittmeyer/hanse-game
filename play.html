@@ -119,6 +119,14 @@
   .tstep.on{background:var(--green)}
   .tstep.rdy{background:var(--gold)}
   .tag{display:inline-block;background:var(--ink);color:var(--parch);border-radius:10px;padding:1px 7px;font-size:.7rem;margin:2px 2px 0 0}
+  /* cask drawn-action badge (vessels) */
+  .cact{display:inline-flex;align-items:center;gap:2px;font-size:.66rem;background:rgba(0,0,0,.07);border:1px solid var(--line);border-radius:8px;padding:0 5px;text-transform:capitalize;color:var(--ink2)}
+  .cact svg,.cact .ic{width:.95em;height:.95em}
+  /* delivered-cask quality pip (which beer went where) + flight tier pips */
+  .qd{display:inline-block;min-width:13px;text-align:center;font-size:.62rem;font-weight:bold;border-radius:3px;padding:0 1px;margin-left:2px;color:#fff;background:var(--ink2)}
+  .qd.q1{background:#8a949c}.qd.q2{background:#c2922f}.qd.q3{background:#b06a34}.qd.q4{background:#caa12a;color:#3a2c00}.qd.q5{background:#7c2128}
+  .fpip{display:inline-block;min-width:20px;text-align:center;font-size:.64rem;font-weight:bold;border-radius:4px;padding:1px 2px;margin-right:3px;border:1px solid var(--line);background:rgba(0,0,0,.06);color:var(--ink2);opacity:.55}
+  .fpip.on{opacity:1;background:var(--gold);color:#3a2c00;border-color:var(--gold)}
   .tag.good{background:var(--gold);color:#000}
   .tag.dim{background:var(--parch);color:var(--ink2);border:1px solid var(--line)}
   .res{display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-weight:bold}
@@ -1795,7 +1803,7 @@ function renderShop(){
   // the face-up Upgrade DISPLAY — v0.12.3: NOT for sale. You take one free by delivering to London/Novgorod.
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Upgrade display</b> <span class="note">('+DISPLAY_SIZE+' face-up + a face-down deck — <b>earned only</b> by delivering to '+LU('landmark')+' London/Novgorod)</span></div>';
   (S.upgradeDisplay||[]).forEach(key=>{const owned=!grantableBuy(p,key);
-    h+='<div class="item"><span data-tip="'+attr(upDesc(key))+'">'+LU('wrench')+' '+upName(key)+(owned?' <span class="note">(have)</span>':'')+'</span><span class="cost"><span class="note">deliver to earn</span></span></div>';});
+    h+='<div class="item"><span>'+LU('wrench')+' <b>'+upName(key)+'</b>'+(owned?' <span class="note">(have)</span>':'')+' <span class="note">— '+upDesc(key)+'</span></span><span class="cost"><span class="note">deliver to earn</span></span></div>';});
   if(!(S.upgradeDisplay||[]).length)h+='<div class="note">(no upgrades face-up)</div>';
   // the face-down Upgrade deck — the 5th stack that refills the display
   h+='<div class="item" style="opacity:.7"><span data-tip="'+attr('Face-down Upgrade deck. Refills the face-up display from its top as tiles are taken.')+'">🂠 Upgrade deck <span class="note">(face-down)</span></span><span class="cost">'+(S.upgradeSupply||[]).length+' left</span></div>';
@@ -1824,7 +1832,9 @@ function renderTableaus(){
       if(!c)return '<div class="vessel" style="opacity:.6">'+LU('flask-conical')+' <i>empty vessel</i></div>';
       let tr='';for(let s=0;s<=c.ready;s++)tr+='<div class="tstep '+(s<c.step?'on':'')+(c.step>=c.ready&&s===c.ready?'rdy':'')+'"></div>';
       const ready=c.step>=c.ready;
-      return '<div class="vessel">'+LU('beer')+' <b>'+styleShort(c.style)+'</b> '+(ready?'<span class="tag good">'+LU('check')+' READY</span>':'<span class="note">'+c.step+'/'+c.ready+'</span>')+'<div class="vtrack">'+tr+'</div></div>';
+      return '<div class="vessel">'+LU('beer')+' <b>'+styleShort(c.style)+'</b> '
+        +'<span class="cact" data-tip="'+attr('Slot action when deployed: '+CASK_ACT[caskAct(c)])+'">'+LU(CASK_ACT_ICON[caskAct(c)]||'')+' '+caskAct(c)+'</span> '
+        +(ready?'<span class="tag good">'+LU('check')+' READY</span>':'<span class="note">'+c.step+'/'+c.ready+'</span>')+'<div class="vtrack">'+tr+'</div></div>';
     }).join('');
     const recipes=p.recipes.map(r=>{const st=STYLES[r];const locked=st.cellar&&!hasUpgrade(p,'cellar');
       return '<span class="rcard"'+(locked?' style="opacity:.55"':'')+' data-tip="'+attr(st.name+' — quality Q'+st.q+', brew cost '+costStr(st.in)+(locked?'. Needs the Aging Cellar to brew.':'.'))+'">'
@@ -1834,7 +1844,14 @@ function renderTableaus(){
     }).join('');
     const ups=p.upgrades.length?p.upgrades.map(k=>'<span class="tag" data-tip="'+attr(upDesc(k))+'">'+LU('wrench')+upName(k)+'</span>').join(''):'<span class="note">none yet — buy from the display, or deliver to London/Novgorod</span>';
     const wharf=SLOTS.map(s=>S.slots[s.id]).filter(t=>t&&t.owner===p.id).map(t=>'<span class="tag">'+(t.type==='ship'?LU('sailboat')+shipName(t)+'→'+DEST[t.dest].name.slice(0,3)+' '+t.load.length+'/'+effCap(t):LU('beer')+styleShort(t.style))+'</span>').join('')||'<span class="note">none</span>';
-    const delivered=DESTS.map(d=>{const n=deliveredAt(p,d);return n?'<span class="tag good">'+(DEST[d].kontor?LU('landmark'):LU('crown'))+DEST[d].name.slice(0,4)+'×'+n+'</span>':'';}).filter(x=>x).join('')||'<span class="note">none</span>';
+    const delivered=DESTS.map(d=>{const ds=p.delivered.filter(x=>x.dest===d);if(!ds.length)return '';
+      const pips=ds.slice().sort((a,b)=>a.q-b.q).map(x=>'<span class="qd q'+x.q+'" data-tip="'+attr(STYLES[x.style].name+' · Q'+x.q)+'">'+x.q+'</span>').join('');
+      return '<span class="tag good">'+(DEST[d].kontor?LU('landmark'):LU('crown'))+DEST[d].name.slice(0,4)+' '+pips+'</span>';}).filter(x=>x).join('')||'<span class="note">none</span>';
+    // FLIGHT tracker: distinct quality tiers delivered ANYWHERE (not the Hall specifically) → (tiers-1)², min 3
+    const fdq={};p.delivered.forEach(x=>fdq[x.q]=1);const ftiers=Object.keys(fdq).length;const fcur=flightScore(p);
+    const fnext=ftiers<5?(FLIGHT_PTS[ftiers+1]||0):null;
+    const fpips=[1,2,3,4,5].map(q=>'<span class="fpip'+(fdq[q]?' on':'')+'" data-tip="'+attr('Q'+q+(fdq[q]?': delivered ✓':': not yet delivered'))+'">Q'+q+'</span>').join('');
+    const flightStr=fpips+' <span class="note"><b>'+fcur+'★</b>'+(ftiers>=5?' — full flight!':(fnext!=null&&fnext>fcur?' · +'+(fnext-fcur)+' at '+(ftiers+1)+' tiers':(ftiers<FLIGHT_MIN?' · need '+FLIGHT_MIN+'+ tiers to score':'')))+'</span>';
     const gv=p.goals.map(g=>({g,v:GOALS[g].fn(p)})).sort((a,b)=>b.v-a.v);
     const goals=gv.map((o,idx)=>'<span class="tag'+(idx<GOAL_BEST?' good':' dim')+'" data-tip="'+attr(GOALS[o.g].text)+'">'+LU('target')+GOALS[o.g].text+' = '+o.v+(idx<GOAL_BEST?' ✓':'')+'</span>').join('');
     body+='<div class="tableau '+(i===activeTab?'show':'')+'">'
@@ -1847,6 +1864,7 @@ function renderTableaus(){
       +'<b class="note">'+LU('wrench')+' Upgrades:</b> '+ups+'<br>'
       +'<b class="note">'+LU('anchor')+' On slots (yours):</b> '+wharf+'<br>'
       +'<b class="note">'+LU('landmark')+' Delivered:</b> '+delivered+'<br>'
+      +'<b class="note">'+LU('layers')+' Flight (distinct tiers delivered, any destination):</b> '+flightStr+'<br>'
       +'<b class="note">'+LU('target')+' Goals (best '+GOAL_BEST+' score):</b> '+goals
       +'</div>';
   });
@@ -1876,7 +1894,14 @@ function renderTableaus(){
     if(!el){pending=null;if(curEl)hide();return;}
     pending=el;timer=setTimeout(()=>{timer=null;pending=null;show(el);},300);
   });
-  document.addEventListener('click',hide,true);
+  // MOBILE: there is no hover on touch, so a TAP on a pure-info element toggles its tooltip.
+  // Interactive elements (buttons / things with onclick) still fire their action; tapping elsewhere dismisses.
+  document.addEventListener('click',e=>{
+    const el=e.target.closest?e.target.closest('[data-tip]'):null;
+    const interactive=el&&(el.tagName==='BUTTON'||el.hasAttribute('onclick')||(el.closest&&el.closest('button,[onclick]')));
+    if(el&&!interactive){ if(el===curEl)hide(); else {clearTimeout(timer);timer=null;show(el);} return; }
+    hide();
+  },true);
   window.addEventListener('scroll',hide,true);
 })();
 
