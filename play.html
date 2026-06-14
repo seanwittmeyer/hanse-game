@@ -282,7 +282,7 @@ const STYLES={
   broyhan:{name:'Broyhan',     lvl:3, q:3, in:{g:1,h:2},  ready:2, act:'load',  export:true},
   keut   :{name:'Keut',        lvl:3, q:3, in:{g:2,h:1},  ready:2, act:'load',  export:true},
   mumme  :{name:'Mumme',       lvl:4, q:4, in:{g:2,h:2},  ready:3, act:'reach', export:true},
-  bock   :{name:'Bock',        lvl:5, q:5, in:{g:3,h:2},  ready:3, act:'wild',  export:true, premium:true},   // v0.14: UNGATED (was cellar:true), cost 3G2H — Aging Cellar now a pathway (−1 step → 2-step Bock), not a gate. (premium = AI-skill flag: only the Trader+ climb to Q5; not a game rule)
+  bock   :{name:'Bock',        lvl:5, q:5, in:{g:3,h:3},  ready:3, act:'wild',  export:true, premium:true},   // v0.14.1 TEST: UNGATED, cost 3G3H (was 3G2H) — testing whether the harder hops cost cools the strong deep lane. Aging Cellar = pathway (−1 step). (premium = AI-skill flag)
 };
 const EXPORT_ROSTER=['broyhan','keut','mumme','bock'];   // 3 of 4 dealt each game; each keeps its fixed quality
 const RECIPE_BUY={broyhan:{g:1},keut:{g:1},mumme:{g:1,h:1},bock:{g:2}};  // Market buy cost (Gruit+Hopped are free starters)
@@ -469,7 +469,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v40'; // v0.14 ⚙: Bock UNGATED + 3G3H (Aging Cellar now a pathway: −1 step, not a requirement) — makes the Q5/full-flight reachable; bump discards stale state
+const KEY='hanse-hotseat-v41'; // v0.14.1 TEST ⚙: Bock 3G2H → 3G3H (un-gated) — probing whether the harder hops cost rebalances the strong deep lane; bump discards stale state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
