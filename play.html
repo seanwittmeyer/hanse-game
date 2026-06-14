@@ -147,6 +147,22 @@
   .modal{position:fixed;inset:0;background:rgba(20,12,8,.82);z-index:80;display:flex;align-items:center;justify-content:center;padding:20px}
   .modal .card{background:var(--parch);border:3px solid var(--gold);border-radius:14px;padding:26px;max-width:600px;width:100%;max-height:90vh;overflow:auto}
   .modal h2{font-variant:small-caps;color:var(--red);margin:0 0 10px}
+  /* player aid */
+  .asec{margin:0 0 11px;border-top:1px solid var(--line);padding-top:8px}
+  .asec>b{font-variant:small-caps;color:var(--red);font-size:1.02rem}
+  .asec .note{font-size:.84rem;line-height:1.5;color:var(--ink);font-style:normal}
+  .asec svg,.asec .ic{width:1.05em;height:1.05em;vertical-align:-.16em}
+  .atable{width:100%;border-collapse:collapse;font-size:.82rem;margin:5px 0}
+  .atable th{text-align:left;color:var(--ink2);font-weight:normal;border-bottom:1px solid var(--line);padding:2px 4px}
+  .atable td{padding:2px 4px;border-bottom:1px solid rgba(0,0,0,.06)}
+  .atags{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+  .atag{font-size:.76rem;background:rgba(0,0,0,.05);border:1px solid var(--line);border-radius:7px;padding:1px 7px}
+  .ascore{margin:5px 0 0;padding-left:20px;font-size:.84rem;line-height:1.55}
+  .ascore li{margin-bottom:2px}
+  .akey{display:grid;grid-template-columns:1fr 1fr;gap:3px 12px;margin-top:6px;font-size:.8rem}
+  @media(max-width:520px){.akey{grid-template-columns:1fr}}
+  .akrow{display:flex;align-items:center;gap:6px}
+  .akrow svg,.akrow .ic{width:1.1em;height:1.1em;flex:0 0 auto}
   .scoretable{width:100%;border-collapse:collapse;margin:10px 0}
   .scoretable th,.scoretable td{border:1px solid var(--line);padding:6px 9px;text-align:center}
   .scoretable th{background:var(--red);color:var(--parch)}
@@ -198,6 +214,7 @@
     <span id="barres"></span>
     <span class="prompt" id="prompt">Loading…</span>
     <span class="links">
+      <a href="#" onclick="toggleAid();return false"><b>📖 Player Aid</b></a>
       <a href="learn.html">Learn</a><a href="index.html">Rulebook</a>
       <a href="#" onclick="newGame();return false">New Game</a>
     </span>
@@ -237,6 +254,7 @@
 </div>
 
 <div id="over" class="modal hidden"><div class="card" id="overcard"></div></div>
+<div id="aid" class="modal hidden"><div class="card" id="aidcard"></div></div>
 <div id="studio" class="modal hidden"><div class="card" id="studiocard"></div></div>
 
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -1614,6 +1632,44 @@ function render(){
   refreshIcons();
 }
 function btn(label,fn,cls){return '<button class="'+(cls||'')+'" onclick="'+fn+'">'+label+'</button>';}
+// ---- PLAYER AID — the printed reference card, mirrored in the UI (data-driven so it can't drift) ----
+function toggleAid(){const el=document.getElementById('aid');if(el.classList.contains('hidden')){renderAid();el.classList.remove('hidden');if(window.lucide)lucide.createIcons();}else el.classList.add('hidden');}
+function renderAid(){
+  const ic=n=>LU(n);
+  const keys=[['wheat','<b>Grain</b> (a currency)'],['sprout','<b>Hops</b> (a currency)'],['beer','<b>Cask</b> / beer quality'],
+    ['star','<b>Points</b> ★ — score only, not spendable'],['landmark','<b>Kontor</b> (Bruges/London/Bergen/Novgorod)'],['crown','<b>The Hall</b> (prestige)'],
+    ['package','<b>Goods</b> / storage'],['wrench','<b>Upgrade</b>'],['layers','<b>The Flight</b> (range of tiers)'],['target','<b>Goal</b> tile'],
+    ['anchor','<b>Slot</b> (perimeter ring)'],['sailboat','<b>Ship</b> (neutral, destination-bound)'],['hourglass','<b>Age</b> a cask'],
+    ['map-pin','<b>Presence</b> / Reach'],['store','<b>Market</b> station'],['flask-conical','<b>Brew</b> / vessel'],['scroll-text','<b>Recipe</b>'],
+    ['ticket','<b>Charter</b> (single-cask voyage)'],['package-plus','<b>Load</b> a cask'],['arrow-left-right','<b>Convert</b> goods G↔H'],
+    ['coins','<b>Source</b> (take goods)'],['sparkles','<b>Wild</b> action (Q4+)']];
+  const dRow=d=>{const D=DEST[d];const val=d==='hall'?'5·7·10·12 by Q':('+'+D.value);const maj=D.maj.length?D.maj.join(' / '):'—';
+    const ben=d==='hall'?'prestige':(D.benefit==='upgrade'?'an Upgrade':'2 goods');
+    return '<tr><td>'+(D.kontor?ic('landmark'):ic('crown'))+' '+D.name+'</td><td>Q'+D.gate+'+</td><td>'+val+'</td><td>'+maj+'</td><td>'+ben+'</td></tr>';};
+  const dests=['bruges','london','bergen','novgorod','hall'].map(dRow).join('');
+  const acts=CASK_ACT_POOL.map(k=>'<span class="atag">'+ic(CASK_ACT_ICON[k])+' <b style="text-transform:capitalize">'+k+'</b> — '+CASK_ACT[k]+'</span>').join('');
+  document.getElementById('aidcard').innerHTML=
+    '<h2>'+ic('scroll-text')+' Player Aid</h2>'
+    +'<div class="asec"><b>Your turn</b><div class="note">Move to an adjacent station (pay 1 '+ic('wheat')+' if a rival is there) → activate its <b>row OR column</b> → resolve up to 4 stops (slot · station · station · slot) <b>in any order</b>.</div></div>'
+    +'<div class="asec"><b>The four stations</b><div class="note">'
+      +ic('store')+' <b>Market</b> (Source): take 2 goods, or buy a recipe / commission a ship.<br>'
+      +ic('flask-conical')+' <b>Brewhouse</b> (Brew): pay a recipe → a young cask in a vessel.<br>'
+      +ic('hourglass')+' <b>Cellar</b> (Age): 3 age points across your casks (every cask also ages +1 each of your turns).<br>'
+      +ic('anchor')+' <b>Harbor</b> (Ship): load a Ready cask onto a ship, launch a partial ship early, or Charter.</div></div>'
+    +'<div class="asec"><b>Destinations</b> <span class="note">gate · value · majority 1st/2nd/3rd · benefit</span>'
+      +'<table class="atable"><tr><th>Destination</th><th>Gate</th><th>Value</th><th>Majority</th><th>Benefit</th></tr>'+dests+'</table>'
+      +'<div class="note">Export premium: a Q4 cask <b>+1</b> ★, a Q5 <b>+2</b> ★, at any kontor. <b>2-player skips 2nd place.</b></div></div>'
+    +'<div class="asec"><b>Cask slot actions</b> <span class="note">(drawn at brew; Gruit is always Source)</span><div class="atags">'+acts+'</div></div>'
+    +'<div class="asec"><b>Scoring — at game end</b><ol class="ascore">'
+      +'<li><b>Delivery value</b> — sum each delivered cask’s value (table above + export premium).</li>'
+      +'<li><b>Majorities</b> — 1st/2nd/3rd at each kontor by delivered-cask count.</li>'
+      +'<li><b>Goals</b> — your best 2 of 3.</li>'
+      +'<li><b>The Flight</b> '+ic('layers')+' — distinct quality tiers delivered (to <b>any</b> destination): <b>3 → '+FLIGHT_PTS[3]+' · 4 → '+FLIGHT_PTS[4]+' · 5 → '+FLIGHT_PTS[5]+'</b> (min 3 to score).</li>'
+      +'<li><b>Masterpiece</b> '+ic('sparkles')+' — first delivery of the game’s top tier (Q5 if Bock is dealt, else Q4): <b>+'+MASTERPIECE.star+' ★ & '+MASTERPIECE.goods+' goods</b>, once.</li>'
+      +'</ol></div>'
+    +'<div class="asec"><b>Icon key</b><div class="akey">'+keys.map(k=>'<div class="akrow">'+ic(k[0])+'<span>'+k[1]+'</span></div>').join('')+'</div></div>'
+    +'<div style="text-align:center;margin-top:10px"><button class="primary" onclick="toggleAid()">Close</button></div>';
+}
 function deployButtons(phase){const p=cur();if(!emptySlots().length)return '';
   return readyInVessels(p).map(o=>btn('▸ Deploy '+LU('beer')+ownSq(p.id)+styleShort(o.c.style)+' to a slot','startDeploy('+o.i+',\''+phase+'\')','ghost')).join('');}
 
