@@ -1200,6 +1200,11 @@ const AI_SPEED_KEY='hanse-ai-speed';
 // ⚙ Guildmaster (Phase 3) dials — `let` so the headless harnesses can lower them for bulk runs.
 let GUILD_MS=250;    // Monte Carlo time budget per decision (ms); 'instant' speed caps it at 120
 let GUILD_MIN=2;     // minimum playouts per option (so no option goes unsampled)
+// GM_DEEP (opt-in): completion-biased rollouts that climb to Bock & ship the high end to the Hall, so the
+// Monte Carlo can PRICE the deep/range path. Default OFF — it lengthens rollouts (~2.5×), so at flat-MC
+// budgets it buys fewer playouts than it gains in realism; the default GM stays the fast robustness oracle.
+let GM_DEEP=false;
+function aiDeepRollout(){return GM_DEEP&&aiSimulating;}
 let aiTimer=null,aiActing=false,aiLoopActive=false,aiChosenWhich='row',aiSimulating=false;
 
 function aiTurn(){return !!(S&&!S.over&&cur()&&cur().ai);}
@@ -1246,11 +1251,11 @@ function aiBuyableExports(p){return (S.exports||[]).filter(s=>!p.recipes.include
   // completion-biased rollout (aiSimulating): the GM's playouts may climb to Bock (if cellar-equipped),
   // so the Monte Carlo can actually PRICE the Q5/full-flight payoff — otherwise the greedy rollout never
   // makes a Bock and the deep path is invisible (the real journeyman tier stays cellar-blind).
-  &&((aiIsTrader(p)||aiSimulating)?(!STYLES[s].cellar||hasUpgrade(p,'cellar')):!STYLES[s].cellar)
+  &&((aiIsTrader(p)||aiDeepRollout())?(!STYLES[s].cellar||hasUpgrade(p,'cellar')):!STYLES[s].cellar)
   &&canPay(p,RECIPE_BUY[s]));}
 function aiPickUpgrade(p,list){
   if(aiIsApp(p))return aiRandOf(list);
-  if((aiIsTrader(p)||aiSimulating)&&(S.exports||[]).includes('bock')&&!hasUpgrade(p,'cellar')&&list.includes('cellar'))return 'cellar';  // rollout grabs the Aging Cellar to enable the Bock climb
+  if((aiIsTrader(p)||aiDeepRollout())&&(S.exports||[]).includes('bock')&&!hasUpgrade(p,'cellar')&&list.includes('cellar'))return 'cellar';  // rollout grabs the Aging Cellar to enable the Bock climb
   const pref=['vessel','cellar','quay','cooperage','royal','staple','guild','warehouse','granary','hopgarden','burgher'];
   for(const k of pref)if(list.includes(k))return k;return list[0];}
 // Majority SWING for one more cask of presence at kontor k: my award delta PLUS what rivals lose.
@@ -1284,7 +1289,7 @@ function aiDest(p,q,style){
   // completion-biased rollout: realize the DEEP payoff so the GM can price it — ship the top tiers to the
   // Hall (prestige + the Flight's top tier + the Masterpiece). Only bites once a player has climbed (q>=4),
   // so it credits deep play that's actually set up rather than force-feeding prestige into volume games.
-  if(aiSimulating&&q>=4&&elig.includes('hall')&&Math.random()<0.6)return 'hall';
+  if(aiDeepRollout()&&q>=4&&elig.includes("hall")&&Math.random()<0.6)return "hall";
   if(!aiIsTrader(p)){
     if(!aiIsApp(p)&&q>=4&&Math.random()<0.3&&elig.includes('hall'))return 'hall';
     const kon=elig.filter(d=>DEST[d].kontor);const pool=kon.length?kon:elig;
