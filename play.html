@@ -237,6 +237,7 @@
       <div class="panel"><h3>Market</h3><div class="shop" id="shop"></div></div>
       <div class="panel"><h3>The Voyage <span class="note">(end clock)</span></h3><div id="voyage"></div></div>
       <div class="panel"><h3>Log</h3><div id="log"></div></div>
+      <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
     </div>
   </div>
   <p class="note" style="text-align:center"><b>v0.15 “Enshrine” — prototype.</b> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
@@ -1647,13 +1648,23 @@ function maybeRunAI(){
 }
 function aiSpeedButtons(){const sp=aiSpeed();
   return ['slow','normal','instant'].map(v=>btn((v===sp?'● ':'')+v,'aiSetSpeed(\''+v+'\')',v===sp?'primary':'ghost')).join('');}
+// The AI-speed control is GLOBAL — a panel at the bottom of the sidebar, shown whenever any seat is
+// an AI. (It used to live only in the action bar during an AI turn, which made it unreachable once
+// 'instant' was picked — AI turns resolved synchronously straight to the human's turn, where the bar
+// shows the human's actions instead.) Now you can change the pace any time an AI is in the game.
+function renderAiSpeed(){
+  const panel=document.getElementById('aispeedpanel');if(!panel)return;
+  const hasAI=!!(S&&S.players&&S.players.some(p=>p.ai));
+  panel.style.display=hasAI?'':'none';
+  if(hasAI)document.getElementById('aispeed').innerHTML=aiSpeedButtons();
+}
 
 //==================================================================
 // RENDER
 //==================================================================
 function render(){
   if(!S)return;
-  renderBar();renderGrid();renderDests();renderShop();renderVoyage();renderTableaus();
+  renderBar();renderGrid();renderDests();renderShop();renderVoyage();renderTableaus();renderAiSpeed();
   document.getElementById('log').innerHTML=S.log.join('');
   document.getElementById('turnlbl').textContent='Round '+S.turn+(S.ending?' · FINAL':'');
   refreshIcons();
@@ -1714,8 +1725,8 @@ function renderBar(){
   }
   // During an AI's turn the bar narrates instead of offering actions — humans only set the pace.
   if(aiTurn()){
-    document.getElementById('prompt').innerHTML='<b>'+p.name+'</b> — '+aiLabel(p)+' AI is taking its turn… <span class="note">(the log narrates each action)</span>';
-    document.getElementById('acts').innerHTML='<span class="note" style="align-self:center;color:var(--parch);opacity:.8">AI speed:</span> '+aiSpeedButtons();
+    document.getElementById('prompt').innerHTML='<b>'+p.name+'</b> — '+aiLabel(p)+' AI is taking its turn… <span class="note">(the log narrates each action · set the pace under <b>AI Speed</b> in the sidebar)</span>';
+    document.getElementById('acts').innerHTML='';
     document.getElementById('boardnote').innerHTML='AI seats play by the same rules with the same information — the tiers differ only in decision quality.';
     return;
   }
