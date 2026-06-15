@@ -71,17 +71,18 @@
   .gen .g-act{background:rgba(0,0,0,.22);border-radius:.04in;padding:.04in .055in;font-size:.105in;line-height:1.16;margin-top:.06in;align-self:stretch}
   .gen.tg .g-head .bigic{position:absolute;right:.1in;bottom:.08in}
   .gen.tg .g-head .bigic svg,.gen.tg .g-head .bigic .ic{width:.34in;height:.34in;opacity:.9}
-  /* ship NUMBERED BERTHS — the load-order spaces (filled 1→cap; deliver in order) */
-  .ts .berths{display:flex;align-items:center;gap:.04in;margin-top:.06in}
+  /* ship NUMBERED BERTHS — pinned to the BOTTOM with the quality gate */
+  .ts .berths{display:flex;align-items:center;justify-content:center;gap:.04in}
   .ts .berths .bn{width:.235in;height:.235in;border:1.3px solid rgba(255,255,255,.9);border-radius:.03in;
     display:flex;align-items:center;justify-content:center;font-size:.13in;font-weight:900;background:rgba(0,0,0,.22);text-shadow:none}
   .ts .berths .sgate{font-weight:900;font-size:.15in;display:inline-flex;align-items:center;gap:.015in;margin-right:.04in}
   .ts .berths .sgate svg,.ts .berths .sgate .ic{width:.17in;height:.17in}
-  /* ship = NEUTRAL hull body; destination is a coloured chip (so it never reads as a player's ship) */
-  .ts .g-dest{display:inline-flex;align-items:center;gap:.04in;align-self:flex-start;color:#fff;font-variant:small-caps;font-weight:bold;font-size:.14in;border-radius:.04in;padding:.025in .07in;margin-top:.05in;text-shadow:0 1px 1px rgba(0,0,0,.45)}
-  .ts .g-dest svg,.ts .g-dest .ic{width:.16in;height:.16in}
-  .ts .t-cost-tr{position:absolute;top:.085in;right:.1in;font-weight:bold}
-  .ts .t-cost-tr .gc{font-size:.16in;gap:.02in} .ts .t-cost-tr .gc svg,.ts .t-cost-tr .gc .ic{width:.17in;height:.17in}
+  /* ship = NEUTRAL hull body; destination is a coloured chip, CENTERED in the middle of the tile */
+  .ts .g-dest-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+  .ts .g-dest{display:inline-flex;align-items:center;gap:.04in;color:#fff;font-variant:small-caps;font-weight:bold;font-size:.125in;border-radius:.04in;padding:.025in .08in;text-shadow:0 1px 1px rgba(0,0,0,.45)}
+  .ts .g-dest svg,.ts .g-dest .ic{width:.15in;height:.15in}
+  .ts .t-cost-tr{position:absolute;top:.08in;right:.09in;font-weight:bold}
+  .ts .t-cost-tr .gc{font-size:.12in;gap:.02in} .ts .t-cost-tr .gc svg,.ts .t-cost-tr .gc .ic{width:.15in;height:.15in}
   /* ====== goods TOKENS — laser-cut .7in circle inside a .95in bleed disc ====== */
   .tok{width:.95in;height:.95in;border-radius:50%;background:var(--c);color:#fff;position:relative;
     display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4)}
@@ -314,12 +315,13 @@ const CASK_POOL=[
   {k:'draw',   ai:'target',           act:'Draw a goal · 1 G'},
 ];
 const CASK_WILD={k:'wild', ai:'sparkles', act:'Wild — any base action'};   // Q4+ only
-const CASKS=[  // shared cask pool — fixed global counts (COMPONENTS §3A). Gruit is PINNED to Source (v0.12.2); Q2+ draw at brew.
-  {nm:'Gruit',  c:'#8a949c', q:1, g:1,h:0,                 n:16, pin:CASK_POOL[0]},
-  {nm:'Hopped', c:'#c2922f', q:2, g:1,h:1,                 n:20},
-  {nm:'Export', c:'#b06a34', q:3, g:1,h:2, alt:[2,1],      n:12},  // Broyhan G H H · Keut G G H
-  {nm:'Export', c:'#caa12a', q:4, g:2,h:2,                 n:8,  wild:true},
-  {nm:'Export', c:'#7c2128', q:5, g:3,h:2,                 n:4,  wild:true},
+const CASKS=[  // cask supply — fixed global counts (COMPONENTS §3A). Gruit is PINNED to Source (v0.12.2); Q2+ draw at brew. Each export beer has its OWN named set (Broyhan/Keut split, was a shared Q3 pool).
+  {nm:'Gruit',   c:'#8a949c', q:1, g:1,h:0, n:16, pin:CASK_POOL[0]},
+  {nm:'Hopped',  c:'#c2922f', q:2, g:1,h:1, n:20},
+  {nm:'Broyhan', c:'#b06a34', q:3, g:1,h:2, n:6},
+  {nm:'Keut',    c:'#9c5f2e', q:3, g:2,h:1, n:6},
+  {nm:'Mumme',   c:'#caa12a', q:4, g:2,h:2, n:8,  wild:true},
+  {nm:'Bock',    c:'#7c2128', q:5, g:3,h:2, n:4,  wild:true},
 ];
 // v0.11 — NEUTRAL, destination-bound hulls (the destination is PRINTED on the tile). The 20-tile deck,
 // KONTORE ONLY: Bruges 5 · London 5 · Bergen 5 · Novgorod 5 (11 Cog / 9 Hulk); the Hall is reached by the local Enshrine, not a boat.
@@ -422,7 +424,7 @@ function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm
   return '<div class="tile gen ts" style="--c:#6f6253">'   // NEUTRAL hull body (not a player colour); destination = the coloured chip
   +'<div class="t-cost-tr">'+cost(2,0)+'</div>'            // commission cost, top-right (no market icon)
   +'<div class="g-head"><span class="bigic">'+LU('sailboat')+'</span><span class="g-nm">'+(hull==='cog'?'Cog':'Hulk')+'</span></div>'
-  +'<div class="g-dest" style="background:'+d.kc+'">'+LU('landmark')+destNm+'</div>'
+  +'<div class="g-dest-wrap"><div class="g-dest" style="background:'+d.kc+'">'+LU('landmark')+destNm+'</div></div>'
   +'<div class="berths"><span class="sgate">'+LU(QI)+d.req+'+</span>'+berths+'</div></div>';}
 function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--c:'+it.c+'">'
   +'<div class="g-head"><span class="bigic">'+LU(it.ic)+'</span><span class="g-nm">'+it.nm+'</span></div>'
@@ -663,10 +665,11 @@ function checklist(pages,famPages){
     +'</table>';
   h+='<table><tr><th></th><th>Tiles — 1.25″ squares (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Cask · Gruit Q1 (pinned Source +2 goods)','16',pgRef(pages,famPages,'Casks'))
-    +row(1,'Cask · Hopped Q2 (action drawn at brew)','20','')
-    +row(1,'Cask · Export Q3 (Broyhan / Keut share the pool)','12','')
-    +row(1,'Cask · Export Q4 (Mumme · Wild possible)','8','')
-    +row(1,'Cask · Export Q5 (Bock — 3G2H, ungated · Wild possible)','4','')
+    +row(1,'Cask · Hopped Q2','20','')
+    +row(1,'Cask · Broyhan Q3 (G1H2)','6','')
+    +row(1,'Cask · Keut Q3 (G2H1)','6','')
+    +row(1,'Cask · Mumme Q4 (Wild possible)','8','')
+    +row(1,'Cask · Bock Q5 (3G2H, ungated · Wild possible)','4','')
     +row(0,'<i>Q2+ casks: the slot-action is drawn at brew — print the supply as a MIX of the 6-action pool (Q4/Q5 add Wild)</i>','','')
     +row(1,'Ships · NEUTRAL, destination-bound hulls (~20 deck: 11 Cog cap 2 / 9 Hulk cap 3)','20',pgRef(pages,famPages,'Ships'))
     +row(0,'<i>destination printed on each: Bruges 5 · London 5 · Bergen 5 · Novgorod 5</i>','','')
