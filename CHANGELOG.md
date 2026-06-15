@@ -2,9 +2,18 @@
 
 Compact version history. The **full rationale ("the why")** lives in `DESIGN.md` (§21 = v0.7, §20 = v0.6, §19 = v0.5, and the dated entries before them); the **current rules** are `RULES.md`. This file also compacts the retired `PLAY-TODO.md` brief, the `PLAYTEST.md` v0.1 snapshot, and the `playtests/` sim write-ups — the originals remain in git history if ever needed.
 
-> **✅ v0.10 is live across the whole repo:** the markdown specs **and all four HTML pages** (`learn` · `index` · `printables` · `play`) are on v0.10 "The Wharf." *(Docs were consolidated back in v0.9 — `TILES.md` + `PLAYERBOARD.md` folded into `COMPONENTS.md`, and the former `rulebook.html` merged into `index.html` as "Rulebook & Components.")*
+> **✅ v0.15 "Enshrine" is live across the whole repo:** the markdown specs **and all four HTML pages** (`learn` · `index` · `printables` · `play`) are on v0.15. *(Docs were consolidated back in v0.9 — `TILES.md` + `PLAYERBOARD.md` folded into `COMPONENTS.md`, and the former `rulebook.html` merged into `index.html` as "Rulebook & Components.")*
 
 ---
+
+## v0.15 — "Enshrine": the Hall goes local (2026-06-15)
+The Hall was a *prestige* destination still reached by a *boat* — thematically off (you don't ship a beer out to enshrine it locally) and the boat's friction (a scarce Hall hull or a charter fare) was masking how high the Hall's value ran. v0.15 makes the Hall a **local Harbor action** and re-balances around it (`KEY → v44`):
+- **Enshrine ⚙** — a new Harbor action: withdraw one of your **deployed casks** (on a slot, **Q2+**) into the **Hall** for prestige — **no ship, no fare.** It advances the Sailed-Ships clock like any voyage. **The throttle is structural, not a fee** (per the design directive): the cask must be **on a public slot first**, so a prized cask sits exposed — a rival may **hijack-load it to a kontor** before you enshrine (the v0.12 rival-loading lever). This re-adds the deploy step + slot-occupancy cost the boat used to impose, *and* keeps the masterpiece contestable — a cleaner rebalance than a flat fee (which was tested and dropped).
+- **Ships + Charter are kontore-only** — the ship deck is now **20 hulls across the 4 kontore (5 each, 11 Cog / 9 Hulk)**; the Hall left the deck entirely.
+- **Hall ladder re-trimmed 5/7/10/12 → 4/6/8/10** — the frictionless local Enshrine exposed the old curve as too high.
+- **Two new upgrades** — **Trophy Room** (Room: *enshrine 2 per Harbor action* — the prestige-throughput room, parallel to Quay/Cooperage for ships) and **Patron's Favor** (Modifier, **replacing Royal Patent**: *+1 good when you enshrine* — the prestige lane's economic hook, since enshrine otherwise returns nothing in-game; an early nudge toward the harder lane).
+- **Balance (PATHWAYS, `CELLAR=1 PERSONAS=1`, n=600):** the structural throttle did the *healthy* kind of rebalancing — it **revived the under-powered volume lane** (19 → ~24–26% at 4p) and pulled the over-strong Hall lanes back to the pack (4p volume/prestige/majority/deep ≈ 24/23/30/23, vs v0.14's 19/29/21/31). Deep stays the slightly-lower, higher-variance "stars-align" lane by design. Gates: ladder PASS (higher tiers ≥60% at 2p), render-smoke PASS, sim 500×(2–5p) 0 crashes, pace in the 12–25 band. (Watch-item: 2p prestige ~56% — Patron's Favor does real work where enshrine is the cleanest plan.)
+- **Also:** the playable page's redundant wall-of-text intro was replaced by a pointer to the **📖 Player Aid** + Rulebook; goal "shipped to the Hall" → "enshrined at the Hall."
 
 ## v0.14 — Bock un-gated: the Q5 climb made reachable (2026-06-14)
 v0.13 made "go deep" a winning strategy, but **Q5/Bock stayed at 0%** — the Aging-Cellar *prerequisite* (a delivery-earned upgrade that might not even be dealt) was an impassable dependency. A diagnostic settled it (`KEY → v40`):

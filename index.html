@@ -163,7 +163,7 @@
 <header>
   <h1>Brewhouses of the Hanse</h1>
   <div class="sub">Rulebook &amp; Components · A merchant brewing house in the Hanseatic League. At <b>the Wharf</b> you <b>Source → Brew → Age → Ship</b> — the <b>kontore</b> pay volume, the <b>Hall</b> pays prestige.</div>
-  <div class="tag">v0.14 “The Wharf” prototype draft · all numbers placeholders ⚙</div>
+  <div class="tag">v0.15 “Enshrine” prototype draft · all numbers placeholders ⚙</div>
 </header>
 
 <nav>
@@ -208,7 +208,7 @@
 <section id="intro">
   <h2><span class="nm">1</span>The Brewing House</h2>
   <p class="lead">Hamburg was called <em>the brewhouse of the Hanse</em>. You are a merchant brewing house in the League, c. 1350.</p>
-  <p>The pivotal innovation of your age is <b>hopped beer</b>. Unlike perishable gruit ale, hopped beer survives a sea voyage — so beer becomes a <em>shippable export</em>. You will source grain and hops, brew casks, mature them, and push them across the Baltic and North Sea to the great foreign trading posts (the <b>kontore</b>: Bergen, London, Bruges, Novgorod) — or withdraw your finest into the brewers' <b>Hall</b>. Whoever has shipped the most valuable casks when the last ship sails wins.</p>
+  <p>The pivotal innovation of your age is <b>hopped beer</b>. Unlike perishable gruit ale, hopped beer survives a sea voyage — so beer becomes a <em>shippable export</em>. You will source grain and hops, brew casks, mature them, and push them across the Baltic and North Sea to the great foreign trading posts (the <b>kontore</b>: Bergen, London, Bruges, Novgorod) — or <b>enshrine</b> your finest, locally, into the brewers' <b>Hall</b>. Whoever has shipped and enshrined the most valuable casks when the last ship sails wins.</p>
 </section>
 
 <section id="idea">
@@ -262,7 +262,7 @@
   <h3>The Destinations (where value lives)</h3>
   <p>The four kontore + the Hall are all <b>open from the start</b>. Each wants a certain <b>quality</b> of beer and pays differently — so there is no single best line of play. Delivery value is flat per kontor for Q1–Q3, and an <b>export premium</b> ⚙ adds <b>+1 for a Q4 cask, +2 for a Q5</b>, at any kontor (the Hall scales with quality throughout) — so the high climb pays wherever it ships.</p>
   <div class="routeboard" id="destBoard"></div>
-  <div class="note"><b>The majority is a big end-game motivator</b> — every kontor pays a tiered, ranked majority (Lacerda-style): by delivered-cask count, <b>1st / 2nd / 3rd</b> place take a kontor's tiers — Bruges <b>4/2/0</b> · London <b>5/3/1</b> · Novgorod <b>8/5/2</b> · <b>Bergen 9/5/2</b> ⚙ (Bergen the rich anchor). Per-cask delivery values are kept low so the points live in the majority race; the Hall's prestige is a printed ladder <b>5/7/10/12</b> (by quality) to balance the tilt toward the kontore. <b>2-player games skip 2nd</b> (winner-take-all); ties split the occupied tiers. Benefits pair off: <b>Bruges &amp; Bergen</b> give goods (liquidity); <b>London &amp; Novgorod</b> give an Upgrade (the engine). The cask's owner always scores the delivery and takes any benefit.</div>
+  <div class="note"><b>The majority is a big end-game motivator</b> — every kontor pays a tiered, ranked majority (Lacerda-style): by delivered-cask count, <b>1st / 2nd / 3rd</b> place take a kontor's tiers — Bruges <b>4/2/0</b> · London <b>5/3/1</b> · Novgorod <b>8/5/2</b> · <b>Bergen 9/5/2</b> ⚙ (Bergen the rich anchor). Per-cask delivery values are kept low so the points live in the majority race; the Hall's prestige is a printed ladder <b>4/6/8/10</b> (by quality) to balance the tilt toward the kontore. <b>2-player games skip 2nd</b> (winner-take-all); ties split the occupied tiers. Benefits pair off: <b>Bruges &amp; Bergen</b> give goods (liquidity); <b>London &amp; Novgorod</b> give an Upgrade (the engine). The cask's owner always scores the delivery and takes any benefit.</div>
   <h3>Your Brewery (private, untouchable)</h3>
   <p>Your brewery board holds the <b>maturation track</b> (casks crawl Brew → … → Ready across your <b>vessels</b> — start <b>2</b>, cap <b>4</b>, each a parallel lane), a <b>recipe rack</b>, and <b>upgrade slots</b> (Rooms &amp; Modifiers, mostly earned by delivering). Rivals can only act on your casks once they're on a slot.</p>
 </section>
@@ -304,7 +304,7 @@
     <tr><td><b>A · Market</b> <span class="pill">Source</span></td><td>Take <b>2 goods</b> (any mix), <b>or</b> acquire <b>one</b>: a <b>recipe</b> (a brewable type), a <b>commission</b> (place the face-up ship of the deck on any open slot), or an <b>upgrade</b> (a Room/Modifier → your brewery, from the face-up display).</td></tr>
     <tr><td><b>B · Brewhouse</b> <span class="pill">Brew</span></td><td><b>Load</b> one recipe you hold (paying its <span class="cube g"></span>/<span class="cube h"></span> cost) into an <b>open vessel</b> — a young cask at step 0. Recipes are permanent. One load per Brewhouse.</td></tr>
     <tr><td><b>D · Cellar</b> <span class="pill">Age</span></td><td>Gain a <b>pool of 3 age points</b> ⚙ and <b>allocate freely across your vessels</b>. (Casks also age <b>+1 automatically each turn</b>.) When a cask is <b>Ready</b>, deploy it to an open slot.</td></tr>
-    <tr><td><b>C · Harbor</b> <span class="pill">Ship</span></td><td><b>Load</b> one of <b>your</b> casks from a slot onto <b>any ship</b> it qualifies for — <b>taking that destination's benefit (goods / an Upgrade) on loading</b>. A ship <b>sails the instant it is full</b> (delivering every cask for points); or <b>launch a ship early</b> if it carries your cask, or use a <b>Charter</b> (ship one Ready cask now for the track-set fare — §10).</td></tr>
+    <tr><td><b>C · Harbor</b> <span class="pill">Ship</span></td><td><b>Load</b> one of <b>your</b> casks from a slot onto <b>any ship</b> it qualifies for — <b>taking that destination's benefit (goods / an Upgrade) on loading</b>. A ship <b>sails the instant it is full</b> (delivering every cask for points); or <b>launch a ship early</b> if it carries your cask, use a <b>Charter</b> (ship one Ready cask now for the track-set fare — §10), or <b>Enshrine</b> a deployed Q2+ cask into the <b>Hall</b> (no ship, no fare — §10). Each voyage <b>or</b> enshrinement advances the clock.</td></tr>
   </table>
 </section>
 
@@ -314,7 +314,7 @@
   <table>
     <tr><th>Quality</th><th>Beer</th><th>Brew</th><th>Matures</th><th>Slot action ⚙</th><th>Ships to</th></tr>
     <tr><td><b>Q1</b></td><td><b>Gruit Ale</b></td><td><span class="cube g"></span></td><td>1 step</td><td><b>Source · +2 goods</b> <span class="small">(fixed)</span></td><td>Bruges</td></tr>
-    <tr><td><b>Q2</b></td><td><b>Hopped Beer</b></td><td><span class="cube g"></span> <span class="cube h"></span></td><td>2</td><td><i>drawn at brew</i></td><td>+ London · Bergen · Hall</td></tr>
+    <tr><td><b>Q2</b></td><td><b>Hopped Beer</b></td><td><span class="cube g"></span> <span class="cube h"></span></td><td>2</td><td><i>drawn at brew</i></td><td>+ London · Bergen <span class="small">(Hall via Enshrine)</span></td></tr>
     <tr><td><b>Q3</b></td><td><b>Broyhan</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span></td><td>2</td><td><i>drawn at brew</i></td><td>+ Novgorod</td></tr>
     <tr><td><b>Q3</b></td><td><b>Keut</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span></td><td>2</td><td><i>drawn at brew</i></td><td>+ Novgorod</td></tr>
     <tr><td><b>Q4</b></td><td><b>Mumme</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span></td><td>3</td><td><i>drawn at brew</i></td><td>all</td></tr>
@@ -333,10 +333,12 @@
 
 <section id="shipping">
   <h2><span class="nm">10</span>Ships &amp; Destinations</h2>
-  <p><b>Shared hulls (v0.11).</b> Ships are <b>neutral</b>: hull (Cog 2 / Hulk 3) and <b>destination printed on the tile</b>, drawn from a shuffled <b>ship deck</b> (~20 hulls ⚙) that feeds a <b>ship market of 3 ⚙</b> face-up at the Market. <b>Commission</b> (Market, 2 G ⚙): place <b>any one of the three</b> face-up ships on an open slot <b>and free-load one of your Ready casks</b> (slot or vessel) aboard — the commissioner's berth (and it feeds the merchant goal). <b>Benefits split by timing</b> (v0.11.2): the destination's <b>immediate benefit</b> (goods / an Upgrade) is paid <b>when you load</b> a cask; the cask's <b>points</b> (value ★ + majority) seal only on <b>delivery</b> when the hull <b>sails</b> (full, or early-launched). <b>Filling earns no bonus.</b> Each voyage advances the Sailed-Ships <b>marker</b>, and the hull returns to the <b>bottom of the deck</b>.</p>
+  <p><b>Shared hulls (v0.11).</b> Ships are <b>neutral</b>: hull (Cog 2 / Hulk 3) and a <b>kontor destination printed on the tile</b>, drawn from a shuffled <b>ship deck</b> (<b>20 hulls</b> ⚙ — <b>5 each for Bruges / London / Bergen / Novgorod</b>; 11 Cog / 9 Hulk) that feeds a <b>ship market of 3 ⚙</b> face-up at the Market. <b>Ships sail only to the four kontore</b> — the <b>Hall is never a ship destination</b> (it is reached locally, by Enshrine, below). <b>Commission</b> (Market, 2 G ⚙): place <b>any one of the three</b> face-up ships on an open slot <b>and free-load one of your Ready casks</b> (slot or vessel) aboard — the commissioner's berth (and it feeds the merchant goal). <b>Benefits split by timing</b> (v0.11.2): the destination's <b>immediate benefit</b> (goods / an Upgrade) is paid <b>when you load</b> a cask; the cask's <b>points</b> (value ★ + majority) seal only on <b>delivery</b> when the hull <b>sails</b> (full, or early-launched). <b>Filling earns no bonus.</b> Each voyage advances the Sailed-Ships <b>marker</b>, and the hull returns to the <b>bottom of the deck</b>.</p>
+  <h3>Enshrine — the Hall (v0.15)</h3>
+  <p>The <b>Hall</b> is no longer a ship destination — it is a <b>local Harbor action</b>. <b>Enshrine</b>: take a <b>Ready cask (Q2+) that is already deployed on a slot</b> and withdraw it into the Hall — <b>no ship, no fare</b>. It scores the Hall's printed prestige ladder (<b>Q2→4 · Q3→6 · Q4→8 · Q5→10</b> ⚙) and, like any voyage, <b>advances the Sailed-Ships clock</b>. You may enshrine <b>one cask per Harbor visit</b> (<b>two</b> with the <b>Trophy Room</b>, §11). Because the cask must first sit on a <b>public slot</b>, it stays <b>contestable</b> — a rival may <b>hijack-load it</b> to a kontor before you enshrine (the v0.12 rival-loading rule). The Hall pays <b>no in-game benefit</b> (prestige only; the <b>Patron's Favor</b> modifier adds 1 good — §11).</p>
   <div class="gallery" id="shipGallery"></div>
   <h3>Charter Voyage</h3>
-  <p>The Harbor always offers a <b>Charter</b> (no tile — an outside hull): pay the <b>charter fare — a shared market price printed under the Sailed-Ships track</b> ⚙, set by how many voyages the table has delivered (2-player row: 2·2·3·2·2·4·5·5 — cheap early, 4–5 G in the closing stretch; one price for everyone) — to send <b>one</b> Ready cask — from a vessel or a slot — on an immediate <b>single-cask voyage</b> to a destination it qualifies for. It delivers normally and advances the clock, but is <b>strictly worse per cask</b> than a Cog/Hulk — so filling the shared ships stays the better plan; the Charter just keeps the tight slots from ever deadlocking.</p>
+  <p>The Harbor always offers a <b>Charter</b> (no tile — an outside hull): pay the <b>charter fare — a shared market price printed under the Sailed-Ships track</b> ⚙, set by how many voyages the table has delivered (2-player row: 2·2·3·2·2·4·5·5 — cheap early, 4–5 G in the closing stretch; one price for everyone) — to send <b>one</b> Ready cask — from a vessel or a slot — on an immediate <b>single-cask voyage</b> to a <b>kontor</b> it qualifies for (Charter is kontore-only; the Hall is reached by Enshrine, not chartered). It delivers normally and advances the clock, but is <b>strictly worse per cask</b> than a Cog/Hulk — so filling the shared ships stays the better plan; the Charter just keeps the tight slots from ever deadlocking.</p>
   <div class="box"><h4>Delivery Benefits</h4>Delivering to <b>London / Novgorod</b> hands you a brewery upgrade from the display at no goods cost (<b>Bergen</b> pays its big majority instead; <b>Bruges</b> pays goods; the <b>Hall</b> pays prestige). The cycle reinforces itself: <em>deliver → earn an upgrade → brew better → deliver better.</em></div>
 </section>
 
@@ -350,12 +352,13 @@
     <tr><td><b>Warehouse</b></td><td>goods storage <b>8 → 12</b></td><td>4 G</td></tr>
     <tr><td><b>Quay</b></td><td>load <b>2 casks</b> in one Harbor visit</td><td>5 G</td></tr>
     <tr><td><b>Cooperage</b></td><td><b>+1 cask loaded</b> per Harbor visit (stacks with Quay)</td><td>4 G</td></tr>
+    <tr><td><b>Trophy Room</b></td><td><b>Enshrine 2 casks</b> at the Hall per Harbor action (instead of 1)</td><td>5 G</td></tr>
   </table>
   <table>
     <tr><th>Modifier (asymmetric perk)</th><th>Effect ⚙</th><th>Buy ⚙</th></tr>
     <tr><td><b>Granary Right</b></td><td>gain grain → <b>+1 extra</b></td><td>4 G</td></tr>
     <tr><td><b>Hop Garden</b></td><td>gain hops → <b>+1 extra</b></td><td>4 G</td></tr>
-    <tr><td><b>Royal Patent</b></td><td>your <b>charter fare is 1 G cheaper</b> (min 1)</td><td>4 G</td></tr>
+    <tr><td><b>Patron's Favor</b></td><td>when you <b>enshrine</b> at the Hall, <b>gain 1 good</b></td><td>4 G</td></tr>
     <tr><td><b>Staple Right</b></td><td><b>+1 good</b> when you deliver to a kontor</td><td>5 G</td></tr>
     <tr><td><b>Guild Seat</b></td><td><b>+1 age point</b> at the Cellar</td><td>4 G</td></tr>
     <tr><td><b>Burgher Status</b></td><td><b>+1 presence</b> at every kontor you've reached (majority help)</td><td>5 G</td></tr>
@@ -384,7 +387,7 @@
   <h2><span class="nm">14</span>Scoring</h2>
   <p>No separate reach/standing tracks. You score from <b>what you delivered</b>:</p>
   <ol>
-    <li><b>Delivery value</b> — sum your delivered casks' values at each destination (kontore = trade value, kept low, <b>plus the export premium ⚙: Q4 +1, Q5 +2</b>; <b>the Hall = prestige</b>, a printed ladder by quality: 5/7/10/12).</li>
+    <li><b>Delivery value</b> — sum your delivered casks' values at each destination (kontore = trade value, kept low, <b>plus the export premium ⚙: Q4 +1, Q5 +2</b>; <b>the Hall = prestige</b>, a printed ladder by quality: 4/6/8/10, scored on enshrined casks).</li>
     <li><b>Majorities</b> (a big chunk of the score) — at <i>every</i> kontor, by delivered-cask count, <b>1st / 2nd / 3rd</b> place take that kontor's tiers: Bruges <b>4/2/0</b> · London <b>5/3/1</b> · Novgorod <b>8/5/2</b> · <b>Bergen 9/5/2</b> ⚙. <b>2-player games skip 2nd</b> (winner-take-all); tied players split the sum of the tiers they occupy ⚙.</li>
     <li><b>Goals</b> — you hold <b>3 goal tiles</b> (dealt at setup; hand cap <b>4</b> ⚙ via the Towncrier); <b>your best 2 score</b> ⚙.</li>
     <li><b>The Flight ⚙ (v0.13) — your range</b>: count the <b>distinct quality tiers (Q1–Q5) you delivered</b> and score <b>(tiers − 1)², min 3 to score</b> → <b>3→4 · 4→9 · 5→16</b>. Two tiers (free Gruit + Hopped) score 0, so it's a true climber's reward — <em>not how high, but how complete the range of the house</em>. The full flight needs a Bock. This is the <b>quality pole</b> of the reach-vs-quality lean.</li>
@@ -435,7 +438,7 @@
     <tr><td><span class="act-ic"><i data-lucide="wrench"></i></span></td><td><b>Take upgrade</b></td><td><b>Market.</b> Cost <i data-lucide="wheat" class="gi"></i>4–<i data-lucide="wheat" class="gi"></i>5 — or <b>free</b> by delivering.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brew</b></td><td><b>Brewhouse.</b> Pay the recipe's cost; start a young cask in an open vessel.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Age</b></td><td><b>Cellar.</b> Gain <b>3 age points</b> ⚙ across your vessels (casks also age +1 each turn). When a cask is Ready, deploy it to a slot.</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>Ship — load</b></td><td><b>Harbor.</b> Load one of <b>your</b> Ready casks onto any qualifying ship — take the destination benefit on loading. A full ship sails at once, delivering every cask for points (no fill bonus).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>Ship — load</b></td><td><b>Harbor.</b> Load one of <b>your</b> Ready casks onto any qualifying ship (kontore only) — take the destination benefit on loading. A full ship sails at once, delivering every cask for points (no fill bonus). The Harbor also offers <b>Enshrine</b> (Hall) and <b>Charter</b> — below.</td></tr>
   </table>
 
   <div class="acat">Cask slot actions — <b>drawn at brew</b> (v0.12), printed on the cask, used when its line fires</div>
@@ -462,7 +465,8 @@
   <div class="acat">Shipping &amp; voyages</div>
   <table class="atbl">
     <tr><td><span class="act-ic"><i data-lucide="sailboat"></i></span></td><td><b>Sail</b> (auto / launch early)</td><td>A ship sails the instant it is <b>full</b> (or launch a partial one): every cask delivers (owner scores + picks the benefit), then the ship moves to the <b>Sailed-Ships track</b>.</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="ticket"></i></span></td><td><b>Charter</b></td><td><b>Harbor.</b> Pay the shared fare under the Sailed-Ships track — <b><i data-lucide="wheat" class="gi"></i>2–5</b> by position ⚙ — to ship <b>one</b> Ready cask (vessel or slot) on a single-cask voyage. Advances the clock; less efficient than your own ship.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="landmark"></i></span></td><td><b>Enshrine</b> (the Hall)</td><td><b>Harbor.</b> Withdraw a <b>deployed Q2+</b> cask from a slot into the <b>Hall</b> — no ship, no fare. Scores the prestige ladder (<b>Q2→4 · Q3→6 · Q4→8 · Q5→10</b> ⚙); advances the clock. <b>1 per Harbor</b> (2 with Trophy Room). No in-game benefit.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="ticket"></i></span></td><td><b>Charter</b></td><td><b>Harbor.</b> Pay the shared fare under the Sailed-Ships track — <b><i data-lucide="wheat" class="gi"></i>2–5</b> by position ⚙ — to ship <b>one</b> Ready cask (vessel or slot) on a single-cask voyage to a <b>kontor</b>. Advances the clock; less efficient than your own ship.</td></tr>
   </table>
 </section>
 
@@ -476,9 +480,9 @@
       <li><b>Resolve</b> the line (slot · station · station · slot), any order. Both stations fire; stations never closed; use the buildings in the line's two slots (on your turn).</li>
     </ol>
     <h4>At the Wharf</h4>
-    <p>Market (gain goods, or buy a recipe / ship / upgrade) → Brewhouse (Brew a cask) → Cellar (Age to Ready → deploy to a slot) → Harbor (Ship → sails when full → delivers).</p>
+    <p>Market (gain goods, or buy a recipe / ship / upgrade) → Brewhouse (Brew a cask) → Cellar (Age to Ready → deploy to a slot) → Harbor (Ship to a kontor → sails when full → delivers; or Enshrine a deployed Q2+ cask into the Hall).</p>
     <h4>Where to ship</h4>
-    <p>Bruges (+1, goods, maj 4/2/0) · London (+2, an upgrade, maj 5/3/1) · Bergen (+2, goods, maj 9/5/2 — the anchor) · Novgorod (+4, an upgrade, maj 8/5/2) · the Hall (prestige — 5/7/10/12 by quality). Majorities are the big motivator (delivery values kept low); gate by quality; each cask owner scores &amp; takes the benefit when the shared hull sails.</p>
+    <p>Bruges (+1, goods, maj 4/2/0) · London (+2, an upgrade, maj 5/3/1) · Bergen (+2, goods, maj 9/5/2 — the anchor) · Novgorod (+4, an upgrade, maj 8/5/2). <b>Enshrine</b> a deployed Q2+ cask into the Hall (no ship/fare) for prestige — 4/6/8/10 by quality. Majorities are the big motivator (delivery values kept low); gate by quality; each cask owner scores &amp; takes the benefit when the shared hull sails.</p>
     <h4>Game ends</h4>
     <p><b>The Sailed-Ships track fills</b> (each voyage = 1 slot) → finish the round → score: Deliveries + Majorities (tiered; 2p skips 2nd) + Goals (best 2 of your 3).</p>
   </div>
@@ -487,7 +491,7 @@
 </div>
 
 <footer>
-  Brewhouses of the Hanse · rulebook &amp; components · <b>v0.14 “The Wharf”</b> · generated from <code>RULES.md</code> / <code>COMPONENTS.md</code> · all numbers are placeholders ⚙<br>
+  Brewhouses of the Hanse · rulebook &amp; components · <b>v0.15 “Enshrine”</b> · generated from <code>RULES.md</code> / <code>COMPONENTS.md</code> · all numbers are placeholders ⚙<br>
   <span class="small">The Play client (<code>play.html</code>) is the de-facto reference implementation.</span>
 </footer>
 
@@ -497,13 +501,13 @@ const G = '<span class="gcube" style="background:var(--grain)"></span>';
 const H = '<span class="gcube" style="background:var(--hops)"></span>';
 function cubes(str){return str.replace(/G/g,G).replace(/H/g,H);}
 
-// ---- DESTINATIONS (v0.10: every kontor a BIG tiered majority — Bergen the anchor · low delivery values · Hall ladder 5/7/10/12) ----
+// ---- DESTINATIONS (v0.15: every kontor a BIG tiered majority — Bergen the anchor · low delivery values · Hall = local Enshrine, ladder 4/6/8/10) ----
 const destinations=[
   {cls:'bruges',  name:'Bruges',   role:'The Hub — wide, takes any beer (the volume on-ramp)', gate:'Q1', value:'+1', benefit:'gain 2 goods (liquidity)', maj:'<b>4 / 2 / 0</b>'},
   {cls:'london',  name:'London',   role:'The Steelyard — the engine destination',             gate:'Q2', value:'+2', benefit:'take an Upgrade from the display', maj:'<b>5 / 3 / 1</b>'},
   {cls:'bergen',  name:'Bergen',   role:'Bryggen — the rich-majority anchor',                  gate:'Q2', value:'+2', benefit:'gain 2 goods (token — the majority is the draw)', maj:'<b>9 / 5 / 2</b>'},
   {cls:'novgorod',name:'Novgorod', role:'The Long Haul — premium only',                        gate:'Q3', value:'+4', benefit:'top value + take an Upgrade', maj:'<b>8 / 5 / 2</b>'},
-  {cls:'hall',    name:'The Hall', role:'Prestige — out of commerce (the Westvleteren move)',  gate:'Q2', value:'5·7·10·12 (Q2→5 · Q3→7 · Q4→10 · Q5→12)', benefit:'the scarcity payout', maj:'—'},
+  {cls:'hall',    name:'The Hall', role:'Prestige — local Enshrine, no ship/fare (the Westvleteren move)',  gate:'Q2 (deployed)', value:'4·6·8·10 (Q2→4 · Q3→6 · Q4→8 · Q5→10)', benefit:'none (prestige only)', maj:'—'},
 ];
 document.getElementById('destBoard').innerHTML=destinations.map(d=>`
   <div class="route ${d.cls}">
@@ -531,11 +535,11 @@ document.getElementById('recipeGallery').innerHTML=recipeTiles.map(t=>`
 
 // ---- SHIP TILES ----
 const ships=[
-  {name:'Cog',cap:'2 casks',cost:'2 G',d:'Small single-use carrier. Built tied to a destination; fills with 2 casks, then sails.',qty:8},
-  {name:'Hulk',cap:'3 casks',cost:'3 G',d:'Large single-use carrier — a 3-cask burst in one voyage. Built tied to a destination; fills with 3, then sails.',qty:5},
+  {name:'Cog',cap:'2 casks',cost:'2 G',d:'Small single-use carrier. Tied to a kontor; fills with 2 casks, then sails.',qty:11},
+  {name:'Hulk',cap:'3 casks',cost:'3 G',d:'Large single-use carrier — a 3-cask burst in one voyage. Tied to a kontor; fills with 3, then sails.',qty:9},
 ];
 document.getElementById('shipGallery').innerHTML=ships.map(t=>`
-  <div class="card"><div class="head h-ship"><div class="kind">Ship · neutral, destination printed</div><div class="ttl">${t.name}</div></div>
+  <div class="card"><div class="head h-ship"><div class="kind">Ship · neutral, kontor printed (20: 5 each)</div><div class="ttl">${t.name}</div></div>
   <div class="body">
     <div class="row"><span class="k">Capacity</span><span class="v">${t.cap}</span></div>
     <div class="row"><span class="k">Build cost</span><span class="v">${cubes(t.cost)}</span></div>
@@ -563,7 +567,7 @@ const goals=[
   ['+X per cask delivered to one kontor','focus / majority'],
   ['+X per Q3+ cask delivered','the export'],
   ['+X per ship you commissioned','the merchant engine'],
-  ['+X per cask shipped to the Hall','prestige'],
+  ['+X per cask enshrined at the Hall','prestige'],
   ['+X per kontor where you hold presence','spread'],
   ['+X per Upgrade on your brewery','engine depth'],
   ['+X per majority you hold','commitment'],

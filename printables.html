@@ -261,7 +261,7 @@
 </head>
 <body>
 <div class="bar no-print">
-  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v0.12</span></h1>
+  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v0.15 &ldquo;Enshrine&rdquo;</span></h1>
   <button onclick="window.print()">🖨 Print</button>
   <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
   <span class="seg"><button id="bfull" class="on" onclick="setMode('full')">Full set</button><button id="bproof" onclick="setMode('proof')">Proof (1 each)</button></span>
@@ -298,16 +298,15 @@ const CASKS=[  // shared cask pool — fixed global counts (COMPONENTS §3A). Gr
   {nm:'Export', c:'#caa12a', q:4, g:2,h:2,                 n:8,  wild:true},
   {nm:'Export', c:'#7c2128', q:5, g:3,h:2,                 n:4,  wild:true},
 ];
-// v0.11 — NEUTRAL, destination-bound hulls (the destination is PRINTED on the tile). The ~20-tile deck
-// mirrors play.html SHIP_DECK_MIX: Bruges 4 · London 4 · Bergen 4 · Novgorod 5 · Hall 3  (11 Cog / 9 Hulk).
+// v0.11 — NEUTRAL, destination-bound hulls (the destination is PRINTED on the tile). The 20-tile deck,
+// KONTORE ONLY: Bruges 5 · London 5 · Bergen 5 · Novgorod 5 (11 Cog / 9 Hulk); the Hall is reached by the local Enshrine, not a boat.
 const HULL={cog:{cap:2},hulk:{cap:3}};
-const SHIP_DEST={Bruges:{kc:'#274b5c',req:1},London:{kc:'#b8860b',req:2},Bergen:{kc:'#4a6b3a',req:2},Novgorod:{kc:'#7c2128',req:3},Hall:{kc:'#5b3a8e',req:2,crown:true}};
+const SHIP_DEST={Bruges:{kc:'#274b5c',req:1},London:{kc:'#b8860b',req:2},Bergen:{kc:'#4a6b3a',req:2},Novgorod:{kc:'#7c2128',req:3}};
 const SHIP_DECK=[
-  ['cog','Bruges'],['cog','Bruges'],['cog','Bruges'],['hulk','Bruges'],
-  ['cog','London'],['cog','London'],['hulk','London'],['hulk','London'],
-  ['cog','Bergen'],['cog','Bergen'],['hulk','Bergen'],['hulk','Bergen'],
-  ['cog','Novgorod'],['cog','Novgorod'],['hulk','Novgorod'],['hulk','Novgorod'],['hulk','Novgorod'],
-  ['cog','Hall'],['cog','Hall'],['hulk','Hall'],
+  ['cog','Bruges'],['cog','Bruges'],['cog','Bruges'],['hulk','Bruges'],['hulk','Bruges'],
+  ['cog','London'],['cog','London'],['cog','London'],['hulk','London'],['hulk','London'],
+  ['cog','Bergen'],['cog','Bergen'],['hulk','Bergen'],['hulk','Bergen'],['hulk','Bergen'],
+  ['cog','Novgorod'],['cog','Novgorod'],['cog','Novgorod'],['hulk','Novgorod'],['hulk','Novgorod'],
 ];
 const NEUTRALS=[  // 6 designs; 2–3 seeded on the slots at setup (random)
   {ic:'store',     nm:'Market Stall', sub:'take 1 good',            c:'#5b4a37', n:1},
@@ -318,26 +317,27 @@ const NEUTRALS=[  // 6 designs; 2–3 seeded on the slots at setup (random)
   {ic:'heart',     nm:'Almshouse',    sub:'+1 at a kontor you lead',c:'#4a4034', n:1},
 ];
 const ROOMS=[  // Extra Vessel supply = players+1 (play.html) ⚙ — 6 supports 5p
-  {ic:'wrench',nm:'Extra Vessel', act:'+1 vessel',                        g:5, c:'#4a6b3a', n:6},
-  {ic:'wrench',nm:'Aging Cellar', act:'mature 1 step faster (a pathway, not a gate)', g:5, c:'#3f5c30', n:2},
-  {ic:'wrench',nm:'Warehouse',    act:'+4 storage',                       g:4, c:'#4a6b3a', n:2},
+  {ic:'wrench',nm:'Extra Vessel', act:'+1 brewing lane, cap 4',           g:5, c:'#4a6b3a', n:6},
+  {ic:'wrench',nm:'Aging Cellar', act:'maturation −1 step',               g:5, c:'#3f5c30', n:2},
+  {ic:'wrench',nm:'Warehouse',    act:'goods storage 8→12',               g:4, c:'#4a6b3a', n:2},
   {ic:'wrench',nm:'Quay',         act:'load 2 casks per Harbor',          g:5, c:'#3f5c30', n:2},
-  {ic:'wrench',nm:'Cooperage',    act:'+1 cask loaded per Harbor',        g:4, c:'#4a6b3a', n:2},
+  {ic:'wrench',nm:'Cooperage',    act:'+1 cask loaded per Harbor (stacks)', g:4, c:'#4a6b3a', n:2},
+  {ic:'trophy',nm:'Trophy Room',  act:'Enshrine 2 casks at the Hall per Harbor', g:5, c:'#3f5c30', n:2},
 ];
 const MODS=[
-  {ic:'badge-plus',nm:'Granary Right', act:'+1 '+LU('wheat','g ic'),              g:4, c:'#6e4ea0', n:2},
-  {ic:'badge-plus',nm:'Hop Garden',    act:'+1 '+LU('sprout','h ic'),             g:4, c:'#5a3f86', n:2},
-  {ic:'badge-plus',nm:'Royal Patent',  act:'+1 '+LU('sailboat','ic')+' capacity', g:5, c:'#6e4ea0', n:2},
-  {ic:'badge-plus',nm:'Staple Right',  act:'+1 good / kontor delivery',           g:5, c:'#5a3f86', n:2},
-  {ic:'badge-plus',nm:'Guild Seat',    act:'age +1 at the Cellar',                g:4, c:'#6e4ea0', n:2},
-  {ic:'badge-plus',nm:'Burgher Status',act:'+1 '+LU('map-pin','ic')+' / kontor',  g:5, c:'#5a3f86', n:2},
+  {ic:'badge-plus',nm:'Granary Right', act:'gain '+LU('wheat','g ic')+' → +1 extra', g:4, c:'#6e4ea0', n:2},
+  {ic:'badge-plus',nm:'Hop Garden',    act:'gain '+LU('sprout','h ic')+' → +1 extra', g:4, c:'#5a3f86', n:2},
+  {ic:'sparkles',  nm:"Patron's Favor",act:'enshrine at the Hall → +1 good',      g:5, c:'#6e4ea0', n:2},
+  {ic:'badge-plus',nm:'Staple Right',  act:'+1 good on kontor delivery',          g:5, c:'#5a3f86', n:2},
+  {ic:'badge-plus',nm:'Guild Seat',    act:'+1 age point at the Cellar',          g:4, c:'#6e4ea0', n:2},
+  {ic:'badge-plus',nm:'Burgher Status',act:'+1 presence at every kontor reached', g:5, c:'#5a3f86', n:2},
 ];
 const GOALS=[  // 9 designs ×2 copies ⚙ so 4–5p can deal 3 each (values match play.html)
   {ic:'target',nm:'Variety',  sub:'+2 / distinct type',  c:'#7c2128', n:2},
   {ic:'target',nm:'Focus',    sub:'+2 / cask, 1 kontor', c:'#7c2128', n:2},
   {ic:'target',nm:'Export',   sub:'+2 / Q3+ delivered',  c:'#7c2128', n:2},
   {ic:'target',nm:'Merchant', sub:'+3 / ship sailed',    c:'#7c2128', n:2},
-  {ic:'target',nm:'Prestige', sub:'+3 / cask to Hall',   c:'#7c2128', n:2},
+  {ic:'target',nm:'Prestige', sub:'+3 / cask enshrined at Hall',   c:'#7c2128', n:2},
   {ic:'target',nm:'Spread',   sub:'+3 / kontor held',    c:'#7c2128', n:2},
   {ic:'target',nm:'Engine',   sub:'+2 / Upgrade',        c:'#7c2128', n:2},
   {ic:'target',nm:'Commit',   sub:'+4 / majority',       c:'#7c2128', n:2},
@@ -346,10 +346,10 @@ const GOALS=[  // 9 designs ×2 copies ⚙ so 4–5p can deal 3 each (values mat
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 const RECIPES=[  // EXPORT recipe cards only — Gruit & Hopped are printed on the brewery board's tuck strip.
   // buy = Market acquire cost (RECIPE_BUY in play.html) · g/h = the BREW cost on the tucked edge.
-  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{g:1},     reach:'L3 · Bruges · London · Bergen · Novgorod · Hall'},
-  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'L3 · Bruges · London · Bergen · Novgorod · Hall'},
-  {nm:'Mumme',   cc:'#9a5526', L:4, g:2,h:2, buy:{g:1,h:1}, reach:'L4 · all kontore + Hall'},
-  {nm:'Bock',    cc:'#7c2128', L:5, g:3,h:2, buy:{g:2}, reach:'L5 · all kontore + Hall (ungated v0.14)'},
+  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{g:1},     reach:'L3 · Bruges · London · Bergen · Novgorod (Hall via Enshrine)'},
+  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'L3 · Bruges · London · Bergen · Novgorod (Hall via Enshrine)'},
+  {nm:'Mumme',   cc:'#9a5526', L:4, g:2,h:2, buy:{g:1,h:1}, reach:'L4 · all kontore (Hall via Enshrine)'},
+  {nm:'Bock',    cc:'#7c2128', L:5, g:3,h:2, buy:{g:2}, reach:'L5 · all kontore (Hall via Enshrine, ungated v0.14)'},
 ];
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'},{nm:'Violet',c:'#5b3a8e'}];
 const DESTS=[
@@ -358,7 +358,7 @@ const DESTS=[
   {nm:'Bergen',  kc:'#4a6b3a', req:2, val:'+2', maj:[9,5,2], role:'Bryggen — the rich-majority anchor',        ben:'gain 2 goods (token — the majority is the draw)'},
   {nm:'Novgorod',kc:'#7c2128', req:3, val:'+4', maj:[8,5,2],  role:'The Long Haul — premium only, top value',   ben:'take 1 Upgrade from the display'},
 ];
-const HALL={nm:'The Hall', kc:'#5b3a8e', req:2, role:'Prestige — out of commerce (scarcity)', ben:'banks prestige by quality (a printed ladder)'};
+const HALL={nm:'The Hall', kc:'#5b3a8e', req:2, role:'Prestige — reached by a LOCAL ENSHRINE (no ship, no fare), out of commerce (scarcity)', ben:'banks prestige by quality (a printed ladder)'};
 const DEST_PREM='Export premium: Q4 casks +1★ · Q5 +2★ at any kontor';   // ⚙ v0.11 A3 — printed once on the destination board
 const SAILED={2:7,3:11,4:14,5:17};   // Sailed-Ships end clock per player count ⚙ (RULES §8 — v0.12.3 re-centered)
 const MAX_ROUND=25;                  // round ceiling ⚙ — top of the 12–25-round target band
@@ -437,7 +437,7 @@ function pboard(p){
   return '<div class="board" style="--pc:'+p.c+'">'
     +'<div class="pb-head"><div class="crest">'+LU('beer')+'</div>'
       +'<div class="pb-title"><div class="pb-name">Brewhouse · '+p.nm+'</div>'
-        +'<div class="pb-sub">your private brewery · Source → Brew → Age → Ship · Brewhouses of the Hanse · v0.12</div></div>'
+        +'<div class="pb-sub">your private brewery · Source → Brew → Age → Ship · Brewhouses of the Hanse · v0.15 “Enshrine”</div></div>'
       +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Storage <span class="sm">cap 8 · the W boxes need a Warehouse</span></span><div class="boxrow">'+store+'</div></div></div>'
     +'<div class="pb-body">'
       +'<div class="pb-col left"><div class="pb-sect">'+LU('flask-conical')+'Vessels &amp; Maturation<span class="hint">start 2 open · cap 4 · +1/turn auto + the Cellar · Aging Cellar −1 step</span></div>'
@@ -456,7 +456,7 @@ function kpanel(d,hall){const kc=d.kc;
   let t1='',t2='';for(let i=0;i<=6;i++)t1+='<div class="pc'+(i===0?' z':'')+'">'+i+'</div>';
   for(let i=7;i<=13;i++)t2+='<div class="pc">'+i+'</div>';
   const valbody = hall
-    ? '<div class="kval">'+LU(VP)+'5·7·10·12<span class="per">by quality — Q2→5 · Q3→7 · Q4→10 · Q5→12</span></div>'
+    ? '<div class="kval">'+LU(VP)+'4·6·8·10<span class="per">by quality — Q2→4 · Q3→6 · Q4→8 · Q5→10</span></div>'
     : '<div class="kval">'+LU(VP)+d.val+'<span class="per">VP per delivered cask</span></div>';
   const majline = hall ? '' : '<div class="kmaj">'+LU(VP)+d.maj.join(' / ')+'</div>';
   return '<div class="kpanel" style="--kc:'+kc+'">'
@@ -527,7 +527,7 @@ function mboard(){
     clk+='<div class="cc'+(end?' end':'')+'">'+(end?end+'<br>END':'<span class="n">'+i+'</span>')+'</div>';}
   let rt='';for(let i=1;i<=MAX_ROUND;i++)rt+='<div class="rc'+(i===MAX_ROUND?' cap':(i>=12?' band':''))+'">'+(i===MAX_ROUND?'25<br>CAP':i)+'</div>';
   return '<div class="mboard">'
-    +'<div class="mb-head"><h2>'+LU('anchor')+'The Wharf</h2><span class="sub">Brewhouses of the Hanse · main board · v0.12 — Source → Brew → Age → Ship</span></div>'
+    +'<div class="mb-head"><h2>'+LU('anchor')+'The Wharf</h2><span class="sub">Brewhouses of the Hanse · main board · v0.15 “Enshrine” — Source → Brew → Age → Ship</span></div>'
     +'<div class="mb-main">'+wharf+side+'</div>'
     +'<div><div class="ctrack">'+clk+'</div><div class="mtrack-l">'+'Sailed-Ships track — every voyage (a ship sailing, or a Charter) fills one slot; at your player-count END, finish the round &amp; score<br><b>Charter fare by position ⚙</b> — 2p 2·2·3·2·2·4·5·5 &nbsp; 3p 2·2·2·3·2·2·3·3·4·5·5 &nbsp; 4p 2·2·2·3·2·2·2·3·3·3·4·4·5·5·5 &nbsp; 5p 2·2·2·2·3·2·2·2·3·3·3·3·4·4·4·5·5·5·5</div></div>'
     +'<div><div class="rtrack">'+rt+'</div><div class="mtrack-l">round track — move the marker each round; the shaded 12–25 band is the target pace; the game never passes 25</div></div>'
@@ -620,7 +620,7 @@ function checklist(pages,famPages){
   const row=(bx,nm,n,note)=>'<tr>'+(bx?'<td class="bx"></td>':'<td></td>')+'<td>'+nm+'</td><td class="n">'+n+'</td><td>'+(note||'')+'</td></tr>';
   const bp=pages.filter(p=>p.section==='boards');
   const pbRef=bp.length>3?'S'+bp[2].no+'–S'+bp[bp.length-1].no:'S'+bp[2].no+' (proof: 1 of 5 shown)';
-  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v0.12)</h2><div class="cols2">';
+  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v0.15 “Enshrine”)</h2><div class="cols2">';
   h+='<table><tr><th></th><th>Boards (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Main board — the Wharf (stations · 8 slots · Sailed-Ships + round tracks)','1','S'+bp[0].no)
     +row(1,'Destinations board (4 kontore + the Hall · Market display · majority chart)','1','S'+bp[1].no)
@@ -634,10 +634,10 @@ function checklist(pages,famPages){
     +row(1,'Cask · Export Q5 (Bock — 3G2H, ungated · Wild possible)','4','')
     +row(0,'<i>Q2+ casks: the slot-action is drawn at brew — print the supply as a MIX of the 6-action pool (Q4/Q5 add Wild)</i>','','')
     +row(1,'Ships · NEUTRAL, destination-bound hulls (~20 deck: 11 Cog cap 2 / 9 Hulk cap 3)','20',pgRef(pages,famPages,'Ships'))
-    +row(0,'<i>destination printed on each: Bruges 4 · London 4 · Bergen 4 · Novgorod 5 · Hall 3</i>','','')
+    +row(0,'<i>destination printed on each: Bruges 5 · London 5 · Bergen 5 · Novgorod 5</i>','','')
     +row(1,'Neutral buildings (6 designs ×1 — seed 2–3 per game)','6',pgRef(pages,famPages,'Neutral buildings'))
     +row(1,'Upgrade · Extra Vessel ⚙ (supply = players+1)','6',pgRef(pages,famPages,'Upgrades'))
-    +row(1,'Upgrades · 10 other designs ×2','20','')
+    +row(1,'Upgrades · 11 other designs ×2 (5 Rooms + 6 Modifiers)','22','')
     +row(1,'Goals (9 designs ×2 ⚙ — 4–5p deal 3 each)','18',pgRef(pages,famPages,'Goals'))
     +'<tr class="tot"><td></td><td>Tile total</td><td class="n">'+tileTotal+'</td><td></td></tr></table>';
   h+='<table><tr><th></th><th>Cards — 1.85×2.55″ (cardstock, do NOT mount)</th><th>qty</th><th>sheet</th></tr>'

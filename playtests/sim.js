@@ -35,7 +35,7 @@ function needShip(p){
 // a CELLARMASTER seat (__cellar) INCLUDES it, to diagnose whether a well-played Q5 path is competitive).
 function buyableExports(p){return (S.exports||[]).filter(function(s){return !p.recipes.includes(s)&&(p.__cellar||!STYLES[s].cellar)&&canPay(p,RECIPE_BUY[s]);});}
 function wantRecipe(p){return buyableExports(p).length>0;}
-function pickUpgrade(list){var pref=['vessel','cellar','quay','cooperage','trophy','royal','staple','guild','warehouse','granary','hopgarden','burgher'];
+function pickUpgrade(list){var pref=['vessel','cellar','quay','cooperage','trophy','patron','staple','guild','warehouse','granary','hopgarden','burgher'];
   for(var i=0;i<pref.length;i++)if(list.indexOf(pref[i])>=0)return pref[i];return list[0];}
 function destFor(p,q,konPref){var elig=DESTS.filter(function(d){return q>=DEST[d].gate;});
   if(q>=4 && Math.random()<0.3 && elig.indexOf('hall')>=0)return 'hall';
