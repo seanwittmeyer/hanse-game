@@ -54,13 +54,12 @@
   .cell .nm{font-variant:small-caps;font-weight:bold;font-size:clamp(.8rem,3.4vw,1.2rem);line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
   .cell .yield{display:flex;gap:7px;align-items:center;margin-top:3px}
   .cell .yield .ic,.cell .yield svg{width:1.25em;height:1.25em;opacity:.95}
-  .cell .ltr{position:absolute;top:5px;right:8px;font-weight:bold;opacity:.38;font-size:.78rem}
   /* v0.7 loop colours: A Market=gold · B Brewhouse=red · C Harbor=sea · D Cellar=green */
   .cell.A{background:linear-gradient(155deg,#cda522,#9c7414);color:#2b2018}
   .cell.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .cell.C{background:linear-gradient(155deg,#3d6b7e,#244554)}
   .cell.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
-  .cell .wk{display:flex;gap:3px;flex-wrap:wrap;align-items:center;min-height:15px}
+  .cell .wk{position:absolute;top:6px;right:7px;display:flex;gap:3px;flex-wrap:wrap;justify-content:flex-end;align-items:center;max-width:58%}
   .pawn{width:15px;height:15px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.4)}
   .cell.legal{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite}
   @keyframes pulse{50%{outline-color:#fff}}
@@ -1834,7 +1833,6 @@ function renderGrid(){
     if(legal)cls+=' legal';
     const yields=(STATION_ACTS[act]||YIELD[act]||[]).map(n=>LU(n)).join('');
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'>'
-      +'<div class="ltr">'+c+'</div>'
       +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="role">'+CELLROLE[c]+'</div><div class="nm">'+act+'</div></div></div>'
       +'<div class="yield">'+yields+'</div>'
       +'<div class="wk">'+pawns+'</div></div>';
