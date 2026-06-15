@@ -121,6 +121,10 @@ function botMarket(p){
   if(UI.stage==='shipdest'){shipDest(personaDest(p,qRefBind(p)));return;}
   if(UI.stage==='place'){placeSlot(emptySlots()[0].id);return;}
   if(needShip(p)){buyTile('s_cog');return;}
+  // v0.16: keep a charter contract in hand when the relief valve is likely needed (jammed / endgame / a
+  // Ready cask but no hull) and you hold none — the deadlock guard + the bot's ability to charter out.
+  if((p.contracts||0)===0&&canPay(p,CONTRACT_BUY)
+     &&(emptySlots().length<=1||S.ending||(myShips(p).length===0&&readyInVessels(p).length>0))){buyContract();return;}
   var ex=buyableExports(p);
   if(ex.length){ex.sort(function(a,b){return STYLES[a].q-STYLES[b].q;});buyRecipe(ex[0]);return;}
   // v0.12.3: upgrades are no longer buyable — earned only via London/Novgorod delivery.
@@ -137,7 +141,7 @@ function botHarbor(p){
   var canLoad=myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});});
   if(canLoad){harborLoad();return;}
   // Charter only as a genuine relief valve: wharf jammed, end-game rush, or no hull & can't build one.
-  var canCharter=canPay(p,charterCost(p))&&charterCasks(p).length>0;
+  var canCharter=(p.contracts||0)>0&&canPay(p,charterCost(p))&&charterCasks(p).length>0;
   var jammed=emptySlots().length===0;
   var noHull=myShips(p).length===0 && !canPay(p,{g:2});
   var launch=myShips(p).filter(function(s){return S.slots[s].load.some(function(L){return L.owner===p.id;});});

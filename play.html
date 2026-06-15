@@ -387,21 +387,17 @@ const SHIP_DECK_MIX=[          // ⚙ 20 hulls — KONTORE ONLY (v0.15: ships sa
   ['cog','bergen'],['cog','bergen'],['hulk','bergen'],['hulk','bergen'],['hulk','bergen'],
   ['cog','novgorod'],['cog','novgorod'],['cog','novgorod'],['hulk','novgorod'],['hulk','novgorod'],
 ];
-const CHARTER_COST={g:2};   // legacy floor fare (kept for the headless harness; use charterCost())
-// ⚙ A2′ (v0.11, supersedes the per-player escalation): the charter fare is a SHARED MARKET PRICE
-// set by the Sailed-Ships track — one fare row printed under the clock (GWT-hiring-market style,
-// radically simplified). Indexed by voyages delivered (S.sailed), per player count: cheap early
-// (charters open the game), a small mid bump, dear in the closing stretch (the endgame charter
-// rush pays full freight). One price for the whole table; max 5G keeps the deadlock guard intact.
-const CHARTER_FARES={
-  2:[2,2,3,2,2,4,5,5],
-  3:[2,2,2,3,2,2,3,3,4,5,5],
-  4:[2,2,2,3,2,2,2,3,3,3,4,4,5,5,5],
-  5:[2,2,2,2,3,2,2,2,3,3,3,3,4,4,4,5,5,5,5],
-};
-function charterFare(){const row=CHARTER_FARES[S.players.length]||CHARTER_FARES[4];
-  return row[Math.min(S.sailed,row.length-1)];}
-function charterCost(p){return {g:charterFare()};}   // shared fare (v0.15: Royal Patent retired → Patron’s Favor; no charter discount)
+// ---- CHARTER CONTRACTS (v0.16): the charter is gated by a SCARCE, OWNABLE certificate, not a price curve ----
+// Each house starts with START_CONTRACTS; using a charter SPENDS one + pays a flat fare. Buy more at the
+// Market (CONTRACT_BUY, one Market acquire). The contract supply is UNLIMITED, so the deadlock guard holds:
+// Move→Market→buy a contract→charter next turn is always a legal escape (and you can always Source goods).
+// This RETIRES the v0.11 A2′ track-indexed escalating fare — the certificate you hold and spend IS the
+// throttle, more legible than a hidden price curve, and finite charters force the shared-hull economy.
+const START_CONTRACTS=2;        // ⚙ free charter contracts each house starts with (the healthy opening charters)
+const CONTRACT_BUY={g:1};       // ⚙ Market acquire cost to buy one more contract (the tempo of a whole Market visit is the real price)
+const CHARTER_FLAT_FARE={g:2};  // ⚙ flat fare to use a charter (replaced the escalating CHARTER_FARES row)
+const CHARTER_COST=CHARTER_FLAT_FARE;   // legacy alias (headless harness)
+function charterCost(p){return CHARTER_FLAT_FARE;}   // flat; the scarce CONTRACT is the real cost (v0.16)
 
 // ---- NEUTRAL BUILDINGS (seeded on the wharf at setup; shared base actions) ----
 const NEUTRALS={
@@ -495,7 +491,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v44'; // v0.15 "Enshrine" ⚙: Hall = LOCAL Enshrine (no boat/fee; cask must be DEPLOYED on a slot — structural throttle, stays contestable; ships+charter = kontore only) + Trophy Room (enshrine 2) + Patron’s Favor (Royal Patent retheme: +1 good on enshrine); bump discards stale state
+const KEY='hanse-hotseat-v45'; // v0.16 "Charter Contracts" ⚙: charters gated by a SCARCE OWNABLE certificate (start 2, buy more at the Market for 1G) + a FLAT 2G fare — RETIRES the escalating track-fare row; the contract is the throttle that pushes cargo onto the shared hulls. (Prior: v0.15 "Enshrine" — local Enshrine, Trophy Room, Patron’s Favor.) bump discards stale v44 state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -528,6 +524,7 @@ function newPlayer(i,name){
     vessels:[{style:'gruit',q:1,step:1,ready:1},null], maxVessels:2,
     recipes:['gruit','hopped'], upgrades:[], delivered:[],
     presBonus:{bruges:0,london:0,bergen:0,novgorod:0}, commissioned:0, masterpiece:false,
+    contracts:START_CONTRACTS,
     goals:dealGoals()};
 }
 function freshState(n,names){
@@ -786,6 +783,11 @@ function buyRecipe(style){const p=cur();
   const c=RECIPE_BUY[style];if(!canPay(p,c))return;
   snapshot();pay(p,c);p.recipes.push(style);
   log(p.name+' buys the '+LU('scroll-text')+' <b>'+STYLES[style].name+'</b> recipe (Q'+STYLES[style].q+').',true);cellDone();}
+// Buy a charter contract (v0.16): a Market acquire — the certificate that lets you charter (§ charterDest).
+// Always available (unlimited supply) so the deadlock guard holds; the real cost is the Market action's tempo.
+function buyContract(){const p=cur();if(!canPay(p,CONTRACT_BUY))return;
+  snapshot();pay(p,CONTRACT_BUY);p.contracts=(p.contracts||0)+1;
+  log(p.name+' acquires a '+LU('ticket')+' <b>charter contract</b> at the Market ('+p.contracts+' in hand).',true);cellDone();}
 // Commission the face-up ship of the deck (v0.11 B): pay the fee, place it on any open slot.
 // The hull & destination are printed on the tile — what you buy is tempo and placement.
 function commissionShip(idx){const p=cur();
@@ -1009,16 +1011,17 @@ function harborLaunch(slot){const p=cur();const t=S.slots[slot];
 // Charter — the relief valve: pay to send ONE of your Ready casks (vessel or wharf) on a single-cask voyage now.
 function charterCasks(p){const out=readyInVessels(p).map(o=>({ref:'v:'+o.i,style:o.c.style,q:o.c.q}));
   wharfCaskSlots().forEach(id=>{if(S.slots[id].owner===p.id)out.push({ref:id,style:S.slots[id].style,q:S.slots[id].q});});return out;}
-function harborCharter(){UI.stage='charter_cask';render();}
+function harborCharter(){if((cur().contracts||0)<=0){log('↳ no charter contract in hand — buy one at the Market.');cellDone();return;}UI.stage='charter_cask';render();}
 function charterPickCask(ref){UI.tmp.charterCask=ref;UI.stage='charter_dest';render();}
 function charterDest(dest){const p=cur();
+  if((p.contracts||0)<=0){log('↳ no charter contract in hand — buy one at the Market first.');resume('stops');return;}
   if(!canPay(p,charterCost(p))){log('↳ cannot afford the '+costStr(charterCost(p))+' charter fare.');resume('stops');return;}
-  snapshot();pay(p,charterCost(p));
+  snapshot();p.contracts--;pay(p,charterCost(p));
   const ref=UI.tmp.charterCask;let c;
   if(ref[0]==='v'){const i=+ref.slice(2);c=p.vessels[i];p.vessels[i]=null;}else{c=S.slots[ref];S.slots[ref]=null;}
   // A charter is a single-cask voyage on an outside hull — it delivers (scores + benefit) and advances the
   // Sailed-Ships clock, but it is NOT your fleet, so it does not count for the "ships you sailed" goal.
-  log(p.name+' charters a '+LU('sailboat')+' single voyage — '+LU('beer')+' '+styleShort(c.style)+' → <b>'+DEST[dest].name+'</b>. (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')',true);
+  log(p.name+' charters a '+LU('sailboat')+' single voyage — '+LU('beer')+' '+styleShort(c.style)+' → <b>'+DEST[dest].name+'</b> (spends a charter contract, '+p.contracts+' left). (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')',true);
   grantImmediate(p,dest);deliverCask(p,c.style,c.q,dest);S.sailed++;afterSail('stops');
 }
 // ENSHRINE (v0.15) — the LOCAL prestige delivery: present a Q2+ cask to the Hall, no boat, no fare.
@@ -1402,6 +1405,10 @@ function aiMarket(p){
     if(!el.length){commSkip();return;}el.sort((a,b)=>b.q-a.q);commLoad(el[0].ref);return;}
   if(UI.stage==='place'){placeSlot(emptySlots()[0].id);return;}
   if(!aiIsApp(p)){const ci=aiCommissionIdx(p);if(ci>=0){commissionShip(ci);return;}}   // apprentice never commissions ⚙
+  // v0.16: restock a charter contract when the relief valve is likely needed (jammed slots / endgame / a
+  // Ready cask but no hull) and you hold none — keeps the deadlock guard live and the bot able to charter out.
+  if(!aiIsApp(p)&&(p.contracts||0)===0&&canPay(p,CONTRACT_BUY)
+     &&(emptySlots().length<=1||S.ending||(myShips(p).length===0&&readyInVessels(p).length>0))){buyContract();return;}
   const ex=aiBuyableExports(p);
   if(ex.length){ex.sort((a,b)=>STYLES[a].q-STYLES[b].q);buyRecipe(ex[0]);return;}
   // v0.12.3: upgrades are no longer bought at the Market — they're earned ONLY by delivering to London/Novgorod.
@@ -1423,7 +1430,7 @@ function aiHarbor(p){
   // the no-fill-fee economy doesn't signal). If a ship were fillable, canLoad above already fired.
   const launch=myShips(p).filter(s=>S.slots[s].load.some(L=>L.owner===p.id));
   if(launch.length){harborLaunch(launch[0]);return;}
-  const canCh=canPay(p,charterCost(p))&&charterCasks(p).length>0;
+  const canCh=(p.contracts||0)>0&&canPay(p,charterCost(p))&&charterCasks(p).length>0;
   const jammed=emptySlots().length===0;
   const noHull=myShips(p).length===0&&!canPay(p,{g:2});
   if(canCh&&(jammed||S.ending||noHull)){harborCharter();return;}
@@ -1552,6 +1559,7 @@ function aiGmOptions(p){
     const o=[()=>marketGoods(2,0),()=>marketGoods(1,1),()=>marketGoods(0,2)];
     (S.exports||[]).forEach(st=>{if(!p.recipes.includes(st)&&canPay(p,RECIPE_BUY[st]))o.push(()=>buyRecipe(st));});
     if(emptySlots().length&&canPay(p,COMMISSION_COST))(S.shipDisplay||[]).forEach((sn,i)=>o.push(()=>commissionShip(i)));
+    if(canPay(p,CONTRACT_BUY))o.push(()=>buyContract());   // v0.16: the GM may buy a charter contract
     // v0.12.3: no Market upgrade-buy — upgrades are earned only via London/Novgorod delivery.
     return o;}
   if(U==='cell'&&UI.cell==='C'){
@@ -1563,7 +1571,7 @@ function aiGmOptions(p){
     if(myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs))))o.push(()=>harborLoad());
     myShips(p).filter(s=>S.slots[s].load.some(L=>L.owner===p.id)).forEach(s=>o.push(()=>harborLaunch(s)));
     if(enshrineCasks(p).length>0)o.push(()=>harborEnshrine());
-    if(canPay(p,charterCost(p))&&charterCasks(p).length>0)o.push(()=>harborCharter());
+    if((p.contracts||0)>0&&canPay(p,charterCost(p))&&charterCasks(p).length>0)o.push(()=>harborCharter());
     o.push(()=>cellDone());
     return o;}
   if(U==='brew'){const aff=p.recipes.filter(r=>canBrew(p,r)&&openVessel(p)>=0);
@@ -1799,7 +1807,7 @@ function cellRender(p){
   }
   if(UI.cell==='C'){
     if(UI.stage==='charter_cask'){const cs=charterCasks(p);
-      return {prompt:'Charter — pick a Ready cask to ship now ('+costStr(charterCost(p))+' — the fare is set by the Sailed-Ships track).',
+      return {prompt:'Charter — pick a Ready cask to ship now ('+costStr(charterCost(p))+' + a charter contract; you hold '+(p.contracts||0)+').',
         acts:cs.map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.style)+' Q'+o.q+(o.ref[0]==='v'?' · vessel':' · slot'),'charterPickCask(\''+o.ref+'\')','go')).join('')+btn('Back','(function(){UI.stage=\'harbor\';render();})()','ghost')};}
     if(UI.stage==='charter_dest'){const ref=UI.tmp.charterCask;const c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
       const ds=DESTS.filter(d=>d!=='hall'&&c.q>=DEST[d].gate);   // charter = overseas trade posts only; the Hall is a local Enshrine
@@ -1810,12 +1818,12 @@ function cellRender(p){
         acts:(cs.length?cs.map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.style)+' Q'+o.q+' · slot','enshrinePick(\''+o.ref+'\')','go')).join(''):'<span class="note">no Q2+ casks on your slots — deploy one first</span> ')+btn('Done','afterSail(\'stops\')','ghost')};}
     const canLoad=myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs)));
     const launch=myShips(p).filter(s=>S.slots[s].load.some(L=>L.owner===p.id));
-    const canCharter=canPay(p,charterCost(p))&&charterCasks(p).length>0;
+    const canCharter=(p.contracts||0)>0&&canPay(p,charterCost(p))&&charterCasks(p).length>0;
     const canEnshrine=enshrineCasks(p).length>0;
     let acts=(canLoad?btn(LU('ship')+' Load a cask → ship','harborLoad()','primary'):'');
     launch.forEach(s=>{const sh=S.slots[s];acts+=btn(LU('sailboat')+' Launch '+shipName(sh)+'→'+DEST[sh.dest].name+' early ('+sh.load.length+'/'+effCap(sh)+')','harborLaunch(\''+s+'\')');});
     if(canEnshrine)acts+=btn(LU('crown')+' Enshrine → the Hall (local'+(enshrineCap(p)>1?', ×2':'')+')','harborEnshrine()');
-    if(canCharter)acts+=btn(LU('sailboat')+' Charter → a kontor ('+costStr(charterCost(p))+')','harborCharter()');
+    if(canCharter)acts+=btn(LU('ticket')+' Charter → a kontor ('+costStr(charterCost(p))+' + contract, '+(p.contracts||0)+' left)','harborCharter()');
     if(!canLoad&&!launch.length&&!canCharter&&!canEnshrine)acts+='<span class="note">nothing to ship yet</span> ';
     return {prompt:'Ship — load a cask onto a ship, launch one early, Enshrine a Q2+ cask at the Hall (local), or Charter a kontor voyage.',acts:acts+btn('Skip','cellDone()','ghost')};
   }
@@ -1889,6 +1897,9 @@ function renderShop(){
       +(st.cellar?' <span class="note" style="font-size:.72rem">(needs Aging Cellar)</span>':'');
     const cost=RECIPE_BUY[style];const can=canPay(p,cost);
     h+='<div class="item"><span data-tip="'+attr('Permission to brew '+st.name+' (Q'+st.q+'), permanent. Brew cost: '+costStr(st.in)+'.')+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyRecipe(\''+style+'\')">buy</button>':'')+'</span></div>';});
+  // CHARTER CONTRACTS (v0.16): an always-available Market acquire — the scarce certificate that lets you charter
+  {const can=canPay(p,CONTRACT_BUY);
+   h+='<div class="item"><span data-tip="'+attr('A charter contract — spend one (plus the '+costStr(CHARTER_FLAT_FARE)+' fare) to send a single Ready cask on an immediate voyage to a kontor (Harbor). You start with '+START_CONTRACTS+'; buy more here. The relief valve for jammed slots — keeps the game deadlock-free.')+'">'+LU('ticket')+' <b>Charter contract</b> <span class="note" style="font-size:.72rem">(you hold '+(p.contracts||0)+')</span></span><span class="cost">'+costIcons(CONTRACT_BUY)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyContract()">buy</button>':'')+'</span></div>';}
   // the SHIP MARKET (v0.11 B, display of 3): face-up neutral hulls — Commission one onto a slot
   const sdisp=S.shipDisplay||[];
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('sailboat')+' Ship market</b> <span class="note">('+sdisp.length+' face-up · neutral hulls, destination printed · '+S.shipDeck.length+' in the deck)</span></div>';
@@ -1906,13 +1917,11 @@ function renderShop(){
 }
 
 function renderVoyage(){
-  const frow=CHARTER_FARES[S.players.length]||CHARTER_FARES[4];
   let trk='';for(let i=0;i<S.sailedCap;i++){
-    const fare=frow[Math.min(i,frow.length-1)];
-    trk+='<div class="spw"><div class="sp'+(i<S.sailed?' on':'')+'">'+(i<S.sailed?'⛵':'')+'</div>'
-      +'<div class="spf'+(i===S.sailed?' cur':'')+'" data-tip="'+attr('Charter fare while the track stands at '+i+': '+fare+' grain. One shared price — printed under the clock.')+'">'+fare+'</div></div>';}
+    trk+='<div class="spw"><div class="sp'+(i<S.sailed?' on':'')+'">'+(i<S.sailed?'⛵':'')+'</div></div>';}
   let h='<div class="voybox">'+LU('sailboat')+' <b>Sailed-Ships</b> '+S.sailed+' / '+S.sailedCap+(S.ending?' · <b style="color:var(--red)">FINAL ROUND</b>':'')
-    +'<div class="track">'+trk+'</div><div class="note" style="font-size:.66rem;margin-top:2px">⛵ the clock · digits = the charter fare at that position (now: <b>'+charterFare()+'G</b>)</div></div>';
+    +'<div class="track">'+trk+'</div><div class="note" style="font-size:.66rem;margin-top:2px">⛵ the end clock — each voyage (a ship sailing, a charter, or an enshrine) fills one</div></div>';
+  h+='<div class="note" style="margin-top:6px"><b>'+LU('ticket')+' Charter contracts:</b> '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+(p.contracts||0)+'</span>').join(' · ')+' <span class="note">(spend 1 + '+costStr(CHARTER_FLAT_FARE)+' to charter; buy more at the Market)</span></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game (3 of 4):</b> '+exportLabel()+'.</div>';
   h+='<div class="note" style="margin-top:4px">Delivered value: '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+scorePlayer(p).deliv+'</span>').join(' · ')+'</div>';
   document.getElementById('voyage').innerHTML=h;
