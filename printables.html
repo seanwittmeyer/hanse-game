@@ -194,26 +194,25 @@
   .kreq{font-size:.11in;font-weight:bold;background:rgba(255,255,255,.22);border-radius:.04in;padding:.01in .06in;display:flex;align-items:center;gap:.03in}
   .kreq svg,.kreq .ic{width:.13in;height:.13in}
   .kbody{flex:1;display:flex;flex-direction:column;gap:.05in;padding:.08in .1in}
-  .krole{font-size:.088in;font-style:italic;color:var(--ink2);line-height:1.05;min-height:.18in}
+  .krole{font-size:.088in;font-style:italic;color:var(--ink2);line-height:1.05;min-height:.18in;text-align:center}
   .kval{text-align:center;font-weight:900;color:var(--kc);font-size:.36in;line-height:.95;display:flex;align-items:center;justify-content:center;gap:.04in}
   .kval svg,.kval .ic{width:.24in;height:.24in;color:var(--vp);stroke-width:2.4}
   .kval .per{display:block;font-size:.078in;font-weight:bold;color:var(--ink2);font-variant:small-caps}
   /* benefit — BIG and iconic (v0.16): "+2 [coins]" or "+ [wrench]" */
   .kben{display:flex;align-items:center;justify-content:center;gap:.05in;font-weight:900;font-size:.26in;color:var(--kc);background:rgba(0,0,0,.05);border-radius:.06in;padding:.04in .06in}
   .kben svg,.kben .ic{width:.3in;height:.3in;flex:0 0 auto;color:var(--kc);stroke-width:2.1}
-  /* Hall prestige ladder — a compact, legible 2×2 of Q→★ (replaces the giant overflowing number) */
-  .kladder{display:grid;grid-template-columns:1fr 1fr;gap:.04in .12in;align-content:center;justify-items:center;padding:.05in 0}
-  .kladder .lr{display:flex;align-items:center;gap:.035in;font-weight:900;font-size:.2in;color:var(--kc)}
-  .kladder .lr .lq{font-size:.105in;font-variant:small-caps;color:var(--ink2)}
-  .kladder .lr svg,.kladder .lr .ic{width:.18in;height:.18in;color:var(--vp);stroke-width:2.3}
+  /* Hall prestige ladder — a vertical STACK of Q→★ (legible, a touch larger) */
+  .kladder{display:flex;flex-direction:column;gap:.06in;align-items:center;padding:.06in 0}
+  .kladder .lr{display:flex;align-items:center;gap:.05in;font-weight:900;font-size:.26in;color:var(--kc)}
+  .kladder .lr .lq{font-size:.13in;font-variant:small-caps;color:var(--ink2);min-width:.32in;text-align:right}
+  .kladder .lr svg,.kladder .lr .ic{width:.24in;height:.24in;color:var(--vp);stroke-width:2.3}
   .kmaj{font-size:.15in;font-weight:bold;display:flex;align-items:center;justify-content:center;gap:.04in;color:var(--kc)}
   .kmaj svg,.kmaj .ic{width:.15in;height:.15in;color:var(--vp)}
-  .kslot.mt{margin-top:auto}
   /* the delivered-cask stack space is TILE-TRUE: exactly 1.25in, the cask tile's footprint */
   .kslot{align-self:center;width:1.25in;height:1.25in;border:1.5px dashed var(--kc);border-radius:.06in;background:rgba(0,0,0,.03);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--kc);font-size:.082in;text-align:center;gap:.02in;line-height:1.05}
   .kslot svg,.kslot .ic{width:.22in;height:.22in;opacity:.5}
   .ptrack{display:flex;border:1px solid var(--kc);border-radius:.04in;overflow:hidden}
-  .ptrack.pt1{margin-top:auto}
+  .ptrack.pt1{margin-top:.02in}
   .ptrack .pc{flex:1;min-width:.18in;height:.24in;border-right:1px solid rgba(0,0,0,.14);display:flex;align-items:center;justify-content:center;font-size:.08in;color:var(--ink2);background:rgba(255,255,255,.5)}
   .ptrack .pc:last-child{border-right:none} .ptrack .pc.z{background:rgba(0,0,0,.08);font-weight:bold}
   .db-bottom{display:flex;flex-direction:column;gap:.08in}
@@ -307,12 +306,12 @@ const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · vic
 // v0.12 — a cask's slot-action is DRAWN AT BREW from this pool (printed on the tile); the supply per
 // quality is a MIX, so drawing a cask of the right quality IS the random draw. Icons mirror play.html CASK_ACT_ICON.
 const CASK_POOL=[
-  {k:'source', ai:'coins',            act:'Source · +2 goods'},
+  {k:'source', ai:'coins',            act:'+2 goods'},
   {k:'age',    ai:'hourglass',        act:'Age a cask +2'},
   {k:'load',   ai:'package-plus',     act:'free Load'},
   {k:'reach',  ai:'map-pin',          act:'+1 Reach'},
   {k:'convert',ai:'arrow-left-right', act:'Convert 2 goods'},
-  {k:'draw',   ai:'target',           act:'Draw a goal · 1 G'},
+  {k:'draw',   ai:'target',           act:'Draw a goal · 1 '+LU('wheat','g')},
 ];
 const CASK_WILD={k:'wild', ai:'sparkles', act:'Wild — any base action'};   // Q4+ only
 const CASKS=[  // cask supply — fixed global counts (COMPONENTS §3A). Gruit is PINNED to Source (v0.12.2); Q2+ draw at brew. Each export beer has its OWN named set (Broyhan/Keut split, was a shared Q3 pool).
@@ -338,7 +337,7 @@ const NEUTRALS=[  // 6 designs; 2–3 seeded on the slots at setup (random)
   {ic:'hammer',    nm:'Cooper',       sub:'age a cask 1 step',      c:'#4a4034', n:1},
   {ic:'package-plus', nm:'Crane',     sub:'free load onto a ship',  c:'#5b4a37', n:1},
   {ic:'arrow-left-right', nm:'Counting House', sub:'convert up to 2 goods', c:'#4a4034', n:1},
-  {ic:'megaphone', nm:'Towncrier',    sub:'1G: draw a goal (cap 4)', c:'#5b4a37', n:1},
+  {ic:'megaphone', nm:'Towncrier',    sub:'draw a goal · 1 '+LU('wheat','g')+' (cap 4)', c:'#5b4a37', n:1},
   {ic:'heart',     nm:'Almshouse',    sub:'+1 at a kontor you lead',c:'#4a4034', n:1},
 ];
 const ROOMS=[  // Extra Vessel supply = players+1 (play.html) ⚙ — 6 supports 5p
@@ -493,11 +492,11 @@ function kpanel(d,hall){const kc=d.kc;
   for(let i=7;i<=13;i++)t2+='<div class="pc">'+i+'</div>';
   const body = hall
     ? '<div class="kladder">'+d.ladder.map(qv=>'<div class="lr"><span class="lq">Q'+qv[0]+'</span>'+LU(VP)+qv[1]+'</div>').join('')+'</div>'
-      +'<div class="kslot mt">'+LU('beer')+'enshrined<br>(stack)</div>'
-    : '<div class="kval">'+LU(VP)+d.val+'<span class="per">per cask</span></div>'
+      +'<div class="kslot">'+LU('beer')+'enshrined<br>(stack)</div>'
+    : '<div class="kval">'+LU(VP)+d.val+'<span class="per">per<br>cask</span></div>'
       +'<div class="kben"><span>'+d.bi.n+'</span>'+LU(d.bi.ic)+'</div>'
-      +'<div class="kmaj">'+LU(VP)+d.maj.join(' / ')+'</div>'
       +'<div class="kslot">'+LU('beer')+'delivered<br>casks (stack)</div>'
+      +'<div class="kmaj">'+LU(VP)+d.maj.join(' / ')+'</div>'
       +'<div class="ptrack pt1">'+t1+'</div><div class="ptrack">'+t2+'</div>';
   return '<div class="kpanel" style="--kc:'+kc+'">'
     +'<div class="ktitle"><span class="kname">'+LU(hall?'crown':'landmark')+d.nm+'</span><span class="kreq">'+LU(QI)+d.req+'+</span></div>'
@@ -604,7 +603,7 @@ function buildPages(){
   const pages=[],famPages={};
   // --- BOARDS ---
   boardPage(pages,'boards','Main board — the Wharf',mboard());
-  boardPage(pages,'boards','Destinations board',dboard());
+  boardPage(pages,'boards','Destinations board',dboard(),6.3);
   PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),6.0));
   // --- TILES (one unbroken 1.25in grid — no family breaks) ---
   const tiles=[];
