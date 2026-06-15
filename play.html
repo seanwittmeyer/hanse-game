@@ -270,7 +270,7 @@ const ICONTIP={
   wheat:'Grain (G) — a brewing input and the medium of exchange.',
   sprout:'Hops (H) — a brewing input; the beer that travels.',
   beer:'Cask — a brewed beer tile (matures → slot → delivered).',
-  store:'Market — Source: gain 2 goods, or buy a recipe / ship / upgrade.',
+  store:'Market — Source: gain 2 goods, or buy a recipe / commission a ship (upgrades are earned by delivering, not bought).',
   'flask-conical':'Brewhouse — Brew: load a recipe into an open vessel.',
   hourglass:'Cellar — Age: a pool of age points across your vessels.',
   ship:'Harbor — Ship: load a Ready cask from a slot onto one of your ships.',
@@ -437,10 +437,9 @@ function upDesc(k){return (UP[k]||{desc:''}).desc;}
 
 // ---- MARKET (Option B): recipes & ships are an always-available supply; UPGRADES are a face-up display ----
 // (v0.11 B: the old always-stocked ship supply is gone — ships come off the SHIP DECK via Commission)
-// Upgrade buy cost (when bought from the face-up display) — priced to ~a kontor delivery's goods cost so
-// buying competes with, but doesn't dominate, EARNING one free by delivering to London/Novgorod.
-const UPGRADE_BUY={vessel:{g:5},cellar:{g:5},warehouse:{g:4},quay:{g:5},cooperage:{g:4},trophy:{g:5},
-  granary:{g:4},hopgarden:{g:4},patron:{g:4},staple:{g:5},guild:{g:4},burgher:{g:5}};
+// v0.12.3: upgrades are EARNED ONLY by delivering to London/Novgorod — there is NO goods-buy. (The old
+// UPGRADE_BUY price table + buyDisplayUp() were dead code and were removed; the relative-value/rarity
+// figures live on only as a tuning note in COMPONENTS.md §3E, not in the engine.)
 const DISPLAY_SIZE=4;   // face-up Upgrade display (Market option B) ⚙
 
 // ---- GOALS (deal 3 per player; best 2 score) ----
@@ -648,7 +647,7 @@ function lineGlyph(lk){const lit=LINES[lk].cells;return '<span class="lg" data-t
 
 // ---- tooltips for stations & slots ----
 const CELLTIP={
-  Market:'Market · Source. Take 2 goods (any mix), OR buy one tile from the Market — a recipe, a ship, or a brewery upgrade. Never closed (move onto a rival here for 1G).',
+  Market:'Market · Source. Take 2 goods (any mix), OR buy a recipe / commission a ship. (Upgrades aren’t for sale — earn one free by delivering to London/Novgorod.) Never closed (move onto a rival here for 1G).',
   Brewhouse:'Brewhouse · Brew. Load one recipe you hold (paying its G/H) into an open vessel as a young cask. Never closed (move onto a rival here for 1G).',
   Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' age points to allocate across your vessels (your casks also age +1 automatically each turn). When a cask is Ready, set it on a slot.',
   Harbor:'Harbor · Ship — your ship-options hub. Load ANY cask (yours or a rival’s — you pick the destination; the owner scores it, you take a loader bonus) onto any ship it qualifies for; the owner banks that destination’s benefit on loading. Launch a ship early, or Charter a single cask. A ship sails full, delivering every cask for points. Never closed.',
@@ -805,10 +804,8 @@ function commissionShip(idx){const p=cur();
 }
 function refillShipDisplay(){while(S.shipDisplay.length<SHIP_DISPLAY&&S.shipDeck.length)S.shipDisplay.push(S.shipDeck.shift());}
 function buyTile(id){commissionShip();}   // legacy alias (the headless harness bot calls buyTile('s_cog'))
-// Buy an upgrade from the face-up display (Market option B): pay its cost, take it, refill.
-function buyDisplayUp(key){const p=cur();if(!grantableBuy(p,key))return;const c=UPGRADE_BUY[key];if(!canPay(p,c))return;
-  snapshot();pay(p,c);grantUpgrade(p,key);takeFromDisplay(key);
-  log(p.name+' buys '+LU('wrench')+' <b>'+upName(key)+'</b> from the Market display.',true);cellDone();}
+// (v0.12.3: upgrades are earned only by delivering — there is no buy-from-display path. The old
+// buyDisplayUp() was removed in the v0.15 cleanup; the face-up display is reference-only at the Market.)
 
 function placeSlot(slot){const t=UI.tmp.placeTile;S.slots[slot]=t;
   log('↳ '+LU('sailboat')+' '+SHIP_NAME[t.ship]+' placed on a '+LU('anchor')+' slot, bound for '+DEST[t.dest].name+'.');
@@ -1247,7 +1244,7 @@ const AI_SPEED_KEY='hanse-ai-speed';
 // ⚙ Guildmaster (Phase 3) dials — `let` so the headless harnesses can lower them for bulk runs.
 let GUILD_MS=250;    // Monte Carlo time budget per decision (ms); 'instant' speed caps it at 120
 let GUILD_MIN=2;     // minimum playouts per option (so no option goes unsampled)
-// GM_DEEP (opt-in): completion-biased rollouts that climb to Bock & ship the high end to the Hall, so the
+// GM_DEEP (opt-in): completion-biased rollouts that climb to Bock & enshrine the high end at the Hall, so the
 // Monte Carlo can PRICE the deep/range path. Default OFF — it lengthens rollouts (~2.5×), so at flat-MC
 // budgets it buys fewer playouts than it gains in realism; the default GM stays the fast robustness oracle.
 let GM_DEEP=false;
@@ -1797,7 +1794,7 @@ function cellRender(p){
     if(UI.stage==='commload'){const el=commEligible(p,UI.tmp.commShipSlot);const sh=S.slots[UI.tmp.commShipSlot];
       return {prompt:'<b>Commission reward</b> — load one Ready cask onto your new '+shipName(sh)+' → <b>'+DEST[sh.dest].name+'</b> (free):',
         acts:el.map(o=>btn(LU('beer')+styleShort(o.style)+' Q'+o.q+(o.ref[0]==='v'?' · vessel':' · slot'),'commLoad(\''+o.ref+'\')','go')).join('')+btn('Skip','commSkip()','ghost')};}
-    return {prompt:'Gain 2 goods, or buy a tile from the Market →',
+    return {prompt:'Gain 2 goods, or buy a recipe / commission a ship →',
       acts:btn('Take '+Gi(2),'marketGoods(2,0)','go')+btn('Take '+Gi(1)+Hi(1),'marketGoods(1,1)','go')+btn('Take '+Hi(2),'marketGoods(0,2)','go')+btn('Skip','cellDone()','ghost')};
   }
   if(UI.cell==='C'){

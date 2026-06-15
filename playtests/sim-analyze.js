@@ -45,7 +45,8 @@ var _doMove=doMove;          doMove=function(c){if(REC())EV('move',{cell:c});ret
 var _chooseLine=chooseLine;  chooseLine=function(w){if(REC())EV('line',{lk:cellOfLine(cur().cell)[w]});return _chooseLine(w);};
 var _brewPick=brewPick;      brewPick=function(st){if(REC())EV('brew',{style:st,q:STYLES[st].q});return _brewPick(st);};
 var _buyRecipe=buyRecipe;    buyRecipe=function(st){if(REC())EV('recipe',{style:st,q:STYLES[st].q});return _buyRecipe(st);};
-var _buyDisplayUp=buyDisplayUp;buyDisplayUp=function(k){if(REC())EV('buyup',{key:k});return _buyDisplayUp(k);};
+// (v0.15: the buyDisplayUp wrapper was removed with the dead upgrade-buy path — upgrades are earned only
+// by delivering, so grantUpgrade below captures every upgrade acquisition.)
 var _grantUpgrade=grantUpgrade;grantUpgrade=function(p,k){if(REC())EV('up',{pid:p.id,key:k});return _grantUpgrade(p,k);};
 var _deployTo=deployTo;      deployTo=function(sl){if(REC())EV('deploy',{slot:sl});return _deployTo(sl);};
 var _commissionShip=commissionShip;commissionShip=function(idx){var sn=(S.shipDisplay&&S.shipDisplay[(idx!=null&&S.shipDisplay[idx])?idx:0]);if(REC()&&sn)EV('shipbuild',{dest:sn.dest,ship:sn.ship});return _commissionShip(idx);};

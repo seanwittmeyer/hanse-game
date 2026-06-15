@@ -220,7 +220,7 @@
       <div class="slot s1" data-line="col-l">slot</div>
       <div class="slot s2" data-line="col-r">slot</div>
       <div class="slot s8" data-line="row-t">slot</div>
-      <div class="cell A" data-row="row-t" data-col="col-l"><div class="corner">A</div><div class="lbl">① Source</div><div class="nm">Market</div><div class="do">Take goods, or buy a recipe / ship / upgrade</div></div>
+      <div class="cell A" data-row="row-t" data-col="col-l"><div class="corner">A</div><div class="lbl">① Source</div><div class="nm">Market</div><div class="do">Take goods, or buy a recipe / commission a ship</div></div>
       <div class="cell B" data-row="row-t" data-col="col-r"><div class="corner">B</div><div class="lbl">② Brew</div><div class="nm">Brewhouse</div><div class="do">Spend a recipe + goods → a young cask in a vessel</div></div>
       <div class="slot s3" data-line="row-t">slot</div>
       <div class="slot s7" data-line="row-b">slot</div>
@@ -301,7 +301,7 @@
   <h2><span class="nm">7</span>The Four Stations</h2>
   <table>
     <tr><th>Station</th><th>Action ⚙</th></tr>
-    <tr><td><b>A · Market</b> <span class="pill">Source</span></td><td>Take <b>2 goods</b> (any mix), <b>or</b> acquire <b>one</b>: a <b>recipe</b> (a brewable type), a <b>commission</b> (place the face-up ship of the deck on any open slot), or an <b>upgrade</b> (a Room/Modifier → your brewery, from the face-up display).</td></tr>
+    <tr><td><b>A · Market</b> <span class="pill">Source</span></td><td>Take <b>2 goods</b> (any mix), <b>or</b> acquire <b>one</b>: a <b>recipe</b> (a brewable type), or a <b>commission</b> (place one of the face-up ships on any open slot and free-load a Ready cask aboard). <em>(Upgrades are <b>not</b> bought here — they're earned by delivering, §11; the Upgrade display sits at the Market only for reference.)</em></td></tr>
     <tr><td><b>B · Brewhouse</b> <span class="pill">Brew</span></td><td><b>Load</b> one recipe you hold (paying its <span class="cube g"></span>/<span class="cube h"></span> cost) into an <b>open vessel</b> — a young cask at step 0. Recipes are permanent. One load per Brewhouse.</td></tr>
     <tr><td><b>D · Cellar</b> <span class="pill">Age</span></td><td>Gain a <b>pool of 3 age points</b> ⚙ and <b>allocate freely across your vessels</b>. (Casks also age <b>+1 automatically each turn</b>.) When a cask is <b>Ready</b>, deploy it to an open slot.</td></tr>
     <tr><td><b>C · Harbor</b> <span class="pill">Ship</span></td><td><b>Load</b> one of <b>your</b> casks from a slot onto <b>any ship</b> it qualifies for — <b>taking that destination's benefit (goods / an Upgrade) on loading</b>. A ship <b>sails the instant it is full</b> (delivering every cask for points); or <b>launch a ship early</b> if it carries your cask, use a <b>Charter</b> (ship one Ready cask now for the track-set fare — §10), or <b>Enshrine</b> a deployed Q2+ cask into the <b>Hall</b> (no ship, no fare — §10). Each voyage <b>or</b> enshrinement advances the clock.</td></tr>
@@ -435,7 +435,7 @@
     <tr><td><span class="act-ic"><i data-lucide="wheat"></i></span></td><td><b>Gain goods</b></td><td><b>Market.</b> Gain <b>+2</b> goods, any mix (<i data-lucide="wheat" class="gi"></i>/<i data-lucide="sprout" class="hi"></i>).</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="scroll-text"></i></span></td><td><b>Buy recipe</b></td><td><b>Market.</b> Cost <i data-lucide="wheat" class="gi"></i>1–<i data-lucide="wheat" class="gi"></i>2; add a brewable type (permanent).</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="sailboat"></i></span></td><td><b>Commission</b></td><td><b>Market.</b> <i data-lucide="wheat" class="gi"></i>2 ⚙: place the <b>face-up ship of the deck</b> (hull &amp; destination printed) on any open slot; flip the next.</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="wrench"></i></span></td><td><b>Take upgrade</b></td><td><b>Market.</b> Cost <i data-lucide="wheat" class="gi"></i>4–<i data-lucide="wheat" class="gi"></i>5 — or <b>free</b> by delivering.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="wrench"></i></span></td><td><b>Earn upgrade</b></td><td><b>Delivery only</b> (not bought). Delivering to <b>London / Novgorod</b> hands you a face-up display tile <b>free</b>; the Market display is reference-only.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brew</b></td><td><b>Brewhouse.</b> Pay the recipe's cost; start a young cask in an open vessel.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Age</b></td><td><b>Cellar.</b> Gain <b>3 age points</b> ⚙ across your vessels (casks also age +1 each turn). When a cask is Ready, deploy it to a slot.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>Ship — load</b></td><td><b>Harbor.</b> Load one of <b>your</b> Ready casks onto any qualifying ship (kontore only) — take the destination benefit on loading. A full ship sails at once, delivering every cask for points (no fill bonus). The Harbor also offers <b>Enshrine</b> (Hall) and <b>Charter</b> — below.</td></tr>
@@ -480,7 +480,7 @@
       <li><b>Resolve</b> the line (slot · station · station · slot), any order. Both stations fire; stations never closed; use the buildings in the line's two slots (on your turn).</li>
     </ol>
     <h4>At the Wharf</h4>
-    <p>Market (gain goods, or buy a recipe / ship / upgrade) → Brewhouse (Brew a cask) → Cellar (Age to Ready → deploy to a slot) → Harbor (Ship to a kontor → sails when full → delivers; or Enshrine a deployed Q2+ cask into the Hall).</p>
+    <p>Market (gain goods, or buy a recipe / commission a ship; upgrades are earned by delivering, not bought) → Brewhouse (Brew a cask) → Cellar (Age to Ready → deploy to a slot) → Harbor (Ship to a kontor → sails when full → delivers; or Enshrine a deployed Q2+ cask into the Hall).</p>
     <h4>Where to ship</h4>
     <p>Bruges (+1, goods, maj 4/2/0) · London (+2, an upgrade, maj 5/3/1) · Bergen (+2, goods, maj 9/5/2 — the anchor) · Novgorod (+4, an upgrade, maj 8/5/2). <b>Enshrine</b> a deployed Q2+ cask into the Hall (no ship/fare) for prestige — 4/6/8/10 by quality. Majorities are the big motivator (delivery values kept low); gate by quality; each cask owner scores &amp; takes the benefit when the shared hull sails.</p>
     <h4>Game ends</h4>
