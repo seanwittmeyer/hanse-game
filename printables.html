@@ -77,6 +77,11 @@
     display:flex;align-items:center;justify-content:center;font-size:.13in;font-weight:900;background:rgba(0,0,0,.22);text-shadow:none}
   .ts .berths .sgate{font-weight:900;font-size:.15in;display:inline-flex;align-items:center;gap:.015in;margin-right:.04in}
   .ts .berths .sgate svg,.ts .berths .sgate .ic{width:.17in;height:.17in}
+  /* ship = NEUTRAL hull body; destination is a coloured chip (so it never reads as a player's ship) */
+  .ts .g-dest{display:inline-flex;align-items:center;gap:.04in;align-self:flex-start;color:#fff;font-variant:small-caps;font-weight:bold;font-size:.14in;border-radius:.04in;padding:.025in .07in;margin-top:.05in;text-shadow:0 1px 1px rgba(0,0,0,.45)}
+  .ts .g-dest svg,.ts .g-dest .ic{width:.16in;height:.16in}
+  .ts .t-cost-tr{position:absolute;top:.085in;right:.1in;font-weight:bold}
+  .ts .t-cost-tr .gc{font-size:.16in;gap:.02in} .ts .t-cost-tr .gc svg,.ts .t-cost-tr .gc .ic{width:.17in;height:.17in}
   /* ====== goods TOKENS — laser-cut .7in circle inside a .95in bleed disc ====== */
   .tok{width:.95in;height:.95in;border-radius:50%;background:var(--c);color:#fff;position:relative;
     display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4)}
@@ -367,10 +372,10 @@ const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'
 const CONTRACTS={nm:'Charter Contract', n:20};
 const RECIPES=[  // EXPORT recipe cards only — Gruit & Hopped are printed on the brewery board's tuck strip.
   // buy = Market acquire cost (RECIPE_BUY in play.html) · g/h = the BREW cost on the tucked edge.
-  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{g:1},     reach:'L3 · Bruges · London · Bergen · Novgorod (Hall via Enshrine)'},
-  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'L3 · Bruges · London · Bergen · Novgorod (Hall via Enshrine)'},
-  {nm:'Mumme',   cc:'#9a5526', L:4, g:2,h:2, buy:{g:1,h:1}, reach:'L4 · all kontore (Hall via Enshrine)'},
-  {nm:'Bock',    cc:'#7c2128', L:5, g:3,h:2, buy:{g:2}, reach:'L5 · all kontore (Hall via Enshrine)'},
+  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{g:1},     reach:'Q3 · Bruges · London · Bergen · Novgorod (Hall via Enshrine)'},
+  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'Q3 · Bruges · London · Bergen · Novgorod (Hall via Enshrine)'},
+  {nm:'Mumme',   cc:'#9a5526', L:4, g:2,h:2, buy:{g:1,h:1}, reach:'Q4 · all kontore (Hall via Enshrine)'},
+  {nm:'Bock',    cc:'#7c2128', L:5, g:3,h:2, buy:{g:2}, reach:'Q5 · all kontore (Hall via Enshrine)'},
 ];
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'},{nm:'Violet',c:'#5b3a8e'}];
 const DESTS=[
@@ -414,11 +419,11 @@ function caskTile(d,act){   // act = the drawn slot-action {ai,act} (v0.12); Gru
 // NEUTRAL destination-bound ship tile (v0.11): hull + capacity · printed destination + quality gate · commission 2 G
 function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
   let berths='';for(let i=1;i<=cap;i++)berths+='<div class="bn">'+i+'</div>';   // numbered load-order berths (v0.16)
-  return '<div class="tile gen ts" style="--c:'+d.kc+'">'
+  return '<div class="tile gen ts" style="--c:#6f6253">'   // NEUTRAL hull body (not a player colour); destination = the coloured chip
+  +'<div class="t-cost-tr">'+cost(2,0)+'</div>'            // commission cost, top-right (no market icon)
   +'<div class="g-head"><span class="bigic">'+LU('sailboat')+'</span><span class="g-nm">'+(hull==='cog'?'Cog':'Hulk')+'</span></div>'
-  +'<div class="g-act">'+LU(d.crown?'crown':'landmark')+' '+destNm+'</div>'
-  +'<div class="berths"><span class="sgate">'+LU(QI)+'L'+d.req+'+</span>'+berths+'</div>'
-  +'<div class="g-cost">'+LU('store')+' '+cost(2,0)+'</div></div>';}
+  +'<div class="g-dest" style="background:'+d.kc+'">'+LU('landmark')+destNm+'</div>'
+  +'<div class="berths"><span class="sgate">'+LU(QI)+d.req+'+</span>'+berths+'</div></div>';}
 function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--c:'+it.c+'">'
   +'<div class="g-head"><span class="bigic">'+LU(it.ic)+'</span><span class="g-nm">'+it.nm+'</span></div>'
   +(it.act?'<div class="g-act">'+it.act+'</div>':'')
@@ -493,7 +498,7 @@ function kpanel(d,hall){const kc=d.kc;
       +'<div class="kslot">'+LU('beer')+'delivered<br>casks (stack)</div>'
       +'<div class="ptrack pt1">'+t1+'</div><div class="ptrack">'+t2+'</div>';
   return '<div class="kpanel" style="--kc:'+kc+'">'
-    +'<div class="ktitle"><span class="kname">'+LU(hall?'crown':'landmark')+d.nm+'</span><span class="kreq">'+LU(QI)+'L'+d.req+'+</span></div>'
+    +'<div class="ktitle"><span class="kname">'+LU(hall?'crown':'landmark')+d.nm+'</span><span class="kreq">'+LU(QI)+d.req+'+</span></div>'
     +'<div class="kbody"><div class="krole">'+d.role+'</div>'+body+'</div></div>';}
 function dboard(){
   let disp='';for(let i=0;i<4;i++)disp+='<div class="uslot">'+LU('wrench')+'upgrade<br>(face-up)</div>';
@@ -502,7 +507,7 @@ function dboard(){
   disp+='<div class="uslot supply faceup">'+LU('target')+'goal supply<br>(face-up)</div>';
   return '<div class="dboard">'
     +'<div class="db-head"><h2>'+LU('landmark')+'Destinations</h2>'
-      +'<span class="legend"><span><b>'+LU(QI,'ql')+'</b> quality level — a cask of level ≥ the L# may ship there</span><span><b>'+LU(VP,'vp')+'</b> victory points</span><span><b>'+DEST_PREM+'</b></span></span></div>'
+      +'<span class="legend"><span><b>'+LU(QI,'ql')+'</b> quality — a cask of quality ≥ the shown number may ship there</span><span><b>'+LU(VP,'vp')+'</b> victory points</span><span><b>'+DEST_PREM+'</b></span></span></div>'
     +'<div class="kontor-row">'+DESTS.map(d=>kpanel(d,false)).join('')+kpanel(HALL,true)+'</div>'
     +'<div class="db-bottom">'
       +'<div class="sbox disp"><div class="sb-h">'+LU('store')+'Market — shared supply<span class="sm">upgrades: earned ONLY by delivering to London / Novgorod (not for sale) · recipes &amp; ships always stocked; commission a face-up ship for 2 G; buy a charter contract for 1 G</span></div><div class="uprow">'+disp+'</div></div>'
