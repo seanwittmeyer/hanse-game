@@ -52,7 +52,7 @@ var _deployTo=deployTo;      deployTo=function(sl){if(REC())EV('deploy',{slot:sl
 var _commissionShip=commissionShip;commissionShip=function(idx){var sn=(S.shipDisplay&&S.shipDisplay[(idx!=null&&S.shipDisplay[idx])?idx:0]);if(REC()&&sn)EV('shipbuild',{dest:sn.dest,ship:sn.ship});return _commissionShip(idx);};
 var _charterDest=charterDest;charterDest=function(d){if(REC())EV('charter',{dest:d});return _charterDest(d);};
 var _deliverCask=deliverCask;deliverCask=function(lp,style,q,dest){if(REC())EV('deliver',{pid:lp.id,dest:dest,q:q});return _deliverCask(lp,style,q,dest);};
-var _sailShip=sailShip;      sailShip=function(sl,cid){if(REC()){var t=S.slots[sl];if(t)EV('sail',{pid:(cid!=null?cid:S.active),dest:t.dest,ncask:t.load.length});}return _sailShip(sl,cid);};
+var _sailShip=sailShip;      sailShip=function(sl,cid){if(REC()){var t=S.slots[sl];if(t)EV('sail',{pid:(cid!=null?cid:S.active),dest:t.dest,ncask:t.load.length,ship:t.ship,cap:effCap(t)});}return _sailShip(sl,cid);};
 var _loadOnto=loadOnto;      loadOnto=function(ss){if(REC()){EV('load',{src:(UI.load&&UI.load.src)||'harbor'});var ct=S.slots[UI.load.cask];if(ct&&ct.owner!==S.active)EV('rivalload',{owner:ct.owner});}return _loadOnto(ss);};
 var _commLoad=commLoad;      commLoad=function(ref){if(REC())EV('load',{src:'commission'});return _commLoad(ref);};
 var _reachPick=reachPick;    reachPick=function(k){if(REC())EV('pres',{dest:k});return _reachPick(k);};
