@@ -1,0 +1,19 @@
+Brewhouses of the Hanse — AI tier ladder (KEY hanse-hotseat-v46)  |  N=600 games per 2p pairing
+
+---- head-to-head at 2p (seats swapped; ladder gate: higher tier >=60%) ----
+apprentice vs journeyman   journeyman wins  91.3%  (apprentice 8.7%)  avg score apprentice 32.3 / journeyman 55.7  rounds 16.1  clock 99.8%  errors 0
+journeyman vs trader       trader wins  60.2%  (journeyman 39.8%)  avg score journeyman 50.9 / trader 57.2  rounds 15.5  clock 99.8%  errors 0
+  trader lean win-rates:   volume 58.1% (n=191)   prestige 66.4% (n=217)   majority 55.2% (n=192)
+apprentice vs trader       trader wins  95.3%  (apprentice 4.7%)  avg score apprentice 32.3 / trader 66.6  rounds 16.7  clock 98.7%  errors 0
+  trader lean win-rates:   volume 95.5% (n=198)   prestige 95.6% (n=206)   majority 94.9% (n=196)
+trader vs guildmaster      guildmaster wins  84.2%  (trader 15.8%)  avg score trader 41.7 / guildmaster 65.0  rounds 16.7  clock 100.0%  errors 0
+  trader lean win-rates:   volume 18.9% (n=37)   prestige 15.6% (n=45)   majority 13.2% (n=38)
+
+---- mixed tables 3-5p (random tier per seat; robustness gate: 0 errors) ----
+3p  games 300  errors 0  rounds 16.6  clock 94.0%  per-seat win-rate: apprentice 6.0%  journeyman 39.4%  trader 54.5%
+4p  games 300  errors 0  rounds 15.5  clock 98.3%  per-seat win-rate: apprentice 1.2%  journeyman 29.7%  trader 44.5%
+5p  games 300  errors 0  rounds 14.9  clock 98.7%  per-seat win-rate: apprentice 0.6%  journeyman 22.9%  trader 37.3%
+
+GATES: errors PASS (0)  |  ladder PASS (every higher tier >=60% at 2p)
+
+EXIT 0
