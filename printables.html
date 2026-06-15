@@ -526,7 +526,7 @@ function mboard(){
   const wharf='<div class="wharf">'
     +'<div></div>'+slot+slot+'<div></div>'
     +slot
-    +station('A','Market','store','<b>2</b>'+LU('package')+OR+LU('scroll-text')+OR+LU('sailboat'))
+    +station('A','Market','store','<b>2</b>'+LU('coins')+OR+LU('scroll-text')+OR+LU('ticket')+OR+LU('sailboat'))
     +station('B','Brewhouse','flask-conical',LU('beer'))
     +slot+slot
     +station('C','Harbor','ship',LU('package-plus')+OR+LU('crown')+OR+LU('ticket'))
@@ -603,7 +603,7 @@ function buildPages(){
   const pages=[],famPages={};
   // --- BOARDS ---
   boardPage(pages,'boards','Main board — the Wharf',mboard());
-  boardPage(pages,'boards','Destinations board',dboard(),6.3);
+  boardPage(pages,'boards','Destinations board',dboard(),6.9);
   PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),6.0));
   // --- TILES (one unbroken 1.25in grid — no family breaks) ---
   const tiles=[];
