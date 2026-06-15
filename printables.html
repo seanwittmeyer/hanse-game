@@ -71,10 +71,12 @@
   .gen .g-act{background:rgba(0,0,0,.22);border-radius:.04in;padding:.04in .055in;font-size:.105in;line-height:1.16;margin-top:.06in;align-self:stretch}
   .gen.tg .g-head .bigic{position:absolute;right:.1in;bottom:.08in}
   .gen.tg .g-head .bigic svg,.gen.tg .g-head .bigic .ic{width:.34in;height:.34in;opacity:.9}
-  /* ship NUMBERED BERTHS — the load-order spaces (1st/2nd/3rd); benefits + points seal in this order */
-  .ts .berths{display:flex;gap:.04in;margin-top:.05in}
+  /* ship NUMBERED BERTHS — the load-order spaces (filled 1→cap; deliver in order) */
+  .ts .berths{display:flex;align-items:center;gap:.04in;margin-top:.06in}
   .ts .berths .bn{width:.235in;height:.235in;border:1.3px solid rgba(255,255,255,.9);border-radius:.03in;
     display:flex;align-items:center;justify-content:center;font-size:.13in;font-weight:900;background:rgba(0,0,0,.22);text-shadow:none}
+  .ts .berths .sgate{font-weight:900;font-size:.15in;display:inline-flex;align-items:center;gap:.015in;margin-right:.04in}
+  .ts .berths .sgate svg,.ts .berths .sgate .ic{width:.17in;height:.17in}
   /* ====== goods TOKENS — laser-cut .7in circle inside a .95in bleed disc ====== */
   .tok{width:.95in;height:.95in;border-radius:50%;background:var(--c);color:#fff;position:relative;
     display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4)}
@@ -348,9 +350,9 @@ const GOALS=[  // 9 designs ×2 copies ⚙ so 4–5p can deal 3 each (values mat
   {ic:'target',nm:'Steady',   sub:'+6 flat',             c:'#7c2128', n:2},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
-// v0.16 — the scarce CHARTER CONTRACT: each house starts with 2, buys more at the Market (1 G), and spends
-// 1 + a flat 2 G fare to charter a single cask. ~20 supply covers starts + the Market buy pile.
-const CONTRACTS={ic:'ticket', nm:'Charter Contract', sub:'spend 1 + 2 '+LU('wheat','g ic')+' fare → one single-cask voyage to a kontor', c:'#8a6408', n:20};
+// v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
+// flat 2 G fare to charter a single cask. ~20 supply covers starts + the Market buy pile. Art = contractCard().
+const CONTRACTS={nm:'Charter Contract', n:20};
 const RECIPES=[  // EXPORT recipe cards only — Gruit & Hopped are printed on the brewery board's tuck strip.
   // buy = Market acquire cost (RECIPE_BUY in play.html) · g/h = the BREW cost on the tucked edge.
   {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{g:1},     reach:'L3 · Bruges · London · Bergen · Novgorod (Hall via Enshrine)'},
@@ -403,8 +405,7 @@ function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm
   return '<div class="tile gen ts" style="--c:'+d.kc+'">'
   +'<div class="g-head"><span class="bigic">'+LU('sailboat')+'</span><span class="g-nm">'+(hull==='cog'?'Cog':'Hulk')+'</span></div>'
   +'<div class="g-act">'+LU(d.crown?'crown':'landmark')+' '+destNm+'</div>'
-  +'<div class="g-sub">needs '+LU(QI)+'L'+d.req+'+ · sails when full · load in order:</div>'
-  +'<div class="berths">'+berths+'</div>'
+  +'<div class="berths"><span class="sgate">'+LU(QI)+'L'+d.req+'+</span>'+berths+'</div>'
   +'<div class="g-cost">'+LU('store')+' '+cost(2,0)+'</div></div>';}
 function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--c:'+it.c+'">'
   +'<div class="g-head"><span class="bigic">'+LU(it.ic)+'</span><span class="g-nm">'+it.nm+'</span></div>'
@@ -426,6 +427,16 @@ function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
     +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(r.g,r.h)+'</span></div>'
   +'</div>'
   +'</div>';}
+
+// charter-contract CARD (v0.16) — icon-first: the effect (a cask → a kontor) + the fare; the card IS the contract you spend
+function contractCard(){return '<div class="card" style="--cc:#8a6408">'
+  +'<div class="c-buy" style="justify-content:center;gap:.12in">'
+    +'<div style="display:flex;align-items:center;gap:.08in;font-size:.42in;color:#8a6408">'+LU('beer')+'<span style="font-size:.26in;font-weight:bold">→</span>'+LU('landmark')+'</div>'
+    +'<span class="lbl">one cask → a kontor</span></div>'
+  +'<div class="c-strip">'
+    +'<div class="c-row"><span class="c-rung">'+LU('ticket')+'</span><span class="c-nm">Charter Contract</span></div>'
+    +'<div class="c-row"><span class="c-lbl">fare</span><span class="c-cost">'+cost(2,0)+'</span></div>'
+  +'</div></div>';}
 
 // ---- player brewery board ----
 function vessel(n,open){
@@ -588,7 +599,6 @@ function buildPages(){
   NEUTRALS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push(['Neutral buildings',genTile(d,'tn')]);});
   ROOMS.concat(MODS).forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push(['Upgrades',genTile(Object.assign({},d,{g:0}),'tu')]);});   // upgrades earned, not bought (v0.12.3) — no cost badge
   GOALS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push(['Goals',genTile(d,'tg')]);});
-  for(let i=0;i<cnt(CONTRACTS.n);i++)tiles.push(['Charter contracts',genTile(CONTRACTS,'tn')]);   // v0.16 scarce certificate
   // group page-assignment by family for the checklist, but pack as ONE run
   packRun(pages,'tiles','Tiles — unbroken 1.25″ grid','tile',tiles.map(t=>t[1]),null,famPages);
   // re-walk to tag families by index
@@ -608,6 +618,8 @@ function buildPages(){
   const cards=[];const sets=MODE==='proof'?1:PLAYERS.length;
   for(let s=0;s<sets;s++)RECIPES.forEach(r=>cards.push(recipeCard(r)));
   packRun(pages,'cards','Export recipe cards — 1 set per player','card',cards,'Recipe cards',famPages);
+  const contractCards=[];for(let i=0;i<cnt(CONTRACTS.n);i++)contractCards.push(contractCard());   // v0.16 charter contracts = cards
+  packRun(pages,'cards','Charter contract cards','card',contractCards,'Charter contracts',famPages);
   // cardstock + paper cutter: cut lines print on the ART layer as grey guides (no laser pass)
   pages.filter(p=>p.section==='cards').forEach(p=>p.papercut=true);
   // --- CHECKLIST (always last; carries no cuts, so earlier sheets stay page-aligned) ---
@@ -624,7 +636,7 @@ function pgRef(pages,famPages,fam){const s=famPages[fam];if(!s)return '—';
   return 'S'+[...s].map(i=>pages[i].no).sort((a,b)=>a-b).join(', S');}
 function checklist(pages,famPages){
   const tileTotal=CASKS.reduce((a,d)=>a+d.n,0)+SHIP_DECK.length+NEUTRALS.length
-    +ROOMS.concat(MODS).reduce((a,d)=>a+d.n,0)+GOALS.reduce((a,d)=>a+d.n,0)+CONTRACTS.n;
+    +ROOMS.concat(MODS).reduce((a,d)=>a+d.n,0)+GOALS.reduce((a,d)=>a+d.n,0);
   const row=(bx,nm,n,note)=>'<tr>'+(bx?'<td class="bx"></td>':'<td></td>')+'<td>'+nm+'</td><td class="n">'+n+'</td><td>'+(note||'')+'</td></tr>';
   const bp=pages.filter(p=>p.section==='boards');
   const pbRef=bp.length>3?'S'+bp[2].no+'–S'+bp[bp.length-1].no:'S'+bp[2].no+' (proof: 1 of 5 shown)';
@@ -647,11 +659,11 @@ function checklist(pages,famPages){
     +row(1,'Upgrade · Extra Vessel ⚙ (supply = players+1)','6',pgRef(pages,famPages,'Upgrades'))
     +row(1,'Upgrades · 11 other designs ×2 (5 Rooms + 6 Modifiers)','22','')
     +row(1,'Goals (9 designs ×2 ⚙ — 4–5p deal 3 each)','18',pgRef(pages,famPages,'Goals'))
-    +row(1,'Charter contracts ⚙ (start 2/house · buy at Market 1 G · spend 1 + 2 G fare)','20',pgRef(pages,famPages,'Charter contracts'))
     +'<tr class="tot"><td></td><td>Tile total</td><td class="n">'+tileTotal+'</td><td></td></tr></table>';
   h+='<table><tr><th></th><th>Cards — 1.85×2.55″ (cardstock, do NOT mount)</th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Export recipes · Broyhan / Keut / Mumme / Bock ×5 (1 per player ⚙)','20',pgRef(pages,famPages,'Recipe cards'))
     +row(0,'<i>Gruit &amp; Hopped — printed on every brewery board (no card)</i>','—','')
+    +row(1,'Charter contracts ⚙ (start 2/house · buy at Market 1 G · spend 1 + 2 G fare)','20',pgRef(pages,famPages,'Charter contracts'))
     +'</table>';
   h+='<table><tr><th></th><th>Tokens &amp; markers (chipboard discs/squares)</th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Grain tokens 0.7″ (or ~60 wooden cubes)','60',pgRef(pages,famPages,'Goods tokens'))
