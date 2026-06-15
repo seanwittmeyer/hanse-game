@@ -144,8 +144,8 @@ function botHarbor(p){
   var canCharter=(p.contracts||0)>0&&canPay(p,charterCost(p))&&charterCasks(p).length>0;
   var jammed=emptySlots().length===0;
   var noHull=myShips(p).length===0 && !canPay(p,{g:2});
-  var launch=myShips(p).filter(function(s){return S.slots[s].load.some(function(L){return L.owner===p.id;});});
-  if(launch.length){harborLaunch(launch[0]);return;}   // free delivery beats a paid charter
+  // v0.16: no partial early-launch — a hull sails only when full (loadOnto handles it). The relief valve
+  // is the contract-gated Charter when the slots jam, the end nears, or there's a stranded Ready cask.
   if(canCharter && (jammed || S.ending || noHull)){__charters++;harborCharter();return;}
   cellDone();
 }

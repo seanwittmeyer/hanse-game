@@ -368,12 +368,14 @@ const ENSHRINE_FEE={};   // ⚙ v0.15: no fare/fee — the throttle is STRUCTURA
 // Nobody owns a ship. Each tile is PRINTED with hull + destination and comes off a shuffled SHIP
 // DECK (the next tile always face-up beside the Market). COMMISSION at the Market (2G ⚙): place
 // the face-up ship on any open slot AND immediately load one of your Ready casks aboard for free
-// (slot or vessel) — the commissioner's berth. You load YOUR OWN casks only; the destination's
-// IMMEDIATE benefit (goods / an Upgrade) is paid the moment a cask is LOADED (grantImmediate), not
-// on sail. Full → it sails: every cask aboard is DELIVERED (points sealed). The player who fills a
-// ship gets NO bonus (they only chose which cask completed it). Commissioning (not filling) feeds
-// the merchant goal. The old "ship a rival's cask" rule is CUT (FINDINGS-v26 B1).
-// (v0.11.2: benefit-on-load · commissioner's free load · no fill fee · merchant goal = commission.)
+// (slot or vessel) — the commissioner's berth. Load any cask (yours or a rival's). A ship SAILS
+// ONLY WHEN FULL (v0.16 "ships sail full" — partial early-launch is retired); the filler gets NO
+// bonus (they only chose which cask completed it). DELIVERY is when value ★ + majority seal AND
+// when the destination's benefit (goods / an Upgrade) is paid to each cask's OWNER — resolved in
+// LOAD ORDER (the ship's first/second/third berths). Commissioning (not filling) feeds the
+// merchant goal.
+// (v0.16: benefit-on-DELIVERY, not on load — the urgency to fill & sail; reverses v0.11.2's
+//  benefit-on-load, which had removed the reason to ever sail a part-loaded hull.)
 const SHIP_CAP={cog:2,hulk:3};
 const SHIP_NAME={cog:'Cog',hulk:'Hulk'};
 const COMMISSION_COST={g:2};   // ⚙ flat — the face-up tile decides hull & destination
@@ -491,7 +493,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v45'; // v0.16 "Charter Contracts" ⚙: charters gated by a SCARCE OWNABLE certificate (start 2, buy more at the Market for 1G) + a FLAT 2G fare — RETIRES the escalating track-fare row; the contract is the throttle that pushes cargo onto the shared hulls. (Prior: v0.15 "Enshrine" — local Enshrine, Trophy Room, Patron’s Favor.) bump discards stale v44 state
+const KEY='hanse-hotseat-v46'; // v0.16 "Ships Sail Full" ⚙: ships sail ONLY when full (partial early-launch retired) + the destination benefit is paid on DELIVERY, not on load (in load order — the first/second/third berths) — so filling-and-sailing is the only payoff, the urgency that reverses v0.11.2's under-fill. (Wave 1 same batch: charter CONTRACTS — start 2, buy at the Market for 1G + flat 2G fare.) bump discards stale v45 state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -647,7 +649,7 @@ const CELLTIP={
   Market:'Market · Source. Take 2 goods (any mix), OR buy a recipe / commission a ship. (Upgrades aren’t for sale — earn one free by delivering to London/Novgorod.) Never closed (move onto a rival here for 1G).',
   Brewhouse:'Brewhouse · Brew. Load one recipe you hold (paying its G/H) into an open vessel as a young cask. Never closed (move onto a rival here for 1G).',
   Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' age points to allocate across your vessels (your casks also age +1 automatically each turn). When a cask is Ready, set it on a slot.',
-  Harbor:'Harbor · Ship — your ship-options hub. Load ANY cask (yours or a rival’s — you pick the destination; the owner scores it, you take a loader bonus) onto any ship it qualifies for; the owner banks that destination’s benefit on loading. Launch a ship early, or Charter a single cask. A ship sails full, delivering every cask for points. Never closed.',
+  Harbor:'Harbor · Ship — your ship-options hub. Load ANY cask (yours or a rival’s — you pick the destination; the owner scores it, you take a loader bonus) onto any ship it qualifies for. A ship sails ONLY when full — then every cask is delivered: its owner banks that destination’s benefit AND its points, in load order. Or Enshrine a Q2+ slot cask at the Hall, or Charter a single cask. Never closed.',
 };
 function tileTip(t){
   if(!t)return 'An open slot — Ready casks deploy here (becoming public action-buildings + cargo), and you build ships here.';
@@ -827,7 +829,7 @@ function commLoad(ref){const p=cur();const shipSlot=UI.tmp.commShipSlot;const sh
   if(ref[0]==='v'){const i=+ref.slice(2);c=p.vessels[i];p.vessels[i]=null;}else{c=S.slots[ref];S.slots[ref]=null;}
   sh.load.push({owner:p.id,style:c.style,q:c.q});sh.lastLoader=p.id;
   log(p.name+' loads '+LU('beer')+styleShort(c.style)+' onto the new '+shipName(sh)+' (free, on commission) — '+sh.load.length+'/'+effCap(sh)+'.',true);
-  grantImmediate(p,sh.dest);
+  // v0.16: NO benefit on load — it's paid on delivery (when the full hull sails). The berth is the prize.
   UI.stage=null;UI.tmp.commShipSlot=null;
   afterSail('stops');}
 function commSkip(){UI.stage=null;UI.tmp.commShipSlot=null;cellDone();}
@@ -943,7 +945,7 @@ function loadOnto(shipSlot){const p=cur();const caskSlot=UI.load.cask;const sh=S
   sh.load.push({owner:ct.owner,style:ct.style,q:ct.q});S.slots[caskSlot]=null;
   sh.lastLoader=p.id;
   log(p.name+' '+LU('ship')+' loads '+LU('beer')+ownSq(ct.owner)+styleShort(ct.style)+' onto the '+LU('sailboat')+shipName(sh)+' → <b>'+DEST[sh.dest].name+'</b> ('+sh.load.length+'/'+effCap(sh)+').',true);
-  grantImmediate(S.players[ct.owner],sh.dest);   // benefit to the cask's OWNER, on LOAD
+  // v0.16: the destination benefit is NOT paid here — it seals on DELIVERY (when the full hull sails).
   if(ct.owner!==p.id){gain(p,LOADER_BONUS.g,0);log('↳ '+p.name+' takes a loader bonus for shipping '+S.players[ct.owner].name+'’s cask (and chose the destination).');}
   const rt=UI.load.returnTo;
   if(sh.load.length>=effCap(sh)){UI.load=null;sailShip(shipSlot,p.id);afterSail(rt);return;}
@@ -955,31 +957,32 @@ function loadBack(){UI.load.cask=null;render();}
 function loadSkip(){const rt=UI.load.returnTo;UI.load=null;resume(rt);}
 
 // ---------- SHIPS: sail & deliver (neutral hulls — v0.11 B) ----------
-// creditId: the player whose action sent it off — the FILLER (full ship: + the dispatch fee ⚙)
-// or the LAUNCHER (partial: goal credit only).
+// A ship sails ONLY when full (v0.16). creditId = the player who loaded the filling cask (the filler);
+// they get no bonus — the prize is that the voyage seals everyone's points + benefits (below).
 function sailShip(slot,creditId){const t=S.slots[slot];
   log('★ the '+LU('sailboat')+' <b>'+shipName(t)+'</b> sails to <b>'+DEST[t.dest].name+'</b> with '+t.load.length+' '+LU('beer')+' cask'+(t.load.length===1?'':'s')+'! Every cask aboard is delivered. (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')');
-  // points only — each cask's IMMEDIATE benefit was already paid when it was loaded (grantImmediate)
-  t.load.forEach(L=>deliverCask(S.players[L.owner],L.style,L.q,t.dest));
+  // v0.16: DELIVERY seals both halves — each cask's OWNER banks the destination benefit (goods / an
+  // Upgrade) AND its points, resolved in LOAD ORDER (the ship's first/second/third berths). This is the
+  // payoff that makes filling-and-sailing worth it (benefit-on-load, v0.11.2, had removed that urgency).
+  t.load.forEach(L=>{const owner=S.players[L.owner];grantImmediate(owner,t.dest);deliverCask(owner,L.style,L.q,t.dest);});
   S.slots[slot]=null;S.sailed++;
   // the hull returns to the yard: sailed ships go to the BOTTOM of the ship deck (the supply never
   // dries up); the Sailed-Ships clock advances by marker, not by consumed tiles ⚙
   S.shipDeck.push({ship:t.ship,dest:t.dest});
   refillShipDisplay();
 }
-// v0.11.2: the destination's IMMEDIATE benefit (goods / an Upgrade) is paid the moment a cask is
-// LOADED onto a hull bound there — NOT when the ship sails. (The POINTS — value ★ + majorities — are
-// sealed only on delivery, in deliverCask.) This makes benefit resolution one cask at a time (clean
-// at the table), rewards the load itself, and means a cask loaded onto a hull that never sails still
-// earned its benefit but scores no points. The loader is always the cask's owner (own casks only).
+// v0.16: the destination's benefit (goods / an Upgrade) is paid to the cask's OWNER on DELIVERY —
+// when the full hull sails (called per cask, in load order, from sailShip; and from charter, which
+// delivers instantly). Points (value ★ + majorities) seal at the same moment, in deliverCask. The
+// fn name is legacy; it is no longer "immediate on load." (Charter/Enshrine ARE the moment of delivery.)
 function grantImmediate(lp,dest){
-  if(DEST[dest].kontor&&hasUpgrade(lp,'staple'))gain(lp,1,0);   // Staple Right: +1 good on any kontor load
-  if(dest==='bruges'||dest==='bergen'){gain(lp,2,0);log('↳ '+lp.name+' takes the '+DEST[dest].name+' liquidity benefit on loading.');}
+  if(DEST[dest].kontor&&hasUpgrade(lp,'staple'))gain(lp,1,0);   // Staple Right: +1 good on any kontor delivery
+  if(dest==='bruges'||dest==='bergen'){gain(lp,2,0);log('↳ '+lp.name+' takes the '+DEST[dest].name+' liquidity benefit on delivery.');}
   else if(dest==='london'||dest==='novgorod'){
-    log('↳ '+lp.name+' earns a free '+LU('wrench')+' Upgrade (loading toward '+DEST[dest].name+').');
+    log('↳ '+lp.name+' earns a free '+LU('wrench')+' Upgrade (delivering to '+DEST[dest].name+').');
     if(lp.id===S.active)(UI.pendingBenefits=UI.pendingBenefits||[]).push({pid:lp.id,dest});
-    else autoGrantDisplay(lp,dest);}   // a rival owner (their cask was loaded on your turn) auto-takes one
-  // the Hall pays no immediate benefit — only prestige points, sealed on delivery
+    else autoGrantDisplay(lp,dest);}   // a rival owner (their cask sailed on your turn) auto-takes one
+  // the Hall pays no benefit — only prestige points, sealed on delivery (Enshrine)
 }
 // the cask is DELIVERED (its points count at game end): recorded on sail, or on an instant charter.
 function deliverCask(lp,style,q,dest){lp.delivered.push({style,q,dest});
@@ -1005,9 +1008,8 @@ function benefitPick(key){snapshot();const b=UI.pendingBenefits[0];grantUpgrade(
 
 // ---------- HARBOR menu ----------
 function harborLoad(){const p=cur();const loads=1+(hasUpgrade(p,'quay')?1:0)+(hasUpgrade(p,'cooperage')?1:0);enterLoad(myShips(p),shipLoadableCasks(p),false,'stops',loads,'harbor');}
-function harborLaunch(slot){const p=cur();const t=S.slots[slot];
-  if(!t||!t.load.some(L=>L.owner===p.id)){log('↳ you may only launch a ship carrying one of your casks.');cellDone();return;}
-  snapshot();sailShip(slot,p.id);afterSail('stops');}
+// v0.16: partial early-launch is RETIRED — a ship sails only when full (loadOnto fires sailShip when
+// load.length hits effCap). The relief valves are now Charter (a contract + fare) and Enshrine.
 // Charter — the relief valve: pay to send ONE of your Ready casks (vessel or wharf) on a single-cask voyage now.
 function charterCasks(p){const out=readyInVessels(p).map(o=>({ref:'v:'+o.i,style:o.c.style,q:o.c.q}));
   wharfCaskSlots().forEach(id=>{if(S.slots[id].owner===p.id)out.push({ref:id,style:S.slots[id].style,q:S.slots[id].q});});return out;}
@@ -1425,11 +1427,8 @@ function aiHarbor(p){
   const canLoad=myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs)));
   if(canLoad){harborLoad();return;}
   // Charter only as a genuine relief valve: slots jammed, the end-game rush, or no hull & can't build.
-  // prefer EARLY-LAUNCHING a ship that carries your cask (a free delivery + frees the slot) over a
-  // PAID charter — same clock cost, but the launch costs no fare and seals your points (correct play
-  // the no-fill-fee economy doesn't signal). If a ship were fillable, canLoad above already fired.
-  const launch=myShips(p).filter(s=>S.slots[s].load.some(L=>L.owner===p.id));
-  if(launch.length){harborLaunch(launch[0]);return;}
+  // (v0.16: no more partial early-launch — a hull you can't fill must wait for more cargo, or you charter
+  // out the stranded cask. If a ship were fillable, canLoad above already fired and sailed it.)
   const canCh=(p.contracts||0)>0&&canPay(p,charterCost(p))&&charterCasks(p).length>0;
   const jammed=emptySlots().length===0;
   const noHull=myShips(p).length===0&&!canPay(p,{g:2});
@@ -1569,7 +1568,6 @@ function aiGmOptions(p){
       return DESTS.filter(d=>d!=='hall'&&c.q>=DEST[d].gate).map(d=>()=>charterDest(d));}
     const o=[];
     if(myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs))))o.push(()=>harborLoad());
-    myShips(p).filter(s=>S.slots[s].load.some(L=>L.owner===p.id)).forEach(s=>o.push(()=>harborLaunch(s)));
     if(enshrineCasks(p).length>0)o.push(()=>harborEnshrine());
     if((p.contracts||0)>0&&canPay(p,charterCost(p))&&charterCasks(p).length>0)o.push(()=>harborCharter());
     o.push(()=>cellDone());
@@ -1698,7 +1696,7 @@ function renderAid(){
       +ic('store')+' <b>Market</b> (Source): take 2 goods, or buy a recipe / commission a ship.<br>'
       +ic('flask-conical')+' <b>Brewhouse</b> (Brew): pay a recipe → a young cask in a vessel.<br>'
       +ic('hourglass')+' <b>Cellar</b> (Age): 3 age points across your casks (every cask also ages +1 each of your turns).<br>'
-      +ic('anchor')+' <b>Harbor</b> (Ship): load a Ready cask onto a ship (→ a kontor), <b>Enshrine</b> a Q2+ <i>slot</i> cask at the '+ic('crown')+' Hall (local — no boat), launch a partial ship early, or Charter.</div></div>'
+      +ic('anchor')+' <b>Harbor</b> (Ship): load a Ready cask onto a ship (→ a kontor; it sails when full, paying each owner the benefit + points on delivery), <b>Enshrine</b> a Q2+ <i>slot</i> cask at the '+ic('crown')+' Hall (local — no boat), or Charter.</div></div>'
     +'<div class="asec"><b>Destinations</b> <span class="note">gate · value · majority 1st/2nd/3rd · benefit · (Hall = local Enshrine; ships sail to kontore only)</span>'
       +'<table class="atable"><tr><th>Destination</th><th>Gate</th><th>Value</th><th>Majority</th><th>Benefit</th></tr>'+dests+'</table>'
       +'<div class="note">Export premium: a Q4 cask <b>+1</b> ★, a Q5 <b>+2</b> ★, at any kontor. <b>2-player skips 2nd place.</b></div></div>'
@@ -1817,15 +1815,13 @@ function cellRender(p){
       return {prompt:'Enshrine at the '+LU('crown')+' Hall — pick a Q2+ cask <b>deployed on a slot</b> to present locally ('+UI.tmp.enshrineLeft+' left). No boat, no fare — but it must be on the wharf, not in a vessel.',
         acts:(cs.length?cs.map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.style)+' Q'+o.q+' · slot','enshrinePick(\''+o.ref+'\')','go')).join(''):'<span class="note">no Q2+ casks on your slots — deploy one first</span> ')+btn('Done','afterSail(\'stops\')','ghost')};}
     const canLoad=myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs)));
-    const launch=myShips(p).filter(s=>S.slots[s].load.some(L=>L.owner===p.id));
     const canCharter=(p.contracts||0)>0&&canPay(p,charterCost(p))&&charterCasks(p).length>0;
     const canEnshrine=enshrineCasks(p).length>0;
-    let acts=(canLoad?btn(LU('ship')+' Load a cask → ship','harborLoad()','primary'):'');
-    launch.forEach(s=>{const sh=S.slots[s];acts+=btn(LU('sailboat')+' Launch '+shipName(sh)+'→'+DEST[sh.dest].name+' early ('+sh.load.length+'/'+effCap(sh)+')','harborLaunch(\''+s+'\')');});
+    let acts=(canLoad?btn(LU('ship')+' Load a cask → ship (sails when full)','harborLoad()','primary'):'');
     if(canEnshrine)acts+=btn(LU('crown')+' Enshrine → the Hall (local'+(enshrineCap(p)>1?', ×2':'')+')','harborEnshrine()');
     if(canCharter)acts+=btn(LU('ticket')+' Charter → a kontor ('+costStr(charterCost(p))+' + contract, '+(p.contracts||0)+' left)','harborCharter()');
-    if(!canLoad&&!launch.length&&!canCharter&&!canEnshrine)acts+='<span class="note">nothing to ship yet</span> ';
-    return {prompt:'Ship — load a cask onto a ship, launch one early, Enshrine a Q2+ cask at the Hall (local), or Charter a kontor voyage.',acts:acts+btn('Skip','cellDone()','ghost')};
+    if(!canLoad&&!canCharter&&!canEnshrine)acts+='<span class="note">nothing to ship yet</span> ';
+    return {prompt:'Ship — load a cask onto a ship (it sails when full), Enshrine a Q2+ cask at the Hall (local), or Charter a kontor voyage.',acts:acts+btn('Skip','cellDone()','ghost')};
   }
   return {prompt:'',acts:''};
 }
