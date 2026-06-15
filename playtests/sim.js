@@ -35,7 +35,7 @@ function needShip(p){
 // a CELLARMASTER seat (__cellar) INCLUDES it, to diagnose whether a well-played Q5 path is competitive).
 function buyableExports(p){return (S.exports||[]).filter(function(s){return !p.recipes.includes(s)&&(p.__cellar||!STYLES[s].cellar)&&canPay(p,RECIPE_BUY[s]);});}
 function wantRecipe(p){return buyableExports(p).length>0;}
-function pickUpgrade(list){var pref=['vessel','cellar','quay','cooperage','royal','staple','guild','warehouse','granary','hopgarden','burgher'];
+function pickUpgrade(list){var pref=['vessel','cellar','quay','cooperage','trophy','royal','staple','guild','warehouse','granary','hopgarden','burgher'];
   for(var i=0;i<pref.length;i++)if(list.indexOf(pref[i])>=0)return pref[i];return list[0];}
 function destFor(p,q,konPref){var elig=DESTS.filter(function(d){return q>=DEST[d].gate;});
   if(q>=4 && Math.random()<0.3 && elig.indexOf('hall')>=0)return 'hall';
@@ -127,8 +127,13 @@ function botMarket(p){
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
 function botHarbor(p){
+  if(UI.stage==='enshrine'){var ec=enshrineCasks(p).filter(function(o){return personaDest(p,o.q)==='hall';}).sort(function(a,b){return b.q-a.q;});
+    if(ec.length){enshrinePick(ec[0].ref);return;}afterSail('stops');return;}
   if(UI.stage==='charter_cask'){var cs=charterCasks(p).slice().sort(function(a,b){return b.q-a.q;});charterPickCask(cs[0].ref);return;}
-  if(UI.stage==='charter_dest'){var ref=UI.tmp.charterCask;var c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];charterDest(personaDest(p,c.q));return;}
+  if(UI.stage==='charter_dest'){var ref=UI.tmp.charterCask;var c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
+    var ds=DESTS.filter(function(d){return d!=='hall'&&c.q>=DEST[d].gate;});var d=personaDest(p,c.q);charterDest(ds.indexOf(d)>=0?d:(ds[0]||'bruges'));return;}
+  // ENSHRINE (v0.15): a Ready Q2+ cask whose persona-destination is the Hall → showcase it locally (no boat)
+  if(enshrineCasks(p).some(function(o){return personaDest(p,o.q)==='hall';})){harborEnshrine();return;}
   var canLoad=myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});});
   if(canLoad){harborLoad();return;}
   // Charter only as a genuine relief valve: wharf jammed, end-game rush, or no hull & can't build one.

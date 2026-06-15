@@ -343,7 +343,7 @@ const DEST={
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
 const DESTS=['bruges','london','bergen','novgorod','hall'];
-const HALL_PTS={2:5,3:7,4:10,5:12}; // ⚙ prestige points at the Hall, a PRINTED ladder by quality (v0.12.3: was the
+const HALL_PTS={2:4,3:6,4:8,5:10}; // ⚙ prestige points at the Hall, a PRINTED ladder by quality (v0.15: trimmed 5/7/10/12→4/6/8/10 — the local Enshrine removed the shipping friction that was masking how high the Hall value was). Was the
 // formula Q×2.5-floored = these same integers; replaced with the explicit table — no in-game math, read it off the tile).
 // v0.10 set the curve to keep the prestige lean competitive vs the big kontor majorities (the Hall contests no majority → bigger per-cask hit).
 // ⚙ A3 (Batch A): the EXPORT PREMIUM — a delivered Q4 cask scores +1, a Q5 +2, at ANY kontor
@@ -362,6 +362,7 @@ function flightScore(p){const t=flightTiers(p);return (t>=FLIGHT_MIN)?(FLIGHT_PT
 // ---- MASTERPIECE (v0.13 ⚙): the first time you deliver the game's TOP export tier (Q5 Bock when dealt,
 // else the highest dealt = Q4) — a one-time +3★ and +3 goods, the magnum-opus moment that pays the climb back.
 const MASTERPIECE={star:3, goods:3};
+const ENSHRINE_FEE={};   // ⚙ v0.15: no fare/fee — the throttle is STRUCTURAL (must enshrine a cask already DEPLOYED to a slot; re-adds the deploy step + slot-occupancy cost the boat used to impose) + action-economy (one Harbor visit, one cask). User directive: corrective is structure, not a fee.
 
 // ---- SHIPS (v0.11 Batch B ⚙): NEUTRAL, destination-bound shared hulls ----
 // Nobody owns a ship. Each tile is PRINTED with hull + destination and comes off a shuffled SHIP
@@ -378,14 +379,13 @@ const SHIP_NAME={cog:'Cog',hulk:'Hulk'};
 const COMMISSION_COST={g:2};   // ⚙ flat — the face-up tile decides hull & destination
 const LOADER_BONUS={g:1};       // ⚙ v0.12: you may load a RIVAL's cask onto a ship (you choose the destination); the owner scores it, you take this loader bonus
 const SHIP_DISPLAY=3;          // ⚙ face-up ship-market size — pick from this many (avoids a single bad-destination tile stalling the yard)
-const SHIP_DECK_MIX=[          // ⚙ 20 hulls (v0.11.3, up from 14) — enlarged so the 4–5p clock rarely
-  // recycles (less deterministic); recycling kept as a safety. Per dest: Bruges 4 · London 4 · Bergen 4
-  // · Novgorod 5 (premium, hard gate) · Hall 3 (~15%). 11 Cogs / 9 Hulks.
-  ['cog','bruges'],['cog','bruges'],['cog','bruges'],['hulk','bruges'],
-  ['cog','london'],['cog','london'],['hulk','london'],['hulk','london'],
-  ['cog','bergen'],['cog','bergen'],['hulk','bergen'],['hulk','bergen'],
-  ['cog','novgorod'],['cog','novgorod'],['hulk','novgorod'],['hulk','novgorod'],['hulk','novgorod'],
-  ['cog','hall'],['cog','hall'],['hulk','hall'],
+const SHIP_DECK_MIX=[          // ⚙ 20 hulls — KONTORE ONLY (v0.15: ships sail overseas to trade posts; the
+  // Hall is reached by a LOCAL ENSHRINE, not a boat). Per dest: Bruges 5 · London 5 · Bergen 5 · Novgorod 5.
+  // 11 Cogs / 9 Hulks.
+  ['cog','bruges'],['cog','bruges'],['cog','bruges'],['hulk','bruges'],['hulk','bruges'],
+  ['cog','london'],['cog','london'],['cog','london'],['hulk','london'],['hulk','london'],
+  ['cog','bergen'],['cog','bergen'],['hulk','bergen'],['hulk','bergen'],['hulk','bergen'],
+  ['cog','novgorod'],['cog','novgorod'],['cog','novgorod'],['hulk','novgorod'],['hulk','novgorod'],
 ];
 const CHARTER_COST={g:2};   // legacy floor fare (kept for the headless harness; use charterCost())
 // ⚙ A2′ (v0.11, supersedes the per-player escalation): the charter fare is a SHARED MARKET PRICE
@@ -421,6 +421,7 @@ const ROOMS={
   warehouse:{name:'Warehouse',     desc:'+4 goods storage'},
   quay     :{name:'Quay',          desc:'load up to 2 casks in one Harbor visit'},
   cooperage:{name:'Cooperage',     desc:'+1 cask loaded per Harbor visit (stacks with Quay)'},
+  trophy   :{name:'Trophy Room',    desc:'Enshrine 2 casks at the Hall per Harbor action (instead of 1)'},
 };
 const MODS={
   granary  :{name:'Granary Right', desc:'when you gain grain, +1 extra'},
@@ -438,7 +439,7 @@ function upDesc(k){return (UP[k]||{desc:''}).desc;}
 // (v0.11 B: the old always-stocked ship supply is gone — ships come off the SHIP DECK via Commission)
 // Upgrade buy cost (when bought from the face-up display) — priced to ~a kontor delivery's goods cost so
 // buying competes with, but doesn't dominate, EARNING one free by delivering to London/Novgorod.
-const UPGRADE_BUY={vessel:{g:5},cellar:{g:5},warehouse:{g:4},quay:{g:5},cooperage:{g:4},
+const UPGRADE_BUY={vessel:{g:5},cellar:{g:5},warehouse:{g:4},quay:{g:5},cooperage:{g:4},trophy:{g:5},
   granary:{g:4},hopgarden:{g:4},royal:{g:4},staple:{g:5},guild:{g:4},burgher:{g:5}};
 const DISPLAY_SIZE=4;   // face-up Upgrade display (Market option B) ⚙
 
@@ -495,7 +496,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v40'; // v0.14 ⚙: Bock UNGATED + 3G2H (Aging Cellar now a pathway: −1 step, not a requirement) — makes the Q5/full-flight reachable; bump discards stale state
+const KEY='hanse-hotseat-v43'; // v0.15 ⚙: the Hall is a LOCAL Enshrine (no boat/fee; cask must be DEPLOYED on a slot — structural throttle, stays contestable; ships+charter = kontore only) + the Trophy Room upgrade (enshrine 2); bump discards stale state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1023,6 +1024,25 @@ function charterDest(dest){const p=cur();
   log(p.name+' charters a '+LU('sailboat')+' single voyage — '+LU('beer')+' '+styleShort(c.style)+' → <b>'+DEST[dest].name+'</b>. (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')',true);
   grantImmediate(p,dest);deliverCask(p,c.style,c.q,dest);S.sailed++;afterSail('stops');
 }
+// ENSHRINE (v0.15) — the LOCAL prestige delivery: present a Q2+ cask to the Hall, no boat, no fare.
+// THROTTLE (no fee — structural): the cask must already be DEPLOYED to a public slot (not in a vessel),
+// which re-adds the deploy step + slot-occupancy cost the boat used to impose AND keeps the prized cask
+// CONTESTABLE on the ring (a rival can hijack-load it to a kontor before you enshrine — v0.12 rule).
+// One per Harbor action (TWO with the Trophy Room). It competes with Load/Charter for the Harbor visit,
+// advances the Sailed-Ships clock like any delivery, and (the Hall's benefit is 'none') returns nothing
+// in-game — pure end-game prestige + the Flight + the Masterpiece.
+function enshrineCasks(p){return charterCasks(p).filter(c=>c.q>=DEST.hall.gate&&c.ref[0]!=='v');}
+function enshrineCap(p){return 1+(hasUpgrade(p,'trophy')?1:0);}
+function harborEnshrine(){snapshot();UI.tmp.enshrineLeft=enshrineCap(cur());UI.stage='enshrine';render();}
+function enshrinePick(ref){const p=cur();if(!canPay(p,ENSHRINE_FEE)){afterSail('stops');return;}let c;
+  if(ref[0]==='v'){const i=+ref.slice(2);c=p.vessels[i];p.vessels[i]=null;}else{c=S.slots[ref];S.slots[ref]=null;}
+  pay(p,ENSHRINE_FEE);
+  if(!aiSimulating)log(p.name+' enshrines '+LU('beer')+' '+styleShort(c.style)+' Q'+c.q+' at the '+LU('crown')+' <b>Hall</b> — a local act of prestige. (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')',true);
+  deliverCask(p,c.style,c.q,'hall');S.sailed++;
+  UI.tmp.enshrineLeft--;
+  if(UI.tmp.enshrineLeft>0&&enshrineCasks(p).length>0){render();return;}   // Trophy Room: enshrine another
+  afterSail('stops');
+}
 
 // ---------- cap dispatchers ----------
 function enterCaskAct(slot,t){const p=cur();const act=caskAct(t);
@@ -1281,7 +1301,7 @@ function aiBuyableExports(p){return (S.exports||[]).filter(s=>!p.recipes.include
 function aiPickUpgrade(p,list){
   if(aiIsApp(p))return aiRandOf(list);
   if((aiIsTrader(p)||aiDeepRollout())&&(S.exports||[]).includes('bock')&&!hasUpgrade(p,'cellar')&&list.includes('cellar'))return 'cellar';  // rollout grabs the Aging Cellar to enable the Bock climb
-  const pref=['vessel','cellar','quay','cooperage','royal','staple','guild','warehouse','granary','hopgarden','burgher'];
+  const pref=['vessel','cellar','quay','cooperage','trophy','royal','staple','guild','warehouse','granary','hopgarden','burgher'];
   for(const k of pref)if(list.includes(k))return k;return list[0];}
 // Majority SWING for one more cask of presence at kontor k: my award delta PLUS what rivals lose.
 // (A pure own-margin never contests a race you trail; the swing is what a delivery actually moves —
@@ -1390,8 +1410,13 @@ function aiMarket(p){
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
 function aiHarbor(p){
+  if(UI.stage==='enshrine'){const cs=enshrineCasks(p).filter(o=>aiDest(p,o.q,o.style)==='hall').sort((a,b)=>b.q-a.q);
+    if(cs.length){enshrinePick(cs[0].ref);return;}afterSail('stops');return;}
   if(UI.stage==='charter_cask'){const cs=charterCasks(p).slice().sort((a,b)=>b.q-a.q);charterPickCask(cs[0].ref);return;}
-  if(UI.stage==='charter_dest'){const ref=UI.tmp.charterCask;const c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];charterDest(aiDest(p,c.q,c.style));return;}
+  if(UI.stage==='charter_dest'){const ref=UI.tmp.charterCask;const c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
+    const ds=DESTS.filter(d=>d!=='hall'&&c.q>=DEST[d].gate);const d=aiDest(p,c.q,c.style);charterDest(ds.indexOf(d)>=0?d:(ds[0]||'bruges'));return;}
+  // ENSHRINE first: any Ready Q2+ cask whose best destination is the Hall → showcase it locally (no boat)
+  if(enshrineCasks(p).some(o=>aiDest(p,o.q,o.style)==='hall')){harborEnshrine();return;}
   const canLoad=myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs)));
   if(canLoad){harborLoad();return;}
   // Charter only as a genuine relief valve: slots jammed, the end-game rush, or no hull & can't build.
@@ -1532,12 +1557,14 @@ function aiGmOptions(p){
     // v0.12.3: no Market upgrade-buy — upgrades are earned only via London/Novgorod delivery.
     return o;}
   if(U==='cell'&&UI.cell==='C'){
+    if(UI.stage==='enshrine'){const e=enshrineCasks(p).map(c=>()=>enshrinePick(c.ref));e.push(()=>afterSail('stops'));return e;}
     if(UI.stage==='charter_cask')return charterCasks(p).map(c=>()=>charterPickCask(c.ref));
     if(UI.stage==='charter_dest'){const ref=UI.tmp.charterCask;const c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
-      return DESTS.filter(d=>c.q>=DEST[d].gate).map(d=>()=>charterDest(d));}
+      return DESTS.filter(d=>d!=='hall'&&c.q>=DEST[d].gate).map(d=>()=>charterDest(d));}
     const o=[];
     if(myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs))))o.push(()=>harborLoad());
     myShips(p).filter(s=>S.slots[s].load.some(L=>L.owner===p.id)).forEach(s=>o.push(()=>harborLaunch(s)));
+    if(enshrineCasks(p).length>0)o.push(()=>harborEnshrine());
     if(canPay(p,charterCost(p))&&charterCasks(p).length>0)o.push(()=>harborCharter());
     o.push(()=>cellDone());
     return o;}
@@ -1767,17 +1794,22 @@ function cellRender(p){
       return {prompt:'Charter — pick a Ready cask to ship now ('+costStr(charterCost(p))+' — the fare is set by the Sailed-Ships track).',
         acts:cs.map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.style)+' Q'+o.q+(o.ref[0]==='v'?' · vessel':' · slot'),'charterPickCask(\''+o.ref+'\')','go')).join('')+btn('Back','(function(){UI.stage=\'harbor\';render();})()','ghost')};}
     if(UI.stage==='charter_dest'){const ref=UI.tmp.charterCask;const c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
-      const ds=DESTS.filter(d=>c.q>=DEST[d].gate);
-      return {prompt:'Charter '+styleShort(c.style)+' (Q'+c.q+') → which destination?',
-        acts:ds.map(d=>btn((DEST[d].kontor?LU('landmark'):LU('crown'))+' '+DEST[d].name,'charterDest(\''+d+'\')','go')).join('')+btn('Back','(function(){UI.stage=\'charter_cask\';render();})()','ghost')};}
+      const ds=DESTS.filter(d=>d!=='hall'&&c.q>=DEST[d].gate);   // charter = overseas trade posts only; the Hall is a local Enshrine
+      return {prompt:'Charter '+styleShort(c.style)+' (Q'+c.q+') → which kontor?',
+        acts:ds.map(d=>btn(LU('landmark')+' '+DEST[d].name,'charterDest(\''+d+'\')','go')).join('')+btn('Back','(function(){UI.stage=\'charter_cask\';render();})()','ghost')};}
+    if(UI.stage==='enshrine'){const cs=enshrineCasks(p);
+      return {prompt:'Enshrine at the '+LU('crown')+' Hall — pick a Q2+ cask <b>deployed on a slot</b> to present locally ('+UI.tmp.enshrineLeft+' left). No boat, no fare — but it must be on the wharf, not in a vessel.',
+        acts:(cs.length?cs.map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.style)+' Q'+o.q+' · slot','enshrinePick(\''+o.ref+'\')','go')).join(''):'<span class="note">no Q2+ casks on your slots — deploy one first</span> ')+btn('Done','afterSail(\'stops\')','ghost')};}
     const canLoad=myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs)));
     const launch=myShips(p).filter(s=>S.slots[s].load.some(L=>L.owner===p.id));
     const canCharter=canPay(p,charterCost(p))&&charterCasks(p).length>0;
+    const canEnshrine=enshrineCasks(p).length>0;
     let acts=(canLoad?btn(LU('ship')+' Load a cask → ship','harborLoad()','primary'):'');
     launch.forEach(s=>{const sh=S.slots[s];acts+=btn(LU('sailboat')+' Launch '+shipName(sh)+'→'+DEST[sh.dest].name+' early ('+sh.load.length+'/'+effCap(sh)+')','harborLaunch(\''+s+'\')');});
-    if(canCharter)acts+=btn(LU('sailboat')+' Charter a voyage ('+costStr(charterCost(p))+')','harborCharter()');
-    if(!canLoad&&!launch.length&&!canCharter)acts+='<span class="note">nothing to ship yet</span> ';
-    return {prompt:'Ship — load a Ready cask from a slot onto a ship, launch one early, or charter a single-cask voyage.',acts:acts+btn('Skip','cellDone()','ghost')};
+    if(canEnshrine)acts+=btn(LU('crown')+' Enshrine → the Hall (local'+(enshrineCap(p)>1?', ×2':'')+')','harborEnshrine()');
+    if(canCharter)acts+=btn(LU('sailboat')+' Charter → a kontor ('+costStr(charterCost(p))+')','harborCharter()');
+    if(!canLoad&&!launch.length&&!canCharter&&!canEnshrine)acts+='<span class="note">nothing to ship yet</span> ';
+    return {prompt:'Ship — load a cask onto a ship, launch one early, Enshrine a Q2+ cask at the Hall (local), or Charter a kontor voyage.',acts:acts+btn('Skip','cellDone()','ghost')};
   }
   return {prompt:'',acts:''};
 }
