@@ -104,36 +104,52 @@ Acquired at the Market (buy + place, or earned by delivering to London/Novgorod)
 placer**, placed on any slot. Under **one grammar — "a building modifies the occupant docked on
 it"** — each is one of two flavors (variety = content, not new rules):
 
-**Value buildings (the variable “demand” — boost a delivery's value):**
+> **Theme is first-class here.** The original goals & upgrades nailed the Hanseatic flavor; the
+> deck carries it forward in *both* the **effects** and the **names** — **trading privileges &
+> patrons** for the *value* verb, the **brewer's craft & harbor works** for the *transform* verb.
+> Each tile should feel like a real Hanse institution, not a stat block. Names/flavor below are
+> the first pass; numbers are ⚙.
 
-| Building | Effect ⚙ | Lane |
-|---|---|---|
-| **Rich Berth** | a **ship** docked here: **each cask it delivers +2★** | demand · volume (full hulls) |
-| **Staple House** | a **cask** docked here delivers **+3★** | demand |
-| **Connoisseur's Cellar** | a **Q4+ cask** docked here delivers **+4★** | demand · range |
-| **Guild Counter** | a **cask** docked here: **+1★ per quality level** | demand · range |
-| **Kontor Privilege** *(×4, one per kontor)* | a cask delivered **to its printed kontor** from here: **+X★** | demand · volume/majority |
-| **Reliquary** | a **cask** docked here, when **enshrined**, scores **+2★** prestige | prestige |
+**Verb 1 — VALUE buildings (make a delivery pay more — *the demand*).** *Trading privileges,
+market rights, and patrons — the institutions of the Hanse.*
 
-**Transform buildings (change the occupant):**
+| Building | Effect ⚙ | Flavor | Lane |
+|---|---|---|---|
+| **Rich Berth** | a **ship** here: each cask it delivers **+2★** | the coveted dockside berth — the whole hold fetches more | demand · volume |
+| **Staple Hall** | a **cask** here delivers **+3★** (any kontor) | your beer is the staple of the market | demand |
+| **Kontor Charter** *(×4: Bruges Hanzehuis · London Steelyard · Bergen Bryggen · Novgorod Peterhof)* | a cask to **its own kontor** from here **+X★** | the Hansa's printed trading privilege | demand · majority |
+| **Burgomaster's Favor** | a **cask** here: **+1★ per quality level** | the mayor drinks only your best — and pays for it | demand · range |
+| **Connoisseur's Cellar** | a **Q4+** cask here **+4★** | the Ratskeller's discerning palate | demand · range |
+| **The Hanse Diet** | a cask here to a kontor **where you lead** **+3★** | the dominant house is feted at the assembly | demand × majority |
+| **Festkeller** | a **full** ship here: **+1★ per cask** | a festival demands a full hold | demand × volume |
+| **Reliquary** | a **cask** here, when **enshrined**: **+2★** prestige | your finest, consecrated | prestige |
+| **Almoner's Stall** | your **wharfage** cut from rivals is **+1★** more | charity that quietly pays | authorship |
 
-| Building | Effect ⚙ | Lane |
-|---|---|---|
-| **Kiln** | a **cask** docked here ships as **+1 quality** (cap Q5) | range · demand |
-| **Aging Loft** | a **cask** docked here ages **+1 / turn** (faster Ready) | range · throughput |
-| **Cooperage** | a **ship** docked here carries **+1 cask** | volume · throughput |
-| **Customs House** | a **ship** docked here may **re-flag its destination** (or −1 gate) | routing · authorship |
-| **Workshop** | a **cask** docked here gains / upgrades its **slot-action** | engine · authorship |
+**Verb 2 — TRANSFORM buildings (change the cask or ship).** *The brewer's craft and the harbor's
+works — the things a house actually builds.*
+
+| Building | Effect ⚙ | Flavor | Lane |
+|---|---|---|---|
+| **Malt Kiln** | a **cask** here ships as **+1 quality** (cap Q5) | kiln-dried malt, a finer brew | range |
+| **Lagering Cellar** | a **cask** here ages **+1 / turn** | cold-stored, it matures to peak faster | range · throughput |
+| **Hop Yard** | a **Q2+** cask here gains **+1 quality** | fresh hops — the beer that travels | range |
+| **Cooperage** | a **ship** here carries **+1 cask** | more barrels, a bigger hold | volume · throughput |
+| **Harbor Crane** | **free-load** a cask when this line fires | the dockside crane does the lifting | tempo |
+| **Customs House** | a **ship** here may **re-flag its destination** (−1 gate) | papers that send cargo anywhere | routing |
+| **Gauger's Office** | a **cask** here **re-qualifies up one gate** | the gauger certifies it fit for the long haul | routing · range |
+| **Brewmaster's Workshop** | a **cask** here **gains / upgrades its slot-action** | the master tinkers; every cask leaves better | engine · authorship |
 
 - **Owned, but shared (one universal rule):** the **owner** gets the full effect and docks
   first; a **rival** may dock on it too — they get the effect, and **you (owner) take a small
   “wharfage” cut** (⚙ **+1★**, capped per delivery — **points, never a goods-skim toll**). *Build
   the dock; tax the traffic, gently.*
-- **Deck ⚙ ~19 tiles, display 4** — e.g. Rich Berth ×2 · Staple House ×2 · Connoisseur ×1 ·
-  Guild Counter ×2 · Kontor Privilege ×1 each (4) · Reliquary ×1 · Kiln ×2 · Aging Loft ×2 ·
-  Cooperage ×1 · Customs House ×1 · Workshop ×1. The vocabulary axes (so new tiles stay
-  one-grammar content): **what it touches** (cask / ship) × **what it does** (boost value /
-  transform) × **on whom** (owner / shared).
+- **Deck ⚙ ~22 tiles across 17 designs, display 4** — value & transform kept roughly balanced,
+  every lane hooked. Counts ⚙: singletons for the swingy/identity tiles (Connoisseur · Hanse
+  Diet · Festkeller · Reliquary · Almoner's Stall · Gauger · Hop Yard · Workshop), ~2 of the
+  workhorses (Rich Berth · Staple Hall · Burgomaster · Malt Kiln · Lagering Cellar · Cooperage ·
+  Harbor Crane · Customs House), Kontor Charter ×1 each (4). The vocabulary axes (so new tiles
+  stay one-grammar content): **what it touches** (cask / ship) × **what it does** (boost value /
+  transform) × **on whom** (owner / shared / a specific kontor).
 
 > **Why this is the keystone:** *what's worth more is what's been built on the living slots* —
 > and the players build it (the GWT player-built track). Each building maps to a lane (right

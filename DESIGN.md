@@ -91,7 +91,9 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   delivery's value** (the variable "demand") or **transforms** the occupant (quality / cargo /
   route). **Owned-but-shared:** the owner benefits most; rivals may route through for less + a
   small points "wharfage." Buildings replace v0.16's goal tiles, neutral buildings, and most
-  upgrades — one content family under one rule.
+  upgrades — one content family under one rule. **A line is half-fixed (its two stations) and
+  half-emergent (its two slots), so your engine *grows into the board*** — placing a building
+  beside a high-traffic line is the core optimization (the heart of v0.17).
 - **Legible scoring.** *In-game:* **Hall enshrine = fixed** (the beginner floor) · **kontor
   deliver = variable** (base + the value-buildings shipped through). *End-game:* **majorities**
   (delivered-cask count) + **the Flight** (distinct quality tiers, (tiers−1)²).

@@ -166,6 +166,18 @@ The 8 slots around the four stations are a **churning, composable commons.** A s
 most slots are casks/ships; a few are buildings that make the goods passing through them worth
 more.
 
+**Why the slots are the fun — the heart of v0.17 (the designer's read).** A line is *half
+fixed, half emergent*: the two **stations** are the steady base actions; the two **slots**
+beside them **evolve over the game.** So every turn you fire a line, half of what it does is the
+engine you've **grown into the board** — and the thrill is landing a **building on a slot of a
+line you fire often** (a high-traffic line), so a high-impact modifier rides your busiest turns.
+Because each slot belongs to **one** line (its row *xor* column), **placing a building commits it
+to a line** — the meaningful row-vs-column choice the original design prized, now with a
+compounding payoff. That single image — *my line's two slots got better because I built them* —
+is the tension, the pushback (rivals route through or crowd your slot), and the optimization the
+whole design is for. Turns run **thin early, compounding late** (the Wingspan arc), as the slots
+fill with what you author.
+
 **Buildings ARE the demand** — but *living*, because they sit on the **transient, contested
 slots** (not frozen at a destination). What's worth more this game is **what's been built on the
 Wharf**, and the Wharf churns. **This is the rethemed "goal":** the old personal goal tiles
@@ -242,6 +254,10 @@ Three decisions set the keystone's shape; everything else sizes off them:
   don't half-build five (the trap we keep falling into).
 - **Content, not rules.** Depth lives in the *building deck* (many tiles, one placement
   grammar), not in new subsystems.
+- **Theme is a deliverable, not a coat of paint.** The building deck must be *fun and thematic*
+  for **both verbs** (value & transform) — the names, the flavor, and the effects together (the
+  original goals & upgrades set the bar). Never ship a stat block where a Hanse institution
+  belongs (`COMPONENTS.md` §3C).
 - **One soul, in the cask + the slots.** Don't re-grow a second parallel scoring board.
 - **Keep v0.16's lessons:** correct *friction* with structure not value; one dial at a time;
   always sim-gated before publish.
