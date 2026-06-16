@@ -67,8 +67,8 @@ This single move does what the v0.16-era review listed as four separate fixes:
 - The **Source → Brew → Age → Ship** spine and the **dual-role cask** (maturing → on a slot
   → delivered). The cask is *more* central in v1.0, not less.
 - The **four kontore** (Bruges/London/Bergen/Novgorod) and **the Hall / local Enshrine** as
-  destinations — but their **scoring is reconceived** (majorities kept; intrinsic
-  quality-value cut; Hall reconceived as standing quality-demand; §5).
+  destinations — but their **scoring is reconceived** (majorities kept; per-cask delivery
+  value relocated to the board; the Flight kept; Hall reconceived; §5).
 - The hard constraints: **no dice, no cards-as-hand, no money** (goods are the only
   currency; standing is unspendable score).
 - The **sim-gate discipline**: nothing ships without `sim.js` (crash/deadlock-free, pace in
@@ -83,9 +83,10 @@ This single move does what the v0.16-era review listed as four separate fixes:
   the "serves all" routes through the **demand system**, not a revived goods-skim
   (rich-get-richer was why v0.7 cut skims).
 - **Scoring → demand-driven.** Goal tiles **dissolve into the demand board** (the slots
-  *are* the goals now), and **intrinsic quality-value is cut** (export premium, the Flight,
-  the Masterpiece, the Hall's by-quality ladder). Majorities stay as the stable floor; the
-  Hall is reconceived. See §5.
+  *are* the goals now), and the **flat per-cask delivery value** (quality number + dest
+  modifier) is **relocated to the board** — the demand/building defines what a delivered
+  cask is worth. Quality keeps its other jobs (the **Flight**, gates, the Hall); majorities
+  stay as the stable floor. See §5.
 - **The cask-action pool folds into the demand face.** One tile per cask carries both its
   demand broadcast and (optionally) its slot-action — fewer things printed, more meaning each.
 - **The private fallback returns (deliberately).** Casks in your vessels become **stable
@@ -107,9 +108,16 @@ bounty *is* where points come from on the demand side.
 
 **F2 — Scoring radius: REPLACE goals AND intrinsic quality-value; KEEP majorities.**
 - **Goal tiles dissolve** into the demand board (the slots *are* the goals).
-- **Intrinsic quality-value is cut.** Out: the export premium (Q4+1/Q5+2), **the Flight**,
-  **the Masterpiece**, Novgorod-pays-high, and the Hall's by-quality ladder — every place a
-  higher number was worth more *for its own sake*.
+- **The flat per-cask delivery value is relocated to the board.** Previously a delivered
+  cask scored its quality number + a destination modifier (`Q5 = 5 + dest`). That value now
+  comes from the **demand/building at the destination** — a quality is worth what the board
+  says it's worth, *where and when*. A high-Q cask becomes **high-variance value**: big in a
+  room that craves it, weak in one that doesn't. (The old flat premium — Q4+1/Q5+2,
+  Novgorod-pays-high — folds into this.)
+- **Quality keeps its other jobs — it is NOT worthless by default.** **The Flight stays**
+  (a range/set-collection reward — breadth, not "higher = more"); quality still **gates**
+  where you can ship (dynamic demand gates); the **Hall** still rewards your finest
+  (prestige; ladder ⚙TBD in §22). **The Masterpiece stays on the table** (reconsider, not cut).
 - **Majorities stay** — raw delivered-cask count at each kontor — as the **stable,
   board-agnostic points floor**: the way to score when the demand board isn't going your
   way. The steady lane.
@@ -121,13 +129,16 @@ it's a Bock — it's worth a lot **only when a room demands it**, and a miss whe
 ladder.** Quality becomes **high-variance**: few rooms want your finest, but those that do
 pay big; cheap-and-cheerful finds a buyer almost anywhere but never spikes. This *is* the
 original Westvleteren-vs-Leffe axis (DESIGN §4), reframed from "deep vs wide" to "read the
-room" — and it **dissolves** the v0.13–v0.14 "make the climb worth it" problem rather than
-patching it: quality is rewarded by demand, never by a printed premium.
+room." **Scope it carefully:** it's the **delivery value** that's contextual — quality's
+*range* reward (the Flight), its *access* (gates), and its *prestige* (the Hall) remain
+intrinsic. A climber is still rewarded; what's gone is only the *guarantee* that a higher
+number pays more at the dock — that payoff now has to be *manifested* by the board.
 
 ### The lane map that falls out
 - **Majority lane** — ship wide; steady, board-agnostic floor. The safe play / catch-up.
 - **Demand lane** — read the board, send the right beer to the right room; volatile bounties.
-  *This is where quality lives* (contextually). The skill lane.
+  *This is where quality's delivery value lives* (contextually). The skill lane. (The
+  **Flight** still rewards building the full range across it.)
 - **Prestige / the Hall** — the one *standing* demand for your finest: a capped, throttled
   outlet that anchors the deep/boutique brewer, so quality has a floor even when the board is
   cold. Reconceived (not a by-quality ladder); the deploy-then-enshrine throttle and
@@ -140,8 +151,9 @@ for-quality. No lane wins solo.
 - **Destination quality-gates become dynamic demand, not static thresholds.** A kontor wants
   a given quality *this season* (a demand face), not forever — consistent with "the board
   manifests or defeats quality."
-- **The Hall survives, reconceived** as the standing quality-demand (capped/throttled), not a
-  by-quality prestige ladder — keeps the deep lane a home and the theme intact.
+- **The Hall survives, reconceived** as the standing quality-demand (capped/throttled) — keeps
+  the deep lane a home and the theme intact. Whether it keeps a by-quality prestige ladder or
+  flattens is ⚙TBD in §22 (it's a legitimate intrinsic-quality reward, so it may stay scaled).
 - **Bock/recipe costs unchanged for now** (3G2H, ungated). With value now contextual, the
   reachability question changes shape; revisit after the demand loop is felt.
 
