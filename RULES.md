@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Turn & Round Rules (the keystone reset — IN DESIGN)
+# Brewhouses of the Hanse — Turn & Round Rules (v0.17 “Living Slots” — IN DESIGN)
 
 > **Status: in-design (2026-06-16).** This is the canonical rulebook, edited forward onto the
 > **keystone** direction (`PLAN.md`): *living, composable Wharf slots + dead-simple scoring.*
@@ -75,7 +75,8 @@ The turn:
    onto a station a rival occupies costs the **1 `G` occupancy toll** ⚙ (capped at what you
    hold; opening placement free) — *or, instead of the toll,* **tap your private floor:**
    activate one *maturing* cask's slot-action (the boutique brewer's stable fallback when the
-   ring is unfavorable) ⚙. *(The carried v0.1 "alternate action when blocked" — `PLAN.md` §1A·#1.)*
+   ring is unfavorable) ⚙. *(The carried v0.1 "alternate action when blocked"; developed into the
+   **Floor / private line** — `PLAN.md` §1B.)*
 2. **Activate** the **row OR column** of your station.
 3. **Resolve** that line's up-to-4 stops — **slot · station · station · slot** — in any order.
    Both stations always fire; the worker only gates *which line is legal*. Each slot you **may**

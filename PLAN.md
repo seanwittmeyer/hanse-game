@@ -1,11 +1,13 @@
-# Brewhouses of the Hanse — the next chapter: PLAN
+# Brewhouses of the Hanse — v0.17 “Living Slots” — PLAN
 
-> **Status: plan, opened 2026-06-16 (reset).** This replaces the abandoned "demand-board"
+> **Status: plan — v0.17 “Living Slots”, opened 2026-06-16 (reset).** This replaces the abandoned "demand-board"
 > detour (the `*-v1` files, deleted; the *"Leffe at a party / quality is a construct"* thread
 > and everything after it is **discarded**). It returns to the **keystone we bookmarked early
 > in the design chat**: the *living, composable Wharf slots*. The live game (v0.16.1) is frozen
 > at branch `archive/main-v0.16.1`, playable at `archive/play.html`, and snapshotted file-by-file
 > in `archive/v0.16/`. From here we edit the **canonical** `RULES.md` / `COMPONENTS.md` forward.
+> **Working mode:** v0.16 is fully archived, so the **top-level files are the v0.17 working set**
+> — cleaned up and **version-stamped as they're edited.**
 
 ---
 
@@ -48,17 +50,23 @@ one-mechanic fix. Here is every thread from the early design chat — the comps 
 designer's five points — and where each lives. The few cuts are deliberate and named; nothing
 is dropped by accident.
 
-**The lanes (the designer's #2 — split volume from majority; GWT's "win by braiding two").**
-Too few lanes = a race; we want several viable paths that *combine*. v-next has five:
-- **Prestige / the Hall** — enshrine for **fixed** points. The steady, beginner-safe lane.
-- **Demand / value** — route casks through the **value-buildings** you author for big per-cask
-  kontor value. The skill lane (the keystone pays here).
-- **Volume / majority** — ship **wide**, dominate kontore by delivered count. The end-game lane.
-- **Range / the Flight** — climb the quality ladder for the set-collection bonus. The deep lane.
-- **Authorship** — **build the board** and tax the traffic (wharfage); a meta-lane that feeds the
-  others (GWT's player-built track).
-A newcomer can win on **one** (the Hall); an expert **braids two**. *That* is the strategic
-identity, and the legible scoring (§2) is what lets a player see it.
+**The five lanes — each a COMPLETE path (no half-measures).** The trap we keep falling into is
+doing many things halfway. The discipline now: **every lane is a fully-executed, integrated,
+balanced path to victory.** *Braiding two lanes is NOT a goal we chase* — it's the natural
+strategy that **emerges** when the lanes are individually strong and well balanced. Build each
+one whole:
+
+| Lane | The loop (what you do) | Scores | Supported by | Its risk / cost |
+|---|---|---|---|---|
+| **Prestige / the Hall** | brew Q2+ → deploy → enshrine | **in-game, fixed** (4/6/8/10) | deploy-then-enshrine; prestige-throughput buildings | low/steady; a capped ceiling — the beginner's whole game |
+| **Demand / value** | author value-buildings → route casks through them → deliver | **in-game, variable** | the building deck; commissioning ships onto your buildings | contested (rivals dock too); you must read & route |
+| **Volume / majority** | brew wide → ship many → dominate kontore by count | **end-game, count** | cheap-cask throughput; Cooperage; Kontor Privilege | deferred payoff; head-to-head races |
+| **Range / the Flight** | climb the ladder → deliver every tier incl. Bock | **end-game, (tiers−1)²** | Kiln (step up); Aging Loft; the export recipes | high-variance; needs the full set (a Bock) |
+| **Authorship / engine** | build buildings → tax traffic → run your Floor (§1B) | **wharfage + it powers the rest** | London/Novgorod earn buildings; the private Floor | investment-heavy, slow to pay |
+
+**The bar for each lane:** a player committed to *only* that lane has a **real, complete game**;
+and **no lane dominates or is dead.** That double test — *complete on its own* and *balanced
+against the rest* — is the standard for every number we set.
 
 **The comps → decisions:**
 - **Lisboa** (multi-use squeeze + interlock) → the **squeeze** is the soul (§1); the **living
@@ -90,6 +98,28 @@ identity, and the legible scoring (§2) is what lets a player see it.
 **Deliberate cuts (named):** the demand-board-*at-destinations*; the "quality-is-a-construct"
 removal of intrinsic quality value (quality keeps the **Flight, the gates, and the Hall**, and the
 climb still pays); the **peak-window** idea (not adopted); everything from the abandoned detour.
+
+---
+
+## 1B. The Floor — your private line (developing; designer-flagged "worth trying")
+
+Every core action lives on the grid; the **Floor** is a **private line you can run instead of a
+grid line**, powered by your own brewery. It grants **no new actions** — it's a way to take your
+engine's actions **without fighting for grid position**, so a player who has **built a strong
+engine moves faster and can't be blocked.** That's the engine-builder's payoff (Wingspan's
+compounding) and the boutique brewer's self-sufficient path — the carried v0.1 "alternate action
+when blocked" (#1), grown up.
+
+**The shape to try (⚙):** on your turn you may **work the Wharf** (move + activate a grid line —
+the default) **OR work your Floor** (activate your private line = the **slot-actions your maturing
+casks carry + your improvements**). A *bare* floor is weak (your few casks); a *built-up* floor
+(more vessels, more maturing casks each bearing an action, improvements) is a strong private
+engine — so the Floor **scales with what you've built**: early a fallback, late a tempo weapon.
+It most directly serves the **Authorship/engine** and **deep** lanes.
+
+**Tensions to settle (⚙):** it must not strictly beat the grid early (or the grid goes unused);
+does it advance the clock / cost anything; is it a full turn-alternative or only the lighter
+occupancy fallback (`RULES.md` §2)? Develop alongside the lanes.
 
 ---
 
@@ -208,6 +238,8 @@ Three decisions set the keystone's shape; everything else sizes off them:
 
 - **Clarity is the product this time.** If a player can't state how they're winning, the rule
   is too clever — cut it. The scoring spine (§2) is the north star.
+- **No half-measures.** Every lane is a complete, balanced path to victory — finish each one;
+  don't half-build five (the trap we keep falling into).
 - **Content, not rules.** Depth lives in the *building deck* (many tiles, one placement
   grammar), not in new subsystems.
 - **One soul, in the cask + the slots.** Don't re-grow a second parallel scoring board.

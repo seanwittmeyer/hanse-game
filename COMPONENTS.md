@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Components, Tiles & Player Board (the keystone reset — IN DESIGN)
+# Brewhouses of the Hanse — Components, Tiles & Player Board (v0.17 “Living Slots” — IN DESIGN)
 
 > The single physical manifest: **boards · tokens · the tile families · the player brewery board
 > · destinations.** *What objects exist and what each does* — the **why** is in `PLAN.md`, the
