@@ -1,38 +1,36 @@
 # Brewhouses of the Hanse — Components, Tiles & Player Board (v0.17 “Living Slots” — IN DESIGN)
 
-> The single physical manifest: **boards · tokens · the tile families · the player brewery board
-> · destinations.** *What objects exist and what each does* — the **why** is in `PLAN.md`, the
-> **operational rules** in `RULES.md`. Every count/value is a placeholder ⚙.
+> The physical manifest: **boards · tokens · the tile families · the player brewery board ·
+> destinations.** Enumerates *what objects exist and what each does* — the **why** is in
+> `DESIGN.md`, the **operational rules** in `RULES.md`, the **plan** in `PLAN.md`. **Every
+> count/value is a placeholder ⚙.**
 >
-> **Status: in-design (2026-06-16).** Edited forward onto the **keystone** (`PLAN.md`): *living,
-> composable Wharf slots + dead-simple scoring.* The live, playable game is **v0.16.1**, frozen
-> at `archive/main-v0.16.1` / `archive/play.html` and snapshotted in `archive/v0.16/`.
->
-> **The headline change:** the old **goal tiles, neutral buildings, and most upgrades collapse
-> into ONE new family — Buildings** (family C): owned tiles placed on the Wharf slots that
-> **modify the casks and ships docked to them** (a building can host a ship, which holds casks).
-> They are the **demand** (variable delivery value) and the **engine** (transforms), authored on
-> the living board. *Content lives in the building deck; the rule is one sentence.*
+> **v0.17 in design.** The last *playable* build is v0.16.1 (archived at `archive/play.html`;
+> the v0.16 manifest at `archive/v0.16/COMPONENTS.md`). The headline change: the **8 slots are a
+> living, composable commons** — they hold **owned buildings** that modify the casks/ships
+> docked to them. **One new tile family (Buildings) absorbs the old neutral buildings, the goal
+> tiles, and most upgrades.**
 
 ---
 
 ## 0. Conventions
 
-- **Goods:** `G` grain · `H` hops — the **only** currency (no money; no spendable prestige).
+- **Goods:** `G` = grain, `H` = hops. The **only** currency (no money; no spendable prestige).
+- **Faces:** infrastructure is single-face; a **cask** is a single working face (quality + one
+  signature action), scored at its destination, never flipped.
+- **The fire rule (one rule for all slots):** when a line is activated, the active player **may
+  use each slot on it** — the occupant's action (a **cask**'s signature action, a **ship**'s
+  free load) **and** any **building** effect. All resolve **on the active player's turn** — no
+  out-of-turn gains.
 - **The slot stack (the keystone):** a slot holds up to two layers — a **building** (owned
-  modifier) + an **occupant** (a **cask** *or* a **ship**, and a ship holds **casks**). One
-  grammar: *a building modifies the occupant docked on it* (`RULES.md` §5).
-- **One fire rule:** when a line is activated, the active player **may** use each slot — the
-  occupant's action (a cask's signature action, a ship's free-load) **and** any building effect
-  — all **on the active player's turn**; no out-of-turn gains.
-- **Acquisition (Market):** **recipes & ships** are always-available supply; **buildings** sit in
-  a small **face-up display** (~4 ⚙, refilling from the Building deck) — **bought + placed** at
-  the Market, **and** handed free by **London / Novgorod** deliveries (the *deliver → author →
-  deliver-better* engine loop). Casks are **brewed**, never bought.
-- **Scoring is legible** (`RULES.md` §11): in-game = **Hall enshrine (fixed)** + **kontor
-  deliver (variable, building-modified)**; end-game = **majorities (count)** + **the Flight
-  (range)**.
-- **End clock:** the **Sailed-Ships track fills** → finish the round → score.
+  modifier) and an **occupant** (a **cask**, or a **ship** that holds casks): *dock → building →
+  ship → cargo.* A building modifies the occupant docked on it (§3C).
+- **Acquisition (Market):** **recipes & ships** are always-available supply; **buildings** sit
+  in a small **face-up display** (4 ⚙, refilling from the Building deck) — **buy + place** one
+  (pay its cost), **or earn one free by delivering to London / Novgorod** (and place it). A few
+  inherently-private **brewery improvements** are buyable for goods (§3E). Casks are **brewed**.
+- **End clock:** the **Sailed-Ships track fills** (a voyage = a full sail, a Charter, or an
+  Enshrine) → finish the round → score.
 
 ---
 
@@ -40,17 +38,15 @@
 
 | Component | Qty | Purpose |
 |---|---|---|
-| **Main board** | 1 | **The Wharf** — 2×2 stations (A Market · B Brewhouse · D Cellar · C Harbor) ringed by **8 slots** (the living, composable commons — buildings · casks · ships), plus the **Sailed-Ships track** (end clock; +1 per voyage). |
-| **Destination board** | 1 | The four **kontore** + the **Hall**, each with **quality gate**, **base value**, **benefit**, and (kontore) a **majority track**. Delivered casks tally here. *(No "demand slots" — demand lives on the Wharf buildings, not the destinations.)* |
-| **Player brewery boards** | N | Private & untouchable — vessels + maturation + recipes + a couple of improvements + storage + **the floor** (maturing casks double as the occupancy fallback, `RULES.md` §2). |
+| **Main board** | 1 | **The Wharf** — the 2×2 of stations **A Market (Source) · B Brewhouse (Brew) · D Cellar (Age) · C Harbor (Ship)** ringed by **8 slots** (each holds a building and/or an occupant), plus the **Sailed-Ships track** (the end clock, one step per voyage). |
+| **Destination board** | 1 | The four **kontore** (Bruges · London · Bergen · Novgorod) + the **Hall**, each with its **quality gate**, small **base value**, **benefit**, and (kontore) a **majority track**. |
+| **Player brewery boards** | 4 | Private & untouchable — vessels + recipes + improvements + the **Floor** (§4). |
 
 ### The slots — the living, composable ring (8 slots)
-- **8 slots, 2 beside each line.** Each can carry a **building** (owned modifier) and/or an
-  **occupant** (a **deployed cask** — public action + cargo — *or* a **ship** — neutral
-  destination-bound hull holding casks). **Most slots are bare casks/ships; a few carry a
-  building** ("one or two may be modifiers"). The composable stack is *dock → building → ship →
-  cargo*. Buildings are **owned**; rivals may still dock on them (owned-but-shared, §C). One fire
-  rule (§0).
+**8 slots, 2 beside each line.** Each holds up to a **building** (owned modifier) **+** an
+**occupant** (a deployed **cask**, or a **ship** with casks in its berths). A churning,
+contested commons: casks deploy in and ship out, ships commission in and sail away, buildings
+are placed and **stay** (the authored layer). *(2-player may run ~6 active slots ⚙.)*
 
 ---
 
@@ -58,131 +54,147 @@
 
 | Component | Qty (⚙) | Notes |
 |---|---|---|
-| **Grain / Hops cubes** | ~60 / ~40 | Brewing inputs; the medium of exchange. |
+| **Grain / Hops cubes** | ~60 / ~40 | The only currency + brew inputs. |
 | **Worker pawns** | 1 / player | Moved between stations. |
-| **Ownership discs** | ~20 / color | Mark a cask's owner on a slot / when delivered; **also mark a building's owner.** |
-| **Wharfage markers** | few / color | Track the small **points cut** an owner earns when a rival's cargo delivers through their value-building (§C). |
-| **Charter contracts** *(small cards)* | ~20 ⚙ | Scarce certificates: start **2**; spend 1 + flat `2 G` fare to Charter; buy more at the Market (`1 G`). |
-| **First-player / round marker** · **Sailed-Ships marker** | 1 each | Fixed turn order / the end clock. |
+| **Ownership discs** | ~20 / colour | Mark a cask's owner on a slot / on delivery, **and a building's owner.** |
+| **Charter contracts** *(small cards)* | ~16 ⚙ | Start **2** / house; spend 1 + a flat `2 G` fare to Charter; buy more at the Market (`1 G`). |
+| **Wharfage / score markers** | — | The owner's small points cut when a rival routes through a building (§3C); a score pad/track. |
+| **First-player / round marker** | 1 | Turn order (fixed) / round clock. |
 
-> **No goal tiles, no neutral-building tiles, no VP/standing/demand/aging tokens.** Score is
-> tallied from delivered casks (variable), enshrined casks (fixed), majorities, and the Flight.
+> **No goal tiles, no VP/standing tokens, no demand-market markers, no aging cubes.** Score is
+> tallied from delivered casks (value + majority), enshrined casks (Hall), and the Flight.
 
-> **Casks are a shared supply with fixed global counts** (Q1×16 · Q2×20 · Q3×12 · Q4×8 · Q5×4 ⚙)
-> — you **brew** them, so the rare export casks are a **contested** resource. Ownership by disc on
-> the slots.
+> **Casks are a shared supply with fixed global counts** (Q1×16 · Q2×20 · Q3×12 · Q4×8 · Q5×4 ⚙),
+> **brewed** (never bought) — so the rare export casks are a contested resource. Ownership is a
+> disc once a cask hits the slots.
 
 ---
 
 ## 3. The tile families
 
-Four families + the destination board. **Casks (A) are the content heart of the cargo; Buildings
-(C) are the content heart of the board.** No card deck beyond recipes + charter contracts.
+Four families + destinations. **Casks (A) are the content heart; Buildings (C) are the new
+authored layer.** No card deck (recipes/contracts are plain permission/certificate cards).
 
-### A. Cask tiles — the dual-role hero (~60, shared supply) — KEPT
-A cask carries **quality Q1–Q5** + **one signature slot-action** (drawn at brew; Gruit pinned to
-Source). Three states: **maturing** (vessel) → **deployed** (slot — cargo + public action +
-contestable; *modified if docked on a building*) → **delivered** (scores, leaves).
+### A. Cask tiles — the dual-role hero (~60, shared supply) — *unchanged*
+Quality **Q1–Q5** (printed, static) + **one signature slot-action** (drawn at brew; **Gruit
+pinned to Source +2 goods**, Q2+ draw from the pool §3F). Three states: maturing (vessel) →
+deployed (slot) → delivered (scores → gone).
 
-| Q | Beer | Brew inputs ⚙ | Maturation ⚙ | Signature slot action ⚙ | Gate | Qty |
-|---|---|---|---|---|---|---|
-| **Q1** | **Gruit Ale** | `G` | 1 | **Source +2 goods** *(fixed)* | Bruges | 16 |
-| **Q2** | **Hopped Beer** | `G H` | 2 | *drawn at brew* | Bruges · London · Bergen · Hall | 20 |
-| **Q3** | **Broyhan** | `G H H` | 2 | *drawn at brew* | + Novgorod | 6 |
-| **Q3** | **Keut** | `G G H` | 2 | *drawn at brew* | + Novgorod | 6 |
-| **Q4** | **Mumme** | `G G H H` | 3 | *drawn at brew* | all | 8 |
-| **Q5** | **Bock** | `G G G H H` | 3 *(2 w/ Aging Cellar)* | *drawn at brew* (Wild possible) | all | 4 |
+| Q | Beer | Brew inputs ⚙ | Matures ⚙ | Reaches (gate) | Qty |
+|---|---|---|---|---|---|
+| **Q1** | **Gruit Ale** | `G` | 1 | Bruges | 16 |
+| **Q2** | **Hopped Beer** | `G H` | 2 | + London · Bergen · the Hall | 20 |
+| **Q3** | **Broyhan** / **Keut** | `G H H` / `G G H` | 2 | + Novgorod | 6 / 6 |
+| **Q4** | **Mumme** | `G G H H` | 3 | all | 8 |
+| **Q5** | **Bock** | `G G G H H` *(ungated)* | 3 | all | 4 |
 
-> **Deal 3 of 4 export beers each game** (the variable ladder shape). The **cask-action pool**
-> (drawn at brew, Q2+): `Source · Age · Load · Reach · Convert · Survey (draw a Building) · Wild
-> (Q4+)`. *(Survey rethemed from "draw a goal" — the authorship feeder.)*
+> **Export beers carry fixed quality; deal 3 of 4 each game** (drop a Q3 → full Q3→Q5 climb;
+> drop Mumme → no Q4; drop Bock → no Q5 — the variable ladder shape). Bock is **ungated at 3G2H**.
 
-### B. Ship tiles — NEUTRAL, destination-bound hulls (~20) — KEPT
-Printed with hull (**Cog** cap 2 · **Hulk** cap 3) and a **kontor destination** (Bruges/London/
-Bergen/Novgorod, 5 each; never the Hall). Face-up **market of 3** + 2 warm-start hulls on slots.
-**Commission** (`2 G`): place one on a slot + a free berth. **Load** deployed casks (yours or a
-rival's — you take `1 G`, owner scores); a ship **sails only when full** → every cask delivers in
-load order; the hull returns to the deck; the voyage advances the clock. **Charter** (1 contract +
-`2 G`) = a single-cask kontor voyage (the deadlock relief valve). **Dock a ship on your
-value-building for a rich berth** (§C — the three-tier payoff).
+### B. Ship tiles — neutral, destination-bound hulls (deck of ~20) — *unchanged*
+Hull (**Cog** 2 / **Hulk** 3) + a **kontor** destination printed (Bruges/London/Bergen/Novgorod,
+5 each; 11 Cog / 9 Hulk). Off a shuffled deck → a **face-up market of 3**. **Commission** (`2 G`)
+places one on a slot + a free berth. **Load** casks (yours or a rival's — you choose the
+destination, you take `1 G`, the owner scores). **Sails only when full** → every cask delivers,
+in load order. The hull returns to the deck; the voyage ticks the clock. **Dock a ship on your
+value-building for a rich berth** (§3C). The **Hall is never a ship destination** (Enshrine).
 
-### C. Building tiles — the NEW family (owned, on the living slots) — THE KEYSTONE
-Replaces the old **goal tiles + neutral buildings + most upgrades.** Acquired at the Market
-(bought from the display *or* earned via London/Novgorod) and **placed on any slot** (empty or
-occupied), **owned** by the placer. **One grammar:** *a building modifies the occupant docked on
-it* — and on a **ship**, the effect applies to **every cask aboard.** Two flavors:
+### C. Building tiles — THE NEW FAMILY (owned, on slots; the authored value layer)
+Acquired at the Market (buy + place, or earned by delivering to London/Novgorod), **owned by the
+placer**, placed on any slot. Under **one grammar — "a building modifies the occupant docked on
+it"** — each is one of two flavors (variety = content, not new rules):
 
-**Value buildings — the "demand" (boost delivery value):**
-| Building ⚙ | Effect (its docked occupant) | ×⚙ |
+**Value buildings (the variable “demand” — boost a delivery's value):**
+
+| Building | Effect ⚙ | Lane |
 |---|---|---|
-| **Rich Berth** | a docked **ship**: every cask it delivers **+2 ★** | 3 |
-| **Staple House** | a docked **cask**: delivers **+3 ★** | 2 |
-| **Kontor Privilege** (one per kontor) | casks shipped through here to **<that kontor>** **+3 ★** | 4 (1 each) |
-| **Connoisseur's Cellar** | a docked **Q4+ cask**: delivers **+4 ★** | 2 |
-| **Festival Wharf** | a docked **ship**: **+1 ★ per cask**, ramping with the load (rewards full hulls) | 1 |
+| **Rich Berth** | a **ship** docked here: **each cask it delivers +2★** | demand · volume (full hulls) |
+| **Staple House** | a **cask** docked here delivers **+3★** | demand |
+| **Connoisseur's Cellar** | a **Q4+ cask** docked here delivers **+4★** | demand · range |
+| **Guild Counter** | a **cask** docked here: **+1★ per quality level** | demand · range |
+| **Kontor Privilege** *(×4, one per kontor)* | a cask delivered **to its printed kontor** from here: **+X★** | demand · volume/majority |
+| **Reliquary** | a **cask** docked here, when **enshrined**, scores **+2★** prestige | prestige |
 
-**Transform buildings — change the occupant:**
-| Building ⚙ | Effect | ×⚙ |
+**Transform buildings (change the occupant):**
+
+| Building | Effect ⚙ | Lane |
 |---|---|---|
-| **Kiln** | a docked **cask** ships at **+1 quality** (a step up the ladder) | 2 |
-| **Cooperage** | a docked **ship** carries **+1 cask** (capacity) | 2 |
-| **Customs House** | a docked **ship** may **re-flag its destination** / **−1 gate** | 2 |
-| **Aging Loft** | a docked **cask** ages **+1/turn** (faster Ready) | 2 |
-| **Workshop** | a docked **cask** **gains / upgrades its slot-action** | 1 |
+| **Kiln** | a **cask** docked here ships as **+1 quality** (cap Q5) | range · demand |
+| **Aging Loft** | a **cask** docked here ages **+1 / turn** (faster Ready) | range · throughput |
+| **Cooperage** | a **ship** docked here carries **+1 cask** | volume · throughput |
+| **Customs House** | a **ship** docked here may **re-flag its destination** (or −1 gate) | routing · authorship |
+| **Workshop** | a **cask** docked here gains / upgrades its **slot-action** | engine · authorship |
 
-- **Owned, but shared (wharfage):** the **owner** gets the full effect and docks first; a **rival**
-  may dock on it too and **also** gets the effect, but the **owner takes a small points cut** ⚙
-  (**+1 ★ per rival delivery through a value-building**, capped — *points, never a goods toll*).
-  Build the dock; tax the traffic — gently. *(⚙ open: whether a rival's effect is reduced vs full.)*
-- **Deck ~18–20 tiles**, face-up **display of 4**. Add variety by **recombining the axes**
-  (*what it hosts* × *value/transform* × *which casks/kontore*) — **content, not new rules.**
+- **Owned, but shared (one universal rule):** the **owner** gets the full effect and docks
+  first; a **rival** may dock on it too — they get the effect, and **you (owner) take a small
+  “wharfage” cut** (⚙ **+1★**, capped per delivery — **points, never a goods-skim toll**). *Build
+  the dock; tax the traffic, gently.*
+- **Deck ⚙ ~19 tiles, display 4** — e.g. Rich Berth ×2 · Staple House ×2 · Connoisseur ×1 ·
+  Guild Counter ×2 · Kontor Privilege ×1 each (4) · Reliquary ×1 · Kiln ×2 · Aging Loft ×2 ·
+  Cooperage ×1 · Customs House ×1 · Workshop ×1. The vocabulary axes (so new tiles stay
+  one-grammar content): **what it touches** (cask / ship) × **what it does** (boost value /
+  transform) × **on whom** (owner / shared).
 
-> **The lanes, through the buildings:** *Rich Berth / Festival Wharf* feed **demand+volume** (fat
-> hulls); *Connoisseur's Cellar / Kiln* feed **range/deep** (the climb); *Kontor Privilege* feeds
-> **majority** (pile into one kontor); *Cooperage / Customs* are pure **tempo/engine**. The
-> building you can grab depends on the display *and* on reaching London/Novgorod — contested.
+> **Why this is the keystone:** *what's worth more is what's been built on the living slots* —
+> and the players build it (the GWT player-built track). Each building maps to a lane (right
+> column), so the **five lanes each have their hooks** (the no-half-measures bar, `PLAN.md` §1A).
 
-### D. Recipe tiles — permission to brew (4 export designs) — KEPT
-A small face-up Market supply (cards tucking under the brewery board). **Type + `G/H` cost,**
-permanent. Start **Gruit + Hopped**; collect exports to climb.
+### D. Recipe tiles — permission to brew a type (4 export designs / player) — *unchanged*
+Start **Gruit + Hopped** (printed); collect exports at the Market. A recipe is just *a brewable
+type + its `G/H` cost*; permanent.
 
 | Recipe | Type | Buy ⚙ | Brew ⚙ |
 |---|---|---|---|
-| Gruit *(start)* | Q1 | — | `G` |
-| Hopped *(start)* | Q2 | — | `G H` |
-| Broyhan | Q3 | `1 G` | `G H H` |
-| Keut | Q3 | `1 G` | `G G H` |
+| Gruit / Hopped | Q1 / Q2 | start | `G` / `G H` |
+| Broyhan / Keut | Q3 | `1 G` | `G H H` / `G G H` |
 | Mumme | Q4 | `1 G 1 H` | `G G H H` |
 | Bock | Q5 | `2 G` | `G G G H H` |
 
-### E. Private brewery improvements — a tiny set (⚙)
-Most v0.16 upgrades folded into Buildings (§C, public). A few **inherently-private** ones remain
-on your brewery board: **Extra Vessel** (cap 2→3) · **Aging Cellar** (−1 maturation step) ·
-**Warehouse** (storage 8→12). **How acquired is ⚙ open** — buyable at the Market for goods (simple)
-or earned by delivery. Kept small on purpose (content-not-rules).
+### E. Private brewery improvements — the small private engine (⚙ — buyable for goods)
+The few upgrades that are inherently **private** (don't fit a public slot) stay as brewery
+improvements, **bought at the Market for goods** (distinct from the earned-and-placed Buildings):
 
-## F. Destinations — the rooms (the destination board) — RECONCEIVED
-All open from start. **The kontor delivery value is small-and-flat by default + whatever
-value-buildings the cargo shipped through** (`RULES.md` §7). The Hall pays a **fixed ladder.**
+| Improvement | Effect ⚙ | Buy ⚙ |
+|---|---|---|
+| **Extra Vessel** | +1 brewing lane (vessels start 2, cap **3**) | `5 G` |
+| **Aging Cellar** | maturation **−1 step** | `5 G` |
+| **Granary / Hop Garden** | when you gain grain / hops, +1 extra | `4 G` |
 
-| Destination | Gate ⚙ | Base value ⚙ | Majority 1/2/3 ⚙ | Benefit on delivery ⚙ |
+> Everything else from the v0.16 upgrade list (Quay/Cooperage/Trophy Room/Burgher/Staple/Patron…)
+> **folds into the public Building family (§3C)** — capability now lives on the living slots, not
+> a private rack. *(How many private improvements survive, and whether they're bought vs earned,
+> is an open ⚙ — keep the set small for clarity.)*
+
+### F. The cask-action pool (drawn at brew, Q2+)
+`Source (+2 goods)` · `Age (age a cask +2)` · `Load (free-load a cask)` · `Reach (+1 presence —
+majority)` · `Convert (2 goods G↔H)` · **`Survey` (draw a building to hand)** · `Wild (any base
+action — Q4+ only)`.
+
+### G. Destinations — *where you deliver* (the destination board)
+All open from start. Variable kontor value comes from the **buildings** a cask shipped through
+(§3C); the base is small and roughly flat.
+
+| Destination | Gate ⚙ | Base value ⚙ | Benefit on delivery ⚙ | Majority (1/2/3) ⚙ |
 |---|---|---|---|---|
-| **Bruges** (Hub) | Q1 | +1 ★ | 4 / 2 / 0 | 2 goods (owner's choice) |
-| **London** (Steelyard) | Q2 | +1 ★ | 5 / 3 / 1 | **take a Building** (free) + place — the engine loop |
-| **Bergen** (Bryggen) | Q2 | +1 ★ | **9 / 5 / 2** (anchor) | 2 goods |
-| **Novgorod** (Long Haul) | Q3 | +2 ★ | 8 / 5 / 2 | **take a Building** (free) + place |
-| **The Hall** (Prestige) | Q2 | **fixed ladder 4/6/8/10 by quality** ⚙ | — | — (local Enshrine) |
+| **Bruges** (Hub) | Q1 | +1 ★ | 2 goods, owner's choice | **4 / 2 / 0** |
+| **London** (Steelyard) | Q2 | +1 ★ | **take a Building** (free) + place it — the engine loop | **5 / 3 / 1** |
+| **Bergen** (Bryggen) | Q2 | +1 ★ | 2 goods | **9 / 5 / 2** (anchor) |
+| **Novgorod** (Long Haul) | Q3 | +2 ★ | **take a Building** (free) + place it | **8 / 5 / 2** |
+| **The Hall** (Prestige) | Q2 | **fixed ladder 4/6/8/10 by quality** | — (local **Enshrine**, no ship) | — |
 
-> **Majorities** (end-game, by delivered count): tiered/ranked; 2p skips 2nd; ties split. Bergen
-> the rich anchor. **Benefits pair off:** Bruges/Bergen → goods (liquidity); London/Novgorod →
-> **a Building** (the deliver → author → deliver-better engine — replacing v0.16's "take an
-> Upgrade"). The **export premium and the Masterpiece are CUT** — the climb now pays through
-> *value-buildings* (e.g. Connoisseur's Cellar) + **the Flight**, keeping scoring clean.
+- **Delivery value at a kontor = base + the value-buildings the cask shipped through.** Low by
+  default, big when routed through demand you built. *(The v0.16 per-cask value table + export
+  premium are folded into this; the Hall keeps a **fixed** ladder — the legible beginner floor.)*
+- **Majorities** (kept from v0.16) = the **stable, board-agnostic floor**, by delivered-cask
+  count; tiered/ranked; **2p skips 2nd**; ties split. Re-tune vs the new building-driven value ⚙.
+- **Benefits:** Bruges/Bergen → **goods** (liquidity); **London/Novgorod → a free Building** (the
+  deliver → author → deliver-better engine loop); the **Hall → fixed prestige** (Enshrine).
 
-### G. End-game scoring — the Flight (range) — KEPT
-- **The Flight — your range.** Distinct quality tiers (Q1–Q5) delivered, **(tiers − 1)², min 3**:
-  **3 → 4 · 4 → 9 · 5 → 16** ⚙. The full flight needs a **Bock**. The deep/range reward,
-  independent of demand. *(The Masterpiece is cut — folded into this + value-buildings.)*
+### H. End-game scoring — the Flight (kept; the Masterpiece cut)
+- **The Flight — your range.** Distinct quality tiers (Q1–Q5) delivered, **(tiers−1)², min 3**
+  (3→4 · 4→9 · 5→16). The deep lane's reward; the full flight needs a Bock. *(No tile — a strip
+  on the player board.)*
+- *(The **Masterpiece** is **cut** for scoring clarity — folded into the Flight + value-buildings.)*
 
 ---
 
@@ -190,24 +202,30 @@ value-buildings the cargo shipped through** (`RULES.md` §7). The Hall pays a **
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│  ⚑ HOUSE crest        STORAGE ▢▢▢▢ ▢▢▢▢  (G/H, cap 8)         │
-│  VESSELS  (start 2, cap 3)                                     │
-│   Vessel 1  [ BREW ]→[ ferment ]→[ AGE ]→[ READY ▸ slots ]     │
-│   Vessel 2  [ BREW ]→[ ferment ]→[ AGE ]→[ READY ▸ slots ]     │
-│   Vessel 3  ▒▒ locked — Extra Vessel improvement ▒▒           │
-│        (THE FLOOR: a maturing cask can be tapped as the        │
-│         occupancy fallback — RULES.md §2)                      │
-│  RECIPES  ▤Gruit ▤Hopped …      IMPROVEMENTS  [ ] [ ] [ ]      │
+│  ⚑ HOUSE         STORAGE ▢▢▢▢ ▢▢▢▢  (G/H, cap 8)             │
+│  VESSELS (start 2, cap 3)                                      │
+│   V1 [ BREW ]→[ ferment ]→[ AGE ]→[ READY ▸ deploy ]          │
+│   V2 [ BREW ]→[ ferment ]→[ AGE ]→[ READY ▸ deploy ]          │
+│   V3 ▒ locked — Extra Vessel ▒                                │
+│  RECIPES  ▤Gruit ▤Hopped  ▤ ▤ …                               │
+│  IMPROVEMENTS  [ ] [ ] …      CONTRACTS  ▣▣                    │
+│  THE FLOOR — run your maturing casks' actions as a private     │
+│             line (PLAN.md §1B)                                 │
 └──────────────────────────────────────────────────────────────┘
 ```
 
-- **Vessels & maturation (start 2, cap 3).** Brew → matures to Ready (+1/turn + the Cellar) →
-  deploy to a slot. Full slots → the Ready cask **clogs its vessel** (the back-pressure). **The
-  maturing casks are also the *floor*** — tappable as the occupancy fallback (`RULES.md` §2).
-- **Recipes** (Gruit + Hopped to start) · **Improvements** (the tiny private set, §E) ·
-  **Storage** cap 8 (Warehouse +4; overflow lost — contains rich-get-richer).
-- **Seat compensation:** **+1 `G` per seat after the first** (fixed turn order balancer); free
-  opening worker placement.
+- **Vessels & maturation** (start 2, cap 3). A Brew loads a recipe into an open vessel at step 0;
+  the cask matures (+1/turn + the Cellar). When Ready, **deploy** to a slot. Slots full → the
+  Ready cask **clogs its vessel** (the back-pressure).
+- **The Floor (new).** Your maturing casks double as a **private line** you may run instead of a
+  grid line — the engine-builder's tempo / the boutique brewer's self-sufficiency (`PLAN.md` §1B;
+  ⚙ developing).
+- **Recipes / Improvements / Contracts / Storage** (cap 8 ⚙).
+
+### Starting setup (symmetric, + seat compensation)
+3 `G` / 2 `H` (**+1 `G` per seat after the first**) · Gruit + Hopped · 2 vessels · **2 charter
+contracts** · **1 building in hand** · a warm start (Hulk → Bruges + 1 ship; 1 Ready Gruit) ·
+worker placed free turn 1.
 
 ---
 
@@ -215,29 +233,40 @@ value-buildings the cargo shipped through** (`RULES.md` §7). The Hall pays a **
 
 | Family | Count ⚙ | Unique |
 |---|---|---|
-| A Casks | 60 | 6 beers × actions |
-| B Ships | 20 | Cog/Hulk × 4 kontore |
-| **C Buildings (NEW)** | **~18–20** | **~11 designs (value + transform)** |
-| D Recipes (cards) | ~20 | 4 exports (+2 printed) |
-| E Private improvements | ~6 | 3 (Extra Vessel/Aging Cellar/Warehouse) |
-| Charter contracts (cards) | ~20 | 1 |
+| A Casks | ~60 | 6 beers |
+| B Ships (deck) | 20 | 2 hulls × 4 kontore |
+| **C Buildings** | **~19** | **~11 designs** |
+| D Recipes (cards) | ~16 | 4 (+2 printed starts) |
+| E Improvements | ~10 | ~4 |
+| Charter contracts | ~16 | 1 |
 
-**Removed vs v0.16:** goal tiles (18), neutral-building tiles (6), the per-cask value table, the
-export premium, the Masterpiece, and the large upgrade family (folded into Buildings). Plus 1 main
-board · 1 destination board · N brewery boards · wooden cubes · ownership/wharfage discs ·
-workers · markers. **Medium GWT footprint** — and **fewer distinct tile families than v0.16**
-(four, not five-plus-goals), the content concentrated in the Building deck.
+Plus 1 main board · 1 destination board · 4 brewery boards · wooden cubes (G/H) · ownership
+discs · workers · markers. **Medium GWT footprint** — substantial, far short of Lacerda.
 
 ---
 
-## 6. Still-open ⚙
+## 6. Removed in v0.17 (folded or cut — preserved in `archive/v0.16/`)
 
-1. **The Building deck** — value/transform vocabulary, magnitudes, deck size, display width. *The
-   keystone's heart.*
-2. **Wharfage cut** — size/cap and whether a rival's building effect is full or reduced.
-3. **Three-tier spikes** — Rich Berth/Festival on a full Hulk could over-reward; cap or curve.
-4. **Private improvements** (§E) — which stay private; bought (goods) vs earned (delivery).
+- **Goal tiles** — dissolved into the public **Buildings** (the board is the authored value set).
+- **Neutral building tiles** — replaced by the owned **Buildings**.
+- **Most upgrade tiles** — folded into **Buildings** (public) or the small **improvements** set.
+- **The per-cask value table + the export premium** — value is now building-driven.
+- **The Masterpiece** — cut for scoring clarity.
+
+## 7. Resolved & still-open
+
+**Resolved (canonical — `PLAN.md` / `RULES.md`):** the Wharf (stations + composable slots);
+the dual-role cask; **buildings modify the occupant docked on them** (one grammar, owned-but-
+shared); **legible scoring** (Hall fixed · kontor variable · majorities + Flight); ships
+sail-when-full; the Charter; the Sailed-Ships clock.
+
+**Still open ⚙:**
+1. **The Building deck** — the value/transform vocabulary, magnitudes, deck size, display width.
+   *The keystone's heart.*
+2. **Wharfage** — points size & cap (owned-but-shared pays the owner without rich-get-richer).
+3. **Three-tier interactions** — building + ship + full cargo can spike; cap/curve ⚙.
+4. **Private improvements** (§3E) — which survive, bought vs earned, how many.
 5. **Base values vs building bonuses** — the flat-vs-spiky dial; keep the Hall ladder the floor.
-6. **Majority tiers** — re-tune now that kontor value is building-driven.
-7. **Slot pressure** — buildings + casks + ships on 8 slots; tight but never locked (2p/5p scaling).
-8. **The Flight / Hall ladder** numbers vs the new in-game economy.
+6. **Majority numbers** — re-tune vs building-driven value.
+7. **The Floor** — full turn-alternative vs occupancy fallback; cost/clock interaction.
+8. **Slot pressure** — buildings + casks + ships on 8 slots; tight, never locked.

@@ -1,860 +1,218 @@
-# Working Title: *Brewhouses of the Hanse*
+# Brewhouses of the Hanse — Design (v0.17 “Living Slots”)
 
-> A theme-first medium euro about a merchant brewing house in the Hanseatic League. You brew beer — hopped beer is the cargo that survives the voyage — and push it across the Baltic and North Sea trade network. **One legible loop — Source → Brew → Age → Ship — walked on a shared grid;** a brewed cask is a dual-role tile (engine on the shared wharf, then points when shipped); ships are owned infrastructure; **where you ship is the volume-vs-prestige choice.**
+> The working design doc: **why the game is the way it is**, the **current architecture**, the
+> **change log**, and the **balance lessons** carried forward. Operational rules live in
+> `RULES.md`; the manifest in `COMPONENTS.md`; the active plan in `PLAN.md`.
 >
-> **⚠ v0.7 "The Wharf" (2026-06-05, `§21`) is the current design and supersedes the v0.5/v0.6 reach-vs-standing/demand-market architecture below where they conflict.** §1–§20 are kept as the design record (the *why* we got here); read §21 for the live game, then `RULES.md`.
+> **This file was compacted (2026-06-16).** The full pre-v0.17 design record — every dated
+> session log, the v0.5/v0.6 reach-vs-standing architecture, the blow-by-blow v0.7→v0.16
+> epilogues, and the old standalone `CHANGELOG.md` (now folded in below, §9) — is preserved
+> verbatim in **`archive/v0.16/DESIGN.md`** and the **`archive/main-v0.16.1`** branch. Nothing
+> is lost; this is the slim, current version.
 
 ---
 
 ## 1. Snapshot
 
-|               |                                                                                     |
-|---------------|-------------------------------------------------------------------------------------|
-|**Players**    |2–5                                                                                  |
-|**Length**     |≈ 45–60 min at 2p (medium — was billed 15–20 min/player at heavier weights)           |
-|**Genre**      |Medium euro · engine building · shared action grid + private brewery                 |
-|**Weight**     |GWT/Distilled (v0.7) — *not* Lacerda                                                 |
-|**Sensibility**|Theme-at-the-heart, *Great Western Trail* / *Distilled* legibility (was Lacerda — see §21)|
-|**Status**     |v0.7 "The Wharf" — full reel-in to medium weight; rules locked, numbers ⚙ open.       |
+|               |                                                                                   |
+|---------------|-----------------------------------------------------------------------------------|
+|**Players**    |2–4 (a 5p mode runs but isn't balance-tuned)                                        |
+|**Length**     |≈ 45–60 min at 2p · medium                                                          |
+|**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
+|**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
+|**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
+|**Status**     |**v0.17 “Living Slots” — IN DESIGN** (reset to the keystone; see `PLAN.md`). The last *playable* build is v0.16.1, archived & playable at `archive/play.html`. |
 
 ---
 
-## 2. Design Pillars (the north star)
+## 2. Design pillars (the north star)
 
-1. **The mechanic *is* the theme.** The central dual-role tile and the authenticity-vs-reach tension are the same object. Nothing is bolted on.
-2. **One coherent strategic tension, two real win conditions.** Volume/reach (the "Leffe" player) vs scarcity/reputation (the "Westvleteren" player). Both score; they pull against each other.
-3. **Crisp turns, deep decisions.** Line activation is capped at 4 stops so turns stay fast even at 5 players. The depth lives in routing and commitment, not in turn length.
-4. **Interaction through a shared board, not take-that.** Occupancy reshapes everyone's options; blocking is positional pressure, never an attack that hard-locks a player.
+1. **The mechanic *is* the theme.** Hopped beer survives the voyage → it *is* the export cargo.
+   Nothing is bolted on.
+2. **The squeeze is the soul.** *You can't brew everything, and you can't deliver everywhere.*
+   Choosing your beers and your destinations is the game.
+3. **Crisp turns, deep decisions.** Medium weight: actions are simple; depth lives in placement,
+   timing, routing, and interaction — not in turn length or rules mass.
+4. **Interaction through a shared board, never take-that.** Occupancy and the living slots
+   reshape everyone's options; pressure, never a hard-lock.
+5. **Legible scoring.** A player can name how they're winning. Clarity is a feature.
 
----
+## 3. Hard constraints (solved thematically, not worked around)
 
-## 3. Hard Constraints (non-negotiable rules)
+- **No dice** — fully deterministic; the managed-uncertainty seat is the *steerable* variance of
+  the building/recipe displays and the cask-action draw (Orléans-lite), not randomness.
+- **No cards-as-hand** — all cardlike content is tiles (the action system is on the board).
+- **No money** — pre-modern barter: **goods (grain `G`, hops `H`) are the only currency;**
+  reputation/standing is earned, unspendable score.
 
-These are deliberate. Each one is solved *thematically*, not worked around.
+## 4. Theme & who you are
 
-- **No dice.** Fully deterministic — heavy-euro native.
-- **No cards.** All cardlike content is **tiles** (often double-sided). The action system lives on the board, not in a hand.
-- **No money.** Pre-modern trade ran on barter, in-kind goods, and obligation. **Goods are the medium of exchange** (grain, hops, casks). **Reputation/standing is earned and unspendable** — it is score, and it unlocks engine, but it is never paid out.
-
----
-
-## 4. Theme & Setting
-
-**Era:** c. 1350, the Hanseatic League at its height.
-
-**Why beer, why now:** Hamburg was literally called *the brewhouse of the Hanse*. The pivotal innovation is **hopped beer**, which (unlike perishable **gruit** ale) survives a sea voyage and so becomes a preservable, shippable export commodity. That gives you a built-in path divergence inside the theme: gruit (cheap, local, perishable) vs hopped (premium, travels).
-
-**The trade network:** casks move out to the great foreign trading posts (**kontore**) — **Bergen** (Bryggen), **London** (the Steelyard), **Bruges**, **Novgorod** (Peterhof) — for presence, majorities, and standing.
-
-**The deeper axis (the real heart):** the modern beer world hands us a perfect tension. **Trappist authenticity (Westvleteren — capped production, no advertising, mystique-as-marketing) vs heritage-brand reach (Leffe — industrial scale, global shelf space, diluted story).** This game pulls that conflict back into the 14th century: *do you keep casks in commerce for reach, or take them out of commerce to become heritage and pure standing?* That decision is the dual-role tile (§8).
-
----
-
-## 5. Who You Are
-
-A **merchant brewing house** — a family/firm operating inside a League city. You source grain and hops, brew, ship along the network, and establish standing at the kontore. You are a builder of a vertically integrated trade-and-production engine, balancing the temptation of volume against the value of reputation.
+c. 1350, the Hanse at its height; Hamburg was literally *"the brewhouse of the Hanse."* The
+pivotal innovation is **hopped beer**, which (unlike perishable gruit ale) survives a sea voyage
+— a preservable, shippable export. You run a **merchant brewing house**: source grain & hops,
+brew, age, and push casks across the Baltic/North-Sea network to the great trading posts
+(**kontore** — Bruges · London · Bergen · Novgorod) for value and majorities, or withdraw your
+finest into the local guild **Hall** for prestige. The deeper axis is **reach vs reputation**
+(industrial Leffe vs Trappist Westvleteren), pulled back into the 14th century.
 
 ---
 
-## 6. Core Mechanic — The Shared Action Grid
+## 5. Design lineage & comps
 
-The signature system. A **2×2 grid of four action cells sits on the main board and is shared by all players.** Each player has a worker on it.
+The target depth and the lessons we steer by (the soul-review the designer ran early in v0.17):
 
-```
-        s1        s2
-   s8 [ A ]----[ B ] s3
-        |    \/    |
-        |    /\    |        (no diagonal movement)
-   s7 [ C ]----[ D ] s4
-        s6        s5
+| Comp | Its soul | What we take |
+|---|---|---|
+| **Lisboa** (Lacerda) | a relentless multi-use squeeze + system interlock | the **cask squeeze** as the soul; the **living slots** as the interlock |
+| **Great Western Trail** (Pfister) | a player-built track; tempo; win by several engines | **owned buildings author the shared board**; the **five lanes** |
+| **Orléans** (Stockhausen) | steerable variance (bag-building) | the **building/recipe displays + cask-action draw** as managed, not random, variance |
+| **Agricola** (Rosenberg) | one rule → a whole decision economy; scarcity/blocking | scarce **vessels/slots/ships** + the **occupancy toll** + clogged-vessel back-pressure |
+| **Wingspan** (Hargrave) | a compounding engine; a content spine; "one more turn" | **transform-buildings** + a **building deck** of content under one grammar |
+| **Obsession / Viticulture / Unconscious Mind** | theme-mechanism fusion; an approachable bridge | hopped-beer-as-cargo + the **legible scoring spine** |
 
-  Top row    : s8 · A · B · s3
-  Bottom row : s7 · C · D · s4
-  Left col   : s1 · A · C · s6
-  Right col  : s2 · B · D · s5
-```
-
-### Worker movement
-
-- On your turn you **must move your worker to an orthogonally adjacent cell** (A↔B, A↔C, B↔D, C↔D). **Never the diagonal.**
-- You then **activate either the row or the column** that your worker's cell belongs to.
-
-### Line activation (the pipeline)
-
-- A line is a **4-stop pipeline:** `cap tile → cell → cell → cap tile`.
-- **Maximum 4 actions per turn:** the two cells on the line, plus the **one perimeter slot adjacent to each of those two cells** on that line.
-- Each of the **8 perimeter slots belongs to exactly one line** (the row *or* the column of its adjacent cell) — never both. Two caps per line, no overlap.
-
-### Emergent consequences (why the geometry is good)
-
-- **Cells are generalists** (each sits in two lines, fires often). **Slot tiles are specialists** (each sits in one line, fires only when you run that line). So **placing a tile commits it to a row XOR a column** — a meaningful decision every time.
-- **The forced orthogonal move makes you walk a circuit.** Ping-ponging the top edge (A↔B) reliably feeds the top row + both columns, but *never* the bottom row. To service the bottom you must march a worker down to C/D. **Which loop you walk is your engine's rhythm.**
-- You can't camp a single line — a one-trick engine starves.
-
-### The scoring-pile variant
-
-- One cell (e.g. **D**) is the **score pile / Kontor**. It is not an action.
-- The **two slots adjacent to the score pile (s4, s5) go dark**, reducing perimeter slots from 8 to 6.
-- The only lines reaching D are **bottom row** (via C) and **right column** (via B), so **only a worker at B or C can deposit.** Banking therefore costs you a fired stop — the spend-vs-score tension falls out of the geometry for free.
-
-### Two rules to pin down (currently assumed)
-
-- **Both cells in an activated line trigger regardless of which one the worker stands on** — the worker only gates *which line is legal*. (**LOCKED: yes.**)
-- **Resolution order within a line:** **WORKING DECISION — free order for now** (player resolves the up-to-4 stops in any order); revisit if turn length / AP suffers. (Fixed/directional remains the fallback if free order proves too fiddly.)
-
-> **⚠ Kontor model under revision (supersedes the §6 "scoring-pile variant" and §7 "not an action").** The Kontor is a **stood-on action cell whose action is the top tile of its enshrinement stack** — it is simultaneously an action space *and* the score pile, and its action **mutates as casks are enshrined onto it.** Full rules pending; §6/§7/§10 to be reconciled once finalized.
+**Differentiation:** "monks/houses brew beer" is occupied (*Ora et Labora*). Our distinct
+ground is the **economic philosophy** — reach-vs-reputation across a beer-trade network —
+expressed through the **dual-role cask** and the **player-authored living slots**.
 
 ---
 
-## 7. The Four Cells (Hanse mapping)
+## 6. The current architecture (v0.17 “Living Slots”)
 
-|Cell |Station                  |Action                                                                                        |
-|-----|-------------------------|----------------------------------------------------------------------------------------------|
-|**A**|**Market**               |Draw goods and tiles from the shared supply (your acquisition engine)                         |
-|**B**|**Brewhouse**            |Convert grain + hops → casks                                                                  |
-|**C**|**Harbor**               |Ship casks out for reach / market presence                                                    |
-|**D**|**Kontor** *(score pile)*|Commit casks to a foreign post (Bergen / London / Bruges / Novgorod) for standing & majorities|
+Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
-> Mapping is tunable — the flow Market → Brewhouse → Harbor/Kontor is the intuition, not a fixed law.
-
----
-
-## 8. Dual-Role Tiles — The Heart
-
-> **⚠ Updated (2026-06-02, see §19 "living slot ring").** The dual role is now **per-cask, per-turn**: a Ready cask either **ships** (cargo loaded into a ship = reach) **or enshrines** (= standing). Casks are **cargo, not standalone working slot tiles**, so the "working face fires a line skim from a slot" framing below is superseded — reach now flows through ships. The reach-vs-standing tension it describes is unchanged.
-
-The single most important object. **Double-sided tiles** that are either engine or score depending on *where they sit*:
-
-- **In a perimeter slot (action face out):** the tile is **working** — it modifies/adds output when its line fires. This is **reach** (the Leffe move): the cask is in commerce, driving the business.
-- **Moved to the score pile (flip to goal face):** the tile is **enshrined** — it no longer fires; it is now **standing/reputation** (the Westvleteren move): taken out of commerce to become heritage and pure score.
-
-Because you can only enshrine when your worker is in line with the Kontor, **cashing out always costs a turn of engine.** That spend-vs-score decision is the spine of the game. Double-sided tiles are tactile, self-documenting, and need no cards.
-
----
-
-## 9. Perimeter Slots — Owned Tiles & the Toll
-
-- Perimeter slot tiles (ships, trading privileges, recipes — Dubbel/Tripel/gruit/barrel-aged styles) are **owned by the player who placed them.**
-- **When *any* player fires a line through an owned slot, the owner collects a bonus** (a skim, paid in goods — consistent with no-money). Parking on a high-traffic line and taxing every rival who runs it is a position worth fighting for.
-- **Acquisition:** tiles enter via the **Market** cell, paid in goods.
-- **Balance lever to watch:** rich-get-richer. Keep slots scarce, tolls modest, and make placement cost a turn (building infrastructure costs real tempo).
+- **The Wharf** — four stations (A Market·Source → B Brewhouse·Brew → D Cellar·Age →
+  C Harbor·Ship) ringed by **8 slots**. Move orthogonally, activate a row/column, resolve up to
+  4 stops (slot·station·station·slot); occupancy toll (or the **Floor**, below).
+- **The dual-role cask** — quality Q1–Q5 + a slot-action; three states: maturing (private) →
+  deployed (public, contestable) → delivered (scored, gone).
+- **The keystone — living, composable slots.** A slot holds a **building** (owned modifier) and
+  an **occupant** (a cask, or a ship that holds casks): *dock → building → ship → cargo.* A
+  building, under one grammar — *"it modifies the occupant docked on it"* — either **boosts a
+  delivery's value** (the variable "demand") or **transforms** the occupant (quality / cargo /
+  route). **Owned-but-shared:** the owner benefits most; rivals may route through for less + a
+  small points "wharfage." Buildings replace v0.16's goal tiles, neutral buildings, and most
+  upgrades — one content family under one rule.
+- **Legible scoring.** *In-game:* **Hall enshrine = fixed** (the beginner floor) · **kontor
+  deliver = variable** (base + the value-buildings shipped through). *End-game:* **majorities**
+  (delivered-cask count) + **the Flight** (distinct quality tiers, (tiers−1)²).
+- **The five lanes — each a complete path** (no half-measures; braiding emerges, it isn't a
+  goal): **Prestige/Hall · Demand/value · Volume/majority · Range/Flight · Authorship/engine.**
+- **The Floor** — a private line you may run instead of a grid line, powered by your built-up
+  brewery (engine payoff + the boutique brewer's self-sufficiency; `PLAN.md` §1B).
+- **Kept from v0.16:** ships sail-when-full; the Charter relief valve (scarce contracts); the
+  Sailed-Ships end clock; the no-dice/cards/money constraints.
 
 ---
 
-## 10. Occupancy Rules — Hybrid (toll + block)
+## 7. The tooling (how we verify — unchanged through v0.17)
 
-The grid is shared and, with 4 cells and up to 5 workers, will be **near-permanently occupied**, so these rules are the *main economic loop*, not an edge case. The hybrid is keyed to grid geography:
-
-- **Production cells (Market, Brewhouse, Harbor) → pay-to-use TOLL.** Occupied cell can still be used; you **pay the resident worker's owner in goods.** Keeps turns flowing; turns the central stations into taxable real estate.
-- **Scoring cell (Kontor) → BLOCK-to-alternate.** You **cannot pay your way in.** If it's occupied you wait or take the fallback. Banking standing must be the contested, un-buyable thing — this protects the spend-vs-score tension and prevents pay-to-win endgames.
-
-### Alternate action when occupied → routes to your tableau
-
-The fallback when a cell is taken is to **perform a private version in your own tableau** (e.g. Brewhouse blocked → brew in your own brew-room at whatever rate you've built). This is *why the tableau exists* and why blocking never hard-locks anyone. The more house you've built, the less a block stings — which keeps blocking honest at 5 players.
-
-> **Most important numbers to tune:** toll prices and fallback strength. Because occupancy is near-constant, these two dials set the entire game's feel.
-
----
-
-## 11. The Private Tableau
-
-The counterpart to the shared grid. Clean division of labor:
-
-- **Shared grid = the VERBS.** Where you spend your turn and collide with others. Lean, rhythmic, contested.
-- **Tableau = the NOUNS.** Where outputs land and compound — warehouses, brew-rooms, banked goods and tiles. Private, uncontested, where specialization deepens. Also the private fallback when the commons is crowded (§10).
-
-**The loop:** act on the public grid → goods & tiles flow into your tableau → tableau stores/converts/scores → feeds back capacity that strengthens your next public action. (Lungs and body.)
-
-**Turn-length discipline:** **only one surface fires per turn.** The grid action produces/moves; the tableau scores passively and only *acts* on a fallback turn. Letting both fire every turn blows the time budget.
+- **`playtests/sim.js`** — drives the *canonical* `play.html` engine headlessly (extract the
+  script, run in a `vm`, append a bot in-scope). The **robustness/pace gate**: 0 crashes / 0
+  deadlocks across 2–5p, pace in the 12–25-round band. `PERSONAS=1` / `CELLAR=N` commit bots to
+  the lanes (the **strategy** oracle — the greedy bot can't judge leans). `sim-analyze.js` =
+  openings/timing/sequencing.
+- **AI seats** (`AUTOMA.md`): Apprentice / Journeyman / Trader / **Guildmaster** (flat Monte
+  Carlo over the engine itself). Gates: `ai-ladder.js` (every higher tier ≥60% at 2p) +
+  `ai-render-smoke.js`. `ai-tune.js` (CEM over the Trader weights) re-runs after a balance pass.
+- **After any engine change:** bump the save `KEY`, run the gates, save the sim output, publish
+  to `main`. *(These harnesses target the v0.16 engine; they'll be re-pointed as v0.17's
+  `play.html` is rebuilt.)*
 
 ---
 
-## 12. Turn Structure (working sketch)
+## 8. Balance lessons carried forward (the distilled gold)
 
-1. **Move** your worker to an orthogonally adjacent cell (mandatory).
-2. **Choose** the row or column of that cell.
-3. **Resolve** the line, up to 4 stops (cap → cell → cell → cap), in fixed order.
-   - Pay tolls in goods for any occupied production cell you use; owners of fired slot tiles collect their skim.
-   - If a cell you want is blocked (Kontor) or you elect the fallback, perform the private tableau version instead.
-4. Goods/tiles flow to your tableau; any enshrined tile flips to its goal face in the Kontor.
+Hard-won across v0.9→v0.16; they constrain every future change:
 
-*(Round/era framing and end-game trigger TBD — see §13–14.)*
-
----
-
-## 13. Scoring — Current Thinking + The Open Fork
-
-The authenticity-vs-reach axis is already baked into the dual-role tile. Scoring should make those **two genuinely competing win conditions**, not two flavors of one point-salad.
-
-**THE KEY OPEN DECISION** — what does the limited tableau reward?
-
-- **(a) Breadth** — many ports & styles served (the reach / Leffe player), or
-- **(b) Depth** — a few rooms refined to high value (the reputation / Westvleteren player), or
-- **(c) Forced commit** — tableau space is limited so both score but actively pull against each other, and you must lean one way.
-
-> Recommendation to pressure-test in Claude Code: **(c)**. Limited tableau space + Kontor majorities should make "spread wide vs go deep" the central strategic identity — the Vinhos-grade thing the whole design has been circling.
-
-Likely scoring inputs: enshrined dual-role tiles (standing), Kontor majorities at the four posts, completed tableau sets/rooms, fulfilled port demand.
+- **"No pure path wins."** Balance the *leans*, and measure them with **persona-committed bots**
+  (`PERSONAS`/`CELLAR`), never the greedy bot — which is a robustness/pace oracle only and
+  systematically under-pilots prestige & deep.
+- **Correct *friction* with a *structure* lever, not the *value* lever.** (v0.15: a free local
+  Enshrine was fixed by a *structural* throttle — deploy-first, contestable — not a fee.)
+- **Bock cost is the WRONG rebalance lever.** The 3G3H probe was tested and rejected twice (it
+  re-breaks Q5 reachability and the AI ladder, and doesn't fix the imbalance). The real axis is
+  **Hall-side vs kontore-side.** Bock is ungated at **3G2H** (one hop was the whole wall).
+- **Majorities reward shipping WIDE** (presence = cask count) — "go for majorities" is a *volume*
+  play, not a concentrate-on-one specialist. Big majorities tilt the game to the kontore, so the
+  **Hall needs a matching prestige curve** to stay balanced.
+- **When the incentive is backwards, find the rule that inverted it** — don't pile on relief
+  valves. (v0.16: three patches collapsed into one loop once benefit went back to delivery.)
+- **A "sail full" rule structurally lengthens the game;** the clock (`SAILED_CAP`) is the
+  round-count lever, not the ship rules.
+- **Fixed turn order has a real first-player edge;** **seat compensation (+1 `G` per later seat)**
+  + free opening placement flatten it.
+- **Content, not rules.** Depth belongs in placement/timing/interaction and a deck of content
+  under one grammar — not in action complexity (the v0.7 reel-in is the founding lesson).
 
 ---
 
-## 14. Deferred Fork — The "Era Arc" (Option 3)
+## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
-The Hanse frame gives the **quality-vs-volume tension now**. What it does *not* yet give is the **historical sweep**: an era clock advancing across centuries, with refrigeration / rail / bottling / advertising / consolidation unlocking new actions and steadily eroding the value of authenticity.
+**v0.17 “Living Slots”** *(2026-06-16, in design)* — Reset to the bookmarked keystone after a
+demand-board detour was tried and abandoned. **Living, composable slots:** owned **buildings**
+modify the casks/ships docked to them (one grammar; value-boost *or* transform; owned-but-shared
+wharfage), folding goals + neutral buildings + most upgrades into one family. **Legible scoring:**
+Hall fixed / kontor variable (building-driven) / majorities + Flight. **Five lanes as complete
+paths** + the **Floor** (private line). v0.16 fully archived; top-level files version-stamped
+v0.17. See `PLAN.md`.
 
-- **Defer-able:** the core game works without it.
-- **If added:** a shared era track is a common clock that unlocks tech for everyone; your own upgrades compound on top. It would deepen the Leffe/Westvleteren arc into a literal timeline.
-- **Cost:** structural complexity + the no-money rule bites hardest in an "industrial brand" late game. Fix is keeping **casks as the universal medium and reputation unspendable** throughout.
+**v0.16.1** — Bruges/Bergen liquidity = 2 goods of the owner's *choice*; brewing vessel cap 4→3.
+**v0.16 “Full Ships”** — Ships **sail only when full** (partial early-launch retired); destination
+benefit **and** points seal **on delivery**, in load order (numbered berths); the **Charter** is
+gated by a **scarce contract** (start 2, buy `1 G`, flat `2 G` fare — retiring the escalating
+fare row). Fixed a backwards incentive (benefit-on-load → never sail).
+**v0.15 “Enshrine”** — The **Hall goes local**: Enshrine a deployed Q2+ cask for prestige, no
+boat. Throttle is **structural** (deploy-first, contestable), not a fee; ladder re-trimmed to
+**4/6/8/10**. Ships/Charter kontore-only. Added **Trophy Room** + **Patron's Favor**. Revived the
+under-powered volume lane.
+**v0.14** — **Bock un-gated** (3G2H, the Aging Cellar a pathway not a gate) → the Q5 climb
+reachable. Pathways resolve to **contested kontore vs the uncontested Hall**; 3G3H probe rejected.
+**v0.13** — **The Flight** (range: (tiers−1)², min 3) + **the Masterpiece** + a majority cooldown
+— making the quality climb pay.
+**v0.12 (.1–.3)** — Rival-loading restored (tactical denial); **variable cask actions** drawn at
+brew (decoupled from quality); **Gruit pinned to Source**; **upgrades earned-only** (no goods-buy);
+**Hall = printed ladder**; clock re-centered to 7/11/14/17.
+**v0.11 (A & B, .1–.3)** — **Neutral, destination-bound ships** off a shared deck (commission →
+load → sail); **ship market of 3**; deck → 20 hulls. Batch A: Towncrier reined in, charter-fare
+experiments, the **export premium**. (Printed destinations *removed* a strategy axis → the Trader
+rebuilt around "which hull to feed.")
+**v0.10** — **Big tiered majorities at every kontor** (Bergen 9/5/2 the anchor); per-cask values
+cut so points live in the majority race; Hall bumped to balance.
+**v0.9** — **Tiered, ranked majorities** (2p skips 2nd); the **London = engine / Bergen = majority**
+split; **seat compensation**. The "prestige is marginal" worry was a greedy-bot artifact (fixed by
+persona bots).
+**v0.8** — Occupancy toll (the de-rondel dial); the **“Wharf” naming**; export beers carry
+**fixed quality, deal 3 of 4**; all six neutral buildings.
+**v0.7 “The Wharf”** — A ground-up **reel-in to GWT/Distilled weight** (≈ half the rules cut).
+The four-station loop, the dual-role cask in three states, **destinations replace the two value
+tracks**, deliver→earn-upgrade, the **Charter** relief valve, the **Sailed-Ships** clock. Cut: the
+demand market, type frontier, Fairs, route lanes, the Hall-as-a-station, working-cask Floor, twins,
+aging cubes.
+**v0.1–v0.6** *(the Lacerda-grade origin, superseded by v0.7)* — The shared 2×2 action grid, the
+double-sided cask (working ↔ enshrined), reach-vs-standing tracks, a demand market, the Brewhouse
+Floor, recipe cards, ships-as-single-use-carriers. Too much game; the right amount of theme — which
+the v0.7 reel-in resolved.
+
+**Tooling milestones:** the headless `sim.js` harness + persona/Cellarmaster lean probes; the
+4-tier AI ladder (Apprentice/Journeyman/Trader/**Guildmaster** flat-MC); `sim-analyze.js`;
+`ai-tune.js` (CEM). All drive the canonical engine, so every rules revision is absorbed
+automatically.
 
 ---
 
-## 15. Design Lineage & Comps
-
-- **Vital Lacerda — *Vinhos*, *Lisboa*, *Kanban*:** the target depth; *Lisboa*/*Kanban* specifically for **shared occupancy reshaping everyone's options.**
-- **Toll economies — *Keyflower*, *Princes of Florence*:** the pay-to-use model for production cells.
-- **Block-to-alternate — *Caylus*, *Keyflower*:** the model for the contested Kontor.
-- **Uwe Rosenberg — *Ora et Labora* (2011):** the title to **differentiate from** (medieval monastery producing beer/whiskey, rotating production wheel).
-
----
-
-## 16. Differentiation
-
-"Monks/houses make beer" is occupied territory (*Ora et Labora*). This game's distinct ground is the **economic philosophy**, not the production: the **authenticity-vs-reach inversion** (Westvleteren vs Leffe pulled into the 14th-century Hanse), expressed through one object — **the double-sided cask tile that is engine when working and score when enshrined.** Nobody has built *"Vinhos, but the tension is authenticity vs reach across beer trade."* That's the hook.
-
----
-
-## 17. Decision Queue (for the next session)
-
-Prioritized — top items unblock the most downstream work.
-
-1. **Scoring axis** (§13): breadth / depth / forced-commit. *Sets the strategic identity of the entire game.*
-2. **Toll prices & fallback strength** (§10). *The two most load-bearing numbers; occupancy is near-constant.*
-3. **Tableau structure** (§11): what are the "rooms," how many, how do they convert and score?
-4. **Line resolution order** (§6): confirm fixed/directional vs free.
-5. **Confirm both-cells-trigger rule** (§6).
-6. **Goods taxonomy:** how many resource types? (grain, hops, water, casks… + grapes if a wine path is wanted.)
-7. **End-game trigger** and round/era framing (§12–14).
-8. **Era arc** (§14): in for v1, or defer to expansion?
-
----
-
-## 18. Glossary
-
-- **Cell** — one of the four shared action spaces (A/B/C/D).
-- **Line** — a row or column; a 4-stop pipeline (cap · cell · cell · cap).
-- **Slot** — one of the 8 (or 6) perimeter spaces holding an owned tile; belongs to exactly one line.
-- **Cap tile** — the slot tile at either end of an activated line.
-- **Dual-role tile / cask** — double-sided tile; **working** (action face, in a slot = reach) or **enshrined** (goal face, in the score pile = standing).
-- **Kontor** — the score pile cell; a foreign trading post (Bergen / London / Bruges / Novgorod).
-- **Toll / skim** — goods paid to a resident worker (occupied cell) or to a slot-tile owner (fired line).
-- **Tableau** — your private board of rooms/warehouses; output, fallback actions, and scoring.
-- **Reach** vs **Standing** — the two competing value types: volume/commerce vs scarcity/reputation.
-
----
-
-## 19. Working Architecture — Session Log (2026-05-31)
-
-This section captures decisions and the working architecture from the live design session. It supersedes earlier sections where they conflict; canonical sections (§1–§18) to be reconciled once the architecture stabilizes.
-
-### Locked decisions
-
-- **Both cells in a fired line trigger** regardless of worker position (§6). Worker position only gates *which line is legal*.
-- **Free resolution order** within a line for now (revisit if AP/turn length suffers).
-- **Cask lifecycle is the core loop, kept deliberately learnable:** `Market (acquire) → Brewhouse (brew) → Harbor (ship = reach) → Kontor (enshrine = standing)`.
-- **Kontor = a stood-on action cell whose action is the top tile of a shared enshrinement stack.** The stack mixes **public and personal tiles**. Enshrining a cask sets the new top (= new Kontor action), burying the previous.
-- **Occupancy fallback = perform the action's private version in your own tableau.** Block-to-tableau, not bump, not pay. This makes walking to a contested cell a *strategic plan* (you'd rather fire your tableau version), not a penalty.
-- **Goods taxonomy:** two cubes — **grain** and **hops** (water cut as dead weight; empty barrels deferred as a possible capacity constraint). **Gruit = grain only** (cheap, local, cannot be enshrined — perishable); **Hopped = grain + hops** (premium, travels, can be shipped & enshrined). The Westvleteren/Leffe axis falls out of the recipe.
-
-### The three-layer object model
-
-- **Perimeter slots = the scoring landscape (owned infrastructure).** Route / ship / recipe tiles. A slotted **route tile** both modifies its line *and* sets/raises that route's end-game value on the board → **players author what scores by what they place.**
-- **Harbor board = execution + presence.** Shipping delivers working casks as **presence** along open routes. Presence = **reach**, now countable.
-- **Kontor stack = standing.** Enshrining **pulls a cask off the board** into the stack: trade live board-presence (reach) for locked, unspendable standing. The reach-vs-standing dilemma is now a physical board→stack migration.
-- **Correction to earlier model:** casks do **not** sit in perimeter slots — slots hold infrastructure; **casks live on the board**, then migrate to the stack when enshrined.
-
-### Harbor / route board (working design)
-
-- Home port (Lübeck/Hamburg) central; four routes radiate to the four kontore through minor-port waypoints.
-- Fire the Harbor line → ship working casks → advance presence along an **open** route (open = a route tile for it sits in a slot), steps modified by ship tiles.
-- **End-game reach score = your presence on each route × that route's slotted value.** Majority of presence on a route = that kontor's standing bonus + the right to enshrine there.
-- **Variable paths to victory via four distinct kontor reward profiles** (no single efficiency line):
-  - **Bergen — Monopoly:** short, narrow, few spaces; control locks a resource/toll → deep defensive standing.
-  - **Novgorod — Long Haul:** longest, highest payout, slow to build → committed reach over time.
-  - **Bruges — Hub:** wide, many small payoffs, flexible → tempo / liquidity.
-  - **London — Privilege:** pays in privilege tiles (engine upgrades, toll exemptions) → engine-builders.
-
-### Stack readability (UX)
-
-- The stack's only live job is its **top tile (current Kontor action).** On enshrining, record the cask's standing **value on a per-kontor track** (markers). Buried tiles are pure thematic sediment, already counted — never referenced again. **Read tracks for value, top-of-stack for action.**
-
-### Tableau — your private brewery (LOCKED direction)
-
-- The tableau is **not a mirror of the grid.** It is your **brewery** — the vessel the brewing verb acts on. Grid = verbs, tableau = the noun. No duplicated actions.
-- **Brewing track** (doubles as the brewing-process tracker): `LOAD → FERMENT → AGE → READY`. Casks crawl through it.
-  - **Gruit** (grain only): LOAD → FERMENT → READY (skips AGE). Fast, frees the vessel; perishable/local; **cannot be enshrined.**
-  - **Hopped** (grain + hops): LOAD → FERMENT → AGE → READY. Slower — vessel tied up a turn longer (real opportunity cost) — but travels & **can be enshrined.**
-  - → The gruit/hopped choice is a **tempo decision**, not just a resource cost.
-- **Public Brewhouse cell = the verb "advance / load brews"** on your track. Verb public, vessel private.
-- **Two kinds of tableau space:** brewing-track spaces (casks flow through, temporary) vs **room/upgrade slots** (permanent installed engine tiles: extra vessel, faster fermenter, aging cellar, warehouse, larder/dock upgrades). Depth & specialization live here.
-
-### Occupancy fallback (LOCKED)
-
-- **Block-to-tableau via "trickle + upgradable rooms."** Only the Brewhouse has a true private twin (your track, always usable). Market/Harbor when blocked → a weak self-sufficient **trickle** (starting larder yields 1 good; starting dock ships 1 step), upgraded by installed rooms. The more brewery you've built, the less a block stings.
-
-### Scoring — three interlocked axes (LOCKED direction)
-
-- **Volume (reach) × Quality × Destination (market) = brand reputation, modeled.** Not additive silos — they **interlock:**
-  - **Quality gates Destination:** far/rich markets demand high quality (Novgorod takes only premium hopped; Bruges takes middling volume).
-  - **Destination sets Reach value:** a route scores by the value players slotted onto it.
-- Competition between paths enforced by **shared scarcity:** vessel capacity (fast-cheap vs slow-premium), perimeter slots (author few routes), turns (reach keeps casks working vs standing pulls them off the board). → §13 option **(c) forced-commit** is the strategic spine.
-- Player archetypes: **Volume/Bruges** (wide, fast, middling) · **Quality/Novgorod** (deep, slow, premium) · hybrids.
-
-### Open / next
-
-- **Components & tile deck** → see `COMPONENTS.md` (v0.1 draft).
-- Reconcile **perimeter slot count (6 vs 8)** now that the Kontor is a stood-on action cell (the old s4/s5-dark rule assumed a passive score pile).
-- Tableau room list, conversion rates, vessel capacities.
-- Toll/trickle numbers; end-game trigger; era arc in/out for v1.
-
-### Revision — cask routing, slots & cards (2026-05-31, cont.)
-
-- **Perimeter slots: 8, all open. 2p variant locks some (→ ~6)** to tighten the board. (LOCKED)
-- **[SUPERSEDED 2026-06-02 — see "living slot ring" below: casks are now cargo inside ships, not standalone working slot tiles, and fire no individual skim.]** **Casks restored to the perimeter slots — supersedes the earlier "casks live on the board, not slots" correction.** A working cask tile sits in a slot and **fires a printed action when its line is activated** (the §8 dual-use heart). Lifecycle:
-  `BREW (tableau track) → SHIP into a SLOT (working = reach engine, fires actions) → ENSHRINE into the Kontor stack (flip to standing face = standing, sets new top action)`. Casks move *into and through* slots. (LOCKED)
-- **Cask tiles are double-sided:** working face = a **line action** + style + quality; standing face = **standing value + a goal**. (LOCKED)
-- **Goal-matching DNA stays:** an enshrined cask's goal scores against your working/slotted/board state — the glue that makes reach & standing *interact*. (LOCKED)
-- **Route board = presence *markers*** dropped when shipping (reach score + majorities), now distinct from the cask tile itself.
-- **Slots hold a *mix* of working casks + infrastructure (route/ship) tiles**, competing for the same 8 spaces → "row XOR column" commitment now spans the whole strategy. ⚙ load-bearing balance point.
-- **OPEN — presence coupling:** reach (presence markers) and standing (enshrined tiles) as *separate accumulations* (lean: yes, simpler — tension lives in slot-space/turns), **or** enshrining *pulls back* a cask's presence (poetic, but needs marker↔cask bookkeeping).
-- **Cards policy (re: §3 no-cards):** deck is big in *copies*, small in *unique designs* (~45–50 unique faces). Recommendation: **stay all-tiles, served from a face-up Market display** (preserves determinism + the physical flip). Hybrid (one high-variety family as cards) only if a family proves to need card-scale variety. ❓ confirm §3 still sacred.
-- **Next deliverable:** fully spec the **cask tile family** (faces, line-actions, quality, goals) — the core of the game. → **DONE: see `TILES.md` (v0.1, full 7-family deck).**
-
-### Locked (2026-05-31, cont.)
-- **Presence (reach) and standing accumulate separately** — never convert.
-- **Stay all-tiles**, served from a **face-up Market display** (deterministic, public). No cards.
-- Full tile list drafted in `TILES.md`: ~140 tiles / ~45 unique designs (tile-scale, not card-scale).
-
-### Locked / discovered via pressure-test (2026-05-31, cont.)
-- **Pressure-Test #1** (`PLAYTEST.md`): core loop holds; breadth-vs-depth tension emerges from T1. Three design changes fell out:
-  - **Bruges (home hub) starts OPEN**; far routes require a slotted Route Lane tile (fixes the reach bootstrap).
-  - **Brewhouse fires = advance ALL brews 1 step + optionally load 1** (vessels = throughput; no dead lanes).
-  - **Goods storage cap + tiny skims** to contain rich-get-richer (the #1 tuning risk).
-  - Balance watch: the **depth path is genuinely slower** (premium ties up a vessel) — goal bonuses must compensate.
-- **Turn & round economy drafted** → `RULES.md` (turn = move + activate line; 4 cell actions; round = turn each, first-player passes; **end-game = Kontor stack reaches N OR a route saturates**; scoring sequence reach → majorities → standing → goals).
-- Confirms **mid-heavy / Brass pace (~10–14 turns/player)**, not Lacerda turn-as-puzzle.
-
-### Player board & opening (2026-05-31, cont.) — LOCKED
-
-- **Symmetric starts.** No asymmetric houses for v1 (revisitable as a variant). Opening variety comes from Market choice + the gruit/hopped load fork, not from forced cell parity.
-- **Vessels: start 1, cap 3.** Throughput is the central tempo throttle.
-- **Room slots: 4 (scarce).** Extra Vessel is itself a room → wide-vessels-vs-deep-rooms is the forced-commit squeeze (§13c) made physical.
-- **Starting resources:** 3 `G`, 2 `H`, recipes **Gruit + Hopped**, storage 8.
-- **Turn-1 rule:** place worker on any cell + activate (no move); move-then-activate from turn 2. Makes first placement a real decision.
-- **Opening analysis** (`PLAYTEST.md` walkthrough): Top Row (Market+Brewhouse) is the natural opening (Harbor is dead with no ready cask); the bumped start + two recipes put the fast-vs-slow fork on turn 1.
-- Full board spec → **`PLAYERBOARD.md`**.
-
-### Grid topology & tableau twins (2026-05-31, cont.) — LOCKED
-
-- **Build × cash-out grid.** Market & Brewhouse (the *builders*) are placed on one **diagonal**; Harbor & Kontor (the *cash-outs*) on the other. They never share a line. Cell map: `A=Market · B=Harbor · C=Kontor · D=Brewhouse`.
-  - Consequence 1 — **kills the dominant opening**: you can never acquire+brew in one line, so no single turn snowballs (was the first-player problem).
-  - Consequence 2 — **every line = one builder + one cash-out**: `Market+Harbor · Market+Kontor · Brewhouse+Harbor · Brewhouse+Kontor`.
-  - Consequence 3 — **reach-vs-standing every turn**: Harbor & Kontor are diagonal, so each turn you ship for reach **or** enshrine for standing, never both. The core tension is now structural, per turn.
-- **Tableau twins (occupancy = opportunity).** Each public verb has a private twin you can upgrade via rooms: **Market→Larder**, **Brewhouse→brew-room (Faster Fermenter)**, **Harbor→Quay**. Kontor is open-to-all (no twin). A twin fires **only when a rival blocks that cell** (locked) — so a developed tableau makes you *want* to step onto crowded cells (you fire your strong twin and still take the line's other cell). With only 4 room slots you specialize one twin → different players value different lines → wide phase-space on a tiny board.
-- The play client + visualizer remapped to this grid; twins (Larder/Quay/Faster Fermenter) implemented as upgrade rooms.
-
-### Balance pass v0.2 — from the 3p engine sim (`playtests/3p-10turn-sim.md`)
-
-The first 3-player simulation broke in three ways; fixes applied to the engine + docs:
-- **Lane presence-skim runaway → fixed.** Lane line-actions paid `+1 presence` to the owner on every fire (uncapped), hitting 12 presence on a cap-4 route and ending the game on turn 4. Now **presence comes only from shipping**, Lane skims pay `+1 G`, and **presence is clamped to route capacity** (caps raised: Bruges 8 · London 6 · Bergen 5 · Novgorod 9 ⚙).
-- **Standing was non-functional (0 enshrinements) → fixed.** You may now **enshrine a Ready cask directly from the brewery** (no mandatory ship step), and standing values were bumped (Hopped 3 · Dubbel 5 · Tripel 7 · Bock 10). Re-sim: standing now scores and goals fire.
-- **Goods faucet throttled.** Kontor seed top-actions cut to `+1 G`.
-- **OPEN — next dials (revealed by the re-sim):** the game is **throughput-bound and slow** — one vessel + 2–5-step brews yields only ~2–4 casks/player in 10 turns, so scores stay low and neither end-clock fires at a good pace. Candidates: faster brewing / passive maturation / cheaper vessels / lower end-clock thresholds. Also **reach-vs-standing fine balance needs a stronger bot or human playtest** (the greedy bot can't execute the multi-step reach plan).
-
-### Revision — the living slot ring: ships as cargo-containers, recipes claim-on-fire (2026-06-02) — LOCKED
-
-A design-conversation pass made the perimeter slots **transient and interactive**. Three converging decisions; engine + `play.html` reworked and headless-tested.
-
-- **Ships are owned, route-bound cargo containers — the toll-baron play. (LOCKED)**
-  - A ship is a **slot tile with a visible stack of cask sub-slots** (`cargo` array, `cap`), placed by a player and **bound to one route** at placement ("this ship supports Bruges").
-  - **Shipping a Ready cask** to a route loads the cask **into a ship that has room on that route** (preferred over a basic shipment). The **shipper** always gains **+1 presence** (reach). If the ship is a **rival's**, its owner collects a **+1 G toll** for the carriage. → You build ships speculatively where you expect traffic and **tax everyone's cargo**, including rivals'.
-  - **A ship's line-action is to load:** when its cap fires (any player's activation), it pulls one of the **owner's** ready, route-eligible casks aboard (owner +1 presence). So the ship fills from *both* directions — Harbor shipments and its own cap-fires.
-  - **Full ⇒ it sails:** cargo is delivered (already counted as each shipper's presence), the **owner** takes a **sail dividend** (+1 presence on the route, +1 G), and the ship **leaves its slot** — transient churn. With no ship on a route, shipping is a **basic shipment** (+1 presence, cask delivered): ships are a **booster, not a gate.**
-- **Casks are cargo, not standalone working slot tiles. (LOCKED — supersedes the 2026-05-31 "casks restored to perimeter slots / fire a printed action" revision and the §8 working-face-fires-a-skim model.)**
-  - A Ready cask now faces a clean fork: **ship it** (→ reach: cargo in a ship, presence on a route) **or enshrine it** (→ standing, straight from the brewery). Never both. The dual-role heart survives as this **per-cask decision**; what's retired is the cask's *individual* in-slot line-skim (reach now flows through ships).
-  - Consequence: **enshrining is only from a Ready vessel** (the slot-based enshrine is gone). "Casks in transit" (cargo loaded in ships) is the new reading of the old "working casks" goal/tiebreak.
-- **Recipes: held in hand, gained via claim-on-fire slot tiles. (LOCKED — supersedes "recipes bought straight to hand.")**
-  - You **start with the Gruit baseline + 2 random premium recipes in hand** (a random pair; 1→2 after the 2026-06-02 multi-sim showed a single random premium gave a ~1.7× Tripel-vs-Hopped win swing), and **brew from hand**. Every other recipe is acquired as a **recipe tile placed in a slot**; the **next time that slot's line fires** (any activator), the **owner claims the recipe into hand and the tile is spent** (slot frees). This unifies "keep them in hand," "gain the recipe when the tile is activated," and "available until claimed" into one transient engine.
-- **Net effect on the slot ring:** slots now hold a churning mix of **ships** (fill → sail away), **recipe tiles** (claimed → spent), and **route lanes** (permanent infrastructure). Transience + the toll/skim ownership model make placement a live, contested, speculative decision — the "more interesting, more transient slots" goal.
-- **Verified headlessly:** rival-loads-your-ship + toll, own-ship loading, cap-fire auto-load → sail → slot frees, basic-shipment fallback, and recipe claim-on-fire all fire correctly; full 3p/10-turn sim runs clean (`playtests/3p-sim-driver.js` updated to the new model).
-- **Still open (unchanged):** throughput/pace tuning, sail-dividend & toll magnitudes (new rich-get-richer dials to watch per §9), whether starting with a *random* premium (vs fixed Hopped) reshapes the turn-1 opening enough to need rebalancing.
-
-### Revision — the recipe book, the type ladder & the VP-token value economy (2026-06-03) — LOCKED
-
-A design-conversation pass replaced the recipe slot-engine with a **private recipe book**, split beer into **two layers (type + recipe)**, and solved variable value with a **spendable VP-token economy** layered over the (preserved) end-game scoring. Aim: diceless variability + variable paths to victory, so no line pre-solves.
-
-- **Recipes are a private book, not slot tiles. (LOCKED — supersedes the 2026-06-02 claim-on-fire slot model and Family C′.)** You **collect** recipe tiles from the Market into your book and brew from it; you **can't brew a type you hold no recipe for** (Gruit is the universal baseline). Each recipe names a **type** and carries its **own cost profile** (`n G · n H · n brew-steps`) — *two recipes of the same type can cost differently*, so collection (which recipes you draw) is the asymmetry/variability engine, alongside future asymmetric family powers. Both are **input randomness** (dealt options), never **output randomness** (no dice resolving an action) — the legitimate kind for a heavy euro.
-- **Two layers of beer. (LOCKED)**
-  - **Type** = a global quality rung. **Anchored spine + variable export:** **Gruit → Hopped** is fixed and historical — hops is the preservation tech that *opens the sea routes* and gives the game its title — then the premium tiers **L3–L5 are filled by historical Hanse beers dealt in a variable order/subset each game** (**Bock**/Einbeck, **Mumme**/Braunschweig, **Broyhan**, **Keut** ⚙; reskins the anachronistic *Dubbel/Tripel* placeholders). Stable on-ramp, unpredictable export.
-  - **Recipe** = a collected instance of a type (above).
-  - The current **type frontier gates the Market's recipe supply** (you can only collect recipes of unlocked types). **Frontier advances production-driven** ⚙: as a type's market saturates, its value drops *and* the next tier unlocks — one causal loop (flood gruit → gruit cheapens → premium recipes appear → the market tempts you upward). This is the **depth-pull tension**: a cheap high-type recipe sits in your book *wanting to be brewed*, pulling a reach-committed player up the ladder.
-- **Value economy — variable value without breaking end-game scoring. (LOCKED)**
-  - **End-game scoring is preserved** (`RULES.md` §6 backbone intact: reach, majorities, standing, the g1–g10 goal layer). Cask tiles keep their **printed base VP**.
-  - **Value rides on types** (a **linear value track**, marker per type ⚙); **routes stay the access/majorities axis** (the quality→destination gate). The combination is the **race condition**: reach floods a type → its track marker **ticks down** (saturation); the quality player wants to cash in before the volume player tanks it. Neither perfectly times the other → the unsolvable, diceless tension.
-  - **VP tokens = a spendable 3rd resource**, minted on each **sale** (ship *or* enshrine) **scaled by the type's current track position** — value *locked in metal* at the moment you sell well. **Spend** mid-game for tempo/power (sinks ⚙) **or bank** as **1 VP each** at end. Tokens are a **modifier on top of** printed cask VP, **never a replacement** — so the backbone never destabilizes, and "lock in value at its peak" lives here (replacing the retired enshrine-freezes-value framing).
-- **End-game trigger = 2 of the 4 kontor cities saturated. (LOCKED — supersedes the v0.1 twin clocks: Kontor-stack-N and single-route-full.)** Visible on the table and **steerable in opposite directions**: reach races to slam a second city full and end it; standing delivers to the empty cities to prolong. Player-driven, telegraphed.
-- **Still open / next dials:** type-frontier advance threshold (how much production flips a tier) ⚙; value-track length & step size ⚙; VP-token yield curve and the 1–2 spend sinks ⚙; the export roster's per-beer mechanical hooks (e.g. Bock needs the Aging Cellar; Mumme = slow/high-standing) ⚙; 2-of-4-cities pacing vs route capacities.
-- **Verified by economy sim (`playtests/v03-economy-findings.md`, 2026-06-03):** the new subsystems interlock — value decays per sale, the production→frontier loop fires (export reaches ~L4), and **2-of-4-cities scales with player count** (3–4p end reliably at rounds ~18–25; **2p too slow → needs lower route caps**). **Open balance issue (structural, not the value gradient):** enshrining is unbounded while shipping is route-capacity-bounded, so standing still out-scores reach (~75–89% wins). Fix candidates: token bounty for saturating a city / majorities→tokens / sail dividends in tokens; then implement v0.3 in `play.html` to test reach's real multipliers (vessels, cap-fire, sail dividends, tolls) which the abstract sim can't see.
-
-### Revision — balance philosophy: the Great Western Trail blend ideal (2026-06-03) — LOCKED
-
-The 2026-06-03 sim's 75–89% pure-standing win rate reframed the balance goal. The target is **not path-parity** (reach "losing" a head-to-head vs standing is fine) — it is **"no *pure* path wins."**
-
-- **The GWT model.** Like *Great Western Trail* (cowboys / engineers / builders, where the winner almost always runs a **blend of two**), Breweries has three leanings — **Reach** (volume / presence / majorities), **Standing** (enshrine / quality), **Engine** (recipe book + climbing the type ladder & value track). A **pure single-lean strategy should under-perform a blend.**
-- **The blend is chosen *as you play*, by reading the board** — your lane placements (you author what scores), the dealt export, opponent occupancy & majorities. The winning mix should **vary by game**, not be solvable pre-game. *Starting positions + interaction make or break a strategy, and you settle into one mid-game.*
-- **The interdependence levers that make blending pay (tune these, don't add new ones):**
-  1. **Goal-matching DNA (g1–g10, `TILES.md`):** enshrined casks score *against your reach/board state* — a pure-standing player draws goals (per-route presence, per-cask-in-transit, Novgorod presence, majorities) that score **~0 without reach.** This is the primary GWT coupling and it already exists.
-  2. **Value-track diminishing returns:** flooding one type tanks its token value → pushes spreading across types/outlets (engine + reach), not one-note standing.
-  3. **Majorities need presence (reach) but reward commitment (standing).**
-  4. **Reach's volume multipliers** (extra vessels, ship cap-fire, sail dividends, tolls) let presence scale past 1/turn — the engine has them; the abstract sim didn't.
-- **Tuning is measured against this, not parity:** **blend win-rate vs pure win-rate**, and **winning-blend variance across seeds**. See `playtests/blend-sim.js`.
-
-### Revision — v0.3 ported into `play.html`; fix D applied; the non-orthogonality reframe (2026-06-03) — LOCKED
-
-Two threads closed here: the GWT balance investigation (`playtests/blend-balance-findings.md`) and porting the v0.3 economy into the playable engine.
-
-- **Balance — fix D (cycle the couplings), chosen & applied.** The blend-sim showed *whichever single axis is left uncapped becomes dominant* (tokens → standing → reach each ran away in turn), so balance here is **bounding all axes**, not buffing one. The goal pool is re-authored into a **3-way symmetric cycle** (3 reach-rewarding + 3 standing-rewarding + 3 engine-rewarding, all capped, **best-3 score**) so no goal rewards the axis the enshrine act already pays. This broke pure-standing dominance (**89% → 6%** at 4p); RS/SE blends are healthy and the winning blend varies by the goal deal.
-- **The deeper reframe (decided: two axes).** The three "leanings" are **not orthogonal** — you climb the type ladder *by* brewing & banking higher casks (so "Engine" is a disguised Standing), and *both* sell-modes mint tokens (so Engine is a **timing multiplier**, not a third action). **Decision: Breweries is Reach vs Standing, with engine/value-timing as connective tissue both paths use.** The blend ideal becomes *"reach + standing, tuned by tempo."* (Cask-tile goals kept; no detach.)
-- **`play.html` brought up to v0.3.** Ported the three load-bearing systems the abstract sim couldn't exercise: **value track + VP tokens** (every sale — ship *or* enshrine — mints `current value`, then that type decays toward its floor: `[3,4,6,8,11]`→floors `[1,1,2,3,4]`), **2-of-4-cities end clock with player-scaled caps** (`base{2,1,0,2}+playerCount` → 2p `{4,3,2,4}`, fixing the v0.3-sim "2p too slow"), and the **cycled goals + tokens in scoring** (best-3 goal cap). HUD shows tokens + the live value track + the city clock; final table adds a Tokens column.
-- **Deltas from the locked v0.3 spec, on purpose:** the **recipe model stays claim-on-fire slot tiles** (not the book/frontier) — functionally a frontier for human play, and swapping it is pure churn that doesn't touch the two-axis balance; logged for a later pass. **VP tokens bank only** (no mid-game spend sinks yet).
-- **Verified:** engine parses, 600 headless games run crash-free (`multi-sim.js`, updated to the live cap + token readout), and a render-path smoke test confirms value decay, token accrual, the best-3 goal cap, and 2p caps. `multi-sim`'s legacy v0.2 bots barely ship, so **`blend-sim.js` remains the balance authority**, not `multi-sim`.
-- **Still open:** recipe-book/type-frontier port; VP-token spend sinks; tuning pure-Reach/pure-Engine down under the two-axis target; human playtest of reach's real multipliers (vessels, cap-fire, sail dividends, tolls) now that they're in the playable build.
-
-### Revision — v0.4 consistency pass: recipe book made canonical, claim-on-fire retired, all pages aligned (2026-06-03) — LOCKED
-
-A full-table reconciliation. Every page (the 5 HTML deliverables + the markdown record) was drifting against the others; the worst gaps were in `rulebook.html` (pre-remap cell map, casks-into-slots shipping, the old twin end-clocks, no VP tokens). Decision: **bring everything up to the latest state — no backlog — and resolve the one logged fork (recipes) in favor of the book.**
-
-- **Recipe model: the private book is now canonical; claim-on-fire is retired everywhere — including `play.html`.** Rationale (designer call): placing a recipe in a slot just to claim it back later isn't intuitive and serves no gameplay purpose that the book doesn't. **Buying a recipe sends it straight to your book.** This closes the 2026-06-02 "claim-on-fire slot model" and the `play.html` delta logged in the previous revision. Recipes no longer occupy perimeter slots → the slot ring now holds **only ships + route lanes** (cleaner row-xor-column tension).
-- **Type frontier + recipe book ported into `play.html`.** Market recipe supply is gated by the global type frontier (opens at Hopped; advances production-driven as a type's league sales cross a threshold ⚙, also ticking that type's value down — the one causal loop). The export (L3–L5) is **dealt from {Bock, Mumme, Broyhan, Keut}** each game (3 of 4) over the fixed L3/L4/L5 rung stats; the top rung needs the Aging Cellar.
-- **All pages now agree on the canonical constants** (the single source of truth for the visualizer, rulebook, printables, and engine):
-  - Cell map **A=Market · B=Harbor · C=Kontor · D=Brewhouse** (build×cash-out diagonals).
-  - Type ladder: Q **1/2/3/4/5**, brew steps **2/3/3/4/5**, base standing **—/3/5/7/10**, value-track start **3/4/6/8/11** → floors **1/1/2/3/4**.
-  - Route caps **player-scaled** `base{2,1,0,2}+playerCount`; quality gates **Bruges 1 · London 2 · Bergen 2 · Novgorod 3**.
-  - Goals: the **cycled 9** (g1/g2/g6 reach · g3/g4/g10 standing · gV/gC/g8 engine), **best-3 score**.
-  - End-game: **2 of 4 cities saturated**. Scoring: Reach → Majorities → Standing → Goals(best-3) → VP tokens.
-- **Casks are cargo, never slot tiles; shipping loads them into ships** — the §9 "cask into a working slot" framing is purged from every page.
-- **Still open (unchanged):** type-frontier threshold tuning; VP-token spend sinks (bank-only for now); per-beer export hooks; pure-Reach/pure-Engine balance under the two-axis target; human playtest.
-
-### Revision — v0.5: the dual-role tile restored as the spine; the demand market; reach-vs-standing as one timing decision (2026-06-03) — LOCKED
-
-A long design-conversation pass rebuilt the heart of the game around the original first-prompt vision (tiles that live in slots and are either engine or score) and fixed the two things that made the prior "one big choice" feel thin: **scoring cost you nothing you'd miss**, and **"Kontor" meant two things at once.** This supersedes the v0.3/v0.4 reach/standing/token framing where they conflict.
-
-**The diagnosis we acted on.** The old reach-vs-standing was a *routing* decision (ship a cask into bucket A or B and it's gone), not a strategic tension — because the scarce resource (slots) was decoupled from scoring, and standing used no slots at all (which is why the sims had it dominate). The fix: put scoring back where it costs engine, make value *move* so timing matters, and unify the theme.
-
-- **A cask has three states. (LOCKED)** Brewed in the tableau, a Ready cask lives in one of:
-  - **Working** — installed in a scarce **personal slot** on your board. Private, uncontested; it soups up one of your stations (an action you can use, also your fallback when that cell is blocked). Engine only, no points.
-  - **Reach** — **deployed into a shared perimeter slot**, bound to a route. **The cask *is* your presence** (it counts as reach on that route while it sits there). When its line fires it yields an **action**. It is exposed.
-  - **Standing** — **enshrined**: pulled off the board to the standing stack; the owner's standing track advances. Reach↔standing never co-exist on one cask — **enshrining converts the tile** (its board presence leaves; the points are banked).
-- **"Any player may enshrine a deployed cask." (LOCKED — the positive-interaction engine.)** On a Hall line, a player may enshrine a cask sitting in *any* shared slot — theirs or a rival's. The **owner** gets the standing (their track ticks up, the cask's goal flips face-up in their row); the **slot frees** for the enshriner. This is the transience valve (casks don't pile up — anyone can clear one) *and* a positive, non-take-that interaction: I reclaim the commons, you get points — but **fewer than you were holding out for**, and not on your timing. It also gives standing real interaction without a hidden shared stack.
-- **The dual-role tension restored.** Casks-in-slots firing actions is the original §8 heart we removed in the 2026-06-02 "living slot ring" rework (to kill skim-runaway). It's safe to bring back **because the any-player-enshrine churn is the governor** — casks cycle off the board instead of accumulating. The engine-vs-score fight is back on the slots, where every point you bank costs you board position.
-- **The demand market = the value-over-time signal (collapses aging + tokens + printed standing into ONE number). (LOCKED)** Each beer **type** has a value marker on a shared **value track**. A cask's payout when enshrined = **its type's value at that instant** (recorded on the owner's standing track). This replaces per-cask aging (no age dials) and folds the old "printed standing + VP tokens" into a single, legible number.
-  - **DOWN:** each time a type is *realized* — **deployed for reach OR enshrined for standing** — its value drops a step (the market cools). So the volume crowd flooding a type erodes the prestige crowd's payout — the reach-vs-standing duel, now expressed as **timing**: every turn you leave a cask out reaching, its standing value may be bleeding away as others sell your type.
-  - **UP (auto):** **buying a recipe** of a type nudges it **+1** (investment stokes demand; makes climbing the recipe ladder pay).
-  - **UP (paid lever):** the **Fair tile** — a slot tile whose **line action lets the active player pay 1 good to raise one type +1**; the **fee goes to the Fair's owner** (toll-baron market stall; the owner pays the supply when self-using, so it's never free). Because pumping is a *line* action, **placement matters**: a Fair on a Hall line lets you **pay → pump Bock → enshrine Bock high in one activation** (pump-and-dump), capturing your own pump before rivals react. The grid's build×cash-out geometry is what enables the chain.
-  - **Guardrail:** a pump (+1) is **never larger than a realize-drop (−1)**, so under steady play the market trends down and can't be farmed into inflation. Floor and ceiling bound the track.
-- **The self-enshrine reason** falls out of the market: cash your type while it's high; don't get caught holding when reach-floods or a rival's enshrine tank it. Owner agency restored without per-cask bookkeeping.
-- **Theme collision fixed. (LOCKED)** Reach **owns the kontore** — the Harbor exports your beer to Bergen/London/Bruges/Novgorod (getting it onto every foreign shelf, the Leffe move). Standing is **withdrawal from commerce** — enshrining a cask into the brewers' **Hall** as a permanent monument (the Westvleteren move). **Cell C is renamed Kontor → Hall.** "Kontor" now means exactly one thing: the export destinations on the route board.
-- **Readability (LOCKED):** the standing stack is tactile sediment (colored tile edges let you eyeball composition); the **scoring-relevant value lives on each player's standing track**, and each enshrined cask's **goal flips face-up** into a small personal row. Nothing is ever hidden in a pile; no memory advantage.
-
-**Scoring (v0.5):** **Reach** = your deployed casks (presence) × route value + majorities · **Standing** = your standing track (sum of market values banked at enshrine) · **Goals** = best-3 of your enshrined casks' face-up goals. (VP tokens retired — folded into the market value that drives standing.)
-
-**Slot economy (v0.5):** shared perimeter slots (8) now hold **deployed casks** (reach + actions, enshrine-able), **Fair tiles** (paid market pump), **route lanes** (open/value a route + resource skim), and **ships/trade houses** (resource faucets). Casks are the transient flow (enshrined off); infrastructure is sticky. **Personal slots (2–3)** hold working casks. Tight at 4p by design — but the engine-vs-score tension lives on your *personal* slots, so it doesn't depend on winning the shared-slot crush.
-
-**Engine deltas (`play.html`) intended this pass:** cask 3-state lifecycle (deploy / install / enshrine); cask = presence on deploy; any-player enshrine from a slot; market value drives the single standing payout (tokens removed); recipe-buy +1 and the Fair pump tile; Kontor→Hall rename; cargo/sail ship mechanic retired (ships become resource faucets). Personal-slot "working" state may ship simplified first and is flagged in-page.
-
-**Still open / next dials:** market step sizes, floor/ceiling, and the Fair cost; how strong a working-cask's station boost is; cost to enshrine a *rival's* cask (an action — watch mild kingmaking on eviction timing); whether ships stay as faucets or fold into lanes; end-game trigger under the new reach model; human playtest.
-
----
-
-## 20. Working Architecture — v0.6: the Brewhouse Floor, recipe cards, ships as single-use carriers, the Sailed-Ships clock (2026-06-04) — LOCKED
-
-A design-conversation pass tightened the player board and rebuilt the **reach** half of the game so it has a real engine (ships + routes) to mirror the **standing** engine (rooms + export brewing). The trigger was a print-prep observation: the player board had **too many dedicated slots** that never fill, so placement was rarely a sacrifice. The fix is the euro move — **scarcity + multi-use** (Brass / Ark Nova / Vinhos) — plus a Lisboa-style card tuck for recipes and a Hanseatic shipping loop that doubles as the game clock. This supersedes v0.5 where they conflict; the **spine (dual-role cask · demand market · 2×2 build×cash-out grid · reach vs standing as timing)** is unchanged.
-
-### A. The Brewhouse Floor (LOCKED) — replaces the 4 room slots + 3 personal cask slots
-- One row of **4 multi-use Floor slots.** Each holds **either a Room** (permanent depth) **or a working Cask** (temporary engine) — never "a place for each kind of thing."
-- **Vessels stay separate** (start 1, cap 3). **Extra Vessel is a Room**, so it costs a Floor slot *and* unlocks a brewing lane — running 3 vessels spends 2 of your 4 Floor slots (the Brass "can't build wide and deep" squeeze, now constant and visible).
-- **Installing a Ready cask as working is free but needs an open Floor slot.** If the Floor is full, the Ready cask **clogs its vessel** until you deploy/enshrine something — so Floor scarcity and brewing back-pressure become *one* tension. A working cask is still assigned to a station (Market/Brewhouse/Harbor) and souped/twin-sharpening as in v0.5.
-- *Why:* every parked engine-cask is a room you didn't build, and vice versa. ~7 dead slots → 4 live, contested squares.
-
-### B. Recipes → dual-use cards (LOCKED) — the Lisboa tuck
-Recipes stop being tiles in a "book" and become **cards** acquired **only at the Market** (unchanged acquisition point). Each card is dual-use, rhyming with the dual-role cask:
-- **Acquisition boon (one-time, on collect) — made deliberately BIG (≈ a free action), scaling by tier:**
-  - **L2 Hopped — *Stocked Pantry:*** +2`G` 2`H`
-  - **L3 — *Brewmaster's Push:*** advance 3 across your vessels (a free Brewhouse)
-  - **L4 — *Grand Market:*** take 2 goods **and** buy one slot tile (lane/ship/Fair/room) at **−1**
-  - **L5 — *Master's Privilege:*** **choose one** — advance 3 / +2`G`2`H` / a free Market / a free Harbor deploy of a Ready cask
-- **Permanent brew strip:** the card **tucks under the bottom edge of the player board** (Lisboa-style), only its **type + cost profile** (`n G · n H · n steps`) showing. Your fanned row of strips **is** your recipe book; you brew from any tucked strip forever.
-- **Soft cap = the board edge:** **6 tuck guides.** Collecting a 7th forces you to **discard a strip** (lose that brewable type) — Brass hand-management, softened because you already banked the card's boon.
-- **Still pumps its type +1 on collect** (unchanged); boon-pumps respect the `pump ≤ drop` guardrail.
-- **Guardrail:** boons grant **resources / tempo / small presence only — never standing or raw VP** (only L5 offers a single *reach* assist), so the cash-out cells keep their job and the two axes stay earned.
-- **Founding-style order hook (optional):** your **first/bottom** strip is your *founding style*; **one** optional Goal rewards casks of that type — a cheap reason to commit early and to care about acquisition order.
-- *Component shift:* recipes move **tile → a small face-up Market deck** (frontier-gated). Good for the paper copy and removes recipe tiles from the box. Start: **Gruit baseline** (printed on the board, always brewable) **+ 2 random premium recipe cards.**
-
-### C. Ships → single-use carriers + the Sailed-Ships clock (LOCKED) — reach gets an engine
-v0.5 ships were passive faucets (the cargo/sail mechanic having been cut for speed). v0.6 brings back **transport without leg-by-leg movement** — a clean **load → fill → sail** lifecycle:
-- **Build** (Market): a ship goes in a perimeter slot, **assigned to a destination kontor**, with **capacity Cog 2 / Hulk 3**, inheriting that route's **quality gate**.
-- **Load** (when the ship's line fires — by *anyone*): the active player may put one **Ready** cask that meets the gate aboard. The **loader takes a small benefit**; the **owner skims a good** (toll-baron, like a Fair). *(Realizing −1 on the type happens when the cask becomes presence, i.e. on sail.)*
-- **Sail** (the answer to "what makes a ship leave its slot"): the instant a ship is **full**, it casts off — every cask aboard **drops as presence (reach)** at the destination, the **owner banks a per-kontor destination bonus**, and the **ship tile moves to the shared Sailed-Ships track** (it is *consumed* — single-use; a new ship must be built). *(Relief valve: the owner may launch a partial ship early via a Harbor action.)*
-- **Destination bonuses (owner, on delivery) ⚙:** **Bruges** +2`G` · **London** a Privilege · **Bergen** a monopoly toll / majority help · **Novgorod** the biggest (a presence/standing kicker).
-- **Ships are the way to reach the far kontore.** **Harbor direct-deploy reaches Bruges only**; London/Bergen/Novgorod presence comes through a ship (the **Quay room** upgrades direct-deploy to any open route, as a deliberate Floor investment — the builder's alternative to the merchant's ships).
-- **The merchant archetype** is now a first-class *reach* lean: open routes (author their value), run ships (skim every load + destination bonuses + your own casks delivered for presence), recycle goods/Privileges into more routes and ships — all still fed by brewing (you must brew to have casks to load). Guardrail: destination bonuses are mostly **engine fuel**, so the merchant converts into reach/standing rather than minting a separate point pile.
-
-### D. Differentiated route lanes (LOCKED)
-A lane still raises its route's end value **and** fires a skim — but the skim is now **per-kontor and authorial**, not a flat +1`G`:
-- **Bruges:** +1`G` (liquidity) · **Bergen:** a toll (a rival who delivers/loads to Bergen pays the lane owner a good) · **London:** advance/draw on the Privilege track · **Novgorod:** +1`H` or advance a brew a step.
-
-### E. Weak alternates at the cash-out cells (LOCKED)
-Both cash-outs stay intentionally weak/situational (dead-on-turn-1 is a *feature* that pushes opening variety onto the builder lines), but get a small fallback so an empty visit isn't wasted:
-- **Harbor (no deploy/load): *dockwork*** — +1 good (or +1 to one open route's value).
-- **Hall (no enshrine): *petition*** — +1 flat standing, or peek/swap one of your face-up goals.
-
-### F. End triggers (LOCKED) — the Sailed-Ships clock replaces city-saturation; a standing trigger replaces the turn cap
-- **Primary — the Sailed-Ships track fills.** Each voyage = one slot; **shared, visible, self-accelerating** (the more the table ships, the sooner it ends — a self-balancing reach clock). Slot count is the master length dial: **~6 / 8 / 10 / 12 for 2 / 3 / 4 / 5p ⚙.** Smoother than city-saturation (a Hulk's 3-presence burst is still just one slot).
-- **Backup — N casks enshrined total** (player-scaled ⚙). Replaces the arbitrary turn cap: any enshrine advances it, so it can't deadlock, and with the Floor only 4 slots (vessels clog) players are *forced* to cash out — one clock always moves.
-- **Whichever fires first → finish the round → score.** No turn limit.
-- **City saturation is no longer an end trigger** — route caps remain only to clamp presence and settle majorities. *(Optional flourish ⚙: milestone slots on the Sailed-Ships track advance the type frontier / refill the Market, tying shipping tempo to the market boom.)*
-
-### G. Casks — shared pool, ownership discs, age vs quality (LOCKED, clarified)
-- Casks are **brewed, never bought**, from a **shared supply with fixed global counts** (~L1×16 · L2×20 · L3×12 · L4×8 · L5×4) — so the rare export casks are a **contested** resource. A player's cap is "what's left to brew," not a personal allotment.
-- **Ownership** needs marking only for a **deployed cask in a shared slot** → a **colored disc**. Working casks (your Floor) and enshrined casks (your goal row) are owned by location.
-- **Quality is printed on the tile** (Q1–Q5, static, set at brew). **Age is tracked by the cask's position** on its vessel's Load→Ferment→Age→Ready track, plus **one aging cube** per brew to count the Age dwell (Gruit skip · L2/L3 1 · L4 2 · L5 3 pips). Per-player colored cask sets were rejected (5× printing, kills shared-pool scarcity and the cycled-goal pool).
-
-### Scoring (v0.6) — unchanged structure, now two real engines
-**Reach** = presence × route value + majorities (engine: **routes + ships**) · **Standing** = standing track (engine: **rooms + export brewing**) · **Goals** = best-3. Both run on brewed casks; the demand market still couples them as a timing decision.
-
-### Engine deltas (`play.html`) intended this pass
-Floor = 4 multi-use Room|Cask slots (rooms + working casks share them; Extra Vessel consumes one); free install gated by Floor space + vessel clog; recipes become dual-use cards (big on-collect boon + permanent brew strip + 6-cap discard); ships become single-use destination carriers (load-on-line-fire by anyone, owner skim, fill→sail→presence+destination bonus→Sailed-Ships track); Harbor direct-deploy limited to Bruges (Quay room → any); differentiated lane skims; weak Harbor/Hall alts; **end triggers = Sailed-Ships track full OR N enshrined → finish round** (city-saturation & turn-cap retired). Bump the save `KEY` (state shape changes).
-
-### Still open / next dials (v0.6)
-Sailed-Ships slot counts & the enshrined backstop number; ship build cost vs single-use payoff; destination-bonus magnitudes; how hard the 6-card recipe cap should bite; whether realize −1 fires per cask on a multi-cask sail; the optional Sailed-Ships milestone flourish; human playtest of the merchant lean vs the prestige lean.
-
----
-
-## 21. Working Architecture — v0.7: "The Wharf" — a ground-up reel-in to GWT/Distilled weight (2026-06-05) — LOCKED
-
-A design-conversation pass that **re-targets the whole game** and rebuilds it around what the designer actually found fun. v0.6 was honest about its ambition — "Lacerda-grade interlocking systems" — but a play-through and a headless pace model showed that ambition was the problem: **too much game, the right amount of theme.** This section supersedes §5–§20 where they conflict. The grid, the perimeter ring, the dual-role cask, the merchant-shipping fantasy, and the theme survive; roughly **half the rules are cut.**
-
-### A. The diagnosis we acted on
-- **Weight mismatch.** The target is now explicitly **Great Western Trail / Distilled** (medium, theme-rich, *actions simple — depth in placement, timing, and interaction*), **not** Lacerda. The v0.6 stack (demand market + type frontier + single-use ships + Fairs + Privileges + 4 differentiated lane skims + 4 destination bonuses + working casks + twins + a 3-way goal cycle) was a Lisboa teach for a game that wants to be a great *second* heavy euro after Wingspan.
-- **The actions were inverted.** In the comps the **actions are simple** and depth lives in how they combine. v0.6 made each of the four cells a multi-stage sub-game and capped *stops* (4) without capping *decisions* (6–8) → "fragmented."
-- **The bootstrap was brutal — measured, not guessed.** A faithful legality-checking pace model (real constants, solo, perfect play) put **first Bruges deploy at turn 2** but **first *voyage* at turn 6** (matching the designer's playtest), and the real far-kontor fantasy at ~turn 7 *and goods-bankrupt without dedicated goods-turns.* Three structural truths: the first voyage was gated at **two casks** (Cog cap 2); the bootstrap was **goods-bound, not brew-bound** (so extra vessels barely helped); and the optimal line was **invisible**, so a real explorer experienced "never." *(Model in `/tmp` during the session; the punchline is what's recorded here.)*
-- **The tiles had lost their fun.** Slot tiles fired tiny `+1 good` skims **out of turn** (counter-intuitive), empty caps were skipped (so early lines were just two cells — "slots feel unused"), and the working-cask Floor state paid `+1 good` for a brewed cask + a contested slot (dominated → "lackluster"). The designer's instinct — *make casks the tiles that bear real actions* (the way ships already bear the load action) — is the founding §8 dual-role vision, finally made fun.
-
-### B. The spine (LOCKED) — one loop, walked on the grid
-- **The four cells ARE the loop, and the forced-move circuit walks it:** **A Market (Source) → B Brewhouse (Brew) → D Cellar (Age) → C Harbor (Ship) → repeat** (clockwise A→B→D→C→A). Every line is two adjacent loop-steps (`Market+Brewhouse`, `Brewhouse+Cellar`, `Harbor+Cellar`, `Market+Harbor`) — each activation is a useful segment. The v0.6 build×cash-out diagonal is **retired** in favor of legibility (the warm start + faster pace made its anti-snowball job unnecessary).
-- **The dual-role cask in three states** (the §8 heart, restored): **maturing** (private, in a vessel) → **on the wharf** (a shared ring slot — simultaneously your cargo-in-waiting, private inventory, *and* a public action-building) → **delivered** (shipped to a destination → scores → gone). Shipping converts it.
-- **The wharf = the perimeter ring, GWT-style.** The 8 slots hold a transient mix — **deployed casks** (public action-buildings), **owned ships**, and **2–3 neutral buildings** seeded at setup (so the ring is alive turn 1). **One fire rule:** on a line, the active player may use each building on it; cask/neutral actions are **free and public** and resolve **on the active player's turn** (no out-of-turn gains — the v0.6 thing that felt wrong is gone). Cask actions are **chunky and loop-advancing**, keyed to type (Gruit→Source 2 · Hopped→Age 2 · L3→free Load · L4→+1 presence · L5→Wild), so *which type you brew is an engine choice.*
-
-### C. Where the value lives now (LOCKED) — the big simplification
-- **The two value tracks (reach/standing) and the whole demand market are cut.** The **volume-vs-prestige lean is expressed as *where you ship*:** kontore (Bruges/London/Bergen/Novgorod) pay trade value + majorities (the Leffe/volume move); **the Hall** is a *destination* that pays prestige for taking a cask out of commerce (the Westvleteren move). Same verb (ship), different destination. This deletes a cell, a value track, and the frontier in one move.
-- **Aging replaces the demand market as the value-over-time signal** — intuitive (you must mature beer before it ships) — and cross-player coupling now comes from **destination scarcity** (kontor caps + majorities), **shared wharf slots**, and the **one shared end clock**, not a market track.
-- **Destinations differentiate by a quality *gate* (the climb — better places want better beer) and a unique *benefit*** (often a brewery upgrade/modifier), closing the engine loop **deliver → earn upgrade → brew better → deliver better** (the Distilled "selling funds your next still" feel). All destinations are **open from the start** (route-lane tiles cut) — variety over limitation.
-
-### D. Interaction (LOCKED) — non-destructive, and a little out of your hands
-- **Shipping a rival's cask:** on your turn you may load a **rival's wharf cask** (never their brewery) onto **your** ship. The destination is **your ship's binding**; the **owner still scores it and picks its benefit** (never purely harmful); **you** get the freed slot, the filled ship toward your end-clock, a small loader bonus, and the timing. Positive-sum with a twist — and thematically *a 1350 brewmaster doesn't fully control where their casks end up.*
-- **Cells are never blocked** (twins cut). The only contested space is the shared wharf.
-
-### E. Pace fixes (LOCKED) — so the fun starts turn 1
-- **Warm start:** begin with one built Cog (bound to Bruges) and one Ready Gruit **in a vessel** (deploy it turn 1) → first voyage by turn 2–3. *(2026-06-06: the starting Gruit moved off the shared wharf into the vessel — de-jams the ring at setup, uniform at all counts.)*
-- **Start with 2 vessels** (cap 4), **base verbs always work** (ring buildings only *add*), and **all destinations open** → the goods/geometry bootstrap the model exposed is gone.
-- **Recipes reel in hard:** start **Gruit + Hopped** (fixed, symmetric, fair — and so *gaining an export recipe means more*); recipes are just *permission + cost to brew a type* — the on-collect boons, the 6-card tuck, and frontier-gating are cut.
-- **Game-length target: ~12–25 rounds** (the `MAX_ROUND` ceiling sits at the top of that band, ≈25 ⚙; good play ends earlier on the Sailed-Ships clock). The Sailed-Ships length is the primary pace dial.
-
-### E′. The Charter relief valve (added in the `play.html` port, 2026-06-05)
-Porting §21 exposed a **hard deadlock the bare wharf model allows**: owned ships are **consumed** when they sail, the ring is tight, and "a cask must be on the wharf to ship" means that once *all* your ships have sailed **and** the ring is full of casks **and** your vessels are clogged with Ready casks, there is **no legal move** — you can't brew (vessels full), deploy (ring full), ship (no ship), or build a ship (ring full). The fix is a small, always-available escape that keeps the loop **provably live**:
-- **Charter** (Harbor): pay **⚙2 `G`** to send **one** Ready cask — vessel *or* wharf — on an immediate **single-cask voyage** to a gated destination. It delivers (scores + benefit) and **advances the Sailed-Ships clock** like any voyage.
-- **Why it doesn't undermine the merchant fantasy:** one cask for the fare makes it **strictly worse per cask** than a Cog (2 casks / 2 `G`) or Hulk (3 / 3 `G`), so owning ships stays the efficient race; the Charter is the pricey flex/relief, not the plan. Because you can always Source 2 `G`, the loop can never lock.
-- **It is the spec's missing companion to "launch a partial ship early"** — that valve needs a ship to launch; the Charter needs none. *Decision: LOCKED into the design (folded into `RULES.md` §5, `COMPONENTS.md`, `TILES.md`).* Tuning the cost / clock-effect is open.
-
-### F. Scoring (v0.7)
-**Delivery value** (your delivered casks, by destination — kontore trade value + the Hall's prestige) **+ majorities + goals (best few).** No separate tracks; the lean is a strategy, not a silo.
-
-### G. What this cut (the reel-in tally)
-Out: the **demand-market track**, the **type frontier**, **Fairs**, **route-lane tiles**, the **Hall action cell**, the **working-cask Floor state**, the **fires-when-blocked twins**, **differentiated lane skims**, **recipe boons / the 6-card tuck**, **aging cubes**, and **casks-as-presence-while-they-sit**. In their place, four ideas do the work: **aging** (the value clock), **destinations** (the two value styles), **the shared wharf with one fire rule** (engine + interaction), and **deliver-to-upgrade** (the engine loop). Theme fully intact; ~half the rules gone.
-
-### Engine deltas (`play.html`) — DONE (2026-06-05 port)
-Full rewrite shipped: grid relabel to the loop (Market/Brewhouse/Cellar/Harbor); cask 3-state lifecycle (mature → deploy to wharf → ship); the wharf ring with one fire rule + chunky public cask-actions + seeded neutral buildings; ships build/load(base-verb or line-fire)/sail → Sailed-Ships clock; destinations with gates + benefits + majorities; owner-scores-and-picks even on a rival ship; brewery = vessels + upgrades; warm start; the **Charter** relief valve (§E′); **no demand market / frontier / Fairs / twins / Hall cell**; scoring = delivery + majorities + goals; `MAX_ROUND` ceiling reeled to **25** (the 12–25 target). Save `KEY` → `hanse-hotseat-v8`. **Smoke-tested headlessly** (mocked-DOM `vm`, bot driven off the engine): 100+ games at 2–5p reach game-over **crash-free and deadlock-free**, plus a targeted test of every cask action, the convert, the London/Bergen benefit pickers, and scoring. *All HTML pages (`learn`/`index`/`rulebook`/`printables`/`play`) and the markdown are now v0.7.*
-
-### Still open / next dials (v0.7)
-Warm-start contents & starting vessels vs **Sailed-Ships length** (the joint pace dials; **target 12–25 rounds**); **Charter cost** (⚙2 `G`) & whether it advances the clock; cask-action strengths & whether every cask bears one; destination values/gates/majority bonuses (the variety heart); the rival-ship loader bonus & best-vs-forced destination gap; ring pressure at 2p/5p; which upgrades come from deliveries vs Market; goal count & best-few cap. **Wants a human playtest of the loop's feel and pace** before the numbers are trusted.
-
-### Sim pass — 500 games surface the pace/depth coupling (2026-06-05)
-A 500-game headless sim (a *competent* bot that climbs the type ladder and ships to every destination, plus per-turn invariant checks) hardened the engine and re-tuned pace:
-- **Correctness is solid:** **0 invariant violations, 0 deadlocks/stuck games** across 500 games at 2–5p; every mechanic exercised (all five cask types brewed, all five destinations delivered to, every upgrade earned, the L5 Wild fired, rival-cask loads & partial launches & charters all occur).
-- **Pace was too *fast* at high counts, and that starved the depth.** With the linear ~6/8/10/12 caps the shared clock filled in ~8 rounds at 4–5p (under the 12–25 band) — and because the game ended so soon, the **export climb barely came online** (few l4/l5, Novgorod marginal). The clock fills *super-linearly* with player count (cross-traffic line-fire loading + charters + partial launches), so the cure was to **steepen the caps to ~7/11/15/19 ⚙ (≈ +4 per player).** Re-sim: medians **12–15 rounds**, 99–100% clock-ended, and l4 +60% / l5 +150% / Novgorod +85% — the depth now has room to breathe. *(`MAX_ROUND` 25 still caught ~1% of 4p games as the backstop.)*
-- **Open balance signals (greedy bot — not verdicts):** **Bruges still takes ~55% of deliveries** (the Q1 on-ramp) and **Novgorod stays the thinnest** kontor; win margins run wide (no defensive play in the bot). These are for the **human playtest** to judge — the sim's job was correctness + pace, both now in hand.
-
-### Destination tweak — Novgorod earns a Modifier (2026-06-05)
-The sim's "Novgorod stays the thinnest kontor" signal (it was *pure value*, while London/Bergen also handed out an upgrade) got addressed: **Novgorod now grants a Modifier on delivery, on top of its highest value.** So the premium Q3 long-haul pays the most *and* earns a perk — the strongest reward, fitting the hardest gate. Benefit map now: **Bruges → goods · London → any Upgrade (room/mod) · Bergen → a Modifier + the biggest majority · Novgorod → a Modifier + top value · Hall → prestige (Q×2).** A *benefit-aware* re-sim shipped **2.4× more casks to Novgorod** (477→1124) and pulled Bruges' share down — Novgorod is a real destination now. (Engine + all docs updated; 0 invariant violations on re-sim.)
-- **⚙ Open idea (parked):** the designer floated **tying the Charter cost to a track** — i.e. an *escalating* fare (cheap first charter, dearer each subsequent one) so that early "charter a cask to grab an upgrade or two" stays a clean opening play but **spamming the relief valve costs more.** Interesting interaction with the Novgorod/London/Bergen benefit outlets (charter-for-upgrades). Left flat at **2 `G`** for now; revisit after a human playtest of the charter's feel.
-
-### Market "option B" — a face-up Upgrade display (2026-06-05)
-Pinning down the Market's table presence: **recipes & ships are an always-available supply** (you can always buy a build option), but **upgrades sit in a shared face-up display** — a row of **4 ⚙** drawn from a shuffled Upgrade supply (~2 of each + extra Extra Vessels), refilling as tiles are taken. You **buy** from the display (pay its cost) **or earn** one *free* by delivering to **London / Bergen / Novgorod** — the **same** display. So *"you ship a cask but don't fully know what'll be on offer at the other end."*
-- **The room/modifier split between kontore dissolves into the one display.** Novgorod-earns-a-Modifier (above) is superseded: the three engine-kontore each just **take a face-up Upgrade**, and they differ by **value · majority · gate** (Bruges = goods, the Hall = prestige, stay the outliers). Cleaner to teach, and it's the source of the contested "what's in store" tension.
-- **Footprint:** the Market is then a few always-stocked supply stacks (recipes, ships) + a **4-tile face-up upgrade row** + a small facedown bag — tight, *Great Western Trail*-scale. Verified in `play.html` (160-game headless: 0 violations, all 11 upgrades reached via 504 buys + 591 delivery-earns). Save `KEY → v9`.
-- **⚙ Open idea (parked):** **evolve recipe acquisition** — recipes are presently a flat always-available supply; there's room to give them a display/tension of their own (a recipe row, a draft, or a frontier-lite) rather than "always buy any export recipe." Left as-is for now.
-- **⚙ Open:** display size (4?), supply counts/contestation, whether a delivery should let you draw deeper if no grantable tile is face-up (currently the benefit can whiff), and whether some upgrades should be delivery-*only* again (currently all are both buyable & earnable).
-
-### Terminology + setup trims (2026-06-06)
-Three small, player-tested-by-feel calls:
-- **"Summit" tier → "Export."** The premium L3–L5 beers were a *design* placeholder ("Summit" = ladder position, nothing to do with beer). Renamed to **Export** — Bock/Mumme/Broyhan/Keut were literally the Hanse's famous *export* beers, and it ties to the game's export-trade spine. (Player-facing labels + spec + printables; the dealt names still show in play.)
-- **Starting Gruit moved off the shared wharf into a vessel.** It begins **Ready in Vessel 1** (deploy it turn 1) rather than pre-placed on the 8-slot ring — de-jams the wharf at setup and is uniform at every count. The **Cog** stays the load-bearing warm-start piece.
-- **First-player rotation removed.** Turn order is **fixed** for the whole game (one fewer round-bookkeeping bit players found easy to forget). This concentrates any first-mover edge (notably first pick of the shared Upgrade display) on seat 1, so **seat compensation** — likely extra starting goods for later seats — is now an **open ⚙** to size at human playtest. (Argued both ways first; the designer chose simplicity now, compensation later.)
-- **Print &amp; Play redesign:** everything re-laid for **US Letter landscape**; casks carry a big card-corner quality index (a `gem` icon + number, no "Q"); tiles get a 1/8″ bleed past an inner safe-frame, tokens a bleed ring for laser cutting; **recipes became cards** (a board tuck strip; a dual-purpose acquire bonus is TBD); and a redesigned **Destinations** board (clean title bars, `L#+` quality gates with a quality icon, a `★` VP icon on every value, one cask slot + a per-player presence/majority marker track).
-
-### Balanced wharf seeding + the "grid is a rondel" diagnosis (2026-06-06)
-A designer review of the grid raised the central health question: **is the action-selection grid solvable — i.e., is the best play just to walk the loop like a rondel?** Two findings and one change.
-
-- **The opening was deterministic (fixed → spread). DONE.** The seeder placed the warm-start Cogs and the 2–3 neutral buildings by iterating the `SLOTS` array in fixed order, so the neutral *positions* never varied (at 2p **both** neutrals always landed on the top row; at 4p both on the bottom). The *types* were random, the *lines* were not — so one line was reliably the richest opening. **Fix (LOCKED):** the warm-start tiles are now **spread across the weakest lines** — each tile placed on the currently lightest-weighted line with an open slot (neutrals weighted heavier so two never stack while a lighter line is open), with random tie-breaks + random slot-within-line. Every line now carries ≈ one seeded tile, the south is worth visiting from turn 1, and the opening varies every game. (`play.html` `freshState`; `KEY → v13`; 500×3 sim clean — 0 crashes/deadlocks, pace 12–13 rounds, seats fair. `RULES.md` §0, `COMPONENTS.md` §1, `rulebook.html` §5 updated.)
-- **The deeper issue is structural and NOT fixed by seeding (OPEN ⚙).** On a 2×2, the adjacency graph is a 4-cycle (A–B–D–C–A) and **all four lines are edges of that cycle**; the diagonals (A–D, B–C) are the only non-edges. v0.7 maps the loop **onto** that cycle (Source=A→Brew=B→Age=D→Ship=C), so **every consecutive loop-step pair is co-linear = chainable in one turn** — that is the definition of a rondel. Concretely: a player can **camp the top edge (A↔B) and fire columns** — `colL` at A = Source+Ship, `colR` at B = Brew+Age — executing the *entire* loop every two turns while touching all four cells, never going south (only the `s7`/`s4` row-cap slots ever pull them down). The designer's verdict: *"if the game were meant to be walked like a rondel, we wouldn't have a grid."*
-  - **Why it's inherent:** on a 2×2 you can only break the rondel by making some consecutive loop-steps *diagonal* (non-co-linear), which forces a 2-move traversal — i.e., the **v0.6 build×cash-out diagonal** (`§19/§20`), retired in v0.7 for legibility. A 2×2 cannot offer a "non-trivial but single-move" loop; it's rondel **or** forced traversal.
-  - **The fork to resolve (pending designer call):** **(a)** revert to a diagonal arrangement (movement matters again; cost = the board no longer *teaches* the loop, and some steps cost 2 moves); **(b)** keep the loop layout but make **position genuinely matter via the wharf + occupancy** — richer/contested cap slots that pull the worker around, and likely the **occupancy-pressure** mechanic (Pillar 4, still in `§2`): arriving on a rival's cell lets them also use it / costs a step, so camping leaks value. **The camp problem and the earlier "do we still need blocking?" question are the same problem** — occupancy pressure is the euro-standard answer to "why leave the optimal cell." **(c)** a larger grid (3×3 / 2×4) gives loop-to-topology slack, but adds actions/weight the design doesn't want. *No change made pending the decision; logged as the top open structural item.*
-
-### Resolution — occupancy pressure chosen; build×cash-out parked; the "Wharf" naming (2026-06-06)
-The fork above was resolved by prototyping **both** candidates on dedicated branches (sim/engine only), each run at **1500 games / player count**, then a designer decision.
-
-- **Build×cash-out diagonal** (`v0.8-buildxcashout-diagonal`, Brewhouse↔Cellar swapped so the two builders are non-co-linear): robust (0 crashes/deadlocks) but **overshot pace** (rounds 10.6/9.6/9.4, below the 12–25 band) and — with the greedy bot — **choked the premium climb** (Novgorod 1–3%, blended wins ~0%): Source and Brew can't chain, so the bot never builds up. Real effects (anti-snowball, faster game) noted; the climb-collapse is partly a bot artifact. **Parked, not deleted** (branch retained).
-- **Occupancy pressure** (`v0.8-occupancy-pressure`, **chosen → merged to `main`**): a **congestion toll** — you pay **1 `G`** to the *supply* when you **move onto a station a rival already occupies** (only your destination station, never the line; **opening placement is free**; capped, never blocks). Toll-to-bank (not the occupant) deliberately avoids the "hand the same tokens back and forth"/kingmaking trap the designer flagged for a 4-station board. 1500-game sim: robust, pace stays **in band** (13.3–13.7 rounds), charters/upgrades ≈ baseline, premium reach slightly **up**, seat bias mild. **Free opening placement** is also the first **seat balancer** (replaces the parked "extra goods for later seats" idea, which stays an open ⚙). *Caveat (LOGGED): the greedy bot doesn't camp, so the sim proves robustness/pace, not that camping is actually beaten — that needs human play or a seat-aware bot.* `KEY → v15`.
-- **Naming (LOCKED).** "The Loop" implied a rondel — the exact wrong read. Renamed throughout: **the Wharf** = the whole core area (the four stations + the 8 slots); **stations** = the four action spaces (was "cells"); **slots** = the 8 perimeter spaces (was "the wharf"/"the ring"); **a line = its two stations plus any tiles in their two slots**. The Source→Brew→Age→Ship sequence is now described, never branded "the Loop," and "walk the loop / circuit / rondel" language is purged. Migrated across all five HTML pages, `RULES.md`, `COMPONENTS.md`, `TILES.md`, `PLAYERBOARD.md`, `README.md`, and `CLAUDE.md`; an **Action Reference** table (icons · title · effect, incl. gain grain/hops) was added to `rulebook.html`. (Historical §1–§20 entries keep their original wording as a record.)
-
-### Export beers carry fixed quality; deal 3 of 4 (variable ladder shape) (2026-06-07)
-The export tier's setup was reworked from *floating* names to *fixed-quality* beers. **Before:** the four historical names (Bock / Mumme / Broyhan / Keut) were shuffled onto three fixed rungs (L3/L4/L5) — so the names were cosmetic and **the full Q3→Q4→Q5 ladder was present every game.** **Now (LOCKED — "Option 1"):** each beer owns a **fixed quality** — **Broyhan** Q3, **Keut** Q3, **Mumme** Q4, **Bock** Q5 (Broyhan g1h2 / Keut g2h1 differentiate the two Q3s by recipe cost) — and **3 of the 4 are dealt** into each game. Because two beers share Q3 and Q4/Q5 are singletons, dropping one **varies the ladder shape**: drop a Q3 → the full Q3→Q4→Q5 climb (the other Q3 + Mumme + Bock); **drop Mumme → no Q4 tier**; **drop Bock → no Q5 tier** (the Wild cask-action and the top trade value sit out that game). The chosen alternative to the "Option 2" conservative variant (pin Bock+Mumme, vary only the single Q3 → full ladder guaranteed every game), traded a guaranteed climb for more game-to-game variety.
-- **Why the interlocks hold.** **Hall** (prestige) gates at Q2 (Hopped reaches it), and **Novgorod** gates at Q3 — and ≥1 of the two Q3 beers is always dealt — so neither the prestige lean nor the hardest kontor is ever locked out by the drop. The action follows the **quality**, not the name (Q3→Load, Q4→Reach, Q5→Wild), so a missing tier simply removes that one cask-action for the game. **Aging Cellar** still grants −1 step always; its "unlocks the L5 export" clause now attaches to **Bock** specifically and is moot in games where Bock is undealt.
-- **Engine.** `STYLES` now defines all four export beers with intrinsic quality (no more name-relabeling of l3/l4/l5 slots); `dealExports()` shuffles `EXPORT_ROSTER` and takes 3; the Market lists *this game's* dealt recipes (sorted by quality) via `buyRecipe`. `KEY → v16`. Re-sim (500×3): **0 crashes / 0 deadlocks**, pace in band (2p 15.1 · 3p 14.9 · 4p 14.3 rounds), clock-ended ~99–100% (`sim-results-v16.txt`).
-- **Printables.** Recipe-card title strip no longer ellipsizes (full beer name always prints — cost wraps instead); destinations-board upgrade row gap tightened to `.109in` so the tiles stay on one row. Also fixed a stale-number bug surfaced by the consistency audit: the printed **upgrade buy costs were 2–3 `G`** but the engine/spec price them at **4–5 `G`** (the deliberately "dear" price so buying doesn't dominate *earning* by delivery) — corrected on the tiles.
-
-### Consistency audit + v0.8 reconciliation (2026-06-07)
-A full read-through of all seven docs + five HTML pages (the source-of-truth `.md` set and the reviewed `.html` artifacts) surfaced a set of drift items, resolved this pass:
-- **All six neutral buildings are now implemented in `play.html`** (the engine had only four). Added **Towncrier** — *draw a goal:* pick one from the face-up goal supply (the goals not already in your row; your best 2 still score, so extra goals only ever expand the choice — self-limiting). And **Almshouse** — *+1 presence at a kontor you already lead* (reinforce/break-the-tie on a majority you hold; mirrors the L4 Reach action, gated to kontore where you're a leader). Both keep the engine crash- & deadlock-free (500×3 sim, `KEY → v18`). The docs/printables/rulebook had been advertising these two ahead of the engine; now they agree. *(Designer call: implement all six rather than trim the docs to four.)* The seeder was also corrected to place **2–3** neutrals per game (was a flat 2) to match the long-standing "2–3 ⚙" spec — 3 at 2–3p, 2 at 4p, 1 at the tightest 5p ring; charters tick up mildly with the tighter ring but pace stays in band.
-- **Recipe-card "acquire bonus" = a parked placeholder (REVISIT).** The printed recipe cards carry an *"acquire bonus — dual-purpose (TBD)"* strip, but the v0.7 reel-in **cut** recipe on-collect boons (a recipe = type + cost). Decision: **keep the placeholder on the card but it is NOT active in the rules or the engine** — we will design and reintroduce an acquire bonus *after a human playtest* of the current loop. Logged here so the card and the spec are knowingly out of step on a single, flagged TBD rather than silently contradictory.
-- **Version stamp:** everything user-facing relabeled **v0.7 → v0.8 "The Wharf"** (page titles/tags/footers, doc headers, README/CHANGELOG banners), with the v0.6/v0.7 *rationale* prose kept as historical record. A proper **`## v0.8`** entry was added to `CHANGELOG.md` (occupancy toll · naming · fixed-quality exports · all six neutrals; KEY v15→v17).
-
-### v0.9 (in review) — the three leans, balanced: tiered majorities, the London/Bergen split, seat compensation (2026-06-07)
-A balance pass driven by a methodological upgrade to the sim harness, prompted by a manifesto gut-check ("do top strategy games' levers hold here?"). The greedy bot's blind spots (never the Hall, never Bergen) meant the game's **headline volume-vs-prestige axis and its third "majority" lean had never actually been tested.** Fix: teach the bot to **commit to a lean** (`PERSONAS`: volume / prestige / majority), then measure win-rate by lean across N=1000 × 2–5p. This is now the authority for lean balance (the greedy bot remains the authority for robustness/pace).
-- **The big de-risk.** With lean-committed bots, **volume and prestige are balanced and both viable** (they trade the lead by count), and the **GWT blend thesis holds** — "blended" winners jumped from ~23% (greedy) to ~63–74%. The manifesto's sharpest critique ("the prestige lean is marginal — 3% of deliveries") was a **bot artifact, not a design flaw.** The Hall needed no buff; the signature theme axis works.
-- **The two real problems the personas exposed.** (1) **Majority-stacking (Bergen) was underpowered** — it lost at every count, worse as players rose (12–24% vs fair 20–33%). (2) **London was a dead destination (~2.5%)** — strictly "Bergen minus the big majority," no identity; a value bump alone didn't revive it (climbers prefer Novgorod).
-- **Decision 1 — tiered, ranked majorities (Lacerda-style), concentrated at Bergen.** Each kontor pays **1st/2nd/3rd** by delivered-cask count (tied players split the occupied tiers); **2-player skips 2nd** (winner-take-all, so 2p majority isn't a participation prize). The designer's call was the classic 15/10/5 schedule; the sim showed **15/10/5 overshoots our ~45-pt score scale** (majority dominates, scores inflate to ~50, and — the subtle part — **broad tiered majorities at *every* kontor starve the prestige lean**, which contests none of them). The resolution, both faithful to the structure and balanced: **concentrate the rich majority at Bergen (10/6/3 ⚙)** and keep the other kontore minor and value-led (Bruges/London 2, Novgorod 3 ⚙). *Note:* zeroing the minor majorities entirely **crashes the *volume* lean** (it gets no majority points), so they're load-bearing. Result: **all three leans land within ~1–3 pts of fair at every count** — the "no *pure* path wins" ideal (`CHANGELOG` balance-lesson #6), finally measured rather than asserted.
-- **Decision 2 — the London/Bergen identity split.** They were near-clones (both Q2, value 3, "take an Upgrade"). Now: **Bergen = the majority kontor** (its whole draw is the 10/6/3 majority; **no upgrade**); **London = the engine kontor** (the accessible Q2 upgrade destination). Upgrade-earning is **London + Novgorod**. The greedy upgrade economy is unchanged (the bot never shipped Bergen, so removing its grant cost nothing). The clean four-niche board: **Bruges = liquidity · London = engine · Bergen = majority · Novgorod = premium value**, + the **Hall = prestige.** *(Caveat: the greedy bot can't value London's "engine" pull, so the sim can't yet confirm London's traffic recovers — but Bergen's new identity already de-clones it; human playtest to confirm.)*
-- **Decision 3 — seat compensation (+1 G per later seat, `SEAT_COMP ⚙`).** The N=1000 baseline surfaced a real **structural first-player edge** at every count (P1 54.7% at 2p; a clean monotonic 38/34/28 at 3p — all seats run identical bot code, so this is pure turn-order: P1 places first untolled and acts first every round). +1 G to each non-first seat flattens it (spread **2p 9.4→2.2, 3p 10.2→3.6**); 4–5p improve with a small residual (the flat +1 mildly over-helps the last seat; the true middle seat stays a hair low) — left for human playtest, since the non-camping bot can't show the toll's real spreading effect or a human's first-player skill edge.
-- **Engine + verification.** `play.html` `KEY → v19`: `DEST.maj` is now a tier array, `majorityAwards()` does the ranked/2p-skip/tie-split payout, `grantBenefit` drops Bergen from the upgrade branch, `newPlayer` applies `SEAT_COMP`. **N=1000 × 2–5p (persona + greedy): 0 crashes / 0 deadlocks, pace 14.0–14.4 (in band), ~99–100% clock-ended, score scale unchanged (~45).** Harness gained `PERSONAS` + a `TUNE` DEST-restat hook (`playtests/sim.js`); outputs saved under `playtests/sim-*v19*`.
-- **Still open / next.** Propagate to the four published HTML pages (the `.md` spec set + `play.html` are done). Then the queued "greatness" work: **asymmetric brewing houses** (now balanceable on the persona harness — the three leans are the seeds of 3–4 houses) and a **solo Automa** from the existing bot. ⚙ open: the exact 4–5p seat-comp shape; whether London's engine identity needs a sharper mechanical pull (deeper upgrade access) beyond de-cloning; whether to lift the whole score scale toward Lacerda territory (which would re-admit bigger majority numbers like 15/10/5).
-
-### v0.10 (in review) — every kontor a competitive majority, then BIG motivating majorities (2026-06-08)
-A designer call to make the majority game live at **all four kontore**, not just Bergen — give every destination a **3-tier majority** worth contesting. A *partial revert* of v0.9's "concentrate at Bergen," so the v0.9 warning had to be answered, not ignored: **broad majorities over-feed the kontore and starve prestige.** It landed in two passes the same day.
-- **Pass 1 — a modest laddered spread (KEY v20).** Every kontor got a small 3-tier set, total pool ≈ v0.9's: **Bruges 2/1/1 · London 3/1/1 · Bergen 4/2/1 · Novgorod 5/2/1** ⚙, with **Bergen normalized to goods** (an upgrade would re-clone it with London → liquidity pair Bruges/Bergen vs engine pair London/Novgorod). A first try at a *big* descending ladder (~5/7/9/11, pool ~2.2×) reproduced the v0.9 failure exactly (volume 48–64%), confirming the warning; shrinking + steepening (rich 1st, thin 2nd/3rd) balanced it. **Also required: a harness fix** — the persona *majority* bot was a v0.9 relic camping one fixed kontor (`__majTarget='bergen'`), which let the volume bot sweep the other three uncontested and falsely read as "volume dominates." Rebuilt it to **contest the richest reachable majorities** (lock the best, shift to the next once safely ahead). Only then did the spread measure near fair.
-- **Pass 2 — BIG majorities as the motivator (KEY v21, the live numbers).** The designer judged 2/3-point majorities too weak to *motivate* — "you want players to go for majorities; that's a good thing." So the tiers were scaled up to the v0.9 magnitudes and beyond: **Bruges 5/3/0 · London 6/4/2 · Novgorod 8/5/2 · Bergen 10/6/3** ⚙ — **Bergen the rich anchor** (its goods benefit is deliberately token, ≈ a Market visit, so the *majority* is its draw); Novgorod rides high for its hard Q3 reach but capped below Bergen (it already tops value + grants an upgrade). Two coupled rebalances kept the game from breaking:
-  - **Per-cask delivery values cut** (Bruges 2→1, London/Bergen 3→2, Novgorod 5→4) so the end-game points **move out of flat value and into the majority race** (the designer's "reduce the delivery end-game points" call). Winner score split shifted `deliv 24 / maj 5` → **`deliv ~18 / maj ~11`** — majorities are now a chunk on par with delivery and goals.
-  - **The Hall bumped Q×2 → Q×2.5** (`HALL_MULT`, floored: Q2→5 · Q3→7 · Q4→10 · Q5→12). This is **forced, not optional**: prestige contests *no* majority, so when majorities get big the kontore tilt the game and prestige must get a matching per-cask hit. Q×2 left prestige starved (16% at 4–5p); Q×3 over-corrected (prestige 35%, majority starved); **Q×2.5 is the balance point.**
-- **The structural insight (worth carrying forward).** **Presence = delivered-cask count, so majorities are won by shipping WIDE, not by concentrating.** A scatter-shipper leads more kontore than a concentrate-on-one "specialist," so big majorities mostly reward *volume* — "go for majorities" *is* a volume play. There is no separate concentrate-on-one strategy that beats it; the genuine axis remains **kontore (volume+majority) vs the Hall (prestige).** The persona harness's `majority` bot therefore stays a touch cold by construction — read it as a stress test, not a third pole.
-- **Result (PERSONAS, N=500 × 2–5p).** The real axis is **balanced**: volume vs prestige are within ~1–3 pts of fair at every count (**4p 26/26/23, 5p 21/24/15**, fair 25/20; 2p 52/51/47). Prestige healthy everywhere; the concentrate-`majority` persona trails at 3p/5p (the structural point above). Robustness (greedy, N=500 × 2–5p): **0 crashes / 0 deadlocks, ~100% clock-ended, pace 13.8–14.4 (in band)**, winner scores ~45–47. Saved `playtests/sim-results-v21*.txt`.
-- **Engine.** `play.html` `KEY → v21`: `DEST.maj` triples (big), kontor `value`s cut, `HALL_MULT=2.5`, Bergen `goods` benefit + **Monopoly → Bryggen** rename. `majorityAwards()`/tie/2p-skip unchanged.
-- **Still open / next.** Wants a **human playtest** — especially whether big majorities + low delivery values make the *feel* of a kontor delivery satisfying (the points come at game-end, not on the ship), and whether Bergen's token goods read as "weak benefit, big payoff" rather than just weak. ⚙ open: `HALL_MULT` (2.5 is sim-balanced but untested by humans); whether the `5/3/0` zero-third-tier at Bruges should be a flat `5/3` (functionally identical).
-
-### v0.11 candidates — consolidated findings → themes → proposals to test (2026-06-12)
-
-The first **human playtests** (5 games vs the AI seats, designer notes) landed alongside the **simulation corpus** (`playtests/FINDINGS-v26.md`: 1,200+ trader games, journeyman & 5p probes, Guildmaster oracles at 2/3/4p). This entry consolidates BOTH into themes with testable proposals. **Discipline: one change per test batch** — too many simultaneous changes and you can't attribute the effect. Each proposal names its measurement (the sim suite + `sim-analyze` deltas + Studio-tracked human games). Nothing below is decided.
-
-**Where human feel and simulation agree (highest confidence, act first):**
-- **The Q4–Q5 climb doesn't pay** — designer: "race nature and pace don't support going that path"; oracle: the GM wins while skipping Q4+ at every count (with a flat-MC bias caveat). → Theme T4.
-- **Charters undercut owned ships** — designer: "felt like cheating… why bother with a larger ship"; oracle: the GM charters 3.3×/game at 4p while sailing fewer ships than the heuristics. → Theme T5.
-- **Cross-player loading is unmotivated/confusing** — designer: never saw rival-ship loads, wants loading to be a decision; oracle: rival-loading is structurally dead at 2p (0.6/game) and only converges to normal at 4p. → Theme T2.
-
----
-
-**T1 · The slot ecology & tile families** *(notes: town buildings carry replayability but players have no agency over them; 8 slots over-subscribed at 4p; merge buildings/upgrades?)*
-- **P1a — Buildings become player-built.** Merge the 6 neutral buildings + the 11 upgrade designs into ONE town-building family: bought at the Market / earned at the engine-kontore, **placed on a slot by the buyer** (public action per the fire rule; owner gets a private kicker ⚙). Setup seeds only 1–2. Gives the "reason to put them out," keeps the replayability lever in player hands, thins the three-family collision.
-- **P1b — Dedicated building sites.** The 4 corner-adjacent slots become **building sites** ("port slots"), the 4 others **berths** (casks/ships only). Geometry relieves 4p pressure without new components.
-- *Measure:* slot-jam rate & charter count at 4–5p (sim), building-use events/game, human "did placement feel like a decision."
-
-**T2 · Ships as shared destination infrastructure** *(notes: ownership tracking finicky; rival-ship line-fire confusing & never used; "ships tied to destinations, not players"; the filler/all-aboard benefit ideas)* — the big structural candidate.
-- **P2a — Neutral ships (Imhotep-style).** Ship tiles are printed with destination+capacity and spawn into berths; **nobody owns them** — loading your cask is claiming cargo space; full ⇒ it sails; every cask owner scores their own casks; the **filler** (or cargo-majority holder ⚙) takes the destination benefit/kicker; "build a ship" becomes **commission** (pick & place the next tile, commission kicker on sail ⚙). Dissolves: ownership tracking, the rival-ship confusion, the B1 gifting paradox (loading is now self-interested by construction), and the loader-bonus dial entirely. Risks: loses the "my fleet" merchant fantasy; sail-timing becomes a race (mitigate: the filler choice is the new timing lever).
-- **P2b — Value-tweak fallback (keep owned ships):** full-ship sail bonus scaling with capacity (Hulk > Cog ⚙) + loader bonus 1G→2G. Answers "bigger ships should pay" without surgery.
-- *Measure:* loads-on-others/game by count, ship-vs-charter mix, human confusion reports. Test P2b first (cheap); prototype P2a behind a setup variant toggle in `play.html`.
-
-**T3 · Cask lifecycle legibility & intentionality** *(notes: slotted-vs-loaded-vs-aging confusion; auto-aging = auto-calculation, bad on the table; "when can a cask be slotted?"; mid-turn slot-then-fire)*
-- **P3a — Formal turn phases:** **(1) Deploy Ready casks → (2) Move → (3) Activate & resolve → (4) End.** Slot tiles fire only if present at activation — kills the mid-turn deploy-then-fire ambiguity (which the GM exploits today as a free same-turn action) and gives the turn a teachable shape.
-- **P3b — Physical state grammar** (components/printables/app): maturing = flat in vessel · Ready = rotated 45° · slotted = on the ring · loaded = physically ON the ship tile. No state lives in memory.
-- **P3c — Intentional aging:** drop the **+1 auto-age per turn** (the auto-calculation); compensate with a richer Cellar (pool 3→4 ⚙) and/or shorter maturations. Aging becomes something you DO. *Big pace lever — sim before table.*
-- *Measure:* pace band (sim — P3c shifts it), human confusion reports, GM exploit gone (analyze: deploy-line correlation).
-
-**T4 · The quality climb must pay** *(notes: Q4/Q5 attract but don't reward; sim FLAG B2 at all counts)*
-- **P4a — Quality pays at the kontore:** delivery value = base **+1 per Q above the gate** ⚙ (majorities still the volume race; quality earns its freight on the same voyage).
-- **P4b — Hall scaling up** (Q×3 for Q4+ only ⚙ — a top-end kink, not a flat bump, so Q2-spam at the Hall doesn't return).
-- **P4c — Premium cask actions on delivery:** Q4/Q5 casks trigger their signature action FOR THE OWNER when delivered ⚙ (a parting gift — ties to T9's variable benefits).
-- *Measure:* Q4+ brews/game (currently GM 0.3–0.5, traders ~1.0), persona balance (prestige must not run away), full-budget GM verification. **Pick ONE dial per test.**
-
-**T5 · Charter & ship economics** *(notes: charters felt like cheating, want variable cost; sim B3 + GM charter-highway)*
-- **P5a — Escalating fare** (the parked §21 idea, now doubly evidenced): charter cost = **2G + 1G per charter you have already taken** ⚙ (per-player; resets never). First one stays the relief valve; the highway gets tolls.
-- **P5b — Destination-priced fares** (Bruges 2G … Novgorod 4G ⚙) — thematic (longer voyage, dearer passage), also nerfs charter-sniping the rich kontore.
-- *Measure:* charters/game by count (target: ≤1/player at 2–4p, ~1.5 at 5p), deadlock still impossible (the first charter must stay affordable), GM ship-vs-charter mix normalizes.
-
-**T6 · Brewhouse engine agency** *(note: upgrades are passive; want active powers — carefully, this was cut in v0.7 for weight)*
-- **P6a — One active Room per turn:** each Room gains a small ACTIVE power usable **once on your turn when your activated line includes the matching station** ⚙ (e.g., Cooperage: free load when Harbor fires). No new phases, no twins — just a reason to look at your board during a line.
-- *Measure:* turn length (human), weight feel, win-correlate shift toward upgrades.
-
-**T7 · Goals economy** *(note: Towncrier → 6+ goals, excessive)* — smallest fix, first batch.
-- **P7 — Towncrier costs 1G and you hold max 4 goals** (draw beyond cap ⇒ discard down) ⚙. Best-2 scoring unchanged.
-- *Measure:* goals drawn/game, goal-pts share stays ~⅓.
-
-**T8 · Board layout question** *(note: is Market+Brewhouse on one line right?)* — experiment, not a change.
-- **P8 — Re-run the build×cash-out A/B with modern instruments.** The v0.8 diagonal test was rejected partly on greedy-bot artifacts; we now have personas, the Trader, the Guildmaster, and `sim-analyze`. Data-only: revive the parked branch logic under a sim flag, compare pace/openings/climb. No table change unless data AND feel agree.
-
-**T9 · Variable cask benefits** *(note: casks need variable benefits)* — component-level, decide after T1/T2 settle the families.
-- **P9 — Action variants within quality bands:** each quality band prints 2–3 signature-action variants across its tile pool ⚙ (drawn blind at brew). Power stays banded; texture and tile identity go up. Pairs with P4c.
-
----
-
-**Test sequencing (one lever at a time):**
-1. **Batch A — value tweaks, each its own KEY + sim suite + a couple of Studio games:** P7 (goals) → P5a (charter fare) → ONE of P4a/P4b (quality).
-2. **Batch B — the structural fork:** prototype **P2a neutral ships** behind a `play.html` setup variant (A/B in the same build); sim + human side-by-side vs P2b.
-3. **Batch C — turn shape:** P3a phases (+P3b visuals), then P3c aging only after pace re-simmed.
-4. **Parallel, no product risk:** P8 layout A/B; P1 decisions after T2 resolves (the families depend on whether ships stay owned).
-5. **Last:** T6, T9 (weight & components — once the structure is stable).
-
-*Every batch: bump `KEY`, run `sim.js 500` + `ai-ladder 600` + `ai-render-smoke` + `sim-analyze` (target metric), then table games → Studio. The AI tiers absorb every change automatically (they drive the engine), so the same Guildmaster verifies each batch.*
-
-### v0.11 Batch B — neutral, destination-bound ships (2026-06-13) — LOCKED, committed (not a variant)
-The structural fork from the v0.11 themes (T2/P2a), shipped as **the** rule. **The variant question, answered:** a runtime toggle would mean two ship models through every code path (engine, four AI tiers, the GM's enumerators, every doc twice) — exactly the complexity the v0.7 reel-in exists to prevent. **Git is the variant system**: the owned-ship world lives at `KEY v30`, fully gated, one revert away; the A/B is sims + table games across builds, not a rules fork at the table.
-
-**The model (all numbers ⚙).** Ships are **neutral**: hull (Cog 2 / Hulk 3) and **destination printed on the tile**, off a shuffled **ship deck** (~14, every destination incl. the Hall) feeding a **ship market of 3 ⚙ face-up** (v0.11.1 — was a single face-up tile); **2 dealt to slots at setup** — the warm start, replacing the per-player Cogs. **Commission** (Market, 2 `G`): place the face-up ship on any open slot — what you buy is tempo and placement. **Load your own casks only.** Full ⇒ it sails: every cask owner scores + benefit; the **filler takes the 2 `G` dispatch fee** + ships-goal credit (g4 → "filled or launched"); **early launch** needs one of your casks aboard. The voyage advances the **Sailed-Ships marker** and the **hull returns to the bottom of the deck** (no tile graveyard — the clock is a marker now). **The "ship a rival's cask" rule is CUT** (FINDINGS-v26 B1: measured anti-optimal, confusing at the table); **Royal Patent** redefined (charter fare −1 `G`, min 1, buy 4 `G`) since ship capacity is no longer ownable.
-
-**Build findings (the honest record):**
-1. **Deck exhaustion** initially deadlocked a greedy bot (commission spam on an empty deck) and starved hulls at 4–5p → the **hull-recycling** rule above; commission can still be exhausted *momentarily*, never permanently.
-2. **Charter mix rises at 4–5p** (sim: ~12/16 per game table-wide vs 7/10 in the owned world) — shared hulls bound to specific destinations often don't match your cargo, so the relief valve works harder; the A2′ fare row taxes exactly this, and the **deck mix per player count** is the ready dial. Pace stays in band (14–16 rounds).
-3. **The big design finding: printed destinations removed a strategy axis.** With ship-binding gone, the heuristic tiers *converged* (journeyman fell to 51% over the apprentice) while the **Guildmaster still won 95–100%** — the game's depth survived (placement, load selection, sail timing), but it relocated. The Trader was rebuilt around the new center: **choosing WHICH hull to feed is the destination decision now**, so its ship-selection scores value + majority swing + goal marginal (that one change restored the ladder: 63/65/71 + GM). The **CEM tuner returned its first ADOPT** (54.1%, CI-clear): swing → 1.0, **goal weight → ×2**, the Hall further end-loaded, persona tilts flattened to ≈1 — adopted into `AI_W`.
-4. First voyage moved from ~round 2 to ~round 4 (the lighter warm start) — still well clear of the v0.6 turn-6 bootstrap problem.
-
-**Open ⚙:** deck mix per count (the charter-mix dial) · commission fee 2 `G` · dispatch fee 2 `G` · whether early launch should cost · how many Hall hulls belong in the deck · whether the dispatch fee should be presence instead of goods. **printables.html is deliberately stale** (owned-ship art) — queued for the next printables batch.
-
-#### v0.11.1 — the ship market grew to 3 (2026-06-13)
-A designer call after the first neutral-ship reads. **The problem (two parts):** (1) a *single* face-up hull can **stall the yard** — if the one showing is bound somewhere nobody wants, the ship economy freezes until someone pays to flush it; (2) the **prisoner's dilemma** of neutral hulls — *why spend my 2 `G` to commission a ship others will load?* (the same shape as the cut "load a rival's cask" problem: an action whose best outcome is to let someone else take it). **The fix (this pass): a face-up display of 3 ⚙.** Commission *any one of the three*, refill from the deck. This directly kills the stall, and **substantially blunts the dilemma via destination control** — you commission the hull bound where **your** ready cargo wants to go, so a fresh hull is worth more to you than to a rival without that cargo. *(The designer's read: "a larger market is a solution that makes sense.")*
-- **Residual free-rider risk (a human-playtest question, not sim-measurable — greedy bots commission when they need a berth, they don't strategically free-ride):** the *best* outcome is still "a rival commissions a hull I want and I ride a berth," and the dispatch fee rewards the *filler*, who may be that free-rider. **If the table still feels it,** ready dials (parked, not taken): a **commissioner's berth** (commissioning includes a free immediate load of one of your Ready casks — turns "fund a public good" into "secure my shipment," token-free), a **commissioner's dividend on sail** (needs a consignment marker), or **dispatch-fee → commissioner**. Recommendation: **test the 3-ship market first** — destination control + first-access + early-launch + the charter backstop may already suffice.
-- **Cascade caught (the AI tier ladder):** the larger market **compressed the heuristic tiers** — picking the best of 3 hulls for your cargo is most of the destination decision, so the Journeyman closed on the Trader (journeyman→trader fell to 54.7%). The **CEM tuner said KEEP** (the Trader weights are already near-optimal — you can't tune *up* past a near-equal opponent), so the gate was restored by making destination judgement the **Trader's** skill: the Journeyman now grabs the *first serviceable* hull (not the best), loads to *complete a sail* (not the best destination), and picks presence greedily — restoring 71% / 64% / + GM 97.5%. **Design note worth carrying:** neutral ships + a wide market lower the *heuristic* skill ceiling (the binding is printed); the depth that remains lives in **timing, placement, and sequencing** — which is why the Guildmaster's dominance is undimmed. `KEY → v32`.
-
-#### v0.11.2 — ship economy v2: benefit-on-load, the commissioner's berth, no fill fee (2026-06-13)
-A coherent retiming of the ship economy from designer table-feel notes, holding the **physical-product** mindset front of mind (the old sail-time benefit batch was "messy" to resolve at the table). Four coupled levers (`KEY → v33`):
-1. **Benefits split cleanly by timing.** The destination's **immediate benefit** (Bruges/Bergen → 2 goods · London/Novgorod → an Upgrade · Hall → none) is paid **the moment a cask is LOADED** onto a hull bound there — one cask at a time, trivial to resolve. The cask's **points** (value ★ + majorities) seal only on **DELIVERY** (when the ship sails). *You keep a load benefit even if the hull never sails — but then it scores no points; "points are what matter at the end."*
-2. **The commissioner's berth.** Commissioning (2 `G`) now **includes a free immediate load** of one of your Ready casks — from a slot **or straight from a vessel** (skipping deploy) — onto the new hull, if it meets the gate. This is the answer to the prisoner's dilemma (`v0.11.1`): commissioning is no longer funding a public good, it **secures your own berth** to a destination you chose, first.
-3. **No fill fee.** The 2 `G` dispatch fee is **removed** — the filler's only reward is having chosen which cask completes the ship. (Filling was almost always done by a non-buyer; paying them felt wrong.)
-4. **The merchant goal rewards commissioning.** Goal g4 "ship you filled/launched" → **"ship you commissioned"** (a `commissioned` counter); the rewarded merchant act is now putting hulls out.
-- **Also:** the score icon is unified to **★** everywhere (was a stray Σ on the running total) — "★ 12" = 12 points, "+2 ★" = an additional 2 points (e.g. a Q5 cask's export premium).
-- **Verified:** sim 500 clean 2–5p (`sim-results-v33.txt`, pace 16–17 in band); ladder PASS and the **margins widened** (66.8 / 66.8 / 75.8 + GM 92.5%, `ai-ladder-v33.txt`) — the new mechanics gave the Trader's destination judgement (which hull to commission/feed) more leverage, restoring tier separation without extra handicaps.
-- **⚠ Flag for the table (greedy-bot signal):** with no fill fee, the heuristic bots **load for the immediate benefit but under-fill** (sails ~1.2/game, charters ~2.5) — they bank benefits and let ships sit, chartering their actual point-deliveries. Humans should *fill or early-launch their own ships* to seal points (the early launch always converts a stranded cask). Watch at the table that ships are *sailed*, not just loaded-and-abandoned; if it's a real problem (not a bot artifact), a small *completion* nudge or a stranded-cask rule are the dials. Possible over-tuning to watch: the free load + benefit-on-load makes the upgrade engine ramp faster (you bank an Upgrade on loading a Q2 to London, before the hull sails).
-
-#### v0.11.3 — ship deck enlarged 14 → 20 hulls (2026-06-13)
-Designer call (after the determinism observation): the 14-tile deck **must recycle** at 4p (clock 15) and 5p (clock 19), making ship appearances feel deterministic ("not *if* but *when*"). Enlarged to **20 ⚙** — Bruges/London/Bergen 4 · Novgorod 5 (premium, hard gate) · Hall 3 (~15%, near its old share so prestige isn't over-supplied) · 11 Cog / 9 Hulk — sized so the 4–5p clock rarely recycles; **recycling kept** as a safety so the supply never stalls. *Verified:* sim 500 clean 2–5p (pace 15.7–16.6 in band), persona balance held (prestige healthy 43→32% across counts; the 2p majority 60.8% is the known winner-take-all 2p artifact, not new), ladder PASS (66.5 / 67.0 + GM 97.5%). `KEY → v34`.
-
-### v0.12 — loading v2 + variable cask actions (2026-06-13)
-A coordinated batch after a human GM-vs-AI playtest surfaced loading friction, and the line-fire audit (below). Five coupled changes (`KEY → v35`). *Context:* the game is **tight**; this deliberately loosens the ropes.
-
-**The line-fire audit (the trigger).** We measured *how* ship-loads happen: the **line-fire ship-load is NOT a minor bonus** — traders do **20%** of in-play loads that way, the **Guildmaster 48%** (its single largest method; the Harbor station is only **19%**). So loading is diffuse, ships-on-slots *is* the loading system, and a "dock" (ships off slots) would gut it. The dock idea was therefore **rejected**; the slot pressure is the *price* of the line-fire interaction, not a separable bug. (5p is also dropped as a pipe dream on a 2×2 — official range trending to 2–4p.)
-
-**The changes:**
-1. **Rival loading restored** ⚙ — you may again load a **rival's** deployed cask onto a ship, **choosing its destination**; the owner scores it + banks the immediate benefit, and **you take a `1 G` loader bonus** + free the slot. *Why:* the human designer, mid-game, wanted exactly this for **tactical destination-control and denial** ("send their Keut to the Hall so they can't fill their Novgorod Cog") — the value the margin-maximizing bots could never see (and why they "declined" it, the B1 finding). Human evidence overrides the bot artifact. (`shipLoadableCasks` = all casks for the load flows; `wharfLoadableCasks` stays own-only for heuristics/commission.)
-2. **Guaranteed Hulk → Bruges at setup** ⚙ — the Gruit on-ramp (Q1, Bruges-only) always has a hull, so a low-quality cask is never stranded into a forced charter at the start. (1 guaranteed + 1 random = the 2 warm-start ships.)
-3. **The Harbor reframed as the ship-options hub** — with rival loading back, the Harbor is where you load *any* cask (choosing the destination), launch early, or charter. Loading's diffusion across line-fire/Crane/L3 means the Harbor's *identity* is ship options, not the primary loader.
-4. **VARIABLE cask actions** ⚙ — a cask's slot-action is **drawn at brew** from a 7-action pool (**Source · Age · Load · Reach · Convert · Draw · Wild[Q4+]**), **decoupled from quality** and **printed on the tile**. *Why:* casks now reliably carry useful actions (incl. Load), so you don't depend on whether the random **Crane** building came out — it loosens the slot/loading bottleneck. Random at brew = no brew-AP; the tactics come from using what you drew.
-5. **Action icons on the board** — every cask shows its drawn action icon, and the **four stations show their full action set** (Market: goods·recipe·commission·upgrade; Harbor: load·charter·launch) — readable without a tooltip (matching the printables grammar; the stations previously showed only a partial yield).
-
-**Measured (sim + analyze):**
-- **The core problem improved:** hull-share rose at every count (2p 74→**79%**, 3p 48→**57%**, 4p 41→**45%**) — the Hulk→Bruges + reliable cask actions cut forced charters.
-- **⚠ Pace overshoot (the side-effect to tune):** variable actions give casks ~5 non-shipping actions/game, slowing the Sailed-Ships clock — games now run **~19–20 rounds** and the **round ceiling (25) fires 4–12% across 2–4p** (was ~0%; was the design's ~100%-clock target). The ropes loosened a touch *too* much. **The dial:** shorten the Sailed-Ships clock to re-tighten (the variable actions made games longer, so fewer voyages should end them). **→ pulled in v0.12.1 (below).**
-
-**v0.12.1 — pace re-trim (one lever).** Shortened the Sailed-Ships clock `SAILED_CAP` **7/11/15/19 → 6/10/13/16** (`KEY → v36`), nothing else touched (one lever per change). Re-sim 500×2–5p lands it: rounds **~16–18**, ceiling-firing collapsed (2p 4.4→**0.6%**, 3p 6.2→**1.8%**, 4p 11.6→**2.0%**, 5p **5.0%**), **~95–99% clock-ended**, 0 crashes/deadlocks. Charters/game also eased (less end-grind: 4p 11.0→9.2). Gates held: ladder PASS (journeyman 62.5 / trader 66.0·73.8 / GM 95.0%, 0 errors), personas balanced (volume 51.6 / prestige 46.7 / majority 51.5 at 2p; Bergen & Hall genuinely exercised). The variable actions stay (the loosening the human asked for); the clock just compensates for the longer rounds-per-voyage they introduced.
-- Persona balance holds (volume 54.6 / prestige 48.0 / majority 47.5 at 2p, fair 50). Rival-loads stay ~0.1/game in sim (the bots still decline it — only the human values the tactical denial; the sim *cannot* show this interaction's worth).
-- ⚙ Open: whether the cask-action pool is too rich (the pace cause — addressed via the clock in v0.12.1, but trimming the pool stays an option), whether Wild-at-Q4+ is the right gate, and the loader bonus size.
-
-### v0.13 — making the quality climb worth it: the Flight & the Masterpiece (2026-06-13)
-**The diagnosis.** A parallel-GM-oracle deep-dive (the 5×10→6×25 sharded harness) settled two long-running questions. (1) **Bruges "dominance" was a false signal** — adjusted for the free starting Gruit every player ships, the destination spread is healthy (Bruges 28% / London 22% / Bergen 22% / Novgorod 15% / Hall 13%), winners and losers ship Bruges identically, and Bruges share doesn't predict winning. So the Bruges demand-track idea was **dropped** (teach-cost for a non-problem). (2) The **real gap is a hollow top:** even the oracle reaches Q5 ≈ 0% (one Bock in 50 games), Q4 = 7% of chosen brews. **Root cause:** majorities (the main score driver) count a Q5 the same as a Q1, so quality is dominated by quantity — in the goods/time for one Q5 you brew 2–3 cheap casks for 2–3× the presence. Any fix must give quality a payoff *quantity can't match*.
-
-**The fix — pull from above (carrots), through the lens of the designer's north-stars (Orléans / GWT / Brass / Lisboa).**
-- **The Flight (Orléans set-collection / Lisboa value-weighting).** An end-game bonus for the **distinct quality tiers delivered** — `(tiers−1)²`, min 3 to score (3→4 · 4→9 · 5→16). Heavily back-loaded (the marginal jumps grow +3/+5/+7) so the points live in reaching 4 and 5 — the Lisboa "catch up at the end with a 4 and 5" feel. It's *additive* (touches no existing number) and self-limiting (you forgo volume to build the range), making **"go deep" a real strategy distinct from "go wide"** — the reach-vs-quality axis we'd talked about but never demonstrated. Framing that clicked for the designer: *"you aren't known for quality but for your full range of capabilities."* Min-3 because 2 tiers (free Gruit + Hopped) is everyone's baseline. Single-set scoring for now — the data shows 2nd full sets are rare (~90% of climbers are single-set), so multi-set scoring would rarely trigger; metrics are recorded to revisit it.
-- **The Masterpiece (Brass "lubricant" / a GWT milestone).** First delivery of the game's **top export tier** (Q5 if Bock dealt, else the highest dealt = Q4) → one-time **+3 ★ + 3 goods**. The *moment* of topping out, and the goods pay the climb's tempo back so the detour is reachable, not just rewarded. Complements the Flight (range) by rewarding the *act*.
-- **Majority cooldown.** The non-Q3 kontore shaved −1/tier (Bruges 4/2/0 · London 5/3/1 · Bergen 9/5/2; Novgorod 8/5/2 kept — the hard Q3 reach earns its majority). Cools the 2p/3p winner-take-all hotness (flagged since the v0.10 personas runs) and, with the Flight added on the quality side, does a **double-nudge** — trim the reach reward, add the quality reward. Bergen stays the anchor.
-
-**Deferred (deliberately, for system stability):** *Pitch 3 — quality-weighted majorities* (the Lisboa "heads, not tiles" idea: a Q5 counts as more presence). It's the structural root-cause lever and easy to balance, but it would invert the "ship wide" identity, so it waits until the additive Flight has been measured. **Housekeeping:** repo re-scoped to **2–4 players** (5p runs, untuned). Sim verification (robustness, ladder gates, and the 6×25 oracle with the new Flight metrics) is in the `v39` artifacts; the question the oracle answers is whether Q4/Q5 brewing and the Hall finally come alive without overshooting into a quality-rush.
-
-### v0.14 — un-gating Bock: tool-vs-game, settled (2026-06-14)
-v0.13's oracle left one nag: **Q5/Bock at literal 0%** even by the strongest play. Was the Q5 path *bad* (game) or *invisible* (tool)? We resolved it methodically before touching a number.
-- **The Cellarmaster diagnostic (`CELLAR=N`, sim.js).** A Q5/range-committed bot (buys Bock, grabs the Aging Cellar, ships the high end to the Hall) run head-to-head. Verdict: the **deep/range path is competitive** (~fair vs greedy-volume *and* personas; above fair at 4p) — a viable strategy the bots merely **undervalue** (tooling) — **but Bock specifically lands only ~0.2–0.3/game even when committed**: a genuine reachability wall. So: *both*, cleanly separated.
-- **The barrier was the Aging-Cellar *prerequisite*, not the brew cost.** It's a delivery-earned upgrade that may not even be dealt — an impassable dependency for a ~15-round game. Designer's call: make the Aging Cellar a **pathway, not a gate** — drop `cellar:true`, keep its −1 step (a Bock now matures in 2 *with* it). Bock is brewable by anyone.
-- **The cost lesson (a clean experiment).** The designer proposed 3G3H. Sim said **3G3H is *worse* than the old gate** — Q5 still 0%, because **the 3rd hop is a cliff** (hops are the scarce resource; even a committed bot can't assemble 3). Reverting the +1 hop to the **original 3G2H (now ungated)** flips it: **Q5 brews 0 → ~2–4/game, Masterpiece-earned 15% → 53–58%.** One hop was the entire wall.
-- **The AI-ladder side-effect.** Un-gating compressed journeyman↔trader (both climb to the Flight). Restored by flagging Bock **`premium`** — an *AI-skill* flag (only Trader+ and the GM's deep rollout climb to Q5; humans and the headless sim bot brew it freely, so the *game* is fully open) — and having the **journeyman cede the Hall** to the trader, so prestige + the deep Flight is the trader's exclusive edge. Ladder PASS with margin (64% trader vs journeyman), sim clean.
-- **Tooling epilogue (the GM).** The completion-biased rollout (fix 1) is shipped behind opt-in **`GM_DEEP`** (default off): it makes the deep payoff *visible* to the Monte Carlo but lengthens rollouts ~2.5×, so at flat-MC budgets it trades sample-count for realism and doesn't clearly pay — confirming flat MC can't *navigate* a multi-turn plan no matter the rollout quality (that's MCTS's job, a future build). The **Cellarmaster + personas** are the right, cheap strategy probes; the GM stays the fast robustness/pace oracle.
-- **Watch-item:** with Bock reachable, the deep/range path now *wins above fair* for a committed player (cellarmaster 55/45/35% at 2/3/4p). That's the intended viability, but if it reads *too* strong at the table, the Flight/Masterpiece values (or 4G2H for Bock) are the dials. Left for the human playtest.
-
-#### v0.14 epilogue — the pathways analysis & the 3G3H probe (2026-06-14)
-A full strategy pass on the v0.14 build (3G2H Bock): four committed bots — **volume / prestige / majority** (personas) + **deep** (Cellarmaster) — run head-to-head (CELLAR=1 PERSONAS=1, 600 games/count) plus the GM oracle (6×25).
-- **The win-pathways resolve onto ONE axis: contested kontore vs the uncontested Hall.** The kontore are zero-sum (majorities are races, deniable); the Hall is solitaire (prestige is yours alone, no majority). Per-capita win-rates (fair = 100/N): **deep 52/37/31 · prestige 49/35/29 · majority 49/33/21 · volume 47/26/19** (2/3/4p). The **Hall-leaning lanes (prestige/deep) beat the kontore-leaning lanes (volume/majority)**, and the gap widens with player count (more rivals → the kontore get more contested while the Hall stays a safe harbor). **Volume is now the under-powered lean** (19% at 4p). The Flight/Masterpiece are nearly *uniform* across lanes (~4–6/~2 each — everyone climbs to ~3 tiers), so the Flight isn't the differentiator; **the Hall is** — whoever banks more prestige wins. This is the inverse of the pre-v0.13 game (where volume dominated): v0.13's majority cooldown + v0.14's reachable Bock + the Hall's high per-cask value over-corrected toward depth.
-- **The 3G3H probe — rejected.** Tested whether a harder Bock cools the strong deep lane. It's a regression on three fronts: (1) **AI ladder FAILS** (journeyman↔trader 59% — the trader's edge *needs* reachable Bock); (2) **casual Q5 re-broken** (0.0/game greedy; the GM scrapes 0.5–0.9 — so 3G3H makes Bock "skilled-only", undoing v0.14's reachability); (3) **the imbalance persists** — deep/prestige still lead, because the win-driver is the **Hall, not Bock**. Reverted to 3G2H. **Lesson: Bock cost is the wrong rebalance lever; the axis is Hall-side vs kontore-side.**
-- **The dials for the next balance pass (when wanted):** trim the **Hall prestige curve** (5/7/10/12 → e.g. 4/6/8/10) to cool prestige/deep, or **partially restore the v0.13 majority cooldown** (lift Bruges/London back up) to boost volume/majority. One lever, sim-gated as always. Left for a deliberate batch.
-
-### v0.15 — "Enshrine": the Hall goes local (2026-06-15)
-The Hall was a *prestige* destination still **reached by a boat** — thematically wrong (you withdraw your finest into the local guild Hall; you don't sail it overseas to do that), and the boat's friction (a scarce Hall hull, or a charter fare) was *masking* how high the Hall's value ran. We made the Hall a **local Harbor action** and rebalanced around it (`KEY → v44`).
-- **Enshrine.** A new Harbor option: withdraw a **deployed cask** (on a slot, **Q2+**) into the Hall for prestige — **no ship, no fare** — advancing the Sailed-Ships clock like any voyage. One per Harbor visit (two with the **Trophy Room**). Ships + the Charter are now **kontore-only** (deck = 20 hulls, 5 per kontor, 11 Cog / 9 Hulk).
-- **The throttle is STRUCTURAL, not a fee** — and this was the design crux. A *free* local Enshrine made prestige **dominant** (62/51/41% at 2/3/4p). The instinct was to reach for an enshrine fee, but the directive (and the better design) was: the corrective should be **structure**, because what changed was *friction*, not the Hall's printed value. The fix: the cask must be **on a public slot first** (not straight from a vessel). That re-adds the deploy step + slot-occupancy cost the boat used to impose, *and* — crucially — keeps the prized cask **contestable**: a rival can **hijack-load it to a kontor** before you enshrine (the v0.12 rival-loading lever). The throttle isn't a tax; it **restores interaction** to the masterpiece. A flat 2 G "presentation fee" was prototyped and **dropped** — it merely reproduced v0.14's imbalance (volume stuck at 16%), whereas the structural throttle *revived* the dead lane.
-- **Hall ladder re-trimmed 5/7/10/12 → 4/6/8/10** — the frictionless Enshrine exposed the old curve as too high; the trim plus the structural throttle together land it.
-- **The upgrade audit → two changes.** A full pass found coverage was lopsided (deep had 3 upgrades; majority and prestige had 1 each) and two near-dead upgrades (Royal Patent's charter discount; Warehouse's storage cap). Acted on the prestige gap — the **structural Wrinkle**: upgrades are earned at London/Novgorod and enshrine returns *nothing* in-game, so the prestige lane is upgrade- and goods-starved. **Royal Patent → Patron's Favor** ("+1 good when you enshrine") gives the prestige lane an economic hook *and* a second dedicated upgrade *and* an early nudge (seeing it face-up signals "prestige is live this game"). The new **Trophy Room** (enshrine ×2) is the prestige-throughput room, parallel to Quay/Cooperage for ships — it closes the gap where *all three* old throughput upgrades served shipping. (Warehouse left as-is — an easy later fix.)
-- **The result (PATHWAYS, `CELLAR=1 PERSONAS=1`, n=600).** The structural throttle did the *healthy* kind of rebalancing — it **revived the under-powered volume lane** rather than capping a strong one. Per-capita win-rates at 4p (vol/pres/maj/deep): **v0.14 = 19/29/21/31** (volume dying) → **v0.15 = 24/23/30/23** — volume back in the game, the Hall lanes pulled to the pack, and **deep left as the slightly-lower, higher-variance "stars-align" lane** (we deliberately do NOT buff it to fair — the greedy bot under-pilots it, and that's the GWT-shredder slot). 2p watch-item: prestige ~56% (Patron's Favor does real work where enshrine is the cleanest plan) — a mild lead over fair-50, not dominant. Gates: ladder PASS (higher tiers ≥60% @2p), render-smoke PASS, sim 500×(2–5p) 0 crashes, pace in the 12–25 band.
-- **Lesson carried forward:** when a change alters *friction*, correct with a *friction/structure* lever, not the *value* lever — and prefer a structural throttle that **restores contestability** over a flat fee that just taxes. The win-axis is unchanged (contested kontore vs the uncontested Hall); v0.15 narrowed the gap from the kontore side.
-
-### v0.16 — "Full Ships": ships sail full · benefit on delivery · charter contracts (2026-06-15)
-A batch that stopped patching the **ship economy** and fixed it at the root. The symptom had been chronic: shared hulls under-filled, players dribbled half-empty ships out via partial early-launch, and charters ran heavy. We'd been treating the *symptom* (the v0.11 escalating charter-fare row, then Wave-1 contracts) without naming the *cause*.
-
-**The diagnosis (the root cause).** **v0.11.2 had moved the destination benefit to ON-LOAD** — to make table resolution clean (one cask at a time). Its side effect, flagged at the time but not acted on: once you bank the reward the moment you load, **there is no reason to ever sail.** So hulls sat half-full; the only way to convert a stranded cask was to **launch it partial** (a dribble) or **charter**. Three mechanisms — the fare row, partial-launch, benefit-on-load — were all propping up a loop whose incentive was backwards.
-
-**The fix, in two waves (both `KEY → v46`).**
-- **Wave 1 — charter contracts** (the throttle, made a *thing* not a *price*). The Charter is gated by a **scarce ownable certificate**: start **2**, buy more at the Market (`1 G`, one acquire, unlimited supply), **spend 1 + a flat `2 G` fare** per charter. Retires the escalating fare row — a legible throttle, and the deadlock guard still holds (Move → Market → buy → charter is always legal; you can always Source goods).
-- **Wave 2 — ships sail full + benefit on delivery** (the spine fix). Ships **sail only when full** (partial early-launch retired), and the **benefit + points both seal on DELIVERY**, paid to each cask's owner in **load order** (the ship's numbered first/second/third berths). The ordered berths are what answer v0.11.2's original "messy on the table" complaint *without* keeping its perverse incentive — so filling-and-sailing becomes the play, Brass-style ("you can't skip the line; make the hull work").
-
-**What we deliberately did NOT do.** Two alternatives were on the table and dropped as redundant once benefit-on-delivery supplies the urgency: a **fill-reward** ("+1 presence to whoever loads the filling cask" — a carrot) and an **empty-cask tax** (pay per empty berth to launch — a stick). Benefit-on-delivery is neither carrot nor stick; it's "the merchant is paid when cargo arrives," which is cleaner thematically and mechanically.
-
-**Validated by the GM oracle — because the greedy bot *cannot* show this** (it never exploited benefit-on-load, so it ships the same either way; its rounds barely moved). The Guildmaster *plans*, so it's our skilled-play proxy. Apples-to-apples GM, 40 games/count, Wave-1 (benefit-on-load + partial-launch) vs Wave-2:
-- **Ships now sail genuinely full: avg casks/sail 2.1 → 2.55 (2p), 2.15 → 2.5 (4p).** In Wave 1, "sails full" was *fiction* — nearly half the "sails" were 1–2-cask dribbles. That's gone (Cog 2 / Hulk 3 → a full mix ≈ 2.4–2.5; we're at 2.5+).
-- **Pace is neutral, NOT reduced — own this.** Forced-full lengthens the game (fewer, fuller voyages = fewer clock ticks/round); benefit-on-delivery shortens it (urgency to sail); **forced-full wins slightly.** GM rounds **2p 17.6 → 19.0, 4p ~flat ~17.8** — in-band, around the ~18 target. *If 18 is a firm number, the lever is `SAILED_CAP`, not this change.* (Designer call this batch: **leave pace as-is** — the change is a fidelity fix, ~18–19 is fine.)
-- **4p charter reliance ~42% is a pre-existing tight-ring trait, not a regression** — the Wave-1 baseline was ~45%, so forced-full actually nudged it *down* with fuller ships. (An earlier in-session worry that Wave 2 *caused* it was retracted once the baseline came in.)
-- **The deep/Q5 climb survives** (GM Q4+ ~1.0–1.6/game). The PATHWAYS "deep colder" (4p ~19% with the greedy persona) is mostly the bot under-piloting deep — shipping rare casks to kontore on unfillable hulls instead of enshrining (the boat-free Hall lane is exactly the deep player's answer to forced-full).
-- **GM dominance slipped a touch** (2p 85→75% in the oracle; 84% in the ladder gate) — it has slightly less early-benefit *timing* to exploit. Still strongly dominant; the difficulty ladder PASSES.
-
-**Gates:** sim 400×(2–5p) 0 crashes / 0 deadlocks, 100% clock-ended, pace in band; PATHWAYS lanes balanced (4p vol/pres/maj/deep ≈ 25/24/33/19, deep the low lane by design); ai-ladder PASS (journeyman>apprentice 91%, trader>journeyman 60%, GM>trader 84%, 0 errors, 3–5p strictly ordered); render-smoke PASS.
-
-**Lesson carried forward:** when the *incentive* is backwards, don't keep adding relief valves — find the rule that inverted it. Here, three patches (fare row · partial-launch · benefit-on-load) collapsed into one coherent loop once benefit went back to delivery. And: **the round-count clock counts *voyages*, so a "sail full" rule structurally lengthens the game** — pair it with a clock trim only if a firm round target demands it (we chose not to).
-
-**Watch-items for the human playtest:** (1) does forcing a hull to sail full read as fair, or does cargo stranded on an unfillable Hulk frustrate? (2) the 4p charter reliance (~42%) — fine, or does it erode the owned-hull fantasy? (3) is benefit-on-delivery in load order clean at the table (the berths should make it so)?
-
-### v0.16.1 — liquidity owner's-choice · vessel cap 4→3 (2026-06-16)
-Two small calls that fell out of a cross-surface consistency review (`KEY → v47`):
-- **The Bruges/Bergen "liquidity" benefit became a real choice.** The engine had been giving a fixed **2 grain** (`gain(lp,2,0)`) while the docs said "2 goods" and the pages disagreed on the icon (play.html showed wheat, the new printables showed coins). Resolved *toward the docs*: the owner now takes **2 goods of their choice of mix** (a new `goodspick` step in the delivery flow), shown as **coins** everywhere. The AI/sim bot takes 2 grain (the prior behavior), so **balance is unmoved** — this was a representation fix with a small human-facing upside.
-- **Brewing vessel cap 4 → 3.** The printed player board had been drawn with 3 lanes (a deliberate compaction); rather than re-add a 4th lane we made the rules match the cardboard — start 2 + **one** Extra Vessel (no longer repeatable). Sim-checked because it's a throughput change: **pace unmoved, lanes still balanced, and the deep/Q5 lane held** (4p deep 19→21%, Q4+/Q5 brewing steady) — cap-3 didn't pinch the throughput-hungry lane as feared.
-- **Gates:** sim 300×(2–5p) crash/deadlock-free, pace in band; render-smoke PASS (new picker path); PATHWAYS balanced (4p ≈ 25/21/32/21); ai-ladder re-run. Docs + all four pages synced.
-
-### Open threads — pick up here next session (as of 2026-06-16)
-**Status:** **v0.16.1 is live repo-wide** (`play.html` `KEY = v47`; specs + all four pages — `learn`/`index`/`printables`/`play` — on it). The reasoning above is settled and gate-clean; the items below are the *deliberately-deferred* ones, roughly by priority:
-
-**A. Needs a HUMAN playtest (the sim can't answer these — "how does it feel").**
-1. **Enshrine feel.** The v0.15 throttle is *structural* (the cask must be deployed on a public slot, then enshrined — so a prized cask is exposed to rival hijack-loading). Does that deploy-then-enshrine friction + exposure read as a fair, interesting cost at the table, or as fiddly? This is the core v0.15 question.
-2. **2p prestige watch-item (~56%).** Patron's Favor does real work at 2p (where enshrine is the cleanest plan). Sim says a mild lead over fair-50, not dominant — confirm it isn't oppressive in real 2p play. Dial if needed: Patron's Favor strength (currently +1 good/enshrine), or the Hall 2p ladder.
-3. **Trophy Room + Patron's Favor pull.** Both are new, lightly playtested. Do they actually get picked / change plans, or sit ignored?
-
-**B. Known small fixes / tech debt (low risk, not yet done).**
-4. **Warehouse upgrade may be near-dead.** Flagged in the upgrade audit; left as-is. *Action:* have the sim report storage-full frequency (does the goods cap ever bind?); if it rarely does, retheme/buff it. It's the weakest remaining upgrade.
-5. **Upgrade coverage still mildly lopsided.** Post-v0.15: deep 3 dedicated upgrades, prestige 2 (Trophy, Patron), **majority only 1 (Burgher)**. If Warehouse (or another weak one) is rethemed, point it at the **majority** lane to even things out. (User: lopsided is OK, but "a little more balance wouldn't hurt.")
-6. ~~**Vestigial upgrade-buy path.**~~ **✓ DONE (2026-06-15, the post-v0.15 cleanup).** Removed `UPGRADE_BUY` + `buyDisplayUp()` from `play.html` (dead code — never wired to a button) and the dangling `buyDisplayUp` wrapper from `playtests/sim-analyze.js` (`grantUpgrade` already captures all upgrade acquisitions). Also fixed the **player-facing contradiction it had leaked into the docs**: `index.html` told players to *buy* upgrades at the Market in **four** places (§7 station table, the grid-cell label, the Action Reference, the Quick Reference) while §11 said earned-only — all corrected to "earned by delivering; the display is reference-only." Two `play.html` Market tooltips fixed the same way. The relative-value/rarity `G` figures survive only as a tuning note in `COMPONENTS.md` §3E. No state/rules/behavior change → **`KEY` left at v44** (nothing to discard).
-7. **All-AI "instant" blocks the UI.** The instant scheduler runs all consecutive AI turns in one synchronous loop (render suppressed), so an all-AI instant game can't be slowed mid-run. Fine for mixed human+AI games (the new sidebar AI-Speed control is reachable on your turn). *Optional:* chunk the instant loop with a yield + a "stop" button so even all-AI runs stay interruptible.
-8. ~~**Stale code comment.**~~ **✓ DONE (2026-06-15).** The `GM_DEEP` block now reads "climb to Bock & **enshrine** the high end at the Hall."
-
-**C. Larger deferred work (a deliberate batch each).**
-9. **Re-run the Trader weight tuner (`ai-tune.js`).** Per the post-balance checklist, a DEST/value retune (the Hall ladder went 5/7/10/12 → 4/6/8/10) should be followed by `node playtests/ai-tune.js` (CEM over `AI_W`, ~2 min) to keep the in-game Trader AI sharp. Skipped at the close of this batch — the ladder gate still PASSED, so it's low-urgency, but it's the one checklist item not run for v0.15.
-10. **`printables.html` pass.** Got a focused *data* update for v0.15 (ship deck, upgrades, ladder, versions) but the user flagged "more printables work coming." Two known items: (a) **the Player Aid as an actual printable card** (it exists as the in-game 📖 modal in `play.html` but not yet as a cut-sheet card), and (b) a general layout/polish pass.
-11. **Formal 2–4p re-scope.** The 5p mode still runs in the engine (and passes the robustness gate) but isn't balance-tuned; all docs say **2–4p**. Decide: keep 5p as an untuned bonus (status quo, documented) or cut it. Not urgent — it's labeled correctly everywhere.
-
-**The standing rebalance dials** (if a future pass wants them): the Hall prestige curve (4/6/8/10), the Enshrine structural throttle, or the majority cooldown — **NOT** Bock cost (the 3G3H probe was tested and rejected, §21 v0.14 epilogue). One lever at a time, always sim-gated (`node playtests/sim.js 500` + `CELLAR=1 PERSONAS=1` PATHWAYS + `ai-ladder.js 600` + `ai-render-smoke.js`), then publish to `main`.
+## 10. Glossary
+
+- **The Wharf** — the whole core area: the four stations + the 8 slots.
+- **Station** — one of the four action spaces (Market · Brewhouse · Cellar · Harbor).
+- **Slot** — one of the 8 perimeter spaces; holds a building and/or an occupant (cask/ship).
+- **Line** — a row or column: its two stations + their two slots (the 4-stop activation).
+- **Cask** — the dual-role tile: quality + a slot-action; maturing → deployed → delivered.
+- **Building** — an owned slot tile that modifies the occupant docked on it (value or transform).
+- **Wharfage** — the small points cut a building's owner takes when a rival routes through it.
+- **The Floor** — your private line: run your built-up brewery instead of a grid line.
+- **Kontor** — a foreign trading post (Bruges/London/Bergen/Novgorod); ship there for value +
+  majority.
+- **The Hall** — the local guild hall; **Enshrine** a cask there for fixed prestige (no ship).
+- **The Flight** — the end-game range bonus for distinct quality tiers delivered.
+- **The lanes** — the five complete paths to victory: Prestige/Hall · Demand/value ·
+  Volume/majority · Range/Flight · Authorship/engine.

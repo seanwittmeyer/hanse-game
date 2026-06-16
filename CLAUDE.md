@@ -26,11 +26,11 @@
 - **Terminology (canonical):** *the Wharf* = the whole core area; *stations* = the four action spaces; *slots* = the 8 perimeter spaces; a *line* = two stations + their two slots. "The Loop" / "cell" / "the wharf (as the ring)" are retired.
 
 ### Doc map — where the canonical picture lives
-- `RULES.md` — operational turn/economy rules (the v0.16 spec).
-- `DESIGN.md` — pillars, rationale, dated session log (the *why*). **§21 = "The Wharf"** (live, v0.7 origin → v0.16, with dated epilogues); §1–§20 = how we got here.
-- `COMPONENTS.md` — the single physical manifest: boards · tokens · the five tile families (casks · ships · neutral buildings · recipes · upgrades) · the **player brewery board** (§4) · destinations · goals. *(Absorbs the former `TILES.md` + `PLAYERBOARD.md`.)*
+- `RULES.md` — operational turn/economy rules (**v0.17 “Living Slots” — in design**; the live *playable* build is v0.16.1, archived at `archive/play.html`).
+- `DESIGN.md` — pillars, lineage/comps, the **current architecture (§6)**, the **change log (§9)**, and the balance lessons (the *why*); **compacted** — the full pre-v0.17 history is in `archive/v0.16/DESIGN.md`.
+- `COMPONENTS.md` — the single physical manifest: boards · tokens · the tile families (casks · ships · **buildings** · recipes) · the **player brewery board** · destinations. *(v0.17 folds the old neutral buildings, goal tiles, and most upgrades into the one **building** family.)*
 - **Four HTML pages** (consolidated from five): `learn.html` (beginner primer) · `index.html` (**Rulebook & Components** — the complete rules + the visual component reference; absorbed the former `rulebook.html`) · `printables.html` (cut sheets) · `play.html` (the playable reference implementation: DATA → STATE → TURN MACHINE → CELL HANDLERS → SCORING → RENDER). `play.html` is canonical — correctness fixes there are rules fixes.
-- `CHANGELOG.md` — compact version history (v0.1→v0.16) + the balance lessons carried forward. `README.md` orients the repo.
+- `DESIGN.md` §9 — compact version history (v0.1→v0.17) + the balance lessons carried forward (the former `CHANGELOG.md`, folded in). `PLAN.md` is the active v0.17 plan. `README.md` orients the repo.
 
 ### Before you commit any game change, check the interlocks
 1. **Theme** — does it still make medieval-brewing sense? Mechanics are dressed as brewing/trade for a reason.
