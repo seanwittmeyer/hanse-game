@@ -41,6 +41,58 @@ floor of **enshrining at the Hall.**
 
 ---
 
+## 1A. The whole-game review — every thread we carry (NOT just the keystone)
+
+The living slots (§3) are the centerpiece, but this is a **review of the whole game**, not a
+one-mechanic fix. Here is every thread from the early design chat — the comps lessons and the
+designer's five points — and where each lives. The few cuts are deliberate and named; nothing
+is dropped by accident.
+
+**The lanes (the designer's #2 — split volume from majority; GWT's "win by braiding two").**
+Too few lanes = a race; we want several viable paths that *combine*. v-next has five:
+- **Prestige / the Hall** — enshrine for **fixed** points. The steady, beginner-safe lane.
+- **Demand / value** — route casks through the **value-buildings** you author for big per-cask
+  kontor value. The skill lane (the keystone pays here).
+- **Volume / majority** — ship **wide**, dominate kontore by delivered count. The end-game lane.
+- **Range / the Flight** — climb the quality ladder for the set-collection bonus. The deep lane.
+- **Authorship** — **build the board** and tax the traffic (wharfage); a meta-lane that feeds the
+  others (GWT's player-built track).
+A newcomer can win on **one** (the Hall); an expert **braids two**. *That* is the strategic
+identity, and the legible scoring (§2) is what lets a player see it.
+
+**The comps → decisions:**
+- **Lisboa** (multi-use squeeze + interlock) → the **squeeze** is the soul (§1); the **living
+  slots** are the interlock — your buildings reshape everyone's options.
+- **Great Western Trail** (player-built track, tempo, win-by-two) → **owned buildings author the
+  shared board**; the **five lanes**; tempo via line-activation + the shared end clock.
+- **Orléans** (steerable variance) → the **building display**, the **cask-action drawn at brew**,
+  and the **3-of-4 dealt exports** give *steerable* variance — you shape and read a shifting
+  offer, not a solved board. (No dice; this is the managed-uncertainty seat.)
+- **Agricola** (one rule → an economy; scarcity/blocking) → scarce **vessels, slots, ships**, the
+  **occupancy toll**, the **clogged-vessel back-pressure** — taking what you need squeezes others.
+- **Wingspan** (compounding engine, content spine, one-more-turn) → **transform-buildings** + a
+  **populated Wharf** that accelerates your turns; the **building deck** is the content spine.
+- **Obsession / Viticulture / Unconscious Mind** (theme-mechanism fusion, approachable bridge) →
+  hopped-beer-as-cargo, the Wharf, enshrine; the **legible scoring spine** is the on-ramp, with
+  depth in routing / timing / authorship.
+
+**The designer's five points:**
+- **#1 — the cask squeeze + the stable fallback.** The squeeze is the soul (§1, §4); the deployed
+  cask is public/contestable/hijack-loadable; the **alternate-action-when-blocked** (the boutique
+  brewer's *private floor* — tap a maturing cask instead of paying the toll) is carried (`RULES.md`
+  §2, ⚙) — the original v0.1 feel.
+- **#2 — split volume from majority.** Done — the two kontor axes (**demand value** vs **majority
+  count**) are different temperaments; see the lanes above.
+- **#3 — owned, composable buildings on the living slots.** The keystone (§3).
+- **#4 — content, not rules; approachable but deep.** One building family **replaces goals +
+  neutral buildings + most upgrades**; legible scoring; depth lives in the deck and the routing.
+
+**Deliberate cuts (named):** the demand-board-*at-destinations*; the "quality-is-a-construct"
+removal of intrinsic quality value (quality keeps the **Flight, the gates, and the Hall**, and the
+climb still pays); the **peak-window** idea (not adopted); everything from the abandoned detour.
+
+---
+
 ## 2. Scoring — the clear spine (build everything back from this)
 
 The whole point of the reset: **make the win obvious.** Four sources, two in-game and two
