@@ -76,9 +76,10 @@ Four families + destinations. **Casks (A) are the content heart; Buildings (C) a
 authored layer.** No card deck (recipes/contracts are plain permission/certificate cards).
 
 ### A. Cask tiles — the dual-role hero (~60, shared supply) — *unchanged*
-Quality **Q1–Q5** (printed, static) + **one signature slot-action** (drawn at brew; **Gruit
-pinned to Source +2 goods**, Q2+ draw from the pool §3F). Three states: maturing (vessel) →
-deployed (slot) → delivered (scores → gone).
+Quality **Q1–Q5** (printed, static) + **one signature slot-action** — taken from the **face-up
+top tile of its quality pile** when brewed (steerable; §3F), **Gruit pinned to Source +2 goods**.
+Three states: maturing (vessel — **powers your Floor**) → deployed (slot) → delivered (scores →
+gone). *(The cask is half your impact: brew what, hold which, deploy when — `RULES.md` §3.)*
 
 | Q | Beer | Brew inputs ⚙ | Matures ⚙ | Reaches (gate) | Qty |
 |---|---|---|---|---|---|
@@ -177,14 +178,22 @@ improvements, **bought at the Market for goods** (distinct from the earned-and-p
 | **Granary / Hop Garden** | when you gain grain / hops, +1 extra | `4 G` |
 
 > Everything else from the v0.16 upgrade list (Quay/Cooperage/Trophy Room/Burgher/Staple/Patron…)
-> **folds into the public Building family (§3C)** — capability now lives on the living slots, not
-> a private rack. *(How many private improvements survive, and whether they're bought vs earned,
-> is an open ⚙ — keep the set small for clarity.)*
+> **folds into the public Building family (§3C)** — capability now lives on the living slots.
+>
+> **The dead-upgrade lesson (designer playtests):** Extra Vessel and the Warehouse were *never*
+> bought across many games. v0.17 **revives Extra Vessel** — vessels now carry **pre-delivery
+> value** (they power the **Floor**, §3A / `PLAN.md` §1B), so a vessel-heavy brewery is a real
+> engine. **Warehouse (storage cap) stays cut/suspect** (no one ever passed cap 8). So the
+> **starting vessel count / cap / whether Extra Vessel repeats** are a live ⚙ — the goal:
+> *adding a vessel is a tempting decision*, which it never was.
 
-### F. The cask-action pool (drawn at brew, Q2+)
-`Source (+2 goods)` · `Age (age a cask +2)` · `Load (free-load a cask)` · `Reach (+1 presence —
-majority)` · `Convert (2 goods G↔H)` · **`Survey` (draw a building to hand)** · `Wild (any base
-action — Q4+ only)`.
+### F. The cask-action pool — *steerable at the kettle* (Q2+)
+Each quality's casks form a pile; **the top tile of every quality pile is face-up**, so when you
+brew you **see the action you'd get** and can pick *which* quality to brew partly by it — the
+Orléans-lite **steerable-variance** seat (agency, not a blind draw), and the place to read for an
+engine-building action. The pool (Q2+): `Source (+2 goods)` · `Age (age a cask +2)` · `Load
+(free-load a cask)` · `Reach (+1 presence — majority)` · `Convert (2 goods G↔H)` · **`Survey`
+(draw a building to hand)** · `Wild (any base action — Q4+ only)`. **Gruit is fixed to Source.**
 
 ### G. Destinations — *where you deliver* (the destination board)
 All open from start. Variable kontor value comes from the **buildings** a cask shipped through

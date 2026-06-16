@@ -101,25 +101,31 @@ climb still pays); the **peak-window** idea (not adopted); everything from the a
 
 ---
 
-## 1B. The Floor — your private line (developing; designer-flagged "worth trying")
+## 1B. The Floor — your private line (the engine-builder's puzzle)
 
-Every core action lives on the grid; the **Floor** is a **private line you can run instead of a
-grid line**, powered by your own brewery. It grants **no new actions** — it's a way to take your
-engine's actions **without fighting for grid position**, so a player who has **built a strong
-engine moves faster and can't be blocked.** That's the engine-builder's payoff (Wingspan's
-compounding) and the boutique brewer's self-sufficient path — the carried v0.1 "alternate action
-when blocked" (#1), grown up.
+Every core action lives on the grid; the **Floor** is a **private line you run instead of a grid
+line**, powered by the **casks in your vessels.** It grants **no new actions** — it takes your
+engine's actions **without fighting for grid position**, so a house that has **built a strong
+brewery moves faster and can't be blocked.** This is where the **dual-role cask earns the other
+half of its impact:** a maturing/Ready cask in a vessel **works for you before it ships** (its
+action, on your Floor), so *how you use a cask* — **hold it** (keep its action private) vs
+**deploy it** (free the vessel, make it public cargo) — is a real decision every turn. The carried
+v0.1 "alternate action when blocked" (#1), grown into a core engine.
 
-**The shape to try (⚙):** on your turn you may **work the Wharf** (move + activate a grid line —
-the default) **OR work your Floor** (activate your private line = the **slot-actions your maturing
-casks carry + your improvements**). A *bare* floor is weak (your few casks); a *built-up* floor
-(more vessels, more maturing casks each bearing an action, improvements) is a strong private
-engine — so the Floor **scales with what you've built**: early a fallback, late a tempo weapon.
-It most directly serves the **Authorship/engine** and **deep** lanes.
+**The shape (⚙):** on your turn you may **work the Wharf** (move + activate a grid line — the
+default) **OR work your Floor** (= the slot-actions of the casks in your vessels + your
+improvements). A *bare* brewery is a weak Floor; a *full* one (more vessels, more action-bearing
+casks held) is a strong private engine — so the Floor **scales with what you've built**: early a
+fallback, late a tempo weapon. It powers the **Authorship/engine** and **deep** lanes.
 
-**Tensions to settle (⚙):** it must not strictly beat the grid early (or the grid goes unused);
-does it advance the clock / cost anything; is it a full turn-alternative or only the lighter
-occupancy fallback (`RULES.md` §2)? Develop alongside the lanes.
+**This revives the vessel as an engine axis.** Because a held cask now has Floor value, **Extra
+Vessel finally pays** (more held actions + more throughput) — fixing a chronically-dead upgrade
+(the designer has *never* bought one, like the Warehouse). Starting vessel count / cap / repeat
+are a live ⚙ (`COMPONENTS.md` §3E), with the goal that *adding a vessel is a tempting decision*.
+
+**Tensions to settle (⚙):** the Floor must not strictly beat the grid early (or the grid goes
+unused); whether it advances the clock / costs anything; full turn-alternative vs the lighter
+occupancy fallback (`RULES.md` §2). Develop alongside the lanes.
 
 ---
 

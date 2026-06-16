@@ -94,7 +94,10 @@ A cask carries a **quality Q1–Q5** (printed) and **one signature slot-action**
 Gruit fixed to **Source +2 goods**, Q2+ draw from the pool — §8). Three states:
 
 1. **Maturing** *(private, in a vessel)* — ages toward **Ready** (+1 each of your turns + the
-   Cellar). Higher quality takes longer. Scores nothing.
+   Cellar). Higher quality takes longer. Scores nothing yet — **but it already works:** a cask in
+   a vessel **powers your Floor** (its action, run as your private line — §8, `PLAN.md` §1B), so
+   it earns value *before* it ships. The catch: it **occupies the vessel** (no new brew there
+   until you deploy or ship it).
 2. **Deployed** *(public, on a slot)* — when Ready, deploy it (free) onto an open slot you
    choose. Now it is **cargo-in-waiting**, a **public slot-action**, and **contestable**. *(If
    you deploy onto a slot with a **building**, the building modifies it — §5.)*
@@ -107,8 +110,12 @@ Gruit fixed to **Source +2 goods**, Q2+ draw from the pool — §8). Three state
 > - **You can't deliver everywhere** — scarce ships and slots, the destination gates, one end
 >   clock. *Where* a cask goes is a commitment, not a default.
 >
-> Choosing your beers and your destinations **is** the game. The living slots are how you tilt
-> those choices in your favor.
+> - **You can't hold everything** — a Ready cask in a vessel powers your **Floor** (§8) but
+>   **clogs the vessel**; deploying frees the space and makes it public cargo, but spends its
+>   private value. *Brew what · hold which · deploy when* is the engine-builder's puzzle.
+>
+> Choosing your beers and destinations — and **how you use each cask before it ships** — **is**
+> the game. The living slots and your Floor are how you tilt those choices in your favor.
 
 ---
 
@@ -123,8 +130,11 @@ Do **one**: take **2 goods** (any mix), **or acquire one tile** (pay its goods c
 - a **charter contract** (`1 G` ⚙ — §6).
 
 ### B · Brewhouse — *Brew*
-**Load** one recipe you hold (paying its `G/H`) into an **open vessel** → a young cask at step 0;
-draw its slot-action. One load per visit. Recipes are permanent.
+**Load** one recipe you hold (paying its `G/H`) into an **open vessel** → a young cask at step 0.
+The cask takes its slot-action from the **face-up top tile of that quality's pile** — and **the
+top tile of *every* quality pile is visible**, so you **see the action you'd get** and can choose
+*which* quality to brew partly by it (steerable variance — agency at the kettle, no blind draw).
+One load per visit; Gruit is fixed to Source. Recipes are permanent.
 
 ### D · Cellar — *Age*
 Gain **3 age points** ⚙, allocate across your vessels (each cask also ages **+1** at the start of
@@ -217,11 +227,17 @@ into this / cut — confirm during `COMPONENTS.md`.)*
 
 ## 8. The brewery (private engine) — vessels · recipes · improvements
 
-Private and safe: **vessels** (start 2, cap 3 ⚙), **recipes**, and the cask-action pool (drawn
-at brew, Q2+): `Source · Age · Load · Reach · Convert · Survey (draw a building) · Wild (Q4+)`.
-**Most v0.16 upgrades fold into the public building family (§5);** a few inherently-private
-improvements (Extra Vessel, faster aging) remain as brewery perks — **how they're acquired
-(Market vs delivery-earned) is ⚙ open**, to settle in `COMPONENTS.md`.
+Private and safe: **vessels** (start 2, cap 3 ⚙), **recipes**, and the **cask-action pool** —
+now **steerable**: the top tile of each quality pile is face-up, so you brew toward the actions
+you want (Q2+ draw `Source · Age · Load · Reach · Convert · Survey (draw a building) · Wild (Q4+)`;
+Gruit fixed to Source).
+
+**Vessels now carry pre-delivery value** — they power the **Floor** (§3, `PLAN.md` §1B) — which
+finally gives **Extra Vessel** a real pull (more vessels = a bigger held engine *and* more brewing
+throughput). So the **starting count / cap / whether Extra Vessel repeats** are a live ⚙ to
+retune: in playtests Extra Vessel and the Warehouse were *never* bought (dead upgrades); the Floor
+fixes Extra Vessel, and storage-cap upgrades stay suspect unless they earn their place.
+**Most v0.16 upgrades fold into the public building family (§5).**
 
 ---
 
