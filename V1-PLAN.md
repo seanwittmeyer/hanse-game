@@ -30,12 +30,13 @@ This single move does what the v0.16-era review listed as four separate fixes:
    demand a cask broadcasts is **printed on it, independent of its own quality** (same
    decoupling we already proved with v0.12 cask-actions), so deploying is a real
    information-reveal and commitment, not a self-serving multiplier.
-2. **It splits volume from majority (the real lane problem).** Today majority = "ship wide"
-   because presence is raw cask count. When demand tiles can read *"here a Q4+ cask counts
-   double"* or *"this kontor weights presence by quality this round,"* **quality-weighted
-   majority becomes a live, board-authored thing** — the parked v0.13 "heads, not tiles"
-   idea, turned on and off by the board instead of hard-coded. That's how 2.5 lanes become
-   a real 4, and how a *braid of two* (GWT-style) beats a single-lane race.
+2. **It gives the lanes genuinely different temperaments (the real lane problem).** Today
+   "volume" and "majority" collapse into one race because both are just "ship wide." Under
+   v1.0 they split by *temperament*: **majorities = the steady, board-agnostic floor**
+   (raw cask count, the points you grind when the board is cold), and **demand bounties =
+   the volatile, contextual lane where quality lives** (read the room, send the right beer,
+   spike or miss). A *braid of two* (GWT-style) — a majority floor plus demand spikes —
+   beats a single-lane race.
 3. **It is replayability content, not rules.** A deck of demand faces is the
    Wingspan/Orléans content spine the game lacks — dozens of small unique "what's hot"
    pieces, all run through **one** grammar (in slot = demand, delivered = points).
@@ -66,7 +67,8 @@ This single move does what the v0.16-era review listed as four separate fixes:
 - The **Source → Brew → Age → Ship** spine and the **dual-role cask** (maturing → on a slot
   → delivered). The cask is *more* central in v1.0, not less.
 - The **four kontore** (Bruges/London/Bergen/Novgorod) and **the Hall / local Enshrine** as
-  destinations. *(How much of their scoring survives = OPEN, §5.)*
+  destinations — but their **scoring is reconceived** (majorities kept; intrinsic
+  quality-value cut; Hall reconceived as standing quality-demand; §5).
 - The hard constraints: **no dice, no cards-as-hand, no money** (goods are the only
   currency; standing is unspendable score).
 - The **sim-gate discipline**: nothing ships without `sim.js` (crash/deadlock-free, pace in
@@ -80,8 +82,10 @@ This single move does what the v0.16-era review listed as four separate fixes:
   special-case interactions (rules). Owned (greater benefit to owner, still serves all), but
   the "serves all" routes through the **demand system**, not a revived goods-skim
   (rich-get-richer was why v0.7 cut skims).
-- **Scoring → demand-driven.** Goal tiles likely **dissolve into the demand board** (the
-  slots *are* the goals now — a whole subsystem retired). Majorities/Hall/Flight: see §5.
+- **Scoring → demand-driven.** Goal tiles **dissolve into the demand board** (the slots
+  *are* the goals now), and **intrinsic quality-value is cut** (export premium, the Flight,
+  the Masterpiece, the Hall's by-quality ladder). Majorities stay as the stable floor; the
+  Hall is reconceived. See §5.
 - **The cask-action pool folds into the demand face.** One tile per cask carries both its
   demand broadcast and (optionally) its slot-action — fewer things printed, more meaning each.
 - **The private fallback returns (deliberately).** Casks in your vessels become **stable
@@ -94,27 +98,60 @@ This single move does what the v0.16-era review listed as four separate fixes:
   rather than "scarce cargo space you deadlock on," the relief-valve scaffolding (charter
   contracts, sail-full bookkeeping) can shrink. Revisit after the demand loop is felt.
 
-## 5. OPEN FORKS — resolve before the detailed spec (the questions this turn)
+## 5. LOCKED decisions (2026-06-16)
 
-These two decisions set the shape of everything downstream; flagged here, asked in chat.
+**F1 — Demand → points: LIVE FULFILLMENT.** A demand sitting in a slot pays a bounty the
+moment you deliver a matching cask, then is consumed and refreshes. A flowing, GWT-tempo
+economy; the cask bites *now*. Intrinsic value is gone (see the philosophy below), so the
+bounty *is* where points come from on the demand side.
 
-- **F1 — How demand becomes points.** (a) **Live fulfillment** — a demand in a slot pays a
-  bounty when you deliver a matching cask, then is consumed/refreshes (flowing GWT tempo);
-  (b) **End-game snapshot** — the slots at game end define/weight what scores (tense "hold
-  the board"); (c) **Hybrid** — live bounty *and* demand weights end-game majorities (this
-  is what explicitly splits volume from majority, at the cost of a second layer).
-- **F2 — Scoring radius of the clean sheet.** (a) **Demand modulates; kontore + Hall +
-  Flight stay** (overlay, lowest risk, keeps tuned structure); (b) **Demand replaces the
-  majority + goal layers** (biggest rebuild, cleanest); (c) **Demand replaces goals only**;
-  keep kontore majorities + Hall + Flight as the skeleton, dissolve goal tiles into demand.
+**F2 — Scoring radius: REPLACE goals AND intrinsic quality-value; KEEP majorities.**
+- **Goal tiles dissolve** into the demand board (the slots *are* the goals).
+- **Intrinsic quality-value is cut.** Out: the export premium (Q4+1/Q5+2), **the Flight**,
+  **the Masterpiece**, Novgorod-pays-high, and the Hall's by-quality ladder — every place a
+  higher number was worth more *for its own sake*.
+- **Majorities stay** — raw delivered-cask count at each kontor — as the **stable,
+  board-agnostic points floor**: the way to score when the demand board isn't going your
+  way. The steady lane.
+
+### The philosophy — "the right beer for the right room"
+*Quality is a construct; the board manifests or defeats it.* A Bock isn't worth more because
+it's a Bock — it's worth a lot **only when a room demands it**, and a miss when it doesn't
+(you don't serve Leffe at the beer-pong table). **Where you send a cask is a read, not a
+ladder.** Quality becomes **high-variance**: few rooms want your finest, but those that do
+pay big; cheap-and-cheerful finds a buyer almost anywhere but never spikes. This *is* the
+original Westvleteren-vs-Leffe axis (DESIGN §4), reframed from "deep vs wide" to "read the
+room" — and it **dissolves** the v0.13–v0.14 "make the climb worth it" problem rather than
+patching it: quality is rewarded by demand, never by a printed premium.
+
+### The lane map that falls out
+- **Majority lane** — ship wide; steady, board-agnostic floor. The safe play / catch-up.
+- **Demand lane** — read the board, send the right beer to the right room; volatile bounties.
+  *This is where quality lives* (contextually). The skill lane.
+- **Prestige / the Hall** — the one *standing* demand for your finest: a capped, throttled
+  outlet that anchors the deep/boutique brewer, so quality has a floor even when the board is
+  cold. Reconceived (not a by-quality ladder); the deploy-then-enshrine throttle and
+  clock-advance survive. ⚙ to-spec in §22.
+- **Engine / upgrades** — capacity to do the above better.
+The **braid** (GWT goal): majority floor + demand spikes, or commit deep to Hall + demand-
+for-quality. No lane wins solo.
+
+### Consequent calls (my resolutions — redline freely)
+- **Destination quality-gates become dynamic demand, not static thresholds.** A kontor wants
+  a given quality *this season* (a demand face), not forever — consistent with "the board
+  manifests or defeats quality."
+- **The Hall survives, reconceived** as the standing quality-demand (capped/throttled), not a
+  by-quality prestige ladder — keeps the deep lane a home and the theme intact.
+- **Bock/recipe costs unchanged for now** (3G2H, ungated). With value now contextual, the
+  reachability question changes shape; revisit after the demand loop is felt.
 
 ## 6. Roadmap (phased; one spine at a time, each sim-gated)
 
 - **Phase 0 — Archive. ✓ (this session.)** `archive/main-v0.16.1` branch on origin; local
   `v0.16.1` tag (proxy blocked the tag push — branch is the canonical revert point).
-- **Phase 1 — Lock the spine.** Resolve F1/F2. Write the detailed mechanic spec as a new
-  `DESIGN.md` §22 (demand grammar, the slot composition rule, the private floor, lane
-  braiding, end clock). Paper-first; numbers are ⚙.
+- **Phase 1 — Lock the spine.** F1/F2 locked (§5). Write the detailed mechanic spec as a new
+  `DESIGN.md` §22 (demand grammar + faces, the slot composition rule, the private floor,
+  the reconceived Hall, majorities-as-floor, lane braiding, end clock). Paper-first; ⚙.
 - **Phase 2 — Components & content.** The demand deck, the building deck (one grammar, many
   cards), the quality ladder under demand, in `COMPONENTS.md` terms. This is where the
   "content not rules" budget is spent.
