@@ -159,11 +159,15 @@ for-quality. No lane wins solo.
 
 ## 6. Roadmap (phased; one spine at a time, each sim-gated)
 
-- **Phase 0 — Archive. ✓ (this session.)** `archive/main-v0.16.1` branch on origin; local
-  `v0.16.1` tag (proxy blocked the tag push — branch is the canonical revert point).
-- **Phase 1 — Lock the spine.** F1/F2 locked (§5). Write the detailed mechanic spec as a new
-  `DESIGN.md` §22 (demand grammar + faces, the slot composition rule, the private floor,
-  the reconceived Hall, majorities-as-floor, lane braiding, end clock). Paper-first; ⚙.
+- **Phase 0 — Archive. ✓ (this session.)** (1) `archive/main-v0.16.1` branch on origin = full
+  repo revert point; (2) **`archive/play.html`** — a playable, save-isolated, labeled snapshot
+  of the v0.16.1 game (navigable on the Pages site). Local `v0.16.1` tag exists but the proxy
+  blocks tag pushes — the branch is the canonical revert ref.
+- **Phase 1 — Lock the spine & first-pass spec. ✓ first pass (this session).** F1/F2 locked
+  (§5); demand model keystoned (**buildings author the demand that redefines delivery value**).
+  First pass written as **`RULES-v1.md`** (operation) + **`COMPONENTS-v1.md`** (manifest, incl.
+  the designed Demand deck). Numbers ⚙, open dials listed. *Next: iterate these to agreement,
+  then HTML docs, then `play.html`, then printables.*
 - **Phase 2 — Components & content.** The demand deck, the building deck (one grammar, many
   cards), the quality ladder under demand, in `COMPONENTS.md` terms. This is where the
   "content not rules" budget is spent.
