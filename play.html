@@ -414,7 +414,7 @@ const NEUTRALS={
 
 // ---- UPGRADES: Rooms (capability) + Modifiers (asymmetric perks) ----
 const ROOMS={
-  vessel   :{name:'Extra Vessel',  desc:'+1 brewing lane (cap 4)'},
+  vessel   :{name:'Extra Vessel',  desc:'+1 brewing lane (start 2 → cap 3; one per house)'},
   cellar   :{name:'Aging Cellar',  desc:'maturation −1 step (e.g. a Bock matures in 2) — a pathway, not a gate'},
   warehouse:{name:'Warehouse',     desc:'+4 goods storage'},
   quay     :{name:'Quay',          desc:'load up to 2 casks in one Harbor visit'},
@@ -493,7 +493,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v46'; // v0.16 "Ships Sail Full" ⚙: ships sail ONLY when full (partial early-launch retired) + the destination benefit is paid on DELIVERY, not on load (in load order — the first/second/third berths) — so filling-and-sailing is the only payoff, the urgency that reverses v0.11.2's under-fill. (Wave 1 same batch: charter CONTRACTS — start 2, buy at the Market for 1G + flat 2G fare.) bump discards stale v45 state
+const KEY='hanse-hotseat-v47'; // v0.16.1 ⚙: (1) Bruges/Bergen LIQUIDITY benefit is now 2 goods of the OWNER'S CHOICE (any mix grain/hops), picked on delivery — was a fixed 2 grain; (2) brewing VESSEL CAP 4→3 (start 2 + one Extra Vessel). (v0.16 "Ships Sail Full": sail only when full · benefit+points on delivery in load order · charter CONTRACTS.) bump discards stale v46 state
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -609,7 +609,7 @@ function canTake(shipSlot,caskSlot){const sh=S.slots[shipSlot],ct=S.slots[caskSl
   return sh&&ct&&sh.type==='ship'&&ct.type==='cask'&&sh.load.length<effCap(sh)&&STYLES[ct.style].q>=DEST[sh.dest].gate;}
 function readyInVessels(p){return p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready);}
 function canBrew(p,style){const st=STYLES[style];if(st.cellar&&!hasUpgrade(p,'cellar'))return false;return canPay(p,st.in);}
-function grantableBuy(p,key){return key==='vessel'?p.maxVessels<4:!hasUpgrade(p,key);}
+function grantableBuy(p,key){return key==='vessel'?p.maxVessels<3:!hasUpgrade(p,key);}
 // ---- Upgrade display (Market option B): face-up row drawn from a shuffled supply ----
 function refillDisplay(){while(S.upgradeDisplay.length<DISPLAY_SIZE&&S.upgradeSupply.length)S.upgradeDisplay.push(S.upgradeSupply.shift());}
 function takeFromDisplay(key){const i=S.upgradeDisplay.indexOf(key);if(i>=0)S.upgradeDisplay.splice(i,1);refillDisplay();}
@@ -977,7 +977,9 @@ function sailShip(slot,creditId){const t=S.slots[slot];
 // fn name is legacy; it is no longer "immediate on load." (Charter/Enshrine ARE the moment of delivery.)
 function grantImmediate(lp,dest){
   if(DEST[dest].kontor&&hasUpgrade(lp,'staple'))gain(lp,1,0);   // Staple Right: +1 good on any kontor delivery
-  if(dest==='bruges'||dest==='bergen'){gain(lp,2,0);log('↳ '+lp.name+' takes the '+DEST[dest].name+' liquidity benefit on delivery.');}
+  if(dest==='bruges'||dest==='bergen'){   // LIQUIDITY: 2 goods, the OWNER'S CHOICE of mix (v0.16.1)
+    if(lp.id===S.active)(UI.pendingGoods=UI.pendingGoods||[]).push({pid:lp.id,dest});
+    else {gain(lp,2,0);log('↳ '+lp.name+' takes the '+DEST[dest].name+' liquidity benefit (2 goods).');}}   // rival owner can't pick off-turn → auto 2 grain
   else if(dest==='london'||dest==='novgorod'){
     log('↳ '+lp.name+' earns a free '+LU('wrench')+' Upgrade (delivering to '+DEST[dest].name+').');
     if(lp.id===S.active)(UI.pendingBenefits=UI.pendingBenefits||[]).push({pid:lp.id,dest});
@@ -994,13 +996,16 @@ function deliverCask(lp,style,q,dest){lp.delivered.push({style,q,dest});
 function autoGrantDisplay(p,dest){const g=displayGrantable(p);if(!g.length)return;const k=g[Math.floor(Math.random()*g.length)];
   grantUpgrade(p,k);takeFromDisplay(k);log('↳ '+p.name+' earns '+LU('wrench')+' <b>'+upName(k)+'</b> (from '+DEST[dest].name+', via the display).');}
 function grantUpgrade(p,key){
-  if(key==='vessel'){if(p.maxVessels<4){p.maxVessels++;p.vessels.push(null);p.upgrades.push('vessel');}return;}
+  if(key==='vessel'){if(p.maxVessels<3){p.maxVessels++;p.vessels.push(null);p.upgrades.push('vessel');}return;}   // v0.16.1: cap 3 (start 2 + one Extra Vessel)
   if(!p.upgrades.includes(key)){p.upgrades.push(key);if(key==='warehouse')p.storage+=4;}
 }
 function afterSail(rt){
+  if((UI.pendingGoods||[]).length){UI.sub='goodspick';UI.goods={returnTo:rt};render();return;}   // v0.16.1: liquidity owner-choice picker
   UI.pendingBenefits=(UI.pendingBenefits||[]).filter(b=>displayGrantable(S.players[b.pid]).length>0);
   if(UI.pendingBenefits.length){UI.sub='benefit';UI.benefit={returnTo:rt};render();}else resume(rt);
 }
+function goodsPick(g,h){snapshot();const b=UI.pendingGoods[0];gain(S.players[b.pid],g,h);
+  UI.pendingGoods.shift();const rt=UI.goods.returnTo;UI.goods=null;afterSail(rt);}
 function benefitPick(key){snapshot();const b=UI.pendingBenefits[0];grantUpgrade(S.players[b.pid],key);takeFromDisplay(key);
   log('↳ '+S.players[b.pid].name+' earns '+LU('wrench')+' <b>'+upName(key)+'</b> (from '+DEST[b.dest].name+', via the Market display).');
   UI.pendingBenefits.shift();const rt=UI.benefit.returnTo;UI.benefit=null;afterSail(rt);
@@ -1587,6 +1592,7 @@ function aiGmOptions(p){
   if(U==='benefit'){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];
     const g=Array.from(new Set(displayGrantable(lp)));
     return g.length?g.map(k=>()=>benefitPick(k)):null;}
+  if(U==='goodspick')return [()=>goodsPick(2,0),()=>goodsPick(1,1),()=>goodsPick(0,2)];   // liquidity mix — the GM evaluates each
   if(U==='wild')return [()=>wildPick('source'),()=>wildPick('brew'),()=>wildPick('age'),()=>wildPick('ship'),()=>wildSkip()];
   if(U==='reach')return UI.reach.ks.map(k=>()=>reachPick(k));
   if(U==='alms')return UI.alms.ks.map(k=>()=>almsPick(k));
@@ -1622,6 +1628,7 @@ function aiStep(){
       case 'load':return aiLoad(p);
       case 'deploy':return aiDeploy(p);
       case 'benefit':return aiBenefit();
+      case 'goodspick':return goodsPick(2,0);   // v0.16.1: AI takes the liquidity benefit as 2 grain (the prior fixed behavior)
       case 'end':return endTurn();
       default:
         log('⚠ '+p.name+' (AI) hit an unknown prompt ('+UI.sub+') — ending its turn.');
@@ -1777,6 +1784,9 @@ function renderBar(){
   else if(U==='benefit'){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];
     prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take an Upgrade from the Market display (free).';
     acts=displayGrantable(lp).map(k=>btn(LU('wrench')+upName(k),'benefitPick(\''+k+'\')','go')).join('');}
+  else if(U==='goodspick'){const b=UI.pendingGoods[0];const lp=S.players[b.pid];
+    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take <b>2 goods</b> (any mix).';
+    acts=btn('Take '+Gi(2),'goodsPick(2,0)','go')+btn('Take '+Gi(1)+Hi(1),'goodsPick(1,1)','go')+btn('Take '+Hi(2),'goodsPick(0,2)','go');}
   else if(U==='end'){prompt='Line resolved.';acts=deployButtons('end')+btn('End Turn ▸','endTurn()','primary');}
   if(undoStack.length)acts+=btn('↶ Undo','doUndo()','ghost');
   document.getElementById('prompt').innerHTML=prompt;
@@ -1869,7 +1879,7 @@ function renderDests(){
       ?'<span data-tip="'+attr('★ = prestige points per ENSHRINED cask, by quality: Q2→4 · Q3→6 · Q4→8 · Q5→10. Reached by the local Enshrine (a Harbor action, no boat); no majority, no benefit — out of commerce.')+'"><b>4·6·8·10</b><span class="vstar">★</span></span>'
       :'<span data-tip="'+attr('★ = points per delivered cask: '+D.value+' at game end — plus the export premium: a Q4 cask +1★, a Q5 +2★, at any kontor.')+'"><b>'+D.value+'</b><span class="vstar">★</span><span style="font-size:.68rem;opacity:.8;margin-left:1px">+Q</span></span>';
     const ben=D.benefit==='upgrade'?'<span data-tip="'+attr('The wrench = the delivery benefit: on each delivery the owner takes one Upgrade from the Market display, free.')+'">+'+LU('wrench')+'</span>'
-      :D.benefit==='goods'?'<span data-tip="'+attr('The grain = the delivery benefit: on each delivery the owner gains 2 grain.')+'">+'+Gi(2)+'</span>':'';
+      :D.benefit==='goods'?'<span data-tip="'+attr('Liquidity: on each delivery the owner takes 2 goods, any mix (grain/hops).')+'">+2'+LU('coins')+'</span>':'';
     h+='<div class="route '+d+'" data-tip="'+attr(D.name+' — '+D.role+'. Legend: Q# = minimum cask quality · N★ = points per delivered cask · top corner = end-game majority (1st/2nd/3rd) · +icon = the owner’s benefit on each delivery · squares = delivered casks (outline = bonus presence, ★ = current leader).')+'">'
       +'<div class="rh"><span class="ric">'+(D.kontor?LU('landmark'):LU('crown'))+'</span>'
       +((D.maj&&D.maj.length)?'<span class="rmaj" data-tip="'+attr(D.maj.join('/')+' = the end-game majority: '+D.maj.join('/')+' points to 1st/2nd/3rd place by delivered-cask count here (2-player skips 2nd; ties split).')+'">'+D.maj.join('/')+'</span>':'')+'</div>'

@@ -114,7 +114,7 @@ Installed on your brewery board. **Earned only by delivering** (the **London / N
 **Rooms (permanent capability)**
 | Room | Effect ⚙ | Buy ⚙ |
 |---|---|---|
-| **Extra Vessel** | +1 brewing lane (start 2, cap 4) — repeatable | `5 G` |
+| **Extra Vessel** | +1 brewing lane (start 2, cap 3 — one per house) | `5 G` |
 | **Aging Cellar** | maturation −1 step (a Bock matures in 2) — a **pathway**, not a gate (v0.14) | `5 G` |
 | **Warehouse** | goods storage 8 → 12 | `4 G` |
 | **Quay** | load **2 casks** in one Harbor visit | `5 G` |
@@ -138,9 +138,9 @@ All **open from the start**. Differentiated by a **quality gate** (the climb-lim
 
 | Destination | Gate ⚙ | Per-cask value ⚙ | Majority — 1st/2nd/3rd ⚙ | Benefit on delivery ⚙ |
 |---|---|---|---|---|
-| **Bruges** (Hub) | Q1 | **+1** | **4 / 2 / 0** | **liquidity** — gain 2 goods |
+| **Bruges** (Hub) | Q1 | **+1** | **4 / 2 / 0** | **liquidity** — gain 2 goods (any mix, owner's choice) |
 | **London** (Steelyard) | Q2 | **+2** | **5 / 3 / 1** | **the engine** — take an Upgrade from the display |
-| **Bergen** (Bryggen) | Q2 | **+2** | **richest 9 / 5 / 2** | **liquidity** — gain 2 goods (token); the **majority is its draw** |
+| **Bergen** (Bryggen) | Q2 | **+2** | **richest 9 / 5 / 2** | **liquidity** — gain 2 goods, any mix (token); the **majority is its draw** |
 | **Novgorod** (Long Haul) | Q3 | **+4** | rich **8 / 5 / 2** | premium — top value **+ take an Upgrade** |
 | **The Hall** (Prestige) | Q2 | **printed ladder by quality: Q2→4 · Q3→6 · Q4→8 · Q5→10** ⚙ | — | out of commerce — the **local Enshrine** (a Harbor action, no ship/fare); the scarcity/Westvleteren payout |
 
@@ -176,7 +176,7 @@ Symmetric for all players (except seat compensation, below). The stations are th
 ┌──────────────────────────────────────────────────────────────┐
 │  ⚑ HOUSE crest        STORAGE ▢▢▢▢ ▢▢▢▢  (G/H, cap 8)         │
 │                                                                │
-│  VESSELS  (brewing throughput — start 2, cap 4)                │
+│  VESSELS  (brewing throughput — start 2, cap 3)                │
 │   Vessel 1  [ BREW ]→[ ferment ]→[ AGE ]→[ READY ▸ slots ]     │
 │   Vessel 2  [ BREW ]→[ ferment ]→[ AGE ]→[ READY ▸ slots ]     │
 │   Vessel 3  ▒▒ locked — add an Extra Vessel (upgrade) ▒▒       │

@@ -9,7 +9,7 @@
 Each house starts with:
 - **3 `G` (grain), 2 `H` (hops)** — plus **seat compensation: +1 `G` for every seat after the first** ⚙ (so seats P1…P5 start with 3/4/4/4/4 `G`). Turn order is fixed, which gives the first player a small structural edge; the free opening placement plus this +1 `G` neutralize it (sim-validated: it flattens the first-player win-rate at 2–3p essentially to fair). Storage cap 8 ⚙.
 - The **Gruit** and **Hopped** recipes (the on-ramp — fixed, symmetric, so everyone can brew immediately and *gaining an export recipe means more*). More recipes are acquired at the Market.
-- **2 open vessels** (the brewing throughput; cap 4 ⚙ via upgrades).
+- **2 open vessels** (the brewing throughput; cap 3 ⚙ — one Extra Vessel upgrade).
 - **2 charter contracts** ⚙ (the scarce certificates that let you Charter — §5; buy more at the Market for `1 G`).
 - A **warm start so the Wharf is live on turn 1:** **a guaranteed Hulk → Bruges plus one more ship** ⚙ dealt from the **ship deck** onto slots (§5 — so the Gruit on-ramp always has a hull; a **ship market of 3** ⚙ sits face-up beside the Market), and **one Ready Gruit in a vessel** per player (deploy it to a slot on turn 1) ⚙ — no starting cask sits on the shared slots. First voyage is reachable by turn 2–3, not turn 6.
 - An empty **brewery board** (vessels + upgrade slots — see `COMPONENTS.md` §4).
@@ -150,9 +150,9 @@ The old two value tracks are replaced by destinations, each with a distinct **be
 
 | Destination | Gate ⚙ | Value ⚙ | Majority (1st/2nd/3rd) ⚙ | Benefit on delivery (the owner takes it) ⚙ |
 |---|---|---|---|---|
-| **Bruges** (Hub) | Q1 | low (+1) | **4 / 2 / 0** | **gain 2 goods** (liquidity) — takes any beer, the volume on-ramp |
+| **Bruges** (Hub) | Q1 | low (+1) | **4 / 2 / 0** | **gain 2 goods, any mix** (liquidity, owner's choice) — takes any beer, the volume on-ramp |
 | **London** (Steelyard) | Q2 | mid (+2) | **5 / 3 / 1** | **take 1 Upgrade from the face-up display** (§3) — *the engine destination* (accessible upgrades) |
-| **Bergen** (Bryggen) | Q2 | mid (+2) | **richest 9 / 5 / 2** | **gain 2 goods** (liquidity) — its goods are token; the **majority is its draw** |
+| **Bergen** (Bryggen) | Q2 | mid (+2) | **richest 9 / 5 / 2** | **gain 2 goods, any mix** (liquidity, owner's choice) — its goods are token; the **majority is its draw** |
 | **Novgorod** (Long Haul) | Q3 | **high (+4)** | rich **8 / 5 / 2** | **take 1 Upgrade from the display** — premium only; pays the most *and* a perk |
 | **The Hall** (Prestige) | Q2 | **prestige by quality — a printed ladder: Q2→4 · Q3→6 · Q4→8 · Q5→10** ⚙ | — | *(none)* — out of commerce; reached by the **local Enshrine** (no ship, no fare — §3), the scarcity/Westvleteren lean |
 
@@ -175,7 +175,7 @@ Your brewery board is private and safe. It holds your **vessels** (start 2, cap 
 
 | # | Room (capability) | Effect ⚙ | Buy cost ⚙ |
 |---|---|---|---|
-| 1 | **Extra Vessel** | +1 brewing lane (vessels start 2, cap **4**) — repeatable | `5 G` |
+| 1 | **Extra Vessel** | +1 brewing lane (vessels start 2, cap **3** — one per house) | `5 G` |
 | 2 | **Aging Cellar** | maturation **−1 step** (a Bock matures in 2) — a *pathway*, not a gate (v0.14) | `5 G` |
 | 3 | **Warehouse** | goods storage **8 → 12** | `4 G` |
 | 4 | **Quay** | load **2 casks** in one Harbor visit (instead of 1) | `5 G` |

@@ -6,6 +6,12 @@ Compact version history. The **full rationale ("the why")** lives in `DESIGN.md`
 
 ---
 
+## v0.16.1 — liquidity owner's-choice · vessel cap 4→3 (2026-06-16)
+Two small calls from a cross-surface consistency review (`KEY → v47`):
+- **Bruges/Bergen "liquidity" benefit = 2 goods of the OWNER'S CHOICE of mix** (grain/hops), picked on delivery — the engine had been giving a fixed **2 grain** while the docs said "2 goods" and the pages were split (play.html showed wheat, printables showed coins). Now it's a real any-mix choice, shown as **🪙 coins** everywhere; the AI/sim bot takes 2 grain (the prior behavior, so balance is unmoved). New `goodspick` picker in the delivery flow (active player chooses; a rival owner auto-takes 2 grain off-turn).
+- **Brewing vessel cap 4 → 3** (start 2 + **one** Extra Vessel; Extra Vessel is no longer repeatable). The printed player board already showed 3 lanes — this makes the rules match the component.
+- **Gates:** sim 300×(2–5p) 0 crashes / 0 deadlocks, pace in band; render-smoke PASS (the new picker path); PATHWAYS lanes still balanced (4p vol/pres/maj/deep ≈ **25/21/32/21** — cap-3 nudged the deep lane *up* 19→21, Q4+/Q5 brewing held). Docs + all pages synced.
+
 ## v0.16 — "Full Ships": ships sail full · benefit on delivery · charter contracts (2026-06-15)
 A coordinated batch that fixed the **ship economy at its root** — three accumulated band-aids replaced by one coherent loop (`KEY → v46`; full rationale `DESIGN.md` §21 v0.16). Two waves:
 - **Wave 1 — charter contracts.** The Charter relief valve is now gated by a **scarce ownable certificate** instead of an escalating price curve: each house **starts with 2 contracts**, buys more at the Market (**`1 G`**, one acquire, unlimited supply), and **spends 1 contract + a flat `2 G` fare** per charter. The escalating fare row (v0.11 A2′) is **retired** — a legible throttle that pushes cargo onto the shared hulls, and the deadlock guard still holds (Move → Market → buy → charter is always legal).

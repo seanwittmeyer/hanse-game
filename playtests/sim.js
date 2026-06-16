@@ -202,6 +202,7 @@ function botActOnce(){var p=cur();var U=UI.sub;
     case 'load':return botLoad(p);
     case 'deploy':return botDeploy();
     case 'benefit':return botBenefit();
+    case 'goodspick':return goodsPick(2,0);   // v0.16.1 liquidity owner-choice — bot takes 2 grain (the prior fixed behavior)
     case 'end':return endTurn();
     default: throw new Error('unknown UI.sub: '+U);
   }

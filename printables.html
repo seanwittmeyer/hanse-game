@@ -341,7 +341,7 @@ const NEUTRALS=[  // 6 designs; 2–3 seeded on the slots at setup (random)
   {ic:'heart',     nm:'Almshouse',    sub:'+1 at a kontor you lead',c:'#4a4034', n:1},
 ];
 const ROOMS=[  // Extra Vessel supply = players+1 (play.html) ⚙ — 6 supports 5p
-  {ic:'wrench',nm:'Extra Vessel', act:'+1 brewing lane, cap 4',           g:5, c:'#4a6b3a', n:6},
+  {ic:'wrench',nm:'Extra Vessel', act:'+1 brewing lane (cap 3)',          g:5, c:'#4a6b3a', n:6},
   {ic:'wrench',nm:'Aging Cellar', act:'maturation −1 step',               g:5, c:'#3f5c30', n:2},
   {ic:'wrench',nm:'Warehouse',    act:'goods storage 8→12',               g:4, c:'#4a6b3a', n:2},
   {ic:'wrench',nm:'Quay',         act:'load 2 casks per Harbor',          g:5, c:'#3f5c30', n:2},
@@ -475,7 +475,7 @@ function pboard(p){
         +'<div class="pb-sub">your private brewery · Source → Brew → Age → Ship · Brewhouses of the Hanse · v0.16 “Full Ships”</div></div>'
       +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Storage <span class="sm">keep your goods here</span></span><div class="storezone"><div class="sz-main">'+LU('coins')+'cap 8</div><div class="sz-wh">+4<br>Warehouse</div></div></div></div>'
     +'<div class="pb-body">'
-      +'<div class="pb-col left"><div class="pb-sect">'+LU('flask-conical')+'Vessels &amp; Maturation<span class="hint">start 2 open · cap 4 · +1/turn auto + the Cellar · Aging Cellar −1 step</span></div>'
+      +'<div class="pb-col left"><div class="pb-sect">'+LU('flask-conical')+'Vessels &amp; Maturation<span class="hint">start 2 open · cap 3 · +1/turn auto + the Cellar · Aging Cellar −1 step</span></div>'
         +vessel(1,true)+vessel(2,true)+vessel(3,false)
         +'<div class="pb-sub" style="margin-top:.02in">Warm start: a Ready Gruit sits in Vessel 1 — deploy it to a slot on turn 1. (A neutral Hulk → Bruges is on a slot for the table.) Seats after the first start +1 '+LU('wheat','g ic')+'.</div></div>'
       +'<div class="pb-col right">'

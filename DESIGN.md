@@ -831,8 +831,14 @@ A batch that stopped patching the **ship economy** and fixed it at the root. The
 
 **Watch-items for the human playtest:** (1) does forcing a hull to sail full read as fair, or does cargo stranded on an unfillable Hulk frustrate? (2) the 4p charter reliance (~42%) — fine, or does it erode the owned-hull fantasy? (3) is benefit-on-delivery in load order clean at the table (the berths should make it so)?
 
-### Open threads — pick up here next session (as of 2026-06-15, mid v0.16 batch)
-**Status:** **v0.15 "Enshrine" is the live build on `main`.** **v0.16 "Full Ships" is on the feature branch** (`play.html` `KEY = v46`; specs + `learn`/`index` swept; **`printables.html` queued**). The v0.16 reasoning above is settled and gate-clean; the items below are the *deliberately-deferred* ones, roughly by priority:
+### v0.16.1 — liquidity owner's-choice · vessel cap 4→3 (2026-06-16)
+Two small calls that fell out of a cross-surface consistency review (`KEY → v47`):
+- **The Bruges/Bergen "liquidity" benefit became a real choice.** The engine had been giving a fixed **2 grain** (`gain(lp,2,0)`) while the docs said "2 goods" and the pages disagreed on the icon (play.html showed wheat, the new printables showed coins). Resolved *toward the docs*: the owner now takes **2 goods of their choice of mix** (a new `goodspick` step in the delivery flow), shown as **coins** everywhere. The AI/sim bot takes 2 grain (the prior behavior), so **balance is unmoved** — this was a representation fix with a small human-facing upside.
+- **Brewing vessel cap 4 → 3.** The printed player board had been drawn with 3 lanes (a deliberate compaction); rather than re-add a 4th lane we made the rules match the cardboard — start 2 + **one** Extra Vessel (no longer repeatable). Sim-checked because it's a throughput change: **pace unmoved, lanes still balanced, and the deep/Q5 lane held** (4p deep 19→21%, Q4+/Q5 brewing steady) — cap-3 didn't pinch the throughput-hungry lane as feared.
+- **Gates:** sim 300×(2–5p) crash/deadlock-free, pace in band; render-smoke PASS (new picker path); PATHWAYS balanced (4p ≈ 25/21/32/21); ai-ladder re-run. Docs + all four pages synced.
+
+### Open threads — pick up here next session (as of 2026-06-16)
+**Status:** **v0.16.1 is live repo-wide** (`play.html` `KEY = v47`; specs + all four pages — `learn`/`index`/`printables`/`play` — on it). The reasoning above is settled and gate-clean; the items below are the *deliberately-deferred* ones, roughly by priority:
 
 **A. Needs a HUMAN playtest (the sim can't answer these — "how does it feel").**
 1. **Enshrine feel.** The v0.15 throttle is *structural* (the cask must be deployed on a public slot, then enshrined — so a prized cask is exposed to rival hijack-loading). Does that deploy-then-enshrine friction + exposure read as a fair, interesting cost at the table, or as fiddly? This is the core v0.15 question.
