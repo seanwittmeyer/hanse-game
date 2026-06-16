@@ -9,7 +9,10 @@ v1.0 "Demand" clean-sheet began.
   so playing the archive never touches — and is never wiped by — the live/v1.0 build.
 - **Full source revert point:** branch `archive/main-v0.16.1` (commit `31311b7`) holds the
   entire repo at this version (docs, pages, playtests). This folder is just the play page.
+- **In-tree snapshot:** `archive/v0.16/` holds file-by-file copies of the v0.16.1 design docs
+  and pages (RULES · COMPONENTS · DESIGN · CHANGELOG · README · AUTOMA · the four HTML pages),
+  kept for easy reference while the canonical root files are edited forward. **Reference only —
+  do not edit.**
 
-Why it exists: v1.0 reconceives the slot/scoring layer around **board-authored demand**
-(see `/V1-PLAN.md`, `/RULES-v1.md`, `/COMPONENTS-v1.md`). The Wharf build was good and worth
-keeping reachable.
+Why it exists: the next chapter reconceives scoring + the slot layer around **living,
+composable Wharf slots** (see `/PLAN.md`). The Wharf build was good and worth keeping reachable.
