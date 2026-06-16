@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v0.17 “Living Slots” — IN DESIGN)
+# Brewhouses of the Hanse — Turn & Round Rules (v1.0 “Living Slots”)
 
 > **Status: in-design (2026-06-16).** This is the canonical rulebook, edited forward onto the
 > **keystone** direction (`PLAN.md`): *living, composable Wharf slots + dead-simple scoring.*
@@ -161,7 +161,7 @@ a building.
 > **Half your line evolves.** A line's two *stations* are fixed base actions; its two *slots*
 > are the half that **grows over the game.** Each slot belongs to **one** line (its row *xor*
 > column), so **placing a building commits it to a line** — landing a high-impact modifier on a
-> slot of a line you fire often is the core optimization (and the heart of v0.17, `PLAN.md` §3).
+> slot of a line you fire often is the core optimization (and the heart of v1.0, `PLAN.md` §3).
 
 ### 5a. Buildings — the one tile family (owned, authored, two flavors)
 Buildings come from the Market display, are **placed on any slot** (empty or occupied), and are

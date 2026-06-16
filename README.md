@@ -16,9 +16,9 @@ Published from `main` via GitHub Pages.
 
 ## Design docs (the canonical picture — read these to understand the whole game)
 - **`DESIGN.md`** — pillars, lineage/comps, the **current architecture (§6)**, the **change log (§9)**, the balance lessons (the *why*); compacted (full history in `archive/v0.16/DESIGN.md`).
-- **`PLAN.md`** — the active **v0.17 “Living Slots”** plan (the keystone reset).
-- **`RULES.md`** — the operational turn/economy spec (**v0.17 — in design**).
-- **`COMPONENTS.md`** — the single physical manifest: boards · tokens · the tile families (casks · ships · **buildings** · recipes) · the **player brewery board** · destinations. *(v0.17 folds the old neutral buildings, goals, and most upgrades into the one **building** family.)*
+- **`PLAN.md`** — the active **v1.0 “Living Slots”** plan (the keystone reset).
+- **`RULES.md`** — the operational turn/economy spec (**v1.0 “Living Slots”**; the `play.html` rebuild is the next step).
+- **`COMPONENTS.md`** — the single physical manifest: boards · tokens · the tile families (casks · ships · **buildings** · recipes) · the **player brewery board** · destinations. *(v1.0 folds the old neutral buildings, goals, and most upgrades into the one **building** family.)*
 - **`AUTOMA.md`** — the AI-opponent plan: system comparison (heuristic / Monte Carlo / MCTS / …) + the staged path. **Phases 1–3 are shipped** (AI seats · the offline weight tuner · the Monte Carlo Guildmaster).
 - *(The change log + balance lessons now live in **`DESIGN.md` §8–§9** — the former `CHANGELOG.md`, folded in.)*
 - **`CLAUDE.md`** — how to work in this repo (the interlocks; a change is never local).

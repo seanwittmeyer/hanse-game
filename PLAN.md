@@ -1,12 +1,12 @@
-# Brewhouses of the Hanse — v0.17 “Living Slots” — PLAN
+# Brewhouses of the Hanse — v1.0 “Living Slots” — PLAN
 
-> **Status: plan — v0.17 “Living Slots”, opened 2026-06-16 (reset).** This replaces the abandoned "demand-board"
+> **Status: plan — v1.0 “Living Slots”, opened 2026-06-16 (reset).** This replaces the abandoned "demand-board"
 > detour (the `*-v1` files, deleted; the *"Leffe at a party / quality is a construct"* thread
 > and everything after it is **discarded**). It returns to the **keystone we bookmarked early
 > in the design chat**: the *living, composable Wharf slots*. The live game (v0.16.1) is frozen
 > at branch `archive/main-v0.16.1`, playable at `archive/play.html`, and snapshotted file-by-file
 > in `archive/v0.16/`. From here we edit the **canonical** `RULES.md` / `COMPONENTS.md` forward.
-> **Working mode:** v0.16 is fully archived, so the **top-level files are the v0.17 working set**
+> **Working mode:** v0.16 is fully archived, so the **top-level files are the v1.0 working set**
 > — cleaned up and **version-stamped as they're edited.**
 
 ---
@@ -172,7 +172,7 @@ The 8 slots around the four stations are a **churning, composable commons.** A s
 most slots are casks/ships; a few are buildings that make the goods passing through them worth
 more.
 
-**Why the slots are the fun — the heart of v0.17 (the designer's read).** A line is *half
+**Why the slots are the fun — the heart of v1.0 (the designer's read).** A line is *half
 fixed, half emergent*: the two **stations** are the steady base actions; the two **slots**
 beside them **evolve over the game.** So every turn you fire a line, half of what it does is the
 engine you've **grown into the board** — and the thrill is landing a **building on a slot of a

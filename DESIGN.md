@@ -1,10 +1,10 @@
-# Brewhouses of the Hanse — Design (v0.17 “Living Slots”)
+# Brewhouses of the Hanse — Design (v1.0 “Living Slots”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
 > `RULES.md`; the manifest in `COMPONENTS.md`; the active plan in `PLAN.md`.
 >
-> **This file was compacted (2026-06-16).** The full pre-v0.17 design record — every dated
+> **This file was compacted (2026-06-16).** The full pre-v1.0 design record — every dated
 > session log, the v0.5/v0.6 reach-vs-standing architecture, the blow-by-blow v0.7→v0.16
 > epilogues, and the old standalone `CHANGELOG.md` (now folded in below, §9) — is preserved
 > verbatim in **`archive/v0.16/DESIGN.md`** and the **`archive/main-v0.16.1`** branch. Nothing
@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v0.17 “Living Slots” — IN DESIGN** (reset to the keystone; see `PLAN.md`). The last *playable* build is v0.16.1, archived & playable at `archive/play.html`. |
+|**Status**     |**v1.0 “Living Slots”** — design locked into the specs; the **`play.html` rebuild is the next step.** The last *playable* build is v0.16.1 (`archive/play.html`). |
 
 ---
 
@@ -59,7 +59,7 @@ finest into the local guild **Hall** for prestige. The deeper axis is **reach vs
 
 ## 5. Design lineage & comps
 
-The target depth and the lessons we steer by (the soul-review the designer ran early in v0.17):
+The target depth and the lessons we steer by (the soul-review the designer ran early in v1.0):
 
 | Comp | Its soul | What we take |
 |---|---|---|
@@ -76,7 +76,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v0.17 “Living Slots”)
+## 6. The current architecture (v1.0 “Living Slots”)
 
 Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -93,7 +93,7 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   small points "wharfage." Buildings replace v0.16's goal tiles, neutral buildings, and most
   upgrades — one content family under one rule. **A line is half-fixed (its two stations) and
   half-emergent (its two slots), so your engine *grows into the board*** — placing a building
-  beside a high-traffic line is the core optimization (the heart of v0.17).
+  beside a high-traffic line is the core optimization (the heart of v1.0).
 - **Legible scoring.** *In-game:* **Hall enshrine = fixed** (the beginner floor) · **kontor
   deliver = variable** (base + the value-buildings shipped through). *End-game:* **majorities**
   (delivered-cask count) + **the Flight** (distinct quality tiers, (tiers−1)²).
@@ -106,7 +106,7 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
 ---
 
-## 7. The tooling (how we verify — unchanged through v0.17)
+## 7. The tooling (how we verify — unchanged through v1.0)
 
 - **`playtests/sim.js`** — drives the *canonical* `play.html` engine headlessly (extract the
   script, run in a `vm`, append a bot in-scope). The **robustness/pace gate**: 0 crashes / 0
@@ -117,7 +117,7 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   Carlo over the engine itself). Gates: `ai-ladder.js` (every higher tier ≥60% at 2p) +
   `ai-render-smoke.js`. `ai-tune.js` (CEM over the Trader weights) re-runs after a balance pass.
 - **After any engine change:** bump the save `KEY`, run the gates, save the sim output, publish
-  to `main`. *(These harnesses target the v0.16 engine; they'll be re-pointed as v0.17's
+  to `main`. *(These harnesses target the v0.16 engine; they'll be re-pointed as v1.0's
   `play.html` is rebuilt.)*
 
 ---
@@ -150,13 +150,14 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
-**v0.17 “Living Slots”** *(2026-06-16, in design)* — Reset to the bookmarked keystone after a
+**v1.0 “Living Slots”** *(2026-06-16)* — The design graduates to **1.0**, locked into the specs
+(`RULES.md` / `COMPONENTS.md`); the `play.html` rebuild is the next step. Reset to the bookmarked keystone after a
 demand-board detour was tried and abandoned. **Living, composable slots:** owned **buildings**
 modify the casks/ships docked to them (one grammar; value-boost *or* transform; owned-but-shared
 wharfage), folding goals + neutral buildings + most upgrades into one family. **Legible scoring:**
 Hall fixed / kontor variable (building-driven) / majorities + Flight. **Five lanes as complete
 paths** + the **Floor** (private line). v0.16 fully archived; top-level files version-stamped
-v0.17. See `PLAN.md`.
+v1.0. See `PLAN.md`.
 
 **v0.16.1** — Bruges/Bergen liquidity = 2 goods of the owner's *choice*; brewing vessel cap 4→3.
 **v0.16 “Full Ships”** — Ships **sail only when full** (partial early-launch retired); destination

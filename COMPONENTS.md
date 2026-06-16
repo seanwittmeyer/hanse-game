@@ -1,11 +1,12 @@
-# Brewhouses of the Hanse — Components, Tiles & Player Board (v0.17 “Living Slots” — IN DESIGN)
+# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.0 “Living Slots”)
 
 > The physical manifest: **boards · tokens · the tile families · the player brewery board ·
 > destinations.** Enumerates *what objects exist and what each does* — the **why** is in
 > `DESIGN.md`, the **operational rules** in `RULES.md`, the **plan** in `PLAN.md`. **Every
 > count/value is a placeholder ⚙.**
 >
-> **v0.17 in design.** The last *playable* build is v0.16.1 (archived at `archive/play.html`;
+> **v1.0 — Living Slots.** The design is locked into the specs; the **`play.html` rebuild is the
+> next step.** The last *playable* build is v0.16.1 (archived at `archive/play.html`;
 > the v0.16 manifest at `archive/v0.16/COMPONENTS.md`). The headline change: the **8 slots are a
 > living, composable commons** — they hold **owned buildings** that modify the casks/ships
 > docked to them. **One new tile family (Buildings) absorbs the old neutral buildings, the goal
@@ -181,7 +182,7 @@ improvements, **bought at the Market for goods** (distinct from the earned-and-p
 > **folds into the public Building family (§3C)** — capability now lives on the living slots.
 >
 > **The dead-upgrade lesson (designer playtests):** Extra Vessel and the Warehouse were *never*
-> bought across many games. v0.17 **revives Extra Vessel** — vessels now carry **pre-delivery
+> bought across many games. v1.0 **revives Extra Vessel** — vessels now carry **pre-delivery
 > value** (they power the **Floor**, §3A / `PLAN.md` §1B), so a vessel-heavy brewery is a real
 > engine. **Warehouse (storage cap) stays cut/suspect** (no one ever passed cap 8). So the
 > **starting vessel count / cap / whether Extra Vessel repeats** are a live ⚙ — the goal:
@@ -270,7 +271,7 @@ discs · workers · markers. **Medium GWT footprint** — substantial, far short
 
 ---
 
-## 6. Removed in v0.17 (folded or cut — preserved in `archive/v0.16/`)
+## 6. Removed in v1.0 (folded or cut — preserved in `archive/v0.16/`)
 
 - **Goal tiles** — dissolved into the public **Buildings** (the board is the authored value set).
 - **Neutral building tiles** — replaced by the owned **Buildings**.
