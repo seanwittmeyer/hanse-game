@@ -41,11 +41,11 @@
 | **Worker pawns** | 1 / player | The worker you move between stations. |
 | **Ownership discs** | ~20 / player color | Mark a cask's owner once it sits on a **slot** or is **delivered** (casks are a shared-pool tile, so ownership is by disc). |
 | **First-player / round marker** | 1 | Turn order (fixed all game) / round clock. |
-| **Charter contracts** | ~20 ⚙ | Scarce ownable certificates (v0.16). Start **2** per house; **spend 1 + a flat `2 G` fare** to Charter (§ Ships). Buy more at the Market (`1 G`, unlimited supply — the deadlock guard). |
+| **Charter contracts** *(small cards)* | ~20 ⚙ | Scarce ownable certificates (v0.16), **printed as small cards** (§3D, with the recipe cards). Start **2** per house; **spend 1 + a flat `2 G` fare** to Charter (§ Ships). Buy more at the Market (`1 G`, unlimited supply — the deadlock guard). |
 
 > **No VP tokens, no standing markers, no demand-market markers, no aging cubes** (all retired). Score is tallied at game end from delivered casks + majorities + goals — no running points track beyond the **Sailed-Ships** end clock.
 
-> **Casks are a shared supply with fixed global counts** (L1×16 · L2×20 · L3×12 · L4×8 · L5×4 ⚙) drawn from by all players — you **brew** them (never buy), so the rare export casks are a **contested** resource. A player's cap is "what's left to brew." Ownership is a disc once a cask hits the slots.
+> **Casks are a shared supply with fixed global counts** (Q1×16 · Q2×20 · Q3×12 — **Broyhan 6 + Keut 6**, each its own named set · Q4×8 · Q5×4 ⚙) drawn from by all players — you **brew** them (never buy), so the rare export casks are a **contested** resource. A player's cap is "what's left to brew." Ownership is a disc once a cask hits the slots.
 
 ---
 
@@ -56,13 +56,14 @@ Five tile families + the destination board + goals. **Casks (A) are the content 
 ### A. Cask tiles — the dual-role hero (~60 tiles, shared supply)
 A cask carries: **`TYPE` · `QUALITY` (Q1–Q5, printed, static) · one `SIGNATURE ACTION`.** Three states (`RULES.md` §2): **maturing** (private vessel, ages to Ready) → **on a slot** (cargo-in-waiting + private inventory + a **public action-building** whose action fires when its line runs) → **delivered** (shipped → scores for its owner → leaves). Shipping converts it; only casks on slots are public/contestable.
 
-| Level | Type | Q | Brew inputs ⚙ | Maturation ⚙ | Signature slot action ⚙ | Reaches (gate) | Qty |
-|---|---|---|---|---|---|---|---|
-| **L1** | **Gruit Ale** | 1 | `G` | 1 step | **Source — +2 goods** *(fixed ⚙ v0.12.2)* | Bruges only | 16 |
-| **L2** | **Hopped Beer** | 2 | `G H` | 2 | *drawn at brew* (pool below) | Bruges · London · Bergen *(Hall via Enshrine)* | 20 |
-| **L3** | **Broyhan / Keut** | 3 | `G H H` / `G G H` | 2 | *drawn at brew* | + Novgorod | 12 |
-| **L4** | **Mumme** | 4 | `G G H H` | 3 | *drawn at brew* | all | 8 |
-| **L5** | **Bock** | 5 | `G G G H H` *(ungated v0.14)* | 3 *(2 w/ Aging Cellar)* | *drawn at brew* (**Wild** possible — Q4+) | all | 4 |
+| Q | Beer | Brew inputs ⚙ | Maturation ⚙ | Signature slot action ⚙ | Reaches (gate) | Qty |
+|---|---|---|---|---|---|---|
+| **Q1** | **Gruit Ale** | `G` | 1 step | **Source — +2 goods** *(fixed ⚙ v0.12.2)* | Bruges only | 16 |
+| **Q2** | **Hopped Beer** | `G H` | 2 | *drawn at brew* (pool below) | Bruges · London · Bergen *(Hall via Enshrine)* | 20 |
+| **Q3** | **Broyhan** | `G H H` | 2 | *drawn at brew* | + Novgorod | 6 |
+| **Q3** | **Keut** | `G G H` | 2 | *drawn at brew* | + Novgorod | 6 |
+| **Q4** | **Mumme** | `G G H H` | 3 | *drawn at brew* | all | 8 |
+| **Q5** | **Bock** | `G G G H H` *(ungated v0.14)* | 3 *(2 w/ Aging Cellar)* | *drawn at brew* (**Wild** possible — Q4+) | all | 4 |
 
 > **Export beers — fixed quality; deal 3 of 4 each game ⚙:** **Broyhan** (Q3, `G H H`) · **Keut** (Q3, `G G H`, a costlier-in-grain alt) · **Mumme** (Q4, Braunschweig) · **Bock** (Q5, Einbeck — `G G G H H`, **ungated v0.14**; the Aging Cellar just speeds it). One is left undealt each game, so the **ladder shape varies**: drop a Q3 → the full Q3→Q4→Q5 climb; drop **Mumme** → no Q4; drop **Bock** → no Q5. Each cask's **signature slot-action is drawn at brew** (v0.12 — from the pool below; **Wild** only for Q4+), **decoupled from the beer/quality** — *except* **Gruit, which is pinned to Source** (v0.12.2). The fixed on-ramp is **Gruit → Hopped**.
 
@@ -214,14 +215,14 @@ Symmetric for all players (except seat compensation, below). The stations are th
 
 | Family | Count ⚙ | Unique designs |
 |---|---|---|
-| A Casks | 60 | 5 types × actions |
+| A Casks | 60 | 6 beers × actions |
 | B Ships (the deck) | 20 | 2 (Cog · Hulk) × 4 kontore printed (5 each) |
 | C Neutral buildings | 6 in box (2–3 in play) | 6 |
 | D Recipes (cards) | 20 (4 exports × 1/player) | 4 (+2 printed starts) |
 | E Upgrades (Rooms + Modifiers) | 28 (Extra Vessel ×6, others ×2) | 12 |
 | G Goals | 18 (9 designs ×2) | 9 |
-| Charter contracts | ~20 ⚙ | 1 (v0.16) |
-| **Tile total** | **~145 + 20 recipe cards** | **~35 unique** |
+| Charter contracts (cards) | ~20 ⚙ | 1 (v0.16) |
+| **Tile total** | **~132 tiles + ~40 cards** (20 recipe + ~20 charter) | **~35 unique** |
 
 Plus **1 main board · 1 destination board · 5 brewery boards**, **~100 wooden cubes** (grain/hops — or the printed 0.7″ tokens), **20 ownership discs / color**, **~20 charter-contract tokens**, **5 workers**, first-player + round markers. **No VP/standing/demand/aging tokens — and no majority markers** (the delivered-cask stacks + ownership discs *are* the standings; tiers pay out at scoring).  Squarely **medium *Great Western Trail* footprint** — substantial table presence, far short of a Lacerda sprawl (`DESIGN.md` §21A). *(The full print-and-cut manifest, with sheet references, is the checklist page of `printables.html`.)*
 
