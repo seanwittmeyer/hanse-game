@@ -782,14 +782,14 @@ function pickCount(n){setupN=n;for(let i=2;i<=5;i++)document.getElementById('pc'
     +'<span class="pawn" style="background:'+COLORS[i]+';display:inline-block;flex:none"></span>'
     +'<input id="nm'+i+'" placeholder="'+CNAMES[i]+'" style="padding:4px;border:1px solid var(--line);border-radius:5px;width:120px">'
     +'<select id="ai'+i+'" style="padding:4px;border:1px solid var(--line);border-radius:5px;font-family:inherit;background:var(--parch)">'
-    +'<option value="human">Human</option>'
+    +'<option value="human"'+((i===1||i===2)?'':' selected')+'>Human</option>'
     +'<option value="apprentice">AI · Apprentice (easy)</option>'
     +'<option value="journeyman">AI · Journeyman (standard)</option>'
     +'<option value="trader">AI · Trader (hard — random lean)</option>'
     +'<option value="trader-volume">AI · Trader — volume lean</option>'
     +'<option value="trader-prestige">AI · Trader — prestige lean</option>'
     +'<option value="trader-majority">AI · Trader — majority lean</option>'
-    +'<option value="guildmaster">AI · Guildmaster (expert — thinks via playouts; slower turns)</option>'
+    +'<option value="guildmaster"'+((i===1||i===2)?' selected':'')+'>AI · Guildmaster (expert — thinks via playouts; slower turns)</option>'
     +'</select></div>';
   document.getElementById('names').innerHTML=h;
 }
