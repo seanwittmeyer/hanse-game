@@ -150,6 +150,40 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
+**v1.1 (IN DESIGN — the differentiation pass)** *(2026-06-17)* — Design review (the designer's read):
+with steerable brew piles, beers now differ **only by quality + cost-mix**, so the two Q3s
+(Broyhan/Keut) are interchangeable and London/Novgorod collapse into "a building + a similar
+majority." The fix — **differentiate by ROLE**: each kontor rewards a different axis, each beer
+serves one. Decisions captured (to build as one pass, sim-gated — persona + oracle):
+
+- **Kontor identities — four unique benefits, four lanes:**
+  - **Bruges (Hub)** — Q1 gate, **2 goods** (liquidity), low flat value → the *economy* lane.
+    **No quality ceiling** (decided): a premium cask at Bruges still earns the Flight (beer-type,
+    quality-blind) + majority (count, quality-blind); only the *value* premium is forgone — a real
+    tradeoff, not waste. The steep value gradient + the Charter/Enshrine relief valves (anti-strand)
+    make floors-only the right call; verify in sim that high-Q→low-value is rare.
+  - **London (Steelyard)** — Q2, **take a Building and place it on arrival** (free, immediate — the
+    *only* place gaining-and-placing is one step; elsewhere it's to-hand) → the *engine/authorship* lane.
+  - **Bergen (Bryggen)** — Q2, **a free Reach** (+1 presence, any kontor) on delivery; the big **9/5/2**
+    majority is the draw → the *majority* lane (the benefit compounds the majority you chase).
+  - **Novgorod (Peterhof)** — Q3, **a free recipe** (exotic styles) + value **scales with quality**
+    (Q3→2 · Q4→4 · **Q5→6**) → the *quality climb* lane; finally the reason to brew Bock.
+- **Beer niches (steerable piles KEPT):** Gruit = fuel (keep). **Hopped → fast (ready 1)** (quick Q2
+  engine access; sharpens "brew now vs hold"). **Broyhan → fast Q3 (ready 1)** (the rush/tempo Q3).
+  **Keut → the specialist** — *open fork:* a light **+1-presence** perk (the majority beer) **vs**
+  **set-collection** (escalating value, rewards going all-in). **Mumme/Bock** = the climb, paid by
+  Novgorod-scaling + the Hall + the Flight. Creates the **broad-vs-deep** axis (5 beers → Flight, or
+  one beer flooded into a kontor).
+- **Trade-factors (presence markers) — a finite PERSONAL supply (~8–10 ⚙, sim-tuned):** *your delivered
+  casks already ARE your presence — this just caps the supply and routes Reach through it.* A **kontor
+  delivery** and a **+1 Reach** (Bergen benefit / Keut perk / Reach action) each place **one**; the
+  **Hall needs none**. Out of markers → you can only Enshrine or stop contesting kontore. Payoffs:
+  (1) gives "+1 presence" a **real cost** (kills the Reach-snowball worry — Reach now trades a future
+  delivery for present standing); (2) sharpens **kontore (finite) vs the Hall (unlimited)** with a
+  built-in **pivot to prestige** once your standing is spent; (3) caps the volume lane. **PERSONAL CAP
+  ONLY** (decided) — *not* an end-trigger; the Sailed-Ships clock stays the single, tuned pace dial. The
+  *"last marker → final round"* dual-trigger is a **deferred** option (revisit only after the cap is simmed).
+
 **v1.0 build + first tune (`play.html` KEY v47→v49)** *(2026-06-17)* — The keystone `play.html` rebuild
 shipped (two-layer slots; building-driven kontor value; goals/neutrals/most upgrades folded into the
 Building family; London/Novgorod → a free Building; steerable brew piles; the Floor; private
