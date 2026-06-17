@@ -35,8 +35,12 @@ function needShip(p){
 // a CELLARMASTER seat (__cellar) INCLUDES it, to diagnose whether a well-played Q5 path is competitive).
 function buyableExports(p){return (S.exports||[]).filter(function(s){return !p.recipes.includes(s)&&(p.__cellar||!STYLES[s].cellar)&&canPay(p,RECIPE_BUY[s]);});}
 function wantRecipe(p){return buyableExports(p).length>0;}
-function pickUpgrade(list){var pref=['vessel','cellar','quay','cooperage','trophy','patron','staple','guild','warehouse','granary','hopgarden','burgher'];
+function pickUpgrade(list){var pref=['vessel','cellar','granary','hopgarden'];
   for(var i=0;i<pref.length;i++)if(list.indexOf(pref[i])>=0)return pref[i];return list[0];}
+// v1.0: London/Novgorod give a free BUILDING from the display. Prefer flexible value buildings.
+function pickBuilding(list){var pref=['staple','richberth','burgomstr','ch_bruges','ch_london','ch_bergen','ch_novgo','maltkiln','cooperage','crane','connoiss','festkeller','customs','hopyard','gauger','lagering','reliquary','hansediet','workshop','almoner'];
+  for(var i=0;i<pref.length;i++)if(list.indexOf(pref[i])>=0)return pref[i];return list[0];}
+function aBuildSlots(){return SLOTS.filter(function(s){return !S.buildings[s.id];});}
 function destFor(p,q,konPref){var elig=DESTS.filter(function(d){return q>=DEST[d].gate;});
   if(q>=4 && Math.random()<0.3 && elig.indexOf('hall')>=0)return 'hall';
   var kon=elig.filter(function(d){return DEST[d].kontor;});var pool=(konPref&&kon.length)?kon:elig;
@@ -110,26 +114,32 @@ function botLine(p){
 }
 function stopPrio(s){
   if(s.kind==='cell')return {Source:0,Brew:1,Age:2,Ship:4}[CELLROLE[s.cell]];
+  if(s.kind==='bldg')return 3;   // a line-effect Building (Crane / Lagering)
   var t=S.slots[s.slot];if(!t)return 99;
-  if(t.type==='cask'){var a=t.act||STYLES[t.style].act;return {source:0,wild:1,age:2,reach:2,load:4,convert:1,draw:1}[a];}
+  if(t.type==='cask'){var a=t.act||STYLES[t.style].act;var pr={source:0,wild:1,age:2,reach:2,load:4,convert:1,survey:1}[a];return pr==null?2:pr;}
   if(t.type==='ship')return 4;
-  if(t.type==='neutral')return {stall:0,counting:1,towncrier:1,cooper:2,almshouse:2,crane:4}[t.b];
   return 50;
 }
 function botStops(){var bi=0,bp=1e9;UI.stops.forEach(function(s,i){var pr=stopPrio(s);if(pr<bp){bp=pr;bi=i;}});resolveStop(bi);}
 function botMarket(p){
-  if(UI.stage==='shipdest'){shipDest(personaDest(p,qRefBind(p)));return;}
-  if(UI.stage==='place'){placeSlot(emptySlots()[0].id);return;}
+  if(UI.stage==='place'){placeSlot(emptySlots()[0].id);return;}                 // a commissioned ship → a slot
+  if(UI.stage==='commload'){var el=commEligible(p,UI.tmp.commShipSlot);
+    if(!el.length){commSkip();return;}el.sort(function(a,b){return b.q-a.q;});commLoad(el[0].ref);return;}
+  // place a held Building (the starting tile / a Survey draw) so authorship is live
+  if((p.hand||[]).length && aBuildSlots().length){placeHeld(0);return;}
   if(needShip(p)){buyTile('s_cog');return;}
-  // v0.16: keep a charter contract in hand when the relief valve is likely needed (jammed / endgame / a
-  // Ready cask but no hull) and you hold none — the deadlock guard + the bot's ability to charter out.
   if((p.contracts||0)===0&&canPay(p,CONTRACT_BUY)
      &&(emptySlots().length<=1||S.ending||(myShips(p).length===0&&readyInVessels(p).length>0))){buyContract();return;}
   var ex=buyableExports(p);
   if(ex.length){ex.sort(function(a,b){return STYLES[a].q-STYLES[b].q;});buyRecipe(ex[0]);return;}
-  // v0.12.3: upgrades are no longer buyable — earned only via London/Novgorod delivery.
+  // buy a Building when flush + a slot is open (authors the variable value); else a private improvement
+  if(p.grain>=4 && aBuildSlots().length){
+    var disp=(S.buildDisplay||[]).map(function(k,i){return {k:k,i:i};}).filter(function(o){return canPay(p,BUILDINGS[o.k].cost);});
+    if(disp.length){var pk=pickBuilding(disp.map(function(o){return o.k;}));var pick=disp.find(function(o){return o.k===pk;})||disp[0];buyBuilding(pick.i);return;}}
+  if(p.grain>=5 && grantableBuy(p,'vessel') && canPay(p,IMPROVEMENTS.vessel.cost)){buyImprovement('vessel');return;}
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
+function botPlaceBldg(){var bs=aBuildSlots();placeBldgOn((bs[0]||SLOTS[0]).id);}
 function botHarbor(p){
   if(UI.stage==='enshrine'){var ec=enshrineCasks(p).filter(function(o){return personaDest(p,o.q)==='hall';}).sort(function(a,b){return b.q-a.q;});
     if(ec.length){enshrinePick(ec[0].ref);return;}afterSail('stops');return;}
@@ -161,8 +171,6 @@ function botAge(p){var mat=p.vessels.map(function(c,i){return {c:c,i:i};}).filte
   mat.sort(function(a,b){return (a.c.ready-a.c.step)-(b.c.ready-b.c.step);});ageAllot(mat[0].i);}
 function botSource(p){var n=UI.src.n;if(n>=2){if(p.hops<2)srcTake(1,1);else srcTake(2,0);}else{if(p.hops<1)srcTake(0,1);else srcTake(1,0);}}
 function botReach(){reachPick(UI.reach.ks[0]);}
-function botAlms(){almsPick(UI.alms.ks[0]);}                 // reinforce wherever you already lead
-function botGoalDraw(p){var a=UI.draw.avail.slice().sort(function(x,y){return GOALS[y].fn(p)-GOALS[x].fn(p);});drawPick(a[0]);}
 function botWild(p){
   if(myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});}))wildPick('ship');
   else if(p.vessels.some(function(c){return c&&c.step<c.ready;}))wildPick('age');
@@ -181,9 +189,8 @@ function botLoad(p){var L=UI.load;
   loadOnto(ships[0]);
 }
 function botDeploy(){var es=emptySlots();if(!es.length){deploySkipAll();return;}deployTo(es[0].id);}
-function botBenefit(){var lp=S.players[UI.pendingBenefits[0].pid];var g=displayGrantable(lp);if(!g.length){UI.pendingBenefits.shift();afterSail(UI.benefit.returnTo);return;}
-  var pick=(lp.__cellar&&!hasUpgrade(lp,'cellar')&&g.indexOf('cellar')>=0)?'cellar':pickUpgrade(g);   // cellarmaster grabs the Aging Cellar first
-  benefitPick(pick);}
+function botBenefit(){var disp=S.buildDisplay||[];if(!disp.length){benefitPick(null);return;}   // London/Novgorod → a free Building
+  benefitPick(pickBuilding(disp.slice()));}
 
 function botActOnce(){var p=cur();var U=UI.sub;
   switch(U){
@@ -196,13 +203,13 @@ function botActOnce(){var p=cur();var U=UI.sub;
     case 'source':return botSource(p);
     case 'convert':return convertSkip();
     case 'reach':return botReach();
-    case 'alms':return botAlms();
-    case 'goaldraw':return botGoalDraw(p);
     case 'wild':return botWild(p);
     case 'load':return botLoad(p);
     case 'deploy':return botDeploy();
     case 'benefit':return botBenefit();
-    case 'goodspick':return goodsPick(2,0);   // v0.16.1 liquidity owner-choice — bot takes 2 grain (the prior fixed behavior)
+    case 'placebldg':return botPlaceBldg();
+    case 'toll':return tollPay();              // the bot pays the occupancy toll (the Floor is a human option)
+    case 'goodspick':return goodsPick(2,0);    // liquidity owner-choice — the bot takes 2 grain
     case 'end':return endTurn();
     default: throw new Error('unknown UI.sub: '+U);
   }
