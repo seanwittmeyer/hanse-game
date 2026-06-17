@@ -170,10 +170,12 @@ serves one. Decisions captured (to build as one pass, sim-gated — persona + or
     (Q3→2 · Q4→4 · **Q5→6**) → the *quality climb* lane; finally the reason to brew Bock.
 - **Beer niches (steerable piles KEPT):** Gruit = fuel (keep). **Hopped → fast (ready 1)** (quick Q2
   engine access; sharpens "brew now vs hold"). **Broyhan → fast Q3 (ready 1)** (the rush/tempo Q3).
-  **Keut → the specialist** — *open fork:* a light **+1-presence** perk (the majority beer) **vs**
-  **set-collection** (escalating value, rewards going all-in). **Mumme/Bock** = the climb, paid by
-  Novgorod-scaling + the Hall + the Flight. Creates the **broad-vs-deep** axis (5 beers → Flight, or
-  one beer flooded into a kontor).
+  **Keut → the +1-presence majority specialist** (DECIDED): a Keut delivered to a kontor plants an
+  extra presence (2 standing for 1 cask) — the beer you flood Bergen with. *(Set-collection was the
+  other fork; **tabled** — its only elegant counter is the delivered Keut tiles on a 3-space strip, and
+  since casks ARE type-identifiable tiles we can revive it later if wanted, but +1-presence needs zero new
+  components.)* **Mumme/Bock** = the climb, paid by Novgorod-scaling + the Hall + the Flight. Creates the
+  **broad-vs-deep** axis (5 beers → Flight, or one beer flooded into a kontor).
 - **Trade-factors (presence markers) — a finite PERSONAL supply (~8–10 ⚙, sim-tuned):** *your delivered
   casks already ARE your presence — this just caps the supply and routes Reach through it.* A **kontor
   delivery** and a **+1 Reach** (Bergen benefit / Keut perk / Reach action) each place **one**; the

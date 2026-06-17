@@ -57,7 +57,8 @@ are placed and **stay** (the authored layer). *(2-player may run ~6 active slots
 |---|---|---|
 | **Grain / Hops cubes** | ~60 / ~40 | The only currency + brew inputs. |
 | **Worker pawns** | 1 / player | Moved between stations. |
-| **Ownership discs** | ~20 / colour | Mark a cask's owner on a slot / on delivery, **and a building's owner.** |
+| **Presence barrels** *(player colour)* | **~9 / colour ⚙ — the TRADE-FACTOR cap** | One token, three lives: it rides your cask as **ownership** on a slot → travels with it on a ship → **plants at the kontor as your presence** on delivery (majorities). **Finite supply = the cap** (v1.1): a kontor delivery / a **+1 Reach** each plant one; out of barrels → you can only Enshrine or stop contesting kontore. **Enshrining (the Hall) returns the barrel** (prestige isn't standing → the Hall is the unlimited overflow). *Personal cap only — not an end-trigger; the Sailed-Ships clock stays the pace dial.* |
+| **Building-owner markers** | ~6 / colour | Mark whose building sits on a slot (wharfage + full-vs-reduced effect). |
 | **Charter contracts** *(small cards)* | ~16 ⚙ | Start **2** / house; spend 1 + a flat `2 G` fare to Charter; buy more at the Market (`1 G`). |
 | **Wharfage / score markers** | — | The owner's small points cut when a rival routes through a building (§3C); a score pad/track. |
 | **First-player / round marker** | 1 | Turn order (fixed) / round clock. |
@@ -66,8 +67,24 @@ are placed and **stay** (the authored layer). *(2-player may run ~6 active slots
 > tallied from delivered casks (value + majority), enshrined casks (Hall), and the Flight.
 
 > **Casks are a shared supply with fixed global counts** (Q1×16 · Q2×20 · Q3×12 · Q4×8 · Q5×4 ⚙),
-> **brewed** (never bought) — so the rare export casks are a contested resource. Ownership is a
-> disc once a cask hits the slots.
+> **brewed** (never bought) — so the rare export casks are a contested resource.
+
+### Physical-tracking model (the digital-state audit — what records what)
+Every property the reference app holds has a physical home (no hidden state):
+- **Cask type + quality** → the **cask tile** itself (beer + quality pips printed). **Owner** → a **presence
+  barrel** on the tile (above). **Its drawn slot-action** → an **action tile** the cask carries from the
+  kettle through its whole life (vessel → slot → ship).
+- **Maturation** → **one marker per vessel** on the player board's "ready in 1/2/3" track.
+- **The steerable kettle** → a shared **brew display**: the four quality piles (Q2–Q5), each showing its
+  **face-up top action tile** (what a cask of that quality would take).
+- **Scoring is IN-GAME, on delivery** (advance the score marker) — so transform-boosted value/quality and
+  the value-Buildings a cask shipped through are resolved *at the moment of load/delivery, while the cask is
+  still on its building* — nothing is deferred or remembered.
+- **The Flight** → a per-player **5-space Tasting strip** (Gruit + Hopped + the 3 dealt exports); mark a
+  beer the first time you deliver it; uncovered spaces = your range.
+- **Wharfage** → scored live on the track when a rival routes through your building.
+- *(Tabled: Keut **set-collection** — would track the count by parking the delivered Keut tiles on a 3-space
+  "specialty" strip, viable because casks are type-tiles; deferred in favour of Keut = +1-presence.)*
 
 ---
 
