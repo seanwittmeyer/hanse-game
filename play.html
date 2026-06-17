@@ -646,6 +646,14 @@ function shipBldgValue(bd,dest,full){if(!bd||dest==='hall')return 0;
   return 0;}
 function wharfageRate(ownerP){return WHARFAGE+(hasUpgrade(ownerP,'almoner')||ownsBuilding(ownerP,'almoner')?1:0);}
 function ownsBuilding(p,key){return SLOTS.some(s=>{const b=bAt(s.id);return b&&b.owner===p.id&&b.b===key;});}
+// ---- value-routing estimators (shared by the in-page AI and the headless sim bot; not ai-prefixed) ----
+// what a deployed cask would DELIVER for at dest, incl. the owner-share of its current slot's value building.
+function caskValueAt(caskSlot,dest){const ct=S.slots[caskSlot];if(!ct||ct.type!=='cask')return 0;
+  const q=caskEffQ(caskSlot);let v=destValue(dest,q);const bd=bAt(caskSlot);
+  if(bd){const raw=caskBldgValue(bd,dest,q,ct.owner);v+=(bd.owner!==ct.owner)?Math.ceil(raw/2):raw;}
+  return v;}
+// the empty-occupant slots carrying p's OWN value building (the best deploy targets — capture the bonus).
+function ownValueDeploySlots(p){return SLOTS.filter(s=>{const b=bAt(s.id);return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value'&&!S.slots[s.id];});}
 function deliveredAt(p,dest){return p.delivered.filter(d=>d.dest===dest).length;}
 function presenceAt(p,dest){return deliveredAt(p,dest)+(p.presBonus[dest]||0);}
 function leadersAt(dest){let best=0;S.players.forEach(p=>best=Math.max(best,presenceAt(p,dest)));
@@ -683,7 +691,7 @@ const CELLTIP={
   Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' age points to allocate across your vessels (your casks also age +1 automatically each turn). When a cask is Ready, set it on a slot.',
   Harbor:'Harbor · Ship — your ship-options hub. Load ANY cask (yours or a rival’s — you pick the destination; the owner scores it, you take a loader bonus) onto any ship it qualifies for. A ship sails ONLY when full — then every cask is delivered: its owner banks that destination’s benefit AND its points (base + the value-Buildings it shipped through), in load order. Or Enshrine a Q2+ slot cask at the Hall, or Charter a single cask. Never closed.',
 };
-function bldgTip(b){if(!b)return '';const def=BUILDINGS[b.b];return (def.verb==='value'?'Value':'Transform')+' Building · '+def.name+' ('+S.players[b.owner].name+'’s) — '+def.desc+'. Owned-but-shared: a rival may dock here too, and the owner takes a +'+WHARFAGE+'★ wharfage when their cargo delivers through it.';}
+function bldgTip(b){if(!b)return '';const def=BUILDINGS[b.b];return (def.verb==='value'?'Value':'Transform')+' Building · '+def.name+' ('+S.players[b.owner].name+'’s) — '+def.desc+'. Owned-but-shared: the owner gets the FULL effect; a rival may dock here too for a REDUCED bonus, and the owner takes a +'+WHARFAGE+'★ wharfage when their cargo delivers through it.';}
 function tileTip(t,slot){
   const b=slot?bAt(slot):null;const btip=b?(' · '+bldgTip(b)):'';
   if(!t)return (b?bldgTip(b):'An open slot')+' — Ready casks deploy here (cargo + a public action), and you commission ships here.'+(b?'':' Place a Building here to author its value.');
@@ -1063,15 +1071,21 @@ function grantImmediate(lp,dest){
     if(lp.id===S.active)(UI.pendingBenefits=UI.pendingBenefits||[]).push({pid:lp.id,dest});
     else autoGrantBuilding(lp,dest);}   // a rival owner (their cask sailed on your turn) auto-takes & places one
 }
-// DELIVER a cask: compute its value (base + cask-slot value-building + ship rich-berth) and seal it; pay
-// any wharfage to a building's owner when a RIVAL routed through it; record the cask for end-game scoring.
+// DELIVER a cask: value = base + the value-Buildings it shipped through. Owned-but-shared (§5b): the
+// owner gets the FULL value bonus; a RIVAL routing through gets a REDUCED bonus (half, rounded up) AND
+// hands the owner a capped "wharfage" points cut (for any building — value or transform — never goods).
 function deliverCask(lp,L,dest,shipSlot,full){
-  let val=destValue(dest,L.q)+caskBldgValue(L.bld,dest,L.q,L.owner);
-  if(shipSlot)val+=shipBldgValue(bAt(shipSlot),dest,full);
-  // wharfage: the owner of a building a RIVAL routed through takes a small points cut (never goods)
-  if(L.bld&&L.bld.owner!==L.owner){const o=S.players[L.bld.owner];o.wharfage+=wharfageRate(o);}
-  if(shipSlot){const sb=bAt(shipSlot);if(sb&&sb.owner!==L.owner){const o=S.players[sb.owner];o.wharfage+=wharfageRate(o);}}
+  let val=destValue(dest,L.q);
+  val+=bldgValueShare(L.bld,L.owner,caskBldgValue(L.bld,dest,L.q,L.owner));
+  if(shipSlot){const sb=bAt(shipSlot);val+=bldgValueShare(sb,L.owner,shipBldgValue(sb,dest,full));}
   lp.delivered.push({style:L.style,q:L.q,dest,val});
+}
+// the share of a building's value bonus the cask's owner actually banks, + the owner's wharfage if a rival.
+function bldgValueShare(bd,caskOwnerId,raw){
+  if(!bd)return 0;
+  const rival=bd.owner!==caskOwnerId;
+  if(rival){const o=S.players[bd.owner];o.wharfage+=wharfageRate(o);}   // tax the traffic (any building)
+  return rival?Math.ceil(raw/2):raw;                                    // a rival's value bonus is reduced
 }
 function grantUpgrade(p,key){   // the private improvements (vessel/cellar/granary/hopgarden)
   if(key==='vessel'){if(p.maxVessels<3){p.maxVessels++;p.vessels.push(null);p.upgrades.push('vessel');}return;}
@@ -1491,10 +1505,16 @@ function aiMarket(p){
      &&(emptySlots().length<=1||S.ending||(myShips(p).length===0&&readyInVessels(p).length>0))){buyContract();return;}
   const ex=aiBuyableExports(p);
   if(ex.length){ex.sort((a,b)=>STYLES[a].q-STYLES[b].q);buyRecipe(ex[0]);return;}
-  // buy a Building when flush + a slot is open (the trader authors the variable value); else an improvement
-  if(!aiIsApp(p)&&p.grain>=4&&aBuildSlotsAI().length){
-    const cands=(S.buildDisplay||[]).filter(k=>canPay(p,BUILDINGS[k].cost));
-    if(cands.length){buyBuilding((S.buildDisplay||[]).indexOf(aiPickBuilding(p,cands)));return;}}
+  // AUTHOR THE DEMAND: the trader buys a VALUE building when it has cargo to route through it and a slot,
+  // up to ~2 (don't over-invest); a transform only when flush. Keeps a 1-grain buffer.
+  if(!aiIsApp(p)&&aBuildSlotsAI().length){
+    const ownVal=SLOTS.filter(s=>{const b=bAt(s.id);return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value';}).length;
+    const hasCargo=readyInVessels(p).length||wharfLoadableCasks(p).length||p.vessels.some(c=>c&&c.q>=2);
+    if(ownVal<2&&hasCargo){
+      const aff=(S.buildDisplay||[]).filter(k=>p.grain>=(BUILDINGS[k].cost.g||0)+1&&canPay(p,BUILDINGS[k].cost));
+      const vcands=aff.filter(k=>BUILDINGS[k].verb==='value');
+      const pool=vcands.length?vcands:(p.grain>=5?aff:[]);
+      if(pool.length){buyBuilding((S.buildDisplay||[]).indexOf(aiPickBuilding(p,pool)));return;}}}
   if(!aiIsApp(p)&&p.grain>=5&&grantableBuy(p,'vessel')&&canPay(p,IMPROVEMENTS.vessel.cost)){buyImprovement('vessel');return;}
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
@@ -1541,12 +1561,15 @@ function aiWild(p){
   else if(p.vessels.some(c=>c&&c.step<c.ready))wildPick('age');
   else if(openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)))wildPick('brew');
   else wildPick('source');}
+// the most a cask on this slot could DELIVER for among the ships on offer (value incl. its slot building).
+function aiCaskBest(p,caskSlot,ships){let best=-1;(ships||[]).forEach(s=>{const sh=S.slots[s];
+  if(canTake(s,caskSlot))best=Math.max(best,caskValueAt(caskSlot,sh.dest));});return best;}
 function aiLoad(p){const L=UI.load;
   if(!L.cask){const elig=L.casks.filter(cs=>L.ships.some(s=>canTake(s,cs)));
     if(!elig.length){loadSkip();return;}
     if(aiIsApp(p)||aiNoisy(p)){loadPickCask(aiRandOf(elig));return;}   // the apprentice loads whatever
     const own=elig.filter(cs=>S.slots[cs].owner===p.id);
-    if(own.length){own.sort((a,b)=>S.slots[b].q-S.slots[a].q);loadPickCask(own[0]);return;}
+    if(own.length){own.sort((a,b)=>aiCaskBest(p,b,L.ships)-aiCaskBest(p,a,L.ships));loadPickCask(own[0]);return;}   // ship the cask that pays most (incl. its value building)
     // Only rival casks are loadable. Loading one GIFTS its owner the delivery (value + benefit +
     // majority presence) — the trader does it only when the move pays for itself: it completes one
     // of MY ships' sails (clock + slot + tempo), or the slots are jammed and I need the space.
@@ -1563,18 +1586,24 @@ function aiLoad(p){const L=UI.load;
   // journeyman only prefers completing a sail (the fee), else takes the first fillable hull — so
   // load-destination judgement is, like commissioning, the trader's edge in the shared-hull world.
   const fillRank=sid=>{const sh=S.slots[sid];return (sh.load.length+1>=effCap(sh))?1:0;};
-  if(aiIsTrader(p)){
-    const shipScore=sid=>{const sh=S.slots[sid];return destValue(sh.dest,lc.q)
-      +(DEST[sh.dest].kontor?0.75*aiMajSwing(p,sh.dest):0)+aiGoalGain(p,lc.style,lc.q,sh.dest);};
+  if(aiIsTrader(p)){   // score the destination by what THIS cask actually delivers there (base + its value building) + majority swing
+    const shipScore=sid=>{const sh=S.slots[sid];return caskValueAt(UI.load.cask,sh.dest)
+      +(DEST[sh.dest].kontor?0.75*aiMajSwing(p,sh.dest):0);};
     ships.sort((a,b)=>{const f=fillRank(b)-fillRank(a);return f||(shipScore(b)-shipScore(a));});
   }else ships.sort((a,b)=>fillRank(b)-fillRank(a));   // journeyman: complete-a-sail, else first
   loadOnto(ships[0]);}
 function aiDeploy(p){const es=emptySlots();if(!es.length){deploySkipAll();return;}
   if(aiNoisy(p)){deployTo(aiRandOf(es).id);return;}
-  // trader: deploy onto the line it is about to activate — aiLine deploys BEFORE chooseLine, so the
-  // cask lands in that line's stops and its action fires THIS turn (a free tempo gain every deploy).
-  if(aiIsTrader(p)&&p.cell){const lk=cellOfLine(p.cell)[aiChosenWhich||'row'];
-    const on=es.find(s=>s.line===lk);if(on){deployTo(on.id);return;}}
+  const lk=p.cell?cellOfLine(p.cell)[aiChosenWhich||'row']:null;
+  // ROUTE THE DEMAND: deploy onto your OWN value-building slot (the cask will capture the bonus when shipped) —
+  // ideally on the line you're firing this turn, so its action fires AND it sits under your demand.
+  if(!aiIsApp(p)){
+    const vs=es.filter(s=>{const b=bAt(s.id);return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value';});
+    const onLine=vs.find(s=>s.line===lk);if(onLine){deployTo(onLine.id);return;}
+    if(vs.length){deployTo(vs[0].id);return;}
+  }
+  // else trader deploys onto the line it is about to activate — the cask's action fires THIS turn (tempo).
+  if(aiIsTrader(p)&&lk){const on=es.find(s=>s.line===lk);if(on){deployTo(on.id);return;}}
   deployTo(es[0].id);}
 function aiBenefit(){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];const disp=S.buildDisplay||[];
   if(!disp.length){benefitPick(null);return;}
@@ -1787,7 +1816,7 @@ function renderAid(){
       +ic('flask-conical')+' <b>Brewhouse</b> (Brew): pay a recipe → a young cask; it takes the FACE-UP action of that quality’s pile (steerable).<br>'
       +ic('hourglass')+' <b>Cellar</b> (Age): 3 age points across your casks (every cask also ages +1 each of your turns).<br>'
       +ic('anchor')+' <b>Harbor</b> (Ship): load a Ready cask onto a ship (it sails when full → each owner banks the benefit + points), <b>Enshrine</b> a Q2+ <i>slot</i> cask at the '+ic('crown')+' Hall (local), or Charter.</div></div>'
-    +'<div class="asec"><b>The living slots (the keystone)</b><div class="note">Each of the 8 slots holds an owned '+ic('building-2')+' <b>Building</b> (a modifier) and/or an occupant (a cask, or a ship with casks). A <b>value</b> building makes a delivery pay more; a <b>transform</b> building changes the cask/ship. Value is captured ON SHIP-THROUGH: a cask delivers for its base + the value-buildings it shipped from + its ship’s berth building. Owned-but-shared: rivals may dock too, and the owner takes a +'+WHARFAGE+'★ wharfage when they do.</div>'
+    +'<div class="asec"><b>The living slots (the keystone)</b><div class="note">Each of the 8 slots holds an owned '+ic('building-2')+' <b>Building</b> (a modifier) and/or an occupant (a cask, or a ship with casks). A <b>value</b> building makes a delivery pay more; a <b>transform</b> building changes the cask/ship. Value is captured ON SHIP-THROUGH: a cask delivers for its base + the value-buildings it shipped from + its ship’s berth building. Owned-but-shared: the owner gets the FULL effect; a rival may dock too for a REDUCED bonus, and the owner takes a +'+WHARFAGE+'★ wharfage when they do.</div>'
       +'<div class="atags" style="margin-top:5px">'+vb+'</div><div class="atags" style="margin-top:4px">'+tb+'</div></div>'
     +'<div class="asec"><b>Destinations</b> <span class="note">gate · value · majority 1st/2nd/3rd · benefit · (Hall = local Enshrine; ships sail to kontore only)</span>'
       +'<table class="atable"><tr><th>Destination</th><th>Gate</th><th>Value</th><th>Majority</th><th>Benefit</th></tr>'+dests+'</table>'
@@ -1837,8 +1866,9 @@ function renderBar(){
     prompt='Resolve this line’s stops <b>in any order</b> — pick the next ('+UI.stops.length+' left).';
     acts=UI.stops.map((s,i)=>btn(stopLabel(s),'resolveStop('+i+')','go')).join('');}
   else if(U==='cell'){const r=cellRender(p);prompt=r.prompt;acts=r.acts;}
-  else if(U==='brew'){prompt='Brew — load a recipe into an open vessel.';
-    acts=p.recipes.map(r=>'<button '+(canBrew(p,r)&&openVessel(p)>=0?'':'disabled')+' onclick="brewPick(\''+r+'\')">'+LU('beer')+' '+STYLES[r].name+' '+costIcons(STYLES[r].in)+'</button>').join('')+btn('Skip','resume(\''+UI.brew.returnTo+'\')','ghost');}
+  else if(U==='brew'){prompt='Brew — load a recipe into an open vessel. <span class="note">Each shows the slot-action its cask will take (the face-up top of that quality’s pile — steerable).</span>';
+    acts=p.recipes.map(r=>{const act=pileTopFor(STYLES[r].q,r);
+      return '<button '+(canBrew(p,r)&&openVessel(p)>=0?'':'disabled')+' onclick="brewPick(\''+r+'\')" data-tip="'+attr(STYLES[r].name+' Q'+STYLES[r].q+' — its cask’s action: '+CASK_ACT[act])+'">'+LU('beer')+' '+STYLES[r].name+' '+costIcons(STYLES[r].in)+' <span class="cact" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:inherit">'+LU(CASK_ACT_ICON[act]||'')+' '+act+'</span></button>';}).join('')+btn('Skip','resume(\''+UI.brew.returnTo+'\')','ghost');}
   else if(U==='age'){const a=UI.age;prompt=(a.mode==='single'?'Age one cask '+a.pool+' step'+(a.pool===1?'':'s'):'Allocate '+a.pool+' age point'+(a.pool===1?'':'s')+' across your vessels')+'.';
     acts=p.vessels.map((c,i)=>(c&&c.step<c.ready)?btn(LU('beer')+styleShort(c.style)+' '+c.step+'/'+c.ready,'ageAllot('+i+')','go'):'').filter(x=>x).join('')
       +(a.mode==='pool'?btn('Done','ageDone()','primary'):'')+btn('Skip','ageSkip()','ghost');}
@@ -2005,7 +2035,7 @@ function renderShop(){
   const noslot=!buildableSlots().length;
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('building-2')+' Building display</b> <span class="note">('+(S.buildDisplay||[]).length+' face-up · '+S.buildDeck.length+' in the deck — buy + place, or earn free at '+LU('landmark')+' London/Novgorod)</span></div>';
   (S.buildDisplay||[]).forEach((key,i)=>{const def=BUILDINGS[key];const can=canPay(p,def.cost)&&!noslot;
-    h+='<div class="item"><span data-tip="'+attr((def.verb==='value'?'Value':'Transform')+' Building — '+def.desc+'. Owned-but-shared (rivals may dock too; you take +'+WHARFAGE+'★ wharfage when they do).')+'">'+LU(def.icon)+' <b>'+def.name+'</b> <span class="note" style="font-size:.72rem">'+(def.verb==='value'?'value':'transform')+'</span></span><span class="cost">'+costIcons(def.cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyBuilding('+i+')">buy</button>':'')+'</span></div>';});
+    h+='<div class="item"><span data-tip="'+attr((def.verb==='value'?'Value':'Transform')+' Building — '+def.desc+'. Owned-but-shared: you get the full effect, a rival docks for a reduced bonus + a +'+WHARFAGE+'★ wharfage to you.')+'">'+LU(def.icon)+' <b>'+def.name+'</b> <span class="note" style="font-size:.72rem">'+(def.verb==='value'?'value':'transform')+'</span></span><span class="cost">'+costIcons(def.cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyBuilding('+i+')">buy</button>':'')+'</span></div>';});
   if(!(S.buildDisplay||[]).length)h+='<div class="note">(building deck exhausted)</div>';
   if(noslot)h+='<div class="note" style="font-size:.7rem">every slot already has a building — no room to place more</div>';
   // private brewery IMPROVEMENTS (bought for goods)
@@ -2022,7 +2052,11 @@ function renderVoyage(){
     +'<div class="track">'+trk+'</div><div class="note" style="font-size:.66rem;margin-top:2px">⛵ the end clock — each voyage (a ship sailing, a charter, or an enshrine) fills one</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>'+LU('ticket')+' Charter contracts:</b> '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+(p.contracts||0)+'</span>').join(' · ')+' <span class="note">(spend 1 + '+costStr(CHARTER_FLAT_FARE)+' to charter; buy more at the Market)</span></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game (3 of 4):</b> '+exportLabel()+'.</div>';
-  h+='<div class="note" style="margin-top:4px">Delivered value: '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+scorePlayer(p).deliv+'</span>').join(' · ')+'</div>';
+  // the steerable BREW PILES — the face-up action atop each quality pile (always visible; §4)
+  h+='<div class="note" style="margin-top:6px"><b>'+LU('flask-conical')+' Brew piles</b> <span class="note">(the action a cask of each quality takes when brewed)</span><div class="atags" style="margin-top:3px">'
+    +'<span class="atag" data-tip="'+attr('Q1 Gruit is pinned to Source (+2 goods).')+'"><span class="qd q1">Q1</span> '+LU(CASK_ACT_ICON.source)+' source</span>'
+    +[2,3,4,5].map(q=>{const a=(S.pileTop&&S.pileTop[q])||'';return '<span class="atag" data-tip="'+attr('A Q'+q+' cask brews with: '+(CASK_ACT[a]||''))+'"><span class="qd q'+q+'">Q'+q+'</span> '+LU(CASK_ACT_ICON[a]||'')+' '+a+'</span>';}).join('')+'</div></div>';
+  h+='<div class="note" style="margin-top:6px">Delivered value: '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+scorePlayer(p).deliv+'</span>').join(' · ')+'</div>';
   document.getElementById('voyage').innerHTML=h;
 }
 

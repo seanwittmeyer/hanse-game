@@ -67,6 +67,7 @@ function personaDest(p,q){
   if(!__PERSON||persona(p)==='volume')return destFor(p,q,true);   // baseline-preserving
   var elig=DESTS.filter(function(d){return q>=DEST[d].gate;});
   if(persona(p)==='prestige')return (elig.indexOf('hall')>=0)?'hall':(bestKon(elig)||elig[0]);
+  if(persona(p)==='demand')return destFor(p,q,true);   // routes value to kontore; the per-cask routing through value buildings lives in botLoad
   // 'majority': contest the RICHEST reachable majorities (by 1st-tier payout). A real majority player
   // doesn't camp one fixed kontor while rivals sweep the rest — it locks the best, then shifts to the next
   // once it safely leads, denying a scatter-shipper free 1st places. (v0.10: majorities live at all four.)
@@ -132,10 +133,17 @@ function botMarket(p){
      &&(emptySlots().length<=1||S.ending||(myShips(p).length===0&&readyInVessels(p).length>0))){buyContract();return;}
   var ex=buyableExports(p);
   if(ex.length){ex.sort(function(a,b){return STYLES[a].q-STYLES[b].q;});buyRecipe(ex[0]);return;}
-  // buy a Building when flush + a slot is open (authors the variable value); else a private improvement
-  if(p.grain>=4 && aBuildSlots().length){
-    var disp=(S.buildDisplay||[]).map(function(k,i){return {k:k,i:i};}).filter(function(o){return canPay(p,BUILDINGS[o.k].cost);});
-    if(disp.length){var pk=pickBuilding(disp.map(function(o){return o.k;}));var pick=disp.find(function(o){return o.k===pk;})||disp[0];buyBuilding(pick.i);return;}}
+  // AUTHOR THE DEMAND: buy a VALUE building when you have cargo to route + a slot (the 'demand' persona
+  // authors eagerly, up to 3; others up to 2, keeping a 1-grain buffer). A transform only when flush.
+  if(aBuildSlots().length){
+    var ownVal=SLOTS.filter(function(s){var b=S.buildings[s.id];return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value';}).length;
+    var hasCargo=readyInVessels(p).length||wharfLoadableCasks(p).length||p.vessels.some(function(c){return c&&c.q>=2;});
+    var dem=(persona(p)==='demand');var cap=dem?3:2;var buf=dem?0:1;
+    if(ownVal<cap && hasCargo){
+      var aff=(S.buildDisplay||[]).filter(function(k){return p.grain>=(BUILDINGS[k].cost.g||0)+buf && canPay(p,BUILDINGS[k].cost);});
+      var vc=aff.filter(function(k){return BUILDINGS[k].verb==='value';});
+      var pool=vc.length?vc:(p.grain>=5?aff:[]);
+      if(pool.length){buyBuilding((S.buildDisplay||[]).indexOf(pickBuilding(pool)));return;}}}
   if(p.grain>=5 && grantableBuy(p,'vessel') && canPay(p,IMPROVEMENTS.vessel.cost)){buyImprovement('vessel');return;}
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
@@ -177,18 +185,30 @@ function botWild(p){
   else if(openVessel(p)>=0&&p.recipes.some(function(r){return canBrew(p,r);}))wildPick('brew');
   else wildPick('source');
 }
+// the most a cask could deliver for among the ships on offer (value incl. its slot's value building)
+function caskBest(caskSlot,ships){var best=-1;ships.forEach(function(s){var sh=S.slots[s];if(canTake(s,caskSlot))best=Math.max(best,caskValueAt(caskSlot,sh.dest));});return best;}
 function botLoad(p){var L=UI.load;
   if(!L.cask){var elig=L.casks.filter(function(cs){return L.ships.some(function(s){return canTake(s,cs);});});
-    if(!elig.length){loadSkip();return;}elig.sort(function(a,b){return S.slots[b].q-S.slots[a].q;});loadPickCask(elig[0]);return;}
+    if(!elig.length){loadSkip();return;}
+    var own=elig.filter(function(cs){return S.slots[cs].owner===p.id;});
+    var pick=(own.length?own:elig);
+    pick.sort(function(a,b){return caskBest(b,L.ships)-caskBest(a,L.ships);});loadPickCask(pick[0]);return;}   // ship what pays most (incl. its value building)
   var ships=L.ships.filter(function(s){return canTake(s,L.cask);});
   if(!ships.length){loadBack();return;}
   ships.sort(function(a,b){var sa=S.slots[a],sb=S.slots[b];
     var fa=(sa.load.length+1>=effCap(sa))?1:0,fb=(sb.load.length+1>=effCap(sb))?1:0;if(fa!==fb)return fb-fa;
-    var oa=sa.owner===p.id?1:0,ob=sb.owner===p.id?1:0;if(oa!==ob)return ob-oa;
-    return DEST[sb.dest].value-DEST[sa.dest].value;});
+    return caskValueAt(L.cask,sb.dest)-caskValueAt(L.cask,sa.dest);});   // route by what THIS cask delivers there
   loadOnto(ships[0]);
 }
-function botDeploy(){var es=emptySlots();if(!es.length){deploySkipAll();return;}deployTo(es[0].id);}
+function botDeploy(){var es=emptySlots();if(!es.length){deploySkipAll();return;}
+  var p=cur();var lk=p.cell?cellOfLine(p.cell)[__chosenWhich||'row']:null;
+  // ROUTE THE DEMAND: deploy onto your OWN value-building slot (capture the bonus when shipped), ideally on the firing line
+  var vs=es.filter(function(s){var b=S.buildings[s.id];return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value';});
+  var onLine=vs.filter(function(s){return s.line===lk;})[0];
+  if(onLine){deployTo(onLine.id);return;}
+  if(vs.length){deployTo(vs[0].id);return;}
+  var on=es.filter(function(s){return s.line===lk;})[0];
+  deployTo((on||es[0]).id);}
 function botBenefit(){var disp=S.buildDisplay||[];if(!disp.length){benefitPick(null);return;}   // London/Novgorod → a free Building
   benefitPick(pickBuilding(disp.slice()));}
 
@@ -227,8 +247,8 @@ function runGame(n){
     if(p.grain>p.storage)p.grain=p.storage; if(p.hops>p.storage)p.hops=p.storage;
   });}
   // ---- assign strategy personas (opt-in), shuffled so persona is decoupled from seat ----
-  if(__PERSON){var pool=shuffle(['volume','prestige','majority']);var base=[];
-    for(var i=0;i<n;i++)base.push(pool[i%3]);   // shuffled pool → all 3 leans appear even at 2p (random 2-of-3)
+  if(__PERSON){var pool=shuffle(['volume','prestige','majority','demand']);var base=[];
+    for(var i=0;i<n;i++)base.push(pool[i%4]);   // shuffled pool → the 4 leans appear across seats (random subset at 2-3p)
     shuffle(base);S.players.forEach(function(pl,seat){pl.__persona=base[seat];if(pl.__persona==='majority')pl.__majTarget='bergen';});}
   // CELLARMASTER diagnostic: mark __CELLAR random seats as Q5-committed (decoupled from seat order)
   if(typeof __CELLAR!=='undefined'&&__CELLAR>0){var cs2=shuffle(S.players.map(function(_,i){return i;}));
@@ -418,7 +438,7 @@ function summarize(n, arr) {
   // ONLY as 'deep' (its assigned persona is ignored, since it plays the deep policy).
   if (PERSONAS || CELLAR) {
     const blank = () => ({ wins:0, n:0, total:0, deliv:0, maj:0, goals:0, flight:0, master:0, hall:0, q4:0, q5:0, tiers:0 });
-    const lanes = { volume:blank(), prestige:blank(), majority:blank(), deep:blank() };
+    const lanes = { volume:blank(), demand:blank(), prestige:blank(), majority:blank(), deep:blank() };
     ok.forEach(r => r.playerStats.forEach(s => {
       const lane = s.cellar ? 'deep' : (PERSONAS ? s.persona : null); if (!lane || !lanes[lane]) return;
       const g = lanes[lane];
@@ -426,7 +446,7 @@ function summarize(n, arr) {
       g.flight += s.flight||0; g.master += s.master||0; g.hall += s.hall||0; g.q4 += s.q4plus; g.q5 += s.q5; g.tiers += s.tiers;
     }));
     console.log(`PATHWAYS TO A WIN (per-capita win-rate; fair = ${fmt(100/n)}%):`);
-    ['volume','prestige','majority','deep'].forEach(k => { const g = lanes[k]; if (!g.n) return;
+    ['volume','demand','prestige','majority','deep'].forEach(k => { const g = lanes[k]; if (!g.n) return;
       const a = x => fmt(g[x]/g.n);
       console.log(`   ${k.padEnd(9)} win ${pct(g.wins,g.n).padStart(6)}  score ${a('total').padStart(5)}  |  deliv ${a('deliv')} · maj ${a('maj')} · goals ${a('goals')} · flight ${a('flight')} · master ${a('master')}  |  Hall/g ${a('hall')} · Q4+/g ${a('q4')} · Q5/g ${a('q5')} · tiers ${a('tiers')}  (n=${g.n})`);
     });
