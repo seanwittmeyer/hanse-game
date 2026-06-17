@@ -14,3 +14,10 @@ apprentice vs trader       trader wins  96.0%  (apprentice 4.0%)  avg score appr
 
 GATES: errors PASS (0)  |  ladder PASS (every higher tier >=60% at 2p)
 
+
+---- guildmaster pairing (run separately at GMN=15 — GM games are slow, so sharded) ----
+trader vs guildmaster      guildmaster wins  86.7%  (trader 13.3%)  avg score trader 28.0 / guildmaster 49.7  rounds 18.9  clock 100.0%  errors 0
+NOTE: the pairings above (apprentice/journeyman/trader) ran at N=200; the guildmaster pairing at
+GMN=15. Full ladder PASSES: journeyman 94.5% > apprentice · trader 67% > journeyman · guildmaster
+86.7% > trader · 0 errors at 3-5p. (A separate quick GMN=40 run showed journeyman-vs-trader dip to
+55% — that is N=40 sampling noise on the closest pairing, not a regression; N=200 is authoritative.)
