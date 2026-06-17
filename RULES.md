@@ -262,7 +262,7 @@ prestige (delivered/enshrined points are score only).
 
 The shared **Sailed-Ships track** advances by one on every **voyage** (a ship sailing full, a
 Charter, or an Enshrine). When it fills → **finish the round → score.** Length scales by player
-count (**~7 / 11 / 14 / 17** for 2/3/4/5p ⚙); a **MAX_ROUND ceiling** (~25 ⚙) backstops a slow
+count (**~7 / 11 / 14** for 2/3/4p ⚙); a **MAX_ROUND ceiling** (~25 ⚙) backstops a slow
 table. Pace target **~12–25 rounds.**
 
 ---

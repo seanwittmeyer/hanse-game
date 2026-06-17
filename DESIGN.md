@@ -16,7 +16,7 @@
 
 |               |                                                                                   |
 |---------------|-----------------------------------------------------------------------------------|
-|**Players**    |2–4 (a 5p mode runs but isn't balance-tuned)                                        |
+|**Players**    |2–4                                                                                  |
 |**Length**     |≈ 45–60 min at 2p · medium                                                          |
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
@@ -110,7 +110,7 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
 - **`playtests/sim.js`** — drives the *canonical* `play.html` engine headlessly (extract the
   script, run in a `vm`, append a bot in-scope). The **robustness/pace gate**: 0 crashes / 0
-  deadlocks across 2–5p, pace in the 12–25-round band. `PERSONAS=1` / `CELLAR=N` commit bots to
+  deadlocks across 2–4p, pace in the 12–25-round band. `PERSONAS=1` / `CELLAR=N` commit bots to
   the lanes (the **strategy** oracle — the greedy bot can't judge leans). `sim-analyze.js` =
   openings/timing/sequencing.
 - **AI seats** (`AUTOMA.md`): Apprentice / Journeyman / Trader / **Guildmaster** (flat Monte
@@ -158,7 +158,7 @@ value building now banks a **reduced** bonus (half) and hands you the **wharfage
 bots were repointed to **author + route** their own value buildings (the demand lane now self-pilots, so
 the lane reads are honest); **(b)** *first balance dial* — the **Hall ladder trimmed 4/6/8/10 → 3/5/7/9**.
 The committed-persona PATHWAYS report had the **prestige** lane hot (3p ≈ 50%, fair 33%); the single Hall
-trim pulled it back to ~fair and tightened the five lanes across 3–5p (prestige now the slightly-lower,
+trim pulled it back to ~fair and tightened the five lanes across 3–4p (prestige now the slightly-lower,
 higher-variance lane *by design*). One dial, sim-gated — per the lessons (§8). *(Guildmaster sims must be
 **sharded** — ≤20 games/shard, multiple shards per player count, run in parallel; notes in
 `playtests/ai-ladder.js` & `sim-analyze.js`.)*
@@ -187,7 +187,7 @@ reachable. Pathways resolve to **contested kontore vs the uncontested Hall**; 3G
 — making the quality climb pay.
 **v0.12 (.1–.3)** — Rival-loading restored (tactical denial); **variable cask actions** drawn at
 brew (decoupled from quality); **Gruit pinned to Source**; **upgrades earned-only** (no goods-buy);
-**Hall = printed ladder**; clock re-centered to 7/11/14/17.
+**Hall = printed ladder**; clock re-centered to 7/11/14.
 **v0.11 (A & B, .1–.3)** — **Neutral, destination-bound ships** off a shared deck (commission →
 load → sail); **ship market of 3**; deck → 20 hulls. Batch A: Towncrier reined in, charter-fare
 experiments, the **export premium**. (Printed destinations *removed* a strategy axis → the Trader

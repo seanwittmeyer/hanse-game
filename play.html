@@ -517,7 +517,7 @@ const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C
 const OCCUPANCY_TOLL=1;
 
 // ---- pace dials ⚙ ----
-const SAILED_CAP={2:7,3:11,4:14,5:17};  // the Sailed-Ships end clock (per RULES §8) — primary pace dial ⚙ (scales steeply: the shared clock fills faster with more players). v0.12.3: re-centered (v0.12.1 had trimmed to 6/10/13/16 for v0.12's slow rounds, but Gruit-Source goods + removing the upgrade-buy sink sped rounds back up, dropping ~15% of games below the 12-round floor — so the clock is lengthened again to re-land pace mid-band ~15-16).
+const SAILED_CAP={2:7,3:11,4:14};  // the Sailed-Ships end clock (per RULES §8) — primary pace dial ⚙ (scales steeply: the shared clock fills faster with more players). 2–4p only (5p support removed). Any stray higher count falls back to 10.
 const MAX_ROUND=25;                      // round ceiling / backstop ⚙ — top of the 12–25-round target band (good play ends earlier on the clock)
 const CELLAR_POOL=3;                     // Cellar age points ⚙
 const START_GOODS={g:3,h:2};
@@ -772,11 +772,11 @@ function newGame(){document.getElementById('over').classList.add('hidden');openS
 function openSetup(){
   aiCancel();
   const m=document.getElementById('setup');m.classList.remove('hidden');
-  let pc='';for(let n=2;n<=5;n++)pc+='<button onclick="pickCount('+n+')" id="pc'+n+'">'+n+' players</button>';
+  let pc='';for(let n=2;n<=4;n++)pc+='<button onclick="pickCount('+n+')" id="pc'+n+'">'+n+' players</button>';
   document.getElementById('pcount').innerHTML=pc;pickCount(2);
 }
 let setupN=2;
-function pickCount(n){setupN=n;for(let i=2;i<=5;i++)document.getElementById('pc'+i).classList.toggle('primary',i===n);
+function pickCount(n){setupN=n;for(let i=2;i<=4;i++)document.getElementById('pc'+i).classList.toggle('primary',i===n);
   let h='<p class="note">Each seat: a name (optional) and who plays it. AI seats never cheat — the tiers differ only in decision quality.</p>';
   for(let i=0;i<n;i++)h+='<div style="margin:4px 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap">'
     +'<span class="pawn" style="background:'+COLORS[i]+';display:inline-block;flex:none"></span>'

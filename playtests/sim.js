@@ -327,8 +327,8 @@ const store = {};
 const localStorage = { getItem: k => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); }, removeItem: k => { delete store[k]; } };
 
 // ---- player counts & starting-token scenario (balance testing) ----
-// COUNTS env: comma list of player counts (default the full 2–5p range).
-const COUNTS = (process.env.COUNTS ? process.env.COUNTS.split(',').map(s=>parseInt(s,10)) : [2,3,4,5]);
+// COUNTS env: comma list of player counts (default the supported 2–4p range; 5p support was removed).
+const COUNTS = (process.env.COUNTS ? process.env.COUNTS.split(',').map(s=>parseInt(s,10)) : [2,3,4]);
 // Named starting-token scenarios. base => canonical 3G/2H, equal seats (no override).
 const SCENARIOS = {
   base : { label:'Baseline — 3G/2H, equal seats (canonical)' },

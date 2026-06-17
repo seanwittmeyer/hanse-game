@@ -76,8 +76,8 @@ __PAIRS.forEach(function(pair){
   }
   __OUT.pairs[pair.join('|')]={names:pair,wins:w,scoreSum:sum,errors:errs,games:n,avgRound:rounds/Math.max(1,n),clock:clock,perPersona:perPersona};
 });
-// ---- mixed-table robustness at 3-5p (random tier per seat; the crash/deadlock gate) ----
-[3,4,5].forEach(function(np){
+// ---- mixed-table robustness at 3-4p (random tier per seat; the crash/deadlock gate) ----
+[3,4].forEach(function(np){
   var errs=0,rounds=0,n=0,clock=0;
   var winsBy={apprentice:0,journeyman:0,trader:0},seatsBy={apprentice:0,journeyman:0,trader:0};
   var games=Math.max(50,Math.floor(__N/2));
