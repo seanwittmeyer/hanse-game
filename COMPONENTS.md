@@ -206,7 +206,7 @@ All open from start. Variable kontor value comes from the **buildings** a cask s
 | **London** (Steelyard) | Q2 | +1 ★ | **take a Building** (free) + place it — the engine loop | **5 / 3 / 1** |
 | **Bergen** (Bryggen) | Q2 | +1 ★ | 2 goods | **9 / 5 / 2** (anchor) |
 | **Novgorod** (Long Haul) | Q3 | +2 ★ | **take a Building** (free) + place it | **8 / 5 / 2** |
-| **The Hall** (Prestige) | Q2 | **fixed ladder 4/6/8/10 by quality** | — (local **Enshrine**, no ship) | — |
+| **The Hall** (Prestige) | Q2 | **fixed ladder 3/5/7/9 by quality** | — (local **Enshrine**, no ship) | — |
 
 - **Delivery value at a kontor = base + the value-buildings the cask shipped through.** Low by
   default, big when routed through demand you built. *(The v0.16 per-cask value table + export

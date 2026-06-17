@@ -11,9 +11,20 @@
 //
 // Guildmaster seats run at the reduced GUILD_MS=40 bulk budget. KNOWN ISSUE: long GM runs degrade
 // well past the early-game rate (~5s/game early, slowing several-fold over a long run — V8/heap
-// behaviour under the wrapper layer; cause not yet isolated). Keep GM cohorts small (N<=50) or
-// watch the stderr heartbeat; the trader/journeyman cohorts are unaffected (thousands of games/min).
-// Events fired inside Guildmaster Monte Carlo playouts are excluded (aiSimulating guard).
+// behaviour under the wrapper layer; cause not yet isolated). Events fired inside Guildmaster Monte
+// Carlo playouts are excluded (aiSimulating guard).
+//
+// >>> RUNNING THE GUILDMASTER — SHARD IT (do not run one big GM batch) <<<
+// Because of the long-run degradation above AND to use every core, run the Guildmaster in SMALL
+// PARALLEL SHARDS: no more than ~20 games per shard, and several shards PER PLAYER COUNT, launched
+// as separate processes (each stays in the fast early-game regime, and they run concurrently).
+// Combine the shard outputs afterward (e.g. playtests/analysis-combine.js). Example — 5 shards ×
+// 20 games for each of 2p/3p/4p, all in parallel:
+//     for c in 2 3 4; do for s in 1 2 3 4 5; do \
+//       TIERS=guildmaster COUNTS=$c SAVE=1 node playtests/sim-analyze.js 20 \
+//         > playtests/analysis/gm-${c}p-s${s}.txt 2>&1 & \
+//     done; done; wait
+// (The trader/journeyman cohorts are unaffected and can run thousands of games in one process.)
 'use strict';
 const fs = require('fs');
 const vm = require('vm');

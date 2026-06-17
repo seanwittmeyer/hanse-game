@@ -150,6 +150,19 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
+**v1.0 build + first tune (`play.html` KEY v47→v49)** *(2026-06-17)* — The keystone `play.html` rebuild
+shipped (two-layer slots; building-driven kontor value; goals/neutrals/most upgrades folded into the
+Building family; London/Novgorod → a free Building; steerable brew piles; the Floor; private
+improvements). Then two follow-ups: **(a)** *owned-but-shared made real* — a rival routing through your
+value building now banks a **reduced** bonus (half) and hands you the **wharfage** (RULES §5b), and the
+bots were repointed to **author + route** their own value buildings (the demand lane now self-pilots, so
+the lane reads are honest); **(b)** *first balance dial* — the **Hall ladder trimmed 4/6/8/10 → 3/5/7/9**.
+The committed-persona PATHWAYS report had the **prestige** lane hot (3p ≈ 50%, fair 33%); the single Hall
+trim pulled it back to ~fair and tightened the five lanes across 3–5p (prestige now the slightly-lower,
+higher-variance lane *by design*). One dial, sim-gated — per the lessons (§8). *(Guildmaster sims must be
+**sharded** — ≤20 games/shard, multiple shards per player count, run in parallel; notes in
+`playtests/ai-ladder.js` & `sim-analyze.js`.)*
+
 **v1.0 “Living Slots”** *(2026-06-16)* — The design graduates to **1.0**, locked into the specs
 (`RULES.md` / `COMPONENTS.md`); the `play.html` rebuild is the next step. Reset to the bookmarked keystone after a
 demand-board detour was tried and abandoned. **Living, composable slots:** owned **buildings**

@@ -4,6 +4,16 @@
 // The gate: 0 crashes/deadlocks, and a strictly increasing tier ladder at 2p
 // (each tier should beat the one below it — target >=60% — or "harder" is a lie).
 // Usage: node playtests/ai-ladder.js [N]   (N head-to-head games per pairing; default 300)
+// Env:   NOGM=1 skips the slow trader-vs-guildmaster pairing; GMN=<n> sets that pairing's game count.
+//
+// >>> SHARD THE GUILDMASTER (big runs) <<<
+// The Guildmaster's Monte-Carlo games are slow, and one long run degrades (V8/heap drift). Here the GM
+// appears ONLY in the 2p trader-vs-guildmaster pairing (the 3-5p mixed tables use no GM), so shard THAT
+// pairing: run several parallel instances at NO MORE THAN ~20 GM games each (N<=100 => __NGM<=20, or set
+// GMN=20), then SUM the win counts. Each shard stays in the fast regime and fills a core. For
+// per-PLAYER-COUNT GM sharding (the oracle cohorts), use sim-analyze.js with COUNTS=<one count>. Example
+// (5 parallel ladder shards, GMN=20 each), then aggregate the pairing wins by hand or with a combiner:
+//   for s in 1 2 3 4 5; do GMN=20 node playtests/ai-ladder.js 120 > playtests/ai-ladder-s"$s".txt 2>&1 & done; wait
 'use strict';
 const fs = require('fs');
 const vm = require('vm');
@@ -21,7 +31,8 @@ save=function(){};
 log=function(){};
 snapshot=function(){};
 // bulk-run budget for the guildmaster's Monte Carlo (the page default is 250ms/decision — far too
-// slow for thousands of games; 40ms still gives it ~10-20 playouts per decision)
+// slow for thousands of games; 40ms still gives it ~10-20 playouts per decision).
+// SHARD THE GUILDMASTER for big runs — see the header note at the top of this file.
 GUILD_MS=40;GUILD_MIN=1;
 
 function aiTestGame(tiers){
@@ -44,7 +55,7 @@ function mkAI(t){
 var __OUT={pairs:{},mixed:{}};
 // ---- head-to-head ladder at 2p (seats swapped every other game so turn order washes out) ----
 // guildmaster games cost ~seconds each (Monte Carlo), so its pairing runs at a reduced count.
-var __NGM=Math.max(40,Math.floor(__N/5));
+var __NGM=(typeof __GMN!=='undefined'&&__GMN)?__GMN:Math.max(20,Math.floor(__N/5));   // GM games in the trader-vs-GM pairing; GMN env overrides. Keep <=20/shard (see header) — N<=100 → 20.
 var __PAIRS=[['apprentice','journeyman'],['journeyman','trader'],['apprentice','trader']];
 if(!__NOGM)__PAIRS.push(['trader','guildmaster']);   // NOGM=1 skips the slow Monte Carlo pairing
 __PAIRS.forEach(function(pair){
@@ -107,7 +118,7 @@ const ctx = {
   parseInt, parseFloat, isNaN, alert: noop,
   setTimeout: noop, clearTimeout: noop,
   lucide: { createIcons: noop },
-  __N: N, __NOGM: process.env.NOGM==='1',
+  __N: N, __NOGM: process.env.NOGM==='1', __GMN: parseInt(process.env.GMN||'0',10),
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;

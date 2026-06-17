@@ -349,11 +349,11 @@ const DEST={
   london  :{name:'London',  gate:2, value:1, maj:[5,3,1],   benefit:'building', kontor:true,  role:'Steelyard · the engine — a free Building + a solid majority'},
   bergen  :{name:'Bergen',  gate:2, value:1, maj:[9,5,2],   benefit:'goods',    kontor:true,  role:'Bryggen · gain goods + THE rich majority'},
   novgorod:{name:'Novgorod',gate:3, value:2, maj:[8,5,2],   benefit:'building', kontor:true,  role:'Long Haul · top base value + a free Building + a rich majority'},
-  hall    :{name:'The Hall',gate:2, value:0, maj:[],        benefit:'none',     kontor:false, role:'Prestige · 4/6/8/10 by quality · the local Enshrine (no boat)'},
+  hall    :{name:'The Hall',gate:2, value:0, maj:[],        benefit:'none',     kontor:false, role:'Prestige · 3/5/7/9 by quality · the local Enshrine (no boat)'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
 const DESTS=['bruges','london','bergen','novgorod','hall'];
-const HALL_PTS={2:4,3:6,4:8,5:10}; // ⚙ prestige points at the Hall — a PRINTED ladder by quality (the legible beginner floor). Read it off the tile; no in-game math.
+const HALL_PTS={2:3,3:5,4:7,5:9}; // ⚙ prestige points at the Hall — a PRINTED ladder by quality (the legible beginner floor). Read it off the tile; no in-game math.
 // v1.0: NO export premium, NO Masterpiece (both folded into the Flight + value-Buildings, for scoring clarity).
 // A kontor's per-cask value is base + the value-Buildings the cask SHIPPED THROUGH (computed at delivery,
 // frozen onto the delivered record as d.val — §5a). destValue() is now just the BASE/ladder (the floor the
@@ -498,7 +498,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v48'; // v1.0 "Living Slots" — the keystone rebuild: the 8 slots are a TWO-LAYER commons (an owned BUILDING modifier + an occupant cask/ship); kontor value is now BUILDING-DRIVEN (base + the value-buildings a cask shipped through); goals + neutral buildings + most upgrades fold into the one Building family; London/Novgorod deliver → a free Building; steerable brewing (face-up pile tops); the Floor (tap a maturing cask instead of the toll); private improvements bought for goods. Bump discards stale v47 state.
+const KEY='hanse-hotseat-v49'; // v1.0 "Living Slots" tune: (1) owned-but-shared made REAL — a rival routing through your value building now gets a REDUCED bonus (half) + you take the wharfage (§5b); (2) Hall prestige ladder trimmed 4/6/8/10 → 3/5/7/9 (the hot prestige lane pulled back to ~fair; now the slightly-lower, higher-variance lane by design); (3) steerable brew piles shown at the kettle + always in the sidebar; bots repointed to author + ROUTE value buildings (the demand lane). Bump discards stale v48 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1801,7 +1801,7 @@ function renderAid(){
     ['map-pin','<b>Presence</b> / Reach'],['store','<b>Market</b> station'],['flask-conical','<b>Brew</b> / vessel · the Floor'],['scroll-text','<b>Recipe</b>'],
     ['ticket','<b>Charter</b> (single-cask voyage)'],['package-plus','<b>Load</b> a cask'],['arrow-left-right','<b>Convert</b> goods G↔H'],['search','<b>Survey</b> (draw a Building)'],
     ['coins','<b>Source</b> (take goods)'],['sparkles','<b>Wild</b> action (Q4+)']];
-  const dRow=d=>{const D=DEST[d];const val=d==='hall'?'4·6·8·10 by Q (fixed)':('+'+D.value+' base + buildings');const maj=D.maj.length?D.maj.join(' / '):'—';
+  const dRow=d=>{const D=DEST[d];const val=d==='hall'?'3·5·7·9 by Q (fixed)':('+'+D.value+' base + buildings');const maj=D.maj.length?D.maj.join(' / '):'—';
     const ben=d==='hall'?'prestige':(D.benefit==='building'?'a free Building':'2 goods');
     return '<tr><td>'+(D.kontor?ic('landmark'):ic('crown'))+' '+D.name+'</td><td>Q'+D.gate+'+</td><td>'+val+'</td><td>'+maj+'</td><td>'+ben+'</td></tr>';};
   const dests=['bruges','london','bergen','novgorod','hall'].map(dRow).join('');
@@ -1826,7 +1826,7 @@ function renderAid(){
       +'<li><b>Delivery value</b> — each delivered cask’s base + the value-Buildings it shipped through, + your wharfage.</li>'
       +'<li><b>Majorities</b> — 1st/2nd/3rd at each kontor by delivered-cask count.</li>'
       +'<li><b>The Flight</b> '+ic('layers')+' — distinct quality tiers delivered (to <b>any</b> destination): <b>3 → '+FLIGHT_PTS[3]+' · 4 → '+FLIGHT_PTS[4]+' · 5 → '+FLIGHT_PTS[5]+'</b> (min 3 to score).</li>'
-      +'<li><b>Hall</b> '+ic('crown')+' — a fixed prestige ladder by quality (4/6/8/10), counted in delivery value.</li>'
+      +'<li><b>Hall</b> '+ic('crown')+' — a fixed prestige ladder by quality (3/5/7/9), counted in delivery value.</li>'
       +'</ol></div>'
     +'<div class="asec"><b>Icon key</b><div class="akey">'+keys.map(k=>'<div class="akrow">'+ic(k[0])+'<span>'+k[1]+'</span></div>').join('')+'</div></div>'
     +'<div style="text-align:center;margin-top:10px"><button class="primary" onclick="toggleAid()">Close</button></div>';
@@ -1995,7 +1995,7 @@ function renderDests(){
       return '<span class="dprow" data-tip="'+attr(p.name+': '+del+' delivered'+(bon?' + '+bon+' bonus presence':'')+(lead?' — current leader':''))+'">'+(lead?'<span class="dlead">★</span>':'')+sq+'</span>';
     }).filter(x=>x).join('');
     const valStr=d==='hall'
-      ?'<span data-tip="'+attr('★ = prestige points per ENSHRINED cask, by quality: Q2→4 · Q3→6 · Q4→8 · Q5→10 (a fixed ladder). Reached by the local Enshrine (a Harbor action, no boat); no majority, no benefit.')+'"><b>4·6·8·10</b><span class="vstar">★</span></span>'
+      ?'<span data-tip="'+attr('★ = prestige points per ENSHRINED cask, by quality: Q2→3 · Q3→5 · Q4→7 · Q5→9 (a fixed ladder). Reached by the local Enshrine (a Harbor action, no boat); no majority, no benefit.')+'"><b>3·5·7·9</b><span class="vstar">★</span></span>'
       :'<span data-tip="'+attr('★ = BASE points per delivered cask ('+D.value+'). The real value is VARIABLE: + the value-Buildings the cask shipped through (Staple Hall +3, Rich Berth +2/cask, a Kontor Charter +4, …). Author them on the slots.')+'"><b>'+D.value+'</b><span class="vstar">★</span><span style="font-size:.68rem;opacity:.8;margin-left:1px">+'+LU('building-2')+'</span></span>';
     const ben=D.benefit==='building'?'<span data-tip="'+attr('The delivery benefit: on each delivery the owner takes one Building from the Market display, free, and places it (the deliver→author→deliver-better engine).')+'">+'+LU('building-2')+'</span>'
       :D.benefit==='goods'?'<span data-tip="'+attr('Liquidity: on each delivery the owner takes 2 goods, any mix (grain/hops).')+'">+2'+LU('coins')+'</span>':'';

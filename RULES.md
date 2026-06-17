@@ -216,7 +216,7 @@ Five destinations, all open from start (⚙ table in `COMPONENTS.md`):
 | **London** (Steelyard) | Q2 | +1 ★ | take a building/recipe ⚙ | 5 / 3 / 1 |
 | **Bergen** (Bryggen) | Q2 | +1 ★ | 2 goods | 9 / 5 / 2 (anchor) |
 | **Novgorod** (Long Haul) | Q3 | +2 ★ | take a building/recipe ⚙ | 8 / 5 / 2 |
-| **The Hall** (Prestige) | Q2 | **fixed ladder 4/6/8/10 by quality** ⚙ | — (Enshrine) | — |
+| **The Hall** (Prestige) | Q2 | **fixed ladder 3/5/7/9 by quality** ⚙ | — (Enshrine) | — |
 
 **Delivery value at a kontor = destination base + the value-building bonuses the cask shipped
 through** (§5a). So a kontor delivery is worth **a little by default, a lot when you've routed it
@@ -260,7 +260,7 @@ table. Pace target **~12–25 rounds.**
 ## 11. Scoring — the clear spine
 
 **In-game (banked as you play):**
-1. **Hall — FIXED.** Each enshrined cask scores its quality's fixed ladder value (4/6/8/10 ⚙).
+1. **Hall — FIXED.** Each enshrined cask scores its quality's fixed ladder value (3/5/7/9 ⚙).
    *The steady beginner path — low risk, always open.*
 2. **Kontore — VARIABLE.** Each delivered cask scores **base + the value-buildings it shipped
    through** (§7), plus any **wharfage cut** you owe/collect (§5b). *The risk/reward path — read
