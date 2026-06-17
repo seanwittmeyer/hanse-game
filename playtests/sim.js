@@ -273,7 +273,7 @@ function runGame(n){
   // all-deliveries destination tally (to confirm prestige/majority leans are actually exercised)
   var allByDest={bruges:0,london:0,bergen:0,novgorod:0,hall:0};
   S.players.forEach(function(p){p.delivered.forEach(function(d){allByDest[d.dest]++;});});
-  var playerStats=S.players.map(function(p,i){var ts={};p.delivered.forEach(function(d){ts[d.q]=1;});
+  var playerStats=S.players.map(function(p,i){var ts={};p.delivered.forEach(function(d){ts[d.style]=1;});   // distinct BEERS (the Flight metric)
     return {persona:persona(p),cellar:!!p.__cellar,total:scores[i].total,won:(i===win),
       deliv:scores[i].deliv,maj:scores[i].maj,goals:scores[i].goals,
       q5:p.delivered.filter(function(d){return d.q===5;}).length,

@@ -158,7 +158,7 @@
   /* delivered-cask quality pip (which beer went where) + flight tier pips */
   .qd{display:inline-block;min-width:13px;text-align:center;font-size:.62rem;font-weight:bold;border-radius:3px;padding:0 1px;margin-left:2px;color:#fff;background:var(--ink2)}
   .qd.q1{background:#8a949c}.qd.q2{background:#c2922f}.qd.q3{background:#b06a34}.qd.q4{background:#caa12a;color:#3a2c00}.qd.q5{background:#7c2128}
-  .fpip{display:inline-block;min-width:20px;text-align:center;font-size:.64rem;font-weight:bold;border-radius:4px;padding:1px 2px;margin-right:3px;border:1px solid var(--line);background:rgba(0,0,0,.06);color:var(--ink2);opacity:.55}
+  .fpip{display:inline-block;min-width:20px;text-align:center;font-size:.64rem;font-weight:bold;font-variant:small-caps;border-radius:4px;padding:1px 6px;margin-right:3px;border:1px solid var(--line);background:rgba(0,0,0,.06);color:var(--ink2);opacity:.55}
   .fpip.on{opacity:1;background:var(--gold);color:#3a2c00;border-color:var(--gold)}
   .tag.good{background:var(--gold);color:#000}
   .tag.dim{background:var(--parch);color:var(--ink2);border:1px solid var(--line)}
@@ -320,7 +320,7 @@ const ICONTIP={
   'map-pin':'Presence — your delivered casks at a kontor (counts for majorities).',
   coins:'Goods.',
   package:'Storage — how many goods you can hold.',
-  layers:'The Flight — your range: distinct quality tiers delivered.',
+  layers:'The Flight — your range: distinct BEERS delivered (5 types exist each game).',
   check:'Ready — this cask is matured; deploy it to a slot.',
   'user-round':'Worker — move it between the four stations.',
 };
@@ -394,9 +394,13 @@ function destValue(dest,q){return dest==='hall'?(HALL_PTS[q]||0):DEST[dest].valu
 // the free Gruit+Hopped baseline everyone has, so it's a true climber's reward). "Full range of the
 // house" — the quality pole of the reach-vs-quality axis; needs a Bock for the full 5-tier flight.
 const FLIGHT_MIN=3;
-const FLIGHT_PTS={1:0,2:0,3:4,4:9,5:16};   // ⚙ Lisboa-style heavy back-loading: the points are in tiers 4 & 5
-function flightTiers(p){return new Set(p.delivered.map(d=>d.q)).size;}
-function flightScore(p){const t=flightTiers(p);return (t>=FLIGHT_MIN)?(FLIGHT_PTS[t]||0):0;}
+const FLIGHT_PTS={1:0,2:0,3:4,4:9,5:16};   // ⚙ Lisboa-style heavy back-loading: the points are in the 4th & 5th beer
+// v1.0.1: the Flight rewards distinct BEERS delivered (not quality tiers). There are always exactly FIVE
+// beer types in a game — Gruit + Hopped + the 3 dealt exports — so a 5-beer Flight is ALWAYS reachable.
+// (The old "distinct quality tiers" was unobtainable at 5 whenever both Q3 exports were dealt and Q4/Q5 was out.)
+function flightTypes(){return ['gruit','hopped'].concat((S.exports||[]).slice().sort((a,b)=>STYLES[a].q-STYLES[b].q));}
+function flightBeers(p){return new Set(p.delivered.map(d=>d.style)).size;}
+function flightScore(p){const t=flightBeers(p);return (t>=FLIGHT_MIN)?(FLIGHT_PTS[t]||0):0;}
 // v1.0: the Masterpiece is CUT (folded into the Flight + value-Buildings, for scoring clarity).
 const ENSHRINE_FEE={};   // ⚙ v0.15: no fare/fee — the throttle is STRUCTURAL (the cask must be DEPLOYED to a slot first; keeps it contestable) + action-economy (one Harbor visit). Corrective is structure, not a fee.
 
@@ -531,7 +535,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v51'; // v1.0 building economy: buildings are gained TO HAND (London/Novgorod delivery & Survey → a tile in hand; no auto-place), and PLACED deliberately at the Market; placing onto a slot that already has a building REPLACES it, returning the displaced tile to its OWNER'S hand (slots never lock — the contest is over prime slot/line positions). Bump discards stale v50 state.
+const KEY='hanse-hotseat-v52'; // v1.0.1: the FLIGHT now rewards distinct BEERS delivered (not quality tiers) — there are always exactly 5 beer types (Gruit + Hopped + the 3 dealt exports), so the full 5-beer flight is ALWAYS reachable (the old quality-tier flight capped at 4 whenever both Q3 exports were dealt and Q4/Q5 was out). Also: 5-player support removed (2–4p). Bump discards stale v51 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1274,7 +1278,7 @@ function gameOver(){
   const {rows,cmp}=finalRows();const win=rows[0];
   let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries<br><span class="note">(value + wharfage)</span></th><th>Majorities</th><th>Flight</th><th>Total</th></tr>';
   rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+(r.sc.wharf?' <span class="note">('+r.sc.wharf+' wharfage)</span>':'')+'</td><td>'+r.sc.maj+'</td><td>'+(r.sc.flight||'·')+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
-  h+='</table><p class="note">Score = <b>delivery value</b> (each cask\'s base + the value-Buildings it shipped through, + your wharfage) + kontor <b>majorities</b> + the <b>Flight</b> (distinct quality tiers delivered — '+FLIGHT_MIN+'+ to score). The Hall is a fixed prestige floor; the kontore are the variable demand. (Tiebreak: goods, then casks on slots.)</p>'
+  h+='</table><p class="note">Score = <b>delivery value</b> (each cask\'s base + the value-Buildings it shipped through, + your wharfage) + kontor <b>majorities</b> + the <b>Flight</b> (distinct beers delivered — '+FLIGHT_MIN+'+ to score). The Hall is a fixed prestige floor; the kontore are the variable demand. (Tiebreak: goods, then casks on slots.)</p>'
     +'<button onclick="hideOver()">⚓ View the final board</button> <button onclick="openStudio()">⇪ Send to Studio'+(S.studioSent?' ✓':'')+'</button> <button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
 }
@@ -1881,7 +1885,7 @@ function renderAid(){
     +'<div class="asec"><b>Scoring — at game end</b><ol class="ascore">'
       +'<li><b>Delivery value</b> — each delivered cask’s base + the value-Buildings it shipped through, + your wharfage.</li>'
       +'<li><b>Majorities</b> — 1st/2nd/3rd at each kontor by delivered-cask count.</li>'
-      +'<li><b>The Flight</b> '+ic('layers')+' — distinct quality tiers delivered (to <b>any</b> destination): <b>3 → '+FLIGHT_PTS[3]+' · 4 → '+FLIGHT_PTS[4]+' · 5 → '+FLIGHT_PTS[5]+'</b> (min 3 to score).</li>'
+      +'<li><b>The Flight</b> '+ic('layers')+' — distinct <b>beers</b> delivered (to <b>any</b> destination; the 5 types — Gruit, Hopped + the 3 dealt exports — are all reachable): <b>3 → '+FLIGHT_PTS[3]+' · 4 → '+FLIGHT_PTS[4]+' · 5 → '+FLIGHT_PTS[5]+'</b> (min 3 to score).</li>'
       +'<li><b>Hall</b> '+ic('crown')+' — a fixed prestige ladder by quality (3/5/7/9), counted in delivery value.</li>'
       +'</ol></div>'
     +'<div class="asec"><b>Icon key</b><div class="akey">'+keys.map(k=>'<div class="akrow">'+ic(k[0])+'<span>'+k[1]+'</span></div>').join('')+'</div></div>'
@@ -2162,11 +2166,12 @@ function renderTableaus(){
     const delivered=DESTS.map(d=>{const ds=p.delivered.filter(x=>x.dest===d);if(!ds.length)return '';
       const pips=ds.slice().sort((a,b)=>a.q-b.q).map(x=>'<span class="qd q'+x.q+'" data-tip="'+attr(STYLES[x.style].name+' · Q'+x.q+' · '+(x.val||0)+'★')+'">'+x.q+'</span>').join('');
       return '<span class="tag good">'+(DEST[d].kontor?LU('landmark'):LU('crown'))+DEST[d].name.slice(0,4)+' '+pips+'</span>';}).filter(x=>x).join('')||'<span class="note">none</span>';
-    // FLIGHT tracker: distinct quality tiers delivered ANYWHERE (not the Hall specifically) → (tiers-1)², min 3
-    const fdq={};p.delivered.forEach(x=>fdq[x.q]=1);const ftiers=Object.keys(fdq).length;const fcur=flightScore(p);
-    const fnext=ftiers<5?(FLIGHT_PTS[ftiers+1]||0):null;
-    const fpips=[1,2,3,4,5].map(q=>'<span class="fpip'+(fdq[q]?' on':'')+'" data-tip="'+attr('Q'+q+(fdq[q]?': delivered ✓':': not yet delivered'))+'">Q'+q+'</span>').join('');
-    const flightStr=fpips+' <span class="note"><b>'+fcur+'★</b>'+(ftiers>=5?' — full flight!':(fnext!=null&&fnext>fcur?' · +'+(fnext-fcur)+' at '+(ftiers+1)+' tiers':(ftiers<FLIGHT_MIN?' · need '+FLIGHT_MIN+'+ tiers to score':'')))+'</span>';
+    // FLIGHT tracker: distinct BEERS delivered ANYWHERE → (beers-1)², min 3. The 5 brewable types (Gruit,
+    // Hopped + the 3 dealt exports) are all reachable, so the 5-beer flight is always achievable.
+    const fdt={};p.delivered.forEach(x=>fdt[x.style]=1);const fbeers=Object.keys(fdt).length;const fcur=flightScore(p);
+    const fnext=fbeers<5?(FLIGHT_PTS[fbeers+1]||0):null;
+    const fpips=flightTypes().map(st=>'<span class="fpip'+(fdt[st]?' on':'')+'" data-tip="'+attr(STYLES[st].name+' (Q'+STYLES[st].q+')'+(fdt[st]?': delivered ✓':': not yet delivered'))+'">'+styleShort(st)+'</span>').join('');
+    const flightStr=fpips+' <span class="note"><b>'+fcur+'★</b>'+(fbeers>=5?' — full flight!':(fnext!=null&&fnext>fcur?' · +'+(fnext-fcur)+' at '+(fbeers+1)+' beers':(fbeers<FLIGHT_MIN?' · need '+FLIGHT_MIN+'+ beers to score':'')))+'</span>';
     body+='<div class="tableau '+(i===activeTab?'show':'')+'">'
       +'<div style="margin-bottom:6px"><span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
       +'<span class="chip" data-tip="Storage cap.">'+LU('package')+'<b>'+p.storage+'</b></span>'
@@ -2178,7 +2183,7 @@ function renderTableaus(){
       +'<b class="note">'+LU('wrench')+' Improvements:</b> '+ups+'<br>'
       +'<b class="note">'+LU('anchor')+' On slots (yours):</b> '+wharf+'<br>'
       +'<b class="note">'+LU('landmark')+' Delivered:</b> '+delivered+'<br>'
-      +'<b class="note">'+LU('layers')+' Flight (distinct tiers delivered, any destination):</b> '+flightStr
+      +'<b class="note">'+LU('layers')+' Flight (distinct beers delivered, any destination):</b> '+flightStr
       +'</div>';
   });
   document.getElementById('tabs').innerHTML=tabs;

@@ -279,8 +279,11 @@ table. Pace target **~12–25 rounds.**
 **End-game:**
 3. **Majorities** — at each kontor, by **delivered-cask count**, tiered (Bruges 4/2/0 · London
    5/3/1 · Novgorod 8/5/2 · Bergen 9/5/2 ⚙; 2p skips 2nd; ties split). *Go big in a few.*
-4. **The Flight** — distinct quality tiers delivered: **(tiers−1)², min 3** (3→4 · 4→9 · 5→16).
-   *The range reward; the full flight needs a Bock.*
+4. **The Flight** — distinct **beers** delivered: **(beers−1)², min 3** (3→4 · 4→9 · 5→16). There are
+   always exactly **five beer types** (Gruit + Hopped + the 3 dealt exports), so the full 5-beer flight is
+   **always reachable** ⚙. *(v1.0.1: was "distinct quality tiers," which could cap at 4 whenever both Q3
+   exports were dealt and Q4/Q5 was out — so the range reward is now per beer, not per quality level.)*
+   *The range reward — deliver the full breadth of the house.*
 
 5. **Tiebreak:** most goods, then most casks on slots.
 

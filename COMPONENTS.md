@@ -217,8 +217,10 @@ All open from start. Variable kontor value comes from the **buildings** a cask s
   deliver → author → deliver-better engine loop); the **Hall → fixed prestige** (Enshrine).
 
 ### H. End-game scoring — the Flight (kept; the Masterpiece cut)
-- **The Flight — your range.** Distinct quality tiers (Q1–Q5) delivered, **(tiers−1)², min 3**
-  (3→4 · 4→9 · 5→16). The deep lane's reward; the full flight needs a Bock. *(No tile — a strip
+- **The Flight — your range.** Distinct **beers** delivered, **(beers−1)², min 3** (3→4 · 4→9 · 5→16).
+  Always exactly 5 beer types exist (Gruit + Hopped + the 3 dealt exports), so the full flight is always
+  reachable (v1.0.1 — was "distinct quality tiers," unobtainable at 5 whenever both Q3 exports were
+  dealt). The range lane's reward — deliver the full breadth of the house. *(No tile — a strip
   on the player board.)*
 - *(The **Masterpiece** is **cut** for scoring clarity — folded into the Flight + value-buildings.)*
 
