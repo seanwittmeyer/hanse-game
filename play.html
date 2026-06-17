@@ -1505,9 +1505,11 @@ function aiMarket(p){
      &&(emptySlots().length<=1||S.ending||(myShips(p).length===0&&readyInVessels(p).length>0))){buyContract();return;}
   const ex=aiBuyableExports(p);
   if(ex.length){ex.sort((a,b)=>STYLES[a].q-STYLES[b].q);buyRecipe(ex[0]);return;}
-  // AUTHOR THE DEMAND: the trader buys a VALUE building when it has cargo to route through it and a slot,
-  // up to ~2 (don't over-invest); a transform only when flush. Keeps a 1-grain buffer.
-  if(!aiIsApp(p)&&aBuildSlotsAI().length){
+  // AUTHOR THE DEMAND: the TRADER buys a VALUE building when it has cargo to route through it and a slot,
+  // up to ~2 (don't over-invest); a transform only when flush. Keeps a 1-grain buffer. Authoring is a
+  // trader-tier skill (the journeyman places only its starting tile) — that's the demand-lane edge that
+  // keeps the ladder separated (journeyman routes existing buildings; the trader builds new demand).
+  if(aiIsTrader(p)&&aBuildSlotsAI().length){
     const ownVal=SLOTS.filter(s=>{const b=bAt(s.id);return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value';}).length;
     const hasCargo=readyInVessels(p).length||wharfLoadableCasks(p).length||p.vessels.some(c=>c&&c.q>=2);
     if(ownVal<2&&hasCargo){
