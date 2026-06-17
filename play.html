@@ -93,6 +93,22 @@
     background:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.45);white-space:nowrap;overflow:hidden;max-width:calc(100% - 6px)}
   .slot .occ .ic,.slot .occ svg{width:.92em;height:.92em}
   .slot .occ.ship{background:var(--sea2)}
+  .slot .btgt{position:absolute;top:2px;left:2px;z-index:2;display:flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:4px;background:rgba(0,0,0,.16)}
+  .slot .btgt .ic,.slot .btgt svg{width:9px;height:9px;color:var(--ink)}
+  .slot .btgt.value{background:rgba(138,60,18,.9)}
+  .slot .btgt.transform{background:rgba(47,93,80,.9)}
+  .slot .btgt.value .ic,.slot .btgt.value svg,.slot .btgt.transform .ic,.slot .btgt.transform svg{color:#fff}
+  /* the Buildings-on-the-Wharf reference panel (always visible; mobile-friendly) */
+  #bldgref .bref{padding:5px 7px;border:1px solid var(--line);border-radius:7px;margin-bottom:5px;background:var(--parch)}
+  #bldgref .brh{display:flex;align-items:center;gap:4px;flex-wrap:wrap;font-size:.82rem;line-height:1.3}
+  #bldgref .brh .ic,#bldgref .brh svg{width:1em;height:1em}
+  #bldgref .brdot{width:10px;height:10px;border-radius:50%;border:1px solid rgba(0,0,0,.3);display:inline-block}
+  #bldgref .brtag{font-size:.58rem;font-weight:bold;text-transform:uppercase;letter-spacing:.4px;padding:0 5px;border-radius:7px;color:#fff}
+  #bldgref .brtag.value{background:#8a3c12}
+  #bldgref .brtag.transform{background:#2f5d50}
+  #bldgref .brtgt{font-size:.66rem;opacity:.82;display:inline-flex;align-items:center;gap:2px}
+  #bldgref .brtgt .ic,#bldgref .brtgt svg{width:.85em;height:.85em}
+  #bldgref .bref.disp{background:transparent;border-style:dashed}
   .s1{grid-area:1/2}.s2{grid-area:1/3}.cA{grid-area:2/2}.cB{grid-area:2/3}
   .s8{grid-area:2/1}.s3{grid-area:2/4}.s7{grid-area:3/1}.s4{grid-area:3/4}
   .cC{grid-area:3/2}.cD{grid-area:3/3}.s6{grid-area:4/2}.s5{grid-area:4/3}
@@ -246,6 +262,7 @@
         <div class="note" id="boardnote" style="text-align:center;margin-top:6px"></div>
       </div>
       <div class="panel"><h3>Destinations <span class="note">(where you ship — kontore = volume · the Hall = prestige)</span></h3><div id="dests"></div></div>
+      <div class="panel"><h3>Buildings on the Wharf <span class="note">(owned slot tiles &amp; what they do — tap-free reference)</span></h3><div id="bldgref"></div></div>
       <div class="panel"><h3>Player Breweries</h3>
         <div class="tabs" id="tabs"></div>
         <div id="tableaus"></div>
@@ -458,6 +475,9 @@ const BUILDINGS={
 const BUILDING_KEYS=Object.keys(BUILDINGS);
 function bName(k){return (BUILDINGS[k]||{name:k}).name;}
 function bDesc(k){return (BUILDINGS[k]||{desc:''}).desc;}
+// what each building's effect TARGETS (the occupant docked on it, or a line/owner) — for clear labels & glyphs
+const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a SHIP docked here'},line:{ic:'zap',lbl:'this LINE (when it fires)'},owner:{ic:'user-round',lbl:'YOU (passive)'}};
+function bTgt(k){return (BUILDINGS[k]||{tgt:'cask'}).tgt;}
 const BUILD_DISPLAY=4;          // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 const WHARFAGE=1;               // ⚙ the owner's points cut when a RIVAL routes cargo through their building (capped per delivery; +1 more with Almoner's Stall)
 
@@ -704,7 +724,7 @@ const CELLTIP={
   Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' age points to allocate across your vessels (your casks also age +1 automatically each turn). When a cask is Ready, set it on a slot.',
   Harbor:'Harbor · Ship — your ship-options hub. Load ANY cask (yours or a rival’s — you pick the destination; the owner scores it, you take a loader bonus) onto any ship it qualifies for. A ship sails ONLY when full — then every cask is delivered: its owner banks that destination’s benefit AND its points (base + the value-Buildings it shipped through), in load order. Or Enshrine a Q2+ slot cask at the Hall, or Charter a single cask. Never closed.',
 };
-function bldgTip(b){if(!b)return '';const def=BUILDINGS[b.b];return (def.verb==='value'?'Value':'Transform')+' Building · '+def.name+' ('+S.players[b.owner].name+'’s) — '+def.desc+'. Owned-but-shared: the owner gets the FULL effect; a rival may dock here too for a REDUCED bonus, and the owner takes a +'+WHARFAGE+'★ wharfage when their cargo delivers through it.';}
+function bldgTip(b){if(!b)return '';const def=BUILDINGS[b.b];return (def.verb==='value'?'Value':'Transform')+' Building · '+def.name+' ('+S.players[b.owner].name+'’s) — '+def.desc+'. Affects '+BTGT[def.tgt].lbl+'. Owned-but-shared: the owner gets the FULL effect; a rival may dock here too for a REDUCED bonus, and the owner takes a +'+WHARFAGE+'★ wharfage when their cargo delivers through it.';}
 function tileTip(t,slot){
   const b=slot?bAt(slot):null;const btip=b?(' · '+bldgTip(b)):'';
   if(!t)return (b?bldgTip(b):'An open slot')+' — Ready casks deploy here (cargo + a public action), and you commission ships here.'+(b?'':' Place a Building here to author its value.');
@@ -727,6 +747,7 @@ function slotFace(t){
 // a BUILDING rendered as the slot's FULL tile (the owned "dock improvement"); the occupant sits on it
 function bldgTileFace(b,occupied){const def=BUILDINGS[b.b];const o=S.players[b.owner];
   return '<div class="bface'+(occupied?' occupied':'')+'" data-tip="'+attr(bldgTip(b))+'" style="border-color:'+o.color+'">'
+    +'<span class="btgt '+def.verb+'" data-tip="'+attr('Affects '+BTGT[def.tgt].lbl)+'">'+LU(BTGT[def.tgt].ic)+'</span>'
     +'<span class="bowner" style="background:'+o.color+'"></span>'
     +'<span class="bbig">'+LU(def.icon)+'</span>'
     +'<span class="bnm">'+def.name+'</span>'
@@ -1818,7 +1839,7 @@ function renderAiSpeed(){
 //==================================================================
 function render(){
   if(!S)return;
-  renderBar();renderGrid();renderDests();renderShop();renderVoyage();renderTableaus();renderAiSpeed();
+  renderBar();renderGrid();renderDests();renderBuildings();renderShop();renderVoyage();renderTableaus();renderAiSpeed();
   document.getElementById('log').innerHTML=S.log.join('');
   document.getElementById('turnlbl').textContent='Round '+S.turn+(S.ending?' · FINAL':'');
   refreshIcons();
@@ -2015,6 +2036,26 @@ function renderGrid(){
   ag.innerHTML=h;
 }
 
+// always-visible reference for buildings on the board (mobile-friendly — no hover needed)
+function renderBuildings(){
+  const placed=SLOTS.map(s=>s.id).filter(id=>bAt(id)).map(id=>({id,b:bAt(id)}));
+  let h='';
+  if(!placed.length){h='<div class="note">No buildings placed yet. Earn one by delivering to '+LU('landmark')+' London/Novgorod, or buy one at the Market — then place it on a slot to author its effect.</div>';}
+  else{
+    h=placed.map(x=>{const def=BUILDINGS[x.b.b];const o=S.players[x.b.owner];const occ=S.slots[x.id];
+      const holding=occ?(occ.type==='ship'?LU('sailboat')+shipName(occ)+'→'+DEST[occ.dest].name.slice(0,3)+' '+occ.load.length+'/'+effCap(occ):LU('beer')+styleShort(occ.style)+' Q'+occ.q):'empty';
+      return '<div class="bref">'
+        +'<span class="brh"><span class="brdot" style="background:'+o.color+'"></span>'+LU(def.icon)+' <b>'+def.name+'</b> '
+        +'<span class="brtag '+def.verb+'">'+def.verb+'</span> '
+        +'<span class="brtgt">'+LU(BTGT[def.tgt].ic)+' '+BTGT[def.tgt].lbl+'</span></span>'
+        +'<div class="note">'+def.desc+' &nbsp;·&nbsp; <span style="opacity:.8">holding: '+holding+'</span></div>'
+        +'</div>';}).join('');
+  }
+  const disp=(S.buildDisplay||[]);
+  if(disp.length)h+='<div class="bref disp"><span class="brh"><b>At the Market</b> <span class="note">(buy '+costStr({g:2})+'–'+costStr({g:3})+' + place, or earn free at London/Novgorod)</span></span><div class="note">'
+    +disp.map(k=>LU(BUILDINGS[k].icon)+' '+bName(k)+' <span class="brtag '+BUILDINGS[k].verb+'">'+BUILDINGS[k].verb+'</span>').join(' &nbsp;·&nbsp; ')+'</div></div>';
+  document.getElementById('bldgref').innerHTML=h;
+}
 function renderDests(){
   let h='';DESTS.forEach(d=>{const D=DEST[d];
     const leaders=D.kontor?leadersAt(d):[];
