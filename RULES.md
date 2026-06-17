@@ -73,10 +73,13 @@ a first player (fixed all game; free placement + the +1 `G`/seat are the seat ba
 The turn:
 1. **Move** your worker to an orthogonally adjacent station (mandatory from turn 2). Moving
    onto a station a rival occupies costs the **1 `G` occupancy toll** ⚙ (capped at what you
-   hold; opening placement free) — *or, instead of the toll,* **tap your private floor:**
-   activate one *maturing* cask's slot-action (the boutique brewer's stable fallback when the
-   ring is unfavorable) ⚙. *(The carried v0.1 "alternate action when blocked"; developed into the
-   **Floor / private line** — `PLAN.md` §1B.)*
+   hold; opening placement free) **and then you work that public line as normal** — *or,*
+   **work your private floor instead:** **in lieu of the public line** (you forgo both its
+   stations and both its slots, and pay no toll), run the **slot-action of every cask on your
+   brewery floor** (each cask in your vessels). The Floor is your whole action that turn — the
+   boutique brewer's stable fallback when the ring is unfavorable ⚙. *(The carried v0.1
+   "alternate action when blocked"; developed into the **Floor / private line** — `PLAN.md`
+   §1B.)*
 2. **Activate** the **row OR column** of your station.
 3. **Resolve** that line's up-to-4 stops — **slot · station · station · slot** — in any order.
    Both stations always fire; the worker only gates *which line is legal*. Each slot you **may**

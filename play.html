@@ -498,7 +498,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v49'; // v1.0 "Living Slots" tune: (1) owned-but-shared made REAL — a rival routing through your value building now gets a REDUCED bonus (half) + you take the wharfage (§5b); (2) Hall prestige ladder trimmed 4/6/8/10 → 3/5/7/9 (the hot prestige lane pulled back to ~fair; now the slightly-lower, higher-variance lane by design); (3) steerable brew piles shown at the kettle + always in the sidebar; bots repointed to author + ROUTE value buildings (the demand lane). Bump discards stale v48 state.
+const KEY='hanse-hotseat-v50'; // v1.0: the FLOOR fixed — moving onto an occupied station, working your Floor (running every cask in your vessels) is now taken IN LIEU OF the public line (not in addition): no toll, no public stations/slots that turn — the boutique brewer's fallback (RULES §2). Bump discards stale v49 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -778,9 +778,9 @@ function chooseLine(which){
   snapshot();
   const p=cur();const lk=cellOfLine(p.cell)[which];
   // occupancy pressure (v1.0 + the FLOOR): moving onto a cell a rival occupies costs the 1 G toll — OR,
-  // instead of the toll, you may TAP YOUR FLOOR (run one maturing cask's slot-action). Round-1 placement
-  // is FREE. Only present the choice when it's real (a maturing cask to tap AND grain to spend); otherwise
-  // pay what you can (capped, never blocks) and fire the line.
+  // instead, you may work your FLOOR: run every cask on your brewery floor IN LIEU OF the public line.
+  // Round-1 placement is FREE. Offer the choice only when it's real (casks on the floor AND grain to
+  // spend on the toll); otherwise pay what you can (capped, never blocks) and fire the line.
   const shared=S.turn>1 && S.players.some(q=>q.id!==p.id&&q.cell===p.cell);
   if(shared){
     const hasFloor=p.vessels.some(c=>c);
@@ -790,24 +790,34 @@ function chooseLine(which){
   }
   activateLine(lk);
 }
-// the toll/Floor fork (the boutique brewer's stable fallback — PLAN.md §1B)
+// the toll/Floor fork: moving onto an occupied station, you EITHER pay the toll and work the contested
+// public line, OR retreat to your private FLOOR — run the slot-action of EVERY cask on your brewery floor
+// (your vessels) IN LIEU OF the public line (not in addition). The boutique brewer's stable fallback when
+// the ring is unfavorable (RULES §2 / PLAN.md §1B). The Floor forgoes both stations + both slots this turn.
 function tollPay(){snapshot();const p=cur();const toll=Math.min(OCCUPANCY_TOLL,p.grain);
   if(toll>0){p.grain-=toll;log(p.name+' pays −'+Gi(toll)+' occupancy toll for sharing <b>'+CELLNAME[p.cell]+'</b>.',true);}
   activateLine(UI.line);}
-function tollFloor(){const p=cur();const fc=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c);
-  if(!fc.length){tollPay();return;}
-  UI.sub='floor';UI.floor={line:UI.line};render();}
-function floorPick(vi){const p=cur();const c=p.vessels[vi];if(!c)return;snapshot();
-  log(p.name+' works the '+LU('flask-conical')+' <b>Floor</b> — taps '+styleShort(c.style)+'’s '+caskAct(c)+' action instead of the toll.',true);
-  UI.floor=null;UI.pendingActivate=UI.line;const act=caskAct(c);
-  if(act==='source')enterSource(2,'activate');
-  else if(act==='age')enterAge(2,'single','activate');
-  else if(act==='load')enterLoad(myShips(p),shipLoadableCasks(p),true,'activate',1,'floor');
-  else if(act==='reach')enterReach('activate');
-  else if(act==='convert')enterConvert('activate');
-  else if(act==='survey')enterSurvey('activate');
-  else if(act==='wild')enterWild('activate');
-  else activateLine(UI.line);
+function tollFloor(){const p=cur();const idxs=p.vessels.map((c,i)=>c?i:-1).filter(i=>i>=0);
+  if(!idxs.length){tollPay();return;}   // no casks on the floor → nothing to run; just take the public line
+  snapshot();
+  log(p.name+' works the '+LU('flask-conical')+' <b>Floor</b> instead of the contested line — runs every cask on the brewery floor (no toll, no public line).',true);
+  UI.floorQueue=idxs.slice();runFloorNext();
+}
+// run the next queued floor cask's slot-action; when the queue empties, the Floor is your whole turn → end.
+function runFloorNext(){
+  if(!UI.floorQueue||!UI.floorQueue.length){UI.floorQueue=null;UI.sub='end';render();return;}
+  const p=cur();const vi=UI.floorQueue.shift();const c=p.vessels[vi];
+  if(!c){runFloorNext();return;}
+  const act=caskAct(c);
+  log('↳ Floor — '+LU('beer')+styleShort(c.style)+'’s '+LU(CASK_ACT_ICON[act]||'')+' '+act+' action.');
+  if(act==='source')enterSource(2,'floorq');
+  else if(act==='age')enterAge(2,'single','floorq');
+  else if(act==='load')enterLoad(myShips(p),shipLoadableCasks(p),true,'floorq',1,'floor');
+  else if(act==='reach')enterReach('floorq');
+  else if(act==='convert')enterConvert('floorq');
+  else if(act==='survey')enterSurvey('floorq');
+  else if(act==='wild')enterWild('floorq');
+  else runFloorNext();
 }
 // build & fire a line's stops: both stations + each cap slot (its occupant, and/or a Crane/Lagering line-effect building)
 function activateLine(lk){const L=LINES[lk];const p=cur();
@@ -840,8 +850,8 @@ function enterBldgLine(slot){const p=cur();const k=bKeyAt(slot);
 // resume / return helpers — clear the sub-flow fields, then route to the right phase
 function resume(rt){
   UI.cell=null;UI.stage=null;UI.tmp=null;
-  UI.age=UI.brew=UI.src=UI.load=UI.cvt=UI.reach=UI.wild=UI.deploy=UI.benefit=UI.survey=UI.goods=UI.floor=null;
-  if(rt==='activate'){const lk=UI.pendingActivate;UI.pendingActivate=null;activateLine(lk);return;}
+  UI.age=UI.brew=UI.src=UI.load=UI.cvt=UI.reach=UI.wild=UI.deploy=UI.benefit=UI.survey=UI.goods=null;
+  if(rt==='floorq'){runFloorNext();return;}   // mid-Floor: run the next cask on the brewery floor (do NOT clear UI.floorQueue)
   if(rt==='benefitcont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}
   if(rt==='line')UI.sub='line';
   else if(rt==='end')UI.sub='end';
@@ -1703,8 +1713,7 @@ function aiGmOptions(p){
   if(U==='placebldg'){const bs=aBuildSlotsAI();return bs.length?bs.map(s=>()=>placeBldgOn(s.id)):null;}
   if(U==='benefit'){const disp=Array.from(new Set(S.buildDisplay||[]));
     return disp.length?disp.map(k=>()=>benefitPick(k)):[()=>benefitPick(null)];}
-  if(U==='toll')return [()=>tollPay(),()=>tollFloor()];
-  if(U==='floor'){const o=p.vessels.map((c,i)=>c?(()=>floorPick(i)):null).filter(x=>x);o.push(()=>tollPay());return o;}
+  if(U==='toll')return [()=>tollPay(),()=>tollFloor()];   // the GM weighs paying for the public line vs working its Floor
   if(U==='goodspick')return [()=>goodsPick(2,0),()=>goodsPick(1,1),()=>goodsPick(0,2)];   // liquidity mix — the GM evaluates each
   if(U==='wild')return [()=>wildPick('source'),()=>wildPick('brew'),()=>wildPick('age'),()=>wildPick('ship'),()=>wildSkip()];
   if(U==='reach')return UI.reach.ks.map(k=>()=>reachPick(k));
@@ -1738,8 +1747,7 @@ function aiStep(){
       case 'deploy':return aiDeploy(p);
       case 'benefit':return aiBenefit();
       case 'placebldg':return aiPlaceBldg(p);
-      case 'toll':return tollPay();              // the AI pays the occupancy toll (the Floor is a human-facing option)
-      case 'floor':{const fi=p.vessels.findIndex(c=>c);return fi>=0?floorPick(fi):tollPay();}
+      case 'toll':return tollPay();              // the journeyman/trader pay the toll for the public line (the GM weighs the Floor via aiGmOptions)
       case 'goodspick':return goodsPick(2,0);    // the AI takes the liquidity benefit as 2 grain
       case 'end':return endTurn();
       default:
@@ -1812,7 +1820,7 @@ function renderAid(){
   const tb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='transform').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   document.getElementById('aidcard').innerHTML=
     '<h2>'+ic('scroll-text')+' Player Aid — v1.0 “Living Slots”</h2>'
-    +'<div class="asec"><b>Your turn</b><div class="note">Move to an adjacent station (pay 1 '+ic('wheat')+' if a rival is there — or work your <b>Floor</b>: tap a maturing cask’s action instead) → activate its <b>row OR column</b> → resolve up to 4 stops (slot · station · station · slot) <b>in any order</b>.</div></div>'
+    +'<div class="asec"><b>Your turn</b><div class="note">Move to an adjacent station → activate its <b>row OR column</b> → resolve up to 4 stops (slot · station · station · slot) <b>in any order</b>. <b>If you move onto a station a rival occupies:</b> pay 1 '+ic('wheat')+' toll and work that public line, <b>OR</b> work your <b>Floor</b> — run every cask in your vessels (their slot-actions) <i>instead of</i> the public line (no toll).</div></div>'
     +'<div class="asec"><b>The four stations</b><div class="note">'
       +ic('store')+' <b>Market</b> (Source): take 2 goods, or acquire one tile — a recipe · a '+ic('building-2')+' Building (buy+place) · a '+ic('sailboat')+' ship · a charter contract · an improvement. Place a held Building free.<br>'
       +ic('flask-conical')+' <b>Brewhouse</b> (Brew): pay a recipe → a young cask; it takes the FACE-UP action of that quality’s pile (steerable).<br>'
@@ -1881,10 +1889,9 @@ function renderBar(){
     acts=btn(Gi(1)+'→'+Hi(1),'convertDo(\'g\',1)','go')+btn(Gi(2)+'→'+Hi(2),'convertDo(\'g\',2)','go')+btn(Hi(1)+'→'+Gi(1),'convertDo(\'h\',1)','go')+btn(Hi(2)+'→'+Gi(2),'convertDo(\'h\',2)','go')+btn('Skip','convertSkip()','ghost');}
   else if(U==='reach'){prompt='Reach — +1 presence at a kontor you’ve delivered to.';
     acts=UI.reach.ks.map(k=>btn(LU('map-pin')+DEST[k].name,'reachPick(\''+k+'\')','go')).join('')+btn('Skip','reachSkip()','ghost');}
-  else if(U==='toll'){prompt='You moved onto an occupied <b>'+CELLNAME[p.cell]+'</b> — pay the toll, or work your <b>Floor</b> (tap a maturing cask’s action) instead.';
-    acts=btn('Pay −'+Gi(1)+' toll','tollPay()','go')+btn(LU('flask-conical')+' Work the Floor','tollFloor()','primary');}
-  else if(U==='floor'){prompt='The <b>Floor</b> — tap one cask in your vessels to run its slot-action (instead of the toll).';
-    acts=p.vessels.map((c,i)=>c?btn(LU('beer')+styleShort(c.style)+' · '+caskAct(c),'floorPick('+i+')','go'):'').filter(x=>x).join('')+btn('Pay the toll instead','tollPay()','ghost');}
+  else if(U==='toll'){const flr=p.vessels.filter(c=>c).map(c=>LU(CASK_ACT_ICON[caskAct(c)]||'')+caskAct(c)).join(', ');
+    prompt='You moved onto an occupied <b>'+CELLNAME[p.cell]+'</b>. <b>Pay the toll</b> and work the contested line, OR work your <b>Floor</b> — run every cask in your brewery ('+flr+') <i>instead of</i> the public line.';
+    acts=btn('Pay −'+Gi(1)+' toll → the line','tollPay()','go')+btn(LU('flask-conical')+' Work the Floor (no line)','tollFloor()','primary');}
   else if(U==='placebldg'){const b=UI.tmp.placeBldg;prompt='Place '+LU('building-2')+' <b>'+bName(b.b)+'</b> — click a glowing slot ('+BUILDINGS[b.b].desc+').';
     acts='';}
   else if(U==='wild'){prompt='Wild — take any base action as a bonus.';
