@@ -531,7 +531,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v50'; // v1.0: the FLOOR fixed — moving onto an occupied station, working your Floor (running every cask in your vessels) is now taken IN LIEU OF the public line (not in addition): no toll, no public stations/slots that turn — the boutique brewer's fallback (RULES §2). Bump discards stale v49 state.
+const KEY='hanse-hotseat-v51'; // v1.0 building economy: buildings are gained TO HAND (London/Novgorod delivery & Survey → a tile in hand; no auto-place), and PLACED deliberately at the Market; placing onto a slot that already has a building REPLACES it, returning the displaced tile to its OWNER'S hand (slots never lock — the contest is over prime slot/line positions). Bump discards stale v50 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -948,12 +948,10 @@ function buyTile(id){commissionShip();}   // legacy alias (the headless harness 
 // ---- BUILDINGS at the Market (v1.0 keystone): buy + place from the display, or place one you hold (free) ----
 function buyBuilding(idx){const p=cur();const disp=S.buildDisplay||[];const key=disp[idx];
   if(!key)return;const cost=BUILDINGS[key].cost;if(!canPay(p,cost))return;
-  if(!buildableSlots().length){alert('Every slot already has a building.');return;}
   snapshot();pay(p,cost);takeBuildFromDisplay(key);
   log(p.name+' buys '+LU('building-2')+' <b>'+bName(key)+'</b> at the '+LU('store')+' Market — place it on a slot.',true);
   beginPlaceBldg(key,p.id,'stops');}
 function placeHeld(idx){const p=cur();const key=(p.hand||[])[idx];if(key===undefined)return;
-  if(!buildableSlots().length){alert('Every slot already has a building.');return;}
   snapshot();p.hand.splice(idx,1);
   log(p.name+' places a held '+LU('building-2')+' <b>'+bName(key)+'</b> (free) — pick a slot.',true);
   beginPlaceBldg(key,p.id,'stops');}
@@ -961,14 +959,18 @@ function buyImprovement(key){const p=cur();const def=IMPROVEMENTS[key];
   if(!def||!grantableBuy(p,key)||!canPay(p,def.cost))return;
   snapshot();pay(p,def.cost);grantUpgrade(p,key);
   log(p.name+' fits the '+LU('wrench')+' <b>'+upName(key)+'</b> improvement.',true);cellDone();}
-// the shared Building-placement flow (Market buy · held tile · a London/Novgorod benefit)
+// the shared Building-placement flow (Market buy · held tile from a delivery/Survey). Any slot is a legal
+// target — placing onto a slot that already has a building REPLACES it; the displaced tile returns to its
+// OWNER'S hand (slots never lock; the contest is over prime slot/line positions, nothing is destroyed).
 function beginPlaceBldg(key,owner,rt){
-  if(!buildableSlots().length){S.players[owner].hand.push(key);log('↳ '+S.players[owner].name+' keeps '+LU('building-2')+bName(key)+' in hand (no open slot).');resume(rt);return;}
   UI.tmp=UI.tmp||{};UI.tmp.placeBldg={b:key,owner};UI.placeRt=rt;UI.sub='placebldg';render();}
-function placeBldgOn(slot){const b=UI.tmp&&UI.tmp.placeBldg;if(!b||bAt(slot))return;snapshot();
+function placeBldgOn(slot){const b=UI.tmp&&UI.tmp.placeBldg;if(!b)return;snapshot();
+  const old=bAt(slot);
+  if(old){S.players[old.owner].hand.push(old.b);
+    log('↳ '+LU('building-2')+bName(old.b)+' is displaced — returned to '+S.players[old.owner].name+'’s hand.');}
   S.buildings[slot]={b:b.b,owner:b.owner};
   if(b.b==='workshop'){const occ=S.slots[slot];if(occ&&occ.type==='cask')occ.act='wild';}   // Workshop upgrades a cask already docked
-  log(S.players[b.owner].name+' authors '+LU('building-2')+' <b>'+bName(b.b)+'</b> on a '+LU('anchor')+' slot — '+BUILDINGS[b.b].desc+'.',true);
+  log(S.players[b.owner].name+' authors '+LU('building-2')+' <b>'+bName(b.b)+'</b> on a '+LU('anchor')+' slot'+(old?' (replacing '+bName(old.b)+')':'')+' — '+BUILDINGS[b.b].desc+'.',true);
   const rt=UI.placeRt;UI.placeRt=null;if(UI.tmp)UI.tmp.placeBldg=null;resume(rt);}
 function enterSurvey(rt){const p=cur();const k=drawBuilding();
   if(!k){log('↳ Survey: the Building deck is empty.');resume(rt);return;}
@@ -1146,14 +1148,11 @@ function grantUpgrade(p,key){   // the private improvements (vessel/cellar/grana
   if(key==='vessel'){if(p.maxVessels<3){p.maxVessels++;p.vessels.push(null);p.upgrades.push('vessel');}return;}
   if(!p.upgrades.includes(key))p.upgrades.push(key);
 }
-// a rival (non-active) owner auto-takes a Building from the display and auto-places it (can't pick mid-turn).
+// a rival (non-active) owner auto-takes a Building from the display TO HAND (can't pick mid-turn); they
+// place it on their own turn at the Market. v1.0 "to hand" — buildings no longer auto-place on delivery.
 function autoGrantBuilding(p,dest){const disp=S.buildDisplay||[];if(!disp.length)return;
-  const k=disp[Math.floor(Math.random()*disp.length)];takeBuildFromDisplay(k);
-  const slots=buildableSlots();
-  if(!slots.length){p.hand.push(k);log('↳ '+p.name+' earns '+LU('building-2')+bName(k)+' (to hand — no open slot) from '+DEST[dest].name+'.');return;}
-  const slot=slots[Math.floor(Math.random()*slots.length)].id;S.buildings[slot]={b:k,owner:p.id};
-  if(k==='workshop'){const occ=S.slots[slot];if(occ&&occ.type==='cask')occ.act='wild';}
-  log('↳ '+p.name+' earns & places '+LU('building-2')+' <b>'+bName(k)+'</b> (from '+DEST[dest].name+').');}
+  const k=disp[Math.floor(Math.random()*disp.length)];takeBuildFromDisplay(k);p.hand.push(k);
+  log('↳ '+p.name+' earns '+LU('building-2')+' <b>'+bName(k)+'</b> to hand (from '+DEST[dest].name+' — places it at the Market).');}
 function afterSail(rt){
   if((UI.pendingGoods||[]).length){UI.sub='goodspick';UI.goods={returnTo:rt};render();return;}   // liquidity owner-choice picker
   if((UI.pendingBenefits||[]).length){UI.sub='benefit';UI.benefit={returnTo:rt};render();return;}   // pick a Building from the display
@@ -1161,12 +1160,14 @@ function afterSail(rt){
 }
 function goodsPick(g,h){snapshot();const b=UI.pendingGoods[0];gain(S.players[b.pid],g,h);
   UI.pendingGoods.shift();const rt=UI.goods.returnTo;UI.goods=null;afterSail(rt);}
+// the active player PICKS which display Building to take — to HAND (placed later at the Market).
 function benefitPick(key){const b=UI.pendingBenefits[0];
   if(!key||!(S.buildDisplay||[]).includes(key)){   // nothing to take (display empty) → skip this benefit
     UI.pendingBenefits.shift();const rt=UI.benefit.returnTo;UI.benefit=null;afterSail(rt);return;}
-  snapshot();takeBuildFromDisplay(key);UI.pendingBenefits.shift();const rt=UI.benefit.returnTo;UI.benefit=null;
-  log('↳ '+S.players[b.pid].name+' earns '+LU('building-2')+' <b>'+bName(key)+'</b> (from '+DEST[b.dest].name+') — place it.');
-  UI.afterRt=rt;beginPlaceBldg(key,b.pid,'benefitcont');
+  snapshot();takeBuildFromDisplay(key);S.players[b.pid].hand.push(key);
+  UI.pendingBenefits.shift();const rt=UI.benefit.returnTo;UI.benefit=null;
+  log('↳ '+S.players[b.pid].name+' takes '+LU('building-2')+' <b>'+bName(key)+'</b> to hand (from '+DEST[b.dest].name+' — place it at the Market).');
+  afterSail(rt);
 }
 
 // ---------- HARBOR menu ----------
@@ -1575,7 +1576,7 @@ function aiMarket(p){
   if(!aiIsApp(p)&&p.grain>=5&&grantableBuy(p,'vessel')&&canPay(p,IMPROVEMENTS.vessel.cost)){buyImprovement('vessel');return;}
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
-function aiPlaceBldg(p){const bs=aBuildSlotsAI();if(!bs.length)return;
+function aiPlaceBldg(p){let bs=aBuildSlotsAI();if(!bs.length)bs=SLOTS.slice();   // prefer empty-building slots; if none, replace
   // trader: place on a slot of a line it works often (a high-traffic line); else first open
   if(aiIsTrader(p)&&p.cell){const lk=cellOfLine(p.cell)[aiChosenWhich||'row'];const on=bs.find(s=>s.line===lk);if(on){placeBldgOn(on.id);return;}}
   placeBldgOn(bs[0].id);}
@@ -1755,7 +1756,7 @@ function aiGmOptions(p){
     const o=ships.map(s=>()=>loadOnto(s));o.push(()=>loadSkip());return o;}
   if(U==='deploy'){const es=emptySlots();if(!es.length)return null;
     const o=es.map(s=>()=>deployTo(s.id));o.push(()=>deploySkipOne());return o;}
-  if(U==='placebldg'){const bs=aBuildSlotsAI();return bs.length?bs.map(s=>()=>placeBldgOn(s.id)):null;}
+  if(U==='placebldg'){const bs=aBuildSlotsAI();const tg=bs.length?bs:SLOTS;return tg.map(s=>()=>placeBldgOn(s.id));}
   if(U==='benefit'){const disp=Array.from(new Set(S.buildDisplay||[]));
     return disp.length?disp.map(k=>()=>benefitPick(k)):[()=>benefitPick(null)];}
   if(U==='toll')return [()=>tollPay(),()=>tollFloor()];   // the GM weighs paying for the public line vs working its Floor
@@ -1867,7 +1868,7 @@ function renderAid(){
     '<h2>'+ic('scroll-text')+' Player Aid — v1.0 “Living Slots”</h2>'
     +'<div class="asec"><b>Your turn</b><div class="note">Move to an adjacent station → activate its <b>row OR column</b> → resolve up to 4 stops (slot · station · station · slot) <b>in any order</b>. <b>If you move onto a station a rival occupies:</b> pay 1 '+ic('wheat')+' toll and work that public line, <b>OR</b> work your <b>Floor</b> — run every cask in your vessels (their slot-actions) <i>instead of</i> the public line (no toll).</div></div>'
     +'<div class="asec"><b>The four stations</b><div class="note">'
-      +ic('store')+' <b>Market</b> (Source): take 2 goods, or acquire one tile — a recipe · a '+ic('building-2')+' Building (buy+place) · a '+ic('sailboat')+' ship · a charter contract · an improvement. Place a held Building free.<br>'
+      +ic('store')+' <b>Market</b> (Source): take 2 goods, or acquire one tile — a recipe · a '+ic('building-2')+' Building (buy + place) · a '+ic('sailboat')+' ship · a charter contract · an improvement. Or <b>place a Building from your hand</b> (free) — the ones you earned at London/Novgorod or drew with Survey.<br>'
       +ic('flask-conical')+' <b>Brewhouse</b> (Brew): pay a recipe → a young cask; it takes the FACE-UP action of that quality’s pile (steerable).<br>'
       +ic('hourglass')+' <b>Cellar</b> (Age): 3 age points across your casks (every cask also ages +1 each of your turns).<br>'
       +ic('anchor')+' <b>Harbor</b> (Ship): load a Ready cask onto a ship (it sails when full → each owner banks the benefit + points), <b>Enshrine</b> a Q2+ <i>slot</i> cask at the '+ic('crown')+' Hall (local), or Charter.</div></div>'
@@ -1937,7 +1938,7 @@ function renderBar(){
   else if(U==='toll'){const flr=p.vessels.filter(c=>c).map(c=>LU(CASK_ACT_ICON[caskAct(c)]||'')+caskAct(c)).join(', ');
     prompt='You moved onto an occupied <b>'+CELLNAME[p.cell]+'</b>. <b>Pay the toll</b> and work the contested line, OR work your <b>Floor</b> — run every cask in your brewery ('+flr+') <i>instead of</i> the public line.';
     acts=btn('Pay −'+Gi(1)+' toll → the line','tollPay()','go')+btn(LU('flask-conical')+' Work the Floor (no line)','tollFloor()','primary');}
-  else if(U==='placebldg'){const b=UI.tmp.placeBldg;prompt='Place '+LU('building-2')+' <b>'+bName(b.b)+'</b> — click a glowing slot ('+BUILDINGS[b.b].desc+').';
+  else if(U==='placebldg'){const b=UI.tmp.placeBldg;prompt='Place '+LU('building-2')+' <b>'+bName(b.b)+'</b> — click any slot. <span class="note">('+BUILDINGS[b.b].desc+'. Placing onto a slot that has a building replaces it — the old tile returns to its owner\'s hand.)</span>';
     acts='';}
   else if(U==='wild'){prompt='Wild — take any base action as a bonus.';
     acts=btn(LU('store')+' Source','wildPick(\'source\')','go')+btn(LU('flask-conical')+' Brew','wildPick(\'brew\')','go')+btn(LU('hourglass')+' Age','wildPick(\'age\')','go')+btn(LU('ship')+' Ship','wildPick(\'ship\')','go')+btn('Skip','wildSkip()','ghost');}
@@ -1952,7 +1953,7 @@ function renderBar(){
     prompt='Set Ready <b>'+styleShort(c.style)+'</b> on a slot — click an open slot.';
     acts=btn('Leave in vessel','deploySkipOne()','ghost')+(UI.deploy.queue.length>1?btn('Skip rest','deploySkipAll()','ghost'):'');}
   else if(U==='benefit'){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];
-    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take a '+LU('building-2')+' <b>Building</b> from the display (free), then place it.';
+    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take a '+LU('building-2')+' <b>Building</b> from the display <b>to hand</b> (free); place it later at the Market.';
     acts=(S.buildDisplay||[]).map(k=>btn(LU('building-2')+bName(k),'benefitPick(\''+k+'\')','go')).join('')+((S.buildDisplay||[]).length?'':'<span class="note">display empty</span>'+btn('Skip','benefitPick(null)','ghost'));}
   else if(U==='goodspick'){const b=UI.pendingGoods[0];const lp=S.players[b.pid];
     prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take <b>2 goods</b> (any mix).';
@@ -2011,7 +2012,7 @@ function renderGrid(){
   const ag=document.getElementById('ag');let h='';
   SLOTS.forEach(s=>{const t=S.slots[s.id];const b=bAt(s.id);let cls='slot '+s.id;
     const occPlacing=!aiTurn()&&((UI.sub==='deploy'&&!t)||(UI.sub==='cell'&&UI.cell==='A'&&UI.stage==='place'&&!t));
-    const bldgPlacing=!aiTurn()&&UI.sub==='placebldg'&&!b;
+    const bldgPlacing=!aiTurn()&&UI.sub==='placebldg';   // any slot is a target (placing onto a building replaces it)
     if(occPlacing||bldgPlacing)cls+=' place';
     let inner;let style='';
     if(b){   // a building is a FULL tile; the occupant (if any) is a token on it
@@ -2072,7 +2073,7 @@ function renderDests(){
     const valStr=d==='hall'
       ?'<span data-tip="'+attr('★ = prestige points per ENSHRINED cask, by quality: Q2→3 · Q3→5 · Q4→7 · Q5→9 (a fixed ladder). Reached by the local Enshrine (a Harbor action, no boat); no majority, no benefit.')+'"><b>3·5·7·9</b><span class="vstar">★</span></span>'
       :'<span data-tip="'+attr('★ = BASE points per delivered cask ('+D.value+'). The real value is VARIABLE: + the value-Buildings the cask shipped through (Staple Hall +3, Rich Berth +2/cask, a Kontor Charter +4, …). Author them on the slots.')+'"><b>'+D.value+'</b><span class="vstar">★</span><span style="font-size:.68rem;opacity:.8;margin-left:1px">+'+LU('building-2')+'</span></span>';
-    const ben=D.benefit==='building'?'<span data-tip="'+attr('The delivery benefit: on each delivery the owner takes one Building from the Market display, free, and places it (the deliver→author→deliver-better engine).')+'">+'+LU('building-2')+'</span>'
+    const ben=D.benefit==='building'?'<span data-tip="'+attr('The delivery benefit: the owner takes one Building from the Market display free TO HAND, and places it later at the Market (the deliver→author→deliver-better engine).')+'">+'+LU('building-2')+'</span>'
       :D.benefit==='goods'?'<span data-tip="'+attr('Liquidity: on each delivery the owner takes 2 goods, any mix (grain/hops).')+'">+2'+LU('coins')+'</span>':'';
     h+='<div class="route '+d+'" data-tip="'+attr(D.name+' — '+D.role+'. Legend: Q# = minimum cask quality · N★ = BASE per-cask value (+ the value-Buildings shipped through) · top corner = end-game majority (1st/2nd/3rd) · +icon = the owner’s benefit on each delivery · squares = delivered casks (outline = bonus presence, ★ = current leader).')+'">'
       +'<div class="rh"><span class="ric">'+(D.kontor?LU('landmark'):LU('crown'))+'</span>'
@@ -2117,7 +2118,7 @@ function renderShop(){
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Improvements</b> <span class="note">(private — bought for goods)</span></div>';
   IMPROVEMENT_KEYS.forEach(key=>{const def=IMPROVEMENTS[key];const owned=!grantableBuy(p,key);const can=canPay(p,def.cost)&&!owned;
     h+='<div class="item"><span data-tip="'+attr(def.desc)+'">'+LU('wrench')+' <b>'+def.name+'</b>'+(owned?' <span class="note">(have)</span>':'')+' <span class="note" style="font-size:.72rem">— '+def.desc+'</span></span><span class="cost">'+costIcons(def.cost)+' '+(buying&&!owned?'<button '+(can?'':'disabled')+' onclick="buyImprovement(\''+key+'\')">buy</button>':'')+'</span></div>';});
-  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">At the '+LU('store')+' <b>Market</b>: take goods, OR acquire one tile — a recipe, a '+LU('building-2')+' Building (buy+place), a '+LU('sailboat')+' ship, a charter contract, or an improvement. Place a held Building free.</div>';
+  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">At the '+LU('store')+' <b>Market</b>: take goods, OR acquire one tile — a recipe, a '+LU('building-2')+' Building (buy+place), a '+LU('sailboat')+' ship, a charter contract, or an improvement. <b>Place a held Building free</b> (earned at London/Novgorod or via Survey). Placing onto a slot that has a building <b>replaces</b> it — the old tile returns to its owner\'s hand.</div>';
 }
 
 function renderVoyage(){

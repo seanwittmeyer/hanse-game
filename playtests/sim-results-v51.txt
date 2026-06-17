@@ -1,0 +1,75 @@
+Brewhouses of the Hanse — headless sim (KEY hanse-hotseat-v51)  |  N=400 games per player count
+scenario: base — Baseline — 3G/2H, equal seats (canonical)
+
+================  2 PLAYERS  (400 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 17.8   min 11   max 25   in 12-25 band: 99.8%
+end trigger:          clock 98.5%   ceiling 1.5%
+sailed/cap at end:    avg 7.1 / 7
+winner total score:   avg 39.7   min 20   max 73
+win margin (1st-2nd): avg 10.9   (ties: 17)
+winner score split:   deliv 19.2   maj 13.0   goals 0.0
+seat win-rate:        P1 54.5%   P2 45.5%   (ideal 50.0%, spread 9.0pts)
+winner lean:          prestige(Hall>kontor) 4.3%   blended(both>0) 13.3%
+UPGRADES (all plyrs): total/game 0.2   earned-via-ship 0.2 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 0.1   (max 1)
+charters/game:        avg 1.5
+winner deliveries by destination (share of winners' casks):
+   bruges 33.6%   london 17.0%   bergen 22.4%   novgorod 25.3%   hall 1.7%
+ALL deliveries by destination (every player):
+   bruges 35.0%   london 19.3%   bergen 22.0%   novgorod 22.5%   hall 1.2%
+
+================  3 PLAYERS  (400 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 16.9   min 12   max 25   in 12-25 band: 100.0%
+end trigger:          clock 99.5%   ceiling 0.5%
+sailed/cap at end:    avg 11.2 / 11
+winner total score:   avg 45.7   min 19   max 77
+win margin (1st-2nd): avg 7.7   (ties: 24)
+winner score split:   deliv 22.4   maj 15.2   goals 0.0
+seat win-rate:        P1 39.8%   P2 31.8%   P3 28.5%   (ideal 33.3%, spread 11.3pts)
+winner lean:          prestige(Hall>kontor) 2.3%   blended(both>0) 12.0%
+UPGRADES (all plyrs): total/game 0.2   earned-via-ship 0.2 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 0.1   (max 1)
+charters/game:        avg 4.0
+winner deliveries by destination (share of winners' casks):
+   bruges 29.5%   london 18.4%   bergen 20.0%   novgorod 30.5%   hall 1.5%
+ALL deliveries by destination (every player):
+   bruges 31.7%   london 19.4%   bergen 20.7%   novgorod 27.3%   hall 0.9%
+
+================  4 PLAYERS  (400 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 15.6   min 11   max 22   in 12-25 band: 99.3%
+end trigger:          clock 100.0%   ceiling 0.0%
+sailed/cap at end:    avg 14.4 / 14
+winner total score:   avg 41.1   min 19   max 78
+win margin (1st-2nd): avg 6.7   (ties: 20)
+winner score split:   deliv 21.5   maj 12.4   goals 0.0
+seat win-rate:        P1 35.3%   P2 24.0%   P3 27.3%   P4 13.5%   (ideal 25.0%, spread 21.8pts)
+winner lean:          prestige(Hall>kontor) 2.8%   blended(both>0) 6.3%
+UPGRADES (all plyrs): total/game 0.3   earned-via-ship 0.3 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 0.1   (max 1)
+charters/game:        avg 7.1
+winner deliveries by destination (share of winners' casks):
+   bruges 30.5%   london 16.0%   bergen 18.3%   novgorod 34.2%   hall 1.0%
+ALL deliveries by destination (every player):
+   bruges 33.0%   london 17.4%   bergen 18.8%   novgorod 30.2%   hall 0.6%
+
+================  5 PLAYERS  (400 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 14.1   min 10   max 23   in 12-25 band: 91.8%
+end trigger:          clock 100.0%   ceiling 0.0%
+sailed/cap at end:    avg 17.6 / 17
+winner total score:   avg 34.9   min 11   max 71
+win margin (1st-2nd): avg 5.3   (ties: 32)
+winner score split:   deliv 18.3   maj 9.5   goals 0.0
+seat win-rate:        P1 39.0%   P2 20.0%   P3 18.5%   P4 11.5%   P5 11.0%   (ideal 20.0%, spread 28.0pts)
+winner lean:          prestige(Hall>kontor) 3.5%   blended(both>0) 7.0%
+UPGRADES (all plyrs): total/game 0.3   earned-via-ship 0.3 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 0.1   (max 1)
+charters/game:        avg 11.3
+winner deliveries by destination (share of winners' casks):
+   bruges 30.6%   london 13.0%   bergen 13.7%   novgorod 41.6%   hall 1.1%
+ALL deliveries by destination (every player):
+   bruges 33.0%   london 14.1%   bergen 13.9%   novgorod 38.4%   hall 0.6%
+

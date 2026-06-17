@@ -127,7 +127,8 @@ Gruit fixed to **Source +2 goods**, Q2+ draw from the pool — §8). Three state
 ### A · Market — *Source & build*
 Do **one**: take **2 goods** (any mix), **or acquire one tile** (pay its goods cost ⚙):
 - a **recipe** (a brewable quality; export recipes cost more);
-- a **building** from the face-up display (`⚙ G` by tier) — **and place it on a slot** (§5);
+- a **building** from the face-up display (`⚙ G` by tier) — **buy and place it on a slot** (§5);
+  *(or **place a building from your hand** — earned at London/Novgorod or via Survey — free);*
   *(you may also place a building you already hold, free — the starting tile / a Survey draw);*
 - a **ship commission** (`2 G` ⚙ — place a face-up ship on a slot + free-load one Ready cask — §6);
 - a **charter contract** (`1 G` ⚙ — §6).
@@ -167,10 +168,16 @@ a building.
 > slot of a line you fire often is the core optimization (and the heart of v1.0, `PLAN.md` §3).
 
 ### 5a. Buildings — the one tile family (owned, authored, two flavors)
-Buildings come from the Market display, are **placed on any slot** (empty or occupied), and are
-**owned** by the placer. Under **one grammar — "a building modifies the occupant docked on it"**
-— a building is one of two flavors (variety = content, not new rules; the deck is in
-`COMPONENTS.md`):
+You **gain** buildings to your **hand** — buy one at the Market, or **take one free to hand** when you
+deliver to London/Novgorod (§7) or draw one with **Survey**. You **place** a held building **at the
+Market** (a free acquire option) onto **any slot**. **Placing onto a slot that already has a building
+REPLACES it** — the displaced tile returns to its **owner's hand** (so the 8 slots never lock; the
+contest is over prime slot/line positions, and nothing is destroyed). Each building is **owned** by its
+placer. Under **one grammar — "a building modifies the occupant docked on it"** — a building is one of
+two flavors (variety = content, not new rules; the deck is in `COMPONENTS.md`). **Each building targets a
+specific occupant** (shown by a glyph): most are **cask** tiles, a few are **ship** tiles (the rich
+berths **Rich Berth/Festkeller** + **Cooperage/Customs House**), two are **line-effects** (Crane,
+Lagering), one is **owner-passive** (Almoner's Stall). A building does nothing for the wrong occupant.
 
 - **Value buildings (the "demand"):** the occupant scores **bonus value on delivery.** On a
   **ship**, this is a **rich berth** — *every* cask the ship delivers scores the bonus (the
@@ -216,9 +223,9 @@ Five destinations, all open from start (⚙ table in `COMPONENTS.md`):
 | Destination | Gate ⚙ | Base value ⚙ | Benefit on delivery ⚙ | Majority (1/2/3) ⚙ |
 |---|---|---|---|---|
 | **Bruges** (Hub) | Q1 | +1 ★ | 2 goods (owner's choice) | 4 / 2 / 0 |
-| **London** (Steelyard) | Q2 | +1 ★ | take a building/recipe ⚙ | 5 / 3 / 1 |
+| **London** (Steelyard) | Q2 | +1 ★ | take a building **to hand** ⚙ | 5 / 3 / 1 |
 | **Bergen** (Bryggen) | Q2 | +1 ★ | 2 goods | 9 / 5 / 2 (anchor) |
-| **Novgorod** (Long Haul) | Q3 | +2 ★ | take a building/recipe ⚙ | 8 / 5 / 2 |
+| **Novgorod** (Long Haul) | Q3 | +2 ★ | take a building **to hand** ⚙ | 8 / 5 / 2 |
 | **The Hall** (Prestige) | Q2 | **fixed ladder 3/5/7/9 by quality** ⚙ | — (Enshrine) | — |
 
 **Delivery value at a kontor = destination base + the value-building bonuses the cask shipped
