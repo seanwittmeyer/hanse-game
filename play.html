@@ -381,7 +381,7 @@ const DEST={
   bruges  :{name:'Bruges',  gate:1, value:1, maj:[4,2,0],   benefit:'goods',    kontor:true,  role:'Hub · the economy — 2 goods + a starter majority'},
   london  :{name:'London',  gate:2, value:1, maj:[5,3,1],   benefit:'building', kontor:true,  role:'Steelyard · the engine — the only kontor that hands you a Building (to hand)'},
   bergen  :{name:'Bergen',  gate:2, value:1, maj:[9,5,2],   benefit:'reach',    kontor:true,  role:'Bryggen · the majority — a free Reach (+1 presence) feeds THE rich majority'},
-  novgorod:{name:'Novgorod',gate:3, value:2, sval:q=>2*Math.max(0,q-2), maj:[8,5,2], benefit:'recipe', kontor:true, role:'Long Haul · the quality climb — value SCALES with quality (Q3→2·Q4→4·Q5→6) + a free recipe'},
+  novgorod:{name:'Novgorod',gate:3, value:2, sval:q=>2*Math.max(0,q-2), maj:[8,5,2], benefit:'age', kontor:true, role:'Long Haul · the quality climb — value SCALES with quality (Q3→2·Q4→4·Q5→6) + the long trade refines a cask (+1 age)'},
   hall    :{name:'The Hall',gate:2, value:0, maj:[],        benefit:'none',     kontor:false, role:'Prestige · 3/5/7/9 by quality · the local Enshrine (no boat)'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
@@ -527,6 +527,7 @@ const OCCUPANCY_TOLL=1;
 const SAILED_CAP={2:7,3:11,4:14};  // the Sailed-Ships end clock (per RULES §8) — primary pace dial ⚙ (scales steeply: the shared clock fills faster with more players). 2–4p only (5p support removed). Any stray higher count falls back to 10.
 const MAX_ROUND=25;                      // round ceiling / backstop ⚙ — top of the 12–25-round target band (good play ends earlier on the clock)
 const CELLAR_POOL=3;                     // Cellar age points ⚙
+const AUTO_AGE=false;                     // v1.1: auto-aging REMOVED — casks age only via the Cellar (3 pts), the cask "age" action, or Novgorod's benefit. Mechanics kept (passiveFerment) for easy reintroduction: flip to true.
 const START_GOODS={g:3,h:2};
 const START_STORAGE=8;
 const SEAT_COMP=1;                       // seat compensation ⚙ — +this much grain to EACH seat after the first
@@ -538,7 +539,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v53'; // v1.1 Stage 1 — kontor identities + beer niches: Bruges=economy (2 goods), London=engine (the only Building source, to hand), Bergen=majority (a free REACH +1 presence), Novgorod=quality climb (value SCALES with Q: Q3→2·Q4→4·Q5→6, + a free RECIPE). Hopped & Broyhan brew FAST (ready 1); Keut is the majority specialist (+1 presence on a kontor delivery). [Stage 2 = the trade-factor presence cap.] Bump discards stale v52 state.
+const KEY='hanse-hotseat-v54'; // v1.1: Novgorod benefit recipe→AGE (refine a maturing cask +1 — uncapped, useful every visit, since auto-aging is gone); AUTO-AGING REMOVED (casks age only via the Cellar/age-action/Novgorod; passiveFerment kept behind AUTO_AGE flag for reintroduction). Bump discards stale v53 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -728,7 +729,7 @@ function lineGlyph(lk){const lit=LINES[lk].cells;return '<span class="lg" data-t
 const CELLTIP={
   Market:'Market · Source. Take 2 goods (any mix), OR acquire one tile: a recipe · a Building from the display (buy + place) · a ship commission · a charter contract · a private improvement. You may also place a Building you hold (free). Never closed (move onto a rival here for 1G).',
   Brewhouse:'Brewhouse · Brew. Load one recipe you hold (paying its G/H) into an open vessel; the cask takes the FACE-UP action of that quality\'s pile (steerable). Never closed (move onto a rival here for 1G).',
-  Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' age points to allocate across your vessels (your casks also age +1 automatically each turn). When a cask is Ready, set it on a slot.',
+  Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' age points to allocate across your vessels (enough to fully age a Bock in one visit). Casks age ONLY when you age them — the Cellar, a cask’s "age" action, or Novgorod’s benefit (no automatic per-turn aging). When a cask is Ready, set it on a slot.',
   Harbor:'Harbor · Ship — your ship-options hub. Load ANY cask (yours or a rival’s — you pick the destination; the owner scores it, you take a loader bonus) onto any ship it qualifies for. A ship sails ONLY when full — then every cask is delivered: its owner banks that destination’s benefit AND its points (base + the value-Buildings it shipped through), in load order. Or Enshrine a Q2+ slot cask at the Hall, or Charter a single cask. Never closed.',
 };
 function bldgTip(b){if(!b)return '';const def=BUILDINGS[b.b];return (def.verb==='value'?'Value':'Transform')+' Building · '+def.name+' ('+S.players[b.owner].name+'’s) — '+def.desc+'. Affects '+BTGT[def.tgt].lbl+'. Owned-but-shared: the owner gets the FULL effect; a rival may dock here too for a REDUCED bonus, and the owner takes a +'+WHARFAGE+'★ wharfage when their cargo delivers through it.';}
@@ -1140,10 +1141,15 @@ function grantImmediate(lp,dest){
   else if(ben==='reach'){          // Bergen — a free Reach (+1 presence, any kontor)
     if(lp.id===S.active)(UI.pendingReach=UI.pendingReach||[]).push({pid:lp.id,dest});
     else autoReach(lp,dest);}
-  else if(ben==='recipe'){         // Novgorod — a free unowned export recipe
-    if(lp.id===S.active)(UI.pendingRecipe=UI.pendingRecipe||[]).push({pid:lp.id,dest});
-    else autoRecipe(lp,dest);}
+  else if(ben==='age'){            // Novgorod — the long trade refines a cask: +1 age (auto, both players)
+    freeAge(lp);}
 }
+// advance the maturing cask CLOSEST to Ready by one step (Novgorod benefit; matters now auto-aging is off)
+function freeAge(p){const m=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step<o.c.ready)
+    .sort((a,b)=>(a.c.ready-a.c.step)-(b.c.ready-b.c.step));
+  if(!m.length){log('↳ '+p.name+' — nothing maturing to refine (Novgorod).');return;}
+  const c=m[0].c;c.step++;
+  log('↳ '+p.name+' refines a cask on the long haul (Novgorod): '+LU('beer')+styleShort(c.style)+' ages +1 → '+c.step+'/'+c.ready+(c.step>=c.ready?' '+LU('check')+' <b>READY</b>':'')+'.');}
 // the kontore you can plant a free Reach at (any kontor — it's free standing)
 function reachBenKontore(){return KONTORE.slice();}
 function freeReach(p,k){p.presBonus[k]=(p.presBonus[k]||0)+1;log('↳ '+p.name+' takes a free '+LU('map-pin')+' Reach (+1 presence at <b>'+DEST[k].name+'</b>, Bergen benefit).');}
@@ -1268,7 +1274,7 @@ function endTurn(){
   // AI turns take no snapshots, and the boundary into a human turn clears the stack —
   // a human can undo within their own turn, never back into (or across) an AI's.
   if(wasAI&&!cur().ai)undoStack.length=0;
-  passiveFerment(cur());UI={sub:'move'};save();render();
+  if(AUTO_AGE)passiveFerment(cur());UI={sub:'move'};save();render();   // v1.1: auto-aging gated off (kept for reintroduction)
   maybeRunAI();
 }
 function passiveFerment(p){let any=false;p.vessels.forEach(c=>{if(c&&c.step<c.ready){c.step++;any=true;}});if(any)log(p.name+'’s casks '+LU('hourglass')+' mature (+1) over the turn.');}
@@ -1901,7 +1907,7 @@ function renderAid(){
     ['ticket','<b>Charter</b> (single-cask voyage)'],['package-plus','<b>Load</b> a cask'],['arrow-left-right','<b>Convert</b> goods G↔H'],['search','<b>Survey</b> (draw a Building)'],
     ['coins','<b>Source</b> (take goods)'],['sparkles','<b>Wild</b> action (Q4+)']];
   const dRow=d=>{const D=DEST[d];const val=d==='hall'?'3·5·7·9 by Q (fixed)':(D.sval?'2·4·6 by Q (scales)':('+'+D.value+' base + buildings'));const maj=D.maj.length?D.maj.join(' / '):'—';
-    const ben=d==='hall'?'prestige':(D.benefit==='building'?'a free Building (to hand)':D.benefit==='reach'?'a free Reach (+1 presence)':D.benefit==='recipe'?'a free recipe':'2 goods');
+    const ben=d==='hall'?'prestige':(D.benefit==='building'?'a free Building (to hand)':D.benefit==='reach'?'a free Reach (+1 presence)':D.benefit==='age'?'refine a cask (+1 age)':'2 goods');
     return '<tr><td>'+(D.kontor?ic('landmark'):ic('crown'))+' '+D.name+'</td><td>Q'+D.gate+'+</td><td>'+val+'</td><td>'+maj+'</td><td>'+ben+'</td></tr>';};
   const dests=['bruges','london','bergen','novgorod','hall'].map(dRow).join('');
   const acts=CASK_ACT_POOL.map(k=>'<span class="atag">'+ic(CASK_ACT_ICON[k])+' <b style="text-transform:capitalize">'+k+'</b> — '+CASK_ACT[k]+'</span>').join('');
@@ -1913,7 +1919,7 @@ function renderAid(){
     +'<div class="asec"><b>The four stations</b><div class="note">'
       +ic('store')+' <b>Market</b> (Source): take 2 goods, or acquire one tile — a recipe · a '+ic('building-2')+' Building (buy + place) · a '+ic('sailboat')+' ship · a charter contract · an improvement. Or <b>place a Building from your hand</b> (free) — the ones you earned at London/Novgorod or drew with Survey.<br>'
       +ic('flask-conical')+' <b>Brewhouse</b> (Brew): pay a recipe → a young cask; it takes the FACE-UP action of that quality’s pile (steerable).<br>'
-      +ic('hourglass')+' <b>Cellar</b> (Age): 3 age points across your casks (every cask also ages +1 each of your turns).<br>'
+      +ic('hourglass')+' <b>Cellar</b> (Age): 3 age points across your casks (enough to fully age a Bock in one visit). Casks age ONLY when aged — no automatic per-turn aging.<br>'
       +ic('anchor')+' <b>Harbor</b> (Ship): load a Ready cask onto a ship (it sails when full → each owner banks the benefit + points), <b>Enshrine</b> a Q2+ <i>slot</i> cask at the '+ic('crown')+' Hall (local), or Charter.</div></div>'
     +'<div class="asec"><b>The living slots (the keystone)</b><div class="note">Each of the 8 slots holds an owned '+ic('building-2')+' <b>Building</b> (a modifier) and/or an occupant (a cask, or a ship with casks). A <b>value</b> building makes a delivery pay more; a <b>transform</b> building changes the cask/ship. Value is captured ON SHIP-THROUGH: a cask delivers for its base + the value-buildings it shipped from + its ship’s berth building. Owned-but-shared: the owner gets the FULL effect; a rival may dock too for a REDUCED bonus, and the owner takes a +'+WHARFAGE+'★ wharfage when they do.</div>'
       +'<div class="atags" style="margin-top:5px">'+vb+'</div><div class="atags" style="margin-top:4px">'+tb+'</div></div>'
@@ -2126,7 +2132,7 @@ function renderDests(){
     const ben=D.benefit==='building'?'<span data-tip="'+attr('The benefit: the owner takes one Building from the display free TO HAND (placed later at the Market). London is the only kontor that hands you a Building.')+'">+'+LU('building-2')+'</span>'
       :D.benefit==='goods'?'<span data-tip="'+attr('Liquidity: on each delivery the owner takes 2 goods, any mix (grain/hops).')+'">+2'+LU('coins')+'</span>'
       :D.benefit==='reach'?'<span data-tip="'+attr('The benefit: a free Reach — +1 presence at any kontor of your choice, feeding the majority race (Bergen).')+'">+'+LU('map-pin')+'</span>'
-      :D.benefit==='recipe'?'<span data-tip="'+attr('The benefit: take a free export recipe you don’t own (exotic eastern styles — Novgorod), broadening your range.')+'">+'+LU('scroll-text')+'</span>':'';
+      :D.benefit==='age'?'<span data-tip="'+attr('The benefit: the long trade refines your craft — advance one of your maturing casks +1 step toward Ready (Novgorod). Uncapped, useful every visit — now that casks no longer auto-age.')+'">+'+LU('hourglass')+'</span>':'';
     h+='<div class="route '+d+'" data-tip="'+attr(D.name+' — '+D.role+'. Legend: Q# = minimum cask quality · N★ = BASE per-cask value (+ the value-Buildings shipped through) · top corner = end-game majority (1st/2nd/3rd) · +icon = the owner’s benefit on each delivery · squares = delivered casks (outline = bonus presence, ★ = current leader).')+'">'
       +'<div class="rh"><span class="ric">'+(D.kontor?LU('landmark'):LU('crown'))+'</span>'
       +((D.maj&&D.maj.length)?'<span class="rmaj" data-tip="'+attr(D.maj.join('/')+' = the end-game majority: '+D.maj.join('/')+' points to 1st/2nd/3rd place by delivered-cask count here (2-player skips 2nd; ties split).')+'">'+D.maj.join('/')+'</span>':'')+'</div>'
