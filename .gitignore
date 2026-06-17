@@ -13,3 +13,4 @@ playtests/*hot.err
 playtests/v*gm-*.txt
 playtests/v*gm-*.err
 playtests/analysis/
+playtests/arc/
