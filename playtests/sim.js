@@ -230,6 +230,9 @@ function botActOnce(){var p=cur();var U=UI.sub;
     case 'placebldg':return botPlaceBldg();
     case 'toll':return tollPay();              // the bot pays the occupancy toll (the Floor is a human option)
     case 'goodspick':return goodsPick(2,0);    // liquidity owner-choice — the bot takes 2 grain
+    case 'breach':{var lp=S.players[UI.pendingReach[0].pid];var bk=reachBenKontore(),bb=bk[0],bv=-1e9;  // reinforce best majority swing
+      bk.forEach(function(k){lp.presBonus[k]=(lp.presBonus[k]||0)+1;var a=majorityAwards(k);lp.presBonus[k]--;var v=(a[lp.id]||0)+Math.random()*0.1;if(v>bv){bv=v;bb=k;}});return breachPick(bb);}
+    case 'brecipe':{var lp=S.players[UI.pendingRecipe[0].pid];var o=freeRecipeOptions(lp);if(!o.length)return brecipePick(null);o.sort(function(a,b){return STYLES[b].q-STYLES[a].q;});return brecipePick(o[0]);}
     case 'end':return endTurn();
     default: throw new Error('unknown UI.sub: '+U);
   }

@@ -340,9 +340,9 @@ function refreshIcons(){if(window.lucide)try{lucide.createIcons();}catch(e){}}
 // (drop a Q3 → full Q3–Q5 climb; drop Mumme → no Q4; drop Bock → no Q5).
 const STYLES={
   gruit  :{name:'Gruit Ale',   lvl:1, q:1, in:{g:1},      ready:1, act:'source', pin:true},
-  hopped :{name:'Hopped Beer', lvl:2, q:2, in:{g:1,h:1},  ready:2, act:'age'},
-  broyhan:{name:'Broyhan',     lvl:3, q:3, in:{g:1,h:2},  ready:2, act:'load',  export:true},
-  keut   :{name:'Keut',        lvl:3, q:3, in:{g:2,h:1},  ready:2, act:'load',  export:true},
+  hopped :{name:'Hopped Beer', lvl:2, q:2, in:{g:1,h:1},  ready:1, act:'age'},                          // v1.1: FAST — quick Q2 engine access
+  broyhan:{name:'Broyhan',     lvl:3, q:3, in:{g:1,h:2},  ready:1, act:'load',  export:true},            // v1.1: FAST — the rush-to-Q3 tempo beer
+  keut   :{name:'Keut',        lvl:3, q:3, in:{g:2,h:1},  ready:2, act:'load',  export:true, bonusPres:1},// v1.1: the MAJORITY specialist — +1 presence on a kontor delivery
   mumme  :{name:'Mumme',       lvl:4, q:4, in:{g:2,h:2},  ready:3, act:'reach', export:true},
   bock   :{name:'Bock',        lvl:5, q:5, in:{g:3,h:2},  ready:3, act:'wild',  export:true, premium:true},   // v0.14: UNGATED, cost 3G2H (3G3H test reverted — re-broke casual Q5 & the ladder without fixing the Hall-driven deep-lane lead). Aging Cellar = pathway (−1 step). (premium = AI-skill flag)
 };
@@ -374,11 +374,14 @@ const STATION_ACTS={Market:['coins','scroll-text','landmark','sailboat'],Brewhou
 // lives in the BUILDINGS the cask shipped through (§5a). The Hall keeps its fixed prestige ladder (the
 // legible beginner floor). Benefits pair off: LIQUIDITY (Bruges/Bergen → 2 goods) vs BUILDING
 // (London/Novgorod → take a Building free + place it — the deliver→author→deliver-better engine loop).
+// v1.1 — four DISTINCT lanes, each a unique benefit: Bruges = the economy (goods), London = the engine
+// (the sole Building source, to-hand), Bergen = the majority (a free Reach feeds the big 9/5/2), Novgorod
+// = the quality climb (value SCALES with quality + a free recipe). 'sval' = a quality-scaling value fn.
 const DEST={
-  bruges  :{name:'Bruges',  gate:1, value:1, maj:[4,2,0],   benefit:'goods',    kontor:true,  role:'Hub · gain goods + a starter majority'},
-  london  :{name:'London',  gate:2, value:1, maj:[5,3,1],   benefit:'building', kontor:true,  role:'Steelyard · the engine — a free Building + a solid majority'},
-  bergen  :{name:'Bergen',  gate:2, value:1, maj:[9,5,2],   benefit:'goods',    kontor:true,  role:'Bryggen · gain goods + THE rich majority'},
-  novgorod:{name:'Novgorod',gate:3, value:2, maj:[8,5,2],   benefit:'building', kontor:true,  role:'Long Haul · top base value + a free Building + a rich majority'},
+  bruges  :{name:'Bruges',  gate:1, value:1, maj:[4,2,0],   benefit:'goods',    kontor:true,  role:'Hub · the economy — 2 goods + a starter majority'},
+  london  :{name:'London',  gate:2, value:1, maj:[5,3,1],   benefit:'building', kontor:true,  role:'Steelyard · the engine — the only kontor that hands you a Building (to hand)'},
+  bergen  :{name:'Bergen',  gate:2, value:1, maj:[9,5,2],   benefit:'reach',    kontor:true,  role:'Bryggen · the majority — a free Reach (+1 presence) feeds THE rich majority'},
+  novgorod:{name:'Novgorod',gate:3, value:2, sval:q=>2*Math.max(0,q-2), maj:[8,5,2], benefit:'recipe', kontor:true, role:'Long Haul · the quality climb — value SCALES with quality (Q3→2·Q4→4·Q5→6) + a free recipe'},
   hall    :{name:'The Hall',gate:2, value:0, maj:[],        benefit:'none',     kontor:false, role:'Prestige · 3/5/7/9 by quality · the local Enshrine (no boat)'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
@@ -388,7 +391,7 @@ const HALL_PTS={2:3,3:5,4:7,5:9}; // ⚙ prestige points at the Hall — a PRINT
 // A kontor's per-cask value is base + the value-Buildings the cask SHIPPED THROUGH (computed at delivery,
 // frozen onto the delivered record as d.val — §5a). destValue() is now just the BASE/ladder (the floor the
 // AI ranks by); the building bonuses are situational and added in deliverCask.
-function destValue(dest,q){return dest==='hall'?(HALL_PTS[q]||0):DEST[dest].value;}
+function destValue(dest,q){if(dest==='hall')return HALL_PTS[q]||0;const D=DEST[dest];return D.sval?D.sval(q):D.value;}
 // ---- THE FLIGHT (v0.13 ⚙): an end-game bonus for your *range* — the count of DISTINCT quality tiers
 // you delivered, scored on a back-loaded ladder = (tiers-1)² with a MIN of 3 tiers to score (2 tiers =
 // the free Gruit+Hopped baseline everyone has, so it's a true climber's reward). "Full range of the
@@ -535,7 +538,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v52'; // v1.0.1: the FLIGHT now rewards distinct BEERS delivered (not quality tiers) — there are always exactly 5 beer types (Gruit + Hopped + the 3 dealt exports), so the full 5-beer flight is ALWAYS reachable (the old quality-tier flight capped at 4 whenever both Q3 exports were dealt and Q4/Q5 was out). Also: 5-player support removed (2–4p). Bump discards stale v51 state.
+const KEY='hanse-hotseat-v53'; // v1.1 Stage 1 — kontor identities + beer niches: Bruges=economy (2 goods), London=engine (the only Building source, to hand), Bergen=majority (a free REACH +1 presence), Novgorod=quality climb (value SCALES with Q: Q3→2·Q4→4·Q5→6, + a free RECIPE). Hopped & Broyhan brew FAST (ready 1); Keut is the majority specialist (+1 presence on a kontor delivery). [Stage 2 = the trade-factor presence cap.] Bump discards stale v52 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -899,7 +902,7 @@ function enterBldgLine(slot){const p=cur();const k=bKeyAt(slot);
 // resume / return helpers — clear the sub-flow fields, then route to the right phase
 function resume(rt){
   UI.cell=null;UI.stage=null;UI.tmp=null;
-  UI.age=UI.brew=UI.src=UI.load=UI.cvt=UI.reach=UI.wild=UI.deploy=UI.benefit=UI.survey=UI.goods=null;
+  UI.age=UI.brew=UI.src=UI.load=UI.cvt=UI.reach=UI.wild=UI.deploy=UI.benefit=UI.survey=UI.goods=UI.breach=UI.brecipe=null;
   if(rt==='floorq'){runFloorNext();return;}   // mid-Floor: run the next cask on the brewery floor (do NOT clear UI.floorQueue)
   if(rt==='benefitcont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}
   if(rt==='line')UI.sub='line';
@@ -1124,14 +1127,32 @@ function sailShip(slot,creditId){const t=S.slots[slot];
 }
 // the destination's benefit, paid to the cask's OWNER on delivery: liquidity (2 goods) at Bruges/Bergen,
 // a free BUILDING at London/Novgorod. The Hall pays no benefit (prestige only).
+// v1.1: each kontor's UNIQUE benefit on delivery. The active player picks (queued → afterSail); a rival
+// owner (their cask sailed on your turn) auto-resolves.
 function grantImmediate(lp,dest){
-  if(dest==='bruges'||dest==='bergen'){   // LIQUIDITY: 2 goods, the owner's choice of mix
+  const ben=DEST[dest].benefit;
+  if(ben==='goods'){
     if(lp.id===S.active)(UI.pendingGoods=UI.pendingGoods||[]).push({pid:lp.id,dest});
     else {gain(lp,2,0);log('↳ '+lp.name+' takes the '+DEST[dest].name+' liquidity benefit (2 goods).');}}
-  else if(dest==='london'||dest==='novgorod'){
+  else if(ben==='building'){
     if(lp.id===S.active)(UI.pendingBenefits=UI.pendingBenefits||[]).push({pid:lp.id,dest});
-    else autoGrantBuilding(lp,dest);}   // a rival owner (their cask sailed on your turn) auto-takes & places one
+    else autoGrantBuilding(lp,dest);}
+  else if(ben==='reach'){          // Bergen — a free Reach (+1 presence, any kontor)
+    if(lp.id===S.active)(UI.pendingReach=UI.pendingReach||[]).push({pid:lp.id,dest});
+    else autoReach(lp,dest);}
+  else if(ben==='recipe'){         // Novgorod — a free unowned export recipe
+    if(lp.id===S.active)(UI.pendingRecipe=UI.pendingRecipe||[]).push({pid:lp.id,dest});
+    else autoRecipe(lp,dest);}
 }
+// the kontore you can plant a free Reach at (any kontor — it's free standing)
+function reachBenKontore(){return KONTORE.slice();}
+function freeReach(p,k){p.presBonus[k]=(p.presBonus[k]||0)+1;log('↳ '+p.name+' takes a free '+LU('map-pin')+' Reach (+1 presence at <b>'+DEST[k].name+'</b>, Bergen benefit).');}
+function autoReach(p,dest){   // rival: reinforce the kontor where +1 presence helps its majority most
+  let best=null,bv=-1e9;reachBenKontore().forEach(k=>{p.presBonus[k]=(p.presBonus[k]||0)+1;const a=majorityAwards(k);p.presBonus[k]--;
+    const v=(a[p.id]||0)+Math.random()*0.1;if(v>bv){bv=v;best=k;}});freeReach(p,best||'bergen');}
+function freeRecipeOptions(p){return (S.exports||[]).filter(s=>!p.recipes.includes(s));}
+function autoRecipe(p,dest){const opts=freeRecipeOptions(p);if(!opts.length){log('↳ '+p.name+' — no new recipe to take (Novgorod).');return;}
+  opts.sort((a,b)=>STYLES[b].q-STYLES[a].q);p.recipes.push(opts[0]);log('↳ '+p.name+' takes the free '+LU('scroll-text')+' <b>'+STYLES[opts[0]].name+'</b> recipe (Novgorod).');}
 // DELIVER a cask: value = base + the value-Buildings it shipped through. Owned-but-shared (§5b): the
 // owner gets the FULL value bonus; a RIVAL routing through gets a REDUCED bonus (half, rounded up) AND
 // hands the owner a capped "wharfage" points cut (for any building — value or transform — never goods).
@@ -1140,6 +1161,8 @@ function deliverCask(lp,L,dest,shipSlot,full){
   val+=bldgValueShare(L.bld,L.owner,caskBldgValue(L.bld,dest,L.q,L.owner));
   if(shipSlot){const sb=bAt(shipSlot);val+=bldgValueShare(sb,L.owner,shipBldgValue(sb,dest,full));}
   lp.delivered.push({style:L.style,q:L.q,dest,val});
+  // v1.1: a beer's delivery perk — Keut plants +1 presence at the kontor (the majority specialist)
+  if(DEST[dest].kontor){const bp=(STYLES[L.style]||{}).bonusPres;if(bp)lp.presBonus[dest]=(lp.presBonus[dest]||0)+bp;}
 }
 // the share of a building's value bonus the cask's owner actually banks, + the owner's wharfage if a rival.
 function bldgValueShare(bd,caskOwnerId,raw){
@@ -1160,8 +1183,16 @@ function autoGrantBuilding(p,dest){const disp=S.buildDisplay||[];if(!disp.length
 function afterSail(rt){
   if((UI.pendingGoods||[]).length){UI.sub='goodspick';UI.goods={returnTo:rt};render();return;}   // liquidity owner-choice picker
   if((UI.pendingBenefits||[]).length){UI.sub='benefit';UI.benefit={returnTo:rt};render();return;}   // pick a Building from the display
+  if((UI.pendingReach||[]).length){UI.sub='breach';UI.breach={returnTo:rt};render();return;}     // Bergen — pick a kontor to Reach
+  if((UI.pendingRecipe||[]).length){UI.sub='brecipe';UI.brecipe={returnTo:rt};render();return;}  // Novgorod — pick a free recipe
   resume(rt);
 }
+function breachPick(k){snapshot();const b=UI.pendingReach[0];freeReach(S.players[b.pid],k);
+  UI.pendingReach.shift();const rt=UI.breach.returnTo;UI.breach=null;afterSail(rt);}
+function brecipePick(style){const b=UI.pendingRecipe[0];const p=S.players[b.pid];
+  if(!style||p.recipes.includes(style)||!(S.exports||[]).includes(style)){UI.pendingRecipe.shift();const rt=UI.brecipe.returnTo;UI.brecipe=null;afterSail(rt);return;}
+  snapshot();p.recipes.push(style);log('↳ '+p.name+' takes the free '+LU('scroll-text')+' <b>'+STYLES[style].name+'</b> recipe (Novgorod).');
+  UI.pendingRecipe.shift();const rt=UI.brecipe.returnTo;UI.brecipe=null;afterSail(rt);}
 function goodsPick(g,h){snapshot();const b=UI.pendingGoods[0];gain(S.players[b.pid],g,h);
   UI.pendingGoods.shift();const rt=UI.goods.returnTo;UI.goods=null;afterSail(rt);}
 // the active player PICKS which display Building to take — to HAND (placed later at the Market).
@@ -1670,6 +1701,10 @@ function aiDeploy(p){const es=emptySlots();if(!es.length){deploySkipAll();return
 function aiBenefit(){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];const disp=S.buildDisplay||[];
   if(!disp.length){benefitPick(null);return;}
   benefitPick(aiPickBuilding(lp,disp.slice()));}
+function aiBreach(p){const b=UI.pendingReach[0];const lp=S.players[b.pid];   // reinforce the kontor with the best majority swing
+  let best=reachBenKontore()[0],bv=-1e9;reachBenKontore().forEach(k=>{const m=aiMajSwing(lp,k)+Math.random()*0.2;if(m>bv){bv=m;best=k;}});breachPick(best);}
+function aiBrecipe(p){const b=UI.pendingRecipe[0];const lp=S.players[b.pid];const opts=freeRecipeOptions(lp);
+  if(!opts.length){brecipePick(null);return;}opts.sort((a,b)=>STYLES[b].q-STYLES[a].q);brecipePick(opts[0]);}
 
 //================= GUILDMASTER — flat Monte Carlo (Phase 3, AUTOMA.md) =================
 // At each high-leverage prompt the guildmaster ENUMERATES the legal options, and for each one:
@@ -1765,6 +1800,8 @@ function aiGmOptions(p){
     return disp.length?disp.map(k=>()=>benefitPick(k)):[()=>benefitPick(null)];}
   if(U==='toll')return [()=>tollPay(),()=>tollFloor()];   // the GM weighs paying for the public line vs working its Floor
   if(U==='goodspick')return [()=>goodsPick(2,0),()=>goodsPick(1,1),()=>goodsPick(0,2)];   // liquidity mix — the GM evaluates each
+  if(U==='breach')return reachBenKontore().map(k=>()=>breachPick(k));                      // Bergen free Reach — which kontor
+  if(U==='brecipe'){const lp=S.players[UI.pendingRecipe[0].pid];const o=freeRecipeOptions(lp).map(s=>()=>brecipePick(s));o.push(()=>brecipePick(null));return o;}
   if(U==='wild')return [()=>wildPick('source'),()=>wildPick('brew'),()=>wildPick('age'),()=>wildPick('ship'),()=>wildSkip()];
   if(U==='reach')return UI.reach.ks.map(k=>()=>reachPick(k));
   return null;   // trader fallback handles the rest
@@ -1799,6 +1836,8 @@ function aiStep(){
       case 'placebldg':return aiPlaceBldg(p);
       case 'toll':return tollPay();              // the journeyman/trader pay the toll for the public line (the GM weighs the Floor via aiGmOptions)
       case 'goodspick':return goodsPick(2,0);    // the AI takes the liquidity benefit as 2 grain
+      case 'breach':return aiBreach(p);          // Bergen free Reach — reinforce the best majority
+      case 'brecipe':return aiBrecipe(p);        // Novgorod free recipe — take the highest unowned
       case 'end':return endTurn();
       default:
         log('⚠ '+p.name+' (AI) hit an unknown prompt ('+UI.sub+') — ending its turn.');
@@ -1861,8 +1900,8 @@ function renderAid(){
     ['map-pin','<b>Presence</b> / Reach'],['store','<b>Market</b> station'],['flask-conical','<b>Brew</b> / vessel · the Floor'],['scroll-text','<b>Recipe</b>'],
     ['ticket','<b>Charter</b> (single-cask voyage)'],['package-plus','<b>Load</b> a cask'],['arrow-left-right','<b>Convert</b> goods G↔H'],['search','<b>Survey</b> (draw a Building)'],
     ['coins','<b>Source</b> (take goods)'],['sparkles','<b>Wild</b> action (Q4+)']];
-  const dRow=d=>{const D=DEST[d];const val=d==='hall'?'3·5·7·9 by Q (fixed)':('+'+D.value+' base + buildings');const maj=D.maj.length?D.maj.join(' / '):'—';
-    const ben=d==='hall'?'prestige':(D.benefit==='building'?'a free Building':'2 goods');
+  const dRow=d=>{const D=DEST[d];const val=d==='hall'?'3·5·7·9 by Q (fixed)':(D.sval?'2·4·6 by Q (scales)':('+'+D.value+' base + buildings'));const maj=D.maj.length?D.maj.join(' / '):'—';
+    const ben=d==='hall'?'prestige':(D.benefit==='building'?'a free Building (to hand)':D.benefit==='reach'?'a free Reach (+1 presence)':D.benefit==='recipe'?'a free recipe':'2 goods');
     return '<tr><td>'+(D.kontor?ic('landmark'):ic('crown'))+' '+D.name+'</td><td>Q'+D.gate+'+</td><td>'+val+'</td><td>'+maj+'</td><td>'+ben+'</td></tr>';};
   const dests=['bruges','london','bergen','novgorod','hall'].map(dRow).join('');
   const acts=CASK_ACT_POOL.map(k=>'<span class="atag">'+ic(CASK_ACT_ICON[k])+' <b style="text-transform:capitalize">'+k+'</b> — '+CASK_ACT[k]+'</span>').join('');
@@ -1962,6 +2001,12 @@ function renderBar(){
   else if(U==='goodspick'){const b=UI.pendingGoods[0];const lp=S.players[b.pid];
     prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take <b>2 goods</b> (any mix).';
     acts=btn('Take '+Gi(2),'goodsPick(2,0)','go')+btn('Take '+Gi(1)+Hi(1),'goodsPick(1,1)','go')+btn('Take '+Hi(2),'goodsPick(0,2)','go');}
+  else if(U==='breach'){const b=UI.pendingReach[0];const lp=S.players[b.pid];
+    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take a free '+LU('map-pin')+' <b>Reach</b> (+1 presence at any kontor).';
+    acts=reachBenKontore().map(k=>btn(LU('map-pin')+DEST[k].name+' <span class="note">('+presenceAt(lp,k)+'→'+(presenceAt(lp,k)+1)+')</span>','breachPick(\''+k+'\')','go')).join('');}
+  else if(U==='brecipe'){const b=UI.pendingRecipe[0];const lp=S.players[b.pid];const opts=freeRecipeOptions(lp);
+    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take a free '+LU('scroll-text')+' <b>recipe</b> (an export you don’t own).';
+    acts=(opts.length?opts.map(s=>btn(LU('scroll-text')+STYLES[s].name+' Q'+STYLES[s].q,'brecipePick(\''+s+'\')','go')).join(''):'<span class="note">you own every dealt export</span> ')+btn('Skip','brecipePick(null)','ghost');}
   else if(U==='end'){prompt='Line resolved.';acts=deployButtons('end')+btn('End Turn ▸','endTurn()','primary');}
   if(undoStack.length)acts+=btn('↶ Undo','doUndo()','ghost');
   document.getElementById('prompt').innerHTML=prompt;
@@ -2076,9 +2121,12 @@ function renderDests(){
     }).filter(x=>x).join('');
     const valStr=d==='hall'
       ?'<span data-tip="'+attr('★ = prestige points per ENSHRINED cask, by quality: Q2→3 · Q3→5 · Q4→7 · Q5→9 (a fixed ladder). Reached by the local Enshrine (a Harbor action, no boat); no majority, no benefit.')+'"><b>3·5·7·9</b><span class="vstar">★</span></span>'
-      :'<span data-tip="'+attr('★ = BASE points per delivered cask ('+D.value+'). The real value is VARIABLE: + the value-Buildings the cask shipped through (Staple Hall +3, Rich Berth +2/cask, a Kontor Charter +4, …). Author them on the slots.')+'"><b>'+D.value+'</b><span class="vstar">★</span><span style="font-size:.68rem;opacity:.8;margin-left:1px">+'+LU('building-2')+'</span></span>';
-    const ben=D.benefit==='building'?'<span data-tip="'+attr('The delivery benefit: the owner takes one Building from the Market display free TO HAND, and places it later at the Market (the deliver→author→deliver-better engine).')+'">+'+LU('building-2')+'</span>'
-      :D.benefit==='goods'?'<span data-tip="'+attr('Liquidity: on each delivery the owner takes 2 goods, any mix (grain/hops).')+'">+2'+LU('coins')+'</span>':'';
+      :D.sval?'<span data-tip="'+attr('★ = per-cask value SCALES WITH QUALITY here: Q3→2 · Q4→4 · Q5→6 (+ any value-Buildings shipped through). The premium home for your finest.')+'"><b>2·4·6</b><span class="vstar">★</span><span style="font-size:.62rem;opacity:.8">by Q</span></span>'
+      :'<span data-tip="'+attr('★ = BASE points per delivered cask ('+D.value+'). The real value is VARIABLE: + the value-Buildings the cask shipped through (Staple Hall +3, Rich Berth +2/cask, a Kontor Charter +4, …).')+'"><b>'+D.value+'</b><span class="vstar">★</span><span style="font-size:.68rem;opacity:.8;margin-left:1px">+'+LU('building-2')+'</span></span>';
+    const ben=D.benefit==='building'?'<span data-tip="'+attr('The benefit: the owner takes one Building from the display free TO HAND (placed later at the Market). London is the only kontor that hands you a Building.')+'">+'+LU('building-2')+'</span>'
+      :D.benefit==='goods'?'<span data-tip="'+attr('Liquidity: on each delivery the owner takes 2 goods, any mix (grain/hops).')+'">+2'+LU('coins')+'</span>'
+      :D.benefit==='reach'?'<span data-tip="'+attr('The benefit: a free Reach — +1 presence at any kontor of your choice, feeding the majority race (Bergen).')+'">+'+LU('map-pin')+'</span>'
+      :D.benefit==='recipe'?'<span data-tip="'+attr('The benefit: take a free export recipe you don’t own (exotic eastern styles — Novgorod), broadening your range.')+'">+'+LU('scroll-text')+'</span>':'';
     h+='<div class="route '+d+'" data-tip="'+attr(D.name+' — '+D.role+'. Legend: Q# = minimum cask quality · N★ = BASE per-cask value (+ the value-Buildings shipped through) · top corner = end-game majority (1st/2nd/3rd) · +icon = the owner’s benefit on each delivery · squares = delivered casks (outline = bonus presence, ★ = current leader).')+'">'
       +'<div class="rh"><span class="ric">'+(D.kontor?LU('landmark'):LU('crown'))+'</span>'
       +((D.maj&&D.maj.length)?'<span class="rmaj" data-tip="'+attr(D.maj.join('/')+' = the end-game majority: '+D.maj.join('/')+' points to 1st/2nd/3rd place by delivered-cask count here (2-player skips 2nd; ties split).')+'">'+D.maj.join('/')+'</span>':'')+'</div>'
