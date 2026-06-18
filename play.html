@@ -174,6 +174,13 @@
     white-space:nowrap;overflow:hidden;line-height:1.02}
   .scard.back .spine{display:flex}
   .scard .spine .ic,.scard .spine svg{width:10cqmin;height:10cqmin;flex:0 0 auto}
+  /* ===== demand DIE — pips show the ★ a cask banks from the value building it shipped through ===== */
+  .die{display:inline-grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:1cqmin;
+    background:#f4ead0;border:1.5px solid #8a6a2a;border-radius:3cqmin;padding:2cqmin;box-shadow:0 1px 2px rgba(0,0,0,.45);box-sizing:border-box}
+  .die .pip{display:flex;align-items:center;justify-content:center}
+  .die .pip.on::after{content:"";width:66%;height:66%;border-radius:50%;background:#2a1d08}
+  .ptile .die.dcask{position:absolute;bottom:5cqmin;right:5cqmin;width:27cqmin;height:27cqmin;z-index:5}
+  .pship .die.dberth{width:18cqmin;height:18cqmin}
   /* DESTINATIONS */
   #dests{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
   @media(max-width:600px){#dests{grid-template-columns:1fr 1fr}}
@@ -836,7 +843,22 @@ const STYLE_COLOR={gruit:'#8a949c',hopped:'#c2922f',broyhan:'#b06a34',keut:'#9c5
 const DEST_COLOR={bruges:'#274b5c',london:'#b8860b',bergen:'#4a6b3a',novgorod:'#7c2128'};
 const P_ACT_TXT={source:'+2 goods',age:'Age a cask +2',load:'free Load',reach:'+1 Reach',convert:'Convert 2 goods',survey:'gain 1 building',wild:'Wild'};
 function pCost(g,h){let a='';if(g)a+='<span class="pgc">'+LU('wheat','pg')+g+'</span>';if(h)a+='<span class="pgc">'+LU('sprout','ph')+h+'</span>';return a;}
-function pCaskFace(t){const st=STYLES[t.style]||{};const o=S.players[t.owner];const act=caskAct(t);
+// ---- the DEMAND DIE: pips = the ★ a cask banks from a value building (a d6, max 5; returns to the pool) ----
+const DIE_PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};   // 3×3 grid, 0-indexed
+function dieFace(n,cls,border){n=Math.max(1,Math.min(6,n|0));let c='';for(let i=0;i<9;i++)c+='<span class="pip'+(DIE_PIPS[n].includes(i)?' on':'')+'"></span>';
+  return '<span class="die'+(cls?' '+cls:'')+'"'+(border?' style="border-color:'+border+'"':'')+' data-tip="'+attr('Demand die — +'+n+'★ this cask banks on delivery (the bonus it captured from the value building it shipped through). It returns to the pool once paid.')+'">'+c+'</span>';}
+// the owner's share of a value-building bonus (rival routing → half, rounded up)
+function bldgShare(bd,ownerId,raw){if(!raw)return 0;return (bd.owner!==ownerId)?Math.ceil(raw/2):raw;}
+// a DEPLOYED cask sitting on a value building → the ★ it will bank (preview, before it ships)
+function caskPreviewBonus(slotId){const t=S.slots[slotId];if(!t||t.type!=='cask')return 0;const bd=bAt(slotId);if(!bd)return 0;
+  const def=BUILDINGS[bd.b];if(!def||def.verb!=='value')return 0;const q=caskEffQ(slotId);let raw;
+  switch(bd.b){case 'staple':raw=3;break;case 'burgomstr':raw=q;break;case 'connoiss':raw=q>=4?4:0;break;
+    case 'hansediet':raw=3;break;case 'reliquary':raw=2;break;
+    case 'ch_bruges':case 'ch_london':case 'ch_bergen':case 'ch_novgo':raw=4;break;default:raw=0;}
+  return bldgShare(bd,t.owner,raw);}
+// a LOADED cask in a ship berth → the ★ it will bank when this ship delivers to its printed destination
+function loadBonus(L,dest){if(!L||!L.bld)return 0;return bldgShare(L.bld,L.owner,caskBldgValue(L.bld,dest,L.q,L.owner));}
+function pCaskFace(t,bonus){const st=STYLES[t.style]||{};const o=S.players[t.owner];const act=caskAct(t);
   return '<div class="ptile pcask" style="--tc:'+(STYLE_COLOR[t.style]||'#777')+'">'
     +'<span class="pq">'+LU('beer')+t.q+'</span>'
     +'<span class="pown" style="background:'+(o?o.color:'#000')+'"></span>'
@@ -844,9 +866,14 @@ function pCaskFace(t){const st=STYLES[t.style]||{};const o=S.players[t.owner];co
     +'<span class="pact"><span class="pac">'+LU(CASK_ACT_ICON[act]||'sparkles')+'</span><span class="ptxt">'+(P_ACT_TXT[act]||act)+'</span></span>'
     +'<span class="pcost">'+pCost((st.in||{}).g,(st.in||{}).h)
       +(st.bonusPres?'<span class="pperk">+'+st.bonusPres+LU('map-pin')+'</span>':'')+'</span>'
+    +((bonus>0)?dieFace(bonus,'dcask'):'')
   +'</div>';}
 function pShipFace(t){const cap=effCap(t);const gate=DEST[t.dest].gate;let berths='';
-  for(let i=0;i<cap;i++){const L=t.load[i];berths+='<div class="pbn"'+(L?' style="background:'+S.players[L.owner].color+';border-color:rgba(255,255,255,.95)"':'')+'>'+(L?'':(i+1))+'</div>';}
+  for(let i=0;i<cap;i++){const L=t.load[i];
+    if(!L){berths+='<div class="pbn">'+(i+1)+'</div>';continue;}
+    const oc=(S.players[L.owner]||{}).color||'#888';const bonus=loadBonus(L,t.dest);
+    berths+= bonus>0 ? dieFace(bonus,'dberth',oc)
+      : '<div class="pbn" style="background:'+oc+';border-color:rgba(255,255,255,.95)"></div>';}
   return '<div class="ptile pship">'
     +'<span class="phead">'+LU('sailboat')+shipName(t)+'</span>'
     +'<span class="pdest" style="background:'+(DEST_COLOR[t.dest]||'#555')+'">'+LU('landmark')+DEST[t.dest].name+'</span>'
@@ -874,7 +901,7 @@ function occSpine(t){
   return '';}
 function bldgSpine(b){const def=BUILDINGS[b.b];return LU(def.icon)+' '+def.name;}
 function stackHtml(b,t,id){const bOnTop=!!stackFlip[id];
-  const occCard='<div class="scard '+(bOnTop?'back':'front')+'">'+(t.type==='cask'?pCaskFace(t):pShipFace(t))+'<div class="spine">'+occSpine(t)+'</div></div>';
+  const occCard='<div class="scard '+(bOnTop?'back':'front')+'">'+(t.type==='cask'?pCaskFace(t,caskPreviewBonus(id)):pShipFace(t))+'<div class="spine">'+occSpine(t)+'</div></div>';
   const bldCard='<div class="scard '+(bOnTop?'front':'back')+'">'+pBldgFace(b)+'<div class="spine">'+bldgSpine(b)+'</div></div>';
   return bOnTop?(occCard+bldCard):(bldCard+occCard);}   // DOM order: back first, front last
 
@@ -2257,7 +2284,7 @@ function renderGrid(){
     if(b&&t){   // both a building and an occupant → an offset stack (tap to swap which is on top)
       cls+=' pfilled stack';inner=stackHtml(b,t,s.id);
     }else if(b){cls+=' pfilled';inner=pBldgFace(b);}
-    else if(t){cls+=' pfilled';inner=(t.type==='cask'?pCaskFace(t):pShipFace(t));}
+    else if(t){cls+=' pfilled';inner=(t.type==='cask'?pCaskFace(t,caskPreviewBonus(s.id)):pShipFace(t));}
     else inner='<span class="semp">'+s.id+'</span>';
     let click=bldgPlacing?'placeBldgOn':(occPlacing?(UI.sub==='deploy'?'deployTo':'placeSlot'):null);
     if(!click&&b&&t)click='toggleStack';   // not placing → tapping a stacked slot swaps the visible order

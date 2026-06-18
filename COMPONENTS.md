@@ -59,6 +59,8 @@ are placed and **stay** (the authored layer). *(2-player may run ~6 active slots
 | **Worker pawns** | 1 / player | Moved between stations. |
 | **Presence barrels** *(player colour)* | **~9 / colour ⚙ — the TRADE-FACTOR cap** | One token, three lives: it rides your cask as **ownership** on a slot → travels with it on a ship → **plants at the kontor as your presence** on delivery (majorities). **Finite supply = the cap** (v1.1): a kontor delivery / a **+1 Reach** each plant one; out of barrels → you can only Enshrine or stop contesting kontore. **Enshrining (the Hall) returns the barrel** (prestige isn't standing → the Hall is the unlimited overflow). *Personal cap only — not an end-trigger; the Sailed-Ships clock stays the pace dial.* |
 | **Building-owner markers** | ~6 / colour | Mark whose building sits on a slot (wharfage + full-vs-reduced effect). |
+| **Demand dice (d6)** | **~8 shared ⚙** | The reusable **value-bonus carrier.** When a cask ships through a **value building** it carries a neutral d6 in the ship's berth, **pips = the ★ it banks on delivery** (max 5 — Burgomaster = quality, a rival route = half rounded up). The die **returns to the pool** once paid (or if the ship never sails). One d6 replaces a whole denomination of value chits. |
+| **Quality-boost markers** | ~6 ⚙ | A small **+1-quality** token a cask carries from a **Malt Kiln / Hop Yard** to delivery (its effective quality — matters for Novgorod's scaling base). |
 | **Charter contracts** *(small cards)* | ~16 ⚙ | Start **2** / house; spend 1 + a flat `2 G` fare to Charter; buy more at the Market (`1 G`). |
 | **Wharfage / score markers** | — | The owner's small points cut when a rival routes through a building (§3C); a score pad/track. |
 | **First-player / round marker** | 1 | Turn order (fixed) / round clock. |
@@ -77,9 +79,15 @@ Every property the reference app holds has a physical home (no hidden state):
 - **Maturation** → **one marker per vessel** on the player board's "ready in 1/2/3" track.
 - **The steerable kettle** → a shared **brew display**: the four quality piles (Q2–Q5), each showing its
   **face-up top action tile** (what a cask of that quality would take).
-- **Scoring is IN-GAME, on delivery** (advance the score marker) — so transform-boosted value/quality and
-  the value-Buildings a cask shipped through are resolved *at the moment of load/delivery, while the cask is
-  still on its building* — nothing is deferred or remembered.
+- **Scoring is IN-GAME, on delivery** (advance the score marker), and what a cask captured is **carried on the
+  cask, not held in memory.** When a cask **loads off a VALUE building**, it takes a neutral **demand die**
+  into the ship's berth, set to the bonus **★** (a d6 — max 5; Burgomaster = its quality; a rival-route =
+  half, rounded up — and the building owner takes a +1★ wharfage). When it **loads off a quality TRANSFORM**
+  (Malt Kiln / Hop Yard) it carries a **+1-quality marker** (its effective quality, for Novgorod's scaling
+  base). **On delivery** you bank: the destination's value (by the cask's marked quality) **+ the die's pips**
+  **+ the ship's rich-berth** (Rich Berth / Festkeller — resolved *live*, the ship is still on its berth, so
+  they need no carried token); then **the die and marker return to the pool.** A cask that never sails
+  (stranded) never banks — the die just goes back. *(Almoner's wharfage is likewise a live score bump.)*
 - **The Flight** → a per-player **5-space Tasting strip** (Gruit + Hopped + the 3 dealt exports); mark a
   beer the first time you deliver it; uncovered spaces = your range.
 - **Wharfage** → scored live on the track when a rival routes through your building.
@@ -285,8 +293,9 @@ worker placed free turn 1.
 | E Improvements | ~10 | ~4 |
 | Charter contracts | ~16 | 1 |
 
-Plus 1 main board · 1 destination board · 4 brewery boards · wooden cubes (G/H) · ownership
-discs · workers · markers. **Medium GWT footprint** — substantial, far short of Lacerda.
+Plus 1 main board · 1 destination board · 4 brewery boards · wooden cubes (G/H) · presence
+barrels · workers · markers · **~8 demand dice (d6)** · quality-boost markers. **Medium GWT
+footprint** — substantial, far short of Lacerda.
 
 ---
 
