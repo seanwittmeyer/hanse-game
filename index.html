@@ -262,7 +262,7 @@
   <h3>The Destinations (where value lives)</h3>
   <p>The four kontore + the Hall are all <b>open from the start</b>. Each wants a certain <b>quality</b> of beer and pays differently — so there is no single best line of play. A kontor delivery is worth a <b>small base</b> + whatever <b>value-buildings</b> the cask shipped through, so the <b>demand you author on the Wharf</b> (not a fixed table) is what makes a delivery pay. The <b>Hall</b> pays a <b>fixed prestige ladder</b> by quality — the steady, beginner-safe lane.</p>
   <div class="routeboard" id="destBoard"></div>
-  <div class="note"><b>The majority is the stable, board-agnostic floor</b> — every kontor pays a tiered, ranked majority by delivered-cask count, <b>1st / 2nd / 3rd</b>: Bruges <b>4/2/0</b> · London <b>5/3/1</b> · Novgorod <b>8/5/2</b> · <b>Bergen 9/5/2</b> ⚙ (Bergen the rich anchor). Base delivery values are low so the in-game points live in the <b>demand</b> you build; the Hall's prestige is a <b>fixed ladder 3/5/7/9</b> by quality. <b>2-player games skip 2nd</b> (winner-take-all); ties split the occupied tiers. Benefits pair off: <b>Bruges &amp; Bergen</b> give goods (liquidity); <b>London &amp; Novgorod</b> let you <b>take a Building</b> (the author-your-board engine). The cask's owner always scores the delivery and takes any benefit.</div>
+  <div class="note"><b>The majority is the stable, board-agnostic floor</b> — every kontor pays a tiered, ranked majority by delivered-cask count, <b>1st / 2nd / 3rd</b>: Bruges <b>4/2/0</b> · London <b>5/3/1</b> · Novgorod <b>8/5/2</b> · <b>Bergen 9/5/2</b> ⚙ (Bergen the rich anchor). Base delivery values are low so the in-game points live in the <b>demand</b> you build; the Hall's prestige is a <b>fixed ladder 3/5/7/9</b> by quality. <b>2-player games skip 2nd</b> (winner-take-all); ties split the occupied tiers. Each kontor's benefit is <b>distinct</b>: <b>Bruges</b> 2 goods (liquidity) · <b>London</b> take a Building (the engine) · <b>Bergen</b> a free Reach, +1 presence (feeds its rich majority) · <b>Novgorod</b> refine a maturing cask +1 age — and Novgorod's <b>value scales with quality</b> (Q3·2 / Q4·4 / Q5·6). The cask's owner always scores the delivery and takes any benefit.</div>
   <h3>Your Brewery (private, untouchable)</h3>
   <p>Your brewery board holds the <b>maturation track</b> (casks crawl Brew → … → Ready across your <b>vessels</b> — start <b>2</b>, cap <b>3</b>, each a parallel lane), a <b>recipe rack</b>, and a few <b>improvements</b>. <b>A cask held in a vessel powers your Floor</b> (its action, run as a private line) — so it works <em>before</em> it ships, and <b>hold vs deploy</b> is a live decision. Rivals can only act on your casks once they're deployed on a slot.</p>
 </section>
@@ -314,9 +314,9 @@
   <table>
     <tr><th>Quality</th><th>Beer</th><th>Brew</th><th>Matures</th><th>Slot action ⚙</th><th>Ships to</th></tr>
     <tr><td><b>Q1</b></td><td><b>Gruit Ale</b></td><td><span class="cube g"></span></td><td>1 step</td><td><b>Source · +2 goods</b> <span class="small">(fixed)</span></td><td>Bruges</td></tr>
-    <tr><td><b>Q2</b></td><td><b>Hopped Beer</b></td><td><span class="cube g"></span> <span class="cube h"></span></td><td>2</td><td><i>top of pile ⚙</i></td><td>+ London · Bergen <span class="small">(Hall via Enshrine)</span></td></tr>
-    <tr><td><b>Q3</b></td><td><b>Broyhan</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span></td><td>2</td><td><i>top of pile ⚙</i></td><td>+ Novgorod</td></tr>
-    <tr><td><b>Q3</b></td><td><b>Keut</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span></td><td>2</td><td><i>top of pile ⚙</i></td><td>+ Novgorod</td></tr>
+    <tr><td><b>Q2</b></td><td><b>Hopped Beer</b> <span class="small">(fast)</span></td><td><span class="cube g"></span> <span class="cube h"></span></td><td>1</td><td><i>top of pile ⚙</i></td><td>+ London · Bergen <span class="small">(Hall via Enshrine)</span></td></tr>
+    <tr><td><b>Q3</b></td><td><b>Broyhan</b> <span class="small">(export · fast)</span></td><td><span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span></td><td>1</td><td><i>top of pile ⚙</i></td><td>+ Novgorod</td></tr>
+    <tr><td><b>Q3</b></td><td><b>Keut</b> <span class="small">(export · +1 presence)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span></td><td>2</td><td><i>top of pile ⚙</i></td><td>+ Novgorod</td></tr>
     <tr><td><b>Q4</b></td><td><b>Mumme</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span></td><td>3</td><td><i>top of pile ⚙</i></td><td>all</td></tr>
     <tr><td><b>Q5</b></td><td><b>Bock</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span> <span class="small">(ungated)</span></td><td>3 <span class="small">(2 w/ Cellar)</span></td><td><i>top of pile (Wild possible)</i></td><td>all</td></tr>
   </table>
@@ -339,7 +339,7 @@
   <div class="gallery" id="shipGallery"></div>
   <h3>Charter Voyage</h3>
   <p>The Harbor always offers a <b>Charter</b> (no tile — an outside hull): spend a <b>charter contract</b> + a flat <b><i data-lucide="wheat" class="gi"></i>2</b> fare ⚙ to send <b>one</b> Ready cask — from a vessel or a slot — on an immediate <b>single-cask voyage</b> to a <b>kontor</b> it qualifies for (Charter is kontore-only; the Hall is reached by Enshrine, not chartered). Each house <b>starts with 2 contracts</b> and can <b>buy more at the Market</b> (one Market acquire, <b>1 G</b> each, unlimited supply) — the <b>scarce contract</b> is the throttle. It delivers normally and advances the clock, but is <b>strictly worse per cask</b> than a Cog/Hulk — so filling the shared ships stays the better plan; the Charter just keeps the tight slots from ever deadlocking (Move → Market → buy a contract → charter is always a legal escape).</p>
-  <div class="box"><h4>Delivery Benefits</h4>Delivering to <b>London / Novgorod</b> lets you <b>take a Building</b> from the display, free, and place it (<b>Bruges &amp; Bergen</b> pay goods; the <b>Hall</b> pays prestige). The cycle reinforces itself: <em>deliver → author a Building → grow your board → deliver better.</em></div>
+  <div class="box"><h4>Delivery Benefits</h4>Each kontor pays a <b>distinct</b> benefit on delivery: <b>Bruges</b> 2 goods (liquidity) · <b>London</b> <b>take a Building</b> (free, to hand — the engine loop: <em>deliver → author → deliver better</em>) · <b>Bergen</b> a free Reach (+1 presence, feeding its rich majority) · <b>Novgorod</b> refine a maturing cask (+1 age), and its value <b>scales with quality</b>. The <b>Hall</b> pays prestige (the local Enshrine).</div>
 </section>
 
 <section id="brewery">
@@ -376,7 +376,7 @@
   <h2><span class="nm">14</span>Scoring</h2>
   <p>No goal tiles, no separate tracks — you score from <b>what you delivered</b>: two in-game sources, two end-game.</p>
   <ol>
-    <li><b>Hall — fixed (in-game)</b>: each <b>enshrined</b> cask scores the printed prestige ladder <b>4 / 6 / 8 / 10</b> by quality. The steady, beginner-safe lane.</li>
+    <li><b>Hall — fixed (in-game)</b>: each <b>enshrined</b> cask scores the printed prestige ladder <b>3 / 5 / 7 / 9</b> by quality. The steady, beginner-safe lane.</li>
     <li><b>Kontore — variable (in-game)</b>: each delivered cask scores its <b>small base</b> + the <b>value-buildings</b> it shipped through (the demand you authored). The skill lane.</li>
     <li><b>Majorities (end-game)</b> — at <i>every</i> kontor, by delivered-cask count, <b>1st / 2nd / 3rd</b> take the tiers: Bruges <b>4/2/0</b> · London <b>5/3/1</b> · Novgorod <b>8/5/2</b> · <b>Bergen 9/5/2</b> ⚙. <b>2-player games skip 2nd</b>; ties split the occupied tiers. The stable floor.</li>
     <li><b>The Flight (end-game) — your range</b>: count the <b>distinct beers you delivered</b> and score <b>(beers − 1)², min 3</b> → <b>3→4 · 4→9 · 5→16</b>. There are always exactly <b>five beer types</b> (Gruit + Hopped + the 3 dealt exports), so the full flight is <b>always reachable</b> — <em>not how high, but how complete the range of the house</em>. The range lane's reward.</li>
@@ -468,7 +468,7 @@
     <h4>At the Wharf</h4>
     <p>Market (gain goods, or acquire a recipe / a <b>Building</b> [+place] / commission a ship / a charter contract) → Brewhouse (Brew — take the top of a quality pile) → Cellar (Age to Ready → deploy to a slot) → Harbor (Ship to a kontor → sails only when full → delivers; or Enshrine a deployed Q2+ cask into the Hall). Or <b>work your Floor</b> instead of the grid.</p>
     <h4>Where to ship</h4>
-    <p>Bruges (base +1, goods, maj 4/2/0) · London (+1, take a Building, maj 5/3/1) · Bergen (+1, goods, maj 9/5/2 — the anchor) · Novgorod (+2, take a Building, maj 8/5/2). A kontor delivery = <b>base + the value-buildings you routed it through</b>. <b>Enshrine</b> a deployed Q2+ cask into the Hall (no ship/fare) for fixed prestige — 3/5/7/9 by quality. Each cask owner scores &amp; takes the benefit (in load order) when the shared hull sails full.</p>
+    <p>Bruges (+1, 2 goods, maj 4/2/0) · London (+1, take a Building, maj 5/3/1) · Bergen (+1, free Reach, maj 9/5/2 — the anchor) · Novgorod (value scales 2/4/6 by quality, refine +1 age, maj 8/5/2). A kontor delivery = <b>base + the value-buildings you routed it through</b>. <b>Enshrine</b> a deployed Q2+ cask into the Hall (no ship/fare) for fixed prestige — 3/5/7/9 by quality. Each cask owner scores &amp; takes the benefit (in load order) when the shared hull sails full.</p>
     <h4>Game ends</h4>
     <p><b>The Sailed-Ships track fills</b> (each voyage = 1 slot — a full sail, a Charter, or an Enshrine) → finish the round → score: <b>Hall</b> (fixed) + <b>kontor deliveries</b> (base + your buildings) + <b>Majorities</b> (tiered; 2p skips 2nd) + <b>the Flight</b> (range).</p>
   </div>
@@ -489,10 +489,10 @@ function cubes(str){return str.replace(/G/g,G).replace(/H/g,H);}
 
 // ---- DESTINATIONS (v1.0: small flat base + variable value from the buildings a cask ships through · majorities the floor · Hall = fixed ladder via Enshrine) ----
 const destinations=[
-  {cls:'bruges',  name:'Bruges',   role:'The Hub — wide, takes any beer (the on-ramp)', gate:'Q1', value:'+1', benefit:'gain 2 goods (liquidity)', maj:'<b>4 / 2 / 0</b>'},
-  {cls:'london',  name:'London',   role:'The Steelyard — author your board',           gate:'Q2', value:'+1', benefit:'take a Building from the display', maj:'<b>5 / 3 / 1</b>'},
-  {cls:'bergen',  name:'Bergen',   role:'Bryggen — the rich-majority anchor',          gate:'Q2', value:'+1', benefit:'gain 2 goods', maj:'<b>9 / 5 / 2</b>'},
-  {cls:'novgorod',name:'Novgorod', role:'The Long Haul — premium only',                gate:'Q3', value:'+2', benefit:'take a Building from the display', maj:'<b>8 / 5 / 2</b>'},
+  {cls:'bruges',  name:'Bruges',   role:'The Hub — the economy (the on-ramp)',         gate:'Q1', value:'+1', benefit:'2 goods (liquidity)', maj:'<b>4 / 2 / 0</b>'},
+  {cls:'london',  name:'London',   role:'The Steelyard — the engine',                  gate:'Q2', value:'+1', benefit:'take a Building (to hand)', maj:'<b>5 / 3 / 1</b>'},
+  {cls:'bergen',  name:'Bergen',   role:'Bryggen — the rich-majority anchor',          gate:'Q2', value:'+1', benefit:'a free Reach (+1 presence)', maj:'<b>9 / 5 / 2</b>'},
+  {cls:'novgorod',name:'Novgorod', role:'The Long Haul — the quality climb',           gate:'Q3', value:'Q3·2 / Q4·4 / Q5·6 (scales)', benefit:'refine a maturing cask (+1 age)', maj:'<b>8 / 5 / 2</b>'},
   {cls:'hall',    name:'The Hall', role:'Prestige — local Enshrine, no ship/fare',     gate:'Q2 (deployed)', value:'fixed ladder 3·5·7·9', benefit:'none (prestige only)', maj:'—'},
 ];
 document.getElementById('destBoard').innerHTML=destinations.map(d=>`
@@ -537,8 +537,8 @@ document.getElementById('shipGallery').innerHTML=ships.map(t=>`
 // ---- BUILDINGS (the owned family — VALUE + TRANSFORM, one placement grammar) ----
 const buildings=[
   ['v','Rich Berth','a ship here: each cask it delivers +2★','demand · volume'],
-  ['v','Staple Hall','a cask here delivers +3★','demand'],
-  ['v','Kontor Charter ×4','a cask to its own kontor: +X★','demand · majority'],
+  ['v','Staple Hall','a cask shipped from here delivers +3★ (any kontor)','demand'],
+  ['v','Kontor Charter ×4','a cask to its own kontor: +4★','demand · majority'],
   ['v',"Burgomaster's Favor",'a cask here: +1★ per quality level','demand · range'],
   ['v',"Connoisseur's Cellar",'a Q4+ cask here: +4★','demand · range'],
   ['v','The Hanse Diet','a cask to a kontor you lead: +3★','demand · majority'],
@@ -546,13 +546,13 @@ const buildings=[
   ['v','Reliquary','a cask, when enshrined: +2★ prestige','prestige'],
   ['v',"Almoner's Stall",'your wharfage from rivals: +1★','authorship'],
   ['t','Malt Kiln','a cask here ships +1 quality','range'],
-  ['t','Lagering Cellar','a cask here ages +1 / turn','range'],
+  ['t','Lagering Cellar','when this line fires, age a maturing cask +1','range · tempo'],
   ['t','Hop Yard','a Q2+ cask here: +1 quality','range'],
   ['t','Cooperage','a ship here carries +1 cask','volume'],
   ['t','Harbor Crane','free-load a cask when this line fires','tempo'],
-  ['t','Customs House','a ship here may re-flag its destination','routing'],
-  ['t',"Gauger's Office",'a cask here re-qualifies up one gate','routing · range'],
-  ['t',"Brewmaster's Workshop",'a cask here gains / upgrades its action','engine'],
+  ['t','Customs House','a ship here may board casks one gate lower','routing'],
+  ['t',"Gauger's Office",'a cask here delivers one gate higher','routing · range'],
+  ['t',"Brewmaster's Workshop",'a cask here upgrades its slot-action to Wild','engine'],
 ];
 document.getElementById('buildingGallery').innerHTML=buildings.map(b=>`
   <div class="card"><div class="head ${b[0]==='v'?'h-mod':'h-room'}"><div class="kind">Building · ${b[0]==='v'?'Value (demand)':'Transform'} · owned</div><div class="ttl">${b[1]}</div></div>

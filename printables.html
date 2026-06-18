@@ -271,14 +271,14 @@
   .stn .yield .sep{font-weight:bold;font-size:.15in;opacity:.85;line-height:1}
   .stn.A{background:linear-gradient(155deg,#cda522,#9c7414)} .stn.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .stn.C{background:linear-gradient(155deg,#3d6b7e,#244554)} .stn.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
-  .mb-side{flex:1;display:flex;flex-direction:column;gap:.07in;min-width:0}
-  .mbox{border:1.5px solid var(--sea);border-radius:.07in;background:#fff;padding:.06in .08in}
-  .mbox h4{margin:0 0 .03in;font-variant:small-caps;font-size:.115in;color:var(--sea);display:flex;align-items:center;gap:.04in;border-bottom:1px solid rgba(0,0,0,.15);padding-bottom:.02in}
+  .mb-side{flex:1;display:flex;flex-direction:column;gap:.055in;min-width:0}
+  .mbox{border:1.5px solid var(--sea);border-radius:.07in;background:#fff;padding:.045in .07in}
+  .mbox h4{margin:0 0 .025in;font-variant:small-caps;font-size:.115in;color:var(--sea);display:flex;align-items:center;gap:.04in;border-bottom:1px solid rgba(0,0,0,.15);padding-bottom:.015in}
   .mbox h4 svg,.mbox h4 .ic{width:.13in;height:.13in}
-  .mbox .b{font-size:.092in;line-height:1.3}
+  .mbox .b{font-size:.092in;line-height:1.22}
   .mbox .b b{color:var(--red)}
-  .mbox ol{margin:.02in 0 0;padding-left:.16in;font-size:.092in;line-height:1.35}
-  .srow{display:flex;gap:.05in;font-size:.09in;line-height:1.28;margin-bottom:.035in}
+  .mbox ol{margin:.02in 0 0;padding-left:.16in;font-size:.092in;line-height:1.24}
+  .srow{display:flex;gap:.05in;font-size:.09in;line-height:1.2;margin-bottom:.024in}
   .srow:last-child{margin-bottom:0}
   .srow .sic{flex:0 0 auto;margin-top:.005in} .srow .sic svg,.srow .sic .ic{width:.14in;height:.14in}
   .srow b{font-variant:small-caps}
@@ -586,20 +586,14 @@ function mboard(){
       +srow('hourglass','Cellar · Age','gain <b>3 age points</b> '+LU('hourglass')+', split freely across your vessels. (Every cask also ages +1 automatically each of your turns.)')
       +srow('ship','Harbor · Ship','load '+LU('package-plus')+' a deployed cask (<b>yours or a rival’s</b> — you pick the ship/destination; owner scores it, you take <b>1 '+LU('wheat','g ic')+'</b>) onto any ship it qualifies for — a ship <b>sails only when full</b> · <b>Enshrine</b> '+LU('crown')+' a Q2+ slot cask at the Hall (local — no boat) · or <b>Charter</b> '+LU('ticket')+': spend a <b>charter contract + a flat 2 '+LU('wheat','g ic')+' fare</b> to ship 1 Ready cask now. On <b>delivery</b> each cask’s owner banks the destination benefit <i>and</i> its points, in <b>load order</b>.')
       +'</div>'
-    +'<div class="mbox"><h4>'+LU('beer')+'The cask’s three states</h4><div class="b">'
-      +'<b>Maturing</b> (private vessel) → Ready → <b>deploy to a slot</b> (public action + cargo) → <b>shipped</b> to a destination (scores for its owner, leaves). '
-      +'A rival may ship your slot cask — <b>you</b> score it &amp; take its benefit.</div>'
-      +'<div class="b" style="margin-top:.04in"><b>Slot-action, drawn at brew</b> (printed on the cask): '
-        +CASK_POOL.map(a=>LU(a.ai)+' '+a.act.replace(/ · .*/,'')).join(' · ')+' · '+LU(CASK_WILD.ai)+' Wild (Q4+). <i>Gruit is always '+LU('coins')+' Source.</i></div></div>'
-    +'<div class="mbox"><h4>'+LU('building-2')+'Buildings — the living slots</h4><div class="b">'
-      +'An <b>owned</b> tile you place on a slot; it <b>modifies the occupant docked on it</b>. '
-      +'<b>Value</b> '+LU('star')+' → a cask/ship delivers for more (the variable kontor value). '
-      +'<b>Transform</b> → it changes the cask/ship (quality · cargo · route · action · tempo). '
-      +'Owned-but-shared: a rival may dock too, and the owner takes a +1 '+LU('star')+' <b>wharfage</b>.</div></div>'
+    +'<div class="mbox"><h4>'+LU('beer')+'The cask &amp; the slots</h4><div class="b">'
+      +'<b>Maturing</b> (private vessel) → Ready → <b>deploy to a slot</b> (public action + cargo) → <b>shipped</b> (scores for its owner, leaves). A rival may ship your slot cask — <b>you</b> score it.</div>'
+      +'<div class="b" style="margin-top:.03in"><b>Slot-action</b> (drawn at brew): '
+        +CASK_POOL.map(a=>LU(a.ai)+' '+a.act.replace(/ · .*/,'')).join(' · ')+' · '+LU(CASK_WILD.ai)+' Wild (Q4+). <i>Gruit = '+LU('coins')+' Source.</i></div>'
+      +'<div class="b" style="margin-top:.03in">'+LU('building-2')+' <b>Buildings</b> — an <b>owned</b> tile on a slot that <b>modifies the occupant docked on it</b>: <b>Value</b> '+LU('star')+' (delivers for more) or <b>Transform</b> (changes the cask/ship). Owned-but-shared: a rival docks for a +1 '+LU('star')+' <b>wharfage</b> to you.</div></div>'
     +'<div class="mbox"><h4>'+LU('settings')+'Setup seeding</h4><div class="b">'
-      +'Each house: 3 '+LU('wheat','g ic')+' 2 '+LU('sprout','h ic')+' (+1 '+LU('wheat','g ic')+' per seat after the first) · Gruit + Hopped · 2 vessels · 2 charter contracts · <b>1 Building in hand</b> · a Ready Gruit.<br>'
-      +'Shared: a <b>guaranteed Hulk → Bruges + 1 more ship</b> dealt to slots, a <b>ship market of 3</b> face-up · a <b>Building display of 4</b> face-up at the Market · deal <b>3 of the 4 export beers</b>. '
-      +'First player is <b>fixed all game</b>. <i>2p: ~6 active slots; majorities winner-take-all.</i></div></div>'
+      +'Each house: 3 '+LU('wheat','g ic')+' 2 '+LU('sprout','h ic')+' (+1 '+LU('wheat','g ic')+'/seat after the first) · Gruit + Hopped · 2 vessels · 2 charter contracts · <b>1 Building in hand</b> · a Ready Gruit. '
+      +'Shared: a <b>guaranteed Hulk → Bruges + 1 more ship</b> on slots, a <b>ship market of 3</b> + a <b>Building display of 4</b> face-up · deal <b>3 of the 4 export beers</b>. First player <b>fixed</b>. <i>2p: ~6 slots; majorities winner-take-all.</i></div></div>'
     +'</div>';
   let clk='';for(let i=1;i<=14;i++){let end='';for(const p in SAILED)if(SAILED[p]===i)end=p+'p';
     clk+='<div class="cc'+(end?' end':'')+'">'+(end?end+'<br>END':'<span class="n">'+i+'</span>')+'</div>';}
@@ -647,7 +641,7 @@ function boardPage(pages,section,label,html,h){
 function buildPages(){
   const pages=[],famPages={};
   // --- BOARDS ---
-  boardPage(pages,'boards','Main board — the Wharf',mboard());
+  boardPage(pages,'boards','Main board — the Wharf',mboard(),7.42);
   boardPage(pages,'boards','Destinations board',dboard(),6.9);
   PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),6.0));
   // --- TILES (one unbroken 1.25in grid — no family breaks) ---
