@@ -2095,7 +2095,12 @@ function aiGmOptions(p){
     const cands=(!p.placed)?['A','B','C','D']:ADJ[p.cell];
     const o=[];cands.forEach(c=>['row','col'].forEach(w=>o.push(()=>{aiChosenWhich=w;doMove(c);})));
     return o;}
-  if(U==='stops')return UI.stops.map((s,i)=>()=>resolveStop(i));
+  // stop ORDERING is low-leverage — the same up-to-4 stops all resolve this turn regardless of order, and the
+  // trader heuristic (aiStops) already sorts them into the canonical Source→Brew→Age→Ship order. A full Monte
+  // Carlo per resolveStop was ~40% of the GM's per-turn compute (≈3.7 of ~8 searches) — i.e. most of the
+  // main-thread freeze — for ~no strength. Delegate to the trader policy; the meaningful sub-actions a stop
+  // opens (market buys, harbor load/enshrine, deploy) still get their own MC.
+  if(U==='stops')return null;
   if(U==='cell'&&UI.cell==='A'){
     if(UI.stage==='commload'){const el=commEligible(p,UI.tmp.commShipSlot);const oo=el.map(e=>()=>commLoad(e.ref));oo.push(()=>commSkip());return oo;}
     if(UI.stage==='place')return emptySlots().map(s=>()=>placeSlot(s.id));
