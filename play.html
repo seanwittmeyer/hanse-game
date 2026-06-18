@@ -2194,7 +2194,10 @@ function aiGmOptions(p){
     if(UI.stage==='place')return emptySlots().map(s=>()=>placeSlot(s.id));
     const o=[()=>marketGoods(2,0),()=>marketGoods(1,1),()=>marketGoods(0,2)];
     (S.exports||[]).forEach(st=>{if(!p.recipes.includes(st)&&canPay(p,RECIPE_BUY[st]))o.push(()=>buyRecipe(st));});
-    if(emptySlots().length&&canPay(p,COMMISSION_COST))(S.shipDisplay||[]).forEach((sn,i)=>o.push(()=>commissionShip(i)));
+    if(emptySlots().length&&canPay(p,COMMISSION_COST)){
+      const reachQ=Math.max(aiBestCargo(p).q,aiAchQ(p));   // don't even consider a hull our cargo can't gate for (the Adaline→Novgorod self-clog trap): cap by current best cargo OR the best quality our recipes can brew
+      (S.shipDisplay||[]).forEach((sn,i)=>{if(reachQ>=DEST[sn.dest].gate)o.push(()=>commissionShip(i));});
+    }
     if(canPay(p,CONTRACT_BUY))o.push(()=>buyContract());
     (p.hand||[]).forEach((k,i)=>{if(aBuildSlotsAI().length)o.push(()=>placeHeld(i));});                 // place a held Building
     if(aBuildSlotsAI().length)(S.buildDisplay||[]).forEach((k,i)=>{if(canPay(p,BUILDINGS[k].cost))o.push(()=>buyBuilding(i));});   // buy + place a Building
