@@ -161,6 +161,17 @@
   .slot .pocc{position:absolute;left:3cqmin;right:3cqmin;bottom:3cqmin;z-index:3;display:flex;align-items:center;justify-content:center;gap:2cqmin;font-size:8.5cqmin;font-weight:bold;font-variant:small-caps;color:#fff;padding:2cqmin 3cqmin;border-radius:5cqmin;box-shadow:0 1px 3px rgba(0,0,0,.5);white-space:nowrap;overflow:hidden;max-width:calc(100% - 6cqmin)}
   .slot .pocc.ship{background:var(--sea2)}
   .slot .pocc .ic,.slot .pocc svg{width:11cqmin;height:11cqmin}
+  /* ===== two tiles in one slot: an offset STACK; tap to swap which is on top ===== */
+  .slot.stack{cursor:pointer}
+  .scard{position:absolute;width:85%;height:85%;border-radius:8px;overflow:hidden;container-type:size}
+  .scard.front{top:0;left:0;z-index:3;box-shadow:0 4px 9px rgba(0,0,0,.45)}
+  .scard.back{top:15%;left:15%;z-index:1}
+  .scard.back::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.16);z-index:5;pointer-events:none}
+  .scard .spine{position:absolute;left:0;right:0;bottom:0;z-index:6;display:none;align-items:center;justify-content:center;gap:2cqmin;
+    font-size:10cqmin;font-weight:bold;font-variant:small-caps;color:#fff;background:rgba(20,14,8,.74);padding:2.5cqmin 3cqmin;
+    white-space:nowrap;overflow:hidden;line-height:1.02}
+  .scard.back .spine{display:flex}
+  .scard .spine .ic,.scard .spine svg{width:10cqmin;height:10cqmin;flex:0 0 auto}
   /* DESTINATIONS */
   #dests{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
   @media(max-width:600px){#dests{grid-template-columns:1fr 1fr}}
@@ -851,6 +862,19 @@ function pOccToken(t){
   if(t.type==='cask')return '<span class="pocc" style="background:'+S.players[t.owner].color+'">'+LU('beer')+styleShort(t.style)+' Q'+t.q+'</span>';
   if(t.type==='ship')return '<span class="pocc ship">'+LU('sailboat')+DEST[t.dest].name.slice(0,3)+' '+t.load.length+'/'+effCap(t)+'</span>';
   return '';}
+// when a slot holds BOTH a building and an occupant, render them as an offset STACK (tap the slot to swap
+// which is on top); the back tile shows a one-line spine in its exposed strip so you know what's under.
+let stackFlip={};   // slotId -> true = building on top (default: the occupant sits on top of its dock)
+function toggleStack(id){stackFlip[id]=!stackFlip[id];render();}
+function occSpine(t){
+  if(t.type==='cask')return LU('beer')+styleShort(t.style)+' Q'+t.q;
+  if(t.type==='ship')return LU('sailboat')+shipName(t)+'→'+DEST[t.dest].name.slice(0,3)+' '+t.load.length+'/'+effCap(t);
+  return '';}
+function bldgSpine(b){const def=BUILDINGS[b.b];return LU(def.icon)+' '+def.name;}
+function stackHtml(b,t,id){const bOnTop=!!stackFlip[id];
+  const occCard='<div class="scard '+(bOnTop?'back':'front')+'">'+(t.type==='cask'?pCaskFace(t):pShipFace(t))+'<div class="spine">'+occSpine(t)+'</div></div>';
+  const bldCard='<div class="scard '+(bOnTop?'front':'back')+'">'+pBldgFace(b)+'<div class="spine">'+bldgSpine(b)+'</div></div>';
+  return bOnTop?(occCard+bldCard):(bldCard+occCard);}   // DOM order: back first, front last
 
 //==================================================================
 // PERSISTENCE
@@ -2155,11 +2179,13 @@ function renderGrid(){
     const bldgPlacing=!aiTurn()&&UI.sub==='placebldg';   // any slot is a target (placing onto a building replaces it)
     if(occPlacing||bldgPlacing)cls+=' place';
     let inner;let style='';
-    if(b){   // a building is the slot's FULL tile; the occupant (if any) docks on it as a token
-      cls+=' pfilled';inner=pBldgFace(b)+(t?pOccToken(t):'');
-    }else if(t){cls+=' pfilled';inner=(t.type==='cask'?pCaskFace(t):pShipFace(t));}
+    if(b&&t){   // both a building and an occupant → an offset stack (tap to swap which is on top)
+      cls+=' pfilled stack';inner=stackHtml(b,t,s.id);
+    }else if(b){cls+=' pfilled';inner=pBldgFace(b);}
+    else if(t){cls+=' pfilled';inner=(t.type==='cask'?pCaskFace(t):pShipFace(t));}
     else inner='<span class="semp">'+s.id+'</span>';
-    const click=bldgPlacing?'placeBldgOn':(occPlacing?(UI.sub==='deploy'?'deployTo':'placeSlot'):null);
+    let click=bldgPlacing?'placeBldgOn':(occPlacing?(UI.sub==='deploy'?'deployTo':'placeSlot'):null);
+    if(!click&&b&&t)click='toggleStack';   // not placing → tapping a stacked slot swaps the visible order
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
   });
   ['A','B','C','D'].forEach(c=>{const act=CELLNAME[c];
