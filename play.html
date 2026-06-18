@@ -527,7 +527,7 @@ const OCCUPANCY_TOLL=1;
 const SAILED_CAP={2:7,3:11,4:14};  // the Sailed-Ships end clock (per RULES §8) — primary pace dial ⚙ (scales steeply: the shared clock fills faster with more players). 2–4p only (5p support removed). Any stray higher count falls back to 10.
 const MAX_ROUND=25;                      // round ceiling / backstop ⚙ — top of the 12–25-round target band (good play ends earlier on the clock)
 const CELLAR_POOL=3;                     // Cellar age points ⚙
-const AUTO_AGE=false;                     // v1.1: auto-aging REMOVED — casks age only via the Cellar (3 pts), the cask "age" action, or Novgorod's benefit. Mechanics kept (passiveFerment) for easy reintroduction: flip to true.
+const AUTO_AGE=true;                      // casks age +1 at the start of your turn (the free "time passes" aging). v1.1 tried removing this (v54) but it stole the turns players needed to fund high-Q + slowed setup past the short 2p clock → reverted. The Cellar/age-action/Novgorod SPEED it. (Flag kept to experiment.)
 const START_GOODS={g:3,h:2};
 const START_STORAGE=8;
 const SEAT_COMP=1;                       // seat compensation ⚙ — +this much grain to EACH seat after the first
@@ -539,7 +539,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v54'; // v1.1: Novgorod benefit recipe→AGE (refine a maturing cask +1 — uncapped, useful every visit, since auto-aging is gone); AUTO-AGING REMOVED (casks age only via the Cellar/age-action/Novgorod; passiveFerment kept behind AUTO_AGE flag for reintroduction). Bump discards stale v53 state.
+const KEY='hanse-hotseat-v55'; // v1.1: AUTO-AGING RESTORED (v54's removal stole the turns players needed to fund high-Q + slowed setup past the short 2p clock — felt slow/goods-starved in real play; GM data showed the aging throttle wasn't needed for balance). Novgorod's +1-age benefit kept (now an accelerant, not a crutch). Bump discards stale v54 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -729,7 +729,7 @@ function lineGlyph(lk){const lit=LINES[lk].cells;return '<span class="lg" data-t
 const CELLTIP={
   Market:'Market · Source. Take 2 goods (any mix), OR acquire one tile: a recipe · a Building from the display (buy + place) · a ship commission · a charter contract · a private improvement. You may also place a Building you hold (free). Never closed (move onto a rival here for 1G).',
   Brewhouse:'Brewhouse · Brew. Load one recipe you hold (paying its G/H) into an open vessel; the cask takes the FACE-UP action of that quality\'s pile (steerable). Never closed (move onto a rival here for 1G).',
-  Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' age points to allocate across your vessels (enough to fully age a Bock in one visit). Casks age ONLY when you age them — the Cellar, a cask’s "age" action, or Novgorod’s benefit (no automatic per-turn aging). When a cask is Ready, set it on a slot.',
+  Cellar:'Cellar · Age. Gain a pool of '+CELLAR_POOL+' age points to allocate across your vessels (enough to fully age a Bock in one visit). Your casks also age +1 automatically at the start of each of your turns; the Cellar, a cask’s "age" action, and Novgorod SPEED that. When a cask is Ready, set it on a slot.',
   Harbor:'Harbor · Ship — your ship-options hub. Load ANY cask (yours or a rival’s — you pick the destination; the owner scores it, you take a loader bonus) onto any ship it qualifies for. A ship sails ONLY when full — then every cask is delivered: its owner banks that destination’s benefit AND its points (base + the value-Buildings it shipped through), in load order. Or Enshrine a Q2+ slot cask at the Hall, or Charter a single cask. Never closed.',
 };
 function bldgTip(b){if(!b)return '';const def=BUILDINGS[b.b];return (def.verb==='value'?'Value':'Transform')+' Building · '+def.name+' ('+S.players[b.owner].name+'’s) — '+def.desc+'. Affects '+BTGT[def.tgt].lbl+'. Owned-but-shared: the owner gets the FULL effect; a rival may dock here too for a REDUCED bonus, and the owner takes a +'+WHARFAGE+'★ wharfage when their cargo delivers through it.';}
@@ -1919,7 +1919,7 @@ function renderAid(){
     +'<div class="asec"><b>The four stations</b><div class="note">'
       +ic('store')+' <b>Market</b> (Source): take 2 goods, or acquire one tile — a recipe · a '+ic('building-2')+' Building (buy + place) · a '+ic('sailboat')+' ship · a charter contract · an improvement. Or <b>place a Building from your hand</b> (free) — the ones you earned at London/Novgorod or drew with Survey.<br>'
       +ic('flask-conical')+' <b>Brewhouse</b> (Brew): pay a recipe → a young cask; it takes the FACE-UP action of that quality’s pile (steerable).<br>'
-      +ic('hourglass')+' <b>Cellar</b> (Age): 3 age points across your casks (enough to fully age a Bock in one visit). Casks age ONLY when aged — no automatic per-turn aging.<br>'
+      +ic('hourglass')+' <b>Cellar</b> (Age): 3 age points across your casks (enough to fully age a Bock in one visit). Casks also age +1 automatically at the start of your turn; the Cellar/age-action/Novgorod speed it.<br>'
       +ic('anchor')+' <b>Harbor</b> (Ship): load a Ready cask onto a ship (it sails when full → each owner banks the benefit + points), <b>Enshrine</b> a Q2+ <i>slot</i> cask at the '+ic('crown')+' Hall (local), or Charter.</div></div>'
     +'<div class="asec"><b>The living slots (the keystone)</b><div class="note">Each of the 8 slots holds an owned '+ic('building-2')+' <b>Building</b> (a modifier) and/or an occupant (a cask, or a ship with casks). A <b>value</b> building makes a delivery pay more; a <b>transform</b> building changes the cask/ship. Value is captured ON SHIP-THROUGH: a cask delivers for its base + the value-buildings it shipped from + its ship’s berth building. Owned-but-shared: the owner gets the FULL effect; a rival may dock too for a REDUCED bonus, and the owner takes a +'+WHARFAGE+'★ wharfage when they do.</div>'
       +'<div class="atags" style="margin-top:5px">'+vb+'</div><div class="atags" style="margin-top:4px">'+tb+'</div></div>'
