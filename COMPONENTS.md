@@ -92,6 +92,13 @@ Every property the reference app holds has a physical home (no hidden state):
 - **The Flight** → a per-player **5-space Tasting strip** (Gruit + Hopped + the 3 dealt exports); mark a
   beer the first time you deliver it; uncovered spaces = your range.
 - **Wharfage** → scored live on the track when a rival routes through your building.
+- **Presence** → a **presence barrel** is placed at a kontor **only by delivering a cask there** or by a
+  **Reach** (the cask action, the Bergen benefit, the Keut perk) **at a kontor where you already have a
+  barrel** — you can't gain a foothold where you've never shipped (v1.2). So a Reach is a dead action until
+  your first delivery; no extra component, just the placement rule.
+- **The developer bonus** (v1.2) → when a **rival overbuilds** your slot, your displaced building returns to
+  your hand **face-up** *and* you flip a spent copy / place a **3★ chit** in your end-game area (it served its
+  purpose). Scored at game end. **Self-displacement pays nothing** (you only score when a *rival* covers you).
 - *(Tabled: Keut **set-collection** — would track the count by parking the delivered Keut tiles on a 3-space
   "specialty" strip, viable because casks are type-tiles; deferred in favour of Keut = +1-presence.)*
 
@@ -295,8 +302,8 @@ worker placed free turn 1.
 | Charter contracts | ~16 | 1 |
 
 Plus 1 main board · 1 destination board · 4 brewery boards · wooden cubes (G/H) · presence
-barrels · workers · markers · **~8 demand dice (d6)** · quality-boost markers. **Medium GWT
-footprint** — substantial, far short of Lacerda.
+barrels · workers · markers · **~8 demand dice (d6)** · quality-boost markers · **~12 developer 3★ chits**
+(displaced-building payout, v1.2). **Medium GWT footprint** — substantial, far short of Lacerda.
 
 ---
 

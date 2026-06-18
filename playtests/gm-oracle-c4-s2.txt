@@ -1,0 +1,65 @@
+  …10 games (213s)
+Brewhouses of the Hanse — strategy analysis  |  15 games  |  tiers=guildmaster  counts=4  N=15/count  [311s]
+winner avg score 42.5  ·  avg rounds 17.3
+
+==== OPENINGS (turn-1 placement + first line; win-rate vs fair share) ====
+-- 4p (fair = 25.0%):
+   Brewhouse + rowT       picked    12×   wins   8.3%   (-16.7 vs fair)
+   Brewhouse + colR       picked     9×   wins  44.4%   (+19.4 vs fair)
+   Market + colL          picked     9×   wins  22.2%   (-2.8 vs fair)
+   Market + rowT          picked     7×   wins  42.9%   (+17.9 vs fair)
+   Cellar + rowB          picked     7×   wins  28.6%   (+3.6 vs fair)
+   Harbor + rowB          picked     7×   wins  14.3%   (-10.7 vs fair)
+   Cellar + colR          picked     6×   wins  16.7%   (-8.3 vs fair)
+   Harbor + colL          picked     3×   wins  33.3%   (+8.3 vs fair)
+
+==== TIMING (avg round of first …; winners vs losers; %never in parens) ====
+   first voyage (sail/charter)  winners 5.5 (0.0% never)     losers 5.8 (0.0% never)
+   first export recipe          winners 7.3 (0.0% never)     losers 6.2 (6.7% never)
+   first upgrade                winners 6.3 (60.0% never)    losers 6.5 (75.6% never)
+   first Hall delivery          winners 14.8 (60.0% never)   losers 8.0 (82.2% never)
+   first Bergen delivery        winners 8.9 (20.0% never)    losers 9.4 (20.0% never)
+   first Q4+ brew               winners 10.6 (26.7% never)   losers 12.1 (37.8% never)
+
+==== ACTION PROFILE by tier (avg per player per game) ====
+-- guildmaster  (n=60, win 25.0%)
+   stations/game: Mkt 4.9 · Brw 4.8 · Hbr 3.8 · Clr 3.7    brews 6.9 (Q4+ 1.1)
+   deliveries/game: brug 2.0 · lond 0.9 · berg 1.6 · novg 1.2 · hall 0.3
+   sails 1.5 · charters 2.0 · rival-loads 1.8 · presence-actions 1.5 · upgrades 0.4 (bought 0.0)
+
+==== DESTINATION TIMING (share of deliveries by phase: rounds 1-5 / 6-10 / 11+) ====
+   bruges       122 casks   early  54.9%   mid  13.1%   late  32.0%
+   london        54 casks   early   1.9%   mid  46.3%   late  51.9%
+   bergen        95 casks   early  14.7%   mid  25.3%   late  60.0%
+   novgorod      73 casks   early   0.0%   mid  13.7%   late  86.3%
+   hall          17 casks   early  29.4%   mid  11.8%   late  58.8%
+
+==== DELIVERY METHOD (casks delivered by hull vs charter; per count) ====
+   4p   hull    225 (65.4%)   charter    119 (34.6%)   avg casks/sail 2.5   commissions/game 4.3   total deliveries 344
+
+==== LOAD SOURCE (share of cask-onto-ship loads by method; commission free-load excluded from "during play") ====
+   of ALL loads:   harbor 27.1%   linefire 43.2%   crane 11.8%   l3cask 5.7%   wild 2.2%   commission 10.0%
+   LINE-FIRE share of in-play loads (Harbor/linefire/crane/l3cask/wild): 48.1%
+
+==== CASK ACTIONS (drawn = dealt at brew · fired = bot chose to activate it · fire/draw = utility) ====
+   total drawn 473  ·  total fired 1157  ·  overall fire rate 244.6%
+   source   drawn  48.4% (  229)   fired  66.2% (  766)   fire/draw 334.5%
+   age      drawn  11.6% (   55)   fired   4.6% (   53)   fire/draw  96.4%
+   load     drawn   9.7% (   46)   fired   5.3% (   61)   fire/draw 132.6%
+   reach    drawn   9.9% (   47)   fired   8.6% (   99)   fire/draw 210.6%
+   convert  drawn   9.3% (   44)   fired   6.4% (   74)   fire/draw 168.2%
+   draw     drawn   0.0% (    0)   fired   0.0% (    0)   fire/draw      —
+   wild     drawn   0.8% (    4)   fired   3.5% (   40)   fire/draw 1000.0%
+
+==== WIN CORRELATES (avg, winners vs losers) ====
+   total score              winners   42.5   losers   31.2   (Δ +11.2)
+   delivery pts             winners   23.3   losers   16.0   (Δ +7.3)
+   majority pts             winners   12.0   losers   10.1   (Δ +1.9)
+   goal pts                 winners    0.0   losers    0.0   (Δ +0.0)
+   casks delivered          winners    6.8   losers    5.8   (Δ +1.0)
+   distinct destinations    winners    3.7   losers    3.2   (Δ +0.5)
+   Hall casks               winners    0.5   losers    0.2   (Δ +0.3)
+   upgrades                 winners    0.5   losers    0.3   (Δ +0.2)
+   ships sailed             winners    0.0   losers    0.0   (Δ +0.0)
+   goals held at end        winners    0.0   losers    0.0   (Δ +0.0)
+

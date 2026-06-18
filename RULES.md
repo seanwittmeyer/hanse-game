@@ -172,7 +172,10 @@ You **gain** buildings to your **hand** — buy one at the Market, or **take one
 deliver to London/Novgorod (§7) or draw one with **Survey**. You **place** a held building **at the
 Market** (a free acquire option) onto **any slot**. **Placing onto a slot that already has a building
 REPLACES it** — the displaced tile returns to its **owner's hand** (so the 8 slots never lock; the
-contest is over prime slot/line positions, and nothing is destroyed). Each building is **owned** by its
+contest is over prime slot/line positions, and nothing is destroyed). **If a *rival* displaced it, the
+owner also scores it for end-game prestige** (⚙ **+3★** — *the developer lane*: the building served its
+purpose, and you are paid for authoring a slot worth overbuilding; **self-displacement pays nothing**, so
+you can't farm it by overbuilding your own). Each building is **owned** by its
 placer. Under **one grammar — "a building modifies the occupant docked on it"** — a building is one of
 two flavors (variety = content, not new rules; the deck is in `COMPONENTS.md`). **Each building targets a
 specific occupant** (shown by a glyph): most are **cask** tiles, a few are **ship** tiles (the rich
@@ -227,7 +230,7 @@ Five destinations, all open from start (⚙ table in `COMPONENTS.md`):
 |---|---|---|---|---|
 | **Bruges** (Hub) | Q1 | +1 ★ | 2 goods (owner's choice) | 4 / 2 / 0 |
 | **London** (Steelyard) | Q2 | +1 ★ | take a building **to hand** ⚙ | 5 / 3 / 1 |
-| **Bergen** (Bryggen) | Q2 | +1 ★ | **free Reach** (+1 presence, any kontor) | 9 / 5 / 2 (anchor) |
+| **Bergen** (Bryggen) | Q2 | +1 ★ | **free Reach** (+1 presence, any kontor *you've delivered to*) | 9 / 5 / 2 (anchor) |
 | **Novgorod** (Peterhof) | Q3 | scales by Q (Q3→2 · Q4→4 · Q5→6) | **refine** (a maturing cask **+1 age**) | 8 / 5 / 2 |
 | **The Hall** (Prestige) | Q2 | **fixed ladder 3/5/7/9 by quality** ⚙ | — (Enshrine) | — |
 
@@ -288,8 +291,15 @@ table. Pace target **~12–25 rounds.**
    **always reachable** ⚙. *(v1.0.1: was "distinct quality tiers," which could cap at 4 whenever both Q3
    exports were dealt and Q4/Q5 was out — so the range reward is now per beer, not per quality level.)*
    *The range reward — deliver the full breadth of the house.*
+5. **The developer bonus** (v1.2) — **+3★** ⚙ for each of your buildings a **rival overbuilt** (§5a).
+   *The crowded-ring / authorship reward — author prime slots and let the contest pay you out.*
 
-5. **Tiebreak:** most goods, then most casks on slots.
+> **Presence is standing earned by trade.** A **Reach** (the cask slot-action, the Bergen benefit, the
+> Keut perk) can add presence **only at a kontor you've already delivered a cask to** — you can't gain a
+> foothold somewhere you've never shipped (v1.2; thematic + fair). Reach is simply a dead action until your
+> first delivery.
+
+6. **Tiebreak:** most goods, then most casks on slots.
 
 > **The legible fork:** the **Hall** is the fixed floor; the **kontore** offer **two** ways to
 > win — chase **demand** (variable, in-game, via the buildings you author) **or** grind

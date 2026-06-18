@@ -414,7 +414,7 @@ const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',
 const DESTS=[
   {nm:'Bruges',  kc:'#274b5c', req:1, val:'1',     scale:false, maj:[4,2,0], role:'The Hub · the economy',            ben:{n:'+2',ic:'coins'},     bnote:'2 goods (liquidity)'},
   {nm:'London',  kc:'#b8860b', req:2, val:'1',     scale:false, maj:[5,3,1], role:'The Steelyard · the engine',       ben:{n:'+', ic:'building-2'}, bnote:'take a Building (to hand)'},
-  {nm:'Bergen',  kc:'#4a6b3a', req:2, val:'1',     scale:false, maj:[9,5,2], role:'Bryggen · the rich majority',      ben:{n:'+', ic:'map-pin'},    bnote:'a free Reach (+1 presence)'},
+  {nm:'Bergen',  kc:'#4a6b3a', req:2, val:'1',     scale:false, maj:[9,5,2], role:'Bryggen · the rich majority',      ben:{n:'+', ic:'map-pin'},    bnote:'a free Reach (+1 presence, where delivered)'},
   {nm:'Novgorod',kc:'#7c2128', req:3, val:'2·4·6', scale:true,  maj:[8,5,2], role:'The Long Haul · the quality climb', ben:{n:'+', ic:'hourglass'},  bnote:'refine a maturing cask (+1 age)'},
 ];
 const HALL={nm:'The Hall', kc:'#5b3a8e', req:2, role:'Prestige · local Enshrine (no ship)', ladder:[[2,3],[3,5],[4,7],[5,9]]};
@@ -521,7 +521,9 @@ function pboard(p){
       +'<div class="pb-col right">'
         +'<div><div class="pb-sect">'+LU('wrench')+'Improvements<span class="hint">private · BUY for goods at the Market</span></div><div class="strip">'+ups+'</div></div>'
         +'<div><div class="pb-sect">'+LU('building-2')+'Buildings — in hand<span class="hint">start 1 · earn at London / Novgorod · place at the Market onto a Wharf slot</span></div><div class="strip">'+hand+'</div></div>'
-        +'<div class="pb-sub" style="margin-top:.04in"><b>The Flight</b> (end-game range): distinct <b>BEERS</b> delivered, min 3 → <b>3:4 · 4:9 · 5:16</b>. Five beer types exist each game (Gruit + Hopped + the 3 dealt exports), so the full flight is always reachable.</div></div>'
+        +'<div class="pb-sub" style="margin-top:.04in"><b>The Flight</b> (end-game range): distinct <b>BEERS</b> delivered, min 3 → <b>3:4 · 4:9 · 5:16</b>. Five beer types exist each game (Gruit + Hopped + the 3 dealt exports), so the full flight is always reachable.</div>'
+        +'<div class="pb-sub" style="margin-top:.03in"><b>Developer</b> (end-game): <b>+3★</b> for each Building a <b>rival overbuilt</b> on a slot (it served its purpose). Self-displacement pays nothing.</div>'
+        +'<div class="pb-sub" style="margin-top:.03in"><b>'+LU('map-pin')+'Presence</b>: a Reach (cask action / Bergen benefit / Keut) plants presence <b>only at a kontor you’ve delivered to</b> — dead until your first delivery there.</div></div>'
     +'</div>'
     +'<div class="tuck"><div class="tuck-h">'+LU('scroll-text')+'Recipe Cards<span class="sm">slide cards up into these — the types you may brew (strip shows the BREW cost)</span></div><div class="tuckrow">'+tuck+'</div></div>'
   +'</div>';}
@@ -736,6 +738,7 @@ function checklist(pages,famPages){
     +row(1,'Round marker 0.8″ (the 1–25 track on the main board)','1','')
     +row(1,'<b>Demand dice</b> — standard d6 (provide your own) — the reusable value-bonus carrier: a cask shipped through a value Building rides a die in its berth, pips = the ★ banked on delivery (max 5; returns to the pool)','8','—')
     +row(1,'Quality-boost markers (+1Q) — a small token a cask carries from a Malt Kiln / Hop Yard to delivery','6','—')
+    +row(1,'<b>Developer 3★ chits</b> — placed in your end-game area when a <b>rival overbuilds</b> your Building (it served its purpose; +3★ each at game end; self-displacement pays nothing)','12','—')
     +'</table>';
   h+='<div class="wf"><b>Prototype workflow.</b> 1) <b>Print to PDF</b> — the whole view, or a 🖨 button for a one-sheet PDF. In the print dialog: Save as PDF · scale 100% · margins default · <b>“Background graphics” ON</b>. Place in Affinity Publisher (passthrough renders exactly) and print at 100% (verify the 3″ bar). '
     +'2) Spray-glue the art sheets to chipboard. 3) <b>Cut on the printed guides</b> — the cut lines &amp; registration marks print with the art; cut the lines by hand or paper cutter. (Toggle the <b>CUT layer</b> first to print a guide-only sheet if you want a separate cutting template.) '

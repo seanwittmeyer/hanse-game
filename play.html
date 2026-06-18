@@ -576,6 +576,7 @@ const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a
 function bTgt(k){return (BUILDINGS[k]||{tgt:'cask'}).tgt;}
 const BUILD_DISPLAY=4;          // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 const WHARFAGE=1;               // ⚙ the owner's points cut when a RIVAL routes cargo through their building (capped per delivery; +1 more with Almoner's Stall)
+const DEVELOP_PTS=3;            // ⚙ v1.2: the "developer" lane — when a RIVAL overbuilds your slot, your displaced Building flipped for END-GAME points (it served its purpose; the owner is paid for having authored it). Rewards being displaced on a crowded ring; self-displacement does NOT pay (anti-farm).
 
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
 // Market (distinct from the public, earned-and-placed Buildings). Everything else from v0.16's upgrade list
@@ -628,7 +629,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v55'; // v1.1: AUTO-AGING RESTORED (v54's removal stole the turns players needed to fund high-Q + slowed setup past the short 2p clock — felt slow/goods-starved in real play; GM data showed the aging throttle wasn't needed for balance). Novgorod's +1-age benefit kept (now an accelerant, not a crutch). Bump discards stale v54 state.
+const KEY='hanse-hotseat-v56'; // v1.2: TWO design fixes — (1) the "developer" lane: a Building a RIVAL overbuilds scores its owner +3★ end-game (rewards being displaced on a crowded ring; self-displacement pays nothing); (2) PRESENCE only where you've delivered — the free Reach (action / Bergen benefit / Keut) can no longer plant a foothold at a kontor you've never shipped to (fixes the unearned-presence leak). Bump discards stale v55 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -659,7 +660,7 @@ function newPlayer(i,name){
     grain:START_GOODS.g+(i>0?SEAT_COMP:0),hops:START_GOODS.h,storage:START_STORAGE,cell:null,placed:false,
     // start 2 vessels; one holds the warm Ready Gruit (deploy it turn 1)
     vessels:[{style:'gruit',q:1,step:1,ready:1},null], maxVessels:2,
-    recipes:['gruit','hopped'], upgrades:[], delivered:[], wharfage:0,
+    recipes:['gruit','hopped'], upgrades:[], delivered:[], wharfage:0, developed:0,
     presBonus:{bruges:0,london:0,bergen:0,novgorod:0}, commissioned:0,
     contracts:START_CONTRACTS,
     hand:[]};   // Buildings held to place (the starting tile + Survey draws) — filled below
@@ -1143,7 +1144,11 @@ function beginPlaceBldg(key,owner,rt){
 function placeBldgOn(slot){const b=UI.tmp&&UI.tmp.placeBldg;if(!b)return;snapshot();
   const old=bAt(slot);
   if(old){S.players[old.owner].hand.push(old.b);
-    log('↳ '+LU('building-2')+bName(old.b)+' is displaced — returned to '+S.players[old.owner].name+'’s hand.');}
+    // v1.2 the "developer" lane: a RIVAL overbuilding your slot flips your displaced Building for END-GAME points
+    // (it served its purpose). Self-displacement (relocating your own) pays nothing — no farming.
+    const paid=(old.owner!==b.owner);
+    if(paid)S.players[old.owner].developed+=DEVELOP_PTS;
+    log('↳ '+LU('building-2')+bName(old.b)+' is displaced — returned to '+S.players[old.owner].name+'’s hand'+(paid?' (+'+DEVELOP_PTS+'★ developer points for having authored it)':'')+'.');}
   S.buildings[slot]={b:b.b,owner:b.owner};
   if(b.b==='workshop'){const occ=S.slots[slot];if(occ&&occ.type==='cask')occ.act='wild';}   // Workshop upgrades a cask already docked
   log(S.players[b.owner].name+' authors '+LU('building-2')+' <b>'+bName(b.b)+'</b> on a '+LU('anchor')+' slot'+(old?' (replacing '+bName(old.b)+')':'')+' — '+BUILDINGS[b.b].desc+'.',true);
@@ -1288,7 +1293,9 @@ function loadSkip(){const rt=UI.load.returnTo;UI.load=null;resume(rt);}
 function sailShip(slot,creditId){const t=S.slots[slot];
   log('★ the '+LU('sailboat')+' <b>'+shipName(t)+'</b> sails to <b>'+DEST[t.dest].name+'</b> with '+t.load.length+' '+LU('beer')+' cask'+(t.load.length===1?'':'s')+'! Every cask aboard is delivered. (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')');
   const full=t.load.length>=effCap(t);
-  t.load.forEach(L=>{const owner=S.players[L.owner];grantImmediate(owner,t.dest);deliverCask(owner,L,t.dest,slot,full);});
+  // deliver FIRST (records the cask at the dest), THEN grant the benefit — so a Bergen free-Reach can see the
+  // delivery it rode in on (presence is only allowed where you've delivered — v1.2).
+  t.load.forEach(L=>{const owner=S.players[L.owner];deliverCask(owner,L,t.dest,slot,full);grantImmediate(owner,t.dest);});
   S.slots[slot]=null;S.sailed++;
   // the hull returns to the yard (the supply never dries up); the building stays on its slot.
   S.shipDeck.push({ship:t.ship,dest:t.dest});
@@ -1318,12 +1325,15 @@ function freeAge(p){const m=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.ste
   if(!m.length){log('↳ '+p.name+' — nothing maturing to refine (Novgorod).');return;}
   const c=m[0].c;c.step++;
   log('↳ '+p.name+' refines a cask on the long haul (Novgorod): '+LU('beer')+styleShort(c.style)+' ages +1 → '+c.step+'/'+c.ready+(c.step>=c.ready?' '+LU('check')+' <b>READY</b>':'')+'.');}
-// the kontore you can plant a free Reach at (any kontor — it's free standing)
-function reachBenKontore(){return KONTORE.slice();}
+// the kontore you can plant a free Reach at — v1.2: ONLY where you've already DELIVERED a cask (presence is
+// standing earned by trade; you can't gain a foothold somewhere you've never shipped — thematic + fair).
+function reachBenKontore(p){return KONTORE.filter(k=>deliveredAt(p,k)>0);}
 function freeReach(p,k){p.presBonus[k]=(p.presBonus[k]||0)+1;log('↳ '+p.name+' takes a free '+LU('map-pin')+' Reach (+1 presence at <b>'+DEST[k].name+'</b>, Bergen benefit).');}
 function autoReach(p,dest){   // rival: reinforce the kontor where +1 presence helps its majority most
-  let best=null,bv=-1e9;reachBenKontore().forEach(k=>{p.presBonus[k]=(p.presBonus[k]||0)+1;const a=majorityAwards(k);p.presBonus[k]--;
-    const v=(a[p.id]||0)+Math.random()*0.1;if(v>bv){bv=v;best=k;}});freeReach(p,best||'bergen');}
+  const ks=reachBenKontore(p);
+  if(!ks.length){log('↳ '+p.name+' has no kontor delivery to reinforce — the free Reach is forfeit.');return;}
+  let best=null,bv=-1e9;ks.forEach(k=>{p.presBonus[k]=(p.presBonus[k]||0)+1;const a=majorityAwards(k);p.presBonus[k]--;
+    const v=(a[p.id]||0)+Math.random()*0.1;if(v>bv){bv=v;best=k;}});freeReach(p,best||ks[0]);}
 function freeRecipeOptions(p){return (S.exports||[]).filter(s=>!p.recipes.includes(s));}
 function autoRecipe(p,dest){const opts=freeRecipeOptions(p);if(!opts.length){log('↳ '+p.name+' — no new recipe to take (Novgorod).');return;}
   opts.sort((a,b)=>STYLES[b].q-STYLES[a].q);p.recipes.push(opts[0]);log('↳ '+p.name+' takes the free '+LU('scroll-text')+' <b>'+STYLES[opts[0]].name+'</b> recipe (Novgorod).');}
@@ -1357,11 +1367,14 @@ function autoGrantBuilding(p,dest){const disp=S.buildDisplay||[];if(!disp.length
 function afterSail(rt){
   if((UI.pendingGoods||[]).length){UI.sub='goodspick';UI.goods={returnTo:rt};render();return;}   // liquidity owner-choice picker
   if((UI.pendingBenefits||[]).length){UI.sub='benefit';UI.benefit={returnTo:rt};render();return;}   // pick a Building from the display
-  if((UI.pendingReach||[]).length){UI.sub='breach';UI.breach={returnTo:rt};render();return;}     // Bergen — pick a kontor to Reach
+  if((UI.pendingReach||[]).length){                                                               // Bergen — pick a kontor to Reach
+    while(UI.pendingReach.length&&!reachBenKontore(S.players[UI.pendingReach[0].pid]).length){    // forfeit a Reach with no delivered kontor (presence only where you've traded)
+      const b=UI.pendingReach.shift();log('↳ '+S.players[b.pid].name+' has no kontor delivery to reinforce — the free Reach is forfeit.');}
+    if(UI.pendingReach.length){UI.sub='breach';UI.breach={returnTo:rt};render();return;}}
   if((UI.pendingRecipe||[]).length){UI.sub='brecipe';UI.brecipe={returnTo:rt};render();return;}  // Novgorod — pick a free recipe
   resume(rt);
 }
-function breachPick(k){snapshot();const b=UI.pendingReach[0];freeReach(S.players[b.pid],k);
+function breachPick(k){const b=UI.pendingReach[0];if(k){snapshot();freeReach(S.players[b.pid],k);}
   UI.pendingReach.shift();const rt=UI.breach.returnTo;UI.breach=null;afterSail(rt);}
 function brecipePick(style){const b=UI.pendingRecipe[0];const p=S.players[b.pid];
   if(!style||p.recipes.includes(style)||!(S.exports||[]).includes(style)){UI.pendingRecipe.shift();const rt=UI.brecipe.returnTo;UI.brecipe=null;afterSail(rt);return;}
@@ -1462,7 +1475,8 @@ function scorePlayer(p){
   deliv+=(p.wharfage||0);
   let maj=0;KONTORE.forEach(k=>{const a=majorityAwards(k);if(a[p.id])maj+=a[p.id];});
   const flight=flightScore(p);                          // the range-of-tiers bonus
-  return {deliv,maj,goals:0,flight,master:0,wharf:(p.wharfage||0),total:deliv+maj+flight};
+  const developed=(p.developed||0);                      // v1.2 the developer lane: points for Buildings rivals overbuilt
+  return {deliv,maj,goals:0,flight,master:0,wharf:(p.wharfage||0),developed,total:deliv+maj+flight+developed};
 }
 // the final ranking under the engine's tiebreak (total, goods, casks on slots) — shared by the
 // standings table and the studio payload
@@ -1481,9 +1495,10 @@ function gameOver(){
   aiCancel();
   if(!S.endedAt)S.endedAt=new Date().toISOString();
   const {rows,cmp}=finalRows();const win=rows[0];
-  let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries<br><span class="note">(value + wharfage)</span></th><th>Majorities</th><th>Flight</th><th>Total</th></tr>';
-  rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+(r.sc.wharf?' <span class="note">('+r.sc.wharf+' wharfage)</span>':'')+'</td><td>'+r.sc.maj+'</td><td>'+(r.sc.flight||'·')+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
-  h+='</table><p class="note">Score = <b>delivery value</b> (each cask\'s base + the value-Buildings it shipped through, + your wharfage) + kontor <b>majorities</b> + the <b>Flight</b> (distinct beers delivered — '+FLIGHT_MIN+'+ to score). The Hall is a fixed prestige floor; the kontore are the variable demand. (Tiebreak: goods, then casks on slots.)</p>'
+  const anyDev=rows.some(r=>r.sc.developed);
+  let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries<br><span class="note">(value + wharfage)</span></th><th>Majorities</th><th>Flight</th>'+(anyDev?'<th>Developer<br><span class="note">(displaced)</span></th>':'')+'<th>Total</th></tr>';
+  rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+(r.sc.wharf?' <span class="note">('+r.sc.wharf+' wharfage)</span>':'')+'</td><td>'+r.sc.maj+'</td><td>'+(r.sc.flight||'·')+'</td>'+(anyDev?'<td>'+(r.sc.developed||'·')+'</td>':'')+'<td><b>'+r.sc.total+'</b></td></tr>';});
+  h+='</table><p class="note">Score = <b>delivery value</b> (each cask\'s base + the value-Buildings it shipped through, + your wharfage) + kontor <b>majorities</b> + the <b>Flight</b> (distinct beers delivered — '+FLIGHT_MIN+'+ to score) + the <b>Developer</b> bonus ('+DEVELOP_PTS+'★ per Building a rival overbuilt). The Hall is a fixed prestige floor; the kontore are the variable demand. (Tiebreak: goods, then casks on slots.)</p>'
     +'<button onclick="hideOver()">⚓ View the final board</button> <button onclick="openStudio()">⇪ Send to Studio'+(S.studioSent?' ✓':'')+'</button> <button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
 }
@@ -1597,7 +1612,7 @@ function studioPayload(){
       name:r.p.name,
       is_winner:cmp(r,win)===0,   // co-winners on an exact tie all count
       notes:r.p.ai?(aiLabel(r.p)+' AI'):'human',
-      scores:{'Deliveries':r.sc.deliv,'Majorities':r.sc.maj,'Flight':r.sc.flight,'Wharfage':r.sc.wharf},
+      scores:{'Deliveries':r.sc.deliv,'Majorities':r.sc.maj,'Flight':r.sc.flight,'Wharfage':r.sc.wharf,'Developer':r.sc.developed},
     })),
   };
   const notes=v('stNotes'),wasNew=v('stNew'),todo=v('stTodo');
@@ -1943,7 +1958,8 @@ function aiBenefit(){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];con
   if(!disp.length){benefitPick(null);return;}
   benefitPick(aiPickBuilding(lp,disp.slice()));}
 function aiBreach(p){const b=UI.pendingReach[0];const lp=S.players[b.pid];   // reinforce the kontor with the best majority swing
-  let best=reachBenKontore()[0],bv=-1e9;reachBenKontore().forEach(k=>{const m=aiMajSwing(lp,k)+Math.random()*0.2;if(m>bv){bv=m;best=k;}});breachPick(best);}
+  const ks=reachBenKontore(lp);if(!ks.length){breachPick(null);return;}
+  let best=ks[0],bv=-1e9;ks.forEach(k=>{const m=aiMajSwing(lp,k)+Math.random()*0.2;if(m>bv){bv=m;best=k;}});breachPick(best);}
 function aiBrecipe(p){const b=UI.pendingRecipe[0];const lp=S.players[b.pid];const opts=freeRecipeOptions(lp);
   if(!opts.length){brecipePick(null);return;}opts.sort((a,b)=>STYLES[b].q-STYLES[a].q);brecipePick(opts[0]);}
 
@@ -2041,7 +2057,7 @@ function aiGmOptions(p){
     return disp.length?disp.map(k=>()=>benefitPick(k)):[()=>benefitPick(null)];}
   if(U==='toll')return [()=>tollPay(),()=>tollFloor()];   // the GM weighs paying for the public line vs working its Floor
   if(U==='goodspick')return [()=>goodsPick(2,0),()=>goodsPick(1,1),()=>goodsPick(0,2)];   // liquidity mix — the GM evaluates each
-  if(U==='breach')return reachBenKontore().map(k=>()=>breachPick(k));                      // Bergen free Reach — which kontor
+  if(U==='breach'){const ks=reachBenKontore(S.players[UI.pendingReach[0].pid]);return ks.length?ks.map(k=>()=>breachPick(k)):[()=>breachPick(null)];}   // Bergen free Reach — which kontor (only where delivered)
   if(U==='brecipe'){const lp=S.players[UI.pendingRecipe[0].pid];const o=freeRecipeOptions(lp).map(s=>()=>brecipePick(s));o.push(()=>brecipePick(null));return o;}
   if(U==='wild')return [()=>wildPick('source'),()=>wildPick('brew'),()=>wildPick('age'),()=>wildPick('ship'),()=>wildSkip()];
   if(U==='reach')return UI.reach.ks.map(k=>()=>reachPick(k));
@@ -2160,13 +2176,14 @@ function renderAid(){
       +'<div class="atags" style="margin-top:5px">'+vb+'</div><div class="atags" style="margin-top:4px">'+tb+'</div></div>'
     +'<div class="asec"><b>Destinations</b> <span class="note">gate · value · majority 1st/2nd/3rd · benefit · (Hall = local Enshrine; ships sail to kontore only)</span>'
       +'<table class="atable"><tr><th>Destination</th><th>Gate</th><th>Value</th><th>Majority</th><th>Benefit</th></tr>'+dests+'</table>'
-      +'<div class="note">Kontor value = small base + the value-Buildings the cask shipped through. <b>2-player skips 2nd place.</b></div></div>'
+      +'<div class="note">Kontor value = small base + the value-Buildings the cask shipped through. <b>2-player skips 2nd place.</b> A '+ic('map-pin')+' <b>Reach</b> (the action, the Bergen benefit, the Keut perk) can add presence <b>only at a kontor you’ve already delivered to</b> — you can’t gain a foothold where you’ve never shipped.</div></div>'
     +'<div class="asec"><b>Cask slot actions</b> <span class="note">(face-up pile tops; Gruit is always Source)</span><div class="atags">'+acts+'</div></div>'
     +'<div class="asec"><b>Scoring — at game end</b><ol class="ascore">'
       +'<li><b>Delivery value</b> — each delivered cask’s base + the value-Buildings it shipped through, + your wharfage.</li>'
       +'<li><b>Majorities</b> — 1st/2nd/3rd at each kontor by delivered-cask count.</li>'
       +'<li><b>The Flight</b> '+ic('layers')+' — distinct <b>beers</b> delivered (to <b>any</b> destination; the 5 types — Gruit, Hopped + the 3 dealt exports — are all reachable): <b>3 → '+FLIGHT_PTS[3]+' · 4 → '+FLIGHT_PTS[4]+' · 5 → '+FLIGHT_PTS[5]+'</b> (min 3 to score).</li>'
       +'<li><b>Hall</b> '+ic('crown')+' — a fixed prestige ladder by quality (3/5/7/9), counted in delivery value.</li>'
+      +'<li><b>Developer</b> '+ic('building-2')+' — when a <b>rival overbuilds</b> your slot, your displaced Building returns to hand AND scores you <b>'+DEVELOP_PTS+'★</b> (it served its purpose). The crowded-ring lane.</li>'
       +'</ol></div>'
     +'<div class="asec"><b>Icon key</b><div class="akey">'+keys.map(k=>'<div class="akrow">'+ic(k[0])+'<span>'+k[1]+'</span></div>').join('')+'</div></div>'
     +'<div style="text-align:center;margin-top:10px"><button class="primary" onclick="toggleAid()">Close</button></div>';
@@ -2242,9 +2259,9 @@ function renderBar(){
   else if(U==='goodspick'){const b=UI.pendingGoods[0];const lp=S.players[b.pid];
     prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take <b>2 goods</b> (any mix).';
     acts=btn('Take '+Gi(2),'goodsPick(2,0)','go')+btn('Take '+Gi(1)+Hi(1),'goodsPick(1,1)','go')+btn('Take '+Hi(2),'goodsPick(0,2)','go');}
-  else if(U==='breach'){const b=UI.pendingReach[0];const lp=S.players[b.pid];
-    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take a free '+LU('map-pin')+' <b>Reach</b> (+1 presence at any kontor).';
-    acts=reachBenKontore().map(k=>btn(LU('map-pin')+DEST[k].name+' <span class="note">('+presenceAt(lp,k)+'→'+(presenceAt(lp,k)+1)+')</span>','breachPick(\''+k+'\')','go')).join('');}
+  else if(U==='breach'){const b=UI.pendingReach[0];const lp=S.players[b.pid];const ks=reachBenKontore(lp);
+    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take a free '+LU('map-pin')+' <b>Reach</b> (+1 presence at a kontor you’ve delivered to).';
+    acts=ks.length?ks.map(k=>btn(LU('map-pin')+DEST[k].name+' <span class="note">('+presenceAt(lp,k)+'→'+(presenceAt(lp,k)+1)+')</span>','breachPick(\''+k+'\')','go')).join(''):'<span class="note">no kontor delivery to reinforce yet</span> '+btn('Skip','breachPick(null)','ghost');}
   else if(U==='brecipe'){const b=UI.pendingRecipe[0];const lp=S.players[b.pid];const opts=freeRecipeOptions(lp);
     prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take a free '+LU('scroll-text')+' <b>recipe</b> (an export you don’t own).';
     acts=(opts.length?opts.map(s=>btn(LU('scroll-text')+STYLES[s].name+' Q'+STYLES[s].q,'brecipePick(\''+s+'\')','go')).join(''):'<span class="note">you own every dealt export</span> ')+btn('Skip','brecipePick(null)','ghost');}

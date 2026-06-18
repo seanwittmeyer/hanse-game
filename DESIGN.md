@@ -152,6 +152,18 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
+**v1.2 “Dice” — design fixes** *(2026-06-18, `play.html` KEY v56)* — Two table-feedback fixes, sim-gated
+(robustness + PATHWAYS + AI ladder, all clean): **(1) the developer lane** — a building a *rival* overbuilds
+now scores its owner **+3★** at game end (it served its purpose; you're paid for authoring a slot worth
+overbuilding). Self-displacement pays nothing (anti-farm). This gives the **Authorship/engine lane** a
+displacement payoff that bites most at 4p, where the ring fills. **(2) presence only where you've delivered**
+— a free Reach (the cask action, the Bergen benefit, the Keut perk) can no longer plant presence at a kontor
+you've never shipped to (it was letting the Bergen benefit seed unearned majority standing — e.g. a player
+holding Novgorod presence with zero Novgorod deliveries). Reach is simply a dead action until your first
+delivery — the simple, intuitive rule. Lanes stayed balanced (4p ≈ vol/dem/pres/maj/deep 24/24/26/26/25).
+*(Also repaired the stale `sim-analyze.js`/`sim.js` hooks that still referenced v0.16-era functions — goals'
+`drawPick`, `almsPick`, `pickCaskAct`, the old `deliverCask` signature — so the GM oracle cohort runs again.)*
+
 **v1.2 “Dice”** *(2026-06-18)* — Shipped the **demand-dice tracking**: a value-building bonus is now
 captured-on-ship-through onto a **reusable d6 that rides the cask in the berth** — its **pips = the ★
 banked on delivery** — while a quality transform rides a **+1-quality marker**; ship value buildings

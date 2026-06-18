@@ -62,14 +62,16 @@ var _grantUpgrade=grantUpgrade;grantUpgrade=function(p,k){if(REC())EV('up',{pid:
 var _deployTo=deployTo;      deployTo=function(sl){if(REC())EV('deploy',{slot:sl});return _deployTo(sl);};
 var _commissionShip=commissionShip;commissionShip=function(idx){var sn=(S.shipDisplay&&S.shipDisplay[(idx!=null&&S.shipDisplay[idx])?idx:0]);if(REC()&&sn)EV('shipbuild',{dest:sn.dest,ship:sn.ship});return _commissionShip(idx);};
 var _charterDest=charterDest;charterDest=function(d){if(REC())EV('charter',{dest:d});return _charterDest(d);};
-var _deliverCask=deliverCask;deliverCask=function(lp,style,q,dest){if(REC())EV('deliver',{pid:lp.id,dest:dest,q:q});return _deliverCask(lp,style,q,dest);};
+var _deliverCask=deliverCask;deliverCask=function(lp,L,dest,shipSlot,full){if(REC())EV('deliver',{pid:lp.id,dest:dest,q:(L&&L.q)});return _deliverCask(lp,L,dest,shipSlot,full);};   // v1.0 sig: (lp,L,dest,shipSlot,full)
 var _sailShip=sailShip;      sailShip=function(sl,cid){if(REC()){var t=S.slots[sl];if(t)EV('sail',{pid:(cid!=null?cid:S.active),dest:t.dest,ncask:t.load.length,ship:t.ship,cap:effCap(t)});}return _sailShip(sl,cid);};
 var _loadOnto=loadOnto;      loadOnto=function(ss){if(REC()){EV('load',{src:(UI.load&&UI.load.src)||'harbor'});var ct=S.slots[UI.load.cask];if(ct&&ct.owner!==S.active)EV('rivalload',{owner:ct.owner});}return _loadOnto(ss);};
 var _commLoad=commLoad;      commLoad=function(ref){if(REC())EV('load',{src:'commission'});return _commLoad(ref);};
 var _reachPick=reachPick;    reachPick=function(k){if(REC())EV('pres',{dest:k});return _reachPick(k);};
-var _drawPick=drawPick;      drawPick=function(g){if(REC())EV('goaldraw',{goal:g});return _drawPick(g);};
-var _almsPick=almsPick;      almsPick=function(k){if(REC())EV('pres',{dest:k});return _almsPick(k);};
-var _pickCaskAct=pickCaskAct; pickCaskAct=function(q){var a=_pickCaskAct(q);if(REC())EV('caskdraw',{act:a,q:q});return a;};
+// v1.0 cut goals (drawPick), the Almoner action (almsPick), and the old fixed cask-draw (pickCaskAct →
+// steerable pileTop). Guard so this stale instrumentation no-ops on the current engine instead of crashing.
+if(typeof drawPick!=='undefined'){var _drawPick=drawPick;drawPick=function(g){if(REC())EV('goaldraw',{goal:g});return _drawPick(g);};}
+if(typeof almsPick!=='undefined'){var _almsPick=almsPick;almsPick=function(k){if(REC())EV('pres',{dest:k});return _almsPick(k);};}
+if(typeof takePileTop!=='undefined'){var _takePileTop=takePileTop;takePileTop=function(q,style){var a=_takePileTop(q,style);if(REC())EV('caskdraw',{act:a,q:q});return a;};}   // v1.0 caskdraw rides takePileTop
 var _enterCaskAct=enterCaskAct; enterCaskAct=function(slot,t){if(REC())EV('caskfire',{act:caskAct(t)});return _enterCaskAct(slot,t);};
 
 function mkAI(t){
@@ -95,7 +97,8 @@ function anGame(np,tierList,gi){
             tiers:Object.keys(tierSet).length, delivByQ:byQ, mastered:p.masterpiece?1:0,
             ndeliv:p.delivered.length,ndest:KONTORE.concat(['hall']).filter(function(d){return deliveredAt(p,d)>0;}).length,
             hall:deliveredAt(p,'hall'),upgrades:p.upgrades.length,ships:p.shipsSailed||0,
-            goalsHeld:p.goals.length};})};
+            developed:sc.developed||0,
+            goalsHeld:(p.goals?p.goals.length:0)};})};   // v1.0 cut goals/Masterpiece — guard the legacy fields
   var ev=__EV;__EV=null;
   __AN.push({out:out,ev:ev});
 }
