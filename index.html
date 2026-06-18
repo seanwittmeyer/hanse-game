@@ -555,7 +555,7 @@ const buildings=[
   ['t',"Brewmaster's Workshop",'a cask here upgrades its slot-action to Wild','engine'],
 ];
 document.getElementById('buildingGallery').innerHTML=buildings.map(b=>`
-  <div class="card"><div class="head ${b[0]==='v'?'h-mod':'h-room'}"><div class="kind">Building · ${b[0]==='v'?'Value (demand)':'Transform'} · owned</div><div class="ttl">${b[1]}</div></div>
+  <div class="card"><div class="head h-room"><div class="kind">Building · ${b[0]==='v'?'Value (demand)':'Transform'} · owned</div><div class="ttl">${b[1]}</div></div>
   <div class="body">${b[2]}<div class="badge">${b[3]}</div></div></div>`).join('');
 
 // ---- (goals cut in v1.0 — dissolved into the Building family above) ----

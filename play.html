@@ -107,8 +107,7 @@
   #bldgref .brh .ic,#bldgref .brh svg{width:1em;height:1em}
   #bldgref .brdot{width:10px;height:10px;border-radius:50%;border:1px solid rgba(0,0,0,.3);display:inline-block}
   #bldgref .brtag{font-size:.58rem;font-weight:bold;text-transform:uppercase;letter-spacing:.4px;padding:0 5px;border-radius:7px;color:#fff}
-  #bldgref .brtag.value{background:#8a3c12}
-  #bldgref .brtag.transform{background:#2f5d50}
+  #bldgref .brtag.value,#bldgref .brtag.transform{background:#3f5c30}   /* Buildings = green */
   #bldgref .brtgt{font-size:.66rem;opacity:.82;display:inline-flex;align-items:center;gap:2px}
   #bldgref .brtgt .ic,#bldgref .brtgt svg{width:.85em;height:.85em}
   #bldgref .bref.disp{background:transparent;border-style:dashed}
@@ -148,7 +147,7 @@
   .pship .pbn{width:17cqmin;height:17cqmin;border:1.5px solid rgba(255,255,255,.9);border-radius:3cqmin;display:flex;align-items:center;justify-content:center;font-size:9.5cqmin;font-weight:900;background:rgba(0,0,0,.22);text-shadow:none}
   /* building */
   .pbld{justify-content:flex-start}
-  .pbld.value{background:#5b3a8e} .pbld.transform{background:#3f5c30}
+  .pbld.value,.pbld.transform{background:#3f5c30}   /* Buildings = GREEN (value/transform told apart by the badge) */
   .pbld .pbown{position:absolute;top:4cqmin;right:4cqmin;width:13cqmin;height:13cqmin;border-radius:50%;border:1.5px solid rgba(255,255,255,.8)}
   .pbld .pbtop{display:flex;align-items:center;gap:3cqmin}
   .pbld .pbtop .ic,.pbld .pbtop svg{width:20cqmin;height:20cqmin}
@@ -184,10 +183,13 @@
   /* ===== tiles shown in the Market & the brew-pile display (a sized container = the cq context) ===== */
   .mtile{position:relative;width:90px;height:90px;flex:0 0 auto;container-type:size}
   .mtile.sm{width:78px;height:78px}
-  .shoptile{display:flex;align-items:center;gap:9px;margin:6px 0}
-  .shopbuy{display:flex;flex-direction:column;gap:4px;font-size:.78rem;align-items:flex-start}
+  .shopgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;margin:6px 0}
+  .shopgrid .mtile{width:100%;height:auto;aspect-ratio:1}
+  .shopcell{display:flex;flex-direction:column;align-items:stretch;gap:3px}
+  .shopcell button{font-size:.72rem;padding:2px 5px}
+  .shopcell .note{text-align:center}
   .pilerow{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
-  .pbld.imp{background:#7a5a2a}
+  .pbld.imp{background:#5b3a8e}   /* Upgrades / improvements = PURPLE */
   .ppile{justify-content:flex-end;background:var(--tc,#777)}
   /* DESTINATIONS */
   #dests{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
@@ -2404,14 +2406,14 @@ function renderShop(){
   // the BUILDING display (v1.0 keystone): buy + place one (or earn one free at London/Novgorod)
   const noslot=!buildableSlots().length;
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('building-2')+' Building display</b> <span class="note">('+(S.buildDisplay||[]).length+' face-up · '+S.buildDeck.length+' in the deck — buy + place, or earn free at '+LU('landmark')+' London/Novgorod)</span></div>';
-  (S.buildDisplay||[]).forEach((key,i)=>{const def=BUILDINGS[key];const can=canPay(p,def.cost)&&!noslot;
-    h+='<div class="shoptile"><div class="mtile" data-tip="'+attr((def.verb==='value'?'Value':'Transform')+' Building — '+def.desc+'. Owned-but-shared: you get the full effect; a rival docks for a reduced bonus + a +'+WHARFAGE+'★ wharfage to you.')+'">'+pBldgFace({b:key})+'</div><div class="shopbuy">'+costIcons(def.cost)+(buying?'<button '+(can?'':'disabled')+' onclick="buyBuilding('+i+')">buy + place</button>':'')+'</div></div>';});
+  h+='<div class="shopgrid">'+(S.buildDisplay||[]).map((key,i)=>{const def=BUILDINGS[key];const can=canPay(p,def.cost)&&!noslot;
+    return '<div class="shopcell"><div class="mtile" data-tip="'+attr((def.verb==='value'?'Value':'Transform')+' Building — '+def.desc+'. Owned-but-shared: you get the full effect; a rival docks for a reduced bonus + a +'+WHARFAGE+'★ wharfage to you.')+'">'+pBldgFace({b:key})+'</div>'+(buying?'<button '+(can?'':'disabled')+' onclick="buyBuilding('+i+')">buy + place</button>':'')+'</div>';}).join('')+'</div>';
   if(!(S.buildDisplay||[]).length)h+='<div class="note">(building deck exhausted)</div>';
   if(noslot)h+='<div class="note" style="font-size:.7rem">every slot already has a building — no room to place more</div>';
   // private brewery IMPROVEMENTS (bought for goods)
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Improvements</b> <span class="note">(private — bought for goods)</span></div>';
-  IMPROVEMENT_KEYS.forEach(key=>{const def=IMPROVEMENTS[key];const owned=!grantableBuy(p,key);const can=canPay(p,def.cost)&&!owned;
-    h+='<div class="shoptile"><div class="mtile" data-tip="'+attr(def.name+' — '+def.desc)+'">'+pImpFace(key)+'</div><div class="shopbuy">'+costIcons(def.cost)+(owned?' <span class="note">(have)</span>':(buying?'<button '+(can?'':'disabled')+' onclick="buyImprovement(\''+key+'\')">buy</button>':''))+'</div></div>';});
+  h+='<div class="shopgrid">'+IMPROVEMENT_KEYS.map(key=>{const def=IMPROVEMENTS[key];const owned=!grantableBuy(p,key);const can=canPay(p,def.cost)&&!owned;
+    return '<div class="shopcell"><div class="mtile" data-tip="'+attr(def.name+' — '+def.desc)+'">'+pImpFace(key)+'</div>'+(owned?'<span class="note">(have)</span>':(buying?'<button '+(can?'':'disabled')+' onclick="buyImprovement(\''+key+'\')">buy</button>':''))+'</div>';}).join('')+'</div>';
   document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">At the '+LU('store')+' <b>Market</b>: take goods, OR acquire one tile — a recipe, a '+LU('building-2')+' Building (buy+place), a '+LU('sailboat')+' ship, a charter contract, or an improvement. <b>Place a held Building free</b> (earned at London/Novgorod or via Survey). Placing onto a slot that has a building <b>replaces</b> it — the old tile returns to its owner\'s hand.</div>';
 }
 
