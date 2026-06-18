@@ -48,21 +48,23 @@
     gap:clamp(4px,1.4vw,7px);
     grid-template-columns:repeat(4,1fr)}
   .cell,.slot{aspect-ratio:1}
-  .cell{border-radius:12px;padding:clamp(6px,2.1vw,10px);color:var(--parch);position:relative;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 3px 9px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14);overflow:hidden}
-  .cell .head{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(2px,1vw,5px)}
-  .cell .bigic .ic,.cell .bigic svg{width:clamp(2em,9vw,3.1em);height:clamp(2em,9vw,3.1em);stroke-width:1.6}
+  /* stations are containers too, so their contents scale in cqmin exactly like the slot tiles */
+  .cell{border-radius:12px;padding:7cqmin;color:var(--parch);position:relative;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 3px 9px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14);overflow:hidden;container-type:size}
+  .cell .head{display:flex;flex-direction:column;align-items:flex-start;gap:3cqmin}
+  .cell .bigic .ic,.cell .bigic svg{width:30cqmin;height:30cqmin;stroke-width:1.6}
   .cell .head>div{min-width:0;max-width:100%}
-  .cell .role{font-size:.56rem;text-transform:uppercase;letter-spacing:1.2px;opacity:.82}
-  .cell .nm{font-variant:small-caps;font-weight:bold;font-size:clamp(.8rem,3.4vw,1.2rem);line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-  .cell .yield{display:flex;gap:7px;align-items:center;margin-top:3px}
-  .cell .yield .ic,.cell .yield svg{width:1.25em;height:1.25em;opacity:.95}
+  .cell .role{font-size:7cqmin;text-transform:uppercase;letter-spacing:1px;opacity:.82}
+  .cell .nm{font-variant:small-caps;font-weight:bold;font-size:15cqmin;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .cell .yield{display:flex;gap:4cqmin;align-items:center;margin-top:3cqmin;flex-wrap:wrap}
+  .cell .yield .ic,.cell .yield svg{width:13cqmin;height:13cqmin;opacity:.95}
   /* v0.7 loop colours: A Market=gold · B Brewhouse=red · C Harbor=sea · D Cellar=green */
   .cell.A{background:linear-gradient(155deg,#cda522,#9c7414);color:#2b2018}
   .cell.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .cell.C{background:linear-gradient(155deg,#3d6b7e,#244554)}
   .cell.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
-  .cell .wk{position:absolute;top:6px;right:7px;display:flex;gap:3px;flex-wrap:wrap;justify-content:flex-end;align-items:center;max-width:58%}
+  .cell .wk{position:absolute;top:5cqmin;right:5cqmin;display:flex;gap:2cqmin;flex-wrap:wrap;justify-content:flex-end;align-items:center;max-width:58%}
   .pawn{width:15px;height:15px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.4)}
+  .cell .wk .pawn{width:13cqmin;height:13cqmin;border-width:1.5cqmin}
   .cell.legal{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite}
   @keyframes pulse{50%{outline-color:#fff}}
   .slot{background:var(--parch);border:2px dashed var(--line);border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;text-align:center;color:var(--ink2);padding:2px;overflow:hidden}
