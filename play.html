@@ -181,6 +181,14 @@
   .die .pip.on::after{content:"";width:66%;height:66%;border-radius:50%;background:#2a1d08}
   .ptile .die.dcask{position:absolute;bottom:5cqmin;right:5cqmin;width:27cqmin;height:27cqmin;z-index:5}
   .pship .die.dberth{width:18cqmin;height:18cqmin}
+  /* ===== tiles shown in the Market & the brew-pile display (a sized container = the cq context) ===== */
+  .mtile{position:relative;width:90px;height:90px;flex:0 0 auto;container-type:size}
+  .mtile.sm{width:78px;height:78px}
+  .shoptile{display:flex;align-items:center;gap:9px;margin:6px 0}
+  .shopbuy{display:flex;flex-direction:column;gap:4px;font-size:.78rem;align-items:flex-start}
+  .pilerow{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
+  .pbld.imp{background:#7a5a2a}
+  .ppile{justify-content:flex-end;background:var(--tc,#777)}
   /* DESTINATIONS */
   #dests{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
   @media(max-width:600px){#dests{grid-template-columns:1fr 1fr}}
@@ -316,7 +324,7 @@
     <span id="barres"></span>
     <span class="prompt" id="prompt">Loading…</span>
     <span class="links">
-      <a href="#" onclick="toggleAid();return false"><b>📖 Player Aid</b></a>
+      <a href="#" onclick="toggleAid();return false">📖 Player Aid</a>
       <a href="learn.html">Learn</a><a href="index.html">Rulebook</a>
       <a href="#" onclick="newGame();return false">New Game</a>
     </span>
@@ -325,13 +333,12 @@
 </div>
 
 <main>
+  <div class="panel"><h3>Destinations <span class="note">(where you ship — kontore = volume · the Hall = prestige)</span></h3><div id="dests"></div></div>
   <div class="cols">
     <div>
       <div class="panel"><h3>Action Grid &amp; Wharf</h3><div class="agwrap"><div class="ag" id="ag"></div></div>
         <div class="note" id="boardnote" style="text-align:center;margin-top:6px"></div>
       </div>
-      <div class="panel"><h3>Destinations <span class="note">(where you ship — kontore = volume · the Hall = prestige)</span></h3><div id="dests"></div></div>
-      <div class="panel"><h3>Buildings on the Wharf <span class="note">(owned slot tiles &amp; what they do — tap-free reference)</span></h3><div id="bldgref"></div></div>
       <div class="panel"><h3>Player Breweries</h3>
         <div class="tabs" id="tabs"></div>
         <div id="tableaus"></div>
@@ -344,6 +351,7 @@
       <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
     </div>
   </div>
+  <div class="panel"><h3>Buildings on the Wharf <span class="note">(owned slot tiles &amp; what they do — tap-free reference)</span></h3><div id="bldgref"></div></div>
   <p class="note" style="text-align:center"><b>v1.0 “Living Slots” — prototype.</b> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
 </main>
 
@@ -385,6 +393,7 @@ const ICONTIP={
   crown:'The Hall — the prestige destination (fixed ladder; the local Enshrine, no boat).',
   'scroll-text':'Recipe — permission to brew a type of beer.',
   wrench:'Improvement — a private upgrade on your brewery (bought for goods).',
+  ticket:'Charter contract — spend one (+ the flat fare) to ship a single Ready cask to a kontor now (the relief valve).',
   search:'Survey — draw a Building to your hand (place it later at the Market, free).',
   'map-pin':'Presence — your delivered casks at a kontor (counts for majorities).',
   coins:'Goods.',
@@ -879,13 +888,28 @@ function pShipFace(t){const cap=effCap(t);const gate=DEST[t.dest].gate;let berth
     +'<span class="pdest" style="background:'+(DEST_COLOR[t.dest]||'#555')+'">'+LU('landmark')+DEST[t.dest].name+'</span>'
     +'<span class="pberths"><span class="pgate">'+LU('beer')+gate+'+</span>'+berths+'</span>'
   +'</div>';}
-function pBldgFace(b){const def=BUILDINGS[b.b];const o=S.players[b.owner];const tg=BTGT[def.tgt];
+function pBldgFace(b){const def=BUILDINGS[b.b];const o=(b.owner!=null)?S.players[b.owner]:null;const tg=BTGT[def.tgt];
   return '<div class="ptile pbld '+def.verb+'">'
-    +'<span class="pbown" style="background:'+o.color+'"></span>'
+    +(o?'<span class="pbown" style="background:'+o.color+'"></span>':'')
     +'<span class="pbtop">'+LU(def.icon)+'<span class="pverb">'+(def.verb==='value'?'Value':'Transform')+'</span></span>'
     +'<span class="pbnm">'+def.name+'</span>'
     +'<span class="pbeff">'+def.desc+'</span>'
     +'<span class="pbfoot"><span class="pbtgt">'+LU(tg.ic)+'</span>'+(def.cost?pCost(def.cost.g,def.cost.h):'')+'</span>'
+  +'</div>';}
+// a private IMPROVEMENT rendered as a tile (Market display)
+function pImpFace(key){const def=IMPROVEMENTS[key];
+  return '<div class="ptile pbld imp">'
+    +'<span class="pbtop">'+LU('wrench')+'<span class="pverb">Private</span></span>'
+    +'<span class="pbnm">'+def.name+'</span>'
+    +'<span class="pbeff">'+def.desc+'</span>'
+    +'<span class="pbfoot">'+(def.cost?pCost(def.cost.g,def.cost.h):'')+'</span>'
+  +'</div>';}
+// a BREW PILE's face-up top, rendered as a tile (the quality + the action a cask brewed there would take)
+const QUAL_COLOR={1:'#8a949c',2:'#c2922f',3:'#b06a34',4:'#caa12a',5:'#7c2128'};
+function pPileFace(q){const act=(q===1)?'source':((S.pileTop&&S.pileTop[q])||'source');
+  return '<div class="ptile ppile" style="--tc:'+(QUAL_COLOR[q]||'#777')+'" data-tip="'+attr('Q'+q+' brew pile — a cask brewed at this quality takes: '+(CASK_ACT[act]||act)+(q===1?' (Gruit is pinned to Source).':' (steerable — brew toward it).'))+'">'
+    +'<span class="pq">'+LU('beer')+q+'</span>'
+    +'<span class="pact"><span class="pac">'+LU(CASK_ACT_ICON[act]||'')+'</span><span class="ptxt">'+(P_ACT_TXT[act]||act)+'</span></span>'
   +'</div>';}
 function pOccToken(t){
   if(t.type==='cask')return '<span class="pocc" style="background:'+S.players[t.owner].color+'">'+LU('beer')+styleShort(t.style)+' Q'+t.q+'</span>';
@@ -2381,13 +2405,13 @@ function renderShop(){
   const noslot=!buildableSlots().length;
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('building-2')+' Building display</b> <span class="note">('+(S.buildDisplay||[]).length+' face-up · '+S.buildDeck.length+' in the deck — buy + place, or earn free at '+LU('landmark')+' London/Novgorod)</span></div>';
   (S.buildDisplay||[]).forEach((key,i)=>{const def=BUILDINGS[key];const can=canPay(p,def.cost)&&!noslot;
-    h+='<div class="item"><span data-tip="'+attr((def.verb==='value'?'Value':'Transform')+' Building — '+def.desc+'. Owned-but-shared: you get the full effect, a rival docks for a reduced bonus + a +'+WHARFAGE+'★ wharfage to you.')+'">'+LU(def.icon)+' <b>'+def.name+'</b> <span class="note" style="font-size:.72rem">'+(def.verb==='value'?'value':'transform')+'</span></span><span class="cost">'+costIcons(def.cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyBuilding('+i+')">buy</button>':'')+'</span></div>';});
+    h+='<div class="shoptile"><div class="mtile" data-tip="'+attr((def.verb==='value'?'Value':'Transform')+' Building — '+def.desc+'. Owned-but-shared: you get the full effect; a rival docks for a reduced bonus + a +'+WHARFAGE+'★ wharfage to you.')+'">'+pBldgFace({b:key})+'</div><div class="shopbuy">'+costIcons(def.cost)+(buying?'<button '+(can?'':'disabled')+' onclick="buyBuilding('+i+')">buy + place</button>':'')+'</div></div>';});
   if(!(S.buildDisplay||[]).length)h+='<div class="note">(building deck exhausted)</div>';
   if(noslot)h+='<div class="note" style="font-size:.7rem">every slot already has a building — no room to place more</div>';
   // private brewery IMPROVEMENTS (bought for goods)
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Improvements</b> <span class="note">(private — bought for goods)</span></div>';
   IMPROVEMENT_KEYS.forEach(key=>{const def=IMPROVEMENTS[key];const owned=!grantableBuy(p,key);const can=canPay(p,def.cost)&&!owned;
-    h+='<div class="item"><span data-tip="'+attr(def.desc)+'">'+LU('wrench')+' <b>'+def.name+'</b>'+(owned?' <span class="note">(have)</span>':'')+' <span class="note" style="font-size:.72rem">— '+def.desc+'</span></span><span class="cost">'+costIcons(def.cost)+' '+(buying&&!owned?'<button '+(can?'':'disabled')+' onclick="buyImprovement(\''+key+'\')">buy</button>':'')+'</span></div>';});
+    h+='<div class="shoptile"><div class="mtile" data-tip="'+attr(def.name+' — '+def.desc)+'">'+pImpFace(key)+'</div><div class="shopbuy">'+costIcons(def.cost)+(owned?' <span class="note">(have)</span>':(buying?'<button '+(can?'':'disabled')+' onclick="buyImprovement(\''+key+'\')">buy</button>':''))+'</div></div>';});
   document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">At the '+LU('store')+' <b>Market</b>: take goods, OR acquire one tile — a recipe, a '+LU('building-2')+' Building (buy+place), a '+LU('sailboat')+' ship, a charter contract, or an improvement. <b>Place a held Building free</b> (earned at London/Novgorod or via Survey). Placing onto a slot that has a building <b>replaces</b> it — the old tile returns to its owner\'s hand.</div>';
 }
 
@@ -2398,10 +2422,9 @@ function renderVoyage(){
     +'<div class="track">'+trk+'</div><div class="note" style="font-size:.66rem;margin-top:2px">⛵ the end clock — each voyage (a ship sailing, a charter, or an enshrine) fills one</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>'+LU('ticket')+' Charter contracts:</b> '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+(p.contracts||0)+'</span>').join(' · ')+' <span class="note">(spend 1 + '+costStr(CHARTER_FLAT_FARE)+' to charter; buy more at the Market)</span></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game (3 of 4):</b> '+exportLabel()+'.</div>';
-  // the steerable BREW PILES — the face-up action atop each quality pile (always visible; §4)
-  h+='<div class="note" style="margin-top:6px"><b>'+LU('flask-conical')+' Brew piles</b> <span class="note">(the action a cask of each quality takes when brewed)</span><div class="atags" style="margin-top:3px">'
-    +'<span class="atag" data-tip="'+attr('Q1 Gruit is pinned to Source (+2 goods).')+'"><span class="qd q1">Q1</span> '+LU(CASK_ACT_ICON.source)+' source</span>'
-    +[2,3,4,5].map(q=>{const a=(S.pileTop&&S.pileTop[q])||'';return '<span class="atag" data-tip="'+attr('A Q'+q+' cask brews with: '+(CASK_ACT[a]||''))+'"><span class="qd q'+q+'">Q'+q+'</span> '+LU(CASK_ACT_ICON[a]||'')+' '+a+'</span>';}).join('')+'</div></div>';
+  // the steerable BREW PILES — render each pile's face-up TOP as a tile (the quality + its action)
+  h+='<div class="note" style="margin-top:6px"><b>'+LU('flask-conical')+' Brew piles</b> <span class="note">(the face-up action a cask of each quality takes — steerable)</span></div>'
+    +'<div class="pilerow">'+[1,2,3,4,5].map(q=>'<div class="mtile sm">'+pPileFace(q)+'</div>').join('')+'</div>';
   h+='<div class="note" style="margin-top:6px">Delivered value: '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+scorePlayer(p).deliv+'</span>').join(' · ')+'</div>';
   document.getElementById('voyage').innerHTML=h;
 }
