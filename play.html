@@ -42,10 +42,10 @@
   .panel h3{margin:0 0 8px;font-variant:small-caps;color:var(--red);font-size:1.1rem;border-bottom:1px solid var(--line);padding-bottom:4px}
   /* GRID */
   .agwrap{display:flex;justify-content:center}
-  .ag{display:grid;max-width:100%;
-    --cellsz:clamp(84px,22vw,132px); gap:clamp(4px,1.2vw,7px);
-    grid-template-columns:repeat(4,var(--cellsz));
-    grid-template-rows:repeat(4,var(--cellsz))}
+  .ag{display:grid;width:100%;max-width:600px;margin:0 auto;
+    gap:clamp(4px,1.4vw,7px);
+    grid-template-columns:repeat(4,1fr)}
+  .cell,.slot{aspect-ratio:1}
   .cell{border-radius:12px;padding:clamp(6px,2.1vw,10px);color:var(--parch);position:relative;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 3px 9px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14);overflow:hidden}
   .cell .head{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(2px,1vw,5px)}
   .cell .bigic .ic,.cell .bigic svg{width:clamp(2em,9vw,3.1em);height:clamp(2em,9vw,3.1em);stroke-width:1.6}
