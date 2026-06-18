@@ -1,0 +1,8 @@
+Cellarmaster vs Guildmaster — 5 shards x 8 games (CELLAR_MS=120, GUILD_MS=40), KEY v57
+guildmaster vs cellarmaster cellarmaster wins  75.0%  (guildmaster 25.0%)  avg score guildmaster 28.5 / cellarmaster 37.3  rounds 19.6  clock 100.0%  errors 0
+guildmaster vs cellarmaster cellarmaster wins  75.0%  (guildmaster 25.0%)  avg score guildmaster 23.0 / cellarmaster 32.1  rounds 19.1  clock 87.5%  errors 0
+guildmaster vs cellarmaster cellarmaster wins  62.5%  (guildmaster 37.5%)  avg score guildmaster 26.5 / cellarmaster 30.4  rounds 18.1  clock 100.0%  errors 0
+guildmaster vs cellarmaster cellarmaster wins  50.0%  (guildmaster 50.0%)  avg score guildmaster 27.8 / cellarmaster 37.5  rounds 21.3  clock 100.0%  errors 0
+guildmaster vs cellarmaster cellarmaster wins  50.0%  (guildmaster 50.0%)  avg score guildmaster 32.5 / cellarmaster 35.1  rounds 18.9  clock 100.0%  errors 0
+
+aggregate: 25/40 = 62.5% cellarmaster

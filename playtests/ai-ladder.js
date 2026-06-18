@@ -34,6 +34,7 @@ snapshot=function(){};
 // slow for thousands of games; 40ms still gives it ~10-20 playouts per decision).
 // SHARD THE GUILDMASTER for big runs — see the header note at the top of this file.
 GUILD_MS=40;GUILD_MIN=1;
+if(typeof CELLAR_MS!=='undefined'){CELLAR_MS=__CMS||80;CELLAR_MIN=1;CELLAR_CAP=600;}   // cellarmaster bulk budget (CELLAR_MS env overrides) — small; SHARD the cellarmaster pairing
 
 function aiTestGame(tiers){
   S=freshState(tiers.length,['P1','P2','P3','P4','P5'].slice(0,tiers.length));
@@ -56,10 +57,12 @@ var __OUT={pairs:{},mixed:{}};
 // ---- head-to-head ladder at 2p (seats swapped every other game so turn order washes out) ----
 // guildmaster games cost ~seconds each (Monte Carlo), so its pairing runs at a reduced count.
 var __NGM=(typeof __GMN!=='undefined'&&__GMN)?__GMN:Math.max(20,Math.floor(__N/5));   // GM games in the trader-vs-GM pairing; GMN env overrides. Keep <=20/shard (see header) — N<=100 → 20.
+var __NCM=(typeof __CMN!=='undefined'&&__CMN)?__CMN:10;   // cellarmaster pairing games; CMN env overrides. DOUBLY slow (deep MC vs flat MC) — keep tiny, shard it.
 var __PAIRS=[['apprentice','journeyman'],['journeyman','trader'],['apprentice','trader']];
-if(!__NOGM)__PAIRS.push(['trader','guildmaster']);   // NOGM=1 skips the slow Monte Carlo pairing
+if(!__NOGM)__PAIRS.push(['trader','guildmaster']);              // NOGM=1 skips the slow flat-MC pairing
+if(!__NOCM)__PAIRS.push(['guildmaster','cellarmaster']);        // NOCM=1 skips the slowest pairing; gate: the cellarmaster (new top rung) beats the GM >=60%
 __PAIRS.forEach(function(pair){
-  var __n=(pair[1]==='guildmaster')?__NGM:__N;
+  var __n=(pair[1]==='cellarmaster')?__NCM:(pair[1]==='guildmaster')?__NGM:__N;
   var w={};w[pair[0]]=0;w[pair[1]]=0;
   var sum={};sum[pair[0]]=0;sum[pair[1]]=0;
   var errs=0,rounds=0,n=0,clock=0;
@@ -119,6 +122,7 @@ const ctx = {
   setTimeout: noop, clearTimeout: noop,
   lucide: { createIcons: noop },
   __N: N, __NOGM: process.env.NOGM==='1', __GMN: parseInt(process.env.GMN||'0',10),
+  __NOCM: process.env.NOCM==='1', __CMN: parseInt(process.env.CMN||'0',10), __CMS: parseInt(process.env.CELLAR_MS||'0',10),
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;

@@ -44,6 +44,7 @@ const driver = `
 render=function(){};save=function(){};log=function(){};snapshot=function(){};
 GUILD_MS=__GMS||40;GUILD_MIN=1;   // bulk budget for any guildmaster seats (GUILD_MS env overrides)
 if(__GMDEEP)GM_DEEP=true;         // GM_DEEP=1 enables the completion-biased (deep-path) rollouts
+if(typeof CELLAR_MS!=='undefined'){CELLAR_MS=__CMS||90;CELLAR_MIN=1;CELLAR_CAP=600;}   // bulk budget for cellarmaster seats (CELLAR_MS env overrides; deliberately small — shard it)
 
 var __EV=null;   // active game's event list (null outside games; guarded vs MC playouts)
 function EV(t,d){if(!__EV||aiSimulating)return;var e={t:t,r:S.turn,pid:S.active};if(d)for(var k in d)e[k]=d[k];__EV.push(e);}
@@ -129,7 +130,7 @@ const ctx = {
   document, localStorage, console, Math, JSON, Date, Set, Map, Array, Object, String, Number, Boolean,
   parseInt, parseFloat, isNaN, alert: noop, setTimeout: noop, clearTimeout: noop,
   lucide: { createIcons: noop },
-  COUNTSX: COUNTS, NX: N, TIERSX: TIERS, __GMS: parseInt(process.env.GUILD_MS || '0', 10), __GMDEEP: process.env.GM_DEEP === '1',
+  COUNTSX: COUNTS, NX: N, TIERSX: TIERS, __GMS: parseInt(process.env.GUILD_MS || '0', 10), __GMDEEP: process.env.GM_DEEP === '1', __CMS: parseInt(process.env.CELLAR_MS || '0', 10),
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;

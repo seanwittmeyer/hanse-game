@@ -116,8 +116,10 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   the lanes (the **strategy** oracle — the greedy bot can't judge leans). `sim-analyze.js` =
   openings/timing/sequencing.
 - **AI seats** (`AUTOMA.md`): Apprentice / Journeyman / Trader / **Guildmaster** (flat Monte
-  Carlo over the engine itself). Gates: `ai-ladder.js` (every higher tier ≥60% at 2p) +
-  `ai-render-smoke.js`. `ai-tune.js` (CEM over the Trader weights) re-runs after a balance pass.
+  Carlo, fast oracle) / **Cellarmaster** (v1.2 — deep Monte Carlo: competent trader+completion-biased
+  rollout, determinized decks, sequential halving; beats the GM ~62%). Gates: `ai-ladder.js` (every higher
+  tier ≥60% at 2p; the GM & Cellarmaster rungs **sharded**) + `ai-render-smoke.js`. `ai-tune.js` (CEM over
+  the Trader weights) re-runs after a balance pass.
 - **After any engine change:** bump the save `KEY`, run the gates, save the sim output, publish
   to `main`. *(These harnesses target the v0.16 engine; they'll be re-pointed as v1.0's
   `play.html` is rebuilt.)*
@@ -151,6 +153,17 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 ---
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
+
+**v1.2 “Dice” — the Cellarmaster AI** *(2026-06-18, `play.html` KEY v57)* — A new top AI tier above the
+Guildmaster, built after diagnosing the GM's strategic blind spot: its flat-MC uses a **journeyman rollout**
+(never enshrines, ships cheap volume), so it under-prices the quality/Hall/Novgorod lanes and over-indexes
+majorities — exploitable by a committed quality+Hall+Reach plan. The **Cellarmaster** fixes all three weak
+axes — a **competent, completion-biased rollout** (Trader + deep climb/enshrine, so the MC can *price* the
+deep lanes), **determinized hidden decks per playout** (no RNG-locking), and a **large budget spent by
+sequential halving**. Beats the Guildmaster **~62%** head-to-head (throttled bulk budget; stronger in-page);
+the Guildmaster is **kept** as the fast robustness oracle. Gates extended: `ai-ladder.js` adds a
+`guildmaster vs cellarmaster` rung (shard it — `CMN`/`CELLAR_MS`), `ai-render-smoke.js` runs a cellarmaster
+game, `sim-analyze.js` profiles `TIERS=cellarmaster`. Full rationale in `AUTOMA.md` (Phase 3+).
 
 **v1.2 “Dice” — design fixes** *(2026-06-18, `play.html` KEY v56)* — Two table-feedback fixes, sim-gated
 (robustness + PATHWAYS + AI ladder, all clean): **(1) the developer lane** — a building a *rival* overbuilds
@@ -322,7 +335,7 @@ Floor, recipe cards, ships-as-single-use-carriers. Too much game; the right amou
 the v0.7 reel-in resolved.
 
 **Tooling milestones:** the headless `sim.js` harness + persona/Cellarmaster lean probes; the
-4-tier AI ladder (Apprentice/Journeyman/Trader/**Guildmaster** flat-MC); `sim-analyze.js`;
+5-tier AI ladder (Apprentice/Journeyman/Trader/**Guildmaster** flat-MC/**Cellarmaster** deep-MC); `sim-analyze.js`;
 `ai-tune.js` (CEM). All drive the canonical engine, so every rules revision is absorbed
 automatically.
 

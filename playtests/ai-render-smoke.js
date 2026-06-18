@@ -38,6 +38,15 @@ render();
 var gguard=0;
 while(!S.over){aiStep();render();if(++gguard>100000)throw new Error('guard tripped in GM game');}
 console.log('render smoke guildmaster OK — rounds '+S.turn);
+// 3c) a cellarmaster mini-game through the real render layer (tiny deep-MC budget)
+CELLAR_MS=20;CELLAR_MIN=1;CELLAR_CAP=120;
+S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;
+S.players[0].ai={tier:'cellarmaster',persona:null};
+S.players[1].ai={tier:'trader',persona:'prestige'};
+render();
+var cguard=0;
+while(!S.over){aiStep();render();if(++cguard>100000)throw new Error('guard tripped in Cellarmaster game');}
+console.log('render smoke cellarmaster OK — rounds '+S.turn);
 // 4) the instant-speed driver path (synchronous whole-game loop with render swap/restore)
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];
 S.players.forEach(function(p){p.ai={tier:'journeyman',persona:null};});

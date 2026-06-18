@@ -629,7 +629,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v56'; // v1.2: TWO design fixes — (1) the "developer" lane: a Building a RIVAL overbuilds scores its owner +3★ end-game (rewards being displaced on a crowded ring; self-displacement pays nothing); (2) PRESENCE only where you've delivered — the free Reach (action / Bergen benefit / Keut) can no longer plant a foothold at a kontor you've never shipped to (fixes the unearned-presence leak). Bump discards stale v55 state.
+const KEY='hanse-hotseat-v57'; // v1.2: NEW AI TIER — the CELLARMASTER (the arch-nemesis): a DEEP Monte Carlo above the Guildmaster — a COMPETENT trader+completion-biased rollout (prices the quality/Hall/Novgorod lanes the GM is blind to), DETERMINIZED hidden decks per playout, and a big budget spent by SEQUENTIAL HALVING. Beats the GM ~62% head-to-head (throttled bulk budget; stronger in-page). Guildmaster kept as the fast robustness oracle. (Prior v56: developer lane + presence-only-where-delivered.) Bump discards stale v56 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -966,6 +966,7 @@ function pickCount(n){setupN=n;for(let i=2;i<=4;i++)document.getElementById('pc'
     +'<option value="trader-prestige">AI · Trader — prestige lean</option>'
     +'<option value="trader-majority">AI · Trader — majority lean</option>'
     +'<option value="guildmaster"'+((i===1||i===2)?' selected':'')+'>AI · Guildmaster (expert — thinks via playouts; slower turns)</option>'
+    +'<option value="cellarmaster">AI · Cellarmaster (the arch-nemesis — deep playouts; SLOW turns)</option>'
     +'</select></div>';
   document.getElementById('names').innerHTML=h;
 }
@@ -1668,7 +1669,11 @@ const AI_TIERS={
   apprentice:{label:'Apprentice', noise:0.65},   // ⚙ noise = chance of a random legal pick per decision
   journeyman:{label:'Journeyman', noise:0},
   trader    :{label:'Trader',     noise:0},
-  guildmaster:{label:'Guildmaster',noise:0},     // Phase 3: flat Monte Carlo on top of the trader policy
+  guildmaster:{label:'Guildmaster',noise:0},     // Phase 3: flat Monte Carlo (fast oracle: journeyman rollouts)
+  cellarmaster:{label:'Cellarmaster',noise:0},   // Phase 3+: the strong, slow automa — DEEP Monte Carlo: a COMPETENT
+                                                 // (Trader + completion-biased) rollout that can price the quality/Hall/
+                                                 // Novgorod lanes the GM is blind to, determinized hidden decks per
+                                                 // playout (no RNG-locking), and a big budget spent by SEQUENTIAL HALVING.
 };
 const AI_PERSONAS=['volume','prestige','majority'];
 // ⚙ Trader policy weights — the PHASE 2 tuning surface (AUTOMA.md). Optimized offline by
@@ -1694,10 +1699,17 @@ const AI_SPEED_KEY='hanse-ai-speed';
 let GUILD_MS=250;    // Monte Carlo time budget per decision (ms); 'instant' speed caps it at 120
 let GUILD_MIN=2;     // minimum playouts per option (so no option goes unsampled)
 // GM_DEEP (opt-in): completion-biased rollouts that climb to Bock & enshrine the high end at the Hall, so the
-// Monte Carlo can PRICE the deep/range path. Default OFF — it lengthens rollouts (~2.5×), so at flat-MC
-// budgets it buys fewer playouts than it gains in realism; the default GM stays the fast robustness oracle.
+// Monte Carlo can PRICE the deep/range path. Default OFF for the Guildmaster — it lengthens rollouts (~2.5×), so
+// at the GM's flat-MC budget it buys fewer playouts than it gains in realism; the GM stays the fast robustness
+// oracle. The CELLARMASTER turns it ON for every playout (aiDeepActive) — that is the whole point of the tier.
 let GM_DEEP=false;
-function aiDeepRollout(){return GM_DEEP&&aiSimulating;}
+let aiDeepActive=false;   // set true only while the Cellarmaster is running its Monte Carlo
+function aiDeepRollout(){return (GM_DEEP||aiDeepActive)&&aiSimulating;}
+// ⚙ Cellarmaster dials (`let` so the harnesses can lower them for bulk runs). The big budget is the point;
+// trader+deep rollouts cost ~10–25× a journeyman rollout, so this tier is deliberately the slow one.
+let CELLAR_MS=1500;   // Monte Carlo time budget per decision (ms); 'instant' speed caps it (below)
+let CELLAR_MIN=6;     // minimum playouts each option gets before it can be halved out
+let CELLAR_CAP=8000;  // hard playout cap per decision (safety, however cheap the playouts)
 let aiTimer=null,aiActing=false,aiLoopActive=false,aiChosenWhich='row',aiSimulating=false;
 
 function aiTurn(){return !!(S&&!S.over&&cur()&&cur().ai);}
@@ -1708,9 +1720,9 @@ function aiSetSpeed(v){try{localStorage.setItem(AI_SPEED_KEY,v);}catch(e){}rende
 function aiRandOf(a){return a[Math.floor(Math.random()*a.length)];}
 function aiNoisy(p){return Math.random()<(AI_TIERS[p.ai.tier].noise||0);}
 function aiIsApp(p){return p.ai.tier==='apprentice';}
-// guildmaster inherits the full trader policy — as its fallback at un-sampled prompts AND as the
-// rollout policy inside its playouts.
-function aiIsTrader(p){return p.ai.tier==='trader'||p.ai.tier==='guildmaster';}
+// guildmaster & cellarmaster inherit the full trader policy — as their fallback at un-sampled prompts
+// AND (for cellarmaster) as the rollout policy inside its playouts.
+function aiIsTrader(p){return p.ai.tier==='trader'||p.ai.tier==='guildmaster'||p.ai.tier==='cellarmaster';}
 
 // ---- shared heuristics (ported from playtests/sim.js; journeyman = that bot verbatim) ----
 function aiAchQ(p){const qs=p.recipes.map(r=>(STYLES[r].cellar&&!hasUpgrade(p,'cellar'))?0:STYLES[r].q);return Math.max(...qs);}
@@ -2009,6 +2021,65 @@ function aiMC(p,options){
   stats.forEach((st,i)=>{const v=st.n?st.sum/st.n:-1e9;if(v>bv){bv=v;bi=i;}});
   options[bi]();   // apply the winner for real
 }
+
+//================= CELLARMASTER — DEEP Monte Carlo (the strong, slow automa) =================
+// The same clone-apply-rollout machinery as the Guildmaster, upgraded on the three axes the GM is weak on:
+//  1) COMPETENT ROLLOUT — every seat plays the full TRADER policy (not the cheap journeyman) WITH the
+//     completion bias on (aiDeepActive → aiDeepRollout()), so rollouts actually climb to Mumme/Bock and
+//     ENSHRINE at the Hall / ship high-Q to Novgorod. This lets the Monte Carlo PRICE the deep/range/prestige
+//     lanes — the exact value the GM's Hall-blind journeyman rollout reports as worthless.
+//  2) DETERMINIZED HIDDEN FUTURE — each playout reshuffles the unseen building & ship decks, so the search is
+//     robust to what's drawn rather than over-fitting the one frozen RNG order a JSON clone would lock in.
+//  3) SEQUENTIAL HALVING — a large budget is concentrated on the real contenders: sample all options, drop the
+//     worst half, repeat. Far better spent than uniform round-robin, and it scales with the (big) budget.
+// Objective unchanged: the anti-kingmaker MARGIN (own total − best rival). Rollout seats are TRADER, never
+// cellarmaster, so there is no nested-search recursion.
+function aiCellarPlayout(oi,snapS,snapUI,options,meId){
+  S=JSON.parse(snapS);UI=JSON.parse(snapUI);
+  if(S.buildDeck&&S.buildDeck.length>1)shuffle(S.buildDeck);   // determinize the hidden future
+  if(S.shipDeck&&S.shipDeck.length>1)shuffle(S.shipDeck);
+  let m;
+  try{
+    options[oi]();
+    S.players.forEach(q=>{q.ai={tier:'trader',persona:null,w:null};});   // the COMPETENT rollout policy
+    let g=0;while(!S.over&&g++<30000)aiStep();
+    m=aiMCMargin(meId);
+  }catch(e){m=aiMCMargin(meId)-5;}   // a crashed playout scores what it has, minus a penalty
+  return m;
+}
+function aiCellarMC(p,options){
+  if(options.length===1){options[0]();return;}
+  const meId=p.id;
+  const snapS=JSON.stringify(S),snapUI=JSON.stringify(UI);
+  const rr=render,ll=log,sv=save;
+  const stats=options.map(()=>({n:0,sum:0}));
+  const mean=st=>st.n?st.sum/st.n:-1e9;
+  const budget=(aiSpeed()==='instant')?Math.min(CELLAR_MS,700):CELLAR_MS;
+  aiSimulating=true;aiDeepActive=true;render=function(){};log=function(){};save=function(){};
+  const t0=Date.now();let total=0;
+  try{
+    let surv=options.map((_,i)=>i);
+    const rounds=Math.max(1,Math.ceil(Math.log2(options.length)));
+    for(let r=0;r<rounds&&surv.length>1;r++){
+      const sliceEnd=t0+budget*(r+1)/rounds;
+      let i=0;
+      // sample survivors round-robin until this round's time slice ends — but guarantee CELLAR_MIN each
+      while(total<CELLAR_CAP&&Date.now()-t0<budget&&
+            (Date.now()<sliceEnd||surv.some(oi=>stats[oi].n<CELLAR_MIN))){
+        const oi=surv[i%surv.length];i++;
+        stats[oi].sum+=aiCellarPlayout(oi,snapS,snapUI,options,meId);stats[oi].n++;total++;
+        if(Date.now()>=sliceEnd&&surv.every(oi=>stats[oi].n>=CELLAR_MIN))break;
+      }
+      surv.sort((a,b)=>mean(stats[b])-mean(stats[a]));
+      surv=surv.slice(0,Math.max(1,Math.floor(surv.length/2)));   // keep the better half
+    }
+  }finally{
+    S=JSON.parse(snapS);UI=JSON.parse(snapUI);
+    render=rr;log=ll;save=sv;aiSimulating=false;aiDeepActive=false;
+  }
+  let bi=0,bv=-1e9;stats.forEach((st,i)=>{const v=mean(st);if(v>bv){bv=v;bi=i;}});
+  options[bi]();   // apply the best-mean-margin option for real
+}
 // The option enumerator: a list of zero-arg thunks calling the SAME functions the buttons call.
 // Returns null for prompts left to the trader fallback (line · age · source · convert · end).
 function aiGmOptions(p){
@@ -2075,6 +2146,12 @@ function aiStep(){
     if(p.ai.tier==='guildmaster'&&!aiSimulating){
       const opts=aiGmOptions(p);
       if(opts&&opts.length)return aiMC(p,opts);
+    }
+    // cellarmaster: the same enumerated prompts, evaluated by the DEEP Monte Carlo (competent rollout +
+    // determinization + sequential halving). Falls through to the trader policy at un-enumerated prompts.
+    if(p.ai.tier==='cellarmaster'&&!aiSimulating){
+      const opts=aiGmOptions(p);
+      if(opts&&opts.length)return aiCellarMC(p,opts);
     }
     switch(UI.sub){
       case 'move':return aiMove(p);
