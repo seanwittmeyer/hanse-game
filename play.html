@@ -878,10 +878,10 @@ function caskPreviewBonus(slotId){const t=S.slots[slotId];if(!t||t.type!=='cask'
   return bldgShare(bd,t.owner,raw);}
 // a LOADED cask in a ship berth → the ★ it will bank when this ship delivers to its printed destination
 function loadBonus(L,dest){if(!L||!L.bld)return 0;return bldgShare(L.bld,L.owner,caskBldgValue(L.bld,dest,L.q,L.owner));}
-function pCaskFace(t,bonus){const st=STYLES[t.style]||{};const o=S.players[t.owner];const act=caskAct(t);
+function pCaskFace(t,bonus){const st=STYLES[t.style]||{};const o=(t.owner!=null)?S.players[t.owner]:null;const act=caskAct(t);
   return '<div class="ptile pcask" style="--tc:'+(STYLE_COLOR[t.style]||'#777')+'">'
     +'<span class="pq">'+LU('beer')+t.q+'</span>'
-    +'<span class="pown" style="background:'+(o?o.color:'#000')+'"></span>'
+    +(o?'<span class="pown" style="background:'+o.color+'"></span>':'')
     +'<span class="pnm">'+st.name+'</span>'
     +'<span class="pact"><span class="pac">'+LU(CASK_ACT_ICON[act]||'sparkles')+'</span><span class="ptxt">'+(P_ACT_TXT[act]||act)+'</span></span>'
     +'<span class="pcost">'+pCost((st.in||{}).g,(st.in||{}).h)
@@ -915,19 +915,6 @@ function pImpFace(key){const def=IMPROVEMENTS[key];
     +'<span class="pbnm">'+def.name+'</span>'
     +'<span class="pbeff">'+def.desc+'</span>'
     +'<span class="pbfoot">'+(def.cost?pCost(def.cost.g,def.cost.h):'')+'</span>'
-  +'</div>';}
-// a BREW PILE's face-up top, rendered as a FULL tile (matching the cask tiles): quality + the action it
-// grants (the title) + which beers brew at this quality.
-const QUAL_COLOR={1:'#8a949c',2:'#c2922f',3:'#b06a34',4:'#caa12a',5:'#7c2128'};
-const ACT_TITLE={source:'Source',age:'Age',load:'Load',reach:'Reach',convert:'Convert',survey:'Survey',wild:'Wild'};
-function beersAtQ(q){return ['gruit','hopped'].concat(S.exports||[]).filter(s=>STYLES[s]&&STYLES[s].q===q);}
-function pPileFace(q){const act=(q===1)?'source':((S.pileTop&&S.pileTop[q])||'source');
-  const beers=beersAtQ(q).map(s=>STYLES[s].name).join(' · ')||'—';
-  return '<div class="ptile pcask" style="--tc:'+(QUAL_COLOR[q]||'#777')+'" data-tip="'+attr('Q'+q+' brew pile ('+beers+') — a cask brewed at this quality takes: '+(CASK_ACT[act]||act)+(q===1?' (Gruit is pinned to Source).':' (steerable — brew toward it).'))+'">'
-    +'<span class="pq">'+LU('beer')+q+'</span>'
-    +'<span class="pnm">'+(ACT_TITLE[act]||act)+'</span>'
-    +'<span class="pact"><span class="pac">'+LU(CASK_ACT_ICON[act]||'')+'</span><span class="ptxt">'+(P_ACT_TXT[act]||act)+'</span></span>'
-    +'<span class="pcost"><span class="ppbeers">'+beers+'</span></span>'
   +'</div>';}
 function pOccToken(t){
   if(t.type==='cask')return '<span class="pocc" style="background:'+S.players[t.owner].color+'">'+LU('beer')+styleShort(t.style)+' Q'+t.q+'</span>';
@@ -2443,9 +2430,11 @@ function renderVoyage(){
     +'<div class="track">'+trk+'</div><div class="note" style="font-size:.66rem;margin-top:2px">⛵ the end clock — each voyage (a ship sailing, a charter, or an enshrine) fills one</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>'+LU('ticket')+' Charter contracts:</b> '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+(p.contracts||0)+'</span>').join(' · ')+' <span class="note">(spend 1 + '+costStr(CHARTER_FLAT_FARE)+' to charter; buy more at the Market)</span></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game (3 of 4):</b> '+exportLabel()+'.</div>';
-  // the steerable BREW PILES — render each pile's face-up TOP as a tile (the quality + its action)
-  h+='<div class="note" style="margin-top:6px"><b>'+LU('flask-conical')+' Brew piles</b> <span class="note">(the face-up action a cask of each quality takes — steerable)</span></div>'
-    +'<div class="shopgrid">'+[1,2,3,4,5].map(q=>'<div class="mtile">'+pPileFace(q)+'</div>').join('')+'</div>';
+  // the steerable BREW PILES — each brewable beer as its real cask tile (name · quality · brew cost) +
+  // the face-up action that quality's pile currently grants (Gruit pinned to Source).
+  const brews=['gruit','hopped'].concat((S.exports||[]).slice().sort((a,b)=>STYLES[a].q-STYLES[b].q));
+  h+='<div class="note" style="margin-top:6px"><b>'+LU('flask-conical')+' Brew piles</b> <span class="note">(each brewable beer — its quality &amp; cost + the face-up action that quality takes, steerable)</span></div>'
+    +'<div class="shopgrid">'+brews.map(style=>{const st=STYLES[style];return '<div class="mtile">'+pCaskFace({style:style,q:st.q,act:pileTopFor(st.q,style),owner:null},0)+'</div>';}).join('')+'</div>';
   h+='<div class="note" style="margin-top:6px">Delivered value: '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+scorePlayer(p).deliv+'</span>').join(' · ')+'</div>';
   document.getElementById('voyage').innerHTML=h;
 }
