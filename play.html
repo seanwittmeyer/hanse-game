@@ -1710,6 +1710,8 @@ function aiDeepRollout(){return (GM_DEEP||aiDeepActive)&&aiSimulating;}
 let CELLAR_MS=1500;   // Monte Carlo time budget per decision (ms); 'instant' speed caps it (below)
 let CELLAR_MIN=6;     // minimum playouts each option gets before it can be halved out
 let CELLAR_CAP=8000;  // hard playout cap per decision (safety, however cheap the playouts)
+let CELLAR_MCTS=false;  // Path C (turn-level UCT) is BUILT but OPT-IN: at the budgets we can sim-test it did NOT clear the ladder gate (~53% vs GM, n=30, vs the flat MC's 62%) and it's slower per decision — matching AUTOMA's "flat MC captures most of MCTS's benefit at this branching." Flip true to play the tree search (its payoff, if any, needs a much larger budget than the in-page default). Default = the gated flat MC.
+let CELLAR_UCT=0.9;     // ⚙ UCB1 exploration constant, in MARGIN points (≈ the spread of a good vs mediocre turn)
 let CELLAR_ROLL='journeyman';   // rollout policy inside Cellarmaster playouts. The DEEP bias (aiDeepActive →
    // aiDeepRollout) is tier-agnostic — it makes even a journeyman rollout climb to Q4+ and ENSHRINE — so the
    // cheap journeyman rollout prices the deep/Hall lane AND buys ~10× the playouts of a trader rollout at the
@@ -2051,7 +2053,7 @@ function aiCellarPlayout(oi,snapS,snapUI,options,meId){
   }catch(e){m=aiMCMargin(meId)-5;}   // a crashed playout scores what it has, minus a penalty
   return m;
 }
-function aiCellarMC(p,options){
+function aiCellarFlat(p,options){
   if(options.length===1){options[0]();return;}
   const meId=p.id;
   const snapS=JSON.stringify(S),snapUI=JSON.stringify(UI);
@@ -2086,6 +2088,92 @@ function aiCellarMC(p,options){
   let bi=surv[0],bv=mean(stats[surv[0]]);
   surv.forEach(i=>{const v=mean(stats[i]);if(v>bv){bv=v;bi=i;}});
   options[bi]();   // apply the winner for real
+}
+
+//========== CELLARMASTER · PATH C — turn-level determinized UCT (the meaner automa) ==========
+// The flat MC (above) evaluates each prompt's options independently, playing the REST of the current turn
+// GREEDILY inside every rollout — so it never searches the JOINT plan of a turn (move + which stops, in
+// which order, buying/brewing/loading/deploying as a package). Path C builds a UCT tree over the active
+// player's WHOLE turn (every branching prompt until the turn passes), with the journeyman+deep policy as the
+// rollout below the frontier. Because every prompt during my turn is MINE, the tree is single-agent
+// (maximize my end-game MARGIN); opponents live in the rollout. Determinized per iteration (reshuffle the
+// unseen decks), nodes keyed by the path of option indices, robust-child (most-visited) at the root.
+// Recursion is impossible: aiSimulating is on throughout, so aiStep's cellarmaster branch is skipped and
+// scripted sub-prompts (line/age/source/convert/stops/end) resolve via the trader policy.
+function cmAdvance(meId){   // auto-resolve scripted/trivial steps until the next BRANCHING decision for me (or my turn ends)
+  let guard=0;
+  while(guard++<2000){
+    if(S.over)return null;
+    if(cur().id!==meId)return null;          // my turn handed off → leaf
+    const opts=aiGmOptions(cur());
+    if(opts===null||opts.length===0){aiStep();continue;}   // scripted prompt → trader policy takes one step
+    if(opts.length===1){opts[0]();continue;}               // forced single option → apply, keep going
+    return opts;                                            // a real branch to put in the tree
+  }
+  return null;
+}
+function aiCellarMCTS(p,options){
+  const meId=p.id;
+  const rootS=JSON.stringify(S),rootUI=JSON.stringify(UI);
+  const rr=render,ll=log,sv=save;
+  const budget=(aiSpeed()==='instant')?Math.min(CELLAR_MS,700):CELLAR_MS;
+  aiSimulating=true;aiDeepActive=true;render=function(){};log=function(){};save=function(){};
+  const N=new Map();   // pathKey → {n,sum,kids:Set(expanded child idx)}
+  const get=k=>{let v=N.get(k);if(!v){v={n:0,sum:0,kids:new Set()};N.set(k,v);}return v;};
+  get("");
+  const t0=Date.now();let iters=0;
+  try{
+    while(Date.now()-t0<budget&&iters<CELLAR_CAP){
+      iters++;
+      S=JSON.parse(rootS);UI=JSON.parse(rootUI);
+      if(S.buildDeck&&S.buildDeck.length>1)shuffle(S.buildDeck);   // determinize the hidden future
+      if(S.shipDeck&&S.shipDeck.length>1)shuffle(S.shipDeck);
+      // ---- selection + single expansion (tree policy) ----
+      let opts=options,key="",path=[];
+      try{
+        while(true){
+          const node=get(key);
+          if(node.kids.size<opts.length){                 // expand: take an untried child
+            let idx=0;while(node.kids.has(idx))idx++;
+            node.kids.add(idx);
+            opts[idx]();path.push(key===""?(""+idx):key+","+idx);
+            break;                                        // → rollout from the expanded state
+          }
+          let bi=0,bv=-1e9;const lnN=Math.log(node.n+1);  // fully expanded: UCB1 descend
+          for(let i=0;i<opts.length;i++){
+            const ck=key===""?(""+i):key+","+i,c=N.get(ck);
+            const cn=c?c.n:0,m=(c&&c.n)?c.sum/c.n:0;
+            const u=m+CELLAR_UCT*Math.sqrt(lnN/(cn+1e-9));
+            if(u>bv){bv=u;bi=i;}
+          }
+          opts[bi]();key=key===""?(""+bi):key+","+bi;path.push(key);
+          const nx=cmAdvance(meId);                       // walk to the next branch (or leaf)
+          if(!nx)break;
+          opts=nx;
+        }
+      }catch(e){/* a bad line in selection → just roll out what we have */}
+      // ---- rollout to game end (journeyman+deep), then backprop the margin ----
+      let m;
+      try{S.players.forEach(q=>{q.ai={tier:CELLAR_ROLL,persona:null,w:null};});
+          let g=0;while(!S.over&&g++<30000)aiStep();m=aiMCMargin(meId);}
+      catch(e){m=aiMCMargin(meId)-5;}
+      const rt=get("");rt.n++;rt.sum+=m;
+      path.forEach(k=>{const nd=get(k);nd.n++;nd.sum+=m;});
+    }
+  }finally{
+    S=JSON.parse(rootS);UI=JSON.parse(rootUI);
+    render=rr;log=ll;save=sv;aiSimulating=false;aiDeepActive=false;
+  }
+  // robust child: the most-visited root option (tiebreak by mean margin)
+  let bi=0,bn=-1,bm=-1e9;
+  for(let i=0;i<options.length;i++){const c=N.get(""+i);const cn=c?c.n:0,cm=(c&&c.n)?c.sum/c.n:-1e9;
+    if(cn>bn||(cn===bn&&cm>bm)){bn=cn;bm=cm;bi=i;}}
+  options[bi]();
+}
+// the Cellarmaster's entry point (called by aiStep) — Path C UCT by default, flat MC if CELLAR_MCTS=false
+function aiCellarMC(p,options){
+  if(options.length===1){options[0]();return;}
+  return CELLAR_MCTS?aiCellarMCTS(p,options):aiCellarFlat(p,options);
 }
 // The option enumerator: a list of zero-arg thunks calling the SAME functions the buttons call.
 // Returns null for prompts left to the trader fallback (line · age · source · convert · end).
