@@ -1,13 +1,23 @@
-# Brewhouses of the Hanse — v1.0 “Living Slots” — PLAN
+# Brewhouses of the Hanse — v1.2 “Dice” — PLAN
 
-> **Status: plan — v1.0 “Living Slots”, opened 2026-06-16 (reset).** This replaces the abandoned "demand-board"
-> detour (the `*-v1` files, deleted; the *"Leffe at a party / quality is a construct"* thread
-> and everything after it is **discarded**). It returns to the **keystone we bookmarked early
-> in the design chat**: the *living, composable Wharf slots*. The live game (v0.16.1) is frozen
-> at branch `archive/main-v0.16.1`, playable at `archive/play.html`, and snapshotted file-by-file
-> in `archive/v0.16/`. From here we edit the **canonical** `RULES.md` / `COMPONENTS.md` forward.
-> **Working mode:** v0.16 is fully archived, so the **top-level files are the v1.0 working set**
-> — cleaned up and **version-stamped as they're edited.**
+> **Status: SHIPPED — v1.2 “Dice” (opened as the v1.0 “Living Slots” reset, 2026-06-16).** The
+> keystone rebuild this plan called for has **shipped**: the *living, composable Wharf slots*, the
+> differentiation pass (v1.1), and the demand dice (v1.2) are all live repo-wide (`RULES.md` /
+> `COMPONENTS.md` / all four HTML pages on **v1.2 “Dice”**). This plan replaced the abandoned
+> "demand-board" detour (the `*-v1` files, deleted; the *"Leffe at a party / quality is a
+> construct"* thread and everything after it is **discarded**) and returned to the **keystone we
+> bookmarked early in the design chat**: the *living, composable Wharf slots*. The prior live game
+> (v0.16.1) is frozen at branch `archive/main-v0.16.1`, playable at `archive/play.html`, and
+> snapshotted file-by-file in `archive/v0.16/`. From there we edited the **canonical** `RULES.md` /
+> `COMPONENTS.md` forward. **Working mode:** v0.16 is fully archived, so the **top-level files are
+> the v1.x working set** — cleaned up and **version-stamped as they're edited.**
+>
+> **What shipped since this plan opened:** v1.0 keystone (living slots + the one Building family +
+> the Floor) → v1.1 differentiation (four distinct kontor benefits; Hall ladder 3/5/7/9; fast
+> Hopped/Broyhan + Keut presence; the Flight scores distinct **beers**, no Masterpiece) → v1.2
+> the **demand dice** (a reusable d6 per value-building bonus rides the cask in the ship's berth;
+> pips = ★ banked on delivery, max 5; a stranded cask banks nothing — replacing a denomination of
+> value chits). The roadmap below (§7) is checked off accordingly.
 
 ---
 
@@ -58,7 +68,7 @@ one whole:
 
 | Lane | The loop (what you do) | Scores | Supported by | Its risk / cost |
 |---|---|---|---|---|
-| **Prestige / the Hall** | brew Q2+ → deploy → enshrine | **in-game, fixed** (4/6/8/10) | deploy-then-enshrine; prestige-throughput buildings | low/steady; a capped ceiling — the beginner's whole game |
+| **Prestige / the Hall** | brew Q2+ → deploy → enshrine | **in-game, fixed** (3/5/7/9, shipped v1.1) | deploy-then-enshrine; prestige-throughput buildings | low/steady; a capped ceiling — the beginner's whole game |
 | **Demand / value** | author value-buildings → route casks through them → deliver | **in-game, variable** | the building deck; commissioning ships onto your buildings | contested (rivals dock too); you must read & route |
 | **Volume / majority** | brew wide → ship many → dominate kontore by count | **end-game, count** | cheap-cask throughput; Cooperage; Kontor Privilege | deferred payoff; head-to-head races |
 | **Range / the Flight** | climb the ladder → deliver every tier incl. Bock | **end-game, (tiers−1)²** | Kiln (step up); Aging Loft; the export recipes | high-variance; needs the full set (a Bock) |
@@ -139,13 +149,17 @@ end-game:
    number of points (a simple ladder by quality). *The easy, beginner path to victory — low
    risk, always available, and there's a whole game in just this.*
 2. **Deliver to a kontor — VARIABLE rate.** Ship a cask to a kontor and score its value — and
-   that value is **modified by the buildings on the Wharf** your cask/ship passed through (the
-   "demand"). *The risk/reward path: read the board, route your brews, maximize value.*
+   that value is **modified by the value-buildings on the Wharf** your cask/ship passed through (the
+   "demand"). *(Shipped v1.2: this bonus is tracked physically by a reusable **d6 “demand die”**
+   that rides the cask in the ship's berth — its pips, max 5, are the ★ banked on delivery; a
+   stranded cask never banks.)* *The risk/reward path: read the board, route your brews, maximize
+   value.*
 
 **End-game points (the long game):**
 3. **Majorities** — at each kontor, by **delivered-cask count.** Easy to track. *Go big:
    become dominant in a few kontore.*
-4. **The Flight** — distinct quality tiers delivered (the range reward). Kept as-is.
+4. **The Flight** — the range reward, `(n−1)²` (min 3 → 3:4 / 4:9 / 5:16). *(Shipped v1.1: it
+   now counts distinct **beers** delivered, not quality tiers; the Masterpiece was cut.)*
 
 > **The strategic fork is now legible:** the **Hall** is the steady floor (fixed); the
 > **kontore** are the risk/reward, with **two distinct ways to score there** — the **evolving
@@ -243,14 +257,13 @@ Three decisions set the keystone's shape; everything else sizes off them:
 
 ## 7. Roadmap
 
-1. **This plan** (+ resolve F1–F3). ✓ opening now.
-2. **Edit the canonical `RULES.md`** forward to the new path (the keystone + the clear scoring).
-   *(The designer's next requested step.)*
+1. **This plan** (+ resolve F1–F3). ✓ done (F1–F3 resolved in the shipped v1.0–v1.2 builds).
+2. **Edit the canonical `RULES.md`** forward to the new path (the keystone + the clear scoring). ✓ shipped (v1.2 “Dice”).
 3. **Edit `COMPONENTS.md`** — the building family (the new content deck, one grammar), the
-   reconceived destination/scoring table, the cuts.
-4. **Rebuild `play.html`** to the new rules (sandbox first; keep v0.16.1 live until ready).
-5. **HTML docs** (`learn` / `index`) then **`printables`** last.
-6. Sim-gate throughout (crash/deadlock-free, pace 12–25, lanes balanced, AI ladder).
+   reconceived destination/scoring table, the cuts. ✓ shipped (v1.2 “Dice”; the demand dice replaced the value chits).
+4. **Rebuild `play.html`** to the new rules (sandbox first; keep v0.16.1 live until ready). ✓ shipped — `play.html` is now on v1.2 “Dice” (v0.16.1 archived).
+5. **HTML docs** (`learn` / `index`) then **`printables`** last. ✓ shipped — all four pages on v1.2.
+6. Sim-gate throughout (crash/deadlock-free, pace 12–25, lanes balanced, AI ladder). ✓ ongoing — the standing gate for every change.
 
 ## 8. Guardrails
 

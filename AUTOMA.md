@@ -1,6 +1,6 @@
 # Automa / AI Opponent — Plan & Status
 
-> The plan for an AI opponent you can play against in `play.html`, with **variable difficulty** and **any mix of humans and AIs at 2–5p** — plus a derived **physical automa deck** for tabletop solo play. Compares the candidate systems (heuristic policy, flat Monte Carlo, MCTS, depth-limited search, learning) and lays out a staged path. Queued in `DESIGN.md` §21 (v0.9 "Still open / next": *"a solo Automa from the existing bot"*).
+> The plan for an AI opponent you can play against in `play.html`, with **variable difficulty** and **any mix of humans and AIs at 2–4p** (current build **v1.2 “Dice”**) — plus a derived **physical automa deck** for tabletop solo play. Compares the candidate systems (heuristic policy, flat Monte Carlo, MCTS, depth-limited search, learning) and lays out a staged path. Queued in `DESIGN.md` §21 (v0.9 "Still open / next": *"a solo Automa from the existing bot"*).
 >
 > **STATUS — ALL THREE PHASES SHIPPED (Phase 3: 2026-06-12, `play.html` `KEY → v24`).**
 > **Phase 3:** the **Guildmaster** tier is live — flat Monte Carlo over the canonical engine (clone `(S,UI)` per option, Journeyman rollouts to game end, margin objective, `GUILD_MS` ⚙ 250ms/decision budget). Measured at 2p: **Guildmaster > Trader 99.0%** (n=200 at a reduced 40ms test budget; avg score 63.4 vs 26.8) — the flat-MC step-change §2B predicted, with **no engine refactor** (same-scope global swap, `aiSimulating` guards). Flat MC has not plateaued, so UCT/max-n (§2C) stays unbuilt by its own criterion. Full ladder: 66.2% / 62.2% / 99.0% (`playtests/ai-ladder-v24.txt`).
@@ -18,10 +18,10 @@ The feasibility of every option below hangs on four properties the repo already 
 
 1. **The game state is one JSON-serializable object.** `play.html` keeps everything in `S` (players, slots, deck, clock) + a small `UI` interaction state; undo literally works by `JSON.stringify(S)` (`snapshot()`/`doUndo()`). **Cloning a position is trivial and cheap** — the prerequisite for any simulation-based AI.
 2. **The engine is a UI-driven state machine with no hidden coupling to the DOM.** Every decision is a `UI.sub`/`UI.stage` prompt resolved by a plain function (`doMove`, `chooseLine`, `resolveStop`, `brewPick`, `ageAllot`, `loadOnto`, `charterDest`, `benefitPick`, `endTurn`…). The sim harness proves `render`/`log`/`save`/`snapshot` can be stubbed to no-ops and the engine driven headlessly.
-3. **A competent heuristic bot already exists and is battle-hardened** (`playtests/sim.js`): it navigates the real `UI.sub`/`UI.stage` machine, is topology-agnostic and toll-aware, has **persona variants** (volume / prestige / majority leans), and has survived thousands of games at 2–5p with 0 crashes / 0 deadlocks. Its blind spots are documented (never ships Bergen in greedy mode, rarely climbs to Q4–Q5, charter-heavy at 4p).
+3. **A competent heuristic bot already exists and is battle-hardened** (`playtests/sim.js`): it navigates the real `UI.sub`/`UI.stage` machine, is topology-agnostic and toll-aware, has **persona variants** (volume / prestige / majority leans), and has survived thousands of games at 2–4p with 0 crashes / 0 deadlocks. Its blind spots are documented (never ships Bergen in greedy mode, rarely climbs to Q4–Q5, charter-heavy at 4p).
 4. **Full-game playouts are ~2 ms.** 1500 headless games run in ~3 s. That number is what makes Monte Carlo methods *practical in the browser*: a few hundred greedy playouts per decision ≈ 0.5–2 s, easily hidden in a Web Worker.
 
-Game-theoretic profile (digital client): **perfect information** (goals are visible in the hotseat UI; see §6.4), **deterministic in play** except the face-down Upgrade-deck refill order, **2–5 players** (not zero-sum two-player — rules out classic alpha-beta), ~12–25 rounds, and a turn that is a *chain* of small decisions (move ≤2 options × line 2 × stop order × sub-choices) — modest branching per decision point (~2–10), combinatorial per whole turn (tens to low hundreds of distinct turn outcomes).
+Game-theoretic profile (digital client): **perfect information** (goals are visible in the hotseat UI; see §6.4), **deterministic in play** except the face-down Upgrade-deck refill order, **2–4 players** (not zero-sum two-player — rules out classic alpha-beta), ~12–25 rounds, and a turn that is a *chain* of small decisions (move ≤2 options × line 2 × stop order × sub-choices) — modest branching per decision point (~2–10), combinatorial per whole turn (tens to low hundreds of distinct turn outcomes).
 
 ---
 
@@ -74,7 +74,7 @@ Enumerate whole turn-plans 1–2 ply deep and score leaves with a static eval (c
 | Dev effort | **days** | ~1–2 wks | ~2–4 wks | ~2 wks + endless eval tuning | months |
 | Per-move latency | instant | 0.2–2 s | 1–5 s | <1 s | — |
 | Survives ⚙ retunes | good | **best** | **best** | **worst** | worst |
-| 2–5p / mixed seats | free | free (margin objective) | max-n backup | max-n | — |
+| 2–4p / mixed seats | free | free (margin objective) | max-n backup | max-n | — |
 | Reuses existing assets | sim bot wholesale | sim bot as playout | B + tree | little | harness as trainer |
 
 ---
@@ -108,7 +108,7 @@ Ladder at the end: **Apprentice → Journeyman → Trader → Guildmaster**, spa
 2. **AI seats:** a per-player `ai: {tier, persona}` flag set in the setup modal; `endTurn` → if `cur().ai`, schedule the AI driver.
 3. **The AI driver is the sim bot's `botActOnce()` loop with pacing:** resolve one `UI.sub` decision every ~400–700 ms with the existing log narrating (the log already explains every action — free explainability), plus an "instant AI turns" toggle.
 4. **Hidden info policy:** goals are face-up in the hotseat UI, so the AI reading them is consistent with the digital client; for purists, a "blind AI" option masks rival goals from the bot. Physical-rules fidelity matters more for the printed automa (§7).
-5. **Objective function (B/C):** maximize **own score minus best rival's score**, not raw score — the margin objective is what keeps a Monte Carlo player from kingmaking with rival-cask shipping and from ignoring the leader at 3–5p.
+5. **Objective function (B/C):** maximize **own score minus best rival's score**, not raw score — the margin objective is what keeps a Monte Carlo player from kingmaking with rival-cask shipping and from ignoring the leader at 3–4p.
 6. **Web Worker without breaking the single-file page:** build the worker from a `Blob` of the page's own engine source (the same extract-the-`<script>` move `sim.js` makes) — `play.html` stays one file.
 7. **Housekeeping:** state-shape change (`ai` flags) ⇒ bump the save `KEY`; after any engine refactor run `node playtests/sim.js 500` (+ `PERSONAS=1`) and commit the results per `CLAUDE.md`.
 
@@ -128,7 +128,7 @@ Ladder at the end: **Apprentice → Journeyman → Trader → Guildmaster**, spa
 
 ## 8. Risks & open questions
 
-- **Phase 3 latency at 5p** (playouts lengthen with player count): mitigate with rollout truncation + the delivery-score proxy, or cap Guildmaster at ≤4 AI seats.
+- **Phase 3 latency at high player counts** (playouts lengthen with player count): mitigate with rollout truncation + the delivery-score proxy, or cap Guildmaster's AI-seat budget.
 - **The (S, UI) de-globalization** touches every mutator — mechanical but wide; it must land with a full sim re-run and `KEY` bump (it's exactly the kind of engine change `CLAUDE.md`'s checklist exists for).
 - **Does flat MC suffice, or is the tree needed?** Decide empirically: if Guildmaster-flat beats Trader <65%, build UCT.
 - **Blind-AI default?** (mask rival goals or not) — designer call; cosmetic either way in the digital client.

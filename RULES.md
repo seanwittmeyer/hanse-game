@@ -1,10 +1,10 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v1.0 “Living Slots”)
+# Brewhouses of the Hanse — Turn & Round Rules (v1.2 “Dice”)
 
-> **Status: in-design (2026-06-16).** This is the canonical rulebook, edited forward onto the
-> **keystone** direction (`PLAN.md`): *living, composable Wharf slots + dead-simple scoring.*
-> Numbers are placeholders ⚙. **The live, playable game is still v0.16.1** ("The Wharf"),
-> frozen at branch `archive/main-v0.16.1`, playable at `archive/play.html`, and snapshotted in
-> `archive/v0.16/`. This document leads the rebuild; `play.html` follows once the rules settle.
+> **Status: live (2026-06-18).** This is the canonical rulebook for the *living, composable Wharf
+> slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
+> playable build is `play.html` (v1.2 “Dice”) — these rules are implemented there.** (The prior
+> v0.16.1 "The Wharf" build is archived at branch `archive/main-v0.16.1` / `archive/play.html` /
+> `archive/v0.16/`.)
 >
 > **The pitch:** a merchant brewing house at the Wharf, where work runs **Source → Brew → Age →
 > Ship.** The soul is the **squeeze** — *you can't brew everything, and you can't deliver
@@ -181,7 +181,10 @@ Lagering), one is **owner-passive** (Almoner's Stall). A building does nothing f
 
 - **Value buildings (the "demand"):** the occupant scores **bonus value on delivery.** On a
   **ship**, this is a **rich berth** — *every* cask the ship delivers scores the bonus (the
-  three-tier payoff). On a **cask**, that cask delivers for more. *This is the variable kontor
+  three-tier payoff). On a **cask**, that cask delivers for more. The bonus is **captured as the
+  cask ships through** the building and carried on a **reusable demand die (d6)** that rides the
+  cask in the berth — its **pips = the ★ banked on delivery** (a quality transform instead rides a
+  +1-quality marker; the full physical model is in `COMPONENTS.md §2`). *This is the variable kontor
   value — what's worth chasing, authored on the living board.*
 - **Transform buildings:** the occupant is **changed.** E.g. a docked cask **ages faster / gains
   +1 quality / gains a second action**; a docked ship **carries +1 cask / may re-flag its
@@ -224,12 +227,13 @@ Five destinations, all open from start (⚙ table in `COMPONENTS.md`):
 |---|---|---|---|---|
 | **Bruges** (Hub) | Q1 | +1 ★ | 2 goods (owner's choice) | 4 / 2 / 0 |
 | **London** (Steelyard) | Q2 | +1 ★ | take a building **to hand** ⚙ | 5 / 3 / 1 |
-| **Bergen** (Bryggen) | Q2 | +1 ★ | 2 goods | 9 / 5 / 2 (anchor) |
-| **Novgorod** (Long Haul) | Q3 | +2 ★ | take a building **to hand** ⚙ | 8 / 5 / 2 |
+| **Bergen** (Bryggen) | Q2 | +1 ★ | **free Reach** (+1 presence, any kontor) | 9 / 5 / 2 (anchor) |
+| **Novgorod** (Peterhof) | Q3 | scales by Q (Q3→2 · Q4→4 · Q5→6) | **refine** (a maturing cask **+1 age**) | 8 / 5 / 2 |
 | **The Hall** (Prestige) | Q2 | **fixed ladder 3/5/7/9 by quality** ⚙ | — (Enshrine) | — |
 
 **Delivery value at a kontor = destination base + the value-building bonuses the cask shipped
-through** (§5a). So a kontor delivery is worth **a little by default, a lot when you've routed it
+through** (§5a) — those bonuses are captured-on-ship-through onto the cask's **demand die** (pips =
+★, §5a). So a kontor delivery is worth **a little by default, a lot when you've routed it
 through demand you built.** *(The export-premium table and the Masterpiece from v0.16 are folded
 into this / cut — confirm during `COMPONENTS.md`.)*
 

@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v1.0 “Living Slots”)
+# Brewhouses of the Hanse — Design (v1.2 “Dice”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v1.0 “Living Slots”** — design locked into the specs; the **`play.html` rebuild is the next step.** The last *playable* build is v0.16.1 (`archive/play.html`). |
+|**Status**     |**v1.2 “Dice”** — live; **`play.html` implements it** (the keystone rebuild shipped; the demand-dice tracking + the printables-tile UI overhaul followed). |
 
 ---
 
@@ -76,7 +76,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v1.0 “Living Slots”)
+## 6. The current architecture (v1.2 “Dice”)
 
 Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -94,9 +94,11 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   upgrades — one content family under one rule. **A line is half-fixed (its two stations) and
   half-emergent (its two slots), so your engine *grows into the board*** — placing a building
   beside a high-traffic line is the core optimization (the heart of v1.0).
-- **Legible scoring.** *In-game:* **Hall enshrine = fixed** (the beginner floor) · **kontor
-  deliver = variable** (base + the value-buildings shipped through). *End-game:* **majorities**
-  (delivered-cask count) + **the Flight** (distinct quality tiers, (tiers−1)²).
+- **Legible scoring.** *In-game:* **Hall enshrine = fixed** (the beginner floor, ladder 3/5/7/9) ·
+  **kontor deliver = variable** (base + the value-buildings shipped through, captured-on-ship-through
+  onto a **reusable demand die** that rides the cask in the berth — pips = the ★ banked on delivery;
+  `COMPONENTS.md §2`). *End-game:* **majorities** (delivered-cask count) + **the Flight** (distinct
+  **beers**, (beers−1)², min 3).
 - **The five lanes — each a complete path** (no half-measures; braiding emerges, it isn't a
   goal): **Prestige/Hall · Demand/value · Volume/majority · Range/Flight · Authorship/engine.**
 - **The Floor** — a private line you may run instead of a grid line, powered by your built-up
@@ -149,6 +151,15 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 ---
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
+
+**v1.2 “Dice”** *(2026-06-18)* — Shipped the **demand-dice tracking**: a value-building bonus is now
+captured-on-ship-through onto a **reusable d6 that rides the cask in the berth** — its **pips = the ★
+banked on delivery** — while a quality transform rides a **+1-quality marker**; ship value buildings
+and the wharfage cut resolve **live**. This replaced the earlier value-chit denomination idea (one
+re-rollable die per cask, no chit-counting). Plus a **`play.html` UI overhaul**: the slots now render
+the **real printables tiles** — full-square slots showing cask / ship / building tiles, a **stacked
+slot with tap-to-swap**, and the market, brew-pile, and brewery tiles — with **buildings = green,
+upgrades = purple**. (Still 2–4p; the v1.1 differentiation pass and scoring tune carry forward.)
 
 **v1.1 SESSION STATE — what shipped + playtest feedback + next steps** *(2026-06-18, `play.html` KEY v50→v55)**
 This session implemented the v1.1 differentiation pass (Stage 1) and several fixes/reverts, then a real
@@ -318,6 +329,6 @@ automatically.
 - **Kontor** — a foreign trading post (Bruges/London/Bergen/Novgorod); ship there for value +
   majority.
 - **The Hall** — the local guild hall; **Enshrine** a cask there for fixed prestige (no ship).
-- **The Flight** — the end-game range bonus for distinct quality tiers delivered.
+- **The Flight** — the end-game range bonus for distinct **beers** delivered ((beers−1)², min 3).
 - **The lanes** — the five complete paths to victory: Prestige/Hall · Demand/value ·
   Volume/majority · Range/Flight · Authorship/engine.

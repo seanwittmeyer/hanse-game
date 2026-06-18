@@ -1,16 +1,17 @@
-# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.0 “Living Slots”)
+# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.2 “Dice”)
 
 > The physical manifest: **boards · tokens · the tile families · the player brewery board ·
 > destinations.** Enumerates *what objects exist and what each does* — the **why** is in
 > `DESIGN.md`, the **operational rules** in `RULES.md`, the **plan** in `PLAN.md`. **Every
 > count/value is a placeholder ⚙.**
 >
-> **v1.0 — Living Slots.** The design is locked into the specs; the **`play.html` rebuild is the
-> next step.** The last *playable* build is v0.16.1 (archived at `archive/play.html`;
-> the v0.16 manifest at `archive/v0.16/COMPONENTS.md`). The headline change: the **8 slots are a
-> living, composable commons** — they hold **owned buildings** that modify the casks/ships
-> docked to them. **One new tile family (Buildings) absorbs the old neutral buildings, the goal
-> tiles, and most upgrades.**
+> **v1.2 — Dice (live).** The keystone "Living Slots" rebuild shipped and is implemented in
+> `play.html`; v0.16.1 is archived at `archive/play.html` (manifest at `archive/v0.16/COMPONENTS.md`).
+> The **8 slots are a living, composable commons** — they hold **owned buildings** that modify the
+> casks/ships docked to them; **one tile family (Buildings) absorbs the old neutral buildings, the
+> goal tiles, and most upgrades.** The **v1.2 headline:** a value building's bonus is tracked by a
+> reusable **demand die (d6)** that rides the cask in the ship's berth (pips = the ★ banked on
+> delivery — §2).
 
 ---
 
