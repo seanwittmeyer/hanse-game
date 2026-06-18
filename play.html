@@ -941,12 +941,13 @@ function chooseLine(which){
   const p=cur();const lk=cellOfLine(p.cell)[which];
   // occupancy pressure (v1.0 + the FLOOR): moving onto a cell a rival occupies costs the 1 G toll — OR,
   // instead, you may work your FLOOR: run every cask on your brewery floor IN LIEU OF the public line.
-  // Round-1 placement is FREE. Offer the choice only when it's real (casks on the floor AND grain to
-  // spend on the toll); otherwise pay what you can (capped, never blocks) and fire the line.
+  // Round-1 placement is FREE. Offer the toll/Floor fork whenever you HAVE a Floor to run (any cask in
+  // your vessels) — even with NO grain to toll, the Floor is a real alternative to the contested public
+  // line, so the player must always get the choice. (Was gated on grain>0, which hid the Floor when broke.)
   const shared=S.turn>1 && S.players.some(q=>q.id!==p.id&&q.cell===p.cell);
   if(shared){
     const hasFloor=p.vessels.some(c=>c);
-    if(hasFloor && p.grain>0){UI={sub:'toll',line:lk};render();return;}
+    if(hasFloor){UI={sub:'toll',line:lk};render();return;}
     const toll=Math.min(OCCUPANCY_TOLL,p.grain);
     if(toll>0){p.grain-=toll;log(p.name+' pays −'+Gi(toll)+' occupancy toll for sharing <b>'+CELLNAME[p.cell]+'</b>.',true);}
   }
@@ -2093,9 +2094,9 @@ function renderBar(){
     acts=btn(Gi(1)+'→'+Hi(1),'convertDo(\'g\',1)','go')+btn(Gi(2)+'→'+Hi(2),'convertDo(\'g\',2)','go')+btn(Hi(1)+'→'+Gi(1),'convertDo(\'h\',1)','go')+btn(Hi(2)+'→'+Gi(2),'convertDo(\'h\',2)','go')+btn('Skip','convertSkip()','ghost');}
   else if(U==='reach'){prompt='Reach — +1 presence at a kontor you’ve delivered to.';
     acts=UI.reach.ks.map(k=>btn(LU('map-pin')+DEST[k].name,'reachPick(\''+k+'\')','go')).join('')+btn('Skip','reachSkip()','ghost');}
-  else if(U==='toll'){const flr=p.vessels.filter(c=>c).map(c=>LU(CASK_ACT_ICON[caskAct(c)]||'')+caskAct(c)).join(', ');
-    prompt='You moved onto an occupied <b>'+CELLNAME[p.cell]+'</b>. <b>Pay the toll</b> and work the contested line, OR work your <b>Floor</b> — run every cask in your brewery ('+flr+') <i>instead of</i> the public line.';
-    acts=btn('Pay −'+Gi(1)+' toll → the line','tollPay()','go')+btn(LU('flask-conical')+' Work the Floor (no line)','tollFloor()','primary');}
+  else if(U==='toll'){const realToll=Math.min(OCCUPANCY_TOLL,p.grain);const flr=p.vessels.filter(c=>c).map(c=>LU(CASK_ACT_ICON[caskAct(c)]||'')+caskAct(c)).join(', ');
+    prompt='You moved onto an occupied <b>'+CELLNAME[p.cell]+'</b>. '+(realToll>0?'<b>Pay the toll</b> and work the contested line':'Work the contested line (no grain — the toll is free)')+', OR work your <b>Floor</b> — run every cask in your brewery ('+flr+') <i>instead of</i> the public line.';
+    acts=btn(realToll>0?('Pay −'+Gi(realToll)+' toll → the line'):'Work the line (free)','tollPay()','go')+btn(LU('flask-conical')+' Work the Floor (no line)','tollFloor()','primary');}
   else if(U==='placebldg'){const b=UI.tmp.placeBldg;prompt='Place '+LU('building-2')+' <b>'+bName(b.b)+'</b> — click any slot. <span class="note">('+BUILDINGS[b.b].desc+'. Placing onto a slot that has a building replaces it — the old tile returns to its owner\'s hand.)</span>';
     acts='';}
   else if(U==='wild'){prompt='Wild — take any base action as a bonus.';
@@ -2123,6 +2124,11 @@ function renderBar(){
     prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take a free '+LU('scroll-text')+' <b>recipe</b> (an export you don’t own).';
     acts=(opts.length?opts.map(s=>btn(LU('scroll-text')+STYLES[s].name+' Q'+STYLES[s].q,'brecipePick(\''+s+'\')','go')).join(''):'<span class="note">you own every dealt export</span> ')+btn('Skip','brecipePick(null)','ghost');}
   else if(U==='end'){prompt='Line resolved.';acts=deployButtons('end')+btn('End Turn ▸','endTurn()','primary');}
+  // End Turn is available at ALL times — every turn action is optional. Hidden only before the turn-1
+  // worker placement, in the 'end' state (it already has it), and during the forced delivery-benefit picks
+  // (which would forfeit a reward — including a rival's). endTurn() resets UI cleanly from any sub-state.
+  const hideEnd=(U==='move'&&!p.placed)||['end','benefit','goodspick','breach','brecipe','placebldg'].includes(U);
+  if(!hideEnd)acts+=btn('End Turn ▸','endTurn()','ghost');
   if(undoStack.length)acts+=btn('↶ Undo','doUndo()','ghost');
   document.getElementById('prompt').innerHTML=prompt;
   document.getElementById('acts').innerHTML=acts;
