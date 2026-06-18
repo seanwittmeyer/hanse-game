@@ -1,0 +1,12 @@
+Cellarmaster (journeyman+deep rollout, final-pick=survivors) vs Guildmaster — KEY v58
+6 shards x 15 games, CELLAR_MS=120 (3x GM's 40ms bulk budget); in-page ratio is ~6x so this is conservative.
+
+PRE-improvement (trader roll, pick=all): 55.5% / 90 games
+guildmaster vs cellarmaster cellarmaster wins  60.0%  (guildmaster 40.0%)  avg score guildmaster 25.3 / cellarmaster 33.4  rounds 20.1  clock 86.7%  errors 0
+guildmaster vs cellarmaster cellarmaster wins  73.3%  (guildmaster 26.7%)  avg score guildmaster 25.3 / cellarmaster 32.1  rounds 20.7  clock 93.3%  errors 0
+guildmaster vs cellarmaster cellarmaster wins  46.7%  (guildmaster 53.3%)  avg score guildmaster 29.0 / cellarmaster 27.1  rounds 19.3  clock 93.3%  errors 0
+guildmaster vs cellarmaster cellarmaster wins  86.7%  (guildmaster 13.3%)  avg score guildmaster 20.5 / cellarmaster 36.5  rounds 19.1  clock 100.0%  errors 0
+guildmaster vs cellarmaster cellarmaster wins  40.0%  (guildmaster 60.0%)  avg score guildmaster 27.2 / cellarmaster 27.7  rounds 19.1  clock 86.7%  errors 0
+guildmaster vs cellarmaster cellarmaster wins  66.7%  (guildmaster 33.3%)  avg score guildmaster 21.7 / cellarmaster 33.7  rounds 19.3  clock 86.7%  errors 0
+
+POST-improvement aggregate: 62.2% / 90 games

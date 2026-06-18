@@ -629,7 +629,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v57'; // v1.2: NEW AI TIER — the CELLARMASTER (the arch-nemesis): a DEEP Monte Carlo above the Guildmaster — a COMPETENT trader+completion-biased rollout (prices the quality/Hall/Novgorod lanes the GM is blind to), DETERMINIZED hidden decks per playout, and a big budget spent by SEQUENTIAL HALVING. Beats the GM ~62% head-to-head (throttled bulk budget; stronger in-page). Guildmaster kept as the fast robustness oracle. (Prior v56: developer lane + presence-only-where-delivered.) Bump discards stale v56 state.
+const KEY='hanse-hotseat-v58'; // v1.2: CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1710,6 +1710,10 @@ function aiDeepRollout(){return (GM_DEEP||aiDeepActive)&&aiSimulating;}
 let CELLAR_MS=1500;   // Monte Carlo time budget per decision (ms); 'instant' speed caps it (below)
 let CELLAR_MIN=6;     // minimum playouts each option gets before it can be halved out
 let CELLAR_CAP=8000;  // hard playout cap per decision (safety, however cheap the playouts)
+let CELLAR_ROLL='journeyman';   // rollout policy inside Cellarmaster playouts. The DEEP bias (aiDeepActive →
+   // aiDeepRollout) is tier-agnostic — it makes even a journeyman rollout climb to Q4+ and ENSHRINE — so the
+   // cheap journeyman rollout prices the deep/Hall lane AND buys ~10× the playouts of a trader rollout at the
+   // same budget (lower variance ⇒ stronger, steadier picks). Set 'trader' for the slower, higher-fidelity rollout.
 let aiTimer=null,aiActing=false,aiLoopActive=false,aiChosenWhich='row',aiSimulating=false;
 
 function aiTurn(){return !!(S&&!S.over&&cur()&&cur().ai);}
@@ -2041,7 +2045,7 @@ function aiCellarPlayout(oi,snapS,snapUI,options,meId){
   let m;
   try{
     options[oi]();
-    S.players.forEach(q=>{q.ai={tier:'trader',persona:null,w:null};});   // the COMPETENT rollout policy
+    S.players.forEach(q=>{q.ai={tier:CELLAR_ROLL,persona:null,w:null};});   // the competent rollout policy (deep bias is on via aiDeepActive)
     let g=0;while(!S.over&&g++<30000)aiStep();
     m=aiMCMargin(meId);
   }catch(e){m=aiMCMargin(meId)-5;}   // a crashed playout scores what it has, minus a penalty
@@ -2057,8 +2061,8 @@ function aiCellarMC(p,options){
   const budget=(aiSpeed()==='instant')?Math.min(CELLAR_MS,700):CELLAR_MS;
   aiSimulating=true;aiDeepActive=true;render=function(){};log=function(){};save=function(){};
   const t0=Date.now();let total=0;
+  let surv=options.map((_,i)=>i);
   try{
-    let surv=options.map((_,i)=>i);
     const rounds=Math.max(1,Math.ceil(Math.log2(options.length)));
     for(let r=0;r<rounds&&surv.length>1;r++){
       const sliceEnd=t0+budget*(r+1)/rounds;
@@ -2077,8 +2081,11 @@ function aiCellarMC(p,options){
     S=JSON.parse(snapS);UI=JSON.parse(snapUI);
     render=rr;log=ll;save=sv;aiSimulating=false;aiDeepActive=false;
   }
-  let bi=0,bv=-1e9;stats.forEach((st,i)=>{const v=mean(st);if(v>bv){bv=v;bi=i;}});
-  options[bi]();   // apply the best-mean-margin option for real
+  // pick the best-mean-margin option AMONG THE SURVIVORS (the most-sampled set) — never a lucky,
+  // under-sampled option that was halved out early on 1–2 noisy rollouts.
+  let bi=surv[0],bv=mean(stats[surv[0]]);
+  surv.forEach(i=>{const v=mean(stats[i]);if(v>bv){bv=v;bi=i;}});
+  options[bi]();   // apply the winner for real
 }
 // The option enumerator: a list of zero-arg thunks calling the SAME functions the buttons call.
 // Returns null for prompts left to the trader fallback (line · age · source · convert · end).
