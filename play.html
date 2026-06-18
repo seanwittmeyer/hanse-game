@@ -40,6 +40,8 @@
   @media(max-width:900px){.cols{grid-template-columns:1fr}}
   .panel{background:var(--parch2);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:14px}
   .panel h3{margin:0 0 8px;font-variant:small-caps;color:var(--red);font-size:1.1rem;border-bottom:1px solid var(--line);padding-bottom:4px}
+  .copybtn{float:right;font-family:inherit;font-variant:normal;font-size:.66rem;cursor:pointer;background:var(--ink);color:var(--parch);border:none;border-radius:5px;padding:2px 8px;letter-spacing:.3px}
+  .copybtn:hover{background:var(--red2)}
   /* GRID */
   .agwrap{display:flex;justify-content:center}
   .ag{display:grid;width:100%;max-width:600px;margin:0 auto;
@@ -331,7 +333,7 @@
     <div>
       <div class="panel"><h3>Market</h3><div class="shop" id="shop"></div></div>
       <div class="panel"><h3>The Voyage <span class="note">(end clock)</span></h3><div id="voyage"></div></div>
-      <div class="panel"><h3>Log</h3><div id="log"></div></div>
+      <div class="panel"><h3>Log <button class="copybtn" onclick="copyDiag(this)" data-tip="Copy the game log + full diagnostic state (turn, UI, AI runtime, board, raw JSON) to the clipboard.">⧉ Copy log + diagnostics</button></h3><div id="log"></div></div>
       <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
     </div>
   </div>
@@ -1454,6 +1456,73 @@ function openStudio(){
 function closeStudio(){document.getElementById('studio').classList.add('hidden');}
 function studioPlainLog(){return S.log.slice().reverse()
   .map(l=>l.replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim()).filter(x=>x);}
+// ---- COPY LOG + DIAGNOSTICS (bug reports — esp. a stuck AI turn) ----
+function safeJson(o){try{return JSON.stringify(o);}catch(e){return '[unserializable: '+(e&&e.message||e)+']';}}
+function diagText(){
+  const L=[];
+  L.push('=== Brewhouses of the Hanse — diagnostic ===');
+  L.push('build: '+(typeof APP_VERSION!=='undefined'?APP_VERSION:'?')+'  ·  save KEY: '+(typeof KEY!=='undefined'?KEY:'?'));
+  L.push('captured: '+new Date().toISOString());
+  if(!S){L.push('(no game in progress)');return L.join('\n');}
+  try{
+    const ac=cur();
+    L.push('players: '+S.players.length+'  ·  round/turn: '+S.turn+'  ·  first seat: '+((S.players[S.first]||{}).name||S.first));
+    L.push('Sailed-Ships: '+S.sailed+'/'+S.sailedCap+'  ·  ending: '+!!S.ending+'  ·  over: '+!!S.over);
+    L.push('ACTIVE seat: '+(ac?ac.name:'?')+(ac&&ac.ai?(' ['+aiLabel(ac)+' AI]'):' [human]'));
+    L.push('UI.sub: '+UI.sub+(UI.stage?('  ·  UI.stage: '+UI.stage):''));
+    // AI runtime flags — the key signal for a stuck/hung turn
+    const f=[];
+    try{f.push('aiTurn='+aiTurn());}catch(e){}
+    if(typeof aiLoopActive!=='undefined')f.push('aiLoopActive='+aiLoopActive);
+    if(typeof aiTimer!=='undefined')f.push('aiTimer='+(aiTimer?'pending':'null'));
+    if(typeof aiActing!=='undefined')f.push('aiActing='+aiActing);
+    if(typeof aiSimulating!=='undefined')f.push('aiSimulating='+aiSimulating);
+    if(typeof GUILD_MS!=='undefined')f.push('GUILD_MS='+GUILD_MS);
+    try{f.push('aiSpeed='+aiSpeed());}catch(e){}
+    L.push('AI runtime: '+f.join('  ·  '));
+    const uiBits={};['stage','line','floorQueue','deploy','load','stops','reach','age','src','brew','pendingBenefits','pendingGoods','pendingReach','pendingRecipe','tmp'].forEach(k=>{if(UI[k]!==undefined)uiBits[k]=UI[k];});
+    L.push('UI detail: '+safeJson(uiBits));
+    L.push('');L.push('--- players ---');
+    S.players.forEach(p=>{
+      const ves=p.vessels.map(c=>c?(styleShort(c.style)+' '+c.step+'/'+c.ready):'·').join(' | ');
+      const del={};(p.delivered||[]).forEach(d=>{del[d.dest]=(del[d.dest]||0)+1;});
+      L.push((p.id===S.active?'▶ ':'  ')+p.name+(p.ai?(' ('+aiLabel(p)+' AI)'):' (human)')
+        +' — cell '+(p.cell||'-')+(p.placed?'':' UNPLACED')
+        +' · G'+p.grain+' H'+p.hops
+        +' · vessels['+ves+']'
+        +' · recipes:'+(p.recipes||[]).join(',')
+        +' · contracts:'+p.contracts
+        +' · hand:['+(p.hand||[]).map(bName).join(',')+']'
+        +' · delivered:'+JSON.stringify(del)
+        +' · wharfage:'+(p.wharfage||0));
+    });
+    L.push('');L.push('--- slots (building + occupant) ---');
+    SLOTS.forEach(s=>{const t=S.slots[s.id];const b=bAt(s.id);
+      let d='  '+s.id+': '+(b?('BLDG '+bName(b.b)+' ('+(S.players[b.owner]||{}).name+')'):'—');
+      if(t)d+=' + '+(t.type==='cask'
+        ?('CASK '+styleShort(t.style)+' Q'+t.q+' '+caskAct(t)+' ['+(S.players[t.owner]||{}).name+']')
+        :('SHIP '+shipName(t)+'→'+DEST[t.dest].name+' '+t.load.length+'/'+effCap(t)));
+      L.push(d);});
+    L.push('');L.push('--- market ---');
+    L.push('  build display: '+(S.buildDisplay||[]).map(bName).join(', ')+'  (deck left: '+((S.buildDeck||[]).length)+')');
+    L.push('  ship market: '+(S.shipDisplay||[]).map(t=>shipName(t)+'→'+DEST[t.dest].name).join(', ')+'  (deck left: '+((S.shipDeck||[]).length)+')');
+    L.push('  exports this game: '+(S.exports||[]).map(e=>STYLES[e].name).join(', '));
+  }catch(e){L.push('[diag build error: '+(e&&e.message||e)+']');}
+  L.push('');L.push('--- log (oldest → newest) ---');
+  try{studioPlainLog().forEach(l=>L.push(l));}catch(e){L.push('[log error: '+(e&&e.message||e)+']');}
+  L.push('');L.push('--- raw state for repro ---');
+  L.push('UI = '+safeJson(UI));
+  L.push('S = '+safeJson(S));
+  return L.join('\n');
+}
+function copyDiag(btn){
+  const txt=diagText();
+  const ok=()=>{if(btn){const o=btn.textContent;btn.textContent='✓ Copied';setTimeout(()=>{btn.textContent=o;},1500);}};
+  const fail=()=>copyFallback(txt,ok);
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(ok,fail);
+  else fail();
+}
+function copyFallback(txt,ok){try{const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.top='-9999px';document.body.appendChild(ta);ta.focus();ta.select();document.execCommand('copy');document.body.removeChild(ta);ok&&ok();}catch(e){alert('Copy failed — open the console and copy diagText() output.');}}
 function studioPayload(){
   const {rows,cmp}=finalRows();const win=rows[0];
   if(!S.sessionId)S.sessionId=newSessionId();   // resumed pre-v26 saves
