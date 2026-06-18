@@ -48,8 +48,10 @@
     gap:clamp(4px,1.4vw,7px);
     grid-template-columns:repeat(4,1fr)}
   .cell,.slot{aspect-ratio:1}
-  /* stations are containers too, so their contents scale in cqmin exactly like the slot tiles */
-  .cell{border-radius:12px;padding:7cqmin;color:var(--parch);position:relative;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 3px 9px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14);overflow:hidden;container-type:size}
+  /* stations are containers; their content sits in an absolute full-bleed .stn layer (like a slot's .ptile),
+     so it scales in cqmin and never collapses under size containment */
+  .cell{border-radius:12px;color:var(--parch);position:relative;box-shadow:0 3px 9px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14);overflow:hidden;container-type:size}
+  .cell .stn{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:7cqmin}
   .cell .head{display:flex;flex-direction:column;align-items:flex-start;gap:3cqmin}
   .cell .bigic .ic,.cell .bigic svg{width:30cqmin;height:30cqmin;stroke-width:1.6}
   .cell .head>div{min-width:0;max-width:100%}
@@ -2337,9 +2339,11 @@ function renderGrid(){
     if(legal)cls+=' legal';
     const yields=(STATION_ACTS[act]||YIELD[act]||[]).map(n=>LU(n)).join('');
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'>'
+      +'<div class="stn">'
       +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="role">'+CELLROLE[c]+'</div><div class="nm">'+act+'</div></div></div>'
       +'<div class="yield">'+yields+'</div>'
-      +'<div class="wk">'+pawns+'</div></div>';
+      +'<div class="wk">'+pawns+'</div>'
+      +'</div></div>';
   });
   ag.innerHTML=h;
 }
