@@ -150,6 +150,59 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
+**v1.1 SESSION STATE — what shipped + playtest feedback + next steps** *(2026-06-18, `play.html` KEY v50→v55)**
+This session implemented the v1.1 differentiation pass (Stage 1) and several fixes/reverts, then a real
+2-player table test surfaced the dominant problem to solve next. **Read this before resuming.**
+
+- **SHIPPED to `main` (live, KEY v55):**
+  - *The Floor (v50)* — fixed to run **in lieu of** the public line, not in addition (run every vessel cask's
+    action instead of the contested line; no toll).
+  - *Building economy (v51)* — buildings are gained **to hand**, **placed at the Market**, and **placement
+    over an existing building REPLACES it** (the displaced tile returns to its owner's hand; slots never lock).
+  - *Tune (v49) + Flight (v52)* — Hall trimmed 4/6/8/10 → **3/5/7/9**; the **Flight counts distinct BEERS**
+    (not quality tiers — there are always 5 beer types, so the 5-beer flight is always reachable).
+  - *5-player support REMOVED* — the game is **2–4p** (UI, docs, sim/ladder defaults all 2–4p).
+  - *Default seats* — names Sean/Olli/Adaline/Jillian; **seats 2 & 3 default to Guildmaster AI**.
+  - *Building tiles render as FULL tiles* (not a corner icon) + a tap-free **"Buildings on the Wharf"** panel +
+    a **target glyph** (cask/ship/line/owner) — the first pass at the legibility problem (still insufficient — see below).
+  - *Stage 1 differentiation (v53)* — the four kontor identities + beer niches **as in the entry below**, EXCEPT:
+    **London is to-hand, NOT "on arrival"** (on-arrival would re-open the board-fill the to-hand throttle just
+    closed). **Novgorod's benefit is now `age` (refine a maturing cask +1), NOT `recipe`** (v54 — the arc showed
+    the free recipe was redundant: players buy recipes cheap by ~R8, before they can reach Novgorod's Q3 gate).
+  - *Auto-aging* — tried REMOVED (v54), then **REVERTED (v55)** — see feedback below.
+
+- **THE DOMINANT FEEDBACK (next session's #1 priority): the game is hard to learn and `play.html` LACKS THE
+  DATA A PLAYER NEEDS TO PLAY.** Too much to track, not enough surfaced on-screen. This is now the top problem
+  — *no more mechanics until the UI/onboarding gives players the information to make decisions.* (The full-tile
+  buildings + the Buildings panel + target glyphs were a start; insufficient.) Likely work: a clear turn/legal-
+  action surface, per-player "what can I do / what do I have" at a glance, the goods economy and the maturation
+  state made obvious, a guided first-game/onboarding, and the player aid pulled into the live flow.
+
+- **Arc analysis (`playtests/gm-arc.js`, v53/v54):** the **Trader climbs eagerly** (full recipe set ~R8, Q5 ~40%)
+  but the **Guildmaster oracle stays CHEAP** (~1.3 recipes, Q5 7–27%, climbs late/rarely) — cheap-volume is
+  optimal-flexible; **the quality climb is a committed, high-variance lane, not the default** (so the Stage-1
+  persona "quality lanes hot" was largely a *forced-persona artifact*, and we did **not** trim quality rewards).
+  Buildings are authored **before** the recipe set fills (R1–4 vs R8–16) — healthy.
+
+- **The goods squeeze (from the 2p table test):** income ≈ 2/turn (a Market source) vs Mumme 4 / Bock 5 / ship 2
+  / charter 2 → **hand-to-mouth**; a high-Q plan can **starve and strand** (a 2nd Mumme was still maturing when
+  the short 2p clock — 7 voyages — ended the game). Auto-aging removal made this worse (it stole the income turns)
+  → reverted. **Open levers (decide with intent, sim first):** (a) *fund-the-climb legibility* — teach/strengthen
+  the **Gruit + Bruges/Bergen goods loop** that funds high-Q (lean teaching before buffing income); (b) **2p
+  runway** — `SAILED_CAP[2]` 7 → 8–9, or accept 2p as the fast/cheap variant.
+
+- **STILL OPEN / queued (after the UI work):**
+  1. **Trade-factor presence CAP (Stage 2)** — the finite-barrel cap, *personal-cap-only* (entry below). Reassess
+     magnitude now that auto-aging is back and the climb self-limits.
+  2. The **goods/income** + **2p clock** levers above.
+  3. *"Is the quality climb meant to be the default or a committed option?"* — design-intent question (Trader says
+     default, oracle says committed). If "worth it for all," make the climb cheaper/faster, not richer.
+  4. Optional: revive **Keut set-collection** (casks are type-tiles → a 3-space strip tracks the count).
+
+- **Physical-tracking model** is recorded in `COMPONENTS.md §2` (casks = type-tiles + an owner barrel that
+  becomes kontor presence = the trade-factor cap; the kettle display; per-vessel maturation marker; the Flight
+  strip; score-on-delivery). No hidden state.
+
 **v1.1 (IN DESIGN — the differentiation pass)** *(2026-06-17)* — Design review (the designer's read):
 with steerable brew piles, beers now differ **only by quality + cost-mix**, so the two Q3s
 (Broyhan/Keut) are interchangeable and London/Novgorod collapse into "a building + a similar
