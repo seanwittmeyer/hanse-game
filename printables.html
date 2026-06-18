@@ -72,8 +72,8 @@
   .gen.tg .g-head .bigic{position:absolute;right:.1in;bottom:.08in}
   .gen.tg .g-head .bigic svg,.gen.tg .g-head .bigic .ic{width:.34in;height:.34in;opacity:.9}
   /* ====== cask PERK strip (e.g. Keut +1 presence) — printed above the cost ====== */
-  .t-perk{font-size:.085in;font-style:italic;line-height:1.05;margin-bottom:.025in;opacity:.96;display:flex;align-items:center;gap:.03in}
-  .t-perk svg,.t-perk .ic{width:.11in;height:.11in;flex:0 0 auto}
+  .t-perk{position:absolute;top:.07in;right:.08in;text-align:right;font-size:.082in;font-style:italic;line-height:1.08;opacity:.96}
+  .t-perk svg,.t-perk .ic{width:.1in;height:.1in;vertical-align:-.012in}
   /* ====== BUILDING tiles (v1.0 keystone — owned slot modifiers) ====== */
   .tile.bld{justify-content:flex-start;text-shadow:0 1px 1px rgba(0,0,0,.4)}
   .bld .b-top{display:flex;align-items:center;gap:.05in}
@@ -343,7 +343,7 @@ const CASKS=[
   {nm:'Gruit',   c:'#8a949c', q:1, g:1,h:0, n:16, ready:1, pin:CASK_POOL[0]},
   {nm:'Hopped',  c:'#c2922f', q:2, g:1,h:1, n:20, ready:1},
   {nm:'Broyhan', c:'#b06a34', q:3, g:1,h:2, n:6,  ready:1},
-  {nm:'Keut',    c:'#9c5f2e', q:3, g:2,h:1, n:6,  ready:2, tag:'+1 '+LU('map-pin')+' presence'},
+  {nm:'Keut',    c:'#9c5f2e', q:3, g:2,h:1, n:6,  ready:2, tag:'+1 '+LU('map-pin')+'<br>presence'},
   {nm:'Mumme',   c:'#caa12a', q:4, g:2,h:2, n:8,  ready:3, wild:true},
   {nm:'Bock',    c:'#7c2128', q:5, g:3,h:2, n:4,  ready:3, wild:true},
 ];
