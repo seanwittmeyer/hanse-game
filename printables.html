@@ -434,7 +434,11 @@
 //==================================================================
 // DATA — mirrors play.html (the canonical engine) & COMPONENTS.md
 //==================================================================
-const LU=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
+// DEPLOY reads as a barrel (a cask set down) — lucide has no barrel, so emit an inline SVG in lucide's stroke style.
+const BARREL_PATHS='<path d="M7 3h10C20 6 20 18 17 21H7C4 18 4 6 7 3Z"/><path d="M5 9h14"/><path d="M5 15h14"/>';
+const LU=(n,cls)=>n==='barrel'
+  ? '<svg class="'+(cls||'ic')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+BARREL_PATHS+'</svg>'
+  : '<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc">'+LU('sprout','h')+h+'</span>');return a.join('');};
 const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · victory-point icon
 
@@ -643,7 +647,7 @@ function aidFront(){
       +'<div class="acol">'
         +'<h5>'+LU('anchor')+'The Four Stations</h5>'
         +'<div class="ln">'+LU('store')+' <b>Market</b> — 2 goods, <i>or</i> 1: recipe · Building (+place) · ship '+LU('sailboat')+' ('+G+'2) · contract '+LU('ticket')+' ('+G+'1) · improvement '+LU('wrench')+'.</div>'
-        +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — Brew a recipe into an open vessel; or <b>Deploy</b> a Ready cask.</div>'
+        +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — Brew a recipe into an open vessel; or '+LU('barrel')+' <b>Deploy</b> a Ready cask.</div>'
         +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — 3 age points across your vessels; or <b>Tap</b> a cask.</div>'
         +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — Load onto a ship (<b>sails when full</b>); <b>Enshrine</b> a Q2+ slot cask; or <b>Charter</b>.</div>'
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
@@ -778,11 +782,12 @@ function station(L,nm,ic,yield_){return '<div class="stn '+L+'" style="grid-area
 function mboard(){
   const slot='<div class="wslot"></div>';
   const OR='<span class="sep">/</span>';
+  const AND='<span class="sep">+</span>';   // brew AND deploy (both happen), vs OR alternatives
   const wharf='<div class="wharf">'
     +'<div></div>'+slot+slot+'<div></div>'
     +slot
     +station('A','Market','store','<b>2</b>'+LU('coins')+OR+LU('scroll-text')+OR+LU('building-2')+OR+LU('sailboat'))
-    +station('B','Brewhouse','flask-conical',LU('beer'))
+    +station('B','Brewhouse','flask-conical',LU('beer')+AND+LU('barrel'))
     +slot+slot
     +station('C','Harbor','ship',LU('package-plus')+OR+LU('crown')+OR+LU('ticket'))
     +station('D','Cellar','hourglass','<b>3</b>'+LU('hourglass')+OR+LU('wrench'))
