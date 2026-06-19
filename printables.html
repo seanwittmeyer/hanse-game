@@ -86,6 +86,12 @@
   .bld .b-tgt{display:inline-flex;align-items:center;justify-content:center;width:.24in;height:.24in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
   .bld .b-tgt svg,.bld .b-tgt .ic{width:.14in;height:.14in;color:#23201c;stroke-width:2}
   .bld .b-foot .gc{margin-left:auto;font-size:.13in} .bld .b-foot .gc svg,.bld .b-foot .gc .ic{width:.14in;height:.14in}
+  /* BUILDING BACK — the displaced/flipped face (Wild + developer ★); parks in an improvement slot */
+  .tile.bback{justify-content:center;align-items:center;text-align:center;gap:.05in}
+  .tile.bback .bb-ic svg,.tile.bback .bb-ic .ic{width:.42in;height:.42in;opacity:.95}
+  .tile.bback .bb-v{display:flex;align-items:center;gap:.03in;font-weight:900;font-size:.36in;line-height:1}
+  .tile.bback .bb-v svg,.tile.bback .bb-v .ic{width:.28in;height:.28in;color:#ffd24a}
+  .tile.bback .bb-l{font-variant:small-caps;font-size:.1in;opacity:.85;letter-spacing:.3px}
   /* ship NUMBERED BERTHS — pinned to the BOTTOM with the quality gate */
   .ts .berths{display:flex;align-items:center;justify-content:center;gap:.04in}
   .ts .berths .bn{width:.235in;height:.235in;border:1.3px solid rgba(255,255,255,.9);border-radius:.03in;
@@ -187,7 +193,7 @@
   .pb-store{flex:0 0 auto;display:flex;flex-direction:column;gap:.04in;justify-content:center}
   .pb-store .slbl{font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--pc);display:flex;align-items:center;gap:.04in}
   .pb-store .slbl svg,.pb-store .slbl .ic{width:.14in;height:.14in}
-  .szone{width:2.7in;height:.8in;border:1.6px solid var(--pc);border-radius:.07in;background:rgba(255,255,255,.45);
+  .szone{width:3.5in;height:.8in;border:1.6px solid var(--pc);border-radius:.07in;background:rgba(255,255,255,.45);
     display:flex;align-items:center;justify-content:center;gap:.14in;color:var(--pc)}
   .szone .si{display:inline-flex;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.135in}
   .szone .si svg,.szone .si .ic{width:.22in;height:.22in}
@@ -198,33 +204,39 @@
     border-bottom:1px solid var(--pc);padding-bottom:.015in;margin-bottom:.05in}
   .pb-sect svg,.pb-sect .ic{width:.15in;height:.15in}
   .pb-sect .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.088in;color:var(--ink2);margin-left:auto}
-  /* --- THE FLOOR: vessels (left) + improvements (right) in one line; aging tracks under the vessels --- */
+  /* --- THE FLOOR: ONE line of 3 vessels + 4 improvement slots; maturation tracks under the vessels --- */
   .floor{flex:0 0 auto}
-  .floor-row{display:flex;align-items:flex-start;justify-content:space-between;gap:.16in}
+  .floor-row{display:flex;align-items:flex-start;gap:.14in}
+  .fgrp{display:flex;flex-direction:column}
   .grp-lbl{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--pc);display:flex;align-items:center;gap:.04in;margin-bottom:.05in}
   .grp-lbl svg,.grp-lbl .ic{width:.13in;height:.13in}
-  .grp-lbl .nn{font-variant:normal;font-weight:normal;font-style:italic;opacity:.8}
-  .vgroup,.igroup{display:flex;gap:.13in}
-  .vcol{display:flex;flex-direction:column;gap:.05in;width:1.25in}
+  .grp-lbl .nn{font-variant:normal;font-weight:normal;font-style:italic;opacity:.8;margin-left:.05in}
+  .vgroup,.igroup{display:flex;gap:.1in}
+  .vcol{display:flex;flex-direction:column;align-items:center;width:1.25in}
   .vsq{width:1.25in;height:1.25in;border:1.6px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.5);position:relative;
     display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.092in;text-align:center;gap:.02in}
   .vsq svg,.vsq .ic{width:.32in;height:.32in;opacity:.42}
   .vsq .vn{position:absolute;top:.05in;left:.07in;font-variant:small-caps;font-weight:bold;font-size:.092in;opacity:.7}
   .vsq .lk{font-style:italic;font-size:.082in;color:var(--ink2)}
+  /* forward-flow arrow between the vessel square and its maturation track (you move RIGHT to Ready) */
+  .vflow{width:1.25in;height:.14in;display:flex;align-items:center;justify-content:center;color:var(--pc)}
+  .vflow svg,.vflow .ic{width:.17in;height:.13in;stroke-width:2.4}
+  /* maturation track: a beer STARTS on the space bearing its name, then advances RIGHT to READY (the last space) */
   .mtrack{display:flex;border:1.3px solid var(--pc);border-radius:.04in;overflow:hidden;width:1.25in}
-  .mtrack .ms{flex:1;height:.36in;border-right:1px solid rgba(0,0,0,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;
-    font-size:.12in;font-weight:900;color:var(--ink2);background:rgba(255,255,255,.5);line-height:1}
+  .mtrack .ms{flex:1;height:.52in;border-right:1px solid rgba(0,0,0,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:.014in;padding:.012in;background:rgba(255,255,255,.5);text-align:center}
   .mtrack .ms:last-child{border-right:none}
-  .mtrack .ms .ml{font-size:.06in;font-weight:normal;font-variant:small-caps;opacity:.8}
-  .mtrack .ms.fin{background:rgba(74,107,58,.22);color:var(--pc)}
-  .vcol.locked .vsq,.vcol.locked .mtrack .ms{border-style:dashed;color:rgba(0,0,0,.3);
-    background:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 .08in,transparent .08in .16in)}
-  /* improvement slots — private upgrades = violet, tile-true 1.25in squares */
+  .mtrack .ms .bn{font-variant:small-caps;font-weight:bold;font-size:.057in;line-height:1.05;color:var(--ink)}
+  .mtrack .ms.fin{background:rgba(74,107,58,.24)}
+  .mtrack .ms.fin .rdy{font-variant:small-caps;font-weight:900;font-size:.086in;color:var(--pc);line-height:1}
+  .mtrack .ms.fin .rsub{font-variant:small-caps;font-size:.054in;color:var(--pc);opacity:.85;line-height:1}
+  .vcol.locked .vsq,.vcol.locked .mtrack .ms{border-style:dashed;background:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 .08in,transparent .08in .16in)}
+  .vcol.locked .vsq,.vcol.locked .vsq .ic,.vcol.locked .mtrack .ms .bn,.vcol.locked .mtrack .ms .rdy,.vcol.locked .mtrack .ms .rsub{color:rgba(0,0,0,.3)}
+  .vcol.locked .vflow{opacity:.35}
+  /* improvement slots — host bought improvements (violet) AND displaced/flipped Buildings; tile-true 1.25in squares */
   .isq{width:1.25in;height:1.25in;border:1.5px dashed var(--violet);border-radius:.06in;background:rgba(91,58,142,.07);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;color:var(--violet);font-size:.092in;text-align:center}
-  .isq svg,.isq .ic{width:.32in;height:.32in;opacity:.6}
-  .ready-leg{font-size:.084in;color:var(--ink2);margin-top:.07in;display:flex;align-items:center;gap:.02in .14in;flex-wrap:wrap;line-height:1.1}
-  .ready-leg b{color:var(--pc)}
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;color:var(--violet);font-size:.088in;text-align:center}
+  .isq svg,.isq .ic{width:.3in;height:.3in;opacity:.6}
   /* --- THE FLIGHT: one space per beer type; mark each beer you deliver --- */
   .flight{flex:0 0 auto}
   .flight-row{display:flex;gap:.08in}
@@ -452,6 +464,7 @@ const BUILDINGS=[
 ];
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 const WHARFAGE=1;        // owner's points cut when a rival routes through their building (+1 with Almoner's Stall)
+const DEVELOP_PTS=3;     // v1.2 developer ★: a Building a RIVAL overbuilt returns flipped to its Wild+★ back, worth this at game end
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
 // Market (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
 const IMPROVE=[   // Upgrades / private improvements = PURPLE
@@ -523,6 +536,12 @@ function buildingTile(d){const tg=BTGT[d.tgt];const c='#3f5c30';   /* Buildings 
   +'<div class="b-nm">'+d.nm+'</div>'
   +'<div class="b-eff">'+d.eff+'</div>'
   +'<div class="b-foot"><span class="b-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span>'+cost(d.g,0)+'</div></div>';}
+// BUILDING BACK (v1.6) — the flipped face: when a RIVAL overbuilds your Building it returns to you flipped to
+// this WILD + developer ★ side and parks in an improvement slot (scores +3★ at game end). One per Building tile.
+function buildingBack(){return '<div class="tile bback" style="--c:#43504a">'
+  +'<div class="bb-ic">'+LU('sparkles')+'</div>'
+  +'<div class="bb-v">+'+DEVELOP_PTS+LU('star')+'</div>'
+  +'<div class="bb-l">displaced Building</div></div>';}
 // NEUTRAL destination-bound ship tile (v0.11): hull + capacity · printed destination + quality gate · commission 2 G
 function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
   let berths='';for(let i=1;i<=cap;i++)berths+='<div class="bn">'+i+'</div>';   // numbered load-order berths (v0.16)
@@ -634,19 +653,24 @@ function aidBack(){
 // A pure TRACKING surface: header + storage zone · THE FLOOR (3 vessel squares + maturation tracks + 3
 // improvement squares) · THE FLIGHT (one space per beer) · a bottom RECIPE RACK (Gruit/Hopped printed as
 // card-edge strips + tuck slots for export recipe cards). No rules text — those live on the player-aid card.
-const MTRACK=[['0','brew'],['1',''],['2',''],['3','ship ▸']];   // maturation steps; a small marker climbs as a cask ages (Ready depends on the beer — see the legend)
+// maturation START spaces, by how many ages the beer needs (3 · 2 · 1 steps): place your aging marker on the
+// space bearing your beer's name, then advance RIGHT one space per age — READY is always the last space.
+const MSTART=[['Mumme','Bock'],['Keut'],['Gruit','Hopped','Broyhan']];
+function mtrackCells(){
+  let c=MSTART.map(names=>'<div class="ms">'+names.map(n=>'<span class="bn">'+n+'</span>').join('')+'</div>').join('');
+  return c+'<div class="ms fin"><span class="rdy">Ready</span><span class="rsub">ship ▸</span></div>';}
 function vcol(n,locked){
-  let ms='';MTRACK.forEach((s,i)=>ms+='<div class="ms'+(i===MTRACK.length-1?' fin':'')+'">'+s[0]+(s[1]?'<span class="ml">'+s[1]+'</span>':'')+'</div>');
   return '<div class="vcol'+(locked?' locked':'')+'">'
     +'<div class="vsq"><span class="vn">Vessel '+n+'</span>'+LU('beer')+(locked?'<span class="lk">+ Extra Vessel</span>':'<span>cask</span>')+'</div>'
-    +'<div class="mtrack">'+ms+'</div></div>';}
+    +'<div class="vflow">'+LU('arrow-right')+'</div>'
+    +'<div class="mtrack">'+mtrackCells()+'</div></div>';}
 function rkPrinted(cc,L,nm,g,h){   // a clone of a recipe card's bottom "c-strip" (the edge that shows when tucked)
   return '<div class="rk printed" style="--cc:'+cc+'">'
     +'<div class="c-row"><span class="c-rung">'+LU(QI)+L+'</span><span class="c-nm">'+nm+'</span></div>'
     +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(g,h)+'</span></div></div>';}
 function pboard(p){
   const vessels=vcol(1,false)+vcol(2,false)+vcol(3,true);   // V1·V2 open, V3 earned with Extra Vessel
-  let imps='';for(let i=0;i<3;i++)imps+='<div class="isq">'+LU('wrench')+'improvement</div>';
+  let imps='';for(let i=0;i<4;i++)imps+='<div class="isq">'+LU('wrench')+'improvement</div>';
   // THE FLIGHT — Gruit + Hopped (always) + the 4 possible exports (3 dealt each game; the 4th space stays empty)
   const flightBeers=[['Gruit','Q1',0],['Hopped','Q2',0],['Broyhan','Q3',1],['Keut','Q3',1],['Mumme','Q4',1],['Bock','Q5',1]];
   const flight=flightBeers.map(b=>'<div class="fbeer'+(b[2]?' exp':'')+'"><span class="fdot"></span>'
@@ -664,10 +688,9 @@ function pboard(p){
     +'</div>'
     +'<div class="floor"><div class="pb-sect">'+LU('home')+'The Floor<span class="sm">your vessels &amp; improvements — your private line</span></div>'
       +'<div class="floor-row">'
-        +'<div><div class="grp-lbl">'+LU('flask-conical')+'Vessels &amp; Maturation</div>'
-          +'<div class="vgroup">'+vessels+'</div>'
-          +'<div class="ready-leg"><b>Ready:</b><span>1 — Gruit · Hopped · Broyhan</span><span>2 — Keut</span><span>3 — Mumme · Bock</span></div></div>'
-        +'<div><div class="grp-lbl">'+LU('wrench')+'Improvements <span class="nn">(max 3)</span></div>'
+        +'<div class="fgrp"><div class="grp-lbl">'+LU('flask-conical')+'Vessels &amp; Maturation</div>'
+          +'<div class="vgroup">'+vessels+'</div></div>'
+        +'<div class="fgrp"><div class="grp-lbl">'+LU('wrench')+'Improvements<span class="nn">+ displaced Buildings</span></div>'
           +'<div class="igroup">'+imps+'</div></div>'
       +'</div></div>'
     +'<div class="flight"><div class="pb-sect">'+LU('layers')+'The Flight<span class="sm">mark each beer you deliver · 3 of 4 exports in play</span></div>'
@@ -814,6 +837,9 @@ function buildPages(){
   BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push([d.verb==='value'?'Value Buildings':'Transform Buildings',buildingTile(d)]);});
   // private brewery IMPROVEMENTS — bought for goods (cost badge shown)
   IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push(['Improvements',genTile(d,'tu')]);});
+  // BUILDING BACKS — the flipped Wild+★ developer face, one per Building tile (mount on a Building's reverse)
+  const backsTotal=BUILDINGS.reduce((a,b)=>a+b.n,0);
+  for(let i=0;i<cnt(backsTotal);i++)tiles.push(['Building backs',buildingBack()]);
   // group page-assignment by family for the checklist, but pack as ONE run
   packRun(pages,'tiles','Tiles — unbroken 1.25″ grid','tile',tiles.map(t=>t[1]),null,famPages);
   // re-walk to tag families by index
@@ -857,7 +883,8 @@ function checklist(pages,famPages){
   const bVal=BUILDINGS.filter(b=>b.verb==='value'), bTr=BUILDINGS.filter(b=>b.verb==='transform');
   const bValN=bVal.reduce((a,b)=>a+b.n,0), bTrN=bTr.reduce((a,b)=>a+b.n,0);
   const impN=IMPROVE.reduce((a,d)=>a+d.n,0);
-  const tileTotal=caskTotal+SHIP_DECK.length+bValN+bTrN+impN;
+  const backsN=bValN+bTrN;
+  const tileTotal=caskTotal+SHIP_DECK.length+bValN+bTrN+impN+backsN;
   const row=(bx,nm,n,note)=>'<tr>'+(bx?'<td class="bx"></td>':'<td></td>')+'<td>'+nm+'</td><td class="n">'+n+'</td><td>'+(note||'')+'</td></tr>';
   const bp=pages.filter(p=>p.section==='boards');
   const pbRef=bp.length>3?'S'+bp[2].no+'–S'+bp[bp.length-1].no:'S'+bp[2].no+' (proof: 1 of '+PLAYERS.length+' shown)';
@@ -883,6 +910,8 @@ function checklist(pages,famPages){
     +row(0,'<i>'+bTr.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ')+'</i>','','')
     +row(1,'Private improvements ('+IMPROVE.length+' designs — bought for goods)',impN,pgRef(pages,famPages,'Improvements'))
     +row(0,'<i>'+IMPROVE.map(d=>d.nm+' ×'+d.n).join(' · ')+'</i>','','')
+    +row(1,'<b>Building backs</b> — the flipped Wild + '+DEVELOP_PTS+'★ developer face (1 per Building tile)',backsN,pgRef(pages,famPages,'Building backs'))
+    +row(0,'<i>mount on the REVERSE of each Building (identical — any back fits any front); replaces the separate developer chits</i>','','')
     +'<tr class="tot"><td></td><td>Tile total</td><td class="n">'+tileTotal+'</td><td></td></tr></table>';
   const aidNo=pages.filter(p=>p.section==='cards'&&p.label.indexOf('Player aid')===0).map(p=>p.no).sort((a,b)=>a-b);
   h+='<table><tr><th></th><th>Cards (cardstock, do NOT mount)</th><th>qty</th><th>sheet</th></tr>'
@@ -902,13 +931,13 @@ function checklist(pages,famPages){
     +row(1,'Brewery markers — vessel maturation (1 per vessel) &amp; the Flight (1 per beer): use small cubes/discs','—','board aids — provide spares')
     +row(1,'<b>Demand dice</b> — standard d6 (provide your own) — the reusable value-bonus carrier: a cask shipped through a value Building rides a die in its berth, pips = the ★ banked on delivery (max 5; returns to the pool)','8','—')
     +row(1,'Quality-boost markers (+1Q) — a small token a cask carries from a Malt Kiln / Hop Yard to delivery','6','—')
-    +row(1,'<b>Developer 3★ chits</b> — placed in your end-game area when a <b>rival overbuilds</b> your Building (it served its purpose; +3★ each at game end; self-displacement pays nothing)','12','—')
+    +row(0,'<i><b>Developer ★</b> is now the <b>back</b> of each Building tile (Wild + '+DEVELOP_PTS+'★) — see Building backs above; no separate chits</i>','—','—')
     +'</table>';
   h+='<div class="wf"><b>Prototype workflow.</b> 1) <b>Print to PDF</b> — the whole view, or a 🖨 button for a one-sheet PDF. In the print dialog: Save as PDF · scale 100% · margins default · <b>“Background graphics” ON</b>. Place in Affinity Publisher (passthrough renders exactly) and print at 100% (verify the 3″ bar). '
     +'2) Spray-glue the art sheets to chipboard. 3) <b>Cut on the printed guides</b> — the cut lines &amp; registration marks print with the art; cut the lines by hand or paper cutter. (Toggle the <b>CUT layer</b> first to print a guide-only sheet if you want a separate cutting template.) '
     +'<b>Card sheets:</b> print on cardstock and cut with a paper cutter; no mounting (recipe cards tuck under the brewery board). The <b>Player aid</b> is a <b>double-sided</b> card — print its FRONT &amp; BACK sheets duplex (flip on the SHORT edge keeps the back upright; the cards are identical &amp; symmetric so the two sides register either way). '
     +'Tiles &amp; cards are gapless grids — every internal line is drawn once. Tokens cut on the inner circle; the ring outside is bleed. '
-    +'Backs are bare chipboard (every component is single-faced <b>except the double-sided Player aid</b>; the face-down Building deck &amp; the export-beer deal work by flipping).</div>';
+    +'Backs are bare chipboard, with two double-sided exceptions: the <b>Player aid</b> (duplex) and the <b>Building tiles</b> (mount a Building <b>back</b> — Wild + '+DEVELOP_PTS+'★ — on each Building’s reverse, so an overbuilt Building flips to its developer face). The face-down Building deck &amp; the export-beer deal work by flipping.</div>';
   h+='</div></div>';
   return h;}
 
