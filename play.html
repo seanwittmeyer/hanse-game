@@ -57,10 +57,9 @@
   .cell .head>div{min-width:0;max-width:100%}
   .cell .role{font-size:7cqmin;text-transform:uppercase;letter-spacing:1px;opacity:.82}
   .cell .nm{font-variant:small-caps;font-weight:bold;font-size:13cqmin;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-  .cell .yield{display:flex;gap:3cqmin;align-items:center;margin-top:3cqmin;flex-wrap:wrap}
+  .cell .yield{display:flex;gap:2cqmin;align-items:center;margin-top:3cqmin;flex-wrap:nowrap}
   .cell .yield .ic,.cell .yield svg{width:13cqmin;height:13cqmin;opacity:.95}
-  .cell .yield .yor{opacity:.5;font-weight:300;font-size:13cqmin;align-self:center}   /* OR: "/" between alternatives */
-  .cell .yield .yand{flex:0 0 auto;width:7cqmin}                                        /* AND: a gap between separate actions (no slash) */
+  .cell .yield .yand{opacity:.5;font-weight:400;font-size:11cqmin;align-self:center;flex:0 0 auto;margin:0 0.5cqmin}   /* AND: a "+" between separate actions (OR are just listed) */
   /* v0.7 loop colours: A Market=gold · B Brewhouse=red · C Harbor=sea · D Cellar=green */
   .cell.A{background:linear-gradient(155deg,#cda522,#9c7414);color:#2b2018}
   .cell.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
@@ -2675,7 +2674,7 @@ function renderGrid(){
     if(legal)cls+=' legal';
     const grps=STATION_ACTS[act]||[(YIELD[act]||[])];   // groups: icons within a group are OR (slash); groups are AND (gap)
     const ico=n=>'<span class="iw" data-tip="'+attr(STATION_ICON_TIP[n]||ICONTIP[n]||'')+'"><i data-lucide="'+n+'" class="ic"></i></span>';
-    const yields=grps.map(grp=>grp.map(ico).join('<span class="yor">/</span>')).join('<span class="yand"></span>');
+    const yields=grps.map(grp=>grp.map(ico).join('')).join('<span class="yand">+</span>');
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'>'
       +'<div class="stn">'
       +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="role">'+CELLROLE[c]+'</div><div class="nm">'+act+'</div></div></div>'
