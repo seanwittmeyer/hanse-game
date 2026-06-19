@@ -71,6 +71,15 @@
   .gen .g-act{background:rgba(0,0,0,.22);border-radius:.04in;padding:.04in .055in;font-size:.105in;line-height:1.16;margin-top:.06in;align-self:stretch}
   .gen.tg .g-head .bigic{position:absolute;right:.1in;bottom:.08in}
   .gen.tg .g-head .bigic svg,.gen.tg .g-head .bigic .ic{width:.34in;height:.34in;opacity:.9}
+  /* ====== IMPROVEMENT tiles (private upgrades) — icon + cost on top, name, a short effect box (no overlap) ====== */
+  .tile.imp{justify-content:flex-start;text-shadow:0 1px 1px rgba(0,0,0,.4)}
+  .imp .imp-top{display:flex;align-items:center;justify-content:space-between;gap:.05in}
+  .imp .imp-top .bigic{flex:0 0 auto} .imp .imp-top .bigic svg,.imp .imp-top .bigic .ic{width:.3in;height:.3in;stroke-width:1.7}
+  .imp .imp-cost{font-weight:bold;font-size:.15in;display:inline-flex;align-items:center}
+  .imp .imp-cost .gc{gap:.02in} .imp .imp-cost .gc svg,.imp .imp-cost .gc .ic{width:.17in;height:.17in}
+  .imp .imp-nm{font-variant:small-caps;font-weight:bold;font-size:.135in;line-height:1.04;margin-top:.055in}
+  .imp .imp-act{font-size:.1in;line-height:1.18;margin-top:.05in;background:rgba(0,0,0,.2);border-radius:.05in;padding:.05in .06in;align-self:stretch}
+  .imp .imp-act .ic,.imp .imp-act svg{width:.13in;height:.13in;vertical-align:-.02in}
   /* ====== cask PERK strip (e.g. Keut +1 presence) — printed above the cost ====== */
   .t-perk{position:absolute;top:.06in;right:.08in;text-align:right;font-size:.082in;font-style:italic;line-height:1.08;opacity:.96}
   .t-perk b{font-size:.16in;font-weight:900;font-style:normal}
@@ -468,13 +477,13 @@ const DEVELOP_PTS=3;     // v1.2 developer ★: a Building a RIVAL overbuilt ret
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
 // Market (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
 const IMPROVE=[   // Upgrades / private improvements = PURPLE
-  {ic:'wrench',     nm:'Extra Vessel',   act:'+1 brewing lane (start 2 → cap 3)', g:5, c:'#5b3a8e', n:4},
-  {ic:'wrench',     nm:'Aging Cellar',   act:'maturation −1 step',                g:5, c:'#5b3a8e', n:4},
-  {ic:'badge-plus', nm:'Granary Right',  act:'gain '+LU('wheat','g ic')+' → +1 extra', g:4, c:'#5b3a8e', n:4},
-  {ic:'badge-plus', nm:'Hop Garden',     act:'gain '+LU('sprout','h ic')+' → +1 extra', g:4, c:'#5b3a8e', n:4},
-  {ic:'package-plus',nm:'Harbor Crane',  act:'your Harbor load sets out 2 casks', g:4, c:'#5b3a8e', n:4},
-  {ic:'snowflake',  nm:'Lagering Cellar',act:'each of your turns, +1 age a maturing cask', g:4, c:'#5b3a8e', n:4},
-  {ic:'anchor',     nm:'Private Quay',   act:'load Ready casks straight from vessels', g:5, c:'#5b3a8e', n:4},
+  {ic:'wrench',     nm:'Extra Vessel',   act:'+1 vessel · cap 3', g:5, c:'#5b3a8e', n:4},
+  {ic:'wrench',     nm:'Aging Cellar',   act:'maturation −1 step', g:5, c:'#5b3a8e', n:4},
+  {ic:'badge-plus', nm:'Granary Right',  act:'gain '+LU('wheat','g ic')+' → +1', g:4, c:'#5b3a8e', n:4},
+  {ic:'badge-plus', nm:'Hop Garden',     act:'gain '+LU('sprout','h ic')+' → +1', g:4, c:'#5b3a8e', n:4},
+  {ic:'package-plus',nm:'Harbor Crane',  act:'Harbor loads 2 casks', g:4, c:'#5b3a8e', n:4},
+  {ic:'snowflake',  nm:'Lagering Cellar',act:'+1 age a cask each turn', g:4, c:'#5b3a8e', n:4},
+  {ic:'anchor',     nm:'Private Quay',   act:'ship casks from vessels', g:5, c:'#5b3a8e', n:4},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
@@ -556,6 +565,12 @@ function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--
   +(it.sub?'<div class="g-sub">'+it.sub+'</div>':'')
   +(it.big?'<div class="g-big">'+it.big+'</div>':'')
   +(it.g?'<div class="g-cost">'+cost(it.g,it.h)+'</div>':'')+'</div>';}
+// IMPROVEMENT tile (private upgrade) — icon + cost share a top row, then name, then a short effect box.
+// (Dedicated layout so the cost never collides with a wrapping effect — the old genTile 'tu' did.)
+function improveTile(d){return '<div class="tile imp" style="--c:'+(d.c||'#5b3a8e')+'">'
+  +'<div class="imp-top"><span class="bigic">'+LU(d.ic)+'</span><span class="imp-cost">'+cost(d.g,d.h)+'</span></div>'
+  +'<div class="imp-nm">'+d.nm+'</div>'
+  +'<div class="imp-act">'+d.act+'</div></div>';}
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
 function disc(c){return '<div class="disc" style="--c:'+c+'">'+LU('circle')+'</div>';}
 function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?'<span>'+d.nm+'</span>':'')+'</div>';}
@@ -836,7 +851,7 @@ function buildPages(){
   // BUILDINGS — the one owned family (value + transform); the authored value layer on the living slots
   BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push([d.verb==='value'?'Value Buildings':'Transform Buildings',buildingTile(d)]);});
   // private brewery IMPROVEMENTS — bought for goods (cost badge shown)
-  IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push(['Improvements',genTile(d,'tu')]);});
+  IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push(['Improvements',improveTile(d)]);});
   // BUILDING BACKS — the flipped Wild+★ developer face, one per Building tile (mount on a Building's reverse)
   const backsTotal=BUILDINGS.reduce((a,b)=>a+b.n,0);
   for(let i=0;i<cnt(backsTotal);i++)tiles.push(['Building backs',buildingBack()]);
