@@ -240,6 +240,20 @@
   .tstep{flex:1;height:7px;border-radius:2px;background:rgba(0,0,0,.12)}
   .tstep.on{background:var(--green)}
   .tstep.rdy{background:var(--gold)}
+  /* THE FLOOR — vessels as complete cask tiles (maturation below) beside the 4 improvement/flip slots */
+  .floor{border:1px solid var(--line);border-radius:8px;padding:8px 11px 10px;margin:6px 0 9px;background:var(--parch2)}
+  .floortop{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .floorgrid{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start;margin-top:4px}
+  .fhalf{display:flex;flex-direction:column}
+  .vrow,.irow{display:flex;gap:9px;flex-wrap:wrap;margin-top:5px}
+  .vcell{display:flex;flex-direction:column;gap:3px;width:90px}
+  .vmat{font-size:.66rem;color:var(--ink2);min-height:26px}
+  .vmat .vtrack{margin-top:2px}
+  .mtile.empty{border:1.6px dashed var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--ink2);opacity:.6;background:transparent;box-shadow:none}
+  .mtile.empty .ic,.mtile.empty svg{width:22px;height:22px}
+  .vcell.locked .vmat{opacity:.7}
+  .mtile.flip{outline:2.5px solid var(--gold);outline-offset:-3px}
+  .mtile.flip::after{content:'★';position:absolute;top:3px;right:5px;color:#ffe08a;font-size:12px;z-index:6;font-weight:900;text-shadow:0 1px 2px rgba(0,0,0,.6)}
   .tag{display:inline-block;background:var(--ink);color:var(--parch);border-radius:10px;padding:1px 7px;font-size:.7rem;margin:2px 2px 0 0}
   /* cask drawn-action badge (vessels) */
   .cact{display:inline-flex;align-items:center;gap:2px;font-size:.66rem;background:rgba(0,0,0,.07);border:1px solid var(--line);border-radius:8px;padding:0 5px;text-transform:capitalize;color:var(--ink2)}
@@ -2760,22 +2774,36 @@ function renderTableaus(){
   S.players.forEach((p,i)=>{
     const sc=scorePlayer(p);
     tabs+='<div class="tab '+(i===activeTab?'active':'')+'" style="'+(i===activeTab?'background:'+p.color:'')+'" onclick="activeTab='+i+';renderTableaus();refreshIcons()"><span class="pawn" style="background:'+p.color+';display:inline-block;vertical-align:middle;width:11px;height:11px"></span> '+p.name+' <span style="opacity:.85;font-size:.74rem" data-tip="Total score so far.">★ '+sc.total+'</span>'+(p.ai?' <span style="opacity:.75;font-size:.72rem" data-tip="'+attr(aiLabel(p)+' AI seat — plays by the same rules; tiers differ only in decision quality.')+'">· AI</span>':'')+'</div>';
-    const vessels=p.vessels.map(c=>{
-      if(!c)return '<div class="vessel" style="opacity:.6">'+LU('flask-conical')+' <i>empty vessel</i></div>';
+    // THE FLOOR — vessel cells: each Ready/aging cask as a COMPLETE tile, maturation below; locked 3rd shown dashed
+    const vcells=[];
+    for(let vi=0;vi<3;vi++){
+      if(vi>=p.maxVessels){vcells.push('<div class="vcell locked"><div class="mtile empty" data-tip="'+attr('Locked brewing lane — buy Extra Vessel at the Cellar to open a 3rd vessel.')+'">'+LU('lock')+'</div><div class="vmat note">+ Extra Vessel</div></div>');continue;}
+      const c=p.vessels[vi];
+      if(!c){vcells.push('<div class="vcell"><div class="mtile empty" data-tip="'+attr('Empty vessel — load a recipe here at the Brewhouse to brew a cask.')+'">'+LU('flask-conical')+'</div><div class="vmat note">empty</div></div>');continue;}
       let tr='';for(let s=0;s<=c.ready;s++)tr+='<div class="tstep '+(s<c.step?'on':'')+(c.step>=c.ready&&s===c.ready?'rdy':'')+'"></div>';
       const ready=c.step>=c.ready;
-      return '<div class="vessel">'+LU('beer')+' <b>'+styleShort(c.style)+'</b> '
-        +'<span class="cact" data-tip="'+attr('Slot action when deployed: '+CASK_ACT[caskAct(c)])+'">'+LU(CASK_ACT_ICON[caskAct(c)]||'')+' '+caskAct(c)+'</span> '
-        +(ready?'<span class="tag good">'+LU('check')+' READY</span>':'<span class="note">'+c.step+'/'+c.ready+'</span>')+'<div class="vtrack">'+tr+'</div></div>';
-    }).join('');
+      vcells.push('<div class="vcell"><div class="mtile" data-tip="'+attr(STYLES[c.style].name+' (Q'+c.q+') — slot action '+CASK_ACT[caskAct(c)]+(ready?'. READY to deploy or ship.':'. Aging '+c.step+'/'+c.ready+'.'))+'">'+pCaskFace(c)+'</div>'
+        +'<div class="vmat">'+(ready?'<span class="tag good">'+LU('check')+' READY ▸ ship</span>':'<span class="note">aging '+c.step+'/'+c.ready+'</span>')+'<div class="vtrack">'+tr+'</div></div></div>');
+    }
+    // improvement cells: 4 slots — bought improvements + flipped (displaced) Buildings, padded with empty slots
+    const impItems=p.upgrades.map(k=>({t:'imp',k})).concat((p.flipped||[]).map(k=>({t:'flip',k})));
+    const icells=[];
+    for(let ii=0;ii<IMP_AREA_CAP;ii++){const it=impItems[ii];
+      if(!it){icells.push('<div class="mtile empty" data-tip="'+attr('Improvement slot — buy an improvement at the Cellar, or a Building a rival overbuilds flips in here (worth '+DEVELOP_PTS+'★ + a Floor Wild).')+'">'+LU('wrench')+'</div>');continue;}
+      if(it.t==='imp')icells.push('<div class="mtile" data-tip="'+attr(upName(it.k)+' — '+upDesc(it.k))+'">'+pImpFace(it.k)+'</div>');
+      else icells.push('<div class="mtile flip" data-tip="'+attr('Flipped '+bName(it.k)+' — worth '+DEVELOP_PTS+'★ + a Wild on its back (fired when you work the Floor)')+'">'+pBldgFace({b:it.k,owner:p.id})+'</div>');
+    }
+    const floorHTML='<div class="floor"><div class="floortop"><b class="note">'+LU('home')+' THE FLOOR</b><span class="note">your vessels &amp; improvements — your private line</span></div>'
+      +'<div class="floorgrid">'
+      +'<div class="fhalf"><b class="note">'+LU('flask-conical')+' Vessels &amp; Maturation ('+p.vessels.filter(c=>c).length+'/'+p.maxVessels+')</b><div class="vrow">'+vcells.join('')+'</div></div>'
+      +'<div class="fhalf"><b class="note">'+LU('wrench')+' Improvements ('+impArea(p)+'/'+IMP_AREA_CAP+') <span class="note">+ displaced Buildings</span></b><div class="irow">'+icells.join('')+'</div></div>'
+      +'</div></div>';
     const recipes=p.recipes.map(r=>{const st=STYLES[r];const locked=st.cellar&&!hasUpgrade(p,'cellar');
       return '<span class="rcard"'+(locked?' style="opacity:.55"':'')+' data-tip="'+attr(st.name+' — quality Q'+st.q+', brew cost '+costStr(st.in)+(locked?'. Needs the Aging Cellar to brew.':'.'))+'">'
         +'<span class="rcn">'+LU('beer')+' '+st.name+'</span>'
         +'<span class="qpd">'+qPips(st.q)+'<b>Q'+st.q+'</b></span>'
         +'<span>'+costIcons(st.in)+(locked?' <span class="note" style="font-size:.66rem">needs Cellar</span>':'')+'</span></span>';
     }).join('');
-    const flipTiles=(p.flipped||[]).map(k=>'<div class="mtile sm" data-tip="'+attr('Flipped '+bName(k)+' — worth '+DEVELOP_PTS+'★ + a '+CASK_ACT.wild+' on its back (fired when you work the Floor)')+'">'+pBldgFace({b:k,owner:p.id})+'</div>').join('');
-    const ups=(p.upgrades.length||(p.flipped||[]).length)?(p.upgrades.map(k=>'<div class="mtile sm" data-tip="'+attr(upName(k)+' — '+upDesc(k))+'">'+pImpFace(k)+'</div>').join('')+flipTiles):'<span class="note">none yet</span>';
     const myBldgs=SLOTS.filter(s=>{const b=bAt(s.id);return b&&b.owner===p.id;}).map(s=>{const b=bAt(s.id);return '<div class="mtile sm" data-tip="'+attr(BUILDINGS[b.b].name+' — '+BUILDINGS[b.b].desc)+'">'+pBldgFace({b:b.b,owner:p.id})+'</div>';}).join('')||'<span class="note">none</span>';
     const hand=(p.hand||[]).length?(p.hand.map(k=>'<div class="mtile sm" data-tip="'+attr(bName(k)+' — '+bDesc(k)+' · in hand; place at the Market')+'">'+pBldgFace({b:k,owner:p.id})+'</div>').join('')):'';
     const wharf=SLOTS.map(s=>S.slots[s.id]).filter(t=>t&&t.owner===p.id).map(t=>'<span class="tag">'+(t.type==='ship'?LU('sailboat')+shipName(t)+'→'+DEST[t.dest].name.slice(0,3)+' '+t.load.length+'/'+effCap(t):LU('beer')+styleShort(t.style))+'</span>').join('')||'<span class="note">none</span>';
@@ -2793,11 +2821,10 @@ function renderTableaus(){
       +'<span class="chip" data-tip="Storage cap.">'+LU('package')+'<b>'+p.storage+'</b></span>'
       +'<span class="chip" data-tip="Charter contracts in hand.">'+LU('ticket')+'<b>'+(p.contracts||0)+'</b></span>'
       +'<span class="chip" data-tip="Total score.">★ <b>'+sc.total+'</b></span> <span class="note">deliveries '+sc.deliv+' · maj '+sc.maj+(sc.flight?' · flight '+sc.flight:'')+(sc.wharf?' · wharfage '+sc.wharf:'')+'</span>'+(p.ai?' <span class="tag" data-tip="An AI seat — same rules, same information; the tiers differ only in decision quality.">'+aiLabel(p)+' AI</span>':'')+'</div>'
-      +'<b class="note">'+LU('flask-conical')+' Vessels ('+p.vessels.length+'/'+p.maxVessels+'):</b><div class="brew">'+vessels+'</div>'
+      +floorHTML
       +'<div class="tsec"><b class="note">'+LU('scroll-text')+' Recipes:</b><div class="trow">'+recipes+'</div></div>'
       +'<div class="tsec"><b class="note">'+LU('building-2')+' Buildings (yours, on slots):</b><div class="trow">'+myBldgs+'</div>'
         +(hand?'<b class="note">'+LU('building-2')+' In hand <span class="note">(place at the Market)</span>:</b><div class="trow">'+hand+'</div>':'')+'</div>'
-      +'<div class="tsec"><b class="note">'+LU('wrench')+' Improvements ('+impArea(p)+'/'+IMP_AREA_CAP+'):</b><div class="trow">'+ups+'</div></div>'
       +'<b class="note">'+LU('anchor')+' On slots (yours):</b> '+wharf+'<br>'
       +'<b class="note">'+LU('landmark')+' Delivered:</b> '+delivered+'<br>'
       +'<b class="note">'+LU('layers')+' Flight (distinct beers delivered, any destination):</b> '+flightStr
