@@ -1,0 +1,54 @@
+
+================  TRADER · 2p  (200 games, 400 player-games, avg 12.5 rounds)  ================
+  TIMELINE (median round of first occurrence):
+   R 1 ──▶ brew Q2
+   R 1 ──▶ 1st building
+   R 2 ───▶ 1st recipe
+   R 4 ──────▶ deliver Q2
+   R 5 ────────▶ brew Q3
+   R 7 ───────────▶ deliver Q3
+   R10 ───────────────▶ full recipes (3 exports)
+   R10 ───────────────▶ brew Q5
+   R11 ─────────────────▶ brew Q4
+   R12 ──────────────────▶ deliver Q5
+   R13 ────────────────────▶ deliver Q4
+  RECIPES:   bought/plyr 2.24   FREE-via-Novgorod/plyr 0.00   reach full set: 39% (median R10)
+  CLIMB:     deliver Q4 6%   deliver Q5 15%   buildings/plyr 2.20
+  ORDER:     1st building median R1  vs  full-recipes median R10   → buildings BEFORE full recipes
+  NOVGOROD:  delivered there by 39% of player-games; median 1st visit R9   avg Novgorod deliveries/plyr 0.56
+
+================  TRADER · 3p  (200 games, 600 player-games, avg 13.6 rounds)  ================
+  TIMELINE (median round of first occurrence):
+   R 1 ──▶ brew Q2
+   R 1 ──▶ 1st building
+   R 2 ───▶ 1st recipe
+   R 3 ─────▶ deliver Q2
+   R 5 ────────▶ brew Q3
+   R 7 ────────────▶ deliver Q3
+   R10 ─────────────────▶ full recipes (3 exports)
+   R11 ──────────────────▶ brew Q5
+   R12 ────────────────────▶ brew Q4
+   R12 ────────────────────▶ deliver Q4
+   R12 ────────────────────▶ deliver Q5
+  RECIPES:   bought/plyr 2.38   FREE-via-Novgorod/plyr 0.00   reach full set: 50% (median R10)
+  CLIMB:     deliver Q4 20%   deliver Q5 17%   buildings/plyr 2.26
+  ORDER:     1st building median R1  vs  full-recipes median R10   → buildings BEFORE full recipes
+  NOVGOROD:  delivered there by 58% of player-games; median 1st visit R8   avg Novgorod deliveries/plyr 0.81
+
+================  TRADER · 4p  (200 games, 800 player-games, avg 13.6 rounds)  ================
+  TIMELINE (median round of first occurrence):
+   R 1 ──▶ brew Q2
+   R 1 ──▶ 1st building
+   R 2 ───▶ 1st recipe
+   R 3 ─────▶ deliver Q2
+   R 4 ───────▶ brew Q3
+   R 7 ────────────▶ deliver Q3
+   R10 ─────────────────▶ full recipes (3 exports)
+   R10 ─────────────────▶ deliver Q4
+   R11 ──────────────────▶ brew Q4
+   R11 ──────────────────▶ brew Q5
+   R12 ────────────────────▶ deliver Q5
+  RECIPES:   bought/plyr 2.52   FREE-via-Novgorod/plyr 0.00   reach full set: 62% (median R10)
+  CLIMB:     deliver Q4 23%   deliver Q5 21%   buildings/plyr 1.96
+  ORDER:     1st building median R1  vs  full-recipes median R10   → buildings BEFORE full recipes
+  NOVGOROD:  delivered there by 52% of player-games; median 1st visit R7   avg Novgorod deliveries/plyr 0.72

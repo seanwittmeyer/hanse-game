@@ -14,3 +14,7 @@ playtests/v*gm-*.txt
 playtests/v*gm-*.err
 playtests/analysis/
 playtests/arc/
+
+# review-session transient logs
+playtests/review/joblogs/
+playtests/review/*.log

@@ -240,6 +240,20 @@
   .tstep{flex:1;height:7px;border-radius:2px;background:rgba(0,0,0,.12)}
   .tstep.on{background:var(--green)}
   .tstep.rdy{background:var(--gold)}
+  /* THE FLOOR — vessels as complete cask tiles (maturation below) beside the 4 improvement/flip slots */
+  .floor{border:1px solid var(--line);border-radius:8px;padding:8px 11px 10px;margin:6px 0 9px;background:var(--parch2)}
+  .floortop{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .floorgrid{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start;margin-top:4px}
+  .fhalf{display:flex;flex-direction:column}
+  .vrow,.irow{display:flex;gap:9px;flex-wrap:wrap;margin-top:5px}
+  .vcell{display:flex;flex-direction:column;gap:3px;width:90px}
+  .vmat{font-size:.66rem;color:var(--ink2);min-height:26px}
+  .vmat .vtrack{margin-top:2px}
+  .mtile.empty{border:1.6px dashed var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--ink2);opacity:.6;background:transparent;box-shadow:none}
+  .mtile.empty .ic,.mtile.empty svg{width:22px;height:22px}
+  .vcell.locked .vmat{opacity:.7}
+  .mtile.flip{outline:2.5px solid var(--gold);outline-offset:-3px}
+  .mtile.flip::after{content:'★';position:absolute;top:3px;right:5px;color:#ffe08a;font-size:12px;z-index:6;font-weight:900;text-shadow:0 1px 2px rgba(0,0,0,.6)}
   .tag{display:inline-block;background:var(--ink);color:var(--parch);border-radius:10px;padding:1px 7px;font-size:.7rem;margin:2px 2px 0 0}
   /* cask drawn-action badge (vessels) */
   .cact{display:inline-flex;align-items:center;gap:2px;font-size:.66rem;background:rgba(0,0,0,.07);border:1px solid var(--line);border-radius:8px;padding:0 5px;text-transform:capitalize;color:var(--ink2)}
@@ -581,16 +595,21 @@ const DEVELOP_PTS=3;            // ⚙ v1.2: the "developer" lane — when a RIV
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
 // Market (distinct from the public, earned-and-placed Buildings). Everything else from v0.16's upgrade list
 // folds into the Building family. The Floor revives Extra Vessel (a vessel-heavy brewery is a real engine).
+// v1.7: improvements are CHEAPER (−1 G each) and bought at the CELLAR (the least-contested station — sim
+// showed the barrier to the improvement economy was the Market ACTION cost, not the goods). They share the
+// player's improvements area with FLIPPED buildings, capped at IMP_AREA_CAP total (below).
 const IMPROVEMENTS={
-  vessel   :{name:'Extra Vessel', desc:'+1 brewing lane (start 2 → cap 3; one per house)', cost:{g:5}},
-  cellar   :{name:'Aging Cellar', desc:'maturation −1 step', cost:{g:5}},
-  granary  :{name:'Granary Right',desc:'when you gain grain, +1 extra', cost:{g:4}},
-  hopgarden:{name:'Hop Garden',   desc:'when you gain hops, +1 extra', cost:{g:4}},
+  vessel   :{name:'Extra Vessel', desc:'+1 brewing lane (start 2 → cap 3; one per house)', cost:{g:4}},
+  cellar   :{name:'Aging Cellar', desc:'maturation −1 step', cost:{g:4}},
+  granary  :{name:'Granary Right',desc:'when you gain grain, +1 extra', cost:{g:3}},
+  hopgarden:{name:'Hop Garden',   desc:'when you gain hops, +1 extra', cost:{g:3}},
   // v1.5 "Improvements": two ex-Buildings reborn as private upgrades + the load-from-vessel valve ⚙
-  crane    :{name:'Harbor Crane', desc:'your Harbor load sets out 2 casks (not 1)', cost:{g:4}},
-  lagering :{name:'Lagering Cellar',desc:'each of your turns, +1 age to one maturing cask', cost:{g:4}},
-  quay     :{name:'Private Quay', desc:'load Ready casks straight from your vessels onto ships', cost:{g:5}},
+  crane    :{name:'Harbor Crane', desc:'your Harbor load sets out 2 casks (not 1)', cost:{g:3}},
+  lagering :{name:'Lagering Cellar',desc:'each of your turns, +1 age to one maturing cask', cost:{g:3}},
+  quay     :{name:'Private Quay', desc:'load Ready casks straight from your vessels onto ships', cost:{g:4}},
 };
+const IMP_AREA_CAP=4;          // ⚙ v1.7: the player's improvements area holds at most this many tiles TOTAL —
+                               // bought improvements + FLIPPED buildings (a building a rival overbuilt flips here).
 const IMPROVEMENT_KEYS=Object.keys(IMPROVEMENTS);
 const UP=IMPROVEMENTS;          // alias kept for hasUpgrade / grantUpgrade / render
 function upName(k){return (UP[k]||{name:k}).name;}
@@ -624,8 +643,9 @@ const CELLAR_POOL=3;                     // Cellar age points ⚙
 const AUTO_AGE=true;                      // casks age +1 at the start of your turn (the free "time passes" aging). v1.1 tried removing this (v54) but it stole the turns players needed to fund high-Q + slowed setup past the short 2p clock → reverted. The Cellar/age-action/Novgorod SPEED it. (Flag kept to experiment.)
 const START_GOODS={g:3,h:2};
 const START_STORAGE=8;
-const SEAT_COMP=1;                       // seat compensation ⚙ — +this much grain to EACH seat after the first
-                                         // (fixed turn order gives P1 a structural edge; sim-validated +1G ≈ neutral)
+const SEAT_COMP=0;                       // seat compensation ⚙ — v1.7: REMOVED (0). The +1G/later-seat comp was tuned to the
+                                         // GREEDY bot's first-mover edge; sim showed it OVER-corrects under strong play (P2 won ~67-72% at 2p).
+                                         // P1's turn-1 (choose the line, place+activate the warm Gruit, no toll) is compensation enough → equal start.
 
 //==================================================================
 // STATE
@@ -633,7 +653,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v63'; // v1.6 "Hops": export ladder is HOPS-LED — Mumme 1G3H, Bock 2G3H (totals unchanged, ratio shifted to hops); export recipe-card buys lean hops (broyhan 1H, mumme 2H, bock 1G1H; keut stays the 1G grain-path Q3). Gives hops real demand (was a grain monopoly) → makes Hop Garden attractive without nerfing Granary. Bump discards stale v62 state. // v1.5: off-turn Building rewards (a rival's sail delivered YOUR cask) now QUEUE to the owner — they CHOOSE from the display at the start of their next turn (was: auto-granted at random). Bump discards stale v61 state. // v1.5 "Improvements": three new private upgrades — Harbor Crane (your Harbor load sets out 2 casks), Lagering Cellar (each of your turns +1 age to one maturing cask), Private Quay (load Ready casks straight from your vessels onto ships). Crane & Lagering moved OUT of the green Buildings pool into the purple IMPROVEMENTS (bought for goods). Bump discards stale v60 state. // v1.4 "Deploy": an EMPTY slot's DEFAULT line-action IS Deploy (shown as "{bldg?} Deploy"). Triggering it (or the Brewhouse — deploy icon on the station; Tap icon on the Cellar) deploys ONE Ready cask to ANY open slot; deploying onto another empty slot still PENDING on this line flips that slot's Deploy stop into the cask's ACTION stop (advanced: place where you'll still act). TAP unchanged (Cellar: vessel or slot → fire action once + discard). Bump discards stale v59 state. // (prior v59 "Tap a Cask"; prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
+const KEY='hanse-hotseat-v64'; // v1.7 "Even Footing": (1) SEAT_COMP→0 — equal starts (the +1G/later-seat over-corrected under strong play, P2 won ~67-72% at 2p); (2) improvements CHEAPER (−1G) and bought at the CELLAR (alongside Tap), not the Market — the action-economy barrier, not goods; (3) a building a RIVAL overbuilds now FLIPS into its owner's improvements area = +3★ + a Wild on its back (fired via the Floor — enriching the alt-line vs the toll); (4) the improvements area is capped at IMP_AREA_CAP=4 (bought improvements + flipped tiles). Bump discards stale v63 state. // v1.6 "Hops": export ladder is HOPS-LED — Mumme 1G3H, Bock 2G3H (totals unchanged, ratio shifted to hops); export recipe-card buys lean hops (broyhan 1H, mumme 2H, bock 1G1H; keut stays the 1G grain-path Q3). Gives hops real demand (was a grain monopoly) → makes Hop Garden attractive without nerfing Granary. Bump discards stale v62 state. // v1.5: off-turn Building rewards (a rival's sail delivered YOUR cask) now QUEUE to the owner — they CHOOSE from the display at the start of their next turn (was: auto-granted at random). Bump discards stale v61 state. // v1.5 "Improvements": three new private upgrades — Harbor Crane (your Harbor load sets out 2 casks), Lagering Cellar (each of your turns +1 age to one maturing cask), Private Quay (load Ready casks straight from your vessels onto ships). Crane & Lagering moved OUT of the green Buildings pool into the purple IMPROVEMENTS (bought for goods). Bump discards stale v60 state. // v1.4 "Deploy": an EMPTY slot's DEFAULT line-action IS Deploy (shown as "{bldg?} Deploy"). Triggering it (or the Brewhouse — deploy icon on the station; Tap icon on the Cellar) deploys ONE Ready cask to ANY open slot; deploying onto another empty slot still PENDING on this line flips that slot's Deploy stop into the cask's ACTION stop (advanced: place where you'll still act). TAP unchanged (Cellar: vessel or slot → fire action once + discard). Bump discards stale v59 state. // (prior v59 "Tap a Cask"; prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -664,7 +684,7 @@ function newPlayer(i,name){
     grain:START_GOODS.g+(i>0?SEAT_COMP:0),hops:START_GOODS.h,storage:START_STORAGE,cell:null,placed:false,
     // start 2 vessels; one holds the warm Ready Gruit (deploy it turn 1)
     vessels:[{style:'gruit',q:1,step:1,ready:1},null], maxVessels:2,
-    recipes:['gruit','hopped'], upgrades:[], delivered:[], wharfage:0, developed:0,
+    recipes:['gruit','hopped'], upgrades:[], flipped:[], delivered:[], wharfage:0, developed:0,
     presBonus:{bruges:0,london:0,bergen:0,novgorod:0}, commissioned:0,
     contracts:START_CONTRACTS,
     hand:[]};   // Buildings held to place (the starting tile + Survey draws) — filled below
@@ -712,6 +732,8 @@ function freshState(n,names){
 //==================================================================
 function cur(){return S.players[S.active];}
 function hasUpgrade(p,key){return (p.upgrades||[]).includes(key);}
+// v1.7: how many tiles sit in the improvements area (bought improvements + flipped buildings) — capped at IMP_AREA_CAP.
+function impArea(p){return (p.upgrades?p.upgrades.length:0)+(p.flipped?p.flipped.length:0);}
 // gain/pay are the ONLY goods faucets/drains, so they double as the log's resource LEDGER:
 // every gain and every spend, by anyone, shows up with icons (the actual applied amounts —
 // upgrade bonuses included, storage-capped overflow noted).
@@ -1032,16 +1054,24 @@ function chooseLine(which){
 function tollPay(){snapshot();const p=cur();const toll=Math.min(OCCUPANCY_TOLL,p.grain);
   if(toll>0){p.grain-=toll;log(p.name+' pays −'+Gi(toll)+' occupancy toll for sharing <b>'+CELLNAME[p.cell]+'</b>.',true);}
   activateLine(UI.line);}
-function tollFloor(){const p=cur();const idxs=p.vessels.map((c,i)=>c?i:-1).filter(i=>i>=0);
-  if(!idxs.length){tollPay();return;}   // no casks on the floor → nothing to run; just take the public line
+// v1.7: the Floor runs every maturing cask's action AND each FLIPPED building's Wild (the back-of-tile action) —
+// making the private alt-line a richer alternative to paying the toll the more you've been displaced.
+function tollFloor(){const p=cur();
+  const casks=p.vessels.map((c,i)=>c?i:-1).filter(i=>i>=0).map(i=>({v:i}));
+  const flips=(p.flipped||[]).map(k=>({flip:k}));
+  const queue=casks.concat(flips);
+  if(!queue.length){tollPay();return;}   // nothing on the floor → just take the public line
   snapshot();
-  log(p.name+' works the '+LU('flask-conical')+' <b>Floor</b> instead of the contested line — runs every cask on the brewery floor (no toll, no public line).',true);
-  UI.floorQueue=idxs.slice();runFloorNext();
+  log(p.name+' works the '+LU('flask-conical')+' <b>Floor</b> instead of the contested line — runs every cask on the brewery floor'+(flips.length?' + '+flips.length+' flipped-building '+LU('sparkles')+'Wild'+(flips.length>1?'s':''):'')+' (no toll, no public line).',true);
+  UI.floorQueue=queue;runFloorNext();
 }
-// run the next queued floor cask's slot-action; when the queue empties, the Floor is your whole turn → end.
+// run the next queued floor entry (a vessel cask's action, or a flipped building's Wild); when the queue
+// empties, the Floor is your whole turn → end.
 function runFloorNext(){
   if(!UI.floorQueue||!UI.floorQueue.length){UI.floorQueue=null;UI.sub='end';render();return;}
-  const p=cur();const vi=UI.floorQueue.shift();const c=p.vessels[vi];
+  const p=cur();const e=UI.floorQueue.shift();
+  if(e&&e.flip!==undefined){log('↳ Floor — flipped '+LU('building-2')+bName(e.flip)+' fires a '+LU('sparkles')+' Wild.');enterWild('floorq');return;}
+  const c=p.vessels[e.v];
   if(!c){runFloorNext();return;}
   const act=caskAct(c);
   log('↳ Floor — '+LU('beer')+styleShort(c.style)+'’s '+LU(CASK_ACT_ICON[act]||'')+' '+act+' action.');
@@ -1148,10 +1178,12 @@ function placeHeld(idx){const p=cur();const key=(p.hand||[])[idx];if(key===undef
   snapshot();p.hand.splice(idx,1);
   log(p.name+' places a held '+LU('building-2')+' <b>'+bName(key)+'</b> (free) — pick a slot.',true);
   beginPlaceBldg(key,p.id,'stops');}
+// v1.7: improvements are bought at the CELLAR (offered alongside Tap), capped by the improvements area.
 function buyImprovement(key){const p=cur();const def=IMPROVEMENTS[key];
-  if(!def||!grantableBuy(p,key)||!canPay(p,def.cost))return;
+  if(!def||!grantableBuy(p,key)||!canPay(p,def.cost)||impArea(p)>=IMP_AREA_CAP)return;
   snapshot();pay(p,def.cost);grantUpgrade(p,key);
-  log(p.name+' fits the '+LU('wrench')+' <b>'+upName(key)+'</b> improvement.',true);cellDone();}
+  log(p.name+' fits the '+LU('wrench')+' <b>'+upName(key)+'</b> improvement at the '+LU('hourglass')+' Cellar.',true);
+  const rt=(UI.tap&&UI.tap.returnTo)||'stops';UI.tap=null;resume(rt);}
 // the shared Building-placement flow (Market buy · held tile from a delivery/Survey). Any slot is a legal
 // target — placing onto a slot that already has a building REPLACES it; the displaced tile returns to its
 // OWNER'S hand (slots never lock; the contest is over prime slot/line positions, nothing is destroyed).
@@ -1159,12 +1191,14 @@ function beginPlaceBldg(key,owner,rt){
   UI.tmp=UI.tmp||{};UI.tmp.placeBldg={b:key,owner};UI.placeRt=rt;UI.sub='placebldg';render();}
 function placeBldgOn(slot){const b=UI.tmp&&UI.tmp.placeBldg;if(!b)return;snapshot();
   const old=bAt(slot);
-  if(old){S.players[old.owner].hand.push(old.b);
-    // v1.2 the "developer" lane: a RIVAL overbuilding your slot flips your displaced Building for END-GAME points
-    // (it served its purpose). Self-displacement (relocating your own) pays nothing — no farming.
-    const paid=(old.owner!==b.owner);
-    if(paid)S.players[old.owner].developed+=DEVELOP_PTS;
-    log('↳ '+LU('building-2')+bName(old.b)+' is displaced — returned to '+S.players[old.owner].name+'’s hand'+(paid?' (+'+DEVELOP_PTS+'★ developer points for having authored it)':'')+'.');}
+  if(old){const op=S.players[old.owner];const rival=(old.owner!==b.owner);
+    // v1.7 the "developer" lane made physical: a RIVAL overbuilding your slot FLIPS your displaced Building into
+    // your improvements area — worth +DEVELOP_PTS★ at game end AND carrying a Wild action on its back (fired via
+    // the Floor). Self-displacement (relocating your own) pays nothing — no farming. Area full → back to hand.
+    if(rival&&impArea(op)<IMP_AREA_CAP){(op.flipped=op.flipped||[]).push(old.b);op.developed+=DEVELOP_PTS;
+      log('↳ '+LU('building-2')+bName(old.b)+' is displaced — it FLIPS into '+op.name+'’s improvements area (+'+DEVELOP_PTS+'★ + a '+LU('sparkles')+' Wild on its back, fired via the Floor).');}
+    else{op.hand.push(old.b);
+      log('↳ '+LU('building-2')+bName(old.b)+' is displaced — returned to '+op.name+'’s hand'+(rival?' (improvements area full — no flip)':'')+'.');}}
   S.buildings[slot]={b:b.b,owner:b.owner};
   if(b.b==='workshop'){const occ=S.slots[slot];if(occ&&occ.type==='cask')occ.act='wild';}   // Workshop upgrades a cask already docked
   log(S.players[b.owner].name+' authors '+LU('building-2')+' <b>'+bName(b.b)+'</b> on a '+LU('anchor')+' slot'+(old?' (replacing '+bName(old.b)+')':'')+' — '+BUILDINGS[b.b].desc+'.',true);
@@ -1961,7 +1995,7 @@ function aiMarket(p){
       const vcands=aff.filter(k=>BUILDINGS[k].verb==='value');
       const pool=vcands.length?vcands:(p.grain>=5?aff:[]);
       if(pool.length){buyBuilding((S.buildDisplay||[]).indexOf(aiPickBuilding(p,pool)));return;}}}
-  if(!aiIsApp(p)&&p.grain>=5&&grantableBuy(p,'vessel')&&canPay(p,IMPROVEMENTS.vessel.cost)){buyImprovement('vessel');return;}
+  // v1.7: improvements are no longer a Market buy — the heuristic AI now acquires them at the Cellar (aiCellarBuy).
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
 function aiPlaceBldg(p){let bs=aBuildSlotsAI();if(!bs.length)bs=SLOTS.slice();   // prefer empty-building slots; if none, replace
@@ -2056,7 +2090,10 @@ function aiDeploy(p){
   deployTo(es[0].id);}
 // TAP (Cellar) — relief: when a Ready cask is jammed (no open slot to deploy it), tap the cheapest to free a vessel; else skip.
 function aiTap(p){const ready=readyInVessels(p);
-  if(ready.length&&emptySlots().length===0){ready.sort((a,b)=>a.c.q-b.c.q);tapPick('v:'+ready[0].i);return;}
+  if(ready.length&&emptySlots().length===0){ready.sort((a,b)=>a.c.q-b.c.q);tapPick('v:'+ready[0].i);return;}   // relieve a jam first
+  // v1.7: improvements are a Cellar buy — grab a high-value one when flush & the area has room (hops-led econ → Hop Garden first)
+  if(impArea(p)<IMP_AREA_CAP){const pref=['hopgarden','granary','cellar','vessel'];
+    for(let i=0;i<pref.length;i++){const k=pref[i];if(grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&p.grain>=(IMPROVEMENTS[k].cost.g||0)+1){buyImprovement(k);return;}}}
   tapSkip();}
 function aiBenefit(){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];const disp=S.buildDisplay||[];
   if(!disp.length){benefitPick(null);return;}
@@ -2287,8 +2324,7 @@ function aiGmOptions(p){
     if(canPay(p,CONTRACT_BUY))o.push(()=>buyContract());
     (p.hand||[]).forEach((k,i)=>{if(aBuildSlotsAI().length)o.push(()=>placeHeld(i));});                 // place a held Building
     if(aBuildSlotsAI().length)(S.buildDisplay||[]).forEach((k,i)=>{if(canPay(p,BUILDINGS[k].cost))o.push(()=>buyBuilding(i));});   // buy + place a Building
-    IMPROVEMENT_KEYS.forEach(k=>{if(grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost))o.push(()=>buyImprovement(k));});            // a private improvement
-    return o;}
+    return o;}   // v1.7: improvements moved to the Cellar (the 'tap' stage, below)
   if(U==='cell'&&UI.cell==='C'){
     if(UI.stage==='enshrine'){const e=enshrineCasks(p).map(c=>()=>enshrinePick(c.ref));e.push(()=>afterSail('stops'));return e;}
     if(UI.stage==='charter_cask')return charterCasks(p).map(c=>()=>charterPickCask(c.ref));
@@ -2310,7 +2346,9 @@ function aiGmOptions(p){
     const ships=L.ships.filter(s=>canTake(s,L.cask));
     if(!ships.length)return null;
     const o=ships.map(s=>()=>loadOnto(s));o.push(()=>loadSkip());return o;}
-  if(U==='tap'){const o=tapTargets(p).map(t=>()=>tapPick(t.ref));o.push(()=>tapSkip());return o;}                          // tap a vessel/slot cask, or skip
+  if(U==='tap'){const o=tapTargets(p).map(t=>()=>tapPick(t.ref));                                                          // tap a vessel/slot cask…
+    IMPROVEMENT_KEYS.forEach(k=>{if(grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&impArea(p)<IMP_AREA_CAP)o.push(()=>buyImprovement(k));});   // …or buy an improvement (v1.7: Cellar) …
+    o.push(()=>tapSkip());return o;}                                                                                        // …or skip
   if(U==='deploy'){                                                                                                        // two-step: pick which Ready cask, then which open slot
     if(UI.deploy.vi==null){const o=readyInVessels(p).map(o2=>()=>deployPickCask(o2.i));o.push(()=>deploySkip());return o;}
     const es=emptySlots();return es.length?es.map(s=>()=>deployTo(s.id)):[()=>deploySkip()];}
@@ -2525,8 +2563,10 @@ function renderBar(){
       prompt='Deploy '+LU('beer')+styleShort(c.style)+' onto <b>any</b> open slot (click it). <span class="note">Drop it on another empty slot of this line to turn that slot’s Deploy into the cask’s action.</span>';
       acts=btn('◂ Pick a different cask','deployPickCask(null)','ghost')+btn('Skip','deploySkip()','ghost');}}
   else if(U==='tap'){
-    prompt='Cellar · '+LU('hourglass')+' <b>Tap</b> a cask — fire its action once, then discard it. From a <b>vessel</b> (frees the lane) or one of <b>your slots</b> (recalls it, clearing the slot).';
-    acts=tapTargets(p).map(t=>btn((t.ref[0]==='v'?'vessel ':'slot ')+LU('beer')+ownSq(p.id)+styleShort(t.style)+' → '+LU(CASK_ACT_ICON[t.act]||'')+t.act,'tapPick(\''+t.ref+'\')','go')).join('')+btn('Skip','tapSkip()','ghost');}
+    prompt='Cellar · '+LU('hourglass')+' <b>Tap</b> a cask (fire its action once, then discard — from a vessel or your slot) <b>or buy an Improvement</b> '+LU('wrench')+' (area '+impArea(p)+'/'+IMP_AREA_CAP+').';
+    const taps=tapTargets(p).map(t=>btn((t.ref[0]==='v'?'vessel ':'slot ')+LU('beer')+ownSq(p.id)+styleShort(t.style)+' → '+LU(CASK_ACT_ICON[t.act]||'')+t.act,'tapPick(\''+t.ref+'\')','go')).join('');
+    const imps=(impArea(p)<IMP_AREA_CAP?IMPROVEMENT_KEYS.filter(k=>grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)):[]).map(k=>btn(LU('wrench')+upName(k)+' '+costIcons(IMPROVEMENTS[k].cost),'buyImprovement(\''+k+'\')','go')).join('');
+    acts=taps+imps+btn('Skip','tapSkip()','ghost');}
   else if(U==='benefit'){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];
     prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take a '+LU('building-2')+' <b>Building</b> from the display <b>to hand</b> (free); place it later at the Market.';
     acts=(S.buildDisplay||[]).map(k=>btn(LU('building-2')+bName(k),'benefitPick(\''+k+'\')','go')).join('')+((S.buildDisplay||[]).length?'':'<span class="note">display empty</span>'+btn('Skip','benefitPick(null)','ghost'));}
@@ -2708,11 +2748,9 @@ function renderShop(){
     return '<div class="shopcell"><div class="mtile" data-tip="'+attr((def.verb==='value'?'Value':'Transform')+' Building — '+def.desc+'. Owned-but-shared: you get the full effect; a rival docks for a reduced bonus + a +'+WHARFAGE+'★ wharfage to you.')+'">'+pBldgFace({b:key})+'</div>'+(buying?'<button '+(can?'':'disabled')+' onclick="buyBuilding('+i+')">buy + place</button>':'')+'</div>';}).join('')+'</div>';
   if(!(S.buildDisplay||[]).length)h+='<div class="note">(building deck exhausted)</div>';
   if(noslot)h+='<div class="note" style="font-size:.7rem">every slot already has a building — no room to place more</div>';
-  // private brewery IMPROVEMENTS (bought for goods)
-  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Improvements</b> <span class="note">(private — bought for goods)</span></div>';
-  h+='<div class="shopgrid">'+IMPROVEMENT_KEYS.map(key=>{const def=IMPROVEMENTS[key];const owned=!grantableBuy(p,key);const can=canPay(p,def.cost)&&!owned;
-    return '<div class="shopcell"><div class="mtile" data-tip="'+attr(def.name+' — '+def.desc)+'">'+pImpFace(key)+'</div>'+(owned?'<span class="note">(have)</span>':(buying?'<button '+(can?'':'disabled')+' onclick="buyImprovement(\''+key+'\')">buy</button>':''))+'</div>';}).join('')+'</div>';
-  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">At the '+LU('store')+' <b>Market</b>: take goods, OR acquire one tile — a recipe, a '+LU('building-2')+' Building (buy+place), a '+LU('sailboat')+' ship, a charter contract, or an improvement. <b>Place a held Building free</b> (earned at London/Novgorod or via Survey). Placing onto a slot that has a building <b>replaces</b> it — the old tile returns to its owner\'s hand.</div>';
+  // v1.7: private IMPROVEMENTS moved to the CELLAR (bought alongside Tap). A pointer note here.
+  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Improvements</b> <span class="note">→ now bought at the '+LU('hourglass')+' <b>Cellar</b> (with Tap), cheaper, max '+IMP_AREA_CAP+' in your area.</span></div>';
+  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">At the '+LU('store')+' <b>Market</b>: take goods, OR acquire one tile — a recipe, a '+LU('building-2')+' Building (buy+place), a '+LU('sailboat')+' ship, or a charter contract. <b>Place a held Building free</b> (earned at London/Novgorod or via Survey). Placing onto a slot that has a building <b>replaces</b> it — the old tile flips into its owner\'s improvements area (a rival\'s overbuild) or returns to hand.</div>';
 }
 
 function renderVoyage(){
@@ -2736,21 +2774,36 @@ function renderTableaus(){
   S.players.forEach((p,i)=>{
     const sc=scorePlayer(p);
     tabs+='<div class="tab '+(i===activeTab?'active':'')+'" style="'+(i===activeTab?'background:'+p.color:'')+'" onclick="activeTab='+i+';renderTableaus();refreshIcons()"><span class="pawn" style="background:'+p.color+';display:inline-block;vertical-align:middle;width:11px;height:11px"></span> '+p.name+' <span style="opacity:.85;font-size:.74rem" data-tip="Total score so far.">★ '+sc.total+'</span>'+(p.ai?' <span style="opacity:.75;font-size:.72rem" data-tip="'+attr(aiLabel(p)+' AI seat — plays by the same rules; tiers differ only in decision quality.')+'">· AI</span>':'')+'</div>';
-    const vessels=p.vessels.map(c=>{
-      if(!c)return '<div class="vessel" style="opacity:.6">'+LU('flask-conical')+' <i>empty vessel</i></div>';
+    // THE FLOOR — vessel cells: each Ready/aging cask as a COMPLETE tile, maturation below; locked 3rd shown dashed
+    const vcells=[];
+    for(let vi=0;vi<3;vi++){
+      if(vi>=p.maxVessels){vcells.push('<div class="vcell locked"><div class="mtile empty" data-tip="'+attr('Locked brewing lane — buy Extra Vessel at the Cellar to open a 3rd vessel.')+'">'+LU('lock')+'</div><div class="vmat note">+ Extra Vessel</div></div>');continue;}
+      const c=p.vessels[vi];
+      if(!c){vcells.push('<div class="vcell"><div class="mtile empty" data-tip="'+attr('Empty vessel — load a recipe here at the Brewhouse to brew a cask.')+'">'+LU('flask-conical')+'</div><div class="vmat note">empty</div></div>');continue;}
       let tr='';for(let s=0;s<=c.ready;s++)tr+='<div class="tstep '+(s<c.step?'on':'')+(c.step>=c.ready&&s===c.ready?'rdy':'')+'"></div>';
       const ready=c.step>=c.ready;
-      return '<div class="vessel">'+LU('beer')+' <b>'+styleShort(c.style)+'</b> '
-        +'<span class="cact" data-tip="'+attr('Slot action when deployed: '+CASK_ACT[caskAct(c)])+'">'+LU(CASK_ACT_ICON[caskAct(c)]||'')+' '+caskAct(c)+'</span> '
-        +(ready?'<span class="tag good">'+LU('check')+' READY</span>':'<span class="note">'+c.step+'/'+c.ready+'</span>')+'<div class="vtrack">'+tr+'</div></div>';
-    }).join('');
+      vcells.push('<div class="vcell"><div class="mtile" data-tip="'+attr(STYLES[c.style].name+' (Q'+c.q+') — slot action '+CASK_ACT[caskAct(c)]+(ready?'. READY to deploy or ship.':'. Aging '+c.step+'/'+c.ready+'.'))+'">'+pCaskFace(c)+'</div>'
+        +'<div class="vmat">'+(ready?'<span class="tag good">'+LU('check')+' READY ▸ ship</span>':'<span class="note">aging '+c.step+'/'+c.ready+'</span>')+'<div class="vtrack">'+tr+'</div></div></div>');
+    }
+    // improvement cells: 4 slots — bought improvements + flipped (displaced) Buildings, padded with empty slots
+    const impItems=p.upgrades.map(k=>({t:'imp',k})).concat((p.flipped||[]).map(k=>({t:'flip',k})));
+    const icells=[];
+    for(let ii=0;ii<IMP_AREA_CAP;ii++){const it=impItems[ii];
+      if(!it){icells.push('<div class="mtile empty" data-tip="'+attr('Improvement slot — buy an improvement at the Cellar, or a Building a rival overbuilds flips in here (worth '+DEVELOP_PTS+'★ + a Floor Wild).')+'">'+LU('wrench')+'</div>');continue;}
+      if(it.t==='imp')icells.push('<div class="mtile" data-tip="'+attr(upName(it.k)+' — '+upDesc(it.k))+'">'+pImpFace(it.k)+'</div>');
+      else icells.push('<div class="mtile flip" data-tip="'+attr('Flipped '+bName(it.k)+' — worth '+DEVELOP_PTS+'★ + a Wild on its back (fired when you work the Floor)')+'">'+pBldgFace({b:it.k,owner:p.id})+'</div>');
+    }
+    const floorHTML='<div class="floor"><div class="floortop"><b class="note">'+LU('home')+' THE FLOOR</b><span class="note">your vessels &amp; improvements — your private line</span></div>'
+      +'<div class="floorgrid">'
+      +'<div class="fhalf"><b class="note">'+LU('flask-conical')+' Vessels &amp; Maturation ('+p.vessels.filter(c=>c).length+'/'+p.maxVessels+')</b><div class="vrow">'+vcells.join('')+'</div></div>'
+      +'<div class="fhalf"><b class="note">'+LU('wrench')+' Improvements ('+impArea(p)+'/'+IMP_AREA_CAP+') <span class="note">+ displaced Buildings</span></b><div class="irow">'+icells.join('')+'</div></div>'
+      +'</div></div>';
     const recipes=p.recipes.map(r=>{const st=STYLES[r];const locked=st.cellar&&!hasUpgrade(p,'cellar');
       return '<span class="rcard"'+(locked?' style="opacity:.55"':'')+' data-tip="'+attr(st.name+' — quality Q'+st.q+', brew cost '+costStr(st.in)+(locked?'. Needs the Aging Cellar to brew.':'.'))+'">'
         +'<span class="rcn">'+LU('beer')+' '+st.name+'</span>'
         +'<span class="qpd">'+qPips(st.q)+'<b>Q'+st.q+'</b></span>'
         +'<span>'+costIcons(st.in)+(locked?' <span class="note" style="font-size:.66rem">needs Cellar</span>':'')+'</span></span>';
     }).join('');
-    const ups=p.upgrades.length?p.upgrades.map(k=>'<div class="mtile sm" data-tip="'+attr(upName(k)+' — '+upDesc(k))+'">'+pImpFace(k)+'</div>').join(''):'<span class="note">none yet</span>';
     const myBldgs=SLOTS.filter(s=>{const b=bAt(s.id);return b&&b.owner===p.id;}).map(s=>{const b=bAt(s.id);return '<div class="mtile sm" data-tip="'+attr(BUILDINGS[b.b].name+' — '+BUILDINGS[b.b].desc)+'">'+pBldgFace({b:b.b,owner:p.id})+'</div>';}).join('')||'<span class="note">none</span>';
     const hand=(p.hand||[]).length?(p.hand.map(k=>'<div class="mtile sm" data-tip="'+attr(bName(k)+' — '+bDesc(k)+' · in hand; place at the Market')+'">'+pBldgFace({b:k,owner:p.id})+'</div>').join('')):'';
     const wharf=SLOTS.map(s=>S.slots[s.id]).filter(t=>t&&t.owner===p.id).map(t=>'<span class="tag">'+(t.type==='ship'?LU('sailboat')+shipName(t)+'→'+DEST[t.dest].name.slice(0,3)+' '+t.load.length+'/'+effCap(t):LU('beer')+styleShort(t.style))+'</span>').join('')||'<span class="note">none</span>';
@@ -2768,11 +2821,10 @@ function renderTableaus(){
       +'<span class="chip" data-tip="Storage cap.">'+LU('package')+'<b>'+p.storage+'</b></span>'
       +'<span class="chip" data-tip="Charter contracts in hand.">'+LU('ticket')+'<b>'+(p.contracts||0)+'</b></span>'
       +'<span class="chip" data-tip="Total score.">★ <b>'+sc.total+'</b></span> <span class="note">deliveries '+sc.deliv+' · maj '+sc.maj+(sc.flight?' · flight '+sc.flight:'')+(sc.wharf?' · wharfage '+sc.wharf:'')+'</span>'+(p.ai?' <span class="tag" data-tip="An AI seat — same rules, same information; the tiers differ only in decision quality.">'+aiLabel(p)+' AI</span>':'')+'</div>'
-      +'<b class="note">'+LU('flask-conical')+' Vessels ('+p.vessels.length+'/'+p.maxVessels+'):</b><div class="brew">'+vessels+'</div>'
+      +floorHTML
       +'<div class="tsec"><b class="note">'+LU('scroll-text')+' Recipes:</b><div class="trow">'+recipes+'</div></div>'
       +'<div class="tsec"><b class="note">'+LU('building-2')+' Buildings (yours, on slots):</b><div class="trow">'+myBldgs+'</div>'
         +(hand?'<b class="note">'+LU('building-2')+' In hand <span class="note">(place at the Market)</span>:</b><div class="trow">'+hand+'</div>':'')+'</div>'
-      +'<div class="tsec"><b class="note">'+LU('wrench')+' Improvements:</b><div class="trow">'+ups+'</div></div>'
       +'<b class="note">'+LU('anchor')+' On slots (yours):</b> '+wharf+'<br>'
       +'<b class="note">'+LU('landmark')+' Delivered:</b> '+delivered+'<br>'
       +'<b class="note">'+LU('layers')+' Flight (distinct beers delivered, any destination):</b> '+flightStr
