@@ -375,6 +375,33 @@
   .rc{flex:1;min-width:0;border-right:1px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:.078in;color:var(--ink2);background:rgba(255,255,255,.4)}
   .rc:last-child{border-right:none} .rc.band{background:rgba(184,134,11,.16)}
   .rc.cap{background:var(--gold);color:#fff;font-weight:bold;font-size:.07in;text-align:center;line-height:1}
+  /* ====================== WHARF SIDE — supply DISPLAYS (Building display · Ship market) ====================== */
+  .disp{flex:1;display:flex;flex-direction:column;gap:.16in;min-width:0}
+  .disp-h{font-variant:small-caps;font-weight:bold;font-size:.135in;color:var(--sea);display:flex;align-items:center;gap:.05in;border-bottom:1.5px solid var(--sea);padding-bottom:.025in;margin-bottom:.09in}
+  .disp-h svg,.disp-h .ic{width:.16in;height:.16in}
+  .disp-h .dsub{margin-left:auto;font-variant:normal;font-weight:normal;font-style:italic;font-size:.092in;color:var(--ink2)}
+  .disp-bd{display:flex;gap:.1in;align-items:center}
+  .bgrid{display:grid;grid-template-columns:repeat(2,1.25in);gap:.08in}
+  .dslot{width:1.25in;height:1.25in;border:1.7px dashed var(--sea);border-radius:.06in;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;color:var(--sea)}
+  .dslot svg,.dslot .ic{width:.4in;height:.4in;opacity:.32}
+  .dslot.b{border-color:var(--green);color:var(--green)}
+  .ddeck{width:1.25in;height:1.25in;border-radius:.06in;background:var(--sea);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;
+    text-shadow:0 1px 1px rgba(0,0,0,.3);box-shadow:.05in -.05in 0 rgba(0,0,0,.18),inset 0 0 0 1.5px rgba(255,255,255,.22)}
+  .ddeck.b{background:var(--green)}
+  .ddeck svg,.ddeck .ic{width:.3in;height:.3in;opacity:.92}
+  .ddeck .dn{font-variant:small-caps;font-weight:bold;font-size:.092in;text-align:center;line-height:1.05}
+  /* ====================== CASK SUPPLY stacks (destinations board bottom) ====================== */
+  .cstack-row{display:flex;gap:.1in;justify-content:center;flex-wrap:wrap}
+  .cstack{width:1.25in;height:1.25in;border:1.7px solid var(--cc);border-radius:.06in;background:rgba(255,255,255,.5);
+    display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:.07in .05in;
+    box-shadow:.05in -.05in 0 rgba(0,0,0,.1),.025in -.025in 0 rgba(0,0,0,.1)}
+  .cstack .cs-h{display:flex;flex-direction:column;align-items:center;gap:.005in;line-height:1}
+  .cstack .cs-q{display:inline-flex;align-items:center;gap:.015in;font-weight:900;font-size:.115in;color:var(--cc)}
+  .cstack .cs-q svg,.cstack .cs-q .ic{width:.13in;height:.13in}
+  .cstack .cs-nm{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--ink)}
+  .cstack .cs-ic{color:var(--cc);opacity:.32}
+  .cstack .cs-ic svg,.cstack .cs-ic .ic{width:.36in;height:.36in}
+  .cstack .cs-n{font-size:.092in;font-style:italic;color:var(--ink2)}
   /* ====================== CHECKLIST ====================== */
   .check{position:absolute;left:.35in;top:.4in;width:9.7in;height:7.1in;font-size:.1in;display:flex;flex-direction:column;gap:.06in}
   .check h2{margin:0;font-variant:small-caps;color:var(--red);font-size:.2in;border-bottom:2px solid var(--gold);padding-bottom:.03in}
@@ -728,16 +755,17 @@ function kpanel(d,hall){const kc=d.kc;
     +'<div class="ktitle"><span class="kname">'+LU(hall?'crown':'landmark')+d.nm+'</span><span class="kreq">'+LU(QI)+d.req+'+</span></div>'
     +'<div class="kbody"><div class="krole">'+d.role+'</div>'+body+'</div></div>';}
 function dboard(){
-  let disp='';for(let i=0;i<BUILD_DISPLAY;i++)disp+='<div class="uslot">'+LU('building-2')+'Building<br>(face-up)</div>';
-  disp+='<div class="uslot supply">'+LU('layers')+'Building deck<br>(face-down)</div>';
-  disp+='<div class="uslot supply faceup">'+LU('sailboat')+'ship market<br>×'+SHIP_DISPLAY+' face-up</div>';
-  disp+='<div class="uslot supply faceup">'+LU('scroll-text')+'recipes · '+LU('ticket')+'contracts · '+LU('wrench')+'improvements<br>(always stocked)</div>';
+  // the brew supply: one face-up stack per beer type (top tile face-up = the steerable slot-action)
+  const cstack=d=>'<div class="cstack" style="--cc:'+d.c+'">'
+    +'<div class="cs-h"><span class="cs-q">'+LU(QI)+d.q+'</span><span class="cs-nm">'+d.nm+'</span></div>'
+    +'<div class="cs-ic">'+LU('beer')+'</div>'
+    +'<div class="cs-n">×'+d.n+'</div></div>';
   return '<div class="dboard">'
     +'<div class="db-head"><h2>'+LU('landmark')+'Destinations</h2>'
       +'<span class="legend"><span><b>'+LU(QI,'ql')+'</b> min cask quality</span><span><b>'+LU(VP,'vp')+'</b> per-cask value <i>(+ value-Buildings shipped through)</i></span><span><b>'+LU('landmark','vp')+' 1/2/3</b> end-game majority</span></span></div>'
     +'<div class="kontor-row">'+DESTS.map(d=>kpanel(d,false)).join('')+kpanel(HALL,true)+'</div>'
-    +'<div class="db-bottom">'
-      +'<div class="sbox disp"><div class="sb-h">'+LU('store')+'Market — shared supply<span class="sm">a Building display of '+BUILD_DISPLAY+' (buy + place, or earn one free by delivering to London / Novgorod) · a ship market of '+SHIP_DISPLAY+' (commission 2 '+LU('wheat','g ic')+') · recipes, charter contracts (1 '+LU('wheat','g ic')+') &amp; private improvements always stocked</span></div><div class="uprow">'+disp+'</div></div>'
+    +'<div class="db-bottom"><div class="sbox"><div class="sb-h">'+LU('beer')+'Cask supply<span class="sm">brew at the Brewhouse · one stack per beer type · top tile face-up</span></div>'
+      +'<div class="cstack-row">'+CASKS.map(cstack).join('')+'</div></div>'
     +'</div></div>';}
 
 // ---- MAIN BOARD — the Wharf (stations + 8 slots + both shared tracks) ----
@@ -760,27 +788,15 @@ function mboard(){
     +slot
     +'<div></div>'+slot+slot+'<div></div>'
     +'</div>';
-  const srow=(ic,nm,txt)=>'<div class="srow"><span class="sic">'+LU(ic)+'</span><span><b>'+nm+'</b> — '+txt+'</span></div>';
-  const side='<div class="mb-side">'
-    +'<div class="mbox"><h4>'+LU('list-ordered')+'Your turn</h4><ol>'
-      +'<li><b>Move</b> to an adjacent station — orthogonal only (mandatory from turn 2). Moving onto a <b>rival-occupied</b> station costs <b>1 '+LU('wheat','g ic')+'</b> (opening placement free). <i>Or, in lieu of the line, run your <b>Floor</b> — your vessels’ cask-actions as a private line (no toll).</i></li>'
-      +'<li><b>Activate</b> your station’s row <b>or</b> column.</li>'
-      +'<li><b>Resolve</b> its 4 stops — slot · station · station · slot — in <b>any order</b>. You may use the cask/ship occupant of each slot <b>and</b> any owned <b>Building</b> on the line: free, on your turn only.</li></ol></div>'
-    +'<div class="mbox"><h4>'+LU('anchor')+'The four stations</h4>'
-      +srow('store','Market · Source','take <b>2 goods</b> '+LU('package')+' (any mix), <i>or</i> acquire 1: a recipe '+LU('scroll-text')+' · a <b>Building</b> '+LU('building-2')+' (buy from the display + place it on a slot; or place one from hand, free) · a <b>charter contract</b> '+LU('ticket')+' (1 '+LU('wheat','g ic')+') · a private <b>improvement</b> '+LU('wrench')+' (buy for goods) · or <b>commission</b> '+LU('sailboat')+' a face-up ship (2 '+LU('wheat','g ic')+' → place on a slot bound to its printed destination + free-load a Ready cask).')
-      +srow('flask-conical','Brewhouse · Brew','pay a recipe’s cost → a young cask '+LU('beer')+' at step 0 in an <b>open vessel</b>. One brew per visit.')
-      +srow('hourglass','Cellar · Age','gain <b>3 age points</b> '+LU('hourglass')+', split freely across your vessels. (Every cask also ages +1 automatically each of your turns.)')
-      +srow('ship','Harbor · Ship','load '+LU('package-plus')+' a deployed cask (<b>yours or a rival’s</b> — you pick the ship/destination; owner scores it, you take <b>1 '+LU('wheat','g ic')+'</b>) onto any ship it qualifies for — a ship <b>sails only when full</b> · <b>Enshrine</b> '+LU('crown')+' a Q2+ slot cask at the Hall (local — no boat) · or <b>Charter</b> '+LU('ticket')+': spend a <b>charter contract + a flat 2 '+LU('wheat','g ic')+' fare</b> to ship 1 Ready cask now. On <b>delivery</b> each cask’s owner banks the destination benefit <i>and</i> its points, in <b>load order</b>.')
-      +'</div>'
-    +'<div class="mbox"><h4>'+LU('beer')+'The cask &amp; the slots</h4><div class="b">'
-      +'<b>Maturing</b> (private vessel) → Ready → <b>deploy to a slot</b> (public action + cargo) → <b>shipped</b> (scores for its owner, leaves). A rival may ship your slot cask — <b>you</b> score it.</div>'
-      +'<div class="b" style="margin-top:.03in"><b>Slot-action</b> (drawn at brew): '
-        +CASK_POOL.map(a=>LU(a.ai)+' '+a.act.replace(/ · .*/,'')).join(' · ')+' · '+LU(CASK_WILD.ai)+' Wild (Q4+). <i>Gruit = '+LU('coins')+' Source.</i></div>'
-      +'<div class="b" style="margin-top:.03in">'+LU('building-2')+' <b>Buildings</b> — an <b>owned</b> tile on a slot that <b>modifies the occupant docked on it</b>: <b>Value</b> '+LU('star')+' (delivers for more) or <b>Transform</b> (changes the cask/ship). Owned-but-shared: a rival docks for a +1 '+LU('star')+' <b>wharfage</b> to you.</div></div>'
-    +'<div class="mbox"><h4>'+LU('settings')+'Setup seeding</h4><div class="b">'
-      +'Each house: 3 '+LU('wheat','g ic')+' 2 '+LU('sprout','h ic')+' (+1 '+LU('wheat','g ic')+'/seat after the first) · Gruit + Hopped · 2 vessels · 2 charter contracts · <b>1 Building in hand</b> · a Ready Gruit. '
-      +'Shared: a <b>guaranteed Hulk → Bruges + 1 more ship</b> on slots, a <b>ship market of 3</b> + a <b>Building display of 4</b> face-up · deal <b>3 of the 4 export beers</b>. First player <b>fixed</b>. <i>2p: ~6 slots; majorities winner-take-all.</i></div></div>'
-    +'</div>';
+  // RIGHT SIDE = the two contested face-up Market displays (the wall of text moved to the player-aid card)
+  const dslot=fam=>'<div class="dslot '+fam+'">'+LU(fam==='b'?'building-2':'sailboat')+'</div>';
+  const ddeck=(fam,nm)=>'<div class="ddeck '+fam+'">'+LU('layers')+'<span class="dn">'+nm+'</span></div>';
+  const side='<div class="disp">'
+    +'<div><div class="disp-h">'+LU('building-2')+'Building display<span class="dsub">4 face-up + deck</span></div>'
+      +'<div class="disp-bd"><div class="bgrid">'+dslot('b')+dslot('b')+dslot('b')+dslot('b')+'</div>'+ddeck('b','Building deck')+'</div></div>'
+    +'<div><div class="disp-h">'+LU('sailboat')+'Ship market<span class="dsub">3 face-up + deck</span></div>'
+      +'<div class="bgrid">'+dslot('s')+dslot('s')+dslot('s')+ddeck('s','Ship deck')+'</div></div>'
+  +'</div>';
   let clk='';for(let i=1;i<=13;i++){let end='';for(const p in SAILED)if(SAILED[p]===i)end=p+'p';
     clk+='<div class="cc'+(end?' end':'')+'">'+(end?end+'<br>END':'<span class="n">'+i+'</span>')+'</div>';}
   let rt='';for(let i=1;i<=MAX_ROUND;i++)rt+='<div class="rc'+(i===MAX_ROUND?' cap':(i>=12?' band':''))+'">'+(i===MAX_ROUND?'25<br>CAP':i)+'</div>';
