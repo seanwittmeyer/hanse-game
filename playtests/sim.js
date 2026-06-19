@@ -109,12 +109,10 @@ function botMove(p){
     if(v>bestv){bestv=v;best=tc;which=w;}});});
   __chosenWhich=which;doMove(best);
 }
-function botLine(p){
-  if(readyInVessels(p).length&&emptySlots().length){startDeploy(readyInVessels(p)[0].i,'line');return;}
-  chooseLine(__chosenWhich||'row');
-}
+function botLine(p){chooseLine(__chosenWhich||'row');}   // v1.3: deploy rides the line/Brewhouse, no longer a free pre-line action
 function stopPrio(s){
   if(s.kind==='cell')return {Source:0,Brew:1,Age:2,Ship:4}[CELLROLE[s.cell]];
+  if(s.kind==='deployhere')return 2.5;   // deploy onto an empty line slot
   if(s.kind==='bldg')return 3;   // a line-effect Building (Crane / Lagering)
   var t=S.slots[s.slot];if(!t)return 99;
   if(t.type==='cask'){var a=t.act||STYLES[t.style].act;var pr={source:0,wild:1,age:2,reach:2,load:4,convert:1,survey:1}[a];return pr==null?2:pr;}
@@ -211,6 +209,12 @@ function botDeploy(){var es=emptySlots();if(!es.length){deploySkipAll();return;}
   deployTo((on||es[0]).id);}
 function botBenefit(){var disp=S.buildDisplay||[];if(!disp.length){benefitPick(null);return;}   // London/Novgorod → a free Building
   benefitPick(pickBuilding(disp.slice()));}
+function botDeployHere(p){var ready=readyInVessels(p);if(!ready.length){deployHereSkip();return;}
+  var own=S.buildings[UI.dhere.slot];var valHere=own&&own.owner===p.id&&BUILDINGS[own.b].verb==='value';
+  ready.sort(function(a,b){return valHere?b.c.q-a.c.q:a.c.q-b.c.q;});deployHerePick(ready[0].i);}
+function botTap(p){var ready=readyInVessels(p);   // tap only to relieve a jam (Ready cask, no slot to deploy it)
+  if(ready.length&&emptySlots().length===0){ready.sort(function(a,b){return a.c.q-b.c.q;});tapPick('v:'+ready[0].i);return;}
+  tapSkip();}
 
 function botActOnce(){var p=cur();var U=UI.sub;
   switch(U){
@@ -226,6 +230,8 @@ function botActOnce(){var p=cur();var U=UI.sub;
     case 'wild':return botWild(p);
     case 'load':return botLoad(p);
     case 'deploy':return botDeploy();
+    case 'deployhere':return botDeployHere(p);
+    case 'tap':return botTap(p);
     case 'benefit':return botBenefit();
     case 'placebldg':return botPlaceBldg();
     case 'toll':return tollPay();              // the bot pays the occupancy toll (the Floor is a human option)
