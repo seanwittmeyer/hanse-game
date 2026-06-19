@@ -336,11 +336,11 @@
   /* ====================== MAIN BOARD — THE WHARF ====================== */
   .mboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--sea);border-radius:.12in;padding:.14in .16in;display:flex;flex-direction:column;gap:.04in;color:var(--ink)}
   .mboard svg,.mboard .ic{stroke-width:1.8}
-  .mb-head{display:flex;align-items:baseline;gap:.16in;border-bottom:2px solid var(--sea);padding-bottom:.03in}
-  .mb-head h2{margin:0;font-variant:small-caps;color:var(--sea);font-size:.2in;letter-spacing:.5px;display:flex;align-items:center;gap:.06in}
+  .mb-head{display:flex;align-items:baseline;gap:.14in;margin-bottom:.02in}
+  .mb-head h2{margin:0;font-variant:small-caps;color:var(--sea);font-size:.26in;letter-spacing:.5px;display:flex;align-items:center;gap:.08in}
   .mb-head h2 svg,.mb-head h2 .ic{width:.2in;height:.2in}
-  .mb-head .sub{font-size:.095in;font-style:italic;color:var(--ink2);margin-left:auto}
-  .mb-main{flex:1;display:flex;gap:.14in;min-height:0}
+  .mb-head .sub{font-size:.1in;font-style:italic;color:var(--ink2)}
+  .mb-main{flex:1;display:flex;gap:.14in;min-height:0;align-items:center}
   .wharf{flex:0 0 auto;display:grid;gap:.05in;
     grid-template-columns:1.3in 1.38in 1.38in 1.3in;
     grid-template-rows:1.3in 1.38in 1.38in 1.3in}
@@ -376,10 +376,11 @@
   .rc:last-child{border-right:none} .rc.band{background:rgba(184,134,11,.16)}
   .rc.cap{background:var(--gold);color:#fff;font-weight:bold;font-size:.07in;text-align:center;line-height:1}
   /* ====================== WHARF SIDE — supply DISPLAYS (Building display · Ship market) ====================== */
-  .disp{flex:1;display:flex;flex-direction:column;gap:.16in;min-width:0}
-  .disp-h{font-variant:small-caps;font-weight:bold;font-size:.135in;color:var(--sea);display:flex;align-items:center;gap:.05in;border-bottom:1.5px solid var(--sea);padding-bottom:.025in;margin-bottom:.09in}
-  .disp-h svg,.disp-h .ic{width:.16in;height:.16in}
-  .disp-h .dsub{margin-left:auto;font-variant:normal;font-weight:normal;font-style:italic;font-size:.092in;color:var(--ink2)}
+  .disp{flex:1;display:flex;flex-direction:column;gap:.12in;min-width:0}
+  .disp-h{display:inline-flex;align-items:center;gap:.05in;background:var(--sea);color:#fff;border-radius:.06in;
+    padding:.035in .12in;font-variant:small-caps;font-weight:bold;font-size:.125in;letter-spacing:.3px;margin-bottom:.07in;text-shadow:0 1px 1px rgba(0,0,0,.25)}
+  .disp-h svg,.disp-h .ic{width:.15in;height:.15in}
+  .disp-h.b{background:var(--green)}
   .disp-bd{display:flex;gap:.1in;align-items:center}
   .bgrid{display:grid;grid-template-columns:repeat(2,1.25in);gap:.08in}
   .dslot{width:1.25in;height:1.25in;border:1.7px dashed var(--sea);border-radius:.06in;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;color:var(--sea)}
@@ -418,7 +419,7 @@
 </head>
 <body>
 <div class="bar no-print">
-  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v1.6 &ldquo;Hops&rdquo;</span></h1>
+  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v1.7 &ldquo;Even Footing&rdquo;</span></h1>
   <button onclick="window.print()">🖨 Print</button>
   <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
   <span class="seg"><button id="bfull" class="on" onclick="setMode('full')">Full set</button><button id="bproof" onclick="setMode('proof')">Proof (1 each)</button></span>
@@ -501,14 +502,14 @@ const WHARFAGE=1;        // owner's points cut when a rival routes through their
 const DEVELOP_PTS=3;     // v1.2 developer ★: a Building a RIVAL overbuilt returns flipped to its Wild+★ back, worth this at game end
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
 // Market (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
-const IMPROVE=[   // Upgrades / private improvements = PURPLE
-  {ic:'wrench',     nm:'Extra Vessel',   act:'+1 vessel · cap 3', g:5, c:'#5b3a8e', n:4},
-  {ic:'wrench',     nm:'Aging Cellar',   act:'maturation −1 step', g:5, c:'#5b3a8e', n:4},
-  {ic:'badge-plus', nm:'Granary Right',  act:'gain '+LU('wheat','g ic')+' → +1', g:4, c:'#5b3a8e', n:4},
-  {ic:'badge-plus', nm:'Hop Garden',     act:'gain '+LU('sprout','h ic')+' → +1', g:4, c:'#5b3a8e', n:4},
-  {ic:'package-plus',nm:'Harbor Crane',  act:'Harbor loads 2 casks', g:4, c:'#5b3a8e', n:4},
-  {ic:'snowflake',  nm:'Lagering Cellar',act:'+1 age a cask each turn', g:4, c:'#5b3a8e', n:4},
-  {ic:'anchor',     nm:'Private Quay',   act:'ship casks from vessels', g:5, c:'#5b3a8e', n:4},
+const IMPROVE=[   // Upgrades / private improvements = PURPLE · v1.7: −1 G each, bought at the CELLAR
+  {ic:'wrench',     nm:'Extra Vessel',   act:'+1 vessel · cap 3', g:4, c:'#5b3a8e', n:4},
+  {ic:'wrench',     nm:'Aging Cellar',   act:'maturation −1 step', g:4, c:'#5b3a8e', n:4},
+  {ic:'badge-plus', nm:'Granary Right',  act:'gain '+LU('wheat','g ic')+' → +1', g:3, c:'#5b3a8e', n:4},
+  {ic:'badge-plus', nm:'Hop Garden',     act:'gain '+LU('sprout','h ic')+' → +1', g:3, c:'#5b3a8e', n:4},
+  {ic:'package-plus',nm:'Harbor Crane',  act:'Harbor loads 2 casks', g:3, c:'#5b3a8e', n:4},
+  {ic:'snowflake',  nm:'Lagering Cellar',act:'+1 age a cask each turn', g:3, c:'#5b3a8e', n:4},
+  {ic:'anchor',     nm:'Private Quay',   act:'ship casks from vessels', g:4, c:'#5b3a8e', n:4},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
@@ -722,7 +723,7 @@ function pboard(p){
     +'<div class="pb-head">'
       +'<div class="crest">'+LU('beer')+'</div>'
       +'<div class="pb-title"><div class="pb-name">'+p.nm+' Brewhouse</div>'
-        +'<div class="pb-sub">Brewhouses of the Hanse · your private brewery · v1.6 “Hops”</div></div>'
+        +'<div class="pb-sub">Brewhouses of the Hanse · your private brewery · v1.7 “Even Footing”</div></div>'
       +'<div class="pb-store"><span class="slbl">'+LU('warehouse')+'Storage</span>'
         +'<div class="szone"><span class="si">'+LU('wheat','g ic')+'Grain</span><span class="si">'+LU('sprout','h ic')+'Hops</span><span class="cap">max <b>8</b></span></div></div>'
     +'</div>'
@@ -784,7 +785,7 @@ function mboard(){
     +station('B','Brewhouse','flask-conical',LU('beer'))
     +slot+slot
     +station('C','Harbor','ship',LU('package-plus')+OR+LU('crown')+OR+LU('ticket'))
-    +station('D','Cellar','hourglass','<b>3</b>'+LU('hourglass'))
+    +station('D','Cellar','hourglass','<b>3</b>'+LU('hourglass')+OR+LU('wrench'))
     +slot
     +'<div></div>'+slot+slot+'<div></div>'
     +'</div>';
@@ -792,19 +793,17 @@ function mboard(){
   const dslot=fam=>'<div class="dslot '+fam+'">'+LU(fam==='b'?'building-2':'sailboat')+'</div>';
   const ddeck=(fam,nm)=>'<div class="ddeck '+fam+'">'+LU('layers')+'<span class="dn">'+nm+'</span></div>';
   const side='<div class="disp">'
-    +'<div><div class="disp-h">'+LU('building-2')+'Building display<span class="dsub">4 face-up + deck</span></div>'
+    +'<div><div class="disp-h b">'+LU('building-2')+'Building display</div>'
       +'<div class="disp-bd"><div class="bgrid">'+dslot('b')+dslot('b')+dslot('b')+dslot('b')+'</div>'+ddeck('b','Building deck')+'</div></div>'
-    +'<div><div class="disp-h">'+LU('sailboat')+'Ship market<span class="dsub">3 face-up + deck</span></div>'
+    +'<div><div class="disp-h">'+LU('sailboat')+'Ship market</div>'
       +'<div class="bgrid">'+dslot('s')+dslot('s')+dslot('s')+ddeck('s','Ship deck')+'</div></div>'
   +'</div>';
   let clk='';for(let i=1;i<=13;i++){let end='';for(const p in SAILED)if(SAILED[p]===i)end=p+'p';
     clk+='<div class="cc'+(end?' end':'')+'">'+(end?end+'<br>END':'<span class="n">'+i+'</span>')+'</div>';}
-  let rt='';for(let i=1;i<=MAX_ROUND;i++)rt+='<div class="rc'+(i===MAX_ROUND?' cap':(i>=12?' band':''))+'">'+(i===MAX_ROUND?'25<br>CAP':i)+'</div>';
   return '<div class="mboard">'
-    +'<div class="mb-head"><h2>'+LU('anchor')+'The Wharf</h2><span class="sub">Brewhouses of the Hanse · main board · v1.6 “Hops” — Source → Brew → Age → Ship</span></div>'
+    +'<div class="mb-head"><h2>'+LU('anchor')+'The Wharf</h2><span class="sub">Source → Brew → Age → Ship</span></div>'
     +'<div class="mb-main">'+wharf+side+'</div>'
-    +'<div><div class="ctrack">'+clk+'</div><div class="mtrack-l">'+'Sailed-Ships track — every voyage (a ship sailing <b>full</b>, a Charter, or an Enshrine) fills one slot; at your player-count END, finish the round &amp; score. <i>Charter = spend a charter contract + a flat 2 '+LU('wheat','g ic')+' fare (start with 2; buy more at the Market for 1 '+LU('wheat','g ic')+').</i></div></div>'
-    +'<div><div class="rtrack">'+rt+'</div><div class="mtrack-l">round track — move the marker each round; the shaded 12–25 band is the target pace; the game never passes 25</div></div>'
+    +'<div><div class="ctrack">'+clk+'</div><div class="mtrack-l">Sailed-Ships track — every voyage (a full sail, a Charter, or an Enshrine) fills one; at your player-count END, finish the round &amp; score.</div></div>'
   +'</div>';}
 
 //==================================================================
@@ -852,7 +851,7 @@ function aidSheet(pages,label,faceHtml){
 function buildPages(){
   const pages=[],famPages={};
   // --- BOARDS ---
-  boardPage(pages,'boards','Main board — the Wharf',mboard(),7.42);
+  boardPage(pages,'boards','Main board — the Wharf',mboard(),7.5);
   boardPage(pages,'boards','Destinations board',dboard(),6.9);
   PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),5.4));
   // --- TILES (one unbroken 1.25in grid — no family breaks) ---
@@ -917,7 +916,7 @@ function checklist(pages,famPages){
   const row=(bx,nm,n,note)=>'<tr>'+(bx?'<td class="bx"></td>':'<td></td>')+'<td>'+nm+'</td><td class="n">'+n+'</td><td>'+(note||'')+'</td></tr>';
   const bp=pages.filter(p=>p.section==='boards');
   const pbRef=bp.length>3?'S'+bp[2].no+'–S'+bp[bp.length-1].no:'S'+bp[2].no+' (proof: 1 of '+PLAYERS.length+' shown)';
-  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v1.6 “Hops”)</h2><div class="cols2">';
+  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v1.7 “Even Footing”)</h2><div class="cols2">';
   h+='<table><tr><th></th><th>Boards (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Main board — the Wharf (stations · 8 slots · Sailed-Ships + round tracks)','1','S'+bp[0].no)
     +row(1,'Destinations board (4 kontore + the Hall · Building display · majority chart)','1','S'+bp[1].no)
@@ -937,7 +936,7 @@ function checklist(pages,famPages){
     +row(0,'<i>'+bVal.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ')+'</i>','','')
     +row(1,'<b>Buildings · TRANSFORM</b> ('+bTr.length+' designs — the craft &amp; works layer)',bTrN,pgRef(pages,famPages,'Transform Buildings'))
     +row(0,'<i>'+bTr.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ')+'</i>','','')
-    +row(1,'Private improvements ('+IMPROVE.length+' designs — bought for goods)',impN,pgRef(pages,famPages,'Improvements'))
+    +row(1,'Private improvements ('+IMPROVE.length+' designs — bought at the Cellar, v1.7)',impN,pgRef(pages,famPages,'Improvements'))
     +row(0,'<i>'+IMPROVE.map(d=>d.nm+' ×'+d.n).join(' · ')+'</i>','','')
     +row(1,'<b>Building backs</b> — the flipped Wild + '+DEVELOP_PTS+'★ developer face (1 per Building tile)',backsN,pgRef(pages,famPages,'Building backs'))
     +row(0,'<i>mount on the REVERSE of each Building (identical — any back fits any front); replaces the separate developer chits</i>','','')
