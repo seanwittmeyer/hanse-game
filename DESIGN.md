@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v1.3 “Tap a Cask”)
+# Brewhouses of the Hanse — Design (v1.4 “Deploy”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v1.3 “Tap a Cask”** — live; **`play.html` implements it** (the keystone rebuild shipped; the demand-dice tracking + the printables-tile UI overhaul followed). |
+|**Status**     |**v1.4 “Deploy”** — live; **`play.html` implements it** (the keystone rebuild shipped; the demand-dice tracking + the printables-tile UI overhaul followed). |
 
 ---
 
@@ -76,7 +76,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v1.3 “Tap a Cask”)
+## 6. The current architecture (v1.4 “Deploy”)
 
 Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -153,6 +153,18 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 ---
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
+
+**v1.4 “Deploy”** *(2026-06-19, `play.html` KEY v60)* — Made **deploy a first-class line action** (building on
+v1.3's "deploy rides the line"). **An empty slot's default line-action IS "Deploy"** (shown as *"{building?}
+Deploy"*) — so a line reads e.g. *slot Deploy · station · station · slot Deploy*, and you spend a stop to set
+**one** Ready cask onto **any** open slot (several Deploy stops → several casks/turn; the Brewhouse station also
+offers Deploy, with its icon now on the board; the Cellar shows the Tap icon). The **combo:** deploying onto
+*another* empty slot still pending on the line flips that slot's Deploy into the **cask's action stop** — place
+where you'll still act and take the action this turn (control over execution for advanced play). This replaces
+v1.3's narrower "deploy here onto the triggering slot only." Rationale: removing the old free/anytime deploy
+makes the game **easier to learn and play** (one fewer floating action), and the empty-slot-default framing
+makes the line legible — every stop *is* an action. *(In-page shipped; sim harness + AI ladder/oracle re-runs
+and the page-doc sweep follow.)*
 
 **v1.3 “Tap a Cask”** *(2026-06-19, `play.html` KEY v59)* — Reworked **deploy** and added **Tap** to cure the
 wharf clog/seize (an all-AI game locked up: slots jam → vessels back up → brewing stalls). **Deploy is no

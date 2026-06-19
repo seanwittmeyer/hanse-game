@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.3 “Tap a Cask”)
+# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.4 “Deploy”)
 
 > The physical manifest: **boards · tokens · the tile families · the player brewery board ·
 > destinations.** Enumerates *what objects exist and what each does* — the **why** is in

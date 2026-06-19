@@ -1,8 +1,8 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v1.3 “Tap a Cask”)
+# Brewhouses of the Hanse — Turn & Round Rules (v1.4 “Deploy”)
 
 > **Status: live (2026-06-18).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
-> playable build is `play.html` (v1.3 “Tap a Cask”) — these rules are implemented there.** (The prior
+> playable build is `play.html` (v1.4 “Deploy”) — these rules are implemented there.** (The prior
 > v0.16.1 "The Wharf" build is archived at branch `archive/main-v0.16.1` / `archive/play.html` /
 > `archive/v0.16/`.)
 >
@@ -101,11 +101,14 @@ Gruit fixed to **Source +2 goods**, Q2+ draw from the pool — §8). Three state
    a vessel **powers your Floor** (its action, run as your private line — §8, `PLAN.md` §1B), so
    it earns value *before* it ships. The catch: it **occupies the vessel** (no new brew there
    until you deploy or ship it).
-2. **Deployed** *(public, on a slot)* — when Ready, **deploy** it by **activating a line**: onto an
-   **empty slot of the line you fire** (deploy *here* — placement is a real decision), or onto **any**
-   open slot via the **Brewhouse** (v1.3 — deploy is no longer a free anytime action). Now it is
-   **cargo-in-waiting**, a **public slot-action**, and **contestable**. *(If you deploy onto a slot
-   with a **building**, the building modifies it — §5.)*
+2. **Deployed** *(public, on a slot)* — when Ready, **deploy** it as a **line action** (v1.4 — no longer
+   free/anytime). **An empty slot's default action IS "Deploy"** (it shows as *"{building?} Deploy"*): so
+   a line with two open slots reads *slot Deploy · station · station · slot Deploy*. Trigger an empty
+   slot's Deploy (or the **Brewhouse**, which also offers Deploy) to set **one** Ready cask onto **any**
+   open slot — with several Deploy stops you may place several casks in a turn. **Combo:** deploy onto
+   *another* empty slot still pending on this line and its Deploy flips to the **cask's action stop** — so
+   you take that action this turn. The cask is now **cargo-in-waiting**, a **public slot-action**, and
+   **contestable**. *(If you deploy onto a slot with a **building**, the building modifies it — §5.)*
 3. **Delivered** *(scored, gone)* — shipped to a destination (§6–7). Scores for its owner and
    leaves.
 

@@ -163,7 +163,7 @@
 <header>
   <h1>Brewhouses of the Hanse</h1>
   <div class="sub">Rulebook &amp; Components · A merchant brewing house in the Hanseatic League. At <b>the Wharf</b> you <b>Source → Brew → Age → Ship</b> — the <b>kontore</b> pay volume, the <b>Hall</b> pays prestige.</div>
-  <div class="tag">v1.3 “Tap a Cask” prototype draft · all numbers placeholders ⚙</div>
+  <div class="tag">v1.4 “Deploy” prototype draft · all numbers placeholders ⚙</div>
 </header>
 
 <nav>
@@ -289,7 +289,7 @@
     <li><b>Resolve</b> the line's up-to-4 stops — <code>slot · station · station · slot</code> — in <b>any order</b>:
       <ul>
         <li><b>Each station</b>: take its action. <b>Stations are never closed</b> — a rival's worker never stops you using one.</li>
-        <li><b>Each slot</b>: you <b>may use what it holds</b> — a <b>cask</b>'s signature action, a <b>ship</b>'s free load, and any <b>owned building</b>'s effect (it modifies the cask/ship docked on it). All resolve <b>on your turn, for you</b> — <b>no out-of-turn gains</b>.</li>
+        <li><b>Each slot</b>: you <b>may use what it holds</b> — a <b>cask</b>'s signature action, a <b>ship</b>'s free load, and any <b>owned building</b>'s effect (it modifies the cask/ship docked on it). An <b>empty</b> slot's action is <b>Deploy</b> (shown <em>"{building?} Deploy"</em>): set <b>one</b> Ready cask onto <b>any</b> open slot. <b>Combo:</b> deploy onto another empty slot still pending on this line and its Deploy becomes that cask's action — take it this turn. All resolve <b>on your turn, for you</b> — <b>no out-of-turn gains</b>.</li>
       </ul>
     </li>
   </ol>
@@ -302,8 +302,8 @@
   <table>
     <tr><th>Station</th><th>Action ⚙</th></tr>
     <tr><td><b>A · Market</b> <span class="pill">Source</span></td><td>Take <b>2 goods</b> (any mix), <b>or</b> acquire <b>one</b>: a <b>recipe</b> (a brewable type); a <b>building</b> from the face-up display — <b>and place it on a slot</b> (the authorship play; you may also place one from hand, free); a <b>commission</b> (place one of the face-up ships on any open slot and free-load a Ready cask aboard); or a <b>charter contract</b> (1 G ⚙, unlimited supply — §10). <em>(Delivering to London / Novgorod also earns a Building free — §10.)</em></td></tr>
-    <tr><td><b>B · Brewhouse</b> <span class="pill">Brew</span></td><td><b>Load</b> one recipe you hold (paying its <span class="cube g"></span>/<span class="cube h"></span> cost) into an <b>open vessel</b> — a young cask at step 0. It takes its slot-action from the <b>face-up top tile of that quality's pile</b>; the top of <b>every</b> pile is visible, so you <b>see the action you'd get</b> and brew toward your engine (steerable — no blind draw). Recipes are permanent; one load per Brewhouse.</td></tr>
-    <tr><td><b>D · Cellar</b> <span class="pill">Age</span></td><td>Gain a <b>pool of 3 age points</b> ⚙ and <b>allocate freely across your vessels</b>. (Casks also age <b>+1 automatically each turn</b>.) When a cask is <b>Ready</b>, deploy it to an open slot.</td></tr>
+    <tr><td><b>B · Brewhouse</b> <span class="pill">Brew · Deploy</span></td><td><b>Load</b> one recipe you hold (paying its <span class="cube g"></span>/<span class="cube h"></span> cost) into an <b>open vessel</b> — a young cask at step 0. It takes its slot-action from the <b>face-up top tile of that quality's pile</b>; the top of <b>every</b> pile is visible, so you <b>see the action you'd get</b> and brew toward your engine (steerable — no blind draw). Recipes are permanent; one load per Brewhouse. The Brewhouse also lets you <b>Deploy</b> a Ready cask onto any open slot.</td></tr>
+    <tr><td><b>D · Cellar</b> <span class="pill">Age · Tap</span></td><td>Gain a <b>pool of 3 age points</b> ⚙ and <b>allocate freely across your vessels</b>. (Casks also age <b>+1 automatically each turn</b>.) Then optionally <b>Tap</b> one cask — from a vessel or a slot: fire its action once, then discard it (frees the vessel, or <b>recalls</b> it off a slot for a better cask). <em>(Deploy a Ready cask via an empty slot's Deploy action, or the Brewhouse.)</em></td></tr>
     <tr><td><b>C · Harbor</b> <span class="pill">Ship</span></td><td><b>Load</b> one of <b>your</b> casks from a slot onto <b>any ship</b> it qualifies for — loading is a <b>commitment</b>, it pays nothing yet. A ship <b>sails only when it is full</b> (then every cask delivers — each owner banks both that destination's benefit and its points, in <b>load order</b>); or use a <b>Charter</b> (spend a <b>charter contract</b> + a flat 2 G fare to ship one Ready cask now — §10), or <b>Enshrine</b> a deployed Q2+ cask into the <b>Hall</b> (no ship, no fare — §10). Each voyage <b>or</b> enshrinement advances the clock.</td></tr>
   </table>
 </section>
@@ -479,7 +479,7 @@
 </div>
 
 <footer>
-  Brewhouses of the Hanse · rulebook &amp; components · <b>v1.3 “Tap a Cask”</b> · generated from <code>RULES.md</code> / <code>COMPONENTS.md</code> · all numbers are placeholders ⚙<br>
+  Brewhouses of the Hanse · rulebook &amp; components · <b>v1.4 “Deploy”</b> · generated from <code>RULES.md</code> / <code>COMPONENTS.md</code> · all numbers are placeholders ⚙<br>
   <span class="small">The Play client (<code>play.html</code>) is the de-facto reference implementation.</span>
 </footer>
 

@@ -1,9 +1,9 @@
-# Brewhouses of the Hanse — v1.3 “Tap a Cask” — PLAN
+# Brewhouses of the Hanse — v1.4 “Deploy” — PLAN
 
-> **Status: SHIPPED — v1.3 “Tap a Cask” (opened as the v1.0 “Living Slots” reset, 2026-06-16).** The
+> **Status: SHIPPED — v1.4 “Deploy” (opened as the v1.0 “Living Slots” reset, 2026-06-16).** The
 > keystone rebuild this plan called for has **shipped**: the *living, composable Wharf slots*, the
 > differentiation pass (v1.1), and the demand dice (v1.2) are all live repo-wide (`RULES.md` /
-> `COMPONENTS.md` / all four HTML pages on **v1.3 “Tap a Cask”**). This plan replaced the abandoned
+> `COMPONENTS.md` / all four HTML pages on **v1.4 “Deploy”**). This plan replaced the abandoned
 > "demand-board" detour (the `*-v1` files, deleted; the *"Leffe at a party / quality is a
 > construct"* thread and everything after it is **discarded**) and returned to the **keystone we
 > bookmarked early in the design chat**: the *living, composable Wharf slots*. The prior live game
@@ -258,10 +258,10 @@ Three decisions set the keystone's shape; everything else sizes off them:
 ## 7. Roadmap
 
 1. **This plan** (+ resolve F1–F3). ✓ done (F1–F3 resolved in the shipped v1.0–v1.2 builds).
-2. **Edit the canonical `RULES.md`** forward to the new path (the keystone + the clear scoring). ✓ shipped (v1.3 “Tap a Cask”).
+2. **Edit the canonical `RULES.md`** forward to the new path (the keystone + the clear scoring). ✓ shipped (v1.4 “Deploy”).
 3. **Edit `COMPONENTS.md`** — the building family (the new content deck, one grammar), the
-   reconceived destination/scoring table, the cuts. ✓ shipped (v1.3 “Tap a Cask”; the demand dice replaced the value chits).
-4. **Rebuild `play.html`** to the new rules (sandbox first; keep v0.16.1 live until ready). ✓ shipped — `play.html` is now on v1.3 “Tap a Cask” (v0.16.1 archived).
+   reconceived destination/scoring table, the cuts. ✓ shipped (v1.4 “Deploy”; the demand dice replaced the value chits).
+4. **Rebuild `play.html`** to the new rules (sandbox first; keep v0.16.1 live until ready). ✓ shipped — `play.html` is now on v1.4 “Deploy” (v0.16.1 archived).
 5. **HTML docs** (`learn` / `index`) then **`printables`** last. ✓ shipped — all four pages on v1.2.
 6. Sim-gate throughout (crash/deadlock-free, pace 12–25, lanes balanced, AI ladder). ✓ ongoing — the standing gate for every change.
 
