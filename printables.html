@@ -340,7 +340,7 @@
   .mb-head h2{margin:0;font-variant:small-caps;color:var(--sea);font-size:.26in;letter-spacing:.5px;display:flex;align-items:center;gap:.08in}
   .mb-head h2 svg,.mb-head h2 .ic{width:.2in;height:.2in}
   .mb-head .sub{font-size:.1in;font-style:italic;color:var(--ink2)}
-  .mb-main{flex:1;display:flex;gap:.14in;min-height:0}
+  .mb-main{flex:1;display:flex;gap:.14in;min-height:0;align-items:center}
   .wharf{flex:0 0 auto;display:grid;gap:.05in;
     grid-template-columns:1.3in 1.38in 1.38in 1.3in;
     grid-template-rows:1.3in 1.38in 1.38in 1.3in}
@@ -376,9 +376,9 @@
   .rc:last-child{border-right:none} .rc.band{background:rgba(184,134,11,.16)}
   .rc.cap{background:var(--gold);color:#fff;font-weight:bold;font-size:.07in;text-align:center;line-height:1}
   /* ====================== WHARF SIDE — supply DISPLAYS (Building display · Ship market) ====================== */
-  .disp{flex:1;display:flex;flex-direction:column;gap:.16in;min-width:0}
+  .disp{flex:1;display:flex;flex-direction:column;gap:.12in;min-width:0}
   .disp-h{display:inline-flex;align-items:center;gap:.05in;background:var(--sea);color:#fff;border-radius:.06in;
-    padding:.035in .12in;font-variant:small-caps;font-weight:bold;font-size:.125in;letter-spacing:.3px;margin-bottom:.1in;text-shadow:0 1px 1px rgba(0,0,0,.25)}
+    padding:.035in .12in;font-variant:small-caps;font-weight:bold;font-size:.125in;letter-spacing:.3px;margin-bottom:.07in;text-shadow:0 1px 1px rgba(0,0,0,.25)}
   .disp-h svg,.disp-h .ic{width:.15in;height:.15in}
   .disp-h.b{background:var(--green)}
   .disp-bd{display:flex;gap:.1in;align-items:center}
@@ -851,7 +851,7 @@ function aidSheet(pages,label,faceHtml){
 function buildPages(){
   const pages=[],famPages={};
   // --- BOARDS ---
-  boardPage(pages,'boards','Main board — the Wharf',mboard(),7.0);
+  boardPage(pages,'boards','Main board — the Wharf',mboard(),7.5);
   boardPage(pages,'boards','Destinations board',dboard(),6.9);
   PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),5.4));
   // --- TILES (one unbroken 1.25in grid — no family breaks) ---
