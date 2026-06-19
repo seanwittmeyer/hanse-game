@@ -28,12 +28,12 @@ ok(S.players[0].developed===DEVELOP_PTS, 'P0 scores DEVELOP_PTS ('+S.players[0].
 ok(S.buildings[slot].b==='staple', 'rival staple now occupies the slot');
 ok(scorePlayer(S.players[0]).developed===DEVELOP_PTS, 'scorePlayer counts the developed points');
 
-// self-displacement pays nothing (anti-farm)
+// v1.7.1: self-displacement FLIPS into your area (a Floor Wild) but scores NO points (no point-farm)
 S.buildings[slot]={b:'maltkiln',owner:0};S.active=0;UI.tmp={placeBldg:{b:'hopyard',owner:0}};UI.placeRt='stops';UI.sub='placebldg';
 var devBefore=S.players[0].developed, flipBefore=(S.players[0].flipped||[]).length;
 placeBldgOn(slot);
-ok(S.players[0].developed===devBefore, 'self-displacement pays no developer points');
-ok((S.players[0].flipped||[]).length===flipBefore, 'self-displacement does NOT flip (returns to hand)');
+ok(S.players[0].developed===devBefore, 'self-displacement pays no developer points (anti point-farm)');
+ok((S.players[0].flipped||[]).length===flipBefore+1, 'self-displacement FLIPS into the area as a Floor Wild (v1.7.1)');
 
 // ---- (B) working the Floor fires a Wild per flipped building ----
 S=freshState(2,['P0','P1']);UI={sub:'move'};S.active=0;
