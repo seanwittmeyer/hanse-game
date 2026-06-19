@@ -33,7 +33,7 @@ snapshot=function(){};
 // bulk-run budget for the guildmaster's Monte Carlo (the page default is 250ms/decision — far too
 // slow for thousands of games; 40ms still gives it ~10-20 playouts per decision).
 // SHARD THE GUILDMASTER for big runs — see the header note at the top of this file.
-GUILD_MS=40;GUILD_MIN=1;
+GUILD_MS=(typeof __GMS!=='undefined'&&__GMS)?__GMS:120;GUILD_MIN=1;   // GM bulk budget (GUILD_MS env overrides). v1.4: 40→120 — the stronger v1.4 Trader needs the GM given a realistic think to show its edge (40ms under-rated it; in-page GM is 250ms).
 if(typeof CELLAR_MS!=='undefined'){CELLAR_MS=__CMS||80;CELLAR_MIN=1;CELLAR_CAP=600;if(typeof __CROLL==='string'&&__CROLL)CELLAR_ROLL=__CROLL;if(__CMCTS==='0')CELLAR_MCTS=false;if(__CMCTS==='1')CELLAR_MCTS=true;}   // cellarmaster bulk budget (CELLAR_MS env overrides) — small; SHARD the cellarmaster pairing. CELLAR_ROLL/CELLAR_MCTS env A/B the rollout policy & Path-C tree.
 
 function aiTestGame(tiers){
@@ -122,7 +122,7 @@ const ctx = {
   setTimeout: noop, clearTimeout: noop,
   lucide: { createIcons: noop },
   __N: N, __NOGM: process.env.NOGM==='1', __GMN: parseInt(process.env.GMN||'0',10),
-  __NOCM: process.env.NOCM==='1', __CMN: parseInt(process.env.CMN||'0',10), __CMS: parseInt(process.env.CELLAR_MS||'0',10), __CROLL: process.env.CELLAR_ROLL||'', __CMCTS: process.env.CELLAR_MCTS||'',
+  __NOCM: process.env.NOCM==='1', __CMN: parseInt(process.env.CMN||'0',10), __CMS: parseInt(process.env.CELLAR_MS||'0',10), __CROLL: process.env.CELLAR_ROLL||'', __CMCTS: process.env.CELLAR_MCTS||'', __GMS: parseInt(process.env.GUILD_MS||'0',10),
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;

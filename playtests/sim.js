@@ -112,7 +112,7 @@ function botMove(p){
 function botLine(p){chooseLine(__chosenWhich||'row');}   // v1.3: deploy rides the line/Brewhouse, no longer a free pre-line action
 function stopPrio(s){
   if(s.kind==='cell')return {Source:0,Brew:1,Age:2,Ship:4}[CELLROLE[s.cell]];
-  if(s.kind==='deployhere')return 2.5;   // deploy onto an empty line slot
+  if(s.kind==='deploy')return 2.5;   // an empty slot's Deploy action
   if(s.kind==='bldg')return 3;   // a line-effect Building (Crane / Lagering)
   var t=S.slots[s.slot];if(!t)return 99;
   if(t.type==='cask'){var a=t.act||STYLES[t.style].act;var pr={source:0,wild:1,age:2,reach:2,load:4,convert:1,survey:1}[a];return pr==null?2:pr;}
@@ -198,9 +198,12 @@ function botLoad(p){var L=UI.load;
     return caskValueAt(L.cask,sb.dest)-caskValueAt(L.cask,sa.dest);});   // route by what THIS cask delivers there
   loadOnto(ships[0]);
 }
-function botDeploy(){var es=emptySlots();if(!es.length){deploySkipAll();return;}
-  var p=cur();var lk=p.cell?cellOfLine(p.cell)[__chosenWhich||'row']:null;
-  // ROUTE THE DEMAND: deploy onto your OWN value-building slot (capture the bonus when shipped), ideally on the firing line
+function botDeploy(){var p=cur();   // v1.4 two-step: pick which Ready cask, then which open slot
+  if(UI.deploy.vi==null){var ready=readyInVessels(p);if(!ready.length){deploySkip();return;}
+    ready.sort(function(a,b){return b.c.q-a.c.q;});deployPickCask(ready[0].i);return;}
+  var es=emptySlots();if(!es.length){deploySkip();return;}
+  var lk=p.cell?cellOfLine(p.cell)[__chosenWhich||'row']:null;
+  // ROUTE THE DEMAND: onto my OWN value-building slot, ideally on the firing line (flips that slot's Deploy → the cask's action)
   var vs=es.filter(function(s){var b=S.buildings[s.id];return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value';});
   var onLine=vs.filter(function(s){return s.line===lk;})[0];
   if(onLine){deployTo(onLine.id);return;}
@@ -209,9 +212,6 @@ function botDeploy(){var es=emptySlots();if(!es.length){deploySkipAll();return;}
   deployTo((on||es[0]).id);}
 function botBenefit(){var disp=S.buildDisplay||[];if(!disp.length){benefitPick(null);return;}   // London/Novgorod → a free Building
   benefitPick(pickBuilding(disp.slice()));}
-function botDeployHere(p){var ready=readyInVessels(p);if(!ready.length){deployHereSkip();return;}
-  var own=S.buildings[UI.dhere.slot];var valHere=own&&own.owner===p.id&&BUILDINGS[own.b].verb==='value';
-  ready.sort(function(a,b){return valHere?b.c.q-a.c.q:a.c.q-b.c.q;});deployHerePick(ready[0].i);}
 function botTap(p){var ready=readyInVessels(p);   // tap only to relieve a jam (Ready cask, no slot to deploy it)
   if(ready.length&&emptySlots().length===0){ready.sort(function(a,b){return a.c.q-b.c.q;});tapPick('v:'+ready[0].i);return;}
   tapSkip();}
@@ -230,7 +230,6 @@ function botActOnce(){var p=cur();var U=UI.sub;
     case 'wild':return botWild(p);
     case 'load':return botLoad(p);
     case 'deploy':return botDeploy();
-    case 'deployhere':return botDeployHere(p);
     case 'tap':return botTap(p);
     case 'benefit':return botBenefit();
     case 'placebldg':return botPlaceBldg();
