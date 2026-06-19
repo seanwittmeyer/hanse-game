@@ -58,7 +58,9 @@ COUNTS.forEach(n => {
   if (feel.skipPct == null) feel.skipPct = num(seg, /= ([\d.]+)% of decisions/);
   feel.floorToll[n] = { forks: num(seg, /\(([\d.]+)% of turns\)/), toll: num(seg, /toll-paid ([\d.]+)%/), floor: num(seg, /Floor-worked ([\d.]+)%/) };
 });
-feel.finding = "Crisp & efficient: only ~2% of decisions are no-op skips. BUT the Floor (alt-line) is DEAD — the occupied-station fork comes up on up to a third of turns and the AI pays the 1G toll 100% of the time, never working the Floor.";
+// the searching Guildmaster's Floor-work rate at the fork (static — a slow GM turnlog run; refresh via TIERS=guildmaster)
+feel.floorSearch = { label: "Guildmaster (search)", "2": 32, "3": 25, "4": 26 };
+feel.finding = "Crisp & efficient: only ~2% of decisions are no-op skips. The Floor (alt-line) is a SUBTLE skill decision — the heuristic Trader pays the 1G toll 100% (never sees it), but the SEARCHING Guildmaster works the Floor 25–32% of the time at the fork. So it's a genuine board-reading choice greedy play (and many humans) under-use, not a dead lane.";
 
 // ---- SLOW (strong-AI) sections — STATIC; update after a matchup-slate run ----
 const SLOW = {

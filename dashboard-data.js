@@ -23,69 +23,69 @@ window.DASH = {
     ],
     "data": {
       "prestige": {
-        "2": 53.5,
-        "3": 40.5,
-        "4": 28.1
+        "2": 47.7,
+        "3": 37.6,
+        "4": 30.3
       },
       "deep": {
-        "2": 54.5,
-        "3": 36,
-        "4": 24.2
+        "2": 53.7,
+        "3": 34.8,
+        "4": 26.3
       },
       "volume": {
-        "2": 40.2,
-        "3": 30.8,
-        "4": 23.5
+        "2": 44,
+        "3": 29.1,
+        "4": 22.1
       },
       "majority": {
-        "2": 44.1,
-        "3": 30.9,
-        "4": 24.8
+        "2": 44.8,
+        "3": 31.1,
+        "4": 23.5
       },
       "demand": {
-        "2": 44.9,
-        "3": 25.5,
-        "4": 24.7
+        "2": 48.6,
+        "3": 32.9,
+        "4": 22.5
       }
     },
     "finding": "Prestige (Hall) + Deep dominate heads-up (2p) and converge to fair at 4p. The contested-kontor lanes need a crowd to pay; the Hall is player-count-invariant."
   },
   "scores": {
     "winner": {
-      "2": 39.7,
-      "3": 48.7,
-      "4": 46.8
+      "2": 39.6,
+      "3": 48,
+      "4": 46.9
     },
     "range": {
-      "2": "7–25",
+      "2": "8–25",
       "3": "9–25",
       "4": "10–25"
     },
     "laneAvg": {
       "prestige": {
-        "2": 28,
-        "3": 40.5,
-        "4": 37.4
+        "2": 27.5,
+        "3": 38.9,
+        "4": 37.6
       },
       "deep": {
-        "2": 34.6,
-        "3": 40.4,
-        "4": 35.9
+        "2": 34.2,
+        "3": 39.9,
+        "4": 36.4
       },
       "volume": {
-        "2": 33.7,
-        "3": 39.1,
-        "4": 35.8
+        "2": 35,
+        "3": 39,
+        "4": 35.2
       },
       "majority": {
-        "2": 34.3,
-        "3": 40.3,
-        "4": 36
+        "2": 34.2,
+        "3": 39.4,
+        "4": 35.6
       },
       "demand": {
-        "2": 33.8,
-        "3": 38.3,
-        "4": 35.3
+        "2": 34.8,
+        "3": 39.4,
+        "4": 35.6
       }
     },
     "finding": "All lanes score within a few points of each other — balance lives in win-rate, not ceiling. Prestige wins more with lower totals (low-variance). Scores peak at 3p."
@@ -210,60 +210,60 @@ window.DASH = {
     },
     "data": {
       "hopgarden": {
-        "2": 5.9,
-        "3": 7.9,
-        "4": 7.7
+        "2": 9.4,
+        "3": 10.3,
+        "4": 8.1
       },
       "granary": {
-        "2": 2.6,
-        "3": 9.7,
-        "4": 6.5
+        "2": 5.2,
+        "3": 3.5,
+        "4": 9.6
       },
       "cellar": {
-        "2": 2.7,
-        "3": 2,
-        "4": 0.9
+        "2": 3.1,
+        "3": 3.2,
+        "4": -3.5
       },
       "lagering": {
-        "2": -1,
-        "3": -0.1,
-        "4": -0.4
+        "2": 1.4,
+        "3": 0,
+        "4": 2.2
       },
       "crane": {
-        "2": -2.4,
-        "3": -5.7,
-        "4": -3.9
+        "2": -6.5,
+        "3": -2.7,
+        "4": -5.3
       },
       "quay": {
-        "2": -2.9,
-        "3": -4.2,
-        "4": -5.5
+        "2": -6.7,
+        "3": -6.9,
+        "4": -4.2
       },
       "vessel": {
-        "2": -5.5,
-        "3": -9.9,
-        "4": -5.3
+        "2": -6.2,
+        "3": -7.8,
+        "4": -6.8
       }
     },
     "finding": "Hop Garden is the clear #1 at every count (the hops-led economy). Throughput perks (Crane/Quay/Vessel) score negative — the greedy bot can't pilot them. Even free, the best is only ~+10% → v1.7 made them cheaper + Cellar-bought."
   },
   "feel": {
-    "decisionsPerTurn": 12,
-    "roundsAvg": 13.1,
-    "skipPct": 1.6,
+    "decisionsPerTurn": 12.1,
+    "roundsAvg": 13.3,
+    "skipPct": 1.8,
     "floorToll": {
       "2": {
-        "forks": 10.1,
+        "forks": 10.2,
         "toll": 100,
         "floor": 0
       },
       "3": {
-        "forks": 22.5,
+        "forks": 22.3,
         "toll": 100,
         "floor": 0
       },
       "4": {
-        "forks": 37.2,
+        "forks": 38.1,
         "toll": 100,
         "floor": 0
       }
@@ -314,6 +314,12 @@ window.DASH = {
         2
       ]
     ],
-    "finding": "Crisp & efficient: only ~2% of decisions are no-op skips. BUT the Floor (alt-line) is DEAD — the occupied-station fork comes up on up to a third of turns and the AI pays the 1G toll 100% of the time, never working the Floor."
+    "floorSearch": {
+      "2": 32,
+      "3": 25,
+      "4": 26,
+      "label": "Guildmaster (search)"
+    },
+    "finding": "Crisp & efficient: only ~2% of decisions are no-op skips. The Floor (alt-line) is a SUBTLE skill decision — the heuristic Trader pays the 1G toll 100% (never sees it), but the SEARCHING Guildmaster works the Floor 25–32% of the time at the fork. So it's a genuine board-reading choice greedy play (and many humans) under-use, not a dead lane."
   }
 };

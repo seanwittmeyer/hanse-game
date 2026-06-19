@@ -197,12 +197,15 @@ function renderFeel(D){
   st.appendChild((()=>{const s=$('div','stat');s.appendChild($('div','n',D.skipPct+'%'));s.appendChild($('div','l','no-op skips'));return s;})());
   st.appendChild((()=>{const s=$('div','stat');s.appendChild($('div','n',D.roundsAvg));s.appendChild($('div','l','avg rounds'));return s;})());
   c.appendChild(st);
-  // Floor vs toll
-  const sm=$('div','sm');sm.style.marginTop='8px';sm.appendChild($('h3',null,'occupied-station fork (% of turns offered → toll-paid)'));
-  const rows=COUNTS.map(n=>({label:n+'p forks',val:D.floorToll[n].forks,suffix:'%'}));
-  sm.appendChild(barGroup(rows,null,40,()=>'var(--blue)'));
-  const w=$('div','smwrap');w.appendChild(sm);c.appendChild(w);
-  c.appendChild($('div','note','Floor-worked: 0% at every count — the alt-line is never chosen.'));
+  // occupied-station fork: how often offered, and who works the Floor
+  const w=$('div','smwrap');
+  const sm=$('div','sm');sm.appendChild($('h3',null,'fork offered <span class="note">(% of turns)</span>'));
+  sm.appendChild(barGroup(COUNTS.map(n=>({label:n+'p',val:D.floorToll[n].forks,suffix:'%'})),null,40,()=>'var(--blue)'));
+  w.appendChild(sm);
+  if(D.floorSearch){const sm2=$('div','sm');sm2.appendChild($('h3',null,'Floor-worked <span class="note">(Trader 0% · '+D.floorSearch.label+')</span>'));
+    sm2.appendChild(barGroup(COUNTS.map(n=>({label:n+'p',val:D.floorSearch[n],suffix:'%'})),null,40,()=>'var(--purple)'));
+    w.appendChild(sm2);}
+  c.appendChild(w);
   c.appendChild(finding(D.finding));return c;
 }
 
