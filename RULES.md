@@ -177,8 +177,11 @@ a building.
 
 ### 5a. Buildings — the one tile family (owned, authored, two flavors)
 You **gain** buildings to your **hand** — buy one at the Market, or **take one free to hand** when you
-deliver to London/Novgorod (§7) or draw one with **Survey**. You **place** a held building **at the
-Market** (a free acquire option) onto **any slot**. **Placing onto a slot that already has a building
+deliver to London/Novgorod (§7) or draw one with **Survey**. **You always choose which building** from
+the face-up display: if your cask is delivered on **someone else's turn** (a rival topped off and sailed
+a hull your cask rode), the choice is **queued to the start of your next turn** — you pick then, from the
+display as it stands. You **place** a held building **at the Market** (a free acquire option) onto **any
+slot**. **Placing onto a slot that already has a building
 REPLACES it** — the displaced tile returns to its **owner's hand** (so the 8 slots never lock; the
 contest is over prime slot/line positions, and nothing is destroyed). **If a *rival* displaced it, the
 owner also scores it for end-game prestige** (⚙ **+3★** — *the developer lane*: the building served its

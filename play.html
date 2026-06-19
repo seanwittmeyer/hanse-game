@@ -633,7 +633,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v61'; // v1.5 "Improvements": three new private upgrades — Harbor Crane (your Harbor load sets out 2 casks), Lagering Cellar (each of your turns +1 age to one maturing cask), Private Quay (load Ready casks straight from your vessels onto ships). Crane & Lagering moved OUT of the green Buildings pool into the purple IMPROVEMENTS (bought for goods). Bump discards stale v60 state. // v1.4 "Deploy": an EMPTY slot's DEFAULT line-action IS Deploy (shown as "{bldg?} Deploy"). Triggering it (or the Brewhouse — deploy icon on the station; Tap icon on the Cellar) deploys ONE Ready cask to ANY open slot; deploying onto another empty slot still PENDING on this line flips that slot's Deploy stop into the cask's ACTION stop (advanced: place where you'll still act). TAP unchanged (Cellar: vessel or slot → fire action once + discard). Bump discards stale v59 state. // (prior v59 "Tap a Cask"; prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
+const KEY='hanse-hotseat-v62'; // v1.5: off-turn Building rewards (a rival's sail delivered YOUR cask) now QUEUE to the owner — they CHOOSE from the display at the start of their next turn (was: auto-granted at random). Bump discards stale v61 state. // v1.5 "Improvements": three new private upgrades — Harbor Crane (your Harbor load sets out 2 casks), Lagering Cellar (each of your turns +1 age to one maturing cask), Private Quay (load Ready casks straight from your vessels onto ships). Crane & Lagering moved OUT of the green Buildings pool into the purple IMPROVEMENTS (bought for goods). Bump discards stale v60 state. // v1.4 "Deploy": an EMPTY slot's DEFAULT line-action IS Deploy (shown as "{bldg?} Deploy"). Triggering it (or the Brewhouse — deploy icon on the station; Tap icon on the Cellar) deploys ONE Ready cask to ANY open slot; deploying onto another empty slot still PENDING on this line flips that slot's Deploy stop into the cask's ACTION stop (advanced: place where you'll still act). TAP unchanged (Cellar: vessel or slot → fire action once + discard). Bump discards stale v59 state. // (prior v59 "Tap a Cask"; prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1085,6 +1085,7 @@ function enterBldgLine(slot){const p=cur();const k=bKeyAt(slot);
 }
 // resume / return helpers — clear the sub-flow fields, then route to the right phase
 function resume(rt){
+  if(rt==='turnstart'){UI={sub:'move'};save();render();return;}   // queued turn-start benefits resolved → begin the move phase
   UI.cell=null;UI.stage=null;UI.tmp=null;
   UI.age=UI.brew=UI.src=UI.load=UI.cvt=UI.reach=UI.wild=UI.deploy=UI.benefit=UI.survey=UI.goods=UI.breach=UI.brecipe=UI.tap=null;
   if(rt==='floorq'){runFloorNext();return;}   // mid-Floor: run the next cask on the brewery floor (do NOT clear UI.floorQueue)
@@ -1366,7 +1367,8 @@ function grantImmediate(lp,dest){
     else {gain(lp,2,0);log('↳ '+lp.name+' takes the '+DEST[dest].name+' liquidity benefit (2 goods).');}}
   else if(ben==='building'){
     if(lp.id===S.active)(UI.pendingBenefits=UI.pendingBenefits||[]).push({pid:lp.id,dest});
-    else autoGrantBuilding(lp,dest);}
+    else {(lp.pendingBuilds=lp.pendingBuilds||[]).push(dest);   // off-turn (a rival's sail delivered your cask): queue the CHOICE to the owner's next turn
+      log('↳ '+lp.name+' earns a '+LU('building-2')+' Building from '+DEST[dest].name+' — they’ll choose it from the display at the start of their next turn.');}}
   else if(ben==='reach'){          // Bergen — a free Reach (+1 presence, any kontor)
     if(lp.id===S.active)(UI.pendingReach=UI.pendingReach||[]).push({pid:lp.id,dest});
     else autoReach(lp,dest);}
@@ -1413,11 +1415,6 @@ function grantUpgrade(p,key){   // the private improvements (vessel/cellar/grana
   if(key==='vessel'){if(p.maxVessels<3){p.maxVessels++;p.vessels.push(null);p.upgrades.push('vessel');}return;}
   if(!p.upgrades.includes(key))p.upgrades.push(key);
 }
-// a rival (non-active) owner auto-takes a Building from the display TO HAND (can't pick mid-turn); they
-// place it on their own turn at the Market. v1.0 "to hand" — buildings no longer auto-place on delivery.
-function autoGrantBuilding(p,dest){const disp=S.buildDisplay||[];if(!disp.length)return;
-  const k=disp[Math.floor(Math.random()*disp.length)];takeBuildFromDisplay(k);p.hand.push(k);
-  log('↳ '+p.name+' earns '+LU('building-2')+' <b>'+bName(k)+'</b> to hand (from '+DEST[dest].name+' — places it at the Market).');}
 function afterSail(rt){
   if((UI.pendingGoods||[]).length){UI.sub='goodspick';UI.goods={returnTo:rt};render();return;}   // liquidity owner-choice picker
   if((UI.pendingBenefits||[]).length){UI.sub='benefit';UI.benefit={returnTo:rt};render();return;}   // pick a Building from the display
@@ -1512,8 +1509,19 @@ function endTurn(){
   // AI turns take no snapshots, and the boundary into a human turn clears the stack —
   // a human can undo within their own turn, never back into (or across) an AI's.
   if(wasAI&&!cur().ai)undoStack.length=0;
-  if(AUTO_AGE)passiveFerment(cur());lageringTick(cur());UI={sub:'move'};save();render();   // v1.1: auto-aging gated off (kept for reintroduction)
+  if(AUTO_AGE)passiveFerment(cur());lageringTick(cur());
+  if(!openTurnBenefits())UI={sub:'move'};   // resolve any queued off-turn Building choices first, then begin the turn
+  save();render();   // v1.1: auto-aging gated off (kept for reintroduction)
   maybeRunAI();
+}
+// Off-turn Building rewards (a rival's sail delivered your cask) are queued to the OWNER — resolved here at
+// the start of their next turn via the normal benefit picker (human chooses; AI uses aiBenefit). Returns
+// true if a picker was opened. (An unplaced hand Building scores nothing, so a reward queued past game-end
+// costs nothing — matching the old auto-grant outcome.)
+function openTurnBenefits(){const p=cur();const q=p.pendingBuilds||[];if(!q.length)return false;
+  p.pendingBuilds=[];
+  UI={sub:'benefit',stops:[],pendingBenefits:q.map(d=>({pid:p.id,dest:d})),benefit:{returnTo:'turnstart'}};
+  return true;
 }
 function passiveFerment(p){let any=false;p.vessels.forEach(c=>{if(c&&c.step<c.ready){c.step++;any=true;}});if(any)log(p.name+'’s casks '+LU('hourglass')+' mature (+1) over the turn.');}
 // Lagering Cellar (private upgrade): each of your turns, +1 age to one maturing cask (the one closest to Ready).
