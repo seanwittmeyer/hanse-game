@@ -187,8 +187,10 @@ you can't farm it by overbuilding your own). Each building is **owned** by its
 placer. Under **one grammar — "a building modifies the occupant docked on it"** — a building is one of
 two flavors (variety = content, not new rules; the deck is in `COMPONENTS.md`). **Each building targets a
 specific occupant** (shown by a glyph): most are **cask** tiles, a few are **ship** tiles (the rich
-berths **Rich Berth/Festkeller** + **Cooperage/Customs House**), two are **line-effects** (Crane,
-Lagering), one is **owner-passive** (Almoner's Stall). A building does nothing for the wrong occupant.
+berths **Rich Berth/Festkeller** + **Cooperage/Customs House**), one is **owner-passive** (Almoner's
+Stall). A building does nothing for the wrong occupant. *(v1.5: the two old **line-effect** buildings,
+**Harbor Crane** and **Lagering Cellar**, were really private engine perks — they left the public deck
+and became **private improvements**, bought for goods at the Market; see §8.)*
 
 - **Value buildings (the "demand"):** the occupant scores **bonus value on delivery.** On a
   **ship**, this is a **rich berth** — *every* cask the ship delivers scores the bonus (the
@@ -263,6 +265,14 @@ throughput). So the **starting count / cap / whether Extra Vessel repeats** are 
 retune: in playtests Extra Vessel and the Warehouse were *never* bought (dead upgrades); the Floor
 fixes Extra Vessel, and storage-cap upgrades stay suspect unless they earn their place.
 **Most v0.16 upgrades fold into the public building family (§5).**
+
+**The improvements (bought at the Market for goods ⚙):** Extra Vessel (`5 G`), Aging Cellar
+(maturation −1 step, `5 G`), Granary Right / Hop Garden (+1 extra grain / hops, `4 G` each), and the
+**v1.5** additions — **Harbor Crane** (your Harbor load sets out **2 casks**, not 1, `4 G`),
+**Lagering Cellar** (each of **your turns**, **+1 age** to one maturing cask, `4 G`), and **Private
+Quay** (load **Ready casks straight from your vessels** onto ships — skipping deploy, `5 G`). *(v1.5
+moved Harbor Crane & Lagering Cellar out of the public Building deck — they were private engine perks,
+not slot authorship — see §5.)*
 
 ---
 

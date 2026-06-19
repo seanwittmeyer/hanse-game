@@ -188,7 +188,7 @@ function caskBest(caskSlot,ships){var best=-1;ships.forEach(function(s){var sh=S
 function botLoad(p){var L=UI.load;
   if(!L.cask){var elig=L.casks.filter(function(cs){return L.ships.some(function(s){return canTake(s,cs);});});
     if(!elig.length){loadSkip();return;}
-    var own=elig.filter(function(cs){return S.slots[cs].owner===p.id;});
+    var own=elig.filter(function(cs){return refOwner(cs)===p.id;});
     var pick=(own.length?own:elig);
     pick.sort(function(a,b){return caskBest(b,L.ships)-caskBest(a,L.ships);});loadPickCask(pick[0]);return;}   // ship what pays most (incl. its value building)
   var ships=L.ships.filter(function(s){return canTake(s,L.cask);});
@@ -307,7 +307,7 @@ var __CNT  = (typeof __COUNTS!=='undefined')?__COUNTS:[2,3,4];
 var __RESULTS={};
 __CNT.forEach(function(n){
   var arr=[];for(var g=0;g<__NRUN;g++){
-    try{arr.push(runGame(n));}catch(e){arr.push({error:String(e&&e.message||e),n:n});}
+    try{arr.push(runGame(n));}catch(e){if(typeof __STK!=='undefined'&&__STK)throw e;arr.push({error:String(e&&e.message||e),n:n});}
   }
   __RESULTS[n]=arr;
 });
@@ -377,7 +377,7 @@ const ctx = {
   parseInt, parseFloat, isNaN, alert: noop,
   setTimeout: noop, clearTimeout: noop,
   lucide: { createIcons: noop },
-  __N: N, __COUNTS: COUNTS, __SC, __PERSONAS: PERSONAS, __CELLAR: CELLAR, __TUNE,
+  __N: N, __COUNTS: COUNTS, __SC, __PERSONAS: PERSONAS, __CELLAR: CELLAR, __TUNE, __STK: !!process.env.STK,
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;

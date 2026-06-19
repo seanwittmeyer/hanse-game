@@ -380,9 +380,7 @@ const BUILDINGS=[
   // TRANSFORM — the brewer's craft & harbor works
   {k:'maltkiln',  nm:'Malt Kiln',            verb:'transform', tgt:'cask', ic:'flame',       g:2, n:2, eff:'a cask from here ships +1 quality (cap Q5)'},
   {k:'hopyard',   nm:'Hop Yard',             verb:'transform', tgt:'cask', ic:'sprout',      g:3, n:1, eff:'a Q2+ cask from here ships +1 quality'},
-  {k:'lagering',  nm:'Lagering Cellar',      verb:'transform', tgt:'line', ic:'snowflake',   g:2, n:2, eff:'when this line fires, age a maturing cask +1'},
   {k:'cooperage', nm:'Cooperage',           verb:'transform', tgt:'ship', ic:'package',      g:2, n:2, eff:'a ship here carries +1 cask'},
-  {k:'crane',     nm:'Harbor Crane',         verb:'transform', tgt:'line', ic:'package-plus', g:2, n:2, eff:'free-load a cask when this line fires'},
   {k:'customs',   nm:'Customs House',        verb:'transform', tgt:'ship', ic:'scroll-text',  g:2, n:2, eff:'a ship here may board casks one gate lower'},
   {k:'gauger',    nm:'Gauger’s Office',      verb:'transform', tgt:'cask', ic:'ruler',        g:3, n:1, eff:'a cask from here delivers one gate higher'},
   {k:'workshop',  nm:'Brewmaster’s Workshop',verb:'transform', tgt:'cask', ic:'hammer',       g:3, n:1, eff:'a cask here upgrades its slot-action to Wild'},
@@ -392,10 +390,13 @@ const WHARFAGE=1;        // owner's points cut when a rival routes through their
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
 // Market (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
 const IMPROVE=[   // Upgrades / private improvements = PURPLE
-  {ic:'wrench',     nm:'Extra Vessel',  act:'+1 brewing lane (start 2 → cap 3)', g:5, c:'#5b3a8e', n:4},
-  {ic:'wrench',     nm:'Aging Cellar',  act:'maturation −1 step',                g:5, c:'#5b3a8e', n:4},
-  {ic:'badge-plus', nm:'Granary Right', act:'gain '+LU('wheat','g ic')+' → +1 extra', g:4, c:'#5b3a8e', n:4},
-  {ic:'badge-plus', nm:'Hop Garden',    act:'gain '+LU('sprout','h ic')+' → +1 extra', g:4, c:'#5b3a8e', n:4},
+  {ic:'wrench',     nm:'Extra Vessel',   act:'+1 brewing lane (start 2 → cap 3)', g:5, c:'#5b3a8e', n:4},
+  {ic:'wrench',     nm:'Aging Cellar',   act:'maturation −1 step',                g:5, c:'#5b3a8e', n:4},
+  {ic:'badge-plus', nm:'Granary Right',  act:'gain '+LU('wheat','g ic')+' → +1 extra', g:4, c:'#5b3a8e', n:4},
+  {ic:'badge-plus', nm:'Hop Garden',     act:'gain '+LU('sprout','h ic')+' → +1 extra', g:4, c:'#5b3a8e', n:4},
+  {ic:'package-plus',nm:'Harbor Crane',  act:'your Harbor load sets out 2 casks', g:4, c:'#5b3a8e', n:4},
+  {ic:'snowflake',  nm:'Lagering Cellar',act:'each of your turns, +1 age a maturing cask', g:4, c:'#5b3a8e', n:4},
+  {ic:'anchor',     nm:'Private Quay',   act:'load Ready casks straight from vessels', g:5, c:'#5b3a8e', n:4},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a

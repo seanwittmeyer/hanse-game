@@ -161,15 +161,15 @@ market rights, and patrons — the institutions of the Hanse.*
 | **Almoner's Stall** | your **wharfage** cut from rivals is **+1★** more | charity that quietly pays | authorship |
 
 **Verb 2 — TRANSFORM buildings (change the cask or ship).** *The brewer's craft and the harbor's
-works — the things a house actually builds.*
+works — the things a house actually builds.* *(v1.5: **Lagering Cellar** and **Harbor Crane** left
+this public family — they were really private engine perks, not slot authorship — and were reborn as
+**private improvements**, bought for goods; see §E.)*
 
 | Building | Effect ⚙ | Flavor | Lane |
 |---|---|---|---|
 | **Malt Kiln** | a **cask** here ships as **+1 quality** (cap Q5) | kiln-dried malt, a finer brew | range |
-| **Lagering Cellar** | a **cask** here ages **+1 / turn** | cold-stored, it matures to peak faster | range · throughput |
 | **Hop Yard** | a **Q2+** cask here gains **+1 quality** | fresh hops — the beer that travels | range |
 | **Cooperage** | a **ship** here carries **+1 cask** | more barrels, a bigger hold | volume · throughput |
-| **Harbor Crane** | **free-load** a cask when this line fires | the dockside crane does the lifting | tempo |
 | **Customs House** | a **ship** here may **re-flag its destination** (−1 gate) | papers that send cargo anywhere | routing |
 | **Gauger's Office** | a **cask** here **re-qualifies up one gate** | the gauger certifies it fit for the long haul | routing · range |
 | **Brewmaster's Workshop** | a **cask** here **gains / upgrades its slot-action** | the master tinkers; every cask leaves better | engine · authorship |
@@ -178,11 +178,11 @@ works — the things a house actually builds.*
   first; a **rival** may dock on it too — they get the effect, and **you (owner) take a small
   “wharfage” cut** (⚙ **+1★**, capped per delivery — **points, never a goods-skim toll**). *Build
   the dock; tax the traffic, gently.*
-- **Deck ⚙ ~22 tiles across 17 designs, display 4** — value & transform kept roughly balanced,
+- **Deck ⚙ ~18 tiles across 15 designs, display 4** — value & transform kept roughly balanced,
   every lane hooked. Counts ⚙: singletons for the swingy/identity tiles (Connoisseur · Hanse
   Diet · Festkeller · Reliquary · Almoner's Stall · Gauger · Hop Yard · Workshop), ~2 of the
-  workhorses (Rich Berth · Staple Hall · Burgomaster · Malt Kiln · Lagering Cellar · Cooperage ·
-  Harbor Crane · Customs House), Kontor Charter ×1 each (4). The vocabulary axes (so new tiles
+  workhorses (Rich Berth · Staple Hall · Burgomaster · Malt Kiln · Cooperage ·
+  Customs House), Kontor Charter ×1 each (4). The vocabulary axes (so new tiles
   stay one-grammar content): **what it touches** (cask / ship) × **what it does** (boost value /
   transform) × **on whom** (owner / shared / a specific kontor).
 
@@ -210,6 +210,9 @@ improvements, **bought at the Market for goods** (distinct from the earned-and-p
 | **Extra Vessel** | +1 brewing lane (vessels start 2, cap **3**) | `5 G` |
 | **Aging Cellar** | maturation **−1 step** | `5 G` |
 | **Granary / Hop Garden** | when you gain grain / hops, +1 extra | `4 G` |
+| **Harbor Crane** *(v1.5)* | your **Harbor load sets out 2 casks** (not 1) | `4 G` |
+| **Lagering Cellar** *(v1.5)* | each of **your turns**, **+1 age** to one maturing cask | `4 G` |
+| **Private Quay** *(v1.5)* | load **Ready casks straight from your vessels** onto ships (skip deploy) | `5 G` |
 
 > Everything else from the v0.16 upgrade list (Quay/Cooperage/Trophy Room/Burgher/Staple/Patron…)
 > **folds into the public Building family (§3C)** — capability now lives on the living slots.
@@ -296,9 +299,9 @@ worker placed free turn 1.
 |---|---|---|
 | A Casks | ~60 | 6 beers |
 | B Ships (deck) | 20 | 2 hulls × 4 kontore |
-| **C Buildings** | **~19** | **~11 designs** |
+| **C Buildings** | **~18** | **~15 designs** |
 | D Recipes (cards) | ~16 | 4 (+2 printed starts) |
-| E Improvements | ~10 | ~4 |
+| E Improvements | ~28 | 7 |
 | Charter contracts | ~16 | 1 |
 
 Plus 1 main board · 1 destination board · 4 brewery boards · wooden cubes (G/H) · presence

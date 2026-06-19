@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v1.4 “Deploy”)
+# Brewhouses of the Hanse — Design (v1.5 “Improvements”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v1.4 “Deploy”** — live; **`play.html` implements it** (the keystone rebuild shipped; the demand-dice tracking + the printables-tile UI overhaul followed). |
+|**Status**     |**v1.5 “Improvements”** — live; **`play.html` implements it** (the keystone rebuild shipped; the demand-dice tracking + the printables-tile UI overhaul followed; v1.5 added three private improvements). |
 
 ---
 
@@ -76,7 +76,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v1.4 “Deploy”)
+## 6. The current architecture (v1.5 “Improvements”)
 
 Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -153,6 +153,19 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 ---
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
+
+**v1.5 “Improvements”** *(2026-06-19, `play.html` KEY v61)* — Three new **private brewery improvements**
+(bought for goods at the Market): **Harbor Crane** (`4 G`, your Harbor load sets out **2 casks**, not 1),
+**Lagering Cellar** (`4 G`, each of **your turns** +1 age to one maturing cask — a *faster-climb* perk,
+distinct from Aging Cellar's −1-step), and **Private Quay** (`5 G`, load **Ready casks straight from your
+vessels** onto ships — skipping deploy/the slot entirely). Implementation: the load flow now accepts a
+**vessel cask-ref (`v:i`)** alongside slot ids (mirrors the existing Charter/Enshrine vessel-load path);
+Crane sets `loadsLeft=2` on the Harbor load; Lagering ticks in `endTurn` after the auto-ferment. The first
+two are **ex-Buildings reborn**: Harbor Crane and Lagering Cellar were the only two *line-effect* buildings
+(awkward in the "a building modifies its docked occupant" grammar), so they left the green public deck for
+the purple private set — where a tempo/throughput perk belongs. Values are first-pass ⚙. Robustness re-run
+clean (0 crash/deadlock, pace in band 2–4p); the greedy sim bot doesn't proactively buy improvements (a
+known blind spot), so the effects are exercised on purchase, not auto-piloted.
 
 **v1.4 “Deploy”** *(2026-06-19, `play.html` KEY v60)* — Made **deploy a first-class line action** (building on
 v1.3's "deploy rides the line"). **An empty slot's default line-action IS "Deploy"** (shown as *"{building?}
