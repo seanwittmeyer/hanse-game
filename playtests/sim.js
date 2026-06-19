@@ -175,7 +175,8 @@ function botBrew(p){var aff=p.recipes.filter(function(r){return canBrew(p,r)&&op
 function botAge(p){var mat=p.vessels.map(function(c,i){return {c:c,i:i};}).filter(function(o){return o.c&&o.c.step<o.c.ready;});
   if(!mat.length){if(UI.age.mode==='pool')ageDone();else ageSkip();return;}
   mat.sort(function(a,b){return (a.c.ready-a.c.step)-(b.c.ready-b.c.step);});ageAllot(mat[0].i);}
-function botSource(p){var n=UI.src.n;if(n>=2){if(p.hops<2)srcTake(1,1);else srcTake(2,0);}else{if(p.hops<1)srcTake(0,1);else srcTake(1,0);}}
+function botSource(p){var n=UI.src.n;var hT=p.recipes.some(function(r){return STYLES[r].in.h>=2;})?3:1;   // v1.6: bank hops for a hops-led export; else grain-leaning
+  if(n>=2){if(p.hops<hT)srcTake(1,1);else srcTake(2,0);}else{if(p.hops<hT)srcTake(0,1);else srcTake(1,0);}}
 function botReach(){reachPick(UI.reach.ks[0]);}
 function botWild(p){
   if(myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});}))wildPick('ship');

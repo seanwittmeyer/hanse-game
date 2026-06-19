@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v1.5 “Improvements”)
+# Brewhouses of the Hanse — Design (v1.6 “Hops”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v1.5 “Improvements”** — live; **`play.html` implements it** (the keystone rebuild shipped; the demand-dice tracking + the printables-tile UI overhaul followed; v1.5 added three private improvements). |
+|**Status**     |**v1.6 “Hops”** — live; **`play.html` implements it** (the keystone rebuild shipped; the demand-dice tracking + the printables-tile UI overhaul followed; v1.5 added three private improvements). |
 
 ---
 
@@ -76,7 +76,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v1.5 “Improvements”)
+## 6. The current architecture (v1.6 “Hops”)
 
 Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -135,9 +135,12 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   systematically under-pilots prestige & deep.
 - **Correct *friction* with a *structure* lever, not the *value* lever.** (v0.15: a free local
   Enshrine was fixed by a *structural* throttle — deploy-first, contestable — not a fee.)
-- **Bock cost is the WRONG rebalance lever.** The 3G3H probe was tested and rejected twice (it
-  re-breaks Q5 reachability and the AI ladder, and doesn't fix the imbalance). The real axis is
-  **Hall-side vs kontore-side.** Bock is ungated at **3G2H** (one hop was the whole wall).
+- **Bock *total* cost is the WRONG lever for the deep-lane imbalance.** The 3G3H probe (raising the
+  TOTAL to 6) was tested and rejected twice (it re-breaks Q5 reachability and the AI ladder, and
+  doesn't fix the imbalance). The real axis for that is **Hall-side vs kontore-side.** *(v1.6 nuance:
+  shifting Bock's **ratio** while holding the total — 3G2H → **2G3H** — is a different, safe move; it
+  was done to give **hops** a demand, not to retune the deep lane, and sim confirmed Q5 timing & the
+  ladder held. The lesson stands: don't raise the **total**.)*
 - **Majorities reward shipping WIDE** (presence = cask count) — "go for majorities" is a *volume*
   play, not a concentrate-on-one specialist. Big majorities tilt the game to the kontore, so the
   **Hall needs a matching prestige curve** to stay balanced.
@@ -153,6 +156,34 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 ---
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
+
+### Parking lot — recorded for future discussion (NOT yet decided)
+- **Asymmetric starting improvements (variable powers).** Deal each player **two** improvements; they keep
+  **one** as a starting private power. Turns the (now symmetric) improvement set into an opening-asymmetry /
+  replay lever. Needs: a power set balanced enough that any pair is fair, and a draft/keep-one rule. Open.
+- **Starting building — does it help me or the table?** Each house starts with **1 random Building in hand**
+  to author turn 1. Concern: a building I place is a **shared slot** — if I can't get my own cask onto it
+  (timing/contention), it can help rivals more than me, and the random tile may not fit my plan. Options to
+  revisit: deal a **choice** of starting buildings (draft), or make the opening building **self-favoring**
+  somehow, or drop the random start. Open — tie into the asymmetry discussion above.
+
+
+**v1.6 “Hops”** *(2026-06-19, `play.html` KEY v63)* — **Economy rebalance: the export ladder is now
+HOPS-LED, giving hops a real demand.** Diagnosis: grain was a near-monopoly currency — it pays the
+occupancy toll, *every* tile/ship/charter/contract buy, **and** the grain half of every beer, while hops
+was spent on almost nothing but the hops half of recipes (Granary ≫ Hop Garden by construction, since
+gains are flexible and you'd take grain anyway). Fix (theme: *hops = the beer that travels* → the
+currency of range/quality): **Mumme 2G2H → 1G3H**, **Bock 3G2H → 2G3H** (**totals unchanged** — the
+rejected 3G3H probe raised the total; this only shifts the ratio, so the Q5 climb timing holds), and the
+export **recipe-card buys** lean hops (Broyhan 1H, Mumme 2H, Bock 1G1H; **Keut stays 1G** — the
+deliberate grain-path Q3 alternative, so hops is a *choice* not a tax). This makes **Hop Garden** a
+genuine pick vs **Granary** without nerfing Granary (you brew far more than you buy, so +1 grain/Source
+stays fine). AI/bot Source heuristic now banks hops (target 3) when it owns a hops-led export, so the
+climb stays fundable in sim. Gates: sim 2–4p 0 crash/deadlock, pace in band, Q5 still reached; ladder 0
+errors + every tier ≥60%; render-smoke clean. *(Recommended follow-up: re-run `ai-tune.js` — the
+Trader weights govern destination valuation, not recipe cost, so no retune was forced, but a balance
+pass warrants a check.)* Parking-lot items above (asymmetric starting improvements; the random
+starting-building question) recorded for later.
 
 **v1.5 “Improvements”** *(2026-06-19, `play.html` KEY v62)* — *(KEY v62 follow-up: **off-turn Building
 rewards now queue to the owner.** When a rival tops off and sails a hull carrying your cask, your

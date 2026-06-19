@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v1.5 “Improvements”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v1.6 “Hops”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -363,7 +363,7 @@
       <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>v1.5 “Improvements” — prototype.</b> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
+  <p class="note" style="text-align:center"><b>v1.6 “Hops” — prototype.</b> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -433,11 +433,11 @@ const STYLES={
   hopped :{name:'Hopped Beer', lvl:2, q:2, in:{g:1,h:1},  ready:1, act:'age'},                          // v1.1: FAST — quick Q2 engine access
   broyhan:{name:'Broyhan',     lvl:3, q:3, in:{g:1,h:2},  ready:1, act:'load',  export:true},            // v1.1: FAST — the rush-to-Q3 tempo beer
   keut   :{name:'Keut',        lvl:3, q:3, in:{g:2,h:1},  ready:2, act:'load',  export:true, bonusPres:1},// v1.1: the MAJORITY specialist — +1 presence on a kontor delivery
-  mumme  :{name:'Mumme',       lvl:4, q:4, in:{g:2,h:2},  ready:3, act:'reach', export:true},
-  bock   :{name:'Bock',        lvl:5, q:5, in:{g:3,h:2},  ready:3, act:'wild',  export:true, premium:true},   // v0.14: UNGATED, cost 3G2H (3G3H test reverted — re-broke casual Q5 & the ladder without fixing the Hall-driven deep-lane lead). Aging Cellar = pathway (−1 step). (premium = AI-skill flag)
+  mumme  :{name:'Mumme',       lvl:4, q:4, in:{g:1,h:3},  ready:3, act:'reach', export:true},                // v1.6: HOPS-LED Q4 (was 2G2H → 1G3H, total unchanged) — hops = the currency of range/quality
+  bock   :{name:'Bock',        lvl:5, q:5, in:{g:2,h:3},  ready:3, act:'wild',  export:true, premium:true},   // v1.6: HOPS-LED Q5 (was 3G2H → 2G3H — TOTAL 5 kept, ratio shifted to hops; NOT the rejected 3G3H total-6 probe). UNGATED; Aging Cellar = pathway (−1 step). (premium = AI-skill flag)
 };
 const EXPORT_ROSTER=['broyhan','keut','mumme','bock'];   // 3 of 4 dealt each game; each keeps its fixed quality
-const RECIPE_BUY={broyhan:{g:1},keut:{g:1},mumme:{g:1,h:1},bock:{g:2}};  // Market buy cost (Gruit+Hopped are free starters)
+const RECIPE_BUY={broyhan:{h:1},keut:{g:1},mumme:{h:2},bock:{g:1,h:1}};  // v1.6: export-card buys lean HOPS up the ladder (keut stays the grain-path Q3). Gruit+Hopped are free starters
 const CASK_ACT={source:'gain 2 goods',age:'Age a cask 2 steps',
   load:'Load — a Ready cask onto a ship, free',reach:'Reach — +1 presence at a kontor',
   convert:'Convert — up to 2 goods G↔H',survey:'Survey — draw a Building to hand',
@@ -633,7 +633,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v62'; // v1.5: off-turn Building rewards (a rival's sail delivered YOUR cask) now QUEUE to the owner — they CHOOSE from the display at the start of their next turn (was: auto-granted at random). Bump discards stale v61 state. // v1.5 "Improvements": three new private upgrades — Harbor Crane (your Harbor load sets out 2 casks), Lagering Cellar (each of your turns +1 age to one maturing cask), Private Quay (load Ready casks straight from your vessels onto ships). Crane & Lagering moved OUT of the green Buildings pool into the purple IMPROVEMENTS (bought for goods). Bump discards stale v60 state. // v1.4 "Deploy": an EMPTY slot's DEFAULT line-action IS Deploy (shown as "{bldg?} Deploy"). Triggering it (or the Brewhouse — deploy icon on the station; Tap icon on the Cellar) deploys ONE Ready cask to ANY open slot; deploying onto another empty slot still PENDING on this line flips that slot's Deploy stop into the cask's ACTION stop (advanced: place where you'll still act). TAP unchanged (Cellar: vessel or slot → fire action once + discard). Bump discards stale v59 state. // (prior v59 "Tap a Cask"; prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
+const KEY='hanse-hotseat-v63'; // v1.6 "Hops": export ladder is HOPS-LED — Mumme 1G3H, Bock 2G3H (totals unchanged, ratio shifted to hops); export recipe-card buys lean hops (broyhan 1H, mumme 2H, bock 1G1H; keut stays the 1G grain-path Q3). Gives hops real demand (was a grain monopoly) → makes Hop Garden attractive without nerfing Granary. Bump discards stale v62 state. // v1.5: off-turn Building rewards (a rival's sail delivered YOUR cask) now QUEUE to the owner — they CHOOSE from the display at the start of their next turn (was: auto-granted at random). Bump discards stale v61 state. // v1.5 "Improvements": three new private upgrades — Harbor Crane (your Harbor load sets out 2 casks), Lagering Cellar (each of your turns +1 age to one maturing cask), Private Quay (load Ready casks straight from your vessels onto ships). Crane & Lagering moved OUT of the green Buildings pool into the purple IMPROVEMENTS (bought for goods). Bump discards stale v60 state. // v1.4 "Deploy": an EMPTY slot's DEFAULT line-action IS Deploy (shown as "{bldg?} Deploy"). Triggering it (or the Brewhouse — deploy icon on the station; Tap icon on the Cellar) deploys ONE Ready cask to ANY open slot; deploying onto another empty slot still PENDING on this line flips that slot's Deploy stop into the cask's ACTION stop (advanced: place where you'll still act). TAP unchanged (Cellar: vessel or slot → fire action once + discard). Bump discards stale v59 state. // (prior v59 "Tap a Cask"; prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -641,7 +641,7 @@ const KEY='hanse-hotseat-v62'; // v1.5: off-turn Building rewards (a rival's sai
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v1.5 “Improvements” · '+KEY;
+const APP_VERSION='v1.6 “Hops” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -1996,7 +1996,8 @@ function aiAge(p){const mat=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.ste
   if(!mat.length){if(UI.age.mode==='pool')ageDone();else ageSkip();return;}
   if(aiIsApp(p)||aiNoisy(p)){ageAllot(aiRandOf(mat).i);return;}   // the apprentice ages whatever
   mat.sort((a,b)=>(a.c.ready-a.c.step)-(b.c.ready-b.c.step));ageAllot(mat[0].i);}
-function aiSource(p){const n=UI.src.n;if(n>=2){if(p.hops<2)srcTake(1,1);else srcTake(2,0);}else{if(p.hops<1)srcTake(0,1);else srcTake(1,0);}}
+function aiSource(p){const n=UI.src.n;const hT=p.recipes.some(r=>STYLES[r].in.h>=2)?3:1;   // v1.6: bank hops for a hops-led export (mumme/bock/broyhan); else stay grain-leaning
+  if(n>=2){if(p.hops<hT)srcTake(1,1);else srcTake(2,0);}else{if(p.hops<hT)srcTake(0,1);else srcTake(1,0);}}
 function aiReach(p){if(aiIsApp(p)){reachSkip();return;}
   if(!aiIsTrader(p)){reachPick(UI.reach.ks[0]);return;}   // journeyman: greedy first kontor
   let best=UI.reach.ks[0],bv=-1e9;
@@ -2433,7 +2434,7 @@ function renderAid(){
   const vb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='value').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   const tb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='transform').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   document.getElementById('aidcard').innerHTML=
-    '<h2>'+ic('scroll-text')+' Player Aid — v1.5 “Improvements”</h2>'
+    '<h2>'+ic('scroll-text')+' Player Aid — v1.6 “Hops”</h2>'
     +'<div class="asec"><b>Your turn</b><div class="note">Move to an adjacent station → activate its <b>row OR column</b> → resolve up to 4 stops (slot · station · station · slot) <b>in any order</b>. <b>If you move onto a station a rival occupies:</b> pay 1 '+ic('wheat')+' toll and work that public line, <b>OR</b> work your <b>Floor</b> — run every cask in your vessels (their slot-actions) <i>instead of</i> the public line (no toll).</div></div>'
     +'<div class="asec"><b>The four stations</b><div class="note">'
       +ic('store')+' <b>Market</b> (Source): take 2 goods, or acquire one tile — a recipe · a '+ic('building-2')+' Building (buy + place) · a '+ic('sailboat')+' ship · a charter contract · an improvement. Or <b>place a Building from your hand</b> (free) — the ones you earned at London/Novgorod or drew with Survey.<br>'

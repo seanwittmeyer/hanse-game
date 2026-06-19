@@ -345,8 +345,8 @@ const CASKS=[
   {nm:'Hopped',  c:'#c2922f', q:2, g:1,h:1, n:20, ready:1},
   {nm:'Broyhan', c:'#b06a34', q:3, g:1,h:2, n:6,  ready:1},
   {nm:'Keut',    c:'#9c5f2e', q:3, g:2,h:1, n:6,  ready:2, tag:'<b>+1</b> '+LU('map-pin')+'<br>presence'},
-  {nm:'Mumme',   c:'#caa12a', q:4, g:2,h:2, n:8,  ready:3, wild:true},
-  {nm:'Bock',    c:'#7c2128', q:5, g:3,h:2, n:4,  ready:3, wild:true},
+  {nm:'Mumme',   c:'#caa12a', q:4, g:1,h:3, n:8,  ready:3, wild:true},
+  {nm:'Bock',    c:'#7c2128', q:5, g:2,h:3, n:4,  ready:3, wild:true},
 ];
 // v0.11 — NEUTRAL, destination-bound hulls (the destination is PRINTED on the tile). The 20-tile deck,
 // KONTORE ONLY: Bruges 5 · London 5 · Bergen 5 · Novgorod 5 (11 Cog / 9 Hulk); the Hall is reached by the local Enshrine, not a boat.
@@ -404,10 +404,10 @@ const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'
 const CONTRACTS={nm:'Charter Contract', n:20};
 const RECIPES=[  // EXPORT recipe cards only — Gruit & Hopped are printed on the brewery board's tuck strip.
   // buy = Market acquire cost (RECIPE_BUY in play.html) · g/h = the BREW cost on the tucked edge.
-  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{g:1},     reach:'Q3 · all kontore (Hall via Enshrine) · FAST: ready 1'},
+  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{h:1},     reach:'Q3 · all kontore (Hall via Enshrine) · FAST: ready 1'},
   {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'Q3 · all kontore · +1 presence on a kontor delivery'},
-  {nm:'Mumme',   cc:'#9a5526', L:4, g:2,h:2, buy:{g:1,h:1}, reach:'Q4 · all kontore (Hall via Enshrine)'},
-  {nm:'Bock',    cc:'#7c2128', L:5, g:3,h:2, buy:{g:2},     reach:'Q5 · all kontore · ungated'},
+  {nm:'Mumme',   cc:'#9a5526', L:4, g:1,h:3, buy:{h:2},     reach:'Q4 · all kontore (Hall via Enshrine)'},
+  {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{g:1,h:1}, reach:'Q5 · all kontore · ungated'},
 ];
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'}];
 // v1.1 destinations — four DISTINCT lanes. Kontor per-cask value is SMALL & flat (base) — the real value is
@@ -713,8 +713,8 @@ function checklist(pages,famPages){
     +row(1,'Cask · Hopped Q2 (G H · ready 1)','20','')
     +row(1,'Cask · Broyhan Q3 (G H H · ready 1)','6','')
     +row(1,'Cask · Keut Q3 (G G H · ready 2 · +1 presence on delivery)','6','')
-    +row(1,'Cask · Mumme Q4 (G G H H · ready 3 · Wild possible)','8','')
-    +row(1,'Cask · Bock Q5 (3G 2H · ungated · ready 3 · Wild possible)','4','')
+    +row(1,'Cask · Mumme Q4 (G H H H · ready 3 · Wild possible)','8','')
+    +row(1,'Cask · Bock Q5 (2G 3H · ungated · ready 3 · Wild possible)','4','')
     +row(0,'<i>Q2+ casks: the slot-action is steerable at brew — print the supply as a MIX of the 6-action pool (Q4/Q5 add Wild)</i>','','')
     +row(1,'Ships · NEUTRAL, destination-bound hulls (20 deck: 11 Cog cap 2 / 9 Hulk cap 3)','20',pgRef(pages,famPages,'Ships'))
     +row(0,'<i>destination printed on each: Bruges 5 · London 5 · Bergen 5 · Novgorod 5</i>','','')

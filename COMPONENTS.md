@@ -120,11 +120,13 @@ gone). *(The cask is half your impact: brew what, hold which, deploy when — `R
 | **Q1** | **Gruit Ale** | `G` | 1 | Bruges | 16 |
 | **Q2** | **Hopped Beer** | `G H` | 2 | + London · Bergen · the Hall | 20 |
 | **Q3** | **Broyhan** / **Keut** | `G H H` / `G G H` | 2 | + Novgorod | 6 / 6 |
-| **Q4** | **Mumme** | `G G H H` | 3 | all | 8 |
-| **Q5** | **Bock** | `G G G H H` *(ungated)* | 3 | all | 4 |
+| **Q4** | **Mumme** | `G H H H` | 3 | all | 8 |
+| **Q5** | **Bock** | `G G H H H` *(ungated)* | 3 | all | 4 |
 
 > **Export beers carry fixed quality; deal 3 of 4 each game** (drop a Q3 → full Q3→Q5 climb;
-> drop Mumme → no Q4; drop Bock → no Q5 — the variable ladder shape). Bock is **ungated at 3G2H**.
+> drop Mumme → no Q4; drop Bock → no Q5 — the variable ladder shape). Bock is **ungated at 2G3H**
+> (v1.6: the export ladder is **hops-led** — Mumme/Bock lean hops, giving hops a real demand so Hop
+> Garden is a genuine pick vs Granary; totals unchanged, so the Q5 climb timing holds).
 
 ### B. Ship tiles — neutral, destination-bound hulls (deck of ~20) — *unchanged*
 Hull (**Cog** 2 / **Hulk** 3) + a **kontor** destination printed (Bruges/London/Bergen/Novgorod,
@@ -197,9 +199,9 @@ type + its `G/H` cost*; permanent.
 | Recipe | Type | Buy ⚙ | Brew ⚙ |
 |---|---|---|---|
 | Gruit / Hopped | Q1 / Q2 | start | `G` / `G H` |
-| Broyhan / Keut | Q3 | `1 G` | `G H H` / `G G H` |
-| Mumme | Q4 | `1 G 1 H` | `G G H H` |
-| Bock | Q5 | `2 G` | `G G G H H` |
+| Broyhan / Keut | Q3 | `1 H` / `1 G` | `G H H` / `G G H` |
+| Mumme | Q4 | `2 H` | `G H H H` |
+| Bock | Q5 | `1 G 1 H` | `G G H H H` |
 
 ### E. Private brewery improvements — the small private engine (⚙ — buyable for goods)
 The few upgrades that are inherently **private** (don't fit a public slot) stay as brewery

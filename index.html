@@ -317,8 +317,8 @@
     <tr><td><b>Q2</b></td><td><b>Hopped Beer</b> <span class="small">(fast)</span></td><td><span class="cube g"></span> <span class="cube h"></span></td><td>1</td><td><i>top of pile ⚙</i></td><td>+ London · Bergen <span class="small">(Hall via Enshrine)</span></td></tr>
     <tr><td><b>Q3</b></td><td><b>Broyhan</b> <span class="small">(export · fast)</span></td><td><span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span></td><td>1</td><td><i>top of pile ⚙</i></td><td>+ Novgorod</td></tr>
     <tr><td><b>Q3</b></td><td><b>Keut</b> <span class="small">(export · +1 presence)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span></td><td>2</td><td><i>top of pile ⚙</i></td><td>+ Novgorod</td></tr>
-    <tr><td><b>Q4</b></td><td><b>Mumme</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span></td><td>3</td><td><i>top of pile ⚙</i></td><td>all</td></tr>
-    <tr><td><b>Q5</b></td><td><b>Bock</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span> <span class="small">(ungated)</span></td><td>3 <span class="small">(2 w/ Cellar)</span></td><td><i>top of pile (Wild possible)</i></td><td>all</td></tr>
+    <tr><td><b>Q4</b></td><td><b>Mumme</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span> <span class="cube h"></span></td><td>3</td><td><i>top of pile ⚙</i></td><td>all</td></tr>
+    <tr><td><b>Q5</b></td><td><b>Bock</b> <span class="small">(export)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="cube h"></span> <span class="cube h"></span> <span class="cube h"></span> <span class="small">(ungated)</span></td><td>3 <span class="small">(2 w/ Cellar)</span></td><td><i>top of pile (Wild possible)</i></td><td>all</td></tr>
   </table>
   <p>The ladder is a fixed spine (<b>Gruit → Hopped</b>) + a <b>variable export</b>: the four historical Hanse export beers carry a <b>fixed quality</b> (Broyhan/Keut Q3 · Mumme Q4 · Bock Q5) and <b>3 of the 4 are dealt each game</b>, so the climb differs every game. Each quality's casks form a <b>face-up pile</b>; brewing takes the <b>top tile</b>, and since the top of every pile is visible you <b>steer</b> — pick the quality whose action (Source · Age · Load · Reach · Convert · Survey · Wild[Q4+]) helps your engine. <b>Gruit is pinned to Source</b> (+2 goods); only Q2+ draw. <b>Recipes</b> (permission to brew) are a face-up Market supply:</p>
   <div class="gallery" id="recipeGallery"></div>
@@ -511,10 +511,10 @@ document.getElementById('destBoard').innerHTML=destinations.map(d=>`
 const recipeTiles=[
   {name:'Gruit',type:'Q1 · start',buy:'printed',brew:'G'},
   {name:'Hopped',type:'Q2 · start',buy:'printed',brew:'G H'},
-  {name:'Broyhan',type:'Q3 export',buy:'1 G',brew:'G H H'},
+  {name:'Broyhan',type:'Q3 export',buy:'1 H',brew:'G H H'},
   {name:'Keut',type:'Q3 export',buy:'1 G',brew:'G G H'},
-  {name:'Mumme',type:'Q4 export',buy:'1 G 1 H',brew:'G G H H'},
-  {name:'Bock',type:'Q5 export',buy:'2 G',brew:'G G G H H (ungated)'},
+  {name:'Mumme',type:'Q4 export',buy:'2 H',brew:'G H H H'},
+  {name:'Bock',type:'Q5 export',buy:'1 G 1 H',brew:'G G H H H (ungated)'},
 ];
 document.getElementById('recipeGallery').innerHTML=recipeTiles.map(t=>`
   <div class="card"><div class="head h-route"><div class="kind">Recipe · ${t.type}</div><div class="ttl">${t.name}</div></div>
