@@ -2529,7 +2529,7 @@ function renderBar(){
 }
 function stopLabel(s){
   if(s.kind==='cell')return LU(ICON[CELLNAME[s.cell]])+' '+CELLNAME[s.cell];
-  if(s.kind==='deploy'){const b=bAt(s.slot);return LU('anchor')+' '+(b?bName(b.b)+' · ':'')+'Deploy';}   // an empty slot's default action
+  if(s.kind==='deploy'){const b=bAt(s.slot);return LU('anchor')+' '+(b?bName(b.b):s.slot)+' · Deploy';}   // empty slot → its id (s4); building present → the building name
   if(s.kind==='bldg')return LU(BUILDINGS[bKeyAt(s.slot)].icon)+' '+bName(bKeyAt(s.slot));
   const t=S.slots[s.slot];if(!t)return '(empty)';
   if(t.type==='cask')return LU('beer')+ownSq(t.owner)+'Cask · '+styleShort(t.style);
