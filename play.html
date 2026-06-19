@@ -435,14 +435,7 @@ const ICONTIP={
   recycle:'Tap (Cellar) — discard a Ready cask from a vessel or a slot, firing its action once (frees the lane / recalls it off a slot).',
   barrel:'Deploy — set a Ready cask onto an open slot.',
 };
-// the DEPLOY action reads as a barrel (a cask being set down) — lucide has no barrel, so emit an
-// inline SVG in lucide's stroke style; iTag() is the single emit point for every icon (so 'barrel'
-// works through LU(), the station yield rows, and the empty-slot reminder alike).
-const BARREL_PATHS='<path d="M7 3h10C20 6 20 18 17 21H7C4 18 4 6 7 3Z"/><path d="M5 9h14"/><path d="M5 15h14"/>';
-const iTag=(n,cls)=>n==='barrel'
-  ? '<svg class="ic'+(cls?' '+cls:'')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+BARREL_PATHS+'</svg>'
-  : '<i data-lucide="'+n+'"'+(cls?' class="ic '+cls+'"':' class="ic"')+'></i>';
-const LU=(n,cls)=>{const i=iTag(n,cls);
+const LU=(n,cls)=>{const i='<i data-lucide="'+n+'"'+(cls?' class="ic '+cls+'"':' class="ic"')+'></i>';
   return ICONTIP[n]?'<span class="iw" data-tip="'+attr(ICONTIP[n])+'">'+i+'</span>':i;};
 const ICON={grain:'wheat',hops:'sprout',cask:'beer',presence:'map-pin',coin:'coins',
   Market:'store',Brewhouse:'flask-conical',Cellar:'hourglass',Harbor:'ship',
@@ -2675,7 +2668,7 @@ function renderGrid(){
       cls+=' pfilled stack';inner=stackHtml(b,t,s.id);
     }else if(b){cls+=' pfilled';inner=pBldgFace(b);}
     else if(t){cls+=' pfilled';inner=(t.type==='cask'?pCaskFace(t,caskPreviewBonus(s.id)):pShipFace(t));}
-    else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Deploy a Ready cask here — an empty slot’s default line-action is Deploy')+'">'+iTag('barrel')+'</span></span>';
+    else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Deploy a Ready cask here — an empty slot’s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span></span>';
     let click=bldgPlacing?'placeBldgOn':(occPlacing?(UI.sub==='deploy'?'deployTo':'placeSlot'):null);
     if(!click&&b&&t)click='toggleStack';   // not placing → tapping a stacked slot swaps the visible order
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
@@ -2686,7 +2679,7 @@ function renderGrid(){
     const legal=(UI.sub==='move'&&!aiTurn()&&(!cur().placed||ADJ[cur().cell].includes(c)));
     if(legal)cls+=' legal';
     const grps=STATION_ACTS[act]||[(YIELD[act]||[])];   // groups: icons within a group are OR (slash); groups are AND (gap)
-    const ico=n=>'<span class="iw" data-tip="'+attr(STATION_ICON_TIP[n]||ICONTIP[n]||'')+'">'+iTag(n)+'</span>';
+    const ico=n=>'<span class="iw" data-tip="'+attr(STATION_ICON_TIP[n]||ICONTIP[n]||'')+'"><i data-lucide="'+n+'" class="ic"></i></span>';
     const yields=grps.map(grp=>grp.map(ico).join('')).join('<span class="yand">+</span>');
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'>'
       +'<div class="stn">'

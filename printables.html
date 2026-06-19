@@ -434,11 +434,7 @@
 //==================================================================
 // DATA — mirrors play.html (the canonical engine) & COMPONENTS.md
 //==================================================================
-// DEPLOY reads as a barrel (a cask set down) — lucide has no barrel, so emit an inline SVG in lucide's stroke style.
-const BARREL_PATHS='<path d="M7 3h10C20 6 20 18 17 21H7C4 18 4 6 7 3Z"/><path d="M5 9h14"/><path d="M5 15h14"/>';
-const LU=(n,cls)=>n==='barrel'
-  ? '<svg class="'+(cls||'ic')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+BARREL_PATHS+'</svg>'
-  : '<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
+const LU=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc">'+LU('sprout','h')+h+'</span>');return a.join('');};
 const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · victory-point icon
 
