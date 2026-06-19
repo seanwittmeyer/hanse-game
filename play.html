@@ -2464,7 +2464,10 @@ function renderBar(){
   else if(U==='cell'){const r=cellRender(p);prompt=r.prompt;acts=r.acts;}
   else if(U==='brew'){prompt='Brew — load a recipe into an open vessel. <span class="note">Each shows the slot-action its cask will take (the face-up top of that quality’s pile — steerable).</span>';
     acts=p.recipes.map(r=>{const act=pileTopFor(STYLES[r].q,r);
-      return '<button '+(canBrew(p,r)&&openVessel(p)>=0?'':'disabled')+' onclick="brewPick(\''+r+'\')" data-tip="'+attr(STYLES[r].name+' Q'+STYLES[r].q+' — its cask’s action: '+CASK_ACT[act])+'">'+LU('beer')+' '+STYLES[r].name+' '+costIcons(STYLES[r].in)+' <span class="cact" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:inherit">'+LU(CASK_ACT_ICON[act]||'')+' '+act+'</span></button>';}).join('')+btn('Skip','resume(\''+UI.brew.returnTo+'\')','ghost');}
+      return '<button '+(canBrew(p,r)&&openVessel(p)>=0?'':'disabled')+' style="display:inline-flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left" onclick="brewPick(\''+r+'\')" data-tip="'+attr(STYLES[r].name+' Q'+STYLES[r].q+' — its cask’s action: '+CASK_ACT[act])+'">'
+        +'<span>'+LU('beer')+' '+STYLES[r].name+' Q'+STYLES[r].q+'</span>'
+        +'<span style="display:inline-flex;align-items:center;gap:5px">'+costIcons(STYLES[r].in)+' <span class="cact" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:inherit">'+LU(CASK_ACT_ICON[act]||'')+' '+act+'</span></span>'
+        +'</button>';}).join('')+btn('Skip','resume(\''+UI.brew.returnTo+'\')','ghost');}
   else if(U==='age'){const a=UI.age;prompt=(a.mode==='single'?'Age one cask '+a.pool+' step'+(a.pool===1?'':'s'):'Allocate '+a.pool+' age point'+(a.pool===1?'':'s')+' across your vessels')+'.';
     acts=p.vessels.map((c,i)=>(c&&c.step<c.ready)?btn(LU('beer')+styleShort(c.style)+' '+c.step+'/'+c.ready,'ageAllot('+i+')','go'):'').filter(x=>x).join('')
       +(a.mode==='pool'?btn('Done','ageDone()','primary'):'')+btn('Skip','ageSkip()','ghost');}
