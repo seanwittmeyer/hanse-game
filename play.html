@@ -2549,7 +2549,7 @@ function renderBar(){
   document.getElementById('prompt').innerHTML=prompt;
   document.getElementById('acts').innerHTML=acts;
   document.getElementById('boardnote').innerHTML =
-      U==='stops'? 'A line fires <b>both stations</b> + each slot’s occupant + any Crane/Lagering building on it (slot·station·station·slot), in <b>any order</b>. Stations are never closed.'
+      U==='stops'? 'A line fires <b>both stations</b> + each slot’s occupant (a cask’s action, or a ship you can load) and any building modifying it (slot·station·station·slot), in <b>any order</b>. Stations are never closed.'
     : U==='deploy'||U==='placebldg'||(U==='cell'&&UI.stage==='place')? 'Click a glowing slot.'
     : 'The Wharf: '+LU('store')+' <b>Source</b> → '+LU('flask-conical')+' <b>Brew</b> → '+LU('hourglass')+' <b>Age</b> → '+LU('ship')+' <b>Ship</b>. A Ready cask deploys to a '+LU('anchor')+' slot, then ships on a '+LU('sailboat')+' to a destination for points.';
 }

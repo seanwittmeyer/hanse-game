@@ -1,8 +1,8 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v1.4 “Deploy”)
+# Brewhouses of the Hanse — Turn & Round Rules (v1.6 “Hops”)
 
 > **Status: live (2026-06-18).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
-> playable build is `play.html` (v1.4 “Deploy”) — these rules are implemented there.** (The prior
+> playable build is `play.html` (v1.6 “Hops”) — these rules are implemented there.** (The prior
 > v0.16.1 "The Wharf" build is archived at branch `archive/main-v0.16.1` / `archive/play.html` /
 > `archive/v0.16/`.)
 >

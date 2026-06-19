@@ -1,11 +1,11 @@
-# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.4 “Deploy”)
+# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.6 “Hops”)
 
 > The physical manifest: **boards · tokens · the tile families · the player brewery board ·
 > destinations.** Enumerates *what objects exist and what each does* — the **why** is in
 > `DESIGN.md`, the **operational rules** in `RULES.md`, the **plan** in `PLAN.md`. **Every
 > count/value is a placeholder ⚙.**
 >
-> **v1.2 — Dice (live).** The keystone "Living Slots" rebuild shipped and is implemented in
+> **v1.6 — Hops (live).** The keystone "Living Slots" rebuild shipped and is implemented in
 > `play.html`; v0.16.1 is archived at `archive/play.html` (manifest at `archive/v0.16/COMPONENTS.md`).
 > The **8 slots are a living, composable commons** — they hold **owned buildings** that modify the
 > casks/ships docked to them; **one tile family (Buildings) absorbs the old neutral buildings, the

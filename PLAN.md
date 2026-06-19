@@ -1,9 +1,9 @@
-# Brewhouses of the Hanse — v1.4 “Deploy” — PLAN
+# Brewhouses of the Hanse — “Living Slots” reset — PLAN (live build: v1.6 “Hops”)
 
-> **Status: SHIPPED — v1.4 “Deploy” (opened as the v1.0 “Living Slots” reset, 2026-06-16).** The
+> **Status: SHIPPED — live build v1.6 “Hops” (opened as the v1.0 “Living Slots” reset, 2026-06-16).** The
 > keystone rebuild this plan called for has **shipped**: the *living, composable Wharf slots*, the
 > differentiation pass (v1.1), and the demand dice (v1.2) are all live repo-wide (`RULES.md` /
-> `COMPONENTS.md` / all four HTML pages on **v1.4 “Deploy”**). This plan replaced the abandoned
+> `COMPONENTS.md` / all four HTML pages on **v1.6 “Hops”**). This plan replaced the abandoned
 > "demand-board" detour (the `*-v1` files, deleted; the *"Leffe at a party / quality is a
 > construct"* thread and everything after it is **discarded**) and returned to the **keystone we
 > bookmarked early in the design chat**: the *living, composable Wharf slots*. The prior live game
@@ -17,7 +17,10 @@
 > Hopped/Broyhan + Keut presence; the Flight scores distinct **beers**, no Masterpiece) → v1.2
 > the **demand dice** (a reusable d6 per value-building bonus rides the cask in the ship's berth;
 > pips = ★ banked on delivery, max 5; a stranded cask banks nothing — replacing a denomination of
-> value chits). The roadmap below (§7) is checked off accordingly.
+> value chits) → **v1.3/v1.4** deploy-as-a-line-action + **Tap** → **v1.5** three private improvements
+> (Harbor Crane · Lagering Cellar · Private Quay) + off-turn Building rewards **queued to the owner** →
+> **v1.6 “Hops”** the **hops-led export ladder** (Mumme 1G3H · Bock 2G3H, totals unchanged) giving hops
+> a real demand. The roadmap below (§7) is checked off accordingly.
 
 ---
 
@@ -261,8 +264,8 @@ Three decisions set the keystone's shape; everything else sizes off them:
 2. **Edit the canonical `RULES.md`** forward to the new path (the keystone + the clear scoring). ✓ shipped (v1.4 “Deploy”).
 3. **Edit `COMPONENTS.md`** — the building family (the new content deck, one grammar), the
    reconceived destination/scoring table, the cuts. ✓ shipped (v1.4 “Deploy”; the demand dice replaced the value chits).
-4. **Rebuild `play.html`** to the new rules (sandbox first; keep v0.16.1 live until ready). ✓ shipped — `play.html` is now on v1.4 “Deploy” (v0.16.1 archived).
-5. **HTML docs** (`learn` / `index`) then **`printables`** last. ✓ shipped — all four pages on v1.2.
+4. **Rebuild `play.html`** to the new rules (sandbox first; keep v0.16.1 live until ready). ✓ shipped — `play.html` is now on **v1.6 “Hops”** (v0.16.1 archived).
+5. **HTML docs** (`learn` / `index`) then **`printables`** last. ✓ shipped — all four pages on **v1.6 “Hops”**.
 6. Sim-gate throughout (crash/deadlock-free, pace 12–25, lanes balanced, AI ladder). ✓ ongoing — the standing gate for every change.
 
 ## 8. Guardrails
