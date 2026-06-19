@@ -118,8 +118,8 @@ gone). *(The cask is half your impact: brew what, hold which, deploy when — `R
 | Q | Beer | Brew inputs ⚙ | Matures ⚙ | Reaches (gate) | Qty |
 |---|---|---|---|---|---|
 | **Q1** | **Gruit Ale** | `G` | 1 | Bruges | 16 |
-| **Q2** | **Hopped Beer** | `G H` | 2 | + London · Bergen · the Hall | 20 |
-| **Q3** | **Broyhan** / **Keut** | `G H H` / `G G H` | 2 | + Novgorod | 6 / 6 |
+| **Q2** | **Hopped Beer** | `G H` | 1 | + London · Bergen · the Hall | 20 |
+| **Q3** | **Broyhan** / **Keut** | `G H H` / `G G H` | 1 / 2 | + Novgorod | 6 / 6 |
 | **Q4** | **Mumme** | `G H H H` | 3 | all | 8 |
 | **Q5** | **Bock** | `G G H H H` *(ungated)* | 3 | all | 4 |
 

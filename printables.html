@@ -140,58 +140,93 @@
   .card .c-strip .c-lbl{font-size:.085in;font-style:italic;opacity:.85}
   .card .c-strip .c-gate{display:inline-flex;align-items:center;gap:.02in;font-size:.085in;font-style:italic}
   .card .c-strip .c-gate svg,.card .c-strip .c-gate .ic{width:.12in;height:.12in}
-  /* ====================== PLAYER BOARD ====================== */
+  /* ====================== PLAYER BOARD (v1.6 — rebuilt from scratch) ======================
+     A pure TRACKING surface — vessels & maturation (THE FLOOR row) · improvements · THE FLIGHT ·
+     a goods zone · a bottom RECIPE RACK. No rules text (those live on the separate player-aid card).
+     Tile-true: vessel & improvement spaces are 1.25in squares; recipe-rack strips are 1.85in (card width). */
   .board{--pc:#7c2128;width:100%;height:100%;background:var(--parch);color:var(--ink);border:2.5px solid var(--pc);
-    border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in}
+    border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.13in}
   .board svg,.board .ic{stroke-width:1.8}
-  .pb-head{display:flex;align-items:stretch;gap:.16in}
-  .crest{width:.8in;flex:0 0 auto;border-radius:.08in;background:var(--pc);color:#fff;display:flex;align-items:center;justify-content:center}
-  .crest svg,.crest .ic{width:.48in;height:.48in}
-  .pb-title{flex:1;display:flex;flex-direction:column;justify-content:center}
-  .pb-name{font-variant:small-caps;font-weight:bold;font-size:.26in;color:var(--pc);line-height:1}
-  .pb-sub{font-size:.105in;color:var(--ink2);font-style:italic}
-  .pb-storage{flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:.05in}
-  .pb-lbl{font-variant:small-caps;font-weight:bold;font-size:.115in;color:var(--pc);display:flex;align-items:center;gap:.05in}
-  .pb-lbl .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.088in;color:var(--ink2)}
-  .boxrow{display:flex;gap:.04in;flex-wrap:wrap;max-width:3.2in}
-  .gbox{width:.32in;height:.32in;border:1.2px solid var(--pc);border-radius:.03in;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;color:var(--pc);position:relative}
-  .gbox svg,.gbox .ic{width:.15in;height:.15in;opacity:.45}
-  .gbox.wh{border-style:dashed;background:repeating-linear-gradient(45deg,rgba(0,0,0,.04) 0 .06in,transparent .06in .12in)}
-  .gbox.wh::after{content:"W";position:absolute;bottom:0;right:.015in;font-size:.07in;font-weight:bold;color:var(--ink2)}
-  /* storage = a holding ZONE (goods are loose tokens/cubes — no fitted boxes) */
-  .storezone{display:flex;height:.6in;min-width:2.5in;border:1.5px solid var(--pc);border-radius:.06in;overflow:hidden;background:rgba(255,255,255,.45)}
-  .storezone .sz-main{flex:2;display:flex;align-items:center;justify-content:center;gap:.05in;font-variant:small-caps;font-weight:bold;color:var(--pc);font-size:.13in}
-  .storezone .sz-main svg,.storezone .sz-main .ic{width:.2in;height:.2in}
-  .storezone .sz-wh{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;border-left:1.5px dashed var(--pc);font-size:.082in;font-style:italic;color:var(--ink2);line-height:1.05;background:repeating-linear-gradient(45deg,rgba(0,0,0,.045) 0 .07in,transparent .07in .14in)}
-  .pb-body{flex:1;display:flex;gap:.16in;min-height:0}
-  .pb-col{display:flex;flex-direction:column;gap:.08in} .pb-col.left{flex:0 0 5.35in} .pb-col.right{flex:1}
-  .pb-sect{font-variant:small-caps;font-weight:bold;font-size:.12in;color:var(--pc);border-bottom:1px solid var(--pc);padding-bottom:.02in;margin-bottom:.04in;display:flex;align-items:center;gap:.05in}
+  /* --- header: crest · house name · storage zone --- */
+  .pb-head{display:flex;align-items:stretch;gap:.16in;flex:0 0 auto}
+  .crest{width:.82in;flex:0 0 auto;border-radius:.08in;background:var(--pc);color:#fff;display:flex;align-items:center;justify-content:center}
+  .crest svg,.crest .ic{width:.5in;height:.5in}
+  .pb-title{flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0}
+  .pb-name{font-variant:small-caps;font-weight:bold;font-size:.3in;color:var(--pc);line-height:1}
+  .pb-sub{font-size:.1in;color:var(--ink2);font-style:italic;margin-top:.03in}
+  .pb-store{flex:0 0 auto;display:flex;flex-direction:column;gap:.04in;justify-content:center}
+  .pb-store .slbl{font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--pc);display:flex;align-items:center;gap:.04in}
+  .pb-store .slbl svg,.pb-store .slbl .ic{width:.14in;height:.14in}
+  .szone{width:2.7in;height:.8in;border:1.6px solid var(--pc);border-radius:.07in;background:rgba(255,255,255,.45);
+    display:flex;align-items:center;justify-content:center;gap:.14in;color:var(--pc)}
+  .szone .si{display:inline-flex;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.135in}
+  .szone .si svg,.szone .si .ic{width:.22in;height:.22in}
+  .szone .cap{display:inline-flex;align-items:baseline;gap:.03in;font-size:.1in;font-style:italic;color:var(--ink2)}
+  .szone .cap b{font-size:.17in;font-style:normal;font-weight:900;color:var(--pc)}
+  /* --- section header (a zone label — a noun, never a rule) --- */
+  .pb-sect{font-variant:small-caps;font-weight:bold;font-size:.125in;color:var(--pc);display:flex;align-items:center;gap:.05in;
+    border-bottom:1px solid var(--pc);padding-bottom:.015in;margin-bottom:.05in}
   .pb-sect svg,.pb-sect .ic{width:.15in;height:.15in}
-  .pb-sect .hint{font-variant:normal;font-weight:normal;font-style:italic;font-size:.088in;color:var(--ink2);margin-left:auto}
-  .vessel{display:flex;align-items:center;gap:.1in;margin-bottom:.07in}
-  .vtag{flex:0 0 .7in;font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--pc);line-height:1.05}
-  .vslot{width:1.05in;height:1.05in;flex:0 0 auto;border:1.5px solid var(--pc);border-radius:.05in;background:rgba(255,255,255,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.092in;text-align:center;gap:.02in}
-  .vslot svg,.vslot .ic{width:.24in;height:.24in;opacity:.5}
-  .vtrack{flex:1;display:flex;align-items:center;gap:.05in}
-  .vstep{flex:1;height:.5in;border:1.3px solid var(--pc);border-radius:.04in;background:rgba(255,255,255,.45);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:.078in;color:var(--ink2);line-height:1.05;position:relative}
-  .vstep .sn{font-variant:small-caps;font-weight:bold;font-size:.092in;color:var(--ink)}
-  .vstep.age{background:rgba(184,134,11,.18)} .vstep.ready{background:rgba(74,107,58,.2)}
-  .vstep .arr{position:absolute;right:-.07in;top:50%;transform:translateY(-50%);color:var(--pc);font-weight:bold;font-size:.13in;z-index:2}
-  .vessel.locked .vslot,.vessel.locked .vstep{border-style:dashed;color:rgba(0,0,0,.32);background:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 .08in,transparent .08in .16in)}
-  .vessel.locked .vtag::after{content:" — needs Extra Vessel";font-variant:normal;font-weight:normal;font-style:italic;font-size:.08in;color:var(--ink2)}
-  .strip{display:flex;gap:.08in;flex-wrap:wrap}
-  .pslot{width:1.25in;height:1.25in;border:1.4px dashed var(--pc);border-radius:.05in;background:rgba(255,255,255,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.09in;text-align:center;gap:.02in}
-  .pslot svg,.pslot .ic{width:.26in;height:.26in;opacity:.55}
-  .pslot.best{border-style:solid;background:rgba(184,134,11,.2);font-weight:bold}
-  .tuck{margin:.04in -.16in -.16in;padding:.06in .16in .04in;border-top:1.5px dashed var(--pc);background:repeating-linear-gradient(90deg,rgba(0,0,0,.02) 0 1.2in,transparent 1.2in 2.4in)}
-  .tuck-h{font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--pc);display:flex;align-items:center;gap:.05in;margin-bottom:.04in}
-  .tuck-h svg,.tuck-h .ic{width:.14in;height:.14in} .tuck-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.085in;color:var(--ink2);margin-left:auto}
-  .tuckrow{display:flex;gap:.1in}
-  .tslot{flex:1;min-width:1.1in;height:.5in;border:1.3px solid var(--pc);border-bottom:none;border-radius:.06in .06in 0 0;background:rgba(255,255,255,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.02in;color:var(--pc);font-size:.092in;text-align:center;line-height:1}
-  .tslot svg,.tslot .ic{width:.14in;height:.14in;opacity:.6}
-  .tslot.printed{background:var(--pc);color:#fff} .tslot.printed svg,.tslot.printed .ic{opacity:.95}
-  .tslot.printed .gc{font-size:.095in} .tslot.printed .gc svg,.tslot.printed .gc .ic{width:.11in;height:.11in}
-  .tslot .tline{display:flex;align-items:center;gap:.03in;font-weight:bold;font-variant:small-caps}
+  .pb-sect .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.088in;color:var(--ink2);margin-left:auto}
+  /* --- THE FLOOR: vessels (left) + improvements (right) in one line; aging tracks under the vessels --- */
+  .floor{flex:0 0 auto}
+  .floor-row{display:flex;align-items:flex-start;justify-content:space-between;gap:.16in}
+  .grp-lbl{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--pc);display:flex;align-items:center;gap:.04in;margin-bottom:.05in}
+  .grp-lbl svg,.grp-lbl .ic{width:.13in;height:.13in}
+  .grp-lbl .nn{font-variant:normal;font-weight:normal;font-style:italic;opacity:.8}
+  .vgroup,.igroup{display:flex;gap:.13in}
+  .vcol{display:flex;flex-direction:column;gap:.05in;width:1.25in}
+  .vsq{width:1.25in;height:1.25in;border:1.6px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.5);position:relative;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.092in;text-align:center;gap:.02in}
+  .vsq svg,.vsq .ic{width:.32in;height:.32in;opacity:.42}
+  .vsq .vn{position:absolute;top:.05in;left:.07in;font-variant:small-caps;font-weight:bold;font-size:.092in;opacity:.7}
+  .vsq .lk{font-style:italic;font-size:.082in;color:var(--ink2)}
+  .mtrack{display:flex;border:1.3px solid var(--pc);border-radius:.04in;overflow:hidden;width:1.25in}
+  .mtrack .ms{flex:1;height:.36in;border-right:1px solid rgba(0,0,0,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-size:.12in;font-weight:900;color:var(--ink2);background:rgba(255,255,255,.5);line-height:1}
+  .mtrack .ms:last-child{border-right:none}
+  .mtrack .ms .ml{font-size:.06in;font-weight:normal;font-variant:small-caps;opacity:.8}
+  .mtrack .ms.fin{background:rgba(74,107,58,.22);color:var(--pc)}
+  .vcol.locked .vsq,.vcol.locked .mtrack .ms{border-style:dashed;color:rgba(0,0,0,.3);
+    background:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 .08in,transparent .08in .16in)}
+  /* improvement slots — private upgrades = violet, tile-true 1.25in squares */
+  .isq{width:1.25in;height:1.25in;border:1.5px dashed var(--violet);border-radius:.06in;background:rgba(91,58,142,.07);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;color:var(--violet);font-size:.092in;text-align:center}
+  .isq svg,.isq .ic{width:.32in;height:.32in;opacity:.6}
+  .ready-leg{font-size:.084in;color:var(--ink2);margin-top:.07in;display:flex;align-items:center;gap:.02in .14in;flex-wrap:wrap;line-height:1.1}
+  .ready-leg b{color:var(--pc)}
+  /* --- THE FLIGHT: one space per beer type; mark each beer you deliver --- */
+  .flight{flex:0 0 auto}
+  .flight-row{display:flex;gap:.08in}
+  .fbeer{flex:1;border:1.4px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.45);
+    display:flex;align-items:center;gap:.07in;padding:.05in .08in}
+  .fbeer.exp{border-style:dashed}
+  .fdot{width:.4in;height:.4in;flex:0 0 auto;border-radius:50%;border:1.4px solid var(--pc);background:rgba(0,0,0,.03)}
+  .fbeer.exp .fdot{border-style:dashed}
+  .fmeta{display:flex;flex-direction:column;line-height:1.08;min-width:0}
+  .fmeta .fn{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--ink)}
+  .fmeta .fq{font-size:.078in;color:var(--ink2)}
+  /* --- RECIPE RACK: bottom edge — slide export recipe cards up; the exposed strip = the card's brew face.
+     Gruit & Hopped are printed here as clones of a recipe card's bottom c-strip. --- */
+  .rack{margin:auto -.16in -.16in;padding:.06in .12in 0;border-top:1.6px dashed var(--pc);
+    background:repeating-linear-gradient(90deg,rgba(0,0,0,.025) 0 1.85in,transparent 1.85in 3.7in)}
+  .rack-h{font-variant:small-caps;font-weight:bold;font-size:.105in;color:var(--pc);display:flex;align-items:center;gap:.05in;margin-bottom:.05in}
+  .rack-h svg,.rack-h .ic{width:.13in;height:.13in} .rack-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.085in;color:var(--ink2);margin-left:auto}
+  .rack-row{display:flex;gap:.04in;justify-content:center}
+  .rk{width:1.85in;height:.56in;flex:0 0 auto;border-radius:.05in .05in 0 0;border:1.3px solid var(--pc);border-bottom:none;overflow:hidden}
+  .rk.tuck{border-style:dashed;background:rgba(255,255,255,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.02in;color:var(--pc);font-size:.092in;text-align:center}
+  .rk.tuck svg,.rk.tuck .ic{width:.15in;height:.15in;opacity:.55}
+  .rk.printed{background:var(--cc);color:#fff;display:flex;flex-direction:column;justify-content:center;gap:.04in;padding:.05in .12in;text-shadow:0 1px 1.5px rgba(0,0,0,.45)}
+  .rk.printed .c-row{display:flex;align-items:center;gap:.06in;line-height:1;white-space:nowrap}
+  .rk.printed svg,.rk.printed .ic{width:.14in;height:.14in;flex:0 0 auto}
+  .rk.printed .c-rung{display:inline-flex;align-items:center;gap:.015in;background:rgba(255,255,255,.92);color:var(--cc);
+    border-radius:.04in;padding:.025in .05in;font-size:.115in;font-weight:bold;text-shadow:none}
+  .rk.printed .c-rung svg,.rk.printed .c-rung .ic{width:.13in;height:.13in}
+  .rk.printed .c-nm{font-variant:small-caps;font-weight:bold;font-size:.16in}
+  .rk.printed .c-lbl{font-size:.085in;font-style:italic;opacity:.85}
+  .rk.printed .c-cost{display:inline-flex;align-items:center;gap:.06in;font-weight:bold;font-size:.13in}
+  .rk.printed .c-cost .gc{font-size:.13in;gap:.02in}
+  .rk.printed .c-cost .gc svg,.rk.printed .c-cost .gc .ic{width:.13in;height:.13in}
   /* ====================== DESTINATIONS BOARD ====================== */
   .dboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--gold);border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in;color:var(--ink)}
   .dboard svg,.dboard .ic{stroke-width:1.8}
@@ -307,7 +342,7 @@
 </head>
 <body>
 <div class="bar no-print">
-  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v1.2 &ldquo;Dice&rdquo;</span></h1>
+  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v1.6 &ldquo;Hops&rdquo;</span></h1>
   <button onclick="window.print()">🖨 Print</button>
   <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
   <span class="seg"><button id="bfull" class="on" onclick="setMode('full')">Full set</button><button id="bproof" onclick="setMode('proof')">Proof (1 each)</button></span>
@@ -419,7 +454,7 @@ const DESTS=[
   {nm:'Novgorod',kc:'#7c2128', req:3, val:'2·4·6', scale:true,  maj:[8,5,2], role:'The Long Haul · the quality climb', ben:{n:'+', ic:'hourglass'},  bnote:'refine a maturing cask (+1 age)'},
 ];
 const HALL={nm:'The Hall', kc:'#5b3a8e', req:2, role:'Prestige · local Enshrine (no ship)', ladder:[[2,3],[3,5],[4,7],[5,9]]};
-const SAILED={2:7,3:11,4:14};        // Sailed-Ships end clock per player count ⚙ (RULES §8 — 2–4p; 5p removed)
+const SAILED={2:6,3:10,4:13};        // Sailed-Ships end clock per player count ⚙ (RULES §8 — 2–4p; v1.3 trimmed 7/11/14→6/10/13)
 const MAX_ROUND=25;                  // round ceiling ⚙ — top of the 12–25-round target band
 const OWN_DISCS=14;                  // ownership / presence discs per colour ⚙ — rides a cask → plants as kontor presence (majorities); also marks who owns a building on a slot
 
@@ -497,36 +532,50 @@ function contractCard(){return '<div class="card" style="--cc:#8a6408">'
     +'<div class="c-row"><span class="c-lbl">spend + fare</span><span class="c-cost">'+cost(2,0)+'</span></div>'
   +'</div></div>';}
 
-// ---- player brewery board ----
-function vessel(n,open){
-  const steps='<div class="vstep"><span class="sn">Brew · 0</span><span class="arr">›</span></div>'
-    +'<div class="vstep ready"><span class="sn">1</span>Gruit · Hopped · Broyhan<span class="arr">›</span></div>'
-    +'<div class="vstep age"><span class="sn">2</span>Keut Ready<span class="arr">›</span></div>'
-    +'<div class="vstep ready"><span class="sn">3</span>Mumme · Bock → slot</div>';
-  return '<div class="vessel'+(open?'':' locked')+'"><span class="vtag">Vessel '+n+'</span><div class="vslot">'+LU('beer')+'cask</div><div class="vtrack">'+steps+'</div></div>';}
+// ---- player brewery board (v1.6 — rebuilt from scratch) ----
+// A pure TRACKING surface: header + storage zone · THE FLOOR (3 vessel squares + maturation tracks + 3
+// improvement squares) · THE FLIGHT (one space per beer) · a bottom RECIPE RACK (Gruit/Hopped printed as
+// card-edge strips + tuck slots for export recipe cards). No rules text — those live on the player-aid card.
+const MTRACK=[['0','brew'],['1',''],['2',''],['3','ship ▸']];   // maturation steps; a small marker climbs as a cask ages (Ready depends on the beer — see the legend)
+function vcol(n,locked){
+  let ms='';MTRACK.forEach((s,i)=>ms+='<div class="ms'+(i===MTRACK.length-1?' fin':'')+'">'+s[0]+(s[1]?'<span class="ml">'+s[1]+'</span>':'')+'</div>');
+  return '<div class="vcol'+(locked?' locked':'')+'">'
+    +'<div class="vsq"><span class="vn">Vessel '+n+'</span>'+LU('beer')+(locked?'<span class="lk">+ Extra Vessel</span>':'<span>cask</span>')+'</div>'
+    +'<div class="mtrack">'+ms+'</div></div>';}
+function rkPrinted(cc,L,nm,g,h){   // a clone of a recipe card's bottom "c-strip" (the edge that shows when tucked)
+  return '<div class="rk printed" style="--cc:'+cc+'">'
+    +'<div class="c-row"><span class="c-rung">'+LU(QI)+L+'</span><span class="c-nm">'+nm+'</span></div>'
+    +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(g,h)+'</span></div></div>';}
 function pboard(p){
-  let ups='';for(let i=0;i<3;i++)ups+='<div class="pslot">'+LU('wrench')+'improvement<br>(buy for goods)</div>';
-  let hand='';for(let i=0;i<2;i++)hand+='<div class="pslot'+(i<1?' best':'')+'">'+LU('building-2')+(i<1?'Building<br>(start: 1)':'Building')+'</div>';
-  let tuck='<div class="tslot printed"><span class="tline">'+LU('scroll-text')+'Gruit</span>'+cost(1,0)+'</div>'
-    +'<div class="tslot printed"><span class="tline">'+LU('scroll-text')+'Hopped</span>'+cost(1,1)+'</div>';
-  for(let i=0;i<3;i++)tuck+='<div class="tslot"><span class="tline">'+LU('plus')+'recipe card</span></div>';
+  const vessels=vcol(1,false)+vcol(2,false)+vcol(3,true);   // V1·V2 open, V3 earned with Extra Vessel
+  let imps='';for(let i=0;i<3;i++)imps+='<div class="isq">'+LU('wrench')+'improvement</div>';
+  // THE FLIGHT — Gruit + Hopped (always) + the 4 possible exports (3 dealt each game; the 4th space stays empty)
+  const flightBeers=[['Gruit','Q1',0],['Hopped','Q2',0],['Broyhan','Q3',1],['Keut','Q3',1],['Mumme','Q4',1],['Bock','Q5',1]];
+  const flight=flightBeers.map(b=>'<div class="fbeer'+(b[2]?' exp':'')+'"><span class="fdot"></span>'
+    +'<span class="fmeta"><span class="fn">'+b[0]+'</span><span class="fq">'+b[1]+'</span></span></div>').join('');
+  // RECIPE RACK — Gruit & Hopped printed; 3 tuck slots for the export recipe cards (max 3 of 4 dealt)
+  let rack=rkPrinted('#6f7a82',1,'Gruit',1,0)+rkPrinted('#a67c1e',2,'Hopped',1,1);
+  for(let i=0;i<3;i++)rack+='<div class="rk tuck">'+LU('plus')+'slide recipe</div>';
   return '<div class="board" style="--pc:'+p.c+'">'
-    +'<div class="pb-head"><div class="crest">'+LU('beer')+'</div>'
-      +'<div class="pb-title"><div class="pb-name">Brewhouse · '+p.nm+'</div>'
-        +'<div class="pb-sub">your private brewery · Source → Brew → Age → Ship · Brewhouses of the Hanse · v1.6 “Hops”</div></div>'
-      +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Storage <span class="sm">keep your goods here</span></span><div class="storezone"><div class="sz-main">'+LU('coins')+'cap 8</div></div></div></div>'
-    +'<div class="pb-body">'
-      +'<div class="pb-col left"><div class="pb-sect">'+LU('flask-conical')+'Vessels &amp; Maturation<span class="hint">start 2 open · cap 3 · +1/turn auto + the Cellar · Aging Cellar −1 step</span></div>'
-        +vessel(1,true)+vessel(2,true)+vessel(3,false)
-        +'<div class="pb-sub" style="margin-top:.02in"><b>The Floor:</b> in lieu of a Wharf line, run the slot-action of every cask in your vessels (your private line). · Warm start: a Ready Gruit sits in Vessel 1 — deploy it turn 1. Seats after the first start +1 '+LU('wheat','g ic')+'.</div></div>'
-      +'<div class="pb-col right">'
-        +'<div><div class="pb-sect">'+LU('wrench')+'Improvements<span class="hint">private · BUY for goods at the Market</span></div><div class="strip">'+ups+'</div></div>'
-        +'<div><div class="pb-sect">'+LU('building-2')+'Buildings — in hand<span class="hint">start 1 · earn at London / Novgorod · place at the Market onto a Wharf slot</span></div><div class="strip">'+hand+'</div></div>'
-        +'<div class="pb-sub" style="margin-top:.04in"><b>The Flight</b> (end-game range): distinct <b>BEERS</b> delivered, min 3 → <b>3:4 · 4:9 · 5:16</b>. Five beer types exist each game (Gruit + Hopped + the 3 dealt exports), so the full flight is always reachable.</div>'
-        +'<div class="pb-sub" style="margin-top:.03in"><b>Developer</b> (end-game): <b>+3★</b> for each Building a <b>rival overbuilt</b> on a slot (it served its purpose). Self-displacement pays nothing.</div>'
-        +'<div class="pb-sub" style="margin-top:.03in"><b>'+LU('map-pin')+'Presence</b>: a Reach (cask action / Bergen benefit / Keut) plants presence <b>only at a kontor you’ve delivered to</b> — dead until your first delivery there.</div></div>'
+    +'<div class="pb-head">'
+      +'<div class="crest">'+LU('beer')+'</div>'
+      +'<div class="pb-title"><div class="pb-name">'+p.nm+' Brewhouse</div>'
+        +'<div class="pb-sub">Brewhouses of the Hanse · your private brewery · v1.6 “Hops”</div></div>'
+      +'<div class="pb-store"><span class="slbl">'+LU('warehouse')+'Storage</span>'
+        +'<div class="szone"><span class="si">'+LU('wheat','g ic')+'Grain</span><span class="si">'+LU('sprout','h ic')+'Hops</span><span class="cap">max <b>8</b></span></div></div>'
     +'</div>'
-    +'<div class="tuck"><div class="tuck-h">'+LU('scroll-text')+'Recipe Cards<span class="sm">slide cards up into these — the types you may brew (strip shows the BREW cost)</span></div><div class="tuckrow">'+tuck+'</div></div>'
+    +'<div class="floor"><div class="pb-sect">'+LU('home')+'The Floor<span class="sm">your vessels &amp; improvements — your private line</span></div>'
+      +'<div class="floor-row">'
+        +'<div><div class="grp-lbl">'+LU('flask-conical')+'Vessels &amp; Maturation</div>'
+          +'<div class="vgroup">'+vessels+'</div>'
+          +'<div class="ready-leg"><b>Ready:</b><span>1 — Gruit · Hopped · Broyhan</span><span>2 — Keut</span><span>3 — Mumme · Bock</span></div></div>'
+        +'<div><div class="grp-lbl">'+LU('wrench')+'Improvements <span class="nn">(max 3)</span></div>'
+          +'<div class="igroup">'+imps+'</div></div>'
+      +'</div></div>'
+    +'<div class="flight"><div class="pb-sect">'+LU('layers')+'The Flight<span class="sm">mark each beer you deliver · 3 of 4 exports in play</span></div>'
+      +'<div class="flight-row">'+flight+'</div></div>'
+    +'<div class="rack"><div class="rack-h">'+LU('scroll-text')+'Recipes<span class="sm">slide export recipe cards up — the strip shows the brew cost</span></div>'
+      +'<div class="rack-row">'+rack+'</div></div>'
   +'</div>';}
 
 // ---- destinations board ----
@@ -598,11 +647,11 @@ function mboard(){
       +'Each house: 3 '+LU('wheat','g ic')+' 2 '+LU('sprout','h ic')+' (+1 '+LU('wheat','g ic')+'/seat after the first) · Gruit + Hopped · 2 vessels · 2 charter contracts · <b>1 Building in hand</b> · a Ready Gruit. '
       +'Shared: a <b>guaranteed Hulk → Bruges + 1 more ship</b> on slots, a <b>ship market of 3</b> + a <b>Building display of 4</b> face-up · deal <b>3 of the 4 export beers</b>. First player <b>fixed</b>. <i>2p: ~6 slots; majorities winner-take-all.</i></div></div>'
     +'</div>';
-  let clk='';for(let i=1;i<=14;i++){let end='';for(const p in SAILED)if(SAILED[p]===i)end=p+'p';
+  let clk='';for(let i=1;i<=13;i++){let end='';for(const p in SAILED)if(SAILED[p]===i)end=p+'p';
     clk+='<div class="cc'+(end?' end':'')+'">'+(end?end+'<br>END':'<span class="n">'+i+'</span>')+'</div>';}
   let rt='';for(let i=1;i<=MAX_ROUND;i++)rt+='<div class="rc'+(i===MAX_ROUND?' cap':(i>=12?' band':''))+'">'+(i===MAX_ROUND?'25<br>CAP':i)+'</div>';
   return '<div class="mboard">'
-    +'<div class="mb-head"><h2>'+LU('anchor')+'The Wharf</h2><span class="sub">Brewhouses of the Hanse · main board · v1.4 “Deploy” — Source → Brew → Age → Ship</span></div>'
+    +'<div class="mb-head"><h2>'+LU('anchor')+'The Wharf</h2><span class="sub">Brewhouses of the Hanse · main board · v1.6 “Hops” — Source → Brew → Age → Ship</span></div>'
     +'<div class="mb-main">'+wharf+side+'</div>'
     +'<div><div class="ctrack">'+clk+'</div><div class="mtrack-l">'+'Sailed-Ships track — every voyage (a ship sailing <b>full</b>, a Charter, or an Enshrine) fills one slot; at your player-count END, finish the round &amp; score. <i>Charter = spend a charter contract + a flat 2 '+LU('wheat','g ic')+' fare (start with 2; buy more at the Market for 1 '+LU('wheat','g ic')+').</i></div></div>'
     +'<div><div class="rtrack">'+rt+'</div><div class="mtrack-l">round track — move the marker each round; the shaded 12–25 band is the target pace; the game never passes 25</div></div>'
@@ -646,7 +695,7 @@ function buildPages(){
   // --- BOARDS ---
   boardPage(pages,'boards','Main board — the Wharf',mboard(),7.42);
   boardPage(pages,'boards','Destinations board',dboard(),6.9);
-  PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),6.0));
+  PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),5.4));
   // --- TILES (one unbroken 1.25in grid — no family breaks) ---
   const tiles=[];
   // casks: Gruit all-Source (pinned); Q2+ cycle the draw-pool across the supply (Q4/Q5 include Wild) — the printed mix IS the brew-draw
@@ -737,6 +786,7 @@ function checklist(pages,famPages){
     +row(1,'Worker discs 0.8″ — 1 per colour (or meeples)',PLAYERS.length,pgRef(pages,famPages,'Workers & markers'))
     +row(1,'First-player marker 0.8″ (fixed all game)','1','')
     +row(1,'Round marker 0.8″ (the 1–25 track on the main board)','1','')
+    +row(1,'Brewery markers — vessel maturation (1 per vessel) &amp; the Flight (1 per beer): use small cubes/discs','—','board aids — provide spares')
     +row(1,'<b>Demand dice</b> — standard d6 (provide your own) — the reusable value-bonus carrier: a cask shipped through a value Building rides a die in its berth, pips = the ★ banked on delivery (max 5; returns to the pool)','8','—')
     +row(1,'Quality-boost markers (+1Q) — a small token a cask carries from a Malt Kiln / Hop Yard to delivery','6','—')
     +row(1,'<b>Developer 3★ chits</b> — placed in your end-game area when a <b>rival overbuilds</b> your Building (it served its purpose; +3★ each at game end; self-displacement pays nothing)','12','—')
