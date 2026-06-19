@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.6 “Hops”)
+# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.7 “Even Footing”)
 
 > The physical manifest: **boards · tokens · the tile families · the player brewery board ·
 > destinations.** Enumerates *what objects exist and what each does* — the **why** is in
@@ -96,9 +96,11 @@ Every property the reference app holds has a physical home (no hidden state):
   **Reach** (the cask action, the Bergen benefit, the Keut perk) **at a kontor where you already have a
   barrel** — you can't gain a foothold where you've never shipped (v1.2). So a Reach is a dead action until
   your first delivery; no extra component, just the placement rule.
-- **The developer bonus** (v1.2) → when a **rival overbuilds** your slot, your displaced building returns to
-  your hand **face-up** *and* you flip a spent copy / place a **3★ chit** in your end-game area (it served its
-  purpose). Scored at game end. **Self-displacement pays nothing** (you only score when a *rival* covers you).
+- **The developer bonus** (v1.2; **v1.7 made physical**) → when a **rival overbuilds** your slot, your
+  displaced building **FLIPS to its back and goes into your improvements area** — a tile worth **3★** at game
+  end **and** carrying a **Wild action** (fired when you work the **Floor**). The improvements area holds at
+  most **4** tiles (improvements + flipped, `IMP_AREA_CAP`); if it's full, the displaced tile returns to hand.
+  **Self-displacement pays nothing** and returns to hand (you only flip when a *rival* covers you — anti-farm).
 - *(Tabled: Keut **set-collection** — would track the count by parking the delivered Keut tiles on a 3-space
   "specialty" strip, viable because casks are type-tiles; deferred in favour of Keut = +1-presence.)*
 
@@ -118,8 +120,8 @@ gone). *(The cask is half your impact: brew what, hold which, deploy when — `R
 | Q | Beer | Brew inputs ⚙ | Matures ⚙ | Reaches (gate) | Qty |
 |---|---|---|---|---|---|
 | **Q1** | **Gruit Ale** | `G` | 1 | Bruges | 16 |
-| **Q2** | **Hopped Beer** | `G H` | 2 | + London · Bergen · the Hall | 20 |
-| **Q3** | **Broyhan** / **Keut** | `G H H` / `G G H` | 2 | + Novgorod | 6 / 6 |
+| **Q2** | **Hopped Beer** | `G H` | 1 | + London · Bergen · the Hall | 20 |
+| **Q3** | **Broyhan** / **Keut** | `G H H` / `G G H` | 1 / 2 | + Novgorod | 6 / 6 |
 | **Q4** | **Mumme** | `G H H H` | 3 | all | 8 |
 | **Q5** | **Bock** | `G G H H H` *(ungated)* | 3 | all | 4 |
 
@@ -205,16 +207,18 @@ type + its `G/H` cost*; permanent.
 
 ### E. Private brewery improvements — the small private engine (⚙ — buyable for goods)
 The few upgrades that are inherently **private** (don't fit a public slot) stay as brewery
-improvements, **bought at the Market for goods** (distinct from the earned-and-placed Buildings):
+improvements, **bought at the CELLAR for goods** (v1.7 — moved from the Market; distinct from the
+earned-and-placed Buildings). The **improvements area holds at most 4 tiles** (`IMP_AREA_CAP`) — these plus any
+**flipped buildings** (§2):
 
-| Improvement | Effect ⚙ | Buy ⚙ |
+| Improvement | Effect ⚙ | Buy ⚙ (v1.7: −1 G) |
 |---|---|---|
-| **Extra Vessel** | +1 brewing lane (vessels start 2, cap **3**) | `5 G` |
-| **Aging Cellar** | maturation **−1 step** | `5 G` |
-| **Granary / Hop Garden** | when you gain grain / hops, +1 extra | `4 G` |
-| **Harbor Crane** *(v1.5)* | your **Harbor load sets out 2 casks** (not 1) | `4 G` |
-| **Lagering Cellar** *(v1.5)* | each of **your turns**, **+1 age** to one maturing cask | `4 G` |
-| **Private Quay** *(v1.5)* | load **Ready casks straight from your vessels** onto ships (skip deploy) | `5 G` |
+| **Extra Vessel** | +1 brewing lane (vessels start 2, cap **3**) | `4 G` |
+| **Aging Cellar** | maturation **−1 step** | `4 G` |
+| **Granary / Hop Garden** | when you gain grain / hops, +1 extra | `3 G` |
+| **Harbor Crane** *(v1.5)* | your **Harbor load sets out 2 casks** (not 1) | `3 G` |
+| **Lagering Cellar** *(v1.5)* | each of **your turns**, **+1 age** to one maturing cask | `3 G` |
+| **Private Quay** *(v1.5)* | load **Ready casks straight from your vessels** onto ships (skip deploy) | `4 G` |
 
 > Everything else from the v0.16 upgrade list (Quay/Cooperage/Trophy Room/Burgher/Staple/Patron…)
 > **folds into the public Building family (§3C)** — capability now lives on the living slots.
@@ -289,7 +293,7 @@ All open from start. Variable kontor value comes from the **buildings** a cask s
 - **Recipes / Improvements / Contracts / Storage** (cap 8 ⚙).
 
 ### Starting setup (symmetric, + seat compensation)
-3 `G` / 2 `H` (**+1 `G` per seat after the first**) · Gruit + Hopped · 2 vessels · **2 charter
+3 `G` / 2 `H` (**equal for every seat** — v1.7: seat compensation removed) · Gruit + Hopped · 2 vessels · **2 charter
 contracts** · **1 building in hand** · a warm start (Hulk → Bruges + 1 ship; 1 Ready Gruit) ·
 worker placed free turn 1.
 

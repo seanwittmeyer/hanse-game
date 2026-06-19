@@ -1,8 +1,8 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v1.6 “Hops”)
+# Brewhouses of the Hanse — Turn & Round Rules (v1.7 “Even Footing”)
 
 > **Status: live (2026-06-18).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
-> playable build is `play.html` (v1.6 “Hops”) — these rules are implemented there.** (The prior
+> playable build is `play.html` (v1.7 “Even Footing”) — these rules are implemented there.** (The prior
 > v0.16.1 "The Wharf" build is archived at branch `archive/main-v0.16.1` / `archive/play.html` /
 > `archive/v0.16/`.)
 >
@@ -40,8 +40,9 @@ no-dice / no-cards / no-money constraints; medium GWT/Distilled weight; the sim-
 ## 1. Setup (symmetric)
 
 Each house starts with (⚙):
-- **3 `G` (grain), 2 `H` (hops)** + seat compensation **+1 `G` per seat after the first**.
-  Storage cap 8 ⚙.
+- **3 `G` (grain), 2 `H` (hops)** — **equal for every seat** (v1.7: seat compensation removed; P1's turn-1
+  edge — choosing the line, placing + activating the warm Gruit, no toll — is balance enough, and sim showed
+  the old +1 `G`/later-seat over-corrected under strong play). Storage cap 8 ⚙.
 - The **Gruit** and **Hopped** recipes (the symmetric on-ramp). More recipes at the Market.
 - **2 open vessels** (brewing throughput; cap 3 ⚙).
 - **2 charter contracts** (the scarce relief-valve certificates; buy more at the Market — §6).
@@ -146,11 +147,13 @@ top tile of *every* quality pile is visible**, so you **see the action you'd get
 One load per visit; Gruit is fixed to Source. Recipes are permanent. **You may also DEPLOY** a Ready
 cask onto **any** open slot here (the cask-hub's flexible placement — v1.3).
 
-### D · Cellar — *Age (+ Tap)*
+### D · Cellar — *Age (+ Tap / buy an Improvement)*
 Gain **3 age points** ⚙, allocate across your vessels (each cask also ages **+1** at the start of
 your turn). Then you **may TAP one cask** (v1.3): take a Ready cask **from a vessel** *or* one of
 **your slots**, fire its slot-action **once**, then **discard** it — freeing the vessel, or **recalling**
 it off a slot (clearing the slot for a better cask). The relief valve / repositioning tool; one Tap per visit ⚙.
+**Or buy a private Improvement here** (v1.7 — moved from the Market; §8): pay its goods cost into your
+improvements area (cap **4** ⚙).
 
 ### C · Harbor — *Ship*
 **Load** a deployed cask (yours or a rival's) onto a ship it qualifies for (you choose the
@@ -182,11 +185,12 @@ the face-up display: if your cask is delivered on **someone else's turn** (a riv
 a hull your cask rode), the choice is **queued to the start of your next turn** — you pick then, from the
 display as it stands. You **place** a held building **at the Market** (a free acquire option) onto **any
 slot**. **Placing onto a slot that already has a building
-REPLACES it** — the displaced tile returns to its **owner's hand** (so the 8 slots never lock; the
-contest is over prime slot/line positions, and nothing is destroyed). **If a *rival* displaced it, the
-owner also scores it for end-game prestige** (⚙ **+3★** — *the developer lane*: the building served its
-purpose, and you are paid for authoring a slot worth overbuilding; **self-displacement pays nothing**, so
-you can't farm it by overbuilding your own). Each building is **owned** by its
+REPLACES it** (so the 8 slots never lock; the contest is over prime slot/line positions, and nothing is
+destroyed). **If a *rival* displaced it, the tile FLIPS into the owner's improvements area** (v1.7) — worth
+**+3★** at game end *and* carrying a **Wild action on its back**, fired when that owner works the **Floor**
+(so being overbuilt feeds your private alt-line). **Self-displacement** (relocating your own) returns the tile
+to **hand** and pays nothing (anti-farm); if the owner's improvements area is **full** (cap 4), the displaced
+tile also returns to hand instead of flipping. Each building is **owned** by its
 placer. Under **one grammar — "a building modifies the occupant docked on it"** — a building is one of
 two flavors (variety = content, not new rules; the deck is in `COMPONENTS.md`). **Each building targets a
 specific occupant** (shown by a glyph): most are **cask** tiles, a few are **ship** tiles (the rich
@@ -269,13 +273,14 @@ retune: in playtests Extra Vessel and the Warehouse were *never* bought (dead up
 fixes Extra Vessel, and storage-cap upgrades stay suspect unless they earn their place.
 **Most v0.16 upgrades fold into the public building family (§5).**
 
-**The improvements (bought at the Market for goods ⚙):** Extra Vessel (`5 G`), Aging Cellar
-(maturation −1 step, `5 G`), Granary Right / Hop Garden (+1 extra grain / hops, `4 G` each), and the
-**v1.5** additions — **Harbor Crane** (your Harbor load sets out **2 casks**, not 1, `4 G`),
-**Lagering Cellar** (each of **your turns**, **+1 age** to one maturing cask, `4 G`), and **Private
-Quay** (load **Ready casks straight from your vessels** onto ships — skipping deploy, `5 G`). *(v1.5
-moved Harbor Crane & Lagering Cellar out of the public Building deck — they were private engine perks,
-not slot authorship — see §5.)*
+**The improvements (v1.7: bought at the CELLAR for goods, cheaper ⚙):** Extra Vessel (`4 G`), Aging Cellar
+(maturation −1 step, `4 G`), Granary Right / Hop Garden (+1 extra grain / hops, `3 G` each), **Harbor Crane**
+(your Harbor load sets out **2 casks**, `3 G`), **Lagering Cellar** (each of **your turns**, **+1 age** to one
+maturing cask, `3 G`), and **Private Quay** (load **Ready casks straight from your vessels** onto ships, `4 G`).
+Your **improvements area holds at most 4 tiles** (these + any flipped buildings, §5) — so the engine is a real
+choice, not a buffet. *(v1.7 moved the buy from the Market to the Cellar — sim showed the barrier was the
+Market action's opportunity cost, not the goods. The free-starting-improvement study makes **Hop Garden** the
+strongest in the hops economy.)*
 
 ---
 

@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v1.6 “Hops”)
+# Brewhouses of the Hanse — Design (v1.7 “Even Footing”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v1.6 “Hops”** — live; **`play.html` implements it** (the keystone rebuild shipped; the demand-dice tracking + the printables-tile UI overhaul followed; v1.5 added three private improvements). |
+|**Status**     |**v1.7 “Even Footing”** — live; **`play.html` implements it** (the keystone rebuild shipped; the demand-dice tracking + the printables-tile UI overhaul followed; v1.5 added three private improvements). |
 
 ---
 
@@ -167,6 +167,25 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   revisit: deal a **choice** of starting buildings (draft), or make the opening building **self-favoring**
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
+
+**v1.7 “Even Footing”** *(2026-06-19, `play.html` KEY v64)* — A pre-playtest balance/feel pass, grounded in
+the v63 strong-AI study (CM/GM/Trader, 900 games + the persona oracle). Four changes: **(1) Seat compensation
+REMOVED (`SEAT_COMP` 1→0) — equal starts.** The +1 `G`/later-seat comp was tuned to the *greedy* bot's
+first-mover edge, but the strong-AI mirrors showed it OVER-corrects under skilled play (second player won
+**~67–72%** at 2p, later seats favored at 3p). P1's turn-1 (choose the line, place + activate the warm Gruit
+for 2 goods, no toll) is compensation enough. **(2) Improvements are CHEAPER (−1 `G` each) and bought at the
+CELLAR** (alongside Tap), not the Market — the free-starting-improvement experiment showed even a *free*
+improvement only swings win-rate ~+10% (Hop Garden, the new #1 in the hops economy) down to −7% (Extra
+Vessel), so the real barrier was the *Market action* opportunity cost, not goods. The least-contested Cellar
+lowers that bar. **(3) The developer lane made physical — a building a RIVAL overbuilds now FLIPS into its
+owner's improvements area:** worth **+3★** at game end AND carrying a **Wild action on its back**, fired when
+you work the **Floor** (so being displaced enriches the private alt-line vs paying the toll — the
+v0.16-era "alt line" question, given a hook). Self-displacement still pays nothing (anti-farm). **(4) The
+improvements area is CAPPED at `IMP_AREA_CAP` = 4** tiles total (bought improvements + flipped buildings), so
+the engine is a real choice, not an open buffet. Gates: sim 2–4p 0 crash/deadlock, pace in band; render-smoke
+clean (incl. GM/CM); ladder fast tiers hold. *Note: the flipped-building feature is **bot-untestable** — the
+AI never overbuilds (developer scored 0 across all 900 v63 games) — so it is crash-validated only; its balance
+is a table question. The Wild cadence (Floor-fired) and `IMP_AREA_CAP` are first-pass ⚙.*
 
 **v1.6 “Hops”** *(2026-06-19, `play.html` KEY v63)* — **Economy rebalance: the export ladder is now
 HOPS-LED, giving hops a real demand.** Diagnosis: grain was a near-monopoly currency — it pays the

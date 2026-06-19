@@ -142,7 +142,7 @@ function botMarket(p){
       var vc=aff.filter(function(k){return BUILDINGS[k].verb==='value';});
       var pool=vc.length?vc:(p.grain>=5?aff:[]);
       if(pool.length){buyBuilding((S.buildDisplay||[]).indexOf(pickBuilding(pool)));return;}}}
-  if(p.grain>=5 && grantableBuy(p,'vessel') && canPay(p,IMPROVEMENTS.vessel.cost)){buyImprovement('vessel');return;}
+  // v1.7: improvements are no longer a Market buy — they're acquired at the Cellar (botTap).
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
 function botPlaceBldg(){var bs=aBuildSlots();placeBldgOn((bs[0]||SLOTS[0]).id);}
@@ -215,6 +215,9 @@ function botBenefit(){var disp=S.buildDisplay||[];if(!disp.length){benefitPick(n
   benefitPick(pickBuilding(disp.slice()));}
 function botTap(p){var ready=readyInVessels(p);   // tap only to relieve a jam (Ready cask, no slot to deploy it)
   if(ready.length&&emptySlots().length===0){ready.sort(function(a,b){return a.c.q-b.c.q;});tapPick('v:'+ready[0].i);return;}
+  // v1.7: improvements are a Cellar buy — grab a high-value one when flush & the area has room (hops-led econ → Hop Garden first)
+  if(typeof impArea==='function'&&impArea(p)<IMP_AREA_CAP){var pref=['hopgarden','granary','cellar','vessel'];
+    for(var i=0;i<pref.length;i++){var k=pref[i];if(grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&p.grain>=(IMPROVEMENTS[k].cost.g||0)+1){buyImprovement(k);return;}}}
   tapSkip();}
 
 function botActOnce(){var p=cur();var U=UI.sub;
