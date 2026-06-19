@@ -168,6 +168,21 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
 
+**v1.8 “Quality Pays”** *(2026-06-19, `play.html` KEY v66)* — **Uncapped the value-Building bonus to reward the
+quality climb.** Base kontor values are tiny (Bruges/London/Bergen = 1), so the in-game points live in the
+**value-Buildings** — but those were **flat** (Staple +3, charters +4, Connoisseur Q4+→**flat 4**), so a Q5 Bock
+banked the same demand as a Q1 Gruit. Quality only paid at Novgorod/Hall → the climb looked unattractive (the
+persona oracle confirmed it: even the *deep* lane delivers only ~0.5 Q5/game). Fix: a value-Building now adds a
+**quality premium** on top of its printed ★ — **+1★ per tier above Q2, gated at Q4** (Q4 +2★, Q5 +3★). Gated at
+Q4 so it rewards the **climb**, not the cheap Q3 volume game; the Hall’s reliquary is excluded (its 3/5/7/9
+ladder already scales). A Bock through a value building is now worth its investment — e.g. Bruges base 1 +
+Staple 6 + a Rich Berth 2 = **9**. **Sims (persona oracle, 400×3):** lane win-rates & pace hold at **baseline**
+(the earlier *ungated* +1-per-tier version leaked into the volume lanes — majority 34→49% at 2p — so it was
+re-gated to Q4+); the **quality ceiling rises** (3p winner-max 74→92) while the median is flat (+1). The greedy
+bots still don’t *climb* (a known blind spot — the payoff is for human/Cellarmaster play); the sim’s job here
+was to prove **no regression**, and it does. *(Parking lot: if play shows the climb still under-rewarded, the
+next dial is a steeper premium or scaling the Rich-Berth/Festkeller ship value too — not the base values.)*
+
 **v1.7 “Even Footing”** *(2026-06-19, `play.html` KEY v64)* — A pre-playtest balance/feel pass, grounded in
 the v63 strong-AI study (CM/GM/Trader, 900 games + the persona oracle). Four changes: **(1) Seat compensation
 REMOVED (`SEAT_COMP` 1→0) — equal starts.** The +1 `G`/later-seat comp was tuned to the *greedy* bot's
