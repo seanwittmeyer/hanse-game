@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v1.3 “Tap a Cask”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v1.4 “Deploy”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -363,7 +363,7 @@
       <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>v1.3 “Tap a Cask” — prototype.</b> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
+  <p class="note" style="text-align:center"><b>v1.4 “Deploy” — prototype.</b> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -412,6 +412,7 @@ const ICONTIP={
   layers:'The Flight — your range: distinct BEERS delivered (5 types exist each game).',
   check:'Ready — this cask is matured; deploy it to a slot.',
   'user-round':'Worker — move it between the four stations.',
+  recycle:'Tap (Cellar) — discard a Ready cask from a vessel or a slot, firing its action once (frees the lane / recalls it off a slot).',
 };
 const LU=(n,cls)=>{const i='<i data-lucide="'+n+'"'+(cls?' class="ic '+cls+'"':' class="ic"')+'></i>';
   return ICONTIP[n]?'<span class="iw" data-tip="'+attr(ICONTIP[n])+'">'+i+'</span>':i;};
@@ -455,7 +456,7 @@ function pileTopFor(q,style){if(style&&STYLES[style]&&STYLES[style].pin)return S
 function takePileTop(q,style){if(style&&STYLES[style]&&STYLES[style].pin)return STYLES[style].act;const a=pileTopFor(q,style);if(S.pileTop)S.pileTop[q]=pileDraw(q);return a;}   // brew consumes the face-up top; a fresh one flips up
 function caskAct(t){return t.act||STYLES[t.style].act;}   // t.act = the action taken at brew (fallback: the old fixed one)
 // ⚙ the four stations' FULL action sets, shown as icons on the board (no hover needed)
-const STATION_ACTS={Market:['coins','scroll-text','landmark','sailboat'],Brewhouse:['beer'],Cellar:['hourglass'],Harbor:['package-plus','crown','ticket']};   // v1.0 board faces: Market = goods·recipe·BUILDING·commission · Brewhouse → a cask · Cellar = age · Harbor = load·enshrine·charter (ships sail full; Buildings are the authored value layer)
+const STATION_ACTS={Market:['coins','scroll-text','landmark','sailboat'],Brewhouse:['beer','anchor'],Cellar:['hourglass','recycle'],Harbor:['package-plus','crown','ticket']};   // v1.4 board faces: Market = goods·recipe·BUILDING·commission · Brewhouse → brew + DEPLOY · Cellar = age + TAP · Harbor = load·enshrine·charter
 
 // ---- DESTINATIONS (4 kontore + the Hall) — all open from start ----
 // maj is a TIERED majority payout [1st,2nd,3rd] (Lacerda-style); 2-player games skip 2nd (winner-take-all).
@@ -629,7 +630,7 @@ const SEAT_COMP=1;                       // seat compensation ⚙ — +this much
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v59'; // v1.3 "Tap a Cask": DEPLOY is no longer free/anytime — it rides line activation (DEPLOY HERE onto an empty slot of the line you fire · Brewhouse = deploy anywhere). New TAP (Cellar): discard a Ready cask from a vessel OR a slot, fire its action once, free the lane / clear the slot (recall-and-replace). Fixes the wharf clog/seize; SAILED_CAP trimmed 7/11/14→6/10/13 + AI re-tuned for the new model. Bump discards stale v58 state. // (prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
+const KEY='hanse-hotseat-v60'; // v1.4 "Deploy": an EMPTY slot's DEFAULT line-action IS Deploy (shown as "{bldg?} Deploy"). Triggering it (or the Brewhouse — deploy icon on the station; Tap icon on the Cellar) deploys ONE Ready cask to ANY open slot; deploying onto another empty slot still PENDING on this line flips that slot's Deploy stop into the cask's ACTION stop (advanced: place where you'll still act). TAP unchanged (Cellar: vessel or slot → fire action once + discard). Bump discards stale v59 state. // (prior v59 "Tap a Cask"; prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -637,7 +638,7 @@ const KEY='hanse-hotseat-v59'; // v1.3 "Tap a Cask": DEPLOY is no longer free/an
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v1.3 “Tap a Cask” · '+KEY;
+const APP_VERSION='v1.4 “Deploy” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -1046,10 +1047,9 @@ function runFloorNext(){
 function activateLine(lk){const L=LINES[lk];const p=cur();
   log(p.name+' activates '+lineGlyph(lk)+' <b>'+L.label+'</b> '+L.cells.map(c=>LU(ICON[CELLNAME[c]])).join(''),true);
   const stops=[];
-  const hasReady=readyInVessels(p).length>0;
   L.cells.forEach(c=>stops.push({kind:'cell',cell:c}));
   L.caps.forEach(cid=>{ if(S.slots[cid])stops.push({kind:'cap',slot:cid});
-    else if(hasReady)stops.push({kind:'deployhere',slot:cid});   // v1.3 "Tap a Cask": deploy a Ready cask onto an EMPTY slot ON the line you activate (placement is now a line decision, not a free anytime action)
+    else stops.push({kind:'deploy',slot:cid});   // v1.4 "Deploy": an EMPTY slot's default action IS Deploy (a Ready cask → any open slot)
     if(bKeyAt(cid)==='crane'||bKeyAt(cid)==='lagering')stops.push({kind:'bldg',slot:cid}); });
   UI={sub:stops.length?'stops':'end',line:lk,stops,pendingBenefits:[]};
   render();
@@ -1058,7 +1058,7 @@ function resolveStop(i){
   const stop=UI.stops[i];if(!stop)return;
   snapshot();UI.stops.splice(i,1);
   if(stop.kind==='cell'){enterCell(stop.cell);return;}
-  if(stop.kind==='deployhere'){enterDeployHere(stop.slot);return;}
+  if(stop.kind==='deploy'){enterDeployAction('stops');return;}   // an empty slot's Deploy action
   if(stop.kind==='bldg'){enterBldgLine(stop.slot);return;}
   const t=S.slots[stop.slot];
   if(!t){backToStops();return;}
@@ -1076,9 +1076,9 @@ function enterBldgLine(slot){const p=cur();const k=bKeyAt(slot);
 // resume / return helpers — clear the sub-flow fields, then route to the right phase
 function resume(rt){
   UI.cell=null;UI.stage=null;UI.tmp=null;
-  UI.age=UI.brew=UI.src=UI.load=UI.cvt=UI.reach=UI.wild=UI.deploy=UI.benefit=UI.survey=UI.goods=UI.breach=UI.brecipe=UI.dhere=UI.tap=null;
+  UI.age=UI.brew=UI.src=UI.load=UI.cvt=UI.reach=UI.wild=UI.deploy=UI.benefit=UI.survey=UI.goods=UI.breach=UI.brecipe=UI.tap=null;
   if(rt==='floorq'){runFloorNext();return;}   // mid-Floor: run the next cask on the brewery floor (do NOT clear UI.floorQueue)
-  if(rt==='brewdeploy'){offerDeploy('stops');return;}   // v1.3: the Brewhouse station, after brewing, lets you DEPLOY a Ready cask to ANY open slot
+  if(rt==='brewdeploy'){enterDeployAction('stops');return;}   // the Brewhouse station, after brewing, also offers a DEPLOY (a Ready cask → any open slot)
   if(rt==='benefitcont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}
   if(rt==='line')UI.sub='line';
   else if(rt==='end')UI.sub='end';
@@ -1216,9 +1216,10 @@ function ageAllot(vi){const p=cur();const c=p.vessels[vi];if(!c||c.step>=c.ready
 function ageDone(){const rt=UI.age.returnTo;const cellar=UI.age.cellar;UI.age=null;if(cellar)offerTap(rt);else resume(rt);}
 function ageSkip(){const rt=UI.age.returnTo;const cellar=UI.age.cellar;UI.age=null;if(cellar)offerTap(rt);else resume(rt);}
 
-// ---------- DEPLOY (Ready cask → wharf) — v1.3: NO LONGER a free anytime action ----------
-// Deploy now rides line activation: DEPLOY HERE onto an empty slot of the line you fired (enterDeployHere),
-// or — firing the Brewhouse — deploy to ANY open slot (offerDeploy, the flexible cask-hub option).
+// ---------- DEPLOY (Ready cask → wharf) — v1.4 "Deploy": the DEFAULT action of any EMPTY slot ----------
+// An empty slot's line-stop IS "Deploy". Triggering it (or the Brewhouse) deploys ONE Ready cask to ANY open
+// slot — and if the target is another empty slot still PENDING on this line, that slot's Deploy stop becomes
+// the cask's ACTION stop (advanced play: deploy onto a slot you'll still resolve, then take its action this turn).
 function deployCask(vi,slot){const p=cur();const c=p.vessels[vi];if(!c)return false;p.vessels[vi]=null;
   let act=c.act||takePileTop(c.q,c.style);
   if(bKeyAt(slot)==='workshop')act='wild';   // Brewmaster's Workshop upgrades the cask's slot-action on deploy
@@ -1226,23 +1227,18 @@ function deployCask(vi,slot){const p=cur();const c=p.vessels[vi];if(!c)return fa
   log(p.name+' sets a Ready '+LU('beer')+' <b>'+styleShort(c.style)+'</b> on a '+LU('anchor')+' slot'+(bAt(slot)?' (under '+bName(bAt(slot).b)+')':'')+'.',true);
   return true;
 }
-// Brewhouse deploy-anywhere: queue every Ready cask, place each on an open slot of your choice.
-function offerDeploy(rt){const p=cur();const ready=readyInVessels(p);
-  if(ready.length&&emptySlots().length){UI.sub='deploy';UI.deploy={queue:ready.map(o=>o.i),returnTo:rt};render();}
-  else{if(ready.length)log('↳ Ready cask(s) clog the brewery — no open slot.');resume(rt);}
+function enterDeployAction(rt){const p=cur();
+  if(!readyInVessels(p).length){log('↳ no Ready cask to deploy.');resume(rt);return;}
+  if(!emptySlots().length){log('↳ no open slot to deploy onto.');resume(rt);return;}
+  UI.sub='deploy';UI.deploy={returnTo:rt,vi:(readyInVessels(p).length===1?readyInVessels(p)[0].i:null)};render();
 }
-function deployTo(slot){snapshot();deployCask(UI.deploy.queue[0],slot);UI.deploy.queue.shift();deployNext();}
-function deployNext(){if(!UI.deploy.queue.length||!emptySlots().length){const rt=UI.deploy.returnTo;UI.deploy=null;resume(rt);}else render();}
-function deploySkipOne(){UI.deploy.queue.shift();deployNext();}
-function deploySkipAll(){const rt=UI.deploy.returnTo;UI.deploy=null;resume(rt);}
-// DEPLOY HERE — onto a specific empty slot on the line you activated; pick WHICH Ready cask goes there.
-function enterDeployHere(slot){const p=cur();const ready=readyInVessels(p);
-  if(!ready.length||S.slots[slot]){backToStops();return;}
-  if(ready.length===1){snapshot();deployCask(ready[0].i,slot);backToStops();return;}
-  UI.sub='deployhere';UI.dhere={slot,returnTo:'stops'};render();
+function deployPickCask(vi){UI.deploy.vi=vi;render();}
+function deployTo(slot){if(S.slots[slot]||!UI.deploy||UI.deploy.vi==null)return;snapshot();
+  deployCask(UI.deploy.vi,slot);
+  if(UI.stops){const si=UI.stops.findIndex(s=>s.kind==='deploy'&&s.slot===slot);if(si>=0)UI.stops[si]={kind:'cap',slot};}  // action-replacement
+  const rt=UI.deploy.returnTo;UI.deploy=null;resume(rt);
 }
-function deployHerePick(vi){const slot=UI.dhere.slot;if(S.slots[slot]){deployHereSkip();return;}snapshot();deployCask(vi,slot);const rt=UI.dhere.returnTo;UI.dhere=null;resume(rt);}
-function deployHereSkip(){const rt=UI.dhere.returnTo;UI.dhere=null;resume(rt);}
+function deploySkip(){const rt=UI.deploy.returnTo;UI.deploy=null;resume(rt);}
 // ---------- TAP (v1.3) — a Cellar action: fire a Ready cask's slot-action ONCE, then discard it ----------
 // From a VESSEL (frees the lane) or from one of YOUR SLOTS (recalls the cask, clearing the slot for a better one).
 function tapTargets(p){const out=readyInVessels(p).map(o=>({ref:'v:'+o.i,style:o.c.style,q:o.c.q,act:caskAct(o.c)}));
@@ -1905,7 +1901,7 @@ function aiMove(p){
 function aiLine(p){chooseLine(aiChosenWhich||'row');}   // v1.3: deploy is no longer a free pre-line action — it rides the line's slots / the Brewhouse
 function aiStopPrio(s){
   if(s.kind==='cell')return {Source:0,Brew:1,Age:2,Ship:4}[CELLROLE[s.cell]];
-  if(s.kind==='deployhere')return 2.5;   // deploy onto an empty line slot (placement); after the cheap stations, before Ship
+  if(s.kind==='deploy')return 2.5;   // an empty slot's Deploy action; after the cheap stations, before Ship
   if(s.kind==='bldg')return 3;   // a line-effect Building (Crane / Lagering)
   const t=S.slots[s.slot];if(!t)return 99;
   if(t.type==='cask'){const pr={source:0,wild:1,age:2,reach:2,load:4,convert:1,survey:1}[caskAct(t)];return pr==null?2:pr;}
@@ -2014,24 +2010,21 @@ function aiLoad(p){const L=UI.load;
     ships.sort((a,b)=>{const f=fillRank(b)-fillRank(a);return f||(shipScore(b)-shipScore(a));});
   }else ships.sort((a,b)=>fillRank(b)-fillRank(a));   // journeyman: complete-a-sail, else first
   loadOnto(ships[0]);}
-function aiDeploy(p){const es=emptySlots();if(!es.length){deploySkipAll();return;}
+function aiDeploy(p){
+  if(UI.deploy.vi==null){const ready=readyInVessels(p);if(!ready.length){deploySkip();return;}   // pick the highest-Q Ready cask to set out
+    ready.sort((a,b)=>b.c.q-a.c.q);deployPickCask(ready[0].i);return;}
+  const es=emptySlots();if(!es.length){deploySkip();return;}
   if(aiNoisy(p)){deployTo(aiRandOf(es).id);return;}
   const lk=p.cell?cellOfLine(p.cell)[aiChosenWhich||'row']:null;
-  // ROUTE THE DEMAND: deploy onto your OWN value-building slot (the cask will capture the bonus when shipped) —
-  // ideally on the line you're firing this turn, so its action fires AND it sits under your demand.
+  // ROUTE THE DEMAND: onto my OWN value-building slot — ideally on the line I'm firing (an empty line slot is a
+  // pending Deploy stop, so dropping there flips it to the cask's ACTION stop → its action fires THIS turn too).
   if(!aiIsApp(p)){
     const vs=es.filter(s=>{const b=bAt(s.id);return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value';});
     const onLine=vs.find(s=>s.line===lk);if(onLine){deployTo(onLine.id);return;}
     if(vs.length){deployTo(vs[0].id);return;}
   }
-  // else trader deploys onto the line it is about to activate — the cask's action fires THIS turn (tempo).
   if(aiIsTrader(p)&&lk){const on=es.find(s=>s.line===lk);if(on){deployTo(on.id);return;}}
   deployTo(es[0].id);}
-// DEPLOY HERE (fixed slot on the active line) — choose which Ready cask drops in.
-function aiDeployHere(p){const ready=readyInVessels(p);if(!ready.length){deployHereSkip();return;}
-  const own=bAt(UI.dhere.slot);const valHere=own&&own.owner===p.id&&BUILDINGS[own.b].verb==='value';
-  ready.sort((a,b)=>valHere?b.c.q-a.c.q:a.c.q-b.c.q);   // a value slot of mine → my best cask; else drop the cheapest here, save premium for a building slot
-  deployHerePick(ready[0].i);}
 // TAP (Cellar) — relief: when a Ready cask is jammed (no open slot to deploy it), tap the cheapest to free a vessel; else skip.
 function aiTap(p){const ready=readyInVessels(p);
   if(ready.length&&emptySlots().length===0){ready.sort((a,b)=>a.c.q-b.c.q);tapPick('v:'+ready[0].i);return;}
@@ -2288,10 +2281,10 @@ function aiGmOptions(p){
     const ships=L.ships.filter(s=>canTake(s,L.cask));
     if(!ships.length)return null;
     const o=ships.map(s=>()=>loadOnto(s));o.push(()=>loadSkip());return o;}
-  if(U==='deployhere'){const o=readyInVessels(p).map(o2=>()=>deployHerePick(o2.i));o.push(()=>deployHereSkip());return o;}   // which Ready cask onto this line slot
   if(U==='tap'){const o=tapTargets(p).map(t=>()=>tapPick(t.ref));o.push(()=>tapSkip());return o;}                          // tap a vessel/slot cask, or skip
-  if(U==='deploy'){const es=emptySlots();if(!es.length)return null;
-    const o=es.map(s=>()=>deployTo(s.id));o.push(()=>deploySkipOne());return o;}
+  if(U==='deploy'){                                                                                                        // two-step: pick which Ready cask, then which open slot
+    if(UI.deploy.vi==null){const o=readyInVessels(p).map(o2=>()=>deployPickCask(o2.i));o.push(()=>deploySkip());return o;}
+    const es=emptySlots();return es.length?es.map(s=>()=>deployTo(s.id)):[()=>deploySkip()];}
   if(U==='placebldg'){const bs=aBuildSlotsAI();const tg=bs.length?bs:SLOTS;return tg.map(s=>()=>placeBldgOn(s.id));}
   if(U==='benefit'){const disp=Array.from(new Set(S.buildDisplay||[]));
     return disp.length?disp.map(k=>()=>benefitPick(k)):[()=>benefitPick(null)];}
@@ -2335,7 +2328,6 @@ function aiStep(){
       case 'wild':return aiWild(p);
       case 'load':return aiLoad(p);
       case 'deploy':return aiDeploy(p);
-      case 'deployhere':return aiDeployHere(p);
       case 'tap':return aiTap(p);
       case 'benefit':return aiBenefit();
       case 'placebldg':return aiPlaceBldg(p);
@@ -2413,14 +2405,14 @@ function renderAid(){
   const vb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='value').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   const tb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='transform').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   document.getElementById('aidcard').innerHTML=
-    '<h2>'+ic('scroll-text')+' Player Aid — v1.3 “Tap a Cask”</h2>'
+    '<h2>'+ic('scroll-text')+' Player Aid — v1.4 “Deploy”</h2>'
     +'<div class="asec"><b>Your turn</b><div class="note">Move to an adjacent station → activate its <b>row OR column</b> → resolve up to 4 stops (slot · station · station · slot) <b>in any order</b>. <b>If you move onto a station a rival occupies:</b> pay 1 '+ic('wheat')+' toll and work that public line, <b>OR</b> work your <b>Floor</b> — run every cask in your vessels (their slot-actions) <i>instead of</i> the public line (no toll).</div></div>'
     +'<div class="asec"><b>The four stations</b><div class="note">'
       +ic('store')+' <b>Market</b> (Source): take 2 goods, or acquire one tile — a recipe · a '+ic('building-2')+' Building (buy + place) · a '+ic('sailboat')+' ship · a charter contract · an improvement. Or <b>place a Building from your hand</b> (free) — the ones you earned at London/Novgorod or drew with Survey.<br>'
       +ic('flask-conical')+' <b>Brewhouse</b> (Brew): pay a recipe → a young cask; it takes the FACE-UP action of that quality’s pile (steerable). Also <b>deploy</b> a Ready cask onto <b>any</b> open slot.<br>'
       +ic('hourglass')+' <b>Cellar</b> (Age): 3 age points across your casks (fully ages a Bock in one visit). Casks also age +1 automatically at the start of your turn. Then optionally <b>Tap</b> one cask — from a vessel or one of your slots: fire its action once, then discard it (frees the lane / recalls it off a slot).<br>'
       +ic('anchor')+' <b>Harbor</b> (Ship): load a Ready cask onto a ship (it sails when full → each owner banks the benefit + points), <b>Enshrine</b> a Q2+ <i>slot</i> cask at the '+ic('crown')+' Hall (local), or Charter.</div></div>'
-    +'<div class="asec"><b>Deploying a cask (v1.3)</b><div class="note">A Ready cask leaves its vessel only by <b>deploying</b> — onto an <b>empty slot of the line you activate</b> (placement is a real decision: fire the line where you want the cask, e.g. onto your own value building to route demand), or onto <b>any</b> open slot via the <b>Brewhouse</b>. Can’t place it? It waits in the vessel, or <b>Tap</b> it at the Cellar to clear the lane.</div></div>'
+    +'<div class="asec"><b>Deploying a cask (v1.4)</b><div class="note">An <b>empty slot’s default line-action is Deploy</b> — so a line with two open slots shows e.g. <i>s8 Deploy · Market · Brewhouse · s3 Deploy</i>. Trigger a Deploy stop (or the <b>Brewhouse</b>) to set one Ready cask onto <b>any</b> open slot; with several Deploy stops you can place several casks in a turn. <b>Advanced:</b> deploy onto <i>another</i> empty slot still pending on this line and its Deploy flips to the cask’s <b>action</b> — so you can take that action this turn. Can’t/won’t place it? It waits in the vessel, or <b>Tap</b> it at the Cellar.</div></div>'
     +'<div class="asec"><b>The living slots (the keystone)</b><div class="note">Each of the 8 slots holds an owned '+ic('building-2')+' <b>Building</b> (a modifier) and/or an occupant (a cask, or a ship with casks). A <b>value</b> building makes a delivery pay more; a <b>transform</b> building changes the cask/ship. Value is captured ON SHIP-THROUGH: a cask delivers for its base + the value-buildings it shipped from + its ship’s berth building. Owned-but-shared: the owner gets the FULL effect; a rival may dock too for a REDUCED bonus, and the owner takes a +'+WHARFAGE+'★ wharfage when they do.</div>'
       +'<div class="atags" style="margin-top:5px">'+vb+'</div><div class="atags" style="margin-top:4px">'+tb+'</div></div>'
     +'<div class="asec"><b>Destinations</b> <span class="note">gate · value · majority 1st/2nd/3rd · benefit · (Hall = local Enshrine; ships sail to kontore only)</span>'
@@ -2497,12 +2489,12 @@ function renderBar(){
     else{const lc=S.slots[L.cask];prompt='Load '+LU('beer')+ownSq(lc.owner)+styleShort(lc.style)+' onto which ship?';
       const ships=L.ships.filter(s=>canTake(s,L.cask));
       acts=ships.map(s=>{const sh=S.slots[s];return btn(LU('sailboat')+' '+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+')','loadOnto(\''+s+'\')','go');}).join('')+btn('Back','loadBack()','ghost')+btn('Skip','loadSkip()','ghost');}}
-  else if(U==='deploy'){const vi=UI.deploy.queue[0];const c=p.vessels[vi];
-    prompt='Brewhouse — set Ready <b>'+styleShort(c.style)+'</b> on <b>any</b> open slot (click it).';
-    acts=btn('Leave in vessel','deploySkipOne()','ghost')+(UI.deploy.queue.length>1?btn('Skip rest','deploySkipAll()','ghost'):'');}
-  else if(U==='deployhere'){const sl=UI.dhere.slot;const b=bAt(sl);
-    prompt='Deploy onto this '+LU('anchor')+' slot'+(b?' (under '+LU('building-2')+bName(b.b)+')':'')+' — pick which Ready cask drops in.';
-    acts=readyInVessels(p).map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.c.style)+' Q'+o.c.q,'deployHerePick('+o.i+')','go')).join('')+btn('Skip','deployHereSkip()','ghost');}
+  else if(U==='deploy'){
+    if(UI.deploy.vi==null){prompt='Deploy — pick which Ready cask to set out.';
+      acts=readyInVessels(p).map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.c.style)+' Q'+o.c.q,'deployPickCask('+o.i+')','go')).join('')+btn('Skip','deploySkip()','ghost');}
+    else{const c=p.vessels[UI.deploy.vi];
+      prompt='Deploy '+LU('beer')+styleShort(c.style)+' onto <b>any</b> open slot (click it). <span class="note">Drop it on another empty slot of this line to turn that slot’s Deploy into the cask’s action.</span>';
+      acts=btn('◂ Pick a different cask','deployPickCask(null)','ghost')+btn('Skip','deploySkip()','ghost');}}
   else if(U==='tap'){
     prompt='Cellar · '+LU('hourglass')+' <b>Tap</b> a cask — fire its action once, then discard it. From a <b>vessel</b> (frees the lane) or one of <b>your slots</b> (recalls it, clearing the slot).';
     acts=tapTargets(p).map(t=>btn((t.ref[0]==='v'?'vessel ':'slot ')+LU('beer')+ownSq(p.id)+styleShort(t.style)+' → '+LU(CASK_ACT_ICON[t.act]||'')+t.act,'tapPick(\''+t.ref+'\')','go')).join('')+btn('Skip','tapSkip()','ghost');}
@@ -2534,6 +2526,7 @@ function renderBar(){
 }
 function stopLabel(s){
   if(s.kind==='cell')return LU(ICON[CELLNAME[s.cell]])+' '+CELLNAME[s.cell];
+  if(s.kind==='deploy'){const b=bAt(s.slot);return LU('anchor')+' '+(b?bName(b.b)+' · ':'')+'Deploy';}   // an empty slot's default action
   if(s.kind==='bldg')return LU(BUILDINGS[bKeyAt(s.slot)].icon)+' '+bName(bKeyAt(s.slot));
   const t=S.slots[s.slot];if(!t)return '(empty)';
   if(t.type==='cask')return LU('beer')+ownSq(t.owner)+'Cask · '+styleShort(t.style);
@@ -2576,10 +2569,9 @@ function cellRender(p){
 function renderGrid(){
   const ag=document.getElementById('ag');let h='';
   SLOTS.forEach(s=>{const t=S.slots[s.id];const b=bAt(s.id);let cls='slot '+s.id;
-    const occPlacing=!aiTurn()&&((UI.sub==='deploy'&&!t)||(UI.sub==='cell'&&UI.cell==='A'&&UI.stage==='place'&&!t));
+    const occPlacing=!aiTurn()&&(((UI.sub==='deploy'&&UI.deploy&&UI.deploy.vi!=null)&&!t)||(UI.sub==='cell'&&UI.cell==='A'&&UI.stage==='place'&&!t));
     const bldgPlacing=!aiTurn()&&UI.sub==='placebldg';   // any slot is a target (placing onto a building replaces it)
-    const dhereHere=!aiTurn()&&UI.sub==='deployhere'&&UI.dhere&&UI.dhere.slot===s.id;   // highlight the line slot you're deploying onto (action via the bar buttons)
-    if(occPlacing||bldgPlacing||dhereHere)cls+=' place';
+    if(occPlacing||bldgPlacing)cls+=' place';
     let inner;let style='';
     if(b&&t){   // both a building and an occupant → an offset stack (tap to swap which is on top)
       cls+=' pfilled stack';inner=stackHtml(b,t,s.id);
