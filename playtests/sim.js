@@ -213,6 +213,8 @@ function botDeploy(){var p=cur();   // v1.4 two-step: pick which Ready cask, the
   deployTo((on||es[0]).id);}
 function botBenefit(){var disp=S.buildDisplay||[];if(!disp.length){benefitPick(null);return;}   // London/Novgorod → a free Building
   benefitPick(pickBuilding(disp.slice()));}
+function botSurvey(){var disp=S.buildDisplay||[];if(!disp.length){surveyPick(null);return;}     // Survey → CHOOSE one of the face-up display Buildings
+  surveyPick(pickBuilding(disp.slice()));}
 function botTap(p){var ready=readyInVessels(p);   // tap only to relieve a jam (Ready cask, no slot to deploy it)
   if(ready.length&&emptySlots().length===0){ready.sort(function(a,b){return a.c.q-b.c.q;});tapPick('v:'+ready[0].i);return;}
   // v1.7: improvements are a Cellar buy — grab a high-value one when flush & the area has room (hops-led econ → Hop Garden first)
@@ -236,6 +238,7 @@ function botActOnce(){var p=cur();var U=UI.sub;
     case 'deploy':return botDeploy();
     case 'tap':return botTap(p);
     case 'benefit':return botBenefit();
+    case 'survey':return botSurvey();
     case 'placebldg':return botPlaceBldg();
     case 'toll':return tollPay();              // the bot pays the occupancy toll (the Floor is a human option)
     case 'goodspick':return goodsPick(2,0);    // liquidity owner-choice — the bot takes 2 grain

@@ -1224,9 +1224,16 @@ function placeBldgOn(slot){const b=UI.tmp&&UI.tmp.placeBldg;if(!b)return;snapsho
   if(b.b==='workshop'){const occ=S.slots[slot];if(occ&&occ.type==='cask')occ.act='wild';}   // Workshop upgrades a cask already docked
   log(S.players[b.owner].name+' authors '+LU('building-2')+' <b>'+bName(b.b)+'</b> on a '+LU('anchor')+' slot'+(old?' (replacing '+bName(old.b)+')':'')+' — '+BUILDINGS[b.b].desc+'.',true);
   const rt=UI.placeRt;UI.placeRt=null;if(UI.tmp)UI.tmp.placeBldg=null;resume(rt);}
-function enterSurvey(rt){const p=cur();const k=drawBuilding();
-  if(!k){log('↳ Survey: the Building deck is empty.');resume(rt);return;}
+function enterSurvey(rt){const p=cur();
+  if((S.buildDisplay||[]).length){UI.survey={returnTo:rt};UI.sub='survey';render();return;}   // CHOOSE one of the face-up Buildings (the whole point of the 4-wide display)
+  const k=drawBuilding();   // display somehow empty → fall back to the deck top
+  if(!k){log('↳ Survey: no Buildings left to draw.');resume(rt);return;}
   p.hand.push(k);log('↳ '+p.name+' surveys the guild — draws '+LU('building-2')+' <b>'+bName(k)+'</b> to hand (place it at the Market).');
+  resume(rt);}
+function surveyPick(key){const p=cur();const rt=UI.survey?UI.survey.returnTo:null;UI.survey=null;
+  if(!key||!(S.buildDisplay||[]).includes(key)){resume(rt);return;}   // skip (display empty)
+  takeBuildFromDisplay(key);p.hand.push(key);
+  log('↳ '+p.name+' surveys the guild — takes '+LU('building-2')+' <b>'+bName(key)+'</b> to hand (place it at the Market).');
   resume(rt);}
 
 function placeSlot(slot){const t=UI.tmp.placeTile;S.slots[slot]=t;
@@ -2121,6 +2128,9 @@ function aiTap(p){const ready=readyInVessels(p);
 function aiBenefit(){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];const disp=S.buildDisplay||[];
   if(!disp.length){benefitPick(null);return;}
   benefitPick(aiPickBuilding(lp,disp.slice()));}
+function aiSurvey(){const p=cur();const disp=S.buildDisplay||[];
+  if(!disp.length){surveyPick(null);return;}
+  surveyPick(aiPickBuilding(p,disp.slice()));}
 function aiBreach(p){const b=UI.pendingReach[0];const lp=S.players[b.pid];   // reinforce the kontor with the best majority swing
   const ks=reachBenKontore(lp);if(!ks.length){breachPick(null);return;}
   let best=ks[0],bv=-1e9;ks.forEach(k=>{const m=aiMajSwing(lp,k)+Math.random()*0.2;if(m>bv){bv=m;best=k;}});breachPick(best);}
@@ -2378,6 +2388,8 @@ function aiGmOptions(p){
   if(U==='placebldg'){const bs=aBuildSlotsAI();const tg=bs.length?bs:SLOTS;return tg.map(s=>()=>placeBldgOn(s.id));}
   if(U==='benefit'){const disp=Array.from(new Set(S.buildDisplay||[]));
     return disp.length?disp.map(k=>()=>benefitPick(k)):[()=>benefitPick(null)];}
+  if(U==='survey'){const disp=Array.from(new Set(S.buildDisplay||[]));
+    return disp.length?disp.map(k=>()=>surveyPick(k)):[()=>surveyPick(null)];}
   if(U==='toll')return [()=>tollPay(),()=>tollFloor()];   // the GM weighs paying for the public line vs working its Floor
   if(U==='goodspick')return [()=>goodsPick(2,0),()=>goodsPick(1,1),()=>goodsPick(0,2)];   // liquidity mix — the GM evaluates each
   if(U==='breach'){const ks=reachBenKontore(S.players[UI.pendingReach[0].pid]);return ks.length?ks.map(k=>()=>breachPick(k)):[()=>breachPick(null)];}   // Bergen free Reach — which kontor (only where delivered)
@@ -2420,6 +2432,7 @@ function aiStep(){
       case 'deploy':return aiDeploy(p);
       case 'tap':return aiTap(p);
       case 'benefit':return aiBenefit();
+      case 'survey':return aiSurvey();
       case 'placebldg':return aiPlaceBldg(p);
       case 'toll':return tollPay();              // the journeyman/trader pay the toll for the public line (the GM weighs the Floor via aiGmOptions)
       case 'goodspick':return goodsPick(2,0);    // the AI takes the liquidity benefit as 2 grain
@@ -2592,6 +2605,9 @@ function renderBar(){
   else if(U==='benefit'){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];
     prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take a '+LU('building-2')+' <b>Building</b> from the display <b>to hand</b> (free); place it later at the Market.';
     acts=(S.buildDisplay||[]).map(k=>btn(LU('building-2')+bName(k),'benefitPick(\''+k+'\')','go')).join('')+((S.buildDisplay||[]).length?'':'<span class="note">display empty</span>'+btn('Skip','benefitPick(null)','ghost'));}
+  else if(U==='survey'){
+    prompt=LU('search')+' <b>Survey</b> — take a '+LU('building-2')+' <b>Building</b> from the display <b>to hand</b> (free); place it later at the Market.';
+    acts=(S.buildDisplay||[]).map(k=>btn(LU('building-2')+bName(k),'surveyPick(\''+k+'\')','go')).join('')+((S.buildDisplay||[]).length?'':'<span class="note">display empty</span>'+btn('Skip','surveyPick(null)','ghost'));}
   else if(U==='goodspick'){const b=UI.pendingGoods[0];const lp=S.players[b.pid];
     prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take <b>2 goods</b> (any mix).';
     acts=btn('Take '+Gi(2),'goodsPick(2,0)','go')+btn('Take '+Gi(1)+Hi(1),'goodsPick(1,1)','go')+btn('Take '+Hi(2),'goodsPick(0,2)','go');}
@@ -2605,7 +2621,7 @@ function renderBar(){
   // End Turn is available at ALL times — every turn action is optional. Hidden only before the turn-1
   // worker placement, in the 'end' state (it already has it), and during the forced delivery-benefit picks
   // (which would forfeit a reward — including a rival's). endTurn() resets UI cleanly from any sub-state.
-  const hideEnd=(U==='move'&&!p.placed)||['end','benefit','goodspick','breach','brecipe','placebldg'].includes(U);
+  const hideEnd=(U==='move'&&!p.placed)||['end','benefit','goodspick','breach','brecipe','placebldg','survey'].includes(U);
   if(!hideEnd)acts+=btn('End Turn ▸','endTurn()','ghost');
   if(undoStack.length)acts+=btn('↶ Undo','doUndo()','ghost');
   document.getElementById('prompt').innerHTML=prompt;
