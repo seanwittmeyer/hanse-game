@@ -1,8 +1,8 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v1.2 “Dice”)
+# Brewhouses of the Hanse — Turn & Round Rules (v1.3 “Tap a Cask”)
 
 > **Status: live (2026-06-18).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
-> playable build is `play.html` (v1.2 “Dice”) — these rules are implemented there.** (The prior
+> playable build is `play.html` (v1.3 “Tap a Cask”) — these rules are implemented there.** (The prior
 > v0.16.1 "The Wharf" build is archived at branch `archive/main-v0.16.1` / `archive/play.html` /
 > `archive/v0.16/`.)
 >
@@ -101,9 +101,11 @@ Gruit fixed to **Source +2 goods**, Q2+ draw from the pool — §8). Three state
    a vessel **powers your Floor** (its action, run as your private line — §8, `PLAN.md` §1B), so
    it earns value *before* it ships. The catch: it **occupies the vessel** (no new brew there
    until you deploy or ship it).
-2. **Deployed** *(public, on a slot)* — when Ready, deploy it (free) onto an open slot you
-   choose. Now it is **cargo-in-waiting**, a **public slot-action**, and **contestable**. *(If
-   you deploy onto a slot with a **building**, the building modifies it — §5.)*
+2. **Deployed** *(public, on a slot)* — when Ready, **deploy** it by **activating a line**: onto an
+   **empty slot of the line you fire** (deploy *here* — placement is a real decision), or onto **any**
+   open slot via the **Brewhouse** (v1.3 — deploy is no longer a free anytime action). Now it is
+   **cargo-in-waiting**, a **public slot-action**, and **contestable**. *(If you deploy onto a slot
+   with a **building**, the building modifies it — §5.)*
 3. **Delivered** *(scored, gone)* — shipped to a destination (§6–7). Scores for its owner and
    leaves.
 
@@ -133,16 +135,19 @@ Do **one**: take **2 goods** (any mix), **or acquire one tile** (pay its goods c
 - a **ship commission** (`2 G` ⚙ — place a face-up ship on a slot + free-load one Ready cask — §6);
 - a **charter contract** (`1 G` ⚙ — §6).
 
-### B · Brewhouse — *Brew*
+### B · Brewhouse — *Brew (+ deploy anywhere)*
 **Load** one recipe you hold (paying its `G/H`) into an **open vessel** → a young cask at step 0.
 The cask takes its slot-action from the **face-up top tile of that quality's pile** — and **the
 top tile of *every* quality pile is visible**, so you **see the action you'd get** and can choose
 *which* quality to brew partly by it (steerable variance — agency at the kettle, no blind draw).
-One load per visit; Gruit is fixed to Source. Recipes are permanent.
+One load per visit; Gruit is fixed to Source. Recipes are permanent. **You may also DEPLOY** a Ready
+cask onto **any** open slot here (the cask-hub's flexible placement — v1.3).
 
-### D · Cellar — *Age*
+### D · Cellar — *Age (+ Tap)*
 Gain **3 age points** ⚙, allocate across your vessels (each cask also ages **+1** at the start of
-your turn). When a cask reaches Ready, deploy it (§3).
+your turn). Then you **may TAP one cask** (v1.3): take a Ready cask **from a vessel** *or* one of
+**your slots**, fire its slot-action **once**, then **discard** it — freeing the vessel, or **recalling**
+it off a slot (clearing the slot for a better cask). The relief valve / repositioning tool; one Tap per visit ⚙.
 
 ### C · Harbor — *Ship*
 **Load** a deployed cask (yours or a rival's) onto a ship it qualifies for (you choose the
@@ -269,7 +274,8 @@ prestige (delivered/enshrined points are score only).
 
 The shared **Sailed-Ships track** advances by one on every **voyage** (a ship sailing full, a
 Charter, or an Enshrine). When it fills → **finish the round → score.** Length scales by player
-count (**~7 / 11 / 14** for 2/3/4p ⚙); a **MAX_ROUND ceiling** (~25 ⚙) backstops a slow
+count (**~6 / 10 / 13** for 2/3/4p ⚙ — trimmed one each in v1.3, since deploy-via-line + Tap cut
+voyages-per-round); a **MAX_ROUND ceiling** (~25 ⚙) backstops a slow
 table. Pace target **~12–25 rounds.**
 
 ---

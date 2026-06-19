@@ -512,7 +512,7 @@ function pboard(p){
   return '<div class="board" style="--pc:'+p.c+'">'
     +'<div class="pb-head"><div class="crest">'+LU('beer')+'</div>'
       +'<div class="pb-title"><div class="pb-name">Brewhouse · '+p.nm+'</div>'
-        +'<div class="pb-sub">your private brewery · Source → Brew → Age → Ship · Brewhouses of the Hanse · v1.2 “Dice”</div></div>'
+        +'<div class="pb-sub">your private brewery · Source → Brew → Age → Ship · Brewhouses of the Hanse · v1.3 “Tap a Cask”</div></div>'
       +'<div class="pb-storage"><span class="pb-lbl">'+LU('warehouse')+'Storage <span class="sm">keep your goods here</span></span><div class="storezone"><div class="sz-main">'+LU('coins')+'cap 8</div></div></div></div>'
     +'<div class="pb-body">'
       +'<div class="pb-col left"><div class="pb-sect">'+LU('flask-conical')+'Vessels &amp; Maturation<span class="hint">start 2 open · cap 3 · +1/turn auto + the Cellar · Aging Cellar −1 step</span></div>'
@@ -601,7 +601,7 @@ function mboard(){
     clk+='<div class="cc'+(end?' end':'')+'">'+(end?end+'<br>END':'<span class="n">'+i+'</span>')+'</div>';}
   let rt='';for(let i=1;i<=MAX_ROUND;i++)rt+='<div class="rc'+(i===MAX_ROUND?' cap':(i>=12?' band':''))+'">'+(i===MAX_ROUND?'25<br>CAP':i)+'</div>';
   return '<div class="mboard">'
-    +'<div class="mb-head"><h2>'+LU('anchor')+'The Wharf</h2><span class="sub">Brewhouses of the Hanse · main board · v1.2 “Dice” — Source → Brew → Age → Ship</span></div>'
+    +'<div class="mb-head"><h2>'+LU('anchor')+'The Wharf</h2><span class="sub">Brewhouses of the Hanse · main board · v1.3 “Tap a Cask” — Source → Brew → Age → Ship</span></div>'
     +'<div class="mb-main">'+wharf+side+'</div>'
     +'<div><div class="ctrack">'+clk+'</div><div class="mtrack-l">'+'Sailed-Ships track — every voyage (a ship sailing <b>full</b>, a Charter, or an Enshrine) fills one slot; at your player-count END, finish the round &amp; score. <i>Charter = spend a charter contract + a flat 2 '+LU('wheat','g ic')+' fare (start with 2; buy more at the Market for 1 '+LU('wheat','g ic')+').</i></div></div>'
     +'<div><div class="rtrack">'+rt+'</div><div class="mtrack-l">round track — move the marker each round; the shaded 12–25 band is the target pace; the game never passes 25</div></div>'
@@ -701,7 +701,7 @@ function checklist(pages,famPages){
   const row=(bx,nm,n,note)=>'<tr>'+(bx?'<td class="bx"></td>':'<td></td>')+'<td>'+nm+'</td><td class="n">'+n+'</td><td>'+(note||'')+'</td></tr>';
   const bp=pages.filter(p=>p.section==='boards');
   const pbRef=bp.length>3?'S'+bp[2].no+'–S'+bp[bp.length-1].no:'S'+bp[2].no+' (proof: 1 of '+PLAYERS.length+' shown)';
-  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v1.2 “Dice”)</h2><div class="cols2">';
+  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v1.3 “Tap a Cask”)</h2><div class="cols2">';
   h+='<table><tr><th></th><th>Boards (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Main board — the Wharf (stations · 8 slots · Sailed-Ships + round tracks)','1','S'+bp[0].no)
     +row(1,'Destinations board (4 kontore + the Hall · Building display · majority chart)','1','S'+bp[1].no)

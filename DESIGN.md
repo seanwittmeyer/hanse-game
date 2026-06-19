@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v1.2 “Dice”)
+# Brewhouses of the Hanse — Design (v1.3 “Tap a Cask”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v1.2 “Dice”** — live; **`play.html` implements it** (the keystone rebuild shipped; the demand-dice tracking + the printables-tile UI overhaul followed). |
+|**Status**     |**v1.3 “Tap a Cask”** — live; **`play.html` implements it** (the keystone rebuild shipped; the demand-dice tracking + the printables-tile UI overhaul followed). |
 
 ---
 
@@ -76,7 +76,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v1.2 “Dice”)
+## 6. The current architecture (v1.3 “Tap a Cask”)
 
 Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -153,6 +153,19 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 ---
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
+
+**v1.3 “Tap a Cask”** *(2026-06-19, `play.html` KEY v59)* — Reworked **deploy** and added **Tap** to cure the
+wharf clog/seize (an all-AI game locked up: slots jam → vessels back up → brewing stalls). **Deploy is no
+longer a free anytime action** — it rides **line activation**: deploy a Ready cask onto an **empty slot of
+the line you fire** (placement becomes a real decision — fire your value-building's line to route demand),
+or onto **any** open slot via the **Brewhouse**. New **Tap** (a Cellar action): discard a Ready cask from a
+**vessel or a slot**, fire its action once, free the lane / **recall** it off a slot for a better cask. Clock
+trimmed (`SAILED_CAP` 7/11/14→6/10/13) since deploy-gating + Tap cut voyages/round; AI re-tuned for the new
+model (move-time demand-routing + adopted `ai-tune` weights). Robustness PASS (0 deadlocks 2–4p, clock-
+dominant pace ~19–20 rounds). **Known tradeoff:** tying deploy to board position adds variance that
+**compresses adjacent AI tiers** — the journeyman→trader rung fell 64%→~57% (even re-tuned it can't reach the
+60% gate); the GM still beats the Trader ~62%. For a *human* the same change reads as added placement *depth*
+rather than luck — a playtest call.
 
 **v1.2 “Dice” — the Cellarmaster AI** *(2026-06-18, `play.html` KEY v57)* — A new top AI tier above the
 Guildmaster, built after diagnosing the GM's strategic blind spot: its flat-MC uses a **journeyman rollout**
