@@ -226,7 +226,6 @@
     display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.092in;text-align:center;gap:.02in}
   .vsq svg,.vsq .ic{width:.32in;height:.32in;opacity:.42}
   .vsq .vn{position:absolute;top:.05in;left:.07in;font-variant:small-caps;font-weight:bold;font-size:.092in;opacity:.7}
-  .vsq .lk{font-style:italic;font-size:.082in;color:var(--ink2)}
   /* forward-flow arrow between the vessel square and its maturation track (you move RIGHT to Ready) */
   .vflow{width:1.25in;height:.14in;display:flex;align-items:center;justify-content:center;color:var(--pc)}
   .vflow svg,.vflow .ic{width:.17in;height:.13in;stroke-width:2.4}
@@ -239,9 +238,8 @@
   .mtrack .ms.fin{background:rgba(74,107,58,.24)}
   .mtrack .ms.fin .rdy{font-variant:small-caps;font-weight:900;font-size:.086in;color:var(--pc);line-height:1}
   .mtrack .ms.fin .rsub{font-variant:small-caps;font-size:.054in;color:var(--pc);opacity:.85;line-height:1}
-  .vcol.locked .vsq,.vcol.locked .mtrack .ms{border-style:dashed;background:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 .08in,transparent .08in .16in)}
-  .vcol.locked .vsq,.vcol.locked .vsq .ic,.vcol.locked .mtrack .ms .bn,.vcol.locked .mtrack .ms .rdy,.vcol.locked .mtrack .ms .rsub{color:rgba(0,0,0,.3)}
-  .vcol.locked .vflow{opacity:.35}
+  /* V3 (Extra Vessel) is identical to V1/V2 — ONLY its tile outline is dashed */
+  .vcol.locked .vsq{border-style:dashed}
   /* improvement slots — host bought improvements (violet) AND displaced/flipped Buildings; tile-true 1.25in squares */
   .isq{width:1.25in;height:1.25in;border:1.5px dashed var(--violet);border-radius:.06in;background:rgba(91,58,142,.07);
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;color:var(--violet);font-size:.088in;text-align:center}
@@ -676,7 +674,7 @@ function mtrackCells(){
   return c+'<div class="ms fin"><span class="rdy">Ready</span><span class="rsub">ship ▸</span></div>';}
 function vcol(n,locked){
   return '<div class="vcol'+(locked?' locked':'')+'">'
-    +'<div class="vsq"><span class="vn">Vessel '+n+'</span>'+LU('beer')+(locked?'<span class="lk">+ Extra Vessel</span>':'<span>cask</span>')+'</div>'
+    +'<div class="vsq"><span class="vn">Vessel '+n+'</span>'+LU('beer')+'<span>cask</span></div>'
     +'<div class="vflow">'+LU('arrow-right')+'</div>'
     +'<div class="mtrack">'+mtrackCells()+'</div></div>';}
 function rkPrinted(cc,L,nm,g,h){   // a clone of a recipe card's bottom "c-strip" (the edge that shows when tucked)
