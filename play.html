@@ -2662,8 +2662,8 @@ function renderShop(){
     if(p.recipes.includes(style))return;
     const st=STYLES[style];
     const nm=LU('scroll-text')+' <b>'+st.name+'</b> <span class="qpd">'+qPips(st.q)+'<b>Q'+st.q+'</b></span>'
-      +' <span class="note" style="font-size:.72rem">brew '+costIcons(st.in)+'</span>'
-      +(st.cellar?' <span class="note" style="font-size:.72rem">(needs Aging Cellar)</span>':'');
+      +'<span class="note" style="font-size:.72rem;display:block;margin-top:2px">brew '+costIcons(st.in)
+      +(st.cellar?' (needs Aging Cellar)':'')+'</span>';
     const cost=RECIPE_BUY[style];const can=canPay(p,cost);
     h+='<div class="item"><span data-tip="'+attr('Permission to brew '+st.name+' (Q'+st.q+'), permanent. Brew cost: '+costStr(st.in)+'.')+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyRecipe(\''+style+'\')">buy</button>':'')+'</span></div>';});
   // CHARTER CONTRACTS (v0.16): an always-available Market acquire — the scarce certificate that lets you charter
