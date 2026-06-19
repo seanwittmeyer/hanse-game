@@ -140,6 +140,36 @@
   .card .c-strip .c-lbl{font-size:.085in;font-style:italic;opacity:.85}
   .card .c-strip .c-gate{display:inline-flex;align-items:center;gap:.02in;font-size:.085in;font-style:italic}
   .card .c-strip .c-gate svg,.card .c-strip .c-gate .ic{width:.12in;height:.12in}
+  /* ====================== PLAYER AID CARD (double-sided: A = a turn · B = icon reference) ======================
+     Two sheets (FRONT / BACK). Every card on a sheet is IDENTICAL, on a centred & symmetric 2×2 grid, so the
+     outlines register under EITHER duplex flip edge — "front aligns with back" holds regardless of the printer.
+     (Flip on the SHORT edge keeps the back upright.) 4.7×3.4in card. */
+  .aid{width:100%;height:100%;background:#f7efdc;color:var(--ink);border:1.4px solid var(--ink);border-radius:.07in;
+    padding:.09in .11in;display:flex;flex-direction:column;overflow:hidden;font-size:.088in;line-height:1.16}
+  .aid .ic,.aid svg{width:.1in;height:.1in;vertical-align:-.015in;flex:0 0 auto}
+  .aid .gi{color:#9c7414} .aid .hi{color:#5d7d34} .aid .vi{color:var(--gold)}
+  .aid b{color:var(--ink)} .aid .em{color:var(--red);font-weight:bold;font-variant:small-caps}
+  .aid .ahd{display:flex;align-items:center;gap:.07in;border-bottom:2px solid var(--gold);padding-bottom:.035in;margin-bottom:.05in;flex:0 0 auto}
+  .aid .ahd .abi{width:.36in;height:.36in;border-radius:.05in;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .aid .ahd .abi svg,.aid .ahd .abi .ic{width:.24in;height:.24in}
+  .aid .ahd .at{font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.155in;line-height:1}
+  .aid .ahd .as{font-size:.076in;font-style:italic;color:var(--ink2);margin-left:auto;text-align:right;line-height:1.1}
+  .aid .acols{flex:1;display:flex;gap:.14in;min-height:0}
+  .aid .acol{flex:1;display:flex;flex-direction:column;min-width:0}
+  .aid h5{font-variant:small-caps;font-weight:bold;color:var(--sea);font-size:.1in;margin:.05in 0 .02in;
+    border-bottom:1px solid var(--line);padding-bottom:.008in;display:flex;align-items:center;gap:.04in}
+  .aid h5:first-child{margin-top:0}
+  .aid h5 svg,.aid h5 .ic{width:.12in;height:.12in}
+  .aid .step{display:flex;gap:.05in;margin-bottom:.03in}
+  .aid .step .sn{flex:0 0 auto;width:.17in;height:.17in;border-radius:50%;background:var(--sea);color:#fff;font-size:.09in;font-weight:bold;display:flex;align-items:center;justify-content:center}
+  .aid .step .sx,.aid .ln{min-width:0}
+  .aid .ln{margin-bottom:.025in}
+  /* legend grid (back) */
+  .aid .leg{display:flex;flex-direction:column}
+  .aid .lr{display:flex;align-items:flex-start;gap:.05in;margin-bottom:.022in}
+  .aid .lr .lic{flex:0 0 .2in;height:.15in;display:flex;align-items:center;justify-content:center;color:var(--sea)}
+  .aid .lr .lic svg,.aid .lr .lic .ic{width:.15in;height:.15in}
+  .aid .lr .lx{min-width:0} .aid .lr .lx b{font-variant:small-caps}
   /* ====================== PLAYER BOARD (v1.6 — rebuilt from scratch) ======================
      A pure TRACKING surface — vessels & maturation (THE FLOOR row) · improvements · THE FLIGHT ·
      a goods zone · a bottom RECIPE RACK. No rules text (those live on the separate player-aid card).
@@ -532,6 +562,74 @@ function contractCard(){return '<div class="card" style="--cc:#8a6408">'
     +'<div class="c-row"><span class="c-lbl">spend + fare</span><span class="c-cost">'+cost(2,0)+'</span></div>'
   +'</div></div>';}
 
+// ---- PLAYER AID CARD (double-sided) — FRONT: a turn & structure · BACK: icon reference ----
+function aidFront(){
+  const G=LU('wheat','gi'),H=LU('sprout','hi');
+  return '<div class="aid front">'
+    +'<div class="ahd"><span class="abi">'+LU('beer')+'</span>'
+      +'<div class="at">Player Aid · A Turn</div>'
+      +'<div class="as">Brewhouses of the Hanse<br>Source → Brew → Age → Ship</div></div>'
+    +'<div class="acols">'
+      +'<div class="acol">'
+        +'<h5>'+LU('list-ordered')+'Your Turn</h5>'
+        +'<div class="step"><span class="sn">1</span><span class="sx"><b>Move</b> to an orthogonally adjacent station (mandatory). Onto a <b>rival</b>? pay '+G+'1 — or run your <span class="em">Floor</span> instead (no toll).</span></div>'
+        +'<div class="step"><span class="sn">2</span><span class="sx"><b>Activate</b> your station’s <b>row OR column</b>.</span></div>'
+        +'<div class="step"><span class="sn">3</span><span class="sx"><b>Resolve</b> its 4 stops — <b>slot · station · station · slot</b> — in any order. Both stations fire; use each slot’s occupant + any owned <b>Building</b>.</span></div>'
+        +'<h5>'+LU('home')+'The Floor</h5>'
+        +'<div class="ln">In lieu of a Wharf line: run the action of <b>every cask in your vessels</b> (your private line — no move, no toll).</div>'
+        +'<h5>'+LU('beer')+'The Cask</h5>'
+        +'<div class="ln"><b>Maturing</b> (vessel) → <b>Deployed</b> (a slot: public action + cargo) → <b>Delivered</b> (scores · leaves).</div>'
+      +'</div>'
+      +'<div class="acol">'
+        +'<h5>'+LU('anchor')+'The Four Stations</h5>'
+        +'<div class="ln">'+LU('store')+' <b>Market</b> — 2 goods, <i>or</i> 1: recipe · Building (+place) · ship '+LU('sailboat')+' ('+G+'2) · contract '+LU('ticket')+' ('+G+'1) · improvement '+LU('wrench')+'.</div>'
+        +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — Brew a recipe into an open vessel; or <b>Deploy</b> a Ready cask.</div>'
+        +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — 3 age points across your vessels; or <b>Tap</b> a cask.</div>'
+        +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — Load onto a ship (<b>sails when full</b>); <b>Enshrine</b> a Q2+ slot cask; or <b>Charter</b>.</div>'
+        +'<h5>'+LU('timer')+'End &amp; Score</h5>'
+        +'<div class="ln"><b>Sailed-Ships</b> fills (6/10/13 for 2/3/4p) → finish the round → score:</div>'
+        +'<div class="ln">'+LU('crown','vi')+' <b>Hall</b> 3/5/7/9 · '+LU('landmark','vi')+' <b>kontor</b> base + value-Buildings · <b>majorities</b> · <span class="em">Flight</span> 3→4·4→9·5→16 · <b>developer</b> +3'+LU('star','vi')+'.</div>'
+      +'</div>'
+    +'</div></div>';}
+function aidBack(){
+  const G=LU('wheat','gi');
+  const row=(ic,nm,desc,cls)=>'<div class="lr"><span class="lic">'+LU(ic,cls||'ic')+'</span><span class="lx"><b>'+nm+'</b> — '+desc+'</span></div>';
+  return '<div class="aid back">'
+    +'<div class="ahd"><span class="abi">'+LU('book-open')+'</span>'
+      +'<div class="at">Player Aid · Icons</div>'
+      +'<div class="as">Brewhouses of the Hanse<br>quick symbol reference</div></div>'
+    +'<div class="acols">'
+      +'<div class="acol"><div class="leg">'
+        +'<h5>'+LU('coins')+'Goods &amp; Stations</h5>'
+        +row('wheat','Grain','currency + brew input','gi')
+        +row('sprout','Hops','currency + brew input','hi')
+        +row('store','Market','Source — goods / acquire a tile')
+        +row('flask-conical','Brewhouse','Brew (+ Deploy)')
+        +row('hourglass','Cellar','Age (+ Tap)')
+        +row('ship','Harbor','Ship / Enshrine / Charter')
+        +'<h5>'+LU('beer')+'Cask Slot-Actions</h5>'
+        +row('coins','Source','+2 goods')
+        +row('hourglass','Age','age a cask +2')
+        +row('package-plus','Load','load a cask onto a ship (free)')
+        +row('map-pin','Reach','+1 presence (where delivered)')
+      +'</div></div>'
+      +'<div class="acol"><div class="leg">'
+        +row('arrow-left-right','Convert','up to 2 goods G↔H')
+        +row('search','Survey','draw a Building to hand')
+        +row('sparkles','Wild','any base action (Q4+)')
+        +'<h5>'+LU('building-2')+'Buildings &amp; Targets</h5>'
+        +row('star','Value','occupant delivers for more ★','vi')
+        +row('hammer','Transform','changes the cask / ship')
+        +row('beer','Cask','the occupant a building modifies')
+        +row('sailboat','Ship','neutral hull (Cog 2 / Hulk 3)')
+        +'<h5>'+LU('trophy')+'Shipping &amp; Score</h5>'
+        +row('ticket','Charter','a contract + '+G+'2 fare → 1 cask')
+        +row('crown','Enshrine','a Q2+ slot cask → the Hall')
+        +row('star','★ Points','value · majority · prestige','vi')
+        +row('layers','Flight','distinct beers delivered')
+      +'</div></div>'
+    +'</div></div>';}
+
 // ---- player brewery board (v1.6 — rebuilt from scratch) ----
 // A pure TRACKING surface: header + storage zone · THE FLOOR (3 vessel squares + maturation tracks + 3
 // improvement squares) · THE FLIGHT (one space per beer) · a bottom RECIPE RACK (Gruit/Hopped printed as
@@ -689,6 +787,15 @@ function boardPage(pages,section,label,html,h){
   pg.items.push({x:0.3,y:0.32,w:9.8,h:H,html});
   pg.rrect={x:0.3,y:0.32,w:9.8,h:H,r:0.12};
 }
+// double-sided player aid: N IDENTICAL cards on a centred, SYMMETRIC 2×2 grid (full) or 1 centred (proof).
+// Because the cards are identical and the grid is symmetric on both axes, the FRONT and BACK sheets register
+// under either duplex flip edge — so "front aligns with back" holds regardless of the printer's flip setting.
+function aidSheet(pages,label,faceHtml){
+  const W=4.7,H=3.4;
+  const pos=MODE==='proof'?[[(PG.w-W)/2,(PG.h-H)/2]]:[[0.35,0.4],[5.35,0.4],[0.35,4.1],[5.35,4.1]];
+  const pg=newPage(pages,'cards',label);
+  pos.forEach(([x,y])=>{pg.items.push({x,y,w:W,h:H,html:faceHtml});addRectCut(pg,x,y,W,H);});
+}
 
 function buildPages(){
   const pages=[],famPages={};
@@ -728,6 +835,9 @@ function buildPages(){
   packRun(pages,'cards','Export recipe cards — 1 set per player','card',cards,'Recipe cards',famPages);
   const contractCards=[];for(let i=0;i<cnt(CONTRACTS.n);i++)contractCards.push(contractCard());   // v0.16 charter contracts = cards
   packRun(pages,'cards','Charter contract cards','card',contractCards,'Charter contracts',famPages);
+  // PLAYER AID — a double-sided reference card (front: a turn · back: icon reference); 2 sheets, duplex
+  aidSheet(pages,'Player aid — FRONT (a turn)',aidFront());
+  aidSheet(pages,'Player aid — BACK (icon reference)',aidBack());
   // cardstock + paper cutter: cut lines print on the ART layer as grey guides (no laser pass)
   pages.filter(p=>p.section==='cards').forEach(p=>p.papercut=true);
   // --- CHECKLIST (always last; carries no cuts, so earlier sheets stay page-aligned) ---
@@ -774,10 +884,13 @@ function checklist(pages,famPages){
     +row(1,'Private improvements ('+IMPROVE.length+' designs — bought for goods)',impN,pgRef(pages,famPages,'Improvements'))
     +row(0,'<i>'+IMPROVE.map(d=>d.nm+' ×'+d.n).join(' · ')+'</i>','','')
     +'<tr class="tot"><td></td><td>Tile total</td><td class="n">'+tileTotal+'</td><td></td></tr></table>';
-  h+='<table><tr><th></th><th>Cards — 1.85×2.55″ (cardstock, do NOT mount)</th><th>qty</th><th>sheet</th></tr>'
-    +row(1,'Export recipes · Broyhan / Keut / Mumme / Bock ×'+PLAYERS.length+' (1 set per player)',RECIPES.length*PLAYERS.length,pgRef(pages,famPages,'Recipe cards'))
+  const aidNo=pages.filter(p=>p.section==='cards'&&p.label.indexOf('Player aid')===0).map(p=>p.no).sort((a,b)=>a-b);
+  h+='<table><tr><th></th><th>Cards (cardstock, do NOT mount)</th><th>qty</th><th>sheet</th></tr>'
+    +row(1,'Export recipes 1.85×2.55″ · Broyhan / Keut / Mumme / Bock ×'+PLAYERS.length+' (1 set per player)',RECIPES.length*PLAYERS.length,pgRef(pages,famPages,'Recipe cards'))
     +row(0,'<i>Gruit &amp; Hopped — printed on every brewery board (no card)</i>','—','')
-    +row(1,'Charter contracts (start 2/house · buy at Market 1 G · spend 1 + 2 G fare)',CONTRACTS.n,pgRef(pages,famPages,'Charter contracts'))
+    +row(1,'Charter contracts 1.85×2.55″ (start 2/house · buy at Market 1 G · spend 1 + 2 G fare)',CONTRACTS.n,pgRef(pages,famPages,'Charter contracts'))
+    +row(1,'<b>Player aid</b> 4.7×3.4″ — double-sided (front: a turn · back: icon reference)',PLAYERS.length,aidNo.length?'S'+aidNo.join(', S'):'—')
+    +row(0,'<i>print DOUBLE-SIDED (flip on the SHORT edge keeps the back upright); the 2×2 is identical &amp; symmetric so fronts &amp; backs register — cut 4</i>','','')
     +'</table>';
   h+='<table><tr><th></th><th>Tokens &amp; markers (chipboard discs/squares)</th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Grain tokens 0.7″ (or ~60 wooden cubes)','60',pgRef(pages,famPages,'Goods tokens'))
@@ -793,9 +906,9 @@ function checklist(pages,famPages){
     +'</table>';
   h+='<div class="wf"><b>Prototype workflow.</b> 1) <b>Print to PDF</b> — the whole view, or a 🖨 button for a one-sheet PDF. In the print dialog: Save as PDF · scale 100% · margins default · <b>“Background graphics” ON</b>. Place in Affinity Publisher (passthrough renders exactly) and print at 100% (verify the 3″ bar). '
     +'2) Spray-glue the art sheets to chipboard. 3) <b>Cut on the printed guides</b> — the cut lines &amp; registration marks print with the art; cut the lines by hand or paper cutter. (Toggle the <b>CUT layer</b> first to print a guide-only sheet if you want a separate cutting template.) '
-    +'<b>Card sheets:</b> print on cardstock and cut with a paper cutter; no mounting (they tuck under the brewery board). '
+    +'<b>Card sheets:</b> print on cardstock and cut with a paper cutter; no mounting (recipe cards tuck under the brewery board). The <b>Player aid</b> is a <b>double-sided</b> card — print its FRONT &amp; BACK sheets duplex (flip on the SHORT edge keeps the back upright; the cards are identical &amp; symmetric so the two sides register either way). '
     +'Tiles &amp; cards are gapless grids — every internal line is drawn once. Tokens cut on the inner circle; the ring outside is bleed. '
-    +'Backs are bare chipboard (every component is single-faced; the face-down Building deck &amp; the export-beer deal work by flipping).</div>';
+    +'Backs are bare chipboard (every component is single-faced <b>except the double-sided Player aid</b>; the face-down Building deck &amp; the export-beer deal work by flipping).</div>';
   h+='</div></div>';
   return h;}
 
