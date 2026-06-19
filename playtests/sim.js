@@ -255,6 +255,10 @@ function runGame(n){
     if(__SC.comp)p.grain+=(__SC.comp[seat]||0);
     if(p.grain>p.storage)p.grain=p.storage; if(p.hops>p.storage)p.hops=p.storage;
   });}
+  // ---- FREE STARTING IMPROVEMENT (opt-in via FREE_IMP) — one DISTINCT improvement per player,
+  // shuffled so it's decoupled from seat; measures which improvement, given free at start, wins most.
+  if(typeof __FREEIMP!=='undefined'&&__FREEIMP){var impPool=shuffle(IMPROVEMENT_KEYS.slice());
+    S.players.forEach(function(p,seat){var k=impPool[seat%impPool.length];grantUpgrade(p,k);p.__startImp=k;});}
   // ---- assign strategy personas (opt-in), shuffled so persona is decoupled from seat ----
   if(__PERSON){var pool=shuffle(['volume','prestige','majority','demand']);var base=[];
     for(var i=0;i<n;i++)base.push(pool[i%4]);   // shuffled pool → the 4 leans appear across seats (random subset at 2-3p)
@@ -283,7 +287,7 @@ function runGame(n){
   var allByDest={bruges:0,london:0,bergen:0,novgorod:0,hall:0};
   S.players.forEach(function(p){p.delivered.forEach(function(d){allByDest[d.dest]++;});});
   var playerStats=S.players.map(function(p,i){var ts={};p.delivered.forEach(function(d){ts[d.style]=1;});   // distinct BEERS (the Flight metric)
-    return {persona:persona(p),cellar:!!p.__cellar,total:scores[i].total,won:(i===win),
+    return {persona:persona(p),cellar:!!p.__cellar,startImp:p.__startImp||null,total:scores[i].total,won:(i===win),
       deliv:scores[i].deliv,maj:scores[i].maj,goals:scores[i].goals,
       q5:p.delivered.filter(function(d){return d.q===5;}).length,
       q4plus:p.delivered.filter(function(d){return d.q>=4;}).length, hall:p.delivered.filter(function(d){return d.dest==='hall';}).length,
@@ -379,6 +383,7 @@ const ctx = {
   setTimeout: noop, clearTimeout: noop,
   lucide: { createIcons: noop },
   __N: N, __COUNTS: COUNTS, __SC, __PERSONAS: PERSONAS, __CELLAR: CELLAR, __TUNE, __STK: !!process.env.STK,
+  __FREEIMP: process.env.FREE_IMP==='1',
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;
@@ -465,4 +470,18 @@ function summarize(n, arr) {
 console.log(`Brewhouses of the Hanse — headless sim (KEY ${R.KEY})  |  N=${N} games per player count`);
 console.log(`scenario: ${SCEN} — ${SC.label}` + (PERSONAS ? `  |  PERSONAS on` : ``) + (process.env.TUNE && process.env.TUNE!=='none' ? `  |  TUNE=${process.env.TUNE} ${JSON.stringify(__TUNE.dest)}` : ``));
 (R.counts || COUNTS).forEach(n => summarize(n, R[n]));
+
+// ---- FREE STARTING IMPROVEMENT report (only when FREE_IMP=1) ----
+if (process.env.FREE_IMP === '1') {
+  console.log(`\n================  FREE STARTING IMPROVEMENT — win-rate by which improvement each player started with  ================`);
+  (R.counts || COUNTS).forEach(n => {
+    const t = {};
+    R[n].forEach(g => { if (g.error || !g.playerStats) return;
+      g.playerStats.forEach(s => { if (!s.startImp) return; const o = t[s.startImp] = t[s.startImp] || { n:0, w:0, score:0 }; o.n++; o.w += s.won?1:0; o.score += s.total; }); });
+    const fair = 100/n;
+    console.log(`-- ${n}p (fair = ${fair.toFixed(1)}%):`);
+    Object.entries(t).sort((a,b)=> b[1].w/b[1].n - a[1].w/a[1].n).forEach(([k,o]) =>
+      console.log(`   ${k.padEnd(10)} win ${pct(o.w,o.n).padStart(6)}  (${(100*o.w/o.n-fair>=0?'+':'')}${(100*o.w/o.n-fair).toFixed(1)} vs fair)   avg score ${fmt(o.score/o.n)}   (n=${o.n})`));
+  });
+}
 console.log('');

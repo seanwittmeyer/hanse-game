@@ -65,3 +65,26 @@ Questions to answer:
 - sim.js / sim-analyze "upgrades" = PRIVATE improvements (vessel/cellar/granary/hopgarden/crane/lagering/quay). These are ~0.5/g = **nearly never bought — the private-improvement economy is dead in bot play** (the long-standing "dead upgrade" issue; Floor was meant to revive Extra Vessel).
 - PUBLIC Buildings (the keystone green tiles, earned at London/Novgorod or Market-bought) are a SEPARATE thing, NOT in the "upgrades" count. Not directly logged → infer from `developed` score (rival-overbuild) ≈ proxy for slot contention. If developed≈0 everywhere ⇒ buildings placed sparsely / slots rarely contested.
 - Trader ships London ~0.7 + Novgorod ~0.8 ≈ ~1.5 building-grants/g → public buildings ARE placed, modestly. Demand persona authors up to 3 value buildings. Don't claim the demand lane is vestigial; it's playable (~43–46% win) but not dominant.
+
+## ROUND 2 — answering the two questions (fast tooling)
+
+### SEAT ORDER REVERSES UNDER STRONG PLAY (corroborated, both tiers, 60g each)
+- CMvCM 2p P1 28.3% / P2 71.7% ; GMvGM 2p P1 33.3% / P2 66.7%.
+- 3p later seats favored (P3>P2>P1). 4p P1 worst (CMvCM P1 15%).
+- Seat comp = FLAT +1G to every seat after first (P1=3G, rest 4G) → AMPLIFIES the later-seat edge. Tuned to greedy (P1-favored); over-corrects for experts. *Biggest expert-balance issue.*
+
+### CM>GM holds at 45/70 bulk budget
+- CMvGM per-capita: 2p CM 63.3/GM 36.7 · 3p CM 47.8/GM 18.2 · 4p CM 30.8/GM 19.2.
+- CM climbs more (Q4+/g up to 1.3) & ships Hall (0.4–0.8) + Novgorod (11–17%) MORE than GM (Hall 0.2–0.5, can't price deep). dev=0 everywhere (slots rarely overbuilt). ups 0.4–0.7 (improvements rare even for CM).
+
+### Q4/Q5 (user Q1): mostly INCENTIVE/STRUCTURE, tooling NOT blind
+- Trader arc: games avg 12.5–13.6 rounds. Q5 delivered median R12, Q4 R12–13 = AT THE BUZZER. deliver-Q4 6/20/23%, deliver-Q5 15/17/21% — RARE+LATE. Full recipe set only 39/50/62%.
+- Cheap beers cycle ~3× faster (Q2 brew R1→deliver R3). Short clock + hops bottleneck → climb is high-variance.
+- BUT CM-mirror games run ~21 rounds (deep play LENGTHENS the game: fewer voyages/round → toward MAX_ROUND 25). So the climb fits when everyone's deep. CLOCK-RUSH INSIGHT: a fast-volume opponent ends the game (~13r) before a deep player cashes in → deep is vulnerable to a rush. (Test on CMvTr when it lands.)
+- CM (prices deep) climbs ~1 Q4+/g & enshrines & WINS → tooling DOES capture the arc; lane is competitive-not-dominant. Even CM blends (Q5 ~0.4–0.6/g), never all-in → Q5 = selective capstone by optimal play.
+
+### Improvements (user Q2): hopgarden is the new king (post-Hops)
+- Free-start win-rate vs fair (N=2000/count, greedy): HOPGARDEN +10.1/+12.7/+7.4 (2/3/4p) = clear #1 at every count.
+- Passive tier: cellar/granary/lagering ≈ neutral (+0 to +6). Granary's old crown moved to Hop Garden (hops-led recipes). Validates user's "income improvement essential," updated to hops.
+- crane/vessel/quay NEGATIVE (−3 to −7) — but greedy under-pilots active ones (Floor/quay/crane), so judge only passives cleanly.
+- Even FREE, best improvement only +10% win → at 4–5G + a full MARKET action, the lift rarely beats tempo → rational to skip. Barrier = ACTION-ECONOMY (opportunity cost at the contested Market), not goods alone. → "buy improvements at the Cellar" idea is well-motivated.
