@@ -29,6 +29,19 @@ aiSpeedButtons();aiSetSpeed('slow');aiSetSpeed('normal');
   if(S.turn<5)throw new Error('suspiciously short game at '+n+'p');
   console.log('render smoke '+n+'p OK — rounds '+S.turn+', sailed '+S.sailed+'/'+S.sailedCap);
 });
+// 3a-EXP) the opt-in SPECIALTY BEERS expansion — a full AI game through the REAL render layer, with all three
+// specialty beers FORCED into the export set so the new cask tiles, signatures, the "3 of 7" labels, Zerbster's
+// parti-gyle (at brew) and Gose/Duckstein's delivery effects all render/run. Toggle off again afterwards.
+EXPANSION=true;
+S=freshState(3,['P1','P2','P3']);UI={sub:'move'};undoStack=[];activeTab=0;
+S.exports=['gose','zerbster','duckstein'];S.pinnacleQ=Math.max.apply(null,S.exports.map(function(s){return STYLES[s].q;}));
+S.players.forEach(function(p,i){p.ai={tier:['journeyman','trader','trader'][i],persona:i?'volume':null};});
+render();
+var eguard=0;
+while(!S.over){aiStep();render();if(++eguard>100000)throw new Error('guard tripped in EXPANSION game');}
+if(!S.expansion)throw new Error('EXPANSION flag not recorded on state');
+console.log('render smoke EXPANSION (Specialty Beers) OK — rounds '+S.turn+', exports '+S.exports.join('/'));
+EXPANSION=false;
 // 3b) a guildmaster mini-game through the real render layer (tiny Monte Carlo budget)
 GUILD_MS=10;GUILD_MIN=1;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;

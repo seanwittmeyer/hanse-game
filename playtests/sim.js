@@ -252,6 +252,7 @@ function botActOnce(){var p=cur();var U=UI.sub;
 
 function tbVec(p){var sc=scorePlayer(p);return [sc.total, p.grain+p.hops, wharfCaskSlots().filter(function(id){return S.slots[id].owner===p.id;}).length];}
 function runGame(n){
+  EXPANSION=(typeof __EXPANSION!=='undefined'&&__EXPANSION);   // EXPANSION "Specialty Beers" sim hook (injected via ctx) — off by default → base-game regression; EXPANSION=1 tests the opt-in module
   S=freshState(n,NAMES.slice(0,n));UI={sub:'move'};undoStack=[];activeTab=0;
   // ---- starting-token override hook (balance testing; null = canonical 3G/2H, equal seats) ----
   // __SC.g/__SC.h override the flat start; __SC.comp[seat] adds per-seat grain (seat compensation
@@ -390,6 +391,7 @@ const ctx = {
   lucide: { createIcons: noop },
   __N: N, __COUNTS: COUNTS, __SC, __PERSONAS: PERSONAS, __CELLAR: CELLAR, __TUNE, __STK: !!process.env.STK,
   __FREEIMP: process.env.FREE_IMP==='1',
+  __EXPANSION: process.env.EXPANSION==='1',
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;

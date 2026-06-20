@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v1.8 “Quality Pays”)
+# Brewhouses of the Hanse — Design (v1.9 “Specialty Beers”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v1.8 “Quality Pays”** — live; **`play.html` implements it** (value-Buildings now reward the quality climb — a premium cask banks +2★/+3★ at Q4/Q5; the keystone rebuild + demand-dice tracking + printables-tile UI shipped earlier; v1.5 added three private improvements). |
+|**Status**     |**v1.9 “Specialty Beers”** — live; the **first expansion** is an **opt-in New Game toggle** that adds Gose · Zerbster · Duckstein to the export draft (pinned-signature "characters"; **base game byte-for-byte unchanged when off**). Base ruleset: **v1.8 “Quality Pays”** (value-Buildings reward the climb — +2★/+3★ at Q4/Q5; keystone rebuild + demand-dice + printables-tile UI; v1.5 private improvements). `play.html` implements both. |
 
 ---
 
@@ -167,6 +167,39 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   revisit: deal a **choice** of starting buildings (draft), or make the opening building **self-favoring**
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
+
+**v1.9 “Specialty Beers” — EXPANSION (opt-in)** *(2026-06-20, `play.html` KEY v67)* — **The first expansion
+module: an opt-in toggle that turns the beer roster from a ladder you climb into characters you main.**
+*Diagnosis (the unlock):* the base beers are **rungs, not characters** — the two Q3s are near-duplicates, a
+deployed cask's slot-action comes from the shared *quality* pile (so the beer name carries no board identity),
+and higher quality is strictly *more*. The game has **exactly one breadth incentive (the Flight) and zero
+depth incentive** — so maining a single beer is never correct (Keut, with its bolted-on +1-presence, is the
+lone exception that proves the rule). *The fix (this module):* a **New Game checkbox** ("Specialty Beers")
+that adds three new pinned-signature beers to the export draft (**3 of 7**, C(7,3)=35 ladders vs the base
+C(4,3)=4); **OFF by default → the base game is byte-for-byte unchanged** (the whole point — the expansion
+never touches the base unless you opt in). *The agency resolution:* base climb beers **keep the steerable
+pile**; a specialty beer is **pinned** (its slot-action is fixed/printed) — this just **generalizes Gruit's
+existing `pin:true`**, so drafting a pinned beer *is* the agency, and the Orléans-lite steer is preserved.
+The three (each one printed signature, reusing existing engine paths so the blast radius is tiny):
+**Gose** (Goslar, Q2 `2G`, no hops — the grain-path) — *Salt Trade:* a kontor delivery throws off **+1G +1H**
+(liquidity, via `deliverCask`); **Zerbster** (Zerbst, Q3 `3H` — the hop-bomb) — *Parti-Gyle:* brewing it also
+fills an open vessel with a **free small Gruit** (the weak second runnings — throughput + the Flight; lost if
+no vessel is open); **Duckstein** (Königslutter, Q2 `1G1H`, ready 2) — *Smoke-Hardy:* ships & scores as **+1
+effective quality** (reuses `caskEffQ`, exactly like an innate Malt Kiln — a humble beer that reaches the
+Novgorod long-haul). *Sim gates (KEY v67, `sim-results-v67.txt`):* **base regression** clean (0 crash/deadlock
+2–4p, pace + behavior identical to the v66 baseline — proves the toggle truly isolates) and **expansion on**
+clean (0 crash/deadlock, pace 16–17 rounds in-band); `ai-render-smoke` passes including a forced all-specialty
+game through the **real** render layer; the AI ladder shows **0 errors** (the 59% journeyman→trader rung is
+the documented v1.3 compression, not a regression — base AI/rules untouched). *Known reads / open ⚙ (for the
+persona oracle, not the greedy bot — which can't pilot signatures):* the specialty beers skew lower-quality so
+the greedy ceiling dips a touch; **Gose's liquidity** wants a persona/strong-AI check for a goods-snowball;
+all magnitudes are first-pass ⚙. *Staged next (Option A's arc, each its own sim-gated increment):* **Jopenbier**
+the vintage/"Q6" super-beer (aging-as-value + the Floor-works-while-aging hook + the race-to-end drama, scored
+**self-contained** so it can't ripple the Q-keyed tables) → **blending** (the deep player's active turn) →
+**thematic buildings** (Parti-Gyle Tun · Salt House · Smoke Kiln). Asymmetry stays a *base*-game item, a
+separate axis. *(This is the "Beer Atlas" path — content under one grammar, riding the existing deal-3
+machinery. Design discussion + the rejected/deferred forks: the Renown depth-track and the eastern kontor are
+held as sim-gated maybes; the destination-board swap is the deliberate heavier horizon.)*
 
 **v1.8 “Quality Pays”** *(2026-06-19, `play.html` KEY v66)* — **Uncapped the value-Building bonus to reward the
 quality climb.** Base kontor values are tiny (Bruges/London/Bergen = 1), so the in-game points live in the
