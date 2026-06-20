@@ -370,6 +370,15 @@ Recipe buys ⚙: Gose `1 G` · Zerbster `1 H` · Duckstein `1 G`. Everything els
 Flight, the clock, scoring, the Hall — is **unchanged**; the expansion is pure roster content under the
 existing grammar (the "Beer Atlas" path).
 
+**Specialty Beers also adds (completing Option A):**
+- **Blending** — a **Cellar** action: combine **two Ready vessel casks → one premium cask at +1 quality** (the
+  higher of the two +1, cap Q5; it inherits the higher beer), in a freed vessel. The deep player's *active*
+  turn — reach Q5 without Bock, and a use for two aged casks (you trade two deliveries for one finer one).
+- **Three thematic Buildings** join the building deck (alongside the base family): **Salt House** (a cask
+  shipped from here → its owner gains **+1 G +1 H** on delivery, the salt trade), **Smoke Kiln** (a cask here
+  **ships +1 quality**, cap Q5 — smoke-cured), **Parti-Gyle Tun** (deploy a cask here → a **free small Gruit**
+  to an open vessel). All ⚙. *(The v1 AI uses the buildings but doesn't yet blend — a follow-up.)*
+
 ### Capstone — Jopenbier (a second, independent toggle)
 
 A separate **New Game toggle** (on with or without Specialty Beers): the **vintage super-beer** (Danzig) — the

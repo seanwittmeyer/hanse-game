@@ -168,6 +168,24 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
 
+**v1.9 “Option A complete” — blending · thematic buildings · the Inland Road made visible** *(2026-06-20, `play.html` KEY v70)* —
+Finishes the **Beer Atlas** (Option A) with three pieces, all opt-in via the existing toggles. **(1) The Inland
+Road is now a VISIBLE board panel** (it was a buried note) — the five towns as cards (gate · the beer they
+teach · standing ★ · who's reached each), beside the Destinations panel, shown when the toggle is on. **(2)
+Blending** — a Cellar action (with Specialty Beers on): combine **two Ready vessel casks → one premium cask at
++1 quality** (the higher +1, cap Q5; it inherits the higher beer), in a freed vessel — the **deep player's
+active turn** (reach Q5 without Bock; a use for two aged casks). A human Cellar action; the v1 AI skips it (a
+forced render-smoke test covers the engine). **(3) Three thematic Buildings** join the deck **only when
+Specialty Beers is on** (`exp:true`): **Salt House** (a cask shipped from here → its owner gains +1G +1H on
+delivery — the salt trade), **Smoke Kiln** (+1 quality, cap Q5 — smoke-cured), **Parti-Gyle Tun** (deploy a
+cask here → a free small Gruit to an open vessel). *Gates (KEY v70, `sim-results-v70.txt`):* base + EXPANSION +
+all-three-on all **0 crash/deadlock 2–4p, pace in band**; render-smoke clean incl. the new **BLEND test** (two
+Q3 → a Q4) and a Cellarmaster game with all expansions on; ladder 0 errors. All numbers ⚙. **Option A (the
+Beer Atlas) is now complete**: characters (Specialty Beers) + a depth capstone (Jopenbier) + a second geography
+(the Inland Road) + the combo/throughput polish (blending + thematic buildings), each an independent slide
+toggle. *(Remaining horizons: AI wiring for blending; the heavier Option-B variants — a destinations-board
+swap, town perks, an eastern route.)*
+
 **v1.9 “The Inland Road” — EXPANSION (a 3rd opt-in toggle; Option B)** *(2026-06-20, `play.html` KEY v69)* —
 **A second geography — the inland brewing towns, a tech-tree reached OVERLAND — the "where you take your beer"
 axis (Option B), shipped as a clean *additive* toggle (the board-swap version stays the heavy horizon).** A new

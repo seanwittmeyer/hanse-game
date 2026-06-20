@@ -502,6 +502,10 @@ const BUILDINGS=[
   {k:'customs',   nm:'Customs House',        verb:'transform', tgt:'ship', ic:'scroll-text',  g:2, n:2, eff:'a ship here may board casks one gate lower'},
   {k:'gauger',    nm:'Gauger’s Office',      verb:'transform', tgt:'cask', ic:'ruler',        g:3, n:1, eff:'a cask from here delivers one gate higher'},
   {k:'workshop',  nm:'Brewmaster’s Workshop',verb:'transform', tgt:'cask', ic:'hammer',       g:3, n:1, eff:'a cask here upgrades its slot-action to Wild'},
+  // EXPANSION "Specialty Beers" (Option A) thematic buildings — print with the kit; use only with that module
+  {k:'salthouse', nm:'Salt House',          verb:'value',     tgt:'cask', ic:'gem',           g:2, n:1, eff:'a cask from here: owner +1G +1H on delivery (the salt trade)'},
+  {k:'smokekiln', nm:'Smoke Kiln',          verb:'transform', tgt:'cask', ic:'cloud',         g:2, n:1, eff:'a cask from here ships +1 quality (cap Q5)'},
+  {k:'partigyle', nm:'Parti-Gyle Tun',      verb:'transform', tgt:'cask', ic:'split',         g:2, n:1, eff:'deploy a cask here → a free small Gruit to an open vessel'},
 ];
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 const WHARFAGE=1;        // owner's points cut when a rival routes through their building (+1 with Almoner's Stall)

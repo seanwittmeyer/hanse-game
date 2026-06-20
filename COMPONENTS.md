@@ -343,7 +343,10 @@ barrels · workers · markers · **~8 demand dice (d6)** · quality-boost marker
 (displaced-building payout, v1.2). **Medium GWT footprint** — substantial, far short of Lacerda.
 
 **Expansions (opt-in, v1.9) — three independent slide toggles, mixable freely:**
-- **Specialty Beers:** +~22 cask tiles (**Gose ×8 · Zerbster ×6 · Duckstein ×8**) + 3 recipe designs/player.
+- **Specialty Beers (full Option A):** +~22 cask tiles (**Gose ×8 · Zerbster ×6 · Duckstein ×8**) + 3 recipe
+  designs/player + **3 thematic Building tiles** (**Salt House · Smoke Kiln · Parti-Gyle Tun**, in the deck
+  only when on). Also adds **Blending** — a Cellar *action* (combine two Ready casks → one +1-quality premium;
+  no component).
 - **Jopenbier capstone:** +3 cask tiles (**Q6**) + 1 recipe design/player.
 - **The Inland Road:** a small **inland strip** with **5 town spaces** (**Lüneburg · Hannover · Braunschweig ·
   Einbeck · Hamburg** — each printed with its quality gate · the beer it teaches · its standing value) +
