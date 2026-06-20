@@ -168,28 +168,32 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
 
-**v2.0 “The Inland Road” — FULL Option B: a contested second destinations board** *(2026-06-20, `play.html` KEY v71)* —
+**v2.0 “The Inland Road” — FULL Option B: a contested second board that REPLACES the kontor majorities** *(2026-06-20, `play.html` KEY v72)* —
 Rebuilds the Inland Road from a per-player freebie (the v1.9 “compete” version) into the **heavy Option B** the
-brief asked for: a **second destinations board that challenges the kontore.** The towns are now a **contested
-overland network** — a **trunk** (Lüneburg · Hannover · Braunschweig · Einbeck · Hamburg) plus an **eastern
-fork** (**Reval · Riga**, opening once you hold any charter; Q4/Q5 gates, the richest prizes). Each town holds
-**ONE charter, claimed first-come** by Caravan (a cutthroat land-grab) — the Caravan UI now picks **(cask × open
-town)**, so *which* charter you grab is the contest. Claiming pays an **on-claim boon** (a recipe **teach** or a
-free **Extra Vessel**) + an **ongoing perk** while held (**Lüneburg** salt = +1 G on Market goods · **Reval** =
-+1★ per kontor delivery · **Riga** = +1 free age/turn) + the charter’s **★**. **New scoring pillar:** a **ROAD
-MAJORITY** (most charters → **7/4/2** ⚙, 2p winner-take-all) — the kontor-majority *rival*, the “another way to
-get value from deliveries.” **Kontor majorities are KEPT** (the design call: the *fork* is **cask scarcity** —
-every cask sent inland is one not shipped — so road & sea compete for the same supply, without destabilizing the
-tuned majority math; a *pure swap* removing kontor majorities is a one-line tunable, left off). The Caravan
-stays **clock-neutral** (overland ≠ a sailed ship). **Bugfix:** a duplicate `id="inland"` (panel div vs the New
-Game toggle) meant the toggle **never actually turned on** — the panel div now `#inlandboard`. **AI wired**
-(in-page heuristic + MC, and the `sim.js` bot): value & race charters, the east when unlocked, don’t strand sea
-value. *Gates (KEY v71):* base 500 **unchanged** (0 crash, pace in band); `INLAND=1` 500 **0 crash/deadlock 2–4p,
-pace 99.8–100% in band, clock-dominant 91–96%, 5.6–6.1 of 7 charters claimed/game** (`sim-results-v71.txt`);
-PATHWAYS lanes consistent with baseline (no new degeneracy); render-smoke clean incl. the **full INLAND contest
-test** (claim → closed-to-rivals → perk → road majority) + a Cellarmaster game with all three expansions on;
-ladder 0 errors. *Watch-item:* the 2p P1 edge ticks up a touch (clock-neutral first-mover charter grab) — a
-tunable, not a break. **Option B (full) ships**; all three expansions remain independent, mixable slide toggles,
+brief asked for: a **second destinations board that challenges the kontore.** The towns are a **contested overland
+network** — a **trunk** (Lüneburg · Hannover · Braunschweig · Einbeck · Hamburg) plus an **eastern fork** (**Reval
+· Riga**, opening once you hold any charter; Q4/Q5 gates, the richest prizes). Each town holds **ONE charter,
+claimed first-come** by Caravan (a cutthroat land-grab) — the Caravan UI picks **(cask × open town)**, so *which*
+charter you grab is the contest. Claiming pays an **on-claim boon** (a recipe **teach** or a free **Extra
+Vessel**) + an **ongoing perk** while held (**Lüneburg** salt = +1 G on Market goods · **Reval** = +1★ per kontor
+delivery · **Riga** = +1 free age/turn) + the charter’s **★**, and the **ROAD MAJORITY** (most charters →
+**7/4/2** ⚙, 2p winner-take-all) is the end-game contest. **The key design move (per the playtest brief — “add
+while replacing where it extends; don’t spread the destinations thin”): the road REPLACES the kontor majorities.**
+v2.0’s first cut *kept* both (kontor majorities **and** the road) — that was a second control layer competing for
+already-scarce casks (the “spread thin” trap). v72 turns the **kontor majorities OFF when the road is on**: the
+kontore become **pure value/throughput** (ship value + benefits + demand dice + buildings + Flight — *unchanged,
+no relearning*), and the majority-class contest lives **inland**. **Bergen** (whose identity *was* the majority)
+repurposes to a **liquidity port (2 goods)**; the **AI** no longer chases the now-off sea majorities (`aiMajSwing`
+→ 0 when inland). The Caravan stays **clock-neutral** (overland ≠ a sailed ship). **Bugfix (v71):** a duplicate
+`id="inland"` (panel div vs the New Game toggle) meant the toggle **never actually turned on** — the panel div is
+now `#inlandboard` (this is why the inland was never visible in playtests). *Gates (KEY v72):* base 300 **unchanged**
+(0 crash, pace in band); `INLAND=1` 500 **0 crash/deadlock 2–4p, pace 99.8–100% in band, clock-dominant 94–98%,
+~6 of 7 charters claimed/game, winner claims 2–3** (`sim-results-v72.txt`); winner totals **de-inflated** ~62→~50
+(no double majority layer); render-smoke clean incl. the **full INLAND contest test** + a Cellarmaster game with
+all three expansions on; ladder **errors 0** (the journeyman→trader rung 59.3% is the documented v1.3
+characteristic, base-AI untouched). *Watch-items:* a **4p first-player charter-grab edge** (P1 ~43%) — a
+seat-compensation tunable; and the sim **personas don’t yet model an inland lane**, so PATHWAYS under-measures it.
+**Option B (full) ships**; all three expansions remain independent, mixable slide toggles,
 **base byte-unchanged when off.** All numbers ⚙.
 
 **v1.9 “Option A complete” — blending · thematic buildings · the Inland Road made visible** *(2026-06-20, `play.html` KEY v70)* —

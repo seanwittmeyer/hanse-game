@@ -102,10 +102,14 @@ ongoing perks + a road majority), so the AI was re-wired to match: `aiCaravanPic
 each **(cask × OPEN town)** pairing by the charter's worth (its ★ + the perk + a road-majority nudge) **minus**
 the sea value forgone, commit only when the inland clearly wins (or the cask can't ship well), enter the **east**
 once a charter is held, and the **MC option enumerator** prices the whole action — so the Cellarmaster **races
-charters** (human play + an oracle). Gates (`sim-results-v71.txt`): **0 crash/deadlock 2–4p, pace 99.8–100% in
-band, clock-dominant, 5.6–6.1 of 7 charters claimed/game**; PATHWAYS lanes consistent with baseline; render-smoke
-runs the **full contest test** + a Cellarmaster game with all three expansions on. `sim.js`'s per-run stat now
-reports **charters-claimed/game** (of 7).
+charters** (human play + an oracle). **v72** made the road **REPLACE the kontor majorities** (it doesn't add a
+second control layer), so the AI also stops chasing the now-off sea majorities — **`aiMajSwing` returns 0 when
+`S.inland`** — and pivots its presence/value weighting to the inland + pure kontor value. Gates
+(`sim-results-v72.txt`): **0 crash/deadlock 2–4p, pace 99.8–100% in band, clock-dominant 94–98%, ~6 of 7 charters
+claimed/game, winner claims 2–3**; render-smoke runs the **full contest test** + a Cellarmaster game with all
+three expansions on; ladder **errors 0**. `sim.js`'s per-run stat reports **charters-claimed/game** (of 7).
+*Watch-items:* a 4p first-player charter-grab edge (seat-comp tunable), and the sim personas don't yet model an
+**inland lane** (so PATHWAYS under-measures it — a sim-analysis refinement, not an engine issue).
 
 **Path C tried — turn-level UCT (built, opt-in, NOT the default).** Implemented a determinized UCT over the active player's whole turn (`aiCellarMCTS`/`cmAdvance`, behind `CELLAR_MCTS`): every branching prompt in a turn is a tree node (single-agent — all in-turn prompts are mine — maximizing end-game margin), journeyman+deep as the rollout below the frontier, decks reshuffled per iteration, robust-child at the root. **Verdict: it did not earn the default.** At the budgets this environment can sim-test it came in ~53% vs the GM (n=30, wide CI) against the flat MC's gated **62%**, and it is **slower per decision** (replay-from-root each iteration → fewer iterations than flat at equal wall-clock, spread over a whole tree → the root children get *fewer* samples than flat's concentrated 1-ply). That is exactly §39's prediction ("flat MC captures most of MCTS's benefit at this branching factor, ~2–10 options"): a tree pays off when branching is large and the budget is generous, neither of which holds here. So per the sim-gate discipline (a new default must clear the rung), **`CELLAR_MCTS` defaults false**; the code stays for the record and for a future attempt with a higher budget + a no-replay (state-caching) implementation. *If Path C is ever revisited:* cache node states instead of replaying from root (the replay cost is what starves it), and verify at a budget ≫ the in-page default before defaulting it on.
 

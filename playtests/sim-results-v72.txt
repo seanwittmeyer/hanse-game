@@ -1,0 +1,60 @@
+Brewhouses of the Hanse — headless sim (KEY hanse-hotseat-v72)  |  N=500 games per player count
+scenario: base — Baseline — 3G/2H, equal seats (canonical)
+
+================  2 PLAYERS  (500 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 19.4   min 11   max 25   in 12-25 band: 99.8%
+end trigger:          clock 93.8%   ceiling 6.2%
+sailed/cap at end:    avg 6.0 / 6
+winner total score:   avg 48.1   min 21   max 115
+win margin (1st-2nd): avg 13.2   (ties: 14)
+winner score split:   deliv 25.2   maj 0.0   goals 0.0
+seat win-rate:        P1 56.8%   P2 43.2%   (ideal 50.0%, spread 13.6pts)
+winner lean:          prestige(Hall>kontor) 10.2%   blended(both>0) 17.6%
+UPGRADES (all plyrs): total/game 2.1   earned-via-ship 2.1 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 1.3   (max 4)
+charters/game:        avg 0.3
+winner deliveries by destination (share of winners' casks):
+   bruges 34.6%   london 20.8%   bergen 21.6%   novgorod 20.3%   hall 2.7%
+ALL deliveries by destination (every player):
+   bruges 35.8%   london 21.2%   bergen 21.8%   novgorod 18.9%   hall 2.3%
+The Inland Road (full): 5.65 charters claimed/game (all players, of 7) · 3.18/game by the winner
+
+================  3 PLAYERS  (500 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 19.2   min 13   max 25   in 12-25 band: 100.0%
+end trigger:          clock 96.4%   ceiling 3.6%
+sailed/cap at end:    avg 10.1 / 10
+winner total score:   avg 55.2   min 19   max 99
+win margin (1st-2nd): avg 10.3   (ties: 15)
+winner score split:   deliv 33.4   maj 0.0   goals 0.0
+seat win-rate:        P1 48.2%   P2 26.4%   P3 25.4%   (ideal 33.3%, spread 22.8pts)
+winner lean:          prestige(Hall>kontor) 6.0%   blended(both>0) 20.0%
+UPGRADES (all plyrs): total/game 2.9   earned-via-ship 2.9 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 1.1   (max 4)
+charters/game:        avg 1.4
+winner deliveries by destination (share of winners' casks):
+   bruges 28.2%   london 20.6%   bergen 20.8%   novgorod 27.5%   hall 2.9%
+ALL deliveries by destination (every player):
+   bruges 29.5%   london 22.2%   bergen 22.4%   novgorod 23.7%   hall 2.2%
+The Inland Road (full): 5.95 charters claimed/game (all players, of 7) · 2.32/game by the winner
+
+================  4 PLAYERS  (500 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 17.9   min 12   max 25   in 12-25 band: 100.0%
+end trigger:          clock 98.2%   ceiling 1.8%
+sailed/cap at end:    avg 13.3 / 13
+winner total score:   avg 53.5   min 19   max 98
+win margin (1st-2nd): avg 9.0   (ties: 21)
+winner score split:   deliv 33.5   maj 0.0   goals 0.0
+seat win-rate:        P1 43.4%   P2 24.4%   P3 16.6%   P4 15.6%   (ideal 25.0%, spread 27.8pts)
+winner lean:          prestige(Hall>kontor) 5.8%   blended(both>0) 18.4%
+UPGRADES (all plyrs): total/game 3.5   earned-via-ship 3.5 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 1.1   (max 4)
+charters/game:        avg 2.7
+winner deliveries by destination (share of winners' casks):
+   bruges 25.4%   london 20.0%   bergen 21.4%   novgorod 30.4%   hall 2.8%
+ALL deliveries by destination (every player):
+   bruges 27.6%   london 21.4%   bergen 22.5%   novgorod 26.6%   hall 1.9%
+The Inland Road (full): 6.01 charters claimed/game (all players, of 7) · 1.98/game by the winner
+

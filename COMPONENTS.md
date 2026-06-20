@@ -355,8 +355,10 @@ barrels · workers · markers · **~8 demand dice (d6)** · quality-boost marker
   first-come; take the claimer's color). The **Caravan** is a Harbor *action* — no new tile. The road board
   sits beside (or in place of) the destinations board.
 
-A modular add-on; the base box is unchanged when the toggles are off. *(A purer Option-B variant — removing the
-kontor majorities outright — is a one-line scoring change, left off so the tuned sea math stays intact.)*
+A modular add-on; the base box is unchanged when the toggles are off. **The Inland Road REPLACES the kontor
+majorities** (it doesn't add a second control layer — *add while replacing where it extends*): with the road on,
+the kontore are pure value/throughput ports and the majority-class contest lives inland (charters + road
+majority). **Bergen** repurposes to a 2-goods liquidity port while the road is on.
 
 ---
 

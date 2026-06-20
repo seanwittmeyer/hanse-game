@@ -419,18 +419,24 @@ charter's **★ at game end**. You **pick which open town** your cask claims —
 **eastern fork opens only once you hold any one charter** (you've reached the interior), and its charters demand
 high quality (Q4/Q5) — the back-loaded, richest prizes.
 
-**The road majority (the replacement value engine):** at game end, whoever holds the **most charters** takes a
-tiered **ROAD MAJORITY** — **7/4/2** ⚙ to 1st/2nd/3rd (2p winner-take-all) — the kontor-majority *rival*, the
-“another way to get value from deliveries.” The **kontor majorities remain**; the **fork** is that **casks are
-scarce** — every cask sent inland is one **not** shipped to a kontor, so the road and the sea compete for the
-same supply. *(A pure swap — removing the kontor majorities entirely — is a one-line tunable, left off so the
-tuned sea math is untouched.)*
+**The road majority — and the key design move: it REPLACES the kontor majorities.** At game end, whoever holds
+the **most charters** takes a tiered **ROAD MAJORITY** — **7/4/2** ⚙ to 1st/2nd/3rd (2p winner-take-all). And
+when the Inland Road is on, **the kontor majorities turn OFF** — the control contest *moves inland*. This is the
+expansion philosophy: *add while replacing where you extend.* The game already has more sea destinations than a
+player has casks for, so the road does **not** pile on a second majority layer (that would spread play thin);
+instead the kontore become **pure value/throughput** ports (ship value + benefits + demand dice + buildings + the
+Flight — **all unchanged, nothing to relearn**), and the *majority-class contest* is the inland charter race. The
+two are linked by **cask scarcity** — every cask sent inland is one **not** shipped — so you choose where your
+trade goes. (**Bergen**, whose identity *was* the majority, repurposes to a **liquidity port — 2 goods/delivery**
+while the road is on.)
 
-**The fork it adds:** a Ready cask now has **three destinations** — a **kontor** (value + majority + Flight, by
+**The fork it adds:** a Ready cask now has **three destinations** — a **kontor** (value + benefit + Flight, by
 ship), the **Hall** (prestige, by Enshrine), or an **inland town charter** (an on-claim boon + an ongoing perk +
-charter ★ + the road majority, by Caravan). A real second board, not a side quest. Base **byte-unchanged** when
-off. All numbers ⚙. *(AI wired — the heuristic + Monte-Carlo seats value & race charters; sim-gated crash/
-deadlock-free, pace in the 12–25 band, clock-dominant. See `DESIGN.md` §9 v2.0.)*
+charter ★ + the road majority, by Caravan). A real second board, not a side quest — and **one** control contest,
+not two. Base **byte-unchanged** when off. All numbers ⚙. *(AI wired — the heuristic + Monte-Carlo seats value &
+race charters, and no longer chase the now-off sea majorities; sim-gated crash/deadlock-free, pace in the 12–25
+band, clock-dominant. Watch-item: a 4p first-player charter-grab edge — a seat-compensation tunable. See
+`DESIGN.md` §9 v2.0.)*
 
 ---
 
