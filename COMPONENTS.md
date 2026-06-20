@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.9 “Specialty Beers”)
+# Brewhouses of the Hanse — Components, Tiles & Player Board (v2.0 “The Inland Road”)
 
 > The physical manifest: **boards · tokens · the tile families · the player brewery board ·
 > destinations.** Enumerates *what objects exist and what each does* — the **why** is in
@@ -342,18 +342,21 @@ Plus 1 main board · 1 destination board · 4 brewery boards · wooden cubes (G/
 barrels · workers · markers · **~8 demand dice (d6)** · quality-boost markers · **~12 developer 3★ chits**
 (displaced-building payout, v1.2). **Medium GWT footprint** — substantial, far short of Lacerda.
 
-**Expansions (opt-in, v1.9) — three independent slide toggles, mixable freely:**
+**Expansions (opt-in, v2.0) — three independent slide toggles, mixable freely:**
 - **Specialty Beers (full Option A):** +~22 cask tiles (**Gose ×8 · Zerbster ×6 · Duckstein ×8**) + 3 recipe
   designs/player + **3 thematic Building tiles** (**Salt House · Smoke Kiln · Parti-Gyle Tun**, in the deck
   only when on). Also adds **Blending** — a Cellar *action* (combine two Ready casks → one +1-quality premium;
   no component).
 - **Jopenbier capstone:** +3 cask tiles (**Q6**) + 1 recipe design/player.
-- **The Inland Road:** a small **inland strip** with **5 town spaces** (**Lüneburg · Hannover · Braunschweig ·
-  Einbeck · Hamburg** — each printed with its quality gate · the beer it teaches · its standing value) +
-  per-player reached-markers (ownership discs). The **Caravan** is a Harbor *action* — no new tile.
+- **The Inland Road (full Option B — the second destinations board):** an **inland road board** with **7 town
+  charter spaces** on a **trunk** (**Lüneburg · Hannover · Braunschweig · Einbeck · Hamburg**) + an **eastern
+  fork** (**Reval · Riga**), each printed with its **quality gate · on-claim boon · ongoing perk · charter ★**,
+  plus a **road-majority track** (most charters → 7/4/2) — and **7 charter discs** (one per town, claimed
+  first-come; take the claimer's color). The **Caravan** is a Harbor *action* — no new tile. The road board
+  sits beside (or in place of) the destinations board.
 
-A small modular add-on; the base box is unchanged. (Future modules — blending, thematic buildings, and the
-heavier Inland Road options (town perks · an eastern route · a destinations-board swap) — add their own tiles.)
+A modular add-on; the base box is unchanged when the toggles are off. *(A purer Option-B variant — removing the
+kontor majorities outright — is a one-line scoring change, left off so the tuned sea math stays intact.)*
 
 ---
 

@@ -61,9 +61,10 @@ if(jd.val!==JOPEN_BASE+2)throw new Error('jopenbier self-contained value wrong: 
 if(flightBeers(S.players[0])!==0)throw new Error('jopenbier leaked into the Flight');
 console.log('render smoke JOPENBIER capstone OK — banked '+jd.val+'★ (base '+JOPEN_BASE+' + vintage 2 · Q6 · Flight-excluded)');
 JOPEN=false;
-// 3a-INL) THE INLAND ROAD — drive the Caravan end-to-end through the real render layer (the AI doesn't Caravan
-// in v1, so exercise it directly): deploy a Q3 cask, render the Caravan stage + the Inland Road panel, Caravan
-// it to the best town, assert the town is reached + inland standing scored.
+// 3a-INL) THE INLAND ROAD (full Option B) — drive the contested Caravan end-to-end through the real render layer:
+// deploy a Q3 cask, render the Caravan stage + the Inland Road board, CLAIM a specific town charter (the contest),
+// assert it's claimed (townOwner + townsReached) + scored, the charter is now CLOSED to rivals, and a held perk
+// registers. Then verify the ROAD MAJORITY pays the charter leader.
 INLAND=true;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;S.active=0;
 S.slots['s1']=null;
@@ -71,12 +72,23 @@ S.players[0].vessels[1]={style:'broyhan',q:3,step:1,ready:1,act:'load'};
 if(!deployCask(1,'s1'))throw new Error('inland: deploy failed');
 render();                                                       // the Inland Road board panel
 UI={sub:'cell',cell:'C',stage:'caravan',stops:[],tmp:{}};render();   // the Caravan harbor stage
-var townsBefore=S.players[0].townsReached.length;
-caravanPick('s1');
-if(S.players[0].townsReached.length!==townsBefore+1)throw new Error('inland: Caravan did not reach a town');
+if(!caravanOptions(S.players[0]).some(function(o){return o.town.k==='braunschweig';}))throw new Error('inland: Braunschweig not an open option for a Q3 cask');
+caravanGo('s1','braunschweig');                                 // claim the Braunschweig (Mumme) charter
+if(!townReached(S.players[0],'braunschweig'))throw new Error('inland: charter not recorded on the claimer');
+if(S.townOwner.braunschweig!==0)throw new Error('inland: townOwner not set to the claimer');
+if(townHolder('braunschweig').id!==0)throw new Error('inland: townHolder wrong');
+// the charter is now CLOSED — a rival Q3 cask cannot claim Braunschweig
+S.slots['s2']=null;S.players[1].vessels[1]={style:'broyhan',q:3,step:1,ready:1,act:'load'};S.active=1;deployCask(1,'s2');
+if(openTownsFor(S.players[1],3).some(function(t){return t.k==='braunschweig';}))throw new Error('inland: a claimed charter is still open to a rival');
+S.active=0;
 var iSc=scorePlayer(S.players[0]);
 if(!(iSc.inland>0))throw new Error('inland: no inland standing scored');
-console.log('render smoke INLAND (The Inland Road) OK — reached '+S.players[0].townsReached.join('/')+' · standing '+iSc.inland+'★');
+// the salt perk should register when held
+S.players[0].townsReached.push('luneburg');S.townOwner.luneburg=0;
+if(!townHasPerk(S.players[0],'salt'))throw new Error('inland: salt perk not detected when held');
+// road majority — P0 holds 2 charters, P1 holds 0 → P0 takes the 2p winner-take-all tier
+if(!(roadMajorityAwards()[0]>0)&&!(scorePlayer(S.players[0]).inland>=5))throw new Error('inland: road majority did not pay the leader');
+console.log('render smoke INLAND (full) OK — claimed '+S.players[0].townsReached.join('/')+' · inland '+iSc.inland+'★ · road-maj to leader '+(roadMajorityAwards()[0]||0)+'★');
 INLAND=false;
 // 3a-BLEND) EXPANSION blending (Option A) — combine two Ready vessel casks into one +1-quality premium (human Cellar action; the AI doesn't blend).
 EXPANSION=true;

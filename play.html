@@ -224,6 +224,12 @@
   .route .gate{font-size:.65rem;opacity:.85;margin-top:1px}
   .route .pres{font-size:.72rem;margin-top:4px;display:flex;gap:7px;flex-wrap:wrap}
   .route.shipable{cursor:pointer;outline:3px solid var(--gold2)}
+  /* The Inland Road (expansion) — town charter cards: earthy trunk, slate eastern fork */
+  #inlandboard .iroad{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+  .route.town{background:linear-gradient(160deg,#6b4f2a,#46341a)}
+  .route.town.east{background:linear-gradient(160deg,#3c4d61,#283440)}
+  .route.town.open{opacity:.82;filter:saturate(.6)}
+  .route.town.claimed{box-shadow:0 0 0 2px var(--bg),0 0 0 4px currentColor}
   /* MARKET / SHOP */
   .shop{display:flex;flex-direction:column;gap:5px;max-height:600px;overflow:auto}
   .item{display:flex;justify-content:space-between;align-items:center;gap:6px;background:var(--parch);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:.82rem}
@@ -377,7 +383,7 @@
 
 <main>
   <div class="panel"><h3>Destinations <span class="note">(where you ship — kontore = volume · the Hall = prestige)</span></h3><div id="dests"></div></div>
-  <div class="panel" id="inlandpanel" style="display:none"><h3><i data-lucide="truck"></i> The Inland Road <span class="note">(Caravan a deployed cask overland at the Harbor → learn its beer + bank standing)</span></h3><div id="inland"></div></div>
+  <div class="panel" id="inlandpanel" style="display:none"><h3><i data-lucide="truck"></i> The Inland Road <span class="note">(the second destinations board — Caravan a deployed cask overland to claim a town <b>charter</b>: a perk + ★, first-come)</span></h3><div id="inlandboard"></div></div>
   <div class="cols">
     <div>
       <div class="panel"><h3>Action Grid &amp; Wharf</h3><div class="agwrap"><div class="ag" id="ag"></div></div>
@@ -410,7 +416,7 @@
     <label class="exprow"><span class="switch"><input type="checkbox" id="jopen"><span class="sl"></span></span>
       <span class="exptxt"><b>Jopenbier</b> <span class="note">(capstone)</span> — a slow, dear, super-valuable <b>Q6</b> beer, always acquirable; it cellars for more the longer you hold it (the race-to-end moonshot).</span></label>
     <label class="exprow"><span class="switch"><input type="checkbox" id="inland"><span class="sl"></span></span>
-      <span class="exptxt"><b>The Inland Road</b> — a tech-tree of <b>brewing towns</b> reached overland (<b>Caravan</b>, at the Harbor): send a deployed cask to a town to <b>learn its beer + bank inland standing</b>. A third place to send your casks.</span></label>
+      <span class="exptxt"><b>The Inland Road</b> (Option B) — a <b>second destinations board</b> that challenges the kontore: a <b>contested town map</b> reached overland (<b>Caravan</b>, at the Harbor) — a trunk + an <b>eastern fork</b>. Send a deployed cask to <b>claim a town charter</b> (first-come): an ongoing <b>perk</b> (recipe · salt · vessel · demand · aging) + charter ★, and a <b>road majority</b> for holding the most.</span></label>
     <button class="primary" style="margin-top:14px" onclick="startGame()">Start Game</button>
   </div>
 </div>
@@ -554,20 +560,36 @@ const HALL_PTS={2:3,3:5,4:7,5:9}; // ⚙ prestige points at the Hall — a PRINT
 // Q-keyed tables above; deliverCask scores it as JOPEN_BASE (kontor) / JOPEN_HALL (enshrine) + its dock-cellared
 // vintage (+1★ per owner-turn it sits deployed, up to JOPEN_VINTAGE_CAP). All ⚙.
 const JOPEN_BASE=8, JOPEN_HALL=9, JOPEN_VINTAGE_CAP=5;
-// ---- EXPANSION "The Inland Road" (v1.9): a tech-tree of inland brewing towns reached OVERLAND via the CARAVAN
-// (a local Harbor action mirroring Enshrine — a DEPLOYED cask, no boat, advances the clock). A quality-gated
-// ladder: reaching a town TEACHES its beer (free, if it's a dealt & unowned export; else +goods) + banks INLAND
-// STANDING (end-game pts). The teaches enable the climb — that IS the tree. A third place to send a cask
-// (kontor / Hall / town). Independent toggle; base unchanged when off. Each town reachable once PER PLAYER.
+// ---- EXPANSION "The Inland Road" (FULL Option B, v2.0): a SECOND destinations board that CHALLENGES the four
+// kontore — a CONTESTED overland trade network reached by CARAVAN (a local Harbor action; a DEPLOYED cask travels
+// overland, NO boat, CLOCK-NEUTRAL — sea voyages alone fill the end clock). The road is a TRUNK (the Saxon brewing
+// towns up the Elbe/Weser) plus an EASTERN FORK (the Baltic road — open once you hold any one charter; the richest,
+// quality-gated charters). Each town holds ONE CHARTER, claimed FIRST-COME (a cutthroat land-grab — the prime
+// charters are scarce): claiming it pays an ON-CLAIM boon (a recipe TEACH, an Extra Vessel, …) AND grants an
+// ongoing PERK while held (salt liquidity, a demand premium, free aging…) AND banks the charter's ★ at game end.
+// On top, a ROAD MAJORITY rewards holding the MOST charters (the "another way to get value from deliveries" that
+// rivals the kontor majorities). Casks are scarce — every cask sent inland is one NOT shipped to a kontor; that
+// opportunity cost is the fork. Independent toggle; base byte-unchanged when off. Each town claimable ONCE TOTAL.
+//   perk: 'teach' (learn town.teach on claim) · 'salt' (+1 G when you take Market goods) · 'vessel' (free Extra
+//   Vessel on claim) · 'value' (+1★ per kontor delivery) · 'age' (+1 free maturation/turn). pts = charter ★.
 const TOWNS=[
-  {k:'luneburg',     name:'Lüneburg',     gate:1, teach:null,      pts:1},
-  {k:'hannover',     name:'Hannover',     gate:2, teach:'broyhan', pts:2},
-  {k:'braunschweig', name:'Braunschweig', gate:3, teach:'mumme',   pts:3},
-  {k:'einbeck',      name:'Einbeck',      gate:4, teach:'bock',    pts:4},
-  {k:'hamburg',      name:'Hamburg',      gate:5, teach:null,      pts:6},   // "the brewhouse of the Hanse" — the prestige capstone town
+  // TRUNK — the Saxon brewing road (up the Elbe/Weser from the wharf)
+  {k:'luneburg',     name:'Lüneburg',     gate:1, teach:null,      perk:'salt',   pts:2, branch:'trunk', desc:'Salt Staple — the salt route greases all your trade: +1 G whenever you take goods at the Market.'},
+  {k:'hannover',     name:'Hannover',     gate:2, teach:'broyhan', perk:'teach',  pts:3, branch:'trunk', desc:'Broyhan Guild — learn the Broyhan recipe on claim (+2 goods if you already know it / it isn’t dealt).'},
+  {k:'braunschweig', name:'Braunschweig', gate:2, teach:'mumme',   perk:'teach',  pts:3, branch:'trunk', desc:'Mumme Cellars — learn the Mumme recipe on claim (+2 goods if moot).'},
+  {k:'einbeck',      name:'Einbeck',      gate:3, teach:'bock',    perk:'teach',  pts:4, branch:'trunk', desc:'Bock Brewery — learn the prestige Bock recipe on claim (+2 goods if moot) — the quality climb.'},
+  {k:'hamburg',      name:'Hamburg',      gate:3, teach:null,      perk:'vessel', pts:4, branch:'trunk', desc:'Brewhouse of the Hanse — a free Extra Vessel on claim (a bigger brewery; +2 goods if already at cap).'},
+  // EASTERN ROUTE — the Baltic road (open ONCE YOU HOLD ANY ONE CHARTER). Long caravans; the richest charters.
+  {k:'reval',        name:'Reval',        gate:4, teach:null,      perk:'value',  pts:5, east:true, branch:'east', desc:'Eastern Staple — a standing demand premium: +1★ on each of your kontor deliveries while held.'},
+  {k:'riga',         name:'Riga',         gate:5, teach:null,      perk:'age',    pts:6, east:true, branch:'east', desc:'Düna Road — your maturation never sleeps: +1 free age each turn to one maturing cask while held.'},
 ];
-const TOWN_GOODS=2;   // ⚙ goods granted on reach when the teach is moot (no teach / already owned / not dealt)
+const TOWN_GOODS=2;   // ⚙ goods granted on claim when the on-claim boon is moot (teach already known / not dealt; vessel at cap)
+const ROAD_MAJ={2:[7,0,0],3:[7,4,2],4:[7,4,2],5:[7,4,2]};  // ⚙ end-game ROAD MAJORITY by # of charters held (most); 2p winner-take-all. The kontor-majority rival.
 function townByKey(k){return TOWNS.find(t=>t.k===k);}
+function townClaimed(k){return !!(S.townOwner&&S.townOwner[k]!=null);}
+function townHolder(k){return (S.townOwner&&S.townOwner[k]!=null)?S.players[S.townOwner[k]]:null;}
+// does player p hold a charter granting an ongoing PERK of this type? (salt / value / age)
+function townHasPerk(p,perk){return !!S.inland&&(p.townsReached||[]).some(k=>{const t=townByKey(k);return t&&t.perk===perk;});}
 // v1.0: NO export premium, NO Masterpiece (both folded into the Flight + value-Buildings, for scoring clarity).
 // A kontor's per-cask value is base + the value-Buildings the cask SHIPPED THROUGH (computed at delivery,
 // frozen onto the delivered record as d.val — §5a). destValue() is now just the BASE/ladder (the floor the
@@ -737,7 +759,7 @@ let activeTab=0;
 let EXPANSION=false;   // EXPANSION "Specialty Beers" toggle — set by startGame (the New Game checkbox) BEFORE freshState, read by dealExports. Default OFF → the base game is byte-for-byte unchanged. Saved on S.expansion; synced on boot. The sim sets it via env (EXPANSION=1).
 let JOPEN=false;       // EXPANSION CAPSTONE "Jopenbier" toggle — INDEPENDENT of EXPANSION; set by startGame, read where jopenbier is offered (Market/brew) & scored. Default OFF. Saved on S.jopen; synced on boot. Sim hook: JOPEN=1.
 let INLAND=false;      // EXPANSION "The Inland Road" toggle — INDEPENDENT; set by startGame, read where the Caravan/towns are offered & scored. Default OFF. Saved on S.inland; synced on boot. Sim hook: INLAND=1.
-const KEY='hanse-hotseat-v70'; // v1.9 Option A COMPLETE: the Inland Road is now a VISIBLE board panel (towns: gate · teaches · standing · who-reached); + BLENDING (a Cellar action — combine two Ready casks → one +1-quality premium, the deep player's active turn) + 3 thematic Buildings gated to Specialty Beers (Salt House = +1G+1H on delivery · Smoke Kiln = +1 quality · Parti-Gyle Tun = a free small Gruit when a cask deploys there). Bump discards stale v69 state. // v1.9 "The Inland Road" (a 3rd opt-in expansion toggle): a tech-tree of inland brewing towns reached OVERLAND via a new Harbor CARAVAN action (mirrors Enshrine — a DEPLOYED cask, no boat; OVERLAND, so it does NOT advance the sea clock). Quality-gated ladder Lüneburg/Hannover/Braunschweig/Einbeck/Hamburg: reaching a town teaches its beer (free, if dealt & unowned; else +goods) + banks inland STANDING (end-game pts). A third place to send a cask (kontor / Hall / town). The New Game expansion toggles are now SLIDE switches. Bump discards stale v68 state. // v1.9 "Jopenbier" capstone (a 2nd opt-in toggle, independent of Specialty Beers): a slow/dear/rare Q6 super-beer, ALWAYS acquirable when on (not drafted; EXCLUDED from the Flight); SELF-CONTAINED scoring (JOPEN_BASE/JOPEN_HALL + dock-cellared vintage at +1★/owner-turn deployed, cap JOPEN_VINTAGE_CAP) so a "Q6" never touches the Q-keyed tables; pinned Source (the long maturation funds itself on the Floor); the race-to-end moonshot. Bump discards stale v67 state. // v1.9 "Specialty Beers" (EXPANSION, opt-in toggle): a New Game checkbox adds Gose/Zerbster/Duckstein to the export draft (3 of 7); each PINNED + one signature (Gose = salt-trade goods on kontor delivery · Zerbster = parti-gyle, a free small Gruit at brew · Duckstein = smoke-hardy, +1 effective quality). Default OFF → base unchanged. Bump discards stale v66 state. // v1.8 "Quality Pays": value BUILDINGS are no longer CAPPED at a flat ★ — a PREMIUM cask banks a quality premium on top (Q4 +2★, Q5 +3★; gated at Q4 so it rewards the CLIMB, not the cheap Q3 volume game; the Hall's reliquary excluded — its 3/5/7/9 ladder already scales). A Bock through a value building is now worth its investment (e.g. Bruges base 1 + Staple 6 + a Rich Berth 2 = 9). Sims: lane balance & pace hold at baseline (no Q3 volume leak), the quality CEILING rises (3p winner-max 74→92). Bump discards stale v65 state. // v1.7.1: a DISPLACED building now FLIPS into its OWNER's improvements area (a Floor Wild) for ANY overbuild — a RIVAL's also scores +3★ (developer lane); a SELF-overbuild gives the Wild only (no points → no point-farm, but you CAN convert your own buildings into Floor engine pieces). Fixes "displaced building went to hand". Also: improvements catalog restored to the always-visible Market panel (buyable when at the Cellar); station yield-rows list EVERY action with "/" between OR-alternatives (Cellar now shows the Improvement wrench); per-icon station tooltips (anchor = Deploy, not Tap); v1.6→v1.7 version strings fixed. Bump discards stale v64 state. // v1.7 "Even Footing": (1) SEAT_COMP→0 — equal starts (the +1G/later-seat over-corrected under strong play, P2 won ~67-72% at 2p); (2) improvements CHEAPER (−1G) and bought at the CELLAR (alongside Tap), not the Market — the action-economy barrier, not goods; (3) a building a RIVAL overbuilds now FLIPS into its owner's improvements area = +3★ + a Wild on its back (fired via the Floor — enriching the alt-line vs the toll); (4) the improvements area is capped at IMP_AREA_CAP=4 (bought improvements + flipped tiles). Bump discards stale v63 state. // v1.6 "Hops": export ladder is HOPS-LED — Mumme 1G3H, Bock 2G3H (totals unchanged, ratio shifted to hops); export recipe-card buys lean hops (broyhan 1H, mumme 2H, bock 1G1H; keut stays the 1G grain-path Q3). Gives hops real demand (was a grain monopoly) → makes Hop Garden attractive without nerfing Granary. Bump discards stale v62 state. // v1.5: off-turn Building rewards (a rival's sail delivered YOUR cask) now QUEUE to the owner — they CHOOSE from the display at the start of their next turn (was: auto-granted at random). Bump discards stale v61 state. // v1.5 "Improvements": three new private upgrades — Harbor Crane (your Harbor load sets out 2 casks), Lagering Cellar (each of your turns +1 age to one maturing cask), Private Quay (load Ready casks straight from your vessels onto ships). Crane & Lagering moved OUT of the green Buildings pool into the purple IMPROVEMENTS (bought for goods). Bump discards stale v60 state. // v1.4 "Deploy": an EMPTY slot's DEFAULT line-action IS Deploy (shown as "{bldg?} Deploy"). Triggering it (or the Brewhouse — deploy icon on the station; Tap icon on the Cellar) deploys ONE Ready cask to ANY open slot; deploying onto another empty slot still PENDING on this line flips that slot's Deploy stop into the cask's ACTION stop (advanced: place where you'll still act). TAP unchanged (Cellar: vessel or slot → fire action once + discard). Bump discards stale v59 state. // (prior v59 "Tap a Cask"; prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
+const KEY='hanse-hotseat-v71'; // v2.0 "The Inland Road" (FULL Option B): the Inland Road is rebuilt from a per-player freebie into a CONTESTED SECOND DESTINATIONS BOARD that challenges the kontore. 7 towns on a TRUNK (Lüneburg/Hannover/Braunschweig/Einbeck/Hamburg) + an EASTERN FORK (Reval/Riga — opens once you hold any charter). Each town holds ONE CHARTER, claimed FIRST-COME by Caravan (a deployed Q≥gate cask, clock-neutral): an on-claim boon (recipe TEACH / free Extra Vessel) AND an ongoing PERK while held (Lüneburg salt = +1G on Market goods · Reval = +1★/kontor delivery · Riga = +1 free age/turn) AND charter ★ at end. NEW: a ROAD MAJORITY (most charters → 7/4/2; 2p winner-take-all) — the "another way to get value" that rivals the kontor majorities. The Caravan UI now picks (cask × open town) so WHICH charter you grab is the contest. Kontor majorities KEPT (the cask-scarcity fork — every cask sent inland is one not shipped — is the challenge; a pure majority-swap is a one-line tunable). FIXED a duplicate id="inland" collision (panel div vs New Game toggle) that prevented the toggle from ever turning on. AI/sim wired to value & race charters. Base byte-unchanged when off. Bump discards stale v70 state. // v1.9 Option A COMPLETE: the Inland Road is now a VISIBLE board panel (towns: gate · teaches · standing · who-reached); + BLENDING (a Cellar action — combine two Ready casks → one +1-quality premium, the deep player's active turn) + 3 thematic Buildings gated to Specialty Beers (Salt House = +1G+1H on delivery · Smoke Kiln = +1 quality · Parti-Gyle Tun = a free small Gruit when a cask deploys there). Bump discards stale v69 state. // v1.9 "The Inland Road" (a 3rd opt-in expansion toggle): a tech-tree of inland brewing towns reached OVERLAND via a new Harbor CARAVAN action (mirrors Enshrine — a DEPLOYED cask, no boat; OVERLAND, so it does NOT advance the sea clock). Quality-gated ladder Lüneburg/Hannover/Braunschweig/Einbeck/Hamburg: reaching a town teaches its beer (free, if dealt & unowned; else +goods) + banks inland STANDING (end-game pts). A third place to send a cask (kontor / Hall / town). The New Game expansion toggles are now SLIDE switches. Bump discards stale v68 state. // v1.9 "Jopenbier" capstone (a 2nd opt-in toggle, independent of Specialty Beers): a slow/dear/rare Q6 super-beer, ALWAYS acquirable when on (not drafted; EXCLUDED from the Flight); SELF-CONTAINED scoring (JOPEN_BASE/JOPEN_HALL + dock-cellared vintage at +1★/owner-turn deployed, cap JOPEN_VINTAGE_CAP) so a "Q6" never touches the Q-keyed tables; pinned Source (the long maturation funds itself on the Floor); the race-to-end moonshot. Bump discards stale v67 state. // v1.9 "Specialty Beers" (EXPANSION, opt-in toggle): a New Game checkbox adds Gose/Zerbster/Duckstein to the export draft (3 of 7); each PINNED + one signature (Gose = salt-trade goods on kontor delivery · Zerbster = parti-gyle, a free small Gruit at brew · Duckstein = smoke-hardy, +1 effective quality). Default OFF → base unchanged. Bump discards stale v66 state. // v1.8 "Quality Pays": value BUILDINGS are no longer CAPPED at a flat ★ — a PREMIUM cask banks a quality premium on top (Q4 +2★, Q5 +3★; gated at Q4 so it rewards the CLIMB, not the cheap Q3 volume game; the Hall's reliquary excluded — its 3/5/7/9 ladder already scales). A Bock through a value building is now worth its investment (e.g. Bruges base 1 + Staple 6 + a Rich Berth 2 = 9). Sims: lane balance & pace hold at baseline (no Q3 volume leak), the quality CEILING rises (3p winner-max 74→92). Bump discards stale v65 state. // v1.7.1: a DISPLACED building now FLIPS into its OWNER's improvements area (a Floor Wild) for ANY overbuild — a RIVAL's also scores +3★ (developer lane); a SELF-overbuild gives the Wild only (no points → no point-farm, but you CAN convert your own buildings into Floor engine pieces). Fixes "displaced building went to hand". Also: improvements catalog restored to the always-visible Market panel (buyable when at the Cellar); station yield-rows list EVERY action with "/" between OR-alternatives (Cellar now shows the Improvement wrench); per-icon station tooltips (anchor = Deploy, not Tap); v1.6→v1.7 version strings fixed. Bump discards stale v64 state. // v1.7 "Even Footing": (1) SEAT_COMP→0 — equal starts (the +1G/later-seat over-corrected under strong play, P2 won ~67-72% at 2p); (2) improvements CHEAPER (−1G) and bought at the CELLAR (alongside Tap), not the Market — the action-economy barrier, not goods; (3) a building a RIVAL overbuilds now FLIPS into its owner's improvements area = +3★ + a Wild on its back (fired via the Floor — enriching the alt-line vs the toll); (4) the improvements area is capped at IMP_AREA_CAP=4 (bought improvements + flipped tiles). Bump discards stale v63 state. // v1.6 "Hops": export ladder is HOPS-LED — Mumme 1G3H, Bock 2G3H (totals unchanged, ratio shifted to hops); export recipe-card buys lean hops (broyhan 1H, mumme 2H, bock 1G1H; keut stays the 1G grain-path Q3). Gives hops real demand (was a grain monopoly) → makes Hop Garden attractive without nerfing Granary. Bump discards stale v62 state. // v1.5: off-turn Building rewards (a rival's sail delivered YOUR cask) now QUEUE to the owner — they CHOOSE from the display at the start of their next turn (was: auto-granted at random). Bump discards stale v61 state. // v1.5 "Improvements": three new private upgrades — Harbor Crane (your Harbor load sets out 2 casks), Lagering Cellar (each of your turns +1 age to one maturing cask), Private Quay (load Ready casks straight from your vessels onto ships). Crane & Lagering moved OUT of the green Buildings pool into the purple IMPROVEMENTS (bought for goods). Bump discards stale v60 state. // v1.4 "Deploy": an EMPTY slot's DEFAULT line-action IS Deploy (shown as "{bldg?} Deploy"). Triggering it (or the Brewhouse — deploy icon on the station; Tap icon on the Cellar) deploys ONE Ready cask to ANY open slot; deploying onto another empty slot still PENDING on this line flips that slot's Deploy stop into the cask's ACTION stop (advanced: place where you'll still act). TAP unchanged (Cellar: vessel or slot → fire action once + discard). Bump discards stale v59 state. // (prior v59 "Tap a Cask"; prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -745,7 +767,7 @@ const KEY='hanse-hotseat-v70'; // v1.9 Option A COMPLETE: the Inland Road is now
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v1.9 “Specialty Beers” · '+KEY;
+const APP_VERSION='v2.0 “The Inland Road” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -783,7 +805,7 @@ function newPlayer(i,name){
 }
 function freshState(n,names){
   const st={players:[],slots:{},buildings:{},pileTop:{},turn:1,active:0,first:0,ending:false,log:[],
-    exports:dealExports(), expansion:EXPANSION, jopen:JOPEN, inland:INLAND, sailed:0, sailedCap:(SAILED_CAP[n]||10), buildDeck:[], buildDisplay:[],
+    exports:dealExports(), expansion:EXPANSION, jopen:JOPEN, inland:INLAND, townOwner:{}, sailed:0, sailedCap:(SAILED_CAP[n]||10), buildDeck:[], buildDisplay:[],
     shipDeck:[], shipDisplay:[],
     sessionId:newSessionId(), endedAt:null, studioSent:null};
   for(let i=0;i<n;i++) st.players.push(newPlayer(i,names[i]));
@@ -937,6 +959,24 @@ function majorityAwards(dest){
     const g=j-i;let sum=0;for(let r=rank;r<rank+g&&r<tiers.length;r++)sum+=tiers[r];
     const share=Math.floor(sum/g);
     for(let k=i;k<j;k++)out[pres[k].id]=share;
+    rank+=g;i=j;
+  }
+  return out;
+}
+// INLAND ROAD (full Option B) — the end-game ROAD MAJORITY: tiered by # of charters held (the kontor-majority
+// rival — "another way to get value from deliveries"). 2p winner-take-all. Ties split the tiers they occupy
+// (floor), mirroring majorityAwards. Returns {playerId: points}. Empty unless the toggle is on.
+function roadMajorityAwards(){
+  if(!S.inland)return {};
+  let tiers=(ROAD_MAJ[S.players.length]||ROAD_MAJ[4]).slice();
+  if(S.players.length===2)tiers=tiers.slice(0,1);
+  const held=S.players.map(p=>({id:p.id,n:(p.townsReached||[]).length})).filter(o=>o.n>0).sort((a,b)=>b.n-a.n);
+  const out={};let i=0,rank=0;
+  while(i<held.length&&rank<tiers.length){
+    let j=i;while(j<held.length&&held[j].n===held[i].n)j++;
+    const g=j-i;let sum=0;for(let r=rank;r<rank+g&&r<tiers.length;r++)sum+=tiers[r];
+    const share=Math.floor(sum/g);
+    for(let k=i;k<j;k++)if(share>0)out[held[k].id]=share;
     rank+=g;i=j;
   }
   return out;
@@ -1461,7 +1501,9 @@ function fireCaskAct(act,rt){const p=cur();
 
 // ---------- SOURCE / CONVERT / REACH / WILD (cask + neutral actions) ----------
 function enterSource(n,rt){UI.sub='source';UI.src={n,returnTo:rt};render();}
-function srcTake(g,h){snapshot();gain(cur(),g,h);const rt=UI.src.returnTo;UI.src=null;resume(rt);}
+function srcTake(g,h){snapshot();const p=cur();
+  if((g+h)>0&&townHasPerk(p,'salt')){g++;if(!aiSimulating)log('↳ '+p.name+'’s '+LU('landmark')+'Lüneburg Salt Staple greases the trade (+1 G).');}   // INLAND ROAD perk
+  gain(p,g,h);const rt=UI.src.returnTo;UI.src=null;resume(rt);}
 function srcSkip(){const rt=UI.src.returnTo;UI.src=null;resume(rt);}
 
 function enterConvert(rt){const p=cur();if(p.grain<=0&&p.hops<=0){log('↳ nothing to convert.');resume(rt);return;}UI.sub='convert';UI.cvt={returnTo:rt};render();}
@@ -1584,6 +1626,7 @@ function deliverCask(lp,L,dest,shipSlot,full){
     val+=bldgValueShare(L.bld,L.owner,caskBldgValue(L.bld,dest,L.q,L.owner));
     if(shipSlot){const sb=bAt(shipSlot);val+=bldgValueShare(sb,L.owner,shipBldgValue(sb,dest,full));}
   }
+  if(DEST[dest].kontor&&townHasPerk(lp,'value'))val+=1;   // INLAND ROAD perk — Reval Eastern Staple: a standing demand premium on kontor deliveries
   lp.delivered.push({style:L.style,q:L.q,dest,val});
   // v1.1: a beer's delivery perk — Keut plants +1 presence at the kontor (the majority specialist)
   if(DEST[dest].kontor){const bp=(STYLES[L.style]||{}).bonusPres;if(bp)lp.presBonus[dest]=(lp.presBonus[dest]||0)+bp;}
@@ -1669,26 +1712,38 @@ function enshrinePick(ref){const p=cur();const c=S.slots[ref];if(!c){afterSail('
   if(UI.tmp.enshrineLeft>0&&enshrineCasks(p).length>0){render();return;}
   afterSail('stops');
 }
-// EXPANSION "The Inland Road" — the CARAVAN: send a DEPLOYED cask overland to an inland town (mirrors Enshrine:
-// no boat, no fare; the cask is consumed; advances the clock). The cask is auto-routed to the HIGHEST unreached
-// town its (effective) quality can reach — so you steer the tree by which quality you send. Reaching a town
-// TEACHES its beer (free, if it's a dealt & unowned export; else +goods) and banks its inland STANDING.
-function townReached(p,k){return (p.townsReached||[]).includes(k);}
-function unreachedTowns(p){return TOWNS.filter(t=>!townReached(p,t.k));}
-function bestTownFor(p,q){const u=unreachedTowns(p).filter(t=>q>=t.gate);return u.length?u.sort((a,b)=>b.gate-a.gate)[0]:null;}
-function caravanCasks(p){if(!S.inland)return [];return wharfCaskSlots().filter(id=>S.slots[id].owner===p.id&&bestTownFor(p,caskEffQ(id))).map(id=>({ref:id,style:S.slots[id].style,q:caskEffQ(id)}));}
+// EXPANSION "The Inland Road" (full) — the CARAVAN: send a DEPLOYED cask overland to CLAIM a town CHARTER
+// (mirrors Enshrine: no boat, no fare; the cask is consumed). CLOCK-NEUTRAL — overland trade never fills the
+// Sailed-Ships (sea) clock. You PICK which open town to claim (the contest): any UNCLAIMED town your cask's
+// effective quality reaches (the east opens once you hold a charter). Claiming pays an on-claim boon + an
+// ongoing perk while held + the charter's ★; the road majority rewards holding the most. First-come, once total.
+function townReached(p,k){return (p.townsReached||[]).includes(k);}   // p HOLDS the charter for town k
+// the towns a player may CARAVAN to with a quality-q cask: UNCLAIMED · q ≥ gate · (east towns need ≥1 held charter).
+function openTownsFor(p,q){return TOWNS.filter(t=>!townClaimed(t.k)&&q>=t.gate&&(!t.east||(p.townsReached||[]).length>=1)).sort((a,b)=>b.gate-a.gate||b.pts-a.pts);}
+// every (deployed cask × open town) pairing for p — the contest means WHICH town you claim is the choice.
+function caravanOptions(p){if(!S.inland)return [];const out=[];
+  wharfCaskSlots().forEach(id=>{if(S.slots[id].owner!==p.id)return;const q=caskEffQ(id);
+    openTownsFor(p,q).forEach(t=>out.push({ref:id,style:S.slots[id].style,q,town:t}));});return out;}
+function caravanCasks(p){if(!S.inland)return [];const seen={},out=[];   // distinct deployed casks that CAN caravan
+  caravanOptions(p).forEach(o=>{if(!seen[o.ref]){seen[o.ref]=1;out.push({ref:o.ref,style:o.style,q:o.q});}});return out;}
 function harborCaravan(){snapshot();UI.stage='caravan';render();}
-function caravanPick(ref){const p=cur();const c=S.slots[ref];if(!c){afterSail('stops');return;}
-  const town=bestTownFor(p,caskEffQ(ref));
-  if(!town){afterSail('stops');return;}
+// claim a town's CHARTER (first-come, once total): consume the deployed cask, pay the on-claim boon + register the
+// ongoing perk, bank the charter ★. CLOCK-NEUTRAL — overland trade never fills the Sailed-Ships (sea) clock.
+function caravanGo(ref,townKey){const p=cur();const c=S.slots[ref];const town=townByKey(townKey);
+  if(!c||!town||townClaimed(townKey)||caskEffQ(ref)<town.gate){afterSail('stops');return;}
   S.slots[ref]=null;                                   // the cask travels overland (consumed)
-  p.townsReached.push(town.k);
-  let learned=null;
-  if(town.teach&&(S.exports||[]).includes(town.teach)&&!p.recipes.includes(town.teach)){p.recipes.push(town.teach);learned=town.teach;}
-  else gain(p,TOWN_GOODS,0);                            // teach moot (no teach / not dealt / already owned) → goods instead
-  // NOTE: the Caravan is OVERLAND — it does NOT advance the Sailed-Ships (sea) clock. It's a parallel inland
-  // activity; the end-clock still fills only via sea voyages (full sails / Charter) and the Hall (Enshrine).
-  if(!aiSimulating)log(p.name+' sends '+LU('beer')+ownSq(p.id)+styleShort(c.style)+' overland by '+LU('truck')+'<b>Caravan</b> → '+LU('landmark')+'<b>'+town.name+'</b> (Q'+town.gate+'+) — '+(learned?'learns the '+LU('scroll-text')+STYLES[learned].name+' recipe':'gains '+Gi(TOWN_GOODS))+' · +'+town.pts+'★ inland standing (overland — the sea clock is untouched).',true);
+  S.townOwner[townKey]=p.id; p.townsReached.push(townKey);   // claim the charter
+  let boon='';
+  if(town.perk==='teach'){
+    if(town.teach&&(S.exports||[]).includes(town.teach)&&!p.recipes.includes(town.teach)){p.recipes.push(town.teach);boon='learns the '+LU('scroll-text')+STYLES[town.teach].name+' recipe';}
+    else {gain(p,TOWN_GOODS,0);boon='gains '+Gi(TOWN_GOODS)+' <span class="note">(recipe moot)</span>';}
+  } else if(town.perk==='vessel'){
+    if(p.maxVessels<3){p.maxVessels++;p.vessels.push(null);boon='gains a free '+LU('flask-conical')+'Extra Vessel';}
+    else {gain(p,TOWN_GOODS,0);boon='gains '+Gi(TOWN_GOODS)+' <span class="note">(vessels at cap)</span>';}
+  } else if(town.perk==='salt'){boon='holds the <b>Salt Staple</b> (+1 G on Market goods)';}
+  else if(town.perk==='value'){boon='holds the <b>Eastern Staple</b> (+1★ per kontor delivery)';}
+  else if(town.perk==='age'){boon='holds the <b>Düna Road</b> (+1 free aging/turn)';}
+  if(!aiSimulating)log(p.name+' sends '+LU('beer')+ownSq(p.id)+styleShort(c.style)+' overland by '+LU('truck')+'<b>Caravan</b> → claims the '+LU('landmark')+'<b>'+town.name+'</b> charter (Q'+town.gate+'+) — '+boon+' · +'+town.pts+'★ charter (overland — the sea clock is untouched).',true);
   afterSail('stops');
 }
 
@@ -1719,7 +1774,7 @@ function endTurn(){
   // AI turns take no snapshots, and the boundary into a human turn clears the stack —
   // a human can undo within their own turn, never back into (or across) an AI's.
   if(wasAI&&!cur().ai)undoStack.length=0;
-  if(AUTO_AGE)passiveFerment(cur());lageringTick(cur());jopenVintageTick(cur());
+  if(AUTO_AGE)passiveFerment(cur());lageringTick(cur());roadAgeTick(cur());jopenVintageTick(cur());
   if(!openTurnBenefits())UI={sub:'move'};   // resolve any queued off-turn Building choices first, then begin the turn
   save();render();   // v1.1: auto-aging gated off (kept for reintroduction)
   maybeRunAI();
@@ -1738,6 +1793,10 @@ function passiveFerment(p){let any=false;p.vessels.forEach(c=>{if(c&&c.step<c.re
 function lageringTick(p){if(!hasUpgrade(p,'lagering'))return;
   const m=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step<o.c.ready).sort((a,b)=>(b.c.step-b.c.ready)-(a.c.step-a.c.ready));
   if(!m.length)return;m[0].c.step++;log(p.name+'’s '+LU('hourglass')+' Lagering Cellar ages '+LU('beer')+styleShort(m[0].c.style)+' (+1).');}
+// INLAND ROAD perk — Riga Düna Road: each of the holder's turns, +1 age to one maturing cask (mirrors Lagering).
+function roadAgeTick(p){if(!townHasPerk(p,'age'))return;
+  const m=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step<o.c.ready).sort((a,b)=>(b.c.step-b.c.ready)-(a.c.step-a.c.ready));
+  if(!m.length)return;m[0].c.step++;if(!aiSimulating)log(p.name+'’s '+LU('landmark')+'Riga Düna Road ages '+LU('beer')+styleShort(m[0].c.style)+' (+1).');}
 // EXPANSION CAPSTONE — a DEPLOYED Jopenbier cellars on the dock: +1★ vintage per its owner's turn (cap
 // JOPEN_VINTAGE_CAP), folded into its self-contained value at delivery. The deliberate slow-burn payoff;
 // it's contestable on the slot (a rival can hijack-ship it to deny you the peak vintage).
@@ -1762,7 +1821,8 @@ function scorePlayer(p){
   let maj=0;KONTORE.forEach(k=>{const a=majorityAwards(k);if(a[p.id])maj+=a[p.id];});
   const flight=flightScore(p);                          // the range-of-tiers bonus
   const developed=(p.developed||0);                      // v1.2 the developer lane: points for Buildings rivals overbuilt
-  const inland=(p.townsReached||[]).reduce((a,k)=>{const t=townByKey(k);return a+(t?t.pts:0);},0);   // EXPANSION: inland standing (towns reached on The Inland Road)
+  // INLAND ROAD (full Option B): charter ★ (towns you hold) + the ROAD MAJORITY (most charters). Both 0 when off.
+  const inland=(p.townsReached||[]).reduce((a,k)=>{const t=townByKey(k);return a+(t?t.pts:0);},0)+(roadMajorityAwards()[p.id]||0);
   return {deliv,maj,goals:0,flight,master:0,wharf:(p.wharfage||0),developed,inland,total:deliv+maj+flight+developed+inland};
 }
 // the final ranking under the engine's tiebreak (total, goods, casks on slots) — shared by the
@@ -2195,19 +2255,23 @@ function aiJopenHold(ref){const c=(typeof ref==='string'&&S.slots[ref])?S.slots[
   if(!c||c.style!=='jopenbier')return false;
   if(S.ending)return false;
   return (c.vintage||0)<JOPEN_VINTAGE_CAP-1;}
-// EXPANSION "The Inland Road" — should the AI CARAVAN a deployed cask overland? Selective: only when it LEARNS
-// a recipe it wants, or the cask is unshippable / ships cheap (≤2★) — so the inland road banks standing + tech
-// without cannibalizing valuable sea shipments. Returns the best {ref,town} or null. (The MC prices it too.)
+// EXPANSION "The Inland Road" (full) — should the AI CARAVAN a deployed cask to claim a town CHARTER? It prices
+// each (cask × OPEN town) by the charter's worth (its ★ + the perk + a road-majority nudge) MINUS the sea value it
+// forgoes, committing when the inland clearly wins or the cask can't ship well (don't strand sea value). The town
+// chosen IS the choice (the contest). Returns the best {ref,town} or null. (The MC prices the whole action too.)
 function aiCaravanPick(p){if(!S.inland)return null;let best=null,bv=0;
-  caravanCasks(p).forEach(o=>{const town=bestTownFor(p,o.q);if(!town)return;
-    const learns=town.teach&&(S.exports||[]).includes(town.teach)&&!p.recipes.includes(town.teach);
+  const held=(p.townsReached||[]).length;
+  caravanOptions(p).forEach(o=>{const town=o.town;
+    const learns=town.perk==='teach'&&town.teach&&(S.exports||[]).includes(town.teach)&&!p.recipes.includes(town.teach);
     const ship=aiCaskBest(p,o.ref,myShips(p));               // best sea-delivery value (−1 = no ship for it)
-    if(!(learns||ship<0||ship<=2))return;                    // caravan only in its niches
-    const v=town.pts+(learns?3:0)-(ship>0?ship:0);
+    const perkV=town.perk==='teach'?(learns?4:0):(town.perk==='vessel'?(p.maxVessels<3?3:0):(town.perk==='value'||town.perk==='age'||town.perk==='salt'?3:1));
+    const majV=held>=1?2:0;                                  // each extra charter feeds the road majority
+    const v=town.pts+perkV+majV-(ship>0?ship:0);
+    if(!(v>3||ship<0||ship<=2))return;                       // caravan only when it clearly beats shipping (or can't ship)
     if(v>bv){bv=v;best={ref:o.ref,town};}});
   return best;}
 function aiHarbor(p){
-  if(UI.stage==='caravan'){const cp=aiCaravanPick(p)||{ref:(caravanCasks(p)[0]||{}).ref};if(cp.ref){caravanPick(cp.ref);return;}afterSail('stops');return;}
+  if(UI.stage==='caravan'){const cp=aiCaravanPick(p)||caravanOptions(p)[0];if(cp&&cp.town){caravanGo(cp.ref,cp.town.k);return;}afterSail('stops');return;}
   if(UI.stage==='enshrine'){const cs=enshrineCasks(p).filter(o=>aiDest(p,o.q,o.style)==='hall'&&!aiJopenHold(o.ref)).sort((a,b)=>b.q-a.q);
     if(cs.length){enshrinePick(cs[0].ref);return;}afterSail('stops');return;}
   if(UI.stage==='charter_cask'){let cs=charterCasks(p).slice();const nonJ=cs.filter(o=>o.style!=='jopenbier');if(!S.ending&&nonJ.length)cs=nonJ;cs.sort((a,b)=>b.q-a.q);charterPickCask(cs[0].ref);return;}
@@ -2536,7 +2600,7 @@ function aiGmOptions(p){
     return o;}   // v1.7: improvements moved to the Cellar (the 'tap' stage, below)
   if(U==='cell'&&UI.cell==='C'){
     if(UI.stage==='enshrine'){const e=enshrineCasks(p).map(c=>()=>enshrinePick(c.ref));e.push(()=>afterSail('stops'));return e;}
-    if(UI.stage==='caravan'){const e=caravanCasks(p).map(c=>()=>caravanPick(c.ref));e.push(()=>afterSail('stops'));return e;}
+    if(UI.stage==='caravan'){const e=caravanOptions(p).map(o=>()=>caravanGo(o.ref,o.town.k));e.push(()=>afterSail('stops'));return e;}
     if(UI.stage==='charter_cask')return charterCasks(p).map(c=>()=>charterPickCask(c.ref));
     if(UI.stage==='charter_dest'){const ref=UI.tmp.charterCask;const c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
       return DESTS.filter(d=>d!=='hall'&&c.q>=DEST[d].gate).map(d=>()=>charterDest(d));}
@@ -2843,16 +2907,16 @@ function cellRender(p){
     if(UI.stage==='enshrine'){const cs=enshrineCasks(p);
       return {prompt:'Enshrine at the '+LU('crown')+' Hall — pick a Q2+ cask <b>deployed on a slot</b> to present locally ('+UI.tmp.enshrineLeft+' left). No boat, no fare — but it must be on the wharf, not in a vessel.',
         acts:(cs.length?cs.map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.style)+' Q'+o.q+' · slot','enshrinePick(\''+o.ref+'\')','go')).join(''):'<span class="note">no Q2+ casks on your slots — deploy one first</span> ')+btn('Done','afterSail(\'stops\')','ghost')};}
-    if(UI.stage==='caravan'){const cs=caravanCasks(p);
-      return {prompt:'Caravan overland → an inland town. Pick a Ready cask <b>deployed on a slot</b>; it travels to the highest town its quality can reach — learning that town’s beer + banking inland standing. No boat, no fare.',
-        acts:(cs.length?cs.map(o=>{const t=bestTownFor(p,o.q);return btn(LU('beer')+ownSq(p.id)+styleShort(o.style)+' Q'+o.q+' → '+LU('landmark')+(t?t.name:'?'),'caravanPick(\''+o.ref+'\')','go');}).join(''):'<span class="note">no deployed cask reaches an unreached town — deploy one (Q ≥ the next town)</span> ')+btn('Done','afterSail(\'stops\')','ghost')};}
+    if(UI.stage==='caravan'){const opts=caravanOptions(p);
+      return {prompt:'Caravan overland → claim a town <b>CHARTER</b> (first-come, once total). Pick a Ready cask <b>deployed on a slot</b> + the OPEN town it claims (Q ≥ the town’s gate; the east opens once you hold a charter). No boat, no fare, clock-neutral — the cask is spent.',
+        acts:(opts.length?opts.map(o=>{const t=o.town;const tag=t.perk==='teach'?(t.teach&&(S.exports||[]).includes(t.teach)&&!p.recipes.includes(t.teach)?'learn '+styleShort(t.teach):'+'+TOWN_GOODS+'g'):(t.perk==='vessel'?'+vessel':t.perk);return btn(LU('beer')+ownSq(p.id)+styleShort(o.style)+' Q'+o.q+' → '+LU('landmark')+t.name+' <span class="note">Q'+t.gate+'·'+tag+'·'+t.pts+'★</span>','caravanGo(\''+o.ref+'\',\''+t.k+'\')','go');}).join(''):'<span class="note">no deployed cask can claim an open town — deploy a Q≥gate cask, or every reachable charter is taken</span> ')+btn('Done','afterSail(\'stops\')','ghost')};}
     const canLoad=myShips(p).length&&harborLoadPool(p).some(cs=>myShips(p).some(s=>canTake(s,cs)));
     const canCharter=(p.contracts||0)>0&&canPay(p,charterCost(p))&&charterCasks(p).length>0;
     const canEnshrine=enshrineCasks(p).length>0;
     const canCaravan=!!S.inland&&caravanCasks(p).length>0;
     let acts=(canLoad?btn(LU('ship')+' Load a cask → ship (sails when full)','harborLoad()','primary'):'');
     if(canEnshrine)acts+=btn(LU('crown')+' Enshrine → the Hall (local'+(enshrineCap(p)>1?', ×2':'')+')','harborEnshrine()');
-    if(canCaravan)acts+=btn(LU('truck')+' Caravan → an inland town (learn a beer + standing)','harborCaravan()','go');
+    if(canCaravan)acts+=btn(LU('truck')+' Caravan → claim a town charter (the Inland Road)','harborCaravan()','go');
     if(canCharter)acts+=btn(LU('ticket')+' Charter → a kontor ('+costStr(charterCost(p))+' + contract, '+(p.contracts||0)+' left)','harborCharter()');
     if(!canLoad&&!canCharter&&!canEnshrine&&!canCaravan)acts+='<span class="note">nothing to ship yet</span> ';
     return {prompt:'Ship — load a cask onto a ship (sails when full), Enshrine a Q2+ cask at the Hall'+(S.inland?', Caravan a cask overland to an inland town,':'')+' or Charter a kontor voyage.',acts:acts+btn('Skip','cellDone()','ghost')};
@@ -2947,23 +3011,38 @@ function renderDests(){
   });
   document.getElementById('dests').innerHTML=h;
 }
-// EXPANSION "The Inland Road" — the visible towns panel: each town as a card (gate · what it teaches · its
-// standing ★ · who's reached it), mirroring the Destinations cards. Shown only when the toggle is on.
+// EXPANSION "The Inland Road" (full Option B) — the second destinations board: a CONTESTED town map. The road
+// majority readout up top, then the TRUNK (Saxon brewing road) and the EASTERN FORK (the Baltic road). Each town
+// is a charter card — its gate · perk · charter ★ · and WHO holds it (claimed, first-come) or "open". Toggle-only.
 function renderInland(){const pan=document.getElementById('inlandpanel');if(!pan)return;
   if(!S||!S.inland){pan.style.display='none';return;}
   pan.style.display='';
-  let h='';TOWNS.forEach(t=>{
-    const who=S.players.filter(p=>(p.townsReached||[]).includes(t.k))
-      .map(p=>'<span class="dsq" style="background:'+p.color+'" data-tip="'+attr(p.name+' reached '+t.name)+'"></span>').join('');
-    const reward=t.teach?('<span data-tip="'+attr('Teaches the '+STYLES[t.teach].name+' recipe FREE on reach (if dealt &amp; unowned; else +'+TOWN_GOODS+' goods)')+'">'+LU('scroll-text')+styleShort(t.teach)+'</span>')
-                        :('<span data-tip="'+attr('+'+TOWN_GOODS+' goods on reach')+'">+'+TOWN_GOODS+LU('coins')+'</span>');
-    h+='<div class="route" data-tip="'+attr(t.name+' — reach it by sending a DEPLOYED Q'+t.gate+'+ cask overland (Caravan, at the Harbor). Once per player.')+'">'
-      +'<div class="rh"><span class="ric">'+LU('landmark')+'</span><span class="rmaj" data-tip="'+attr(t.pts+'★ inland standing at game end')+'">'+t.pts+'★</span></div>'
-      +'<div class="rn">'+t.name+'</div>'
-      +'<div class="rstats"><span class="rgate"><b>Q'+t.gate+'+</b></span>'+reward+'</div>'
-      +'<div class="pres">'+who+'</div></div>';
-  });
-  document.getElementById('inland').innerHTML=h;
+  const perkTag=t=>{
+    if(t.perk==='teach')return LU('scroll-text')+styleShort(t.teach);
+    if(t.perk==='vessel')return LU('flask-conical')+'+Vessel';
+    if(t.perk==='salt')return LU('coins')+'+1G/Market';
+    if(t.perk==='value')return '+1★/kontor';
+    if(t.perk==='age')return LU('hourglass')+'+1 age/turn';
+    return '+'+TOWN_GOODS+'g';};
+  const perkTip=t=>t.desc+' Claim by Caravan: a DEPLOYED Q'+t.gate+'+ cask, at the Harbor. Once total (first-come).'+(t.east?' EAST: opens once you hold any charter.':'');
+  const card=t=>{const holder=townHolder(t.k);const claimed=!!holder;
+    return '<div class="route town'+(t.east?' east':'')+(claimed?' claimed':' open')+'"'+(claimed?' style="color:'+holder.color+'"':'')+' data-tip="'+attr(t.name+' — '+perkTip(t))+'">'
+      +'<div class="rh"><span class="ric" style="color:var(--parch)">'+LU('landmark')+'</span><span class="rmaj" data-tip="'+attr(t.pts+'★ charter at game end')+'">'+t.pts+'★</span></div>'
+      +'<div class="rn" style="color:var(--parch)">'+t.name+'</div>'
+      +'<div class="rstats" style="color:var(--parch)"><span class="rgate"><b>Q'+t.gate+'+</b></span> <span style="font-size:.68rem">'+perkTag(t)+'</span></div>'
+      +'<div class="pres">'+(claimed
+        ?'<span class="dsq" style="background:'+holder.color+'" data-tip="'+attr(holder.name+' holds this charter')+'"></span><b style="font-size:.66rem;color:'+holder.color+'">'+holder.name+'</b>'
+        :'<span class="note" style="font-size:.66rem;color:var(--parch);opacity:.85">open — race for it</span>')+'</div></div>';};
+  const maj=roadMajorityAwards();
+  const tiers=(ROAD_MAJ[S.players.length]||ROAD_MAJ[4]).filter((x,i)=>!(S.players.length===2&&i>0));
+  const stand=S.players.map(p=>({p,n:(p.townsReached||[]).length,m:maj[p.id]||0})).filter(o=>o.n>0).sort((a,b)=>b.n-a.n);
+  let h='<div class="note" style="margin-bottom:7px"><b>'+LU('truck')+' Road majority</b> <span class="note">(most charters → '+tiers.join('/')+'★ at game end)</span>: '
+    +(stand.length?stand.map(o=>'<span style="color:'+o.p.color+';font-weight:bold">'+o.p.name+' '+o.n+' charter'+(o.n===1?'':'s')+(o.m?' (+'+o.m+'★)':'')+'</span>').join(' · '):'<span class="note">no charters claimed yet</span>')+'</div>';
+  h+='<div class="note" style="font-size:.68rem;margin:0 0 4px"><b>Trunk</b> <span class="note">— the Saxon brewing road (up the Elbe/Weser)</span></div>';
+  h+='<div class="iroad">'+TOWNS.filter(t=>!t.east).map(card).join('')+'</div>';
+  h+='<div class="note" style="font-size:.68rem;margin:9px 0 4px"><b>'+LU('compass')+' Eastern route</b> <span class="note">— the Baltic road (opens once you hold a charter)</span></div>';
+  h+='<div class="iroad">'+TOWNS.filter(t=>t.east).map(card).join('')+'</div>';
+  document.getElementById('inlandboard').innerHTML=h;
 }
 
 function renderShop(){
@@ -3013,7 +3092,7 @@ function renderVoyage(){
     +'<div class="track">'+trk+'</div><div class="note" style="font-size:.66rem;margin-top:2px">⛵ the end clock — each voyage (a ship sailing, a charter, or an enshrine) fills one</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>'+LU('ticket')+' Charter contracts:</b> '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+(p.contracts||0)+'</span>').join(' · ')+' <span class="note">(spend 1 + '+costStr(CHARTER_FLAT_FARE)+' to charter; buy more at the Market)</span></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game ('+(S.expansion?'3 of 7 · '+LU('sparkles')+'Specialty Beers ON':'3 of 4')+'):</b> '+exportLabel()+(S.jopen?' · + '+LU('sparkles')+'<b>Jopenbier</b> capstone (always acquirable)':'')+'.</div>';
-  if(S.inland)h+='<div class="note" style="margin-top:6px"><b>'+LU('truck')+' The Inland Road</b> <span class="note">(Caravan a deployed cask overland → learn its beer + standing)</span>: '+TOWNS.map(t=>{const who=S.players.filter(pp=>(pp.townsReached||[]).includes(t.k)).map(pp=>'<span style="color:'+pp.color+';font-weight:bold">●</span>').join('');return LU('landmark')+t.name+' <span class="note">Q'+t.gate+(t.teach?'·'+styleShort(t.teach):'')+'·'+t.pts+'★</span>'+(who?' '+who:'');}).join(' &nbsp; ')+'</div>';
+  if(S.inland)h+='<div class="note" style="margin-top:6px"><b>'+LU('truck')+' The Inland Road</b> <span class="note">(Caravan a deployed cask overland → claim a town charter, first-come)</span>: '+TOWNS.map(t=>{const ho=townHolder(t.k);return LU('landmark')+t.name+' <span class="note">Q'+t.gate+(t.east?'·E':'')+'·'+t.pts+'★</span>'+(ho?' <span style="color:'+ho.color+';font-weight:bold">●'+ho.name.slice(0,1)+'</span>':' <span class="note" style="opacity:.6">○</span>');}).join(' &nbsp; ')+'</div>';
   // the steerable BREW PILES — each brewable beer as its real cask tile (name · quality · brew cost) +
   // the face-up action that quality's pile currently grants (Gruit pinned to Source).
   const brews=['gruit','hopped'].concat((S.exports||[]).slice().sort((a,b)=>STYLES[a].q-STYLES[b].q));

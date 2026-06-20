@@ -152,18 +152,22 @@ function botPlaceBldg(){var bs=aBuildSlots();placeBldgOn((bs[0]||SLOTS[0]).id);}
 // EXPANSION CAPSTONE — cellar a deployed Jopenbier until ripe / ending (mirrors the in-page AI).
 function botJopenHold(ref){var c=(typeof ref==='string'&&S.slots[ref])?S.slots[ref]:null;
   if(!c||c.style!=='jopenbier')return false; if(S.ending)return false; return (c.vintage||0)<JOPEN_VINTAGE_CAP-1;}
-// EXPANSION "The Inland Road" — same selective Caravan heuristic as the in-page AI (learn a wanted recipe, or
-// use an unshippable / cheap cask), so the bot banks standing + tech without cannibalizing valuable shipments.
+// EXPANSION "The Inland Road" (full) — mirror the in-page aiCaravanPick: price each (cask × OPEN town) by the
+// charter's worth (★ + perk + a road-majority nudge) minus the sea value forgone; commit when the inland clearly
+// wins or the cask can't ship well. The town chosen IS the contest. Returns {ref,town} or null.
 function botCaravanPick(p){if(!S.inland)return null;var best=null,bv=0;
-  caravanCasks(p).forEach(function(o){var town=bestTownFor(p,o.q);if(!town)return;
-    var learns=town.teach&&(S.exports||[]).includes(town.teach)&&!p.recipes.includes(town.teach);
+  var held=(p.townsReached||[]).length;
+  caravanOptions(p).forEach(function(o){var town=o.town;
+    var learns=town.perk==='teach'&&town.teach&&(S.exports||[]).includes(town.teach)&&!p.recipes.includes(town.teach);
     var ship=caskBest(o.ref,myShips(p));
-    if(!(learns||ship<0||ship<=2))return;
-    var v=town.pts+(learns?3:0)-(ship>0?ship:0);
+    var perkV=town.perk==='teach'?(learns?4:0):(town.perk==='vessel'?(p.maxVessels<3?3:0):(town.perk==='value'||town.perk==='age'||town.perk==='salt'?3:1));
+    var majV=held>=1?2:0;
+    var v=town.pts+perkV+majV-(ship>0?ship:0);
+    if(!(v>3||ship<0||ship<=2))return;
     if(v>bv){bv=v;best={ref:o.ref,town:town};}});
   return best;}
 function botHarbor(p){
-  if(UI.stage==='caravan'){var cp=botCaravanPick(p)||{ref:(caravanCasks(p)[0]||{}).ref};if(cp.ref){caravanPick(cp.ref);return;}afterSail('stops');return;}
+  if(UI.stage==='caravan'){var cp=botCaravanPick(p)||caravanOptions(p)[0];if(cp&&cp.town){caravanGo(cp.ref,cp.town.k);return;}afterSail('stops');return;}
   if(UI.stage==='enshrine'){var ec=enshrineCasks(p).filter(function(o){return personaDest(p,o.q)==='hall'&&!botJopenHold(o.ref);}).sort(function(a,b){return b.q-a.q;});
     if(ec.length){enshrinePick(ec[0].ref);return;}afterSail('stops');return;}
   if(UI.stage==='charter_cask'){var cs=charterCasks(p).slice();var nonJ=cs.filter(function(o){return o.style!=='jopenbier';});if(!S.ending&&nonJ.length)cs=nonJ;cs.sort(function(a,b){return b.q-a.q;});charterPickCask(cs[0].ref);return;}
@@ -485,7 +489,7 @@ function summarize(n, arr) {
   const jopenAll = ok.reduce((a, r) => a + (r.jopenAll || 0), 0), jopenWin = ok.reduce((a, r) => a + (r.jopenWin || 0), 0);
   if (jopenAll > 0) console.log(`Jopenbier capstone: delivered ${fmt(jopenAll / ok.length, 2)}/game (all players) · ${fmt(jopenWin / ok.length, 2)}/game by the winner`);
   const townsAll = ok.reduce((a, r) => a + (r.townsAll || 0), 0), townsWin = ok.reduce((a, r) => a + (r.townsWin || 0), 0);
-  if (townsAll > 0) console.log(`The Inland Road: ${fmt(townsAll / ok.length, 2)} towns reached/game (all players) · ${fmt(townsWin / ok.length, 2)}/game by the winner`);
+  if (townsAll > 0) console.log(`The Inland Road (full): ${fmt(townsAll / ok.length, 2)} charters claimed/game (all players, of 7) · ${fmt(townsWin / ok.length, 2)}/game by the winner`);
   // ===== PATHWAYS TO A WIN — per-strategy win-rate + score composition =====
   // Pathways: volume / prestige / majority (personas) + deep (cellarmaster). A cellar seat is reported
   // ONLY as 'deep' (its assigned persona is ignored, since it plays the deep policy).

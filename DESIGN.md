@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v1.9 “Specialty Beers”)
+# Brewhouses of the Hanse — Design (v2.0 “The Inland Road”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v1.9 (expansions live)** — the first expansion ships as **three opt-in New Game *slide* toggles**, mixable freely: **Specialty Beers** (Gose · Zerbster · Duckstein → the 3-of-7 export draft; pinned-signature "characters"), the **Jopenbier** Q6 vintage capstone (self-contained scoring + dock-cellared aging-as-value; the deep moonshot), and **The Inland Road** (Option B — a tech-tree of inland towns reached overland by Caravan: learn a beer + bank standing). **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”** (value-Buildings reward the climb — +2★/+3★ at Q4/Q5; keystone rebuild + demand-dice + printables-tile UI; v1.5 private improvements). `play.html` implements both. |
+|**Status**     |**v2.0 (expansions live)** — the expansion ships as **three opt-in New Game *slide* toggles**, mixable freely: **Specialty Beers** (Gose · Zerbster · Duckstein → the 3-of-7 export draft; pinned-signature "characters"), the **Jopenbier** Q6 vintage capstone (self-contained scoring + dock-cellared aging-as-value; the deep moonshot), and **The Inland Road** (Option B, **FULL** — a **contested second destinations board**: a trunk + eastern fork of inland towns, each a **first-come charter** with an on-claim boon + ongoing perk + ★, reached overland by Caravan, plus a **road majority** that rivals the kontore). **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”** (value-Buildings reward the climb — +2★/+3★ at Q4/Q5; keystone rebuild + demand-dice + printables-tile UI; v1.5 private improvements). `play.html` implements both. |
 
 ---
 
@@ -167,6 +167,30 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   revisit: deal a **choice** of starting buildings (draft), or make the opening building **self-favoring**
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
+
+**v2.0 “The Inland Road” — FULL Option B: a contested second destinations board** *(2026-06-20, `play.html` KEY v71)* —
+Rebuilds the Inland Road from a per-player freebie (the v1.9 “compete” version) into the **heavy Option B** the
+brief asked for: a **second destinations board that challenges the kontore.** The towns are now a **contested
+overland network** — a **trunk** (Lüneburg · Hannover · Braunschweig · Einbeck · Hamburg) plus an **eastern
+fork** (**Reval · Riga**, opening once you hold any charter; Q4/Q5 gates, the richest prizes). Each town holds
+**ONE charter, claimed first-come** by Caravan (a cutthroat land-grab) — the Caravan UI now picks **(cask × open
+town)**, so *which* charter you grab is the contest. Claiming pays an **on-claim boon** (a recipe **teach** or a
+free **Extra Vessel**) + an **ongoing perk** while held (**Lüneburg** salt = +1 G on Market goods · **Reval** =
++1★ per kontor delivery · **Riga** = +1 free age/turn) + the charter’s **★**. **New scoring pillar:** a **ROAD
+MAJORITY** (most charters → **7/4/2** ⚙, 2p winner-take-all) — the kontor-majority *rival*, the “another way to
+get value from deliveries.” **Kontor majorities are KEPT** (the design call: the *fork* is **cask scarcity** —
+every cask sent inland is one not shipped — so road & sea compete for the same supply, without destabilizing the
+tuned majority math; a *pure swap* removing kontor majorities is a one-line tunable, left off). The Caravan
+stays **clock-neutral** (overland ≠ a sailed ship). **Bugfix:** a duplicate `id="inland"` (panel div vs the New
+Game toggle) meant the toggle **never actually turned on** — the panel div now `#inlandboard`. **AI wired**
+(in-page heuristic + MC, and the `sim.js` bot): value & race charters, the east when unlocked, don’t strand sea
+value. *Gates (KEY v71):* base 500 **unchanged** (0 crash, pace in band); `INLAND=1` 500 **0 crash/deadlock 2–4p,
+pace 99.8–100% in band, clock-dominant 91–96%, 5.6–6.1 of 7 charters claimed/game** (`sim-results-v71.txt`);
+PATHWAYS lanes consistent with baseline (no new degeneracy); render-smoke clean incl. the **full INLAND contest
+test** (claim → closed-to-rivals → perk → road majority) + a Cellarmaster game with all three expansions on;
+ladder 0 errors. *Watch-item:* the 2p P1 edge ticks up a touch (clock-neutral first-mover charter grab) — a
+tunable, not a break. **Option B (full) ships**; all three expansions remain independent, mixable slide toggles,
+**base byte-unchanged when off.** All numbers ⚙.
 
 **v1.9 “Option A complete” — blending · thematic buildings · the Inland Road made visible** *(2026-06-20, `play.html` KEY v70)* —
 Finishes the **Beer Atlas** (Option A) with three pieces, all opt-in via the existing toggles. **(1) The Inland
