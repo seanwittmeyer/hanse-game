@@ -1,9 +1,10 @@
 # Brewhouses of the Hanse — Turn & Round Rules (v2.0 “The Trade Roads”)
 
-> **Status: live (2026-06-18).** This is the canonical rulebook for the *living, composable Wharf
+> **Status: live (2026-06-20).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
-> playable build is `play.html` (v1.9 “Beer Atlas” — base ruleset v1.8 “Quality Pays”; the two opt-in
-> expansions — **Specialty Beers** (incl. blending + 3 thematic Buildings) and the **Jopenbier** capstone —
+> playable build is `play.html` (v2.0 “The Trade Roads” — base ruleset v1.8 “Quality Pays”; the three
+> opt-in expansions — **Specialty Beers** (incl. blending + 3 thematic Buildings), the **Jopenbier**
+> capstone, and **The Trade Roads** (an Overland inland map/tech-tree that replaces the kontor majorities) —
 > are §12) — these rules are implemented there.** (The prior
 > v0.16.1 "The Wharf" build is archived at branch `archive/main-v0.16.1` / `archive/play.html` /
 > `archive/v0.16/`.) *(An Inland Road / Option B was prototyped then rolled back — `DESIGN.md` §9; the work is on `archive/option-b-inland`.)*
@@ -136,7 +137,7 @@ Gruit fixed to **Source +2 goods**, Q2+ draw from the pool — §8). Three state
 Do **one**: take **2 goods** (any mix), **or acquire one tile** (pay its goods cost ⚙):
 - a **recipe** (a brewable quality; export recipes cost more);
 - a **building** from the face-up display (`⚙ G` by tier) — **buy and place it on a slot** (§5);
-  *(or **place a building from your hand** — earned at London/Novgorod or via Survey — free);*
+  *(or **place a building from your hand** — earned at London or via Survey — free);*
   *(you may also place a building you already hold, free — the starting tile / a Survey draw);*
 - a **ship commission** (`2 G` ⚙ — place a face-up ship on a slot + free-load one Ready cask — §6);
 - a **charter contract** (`1 G` ⚙ — §6).
@@ -182,7 +183,7 @@ a building.
 
 ### 5a. Buildings — the one tile family (owned, authored, two flavors)
 You **gain** buildings to your **hand** — buy one at the Market, or **take one free to hand** when you
-deliver to London/Novgorod (§7) or draw one with **Survey**. **You always choose which building** from
+deliver to London (§7) or draw one with **Survey**. **You always choose which building** from
 the face-up display: if your cask is delivered on **someone else's turn** (a rival topped off and sailed
 a hull your cask rode), the choice is **queued to the start of your next turn** — you pick then, from the
 display as it stands. You **place** a held building **at the Market** (a free acquire option) onto **any

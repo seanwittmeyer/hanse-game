@@ -29,7 +29,7 @@
   ship → cargo.* A building modifies the occupant docked on it (§3C).
 - **Acquisition (Market):** **recipes & ships** are always-available supply; **buildings** sit
   in a small **face-up display** (4 ⚙, refilling from the Building deck) — **buy + place** one
-  (pay its cost), **or earn one free by delivering to London / Novgorod** (and place it). A few
+  (pay its cost), **or earn one free by delivering to London** (and place it). A few
   inherently-private **brewery improvements** are buyable for goods (§3E). Casks are **brewed**.
 - **End clock:** the **Sailed-Ships track fills** (a voyage = a full sail, a Charter, or an
   Enshrine) → finish the round → score.
@@ -161,7 +161,7 @@ in load order. The hull returns to the deck; the voyage ticks the clock. **Dock 
 value-building for a rich berth** (§3C). The **Hall is never a ship destination** (Enshrine).
 
 ### C. Building tiles — THE NEW FAMILY (owned, on slots; the authored value layer)
-Acquired at the Market (buy + place, or earned by delivering to London/Novgorod), **owned by the
+Acquired at the Market (buy + place, or earned by delivering to London), **owned by the
 placer**, placed on any slot. Under **one grammar — "a building modifies the occupant docked on
 it"** — each is one of two flavors (variety = content, not new rules):
 
@@ -277,8 +277,8 @@ All open from start. Variable kontor value comes from the **buildings** a cask s
 |---|---|---|---|---|
 | **Bruges** (Hub) | Q1 | +1 ★ | 2 goods, owner's choice | **4 / 2 / 0** |
 | **London** (Steelyard) | Q2 | +1 ★ | **take a Building** (free) + place it — the engine loop | **5 / 3 / 1** |
-| **Bergen** (Bryggen) | Q2 | +1 ★ | 2 goods | **9 / 5 / 2** (anchor) |
-| **Novgorod** (Long Haul) | Q3 | +2 ★ | **take a Building** (free) + place it | **8 / 5 / 2** |
+| **Bergen** (Bryggen) | Q2 | +1 ★ | **free Reach** (+1 presence, any kontor you've delivered to) | **9 / 5 / 2** (anchor) |
+| **Novgorod** (Long Haul) | Q3 | **scales by Q (Q3→2 · Q4→4 · Q5→6)** | **refine** (a maturing cask **+1 age**) | **8 / 5 / 2** |
 | **The Hall** (Prestige) | Q2 | **fixed ladder 3/5/7/9 by quality** | — (local **Enshrine**, no ship) | — |
 
 - **Delivery value at a kontor = base + the value-buildings the cask shipped through.** Low by
@@ -286,8 +286,9 @@ All open from start. Variable kontor value comes from the **buildings** a cask s
   premium are folded into this; the Hall keeps a **fixed** ladder — the legible beginner floor.)*
 - **Majorities** (kept from v0.16) = the **stable, board-agnostic floor**, by delivered-cask
   count; tiered/ranked; **2p skips 2nd**; ties split. Re-tune vs the new building-driven value ⚙.
-- **Benefits:** Bruges/Bergen → **goods** (liquidity); **London/Novgorod → a free Building** (the
-  deliver → author → deliver-better engine loop); the **Hall → fixed prestige** (Enshrine).
+- **Benefits (v1.1 — four distinct lanes):** Bruges → **2 goods** (liquidity); London → **a Building
+  to hand** (the deliver → author → deliver-better engine loop); Bergen → **a free Reach** (+1 presence,
+  feeds majorities); Novgorod → **refine** (a maturing cask +1 age); the **Hall → fixed prestige** (Enshrine).
 
 ### H. End-game scoring — the Flight (kept; the Masterpiece cut)
 - **The Flight — your range.** Distinct **beers** delivered, **(beers−1)², min 3** (3→4 · 4→9 · 5→16).

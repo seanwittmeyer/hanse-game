@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v1.8 “Quality Pays”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v2.0 “The Trade Roads”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -336,6 +336,7 @@
   .rcard .rcn{font-weight:bold;font-variant:small-caps;white-space:nowrap}
   /* destinations: data row + delivery squares */
   .rmaj{font-weight:bold;font-size:.95rem;letter-spacing:.5px}
+  .rmaj.off{text-decoration:line-through;opacity:.4;font-weight:normal}   /* The Trade Roads replaces majorities — show the printed number struck-through */
   .route .ric .ic,.route .ric svg{width:1.25em;height:1.25em}
   .route .rn{display:block;margin-top:2px}
   .rstats{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;margin-top:5px;font-size:.88rem}
@@ -385,7 +386,7 @@
       <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>v1.9 “Beer Atlas” — prototype.</b> <span class="note">(opt-in expansions: Specialty Beers + Jopenbier; the base game is v1.8.)</span> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
+  <p class="note" style="text-align:center"><b>v2.0 “The Trade Roads” — prototype.</b> <span class="note">(opt-in expansions: Specialty Beers · Jopenbier · The Trade Roads; the base game is v1.8.)</span> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -1536,8 +1537,9 @@ function sailShip(slot,creditId){const t=S.slots[slot];
   S.shipDeck.push({ship:t.ship,dest:t.dest});
   refillShipDisplay();
 }
-// the destination's benefit, paid to the cask's OWNER on delivery: liquidity (2 goods) at Bruges/Bergen,
-// a free BUILDING at London/Novgorod. The Hall pays no benefit (prestige only).
+// the destination's benefit, paid to the cask's OWNER on delivery —
+// v1.1 four distinct lanes: Bruges→2 goods · London→a free Building (to hand) · Bergen→a free Reach ·
+// Novgorod→refine (+1 age). The Hall pays no benefit (prestige only).
 // v1.1: each kontor's UNIQUE benefit on delivery. The active player picks (queued → afterSail); a rival
 // owner (their cask sailed on your turn) auto-resolves.
 function grantImmediate(lp,dest){
@@ -2659,10 +2661,10 @@ function renderAid(){
   const vb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='value').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   const tb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='transform').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   document.getElementById('aidcard').innerHTML=
-    '<h2>'+ic('scroll-text')+' Player Aid — v1.8 “Quality Pays”</h2>'
+    '<h2>'+ic('scroll-text')+' Player Aid — v2.0 “The Trade Roads”</h2>'
     +'<div class="asec"><b>Your turn</b><div class="note">Move to an adjacent station → activate its <b>row OR column</b> → resolve up to 4 stops (slot · station · station · slot) <b>in any order</b>. <b>If you move onto a station a rival occupies:</b> pay 1 '+ic('wheat')+' toll and work that public line, <b>OR</b> work your <b>Floor</b> — run every cask in your vessels (their slot-actions) <i>instead of</i> the public line (no toll).</div></div>'
     +'<div class="asec"><b>The four stations</b><div class="note">'
-      +ic('store')+' <b>Market</b> (Source): take 2 goods, or acquire one tile — a recipe · a '+ic('building-2')+' Building (buy + place) · a '+ic('sailboat')+' ship · a charter contract. Or <b>place a Building from your hand</b> (free) — the ones you earned at London/Novgorod or drew with Survey.<br>'
+      +ic('store')+' <b>Market</b> (Source): take 2 goods, or acquire one tile — a recipe · a '+ic('building-2')+' Building (buy + place) · a '+ic('sailboat')+' ship · a charter contract. Or <b>place a Building from your hand</b> (free) — the ones you earned at London or drew with Survey.<br>'
       +ic('flask-conical')+' <b>Brewhouse</b> (Brew): pay a recipe → a young cask; it takes the FACE-UP action of that quality’s pile (steerable). Also <b>deploy</b> a Ready cask onto <b>any</b> open slot.<br>'
       +ic('hourglass')+' <b>Cellar</b> (Age): 3 age points across your casks (fully ages a Bock in one visit). Casks also age +1 automatically at the start of your turn. Then optionally <b>Tap</b> one cask (fire its action once, then discard) <b>or buy an '+ic('wrench')+' Improvement</b> (max '+IMP_AREA_CAP+' in your area).<br>'
       +ic('anchor')+' <b>Harbor</b> (Ship): load a Ready cask onto a ship (it sails when full → each owner banks the benefit + points), <b>Enshrine</b> a Q2+ <i>slot</i> cask at the '+ic('crown')+' Hall (local), or Charter.</div></div>'
@@ -2866,7 +2868,7 @@ function renderBuildings(){
   if(!document.getElementById('bldgref'))return;   // panel removed — buildings now live as tiles in the UI
   const placed=SLOTS.map(s=>s.id).filter(id=>bAt(id)).map(id=>({id,b:bAt(id)}));
   let h='<div class="note" style="margin-bottom:5px"><b>'+LU('beer')+' Quality premium:</b> a '+LU('building-2')+' value Building pays its printed ★ for Q1–Q3; a <b>Q4</b> cask banks <b>+2★</b> and a <b>Q5</b> cask <b>+3★</b> on top — the climb pays (no cap).</div>';
-  if(!placed.length){h+='<div class="note">No buildings placed yet. Earn one by delivering to '+LU('landmark')+' London/Novgorod, or buy one at the Market — then place it on a slot to author its effect.</div>';}
+  if(!placed.length){h+='<div class="note">No buildings placed yet. Earn one by delivering to '+LU('landmark')+' London, or buy one at the Market — then place it on a slot to author its effect.</div>';}
   else{
     h=placed.map(x=>{const def=BUILDINGS[x.b.b];const o=S.players[x.b.owner];const occ=S.slots[x.id];
       const holding=occ?(occ.type==='ship'?LU('sailboat')+shipName(occ)+'→'+DEST[occ.dest].name.slice(0,3)+' '+occ.load.length+'/'+effCap(occ):LU('beer')+styleShort(occ.style)+' Q'+occ.q):'empty';
@@ -2878,11 +2880,12 @@ function renderBuildings(){
         +'</div>';}).join('');
   }
   const disp=(S.buildDisplay||[]);
-  if(disp.length)h+='<div class="bref disp"><span class="brh"><b>At the Market</b> <span class="note">(buy '+costStr({g:2})+'–'+costStr({g:3})+' + place, or earn free at London/Novgorod)</span></span><div class="note">'
+  if(disp.length)h+='<div class="bref disp"><span class="brh"><b>At the Market</b> <span class="note">(buy '+costStr({g:2})+'–'+costStr({g:3})+' + place, or earn free at London)</span></span><div class="note">'
     +disp.map(k=>LU(BUILDINGS[k].icon)+' '+bName(k)+' <span class="brtag '+BUILDINGS[k].verb+'">'+BUILDINGS[k].verb+'</span>').join(' &nbsp;·&nbsp; ')+'</div></div>';
   document.getElementById('bldgref').innerHTML=h;
 }
 function renderDests(){
+  const majOff=EXPANSIONS.some(m=>expOn(m)&&m.replacesMajorities);   // The Trade Roads turns the kontor majorities OFF (the contest moves inland)
   let h='';DESTS.forEach(d=>{const D=DEST[d];
     const leaders=D.kontor?leadersAt(d):[];
     // deliveries as SQUARES: one filled square per delivered cask (player colour), outlined squares
@@ -2905,7 +2908,7 @@ function renderDests(){
       :D.benefit==='age'?'<span data-tip="'+attr('Benefit: refine — advance a maturing cask +1 step toward Ready.')+'">+'+LU('hourglass')+'</span>':'';
     h+='<div class="route '+d+'" data-tip="'+attr(D.name+' · '+D.role)+'">'
       +'<div class="rh"><span class="ric">'+(D.kontor?LU('landmark'):LU('crown'))+'</span>'
-      +((D.maj&&D.maj.length)?'<span class="rmaj" data-tip="'+attr('End-game majority '+D.maj.join('/')+' — to 1st/2nd/3rd by delivered-cask count (2p skips 2nd).')+'">'+D.maj.join('/')+'</span>':'')+'</div>'
+      +((D.maj&&D.maj.length)?'<span class="rmaj'+(majOff?' off':'')+'" data-tip="'+attr(majOff?('Majorities OFF this game — The Trade Roads replaces them with the inland-roads network (see the Trade Roads panel). Printed base: '+D.maj.join('/')+'.'):('End-game majority '+D.maj.join('/')+' — to 1st/2nd/3rd by delivered-cask count (2p skips 2nd).'))+'">'+D.maj.join('/')+'</span>':'')+'</div>'
       +'<div class="rn">'+D.name+'</div>'
       +'<div class="rstats">'
       +'<span class="rgate" data-tip="'+attr('Min quality Q'+D.gate+' to deliver here.')+'"><b>Q'+D.gate+'+</b></span>'
@@ -2942,7 +2945,7 @@ function renderShop(){
   else h+='<div class="note" style="opacity:.7">'+LU('sailboat')+' ship market empty <span class="note">(charters still sail)</span></div>';
   // the BUILDING display (v1.0 keystone): buy + place one (or earn one free at London/Novgorod)
   const noslot=!buildableSlots().length;
-  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('building-2')+' Building display</b> <span class="note">('+(S.buildDisplay||[]).length+' face-up · '+S.buildDeck.length+' in the deck — buy + place, or earn free at '+LU('landmark')+' London/Novgorod)</span></div>';
+  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('building-2')+' Building display</b> <span class="note">('+(S.buildDisplay||[]).length+' face-up · '+S.buildDeck.length+' in the deck — buy + place, or earn free at '+LU('landmark')+' London)</span></div>';
   h+='<div class="shopgrid">'+(S.buildDisplay||[]).map((key,i)=>{const def=BUILDINGS[key];const can=canPay(p,def.cost)&&!noslot;
     return '<div class="shopcell"><div class="mtile" data-tip="'+attr((def.verb==='value'?'Value':'Transform')+' — '+def.desc+' · rivals ½ + you +'+WHARFAGE+'★ wharfage')+'">'+pBldgFace({b:key})+'</div>'+(buying?'<button '+(can?'':'disabled')+' onclick="buyBuilding('+i+')">buy + place</button>':'')+'</div>';}).join('')+'</div>';
   if(!(S.buildDisplay||[]).length)h+='<div class="note">(building deck exhausted)</div>';
