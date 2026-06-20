@@ -163,7 +163,7 @@
 <header>
   <h1>Brewhouses of the Hanse</h1>
   <div class="sub">Rulebook &amp; Components · A merchant brewing house in the Hanseatic League. At <b>the Wharf</b> you <b>Source → Brew → Age → Ship</b> — the <b>kontore</b> pay volume, the <b>Hall</b> pays prestige.</div>
-  <div class="tag">v1.6 “Hops” prototype draft · all numbers placeholders ⚙</div>
+  <div class="tag">v1.9 “Specialty Beers” prototype draft · all numbers placeholders ⚙</div>
 </header>
 
 <nav>
@@ -274,7 +274,7 @@
     <li><b>Deal 3 of the 4 export beers</b> ⚙. Each carries a <b>fixed quality</b> — <b>Broyhan</b> Q3 · <b>Keut</b> Q3 · <b>Mumme</b> Q4 · <b>Bock</b> Q5 — so dropping one varies the ladder: drop a Q3 → the full Q3→Q5 climb; drop Mumme → no Q4; drop Bock → no Q5. Recipes &amp; ships are an always-available Market supply; shuffle the <b>Building deck</b> and deal <b>4 ⚙ face-up</b> — the <b>Building display</b> (refills as tiles are taken, §9). Set out each quality's <b>cask-action pile face-up</b> (you brew toward the visible top action, §8).</li>
     <li>Set the <b>Sailed-Ships track</b> to its player-scaled length (it scales steeply): <b>~6 / 10 / 13 slots for 2 / 3 / 4 players</b> ⚙.</li>
     <li>Each player takes a <b>brewery board</b>, a <b>worker</b>, ownership discs, and a starting stake: the <b>Gruit + Hopped</b> recipes (printed), <b>2 open vessels</b> (lane 3 locked behind Extra Vessel), <b>2 charter contracts</b>, <b>1 Building tile in hand</b> (an authorship play for turn 1), and <b>one Ready Gruit</b> in Vessel 1 (deploy it turn 1).</li>
-    <li><b>Starting goods (with seat compensation):</b> <b>3 <span class="cube g"></span>, 2 <span class="cube h"></span></b>, plus <b>+1 <span class="cube g"></span> for every seat after the first</b> ⚙ — so seats P1…P5 start with <b>3 / 4 / 4 / 4 / 4 G</b>. (Turn order is fixed, which gives the first player a small edge; the free opening placement + this +1 G neutralize it.)</li>
+    <li><b>Starting goods:</b> <b>3 <span class="cube g"></span>, 2 <span class="cube h"></span></b> — <b>equal for every seat</b> ⚙ (v1.7 removed the old +1 <span class="cube g"></span>/later-seat compensation — under strong play it over-corrected). Turn order is fixed; the first player's natural turn-1 edge (choose the line, place + activate the warm Gruit, no toll) plus the free opening placement balance it.</li>
     <li>Each player places their worker on any station — <b>your opening placement is free</b> (no occupancy toll, §6). Give the first-player marker to any player (it does not pass).</li>
   </ol>
   <div class="box"><h4>Warm start</h4>Starting with 2 vessels, two shared hulls already on the Wharf, and a Ready cask means a first voyage is reachable by turn 2–3.</div>
@@ -294,7 +294,7 @@
     </li>
   </ol>
   <div class="box"><h4>Both stations always fire</h4>Activating a line triggers <em>both</em> stations; your worker only determines <b>which line is legal</b>. Because base actions are always available and slot buildings only <em>add</em>, you are never stalled — a populated Wharf makes your turns bigger.</div>
-  <p>Play passes clockwise. <b>The first player is fixed for the whole game — turn order does not rotate.</b> The <b>free opening placement</b> and the <b>+1 G per later seat</b> (§5) are the seat balancers.</p>
+  <p>Play passes clockwise. <b>The first player is fixed for the whole game — turn order does not rotate.</b> Starts are <b>equal</b> (v1.7 removed the +1 G/later-seat compensation); the seat balancer is the <b>free opening placement</b> plus the first player's natural turn-1 edge (§5).</p>
 </section>
 
 <section id="actions">
@@ -395,6 +395,18 @@
   <p>With fewer workers the slots feel loose, so <b>lock some slots</b> (down to ~6 ⚙) to keep the race for cargo space tight. The <b>Sailed-Ships track</b> is shortest at 2p (~6 slots ⚙), so the clock stays brisk. Majorities are <b>winner-take-all</b> at 2p (2nd place is skipped). Everything else plays identically.</p>
 </section>
 
+<section id="expansion">
+  <h2><span class="nm">★</span>Expansion — Specialty Beers <span class="small">(opt-in)</span></h2>
+  <p>A modular, <b>opt-in</b> expansion, switched on by a <b>New Game checkbox</b>. <b>Off → the base game is exactly as above.</b> On → three new <b>specialty beers</b> join the export draft, so you <b>deal 3 of 7</b> (vs the base 3 of 4), with a guarantee of <b>≥1 base Q4+</b> (Mumme/Bock) so the quality climb still matters. The point: turn the roster from a quality <i>ladder you climb</i> into <i>characters you main</i>. Each specialty beer is <b>pinned</b> — its slot-action is fixed &amp; printed (the base climb beers still draw from the <b>steerable pile</b>, so the Orléans-lite agency is untouched; this simply generalizes Gruit's pin) — and carries <b>one always-on signature</b>, so leaning a beer pays <i>during</i> play, not just at scoring.</p>
+  <table>
+    <tr><th>Q</th><th>Beer (town)</th><th>Brew</th><th>Matures</th><th>Pinned action</th><th>Signature ⚙</th></tr>
+    <tr><td><b>Q2</b></td><td><b>Gose</b> <span class="small">(Goslar)</span></td><td><span class="cube g"></span> <span class="cube g"></span> <span class="small">(no hops)</span></td><td>1</td><td>Source</td><td><b>Salt Trade</b> — a kontor delivery throws off <b>+1 <span class="cube g"></span> +1 <span class="cube h"></span></b> to the owner (liquidity; the grain-path beer)</td></tr>
+    <tr><td><b>Q3</b></td><td><b>Zerbster</b> <span class="small">(Zerbst)</span></td><td><span class="cube h"></span> <span class="cube h"></span> <span class="cube h"></span></td><td>1</td><td>Load</td><td><b>Parti-Gyle</b> — brewing it also fills an open vessel with a <b>free small Gruit</b> (the weak second runnings → throughput + the Flight; lost if no vessel is open)</td></tr>
+    <tr><td><b>Q2</b></td><td><b>Duckstein</b> <span class="small">(Königslutter)</span></td><td><span class="cube g"></span> <span class="cube h"></span></td><td>2</td><td>Reach</td><td><b>Smoke-Hardy</b> — ships &amp; scores as <b>+1 quality</b> (gates <i>and</i> value — reaches the Novgorod long-haul; a humble beer that travels like a fine export)</td></tr>
+  </table>
+  <p class="small">Recipe buys ⚙: Gose 1 <span class="cube g"></span> · Zerbster 1 <span class="cube h"></span> · Duckstein 1 <span class="cube g"></span>. Everything else — destinations, majorities, the Flight, the clock, scoring, the Hall — is <b>unchanged</b>; the expansion is pure roster content under the existing grammar (the “Beer Atlas” path). <b>Staged next</b> (each its own module): <b>Jopenbier</b> the vintage/super-beer, <b>blending</b>, and <b>thematic buildings</b> (Parti-Gyle Tun · Salt House · Smoke Kiln). See <code>RULES.md</code> §12 · <code>DESIGN.md</code> §9.</p>
+</section>
+
 <section id="glossary">
   <h2><span class="nm">16</span>Glossary</h2>
   <div class="glosgrid">
@@ -482,7 +494,7 @@
 </div>
 
 <footer>
-  Brewhouses of the Hanse · rulebook &amp; components · <b>v1.6 “Hops”</b> · generated from <code>RULES.md</code> / <code>COMPONENTS.md</code> · all numbers are placeholders ⚙<br>
+  Brewhouses of the Hanse · rulebook &amp; components · <b>v1.9 “Specialty Beers”</b> · generated from <code>RULES.md</code> / <code>COMPONENTS.md</code> · all numbers are placeholders ⚙<br>
   <span class="small">The Play client (<code>play.html</code>) is the de-facto reference implementation.</span>
 </footer>
 
