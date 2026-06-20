@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v1.9 “Specialty Beers”** — live; the **first expansion** is an **opt-in New Game toggle** that adds Gose · Zerbster · Duckstein to the export draft (pinned-signature "characters"; **base game byte-for-byte unchanged when off**). Base ruleset: **v1.8 “Quality Pays”** (value-Buildings reward the climb — +2★/+3★ at Q4/Q5; keystone rebuild + demand-dice + printables-tile UI; v1.5 private improvements). `play.html` implements both. |
+|**Status**     |**v1.9 “Specialty Beers”** — live; the **first expansion** ships as **two opt-in New Game toggles**: *Specialty Beers* (Gose · Zerbster · Duckstein → the 3-of-7 export draft; pinned-signature "characters") and the *Jopenbier* **Q6 vintage capstone** (self-contained scoring + dock-cellared aging-as-value; the deep moonshot). **Base game byte-for-byte unchanged when both off.** Base ruleset: **v1.8 “Quality Pays”** (value-Buildings reward the climb — +2★/+3★ at Q4/Q5; keystone rebuild + demand-dice + printables-tile UI; v1.5 private improvements). `play.html` implements both. |
 
 ---
 
@@ -167,6 +167,28 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   revisit: deal a **choice** of starting buildings (draft), or make the opening building **self-favoring**
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
+
+**v1.9 “Jopenbier” — the EXPANSION CAPSTONE (a 2nd opt-in toggle)** *(2026-06-20, `play.html` KEY v68)* — **The
+depth counterweight that completes the roster arc: a slow, dear, super-valuable Q6 “vintage” beer (Danzig).**
+Where the three Specialty Beers add *breadth* (characters across the low/mid band), Jopenbier is the all-in
+*deep* play — two incompatible plans on turn one. Its own toggle, independent of Specialty Beers. Design calls,
+each chosen to avoid rippling a tuned system: **(1) “Q6” is display-only — scored SELF-CONTAINED** (`deliverCask`
+special-cases it: `JOPEN_BASE` 8 at a kontor / `JOPEN_HALL` 9 enshrined, never the Q-keyed Hall/Novgorod/premium
+tables), so a sixth rung can’t leak into any balance dial. **(2) Aging-as-value (the novelty the game lacked):**
+once DEPLOYED it *cellars on the dock* — **+1★ vintage per owner-turn, cap 5** (`jopenVintageTick` in `endTurn`),
+folded into its delivered value; the longer (riskier) you hold it the bigger the payoff, and it stays
+contestable on the slot (a rival can hijack-ship it to deny the peak). **(3) Floor synergy:** pinned to
+**Source**, so the long ready-4 maturation funds itself on the Floor (the existing vessels-power-the-Floor rule
+does the work — no new code). **(4) Always *acquirable*, not drafted** (the looming moonshot every game it’s on)
+and **excluded from the Flight** (a capstone, not part of your range — this also dodges the `FLIGHT_PTS[6]`
+edge). **(5) The race-to-end:** the slowness + the visible recipe give the end-clock a second job — rivals push
+the Sailed-Ships track to deny a maturing Jopenbier. *Gates (KEY v68, `sim-results-v68.txt`):* base regression +
+EXPANSION + JOPEN all **0 crash/deadlock** 2–4p, pace in band; `ai-render-smoke` drives the capstone end-to-end
+(banks `JOPEN_BASE`+vintage, records Q6, Flight-excluded) through the **real** render layer; ladder 0 errors.
+*Note:* the greedy/persona bots don’t pilot the capstone (deep, all-in) — it is crash-validated; its balance is
+a human/Cellarmaster question (the intended high-variance “stars-align” lane — do not buff to fair). All numbers
+⚙. **This completes Option A’s core** (characters + a depth capstone); **blending** and **thematic buildings**
+remain as optional future polish.
 
 **v1.9 “Specialty Beers” — EXPANSION (opt-in)** *(2026-06-20, `play.html` KEY v67)* — **The first expansion
 module: an opt-in toggle that turns the beer roster from a ladder you climb into characters you main.**

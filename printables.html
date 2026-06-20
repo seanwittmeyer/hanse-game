@@ -463,6 +463,8 @@ const CASKS=[
   {nm:'Gose',     c:'#6e8b74', q:2, g:2,h:0, n:8, ready:1, pin:CASK_POOL[0], tag:'salt trade:<br>+'+LU('wheat')+LU('sprout')},
   {nm:'Zerbster', c:'#5f7a3c', q:3, g:0,h:3, n:6, ready:1, pin:CASK_POOL[2], tag:'parti-gyle:<br>+free Gruit'},
   {nm:'Duckstein',c:'#7a5236', q:2, g:1,h:1, n:8, ready:2, pin:CASK_POOL[3], tag:'smoke-hardy:<br>ships +1Q'},
+  // ---- EXPANSION CAPSTONE "Jopenbier" (v1.9, its OWN toggle) — the Q6 vintage super-beer (self-contained scoring) ----
+  {nm:'Jopenbier',c:'#5e2433', q:6, g:2,h:4, n:3, ready:4, pin:CASK_POOL[0], tag:'vintage:<br>+★/turn deployed'},
 ];
 // v0.11 — NEUTRAL, destination-bound hulls (the destination is PRINTED on the tile). The 20-tile deck,
 // KONTORE ONLY: Bruges 5 · London 5 · Bergen 5 · Novgorod 5 (11 Cog / 9 Hulk); the Hall is reached by the local Enshrine, not a boat.
@@ -529,6 +531,7 @@ const RECIPES=[  // EXPORT recipe cards only — Gruit & Hopped are printed on t
   {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, buy:{g:1}, reach:'Q2 · grain-path (no hops) · SALT TRADE: a kontor delivery → +1G +1H'},
   {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, buy:{h:1}, reach:'Q3 · PARTI-GYLE: brewing also yields a free small Gruit (open vessel)'},
   {nm:'Duckstein',cc:'#7a5236', L:2, g:1,h:1, buy:{g:1}, reach:'Q2 · ready 2 · SMOKE-HARDY: ships &amp; scores as +1 quality (reaches Novgorod)'},
+  {nm:'Jopenbier',cc:'#5e2433', L:6, g:2,h:4, buy:{g:1,h:1}, reach:'Q6 CAPSTONE (own toggle) · self-contained 8★+ · cellars +1★/turn deployed · the race-to-end moonshot'},
 ];
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'}];
 // v1.1 destinations — four DISTINCT lanes. Kontor per-cask value is SMALL & flat (base) — the real value is
@@ -944,6 +947,8 @@ function checklist(pages,famPages){
     +row(1,'Cask · Gose Q2 (G G · ready 1 · PINNED Source · Salt Trade: a kontor delivery → +1G +1H)','8','')
     +row(1,'Cask · Zerbster Q3 (H H H · ready 1 · PINNED Load · Parti-Gyle: brew also yields a free small Gruit)','6','')
     +row(1,'Cask · Duckstein Q2 (G H · ready 2 · PINNED Reach · Smoke-Hardy: ships &amp; scores as +1 quality)','8','')
+    +row(0,'<i>— CAPSTONE “Jopenbier” (own toggle) — the Q6 vintage super-beer; self-contained value + dock-cellared vintage —</i>','','')
+    +row(1,'Cask · Jopenbier Q6 (G G H H H H · ready 4 · PINNED Source · always acquirable; not drafted, not in the Flight)','3','')
     +row(1,'Ships · NEUTRAL, destination-bound hulls (20 deck: 11 Cog cap 2 / 9 Hulk cap 3)','20',pgRef(pages,famPages,'Ships'))
     +row(0,'<i>destination printed on each: Bruges 5 · London 5 · Bergen 5 · Novgorod 5</i>','','')
     +row(1,'<b>Buildings · VALUE</b> ('+bVal.length+' designs — the demand layer)',bValN,pgRef(pages,famPages,'Value Buildings'))
@@ -957,7 +962,7 @@ function checklist(pages,famPages){
     +'<tr class="tot"><td></td><td>Tile total</td><td class="n">'+tileTotal+'</td><td></td></tr></table>';
   const aidNo=pages.filter(p=>p.section==='cards'&&p.label.indexOf('Player aid')===0).map(p=>p.no).sort((a,b)=>a-b);
   h+='<table><tr><th></th><th>Cards (cardstock, do NOT mount)</th><th>qty</th><th>sheet</th></tr>'
-    +row(1,'Export recipes 1.85×2.55″ · Broyhan / Keut / Mumme / Bock <i>+ Gose / Zerbster / Duckstein (expansion)</i> ×'+PLAYERS.length+' (1 set per player)',RECIPES.length*PLAYERS.length,pgRef(pages,famPages,'Recipe cards'))
+    +row(1,'Export recipes 1.85×2.55″ · Broyhan / Keut / Mumme / Bock <i>+ Gose / Zerbster / Duckstein (expansion) + Jopenbier (capstone)</i> ×'+PLAYERS.length+' (1 set per player)',RECIPES.length*PLAYERS.length,pgRef(pages,famPages,'Recipe cards'))
     +row(0,'<i>Gruit &amp; Hopped — printed on every brewery board (no card)</i>','—','')
     +row(1,'Charter contracts 1.85×2.55″ (start 2/house · buy at Market 1 G · spend 1 + 2 G fare)',CONTRACTS.n,pgRef(pages,famPages,'Charter contracts'))
     +row(1,'<b>Player aid</b> 4.7×3.4″ — double-sided (front: a turn · back: icon reference)',PLAYERS.length,aidNo.length?'S'+aidNo.join(', S'):'—')
