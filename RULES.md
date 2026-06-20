@@ -365,10 +365,23 @@ Recipe buys ⚙: Gose `1 G` · Zerbster `1 H` · Duckstein `1 G`. Everything els
 Flight, the clock, scoring, the Hall — is **unchanged**; the expansion is pure roster content under the
 existing grammar (the "Beer Atlas" path).
 
-*Staged next (each a separate, sim-gated module):* **Jopenbier** the vintage/super-beer (aging-as-value + the
-Floor-works-while-aging + the race-to-end, scored **self-contained** so it can't ripple the Q-keyed tables) →
-**blending** (the deep player's active turn) → **thematic buildings** (Parti-Gyle Tun · Salt House · Smoke
-Kiln). All numbers ⚙. Rationale + sim gates: `DESIGN.md` §9 (v1.9).
+### Capstone — Jopenbier (a second, independent toggle)
+
+A separate **New Game toggle** (on with or without Specialty Beers): the **vintage super-beer** (Danzig) — the
+*deep* counterweight to the breadth above (two incompatible plans on turn one). **Q6** (display only), **slow**
+(ready 4), **dear** (`2G 4H`), and **always acquirable** when on (not in the draft) — the looming moonshot. It
+is **scored self-contained** — a big fixed ★ that never touches the Hall/Novgorod/premium tables (so a "Q6"
+can't ripple anything): **8★ at a kontor / 9★ enshrined**, **plus a "vintage" bonus**. *Aging-as-value (new):*
+once **deployed**, it **cellars on the dock for +1★ per your turn (cap +5)** — the longer (riskier) you hold it,
+the bigger the payoff, and it stays **contestable** (a rival can hijack-ship it to deny your peak). Pinned to
+**Source**, so the long maturation **funds itself on the Floor**. **Excluded from the Flight** (a capstone, not
+part of your range); counts as a normal cask for majority. The slowness + the visible recipe give the
+**end-clock a second job** — rivals push the Sailed-Ships track to deny a maturing Jopenbier (the race-to-end).
+All numbers ⚙ (`JOPEN_BASE` 8 · `JOPEN_HALL` 9 · vintage cap 5 · ready 4).
+
+*Staged next (optional future modules):* **blending** (sacrifice two matured casks → one premium delivery — the
+deep player's active turn) → **thematic buildings** (Parti-Gyle Tun · Salt House · Smoke Kiln). Rationale + sim
+gates: `DESIGN.md` §9 (v1.9).
 
 ---
 

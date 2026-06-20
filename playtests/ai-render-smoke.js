@@ -42,6 +42,25 @@ while(!S.over){aiStep();render();if(++eguard>100000)throw new Error('guard tripp
 if(!S.expansion)throw new Error('EXPANSION flag not recorded on state');
 console.log('render smoke EXPANSION (Specialty Beers) OK — rounds '+S.turn+', exports '+S.exports.join('/'));
 EXPANSION=false;
+// 3a-JOP) the EXPANSION CAPSTONE Jopenbier — drive the Q6 self-contained scoring + dock-cellar vintage +
+// Flight-exclusion + the capstone tiles directly through the REAL render layer (the AI never pilots it).
+JOPEN=true;EXPANSION=false;
+S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;S.active=0;
+render();                                   // renderShop shows the always-acquirable Jopenbier item (P1 doesn't own it yet)
+S.slots['s1']=null;                          // clear any warm-start occupant on s1
+S.players[0].vessels[1]={style:'jopenbier',q:6,step:4,ready:4,act:'source'};
+render();                                   // pCaskFace for a maturing Q6 in a vessel (the "+★/turn" hint)
+if(!deployCask(1,'s1'))throw new Error('jopenbier deploy failed');
+jopenVintageTick(S.players[0]);jopenVintageTick(S.players[0]);   // +2 vintage on the dock
+render();                                   // pCaskFace for the deployed Q6 with the vintage badge
+const jL=captureLoad('s1');
+if(jL.q!==6)throw new Error('jopenbier should record Q6, got '+jL.q);
+deliverCask(S.players[0],jL,'bruges',null,false);
+const jd=S.players[0].delivered.slice(-1)[0];
+if(jd.val!==JOPEN_BASE+2)throw new Error('jopenbier self-contained value wrong: '+jd.val+' (expected '+(JOPEN_BASE+2)+')');
+if(flightBeers(S.players[0])!==0)throw new Error('jopenbier leaked into the Flight');
+console.log('render smoke JOPENBIER capstone OK — banked '+jd.val+'★ (base '+JOPEN_BASE+' + vintage 2 · Q6 · Flight-excluded)');
+JOPEN=false;
 // 3b) a guildmaster mini-game through the real render layer (tiny Monte Carlo budget)
 GUILD_MS=10;GUILD_MIN=1;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;
