@@ -33,7 +33,10 @@ function needShip(p){
 }
 // This game's dealt export beers the bot will climb (skips the Q5 cellar beer — a known greedy blind spot;
 // a CELLARMASTER seat (__cellar) INCLUDES it, to diagnose whether a well-played Q5 path is competitive).
-function buyableExports(p){return (S.exports||[]).filter(function(s){return !p.recipes.includes(s)&&(p.__cellar||!STYLES[s].cellar)&&canPay(p,RECIPE_BUY[s]);});}
+function buyableExports(p){var list=(S.exports||[]).filter(function(s){return !p.recipes.includes(s)&&(p.__cellar||!STYLES[s].cellar)&&canPay(p,RECIPE_BUY[s]);});
+  // EXPANSION CAPSTONE: the DEEP (cellarmaster) persona pursues the always-acquirable Jopenbier — so the PATHWAYS oracle can pressure-test it
+  if(JOPEN&&p.__cellar&&!p.recipes.includes('jopenbier')&&canPay(p,RECIPE_BUY.jopenbier))list.push('jopenbier');
+  return list;}
 function wantRecipe(p){return buyableExports(p).length>0;}
 function pickUpgrade(list){var pref=['vessel','cellar','granary','hopgarden'];
   for(var i=0;i<pref.length;i++)if(list.indexOf(pref[i])>=0)return pref[i];return list[0];}
@@ -146,14 +149,17 @@ function botMarket(p){
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
 function botPlaceBldg(){var bs=aBuildSlots();placeBldgOn((bs[0]||SLOTS[0]).id);}
+// EXPANSION CAPSTONE — cellar a deployed Jopenbier until ripe / ending (mirrors the in-page AI).
+function botJopenHold(ref){var c=(typeof ref==='string'&&S.slots[ref])?S.slots[ref]:null;
+  if(!c||c.style!=='jopenbier')return false; if(S.ending)return false; return (c.vintage||0)<JOPEN_VINTAGE_CAP-1;}
 function botHarbor(p){
-  if(UI.stage==='enshrine'){var ec=enshrineCasks(p).filter(function(o){return personaDest(p,o.q)==='hall';}).sort(function(a,b){return b.q-a.q;});
+  if(UI.stage==='enshrine'){var ec=enshrineCasks(p).filter(function(o){return personaDest(p,o.q)==='hall'&&!botJopenHold(o.ref);}).sort(function(a,b){return b.q-a.q;});
     if(ec.length){enshrinePick(ec[0].ref);return;}afterSail('stops');return;}
-  if(UI.stage==='charter_cask'){var cs=charterCasks(p).slice().sort(function(a,b){return b.q-a.q;});charterPickCask(cs[0].ref);return;}
+  if(UI.stage==='charter_cask'){var cs=charterCasks(p).slice();var nonJ=cs.filter(function(o){return o.style!=='jopenbier';});if(!S.ending&&nonJ.length)cs=nonJ;cs.sort(function(a,b){return b.q-a.q;});charterPickCask(cs[0].ref);return;}
   if(UI.stage==='charter_dest'){var ref=UI.tmp.charterCask;var c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
     var ds=DESTS.filter(function(d){return d!=='hall'&&c.q>=DEST[d].gate;});var d=personaDest(p,c.q);charterDest(ds.indexOf(d)>=0?d:(ds[0]||'bruges'));return;}
   // ENSHRINE (v0.15): a Ready Q2+ cask whose persona-destination is the Hall → showcase it locally (no boat)
-  if(enshrineCasks(p).some(function(o){return personaDest(p,o.q)==='hall';})){harborEnshrine();return;}
+  if(enshrineCasks(p).some(function(o){return personaDest(p,o.q)==='hall'&&!botJopenHold(o.ref);})){harborEnshrine();return;}
   var canLoad=myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});});
   if(canLoad){harborLoad();return;}
   // Charter only as a genuine relief valve: wharf jammed, end-game rush, or no hull & can't build one.
@@ -175,7 +181,7 @@ function botBrew(p){var aff=p.recipes.filter(function(r){return canBrew(p,r)&&op
 function botAge(p){var mat=p.vessels.map(function(c,i){return {c:c,i:i};}).filter(function(o){return o.c&&o.c.step<o.c.ready;});
   if(!mat.length){if(UI.age.mode==='pool')ageDone();else ageSkip();return;}
   mat.sort(function(a,b){return (a.c.ready-a.c.step)-(b.c.ready-b.c.step);});ageAllot(mat[0].i);}
-function botSource(p){var n=UI.src.n;var hT=p.recipes.some(function(r){return STYLES[r].in.h>=2;})?3:1;   // v1.6: bank hops for a hops-led export; else grain-leaning
+function botSource(p){var n=UI.src.n;var hT=p.recipes.includes('jopenbier')?4:(p.recipes.some(function(r){return STYLES[r].in.h>=2;})?3:1);   // v1.6/v1.9: bank hops (4 for the Jopenbier capstone, h:4)
   if(n>=2){if(p.hops<hT)srcTake(1,1);else srcTake(2,0);}else{if(p.hops<hT)srcTake(0,1);else srcTake(1,0);}}
 function botReach(){reachPick(UI.reach.ks[0]);}
 function botWild(p){
@@ -189,7 +195,7 @@ function caskBest(caskSlot,ships){var best=-1;ships.forEach(function(s){var sh=S
 function botLoad(p){var L=UI.load;
   if(!L.cask){var elig=L.casks.filter(function(cs){return L.ships.some(function(s){return canTake(s,cs);});});
     if(!elig.length){loadSkip();return;}
-    var own=elig.filter(function(cs){return refOwner(cs)===p.id;});
+    var own=elig.filter(function(cs){return refOwner(cs)===p.id&&!botJopenHold(cs);});   // cellar a deployed Jopenbier until ripe / ending
     var pick=(own.length?own:elig);
     pick.sort(function(a,b){return caskBest(b,L.ships)-caskBest(a,L.ships);});loadPickCask(pick[0]);return;}   // ship what pays most (incl. its value building)
   var ships=L.ships.filter(function(s){return canTake(s,L.cask);});
@@ -294,6 +300,9 @@ function runGame(n){
   // all-deliveries destination tally (to confirm prestige/majority leans are actually exercised)
   var allByDest={bruges:0,london:0,bergen:0,novgorod:0,hall:0};
   S.players.forEach(function(p){p.delivered.forEach(function(d){allByDest[d.dest]++;});});
+  // EXPANSION CAPSTONE — Jopenbier deliveries (proves the deep persona actually lands the moonshot)
+  var jopenAll=S.players.reduce(function(a,p){return a+p.delivered.filter(function(d){return d.style==='jopenbier';}).length;},0);
+  var jopenWin=wp.delivered.filter(function(d){return d.style==='jopenbier';}).length;
   var playerStats=S.players.map(function(p,i){var ts={};p.delivered.forEach(function(d){ts[d.style]=1;});   // distinct BEERS (the Flight metric)
     return {persona:persona(p),cellar:!!p.__cellar,startImp:p.__startImp||null,total:scores[i].total,won:(i===win),
       deliv:scores[i].deliv,maj:scores[i].maj,goals:scores[i].goals,
@@ -308,7 +317,7 @@ function runGame(n){
     winByDest:byDest, winValKontor:valDest.kontor, winValHall:valDest.hall,
     winShips:wp.shipsSailed, winUpgrades:wp.upgrades.length, winPersona:persona(wp),
     totalUpgrades:totalUpgrades, buys:__buys, totalDeliv:totalDeliv, charters:__charters,
-    allByDest:allByDest, playerStats:playerStats
+    allByDest:allByDest, jopenAll:jopenAll, jopenWin:jopenWin, playerStats:playerStats
   };
 }
 
@@ -457,6 +466,8 @@ function summarize(n, arr) {
   const totalAll = Object.values(allByDest).reduce((a, b) => a + b, 0);
   console.log(`ALL deliveries by destination (every player):`);
   console.log(`   ` + Object.keys(allByDest).map(k => `${k} ${pct(allByDest[k], totalAll)}`).join('   '));
+  const jopenAll = ok.reduce((a, r) => a + (r.jopenAll || 0), 0), jopenWin = ok.reduce((a, r) => a + (r.jopenWin || 0), 0);
+  if (jopenAll > 0) console.log(`Jopenbier capstone: delivered ${fmt(jopenAll / ok.length, 2)}/game (all players) · ${fmt(jopenWin / ok.length, 2)}/game by the winner`);
   // ===== PATHWAYS TO A WIN — per-strategy win-rate + score composition =====
   // Pathways: volume / prestige / majority (personas) + deep (cellarmaster). A cellar seat is reported
   // ONLY as 'deep' (its assigned persona is ignored, since it plays the deep policy).

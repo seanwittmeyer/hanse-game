@@ -70,7 +70,10 @@ render();
 var gguard=0;
 while(!S.over){aiStep();render();if(++gguard>100000)throw new Error('guard tripped in GM game');}
 console.log('render smoke guildmaster OK — rounds '+S.turn);
-// 3c) a cellarmaster mini-game through the real render layer (tiny deep-MC budget)
+// 3c) a cellarmaster mini-game through the real render layer (tiny deep-MC budget) — with BOTH expansions
+// ON, so the MC's enumeration + deep rollout exercise the specialty beers AND the Jopenbier capstone (the
+// real oracle path: aiBuyableExports adds jopenbier, the deep rollout prices it, aiJopenHold cellars it).
+EXPANSION=true;JOPEN=true;
 CELLAR_MS=20;CELLAR_MIN=1;CELLAR_CAP=120;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;
 S.players[0].ai={tier:'cellarmaster',persona:null};
@@ -78,7 +81,8 @@ S.players[1].ai={tier:'trader',persona:'prestige'};
 render();
 var cguard=0;
 while(!S.over){aiStep();render();if(++cguard>100000)throw new Error('guard tripped in Cellarmaster game');}
-console.log('render smoke cellarmaster OK — rounds '+S.turn);
+console.log('render smoke cellarmaster OK (Specialty Beers + Jopenbier on) — rounds '+S.turn);
+EXPANSION=false;JOPEN=false;
 // 3d) the opt-in Path C (turn-level UCT) Cellarmaster — keep the tree-search code crash-covered
 CELLAR_MS=20;CELLAR_MIN=1;CELLAR_CAP=120;CELLAR_MCTS=true;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;

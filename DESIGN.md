@@ -185,9 +185,14 @@ edge). **(5) The race-to-end:** the slowness + the visible recipe give the end-c
 the Sailed-Ships track to deny a maturing Jopenbier. *Gates (KEY v68, `sim-results-v68.txt`):* base regression +
 EXPANSION + JOPEN all **0 crash/deadlock** 2–4p, pace in band; `ai-render-smoke` drives the capstone end-to-end
 (banks `JOPEN_BASE`+vintage, records Q6, Flight-excluded) through the **real** render layer; ladder 0 errors.
-*Note:* the greedy/persona bots don’t pilot the capstone (deep, all-in) — it is crash-validated; its balance is
-a human/Cellarmaster question (the intended high-variance “stars-align” lane — do not buff to fair). All numbers
-⚙. **This completes Option A’s core** (characters + a depth capstone); **blending** and **thematic buildings**
+*Note (AI wired — KEY v68 follow-up):* the **Cellarmaster, the deep MC-rollout, and the `sim.js` deep persona
+now pursue the capstone** — acquire → bank 4 hops → brew → **cellar-then-cash** (`aiJopenHold`: hold a deployed
+Jopenbier until ripe or ending, never strand it; `caskValueAt` prices it self-contained so a ripe one ranks
+right). Oracle (`JOPEN=1 CELLAR=1 PERSONAS=1`, `sim-results-v68-jopenbier-ai.txt`): the deep lane lands it
+~**0.07–0.11/game** (a rarely-completed moonshot, by design) with **0 crash/deadlock** and the **deep lane
+unchanged — slightly-below-fair, do not buff to fair**. So the strong AI is now a real opponent/oracle for it
+(human playtests + sim); tuning the capstone's numbers stays a human/strong-MC table question. All numbers ⚙.
+**This completes Option A’s core** (characters + a depth capstone); **blending** and **thematic buildings**
 remain as optional future polish.
 
 **v1.9 “Specialty Beers” — EXPANSION (opt-in)** *(2026-06-20, `play.html` KEY v67)* — **The first expansion

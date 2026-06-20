@@ -883,6 +883,7 @@ function ownsBuilding(p,key){return SLOTS.some(s=>{const b=bAt(s.id);return b&&b
 // ---- value-routing estimators (shared by the in-page AI and the headless sim bot; not ai-prefixed) ----
 // what a deployed cask would DELIVER for at dest, incl. the owner-share of its current slot's value building.
 function caskValueAt(caskSlot,dest){const ct=refCask(caskSlot);if(!ct)return 0;
+  if(ct.style==='jopenbier')return (dest==='hall'?JOPEN_HALL:JOPEN_BASE)+((!isVRef(caskSlot)&&S.slots[caskSlot]&&S.slots[caskSlot].vintage)||0);   // EXPANSION CAPSTONE: self-contained value (+ dock-cellared vintage), never the Q-keyed tables
   const q=caskEffQ(caskSlot);let v=destValue(dest,q);if(isVRef(caskSlot))return v;   // vessel cask carries no slot building
   if(ct.type!=='cask')return 0;const owner=ct.owner;const bd=bAt(caskSlot);
   if(bd){const raw=caskBldgValue(bd,dest,q,owner);v+=(bd.owner!==owner)?Math.ceil(raw/2):raw;}
@@ -1970,9 +1971,12 @@ function aiNeedShip(p){return aiCommissionIdx(p)>=0;}   // for the Source-cell h
 // apprentice/journeyman keep the documented greedy blind spot (never the premium beer) on purpose, so
 // the trader's Q5/full-flight edge keeps the tiers ordered. `premium` is an AI-only flag — humans and
 // the headless sim bot brew Bock freely (it's ungated in the game).
-function aiBuyableExports(p){return (S.exports||[]).filter(s=>!p.recipes.includes(s)
+function aiBuyableExports(p){const list=(S.exports||[]).filter(s=>!p.recipes.includes(s)
   &&((aiIsTrader(p)||aiDeepRollout())||!STYLES[s].premium)
-  &&canPay(p,RECIPE_BUY[s]));}
+  &&canPay(p,RECIPE_BUY[s]));
+  // EXPANSION CAPSTONE: the Trader/Cellarmaster (& the deep rollout) buy the always-acquirable Jopenbier recipe, so the MC can PRICE the moonshot
+  if(S.jopen&&!p.recipes.includes('jopenbier')&&(aiIsTrader(p)||aiDeepRollout())&&canPay(p,RECIPE_BUY.jopenbier))list.push('jopenbier');
+  return list;}
 // v1.0: London/Novgorod hand a free BUILDING from the display — prefer flexible value buildings.
 function aiPickBuilding(p,list){
   if(aiIsApp(p))return aiRandOf(list);
@@ -2110,14 +2114,20 @@ function aiPlaceBldg(p){let bs=aBuildSlotsAI();if(!bs.length)bs=SLOTS.slice();  
   // trader: place on a slot of a line it works often (a high-traffic line); else first open
   if(aiIsTrader(p)&&p.cell){const lk=cellOfLine(p.cell)[aiChosenWhich||'row'];const on=bs.find(s=>s.line===lk);if(on){placeBldgOn(on.id);return;}}
   placeBldgOn(bs[0].id);}
+// EXPANSION CAPSTONE — the AI CELLARS a deployed Jopenbier (lets its vintage build) and only CASHES it when
+// it's ripe (near the cap) or the game is ending (never strand the moonshot). true = keep holding.
+function aiJopenHold(ref){const c=(typeof ref==='string'&&S.slots[ref])?S.slots[ref]:null;
+  if(!c||c.style!=='jopenbier')return false;
+  if(S.ending)return false;
+  return (c.vintage||0)<JOPEN_VINTAGE_CAP-1;}
 function aiHarbor(p){
-  if(UI.stage==='enshrine'){const cs=enshrineCasks(p).filter(o=>aiDest(p,o.q,o.style)==='hall').sort((a,b)=>b.q-a.q);
+  if(UI.stage==='enshrine'){const cs=enshrineCasks(p).filter(o=>aiDest(p,o.q,o.style)==='hall'&&!aiJopenHold(o.ref)).sort((a,b)=>b.q-a.q);
     if(cs.length){enshrinePick(cs[0].ref);return;}afterSail('stops');return;}
-  if(UI.stage==='charter_cask'){const cs=charterCasks(p).slice().sort((a,b)=>b.q-a.q);charterPickCask(cs[0].ref);return;}
+  if(UI.stage==='charter_cask'){let cs=charterCasks(p).slice();const nonJ=cs.filter(o=>o.style!=='jopenbier');if(!S.ending&&nonJ.length)cs=nonJ;cs.sort((a,b)=>b.q-a.q);charterPickCask(cs[0].ref);return;}
   if(UI.stage==='charter_dest'){const ref=UI.tmp.charterCask;const c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
     const ds=DESTS.filter(d=>d!=='hall'&&c.q>=DEST[d].gate);const d=aiDest(p,c.q,c.style);charterDest(ds.indexOf(d)>=0?d:(ds[0]||'bruges'));return;}
   // ENSHRINE first: any Ready Q2+ cask whose best destination is the Hall → showcase it locally (no boat)
-  if(enshrineCasks(p).some(o=>aiDest(p,o.q,o.style)==='hall')){harborEnshrine();return;}
+  if(enshrineCasks(p).some(o=>aiDest(p,o.q,o.style)==='hall'&&!aiJopenHold(o.ref))){harborEnshrine();return;}
   const canLoad=myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs)));
   if(canLoad){harborLoad();return;}
   // Charter only as a genuine relief valve: slots jammed, the end-game rush, or no hull & can't build.
@@ -2138,7 +2148,7 @@ function aiAge(p){const mat=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.ste
   if(!mat.length){if(UI.age.mode==='pool')ageDone();else ageSkip();return;}
   if(aiIsApp(p)||aiNoisy(p)){ageAllot(aiRandOf(mat).i);return;}   // the apprentice ages whatever
   mat.sort((a,b)=>(a.c.ready-a.c.step)-(b.c.ready-b.c.step));ageAllot(mat[0].i);}
-function aiSource(p){const n=UI.src.n;const hT=p.recipes.some(r=>STYLES[r].in.h>=2)?3:1;   // v1.6: bank hops for a hops-led export (mumme/bock/broyhan); else stay grain-leaning
+function aiSource(p){const n=UI.src.n;const hT=p.recipes.includes('jopenbier')?4:(p.recipes.some(r=>STYLES[r].in.h>=2)?3:1);   // v1.6: bank hops for a hops-led export; v1.9: 4 for the Jopenbier capstone (h:4)
   if(n>=2){if(p.hops<hT)srcTake(1,1);else srcTake(2,0);}else{if(p.hops<hT)srcTake(0,1);else srcTake(1,0);}}
 function aiReach(p){if(aiIsApp(p)){reachSkip();return;}
   if(!aiIsTrader(p)){reachPick(UI.reach.ks[0]);return;}   // journeyman: greedy first kontor
@@ -2157,7 +2167,7 @@ function aiLoad(p){const L=UI.load;
   if(!L.cask){const elig=L.casks.filter(cs=>L.ships.some(s=>canTake(s,cs)));
     if(!elig.length){loadSkip();return;}
     if(aiIsApp(p)||aiNoisy(p)){loadPickCask(aiRandOf(elig));return;}   // the apprentice loads whatever
-    const own=elig.filter(cs=>refOwner(cs)===p.id);
+    const own=elig.filter(cs=>refOwner(cs)===p.id&&!aiJopenHold(cs));   // EXPANSION: cellar a deployed Jopenbier (don't ship it early) until ripe / ending
     if(own.length){own.sort((a,b)=>aiCaskBest(p,b,L.ships)-aiCaskBest(p,a,L.ships));loadPickCask(own[0]);return;}   // ship the cask that pays most (incl. its value building)
     // Only rival casks are loadable. Loading one GIFTS its owner the delivery (value + benefit +
     // majority presence) — the trader does it only when the move pays for itself: it completes one
