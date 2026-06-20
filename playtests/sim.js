@@ -321,7 +321,7 @@ function runGame(n){
     allByDest:allByDest, jopenAll:jopenAll, jopenWin:jopenWin, playerStats:playerStats,
     // EXPANSION "The Trade Roads": trading posts founded this game (all players) + by the winner + winner inland ★
     olPosts:(S.overland?Object.values(S.overland.posts).reduce((a,arr)=>a+arr.length,0):0),
-    olWin:(S.overland?OL_TOWNS.reduce((a,t)=>a+(((S.overland.posts[t.k]||[]).includes(win))?1:0),0):0),
+    olWin:(S.overland?OL_TOWN_KEYS.reduce((a,k)=>a+(((S.overland.posts[k]||[]).includes(win))?1:0),0):0),
     olWinPts:(S.overland?(scores[win].ext||0):0)
   };
 }
@@ -475,7 +475,7 @@ function summarize(n, arr) {
   const jopenAll = ok.reduce((a, r) => a + (r.jopenAll || 0), 0), jopenWin = ok.reduce((a, r) => a + (r.jopenWin || 0), 0);
   if (jopenAll > 0) console.log(`Jopenbier capstone: delivered ${fmt(jopenAll / ok.length, 2)}/game (all players) · ${fmt(jopenWin / ok.length, 2)}/game by the winner`);
   const olPosts = ok.reduce((a,r)=>a+(r.olPosts||0),0), olWin = ok.reduce((a,r)=>a+(r.olWin||0),0), olWinPts = ok.reduce((a,r)=>a+(r.olWinPts||0),0);
-  if (olPosts > 0) console.log(`The Trade Roads: ${fmt(olPosts/ok.length,2)} posts founded/game (all, of 12) · winner ${fmt(olWin/ok.length,2)} posts, ${fmt(olWinPts/ok.length,1)}★ inland`);
+  if (olPosts > 0) console.log(`The Trade Roads: ${fmt(olPosts/ok.length,2)} posts founded/game (all, of 7 towns) · winner ${fmt(olWin/ok.length,2)} posts, ${fmt(olWinPts/ok.length,1)}★ inland`);
   // ===== PATHWAYS TO A WIN — per-strategy win-rate + score composition =====
   // Pathways: volume / prestige / majority (personas) + deep (cellarmaster). A cellar seat is reported
   // ONLY as 'deep' (its assigned persona is ignored, since it plays the deep policy).

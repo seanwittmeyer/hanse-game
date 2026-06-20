@@ -74,22 +74,26 @@ var bvz=S.players[0].vessels.filter(function(c){return c;});
 if(!bvz.some(function(c){return c.q===4&&c.step>=c.ready;}))throw new Error('blend did not produce a Ready Q4 cask: '+JSON.stringify(bvz));
 console.log('render smoke BLEND OK — two Q3 → a premium Q4 (Ready)');
 EXPANSION=false;
-// 3a-ROAD) THE TRADE ROADS (Overland) — a delivery to a kontor extends the road, founds a post, scores the network,
-// turns kontor majorities OFF, and a held perk (Cologne salt) fires. Driven through the real deliverCask + render.
+// 3a-ROAD) THE TRADE ROADS (Overland, the Hanse Network) — per-VOYAGE caravan movement on a tree rooted at
+// Hamburg: a 1st Bruges voyage reaches the gateway, a 2nd founds Cologne (the Rhineland spur). Scores the
+// network, turns kontor majorities OFF, and a held perk (Cologne salt) fires. Driven through deliverCask+voyage+render.
 OVERLAND=true;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;S.active=0;
 if(!(S.overland&&S.overland.on))throw new Error('overland: state not set up');
-deliverCask(S.players[0],{owner:0,style:'broyhan',q:3,bld:null},'bruges',null,false);   // ship a Q3 to Bruges
-if(!((S.overland.reach[0].bruges||0)>=1))throw new Error('overland: road did not advance on delivery');
-if(!((S.overland.posts['br1']||[]).includes(0)))throw new Error('overland: Cologne post not founded');
-if(S.overland.founder['br1']!==0)throw new Error('overland: founder not recorded');
+// a voyage = the real seam: deliver each cask (per-cask keystone) then fire 'voyage' once (per-ship caravan step)
+function olVoy(pid,style,q,dest){deliverCask(S.players[pid],{owner:pid,style:style,q:q,bld:null},dest,null,false);fire('voyage',{ship:{load:[{owner:pid,style:style,q:q}],dest:dest}});}
+olVoy(0,'broyhan',3,'bruges');
+if(!olReached(0).bruges)throw new Error('overland: caravan did not reach the Bruges gateway on the 1st voyage');
+olVoy(0,'broyhan',3,'bruges');
+if(!((S.overland.posts['cologne']||[]).includes(0)))throw new Error('overland: Cologne not founded on the 2nd Bruges voyage');
+if(S.overland.founder['cologne']!==0)throw new Error('overland: founder not recorded');
 var oSc=scorePlayer(S.players[0]);
 if(!(oSc.ext>0))throw new Error('overland: inland network scored nothing');
 if(oSc.maj!==0)throw new Error('overland: kontor majorities should be OFF with The Trade Roads on');
 var g0=S.players[0].grain;UI={sub:'source',src:{n:2,returnTo:'end'}};srcTake(2,0);   // Cologne 'salt' perk → +1 G on Market goods
 if(!(S.players[0].grain>=Math.min(S.players[0].storage,g0+3)))throw new Error('overland: salt perk (+1 G on Market goods) not applied');
 render();   // exercise the inland map panel injection through the real render layer
-console.log('render smoke OVERLAND (The Trade Roads) OK — Bruges reach '+S.overland.reach[0].bruges+', '+Object.keys(S.overland.founder).length+' post(s) founded, inland '+oSc.ext+'★, majorities '+oSc.maj);
+console.log('render smoke OVERLAND (The Trade Roads) OK — reached '+Object.keys(olReached(0)).join('/')+', '+Object.keys(S.overland.founder).length+' town(s) founded, inland '+oSc.ext+'★, majorities '+oSc.maj);
 OVERLAND=false;
 // 3b) a guildmaster mini-game through the real render layer (tiny Monte Carlo budget)
 GUILD_MS=10;GUILD_MIN=1;

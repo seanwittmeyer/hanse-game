@@ -735,7 +735,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-hotseat-v74'; // v2.0 "The Trade Roads" (Overland) — a 3rd opt-in expansion built on a new EXPANSION SPINE (registry + hooks) so the core stays clean. It RETHINKS the kontor majorities as an inland MAP/tech-tree: delivering a cask to a kontor (the existing Ship action, fully through the demand-die/quality keystone) also extends your ROAD inland from that kontor; reaching a town FOUNDS a Trading Post — a recurring engine PERK (stackable: salt/liquidity/demand/extraload/reach/refine/enshrine) + end-game ★. First to a town gets a one-time BOON (Merv-style); later arrivals still get the perk + half ★ (catch-up-friendly, no runaway). Quality gates the deep towns (reach=breadth, quality=depth — both win). Kontor majorities turn OFF when Overland is on (the contest moves inland); Reach/Keut/Bergen re-home to road steps. Base + Specialty Beers + Jopenbier byte-unchanged when off. Bump discards stale v73 state. // v1.9 "Beer Atlas" — OPTION A COMPLETE: adds BLENDING (a Cellar action — combine two Ready vessel casks → one premium cask at +1 quality, the higher +1, cap Q5, in a freed vessel; the deep player's active turn) + 3 THEMATIC BUILDINGS gated to Specialty Beers (Salt House = +1G+1H to the shipper on delivery · Smoke Kiln = +1 quality, cap Q5 · Parti-Gyle Tun = a free small Gruit when a cask deploys there). This is the foundation re-established after the Inland Road (Option B, v69–v72) was ROLLED BACK (it bypassed the demand/quality/Flight keystone and replaced a tuned lane — see DESIGN §9; the Inland work is preserved on the archive/option-b-inland branch). Bump discards stale v66–v72 state. // v1.9 "Jopenbier" capstone (a 2nd opt-in toggle, independent of Specialty Beers): a slow/dear/rare Q6 super-beer, ALWAYS acquirable when on (not drafted; EXCLUDED from the Flight); SELF-CONTAINED scoring (JOPEN_BASE/JOPEN_HALL + dock-cellared vintage at +1★/owner-turn deployed, cap JOPEN_VINTAGE_CAP) so a "Q6" never touches the Q-keyed tables; pinned Source (the long maturation funds itself on the Floor); the race-to-end moonshot. Bump discards stale v67 state. // v1.9 "Specialty Beers" (EXPANSION, opt-in toggle): a New Game checkbox adds Gose/Zerbster/Duckstein to the export draft (3 of 7); each PINNED + one signature (Gose = salt-trade goods on kontor delivery · Zerbster = parti-gyle, a free small Gruit at brew · Duckstein = smoke-hardy, +1 effective quality). Default OFF → base unchanged. Bump discards stale v66 state. // v1.8 "Quality Pays": value BUILDINGS are no longer CAPPED at a flat ★ — a PREMIUM cask banks a quality premium on top (Q4 +2★, Q5 +3★; gated at Q4 so it rewards the CLIMB, not the cheap Q3 volume game; the Hall's reliquary excluded — its 3/5/7/9 ladder already scales). A Bock through a value building is now worth its investment (e.g. Bruges base 1 + Staple 6 + a Rich Berth 2 = 9). Sims: lane balance & pace hold at baseline (no Q3 volume leak), the quality CEILING rises (3p winner-max 74→92). Bump discards stale v65 state. // v1.7.1: a DISPLACED building now FLIPS into its OWNER's improvements area (a Floor Wild) for ANY overbuild — a RIVAL's also scores +3★ (developer lane); a SELF-overbuild gives the Wild only (no points → no point-farm, but you CAN convert your own buildings into Floor engine pieces). Fixes "displaced building went to hand". Also: improvements catalog restored to the always-visible Market panel (buyable when at the Cellar); station yield-rows list EVERY action with "/" between OR-alternatives (Cellar now shows the Improvement wrench); per-icon station tooltips (anchor = Deploy, not Tap); v1.6→v1.7 version strings fixed. Bump discards stale v64 state. // v1.7 "Even Footing": (1) SEAT_COMP→0 — equal starts (the +1G/later-seat over-corrected under strong play, P2 won ~67-72% at 2p); (2) improvements CHEAPER (−1G) and bought at the CELLAR (alongside Tap), not the Market — the action-economy barrier, not goods; (3) a building a RIVAL overbuilds now FLIPS into its owner's improvements area = +3★ + a Wild on its back (fired via the Floor — enriching the alt-line vs the toll); (4) the improvements area is capped at IMP_AREA_CAP=4 (bought improvements + flipped tiles). Bump discards stale v63 state. // v1.6 "Hops": export ladder is HOPS-LED — Mumme 1G3H, Bock 2G3H (totals unchanged, ratio shifted to hops); export recipe-card buys lean hops (broyhan 1H, mumme 2H, bock 1G1H; keut stays the 1G grain-path Q3). Gives hops real demand (was a grain monopoly) → makes Hop Garden attractive without nerfing Granary. Bump discards stale v62 state. // v1.5: off-turn Building rewards (a rival's sail delivered YOUR cask) now QUEUE to the owner — they CHOOSE from the display at the start of their next turn (was: auto-granted at random). Bump discards stale v61 state. // v1.5 "Improvements": three new private upgrades — Harbor Crane (your Harbor load sets out 2 casks), Lagering Cellar (each of your turns +1 age to one maturing cask), Private Quay (load Ready casks straight from your vessels onto ships). Crane & Lagering moved OUT of the green Buildings pool into the purple IMPROVEMENTS (bought for goods). Bump discards stale v60 state. // v1.4 "Deploy": an EMPTY slot's DEFAULT line-action IS Deploy (shown as "{bldg?} Deploy"). Triggering it (or the Brewhouse — deploy icon on the station; Tap icon on the Cellar) deploys ONE Ready cask to ANY open slot; deploying onto another empty slot still PENDING on this line flips that slot's Deploy stop into the cask's ACTION stop (advanced: place where you'll still act). TAP unchanged (Cellar: vessel or slot → fire action once + discard). Bump discards stale v59 state. // (prior v59 "Tap a Cask"; prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
+const KEY='hanse-hotseat-v75'; // v2.0 "The Trade Roads" — OVERLAND REDESIGNED as the Hanse NETWORK: a tree rooted at HAMBURG (two roads out — West to the Bruges gateway → London/Bergen/Rhineland branches; East = the deep Novgorod haul). MOVEMENT is now per VOYAGE (one ship = one caravan step, gated by cask quality), not per cask; PRESENCE markers are the caravan trail; CORE cities are sea-benefit waypoints (towns carry the ★); BRUGES delivery = choose a recipe OR 2 goods (the knowledge on-ramp). Bump discards stale v74 state. // (prior) v2.0 "The Trade Roads" (Overland) — a 3rd opt-in expansion built on a new EXPANSION SPINE (registry + hooks) so the core stays clean. It RETHINKS the kontor majorities as an inland MAP/tech-tree: delivering a cask to a kontor (the existing Ship action, fully through the demand-die/quality keystone) also extends your ROAD inland from that kontor; reaching a town FOUNDS a Trading Post — a recurring engine PERK (stackable: salt/liquidity/demand/extraload/reach/refine/enshrine) + end-game ★. First to a town gets a one-time BOON (Merv-style); later arrivals still get the perk + half ★ (catch-up-friendly, no runaway). Quality gates the deep towns (reach=breadth, quality=depth — both win). Kontor majorities turn OFF when Overland is on (the contest moves inland); Reach/Keut/Bergen re-home to road steps. Base + Specialty Beers + Jopenbier byte-unchanged when off. Bump discards stale v73 state. // v1.9 "Beer Atlas" — OPTION A COMPLETE: adds BLENDING (a Cellar action — combine two Ready vessel casks → one premium cask at +1 quality, the higher +1, cap Q5, in a freed vessel; the deep player's active turn) + 3 THEMATIC BUILDINGS gated to Specialty Beers (Salt House = +1G+1H to the shipper on delivery · Smoke Kiln = +1 quality, cap Q5 · Parti-Gyle Tun = a free small Gruit when a cask deploys there). This is the foundation re-established after the Inland Road (Option B, v69–v72) was ROLLED BACK (it bypassed the demand/quality/Flight keystone and replaced a tuned lane — see DESIGN §9; the Inland work is preserved on the archive/option-b-inland branch). Bump discards stale v66–v72 state. // v1.9 "Jopenbier" capstone (a 2nd opt-in toggle, independent of Specialty Beers): a slow/dear/rare Q6 super-beer, ALWAYS acquirable when on (not drafted; EXCLUDED from the Flight); SELF-CONTAINED scoring (JOPEN_BASE/JOPEN_HALL + dock-cellared vintage at +1★/owner-turn deployed, cap JOPEN_VINTAGE_CAP) so a "Q6" never touches the Q-keyed tables; pinned Source (the long maturation funds itself on the Floor); the race-to-end moonshot. Bump discards stale v67 state. // v1.9 "Specialty Beers" (EXPANSION, opt-in toggle): a New Game checkbox adds Gose/Zerbster/Duckstein to the export draft (3 of 7); each PINNED + one signature (Gose = salt-trade goods on kontor delivery · Zerbster = parti-gyle, a free small Gruit at brew · Duckstein = smoke-hardy, +1 effective quality). Default OFF → base unchanged. Bump discards stale v66 state. // v1.8 "Quality Pays": value BUILDINGS are no longer CAPPED at a flat ★ — a PREMIUM cask banks a quality premium on top (Q4 +2★, Q5 +3★; gated at Q4 so it rewards the CLIMB, not the cheap Q3 volume game; the Hall's reliquary excluded — its 3/5/7/9 ladder already scales). A Bock through a value building is now worth its investment (e.g. Bruges base 1 + Staple 6 + a Rich Berth 2 = 9). Sims: lane balance & pace hold at baseline (no Q3 volume leak), the quality CEILING rises (3p winner-max 74→92). Bump discards stale v65 state. // v1.7.1: a DISPLACED building now FLIPS into its OWNER's improvements area (a Floor Wild) for ANY overbuild — a RIVAL's also scores +3★ (developer lane); a SELF-overbuild gives the Wild only (no points → no point-farm, but you CAN convert your own buildings into Floor engine pieces). Fixes "displaced building went to hand". Also: improvements catalog restored to the always-visible Market panel (buyable when at the Cellar); station yield-rows list EVERY action with "/" between OR-alternatives (Cellar now shows the Improvement wrench); per-icon station tooltips (anchor = Deploy, not Tap); v1.6→v1.7 version strings fixed. Bump discards stale v64 state. // v1.7 "Even Footing": (1) SEAT_COMP→0 — equal starts (the +1G/later-seat over-corrected under strong play, P2 won ~67-72% at 2p); (2) improvements CHEAPER (−1G) and bought at the CELLAR (alongside Tap), not the Market — the action-economy barrier, not goods; (3) a building a RIVAL overbuilds now FLIPS into its owner's improvements area = +3★ + a Wild on its back (fired via the Floor — enriching the alt-line vs the toll); (4) the improvements area is capped at IMP_AREA_CAP=4 (bought improvements + flipped tiles). Bump discards stale v63 state. // v1.6 "Hops": export ladder is HOPS-LED — Mumme 1G3H, Bock 2G3H (totals unchanged, ratio shifted to hops); export recipe-card buys lean hops (broyhan 1H, mumme 2H, bock 1G1H; keut stays the 1G grain-path Q3). Gives hops real demand (was a grain monopoly) → makes Hop Garden attractive without nerfing Granary. Bump discards stale v62 state. // v1.5: off-turn Building rewards (a rival's sail delivered YOUR cask) now QUEUE to the owner — they CHOOSE from the display at the start of their next turn (was: auto-granted at random). Bump discards stale v61 state. // v1.5 "Improvements": three new private upgrades — Harbor Crane (your Harbor load sets out 2 casks), Lagering Cellar (each of your turns +1 age to one maturing cask), Private Quay (load Ready casks straight from your vessels onto ships). Crane & Lagering moved OUT of the green Buildings pool into the purple IMPROVEMENTS (bought for goods). Bump discards stale v60 state. // v1.4 "Deploy": an EMPTY slot's DEFAULT line-action IS Deploy (shown as "{bldg?} Deploy"). Triggering it (or the Brewhouse — deploy icon on the station; Tap icon on the Cellar) deploys ONE Ready cask to ANY open slot; deploying onto another empty slot still PENDING on this line flips that slot's Deploy stop into the cask's ACTION stop (advanced: place where you'll still act). TAP unchanged (Cellar: vessel or slot → fire action once + discard). Bump discards stale v59 state. // (prior v59 "Tap a Cask"; prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1532,6 +1532,7 @@ function sailShip(slot,creditId){const t=S.slots[slot];
   // deliver FIRST (records the cask at the dest), THEN grant the benefit — so a Bergen free-Reach can see the
   // delivery it rode in on (presence is only allowed where you've delivered — v1.2).
   t.load.forEach(L=>{const owner=S.players[L.owner];deliverCask(owner,L,t.dest,slot,full);grantImmediate(owner,t.dest);});
+  fire('voyage',{ship:t,slot});   // EXPANSION SPINE: The Trade Roads advances each owner's caravan ONCE per voyage (not per cask)
   S.slots[slot]=null;S.sailed++;
   // the hull returns to the yard (the supply never dries up); the building stays on its slot.
   S.shipDeck.push({ship:t.ship,dest:t.dest});
@@ -1626,6 +1627,10 @@ function brecipePick(style){const b=UI.pendingRecipe[0];const p=S.players[b.pid]
   UI.pendingRecipe.shift();const rt=UI.brecipe.returnTo;UI.brecipe=null;afterSail(rt);}
 function goodsPick(g,h){snapshot();const b=UI.pendingGoods[0];gain(S.players[b.pid],g,h);
   UI.pendingGoods.shift();const rt=UI.goods.returnTo;UI.goods=null;afterSail(rt);}
+// The Trade Roads: a Bruges delivery may take a missing dealt-export RECIPE instead of the goods (the knowledge on-ramp).
+function goodsPickRecipe(style){const b=UI.pendingGoods[0];const lp=S.players[b.pid];
+  if(style&&!lp.recipes.includes(style)&&(S.exports||[]).includes(style)){snapshot();lp.recipes.push(style);log('↳ '+lp.name+' takes the '+LU('scroll-text')+'<b>'+STYLES[style].name+'</b> recipe at '+DEST[b.dest].name+' (the knowledge on-ramp).',true);}
+  UI.pendingGoods.shift();const rt=UI.goods.returnTo;UI.goods=null;afterSail(rt);}
 // the active player PICKS which display Building to take — to HAND (placed later at the Market).
 function benefitPick(key){const b=UI.pendingBenefits[0];
   if(!key||!(S.buildDisplay||[]).includes(key)){   // nothing to take (display empty) → skip this benefit
@@ -1658,7 +1663,7 @@ function charterDest(dest){const p=cur();
   // A charter is a single-cask voyage on an outside hull — it delivers (scores + benefit) and advances the
   // Sailed-Ships clock.
   log(p.name+' charters a '+LU('sailboat')+' single voyage — '+LU('beer')+' '+styleShort(c.style)+' → <b>'+DEST[dest].name+'</b> (spends a charter contract, '+p.contracts+' left). (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')',true);
-  grantImmediate(p,dest);deliverCask(p,L,dest,null,false);S.sailed++;afterSail('stops');
+  grantImmediate(p,dest);deliverCask(p,L,dest,null,false);fire('voyage',{ship:{load:[L],dest:dest},slot:null});S.sailed++;afterSail('stops');   // a charter is a one-cask voyage — it advances the caravan too
 }
 // ENSHRINE — the LOCAL prestige delivery: present a Q2+ cask DEPLOYED on a slot to the Hall, no boat, no
 // fare. The structural throttle (deploy-first) keeps the prized cask contestable on the ring. A cask sitting
@@ -2543,7 +2548,9 @@ function aiGmOptions(p){
   if(U==='survey'){const disp=Array.from(new Set(S.buildDisplay||[]));
     return disp.length?disp.map(k=>()=>surveyPick(k)):[()=>surveyPick(null)];}
   if(U==='toll')return [()=>tollPay(),()=>tollFloor()];   // the GM weighs paying for the public line vs working its Floor
-  if(U==='goodspick')return [()=>goodsPick(2,0),()=>goodsPick(1,1),()=>goodsPick(0,2)];   // liquidity mix — the GM evaluates each
+  if(U==='goodspick'){const lp=S.players[UI.pendingGoods[0].pid];   // Bruges: a recipe (Overland) or the goods mix — the GM evaluates each
+    const recs=olEnabled()?(S.exports||[]).filter(s=>!lp.recipes.includes(s)):[];
+    return recs.map(s=>()=>goodsPickRecipe(s)).concat([()=>goodsPick(2,0),()=>goodsPick(1,1),()=>goodsPick(0,2)]);}
   if(U==='breach'){const ks=reachBenKontore(S.players[UI.pendingReach[0].pid]);return ks.length?ks.map(k=>()=>breachPick(k)):[()=>breachPick(null)];}   // Bergen free Reach — which kontor (only where delivered)
   if(U==='brecipe'){const lp=S.players[UI.pendingRecipe[0].pid];const o=freeRecipeOptions(lp).map(s=>()=>brecipePick(s));o.push(()=>brecipePick(null));return o;}
   if(U==='wild')return [()=>wildPick('source'),()=>wildPick('brew'),()=>wildPick('age'),()=>wildPick('ship'),()=>wildSkip()];
@@ -2588,7 +2595,9 @@ function aiStep(){
       case 'survey':return aiSurvey();
       case 'placebldg':return aiPlaceBldg(p);
       case 'toll':return tollPay();              // the journeyman/trader pay the toll for the public line (the GM weighs the Floor via aiGmOptions)
-      case 'goodspick':return goodsPick(2,0);    // the AI takes the liquidity benefit as 2 grain
+      case 'goodspick':{const lp=S.players[UI.pendingGoods[0].pid];   // Bruges: take a missing recipe (Overland) else 2 grain
+        const recs=olEnabled()?(S.exports||[]).filter(s=>!lp.recipes.includes(s)).sort((a,b)=>STYLES[b].q-STYLES[a].q):[];
+        return recs.length?goodsPickRecipe(recs[0]):goodsPick(2,0);}
       case 'breach':return aiBreach(p);          // Bergen free Reach — reinforce the best majority
       case 'brecipe':return aiBrecipe(p);        // Novgorod free recipe — take the highest unowned
       case 'end':return endTurn();
@@ -2765,8 +2774,10 @@ function renderBar(){
     prompt=LU('search')+' <b>Survey</b> — take a '+LU('building-2')+' <b>Building</b> from the display <b>to hand</b> (free); place it later at the Market.';
     acts=(S.buildDisplay||[]).map(k=>btn(LU('building-2')+bName(k),'surveyPick(\''+k+'\')','go')).join('')+((S.buildDisplay||[]).length?'':'<span class="note">display empty</span>'+btn('Skip','surveyPick(null)','ghost'));}
   else if(U==='goodspick'){const b=UI.pendingGoods[0];const lp=S.players[b.pid];
-    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take <b>2 goods</b> (any mix).';
-    acts=btn('Take '+Gi(2),'goodsPick(2,0)','go')+btn('Take '+Gi(1)+Hi(1),'goodsPick(1,1)','go')+btn('Take '+Hi(2),'goodsPick(0,2)','go');}
+    const recs=olEnabled()?(S.exports||[]).filter(s=>!lp.recipes.includes(s)):[];   // The Trade Roads: Bruges = a recipe OR 2 goods
+    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — '+(recs.length?'take a '+LU('scroll-text')+'<b>recipe</b> OR <b>2 goods</b>.':'take <b>2 goods</b> (any mix).');
+    acts=recs.map(s=>btn(LU('scroll-text')+STYLES[s].name+' Q'+STYLES[s].q,'goodsPickRecipe(\''+s+'\')','go')).join('')
+      +btn('Take '+Gi(2),'goodsPick(2,0)','go')+btn('Take '+Gi(1)+Hi(1),'goodsPick(1,1)','go')+btn('Take '+Hi(2),'goodsPick(0,2)','go');}
   else if(U==='breach'){const b=UI.pendingReach[0];const lp=S.players[b.pid];const ks=reachBenKontore(lp);
     prompt=lp.name+' delivered to '+DEST[b.dest].name+' — take a free '+LU('map-pin')+' <b>Reach</b> (+1 presence at a kontor you’ve delivered to).';
     acts=ks.length?ks.map(k=>btn(LU('map-pin')+DEST[k].name+' <span class="note">('+presenceAt(lp,k)+'→'+(presenceAt(lp,k)+1)+')</span>','breachPick(\''+k+'\')','go')).join(''):'<span class="note">no kontor delivery to reinforce yet</span> '+btn('Skip','breachPick(null)','ghost');}
@@ -3075,126 +3086,152 @@ function renderTableaus(){
 
 //==================================================================
 // ████  EXPANSION: THE TRADE ROADS (Overland)  ████  — delete this whole block to remove the expansion.
-// One self-contained module on the EXPANSION SPINE: it RETHINKS the kontor majorities as an inland MAP/tech-tree.
-// Loop (rides the existing Ship action — no new station, no new line): deliver a cask to a kontor (full keystone:
-// demand die · quality premium · the Flight) → that ALSO pushes your ROAD inland from that kontor by reach
-// (1, +1 if Q4+, +Reach/Keut/perks) → when your marker reaches a town whose quality GATE the delivered cask
-// meets, you FOUND a Trading Post: first there gets a one-time BOON (Merv-style) + full ★; later arrivals get
-// the recurring PERK + half ★ (catch-up-friendly). Perks STACK (climb a road, stack its perk). Reach=breadth,
-// quality=depth — both win. Kontor majorities turn OFF (replacesMajorities); Reach/Keut/Bergen re-home to road steps.
+// One self-contained module on the EXPANSION SPINE: it RETHINKS the kontor majorities as an inland trade
+// NETWORK — a tree rooted at HAMBURG (home). Two roads leave home: WEST to Bruges (the gateway, which fans
+// out to London, Bergen and the Rhineland) and EAST on the long deep haul to Novgorod. Loop (rides the Ship
+// action, no new station): a VOYAGE to a kontor (one ship, ANY number of casks — full keystone: demand die ·
+// quality premium · the Flight) advances your caravan ONE node along that kontor's route, IF a cask aboard
+// clears the next node's quality GATE; reaching a TOWN founds a Trading Post (first = founder boon + full ★;
+// later = the recurring perk + half ★, Merv-style). Movement = per VOYAGE (not per cask); quality GATES depth;
+// presence markers ARE the caravan trail. Core cities are sea-benefit WAYPOINTS (towns carry the ★). Perks
+// stack. Kontor majorities turn OFF (replacesMajorities). See DESIGN.md §9 + RULES.md §12.
 //==================================================================
-const OL_ROADS=['bruges','london','bergen','novgorod'];        // each kontor heads a road inland (extends its identity)
-const OL_CLOCK_BONUS=2;   // ⚙ +Sailed-Ships length: a little more game to pay back the inland investment
-const OL_BOON_GOODS=2;    // ⚙ goods for the 'goods' founder boon / a moot boon
-const OL_DEEP_BONUS=3;    // ⚙ end-game: hold the DEEPEST town of a road (you climbed it) → bonus ★
-// town: k=key · road · pos(depth) · gate(min effective quality of the delivered cask) · perk(recurring, STACKS) · boon(founder one-time) · pts(★: founder full / later floor/2)
-const OL_TOWNS=[
-  // Bruges → the Rhineland — the ECONOMY road (low gates, volume-friendly)
-  {k:'br1',road:'bruges',  pos:1,name:'Cologne',   gate:1,perk:'salt',     boon:'goods',   pts:2},
-  {k:'br2',road:'bruges',  pos:2,name:'Antwerp',   gate:2,perk:'liquidity',boon:'goods',   pts:3},
-  {k:'br3',road:'bruges',  pos:3,name:'Frankfurt', gate:3,perk:'liquidity',boon:'recipe',  pts:4},
-  // London → the Shires — the ENGINE/AUTHORSHIP road (mid gates)
-  {k:'lo1',road:'london',  pos:1,name:'Norwich',   gate:2,perk:'demand',   boon:'building',pts:3},
-  {k:'lo2',road:'london',  pos:2,name:'York',      gate:3,perk:'extraload',boon:'building',pts:4},
-  {k:'lo3',road:'london',  pos:3,name:'Bristol',   gate:4,perk:'demand',   boon:'building',pts:6},
-  // Bergen → the Northern Reach — the VOLUME/THROUGHPUT road (its old "anchor" identity, re-homed; long & low)
-  {k:'be1',road:'bergen',  pos:1,name:'Visby',     gate:2,perk:'reach',    boon:'contract',pts:2},
-  {k:'be2',road:'bergen',  pos:2,name:'Tallinn',   gate:2,perk:'refine',   boon:'goods',   pts:3},
-  {k:'be3',road:'bergen',  pos:3,name:'Riga',      gate:3,perk:'reach',    boon:'vessel',  pts:4},
-  // Novgorod → the Deep Road (Rus') — the QUALITY/PRESTIGE road (high gates, biggest ★)
-  {k:'no1',road:'novgorod',pos:1,name:'Pskov',     gate:3,perk:'refine',   boon:'recipe',  pts:3},
-  {k:'no2',road:'novgorod',pos:2,name:'Smolensk',  gate:4,perk:'enshrine', boon:'goods',   pts:5},
-  {k:'no3',road:'novgorod',pos:3,name:'Kiev',      gate:5,perk:'demand',   boon:'recipe',  pts:8},
-];
+const OL_HOME='hamburg';
+const OL_CLOCK_BONUS=2;    // ⚙ +Sailed-Ships length: a little more game to pay back the inland investment (3 drifted 2p long → 2)
+const OL_BOON_GOODS=2;     // ⚙ goods for the 'goods' founder boon / a moot boon
+const OL_DEEP_BONUS=4;     // ⚙ end-game: hold a DEEP terminal town (Frankfurt/Pskov — you climbed the long trunk) → bonus ★
+const OL_REACH_GATECAP=3;  // ⚙ a free Reach / Bergen step extends roads gated ≤ this — it can't STEAL the deep Q4/Q5 prizes (those need a qualifying voyage)
+// THE NETWORK as a tree. Core cities (Bruges/London/Bergen/Novgorod) are WAYPOINTS: no perk/★ — their reward
+// is the sea-delivery benefit. TOWNS carry: gate(min cask quality to extend onto it) · perk(recurring, STACKS) ·
+// boon(founder one-time) · pts(★: founder full / later floor/2) · deep(a long-trunk terminal = +OL_DEEP_BONUS).
+const OL_NODES={
+  bruges   :{name:'Bruges',    core:true, gate:1},                                          // the western gateway (shared by 3 routes)
+  cologne  :{name:'Cologne',   gate:2, perk:'salt',      boon:'recipe',  pts:3},            // Rhineland spur — reached by BRUGES voyages
+  frankfurt:{name:'Frankfurt', gate:3, perk:'liquidity', boon:'recipe',  pts:5, deep:true}, // (recipe-rich: the "knowledge" west)
+  antwerp  :{name:'Antwerp',   gate:2, perk:'demand',    boon:'building',pts:3},            // London branch
+  london   :{name:'London',    core:true, gate:2},
+  tonsberg :{name:'Tønsberg',  gate:2, perk:'extraload', boon:'contract',pts:3},            // Bergen branch
+  bergen   :{name:'Bergen',    core:true, gate:2},
+  visby    :{name:'Visby',     gate:2, perk:'reach',     boon:'goods',   pts:2},            // the deep EAST (Novgorod voyages)
+  tallinn  :{name:'Tallinn',   gate:3, perk:'refine',    boon:'vessel',  pts:4},
+  novgorod :{name:'Novgorod',  core:true, gate:3},
+  pskov    :{name:'Pskov',     gate:5, perk:'demand',    boon:'recipe',  pts:8, deep:true}, // the Q5 climax — biggest ★
+};
+// Each core city's voyages walk this route (Hamburg → … → deepest leaf). The three WEST routes share the
+// 'bruges' node (claimed once) → Bruges is structurally first; Bruges voyages walk the Rhineland spur.
+const OL_ROUTES={
+  bruges  :['bruges','cologne','frankfurt'],
+  london  :['bruges','antwerp','london'],
+  bergen  :['bruges','tonsberg','bergen'],
+  novgorod:['visby','tallinn','novgorod','pskov'],
+};
+const OL_ROADS=Object.keys(OL_ROUTES);                                  // the 4 kontor routes (name kept for the spine)
+const OL_TOWN_KEYS=Object.keys(OL_NODES).filter(k=>!OL_NODES[k].core);  // foundable nodes (towns; core cities are waypoints)
 const OL_PERK={
-  salt:     {ic:'coins',         lbl:'+1 G on Market goods'},
-  liquidity:{ic:'coins',         lbl:'+1 G per kontor delivery'},
-  demand:   {ic:'gem',           lbl:'+1★ when a cask ships through your own value building'},
-  extraload:{ic:'package',       lbl:'+1 cask per Harbor load'},
-  reach:    {ic:'truck',         lbl:'+1 road step per delivery'},
-  refine:   {ic:'hourglass',     lbl:'+1 age/turn to a maturing cask'},
-  enshrine: {ic:'crown',         lbl:'+1★ per Enshrine'},
+  salt:     {ic:'coins',     lbl:'+1 G on Market goods'},
+  liquidity:{ic:'coins',     lbl:'+1 G per kontor delivery'},
+  demand:   {ic:'gem',       lbl:'+1★ when a cask ships through your own value building'},
+  extraload:{ic:'package',   lbl:'+1 cask per Harbor load'},
+  reach:    {ic:'truck',     lbl:'+1 caravan step per voyage'},
+  refine:   {ic:'hourglass', lbl:'+1 age/turn to a maturing cask'},
+  enshrine: {ic:'crown',     lbl:'+1★ per Enshrine'},
 };
 function olEnabled(){return !!(S&&S.overland&&S.overland.on);}
-function olTown(k){return OL_TOWNS.find(t=>t.k===k);}
-function olHas(pid,t){return ((S.overland.posts[t.k])||[]).includes(pid);}
-function olPerkCount(p,key){if(!olEnabled())return 0;let n=0;for(const t of OL_TOWNS){if(t.perk===key&&olHas(p.id,t))n++;}return n;}
-function olRoadName(r){return DEST[r]?DEST[r].name:r;}
-function olReachStep(p,q){return 1+(q>=4?1:0)+olPerkCount(p,'reach');}
-// FOUND/open a post at town t for player lp (Merv-style: first = founder + boon + full ★; later = perk + half ★)
-function olEstablish(lp,t){const ov=S.overland;ov.posts[t.k]=ov.posts[t.k]||[];
-  const founder=!(t.k in ov.founder);if(founder)ov.founder[t.k]=lp.id;ov.posts[t.k].push(lp.id);
-  if(founder)olBoon(lp,t);
-  if(!aiSimulating)log(lp.name+' '+LU('truck')+(founder?' <b>founds</b>':' opens')+' a trading post at '+LU('landmark')+'<b>'+t.name+'</b> <span class="note">('+olRoadName(t.road)+' road · Q'+t.gate+'+ · '+OL_PERK[t.perk].lbl+(founder?' · boon: '+t.boon:'')+')</span>',true);
+function olReached(pid){return (S.overland.reached&&S.overland.reached[pid])||{};}
+function olHas(pid,k){return !!(S.overland.posts&&(S.overland.posts[k]||[]).includes(pid));}   // founded this TOWN?
+function olPerkCount(p,key){if(!olEnabled())return 0;let n=0;for(const k of OL_TOWN_KEYS){if(OL_NODES[k].perk===key&&olHas(p.id,k))n++;}return n;}
+function olCityName(c){return DEST[c]?DEST[c].name:((OL_NODES[c]||{}).name||c);}
+// FOUND a town for lp (Merv-style: first = founder + boon + full ★; later = the perk + half ★).
+function olFound(lp,k){const ov=S.overland,node=OL_NODES[k];ov.posts[k]=ov.posts[k]||[];
+  const founder=!(k in ov.founder);if(founder)ov.founder[k]=lp.id;ov.posts[k].push(lp.id);
+  if(founder)olBoon(lp,node);
+  if(!aiSimulating)log(lp.name+' '+LU('truck')+(founder?' <b>founds</b>':' opens')+' a trading post at '+LU('landmark')+'<b>'+node.name+'</b> <span class="note">(Q'+node.gate+'+ · '+OL_PERK[node.perk].lbl+(founder?' · boon: '+node.boon:'')+' · '+node.pts+'★)</span>',true);
 }
-function olBoon(lp,t){const b=t.boon;
+function olBoon(lp,node){const b=node.boon;
   if(b==='goods')gain(lp,OL_BOON_GOODS,0);
   else if(b==='recipe'){const o=(S.exports||[]).filter(s=>!lp.recipes.includes(s)).sort((x,y)=>STYLES[y].q-STYLES[x].q);if(o.length){lp.recipes.push(o[0]);if(!aiSimulating)log('↳ '+lp.name+' learns '+LU('scroll-text')+STYLES[o[0]].name+' (founder boon).');}else gain(lp,OL_BOON_GOODS,0);}
   else if(b==='building'){const k=drawBuilding();if(k){lp.hand.push(k);if(!aiSimulating)log('↳ '+lp.name+' takes '+LU('building-2')+bName(k)+' to hand (founder boon).');}else gain(lp,OL_BOON_GOODS,0);}
   else if(b==='contract'){lp.contracts=(lp.contracts||0)+1;}
   else if(b==='vessel'){if(lp.maxVessels<3){lp.maxVessels++;lp.vessels.push(null);}else gain(lp,OL_BOON_GOODS,0);}
 }
-// advance lp's road on kontor K by `step`, then found every newly-reachable town the delivered quality q can gate.
-function olAdvance(lp,K,step,q){const ov=S.overland,pid=lp.id;
-  ov.reach[pid]=ov.reach[pid]||{};ov.reach[pid][K]=(ov.reach[pid][K]||0)+step;
-  OL_TOWNS.filter(t=>t.road===K).sort((a,b)=>a.pos-b.pos).forEach(t=>{
-    if(t.pos<=ov.reach[pid][K]&&q>=t.gate&&!olHas(pid,t))olEstablish(lp,t);});
+// advance lp ONE node along city C's route, IF a quality-q cask can clear the next node's gate; found towns on arrival.
+function olAdvanceToward(lp,city,q){const route=OL_ROUTES[city];if(!route)return false;
+  const reached=S.overland.reached[lp.id]||(S.overland.reached[lp.id]={});
+  const next=route.find(k=>!reached[k]);if(!next)return false;        // whole trunk reached
+  if(q<OL_NODES[next].gate)return false;                              // cask not good enough to extend further
+  reached[next]=true;
+  if(OL_NODES[next].core){ if(!aiSimulating)log('↳ '+lp.name+'’s '+LU('truck')+' caravan reaches '+LU('landmark')+OL_NODES[next].name+'.'); }
+  else olFound(lp,next);
+  return true;
 }
 function olInjectCSS(){if(olInjectCSS.done)return;olInjectCSS.done=true;
   try{const s=document.createElement('style');s.textContent=
-   '#overland-panel .olroad{margin:4px 0;padding:5px 6px;border:1px solid var(--line);border-radius:8px;background:var(--parch2)}'
-  +'#overland-panel .olhead{font-size:.82rem;display:flex;align-items:center;gap:5px;margin-bottom:3px}'
-  +'#overland-panel .olmk{display:inline-flex;align-items:center;justify-content:center;min-width:15px;height:15px;border-radius:50%;color:#fff;font-size:.62rem;font-weight:bold;padding:0 3px}'
+   '#overland-panel .olhamburg{font-size:.82rem;margin:2px 0 5px;display:flex;align-items:center;gap:5px}'
+  +'#overland-panel .olroad{margin:3px 0;padding:4px 6px;border:1px solid var(--line);border-radius:8px;background:var(--parch2)}'
+  +'#overland-panel .olhead{font-size:.76rem;display:flex;align-items:center;gap:5px;margin-bottom:3px}'
   +'#overland-panel .oltowns{display:flex;align-items:stretch;gap:2px;flex-wrap:wrap}'
-  +'#overland-panel .oltown{flex:1;min-width:74px;border:1px solid var(--line);border-radius:6px;padding:4px 5px;background:#fff7e6;position:relative}'
+  +'#overland-panel .oltown{flex:1;min-width:70px;border:1px solid var(--line);border-radius:6px;padding:4px 5px;background:#fff7e6;position:relative}'
+  +'#overland-panel .oltown.core{background:#e7ddc6}'
   +'#overland-panel .oltown.claimed{box-shadow:0 0 0 2px var(--gold2) inset}'
-  +'#overland-panel .olnm{font-weight:bold;font-size:.78rem;line-height:1.05}'
-  +'#overland-panel .olmeta{font-size:.66rem;color:var(--ink2)}'
+  +'#overland-panel .olnm{font-weight:bold;font-size:.76rem;line-height:1.05}'
+  +'#overland-panel .olmeta{font-size:.64rem;color:var(--ink2)}'
   +'#overland-panel .olperk .ic{width:13px;height:13px;color:var(--red)}'
-  +'#overland-panel .olposters{display:flex;gap:2px;margin-top:2px;min-height:9px}'
+  +'#overland-panel .olposters{display:flex;gap:2px;margin-top:2px;min-height:9px;flex-wrap:wrap}'
   +'#overland-panel .oldot{width:9px;height:9px;border-radius:50%;border:1px solid rgba(0,0,0,.3)}'
   +'#overland-panel .oldot.founder{box-shadow:0 0 0 1.5px var(--gold2)}'
   +'#overland-panel .olarrow{align-self:center;color:var(--gold);font-weight:bold;font-size:.8rem}';
   (document.head||document.body||{appendChild(){}}).appendChild(s);}catch(e){}}
-function olBoardHTML(){const ov=S.overland;
-  return OL_ROADS.map(road=>{
-    const towns=OL_TOWNS.filter(t=>t.road===road).sort((a,b)=>a.pos-b.pos);
-    const mk=S.players.map(p=>{const r=(ov.reach[p.id]&&ov.reach[p.id][road])||0;return '<span class="olmk" style="background:'+p.color+'" data-tip="'+attr(p.name+' · road reach '+r)+'">'+r+'</span>';}).join('');
-    const cells=towns.map(t=>{const ps=ov.posts[t.k]||[];
-      const dots=ps.map(pid=>'<span class="oldot'+(ov.founder[t.k]===pid?' founder':'')+'" style="background:'+S.players[pid].color+'" data-tip="'+attr(S.players[pid].name+(ov.founder[t.k]===pid?' (founder)':''))+'"></span>').join('');
-      return '<div class="oltown'+(ps.length?' claimed':'')+'" data-tip="'+attr(t.name+' — Q'+t.gate+'+ to reach · '+OL_PERK[t.perk].lbl+' · founder boon: '+t.boon+' · '+t.pts+'★ founder / '+Math.max(1,Math.floor(t.pts/2))+'★ later')+'">'
-        +'<div class="olnm">'+t.name+'</div><div class="olmeta">Q'+t.gate+'+ · '+t.pts+'★</div><div class="olperk">'+LU(OL_PERK[t.perk].ic)+'</div><div class="olposters">'+dots+'</div></div>';
-    }).join('<span class="olarrow">→</span>');
-    return '<div class="olroad"><div class="olhead">'+LU('landmark')+'<b>'+DEST[road].name+'</b> <span class="note">road</span> '+mk+'</div><div class="oltowns">'+cells+'</div></div>';
-  }).join('');
+function olNodeCell(k){const node=OL_NODES[k],ov=S.overland;
+  if(node.core){const dots=S.players.filter(p=>olReached(p.id)[k]).map(p=>'<span class="oldot" style="background:'+p.color+'" data-tip="'+attr(p.name+' reached')+'"></span>').join('');
+    return '<div class="oltown core" data-tip="'+attr(node.name+' — kontor (gateway/waypoint). Ship here for its delivery benefit; your caravan passes through it.')+'"><div class="olnm">'+LU('landmark')+node.name+'</div><div class="olmeta">kontor · Q'+node.gate+'+</div><div class="olposters">'+dots+'</div></div>';}
+  const ps=ov.posts[k]||[];
+  const dots=ps.map(pid=>'<span class="oldot'+(ov.founder[k]===pid?' founder':'')+'" style="background:'+S.players[pid].color+'" data-tip="'+attr(S.players[pid].name+(ov.founder[k]===pid?' (founder)':''))+'"></span>').join('');
+  return '<div class="oltown'+(ps.length?' claimed':'')+'" data-tip="'+attr(node.name+' — Q'+node.gate+'+ to extend onto · '+OL_PERK[node.perk].lbl+' · founder boon: '+node.boon+' · '+node.pts+'★ founder / '+Math.max(1,Math.floor(node.pts/2))+'★ later'+(node.deep?' · DEEP +'+OL_DEEP_BONUS+'★':''))+'">'
+    +'<div class="olnm">'+node.name+'</div><div class="olmeta">Q'+node.gate+'+ · '+node.pts+'★'+(node.deep?' ◆':'')+'</div><div class="olperk">'+LU(OL_PERK[node.perk].ic)+'</div><div class="olposters">'+dots+'</div></div>';
+}
+function olRow(label,keys){return '<div class="olroad"><div class="olhead">'+label+'</div><div class="oltowns">'+keys.map(olNodeCell).join('<span class="olarrow">→</span>')+'</div></div>';}
+function olBoardHTML(){
+  return '<div class="olhamburg">'+LU('home')+' <b>Hamburg</b> <span class="note">— two roads lead out: West to the gateway, East to the deep haul.</span></div>'
+    + olRow(LU('landmark')+'<b>West</b> <span class="note">· the gateway</span>',['bruges'])
+    + olRow('<span class="note">↳ Rhineland (Bruges voyages)</span>',['cologne','frankfurt'])
+    + olRow('<span class="note">↳ to London</span>',['antwerp','london'])
+    + olRow('<span class="note">↳ to Bergen</span>',['tonsberg','bergen'])
+    + olRow(LU('truck')+'<b>East</b> <span class="note">· the deep road (Novgorod voyages)</span>',['visby','tallinn','novgorod','pskov']);
 }
 registerExpansion({
   id:'overland', enabled:olEnabled, replacesMajorities:true,
-  setup(st){ if(!OVERLAND)return; st.overland={on:true,reach:{},posts:{},founder:{}};
-    st.players.forEach(p=>{st.overland.reach[p.id]={bruges:0,london:0,bergen:0,novgorod:0};});
+  setup(st){ if(!OVERLAND)return; st.overland={on:true,reached:{},posts:{},founder:{}};
+    st.players.forEach(p=>{st.overland.reached[p.id]={};});
     st.sailedCap=(st.sailedCap||0)+OL_CLOCK_BONUS; },
   on:{
+    // MOVEMENT is per VOYAGE (once per ship, per owner aboard) — not per cask. Each owner advances toward the
+    // ship's destination by 1 (+ their 'reach' perks, + 1 if a Keut is aboard), each step gated by their best
+    // cask quality on the voyage. Charter fires this too (a single-cask voyage); the Hall (enshrine) does not.
+    voyage(ctx){ const ship=ctx.ship; if(!ship||!OL_ROUTES[ship.dest])return;
+      const by={}; (ship.load||[]).forEach(L=>{const o=L.owner; if(!(o in by))by[o]={q:0,keut:false}; by[o].q=Math.max(by[o].q,L.q||0); if(L.style==='keut')by[o].keut=true;});
+      Object.keys(by).forEach(o=>{const lp=S.players[o]; if(!lp)return; let steps=1+olPerkCount(lp,'reach')+(by[o].keut?1:0);
+        for(let i=0;i<steps;i++){ if(!olAdvanceToward(lp,ship.dest,by[o].q))break; } }); },
+    // per-cask VALUE perks (the keystone stays per-cask): liquidity (goods), demand (★ via your own value bldg), enshrine (★ at the Hall)
     deliver({lp,L,dest}){ const rec=lp.delivered[lp.delivered.length-1];
-      if(DEST[dest]&&DEST[dest].kontor){
-        let step=olReachStep(lp,L.q); if(L.style==='keut')step++;          // Keut re-homed: +1 road step (the old majority specialist)
-        olAdvance(lp,dest,step,L.q);
-        const liq=olPerkCount(lp,'liquidity'); if(liq)gain(lp,liq,0);        // liquidity perk
-        if(rec&&L.bld&&L.bld.owner===lp.id&&BUILDINGS[L.bld.b]&&BUILDINGS[L.bld.b].verb==='value'){const d=olPerkCount(lp,'demand'); if(d)rec.val+=d;}  // demand perk
-      } else if(dest==='hall'&&rec){const e=olPerkCount(lp,'enshrine'); if(e)rec.val+=e;}  // enshrine perk
-    },
+      if(DEST[dest]&&DEST[dest].kontor){ const liq=olPerkCount(lp,'liquidity'); if(liq)gain(lp,liq,0);
+        if(rec&&L.bld&&L.bld.owner===lp.id&&BUILDINGS[L.bld.b]&&BUILDINGS[L.bld.b].verb==='value'){const d=olPerkCount(lp,'demand'); if(d)rec.val+=d;}
+      } else if(dest==='hall'&&rec){const e=olPerkCount(lp,'enshrine'); if(e)rec.val+=e;} },
     turn({p}){ const n=olPerkCount(p,'refine'); if(!n)return;               // refine perk: +1 age/turn ×count
       for(let i=0;i<n;i++){const m=p.vessels.map((c,idx)=>({c,idx})).filter(o=>o.c&&o.c.step<o.c.ready).sort((a,b)=>(b.c.step-b.c.ready)-(a.c.step-a.c.ready));if(!m.length)break;m[0].c.step++;}
       if(!aiSimulating)log(p.name+'’s '+LU('truck')+' inland cellars refine a maturing cask (×'+n+').'); },
-    reach(ctx){ const{p,k}=ctx; if(!OL_ROADS.includes(k))return; olAdvance(p,k,1,5); ctx.handled=true;   // Reach action / Bergen benefit re-homed → a road step (q=5 so it can found any already-reached town)
-      if(!aiSimulating)log('↳ '+p.name+' extends the '+LU('truck')+olRoadName(k)+' road (+1).'); },
+    // a free Reach (Bergen benefit · the Reach cask-action) = +1 caravan step toward a chosen city, gate-capped
+    // at OL_REACH_GATECAP — it builds breadth, it can't punch through to the deep Q5 prize.
+    reach(ctx){ const{p,k}=ctx; if(!OL_ROUTES[k])return; ctx.handled=true;
+      const moved=olAdvanceToward(p,k,OL_REACH_GATECAP);
+      if(!aiSimulating)log('↳ '+p.name+(moved?' extends the road toward '+LU('truck')+olCityName(k)+'.':'’s road toward '+olCityName(k)+' can’t extend further now.')); },
   },
   marketGoods(p){ return olPerkCount(p,'salt'); },
   loadBonus(p){ return olPerkCount(p,'extraload'); },
-  aiDestBonus(p,dest,q){ if(!DEST[dest]||!DEST[dest].kontor)return 0; const r=(S.overland.reach[p.id]&&S.overland.reach[p.id][dest])||0; const step=olReachStep(p,q); let b=0;
-    OL_TOWNS.filter(t=>t.road===dest).forEach(t=>{ if(!olHas(p.id,t)&&t.pos<=r+step&&q>=t.gate)b+=t.pts*0.5; }); return b; },
-  score(p){ const ov=S.overland; let s=0;
-    OL_TOWNS.forEach(t=>{ if(olHas(p.id,t)) s+=(ov.founder[t.k]===p.id)?t.pts:Math.max(1,Math.floor(t.pts/2)); });
-    OL_ROADS.forEach(road=>{ const deep=OL_TOWNS.filter(t=>t.road===road).reduce((a,t)=>t.pos>a.pos?t:a); if(olHas(p.id,deep))s+=OL_DEEP_BONUS; });
+  aiDestBonus(p,dest,q){ const route=OL_ROUTES[dest]; if(!route)return 0; const reached=olReached(p.id);
+    const next=route.find(k=>!reached[k]); if(!next||q<OL_NODES[next].gate)return 0;
+    return OL_NODES[next].core?0.6:(OL_NODES[next].pts*0.6+2); },
+  score(p){ let s=0;
+    OL_TOWN_KEYS.forEach(k=>{ if(olHas(p.id,k)){const node=OL_NODES[k]; s+=(S.overland.founder[k]===p.id)?node.pts:Math.max(1,Math.floor(node.pts/2)); if(node.deep)s+=OL_DEEP_BONUS;} });
     return s; },
   render(){ const ex=document.getElementById('overland-panel');
     if(!olEnabled()){ if(ex)ex.style.display='none'; return; }
@@ -3202,7 +3239,7 @@ registerExpansion({
     let pan=document.getElementById('overland-panel');
     if(!pan){ const dests=document.getElementById('dests'); const host=dests&&dests.closest?dests.closest('.panel'):null;
       pan=document.createElement('div'); pan.className='panel'; pan.id='overland-panel';
-      pan.innerHTML='<h3>'+LU('truck')+' The Trade Roads <span class="note">(ship to a kontor → push its road inland → found posts)</span></h3><div id="overland-body"></div>';
+      pan.innerHTML='<h3>'+LU('truck')+' The Trade Roads <span class="note">(Hamburg → a voyage to a kontor pushes your caravan one node along its road → found towns)</span></h3><div id="overland-body"></div>';
       if(host&&host.parentNode)host.parentNode.insertBefore(pan,host.nextSibling); else {const mn=document.querySelector('main'); if(mn&&mn.appendChild)mn.appendChild(pan);} }
     if(pan)pan.style.display='';
     const body=document.getElementById('overland-body'); if(body)body.innerHTML=olBoardHTML();

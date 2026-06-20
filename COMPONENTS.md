@@ -351,18 +351,25 @@ barrels · workers · markers · **~8 demand dice (d6)** · quality-boost marker
   the capstone) + 4 recipe designs/player + **3 thematic Building tiles** (**Salt House · Smoke Kiln · Parti-Gyle
   Tun**, in the deck only when on). Also adds **Blending** (a Cellar *action*, no component). + the **Jopenbier**
   Q6 capstone (its own toggle).
-- **The Trade Roads (Overland) — the inland map; REPLACES the kontor majorities.** Components: **1 inland map
-  board** — the four kontore as coastal road-heads, each running inland through a **3-town road** (12 town spaces,
-  each printed with its **quality gate · recurring perk · founder boon · ★**; deeper = higher gate + more ★);
-  per player, **4 road markers** (one per road) + **~9 trading-post tokens** (re-cut from the now-freed presence
-  barrels). The **Caravan rides the Ship action** — *no new tile/station*. **First to a town = founder** (one-time
-  boon + full ★); later arrivals tap the recurring perk + half ★ (Merv-style — shared access, no runaway). **OUT
-  when this module is on:** the kontor **majority tracks/chart** (the contest moves inland); the **presence
-  barrels** repurpose to road markers/posts. The road board sits beside the destinations board.
+- **The Trade Roads (Overland) — the Hanse NETWORK; REPLACES the kontor majorities.** Components: **1 inland
+  network board** — a **tree rooted at HAMBURG** (home). Two roads leave home: **WEST** to the **Bruges gateway**,
+  which branches to **London**, **Bergen**, and the **Rhineland**; and **EAST** on the deep haul to **Novgorod**.
+  The four kontore are **core-city waypoints** (no ★ — their reward is the sea-delivery benefit); **7 town spaces**
+  carry the engine — **Cologne · Frankfurt** (Rhineland) · **Antwerp** (London) · **Tønsberg** (Bergen) · **Visby ·
+  Tallinn · Pskov** (East) — each printed with its **quality gate · recurring perk · founder boon · ★** (deeper =
+  higher gate + more ★; **Frankfurt / Pskov** are ◆ **deep** terminals = a bonus ★). Per player, **presence
+  markers double as the CARAVAN TRAIL** (drop one on each node you reach — they show who's gone where & how deep;
+  re-cut from the now-freed presence barrels) + **trading-post tokens** for founded towns. The **caravan rides the
+  Ship action** — *no new tile/station; movement is per VOYAGE (one ship = one step), gated by cask quality.*
+  **First to a town = founder** (one-time boon + full ★); later arrivals tap the perk + half ★ (Merv-style —
+  shared access, no runaway). **Bruges delivery = a recipe OR 2 goods** (the knowledge on-ramp). **OUT when this
+  module is on:** the kontor **majority tracks/chart** (the contest moves inland). The network board sits beside
+  the destinations board.
 
-The four roads extend the four kontor identities (Bruges=economy · London=engine · Bergen=throughput · Novgorod=
-quality/deep). Reach (breadth) and quality (depth, gated) both win. *(Two earlier Inland Road / Option B attempts
-were rolled back for bypassing the keystone — see `DESIGN.md` §9; that work is preserved on `archive/option-b-inland`.)*
+The map extends the four kontor identities (Bruges = the gateway/economy + recipes · London = engine · Bergen =
+throughput · Novgorod = the deep quality road). **Reach (breadth)** and **quality (depth, gated)** both win.
+*(Earlier siloed-roads and Inland Road / Option B cuts were reworked/rolled back for the network — see `DESIGN.md`
+§9; the Option B work is preserved on `archive/option-b-inland`.)*
 
 ---
 

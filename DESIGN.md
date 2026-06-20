@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v2.0 “The Trade Roads”** — live; **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — an inland **map/tech-tree that REPLACES the kontor majorities**: every delivery to a kontor also pushes your **road** inland from it; reaching a town **founds a Trading Post** (a stacking engine perk + end-game ★; first there gets a one-time boon, Merv-style). Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
+|**Status**     |**v2.0 “The Trade Roads”** — live; **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — the **Hanse Network**: a tree from **Hamburg** (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul) that **REPLACES the kontor majorities**. A **voyage** to a kontor pushes your **caravan** one node along its road (**per voyage**, gated by cask quality); reaching a town **founds a Trading Post** (a stacking perk + end-game ★; first there gets a one-time boon, Merv-style). Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
 
 ---
 
@@ -110,10 +110,11 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 - **The expansion spine (v2.0):** a tiny `registerExpansion` registry + hook seams
   (`fire`/`collect`/`expSetup`/`expRender`, plus a `reach` re-home hook and a `replacesMajorities`
   flag) so each opt-in module is one self-contained block and the core stays free of scattered
-  conditionals. **The Trade Roads** (Overland) is the first module on it: an inland map/tech-tree
-  that **replaces the kontor majorities** — delivering to a kontor extends your road inland; reaching
-  a town founds a Trading Post (a stacking perk + ★). Specialty Beers / Jopenbier predate the spine
-  and remain inline (a later, optional migration).
+  conditionals. **The Trade Roads** (Overland) is the first module on it: the **Hanse Network** — a tree
+  rooted at HAMBURG (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul)
+  that **replaces the kontor majorities**. A **voyage** to a kontor advances your caravan one node along its
+  road (**per voyage**, gated by cask quality); reaching a town founds a Trading Post (a stacking perk + ★).
+  Specialty Beers / Jopenbier predate the spine and remain inline (a later, optional migration).
 
 ---
 
@@ -177,31 +178,39 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
 
-**v2.0 “The Trade Roads” (Overland) — the inland map/tech-tree, done right this time** *(2026-06-20, `play.html` KEY v74)* —
-The successful re-take of the inland geography, on the lesson the first two attempts taught: **a second geography
-must be powered by the engine's output and feed back into it — route THROUGH the keystone, never beside it.** It
-also lands on a small new **EXPANSION SPINE** (a `registerExpansion` registry + `fire`/`collect`/`expSetup`/`expRender`
-hook seams) so the whole feature is **one self-contained block** the core never tangles with — adding the next
-expansion is append-a-module; removing one is delete-a-block (no more Option-B-style 30-point excisions). *The loop
-(rides the existing Ship action — no new station, no new line):* delivering a cask to a kontor (full keystone:
-demand die · Q4/Q5 premium · the Flight) **also advances your ROAD inland** from that kontor by reach (1, +1 at
-Q4+, +Reach/Keut/perks); when your marker reaches a town whose **quality gate** the delivered cask meets you
-**found a Trading Post** — a recurring, **stacking** engine perk (salt · liquidity · demand · extraload · reach ·
-refine · enshrine) + end-game ★. **Merv-style contest:** first to a town takes a one-time **boon** + full ★; later
-arrivals still get the perk + half ★ (catch-up-friendly — no runaway, and it defuses the 4p first-mover land-grab
-that sank Option B). **Four roads extend the four kontor identities** — Bruges→Rhineland (economy, low gates),
-London→Shires (engine), Bergen→Northern Reach (volume/throughput, its old anchor re-homed), Novgorod→Deep Road
-(quality/prestige, Q4/Q5-gated, biggest ★). **Kontor majorities turn OFF** (`replacesMajorities`) — the contest
-moves inland — and **Reach / Keut / Bergen's benefit re-home** to road steps via a `reach` hook (no orphans, the
-flaw that dogged Option B). Reach=breadth (many shallow posts), quality=depth (few deep, gated) — both win; the
-Hall stays the deliberate non-delivery lane. The Caravan rides deliveries so it's **clock-tied** (no pace bug);
-`SAILED_CAP` +2 pays back the inland investment. *Gates (KEY v74):* base + EXPANSION **unchanged** (0 crash, pace
-in band); **OVERLAND 300 → 0 crash/deadlock 2–4p, 100% pace-in-band, clock-dominant** (`sim-results-v74-overland.txt`);
-render-smoke clean incl. a **full Trade Roads test** (deliver → road → found a post → score → majorities off → salt
+**v2.0 “The Trade Roads” (Overland) — the inland geography as the Hanse NETWORK** *(2026-06-20, `play.html` KEY v75)* —
+The third opt-in expansion, and the successful re-take of the inland geography on the lesson the earlier attempts
+taught: **a second geography must be powered by the engine's output and feed back into it — route THROUGH the
+keystone, never beside it.** It lands on a small **EXPANSION SPINE** (a `registerExpansion` registry +
+`fire`/`collect`/`expSetup`/`expRender` hook seams) so the whole feature is **one self-contained block** the core
+never tangles with — adding the next expansion is append-a-module; removing one is delete-a-block.
+*The model* (a first **siloed-roads** cut — 4 independent linear tracks, KEY v74 — was reworked at the table's
+request into a connected map): the board is a **tree rooted at HAMBURG (home)** with **two roads from the start** —
+**West** to the **Bruges gateway** (which branches to **London**, **Bergen**, and the **Rhineland** spur) and
+**East** on the long deep haul to **Novgorod**. London/Bergen routes pass *through* Bruges (the gateway is
+structurally first); Novgorod is the independent deep lane.
+*The loop (rides the Ship action — no new station):* a **VOYAGE** to a kontor (one ship, any casks — full keystone:
+demand die · Q4/Q5 premium · the Flight; or a Charter) advances each owner's **caravan ONE node** along that
+kontor's route — **per voyage, not per cask** (the fix for the old "2 casks = 2 towns" flatness: casks drive
+*value*, voyages drive *depth*). **Quality GATES depth** (you only step onto a node a cask on that voyage can
+clear), so **reach (breadth) and quality (depth) both win**. **Presence markers ARE the caravan trail**
+(repurposed from the now-majority-less barrels) — the board shows who's gone where & how deep.
+Reaching a **town** founds a **Trading Post** — a recurring, **stacking** perk (salt · liquidity · demand ·
+extra-load · reach · refine · enshrine) + end-game ★; **Merv-style:** first = founder boon + full ★, later = the
+perk + half ★ (no runaway, defuses the 4p land-grab that sank Option B). **Core cities are sea-benefit WAYPOINTS**
+(towns carry the ★); **Frankfurt/Pskov** are deep terminals (+bonus ★). **Bruges delivery = choose a recipe OR 2
+goods** (the knowledge on-ramp — hot early, self-diminishing unless propped by buildings; the Rhineland & Pskov
+towns also hand recipes). **Kontor majorities turn OFF** (`replacesMajorities`); **Reach / Keut / Bergen's
+benefit re-home** to caravan steps via the `reach`/`voyage` hooks (no orphans, the flaw that dogged Option B). The
+caravan rides voyages so it's **clock-tied** (every step is a Sailed-Ships tick — invest carefully or run the
+clock out); `SAILED_CAP` **+2** pays it back.
+*Gates (KEY v75):* base + EXPANSION **unchanged**; **OVERLAND 300 → 0 crash/deadlock 2–4p, 100% pace-in-band,
+clock-dominant**, winner inland **~17–19★** (the siloed cut's ~33★ over-weight corrected); render-smoke clean incl.
+a **full Trade Roads test** (voyage → reach the gateway → 2nd voyage founds a town → score → majorities off → salt
 perk) + a Cellarmaster game with **all three** expansions on; **ladder PASS, errors 0**. *Watch-items (tuning, ⚙):*
-the road-investment payback vs. the stay-home Hall tempo; the network-score weight vs. the old majority weight; a
-road-beer specialty and richer cross-road connection scoring are noted future extensions. **Specialty Beers &
-Jopenbier remain inline** (pre-spine) — an optional later migration, not required.
+the West-broad/East-deep ★ balance; 2p clock length (clock bonus trimmed 3→2); whether the deep East (Pskov, Q5)
+is reachable enough in human play; a road-beer specialty + richer cross-road set-scoring are noted future
+extensions. **Specialty Beers & Jopenbier remain inline** (pre-spine) — an optional later migration, not required.
 
 **v1.9 “Beer Atlas” — Option A complete (blending + thematic Buildings); Inland Road / Option B rolled back** *(2026-06-20, `play.html` KEY v73)* —
 Two things happened here, recorded together because the second is the reason the first was re-done cleanly.

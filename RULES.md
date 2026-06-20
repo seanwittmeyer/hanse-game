@@ -396,35 +396,56 @@ part of your range); counts as a normal cask for majority. The slowness + the vi
 **end-clock a second job** — rivals push the Sailed-Ships track to deny a maturing Jopenbier (the race-to-end).
 All numbers ⚙ (`JOPEN_BASE` 8 · `JOPEN_HALL` 9 · vintage cap 5 · ready 4).
 
-### The Trade Roads — the inland map (Overland, the third toggle)
+### The Trade Roads — the Hanse Network (Overland, the third toggle)
 
-The heaviest module, and the one that **REPLACES the kontor majorities**: when it's on, those majorities turn
-**OFF** and the control contest moves inland. It adds a **map** — each kontor is the coastal head of a **ROAD**
-running inland through a short chain of **towns** — grown by the deliveries you already make. **No new station,
-no new action; it rides the Harbor's Ship.**
+The heaviest module, and the one that **REPLACES the kontor majorities** (they turn **OFF** when it's on; the
+control contest moves inland). It adds an **inland trade network — a tree rooted at HAMBURG (home).** Two roads
+lead out: **West** to the **Bruges gateway**, which fans out to **London**, **Bergen**, and the **Rhineland**; and
+**East** on the long deep haul to **Novgorod**. The four coastal kontore stay the **core cities** (each keeps its
+delivery benefit); the in-between **towns** carry the recurring perks + ★. **No new station, no new action — it
+rides the Harbor's Ship.**
 
-- **Reach rides delivery.** Shipping a cask to a kontor (the normal Ship — fully through the demand die / quality
-  premium / the Flight) **also pushes your road marker** inland from that kontor by its **reach**: **1, +1 if the
-  cask is Q4+**, plus any **Reach** / **Keut** / road perks (these **re-home here** — there are no majorities left
-  to feed). *Quality buys distance; the demand engine you built funds the deliveries that grow the network.*
-- **Found a Trading Post.** When your marker reaches a town whose **quality gate** the delivered cask meets, you
-  establish a post: a **recurring perk** (it **stacks** — climb a road, stack its perk) + end-game **★**. **First
-  to a town** takes a one-time **founder boon** (a recipe · a building · goods · a vessel · a contract) + its
-  **full ★**; **later arrivals** still get the perk + **half ★** (catch-up-friendly — no runaway; this also
-  defuses a first-mover land-grab).
-- **Four roads, four leans** (extending the kontor identities): **Bruges → Rhineland** (economy — salt/liquidity,
-  low gates), **London → Shires** (engine — demand/extra-load), **Bergen → Northern Reach** (volume/throughput —
-  reach/refine; the old anchor re-homed), **Novgorod → the Deep Road** (quality/prestige — refine/enshrine,
-  **Q4/Q5-gated**, the biggest ★).
-- **Scoring (replaces majorities):** each post scores its ★ (founder full / later half) + a **completed-road**
-  bonus for holding a road's deepest town. **Reach = breadth** (many shallow posts) · **quality = depth** (few
-  deep, gated) — both win; the **Hall** stays the deliberate non-delivery lane.
+- **Movement is per VOYAGE, not per cask.** When a ship **sails** to a kontor (the normal full-ship sail — fully
+  through the demand die / quality premium / the Flight — *or* a single-cask **Charter**), **each owner aboard
+  advances their caravan ONE node** along that kontor's route. A 3-cask Hulk = **one** step. *(Per owner: a rival
+  whose cask you carried advances too.)* This is the fix for the old "2 casks = 2 towns" flatness — casks drive
+  **value**, voyages drive **depth**.
+- **Quality gates depth (not speed).** You step onto the next node only if a cask on that voyage **meets its
+  quality gate** — the deep towns need a high-Q beer to extend onto, while voyages (clock) buy the distance.
+  **Reach (breadth)** and **quality (depth)** are both required; neither substitutes.
+- **Presence markers are the caravan trail** — each step drops one of your markers on the node reached, so the
+  board shows **who has gone where, and how deep**. (Presence no longer feeds majorities; it *is* the network.)
+- **Found a Trading Post.** Reaching a **town** founds a post: a **recurring perk** (it **stacks**) + end-game
+  **★**. **First to a town** takes a one-time **founder boon** (a recipe · a building · goods · a vessel · a
+  contract) + its **full ★**; **later arrivals** still get the perk + **half ★** (Merv-style — shared access,
+  no runaway). **Core cities are waypoints** — the caravan passes through them; their reward is the sea-delivery
+  benefit, the **towns** carry the ★.
+- **The map (two roads from Hamburg):**
+  - **WEST — the Bruges gateway** *(open from the start; Bruges voyages walk the Rhineland spur)*: **Bruges**(core)
+    → **Cologne** (Q2 · salt) → **Frankfurt** (Q3 · liquidity · ◆ deep). The **London** branch (London voyages,
+    through Bruges): → **Antwerp** (Q2 · demand) → **London**(core). The **Bergen** branch (Bergen voyages, through
+    Bruges): → **Tønsberg** (Q2 · extra-load) → **Bergen**(core). *London/Bergen routes pass through Bruges — the
+    gateway is structurally first.*
+  - **EAST — the deep road** *(open from the start; Novgorod voyages)*: **Visby** (Q2 · reach) → **Tallinn** (Q3 ·
+    refine) → **Novgorod**(core) → **Pskov** (Q5 · demand · ◆ deep — the biggest ★).
+- **Bruges = the knowledge on-ramp.** A delivery to Bruges lets the owner **choose a recipe** (a dealt export you
+  lack) **OR 2 goods** — so the gateway is hot and contested early, and self-diminishes as recipes fill (worth
+  revisiting late only if you've propped it with value-buildings). The **Rhineland & Pskov** towns also hand
+  recipes — the map is where knowledge lives.
+- **Re-homed benefits/actions (no orphans):** **Bergen's** benefit and the **Reach** cask-action become **+1
+  caravan step toward a city you choose** (capped at Q3 gates — a free step builds breadth, it can't steal the
+  deep Q5 prize); **Keut** adds **+1 step** on its voyage; the **reach** road-perk adds steps too. Everything that
+  fed the old majorities now feeds the network.
+- **Scoring (replaces majorities):** each founded town scores its ★ (founder full / later half) + a **deep-town
+  bonus** (◆) for holding a long-trunk terminal (**Frankfurt / Pskov**). The **Hall** stays the deliberate
+  non-delivery lane.
 
-The Caravan rides sea deliveries, so it's **clock-tied** (no pace bug); the Sailed-Ships length is **+2** to pay
-back the inland investment. All numbers ⚙. Sim-gated: 0 crash/deadlock 2–4p, pace in band, clock-dominant;
-render-smoke + ladder clean. See `DESIGN.md` §9 (v2.0). *(Lesson honored: a second geography must run THROUGH the
-keystone — delivery, quality, the demand die — and EXTEND a lane, not sit beside the engine; the earlier Inland
-Road / Option B failed that and was rolled back.)*
+Movement rides voyages, so it's **clock-tied** — every step is a Sailed-Ships tick, so *invest carefully or you
+run the clock out*; the Sailed-Ships length is **+2** to pay back the inland investment. All numbers ⚙. Sim-gated
+(KEY v75): 0 crash/deadlock 2–4p, 100% pace-in-band, clock-dominant; render-smoke + ladder clean. See `DESIGN.md`
+§9 (v2.0). *(Lesson honored: a second geography must run THROUGH the keystone — delivery, quality, the demand die
+— and EXTEND a lane, not sit beside the engine; an earlier siloed-roads cut and the Inland Road / Option B that
+preceded it are recorded in §9.)*
 
 ---
 
