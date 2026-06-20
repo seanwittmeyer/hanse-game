@@ -342,10 +342,15 @@ Plus 1 main board · 1 destination board · 4 brewery boards · wooden cubes (G/
 barrels · workers · markers · **~8 demand dice (d6)** · quality-boost markers · **~12 developer 3★ chits**
 (displaced-building payout, v1.2). **Medium GWT footprint** — substantial, far short of Lacerda.
 
-**Expansion — Specialty Beers (opt-in, v1.9):** +~25 cask tiles (**Gose ×8 · Zerbster ×6 · Duckstein ×8 ·
-Jopenbier ×3** the capstone) + 4 recipe designs/player, across **two independent toggles** (Specialty Beers +
-the Jopenbier capstone). A small modular add-on; the base box is unchanged. (Future modules — blending, thematic
-buildings — add their own tiles.)
+**Expansions (opt-in, v1.9) — three independent slide toggles, mixable freely:**
+- **Specialty Beers:** +~22 cask tiles (**Gose ×8 · Zerbster ×6 · Duckstein ×8**) + 3 recipe designs/player.
+- **Jopenbier capstone:** +3 cask tiles (**Q6**) + 1 recipe design/player.
+- **The Inland Road:** a small **inland strip** with **5 town spaces** (**Lüneburg · Hannover · Braunschweig ·
+  Einbeck · Hamburg** — each printed with its quality gate · the beer it teaches · its standing value) +
+  per-player reached-markers (ownership discs). The **Caravan** is a Harbor *action* — no new tile.
+
+A small modular add-on; the base box is unchanged. (Future modules — blending, thematic buildings, and the
+heavier Inland Road options (town perks · an eastern route · a destinations-board swap) — add their own tiles.)
 
 ---
 

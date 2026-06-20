@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v1.9 “Specialty Beers”** — live; the **first expansion** ships as **two opt-in New Game toggles**: *Specialty Beers* (Gose · Zerbster · Duckstein → the 3-of-7 export draft; pinned-signature "characters") and the *Jopenbier* **Q6 vintage capstone** (self-contained scoring + dock-cellared aging-as-value; the deep moonshot). **Base game byte-for-byte unchanged when both off.** Base ruleset: **v1.8 “Quality Pays”** (value-Buildings reward the climb — +2★/+3★ at Q4/Q5; keystone rebuild + demand-dice + printables-tile UI; v1.5 private improvements). `play.html` implements both. |
+|**Status**     |**v1.9 (expansions live)** — the first expansion ships as **three opt-in New Game *slide* toggles**, mixable freely: **Specialty Beers** (Gose · Zerbster · Duckstein → the 3-of-7 export draft; pinned-signature "characters"), the **Jopenbier** Q6 vintage capstone (self-contained scoring + dock-cellared aging-as-value; the deep moonshot), and **The Inland Road** (Option B — a tech-tree of inland towns reached overland by Caravan: learn a beer + bank standing). **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”** (value-Buildings reward the climb — +2★/+3★ at Q4/Q5; keystone rebuild + demand-dice + printables-tile UI; v1.5 private improvements). `play.html` implements both. |
 
 ---
 
@@ -167,6 +167,30 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   revisit: deal a **choice** of starting buildings (draft), or make the opening building **self-favoring**
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
+
+**v1.9 “The Inland Road” — EXPANSION (a 3rd opt-in toggle; Option B)** *(2026-06-20, `play.html` KEY v69)* —
+**A second geography — the inland brewing towns, a tech-tree reached OVERLAND — the "where you take your beer"
+axis (Option B), shipped as a clean *additive* toggle (the board-swap version stays the heavy horizon).** A new
+local Harbor action, the **Caravan**, mirrors Enshrine (a *deployed* cask → a local destination, no boat,
+advances the clock) but sends the cask **overland to an inland town** instead of the Hall. The towns are a
+**quality-gated tech ladder** — **Lüneburg** Q1 · **Hannover** Q2 · **Braunschweig** Q3 · **Einbeck** Q4 ·
+**Hamburg** Q5 — each reachable once **per player**; reaching one **teaches its famous beer** (free —
+Hannover→Broyhan · Braunschweig→Mumme · Einbeck→Bock; if that export isn't dealt or you already own it, +goods
+instead) and banks **inland standing** (end-game pts 1/2/3/4/6, max 16 — a line opposite the Flight). The
+teaches *enable the climb*, so the ladder **is** the tree (a Q1 Gruit reaches Lüneburg; you brew up; a Q4 cask
+reaches Einbeck and learns Bock). **The design payoff:** a Ready cask now has **three destinations** — a
+**kontor** (value + majority + Flight, by ship), the **Hall** (prestige), or an **inland town** (a recipe +
+standing, overland) — the squeeze deepened, with **no new scoring board** (town points live on
+`p.townsReached`, summed in `scorePlayer`; reuses the Enshrine flow). Also this build: the **New Game expansion
+toggles are now SLIDE switches** (all three). *Gates (KEY v69, `sim-results-v69.txt`):* base + INLAND +
+all-three-on all **0 crash/deadlock 2–4p, pace in band**; `ai-render-smoke` drives the Caravan end-to-end
+(reach a town, bank standing) through the real render layer + runs a Cellarmaster game with all three
+expansions on; ladder 0 errors. **AI caveat (v1):** the bots **don't Caravan yet** — the inland road is
+human-playable + engine-tested, and INLAND-on AI games are robustness-safe (the AI simply plays the sea game);
+wiring the Cellarmaster/deep persona to pursue the inland tech-tree is the **next step** (the Jopenbier pattern:
+ship the feature, then teach the AI to pilot it). All numbers ⚙. *(Option B's “compete” version — additive; the
+toggle rules out the board-swap. Town **perks** beyond recipes, an **eastern route**, a **race to claim towns**,
+and the full **destinations-board swap** remain heavier future options.)*
 
 **v1.9 “Jopenbier” — the EXPANSION CAPSTONE (a 2nd opt-in toggle)** *(2026-06-20, `play.html` KEY v68)* — **The
 depth counterweight that completes the roster arc: a slow, dear, super-valuable Q6 “vintage” beer (Danzig).**

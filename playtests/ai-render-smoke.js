@@ -61,6 +61,23 @@ if(jd.val!==JOPEN_BASE+2)throw new Error('jopenbier self-contained value wrong: 
 if(flightBeers(S.players[0])!==0)throw new Error('jopenbier leaked into the Flight');
 console.log('render smoke JOPENBIER capstone OK — banked '+jd.val+'★ (base '+JOPEN_BASE+' + vintage 2 · Q6 · Flight-excluded)');
 JOPEN=false;
+// 3a-INL) THE INLAND ROAD — drive the Caravan end-to-end through the real render layer (the AI doesn't Caravan
+// in v1, so exercise it directly): deploy a Q3 cask, render the Caravan stage + the Inland Road panel, Caravan
+// it to the best town, assert the town is reached + inland standing scored.
+INLAND=true;
+S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;S.active=0;
+S.slots['s1']=null;
+S.players[0].vessels[1]={style:'broyhan',q:3,step:1,ready:1,act:'load'};
+if(!deployCask(1,'s1'))throw new Error('inland: deploy failed');
+render();                                                       // the Inland Road board panel
+UI={sub:'cell',cell:'C',stage:'caravan',stops:[],tmp:{}};render();   // the Caravan harbor stage
+var townsBefore=S.players[0].townsReached.length;
+caravanPick('s1');
+if(S.players[0].townsReached.length!==townsBefore+1)throw new Error('inland: Caravan did not reach a town');
+var iSc=scorePlayer(S.players[0]);
+if(!(iSc.inland>0))throw new Error('inland: no inland standing scored');
+console.log('render smoke INLAND (The Inland Road) OK — reached '+S.players[0].townsReached.join('/')+' · standing '+iSc.inland+'★');
+INLAND=false;
 // 3b) a guildmaster mini-game through the real render layer (tiny Monte Carlo budget)
 GUILD_MS=10;GUILD_MIN=1;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;
@@ -73,7 +90,7 @@ console.log('render smoke guildmaster OK — rounds '+S.turn);
 // 3c) a cellarmaster mini-game through the real render layer (tiny deep-MC budget) — with BOTH expansions
 // ON, so the MC's enumeration + deep rollout exercise the specialty beers AND the Jopenbier capstone (the
 // real oracle path: aiBuyableExports adds jopenbier, the deep rollout prices it, aiJopenHold cellars it).
-EXPANSION=true;JOPEN=true;
+EXPANSION=true;JOPEN=true;INLAND=true;
 CELLAR_MS=20;CELLAR_MIN=1;CELLAR_CAP=120;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;
 S.players[0].ai={tier:'cellarmaster',persona:null};
@@ -81,8 +98,8 @@ S.players[1].ai={tier:'trader',persona:'prestige'};
 render();
 var cguard=0;
 while(!S.over){aiStep();render();if(++cguard>100000)throw new Error('guard tripped in Cellarmaster game');}
-console.log('render smoke cellarmaster OK (Specialty Beers + Jopenbier on) — rounds '+S.turn);
-EXPANSION=false;JOPEN=false;
+console.log('render smoke cellarmaster OK (Specialty Beers + Jopenbier + Inland Road on) — rounds '+S.turn);
+EXPANSION=false;JOPEN=false;INLAND=false;
 // 3d) the opt-in Path C (turn-level UCT) Cellarmaster — keep the tree-search code crash-covered
 CELLAR_MS=20;CELLAR_MIN=1;CELLAR_CAP=120;CELLAR_MCTS=true;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;

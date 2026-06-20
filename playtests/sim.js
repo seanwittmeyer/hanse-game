@@ -260,6 +260,7 @@ function tbVec(p){var sc=scorePlayer(p);return [sc.total, p.grain+p.hops, wharfC
 function runGame(n){
   EXPANSION=(typeof __EXPANSION!=='undefined'&&__EXPANSION);   // EXPANSION "Specialty Beers" sim hook (injected via ctx) — off by default → base-game regression; EXPANSION=1 tests the opt-in module
   JOPEN=(typeof __JOPEN!=='undefined'&&__JOPEN);               // EXPANSION CAPSTONE "Jopenbier" sim hook — JOPEN=1 confirms the flag doesn't break the base flow (the greedy bot doesn't pilot the capstone)
+  INLAND=(typeof __INLAND!=='undefined'&&__INLAND);            // EXPANSION "The Inland Road" sim hook — INLAND=1 confirms the toggle doesn't break the base flow (the v1 bot doesn't Caravan)
   S=freshState(n,NAMES.slice(0,n));UI={sub:'move'};undoStack=[];activeTab=0;
   // ---- starting-token override hook (balance testing; null = canonical 3G/2H, equal seats) ----
   // __SC.g/__SC.h override the flat start; __SC.comp[seat] adds per-seat grain (seat compensation
@@ -403,6 +404,7 @@ const ctx = {
   __FREEIMP: process.env.FREE_IMP==='1',
   __EXPANSION: process.env.EXPANSION==='1',
   __JOPEN: process.env.JOPEN==='1',
+  __INLAND: process.env.INLAND==='1',
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;

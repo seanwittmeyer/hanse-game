@@ -344,7 +344,12 @@ table. Pace target **~12–25 rounds.**
 
 ---
 
-## 12. Expansion — Specialty Beers (opt-in toggle)
+## 12. Expansions (opt-in toggles)
+
+*Three independent **slide toggles** on the New Game screen, mixable freely; all off = the base game. **(1)
+Specialty Beers** (below), **(2) the Jopenbier capstone**, **(3) The Inland Road**.*
+
+### Specialty Beers
 
 A modular, **opt-in** expansion, switched on by a **New Game checkbox**. **OFF by default → the base game is
 exactly as above (§1–11), byte-for-byte.** ON → three new **specialty beers** join the export draft, so you
@@ -379,7 +384,34 @@ part of your range); counts as a normal cask for majority. The slowness + the vi
 **end-clock a second job** — rivals push the Sailed-Ships track to deny a maturing Jopenbier (the race-to-end).
 All numbers ⚙ (`JOPEN_BASE` 8 · `JOPEN_HALL` 9 · vintage cap 5 · ready 4).
 
-*Staged next (optional future modules):* **blending** (sacrifice two matured casks → one premium delivery — the
+### The Inland Road — a second geography, by Caravan (Option B)
+
+A separate **New Game toggle**: beyond the sea kontore lie the great **inland brewing towns**, reached
+**overland**. A new local Harbor action — the **Caravan** — sends a **deployed** cask overland to a town (no
+boat, no fare, like Enshrine; the cask is consumed; it advances the clock). The towns are a **quality-gated
+tech ladder**, each reachable once **per player**:
+
+| Town | Gate ⚙ | Teaches ⚙ | Standing ⚙ |
+|---|---|---|---|
+| **Lüneburg** (salt) | Q1 | — (+2 goods) | 1★ |
+| **Hannover** | Q2 | **Broyhan** | 2★ |
+| **Braunschweig** | Q3 | **Mumme** | 3★ |
+| **Einbeck** | Q4 | **Bock** | 4★ |
+| **Hamburg** (the brewhouse of the Hanse) | Q5 | — | 6★ |
+
+Reaching a town **teaches its beer free** (if that export is in the game and unowned; otherwise it pays **+2
+goods**) and banks its **inland standing** (end-game points, **max 16** — a line opposite the Flight). The
+teaches **enable the climb** (a Q1 Gruit reaches Lüneburg → brew up → a Q4 cask reaches Einbeck and learns
+Bock), so the ladder **is** the tree. A cask auto-routes to the **highest unreached town its quality can
+reach**, so you steer by *which quality you send*.
+
+**The fork it adds:** a Ready cask now has **three destinations** — a **kontor** (value + majority + Flight, by
+ship), the **Hall** (prestige, by Enshrine), or an **inland town** (a recipe + standing, by Caravan). The
+squeeze, deepened; no new scoring board. Base unchanged when off. All numbers ⚙. *(The “compete” version of
+Option B; a destinations-board swap, town perks, and an eastern route are heavier future options. The v1 AI
+doesn't Caravan yet — human-playable + engine-tested now; AI piloting is the next step.)*
+
+*Staged next (optional Option-A polish):* **blending** (sacrifice two matured casks → one premium delivery — the
 deep player's active turn) → **thematic buildings** (Parti-Gyle Tun · Salt House · Smoke Kiln). Rationale + sim
 gates: `DESIGN.md` §9 (v1.9).
 
