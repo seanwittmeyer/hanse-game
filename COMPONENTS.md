@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.7 “Even Footing”)
+# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.8 “Quality Pays”)
 
 > The physical manifest: **boards · tokens · the tile families · the player brewery board ·
 > destinations.** Enumerates *what objects exist and what each does* — the **why** is in
@@ -60,7 +60,7 @@ are placed and **stay** (the authored layer). *(2-player may run ~6 active slots
 | **Worker pawns** | 1 / player | Moved between stations. |
 | **Presence barrels** *(player colour)* | **~9 / colour ⚙ — the TRADE-FACTOR cap** | One token, three lives: it rides your cask as **ownership** on a slot → travels with it on a ship → **plants at the kontor as your presence** on delivery (majorities). **Finite supply = the cap** (v1.1): a kontor delivery / a **+1 Reach** each plant one; out of barrels → you can only Enshrine or stop contesting kontore. **Enshrining (the Hall) returns the barrel** (prestige isn't standing → the Hall is the unlimited overflow). *Personal cap only — not an end-trigger; the Sailed-Ships clock stays the pace dial.* |
 | **Building-owner markers** | ~6 / colour | Mark whose building sits on a slot (wharfage + full-vs-reduced effect). |
-| **Demand dice (d6)** | **~8 shared ⚙** | The reusable **value-bonus carrier.** When a cask ships through a **value building** it carries a neutral d6 in the ship's berth, **pips = the ★ it banks on delivery** (max 5 — Burgomaster = quality, a rival route = half rounded up). The die **returns to the pool** once paid (or if the ship never sails). One d6 replaces a whole denomination of value chits. |
+| **Demand dice (d6)** | **~8 shared ⚙** | The reusable **value-bonus carrier.** When a cask ships through a **value building** it carries a neutral d6 in the ship's berth, **pips = the ★ it banks on delivery** (the building's value + any **Q4/Q5 quality premium**, §3C; a rival route = half rounded up). A **premium capstone** can bank **>6** — the d6 shows up to 6 and the **premium beyond that is read off the cask's printed quality**. The die **returns to the pool** once paid (or if the ship never sails). |
 | **Quality-boost markers** | ~6 ⚙ | A small **+1-quality** token a cask carries from a **Malt Kiln / Hop Yard** to delivery (its effective quality — matters for Novgorod's scaling base). |
 | **Charter contracts** *(small cards)* | ~16 ⚙ | Start **2** / house; spend 1 + a flat `2 G` fare to Charter; buy more at the Market (`1 G`). |
 | **Wharfage / score markers** | — | The owner's small points cut when a rival routes through a building (§3C); a score pad/track. |
@@ -82,8 +82,9 @@ Every property the reference app holds has a physical home (no hidden state):
   **face-up top action tile** (what a cask of that quality would take).
 - **Scoring is IN-GAME, on delivery** (advance the score marker), and what a cask captured is **carried on the
   cask, not held in memory.** When a cask **loads off a VALUE building**, it takes a neutral **demand die**
-  into the ship's berth, set to the bonus **★** (a d6 — max 5; Burgomaster = its quality; a rival-route =
-  half, rounded up — and the building owner takes a +1★ wharfage). When it **loads off a quality TRANSFORM**
+  into the ship's berth, set to the bonus **★** (a d6 — the building's value + any **Q4/Q5 quality premium**;
+  a rival-route = half, rounded up — and the building owner takes a +1★ wharfage; a premium capstone >6 reads
+  the overflow off the cask's quality). When it **loads off a quality TRANSFORM**
   (Malt Kiln / Hop Yard) it carries a **+1-quality marker** (its effective quality, for Novgorod's scaling
   base). **On delivery** you bank: the destination's value (by the cask's marked quality) **+ the die's pips**
   **+ the ship's rich-berth** (Rich Berth / Festkeller — resolved *live*, the ship is still on its berth, so
@@ -163,6 +164,15 @@ market rights, and patrons — the institutions of the Hanse.*
 | **Festkeller** | a **full** ship here: **+1★ per cask** | a festival demands a full hold | demand × volume |
 | **Reliquary** | a **cask** here, when **enshrined**: **+2★** prestige | your finest, consecrated | prestige |
 | **Almoner's Stall** | your **wharfage** cut from rivals is **+1★** more | charity that quietly pays | authorship |
+
+> **The quality premium (v1.8 "Quality Pays").** The cask value buildings above (Staple · Charters ·
+> Burgomaster · Connoisseur · Hanse Diet) are **no longer capped at their flat ★** — a **premium**
+> cask banks **+2★ at Q4** and **+3★ at Q5** on top (`+1★ per tier above Q2, for Q4+`), so the climb
+> pays (a Bock through Staple = **6**; Bruges base 1 + Staple 6 + Rich Berth 2 = **9**). The premium
+> can push a single delivery's banked ★ above the **d6** — the die shows up to 6 and the **premium
+> beyond that is read off the cask's printed quality** (no extra component). The **Reliquary/Hall is
+> excluded** (its 3/5/7/9 ladder already scales). The *ship* value buildings (Rich Berth · Festkeller)
+> stay flat — they reward **volume** (per cask), not quality.
 
 **Verb 2 — TRANSFORM buildings (change the cask or ship).** *The brewer's craft and the harbor's
 works — the things a house actually builds.* *(v1.5: **Lagering Cellar** and **Harbor Crane** left

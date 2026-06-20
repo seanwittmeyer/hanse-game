@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v1.7 “Even Footing”)
+# Brewhouses of the Hanse — Design (v1.8 “Quality Pays”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v1.7 “Even Footing”** — live; **`play.html` implements it** (the keystone rebuild shipped; the demand-dice tracking + the printables-tile UI overhaul followed; v1.5 added three private improvements). |
+|**Status**     |**v1.8 “Quality Pays”** — live; **`play.html` implements it** (value-Buildings now reward the quality climb — a premium cask banks +2★/+3★ at Q4/Q5; the keystone rebuild + demand-dice tracking + printables-tile UI shipped earlier; v1.5 added three private improvements). |
 
 ---
 
