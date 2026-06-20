@@ -4,6 +4,9 @@
 - Be concise. Keep feedback efficient.
 - Don't put text, data, or code inline unless necessary — reference files/locations instead of pasting their contents.
 
+## Commit authorship
+- Author every commit as **Sean Wittmeyer** `<sean@wittmeyer.io>` — e.g. `git -c user.name='Sean Wittmeyer' -c user.email='sean@wittmeyer.io' commit …` (or `git commit --author='Sean Wittmeyer <sean@wittmeyer.io>'`).
+
 ## Deploy — READ THIS: the user can only see work that is on `main`
 - **The user plays/reviews the LIVE GitHub Pages site, which is served from the `main` branch only.** Anything that is merely committed to the feature branch — or just edited in the working tree — is **invisible to the user.** "Pushed" is not enough; it must be on `main`.
 - **Therefore: after ANY change the user needs to see or test, publish it to `main` in the same turn.** The flow is always: commit on the feature branch → `git push -u origin <branch>` → **fast-forward `main`** (`git push origin <branch>:main`). Do not end a turn with user-visible work stranded on the feature branch. If you're unsure whether to publish, publish.

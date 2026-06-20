@@ -2753,7 +2753,7 @@ function renderBar(){
       acts=btn('◂ Pick a different cask','deployPickCask(null)','ghost')+btn('Skip','deploySkip()','ghost');}}
   else if(U==='tap'){
     prompt='Cellar · '+LU('hourglass')+' <b>Tap</b> a cask (fire its action once, then discard — from a vessel or your slot), <b>or buy an Improvement</b> '+LU('wrench')+' from the Market panel (area '+impArea(p)+'/'+IMP_AREA_CAP+'), or skip.';
-    const taps=tapTargets(p).map(t=>btn((t.ref[0]==='v'?'vessel ':'slot ')+LU('beer')+ownSq(p.id)+styleShort(t.style)+' → '+LU(CASK_ACT_ICON[t.act]||'')+t.act,'tapPick(\''+t.ref+'\')','go')).join('');
+    const taps=tapTargets(p).map(t=>btn('Tap '+LU('beer')+styleShort(t.style)+' in '+(t.ref[0]==='v'?'vessel':'slot')+' for '+LU(CASK_ACT_ICON[t.act]||'')+(P_ACT_TXT[t.act]||t.act),'tapPick(\''+t.ref+'\')','go')).join('');
     acts=taps+(canBlend(p)?btn(LU('split')+' Blend 2 Ready casks → +1 quality','blendStart(UI.tap.returnTo)','go'):'')+btn('Skip','tapSkip()','ghost');}
   else if(U==='blend'){const rdy=blendReady(p);const f=UI.blend.first;
     prompt='Cellar · '+LU('split')+' <b>Blend</b> — pick TWO Ready casks to combine into one premium cask at <b>+1 quality</b> (the higher +1, cap Q5; it inherits the higher beer).'+(f!=null?' Now pick the second (or tap the first again to deselect).':'');
