@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.8 “Quality Pays”)
+# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.9 “Specialty Beers”)
 
 > The physical manifest: **boards · tokens · the tile families · the player brewery board ·
 > destinations.** Enumerates *what objects exist and what each does* — the **why** is in
@@ -130,6 +130,21 @@ gone). *(The cask is half your impact: brew what, hold which, deploy when — `R
 > drop Mumme → no Q4; drop Bock → no Q5 — the variable ladder shape). Bock is **ungated at 2G3H**
 > (v1.6: the export ladder is **hops-led** — Mumme/Bock lean hops, giving hops a real demand so Hop
 > Garden is a genuine pick vs Granary; totals unchanged, so the Q5 climb timing holds).
+
+> **Expansion — Specialty Beers (opt-in, v1.9).** A New Game toggle adds **three specialty cask designs** to
+> the export draft (deal **3 of 7**; OFF by default → base unchanged). Each is **pinned** (a printed
+> slot-action, not steerable — generalizing Gruit's pin) with one always-on signature — *characters, not
+> rungs* (`DESIGN.md` §9, v1.9):
+>
+> | Q | Beer (town) | Brew ⚙ | Matures ⚙ | Pinned act | Signature ⚙ | Qty ⚙ |
+> |---|---|---|---|---|---|---|
+> | **Q2** | **Gose** (Goslar) | `G G` *(no hops)* | 1 | Source | **Salt Trade** — a kontor delivery → **+1 G +1 H** to the owner (liquidity / grain-path) | 8 |
+> | **Q3** | **Zerbster** (Zerbst) | `H H H` | 1 | Load | **Parti-Gyle** — brewing it also yields a **free small Gruit** in an open vessel (throughput + the Flight) | 6 |
+> | **Q2** | **Duckstein** (Königslutter) | `G H` | 2 | Reach | **Smoke-Hardy** — ships & scores as **+1 quality** (gates + value; reaches Novgorod) | 8 |
+>
+> Recipe-buy ⚙: Gose `1 G` · Zerbster `1 H` · Duckstein `1 G`. Everything else (destinations, ships, buildings,
+> the Flight, scoring, the clock) is **unchanged** — pure roster content. Staged next: **Jopenbier**
+> (vintage/super-beer), **blending**, **thematic buildings** (Parti-Gyle Tun · Salt House · Smoke Kiln).
 
 ### B. Ship tiles — neutral, destination-bound hulls (deck of ~20) — *unchanged*
 Hull (**Cog** 2 / **Hulk** 3) + a **kontor** destination printed (Bruges/London/Bergen/Novgorod,
@@ -323,6 +338,10 @@ worker placed free turn 1.
 Plus 1 main board · 1 destination board · 4 brewery boards · wooden cubes (G/H) · presence
 barrels · workers · markers · **~8 demand dice (d6)** · quality-boost markers · **~12 developer 3★ chits**
 (displaced-building payout, v1.2). **Medium GWT footprint** — substantial, far short of Lacerda.
+
+**Expansion — Specialty Beers (opt-in, v1.9):** +~22 cask tiles (**Gose ×8 · Zerbster ×6 · Duckstein ×8**) +
+3 recipe designs/player. A small modular add-on; the base box is unchanged. (Future modules — Jopenbier,
+blending, thematic buildings — add their own tiles.)
 
 ---
 

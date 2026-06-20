@@ -385,7 +385,7 @@
       <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>v1.8 “Quality Pays” — prototype.</b> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
+  <p class="note" style="text-align:center"><b>v1.9 “Specialty Beers” — prototype.</b> <span class="note">(opt-in expansion; the base game is v1.8.)</span> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -394,7 +394,11 @@
     <p>Hot-seat. Choose the number of brewing houses.</p>
     <div id="pcount" style="display:flex;gap:8px;margin:12px 0"></div>
     <div id="names"></div>
-    <button class="primary" style="margin-top:14px" onclick="startGame()">Start Game</button>
+    <label style="display:flex;align-items:flex-start;gap:8px;margin:12px 0 2px;font-size:.9rem;cursor:pointer">
+      <input type="checkbox" id="expansion" style="width:16px;height:16px;margin-top:2px;flex:none">
+      <span><b>Specialty Beers</b> <span class="note">(expansion)</span> — adds <b>Gose · Zerbster · Duckstein</b> to the export draft (3 of 7). Leave off for the base game.</span>
+    </label>
+    <button class="primary" style="margin-top:10px" onclick="startGame()">Start Game</button>
   </div>
 </div>
 
@@ -458,9 +462,21 @@ const STYLES={
   keut   :{name:'Keut',        lvl:3, q:3, in:{g:2,h:1},  ready:2, act:'load',  export:true, bonusPres:1},// v1.1: the MAJORITY specialist — +1 presence on a kontor delivery
   mumme  :{name:'Mumme',       lvl:4, q:4, in:{g:1,h:3},  ready:3, act:'reach', export:true},                // v1.6: HOPS-LED Q4 (was 2G2H → 1G3H, total unchanged) — hops = the currency of range/quality
   bock   :{name:'Bock',        lvl:5, q:5, in:{g:2,h:3},  ready:3, act:'wild',  export:true, premium:true},   // v1.6: HOPS-LED Q5 (was 3G2H → 2G3H — TOTAL 5 kept, ratio shifted to hops; NOT the rejected 3G3H total-6 probe). UNGATED; Aging Cellar = pathway (−1 step). (premium = AI-skill flag)
+  // ---- EXPANSION "Specialty Beers" (v1.9 ⚙) — drafted into the export pool ONLY when the toggle is ON.
+  // Each is PINNED (its slot-action is fixed/printed = identity on the board — generalizing Gruit's pin) AND
+  // carries one printed SIGNATURE, so leaning a beer pays DURING play, not just at scoring. Base climb beers
+  // keep the STEERABLE pile (agency preserved); a specialty beer trades the steer for a guaranteed character.
+  gose     :{name:'Gose',      lvl:2, q:2, in:{g:2},      ready:1, act:'source', pin:true, export:true, exp:true,
+             sig:'Salt Trade — a kontor delivery throws off +1G +1H to its owner (the salt route). Grain-path, no hops.'},
+  zerbster :{name:'Zerbster',  lvl:3, q:3, in:{h:3},      ready:1, act:'load',   pin:true, export:true, exp:true,
+             sig:'Parti-Gyle — brewing it also fills an open vessel with a free small Gruit (the weak second runnings; lost if no vessel is open).'},
+  duckstein:{name:'Duckstein', lvl:2, q:2, in:{g:1,h:1},  ready:2, act:'reach',  pin:true, export:true, exp:true,
+             sig:'Smoke-Hardy — ships & scores as +1 quality (a humble beer that travels like a fine export — reaches the Novgorod long-haul).'},
 };
 const EXPORT_ROSTER=['broyhan','keut','mumme','bock'];   // 3 of 4 dealt each game; each keeps its fixed quality
-const RECIPE_BUY={broyhan:{h:1},keut:{g:1},mumme:{h:2},bock:{g:1,h:1}};  // v1.6: export-card buys lean HOPS up the ladder (keut stays the grain-path Q3). Gruit+Hopped are free starters
+const EXPANSION_ROSTER=['gose','zerbster','duckstein']; // EXPANSION "Specialty Beers": added to the draftable export pool when the toggle is ON (still deal 3 → C(7,3)=35 ladders, vs C(4,3)=4 base)
+const RECIPE_BUY={broyhan:{h:1},keut:{g:1},mumme:{h:2},bock:{g:1,h:1},
+  gose:{g:1},zerbster:{h:1},duckstein:{g:1}};  // v1.6: export-card buys lean HOPS up the ladder (keut stays the grain-path Q3). Gruit+Hopped are free starters. (expansion: gose/duckstein grain-path, zerbster hops)
 const CASK_ACT={source:'gain 2 goods',age:'Age a cask 2 steps',
   load:'Load — a Ready cask onto a ship, free',reach:'Reach — +1 presence at a kontor',
   convert:'Convert — up to 2 goods G↔H',survey:'Survey — draw a Building to hand',
@@ -675,7 +691,8 @@ const SEAT_COMP=0;                       // seat compensation ⚙ — v1.7: REMO
 let S=null;            // game state
 let UI={sub:'move'};   // interaction state
 let activeTab=0;
-const KEY='hanse-hotseat-v66'; // v1.8 "Quality Pays": value BUILDINGS are no longer CAPPED at a flat ★ — a PREMIUM cask banks a quality premium on top (Q4 +2★, Q5 +3★; gated at Q4 so it rewards the CLIMB, not the cheap Q3 volume game; the Hall's reliquary excluded — its 3/5/7/9 ladder already scales). A Bock through a value building is now worth its investment (e.g. Bruges base 1 + Staple 6 + a Rich Berth 2 = 9). Sims: lane balance & pace hold at baseline (no Q3 volume leak), the quality CEILING rises (3p winner-max 74→92). Bump discards stale v65 state. // v1.7.1: a DISPLACED building now FLIPS into its OWNER's improvements area (a Floor Wild) for ANY overbuild — a RIVAL's also scores +3★ (developer lane); a SELF-overbuild gives the Wild only (no points → no point-farm, but you CAN convert your own buildings into Floor engine pieces). Fixes "displaced building went to hand". Also: improvements catalog restored to the always-visible Market panel (buyable when at the Cellar); station yield-rows list EVERY action with "/" between OR-alternatives (Cellar now shows the Improvement wrench); per-icon station tooltips (anchor = Deploy, not Tap); v1.6→v1.7 version strings fixed. Bump discards stale v64 state. // v1.7 "Even Footing": (1) SEAT_COMP→0 — equal starts (the +1G/later-seat over-corrected under strong play, P2 won ~67-72% at 2p); (2) improvements CHEAPER (−1G) and bought at the CELLAR (alongside Tap), not the Market — the action-economy barrier, not goods; (3) a building a RIVAL overbuilds now FLIPS into its owner's improvements area = +3★ + a Wild on its back (fired via the Floor — enriching the alt-line vs the toll); (4) the improvements area is capped at IMP_AREA_CAP=4 (bought improvements + flipped tiles). Bump discards stale v63 state. // v1.6 "Hops": export ladder is HOPS-LED — Mumme 1G3H, Bock 2G3H (totals unchanged, ratio shifted to hops); export recipe-card buys lean hops (broyhan 1H, mumme 2H, bock 1G1H; keut stays the 1G grain-path Q3). Gives hops real demand (was a grain monopoly) → makes Hop Garden attractive without nerfing Granary. Bump discards stale v62 state. // v1.5: off-turn Building rewards (a rival's sail delivered YOUR cask) now QUEUE to the owner — they CHOOSE from the display at the start of their next turn (was: auto-granted at random). Bump discards stale v61 state. // v1.5 "Improvements": three new private upgrades — Harbor Crane (your Harbor load sets out 2 casks), Lagering Cellar (each of your turns +1 age to one maturing cask), Private Quay (load Ready casks straight from your vessels onto ships). Crane & Lagering moved OUT of the green Buildings pool into the purple IMPROVEMENTS (bought for goods). Bump discards stale v60 state. // v1.4 "Deploy": an EMPTY slot's DEFAULT line-action IS Deploy (shown as "{bldg?} Deploy"). Triggering it (or the Brewhouse — deploy icon on the station; Tap icon on the Cellar) deploys ONE Ready cask to ANY open slot; deploying onto another empty slot still PENDING on this line flips that slot's Deploy stop into the cask's ACTION stop (advanced: place where you'll still act). TAP unchanged (Cellar: vessel or slot → fire action once + discard). Bump discards stale v59 state. // (prior v59 "Tap a Cask"; prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
+let EXPANSION=false;   // EXPANSION "Specialty Beers" toggle — set by startGame (the New Game checkbox) BEFORE freshState, read by dealExports. Default OFF → the base game is byte-for-byte unchanged. Saved on S.expansion; synced on boot. The sim sets it via env (EXPANSION=1).
+const KEY='hanse-hotseat-v67'; // v1.9 "Specialty Beers" (EXPANSION, opt-in toggle): a New Game checkbox adds Gose/Zerbster/Duckstein to the export draft (3 of 7); each PINNED + one signature (Gose = salt-trade goods on kontor delivery · Zerbster = parti-gyle, a free small Gruit at brew · Duckstein = smoke-hardy, +1 effective quality). Default OFF → base unchanged. Bump discards stale v66 state. // v1.8 "Quality Pays": value BUILDINGS are no longer CAPPED at a flat ★ — a PREMIUM cask banks a quality premium on top (Q4 +2★, Q5 +3★; gated at Q4 so it rewards the CLIMB, not the cheap Q3 volume game; the Hall's reliquary excluded — its 3/5/7/9 ladder already scales). A Bock through a value building is now worth its investment (e.g. Bruges base 1 + Staple 6 + a Rich Berth 2 = 9). Sims: lane balance & pace hold at baseline (no Q3 volume leak), the quality CEILING rises (3p winner-max 74→92). Bump discards stale v65 state. // v1.7.1: a DISPLACED building now FLIPS into its OWNER's improvements area (a Floor Wild) for ANY overbuild — a RIVAL's also scores +3★ (developer lane); a SELF-overbuild gives the Wild only (no points → no point-farm, but you CAN convert your own buildings into Floor engine pieces). Fixes "displaced building went to hand". Also: improvements catalog restored to the always-visible Market panel (buyable when at the Cellar); station yield-rows list EVERY action with "/" between OR-alternatives (Cellar now shows the Improvement wrench); per-icon station tooltips (anchor = Deploy, not Tap); v1.6→v1.7 version strings fixed. Bump discards stale v64 state. // v1.7 "Even Footing": (1) SEAT_COMP→0 — equal starts (the +1G/later-seat over-corrected under strong play, P2 won ~67-72% at 2p); (2) improvements CHEAPER (−1G) and bought at the CELLAR (alongside Tap), not the Market — the action-economy barrier, not goods; (3) a building a RIVAL overbuilds now FLIPS into its owner's improvements area = +3★ + a Wild on its back (fired via the Floor — enriching the alt-line vs the toll); (4) the improvements area is capped at IMP_AREA_CAP=4 (bought improvements + flipped tiles). Bump discards stale v63 state. // v1.6 "Hops": export ladder is HOPS-LED — Mumme 1G3H, Bock 2G3H (totals unchanged, ratio shifted to hops); export recipe-card buys lean hops (broyhan 1H, mumme 2H, bock 1G1H; keut stays the 1G grain-path Q3). Gives hops real demand (was a grain monopoly) → makes Hop Garden attractive without nerfing Granary. Bump discards stale v62 state. // v1.5: off-turn Building rewards (a rival's sail delivered YOUR cask) now QUEUE to the owner — they CHOOSE from the display at the start of their next turn (was: auto-granted at random). Bump discards stale v61 state. // v1.5 "Improvements": three new private upgrades — Harbor Crane (your Harbor load sets out 2 casks), Lagering Cellar (each of your turns +1 age to one maturing cask), Private Quay (load Ready casks straight from your vessels onto ships). Crane & Lagering moved OUT of the green Buildings pool into the purple IMPROVEMENTS (bought for goods). Bump discards stale v60 state. // v1.4 "Deploy": an EMPTY slot's DEFAULT line-action IS Deploy (shown as "{bldg?} Deploy"). Triggering it (or the Brewhouse — deploy icon on the station; Tap icon on the Cellar) deploys ONE Ready cask to ANY open slot; deploying onto another empty slot still PENDING on this line flips that slot's Deploy stop into the cask's ACTION stop (advanced: place where you'll still act). TAP unchanged (Cellar: vessel or slot → fire action once + discard). Bump discards stale v59 state. // (prior v59 "Tap a Cask"; prior: v58 CELLARMASTER tuned — the arch-nemesis AI. A DEEP Monte Carlo above the Guildmaster: a CHEAP-but-competent rollout (journeyman + the tier-agnostic deep/completion bias → still climbs & ENSHRINES, but ~10× the playouts of a trader rollout ⇒ far lower variance), DETERMINIZED hidden decks per playout, a big budget spent by SEQUENTIAL HALVING, and the final pick taken among the SURVIVORS (no lucky under-sampled option). Beats the GM ~62% head-to-head over 90 games at a conservative 3× bulk budget (in-page ~6× ⇒ tougher). Guildmaster kept as the fast robustness oracle. Bump discards stale v57 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -683,7 +700,7 @@ const KEY='hanse-hotseat-v66'; // v1.8 "Quality Pays": value BUILDINGS are no lo
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v1.8 “Quality Pays” · '+KEY;
+const APP_VERSION='v1.9 “Specialty Beers” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -694,7 +711,15 @@ function snapshot(){if(!S||aiActing)return;undoStack.push({S:JSON.stringify(S),U
 function doUndo(){if(!undoStack.length)return;const u=undoStack.pop();S=JSON.parse(u.S);UI=JSON.parse(u.UI);activeTab=u.tab;save();render();maybeRunAI();}
 
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function dealExports(){return shuffle(EXPORT_ROSTER.slice()).slice(0,3);}  // 3 of the 4 fixed-quality export beers; ladder shape varies
+function dealExports(){
+  // base: 3 of the 4 fixed-quality exports (ladder shape varies). EXPANSION: draft 3 from the base 4 + the 3
+  // specialty beers (C(7,3)=35), but GUARANTEE at least one base Q4+ (Mumme/Bock) so the climb, the Hall's
+  // high rungs, Novgorod's scaling, and pinnacleQ stay meaningful (no all-low draft). Base path = unchanged.
+  const pool=shuffle((EXPANSION?EXPORT_ROSTER.concat(EXPANSION_ROSTER):EXPORT_ROSTER).slice());
+  const pick=pool.slice(0,3);
+  if(EXPANSION&&!pick.some(s=>STYLES[s].q>=4)){const hi=pool.filter(s=>STYLES[s].q>=4&&!pick.includes(s));if(hi.length)pick[2]=hi[0];}
+  return pick;
+}
 function exportLabel(){return (S.exports||[]).slice().sort((a,b)=>STYLES[a].lvl-STYLES[b].lvl)
   .map(k=>'Q'+STYLES[k].q+' '+STYLES[k].name).join(' · ');}
 function buildBuildingDeck(){const d=[];BUILDING_KEYS.forEach(k=>{for(let i=0;i<(BUILDINGS[k].qty||1);i++)d.push(k);});return shuffle(d);}
@@ -713,7 +738,7 @@ function newPlayer(i,name){
 }
 function freshState(n,names){
   const st={players:[],slots:{},buildings:{},pileTop:{},turn:1,active:0,first:0,ending:false,log:[],
-    exports:dealExports(), sailed:0, sailedCap:(SAILED_CAP[n]||10), buildDeck:[], buildDisplay:[],
+    exports:dealExports(), expansion:EXPANSION, sailed:0, sailedCap:(SAILED_CAP[n]||10), buildDeck:[], buildDisplay:[],
     shipDeck:[], shipDisplay:[],
     sessionId:newSessionId(), endedAt:null, studioSent:null};
   for(let i=0;i<n;i++) st.players.push(newPlayer(i,names[i]));
@@ -794,9 +819,9 @@ function isVRef(r){return typeof r==='string'&&r[0]==='v'&&r[1]===':';}
 function refCask(r){return isVRef(r)?cur().vessels[+r.slice(2)]:S.slots[r];}   // vessel casks are always the current player's
 function refOwner(r){return isVRef(r)?cur().id:(S.slots[r]?S.slots[r].owner:null);}
 // the cask's EFFECTIVE delivery quality — Malt Kiln (+1 any) / Hop Yard (+1 if base Q2+), captured at load.
-function caskEffQ(caskSlot){if(isVRef(caskSlot)){const c=cur().vessels[+caskSlot.slice(2)];return c?Math.min(5,c.q):0;}
+function caskEffQ(caskSlot){if(isVRef(caskSlot)){const c=cur().vessels[+caskSlot.slice(2)];if(!c)return 0;let q=c.q;if(c.style==='duckstein')q++;return Math.min(5,q);}
   const ct=S.slots[caskSlot];if(!ct||ct.type!=='cask')return 0;let q=ct.q;const k=bKeyAt(caskSlot);
-  if(k==='maltkiln')q++;if(k==='hopyard'&&ct.q>=2)q++;return Math.min(5,q);}
+  if(k==='maltkiln')q++;if(k==='hopyard'&&ct.q>=2)q++;if(ct.style==='duckstein')q++;return Math.min(5,q);}   // EXPANSION: Duckstein "smoke-hardy" delivers/gates as +1 quality (cap Q5)
 // the gate a cask must meet to board a ship — relieved one step by Gauger (on the cask) or Customs (on the ship).
 function gateNeed(shipSlot,caskSlot){let g=DEST[S.slots[shipSlot].dest].gate;
   if(bKeyAt(caskSlot)==='gauger')g--;if(bKeyAt(shipSlot)==='customs')g--;return Math.max(1,g);}
@@ -1043,10 +1068,11 @@ function startGame(){
     else{const parts=av.split('-');
       ais.push({tier:parts[0],persona:parts[0]==='trader'?(parts[1]||aiRandOf(AI_PERSONAS)):null});}
   }
+  EXPANSION=!!(document.getElementById('expansion')&&document.getElementById('expansion').checked);
   S=freshState(setupN,names);UI={sub:'move'};activeTab=0;undoStack=[];
   S.players.forEach((p,i)=>{p.ai=ais[i];});
   document.getElementById('setup').classList.add('hidden');
-  log('Game begins — '+setupN+' brewing houses'+(ais.some(a=>a)?' · AI seats: '+S.players.filter(p=>p.ai).map(p=>p.name+' ('+aiLabel(p)+')').join(', '):'')+'. The export beers this game (3 of 4): '+exportLabel()+'.');
+  log('Game begins — '+setupN+' brewing houses'+(ais.some(a=>a)?' · AI seats: '+S.players.filter(p=>p.ai).map(p=>p.name+' ('+aiLabel(p)+')').join(', '):'')+'.'+(EXPANSION?' '+LU('sparkles')+'<b>Specialty Beers</b> expansion ON.':'')+' The export beers this game ('+(EXPANSION?'3 of 7':'3 of 4')+'): '+exportLabel()+'.');
   log('Warm start: a Hulk → Bruges plus one more ship sit on the slots, a ship market of 3 + a Building display of 4 are face-up at the Market, every house holds a Ready Gruit in vessel 1 (deploy it turn 1) and one Building in hand (place it at the Market — authorship is live turn 1).');
   save();render();maybeRunAI();
 }
@@ -1280,6 +1306,12 @@ function brewPick(style){const p=cur();if(!canBrew(p,style))return;const vi=open
   snapshot();pay(p,STYLES[style].in);
   p.vessels[vi]={style,q:STYLES[style].q,step:0,ready:effReady(p,style),act:takePileTop(STYLES[style].q,style)};
   log(p.name+' '+LU('flask-conical')+' brews '+LU('beer')+' <b>'+STYLES[style].name+'</b> (Q'+STYLES[style].q+' · matures in '+effReady(p,style)+' step'+(effReady(p,style)===1?'':'s')+').',true);
+  // EXPANSION — Zerbster's PARTI-GYLE: the same mash throws a small second-runnings cask (a Gruit-rung
+  // Dünnbier) into another open vessel for free; if none is open, the weak runnings are lost.
+  if(style==='zerbster'){const vj=openVessel(p);
+    if(vj>=0){p.vessels[vj]={style:'gruit',q:1,step:0,ready:effReady(p,'gruit'),act:'source'};
+      log('↳ '+LU('flask-conical')+' <b>parti-gyle</b>: the weak second runnings fill a vessel as a small '+LU('beer')+'Gruit (free).');}
+    else log('↳ '+LU('flask-conical')+' <b>parti-gyle</b>: no open vessel for the second runnings — they’re lost.');}
   const rt=UI.brew.returnTo;UI.brew=null;resume(rt);
 }
 
@@ -1477,6 +1509,9 @@ function deliverCask(lp,L,dest,shipSlot,full){
   lp.delivered.push({style:L.style,q:L.q,dest,val});
   // v1.1: a beer's delivery perk — Keut plants +1 presence at the kontor (the majority specialist)
   if(DEST[dest].kontor){const bp=(STYLES[L.style]||{}).bonusPres;if(bp)lp.presBonus[dest]=(lp.presBonus[dest]||0)+bp;}
+  // EXPANSION — Gose's SALT TRADE: a kontor delivery throws off goods to the cask's owner (liquidity).
+  // gain() is log-stubbed during MC playouts, so the search still PRICES the goods without spam.
+  if(DEST[dest].kontor&&L.style==='gose')gain(lp,1,1);
 }
 // the share of a building's value bonus the cask's owner actually banks, + the owner's wharfage if a rival.
 function bldgValueShare(bd,caskOwnerId,raw){
@@ -2780,7 +2815,8 @@ function renderShop(){
     const st=STYLES[style];
     const nm=LU('scroll-text')+' <b>'+st.name+'</b> <span class="qpd">'+qPips(st.q)+'<b>Q'+st.q+'</b></span>'
       +'<span class="note" style="font-size:.72rem;display:block;margin-top:2px">brew '+costIcons(st.in)
-      +(st.cellar?' (needs Aging Cellar)':'')+'</span>';
+      +(st.cellar?' (needs Aging Cellar)':'')+'</span>'
+      +(st.sig?'<span class="note" style="font-size:.7rem;display:block;margin-top:2px"><b>'+LU('sparkles')+'Signature:</b> '+st.sig+'</span>':'');
     const cost=RECIPE_BUY[style];const can=canPay(p,cost);
     h+='<div class="item"><span data-tip="'+attr(st.name+' recipe (Q'+st.q+') — permanent · brew cost '+costStr(st.in))+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyRecipe(\''+style+'\')">buy</button>':'')+'</span></div>';});
   // CHARTER CONTRACTS (v0.16): an always-available Market acquire — the scarce certificate that lets you charter
@@ -2813,12 +2849,12 @@ function renderVoyage(){
   let h='<div class="voybox">'+LU('sailboat')+' <b>Sailed-Ships</b> '+S.sailed+' / '+S.sailedCap+(S.ending?' · <b style="color:var(--red)">FINAL ROUND</b>':'')
     +'<div class="track">'+trk+'</div><div class="note" style="font-size:.66rem;margin-top:2px">⛵ the end clock — each voyage (a ship sailing, a charter, or an enshrine) fills one</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>'+LU('ticket')+' Charter contracts:</b> '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+(p.contracts||0)+'</span>').join(' · ')+' <span class="note">(spend 1 + '+costStr(CHARTER_FLAT_FARE)+' to charter; buy more at the Market)</span></div>';
-  h+='<div class="note" style="margin-top:6px"><b>Export beers this game (3 of 4):</b> '+exportLabel()+'.</div>';
+  h+='<div class="note" style="margin-top:6px"><b>Export beers this game ('+(S.expansion?'3 of 7 · '+LU('sparkles')+'Specialty Beers ON':'3 of 4')+'):</b> '+exportLabel()+'.</div>';
   // the steerable BREW PILES — each brewable beer as its real cask tile (name · quality · brew cost) +
   // the face-up action that quality's pile currently grants (Gruit pinned to Source).
   const brews=['gruit','hopped'].concat((S.exports||[]).slice().sort((a,b)=>STYLES[a].q-STYLES[b].q));
   h+='<div class="note" style="margin-top:6px"><b>'+LU('flask-conical')+' Brew piles</b> <span class="note">(each brewable beer — its quality &amp; cost + the face-up action that quality takes, steerable)</span></div>'
-    +'<div class="shopgrid">'+brews.map(style=>{const st=STYLES[style];return '<div class="mtile">'+pCaskFace({style:style,q:st.q,act:pileTopFor(st.q,style),owner:null},0)+'</div>';}).join('')+'</div>';
+    +'<div class="shopgrid">'+brews.map(style=>{const st=STYLES[style];return '<div class="shopcell"><div class="mtile">'+pCaskFace({style:style,q:st.q,act:pileTopFor(st.q,style),owner:null},0)+'</div>'+(st.sig?'<span class="note" style="font-size:.64rem;line-height:1.2;display:block;margin-top:2px">'+LU('sparkles')+st.sig.split(' — ')[0]+'</span>':'')+'</div>';}).join('')+'</div>';
   h+='<div class="note" style="margin-top:6px">Delivered value: '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+scorePlayer(p).deliv+'</span>').join(' · ')+'</div>';
   document.getElementById('voyage').innerHTML=h;
 }
@@ -2853,7 +2889,7 @@ function renderTableaus(){
       +'<div class="fhalf"><b class="note">'+LU('wrench')+' Improvements ('+impArea(p)+'/'+IMP_AREA_CAP+') <span class="note">+ displaced Buildings</span></b><div class="irow">'+icells.join('')+'</div></div>'
       +'</div></div>';
     const recipes=p.recipes.map(r=>{const st=STYLES[r];const locked=st.cellar&&!hasUpgrade(p,'cellar');
-      return '<span class="rcard"'+(locked?' style="opacity:.55"':'')+' data-tip="'+attr(st.name+' — quality Q'+st.q+', brew cost '+costStr(st.in)+(locked?'. Needs the Aging Cellar to brew.':'.'))+'">'
+      return '<span class="rcard"'+(locked?' style="opacity:.55"':'')+' data-tip="'+attr(st.name+' — quality Q'+st.q+', brew cost '+costStr(st.in)+(locked?'. Needs the Aging Cellar to brew.':'.')+(st.sig?' SIGNATURE: '+st.sig:''))+'">'
         +'<span class="rcn">'+LU('beer')+' '+st.name+'</span>'
         +'<span class="qpd">'+qPips(st.q)+'<b>Q'+st.q+'</b></span>'
         +'<span>'+costIcons(st.in)+(locked?' <span class="note" style="font-size:.66rem">needs Cellar</span>':'')+'</span></span>';
@@ -2926,7 +2962,7 @@ function renderTableaus(){
 //==================================================================
 (function boot(){
   const saved=load();
-  if(saved&&saved.players){S=saved;UI={sub:'move'};
+  if(saved&&saved.players){S=saved;EXPANSION=!!S.expansion;UI={sub:'move'};
     render();log('— resumed saved game —');render();
     if(S.over)gameOver();else maybeRunAI();
   } else {openSetup();}

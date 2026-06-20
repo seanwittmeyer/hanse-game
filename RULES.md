@@ -1,8 +1,9 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v1.8 “Quality Pays”)
+# Brewhouses of the Hanse — Turn & Round Rules (v1.9 “Specialty Beers”)
 
 > **Status: live (2026-06-18).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
-> playable build is `play.html` (v1.8 “Quality Pays”) — these rules are implemented there.** (The prior
+> playable build is `play.html` (v1.9 “Specialty Beers” — base ruleset v1.8 “Quality Pays”; the opt-in
+> **Specialty Beers** expansion is §12) — these rules are implemented there.** (The prior
 > v0.16.1 "The Wharf" build is archived at branch `archive/main-v0.16.1` / `archive/play.html` /
 > `archive/v0.16/`.)
 >
@@ -340,6 +341,34 @@ table. Pace target **~12–25 rounds.**
 > win — chase **demand** (variable, in-game, via the buildings you author) **or** grind
 > **majorities** (count, end-game). The Flight rewards going deep. A new player picks one; an
 > expert braids two. That clarity is the point.
+
+---
+
+## 12. Expansion — Specialty Beers (opt-in toggle)
+
+A modular, **opt-in** expansion, switched on by a **New Game checkbox**. **OFF by default → the base game is
+exactly as above (§1–11), byte-for-byte.** ON → three new **specialty beers** join the export draft, so you
+**deal 3 of 7** (vs the base 3 of 4), with a guarantee of **≥1 base Q4+** (Mumme/Bock) so the quality climb,
+the Hall's high rungs, and Novgorod's scaling stay meaningful. The point: turn the roster from a quality
+*ladder you climb* into *characters you main*. Each specialty beer is **pinned** (its slot-action is fixed &
+printed — the base climb beers still draw from the **steerable pile**, so the Orléans-lite agency is untouched;
+this simply generalizes Gruit's existing pin) and carries **one always-on signature**, so leaning a beer pays
+*during* play, not just at scoring.
+
+| Beer (town) | Q · ready · brew ⚙ | Pinned action | Signature ⚙ |
+|---|---|---|---|
+| **Gose** (Goslar) | Q2 · 1 · `2G` (no hops) | Source | **Salt Trade** — a kontor delivery throws off **+1 G +1 H** to the owner (liquidity; the grain-path beer) |
+| **Zerbster** (Zerbst) | Q3 · 1 · `3H` | Load | **Parti-Gyle** — brewing it also fills an open vessel with a **free small Gruit** (the weak second runnings → throughput + the Flight; lost if no vessel is open) |
+| **Duckstein** (Königslutter) | Q2 · 2 · `1G 1H` | Reach | **Smoke-Hardy** — ships & scores as **+1 quality** (gates *and* value — reaches the Novgorod long-haul; a humble beer that travels like a fine export) |
+
+Recipe buys ⚙: Gose `1 G` · Zerbster `1 H` · Duckstein `1 G`. Everything else — destinations, majorities, the
+Flight, the clock, scoring, the Hall — is **unchanged**; the expansion is pure roster content under the
+existing grammar (the "Beer Atlas" path).
+
+*Staged next (each a separate, sim-gated module):* **Jopenbier** the vintage/super-beer (aging-as-value + the
+Floor-works-while-aging + the race-to-end, scored **self-contained** so it can't ripple the Q-keyed tables) →
+**blending** (the deep player's active turn) → **thematic buildings** (Parti-Gyle Tun · Salt House · Smoke
+Kiln). All numbers ⚙. Rationale + sim gates: `DESIGN.md` §9 (v1.9).
 
 ---
 
