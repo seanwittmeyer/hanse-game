@@ -171,8 +171,9 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 **v1.9 “The Inland Road” — EXPANSION (a 3rd opt-in toggle; Option B)** *(2026-06-20, `play.html` KEY v69)* —
 **A second geography — the inland brewing towns, a tech-tree reached OVERLAND — the "where you take your beer"
 axis (Option B), shipped as a clean *additive* toggle (the board-swap version stays the heavy horizon).** A new
-local Harbor action, the **Caravan**, mirrors Enshrine (a *deployed* cask → a local destination, no boat,
-advances the clock) but sends the cask **overland to an inland town** instead of the Hall. The towns are a
+local Harbor action, the **Caravan**, mirrors Enshrine (a *deployed* cask → a local destination, no boat) but
+sends the cask **overland to an inland town** instead of the Hall — and because it's overland it does **not**
+advance the (sea) Sailed-Ships clock. The towns are a
 **quality-gated tech ladder** — **Lüneburg** Q1 · **Hannover** Q2 · **Braunschweig** Q3 · **Einbeck** Q4 ·
 **Hamburg** Q5 — each reachable once **per player**; reaching one **teaches its famous beer** (free —
 Hannover→Broyhan · Braunschweig→Mumme · Einbeck→Bock; if that export isn't dealt or you already own it, +goods
@@ -185,10 +186,16 @@ standing, overland) — the squeeze deepened, with **no new scoring board** (tow
 toggles are now SLIDE switches** (all three). *Gates (KEY v69, `sim-results-v69.txt`):* base + INLAND +
 all-three-on all **0 crash/deadlock 2–4p, pace in band**; `ai-render-smoke` drives the Caravan end-to-end
 (reach a town, bank standing) through the real render layer + runs a Cellarmaster game with all three
-expansions on; ladder 0 errors. **AI caveat (v1):** the bots **don't Caravan yet** — the inland road is
-human-playable + engine-tested, and INLAND-on AI games are robustness-safe (the AI simply plays the sea game);
-wiring the Cellarmaster/deep persona to pursue the inland tech-tree is the **next step** (the Jopenbier pattern:
-ship the feature, then teach the AI to pilot it). All numbers ⚙. *(Option B's “compete” version — additive; the
+expansions on; ladder 0 errors. **AI (wired — KEY v69 follow-up):** the in-page AI (Trader/Guildmaster/Cellarmaster
++ the MC enumerator) **and** the `sim.js` bot now **pilot the Caravan** via a selective heuristic — caravan a
+deployed cask only when it **learns a wanted recipe** or is **cheap/unshippable** (≤2★), so the inland road
+banks standing + tech without cannibalizing valuable shipments. Wiring it **surfaced a pace bug**: the Caravan
+was ticking the Sailed-Ships clock, and the bots caravan ~6–9 towns/game, so games ended at ~9 rounds — fixed
+by making the **Caravan clock-neutral** (it's overland, not a sailed ship). Oracle
+(`sim-results-v69-inland-ai.txt`): pace back **in band (~20 rounds, clock-dominant), 0 crash/deadlock**, lanes
+roughly balanced (**majority a touch low** — caravanning pulls some casks off the kontor races; a tunable
+watch-item via town pts or the bot's caravan eagerness), the winner reaching ~2 towns/game. `sim.js` gained a
+per-run **towns-reached/game** stat. All numbers ⚙. *(Option B's “compete” version — additive; the
 toggle rules out the board-swap. Town **perks** beyond recipes, an **eastern route**, a **race to claim towns**,
 and the full **destinations-board swap** remain heavier future options.)*
 

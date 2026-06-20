@@ -388,8 +388,9 @@ All numbers ⚙ (`JOPEN_BASE` 8 · `JOPEN_HALL` 9 · vintage cap 5 · ready 4).
 
 A separate **New Game toggle**: beyond the sea kontore lie the great **inland brewing towns**, reached
 **overland**. A new local Harbor action — the **Caravan** — sends a **deployed** cask overland to a town (no
-boat, no fare, like Enshrine; the cask is consumed; it advances the clock). The towns are a **quality-gated
-tech ladder**, each reachable once **per player**:
+boat, no fare, like Enshrine; the cask is consumed). Because it is **overland it does NOT advance the
+Sailed-Ships clock** (unlike a sea voyage or Enshrine) — it's a parallel inland activity. The towns are a
+**quality-gated tech ladder**, each reachable once **per player**:
 
 | Town | Gate ⚙ | Teaches ⚙ | Standing ⚙ |
 |---|---|---|---|

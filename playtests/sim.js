@@ -152,7 +152,18 @@ function botPlaceBldg(){var bs=aBuildSlots();placeBldgOn((bs[0]||SLOTS[0]).id);}
 // EXPANSION CAPSTONE — cellar a deployed Jopenbier until ripe / ending (mirrors the in-page AI).
 function botJopenHold(ref){var c=(typeof ref==='string'&&S.slots[ref])?S.slots[ref]:null;
   if(!c||c.style!=='jopenbier')return false; if(S.ending)return false; return (c.vintage||0)<JOPEN_VINTAGE_CAP-1;}
+// EXPANSION "The Inland Road" — same selective Caravan heuristic as the in-page AI (learn a wanted recipe, or
+// use an unshippable / cheap cask), so the bot banks standing + tech without cannibalizing valuable shipments.
+function botCaravanPick(p){if(!S.inland)return null;var best=null,bv=0;
+  caravanCasks(p).forEach(function(o){var town=bestTownFor(p,o.q);if(!town)return;
+    var learns=town.teach&&(S.exports||[]).includes(town.teach)&&!p.recipes.includes(town.teach);
+    var ship=caskBest(o.ref,myShips(p));
+    if(!(learns||ship<0||ship<=2))return;
+    var v=town.pts+(learns?3:0)-(ship>0?ship:0);
+    if(v>bv){bv=v;best={ref:o.ref,town:town};}});
+  return best;}
 function botHarbor(p){
+  if(UI.stage==='caravan'){var cp=botCaravanPick(p)||{ref:(caravanCasks(p)[0]||{}).ref};if(cp.ref){caravanPick(cp.ref);return;}afterSail('stops');return;}
   if(UI.stage==='enshrine'){var ec=enshrineCasks(p).filter(function(o){return personaDest(p,o.q)==='hall'&&!botJopenHold(o.ref);}).sort(function(a,b){return b.q-a.q;});
     if(ec.length){enshrinePick(ec[0].ref);return;}afterSail('stops');return;}
   if(UI.stage==='charter_cask'){var cs=charterCasks(p).slice();var nonJ=cs.filter(function(o){return o.style!=='jopenbier';});if(!S.ending&&nonJ.length)cs=nonJ;cs.sort(function(a,b){return b.q-a.q;});charterPickCask(cs[0].ref);return;}
@@ -160,6 +171,7 @@ function botHarbor(p){
     var ds=DESTS.filter(function(d){return d!=='hall'&&c.q>=DEST[d].gate;});var d=personaDest(p,c.q);charterDest(ds.indexOf(d)>=0?d:(ds[0]||'bruges'));return;}
   // ENSHRINE (v0.15): a Ready Q2+ cask whose persona-destination is the Hall → showcase it locally (no boat)
   if(enshrineCasks(p).some(function(o){return personaDest(p,o.q)==='hall'&&!botJopenHold(o.ref);})){harborEnshrine();return;}
+  if(botCaravanPick(p)){harborCaravan();return;}   // EXPANSION: Caravan a deployed cask overland to an inland town when it beats shipping it
   var canLoad=myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});});
   if(canLoad){harborLoad();return;}
   // Charter only as a genuine relief valve: wharf jammed, end-game rush, or no hull & can't build one.
@@ -304,6 +316,8 @@ function runGame(n){
   // EXPANSION CAPSTONE — Jopenbier deliveries (proves the deep persona actually lands the moonshot)
   var jopenAll=S.players.reduce(function(a,p){return a+p.delivered.filter(function(d){return d.style==='jopenbier';}).length;},0);
   var jopenWin=wp.delivered.filter(function(d){return d.style==='jopenbier';}).length;
+  var townsAll=S.players.reduce(function(a,p){return a+((p.townsReached||[]).length);},0);   // EXPANSION: Inland Road towns reached
+  var townsWin=(wp.townsReached||[]).length;
   var playerStats=S.players.map(function(p,i){var ts={};p.delivered.forEach(function(d){ts[d.style]=1;});   // distinct BEERS (the Flight metric)
     return {persona:persona(p),cellar:!!p.__cellar,startImp:p.__startImp||null,total:scores[i].total,won:(i===win),
       deliv:scores[i].deliv,maj:scores[i].maj,goals:scores[i].goals,
@@ -318,7 +332,7 @@ function runGame(n){
     winByDest:byDest, winValKontor:valDest.kontor, winValHall:valDest.hall,
     winShips:wp.shipsSailed, winUpgrades:wp.upgrades.length, winPersona:persona(wp),
     totalUpgrades:totalUpgrades, buys:__buys, totalDeliv:totalDeliv, charters:__charters,
-    allByDest:allByDest, jopenAll:jopenAll, jopenWin:jopenWin, playerStats:playerStats
+    allByDest:allByDest, jopenAll:jopenAll, jopenWin:jopenWin, townsAll:townsAll, townsWin:townsWin, playerStats:playerStats
   };
 }
 
@@ -470,6 +484,8 @@ function summarize(n, arr) {
   console.log(`   ` + Object.keys(allByDest).map(k => `${k} ${pct(allByDest[k], totalAll)}`).join('   '));
   const jopenAll = ok.reduce((a, r) => a + (r.jopenAll || 0), 0), jopenWin = ok.reduce((a, r) => a + (r.jopenWin || 0), 0);
   if (jopenAll > 0) console.log(`Jopenbier capstone: delivered ${fmt(jopenAll / ok.length, 2)}/game (all players) · ${fmt(jopenWin / ok.length, 2)}/game by the winner`);
+  const townsAll = ok.reduce((a, r) => a + (r.townsAll || 0), 0), townsWin = ok.reduce((a, r) => a + (r.townsWin || 0), 0);
+  if (townsAll > 0) console.log(`The Inland Road: ${fmt(townsAll / ok.length, 2)} towns reached/game (all players) · ${fmt(townsWin / ok.length, 2)}/game by the winner`);
   // ===== PATHWAYS TO A WIN — per-strategy win-rate + score composition =====
   // Pathways: volume / prestige / majority (personas) + deep (cellarmaster). A cellar seat is reported
   // ONLY as 'deep' (its assigned persona is ignored, since it plays the deep policy).
