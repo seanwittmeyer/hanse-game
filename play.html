@@ -2221,8 +2221,9 @@ function aiSource(p){const n=UI.src.n;const hT=p.recipes.includes('jopenbier')?4
   if(n>=2){if(p.hops<hT)srcTake(1,1);else srcTake(2,0);}else{if(p.hops<hT)srcTake(0,1);else srcTake(1,0);}}
 function aiReach(p){if(aiIsApp(p)){reachSkip();return;}
   if(!aiIsTrader(p)){reachPick(UI.reach.ks[0]);return;}   // journeyman: greedy first kontor
+  const olOn=(typeof olEnabled==='function'&&olEnabled());   // The Trade Roads: a Reach step grows a road → value it by the claimable town ahead, not majorities
   let best=UI.reach.ks[0],bv=-1e9;
-  UI.reach.ks.forEach(k=>{const m=aiMajSwing(p,k)+Math.random()*0.2;if(m>bv){bv=m;best=k;}});
+  UI.reach.ks.forEach(k=>{const m=(olOn?collect(mm=>mm.aiDestBonus&&mm.aiDestBonus(p,k,3)):aiMajSwing(p,k))+Math.random()*0.2;if(m>bv){bv=m;best=k;}});
   reachPick(best);}
 function aiWild(p){
   if(myShips(p).length&&wharfLoadableCasks(p).some(cs=>myShips(p).some(s=>canTake(s,cs))))wildPick('ship');
@@ -2288,9 +2289,10 @@ function aiBenefit(){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];con
 function aiSurvey(){const p=cur();const disp=S.buildDisplay||[];
   if(!disp.length){surveyPick(null);return;}
   surveyPick(aiPickBuilding(p,disp.slice()));}
-function aiBreach(p){const b=UI.pendingReach[0];const lp=S.players[b.pid];   // reinforce the kontor with the best majority swing
+function aiBreach(p){const b=UI.pendingReach[0];const lp=S.players[b.pid];   // reinforce the best road (Overland) / best majority swing (base)
   const ks=reachBenKontore(lp);if(!ks.length){breachPick(null);return;}
-  let best=ks[0],bv=-1e9;ks.forEach(k=>{const m=aiMajSwing(lp,k)+Math.random()*0.2;if(m>bv){bv=m;best=k;}});breachPick(best);}
+  const olOn=(typeof olEnabled==='function'&&olEnabled());
+  let best=ks[0],bv=-1e9;ks.forEach(k=>{const m=(olOn?collect(mm=>mm.aiDestBonus&&mm.aiDestBonus(lp,k,3)):aiMajSwing(lp,k))+Math.random()*0.2;if(m>bv){bv=m;best=k;}});breachPick(best);}
 function aiBrecipe(p){const b=UI.pendingRecipe[0];const lp=S.players[b.pid];const opts=freeRecipeOptions(lp);
   if(!opts.length){brecipePick(null);return;}opts.sort((a,b)=>STYLES[b].q-STYLES[a].q);brecipePick(opts[0]);}
 
