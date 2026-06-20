@@ -1,8 +1,8 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v1.7 “Even Footing”)
+# Brewhouses of the Hanse — Turn & Round Rules (v1.8 “Quality Pays”)
 
 > **Status: live (2026-06-18).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
-> playable build is `play.html` (v1.7 “Even Footing”) — these rules are implemented there.** (The prior
+> playable build is `play.html` (v1.8 “Quality Pays”) — these rules are implemented there.** (The prior
 > v0.16.1 "The Wharf" build is archived at branch `archive/main-v0.16.1` / `archive/play.html` /
 > `archive/v0.16/`.)
 >
@@ -254,8 +254,16 @@ Five destinations, all open from start (⚙ table in `COMPONENTS.md`):
 **Delivery value at a kontor = destination base + the value-building bonuses the cask shipped
 through** (§5a) — those bonuses are captured-on-ship-through onto the cask's **demand die** (pips =
 ★, §5a). So a kontor delivery is worth **a little by default, a lot when you've routed it
-through demand you built.** *(The export-premium table and the Masterpiece from v0.16 are folded
-into this / cut — confirm during `COMPONENTS.md`.)*
+through demand you built.**
+
+**The quality premium (v1.8 "Quality Pays").** A value building is **no longer capped at a flat
+★** — it rewards the **climb**: it pays its printed value for Q1–Q3, but a **Q4** cask banks **+2★**
+and a **Q5** cask **+3★** on top (`+1★ per quality tier above Q2, for Q4+`). So a Bock routed
+through a value building is finally worth its investment — e.g. *Bruges base 1 + Staple 6 + a Rich
+Berth 2 = **9***. The premium overflows the d6 (a capstone delivery can bank up to 8★); the die
+shows up to 6, the **premium beyond that is read off the cask's printed quality**. The **Hall's
+reliquary is excluded** — its fixed 3/5/7/9 prestige ladder already scales with quality. *(The
+export-premium table and the Masterpiece from v0.16 are folded into this / cut.)*
 
 ---
 

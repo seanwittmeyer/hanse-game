@@ -381,7 +381,7 @@
   <p>No goal tiles, no separate tracks — you score from <b>what you delivered</b>: two in-game sources, two end-game.</p>
   <ol>
     <li><b>Hall — fixed (in-game)</b>: each <b>enshrined</b> cask scores the printed prestige ladder <b>3 / 5 / 7 / 9</b> by quality. The steady, beginner-safe lane.</li>
-    <li><b>Kontore — variable (in-game)</b>: each delivered cask scores its <b>small base</b> + the <b>value-buildings</b> it shipped through (the demand you authored). The skill lane.</li>
+    <li><b>Kontore — variable (in-game)</b>: each delivered cask scores its <b>small base</b> + the <b>value-buildings</b> it shipped through (the demand you authored). A <b>premium cask rewards the climb</b> — a value building pays its printed ★ for Q1–Q3, but a <b>Q4</b> cask banks <b>+2★</b> and a <b>Q5</b> <b>+3★</b> on top (no cap). The skill lane.</li>
     <li><b>Majorities (end-game)</b> — at <i>every</i> kontor, by delivered-cask count, <b>1st / 2nd / 3rd</b> take the tiers: Bruges <b>4/2/0</b> · London <b>5/3/1</b> · Novgorod <b>8/5/2</b> · <b>Bergen 9/5/2</b> ⚙. <b>2-player games skip 2nd</b>; ties split the occupied tiers. The stable floor.</li>
     <li><b>The Flight (end-game) — your range</b>: count the <b>distinct beers you delivered</b> and score <b>(beers − 1)², min 3</b> → <b>3→4 · 4→9 · 5→16</b>. There are always exactly <b>five beer types</b> (Gruit + Hopped + the 3 dealt exports), so the full flight is <b>always reachable</b> — <em>not how high, but how complete the range of the house</em>. The range lane's reward.</li>
     <li><b>Developer (end-game)</b> — <b>+3★</b> ⚙ for each of your buildings a <b>rival overbuilt</b> (it served its purpose; you're paid for authoring a slot worth covering). <b>Self-displacement pays nothing.</b> The crowded-ring / authorship reward — bites most at 4p.</li>
@@ -559,7 +559,8 @@ const buildings=[
 ];
 document.getElementById('buildingGallery').innerHTML=buildings.map(b=>`
   <div class="card"><div class="head h-room"><div class="kind">Building · ${b[0]==='v'?'Value (demand)':'Transform'} · owned</div><div class="ttl">${b[1]}</div></div>
-  <div class="body">${b[2]}<div class="badge">${b[3]}</div></div></div>`).join('');
+  <div class="body">${b[2]}<div class="badge">${b[3]}</div></div></div>`).join('')
+  +`<p class="small" style="grid-column:1/-1"><b>Quality premium (v1.8):</b> the cask <b>value</b> buildings above pay their printed ★ for Q1–Q3; a <b>Q4</b> cask banks <b>+2★</b> and a <b>Q5</b> <b>+3★</b> on top (no cap), so the climb pays. The <b>ship</b> value buildings (Rich Berth · Festkeller) stay flat — they reward volume. Reliquary/Hall already scales.</p>`;
 
 // ---- (goals cut in v1.0 — dissolved into the Building family above) ----
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v1.7 “Even Footing”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v1.8 “Quality Pays”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -184,8 +184,10 @@
   .scard.back .spine{display:flex}
   .scard .spine .ic,.scard .spine svg{width:8.5cqmin;height:8.5cqmin;flex:0 0 auto}
   /* ===== demand DIE — pips show the ★ a cask banks from the value building it shipped through ===== */
-  .die{display:inline-grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:1cqmin;
+  .die{display:inline-grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:1cqmin;position:relative;
     background:#f4ead0;border:1.5px solid #8a6a2a;border-radius:3cqmin;padding:2cqmin;box-shadow:0 1px 2px rgba(0,0,0,.45);box-sizing:border-box}
+  .die .dieover{position:absolute;top:-32%;right:-26%;min-width:1.4em;height:1.4em;padding:0 .18em;border-radius:1em;background:#8a3c12;color:#fff;border:1.2px solid #fff;
+    display:flex;align-items:center;justify-content:center;font-size:11cqmin;font-weight:900;line-height:1;box-shadow:0 1px 2px rgba(0,0,0,.4)}   /* quality-premium overflow past the d6 */
   .die .pip{display:flex;align-items:center;justify-content:center}
   .die .pip.on::after{content:"";width:66%;height:66%;border-radius:50%;background:#2a1d08}
   .ptile .die.dcask{position:absolute;bottom:5cqmin;right:5cqmin;width:27cqmin;height:27cqmin;z-index:5}
@@ -383,7 +385,7 @@
       <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>v1.7 “Even Footing” — prototype.</b> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
+  <p class="note" style="text-align:center"><b>v1.8 “Quality Pays” — prototype.</b> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
 </main>
 
 <div id="setup" class="modal hidden">
@@ -681,7 +683,7 @@ const KEY='hanse-hotseat-v66'; // v1.8 "Quality Pays": value BUILDINGS are no lo
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v1.7 “Even Footing” · '+KEY;
+const APP_VERSION='v1.8 “Quality Pays” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -926,8 +928,9 @@ const P_ACT_TXT={source:'+2 goods',age:'Age a cask +2',load:'free Load',reach:'+
 function pCost(g,h){let a='';if(g)a+='<span class="pgc">'+LU('wheat','pg')+g+'</span>';if(h)a+='<span class="pgc">'+LU('sprout','ph')+h+'</span>';return a;}
 // ---- the DEMAND DIE: pips = the ★ a cask banks from a value building (a d6, max 5; returns to the pool) ----
 const DIE_PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};   // 3×3 grid, 0-indexed
-function dieFace(n,cls,border){n=Math.max(1,Math.min(6,n|0));let c='';for(let i=0;i<9;i++)c+='<span class="pip'+(DIE_PIPS[n].includes(i)?' on':'')+'"></span>';
-  return '<span class="die'+(cls?' '+cls:'')+'"'+(border?' style="border-color:'+border+'"':'')+' data-tip="'+attr('Demand die — +'+n+'★ this cask banks on delivery (captured from a value-Building).')+'">'+c+'</span>';}
+function dieFace(n,cls,border){n=n|0;const show=Math.max(1,Math.min(6,n));let c='';for(let i=0;i<9;i++)c+='<span class="pip'+(DIE_PIPS[show].includes(i)?' on':'')+'"></span>';
+  const over=n>6?'<span class="dieover">+'+(n-6)+'</span>':'';   // a PREMIUM (Q4/Q5) cask can bank >6 — the d6 maxes at 6, the quality premium overflows (read off the cask)
+  return '<span class="die'+(cls?' '+cls:'')+'"'+(border?' style="border-color:'+border+'"':'')+' data-tip="'+attr('Demand die — +'+n+'★ this cask banks on delivery (a value-Building + any Q4/Q5 quality premium).')+'">'+c+over+'</span>';}
 // the owner's share of a value-building bonus (rival routing → half, rounded up)
 function bldgShare(bd,ownerId,raw){if(!raw)return 0;return (bd.owner!==ownerId)?Math.ceil(raw/2):raw;}
 // a DEPLOYED cask sitting on a value building → the ★ it will bank (preview, before it ships)
@@ -2515,7 +2518,7 @@ function renderAid(){
   const vb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='value').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   const tb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='transform').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   document.getElementById('aidcard').innerHTML=
-    '<h2>'+ic('scroll-text')+' Player Aid — v1.7 “Even Footing”</h2>'
+    '<h2>'+ic('scroll-text')+' Player Aid — v1.8 “Quality Pays”</h2>'
     +'<div class="asec"><b>Your turn</b><div class="note">Move to an adjacent station → activate its <b>row OR column</b> → resolve up to 4 stops (slot · station · station · slot) <b>in any order</b>. <b>If you move onto a station a rival occupies:</b> pay 1 '+ic('wheat')+' toll and work that public line, <b>OR</b> work your <b>Floor</b> — run every cask in your vessels (their slot-actions) <i>instead of</i> the public line (no toll).</div></div>'
     +'<div class="asec"><b>The four stations</b><div class="note">'
       +ic('store')+' <b>Market</b> (Source): take 2 goods, or acquire one tile — a recipe · a '+ic('building-2')+' Building (buy + place) · a '+ic('sailboat')+' ship · a charter contract. Or <b>place a Building from your hand</b> (free) — the ones you earned at London/Novgorod or drew with Survey.<br>'
