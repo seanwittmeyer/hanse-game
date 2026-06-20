@@ -1,0 +1,60 @@
+Brewhouses of the Hanse — headless sim (KEY hanse-hotseat-v75)  |  N=500 games per player count
+scenario: base — Baseline — 3G/2H, equal seats (canonical)
+
+================  2 PLAYERS  (500 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 19.1   min 13   max 25   in 12-25 band: 100.0%
+end trigger:          clock 96.8%   ceiling 3.2%
+sailed/cap at end:    avg 8.0 / 8
+winner total score:   avg 61.2   min 23   max 106
+win margin (1st-2nd): avg 17.6   (ties: 13)
+winner score split:   deliv 33.1   maj 0.0   goals 0.0
+seat win-rate:        P1 58.8%   P2 41.2%   (ideal 50.0%, spread 17.6pts)
+winner lean:          prestige(Hall>kontor) 4.0%   blended(both>0) 21.6%
+UPGRADES (all plyrs): total/game 2.1   earned-via-ship 2.1 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 1.3   (max 4)
+charters/game:        avg 0.8
+winner deliveries by destination (share of winners' casks):
+   bruges 31.4%   london 21.1%   bergen 20.3%   novgorod 24.7%   hall 2.5%
+ALL deliveries by destination (every player):
+   bruges 31.5%   london 22.1%   bergen 21.6%   novgorod 22.8%   hall 1.9%
+The Trade Roads: 9.26 posts founded/game (all, of 7 towns) · winner 5.02 posts, 18.1★ inland
+
+================  3 PLAYERS  (500 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 18.3   min 13   max 25   in 12-25 band: 100.0%
+end trigger:          clock 97.6%   ceiling 2.4%
+sailed/cap at end:    avg 12.2 / 12
+winner total score:   avg 68.6   min 30   max 116
+win margin (1st-2nd): avg 15.2   (ties: 11)
+winner score split:   deliv 39.4   maj 0.0   goals 0.0
+seat win-rate:        P1 47.2%   P2 32.2%   P3 20.6%   (ideal 33.3%, spread 26.6pts)
+winner lean:          prestige(Hall>kontor) 1.8%   blended(both>0) 15.8%
+UPGRADES (all plyrs): total/game 2.8   earned-via-ship 2.8 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 1.2   (max 4)
+charters/game:        avg 2.1
+winner deliveries by destination (share of winners' casks):
+   bruges 27.6%   london 19.9%   bergen 21.4%   novgorod 29.2%   hall 1.8%
+ALL deliveries by destination (every player):
+   bruges 27.6%   london 21.5%   bergen 23.5%   novgorod 25.8%   hall 1.5%
+The Trade Roads: 15.01 posts founded/game (all, of 7 towns) · winner 5.51 posts, 19.1★ inland
+
+================  4 PLAYERS  (500 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 16.8   min 12   max 25   in 12-25 band: 100.0%
+end trigger:          clock 99.6%   ceiling 0.4%
+sailed/cap at end:    avg 15.4 / 15
+winner total score:   avg 67.2   min 21   max 122
+win margin (1st-2nd): avg 14.1   (ties: 10)
+winner score split:   deliv 37.7   maj 0.0   goals 0.0
+seat win-rate:        P1 50.0%   P2 24.4%   P3 18.0%   P4 7.6%   (ideal 25.0%, spread 42.4pts)
+winner lean:          prestige(Hall>kontor) 1.2%   blended(both>0) 13.4%
+UPGRADES (all plyrs): total/game 3.1   earned-via-ship 3.1 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 1.1   (max 4)
+charters/game:        avg 4.4
+winner deliveries by destination (share of winners' casks):
+   bruges 28.0%   london 19.0%   bergen 18.2%   novgorod 33.1%   hall 1.6%
+ALL deliveries by destination (every player):
+   bruges 27.4%   london 20.1%   bergen 21.8%   novgorod 29.5%   hall 1.3%
+The Trade Roads: 19.55 posts founded/game (all, of 7 towns) · winner 5.57 posts, 19.6★ inland
+
