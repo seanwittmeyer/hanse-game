@@ -1,11 +1,12 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v1.9 “Specialty Beers”)
+# Brewhouses of the Hanse — Turn & Round Rules (v1.9 “Beer Atlas”)
 
 > **Status: live (2026-06-18).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
-> playable build is `play.html` (v1.9 “Specialty Beers” — base ruleset v1.8 “Quality Pays”; the opt-in
-> **Specialty Beers** expansion is §12) — these rules are implemented there.** (The prior
+> playable build is `play.html` (v1.9 “Beer Atlas” — base ruleset v1.8 “Quality Pays”; the two opt-in
+> expansions — **Specialty Beers** (incl. blending + 3 thematic Buildings) and the **Jopenbier** capstone —
+> are §12) — these rules are implemented there.** (The prior
 > v0.16.1 "The Wharf" build is archived at branch `archive/main-v0.16.1` / `archive/play.html` /
-> `archive/v0.16/`.)
+> `archive/v0.16/`.) *(An Inland Road / Option B was prototyped then rolled back — `DESIGN.md` §9; the work is on `archive/option-b-inland`.)*
 >
 > **The pitch:** a merchant brewing house at the Wharf, where work runs **Source → Brew → Age →
 > Ship.** The soul is the **squeeze** — *you can't brew everything, and you can't deliver
@@ -364,6 +365,15 @@ this simply generalizes Gruit's existing pin) and carries **one always-on signat
 Recipe buys ⚙: Gose `1 G` · Zerbster `1 H` · Duckstein `1 G`. Everything else — destinations, majorities, the
 Flight, the clock, scoring, the Hall — is **unchanged**; the expansion is pure roster content under the
 existing grammar (the "Beer Atlas" path).
+
+**Specialty Beers also adds (completing Option A):**
+- **Blending** — a **Cellar** action: combine **two Ready vessel casks → one premium cask at +1 quality** (the
+  higher of the two +1, cap Q5; it inherits the higher beer), in a freed vessel. The deep player's *active*
+  turn — reach Q5 without Bock, and a use for two aged casks (you trade two deliveries for one finer one).
+- **Three thematic Buildings** join the building deck (alongside the base family): **Salt House** (a cask
+  shipped from here → its owner gains **+1 G +1 H** on delivery, the salt trade), **Smoke Kiln** (a cask here
+  **ships +1 quality**, cap Q5 — smoke-cured), **Parti-Gyle Tun** (deploy a cask here → a **free small Gruit**
+  to an open vessel). All ⚙. *(The v1 AI uses the buildings but doesn't yet blend — a follow-up.)*
 
 ### Capstone — Jopenbier (a second, independent toggle)
 

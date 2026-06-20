@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.9 “Specialty Beers”)
+# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.9 “Beer Atlas”)
 
 > The physical manifest: **boards · tokens · the tile families · the player brewery board ·
 > destinations.** Enumerates *what objects exist and what each does* — the **why** is in
@@ -146,8 +146,11 @@ gone). *(The cask is half your impact: brew what, hold which, deploy when — `R
 > Recipe-buy ⚙: Gose `1 G` · Zerbster `1 H` · Duckstein `1 G` · Jopenbier `1 G 1 H`. Everything else
 > (destinations, ships, buildings, the Flight, scoring, the clock) is **unchanged** — pure roster content. The
 > **Jopenbier capstone** is a **second, independent toggle** (the deep moonshot; its Q6 is display-only — scored
-> self-contained so it never touches the Q-keyed tables). Staged next: **blending**, **thematic buildings**
-> (Parti-Gyle Tun · Salt House · Smoke Kiln).
+> self-contained so it never touches the Q-keyed tables). Specialty Beers also adds, **completing Option A**:
+> **Blending** — a Cellar *action* (combine **two Ready vessel casks → one premium cask at +1 quality**, cap Q5,
+> in a freed vessel; no component) — and **three thematic Buildings** in the deck only when the toggle is on
+> (`exp:true`): **Salt House** (a cask shipped from here → its owner +1 G +1 H on delivery), **Smoke Kiln**
+> (a cask here ships +1 quality, cap Q5), **Parti-Gyle Tun** (deploy a cask here → a free small Gruit).
 
 ### B. Ship tiles — neutral, destination-bound hulls (deck of ~20) — *unchanged*
 Hull (**Cog** 2 / **Hulk** 3) + a **kontor** destination printed (Bruges/London/Bergen/Novgorod,
@@ -342,10 +345,12 @@ Plus 1 main board · 1 destination board · 4 brewery boards · wooden cubes (G/
 barrels · workers · markers · **~8 demand dice (d6)** · quality-boost markers · **~12 developer 3★ chits**
 (displaced-building payout, v1.2). **Medium GWT footprint** — substantial, far short of Lacerda.
 
-**Expansion — Specialty Beers (opt-in, v1.9):** +~25 cask tiles (**Gose ×8 · Zerbster ×6 · Duckstein ×8 ·
-Jopenbier ×3** the capstone) + 4 recipe designs/player, across **two independent toggles** (Specialty Beers +
-the Jopenbier capstone). A small modular add-on; the base box is unchanged. (Future modules — blending, thematic
-buildings — add their own tiles.)
+**Expansions — the Beer Atlas (opt-in, v1.9):** +~25 cask tiles (**Gose ×8 · Zerbster ×6 · Duckstein ×8 ·
+Jopenbier ×3** the capstone) + 4 recipe designs/player + **3 thematic Building tiles** (**Salt House · Smoke
+Kiln · Parti-Gyle Tun**, in the deck only when Specialty Beers is on), across **two independent toggles**
+(Specialty Beers — which also adds **Blending**, a Cellar action with no component — + the Jopenbier capstone).
+A small modular add-on; the base box is unchanged. *(An Inland Road / Option B was prototyped then rolled back —
+`DESIGN.md` §9; the work is preserved on `archive/option-b-inland`.)*
 
 ---
 

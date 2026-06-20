@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v1.9 “Specialty Beers”)
+# Brewhouses of the Hanse — Design (v1.9 “Beer Atlas”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v1.9 “Specialty Beers”** — live; the **first expansion** ships as **two opt-in New Game toggles**: *Specialty Beers* (Gose · Zerbster · Duckstein → the 3-of-7 export draft; pinned-signature "characters") and the *Jopenbier* **Q6 vintage capstone** (self-contained scoring + dock-cellared aging-as-value; the deep moonshot). **Base game byte-for-byte unchanged when both off.** Base ruleset: **v1.8 “Quality Pays”** (value-Buildings reward the climb — +2★/+3★ at Q4/Q5; keystone rebuild + demand-dice + printables-tile UI; v1.5 private improvements). `play.html` implements both. |
+|**Status**     |**v1.9 “Beer Atlas”** — live; **Option A is complete**, shipping as **two opt-in New Game toggles**: *Specialty Beers* (Gose · Zerbster · Duckstein → the 3-of-7 export draft; pinned-signature "characters" — **plus Blending and 3 thematic Buildings**: Salt House · Smoke Kiln · Parti-Gyle Tun) and the *Jopenbier* **Q6 vintage capstone** (self-contained scoring + dock-cellared aging-as-value; the deep moonshot). **Base game byte-for-byte unchanged when both off.** *(An Inland Road / Option B was prototyped (v69–v72) and then **rolled back** — it bypassed the keystone and replaced a tuned lane; see §9. The work is preserved on `archive/option-b-inland`.)* Base ruleset: **v1.8 “Quality Pays”** (value-Buildings reward the climb — +2★/+3★ at Q4/Q5; keystone rebuild + demand-dice + printables-tile UI; v1.5 private improvements). `play.html` implements both. |
 
 ---
 
@@ -167,6 +167,33 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   revisit: deal a **choice** of starting buildings (draft), or make the opening building **self-favoring**
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
+
+**v1.9 “Beer Atlas” — Option A complete (blending + thematic Buildings); Inland Road / Option B rolled back** *(2026-06-20, `play.html` KEY v73)* —
+Two things happened here, recorded together because the second is the reason the first was re-done cleanly.
+**(A) Option A is completed** with the two pieces that were "staged next" after the capstone: **Blending** — a
+**Cellar** action (with Specialty Beers on): combine **two Ready vessel casks → one premium cask at +1 quality**
+(the higher +1, cap Q5; it inherits the higher beer), in a freed vessel — the deep player's *active* turn (reach
+Q5 without Bock; a use for two aged casks). A human Cellar action; the v1 AI skips it (a forced render-smoke test
+covers the engine). And **three thematic Buildings**, in the deck only when Specialty Beers is on (`exp:true`):
+**Salt House** (a cask shipped from here → its owner +1 G +1 H on delivery), **Smoke Kiln** (+1 quality, cap Q5,
+via `caskEffQ`), **Parti-Gyle Tun** (deploy a cask here → a free small Gruit to an open vessel; added to
+`aiPickBuilding`'s preference). *Gates (KEY v73, `sim-results-v73.txt`):* base + EXPANSION **0 crash/deadlock
+2–4p, pace in band**; render-smoke clean incl. the **BLEND test** (two Q3 → a Q4) + a Cellarmaster game with both
+expansions on; ladder errors 0. With this, **Option A — the Beer Atlas — is complete**: characters (Specialty
+Beers) + a depth capstone (Jopenbier) + the combo/throughput polish (blending + thematic Buildings).
+**(B) The Inland Road (Option B) was ROLLED BACK.** It was prototyped across v69–v72 (an additive overland
+tech-ladder → a contested charter board → a version that *replaced* the kontor majorities). A post-build audit
+found it **sat beside the engine, not through it**: a caravanned cask never ran `deliverCask`, so it **bypassed
+the keystone** (value-buildings, the demand die, the Q4/Q5 quality premium) and **never counted for the Flight**;
+the v72 "replace majorities" move then **deleted a tuned lane** (Volume — one of the five) for an untuned
+charter-count race, orphaning Reach/Keut/presence and mis-counterweighting the Hall. Rather than surgically
+unpick it from the latest build, we **reset `main` to the foundation (`82e9aa9`)** — base + Quality Pays +
+Specialty Beers + Jopenbier — and **re-applied only the genuine Option-A work** (blending + thematic Buildings),
+which had been entangled with the Inland commit `1d8328f`. The Inland work is **preserved on
+`archive/option-b-inland`** for a future, properly-integrated Option B. **Lesson:** a second geography must
+*express* the engine (route through buildings · let quality/premium matter · feed the Flight) and **extend** a
+lane rather than delete one — and keep expansion modules in **separate commits** so one can be dropped without
+unpicking another. All numbers ⚙.
 
 **v1.9 “Jopenbier” — the EXPANSION CAPSTONE (a 2nd opt-in toggle)** *(2026-06-20, `play.html` KEY v68)* — **The
 depth counterweight that completes the roster arc: a slow, dear, super-valuable Q6 “vintage” beer (Danzig).**

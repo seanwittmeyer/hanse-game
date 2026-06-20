@@ -61,6 +61,19 @@ if(jd.val!==JOPEN_BASE+2)throw new Error('jopenbier self-contained value wrong: 
 if(flightBeers(S.players[0])!==0)throw new Error('jopenbier leaked into the Flight');
 console.log('render smoke JOPENBIER capstone OK — banked '+jd.val+'★ (base '+JOPEN_BASE+' + vintage 2 · Q6 · Flight-excluded)');
 JOPEN=false;
+// 3a-BLEND) EXPANSION blending (Option A) — combine two Ready vessel casks into one +1-quality premium (human Cellar action; the AI doesn't blend).
+EXPANSION=true;
+S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;S.active=0;
+S.players[0].vessels[0]={style:'broyhan',q:3,step:1,ready:1,act:'load'};
+S.players[0].vessels[1]={style:'keut',q:3,step:2,ready:2,act:'load'};
+UI={sub:'tap',tap:{returnTo:'end'}};
+blendStart('end');render();          // the blend stage render
+blendPick(0);render();               // pick the first cask
+blendPick(1);                        // pick the second → combine
+var bvz=S.players[0].vessels.filter(function(c){return c;});
+if(!bvz.some(function(c){return c.q===4&&c.step>=c.ready;}))throw new Error('blend did not produce a Ready Q4 cask: '+JSON.stringify(bvz));
+console.log('render smoke BLEND OK — two Q3 → a premium Q4 (Ready)');
+EXPANSION=false;
 // 3b) a guildmaster mini-game through the real render layer (tiny Monte Carlo budget)
 GUILD_MS=10;GUILD_MIN=1;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;
