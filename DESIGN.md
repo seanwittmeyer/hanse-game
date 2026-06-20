@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v1.9 “Beer Atlas”)
+# Brewhouses of the Hanse — Design (v2.0 “The Trade Roads”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -21,7 +21,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v1.9 “Beer Atlas”** — live; **Option A is complete**, shipping as **two opt-in New Game toggles**: *Specialty Beers* (Gose · Zerbster · Duckstein → the 3-of-7 export draft; pinned-signature "characters" — **plus Blending and 3 thematic Buildings**: Salt House · Smoke Kiln · Parti-Gyle Tun) and the *Jopenbier* **Q6 vintage capstone** (self-contained scoring + dock-cellared aging-as-value; the deep moonshot). **Base game byte-for-byte unchanged when both off.** *(An Inland Road / Option B was prototyped (v69–v72) and then **rolled back** — it bypassed the keystone and replaced a tuned lane; see §9. The work is preserved on `archive/option-b-inland`.)* Base ruleset: **v1.8 “Quality Pays”** (value-Buildings reward the climb — +2★/+3★ at Q4/Q5; keystone rebuild + demand-dice + printables-tile UI; v1.5 private improvements). `play.html` implements both. |
+|**Status**     |**v2.0 “The Trade Roads”** — live; **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — an inland **map/tech-tree that REPLACES the kontor majorities**: every delivery to a kontor also pushes your **road** inland from it; reaching a town **founds a Trading Post** (a stacking engine perk + end-game ★; first there gets a one-time boon, Merv-style). Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
 
 ---
 
@@ -105,6 +105,13 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   brewery (engine payoff + the boutique brewer's self-sufficiency; `PLAN.md` §1B).
 - **Kept from v0.16:** ships sail-when-full; the Charter relief valve (scarce contracts); the
   Sailed-Ships end clock; the no-dice/cards/money constraints.
+- **The expansion spine (v2.0):** a tiny `registerExpansion` registry + hook seams
+  (`fire`/`collect`/`expSetup`/`expRender`, plus a `reach` re-home hook and a `replacesMajorities`
+  flag) so each opt-in module is one self-contained block and the core stays free of scattered
+  conditionals. **The Trade Roads** (Overland) is the first module on it: an inland map/tech-tree
+  that **replaces the kontor majorities** — delivering to a kontor extends your road inland; reaching
+  a town founds a Trading Post (a stacking perk + ★). Specialty Beers / Jopenbier predate the spine
+  and remain inline (a later, optional migration).
 
 ---
 
@@ -167,6 +174,32 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   revisit: deal a **choice** of starting buildings (draft), or make the opening building **self-favoring**
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
+
+**v2.0 “The Trade Roads” (Overland) — the inland map/tech-tree, done right this time** *(2026-06-20, `play.html` KEY v74)* —
+The successful re-take of the inland geography, on the lesson the first two attempts taught: **a second geography
+must be powered by the engine's output and feed back into it — route THROUGH the keystone, never beside it.** It
+also lands on a small new **EXPANSION SPINE** (a `registerExpansion` registry + `fire`/`collect`/`expSetup`/`expRender`
+hook seams) so the whole feature is **one self-contained block** the core never tangles with — adding the next
+expansion is append-a-module; removing one is delete-a-block (no more Option-B-style 30-point excisions). *The loop
+(rides the existing Ship action — no new station, no new line):* delivering a cask to a kontor (full keystone:
+demand die · Q4/Q5 premium · the Flight) **also advances your ROAD inland** from that kontor by reach (1, +1 at
+Q4+, +Reach/Keut/perks); when your marker reaches a town whose **quality gate** the delivered cask meets you
+**found a Trading Post** — a recurring, **stacking** engine perk (salt · liquidity · demand · extraload · reach ·
+refine · enshrine) + end-game ★. **Merv-style contest:** first to a town takes a one-time **boon** + full ★; later
+arrivals still get the perk + half ★ (catch-up-friendly — no runaway, and it defuses the 4p first-mover land-grab
+that sank Option B). **Four roads extend the four kontor identities** — Bruges→Rhineland (economy, low gates),
+London→Shires (engine), Bergen→Northern Reach (volume/throughput, its old anchor re-homed), Novgorod→Deep Road
+(quality/prestige, Q4/Q5-gated, biggest ★). **Kontor majorities turn OFF** (`replacesMajorities`) — the contest
+moves inland — and **Reach / Keut / Bergen's benefit re-home** to road steps via a `reach` hook (no orphans, the
+flaw that dogged Option B). Reach=breadth (many shallow posts), quality=depth (few deep, gated) — both win; the
+Hall stays the deliberate non-delivery lane. The Caravan rides deliveries so it's **clock-tied** (no pace bug);
+`SAILED_CAP` +2 pays back the inland investment. *Gates (KEY v74):* base + EXPANSION **unchanged** (0 crash, pace
+in band); **OVERLAND 300 → 0 crash/deadlock 2–4p, 100% pace-in-band, clock-dominant** (`sim-results-v74-overland.txt`);
+render-smoke clean incl. a **full Trade Roads test** (deliver → road → found a post → score → majorities off → salt
+perk) + a Cellarmaster game with **all three** expansions on; **ladder PASS, errors 0**. *Watch-items (tuning, ⚙):*
+the road-investment payback vs. the stay-home Hall tempo; the network-score weight vs. the old majority weight; a
+road-beer specialty and richer cross-road connection scoring are noted future extensions. **Specialty Beers &
+Jopenbier remain inline** (pre-spine) — an optional later migration, not required.
 
 **v1.9 “Beer Atlas” — Option A complete (blending + thematic Buildings); Inland Road / Option B rolled back** *(2026-06-20, `play.html` KEY v73)* —
 Two things happened here, recorded together because the second is the reason the first was re-done cleanly.

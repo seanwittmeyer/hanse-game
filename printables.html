@@ -739,7 +739,7 @@ function pboard(p){
     +'<div class="pb-head">'
       +'<div class="crest">'+LU('beer')+'</div>'
       +'<div class="pb-title"><div class="pb-name">'+p.nm+' Brewhouse</div>'
-        +'<div class="pb-sub">Brewhouses of the Hanse · your private brewery · v1.9 “Beer Atlas”</div></div>'
+        +'<div class="pb-sub">Brewhouses of the Hanse · your private brewery · v2.0 “The Trade Roads”</div></div>'
       +'<div class="pb-store"><span class="slbl">'+LU('warehouse')+'Storage</span>'
         +'<div class="szone"><span class="si">'+LU('wheat','g ic')+'Grain</span><span class="si">'+LU('sprout','h ic')+'Hops</span><span class="cap">max <b>8</b></span></div></div>'
     +'</div>'
@@ -933,11 +933,12 @@ function checklist(pages,famPages){
   const row=(bx,nm,n,note)=>'<tr>'+(bx?'<td class="bx"></td>':'<td></td>')+'<td>'+nm+'</td><td class="n">'+n+'</td><td>'+(note||'')+'</td></tr>';
   const bp=pages.filter(p=>p.section==='boards');
   const pbRef=bp.length>3?'S'+bp[2].no+'–S'+bp[bp.length-1].no:'S'+bp[2].no+' (proof: 1 of '+PLAYERS.length+' shown)';
-  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v1.9 “Beer Atlas”)</h2><div class="cols2">';
+  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v2.0 “The Trade Roads”)</h2><div class="cols2">';
   h+='<table><tr><th></th><th>Boards (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Main board — the Wharf (stations · 8 slots · Sailed-Ships + round tracks)','1','S'+bp[0].no)
     +row(1,'Destinations board (4 kontore + the Hall · Building display · majority chart)','1','S'+bp[1].no)
     +row(1,'Player brewery boards ('+PLAYERS.map(p=>p.nm).join(' · ')+')',PLAYERS.length,pbRef)
+    +row(0,'<i>EXPANSION — The Trade Roads (Overland): 1 inland map board — the 4 kontore as coastal road-heads, each a 3-town road inland (12 town spaces, each printed with its quality gate · recurring perk · founder boon · ★; deeper = higher gate + more ★). Per player: 4 road markers + ~9 trading-post tokens (re-cut from the freed presence barrels). The Caravan rides the Ship action — no new tile; replaces the kontor majority chart when on.</i>','—','—')
     +'</table>';
   h+='<table><tr><th></th><th>Tiles — 1.25″ squares (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Cask · Gruit Q1 (pinned Source +2 goods · ready 1)','16',pgRef(pages,famPages,'Casks'))

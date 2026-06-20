@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Components, Tiles & Player Board (v1.9 “Beer Atlas”)
+# Brewhouses of the Hanse — Components, Tiles & Player Board (v2.0 “The Trade Roads”)
 
 > The physical manifest: **boards · tokens · the tile families · the player brewery board ·
 > destinations.** Enumerates *what objects exist and what each does* — the **why** is in
@@ -345,12 +345,23 @@ Plus 1 main board · 1 destination board · 4 brewery boards · wooden cubes (G/
 barrels · workers · markers · **~8 demand dice (d6)** · quality-boost markers · **~12 developer 3★ chits**
 (displaced-building payout, v1.2). **Medium GWT footprint** — substantial, far short of Lacerda.
 
-**Expansions — the Beer Atlas (opt-in, v1.9):** +~25 cask tiles (**Gose ×8 · Zerbster ×6 · Duckstein ×8 ·
-Jopenbier ×3** the capstone) + 4 recipe designs/player + **3 thematic Building tiles** (**Salt House · Smoke
-Kiln · Parti-Gyle Tun**, in the deck only when Specialty Beers is on), across **two independent toggles**
-(Specialty Beers — which also adds **Blending**, a Cellar action with no component — + the Jopenbier capstone).
-A small modular add-on; the base box is unchanged. *(An Inland Road / Option B was prototyped then rolled back —
-`DESIGN.md` §9; the work is preserved on `archive/option-b-inland`.)*
+**Expansions (opt-in, v2.0) — three independent toggles on a shared expansion spine; the base box is unchanged when all off:**
+- **Specialty Beers (the Beer Atlas):** +~25 cask tiles (**Gose ×8 · Zerbster ×6 · Duckstein ×8 · Jopenbier ×3**
+  the capstone) + 4 recipe designs/player + **3 thematic Building tiles** (**Salt House · Smoke Kiln · Parti-Gyle
+  Tun**, in the deck only when on). Also adds **Blending** (a Cellar *action*, no component). + the **Jopenbier**
+  Q6 capstone (its own toggle).
+- **The Trade Roads (Overland) — the inland map; REPLACES the kontor majorities.** Components: **1 inland map
+  board** — the four kontore as coastal road-heads, each running inland through a **3-town road** (12 town spaces,
+  each printed with its **quality gate · recurring perk · founder boon · ★**; deeper = higher gate + more ★);
+  per player, **4 road markers** (one per road) + **~9 trading-post tokens** (re-cut from the now-freed presence
+  barrels). The **Caravan rides the Ship action** — *no new tile/station*. **First to a town = founder** (one-time
+  boon + full ★); later arrivals tap the recurring perk + half ★ (Merv-style — shared access, no runaway). **OUT
+  when this module is on:** the kontor **majority tracks/chart** (the contest moves inland); the **presence
+  barrels** repurpose to road markers/posts. The road board sits beside the destinations board.
+
+The four roads extend the four kontor identities (Bruges=economy · London=engine · Bergen=throughput · Novgorod=
+quality/deep). Reach (breadth) and quality (depth, gated) both win. *(Two earlier Inland Road / Option B attempts
+were rolled back for bypassing the keystone — see `DESIGN.md` §9; that work is preserved on `archive/option-b-inland`.)*
 
 ---
 

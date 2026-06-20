@@ -74,6 +74,23 @@ var bvz=S.players[0].vessels.filter(function(c){return c;});
 if(!bvz.some(function(c){return c.q===4&&c.step>=c.ready;}))throw new Error('blend did not produce a Ready Q4 cask: '+JSON.stringify(bvz));
 console.log('render smoke BLEND OK — two Q3 → a premium Q4 (Ready)');
 EXPANSION=false;
+// 3a-ROAD) THE TRADE ROADS (Overland) — a delivery to a kontor extends the road, founds a post, scores the network,
+// turns kontor majorities OFF, and a held perk (Cologne salt) fires. Driven through the real deliverCask + render.
+OVERLAND=true;
+S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;S.active=0;
+if(!(S.overland&&S.overland.on))throw new Error('overland: state not set up');
+deliverCask(S.players[0],{owner:0,style:'broyhan',q:3,bld:null},'bruges',null,false);   // ship a Q3 to Bruges
+if(!((S.overland.reach[0].bruges||0)>=1))throw new Error('overland: road did not advance on delivery');
+if(!((S.overland.posts['br1']||[]).includes(0)))throw new Error('overland: Cologne post not founded');
+if(S.overland.founder['br1']!==0)throw new Error('overland: founder not recorded');
+var oSc=scorePlayer(S.players[0]);
+if(!(oSc.ext>0))throw new Error('overland: inland network scored nothing');
+if(oSc.maj!==0)throw new Error('overland: kontor majorities should be OFF with The Trade Roads on');
+var g0=S.players[0].grain;UI={sub:'source',src:{n:2,returnTo:'end'}};srcTake(2,0);   // Cologne 'salt' perk → +1 G on Market goods
+if(!(S.players[0].grain>=Math.min(S.players[0].storage,g0+3)))throw new Error('overland: salt perk (+1 G on Market goods) not applied');
+render();   // exercise the inland map panel injection through the real render layer
+console.log('render smoke OVERLAND (The Trade Roads) OK — Bruges reach '+S.overland.reach[0].bruges+', '+Object.keys(S.overland.founder).length+' post(s) founded, inland '+oSc.ext+'★, majorities '+oSc.maj);
+OVERLAND=false;
 // 3b) a guildmaster mini-game through the real render layer (tiny Monte Carlo budget)
 GUILD_MS=10;GUILD_MIN=1;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;
@@ -86,7 +103,7 @@ console.log('render smoke guildmaster OK — rounds '+S.turn);
 // 3c) a cellarmaster mini-game through the real render layer (tiny deep-MC budget) — with BOTH expansions
 // ON, so the MC's enumeration + deep rollout exercise the specialty beers AND the Jopenbier capstone (the
 // real oracle path: aiBuyableExports adds jopenbier, the deep rollout prices it, aiJopenHold cellars it).
-EXPANSION=true;JOPEN=true;
+EXPANSION=true;JOPEN=true;OVERLAND=true;
 CELLAR_MS=20;CELLAR_MIN=1;CELLAR_CAP=120;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;
 S.players[0].ai={tier:'cellarmaster',persona:null};
@@ -94,8 +111,8 @@ S.players[1].ai={tier:'trader',persona:'prestige'};
 render();
 var cguard=0;
 while(!S.over){aiStep();render();if(++cguard>100000)throw new Error('guard tripped in Cellarmaster game');}
-console.log('render smoke cellarmaster OK (Specialty Beers + Jopenbier on) — rounds '+S.turn);
-EXPANSION=false;JOPEN=false;
+console.log('render smoke cellarmaster OK (Specialty Beers + Jopenbier + The Trade Roads on) — rounds '+S.turn);
+EXPANSION=false;JOPEN=false;OVERLAND=false;
 // 3d) the opt-in Path C (turn-level UCT) Cellarmaster — keep the tree-search code crash-covered
 CELLAR_MS=20;CELLAR_MIN=1;CELLAR_CAP=120;CELLAR_MCTS=true;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;

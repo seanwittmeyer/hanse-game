@@ -260,6 +260,7 @@ function tbVec(p){var sc=scorePlayer(p);return [sc.total, p.grain+p.hops, wharfC
 function runGame(n){
   EXPANSION=(typeof __EXPANSION!=='undefined'&&__EXPANSION);   // EXPANSION "Specialty Beers" sim hook (injected via ctx) — off by default → base-game regression; EXPANSION=1 tests the opt-in module
   JOPEN=(typeof __JOPEN!=='undefined'&&__JOPEN);               // EXPANSION CAPSTONE "Jopenbier" sim hook — JOPEN=1 confirms the flag doesn't break the base flow (the greedy bot doesn't pilot the capstone)
+  if(typeof OVERLAND!=='undefined')OVERLAND=(typeof __OVERLAND!=='undefined'&&__OVERLAND);   // EXPANSION "The Trade Roads" sim hook — OVERLAND=1; the greedy bot grows roads PASSIVELY (delivering rides the road), which gates robustness/pace
   S=freshState(n,NAMES.slice(0,n));UI={sub:'move'};undoStack=[];activeTab=0;
   // ---- starting-token override hook (balance testing; null = canonical 3G/2H, equal seats) ----
   // __SC.g/__SC.h override the flat start; __SC.comp[seat] adds per-seat grain (seat compensation
@@ -317,7 +318,11 @@ function runGame(n){
     winByDest:byDest, winValKontor:valDest.kontor, winValHall:valDest.hall,
     winShips:wp.shipsSailed, winUpgrades:wp.upgrades.length, winPersona:persona(wp),
     totalUpgrades:totalUpgrades, buys:__buys, totalDeliv:totalDeliv, charters:__charters,
-    allByDest:allByDest, jopenAll:jopenAll, jopenWin:jopenWin, playerStats:playerStats
+    allByDest:allByDest, jopenAll:jopenAll, jopenWin:jopenWin, playerStats:playerStats,
+    // EXPANSION "The Trade Roads": trading posts founded this game (all players) + by the winner + winner inland ★
+    olPosts:(S.overland?Object.values(S.overland.posts).reduce((a,arr)=>a+arr.length,0):0),
+    olWin:(S.overland?OL_TOWNS.reduce((a,t)=>a+(((S.overland.posts[t.k]||[]).includes(win))?1:0),0):0),
+    olWinPts:(S.overland?(scores[win].ext||0):0)
   };
 }
 
@@ -403,6 +408,7 @@ const ctx = {
   __FREEIMP: process.env.FREE_IMP==='1',
   __EXPANSION: process.env.EXPANSION==='1',
   __JOPEN: process.env.JOPEN==='1',
+  __OVERLAND: process.env.OVERLAND==='1',
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;
@@ -468,6 +474,8 @@ function summarize(n, arr) {
   console.log(`   ` + Object.keys(allByDest).map(k => `${k} ${pct(allByDest[k], totalAll)}`).join('   '));
   const jopenAll = ok.reduce((a, r) => a + (r.jopenAll || 0), 0), jopenWin = ok.reduce((a, r) => a + (r.jopenWin || 0), 0);
   if (jopenAll > 0) console.log(`Jopenbier capstone: delivered ${fmt(jopenAll / ok.length, 2)}/game (all players) · ${fmt(jopenWin / ok.length, 2)}/game by the winner`);
+  const olPosts = ok.reduce((a,r)=>a+(r.olPosts||0),0), olWin = ok.reduce((a,r)=>a+(r.olWin||0),0), olWinPts = ok.reduce((a,r)=>a+(r.olWinPts||0),0);
+  if (olPosts > 0) console.log(`The Trade Roads: ${fmt(olPosts/ok.length,2)} posts founded/game (all, of 12) · winner ${fmt(olWin/ok.length,2)} posts, ${fmt(olWinPts/ok.length,1)}★ inland`);
   // ===== PATHWAYS TO A WIN — per-strategy win-rate + score composition =====
   // Pathways: volume / prestige / majority (personas) + deep (cellarmaster). A cellar seat is reported
   // ONLY as 'deep' (its assigned persona is ignored, since it plays the deep policy).

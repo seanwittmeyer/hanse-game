@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v1.9 “Beer Atlas”)
+# Brewhouses of the Hanse — Turn & Round Rules (v2.0 “The Trade Roads”)
 
 > **Status: live (2026-06-18).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
@@ -345,7 +345,13 @@ table. Pace target **~12–25 rounds.**
 
 ---
 
-## 12. Expansion — Specialty Beers (opt-in toggle)
+## 12. Expansions (opt-in toggles)
+
+*Three independent **New Game toggles**, mixable freely, on a shared **expansion spine** (a registry + hook seams,
+so each module is one self-contained block and the base stays untouched): **(1) Specialty Beers** (below),
+**(2) the Jopenbier capstone**, **(3) The Trade Roads** — the inland map that replaces the kontor majorities.*
+
+### Specialty Beers
 
 A modular, **opt-in** expansion, switched on by a **New Game checkbox**. **OFF by default → the base game is
 exactly as above (§1–11), byte-for-byte.** ON → three new **specialty beers** join the export draft, so you
@@ -389,9 +395,35 @@ part of your range); counts as a normal cask for majority. The slowness + the vi
 **end-clock a second job** — rivals push the Sailed-Ships track to deny a maturing Jopenbier (the race-to-end).
 All numbers ⚙ (`JOPEN_BASE` 8 · `JOPEN_HALL` 9 · vintage cap 5 · ready 4).
 
-*Staged next (optional future modules):* **blending** (sacrifice two matured casks → one premium delivery — the
-deep player's active turn) → **thematic buildings** (Parti-Gyle Tun · Salt House · Smoke Kiln). Rationale + sim
-gates: `DESIGN.md` §9 (v1.9).
+### The Trade Roads — the inland map (Overland, the third toggle)
+
+The heaviest module, and the one that **REPLACES the kontor majorities**: when it's on, those majorities turn
+**OFF** and the control contest moves inland. It adds a **map** — each kontor is the coastal head of a **ROAD**
+running inland through a short chain of **towns** — grown by the deliveries you already make. **No new station,
+no new action; it rides the Harbor's Ship.**
+
+- **Reach rides delivery.** Shipping a cask to a kontor (the normal Ship — fully through the demand die / quality
+  premium / the Flight) **also pushes your road marker** inland from that kontor by its **reach**: **1, +1 if the
+  cask is Q4+**, plus any **Reach** / **Keut** / road perks (these **re-home here** — there are no majorities left
+  to feed). *Quality buys distance; the demand engine you built funds the deliveries that grow the network.*
+- **Found a Trading Post.** When your marker reaches a town whose **quality gate** the delivered cask meets, you
+  establish a post: a **recurring perk** (it **stacks** — climb a road, stack its perk) + end-game **★**. **First
+  to a town** takes a one-time **founder boon** (a recipe · a building · goods · a vessel · a contract) + its
+  **full ★**; **later arrivals** still get the perk + **half ★** (catch-up-friendly — no runaway; this also
+  defuses a first-mover land-grab).
+- **Four roads, four leans** (extending the kontor identities): **Bruges → Rhineland** (economy — salt/liquidity,
+  low gates), **London → Shires** (engine — demand/extra-load), **Bergen → Northern Reach** (volume/throughput —
+  reach/refine; the old anchor re-homed), **Novgorod → the Deep Road** (quality/prestige — refine/enshrine,
+  **Q4/Q5-gated**, the biggest ★).
+- **Scoring (replaces majorities):** each post scores its ★ (founder full / later half) + a **completed-road**
+  bonus for holding a road's deepest town. **Reach = breadth** (many shallow posts) · **quality = depth** (few
+  deep, gated) — both win; the **Hall** stays the deliberate non-delivery lane.
+
+The Caravan rides sea deliveries, so it's **clock-tied** (no pace bug); the Sailed-Ships length is **+2** to pay
+back the inland investment. All numbers ⚙. Sim-gated: 0 crash/deadlock 2–4p, pace in band, clock-dominant;
+render-smoke + ladder clean. See `DESIGN.md` §9 (v2.0). *(Lesson honored: a second geography must run THROUGH the
+keystone — delivery, quality, the demand die — and EXTEND a lane, not sit beside the engine; the earlier Inland
+Road / Option B failed that and was rolled back.)*
 
 ---
 
