@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v2.0 “The Trade Roads”)
+# Brewhouses of the Hanse — Design (v2.1 “Staple Rights”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v2.0 “The Trade Roads”** — live; **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — the **Hanse Network**: a tree from **Hamburg** (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul) that **REPLACES the kontor majorities**. A **voyage** to a kontor pushes your **caravan** one node along its road (**per voyage**, gated by cask quality); reaching a town **founds a Trading Post** (a stacking perk + end-game ★; first there gets a one-time boon, Merv-style). Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
+|**Status**     |**v2.1 “Staple Rights”** — live; **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — the **Hanse Network**: a tree from **Hamburg** (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul) that **REPLACES the kontor majorities**. A **voyage** to a kontor pushes your **caravan** one node along its road (**per voyage**, gated by cask quality); reaching a town lets each cask aboard **claim a Staple-Right slot** (a distinct one-shot bonus, flavoured by lane: Rhineland=craft · London=infrastructure · Bergen=logistics · East=points), in load order; a full town pays an overflow bonus. Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
 
 ---
 
@@ -78,7 +78,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v2.0 “The Trade Roads”)
+## 6. The current architecture (v2.1 “Staple Rights”)
 
 Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -177,6 +177,35 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   revisit: deal a **choice** of starting buildings (draft), or make the opening building **self-favoring**
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
+
+**v2.1 “Staple Rights” — The Trade Roads, REDESIGNED to claimable slots** *(2026-06-21, `play.html` KEY v79)* —
+**Table feedback retired the founder/recurring-perk town model in favour of a slot-claim model** (the Hanse
+*Stapelrecht*). Each **town** now carries **2–4 PRINTED SLOTS**, each a **distinct ONE-SHOT bonus** drawn from
+across the game and **flavoured by lane** — so the lane choice is an identity, not a number: **Rhineland =
+knowledge/craft** (recipe · +quality · +age · free brew), **London = infrastructure** (Buildings to hand · goods),
+**Bergen = logistics** (contracts · goods), **East = depth/value** (vessel · +quality · big points; **Pskov = pure
+points**). **Claiming:** movement stays **one node per voyage per owner** (quality gates depth — the anti-flatness
+rule kept), then **each cask aboard claims a slot at that node, in LOAD ORDER** (first loaded picks first); a 2-cask
+voyage to your frontier = two slots. The **active player picks** an open slot (a new `olclaim` picker on the
+sail-resolution pending queue, mirroring the Bergen-reach/London-building flow); rivals & the AI auto-pick the
+highest-value open slot. **Never nothing:** a full town pays the line's small **overflow** bonus and your road
+still extends. Active slot count **scales with player count** (2p→2 … 4p→4); the deep ◆ towns (Frankfurt/Pskov)
+stay **scarce at 2**. **The Rhine Charter** added: a **Q4+** Charter takes the *Rhine road* — the cask delivers at
+Bruges (full keystone) but the caravan **leaps Hamburg→Cologne, skipping the contested Bruges node** (marked
+satisfied, so later Bruges voyages continue to Frankfurt) — the quality brewer's express. **Why the change:**
+the recurring perks (esp. `refine` = +1 age **every turn**) were exactly the *per-turn tabletop upkeep* a physical
+euro should avoid, and the founder/half-★ model was a flat winner-take-all race; discrete on-arrival slot bonuses
+fix both and make each lane *play* differently. The motivating diagnostics were three real 2p games (a Jopenbier
+capstone that fell flat — its dock-cellar vintage never accrued because a deployed cask is shipped immediately —
+and two Overland games whose recurring perks read as upkeep). *Composes with the v1.4.1 Flexible Cellar* (below).
+*Scoring* is still the inland network ★ (node delivery pts + slot bonuses, banked live) replacing majorities.
+*Sim-gated (KEY v79, `sim-results-v79.txt`):* base regression + OVERLAND both **0 crash/deadlock 2–4p**, pace
+**100% in the 12–25 band** (avg ~18–20 rounds), clock-dominant; `ai-render-smoke` drives the **slot picker + the
+Rhine leap** and a full Cellarmaster game with all three expansions on through the **real** render layer; the AI
+ladder is clean (0 errors). *Open ⚙ (for the persona oracle, not the greedy bot):* the exact slot magnitudes &
+per-lane delivery points (first pass — East currently the point-heavy lane by design); a **manual bonus-resolution**
+picker for the choice-bearing slots (v1 auto-resolves the bonus, the player only picks *which slot*); whether to
+bump core-city delivery points to sharpen the lane point-gradient.
 
 **v76 EXPERIMENT — the Brewhouse↔Cellar grid swap: TESTED, then REVERTED** *(2026-06-21, sim-gated, not shipped)* —
 A playtest hypothesis — swap the Brewhouse(Brew) and Cellar(Age) stations in the 2×2. A mirror-match A/B (360 games,

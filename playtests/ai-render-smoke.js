@@ -80,20 +80,24 @@ EXPANSION=false;
 OVERLAND=true;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;S.active=0;
 if(!(S.overland&&S.overland.on))throw new Error('overland: state not set up');
-// a voyage = the real seam: deliver each cask (per-cask keystone) then fire 'voyage' once (per-ship caravan step)
-function olVoy(pid,style,q,dest){deliverCask(S.players[pid],{owner:pid,style:style,q:q,bld:null},dest,null,false);fire('voyage',{ship:{load:[{owner:pid,style:style,q:q}],dest:dest}});}
+// v2.1 STAPLE RIGHTS: a voyage = deliver each cask (per-cask keystone) + fire 'voyage' once (per-ship, ONE node);
+// the active player's slot claim queues to UI.pendingOlClaim → drain it (olClaimPick) like the real picker.
+function olDrain(){var g=0;while((UI.pendingOlClaim||[]).length){if(++g>50)throw new Error('overland: claim drain runaway');var b=UI.pendingOlClaim[0];var open=olOpenSlots(b.node);olClaimPick(open.length?olBestSlot(S.players[b.pid],b.node,open):0);}}
+function olVoy(pid,style,q,dest){S.active=pid;UI={sub:'stops',stops:[]};deliverCask(S.players[pid],{owner:pid,style:style,q:q,bld:null},dest,null,false);fire('voyage',{ship:{load:[{owner:pid,style:style,q:q}],dest:dest}});olDrain();}
 olVoy(0,'broyhan',3,'bruges');
 if(!olReached(0).bruges)throw new Error('overland: caravan did not reach the Bruges gateway on the 1st voyage');
 olVoy(0,'broyhan',3,'bruges');
-if(!((S.overland.posts['cologne']||[]).includes(0)))throw new Error('overland: Cologne not founded on the 2nd Bruges voyage');
-if(S.overland.founder['cologne']!==0)throw new Error('overland: founder not recorded');
+if(!olReached(0).cologne)throw new Error('overland: caravan did not reach Cologne on the 2nd Bruges voyage');
+if(!((S.overland.slots['cologne']||[]).some(function(c){return c.pid===0;})))throw new Error('overland: no Staple Right claimed at Cologne');
 var oSc=scorePlayer(S.players[0]);
 if(!(oSc.ext>0))throw new Error('overland: inland network scored nothing');
 if(oSc.maj!==0)throw new Error('overland: kontor majorities should be OFF with The Trade Roads on');
-var g0=S.players[0].grain;UI={sub:'source',src:{n:2,returnTo:'end'}};srcTake(2,0);   // Cologne 'salt' perk → +1 G on Market goods
-if(!(S.players[0].grain>=Math.min(S.players[0].storage,g0+3)))throw new Error('overland: salt perk (+1 G on Market goods) not applied');
+// the Rhine Charter: a Q4+ leap skips Bruges → Cologne (mark satisfied) for a fresh player
+S=freshState(2,['P1','P2']);UI={sub:'stops',stops:[]};S.active=0;
+olRhineLeap(S.players[0]);olDrain();
+if(!(olReached(0).bruges&&olReached(0).cologne))throw new Error('overland: Rhine leap did not satisfy Bruges + reach Cologne');
 render();   // exercise the inland map panel injection through the real render layer
-console.log('render smoke OVERLAND (The Trade Roads) OK — reached '+Object.keys(olReached(0)).join('/')+', '+Object.keys(S.overland.founder).length+' town(s) founded, inland '+oSc.ext+'★, majorities '+oSc.maj);
+console.log('render smoke OVERLAND (Staple Rights) OK — reached '+Object.keys(olReached(0)).join('/')+', '+Object.values(S.overland.slots).reduce(function(a,arr){return a+arr.length;},0)+' slot(s) claimed, inland '+oSc.ext+'★, majorities '+oSc.maj);
 OVERLAND=false;
 // 3b) a guildmaster mini-game through the real render layer (tiny Monte Carlo budget)
 GUILD_MS=10;GUILD_MIN=1;

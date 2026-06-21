@@ -256,6 +256,7 @@ function botActOnce(){var p=cur();var U=UI.sub;
     case 'breach':{var lp=S.players[UI.pendingReach[0].pid];var bk=reachBenKontore(lp);if(!bk.length)return breachPick(null);var bb=bk[0],bv=-1e9;  // reinforce best majority swing (presence only where delivered)
       bk.forEach(function(k){lp.presBonus[k]=(lp.presBonus[k]||0)+1;var a=majorityAwards(k);lp.presBonus[k]--;var v=(a[lp.id]||0)+Math.random()*0.1;if(v>bv){bv=v;bb=k;}});return breachPick(bb);}
     case 'brecipe':{var lp=S.players[UI.pendingRecipe[0].pid];var o=freeRecipeOptions(lp);if(!o.length)return brecipePick(null);o.sort(function(a,b){return STYLES[b].q-STYLES[a].q;});return brecipePick(o[0]);}
+    case 'olclaim':{var b=(UI.pendingOlClaim||[])[0];if(!b)return olClaimPick(0);var open=olOpenSlots(b.node);return olClaimPick(open.length?olBestSlot(S.players[b.pid],b.node,open):0);}   // The Trade Roads — claim the best open Staple Right
     case 'end':return endTurn();
     default: throw new Error('unknown UI.sub: '+U);
   }
@@ -324,9 +325,9 @@ function runGame(n){
     winShips:wp.shipsSailed, winUpgrades:wp.upgrades.length, winPersona:persona(wp),
     totalUpgrades:totalUpgrades, buys:__buys, totalDeliv:totalDeliv, charters:__charters,
     allByDest:allByDest, jopenAll:jopenAll, jopenWin:jopenWin, playerStats:playerStats,
-    // EXPANSION "The Trade Roads": trading posts founded this game (all players) + by the winner + winner inland ★
-    olPosts:(S.overland?Object.values(S.overland.posts).reduce((a,arr)=>a+arr.length,0):0),
-    olWin:(S.overland?OL_TOWN_KEYS.reduce((a,k)=>a+(((S.overland.posts[k]||[]).includes(win))?1:0),0):0),
+    // EXPANSION "The Trade Roads" (v2.1 Staple Rights): slots claimed this game (all players) + by the winner + winner inland ★
+    olPosts:(S.overland&&S.overland.slots?Object.values(S.overland.slots).reduce((a,arr)=>a+arr.length,0):0),
+    olWin:(S.overland&&S.overland.slots?Object.values(S.overland.slots).reduce((a,arr)=>a+arr.filter(c=>c.pid===win).length,0):0),
     olWinPts:(S.overland?(scores[win].ext||0):0)
   };
 }

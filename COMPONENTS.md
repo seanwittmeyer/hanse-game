@@ -1,11 +1,11 @@
-# Brewhouses of the Hanse — Components, Tiles & Player Board (v2.0 “The Trade Roads”)
+# Brewhouses of the Hanse — Components, Tiles & Player Board (v2.1 “Staple Rights”)
 
 > The physical manifest: **boards · tokens · the tile families · the player brewery board ·
 > destinations.** Enumerates *what objects exist and what each does* — the **why** is in
 > `DESIGN.md`, the **operational rules** in `RULES.md`, the **plan** in `PLAN.md`. **Every
 > count/value is a placeholder ⚙.**
 >
-> **v2.0 — The Trade Roads (live).** The keystone "Living Slots" rebuild shipped and is implemented in
+> **v2.1 — The Trade Roads / Staple Rights (live).** The keystone "Living Slots" rebuild shipped and is implemented in
 > `play.html`; v0.16.1 is archived at `archive/play.html` (manifest at `archive/v0.16/COMPONENTS.md`).
 > The **8 slots are a living, composable commons** — they hold **owned buildings** that modify the
 > casks/ships docked to them; **one tile family (Buildings) absorbs the old neutral buildings, the
@@ -346,30 +346,35 @@ Plus 1 main board · 1 destination board · 4 brewery boards · wooden cubes (G/
 barrels · workers · markers · **~8 demand dice (d6)** · quality-boost markers · **~12 developer 3★ chits**
 (displaced-building payout, v1.2). **Medium GWT footprint** — substantial, far short of Lacerda.
 
-**Expansions (opt-in, v2.0) — three independent toggles on a shared expansion spine; the base box is unchanged when all off:**
+**Expansions (opt-in, v2.1) — three independent toggles on a shared expansion spine; the base box is unchanged when all off:**
 - **Specialty Beers (the Beer Atlas):** +~25 cask tiles (**Gose ×8 · Zerbster ×6 · Duckstein ×8 · Jopenbier ×3**
   the capstone) + 4 recipe designs/player + **3 thematic Building tiles** (**Salt House · Smoke Kiln · Parti-Gyle
   Tun**, in the deck only when on). Also adds **Blending** (a Cellar *action*, no component). + the **Jopenbier**
   Q6 capstone (its own toggle).
-- **The Trade Roads (Overland) — the Hanse NETWORK; REPLACES the kontor majorities.** Components: **1 inland
+- **The Trade Roads (Overland) — STAPLE RIGHTS; REPLACES the kontor majorities.** Components: **1 inland
   network board** — a **tree rooted at HAMBURG** (home). Two roads leave home: **WEST** to the **Bruges gateway**,
   which branches to **London**, **Bergen**, and the **Rhineland**; and **EAST** on the deep haul to **Novgorod**.
-  The four kontore are **core-city waypoints** (no ★ — their reward is the sea-delivery benefit); **7 town spaces**
-  carry the engine — **Cologne · Frankfurt** (Rhineland) · **Antwerp** (London) · **Tønsberg** (Bergen) · **Visby ·
-  Tallinn · Pskov** (East) — each printed with its **quality gate · recurring perk · founder boon · ★** (deeper =
-  higher gate + more ★; **Frankfurt / Pskov** are ◆ **deep** terminals = a bonus ★). Per player, **presence
-  markers double as the CARAVAN TRAIL** (drop one on each node you reach — they show who's gone where & how deep;
-  re-cut from the now-freed presence barrels) + **trading-post tokens** for founded towns. The **caravan rides the
-  Ship action** — *no new tile/station; movement is per VOYAGE (one ship = one step), gated by cask quality.*
-  **First to a town = founder** (one-time boon + full ★); later arrivals tap the perk + half ★ (Merv-style —
-  shared access, no runaway). **Bruges delivery = a recipe OR 2 goods** (the knowledge on-ramp). **OUT when this
+  The four kontore are **core-city waypoints** (no slots — their reward is the base sea-delivery benefit); **7 town
+  spaces** carry **Staple-Right SLOTS** — **Cologne · Frankfurt** (Rhineland) · **Antwerp** (London) · **Tønsberg**
+  (Bergen) · **Visby · Tallinn · Pskov** (East) — each printed with its **quality gate · base delivery ★ · 2–4
+  SLOTS** (each a distinct one-shot bonus, **flavoured by lane**) · an **overflow** bonus (claimed when the slots
+  are full — "never nothing"). **Frankfurt / Pskov** are ◆ **deep** terminals (high gate, biggest ★, **scarce: only
+  2 active slots**). The lane menus: **Rhineland = craft** (a recipe · +1 quality · +2 age · a free Hopped),
+  **London = infrastructure** (a Building to hand · goods), **Bergen = logistics** (a charter contract · goods),
+  **East = depth/value** (a vessel · +1 quality · big points; **Pskov = pure points**). **Active slot count scales
+  with player count** (2p→2 … 4p→4; deep towns stay 2) — print 4, cover the high slots for fewer players. Per
+  player, **presence markers** are dropped into the **slot they claim** (who holds which Staple Right). The
+  **caravan rides the Ship action** — *no new tile/station; movement is per VOYAGE (one ship = ONE node per owner),
+  gated by cask quality;* then **each cask aboard claims an open slot at the node reached, in LOAD ORDER**. **Bruges
+  delivery = a recipe OR 2 goods** (the knowledge on-ramp, no slots). **The Rhine Charter:** a **Q4+** Charter may
+  skip the Bruges node, leaping the caravan **Hamburg→Cologne** (the cask still delivers at Bruges). **OUT when this
   module is on:** the kontor **majority tracks/chart** (the contest moves inland). The network board sits beside
   the destinations board.
 
-The map extends the four kontor identities (Bruges = the gateway/economy + recipes · London = engine · Bergen =
-throughput · Novgorod = the deep quality road). **Reach (breadth)** and **quality (depth, gated)** both win.
-*(Earlier siloed-roads and Inland Road / Option B cuts were reworked/rolled back for the network — see `DESIGN.md`
-§9; the Option B work is preserved on `archive/option-b-inland`.)*
+The map extends the four kontor identities into lane identities (Bruges = the gateway/recipes · Rhineland = craft ·
+London = infrastructure · Bergen = logistics · the East = the deep points road). **Reach (breadth)** and **quality
+(depth, gated)** both win. *(v2.1 retired the v2.0 founder/recurring-perk town model for the slot-claim model — see
+`DESIGN.md` §9; earlier siloed-roads / Option B cuts are on `archive/option-b-inland`.)*
 
 ---
 
