@@ -3150,7 +3150,6 @@ const OL_PERK={
   extraload:{ic:'package',   lbl:'+1 cask per Harbor load'},
   reach:    {ic:'truck',     lbl:'+1 caravan step per voyage'},
   refine:   {ic:'hourglass', lbl:'+1 age/turn to a maturing cask'},
-  enshrine: {ic:'crown',     lbl:'+1★ per Enshrine'},
 };
 function olEnabled(){return !!(S&&S.overland&&S.overland.on);}
 function olReached(pid){return (S.overland.reached&&S.overland.reached[pid])||{};}
@@ -3252,11 +3251,11 @@ registerExpansion({
       const by={}; (ship.load||[]).forEach(L=>{const o=L.owner; if(!(o in by))by[o]={q:0,keut:false}; by[o].q=Math.max(by[o].q,L.q||0); if(L.style==='keut')by[o].keut=true;});
       Object.keys(by).forEach(o=>{const lp=S.players[o]; if(!lp)return; let steps=1+olPerkCount(lp,'reach')+(by[o].keut?1:0);
         for(let i=0;i<steps;i++){ if(!olAdvanceToward(lp,ship.dest,by[o].q))break; } }); },
-    // per-cask VALUE perks (the keystone stays per-cask): liquidity (goods), demand (★ via your own value bldg), enshrine (★ at the Hall)
+    // per-cask VALUE perks (the keystone stays per-cask): liquidity (goods on a kontor delivery), demand (★ via your own value bldg)
     deliver({lp,L,dest}){ const rec=lp.delivered[lp.delivered.length-1];
       if(DEST[dest]&&DEST[dest].kontor){ const liq=olPerkCount(lp,'liquidity'); if(liq)gain(lp,liq,0);
         if(rec&&L.bld&&L.bld.owner===lp.id&&BUILDINGS[L.bld.b]&&BUILDINGS[L.bld.b].verb==='value'){const d=olPerkCount(lp,'demand'); if(d)rec.val+=d;}
-      } else if(dest==='hall'&&rec){const e=olPerkCount(lp,'enshrine'); if(e)rec.val+=e;} },
+      } },
     turn({p}){ const n=olPerkCount(p,'refine'); if(!n)return;               // refine perk: +1 age/turn ×count
       for(let i=0;i<n;i++){const m=p.vessels.map((c,idx)=>({c,idx})).filter(o=>o.c&&o.c.step<o.c.ready).sort((a,b)=>(b.c.step-b.c.ready)-(a.c.step-a.c.ready));if(!m.length)break;m[0].c.step++;}
       if(!aiSimulating)log(p.name+'’s '+LU('truck')+' inland cellars refine a maturing cask (×'+n+').'); },

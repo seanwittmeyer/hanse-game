@@ -78,7 +78,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v1.6 “Hops”)
+## 6. The current architecture (v2.0 “The Trade Roads”)
 
 Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -158,8 +158,8 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   valves. (v0.16: three patches collapsed into one loop once benefit went back to delivery.)
 - **A "sail full" rule structurally lengthens the game;** the clock (`SAILED_CAP`) is the
   round-count lever, not the ship rules.
-- **Fixed turn order has a real first-player edge;** **seat compensation (+1 `G` per later seat)**
-  + free opening placement flatten it.
+- **Fixed turn order has a real first-player edge;** **free opening placement** + P1's natural
+  turn-1 edge flatten it. (v1.7 REMOVED the +1 `G`/later-seat compensation — it over-corrected under strong play.)
 - **Content, not rules.** Depth belongs in placement/timing/interaction and a deck of content
   under one grammar — not in action complexity (the v0.7 reel-in is the founding lesson).
 
@@ -196,7 +196,7 @@ kontor's route — **per voyage, not per cask** (the fix for the old "2 casks = 
 clear), so **reach (breadth) and quality (depth) both win**. **Presence markers ARE the caravan trail**
 (repurposed from the now-majority-less barrels) — the board shows who's gone where & how deep.
 Reaching a **town** founds a **Trading Post** — a recurring, **stacking** perk (salt · liquidity · demand ·
-extra-load · reach · refine · enshrine) + end-game ★; **Merv-style:** first = founder boon + full ★, later = the
+extra-load · reach · refine) + end-game ★; **Merv-style:** first = founder boon + full ★, later = the
 perk + half ★ (no runaway, defuses the 4p land-grab that sank Option B). **Core cities are sea-benefit WAYPOINTS**
 (towns carry the ★); **Frankfurt/Pskov** are deep terminals (+bonus ★). **Bruges delivery = choose a recipe OR 2
 goods** (the knowledge on-ramp — hot early, self-diminishing unless propped by buildings; the Rhineland & Pskov

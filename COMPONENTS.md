@@ -5,7 +5,7 @@
 > `DESIGN.md`, the **operational rules** in `RULES.md`, the **plan** in `PLAN.md`. **Every
 > count/value is a placeholder ⚙.**
 >
-> **v1.6 — Hops (live).** The keystone "Living Slots" rebuild shipped and is implemented in
+> **v2.0 — The Trade Roads (live).** The keystone "Living Slots" rebuild shipped and is implemented in
 > `play.html`; v0.16.1 is archived at `archive/play.html` (manifest at `archive/v0.16/COMPONENTS.md`).
 > The **8 slots are a living, composable commons** — they hold **owned buildings** that modify the
 > casks/ships docked to them; **one tile family (Buildings) absorbs the old neutral buildings, the
@@ -324,7 +324,7 @@ All open from start. Variable kontor value comes from the **buildings** a cask s
   ⚙ developing).
 - **Recipes / Improvements / Contracts / Storage** (cap 8 ⚙).
 
-### Starting setup (symmetric, + seat compensation)
+### Starting setup (symmetric — no seat compensation)
 3 `G` / 2 `H` (**equal for every seat** — v1.7: seat compensation removed) · Gruit + Hopped · 2 vessels · **2 charter
 contracts** · **1 building in hand** · a warm start (Hulk → Bruges + 1 ship; 1 Ready Gruit) ·
 worker placed free turn 1.

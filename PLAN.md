@@ -1,6 +1,6 @@
-# Brewhouses of the Hanse — “Living Slots” reset — PLAN (live build: v1.6 “Hops”)
+# Brewhouses of the Hanse — “Living Slots” reset — PLAN (SHIPPED · live build now v2.0 “The Trade Roads”)
 
-> **Status: SHIPPED — live build v1.6 “Hops” (opened as the v1.0 “Living Slots” reset, 2026-06-16).** The
+> **Status: SHIPPED — this plan opened as the v1.0 “Living Slots” reset (2026-06-16); v1.7–v2.0 shipped on top, live build now v2.0 “The Trade Roads”.** The
 > keystone rebuild this plan called for has **shipped**: the *living, composable Wharf slots*, the
 > differentiation pass (v1.1), and the demand dice (v1.2) are all live repo-wide (`RULES.md` /
 > `COMPONENTS.md` / all four HTML pages on **v1.6 “Hops”**). This plan replaced the abandoned

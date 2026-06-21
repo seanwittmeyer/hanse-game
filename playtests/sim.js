@@ -256,7 +256,7 @@ function botActOnce(){var p=cur();var U=UI.sub;
   }
 }
 
-function tbVec(p){var sc=scorePlayer(p);return [sc.total, p.grain+p.hops, wharfCaskSlots().filter(function(id){return S.slots[id].owner===p.id;}).length];}
+function tbVec(p){var sc=scorePlayer(p);return [sc.total, deployedCaskQ(p), p.grain+p.hops];}   // matches the engine: total → quality of deployed slot casks → goods
 function runGame(n){
   EXPANSION=(typeof __EXPANSION!=='undefined'&&__EXPANSION);   // EXPANSION "Specialty Beers" sim hook (injected via ctx) — off by default → base-game regression; EXPANSION=1 tests the opt-in module
   JOPEN=(typeof __JOPEN!=='undefined'&&__JOPEN);               // EXPANSION CAPSTONE "Jopenbier" sim hook — JOPEN=1 confirms the flag doesn't break the base flow (the greedy bot doesn't pilot the capstone)
@@ -288,7 +288,7 @@ function runGame(n){
     if(S.ending&&S.active===S.first&&UI.sub==='end')break; // gameOver fired inside endTurn
   }
   var scores=S.players.map(function(p){return scorePlayer(p);});
-  // winner via the engine's tiebreak (total, goods, wharf casks)
+  // winner via the engine's tiebreak (total → quality of deployed slot casks → goods)
   var order=S.players.map(function(p,i){return i;}).sort(function(a,b){
     var A=tbVec(S.players[a]),B=tbVec(S.players[b]);for(var i=0;i<3;i++)if(B[i]!==A[i])return B[i]-A[i];return 0;});
   var win=order[0], second=order[1];

@@ -59,7 +59,7 @@ destinations open** (Bruges/London/Bergen/Novgorod + the Hall); **deal 3 of the 
 (the variable quality ladder); shuffle the **Building deck** and deal a face-up **display of 4**
 ⚙ at the Market (refills from the deck); set the **Sailed-Ships track** to its player-scaled
 length (§10). Each player places a worker on any station — **opening placement is free.** Choose
-a first player (fixed all game; free placement + the +1 `G`/seat are the seat balancers).
+a first player (fixed all game; free opening placement is the seat balancer — v1.7 removed the +1 `G`/seat compensation).
 
 ---
 
@@ -337,7 +337,7 @@ table. Pace target **~12–25 rounds.**
 > foothold somewhere you've never shipped (v1.2; thematic + fair). Reach is simply a dead action until your
 > first delivery.
 
-6. **Tiebreak:** most goods, then most casks on slots.
+6. **Tiebreak:** the combined **quality of your deployed casks on slots** (built but not yet delivered — you must still deliver to actually bank them), then most goods.
 
 > **The legible fork:** the **Hall** is the fixed floor; the **kontore** offer **two** ways to
 > win — chase **demand** (variable, in-game, via the buildings you author) **or** grind
@@ -436,8 +436,9 @@ rides the Harbor's Ship.**
   caravan step toward a city you choose** (capped at Q3 gates — a free step builds breadth, it can't steal the
   deep Q5 prize); **Keut** adds **+1 step** on its voyage; the **reach** road-perk adds steps too. Everything that
   fed the old majorities now feeds the network.
-- **Scoring (replaces majorities):** each founded town scores its ★ (founder full / later half) + a **deep-town
-  bonus** (◆) for holding a long-trunk terminal (**Frankfurt / Pskov**). The **Hall** stays the deliberate
+- **Scoring (replaces majorities):** each founded town scores its ★ — **founder full / later half** (floored, min 1):
+  **Cologne 3 · Frankfurt 5 · Antwerp 3 · Tønsberg 3 · Visby 2 · Tallinn 4 · Pskov 8** — plus a **deep-town bonus
+  (+4★, ◆)** for holding a long-trunk terminal (**Frankfurt / Pskov**). The **Hall** stays the deliberate
   non-delivery lane.
 
 Movement rides voyages, so it's **clock-tied** — every step is a Sailed-Ships tick, so *invest carefully or you
