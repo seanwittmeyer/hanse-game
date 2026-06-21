@@ -8,8 +8,9 @@ const files = fs.readdirSync(HERE).filter(f => /^(base|swap)-(gm|cm)-\dp-s\d\.js
 const cells = {}; // key tag|tier|np
 for (const f of files) {
   let o; try { o = JSON.parse(fs.readFileSync(path.join(HERE, f), 'utf8')); } catch (e) { continue; }
-  const k = `${o.tag}|${o.tier}|${o.np}`;
-  const c = cells[k] || (cells[k] = { tag: o.tag, tier: o.tier, np: o.np, games: 0, errors: 0, ties: 0,
+  const short = o.tier && o.tier.startsWith('cell') ? 'cm' : 'gm';
+  const k = `${o.tag}|${short}|${o.np}`;
+  const c = cells[k] || (cells[k] = { tag: o.tag, tier: short, np: o.np, games: 0, errors: 0, ties: 0,
     clock: 0, inBand: 0, roundSum: 0, roundMin: 1e9, roundMax: 0, winnerSum: 0, winnerMin: 1e9, winnerMax: 0,
     allSum: 0, allN: 0, winsBySeat: [] });
   c.games += o.games; c.errors += o.errors; c.ties += o.ties; c.clock += o.clock; c.inBand += o.inBand;
