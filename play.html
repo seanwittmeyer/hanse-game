@@ -1756,11 +1756,15 @@ function scorePlayer(p){
   const ext=collect(m=>m.score&&m.score(p));            // EXPANSION SPINE: expansion scoring lanes (e.g. the inland network)
   return {deliv,maj,goals:0,flight,master:0,wharf:(p.wharfage||0),developed,ext,total:deliv+maj+flight+developed+ext};
 }
-// the final ranking under the engine's tiebreak (total, goods, casks on slots) — shared by the
-// standings table and the studio payload
+// the COMBINED effective quality of a house's DEPLOYED (on-slot) casks — the tiebreak. Rewards built-but-
+// undelivered big casks in a tie; for normal scoring you must still DELIVER to bank them. Vessels (private/
+// maturing) don't count — only casks committed to the public ring.
+function deployedCaskQ(p){return wharfCaskSlots().filter(id=>S.slots[id].owner===p.id).reduce((s,id)=>s+caskEffQ(id),0);}
+// the final ranking under the engine's tiebreak (total → quality of deployed slot casks → goods) — shared by
+// the standings table and the studio payload
 function finalRows(){
   const rows=S.players.map(p=>({p,sc:scorePlayer(p)}));
-  const tb=r=>[r.sc.total,r.p.grain+r.p.hops,wharfCaskSlots().filter(id=>S.slots[id].owner===r.p.id).length];
+  const tb=r=>[r.sc.total,deployedCaskQ(r.p),r.p.grain+r.p.hops];
   const cmp=(a,b)=>{const A=tb(a),B=tb(b);for(let i=0;i<3;i++)if(B[i]!==A[i])return B[i]-A[i];return 0;};
   rows.sort(cmp);return {rows,cmp};
 }
@@ -1778,7 +1782,7 @@ function gameOver(){
   const midHdr=olOn?'Inland roads<br><span class="note">(posts + network)</span>':'Majorities';
   let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries<br><span class="note">(value + wharfage)</span></th><th>'+midHdr+'</th><th>Flight</th>'+(anyDev?'<th>Developer<br><span class="note">(displaced)</span></th>':'')+'<th>Total</th></tr>';
   rows.forEach(r=>{const mid=olOn?(r.sc.ext||0):r.sc.maj;h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+(r.sc.wharf?' <span class="note">('+r.sc.wharf+' wharfage)</span>':'')+'</td><td>'+mid+'</td><td>'+(r.sc.flight||'·')+'</td>'+(anyDev?'<td>'+(r.sc.developed||'·')+'</td>':'')+'<td><b>'+r.sc.total+'</b></td></tr>';});
-  h+='</table><p class="note">Score = <b>delivery value</b> (each cask\'s base + the value-Buildings it shipped through, + your wharfage) + kontor <b>majorities</b> + the <b>Flight</b> (distinct beers delivered — '+FLIGHT_MIN+'+ to score) + the <b>Developer</b> bonus ('+DEVELOP_PTS+'★ per Building a rival overbuilt). The Hall is a fixed prestige floor; the kontore are the variable demand. (Tiebreak: goods, then casks on slots.)</p>'
+  h+='</table><p class="note">Score = <b>delivery value</b> (each cask\'s base + the value-Buildings it shipped through, + your wharfage) + kontor <b>majorities</b> + the <b>Flight</b> (distinct beers delivered — '+FLIGHT_MIN+'+ to score) + the <b>Developer</b> bonus ('+DEVELOP_PTS+'★ per Building a rival overbuilt). The Hall is a fixed prestige floor; the kontore are the variable demand. (Tiebreak: the combined <b>quality of your deployed casks on slots</b> — built but not yet delivered — then goods.)</p>'
     +'<button onclick="hideOver()">⚓ View the final board</button> <button onclick="openStudio()">⇪ Send to Studio'+(S.studioSent?' ✓':'')+'</button> <button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
 }
@@ -1854,7 +1858,7 @@ function diagText(){
         const parts=['deliv '+sc.deliv+(sc.wharf?' (incl '+sc.wharf+' wharf)':''),(majOff?'inland '+(sc.ext||0):'maj '+sc.maj),'flight '+sc.flight];
         if(!majOff&&sc.ext)parts.push('inland '+sc.ext);
         if(sc.developed)parts.push('dev '+sc.developed);
-        L.push('  '+(i===0?'★ #1 ':'  #'+(i+1)+' ')+p.name+(p.ai?(' ('+aiLabel(p)+')'):'')+' — TOTAL '+sc.total+'  ['+parts.join(' · ')+']  · tiebreak: G+H '+(p.grain+p.hops)+' · slotCasks '+wharfCaskSlots().filter(id=>S.slots[id].owner===p.id).length);
+        L.push('  '+(i===0?'★ #1 ':'  #'+(i+1)+' ')+p.name+(p.ai?(' ('+aiLabel(p)+')'):'')+' — TOTAL '+sc.total+'  ['+parts.join(' · ')+']  · tiebreak: deployedQ '+deployedCaskQ(p)+' · G+H '+(p.grain+p.hops));
       });
     }catch(e){L.push('  [score error: '+(e&&e.message||e)+']');}
     L.push('');L.push('--- slots (building + occupant) ---');
