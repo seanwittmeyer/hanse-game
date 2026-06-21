@@ -178,8 +178,20 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
 
-**v1.4.1 “Flexible Cellar” — the Cellar visit becomes an any-order, chaining menu** *(2026-06-21, `play.html` KEY v77)* —
-A small UI/flow fix to a too-rigid station (built on top of the v76 grid swap that put the Cellar at grid B). The
+**v76 EXPERIMENT — the Brewhouse↔Cellar grid swap: TESTED, then REVERTED** *(2026-06-21, sim-gated, not shipped)* —
+A playtest hypothesis — swap the Brewhouse(Brew) and Cellar(Age) stations in the 2×2. A mirror-match A/B (360 games,
+gm+cm × 2–4p, `playtests/sim-results-v76-swap-ab.txt`) showed it **breaks clock-dominance**: GM games end on the
+sailed-ships clock only **23–50%** of the time (base 83–97%), drift ~2–4 rounds to the round ceiling, and score
+~2–6 pts lower. **Cause (line-usage probe, real turns only):** the swap pulls **Brew off its shared line with
+Source** — you can no longer gather goods *and* brew them in one activation, so Brew firing falls ~28%→22% and the
+whole engine slows. (The Age↔Ship split first blamed was a red herring — Age+Ship is the *least*-used line, ~18–21%;
+aging is free anyway.) **Lesson:** the load-bearing line is **Source+Brew** (the engine's heartbeat), not the
+delivery pairing — and *balancing for its own sake can flatten the texture that makes the game fun*; the occupancy
+toll + variable slots already supply the interesting friction. Reverted; the Flexible Cellar (below) was kept and
+shipped standalone.
+
+**v1.4.1 “Flexible Cellar” — the Cellar visit becomes an any-order, chaining menu** *(2026-06-21, `play.html` KEY v78)* —
+A small UI/flow fix to a too-rigid station. The
 Cellar **forced Age first, then exactly ONE of { Tap, buy Improvement }** — which blocked legitimate combos. It is
 now a **flexible menu worked through in ANY ORDER until Done — { Age · Tap a cask · Blend (expansion) · buy an
 Improvement }** — and, crucially, the steps **chain**: what one step produces is available to a later step *in the
@@ -194,7 +206,8 @@ continues, and the menu auto-exits to the line once no legal option remains. `sn
 mutating step, so Undo unwinds one menu step at a time. *Gates (KEY v77):* render-smoke **PASS** (incl. the Blend
 path + a Cellarmaster game with all three expansions on); sim 300 = **0 crash/deadlock 2–4p**, clock-dominant
 (2p 100% · 3p 96% · 4p 95.7%), pace in band; AI ladder clean. The greedy bots age-first-then-tap/buy exactly as
-before (no behavior/pace regression); the new chaining is a human/strong-AI affordance.
+before (no behavior/pace regression); the new chaining is a human/strong-AI affordance. *(Gates re-confirmed at
+KEY v78 after the v76 swap was reverted: render-smoke PASS, sim 300 clock-dominant 2p 96% · 3p 95% · 4p 96%.)*
 
 **v2.0 “The Trade Roads” (Overland) — the inland geography as the Hanse NETWORK** *(2026-06-20, `play.html` KEY v75)* —
 The third opt-in expansion, and the successful re-take of the inland geography on the lesson the earlier attempts
