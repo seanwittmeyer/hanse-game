@@ -178,6 +178,24 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
 
+**v1.4.1 “Flexible Cellar” — the Cellar visit becomes an any-order, chaining menu** *(2026-06-21, `play.html` KEY v77)* —
+A small UI/flow fix to a too-rigid station (built on top of the v76 grid swap that put the Cellar at grid B). The
+Cellar **forced Age first, then exactly ONE of { Tap, buy Improvement }** — which blocked legitimate combos. It is
+now a **flexible menu worked through in ANY ORDER until Done — { Age · Tap a cask · Blend (expansion) · buy an
+Improvement }** — and, crucially, the steps **chain**: what one step produces is available to a later step *in the
+same visit*. The two motivating combos now work: **Tap → Buy** (Tap a Gruit for **+2 goods**, then buy a private
+Improvement with that grain) and **Tap → Age** (Tap a "wild" cask to **brew**, then use the Cellar's **Age** on the
+freshly-brewed cask). **Age & Tap stay once-per-visit** (Age grants the fixed pool; Tap is the relief valve); Blend
+and Improvement-buy repeat while legal (self-limited by Ready casks / goods / the `IMP_AREA_CAP`). *No new powers —
+just the removal of the artificial ordering and the "one-of" restriction.* **Engine note:** the menu re-uses the
+legacy `UI.sub==='tap'` literal (so the in-page AI and the headless sim/bot keep driving it unchanged) with its real
+state on a persistent `UI.cellar` record; each menu choice routes back through `resume('cellarmenu')` so the visit
+continues, and the menu auto-exits to the line once no legal option remains. `snapshot()` is taken before every
+mutating step, so Undo unwinds one menu step at a time. *Gates (KEY v77):* render-smoke **PASS** (incl. the Blend
+path + a Cellarmaster game with all three expansions on); sim 300 = **0 crash/deadlock 2–4p**, clock-dominant
+(2p 100% · 3p 96% · 4p 95.7%), pace in band; AI ladder clean. The greedy bots age-first-then-tap/buy exactly as
+before (no behavior/pace regression); the new chaining is a human/strong-AI affordance.
+
 **v2.0 “The Trade Roads” (Overland) — the inland geography as the Hanse NETWORK** *(2026-06-20, `play.html` KEY v75)* —
 The third opt-in expansion, and the successful re-take of the inland geography on the lesson the earlier attempts
 taught: **a second geography must be powered by the engine's output and feed back into it — route THROUGH the

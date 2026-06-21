@@ -150,13 +150,23 @@ top tile of *every* quality pile is visible**, so you **see the action you'd get
 One load per visit; Gruit is fixed to Source. Recipes are permanent. **You may also DEPLOY** a Ready
 cask onto **any** open slot here (the cask-hub's flexible placement — v1.3).
 
-### D · Cellar — *Age (+ Tap / buy an Improvement)*
-Gain **3 age points** ⚙, allocate across your vessels (each cask also ages **+1** at the start of
-your turn). Then you **may TAP one cask** (v1.3): take a Ready cask **from a vessel** *or* one of
-**your slots**, fire its slot-action **once**, then **discard** it — freeing the vessel, or **recalling**
-it off a slot (clearing the slot for a better cask). The relief valve / repositioning tool; one Tap per visit ⚙.
-**Or buy a private Improvement here** (v1.7 — moved from the Market; §8): pay its goods cost into your
-improvements area (cap **4** ⚙).
+### Cellar — *a flexible menu: Age · Tap · buy an Improvement (any order, chained)* (v1.4.1)
+The Cellar visit is a small **menu you work through in ANY ORDER** until you choose **Done** — and the
+steps **chain** (resources/casks one step produces are available to the next *in the same visit*). The menu:
+- **Age** — gain **3 age points** ⚙ and allocate across your vessels (each cask also ages **+1** at the
+  start of your turn). Once per visit.
+- **Tap one cask** (v1.3) — take a Ready cask **from a vessel** *or* one of **your slots**, fire its
+  slot-action **once**, then **discard** it — freeing the vessel, or **recalling** it off a slot
+  (clearing the slot for a better cask). The relief valve / repositioning tool; **one Tap per visit** ⚙.
+- **Buy a private Improvement** (v1.7 — moved from the Market; §8) — pay its goods cost into your
+  improvements area (cap **4** ⚙).
+- **Blend** (Specialty Beers expansion only) — combine two Ready vessel casks into one premium cask
+  (§12).
+
+**Order is free and the steps feed each other.** Two worked examples: **Tap → Buy** — Tap a cask whose
+action yields goods (e.g. a Gruit → **+2 goods**) to gain the grain you need, *then* buy an Improvement
+with it; **Tap → Age** — Tap a "wild" cask to **brew** a beer, *then* use the Cellar's **Age** to age that
+freshly-brewed cask. *(No more forced Age-first, no more "only one of Tap / Improvement".)*
 
 ### C · Harbor — *Ship*
 **Load** a deployed cask (yours or a rival's) onto a ship it qualifies for (you choose the

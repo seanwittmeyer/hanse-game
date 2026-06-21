@@ -221,12 +221,17 @@ function botBenefit(){var disp=S.buildDisplay||[];if(!disp.length){benefitPick(n
   benefitPick(pickBuilding(disp.slice()));}
 function botSurvey(){var disp=S.buildDisplay||[];if(!disp.length){surveyPick(null);return;}     // Survey → CHOOSE one of the face-up display Buildings
   surveyPick(pickBuilding(disp.slice()));}
-function botTap(p){var ready=readyInVessels(p);   // tap only to relieve a jam (Ready cask, no slot to deploy it)
-  if(ready.length&&emptySlots().length===0){ready.sort(function(a,b){return a.c.q-b.c.q;});tapPick('v:'+ready[0].i);return;}
-  // v1.7: improvements are a Cellar buy — grab a high-value one when flush & the area has room (hops-led econ → Hop Garden first)
-  if(typeof impArea==='function'&&impArea(p)<IMP_AREA_CAP){var pref=['hopgarden','granary','cellar','vessel'];
+// v1.4.1 "Flexible Cellar": the Cellar is now an ANY-ORDER menu (Age · Tap · buy Improvement · Done) on the
+// UI.sub==='tap' literal. ONE step per call (each routes back to the menu): AGE the closest-to-Ready cask first
+// (the core Cellar use — was the forced step pre-v1.4.1), then TAP to relieve a slot jam, then buy a high-value
+// improvement when flush, else Done. (cellarCan*/cellarMenuAge/cellarDone are play.html funcs, in-scope here.)
+function botTap(p){
+  if(cellarCanAge(p)){cellarMenuAge();return;}
+  var ready=readyInVessels(p);
+  if(cellarCanTap(p)&&ready.length&&emptySlots().length===0){ready.sort(function(a,b){return a.c.q-b.c.q;});tapPick('v:'+ready[0].i);return;}   // relieve a jam
+  if(cellarCanImp(p)){var pref=['hopgarden','granary','cellar','vessel'];
     for(var i=0;i<pref.length;i++){var k=pref[i];if(grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&p.grain>=(IMPROVEMENTS[k].cost.g||0)+1){buyImprovement(k);return;}}}
-  tapSkip();}
+  cellarDone();}
 
 function botActOnce(){var p=cur();var U=UI.sub;
   switch(U){
