@@ -437,8 +437,8 @@ station, no new action — it rides the Harbor's Ship.**
     → **Frankfurt** — *points + a prestige outlet* (Q3 · +3★ · ◆ scarce-2 · `+4★ · a free Enshrine · +2 age · +6★`).
   - **London — INFRASTRUCTURE** *(London voyages, through Bruges)*: **Antwerp** (Q2 · +2★ · `a Building to hand ·
     brew a beer · +3 goods · +4★`) → **London** (kontor · Q2 · +2★ · `a Building to hand · a free Improvement · +3 goods · +4★`).
-  - **Bergen — LOGISTICS** *(Bergen voyages, through Bruges)*: **Tønsberg** (Q2 · +2★ · `+1 contract · brew a beer ·
-    +2 G · +4★`) → **Bergen** (kontor · Q2 · +2★ · `+1 contract · +3 goods · +1 vessel · +4★`).
+  - **Bergen — LOGISTICS** *(Bergen voyages, through Bruges)*: **Tønsberg** (Q2 · +2★ · `+1 charter contract · brew a beer ·
+    +2 G · +4★`) → **Bergen** (kontor · Q2 · +2★ · `+1 charter contract · +3 goods · +1 vessel · +4★`).
   - **East — DEPTH/VALUE** *(Novgorod voyages)*: **Visby** (Q2 · +2★ · `+2 G · a free road step · +2 age · +3★`) →
     **Tallinn** (Q3 · +3★ · `+1 vessel · +1 quality · brew a beer · +5★`) → **Novgorod** (kontor · Q3 · +3★ · `+1 quality ·
     +1 vessel · +2 age · +5★`) → **Pskov** — *just a delivery* (Q5 · ◆ · **one slot +8★**, every later delivery **+5★**).

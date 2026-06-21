@@ -3198,7 +3198,7 @@ const OL_TOWN_KEYS=Object.keys(OL_NODES).filter(k=>!OL_NODES[k].core);
 // the slot vocabulary — label + a rough AI value; resolution is in olResolveSlot. pts-slots are 'ptsN'.
 const OL_SLOTLBL={recipe:'learn a recipe',age2:'+2 age',quality1:'+1 quality',quality2:'+2 quality',brew:'brew a beer',
   improvement:'a free Improvement',enshrine:'a free Enshrine',
-  vessel:'+1 vessel',bldghand:'a Building to hand',contract:'+1 contract',goods2:'+2 G',goods3:'+3 goods',
+  vessel:'+1 vessel',bldghand:'a Building to hand',contract:'+1 charter contract',goods2:'+2 G',goods3:'+3 goods',
   reachstep:'a free road step'};
 function olSlotLabel(key){return key.startsWith('pts')?('+'+parseInt(key.slice(3),10)+'★'):(OL_SLOTLBL[key]||key);}
 function olSlotValue(lp,key){if(key.startsWith('pts'))return parseInt(key.slice(3),10);
