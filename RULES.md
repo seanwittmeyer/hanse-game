@@ -411,9 +411,10 @@ All numbers ⚙ (`JOPEN_BASE` 8 · `JOPEN_HALL` 9 · vintage cap 5 · ready 4).
 The heaviest module, and the one that **REPLACES the kontor majorities** (they turn **OFF** when it's on; the
 control contest moves inland). It adds an **inland trade network — a tree rooted at HAMBURG (home).** Two roads
 lead out: **West** to the **Bruges gateway**, which fans out to **London**, **Bergen**, and the **Rhineland**; and
-**East** on the long deep haul to **Novgorod**. The four coastal kontore stay the **core cities** (waypoints — they
-keep their base sea-delivery benefit); the in-between **towns** carry **Staple Right slots**. **No new station, no
-new action — it rides the Harbor's Ship.**
+**East** on the long deep haul to **Novgorod**. **Bruges** is the lone pure waypoint — the no-slots gateway
+(recipe-or-goods); **every other node, including the London/Bergen/Novgorod kontore, carries Staple Right slots**
+(the kontore keep their base sea-delivery benefit *and* offer slots when your caravan reaches them). **No new
+station, no new action — it rides the Harbor's Ship.**
 
 - **Movement is per VOYAGE, ONE node per owner.** When a ship **sails** to a kontor (the normal full-ship sail —
   fully through the demand die / quality premium / the Flight — *or* a single-cask **Charter**), **each owner aboard
@@ -429,21 +430,23 @@ new action — it rides the Harbor's Ship.**
   both required.
 - **Never nothing.** A town whose slots are all claimed pays the line's small **overflow** bonus, and your road
   still extends — every voyage that reaches a node pays *something*.
-- **Distinct slots, flavoured by LANE** (2–4 per town; *active count scales with player count* — 2p uses 2 slots,
-  4p uses 4; the deep ◆ towns stay **scarce at 2**). The lane identity lives in the slot menu:
-  - **Rhineland — KNOWLEDGE/CRAFT** *(Bruges voyages)*: **Cologne** (Q2 · +2★ · `recipe · +2 age · free Hopped · +3★`)
-    → **Frankfurt** (Q3 · +3★ · ◆ · `+1 quality · recipe · +2 age · +6★`).
-  - **London — INFRASTRUCTURE** *(London voyages, through Bruges)*: **Antwerp** (Q2 · +2★ · `a Building to hand ×2 ·
-    +3 goods · +4★`) → **London**(core).
-  - **Bergen — LOGISTICS** *(Bergen voyages, through Bruges)*: **Tønsberg** (Q2 · +2★ · `+1 contract · +3 goods ·
-    +2 G · +4★`) → **Bergen**(core).
+- **Distinct slots, flavoured by LANE** (2–4 per node; *active count scales with player count* — 2p uses 2 slots,
+  4p uses 4; the deep ◆ nodes stay **scarce**). Slots are listed best-first (the scarce nodes show only their top
+  ones). The lane identity lives in the slot menu:
+  - **Rhineland — KNOWLEDGE/CRAFT** *(Bruges voyages)*: **Cologne** (Q2 · +2★ · `recipe · free Hopped · +2 age · +3★`)
+    → **Frankfurt** — *the quality destination* (Q3 · +3★ · ◆ scarce-2 · `+2 quality · +1 quality · +2 age · +6★`).
+  - **London — INFRASTRUCTURE** *(London voyages, through Bruges)*: **Antwerp** (Q2 · +2★ · `a Building to hand ·
+    free Hopped · +3 goods · +4★`) → **London** (kontor · Q2 · +2★ · `a Building to hand ×2 · +3 goods · +4★`).
+  - **Bergen — LOGISTICS** *(Bergen voyages, through Bruges)*: **Tønsberg** (Q2 · +2★ · `+1 contract · free Hopped ·
+    +2 G · +4★`) → **Bergen** (kontor · Q2 · +2★ · `+1 contract · +3 goods · +1 vessel · +4★`).
   - **East — DEPTH/VALUE** *(Novgorod voyages)*: **Visby** (Q2 · +2★ · `+2 G · a free road step · +2 age · +3★`) →
-    **Tallinn** (Q3 · +3★ · `+1 vessel · +1 quality · +2 age · +5★`) → **Novgorod**(core) → **Pskov** (Q5 · +5★ · ◆ ·
-    **pure points** `+8★ · +8★ · +6★ · +6★`).
-- **Lane economics:** the **East** pays the most in points (the deep money lane); the **Rhineland** pays the least
-  in points but powers your brewery (recipes/quality/age) to *fund* that climb; **London** buys the board
-  (buildings → demand on every delivery); **Bergen** buys throughput (contracts/goods → more voyages → more depth).
-  *Name your plan turn one.*
+    **Tallinn** (Q3 · +3★ · `+1 vessel · +1 quality · +2 age · +5★`) → **Novgorod** (kontor · Q3 · +3★ · `+1 quality ·
+    +1 vessel · +2 age · +5★`) → **Pskov** — *just a delivery* (Q5 · ◆ · **one slot +8★**, every later delivery **+5★**).
+- **Lane economics:** the **East** pays the most in points (the deep money lane, capped by **Pskov**); the
+  **Rhineland** pays less in points but is **the quality road** (recipes/+quality/age — Frankfurt jumps a cask **+2
+  quality**) to *fund* the climb; **London** buys the board (buildings → demand on every delivery); **Bergen** buys
+  throughput (contracts/goods/a vessel → more voyages → more depth). Each line carries **a brew action** at its first
+  town (Cologne/Antwerp/Tønsberg). *Name your plan turn one.*
 - **Bruges = the knowledge on-ramp** (core, no slots): a delivery there lets the owner **choose a recipe** (a dealt
   export you lack) **OR 2 goods** — hot and contested early, self-diminishing as recipes fill.
 - **The Rhine Charter** (the bypass): a **Charter** carrying a **Q4+** cask may take the **Rhine road** — the cask
