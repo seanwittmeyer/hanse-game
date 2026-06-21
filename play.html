@@ -1847,6 +1847,16 @@ function diagText(){
         +' · delivered:'+JSON.stringify(del)
         +' · wharfage:'+(p.wharfage||0));
     });
+    L.push('');L.push('--- score'+(S.over?' (FINAL)':' (current standings)')+' ---');
+    try{
+      const majOff=EXPANSIONS.some(m=>expOn(m)&&m.replacesMajorities);
+      finalRows().rows.forEach((r,i)=>{const sc=r.sc,p=r.p;
+        const parts=['deliv '+sc.deliv+(sc.wharf?' (incl '+sc.wharf+' wharf)':''),(majOff?'inland '+(sc.ext||0):'maj '+sc.maj),'flight '+sc.flight];
+        if(!majOff&&sc.ext)parts.push('inland '+sc.ext);
+        if(sc.developed)parts.push('dev '+sc.developed);
+        L.push('  '+(i===0?'★ #1 ':'  #'+(i+1)+' ')+p.name+(p.ai?(' ('+aiLabel(p)+')'):'')+' — TOTAL '+sc.total+'  ['+parts.join(' · ')+']  · tiebreak: G+H '+(p.grain+p.hops)+' · slotCasks '+wharfCaskSlots().filter(id=>S.slots[id].owner===p.id).length);
+      });
+    }catch(e){L.push('  [score error: '+(e&&e.message||e)+']');}
     L.push('');L.push('--- slots (building + occupant) ---');
     SLOTS.forEach(s=>{const t=S.slots[s.id];const b=bAt(s.id);
       let d='  '+s.id+': '+(b?('BLDG '+bName(b.b)+' ('+(S.players[b.owner]||{}).name+')'):'—');
