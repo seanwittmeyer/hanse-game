@@ -1806,7 +1806,7 @@ function gameOver(){
   const {rows,cmp}=finalRows();const win=rows[0];
   const anyDev=rows.some(r=>r.sc.developed);
   const olOn=(typeof olEnabled==='function'&&olEnabled());   // The Trade Roads replaces the Majorities column with the Inland-roads network
-  const midHdr=olOn?'Inland roads<br><span class="note">(posts + network)</span>':'Majorities';
+  const midHdr=olOn?'Inland roads<br><span class="note">(Staple Rights)</span>':'Majorities';
   let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries<br><span class="note">(value + wharfage)</span></th><th>'+midHdr+'</th><th>Flight</th>'+(anyDev?'<th>Developer<br><span class="note">(displaced)</span></th>':'')+'<th>Total</th></tr>';
   rows.forEach(r=>{const mid=olOn?(r.sc.ext||0):r.sc.maj;h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+(r.sc.wharf?' <span class="note">('+r.sc.wharf+' wharfage)</span>':'')+'</td><td>'+mid+'</td><td>'+(r.sc.flight||'·')+'</td>'+(anyDev?'<td>'+(r.sc.developed||'·')+'</td>':'')+'<td><b>'+r.sc.total+'</b></td></tr>';});
   h+='</table><p class="note">Score = <b>delivery value</b> (each cask\'s base + the value-Buildings it shipped through, + your wharfage) + kontor <b>majorities</b> + the <b>Flight</b> (distinct beers delivered — '+FLIGHT_MIN+'+ to score) + the <b>Developer</b> bonus ('+DEVELOP_PTS+'★ per Building a rival overbuilt). The Hall is a fixed prestige floor; the kontore are the variable demand. (Tiebreak: the combined <b>quality of your deployed casks on slots</b> — built but not yet delivered — then goods.)</p>'
@@ -2725,7 +2725,7 @@ function renderAid(){
   const vb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='value').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   const tb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='transform').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   document.getElementById('aidcard').innerHTML=
-    '<h2>'+ic('scroll-text')+' Player Aid — v2.0 “The Trade Roads”</h2>'
+    '<h2>'+ic('scroll-text')+' Player Aid — v2.1 “Staple Rights”</h2>'
     +'<div class="asec"><b>Your turn</b><div class="note">Move to an adjacent station → activate its <b>row OR column</b> → resolve up to 4 stops (slot · station · station · slot) <b>in any order</b>. <b>If you move onto a station a rival occupies:</b> pay 1 '+ic('wheat')+' toll and work that public line, <b>OR</b> work your <b>Floor</b> — run every cask in your vessels (their slot-actions) <i>instead of</i> the public line (no toll).</div></div>'
     +'<div class="asec"><b>The four stations</b><div class="note">'
       +ic('store')+' <b>Market</b> (Source): take 2 goods, or acquire one tile — a recipe · a '+ic('building-2')+' Building (buy + place) · a '+ic('sailboat')+' ship · a charter contract. Or <b>place a Building from your hand</b> (free) — the ones you earned at London or drew with Survey.<br>'

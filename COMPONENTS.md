@@ -354,15 +354,17 @@ barrels · workers · markers · **~8 demand dice (d6)** · quality-boost marker
 - **The Trade Roads (Overland) — STAPLE RIGHTS; REPLACES the kontor majorities.** Components: **1 inland
   network board** — a **tree rooted at HAMBURG** (home). Two roads leave home: **WEST** to the **Bruges gateway**,
   which branches to **London**, **Bergen**, and the **Rhineland**; and **EAST** on the deep haul to **Novgorod**.
-  The four kontore are **core-city waypoints** (no slots — their reward is the base sea-delivery benefit); **7 town
-  spaces** carry **Staple-Right SLOTS** — **Cologne · Frankfurt** (Rhineland) · **Antwerp** (London) · **Tønsberg**
-  (Bergen) · **Visby · Tallinn · Pskov** (East) — each printed with its **quality gate · base delivery ★ · 2–4
-  SLOTS** (each a distinct one-shot bonus, **flavoured by lane**) · an **overflow** bonus (claimed when the slots
-  are full — "never nothing"). **Frankfurt / Pskov** are ◆ **deep** terminals (high gate, biggest ★, **scarce: only
-  2 active slots**). The lane menus: **Rhineland = craft** (a recipe · +1 quality · +2 age · a free Hopped),
-  **London = infrastructure** (a Building to hand · goods), **Bergen = logistics** (a charter contract · goods),
-  **East = depth/value** (a vessel · +1 quality · big points; **Pskov = pure points**). **Active slot count scales
-  with player count** (2p→2 … 4p→4; deep towns stay 2) — print 4, cover the high slots for fewer players. Per
+  **Bruges** is the lone **no-slots gateway** (its reward is the recipe-or-2-goods on-ramp); **every other node
+  carries Staple-Right SLOTS** — the towns **Cologne · Frankfurt** (Rhineland) · **Antwerp** (London) · **Tønsberg**
+  (Bergen) · **Visby · Tallinn · Pskov** (East), **and the kontore London · Bergen · Novgorod** (claimed when the
+  caravan reaches them, on top of their base sea benefit). Each slotted node is printed with its **quality gate ·
+  base delivery ★ · 2–4 SLOTS** (each a distinct one-shot bonus, **flavoured by lane**) · an **overflow** bonus
+  (claimed when the slots are full — "never nothing"). **Frankfurt / Pskov** are ◆ **deep** terminals (high gate,
+  **scarce**); **Pskov is just a delivery** — one slot (**+8★**, then **+5★** each later visit). The lane menus:
+  **Rhineland = craft** (a recipe · a **brew action** · +2 age · pts), **London = infrastructure** (a Building to
+  hand · a **free Improvement** · goods), **Bergen = logistics** (a **charter contract** · goods · a vessel),
+  **East = depth/value** (a vessel · +1 quality · big points); **Frankfurt** = points + a **free Enshrine**. **Active
+  slot count scales with player count** (2p→2 … 4p→4; deep nodes stay 2) — print 4, cover the high slots for fewer players. Per
   player, **presence markers** are dropped into the **slot they claim** (who holds which Staple Right). The
   **caravan rides the Ship action** — *no new tile/station; movement is per VOYAGE (one ship = ONE node per owner),
   gated by cask quality;* then **each cask aboard claims an open slot at the node reached, in LOAD ORDER**. **Bruges

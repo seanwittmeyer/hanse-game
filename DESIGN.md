@@ -113,8 +113,9 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   conditionals. **The Trade Roads** (Overland) is the first module on it: the **Hanse Network** — a tree
   rooted at HAMBURG (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul)
   that **replaces the kontor majorities**. A **voyage** to a kontor advances your caravan one node along its
-  road (**per voyage**, gated by cask quality); reaching a town founds a Trading Post (a stacking perk + ★).
-  Specialty Beers / Jopenbier predate the spine and remain inline (a later, optional migration).
+  road (**per voyage**, gated by cask quality); reaching a town lets **each cask aboard claim a Staple-Right slot**
+  (a one-shot bonus + ★, flavoured by lane — v2.1). Specialty Beers / Jopenbier predate the spine and remain
+  inline (a later, optional migration).
 
 ---
 
@@ -255,15 +256,18 @@ kontor's route — **per voyage, not per cask** (the fix for the old "2 casks = 
 *value*, voyages drive *depth*). **Quality GATES depth** (you only step onto a node a cask on that voyage can
 clear), so **reach (breadth) and quality (depth) both win**. **Presence markers ARE the caravan trail**
 (repurposed from the now-majority-less barrels) — the board shows who's gone where & how deep.
-Reaching a **town** founds a **Trading Post** — a recurring, **stacking** perk (salt · liquidity · demand ·
-extra-load · reach · refine) + end-game ★; **Merv-style:** first = founder boon + full ★, later = the
-perk + half ★ (no runaway, defuses the 4p land-grab that sank Option B). **Core cities are sea-benefit WAYPOINTS**
-(towns carry the ★); **Frankfurt/Pskov** are deep terminals (+bonus ★). **Bruges delivery = choose a recipe OR 2
-goods** (the knowledge on-ramp — hot early, self-diminishing unless propped by buildings; the Rhineland & Pskov
-towns also hand recipes). **Kontor majorities turn OFF** (`replacesMajorities`); **Reach / Keut / Bergen's
-benefit re-home** to caravan steps via the `reach`/`voyage` hooks (no orphans, the flaw that dogged Option B). The
-caravan rides voyages so it's **clock-tied** (every step is a Sailed-Ships tick — invest carefully or run the
-clock out); `SAILED_CAP` **+2** pays it back.
+Reaching a node, **each cask aboard CLAIMS an open Staple-Right SLOT there, in load order** (v2.1 — the
+founder/recurring-perk model was retired as per-turn tabletop upkeep): a **distinct ONE-SHOT bonus** + the node's
+delivery ★, **flavoured by lane** — **Rhineland = craft** (recipe · a brew action · +age) · **London =
+infrastructure** (a Building to hand · a free Improvement) · **Bergen = logistics** (charter contracts · goods · a
+vessel) · **East = depth/value** (a vessel · +quality · big points). A full node pays the line's small **overflow**
+(never nothing); active slot count **scales with player count** and the deep ◆ terminals (Frankfurt/Pskov) stay
+**scarce**. **Bruges is the lone no-slots gateway** (recipe OR 2 goods); the other kontore — **London/Bergen/Novgorod**
+— now **also carry slots**, claimed when the caravan reaches them, on top of their base sea benefit. **Frankfurt** is
+a points + free-**Enshrine** outlet; **Pskov** is just a delivery (**one slot +8★, then +5★** each later visit). The
+**Rhine Charter** (a Q4+ Charter) skips Bruges → Cologne. **Kontor majorities turn OFF** (`replacesMajorities`);
+**Reach / Bergen's benefit re-home** to a caravan road step via the `reach`/`voyage` hooks (no orphans). The caravan
+rides voyages so it's **clock-tied** (every step is a Sailed-Ships tick); `SAILED_CAP` **+2** pays it back.
 *Gates (KEY v75):* base + EXPANSION **unchanged**; **OVERLAND 300 → 0 crash/deadlock 2–4p, 100% pace-in-band,
 clock-dominant**, winner inland **~17–19★** (the siloed cut's ~33★ over-weight corrected); render-smoke clean incl.
 a **full Trade Roads test** (voyage → reach the gateway → 2nd voyage founds a town → score → majorities off → salt

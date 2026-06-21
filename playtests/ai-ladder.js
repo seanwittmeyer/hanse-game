@@ -37,6 +37,9 @@ GUILD_MS=(typeof __GMS!=='undefined'&&__GMS)?__GMS:120;GUILD_MIN=1;   // GM bulk
 if(typeof CELLAR_MS!=='undefined'){CELLAR_MS=__CMS||80;CELLAR_MIN=1;CELLAR_CAP=600;if(typeof __CROLL==='string'&&__CROLL)CELLAR_ROLL=__CROLL;if(__CMCTS==='0')CELLAR_MCTS=false;if(__CMCTS==='1')CELLAR_MCTS=true;}   // cellarmaster bulk budget (CELLAR_MS env overrides) — small; SHARD the cellarmaster pairing. CELLAR_ROLL/CELLAR_MCTS env A/B the rollout policy & Path-C tree.
 
 function aiTestGame(tiers){
+  if(typeof OVERLAND!=='undefined')OVERLAND=(typeof __OVERLAND!=='undefined'&&__OVERLAND);   // expansion hooks (off → base ladder unchanged)
+  if(typeof EXPANSION!=='undefined')EXPANSION=(typeof __EXPANSION!=='undefined'&&__EXPANSION);
+  if(typeof JOPEN!=='undefined')JOPEN=(typeof __JOPEN!=='undefined'&&__JOPEN);
   S=freshState(tiers.length,['P1','P2','P3','P4','P5'].slice(0,tiers.length));
   UI={sub:'move'};undoStack=[];activeTab=0;
   S.players.forEach(function(p,i){p.ai=tiers[i];});
@@ -123,6 +126,7 @@ const ctx = {
   lucide: { createIcons: noop },
   __N: N, __NOGM: process.env.NOGM==='1', __GMN: parseInt(process.env.GMN||'0',10),
   __NOCM: process.env.NOCM==='1', __CMN: parseInt(process.env.CMN||'0',10), __CMS: parseInt(process.env.CELLAR_MS||'0',10), __CROLL: process.env.CELLAR_ROLL||'', __CMCTS: process.env.CELLAR_MCTS||'', __GMS: parseInt(process.env.GUILD_MS||'0',10),
+  __OVERLAND: process.env.OVERLAND==='1', __EXPANSION: process.env.EXPANSION==='1', __JOPEN: process.env.JOPEN==='1',   // run the GM/CM ladder through an expansion
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;
