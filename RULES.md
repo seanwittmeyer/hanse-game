@@ -427,28 +427,31 @@ station, no new action — it rides the Harbor's Ship.**
   **active player picks** an open slot; rivals (off-turn) and the AI auto-pick.
 - **Quality gates depth.** You step onto the next node only if a cask on that voyage **meets its quality gate** —
   the deep towns need a high-Q beer; voyages (the clock) buy the distance. Reach (breadth) and quality (depth) are
-  both required.
+  both required. **A charter opens a road at its NEXT node's gate** — so a **Q2 charter opens the eastern road at
+  Visby (Q2)**; the Novgorod kontor's Q3 sea gate no longer walls off the cheap entry (a sub-gate charter advances
+  the caravan + claims the node, but earns no under-gate kontor sea benefit).
 - **Never nothing.** A town whose slots are all claimed pays the line's small **overflow** bonus, and your road
   still extends — every voyage that reaches a node pays *something*.
-- **Distinct slots, flavoured by LANE** (2–4 per node; *active count scales with player count* — 2p uses 2 slots,
-  4p uses 4; the deep ◆ nodes stay **scarce**). Slots are listed best-first (the scarce nodes show only their top
+- **Distinct slots, flavoured by LANE** (2–4 per node; *active count scales **n+1** with player count* — 2p uses **3**
+  slots, 3p/4p use 4; the deep ◆ nodes stay **scarce** at 2). Slots are listed best-first (the scarce nodes show only their top
   ones). The lane identity lives in the slot menu:
-  - **Rhineland — KNOWLEDGE/CRAFT** *(Bruges voyages)*: **Cologne** (Q2 · +2★ · `recipe · brew a beer · +2 age · brew a beer`)
-    → **Frankfurt** — *points + a prestige outlet* (Q3 · +3★ · ◆ scarce-2 · `+4★ · a free Enshrine · +2 age · +6★`).
+  - **Rhineland — KNOWLEDGE/CRAFT** *(Bruges voyages)*: **Cologne** (Q2 · +2★ · `recipe · a free Gruit · brew · brew`)
+    → **Frankfurt** — *the deep craft/prestige outlet* (Q3 · +3★ · ◆ scarce-2 · `a free Q3 · a free Enshrine · +2 age · +6★`).
   - **London — INFRASTRUCTURE** *(London voyages, through Bruges)*: **Antwerp** (Q2 · +2★ · `a Building to hand ·
     brew a beer · +3 goods · a Building to hand`) → **London** (kontor · Q2 · **+3★** · `a Building to hand · a free Improvement · +3 goods · a free Improvement`).
   - **Bergen — LOGISTICS** *(Bergen voyages, through Bruges)*: **Tønsberg** (Q2 · +2★ · `+1 charter contract · brew a beer ·
     +2 G · brew a beer`) → **Bergen** (kontor · Q2 · **+3★** · `+1 charter contract · +3 goods · +1 vessel · +1 vessel`).
   - **East — DEPTH/VALUE** *(Novgorod voyages)*: **Visby** (Q2 · +2★ · `+2 G · a free road step · +2 age · +3★`) →
-    **Tallinn** (Q3 · +3★ · `+1 vessel · +1 quality · brew a beer · +5★`) → **Novgorod** (kontor · Q3 · +3★ · `+1 quality ·
+    **Tallinn** (Q3 · +3★ · `+1 vessel · +1 quality · brew a beer · +5★`) → **Novgorod** (kontor · Q3 · **★ = delivered quality** · `+1 quality ·
     +1 vessel · +2 age · +5★`) → **Pskov** — *just a delivery* (Q5 · ◆ · **one slot +8★**, every later delivery **+5★**).
-  - **The 4-player (4th) slot** (each slot list's last entry; opens only at 4p, since active slots scale 2p→2…4p→4):
+  - **The 4th slot** (each slot list's last entry; opens at **3p+** now that active slots scale **n+1** — 2p→3, 3p/4p→4):
     the **western** towns DUPLICATE the lane's signature bonus there (a 2nd brew · 2nd Building · 2nd Improvement · 2nd vessel)
     rather than a generic points slot — the extra 4p slot reinforces the lane's identity. The **East** (the depth/**points** lane)
     and the deep ◆ nodes keep their **+★** there.
-  - The **brew** slot is a free **Brewhouse action** — load a recipe you hold into an open vessel (pay its cost);
-    **London's free Improvement** fits a private Cellar upgrade gratis; **Frankfurt's Enshrine** presents a deployed
-    Q2+ cask to the Hall, no boat. *(v1 auto-resolves these to your best option; the manual sub-picker is the next increment.)*
+  - The **brew** slot is a **Brewhouse action** — the active player **chooses a recipe they hold and pays it** into an
+    open vessel (the brew picker; off-turn/AI auto-brew the highest affordable). The **free Gruit / free Q3** slots
+    instead rack a free cask (no recipe, no cost) straight to a vessel to cellar. **London's free Improvement** fits a
+    private Cellar upgrade gratis; **Frankfurt's Enshrine** presents a deployed Q2+ cask to the Hall, no boat.
 - **Lane economics:** the **East** pays the most in points (the deep money lane, capped by **Pskov**); the
   **Rhineland** is **the craft road** (recipes/brew/age → fund the climb, then cash big at Frankfurt or enshrine
   there); **London** buys the board + your engine (buildings + a free Improvement → demand on every delivery);

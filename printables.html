@@ -863,21 +863,22 @@ const OL_SLOT={
   recipe:{ic:'scroll-text',t:'recipe'}, brew:{ic:'flask-conical',t:'brew'}, age2:{ic:'hourglass',t:'+2 age'},
   quality1:{ic:'chevrons-up',t:'+1 Q'}, quality2:{ic:'chevrons-up',t:'+2 Q'}, improvement:{ic:'wrench',t:'improve'},
   enshrine:{ic:'crown',t:'enshrine'}, vessel:{ic:'flask-round',t:'vessel'}, bldghand:{ic:'building-2',t:'Building'},
-  contract:{ic:'scroll',t:'contract'}, goods2:{ic:'wheat',t:'+2 G'}, goods3:{ic:'package',t:'+3 goods'},
+  contract:{ic:'scroll',t:'contract'}, gruitfree:{ic:'beer',t:'free Q1'}, q3free:{ic:'beer',t:'free Q3'},
+  goods2:{ic:'wheat',t:'+2 G'}, goods3:{ic:'package',t:'+3 goods'},
   reachstep:{ic:'truck',t:'road step'} };
 const olSlotInfo=k=>k.startsWith('pts')?{ic:'star',t:'+'+k.slice(3)+'★',pts:1}:(OL_SLOT[k]||{ic:'circle',t:k});
 const OL_N={
   hamburg  :{nm:'Hamburg',  home:1, w:.95},
   bruges   :{nm:'Bruges',   core:1, gate:1, gw:1, w:1.45},
-  cologne  :{nm:'Cologne',  gate:2, pts:2, slots:['recipe','brew','age2','brew'], over:'age2', w:2.3},
-  frankfurt:{nm:'Frankfurt',gate:3, pts:3, deep:1, slots:['pts4','enshrine'], over:'pts2', w:1.7},
+  cologne  :{nm:'Cologne',  gate:2, pts:2, slots:['recipe','gruitfree','brew','brew'], over:'age2', w:2.3},
+  frankfurt:{nm:'Frankfurt',gate:3, pts:3, deep:1, slots:['q3free','enshrine'], over:'pts2', w:1.7},
   antwerp  :{nm:'Antwerp',  gate:2, pts:2, slots:['bldghand','brew','goods3','bldghand'], over:'bldghand', w:2.3},
   london   :{nm:'London',   core:1, gate:2, pts:3, slots:['bldghand','improvement','goods3','improvement'], over:'bldghand', w:2.3},
   tonsberg :{nm:'Tønsberg', gate:2, pts:2, slots:['contract','brew','goods2','brew'], over:'goods2', w:2.3},
   bergen   :{nm:'Bergen',   core:1, gate:2, pts:3, slots:['contract','goods3','vessel','vessel'], over:'goods2', w:2.3},
   visby    :{nm:'Visby',    gate:2, pts:2, slots:['goods2','reachstep','age2','pts3'], over:'pts2', w:2.05},
   tallinn  :{nm:'Tallinn',  gate:3, pts:3, slots:['vessel','quality1','brew','pts5'], over:'pts2', w:2.05},
-  novgorod :{nm:'Novgorod', core:1, gate:3, pts:3, slots:['quality1','vessel','age2','pts5'], over:'pts2', w:2.05},
+  novgorod :{nm:'Novgorod', core:1, gate:3, pts:3, qpts:1, slots:['quality1','vessel','age2','pts5'], over:'pts2', w:2.05},
   pskov    :{nm:'Pskov',    gate:5, pts:5, deep:1, slots:['pts8'], over:'pts5', w:1.35},
 };
 const OL_XY={ hamburg:[5,46], bruges:[19,33],
@@ -885,13 +886,13 @@ const OL_XY={ hamburg:[5,46], bruges:[19,33],
   visby:[15,87], tallinn:[39,87], novgorod:[63,87], pskov:[87,87] };
 const OL_EDG=[['hamburg','bruges'],['bruges','cologne'],['cologne','frankfurt'],['bruges','antwerp'],['antwerp','london'],
   ['bruges','tonsberg'],['tonsberg','bergen'],['hamburg','visby'],['visby','tallinn'],['tallinn','novgorod'],['novgorod','pskov']];
-function olSq(key,idx){const s=olSlotInfo(key);   // idx<2 = always-available (SOLID dark); idx>=2 = player-count slot (DASHED + 3+/4p badge)
-  const badge=idx===2?'<span class="olsq-badge">3+</span>':(idx===3?'<span class="olsq-badge">4p</span>':'');
-  return '<div class="olsq'+(idx<2?' fix':'')+(s.pts?' pts':'')+'">'+badge+LU(s.ic)+'<span class="t">'+s.t+'</span></div>';}
+function olSq(key,idx){const s=olSlotInfo(key);   // n+1 active slots: idx 0-2 = always (2p+, SOLID dark); idx 3 opens at 3p (DASHED + 3+ badge)
+  const badge=idx===3?'<span class="olsq-badge">3+</span>':'';
+  return '<div class="olsq'+(idx<3?' fix':'')+(s.pts?' pts':'')+'">'+badge+LU(s.ic)+'<span class="t">'+s.t+'</span></div>';}
 function olNode(k){const n=OL_N[k];const xy=OL_XY[k];const style='left:'+xy[0]+'%;top:'+xy[1]+'%;width:'+n.w+'in';
   if(n.home) return '<div class="oln home" style="'+style+'">'+LU('home')+'<span class="oln-nm">Hamburg</span><span class="oln-mt">home</span></div>';
   const head='<div class="oln-h"><span class="oln-nm">'+(n.core?LU('landmark'):'')+n.nm+(n.deep?' <span class="oln-dp">◆</span>':'')+'</span>'
-    +'<span class="oln-q">'+LU(QI)+n.gate+'+</span>'+(n.pts?'<span class="oln-pts">'+LU(VP)+n.pts+'</span>':'')+'</div>';
+    +'<span class="oln-q">'+LU(QI)+n.gate+'+</span>'+(n.pts?'<span class="oln-pts">'+LU(VP)+(n.qpts?'=Q':n.pts)+'</span>':'')+'</div>';
   if(n.gw) return '<div class="oln gw core" style="'+style+'">'+head
     +'<div class="oln-gwb"><i>gateway · no slots</i><span class="oln-gwa">'+LU('scroll-text')+'recipe <b>OR</b> '+LU('wheat')+'2 goods</span></div></div>';
   const sl='<div class="olsq-row">'+n.slots.map((key,i)=>olSq(key,i)).join('')+'</div>';
@@ -915,8 +916,8 @@ function olboard(){
     +'<div class="ol-legend">'
       +'<span><b>A VOYAGE</b> to a kontor (a full sail <i>or</i> a Charter) walks your '+LU('truck')+' caravan <b>ONE node</b> along that road, gated by your best cask quality aboard.</span>'
       +'<span>Then <b>each cask aboard CLAIMS a slot</b> at the node reached (in <b>load order</b>): bank the node’s '+LU(VP)+' + cover a ☐ for its one-shot bonus.</span>'
-      +'<span><b>'+LU(QI)+' gates depth.</b> Slots scale with players — the <b>3+</b>/<b>4p</b> squares open at that count; ◆ deep nodes stay at 2. A full node pays its <b>overflow</b> (never nothing).</span>'
-      +'<span><b>Bruges</b> is the no-slots gateway; a <b>Q4+ Rhine Charter</b> skips it to Cologne. <b>Majorities are OFF.</b></span>'
+      +'<span><b>'+LU(QI)+' gates depth.</b> Slots scale with players (n+1) — the <b>3+</b> square opens at 3 players; ◆ deep nodes stay at 2. A full node pays its <b>overflow</b> (never nothing).</span>'
+      +'<span><b>Bruges</b> is the no-slots gateway; a <b>Q4+ Rhine Charter</b> skips it to Cologne; a charter can open the eastern road at <b>Visby (Q2)</b>. <b>Novgorod</b> pays '+LU(VP)+' = the delivered quality. <b>Majorities are OFF.</b></span>'
     +'</div>'
     +'<div class="ol-tree">'+svg+labels+nodes+'</div>'
   +'</div>';}

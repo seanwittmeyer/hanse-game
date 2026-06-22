@@ -361,18 +361,21 @@ barrels · workers · markers · **~8 demand dice (d6)** · quality-boost marker
   base delivery ★ · 2–4 SLOTS** (each a distinct one-shot bonus, **flavoured by lane**) · an **overflow** bonus
   (claimed when the slots are full — "never nothing"). **Frankfurt / Pskov** are ◆ **deep** terminals (high gate,
   **scarce**); **Pskov is just a delivery** — one slot (**+8★**, then **+5★** each later visit). The lane menus:
-  **Rhineland = craft** (a recipe · a **brew action** · +2 age · pts), **London = infrastructure** (a Building to
-  hand · a **free Improvement** · goods), **Bergen = logistics** (a **charter contract** · goods · a vessel),
-  **East = depth/value** (a vessel · +1 quality · big points); **Frankfurt** = points + a **free Enshrine**. *(v80: each
-  **western** town's **4-player (4th) slot DUPLICATES its lane signature** — a 2nd brew (Cologne/Tønsberg) · a 2nd
-  Building (Antwerp) · a 2nd Improvement (London) · a 2nd vessel (Bergen) — instead of a generic points slot; the East
-  keeps its **+★** there, since points ARE its lane.)* **Active
-  slot count scales with player count** (2p→2 … 4p→4; deep nodes stay 2) — print 4, cover the high slots for fewer players. Per
+  **Rhineland = craft** (a recipe · a **free Gruit** (Cologne) / **free Q3** (Frankfurt) racked to cellar · a **brew
+  action** (choose + pay) · +2 age), **London = infrastructure** (a Building to hand · a **free Improvement** · goods),
+  **Bergen = logistics** (a **charter contract** · goods · a vessel), **East = depth/value** (a vessel · +1 quality ·
+  big points; **Novgorod** pays ★ = the **delivered cask's quality**); **Frankfurt** = a **free Q3** + a **free
+  Enshrine** (the deep craft/prestige outlet). *(v80: each **western** town's **4th slot DUPLICATES its lane
+  signature** — a 2nd brew (Cologne/Tønsberg) · a 2nd Building (Antwerp) · a 2nd Improvement (London) · a 2nd vessel
+  (Bergen); the East keeps its **+★** there.)* **Active slot count scales n+1 with player count** (2p→3 … 4p→4;
+  deep nodes stay 2) — print 4, cover the high slots for fewer players. Per
   player, **presence markers** are dropped into the **slot they claim** (who holds which Staple Right). The
   **caravan rides the Ship action** — *no new tile/station; movement is per VOYAGE (one ship = ONE node per owner),
   gated by cask quality;* then **each cask aboard claims an open slot at the node reached, in LOAD ORDER**. **Bruges
-  delivery = a recipe OR 2 goods** (the knowledge on-ramp, no slots). **The Rhine Charter:** a **Q4+** Charter may
-  skip the Bruges node, leaping the caravan **Hamburg→Cologne** (the cask still delivers at Bruges). **OUT when this
+  delivery = a recipe OR 2 goods** (the knowledge on-ramp, no slots). **A charter opens a road at its NEXT node's
+  gate** — a **Q2 charter opens the eastern road at Visby (Q2)** (the Novgorod Q3 sea gate no longer walls it off).
+  **The Rhine Charter:** a **Q4+** Charter may skip the Bruges node, leaping the caravan **Hamburg→Cologne** (the cask
+  still delivers at Bruges). **OUT when this
   module is on:** the kontor **majority tracks/chart** (the contest moves inland). The network board sits beside
   the destinations board.
 

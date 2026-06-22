@@ -179,6 +179,28 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
 
+**v81 — Overland: a human-playtest tuning pass (charter east · Novgorod=quality · n+1 slots · manual brew · free casks)** *(2026-06-22, `play.html` KEY v81)* —
+Five interlocking fixes from a live 2p playtest, all ⚙. **(1) The charter opens the EAST at its next road node, not the
+kontor sea gate.** Visby's gate is Q2, but the only eastern voyage trigger was shipping/chartering to the **Novgorod
+kontor** (Q3 sea gate) — so a Q2 couldn't reach Visby (reachability was effectively Q3 though the board read Q2). A
+charter now gates on the **next unreached road node** (`olCharterGate`; east-only — the west kontore already match
+their road's early-node gates), so a **Q2 Hopped opens the eastern lane at Visby** early. A *sub-gate* charter advances
+the caravan + claims the node but takes **no under-gate kontor sea benefit** (so a Q1 can't farm London's Building, etc.).
+**(2) Novgorod pays ★ = the delivered cask's effective quality** (`qpts`: Q3→3 · Q4→4 · Q5→5) — the deep market finally
+rewards the climb on arrival (was a flat node ★). **(3) n+1 active slots per node** (2p→3 · 3p/4p→4; deep ◆ stay scarce
+at 2) — at 2p the old 2-slot towns felt too rigid to make the network a real space of choice. **(4) The `brew` slot is
+MANUAL** for the active player — choose a recipe you hold + pay it (via the existing brew picker; off-turn/AI/sim
+auto-brew the highest affordable, so harness coverage holds). **(5) NEW free-cask slots** rack a **free Gruit** (Cologne)
+/ **free Q3** (Frankfurt) straight into an open vessel — the Rhineland *craft* lane gets a way to cellar a cask without
+the Q2→Q5 procession (Frankfurt traded its flat-points slot for the free Q3, keeping its enshrine outlet). *Decisions
+taken with the designer mid-playtest:* Novgorod-only quality scaling (not the whole east, for now); free casks on the
+Rhineland craft lane. *Gated (KEY v81):* syntax + `ai-render-smoke` (real layer, all three expansions) PASS; `sim.js`
+base + OVERLAND **0 crash/deadlock 2–4p**, pace in band, clock-dominant; targeted unit checks confirm the Q2→Visby
+charter, n+1 counts, Novgorod qpts (Q5→5/Q3→3), and the free casks. Synced to `printables.html` (the tech-tree diagram)
++ `RULES.md`/`COMPONENTS.md` §12. *(Open ⚙ for the persona oracle, not the greedy bot: whether the whole east should
+scale by quality, the exact free-cask placements, and a richer "skip the procession" high-recipe slot if the manual
+brew + recipe/quality slots still feel insufficient in play.)*
+
 **v80 — Overland: the western 4-player slot duplicates the lane signature** *(2026-06-22, `play.html` KEY v80)* —
 A small Trade Roads tune. A town's active slot count scales with player count (2p→2 … 4p→4) for **supply** (more
 claimants need more slots, else everyone is shoved to overflow); the marginal **4th slot** had been a generic
