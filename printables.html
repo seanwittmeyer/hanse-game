@@ -411,36 +411,55 @@
   .cstack.gen .cs-q,.cstack.gen .cs-ic{color:var(--ink2)}
   .cstack.opt{border-style:dashed}
   /* ====================== OVERLAND board (Trade Roads) ====================== */
-  .olboard{width:100%;height:100%;background:var(--parch);border:2.5px solid #7a5236;border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in;color:var(--ink)}
+  .olboard{width:100%;height:100%;background:var(--parch);border:2.5px solid #7a5236;border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.08in;color:var(--ink)}
   .olboard svg,.olboard .ic{stroke-width:1.8}
   .ol-head{display:flex;align-items:baseline;gap:.14in}
   .ol-head h2{margin:0;font-variant:small-caps;color:#7a5236;font-size:.24in;display:flex;align-items:center;gap:.08in}
   .ol-head h2 svg,.ol-head h2 .ic{width:.2in;height:.2in}
   .ol-head .sub{font-size:.1in;font-style:italic;color:var(--ink2)}
-  .ol-legend{display:grid;grid-template-columns:1fr 1fr;gap:.03in .2in;font-size:.092in;line-height:1.22;background:#fff;border:1.5px solid #c9b693;border-radius:.08in;padding:.06in .1in}
+  .ol-legend{display:grid;grid-template-columns:1fr 1fr;gap:.02in .2in;font-size:.088in;line-height:1.2;background:#fff;border:1.5px solid #c9b693;border-radius:.08in;padding:.05in .1in}
   .ol-legend b{color:#7a5236}
-  .ol-legend svg,.ol-legend .ic{width:.12in;height:.12in;vertical-align:-.02in}
-  .ol-lanes{flex:1;display:flex;flex-direction:column;gap:.08in;min-height:0}
-  .ol-lane{flex:1;border:2px solid var(--lc);border-radius:.09in;background:#fff;padding:.045in .08in;display:flex;flex-direction:column;gap:.03in;min-height:0}
-  .ol-lh{font-variant:small-caps;font-weight:bold;font-size:.12in;color:var(--lc);letter-spacing:.3px}
-  .ol-seq{flex:1;display:flex;align-items:stretch;gap:.02in;min-height:0}
-  .ol-arr{display:flex;align-items:center;color:var(--ink2)}
-  .ol-arr svg,.ol-arr .ic{width:.16in;height:.16in}
-  .oln{flex:1;border:1.5px solid #c9b693;border-radius:.06in;background:rgba(0,0,0,.02);padding:.03in .05in;display:flex;flex-direction:column;gap:.02in;min-width:0}
-  .oln.home{flex:0 0 .66in;background:#e6d3a8;border-color:#8a6d3b;align-items:center;justify-content:center;text-align:center}
-  .oln.home svg,.oln.home .ic{width:.18in;height:.18in}
-  .oln.core{background:rgba(184,134,11,.1);border-color:var(--gold);border-width:2px}
-  .oln.gw{background:rgba(39,75,92,.06)}
-  .oln.deep{border-color:#7c2128;border-width:2px}
+  .ol-legend svg,.ol-legend .ic{width:.11in;height:.11in;vertical-align:-.02in}
+  /* the tech-tree canvas: one Hamburg root + one Bruges gateway, branching to the 3 western roads + the eastern haul */
+  .ol-tree{position:relative;flex:1;min-height:0}
+  .ol-roads{position:absolute;inset:0;width:100%;height:100%}
+  .ol-roads .ol-reg{fill:rgba(120,90,40,.05);stroke:rgba(0,0,0,.05)}
+  .ol-roads .ol-reg.e{fill:rgba(70,50,20,.07)}
+  .ol-roads line{stroke:#b08d57;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:.4 6;opacity:.85;vector-effect:non-scaling-stroke}
+  .ol-reglbl{position:absolute;font-variant:small-caps;font-style:italic;font-weight:bold;font-size:.1in;color:rgba(90,70,40,.72);letter-spacing:.5px}
+  .ol-reglbl.r{font-style:normal;display:flex;align-items:center;gap:.04in;transform:translateX(-100%)}
+  .ol-reglbl svg,.ol-reglbl .ic{width:.12in;height:.12in}
+  /* a town node CARD, absolutely positioned & centred on its tree coordinate */
+  .oln{position:absolute;transform:translate(-50%,-50%);border:1.6px solid #c9b693;border-radius:.07in;background:#fff;padding:.04in .05in;display:flex;flex-direction:column;gap:.03in;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+  .oln.home{background:#e6d3a8;border:2px solid #8a6d3b;align-items:center;justify-content:center;text-align:center;gap:.01in;padding:.05in}
+  .oln.home svg,.oln.home .ic{width:.2in;height:.2in;color:#7a5236}
+  .oln.home .oln-nm{font-size:.12in}
+  .oln.home .oln-mt{font-size:.082in;font-style:italic;color:var(--ink2)}
+  .oln.core{border-color:var(--gold);border-width:2.2px;background:#fdf6e6}
+  .oln.deep{box-shadow:0 0 0 1.5px #7c2128,0 1px 3px rgba(0,0,0,.12)}
   .oln-h{display:flex;align-items:center;gap:.04in;flex-wrap:wrap}
-  .oln-nm{font-variant:small-caps;font-weight:bold;font-size:.105in}
+  .oln-nm{font-variant:small-caps;font-weight:bold;font-size:.12in;display:inline-flex;align-items:center;gap:.03in}
+  .oln-nm svg,.oln-nm .ic{width:.13in;height:.13in;color:var(--gold)}
   .oln-dp{color:var(--gold);font-weight:900}
-  .oln-q,.oln-pts{display:inline-flex;align-items:center;gap:.015in;font-weight:900;font-size:.09in;border-radius:.03in;padding:0 .03in}
-  .oln-q{background:rgba(0,0,0,.08)} .oln-pts{background:rgba(184,134,11,.18);color:#7a5210}
+  .oln-q,.oln-pts{display:inline-flex;align-items:center;gap:.012in;font-weight:900;font-size:.092in;border-radius:.03in;padding:0 .035in}
+  .oln-q{background:rgba(0,0,0,.08)} .oln-pts{background:rgba(184,134,11,.2);color:#7a5210;margin-left:auto}
   .oln-q svg,.oln-q .ic,.oln-pts svg,.oln-pts .ic{width:.11in;height:.11in}
-  .oln-sl{display:flex;flex-direction:column;gap:.012in;font-size:.086in;line-height:1.12}
-  .oln-sl span{background:rgba(0,0,0,.05);border-radius:.03in;padding:.004in .04in}
-  .oln-sl i{color:var(--ink2)}
+  /* the PHYSICAL claim-slot squares — a little bigger than a presence token; cover one to claim it */
+  .olsq-row{display:flex;gap:.04in;justify-content:center}
+  .olsq{position:relative;width:.4in;min-width:.4in;height:.46in;border:1.4px dashed #9a8049;border-radius:.04in;background:rgba(120,90,40,.05);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.01in;text-align:center;color:#6a532b}
+  .olsq svg,.olsq .ic{width:.16in;height:.16in;stroke-width:1.9}
+  .olsq .t{font-size:.066in;line-height:1;font-weight:bold;letter-spacing:-.2px}
+  .olsq.pts{background:rgba(184,134,11,.16);border-color:var(--gold);border-style:solid;color:#7a5210}
+  .olsq.pts svg,.olsq.pts .ic{color:var(--gold)}
+  .olsq-badge{position:absolute;top:-.06in;right:-.05in;background:var(--red);color:#fff;font-size:.062in;font-weight:900;border-radius:.03in;padding:.004in .025in;letter-spacing:0}
+  .oln-over{display:flex;align-items:center;gap:.03in;font-size:.076in;color:var(--ink2);border-top:1px dotted #c9b693;padding-top:.025in}
+  .oln-over b{color:#7a5236}
+  .oln-over svg,.oln-over .ic{width:.1in;height:.1in}
+  .oln-gwb{display:flex;flex-direction:column;gap:.025in;font-size:.085in}
+  .oln-gwb i{color:var(--ink2)}
+  .oln-gwa{display:inline-flex;align-items:center;gap:.03in;font-weight:bold}
+  .oln-gwa svg,.oln-gwa .ic{width:.11in;height:.11in}
   /* ====================== CHECKLIST ====================== */
   .check{position:absolute;left:.35in;top:.38in;width:9.7in;height:7.42in;font-size:.094in;display:flex;flex-direction:column;gap:.05in}
   .check h2{margin:0;font-variant:small-caps;color:var(--red);font-size:.2in;border-bottom:2px solid var(--gold);padding-bottom:.03in}
@@ -832,45 +851,68 @@ function dboard(){
       +'<div class="cstack-row">'+SUPPLY.map(cstack).join('')+'</div></div>'
     +'</div></div>';}
 
-// ---- OVERLAND BOARD — The Trade Roads (Staple Rights); prints on the BACK of the Destinations board ----
-// A lane-by-lane reference: each lane is Hamburg → its towns/kontor, each node carrying its gate · delivery ★ ·
-// Staple-Right slots. Matches play.html's OL_NODES; numbers are ⚙.
-const OL_LANES=[
-  {nm:'Rhineland · CRAFT', col:'#7c2128', nodes:[
-    {nm:'Bruges',   gate:1, gw:1, sl:'recipe OR 2 goods · no slots'},
-    {nm:'Cologne',  gate:2, pts:2, sl:['recipe','brew','+2 age','+3★']},
-    {nm:'Frankfurt',gate:3, pts:3, deep:1, sl:['+4★','Enshrine','+2 age','+6★']} ]},
-  {nm:'London · INFRASTRUCTURE', col:'#b8860b', nodes:[
-    {nm:'Bruges',  gate:1, gw:1, sl:'gateway (see Rhineland)'},
-    {nm:'Antwerp', gate:2, pts:2, sl:['Building','brew','+3 goods','+4★']},
-    {nm:'London',  gate:2, pts:3, core:1, sl:['Building','Improvement','+3 goods','+6★']} ]},
-  {nm:'Bergen · LOGISTICS', col:'#4a6b3a', nodes:[
-    {nm:'Bruges',  gate:1, gw:1, sl:'gateway (see Rhineland)'},
-    {nm:'Tønsberg',gate:2, pts:2, sl:['contract','brew','+2 G','+4★']},
-    {nm:'Bergen',  gate:2, pts:3, core:1, sl:['contract','+3 goods','vessel','+6★']} ]},
-  {nm:'The East · DEPTH / POINTS', col:'#274b5c', nodes:[
-    {nm:'Visby',   gate:2, pts:2, sl:['+2 G','road step','+2 age','+3★']},
-    {nm:'Tallinn', gate:3, pts:3, sl:['vessel','+1 quality','brew','+5★']},
-    {nm:'Novgorod',gate:3, pts:3, core:1, sl:['+1 quality','vessel','+2 age','+5★']},
-    {nm:'Pskov',   gate:5, deep:1, sl:'one slot +8★ · then +5★ each later delivery'} ]},
-];
+// ---- OVERLAND BOARD — The Trade Roads (Staple Rights) — a TECH-TREE map; prints on the BACK of Destinations ----
+// A true tree: ONE Hamburg root + ONE Bruges gateway, branching to the 3 western roads + the eastern deep haul.
+// Each town carries PHYSICAL claim-slot SQUARES (token-sized: cover one with a presence marker to claim it), each
+// printed as an icon + short label, plus the OVERFLOW bonus (paid when every slot is filled). Mirrors play.html
+// OL_NODES exactly; deep ◆ nodes show only their 2 active slots (the scarcity cap). All numbers ⚙.
+const OL_SLOT={
+  recipe:{ic:'scroll-text',t:'recipe'}, brew:{ic:'flask-conical',t:'brew'}, age2:{ic:'hourglass',t:'+2 age'},
+  quality1:{ic:'chevrons-up',t:'+1 Q'}, quality2:{ic:'chevrons-up',t:'+2 Q'}, improvement:{ic:'wrench',t:'improve'},
+  enshrine:{ic:'crown',t:'enshrine'}, vessel:{ic:'flask-round',t:'vessel'}, bldghand:{ic:'building-2',t:'Building'},
+  contract:{ic:'scroll',t:'contract'}, goods2:{ic:'wheat',t:'+2 G'}, goods3:{ic:'package',t:'+3 goods'},
+  reachstep:{ic:'truck',t:'road step'} };
+const olSlotInfo=k=>k.startsWith('pts')?{ic:'star',t:'+'+k.slice(3)+'★',pts:1}:(OL_SLOT[k]||{ic:'circle',t:k});
+const OL_N={
+  hamburg  :{nm:'Hamburg',  home:1, w:.95},
+  bruges   :{nm:'Bruges',   core:1, gate:1, gw:1, w:1.45},
+  cologne  :{nm:'Cologne',  gate:2, pts:2, slots:['recipe','brew','age2','pts3'], over:'age2', w:2.3},
+  frankfurt:{nm:'Frankfurt',gate:3, pts:3, deep:1, slots:['pts4','enshrine'], over:'pts2', w:1.7},
+  antwerp  :{nm:'Antwerp',  gate:2, pts:2, slots:['bldghand','brew','goods3','pts4'], over:'bldghand', w:2.3},
+  london   :{nm:'London',   core:1, gate:2, pts:3, slots:['bldghand','improvement','goods3','pts6'], over:'bldghand', w:2.3},
+  tonsberg :{nm:'Tønsberg', gate:2, pts:2, slots:['contract','brew','goods2','pts4'], over:'goods2', w:2.3},
+  bergen   :{nm:'Bergen',   core:1, gate:2, pts:3, slots:['contract','goods3','vessel','pts6'], over:'goods2', w:2.3},
+  visby    :{nm:'Visby',    gate:2, pts:2, slots:['goods2','reachstep','age2','pts3'], over:'pts2', w:2.05},
+  tallinn  :{nm:'Tallinn',  gate:3, pts:3, slots:['vessel','quality1','brew','pts5'], over:'pts2', w:2.05},
+  novgorod :{nm:'Novgorod', core:1, gate:3, pts:3, slots:['quality1','vessel','age2','pts5'], over:'pts2', w:2.05},
+  pskov    :{nm:'Pskov',    gate:5, pts:5, deep:1, slots:['pts8'], over:'pts5', w:1.35},
+};
+const OL_XY={ hamburg:[5,46], bruges:[19,33],
+  cologne:[41,11], frankfurt:[68,11], antwerp:[41,33], london:[68,33], tonsberg:[41,55], bergen:[68,55],
+  visby:[15,87], tallinn:[39,87], novgorod:[63,87], pskov:[87,87] };
+const OL_EDG=[['hamburg','bruges'],['bruges','cologne'],['cologne','frankfurt'],['bruges','antwerp'],['antwerp','london'],
+  ['bruges','tonsberg'],['tonsberg','bergen'],['hamburg','visby'],['visby','tallinn'],['tallinn','novgorod'],['novgorod','pskov']];
+function olSq(key,idx){const s=olSlotInfo(key);
+  const badge=idx===2?'<span class="olsq-badge">3+</span>':(idx===3?'<span class="olsq-badge">4p</span>':'');
+  return '<div class="olsq'+(s.pts?' pts':'')+'">'+badge+LU(s.ic)+'<span class="t">'+s.t+'</span></div>';}
+function olNode(k){const n=OL_N[k];const xy=OL_XY[k];const style='left:'+xy[0]+'%;top:'+xy[1]+'%;width:'+n.w+'in';
+  if(n.home) return '<div class="oln home" style="'+style+'">'+LU('home')+'<span class="oln-nm">Hamburg</span><span class="oln-mt">home</span></div>';
+  const head='<div class="oln-h"><span class="oln-nm">'+(n.core?LU('landmark'):'')+n.nm+(n.deep?' <span class="oln-dp">◆</span>':'')+'</span>'
+    +'<span class="oln-q">'+LU(QI)+n.gate+'+</span>'+(n.pts?'<span class="oln-pts">'+LU(VP)+n.pts+'</span>':'')+'</div>';
+  if(n.gw) return '<div class="oln gw core" style="'+style+'">'+head
+    +'<div class="oln-gwb"><i>gateway · no slots</i><span class="oln-gwa">'+LU('scroll-text')+'recipe <b>OR</b> '+LU('wheat')+'2 goods</span></div></div>';
+  const sl='<div class="olsq-row">'+n.slots.map((key,i)=>olSq(key,i)).join('')+'</div>';
+  const over='<div class="oln-over">'+LU('layers')+'all full → <b>'+olSlotInfo(n.over).t+'</b></div>';
+  return '<div class="oln'+(n.core?' core':'')+(n.deep?' deep':'')+'" style="'+style+'">'+head+sl+over+'</div>';}
 function olboard(){
-  const node=n=>'<div class="oln'+(n.core?' core':'')+(n.deep?' deep':'')+(n.gw?' gw':'')+'">'
-    +'<div class="oln-h"><span class="oln-nm">'+n.nm+(n.deep?' <span class="oln-dp">◆</span>':'')+'</span>'
-      +'<span class="oln-q">'+LU(QI)+n.gate+'+</span>'+(n.pts?'<span class="oln-pts">'+LU(VP)+n.pts+'</span>':'')+'</div>'
-    +'<div class="oln-sl">'+(Array.isArray(n.sl)?n.sl.map(s=>'<span>'+s+'</span>').join(''):'<i>'+n.sl+'</i>')+'</div></div>';
-  const lane=L=>'<div class="ol-lane" style="--lc:'+L.col+'"><div class="ol-lh">'+L.nm+'</div>'
-    +'<div class="ol-seq"><div class="oln home">'+LU('home')+'<span class="oln-nm">Hamburg</span></div>'
-    +L.nodes.map(n=>'<span class="ol-arr">'+LU('chevron-right')+'</span>'+node(n)).join('')+'</div></div>';
+  const line=e=>{const a=OL_XY[e[0]],b=OL_XY[e[1]];return '<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'"/>';};
+  const svg='<svg class="ol-roads" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">'
+    +'<rect class="ol-reg" x="9" y="1" width="76" height="66" rx="2"/>'
+    +'<rect class="ol-reg e" x="4" y="74" width="93" height="25" rx="2"/>'
+    +OL_EDG.map(line).join('')+'</svg>';
+  const labels='<div class="ol-reglbl" style="left:1%;top:2.5%">THE WESTERN ROADS · the Bruges gateway</div>'
+    +'<div class="ol-reglbl" style="left:1%;top:96%">THE EASTERN ROAD · the deep haul to Novgorod</div>'
+    +'<div class="ol-reglbl r" style="left:99%;top:2.5%">'+LU('landmark')+' kontor · ◆ deep (scarce) · ☐ claim slot — cover to take</div>';
+  const nodes=Object.keys(OL_N).map(olNode).join('');
   return '<div class="olboard">'
-    +'<div class="ol-head"><h2>'+LU('truck')+'The Trade Roads — Staple Rights</h2><span class="sub">Overland expansion · replaces the kontor majorities · print on the back of the Destinations board</span></div>'
+    +'<div class="ol-head"><h2>'+LU('truck')+'The Trade Roads — Staple Rights</h2><span class="sub">Overland · replaces the kontor majorities · print on the back of the Destinations board</span></div>'
     +'<div class="ol-legend">'
-      +'<span><b>A VOYAGE</b> to a kontor (a full sail <i>or</i> a Charter) pushes your '+LU('truck')+' caravan <b>ONE node</b> along that road, gated by your best cask quality aboard.</span>'
-      +'<span>Then <b>each cask aboard CLAIMS an open slot</b> at the node reached, in <b>load order</b> — its delivery '+LU(VP)+' + a one-shot bonus + a presence marker.</span>'
-      +'<span><b>'+LU(QI)+' gates depth</b> · slots scale with player count (◆ deep = scarce) · a full node pays an <b>overflow</b> (never nothing).</span>'
-      +'<span><b>Bruges</b> = the no-slots gateway · the <b>Q4+ Rhine Charter</b> skips Bruges → Cologne · <b>majorities are OFF</b>.</span>'
+      +'<span><b>A VOYAGE</b> to a kontor (a full sail <i>or</i> a Charter) walks your '+LU('truck')+' caravan <b>ONE node</b> along that road, gated by your best cask quality aboard.</span>'
+      +'<span>Then <b>each cask aboard CLAIMS a slot</b> at the node reached (in <b>load order</b>): bank the node’s '+LU(VP)+' + cover a ☐ for its one-shot bonus.</span>'
+      +'<span><b>'+LU(QI)+' gates depth.</b> Slots scale with players — the <b>3+</b>/<b>4p</b> squares open at that count; ◆ deep nodes stay at 2. A full node pays its <b>overflow</b> (never nothing).</span>'
+      +'<span><b>Bruges</b> is the no-slots gateway; a <b>Q4+ Rhine Charter</b> skips it to Cologne. <b>Majorities are OFF.</b></span>'
     +'</div>'
-    +'<div class="ol-lanes">'+OL_LANES.map(lane).join('')+'</div>'
+    +'<div class="ol-tree">'+svg+labels+nodes+'</div>'
   +'</div>';}
 
 // ---- MAIN BOARD — the Wharf (stations + 8 slots + both shared tracks) ----
