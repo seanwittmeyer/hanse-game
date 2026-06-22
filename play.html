@@ -3313,52 +3313,116 @@ function olRhineLeap(lp){const rc=S.overland.reached[lp.id]||(S.overland.reached
   if(!rc.cologne){rc.cologne=true;}olClaimAt(lp,'cologne',true);}
 function olCanRhine(lp,q){return olEnabled()&&q>=OL_RHINE_GATE&&!olReached(lp.id).cologne;}
 
-// ---- the inland NETWORK as a MAP (SVG roads + HTML node cards) ----
-const OL_POS={hamburg:[74,232],bruges:[250,150],cologne:[452,74],frankfurt:[690,74],
-  antwerp:[452,166],london:[690,166],tonsberg:[452,264],bergen:[690,264],
-  visby:[312,360],tallinn:[502,392],novgorod:[700,398],pskov:[892,398]};
+// ---- the inland NETWORK as a MAP — the printables "tech-tree" diagram, made LIVE & RESPONSIVE ----
+// Ports printables.html's olboard() look (Hamburg root → the Bruges gateway → 3 western roads + the
+// eastern haul, with token-sized claim-slot SQUARES) into the live client. Everything inside the map is
+// sized in cqw (% of the board's width) so it SCALES with the container; below a readable min-width floor
+// the map SCROLLS horizontally (it's a wide board). Live state painted on the printed art: each node shows
+// the caravans that have reached it (owner-colour flags) + which claim-slots are taken (owner colour).
+// Coords are the printables 0–100 layout (better spaced than the old 980×472 grid).
+const OL_POS={hamburg:[5,46],bruges:[19,33],
+  cologne:[41,11],frankfurt:[68,11],antwerp:[41,33],london:[68,33],tonsberg:[41,55],bergen:[68,55],
+  visby:[15,87],tallinn:[39,87],novgorod:[63,87],pskov:[87,87]};
 const OL_EDGES=[['hamburg','bruges'],['bruges','cologne'],['cologne','frankfurt'],
   ['bruges','antwerp'],['antwerp','london'],['bruges','tonsberg'],['tonsberg','bergen'],
   ['hamburg','visby'],['visby','tallinn'],['tallinn','novgorod'],['novgorod','pskov']];
+// node-card WIDTH in cqw (% of board width): home small · the gateway mid · towns wide · deep nodes narrow
+function olNodeW(k){const n=OL_NODES[k];
+  if(k==='hamburg')return 11; if(n.core&&!n.slots)return 16;   // Bruges gateway (no slots)
+  if(k==='pskov')return 15; if(k==='frankfurt')return 18;
+  if(['visby','tallinn','novgorod'].includes(k))return 22; return 25;}
+const OL_SLOTIC={recipe:'scroll-text',brew:'flask-conical',age2:'hourglass',quality1:'chevrons-up',quality2:'chevrons-up',
+  improvement:'wrench',enshrine:'crown',vessel:'flask-round',bldghand:'building-2',contract:'scroll',
+  goods2:'wheat',goods3:'package',reachstep:'truck'};
+function olSlotIcon(key){return key.startsWith('pts')?'star':(OL_SLOTIC[key]||'circle');}
+const OL_SQLBL={recipe:'recipe',brew:'brew',age2:'+2 age',quality1:'+1 Q',quality2:'+2 Q',improvement:'improve',
+  enshrine:'enshrine',vessel:'vessel',bldghand:'Building',contract:'contract',goods2:'+2 G',goods3:'+3 gd',reachstep:'road'};
+function olSqLabel(key){return key.startsWith('pts')?('+'+key.slice(3)+'★'):(OL_SQLBL[key]||key);}
 function olInjectCSS(){if(olInjectCSS.done)return;olInjectCSS.done=true;
   try{const s=document.createElement('style');s.textContent=
-   '#overland-panel .olwrap{position:relative;width:100%;max-width:1060px;margin:0 auto;aspect-ratio:980/472}'
-  +'#overland-panel .olroads{position:absolute;inset:0;width:100%;height:100%}'
-  +'#overland-panel .olnode{position:absolute;transform:translate(-50%,-50%);box-sizing:border-box;width:14.5%;min-width:108px;border-radius:9px;padding:4px 6px;text-align:center;background:#fff7e6;border:1.4px solid #cbb68a;line-height:1.16;box-shadow:0 1px 3px rgba(0,0,0,.12)}'
-  +'#overland-panel .olnode.east{background:#f3ead2;border-color:#c2a76a}'
-  +'#overland-panel .olnode.core{background:#efe2c0;border:2px solid #b8860b}'
-  +'#overland-panel .olnode.home{background:#e6d3a8;border:2px solid #8a6d3b;width:9.4%;min-width:90px}'
-  +'#overland-panel .olnm2{font-weight:700;font-size:12.5px;color:#2b2018;display:flex;align-items:center;justify-content:center;gap:3px;white-space:nowrap}'
-  +'#overland-panel .olnode.core .olnm2{color:#5b3a12}'
-  +'#overland-panel .oldp{color:#b8860b;font-weight:700}'
-  +'#overland-panel .olmt2{font-size:9.5px;color:#5b4a37;font-weight:600;white-space:nowrap;margin-top:1px}'
-  +'#overland-panel .olnm2 svg{width:13px;height:13px}'
-  +'#overland-panel .olslot{display:flex;align-items:center;justify-content:center;gap:3px;font-size:9px;color:#4a3a26;border-top:1px dotted #cbb68a;padding:1px 0}'
-  +'#overland-panel .olslot .oldot{width:8px;height:8px;border-radius:50%;border:1px solid rgba(0,0,0,.4)}'
-  +'#overland-panel .olslot.taken{opacity:.55}'
-  +'#overland-panel .olreglbl{position:absolute;font-style:italic;font-weight:700;font-size:12px;color:#5b4a37;opacity:.55;letter-spacing:.5px;white-space:nowrap}';
+   '#overland-panel .ol-legend{display:grid;grid-template-columns:1fr 1fr;gap:2px 16px;font-size:.8rem;line-height:1.3;background:#fff7e6;border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin-bottom:8px;color:var(--ink2)}'
+  +'@media(max-width:620px){#overland-panel .ol-legend{grid-template-columns:1fr}}'
+  +'#overland-panel .ol-legend b{color:#7a5236}'
+  +'#overland-panel .ol-legend .ic,#overland-panel .ol-legend svg{width:1em;height:1em;vertical-align:-.15em}'
+  +'#overland-panel .oltreewrap{display:flex;overflow-x:auto;overflow-y:hidden;padding-bottom:6px}'   // scroll the wide MAP only (legend stays responsive); flex keeps the centred map reachable when it overflows
+  +'#overland-panel .ol-tree{position:relative;container-type:inline-size;flex:0 0 auto;width:100%;min-width:900px;max-width:1080px;margin:0 auto;aspect-ratio:100/60;background:var(--parch);border:1px solid var(--line);border-radius:10px}'
+  +'#overland-panel .ol-roads{position:absolute;inset:0;width:100%;height:100%}'
+  +'#overland-panel .ol-roads .ol-reg{fill:rgba(120,90,40,.05);stroke:rgba(0,0,0,.05)}'
+  +'#overland-panel .ol-roads .ol-reg.e{fill:rgba(70,50,20,.07)}'
+  +'#overland-panel .ol-roads line,#overland-panel .ol-roads .ol-express{stroke:#b08d57;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:.4 6;opacity:.85;vector-effect:non-scaling-stroke}'
+  +'#overland-panel .ol-reglbl{position:absolute;font-variant:small-caps;font-style:italic;font-weight:bold;font-size:1.5cqw;color:rgba(90,70,40,.72);letter-spacing:.5px;white-space:nowrap}'
+  +'#overland-panel .ol-reglbl.r{font-style:normal;display:flex;align-items:center;gap:3px;transform:translateX(-100%)}'
+  +'#overland-panel .ol-reglbl.express{font-style:normal;display:flex;align-items:center;gap:2px;color:#9c3b2e;background:rgba(243,233,210,.85);border-radius:3px;padding:0 3px}'
+  +'#overland-panel .ol-reglbl .ic,#overland-panel .ol-reglbl svg{width:1.6cqw;height:1.6cqw}'
+  +'#overland-panel .oln{position:absolute;transform:translate(-50%,-50%);box-sizing:border-box;border:1.4px solid #c9b693;border-radius:7px;background:#fff;padding:.6cqw;display:flex;flex-direction:column;gap:.4cqw;box-shadow:0 1px 3px rgba(0,0,0,.12)}'
+  +'#overland-panel .oln.home{background:#e6d3a8;border:2px solid #8a6d3b;align-items:center;justify-content:center;text-align:center;gap:.2cqw}'
+  +'#overland-panel .oln.home .ic,#overland-panel .oln.home svg{width:2.6cqw;height:2.6cqw;color:#7a5236}'
+  +'#overland-panel .oln.core{border-color:var(--gold);border-width:2px;background:#fdf6e6}'
+  +'#overland-panel .oln.deep{box-shadow:0 0 0 1.5px #7c2128,0 1px 3px rgba(0,0,0,.12)}'
+  +'#overland-panel .oln-h{display:flex;align-items:center;gap:.5cqw;flex-wrap:wrap}'
+  +'#overland-panel .oln-nm{font-variant:small-caps;font-weight:bold;font-size:1.55cqw;display:inline-flex;align-items:center;gap:.3cqw;color:var(--ink)}'
+  +'#overland-panel .oln.home .oln-nm{font-size:1.6cqw}'
+  +'#overland-panel .oln.home .oln-mt{font-size:1.15cqw;font-style:italic;color:var(--ink2)}'
+  +'#overland-panel .oln-nm .ic,#overland-panel .oln-nm svg{width:1.5cqw;height:1.5cqw;color:var(--gold)}'
+  +'#overland-panel .oln-dp{color:var(--gold);font-weight:900}'
+  +'#overland-panel .oln-q,#overland-panel .oln-pts{display:inline-flex;align-items:center;gap:.15cqw;font-weight:900;font-size:1.2cqw;border-radius:4px;padding:0 .4cqw}'
+  +'#overland-panel .oln-q{background:rgba(0,0,0,.08)}'
+  +'#overland-panel .oln-pts{background:rgba(184,134,11,.2);color:#7a5210;margin-left:auto}'
+  +'#overland-panel .oln-q .ic,#overland-panel .oln-q svg,#overland-panel .oln-pts .ic,#overland-panel .oln-pts svg{width:1.3cqw;height:1.3cqw}'
+  +'#overland-panel .oln-cv{position:absolute;top:-.9cqw;right:.5cqw;display:flex;align-items:center;gap:.3cqw}'   // caravan "flags" on the top edge (no layout height)
+  +'#overland-panel .oln-cv .cvdot{width:1.7cqw;height:1.7cqw;border-radius:50%;border:1.3px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.4)}'
+  +'#overland-panel .olsq-row{display:flex;gap:.5cqw;justify-content:center}'
+  +'#overland-panel .olsq{position:relative;box-sizing:border-box;width:4.7cqw;height:4.7cqw;border:1.3px dashed #9a8049;border-radius:4px;background:rgba(120,90,40,.05);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2cqw;text-align:center;color:#6a532b;overflow:hidden}'
+  +'#overland-panel .olsq .ic,#overland-panel .olsq svg{width:2cqw;height:2cqw;stroke-width:1.9}'
+  +'#overland-panel .olsq .t{font-size:1cqw;line-height:1;font-weight:bold}'
+  +'#overland-panel .olsq.pts{color:#7a5210}'
+  +'#overland-panel .olsq.pts .ic,#overland-panel .olsq.pts svg{color:var(--gold)}'
+  +'#overland-panel .olsq.taken{border-style:solid;border-color:#6f5530}'
+  +'#overland-panel .olsq .clm{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--cl);opacity:.9}'
+  +'#overland-panel .olsq .clm .ic,#overland-panel .olsq .clm svg{width:2.4cqw;height:2.4cqw;color:#fff;stroke-width:2.4}'
+  +'#overland-panel .oln-over{display:flex;align-items:center;gap:.3cqw;font-size:1cqw;color:var(--ink2);border-top:1px dotted #c9b693;padding-top:.3cqw}'
+  +'#overland-panel .oln-over b{color:#7a5236}'
+  +'#overland-panel .oln-over .ic,#overland-panel .oln-over svg{width:1.1cqw;height:1.1cqw}'
+  +'#overland-panel .oln-gwb{display:flex;flex-direction:column;gap:.3cqw;font-size:1.2cqw}'
+  +'#overland-panel .oln-gwb i{color:var(--ink2)}'
+  +'#overland-panel .oln-gwa{display:inline-flex;align-items:center;gap:.3cqw;font-weight:bold}'
+  +'#overland-panel .oln-gwa .ic,#overland-panel .oln-gwa svg{width:1.3cqw;height:1.3cqw}';
   (document.head||document.body||{appendChild(){}}).appendChild(s);}catch(e){}}
-function olBoardHTML(){const ov=S.overland,ic=n=>'<i data-lucide="'+n+'" class="ic"></i>';
-  const pos=k=>{const p=OL_POS[k];return 'left:'+(p[0]/980*100).toFixed(2)+'%;top:'+(p[1]/472*100).toFixed(2)+'%';};
-  let roads='';OL_EDGES.forEach(e=>{const pa=OL_POS[e[0]],pb=OL_POS[e[1]];
-    const east=(e[0]==='hamburg'&&e[1]==='visby')||['visby','tallinn','novgorod'].includes(e[0]);
-    roads+='<line x1="'+pa[0]+'" y1="'+pa[1]+'" x2="'+pb[0]+'" y2="'+pb[1]+'" stroke="'+(east?'#9c6b3f':'#b08d57')+'" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.1 9" opacity=".8"/>';});
-  const svg='<svg class="olroads" viewBox="0 0 980 472" preserveAspectRatio="none" aria-hidden="true">'
-    +'<rect x="140" y="38" width="648" height="286" rx="14" fill="rgba(120,90,40,.05)" stroke="rgba(0,0,0,.06)"/>'
-    +'<rect x="140" y="332" width="838" height="116" rx="14" fill="rgba(70,50,20,.07)" stroke="rgba(0,0,0,.06)"/>'+roads+'</svg>';
-  let h='<div class="olreglbl" style="left:1.5%;top:4%">THE WESTERN ROADS · the Bruges gateway</div>'
-    +'<div class="olreglbl" style="left:1.5%;top:96%">THE EASTERN ROAD · the deep haul to Novgorod</div>'
-    +'<div class="olreglbl" style="right:1.5%;top:4%">gold = kontor · ◆ deep (scarce)</div>';
-  h+='<div class="olnode home" style="'+pos('hamburg')+'" data-tip="'+attr('Hamburg — home. Two roads lead out: West to the Bruges gateway, East to the deep Novgorod haul.')+'"><div class="olnm2">'+ic('home')+'Hamburg</div><div class="olmt2">home</div></div>';
-  Object.keys(OL_NODES).forEach(k=>{const node=OL_NODES[k];
-    if(node.core&&!node.slots){const tk=S.players.filter(p=>olReached(p.id)[k]).map(p=>'<span class="oldot" style="background:'+p.color+'" data-tip="'+attr(p.name+' reached')+'"></span>').join('');
-      h+='<div class="olnode core" style="'+pos(k)+'" data-tip="'+attr(node.name+' — the gateway kontor (Q'+node.gate+'+). A waypoint; ship here for its recipe-or-goods benefit.')+'"><div class="olnm2">'+ic('landmark')+node.name+'</div><div class="olmt2">gateway · Q'+node.gate+'+ '+tk+'</div></div>';
-    }else{const east=['visby','tallinn','pskov'].includes(k);const active=olSlotsActive(k);const taken=olClaimedSlots(k);
-      let sl='';for(let i=0;i<active;i++){const c=taken.find(t=>t.slot===i);
-        sl+='<div class="olslot'+(c?' taken':'')+'">'+(c?'<span class="oldot" style="background:'+S.players[c.pid].color+'"></span>':'<span class="oldot" style="background:#fff;"></span>')+olSlotLabel(node.slots[i])+'</div>';}
-      h+='<div class="olnode'+(node.core?' core':'')+(east?' east':'')+'" style="'+pos(k)+'" data-tip="'+attr(node.name+(node.core?' — kontor (Q':' — Q')+node.gate+'+ '+(node.core?'· its sea benefit + ':'')+node.pts+'★ delivery + a Staple Right slot'+(node.deep?' · DEEP (scarce)':''))+'"><div class="olnm2">'+(node.core?ic('landmark'):'')+node.name+(node.deep?' <span class="oldp">◆</span>':'')+'</div><div class="olmt2">Q'+node.gate+'+ · '+node.pts+'★</div>'+sl+'</div>';
-    }});
-  return '<div class="olwrap">'+svg+h+'</div>';
+function olNode(k){const n=OL_NODES[k];const xy=OL_POS[k];
+  const style='left:'+xy[0]+'%;top:'+xy[1]+'%;width:'+olNodeW(k)+'cqw';
+  if(k==='hamburg')return '<div class="oln home" style="'+style+'" data-tip="'+attr('Hamburg — home. Two roads lead out: West to the Bruges gateway, East to the deep Novgorod haul.')+'">'+LU('home')+'<span class="oln-nm">Hamburg</span><span class="oln-mt">home</span></div>';
+  const cv=S.players.filter(p=>olReached(p.id)[k]).map(p=>'<span class="cvdot" style="background:'+p.color+'" data-tip="'+attr(p.name+'’s caravan reached '+olCityName(k))+'"></span>').join('');
+  const cvrow=cv?'<div class="oln-cv">'+cv+'</div>':'';
+  const head='<div class="oln-h"><span class="oln-nm">'+(n.core?LU('landmark'):'')+n.name+(n.deep?' <span class="oln-dp">◆</span>':'')+'</span>'
+    +'<span class="oln-q">'+LU('beer')+n.gate+'+</span>'+(n.pts?'<span class="oln-pts">'+LU('star')+n.pts+'</span>':'')+'</div>';
+  if(n.core&&!n.slots)return '<div class="oln core" style="'+style+'" data-tip="'+attr(n.name+' — gateway kontor (Q'+n.gate+'+): a recipe OR 2 goods. No slots.')+'">'+cvrow+head
+    +'<div class="oln-gwb"><i>gateway · no slots</i><span class="oln-gwa">'+LU('scroll-text')+'recipe <b>OR</b> '+LU('wheat')+'2 goods</span></div></div>';
+  const active=olSlotsActive(k),taken=olClaimedSlots(k);let sq='';
+  for(let i=0;i<active;i++){const key=n.slots[i],c=taken.find(t=>t.slot===i);
+    sq+='<div class="olsq'+(key.startsWith('pts')?' pts':'')+(c?' taken':'')+'" data-tip="'+attr(olSlotLabel(key)+(c?(' — claimed by '+S.players[c.pid].name):' — open Staple Right'))+'">'+LU(olSlotIcon(key))+'<span class="t">'+olSqLabel(key)+'</span>'+(c?'<span class="clm" style="--cl:'+S.players[c.pid].color+'">'+LU('check')+'</span>':'')+'</div>';}
+  return '<div class="oln'+(n.core?' core':'')+(n.deep?' deep':'')+'" style="'+style+'" data-tip="'+attr(n.name+' — Q'+n.gate+'+ · '+(n.pts||0)+'★ delivery'+(n.deep?' · deep (scarce: 2 slots)':''))+'">'+cvrow+head
+    +'<div class="olsq-row">'+sq+'</div><div class="oln-over">'+LU('layers')+'full → <b>'+olSqLabel(n.over)+'</b></div></div>';
+}
+function olBoardHTML(){
+  const line=e=>{const a=OL_POS[e[0]],b=OL_POS[e[1]];return '<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'"/>';};
+  const svg='<svg class="ol-roads" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">'
+    +'<rect class="ol-reg" x="9" y="1" width="76" height="66" rx="2"/>'
+    +'<rect class="ol-reg e" x="4" y="74" width="93" height="25" rx="2"/>'
+    +OL_EDGES.map(line).join('')
+    +'<path class="ol-express" d="M5,46 Q4,6 41,11" fill="none"/>'   // the Q4+ Rhine Charter: Hamburg→Cologne, arcing OVER Bruges (it skips that node)
+    +'</svg>';
+  const labels='<div class="ol-reglbl express" style="left:7%;top:15%">'+LU('zap')+'Q4+ Rhine Charter</div>'
+    +'<div class="ol-reglbl" style="left:1%;top:2.5%">THE WESTERN ROADS · the Bruges gateway</div>'
+    +'<div class="ol-reglbl" style="left:1%;top:96%">THE EASTERN ROAD · the deep haul to Novgorod</div>'
+    +'<div class="ol-reglbl r" style="left:99%;top:2.5%">'+LU('landmark')+' kontor · ◆ deep · ☐ claim slot</div>';
+  const nodes=Object.keys(OL_NODES).map(olNode).join('');
+  const legend='<div class="ol-legend">'
+    +'<span><b>A voyage</b> to a kontor (a full sail '+LU('sailboat')+' or a Charter) walks your '+LU('truck')+' caravan <b>one node</b> along that road — gated by your best cask quality aboard.</span>'
+    +'<span>Then <b>each cask aboard claims a slot</b> at the node reached (in load order): bank its '+LU('star')+' + take a ☐ for its one-shot bonus.</span>'
+    +'<span><b>'+LU('beer')+' gates depth.</b> Active slots scale with player count; ◆ deep nodes stay at 2. A full node pays its <b>overflow</b> (never nothing).</span>'
+    +'<span><b>Bruges</b> is the no-slots gateway; a <b>Q4+ Rhine Charter</b> skips it to Cologne. <b>Majorities are OFF.</b></span>'
+    +'</div>';
+  return legend+'<div class="oltreewrap"><div class="ol-tree">'+svg+labels+nodes+'</div></div>';
 }
 registerExpansion({
   id:'overland', enabled:olEnabled, replacesMajorities:true,
