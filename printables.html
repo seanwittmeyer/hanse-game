@@ -426,7 +426,7 @@
   .ol-roads .ol-reg{fill:rgba(120,90,40,.05);stroke:rgba(0,0,0,.05)}
   .ol-roads .ol-reg.e{fill:rgba(70,50,20,.07)}
   .ol-roads line{stroke:#b08d57;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:.4 6;opacity:.85;vector-effect:non-scaling-stroke}
-  .ol-roads .ol-express{stroke:#9c3b2e;stroke-width:2.4;stroke-linecap:round;stroke-dasharray:5 4.5;opacity:.92;vector-effect:non-scaling-stroke}  /* the Q4+ Rhine Charter — skip Bruges, leap Hamburg→Cologne */
+  .ol-roads .ol-express{stroke:#b08d57;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:.4 6;opacity:.85;vector-effect:non-scaling-stroke}  /* the Q4+ Rhine Charter (Hamburg→Cologne, skip Bruges) — same dotted style as the other roads; the label marks it */
   .ol-reglbl{position:absolute;font-variant:small-caps;font-style:italic;font-weight:bold;font-size:.1in;color:rgba(90,70,40,.72);letter-spacing:.5px}
   .ol-reglbl.r{font-style:normal;display:flex;align-items:center;gap:.04in;transform:translateX(-100%)}
   .ol-reglbl.express{font-style:normal;display:flex;align-items:center;gap:.04in;color:#9c3b2e;font-size:.092in;background:rgba(243,233,210,.85);border-radius:.04in;padding:.005in .035in}
@@ -905,7 +905,7 @@ function olboard(){
     +OL_EDG.map(line).join('')
     +'<path class="ol-express" d="M5,46 Q4,6 41,11" fill="none"/>'   // the Rhine Charter: Hamburg→Cologne, bowed up-left to arc OVER Bruges (it skips the Bruges node)
     +'</svg>';
-  const labels='<div class="ol-reglbl express" style="left:13%;top:21%">'+LU('zap')+'Q4+ Rhine Charter · skip Bruges</div>'
+  const labels='<div class="ol-reglbl express" style="left:7%;top:16%">'+LU('zap')+'Q4+ Rhine Charter</div>'
     +'<div class="ol-reglbl" style="left:1%;top:2.5%">THE WESTERN ROADS · the Bruges gateway</div>'
     +'<div class="ol-reglbl" style="left:1%;top:96%">THE EASTERN ROAD · the deep haul to Novgorod</div>'
     +'<div class="ol-reglbl r" style="left:99%;top:2.5%">'+LU('landmark')+' kontor · ◆ deep (scarce) · ☐ claim slot — cover to take</div>';
