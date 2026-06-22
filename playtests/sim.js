@@ -57,6 +57,11 @@ function destFor(p,q,konPref){var elig=DESTS.filter(function(d){return q>=DEST[d
 // stacks one kontor (Bergen, the richest majority) to win it.
 var __PERSON=(typeof __PERSONAS!=='undefined')?__PERSONAS:false;
 function persona(p){return p.__persona||'volume';}
+// OVERLAND-LANE personas (PERSONAS=1 + OVERLAND=1): commit a bot to one ROUTE so each Trade-Roads lane is
+// piloted hard — Rhineland(Bruges) · London · Bergen · East(Novgorod). The persona commits the kontor the bot
+// ships/commissions/charters toward (which walks that route's towns); East also climbs quality (for Pskov).
+var OL_PERSONA_KON={ol_rhine:'bruges',ol_london:'london',ol_bergen:'bergen',ol_east:'novgorod'};
+function olPersonaKon(p){return (typeof OVERLAND!=='undefined'&&OVERLAND)?(OL_PERSONA_KON[persona(p)]||null):null;}
 function bestKon(elig){var k=elig.filter(function(d){return DEST[d].kontor;});
   k.sort(function(a,b){return DEST[b].value-DEST[a].value;});return k[0];}
 function personaDest(p,q){
@@ -67,6 +72,8 @@ function personaDest(p,q){
     if(q>=2&&ce.indexOf('london')>=0)return 'london';
     return ce[0]||'bruges';
   }
+  var olk=olPersonaKon(p);
+  if(olk)return (q>=DEST[olk].gate)?olk:destFor(p,q,true);   // OVERLAND lane persona: ship toward its route's kontor (else best reachable)
   if(!__PERSON||persona(p)==='volume')return destFor(p,q,true);   // baseline-preserving
   var elig=DESTS.filter(function(d){return q>=DEST[d].gate;});
   if(persona(p)==='prestige')return (elig.indexOf('hall')>=0)?'hall':(bestKon(elig)||elig[0]);
@@ -129,11 +136,14 @@ function botMarket(p){
     if(!el.length){commSkip();return;}el.sort(function(a,b){return b.q-a.q;});commLoad(el[0].ref);return;}
   // place a held Building (the starting tile / a Survey draw) so authorship is live
   if((p.hand||[]).length && aBuildSlots().length){placeHeld(0);return;}
-  if(needShip(p)){buyTile('s_cog');return;}
+  if(needShip(p)){var olk=olPersonaKon(p),sidx=0;
+    if(olk&&S.shipDisplay){var ti=S.shipDisplay.findIndex(function(s){return s.dest===olk;});if(ti>=0)sidx=ti;}   // commission a ship bound for the lane's kontor
+    commissionShip(sidx);return;}
   if((p.contracts||0)===0&&canPay(p,CONTRACT_BUY)
      &&(emptySlots().length<=1||S.ending||(myShips(p).length===0&&readyInVessels(p).length>0))){buyContract();return;}
   var ex=buyableExports(p);
-  if(ex.length){ex.sort(function(a,b){return STYLES[a].q-STYLES[b].q;});buyRecipe(ex[0]);return;}
+  if(ex.length){var eastlike=(olPersonaKon(p)==='novgorod');   // East climbs (buy the highest-q export for Pskov/Novgorod); others buy cheap first
+    ex.sort(function(a,b){return eastlike?(STYLES[b].q-STYLES[a].q):(STYLES[a].q-STYLES[b].q);});buyRecipe(ex[0]);return;}
   // AUTHOR THE DEMAND: buy a VALUE building when you have cargo to route + a slot (the 'demand' persona
   // authors eagerly, up to 3; others up to 2, keeping a 1-grain buffer). A transform only when flush.
   if(aBuildSlots().length){
@@ -200,7 +210,9 @@ function botLoad(p){var L=UI.load;
     pick.sort(function(a,b){return caskBest(b,L.ships)-caskBest(a,L.ships);});loadPickCask(pick[0]);return;}   // ship what pays most (incl. its value building)
   var ships=L.ships.filter(function(s){return canTake(s,L.cask);});
   if(!ships.length){loadBack();return;}
+  var olk=olPersonaKon(p);
   ships.sort(function(a,b){var sa=S.slots[a],sb=S.slots[b];
+    if(olk){var ta=(sa.dest===olk)?1:0,tb=(sb.dest===olk)?1:0;if(ta!==tb)return tb-ta;}   // OVERLAND lane: prefer the route's kontor
     var fa=(sa.load.length+1>=effCap(sa))?1:0,fb=(sb.load.length+1>=effCap(sb))?1:0;if(fa!==fb)return fb-fa;
     return caskValueAt(L.cask,sb.dest)-caskValueAt(L.cask,sa.dest);});   // route by what THIS cask delivers there
   loadOnto(ships[0]);
@@ -281,7 +293,8 @@ function runGame(n){
   if(typeof __FREEIMP!=='undefined'&&__FREEIMP){var impPool=shuffle(IMPROVEMENT_KEYS.slice());
     S.players.forEach(function(p,seat){var k=impPool[seat%impPool.length];grantUpgrade(p,k);p.__startImp=k;});}
   // ---- assign strategy personas (opt-in), shuffled so persona is decoupled from seat ----
-  if(__PERSON){var pool=shuffle(['volume','prestige','majority','demand']);var base=[];
+  if(__PERSON){var olOn=(typeof OVERLAND!=='undefined'&&OVERLAND);
+    var pool=shuffle(olOn?['ol_rhine','ol_london','ol_bergen','ol_east']:['volume','prestige','majority','demand']);var base=[];
     for(var i=0;i<n;i++)base.push(pool[i%4]);   // shuffled pool → the 4 leans appear across seats (random subset at 2-3p)
     shuffle(base);S.players.forEach(function(pl,seat){pl.__persona=base[seat];if(pl.__persona==='majority')pl.__majTarget='bergen';});}
   // CELLARMASTER diagnostic: mark __CELLAR random seats as Q5-committed (decoupled from seat order)
@@ -487,7 +500,8 @@ function summarize(n, arr) {
   // ONLY as 'deep' (its assigned persona is ignored, since it plays the deep policy).
   if (PERSONAS || CELLAR) {
     const blank = () => ({ wins:0, n:0, total:0, deliv:0, maj:0, goals:0, flight:0, master:0, hall:0, q4:0, q5:0, tiers:0 });
-    const lanes = { volume:blank(), demand:blank(), prestige:blank(), majority:blank(), deep:blank() };
+    const lanes = { volume:blank(), demand:blank(), prestige:blank(), majority:blank(), deep:blank(),
+      ol_rhine:blank(), ol_london:blank(), ol_bergen:blank(), ol_east:blank() };
     ok.forEach(r => r.playerStats.forEach(s => {
       const lane = s.cellar ? 'deep' : (PERSONAS ? s.persona : null); if (!lane || !lanes[lane]) return;
       const g = lanes[lane];
@@ -495,7 +509,7 @@ function summarize(n, arr) {
       g.flight += s.flight||0; g.master += s.master||0; g.hall += s.hall||0; g.q4 += s.q4plus; g.q5 += s.q5; g.tiers += s.tiers;
     }));
     console.log(`PATHWAYS TO A WIN (per-capita win-rate; fair = ${fmt(100/n)}%):`);
-    ['volume','demand','prestige','majority','deep'].forEach(k => { const g = lanes[k]; if (!g.n) return;
+    ['volume','demand','prestige','majority','deep','ol_rhine','ol_london','ol_bergen','ol_east'].forEach(k => { const g = lanes[k]; if (!g.n) return;
       const a = x => fmt(g[x]/g.n);
       console.log(`   ${k.padEnd(9)} win ${pct(g.wins,g.n).padStart(6)}  score ${a('total').padStart(5)}  |  deliv ${a('deliv')} · maj ${a('maj')} · goals ${a('goals')} · flight ${a('flight')} · master ${a('master')}  |  Hall/g ${a('hall')} · Q4+/g ${a('q4')} · Q5/g ${a('q5')} · tiers ${a('tiers')}  (n=${g.n})`);
     });
