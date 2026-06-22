@@ -1,78 +1,75 @@
-########## v2.1 Staple Rights — OVERLAND-LANE PERSONAS (PERSONAS=1 OVERLAND=1), N=400 ##########
-Lanes: ol_rhine (Bruges route) · ol_london · ol_bergen · ol_east (Novgorod route). Fair = 100/n%.
-
 Brewhouses of the Hanse — headless sim (KEY hanse-hotseat-v79)  |  N=400 games per player count
 scenario: base — Baseline — 3G/2H, equal seats (canonical)  |  PERSONAS on
 
 ================  2 PLAYERS  (400 games)  ================
 crashes/stuck:        0  (none)
-rounds:               avg 19.6   min 12   max 25   in 12-25 band: 100.0%
-end trigger:          clock 91.5%   ceiling 8.5%
+rounds:               avg 19.6   min 13   max 25   in 12-25 band: 100.0%
+end trigger:          clock 90.8%   ceiling 9.3%
 sailed/cap at end:    avg 7.9 / 8
-winner total score:   avg 57.8   min 19   max 116
-win margin (1st-2nd): avg 14.4   (ties: 8)
-winner score split:   deliv 28.8   maj 0.0   goals 0.0
-seat win-rate:        P1 61.8%   P2 38.3%   (ideal 50.0%, spread 23.5pts)
-winner lean:          prestige(Hall>kontor) 2.0%   blended(both>0) 17.8%
+winner total score:   avg 60.8   min 24   max 137
+win margin (1st-2nd): avg 15.0   (ties: 10)
+winner score split:   deliv 29.4   maj 0.0   goals 0.0
+seat win-rate:        P1 56.3%   P2 43.8%   (ideal 50.0%, spread 12.5pts)
+winner lean:          prestige(Hall>kontor) 0.8%   blended(both>0) 17.3%
 UPGRADES (all plyrs): total/game 2.6   earned-via-ship 2.6 (100.0%)   bought 0.0 (0.0%)
 upgrades per WINNER:  avg 1.4   (max 4)
-charters/game:        avg 1.2
+charters/game:        avg 1.1
 winner deliveries by destination (share of winners' casks):
-   bruges 31.8%   london 22.1%   bergen 22.2%   novgorod 22.1%   hall 1.8%
+   bruges 31.1%   london 22.0%   bergen 22.5%   novgorod 22.6%   hall 1.8%
 ALL deliveries by destination (every player):
-   bruges 32.1%   london 23.2%   bergen 23.3%   novgorod 20.1%   hall 1.4%
-The Trade Roads: 9.94 posts founded/game (all, of 7 towns) · winner 5.63 posts, 19.1★ inland
+   bruges 31.5%   london 22.5%   bergen 23.6%   novgorod 20.8%   hall 1.6%
+The Trade Roads: 10.10 posts founded/game (all, of 7 towns) · winner 5.66 posts, 21.5★ inland
 PATHWAYS TO A WIN (per-capita win-rate; fair = 50.0%):
-   ol_rhine  win  55.2%  score  51.9  |  deliv 25.0 · maj 0.0 · goals 0.0 · flight 9.4 · master 0.0  |  Hall/g 0.3 · Q4+/g 1.9 · Q5/g 1.3 · tiers 4.0  (n=192)
-   ol_london win  42.0%  score  48.2  |  deliv 23.7 · maj 0.0 · goals 0.0 · flight 8.2 · master 0.0  |  Hall/g 0.1 · Q4+/g 1.6 · Q5/g 1.0 · tiers 3.8  (n=200)
-   ol_bergen win  51.7%  score  49.7  |  deliv 24.2 · maj 0.0 · goals 0.0 · flight 8.9 · master 0.0  |  Hall/g 0.1 · Q4+/g 1.7 · Q5/g 1.2 · tiers 3.9  (n=205)
-   ol_east   win  51.2%  score  52.3  |  deliv 26.3 · maj 0.0 · goals 0.0 · flight 8.2 · master 0.0  |  Hall/g 0.1 · Q4+/g 2.0 · Q5/g 1.5 · tiers 3.8  (n=203)
+   ol_rhine  win  58.6%  score  55.4  |  deliv 26.2 · maj 0.0 · goals 0.0 · flight 9.4 · master 0.0  |  Hall/g 0.3 · Q4+/g 1.8 · Q5/g 1.3 · tiers 4.0  (n=198)
+   ol_london win  39.5%  score  51.6  |  deliv 24.0 · maj 0.0 · goals 0.0 · flight 8.8 · master 0.0  |  Hall/g 0.1 · Q4+/g 1.5 · Q5/g 1.0 · tiers 3.9  (n=210)
+   ol_bergen win  46.6%  score  52.8  |  deliv 24.0 · maj 0.0 · goals 0.0 · flight 9.1 · master 0.0  |  Hall/g 0.1 · Q4+/g 1.7 · Q5/g 1.2 · tiers 3.9  (n=176)
+   ol_east   win  55.1%  score  53.4  |  deliv 26.7 · maj 0.0 · goals 0.0 · flight 8.3 · master 0.0  |  Hall/g 0.1 · Q4+/g 1.9 · Q5/g 1.5 · tiers 3.8  (n=216)
 
 ================  3 PLAYERS  (400 games)  ================
 crashes/stuck:        0  (none)
-rounds:               avg 18.7   min 12   max 25   in 12-25 band: 100.0%
-end trigger:          clock 96.5%   ceiling 3.5%
+rounds:               avg 18.9   min 13   max 25   in 12-25 band: 100.0%
+end trigger:          clock 95.8%   ceiling 4.3%
 sailed/cap at end:    avg 12.1 / 12
-winner total score:   avg 65.3   min 17   max 116
-win margin (1st-2nd): avg 13.5   (ties: 12)
-winner score split:   deliv 33.8   maj 0.0   goals 0.0
-seat win-rate:        P1 49.0%   P2 29.5%   P3 21.5%   (ideal 33.3%, spread 27.5pts)
-winner lean:          prestige(Hall>kontor) 1.0%   blended(both>0) 16.5%
-UPGRADES (all plyrs): total/game 4.5   earned-via-ship 4.5 (100.0%)   bought 0.0 (0.0%)
-upgrades per WINNER:  avg 1.7   (max 4)
-charters/game:        avg 2.7
+winner total score:   avg 68.1   min 15   max 121
+win margin (1st-2nd): avg 12.6   (ties: 8)
+winner score split:   deliv 34.1   maj 0.0   goals 0.0
+seat win-rate:        P1 43.5%   P2 31.8%   P3 24.8%   (ideal 33.3%, spread 18.8pts)
+winner lean:          prestige(Hall>kontor) 0.5%   blended(both>0) 14.5%
+UPGRADES (all plyrs): total/game 4.2   earned-via-ship 4.2 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 1.6   (max 4)
+charters/game:        avg 2.6
 winner deliveries by destination (share of winners' casks):
-   bruges 31.4%   london 20.1%   bergen 22.2%   novgorod 24.5%   hall 1.7%
+   bruges 30.4%   london 22.0%   bergen 23.0%   novgorod 23.0%   hall 1.5%
 ALL deliveries by destination (every player):
-   bruges 29.5%   london 23.0%   bergen 25.1%   novgorod 21.1%   hall 1.3%
-The Trade Roads: 16.23 posts founded/game (all, of 7 towns) · winner 6.25 posts, 21.5★ inland
+   bruges 29.4%   london 23.0%   bergen 25.6%   novgorod 20.9%   hall 1.2%
+The Trade Roads: 16.24 posts founded/game (all, of 7 towns) · winner 6.24 posts, 24.1★ inland
 PATHWAYS TO A WIN (per-capita win-rate; fair = 33.3%):
-   ol_rhine  win  46.6%  score  56.8  |  deliv 27.5 · maj 0.0 · goals 0.0 · flight 8.7 · master 0.0  |  Hall/g 0.3 · Q4+/g 1.9 · Q5/g 1.2 · tiers 3.9  (n=298)
-   ol_london win  23.5%  score  49.2  |  deliv 24.7 · maj 0.0 · goals 0.0 · flight 8.1 · master 0.0  |  Hall/g 0.1 · Q4+/g 1.7 · Q5/g 1.0 · tiers 3.8  (n=294)
-   ol_bergen win  28.6%  score  51.2  |  deliv 25.6 · maj 0.0 · goals 0.0 · flight 8.9 · master 0.0  |  Hall/g 0.0 · Q4+/g 1.7 · Q5/g 1.1 · tiers 3.9  (n=304)
-   ol_east   win  34.5%  score  53.6  |  deliv 28.6 · maj 0.0 · goals 0.0 · flight 7.6 · master 0.0  |  Hall/g 0.1 · Q4+/g 1.9 · Q5/g 1.4 · tiers 3.7  (n=304)
+   ol_rhine  win  47.6%  score  59.0  |  deliv 28.2 · maj 0.0 · goals 0.0 · flight 9.1 · master 0.0  |  Hall/g 0.3 · Q4+/g 1.9 · Q5/g 1.3 · tiers 3.9  (n=290)
+   ol_london win  26.2%  score  54.2  |  deliv 26.2 · maj 0.0 · goals 0.0 · flight 8.4 · master 0.0  |  Hall/g 0.0 · Q4+/g 1.7 · Q5/g 1.0 · tiers 3.8  (n=301)
+   ol_bergen win  24.3%  score  54.2  |  deliv 26.1 · maj 0.0 · goals 0.0 · flight 8.2 · master 0.0  |  Hall/g 0.0 · Q4+/g 1.7 · Q5/g 1.0 · tiers 3.8  (n=317)
+   ol_east   win  36.3%  score  56.0  |  deliv 28.4 · maj 0.0 · goals 0.0 · flight 7.7 · master 0.0  |  Hall/g 0.1 · Q4+/g 2.0 · Q5/g 1.4 · tiers 3.7  (n=292)
 
 ================  4 PLAYERS  (400 games)  ================
 crashes/stuck:        0  (none)
-rounds:               avg 17.8   min 12   max 25   in 12-25 band: 100.0%
-end trigger:          clock 97.8%   ceiling 2.3%
-sailed/cap at end:    avg 15.3 / 15
-winner total score:   avg 67.5   min 28   max 141
-win margin (1st-2nd): avg 11.9   (ties: 18)
-winner score split:   deliv 32.3   maj 0.0   goals 0.0
-seat win-rate:        P1 43.8%   P2 22.5%   P3 21.5%   P4 12.3%   (ideal 25.0%, spread 31.5pts)
-winner lean:          prestige(Hall>kontor) 1.0%   blended(both>0) 11.0%
-UPGRADES (all plyrs): total/game 5.1   earned-via-ship 5.1 (100.0%)   bought 0.0 (0.0%)
+rounds:               avg 17.8   min 13   max 25   in 12-25 band: 100.0%
+end trigger:          clock 95.0%   ceiling 5.0%
+sailed/cap at end:    avg 15.2 / 15
+winner total score:   avg 69.9   min 21   max 172
+win margin (1st-2nd): avg 11.2   (ties: 14)
+winner score split:   deliv 31.0   maj 0.0   goals 0.0
+seat win-rate:        P1 42.3%   P2 27.0%   P3 19.0%   P4 11.8%   (ideal 25.0%, spread 30.5pts)
+winner lean:          prestige(Hall>kontor) 0.8%   blended(both>0) 12.8%
+UPGRADES (all plyrs): total/game 4.9   earned-via-ship 4.9 (100.0%)   bought 0.0 (0.0%)
 upgrades per WINNER:  avg 1.4   (max 4)
 charters/game:        avg 5.0
 winner deliveries by destination (share of winners' casks):
-   bruges 31.3%   london 20.1%   bergen 21.0%   novgorod 26.3%   hall 1.3%
+   bruges 29.0%   london 21.7%   bergen 22.4%   novgorod 25.4%   hall 1.5%
 ALL deliveries by destination (every player):
-   bruges 28.5%   london 23.6%   bergen 25.3%   novgorod 21.4%   hall 1.3%
-The Trade Roads: 20.53 posts founded/game (all, of 7 towns) · winner 5.85 posts, 25.6★ inland
+   bruges 28.5%   london 22.8%   bergen 25.6%   novgorod 22.0%   hall 1.1%
+The Trade Roads: 20.58 posts founded/game (all, of 7 towns) · winner 6.00 posts, 29.5★ inland
 PATHWAYS TO A WIN (per-capita win-rate; fair = 25.0%):
-   ol_rhine  win  30.3%  score  54.3  |  deliv 23.8 · maj 0.0 · goals 0.0 · flight 8.0 · master 0.0  |  Hall/g 0.3 · Q4+/g 1.7 · Q5/g 1.1 · tiers 3.7  (n=400)
-   ol_london win  19.3%  score  49.6  |  deliv 23.0 · maj 0.0 · goals 0.0 · flight 7.8 · master 0.0  |  Hall/g 0.0 · Q4+/g 1.6 · Q5/g 1.0 · tiers 3.7  (n=400)
-   ol_bergen win  16.8%  score  47.9  |  deliv 21.6 · maj 0.0 · goals 0.0 · flight 7.6 · master 0.0  |  Hall/g 0.0 · Q4+/g 1.6 · Q5/g 1.0 · tiers 3.7  (n=400)
-   ol_east   win  33.8%  score  55.2  |  deliv 26.9 · maj 0.0 · goals 0.0 · flight 7.7 · master 0.0  |  Hall/g 0.0 · Q4+/g 1.8 · Q5/g 1.3 · tiers 3.7  (n=400)
+   ol_rhine  win  30.0%  score  56.3  |  deliv 23.8 · maj 0.0 · goals 0.0 · flight 8.3 · master 0.0  |  Hall/g 0.3 · Q4+/g 1.7 · Q5/g 1.1 · tiers 3.8  (n=400)
+   ol_london win  26.8%  score  55.0  |  deliv 23.0 · maj 0.0 · goals 0.0 · flight 7.5 · master 0.0  |  Hall/g 0.0 · Q4+/g 1.7 · Q5/g 1.1 · tiers 3.7  (n=400)
+   ol_bergen win  17.3%  score  52.9  |  deliv 22.4 · maj 0.0 · goals 0.0 · flight 7.7 · master 0.0  |  Hall/g 0.0 · Q4+/g 1.6 · Q5/g 1.0 · tiers 3.7  (n=400)
+   ol_east   win  26.0%  score  54.9  |  deliv 25.6 · maj 0.0 · goals 0.0 · flight 7.1 · master 0.0  |  Hall/g 0.0 · Q4+/g 1.8 · Q5/g 1.3 · tiers 3.6  (n=400)
 
