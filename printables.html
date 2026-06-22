@@ -344,7 +344,7 @@
   .mb-head h2 svg,.mb-head h2 .ic{width:.2in;height:.2in}
   .mb-head .sub{font-size:.1in;font-style:italic;color:var(--ink2)}
   .mb-main{flex:1;display:flex;gap:.14in;min-height:0;align-items:center}
-  .wharf{flex:0 0 auto;display:grid;gap:.05in;
+  .wharf{flex:0 0 auto;align-self:flex-start;display:grid;gap:.05in;
     grid-template-columns:1.3in 1.38in 1.38in 1.3in;
     grid-template-rows:1.3in 1.38in 1.38in 1.3in}
   .wslot{border:2px dashed var(--ink2);border-radius:.07in;background:rgba(255,255,255,.55)}
@@ -1008,23 +1008,33 @@ function buildPages(){
   boardPage(pages,'boards','Destinations board',dboard(),7.5);
   boardPage(pages,'boards','Trade Roads — Overland (back of Destinations)',olboard(),7.5);
   PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),5.45));
-  // --- TILES (one unbroken 1.25in grid — no family breaks) ---
-  const tiles=[];
+  // --- TILES — the DOUBLE-SIDED Buildings get their own sheets, kept apart from the BLANK-BACK tiles
+  // (casks · ships · improvements), so building fronts & backs are easy to match when mounting. ---
+  // (1) blank-back tiles — one unbroken 1.25in grid (backs are bare chipboard)
+  const blankBack=[];
   // casks: Gruit all-Source (pinned); Q2+ cycle the draw-pool across the supply (Q4/Q5 include Wild) — the printed mix IS the brew-draw
   CASKS.forEach(d=>{const pool=d.pin?[d.pin]:(d.wild?CASK_POOL.concat([CASK_WILD]):CASK_POOL);
-    for(let i=0;i<cnt(d.n);i++)tiles.push(['Casks',caskTile(d,pool[i%pool.length])]);});
+    for(let i=0;i<cnt(d.n);i++)blankBack.push(['Casks',caskTile(d,pool[i%pool.length])]);});
   const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
-  shipList.forEach(([hull,dest])=>tiles.push(['Ships',shipTile(hull,dest)]));
-  // BUILDINGS — the one owned family (value + transform); the authored value layer on the living slots
-  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push([d.verb==='value'?'Value Buildings':'Transform Buildings',buildingTile(d)]);});
-  // private brewery IMPROVEMENTS — bought for goods (cost badge shown)
-  IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)tiles.push(['Improvements',improveTile(d)]);});
-  // BUILDING BACKS — the flipped Wild+★ developer face, one per Building tile (mount on a Building's reverse)
-  const backsTotal=BUILDINGS.reduce((a,b)=>a+b.n,0);
-  for(let i=0;i<cnt(backsTotal);i++)tiles.push(['Building backs',buildingBack()]);
-  // group page-assignment by family for the checklist, but pack as ONE run
-  packRun(pages,'tiles','Tiles — unbroken 1.25″ grid','tile',tiles.map(t=>t[1]),null,famPages);
-  // re-walk to tag families by index
+  shipList.forEach(([hull,dest])=>blankBack.push(['Ships',shipTile(hull,dest)]));
+  // private brewery IMPROVEMENTS — bought for goods (cost badge shown) — also a blank back
+  IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)blankBack.push(['Improvements',improveTile(d)]);});
+  // (2) BUILDING tiles (fronts) — the one owned family (value + transform); the authored value layer. DOUBLE-SIDED.
+  const bldTiles=[];
+  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)bldTiles.push([d.verb==='value'?'Value Buildings':'Transform Buildings',buildingTile(d)]);});
+  // (3) BUILDING BACKS — the flipped Wild+★ developer face, one per Building tile (mount on a Building's reverse)
+  const backsTotal=BUILDINGS.reduce((a,b)=>a+cnt(b.n),0);
+  const backTiles=[];
+  for(let i=0;i<backsTotal;i++)backTiles.push(['Building backs',buildingBack()]);
+  // pack each group starting on its OWN fresh page (all stay in the 'tiles' view). The building fronts and the
+  // building backs pack identically (same 1.25in grid, same order, same count) → they line up sheet-for-sheet.
+  packRun(pages,'tiles','Tiles — casks · ships · improvements (blank backs)','tile',blankBack.map(t=>t[1]),null,famPages);
+  newPage(pages,'tiles','Building tiles — fronts (mount a building back on each reverse)');
+  packRun(pages,'tiles','Building tiles — fronts (mount a building back on each reverse)','tile',bldTiles.map(t=>t[1]),null,famPages);
+  newPage(pages,'tiles','Building backs — the flipped Wild + ★ developer face');
+  packRun(pages,'tiles','Building backs — the flipped Wild + ★ developer face','tile',backTiles.map(t=>t[1]),null,famPages);
+  // re-walk to tag families by index (page order + item order == tiles[] order)
+  const tiles=blankBack.concat(bldTiles,backTiles);
   (function(){let idx=0;pages.filter(p=>p.section==='tiles').forEach(pg=>{pg.items.forEach(()=>{
     const fam=tiles[idx++][0];(famPages[fam]=famPages[fam]||new Set()).add(pages.indexOf(pg));});});})();
   // --- TOKENS & BITS ---
@@ -1127,7 +1137,7 @@ function checklist(pages,famPages){
     +'2) Spray-glue the art sheets to chipboard. 3) <b>Cut on the printed guides</b> — the cut lines &amp; registration marks print with the art; cut the lines by hand or paper cutter. (Toggle the <b>CUT layer</b> first to print a guide-only sheet if you want a separate cutting template.) '
     +'<b>Card sheets:</b> print on cardstock and cut with a paper cutter; no mounting (recipe cards tuck under the brewery board). The <b>Player aid</b> is a <b>double-sided</b> card — print its FRONT &amp; BACK sheets duplex (flip on the SHORT edge keeps the back upright; the cards are identical &amp; symmetric so the two sides register either way). '
     +'Tiles &amp; cards are gapless grids — every internal line is drawn once. Tokens cut on the inner circle; the ring outside is bleed. '
-    +'Backs are bare chipboard, with two double-sided exceptions: the <b>Player aid</b> (duplex) and the <b>Building tiles</b> (mount a Building <b>back</b> — Wild + '+DEVELOP_PTS+'★ — on each Building’s reverse, so an overbuilt Building flips to its developer face). The face-down Building deck &amp; the export-beer deal work by flipping.</div>';
+    +'Backs are bare chipboard, with two double-sided exceptions: the <b>Player aid</b> (duplex) and the <b>Building tiles</b> (mount a Building <b>back</b> — Wild + '+DEVELOP_PTS+'★ — on each Building’s reverse, so an overbuilt Building flips to its developer face). The casks · ships · improvements (blank backs) sit on their own sheets; the <b>building fronts and the building backs print on their own matching sheets</b> (same grid, same order) so each front gets a back in the same position — spray-glue front-sheet to back-sheet, then cut. The face-down Building deck &amp; the export-beer deal work by flipping.</div>';
   h+='</div></div>';
   return h;}
 
