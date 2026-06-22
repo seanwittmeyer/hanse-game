@@ -3341,13 +3341,10 @@ function olSqLabel(key){return key.startsWith('pts')?('+'+key.slice(3)+'★'):(O
 function olInjectCSS(){if(olInjectCSS.done)return;olInjectCSS.done=true;
   try{const s=document.createElement('style');s.textContent=
    '#overland-panel .oltreewrap{display:flex;overflow-x:auto;overflow-y:hidden;padding-bottom:6px}'   // scroll the wide MAP only; flex keeps the centred map reachable when it overflows
-  +'#overland-panel .ol-tree{position:relative;container-type:inline-size;flex:0 0 auto;width:100%;min-width:860px;max-width:1000px;margin:0 auto;aspect-ratio:100/56;background:var(--parch);border:1px solid var(--line);border-radius:10px}'
+  +'#overland-panel .ol-tree{position:relative;container-type:inline-size;flex:0 0 auto;width:100%;min-width:860px;max-width:1000px;margin:0 auto;aspect-ratio:100/56}'
   +'#overland-panel .ol-roads{position:absolute;inset:0;width:100%;height:100%}'
-  +'#overland-panel .ol-roads .ol-reg{fill:rgba(120,90,40,.05);stroke:rgba(0,0,0,.05)}'
-  +'#overland-panel .ol-roads .ol-reg.e{fill:rgba(70,50,20,.07)}'
   +'#overland-panel .ol-roads line,#overland-panel .ol-roads .ol-express{stroke:#b08d57;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:.4 6;opacity:.85;vector-effect:non-scaling-stroke}'
   +'#overland-panel .ol-reglbl{position:absolute;font-variant:small-caps;font-style:italic;font-weight:bold;font-size:1.25cqw;color:rgba(90,70,40,.72);letter-spacing:.5px;white-space:nowrap}'
-  +'#overland-panel .ol-reglbl.r{font-style:normal;display:flex;align-items:center;gap:3px;transform:translateX(-100%)}'
   +'#overland-panel .ol-reglbl.express{font-style:normal;display:flex;align-items:center;gap:2px;color:#9c3b2e;background:rgba(243,233,210,.85);border-radius:3px;padding:0 3px}'
   +'#overland-panel .ol-reglbl .ic,#overland-panel .ol-reglbl svg{width:1.35cqw;height:1.35cqw}'
   +'#overland-panel .oln{position:absolute;transform:translate(-50%,-50%);box-sizing:border-box;border:1.4px solid #c9b693;border-radius:6px;background:#fff;padding:.5cqw;display:flex;flex-direction:column;gap:.34cqw;box-shadow:0 1px 3px rgba(0,0,0,.12)}'
@@ -3402,15 +3399,12 @@ function olNode(k){const n=OL_NODES[k];const xy=OL_POS[k];
 function olBoardHTML(){
   const line=e=>{const a=OL_POS[e[0]],b=OL_POS[e[1]];return '<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'"/>';};
   const svg='<svg class="ol-roads" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">'
-    +'<rect class="ol-reg" x="9" y="1" width="76" height="66" rx="2"/>'
-    +'<rect class="ol-reg e" x="4" y="74" width="93" height="25" rx="2"/>'
     +OL_EDGES.map(line).join('')
     +'<path class="ol-express" d="M5,46 Q4,6 41,11" fill="none"/>'   // the Q4+ Rhine Charter: Hamburg→Cologne, arcing OVER Bruges (it skips that node)
     +'</svg>';
   const labels='<div class="ol-reglbl express" style="left:7%;top:15%">'+LU('zap')+'Q4+ Rhine Charter</div>'
     +'<div class="ol-reglbl" style="left:1%;top:2.5%">THE WESTERN ROADS · the Bruges gateway</div>'
-    +'<div class="ol-reglbl" style="left:1%;top:96%">THE EASTERN ROAD · the deep haul to Novgorod</div>'
-    +'<div class="ol-reglbl r" style="left:99%;top:2.5%">'+LU('landmark')+' kontor · ◆ deep · ☐ claim slot</div>';
+    +'<div class="ol-reglbl" style="left:1%;top:96%">THE EASTERN ROAD · the deep haul to Novgorod</div>';
   const nodes=Object.keys(OL_NODES).map(olNode).join('');
   return '<div class="oltreewrap"><div class="ol-tree">'+svg+labels+nodes+'</div></div>';
 }
