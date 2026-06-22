@@ -3322,14 +3322,14 @@ function olCanRhine(lp,q){return olEnabled()&&q>=OL_RHINE_GATE&&!olReached(lp.id
 // Coords are the printables 0–100 layout (better spaced than the old 980×472 grid).
 const OL_POS={hamburg:[5,46],bruges:[19,33],
   cologne:[41,11],frankfurt:[68,11],antwerp:[41,33],london:[68,33],tonsberg:[41,55],bergen:[68,55],
-  visby:[15,87],tallinn:[39,87],novgorod:[63,87],pskov:[87,87]};
+  visby:[15,80],tallinn:[39,80],novgorod:[63,80],pskov:[87,80]};
 const OL_EDGES=[['hamburg','bruges'],['bruges','cologne'],['cologne','frankfurt'],
   ['bruges','antwerp'],['antwerp','london'],['bruges','tonsberg'],['tonsberg','bergen'],
   ['hamburg','visby'],['visby','tallinn'],['tallinn','novgorod'],['novgorod','pskov']];
 // node-card WIDTH in cqw (% of board width): home small · the gateway mid · towns wide · deep nodes narrow
 function olNodeW(k){const n=OL_NODES[k];
   if(k==='hamburg')return 9; if(n.core&&!n.slots)return 13.5;   // Bruges gateway (no slots)
-  if(k==='pskov')return 12.5; if(k==='frankfurt')return 15;
+  if(k==='pskov')return 12.5;   // Frankfurt falls through to the town width (21) → matches London/Bergen
   if(['visby','tallinn','novgorod'].includes(k))return 18.5; return 21;}
 const OL_SLOTIC={recipe:'scroll-text',brew:'flask-conical',age2:'hourglass',quality1:'chevrons-up',quality2:'chevrons-up',
   improvement:'wrench',enshrine:'crown',vessel:'flask-round',bldghand:'building-2',contract:'scroll',
@@ -3341,7 +3341,7 @@ function olSqLabel(key){return key.startsWith('pts')?('+'+key.slice(3)+'★'):(O
 function olInjectCSS(){if(olInjectCSS.done)return;olInjectCSS.done=true;
   try{const s=document.createElement('style');s.textContent=
    '#overland-panel .oltreewrap{display:flex;overflow-x:auto;overflow-y:hidden;padding-bottom:6px}'   // scroll the wide MAP only; flex keeps the centred map reachable when it overflows
-  +'#overland-panel .ol-tree{position:relative;container-type:inline-size;flex:0 0 auto;width:100%;min-width:860px;max-width:1000px;margin:0 auto;aspect-ratio:100/56}'
+  +'#overland-panel .ol-tree{position:relative;container-type:inline-size;flex:0 0 auto;width:100%;min-width:860px;max-width:1000px;margin:0 auto;aspect-ratio:100/52}'
   +'#overland-panel .ol-roads{position:absolute;inset:0;width:100%;height:100%}'
   +'#overland-panel .ol-roads line,#overland-panel .ol-roads .ol-express{stroke:#b08d57;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:.4 6;opacity:.85;vector-effect:non-scaling-stroke}'
   +'#overland-panel .ol-reglbl{position:absolute;font-variant:small-caps;font-style:italic;font-weight:bold;font-size:1.25cqw;color:rgba(90,70,40,.72);letter-spacing:.5px;white-space:nowrap}'
@@ -3404,7 +3404,7 @@ function olBoardHTML(){
     +'</svg>';
   const labels='<div class="ol-reglbl express" style="left:7%;top:15%">'+LU('zap')+'Q4+ Rhine Charter</div>'
     +'<div class="ol-reglbl" style="left:1%;top:2.5%">THE WESTERN ROADS · the Bruges gateway</div>'
-    +'<div class="ol-reglbl" style="left:1%;top:96%">THE EASTERN ROAD · the deep haul to Novgorod</div>';
+    +'<div class="ol-reglbl" style="left:1%;top:90%">THE EASTERN ROAD · the deep haul to Novgorod</div>';
   const nodes=Object.keys(OL_NODES).map(olNode).join('');
   return '<div class="oltreewrap"><div class="ol-tree">'+svg+labels+nodes+'</div></div>';
 }
