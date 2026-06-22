@@ -3405,7 +3405,7 @@ function olBoardHTML(){
   const labels='<div class="ol-reglbl express" style="left:7%;top:15%">'+LU('zap')+'Q4+ Rhine Charter</div>'
     +'<div class="ol-reglbl" style="left:1%;top:2.5%">THE WESTERN ROADS · the Bruges gateway</div>'
     +'<div class="ol-reglbl" style="left:1%;top:90%">THE EASTERN ROAD · the deep haul to Novgorod</div>';
-  const nodes=Object.keys(OL_NODES).map(olNode).join('');
+  const nodes=['hamburg'].concat(Object.keys(OL_NODES)).map(olNode).join('');   // Hamburg is the home root (not in OL_NODES) — render it first, like printables' olboard()
   return '<div class="oltreewrap"><div class="ol-tree">'+svg+labels+nodes+'</div></div>';
 }
 registerExpansion({
