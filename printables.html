@@ -959,7 +959,7 @@ function buildPages(){
   boardPage(pages,'boards','Main board — the Wharf',mboard(),7.5);
   boardPage(pages,'boards','Destinations board',dboard(),7.5);
   boardPage(pages,'boards','Trade Roads — Overland (back of Destinations)',olboard(),7.5);
-  PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),5.4));
+  PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),6.0));
   // --- TILES (one unbroken 1.25in grid — no family breaks) ---
   const tiles=[];
   // casks: Gruit all-Source (pinned); Q2+ cycle the draw-pool across the supply (Q4/Q5 include Wild) — the printed mix IS the brew-draw
