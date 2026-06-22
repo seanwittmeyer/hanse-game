@@ -450,7 +450,8 @@
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.01in;text-align:center;color:#6a532b}
   .olsq svg,.olsq .ic{width:.16in;height:.16in;stroke-width:1.9}
   .olsq .t{font-size:.066in;line-height:1;font-weight:bold;letter-spacing:-.2px}
-  .olsq.pts{background:rgba(184,134,11,.16);border-color:var(--gold);border-style:solid;color:#7a5210}
+  .olsq.fix{border-style:solid;border-width:1.8px;border-color:#6f5530;background:rgba(120,90,40,.13)}  /* always-available (every player count) — SOLID dark */
+  .olsq.pts{background:rgba(184,134,11,.16);border-color:var(--gold);color:#7a5210}  /* points slot — gold accent (border-style follows fix/gated) */
   .olsq.pts svg,.olsq.pts .ic{color:var(--gold)}
   .olsq-badge{position:absolute;top:-.06in;right:-.05in;background:var(--red);color:#fff;font-size:.062in;font-weight:900;border-radius:.03in;padding:.004in .025in;letter-spacing:0}
   .oln-over{display:flex;align-items:center;gap:.03in;font-size:.076in;color:var(--ink2);border-top:1px dotted #c9b693;padding-top:.025in}
@@ -882,9 +883,9 @@ const OL_XY={ hamburg:[5,46], bruges:[19,33],
   visby:[15,87], tallinn:[39,87], novgorod:[63,87], pskov:[87,87] };
 const OL_EDG=[['hamburg','bruges'],['bruges','cologne'],['cologne','frankfurt'],['bruges','antwerp'],['antwerp','london'],
   ['bruges','tonsberg'],['tonsberg','bergen'],['hamburg','visby'],['visby','tallinn'],['tallinn','novgorod'],['novgorod','pskov']];
-function olSq(key,idx){const s=olSlotInfo(key);
+function olSq(key,idx){const s=olSlotInfo(key);   // idx<2 = always-available (SOLID dark); idx>=2 = player-count slot (DASHED + 3+/4p badge)
   const badge=idx===2?'<span class="olsq-badge">3+</span>':(idx===3?'<span class="olsq-badge">4p</span>':'');
-  return '<div class="olsq'+(s.pts?' pts':'')+'">'+badge+LU(s.ic)+'<span class="t">'+s.t+'</span></div>';}
+  return '<div class="olsq'+(idx<2?' fix':'')+(s.pts?' pts':'')+'">'+badge+LU(s.ic)+'<span class="t">'+s.t+'</span></div>';}
 function olNode(k){const n=OL_N[k];const xy=OL_XY[k];const style='left:'+xy[0]+'%;top:'+xy[1]+'%;width:'+n.w+'in';
   if(n.home) return '<div class="oln home" style="'+style+'">'+LU('home')+'<span class="oln-nm">Hamburg</span><span class="oln-mt">home</span></div>';
   const head='<div class="oln-h"><span class="oln-nm">'+(n.core?LU('landmark'):'')+n.nm+(n.deep?' <span class="oln-dp">◆</span>':'')+'</span>'
