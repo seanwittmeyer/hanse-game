@@ -376,7 +376,8 @@
   .rc:last-child{border-right:none} .rc.band{background:rgba(184,134,11,.16)}
   .rc.cap{background:var(--gold);color:#fff;font-weight:bold;font-size:.07in;text-align:center;line-height:1}
   /* ====================== WHARF SIDE — supply DISPLAYS (Building display · Ship market) ====================== */
-  .disp{flex:1;display:flex;flex-direction:column;gap:.12in;min-width:0}
+  .disp{flex:1;display:flex;flex-direction:column;gap:.12in;min-width:0;margin-top:-4em}
+  .mb-track{margin-top:-4em}
   .disp-h{display:inline-flex;align-items:center;gap:.05in;background:var(--sea);color:#fff;border-radius:.06in;
     padding:.035in .12in;font-variant:small-caps;font-weight:bold;font-size:.125in;letter-spacing:.3px;margin-bottom:.07in;text-shadow:0 1px 1px rgba(0,0,0,.25)}
   .disp-h svg,.disp-h .ic{width:.15in;height:.15in}
@@ -403,13 +404,47 @@
   .cstack .cs-ic{color:var(--cc);opacity:.32}
   .cstack .cs-ic svg,.cstack .cs-ic .ic{width:.36in;height:.36in}
   .cstack .cs-n{font-size:.092in;font-style:italic;color:var(--ink2)}
+  .cstack.gen{border:1.7px dashed var(--ink2);background:rgba(0,0,0,.035)}
+  .cstack.gen .cs-q,.cstack.gen .cs-ic{color:var(--ink2)}
+  .cstack.opt{border-style:dashed}
+  /* ====================== OVERLAND board (Trade Roads) ====================== */
+  .olboard{width:100%;height:100%;background:var(--parch);border:2.5px solid #7a5236;border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in;color:var(--ink)}
+  .olboard svg,.olboard .ic{stroke-width:1.8}
+  .ol-head{display:flex;align-items:baseline;gap:.14in}
+  .ol-head h2{margin:0;font-variant:small-caps;color:#7a5236;font-size:.24in;display:flex;align-items:center;gap:.08in}
+  .ol-head h2 svg,.ol-head h2 .ic{width:.2in;height:.2in}
+  .ol-head .sub{font-size:.1in;font-style:italic;color:var(--ink2)}
+  .ol-legend{display:grid;grid-template-columns:1fr 1fr;gap:.03in .2in;font-size:.092in;line-height:1.22;background:#fff;border:1.5px solid #c9b693;border-radius:.08in;padding:.06in .1in}
+  .ol-legend b{color:#7a5236}
+  .ol-legend svg,.ol-legend .ic{width:.12in;height:.12in;vertical-align:-.02in}
+  .ol-lanes{flex:1;display:flex;flex-direction:column;gap:.08in;min-height:0}
+  .ol-lane{flex:1;border:2px solid var(--lc);border-radius:.09in;background:#fff;padding:.045in .08in;display:flex;flex-direction:column;gap:.03in;min-height:0}
+  .ol-lh{font-variant:small-caps;font-weight:bold;font-size:.12in;color:var(--lc);letter-spacing:.3px}
+  .ol-seq{flex:1;display:flex;align-items:stretch;gap:.02in;min-height:0}
+  .ol-arr{display:flex;align-items:center;color:var(--ink2)}
+  .ol-arr svg,.ol-arr .ic{width:.16in;height:.16in}
+  .oln{flex:1;border:1.5px solid #c9b693;border-radius:.06in;background:rgba(0,0,0,.02);padding:.03in .05in;display:flex;flex-direction:column;gap:.02in;min-width:0}
+  .oln.home{flex:0 0 .66in;background:#e6d3a8;border-color:#8a6d3b;align-items:center;justify-content:center;text-align:center}
+  .oln.home svg,.oln.home .ic{width:.18in;height:.18in}
+  .oln.core{background:rgba(184,134,11,.1);border-color:var(--gold);border-width:2px}
+  .oln.gw{background:rgba(39,75,92,.06)}
+  .oln.deep{border-color:#7c2128;border-width:2px}
+  .oln-h{display:flex;align-items:center;gap:.04in;flex-wrap:wrap}
+  .oln-nm{font-variant:small-caps;font-weight:bold;font-size:.105in}
+  .oln-dp{color:var(--gold);font-weight:900}
+  .oln-q,.oln-pts{display:inline-flex;align-items:center;gap:.015in;font-weight:900;font-size:.09in;border-radius:.03in;padding:0 .03in}
+  .oln-q{background:rgba(0,0,0,.08)} .oln-pts{background:rgba(184,134,11,.18);color:#7a5210}
+  .oln-q svg,.oln-q .ic,.oln-pts svg,.oln-pts .ic{width:.11in;height:.11in}
+  .oln-sl{display:flex;flex-direction:column;gap:.012in;font-size:.086in;line-height:1.12}
+  .oln-sl span{background:rgba(0,0,0,.05);border-radius:.03in;padding:.004in .04in}
+  .oln-sl i{color:var(--ink2)}
   /* ====================== CHECKLIST ====================== */
-  .check{position:absolute;left:.35in;top:.4in;width:9.7in;height:7.1in;font-size:.1in;display:flex;flex-direction:column;gap:.06in}
+  .check{position:absolute;left:.35in;top:.38in;width:9.7in;height:7.42in;font-size:.094in;display:flex;flex-direction:column;gap:.05in}
   .check h2{margin:0;font-variant:small-caps;color:var(--red);font-size:.2in;border-bottom:2px solid var(--gold);padding-bottom:.03in}
   .check .cols2{columns:2;column-gap:.3in;flex:1}
-  .check table{width:100%;border-collapse:collapse;margin-bottom:.1in;break-inside:avoid}
+  .check table{width:100%;border-collapse:collapse;margin-bottom:.07in;break-inside:avoid}
   .check th{font-variant:small-caps;text-align:left;color:var(--red);border-bottom:1px solid var(--gold);font-size:.1in;padding:.015in .03in}
-  .check td{border-bottom:1px solid rgba(0,0,0,.12);padding:.018in .03in;vertical-align:top}
+  .check td{border-bottom:1px solid rgba(0,0,0,.12);padding:.012in .03in;vertical-align:top;line-height:1.18}
   .check td.n{text-align:right;font-weight:bold;white-space:nowrap}
   .check td.bx::before{content:"☐";font-size:.13in}
   .check .tot{font-weight:bold;background:rgba(184,134,11,.12)}
@@ -772,18 +807,64 @@ function kpanel(d,hall){const kc=d.kc;
     +'<div class="ktitle"><span class="kname">'+LU(hall?'crown':'landmark')+d.nm+'</span><span class="kreq">'+LU(QI)+d.req+'+</span></div>'
     +'<div class="kbody"><div class="krole">'+d.role+'</div>'+body+'</div></div>';}
 function dboard(){
-  // the brew supply: one face-up stack per beer type (top tile face-up = the steerable slot-action)
-  const cstack=d=>'<div class="cstack" style="--cc:'+d.c+'">'
-    +'<div class="cs-h"><span class="cs-q">'+LU(QI)+d.q+'</span><span class="cs-nm">'+d.nm+'</span></div>'
-    +'<div class="cs-ic">'+LU('beer')+'</div>'
-    +'<div class="cs-n">×'+d.n+'</div></div>';
+  // the brew supply (6 stacks): Gruit + Hopped (always) · 3 generic slots for the dealt exports · Jopenbier (if the capstone is on)
+  const cstack=d=>{
+    if(d.gen)return '<div class="cstack gen"><div class="cs-h"><span class="cs-q">'+LU(QI)+'?</span><span class="cs-nm">dealt export</span></div>'
+      +'<div class="cs-ic">'+LU('beer')+'</div><div class="cs-n">1 of the 3 drawn</div></div>';
+    return '<div class="cstack'+(d.opt?' opt':'')+'" style="--cc:'+d.c+'">'
+      +'<div class="cs-h"><span class="cs-q">'+LU(QI)+d.q+'</span><span class="cs-nm">'+d.nm+'</span></div>'
+      +'<div class="cs-ic">'+LU('beer')+'</div>'
+      +'<div class="cs-n">'+(d.opt?'capstone · if on':'×'+d.n)+'</div></div>';};
+  const JOP=CASKS.find(c=>c.nm==='Jopenbier')||{nm:'Jopenbier',c:'#5e2433',q:6,n:3};
+  const SUPPLY=[CASKS[0],CASKS[1],{gen:1},{gen:1},{gen:1},Object.assign({opt:1},JOP)];
   return '<div class="dboard">'
     +'<div class="db-head"><h2>'+LU('landmark')+'Destinations</h2>'
       +'<span class="legend"><span><b>'+LU(QI,'ql')+'</b> min cask quality</span><span><b>'+LU(VP,'vp')+'</b> per-cask value <i>(+ value-Buildings shipped through)</i></span><span><b>'+LU('landmark','vp')+' 1/2/3</b> end-game majority</span></span></div>'
     +'<div class="kontor-row">'+DESTS.map(d=>kpanel(d,false)).join('')+kpanel(HALL,true)+'</div>'
-    +'<div class="db-bottom"><div class="sbox"><div class="sb-h">'+LU('beer')+'Cask supply<span class="sm">brew at the Brewhouse · one stack per beer type · top tile face-up</span></div>'
-      +'<div class="cstack-row">'+CASKS.map(cstack).join('')+'</div></div>'
+    +'<div class="db-bottom"><div class="sbox"><div class="sb-h">'+LU('beer')+'Cask supply<span class="sm">brew at the Brewhouse · Gruit + Hopped + the 3 dealt exports (+ Jopenbier if on) · top tile face-up</span></div>'
+      +'<div class="cstack-row">'+SUPPLY.map(cstack).join('')+'</div></div>'
     +'</div></div>';}
+
+// ---- OVERLAND BOARD — The Trade Roads (Staple Rights); prints on the BACK of the Destinations board ----
+// A lane-by-lane reference: each lane is Hamburg → its towns/kontor, each node carrying its gate · delivery ★ ·
+// Staple-Right slots. Matches play.html's OL_NODES; numbers are ⚙.
+const OL_LANES=[
+  {nm:'Rhineland · CRAFT', col:'#7c2128', nodes:[
+    {nm:'Bruges',   gate:1, gw:1, sl:'recipe OR 2 goods · no slots'},
+    {nm:'Cologne',  gate:2, pts:2, sl:['recipe','brew','+2 age','+3★']},
+    {nm:'Frankfurt',gate:3, pts:3, deep:1, sl:['+4★','Enshrine','+2 age','+6★']} ]},
+  {nm:'London · INFRASTRUCTURE', col:'#b8860b', nodes:[
+    {nm:'Bruges',  gate:1, gw:1, sl:'gateway (see Rhineland)'},
+    {nm:'Antwerp', gate:2, pts:2, sl:['Building','brew','+3 goods','+4★']},
+    {nm:'London',  gate:2, pts:3, core:1, sl:['Building','Improvement','+3 goods','+6★']} ]},
+  {nm:'Bergen · LOGISTICS', col:'#4a6b3a', nodes:[
+    {nm:'Bruges',  gate:1, gw:1, sl:'gateway (see Rhineland)'},
+    {nm:'Tønsberg',gate:2, pts:2, sl:['contract','brew','+2 G','+4★']},
+    {nm:'Bergen',  gate:2, pts:3, core:1, sl:['contract','+3 goods','vessel','+6★']} ]},
+  {nm:'The East · DEPTH / POINTS', col:'#274b5c', nodes:[
+    {nm:'Visby',   gate:2, pts:2, sl:['+2 G','road step','+2 age','+3★']},
+    {nm:'Tallinn', gate:3, pts:3, sl:['vessel','+1 quality','brew','+5★']},
+    {nm:'Novgorod',gate:3, pts:3, core:1, sl:['+1 quality','vessel','+2 age','+5★']},
+    {nm:'Pskov',   gate:5, deep:1, sl:'one slot +8★ · then +5★ each later delivery'} ]},
+];
+function olboard(){
+  const node=n=>'<div class="oln'+(n.core?' core':'')+(n.deep?' deep':'')+(n.gw?' gw':'')+'">'
+    +'<div class="oln-h"><span class="oln-nm">'+n.nm+(n.deep?' <span class="oln-dp">◆</span>':'')+'</span>'
+      +'<span class="oln-q">'+LU(QI)+n.gate+'+</span>'+(n.pts?'<span class="oln-pts">'+LU(VP)+n.pts+'</span>':'')+'</div>'
+    +'<div class="oln-sl">'+(Array.isArray(n.sl)?n.sl.map(s=>'<span>'+s+'</span>').join(''):'<i>'+n.sl+'</i>')+'</div></div>';
+  const lane=L=>'<div class="ol-lane" style="--lc:'+L.col+'"><div class="ol-lh">'+L.nm+'</div>'
+    +'<div class="ol-seq"><div class="oln home">'+LU('home')+'<span class="oln-nm">Hamburg</span></div>'
+    +L.nodes.map(n=>'<span class="ol-arr">'+LU('chevron-right')+'</span>'+node(n)).join('')+'</div></div>';
+  return '<div class="olboard">'
+    +'<div class="ol-head"><h2>'+LU('truck')+'The Trade Roads — Staple Rights</h2><span class="sub">Overland expansion · replaces the kontor majorities · print on the back of the Destinations board</span></div>'
+    +'<div class="ol-legend">'
+      +'<span><b>A VOYAGE</b> to a kontor (a full sail <i>or</i> a Charter) pushes your '+LU('truck')+' caravan <b>ONE node</b> along that road, gated by your best cask quality aboard.</span>'
+      +'<span>Then <b>each cask aboard CLAIMS an open slot</b> at the node reached, in <b>load order</b> — its delivery '+LU(VP)+' + a one-shot bonus + a presence marker.</span>'
+      +'<span><b>'+LU(QI)+' gates depth</b> · slots scale with player count (◆ deep = scarce) · a full node pays an <b>overflow</b> (never nothing).</span>'
+      +'<span><b>Bruges</b> = the no-slots gateway · the <b>Q4+ Rhine Charter</b> skips Bruges → Cologne · <b>majorities are OFF</b>.</span>'
+    +'</div>'
+    +'<div class="ol-lanes">'+OL_LANES.map(lane).join('')+'</div>'
+  +'</div>';}
 
 // ---- MAIN BOARD — the Wharf (stations + 8 slots + both shared tracks) ----
 // Board-design principle: the board carries shapes & icons only (a 1.25" tile fits a 1.3" dashed
@@ -820,7 +901,7 @@ function mboard(){
   return '<div class="mboard">'
     +'<div class="mb-head"><h2>'+LU('anchor')+'The Wharf</h2><span class="sub">Source → Brew → Age → Ship</span></div>'
     +'<div class="mb-main">'+wharf+side+'</div>'
-    +'<div><div class="ctrack">'+clk+'</div><div class="mtrack-l">Sailed-Ships track — every voyage (a full sail, a Charter, or an Enshrine) fills one; at your player-count END, finish the round &amp; score.</div></div>'
+    +'<div class="mb-track"><div class="ctrack">'+clk+'</div><div class="mtrack-l">Sailed-Ships track — every voyage (a full sail, a Charter, or an Enshrine) fills one; at your player-count END, finish the round &amp; score.</div></div>'
   +'</div>';}
 
 //==================================================================
@@ -869,7 +950,8 @@ function buildPages(){
   const pages=[],famPages={};
   // --- BOARDS ---
   boardPage(pages,'boards','Main board — the Wharf',mboard(),7.5);
-  boardPage(pages,'boards','Destinations board',dboard(),6.9);
+  boardPage(pages,'boards','Destinations board',dboard(),7.5);
+  boardPage(pages,'boards','Trade Roads — Overland (back of Destinations)',olboard(),7.5);
   PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),5.4));
   // --- TILES (one unbroken 1.25in grid — no family breaks) ---
   const tiles=[];
@@ -932,11 +1014,12 @@ function checklist(pages,famPages){
   const tileTotal=caskTotal+SHIP_DECK.length+bValN+bTrN+impN+backsN;
   const row=(bx,nm,n,note)=>'<tr>'+(bx?'<td class="bx"></td>':'<td></td>')+'<td>'+nm+'</td><td class="n">'+n+'</td><td>'+(note||'')+'</td></tr>';
   const bp=pages.filter(p=>p.section==='boards');
-  const pbRef=bp.length>3?'S'+bp[2].no+'–S'+bp[bp.length-1].no:'S'+bp[2].no+' (proof: 1 of '+PLAYERS.length+' shown)';
+  const pbRef=bp.length>4?'S'+bp[3].no+'–S'+bp[bp.length-1].no:'S'+bp[3].no+' (proof: 1 of '+PLAYERS.length+' shown)';
   let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v2.1 “Staple Rights”)</h2><div class="cols2">';
   h+='<table><tr><th></th><th>Boards (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Main board — the Wharf (stations · 8 slots · Sailed-Ships + round tracks)','1','S'+bp[0].no)
     +row(1,'Destinations board (4 kontore + the Hall · Building display · majority chart)','1','S'+bp[1].no)
+    +row(1,'<b>EXPANSION</b> — Trade Roads network board (Overland · <i>print on the BACK of the Destinations board</i>)','1','S'+bp[2].no)
     +row(1,'Player brewery boards ('+PLAYERS.map(p=>p.nm).join(' · ')+')',PLAYERS.length,pbRef)
     +row(0,'<i>EXPANSION — The Trade Roads (Overland, Staple Rights): 1 inland network board — a tree rooted at HAMBURG; two roads out (WEST to the Bruges gateway → London/Bergen/Rhineland; EAST = the deep Novgorod haul). BRUGES is the lone no-slots gateway (recipe/2 goods); every other node carries Staple-Right SLOTS — the towns Cologne · Frankfurt · Antwerp · Tønsberg · Visby · Tallinn · Pskov AND the kontore London · Bergen · Novgorod (the kontore claim theirs when the caravan arrives, atop their base sea benefit). Each slotted node: quality gate · base delivery ★ · 2–4 SLOTS (distinct one-shot bonuses, flavoured by lane: Rhineland=craft (recipe/brew/age) · London=infrastructure (buildings/improvement) · Bergen=logistics (contracts/goods/vessel) · East=depth/points; Frankfurt=points+Enshrine; Pskov=just a delivery, one slot +8★ then +5★) · an overflow bonus. Frankfurt/Pskov = ◆ deep terminals (scarce). Active slot count scales with player count (print 4, cover the high slots for 2–3p). Per player: presence markers drop into the slot claimed. The caravan rides the Ship action (per VOYAGE = ONE node per owner, gated by cask quality), then each cask aboard claims a slot in load order — no new tile; replaces the kontor majority chart when on. The Q4+ Rhine Charter skips Bruges → Cologne.</i>','—','—')
     +'</table>';
