@@ -179,6 +179,18 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
 
+**v80 — Overland: the western 4-player slot duplicates the lane signature** *(2026-06-22, `play.html` KEY v80)* —
+A small Trade Roads tune. A town's active slot count scales with player count (2p→2 … 4p→4) for **supply** (more
+claimants need more slots, else everyone is shoved to overflow); the marginal **4th slot** had been a generic
+**+★ points** filler everywhere. The **western** towns now make that 4p slot a **duplicate of the lane's signature
+bonus** instead — **Cologne/Tønsberg → a 2nd brew · Antwerp → a 2nd Building to hand · London → a 2nd free
+Improvement · Bergen → a 2nd vessel** — so the extra-at-4p slot *reinforces lane identity* rather than paying
+anonymous points. The **East stays as-is** (it IS the depth/**points** lane, and its non-points actions are uneven —
+Visby's best is a weak +2 age), and the deep ◆ nodes (Frankfurt/Pskov, capped at 2 active slots) are untouched.
+Only 4p games change; 2p/3p are byte-identical. *(Lesson applied: the 4th slot's job is supply-scaling, not a points
+buff — so a lane-signature duplicate serves that job and the theme better than filler points.)* Sim-gated (KEY v80):
+base + OVERLAND **0 crash/deadlock 2–4p**, pace in band, clock-dominant; AI ladder + render-smoke clean.
+
 **v2.1 “Staple Rights” — The Trade Roads, REDESIGNED to claimable slots** *(2026-06-21, `play.html` KEY v79)* —
 **Table feedback retired the founder/recurring-perk town model in favour of a slot-claim model** (the Hanse
 *Stapelrecht*). Each **town** now carries **2–4 PRINTED SLOTS**, each a **distinct ONE-SHOT bonus** drawn from

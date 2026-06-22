@@ -363,7 +363,10 @@ barrels · workers · markers · **~8 demand dice (d6)** · quality-boost marker
   **scarce**); **Pskov is just a delivery** — one slot (**+8★**, then **+5★** each later visit). The lane menus:
   **Rhineland = craft** (a recipe · a **brew action** · +2 age · pts), **London = infrastructure** (a Building to
   hand · a **free Improvement** · goods), **Bergen = logistics** (a **charter contract** · goods · a vessel),
-  **East = depth/value** (a vessel · +1 quality · big points); **Frankfurt** = points + a **free Enshrine**. **Active
+  **East = depth/value** (a vessel · +1 quality · big points); **Frankfurt** = points + a **free Enshrine**. *(v80: each
+  **western** town's **4-player (4th) slot DUPLICATES its lane signature** — a 2nd brew (Cologne/Tønsberg) · a 2nd
+  Building (Antwerp) · a 2nd Improvement (London) · a 2nd vessel (Bergen) — instead of a generic points slot; the East
+  keeps its **+★** there, since points ARE its lane.)* **Active
   slot count scales with player count** (2p→2 … 4p→4; deep nodes stay 2) — print 4, cover the high slots for fewer players. Per
   player, **presence markers** are dropped into the **slot they claim** (who holds which Staple Right). The
   **caravan rides the Ship action** — *no new tile/station; movement is per VOYAGE (one ship = ONE node per owner),

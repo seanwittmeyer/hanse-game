@@ -426,8 +426,10 @@
   .ol-roads .ol-reg{fill:rgba(120,90,40,.05);stroke:rgba(0,0,0,.05)}
   .ol-roads .ol-reg.e{fill:rgba(70,50,20,.07)}
   .ol-roads line{stroke:#b08d57;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:.4 6;opacity:.85;vector-effect:non-scaling-stroke}
+  .ol-roads .ol-express{stroke:#9c3b2e;stroke-width:2.4;stroke-linecap:round;stroke-dasharray:5 4.5;opacity:.92;vector-effect:non-scaling-stroke}  /* the Q4+ Rhine Charter — skip Bruges, leap Hamburg→Cologne */
   .ol-reglbl{position:absolute;font-variant:small-caps;font-style:italic;font-weight:bold;font-size:.1in;color:rgba(90,70,40,.72);letter-spacing:.5px}
   .ol-reglbl.r{font-style:normal;display:flex;align-items:center;gap:.04in;transform:translateX(-100%)}
+  .ol-reglbl.express{font-style:normal;display:flex;align-items:center;gap:.04in;color:#9c3b2e;font-size:.092in;background:rgba(243,233,210,.85);border-radius:.04in;padding:.005in .035in}
   .ol-reglbl svg,.ol-reglbl .ic{width:.12in;height:.12in}
   /* a town node CARD, absolutely positioned & centred on its tree coordinate */
   .oln{position:absolute;transform:translate(-50%,-50%);border:1.6px solid #c9b693;border-radius:.07in;background:#fff;padding:.04in .05in;display:flex;flex-direction:column;gap:.03in;box-shadow:0 1px 3px rgba(0,0,0,.12)}
@@ -867,12 +869,12 @@ const olSlotInfo=k=>k.startsWith('pts')?{ic:'star',t:'+'+k.slice(3)+'★',pts:1}
 const OL_N={
   hamburg  :{nm:'Hamburg',  home:1, w:.95},
   bruges   :{nm:'Bruges',   core:1, gate:1, gw:1, w:1.45},
-  cologne  :{nm:'Cologne',  gate:2, pts:2, slots:['recipe','brew','age2','pts3'], over:'age2', w:2.3},
+  cologne  :{nm:'Cologne',  gate:2, pts:2, slots:['recipe','brew','age2','brew'], over:'age2', w:2.3},
   frankfurt:{nm:'Frankfurt',gate:3, pts:3, deep:1, slots:['pts4','enshrine'], over:'pts2', w:1.7},
-  antwerp  :{nm:'Antwerp',  gate:2, pts:2, slots:['bldghand','brew','goods3','pts4'], over:'bldghand', w:2.3},
-  london   :{nm:'London',   core:1, gate:2, pts:3, slots:['bldghand','improvement','goods3','pts6'], over:'bldghand', w:2.3},
-  tonsberg :{nm:'Tønsberg', gate:2, pts:2, slots:['contract','brew','goods2','pts4'], over:'goods2', w:2.3},
-  bergen   :{nm:'Bergen',   core:1, gate:2, pts:3, slots:['contract','goods3','vessel','pts6'], over:'goods2', w:2.3},
+  antwerp  :{nm:'Antwerp',  gate:2, pts:2, slots:['bldghand','brew','goods3','bldghand'], over:'bldghand', w:2.3},
+  london   :{nm:'London',   core:1, gate:2, pts:3, slots:['bldghand','improvement','goods3','improvement'], over:'bldghand', w:2.3},
+  tonsberg :{nm:'Tønsberg', gate:2, pts:2, slots:['contract','brew','goods2','brew'], over:'goods2', w:2.3},
+  bergen   :{nm:'Bergen',   core:1, gate:2, pts:3, slots:['contract','goods3','vessel','vessel'], over:'goods2', w:2.3},
   visby    :{nm:'Visby',    gate:2, pts:2, slots:['goods2','reachstep','age2','pts3'], over:'pts2', w:2.05},
   tallinn  :{nm:'Tallinn',  gate:3, pts:3, slots:['vessel','quality1','brew','pts5'], over:'pts2', w:2.05},
   novgorod :{nm:'Novgorod', core:1, gate:3, pts:3, slots:['quality1','vessel','age2','pts5'], over:'pts2', w:2.05},
@@ -900,8 +902,11 @@ function olboard(){
   const svg='<svg class="ol-roads" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">'
     +'<rect class="ol-reg" x="9" y="1" width="76" height="66" rx="2"/>'
     +'<rect class="ol-reg e" x="4" y="74" width="93" height="25" rx="2"/>'
-    +OL_EDG.map(line).join('')+'</svg>';
-  const labels='<div class="ol-reglbl" style="left:1%;top:2.5%">THE WESTERN ROADS · the Bruges gateway</div>'
+    +OL_EDG.map(line).join('')
+    +'<path class="ol-express" d="M5,46 Q4,6 41,11" fill="none"/>'   // the Rhine Charter: Hamburg→Cologne, bowed up-left to arc OVER Bruges (it skips the Bruges node)
+    +'</svg>';
+  const labels='<div class="ol-reglbl express" style="left:13%;top:21%">'+LU('zap')+'Q4+ Rhine Charter · skip Bruges</div>'
+    +'<div class="ol-reglbl" style="left:1%;top:2.5%">THE WESTERN ROADS · the Bruges gateway</div>'
     +'<div class="ol-reglbl" style="left:1%;top:96%">THE EASTERN ROAD · the deep haul to Novgorod</div>'
     +'<div class="ol-reglbl r" style="left:99%;top:2.5%">'+LU('landmark')+' kontor · ◆ deep (scarce) · ☐ claim slot — cover to take</div>';
   const nodes=Object.keys(OL_N).map(olNode).join('');

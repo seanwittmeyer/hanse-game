@@ -433,15 +433,19 @@ station, no new action — it rides the Harbor's Ship.**
 - **Distinct slots, flavoured by LANE** (2–4 per node; *active count scales with player count* — 2p uses 2 slots,
   4p uses 4; the deep ◆ nodes stay **scarce**). Slots are listed best-first (the scarce nodes show only their top
   ones). The lane identity lives in the slot menu:
-  - **Rhineland — KNOWLEDGE/CRAFT** *(Bruges voyages)*: **Cologne** (Q2 · +2★ · `recipe · brew a beer · +2 age · +3★`)
+  - **Rhineland — KNOWLEDGE/CRAFT** *(Bruges voyages)*: **Cologne** (Q2 · +2★ · `recipe · brew a beer · +2 age · brew a beer`)
     → **Frankfurt** — *points + a prestige outlet* (Q3 · +3★ · ◆ scarce-2 · `+4★ · a free Enshrine · +2 age · +6★`).
   - **London — INFRASTRUCTURE** *(London voyages, through Bruges)*: **Antwerp** (Q2 · +2★ · `a Building to hand ·
-    brew a beer · +3 goods · +4★`) → **London** (kontor · Q2 · **+3★** · `a Building to hand · a free Improvement · +3 goods · **+6★**`).
+    brew a beer · +3 goods · a Building to hand`) → **London** (kontor · Q2 · **+3★** · `a Building to hand · a free Improvement · +3 goods · a free Improvement`).
   - **Bergen — LOGISTICS** *(Bergen voyages, through Bruges)*: **Tønsberg** (Q2 · +2★ · `+1 charter contract · brew a beer ·
-    +2 G · +4★`) → **Bergen** (kontor · Q2 · **+3★** · `+1 charter contract · +3 goods · +1 vessel · **+6★**`).
+    +2 G · brew a beer`) → **Bergen** (kontor · Q2 · **+3★** · `+1 charter contract · +3 goods · +1 vessel · +1 vessel`).
   - **East — DEPTH/VALUE** *(Novgorod voyages)*: **Visby** (Q2 · +2★ · `+2 G · a free road step · +2 age · +3★`) →
     **Tallinn** (Q3 · +3★ · `+1 vessel · +1 quality · brew a beer · +5★`) → **Novgorod** (kontor · Q3 · +3★ · `+1 quality ·
     +1 vessel · +2 age · +5★`) → **Pskov** — *just a delivery* (Q5 · ◆ · **one slot +8★**, every later delivery **+5★**).
+  - **The 4-player (4th) slot** (each slot list's last entry; opens only at 4p, since active slots scale 2p→2…4p→4):
+    the **western** towns DUPLICATE the lane's signature bonus there (a 2nd brew · 2nd Building · 2nd Improvement · 2nd vessel)
+    rather than a generic points slot — the extra 4p slot reinforces the lane's identity. The **East** (the depth/**points** lane)
+    and the deep ◆ nodes keep their **+★** there.
   - The **brew** slot is a free **Brewhouse action** — load a recipe you hold into an open vessel (pay its cost);
     **London's free Improvement** fits a private Cellar upgrade gratis; **Frankfurt's Enshrine** presents a deployed
     Q2+ cask to the Hall, no boat. *(v1 auto-resolves these to your best option; the manual sub-picker is the next increment.)*

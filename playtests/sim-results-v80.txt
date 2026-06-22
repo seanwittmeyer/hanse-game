@@ -1,0 +1,38 @@
+=== sim-results-v80 (Overland: western 4p slot = lane-signature duplicate) ===
+
+### BASE regression (overland off) ###
+================  2 PLAYERS  (300 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 16.9   min 11   max 25   in 12-25 band: 98.7%
+end trigger:          clock 97.3%   ceiling 2.7%
+seat win-rate:        P1 58.7%   P2 41.3%   (ideal 50.0%, spread 17.3pts)
+================  3 PLAYERS  (300 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 18.3   min 12   max 25   in 12-25 band: 100.0%
+end trigger:          clock 94.0%   ceiling 6.0%
+seat win-rate:        P1 41.3%   P2 32.3%   P3 26.3%   (ideal 33.3%, spread 15.0pts)
+================  4 PLAYERS  (300 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 17.2   min 12   max 25   in 12-25 band: 100.0%
+end trigger:          clock 95.7%   ceiling 4.3%
+seat win-rate:        P1 40.3%   P2 25.3%   P3 19.3%   P4 15.0%   (ideal 25.0%, spread 25.3pts)
+
+### OVERLAND ###
+================  2 PLAYERS  (300 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 19.5   min 12   max 25   in 12-25 band: 100.0%
+end trigger:          clock 95.3%   ceiling 4.7%
+seat win-rate:        P1 55.7%   P2 44.3%   (ideal 50.0%, spread 11.3pts)
+The Trade Roads: 9.97 posts founded/game (all, of 7 towns) · winner 5.66 posts, 20.8★ inland
+================  3 PLAYERS  (300 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 18.7   min 13   max 25   in 12-25 band: 100.0%
+end trigger:          clock 95.3%   ceiling 4.7%
+seat win-rate:        P1 47.7%   P2 31.3%   P3 21.0%   (ideal 33.3%, spread 26.7pts)
+The Trade Roads: 16.46 posts founded/game (all, of 7 towns) · winner 6.29 posts, 22.9★ inland
+================  4 PLAYERS  (300 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 17.7   min 12   max 25   in 12-25 band: 100.0%
+end trigger:          clock 97.0%   ceiling 3.0%
+seat win-rate:        P1 44.0%   P2 23.0%   P3 18.3%   P4 14.7%   (ideal 25.0%, spread 29.3pts)
+The Trade Roads: 20.65 posts founded/game (all, of 7 towns) · winner 6.15 posts, 24.7★ inland
