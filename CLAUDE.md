@@ -1,5 +1,11 @@
 # CLAUDE.md
 
+## Get fully up to speed before any revision (do this first, every session)
+- **Before making revisions to values/actions — or any game change — be 100% up to date on the entire game system.** Don't start from a partial picture, and don't ask whether to do this: it is standing. Do it at the top of every session.
+- **Completely read the canonical set:** `CLAUDE.md`, `DESIGN.md`, and the full base catalog — `COMPONENTS.md`, `RULES.md`, and the four HTML pages: `index.html`, `play.html`, `printables.html`, `learn.html`.
+- **`play.html` is canonical** (correctness fixes there are rules fixes); its `KEY` constant is the source of truth for the **live version** — this doc's narrative can lag behind it, so reconcile against `play.html` and flag any drift.
+- Only then map a change through the interlocks below before touching anything.
+
 ## Response style
 - Be concise. Keep feedback efficient.
 - Don't put text, data, or code inline unless necessary — reference files/locations instead of pasting their contents.
