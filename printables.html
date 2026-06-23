@@ -22,8 +22,10 @@
   .bar.collapsed{padding:6px 16px}
   .bar.collapsed > :not(h1):not(.bartoggle){display:none}
   /* ====== PAGE = US Letter LANDSCAPE (11×8.5in, .3in margins → 10.4×7.9in canvas) ====== */
-  @media print{ @page{size:letter landscape;margin:.3in} }
+  @media print{ @page{size:letter landscape;margin:.3in} @page large{size:22in 12in;margin:0} }
   .page{width:10.4in;height:7.9in;background:#fff;margin:14px auto;box-shadow:0 3px 14px rgba(0,0,0,.25);position:relative;overflow:hidden}
+  /* LARGE-FORMAT tile sheets (laser cutter) — 22×12in; a named @page so they print full-bleed alongside the letter sheets */
+  .page.lg{width:22in;height:12in;page:large}
   @media print{.no-print{display:none} body{background:#fff} .page{margin:0;box-shadow:none;break-after:page}
     body.solo .page{display:none} body.solo .page.soloed{display:block}}
   /* every printed piece sits in an absolutely positioned .it box (inches) — layout is identical in
@@ -617,7 +619,8 @@ const OWN_DISCS=14;                  // ownership / presence discs per colour �
 // the cut overlay, and the SVG export, so the layers always align.
 //==================================================================
 const PG={w:10.4,h:7.9,y0:0.45,yMax:7.62};
-const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres
+const TILE_GEO={w:22,h:12,y0:0.45,yMax:11.72};   // LARGE-FORMAT tile sheet (laser cutter): all tiles on 22×12in (17 cols × 9 rows of 1.25in)
+const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
 const SIZE={tile:[1.25,1.25],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
@@ -963,16 +966,17 @@ function mboard(){
 //==================================================================
 // PAGINATION — deterministic sheets of absolutely positioned items
 //==================================================================
-function newPage(pages,section,label){const p={section,label,items:[],cuts:[],circles:[]};pages.push(p);return p;}
-function packRun(pages,section,label,kind,htmlList,famTag,famPages){
-  // pack same-size items in gapless rows; rows flow page to page (one unbroken grid)
-  const [w,h]=SIZE[kind];const cols=Math.floor((PG.w-0.4)/w);const x0=+( (PG.w-cols*w)/2 ).toFixed(4);
-  let pg=pages.length&&pages[pages.length-1].section===section?pages[pages.length-1]:newPage(pages,section,label);
-  let cx=pg._cx!==undefined?pg._cx:x0, cy=pg._cy!==undefined?pg._cy:PG.y0, rh=pg._rh||0;
+function newPage(pages,section,label,geo){const p={section,label,items:[],cuts:[],circles:[],geo:geo||PG};pages.push(p);return p;}
+function packRun(pages,section,label,kind,htmlList,famTag,famPages,geo){
+  // pack same-size items in gapless rows; rows flow page to page (one unbroken grid). geo = page geometry (default PG; tiles use TILE_GEO)
+  const G=geo||PG;
+  const [w,h]=SIZE[kind];const cols=Math.floor((G.w-0.4)/w);const x0=+( (G.w-cols*w)/2 ).toFixed(4);
+  let pg=pages.length&&pages[pages.length-1].section===section?pages[pages.length-1]:newPage(pages,section,label,G);
+  let cx=pg._cx!==undefined?pg._cx:x0, cy=pg._cy!==undefined?pg._cy:G.y0, rh=pg._rh||0;
   if(pg._kind&&pg._kind!==kind){cx=x0;cy=cy+rh;rh=0;}   // a new size always starts a fresh row
   htmlList.forEach(html=>{
     if(cx+w>x0+cols*w+0.001){cx=x0;cy+=h;}
-    if(cy+h>PG.yMax){pg._cx=undefined;pg=newPage(pages,section,label);cx=x0;cy=PG.y0;}
+    if(cy+h>G.yMax){pg._cx=undefined;pg=newPage(pages,section,label,G);cx=x0;cy=G.y0;}
     pg.items.push({x:cx,y:cy,w,h,html});
     if(kind==='tok'||kind==='disc'||kind==='wtok')pg.circles.push({cx:cx+w/2,cy:cy+h/2,r:CUTR[kind]});
     else addRectCut(pg,cx,cy,w,h);
@@ -1009,33 +1013,42 @@ function buildPages(){
   boardPage(pages,'boards','Destinations board',dboard(),7.5);
   boardPage(pages,'boards','Trade Roads — Overland (back of Destinations)',olboard(),7.5);
   PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),5.45));
-  // --- TILES — the DOUBLE-SIDED Buildings get their own sheets, kept apart from the BLANK-BACK tiles
-  // (casks · ships · improvements), so building fronts & backs are easy to match when mounting. ---
-  // (1) blank-back tiles — one unbroken 1.25in grid (backs are bare chipboard)
+  // --- TILES — LARGE FORMAT (22×12in) for the LASER CUTTER. Double-sided registration:
+  //   • BLANK-BACK tiles (casks · ships · improvements) → their own large sheet(s); backs are bare material.
+  //   • BUILDINGS are DOUBLE-SIDED → a FRONTS sheet + a BACKS sheet (Wild + ★). The BACKS sheet is the
+  //     HORIZONTAL MIRROR of the fronts, so flipping it LEFT↔RIGHT (around the tall edge) and gluing it under
+  //     the fronts lands a Wild back behind every building. The 1.25in cut grid is uniform → it registers either side.
+  const TG=TILE_GEO;
+  // (1) blank-back tiles
   const blankBack=[];
   // casks: Gruit all-Source (pinned); Q2+ cycle the draw-pool across the supply (Q4/Q5 include Wild) — the printed mix IS the brew-draw
   CASKS.forEach(d=>{const pool=d.pin?[d.pin]:(d.wild?CASK_POOL.concat([CASK_WILD]):CASK_POOL);
     for(let i=0;i<cnt(d.n);i++)blankBack.push(['Casks',caskTile(d,pool[i%pool.length])]);});
   const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
   shipList.forEach(([hull,dest])=>blankBack.push(['Ships',shipTile(hull,dest)]));
-  // private brewery IMPROVEMENTS — bought for goods (cost badge shown) — also a blank back
   IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)blankBack.push(['Improvements',improveTile(d)]);});
-  // (2) BUILDING tiles (fronts) — the one owned family (value + transform); the authored value layer. DOUBLE-SIDED.
+  // (2) BUILDING fronts — the one owned family (value + transform); the authored value layer
   const bldTiles=[];
   BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)bldTiles.push([d.verb==='value'?'Value Buildings':'Transform Buildings',buildingTile(d)]);});
-  // (3) BUILDING BACKS — the flipped Wild+★ developer face, one per Building tile (mount on a Building's reverse)
-  const backsTotal=BUILDINGS.reduce((a,b)=>a+cnt(b.n),0);
-  const backTiles=[];
-  for(let i=0;i<backsTotal;i++)backTiles.push(['Building backs',buildingBack()]);
-  // pack each group starting on its OWN fresh page (all stay in the 'tiles' view). The building fronts and the
-  // building backs pack identically (same 1.25in grid, same order, same count) → they line up sheet-for-sheet.
-  packRun(pages,'tiles','Tiles — casks · ships · improvements (blank backs)','tile',blankBack.map(t=>t[1]),null,famPages);
-  newPage(pages,'tiles','Building tiles — fronts (mount a building back on each reverse)');
-  packRun(pages,'tiles','Building tiles — fronts (mount a building back on each reverse)','tile',bldTiles.map(t=>t[1]),null,famPages);
-  newPage(pages,'tiles','Building backs — the flipped Wild + ★ developer face');
-  packRun(pages,'tiles','Building backs — the flipped Wild + ★ developer face','tile',backTiles.map(t=>t[1]),null,famPages);
-  // re-walk to tag families by index (page order + item order == tiles[] order)
-  const tiles=blankBack.concat(bldTiles,backTiles);
+  // pack the blank-back group on its own LARGE sheet(s)
+  packRun(pages,'tiles','Tiles — casks · ships · improvements · LARGE 22×12 (blank backs = bare material)','tile',blankBack.map(t=>t[1]),null,famPages,TG);
+  // pack the BUILDING FRONTS on a fresh LARGE sheet
+  const bfLabel='Buildings — FRONTS · LARGE 22×12 (glue the BACKS sheet under, flipped LEFT↔RIGHT)';
+  newPage(pages,'tiles',bfLabel,TG);
+  const bf0=pages.length-1;
+  packRun(pages,'tiles',bfLabel,'tile',bldTiles.map(t=>t[1]),null,famPages,TG);
+  const bf1=pages.length-1;
+  // build a matching BACKS sheet for each FRONTS sheet = the HORIZONTAL MIRROR (Wild art + mirrored cut grid),
+  // so flipping the backs sheet left↔right registers a Wild behind every building front.
+  let backCount=0;
+  for(let pi=bf0;pi<=bf1;pi++){const fp=pages[pi];
+    const bp=newPage(pages,'tiles','Buildings — BACKS (Wild + '+DEVELOP_PTS+'★) · LARGE 22×12 (mirror of the fronts — flips into register)',TG);
+    fp.items.forEach(it=>{const mx=+(TG.w-it.x-it.w).toFixed(4);
+      bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:buildingBack()});addRectCut(bp,mx,it.y,it.w,it.h);backCount++;});
+  }
+  // re-walk to tag families by index — page order + item order == tiles[] order:
+  // blankBack sheet(s) · building FRONTS sheet(s) · building BACKS sheet(s) (all Wild; backCount == bldTiles.length).
+  const tiles=blankBack.concat(bldTiles, Array.from({length:backCount},()=>['Building backs',null]));
   (function(){let idx=0;pages.filter(p=>p.section==='tiles').forEach(pg=>{pg.items.forEach(()=>{
     const fam=tiles[idx++][0];(famPages[fam]=famPages[fam]||new Set()).add(pages.indexOf(pg));});});})();
   // --- TOKENS & BITS ---
@@ -1089,7 +1102,7 @@ function checklist(pages,famPages){
     +row(1,'Player brewery boards ('+PLAYERS.map(p=>p.nm).join(' · ')+')',PLAYERS.length,pbRef)
     +row(0,'<i>EXPANSION — The Trade Roads (Overland, Staple Rights): 1 inland network board — a tree rooted at HAMBURG; two roads out (WEST to the Bruges gateway → London/Bergen/Rhineland; EAST = the deep Novgorod haul). BRUGES is the lone no-slots gateway (recipe/2 goods); every other node carries Staple-Right SLOTS — the towns Cologne · Frankfurt · Antwerp · Tønsberg · Visby · Tallinn · Pskov AND the kontore London · Bergen · Novgorod (the kontore claim theirs when the caravan arrives, atop their base sea benefit). Each slotted node: quality gate · base delivery ★ · 2–4 SLOTS (distinct one-shot bonuses, flavoured by lane: Rhineland=craft (recipe/brew/age) · London=infrastructure (buildings/improvement) · Bergen=logistics (contracts/goods/vessel) · East=depth/points; Frankfurt=points+Enshrine; Pskov=just a delivery, one slot +8★ then +5★) · an overflow bonus. Frankfurt/Pskov = ◆ deep terminals (scarce). Active slot count scales with player count (print 4, cover the high slots for 2–3p). Per player: presence markers drop into the slot claimed. The caravan rides the Ship action (per VOYAGE = ONE node per owner, gated by cask quality), then each cask aboard claims a slot in load order — no new tile; replaces the kontor majority chart when on. The Q4+ Rhine Charter skips Bruges → Cologne.</i>','—','—')
     +'</table>';
-  h+='<table><tr><th></th><th>Tiles — 1.25″ squares (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
+  h+='<table><tr><th></th><th>Tiles — 1.25″ squares · <b>LARGE 22×12in sheets</b> (laser cutter)</th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Cask · Gruit Q1 (pinned Source +2 goods · ready 1)','16',pgRef(pages,famPages,'Casks'))
     +row(1,'Cask · Hopped Q2 (G H · ready 1)','20','')
     +row(1,'Cask · Broyhan Q3 (G H H · ready 1)','6','')
@@ -1112,7 +1125,7 @@ function checklist(pages,famPages){
     +row(1,'Private improvements ('+IMPROVE.length+' designs — bought at the Cellar, v1.7)',impN,pgRef(pages,famPages,'Improvements'))
     +row(0,'<i>'+IMPROVE.map(d=>d.nm+' ×'+d.n).join(' · ')+'</i>','','')
     +row(1,'<b>Building backs</b> — the flipped Wild + '+DEVELOP_PTS+'★ developer face (1 per Building tile)',backsN,pgRef(pages,famPages,'Building backs'))
-    +row(0,'<i>mount on the REVERSE of each Building (identical — any back fits any front); replaces the separate developer chits</i>','','')
+    +row(0,'<i>own 22×12 sheet = the HORIZONTAL MIRROR of the Buildings FRONTS sheet (all identical); flip it LEFT↔RIGHT &amp; glue under the fronts → a Wild lands behind every building. Replaces the separate developer chits.</i>','','')
     +'<tr class="tot"><td></td><td>Tile total</td><td class="n">'+tileTotal+'</td><td></td></tr></table>';
   const aidNo=pages.filter(p=>p.section==='cards'&&p.label.indexOf('Player aid')===0).map(p=>p.no).sort((a,b)=>a-b);
   h+='<table><tr><th></th><th>Cards (cardstock, do NOT mount)</th><th>qty</th><th>sheet</th></tr>'
@@ -1135,28 +1148,31 @@ function checklist(pages,famPages){
     +row(0,'<i><b>Developer ★</b> is now the <b>back</b> of each Building tile (Wild + '+DEVELOP_PTS+'★) — see Building backs above; no separate chits</i>','—','—')
     +'</table>';
   h+='<div class="wf"><b>Prototype workflow.</b> 1) <b>Print to PDF</b> — the whole view, or a 🖨 button for a one-sheet PDF. In the print dialog: Save as PDF · scale 100% · margins default · <b>“Background graphics” ON</b>. Place in Affinity Publisher (passthrough renders exactly) and print at 100% (verify the 3″ bar). '
-    +'2) Spray-glue the art sheets to chipboard. 3) <b>Cut on the printed guides</b> — the cut lines &amp; registration marks print with the art; cut the lines by hand or paper cutter. (Toggle the <b>CUT layer</b> first to print a guide-only sheet if you want a separate cutting template.) '
-    +'<b>Card sheets:</b> print on cardstock and cut with a paper cutter; no mounting (recipe cards tuck under the brewery board). The <b>Player aid</b> is a <b>double-sided</b> card — print its FRONT &amp; BACK sheets duplex (flip on the SHORT edge keeps the back upright; the cards are identical &amp; symmetric so the two sides register either way). '
-    +'Tiles &amp; cards are gapless grids — every internal line is drawn once. Tokens cut on the inner circle; the ring outside is bleed. '
-    +'Backs are bare chipboard, with two double-sided exceptions: the <b>Player aid</b> (duplex) and the <b>Building tiles</b> (mount a Building <b>back</b> — Wild + '+DEVELOP_PTS+'★ — on each Building’s reverse, so an overbuilt Building flips to its developer face). The casks · ships · improvements (blank backs) sit on their own sheets; the <b>building fronts and the building backs print on their own matching sheets</b> (same grid, same order) so each front gets a back in the same position — spray-glue front-sheet to back-sheet, then cut. The face-down Building deck &amp; the export-beer deal work by flipping.</div>';
+    +'<b>The TILE sheets are LARGE FORMAT — 22×12in</b> (a named print size; use Chrome &amp; pick the matching paper/“Save as PDF”, or just print the <b>Tiles</b> view). 2) Mount/adhere the art to your laser stock. 3) <b>Cut on the CUT layer</b> — toggle the <b>CUT layer</b> for the red laser lines (1.25″ grid) + the corner registration marks; this is the laser file, and it matches the art exactly (same coordinate system). '
+    +'<b>Double-sided Buildings (laser):</b> the <b>Buildings FRONTS</b> sheet and the <b>Buildings BACKS</b> sheet (Wild + '+DEVELOP_PTS+'★) are the same 22×12 grid, the BACKS being the <b>horizontal MIRROR</b> of the fronts. Align by the corner marks, <b>flip the BACKS sheet LEFT↔RIGHT</b> and adhere it under the fronts → a Wild lands behind every building; then cut the sandwich once (the cut grid registers either side). '
+    +'The <b>casks · ships · improvements</b> sheet has <b>blank/bare backs</b> (no back sheet). '
+    +'<b>Card sheets</b> (letter): print on cardstock, cut with a paper cutter; no mounting (recipe cards tuck under the brewery board). The <b>Player aid</b> is a <b>double-sided</b> card — print its FRONT &amp; BACK sheets duplex (flip on the SHORT edge keeps the back upright; the cards are identical &amp; symmetric so the two sides register either way). '
+    +'Tiles &amp; cards are gapless grids — every internal line is drawn once. Tokens cut on the inner circle; the ring outside is bleed. The face-down Building deck &amp; the export-beer deal work by flipping.</div>';
   h+='</div></div>';
   return h;}
 
 //==================================================================
 // OVERLAY SVG — registration marks (both layers) + cut lines (CUT)
 //==================================================================
-function regmarkSvg(){let s='';REGS.forEach(([x,y])=>{
+function regmarkSvg(g){g=g||PG;const m=0.15;const regs=[[m,m],[g.w-m,m],[m,g.h-m],[g.w-m,g.h-m]];let s='';regs.forEach(([x,y])=>{
   s+='<line x1="'+(x-0.15)+'" y1="'+y+'" x2="'+(x+0.15)+'" y2="'+y+'" stroke="#000" stroke-width="0.012" fill="none"/>'
     +'<line x1="'+x+'" y1="'+(y-0.15)+'" x2="'+x+'" y2="'+(y+0.15)+'" stroke="#000" stroke-width="0.012" fill="none"/>'
     +'<circle cx="'+x+'" cy="'+y+'" r="0.07" stroke="#000" stroke-width="0.012" fill="none"/>';});
   return s;}
 function marksSvg(pg){  // ONE fragment shared by the on-page overlay and BOTH SVG exports → guaranteed alignment
-  return regmarkSvg()
+  const g=pg.geo||PG;
+  const bx2=+(g.w-0.5).toFixed(2), bx1=+(bx2-3).toFixed(2), bxm=+((bx1+bx2)/2-0.32).toFixed(2);  // a 3.00in scale-check bar at the top-right of any page size
+  return regmarkSvg(g)
     +'<text x="0.45" y="0.22" font-size="0.11" font-family="Georgia,serif" fill="#000">Brewhouses of the Hanse · S'+pg.no+' · '+MODE+' · '+esc(pg.label)+'</text>'
-    +'<line x1="6.9" y1="0.16" x2="9.9" y2="0.16" stroke="#000" stroke-width="0.014"/>'
-    +'<line x1="6.9" y1="0.1" x2="6.9" y2="0.22" stroke="#000" stroke-width="0.014"/>'
-    +'<line x1="9.9" y1="0.1" x2="9.9" y2="0.22" stroke="#000" stroke-width="0.014"/>'
-    +'<text x="8.18" y="0.12" font-size="0.09" font-family="Georgia,serif" fill="#000">3.00 in</text>';}
+    +'<line x1="'+bx1+'" y1="0.16" x2="'+bx2+'" y2="0.16" stroke="#000" stroke-width="0.014"/>'
+    +'<line x1="'+bx1+'" y1="0.1" x2="'+bx1+'" y2="0.22" stroke="#000" stroke-width="0.014"/>'
+    +'<line x1="'+bx2+'" y1="0.1" x2="'+bx2+'" y2="0.22" stroke="#000" stroke-width="0.014"/>'
+    +'<text x="'+bxm+'" y="0.12" font-size="0.09" font-family="Georgia,serif" fill="#000">3.00 in</text>';}
 function cutsSvg(pg){
   const cc=pg.papercut?'#888':'#f00';   // paper-cutter guides print grey with the art; laser cuts are red
   let s='';
@@ -1164,8 +1180,8 @@ function cutsSvg(pg){
   pg.circles.forEach(c=>{s+='<circle cx="'+c.cx+'" cy="'+c.cy+'" r="'+c.r+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';});
   if(pg.rrect){const r=pg.rrect;s+='<rect x="'+r.x+'" y="'+r.y+'" width="'+r.w+'" height="'+r.h+'" rx="'+r.r+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';}
   return s;}
-function overlaySvg(pg){
-  return '<svg class="ov" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+PG.w+' '+PG.h+'">'
+function overlaySvg(pg){const g=pg.geo||PG;
+  return '<svg class="ov" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+g.w+' '+g.h+'">'
     +'<g class="marks">'+marksSvg(pg)+'</g>'
     +'<g class="cuts'+(pg.papercut?' always':'')+'">'+cutsSvg(pg)+'</g></svg>';}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
@@ -1179,7 +1195,8 @@ function render(){
   const show=PAGES.filter(p=>VIEW==='all'||p.section===VIEW);
   let h='';
   show.forEach(pg=>{
-    h+='<div class="page" id="pg'+pg.no+'">';
+    const lg=(pg.geo||PG)!==PG;   // large-format (22×12) tile sheets get the .lg class → the named @page size
+    h+='<div class="page'+(lg?' lg':'')+'" id="pg'+pg.no+'">';
     pg.items.forEach(it=>{h+='<div class="it" style="left:'+it.x+'in;top:'+it.y+'in;width:'+it.w+'in;height:'+it.h+'in">'+it.html+'</div>';});
     h+=overlaySvg(pg);
     h+='<span class="dl no-print"><button onclick="printOne('+pg.no+')">🖨 S'+pg.no+' PDF</button></span>';
