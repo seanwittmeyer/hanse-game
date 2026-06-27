@@ -390,6 +390,25 @@
   .rc{flex:1;min-width:0;border-right:1px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:.078in;color:var(--ink2);background:rgba(255,255,255,.4)}
   .rc:last-child{border-right:none} .rc.band{background:rgba(184,134,11,.16)}
   .rc.cap{background:var(--gold);color:#fff;font-weight:bold;font-size:.07in;text-align:center;line-height:1}
+  .rc.z{background:rgba(124,33,40,.12);font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.07in}
+  /* printables2: the SCORE track (start + 1–50, wrapped 3×17) + shared-track headers */
+  .strack{display:grid;grid-template-columns:repeat(17,1fr);border:1.5px solid var(--gold);border-radius:.05in;overflow:hidden}
+  .sc{border-right:1px solid rgba(0,0,0,.12);border-bottom:1px solid rgba(0,0,0,.12);min-height:.36in;display:flex;align-items:center;justify-content:center;font-size:.1in;color:var(--ink2);background:rgba(255,255,255,.5)}
+  .sc.start{background:rgba(124,33,40,.12);font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.082in}
+  .sc.ten{background:rgba(184,134,11,.2);font-weight:bold;color:var(--ink)}
+  .trk-h{font-variant:small-caps;font-weight:bold;font-size:.12in;color:var(--sea);display:flex;align-items:center;gap:.05in;margin:.07in 0 .03in}
+  .trk-h svg,.trk-h .ic{width:.14in;height:.14in}
+  .trk-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;color:var(--ink2);margin-left:.06in}
+  /* the WHARF board is a CROSS — the cut follows the plus outline; the 4 corners fall away */
+  .mboard.cross{background:var(--parch);border:none;border-radius:0;padding:0;display:block;
+    clip-path:polygon(25.69% 0, 74.31% 0, 74.31% 25.69%, 100% 25.69%, 100% 74.31%, 74.31% 74.31%, 74.31% 100%, 25.69% 100%, 25.69% 74.31%, 0 74.31%, 0 25.69%, 25.69% 25.69%)}
+  .mboard.supply{display:flex;flex-direction:column}
+  .mboard.supply .disp{flex:0 0 auto;margin-top:0}
+  .mboard.supply .tracks{flex:0 0 auto}
+  /* a printed label on the large sheet (above each cut board) */
+  .sheetlbl{font-variant:small-caps;color:var(--sea);font-weight:bold;font-size:.28in;display:flex;align-items:center;gap:.1in;height:100%}
+  .sheetlbl svg,.sheetlbl .ic{width:.26in;height:.26in}
+  .sheetlbl .sub{font-variant:normal;font-weight:normal;font-style:italic;font-size:.13in;color:var(--ink2)}
   /* ====================== WHARF SIDE — supply DISPLAYS (Building display · Ship market) ====================== */
   .disp{flex:1;display:flex;flex-direction:column;gap:.18in;min-width:0;margin-top:0}
   .mb-track{margin-top:.12in}
@@ -947,7 +966,9 @@ function olboard(){
 function station(L,nm,ic,yield_){return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
   +'<span class="bigic">'+LU(ic)+'</span><span class="nm">'+nm+'</span>'
   +'<span class="yield">'+yield_+'</span></div>';}
-function mboard(){
+// printables2: the WHARF is now a CROSS board on its own (the cut follows the plus). 4×4 grid:
+// empty corners · 8 perimeter slots · the 4 stations in the centre 2×2.
+function wharfCross(){
   const slot='<div class="wslot"></div>';
   const OR='<span class="sep">/</span>';
   const AND='<span class="sep">+</span>';   // brew AND deploy (both happen), vs OR alternatives
@@ -962,10 +983,14 @@ function mboard(){
     +slot
     +'<div></div>'+slot+slot+'<div></div>'
     +'</div>';
-  // RIGHT SIDE = the two contested face-up Market displays (the wall of text moved to the player-aid card)
+  return '<div class="mboard cross">'+wharf+'</div>';
+}
+// printables2: the SUPPLY board — the two face-up market displays + the three shared tracks
+// (Sailed-Ships end clock · Round · Score start→50). Sits beside the Wharf on the same large sheet.
+function supplyBoard(){
   const dslot=fam=>'<div class="dslot '+fam+'">'+LU(fam==='b'?'building-2':'sailboat')+'</div>';
   const ddeck=(fam,nm)=>'<div class="ddeck '+fam+'">'+LU('layers')+'<span class="dn">'+nm+'</span></div>';
-  const side='<div class="disp">'
+  const disp='<div class="disp">'
     +'<div><div class="disp-h b">'+LU('building-2')+'Building display</div>'
       +'<div class="disp-bd"><div class="bgrid">'+dslot('b')+dslot('b')+dslot('b')+dslot('b')+'</div>'+ddeck('b','Building deck')+'</div></div>'
     +'<div><div class="disp-h">'+LU('sailboat')+'Ship market</div>'
@@ -973,10 +998,19 @@ function mboard(){
   +'</div>';
   let clk='';for(let i=1;i<=13;i++){let end='';for(const p in SAILED)if(SAILED[p]===i)end=p+'p';
     clk+='<div class="cc'+(end?' end':'')+'">'+(end?end+'<br>END':'<span class="n">'+i+'</span>')+'</div>';}
-  return '<div class="mboard">'
-    +'<div class="mb-head"><h2>'+LU('anchor')+'The Wharf</h2><span class="sub">Source → Brew → Age → Ship</span></div>'
-    +'<div class="mb-main">'+wharf+side+'</div>'
-    +'<div class="mb-track"><div class="ctrack">'+clk+'</div><div class="mtrack-l">Sailed-Ships track — every voyage (a full sail, a Charter, or an Enshrine) fills one; at your player-count END, finish the round &amp; score.</div></div>'
+  let rnd='<div class="rc z">start</div>';for(let i=1;i<=MAX_ROUND;i++)rnd+='<div class="rc'+(i===MAX_ROUND?' cap':'')+'">'+i+'</div>';
+  let sc='<div class="sc start">start</div>';for(let i=1;i<=50;i++)sc+='<div class="sc'+(i%10===0?' ten':'')+'">'+i+'</div>';
+  return '<div class="mboard supply">'
+    +'<div class="mb-head"><h2>'+LU('store')+'Supply &amp; Tracks</h2><span class="sub">the shared market displays &amp; the game tracks</span></div>'
+    +disp
+    +'<div class="tracks">'
+      +'<div class="trk-h">'+LU('sailboat')+'Sailed-Ships<span class="sm">the end clock — every voyage (a full sail · Charter · Enshrine) fills one; at your player-count END, finish the round &amp; score</span></div>'
+      +'<div class="ctrack">'+clk+'</div>'
+      +'<div class="trk-h">'+LU('hourglass')+'Round<span class="sm">advance one each full round (length backstop '+MAX_ROUND+')</span></div>'
+      +'<div class="rtrack">'+rnd+'</div>'
+      +'<div class="trk-h">'+LU('star')+'Score<span class="sm">bank points as you play — start → 50</span></div>'
+      +'<div class="strack">'+sc+'</div>'
+    +'</div>'
   +'</div>';}
 
 //==================================================================
@@ -1006,6 +1040,9 @@ function addRectCut(pg,x,y,w,h){  // dedupe shared edges → each grid line cuts
     if(!pg._segs)pg._segs={};if(pg._segs[k])return;pg._segs[k]=1;pg.cuts.push([x1,y1,x2,y2]);};
   seg(x,y,x+w,y);seg(x,y+h,x+w,y+h);seg(x,y,x,y+h);seg(x+w,y,x+w,y+h);
 }
+function addPolyCut(pg,pts){   // a closed polygon cut (the Wharf cross) — consecutive vertices → cut segments
+  for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length];pg.cuts.push([a[0],a[1],b[0],b[1]]);}
+}
 function boardPage(pages,section,label,html,h){
   const H=h||7.3;   // player boards pass a shorter height → the board is compact, leaving page white space
   const pg=newPage(pages,section,label);
@@ -1020,6 +1057,20 @@ function boardPageLg(pages,section,label,html,w,h){
   pg.items.push({x,y,w,h,html});
   pg.rrect={x,y,w,h,r:0.14};
 }
+// printables2: the Wharf (a CROSS) + the Supply board, side by side on ONE large 22×15 sheet.
+function wharfSupplySheet(pages){
+  const G=TILE_GEO;const pg=newPage(pages,'boards','Main board — the Wharf (cross) + Supply board',G);
+  // WHARF cross — its 4×4 grid (2.5in cells + .3in gaps) is 10.9in square; the cut follows the plus outline.
+  const W=10.9, wx=0.7, wy=2.4;
+  pg.items.push({x:wx,y:wy-0.72,w:W,h:0.55,html:'<div class="sheetlbl">'+LU('anchor')+'The Wharf<span class="sub">Source → Brew → Age → Ship</span></div>'});
+  pg.items.push({x:wx,y:wy,w:W,h:W,html:wharfCross()});
+  const n=2.8,m=8.1,L=10.9;
+  addPolyCut(pg,[[n,0],[m,0],[m,n],[L,n],[L,m],[m,m],[m,L],[n,L],[n,m],[0,m],[0,n],[n,n]].map(p=>[+(wx+p[0]).toFixed(3),+(wy+p[1]).toFixed(3)]));
+  // SUPPLY board (right) — the two market displays + the three shared tracks.
+  const sx=12.2, sy=1.0, sw=9.3, sh=13.0;
+  pg.items.push({x:sx,y:sy,w:sw,h:sh,html:supplyBoard()});
+  pg.rrect={x:sx,y:sy,w:sw,h:sh,r:0.14};
+}
 // double-sided player aid: N IDENTICAL cards on a centred, SYMMETRIC 2×2 grid (full) or 1 centred (proof).
 // Because the cards are identical and the grid is symmetric on both axes, the FRONT and BACK sheets register
 // under either duplex flip edge — so "front aligns with back" holds regardless of the printer's flip setting.
@@ -1033,7 +1084,7 @@ function aidSheet(pages,label,faceHtml){
 function buildPages(){
   const pages=[],famPages={};
   // --- BOARDS ---
-  boardPageLg(pages,'boards','Main board — the Wharf (2.5″ tile slots · large format)',mboard(),18,13);   // printables2: on its own 22×15 sheet
+  wharfSupplySheet(pages);   // printables2: the Wharf (cross) + the Supply board on one 22×15 sheet
   boardPage(pages,'boards','Destinations board',dboard(),7.5);
   boardPage(pages,'boards','Trade Roads — Overland (back of Destinations)',olboard(),7.5);
   PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),5.45));
@@ -1118,7 +1169,7 @@ function checklist(pages,famPages){
   const pbRef=bp.length>4?'S'+bp[3].no+'–S'+bp[bp.length-1].no:'S'+bp[3].no+' (proof: 1 of '+PLAYERS.length+' shown)';
   let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v2.1 “Staple Rights”)</h2><div class="cols2">';
   h+='<table><tr><th></th><th>Boards (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
-    +row(1,'Main board — the Wharf (stations · 8 slots · Sailed-Ships + round tracks)','1','S'+bp[0].no)
+    +row(1,'Main board — the Wharf (a CROSS: 4 stations + 8 · 2.5″ slots) + the Supply board (Building display · Ship market · Sailed-Ships, Round &amp; Score 1–50 tracks) — same large 22×15 sheet','1','S'+bp[0].no)
     +row(1,'Destinations board (4 kontore + the Hall · Building display · majority chart)','1','S'+bp[1].no)
     +row(1,'<b>EXPANSION</b> — Trade Roads network board (Overland · <i>print on the BACK of the Destinations board</i>)','1','S'+bp[2].no)
     +row(1,'Player brewery boards ('+PLAYERS.map(p=>p.nm).join(' · ')+')',PLAYERS.length,pbRef)
