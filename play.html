@@ -289,8 +289,28 @@
   #log .me{color:var(--red)}
   /* MODAL */
   .modal{position:fixed;inset:0;background:rgba(20,12,8,.82);z-index:80;display:flex;align-items:center;justify-content:center;padding:20px}
-  .modal .card{background:var(--parch);border:3px solid var(--gold);border-radius:14px;padding:26px;max-width:600px;width:100%;max-height:90vh;overflow:auto}
-  .modal h2{font-variant:small-caps;color:var(--red);margin:0 0 10px}
+  .modal .card{position:relative;background:var(--parch);border:3px solid var(--gold);border-radius:14px;padding:24px;max-width:600px;width:100%;max-height:90vh;overflow:auto}
+  .modal h2{font-variant:small-caps;color:var(--red);margin:0 0 10px;padding-right:32px}
+  /* modal close (X) */
+  .modal-x{position:absolute;top:10px;right:12px;width:34px;height:34px;border:none;border-radius:8px;background:rgba(0,0,0,.06);color:var(--ink2);font-size:1.3rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none;padding:0}
+  .modal-x:hover{background:var(--red);color:var(--parch)}
+  /* expansion slide toggles (one-line title + switch) */
+  .ng-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 2px;border-top:1px solid var(--line)}
+  .ng-row .ng-lbl{min-width:0}
+  .ng-row .ng-lbl b{font-size:.98rem}
+  .ng-row .ng-lbl .ng-sub{display:block;font-size:.78rem;color:var(--ink2)}
+  .ng-switch{position:relative;display:inline-block;width:46px;height:26px;flex:none}
+  .ng-switch input{opacity:0;width:0;height:0;position:absolute}
+  .ng-switch .ng-tk{position:absolute;inset:0;background:#c0ad84;border-radius:26px;transition:.18s;cursor:pointer}
+  .ng-switch .ng-tk:before{content:"";position:absolute;height:20px;width:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+  .ng-switch input:checked + .ng-tk{background:var(--green)}
+  .ng-switch input:checked + .ng-tk:before{transform:translateX(20px)}
+  .ng-switch input:focus-visible + .ng-tk{outline:2px solid var(--gold);outline-offset:2px}
+  @media(max-width:560px){
+    .modal{padding:0;align-items:stretch}
+    .modal .card{padding:18px;border-radius:0;max-width:100%;min-height:100%;max-height:100vh}
+    .modal h2{font-size:1.4rem}
+  }
   /* player aid */
   .asec{margin:0 0 11px;border-top:1px solid var(--line);padding-top:8px}
   .asec>b{font-variant:small-caps;color:var(--red);font-size:1.02rem}
@@ -389,25 +409,29 @@
   <p class="note" style="text-align:center"><b>v2.1 “Staple Rights” — prototype.</b> <span class="note">(opt-in expansions: Specialty Beers · Jopenbier · The Trade Roads; the base game is v1.8.)</span> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
 </main>
 
-<div id="setup" class="modal hidden">
+<div id="setup" class="modal hidden" onclick="if(event.target===this)closeSetup()">
   <div class="card">
-    <h2>New Game — Brewhouses of the Hanse</h2>
-    <p>Hot-seat. Choose the number of brewing houses.</p>
-    <div id="pcount" style="display:flex;gap:8px;margin:12px 0"></div>
+    <button class="modal-x" onclick="closeSetup()" aria-label="Close" title="Close">×</button>
+    <h2>New Game</h2>
+    <p class="note" style="margin:0 0 6px">Hot-seat · choose the number of brewing houses.</p>
+    <div id="pcount" style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0"></div>
     <div id="names"></div>
-    <label style="display:flex;align-items:flex-start;gap:8px;margin:12px 0 2px;font-size:.9rem;cursor:pointer">
-      <input type="checkbox" id="expansion" style="width:16px;height:16px;margin-top:2px;flex:none">
-      <span><b>Specialty Beers</b> <span class="note">(expansion)</span> — adds <b>Gose · Zerbster · Duckstein</b> to the export draft (3 of 7). Leave off for the base game.</span>
-    </label>
-    <label style="display:flex;align-items:flex-start;gap:8px;margin:6px 0 2px;font-size:.9rem;cursor:pointer">
-      <input type="checkbox" id="jopen" style="width:16px;height:16px;margin-top:2px;flex:none">
-      <span><b>Jopenbier</b> <span class="note">(capstone)</span> — a slow, dear, super-valuable <b>Q6</b> beer, always acquirable; it cellars for more the longer you hold it (the race-to-end moonshot). Independent of the above.</span>
-    </label>
-    <label style="display:flex;align-items:flex-start;gap:8px;margin:6px 0 2px;font-size:.9rem;cursor:pointer">
-      <input type="checkbox" id="overland" style="width:16px;height:16px;margin-top:2px;flex:none">
-      <span><b>The Trade Roads</b> <span class="note">(Overland · the big one)</span> — an inland <b>map</b> that <b>replaces the kontor majorities</b>. Each voyage pushes your caravan one town inland; each cask claims an open <b>Staple Right</b> slot there (a one-shot bonus, flavoured by lane). Reach (breadth) and quality (depth) both pay.</span>
-    </label>
-    <button class="primary" style="margin-top:10px" onclick="startGame()">Start Game</button>
+    <div style="margin-top:14px">
+      <div class="note" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Expansions <span style="text-transform:none;letter-spacing:0">(optional)</span></div>
+      <label class="ng-row" for="expansion">
+        <span class="ng-lbl"><b>Specialty Beers</b><span class="ng-sub">3 extra beers to draft</span></span>
+        <span class="ng-switch"><input type="checkbox" id="expansion"><span class="ng-tk"></span></span>
+      </label>
+      <label class="ng-row" for="jopen">
+        <span class="ng-lbl"><b>Jopenbier</b><span class="ng-sub">a Q6 capstone moonshot</span></span>
+        <span class="ng-switch"><input type="checkbox" id="jopen"><span class="ng-tk"></span></span>
+      </label>
+      <label class="ng-row" for="overland">
+        <span class="ng-lbl"><b>The Trade Roads</b><span class="ng-sub">inland map · majorities off</span></span>
+        <span class="ng-switch"><input type="checkbox" id="overland"><span class="ng-tk"></span></span>
+      </label>
+    </div>
+    <button class="primary" style="margin-top:16px;width:100%" onclick="startGame()">Start Game</button>
   </div>
 </div>
 
@@ -1093,6 +1117,9 @@ function stackHtml(b,t,id){const bOnTop=!!stackFlip[id];
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function load(){try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):null;}catch(e){return null;}}
 function newGame(){document.getElementById('over').classList.add('hidden');openSetup();}
+// Dismiss the New Game modal without starting (the close button / Esc / backdrop). If a game is already
+// in progress, fall back to it; otherwise just close (the top-bar "New Game" reopens this).
+function closeSetup(){const m=document.getElementById('setup');if(m)m.classList.add('hidden');if(S)render();}
 
 //==================================================================
 // SETUP
