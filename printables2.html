@@ -123,6 +123,7 @@
   .ccard .cnm{font-variant:small-caps;font-weight:bold;font-size:.165in;line-height:1.02}
   .ccard .ccost{display:inline-flex;gap:.05in;font-weight:bold;font-size:.135in;align-items:center}
   .ccard .ccost .gc{gap:.02in} .ccard .ccost .gc svg,.ccard .ccost .gc .ic{width:.14in;height:.14in}
+  .ccard .ctitle{display:flex;flex-direction:column;align-items:flex-end;gap:.02in;line-height:1.05;text-align:right}   /* title + cost stacked on the right, beside the big quality */
   .ccard .clbl{font-size:.085in;font-style:italic;opacity:.85}
   .ccard .cact{display:flex;align-items:center;gap:.05in;background:rgba(0,0,0,.3);border-radius:.05in;padding:.045in .06in;font-size:.12in;line-height:1.1}
   .ccard .cact .ac{display:inline-flex;align-items:center;justify-content:center;width:.27in;height:.27in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
@@ -760,8 +761,8 @@ function caskCardFront(d,act){
   for(let i=1;i<d.ready;i++)track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step">'+i+'</div>';
   track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step rdy">Ready</div>';
   return '<div class="ccard cc-front" style="--c:'+d.c+'">'
-    +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span></div>'
-      +'<div class="ce-row" style="justify-content:flex-end"><span class="ccost">'+c+'</span></div></div>'
+    +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span>'
+      +'<span class="ctitle"><span class="cnm">'+d.nm+'</span><span class="ccost">'+c+'</span></span></div></div>'
     +'<div class="cc-age"><span class="agl">'+LU('hourglass')+'Aging</span><div class="cc-agerow">'+track+'</div>'
       +'<span class="nn">a vessel marker advances 1/turn; a cellar marker skips a step</span></div>'
     +'<div class="ce bot"><div class="ce-row sb"><span class="cq">'+LU(QI)+d.q+'</span><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div></div>'
