@@ -72,6 +72,8 @@
   .cell .wk .pawn{width:13cqmin;height:13cqmin;border-width:1.5cqmin}
   .cell.legal{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite}
   @keyframes pulse{50%{outline-color:#fff}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .ai-spin{display:inline-block;width:15px;height:15px;border:2px solid var(--line);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;vertical-align:-3px;margin-right:8px}
   .slot{background:var(--parch);border:2px dashed var(--line);border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;text-align:center;color:var(--ink2);padding:2px;overflow:hidden}
   .slot .ic,.slot svg{width:1.5em;height:1.5em}
   .slot.filled{border-style:solid;border-width:3px;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.32);padding:3px}
@@ -2815,11 +2817,11 @@ function renderBar(){
     document.getElementById('boardnote').innerHTML='The end-game state: hover slots, destinations, and the brewery tabs for the full detail behind the scores.';
     return;
   }
-  // During an AI's turn the bar narrates instead of offering actions — humans only set the pace.
+  // During an AI's turn the bar just shows a spinner — humans only set the pace (under AI Speed).
   if(aiTurn()){
-    document.getElementById('prompt').innerHTML='<b>'+p.name+'</b> — '+aiLabel(p)+' AI is taking its turn… <span class="note">(the log narrates each action · set the pace under <b>AI Speed</b> in the sidebar)</span>';
+    document.getElementById('prompt').innerHTML='<span class="ai-spin"></span><b>'+p.name+'</b> is taking a turn…';
     document.getElementById('acts').innerHTML='';
-    document.getElementById('boardnote').innerHTML='AI seats play by the same rules with the same information — the tiers differ only in decision quality.';
+    document.getElementById('boardnote').innerHTML='';
     return;
   }
   let prompt='',acts='';
