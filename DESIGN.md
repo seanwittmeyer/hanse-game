@@ -179,6 +179,30 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
 
+**v82 — "Scarce Improvements": the private upgrades become a contested deck + display of 4** *(2026-06-27, `play.html` KEY v82)* —
+The private brewery improvements were an **always-available catalog** (every house could fit one of each of the 7
+types, supply-unlimited). v82 makes them a **shuffled deck of `n − 1` copies of each type** (n = players: 2p →
+7 tiles · 3p → 14 · 4p → 21) feeding a **face-up display of 4** at the Cellar that refills from the deck — the
+**same deck/display grammar already used for the Buildings** (`buildImpDeck`/`refillImpDisplay`/`takeImpFromDisplay`,
+mirroring the building functions; `IMP_DISPLAY=4`). **Only the 4 face-up tiles are buyable**, and with `n − 1`
+copies the table **competes** for them — not everyone can fit every improvement, so the engine choice gains the
+same scarcity/contention the public slots already have (the 4p ring's tension now reaches the private engine).
+Wiring kept the blast radius small: `buyImprovement` takes the tile from the display + refills; `cellarCanImp`,
+the in-page `aiCellar`, and the MC `legalActions` all gate on `S.impDisplay`; the Cellarmaster/Guildmaster MC
+playouts **shuffle the hidden `impDeck`** per playout (determinized, like the building deck); the render shows
+the display with a deck-left count; the debug payload prints it. The Overland "free Improvement" Staple Right
+stays a **granted fit** (not a purchase from the display), so the expansion is untouched. **Methodology note (the
+key read):** the **greedy sim bot buys ≈0 improvements** (the long-documented blind spot — robustness sim shows
+`bought 0.0/game`), so `sim.js` is *inert* to this change and only serves as a no-regression gate; the genuine
+measure is the **MC AI (Guildmaster/Cellarmaster) oracle**, which *does* buy improvements via search — so the
+ladder + the `sim-analyze` GM/CM cohorts (upgrades/game · first-upgrade timing · win-rate) are the real test.
+*Gates (KEY v82):* `verify-cellar` (the Tap→Buy chain, with Granary forced face-up) + `ai-render-smoke` (incl. a
+full Cellarmaster game with all three expansions, through the real render layer) **PASS**; base `sim.js` 500 +
+OVERLAND 300 → **0 crash/deadlock 2–4p (+5p), 100% pace-in-band, clock-dominant**; AI-ladder + GM/CM oracle A/B
+(v82 vs v81) recorded in `playtests/`. *(Open ⚙ for the persona/strong-AI oracle, not the greedy bot: whether
+`n − 1` copies + a 4-wide display is the right scarcity, or the display width / copy count wants a tune; and
+whether the greedy/persona bot should be taught to value improvements so `sim.js` can price the lane.)*
+
 **v81 — Overland: a human-playtest tuning pass (charter east · Novgorod=quality · n+1 slots · manual brew · free casks)** *(2026-06-22, `play.html` KEY v81)* —
 Five interlocking fixes from a live 2p playtest, all ⚙. **(1) The charter opens the EAST at its next road node, not the
 kontor sea gate.** Visby's gate is Q2, but the only eastern voyage trigger was shipping/chartering to the **Novgorod

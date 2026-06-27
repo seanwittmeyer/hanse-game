@@ -22,6 +22,7 @@ var __LOG=[];
   var p=_setup();
   p.vessels=[ {style:'gruit',q:1,step:1,ready:1,act:'source'}, null ];   // a Ready Gruit whose Tap = Source +2 goods
   p.grain=1; p.hops=0; p.upgrades=[]; p.flipped=[];                       // Granary Right costs 3G — unaffordable at 1G
+  S.impDisplay=['granary','cellar','vessel','hopgarden']; S.impDeck=[];   // v82: force Granary face-up so the Tap→Buy chain is deterministic
   _assert(!canPay(p,IMPROVEMENTS.granary.cost),'(a) precondition: cannot afford Granary (3G) with 1G');
   enterCellarMenu('stops');
   _assert(UI.sub==='tap'&&!!UI.cellar,'(a) Cellar menu opened (UI.sub tap + UI.cellar)');

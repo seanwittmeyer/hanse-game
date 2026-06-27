@@ -240,7 +240,15 @@ type + its `G/H` cost*; permanent.
 The few upgrades that are inherently **private** (don't fit a public slot) stay as brewery
 improvements, **bought at the CELLAR for goods** (v1.7 — moved from the Market; distinct from the
 earned-and-placed Buildings). The **improvements area holds at most 4 tiles** (`IMP_AREA_CAP`) — these plus any
-**flipped buildings** (§2):
+**flipped buildings** (§2).
+
+> **v82 "Scarce Improvements" — a deck + a face-up display of 4 (`IMP_DISPLAY`), not an open catalog.** The
+> improvement tiles form a **shuffled deck of `n − 1` copies of each of the 7 types** (`n` = players: 2p → 7
+> tiles · 3p → 14 · 4p → 21), feeding a **face-up display of 4** at the Cellar that refills from the deck — the
+> same deck/display grammar as the Buildings (§3C). **Only the 4 face-up tiles are buyable**, so the upgrades are
+> now a **contested supply** (with `n − 1` copies, the table competes for them and not everyone fits every one).
+> A house still can't own two of the same type. Box add: ~**21 improvement tiles** (3 copies × 7 types covers
+> up to 4p). *(The Overland "free Improvement" Staple Right is a granted fit, outside the display.)*
 
 | Improvement | Effect ⚙ | Buy ⚙ (v1.7: −1 G) |
 |---|---|---|
@@ -339,7 +347,7 @@ worker placed free turn 1.
 | B Ships (deck) | 20 | 2 hulls × 4 kontore |
 | **C Buildings** | **~18** | **~15 designs** |
 | D Recipes (cards) | ~16 | 4 (+2 printed starts) |
-| E Improvements | ~28 | 7 |
+| E Improvements | ~21 (deck: `n−1`×7; 3×7 at 4p) | 7 |
 | Charter contracts | ~16 | 1 |
 
 Plus 1 main board · 1 destination board · 4 brewery boards · wooden cubes (G/H) · presence

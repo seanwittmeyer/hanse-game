@@ -303,6 +303,16 @@ choice, not a buffet. *(v1.7 moved the buy from the Market to the Cellar — sim
 Market action's opportunity cost, not the goods. The free-starting-improvement study makes **Hop Garden** the
 strongest in the hops economy.)*
 
+**v82 "Scarce Improvements" — the improvements are now a SHUFFLED DECK + a face-up DISPLAY of 4, not an
+always-available catalog.** The deck holds **`n − 1` copies of each of the 7 improvement types** (`n` = player
+count: 2p → 1 each = 7 tiles · 3p → 2 each = 14 · 4p → 3 each = 21), shuffled; deal **4 face-up** at the Cellar,
+refilling from the deck as tiles are bought (mirrors the Building deck/display, §5a). **Only what's face-up is
+buyable** — so the private upgrades become a **contested supply**: with `n − 1` copies the table races for them,
+and not everyone can fit every improvement (the 4-player ring's slot-contention now reaches the private engine).
+A player still cannot own two of the same type (a face-up tile they already own shows greyed). Everything else
+holds — the Cellar buy, the `4 G`/`3 G` costs, the 4-tile area cap. *(The Overland "free Improvement" Staple
+Right stays a free fit — a granted upgrade, not a purchase from the display.)*
+
 ---
 
 ## 9. Goods & storage

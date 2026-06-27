@@ -574,15 +574,17 @@ const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills 
 const WHARFAGE=1;        // owner's points cut when a rival routes through their building (+1 with Almoner's Stall)
 const DEVELOP_PTS=3;     // v1.2 developer ★: a Building a RIVAL overbuilt returns flipped to its Wild+★ back, worth this at game end
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
-// Market (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
-const IMPROVE=[   // Upgrades / private improvements = PURPLE · v1.7: −1 G each, bought at the CELLAR
-  {ic:'wrench',     nm:'Extra Vessel',   act:'+1 vessel · cap 3', g:4, c:'#5b3a8e', n:4},
-  {ic:'wrench',     nm:'Aging Cellar',   act:'maturation −1 step', g:4, c:'#5b3a8e', n:4},
-  {ic:'badge-plus', nm:'Granary Right',  act:'gain '+LU('wheat','g ic')+' → +1', g:3, c:'#5b3a8e', n:4},
-  {ic:'badge-plus', nm:'Hop Garden',     act:'gain '+LU('sprout','h ic')+' → +1', g:3, c:'#5b3a8e', n:4},
-  {ic:'package-plus',nm:'Harbor Crane',  act:'Harbor loads 2 casks', g:3, c:'#5b3a8e', n:4},
-  {ic:'snowflake',  nm:'Lagering Cellar',act:'+1 age a cask each turn', g:3, c:'#5b3a8e', n:4},
-  {ic:'anchor',     nm:'Private Quay',   act:'ship casks from vessels', g:4, c:'#5b3a8e', n:4},
+// CELLAR (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
+// v82 "Scarce Improvements": these now form a SHUFFLED DECK of (n−1) copies of each type (n=players) feeding a
+// face-up DISPLAY of 4 at the Cellar (refills from the deck). 3 copies/type covers a 4-player deck (n−1=3).
+const IMPROVE=[   // Upgrades / private improvements = PURPLE · v1.7: −1 G each, bought at the CELLAR · v82: deck of n−1/type (3 each = the 4p deck)
+  {ic:'wrench',     nm:'Extra Vessel',   act:'+1 vessel · cap 3', g:4, c:'#5b3a8e', n:3},
+  {ic:'wrench',     nm:'Aging Cellar',   act:'maturation −1 step', g:4, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Granary Right',  act:'gain '+LU('wheat','g ic')+' → +1', g:3, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Hop Garden',     act:'gain '+LU('sprout','h ic')+' → +1', g:3, c:'#5b3a8e', n:3},
+  {ic:'package-plus',nm:'Harbor Crane',  act:'Harbor loads 2 casks', g:3, c:'#5b3a8e', n:3},
+  {ic:'snowflake',  nm:'Lagering Cellar',act:'+1 age a cask each turn', g:3, c:'#5b3a8e', n:3},
+  {ic:'anchor',     nm:'Private Quay',   act:'ship casks from vessels', g:4, c:'#5b3a8e', n:3},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a

@@ -241,8 +241,8 @@ function botTap(p){
   if(cellarCanAge(p)){cellarMenuAge();return;}
   var ready=readyInVessels(p);
   if(cellarCanTap(p)&&ready.length&&emptySlots().length===0){ready.sort(function(a,b){return a.c.q-b.c.q;});tapPick('v:'+ready[0].i);return;}   // relieve a jam
-  if(cellarCanImp(p)){var pref=['hopgarden','granary','cellar','vessel'];
-    for(var i=0;i<pref.length;i++){var k=pref[i];if(grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&p.grain>=(IMPROVEMENTS[k].cost.g||0)+1){buyImprovement(k);return;}}}
+  if(cellarCanImp(p)){var pref=['hopgarden','granary','cellar','vessel'];   // v82: only buy what's face-up in the scarce display
+    for(var i=0;i<pref.length;i++){var k=pref[i];if((S.impDisplay||[]).includes(k)&&grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&p.grain>=(IMPROVEMENTS[k].cost.g||0)+1){buyImprovement(k);return;}}}
   cellarDone();}
 
 function botActOnce(){var p=cur();var U=UI.sub;
