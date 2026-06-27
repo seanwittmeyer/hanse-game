@@ -70,22 +70,27 @@ var __LOG=[];
   _assert(!UI.cellar||UI.cellar.usedAge===true||UI.sub==='stops'||UI.sub==='end','(b) Age consumed / visit progressed');
 })();
 
-// ---------- once-per-visit + Undo ----------
+// ---------- v83: Age once-per-visit · Tap REPEATABLE (multi-tap) · Undo ----------
 (function(){
   var p=_setup();
-  p.vessels=[ {style:'mumme',q:4,step:1,ready:4,act:'source'}, {style:'gruit',q:1,step:1,ready:1,act:'source'} ];  // one maturing + one Ready
-  p.grain=2; p.hops=0;
+  p.maxVessels=3;
+  p.vessels=[ {style:'mumme',q:4,step:1,ready:4,act:'source'}, {style:'gruit',q:1,step:1,ready:1,act:'source'}, {style:'gruit',q:1,step:1,ready:1,act:'source'} ];  // one maturing + TWO Ready
+  p.grain=0; p.hops=0;
   enterCellarMenu('stops');
   _assert(cellarCanAge(p)&&cellarCanTap(p),'(c) both Age and Tap available at open');
   cellarMenuAge(); var vi=0; ageAllot(vi); if(UI.sub==='age') ageDone();
   _assert(UI.cellar.usedAge===true,'(c) Age flagged used');
   _assert(cellarCanAge(p)===false,'(c) Age cannot be taken twice in one visit (once-per-visit)');
   var snapBeforeTap=undoStack.length;
-  tapPick('v:1');                                                        // Tap the Ready Gruit
+  tapPick('v:1');                                                        // Tap the FIRST Ready Gruit
   if(UI.sub==='source') srcTake(2,0);
-  _assert(UI.cellar&&UI.cellar.usedTap===true,'(c) Tap flagged used');
-  _assert(cellarCanTap(p)===false,'(c) Tap cannot be taken twice in one visit');
-  // Undo the tap+take: pop back through the snapshots
+  _assert(UI.cellar&&UI.cellar.usedTap===true,'(c) Tap recorded (usedTap)');
+  _assert(cellarCanTap(p)===true,'(c) v83: Tap is REPEATABLE — a second Ready cask can still be tapped in the same visit');
+  tapPick('v:2');                                                        // Tap the SECOND Ready Gruit (multi-tap, one visit)
+  if(UI.sub==='source') srcTake(2,0);
+  _assert(p.grain===4,'(c) v83: BOTH taps fired (2 Gruit Source → +4 grain in one Cellar visit): '+p.grain);
+  _assert(cellarCanTap(p)===false,'(c) no Ready casks remain → Tap no longer offered');
+  // Undo back through the two taps: pop the snapshots
   while(undoStack.length>=snapBeforeTap+1) doUndo();
   _assert(UI.cellar&&UI.cellar.usedTap===false,'(c) Undo restored the menu state (usedTap back to false)');
 })();

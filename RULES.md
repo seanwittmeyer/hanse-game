@@ -155,9 +155,11 @@ The Cellar visit is a small **menu you work through in ANY ORDER** until you cho
 steps **chain** (resources/casks one step produces are available to the next *in the same visit*). The menu:
 - **Age** — gain **3 age points** ⚙ and allocate across your vessels (each cask also ages **+1** at the
   start of your turn). Once per visit.
-- **Tap one cask** (v1.3) — take a Ready cask **from a vessel** *or* one of **your slots**, fire its
-  slot-action **once**, then **discard** it — freeing the vessel, or **recalling** it off a slot
-  (clearing the slot for a better cask). The relief valve / repositioning tool; **one Tap per visit** ⚙.
+- **Tap casks** (v1.3 · **v83: repeatable**) — take a Ready cask **from a vessel** *or* one of **your
+  slots**, fire its slot-action **once**, then **discard** it — freeing the vessel, or **recalling** it off a
+  slot (clearing the slot for a better cask). The relief valve / repositioning tool. **v83: you may Tap any
+  number of casks per visit**, in any order with Age / Blend / buy-Improvement (the old "one Tap per visit"
+  cap is retired) — so e.g. *Age · Tap · Tap · buy an Improvement* is one legal Cellar visit ⚙.
 - **Buy a private Improvement** (v1.7 — moved from the Market; §8) — pay its goods cost into your
   improvements area (cap **4** ⚙).
 - **Blend** (Specialty Beers expansion only) — combine two Ready vessel casks into one premium cask

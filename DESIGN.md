@@ -179,6 +179,29 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
 
+**v83 — "Free Tap": the Cellar's Tap becomes repeatable (multi-tap per visit)** *(2026-06-27, `play.html` KEY v83)* —
+The Cellar **Tap** (discard a Ready cask from a vessel/slot → fire its action once, freeing the vessel or
+recalling it off a slot) was **once per visit**. v83 makes it **repeatable**: tap any number of your Ready casks
+in one Cellar visit, in any order with **Age** (still once — it's a fixed pool), **Blend**, and **buy-Improvement**
+(which already repeated). So *Age · Tap · Tap · buy an Improvement* is one legal visit. **Why:** the once-cap was
+an artificial restriction on the only flexible station; lifting it lets a held-cask-heavy brewery cash several
+casks' actions (and unclog several vessels) in a turn — a real engine/Floor-adjacent play, and a stronger
+relief valve for the wharf-clog Tap was added (v1.3) to cure. **Self-limiting:** each tap *consumes* a cask, so
+the option is bounded by your Ready casks (no loop), and tapping spends cargo you could have shipped/enshrined —
+a genuine trade-off, not free value. **Engine (small diff):** `cellarCanTap` drops the `usedTap` gate; the render
+shows a Tap button per Ready cask every visit; `usedTap` is **repurposed as a throttle that keeps the greedy
+AI/sim bot tapping once** (jam-relief) so the v82 robustness/balance profile is preserved for a clean A/B; the MC
+`legalActions` already enumerates per-target, so the **strong AI (GM/CM) gains multi-tap** as a real search
+option. **Methodology (same as v82):** the greedy bot is throttled → `sim.js` is a no-regression gate only; the
+real measure is the **MC oracle** A/B (does multi-tap shift the strong AI's pace — more taps = fewer voyages =
+a slower clock? — or its win composition). *Gates (KEY v83):* `verify-cellar` (rewritten test (c): two Ready
+Gruits → both tapped in one visit, +4 grain) + `ai-render-smoke` (incl. full Cellarmaster w/ all expansions, now
+free to multi-tap) **PASS**; base `sim.js 500` → **0 crash/deadlock 2–4p, ~98–100% pace-in-band, clock-dominant**
+(unchanged vs v82, as designed); AI-ladder + GM/CM oracle A/B (v83 vs v82) recorded in `playtests/`. *(Open ⚙:
+whether multi-tap measurably lengthens strong-AI games toward the round ceiling — if so, the lever is the clock
+`SAILED_CAP`, not re-capping Tap; and whether the greedy bot should learn to exploit multi-tap so `sim.js` can
+price it.)*
+
 **v82 — "Scarce Improvements": the private upgrades become a contested deck + display of 4** *(2026-06-27, `play.html` KEY v82)* —
 The private brewery improvements were an **always-available catalog** (every house could fit one of each of the 7
 types, supply-unlimited). v82 makes them a **shuffled deck of `n − 1` copies of each type** (n = players: 2p →
