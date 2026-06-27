@@ -119,6 +119,7 @@
   .ccard .ce-row.sb{justify-content:space-between}
   .ccard .cq{display:inline-flex;align-items:center;gap:.02in;font-weight:900;font-size:.2in;line-height:1;flex:0 0 auto}
   .ccard .cq svg,.ccard .cq .ic{width:.17in;height:.17in;stroke-width:2.2}
+  .ccard .cq.big{font-size:.4in} .ccard .cq.big svg,.ccard .cq.big .ic{width:.34in;height:.34in}   /* the front top-end quality, 2× */
   .ccard .cnm{font-variant:small-caps;font-weight:bold;font-size:.165in;line-height:1.02}
   .ccard .ccost{display:inline-flex;gap:.05in;font-weight:bold;font-size:.135in;align-items:center}
   .ccard .ccost .gc{gap:.02in} .ccard .ccost .gc svg,.ccard .ccost .gc .ic{width:.14in;height:.14in}
@@ -756,11 +757,11 @@ function caskCardFront(d,act){
   for(let i=1;i<d.ready;i++)track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step">'+i+'</div>';
   track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step rdy">Ready</div>';
   return '<div class="ccard cc-front" style="--c:'+d.c+'">'
-    +'<div class="ce top"><div class="ce-row sb"><span class="cq">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span></div>'
-      +'<div class="ce-row sb"><span class="clbl">brew</span><span class="ccost">'+c+'</span></div></div>'
+    +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span></div>'
+      +'<div class="ce-row" style="justify-content:flex-end"><span class="ccost">'+c+'</span></div></div>'
     +'<div class="cc-age"><span class="agl">'+LU('hourglass')+'Aging</span><div class="cc-agerow">'+track+'</div>'
       +'<span class="nn">a vessel marker advances 1/turn; a cellar marker skips a step</span></div>'
-    +'<div class="ce bot"><div class="ce-row"><span class="cq">'+LU(QI)+d.q+'</span><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div></div>'
+    +'<div class="ce bot"><div class="ce-row sb"><span class="cq">'+LU(QI)+d.q+'</span><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div></div>'
   +'</div>';
 }
 function caskCardBack(d,act){
