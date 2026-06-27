@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · Large Tiles (v2)</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · Cask Cards (v2)</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -110,6 +110,37 @@
   .tile.bback .bb-v{display:flex;align-items:center;gap:.03in;font-weight:900;font-size:.36in;line-height:1}
   .tile.bback .bb-v svg,.tile.bback .bb-v .ic{width:.28in;height:.28in;color:#ffd24a}
   .tile.bback .bb-l{font-variant:small-caps;font-size:.1in;opacity:.85;letter-spacing:.3px}
+  /* ====== printables2: CASK CARDS (double-sided, 2×3) — FRONT buy/age (aging track) · BACK brewed (action) ====== */
+  .ccard{width:2in;height:3in;background:var(--c,#777);color:#fff;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.5)}
+  .ccard .ce{padding:.08in .1in;display:flex;flex-direction:column;gap:.035in;flex:0 0 auto}
+  .ccard .ce.bot{padding-top:.05in}
+  .ccard .ce-row{display:flex;align-items:center;gap:.06in}
+  .ccard .ce-row.sb{justify-content:space-between}
+  .ccard .cq{display:inline-flex;align-items:center;gap:.02in;font-weight:900;font-size:.2in;line-height:1;flex:0 0 auto}
+  .ccard .cq svg,.ccard .cq .ic{width:.17in;height:.17in;stroke-width:2.2}
+  .ccard .cnm{font-variant:small-caps;font-weight:bold;font-size:.165in;line-height:1.02}
+  .ccard .ccost{display:inline-flex;gap:.05in;font-weight:bold;font-size:.135in;align-items:center}
+  .ccard .ccost .gc{gap:.02in} .ccard .ccost .gc svg,.ccard .ccost .gc .ic{width:.14in;height:.14in}
+  .ccard .clbl{font-size:.085in;font-style:italic;opacity:.85}
+  .ccard .cact{display:flex;align-items:center;gap:.05in;background:rgba(0,0,0,.3);border-radius:.05in;padding:.045in .06in;font-size:.12in;line-height:1.1}
+  .ccard .cact .ac{display:inline-flex;align-items:center;justify-content:center;width:.27in;height:.27in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
+  .ccard .cact .ac svg,.ccard .cact .ac .ic{width:.15in;height:.15in;color:#23201c;stroke-width:2.1}
+  .ccard .cc-mark{width:.3in;height:.3in;border:1.6px dashed rgba(255,255,255,.85);border-radius:.05in;flex:0 0 auto;margin-left:auto}
+  /* aging track on the FRONT centre */
+  .cc-age{margin:.04in .1in;background:rgba(255,255,255,.88);color:var(--ink);border-radius:.07in;padding:.07in .06in;
+    display:flex;flex-direction:column;align-items:center;gap:.05in;flex:1;justify-content:center}
+  .cc-age .agl{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--ink2);display:flex;align-items:center;gap:.04in}
+  .cc-age .agl svg,.cc-age .agl .ic{width:.13in;height:.13in}
+  .cc-agerow{display:flex;gap:.04in;align-items:center;flex-wrap:wrap;justify-content:center}
+  .cc-step{width:.3in;height:.3in;border:1.5px solid var(--ink2);border-radius:.05in;display:flex;align-items:center;justify-content:center;font-size:.12in;font-weight:bold;color:var(--ink2);background:rgba(255,255,255,.6)}
+  .cc-arr{color:var(--ink2);display:flex;align-items:center} .cc-arr svg,.cc-arr .ic{width:.13in;height:.13in}
+  .cc-step.rdy{width:auto;padding:0 .07in;border-color:var(--green);background:rgba(74,107,58,.2);color:var(--green);font-variant:small-caps}
+  .cc-age .nn{font-size:.07in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.15;max-width:1.7in}
+  /* BACK centre */
+  .cc-big{flex:1;display:flex;align-items:center;justify-content:center;opacity:.32}
+  .cc-big svg,.cc-big .ic{width:.85in;height:.85in}
+  .cc-back .ce.bot{gap:.05in}
   /* ship NUMBERED BERTHS — pinned to the BOTTOM with the quality gate */
   .ts .berths{display:flex;align-items:center;justify-content:center;gap:.04in}
   .ts .berths .bn{width:.235in;height:.235in;border:1.3px solid rgba(255,255,255,.9);border-radius:.03in;
@@ -364,10 +395,10 @@
   .stn .bigic svg,.stn .bigic .ic{width:.8in;height:.8in;stroke-width:1.6}
   .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.32in;line-height:1}
   /* the action line, in the board's icon grammar: "/" = or · juxtaposed = both · ":" = per-each */
-  .stn .yield{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.06in;margin-top:.05in;opacity:.95}
-  .stn .yield svg,.stn .yield .ic{width:.32in;height:.32in}
-  .stn .yield b{font-size:.3in;font-weight:900;line-height:1}
-  .stn .yield .sep{font-weight:bold;font-size:.26in;opacity:.85;line-height:1}
+  .stn .yield{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:.035in;margin-top:.06in;opacity:.95}
+  .stn .yield svg,.stn .yield .ic{width:.22in;height:.22in}
+  .stn .yield b{font-size:.2in;font-weight:900;line-height:1}
+  .stn .yield .sep{font-weight:bold;font-size:.15in;opacity:.85;line-height:1}
   .stn.A{background:linear-gradient(155deg,#cda522,#9c7414)} .stn.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .stn.C{background:linear-gradient(155deg,#3d6b7e,#244554)} .stn.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
   .mb-side{flex:1;display:flex;flex-direction:column;gap:.055in;min-width:0}
@@ -400,8 +431,9 @@
   .trk-h svg,.trk-h .ic{width:.14in;height:.14in}
   .trk-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;color:var(--ink2);margin-left:.06in}
   /* the WHARF board is a CROSS — the cut follows the plus outline; the 4 corners fall away */
-  .mboard.cross{background:var(--parch);border:none;border-radius:0;padding:0;display:block;
-    clip-path:polygon(25.69% 0, 74.31% 0, 74.31% 25.69%, 100% 25.69%, 100% 74.31%, 74.31% 74.31%, 74.31% 100%, 25.69% 100%, 25.69% 74.31%, 0 74.31%, 0 25.69%, 25.69% 25.69%)}
+  /* +.3in outline padding: the grid sits inset, the cut plus runs .3in outside the slots */
+  .mboard.cross{background:var(--parch);border:none;border-radius:0;padding:.3in;display:block;
+    clip-path:polygon(24.35% 0, 75.65% 0, 75.65% 24.35%, 100% 24.35%, 100% 75.65%, 75.65% 75.65%, 75.65% 100%, 24.35% 100%, 24.35% 75.65%, 0 75.65%, 0 24.35%, 24.35% 24.35%)}
   .mboard.supply{display:flex;flex-direction:column}
   .mboard.supply .disp{flex:0 0 auto;margin-top:0}
   .mboard.supply .tracks{flex:0 0 auto}
@@ -511,10 +543,10 @@
 </head>
 <body>
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v2.1 &ldquo;Staple Rights&rdquo; · LARGE TILES (casks 2.5″ · ships/buildings 2″)</span></h1>
+  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v2.1 &ldquo;Staple Rights&rdquo; · casks = double-sided CARDS · ships/buildings 2″ tiles</span></h1>
   <button class="bartoggle" id="bartoggle" onclick="toggleBar()" title="Collapse / expand the toolbar">▾ Hide</button>
   <button onclick="window.print()">🖨 Print</button>
-  <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
+  <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles &amp; Cards</button><button id="vimps" onclick="setView('imps')">Improvements</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
   <span class="seg"><button id="bfull" class="on" onclick="setMode('full')">Full set</button><button id="bproof" onclick="setMode('proof')">Proof (1 each)</button></span>
   <span class="seg"><button id="lart" class="on" onclick="setLayer('art')">ART layer</button><button id="lcut" onclick="setLayer('cut')">CUT layer</button></span>
   <span class="note"><b>US Letter · LANDSCAPE · 100%</b> (verify the 3-inch bar). <b>Print to PDF</b> (the 🖨 buttons; in the dialog: Save as PDF, scale 100%, margins default, <b>“Background graphics” ON</b>) — vector-perfect, places in Affinity at exact size. The cut guides &amp; registration marks print with the art; toggle the <b>CUT layer</b> to print a guide-only sheet. Card sheets print their grey cut guides with the art. Tiles are one unbroken grid — neighbours are the bleed.</span>
@@ -653,7 +685,7 @@ const OWN_DISCS=14;                  // ownership / presence discs per colour �
 const PG={w:10.4,h:7.9,y0:0.45,yMax:7.62};
 const TILE_GEO={w:22,h:15,y0:0.45,yMax:14.72};   // LARGE-FORMAT tile sheet (laser cutter): all tiles on 22×15in (17 cols × 11 rows of 1.25in = 187 cap; 160 fronts fit on one)
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
-const SIZE={tile:[1.25,1.25],cask:[2.5,2.5],ship:[2,2],bld:[2,2],imp:[1.25,1.25],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // printables2 scale-up: casks 2.5″ · ships/buildings 2″ · improvements 1.25″ · ownership frames 2.5″
+const SIZE={tile:[1.25,1.25],caskc:[2,3],cask:[2.5,2.5],ship:[2,2],bld:[2,2],imp:[1.25,1.25],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // printables2 v3: casks are 2×3 double-sided CARDS · ships/buildings 2″ tiles · improvements 1.25″ (separate) · ownership frames 2.5″
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
@@ -662,7 +694,7 @@ function toggleBar(){const bar=document.getElementById('bar');const c=bar.classL
   document.getElementById('bartoggle').textContent=c?'▸ Tools':'▾ Hide';
   try{localStorage.setItem('pnp_bar_collapsed',c?'1':'0');}catch(e){}}
 function setMode(m){MODE=m;document.getElementById('bproof').classList.toggle('on',m==='proof');document.getElementById('bfull').classList.toggle('on',m==='full');render();}
-function setView(v){VIEW=v;['all','boards','tiles','bits','cards','list'].forEach(x=>document.getElementById('v'+x).classList.toggle('on',v===x));render();}
+function setView(v){VIEW=v;['all','boards','tiles','imps','bits','cards','list'].forEach(x=>document.getElementById('v'+x).classList.toggle('on',v===x));render();}
 function setLayer(l){LAYER=l;document.getElementById('lart').classList.toggle('on',l==='art');document.getElementById('lcut').classList.toggle('on',l==='cut');
   document.body.classList.toggle('cut',l==='cut');}   // pure CSS — layout never changes between layers
 
@@ -711,6 +743,31 @@ function improveTile(d){return '<div class="tile imp" style="--c:'+(d.c||'#5b3a8
   +'<div class="imp-top"><span class="bigic">'+LU(d.ic)+'</span><span class="imp-cost">'+cost(d.g,d.h)+'</span></div>'
   +'<div class="imp-nm">'+d.nm+'</div>'
   +'<div class="imp-act">'+d.act+'</div></div>';}
+// printables2 v3: a CASK is a double-sided CARD (2×3). FRONT = the buy/age side: Q+name on the top end, brew
+// cost under it, the AGING TRACK in the centre (the card carries its own step count — so the player-board
+// maturation track + cellar markers come off the board), and Q+action on the bottom end. BACK = the brewed
+// side: Q+name + a die/presence space on the top end, the action just above the bottom end, Q on the bottom.
+// (act = the drawn slot-action {ai,act}; Gruit passes its pinned Source — the printed mix IS the brew-draw.)
+function caskCardFront(d,act){
+  let c=cost(d.g,d.h);if(d.alt)c+='<span style="opacity:.85">/</span>'+cost(d.alt[0],d.alt[1]);
+  let track='';for(let i=1;i<=d.ready;i++){if(i>1)track+='<span class="cc-arr">'+LU('chevron-right')+'</span>';track+='<div class="cc-step">'+i+'</div>';}
+  track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step rdy">Ready</div>';
+  return '<div class="ccard cc-front" style="--c:'+d.c+'">'
+    +'<div class="ce top"><div class="ce-row sb"><span class="cq">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span></div>'
+      +'<div class="ce-row sb"><span class="clbl">brew</span><span class="ccost">'+c+'</span></div></div>'
+    +'<div class="cc-age"><span class="agl">'+LU('hourglass')+'Aging</span><div class="cc-agerow">'+track+'</div>'
+      +'<span class="nn">a vessel marker advances 1/turn; a cellar marker skips a step</span></div>'
+    +'<div class="ce bot"><div class="ce-row"><span class="cq">'+LU(QI)+d.q+'</span><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div></div>'
+  +'</div>';
+}
+function caskCardBack(d,act){
+  return '<div class="ccard cc-back" style="--c:'+d.c+'">'
+    +'<div class="ce top"><div class="ce-row"><span class="cq">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span><span class="cc-mark" title="quality die / presence marker"></span></div></div>'
+    +'<div class="cc-big">'+LU('beer')+'</div>'
+    +'<div class="ce bot"><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div>'
+      +'<div class="ce-row"><span class="cq">'+LU(QI)+d.q+'</span><span class="clbl">'+d.nm+'</span></div></div>'
+  +'</div>';
+}
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
 function disc(c){return '<div class="disc" style="--c:'+c+'">'+LU('circle')+'</div>';}
 // BUILDING OWNERSHIP FRAME (printables2) — a 2.5in player-colour base; a 2in Building tile sits on it, the
@@ -1060,12 +1117,12 @@ function boardPageLg(pages,section,label,html,w,h){
 // printables2: the Wharf (a CROSS) + the Supply board, side by side on ONE large 22×15 sheet.
 function wharfSupplySheet(pages){
   const G=TILE_GEO;const pg=newPage(pages,'boards','Main board — the Wharf (cross) + Supply board',G);
-  // WHARF cross — its 4×4 grid (2.5in cells + .3in gaps) is 10.9in square; the cut follows the plus outline.
-  const W=10.9, wx=0.7, wy=2.4;
+  // WHARF cross — the 4×4 grid (2.5in cells + .3in gaps) is 10.9in; +.3in outline padding → an 11.5in board.
+  const W=11.5, wx=0.4, wy=1.9;
   pg.items.push({x:wx,y:wy-0.72,w:W,h:0.55,html:'<div class="sheetlbl">'+LU('anchor')+'The Wharf<span class="sub">Source → Brew → Age → Ship</span></div>'});
   pg.items.push({x:wx,y:wy,w:W,h:W,html:wharfCross()});
-  const n=2.8,m=8.1,L=10.9;
-  addPolyCut(pg,[[n,0],[m,0],[m,n],[L,n],[L,m],[m,m],[m,L],[n,L],[n,m],[0,m],[0,n],[n,n]].map(p=>[+(wx+p[0]).toFixed(3),+(wy+p[1]).toFixed(3)]));
+  const a=2.8,b=8.7,L=11.5;   // the cut plus runs .3in OUTSIDE the slots
+  addPolyCut(pg,[[a,0],[b,0],[b,a],[L,a],[L,b],[b,b],[b,L],[a,L],[a,b],[0,b],[0,a],[a,a]].map(p=>[+(wx+p[0]).toFixed(3),+(wy+p[1]).toFixed(3)]));
   // SUPPLY board (right) — the two market displays + the three shared tracks.
   const sx=12.2, sy=1.0, sw=9.3, sh=13.0;
   pg.items.push({x:sx,y:sy,w:sw,h:sh,html:supplyBoard()});
@@ -1095,32 +1152,33 @@ function buildPages(){
   //     on the SAME full 1.25in cut grid. Flip the backs sheet LEFT↔RIGHT (around the tall edge) and glue it under
   //     the fronts → a Wild lands behind every building, blanks behind the rest; cut the sandwich once.
   const TG=TILE_GEO;
-  const LBL='Tiles — FRONTS · LARGE 22×15 (casks 2.5″ · ships & buildings 2″ · improvements 1.25″)';
-  // build every front tile, tagged with its family + size KIND + whether it's a building (→ a Wild rear).
-  // printables2 scale-up: the inner art is the tuned 1.25in tile, scaled by CSS to the cut size of its kind.
+  // printables2 v3: CASKS are double-sided CARDS (2×3); SHIPS & BUILDINGS stay 2″ tiles; IMPROVEMENTS move to
+  // their own sheet (below). Each cask front records its data+action so the BACKS pass can print the brewed side.
   const fronts=[];
-  // casks (2.5″): Gruit all-Source (pinned); Q2+ cycle the draw-pool (Q4/Q5 include Wild) — the printed mix IS the brew-draw
+  // cask cards: Gruit all-Source (pinned); Q2+ cycle the draw-pool (Q4/Q5 include Wild) — the printed mix IS the brew-draw
   CASKS.forEach(d=>{const pool=d.pin?[d.pin]:(d.wild?CASK_POOL.concat([CASK_WILD]):CASK_POOL);
-    for(let i=0;i<cnt(d.n);i++)fronts.push({fam:'Casks',kind:'cask',html:caskTile(d,pool[i%pool.length])});});
+    for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];fronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
   const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
   shipList.forEach(([hull,dest])=>fronts.push({fam:'Ships',kind:'ship',html:shipTile(hull,dest)}));   // ships 2″
-  IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)fronts.push({fam:'Improvements',kind:'imp',html:improveTile(d)});});   // improvements stay 1.25″
-  // BUILDING fronts last (2″) so the Wild rears cluster on the backs sheet — the one owned family (value + transform)
-  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)fronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',kind:'bld',bld:true,html:buildingTile(d)});});
-  // pack family-by-family (each family is one contiguous size → its own gapless grid; rows flow page→page on 22×15)
-  ['cask','ship','imp','bld'].forEach(k=>packRun(pages,'tiles',LBL,k,fronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,TG));
+  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)fronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',kind:'bld',bld:true,html:buildingTile(d)});});   // buildings 2″
+  const FLBL='Cask CARDS (front · buy/age) + Ship & Building TILES · LARGE 22×15 (casks 2×3 cards · ships/buildings 2″)';
+  ['caskc','ship','bld'].forEach(k=>packRun(pages,'tiles',FLBL,k,fronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,TG));
   const frontPages=pages.filter(p=>p.section==='tiles');
   // tag front families by pack order (item order across the tile pages == fronts order)
   (function(){let i=0;frontPages.forEach(fp=>fp.items.forEach(()=>{const fam=fronts[i++].fam;(famPages[fam]=famPages[fam]||new Set()).add(pages.indexOf(fp));}));})();
-  // build the matching BACKS sheet(s) = HORIZONTAL MIRROR of each fronts sheet: the SAME full cut grid (mirrored),
-  // with a Wild (+★) only behind each building front, blank elsewhere — flips into register under the fronts.
+  // BACKS = the HORIZONTAL MIRROR of each fronts sheet (flip LEFT↔RIGHT): a cask's brewed side behind each
+  // cask card, a Wild (+★) behind each building, blank behind ships — flips into register under the fronts.
   (function(){let i=0;frontPages.forEach(fp=>{
-    const bp=newPage(pages,'tiles','Tiles — BACKS · LARGE 22×15 (mirror of the fronts: Wild + '+DEVELOP_PTS+'★ behind buildings, blank elsewhere — flip LEFT↔RIGHT)',TG);
+    const bp=newPage(pages,'tiles','BACKS · LARGE 22×15 (mirror — flip LEFT↔RIGHT): cask brewed-side · Wild + '+DEVELOP_PTS+'★ behind buildings · blank behind ships',TG);
     fp.items.forEach(it=>{const f=fronts[i++];const mx=+(TG.w-it.x-it.w).toFixed(4);
-      addRectCut(bp,mx,it.y,it.w,it.h);                                            // full mirrored cut grid (every tile) → registers the sandwich
-      if(f.bld)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:buildingBack()});});  // Wild rear only behind buildings
-    (famPages['Building backs']=famPages['Building backs']||new Set()).add(pages.indexOf(bp));
+      addRectCut(bp,mx,it.y,it.w,it.h);                                            // full mirrored cut grid → registers the sandwich
+      if(f.cask)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:caskCardBack(f.d,f.act)});
+      else if(f.bld)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:buildingBack()});});
+    (famPages['Card/tile backs']=famPages['Card/tile backs']||new Set()).add(pages.indexOf(bp));
   });})();
+  // IMPROVEMENTS — SEPARATE sheet (a different size; to be reworked later). Kept 1.25″ on a letter sheet for now.
+  const imps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)imps.push(improveTile(d));});
+  packRun(pages,'imps','Private improvements — SEPARATE (1.25″ · to be reworked)','imp',imps,'Improvements',famPages);
   // --- TOKENS & BITS ---
   const BL='Tokens & markers — circles cut on the inner ring';
   const toks=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)toks.push(tok(d));});
@@ -1162,8 +1220,8 @@ function checklist(pages,famPages){
   const bVal=BUILDINGS.filter(b=>b.verb==='value'), bTr=BUILDINGS.filter(b=>b.verb==='transform');
   const bValN=bVal.reduce((a,b)=>a+b.n,0), bTrN=bTr.reduce((a,b)=>a+b.n,0);
   const impN=IMPROVE.reduce((a,d)=>a+d.n,0);
-  const backsN=bValN+bTrN;
-  const tileTotal=caskTotal+SHIP_DECK.length+bValN+bTrN+impN+backsN;
+  const backsN=caskTotal+bValN+bTrN;   // cask cards + building tiles are double-sided (ships' backs are blank)
+  const tileTotal=caskTotal+SHIP_DECK.length+bValN+bTrN+backsN;   // improvements are now a SEPARATE sheet
   const row=(bx,nm,n,note)=>'<tr>'+(bx?'<td class="bx"></td>':'<td></td>')+'<td>'+nm+'</td><td class="n">'+n+'</td><td>'+(note||'')+'</td></tr>';
   const bp=pages.filter(p=>p.section==='boards');
   const pbRef=bp.length>4?'S'+bp[3].no+'–S'+bp[bp.length-1].no:'S'+bp[3].no+' (proof: 1 of '+PLAYERS.length+' shown)';
@@ -1175,8 +1233,8 @@ function checklist(pages,famPages){
     +row(1,'Player brewery boards ('+PLAYERS.map(p=>p.nm).join(' · ')+')',PLAYERS.length,pbRef)
     +row(0,'<i>EXPANSION — The Trade Roads (Overland, Staple Rights): 1 inland network board — a tree rooted at HAMBURG; two roads out (WEST to the Bruges gateway → London/Bergen/Rhineland; EAST = the deep Novgorod haul). BRUGES is the lone no-slots gateway (recipe/2 goods); every other node carries Staple-Right SLOTS — the towns Cologne · Frankfurt · Antwerp · Tønsberg · Visby · Tallinn · Pskov AND the kontore London · Bergen · Novgorod (the kontore claim theirs when the caravan arrives, atop their base sea benefit). Each slotted node: quality gate · base delivery ★ · 2–4 SLOTS (distinct one-shot bonuses, flavoured by lane: Rhineland=craft (recipe/brew/age) · London=infrastructure (buildings/improvement) · Bergen=logistics (contracts/goods/vessel) · East=depth/points; Frankfurt=points+Enshrine; Pskov=just a delivery, one slot +8★ then +5★) · an overflow bonus. Frankfurt/Pskov = ◆ deep terminals (scarce). Active slot count scales with player count (print 4, cover the high slots for 2–3p). Per player: presence markers drop into the slot claimed. The caravan rides the Ship action (per VOYAGE = ONE node per owner, gated by cask quality), then each cask aboard claims a slot in load order — no new tile; replaces the kontor majority chart when on. The Q4+ Rhine Charter skips Bruges → Cologne.</i>','—','—')
     +'</table>';
-  h+='<table><tr><th></th><th>Tiles — casks 2.5″ · ships &amp; buildings 2″ · improvements 1.25″ · <b>LARGE 22×15in sheets</b> (laser cutter)</th><th>qty</th><th>sheet</th></tr>'
-    +row(1,'Cask · Gruit Q1 (pinned Source +2 goods · ready 1)','16',pgRef(pages,famPages,'Casks'))
+  h+='<table><tr><th></th><th>Cask CARDS 2×3 (double-sided: buy/age ⇄ brewed) · Ship &amp; Building TILES 2″ · <b>LARGE 22×15in sheets</b></th><th>qty</th><th>sheet</th></tr>'
+    +row(1,'Cask card · Gruit Q1 (pinned Source +2 goods · ready 1)','16',pgRef(pages,famPages,'Cask cards'))
     +row(1,'Cask · Hopped Q2 (G H · ready 1)','20','')
     +row(1,'Cask · Broyhan Q3 (G H H · ready 1)','6','')
     +row(1,'Cask · Keut Q3 (G G H · ready 2 · +1 presence on delivery)','6','')
@@ -1195,9 +1253,9 @@ function checklist(pages,famPages){
     +row(0,'<i>'+bVal.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ')+'</i>','','')
     +row(1,'<b>Buildings · TRANSFORM</b> ('+bTr.length+' designs — the craft &amp; works layer)',bTrN,pgRef(pages,famPages,'Transform Buildings'))
     +row(0,'<i>'+bTr.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ')+'</i>','','')
-    +row(1,'Private improvements ('+IMPROVE.length+' designs — bought at the Cellar, v1.7)',impN,pgRef(pages,famPages,'Improvements'))
+    +row(1,'Private improvements ('+IMPROVE.length+' designs — bought at the Cellar) — <b>SEPARATE sheet, 1.25″, to be reworked</b>',impN,pgRef(pages,famPages,'Improvements'))
     +row(0,'<i>'+IMPROVE.map(d=>d.nm+' ×'+d.n).join(' · ')+'</i>','','')
-    +row(1,'<b>Building backs</b> — the flipped Wild + '+DEVELOP_PTS+'★ developer face (1 per Building tile)',backsN,pgRef(pages,famPages,'Building backs'))
+    +row(1,'<b>Card/tile backs</b> — cask brewed-side (1 per cask card) + the building Wild + '+DEVELOP_PTS+'★ face (1 per Building); blank behind ships',backsN,pgRef(pages,famPages,'Card/tile backs'))
     +row(0,'<i>on the single BACKS sheet (the HORIZONTAL MIRROR of the fronts): a Wild sits behind every building, blank elsewhere. Flip the backs sheet LEFT↔RIGHT &amp; glue under the fronts. Replaces the separate developer chits.</i>','','')
     +'<tr class="tot"><td></td><td>Tile total</td><td class="n">'+tileTotal+'</td><td></td></tr></table>';
   const aidNo=pages.filter(p=>p.section==='cards'&&p.label.indexOf('Player aid')===0).map(p=>p.no).sort((a,b)=>a-b);
