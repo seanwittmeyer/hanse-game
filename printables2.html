@@ -143,6 +143,9 @@
   .cc-big{flex:1;display:flex;align-items:center;justify-content:center;opacity:.32}
   .cc-big svg,.cc-big .ic{width:.85in;height:.85in}
   .cc-back .ce.bot{gap:.05in}
+  /* the BACK ends match (Q + title + a marker space), a little larger */
+  .cc-back .ce .cq{font-size:.24in} .cc-back .ce .cq svg,.cc-back .ce .cq .ic{width:.2in;height:.2in}
+  .cc-back .ce .cnm{font-size:.19in}
   /* ship NUMBERED BERTHS — pinned to the BOTTOM with the quality gate */
   .ts .berths{display:flex;align-items:center;justify-content:center;gap:.04in}
   .ts .berths .bn{width:.235in;height:.235in;border:1.3px solid rgba(255,255,255,.9);border-radius:.03in;
@@ -765,11 +768,12 @@ function caskCardFront(d,act){
   +'</div>';
 }
 function caskCardBack(d,act){
+  // both ends match: Q + title + a die/presence marker space (so the card reads either way it's slid in)
+  const end='<div class="ce-row"><span class="cq">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span><span class="cc-mark" title="quality die / presence marker"></span></div>';
   return '<div class="ccard cc-back" style="--c:'+d.c+'">'
-    +'<div class="ce top"><div class="ce-row"><span class="cq">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span><span class="cc-mark" title="quality die / presence marker"></span></div></div>'
+    +'<div class="ce top">'+end+'</div>'
     +'<div class="cc-big">'+LU('beer')+'</div>'
-    +'<div class="ce bot"><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div>'
-      +'<div class="ce-row"><span class="cq">'+LU(QI)+d.q+'</span><span class="clbl">'+d.nm+'</span></div></div>'
+    +'<div class="ce bot"><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div>'+end+'</div>'
   +'</div>';
 }
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
