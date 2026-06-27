@@ -111,7 +111,7 @@
   .tile.bback .bb-v svg,.tile.bback .bb-v .ic{width:.28in;height:.28in;color:#ffd24a}
   .tile.bback .bb-l{font-variant:small-caps;font-size:.1in;opacity:.85;letter-spacing:.3px}
   /* ====== printables2: CASK CARDS (double-sided, 2×3) — FRONT buy/age (aging track) · BACK brewed (action) ====== */
-  .ccard{width:2in;height:3in;background:var(--c,#777);color:#fff;position:relative;overflow:hidden;
+  .ccard{width:2.5in;height:2.5in;background:var(--c,#777);color:#fff;position:relative;overflow:hidden;
     display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.5)}
   .ccard .ce{padding:.08in .1in;display:flex;flex-direction:column;gap:.035in;flex:0 0 auto}
   .ccard .ce.bot{padding-top:.05in}
@@ -136,6 +136,7 @@
   .cc-step{width:.3in;height:.3in;border:1.5px solid var(--ink2);border-radius:.05in;display:flex;align-items:center;justify-content:center;font-size:.12in;font-weight:bold;color:var(--ink2);background:rgba(255,255,255,.6)}
   .cc-arr{color:var(--ink2);display:flex;align-items:center} .cc-arr svg,.cc-arr .ic{width:.13in;height:.13in}
   .cc-step.rdy{width:auto;padding:0 .07in;border-color:var(--green);background:rgba(74,107,58,.2);color:var(--green);font-variant:small-caps}
+  .cc-step.start{width:auto;padding:0 .06in;border-style:dashed;font-size:.075in;font-variant:small-caps;font-weight:bold;color:var(--ink2)}   /* the vessel marker starts here at brew */
   .cc-age .nn{font-size:.07in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.15;max-width:1.7in}
   /* BACK centre */
   .cc-big{flex:1;display:flex;align-items:center;justify-content:center;opacity:.32}
@@ -685,7 +686,7 @@ const OWN_DISCS=14;                  // ownership / presence discs per colour �
 const PG={w:10.4,h:7.9,y0:0.45,yMax:7.62};
 const TILE_GEO={w:22,h:15,y0:0.45,yMax:14.72};   // LARGE-FORMAT tile sheet (laser cutter): all tiles on 22×15in (17 cols × 11 rows of 1.25in = 187 cap; 160 fronts fit on one)
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
-const SIZE={tile:[1.25,1.25],caskc:[2,3],cask:[2.5,2.5],ship:[2,2],bld:[2,2],imp:[1.25,1.25],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // printables2 v3: casks are 2×3 double-sided CARDS · ships/buildings 2″ tiles · improvements 1.25″ (separate) · ownership frames 2.5″
+const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2,2],bld:[2,2],imp:[1.25,1.25],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // printables2 v3: casks are 2.5″ square double-sided CARDS · ships/buildings 2″ tiles · improvements 1.25″ (separate) · ownership frames 2.5″
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
@@ -750,7 +751,9 @@ function improveTile(d){return '<div class="tile imp" style="--c:'+(d.c||'#5b3a8
 // (act = the drawn slot-action {ai,act}; Gruit passes its pinned Source — the printed mix IS the brew-draw.)
 function caskCardFront(d,act){
   let c=cost(d.g,d.h);if(d.alt)c+='<span style="opacity:.85">/</span>'+cost(d.alt[0],d.alt[1]);
-  let track='';for(let i=1;i<=d.ready;i++){if(i>1)track+='<span class="cc-arr">'+LU('chevron-right')+'</span>';track+='<div class="cc-step">'+i+'</div>';}
+  // START (place the vessel marker here at brew) → advance one step per turn → READY (ready = the step count)
+  let track='<div class="cc-step start">start</div>';
+  for(let i=1;i<d.ready;i++)track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step">'+i+'</div>';
   track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step rdy">Ready</div>';
   return '<div class="ccard cc-front" style="--c:'+d.c+'">'
     +'<div class="ce top"><div class="ce-row sb"><span class="cq">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span></div>'
@@ -1161,7 +1164,7 @@ function buildPages(){
   const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
   shipList.forEach(([hull,dest])=>fronts.push({fam:'Ships',kind:'ship',html:shipTile(hull,dest)}));   // ships 2″
   BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)fronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',kind:'bld',bld:true,html:buildingTile(d)});});   // buildings 2″
-  const FLBL='Cask CARDS (front · buy/age) + Ship & Building TILES · LARGE 22×15 (casks 2×3 cards · ships/buildings 2″)';
+  const FLBL='Cask CARDS (front · buy/age) + Ship & Building TILES · LARGE 22×15 (casks 2.5″ square cards · ships/buildings 2″)';
   ['caskc','ship','bld'].forEach(k=>packRun(pages,'tiles',FLBL,k,fronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,TG));
   const frontPages=pages.filter(p=>p.section==='tiles');
   // tag front families by pack order (item order across the tile pages == fronts order)
@@ -1233,7 +1236,7 @@ function checklist(pages,famPages){
     +row(1,'Player brewery boards ('+PLAYERS.map(p=>p.nm).join(' · ')+')',PLAYERS.length,pbRef)
     +row(0,'<i>EXPANSION — The Trade Roads (Overland, Staple Rights): 1 inland network board — a tree rooted at HAMBURG; two roads out (WEST to the Bruges gateway → London/Bergen/Rhineland; EAST = the deep Novgorod haul). BRUGES is the lone no-slots gateway (recipe/2 goods); every other node carries Staple-Right SLOTS — the towns Cologne · Frankfurt · Antwerp · Tønsberg · Visby · Tallinn · Pskov AND the kontore London · Bergen · Novgorod (the kontore claim theirs when the caravan arrives, atop their base sea benefit). Each slotted node: quality gate · base delivery ★ · 2–4 SLOTS (distinct one-shot bonuses, flavoured by lane: Rhineland=craft (recipe/brew/age) · London=infrastructure (buildings/improvement) · Bergen=logistics (contracts/goods/vessel) · East=depth/points; Frankfurt=points+Enshrine; Pskov=just a delivery, one slot +8★ then +5★) · an overflow bonus. Frankfurt/Pskov = ◆ deep terminals (scarce). Active slot count scales with player count (print 4, cover the high slots for 2–3p). Per player: presence markers drop into the slot claimed. The caravan rides the Ship action (per VOYAGE = ONE node per owner, gated by cask quality), then each cask aboard claims a slot in load order — no new tile; replaces the kontor majority chart when on. The Q4+ Rhine Charter skips Bruges → Cologne.</i>','—','—')
     +'</table>';
-  h+='<table><tr><th></th><th>Cask CARDS 2×3 (double-sided: buy/age ⇄ brewed) · Ship &amp; Building TILES 2″ · <b>LARGE 22×15in sheets</b></th><th>qty</th><th>sheet</th></tr>'
+  h+='<table><tr><th></th><th>Cask CARDS 2.5″ square (double-sided: buy/age ⇄ brewed) · Ship &amp; Building TILES 2″ · <b>LARGE 22×15in sheets</b></th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Cask card · Gruit Q1 (pinned Source +2 goods · ready 1)','16',pgRef(pages,famPages,'Cask cards'))
     +row(1,'Cask · Hopped Q2 (G H · ready 1)','20','')
     +row(1,'Cask · Broyhan Q3 (G H H · ready 1)','6','')
