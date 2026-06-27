@@ -197,10 +197,15 @@ real measure is the **MC oracle** A/B (does multi-tap shift the strong AI's pace
 a slower clock? — or its win composition). *Gates (KEY v83):* `verify-cellar` (rewritten test (c): two Ready
 Gruits → both tapped in one visit, +4 grain) + `ai-render-smoke` (incl. full Cellarmaster w/ all expansions, now
 free to multi-tap) **PASS**; base `sim.js 500` → **0 crash/deadlock 2–4p, ~98–100% pace-in-band, clock-dominant**
-(unchanged vs v82, as designed); AI-ladder + GM/CM oracle A/B (v83 vs v82) recorded in `playtests/`. *(Open ⚙:
-whether multi-tap measurably lengthens strong-AI games toward the round ceiling — if so, the lever is the clock
-`SAILED_CAP`, not re-capping Tap; and whether the greedy bot should learn to exploit multi-tap so `sim.js` can
-price it.)*
+(unchanged vs v82, as designed); AI-ladder (**errors 0** across 28 MC rungs; tiers healthy) + GM/CM oracle A/B (v83 vs v82) in
+`playtests/oracle-{gm,cm}-v83*.txt`. **Measured verdict (2p oracle, small-N/directional):** multi-tap lengthens
+strong-AI games a **mild ~+1.5 rounds** (GM 21.2→22.6, CM 21.1→22.8 — the CM ships slightly fewer casks,
+1.7→1.5/player, since a tap spends cargo), still **well inside the 12–25 band** (ceiling 25); GM's **winner
+ceiling rose** (29.6→35.7 — it extracts more value from the freed option); upgrade acquisition is ~flat. So the
+change reads as a **small buff to the strong-AI's engine play** with a **modest pace cost**, no robustness/ladder
+regression. *(Open ⚙: if multi-tap ever pushes strong-AI games to the ceiling systematically, the lever is the
+clock `SAILED_CAP`, NOT re-capping Tap — per the lessons; and the greedy bot could be taught to exploit multi-tap
+so `sim.js` prices it. At +1.5 rounds, no action needed yet.)*
 
 **v82 — "Scarce Improvements": the private upgrades become a contested deck + display of 4** *(2026-06-27, `play.html` KEY v82)* —
 The private brewery improvements were an **always-available catalog** (every house could fit one of each of the 7
