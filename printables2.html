@@ -459,6 +459,8 @@
   .dslot{width:2in;height:2in;border:1.7px dashed var(--sea);border-radius:.07in;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;color:var(--sea)}
   .dslot svg,.dslot .ic{width:.6in;height:.6in;opacity:.32}
   .dslot.b{border-color:var(--green);color:var(--green)}
+  .bgrid.sm{grid-template-columns:repeat(2,2.5in)}   /* ship market holds 2.5″ ships */
+  .dslot.s,.ddeck.s{width:2.5in;height:2.5in}
   .ddeck{width:2in;height:2in;border-radius:.07in;background:var(--sea);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;
     text-shadow:0 1px 1px rgba(0,0,0,.3);box-shadow:.05in -.05in 0 rgba(0,0,0,.18),inset 0 0 0 1.5px rgba(255,255,255,.22)}
   .ddeck.b{background:var(--green)}
@@ -549,7 +551,7 @@
 </head>
 <body>
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v2.1 &ldquo;Staple Rights&rdquo; · casks = double-sided CARDS · ships/buildings 2″ tiles</span></h1>
+  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v2.1 &ldquo;Staple Rights&rdquo; · casks = CARDS · ships 2.5″ · buildings 2″ (in 2.5″ owner rings)</span></h1>
   <button class="bartoggle" id="bartoggle" onclick="toggleBar()" title="Collapse / expand the toolbar">▾ Hide</button>
   <button onclick="window.print()">🖨 Print</button>
   <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles &amp; Cards</button><button id="vimps" onclick="setView('imps')">Improvements</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
@@ -691,7 +693,7 @@ const OWN_DISCS=14;                  // ownership / presence discs per colour �
 const PG={w:10.4,h:7.9,y0:0.45,yMax:7.62};
 const TILE_GEO={w:22,h:15,y0:0.45,yMax:14.72};   // LARGE-FORMAT tile sheet (laser cutter): all tiles on 22×15in (17 cols × 11 rows of 1.25in = 187 cap; 160 fronts fit on one)
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
-const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2,2],bld:[2,2],imp:[1.25,1.25],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // printables2 v3: casks are 2.5″ square double-sided CARDS · ships/buildings 2″ tiles · improvements 1.25″ (separate) · ownership frames 2.5″
+const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2.5,2.5],bld:[2,2],imp:[1.25,1.25],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // printables2 v3: casks & ships 2.5″ (match the slots) · buildings 2″ (nest in the 2.5″ owner rings) · improvements 1.25″ (separate)
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
@@ -732,7 +734,7 @@ function buildingBack(){return '<div class="tile bback s16" style="--c:#43504a">
 // NEUTRAL destination-bound ship tile (v0.11): hull + capacity · printed destination + quality gate · commission 2 G
 function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
   let berths='';for(let i=1;i<=cap;i++)berths+='<div class="bn">'+i+'</div>';   // numbered load-order berths (v0.16)
-  return '<div class="tile gen ts s16" style="--c:#6f6253">'   // NEUTRAL hull body; printables2: ship → 2.0in
+  return '<div class="tile gen ts s2" style="--c:#6f6253">'   // NEUTRAL hull body; printables2: ship → 2.5in (matches casks & slots)
   +'<div class="t-cost-tr">'+cost(2,0)+'</div>'            // commission cost, top-right (no market icon)
   +'<div class="g-head"><span class="bigic">'+LU('sailboat')+'</span><span class="g-nm">'+(hull==='cog'?'Cog':'Hulk')+'</span></div>'
   +'<div class="g-dest-wrap"><div class="g-dest" style="background:'+d.kc+'">'+LU('landmark')+destNm+'</div></div>'
@@ -1060,7 +1062,7 @@ function supplyBoard(){
     +'<div><div class="disp-h b">'+LU('building-2')+'Building display</div>'
       +'<div class="disp-bd"><div class="bgrid">'+dslot('b')+dslot('b')+dslot('b')+dslot('b')+'</div>'+ddeck('b','Building deck')+'</div></div>'
     +'<div><div class="disp-h">'+LU('sailboat')+'Ship market</div>'
-      +'<div class="bgrid">'+dslot('s')+dslot('s')+dslot('s')+ddeck('s','Ship deck')+'</div></div>'
+      +'<div class="bgrid sm">'+dslot('s')+dslot('s')+dslot('s')+ddeck('s','Ship deck')+'</div></div>'
   +'</div>';
   let clk='';for(let i=1;i<=13;i++){let end='';for(const p in SAILED)if(SAILED[p]===i)end=p+'p';
     clk+='<div class="cc'+(end?' end':'')+'">'+(end?end+'<br>END':'<span class="n">'+i+'</span>')+'</div>';}
@@ -1133,7 +1135,7 @@ function wharfSupplySheet(pages){
   const a=2.8,b=8.7,L=11.5;   // the cut plus runs .3in OUTSIDE the slots
   addPolyCut(pg,[[a,0],[b,0],[b,a],[L,a],[L,b],[b,b],[b,L],[a,L],[a,b],[0,b],[0,a],[a,a]].map(p=>[+(wx+p[0]).toFixed(3),+(wy+p[1]).toFixed(3)]));
   // SUPPLY board (right) — the two market displays + the three shared tracks.
-  const sx=12.2, sy=1.0, sw=9.3, sh=13.0;
+  const sx=12.2, sy=1.0, sw=9.3, sh=13.5;
   pg.items.push({x:sx,y:sy,w:sw,h:sh,html:supplyBoard()});
   pg.rrect={x:sx,y:sy,w:sw,h:sh,r:0.14};
 }
@@ -1170,7 +1172,7 @@ function buildPages(){
   const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
   shipList.forEach(([hull,dest])=>fronts.push({fam:'Ships',kind:'ship',html:shipTile(hull,dest)}));   // ships 2″
   BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)fronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',kind:'bld',bld:true,html:buildingTile(d)});});   // buildings 2″
-  const FLBL='Cask CARDS (front · buy/age) + Ship & Building TILES · LARGE 22×15 (casks 2.5″ square cards · ships/buildings 2″)';
+  const FLBL='Cask CARDS (front · buy/age) + Ship & Building TILES · LARGE 22×15 (casks & ships 2.5″ · buildings 2″)';
   ['caskc','ship','bld'].forEach(k=>packRun(pages,'tiles',FLBL,k,fronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,TG));
   const frontPages=pages.filter(p=>p.section==='tiles');
   // tag front families by pack order (item order across the tile pages == fronts order)
@@ -1242,7 +1244,7 @@ function checklist(pages,famPages){
     +row(1,'Player brewery boards ('+PLAYERS.map(p=>p.nm).join(' · ')+')',PLAYERS.length,pbRef)
     +row(0,'<i>EXPANSION — The Trade Roads (Overland, Staple Rights): 1 inland network board — a tree rooted at HAMBURG; two roads out (WEST to the Bruges gateway → London/Bergen/Rhineland; EAST = the deep Novgorod haul). BRUGES is the lone no-slots gateway (recipe/2 goods); every other node carries Staple-Right SLOTS — the towns Cologne · Frankfurt · Antwerp · Tønsberg · Visby · Tallinn · Pskov AND the kontore London · Bergen · Novgorod (the kontore claim theirs when the caravan arrives, atop their base sea benefit). Each slotted node: quality gate · base delivery ★ · 2–4 SLOTS (distinct one-shot bonuses, flavoured by lane: Rhineland=craft (recipe/brew/age) · London=infrastructure (buildings/improvement) · Bergen=logistics (contracts/goods/vessel) · East=depth/points; Frankfurt=points+Enshrine; Pskov=just a delivery, one slot +8★ then +5★) · an overflow bonus. Frankfurt/Pskov = ◆ deep terminals (scarce). Active slot count scales with player count (print 4, cover the high slots for 2–3p). Per player: presence markers drop into the slot claimed. The caravan rides the Ship action (per VOYAGE = ONE node per owner, gated by cask quality), then each cask aboard claims a slot in load order — no new tile; replaces the kontor majority chart when on. The Q4+ Rhine Charter skips Bruges → Cologne.</i>','—','—')
     +'</table>';
-  h+='<table><tr><th></th><th>Cask CARDS 2.5″ square (double-sided: buy/age ⇄ brewed) · Ship &amp; Building TILES 2″ · <b>LARGE 22×15in sheets</b></th><th>qty</th><th>sheet</th></tr>'
+  h+='<table><tr><th></th><th>Cask CARDS 2.5″ square (double-sided) · Ship TILES 2.5″ · Building TILES 2″ (in 2.5″ owner rings) · <b>LARGE 22×15in sheets</b></th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Cask card · Gruit Q1 (pinned Source +2 goods · ready 1)','16',pgRef(pages,famPages,'Cask cards'))
     +row(1,'Cask · Hopped Q2 (G H · ready 1)','20','')
     +row(1,'Cask · Broyhan Q3 (G H H · ready 1)','6','')
@@ -1256,7 +1258,7 @@ function checklist(pages,famPages){
     +row(1,'Cask · Duckstein Q2 (G H · ready 2 · PINNED Reach · Smoke-Hardy: ships &amp; scores as +1 quality)','8','')
     +row(0,'<i>— CAPSTONE “Jopenbier” (own toggle) — the Q6 vintage super-beer; self-contained value + dock-cellared vintage —</i>','','')
     +row(1,'Cask · Jopenbier Q6 (G G H H H H · ready 4 · PINNED Source · always acquirable; not drafted, not in the Flight)','3','')
-    +row(1,'Ships · NEUTRAL, destination-bound hulls (20 deck: 11 Cog cap 2 / 9 Hulk cap 3)','20',pgRef(pages,famPages,'Ships'))
+    +row(1,'Ships · NEUTRAL, destination-bound hulls · 2.5″ tiles (20 deck: 11 Cog cap 2 / 9 Hulk cap 3)','20',pgRef(pages,famPages,'Ships'))
     +row(0,'<i>destination printed on each: Bruges 5 · London 5 · Bergen 5 · Novgorod 5</i>','','')
     +row(1,'<b>Buildings · VALUE</b> ('+bVal.length+' designs — the demand layer)',bValN,pgRef(pages,famPages,'Value Buildings'))
     +row(0,'<i>'+bVal.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ')+'</i>','','')
