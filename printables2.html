@@ -771,12 +771,13 @@ function caskCardFront(d,act){
   +'</div>';
 }
 function caskCardBack(d,act){
-  // both ends match: Q + title + a die/presence marker space (so the card reads either way it's slid in)
-  const end='<div class="ce-row"><span class="cq">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span><span class="cc-mark" title="quality die / presence marker"></span></div>';
+  // both ends show Q + title; only the BOTTOM end carries the die/presence marker space
+  const q='<span class="cq">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span>';
   return '<div class="ccard cc-back" style="--c:'+d.c+'">'
-    +'<div class="ce top">'+end+'</div>'
+    +'<div class="ce top"><div class="ce-row">'+q+'</div></div>'
     +'<div class="cc-big">'+LU('beer')+'</div>'
-    +'<div class="ce bot"><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div>'+end+'</div>'
+    +'<div class="ce bot"><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div>'
+      +'<div class="ce-row">'+q+'<span class="cc-mark" title="quality die / presence marker"></span></div></div>'
   +'</div>';
 }
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
