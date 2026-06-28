@@ -30,28 +30,40 @@ These images sit **behind** the cask cards (2.5″ square) and ship tiles (2.5�
 > existing cask/ship art (browsers decode by content, not extension).
 
 ## Shared style block — paste at the top of EVERY prompt
-> Medieval Hanseatic League harbor town, c. 1350. Hand-painted illustration in the style of an aged
-> manuscript illumination / old-map vignette — painterly, soft warm light, muted earthy palette.
-> **FULL-BLEED square 1:1 composition: the painted scene fills the ENTIRE square edge to edge, bleeding
-> off all four sides — especially the LEFT and RIGHT edges, where the surrounding town/landscape continues
-> past the frame. ABSOLUTELY NO parchment border, NO paper margin, NO frame, NO vignette ring, NO drawn
-> frame line, NO cream/ivory mat, NO rounded corners — the artwork goes right to every edge.** No text,
-> no letters, no numbers, no signs/signage, no people in the foreground, no modern objects. **Frame the
-> MAIN SUBJECT as a complete, wide establishing view: the whole structure is fully visible and comfortably
-> contained with a little breathing room — it must NOT be awkwardly cropped or run off the top, and it sits
-> naturally in a setting that extends to the left and right edges.** Keep the **top ~22% and bottom ~28%**
-> visually simple and a touch darker (calm sky / shadow / still water / muted ground or ceiling) so overlaid
-> card text stays readable — **but do NOT leave an empty band; the painting still fills those areas.**
-> Slightly desaturated and low-contrast so it reads as a background. ~1024×1024, PNG.
+> A single old north-European merchant-town building, c. 1350. Hand-painted illustration in the style of an
+> aged manuscript illumination / old-map vignette — painterly, soft warm light, muted earthy palette.
+> **FULL-BLEED square 1:1: the painting fills the ENTIRE square edge to edge with NO parchment border, NO
+> paper margin, NO frame, NO drawn frame line, NO cream/ivory mat, NO vignette ring, NO rounded corners, NO
+> overlay of any kind — the artwork reaches every edge cleanly.** **A SINGLE building is the clear subject:
+> ONE structure, centered and fairly large in the frame, shown COMPLETE and uncropped (the whole building
+> visible, not running off the top/sides/bottom) — a PORTRAIT of that one building, like a single icon being
+> added to a game. It is NOT a city panorama, NOT a row of many buildings, NOT a wide harbor scene, NOT a
+> townscape.** Keep the immediate surroundings simple, sparse and uncluttered (a little plain ground / quay /
+> sky — at most a faint hint of a neighbour, never a crowd) so the eye reads ONE building. No text, no letters,
+> no numbers, no signs/signage, no people in the foreground, no modern objects. Keep the **top ~22% and bottom
+> ~28%** calm and a touch darker (plain sky / shadow / still water / muted ground) so overlaid card text stays
+> readable, but still painted (no empty band). Slightly desaturated, low-contrast, reads as a background.
+> ~1024×1024, PNG.
 
-> **Why this changed (v6 art pass):** the earlier block asked for a "gentle parchment texture / subtle
-> vignette" and to "place the subject in the center band" — which baked a parchment border into the output
-> and cropped interior subjects (Connoisseur's Cellar, Brewmaster's Workshop, Parti-Gyle Tun felt cut off).
-> The full-bleed + complete-subject framing above fixes both. **Two gotchas to watch:** (1) a proper place
-> name in the subject (e.g. "Bergen Bryggen", "Novgorod Peterhof") can make the model paint a **text title
-> banner or a gate sign** — describe the structure generically and append an explicit "no written words /
-> no signage" instruction; (2) the model still occasionally adds a parchment mat anyway — append an explicit
-> "no parchment border / no drawn frame line / bleeds off all four edges" instruction and regenerate.
+> **Why this is a SINGLE building (v6.2 art pass):** a first full-bleed pass (v6.1) over-corrected into wide
+> *city / harbor scenes* — each card became a townscape rather than "one building being added to the game,"
+> which lost the original set's icon feel. v6.2 reverts to a **single hero-building portrait** per card while
+> keeping the full-bleed / no-parchment-frame fix. **Three gotchas, in order of nuisance:** (1) the model
+> intermittently bakes a **parchment mat + drawn frame line** anyway (worst on interiors — Ratskeller cellar,
+> tun-house). Append an explicit "no parchment border / no drawn frame line / bleeds off all four edges" line;
+> if it still frames, **auto-crop the mat** (the `trimframe` pass below) — a deterministic fallback. (2) A
+> proper place name in the subject (Bergen Bryggen, Novgorod Peterhof) and a leading bare "Hanseatic League"
+> can make the model paint a **title banner / gate sign**, especially when there is a lot of empty sky/water to
+> fill — describe the structure generically, open with "A single … building" (not a proper noun), and forbid
+> "any title/caption/lettering in the sky or water." (3) "the town continues past the edges" wording brings
+> back the panorama — say "ONE building alone, not a row."
+
+> **`trimframe` fallback (deterministic):** if a render still ships with a parchment mat, detect a light, warm,
+> low-saturation border on the outer edges and crop it, then re-scale to 1024². Classify a pixel as mat if
+> `r>185, g>172, b>145, 3<(r−b)<78, (max−min)<74` (cream/ivory, warm — bluish sky is excluded since it needs
+> `r>b`). Treat it as a true frame only when a border is found on **all four sides** (so a sky-only top is never
+> trimmed); for a partial mat whose bottom edge is water (e.g. London Steelyard), force a fixed ~5% crop. A few
+> px of inner drawn frame-line may survive the mat crop — take a second ~2–3% pass to clear it.
 
 ---
 
