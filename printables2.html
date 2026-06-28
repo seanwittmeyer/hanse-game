@@ -147,6 +147,7 @@
   /* the BACK ends match (Q + title + a marker space), a little larger */
   .cc-back .ce .cq{font-size:.24in} .cc-back .ce .cq svg,.cc-back .ce .cq .ic{width:.2in;height:.2in}
   .cc-back .ce .cnm{font-size:.19in}
+  .cc-back .ce.top .cnm{font-size:.225in}   /* the back's top title a touch larger */
   /* ===== background ART slot (printables2): a layer behind the card/tile content. Placeholder = a faint hatch;
      when ART_ON, it carries the generated image (art/cask-<beer>.png · art/ship-<hull>.png) with a scrim for legibility. ===== */
   .ccard > *{position:relative;z-index:1}
@@ -796,7 +797,6 @@ function caskCardBack(d,act){
   return '<div class="ccard cc-back" style="--c:'+d.c+'">'
     +artLayer('cask-'+d.nm.toLowerCase()+'.png')
     +'<div class="ce top"><div class="ce-row">'+q+'</div></div>'
-    +'<div class="cc-big">'+LU('beer')+'</div>'
     +'<div class="ce bot"><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div>'
       +'<div class="ce-row">'+q+'<span class="cc-mark" title="quality die / presence marker"></span></div></div>'
   +'</div>';
