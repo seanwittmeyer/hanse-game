@@ -602,6 +602,22 @@
   .check .tot{font-weight:bold;background:rgba(184,134,11,.12)}
   .check .wf{font-size:.092in;line-height:1.4;border:1.5px solid var(--sea);border-radius:.06in;padding:.05in .08in;background:#fff;break-inside:avoid}
   .check .wf b{color:var(--sea)}
+  /* ====================== PNG EXPORT view (screen only) ====================== */
+  .exp-wrap{max-width:11in;margin:14px auto;padding:0 16px;color:var(--ink)}
+  .exp-head h2{font-variant:small-caps;color:var(--red);margin:.2in 0 .04in}
+  .exp-head p{font-size:.85rem;color:var(--ink2);margin:0 0 .1in;max-width:7.5in}
+  .exp-head code{background:#0001;padding:1px 5px;border-radius:4px}
+  .exp-group{margin:16px 0;background:#fff;border:1px solid #c9b693;border-radius:10px;padding:12px 14px}
+  .exp-gh{display:flex;align-items:center;gap:12px;border-bottom:1px solid #c9b693;padding-bottom:8px;margin-bottom:10px}
+  .exp-gt{font-variant:small-caps;font-weight:bold;color:var(--sea);font-size:1.1rem;text-transform:capitalize}
+  .exp-gc{color:var(--ink2);font-size:.8rem}
+  .exp-zip{margin-left:auto;cursor:pointer;border:none;border-radius:6px;padding:6px 13px;background:var(--green);color:#fff;font-weight:bold;font-family:inherit;font-size:.82rem}
+  .exp-zip:disabled{opacity:.6;cursor:default}
+  .exp-grid{display:flex;flex-wrap:wrap;gap:16px}
+  .exp-item{display:flex;flex-direction:column;align-items:center;gap:5px;width:1.7in}
+  .exp-thumb{box-shadow:0 2px 8px rgba(0,0,0,.25);overflow:hidden;background:#cdbfa0;border-radius:3px}
+  .exp-dl{cursor:pointer;border:none;border-radius:5px;padding:4px 12px;background:var(--sea);color:#fff;font-family:inherit;font-size:.78rem}
+  .exp-fn{font-size:.6rem;color:var(--ink2);font-family:ui-monospace,Menlo,monospace;text-align:center;word-break:break-all;line-height:1.2}
 </style>
 </head>
 <body>
@@ -609,7 +625,7 @@
   <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v2.1 &ldquo;Staple Rights&rdquo; · casks &amp; ships = CARDS 2.5″ · building CARDS 2″ (in 2.5″ owner frames)</span></h1>
   <button class="bartoggle" id="bartoggle" onclick="toggleBar()" title="Collapse / expand the toolbar">▾ Hide</button>
   <button onclick="window.print()">🖨 Print</button>
-  <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles &amp; Cards</button><button id="vimps" onclick="setView('imps')">Improvements</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
+  <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles &amp; Cards</button><button id="vimps" onclick="setView('imps')">Improvements</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vpng" onclick="setView('png')">⬇ PNG Export</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
   <span class="seg"><button id="bfull" class="on" onclick="setMode('full')">Full set</button><button id="bproof" onclick="setMode('proof')">Proof (1 each)</button></span>
   <span class="seg"><button id="lart" class="on" onclick="setLayer('art')">ART layer</button><button id="lcut" onclick="setLayer('cut')">CUT layer</button></span>
   <span class="note"><b>US Letter · LANDSCAPE · 100%</b> (verify the 3-inch bar). <b>Print to PDF</b> (the 🖨 buttons; in the dialog: Save as PDF, scale 100%, margins default, <b>“Background graphics” ON</b>) — vector-perfect, places in Affinity at exact size. The cut guides &amp; registration marks print with the art; toggle the <b>CUT layer</b> to print a guide-only sheet. Card sheets print their grey cut guides with the art. Tiles are one unbroken grid — neighbours are the bleed.</span>
@@ -618,6 +634,8 @@
 <div id="out"></div>
 
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="vendor/html2canvas.min.js"></script>
+<script src="vendor/jszip.min.js"></script>
 <script>
 //==================================================================
 // DATA — mirrors play.html (the canonical engine) & COMPONENTS.md
@@ -758,7 +776,7 @@ function toggleBar(){const bar=document.getElementById('bar');const c=bar.classL
   document.getElementById('bartoggle').textContent=c?'▸ Tools':'▾ Hide';
   try{localStorage.setItem('pnp_bar_collapsed',c?'1':'0');}catch(e){}}
 function setMode(m){MODE=m;document.getElementById('bproof').classList.toggle('on',m==='proof');document.getElementById('bfull').classList.toggle('on',m==='full');render();}
-function setView(v){VIEW=v;['all','boards','tiles','imps','bits','cards','list'].forEach(x=>document.getElementById('v'+x).classList.toggle('on',v===x));render();}
+function setView(v){VIEW=v;['all','boards','tiles','imps','bits','cards','png','list'].forEach(x=>document.getElementById('v'+x).classList.toggle('on',v===x));render();}
 function setLayer(l){LAYER=l;document.getElementById('lart').classList.toggle('on',l==='art');document.getElementById('lcut').classList.toggle('on',l==='cut');
   document.body.classList.toggle('cut',l==='cut');}   // pure CSS — layout never changes between layers
 
@@ -1450,8 +1468,88 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 //==================================================================
 // RENDER + DOWNLOADS
 //==================================================================
+//==================================================================
+// PNG EXPORT — rasterize any component to a PNG (html2canvas) ·
+// download individually, or a whole type as a .zip (JSZip).
+// Filenames: <type>-<name>-<front|back>.png. High-res (×4 ≈ 384 dpi).
+//==================================================================
+const PNG_SCALE=4;
+let EXPORT=[];   // current export registry (index = onclick handle)
+const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+function exportItems(){
+  const it=[]; let ci=0;
+  // CASKS — one representative card per beer (front+back). The slot-action is steerable in play; for the
+  // asset we render the pinned action where pinned, else cycle the pool so the set shows variety.
+  CASKS.forEach(d=>{const act=d.pin?d.pin:CASK_POOL[(ci++)%CASK_POOL.length];const nm=slug(d.nm);
+    it.push({type:'cask',name:nm,side:'front',w:2.5,h:2.5,html:caskCardFront(d,act)});
+    it.push({type:'cask',name:nm,side:'back', w:2.5,h:2.5,html:caskCardBack(d,act)});});
+  // SHIPS — one per distinct hull+destination (front) + the shared back, duplicated per ship for consistent naming
+  const seen=new Set();
+  SHIP_DECK.forEach(([hull,dest])=>{const key=hull+'-'+slug(dest);if(seen.has(key))return;seen.add(key);
+    it.push({type:'ship',name:key,side:'front',w:2.5,h:2.5,html:shipCard(hull,dest)});
+    it.push({type:'ship',name:key,side:'back', w:2.5,h:2.5,html:shipBack()});});
+  // BUILDINGS — front + displaced back per design
+  BUILDINGS.forEach(d=>{
+    it.push({type:'building',name:d.k,side:'front',w:2,h:2,html:buildingCard(d)});
+    it.push({type:'building',name:d.k,side:'back', w:2,h:2,html:buildingBack(d)});});
+  // IMPROVEMENTS · RECIPES · CONTRACT · PLAYER AID
+  IMPROVE.forEach(d=>it.push({type:'improvement',name:slug(d.nm),side:'front',w:1.25,h:1.25,html:improveTile(d)}));
+  RECIPES.forEach(r=>it.push({type:'recipe',name:slug(r.nm),side:'front',w:1.85,h:2.55,html:recipeCard(r)}));
+  it.push({type:'contract',name:'charter',side:'front',w:1.85,h:2.55,html:contractCard()});
+  it.push({type:'aid',name:'player-aid',side:'front',w:4.7,h:3.4,html:aidFront()});
+  it.push({type:'aid',name:'player-aid',side:'back', w:4.7,h:3.4,html:aidBack()});
+  return it;
+}
+const fname=it=>it.type+'-'+it.name+'-'+it.side+'.png';
+function saveBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);}
+async function canvasOf(it){
+  const host=document.createElement('div');host.style.cssText='position:fixed;left:-99999px;top:0';
+  const box=document.createElement('div');box.style.cssText='width:'+it.w+'in;height:'+it.h+'in;overflow:hidden';
+  box.innerHTML=it.html;host.appendChild(box);document.body.appendChild(host);
+  if(window.lucide)lucide.createIcons();           // render this component's icons
+  await new Promise(r=>setTimeout(r,60));           // let background art settle
+  const canvas=await html2canvas(box,{scale:PNG_SCALE,useCORS:true,backgroundColor:null,logging:false,
+    width:box.offsetWidth,height:box.offsetHeight,windowWidth:box.offsetWidth,windowHeight:box.offsetHeight});
+  document.body.removeChild(host);return canvas;
+}
+const canvasBlob=c=>new Promise((res,rej)=>c.toBlob(b=>b?res(b):rej(new Error('toBlob failed (page must be served over http/https, not file://)')),'image/png'));
+async function dlOne(i,btn){const it=EXPORT[i];const t0=btn&&btn.textContent;if(btn){btn.textContent='…';btn.disabled=true;}
+  try{const c=await canvasOf(it);const b=await canvasBlob(c);saveBlob(b,fname(it));if(btn)btn.textContent='✓ PNG';}
+  catch(e){if(btn)btn.textContent='⬇ PNG';alert('PNG export failed:\n'+(e&&e.message||e));}
+  finally{if(btn){btn.disabled=false;setTimeout(()=>{btn.textContent=t0;},1400);}}}
+async function dlType(type,btn){const list=EXPORT.filter(x=>x.type===type);const t0=btn&&btn.textContent;
+  if(btn){btn.disabled=true;}
+  try{const z=new JSZip();let n=0;
+    for(const it of list){if(btn)btn.textContent='zipping '+(++n)+'/'+list.length+'…';
+      const c=await canvasOf(it);z.file(fname(it),await canvasBlob(c));}
+    const blob=await z.generateAsync({type:'blob'});saveBlob(blob,type+'-cards.zip');if(btn)btn.textContent='✓ '+type+'-cards.zip';}
+  catch(e){alert('Zip export failed:\n'+(e&&e.message||e));}
+  finally{if(btn){btn.disabled=false;setTimeout(()=>{btn.textContent=t0;},2000);}}}
+function expHtml(){
+  EXPORT=exportItems();
+  const ready=(window.html2canvas&&window.JSZip);
+  const types=[];EXPORT.forEach(it=>{if(!types.includes(it.type))types.push(it.type);});
+  let h='<div class="exp-wrap"><div class="exp-head"><h2>'+LU('image')+' PNG Export</h2>'
+    +'<p>Download any component as a PNG, or a whole type as a <b>.zip</b>. Files are named <code>type-name-front/back.png</code> at high resolution (×'+PNG_SCALE+', ≈384 dpi).'
+    +(ready?'':' <b style="color:var(--red)">⚠ export libraries not loaded.</b>')
+    +' <i>Tip: this must run on the live site (https) — a local <code>file://</code> open can’t save the images (browser security).</i></p></div>';
+  types.forEach(t=>{
+    const list=EXPORT.map((it,i)=>({it,i})).filter(x=>x.it.type===t);
+    h+='<div class="exp-group"><div class="exp-gh"><span class="exp-gt">'+t+'</span><span class="exp-gc">'+list.length+' file'+(list.length>1?'s':'')+'</span>'
+      +'<button class="exp-zip" onclick="dlType(\''+t+'\',this)">'+LU('folder-down')+' Download all (.zip)</button></div><div class="exp-grid">';
+    list.forEach(x=>{const it=x.it;const S=Math.min(1.55/it.w,1.55/it.h);
+      h+='<div class="exp-item"><div class="exp-thumb" style="width:'+(it.w*S).toFixed(3)+'in;height:'+(it.h*S).toFixed(3)+'in">'
+        +'<div style="transform:scale('+S.toFixed(3)+');transform-origin:top left;width:'+it.w+'in;height:'+it.h+'in">'+it.html+'</div></div>'
+        +'<button class="exp-dl" onclick="dlOne('+x.i+',this)">'+LU('download')+' PNG</button>'
+        +'<div class="exp-fn">'+fname(it)+'</div></div>';});
+    h+='</div></div>';});
+  return h+'</div>';
+}
+
 let PAGES=[];
 function render(){
+  if(VIEW==='png'){document.getElementById('out').innerHTML=expHtml();if(window.lucide)lucide.createIcons();return;}
   PAGES=buildPages();
   const show=PAGES.filter(p=>VIEW==='all'||p.section===VIEW);
   let h='';
