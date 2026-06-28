@@ -131,14 +131,15 @@
   .ccard .cc-mark{width:.3in;height:.3in;border:1.6px dashed rgba(255,255,255,.85);border-radius:.05in;flex:0 0 auto;margin-left:auto}
   /* aging track on the FRONT centre */
   /* FRONT centre = the maturation track on ONE line over a brewhouse-interior illustration (light parchment scrim keeps the ink legible) */
-  .cc-age{margin:.04in .09in;color:var(--ink);border-radius:.07in;padding:.05in .05in;overflow:hidden;
-    background:linear-gradient(rgba(244,234,208,.62),rgba(244,234,208,.62)),url('art/brewhouse.png');background-size:cover;background-position:center;
+  .cc-age{margin:.04in .09in;color:#fff;border-radius:.07in;padding:.05in .05in;overflow:hidden;
+    background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),url('art/brewhouse.png');background-size:cover;background-position:center;
     display:flex;align-items:center;justify-content:center;flex:1}
   .cc-agerow{display:flex;gap:.06in;align-items:center;justify-content:center;flex-wrap:nowrap}
-  .cc-step{width:.34in;height:.34in;border:1.6px solid var(--ink2);border-radius:.05in;display:flex;align-items:center;justify-content:center;font-size:.17in;font-weight:bold;color:var(--ink);background:rgba(255,255,255,.92);box-shadow:0 1px 2px rgba(0,0,0,.2);flex:0 0 auto}
-  .cc-step.rdy{width:auto;padding:0 .07in;gap:.03in;border-color:var(--green);background:var(--green);color:#fff;font-variant:small-caps;font-size:.095in;font-weight:900;letter-spacing:.2px;box-shadow:0 1px 2px rgba(0,0,0,.3)}   /* READY = flip the card to its brewed side */
-  .cc-step.rdy svg,.cc-step.rdy .ic{width:.19in;height:.19in;stroke-width:2.4}
-  .cc-step.start{width:auto;padding:0 .055in;border-style:dashed;font-size:.08in;font-variant:small-caps;font-weight:bold;color:var(--ink2);background:rgba(255,255,255,.8)}   /* place the vessel marker here at brew */
+  .cc-step{width:.34in;height:.34in;border:1.8px solid rgba(255,255,255,.92);border-radius:.05in;display:flex;align-items:center;justify-content:center;font-size:.18in;font-weight:bold;color:#fff;background:transparent;text-shadow:0 1px 2px rgba(0,0,0,.75);flex:0 0 auto}
+  .cc-step.rdy{width:auto;padding:0 .07in;gap:.03in;border-color:var(--green);background:var(--green);color:#fff;font-variant:small-caps;font-size:.095in;font-weight:900;letter-spacing:.2px;text-shadow:none;box-shadow:0 1px 2px rgba(0,0,0,.4)}   /* READY = flip the card to its brewed side */
+  .cc-step.rdy svg,.cc-step.rdy .ic{width:.19in;height:.19in;stroke-width:2.6}
+  .cc-step.start{border-style:dashed}   /* place the vessel marker here at brew (the Brewhouse beaker) */
+  .cc-step.start svg,.cc-step.start .ic{width:.21in;height:.21in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.75))}
   /* BACK centre */
   .cc-big{flex:1;display:flex;align-items:center;justify-content:center;opacity:.32}
   .cc-big svg,.cc-big .ic{width:.85in;height:.85in}
@@ -423,8 +424,18 @@
   .wharf{flex:0 0 auto;align-self:flex-start;display:grid;gap:.3in;
     grid-template-columns:repeat(4,2.5in);
     grid-template-rows:repeat(4,2.5in)}
-  .wslot{border:2px dashed var(--ink2);border-radius:.07in;background:rgba(255,255,255,.55)}
-  .stn{border-radius:.12in;color:#fff;padding:.14in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1in;position:relative;overflow:hidden;text-shadow:0 1px 1.5px rgba(0,0,0,.4)}
+  .wslot{border:2.5px dashed rgba(255,255,255,.82);border-radius:.18in;background:rgba(20,14,8,.24);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.75)}
+  .wslot svg,.wslot .ic{width:.82in;height:.82in;opacity:.9;filter:drop-shadow(0 1px 3px rgba(0,0,0,.7))}
+  .wslot .wsd{font-variant:small-caps;font-weight:bold;font-size:.18in;letter-spacing:.6px;opacity:.92}
+  .stn{border-radius:.2in;color:#fff;padding:.14in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1in;position:relative;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.55);box-shadow:0 3px 10px rgba(0,0,0,.35)}
+  .stn>*{position:relative;z-index:1}
+  /* roof-tile (fish-scale) texture over the station colour — reads as a tiled rooftop from above */
+  .stn::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;
+    background-image:
+      radial-gradient(circle at 50% 112%, transparent 45%, rgba(0,0,0,.28) 47%, rgba(0,0,0,.28) 50%, transparent 52%),
+      radial-gradient(circle at 50% 100%, transparent 50%, rgba(255,255,255,.12) 52%, transparent 64%);
+    background-size:.6in .4in;background-position:0 0,0 0}
   .stn .bigic svg,.stn .bigic .ic{width:.8in;height:.8in;stroke-width:1.6}
   .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.32in;line-height:1}
   /* the action line, in the board's icon grammar: "/" = or · juxtaposed = both · ":" = per-each */
@@ -465,8 +476,8 @@
   .trk-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;color:var(--ink2);margin-left:.06in}
   /* the WHARF board is a CROSS — the cut follows the plus outline; the 4 corners fall away */
   /* +.3in outline padding: the grid sits inset, the cut plus runs .3in outside the slots */
-  .mboard.cross{background:var(--parch);border:none;border-radius:0;padding:.3in;display:block;
-    clip-path:polygon(24.35% 0, 75.65% 0, 75.65% 24.35%, 100% 24.35%, 100% 75.65%, 75.65% 75.65%, 75.65% 100%, 24.35% 100%, 24.35% 75.65%, 0 75.65%, 0 24.35%, 24.35% 24.35%)}
+  .mboard.cross{background:#e9dcc0 url('art/wharf-board.png') center/cover;border:none;border-radius:0;padding:.3in;display:block;
+    clip-path:url(#crossclip)}
   .mboard.supply{display:flex;flex-direction:column}
   .mboard.supply .disp{flex:0 0 auto;margin-top:0}
   .mboard.supply .tracks{flex:0 0 auto}
@@ -798,9 +809,9 @@ function caskCardFront(d,act){
   // the maturation track on ONE line: a dashed START (place the vessel marker) → numbered steps → a green
   // READY=FLIP endpoint (the flip glyph says "turn the card to its brewed side"). No title/rules text — the
   // brewhouse illustration sits behind it (cc-age background).
-  let track='<div class="cc-step start">start</div>';
+  let track='<div class="cc-step start">'+LU('flask-conical')+'</div>';
   for(let i=1;i<d.ready;i++)track+='<div class="cc-step">'+i+'</div>';
-  track+='<div class="cc-step rdy">'+LU('refresh-cw')+'<span>flip</span></div>';
+  track+='<div class="cc-step rdy">'+LU('check')+'<span>flip</span></div>';
   return '<div class="ccard cc-front" style="--c:'+d.c+'">'
     +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span>'
       +'<span class="ctitle"><span class="cnm">'+d.nm+'</span><span class="ccost">'+c+'</span></span></div></div>'
@@ -1089,8 +1100,27 @@ function station(L,nm,ic,yield_){return '<div class="stn '+L+'" style="grid-area
   +'<span class="yield">'+yield_+'</span></div>';}
 // printables2: the WHARF is now a CROSS board on its own (the cut follows the plus). 4×4 grid:
 // empty corners · 8 perimeter slots · the 4 stations in the centre 2×2.
+// a rounded-corner PLUS outline (objectBoundingBox 0–1) — used both as the cross board's clip-path and,
+// chamfered, as its print cut. r = corner radius as a fraction of the board.
+function roundedPlusPath(a,b,r){
+  const P=[[a,0],[b,0],[b,a],[1,a],[1,b],[b,b],[b,1],[a,1],[a,b],[0,b],[0,a],[a,a]];
+  const sweep=[1,1,0,1,1,0,1,1,0,1,1,0];   // outer (convex) corners sweep 1, inner (concave) 0
+  const n=P.length, V=i=>P[((i%n)+n)%n], f=x=>+x.toFixed(4);
+  const nrm=p=>{const L=Math.hypot(p[0],p[1])||1;return[p[0]/L,p[1]/L];};
+  let d='',ch=[];
+  for(let i=0;i<n;i++){
+    const cur=V(i),pv=V(i-1),nx=V(i+1);
+    const inD=nrm([cur[0]-pv[0],cur[1]-pv[1]]), outD=nrm([nx[0]-cur[0],nx[1]-cur[1]]);
+    const en=[cur[0]-r*inD[0],cur[1]-r*inD[1]], ex=[cur[0]+r*outD[0],cur[1]+r*outD[1]];
+    d+=(i===0?'M ':'L ')+f(en[0])+' '+f(en[1])+' A '+r+' '+r+' 0 0 '+sweep[i]+' '+f(ex[0])+' '+f(ex[1])+' ';
+    ch.push(en,ex);
+  }
+  return {d:d+'Z',ch};
+}
+const CROSS_A=0.2435, CROSS_B=0.7565, CROSS_R=0.04;
 function wharfCross(){
-  const slot='<div class="wslot"></div>';
+  const slot='<div class="wslot">'+LU('barrel')+'<span class="wsd">deploy</span></div>';   // empty slot's default action = Deploy
+  const clip='<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="crossclip" clipPathUnits="objectBoundingBox"><path d="'+roundedPlusPath(CROSS_A,CROSS_B,CROSS_R).d+'"/></clipPath></defs></svg>';
   const OR='<span class="sep">/</span>';
   const AND='<span class="sep">+</span>';   // brew AND deploy (both happen), vs OR alternatives
   const wharf='<div class="wharf">'
@@ -1104,7 +1134,7 @@ function wharfCross(){
     +slot
     +'<div></div>'+slot+slot+'<div></div>'
     +'</div>';
-  return '<div class="mboard cross">'+wharf+'</div>';
+  return clip+'<div class="mboard cross">'+wharf+'</div>';
 }
 // printables2: the SUPPLY board — the two face-up market displays + the three shared tracks
 // (Sailed-Ships end clock · Round · Score start→50). Sits beside the Wharf on the same large sheet.
@@ -1185,8 +1215,8 @@ function wharfSupplySheet(pages){
   const W=11.5, wx=0.4, wy=1.9;
   pg.items.push({x:wx,y:wy-0.72,w:W,h:0.55,html:'<div class="sheetlbl">'+LU('anchor')+'The Wharf<span class="sub">Source → Brew → Age → Ship</span></div>'});
   pg.items.push({x:wx,y:wy,w:W,h:W,html:wharfCross()});
-  const a=2.8,b=8.7,L=11.5;   // the cut plus runs .3in OUTSIDE the slots
-  addPolyCut(pg,[[a,0],[b,0],[b,a],[L,a],[L,b],[b,b],[b,L],[a,L],[a,b],[0,b],[0,a],[a,a]].map(p=>[+(wx+p[0]).toFixed(3),+(wy+p[1]).toFixed(3)]));
+  // the cut follows the SAME rounded plus as the board's clip-path (chamfered at each corner → matches the art)
+  addPolyCut(pg,roundedPlusPath(CROSS_A,CROSS_B,CROSS_R).ch.map(p=>[+(wx+p[0]*W).toFixed(3),+(wy+p[1]*W).toFixed(3)]));
   // SUPPLY board (right) — the two market displays + the three shared tracks.
   const sx=12.2, sy=1.0, sw=9.3, sh=13.5;
   pg.items.push({x:sx,y:sy,w:sw,h:sh,html:supplyBoard()});
