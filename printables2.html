@@ -189,9 +189,13 @@
   .tile.ts > *{position:relative;z-index:1}
   .tile.ts > .artbg{z-index:0}
   .artbg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat}
-  .artbg>img.artbg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+  /* the art tiles are square and so is the source image, so width/height:100% (object-fit:fill) gives an
+     undistorted full cover WITHOUT object-fit:cover — html2canvas leaves a centre seam with cover, none with fill. */
+  .artbg>img.artbg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block}
   .artbg.ph{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 .09in,rgba(255,255,255,0) .09in .18in)}
-  .artbg.scrim::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5),rgba(0,0,0,.12) 28%,rgba(0,0,0,.12) 72%,rgba(0,0,0,.55))}
+  /* the legibility scrim is an inline SVG gradient (not a CSS gradient) — html2canvas renders a faint seam at
+     CSS gradient colour-stops, but rasterizes SVG gradients cleanly. */
+  .artbg .artscrim{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;display:block}
   /* keep the white end-icons legible over busy art */
   .ccard .cq svg,.ccard .cq .ic,.ccard .ccost svg,.ccard .ccost .ic,.tile.ts .g-head svg,.tile.ts .g-head .ic,.tile.ts .berths svg,.tile.ts .berths .ic{filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}
   /* ship NUMBERED BERTHS — pinned to the BOTTOM with the quality gate */
@@ -850,11 +854,44 @@ function improveTile(d){return '<div class="tile imp" style="--c:'+(d.c||'#5b3a8
 // Flip ART_ON to true once the images exist in art/ (named below). Until then a faint hatch marks the slot.
 // Filenames: casks → art/cask-<beer>.png (gruit/hopped/broyhan/keut/mumme/bock/gose/zerbster/duckstein/jopenbier);
 //            ships → art/ship-<hull>.png (cog/hulk). Prompts to generate them: art/PROMPTS.md.
+// ===================================================================================================
+// HANDOFF NOTE — PNG-export "seam line" bug (UNFINISHED; for the next agent) — 2026-06-28
+// ---------------------------------------------------------------------------------------------------
+// SYMPTOM: exported card PNGs (PNG Export view) show a faint horizontal LINE across the card. On screen
+//   the cards are clean — it only appears in the html2canvas raster.
+// ROOT CAUSE (confirmed): html2canvas renders a seam at CSS linear-gradient COLOUR-STOPS. Our cards fade
+//   the card colour to transparent (`var(--c) … transparent`) at a hard stop, and html2canvas leaves a
+//   1px discontinuity there. Numeric probe (2nd-difference of row brightness, 20–48% band) on
+//   cask-gose-back: seam_maxSD ≈ 42 at y ≈ 34% (= the `.cc-back .ce.top` stop at 36%). Disabling those
+//   gradients removes the line; so does converting a gradient to inline SVG (see SCRIM_SVG below).
+// DONE so far (committed): (1) art is an <img object-fit:fill> not a CSS background → sharp + no centre
+//   seam; (2) the legibility SCRIM is now an inline SVG gradient (SCRIM_SVG) → that stop no longer seams.
+// STILL SEAMS (TODO): the COLOURED fade gradients that use `var(--c) → transparent`:
+//     • `.cc-back .ce.top` / `.cc-back .ce.bot` (cask BACK ends; ships inherit `.ce.bot`)
+//     • `.bcard .bc-foot` (building front + back)  • any `.cc-front .ce.bot` colour foot
+//   FIX: render each as an inline SVG linearGradient with the card colour BAKED IN (per-card d.c / BLD_FOOT),
+//   same pattern as SCRIM_SVG, placed as an absolutely-positioned layer behind that band's text — NOT a CSS
+//   gradient. Keep the solid-hold region for foot legibility (e.g. SVG stops 0→solid, .5→solid, 1→transparent).
+//   Use a SAME-COLOUR transparent endpoint (stop-opacity 0 on the card colour), not the `transparent` keyword.
+// REJECTED: html2canvas-pro (drop-in fork) renders gradients cleanly BUT TAINTS the export canvas
+//   ("getImageData/toBlob … tainted by cross-origin data") → breaks the download. Do NOT switch to it.
+//   (Other html2canvas limits already worked around here: it ignores radial-gradients [station roof → SVG
+//    pattern], CSS filter [building-back grey], and clip-path:url() [wharf board → re-clipped via Path2D].)
+// VERIFY WITHOUT BIG IMAGES: reading full-res screenshots kept tripping the 32 MB media limit. Verify with
+//   a tiny render (scale 2) + a NUMERIC metric POSTed back via the local http server's request log
+//   (fetch('/__R__/'+encodeURIComponent(result))) — never read a multi-hundred-px card image.
+// ===================================================================================================
 const ART_ON=true, ART_DIR='art/';
-// art rides an <img> (object-fit:cover) rather than a CSS background — html2canvas rasterizes an <img> at its
-// NATIVE source resolution (sharp PNG export), whereas a background-image is upscaled from the element's CSS size.
+// art rides an <img> (object-fit:fill — square art in a square tile, so no distortion and no html2canvas
+// centre seam) rather than a CSS background — html2canvas rasterizes an <img> at its NATIVE source
+// resolution (sharp PNG export), whereas a background-image is upscaled from the element's CSS size.
+const SCRIM_SVG='<svg class="artscrim" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 10 100">'
+  +'<defs><linearGradient id="ascr" x1="0" y1="0" x2="0" y2="1">'
+  +'<stop offset="0" stop-color="#000" stop-opacity=".5"/><stop offset=".28" stop-color="#000" stop-opacity=".12"/>'
+  +'<stop offset=".72" stop-color="#000" stop-opacity=".12"/><stop offset="1" stop-color="#000" stop-opacity=".55"/>'
+  +'</linearGradient></defs><rect width="10" height="100" fill="url(#ascr)"/></svg>';
 function artLayer(file){return ART_ON
-  ? '<div class="artbg scrim"><img class="artbg-img" src="'+ART_DIR+file+'" alt=""></div>'
+  ? '<div class="artbg"><img class="artbg-img" src="'+ART_DIR+file+'" alt="">'+SCRIM_SVG+'</div>'
   : '<div class="artbg ph" data-art="'+ART_DIR+file+'"></div>';}
 function caskCardFront(d,act){
   let c=cost(d.g,d.h);if(d.alt)c+='<span style="opacity:.85">/</span>'+cost(d.alt[0],d.alt[1]);
