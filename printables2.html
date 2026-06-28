@@ -1563,17 +1563,24 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 // ------------------------------------------------------------------------------------------------------
 //==================================================================
 const PNG_SCALE=6;   // ⚙ a 2″ card → 1152px, a 2.5″ card → 1440px — both ≥ the 1024² source art (no soft upscaling)
+const SHEET_DPI=410; // ⚙ full-sheet PNG export resolution. 410 ≈ the source art's native density (1024px ÷ 2.5in) → no
+                     // data loss; a 22×15 sheet → ~9020×6150px. Lower it (≈300) for smaller files if a browser struggles.
 let EXPORT=[];   // current export registry (index = onclick handle)
 const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
 function exportItems(){
   const it=[]; let ci=0;
   // BOARDS — the wharf cross (its own scale: a big board upscales the 1024² art, so a modest ×2 keeps the file sane)
   it.push({type:'board',name:'wharf',side:'',w:WHARF_W+2*CROSS_BLEED,h:WHARF_W+2*CROSS_BLEED,scale:2,clip:'cross',html:wharfCross()});
-  // CASKS — one representative card per beer (front+back). The slot-action is steerable in play; for the
-  // asset we render the pinned action where pinned, else cycle the pool so the set shows variety.
-  CASKS.forEach(d=>{const act=d.pin?d.pin:CASK_POOL[(ci++)%CASK_POOL.length];const nm=slug(d.nm);
-    it.push({type:'cask',name:nm,side:'front',w:2.5,h:2.5,html:caskCardFront(d,act)});
-    it.push({type:'cask',name:nm,side:'back', w:2.5,h:2.5,html:caskCardBack(d,act)});});
+  // CASKS — EVERY distinct tile (beer × action). The slot-action drawn at brew is the replayability: pinned beers
+  // are one variant; Q2+ beers cycle the 6-action pool (Mumme & Bock add the Q4+ Wild). We mirror exactly what the
+  // print sheets lay down (buildPages) and emit one asset per DISTINCT action — identical copies are byte-identical
+  // PNGs, so deduping by action key gives the full variety with no redundant files. Named cask-<beer>-<action>.
+  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:(d.wild?CASK_POOL.concat([CASK_WILD]):CASK_POOL);
+    const seen=new Set();
+    for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];if(seen.has(act.k))continue;seen.add(act.k);
+      const nm=slug(d.nm)+'-'+act.k;
+      it.push({type:'cask',name:nm,side:'front',w:2.5,h:2.5,html:caskCardFront(d,act)});
+      it.push({type:'cask',name:nm,side:'back', w:2.5,h:2.5,html:caskCardBack(d,act)});}});
   // SHIPS — one per distinct hull+destination (front) + the shared back, duplicated per ship for consistent naming
   const seen=new Set();
   SHIP_DECK.forEach(([hull,dest])=>{const key=hull+'-'+slug(dest);if(seen.has(key))return;seen.add(key);
@@ -1667,6 +1674,31 @@ async function dlOne(i,btn){const it=EXPORT[i];const t0=btn&&btn.textContent;if(
   try{const c=await canvasOf(it);const b=await canvasBlob(c);saveBlob(b,fname(it));if(btn)btn.textContent='✓ PNG';}
   catch(e){if(btn)btn.textContent='⬇ PNG';alert('PNG export failed:\n'+(e&&e.message||e));}
   finally{if(btn){btn.disabled=false;setTimeout(()=>{btn.textContent=t0;},1400);}}}
+// FULL-SHEET PNG — rasterize one print sheet's ART (no cut overlay) at SHEET_DPI, so it can be placed without data
+// loss and the cut lines exported separately as vector (the Cut layer + the sheet's 🖨 print). Rebuilds the sheet
+// off-screen from its PAGES data (items only — no overlay, no buttons), bakes the art, and html2canvases it whole.
+async function sheetPNG(no,btn){
+  const pg=PAGES.find(p=>p.no===no);if(!pg)return;
+  const t0=btn&&btn.textContent;if(btn){btn.textContent='rendering…';btn.disabled=true;}
+  const geo=pg.geo||PG,scale=SHEET_DPI/96;
+  const host=document.createElement('div');host.style.cssText='position:fixed;left:-99999px;top:0';
+  const page=document.createElement('div');page.className='page'+(geo!==PG?' lg':'');
+  page.style.cssText='width:'+geo.w+'in;height:'+geo.h+'in;margin:0;box-shadow:none;background:#fff';
+  page.innerHTML=pg.items.map(it=>'<div class="it" style="left:'+it.x+'in;top:'+it.y+'in;width:'+it.w+'in;height:'+it.h+'in">'+it.html+'</div>').join('');
+  host.appendChild(page);document.body.appendChild(host);
+  try{
+    if(window.lucide)lucide.createIcons();
+    await Promise.all([...page.querySelectorAll('img')].map(im=>(im.complete&&im.naturalWidth)?Promise.resolve()
+      :new Promise(res=>{im.addEventListener('load',res,{once:true});im.addEventListener('error',res,{once:true});})));
+    await new Promise(r=>setTimeout(r,40));
+    bakeArt(page,scale);
+    const W=page.offsetWidth,H=page.offsetHeight;
+    const canvas=await html2canvas(page,{scale,backgroundColor:'#fff',useCORS:true,logging:false,width:W,height:H,windowWidth:W,windowHeight:H});
+    const blob=await canvasBlob(canvas);saveBlob(blob,'sheet-S'+no+'-'+slug(pg.label).slice(0,40)+'.png');
+    if(btn)btn.textContent='✓ PNG';
+  }catch(e){if(btn)btn.textContent='⬇ art PNG';alert('Sheet PNG failed:\n'+(e&&e.message||e));}
+  finally{document.body.removeChild(host);if(btn){btn.disabled=false;setTimeout(()=>{btn.textContent=t0;},1600);}}
+}
 async function dlType(type,btn){const list=EXPORT.filter(x=>x.type===type);const t0=btn&&btn.textContent;
   if(btn){btn.disabled=true;}
   try{const z=new JSZip();let n=0;
@@ -1707,7 +1739,11 @@ function render(){
     h+='<div class="page'+(lg?' lg':'')+'" id="pg'+pg.no+'">';
     pg.items.forEach(it=>{h+='<div class="it" style="left:'+it.x+'in;top:'+it.y+'in;width:'+it.w+'in;height:'+it.h+'in">'+it.html+'</div>';});
     h+=overlaySvg(pg);
-    h+='<span class="dl no-print"><button onclick="printOne('+pg.no+')">🖨 S'+pg.no+' PDF</button></span>';
+    h+='<span class="dl no-print">'
+      +'<button onclick="sheetPNG('+pg.no+',this)" title="rasterize this sheet’s ART (no cut lines) at '+SHEET_DPI+' DPI">⬇ S'+pg.no+' art PNG</button>'
+      +'<button onclick="printOne('+pg.no+')" title="print this sheet as-is (current layer) to PDF">🖨 PDF</button>'
+      +'<button onclick="printOne('+pg.no+',\'cut\')" title="print ONLY the cut lines as vector (Save as PDF)">✂ cuts</button>'
+      +'</span>';
     h+='</div>';
   });
   document.getElementById('out').innerHTML=h||'<p style="text-align:center;padding:2em">no sheets in this view</p>';
@@ -1715,10 +1751,14 @@ function render(){
 }
 // Export = the browser's own print engine (vector-perfect PDF; "Save as PDF" in the dialog).
 // printOne solos a sheet so each sheet can be saved as its own one-page PDF for Affinity placement.
-function printOne(no){
+function printOne(no,forceLayer){
   const el=document.getElementById('pg'+no);if(!el)return;
-  document.body.classList.add('solo');el.classList.add('soloed');
-  const done=()=>{document.body.classList.remove('solo');el.classList.remove('soloed');window.removeEventListener('afterprint',done);};
+  const b=document.body, hadCut=b.classList.contains('cut'), hadBoth=b.classList.contains('both');
+  if(forceLayer){b.classList.toggle('cut',forceLayer==='cut');b.classList.toggle('both',forceLayer==='both');}
+  b.classList.add('solo');el.classList.add('soloed');
+  const done=()=>{b.classList.remove('solo');el.classList.remove('soloed');
+    if(forceLayer){b.classList.toggle('cut',hadCut);b.classList.toggle('both',hadBoth);}   // restore the on-screen layer
+    window.removeEventListener('afterprint',done);};
   window.addEventListener('afterprint',done);
   window.print();
   setTimeout(done,500);   // fallback for browsers that don't fire afterprint
