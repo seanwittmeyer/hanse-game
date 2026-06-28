@@ -1559,6 +1559,24 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 // PNG EXPORT — rasterize any component to a PNG (html2canvas) ·
 // download individually, or a whole type as a .zip (JSZip).
 // Filenames: <type>-<name>-<front|back>.png. High-res (×6) so the output meets/exceeds the 1024px source art.
+//
+// ---- REVIEW NOTE from a parallel session (2026-06-28) — findings on the export "seam line" ----
+// I was chasing the same exported-card horizontal seam this `bakeArt()` flatten apparently fixes. Notes
+// in case they're useful for review / future tweaks (no code change here — this is just a comment):
+//  • ROOT CAUSE: html2canvas leaves a 1px seam at CSS linear-gradient COLOUR-STOPS. The visible line on
+//    card backs was the coloured `var(--c) → transparent` end/foot gradients (.cc-back .ce.top/.ce.bot,
+//    .bcard .bc-foot, ship foot), seaming at their stop (cask-gose-back: ~y34% = the .ce.top 36% stop).
+//    If any seam survives bakeArt on cards whose gradient is a real DOM element (not part of the baked art
+//    layer), converting that gradient to an inline SVG linearGradient (baked colour, stop-opacity not the
+//    `transparent` keyword) renders seam-free — same trick already used for the scrim / station roof.
+//  • DO NOT swap in html2canvas-pro to "fix gradients": tested — it renders gradients cleanly BUT TAINTS
+//    the export canvas ("getImageData/toBlob … tainted by cross-origin data"), which breaks the download.
+//  • html2canvas also ignores radial-gradients (station roof → SVG pattern), CSS filter (building-back
+//    grey), and clip-path:url() (wharf board → re-clip via Path2D) — keep those SVG/Path2D workarounds.
+//  • VERIFYING the export in a headless sandbox: reading full-res card screenshots trips a 32MB media
+//    limit. Verify with a small render (scale 2) + a NUMERIC metric (2nd-difference of row brightness in
+//    the 20–48% band) POSTed back via the local http server's request log — never read a big card image.
+// ------------------------------------------------------------------------------------------------------
 //==================================================================
 const PNG_SCALE=6;   // ⚙ a 2″ card → 1152px, a 2.5″ card → 1440px — both ≥ the 1024² source art (no soft upscaling)
 let EXPORT=[];   // current export registry (index = onclick handle)
