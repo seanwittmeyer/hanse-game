@@ -144,17 +144,19 @@
   .cc-big{flex:1;display:flex;align-items:center;justify-content:center;opacity:.32}
   .cc-big svg,.cc-big .ic{width:.85in;height:.85in}
   .cc-back .ce.bot{gap:.05in;padding-top:.34in;background:linear-gradient(to top,var(--c) 0%,var(--c) 38%,transparent 100%)}   /* the front's beer colour, solid at the foot, fading up into the illustration */
-  .cc-actfloat{flex:1;display:flex;align-items:flex-end;justify-content:center;padding-bottom:.06in}   /* the brewed action floats low over the illustration, just above the colour foot */
+  .cc-back .ce.top{padding-bottom:.3in;background:linear-gradient(to bottom,var(--c) 0%,var(--c) 36%,transparent 100%)}   /* a matching colour gradient at the top, fading down into the illustration */
+  .cc-actfloat{flex:1;display:flex;align-items:flex-end;justify-content:center;padding-bottom:0;transform:translateY(.13in)}   /* the action / berths float low over the illustration, dropped toward the colour foot */
   /* SHIP CARD (printables2 v4) — hull + cost over the art, gate + berths floating low, the kontor name in the colour foot */
   .ship-card .ce.top .cnm{font-size:.22in;display:inline-flex;align-items:center;gap:.05in}
   .ship-card .ce.top .cnm svg,.ship-card .ce.top .cnm .ic{width:.26in;height:.26in}
   .ship-card .ccost{font-size:.17in}
-  .ship-card .sberth{display:inline-flex;align-items:center;gap:.06in;background:rgba(0,0,0,.34);border-radius:.06in;padding:.05in .08in}
-  .ship-card .sgate{font-weight:900;font-size:.2in;display:inline-flex;align-items:center;gap:.02in}
-  .ship-card .sgate svg,.ship-card .sgate .ic{width:.19in;height:.19in}
-  .ship-card .sbn{width:.27in;height:.27in;border:1.7px solid rgba(255,255,255,.92);border-radius:.04in;display:flex;align-items:center;justify-content:center;font-size:.15in;font-weight:900}
-  .ship-card .ce.bot .sdest{font-size:.26in;font-variant:small-caps;font-weight:bold;display:inline-flex;align-items:center;gap:.06in}
-  .ship-card .ce.bot .sdest svg,.ship-card .ce.bot .sdest .ic{width:.24in;height:.24in}
+  .ship-card .sberth{display:inline-flex;align-items:center;gap:.07in;background:rgba(0,0,0,.34);border-radius:.06in;padding:.055in .09in}
+  .ship-card .sbn{width:.34in;height:.34in;border:1.8px solid rgba(255,255,255,.92);border-radius:.05in;display:flex;align-items:center;justify-content:center;font-size:.18in;font-weight:900}
+  .ship-card .ce.bot .ce-row{align-items:flex-end}
+  .ship-card .ce.bot .sdest{font-size:.22in;font-variant:small-caps;font-weight:bold;display:inline-flex;align-items:center;gap:.06in}
+  .ship-card .ce.bot .sdest svg,.ship-card .ce.bot .sdest .ic{width:.2in;height:.2in}
+  .ship-card .ce.bot .sgate{font-weight:900;font-size:.2in;display:inline-flex;align-items:center;gap:.02in}
+  .ship-card .ce.bot .sgate svg,.ship-card .ce.bot .sgate .ic{width:.19in;height:.19in}
   /* the BACK ends match (Q + title + a marker space), a little larger */
   .cc-back .ce .cq{font-size:.24in} .cc-back .ce .cq svg,.cc-back .ce .cq .ic{width:.2in;height:.2in}
   .cc-back .ce .cnm{font-size:.19in}
@@ -824,8 +826,8 @@ function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm
   return '<div class="ccard cc-back ship-card" style="--c:'+d.kc+'">'
     +artLayer('wharf-'+destNm.toLowerCase()+'.png')
     +'<div class="ce top"><div class="ce-row sb"><span class="cnm shull">'+LU('sailboat')+(hull==='cog'?'Cog':'Hulk')+'</span><span class="ccost">'+cost(2,0)+'</span></div></div>'
-    +'<div class="cc-actfloat"><div class="sberth"><span class="sgate">'+LU(QI)+d.req+'+</span>'+berths+'</div></div>'
-    +'<div class="ce bot"><div class="ce-row"><span class="sdest">'+LU('landmark')+destNm+'</span></div></div>'
+    +'<div class="cc-actfloat"><div class="sberth">'+berths+'</div></div>'
+    +'<div class="ce bot"><div class="ce-row sb"><span class="sdest">'+LU('landmark')+destNm+'</span><span class="sgate">'+LU(QI)+d.req+'+</span></div></div>'
   +'</div>';
 }
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
