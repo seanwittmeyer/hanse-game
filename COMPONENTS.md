@@ -4,7 +4,7 @@
 >
 > - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9.
 > - The live build is `play.html` (`KEY hanse-hotseat-v84`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - Cross-reference for tile families: §3 boards, §4 supply, §5–11 the seven families A–G, §12 player board, §13 starting setup, §14 box footprint. Expansion add-ons are §15. Purge candidates are §16.
+> - Cross-reference for tile families: §3 boards, §4 supply, §5–11 the seven families A–G, §12 player board, §13 starting setup, §14 box footprint. Expansion add-ons are §15; cross-references §16.
 
 ---
 
@@ -327,29 +327,7 @@ Adds one inland-network board sitting beside the destination board. Per-house: p
 
 ---
 
-## 16. Purge candidates (to keep the box light)
-
-These are the items most worth revisiting if we want to trim. None are decided — they're flagged so a future tuning pass can shed weight without losing flavor.
-
-| Candidate | Why it could go | Risk if cut |
-|---|---|---|
-| **Developer 3★ chits** (§4 of the prior doc) | Already redundant: a displaced building **flips to its back** in the owner's improvements area. The tile *is* the chit. | None — already implemented as a flip. Just stop printing chits. |
-| **Kontor Charter ×4 buildings** (Hanzehuis / Steelyard / Bryggen / Peterhof) | Four near-identical singletons; could collapse to **2 generic Kontor Charter tiles** whose owner names the kontor on placement. | Slightly less thematic; minor loss of variety. |
-| **The Hanse Diet** | "Cask to a kontor where you lead +3★" rewards the runaway leader. Rare trigger; doubles up with Burgomaster's Favor. | Reduces value variety, but the Burgomaster covers the same lane. |
-| **Reliquary** | Niche trigger (enshrine only). The Hall ladder already scales with quality. | Mild — removes a Hall-leaning author play. |
-| **Almoner's Stall** | Niche owner-passive (only fires on wharfage). Wharfage is already small. | Tiny — wharfage stays printed at `1★`. |
-| **Aging Cellar ↔ Lagering Cellar** overlap | Both speed maturation. Aging is a flat −1 step; Lagering is +1 age/turn. Could merge into one tile. | Removes the "one-time discount vs steady drip" choice. |
-| **Quality-boost markers** | Only used by 2 transforms (Malt Kiln, Hop Yard). Could be replaced by **rotating the cask 90°** on the slot. | Saves 6 wooden markers; minor visual cue work. |
-| **Demand die count** | 8 dice may be over-budget for a base game; at most ~3 ships in berth at once. **4–5 dice** likely covers actual demand. | None at smaller counts; reprint risk if 6+ value tiles fire same turn. |
-| **Cask supply** | 60 casks is generous. With 5 vessels max per player × 4p = 20 in maturation + deliveries on the score pile, **~45** likely sufficient. | Edge cases where supply runs out; doubles as a soft cap. |
-| **Charter contracts** | 16 cards; with 2 starting / house × 4 + buy-cap unused, **12** covers the usable lifespan. | None at lower count. |
-| **The "developer bonus" entirely** (`DEVELOP_PTS=3`) | Could fold into the Flight or remove if displacement is rare enough to skip rewarding. | Removes the authorship endgame hook the v1.7 design called out. |
-
-Decisions on the above go in `DESIGN.md` §9 (with the rationale) and `PLAN.md` (if scheduled). This doc only catalogs the candidates.
-
----
-
-## 17. Cross-references
+## 16. Cross-references
 
 - **Why the family is shaped this way** — `DESIGN.md` §6 (architecture) and §9 (change log).
 - **How a tile is used during a turn** — `RULES.md` §2–§7.
