@@ -103,7 +103,12 @@
   .bcard > .artbg{z-index:0}
   .bcard .bc-top{display:flex;align-items:flex-start;gap:.05in;padding:.1in .11in 0}
   .bcard .bc-ic{flex:0 0 auto} .bcard .bc-ic svg,.bcard .bc-ic .ic{width:.2in;height:.2in;stroke-width:1.8}
-  .bcard .bc-nm{font-variant:small-caps;font-weight:bold;font-size:.155in;line-height:1.02;flex:1;margin-top:-.01in}
+  /* WHARFAGE chip — icons+numbers only: what the OWNER banks when a RIVAL docks a cask/ship here (a rival → +N★) */
+  .bcard .bc-wf{display:inline-flex;align-items:center;gap:.012in;flex:0 0 auto;font-weight:bold;font-size:.115in;line-height:1;
+    background:rgba(0,0,0,.34);border-radius:.04in;padding:.022in .05in;margin-top:.005in}
+  .bcard .bc-wf svg,.bcard .bc-wf .ic{width:.13in;height:.13in;stroke-width:2}
+  .bcard .bc-wf .st{color:#ffd24a}
+  .bcard .bc-nm{font-variant:small-caps;font-weight:bold;font-size:.15in;line-height:1.02;flex:1;margin-top:-.01in}
   .bcard .bc-foot{background:linear-gradient(to top,var(--c) 0%,var(--c) 52%,transparent 100%);
     padding:.26in .11in .1in;display:flex;flex-direction:column;gap:.055in}
   .bcard .bc-eff{font-size:.1in;line-height:1.17}
@@ -775,9 +780,13 @@ function caskTile(d,act){   // act = the drawn slot-action {ai,act} (v0.12); Gru
 // nests in the 2.5″ player-colour owner FRAME, so the coloured edge around it marks ownership.
 const BLD_FOOT='#3a3342';   // building card foot/base — dark purple-grey (v6; was green). Same on front & back.
 function buildingCard(d){const tg=BTGT[d.tgt];
+  // wharfage chip (icons+numbers only) — what YOU bank when a RIVAL docks a cask/ship here; only for dockable
+  // buildings (cask/ship targets — the owner-passive Almoner & any line tiles have no occupant to toll).
+  const wf=(d.tgt==='cask'||d.tgt==='ship')
+    ? '<span class="bc-wf" title="when a rival docks a cask/ship here, you (owner) bank this wharfage on its delivery">'+LU('users-round')+'+'+WHARFAGE+LU('star','st')+'</span>' : '';
   return '<div class="bcard" style="--c:'+BLD_FOOT+'">'
   +artLayer('building-'+d.k+'.png')
-  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span></div>'
+  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span>'+wf+'<span class="bc-nm">'+d.nm+'</span></div>'
   +'<div class="bc-foot"><div class="bc-eff">'+d.eff+'</div>'
     +'<div class="bc-row"><span class="bc-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span>'+cost(d.g,0)+'</div></div>'
   +'</div>';}
