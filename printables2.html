@@ -783,7 +783,6 @@ function caskCardFront(d,act){
   for(let i=1;i<d.ready;i++)track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step">'+i+'</div>';
   track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step rdy">Ready</div>';
   return '<div class="ccard cc-front" style="--c:'+d.c+'">'
-    +artLayer('cask-'+d.nm.toLowerCase()+'.png')
     +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span>'
       +'<span class="ctitle"><span class="cnm">'+d.nm+'</span><span class="ccost">'+c+'</span></span></div></div>'
     +'<div class="cc-age"><span class="agl">'+LU('hourglass')+'Aging</span><div class="cc-agerow">'+track+'</div>'
