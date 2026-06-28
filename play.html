@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v2.1 “Staple Rights”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v2.1.1 “Staple Rights”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -408,7 +408,7 @@
       <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>v2.1 “Staple Rights” — prototype.</b> <span class="note">(opt-in expansions: Specialty Beers · Jopenbier · The Trade Roads; the base game is v1.8.)</span> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
+  <p class="note" style="text-align:center"><b>v2.1.1 “Staple Rights” — prototype.</b> <span class="note">(opt-in expansions: Specialty Beers · Jopenbier · The Trade Roads; the base game is v1.8.)</span> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
 </main>
 
 <div id="setup" class="modal hidden" onclick="if(event.target===this)closeSetup()">
@@ -776,7 +776,7 @@ const KEY='hanse-hotseat-v84'; // v84 "Cellarmaster bites": the CELLARMASTER's d
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v2.1 “Staple Rights” · '+KEY;
+const APP_VERSION='v2.1.1 “Staple Rights” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -2786,7 +2786,7 @@ function renderAid(){
   const vb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='value').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   const tb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='transform').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   document.getElementById('aidcard').innerHTML=
-    '<h2>'+ic('scroll-text')+' Player Aid — v2.1 “Staple Rights”</h2>'
+    '<h2>'+ic('scroll-text')+' Player Aid — v2.1.1 “Staple Rights”</h2>'
     +'<div class="asec"><b>Your turn</b><div class="note">Move to an adjacent station → activate its <b>row OR column</b> → resolve up to 4 stops (slot · station · station · slot) <b>in any order</b>. <b>If you move onto a station a rival occupies:</b> pay 1 '+ic('wheat')+' toll and work that public line, <b>OR</b> work your <b>Floor</b> — run every cask in your vessels (their slot-actions) <i>instead of</i> the public line (no toll).</div></div>'
     +'<div class="asec"><b>The four stations</b><div class="note">'
       +ic('store')+' <b>Market</b> (Source): take 2 goods, or acquire one tile — a recipe · a '+ic('building-2')+' Building (buy + place) · a '+ic('sailboat')+' ship · a charter contract. Or <b>place a Building from your hand</b> (free) — the ones you earned at London or drew with Survey.<br>'

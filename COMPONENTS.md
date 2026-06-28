@@ -1,9 +1,9 @@
-# Brewhouses of the Hanse — Components
+# Brewhouses of the Hanse — Components (v2.1.1 “Staple Rights”)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9.
-> - The live build is `play.html` (`KEY hanse-hotseat-v84`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v2.1.1 “Staple Rights”** (`KEY hanse-hotseat-v84`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - Cross-reference for tile families: §3 boards, §4 supply, §5–11 the seven families A–G, §12 player board, §13 starting setup, §14 box footprint. Expansion add-ons are §15; cross-references §16.
 
 ---

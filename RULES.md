@@ -1,8 +1,8 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v2.1 “Staple Rights”)
+# Brewhouses of the Hanse — Turn & Round Rules (v2.1.1 “Staple Rights”)
 
 > **Status: live (2026-06-20).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
-> playable build is `play.html` (v2.1 “Staple Rights” — base ruleset v1.8 “Quality Pays”; the three
+> playable build is `play.html` (v2.1.1 “Staple Rights” — base ruleset v1.8 “Quality Pays”; the three
 > opt-in expansions — **Specialty Beers** (incl. blending + 3 thematic Buildings), the **Jopenbier**
 > capstone, and **The Trade Roads** (an Overland inland map of claimable Staple-Right slots that replaces the kontor majorities) —
 > are §12) — these rules are implemented there.** (The prior

@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v2.1 “Staple Rights”)
+# Brewhouses of the Hanse — Design (v2.1.1 “Staple Rights”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v2.1 “Staple Rights”** — live; **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — the **Hanse Network**: a tree from **Hamburg** (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul) that **REPLACES the kontor majorities**. A **voyage** to a kontor pushes your **caravan** one node along its road (**per voyage**, gated by cask quality); reaching a town lets each cask aboard **claim a Staple-Right slot** (a distinct one-shot bonus, flavoured by lane: Rhineland=craft · London=infrastructure · Bergen=logistics · East=points), in load order; a full town pays an overflow bonus. Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
+|**Status**     |**v2.1.1 “Staple Rights”** — live; **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — the **Hanse Network**: a tree from **Hamburg** (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul) that **REPLACES the kontor majorities**. A **voyage** to a kontor pushes your **caravan** one node along its road (**per voyage**, gated by cask quality); reaching a town lets each cask aboard **claim a Staple-Right slot** (a distinct one-shot bonus, flavoured by lane: Rhineland=craft · London=infrastructure · Bergen=logistics · East=points), in load order; a full town pays an overflow bonus. Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
 
 ---
 
@@ -78,7 +78,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v2.1 “Staple Rights”)
+## 6. The current architecture (v2.1.1 “Staple Rights”)
 
 Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -132,8 +132,8 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   tier ≥60% at 2p; the GM & Cellarmaster rungs **sharded**) + `ai-render-smoke.js`. `ai-tune.js` (CEM over
   the Trader weights) re-runs after a balance pass.
 - **After any engine change:** bump the save `KEY`, run the gates, save the sim output, publish
-  to `main`. *(These harnesses target the v0.16 engine; they'll be re-pointed as v1.0's
-  `play.html` is rebuilt.)*
+  to `main`. *(The harnesses drive the live `play.html` engine — they extract its `<script>` and
+  run it in a Node `vm`, so they track the current build.)*
 
 ---
 
@@ -178,6 +178,16 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   revisit: deal a **choice** of starting buildings (draft), or make the opening building **self-favoring**
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
+
+**v84 — "Cellarmaster bites": the deep-MC rollout policy becomes the Trader** *(2026-06-28, `play.html` KEY v84)* —
+The **Cellarmaster** (the deep Monte-Carlo arch-nemesis) ran *journeyman* rollouts, which ship to the first
+fillable hull and never model deliberately stacking the rich anchors (Bergen 9 / Novgorod 8) — the lane a strong
+human wins on. v84 switches its rollout policy to the **Trader** (`CELLAR_ROLL='trader'`: value-ranked
+destinations + `aiMajSwing` + the Hall), so the deep playouts finally price anchor-stacking. Equal-budget A/B
+(CMN=30, CELLAR_MS=220): the trader-rollout Cellarmaster beats the Guildmaster **66.7%** (vs the journeyman
+rollout's 50%) and plays tighter (rounds 22→18, clock 77%→100%). The Guildmaster keeps its journeyman rollout
+(the fast robustness oracle). **AI-only — no rules/engine/state-shape change;** the KEY bump just discards stale
+v83 saves. *(The `v2.1.1` repo-wide doc/printables alignment pass rides on this same KEY — no rules change.)*
 
 **v83 — "Free Tap": the Cellar's Tap becomes repeatable (multi-tap per visit)** *(2026-06-27, `play.html` KEY v83)* —
 The Cellar **Tap** (discard a Ready cask from a vessel/slot → fire its action once, freeing the vessel or
@@ -603,7 +613,7 @@ This session implemented the v1.1 differentiation pass (Stage 1) and several fix
   action surface, per-player "what can I do / what do I have" at a glance, the goods economy and the maturation
   state made obvious, a guided first-game/onboarding, and the player aid pulled into the live flow.
 
-- **Arc analysis (`playtests/gm-arc.js`, v53/v54):** the **Trader climbs eagerly** (full recipe set ~R8, Q5 ~40%)
+- **Arc analysis (v53/v54):** the **Trader climbs eagerly** (full recipe set ~R8, Q5 ~40%)
   but the **Guildmaster oracle stays CHEAP** (~1.3 recipes, Q5 7–27%, climbs late/rarely) — cheap-volume is
   optimal-flexible; **the quality climb is a committed, high-variance lane, not the default** (so the Stage-1
   persona "quality lanes hot" was largely a *forced-persona artifact*, and we did **not** trim quality rewards).
