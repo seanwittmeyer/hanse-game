@@ -448,12 +448,9 @@
   .wslot svg,.wslot .ic{width:.5in;height:.5in;opacity:.85;filter:drop-shadow(0 1px 3px rgba(0,0,0,.7))}
   .stn{border-radius:.2in;color:#fff;padding:.14in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1in;position:relative;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.55);box-shadow:0 3px 10px rgba(0,0,0,.35)}
   .stn>*{position:relative;z-index:1}
-  /* roof-tile (fish-scale) texture over the station colour — reads as a tiled rooftop from above */
-  .stn::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;
-    background-image:
-      radial-gradient(circle at 50% 112%, transparent 45%, rgba(0,0,0,.28) 47%, rgba(0,0,0,.28) 50%, transparent 52%),
-      radial-gradient(circle at 50% 100%, transparent 50%, rgba(255,255,255,.12) 52%, transparent 64%);
-    background-size:.6in .4in;background-position:0 0,0 0}
+  /* roof-tile (fish-scale) texture over the station colour — an inline SVG <pattern> (not a CSS radial-gradient)
+     so it survives the PNG export: html2canvas can't rasterize tiled radial-gradients, but it renders inline SVG. */
+  .stn>.stn-tex{position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none}
   .stn .bigic svg,.stn .bigic .ic{width:.8in;height:.8in;stroke-width:1.6}
   .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.32in;line-height:1}
   /* the action line, in the board's icon grammar: "/" = or · juxtaposed = both · ":" = per-each */
@@ -1153,7 +1150,14 @@ function olboard(){
 // ---- MAIN BOARD — the Wharf (stations + 8 slots + both shared tracks) ----
 // Board-design principle: the board carries shapes & icons only (a 1.25" tile fits a 1.3" dashed
 // square; that's the affordance) — the verbose station reference lives in the side column.
+// the roof-tile texture, drawn as a tiled SVG <pattern> (scalloped arcs) — exports cleanly via html2canvas
+const STN_TEX='<svg class="stn-tex" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">'
+  +'<defs><pattern id="rooftex" width="57.6" height="38.4" patternUnits="userSpaceOnUse">'
+  +'<path d="M0 38.4 Q28.8 7 57.6 38.4" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="2.4"/>'
+  +'<path d="M0 34.4 Q28.8 3 57.6 34.4" fill="none" stroke="rgba(255,255,255,.13)" stroke-width="1.7"/>'
+  +'</pattern></defs><rect width="100%" height="100%" fill="url(#rooftex)"/></svg>';
 function station(L,nm,ic,yield_){return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
+  +STN_TEX
   +'<span class="bigic">'+LU(ic)+'</span><span class="nm">'+nm+'</span>'
   +'<span class="yield">'+yield_+'</span></div>';}
 // printables2: the WHARF is now a CROSS board on its own (the cut follows the plus). 4×4 grid:
