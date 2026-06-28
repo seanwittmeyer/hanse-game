@@ -110,6 +110,33 @@
   .tile.bback .bb-v{display:flex;align-items:center;gap:.03in;font-weight:900;font-size:.36in;line-height:1}
   .tile.bback .bb-v svg,.tile.bback .bb-v .ic{width:.28in;height:.28in;color:#ffd24a}
   .tile.bback .bb-l{font-variant:small-caps;font-size:.1in;opacity:.85;letter-spacing:.3px}
+  /* ====== printables2: BUILDING CARDS (2″, double-sided) — FRONT full-bleed building art + effect ·
+     BACK the generic Wild + developer ★ (displaced face). Nests in the 2.5″ player-colour owner FRAME
+     (the coloured edge showing around it = whose building it is). Same art-card grammar as the casks/ships. ====== */
+  .bcard{width:2in;height:2in;background:var(--c,#3f5c30);color:#fff;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}
+  .bcard > *{position:relative;z-index:1}
+  .bcard > .artbg{z-index:0}
+  .bcard .bc-top{display:flex;align-items:flex-start;gap:.05in;padding:.1in .11in 0}
+  .bcard .bc-ic{flex:0 0 auto} .bcard .bc-ic svg,.bcard .bc-ic .ic{width:.2in;height:.2in;stroke-width:1.8}
+  .bcard .bc-nm{font-variant:small-caps;font-weight:bold;font-size:.155in;line-height:1.02;flex:1;margin-top:-.01in}
+  .bcard .bc-verb{font-size:.075in;font-variant:small-caps;font-weight:bold;letter-spacing:.4px;
+    background:rgba(255,255,255,.26);border-radius:.03in;padding:.014in .05in;flex:0 0 auto}
+  .bcard .bc-foot{background:linear-gradient(to top,var(--c) 0%,var(--c) 52%,transparent 100%);
+    padding:.26in .11in .1in;display:flex;flex-direction:column;gap:.055in}
+  .bcard .bc-eff{font-size:.1in;line-height:1.17}
+  .bcard .bc-eff .ic,.bcard .bc-eff svg{width:.12in;height:.12in;vertical-align:-.02in}
+  .bcard .bc-row{display:flex;align-items:center;gap:.05in}
+  .bcard .bc-tgt{display:inline-flex;align-items:center;justify-content:center;width:.26in;height:.26in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
+  .bcard .bc-tgt svg,.bcard .bc-tgt .ic{width:.15in;height:.15in;color:#23201c;stroke-width:2}
+  .bcard .bc-row .gc{margin-left:auto;font-size:.14in} .bcard .bc-row .gc svg,.bcard .bc-row .gc .ic{width:.15in;height:.15in}
+  .bcard .bc-top svg,.bcard .bc-top .ic{filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}
+  /* BUILDING CARD BACK — the displaced/flipped Wild + developer ★ face (one generic design for every building) */
+  .bcard.bc-back{justify-content:center;align-items:center;text-align:center;gap:.06in;background:#43504a}
+  .bcard.bc-back .bb-ic svg,.bcard.bc-back .bb-ic .ic{width:.5in;height:.5in;opacity:.95}
+  .bcard.bc-back .bb-v{display:flex;align-items:center;gap:.03in;font-weight:900;font-size:.42in;line-height:1}
+  .bcard.bc-back .bb-v svg,.bcard.bc-back .bb-v .ic{width:.32in;height:.32in;color:#ffd24a}
+  .bcard.bc-back .bb-l{font-variant:small-caps;font-size:.092in;opacity:.85;letter-spacing:.3px;max-width:1.7in;line-height:1.15}
   /* ====== printables2: CASK CARDS (double-sided, 2×3) — FRONT buy/age (aging track) · BACK brewed (action) ====== */
   .ccard{width:2.5in;height:2.5in;background:var(--c,#777);color:#fff;position:relative;overflow:hidden;
     display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.5)}
@@ -588,7 +615,7 @@
 </head>
 <body>
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v2.1 &ldquo;Staple Rights&rdquo; · casks = CARDS · ships 2.5″ · buildings 2″ (in 2.5″ owner rings)</span></h1>
+  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v2.1 &ldquo;Staple Rights&rdquo; · casks &amp; ships = CARDS 2.5″ · building CARDS 2″ (in 2.5″ owner frames)</span></h1>
   <button class="bartoggle" id="bartoggle" onclick="toggleBar()" title="Collapse / expand the toolbar">▾ Hide</button>
   <button onclick="window.print()">🖨 Print</button>
   <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles &amp; Cards</button><button id="vimps" onclick="setView('imps')">Improvements</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
@@ -757,18 +784,23 @@ function caskTile(d,act){   // act = the drawn slot-action {ai,act} (v0.12); Gru
   +'<div class="t-cost'+(d.alt?' dual':'')+'">'+c+'</div></div>';}
 // BUILDING tile (v1.0 keystone) — an OWNED slot modifier: icon + name + verb badge (VALUE/TRANSFORM) +
 // the effect + a target glyph (what it modifies: cask/ship/line/owner) + the goods cost. Value = violet, Transform = green.
-function buildingTile(d){const tg=BTGT[d.tgt];const c='#3f5c30';   /* Buildings = GREEN (value/transform via the badge) */
-  return '<div class="tile bld s16" style="--c:'+c+'">'   /* printables2: building → 2.0in (sits on an ownership frame) */
-  +'<div class="b-top"><span class="bigic">'+LU(d.ic)+'</span><span class="b-verb">'+(d.verb==='value'?'Value':'Transform')+'</span></div>'
-  +'<div class="b-nm">'+d.nm+'</div>'
-  +'<div class="b-eff">'+d.eff+'</div>'
-  +'<div class="b-foot"><span class="b-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span>'+cost(d.g,0)+'</div></div>';}
-// BUILDING BACK (v1.6) — the flipped face: when a RIVAL overbuilds your Building it returns to you flipped to
-// this WILD + developer ★ side and parks in an improvement slot (scores +3★ at game end). One per Building tile.
-function buildingBack(){return '<div class="tile bback s16" style="--c:#43504a">'   /* printables2: 2.0in, mirrors the building front */
+// BUILDING CARD (printables2 v5) — buildings migrate from flat tiles to 2″ double-sided ART CARDS (same grammar
+// as the cask/ship cards). FRONT = full-bleed building art (art/building-<key>.png) behind a scrim, with the name
+// + verb badge (Value/Transform) up top and the effect + target glyph + goods cost in a colour foot. The card
+// nests in the 2.5″ player-colour owner FRAME, so the coloured edge around it marks ownership.
+function buildingCard(d){const tg=BTGT[d.tgt];const c='#3f5c30';   /* Buildings = GREEN family; the badge & art carry value/transform */
+  return '<div class="bcard" style="--c:'+c+'">'
+  +artLayer('building-'+d.k+'.png')
+  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span><span class="bc-verb">'+(d.verb==='value'?'Value':'Transform')+'</span></div>'
+  +'<div class="bc-foot"><div class="bc-eff">'+d.eff+'</div>'
+    +'<div class="bc-row"><span class="bc-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span>'+cost(d.g,0)+'</div></div>'
+  +'</div>';}
+// BUILDING CARD BACK (v1.6) — the flipped face: when a RIVAL overbuilds your Building it returns to you flipped to
+// this WILD + developer ★ side and parks in an improvement slot (scores +3★ at game end). One generic design.
+function buildingBack(){return '<div class="bcard bc-back">'   /* printables2: 2.0in, mirrors the building card front */
   +'<div class="bb-ic">'+LU('sparkles')+'</div>'
   +'<div class="bb-v">+'+DEVELOP_PTS+LU('star')+'</div>'
-  +'<div class="bb-l">displaced Building</div></div>';}
+  +'<div class="bb-l">displaced Building · Wild on the Floor</div></div>';}
 // NEUTRAL destination-bound ship tile (v0.11): hull + capacity · printed destination + quality gate · commission 2 G
 function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
   let berths='';for(let i=1;i<=cap;i++)berths+='<div class="bn">'+i+'</div>';   // numbered load-order berths (v0.16)
@@ -1256,8 +1288,8 @@ function buildPages(){
     for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];fronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
   const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
   shipList.forEach(([hull,dest])=>fronts.push({fam:'Ships',kind:'ship',ship:true,html:shipCard(hull,dest)}));   // ships = full-bleed 2.5″ cards (v4)
-  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)fronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',kind:'bld',bld:true,html:buildingTile(d)});});   // buildings 2″
-  const FLBL='Cask CARDS (front · buy/age) + Ship & Building TILES · LARGE 22×15 (casks & ships 2.5″ · buildings 2″)';
+  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)fronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',kind:'bld',bld:true,html:buildingCard(d)});});   // building CARDS 2″ (nest in 2.5″ owner frames)
+  const FLBL='Cask · Ship · Building CARDS (fronts) · LARGE 22×15 (casks & ships 2.5″ · building cards 2″, nest in 2.5″ owner frames)';
   ['caskc','ship','bld'].forEach(k=>packRun(pages,'tiles',FLBL,k,fronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,TG));
   const frontPages=pages.filter(p=>p.section==='tiles');
   // tag front families by pack order (item order across the tile pages == fronts order)
@@ -1330,7 +1362,7 @@ function checklist(pages,famPages){
     +row(1,'Player brewery boards ('+PLAYERS.map(p=>p.nm).join(' · ')+')',PLAYERS.length,pbRef)
     +row(0,'<i>EXPANSION — The Trade Roads (Overland, Staple Rights): 1 inland network board — a tree rooted at HAMBURG; two roads out (WEST to the Bruges gateway → London/Bergen/Rhineland; EAST = the deep Novgorod haul). BRUGES is the lone no-slots gateway (recipe/2 goods); every other node carries Staple-Right SLOTS — the towns Cologne · Frankfurt · Antwerp · Tønsberg · Visby · Tallinn · Pskov AND the kontore London · Bergen · Novgorod (the kontore claim theirs when the caravan arrives, atop their base sea benefit). Each slotted node: quality gate · base delivery ★ · 2–4 SLOTS (distinct one-shot bonuses, flavoured by lane: Rhineland=craft (recipe/brew/age) · London=infrastructure (buildings/improvement) · Bergen=logistics (contracts/goods/vessel) · East=depth/points; Frankfurt=points+Enshrine; Pskov=just a delivery, one slot +8★ then +5★) · an overflow bonus. Frankfurt/Pskov = ◆ deep terminals (scarce). Active slot count scales with player count (print 4, cover the high slots for 2–3p). Per player: presence markers drop into the slot claimed. The caravan rides the Ship action (per VOYAGE = ONE node per owner, gated by cask quality), then each cask aboard claims a slot in load order — no new tile; replaces the kontor majority chart when on. The Q4+ Rhine Charter skips Bruges → Cologne.</i>','—','—')
     +'</table>';
-  h+='<table><tr><th></th><th>Cask CARDS 2.5″ square (double-sided) · Ship TILES 2.5″ · Building TILES 2″ (in 2.5″ owner rings) · <b>LARGE 22×15in sheets</b></th><th>qty</th><th>sheet</th></tr>'
+  h+='<table><tr><th></th><th>Cask CARDS 2.5″ square (double-sided) · Ship CARDS 2.5″ · Building CARDS 2″ (double-sided · nest in 2.5″ owner frames) · <b>LARGE 22×15in sheets</b></th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Cask card · Gruit Q1 (pinned Source +2 goods · ready 1)','16',pgRef(pages,famPages,'Cask cards'))
     +row(1,'Cask · Hopped Q2 (G H · ready 1)','20','')
     +row(1,'Cask · Broyhan Q3 (G H H · ready 1)','8','')

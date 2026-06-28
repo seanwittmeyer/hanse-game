@@ -14,6 +14,20 @@ These images sit **behind** the cask cards (2.5″ square) and ship tiles (2.5�
   `cask-mumme.png` · `cask-bock.png` · `cask-gose.png` · `cask-zerbster.png` ·
   `cask-duckstein.png` · `cask-jopenbier.png`
 - Ships: `ship-cog.png` · `ship-hulk.png`
+- Buildings (v5 — 2″ building CARDS, full-bleed art behind the name/effect/cost): `building-<key>.png`,
+  one per `BUILDINGS` key in `printables2.html` — `building-richberth.png` · `building-staple.png` ·
+  `building-burgomstr.png` · `building-connoiss.png` · `building-hansediet.png` · `building-festkeller.png` ·
+  `building-reliquary.png` · `building-almoner.png` · `building-ch_bruges.png` · `building-ch_london.png` ·
+  `building-ch_bergen.png` · `building-ch_novgo.png` · `building-maltkiln.png` · `building-hopyard.png` ·
+  `building-cooperage.png` · `building-customs.png` · `building-gauger.png` · `building-workshop.png` ·
+  `building-salthouse.png` · `building-smokekiln.png` · `building-partigyle.png`.
+  (The building card BACK is the generic Wild + ★ "displaced" face — no art.)
+
+> **Model note (current):** generated with Google's **`gemini-3.1-flash-image`** (nano-banana class) via the
+> Generative Language API — `:generateContent` with `responseModalities:["IMAGE"]` + `imageConfig.aspectRatio:"1:1"`.
+> The reusable generator (`gen.py`) lives in the session scratchpad; **the API key is never committed.**
+> `ART_ON` is already `true` in `printables2.html`. Output is JPEG-in-`.png` at 1024² — the same as the
+> existing cask/ship art (browsers decode by content, not extension).
 
 ## Shared style block — paste at the top of EVERY prompt
 > Medieval Hanseatic League harbor, c. 1350. Hand-painted illustration in the style of an aged
@@ -48,8 +62,35 @@ Vary the wood tone, contents glow, and mood per beer:
 - **ship-hulk.png** — *a larger Hanseatic **hulk** with a broad rounded hull and a big square sail, a heavier
   cargo carrier, under open sky on the Baltic/North Sea.* Slightly grander, warmer **sea-green/blue** tones.
 
+## Building cards — subject: the Hanseatic institution / structure itself
+Each building is a recognizable medieval structure, centered, with calm sky above and calm ground/water below
+for the overlaid name (top) and effect/cost (foot). *Value buildings = trading privileges & patrons; transform
+buildings = the brewer's craft & harbor works.* The subjects used:
+
+- **building-richberth.png** — a prime stone-and-timber deepwater dock berth, mooring posts & bollards, a richly laden ship's bow at the best berth.
+- **building-staple.png** — a grand staple warehouse (Stapelhaus), a tall stepped-gable brick hall with great loading doors, bales & crates stacked before it.
+- **building-burgomstr.png** — a stately burgomaster's gabled patrician townhouse, fine brickwork, a small crest above the door.
+- **building-connoiss.png** — a vaulted Ratskeller tasting cellar, stone arches by candlelight, fine casks and a goblet of dark beer.
+- **building-hansediet.png** — the great Hanseatic assembly hall (Hansetag chamber), a grand civic hall with arched doorway and banners.
+- **building-festkeller.png** — a lively festival beer hall, a timbered hall hung with garlands and banners, full casks and long tables.
+- **building-reliquary.png** — a small ornate stone chapel / reliquary shrine, a relic casket on an altar beneath a rose window.
+- **building-almoner.png** — a humble almshouse / almoner's charity stall, a modest dispensary with a bread shelf and alms bowl.
+- **building-ch_bruges.png** — the Bruges kontor house (Hanzehuis), an elegant Flemish stepped-gable brick merchant house by a canal.
+- **building-ch_london.png** — the London Steelyard (Stalhof), a walled riverside compound of brick warehouses on the Thames, gate and crane.
+- **building-ch_bergen.png** — the Bergen Bryggen, a row of tall narrow colourful wooden Hanseatic wharf houses along the quay.
+- **building-ch_novgo.png** — the Novgorod Peterhof, a fortified Russian timber trading yard with a log stockade and a small onion-domed church behind.
+- **building-maltkiln.png** — a malthouse with a malt kiln, a tall pyramidal kiln roof with a vent cowl, golden malt drying, a warm fire glow.
+- **building-hopyard.png** — a hop garden, tall timber trellises strung with climbing hop vines heavy with green cones, a drying shed behind.
+- **building-cooperage.png** — a cooper's workshop, stacks of barrel staves and iron hoops, a half-built cask on a workbench.
+- **building-customs.png** — a customs & toll house at the harbour gate, a small fortified gatehouse with a weighing beam, scales and a tollbar.
+- **building-gauger.png** — a gauger's office, a small counting house where casks are measured with gauging rods and rulers.
+- **building-workshop.png** — a brewmaster's workshop, a brewhouse interior with a great gleaming copper kettle, mash paddles, steam rising.
+- **building-salthouse.png** — a salt warehouse, a timber storehouse with gleaming white mounds of sea salt and salt sacks (the salt trade).
+- **building-smokekiln.png** — a smokehouse / smoke kiln, a dark timber curing hut with drifting blue woodsmoke from its roof.
+- **building-partigyle.png** — a brewing tun-house, a large wooden mash/lauter tun splitting the runnings, wort flowing into vessels.
+
 ## Notes
 - Keep all ten cask images **consistent** (same wharf, same angle/lighting) so the deck reads as one family —
-  only the wood/contents/mood change per beer. Same for the two ships.
+  only the wood/contents/mood change per beer. Same for the two ships, and for the 21 building structures.
 - If a beer's color clashes with its card tint, lean the art toward the card's color (the card's `--c`
   shows through the scrim at the edges).
