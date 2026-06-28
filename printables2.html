@@ -1449,74 +1449,57 @@ function buildPages(){
 function pgRef(pages,famPages,fam){const s=famPages[fam];if(!s)return '—';
   return 'S'+[...s].map(i=>pages[i].no).sort((a,b)=>a-b).join(', S');}
 function checklist(pages,famPages){
-  const caskTotal=CASKS.reduce((a,d)=>a+d.n,0);
-  const bVal=BUILDINGS.filter(b=>b.verb==='value'), bTr=BUILDINGS.filter(b=>b.verb==='transform');
-  const bValN=bVal.reduce((a,b)=>a+b.n,0), bTrN=bTr.reduce((a,b)=>a+b.n,0);
-  const impN=IMPROVE.reduce((a,d)=>a+d.n,0);
-  const backsN=caskTotal+bValN+bTrN;   // cask cards + building tiles are double-sided (ships' backs are blank)
-  const tileTotal=caskTotal+SHIP_DECK.length+bValN+bTrN+backsN;   // improvements are now a SEPARATE sheet
-  const row=(bx,nm,n,note)=>'<tr>'+(bx?'<td class="bx"></td>':'<td></td>')+'<td>'+nm+'</td><td class="n">'+n+'</td><td>'+(note||'')+'</td></tr>';
-  const bp=pages.filter(p=>p.section==='boards');
-  const pbRef=bp.length>4?'S'+bp[3].no+'–S'+bp[bp.length-1].no:'S'+bp[3].no+' (proof: 1 of '+PLAYERS.length+' shown)';
-  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v2.1 “Staple Rights”)</h2><div class="cols2">';
-  h+='<table><tr><th></th><th>Boards (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
-    +row(1,'Main board — the Wharf (a CROSS: 4 stations + 8 · 2.5″ slots) + the Supply board (Building display · Ship market · Sailed-Ships, Round &amp; Score 1–50 tracks) — same large 22×15 sheet','1','S'+bp[0].no)
-    +row(1,'Destinations board (4 kontore + the Hall · Building display · majority chart)','1','S'+bp[1].no)
-    +row(1,'<b>EXPANSION</b> — Trade Roads network board (Overland · <i>print on the BACK of the Destinations board</i>)','1','S'+bp[2].no)
-    +row(1,'Player brewery boards ('+PLAYERS.map(p=>p.nm).join(' · ')+')',PLAYERS.length,pbRef)
+  // counts are sourced from the CANON (COMPONENTS.md / RULES.md / play.html) — not the printables' tile data.
+  const EXP_BLD=['salthouse','smokekiln','partigyle'];                       // Specialty-Beers thematic buildings
+  const baseBld=BUILDINGS.filter(b=>!EXP_BLD.includes(b.k));
+  const sumN=a=>a.reduce((s,b)=>s+b.n,0);
+  const baseVal=baseBld.filter(b=>b.verb==='value'), baseTr=baseBld.filter(b=>b.verb==='transform');
+  const designs=a=>a.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ');
+  const impTotal=IMPROVE.reduce((s,d)=>s+d.n,0);                              // 7 types × (n−1); 21 at 4p
+  const D='style="font-size:.085in;color:#5b4a37;font-weight:normal;line-height:1.26;margin-top:.005in"';
+  const R=(nm,detail,n)=>'<tr><td class="bx"></td><td><b>'+nm+'</b>'+(detail?'<div '+D+'>'+detail+'</div>':'')+'</td><td class="n">'+n+'</td></tr>';
+  const T=title=>'<table><tr><th></th><th>'+title+'</th><th>qty</th></tr>';
+  let h='<div class="check"><h2>What’s in the box — component manifest</h2>'
+    +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The base game below; the three opt-in expansions are listed last. With all expansions off, the box is exactly the base set. (Counts are a working first pass.)</p>'
+    +'<div class="cols2">';
+  h+=T('Boards')
+    +R('Main board — the Wharf','The 2×2 of stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots, plus the Sailed-Ships end-clock track.','1')
+    +R('Destinations board','The four kontore (Bruges · London · Bergen · Novgorod) + the Hall — each with its quality gate, base value, on-delivery benefit, and (kontore) a majority track.','1')
+    +R('Player brewery boards','One per player: vessel lanes (start 2, cap 3), the maturation track, a recipe rack, improvement slots, the Flight strip, and goods storage (cap 8).',PLAYERS.length)
     +'</table>';
-  h+='<table><tr><th></th><th>Cask CARDS 2.5″ square (double-sided) · Ship CARDS 2.5″ · Building CARDS 2″ (double-sided · nest in 2.5″ owner frames) · <b>LARGE 22×15in sheets</b></th><th>qty</th><th>sheet</th></tr>'
-    +row(1,'Cask card · Gruit Q1 (pinned Source +2 goods · ready 1)','16',pgRef(pages,famPages,'Cask cards'))
-    +row(1,'Cask · Hopped Q2 (G H · ready 1)','20','')
-    +row(1,'Cask · Broyhan Q3 (G H H · ready 1)','8','')
-    +row(1,'Cask · Keut Q3 (G G H · ready 2 · +1 presence on delivery)','8','')
-    +row(1,'Cask · Mumme Q4 (G H H H · ready 3 · Wild possible)','8','')
-    +row(1,'Cask · Bock Q5 (2G 3H · ungated · ready 3 · Wild possible)','8','')
-    +row(0,'<i>Q2+ casks: the slot-action is steerable at brew — print the supply as a MIX of the 6-action pool (Q4/Q5 add Wild)</i>','','')
-    +row(0,'<i>— EXPANSION “Specialty Beers” (opt-in) — pinned-signature casks · a 3-of-7 export draft —</i>','','')
-    +row(1,'Cask · Gose Q2 (G G · ready 1 · PINNED Source · Salt Trade: a kontor delivery → +1G +1H)','8','')
-    +row(1,'Cask · Zerbster Q3 (H H H · ready 1 · PINNED Load · Parti-Gyle: brew also yields a free small Gruit)','8','')
-    +row(1,'Cask · Duckstein Q2 (G H · ready 2 · PINNED Reach · Smoke-Hardy: ships &amp; scores as +1 quality)','8','')
-    +row(0,'<i>— CAPSTONE “Jopenbier” (own toggle) — the Q6 vintage super-beer; self-contained value + dock-cellared vintage —</i>','','')
-    +row(1,'Cask · Jopenbier Q6 (G G H H H H · ready 4 · PINNED Source · always acquirable; not drafted, not in the Flight)','6','')
-    +row(1,'Ships · NEUTRAL, destination-bound hulls · 2.5″ tiles (20 deck: 11 Cog cap 2 / 9 Hulk cap 3)','20',pgRef(pages,famPages,'Ships'))
-    +row(0,'<i>destination printed on each: Bruges 5 · London 5 · Bergen 5 · Novgorod 5</i>','','')
-    +row(1,'<b>Buildings · VALUE</b> ('+bVal.length+' designs — the demand layer)',bValN,pgRef(pages,famPages,'Value Buildings'))
-    +row(0,'<i>'+bVal.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ')+'</i>','','')
-    +row(1,'<b>Buildings · TRANSFORM</b> ('+bTr.length+' designs — the craft &amp; works layer)',bTrN,pgRef(pages,famPages,'Transform Buildings'))
-    +row(0,'<i>'+bTr.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ')+'</i>','','')
-    +row(1,'Private improvements ('+IMPROVE.length+' designs — bought at the Cellar) — <b>SEPARATE sheet, 1.25″, to be reworked</b>',impN,pgRef(pages,famPages,'Improvements'))
-    +row(0,'<i>'+IMPROVE.map(d=>d.nm+' ×'+d.n).join(' · ')+'</i>','','')
-    +row(1,'<b>Card/tile backs</b> — cask brewed-side (1 per cask card) + each Building’s displaced back (its own art + title + Wild + '+DEVELOP_PTS+'★, 1 per Building); blank behind ships',backsN,pgRef(pages,famPages,'Card/tile backs'))
-    +row(0,'<i>on the single BACKS sheet (the HORIZONTAL MIRROR of the fronts): each building’s displaced/Wild back sits behind its own front, blank behind casks/ships. Flip the backs sheet LEFT↔RIGHT &amp; glue under the fronts. Replaces the separate developer chits.</i>','','')
-    +'<tr class="tot"><td></td><td>Tile total</td><td class="n">'+tileTotal+'</td><td></td></tr></table>';
-  const aidNo=pages.filter(p=>p.section==='cards'&&p.label.indexOf('Player aid')===0).map(p=>p.no).sort((a,b)=>a-b);
-  h+='<table><tr><th></th><th>Cards (cardstock, do NOT mount)</th><th>qty</th><th>sheet</th></tr>'
-    +row(1,'Export recipes 1.85×2.55″ · Broyhan / Keut / Mumme / Bock <i>+ Gose / Zerbster / Duckstein (expansion) + Jopenbier (capstone)</i> ×'+PLAYERS.length+' (1 set per player)',RECIPES.length*PLAYERS.length,pgRef(pages,famPages,'Recipe cards'))
-    +row(0,'<i>Gruit &amp; Hopped — printed on every brewery board (no card)</i>','—','')
-    +row(1,'Charter contracts 1.85×2.55″ (start 2/house · buy at Market 1 G · spend 1 + 2 G fare)',CONTRACTS.n,pgRef(pages,famPages,'Charter contracts'))
-    +row(1,'<b>Player aid</b> 4.7×3.4″ — double-sided (front: a turn · back: icon reference)',PLAYERS.length,aidNo.length?'S'+aidNo.join(', S'):'—')
-    +row(0,'<i>print DOUBLE-SIDED (flip on the SHORT edge keeps the back upright); the 2×2 is identical &amp; symmetric so fronts &amp; backs register — cut 4</i>','','')
+  h+=T('Tiles (mount on chipboard, laser-cut)')
+    +R('Cask tiles — the beer supply','A shared pool, brewed not bought: Gruit ×16 · Hopped ×20 · Broyhan ×6 · Keut ×6 · Mumme ×8 · Bock ×4. Each shows a quality (Q1–Q5) and one slot-action. Deal 3 of the 4 export beers each game.','60')
+    +R('Ship tiles','Neutral hulls, a kontor printed on each — Cog (holds 2) ×11 · Hulk (holds 3) ×9; five to each of the four kontore. Drawn off a shuffled deck into a face-up market of 3.','20')
+    +R('Building tiles','The owned slot modifiers, '+baseBld.length+' designs (each tile double-sided: art front / displaced Wild back, +'+DEVELOP_PTS+'★). <b>Value —</b> '+designs(baseVal)+'. <b>Transform —</b> '+designs(baseTr)+'.',sumN(baseBld))
+    +R('Improvement tiles','The private upgrades, 7 designs: '+IMPROVE.map(d=>d.nm).join(' · ')+'. A shuffled display at the Cellar — 3 copies of each type (n−1 per type), enough for 4 players.',impTotal)
     +'</table>';
-  h+='<table><tr><th></th><th>Tokens &amp; markers (chipboard discs/squares)</th><th>qty</th><th>sheet</th></tr>'
-    +row(1,'Grain tokens 0.7″ (or ~60 wooden cubes)','60',pgRef(pages,famPages,'Goods tokens'))
-    +row(1,'Hops tokens 0.7″ (or ~40 wooden cubes)','40','')
-    +row(1,'Ownership / presence discs 0.5″ — '+OWN_DISCS+' per colour (cask owner → kontor presence + building owner)',OWN_DISCS*PLAYERS.length,pgRef(pages,famPages,'Ownership discs'))
-    +row(1,'<b>Building ownership frames</b> 2.5″ — 6 per colour (the 2″ Building tile sits on its colour frame to mark ownership)',6*PLAYERS.length,pgRef(pages,famPages,'Building frames'))
-    +row(1,'Worker discs 0.8″ — 1 per colour (or meeples)',PLAYERS.length,pgRef(pages,famPages,'Workers & markers'))
-    +row(1,'First-player marker 0.8″ (fixed all game)','1','')
-    +row(1,'Round marker 0.8″ (the 1–25 track on the main board)','1','')
-    +row(1,'Brewery markers — vessel maturation (1 per vessel) &amp; the Flight (1 per beer): use small cubes/discs','—','board aids — provide spares')
-    +row(1,'<b>Demand dice</b> — standard d6 (provide your own) — the reusable value-bonus carrier: a cask shipped through a value Building rides a die in its berth, pips = the ★ banked on delivery (max 5; returns to the pool)','8','—')
-    +row(1,'Quality-boost markers (+1Q) — a small token a cask carries from a Malt Kiln / Hop Yard to delivery','6','—')
-    +row(0,'<i><b>Developer ★</b> is now the <b>back</b> of each Building tile (Wild + '+DEVELOP_PTS+'★) — see Building backs above; no separate chits</i>','—','—')
+  h+=T('Cards (cardstock — do not mount)')
+    +R('Recipe cards (export)','One set of four per player: Broyhan · Keut · Mumme · Bock. (Gruit &amp; Hopped are printed on the brewery board.)',4*PLAYERS.length)
+    +R('Charter contracts','The relief-valve certificates — start 2 per house, buy more (1 G), spend one + a 2 G fare for a single-cask voyage.','16')
+    +R('Player aid cards','Double-sided quick reference (a turn / the icon key), one per player.',PLAYERS.length)
     +'</table>';
-  h+='<div class="wf"><b>Prototype workflow.</b> 1) <b>Print to PDF</b> — the whole view, or a 🖨 button for a one-sheet PDF. In the print dialog: Save as PDF · scale 100% · margins default · <b>“Background graphics” ON</b>. Place in Affinity Publisher (passthrough renders exactly) and print at 100% (verify the 3″ bar). '
-    +'<b>The TILE sheets are LARGE FORMAT — 22×15in</b> (a named print size; use Chrome &amp; pick the matching paper/“Save as PDF”, or just print the <b>Tiles</b> view). <b>All tile FRONTS fit on one 22×15 sheet</b>, with one matching BACKS sheet. 2) Mount/adhere the art to your laser stock. 3) <b>Cut on the CUT layer</b> — toggle the <b>CUT layer</b> for the red laser lines (1.25″ grid) + the corner registration marks; this is the laser file, and it matches the art exactly (same coordinate system). '
-    +'<b>Double-sided (laser):</b> the <b>FRONTS</b> sheet and the <b>BACKS</b> sheet are the same 22×15 grid, the BACKS being the <b>horizontal MIRROR</b> of the fronts — a Wild + '+DEVELOP_PTS+'★ behind every building, blank behind casks · ships · improvements. Align by the corner marks, <b>flip the BACKS sheet LEFT↔RIGHT</b> and adhere it under the fronts → a Wild lands behind every building (blanks behind the rest); then cut the sandwich once (the cut grid registers either side). '
-    +'<b>Card sheets</b> (letter): print on cardstock, cut with a paper cutter; no mounting (recipe cards tuck under the brewery board). The <b>Player aid</b> is a <b>double-sided</b> card — print its FRONT &amp; BACK sheets duplex (flip on the SHORT edge keeps the back upright; the cards are identical &amp; symmetric so the two sides register either way). '
-    +'Tiles &amp; cards are gapless grids — every internal line is drawn once. Tokens cut on the inner circle; the ring outside is bleed. The face-down Building deck &amp; the export-beer deal work by flipping.</div>';
-  h+='</div></div>';
+  h+=T('Tokens &amp; bits')
+    +R('Grain cubes','Currency &amp; brew input (G).','60')
+    +R('Hops cubes','Currency &amp; brew input (H).','40')
+    +R('Worker pawns','One per player; moved between stations.',PLAYERS.length)
+    +R('Presence barrels','Per player colour — marks a cask you own, then plants at a kontor as your presence (for majorities).','≈12 ea')
+    +R('Building-owner frames','Per player colour — marks whose building sits on a slot.','6 ea')
+    +R('Demand dice (d6)','The reusable value carrier — a cask shipped through a value building rides one in its berth; the pips are the ★ it banks on delivery.','8')
+    +R('Quality-boost markers','A +1-quality token a cask carries from a Malt Kiln / Hop Yard to delivery.','6')
+    +R('First-player &amp; round markers','Turn order (fixed all game) + the round track.','2')
+    +'</table>';
+  h+=T('Expansions (opt-in — added only when used)')
+    +R('Specialty Beers — cask tiles','Gose ×8 (Q2) · Zerbster ×6 (Q3) · Duckstein ×8 (Q2) — pinned-signature beers; with them in, deal 3 of 7 exports.','22')
+    +R('Specialty Beers — building tiles','Salt House · Smoke Kiln · Parti-Gyle Tun — added to the building deck. (Blending is a Cellar action, no component.)','3')
+    +R('Specialty Beers — recipe cards','Gose · Zerbster · Duckstein, one set of three per player.',3*PLAYERS.length)
+    +R('Jopenbier (capstone) — cask tiles','The Q6 vintage super-beer; always acquirable when on, scored self-contained.','3')
+    +R('Jopenbier — recipe cards','One per player.',PLAYERS.length)
+    +R('The Trade Roads — network board','The inland map (Hamburg → the Bruges gateway → London / Bergen / Rhineland, plus the eastern haul to Novgorod); towns carry claimable Staple-Right slots. Prints on the back of the Destinations board, and replaces the kontor majorities.','1')
+    +'</table>';
+  h+='</div>';
+  h+='<p style="font-size:.092in;color:#5b4a37;border-top:1px solid #c8b48a;padding-top:.05in;margin:.04in 0 0">'
+    +'<b>Print &amp; cut.</b> Boards and tiles mount on chipboard and cut on the CUT layer (laser lines + corner registration marks); cards print on cardstock, no mounting. Building tiles are double-sided (front art / Wild back). See the Boards, Tiles &amp; Cards views to print each family.</p>';
+  h+='</div>';
   return h;}
 
 //==================================================================
