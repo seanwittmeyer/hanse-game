@@ -1157,18 +1157,22 @@ function station(L,nm,ic,yield_){return '<div class="stn '+L+'" style="grid-area
 // empty corners · 8 perimeter slots · the 4 stations in the centre 2×2.
 // a rounded-corner PLUS outline (objectBoundingBox 0–1) — used both as the cross board's clip-path and,
 // chamfered, as its print cut. r = corner radius as a fraction of the board.
-function roundedPlusPath(a,b,r){
+// scale/ox/oy let the SAME plus be emitted in objectBoundingBox fractions (defaults — for the clip-path)
+// OR in absolute inch coords (for the cut overlay), so the CUT exactly matches the ART edge (the clip).
+function roundedPlusPath(a,b,r,scale,ox,oy){
+  scale=scale||1; ox=ox||0; oy=oy||0;
   const P=[[a,0],[b,0],[b,a],[1,a],[1,b],[b,b],[b,1],[a,1],[a,b],[0,b],[0,a],[a,a]];
   const sweep=[1,1,0,1,1,0,1,1,0,1,1,0];   // outer (convex) corners sweep 1, inner (concave) 0
   const n=P.length, V=i=>P[((i%n)+n)%n], f=x=>+x.toFixed(4);
   const nrm=p=>{const L=Math.hypot(p[0],p[1])||1;return[p[0]/L,p[1]/L];};
+  const X=v=>f(ox+v*scale), Y=v=>f(oy+v*scale), R=f(r*scale);
   let d='',ch=[];
   for(let i=0;i<n;i++){
     const cur=V(i),pv=V(i-1),nx=V(i+1);
     const inD=nrm([cur[0]-pv[0],cur[1]-pv[1]]), outD=nrm([nx[0]-cur[0],nx[1]-cur[1]]);
     const en=[cur[0]-r*inD[0],cur[1]-r*inD[1]], ex=[cur[0]+r*outD[0],cur[1]+r*outD[1]];
-    d+=(i===0?'M ':'L ')+f(en[0])+' '+f(en[1])+' A '+r+' '+r+' 0 0 '+sweep[i]+' '+f(ex[0])+' '+f(ex[1])+' ';
-    ch.push(en,ex);
+    d+=(i===0?'M ':'L ')+X(en[0])+' '+Y(en[1])+' A '+R+' '+R+' 0 0 '+sweep[i]+' '+X(ex[0])+' '+Y(ex[1])+' ';
+    ch.push([X(en[0]),Y(en[1])],[X(ex[0]),Y(ex[1])]);
   }
   return {d:d+'Z',ch};
 }
@@ -1270,8 +1274,8 @@ function wharfSupplySheet(pages){
   const W=11.5, wx=0.4, wy=1.9;
   pg.items.push({x:wx,y:wy-0.72,w:W,h:0.55,html:'<div class="sheetlbl">'+LU('anchor')+'The Wharf<span class="sub">Source → Brew → Age → Ship</span></div>'});
   pg.items.push({x:wx,y:wy,w:W,h:W,html:wharfCross()});
-  // the cut follows the SAME rounded plus as the board's clip-path (chamfered at each corner → matches the art)
-  addPolyCut(pg,roundedPlusPath(CROSS_A,CROSS_B,CROSS_R).ch.map(p=>[+(wx+p[0]*W).toFixed(3),+(wy+p[1]*W).toFixed(3)]));
+  // the cut is the SAME rounded plus PATH as the board's clip-path (arcs, not chamfers) → it matches the art edge exactly
+  pg.cutPath=roundedPlusPath(CROSS_A,CROSS_B,CROSS_R,W,wx,wy).d;
   // SUPPLY board (right) — the two market displays + the three shared tracks.
   const sx=12.2, sy=1.0, sw=9.3, sh=13.5;
   pg.items.push({x:sx,y:sy,w:sw,h:sh,html:supplyBoard()});
@@ -1461,6 +1465,7 @@ function cutsSvg(pg){
   pg.cuts.forEach(c=>{s+='<line x1="'+c[0]+'" y1="'+c[1]+'" x2="'+c[2]+'" y2="'+c[3]+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';});
   pg.circles.forEach(c=>{s+='<circle cx="'+c.cx+'" cy="'+c.cy+'" r="'+c.r+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';});
   if(pg.rrect){const r=pg.rrect;s+='<rect x="'+r.x+'" y="'+r.y+'" width="'+r.w+'" height="'+r.h+'" rx="'+r.r+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';}
+  if(pg.cutPath)s+='<path d="'+pg.cutPath+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';
   return s;}
 function overlaySvg(pg){const g=pg.geo||PG;
   return '<svg class="ov" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+g.w+' '+g.h+'">'
