@@ -134,12 +134,11 @@
   .cc-age{margin:.04in .09in;color:var(--ink);border-radius:.07in;padding:.05in .05in;overflow:hidden;
     background:linear-gradient(rgba(244,234,208,.62),rgba(244,234,208,.62)),url('art/brewhouse.png');background-size:cover;background-position:center;
     display:flex;align-items:center;justify-content:center;flex:1}
-  .cc-agerow{display:flex;gap:.025in;align-items:center;justify-content:center;flex-wrap:nowrap}
-  .cc-step{width:.27in;height:.27in;border:1.5px solid var(--ink2);border-radius:.045in;display:flex;align-items:center;justify-content:center;font-size:.13in;font-weight:bold;color:var(--ink);background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.18);flex:0 0 auto}
-  .cc-arr{color:var(--ink2);display:flex;align-items:center;flex:0 0 auto} .cc-arr svg,.cc-arr .ic{width:.1in;height:.1in}
-  .cc-step.rdy{width:auto;padding:0 .055in;gap:.025in;border-color:var(--green);background:var(--green);color:#fff;font-variant:small-caps;font-size:.085in;font-weight:900;letter-spacing:.2px;box-shadow:0 1px 2px rgba(0,0,0,.3)}   /* READY = flip the card to its brewed side */
-  .cc-step.rdy svg,.cc-step.rdy .ic{width:.16in;height:.16in;stroke-width:2.4}
-  .cc-step.start{width:auto;padding:0 .045in;border-style:dashed;font-size:.07in;font-variant:small-caps;font-weight:bold;color:var(--ink2);background:rgba(255,255,255,.78)}   /* place the vessel marker here at brew */
+  .cc-agerow{display:flex;gap:.06in;align-items:center;justify-content:center;flex-wrap:nowrap}
+  .cc-step{width:.34in;height:.34in;border:1.6px solid var(--ink2);border-radius:.05in;display:flex;align-items:center;justify-content:center;font-size:.17in;font-weight:bold;color:var(--ink);background:rgba(255,255,255,.92);box-shadow:0 1px 2px rgba(0,0,0,.2);flex:0 0 auto}
+  .cc-step.rdy{width:auto;padding:0 .07in;gap:.03in;border-color:var(--green);background:var(--green);color:#fff;font-variant:small-caps;font-size:.095in;font-weight:900;letter-spacing:.2px;box-shadow:0 1px 2px rgba(0,0,0,.3)}   /* READY = flip the card to its brewed side */
+  .cc-step.rdy svg,.cc-step.rdy .ic{width:.19in;height:.19in;stroke-width:2.4}
+  .cc-step.start{width:auto;padding:0 .055in;border-style:dashed;font-size:.08in;font-variant:small-caps;font-weight:bold;color:var(--ink2);background:rgba(255,255,255,.8)}   /* place the vessel marker here at brew */
   /* BACK centre */
   .cc-big{flex:1;display:flex;align-items:center;justify-content:center;opacity:.32}
   .cc-big svg,.cc-big .ic{width:.85in;height:.85in}
@@ -800,8 +799,8 @@ function caskCardFront(d,act){
   // READY=FLIP endpoint (the flip glyph says "turn the card to its brewed side"). No title/rules text — the
   // brewhouse illustration sits behind it (cc-age background).
   let track='<div class="cc-step start">start</div>';
-  for(let i=1;i<d.ready;i++)track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step">'+i+'</div>';
-  track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step rdy">'+LU('refresh-cw')+'<span>flip</span></div>';
+  for(let i=1;i<d.ready;i++)track+='<div class="cc-step">'+i+'</div>';
+  track+='<div class="cc-step rdy">'+LU('refresh-cw')+'<span>flip</span></div>';
   return '<div class="ccard cc-front" style="--c:'+d.c+'">'
     +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span>'
       +'<span class="ctitle"><span class="cnm">'+d.nm+'</span><span class="ccost">'+c+'</span></span></div></div>'
