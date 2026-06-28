@@ -147,6 +147,15 @@
   /* the BACK ends match (Q + title + a marker space), a little larger */
   .cc-back .ce .cq{font-size:.24in} .cc-back .ce .cq svg,.cc-back .ce .cq .ic{width:.2in;height:.2in}
   .cc-back .ce .cnm{font-size:.19in}
+  /* ===== background ART slot (printables2): a layer behind the card/tile content. Placeholder = a faint hatch;
+     when ART_ON, it carries the generated image (art/cask-<beer>.png · art/ship-<hull>.png) with a scrim for legibility. ===== */
+  .ccard > *{position:relative;z-index:1}
+  .ccard > .artbg{z-index:0}
+  .tile.ts > *{position:relative;z-index:1}
+  .tile.ts > .artbg{z-index:0}
+  .artbg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat}
+  .artbg.ph{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 .09in,rgba(255,255,255,0) .09in .18in)}
+  .artbg.scrim::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5),rgba(0,0,0,.12) 28%,rgba(0,0,0,.12) 72%,rgba(0,0,0,.55))}
   /* ship NUMBERED BERTHS — pinned to the BOTTOM with the quality gate */
   .ts .berths{display:flex;align-items:center;justify-content:center;gap:.04in}
   .ts .berths .bn{width:.235in;height:.235in;border:1.3px solid rgba(255,255,255,.9);border-radius:.03in;
@@ -735,6 +744,7 @@ function buildingBack(){return '<div class="tile bback s16" style="--c:#43504a">
 function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
   let berths='';for(let i=1;i<=cap;i++)berths+='<div class="bn">'+i+'</div>';   // numbered load-order berths (v0.16)
   return '<div class="tile gen ts s2" style="--c:#6f6253">'   // NEUTRAL hull body; printables2: ship → 2.5in (matches casks & slots)
+  +artLayer('ship-'+hull+'.png')
   +'<div class="t-cost-tr">'+cost(2,0)+'</div>'            // commission cost, top-right (no market icon)
   +'<div class="g-head"><span class="bigic">'+LU('sailboat')+'</span><span class="g-nm">'+(hull==='cog'?'Cog':'Hulk')+'</span></div>'
   +'<div class="g-dest-wrap"><div class="g-dest" style="background:'+d.kc+'">'+LU('landmark')+destNm+'</div></div>'
@@ -756,6 +766,14 @@ function improveTile(d){return '<div class="tile imp" style="--c:'+(d.c||'#5b3a8
 // maturation track + cellar markers come off the board), and Q+action on the bottom end. BACK = the brewed
 // side: Q+name + a die/presence space on the top end, the action just above the bottom end, Q on the bottom.
 // (act = the drawn slot-action {ai,act}; Gruit passes its pinned Source — the printed mix IS the brew-draw.)
+// ---- background ART slot (printables2) ----
+// Flip ART_ON to true once the images exist in art/ (named below). Until then a faint hatch marks the slot.
+// Filenames: casks → art/cask-<beer>.png (gruit/hopped/broyhan/keut/mumme/bock/gose/zerbster/duckstein/jopenbier);
+//            ships → art/ship-<hull>.png (cog/hulk). Prompts to generate them: art/PROMPTS.md.
+const ART_ON=false, ART_DIR='art/';
+function artLayer(file){return ART_ON
+  ? '<div class="artbg scrim" style="background-image:url(\''+ART_DIR+file+'\')"></div>'
+  : '<div class="artbg ph" data-art="'+ART_DIR+file+'"></div>';}
 function caskCardFront(d,act){
   let c=cost(d.g,d.h);if(d.alt)c+='<span style="opacity:.85">/</span>'+cost(d.alt[0],d.alt[1]);
   // START (place the vessel marker here at brew) → advance one step per turn → READY (ready = the step count)
@@ -763,6 +781,7 @@ function caskCardFront(d,act){
   for(let i=1;i<d.ready;i++)track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step">'+i+'</div>';
   track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step rdy">Ready</div>';
   return '<div class="ccard cc-front" style="--c:'+d.c+'">'
+    +artLayer('cask-'+d.nm.toLowerCase()+'.png')
     +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span>'
       +'<span class="ctitle"><span class="cnm">'+d.nm+'</span><span class="ccost">'+c+'</span></span></div></div>'
     +'<div class="cc-age"><span class="agl">'+LU('hourglass')+'Aging</span><div class="cc-agerow">'+track+'</div>'
@@ -774,6 +793,7 @@ function caskCardBack(d,act){
   // both ends show Q + title; only the BOTTOM end carries the die/presence marker space
   const q='<span class="cq">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span>';
   return '<div class="ccard cc-back" style="--c:'+d.c+'">'
+    +artLayer('cask-'+d.nm.toLowerCase()+'.png')
     +'<div class="ce top"><div class="ce-row">'+q+'</div></div>'
     +'<div class="cc-big">'+LU('beer')+'</div>'
     +'<div class="ce bot"><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div>'
