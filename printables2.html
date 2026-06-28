@@ -621,20 +621,21 @@ const CASK_POOL=[
 ];
 const CASK_WILD={k:'wild', ai:'sparkles', act:'Wild — any base action'};   // Q4+ only
 // cask supply — fixed global counts (COMPONENTS §3A). Gruit PINNED to Source; Q2+ draw at brew (steerable).
+// component policy: a MINIMUM of 8 tiles per cask type (Jopenbier the lone exception at 6 — the rare capstone moonshot).
 // ready = maturation steps (v1.1: Hopped & Broyhan are FAST = ready 1; Keut ready 2; Mumme/Bock ready 3).
 const CASKS=[
   {nm:'Gruit',   c:'#8a949c', q:1, g:1,h:0, n:16, ready:1, pin:CASK_POOL[0]},
   {nm:'Hopped',  c:'#c2922f', q:2, g:1,h:1, n:20, ready:1},
-  {nm:'Broyhan', c:'#b06a34', q:3, g:1,h:2, n:6,  ready:1},
-  {nm:'Keut',    c:'#9c5f2e', q:3, g:2,h:1, n:6,  ready:2, tag:'<b>+1</b> '+LU('map-pin')+'<br>presence'},
+  {nm:'Broyhan', c:'#b06a34', q:3, g:1,h:2, n:8,  ready:1},
+  {nm:'Keut',    c:'#9c5f2e', q:3, g:2,h:1, n:8,  ready:2, tag:'<b>+1</b> '+LU('map-pin')+'<br>presence'},
   {nm:'Mumme',   c:'#caa12a', q:4, g:1,h:3, n:8,  ready:3, wild:true},
-  {nm:'Bock',    c:'#7c2128', q:5, g:2,h:3, n:4,  ready:3, wild:true},
+  {nm:'Bock',    c:'#7c2128', q:5, g:2,h:3, n:8,  ready:3, wild:true},
   // ---- EXPANSION "Specialty Beers" (v1.9, opt-in) — PINNED-signature casks; drafted 3-of-7 only with the toggle ----
   {nm:'Gose',     c:'#6e8b74', q:2, g:2,h:0, n:8, ready:1, pin:CASK_POOL[0], tag:'salt trade:<br>+'+LU('wheat')+LU('sprout')},
-  {nm:'Zerbster', c:'#5f7a3c', q:3, g:0,h:3, n:6, ready:1, pin:CASK_POOL[2], tag:'parti-gyle:<br>+free Gruit'},
+  {nm:'Zerbster', c:'#5f7a3c', q:3, g:0,h:3, n:8, ready:1, pin:CASK_POOL[2], tag:'parti-gyle:<br>+free Gruit'},
   {nm:'Duckstein',c:'#7a5236', q:2, g:1,h:1, n:8, ready:2, pin:CASK_POOL[3], tag:'smoke-hardy:<br>ships +1Q'},
   // ---- EXPANSION CAPSTONE "Jopenbier" (v1.9, its OWN toggle) — the Q6 vintage super-beer (self-contained scoring) ----
-  {nm:'Jopenbier',c:'#5e2433', q:6, g:2,h:4, n:3, ready:4, pin:CASK_POOL[0], tag:'vintage:<br>+★/turn deployed'},
+  {nm:'Jopenbier',c:'#5e2433', q:6, g:2,h:4, n:6, ready:4, pin:CASK_POOL[0], tag:'vintage:<br>+★/turn deployed'},
 ];
 // v0.11 — NEUTRAL, destination-bound hulls (the destination is PRINTED on the tile). The 20-tile deck,
 // KONTORE ONLY: Bruges 5 · London 5 · Bergen 5 · Novgorod 5 (11 Cog / 9 Hulk); the Hall is reached by the local Enshrine, not a boat.
@@ -1015,7 +1016,7 @@ function dboard(){
       +'<div class="cs-h"><span class="cs-q">'+LU(QI)+d.q+'</span><span class="cs-nm">'+d.nm+'</span></div>'
       +'<div class="cs-ic">'+LU('beer')+'</div>'
       +'<div class="cs-n">'+(d.opt?'capstone · if on':'×'+d.n)+'</div></div>';};
-  const JOP=CASKS.find(c=>c.nm==='Jopenbier')||{nm:'Jopenbier',c:'#5e2433',q:6,n:3};
+  const JOP=CASKS.find(c=>c.nm==='Jopenbier')||{nm:'Jopenbier',c:'#5e2433',q:6,n:6};
   const SUPPLY=[CASKS[0],CASKS[1],{gen:1},{gen:1},{gen:1},Object.assign({opt:1},JOP)];
   return '<div class="dboard">'
     +'<div class="db-head"><h2>'+LU('landmark')+'Destinations</h2>'
@@ -1332,17 +1333,17 @@ function checklist(pages,famPages){
   h+='<table><tr><th></th><th>Cask CARDS 2.5″ square (double-sided) · Ship TILES 2.5″ · Building TILES 2″ (in 2.5″ owner rings) · <b>LARGE 22×15in sheets</b></th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Cask card · Gruit Q1 (pinned Source +2 goods · ready 1)','16',pgRef(pages,famPages,'Cask cards'))
     +row(1,'Cask · Hopped Q2 (G H · ready 1)','20','')
-    +row(1,'Cask · Broyhan Q3 (G H H · ready 1)','6','')
-    +row(1,'Cask · Keut Q3 (G G H · ready 2 · +1 presence on delivery)','6','')
+    +row(1,'Cask · Broyhan Q3 (G H H · ready 1)','8','')
+    +row(1,'Cask · Keut Q3 (G G H · ready 2 · +1 presence on delivery)','8','')
     +row(1,'Cask · Mumme Q4 (G H H H · ready 3 · Wild possible)','8','')
-    +row(1,'Cask · Bock Q5 (2G 3H · ungated · ready 3 · Wild possible)','4','')
+    +row(1,'Cask · Bock Q5 (2G 3H · ungated · ready 3 · Wild possible)','8','')
     +row(0,'<i>Q2+ casks: the slot-action is steerable at brew — print the supply as a MIX of the 6-action pool (Q4/Q5 add Wild)</i>','','')
     +row(0,'<i>— EXPANSION “Specialty Beers” (opt-in) — pinned-signature casks · a 3-of-7 export draft —</i>','','')
     +row(1,'Cask · Gose Q2 (G G · ready 1 · PINNED Source · Salt Trade: a kontor delivery → +1G +1H)','8','')
-    +row(1,'Cask · Zerbster Q3 (H H H · ready 1 · PINNED Load · Parti-Gyle: brew also yields a free small Gruit)','6','')
+    +row(1,'Cask · Zerbster Q3 (H H H · ready 1 · PINNED Load · Parti-Gyle: brew also yields a free small Gruit)','8','')
     +row(1,'Cask · Duckstein Q2 (G H · ready 2 · PINNED Reach · Smoke-Hardy: ships &amp; scores as +1 quality)','8','')
     +row(0,'<i>— CAPSTONE “Jopenbier” (own toggle) — the Q6 vintage super-beer; self-contained value + dock-cellared vintage —</i>','','')
-    +row(1,'Cask · Jopenbier Q6 (G G H H H H · ready 4 · PINNED Source · always acquirable; not drafted, not in the Flight)','3','')
+    +row(1,'Cask · Jopenbier Q6 (G G H H H H · ready 4 · PINNED Source · always acquirable; not drafted, not in the Flight)','6','')
     +row(1,'Ships · NEUTRAL, destination-bound hulls · 2.5″ tiles (20 deck: 11 Cog cap 2 / 9 Hulk cap 3)','20',pgRef(pages,famPages,'Ships'))
     +row(0,'<i>destination printed on each: Bruges 5 · London 5 · Bergen 5 · Novgorod 5</i>','','')
     +row(1,'<b>Buildings · VALUE</b> ('+bVal.length+' designs — the demand layer)',bValN,pgRef(pages,famPages,'Value Buildings'))
