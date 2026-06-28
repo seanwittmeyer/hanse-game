@@ -189,6 +189,7 @@
   .tile.ts > *{position:relative;z-index:1}
   .tile.ts > .artbg{z-index:0}
   .artbg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat}
+  .artbg>img.artbg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
   .artbg.ph{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 .09in,rgba(255,255,255,0) .09in .18in)}
   .artbg.scrim::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5),rgba(0,0,0,.12) 28%,rgba(0,0,0,.12) 72%,rgba(0,0,0,.55))}
   /* keep the white end-icons legible over busy art */
@@ -853,8 +854,10 @@ function improveTile(d){return '<div class="tile imp" style="--c:'+(d.c||'#5b3a8
 // Filenames: casks → art/cask-<beer>.png (gruit/hopped/broyhan/keut/mumme/bock/gose/zerbster/duckstein/jopenbier);
 //            ships → art/ship-<hull>.png (cog/hulk). Prompts to generate them: art/PROMPTS.md.
 const ART_ON=true, ART_DIR='art/';
+// art rides an <img> (object-fit:cover) rather than a CSS background — html2canvas rasterizes an <img> at its
+// NATIVE source resolution (sharp PNG export), whereas a background-image is upscaled from the element's CSS size.
 function artLayer(file){return ART_ON
-  ? '<div class="artbg scrim" style="background-image:url(\''+ART_DIR+file+'\')"></div>'
+  ? '<div class="artbg scrim"><img class="artbg-img" src="'+ART_DIR+file+'" alt=""></div>'
   : '<div class="artbg ph" data-art="'+ART_DIR+file+'"></div>';}
 function caskCardFront(d,act){
   let c=cost(d.g,d.h);if(d.alt)c+='<span style="opacity:.85">/</span>'+cost(d.alt[0],d.alt[1]);
@@ -1493,9 +1496,9 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 //==================================================================
 // PNG EXPORT — rasterize any component to a PNG (html2canvas) ·
 // download individually, or a whole type as a .zip (JSZip).
-// Filenames: <type>-<name>-<front|back>.png. High-res (×4 ≈ 384 dpi).
+// Filenames: <type>-<name>-<front|back>.png. High-res (×6) so the output meets/exceeds the 1024px source art.
 //==================================================================
-const PNG_SCALE=4;
+const PNG_SCALE=6;   // ⚙ a 2″ card → 1152px, a 2.5″ card → 1440px — both ≥ the 1024² source art (no soft upscaling)
 let EXPORT=[];   // current export registry (index = onclick handle)
 const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
 function exportItems(){
@@ -1530,7 +1533,11 @@ async function canvasOf(it){
   const box=document.createElement('div');box.style.cssText='width:'+it.w+'in;height:'+it.h+'in;overflow:hidden';
   box.innerHTML=it.html;host.appendChild(box);document.body.appendChild(host);
   if(window.lucide)lucide.createIcons();           // render this component's icons
-  await new Promise(r=>setTimeout(r,60));           // let background art settle
+  // wait for the art <img>(s) to fully load/decode so html2canvas captures them at native resolution
+  await Promise.all([...box.querySelectorAll('img')].map(im=>(im.complete&&im.naturalWidth)
+    ? Promise.resolve()
+    : new Promise(res=>{im.addEventListener('load',res,{once:true});im.addEventListener('error',res,{once:true});})));
+  await new Promise(r=>setTimeout(r,30));           // a tick for layout/decode
   const canvas=await html2canvas(box,{scale:PNG_SCALE,useCORS:true,backgroundColor:null,logging:false,
     width:box.offsetWidth,height:box.offsetHeight,windowWidth:box.offsetWidth,windowHeight:box.offsetHeight});
   document.body.removeChild(host);return canvas;
