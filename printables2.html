@@ -810,7 +810,7 @@ function caskCardFront(d,act){
   // brewhouse illustration sits behind it (cc-age background).
   let track='<div class="cc-step start">'+LU('flask-conical')+'</div>';
   for(let i=1;i<d.ready;i++)track+='<div class="cc-step">'+i+'</div>';
-  track+='<div class="cc-step rdy">'+LU('flip-horizontal-2')+'</div>';   // Ready → flip the card to its brewed side
+  track+='<div class="cc-step rdy">'+LU('undo-2')+'</div>';   // Ready → flip the card to its brewed side
   return '<div class="ccard cc-front" style="--c:'+d.c+'">'
     +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span>'
       +'<span class="ctitle"><span class="cnm">'+d.nm+'</span><span class="ccost">'+c+'</span></span></div></div>'
