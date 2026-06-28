@@ -953,7 +953,10 @@ function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm
   +'</div>';
 }
 // the SHIP card rear — one shared graphic for every ship (a Hanseatic cog at sea); ships are single-faced/neutral
-function shipBack(){return '<div class="ccard ship-back" style="background:#33445a url(\''+ART_DIR+'ship-back.png\') center/cover"></div>';}
+// img-based art (not a CSS background) so the PNG export bakes it sharp — a CSS background gets upscaled from the
+// element's CSS size by html2canvas (blurry). No scrim: the ship-at-sea graphic carries no text overlay.
+function shipBack(){return '<div class="ccard ship-back" style="background:#33445a">'
+  +'<div class="artbg"><img class="artbg-img" src="'+ART_DIR+'ship-back.png" alt=""></div></div>';}
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
 function disc(c){return '<div class="disc" style="--c:'+c+'">'+LU('circle')+'</div>';}
 // BUILDING OWNERSHIP FRAME (printables2) — a 2.5in player-colour base; a 2in Building tile sits on it, the
