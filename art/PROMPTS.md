@@ -30,13 +30,28 @@ These images sit **behind** the cask cards (2.5″ square) and ship tiles (2.5�
 > existing cask/ship art (browsers decode by content, not extension).
 
 ## Shared style block — paste at the top of EVERY prompt
-> Medieval Hanseatic League harbor, c. 1350. Hand-painted illustration in the style of an aged
-> manuscript illumination / old map vignette — painterly, soft warm light, muted earthy palette,
-> gentle parchment texture, subtle vignette. **Square 1:1 composition.** No text, no letters, no
-> numbers, no borders, no frames, no people in the foreground, no modern objects. Keep the **top ~25%
-> and bottom ~25% calm and uncluttered** (open sky / still water / muted ground) so overlaid card
-> text stays readable; place the subject in the **center band**. Slightly desaturated and low-contrast
-> so it reads as a background. ~1024×1024, PNG.
+> Medieval Hanseatic League harbor town, c. 1350. Hand-painted illustration in the style of an aged
+> manuscript illumination / old-map vignette — painterly, soft warm light, muted earthy palette.
+> **FULL-BLEED square 1:1 composition: the painted scene fills the ENTIRE square edge to edge, bleeding
+> off all four sides — especially the LEFT and RIGHT edges, where the surrounding town/landscape continues
+> past the frame. ABSOLUTELY NO parchment border, NO paper margin, NO frame, NO vignette ring, NO drawn
+> frame line, NO cream/ivory mat, NO rounded corners — the artwork goes right to every edge.** No text,
+> no letters, no numbers, no signs/signage, no people in the foreground, no modern objects. **Frame the
+> MAIN SUBJECT as a complete, wide establishing view: the whole structure is fully visible and comfortably
+> contained with a little breathing room — it must NOT be awkwardly cropped or run off the top, and it sits
+> naturally in a setting that extends to the left and right edges.** Keep the **top ~22% and bottom ~28%**
+> visually simple and a touch darker (calm sky / shadow / still water / muted ground or ceiling) so overlaid
+> card text stays readable — **but do NOT leave an empty band; the painting still fills those areas.**
+> Slightly desaturated and low-contrast so it reads as a background. ~1024×1024, PNG.
+
+> **Why this changed (v6 art pass):** the earlier block asked for a "gentle parchment texture / subtle
+> vignette" and to "place the subject in the center band" — which baked a parchment border into the output
+> and cropped interior subjects (Connoisseur's Cellar, Brewmaster's Workshop, Parti-Gyle Tun felt cut off).
+> The full-bleed + complete-subject framing above fixes both. **Two gotchas to watch:** (1) a proper place
+> name in the subject (e.g. "Bergen Bryggen", "Novgorod Peterhof") can make the model paint a **text title
+> banner or a gate sign** — describe the structure generically and append an explicit "no written words /
+> no signage" instruction; (2) the model still occasionally adds a parchment mat anyway — append an explicit
+> "no parchment border / no drawn frame line / bleeds off all four edges" instruction and regenerate.
 
 ---
 
