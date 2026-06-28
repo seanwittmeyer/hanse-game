@@ -156,6 +156,8 @@
   .artbg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat}
   .artbg.ph{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 .09in,rgba(255,255,255,0) .09in .18in)}
   .artbg.scrim::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5),rgba(0,0,0,.12) 28%,rgba(0,0,0,.12) 72%,rgba(0,0,0,.55))}
+  /* keep the white end-icons legible over busy art */
+  .ccard .cq svg,.ccard .cq .ic,.ccard .ccost svg,.ccard .ccost .ic,.tile.ts .g-head svg,.tile.ts .g-head .ic,.tile.ts .berths svg,.tile.ts .berths .ic{filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}
   /* ship NUMBERED BERTHS — pinned to the BOTTOM with the quality gate */
   .ts .berths{display:flex;align-items:center;justify-content:center;gap:.04in}
   .ts .berths .bn{width:.235in;height:.235in;border:1.3px solid rgba(255,255,255,.9);border-radius:.03in;
@@ -571,7 +573,7 @@
 </div>
 <div id="out"></div>
 
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="lucide.min.js" onerror="this.onerror=null;var s=document.createElement('script');s.src='https://unpkg.com/lucide@latest/dist/umd/lucide.min.js';s.onload=function(){if(window.lucide)lucide.createIcons()};document.head.appendChild(s)"></script>
 <script>
 //==================================================================
 // DATA — mirrors play.html (the canonical engine) & COMPONENTS.md
@@ -770,7 +772,7 @@ function improveTile(d){return '<div class="tile imp" style="--c:'+(d.c||'#5b3a8
 // Flip ART_ON to true once the images exist in art/ (named below). Until then a faint hatch marks the slot.
 // Filenames: casks → art/cask-<beer>.png (gruit/hopped/broyhan/keut/mumme/bock/gose/zerbster/duckstein/jopenbier);
 //            ships → art/ship-<hull>.png (cog/hulk). Prompts to generate them: art/PROMPTS.md.
-const ART_ON=false, ART_DIR='art/';
+const ART_ON=true, ART_DIR='art/';
 function artLayer(file){return ART_ON
   ? '<div class="artbg scrim" style="background-image:url(\''+ART_DIR+file+'\')"></div>'
   : '<div class="artbg ph" data-art="'+ART_DIR+file+'"></div>';}
