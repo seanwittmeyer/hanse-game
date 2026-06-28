@@ -17,10 +17,10 @@
   .bar .seg{display:inline-flex;border:1px solid var(--gold);border-radius:6px;overflow:hidden}
   .bar .seg button{border-radius:0;background:transparent;color:var(--parch);font-weight:normal}
   .bar .seg button.on{background:var(--gold);color:var(--ink)}
+  .bar .bsub{font-weight:normal;font-size:.66rem;opacity:.55;font-variant:small-caps;letter-spacing:1.5px;margin-left:10px}
+  .bar .bsel{font-family:inherit;font-size:.85rem;border-radius:6px;padding:5px 10px;border:1px solid var(--gold);background:var(--ink);color:var(--parch);cursor:pointer}
+  .bar h1+.bsel{margin-left:auto}   /* push the controls to the right of the title */
   .note{font-size:.78rem;opacity:.85}
-  .bartoggle{background:transparent!important;color:var(--gold)!important;border:1px solid var(--gold)!important;font-weight:normal!important;padding:4px 10px!important}
-  .bar.collapsed{padding:6px 16px}
-  .bar.collapsed > :not(h1):not(.bartoggle){display:none}
   /* ====== PAGE = US Letter LANDSCAPE (11×8.5in, .3in margins → 10.4×7.9in canvas) ====== */
   @media print{ @page{size:letter landscape;margin:.3in} @page large{size:22in 15in;margin:0} }
   .page{width:10.4in;height:7.9in;background:#fff;margin:14px auto;box-shadow:0 3px 14px rgba(0,0,0,.25);position:relative;overflow:hidden}
@@ -39,7 +39,7 @@
   .mbox .h,.pb-sub .h,.card .c-buy .h{color:#5d7d34}
   .ov{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
   .ov .cuts{display:none}
-  body.cut .ov .cuts{display:block}
+  body.cut .ov .cuts,body.both .ov .cuts{display:block}   /* CUT shows guides only (art hidden); BOTH overlays guides ON the art */
   /* card sheets are cut with a paper cutter, not the laser — their cut lines print WITH the art */
   .ov .cuts.always{display:block}
   .dl{position:absolute;top:.32in;right:.45in;z-index:6;display:flex;gap:4px}
@@ -622,14 +622,19 @@
 </head>
 <body>
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v2.1 &ldquo;Staple Rights&rdquo; · casks &amp; ships = CARDS 2.5″ · building CARDS 2″ (in 2.5″ owner frames)</span></h1>
-  <button class="bartoggle" id="bartoggle" onclick="toggleBar()" title="Collapse / expand the toolbar">▾ Hide</button>
-  <button onclick="window.print()">🖨 Print</button>
-  <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles &amp; Cards</button><button id="vimps" onclick="setView('imps')">Improvements</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vpng" onclick="setView('png')">⬇ PNG Export</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
-  <span class="seg"><button id="bfull" class="on" onclick="setMode('full')">Full set</button><button id="bproof" onclick="setMode('proof')">Proof (1 each)</button></span>
-  <span class="seg"><button id="lart" class="on" onclick="setLayer('art')">ART layer</button><button id="lcut" onclick="setLayer('cut')">CUT layer</button></span>
-  <span class="note"><b>US Letter · LANDSCAPE · 100%</b> (verify the 3-inch bar). <b>Print to PDF</b> (the 🖨 buttons; in the dialog: Save as PDF, scale 100%, margins default, <b>“Background graphics” ON</b>) — vector-perfect, places in Affinity at exact size. The cut guides &amp; registration marks print with the art; toggle the <b>CUT layer</b> to print a guide-only sheet. Card sheets print their grey cut guides with the art. Tiles are one unbroken grid — neighbours are the bleed.</span>
-  <span style="margin-left:auto"><a href="learn.html">Learn</a> · <a href="index.html">Rulebook &amp; Components</a> · <a href="play.html">Play</a></span>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play</span></h1>
+  <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
+    <option value="all">All sheets</option>
+    <option value="boards">Boards</option>
+    <option value="tiles">Tiles &amp; Cards</option>
+    <option value="imps">Improvements</option>
+    <option value="bits">Tokens &amp; Bits</option>
+    <option value="cards">Cards</option>
+    <option value="png">PNG Export</option>
+    <option value="list">Checklist</option>
+  </select>
+  <span class="seg"><button id="bfull" class="on" onclick="setMode('full')">Full</button><button id="bproof" onclick="setMode('proof')">Proof</button></span>
+  <span class="seg"><button id="lart" class="on" onclick="setLayer('art')">Art</button><button id="lcut" onclick="setLayer('cut')">Cut</button><button id="lboth" onclick="setLayer('both')">Both</button></span>
 </div>
 <div id="out"></div>
 
@@ -772,13 +777,10 @@ const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the ble
 
 let MODE='full', VIEW='all', LAYER='art';
 const cnt=n=>MODE==='proof'?1:n;
-function toggleBar(){const bar=document.getElementById('bar');const c=bar.classList.toggle('collapsed');
-  document.getElementById('bartoggle').textContent=c?'▸ Tools':'▾ Hide';
-  try{localStorage.setItem('pnp_bar_collapsed',c?'1':'0');}catch(e){}}
 function setMode(m){MODE=m;document.getElementById('bproof').classList.toggle('on',m==='proof');document.getElementById('bfull').classList.toggle('on',m==='full');render();}
-function setView(v){VIEW=v;['all','boards','tiles','imps','bits','cards','png','list'].forEach(x=>document.getElementById('v'+x).classList.toggle('on',v===x));render();}
-function setLayer(l){LAYER=l;document.getElementById('lart').classList.toggle('on',l==='art');document.getElementById('lcut').classList.toggle('on',l==='cut');
-  document.body.classList.toggle('cut',l==='cut');}   // pure CSS — layout never changes between layers
+function setView(v){VIEW=v;const sel=document.getElementById('vsel');if(sel&&sel.value!==v)sel.value=v;render();}
+function setLayer(l){LAYER=l;['art','cut','both'].forEach(x=>document.getElementById('l'+x).classList.toggle('on',l===x));
+  document.body.classList.toggle('cut',l==='cut');document.body.classList.toggle('both',l==='both');}   // pure CSS — layout never changes between layers
 
 //==================================================================
 // ART — piece face generators (the scrutinized tile/card/board art)
@@ -1291,7 +1293,7 @@ function buildPages(){
   wharfSupplySheet(pages);   // printables2: the Wharf (cross) + the Supply board on one 22×15 sheet
   boardPage(pages,'boards','Destinations board',dboard(),7.5);
   boardPage(pages,'boards','Trade Roads — Overland (back of Destinations)',olboard(),7.5);
-  PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),5.45));
+  // (player brewery boards are generated LAST — at the bottom of the page — see below)
   // --- TILES — LARGE FORMAT (22×15in) for the LASER CUTTER. ALL tiles fit on ONE FRONTS sheet (17×11 grid),
   // with ONE matching BACKS sheet for double-sided registration:
   //   • casks · ships · improvements want BLANK rears; BUILDINGS want a WILD (+★) rear.
@@ -1351,6 +1353,8 @@ function buildPages(){
   aidSheet(pages,'Player aid — BACK (icon reference)',aidBack());
   // cardstock + paper cutter: cut lines print on the ART layer as grey guides (no laser pass)
   pages.filter(p=>p.section==='cards').forEach(p=>p.papercut=true);
+  // --- PLAYER BOARDS (moved to the BOTTOM of the page, just before the checklist) ---
+  PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),5.45));
   // --- CHECKLIST (always last; carries no cuts, so earlier sheets stay page-aligned) ---
   const pg=newPage(pages,'list','Component checklist');
   pages.forEach((p,i)=>p.no=i+1);   // number sheets BEFORE building the checklist's sheet refs
@@ -1574,7 +1578,6 @@ function printOne(no){
   window.print();
   setTimeout(done,500);   // fallback for browsers that don't fire afterprint
 }
-try{if(localStorage.getItem('pnp_bar_collapsed')==='1'){document.getElementById('bar').classList.add('collapsed');document.getElementById('bartoggle').textContent='▸ Tools';}}catch(e){}
 render();
 </script>
 </body>
