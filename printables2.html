@@ -1159,27 +1159,39 @@ function station(L,nm,ic,yield_){return '<div class="stn '+L+'" style="grid-area
 // chamfered, as its print cut. r = corner radius as a fraction of the board.
 // scale/ox/oy let the SAME plus be emitted in objectBoundingBox fractions (defaults — for the clip-path)
 // OR in absolute inch coords (for the cut overlay), so the CUT exactly matches the ART edge (the clip).
+// r may be a number (same radius everywhere) OR {conv,conc} (different convex/concave radii — needed when
+// the path is a uniform OUTWARD OFFSET of another plus, e.g. the art bleed clip vs the cut).
 function roundedPlusPath(a,b,r,scale,ox,oy){
   scale=scale||1; ox=ox||0; oy=oy||0;
+  const rc=(r&&typeof r==='object')?r:{conv:r,conc:r};
   const P=[[a,0],[b,0],[b,a],[1,a],[1,b],[b,b],[b,1],[a,1],[a,b],[0,b],[0,a],[a,a]];
   const sweep=[1,1,0,1,1,0,1,1,0,1,1,0];   // outer (convex) corners sweep 1, inner (concave) 0
   const n=P.length, V=i=>P[((i%n)+n)%n], f=x=>+x.toFixed(4);
   const nrm=p=>{const L=Math.hypot(p[0],p[1])||1;return[p[0]/L,p[1]/L];};
-  const X=v=>f(ox+v*scale), Y=v=>f(oy+v*scale), R=f(r*scale);
+  const X=v=>f(ox+v*scale), Y=v=>f(oy+v*scale);
   let d='',ch=[];
   for(let i=0;i<n;i++){
+    const ri=sweep[i]===1?rc.conv:rc.conc;
     const cur=V(i),pv=V(i-1),nx=V(i+1);
     const inD=nrm([cur[0]-pv[0],cur[1]-pv[1]]), outD=nrm([nx[0]-cur[0],nx[1]-cur[1]]);
-    const en=[cur[0]-r*inD[0],cur[1]-r*inD[1]], ex=[cur[0]+r*outD[0],cur[1]+r*outD[1]];
+    const en=[cur[0]-ri*inD[0],cur[1]-ri*inD[1]], ex=[cur[0]+ri*outD[0],cur[1]+ri*outD[1]];
+    const R=f(ri*scale);
     d+=(i===0?'M ':'L ')+X(en[0])+' '+Y(en[1])+' A '+R+' '+R+' 0 0 '+sweep[i]+' '+X(ex[0])+' '+Y(ex[1])+' ';
     ch.push([X(en[0]),Y(en[1])],[X(ex[0]),Y(ex[1])]);
   }
   return {d:d+'Z',ch};
 }
 const CROSS_A=0.2435, CROSS_B=0.7565, CROSS_R=0.04;
+const WHARF_W=11.5;          // the cross board size (in) — the CUT plus is this size; the ART bleeds past it
+const CROSS_BLEED=0.125;     // ⚙ art bleed past the cut line (1/8″) for laser-cut tolerance — the cut is unchanged; only the art extends
+// the ART clip = the cut plus DILATED outward by CROSS_BLEED, over a bleed-enlarged element (W + 2·bleed).
+// A true outward offset: arms longer & wider by the bleed, convex corner radius +bleed, concave −bleed.
+const CROSS_ART=(function(){const Wd=WHARF_W+2*CROSS_BLEED, halfArm=(CROSS_B-CROSS_A)/2*WHARF_W+CROSS_BLEED;
+  return {a:(Wd/2-halfArm)/Wd, b:(Wd/2+halfArm)/Wd,
+    r:{conv:(CROSS_R*WHARF_W+CROSS_BLEED)/Wd, conc:Math.max(.0005,(CROSS_R*WHARF_W-CROSS_BLEED)/Wd)}};})();
 function wharfCross(){
   const slot='<div class="wslot">'+LU('barrel')+'</div>';   // empty slot's default action = Deploy (the barrel icon)
-  const clip='<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="crossclip" clipPathUnits="objectBoundingBox"><path d="'+roundedPlusPath(CROSS_A,CROSS_B,CROSS_R).d+'"/></clipPath></defs></svg>';
+  const clip='<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="crossclip" clipPathUnits="objectBoundingBox"><path d="'+roundedPlusPath(CROSS_ART.a,CROSS_ART.b,CROSS_ART.r).d+'"/></clipPath></defs></svg>';
   const OR='<span class="sep">/</span>';
   const AND='<span class="sep">+</span>';   // brew AND deploy (both happen), vs OR alternatives
   const wharf='<div class="wharf">'
@@ -1193,7 +1205,8 @@ function wharfCross(){
     +slot
     +'<div></div>'+slot+slot+'<div></div>'
     +'</div>';
-  return clip+'<div class="mboard cross">'+wharf+'</div>';
+  // padding grows by the bleed so the inner grid stays centered/put while the element (and its clipped art) extends outward
+  return clip+'<div class="mboard cross" style="padding:'+(0.3+CROSS_BLEED).toFixed(3)+'in">'+wharf+'</div>';
 }
 // printables2: the SUPPLY board — the two face-up market displays + the three shared tracks
 // (Sailed-Ships end clock · Round · Score start→50). Sits beside the Wharf on the same large sheet.
@@ -1271,10 +1284,11 @@ function boardPageLg(pages,section,label,html,w,h){
 function wharfSupplySheet(pages){
   const G=TILE_GEO;const pg=newPage(pages,'boards','Main board — the Wharf (cross) + Supply board',G);
   // WHARF cross — the 4×4 grid (2.5in cells + .3in gaps) is 10.9in; +.3in outline padding → an 11.5in board.
-  const W=11.5, wx=0.4, wy=1.9;
+  const W=WHARF_W, wx=0.4, wy=1.9, bl=CROSS_BLEED;
   pg.items.push({x:wx,y:wy-0.72,w:W,h:0.55,html:'<div class="sheetlbl">'+LU('anchor')+'The Wharf<span class="sub">Source → Brew → Age → Ship</span></div>'});
-  pg.items.push({x:wx,y:wy,w:W,h:W,html:wharfCross()});
-  // the cut is the SAME rounded plus PATH as the board's clip-path (arcs, not chamfers) → it matches the art edge exactly
+  // the board element extends OUTWARD by the bleed on every side (grid stays centered via the +bleed padding),
+  // so the clipped art bleeds past the cut. The CUT itself is the original-size plus at (wx,wy) — unchanged.
+  pg.items.push({x:wx-bl,y:wy-bl,w:W+2*bl,h:W+2*bl,html:wharfCross()});
   pg.cutPath=roundedPlusPath(CROSS_A,CROSS_B,CROSS_R,W,wx,wy).d;
   // SUPPLY board (right) — the two market displays + the three shared tracks.
   const sx=12.2, sy=1.0, sw=9.3, sh=13.5;
