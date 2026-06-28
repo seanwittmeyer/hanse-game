@@ -105,7 +105,7 @@
   .bcard .bc-ic{flex:0 0 auto} .bcard .bc-ic svg,.bcard .bc-ic .ic{width:.2in;height:.2in;stroke-width:1.8}
   /* WHARFAGE chip — icons+numbers only: what the OWNER banks when a RIVAL docks a cask/ship here (a rival → +N★) */
   .bcard .bc-wf{display:inline-flex;align-items:center;gap:.012in;flex:0 0 auto;font-weight:bold;font-size:.115in;line-height:1;
-    background:rgba(0,0,0,.34);border-radius:.04in;padding:.022in .05in;margin-top:.005in}
+    background:rgba(0,0,0,.34);border-radius:.04in;padding:.022in .05in}
   .bcard .bc-wf svg,.bcard .bc-wf .ic{width:.13in;height:.13in;stroke-width:2}
   .bcard .bc-wf .st{color:#ffd24a}
   .bcard .bc-nm{font-variant:small-caps;font-weight:bold;font-size:.15in;line-height:1.02;flex:1;margin-top:-.01in}
@@ -786,9 +786,9 @@ function buildingCard(d){const tg=BTGT[d.tgt];
     ? '<span class="bc-wf" title="when a rival docks a cask/ship here, you (owner) bank this wharfage on its delivery">'+LU('users-round')+'+'+WHARFAGE+LU('star','st')+'</span>' : '';
   return '<div class="bcard" style="--c:'+BLD_FOOT+'">'
   +artLayer('building-'+d.k+'.png')
-  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span>'+wf+'<span class="bc-nm">'+d.nm+'</span></div>'
+  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span></div>'
   +'<div class="bc-foot"><div class="bc-eff">'+d.eff+'</div>'
-    +'<div class="bc-row"><span class="bc-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span>'+cost(d.g,0)+'</div></div>'
+    +'<div class="bc-row"><span class="bc-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span>'+wf+cost(d.g,0)+'</div></div>'
   +'</div>';}
 // BUILDING CARD BACK (v6) — the flipped/displaced face: when a RIVAL overbuilds your Building it returns to you
 // flipped to its WILD side and parks in an improvement slot (scores +DEVELOP_PTS★ at game end). v6: shows the
