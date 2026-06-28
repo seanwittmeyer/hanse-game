@@ -374,6 +374,63 @@
   .rk.printed .c-cost{display:inline-flex;align-items:center;gap:.06in;font-weight:bold;font-size:.13in}
   .rk.printed .c-cost .gc{font-size:.13in;gap:.02in}
   .rk.printed .c-cost .gc svg,.rk.printed .c-cost .gc .ic{width:.13in;height:.13in}
+  /* ====================== PLAYER BOARD v2 (sketch-based — pure TILE SLOTS) ======================
+     4 building/improvement slots (2in, tile-true) on top + a Flight strip on the right; a recipe TUCK +
+     3 cask-vessel slots (2.45in, hold the 2.5in cask cards) on the bottom. No rules text. The Flight sits
+     top-right (not full-height) so the 3 cask cards keep their true 2.5in pitch on a Letter sheet. */
+  .pb2{--pc:#7c2128;width:100%;height:100%;background:var(--parch);color:var(--ink);border:2.5px solid var(--pc);
+    border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in}
+  .pb2 svg,.pb2 .ic{stroke-width:1.8}
+  .pb2-head{display:flex;align-items:center;gap:.12in;flex:0 0 auto}
+  .pb2-crest{width:.5in;height:.5in;flex:0 0 auto;border-radius:.07in;background:var(--pc);color:#fff;display:flex;align-items:center;justify-content:center}
+  .pb2-crest svg,.pb2-crest .ic{width:.3in;height:.3in}
+  .pb2-name{font-variant:small-caps;font-weight:bold;font-size:.24in;color:var(--pc);line-height:1;flex:1 1 auto}
+  .pb2-store{flex:0 0 auto;display:flex;align-items:center;gap:.12in;border:1.5px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.45);padding:.04in .12in;color:var(--pc)}
+  .pb2-store .si{display:inline-flex;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.12in}
+  .pb2-store .si svg,.pb2-store .si .ic{width:.18in;height:.18in}
+  .pb2-store .cap{font-size:.092in;font-style:italic;color:var(--ink2)} .pb2-store .cap b{font-size:.14in;font-style:normal;color:var(--pc)}
+  .pb2-lbl{font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--pc);display:flex;align-items:center;gap:.05in}
+  .pb2-lbl svg,.pb2-lbl .ic{width:.13in;height:.13in}
+  .pb2-lbl .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.085in;color:var(--ink2);margin-left:.05in}
+  /* TOP — 4 building/improvement slots + the Flight strip */
+  .pb2-top{display:flex;align-items:stretch;gap:.13in;flex:0 0 auto}
+  .pb2-blds{display:flex;gap:.1in;flex:0 0 auto}
+  .pb2-slot{border:1.7px dashed var(--pc);border-radius:.07in;background:rgba(255,255,255,.4);position:relative;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.05in;color:var(--pc);text-align:center}
+  .pb2-slot .sn{position:absolute;top:.06in;left:0;right:0;font-variant:small-caps;font-weight:bold;font-size:.085in;opacity:.72;line-height:1.05}
+  .pb2-slot .si{display:flex;gap:.06in;opacity:.5} .pb2-slot .si svg,.pb2-slot .si .ic{width:.34in;height:.34in}
+  .pb2-slot .st{font-size:.088in;font-variant:small-caps;opacity:.75}
+  .pb2-bld{width:2in;height:2in}
+  .pb2-flight{flex:1 1 auto;display:flex;flex-direction:column;gap:.03in;border:1.6px solid var(--pc);border-radius:.07in;background:rgba(255,255,255,.4);padding:.06in .07in}
+  .pb2-flight .fh{font-variant:small-caps;font-weight:bold;font-size:.105in;color:var(--pc);text-align:center;display:flex;align-items:center;justify-content:center;gap:.04in}
+  .pb2-flight .fh svg,.pb2-flight .fh .ic{width:.13in;height:.13in}
+  .pb2-flight .fsub{font-size:.075in;font-style:italic;color:var(--ink2);text-align:center;margin-bottom:.02in}
+  .pb2-fboxes{flex:1;display:flex;flex-direction:column;gap:.045in}
+  .pb2-fbox{flex:1;border:1.3px solid var(--pc);border-radius:.04in;background:rgba(255,255,255,.5);
+    display:flex;align-items:center;justify-content:space-between;padding:0 .08in;font-size:.1in;color:var(--ink2)}
+  .pb2-fbox .fn{font-weight:900;font-size:.13in;color:var(--pc)}
+  .pb2-fbox .fp{display:inline-flex;align-items:center;gap:.02in;font-weight:900;font-size:.115in;color:var(--vp)}
+  .pb2-fbox .fp svg,.pb2-fbox .fp .ic{width:.13in;height:.13in}
+  .pb2-fbox.z{opacity:.6} .pb2-fbox.z .fp{color:var(--ink2);font-weight:normal;font-size:.1in}
+  /* BOTTOM — recipe tuck + 3 cask vessels */
+  .pb2-bot{display:flex;align-items:stretch;gap:.1in;flex:0 0 auto}
+  .pb2-recipe{width:1.78in;flex:0 0 auto;display:flex;flex-direction:column;gap:.045in;border:1.6px dashed var(--pc);border-radius:.07in;background:rgba(255,255,255,.4);padding:.06in}
+  .pb2-recipe .rh{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--pc);display:flex;align-items:center;gap:.04in}
+  .pb2-recipe .rh svg,.pb2-recipe .rh .ic{width:.12in;height:.12in}
+  .pb2-rstrips{display:flex;flex-direction:column;gap:.04in;flex:1}
+  .pb2-rbar{border-radius:.04in;padding:.035in .06in;color:#fff;display:flex;align-items:center;gap:.05in;text-shadow:0 1px 1px rgba(0,0,0,.4)}
+  .pb2-rbar .rq{display:inline-flex;align-items:center;gap:.01in;background:rgba(255,255,255,.92);color:#333;border-radius:.03in;padding:0 .035in;font-weight:bold;font-size:.092in}
+  .pb2-rbar .rq svg,.pb2-rbar .rq .ic{width:.1in;height:.1in}
+  .pb2-rbar .rn{font-variant:small-caps;font-weight:bold;font-size:.11in;flex:1}
+  .pb2-rbar .rc{display:inline-flex;align-items:center;gap:.03in;font-weight:bold;font-size:.1in}
+  .pb2-rbar .rc .gc{font-size:.1in} .pb2-rbar .rc .gc svg,.pb2-rbar .rc .gc .ic{width:.11in;height:.11in}
+  .pb2-rtuck{flex:1;border:1.2px dashed var(--pc);border-radius:.04in;background:rgba(255,255,255,.32);
+    display:flex;align-items:center;justify-content:center;gap:.04in;color:var(--pc);font-size:.08in;opacity:.85;min-height:.3in}
+  .pb2-rtuck svg,.pb2-rtuck .ic{width:.12in;height:.12in;opacity:.7}
+  .pb2-vessels{display:flex;gap:.05in;flex:0 0 auto}
+  .pb2-vsl{width:2.45in;height:2.45in;border-style:solid}
+  .pb2-vsl.extra{border-style:dashed}
+  .pb2-vsl .si svg,.pb2-vsl .si .ic{width:.5in;height:.5in}
   /* ====================== DESTINATIONS BOARD ====================== */
   .dboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--gold);border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in;color:var(--ink)}
   .dboard svg,.dboard .ic{stroke-width:1.8}
@@ -1014,35 +1071,35 @@ function rkPrinted(cc,L,nm,g,h){   // a clone of a recipe card's bottom "c-strip
   return '<div class="rk printed" style="--cc:'+cc+'">'
     +'<div class="c-row"><span class="c-rung">'+LU(QI)+L+'</span><span class="c-nm">'+nm+'</span></div>'
     +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(g,h)+'</span></div></div>';}
+// ---- player board v2 (sketch-based) — a pure TILE SLOT surface. The slots ONLY: 4 building/improvement
+// slots (2in) + a Flight strip on top; a recipe TUCK + 3 cask-vessel slots (2.45in, hold 2.5in cask cards)
+// on the bottom. The leftmost bottom position is the recipe tuck; the 3 vessels are where casks age. ----
+function pbFlight(){   // distinct beers delivered → (beers−1)², min 3: 1·2 score 0, 3→4, 4→9, 5→16
+  const rungs=[[1,0],[2,0],[3,4],[4,9],[5,16]];
+  const boxes=rungs.map(r=>'<div class="pb2-fbox'+(r[1]?'':' z')+'"><span class="fn">'+r[0]+'</span>'
+    +(r[1]?'<span class="fp">'+LU('star')+r[1]+'</span>':'<span class="fp">—</span>')+'</div>').join('');
+  return '<div class="pb2-flight"><div class="fh">'+LU('layers')+'Flight</div>'
+    +'<div class="fsub">distinct beers</div><div class="pb2-fboxes">'+boxes+'</div></div>';}
+function pbRecipe(){   // Gruit & Hopped printed (always have) + 3 tuck slots for the dealt export recipe cards
+  const bar=(cc,L,nm,g,h)=>'<div class="pb2-rbar" style="background:'+cc+'"><span class="rq">'+LU(QI)+L+'</span>'
+    +'<span class="rn">'+nm+'</span><span class="rc">'+cost(g,h)+'</span></div>';
+  let tucks='';for(let i=0;i<3;i++)tucks+='<div class="pb2-rtuck">'+LU('plus')+'tuck recipe</div>';
+  return '<div class="pb2-recipe"><div class="rh">'+LU('scroll-text')+'Recipes</div>'
+    +'<div class="pb2-rstrips">'+bar('#6f7a82',1,'Gruit',1,0)+bar('#a67c1e',2,'Hopped',1,1)+tucks+'</div></div>';}
 function pboard(p){
-  const vessels=vcol(1,false)+vcol(2,false)+vcol(3,true);   // V1·V2 open, V3 earned with Extra Vessel
-  let imps='';for(let i=0;i<4;i++)imps+='<div class="isq">'+LU('wrench')+'improvement</div>';
-  // THE FLIGHT — Gruit + Hopped (always) + the 4 possible exports (3 dealt each game; the 4th space stays empty)
-  const flightBeers=[['Gruit','Q1',0],['Hopped','Q2',0],['Broyhan','Q3',1],['Keut','Q3',1],['Mumme','Q4',1],['Bock','Q5',1]];
-  const flight=flightBeers.map(b=>'<div class="fbeer'+(b[2]?' exp':'')+'"><span class="fdot"></span>'
-    +'<span class="fmeta"><span class="fn">'+b[0]+'</span><span class="fq">'+b[1]+'</span></span></div>').join('');
-  // RECIPE RACK — Gruit & Hopped printed; 3 tuck slots for the export recipe cards (max 3 of 4 dealt)
-  let rack=rkPrinted('#6f7a82',1,'Gruit',1,0)+rkPrinted('#a67c1e',2,'Hopped',1,1);
-  for(let i=0;i<3;i++)rack+='<div class="rk tuck">'+LU('plus')+'slide recipe</div>';
-  return '<div class="board" style="--pc:'+p.c+'">'
-    +'<div class="pb-head">'
-      +'<div class="crest">'+LU('beer')+'</div>'
-      +'<div class="pb-title"><div class="pb-name">'+p.nm+' Brewhouse</div>'
-        +'<div class="pb-sub">Brewhouses of the Hanse · your private brewery · v2.1 “Staple Rights”</div></div>'
-      +'<div class="pb-store"><span class="slbl">'+LU('warehouse')+'Storage</span>'
-        +'<div class="szone"><span class="si">'+LU('wheat','g ic')+'Grain</span><span class="si">'+LU('sprout','h ic')+'Hops</span><span class="cap">max <b>8</b></span></div></div>'
-    +'</div>'
-    +'<div class="floor"><div class="pb-sect">'+LU('home')+'The Floor<span class="sm">your vessels &amp; improvements — your private line</span></div>'
-      +'<div class="floor-row">'
-        +'<div class="fgrp"><div class="grp-lbl">'+LU('flask-conical')+'Vessels &amp; Maturation</div>'
-          +'<div class="vgroup">'+vessels+'</div></div>'
-        +'<div class="fgrp"><div class="grp-lbl">'+LU('wrench')+'Improvements<span class="nn">+ displaced Buildings</span></div>'
-          +'<div class="igroup">'+imps+'</div></div>'
-      +'</div></div>'
-    +'<div class="flight"><div class="pb-sect">'+LU('layers')+'The Flight<span class="sm">mark each beer you deliver · 3 of 4 exports in play</span></div>'
-      +'<div class="flight-row">'+flight+'</div></div>'
-    +'<div class="rack"><div class="rack-h">'+LU('scroll-text')+'Recipes<span class="sm">slide export recipe cards up — the strip shows the brew cost</span></div>'
-      +'<div class="rack-row">'+rack+'</div></div>'
+  let blds='';for(let i=0;i<4;i++)blds+='<div class="pb2-slot pb2-bld"><span class="sn">Building /<br>Improvement</span>'
+    +'<span class="si">'+LU('building-2')+LU('wrench')+'</span><span class="st">place a tile</span></div>';
+  const vlabels=[['Vessel 1',false],['Vessel 2',false],['Extra Vessel',true]];
+  const vessels=vlabels.map(v=>'<div class="pb2-slot pb2-vsl'+(v[1]?' extra':'')+'"><span class="sn">'+v[0]+'</span>'
+    +'<span class="si">'+LU('beer')+'</span><span class="st">aging cask</span></div>').join('');
+  return '<div class="pb2" style="--pc:'+p.c+'">'
+    +'<div class="pb2-head"><div class="pb2-crest">'+LU('beer')+'</div>'
+      +'<div class="pb2-name">'+p.nm+' Brewhouse</div>'
+      +'<div class="pb2-store"><span class="si">'+LU('wheat','g ic')+'Grain</span><span class="si">'+LU('sprout','h ic')+'Hops</span><span class="cap">max <b>8</b></span></div></div>'
+    +'<div class="pb2-lbl">'+LU('layout-grid')+'Buildings &amp; Improvements<span class="sm">place owned tiles (area cap 4)</span></div>'
+    +'<div class="pb2-top"><div class="pb2-blds">'+blds+'</div>'+pbFlight()+'</div>'
+    +'<div class="pb2-lbl">'+LU('flask-conical')+'Vessels &amp; Recipes<span class="sm">casks age here · tuck recipe cards at left</span></div>'
+    +'<div class="pb2-bot">'+pbRecipe()+'<div class="pb2-vessels">'+vessels+'</div></div>'
   +'</div>';}
 
 // ---- destinations board ----
@@ -1378,7 +1435,7 @@ function buildPages(){
   // cardstock + paper cutter: cut lines print on the ART layer as grey guides (no laser pass)
   pages.filter(p=>p.section==='cards').forEach(p=>p.papercut=true);
   // --- PLAYER BOARDS (moved to the BOTTOM of the page, just before the checklist) ---
-  PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),5.45));
+  PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>boardPage(pages,'boards','Player board — '+p.nm,pboard(p),6.1));
   // --- CHECKLIST (always last; carries no cuts, so earlier sheets stay page-aligned) ---
   const pg=newPage(pages,'list','Component checklist');
   pages.forEach((p,i)=>p.no=i+1);   // number sheets BEFORE building the checklist's sheet refs
