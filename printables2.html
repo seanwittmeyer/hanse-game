@@ -842,6 +842,8 @@ function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm
     +'<div class="ce bot"><div class="ce-row sb"><span class="sdest">'+LU('landmark')+destNm+'</span><span class="sgate">'+LU(QI)+d.req+'+</span></div></div>'
   +'</div>';
 }
+// the SHIP card rear — one shared graphic for every ship (a Hanseatic cog at sea); ships are single-faced/neutral
+function shipBack(){return '<div class="ccard ship-back" style="background:#33445a url(\''+ART_DIR+'ship-back.png\') center/cover"></div>';}
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
 function disc(c){return '<div class="disc" style="--c:'+c+'">'+LU('circle')+'</div>';}
 // BUILDING OWNERSHIP FRAME (printables2) — a 2.5in player-colour base; a 2in Building tile sits on it, the
@@ -1252,7 +1254,7 @@ function buildPages(){
   CASKS.forEach(d=>{const pool=d.pin?[d.pin]:(d.wild?CASK_POOL.concat([CASK_WILD]):CASK_POOL);
     for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];fronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
   const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
-  shipList.forEach(([hull,dest])=>fronts.push({fam:'Ships',kind:'ship',html:shipCard(hull,dest)}));   // ships = full-bleed 2.5″ cards (v4)
+  shipList.forEach(([hull,dest])=>fronts.push({fam:'Ships',kind:'ship',ship:true,html:shipCard(hull,dest)}));   // ships = full-bleed 2.5″ cards (v4)
   BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)fronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',kind:'bld',bld:true,html:buildingTile(d)});});   // buildings 2″
   const FLBL='Cask CARDS (front · buy/age) + Ship & Building TILES · LARGE 22×15 (casks & ships 2.5″ · buildings 2″)';
   ['caskc','ship','bld'].forEach(k=>packRun(pages,'tiles',FLBL,k,fronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,TG));
@@ -1262,11 +1264,12 @@ function buildPages(){
   // BACKS = the HORIZONTAL MIRROR of each fronts sheet (flip LEFT↔RIGHT): a cask's brewed side behind each
   // cask card, a Wild (+★) behind each building, blank behind ships — flips into register under the fronts.
   (function(){let i=0;frontPages.forEach(fp=>{
-    const bp=newPage(pages,'tiles','BACKS · LARGE 22×15 (mirror — flip LEFT↔RIGHT): cask brewed-side · Wild + '+DEVELOP_PTS+'★ behind buildings · blank behind ships',TG);
+    const bp=newPage(pages,'tiles','BACKS · LARGE 22×15 (mirror — flip LEFT↔RIGHT): cask brewed-side · Wild + '+DEVELOP_PTS+'★ behind buildings · a ship at sea behind ships',TG);
     fp.items.forEach(it=>{const f=fronts[i++];const mx=+(TG.w-it.x-it.w).toFixed(4);
       addRectCut(bp,mx,it.y,it.w,it.h);                                            // full mirrored cut grid → registers the sandwich
       if(f.cask)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:caskCardBack(f.d,f.act)});
-      else if(f.bld)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:buildingBack()});});
+      else if(f.bld)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:buildingBack()});
+      else if(f.ship)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:shipBack()});});
     (famPages['Card/tile backs']=famPages['Card/tile backs']||new Set()).add(pages.indexOf(bp));
   });})();
   // IMPROVEMENTS — SEPARATE sheet (a different size; to be reworked later). Kept 1.25″ on a letter sheet for now.
