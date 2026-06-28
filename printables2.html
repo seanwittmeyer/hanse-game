@@ -111,7 +111,8 @@
   .bcard .bc-nm{font-variant:small-caps;font-weight:bold;font-size:.15in;line-height:1.02;flex:1;margin-top:-.01in}
   .bcard .bc-foot{background:linear-gradient(to top,var(--c) 0%,var(--c) 52%,transparent 100%);
     padding:.26in .17in .15in;display:flex;flex-direction:column;gap:.055in}
-  .bcard .bc-eff{font-size:.1in;line-height:1.17}
+  .bcard .bc-eff{font-size:.115in;line-height:1.18}
+  .bcard .bc-eff::first-letter{text-transform:uppercase}   /* sentence-case the effect (data stays lowercase) */
   /* resource icons inside effect text — colour by type (gold grain / green hops), notation: +1 [icon] */
   .bcard .bc-eff .ic,.bcard .bc-eff svg{width:.12in;height:.12in;vertical-align:-.02in}
   .bcard .bc-eff .g{color:#ffe08a} .bcard .bc-eff .h{color:#c4e69c}
