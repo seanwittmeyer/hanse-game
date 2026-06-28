@@ -853,7 +853,7 @@ function caskTile(d,act){   // act = the drawn slot-action {ai,act} (v0.12); Gru
 // as the cask/ship cards). FRONT = full-bleed building art (art/building-<key>.png) behind a scrim, with the name
 // + verb badge (Value/Transform) up top and the effect + target glyph + goods cost in a colour foot. The card
 // nests in the 2.5″ player-colour owner FRAME, so the coloured edge around it marks ownership.
-const BLD_FOOT='#3a3342';   // building card foot/base — dark purple-grey (v6; was green). Same on front & back.
+const BLD_FOOT='rgba(58,51,66,.9)';   // building card foot/base — dark purple-grey (#3a3342) at 90% opacity so the illustration bleeds ~10% through the foot. Same on front & back.
 function buildingCard(d){const tg=BTGT[d.tgt];
   // wharfage chip (icons+numbers only) — what YOU bank when a RIVAL docks a cask/ship here; only for dockable
   // buildings (cask/ship targets — the owner-passive Almoner & any line tiles have no occupant to toll).
