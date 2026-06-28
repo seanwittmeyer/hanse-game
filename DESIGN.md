@@ -179,6 +179,19 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   somehow, or drop the random start. Open — tie into the asymmetry discussion above.
 
 
+**v85 — "Frankfurt opens": the deep-node 2-slot cap is lifted** *(2026-06-28, `play.html` KEY v85)* —
+The Trade Roads' deep ◆ terminals were hard-capped at **2 active slots** regardless of player count
+(`olSlotsActive`: `if(node.deep)a=Math.min(a,2)`), which orphaned two of **Frankfurt's** four printed
+Rhineland slots — its **+2 age** and **+6★** were never claimable. v85 **removes the cap**: every node —
+deep or not — now scales **n+1**, bounded by its printed slot count, so **Frankfurt's 4 slots all activate**
+(3 at 2p · 4 at 3p+) and **Pskov** stays scarce simply by having a single printed slot. "Deep ◆" now denotes
+a high-gate terminal, not a 2-slot cap; scarcity is the slot count. Also folded in — a **physical-component**
+change with no engine effect (`play.html` doesn't model the cask supply, so it lives in `COMPONENTS.md` + the
+printables): the **cask floor is raised to a minimum of 6 tiles per type** (Bock 4→6, Jopenbier 3→6) for
+"more cask tiles." *Gates (KEY v85):* base `sim.js 500` → 0 crash/deadlock 2–4p, pace in band, clock-dominant;
+`OVERLAND=1 sim.js 500` → 0 crash/deadlock 2–4p, **100% pace-in-band**, clock 91–97%; `ai-render-smoke` (incl.
+Overland + the Cellarmaster with all three expansions) **PASS**. Bump discards stale v84 state.
+
 **v84 — "Cellarmaster bites": the deep-MC rollout policy becomes the Trader** *(2026-06-28, `play.html` KEY v84)* —
 The **Cellarmaster** (the deep Monte-Carlo arch-nemesis) ran *journeyman* rollouts, which ship to the first
 fillable hull and never model deliberately stacking the rich anchors (Bergen 9 / Novgorod 8) — the lane a strong

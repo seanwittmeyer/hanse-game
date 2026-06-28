@@ -116,6 +116,11 @@ Gruit fixed to **Source +2 goods**, Q2+ draw from the pool — §8). Three state
 3. **Delivered** *(scored, gone)* — shipped to a destination (§6–7). Scores for its owner and
    leaves.
 
+> **Shared supply (⚙):** casks are a shared pool, **brewed never bought**, stocked at a **minimum
+> of 6 tiles per cask type** (the staples Gruit/Hopped run deeper at 16/20; the Jopenbier capstone
+> also stocks 6). Counts live in the manifest (`COMPONENTS.md §5`); the digital `play.html` does
+> not cap the supply.
+
 > **The squeeze (state it to players):**
 > - **You can't brew everything** — 2 vessels (cap 3), the recipe ladder, and time. A slow Bock
 >   ties up a vessel that could have turned two quick casks.
@@ -445,10 +450,11 @@ station, no new action — it rides the Harbor's Ship.**
 - **Never nothing.** A town whose slots are all claimed pays the line's small **overflow** bonus, and your road
   still extends — every voyage that reaches a node pays *something*.
 - **Distinct slots, flavoured by LANE** (2–4 per node; *active count scales **n+1** with player count* — 2p uses **3**
-  slots, 3p/4p use 4; the deep ◆ nodes stay **scarce** at 2). Slots are listed best-first (the scarce nodes show only their top
-  ones). The lane identity lives in the slot menu:
+  slots, 3p/4p use 4, bounded by a node's printed slots). The deep ◆ nodes are **high-gate terminals**; scarcity comes from a
+  node's slot count — **Pskov** is the scarce one (a single slot), **Frankfurt** the rich 4-slot Rhineland outlet. Slots are
+  listed best-first. The lane identity lives in the slot menu:
   - **Rhineland — KNOWLEDGE/CRAFT** *(Bruges voyages)*: **Cologne** (Q2 · +2★ · `recipe · a free Gruit · brew · brew`)
-    → **Frankfurt** — *the deep craft/prestige outlet* (Q3 · +3★ · ◆ scarce-2 · `a free Q3 · a free Enshrine · +2 age · +6★`).
+    → **Frankfurt** — *the deep craft/prestige outlet* (Q3 · +3★ · ◆ · `a free Q3 · a free Enshrine · +2 age · +6★`).
   - **London — INFRASTRUCTURE** *(London voyages, through Bruges)*: **Antwerp** (Q2 · +2★ · `a Building to hand ·
     brew a beer · +3 goods · a Building to hand`) → **London** (kontor · Q2 · **+3★** · `a Building to hand · a free Improvement · +3 goods · a free Improvement`).
   - **Bergen — LOGISTICS** *(Bergen voyages, through Bruges)*: **Tønsberg** (Q2 · +2★ · `+1 charter contract · brew a beer ·

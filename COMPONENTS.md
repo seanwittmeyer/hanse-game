@@ -3,7 +3,7 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9.
-> - The live build is `play.html` — **v2.1.1 “Staple Rights”** (`KEY hanse-hotseat-v84`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v2.1.1 “Staple Rights”** (`KEY hanse-hotseat-v85`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - Cross-reference for tile families: §3 boards, §4 supply, §5–11 the seven families A–G, §12 player board, §13 starting setup, §14 box footprint. Expansion add-ons are §15; cross-references §16.
 
 ---
@@ -53,7 +53,7 @@
 
 ---
 
-## 5. Cask tiles · family A (~60, shared supply)
+## 5. Cask tiles · family A (~62, shared supply)
 
 A brewed beer in one of three states: **maturing** (vessel) → **deployed** (slot, cargo + a public action) → **delivered** (scores, gone). Each cask carries a printed quality and, on brewing, a slot-action drawn from the top of its quality pile (Gruit is pinned to Source).
 
@@ -64,9 +64,11 @@ A brewed beer in one of three states: **maturing** (vessel) → **deployed** (sl
 | Q3 | Broyhan | `G H H` | 1 | + Novgorod | 6 |
 | Q3 | Keut *(+1 presence on a kontor delivery)* | `G G H` | 2 | + Novgorod | 6 |
 | Q4 | Mumme | `G H H H` | 3 | all | 8 |
-| Q5 | Bock | `G G H H H` | 3 (2 with Aging Cellar) | all | 4 |
+| Q5 | Bock | `G G H H H` | 3 (2 with Aging Cellar) | all | 6 |
 
 **Draft:** the export ladder deals **3 of the 4** export beers each game (so dropping one varies the climb). Gruit + Hopped are always available.
+
+**Supply floor:** a **minimum of 6 tiles per cask type** so no beer runs dry mid-game — the staples run deeper (Gruit 16 · Hopped 20). *(The Jopenbier capstone also stocks 6 — §15B.)* Casks are a shared pool, **brewed never bought**; `play.html` does not cap the supply (the counts are a physical-manifest concern).
 
 ---
 
@@ -237,7 +239,7 @@ Shared setup: 2 ships dealt onto slots (spread across lines, includes a guarante
 | Family | Count ⚙ | Designs |
 |---|---|---|
 | Boards | 3 (1 Wharf · 1 destinations · 4 brewery) | — |
-| Casks (A) | 60 | 6 beers |
+| Casks (A) | 62 | 6 beers |
 | Ships (B) | 20 | 2 hulls × 4 destinations |
 | Buildings (C) | 24 | 18 |
 | Recipes (D) | 24 cards | 6 |
@@ -285,7 +287,7 @@ Recipe buys ⚙: Gose `1 G` · Zerbster `1 H` · Duckstein `1 G`.
 
 | Quality | Beer (town) | Brew ⚙ | Matures | Pinned act | Always acquirable | Qty ⚙ |
 |---|---|---|---|---|---|---|
-| Q6 (display) | Jopenbier (Danzig) | `G G H H H H` | 4 | Source | yes (not in draft) | 3 |
+| Q6 (display) | Jopenbier (Danzig) | `G G H H H H` | 4 | Source | yes (not in draft) | 6 |
 
 Scored **self-contained**: 8★ kontor / 9★ Hall, **+1★ per owner-turn while deployed (cap +5)**. Not part of the Flight. Recipe buy ⚙ `1 G 1 H`.
 
@@ -302,7 +304,7 @@ Adds one inland-network board sitting beside the destination board. Per-house: p
 
 **Toggles OFF:** the kontor **majorities** (the contest moves inland; the majority chart on the destination board is not used).
 
-**Town slots** (n+1 active per node — 2p uses 3, 3p/4p use 4; deep ◆ nodes stay at 2):
+**Town slots** (n+1 active per node — 2p uses 3, 3p/4p use 4, bounded by a node's printed slots; deep ◆ = high-gate terminals — Pskov scarce with its single slot, Frankfurt the rich 4-slot Rhineland outlet):
 
 | Node | Gate | Base ★ | Slot menu (best-first) | Overflow |
 |---|---|---|---|---|
