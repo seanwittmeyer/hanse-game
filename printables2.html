@@ -130,16 +130,16 @@
   .ccard .cact .ac svg,.ccard .cact .ac .ic{width:.15in;height:.15in;color:#23201c;stroke-width:2.1}
   .ccard .cc-mark{width:.3in;height:.3in;border:1.6px dashed rgba(255,255,255,.85);border-radius:.05in;flex:0 0 auto;margin-left:auto}
   /* aging track on the FRONT centre */
-  .cc-age{margin:.04in .1in;background:rgba(255,255,255,.88);color:var(--ink);border-radius:.07in;padding:.07in .06in;
-    display:flex;flex-direction:column;align-items:center;gap:.05in;flex:1;justify-content:center}
-  .cc-age .agl{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--ink2);display:flex;align-items:center;gap:.04in}
-  .cc-age .agl svg,.cc-age .agl .ic{width:.13in;height:.13in}
-  .cc-agerow{display:flex;gap:.04in;align-items:center;flex-wrap:wrap;justify-content:center}
-  .cc-step{width:.3in;height:.3in;border:1.5px solid var(--ink2);border-radius:.05in;display:flex;align-items:center;justify-content:center;font-size:.12in;font-weight:bold;color:var(--ink2);background:rgba(255,255,255,.6)}
-  .cc-arr{color:var(--ink2);display:flex;align-items:center} .cc-arr svg,.cc-arr .ic{width:.13in;height:.13in}
-  .cc-step.rdy{width:auto;padding:0 .07in;border-color:var(--green);background:rgba(74,107,58,.2);color:var(--green);font-variant:small-caps}
-  .cc-step.start{width:auto;padding:0 .06in;border-style:dashed;font-size:.075in;font-variant:small-caps;font-weight:bold;color:var(--ink2)}   /* the vessel marker starts here at brew */
-  .cc-age .nn{font-size:.07in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.15;max-width:1.7in}
+  /* FRONT centre = the maturation track on ONE line over a brewhouse-interior illustration (light parchment scrim keeps the ink legible) */
+  .cc-age{margin:.04in .09in;color:var(--ink);border-radius:.07in;padding:.05in .05in;overflow:hidden;
+    background:linear-gradient(rgba(244,234,208,.62),rgba(244,234,208,.62)),url('art/brewhouse.png');background-size:cover;background-position:center;
+    display:flex;align-items:center;justify-content:center;flex:1}
+  .cc-agerow{display:flex;gap:.025in;align-items:center;justify-content:center;flex-wrap:nowrap}
+  .cc-step{width:.27in;height:.27in;border:1.5px solid var(--ink2);border-radius:.045in;display:flex;align-items:center;justify-content:center;font-size:.13in;font-weight:bold;color:var(--ink);background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.18);flex:0 0 auto}
+  .cc-arr{color:var(--ink2);display:flex;align-items:center;flex:0 0 auto} .cc-arr svg,.cc-arr .ic{width:.1in;height:.1in}
+  .cc-step.rdy{width:auto;padding:0 .055in;gap:.025in;border-color:var(--green);background:var(--green);color:#fff;font-variant:small-caps;font-size:.085in;font-weight:900;letter-spacing:.2px;box-shadow:0 1px 2px rgba(0,0,0,.3)}   /* READY = flip the card to its brewed side */
+  .cc-step.rdy svg,.cc-step.rdy .ic{width:.16in;height:.16in;stroke-width:2.4}
+  .cc-step.start{width:auto;padding:0 .045in;border-style:dashed;font-size:.07in;font-variant:small-caps;font-weight:bold;color:var(--ink2);background:rgba(255,255,255,.78)}   /* place the vessel marker here at brew */
   /* BACK centre */
   .cc-big{flex:1;display:flex;align-items:center;justify-content:center;opacity:.32}
   .cc-big svg,.cc-big .ic{width:.85in;height:.85in}
@@ -796,14 +796,16 @@ function artLayer(file){return ART_ON
 function caskCardFront(d,act){
   let c=cost(d.g,d.h);if(d.alt)c+='<span style="opacity:.85">/</span>'+cost(d.alt[0],d.alt[1]);
   // START (place the vessel marker here at brew) → advance one step per turn → READY (ready = the step count)
+  // the maturation track on ONE line: a dashed START (place the vessel marker) → numbered steps → a green
+  // READY=FLIP endpoint (the flip glyph says "turn the card to its brewed side"). No title/rules text — the
+  // brewhouse illustration sits behind it (cc-age background).
   let track='<div class="cc-step start">start</div>';
   for(let i=1;i<d.ready;i++)track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step">'+i+'</div>';
-  track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step rdy">Ready</div>';
+  track+='<span class="cc-arr">'+LU('chevron-right')+'</span><div class="cc-step rdy">'+LU('refresh-cw')+'<span>flip</span></div>';
   return '<div class="ccard cc-front" style="--c:'+d.c+'">'
     +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span>'
       +'<span class="ctitle"><span class="cnm">'+d.nm+'</span><span class="ccost">'+c+'</span></span></div></div>'
-    +'<div class="cc-age"><span class="agl">'+LU('hourglass')+'Aging</span><div class="cc-agerow">'+track+'</div>'
-      +'<span class="nn">a vessel marker advances 1/turn; a cellar marker skips a step</span></div>'
+    +'<div class="cc-age"><div class="cc-agerow">'+track+'</div></div>'
     +'<div class="ce bot"><div class="ce-row sb"><span class="cq">'+LU(QI)+d.q+'</span><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div></div>'
   +'</div>';
 }
