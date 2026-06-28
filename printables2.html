@@ -143,7 +143,8 @@
   /* BACK centre */
   .cc-big{flex:1;display:flex;align-items:center;justify-content:center;opacity:.32}
   .cc-big svg,.cc-big .ic{width:.85in;height:.85in}
-  .cc-back .ce.bot{gap:.05in;background:var(--c);box-shadow:0 -1px 0 rgba(0,0,0,.28)}   /* the front's beer colour as the back's bottom bar */
+  .cc-back .ce.bot{gap:.05in;padding-top:.34in;background:linear-gradient(to top,var(--c) 0%,var(--c) 38%,transparent 100%)}   /* the front's beer colour, solid at the foot, fading up into the illustration */
+  .cc-actfloat{flex:1;display:flex;align-items:center;justify-content:center}   /* the brewed action floats over the illustration, not in the colour bar */
   /* the BACK ends match (Q + title + a marker space), a little larger */
   .cc-back .ce .cq{font-size:.24in} .cc-back .ce .cq svg,.cc-back .ce .cq .ic{width:.2in;height:.2in}
   .cc-back .ce .cnm{font-size:.19in}
@@ -799,8 +800,8 @@ function caskCardBack(d,act){
   return '<div class="ccard cc-back" style="--c:'+d.c+'">'
     +artLayer('cask-'+d.nm.toLowerCase()+'.png')
     +'<div class="ce top"><div class="ce-row sb">'+q+'</div></div>'
-    +'<div class="ce bot"><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div>'
-      +'<div class="ce-row">'+q+'<span class="cc-mark" title="quality die / presence marker"></span></div></div>'
+    +'<div class="cc-actfloat"><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div>'
+    +'<div class="ce bot"><div class="ce-row">'+q+'<span class="cc-mark" title="quality die / presence marker"></span></div></div>'
   +'</div>';
 }
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
