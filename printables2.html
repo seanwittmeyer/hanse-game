@@ -136,8 +136,8 @@
     display:flex;align-items:center;justify-content:center;flex:1}
   .cc-agerow{display:flex;gap:.06in;align-items:center;justify-content:center;flex-wrap:nowrap}
   .cc-step{width:.34in;height:.34in;border:1.8px solid rgba(255,255,255,.92);border-radius:.05in;display:flex;align-items:center;justify-content:center;font-size:.18in;font-weight:bold;color:#fff;background:transparent;text-shadow:0 1px 2px rgba(0,0,0,.75);flex:0 0 auto}
-  .cc-step.rdy{width:auto;padding:0 .07in;gap:.03in;border-color:var(--green);background:var(--green);color:#fff;font-variant:small-caps;font-size:.095in;font-weight:900;letter-spacing:.2px;text-shadow:none;box-shadow:0 1px 2px rgba(0,0,0,.4)}   /* READY = flip the card to its brewed side */
-  .cc-step.rdy svg,.cc-step.rdy .ic{width:.19in;height:.19in;stroke-width:2.6}
+  .cc-step.rdy{border-color:var(--green);background:var(--green);color:#fff;text-shadow:none;box-shadow:0 1px 2px rgba(0,0,0,.4)}   /* READY = flip the card to its brewed side */
+  .cc-step.rdy svg,.cc-step.rdy .ic{width:.22in;height:.22in;stroke-width:2.4}
   .cc-step.start{border-style:dashed}   /* place the vessel marker here at brew (the Brewhouse beaker) */
   .cc-step.start svg,.cc-step.start .ic{width:.21in;height:.21in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.75))}
   /* BACK centre */
@@ -810,7 +810,7 @@ function caskCardFront(d,act){
   // brewhouse illustration sits behind it (cc-age background).
   let track='<div class="cc-step start">'+LU('flask-conical')+'</div>';
   for(let i=1;i<d.ready;i++)track+='<div class="cc-step">'+i+'</div>';
-  track+='<div class="cc-step rdy">'+LU('check')+'<span>flip</span></div>';
+  track+='<div class="cc-step rdy">'+LU('flip-horizontal-2')+'</div>';   // Ready → flip the card to its brewed side
   return '<div class="ccard cc-front" style="--c:'+d.c+'">'
     +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span>'
       +'<span class="ctitle"><span class="cnm">'+d.nm+'</span><span class="ccost">'+c+'</span></span></div></div>'
