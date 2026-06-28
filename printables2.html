@@ -93,50 +93,35 @@
   .t-perk{position:absolute;top:.06in;right:.08in;text-align:right;font-size:.082in;font-style:italic;line-height:1.08;opacity:.96}
   .t-perk b{font-size:.16in;font-weight:900;font-style:normal}
   .t-perk svg,.t-perk .ic{width:.16in;height:.16in;vertical-align:-.03in}
-  /* ====== BUILDING tiles (v1.0 keystone — owned slot modifiers) ====== */
-  .tile.bld{justify-content:flex-start;text-shadow:0 1px 1px rgba(0,0,0,.4)}
-  .bld .b-top{display:flex;align-items:center;gap:.05in}
-  .bld .b-top .bigic{flex:0 0 auto} .bld .b-top .bigic svg,.bld .b-top .bigic .ic{width:.26in;height:.26in;stroke-width:1.7}
-  .bld .b-verb{margin-left:auto;font-size:.078in;font-variant:small-caps;font-weight:bold;letter-spacing:.4px;background:rgba(255,255,255,.24);border-radius:.03in;padding:.014in .05in}
-  .bld .b-nm{font-variant:small-caps;font-weight:bold;font-size:.13in;line-height:1.02;margin-top:.05in}
-  .bld .b-eff{font-size:.097in;line-height:1.16;margin-top:.04in;flex:1}
-  .bld .b-foot{display:flex;align-items:center;gap:.05in;margin-top:.02in}
-  .bld .b-tgt{display:inline-flex;align-items:center;justify-content:center;width:.24in;height:.24in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
-  .bld .b-tgt svg,.bld .b-tgt .ic{width:.14in;height:.14in;color:#23201c;stroke-width:2}
-  .bld .b-foot .gc{margin-left:auto;font-size:.13in} .bld .b-foot .gc svg,.bld .b-foot .gc .ic{width:.14in;height:.14in}
-  /* BUILDING BACK — the displaced/flipped face (Wild + developer ★); parks in an improvement slot */
-  .tile.bback{justify-content:center;align-items:center;text-align:center;gap:.05in}
-  .tile.bback .bb-ic svg,.tile.bback .bb-ic .ic{width:.42in;height:.42in;opacity:.95}
-  .tile.bback .bb-v{display:flex;align-items:center;gap:.03in;font-weight:900;font-size:.36in;line-height:1}
-  .tile.bback .bb-v svg,.tile.bback .bb-v .ic{width:.28in;height:.28in;color:#ffd24a}
-  .tile.bback .bb-l{font-variant:small-caps;font-size:.1in;opacity:.85;letter-spacing:.3px}
+  /* (v5: the old 1.25″ .tile.bld / .tile.bback building-tile styles were retired — buildings are now .bcard cards, below) */
   /* ====== printables2: BUILDING CARDS (2″, double-sided) — FRONT full-bleed building art + effect ·
      BACK the generic Wild + developer ★ (displaced face). Nests in the 2.5″ player-colour owner FRAME
      (the coloured edge showing around it = whose building it is). Same art-card grammar as the casks/ships. ====== */
-  .bcard{width:2in;height:2in;background:var(--c,#3f5c30);color:#fff;position:relative;overflow:hidden;
+  .bcard{width:2in;height:2in;background:var(--c,#3a3342);color:#fff;position:relative;overflow:hidden;
     display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}
   .bcard > *{position:relative;z-index:1}
   .bcard > .artbg{z-index:0}
   .bcard .bc-top{display:flex;align-items:flex-start;gap:.05in;padding:.1in .11in 0}
   .bcard .bc-ic{flex:0 0 auto} .bcard .bc-ic svg,.bcard .bc-ic .ic{width:.2in;height:.2in;stroke-width:1.8}
   .bcard .bc-nm{font-variant:small-caps;font-weight:bold;font-size:.155in;line-height:1.02;flex:1;margin-top:-.01in}
-  .bcard .bc-verb{font-size:.075in;font-variant:small-caps;font-weight:bold;letter-spacing:.4px;
-    background:rgba(255,255,255,.26);border-radius:.03in;padding:.014in .05in;flex:0 0 auto}
   .bcard .bc-foot{background:linear-gradient(to top,var(--c) 0%,var(--c) 52%,transparent 100%);
     padding:.26in .11in .1in;display:flex;flex-direction:column;gap:.055in}
   .bcard .bc-eff{font-size:.1in;line-height:1.17}
+  /* resource icons inside effect text — colour by type (gold grain / green hops), notation: +1 [icon] */
   .bcard .bc-eff .ic,.bcard .bc-eff svg{width:.12in;height:.12in;vertical-align:-.02in}
+  .bcard .bc-eff .g{color:#ffe08a} .bcard .bc-eff .h{color:#c4e69c}
   .bcard .bc-row{display:flex;align-items:center;gap:.05in}
   .bcard .bc-tgt{display:inline-flex;align-items:center;justify-content:center;width:.26in;height:.26in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
   .bcard .bc-tgt svg,.bcard .bc-tgt .ic{width:.15in;height:.15in;color:#23201c;stroke-width:2}
   .bcard .bc-row .gc{margin-left:auto;font-size:.14in} .bcard .bc-row .gc svg,.bcard .bc-row .gc .ic{width:.15in;height:.15in}
   .bcard .bc-top svg,.bcard .bc-top .ic{filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}
-  /* BUILDING CARD BACK — the displaced/flipped Wild + developer ★ face (one generic design for every building) */
-  .bcard.bc-back{justify-content:center;align-items:center;text-align:center;gap:.06in;background:#43504a}
-  .bcard.bc-back .bb-ic svg,.bcard.bc-back .bb-ic .ic{width:.5in;height:.5in;opacity:.95}
-  .bcard.bc-back .bb-v{display:flex;align-items:center;gap:.03in;font-weight:900;font-size:.42in;line-height:1}
-  .bcard.bc-back .bb-v svg,.bcard.bc-back .bb-v .ic{width:.32in;height:.32in;color:#ffd24a}
-  .bcard.bc-back .bb-l{font-variant:small-caps;font-size:.092in;opacity:.85;letter-spacing:.3px;max-width:1.7in;line-height:1.15}
+  /* BUILDING CARD BACK (v6) — the SAME building art + title as the front (muted), plus the Wild action + the
+     developer ★. Reuses the front's bc-top/bc-foot layout so a flipped card still reads as its building. */
+  .bcard.bc-bk .artbg{filter:grayscale(.55) brightness(.78)}
+  .bcard .bc-wild{font-size:.1in;line-height:1.15;flex:1}
+  .bcard .bc-sub{font-variant:small-caps;font-size:.092in;opacity:.85;letter-spacing:.3px}
+  .bcard .bc-dev{margin-left:auto;font-weight:900;font-size:.2in;display:inline-flex;align-items:center;gap:.02in}
+  .bcard .bc-dev svg,.bcard .bc-dev .ic{width:.2in;height:.2in;color:#ffd24a}
   /* ====== printables2: CASK CARDS (double-sided, 2×3) — FRONT buy/age (aging track) · BACK brewed (action) ====== */
   .ccard{width:2.5in;height:2.5in;background:var(--c,#777);color:#fff;position:relative;overflow:hidden;
     display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.5)}
@@ -701,7 +686,7 @@ const BUILDINGS=[
   {k:'gauger',    nm:'Gauger’s Office',      verb:'transform', tgt:'cask', ic:'ruler',        g:3, n:1, eff:'a cask from here delivers one gate higher'},
   {k:'workshop',  nm:'Brewmaster’s Workshop',verb:'transform', tgt:'cask', ic:'hammer',       g:3, n:1, eff:'a cask here upgrades its slot-action to Wild'},
   // EXPANSION "Specialty Beers" (Option A) thematic buildings — print with the kit; use only with that module
-  {k:'salthouse', nm:'Salt House',          verb:'value',     tgt:'cask', ic:'gem',           g:2, n:1, eff:'a cask from here: owner +1G +1H on delivery (the salt trade)'},
+  {k:'salthouse', nm:'Salt House',          verb:'value',     tgt:'cask', ic:'gem',           g:2, n:1, eff:'a cask from here: owner +1'+LU('wheat','g')+' +1'+LU('sprout','h')+' on delivery (the salt trade)'},
   {k:'smokekiln', nm:'Smoke Kiln',          verb:'transform', tgt:'cask', ic:'cloud',         g:2, n:1, eff:'a cask from here ships +1 quality (cap Q5)'},
   {k:'partigyle', nm:'Parti-Gyle Tun',      verb:'transform', tgt:'cask', ic:'split',         g:2, n:1, eff:'deploy a cask here → a free small Gruit to an open vessel'},
 ];
@@ -788,19 +773,25 @@ function caskTile(d,act){   // act = the drawn slot-action {ai,act} (v0.12); Gru
 // as the cask/ship cards). FRONT = full-bleed building art (art/building-<key>.png) behind a scrim, with the name
 // + verb badge (Value/Transform) up top and the effect + target glyph + goods cost in a colour foot. The card
 // nests in the 2.5″ player-colour owner FRAME, so the coloured edge around it marks ownership.
-function buildingCard(d){const tg=BTGT[d.tgt];const c='#3f5c30';   /* Buildings = GREEN family; the badge & art carry value/transform */
-  return '<div class="bcard" style="--c:'+c+'">'
+const BLD_FOOT='#3a3342';   // building card foot/base — dark purple-grey (v6; was green). Same on front & back.
+function buildingCard(d){const tg=BTGT[d.tgt];
+  return '<div class="bcard" style="--c:'+BLD_FOOT+'">'
   +artLayer('building-'+d.k+'.png')
-  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span><span class="bc-verb">'+(d.verb==='value'?'Value':'Transform')+'</span></div>'
+  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span></div>'
   +'<div class="bc-foot"><div class="bc-eff">'+d.eff+'</div>'
     +'<div class="bc-row"><span class="bc-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span>'+cost(d.g,0)+'</div></div>'
   +'</div>';}
-// BUILDING CARD BACK (v1.6) — the flipped face: when a RIVAL overbuilds your Building it returns to you flipped to
-// this WILD + developer ★ side and parks in an improvement slot (scores +3★ at game end). One generic design.
-function buildingBack(){return '<div class="bcard bc-back">'   /* printables2: 2.0in, mirrors the building card front */
-  +'<div class="bb-ic">'+LU('sparkles')+'</div>'
-  +'<div class="bb-v">+'+DEVELOP_PTS+LU('star')+'</div>'
-  +'<div class="bb-l">displaced Building · Wild on the Floor</div></div>';}
+// BUILDING CARD BACK (v6) — the flipped/displaced face: when a RIVAL overbuilds your Building it returns to you
+// flipped to its WILD side and parks in an improvement slot (scores +DEVELOP_PTS★ at game end). v6: shows the
+// SAME building art + title (muted) so it's identifiable, with the Wild action + the developer ★ in the foot.
+function buildingBack(d){
+  return '<div class="bcard bc-bk" style="--c:'+BLD_FOOT+'">'
+  +artLayer('building-'+d.k+'.png')
+  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span></div>'
+  +'<div class="bc-foot">'
+    +'<div class="bc-row"><span class="bc-tgt">'+LU('sparkles')+'</span><span class="bc-wild">a <b>Wild</b> action on your Floor</span></div>'
+    +'<div class="bc-row"><span class="bc-sub">displaced Building</span><span class="bc-dev">+'+DEVELOP_PTS+LU('star')+'</span></div>'
+  +'</div></div>';}
 // NEUTRAL destination-bound ship tile (v0.11): hull + capacity · printed destination + quality gate · commission 2 G
 function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
   let berths='';for(let i=1;i<=cap;i++)berths+='<div class="bn">'+i+'</div>';   // numbered load-order berths (v0.16)
@@ -1288,7 +1279,7 @@ function buildPages(){
     for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];fronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
   const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
   shipList.forEach(([hull,dest])=>fronts.push({fam:'Ships',kind:'ship',ship:true,html:shipCard(hull,dest)}));   // ships = full-bleed 2.5″ cards (v4)
-  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)fronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',kind:'bld',bld:true,html:buildingCard(d)});});   // building CARDS 2″ (nest in 2.5″ owner frames)
+  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)fronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',kind:'bld',bld:true,d:d,html:buildingCard(d)});});   // building CARDS 2″ (nest in 2.5″ owner frames)
   const FLBL='Cask · Ship · Building CARDS (fronts) · LARGE 22×15 (casks & ships 2.5″ · building cards 2″, nest in 2.5″ owner frames)';
   ['caskc','ship','bld'].forEach(k=>packRun(pages,'tiles',FLBL,k,fronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,TG));
   const frontPages=pages.filter(p=>p.section==='tiles');
@@ -1297,11 +1288,11 @@ function buildPages(){
   // BACKS = the HORIZONTAL MIRROR of each fronts sheet (flip LEFT↔RIGHT): a cask's brewed side behind each
   // cask card, a Wild (+★) behind each building, blank behind ships — flips into register under the fronts.
   (function(){let i=0;frontPages.forEach(fp=>{
-    const bp=newPage(pages,'tiles','BACKS · LARGE 22×15 (mirror — flip LEFT↔RIGHT): cask brewed-side · Wild + '+DEVELOP_PTS+'★ behind buildings · a ship at sea behind ships',TG);
+    const bp=newPage(pages,'tiles','BACKS · LARGE 22×15 (mirror — flip LEFT↔RIGHT): cask brewed-side · each building’s own art + title + Wild + '+DEVELOP_PTS+'★ · a ship at sea behind ships',TG);
     fp.items.forEach(it=>{const f=fronts[i++];const mx=+(TG.w-it.x-it.w).toFixed(4);
       addRectCut(bp,mx,it.y,it.w,it.h);                                            // full mirrored cut grid → registers the sandwich
       if(f.cask)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:caskCardBack(f.d,f.act)});
-      else if(f.bld)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:buildingBack()});
+      else if(f.bld)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:buildingBack(f.d)});
       else if(f.ship)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:shipBack()});});
     (famPages['Card/tile backs']=famPages['Card/tile backs']||new Set()).add(pages.indexOf(bp));
   });})();
@@ -1384,8 +1375,8 @@ function checklist(pages,famPages){
     +row(0,'<i>'+bTr.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ')+'</i>','','')
     +row(1,'Private improvements ('+IMPROVE.length+' designs — bought at the Cellar) — <b>SEPARATE sheet, 1.25″, to be reworked</b>',impN,pgRef(pages,famPages,'Improvements'))
     +row(0,'<i>'+IMPROVE.map(d=>d.nm+' ×'+d.n).join(' · ')+'</i>','','')
-    +row(1,'<b>Card/tile backs</b> — cask brewed-side (1 per cask card) + the building Wild + '+DEVELOP_PTS+'★ face (1 per Building); blank behind ships',backsN,pgRef(pages,famPages,'Card/tile backs'))
-    +row(0,'<i>on the single BACKS sheet (the HORIZONTAL MIRROR of the fronts): a Wild sits behind every building, blank elsewhere. Flip the backs sheet LEFT↔RIGHT &amp; glue under the fronts. Replaces the separate developer chits.</i>','','')
+    +row(1,'<b>Card/tile backs</b> — cask brewed-side (1 per cask card) + each Building’s displaced back (its own art + title + Wild + '+DEVELOP_PTS+'★, 1 per Building); blank behind ships',backsN,pgRef(pages,famPages,'Card/tile backs'))
+    +row(0,'<i>on the single BACKS sheet (the HORIZONTAL MIRROR of the fronts): each building’s displaced/Wild back sits behind its own front, blank behind casks/ships. Flip the backs sheet LEFT↔RIGHT &amp; glue under the fronts. Replaces the separate developer chits.</i>','','')
     +'<tr class="tot"><td></td><td>Tile total</td><td class="n">'+tileTotal+'</td><td></td></tr></table>';
   const aidNo=pages.filter(p=>p.section==='cards'&&p.label.indexOf('Player aid')===0).map(p=>p.no).sort((a,b)=>a-b);
   h+='<table><tr><th></th><th>Cards (cardstock, do NOT mount)</th><th>qty</th><th>sheet</th></tr>'
