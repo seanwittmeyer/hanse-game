@@ -687,10 +687,9 @@
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
     <option value="boards">Boards</option>
-    <option value="tiles">Tiles &amp; Cards</option>
-    <option value="imps">Improvements</option>
-    <option value="bits">Tokens &amp; Bits</option>
-    <option value="cards">Cards</option>
+    <option value="tiles">Cask &amp; ship cards</option>
+    <option value="bits">Tiles (buildings · improvements · tokens · rings)</option>
+    <option value="cards">Recipe / contract / aid cards</option>
     <option value="png">PNG Export</option>
     <option value="list">Checklist</option>
   </select>
@@ -1329,8 +1328,9 @@ function packRun(pages,section,label,kind,htmlList,famTag,famPages,geo){
   const G=geo||PG;
   const [nw,nh]=SIZE[kind];const w=+(nw*SCALE).toFixed(4),h=+(nh*SCALE).toFixed(4);   // footprint = native × SCALE
   const cols=Math.floor((G.w-0.4)/w);const x0=+( (G.w-cols*w)/2 ).toFixed(4);
-  // continue the previous run only if it's the SAME section AND the SAME page size (geo) — else start a fresh page
-  let pg=pages.length&&pages[pages.length-1].section===section&&(pages[pages.length-1].geo||PG)===G?pages[pages.length-1]:newPage(pages,section,label,G);
+  // continue the previous run only if it's the SAME section, SAME page size (geo), AND was itself packed by packRun
+  // (_kind set) — so a run never spills onto a mirror-BACKS page or a board page that shares the section.
+  let pg=pages.length&&pages[pages.length-1].section===section&&(pages[pages.length-1].geo||PG)===G&&pages[pages.length-1]._kind?pages[pages.length-1]:newPage(pages,section,label,G);
   let cx=pg._cx!==undefined?pg._cx:x0, cy=pg._cy!==undefined?pg._cy:G.y0, rh=pg._rh||0;
   if(pg._kind&&pg._kind!==kind){cx=x0;cy=cy+rh;rh=0;}   // a new size always starts a fresh row
   htmlList.forEach(html=>{
@@ -1413,8 +1413,8 @@ function buildPages(){
   // cut. BUILDINGS stay 2″ CARDS on the LARGE 22×15 laser sheet (they nest in 2.5″ owner frames). IMPROVEMENTS:
   // their own sheet (below). Each cask front records its data+action so the BACKS pass can print the brewed side.
   // helper: append a BACKS page mirroring each FRONT page LEFT↔RIGHT about that page's width (geo.w)
-  function mirrorBackPages(frontPages,meta,geo,label){let i=0;frontPages.forEach(fp=>{
-    const bp=newPage(pages,'tiles',label,geo);
+  function mirrorBackPages(frontPages,meta,geo,label,section){let i=0;frontPages.forEach(fp=>{
+    const bp=newPage(pages,section||'tiles',label,geo);
     fp.items.forEach(it=>{const f=meta[i++];const mx=+(geo.w-it.x-it.w).toFixed(4);
       addRectCut(bp,mx,it.y,it.w,it.h);                                            // mirrored cut grid → registers the duplex sandwich
       if(f.cask)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:caskCardBack(f.d,f.act)});
@@ -1440,31 +1440,31 @@ function buildPages(){
   tagFamilies(cardFrontPages,cardFronts);
   mirrorBackPages(cardFrontPages,cardFronts,CARD_GEO,'Cask &amp; Ship CARD BACKS · LETTER 8.5×11 (mirror — flip LEFT↔RIGHT): cask brewed-side · a ship at sea behind ships');
 
-  // --- BUILDING CARDS → LARGE 22×15 laser sheet (nest in 2.5″ owner frames) ---
+  // --- TILES (combined) → ONE Letter section: buildings (+ their Wild backs) · improvements · goods · workers ·
+  // ownership discs · building ownership rings, all packed together (was: buildings on a 22×15 laser sheet,
+  // improvements on their own sheet, tokens/frames separate). Now they share Letter sheets, densely. ---
+  const TLBL='Tiles — buildings · improvements · tokens · ownership rings (LETTER 8.5×11 · cut apart)';
+  // buildings are double-sided (front art / Wild + ★ back): packed first, then a matching mirrored BACKS run.
   const bldFronts=[];
   BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)bldFronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',kind:'bld',bld:true,d:d,html:buildingCard(d)});});
-  const BLBL='Building CARDS — fronts · LARGE 22×15 (2″, nest in 2.5″ owner frames)';
   const bStart=pages.length;
-  packRun(pages,'tiles',BLBL,'bld',bldFronts.map(f=>f.html),null,famPages,TG);
+  packRun(pages,'bits',TLBL,'bld',bldFronts.map(f=>f.html),null,famPages,PG);
   const bldFrontPages=pages.slice(bStart);
   tagFamilies(bldFrontPages,bldFronts);
-  mirrorBackPages(bldFrontPages,bldFronts,TG,'Building CARD BACKS · LARGE 22×15 (mirror — flip LEFT↔RIGHT): each building’s art + title + Wild + '+DEVELOP_PTS+'★');
-  // IMPROVEMENTS — SEPARATE sheet (a different size; to be reworked later). Kept 1.25″ on a letter sheet for now.
+  mirrorBackPages(bldFrontPages,bldFronts,PG,'Building TILE BACKS (mirror — flip LEFT↔RIGHT): each building’s art + Wild + '+DEVELOP_PTS+'★','bits');
+  // the rest are single-sided and flow onto the same Letter sheets after the building backs
   const imps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)imps.push(improveTile(d));});
-  packRun(pages,'imps','Private improvements — art cards (2×1in, building width · half height)','imp',imps,'Improvements',famPages);
-  // --- TOKENS & BITS ---
-  const BL='Tokens & markers — circles cut on the inner ring';
+  packRun(pages,'bits',TLBL,'imp',imps,'Improvements',famPages);
   const toks=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)toks.push(tok(d));});
-  packRun(pages,'bits',BL,'tok',toks,'Goods tokens',famPages);
+  packRun(pages,'bits',TLBL,'tok',toks,'Goods tokens',famPages);
   const wt=[];PLAYERS.forEach(p=>wt.push(wtok({ic:'user-round',c:p.c})));
   wt.push(wtok({ic:'anchor',nm:'first player (fixed)',c:'#b8860b'}));
   wt.push(wtok({ic:'hourglass',nm:'round marker',c:'#5b4a37'}));
-  packRun(pages,'bits',BL,'wtok',MODE==='proof'?wt.slice(0,3):wt,'Workers & markers',famPages);
+  packRun(pages,'bits',TLBL,'wtok',MODE==='proof'?wt.slice(0,3):wt,'Workers & markers',famPages);
   const ds=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(OWN_DISCS);i++)ds.push(disc(p.c));});
-  packRun(pages,'bits',BL,'disc',ds,'Ownership discs',famPages);
-  // BUILDING OWNERSHIP FRAMES (printables2) — per player: a 2.5″ colour base the 2″ Building tile sits on
+  packRun(pages,'bits',TLBL,'disc',ds,'Ownership discs',famPages);
   const frames=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(6);i++)frames.push(frameTile(p.c,p.nm));});
-  packRun(pages,'bits','Building ownership frames — a 2.5″ player-colour base; the 2″ Building tile sits on it','frame',frames,'Building frames',famPages);
+  packRun(pages,'bits',TLBL,'frame',frames,'Building frames',famPages);
   // --- RECIPE CARDS (cardstock — do not mount; they tuck under the board edge) ---
   const cards=[];const sets=MODE==='proof'?1:PLAYERS.length;
   for(let s=0;s<sets;s++)RECIPES.forEach(r=>cards.push(recipeCard(r)));
