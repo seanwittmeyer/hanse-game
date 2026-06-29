@@ -829,13 +829,19 @@ const OWN_DISCS=14;                  // ownership / presence discs per colour �
 // GEOMETRY — one coordinate system (inches) drives the HTML layout,
 // the cut overlay, and the SVG export, so the layers always align.
 //==================================================================
+// GLOBAL COMPONENT SCALE (printables2 v8) — every component renders at its NATIVE design size, then a render-time
+// transform scales it (and its footprint on the sheet) by SCALE. So one number shrinks the whole game uniformly:
+// cask/ship cards 2.5″→2.0″, buildings 2″→1.6″, improvements/boards/tokens all ×SCALE, and the sheets re-pack denser.
+const SCALE=0.8;   // 2.0 / 2.5 — the cask/ship card target is 2″
 const PG={w:10.4,h:7.9,y0:0.45,yMax:7.62};
-// CARD_GEO — a LETTER (8.5×11) sheet centred for 2.5″ double-sided cards: 4 cols × 3 rows = 12/sheet, 0.2″ margins
-// all around (0.2 + 4×2.5 + 0.2 = 10.4 wide · 0.2 + 3×2.5 + 0.2 = 7.9 tall). Used for the cask & ship card sheets.
-const CARD_GEO={w:10.4,h:7.9,y0:0.2,yMax:7.9};
+// CARD_GEO — a LETTER (8.5×11) sheet centred for the (scaled) 2″ double-sided cards: 5 cols × 3 rows = 15/sheet.
+// 5×2.0 = 10.0 wide (x0 .2) · 3×2.0 = 6.0 tall, centred top/bottom (y0 .95). packRun derives cols from the scaled footprint.
+const CARD_GEO={w:10.4,h:7.9,y0:0.95,yMax:7.9};
 const TILE_GEO={w:22,h:15,y0:0.45,yMax:14.72};   // LARGE-FORMAT tile sheet (laser cutter): all tiles on 22×15in (17 cols × 11 rows of 1.25in = 187 cap; 160 fronts fit on one)
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
-const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2.5,2.5],bld:[2,2],imp:[2,1],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // printables2 v3: casks & ships 2.5″ (match the slots) · buildings 2″ (nest in the 2.5″ owner rings) · improvements 1.25″ (separate)
+// NATIVE component sizes (in) — the design size each piece renders at; packRun scales the FOOTPRINT by SCALE and
+// the render wrapper scales the CONTENT to match. casks/ships 2.5″ · buildings 2″ · improvement cards 2×1″ · frames 2.5″.
+const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2.5,2.5],bld:[2,2],imp:[2,1],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
@@ -1321,7 +1327,8 @@ function newPage(pages,section,label,geo){const p={section,label,items:[],cuts:[
 function packRun(pages,section,label,kind,htmlList,famTag,famPages,geo){
   // pack same-size items in gapless rows; rows flow page to page (one unbroken grid). geo = page geometry (default PG; tiles use TILE_GEO)
   const G=geo||PG;
-  const [w,h]=SIZE[kind];const cols=Math.floor((G.w-0.4)/w);const x0=+( (G.w-cols*w)/2 ).toFixed(4);
+  const [nw,nh]=SIZE[kind];const w=+(nw*SCALE).toFixed(4),h=+(nh*SCALE).toFixed(4);   // footprint = native × SCALE
+  const cols=Math.floor((G.w-0.4)/w);const x0=+( (G.w-cols*w)/2 ).toFixed(4);
   // continue the previous run only if it's the SAME section AND the SAME page size (geo) — else start a fresh page
   let pg=pages.length&&pages[pages.length-1].section===section&&(pages[pages.length-1].geo||PG)===G?pages[pages.length-1]:newPage(pages,section,label,G);
   let cx=pg._cx!==undefined?pg._cx:x0, cy=pg._cy!==undefined?pg._cy:G.y0, rh=pg._rh||0;
@@ -1329,8 +1336,8 @@ function packRun(pages,section,label,kind,htmlList,famTag,famPages,geo){
   htmlList.forEach(html=>{
     if(cx+w>x0+cols*w+0.001){cx=x0;cy+=h;}
     if(cy+h>G.yMax){pg._cx=undefined;pg=newPage(pages,section,label,G);cx=x0;cy=G.y0;}
-    pg.items.push({x:cx,y:cy,w,h,html});
-    if(kind==='tok'||kind==='disc'||kind==='wtok')pg.circles.push({cx:cx+w/2,cy:cy+h/2,r:CUTR[kind]});
+    pg.items.push({x:cx,y:cy,w,h,nat:[nw,nh],html});   // nat = native size; the renderer scales content → footprint
+    if(kind==='tok'||kind==='disc'||kind==='wtok')pg.circles.push({cx:cx+w/2,cy:cy+h/2,r:+(CUTR[kind]*SCALE).toFixed(4)});
     else addRectCut(pg,cx,cy,w,h);
     if(famTag)(famPages[famTag]=famPages[famTag]||new Set()).add(pages.indexOf(pg));
     cx+=w;rh=h;
@@ -1348,8 +1355,9 @@ function addPolyCut(pg,pts){   // a closed polygon cut (the Wharf cross) — con
 function boardPage(pages,section,label,html,h){
   const H=h||7.3;   // player boards pass a shorter height → the board is compact, leaving page white space
   const pg=newPage(pages,section,label);
-  pg.items.push({x:0.3,y:0.32,w:9.8,h:H,html});
-  pg.rrect={x:0.3,y:0.32,w:9.8,h:H,r:0.12};
+  const sw=+(9.8*SCALE).toFixed(4),sh=+(H*SCALE).toFixed(4),x=+((PG.w-sw)/2).toFixed(4);   // scaled board, centred on the sheet
+  pg.items.push({x,y:0.32,w:sw,h:sh,nat:[9.8,H],html});
+  pg.rrect={x,y:0.32,w:sw,h:sh,r:+(0.12*SCALE).toFixed(4)};
 }
 // printables2: a LARGE-FORMAT (22×15) board sheet — the scaled Wharf (2.5in slots) is too big for letter.
 // Centred on the sheet, with room to drop other boards alongside it later (paper efficiency).
@@ -1366,12 +1374,14 @@ function wharfSupplySheet(pages){
   const W=WHARF_W, wx=0.4, wy=1.9, bl=CROSS_BLEED;
   // the board element extends OUTWARD by the bleed on every side (grid stays centered via the +bleed padding),
   // so the clipped art bleeds past the cut. The CUT itself is the original-size plus at (wx,wy) — unchanged.
-  pg.items.push({x:wx-bl,y:wy-bl,w:W+2*bl,h:W+2*bl,html:wharfCross()});
-  pg.cutPath=roundedPlusPath(CROSS_A,CROSS_B,CROSS_R,W,wx,wy).d;
+  const Ox=+(wx-bl).toFixed(4),Oy=+(wy-bl).toFixed(4),wn=W+2*bl;
+  pg.items.push({x:Ox,y:Oy,w:+(wn*SCALE).toFixed(4),h:+(wn*SCALE).toFixed(4),nat:[wn,wn],html:wharfCross()});
+  pg.cutPath=roundedPlusPath(CROSS_A,CROSS_B,CROSS_R,W,wx,wy).d;   // native cross outline; scaled to match the content via cutXform
+  pg.cutXform='matrix('+SCALE+',0,0,'+SCALE+','+(+(Ox*(1-SCALE)).toFixed(4))+','+(+(Oy*(1-SCALE)).toFixed(4))+')';
   // SUPPLY board (right) — the two market displays + the three shared tracks.
   const sx=12.2, sy=1.0, sw=9.3, sh=13.5;
-  pg.items.push({x:sx,y:sy,w:sw,h:sh,html:supplyBoard()});
-  pg.rrect={x:sx,y:sy,w:sw,h:sh,r:0.14};
+  pg.items.push({x:sx,y:sy,w:+(sw*SCALE).toFixed(4),h:+(sh*SCALE).toFixed(4),nat:[sw,sh],html:supplyBoard()});
+  pg.rrect={x:sx,y:sy,w:+(sw*SCALE).toFixed(4),h:+(sh*SCALE).toFixed(4),r:0.14};
 }
 // double-sided player aid: N IDENTICAL cards on a centred, SYMMETRIC 2×2 grid (full) or 1 centred (proof).
 // Because the cards are identical and the grid is symmetric on both axes, the FRONT and BACK sheets register
@@ -1407,9 +1417,9 @@ function buildPages(){
     const bp=newPage(pages,'tiles',label,geo);
     fp.items.forEach(it=>{const f=meta[i++];const mx=+(geo.w-it.x-it.w).toFixed(4);
       addRectCut(bp,mx,it.y,it.w,it.h);                                            // mirrored cut grid → registers the duplex sandwich
-      if(f.cask)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:caskCardBack(f.d,f.act)});
-      else if(f.bld)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:buildingBack(f.d)});
-      else if(f.ship)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:shipBack()});});
+      if(f.cask)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:caskCardBack(f.d,f.act)});
+      else if(f.bld)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:buildingBack(f.d)});
+      else if(f.ship)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:shipBack()});});
     (famPages['Card/tile backs']=famPages['Card/tile backs']||new Set()).add(pages.indexOf(bp));
   });}
   // tag each front family by pack order (item order across the pages == meta order)
@@ -1423,7 +1433,7 @@ function buildPages(){
     for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];cardFronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
   const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
   shipList.forEach(([hull,dest])=>cardFronts.push({fam:'Ships',kind:'ship',ship:true,html:shipCard(hull,dest)}));   // ships = full-bleed 2.5″ cards
-  const CLBL='Cask &amp; Ship CARDS — fronts · LETTER 8.5×11 · 2.5″, centred — print DOUBLE-SIDED, flip on the SHORT edge (LEFT↔RIGHT)';
+  const CLBL='Cask &amp; Ship CARDS — fronts · LETTER 8.5×11 · 2″, centred — print DOUBLE-SIDED, flip on the SHORT edge (LEFT↔RIGHT)';
   const cStart=pages.length;
   ['caskc','ship'].forEach(k=>packRun(pages,'tiles',CLBL,k,cardFronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,CARD_GEO));
   const cardFrontPages=pages.slice(cStart);
@@ -1468,9 +1478,9 @@ function buildPages(){
   pages.filter(p=>p.section==='cards').forEach(p=>p.papercut=true);
   // --- PLAYER BOARDS (moved to the BOTTOM of the page, just before the checklist) ---
   PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>{   // tight die-cut hugging the slot cluster (not a page-filling rect)
-    const W=9.64,H=5.25,X=+((PG.w-W)/2).toFixed(2),Y=0.55,pg=newPage(pages,'boards','Player board — '+p.nm);
-    pg.items.push({x:X,y:Y,w:W,h:H,html:pboard(p)});
-    pg.rrect={x:X,y:Y,w:W,h:H,r:0.18};
+    const W=9.64,H=5.25,sw=+(W*SCALE).toFixed(4),sh=+(H*SCALE).toFixed(4),X=+((PG.w-sw)/2).toFixed(2),Y=0.55,pg=newPage(pages,'boards','Player board — '+p.nm);
+    pg.items.push({x:X,y:Y,w:sw,h:sh,nat:[W,H],html:pboard(p)});
+    pg.rrect={x:X,y:Y,w:sw,h:sh,r:+(0.18*SCALE).toFixed(4)};
   });
   // --- CHECKLIST (always last; carries no cuts, so earlier sheets stay page-aligned) ---
   const pg=newPage(pages,'list','Component checklist');
@@ -1561,7 +1571,7 @@ function cutsSvg(pg){
   pg.cuts.forEach(c=>{s+='<line x1="'+c[0]+'" y1="'+c[1]+'" x2="'+c[2]+'" y2="'+c[3]+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';});
   pg.circles.forEach(c=>{s+='<circle cx="'+c.cx+'" cy="'+c.cy+'" r="'+c.r+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';});
   if(pg.rrect){const r=pg.rrect;s+='<rect x="'+r.x+'" y="'+r.y+'" width="'+r.w+'" height="'+r.h+'" rx="'+r.r+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';}
-  if(pg.cutPath)s+='<path d="'+pg.cutPath+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';
+  if(pg.cutPath)s+='<path d="'+pg.cutPath+'"'+(pg.cutXform?' transform="'+pg.cutXform+'"':'')+' stroke="'+cc+'" stroke-width="0.008" fill="none"/>';
   return s;}
 function overlaySvg(pg){const g=pg.geo||PG;
   return '<svg class="ov" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+g.w+' '+g.h+'">'
@@ -1717,7 +1727,7 @@ async function sheetPNG(no,btn){
   const host=document.createElement('div');host.style.cssText='position:fixed;left:-99999px;top:0';
   const page=document.createElement('div');page.className='page'+(geo.w>11?' lg':'');
   page.style.cssText='width:'+geo.w+'in;height:'+geo.h+'in;margin:0;box-shadow:none;background:#fff';
-  page.innerHTML=pg.items.map(it=>'<div class="it" style="left:'+it.x+'in;top:'+it.y+'in;width:'+it.w+'in;height:'+it.h+'in">'+it.html+'</div>').join('');
+  page.innerHTML=pg.items.map(itDiv).join('');
   host.appendChild(page);document.body.appendChild(host);
   try{
     if(window.lucide)lucide.createIcons();
@@ -1761,6 +1771,13 @@ function expHtml(){
   return h+'</div>';
 }
 
+// render one packed item: the .it box is the (scaled) footprint; the content renders at its NATIVE size inside a
+// transform:scale wrapper so the whole piece shrinks uniformly (composes with any per-component transform). nat
+// defaults to the footprint (scale 1) for unscaled items like the full-page checklist.
+function itDiv(it){const nat=it.nat||[it.w,it.h];const sc=+(it.w/nat[0]).toFixed(5);
+  const inner=(sc===1)?it.html
+    :'<div class="sc" style="transform:scale('+sc+');transform-origin:top left;width:'+nat[0]+'in;height:'+nat[1]+'in">'+it.html+'</div>';
+  return '<div class="it" style="left:'+it.x+'in;top:'+it.y+'in;width:'+it.w+'in;height:'+it.h+'in">'+inner+'</div>';}
 let PAGES=[];
 function render(){
   if(VIEW==='png'){document.getElementById('out').innerHTML=expHtml();if(window.lucide)lucide.createIcons();return;}
@@ -1770,7 +1787,7 @@ function render(){
   show.forEach(pg=>{
     const lg=(pg.geo||PG).w>11;   // large-format (22×15) tile sheets get the .lg class → the named @page size; Letter geos (≤11in wide) stay on the default letter @page
     h+='<div class="page'+(lg?' lg':'')+'" id="pg'+pg.no+'">';
-    pg.items.forEach(it=>{h+='<div class="it" style="left:'+it.x+'in;top:'+it.y+'in;width:'+it.w+'in;height:'+it.h+'in">'+it.html+'</div>';});
+    pg.items.forEach(it=>{h+=itDiv(it);});
     h+=overlaySvg(pg);
     h+='<span class="dl no-print">'
       +'<button onclick="sheetPNG('+pg.no+',this)" title="rasterize this sheet’s ART (no cut lines) at '+SHEET_DPI+' DPI">⬇ S'+pg.no+' art PNG</button>'
