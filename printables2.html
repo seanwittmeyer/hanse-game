@@ -830,6 +830,9 @@ const OWN_DISCS=14;                  // ownership / presence discs per colour �
 // the cut overlay, and the SVG export, so the layers always align.
 //==================================================================
 const PG={w:10.4,h:7.9,y0:0.45,yMax:7.62};
+// CARD_GEO — a LETTER (8.5×11) sheet centred for 2.5″ double-sided cards: 4 cols × 3 rows = 12/sheet, 0.2″ margins
+// all around (0.2 + 4×2.5 + 0.2 = 10.4 wide · 0.2 + 3×2.5 + 0.2 = 7.9 tall). Used for the cask & ship card sheets.
+const CARD_GEO={w:10.4,h:7.9,y0:0.2,yMax:7.9};
 const TILE_GEO={w:22,h:15,y0:0.45,yMax:14.72};   // LARGE-FORMAT tile sheet (laser cutter): all tiles on 22×15in (17 cols × 11 rows of 1.25in = 187 cap; 160 fronts fit on one)
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
 const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2.5,2.5],bld:[2,2],imp:[2,1],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // printables2 v3: casks & ships 2.5″ (match the slots) · buildings 2″ (nest in the 2.5″ owner rings) · improvements 1.25″ (separate)
@@ -1319,7 +1322,8 @@ function packRun(pages,section,label,kind,htmlList,famTag,famPages,geo){
   // pack same-size items in gapless rows; rows flow page to page (one unbroken grid). geo = page geometry (default PG; tiles use TILE_GEO)
   const G=geo||PG;
   const [w,h]=SIZE[kind];const cols=Math.floor((G.w-0.4)/w);const x0=+( (G.w-cols*w)/2 ).toFixed(4);
-  let pg=pages.length&&pages[pages.length-1].section===section?pages[pages.length-1]:newPage(pages,section,label,G);
+  // continue the previous run only if it's the SAME section AND the SAME page size (geo) — else start a fresh page
+  let pg=pages.length&&pages[pages.length-1].section===section&&(pages[pages.length-1].geo||PG)===G?pages[pages.length-1]:newPage(pages,section,label,G);
   let cx=pg._cx!==undefined?pg._cx:x0, cy=pg._cy!==undefined?pg._cy:G.y0, rh=pg._rh||0;
   if(pg._kind&&pg._kind!==kind){cx=x0;cy=cy+rh;rh=0;}   // a new size always starts a fresh row
   htmlList.forEach(html=>{
@@ -1386,38 +1390,55 @@ function buildPages(){
   boardPage(pages,'boards','Destinations board',dboard(),7.5);
   boardPage(pages,'boards','Trade Roads — Overland (back of Destinations)',olboard(),7.5);
   // (player brewery boards are generated LAST — at the bottom of the page — see below)
-  // --- TILES — LARGE FORMAT (22×15in) for the LASER CUTTER. ALL tiles fit on ONE FRONTS sheet (17×11 grid),
-  // with ONE matching BACKS sheet for double-sided registration:
-  //   • casks · ships · improvements want BLANK rears; BUILDINGS want a WILD (+★) rear.
-  //   • The BACKS sheet is the HORIZONTAL MIRROR of the fronts — a Wild only behind each building, blank elsewhere,
-  //     on the SAME full 1.25in cut grid. Flip the backs sheet LEFT↔RIGHT (around the tall edge) and glue it under
-  //     the fronts → a Wild lands behind every building, blanks behind the rest; cut the sandwich once.
+  // --- CARDS & TILES — split by where they print:
+  //   • CASKS & SHIPS  → LETTER (8.5×11), 2.5″ double-sided cards, for a HOME duplex printer (below).
+  //   • BUILDINGS      → LARGE 22×15 laser sheet, 2″ cards (nest in 2.5″ owner frames).
+  //   • IMPROVEMENTS   → their own sheet (further below).
+  // Every FRONTS sheet has a matching BACKS sheet that is its LEFT↔RIGHT mirror, so a duplex flip on the SHORT
+  // edge lands each card's back square on its front; then cut the sandwich once.
   const TG=TILE_GEO;
-  // printables2 v3: CASKS are double-sided CARDS (2×3); SHIPS & BUILDINGS stay 2″ tiles; IMPROVEMENTS move to
+  // printables2 v7: CASKS & SHIPS are double-sided 2.5″ CARDS printed on LETTER (8.5×11) sheets for HOME
+  // double-sided printing — a horizontally-centred grid whose BACKS sheet is the LEFT↔RIGHT mirror of the
+  // fronts, so a duplex flip on the SHORT edge (LEFT↔RIGHT) lands each card's back square on its front; then
+  // cut. BUILDINGS stay 2″ CARDS on the LARGE 22×15 laser sheet (they nest in 2.5″ owner frames). IMPROVEMENTS:
   // their own sheet (below). Each cask front records its data+action so the BACKS pass can print the brewed side.
-  const fronts=[];
-  // cask cards: Gruit all-Source (pinned); Q2+ cycle the draw-pool (Q4/Q5 include Wild) — the printed mix IS the brew-draw
-  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:(d.wild?CASK_POOL.concat([CASK_WILD]):CASK_POOL);
-    for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];fronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
-  const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
-  shipList.forEach(([hull,dest])=>fronts.push({fam:'Ships',kind:'ship',ship:true,html:shipCard(hull,dest)}));   // ships = full-bleed 2.5″ cards (v4)
-  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)fronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',kind:'bld',bld:true,d:d,html:buildingCard(d)});});   // building CARDS 2″ (nest in 2.5″ owner frames)
-  const FLBL='Cask · Ship · Building CARDS (fronts) · LARGE 22×15 (casks & ships 2.5″ · building cards 2″, nest in 2.5″ owner frames)';
-  ['caskc','ship','bld'].forEach(k=>packRun(pages,'tiles',FLBL,k,fronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,TG));
-  const frontPages=pages.filter(p=>p.section==='tiles');
-  // tag front families by pack order (item order across the tile pages == fronts order)
-  (function(){let i=0;frontPages.forEach(fp=>fp.items.forEach(()=>{const fam=fronts[i++].fam;(famPages[fam]=famPages[fam]||new Set()).add(pages.indexOf(fp));}));})();
-  // BACKS = the HORIZONTAL MIRROR of each fronts sheet (flip LEFT↔RIGHT): a cask's brewed side behind each
-  // cask card, a Wild (+★) behind each building, blank behind ships — flips into register under the fronts.
-  (function(){let i=0;frontPages.forEach(fp=>{
-    const bp=newPage(pages,'tiles','BACKS · LARGE 22×15 (mirror — flip LEFT↔RIGHT): cask brewed-side · each building’s own art + title + Wild + '+DEVELOP_PTS+'★ · a ship at sea behind ships',TG);
-    fp.items.forEach(it=>{const f=fronts[i++];const mx=+(TG.w-it.x-it.w).toFixed(4);
-      addRectCut(bp,mx,it.y,it.w,it.h);                                            // full mirrored cut grid → registers the sandwich
+  // helper: append a BACKS page mirroring each FRONT page LEFT↔RIGHT about that page's width (geo.w)
+  function mirrorBackPages(frontPages,meta,geo,label){let i=0;frontPages.forEach(fp=>{
+    const bp=newPage(pages,'tiles',label,geo);
+    fp.items.forEach(it=>{const f=meta[i++];const mx=+(geo.w-it.x-it.w).toFixed(4);
+      addRectCut(bp,mx,it.y,it.w,it.h);                                            // mirrored cut grid → registers the duplex sandwich
       if(f.cask)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:caskCardBack(f.d,f.act)});
       else if(f.bld)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:buildingBack(f.d)});
       else if(f.ship)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,html:shipBack()});});
     (famPages['Card/tile backs']=famPages['Card/tile backs']||new Set()).add(pages.indexOf(bp));
-  });})();
+  });}
+  // tag each front family by pack order (item order across the pages == meta order)
+  function tagFamilies(frontPages,meta){let i=0;frontPages.forEach(fp=>fp.items.forEach(()=>{
+    const fam=meta[i++].fam;(famPages[fam]=famPages[fam]||new Set()).add(pages.indexOf(fp));}));}
+
+  // --- CASK & SHIP CARDS → LETTER (8.5×11), double-sided (flip LEFT↔RIGHT) ---
+  // cask cards: Gruit all-Source (pinned); Q2+ cycle the draw-pool (Q4/Q5 include Wild) — the printed mix IS the brew-draw
+  const cardFronts=[];
+  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:(d.wild?CASK_POOL.concat([CASK_WILD]):CASK_POOL);
+    for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];cardFronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
+  const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
+  shipList.forEach(([hull,dest])=>cardFronts.push({fam:'Ships',kind:'ship',ship:true,html:shipCard(hull,dest)}));   // ships = full-bleed 2.5″ cards
+  const CLBL='Cask &amp; Ship CARDS — fronts · LETTER 8.5×11 · 2.5″, centred — print DOUBLE-SIDED, flip on the SHORT edge (LEFT↔RIGHT)';
+  const cStart=pages.length;
+  ['caskc','ship'].forEach(k=>packRun(pages,'tiles',CLBL,k,cardFronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,CARD_GEO));
+  const cardFrontPages=pages.slice(cStart);
+  tagFamilies(cardFrontPages,cardFronts);
+  mirrorBackPages(cardFrontPages,cardFronts,CARD_GEO,'Cask &amp; Ship CARD BACKS · LETTER 8.5×11 (mirror — flip LEFT↔RIGHT): cask brewed-side · a ship at sea behind ships');
+
+  // --- BUILDING CARDS → LARGE 22×15 laser sheet (nest in 2.5″ owner frames) ---
+  const bldFronts=[];
+  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)bldFronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',kind:'bld',bld:true,d:d,html:buildingCard(d)});});
+  const BLBL='Building CARDS — fronts · LARGE 22×15 (2″, nest in 2.5″ owner frames)';
+  const bStart=pages.length;
+  packRun(pages,'tiles',BLBL,'bld',bldFronts.map(f=>f.html),null,famPages,TG);
+  const bldFrontPages=pages.slice(bStart);
+  tagFamilies(bldFrontPages,bldFronts);
+  mirrorBackPages(bldFrontPages,bldFronts,TG,'Building CARD BACKS · LARGE 22×15 (mirror — flip LEFT↔RIGHT): each building’s art + title + Wild + '+DEVELOP_PTS+'★');
   // IMPROVEMENTS — SEPARATE sheet (a different size; to be reworked later). Kept 1.25″ on a letter sheet for now.
   const imps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)imps.push(improveTile(d));});
   packRun(pages,'imps','Private improvements — art cards (2×1in, building width · half height)','imp',imps,'Improvements',famPages);
@@ -1694,7 +1715,7 @@ async function sheetPNG(no,btn){
   const t0=btn&&btn.textContent;if(btn){btn.textContent='rendering…';btn.disabled=true;}
   const geo=pg.geo||PG,scale=SHEET_DPI/96;
   const host=document.createElement('div');host.style.cssText='position:fixed;left:-99999px;top:0';
-  const page=document.createElement('div');page.className='page'+(geo!==PG?' lg':'');
+  const page=document.createElement('div');page.className='page'+(geo.w>11?' lg':'');
   page.style.cssText='width:'+geo.w+'in;height:'+geo.h+'in;margin:0;box-shadow:none;background:#fff';
   page.innerHTML=pg.items.map(it=>'<div class="it" style="left:'+it.x+'in;top:'+it.y+'in;width:'+it.w+'in;height:'+it.h+'in">'+it.html+'</div>').join('');
   host.appendChild(page);document.body.appendChild(host);
@@ -1747,7 +1768,7 @@ function render(){
   const show=PAGES.filter(p=>VIEW==='all'||p.section===VIEW);
   let h='';
   show.forEach(pg=>{
-    const lg=(pg.geo||PG)!==PG;   // large-format (22×15) tile sheets get the .lg class → the named @page size
+    const lg=(pg.geo||PG).w>11;   // large-format (22×15) tile sheets get the .lg class → the named @page size; Letter geos (≤11in wide) stay on the default letter @page
     h+='<div class="page'+(lg?' lg':'')+'" id="pg'+pg.no+'">';
     pg.items.forEach(it=>{h+='<div class="it" style="left:'+it.x+'in;top:'+it.y+'in;width:'+it.w+'in;height:'+it.h+'in">'+it.html+'</div>';});
     h+=overlaySvg(pg);
