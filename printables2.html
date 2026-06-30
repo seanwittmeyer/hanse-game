@@ -423,7 +423,7 @@
   .pb2-fbox .fp{display:inline-flex;align-items:center;gap:.015in;font-weight:900;font-size:.105in;color:var(--vp)}
   .pb2-fbox .fp svg,.pb2-fbox .fp .ic{width:.12in;height:.12in}
   .pb2-fbox.z{opacity:.5} .pb2-fbox.z .fp{color:var(--ink2);font-weight:normal}
-  /* recipe — ONE slot: cards STACK here (cards are made to stack). Gruit/Hopped printed at the base. */
+  /* recipe — Gruit/Hopped printed at the TOP; acquired cards slide UP under them and stack in the zone below. */
   .pb2-recipe{width:1.78in;flex:0 0 auto;display:flex;flex-direction:column;gap:.05in;border:1.6px dashed var(--pc);border-radius:.06in;background:rgba(255,255,255,.35);padding:.06in}
   .pb2-recipe .rh{font-variant:small-caps;font-weight:bold;font-size:.095in;color:var(--pc);display:flex;align-items:center;gap:.03in}
   .pb2-recipe .rh svg,.pb2-recipe .rh .ic{width:.11in;height:.11in}
@@ -1096,12 +1096,12 @@ function pbFlight(){   // distinct beers delivered → (beers−1)², min 3: 1·
     +(r[1]?'<span class="fp">'+LU('star')+r[1]+'</span>':'<span class="fp">—</span>')+'</div>').join('');
   return '<div class="pb2-flight"><div class="fh">'+LU('layers')+'Flight</div>'
     +'<div class="fsub">distinct beers</div><div class="pb2-fboxes">'+boxes+'</div></div>';}
-function pbRecipe(){   // ONE slot — recipe cards STACK here; Gruit & Hopped (the starters) printed at the base
+function pbRecipe(){   // Gruit & Hopped (the starters) printed at the TOP; acquired recipe cards slide UP under them, stacking in the zone below
   const bar=(cc,L,nm,g,h)=>'<div class="pb2-rbar" style="background:'+cc+'"><span class="rq">'+LU(QI)+L+'</span>'
     +'<span class="rn">'+nm+'</span><span class="rc">'+cost(g,h)+'</span></div>';
   return '<div class="pb2-recipe"><div class="rh">'+LU('scroll-text')+'Recipes</div>'
-    +'<div class="pb2-rstack">'+LU('layers')+'stack cards</div>'
-    +'<div class="pb2-rbase">'+bar('#6f7a82',1,'Gruit',1,0)+bar('#a67c1e',2,'Hopped',1,1)+'</div></div>';}
+    +'<div class="pb2-rbase">'+bar('#6f7a82',1,'Gruit',1,0)+bar('#a67c1e',2,'Hopped',1,1)+'</div>'
+    +'<div class="pb2-rstack">'+LU('layers')+'slide cards under</div></div>';}
 function pboard(p){
   let blds='';for(let i=0;i<4;i++)blds+='<div class="pb2-slot pb2-bld"><span class="sn">Building /<br>Improvement</span>'
     +'<span class="si">'+LU('building-2')+LU('wrench')+'</span></div>';
