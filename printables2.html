@@ -978,9 +978,11 @@ function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?
 
 function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
   +'<div class="c-reach">reaches: '+r.reach+'</div>'
-  +'<div class="c-buy"><span class="lbl">'+LU('store')+' acquire at the Market</span>'
-    +'<span class="gc">'+cost(r.buy.g,r.buy.h)+'</span>'
-    +'<span>permanent — brewing never consumes it</span></div>'
+  +'<div class="c-buy">'+(r.start
+    ? '<span class="lbl">'+LU('home')+' starting recipe</span><span>printed on your brewery board — always available</span>'
+    : '<span class="lbl">'+LU('store')+' acquire at the Market</span>'
+      +'<span class="gc">'+cost(r.buy.g,r.buy.h)+'</span>'
+      +'<span>permanent — brewing never consumes it</span>')+'</div>'
   +'<div class="c-strip">'
     +'<div class="c-row"><span class="c-rung">'+LU(QI)+r.L+'</span><span class="c-nm">'+r.nm+'</span></div>'
     +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(r.g,r.h)+'</span></div>'
@@ -1652,6 +1654,11 @@ function exportItems(){
   // IMPROVEMENTS · RECIPES · CONTRACT · PLAYER AID
   IMPROVE.forEach(d=>it.push({type:'improvement',name:slug(d.nm),side:'front',w:2,h:1,html:improveTile(d)}));
   RECIPES.forEach(r=>it.push({type:'recipe',name:slug(r.nm),side:'front',w:1.85,h:2.55,html:recipeCard(r)}));
+  // Gruit & Hopped recipe cards — for the user's convenience in the PNG export (canon keeps them on the brewery
+  // board, so they're NOT on the printed recipe sheet; this just makes downloadable cards available).
+  [{nm:'Gruit', cc:'#8a949c', L:1, g:1,h:0, start:1, reach:'Q1 · the starting ale — every brewery begins with it'},
+   {nm:'Hopped',cc:'#c2922f', L:2, g:1,h:1, start:1, reach:'Q2 · the first export — hopped beer survives the voyage'}]
+    .forEach(r=>it.push({type:'recipe',name:slug(r.nm),side:'front',w:1.85,h:2.55,html:recipeCard(r)}));
   it.push({type:'contract',name:'charter',side:'front',w:1.85,h:2.55,html:contractCard()});
   it.push({type:'aid',name:'player-aid',side:'front',w:4.7,h:3.4,html:aidFront()});
   it.push({type:'aid',name:'player-aid',side:'back', w:4.7,h:3.4,html:aidBack()});
