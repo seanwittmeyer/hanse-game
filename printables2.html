@@ -452,45 +452,48 @@
   .kpanel{position:relative;flex:1;border:2.5px solid var(--kc);border-radius:.11in;background:var(--kt);display:flex;flex-direction:column;overflow:hidden;color:var(--ink)}
   .kpanel.hall{flex:.86}   /* the Hall is a touch narrower — no majority track */
   .ktitle{background:var(--kc);color:#fff;padding:.07in .1in;display:flex;justify-content:space-between;align-items:center;gap:.04in}
-  .kname{font-variant:small-caps;font-weight:bold;font-size:.24in;display:flex;align-items:center;gap:.05in;line-height:1;letter-spacing:.3px}
-  .kname svg,.kname .ic{width:.26in;height:.26in}
-  .kreq{font-size:.155in;font-weight:bold;background:rgba(255,255,255,.24);border-radius:.05in;padding:.02in .07in;display:flex;align-items:center;gap:.03in;flex:0 0 auto}
-  .kreq svg,.kreq .ic{width:.17in;height:.17in}
-  .kbody{flex:1;display:flex;flex-direction:column;gap:.08in;padding:.09in .08in .1in}
-  .krole{font-size:.12in;font-style:italic;color:var(--ink2);line-height:1.12;text-align:center;min-height:.26in}
-  /* a section card inside the panel: white, kontor-edged, with a small small-caps heading */
-  .ksect{flex:1;background:#fff;border:1.5px solid var(--kc);border-radius:.08in;padding:.07in .06in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.05in}
-  .ksh{font-variant:small-caps;font-weight:bold;font-size:.115in;color:var(--kc);letter-spacing:.4px;display:flex;align-items:center;gap:.04in;opacity:.92}
-  .ksh svg,.ksh .ic{width:.15in;height:.15in;opacity:.85}
-  .ksh .mt-t{color:var(--ink2);font-weight:normal;font-variant:normal;font-style:italic;font-size:.095in;margin-left:.03in}
-  .ksub{font-size:.098in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.1}
+  .kname{font-variant:small-caps;font-weight:bold;font-size:.2in;display:flex;align-items:center;gap:.05in;line-height:1;letter-spacing:.3px}
+  .kname svg,.kname .ic{width:.22in;height:.22in}
+  .kreq{font-size:.13in;font-weight:bold;background:rgba(255,255,255,.24);border-radius:.05in;padding:.018in .06in;display:flex;align-items:center;gap:.03in;flex:0 0 auto}
+  .kreq svg,.kreq .ic{width:.15in;height:.15in}
+  .kbody{flex:1;display:flex;flex-direction:column;gap:.07in;padding:.08in .07in .09in}
+  .krole{font-size:.1in;font-style:italic;color:var(--ink2);line-height:1.12;text-align:center;min-height:.22in}
+  /* a section card inside the panel: white, kontor-edged, with a small small-caps heading. value/benefit are
+     compact; the MAJORITY card grows so its presence zone fills the panel. */
+  .ksect{flex:1 1 0;background:#fff;border:1.5px solid var(--kc);border-radius:.07in;padding:.06in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in}
+  .ksh{font-variant:small-caps;font-weight:bold;font-size:.098in;color:var(--kc);letter-spacing:.4px;display:flex;align-items:center;gap:.035in;opacity:.92}
+  .ksh svg,.ksh .ic{width:.13in;height:.13in;opacity:.85}
+  .ksh .mt-t{color:var(--ink2);font-weight:normal;font-variant:normal;font-style:italic;font-size:.08in;margin-left:.03in}
+  .ksub{font-size:.085in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.08}
   .ksub b{color:var(--kc);font-style:normal}
-  /* per-cask value — big star number, or a by-quality mini-row for the Long Haul */
-  .kval{display:flex;align-items:center;justify-content:center;gap:.05in;font-weight:900;font-size:.66in;color:var(--kc);line-height:.92}
-  .kval svg,.kval .ic{width:.46in;height:.46in;color:var(--vp);stroke-width:2.5}
-  .kvscale{display:flex;gap:.13in;justify-content:center;align-items:flex-end}
-  .kvscale .qv{display:flex;flex-direction:column;align-items:center;gap:.02in}
-  .kvscale .qv .qq{font-size:.135in;font-variant:small-caps;font-weight:bold;color:var(--ink2)}
-  .kvscale .qv .qn{display:flex;align-items:center;gap:.03in;font-weight:900;font-size:.4in;color:var(--kc);line-height:1}
-  .kvscale .qv .qn svg,.kvscale .qv .qn .ic{width:.28in;height:.28in;color:var(--vp);stroke-width:2.6}
-  /* on-delivery benefit — big iconic + a one-line note */
-  .kben{display:flex;align-items:center;justify-content:center;gap:.06in;font-weight:900;font-size:.52in;color:var(--kc);line-height:1}
-  .kben svg,.kben .ic{width:.56in;height:.56in;color:var(--kc);stroke-width:2.1}
-  /* majority — the tiered payout + a presence count track in the kontor colour */
-  .kmaj{display:flex;align-items:center;justify-content:center;gap:.06in;font-weight:900;font-size:.42in;color:var(--kc);line-height:1}
-  .kmaj svg,.kmaj .ic{width:.28in;height:.28in;color:var(--vp);stroke-width:2.4}
-  .kmaj i{color:var(--ink2);font-style:normal;font-weight:normal;font-size:.26in}
-  .ptrack{display:flex;flex-wrap:wrap;gap:.03in;justify-content:center;margin-top:.03in}
-  .ptrack .pc{width:.3in;height:.3in;border:1.2px solid var(--kc);border-radius:.04in;display:flex;align-items:center;justify-content:center;font-size:.13in;color:var(--ink2);background:rgba(255,255,255,.75)}
-  .ptrack .pc.z{background:var(--kc);color:#fff;font-weight:bold}
+  /* per-cask value — a readable star number, or a by-quality mini-row for the Long Haul */
+  .kval{display:flex;align-items:center;justify-content:center;gap:.04in;font-weight:900;font-size:.44in;color:var(--kc);line-height:.92}
+  .kval svg,.kval .ic{width:.3in;height:.3in;color:var(--vp);stroke-width:2.5}
+  .kvscale{display:flex;gap:.1in;justify-content:center;align-items:flex-end}
+  .kvscale .qv{display:flex;flex-direction:column;align-items:center;gap:.015in}
+  .kvscale .qv .qq{font-size:.1in;font-variant:small-caps;font-weight:bold;color:var(--ink2)}
+  .kvscale .qv .qn{display:flex;align-items:center;gap:.025in;font-weight:900;font-size:.28in;color:var(--kc);line-height:1}
+  .kvscale .qv .qn svg,.kvscale .qv .qn .ic{width:.2in;height:.2in;color:var(--vp);stroke-width:2.6}
+  /* on-delivery benefit — iconic + a one-line note */
+  .kben{display:flex;align-items:center;justify-content:center;gap:.05in;font-weight:900;font-size:.36in;color:var(--kc);line-height:1}
+  .kben svg,.kben .ic{width:.42in;height:.42in;color:var(--kc);stroke-width:2.1}
+  /* majority — the tiered payout + a PRESENCE ZONE (pile your delivered-cask tokens; most leads) */
+  .ksect.maj{flex:1 1 auto}
+  .kmaj{display:flex;align-items:center;justify-content:center;gap:.05in;font-weight:900;font-size:.32in;color:var(--kc);line-height:1}
+  .kmaj svg,.kmaj .ic{width:.22in;height:.22in;color:var(--vp);stroke-width:2.4}
+  .kmaj i{color:var(--ink2);font-style:normal;font-weight:normal;font-size:.2in}
+  .kpz{flex:1 1 auto;align-self:stretch;min-height:.65in;margin-top:.03in;border:1.5px dashed var(--kc);border-radius:.06in;
+    background:rgba(0,0,0,.025);display:flex;align-items:center;justify-content:center;gap:.04in;color:var(--kc)}
+  .kpz svg,.kpz .ic{width:.14in;height:.14in;opacity:.7}
+  .kpz span{font-variant:small-caps;font-weight:bold;font-size:.1in;letter-spacing:.5px;opacity:.78}
   /* the Hall — a prestige ladder of Q → ★ rows */
-  .ksect.hall{flex:1;justify-content:center;gap:.09in}
-  .kladder{display:flex;flex-direction:column;gap:.09in;align-self:stretch;width:100%}
-  .kladder .lr{display:flex;align-items:center;justify-content:space-between;gap:.07in;font-weight:900;color:var(--kc);background:var(--kt);border:1.5px solid var(--kc);border-radius:.07in;padding:.06in .14in}
-  .kladder .lr .lq{font-size:.2in;font-variant:small-caps;color:var(--ink2)}
-  .kladder .lr .lv{display:flex;align-items:center;gap:.04in;font-size:.42in}
-  .kladder .lr svg,.kladder .lr .ic{width:.34in;height:.34in;color:var(--vp);stroke-width:2.5}
-  .hall-note{font-size:.11in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.16;margin-top:auto;padding-top:.06in}
+  .ksect.hall{flex:1 1 auto;justify-content:center;gap:.07in}
+  .kladder{display:flex;flex-direction:column;gap:.07in;align-self:stretch;width:100%}
+  .kladder .lr{display:flex;align-items:center;justify-content:space-between;gap:.06in;font-weight:900;color:var(--kc);background:var(--kt);border:1.5px solid var(--kc);border-radius:.06in;padding:.045in .11in}
+  .kladder .lr .lq{font-size:.15in;font-variant:small-caps;color:var(--ink2)}
+  .kladder .lr .lv{display:flex;align-items:center;gap:.035in;font-size:.3in}
+  .kladder .lr svg,.kladder .lr .ic{width:.24in;height:.24in;color:var(--vp);stroke-width:2.5}
+  .hall-note{font-size:.092in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.16;margin-top:auto;padding-top:.05in}
   .hall-note b{color:var(--kc);font-style:normal}
   /* ====================== MAIN BOARD — THE WHARF ====================== */
   .mboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--sea);border-radius:.12in;padding:.14in .16in;display:flex;flex-direction:column;gap:.04in;color:var(--ink)}
@@ -1117,27 +1120,24 @@ function kpanel(d,hall){
     // THE HALL — a prestige ladder (Q → ★), reached by the local Enshrine (no ship)
     const ladder='<div class="kladder">'+d.ladder.map(qv=>'<div class="lr"><span class="lq">Q'+qv[0]+'</span><span class="lv">'+LU(VP)+qv[1]+'</span></div>').join('')+'</div>';
     const body='<div class="ksect hall"><div class="ksh">'+LU('crown')+'prestige · by quality</div>'+ladder+'</div>'
-      +'<div class="hall-note">the local <b>Enshrine</b> — withdraw a <i>deployed</i> Q2+ cask into the Hall (no ship); it stays contestable on its slot until you do.</div>';
+      +'<div class="hall-note"><b>Enshrine</b> — a deployed Q2+ cask, no ship</div>';
     return '<div class="kpanel hall" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+title+'<div class="kbody"><div class="krole">'+d.role+'</div>'+body+'</div></div>';
   }
   // per-cask VALUE — flat star number, or a by-quality mini-row for Novgorod (scales with quality)
   const valSect = d.scale
     ? '<div class="ksect"><div class="ksh">'+LU(VP)+'value · by quality</div>'
-        +'<div class="kvscale">'+d.scale.map(qv=>'<div class="qv"><span class="qq">Q'+qv[0]+'</span><span class="qn">'+LU(VP)+qv[1]+'</span></div>').join('')+'</div>'
-        +'<div class="ksub">scales with quality <b>+</b> the value-Buildings shipped through</div></div>'
+        +'<div class="kvscale">'+d.scale.map(qv=>'<div class="qv"><span class="qq">Q'+qv[0]+'</span><span class="qn">'+LU(VP)+qv[1]+'</span></div>').join('')+'</div></div>'
     : '<div class="ksect"><div class="ksh">'+LU(VP)+'per-cask value</div>'
-        +'<div class="kval">'+LU(VP)+d.val+'</div>'
-        +'<div class="ksub">base <b>+</b> the value-Buildings shipped through</div></div>';
-  // ON-DELIVERY benefit — big iconic + a one-line note
+        +'<div class="kval">'+LU(VP)+d.val+'</div></div>';
+  // ON-DELIVERY benefit — iconic + a one-line note
   const benSect = '<div class="ksect"><div class="ksh">'+LU('gift')+'on delivery</div>'
         +'<div class="kben"><span>'+d.ben.n+'</span>'+LU(d.ben.ic)+'</div>'
         +'<div class="ksub">'+d.bnote+'</div></div>';
-  // MAJORITY — tiered payout + a presence count track (advance a disc per cask delivered here)
-  let pcells='';for(let i=0;i<=11;i++)pcells+='<div class="pc'+(i===0?' z':'')+'">'+i+'</div>';
-  const majSect = '<div class="ksect"><div class="ksh">'+LU('landmark')+'majority<span class="mt-t">1st / 2nd / 3rd</span></div>'
+  // MAJORITY — tiered payout + a PRESENCE ZONE (pile your delivered-cask tokens here; most leads)
+  const majSect = '<div class="ksect maj"><div class="ksh">'+LU('landmark')+'majority<span class="mt-t">1 · 2 · 3</span></div>'
         +'<div class="kmaj">'+LU(VP)+d.maj.map((m,i)=>i?'<i>/</i>'+m:m).join('')+'</div>'
-        +'<div class="ksub">most casks delivered · 2p = winner-take-all</div>'
-        +'<div class="ptrack">'+pcells+'</div></div>';
+        +'<div class="ksub">most delivered · 2p: top only</div>'
+        +'<div class="kpz">'+LU('circle')+'<span>presence</span></div></div>';
   return '<div class="kpanel" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+title+'<div class="kbody"><div class="krole">'+d.role+'</div>'+valSect+benSect+majSect+'</div></div>';}
 function dboard(){
   // the destinations board: the four kontore + the Hall, each a colourful card. (The brew supply lived here as
@@ -1370,7 +1370,7 @@ function addPolyCut(pg,pts){   // a closed polygon cut (the Wharf cross) — con
 // while keeping its tuned proportions. Used for the Destinations board + its Trade Roads back.
 function letterBoard(pages,section,label,html){
   const pg=newPage(pages,section,label);   // default PG geo = letter landscape (10.4×7.9 printable)
-  const NW=9.8,NH=7.5, sc=Math.min((PG.w-0.34)/NW,(PG.h-0.2)/NH);   // fill the sheet, ~.17in side / .1in top margin
+  const NW=9.8,NH=7.0, sc=Math.min((PG.w-0.34)/NW,(PG.h-0.2)/NH);   // fill the sheet width; ~.36in top/bottom margin
   const w=+(NW*sc).toFixed(3),h=+(NH*sc).toFixed(3),x=+((PG.w-w)/2).toFixed(3),y=+((PG.h-h)/2).toFixed(3);
   pg.items.push({x,y,w,h,nat:[NW,NH],html});   // nat = the design size → itDiv scales the whole board by sc
 }
