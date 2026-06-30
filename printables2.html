@@ -22,12 +22,11 @@
   .bar h1+.bsel{margin-left:auto}   /* push the controls to the right of the title */
   .note{font-size:.78rem;opacity:.85}
   /* ====== PAGE = US Letter LANDSCAPE (11×8.5in, .3in margins → 10.4×7.9in canvas) ====== */
-  @media print{ @page{size:letter landscape;margin:.3in} @page large{size:22in 15in;margin:0} @page tokensheet{size:22in 6in;margin:0} }
+  @media print{ @page{size:letter landscape;margin:.3in} @page large{size:22in 15in;margin:0} }
   .page{width:10.4in;height:7.9in;background:#fff;margin:14px auto;box-shadow:0 3px 14px rgba(0,0,0,.25);position:relative;overflow:hidden}
   /* LARGE-FORMAT tile sheets (laser cutter / plotter) — a named @page so they print full-bleed alongside the letter sheets.
-     .lg = the 22×15 sheets (boards + the tiles sheet); .lgt = the short 22×6 tokens sheet. */
+     .lg = the 22×15 sheets (boards + the tiles sheet). */
   .page.lg{width:22in;height:15in;page:large}
-  .page.lgt{width:22in;height:6in;page:tokensheet}
   @media print{.no-print{display:none} body{background:#fff} .page{margin:0;box-shadow:none;break-after:page}
     body.solo .page{display:none} body.solo .page.soloed{display:block}}
   /* every printed piece sits in an absolutely positioned .it box (inches) — layout is identical in
@@ -690,7 +689,7 @@
     <option value="all">All sheets</option>
     <option value="boards">Boards</option>
     <option value="tiles">Cask &amp; ship cards</option>
-    <option value="bits">Tiles &amp; tokens — plotter (buildings · improvements · tokens · rings)</option>
+    <option value="bits">Tiles — plotter (buildings · improvements · owner frames)</option>
     <option value="cards">Recipe / contract / aid cards</option>
     <option value="png">PNG Export</option>
     <option value="list">Checklist</option>
@@ -838,8 +837,7 @@ const PG={w:10.4,h:7.9,y0:0.45,yMax:7.62};
 // CARD_GEO — a LETTER (8.5×11) sheet centred for the (scaled) 2″ double-sided cards: 5 cols × 3 rows = 15/sheet.
 // 5×2.0 = 10.0 wide (x0 .2) · 3×2.0 = 6.0 tall, centred top/bottom (y0 .95). packRun derives cols from the scaled footprint.
 const CARD_GEO={w:10.4,h:7.9,y0:0.95,yMax:7.9};
-const TILE_GEO={w:22,h:15,y0:0.45,yMax:14.72};   // LARGE-FORMAT 22×15 plotter sheet — the boards AND the TILES sheet (buildings · improvements · owner frames).
-const TOKEN_GEO={w:22,h:6,y0:0.45,yMax:5.72};    // a short 22×6 plotter sheet for the small punch TOKENS (goods cubes · ownership discs) — no sense running a full sheet for them.
+const TILE_GEO={w:22,h:15,y0:0.45,yMax:14.72};   // LARGE-FORMAT 22×15 plotter sheet — the boards AND the TILES sheet (buildings · improvements · owner frames). Tokens tuck into the board sheet's empty corners (see packRegion).
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
 // NATIVE component sizes (in) — the design size each piece renders at; packRun scales the FOOTPRINT by SCALE and
 // the render wrapper scales the CONTENT to match. casks/ships 2.5″ · buildings 2″ · improvement cards 2×1″ · frames 2.5″.
@@ -1352,6 +1350,22 @@ function addRectCut(pg,x,y,w,h){  // dedupe shared edges → each grid line cuts
     if(!pg._segs)pg._segs={};if(pg._segs[k])return;pg._segs[k]=1;pg.cuts.push([x1,y1,x2,y2]);};
   seg(x,y,x+w,y);seg(x,y+h,x+w,y+h);seg(x,y,x,y+h);seg(x+w,y,x+w,y+h);
 }
+// pack same-size items (a single kind) into a sub-rectangle [x0,y0]→[x1,y1] of an EXISTING page — used to tuck the
+// small TOKENS into the empty corners of the main board sheet. Rows flow within the box; round tokens get a cut circle.
+function packRegion(pages,pg,kind,htmlList,x0,y0,x1,y1,famTag,famPages){
+  const [nw,nh]=SIZE[kind];const w=+(nw*SCALE).toFixed(4),h=+(nh*SCALE).toFixed(4);
+  const cols=Math.max(1,Math.floor((x1-x0)/w));let cx=x0,cy=y0,n=0,over=0;
+  htmlList.forEach(html=>{
+    if(n&&n%cols===0){cx=x0;cy=+(cy+h).toFixed(4);}
+    if(cy+h>y1+0.01)over++;
+    pg.items.push({x:+cx.toFixed(4),y:+cy.toFixed(4),w,h,nat:[nw,nh],html});
+    if(kind==='tok'||kind==='disc'||kind==='wtok')pg.circles.push({cx:+(cx+w/2).toFixed(4),cy:+(cy+h/2).toFixed(4),r:+(CUTR[kind]*SCALE).toFixed(4)});
+    else addRectCut(pg,cx,cy,w,h);
+    cx=+(cx+w).toFixed(4);n++;
+  });
+  if(famTag)(famPages[famTag]=famPages[famTag]||new Set()).add(pages.indexOf(pg));
+  if(over)console.warn('packRegion '+kind+': '+over+' items overflow the box bottom ('+y1+')');
+}
 function addPolyCut(pg,pts){   // a closed polygon cut (the Wharf cross) — consecutive vertices → cut segments
   for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length];pg.cuts.push([a[0],a[1],b[0],b[1]]);}
 }
@@ -1400,6 +1414,14 @@ function buildPages(){
   const pages=[],famPages={};
   // --- BOARDS ---
   wharfSupplySheet(pages);   // printables2: the Wharf (cross) + the Supply board on one 22×15 sheet
+  // CONSOLIDATE the small TOKENS onto that same main board sheet (page 1): ownership discs in the strip right of
+  // the Supply board, goods cubes in the band below the boards. This drops the plotter kit from 3 sheets
+  // (board + tiles + tokens) to 2 (board+tokens · tiles) — the tokens used barely a third of their own sheet.
+  const wpg=pages[pages.length-1];
+  const wdisc=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(OWN_DISCS);i++)wdisc.push(disc(p.c));});
+  packRegion(pages,wpg,'disc',wdisc,19.75,1.0,21.9,11.6,'Ownership discs',famPages);   // right of the Supply board
+  const wtok=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wtok.push(tok(d));});
+  packRegion(pages,wpg,'tok',wtok,0.4,11.9,21.9,14.95,'Goods tokens',famPages);        // the band below the boards
   boardPage(pages,'boards','Destinations board',dboard(),7.5);
   boardPage(pages,'boards','Trade Roads — Overland (back of Destinations)',olboard(),7.5);
   // (player brewery boards are generated LAST — at the bottom of the page — see below)
@@ -1410,7 +1432,8 @@ function buildPages(){
   //   • TILES    → a 22×15 PLOTTER sheet (24″ roll, SINGLE-SIDED): buildings (+ their Wild/★ back tiles),
   //                improvements, building owner frames. No duplex mirror (a plotter is one-sided): building backs
   //                are their own tiles; cut both and mount each front to its back around a chipboard core.
-  //   • TOKENS   → a short 22×6 PLOTTER sheet: goods cubes + ownership discs.
+  //   • TOKENS   → tucked into the empty corners of the BOARD sheet (page 1): goods cubes in the band below the
+  //                boards, ownership discs in the strip right of the Supply board (see packRegion in --- BOARDS ---).
   // CASKS & SHIPS are double-sided 2″ CARDS on LETTER (8.5×11) for HOME double-sided printing — a centred grid
   // whose BACKS sheet is the LEFT↔RIGHT mirror of the fronts, so a duplex flip on the SHORT edge lands each
   // card's back on its front; then cut. Each cask front records its data+action so the BACKS pass prints the
@@ -1444,15 +1467,13 @@ function buildPages(){
   tagFamilies(cardFrontPages,cardFronts);
   mirrorBackPages(cardFrontPages,cardFronts,CARD_GEO,'Cask &amp; Ship CARD BACKS · LETTER 8.5×11 (mirror — flip LEFT↔RIGHT): cask brewed-side · a ship at sea behind ships');
 
-  // --- TILES & TOKENS → TWO plotter sheets (24″ roll, single-sided), split by what they are:
-  //   • TILES  → one 22×15 sheet: buildings (front art + their Wild/★ back) · improvements · building owner frames.
-  //     A plotter prints SINGLE-SIDED, so building backs are laid as their own tiles (cut both, mount each building
-  //     front to its Wild/★ back around a chipboard core) — not a duplex mirror (that's for the home CARDS above).
-  //     The owner frames run 2.25″ (a hair under the 2.5″ default) so the whole tiles set fits one 22×15 sheet.
-  //   • TOKENS → a short 22×6 sheet: goods cubes · ownership discs (no sense running a full sheet for the small bits).
-  //   Worker pawns + the first-player/round markers aren't printed (use any pawns/tokens). Casks/ships/recipes → Letter. ---
+  // --- TILES → one 22×15 PLOTTER sheet (24″ roll, single-sided): buildings (front art + their Wild/★ back) ·
+  // improvements · building owner frames. A plotter prints SINGLE-SIDED, so building backs are laid as their own
+  // tiles (cut both, mount each building front to its Wild/★ back around a chipboard core) — not a duplex mirror
+  // (that's for the home CARDS above). The owner frames run 2.25″ (a hair under the 2.5″ default) so the whole
+  // tiles set fits one 22×15 sheet. The small TOKENS (goods · discs) are tucked onto the BOARD sheet above; the
+  // worker pawns + first-player/round markers aren't printed (use any pawns/tokens). Casks/ships/recipes → Letter. ---
   const TLBL_TILE='Tiles — buildings · improvements · building owner frames (22×15 PLOTTER · single-sided · cut apart)';
-  const TLBL_TOK='Tokens — goods cubes · ownership discs (22×6 PLOTTER · cut apart)';
   const bldFronts=[];
   BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)bldFronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',html:buildingCard(d)});});
   const bStart=pages.length;
@@ -1464,11 +1485,6 @@ function buildPages(){
   packRun(pages,'bits',TLBL_TILE,'imp',imps,'Improvements',famPages,TILE_GEO);
   const frames=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(6);i++)frames.push(frameTile(p.c,p.nm));});
   packRun(pages,'bits',TLBL_TILE,'frame',frames,'Building frames',famPages,TILE_GEO);
-  // TOKENS → their own short sheet (a different geo → packRun starts a fresh page)
-  const toks=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)toks.push(tok(d));});
-  packRun(pages,'bits',TLBL_TOK,'tok',toks,'Goods tokens',famPages,TOKEN_GEO);
-  const ds=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(OWN_DISCS);i++)ds.push(disc(p.c));});
-  packRun(pages,'bits',TLBL_TOK,'disc',ds,'Ownership discs',famPages,TOKEN_GEO);
   // --- RECIPE CARDS (cardstock — do not mount; they tuck under the board edge) ---
   const cards=[];const sets=MODE==='proof'?1:PLAYERS.length;
   for(let s=0;s<sets;s++)RECIPES.forEach(r=>cards.push(recipeCard(r)));
@@ -1729,7 +1745,7 @@ async function sheetPNG(no,btn){
   const t0=btn&&btn.textContent;if(btn){btn.textContent='rendering…';btn.disabled=true;}
   const geo=pg.geo||PG,scale=SHEET_DPI/96;
   const host=document.createElement('div');host.style.cssText='position:fixed;left:-99999px;top:0';
-  const page=document.createElement('div');page.className='page'+(geo.w>11?(geo.h<8?' lgt':' lg'):'');
+  const page=document.createElement('div');page.className='page'+(geo.w>11?' lg':'');
   page.style.cssText='width:'+geo.w+'in;height:'+geo.h+'in;margin:0;box-shadow:none;background:#fff';
   page.innerHTML=pg.items.map(itDiv).join('');
   host.appendChild(page);document.body.appendChild(host);
@@ -1789,8 +1805,8 @@ function render(){
   const show=PAGES.filter(p=>VIEW==='all'||p.section===VIEW);
   let h='';
   show.forEach(pg=>{
-    const G=pg.geo||PG;const lgCls=G.w>11?(G.h<8?'lgt':'lg'):'';   // large-format sheets get a named @page: .lg = 22×15 (boards + tiles) · .lgt = the short 22×6 tokens sheet · Letter geos stay on the default letter @page
-    h+='<div class="page'+(lgCls?' '+lgCls:'')+'" id="pg'+pg.no+'">';
+    const lg=(pg.geo||PG).w>11;   // large-format 22×15 sheets get the .lg named @page; Letter geos stay on the default letter @page
+    h+='<div class="page'+(lg?' lg':'')+'" id="pg'+pg.no+'">';
     pg.items.forEach(it=>{h+=itDiv(it);});
     h+=overlaySvg(pg);
     h+='<span class="dl no-print">'
