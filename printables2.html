@@ -1385,8 +1385,8 @@ function boardPageLg(pages,section,label,html,w,h){
   pg.rrect={x,y,w,h,r:0.14};
 }
 // printables2: the Wharf (a CROSS) + the Supply board, side by side on ONE large 22×15 sheet.
-function wharfSupplySheet(pages){
-  const G=TILE_GEO;const pg=newPage(pages,'boards','Main board — the Wharf (cross) + Supply board',G);
+function wharfBoardSheet(pages){
+  const G=TILE_GEO;const pg=newPage(pages,'boards','Main board — the Wharf (cross)',G);
   // WHARF cross — the 4×4 grid (2.5in cells + .3in gaps) is 10.9in; +.3in outline padding → an 11.5in board.
   const W=WHARF_W, wx=0.4, wy=1.9, bl=CROSS_BLEED;
   // the board element extends OUTWARD by the bleed on every side (grid stays centered via the +bleed padding),
@@ -1395,10 +1395,14 @@ function wharfSupplySheet(pages){
   pg.items.push({x:Ox,y:Oy,w:+(wn*SCALE).toFixed(4),h:+(wn*SCALE).toFixed(4),nat:[wn,wn],html:wharfCross()});
   pg.cutPath=roundedPlusPath(CROSS_A,CROSS_B,CROSS_R,W,wx,wy).d;   // native cross outline; scaled to match the content via cutXform
   pg.cutXform='matrix('+SCALE+',0,0,'+SCALE+','+(+(Ox*(1-SCALE)).toFixed(4))+','+(+(Oy*(1-SCALE)).toFixed(4))+')';
-  // SUPPLY board (right) — the two market displays + the three shared tracks.
-  const sx=12.2, sy=1.0, sw=9.3, sh=13.5;
-  pg.items.push({x:sx,y:sy,w:+(sw*SCALE).toFixed(4),h:+(sh*SCALE).toFixed(4),nat:[sw,sh],html:supplyBoard()});
-  pg.rrect={x:sx,y:sy,w:+(sw*SCALE).toFixed(4),h:+(sh*SCALE).toFixed(4),r:0.14};
+  return pg;
+}
+// the SUPPLY & TRACKS board → its OWN sheet (work-in-progress; kept off the main board sheet for now), centred.
+function supplyBoardSheet(pages){
+  const G=TILE_GEO;const pg=newPage(pages,'boards','Supply &amp; Tracks board (work in progress)',G);
+  const w=+(9.3*SCALE).toFixed(4),h=+(13.5*SCALE).toFixed(4),x=+((G.w-w)/2).toFixed(3),y=+((G.h-h)/2).toFixed(3);
+  pg.items.push({x,y,w,h,nat:[9.3,13.5],html:supplyBoard()});
+  pg.rrect={x,y,w,h,r:0.14};
 }
 // double-sided player aid: N IDENTICAL cards on a centred, SYMMETRIC 2×2 grid (full) or 1 centred (proof).
 // Because the cards are identical and the grid is symmetric on both axes, the FRONT and BACK sheets register
@@ -1413,27 +1417,27 @@ function aidSheet(pages,label,faceHtml){
 function buildPages(){
   const pages=[],famPages={};
   // --- BOARDS ---
-  wharfSupplySheet(pages);   // printables2: the Wharf (cross) + the Supply board on one 22×15 sheet
-  // CONSOLIDATE the small TOKENS onto that same main board sheet (page 1): ownership discs in the strip right of
-  // the Supply board, goods cubes in the band below the boards. This drops the plotter kit from 3 sheets
-  // (board + tiles + tokens) to 2 (board+tokens · tiles) — the tokens used barely a third of their own sheet.
+  wharfBoardSheet(pages);   // the Wharf (cross) — its own 22×15 sheet (the Supply board moved to its own sheet, below)
+  // tuck the single-sided TOKENS into the open right side of the Wharf sheet (no separate token sheet needed):
+  // goods cubes upper, ownership discs below — both single-sided, so no back sheet.
   const wpg=pages[pages.length-1];
-  const wdisc=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(OWN_DISCS);i++)wdisc.push(disc(p.c));});
-  packRegion(pages,wpg,'disc',wdisc,19.75,1.0,21.9,11.6,'Ownership discs',famPages);   // right of the Supply board
   const wtok=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wtok.push(tok(d));});
-  packRegion(pages,wpg,'tok',wtok,0.4,11.9,21.9,14.95,'Goods tokens',famPages);        // the band below the boards
+  packRegion(pages,wpg,'tok',wtok,10.0,1.0,21.9,7.4,'Goods tokens',famPages);
+  const wdisc=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(OWN_DISCS);i++)wdisc.push(disc(p.c));});
+  packRegion(pages,wpg,'disc',wdisc,10.0,7.0,21.9,11.5,'Ownership discs',famPages);
+  supplyBoardSheet(pages);   // the Supply & Tracks board — its own sheet (work in progress; not finalized)
   boardPage(pages,'boards','Destinations board',dboard(),7.5);
   boardPage(pages,'boards','Trade Roads — Overland (back of Destinations)',olboard(),7.5);
   // (player brewery boards are generated LAST — at the bottom of the page — see below)
-  // --- CARDS vs TILES — split by HOW they print (the user's two production paths):
+  // --- CARDS vs TILES — split by HOW they print, but BOTH are duplex (a FRONT sheet + a matching reversed BACK
+  // sheet — fronts and backs never share a sheet):
   //   • CARDS    → LETTER (8.5×11) on a HOME duplex printer: casks & ships (2″ double-sided), recipes,
   //                contracts, player aids. Each FRONTS sheet has a matching BACKS sheet that is its LEFT↔RIGHT
   //                mirror, so a duplex flip on the SHORT edge lands each card's back square on its front; cut once.
-  //   • TILES    → a 22×15 PLOTTER sheet (24″ roll, SINGLE-SIDED): buildings (+ their Wild/★ back tiles),
-  //                improvements, building owner frames. No duplex mirror (a plotter is one-sided): building backs
-  //                are their own tiles; cut both and mount each front to its back around a chipboard core.
-  //   • TOKENS   → tucked into the empty corners of the BOARD sheet (page 1): goods cubes in the band below the
-  //                boards, ownership discs in the strip right of the Supply board (see packRegion in --- BOARDS ---).
+  //   • TILES    → a 22×15 PLOTTER FRONT sheet + its LEFT↔RIGHT MIRRORED back sheet: buildings are double-sided
+  //                (front art / Wild + ★ back) → the back sheet carries the Wild/★ backs. Improvements & owner
+  //                frames are single-sided (they ride the front sheet, blank back). Flip/mount, then cut the sandwich.
+  //   • TOKENS   → single-sided; tucked into the open right side of the Wharf BOARD sheet (see packRegion in BOARDS).
   // CASKS & SHIPS are double-sided 2″ CARDS on LETTER (8.5×11) for HOME double-sided printing — a centred grid
   // whose BACKS sheet is the LEFT↔RIGHT mirror of the fronts, so a duplex flip on the SHORT edge lands each
   // card's back on its front; then cut. Each cask front records its data+action so the BACKS pass prints the
@@ -1467,24 +1471,25 @@ function buildPages(){
   tagFamilies(cardFrontPages,cardFronts);
   mirrorBackPages(cardFrontPages,cardFronts,CARD_GEO,'Cask &amp; Ship CARD BACKS · LETTER 8.5×11 (mirror — flip LEFT↔RIGHT): cask brewed-side · a ship at sea behind ships');
 
-  // --- TILES → one 22×15 PLOTTER sheet (24″ roll, single-sided): buildings (front art + their Wild/★ back) ·
-  // improvements · building owner frames. A plotter prints SINGLE-SIDED, so building backs are laid as their own
-  // tiles (cut both, mount each building front to its Wild/★ back around a chipboard core) — not a duplex mirror
-  // (that's for the home CARDS above). The owner frames run 2.25″ (a hair under the 2.5″ default) so the whole
-  // tiles set fits one 22×15 sheet. The small TOKENS (goods · discs) are tucked onto the BOARD sheet above; the
-  // worker pawns + first-player/round markers aren't printed (use any pawns/tokens). Casks/ships/recipes → Letter. ---
-  const TLBL_TILE='Tiles — buildings · improvements · building owner frames (22×15 PLOTTER · single-sided · cut apart)';
-  const bldFronts=[];
-  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)bldFronts.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',html:buildingCard(d)});});
-  const bStart=pages.length;
-  packRun(pages,'bits',TLBL_TILE,'bld',bldFronts.map(f=>f.html),null,famPages,TILE_GEO);
-  tagFamilies(pages.slice(bStart),bldFronts);   // capped at meta.length → only the front tiles get the Value/Transform family
-  const bldBacks=[];BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)bldBacks.push(buildingBack(d));});
-  packRun(pages,'bits',TLBL_TILE,'bld',bldBacks,'Building backs (Wild + '+DEVELOP_PTS+'★)',famPages,TILE_GEO);
-  const imps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)imps.push(improveTile(d));});
-  packRun(pages,'bits',TLBL_TILE,'imp',imps,'Improvements',famPages,TILE_GEO);
-  const frames=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(6);i++)frames.push(frameTile(p.c,p.nm));});
-  packRun(pages,'bits',TLBL_TILE,'frame',frames,'Building frames',famPages,TILE_GEO);
+  // --- TILES → a 22×15 PLOTTER front sheet + its LEFT↔RIGHT MIRRORED back sheet (24″ roll). Building tiles are
+  // DOUBLE-SIDED (front art / Wild + ★ back), so — exactly like the cask/ship cards above — the FRONTS go on one
+  // sheet and a separate MIRRORED back sheet carries each building's Wild/★ back; flip the sheet on the SHORT edge
+  // (or mount front-to-back around chipboard) and every back lands square on its front, then cut. Improvements &
+  // owner frames are SINGLE-SIDED — they ride the front sheet and get a blank back. (Fronts and backs must NOT
+  // share a sheet — every sheet has its matching reversed back.) The small single-sided TOKENS (goods · discs) are
+  // tucked onto the Wharf board sheet above; worker pawns + first-player/round markers aren't printed. Cards → Letter. ---
+  const TLBL_TILE='Tile FRONTS — buildings · improvements · building owner frames (22×15 PLOTTER · cut apart)';
+  const bldFrontHtml=[],tileMeta=[];
+  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++){bldFrontHtml.push(buildingCard(d));tileMeta.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',bld:true,d:d});}});
+  const imps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++){imps.push(improveTile(d));tileMeta.push({fam:'Improvements'});}});   // single-sided → blank back
+  const frames=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(6);i++){frames.push(frameTile(p.c,p.nm));tileMeta.push({fam:'Building frames'});}});   // single-sided → blank back
+  const tStart=pages.length;
+  packRun(pages,'bits',TLBL_TILE,'bld',bldFrontHtml,null,famPages,TILE_GEO);
+  packRun(pages,'bits',TLBL_TILE,'imp',imps,null,famPages,TILE_GEO);
+  packRun(pages,'bits',TLBL_TILE,'frame',frames,null,famPages,TILE_GEO);
+  const tileFrontPages=pages.slice(tStart);
+  tagFamilies(tileFrontPages,tileMeta);   // tag each front family (Value/Transform buildings · Improvements · Building frames) in pack order
+  mirrorBackPages(tileFrontPages,tileMeta,TILE_GEO,'Tile BACKS (mirror — flip LEFT↔RIGHT): each building’s Wild + '+DEVELOP_PTS+'★ · improvement &amp; frame backs blank','bits');
   // --- RECIPE CARDS (cardstock — do not mount; they tuck under the board edge) ---
   const cards=[];const sets=MODE==='proof'?1:PLAYERS.length;
   for(let s=0;s<sets;s++)RECIPES.forEach(r=>cards.push(recipeCard(r)));
