@@ -438,62 +438,66 @@
   .pb2-rbar .rc{display:inline-flex;align-items:center;gap:.025in;font-weight:bold;font-size:.092in}
   .pb2-rbar .rc .gc .ic,.pb2-rbar .rc .gc svg{width:.1in;height:.1in}
   /* ====================== DESTINATIONS BOARD ====================== */
-  .dboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--gold);border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.1in;color:var(--ink)}
-  .dboard svg,.dboard .ic{stroke-width:1.8}
-  .db-head{display:flex;align-items:baseline;gap:.16in;border-bottom:2px solid var(--gold);padding-bottom:.05in}
-  .db-head h2{margin:0;font-variant:small-caps;color:var(--red);font-size:.28in;letter-spacing:.5px;display:flex;align-items:center;gap:.06in}
-  .db-head h2 svg,.db-head h2 .ic{width:.26in;height:.26in}
-  .db-head .legend{font-size:.092in;color:var(--ink2);margin-left:auto;display:flex;gap:.14in;align-items:center}
+  .dboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--gold);border-radius:.14in;padding:.16in;display:flex;flex-direction:column;gap:.12in;color:var(--ink);box-sizing:border-box}
+  .dboard svg,.dboard .ic{stroke-width:1.9}
+  .db-head{display:flex;align-items:baseline;gap:.14in;border-bottom:2.5px solid var(--gold);padding-bottom:.06in}
+  .db-head h2{margin:0;font-variant:small-caps;color:var(--red);font-size:.30in;letter-spacing:.5px;display:flex;align-items:center;gap:.06in}
+  .db-head h2 svg,.db-head h2 .ic{width:.28in;height:.28in}
+  .db-head .dsub{font-style:italic;color:var(--ink2);font-size:.1in}
+  .db-head .legend{font-size:.088in;color:var(--ink2);margin-left:auto;display:flex;gap:.13in;align-items:center}
   .db-head .legend b{color:var(--ink)} .db-head .legend svg,.db-head .legend .ic{width:.14in;height:.14in;vertical-align:-.02in}
   .vp{color:var(--vp)} .ql{color:var(--ink)}
+  /* each destination = a colourful vertical card, washed in its kontor colour */
   .kontor-row{display:flex;gap:.1in;flex:1;min-height:0}
-  .kpanel{flex:1;border:2px solid var(--kc);border-radius:.1in;background:#fff;display:flex;flex-direction:column;overflow:hidden;color:var(--ink)}
-  .ktitle{background:var(--kc);color:#fff;padding:.06in .1in;display:flex;justify-content:space-between;align-items:center}
-  .kname{font-variant:small-caps;font-weight:bold;font-size:.16in;display:flex;align-items:center;gap:.04in;line-height:1}
-  .kname svg,.kname .ic{width:.18in;height:.18in}
-  .kreq{font-size:.11in;font-weight:bold;background:rgba(255,255,255,.22);border-radius:.04in;padding:.01in .06in;display:flex;align-items:center;gap:.03in}
+  .kpanel{position:relative;flex:1;border:2.5px solid var(--kc);border-radius:.11in;background:var(--kt);display:flex;flex-direction:column;overflow:hidden;color:var(--ink)}
+  .kpanel.hall{flex:.86}   /* the Hall is a touch narrower — no majority track */
+  .ktitle{background:var(--kc);color:#fff;padding:.07in .1in;display:flex;justify-content:space-between;align-items:center;gap:.04in}
+  .kname{font-variant:small-caps;font-weight:bold;font-size:.17in;display:flex;align-items:center;gap:.04in;line-height:1;letter-spacing:.3px}
+  .kname svg,.kname .ic{width:.19in;height:.19in}
+  .kreq{font-size:.115in;font-weight:bold;background:rgba(255,255,255,.24);border-radius:.05in;padding:.015in .06in;display:flex;align-items:center;gap:.025in;flex:0 0 auto}
   .kreq svg,.kreq .ic{width:.13in;height:.13in}
-  .kbody{flex:1;display:flex;flex-direction:column;gap:.05in;padding:.08in .1in}
-  .krole{font-size:.088in;font-style:italic;color:var(--ink2);line-height:1.05;min-height:.18in;text-align:center}
-  .kval{text-align:center;font-weight:900;color:var(--kc);font-size:.36in;line-height:.95;display:flex;align-items:center;justify-content:center;gap:.04in}
-  .kval.sc{font-size:.24in} .kval.sc .per{font-size:.072in}
-  .kval svg,.kval .ic{width:.24in;height:.24in;color:var(--vp);stroke-width:2.4}
-  .kval.sc svg,.kval.sc .ic{width:.18in;height:.18in}
-  .kval .per{display:block;font-size:.078in;font-weight:bold;color:var(--ink2);font-variant:small-caps;line-height:1.02}
-  .kval .per svg,.kval .per .ic{width:.1in;height:.1in;color:var(--ink2);stroke-width:2;vertical-align:-.01in}
-  /* "+ value-Buildings" reminder — the variable value lives in what you author */
-  .kplus{display:flex;align-items:center;justify-content:center;gap:.03in;font-size:.08in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.05}
-  .kplus svg,.kplus .ic{width:.11in;height:.11in;opacity:.7;flex:0 0 auto}
-  /* benefit — BIG and iconic: a "+2 [coins]" main row + a small note of what it does */
-  .kben{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.015in;color:var(--kc);background:rgba(0,0,0,.05);border-radius:.06in;padding:.035in .06in}
-  .kben .kbmain{display:flex;align-items:center;gap:.04in;font-weight:900;font-size:.26in}
-  .kben .kbmain svg,.kben .kbmain .ic{width:.28in;height:.28in;flex:0 0 auto;color:var(--kc);stroke-width:2.1}
-  .kben .kbnote{font-size:.073in;font-weight:normal;font-variant:normal;color:var(--ink2);font-style:italic;line-height:1.04;text-align:center}
-  /* Hall prestige ladder — a vertical STACK of Q→★ (legible, a touch larger) */
-  .kladder{display:flex;flex-direction:column;gap:.06in;align-items:center;padding:.06in 0}
-  .kladder .lr{display:flex;align-items:center;gap:.05in;font-weight:900;font-size:.26in;color:var(--kc)}
-  .kladder .lr .lq{font-size:.13in;font-variant:small-caps;color:var(--ink2);min-width:.32in;text-align:right}
-  .kladder .lr svg,.kladder .lr .ic{width:.24in;height:.24in;color:var(--vp);stroke-width:2.3}
-  .kmaj{font-size:.15in;font-weight:bold;display:flex;align-items:center;justify-content:center;gap:.04in;color:var(--kc)}
-  .kmaj svg,.kmaj .ic{width:.15in;height:.15in;color:var(--vp)}
-  /* the delivered-cask stack space is TILE-TRUE: exactly 1.25in, the cask tile's footprint */
-  .kslot{align-self:center;width:1.25in;height:1.25in;border:1.5px dashed var(--kc);border-radius:.06in;background:rgba(0,0,0,.03);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--kc);font-size:.082in;text-align:center;gap:.02in;line-height:1.05}
-  .kslot svg,.kslot .ic{width:.22in;height:.22in;opacity:.5}
-  .ptrack{display:flex;border:1px solid var(--kc);border-radius:.04in;overflow:hidden}
-  .ptrack.pt1{margin-top:.02in}
-  .ptrack .pc{flex:1;min-width:.18in;height:.24in;border-right:1px solid rgba(0,0,0,.14);display:flex;align-items:center;justify-content:center;font-size:.08in;color:var(--ink2);background:rgba(255,255,255,.5)}
-  .ptrack .pc:last-child{border-right:none} .ptrack .pc.z{background:rgba(0,0,0,.08);font-weight:bold}
+  .kbody{flex:1;display:flex;flex-direction:column;gap:.06in;padding:.07in .07in .08in}
+  .krole{font-size:.086in;font-style:italic;color:var(--ink2);line-height:1.1;text-align:center;min-height:.2in}
+  /* a section card inside the panel: white, kontor-edged, with a small small-caps heading */
+  .ksect{flex:1;background:#fff;border:1.5px solid var(--kc);border-radius:.07in;padding:.045in .05in .05in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in}
+  .ksh{font-variant:small-caps;font-weight:bold;font-size:.082in;color:var(--kc);letter-spacing:.4px;display:flex;align-items:center;gap:.03in;opacity:.92}
+  .ksh svg,.ksh .ic{width:.105in;height:.105in;opacity:.85}
+  .ksh .mt-t{color:var(--ink2);font-weight:normal;font-variant:normal;font-style:italic;font-size:.07in;margin-left:.02in}
+  .ksub{font-size:.07in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.06}
+  .ksub b{color:var(--kc);font-style:normal}
+  /* per-cask value — big star number, or a by-quality mini-row for the Long Haul */
+  .kval{display:flex;align-items:center;justify-content:center;gap:.04in;font-weight:900;font-size:.36in;color:var(--kc);line-height:.92}
+  .kval svg,.kval .ic{width:.25in;height:.25in;color:var(--vp);stroke-width:2.5}
+  .kvscale{display:flex;gap:.07in;justify-content:center;align-items:flex-end}
+  .kvscale .qv{display:flex;flex-direction:column;align-items:center;gap:.01in}
+  .kvscale .qv .qq{font-size:.082in;font-variant:small-caps;font-weight:bold;color:var(--ink2)}
+  .kvscale .qv .qn{display:flex;align-items:center;gap:.02in;font-weight:900;font-size:.2in;color:var(--kc);line-height:1}
+  .kvscale .qv .qn svg,.kvscale .qv .qn .ic{width:.15in;height:.15in;color:var(--vp);stroke-width:2.6}
+  /* on-delivery benefit — big iconic + a one-line note */
+  .kben{display:flex;align-items:center;justify-content:center;gap:.05in;font-weight:900;font-size:.24in;color:var(--kc);line-height:1}
+  .kben svg,.kben .ic{width:.3in;height:.3in;color:var(--kc);stroke-width:2.1}
+  /* majority — the tiered payout + a presence count track in the kontor colour */
+  .kmaj{display:flex;align-items:center;justify-content:center;gap:.05in;font-weight:900;font-size:.22in;color:var(--kc);line-height:1}
+  .kmaj svg,.kmaj .ic{width:.16in;height:.16in;color:var(--vp);stroke-width:2.4}
+  .kmaj i{color:var(--ink2);font-style:normal;font-weight:normal;font-size:.13in}
+  .ptrack{display:flex;flex-wrap:wrap;gap:.022in;justify-content:center;margin-top:.01in}
+  .ptrack .pc{width:.165in;height:.165in;border:1px solid var(--kc);border-radius:.03in;display:flex;align-items:center;justify-content:center;font-size:.07in;color:var(--ink2);background:rgba(255,255,255,.75)}
+  .ptrack .pc.z{background:var(--kc);color:#fff;font-weight:bold}
+  /* the Hall — a prestige ladder of Q → ★ rows */
+  .ksect.hall{flex:1;justify-content:center;gap:.06in}
+  .kladder{display:flex;flex-direction:column;gap:.055in;align-self:stretch;width:100%}
+  .kladder .lr{display:flex;align-items:center;justify-content:space-between;gap:.06in;font-weight:900;color:var(--kc);background:var(--kt);border:1.5px solid var(--kc);border-radius:.06in;padding:.03in .09in}
+  .kladder .lr .lq{font-size:.13in;font-variant:small-caps;color:var(--ink2)}
+  .kladder .lr .lv{display:flex;align-items:center;gap:.03in;font-size:.22in}
+  .kladder .lr svg,.kladder .lr .ic{width:.2in;height:.2in;color:var(--vp);stroke-width:2.5}
+  .hall-note{font-size:.078in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.12;margin-top:auto;padding-top:.04in}
+  .hall-note b{color:var(--kc);font-style:normal}
+  /* cask supply strip (kept — the brew pool) */
   .db-bottom{display:flex;flex-direction:column;gap:.08in}
   .sbox{border:2px solid var(--gold);border-radius:.1in;background:#fff;padding:.08in;display:flex;flex-direction:column;gap:.05in}
   .sbox.disp{flex:0 0 auto}
   .sb-h{font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.13in;display:flex;align-items:center;gap:.05in;border-bottom:1px solid var(--gold);padding-bottom:.02in}
   .sb-h svg,.sb-h .ic{width:.15in;height:.15in} .sb-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;color:var(--ink2);margin-left:auto}
-  /* Market spaces are TILE-TRUE: exactly 1.25in squares, minimal gaps */
-  .uprow{display:flex;gap:.05in}
-  .uslot{flex:0 0 auto;width:1.25in;height:1.25in;border:1.5px solid var(--gold);border-radius:.05in;background:rgba(184,134,11,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;color:#8a6408;font-size:.092in;text-align:center}
-  .uslot svg,.uslot .ic{width:.26in;height:.26in;opacity:.6}
-  .uslot.supply{border-style:dashed;background:repeating-linear-gradient(45deg,rgba(0,0,0,.04) 0 .08in,transparent .08in .16in)}
-  .uslot.supply.faceup{border-style:solid;background:rgba(184,134,11,.08)}
   /* ====================== MAIN BOARD — THE WHARF ====================== */
   .mboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--sea);border-radius:.12in;padding:.14in .16in;display:flex;flex-direction:column;gap:.04in;color:var(--ink)}
   .mboard svg,.mboard .ic{stroke-width:1.8}
@@ -815,12 +819,12 @@ const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',
 // v1.1 destinations — four DISTINCT lanes. Kontor per-cask value is SMALL & flat (base) — the real value is
 // the value-Buildings a cask ships through. Novgorod's value SCALES with quality (Q3·2 / Q4·4 / Q5·6).
 const DESTS=[
-  {nm:'Bruges',  kc:'#274b5c', req:1, val:'1',     scale:false, maj:[4,2,0], role:'The Hub · the economy',            ben:{n:'+2',ic:'coins'},     bnote:'2 goods (liquidity)'},
-  {nm:'London',  kc:'#b8860b', req:2, val:'1',     scale:false, maj:[5,3,1], role:'The Steelyard · the engine',       ben:{n:'+', ic:'building-2'}, bnote:'take a Building (to hand)'},
-  {nm:'Bergen',  kc:'#4a6b3a', req:2, val:'1',     scale:false, maj:[9,5,2], role:'Bryggen · the rich majority',      ben:{n:'+', ic:'map-pin'},    bnote:'a free Reach (+1 presence, where delivered)'},
-  {nm:'Novgorod',kc:'#7c2128', req:3, val:'2·4·6', scale:true,  maj:[8,5,2], role:'The Long Haul · the quality climb', ben:{n:'+', ic:'hourglass'},  bnote:'refine a maturing cask (+1 age)'},
+  {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, val:'1',                maj:[4,2,0], role:'The Hub — the economy',          ben:{n:'+2',ic:'coins'},      bnote:'goods (liquidity)'},
+  {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, val:'1',                maj:[5,3,1], role:'The Steelyard — the engine',     ben:{n:'+1',ic:'building-2'}, bnote:'take a Building (to hand)'},
+  {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, val:'1',                maj:[9,5,2], role:'Bryggen — the rich majority',    ben:{n:'+1',ic:'map-pin'},    bnote:'a free Reach (+1 presence)'},
+  {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, scale:[[3,2],[4,4],[5,6]], maj:[8,5,2], role:'The Long Haul — the quality climb', ben:{n:'+1',ic:'hourglass'},  bnote:'refine a maturing cask (+1 age)'},
 ];
-const HALL={nm:'The Hall', kc:'#5b3a8e', req:2, role:'Prestige · local Enshrine (no ship)', ladder:[[2,3],[3,5],[4,7],[5,9]]};
+const HALL={nm:'The Hall', kc:'#5b3a8e', tint:'#efeaf6', req:2, role:'Prestige — the local Enshrine (no ship)', ladder:[[2,3],[3,5],[4,7],[5,9]]};
 const SAILED={2:6,3:10,4:13};        // Sailed-Ships end clock per player count ⚙ (RULES §8 — 2–4p; v1.3 trimmed 7/11/14→6/10/13)
 const MAX_ROUND=25;                  // round ceiling ⚙ — top of the 12–25-round target band
 const OWN_DISCS=14;                  // ownership / presence discs per colour ⚙ — rides a cask → plants as kontor presence (majorities); also marks who owns a building on a slot
@@ -1128,20 +1132,34 @@ function pboard(p){
   +'</div>';}
 
 // ---- destinations board ----
-function kpanel(d,hall){const kc=d.kc;
-  let t1='',t2='';for(let i=0;i<=6;i++)t1+='<div class="pc'+(i===0?' z':'')+'">'+i+'</div>';
-  for(let i=7;i<=13;i++)t2+='<div class="pc">'+i+'</div>';
-  const body = hall
-    ? '<div class="kladder">'+d.ladder.map(qv=>'<div class="lr"><span class="lq">Q'+qv[0]+'</span>'+LU(VP)+qv[1]+'</div>').join('')+'</div>'
-      +'<div class="kslot">'+LU('beer')+'enshrined<br>(stack)</div>'
-    : '<div class="kval'+(d.scale?' sc':'')+'">'+LU(VP)+d.val+'<span class="per">'+(d.scale?'per cask · by Q':'base + '+LU('building-2'))+'</span></div>'
-      +'<div class="kben"><div class="kbmain"><span>'+d.ben.n+'</span>'+LU(d.ben.ic)+'</div><span class="kbnote">'+d.bnote+'</span></div>'
-      +'<div class="kslot">'+LU('beer')+'delivered<br>casks (stack)</div>'
-      +'<div class="kmaj">'+LU(VP)+d.maj.join(' / ')+'</div>'
-      +'<div class="ptrack pt1">'+t1+'</div><div class="ptrack">'+t2+'</div>';
-  return '<div class="kpanel" style="--kc:'+kc+'">'
-    +'<div class="ktitle"><span class="kname">'+LU(hall?'crown':'landmark')+d.nm+'</span><span class="kreq">'+LU(QI)+d.req+'+</span></div>'
-    +'<div class="kbody"><div class="krole">'+d.role+'</div>'+body+'</div></div>';}
+function kpanel(d,hall){
+  const title='<div class="ktitle"><span class="kname">'+LU(hall?'crown':'landmark')+d.nm+'</span><span class="kreq">'+LU(QI)+d.req+'+</span></div>';
+  if(hall){
+    // THE HALL — a prestige ladder (Q → ★), reached by the local Enshrine (no ship)
+    const ladder='<div class="kladder">'+d.ladder.map(qv=>'<div class="lr"><span class="lq">Q'+qv[0]+'</span><span class="lv">'+LU(VP)+qv[1]+'</span></div>').join('')+'</div>';
+    const body='<div class="ksect hall"><div class="ksh">'+LU('crown')+'prestige · by quality</div>'+ladder+'</div>'
+      +'<div class="hall-note">the local <b>Enshrine</b> — withdraw a <i>deployed</i> Q2+ cask into the Hall (no ship); it stays contestable on its slot until you do.</div>';
+    return '<div class="kpanel hall" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+title+'<div class="kbody"><div class="krole">'+d.role+'</div>'+body+'</div></div>';
+  }
+  // per-cask VALUE — flat star number, or a by-quality mini-row for Novgorod (scales with quality)
+  const valSect = d.scale
+    ? '<div class="ksect"><div class="ksh">'+LU(VP)+'value · by quality</div>'
+        +'<div class="kvscale">'+d.scale.map(qv=>'<div class="qv"><span class="qq">Q'+qv[0]+'</span><span class="qn">'+LU(VP)+qv[1]+'</span></div>').join('')+'</div>'
+        +'<div class="ksub">scales with quality <b>+</b> the value-Buildings shipped through</div></div>'
+    : '<div class="ksect"><div class="ksh">'+LU(VP)+'per-cask value</div>'
+        +'<div class="kval">'+LU(VP)+d.val+'</div>'
+        +'<div class="ksub">base <b>+</b> the value-Buildings shipped through</div></div>';
+  // ON-DELIVERY benefit — big iconic + a one-line note
+  const benSect = '<div class="ksect"><div class="ksh">'+LU('gift')+'on delivery</div>'
+        +'<div class="kben"><span>'+d.ben.n+'</span>'+LU(d.ben.ic)+'</div>'
+        +'<div class="ksub">'+d.bnote+'</div></div>';
+  // MAJORITY — tiered payout + a presence count track (advance a disc per cask delivered here)
+  let pcells='';for(let i=0;i<=11;i++)pcells+='<div class="pc'+(i===0?' z':'')+'">'+i+'</div>';
+  const majSect = '<div class="ksect"><div class="ksh">'+LU('landmark')+'majority<span class="mt-t">1st / 2nd / 3rd</span></div>'
+        +'<div class="kmaj">'+LU(VP)+d.maj.map((m,i)=>i?'<i>/</i>'+m:m).join('')+'</div>'
+        +'<div class="ksub">most casks delivered · 2p = winner-take-all</div>'
+        +'<div class="ptrack">'+pcells+'</div></div>';
+  return '<div class="kpanel" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+title+'<div class="kbody"><div class="krole">'+d.role+'</div>'+valSect+benSect+majSect+'</div></div>';}
 function dboard(){
   // the brew supply (6 stacks): Gruit + Hopped (always) · 3 generic slots for the dealt exports · Jopenbier (if the capstone is on)
   const cstack=d=>{
@@ -1155,7 +1173,8 @@ function dboard(){
   const SUPPLY=[CASKS[0],CASKS[1],{gen:1},{gen:1},{gen:1},Object.assign({opt:1},JOP)];
   return '<div class="dboard">'
     +'<div class="db-head"><h2>'+LU('landmark')+'Destinations</h2>'
-      +'<span class="legend"><span><b>'+LU(QI,'ql')+'</b> min cask quality</span><span><b>'+LU(VP,'vp')+'</b> per-cask value <i>(+ value-Buildings shipped through)</i></span><span><b>'+LU('landmark','vp')+' 1/2/3</b> end-game majority</span></span></div>'
+      +'<span class="dsub">where you ship — the four kontore (value &amp; majorities) · the Hall (prestige)</span>'
+      +'<span class="legend"><span><b>'+LU(QI,'ql')+'</b> min cask quality</span><span><b>'+LU(VP,'vp')+'</b> per-cask value <i>(+ value-Buildings)</i></span><span><b>'+LU('landmark','vp')+' 1/2/3</b> end-game majority</span></span></div>'
     +'<div class="kontor-row">'+DESTS.map(d=>kpanel(d,false)).join('')+kpanel(HALL,true)+'</div>'
     +'<div class="db-bottom"><div class="sbox"><div class="sb-h">'+LU('beer')+'Cask supply<span class="sm">brew at the Brewhouse · Gruit + Hopped + the 3 dealt exports (+ Jopenbier if on) · top tile face-up</span></div>'
       +'<div class="cstack-row">'+SUPPLY.map(cstack).join('')+'</div></div>'
