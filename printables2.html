@@ -22,11 +22,10 @@
   .bar h1+.bsel{margin-left:auto}   /* push the controls to the right of the title */
   .note{font-size:.78rem;opacity:.85}
   /* ====== PAGE = US Letter LANDSCAPE (11×8.5in, .3in margins → 10.4×7.9in canvas) ====== */
-  @media print{ @page{size:letter landscape;margin:.3in} @page large{size:22in 15in;margin:0} }
+  @media print{ @page{size:letter landscape;margin:.3in} }
   .page{width:10.4in;height:7.9in;background:#fff;margin:14px auto;box-shadow:0 3px 14px rgba(0,0,0,.25);position:relative;overflow:hidden}
-  /* LARGE-FORMAT tile sheets (laser cutter / plotter) — a named @page so they print full-bleed alongside the letter sheets.
-     .lg = the 22×15 sheets (boards + the tiles sheet). */
-  .page.lg{width:22in;height:15in;page:large}
+  /* LARGE-FORMAT sheets (laser cutter / plotter) are 22in wide but each is trimmed to its own content HEIGHT so we
+     don't run blank media — render() emits one named @page + .lgNN rule per distinct height into <style id=dynpage>. */
   @media print{.no-print{display:none} body{background:#fff} .page{margin:0;box-shadow:none;break-after:page}
     body.solo .page{display:none} body.solo .page.soloed{display:block}}
   /* every printed piece sits in an absolutely positioned .it box (inches) — layout is identical in
@@ -681,6 +680,7 @@
   .exp-dl{cursor:pointer;border:none;border-radius:5px;padding:4px 12px;background:var(--sea);color:#fff;font-family:inherit;font-size:.78rem}
   .exp-fn{font-size:.6rem;color:var(--ink2);font-family:ui-monospace,Menlo,monospace;text-align:center;word-break:break-all;line-height:1.2}
 </style>
+<style id="dynpage"></style>
 </head>
 <body>
 <div class="bar no-print" id="bar">
@@ -689,7 +689,7 @@
     <option value="all">All sheets</option>
     <option value="boards">Boards</option>
     <option value="tiles">Cask &amp; ship cards</option>
-    <option value="bits">Tiles — plotter (buildings · improvements · owner frames)</option>
+    <option value="bits">Tiles — plotter (building fronts/backs · improvements · frames)</option>
     <option value="cards">Recipe / contract / aid cards</option>
     <option value="png">PNG Export</option>
     <option value="list">Checklist</option>
@@ -837,7 +837,12 @@ const PG={w:10.4,h:7.9,y0:0.45,yMax:7.62};
 // CARD_GEO — a LETTER (8.5×11) sheet centred for the (scaled) 2″ double-sided cards: 5 cols × 3 rows = 15/sheet.
 // 5×2.0 = 10.0 wide (x0 .2) · 3×2.0 = 6.0 tall, centred top/bottom (y0 .95). packRun derives cols from the scaled footprint.
 const CARD_GEO={w:10.4,h:7.9,y0:0.95,yMax:7.9};
-const TILE_GEO={w:22,h:15,y0:0.45,yMax:14.72};   // LARGE-FORMAT 22×15 plotter sheet — the boards AND the TILES sheet (buildings · improvements · owner frames). Tokens tuck into the board sheet's empty corners (see packRegion).
+// LARGE-FORMAT (22″-wide) plotter sheets — each TRIMMED to its own content height so we don't run blank media.
+// (render() emits a named @page + .lgNN rule per distinct height — see lgClass / the dynpage stylesheet.)
+const WHARF_GEO ={w:22,h:10.5, y0:0.45,yMax:10.22};  // the Wharf cross (9.4″) + tokens tucked on the right
+const SUPPLY_GEO={w:22,h:11.5, y0:0.45,yMax:11.22};  // the Supply & Tracks board (10.8″), centred — work in progress
+const TILE_GEO  ={w:22,h:5.75, y0:0.45,yMax:5.47};   // building FRONTS sheet + its mirrored BACKS sheet (27 tiles, 3 rows)
+const IMPF_GEO  ={w:22,h:6.0,  y0:0.45,yMax:5.78};   // improvements + owner frames (single-sided, their own sheet)
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
 // NATIVE component sizes (in) — the design size each piece renders at; packRun scales the FOOTPRINT by SCALE and
 // the render wrapper scales the CONTENT to match. casks/ships 2.5″ · buildings 2″ · improvement cards 2×1″ · frames 2.5″.
@@ -1384,11 +1389,12 @@ function boardPageLg(pages,section,label,html,w,h){
   pg.items.push({x,y,w,h,html});
   pg.rrect={x,y,w,h,r:0.14};
 }
-// printables2: the Wharf (a CROSS) + the Supply board, side by side on ONE large 22×15 sheet.
+// printables2: the Wharf (a CROSS) on its own trimmed 22-wide sheet (the Supply board moved to its own sheet).
 function wharfBoardSheet(pages){
-  const G=TILE_GEO;const pg=newPage(pages,'boards','Main board — the Wharf (cross)',G);
+  const G=WHARF_GEO;const pg=newPage(pages,'boards','Main board — the Wharf (cross)',G);
   // WHARF cross — the 4×4 grid (2.5in cells + .3in gaps) is 10.9in; +.3in outline padding → an 11.5in board.
-  const W=WHARF_W, wx=0.4, wy=1.9, bl=CROSS_BLEED;
+  // wy sits the cross near the top so the trimmed sheet has minimal margin (tokens tuck into the open right).
+  const W=WHARF_W, wx=0.4, wy=0.7, bl=CROSS_BLEED;
   // the board element extends OUTWARD by the bleed on every side (grid stays centered via the +bleed padding),
   // so the clipped art bleeds past the cut. The CUT itself is the original-size plus at (wx,wy) — unchanged.
   const Ox=+(wx-bl).toFixed(4),Oy=+(wy-bl).toFixed(4),wn=W+2*bl;
@@ -1397,9 +1403,9 @@ function wharfBoardSheet(pages){
   pg.cutXform='matrix('+SCALE+',0,0,'+SCALE+','+(+(Ox*(1-SCALE)).toFixed(4))+','+(+(Oy*(1-SCALE)).toFixed(4))+')';
   return pg;
 }
-// the SUPPLY & TRACKS board → its OWN sheet (work-in-progress; kept off the main board sheet for now), centred.
+// the SUPPLY & TRACKS board → its OWN trimmed sheet (work-in-progress; kept off the main board sheet for now), centred.
 function supplyBoardSheet(pages){
-  const G=TILE_GEO;const pg=newPage(pages,'boards','Supply &amp; Tracks board (work in progress)',G);
+  const G=SUPPLY_GEO;const pg=newPage(pages,'boards','Supply &amp; Tracks board (work in progress)',G);
   const w=+(9.3*SCALE).toFixed(4),h=+(13.5*SCALE).toFixed(4),x=+((G.w-w)/2).toFixed(3),y=+((G.h-h)/2).toFixed(3);
   pg.items.push({x,y,w,h,nat:[9.3,13.5],html:supplyBoard()});
   pg.rrect={x,y,w,h,r:0.14};
@@ -1422,9 +1428,9 @@ function buildPages(){
   // goods cubes upper, ownership discs below — both single-sided, so no back sheet.
   const wpg=pages[pages.length-1];
   const wtok=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wtok.push(tok(d));});
-  packRegion(pages,wpg,'tok',wtok,10.0,1.0,21.9,7.4,'Goods tokens',famPages);
+  packRegion(pages,wpg,'tok',wtok,10.0,0.7,21.9,6.2,'Goods tokens',famPages);
   const wdisc=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(OWN_DISCS);i++)wdisc.push(disc(p.c));});
-  packRegion(pages,wpg,'disc',wdisc,10.0,7.0,21.9,11.5,'Ownership discs',famPages);
+  packRegion(pages,wpg,'disc',wdisc,10.0,6.4,21.9,9.9,'Ownership discs',famPages);
   supplyBoardSheet(pages);   // the Supply & Tracks board — its own sheet (work in progress; not finalized)
   boardPage(pages,'boards','Destinations board',dboard(),7.5);
   boardPage(pages,'boards','Trade Roads — Overland (back of Destinations)',olboard(),7.5);
@@ -1434,9 +1440,9 @@ function buildPages(){
   //   • CARDS    → LETTER (8.5×11) on a HOME duplex printer: casks & ships (2″ double-sided), recipes,
   //                contracts, player aids. Each FRONTS sheet has a matching BACKS sheet that is its LEFT↔RIGHT
   //                mirror, so a duplex flip on the SHORT edge lands each card's back square on its front; cut once.
-  //   • TILES    → a 22×15 PLOTTER FRONT sheet + its LEFT↔RIGHT MIRRORED back sheet: buildings are double-sided
-  //                (front art / Wild + ★ back) → the back sheet carries the Wild/★ backs. Improvements & owner
-  //                frames are single-sided (they ride the front sheet, blank back). Flip/mount, then cut the sandwich.
+  //   • TILES    → 22-wide PLOTTER sheets, each TRIMMED to its content height (no blank media). BUILDINGS are
+  //                double-sided → a FRONT sheet + its LEFT↔RIGHT MIRRORED back sheet (the back carries the Wild/★
+  //                backs; flip/mount, then cut). IMPROVEMENTS + owner FRAMES are single-sided → their own sheet.
   //   • TOKENS   → single-sided; tucked into the open right side of the Wharf BOARD sheet (see packRegion in BOARDS).
   // CASKS & SHIPS are double-sided 2″ CARDS on LETTER (8.5×11) for HOME double-sided printing — a centred grid
   // whose BACKS sheet is the LEFT↔RIGHT mirror of the fronts, so a duplex flip on the SHORT edge lands each
@@ -1471,25 +1477,25 @@ function buildPages(){
   tagFamilies(cardFrontPages,cardFronts);
   mirrorBackPages(cardFrontPages,cardFronts,CARD_GEO,'Cask &amp; Ship CARD BACKS · LETTER 8.5×11 (mirror — flip LEFT↔RIGHT): cask brewed-side · a ship at sea behind ships');
 
-  // --- TILES → a 22×15 PLOTTER front sheet + its LEFT↔RIGHT MIRRORED back sheet (24″ roll). Building tiles are
-  // DOUBLE-SIDED (front art / Wild + ★ back), so — exactly like the cask/ship cards above — the FRONTS go on one
-  // sheet and a separate MIRRORED back sheet carries each building's Wild/★ back; flip the sheet on the SHORT edge
-  // (or mount front-to-back around chipboard) and every back lands square on its front, then cut. Improvements &
-  // owner frames are SINGLE-SIDED — they ride the front sheet and get a blank back. (Fronts and backs must NOT
-  // share a sheet — every sheet has its matching reversed back.) The small single-sided TOKENS (goods · discs) are
-  // tucked onto the Wharf board sheet above; worker pawns + first-player/round markers aren't printed. Cards → Letter. ---
-  const TLBL_TILE='Tile FRONTS — buildings · improvements · building owner frames (22×15 PLOTTER · cut apart)';
-  const bldFrontHtml=[],tileMeta=[];
-  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++){bldFrontHtml.push(buildingCard(d));tileMeta.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',bld:true,d:d});}});
-  const imps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++){imps.push(improveTile(d));tileMeta.push({fam:'Improvements'});}});   // single-sided → blank back
-  const frames=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(6);i++){frames.push(frameTile(p.c,p.nm));tileMeta.push({fam:'Building frames'});}});   // single-sided → blank back
+  // --- BUILDING TILES → a 22-wide FRONT sheet + its LEFT↔RIGHT MIRRORED back sheet. Buildings are DOUBLE-SIDED
+  // (front art / Wild + ★ back), so — exactly like the cask/ship cards above — the FRONTS go on one sheet and a
+  // separate MIRRORED back sheet carries each building's Wild/★ back; flip on the SHORT edge (or mount front-to-back
+  // around chipboard) and every back lands square on its front, then cut. (Fronts and backs must NOT share a sheet
+  // — every sheet has its matching reversed back.) Both sheets are trimmed to the building grid so no blank media.
+  const TLBL_BLD='Building tile FRONTS (22″ plotter · cut apart)';
+  const bldFrontHtml=[],bldMeta=[];
+  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++){bldFrontHtml.push(buildingCard(d));bldMeta.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',bld:true,d:d});}});
   const tStart=pages.length;
-  packRun(pages,'bits',TLBL_TILE,'bld',bldFrontHtml,null,famPages,TILE_GEO);
-  packRun(pages,'bits',TLBL_TILE,'imp',imps,null,famPages,TILE_GEO);
-  packRun(pages,'bits',TLBL_TILE,'frame',frames,null,famPages,TILE_GEO);
-  const tileFrontPages=pages.slice(tStart);
-  tagFamilies(tileFrontPages,tileMeta);   // tag each front family (Value/Transform buildings · Improvements · Building frames) in pack order
-  mirrorBackPages(tileFrontPages,tileMeta,TILE_GEO,'Tile BACKS (mirror — flip LEFT↔RIGHT): each building’s Wild + '+DEVELOP_PTS+'★ · improvement &amp; frame backs blank','bits');
+  packRun(pages,'bits',TLBL_BLD,'bld',bldFrontHtml,null,famPages,TILE_GEO);
+  const bldFrontPages=pages.slice(tStart);
+  tagFamilies(bldFrontPages,bldMeta);
+  mirrorBackPages(bldFrontPages,bldMeta,TILE_GEO,'Building tile BACKS (mirror — flip LEFT↔RIGHT): each building’s Wild + '+DEVELOP_PTS+'★','bits');
+  // IMPROVEMENTS + owner FRAMES are SINGLE-SIDED → their own trimmed sheet (no back).
+  const TLBL_IMPF='Improvements + owner frames (22″ plotter · single-sided · cut apart)';
+  const imps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)imps.push(improveTile(d));});
+  packRun(pages,'bits',TLBL_IMPF,'imp',imps,'Improvements',famPages,IMPF_GEO);
+  const frames=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(6);i++)frames.push(frameTile(p.c,p.nm));});
+  packRun(pages,'bits',TLBL_IMPF,'frame',frames,'Building frames',famPages,IMPF_GEO);
   // --- RECIPE CARDS (cardstock — do not mount; they tuck under the board edge) ---
   const cards=[];const sets=MODE==='proof'?1:PLAYERS.length;
   for(let s=0;s<sets;s++)RECIPES.forEach(r=>cards.push(recipeCard(r)));
@@ -1750,7 +1756,7 @@ async function sheetPNG(no,btn){
   const t0=btn&&btn.textContent;if(btn){btn.textContent='rendering…';btn.disabled=true;}
   const geo=pg.geo||PG,scale=SHEET_DPI/96;
   const host=document.createElement('div');host.style.cssText='position:fixed;left:-99999px;top:0';
-  const page=document.createElement('div');page.className='page'+(geo.w>11?' lg':'');
+  const page=document.createElement('div');page.className='page'+(geo.w>11?' '+lgClass(geo.h):'');
   page.style.cssText='width:'+geo.w+'in;height:'+geo.h+'in;margin:0;box-shadow:none;background:#fff';
   page.innerHTML=pg.items.map(itDiv).join('');
   host.appendChild(page);document.body.appendChild(host);
@@ -1803,15 +1809,22 @@ function itDiv(it){const nat=it.nat||[it.w,it.h];const sc=+(it.w/nat[0]).toFixed
   const inner=(sc===1)?it.html
     :'<div class="sc" style="transform:scale('+sc+');transform-origin:top left;width:'+nat[0]+'in;height:'+nat[1]+'in">'+it.html+'</div>';
   return '<div class="it" style="left:'+it.x+'in;top:'+it.y+'in;width:'+it.w+'in;height:'+it.h+'in">'+inner+'</div>';}
+// each 22-wide plotter sheet is trimmed to its own height → one .lgNN class + named @page per distinct height.
+function lgClass(h){return 'lg'+String(+h).replace('.','_');}
+function dynPageCss(pages){const seen={};let css='';
+  pages.forEach(p=>{const g=p.geo||PG;if(g.w<=11)return;const c=lgClass(g.h);if(seen[c])return;seen[c]=1;
+    css+='@page '+c+'{size:22in '+g.h+'in;margin:0}\n.page.'+c+'{width:22in;height:'+g.h+'in;page:'+c+'}\n';});
+  return css;}
 let PAGES=[];
 function render(){
   if(VIEW==='png'){document.getElementById('out').innerHTML=expHtml();if(window.lucide)lucide.createIcons();return;}
   PAGES=buildPages();
+  const dp=document.getElementById('dynpage');if(dp)dp.textContent=dynPageCss(PAGES);   // size each large sheet to its content
   const show=PAGES.filter(p=>VIEW==='all'||p.section===VIEW);
   let h='';
   show.forEach(pg=>{
-    const lg=(pg.geo||PG).w>11;   // large-format 22×15 sheets get the .lg named @page; Letter geos stay on the default letter @page
-    h+='<div class="page'+(lg?' lg':'')+'" id="pg'+pg.no+'">';
+    const G=pg.geo||PG;const cls=G.w>11?lgClass(G.h):'';   // large 22-wide sheets get their height's named @page; Letter geos stay default
+    h+='<div class="page'+(cls?' '+cls:'')+'" id="pg'+pg.no+'">';
     pg.items.forEach(it=>{h+=itDiv(it);});
     h+=overlaySvg(pg);
     h+='<span class="dl no-print">'
