@@ -227,7 +227,7 @@
   .disc svg{width:.2in;height:.2in}
   /* BUILDING OWNERSHIP FRAMES (printables2) — a player-colour 2.5in base the 2in Building tile sits on; the
      colour border showing around the smaller tile = whose building it is. Sized to drop into a 2.5in wharf slot. */
-  .frame{width:2.25in;height:2.25in;background:var(--c);border-radius:.12in;position:relative;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  .frame{width:2.5in;height:2.5in;background:var(--c);border-radius:.12in;position:relative;box-shadow:0 1px 3px rgba(0,0,0,.25)}
   .frame::after{content:"";position:absolute;inset:.25in;border:2px dashed rgba(255,255,255,.85);border-radius:.07in}
   .frame .fl{position:absolute;left:0;right:0;bottom:.07in;text-align:center;color:#fff;font-variant:small-caps;font-weight:bold;font-size:.12in;text-shadow:0 1px 1.5px rgba(0,0,0,.5)}
   /* worker / marker DISCS — .8in cut circle inside a 1in bleed disc */
@@ -842,11 +842,11 @@ const CARD_GEO={w:10.4,h:7.9,y0:0.95,yMax:7.9};
 const WHARF_GEO ={w:22,h:10.5, y0:0.45,yMax:10.22};  // the Wharf cross (9.4″) + tokens tucked on the right
 const SUPPLY_GEO={w:22,h:11.5, y0:0.45,yMax:11.22};  // the Supply & Tracks board (10.8″), centred — work in progress
 const TILE_GEO  ={w:22,h:5.75, y0:0.45,yMax:5.47};   // building FRONTS sheet + its mirrored BACKS sheet (27 tiles, 3 rows)
-const IMPF_GEO  ={w:22,h:6.0,  y0:0.45,yMax:5.78};   // improvements + owner frames (single-sided, their own sheet)
+const IMPF_GEO  ={w:22,h:8.5,  y0:0.45,yMax:8.22};   // improvements + owner frames (2.5″ rings, 3 rows) — single-sided, their own sheet
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
 // NATIVE component sizes (in) — the design size each piece renders at; packRun scales the FOOTPRINT by SCALE and
 // the render wrapper scales the CONTENT to match. casks/ships 2.5″ · buildings 2″ · improvement cards 2×1″ · frames 2.5″.
-const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2.5,2.5],bld:[2,2],imp:[2,1],frame:[2.25,2.25],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};
+const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2.5,2.5],bld:[2,2],imp:[2,1],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
@@ -1345,6 +1345,9 @@ function packRun(pages,section,label,kind,htmlList,famTag,famPages,geo){
     pg.items.push({x:cx,y:cy,w,h,nat:[nw,nh],html});   // nat = native size; the renderer scales content → footprint
     if(kind==='tok'||kind==='disc'||kind==='wtok')pg.circles.push({cx:cx+w/2,cy:cy+h/2,r:+(CUTR[kind]*SCALE).toFixed(4)});
     else addRectCut(pg,cx,cy,w,h);
+    if(kind==='frame'){   // owner RINGS: also cut the interior hole (sized to a building tile, so the ring frames it)
+      const hole=+(SIZE.bld[0]*SCALE).toFixed(4),ins=+((w-hole)/2).toFixed(4);
+      if(ins>0.02)addRectCut(pg,+(cx+ins).toFixed(4),+(cy+ins).toFixed(4),hole,hole);}
     if(famTag)(famPages[famTag]=famPages[famTag]||new Set()).add(pages.indexOf(pg));
     cx+=w;rh=h;
   });
