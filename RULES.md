@@ -155,6 +155,20 @@ top tile of *every* quality pile is visible**, so you **see the action you'd get
 One load per visit; Gruit is fixed to Source. Recipes are permanent. **You may also DEPLOY** a Ready
 cask onto **any** open slot here (the cask-hub's flexible placement — v1.3).
 
+**Recipe costs** (brew cost = paid from hand into the vessel; buy cost = a Market action to add the
+recipe card to your rack — Gruit/Hopped start known):
+
+| Recipe | Quality | Brew cost | Ready | Buy (Market) |
+|---|---|---|---|---|
+| Gruit | Q1 | `G` | 1 | starter |
+| Hopped | Q2 | `G H` | 1 | starter |
+| Broyhan | Q3 | `G H H` | 1 | `1 H` |
+| Keut | Q3 | `G G H` | 2 | `1 G` |
+| Mumme | Q4 | `G H H H` | 3 | `2 H` |
+| Bock | Q5 | `G G H H H` | 3 (2 with Aging Cellar) | `1 G 1 H` |
+
+(Specialty Beers and Jopenbier costs are given with those toggles, §12.)
+
 ### Cellar — *a flexible menu: Age · Tap · buy an Improvement (any order, chained)* (v1.4.1)
 The Cellar visit is a small **menu you work through in ANY ORDER** until you choose **Done** — and the
 steps **chain** (resources/casks one step produces are available to the next *in the same visit*). The menu:

@@ -36,7 +36,7 @@
 | Hops cubes (`H`) | ~40 | Currency + brew input. |
 | Demand dice (d6) | 8 | Reusable value-bonus carrier — pips = the ★ a cask banks on delivery from a value building. |
 | Quality-boost markers | 6 | Ride a cask from a Malt Kiln / Hop Yard, raising its effective quality at delivery. |
-| Charter contracts (cards) | 16 | Spend 1 + a flat `2 G` fare to Charter; buyable at the Market (`1 G`). |
+| Charter contracts (cards) | 20 | Spend 1 + a flat `2 G` fare to Charter; buyable at the Market (`1 G`). |
 | First-player marker | 1 | Fixed all game (turn order does not rotate). |
 | Round / Sailed-Ships marker | 2 | Round clock; voyage counter. |
 | Score pad or track | 1 | Scoring is in-game; pads or a shared track both work. |
@@ -48,8 +48,7 @@
 | Component | Qty per house ⚙ | Notes |
 |---|---|---|
 | Worker pawn | 1 | Moves between stations. |
-| Presence barrels (player colour) | 9 | Single token in three lives: ownership on a slot → rides on a ship → plants at the kontor as your presence (the majority count). **Finite supply = your trade-factor cap.** Enshrining returns the barrel; the Hall is unlimited. |
-| Building-owner markers | 6 | Mark whose building sits on a slot (wharfage routing). |
+| Ownership / presence discs (player colour) | 14 | Single token in three lives: ownership on a slot → rides on a ship → plants at the kontor as your presence (the majority count); also marks whose building sits on a slot (wharfage routing). **Finite supply = your trade-factor cap.** Enshrining returns a disc; the Hall is unlimited. |
 
 ---
 
@@ -244,13 +243,12 @@ Shared setup: 2 ships dealt onto slots (spread across lines, includes a guarante
 | Buildings (C) | 24 | 18 |
 | Recipes (D) | 24 cards | 6 |
 | Improvements (E) | 21 | 7 |
-| Charter contracts | 16 cards | 1 |
+| Charter contracts | 20 cards | 1 |
 | Goods cubes | ~100 (60 `G` + 40 `H`) | 2 |
 | Demand dice | 8 (d6) | 1 |
 | Quality-boost markers | 6 | 1 |
 | Worker pawns | 4 | 4 colours |
-| Presence barrels | 36 (9 / colour) | 4 colours |
-| Building-owner markers | 24 (6 / colour) | 4 colours |
+| Ownership / presence discs | 56 (14 / colour) | 4 colours |
 | Sailed-Ships track length | 6 / 10 / 13 slots for 2 / 3 / 4 p | — |
 
 **Pace dial:** Sailed-Ships fills end the game (max round ceiling 25 as backstop). The track is printed at length 13 (the 4-player figure); the shorter player counts cover the higher slots.

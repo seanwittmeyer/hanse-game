@@ -529,7 +529,8 @@ London/Novgorod Building benefit no longer auto-grants a **random** tile — it'
 your next turn**, where you choose from the display via the normal picker, same as an on-turn delivery.
 An unplaced hand Building scores nothing, so a reward queued past game-end costs nothing — matching the
 old outcome. The AI resolves its queue with `aiBenefit` (preference-ranked, no longer random).)* Three new **private brewery improvements**
-(bought for goods at the Market): **Harbor Crane** (`4 G`, your Harbor load sets out **2 casks**, not 1),
+(bought for goods at the Market — costs below are the v1.5-era prices, **superseded by v1.7's "−1 G
+each, bought at the Cellar" cut**; current costs are `3 G`/`3 G`/`4 G`, see COMPONENTS.md §9): **Harbor Crane** (`4 G`, your Harbor load sets out **2 casks**, not 1),
 **Lagering Cellar** (`4 G`, each of **your turns** +1 age to one maturing cask — a *faster-climb* perk,
 distinct from Aging Cellar's −1-step), and **Private Quay** (`5 G`, load **Ready casks straight from your
 vessels** onto ships — skipping deploy/the slot entirely). Implementation: the load flow now accepts a

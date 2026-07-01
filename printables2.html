@@ -1539,15 +1539,15 @@ function checklist(pages,famPages){
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')
     +R('Recipe cards (export)','One set of four per player: Broyhan · Keut · Mumme · Bock. (Gruit &amp; Hopped are printed on the brewery board.)',4*PLAYERS.length)
-    +R('Charter contracts','The relief-valve certificates — start 2 per house, buy more (1 G), spend one + a 2 G fare for a single-cask voyage.','16')
+    +R('Charter contracts','The relief-valve certificates — start 2 per house, buy more (1 G), spend one + a 2 G fare for a single-cask voyage.',CONTRACTS.n)
     +R('Player aid cards','Double-sided quick reference (a turn / the icon key), one per player.',PLAYERS.length)
     +'</table>';
   h+=T('Tokens &amp; bits')
     +R('Grain cubes','Currency &amp; brew input (G).','60')
     +R('Hops cubes','Currency &amp; brew input (H).','40')
     +R('Worker pawns','One per player; moved between stations.',PLAYERS.length)
-    +R('Presence barrels','Per player colour — marks a cask you own, then plants at a kontor as your presence (for majorities).','≈12 ea')
-    +R('Building-owner frames','Per player colour — marks whose building sits on a slot.','6 ea')
+    +R('Ownership / presence discs','Per player colour — marks a cask you own, then plants at a kontor as your presence (for majorities).',OWN_DISCS+' ea')
+    +R('Building-owner frames','Per player colour — a card-kit-specific overlay marking whose building card sits on a slot (printables.html marks this with the same disc instead).','6 ea')
     +R('Demand dice (d6)','The reusable value carrier — a cask shipped through a value building rides one in its berth; the pips are the ★ it banks on delivery.','8')
     +R('Quality-boost markers','A +1-quality token a cask carries from a Malt Kiln / Hop Yard to delivery.','6')
     +R('First-player &amp; round markers','Turn order (fixed all game) + the round track.','2')

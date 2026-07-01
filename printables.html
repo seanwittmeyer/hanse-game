@@ -607,9 +607,9 @@ const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',
 // the value-Buildings a cask ships through. Novgorod's value SCALES with quality (Q3·2 / Q4·4 / Q5·6).
 const DESTS=[
   {nm:'Bruges',  kc:'#274b5c', req:1, val:'1',     scale:false, maj:[4,2,0], role:'The Hub · the economy',            ben:{n:'+2',ic:'coins'},     bnote:'2 goods (liquidity)'},
-  {nm:'London',  kc:'#b8860b', req:2, val:'1',     scale:false, maj:[5,3,1], role:'The Steelyard · the engine',       ben:{n:'+', ic:'building-2'}, bnote:'take a Building (to hand)'},
-  {nm:'Bergen',  kc:'#4a6b3a', req:2, val:'1',     scale:false, maj:[9,5,2], role:'Bryggen · the rich majority',      ben:{n:'+', ic:'map-pin'},    bnote:'a free Reach (+1 presence, where delivered)'},
-  {nm:'Novgorod',kc:'#7c2128', req:3, val:'2·4·6', scale:true,  maj:[8,5,2], role:'The Long Haul · the quality climb', ben:{n:'+', ic:'hourglass'},  bnote:'refine a maturing cask (+1 age)'},
+  {nm:'London',  kc:'#b8860b', req:2, val:'1',     scale:false, maj:[5,3,1], role:'The Steelyard · the engine',       ben:{n:'+1',ic:'building-2'}, bnote:'take a Building (to hand)'},
+  {nm:'Bergen',  kc:'#4a6b3a', req:2, val:'1',     scale:false, maj:[9,5,2], role:'Bryggen · the rich majority',      ben:{n:'+1',ic:'map-pin'},    bnote:'a free Reach (+1 presence, where delivered)'},
+  {nm:'Novgorod',kc:'#7c2128', req:3, val:'2·4·6', scale:true,  maj:[8,5,2], role:'The Long Haul · the quality climb', ben:{n:'+1',ic:'hourglass'},  bnote:'refine a maturing cask (+1 age)'},
 ];
 const HALL={nm:'The Hall', kc:'#5b3a8e', req:2, role:'Prestige · local Enshrine (no ship)', ladder:[[2,3],[3,5],[4,7],[5,9]]};
 const SAILED={2:6,3:10,4:13};        // Sailed-Ships end clock per player count ⚙ (RULES §8 — 2–4p; v1.3 trimmed 7/11/14→6/10/13)
@@ -726,9 +726,9 @@ function aidFront(){
       +'</div>'
       +'<div class="acol">'
         +'<h5>'+LU('anchor')+'The Four Stations</h5>'
-        +'<div class="ln">'+LU('store')+' <b>Market</b> — 2 goods, <i>or</i> 1: recipe · Building (+place) · ship '+LU('sailboat')+' ('+G+'2) · contract '+LU('ticket')+' ('+G+'1) · improvement '+LU('wrench')+'.</div>'
+        +'<div class="ln">'+LU('store')+' <b>Market</b> — 2 goods, <i>or</i> 1: recipe · Building (+place) · ship '+LU('sailboat')+' ('+G+'2) · contract '+LU('ticket')+' ('+G+'1).</div>'
         +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — Brew a recipe into an open vessel; or '+LU('barrel')+' <b>Deploy</b> a Ready cask.</div>'
-        +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — 3 age points across your vessels; or <b>Tap</b> a cask.</div>'
+        +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — 3 age points across your vessels; <b>Tap</b> a cask; or buy an Improvement '+LU('wrench')+' (any order).</div>'
         +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — Load onto a ship (<b>sails when full</b>); <b>Enshrine</b> a Q2+ slot cask; or <b>Charter</b>.</div>'
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
         +'<div class="ln"><b>Sailed-Ships</b> fills (6/10/13 for 2/3/4p) → finish the round → score:</div>'
@@ -1081,11 +1081,13 @@ function pgRef(pages,famPages,fam){const s=famPages[fam];if(!s)return '—';
   return 'S'+[...s].map(i=>pages[i].no).sort((a,b)=>a-b).join(', S');}
 function checklist(pages,famPages){
   const caskTotal=CASKS.reduce((a,d)=>a+d.n,0);
-  const bVal=BUILDINGS.filter(b=>b.verb==='value'), bTr=BUILDINGS.filter(b=>b.verb==='transform');
-  const bValN=bVal.reduce((a,b)=>a+b.n,0), bTrN=bTr.reduce((a,b)=>a+b.n,0);
+  const EXP_BLD=['salthouse','smokekiln','partigyle'];               // Specialty-Beers thematic buildings
+  const baseBld=BUILDINGS.filter(b=>!EXP_BLD.includes(b.k)), expBld=BUILDINGS.filter(b=>EXP_BLD.includes(b.k));
+  const bVal=baseBld.filter(b=>b.verb==='value'), bTr=baseBld.filter(b=>b.verb==='transform');
+  const bValN=bVal.reduce((a,b)=>a+b.n,0), bTrN=bTr.reduce((a,b)=>a+b.n,0), expBldN=expBld.reduce((a,b)=>a+b.n,0);
   const impN=IMPROVE.reduce((a,d)=>a+d.n,0);
-  const backsN=bValN+bTrN;
-  const tileTotal=caskTotal+SHIP_DECK.length+bValN+bTrN+impN+backsN;
+  const backsN=bValN+bTrN+expBldN;
+  const tileTotal=caskTotal+SHIP_DECK.length+bValN+bTrN+expBldN+impN+backsN;
   const row=(bx,nm,n,note)=>'<tr>'+(bx?'<td class="bx"></td>':'<td></td>')+'<td>'+nm+'</td><td class="n">'+n+'</td><td>'+(note||'')+'</td></tr>';
   const bp=pages.filter(p=>p.section==='boards');
   const pbRef=bp.length>4?'S'+bp[3].no+'–S'+bp[bp.length-1].no:'S'+bp[3].no+' (proof: 1 of '+PLAYERS.length+' shown)';
@@ -1117,6 +1119,8 @@ function checklist(pages,famPages){
     +row(0,'<i>'+bVal.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ')+'</i>','','')
     +row(1,'<b>Buildings · TRANSFORM</b> ('+bTr.length+' designs — the craft &amp; works layer)',bTrN,pgRef(pages,famPages,'Transform Buildings'))
     +row(0,'<i>'+bTr.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ')+'</i>','','')
+    +row(1,'<b>Buildings · EXPANSION</b> ('+expBld.length+' designs — Specialty Beers, opt-in)',expBldN,pgRef(pages,famPages,'Value Buildings'))
+    +row(0,'<i>'+expBld.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ')+'</i>','','')
     +row(1,'Private improvements ('+IMPROVE.length+' designs — bought at the Cellar, v1.7)',impN,pgRef(pages,famPages,'Improvements'))
     +row(0,'<i>'+IMPROVE.map(d=>d.nm+' ×'+d.n).join(' · ')+'</i>','','')
     +row(1,'<b>Building backs</b> — the flipped Wild + '+DEVELOP_PTS+'★ developer face (1 per Building tile)',backsN,pgRef(pages,famPages,'Building backs'))
