@@ -935,7 +935,7 @@ function caskCardFront(d,act){
   track+='<div class="cc-step rdy">'+LU('undo-2')+'</div>';   // Ready → flip the card to its brewed side
   return '<div class="ccard cc-front" style="--c:'+d.c+'">'
     +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span>'
-      +'<span class="ctitle"><span class="cnm">'+d.nm+'</span><span class="ccost">'+c+'</span></span></div></div>'
+      +'<span class="ctitle"><span class="cnm">'+d.nm+'</span>'+(d.tag?'<span class="clbl">'+d.tag+'</span>':'')+'<span class="ccost">'+c+'</span></span></div></div>'
     +'<div class="cc-age"><div class="cc-agerow">'+track+'</div></div>'
     +'<div class="ce bot"><div class="ce-row sb"><span class="cq">'+LU(QI)+d.q+'</span><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div></div>'
   +'</div>';
@@ -943,9 +943,12 @@ function caskCardFront(d,act){
 function caskCardBack(d,act){
   // both ends show Q + title; only the BOTTOM end carries the die/presence marker space
   const q='<span class="cq">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span>';
+  // TOP end also carries the pinned-signature tag (Gose/Zerbster/Duckstein/Jopenbier) — this is the brewed/in-play
+  // face, where the passive ability actually matters (a slot cask's owner needs the reminder, not just the buy side)
+  const qTop='<span class="cq">'+LU(QI)+d.q+'</span><span class="ctitle"><span class="cnm">'+d.nm+'</span>'+(d.tag?'<span class="clbl">'+d.tag+'</span>':'')+'</span>';
   return '<div class="ccard cc-back" style="--c:'+d.c+'">'
     +artLayer('cask-'+d.nm.toLowerCase()+'.png')
-    +'<div class="ce top"><div class="ce-row sb">'+q+'</div></div>'
+    +'<div class="ce top"><div class="ce-row sb">'+qTop+'</div></div>'
     +'<div class="cc-actfloat"><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div>'
     +'<div class="ce bot"><div class="ce-row">'+q+'<span class="cc-mark" title="quality die / presence marker"></span></div></div>'
   +'</div>';
