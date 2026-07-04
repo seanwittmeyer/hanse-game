@@ -245,11 +245,22 @@ presence grants). *Gates (KEY v88):* `verify-v88` — **13 checks PASS** (re-pri
 the Hire pool gate/picker/dead-case/AI-auto · London's improvement path + AI fallback · the type badges);
 `verify-v87` still green (the v2.3 arithmetic untouched); base `sim.js 500` + PATHWAYS 400 + EXP/JOPEN 300 +
 OVERLAND 300 → **0 crash/deadlock, pace in band, clock-dominant**; improvements now actually flow (2p
-~0.7→**1.7**/game, 3p ~**4.2** — Hire is the feeder); `ai-render-smoke` **ALL PASS**. *(Ladder/tuner/probe
-re-runs: see `ai-ladder-v88.txt` · `ai-tune-v88.txt` · `probe-imps-v88.txt`.)*
+~0.7→**1.7**/game, 3p ~**4.2** — Hire is the feeder); `ai-render-smoke` **ALL PASS**; `ai-ladder 600` — **0 errors**, fast
+rungs pass (journeyman 89.7 · trader 72.8); the two MC rungs re-measured **sharded at real budgets, 10
+games/shard** (the new shard discipline): **GM > trader 66%** (50 games, `GUILD_MS=250` — the in-run 59.2%
+was the throttled-budget artifact) and **CM > GM 74%** (50 games, `CELLAR_MS=220`) — **ladder PASS**
+(`oracle-tgm-v88.txt` · `oracle-gmcm-v88.txt`); `ai-tune` → **KEEP the incumbent `AI_W`** (best 50.9%).
 *PATHWAYS (⚙ recorded not dialed):* prestige stays the hot greedy-persona lane (2p 58 / 3p 41 / 4p 35 vs
 fair 50/33/25 — same direction as v87); holding the Hall-curve dial until the improvement economy settles
 and a human table reads it.
+*Parity re-probe (`probe-imps-v88.txt`):* the free-grant spread **compressed 19 → ~13 pts** and the outlier
+tamed (Hop Garden **+17.3 → +8.0**; Cellar +4.5 · Lagering +4.0 · Granary +1.5 · Crane −0.5 · Vessel/Quay
+−4.8) — with Hire + the cheaper prices, everyone gets improvements, so any single tile's marginal value
+drops (the intended floor-lift; note a granted tile also pre-fills one of the 4 area slots, a real cost now
+that the area is the Floor-lane brake). **New watch-item — the 2p/3p first-seat edge widened** (greedy sim:
+2p spread 2.0→6.0 pts, 3p 2.6→6.6; trader-mirror baseline P1 53.3→59.8%): at 2p the improvement deck holds
+ONE copy of each type (n−1) and P1 now reaches it first via Hire. Candidate dial if human play confirms:
+2p deck = n copies (not n−1), NOT seat compensation (the v1.7 lesson — it over-corrects). Recorded.
 
 **v2.3 "Privileges & Works" — the delivery-arithmetic keystone** *(2026-07-04, `play.html` KEY v87)* —
 **The designer-approved rework of the rival "reduced effect" + wharfage tangle** (Path C of the 2026-07-04
