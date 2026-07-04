@@ -174,11 +174,15 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   heaviest table math, at its payoff moment. To be reworked together with the **rival "reduced effect" rule**
   and **wharfage itself** (owner-full / rival-reduced / the points trickle all need one clearer, simpler
   formulation — revisit as one conversation).
-- **Enshrine — public-first vs vessel-direct (2026-07-04).** Does the Hall keep the v0.15 deploy-first
-  structural throttle (contestable before it scores), or allow **vessel-direct Enshrine at the Harbor** as
-  counterplay to hostile dock-loading? A real prestige-lane buff either way — decide in its own conversation,
-  persona-sim gated (the dial if it runs hot is the Hall curve, per the lessons). Engine keeps deploy-first
-  until decided.
+- **Enshrine — public-first vs vessel-direct: RESOLVED (2026-07-04) — deploy-first stands.** Enshrine stays
+  from **deployed casks only**; the v0.15 structural throttle (contestable before it scores) is kept and gets
+  stated in the rulebook as a principle ("the Hall demands a public showing"). The vessel-direct idea is
+  withdrawn; the counterplay to hostile dock-loading is the Charter relief valve + Tap recall.
+- **Improvement-tile parity (2026-07-04, designer directive).** The seven private improvements should be
+  **equally good — powerful, invested-in flexibility** (Private Quay is the model: a strong unlock you pay
+  for). The v1.7 free-starting-improvement study measured them *unequal* (Hop Garden ~+10% win-rate swing …
+  Extra Vessel ~−7%). Run a dedicated parity/tuning pass (re-use that study's methodology + persona sims)
+  after the rules-consistency change set lands; dials are costs and effect magnitudes, not new rules.
 - **The Trade Roads review pass (2026-07-04).** The Overland expansion gets its own dedicated exercise.
   Carry-ins from the consistency audit: Keut's +1 presence is orphaned when majorities are off; Frankfurt's
   free-Q3 can create a 6th delivered beer (the Flight edge); the +2 clock cells have no printed home; the
