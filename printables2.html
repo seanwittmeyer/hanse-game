@@ -80,17 +80,17 @@
   .gen .g-act{background:rgba(0,0,0,.22);border-radius:.04in;padding:.04in .055in;font-size:.105in;line-height:1.16;margin-top:.06in;align-self:stretch}
   .gen.tg .g-head .bigic{position:absolute;right:.1in;bottom:.08in}
   .gen.tg .g-head .bigic svg,.gen.tg .g-head .bigic .ic{width:.34in;height:.34in;opacity:.9}
-  /* ====== IMPROVEMENT CARD (v9) — half-height building card: 2in×1in, full-bleed interior art + green foot ====== */
-  .icard{width:2in;height:1in;background:var(--c,#46663a);color:#fff;position:relative;overflow:hidden;
+  /* ====== SPECIALIST CARD (v10) — SQUARE, matching the 2in×2in building card: full-bleed object art + purple foot ====== */
+  .icard{width:2in;height:2in;background:var(--c,#46663a);color:#fff;position:relative;overflow:hidden;
     display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}
   .icard > *{position:relative;z-index:1}
   .icard > .artbg{z-index:0}
-  .icard .ic-top{display:flex;align-items:center;gap:.05in;padding:.09in .12in 0}
-  .icard .ic-ic{flex:0 0 auto} .icard .ic-ic svg,.icard .ic-ic .ic{width:.18in;height:.18in;stroke-width:1.8;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}
-  .icard .ic-nm{font-variant:small-caps;font-weight:bold;font-size:.145in;line-height:1.0;flex:1}
-  .icard .ic-foot{background:linear-gradient(to top,var(--c) 0%,var(--c) 55%,transparent 100%);
-    padding:.16in .12in .09in;display:flex;align-items:flex-end;gap:.06in}
-  .icard .ic-act{font-size:.105in;line-height:1.12;flex:1}
+  .icard .ic-top{display:flex;align-items:center;gap:.06in;padding:.15in .17in 0}
+  .icard .ic-ic{flex:0 0 auto} .icard .ic-ic svg,.icard .ic-ic .ic{width:.2in;height:.2in;stroke-width:1.8;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}
+  .icard .ic-nm{font-variant:small-caps;font-weight:bold;font-size:.16in;line-height:1.02;flex:1}
+  .icard .ic-foot{background:linear-gradient(to top,var(--c) 0%,var(--c) 52%,transparent 100%);
+    padding:.26in .17in .15in;display:flex;align-items:flex-end;gap:.06in}
+  .icard .ic-act{font-size:.115in;line-height:1.18;flex:1}
   .icard .ic-act::first-letter{text-transform:uppercase}
   .icard .ic-act .ic,.icard .ic-act svg{width:.13in;height:.13in;vertical-align:-.02in}
   .icard .ic-act .g{color:#ffe08a} .icard .ic-act .h{color:#c4e69c}
@@ -777,24 +777,28 @@ const DEVELOP_PTS=3;     // v2.2 developer ★: banked IMMEDIATELY when a buildi
 // ============================================================================
 // SPECIALIST TILE ART — IMAGE-GENERATION SPEC (for the art agent; v2.6.1)
 // ============================================================================
-// Generate ONE image per Specialist, saved as art/improve-<slug>.png where <slug> = the tile
-// name lowercased, spaces removed by the kit's slug() (e.g. Coppersmith → improve-coppersmith.png,
-// Grain Factor → improve-grainfactor.png).
+// Generate ONE image per Specialist, saved as art/improve-<slug>.jpg (JPEG, not PNG — a flat-field
+// object shot with no transparency needs no alpha channel, and compresses ~8x smaller at quality
+// ~88 with no visible loss; every other art/ family stays .png) where <slug> = the kit's own
+// slug(d.nm) (lowercased, non-alphanumeric runs → a single hyphen — e.g. Coppersmith →
+// improve-coppersmith.jpg, Grain Factor → improve-grain-factor.jpg; NOTE the hyphen — a prior
+// version of this comment said "grainfactor"/"hopgardener" with no hyphen, which does not match
+// what slug() actually emits at runtime; always derive the filename from slug(), not by hand).
 // STYLE (all seven, identical treatment):
 //   • a plain warm BEIGE field (parchment #e9dcc0-ish), edge-to-edge — NO scene, NO border
 //   • ONE object centered — the specialist's trade tool (the art: brief on each row below);
 //     medieval-woodcut / muted-gouache feel, readable at 1 inch print size
 //   • no text, no people, no player-colour hues (the purple foot bar is added by the kit)
-// The card layout: this art sits full-bleed behind a scrim; name on top, effect+cost in the
-// purple foot — so keep the object in the middle 60% of the frame.
+// The card is now SQUARE (2in×2in, matching the Building card): this art sits full-bleed behind a
+// scrim; name on top, effect+cost in the purple foot — so keep the object in the middle 60% of the frame.
 // The seven briefs (also carried per-row as art:'…'):
-//   coppersmith  → a gleaming copper brew kettle
-//   cellarman    → an oak cask racked on a wooden stillage
-//   grainfactor  → a tied burlap sack overflowing with barley
-//   hopgardener  → a climbing hop bine with cones on a tall pole
-//   stevedore    → a medieval wooden treadwheel harbor crane
-//   lagerkeeper  → stacked casks dusted with frost and icicles
-//   quaymaster   → a private wooden jetty with a rope-wound mooring bollard
+//   coppersmith    → a gleaming copper brew kettle
+//   cellarman      → an oak cask racked on a wooden stillage
+//   grain-factor   → a tied burlap sack overflowing with barley
+//   hop-gardener   → a climbing hop bine with cones on a tall pole
+//   stevedore      → a medieval wooden treadwheel harbor crane
+//   lagerkeeper    → stacked casks dusted with frost and icicles
+//   quaymaster     → a private wooden jetty with a rope-wound mooring bollard
 // ============================================================================
 const IMPROVE=[   // SPECIALISTS = PURPLE (the third tile type, v2.4.1) · bought at the CELLAR, hired via the Q3+ Hire action, or London's benefit · v82: deck of n−1/type (3 each = the 4p deck)
   {ic:'wrench',     nm:'Coppersmith', art:'a gleaming copper brew kettle',   act:'Extra Vessel', g:3, c:'#5b3a8e', n:3},
@@ -856,7 +860,7 @@ const IMPF_GEO  ={w:22,h:8.5,  y0:0.45,yMax:8.22};   // improvements + owner fra
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
 // NATIVE component sizes (in) — the design size each piece renders at; packRun scales the FOOTPRINT by SCALE and
 // the render wrapper scales the CONTENT to match. casks/ships 2.5″ · buildings 2″ · improvement cards 2×1″ · frames 2.5″.
-const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2.5,2.5],bld:[2,2],imp:[2,1],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};
+const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2.5,2.5],bld:[2,2],imp:[2,2],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
@@ -921,15 +925,15 @@ function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--
   +(it.sub?'<div class="g-sub">'+it.sub+'</div>':'')
   +(it.big?'<div class="g-big">'+it.big+'</div>':'')
   +(it.g?'<div class="g-cost">'+cost(it.g,it.h)+'</div>':'')+'</div>';}
-// IMPROVEMENT tile (private upgrade) — icon + cost share a top row, then name, then a short effect box.
-// (Dedicated layout so the cost never collides with a wrapping effect — the old genTile 'tu' did.)
-// IMPROVEMENT CARD (v9) — a HALF-HEIGHT building card: full-bleed INTERIOR art (improve-<slug>.png) + scrim, the
-// name/icon on top, and a GREEN foot bar carrying the effect + cost. Same art-card grammar as the casks/ships/
-// buildings. Card bg = the same green as the foot, so any html2canvas foot-edge hairline is green-on-green.
+// SPECIALIST CARD (v10) — now a SQUARE 2in×2in card, matching the Building card's footprint (was a half-height
+// 2in×1in strip). Full-bleed OBJECT art (improve-<slug>.jpg — a single trade-tool icon on a plain beige field,
+// no scene) + scrim, name/icon on top, and a PURPLE foot bar carrying the effect + cost. Same art-card grammar
+// as the casks/ships/buildings. Card bg = the same purple as the foot, so any html2canvas foot-edge hairline
+// is purple-on-purple.
 const IMP_FOOT='#4a3a6e';   // Specialist foot/base — PURPLE (the third tile type, v2.4.1; was Cellar-green)
 function improveTile(d){const k=slug(d.nm);
   return '<div class="icard" style="--c:'+IMP_FOOT+'">'
-  +artLayer('improve-'+k+'.png')
+  +artLayer('improve-'+k+'.jpg')   // .jpg not .png — a flat-colour-field object shot compresses ~8x smaller as JPEG at no visible quality loss
   +'<div class="ic-top"><span class="ic-ic">'+LU(d.ic)+'</span><span class="ic-nm">'+d.nm+'</span></div>'
   +'<div class="ic-foot"><span class="ic-act">'+d.act+'</span><span class="ic-cost">'+cost(d.g,d.h)+'</span></div>'
   +'</div>';}
@@ -1682,7 +1686,7 @@ function exportItems(){
     it.push({type:'building',name:d.k,side:'front',w:2,h:2,html:buildingCard(d)});
     it.push({type:'building',name:d.k,side:'back', w:2,h:2,html:buildingBack(d)});});
   // IMPROVEMENTS · RECIPES · CONTRACT · PLAYER AID
-  IMPROVE.forEach(d=>it.push({type:'improvement',name:slug(d.nm),side:'front',w:2,h:1,html:improveTile(d)}));
+  IMPROVE.forEach(d=>it.push({type:'improvement',name:slug(d.nm),side:'front',w:2,h:2,html:improveTile(d)}));
   RECIPES.forEach(r=>it.push({type:'recipe',name:slug(r.nm),side:'front',w:1.85,h:2.55,html:recipeCard(r)}));
   // Gruit & Hopped recipe cards — for the user's convenience in the PNG export (canon keeps them on the brewery
   // board, so they're NOT on the printed recipe sheet; this just makes downloadable cards available).
