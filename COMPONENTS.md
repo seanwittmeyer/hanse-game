@@ -204,7 +204,7 @@ Printed schematic, no tokens of its own beyond what's listed in §4.
 │  VESSELS (start 2, cap 3)                                    │
 │   V1 [ BREW ]→[ ferment ]→[ AGE ]→[ READY ▸ deploy ]         │
 │   V2 [ BREW ]→[ ferment ]→[ AGE ]→[ READY ▸ deploy ]         │
-│   V3 ▒ locked — unlocks with Extra Vessel ▒                  │
+│   V3 ▒ locked — unlocks with the Coppersmith ▒                  │
 │  RECIPES   ▤Gruit ▤Hopped  ▤ ▤ …                             │
 │  IMPROVEMENTS  [ ] [ ] [ ] [ ] (cap 4)   CONTRACTS  ▣▣       │
 │  THE FLOOR — run your maturing casks' actions as a private   │

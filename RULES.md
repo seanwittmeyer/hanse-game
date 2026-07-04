@@ -181,7 +181,7 @@ recipe card to your rack — Gruit/Hopped start known):
 | Broyhan | Q3 | `G H H` | 1 | `1 H` |
 | Keut | Q3 | `G G H` | 2 | `1 G` |
 | Mumme | Q4 | `G H H H` | 3 | `2 H` |
-| Bock | Q5 | `G G H H H` | 3 (2 with Aging Cellar) | `1 G 1 H` |
+| Bock | Q5 | `G G H H H` | 3 (2 with the Cellarman) | `1 G 1 H` |
 
 (Specialty Beers and Jopenbier costs are given with those toggles, §12.)
 
@@ -215,7 +215,7 @@ ships **sail only when full**. **Or Enshrine** at the Hall (§6). **Or Charter**
 > **THE ONE VESSEL-OUTLET GRAMMAR (v2.2).** *A cask leaves your vessels only two ways: **Deploy**
 > it, or **Charter** it.* Every load verb on the board — the Harbor Load, a cask's free-Load
 > action, a ship's line-fire, the commission free-load — touches **deployed** casks only.
-> **Private Quay** is the invested exception: it upgrades *your Harbor Load* to reach your own
+> the **Quaymaster** (ex Private Quay) is the invested exception: it upgrades *your Harbor Load* to reach your own
 > vessels. **Enshrine takes deployed casks only** — *the Hall demands a public showing* (the
 > deploy-first contestability principle, kept deliberately). **Every gate check uses EFFECTIVE
 > quality** (kilns, Duckstein, Customs/Gauger — one rule for every verb).
@@ -374,22 +374,22 @@ you want (Q2+ draw `Source · Age · Load · Reach · Convert · Survey (a slot 
 Specialist, free — Q3+ only, v2.4) · Wild (Q4+)`; Gruit fixed to Source).
 
 **Vessels now carry pre-delivery value** — they power the **Floor** (§3, `PLAN.md` §1B) — which
-finally gives **Extra Vessel** a real pull (more vessels = a bigger held engine *and* more brewing
-throughput). So the **starting count / cap / whether Extra Vessel repeats** are a live ⚙ to
-retune: in playtests Extra Vessel and the Warehouse were *never* bought (dead upgrades); the Floor
-fixes Extra Vessel, and storage-cap upgrades stay suspect unless they earn their place.
+finally gives the **Coppersmith** (+1 vessel) a real pull (more vessels = a bigger held engine *and* more brewing
+throughput). So the **starting count / cap / whether the Coppersmith repeats** are a live ⚙ to
+retune: in early playtests the extra vessel and the Warehouse were *never* bought (dead upgrades); the Floor
+fixes it, and storage-cap upgrades stay suspect unless they earn their place.
 **Most v0.16 upgrades fold into the public building family (§5).**
 
 **The SPECIALISTS (the purple private tiles — bought at the CELLAR for goods, hired free via the Q3+
-Hire action, or taken as London's benefit; the v2.4 re-prices lift the floor ⚙):** Extra Vessel (`3 G`),
-Aging Cellar (maturation −1 step, `4 G`), Granary Right (+1 extra grain, `3 G`), **Hop Garden** (+1 extra
-hops, `4 G` — the parity probe's outlier pays a premium in the hops-led economy), **Harbor Crane**
-(your Harbor load sets out **2 casks**, `3 G`), **Lagering Cellar** (each of **your turns**, **EVERY**
-maturing cask **+1 age**, `2 G` — the Floor-lane keystone), and **Private Quay** (load **Ready casks
+Hire action, or taken as London's benefit; the v2.4 re-prices lift the floor ⚙; v2.6.1 persona names):**
+**Coppersmith** (+1 vessel, `3 G`), **Cellarman** (maturation −1 step, `4 G`), **Grain Factor** (+1 extra
+grain, `3 G`), **Hop Gardener** (+1 extra hops, `4 G` — the parity probe's outlier pays a premium in the
+hops-led economy), **Stevedore** (your Harbor load sets out **2 casks**, `3 G`), **Lagerkeeper** (each of
+**your turns**, **EVERY** maturing cask **+1 age**, `2 G` — the Floor-lane keystone), and **Quaymaster** (load **Ready casks
 straight from your vessels** onto ships, `3 G` — the only door past Deploy).
 Your **improvements area holds at most 4 tiles** (these + any flipped buildings, §5) — so the engine is a real
 choice, not a buffet. *(v1.7 moved the buy from the Market to the Cellar — sim showed the barrier was the
-Market action's opportunity cost, not the goods. The free-starting-improvement study makes **Hop Garden** the
+Market action's opportunity cost, not the goods. The free-starting-improvement study made **Hop Gardener** the
 strongest in the hops economy.)*
 
 **v82 "Scarce Improvements" — the improvements are now a SHUFFLED DECK + a face-up DISPLAY of 4, not an

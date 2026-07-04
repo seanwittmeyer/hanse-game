@@ -243,7 +243,7 @@
   .mtrack .ms.fin{background:rgba(74,107,58,.24)}
   .mtrack .ms.fin .rdy{font-variant:small-caps;font-weight:900;font-size:.086in;color:var(--pc);line-height:1}
   .mtrack .ms.fin .rsub{font-variant:small-caps;font-size:.054in;color:var(--pc);opacity:.85;line-height:1}
-  /* V3 (Extra Vessel) is identical to V1/V2 — ONLY its tile outline is dashed */
+  /* V3 (the Coppersmith) is identical to V1/V2 — ONLY its tile outline is dashed */
   .vcol.locked .vsq{border-style:dashed}
   /* improvement slots — host bought improvements (violet) AND displaced/flipped Buildings; tile-true 1.25in squares */
   .isq{width:1.25in;height:1.25in;border:1.5px dashed var(--violet);border-radius:.06in;background:rgba(91,58,142,.07);
@@ -730,7 +730,7 @@ function aidFront(){
         +'<div class="ln">'+LU('store')+' <b>Market</b> — 2 goods, <i>or</i> 1: recipe · Building (display → <b>place at once</b>) · ship '+LU('sailboat')+' ('+G+'2, + free-load a deployed cask) · contract '+LU('ticket')+' ('+G+'1).</div>'
         +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — Brew a recipe into an open vessel; or '+LU('barrel')+' <b>Deploy</b> a Ready cask.</div>'
         +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — 3 age points across your vessels; <b>Tap</b> a cask; or buy an Improvement '+LU('wrench')+' (any order).</div>'
-        +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — Load any <b>deployed</b> cask onto a ship (<b>sails when full</b>; vessels only via Private Quay); <b>Enshrine</b> a Q2+ deployed cask; or <b>Charter</b> (vessel or slot).</div>'
+        +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — Load any <b>deployed</b> cask onto a ship (<b>sails when full</b>; vessels only via the Quaymaster); <b>Enshrine</b> a Q2+ deployed cask; or <b>Charter</b> (vessel or slot).</div>'
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
         +'<div class="ln"><b>Sailed-Ships</b> fills (6/10/13 for 2/3/4p) → finish the round → score:</div>'
         +'<div class="ln">'+LU('crown','vi')+' <b>Hall</b> 3/5/7/9 · '+LU('landmark','vi')+' <b>kontor</b> starting value + the demand die · <b>majorities</b> · <span class="em">Flight</span> 3→4·4→9·5→16 (6→25 w/ Jopenbier) · <b>developer</b> +3'+LU('star','vi')+' banked at each overbuild.</div>'
@@ -798,7 +798,7 @@ function rkPrinted(cc,L,nm,g,h){   // a clone of a recipe card's bottom "c-strip
     +'<div class="c-row"><span class="c-rung">'+LU(QI)+L+'</span><span class="c-nm">'+nm+'</span></div>'
     +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(g,h)+'</span></div></div>';}
 function pboard(p){
-  const vessels=vcol(1,false)+vcol(2,false)+vcol(3,true);   // V1·V2 open, V3 earned with Extra Vessel
+  const vessels=vcol(1,false)+vcol(2,false)+vcol(3,true);   // V1·V2 open, V3 earned with the Coppersmith
   let imps='';for(let i=0;i<4;i++)imps+='<div class="isq">'+LU('wrench')+'improvement</div>';
   // THE FLIGHT — Gruit + Hopped (always) + the 4 possible exports (3 dealt each game; the 4th space stays empty)
   const flightBeers=[['Gruit','Q1',0],['Hopped','Q2',0],['Broyhan','Q3',1],['Keut','Q3',1],['Mumme','Q4',1],['Bock','Q5',1],['Jopenbier','Q6',1]];   // v2.2: the capstone counts for the Flight (space used only when the toggle is in play)
