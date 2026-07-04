@@ -187,11 +187,10 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 - **Asymmetric starting improvements (variable powers).** Deal each player **two** improvements; they keep
   **one** as a starting private power. Turns the (now symmetric) improvement set into an opening-asymmetry /
   replay lever. Needs: a power set balanced enough that any pair is fair, and a draft/keep-one rule. Open.
-- **Starting building — does it help me or the table?** Each house starts with **1 random Building in hand**
-  to author turn 1. Concern: a building I place is a **shared slot** — if I can't get my own cask onto it
-  (timing/contention), it can help rivals more than me, and the random tile may not fit my plan. Options to
-  revisit: deal a **choice** of starting buildings (draft), or make the opening building **self-favoring**
-  somehow, or drop the random start. Open — tie into the asymmetry discussion above.
+- **Starting building — RESOLVED (2026-07-04): there is no starting building.** The "1 random Building in
+  hand" setup is cut (with the whole buildings-in-hand concept — buildings are always chosen from the display
+  and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
+  expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
 
 **v85 — "Frankfurt opens": the deep-node 2-slot cap is lifted** *(2026-06-28, `play.html` KEY v85)* —
