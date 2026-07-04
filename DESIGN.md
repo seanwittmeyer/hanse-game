@@ -242,6 +242,11 @@ for sim/human seats); `ai-render-smoke` **ALL PASS** (its Jopenbier assertion up
 `ai-ladder 600` **PASS — 0 errors, every rung ≥60%** (journeyman 87.7% · trader 71.5% · GM 62.5% · CM 60.0%;
 mixed 3–4p tables 0 errors); `ai-tune` (CEM, 10 gens + confirmation) → **KEEP the incumbent `AI_W`** (best
 challenger 44.3% vs incumbent — the v2.2 grammar didn't shift the Trader's weight landscape).
+*Oracle runs (sharded, full budgets — `playtests/oracle-gmcm-v86.txt` / `oracle-cmcm-v86.txt`):* **GM-vs-CM
+73.3%** to the Cellarmaster over 75 games at `CELLAR_MS=220` (the ≥60% gate holds with room; v84 A/B was 66.7%);
+**CM-vs-CM mirror** (36 games) — ~17.9 rounds, winner ~33★, delivery share **Bruges 41% / Hall 22.5% / Bergen
+17% / London 13% / Novgorod 6%** (Enshrine a real lane at strong play), win-rate climbing with Flight breadth
+(3-tier 54% → 4-tier 65%).
 *Watch-items for the persona oracle (⚙, recorded not tuned):* the PATHWAYS lanes moved with the die cap +
 benefit changes — 2p prestige reads **hot (~56%)** with deep ~53% and majority ~37% (3p ≈ 29/33/36/28/36) —
 re-baseline after the parked wharfage/rival-effect and improvement-parity conversations rather than dialing
