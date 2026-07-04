@@ -1,9 +1,9 @@
-# Brewhouses of the Hanse — Components (v2.4.1 “Three Tiles”)
+# Brewhouses of the Hanse — Components (v2.5 “Warm Wharf”)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9.
-> - The live build is `play.html` — **v2.4.1 “Three Tiles”** (`KEY hanse-hotseat-v88`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v2.5 “Warm Wharf”** (`KEY hanse-hotseat-v89`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - Cross-reference for tile families: §3 boards, §4 supply, §5–11 the seven families A–G, §12 player board, §13 starting setup, §14 box footprint. Expansion add-ons are §15; cross-references §16.
 
 ---
@@ -229,7 +229,7 @@ Printed schematic, no tokens of its own beyond what's listed in §4.
 | Ready Gruit in V1 | 1 | from the cask supply |
 | Worker placement | 1 | choose any station, free (no toll) |
 
-Shared setup: 2 ships dealt onto slots (spread across lines, includes a guaranteed Hulk→Bruges); ship market filled to 3; Building display filled to 4; Improvement display filled to 4 (deck = `n−1` × 7); export draft of 3 of 4; Sailed-Ships track length set (§14). *(v2.2: no starting building.)*
+Shared setup: 2 ships dealt onto slots (spread across lines, includes a guaranteed Hulk→Bruges); **2 neutral green Buildings** dealt from the deck onto open slots (v2.5 — no owner; overbuilt = discarded, nothing banked); ship market filled to 3; Building display filled to 4; Improvement display filled to 4 (deck = `n−1` × 7); export draft of 3 of 4; Sailed-Ships track length set (§14). *(v2.2: no starting building.)*
 
 ---
 

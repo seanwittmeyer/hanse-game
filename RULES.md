@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v2.4.1 “Three Tiles”)
+# Brewhouses of the Hanse — Turn & Round Rules (v2.5 “Warm Wharf”)
 
 > **Status: live (2026-07-04).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
@@ -58,7 +58,9 @@ Each house starts with (⚙):
 - **2 open vessels** (brewing throughput; cap 3 ⚙).
 - **2 charter contracts** (the scarce relief-valve certificates; buy more at the Market — §6).
 - A **warm start** so the Wharf is live turn 1: a guaranteed **Hulk → Bruges** + one more ship
-  dealt onto slots (spread across lines); **one Ready Gruit** per house to deploy on turn 1.
+  dealt onto slots (spread across lines); **two NEUTRAL green Buildings** dealt from the deck onto
+  open slots (v2.5 — they serve any dock; no owner, so overbuilding one banks nothing and discards
+  it; a Privilege is personal and is never dealt neutral); **one Ready Gruit** per house.
 - An empty **brewery board** (vessels + recipe area — §8). *(v2.2: there is **no starting building**
   and **no buildings-in-hand** anywhere — buildings are always chosen from the display and placed on
   acquisition, §5a. The opening-asymmetry idea may return via an expanded improvements set —

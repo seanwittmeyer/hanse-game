@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v2.4.1 “Three Tiles”)
+# Brewhouses of the Hanse — Design (v2.5 “Warm Wharf”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -223,6 +223,17 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v2.5 "Warm Wharf" — the table-feel pass** *(2026-07-04, `play.html` KEY v89)* — Two designer asks.
+**(1) Greyed, not hidden:** every stop / harbor option now renders but is **disabled when it has no legal
+effect right now** (`stopAvail`/`actAvail`/`btnOff`) — the list re-renders after each stop, so **resolve
+order can light a greyed stop up** (deliberate: "I may choose the order of actions to make it activatable").
+**(2) Two NEUTRAL starting Buildings:** setup deals 2 random **green** Buildings (transform verb — a
+PRIVILEGE is a personal grant and is never neutral) from the deck onto open slots, owner-less, alongside
+the 2 warm-start ships — the wharf opens with working infrastructure; overbuilding a neutral tile banks
+nothing and discards it. *Gates (KEY v89):* `verify-v89` 10 checks PASS + v87/v88 still green; sim 300
+0 crash/deadlock, pace in band; render-smoke ALL PASS. *(Parked to discuss: commissioning a ship ONTO a
+slot with an eligible cask, auto-loading it — the designer's Bruges-ship-onto-a-Gruit example.)*
 
 **v2.4.1 — the naming pass: PRIVILEGE · BUILDING · SPECIALIST** *(2026-07-04, rides KEY v88 — display
 text only, no state change; the v2.1.1 precedent)* — the designer settled the triad: the green
