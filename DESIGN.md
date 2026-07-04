@@ -172,7 +172,13 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 - **Delivery arithmetic diet (2026-07-04).** Discuss after the rules-consistency exercise: the delivery moment
   stacks base + building ★ + the Q4/Q5 premium + the rival share + the ship-berth bonus + wharfage — the game's
   heaviest table math, at its payoff moment. To be reworked together with the **rival "reduced effect" rule**
-  (owner-full / rival-reduced needs a clearer, simpler formulation — revisit both as one conversation).
+  and **wharfage itself** (owner-full / rival-reduced / the points trickle all need one clearer, simpler
+  formulation — revisit as one conversation).
+- **Enshrine — public-first vs vessel-direct (2026-07-04).** Does the Hall keep the v0.15 deploy-first
+  structural throttle (contestable before it scores), or allow **vessel-direct Enshrine at the Harbor** as
+  counterplay to hostile dock-loading? A real prestige-lane buff either way — decide in its own conversation,
+  persona-sim gated (the dial if it runs hot is the Hall curve, per the lessons). Engine keeps deploy-first
+  until decided.
 - **The Trade Roads review pass (2026-07-04).** The Overland expansion gets its own dedicated exercise.
   Carry-ins from the consistency audit: Keut's +1 presence is orphaned when majorities are off; Frankfurt's
   free-Q3 can create a 6th delivered beer (the Flight edge); the +2 clock cells have no printed home; the
