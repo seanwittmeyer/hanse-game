@@ -1,0 +1,34 @@
+Brewhouses of the Hanse — Trader weight tuner (CEM)  |  gens=10 pop=16 elite=4
+fitness = 0.5*WR(2p vs incumbent, n=160) + 0.25*WR(2p vs journeyman, n=80) + 0.25*min(1, 2*WR(4p vs 3 incumbents, n=60))
+incumbent/defaults: swing=1 upBen=1.45 goodsBen=1.4 hallBase=0.45 hallRamp=0.9 leanVal=0.91 leanSwing=1.01 leanHall=0.91 goalW=1.94 buyFlush=8.68
+
+gen  1  best f=0.568 (inc 50% jour 74% 4p 27%)  elite-mean f=0.536  [15s]
+        mean: swing=1.043 upBen=0.719 goodsBen=1.058 hallBase=0.604 hallRamp=0.95 leanVal=0.92 leanSwing=0.996 leanHall=0.962 goalW=1.337 buyFlush=9.268
+gen  2  best f=0.532 (inc 44% jour 68% 4p 28%)  elite-mean f=0.524  [29s]
+        mean: swing=0.864 upBen=0.622 goodsBen=1.091 hallBase=0.653 hallRamp=1.034 leanVal=0.939 leanSwing=0.98 leanHall=0.965 goalW=1.185 buyFlush=8.686
+gen  3  best f=0.554 (inc 49% jour 76% 4p 23%)  elite-mean f=0.530  [43s]
+        mean: swing=0.797 upBen=0.549 goodsBen=0.895 hallBase=0.704 hallRamp=1.012 leanVal=0.969 leanSwing=0.99 leanHall=1.014 goalW=1.283 buyFlush=8.44
+gen  4  best f=0.574 (inc 46% jour 65% 4p 37%)  elite-mean f=0.557  [57s]
+        mean: swing=0.726 upBen=0.675 goodsBen=1.261 hallBase=0.688 hallRamp=1.011 leanVal=0.981 leanSwing=0.969 leanHall=1.025 goalW=1.22 buyFlush=8.721
+gen  5  best f=0.550 (inc 44% jour 71% 4p 30%)  elite-mean f=0.540  [70s]
+        mean: swing=0.73 upBen=0.592 goodsBen=1.165 hallBase=0.675 hallRamp=1.046 leanVal=0.981 leanSwing=0.99 leanHall=1.028 goalW=1.326 buyFlush=9.264
+gen  6  best f=0.605 (inc 56% jour 76% 4p 27%)  elite-mean f=0.571  [84s]
+        mean: swing=0.716 upBen=0.745 goodsBen=0.991 hallBase=0.674 hallRamp=1.016 leanVal=0.995 leanSwing=0.991 leanHall=1.049 goalW=1.376 buyFlush=9.071
+gen  7  best f=0.576 (inc 49% jour 75% 4p 28%)  elite-mean f=0.559  [98s]
+        mean: swing=0.666 upBen=0.785 goodsBen=1.359 hallBase=0.68 hallRamp=1.084 leanVal=0.988 leanSwing=0.979 leanHall=1.043 goalW=1.376 buyFlush=9.381
+gen  8  best f=0.580 (inc 51% jour 68% 4p 32%)  elite-mean f=0.554  [111s]
+        mean: swing=0.641 upBen=0.802 goodsBen=1.32 hallBase=0.661 hallRamp=1.06 leanVal=1.002 leanSwing=0.986 leanHall=1.033 goalW=1.36 buyFlush=9.159
+gen  9  best f=0.578 (inc 54% jour 74% 4p 25%)  elite-mean f=0.569  [125s]
+        mean: swing=0.627 upBen=0.796 goodsBen=1.115 hallBase=0.645 hallRamp=1.07 leanVal=1.001 leanSwing=1 leanHall=1.047 goalW=1.345 buyFlush=9.228
+gen 10  best f=0.571 (inc 47% jour 61% 4p 37%)  elite-mean f=0.562  [138s]
+        mean: swing=0.636 upBen=0.795 goodsBen=1.024 hallBase=0.657 hallRamp=1.052 leanVal=0.986 leanSwing=0.974 leanHall=1.058 goalW=1.343 buyFlush=9.208
+
+---- confirmation (2p n=2000 each + 4p n=600) ----
+final-mean  vs incumbent 44.3% (±2.2)  vs journeyman 70.3%  4p share 23.2% (fair 25)
+            swing=0.636 upBen=0.795 goodsBen=1.024 hallBase=0.657 hallRamp=1.052 leanVal=0.986 leanSwing=0.974 leanHall=1.058 goalW=1.343 buyFlush=9.208
+best-ever   vs incumbent 44.0% (±2.2)  vs journeyman 69.3%  4p share 24.8% (fair 25)
+            swing=0.705 upBen=0.878 goodsBen=0.948 hallBase=0.634 hallRamp=1.158 leanVal=0.998 leanSwing=0.984 leanHall=1.063 goalW=1.33 buyFlush=9.775
+
+RECOMMENDATION: KEEP the incumbent — no candidate beats it significantly (best: final-mean at 44.3%). The shipped AI_W stands.
+winner weights: swing=0.636 upBen=0.795 goodsBen=1.024 hallBase=0.657 hallRamp=1.052 leanVal=0.986 leanSwing=0.974 leanHall=1.058 goalW=1.343 buyFlush=9.208
+

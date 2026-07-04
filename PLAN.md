@@ -1,9 +1,9 @@
-# Brewhouses of the Hanse — “Living Slots” reset — PLAN (SHIPPED · live build now v2.1.1 “Staple Rights”)
+# Brewhouses of the Hanse — “Living Slots” reset — PLAN (SHIPPED · live build now v2.2 “One Grammar”)
 
-> **Status: SHIPPED — this plan opened as the v1.0 “Living Slots” reset (2026-06-16); v1.7–v2.1.1 shipped on top, live build now v2.1.1 “Staple Rights”.** The
+> **Status: SHIPPED — this plan opened as the v1.0 “Living Slots” reset (2026-06-16); v1.7–v2.2 shipped on top, live build now v2.2 “One Grammar”.** The
 > keystone rebuild this plan called for has **shipped**: the *living, composable Wharf slots*, the
 > differentiation pass (v1.1), and the demand dice (v1.2) are all live repo-wide (`RULES.md` /
-> `COMPONENTS.md` / all five HTML pages now on **v2.1.1 “Staple Rights”**, base ruleset v1.8). This plan replaced the abandoned
+> `COMPONENTS.md` / all five HTML pages now on **v2.2 “One Grammar”**). This plan replaced the abandoned
 > "demand-board" detour (the `*-v1` files, deleted; the *"Leffe at a party / quality is a
 > construct"* thread and everything after it is **discarded**) and returned to the **keystone we
 > bookmarked early in the design chat**: the *living, composable Wharf slots*. The prior live game
@@ -264,8 +264,8 @@ Three decisions set the keystone's shape; everything else sizes off them:
 2. **Edit the canonical `RULES.md`** forward to the new path (the keystone + the clear scoring). ✓ shipped (v1.4 “Deploy”).
 3. **Edit `COMPONENTS.md`** — the building family (the new content deck, one grammar), the
    reconceived destination/scoring table, the cuts. ✓ shipped (v1.4 “Deploy”; the demand dice replaced the value chits).
-4. **Rebuild `play.html`** to the new rules (sandbox first; keep v0.16.1 live until ready). ✓ shipped — `play.html` is now on **v2.1.1 “Staple Rights”** (v0.16.1 archived).
-5. **HTML docs** (`learn` / `index`) then **`printables`** last. ✓ shipped — all five pages on **v2.1.1 “Staple Rights”** (incl. the alternative card-based `printables2.html`).
+4. **Rebuild `play.html`** to the new rules (sandbox first; keep v0.16.1 live until ready). ✓ shipped — `play.html` is now on **v2.2 “One Grammar”** (v0.16.1 archived).
+5. **HTML docs** (`learn` / `index`) then **`printables`** last. ✓ shipped — all five pages on **v2.2 “One Grammar”** (incl. the alternative card-based `printables2.html`).
 6. Sim-gate throughout (crash/deadlock-free, pace 12–25, lanes balanced, AI ladder). ✓ ongoing — the standing gate for every change.
 
 ## 8. Guardrails

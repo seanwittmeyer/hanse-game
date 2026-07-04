@@ -134,8 +134,7 @@ function botMarket(p){
   if(UI.stage==='place'){placeSlot(emptySlots()[0].id);return;}                 // a commissioned ship → a slot
   if(UI.stage==='commload'){var el=commEligible(p,UI.tmp.commShipSlot);
     if(!el.length){commSkip();return;}el.sort(function(a,b){return b.q-a.q;});commLoad(el[0].ref);return;}
-  // place a held Building (the starting tile / a Survey draw) so authorship is live
-  if((p.hand||[]).length && aBuildSlots().length){placeHeld(0);return;}
+  // (v2.2: no buildings-in-hand — every acquisition is display → place at once)
   if(needShip(p)){var olk=olPersonaKon(p),sidx=0;
     if(olk&&S.shipDisplay){var ti=S.shipDisplay.findIndex(function(s){return s.dest===olk;});if(ti>=0)sidx=ti;}   // commission a ship bound for the lane's kontor
     commissionShip(sidx);return;}
@@ -263,11 +262,13 @@ function botActOnce(){var p=cur();var U=UI.sub;
     case 'benefit':return botBenefit();
     case 'survey':return botSurvey();
     case 'placebldg':return botPlaceBldg();
-    case 'toll':return tollPay();              // the bot pays the occupancy toll (the Floor is a human option)
     case 'goodspick':return goodsPick(2,0);    // liquidity owner-choice — the bot takes 2 grain
     case 'breach':{var lp=S.players[UI.pendingReach[0].pid];var bk=reachBenKontore(lp);if(!bk.length)return breachPick(null);var bb=bk[0],bv=-1e9;  // reinforce best majority swing (presence only where delivered)
       bk.forEach(function(k){lp.presBonus[k]=(lp.presBonus[k]||0)+1;var a=majorityAwards(k);lp.presBonus[k]--;var v=(a[lp.id]||0)+Math.random()*0.1;if(v>bv){bv=v;bb=k;}});return breachPick(bb);}
-    case 'brecipe':{var lp=S.players[UI.pendingRecipe[0].pid];var o=freeRecipeOptions(lp);if(!o.length)return brecipePick(null);o.sort(function(a,b){return STYLES[b].q-STYLES[a].q;});return brecipePick(o[0]);}
+    case 'brefine':{var lp=S.players[UI.pendingRefine[0].pid];   // v2.2 — Novgorod refine: the owner picks a maturing cask; the bot takes closest-to-Ready
+      var m=lp.vessels.map(function(c,i){return {c:c,i:i};}).filter(function(o){return o.c&&o.c.step<o.c.ready;})
+        .sort(function(a,b){return (a.c.ready-a.c.step)-(b.c.ready-b.c.step);});
+      return brefinePick(m.length?m[0].i:-1);}
     case 'olclaim':{var b=(UI.pendingOlClaim||[])[0];if(!b)return olClaimPick(0);var open=olOpenSlots(b.node);return olClaimPick(open.length?olBestSlot(S.players[b.pid],b.node,open):0);}   // The Trade Roads — claim the best open Staple Right
     case 'end':return endTurn();
     default: throw new Error('unknown UI.sub: '+U);

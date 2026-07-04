@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v2.1.1 “Staple Rights”)
+# Brewhouses of the Hanse — Design (v2.2 “One Grammar”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v2.1.1 “Staple Rights”** — live; **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — the **Hanse Network**: a tree from **Hamburg** (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul) that **REPLACES the kontor majorities**. A **voyage** to a kontor pushes your **caravan** one node along its road (**per voyage**, gated by cask quality); reaching a town lets each cask aboard **claim a Staple-Right slot** (a distinct one-shot bonus, flavoured by lane: Rhineland=craft · London=infrastructure · Bergen=logistics · East=points), in load order; a full town pays an overflow bonus. Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
+|**Status**     |**v2.2 “One Grammar”** — live; the designer-approved **rules-consistency keystone** (one load grammar · one gate rule · benefits-when-gained · buildings display→placed-at-once · the Floor as the standing 3rd line · overbuild one-rule · the demand die a real d6 · Jopenbier in the Flight); **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — the **Hanse Network**: a tree from **Hamburg** (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul) that **REPLACES the kontor majorities**. A **voyage** to a kontor pushes your **caravan** one node along its road (**per voyage**, gated by cask quality); reaching a town lets each cask aboard **claim a Staple-Right slot** (a distinct one-shot bonus, flavoured by lane: Rhineland=craft · London=infrastructure · Bergen=logistics · East=points), in load order; a full town pays an overflow bonus. Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
 
 ---
 
@@ -78,13 +78,14 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v2.1.1 “Staple Rights”)
+## 6. The current architecture (v2.2 “One Grammar”)
 
 Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
 - **The Wharf** — four stations (A Market·Source → B Brewhouse·Brew → D Cellar·Age →
-  C Harbor·Ship) ringed by **8 slots**. Move orthogonally, activate a row/column, resolve up to
-  4 stops (slot·station·station·slot); occupancy toll (or the **Floor**, below).
+  C Harbor·Ship) ringed by **8 slots**. Move orthogonally, then choose one of **three lines** —
+  the row, the column, or the **Floor** (v2.2: the standing private 3rd line) — and resolve its
+  stops in any order, all optional; the occupancy toll applies to public lines only.
 - **The dual-role cask** — quality Q1–Q5 + a slot-action; three states: maturing (private) →
   deployed (public, contestable) → delivered (scored, gone).
 - **The keystone — living, composable slots.** A slot holds a **building** (owned modifier) and
@@ -103,8 +104,15 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   **beers**, (beers−1)², min 3).
 - **The five lanes — each a complete path** (no half-measures; braiding emerges, it isn't a
   goal): **Prestige/Hall · Demand/value · Volume/majority · Range/Flight · Authorship/engine.**
-- **The Floor** — a private line you may run instead of a grid line, powered by your built-up
-  brewery (engine payoff + the boutique brewer's self-sufficiency; `PLAN.md` §1B).
+- **The Floor** — the standing 3rd line (v2.2): after moving, always choosable instead of the
+  row/column — every vessel cask's action + a Wild per flipped building, never tolled
+  (engine payoff + the boutique brewer's self-sufficiency; `PLAN.md` §1B).
+- **One grammar (v2.2)** — casks leave vessels only by **Deploy or Charter** (Private Quay = the
+  invested Harbor exception); every gate check uses **effective quality**; **benefits resolve when
+  gained, owner's choice**; **buildings always display → placed at once** (no hand, no starting
+  building); **overbuild**: +3★ banked immediately + the tile flips to the owner's floor (self =
+  rival; floor full → discard); the **demand die is a real d6, max 6** (building ★ + Q4/Q5
+  premium, set not accumulated; destinations are the cask's starting value).
 - **Kept from v0.16:** ships sail-when-full; the Charter relief valve (scarce contracts); the
   Sailed-Ships end clock; the no-dice/cards/money constraints.
 - **The expansion spine (v2.0):** a tiny `registerExpansion` registry + hook seams
@@ -196,6 +204,48 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v2.2 "One Grammar" — the rules-consistency keystone** *(2026-07-04, `play.html` KEY v86)* —
+**The designer-approved pass that collapses the grown-per-version verb exceptions into single rules** (the
+full audit + decision trail: the 2026-07-04 consistency exercise). The ten changes: **(1) The FLOOR is the
+standing 3rd line** — move, then choose *row / column / Floor* (every vessel cask's action + a Wild per
+flipped building, any order, all optional, resolved through the normal stops picker); the occupancy toll
+applies **only to a public line while sharing the station** (the Floor is never tolled; the old toll-fork UI
+state is gone). **(2) One vessel-outlet grammar** — *casks leave your vessels only by Deploy or Charter*;
+Private Quay stays as the invested exception (it upgrades your Harbor Load to reach your vessels); the
+**commission free-load is deployed-casks-only**. Enshrine stays deployed-only — stated as a principle: *the
+Hall demands a public showing.* **(3) One gate rule** — every load/charter/commission check uses **effective
+quality** (the raw-q variants in `commEligible`/`commLoad`/`charterDest` are gone; a kilned/Duckstein cask
+now charters and commission-loads at its effective quality). **(4) Positional building mods** — a building
+modifies whatever is docked on it *now* (`slotEffAct`); the Workshop no longer permanently rewrites a cask's
+action, and **Tap fires the modified action**. **(5) Overbuild, one rule** — ANY displacement (self = rival):
+the owner banks **+3★ immediately** (benefits-when-gained; the flipped card's printed back is the record),
+the tile flips to their floor as a Wild, **discarded if the 4 slots are full** (no hand exists). **(6)
+Buildings always from the display, placed at once** — Market buy, London benefit, Survey; the entire
+buildings-in-hand concept is CUT (`p.hand`, `placeHeld`, the off-turn `pendingBuilds` queue, both blind deck
+draws) and there is **no starting building**. **(7) Benefits resolve when gained, owner's choice** — whoever's
+turn it is (Bruges goods-mix · Bergen Reach · London building+placement · **Novgorod refine is now a choice**
+of which maturing cask); AI-owned pendings auto-resolve, human-owned pendings **pause an AI's turn via the
+human-gate** (the pass-the-device moment). **(8) The demand die is a real d6** — building ★ + the Q4/Q5
+premium, SET not accumulated, **hard max 6** (the overflow badge is gone); destinations never touch the die
+(they are the cask's *starting value*). **(9) Jopenbier joins the Flight** ("a beer you brew like the
+others") — six types with the capstone on, `FLIGHT_PTS[6]=25` (the formula's own (n−1)²; also closes the
+6-distinct-beers-scored-zero hole). **(10) A ship sails whenever it becomes full** — including when its
+capacity *shrinks* (a Cooperage overbuilt under a part-loaded hull was a strand). Plus dead-state removal:
+the Novgorod free-recipe flow, `enterBldgLine`, the `BTGT` 'line' target, `p.commissioned` ("merchant goal").
+*Gates (KEY v86):* **`verify-v86` — 26 targeted checks PASS** (Floor stops · toll public-only · overbuild
+banking/flip/discard · die cap 6 · commission pool/effQ · vessel-charter effQ · the Cooperage sail · the full
+human-gate benefit flow · refine choice · Flight 6→25); base `sim.js 500` → **0 crash/deadlock 2–4p, 98–100%
+pace-in-band, clock 96–99%**, seat spreads healthy; `EXPANSION+JOPEN 300` and `OVERLAND 300` → **0
+crash/deadlock, pace in band** (one genuine bug caught and fixed at the gate: `aiPickBuilding` made null-safe
+for sim/human seats); `ai-render-smoke` **ALL PASS** (its Jopenbier assertion updated to the new Flight rule);
+`ai-ladder 600` **PASS — 0 errors, every rung ≥60%** (journeyman 87.7% · trader 71.5% · GM 62.5% · CM 60.0%;
+mixed 3–4p tables 0 errors); `ai-tune` (CEM, 10 gens + confirmation) → **KEEP the incumbent `AI_W`** (best
+challenger 44.3% vs incumbent — the v2.2 grammar didn't shift the Trader's weight landscape).
+*Watch-items for the persona oracle (⚙, recorded not tuned):* the PATHWAYS lanes moved with the die cap +
+benefit changes — 2p prestige reads **hot (~56%)** with deep ~53% and majority ~37% (3p ≈ 29/33/36/28/36) —
+re-baseline after the parked wharfage/rival-effect and improvement-parity conversations rather than dialing
+now; the die cap trims only the top-end premium combos (Connoisseur/kontor charters + Q5 → 6). All numbers ⚙.
 
 **v85 — "Frankfurt opens": the deep-node 2-slot cap is lifted** *(2026-06-28, `play.html` KEY v85)* —
 The Trade Roads' deep ◆ terminals were hard-capped at **2 active slots** regardless of player count
@@ -386,7 +436,7 @@ clear), so **reach (breadth) and quality (depth) both win**. **Presence markers 
 Reaching a node, **each cask aboard CLAIMS an open Staple-Right SLOT there, in load order** (v2.1 — the
 founder/recurring-perk model was retired as per-turn tabletop upkeep): a **distinct ONE-SHOT bonus** + the node's
 delivery ★, **flavoured by lane** — **Rhineland = craft** (recipe · a brew action · +age) · **London =
-infrastructure** (a Building to hand · a free Improvement) · **Bergen = logistics** (charter contracts · goods · a
+infrastructure** (a Building — from the display, placed at once (v2.2) · a free Improvement) · **Bergen = logistics** (charter contracts · goods · a
 vessel) · **East = depth/value** (a vessel · +quality · big points). A full node pays the line's small **overflow**
 (never nothing); active slot count **scales with player count** and the deep ◆ terminals (Frankfurt/Pskov) stay
 **scarce**. **Bruges is the lone no-slots gateway** (recipe OR 2 goods); the other kontore — **London/Bergen/Novgorod**
