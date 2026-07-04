@@ -1,0 +1,9 @@
+IMPROVEMENT-PARITY PROBE — 2p trader mirrors, P1 granted one free improvement · N=400/config (KEY hanse-hotseat-v88)
+baseline (no grant): P1 wins 59.8%  ·  avg P1 30.8 / P2 26.9
+vessel      P1 wins 55.0%  (delta -4.8 pts)  ·  avg P1 29.5 / P2 27.6
+cellar      P1 wins 64.3%  (delta +4.5 pts)  ·  avg P1 31.9 / P2 26.9
+granary     P1 wins 61.3%  (delta +1.5 pts)  ·  avg P1 29.1 / P2 26.2
+hopgarden   P1 wins 67.8%  (delta +8.0 pts)  ·  avg P1 33.4 / P2 26.9
+crane       P1 wins 59.3%  (delta -0.5 pts)  ·  avg P1 29.8 / P2 27.4
+lagering    P1 wins 63.8%  (delta +4.0 pts)  ·  avg P1 31.2 / P2 26.6
+quay        P1 wins 55.0%  (delta -4.8 pts)  ·  avg P1 29.8 / P2 27.6

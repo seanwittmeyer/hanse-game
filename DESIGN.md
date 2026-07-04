@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v2.3 “Privileges & Works”)
+# Brewhouses of the Hanse — Design (v2.4 “Three Tiles”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v2.3 “Privileges & Works”** — live; the **delivery-arithmetic keystone** (value = a privilege, owner-only · transform = a work, serves any dock · wharfage/rival-½ retired · delivery = starting value + the ONE die, max 6) on the designer-approved v2.2 **rules-consistency keystone** (one load grammar · one gate rule · benefits-when-gained · buildings display→placed-at-once · the Floor as the standing 3rd line · overbuild one-rule · the demand die a real d6 · Jopenbier in the Flight); **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — the **Hanse Network**: a tree from **Hamburg** (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul) that **REPLACES the kontor majorities**. A **voyage** to a kontor pushes your **caravan** one node along its road (**per voyage**, gated by cask quality); reaching a town lets each cask aboard **claim a Staple-Right slot** (a distinct one-shot bonus, flavoured by lane: Rhineland=craft · London=infrastructure · Bergen=logistics · East=points), in load order; a full town pays an overflow bonus. Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
+|**Status**     |**v2.4 “Three Tiles”** — live; the **tile-taxonomy + Floor-lane pass** (three colour-coded tile types — PRIVILEGE blue · WORK green · IMPROVEMENT purple; London pays a Building OR an Improvement; the Q3+ **Hire** cask action; the Floor-lane re-prices) on the v2.3 **delivery-arithmetic keystone** (value = a privilege, owner-only · transform = a work, serves any dock · wharfage/rival-½ retired · delivery = starting value + the ONE die, max 6) on the designer-approved v2.2 **rules-consistency keystone** (one load grammar · one gate rule · benefits-when-gained · buildings display→placed-at-once · the Floor as the standing 3rd line · overbuild one-rule · the demand die a real d6 · Jopenbier in the Flight); **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — the **Hanse Network**: a tree from **Hamburg** (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul) that **REPLACES the kontor majorities**. A **voyage** to a kontor pushes your **caravan** one node along its road (**per voyage**, gated by cask quality); reaching a town lets each cask aboard **claim a Staple-Right slot** (a distinct one-shot bonus, flavoured by lane: Rhineland=craft · London=infrastructure · Bergen=logistics · East=points), in load order; a full town pays an overflow bonus. Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
 
 ---
 
@@ -78,7 +78,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v2.3 “Privileges & Works”)
+## 6. The current architecture (v2.4 “Three Tiles”)
 
 Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -116,6 +116,10 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   building); **overbuild**: +3★ banked immediately + the tile flips to the owner's floor (self =
   rival; floor full → discard); the **demand die is a real d6, max 6** (building ★ + Q4/Q5
   premium, set not accumulated; destinations are the cask's starting value).
+- **Three tile types (v2.4)** — every ownable tile is one of three colour-coded first-class
+  types: **PRIVILEGE** (bright blue; owner-only value, on the slots) · **WORK** (green;
+  serves-any-dock transform, on the slots) · **IMPROVEMENT** (purple; the private brewery tiles —
+  bought at the Cellar, hired free by the Q3+ **Hire** cask action, or taken as London's benefit).
 - **Privileges & Works (v2.3)** — one sharing rule along the printed verb: **value pays its
   owner; works serve the wharf.** Delivery = **starting value + the one die, nothing else** —
   ship-slot value buildings bump the same die at the sail (hard max 6 on the sum); wharfage,
@@ -193,11 +197,17 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   from **deployed casks only**; the v0.15 structural throttle (contestable before it scores) is kept and gets
   stated in the rulebook as a principle ("the Hall demands a public showing"). The vessel-direct idea is
   withdrawn; the counterplay to hostile dock-loading is the Charter relief valve + Tap recall.
-- **Improvement-tile parity (2026-07-04, designer directive).** The seven private improvements should be
-  **equally good — powerful, invested-in flexibility** (Private Quay is the model: a strong unlock you pay
-  for). The v1.7 free-starting-improvement study measured them *unequal* (Hop Garden ~+10% win-rate swing …
-  Extra Vessel ~−7%). Run a dedicated parity/tuning pass (re-use that study's methodology + persona sims)
-  after the rules-consistency change set lands; dials are costs and effect magnitudes, not new rules.
+- **Improvement-tile parity: FIRST PASS SHIPPED (2026-07-04) → v2.4 "Three Tiles"** (§9). The fresh
+  free-grant probe (`probe-imps-v87`) measured the spread at −1.5…+17.3 win-rate pts; v2.4 re-prices
+  (Vessel/Quay 4→3, Lagering 3→2 + per-vessel tick, Hop Garden 3→4) plus the new access paths (Hire ·
+  London's choice) lift the floor. RE-PROBE after v88 and iterate — parity is a dial, not a one-shot.
+- **The Hanse Diet (deferred, 2026-07-04).** The probe showed **0 die-sets in 1,000 games** (the
+  lead-AND-route parlay never assembles for greedy play). Designer intuition: **+4★ where you lead** (make
+  it wanted; NO presence grants — runaway risk). Revisit with Cellarmaster/human data.
+- **The Floor/vertical-integration lane (watch-item, 2026-07-04).** Designer: deliberately buffed (per-vessel
+  Lagering · cheaper Vessel/Quay · displaced-building Wilds) to sharpen "compete on the crowded wharf vs
+  build tall at home." Watch for dominance ("you basically hacked the game"); the 4-tile area cap stays the
+  brake for now.
 - **The Trade Roads review pass (2026-07-04).** The Overland expansion gets its own dedicated exercise.
   Carry-ins from the consistency audit: Keut's +1 presence is orphaned when majorities are off; Frankfurt's
   free-Q3 can create a 6th delivered beer (the Flight edge); the +2 clock cells have no printed home; the
@@ -211,6 +221,35 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v2.4 "Three Tiles" — the tile-taxonomy + Floor-lane pass** *(2026-07-04, `play.html` KEY v88)* —
+**The designer-directed follow-through on the improvement-parity / buildings review** (the probe evidence:
+`playtests/probe-imps-v87.txt` — a −1.5…+17.3 win-rate spread across the seven improvements — and
+`probe-bldgs-v87.txt`). **(1) Three first-class tile types, colour-coded on every surface** — the designer's
+fix for "buildings" covering two behaviours: **PRIVILEGE** (bright **blue** `#2e7bab`; the owner-only value
+tiles on the slots), **WORK** (**green** `#3f5c30`; the serves-any-dock transform tiles), **IMPROVEMENT**
+(**purple** `#5b3a8e`; the private brewery tiles). Mechanics unchanged from v2.3 — the pass renames and
+recolours (tile badges now read *Privilege / Work / Improvement*; `value`/`transform` survive as internal
+verb keys only; ownership, display-and-place, overbuild all stand). **(2) London's benefit is a CHOICE** — a
+free Building (display → placed at once) **or** a free Improvement (display → yours at once) ⚙. **(3) The
+`Hire` cask action** joins the Q3+ pool (like Wild's Q4+ gate): take an eligible Improvement from the Cellar
+display, free — the improvements' Survey, and a second access path that lifts the family's floor ⚙. **(4)
+Floor-lane buffs** (the designer's vertical-integration lane — *"do I compete and pay fees in the crowded
+wharf, or vertically integrate on my Floor?"*): **Lagering Cellar** now ages **EVERY** maturing cask +1 each
+of your turns (was one) and costs **2G** (was 3); **Extra Vessel 4G→3G**; **Private Quay 4G→3G**; **Hop
+Garden 3G→4G** (the +17-pt probe outlier pays a premium in the hops-led economy). Left alone by direction:
+**Connoisseur & Festkeller** (human favourites that justify the quality path against the Q2/Q3 ceiling), the
+**Almoner** (it sets the die; watch the load-vs-delivery lead drift), the **4-tile improvements area** (kept
+as the Floor-lane brake). **The Hanse Diet is deferred** (parking lot: +4-where-you-lead candidate, no
+presence grants). *Gates (KEY v88):* `verify-v88` — **13 checks PASS** (re-prices · per-vessel Lagering ·
+the Hire pool gate/picker/dead-case/AI-auto · London's improvement path + AI fallback · the type badges);
+`verify-v87` still green (the v2.3 arithmetic untouched); base `sim.js 500` + PATHWAYS 400 + EXP/JOPEN 300 +
+OVERLAND 300 → **0 crash/deadlock, pace in band, clock-dominant**; improvements now actually flow (2p
+~0.7→**1.7**/game, 3p ~**4.2** — Hire is the feeder); `ai-render-smoke` **ALL PASS**. *(Ladder/tuner/probe
+re-runs: see `ai-ladder-v88.txt` · `ai-tune-v88.txt` · `probe-imps-v88.txt`.)*
+*PATHWAYS (⚙ recorded not dialed):* prestige stays the hot greedy-persona lane (2p 58 / 3p 41 / 4p 35 vs
+fair 50/33/25 — same direction as v87); holding the Hall-curve dial until the improvement economy settles
+and a human table reads it.
 
 **v2.3 "Privileges & Works" — the delivery-arithmetic keystone** *(2026-07-04, `play.html` KEY v87)* —
 **The designer-approved rework of the rival "reduced effect" + wharfage tangle** (Path C of the 2026-07-04
@@ -884,6 +923,8 @@ automatically.
 - **Privileges & Works** — the v2.3 sharing rule: a **value** building pays its **owner only** (a
   privilege); a **transform** building serves **whoever docks** (a work). No delivery payments
   between players.
+- **Improvement** — the purple private-brewery tile type (v2.4); bought at the Cellar, hired via the
+  Q3+ Hire action, or London's benefit. Powers the Floor.
 - **Wharfage** — *(retired, v2.3)* the old points cut a building's owner took when a rival routed through it; see **Privileges & Works**.
 - **The Floor** — your private line: run your built-up brewery instead of a grid line.
 - **Kontor** — a foreign trading post (Bruges/London/Bergen/Novgorod); ship there for value +

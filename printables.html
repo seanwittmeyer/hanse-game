@@ -481,7 +481,7 @@
 </head>
 <body>
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v2.3 &ldquo;Privileges &amp; Works&rdquo;</span></h1>
+  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v2.4 &ldquo;Three Tiles&rdquo;</span></h1>
   <button class="bartoggle" id="bartoggle" onclick="toggleBar()" title="Collapse / expand the toolbar">▾ Hide</button>
   <button onclick="window.print()">🖨 Print</button>
   <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
@@ -511,6 +511,7 @@ const CASK_POOL=[
   {k:'reach',  ai:'map-pin',          act:'+1 Reach'},
   {k:'convert',ai:'arrow-left-right', act:'Convert 2 goods'},
   {k:'survey', ai:'search',           act:'gain 1 building'},
+  {k:'hire',   ai:'wrench',           act:'free improvement (Q3+)'},
 ];
 const CASK_WILD={k:'wild', ai:'sparkles', act:'Wild — any base action'};   // Q4+ only
 // cask supply — fixed global counts (COMPONENTS §3A). Gruit PINNED to Source; Q2+ draw at brew (steerable).
@@ -577,14 +578,14 @@ const DEVELOP_PTS=3;     // v2.2 developer ★: banked IMMEDIATELY when a buildi
 // CELLAR (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
 // v82 "Scarce Improvements": these now form a SHUFFLED DECK of (n−1) copies of each type (n=players) feeding a
 // face-up DISPLAY of 4 at the Cellar (refills from the deck). 3 copies/type covers a 4-player deck (n−1=3).
-const IMPROVE=[   // Upgrades / private improvements = PURPLE · v1.7: −1 G each, bought at the CELLAR · v82: deck of n−1/type (3 each = the 4p deck)
-  {ic:'wrench',     nm:'Extra Vessel',   act:'+1 vessel · cap 3', g:4, c:'#5b3a8e', n:3},
+const IMPROVE=[   // IMPROVEMENTS = PURPLE (the third tile type, v2.4) · bought at the CELLAR, hired via the Q3+ Hire action, or London's benefit · v82: deck of n−1/type (3 each = the 4p deck)
+  {ic:'wrench',     nm:'Extra Vessel',   act:'+1 vessel · cap 3', g:3, c:'#5b3a8e', n:3},
   {ic:'wrench',     nm:'Aging Cellar',   act:'maturation −1 step', g:4, c:'#5b3a8e', n:3},
   {ic:'badge-plus', nm:'Granary Right',  act:'gain '+LU('wheat','g ic')+' → +1', g:3, c:'#5b3a8e', n:3},
-  {ic:'badge-plus', nm:'Hop Garden',     act:'gain '+LU('sprout','h ic')+' → +1', g:3, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Hop Garden',     act:'gain '+LU('sprout','h ic')+' → +1', g:4, c:'#5b3a8e', n:3},
   {ic:'package-plus',nm:'Harbor Crane',  act:'Harbor loads 2 casks', g:3, c:'#5b3a8e', n:3},
-  {ic:'snowflake',  nm:'Lagering Cellar',act:'+1 age a cask each turn', g:3, c:'#5b3a8e', n:3},
-  {ic:'anchor',     nm:'Private Quay',   act:'ship casks from vessels', g:4, c:'#5b3a8e', n:3},
+  {ic:'snowflake',  nm:'Lagering Cellar',act:'EVERY maturing cask +1/turn', g:2, c:'#5b3a8e', n:3},
+  {ic:'anchor',     nm:'Private Quay',   act:'ship casks from vessels', g:3, c:'#5b3a8e', n:3},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
@@ -607,7 +608,7 @@ const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',
 // the value-Buildings a cask ships through. Novgorod's value SCALES with quality (Q3·2 / Q4·4 / Q5·6).
 const DESTS=[
   {nm:'Bruges',  kc:'#274b5c', req:1, val:'1',     scale:false, maj:[4,2,0], role:'The Hub · the economy',            ben:{n:'+2',ic:'coins'},     bnote:'2 goods (liquidity)'},
-  {nm:'London',  kc:'#b8860b', req:2, val:'1',     scale:false, maj:[5,3,1], role:'The Steelyard · the engine',       ben:{n:'+1',ic:'building-2'}, bnote:'a Building — display, placed at once'},
+  {nm:'London',  kc:'#b8860b', req:2, val:'1',     scale:false, maj:[5,3,1], role:'The Steelyard · the engine',       ben:{n:'+1',ic:'building-2'}, bnote:'a Building (placed at once) OR an Improvement, free'},
   {nm:'Bergen',  kc:'#4a6b3a', req:2, val:'1',     scale:false, maj:[9,5,2], role:'Bryggen · the rich majority',      ben:{n:'+1',ic:'map-pin'},    bnote:'a free Reach (+1 presence, where delivered)'},
   {nm:'Novgorod',kc:'#7c2128', req:3, val:'2·4·6', scale:true,  maj:[8,5,2], role:'The Long Haul · the quality climb', ben:{n:'+1',ic:'hourglass'},  bnote:'refine a maturing cask (+1 age)'},
 ];
@@ -649,9 +650,9 @@ function caskTile(d,act){   // act = the drawn slot-action {ai,act} (v0.12); Gru
   +'<div class="t-cost'+(d.alt?' dual':'')+'">'+c+'</div></div>';}
 // BUILDING tile (v1.0 keystone) — an OWNED slot modifier: icon + name + verb badge (VALUE/TRANSFORM) +
 // the effect + a target glyph (what it modifies: cask/ship/line/owner) + the goods cost. Value = violet, Transform = green.
-function buildingTile(d){const tg=BTGT[d.tgt];const c='#3f5c30';   /* Buildings = GREEN (value/transform via the badge) */
+function buildingTile(d){const tg=BTGT[d.tgt];const c=(d.verb==='value'?'#2e7bab':'#3f5c30');   /* v2.4: PRIVILEGES = bright BLUE · WORKS = GREEN (the third type, IMPROVEMENTS, is purple) */
   return '<div class="tile bld" style="--c:'+c+'">'
-  +'<div class="b-top"><span class="bigic">'+LU(d.ic)+'</span><span class="b-verb">'+(d.verb==='value'?'Value':'Transform')+'</span></div>'
+  +'<div class="b-top"><span class="bigic">'+LU(d.ic)+'</span><span class="b-verb">'+(d.verb==='value'?'Privilege':'Work')+'</span></div>'
   +'<div class="b-nm">'+d.nm+'</div>'
   +'<div class="b-eff">'+d.eff+'</div>'
   +'<div class="b-foot"><span class="b-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span>'+cost(d.g,0)+'</div></div>';}
@@ -761,10 +762,12 @@ function aidBack(){
       +'<div class="acol"><div class="leg">'
         +row('arrow-left-right','Convert','up to 2 goods G↔H')
         +row('search','Survey','a Building from the display, placed at once')
+        +row('wrench','Hire','an Improvement from the display, free (Q3+)')
         +row('sparkles','Wild','any base action (Q4+)')
         +'<h5>'+LU('building-2')+'Buildings &amp; Targets</h5>'
-        +row('star','Value','occupant delivers for more ★','vi')
-        +row('hammer','Transform','changes the cask / ship')
+        +row('star','Privilege','BLUE — pays its owner only (the die)','vi')
+        +row('hammer','Work','GREEN — serves any dock')
+        +row('wrench','Improvement','PURPLE — private, on your brewery board')
         +row('beer','Cask','the occupant a building modifies')
         +row('sailboat','Ship','neutral hull (Cog 2 / Hulk 3)')
         +'<h5>'+LU('trophy')+'Shipping &amp; Score</h5>'
@@ -808,7 +811,7 @@ function pboard(p){
     +'<div class="pb-head">'
       +'<div class="crest">'+LU('beer')+'</div>'
       +'<div class="pb-title"><div class="pb-name">'+p.nm+' Brewhouse</div>'
-        +'<div class="pb-sub">Brewhouses of the Hanse · your private brewery · v2.3 “Privileges & Works”</div></div>'
+        +'<div class="pb-sub">Brewhouses of the Hanse · your private brewery · v2.4 “Three Tiles”</div></div>'
       +'<div class="pb-store"><span class="slbl">'+LU('warehouse')+'Storage</span>'
         +'<div class="szone"><span class="si">'+LU('wheat','g ic')+'Grain</span><span class="si">'+LU('sprout','h ic')+'Hops</span><span class="cap">max <b>8</b></span></div></div>'
     +'</div>'
@@ -1091,7 +1094,7 @@ function checklist(pages,famPages){
   const row=(bx,nm,n,note)=>'<tr>'+(bx?'<td class="bx"></td>':'<td></td>')+'<td>'+nm+'</td><td class="n">'+n+'</td><td>'+(note||'')+'</td></tr>';
   const bp=pages.filter(p=>p.section==='boards');
   const pbRef=bp.length>4?'S'+bp[3].no+'–S'+bp[bp.length-1].no:'S'+bp[3].no+' (proof: 1 of '+PLAYERS.length+' shown)';
-  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v2.3 “Privileges & Works”)</h2><div class="cols2">';
+  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v2.4 “Three Tiles”)</h2><div class="cols2">';
   h+='<table><tr><th></th><th>Boards (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Main board — the Wharf (stations · 8 slots · Sailed-Ships + round tracks)','1','S'+bp[0].no)
     +row(1,'Destinations board (4 kontore + the Hall · Building display · majority chart)','1','S'+bp[1].no)

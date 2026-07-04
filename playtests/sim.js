@@ -261,6 +261,7 @@ function botActOnce(){var p=cur();var U=UI.sub;
     case 'tap':return botTap(p);
     case 'benefit':return botBenefit();
     case 'survey':return botSurvey();
+    case 'hire':{var eh=hireable(p);return hirePick(eh.length?eh[0]:null);}   // v2.4 — the Q3+ Hire cask action: take the first eligible improvement
     case 'placebldg':return botPlaceBldg();
     case 'goodspick':return goodsPick(2,0);    // liquidity owner-choice — the bot takes 2 grain
     case 'breach':{var lp=S.players[UI.pendingReach[0].pid];var bk=reachBenKontore(lp);if(!bk.length)return breachPick(null);var bb=bk[0],bv=-1e9;  // reinforce best majority swing (presence only where delivered)

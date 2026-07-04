@@ -1,8 +1,11 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v2.3 “Privileges & Works”)
+# Brewhouses of the Hanse — Turn & Round Rules (v2.4 “Three Tiles”)
 
 > **Status: live (2026-07-04).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
-> playable build is `play.html` (v2.3 “Privileges & Works” — the delivery-arithmetic keystone on
+> playable build is `play.html` (v2.4 “Three Tiles” — the tile-taxonomy + Floor-lane pass: three
+> colour-coded tile types — **PRIVILEGE** (blue) · **WORK** (green) · **IMPROVEMENT** (purple) —
+> London pays a Building OR an Improvement, the Q3+ **Hire** cask action, and the Floor-lane
+> re-prices; on v2.3 “Privileges & Works” — the delivery-arithmetic keystone on
 > top of v2.2 “One Grammar”: value buildings are privileges (owner-only), transforms are works
 > (serve any dock), wharfage and the rival-½ are retired, and delivery is always *starting value +
 > the one demand die* (a real d6, max 6 — ship-slot value buildings bump the same die at the sail);
@@ -230,7 +233,13 @@ a building.
 > column), so **placing a building commits it to a line** — landing a high-impact modifier on a
 > slot of a line you fire often is the core optimization (and the heart of v1.0, `PLAN.md` §3).
 
-### 5a. Buildings — the one tile family (owned, authored, two flavors)
+### 5a. The slot tiles — Privileges & Works (owned, authored)
+> **THREE TILE TYPES, THREE COLOURS (v2.4).** Every non-cask tile you can own is one of three
+> first-class types, told apart at a glance: a **PRIVILEGE** (bright **blue**) — an owner-only
+> value tile on the slots; a **WORK** (**green**) — a serves-any-dock transform tile on the
+> slots; an **IMPROVEMENT** (**purple**) — a private tile in your brewery (§8). Privileges and
+> works share the slot grammar below (display of 4 · buy + place · overbuild · ownership);
+> improvements live on your player board and power the Floor.
 **Buildings always come from the face-up display, and you place them the moment you gain them**
 (v2.2 — there is no hand): **buy** one at the Market (pay + place), **earn** one free when you
 deliver to **London** (§7 — choose from the display and place it *when gained*, whoever's turn it
@@ -319,7 +328,7 @@ Five destinations, all open from start (⚙ table in `COMPONENTS.md`):
 | Destination | Gate ⚙ | Base value ⚙ | Benefit on delivery ⚙ | Majority (1/2/3) ⚙ |
 |---|---|---|---|---|
 | **Bruges** (Hub) | Q1 | +1 ★ | 2 goods (owner's choice) | 4 / 2 / 0 |
-| **London** (Steelyard) | Q2 | +1 ★ | a Building from the display, **placed at once** ⚙ | 5 / 3 / 1 |
+| **London** (Steelyard) | Q2 | +1 ★ | a **Building** (display → placed at once) **OR** an **Improvement** (display → yours), free ⚙ | 5 / 3 / 1 |
 | **Bergen** (Bryggen) | Q2 | +1 ★ | **free Reach** (+1 presence, any kontor *you've delivered to*) | 9 / 5 / 2 (anchor) |
 | **Novgorod** (Peterhof) | Q3 | scales by Q (Q3→2 · Q4→4 · Q5→6) | **refine** (a maturing cask **+1 age**) | 8 / 5 / 2 |
 | **The Hall** (Prestige) | Q2 | **fixed ladder 3/5/7/9 by quality** ⚙ | — (Enshrine) | — |
@@ -341,9 +350,10 @@ export-premium table and the Masterpiece from v0.16 are folded into this / cut.)
 
 **Benefits resolve WHEN GAINED, owner's choice (v2.2).** Every on-delivery benefit is taken by the
 cask's **owner, immediately, whoever's turn it is** (a rival tops off a hull carrying your cask →
-you choose your benefit right then): **Bruges** — 2 goods, any mix; **London** — choose a Building
-from the display **and place it now** (§5a); **Bergen** — a free Reach at a kontor you've
-delivered to; **Novgorod** — refine: **you choose which** of your maturing casks ages +1. No
+you choose your benefit right then): **Bruges** — 2 goods, any mix; **London** — choose a **Building** from the display **and place it
+now** (§5a) **or take an eligible Improvement** from the Cellar display, free (v2.4); **Bergen** — a
+free Reach at a kontor you've delivered to; **Novgorod** — refine: **you choose which** of your
+maturing casks ages +1. No
 queues, no deferred choices, nothing to remember between turns.
 
 ---
@@ -352,8 +362,8 @@ queues, no deferred choices, nothing to remember between turns.
 
 Private and safe: **vessels** (start 2, cap 3 ⚙), **recipes**, and the **cask-action pool** —
 now **steerable**: the top tile of each quality pile is face-up, so you brew toward the actions
-you want (Q2+ draw `Source · Age · Load · Reach · Convert · Survey (draw a building) · Wild (Q4+)`;
-Gruit fixed to Source).
+you want (Q2+ draw `Source · Age · Load · Reach · Convert · Survey (a Building, placed) · Hire (an
+Improvement, free — Q3+ only, v2.4) · Wild (Q4+)`; Gruit fixed to Source).
 
 **Vessels now carry pre-delivery value** — they power the **Floor** (§3, `PLAN.md` §1B) — which
 finally gives **Extra Vessel** a real pull (more vessels = a bigger held engine *and* more brewing
@@ -362,10 +372,12 @@ retune: in playtests Extra Vessel and the Warehouse were *never* bought (dead up
 fixes Extra Vessel, and storage-cap upgrades stay suspect unless they earn their place.
 **Most v0.16 upgrades fold into the public building family (§5).**
 
-**The improvements (v1.7: bought at the CELLAR for goods, cheaper ⚙):** Extra Vessel (`4 G`), Aging Cellar
-(maturation −1 step, `4 G`), Granary Right / Hop Garden (+1 extra grain / hops, `3 G` each), **Harbor Crane**
-(your Harbor load sets out **2 casks**, `3 G`), **Lagering Cellar** (each of **your turns**, **+1 age** to one
-maturing cask, `3 G`), and **Private Quay** (load **Ready casks straight from your vessels** onto ships, `4 G`).
+**The improvements (bought at the CELLAR for goods; v2.4 re-prices lift the floor ⚙):** Extra Vessel (`3 G`),
+Aging Cellar (maturation −1 step, `4 G`), Granary Right (+1 extra grain, `3 G`), **Hop Garden** (+1 extra
+hops, `4 G` — the parity probe's outlier pays a premium in the hops-led economy), **Harbor Crane**
+(your Harbor load sets out **2 casks**, `3 G`), **Lagering Cellar** (each of **your turns**, **EVERY**
+maturing cask **+1 age**, `2 G` — the Floor-lane keystone), and **Private Quay** (load **Ready casks
+straight from your vessels** onto ships, `3 G` — the only door past Deploy).
 Your **improvements area holds at most 4 tiles** (these + any flipped buildings, §5) — so the engine is a real
 choice, not a buffet. *(v1.7 moved the buy from the Market to the Cellar — sim showed the barrier was the
 Market action's opportunity cost, not the goods. The free-starting-improvement study makes **Hop Garden** the

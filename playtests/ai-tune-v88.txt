@@ -1,0 +1,4 @@
+Brewhouses of the Hanse — Trader weight tuner (CEM)  |  gens=10 pop=16 elite=4
+fitness = 0.5*WR(2p vs incumbent, n=160) + 0.25*WR(2p vs journeyman, n=80) + 0.25*min(1, 2*WR(4p vs 3 incumbents, n=60))
+incumbent/defaults: swing=1 upBen=1.45 goodsBen=1.4 hallBase=0.45 hallRamp=0.9 leanVal=0.91 leanSwing=1.01 leanHall=0.91 goalW=1.94 buyFlush=8.68
+
