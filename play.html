@@ -700,15 +700,17 @@ const DEVELOP_PTS=3;            // ⚙ the "developer" lane — v2.2: banked IMM
 // v1.7: improvements are CHEAPER (−1 G each) and bought at the CELLAR (the least-contested station — sim
 // showed the barrier to the improvement economy was the Market ACTION cost, not the goods). They share the
 // player's improvements area with FLIPPED buildings, capped at IMP_AREA_CAP total (below).
+// SPECIALIST ART METADATA (v2.6.1): each tile carries art:'…' — the illustration brief for the image agent
+// (style: a BEIGE field, ONE object centered — the specialist's trade — so Specialists read apart at a glance).
 const IMPROVEMENTS={
-  vessel   :{name:'Extra Vessel', desc:'+1 brewing lane (start 2 → cap 3; one per house)', cost:{g:3}},   // v2.4 ⚙ 4→3 — lift the floor (the Floor line pays it now)
-  cellar   :{name:'Aging Cellar', desc:'maturation −1 step', cost:{g:4}},
-  granary  :{name:'Granary Right',desc:'when you gain grain, +1 extra', cost:{g:3}},
-  hopgarden:{name:'Hop Garden',   desc:'when you gain hops, +1 extra', cost:{g:4}},   // v2.4 ⚙ 3→4 — the +17-pt outlier of the parity probe pays a premium in the hops-led economy
+  vessel   :{name:'Coppersmith', art:'a gleaming copper brew kettle', desc:'+1 brewing lane (start 2 → cap 3; one per house)', cost:{g:3}},   // v2.4 ⚙ 4→3 — lift the floor (the Floor line pays it now)
+  cellar   :{name:'Cellarman', art:'an oak cask racked on a wooden stillage', desc:'maturation −1 step', cost:{g:4}},
+  granary  :{name:'Grain Factor', art:'a tied burlap sack overflowing with barley',desc:'when you gain grain, +1 extra', cost:{g:3}},
+  hopgarden:{name:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',   desc:'when you gain hops, +1 extra', cost:{g:4}},   // v2.4 ⚙ 3→4 — the +17-pt outlier of the parity probe pays a premium in the hops-led economy
   // v1.5 "Improvements": two ex-Buildings reborn as private upgrades + the load-from-vessel valve ⚙
-  crane    :{name:'Harbor Crane', desc:'your Harbor load sets out 2 casks (not 1)', cost:{g:3}},
-  lagering :{name:'Lagering Cellar',desc:'each of your turns, EVERY maturing cask +1 age', cost:{g:2}},   // v2.4 ⚙ per-vessel tick + 3→2 — the Floor-lane keystone (hold more, everything matures)
-  quay     :{name:'Private Quay', desc:'load Ready casks straight from your vessels onto ships', cost:{g:3}},   // v2.4 ⚙ 4→3 — the only way past Deploy (the one-outlet grammar’s invested exception)
+  crane    :{name:'Stevedore', art:'a medieval wooden treadwheel harbor crane', desc:'your Harbor load sets out 2 casks (not 1)', cost:{g:3}},
+  lagering :{name:'Lagerkeeper', art:'stacked casks dusted with frost and icicles',desc:'each of your turns, EVERY maturing cask +1 age', cost:{g:2}},   // v2.4 ⚙ per-vessel tick + 3→2 — the Floor-lane keystone (hold more, everything matures)
+  quay     :{name:'Quaymaster', art:'a private wooden jetty with a rope-wound mooring bollard', desc:'load Ready casks straight from your vessels onto ships', cost:{g:3}},   // v2.4 ⚙ 4→3 — the only way past Deploy (the one-outlet grammar’s invested exception)
 };
 const IMP_AREA_CAP=4;          // ⚙ v1.7: the player's improvements area holds at most this many tiles TOTAL —
                                // bought improvements + FLIPPED buildings (a building a rival overbuilt flips here).

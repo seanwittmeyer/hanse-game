@@ -145,17 +145,17 @@ Print 4 copies of each export recipe (covers 4 houses each picking up the full l
 
 ## 9. Specialist tiles · family E (7 designs, scarce deck)
 
-Private brewery-board tiles (**SPECIALISTS — purple**, the third tile type), bought at the **Cellar** for goods — or gained free via **Hire** (the Q3+ cask action) or a **London** delivery (v2.4). The deck holds `n − 1` copies of each type (n = player count → 7 / 14 / 21 tiles). A face-up **display of 4** at the Cellar refills from the deck. A house cannot own two of the same type. The improvements area holds **4 tiles total** (improvements + flipped buildings).
+Private brewery-board tiles (**SPECIALISTS — purple**, the third tile type; v2.6.1 persona names — each tile carries an `art` brief: a **beige field, one centered object**, the specialist’s trade), bought at the **Cellar** for goods — or gained free via **Hire** (the Q3+ cask action) or a **London** delivery (v2.4). The deck holds `n − 1` copies of each type (n = player count → 7 / 14 / 21 tiles). A face-up **display of 4** at the Cellar refills from the deck. A house cannot own two of the same type. The improvements area holds **4 tiles total** (improvements + flipped buildings).
 
 | Improvement | Effect ⚙ | Cost ⚙ |
 |---|---|---|
-| Extra Vessel | +1 brewing lane (vessels start 2, cap 3) | `3 G` |
-| Aging Cellar | maturation −1 step | `4 G` |
-| Granary Right | when you gain grain, +1 extra | `3 G` |
-| Hop Garden | when you gain hops, +1 extra | `4 G` |
-| Harbor Crane | your Harbor load sets out 2 casks (not 1) | `3 G` |
-| Lagering Cellar | each of your turns: EVERY maturing cask +1 age | `2 G` |
-| Private Quay | load Ready casks straight from vessels onto ships | `3 G` |
+| **Coppersmith** *(a gleaming copper brew kettle)* | +1 brewing lane (vessels start 2, cap 3) | `3 G` |
+| **Cellarman** *(an oak cask racked on a stillage)* | maturation −1 step | `4 G` |
+| **Grain Factor** *(a burlap sack of barley)* | when you gain grain, +1 extra | `3 G` |
+| **Hop Gardener** *(a hop bine with cones on a pole)* | when you gain hops, +1 extra | `4 G` |
+| **Stevedore** *(a wooden treadwheel harbor crane)* | your Harbor load sets out 2 casks (not 1) | `3 G` |
+| **Lagerkeeper** *(frost-dusted stacked casks)* | each of your turns: EVERY maturing cask +1 age | `2 G` |
+| **Quaymaster** *(a private jetty + mooring bollard)* | load Ready casks straight from vessels onto ships | `3 G` |
 
 **Print: 21 improvement tiles** (3 copies × 7 types covers up to 4 players).
 
