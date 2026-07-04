@@ -169,6 +169,15 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
 ### Parking lot — recorded for future discussion (NOT yet decided)
+- **Delivery arithmetic diet (2026-07-04).** Discuss after the rules-consistency exercise: the delivery moment
+  stacks base + building ★ + the Q4/Q5 premium + the rival share + the ship-berth bonus + wharfage — the game's
+  heaviest table math, at its payoff moment. To be reworked together with the **rival "reduced effect" rule**
+  (owner-full / rival-reduced needs a clearer, simpler formulation — revisit both as one conversation).
+- **The Trade Roads review pass (2026-07-04).** The Overland expansion gets its own dedicated exercise.
+  Carry-ins from the consistency audit: Keut's +1 presence is orphaned when majorities are off; Frankfurt's
+  free-Q3 can create a 6th delivered beer (the Flight edge); the +2 clock cells have no printed home; the
+  free-Improvement grant sits outside the `n − 1` printed supply; several node bonuses auto-resolve where a
+  table would offer the owner a choice.
 - **Asymmetric starting improvements (variable powers).** Deal each player **two** improvements; they keep
   **one** as a starting private power. Turns the (now symmetric) improvement set into an opening-asymmetry /
   replay lever. Needs: a power set balanced enough that any pair is fair, and a draft/keep-one rule. Open.

@@ -333,3 +333,24 @@ Adds one inland-network board sitting beside the destination board. Per-house: p
 - **How a tile is used during a turn** — `RULES.md` §2–§7.
 - **The live numbers** — `play.html` (constants at the top of the `<script>` block: `STYLES`, `DEST`, `BUILDINGS`, `IMPROVEMENTS`, `SHIP_DECK_MIX`, `SAILED_CAP`, `MAX_ROUND`).
 - **Printed cut sheets** — `printables.html`. *(Do not back-fill this manifest from the printables; printables generate from this doc, not the other way around.)*
+
+---
+
+## 17. Known component gaps (recorded 2026-07-04 · resolve in the components revision)
+
+> **Direction (designer, 2026-07-04):** the **card kit (`printables2.html`) is the direction of the game** (the tile kit's tokens-and-tiles density problem is real). **Owner frames are the confirmed solution** for marking building ownership — supersedes this doc's §4 note that the disc marks it. A **new board carrying the supply displays, the round tracker, and the score track** will be designed later; not a concern now. Until that revision, the table below records every gap between what the digital reference (`play.html`) tracks and what the printed components can carry — the standing rule is that **all game state must live in the components on the table**.
+
+| # | Gap | State it must carry | Sketch of a fix |
+|---|---|---|---|
+| 1 | **Maturation markers missing** — no token is manifested to sit on the cask card's printed aging track (the old "per-vessel maturation marker" note was lost in the DESIGN compaction) | each maturing cask's step | ~3 markers per player colour (one per vessel), or spare cubes |
+| 2 | **Flight strip is count-based** on the `printables2` player board — a bare count can't be maintained (you must know *which* beers already counted) | distinct beers delivered | per-beer named spaces, as §12 already specifies — fix the pb2 board |
+| 3 | **Loaded-cargo procedure unspecified** — 2.5″ cask cards can't sit in the die-sized printed berths; where cargo cards go and how load order is preserved is undefined | a ship's cargo + load order | e.g. tuck cargo cards under the ship card's edge in berth order; the demand die sits in the printed berth |
+| 4 | **Jopenbier vintage counter** — nothing tracks the deployed capstone's +1★/turn (0–5) | the vintage count | print a 0–5 strip on the Jopenbier card + a cube |
+| 5 | **Improvement display has no printed zone** — the v82 Cellar display of 4 + its deck are absent from the supply board | the face-up improvement display + deck | a zone on the new supply board |
+| 6 | **Sailed-Ships track prints 13 cells** — The Trade Roads extends the clock to 8 / 12 / 15 | the end clock with the expansion on | 15 cells with dual END marks per player count (new supply board) |
+| 7 | **Score track runs 0–50** — recorded winner ceilings reach ~90 (v1.8 sims) | banked score | 0–99, or a 50/100 lap marker (new supply board) |
+| 8 | **Recipe-card count drift** — §8 says 24 cards (incl. 4× Gruit/Hopped); both kits print 16 export-only cards with the starters printed on the player board | — | manifest adopts the kits' model: 16 export cards + printed starters |
+| 9 | **Owner frames absent from the manifest** — `printables2` ships 6 per colour; §4 still assigns building-marking to the disc | building ownership on slots | add frames to §4 (confirmed direction); reword the disc's "three lives" |
+| 10 | **Blend's +1 quality** (Specialty Beers) has no stated carrier; the 6 quality-boost markers are already claimed by the kilns | a blended cask's raised quality | more boost markers, or a printed carrier rule + a supply count check |
+| 11 | **Trade Roads free-Improvement** grants a tile from outside the printed `n − 1` deck supply | — | resolve in the Trade Roads review pass |
+| 12 | **Demand dice supply (8)** unverified against worst-case simultaneous loaded bonuses | dice riding berths | count check at the table |
