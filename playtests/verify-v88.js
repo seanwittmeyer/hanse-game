@@ -71,8 +71,8 @@ ok('AI London benefit falls back to a free Improvement when no Building is takea
 // (i) the type badges: Privilege (blue) / Work (green) / Improvement (purple)
 S=freshState(2,['H','A']);
 ok('a value tile badges as Privilege', pBldgFace({b:'staple'}).includes('>Privilege<'));
-ok('a transform tile badges as Work', pBldgFace({b:'maltkiln'}).includes('>Work<'));
-ok('an improvement badges as Improvement', pImpFace('granary').includes('>Improvement<'));
+ok('a transform tile badges as Building', pBldgFace({b:'maltkiln'}).includes('>Building<'));
+ok('a private tile badges as Specialist', pImpFace('granary').includes('>Specialist<'));
 
 console.log('ALL v88 VERIFY CHECKS PASS');
 `;

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · Cask Cards · v2.4 “Three Tiles”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · Cask Cards · v2.4.1 “Three Tiles”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -671,7 +671,7 @@
 </head>
 <body>
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · Cask Cards · v2.4 “Three Tiles”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · Cask Cards · v2.4.1 “Three Tiles”</span></h1>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
     <option value="boards">Boards</option>
@@ -707,7 +707,7 @@ const CASK_POOL=[
   {k:'reach',  ai:'map-pin',          act:'+1 Reach'},
   {k:'convert',ai:'arrow-left-right', act:'Convert 2 goods'},
   {k:'survey', ai:'search',           act:'gain 1 building'},
-  {k:'hire',   ai:'wrench',           act:'free improvement (Q3+)'},
+  {k:'hire',   ai:'wrench',           act:'free Specialist (Q3+)'},
 ];
 const CASK_WILD={k:'wild', ai:'sparkles', act:'Wild — any base action'};   // Q4+ only
 // cask supply — fixed global counts (COMPONENTS §5; the scarce high-Q exports are intentional). Gruit PINNED to Source; Q2+ draw at brew (steerable).
@@ -774,7 +774,7 @@ const DEVELOP_PTS=3;     // v2.2 developer ★: banked IMMEDIATELY when a buildi
 // CELLAR (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
 // v82 "Scarce Improvements": these now form a SHUFFLED DECK of (n−1) copies of each type (n=players) feeding a
 // face-up DISPLAY of 4 at the Cellar (refills from the deck). 3 copies/type covers a 4-player deck (n−1=3).
-const IMPROVE=[   // IMPROVEMENTS = PURPLE (the third tile type, v2.4) · bought at the CELLAR, hired via the Q3+ Hire action, or London's benefit · v82: deck of n−1/type (3 each = the 4p deck)
+const IMPROVE=[   // SPECIALISTS = PURPLE (the third tile type, v2.4.1) · bought at the CELLAR, hired via the Q3+ Hire action, or London's benefit · v82: deck of n−1/type (3 each = the 4p deck)
   {ic:'wrench',     nm:'Extra Vessel',   act:'+1 vessel · cap 3', g:3, c:'#5b3a8e', n:3},
   {ic:'wrench',     nm:'Aging Cellar',   act:'maturation −1 step', g:4, c:'#5b3a8e', n:3},
   {ic:'badge-plus', nm:'Granary Right',  act:'gain '+LU('wheat','g ic')+' → +1', g:3, c:'#5b3a8e', n:3},
@@ -804,7 +804,7 @@ const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',
 // the value-Buildings a cask ships through. Novgorod's value SCALES with quality (Q3·2 / Q4·4 / Q5·6).
 const DESTS=[
   {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, val:'1',                maj:[4,2,0], role:'The Hub — the economy',          ben:{n:'+2',ic:'coins'},      bnote:'goods (liquidity)'},
-  {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, val:'1',                maj:[5,3,1], role:'The Steelyard — the engine',     ben:{n:'+1',ic:'building-2'}, bnote:'a Building (placed at once) OR an Improvement, free'},
+  {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, val:'1',                maj:[5,3,1], role:'The Steelyard — the engine',     ben:{n:'+1',ic:'building-2'}, bnote:'a Privilege/Building (placed) OR a Specialist, free'},
   {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, val:'1',                maj:[9,5,2], role:'Bryggen — the rich majority',    ben:{n:'+1',ic:'map-pin'},    bnote:'a free Reach (+1 presence)'},
   {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, scale:[[3,2],[4,4],[5,6]], maj:[8,5,2], role:'The Long Haul — the quality climb', ben:{n:'+1',ic:'hourglass'},  bnote:'refine a maturing cask (+1 age)'},
 ];
@@ -861,7 +861,7 @@ function caskTile(d,act){   // act = the drawn slot-action {ai,act} (v0.12); Gru
 // as the cask/ship cards). FRONT = full-bleed building art (art/building-<key>.png) behind a scrim, with the name
 // + verb badge (Value/Transform) up top and the effect + target glyph + goods cost in a colour foot. The card
 // nests in the 2.5″ player-colour owner FRAME, so the coloured edge around it marks ownership.
-const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(50,79,42,.74)';   // v2.4: PRIVILEGE = bright blue · WORK = green (IMPROVEMENT = purple below)
+const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(50,79,42,.74)';   // v2.4.1: PRIVILEGE = bright blue (owner-only) · BUILDING = green (serves everyone) — SPECIALIST = purple below
 const BLD_FOOT='rgba(58,51,66,.7)';   // legacy fallback   // building card foot/base — dark purple-grey (#3a3342) at 70% opacity so the illustration bleeds ~30% through the foot. Same on front & back.
 function buildingCard(d){const tg=BTGT[d.tgt];const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   // (v2.3: the wharfage chip is retired — a value building is a privilege that pays its owner only; the
@@ -869,7 +869,7 @@ function buildingCard(d){const tg=BTGT[d.tgt];const foot=(d.verb==='value'?PRIV_
   const wf='';
   return '<div class="bcard" style="--c:'+foot+'">'
   +artLayer('building-'+d.k+'.png')
-  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span><span class="bc-verb">'+(d.verb==='value'?'PRIVILEGE':'WORK')+'</span></div>'
+  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span><span class="bc-verb">'+(d.verb==='value'?'PRIVILEGE':'BUILDING')+'</span></div>'
   +'<div class="bc-foot"><div class="bc-eff">'+d.eff+'</div>'
     +'<div class="bc-row"><span class="bc-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span>'+wf+cost(d.g,0)+'</div></div>'
   +'</div>';}
@@ -904,7 +904,7 @@ function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--
 // IMPROVEMENT CARD (v9) — a HALF-HEIGHT building card: full-bleed INTERIOR art (improve-<slug>.png) + scrim, the
 // name/icon on top, and a GREEN foot bar carrying the effect + cost. Same art-card grammar as the casks/ships/
 // buildings. Card bg = the same green as the foot, so any html2canvas foot-edge hairline is green-on-green.
-const IMP_FOOT='#4a3a6e';   // improvement foot/base — PURPLE (the third tile type, v2.4; was Cellar-green)
+const IMP_FOOT='#4a3a6e';   // Specialist foot/base — PURPLE (the third tile type, v2.4.1; was Cellar-green)
 function improveTile(d){const k=slug(d.nm);
   return '<div class="icard" style="--c:'+IMP_FOOT+'">'
   +artLayer('improve-'+k+'.png')
@@ -1059,12 +1059,12 @@ function aidBack(){
       +'<div class="acol"><div class="leg">'
         +row('arrow-left-right','Convert','up to 2 goods G↔H')
         +row('search','Survey','a Building from the display, placed at once')
-        +row('wrench','Hire','an Improvement from the display, free (Q3+)')
+        +row('wrench','Hire','a Specialist from the display, free (Q3+)')
         +row('sparkles','Wild','any base action (Q4+)')
         +'<h5>'+LU('building-2')+'Buildings &amp; Targets</h5>'
         +row('star','Privilege','BLUE — pays its owner only (the die)','vi')
-        +row('hammer','Work','GREEN — serves any dock')
-        +row('wrench','Improvement','PURPLE — private, on your brewery board')
+        +row('hammer','Building','GREEN — serves any dock')
+        +row('wrench','Specialist','PURPLE — private, on your brewery board')
         +row('beer','Cask','the occupant a building modifies')
         +row('sailboat','Ship','neutral hull (Cog 2 / Hulk 3)')
         +'<h5>'+LU('trophy')+'Shipping &amp; Score</h5>'
@@ -1531,7 +1531,7 @@ function checklist(pages,famPages){
   const D='style="font-size:.085in;color:#5b4a37;font-weight:normal;line-height:1.26;margin-top:.005in"';
   const R=(nm,detail,n)=>'<tr><td class="bx"></td><td><b>'+nm+'</b>'+(detail?'<div '+D+'>'+detail+'</div>':'')+'</td><td class="n">'+n+'</td></tr>';
   const T=title=>'<table><tr><th></th><th>'+title+'</th><th>qty</th></tr>';
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v2.4 “Three Tiles”)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v2.4.1 “Three Tiles”)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The base game below; the three opt-in expansions are listed last. With all expansions off, the box is exactly the base set. (Counts are a working first pass.)</p>'
     +'<div class="cols2">';
   h+=T('Boards')

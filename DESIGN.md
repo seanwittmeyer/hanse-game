@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v2.4 “Three Tiles”)
+# Brewhouses of the Hanse — Design (v2.4.1 “Three Tiles”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v2.4 “Three Tiles”** — live; the **tile-taxonomy + Floor-lane pass** (three colour-coded tile types — PRIVILEGE blue · WORK green · IMPROVEMENT purple; London pays a Building OR an Improvement; the Q3+ **Hire** cask action; the Floor-lane re-prices) on the v2.3 **delivery-arithmetic keystone** (value = a privilege, owner-only · transform = a work, serves any dock · wharfage/rival-½ retired · delivery = starting value + the ONE die, max 6) on the designer-approved v2.2 **rules-consistency keystone** (one load grammar · one gate rule · benefits-when-gained · buildings display→placed-at-once · the Floor as the standing 3rd line · overbuild one-rule · the demand die a real d6 · Jopenbier in the Flight); **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — the **Hanse Network**: a tree from **Hamburg** (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul) that **REPLACES the kontor majorities**. A **voyage** to a kontor pushes your **caravan** one node along its road (**per voyage**, gated by cask quality); reaching a town lets each cask aboard **claim a Staple-Right slot** (a distinct one-shot bonus, flavoured by lane: Rhineland=craft · London=infrastructure · Bergen=logistics · East=points), in load order; a full town pays an overflow bonus. Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
+|**Status**     |**v2.4.1 “Three Tiles”** — live; the **tile-taxonomy + Floor-lane pass** (three colour-coded tile types — **PRIVILEGE** blue, pays its owner only · **BUILDING** green, serves everyone · **SPECIALIST** purple, private brewery board; London pays a Privilege/Building OR a Specialist; the Q3+ **Hire** cask action; the Floor-lane re-prices) on the v2.3 **delivery-arithmetic keystone** (value = a privilege, owner-only · transform = a work, serves any dock · wharfage/rival-½ retired · delivery = starting value + the ONE die, max 6) on the designer-approved v2.2 **rules-consistency keystone** (one load grammar · one gate rule · benefits-when-gained · buildings display→placed-at-once · the Floor as the standing 3rd line · overbuild one-rule · the demand die a real d6 · Jopenbier in the Flight); **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — the **Hanse Network**: a tree from **Hamburg** (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul) that **REPLACES the kontor majorities**. A **voyage** to a kontor pushes your **caravan** one node along its road (**per voyage**, gated by cask quality); reaching a town lets each cask aboard **claim a Staple-Right slot** (a distinct one-shot bonus, flavoured by lane: Rhineland=craft · London=infrastructure · Bergen=logistics · East=points), in load order; a full town pays an overflow bonus. Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
 
 ---
 
@@ -78,7 +78,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v2.4 “Three Tiles”)
+## 6. The current architecture (v2.4.1 “Three Tiles”)
 
 Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -116,10 +116,12 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   building); **overbuild**: +3★ banked immediately + the tile flips to the owner's floor (self =
   rival; floor full → discard); the **demand die is a real d6, max 6** (building ★ + Q4/Q5
   premium, set not accumulated; destinations are the cask's starting value).
-- **Three tile types (v2.4)** — every ownable tile is one of three colour-coded first-class
-  types: **PRIVILEGE** (bright blue; owner-only value, on the slots) · **WORK** (green;
-  serves-any-dock transform, on the slots) · **IMPROVEMENT** (purple; the private brewery tiles —
-  bought at the Cellar, hired free by the Q3+ **Hire** cask action, or taken as London's benefit).
+- **Three tile types (v2.4.1)** — every ownable tile is one of three colour-coded first-class
+  types: **PRIVILEGE** (bright blue; owner-only value, on the slots) · **BUILDING** (green;
+  serves-any-dock transform, on the slots) · **SPECIALIST** (purple; the private brewery-board
+  tiles — bought at the Cellar, hired free by the Q3+ **Hire** cask action, or taken as London's
+  benefit). "Building" now names ONLY the public green type; the slot tiles together are
+  "Privileges & Buildings" (one shared Wharf display/deck).
 - **Privileges & Works (v2.3)** — one sharing rule along the printed verb: **value pays its
   owner; works serve the wharf.** Delivery = **starting value + the one die, nothing else** —
   ship-slot value buildings bump the same die at the sail (hard max 6 on the sum); wharfage,
@@ -221,6 +223,14 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v2.4.1 — the naming pass: PRIVILEGE · BUILDING · SPECIALIST** *(2026-07-04, rides KEY v88 — display
+text only, no state change; the v2.1.1 precedent)* — the designer settled the triad: the green
+serves-everyone slot tiles are simply **BUILDINGS**; the purple private tiles become **SPECIALISTS**
+("improving your personal Brewhouse board" — you hire them); the blue owner-only tiles stay
+**PRIVILEGES** (Stapelrecht, charters, favors — personal grants). The shared Market display is the
+**Wharf display** (it holds both slot types). Badges, prompts, logs, aid, rules, manifests, and both
+printables kits re-labelled; `value`/`transform` remain internal verb keys.
 
 **v2.4 "Three Tiles" — the tile-taxonomy + Floor-lane pass** *(2026-07-04, `play.html` KEY v88)* —
 **The designer-directed follow-through on the improvement-parity / buildings review** (the probe evidence:
@@ -934,8 +944,10 @@ automatically.
 - **Privileges & Works** — the v2.3 sharing rule: a **value** building pays its **owner only** (a
   privilege); a **transform** building serves **whoever docks** (a work). No delivery payments
   between players.
-- **Improvement** — the purple private-brewery tile type (v2.4); bought at the Cellar, hired via the
-  Q3+ Hire action, or London's benefit. Powers the Floor.
+- **Specialist** — the purple private-brewery tile type (v2.4.1, formerly "improvement"); bought at
+  the Cellar, hired via the Q3+ Hire action, or London's benefit. Powers the Floor.
+- **Building** — since v2.4.1, ONLY the green serves-any-dock slot tiles (the old umbrella use is
+  retired; slot tiles together = Privileges & Buildings).
 - **Wharfage** — *(retired, v2.3)* the old points cut a building's owner took when a rival routed through it; see **Privileges & Works**.
 - **The Floor** — your private line: run your built-up brewery instead of a grid line.
 - **Kontor** — a foreign trading post (Bruges/London/Bergen/Novgorod); ship there for value +

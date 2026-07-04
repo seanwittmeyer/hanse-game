@@ -1,9 +1,9 @@
-# Brewhouses of the Hanse — Components (v2.4 “Three Tiles”)
+# Brewhouses of the Hanse — Components (v2.4.1 “Three Tiles”)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9.
-> - The live build is `play.html` — **v2.4 “Three Tiles”** (`KEY hanse-hotseat-v88`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v2.4.1 “Three Tiles”** (`KEY hanse-hotseat-v88`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - Cross-reference for tile families: §3 boards, §4 supply, §5–11 the seven families A–G, §12 player board, §13 starting setup, §14 box footprint. Expansion add-ons are §15; cross-references §16.
 
 ---
@@ -13,7 +13,7 @@
 - **Goods:** `G` = grain, `H` = hops — the only currency.
 - **A line** = a row or column of the Wharf = two stations + the two slots beside them.
 - **A slot stack** (max two layers): `[building?] + [ship+casks | cask]`.
-- **Three tile types, three colours (v2.4):** a **PRIVILEGE** (bright **blue**) — an owner-only value tile on the slots (a rival docking there banks nothing); a **WORK** (**green**) — a serves-any-dock transform tile on the slots; an **IMPROVEMENT** (**purple**) — a private brewery tile. No payments between players at delivery (wharfage and the rival-½ retired, v2.3).
+- **Three tile types, three colours (v2.4.1):** a **PRIVILEGE** (bright **blue**) — an owner-only value tile on the slots (a rival docking there banks nothing); a **BUILDING** (**green**) — a serves-any-dock transform tile on the slots; a **SPECIALIST** (**purple**) — a private brewery-board tile. No payments between players at delivery (wharfage and the rival-½ retired, v2.3).
 - **End clock:** the Sailed-Ships track fills by one per voyage (a full sail, a Charter, or an Enshrine).
 
 ---
@@ -84,9 +84,9 @@ Neutral, destination-bound hulls. Drawn from a shuffled deck into a face-up **ma
 
 ---
 
-## 7. Building tiles · family C (the owned slot layer)
+## 7. Slot tiles — Privileges & Buildings · family C (the owned slot layer)
 
-Always acquired **from the face-up display and placed on a slot at once** (v2.2 — no hand): buy at the Market, or free via a London delivery or the Survey action. **One grammar:** a building modifies the occupant docked on it **now** (positional — nothing is rewritten) — `tgt` is what it acts on (cask or ship). **One sharing rule, one colour code (v2.3/v2.4): PRIVILEGE (blue) = pays its owner only · WORK (green) = serves any dock** — the tile faces print the type badge. A face-up **display of 4** at the Market refills from the shuffled deck.
+Always acquired **from the face-up display and placed on a slot at once** (v2.2 — no hand): buy at the Market, or free via a London delivery or the Survey action. **One grammar:** a building modifies the occupant docked on it **now** (positional — nothing is rewritten) — `tgt` is what it acts on (cask or ship). **One sharing rule, one colour code: PRIVILEGE (blue) = pays its owner only · BUILDING (green) = serves any dock** — the tile faces print the type badge. A face-up **Wharf display of 4** at the Market refills from the shuffled deck.
 
 ### 7A. PRIVILEGES (blue) — the owner’s cask/ship banks bonus ★ on delivery
 
@@ -105,7 +105,7 @@ Always acquired **from the face-up display and placed on a slot at once** (v2.2 
 | Bergen Bryggen | cask | a cask from here to Bergen: +4★ | `2 G` | 1 |
 | Novgorod Peterhof | cask | a cask from here to Novgorod: +4★ | `2 G` | 1 |
 
-### 7B. WORKS (green) — the docked cask/ship is changed, for whoever docks
+### 7B. BUILDINGS (green) — the docked cask/ship is changed, for whoever docks
 
 | Tile | Target | Effect ⚙ | Cost ⚙ | Qty ⚙ |
 |---|---|---|---|---|
@@ -143,9 +143,9 @@ Print 4 copies of each export recipe (covers 4 houses each picking up the full l
 
 ---
 
-## 9. Improvement tiles · family E (7 designs, scarce deck)
+## 9. Specialist tiles · family E (7 designs, scarce deck)
 
-Private brewery tiles (**IMPROVEMENTS — purple**, the third tile type), bought at the **Cellar** for goods — or gained free via **Hire** (the Q3+ cask action) or a **London** delivery (v2.4). The deck holds `n − 1` copies of each type (n = player count → 7 / 14 / 21 tiles). A face-up **display of 4** at the Cellar refills from the deck. A house cannot own two of the same type. The improvements area holds **4 tiles total** (improvements + flipped buildings).
+Private brewery-board tiles (**SPECIALISTS — purple**, the third tile type), bought at the **Cellar** for goods — or gained free via **Hire** (the Q3+ cask action) or a **London** delivery (v2.4). The deck holds `n − 1` copies of each type (n = player count → 7 / 14 / 21 tiles). A face-up **display of 4** at the Cellar refills from the deck. A house cannot own two of the same type. The improvements area holds **4 tiles total** (improvements + flipped buildings).
 
 | Improvement | Effect ⚙ | Cost ⚙ |
 |---|---|---|
@@ -173,7 +173,7 @@ Each quality's casks form a face-up pile; the **top action** of every quality pi
 | Reach | +1 presence at a kontor you've delivered to | Q2–Q5 pool |
 | Convert | up to 2 goods G↔H | Q2–Q5 pool |
 | Survey | choose a Building from the display + place it at once | Q2–Q5 pool |
-| Hire | take an eligible Improvement from the Cellar display, free | Q3–Q5 pool (v2.4) |
+| Hire | take an eligible Specialist from the Cellar display, free | Q3–Q5 pool (v2.4) |
 | Wild | take any one base action | Q4+ pool only |
 
 ---
@@ -185,7 +185,7 @@ All open from setup. **Kontor delivery value = base + the value-building bonuses
 | Destination | Quality gate | Base value ⚙ | On-delivery benefit ⚙ | Majority (1 / 2 / 3) ⚙ |
 |---|---|---|---|---|
 | Bruges (Hub) | Q1 | +1 ★ | 2 goods (owner's choice) | 4 / 2 / 0 |
-| London (Steelyard) | Q2 | +1 ★ | a Building (display → placed) OR an Improvement, free | 5 / 3 / 1 |
+| London (Steelyard) | Q2 | +1 ★ | a Privilege/Building (placed) OR a Specialist, free | 5 / 3 / 1 |
 | Bergen (Bryggen) | Q2 | +1 ★ | free Reach (+1 presence) | 9 / 5 / 2 |
 | Novgorod (Peterhof) | Q3 | scales: Q3·2 / Q4·4 / Q5·6 | refine — a maturing cask +1 age | 8 / 5 / 2 |
 | The Hall | Q2 (deployed) | fixed ladder: Q2·3 / Q3·5 / Q4·7 / Q5·9 | — | — |
