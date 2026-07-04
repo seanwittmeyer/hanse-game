@@ -774,6 +774,28 @@ const DEVELOP_PTS=3;     // v2.2 developer ★: banked IMMEDIATELY when a buildi
 // CELLAR (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
 // v82 "Scarce Improvements": these now form a SHUFFLED DECK of (n−1) copies of each type (n=players) feeding a
 // face-up DISPLAY of 4 at the Cellar (refills from the deck). 3 copies/type covers a 4-player deck (n−1=3).
+// ============================================================================
+// SPECIALIST TILE ART — IMAGE-GENERATION SPEC (for the art agent; v2.6.1)
+// ============================================================================
+// Generate ONE image per Specialist, saved as art/improve-<slug>.png where <slug> = the tile
+// name lowercased, spaces removed by the kit's slug() (e.g. Coppersmith → improve-coppersmith.png,
+// Grain Factor → improve-grainfactor.png).
+// STYLE (all seven, identical treatment):
+//   • a plain warm BEIGE field (parchment #e9dcc0-ish), edge-to-edge — NO scene, NO border
+//   • ONE object centered — the specialist's trade tool (the art: brief on each row below);
+//     medieval-woodcut / muted-gouache feel, readable at 1 inch print size
+//   • no text, no people, no player-colour hues (the purple foot bar is added by the kit)
+// The card layout: this art sits full-bleed behind a scrim; name on top, effect+cost in the
+// purple foot — so keep the object in the middle 60% of the frame.
+// The seven briefs (also carried per-row as art:'…'):
+//   coppersmith  → a gleaming copper brew kettle
+//   cellarman    → an oak cask racked on a wooden stillage
+//   grainfactor  → a tied burlap sack overflowing with barley
+//   hopgardener  → a climbing hop bine with cones on a tall pole
+//   stevedore    → a medieval wooden treadwheel harbor crane
+//   lagerkeeper  → stacked casks dusted with frost and icicles
+//   quaymaster   → a private wooden jetty with a rope-wound mooring bollard
+// ============================================================================
 const IMPROVE=[   // SPECIALISTS = PURPLE (the third tile type, v2.4.1) · bought at the CELLAR, hired via the Q3+ Hire action, or London's benefit · v82: deck of n−1/type (3 each = the 4p deck)
   {ic:'wrench',     nm:'Coppersmith', art:'a gleaming copper brew kettle',   act:'+1 vessel · cap 3', g:3, c:'#5b3a8e', n:3},
   {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'maturation −1 step', g:4, c:'#5b3a8e', n:3},
