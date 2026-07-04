@@ -1,9 +1,9 @@
-# Brewhouses of the Hanse — Components (v2.5 “Warm Wharf”)
+# Brewhouses of the Hanse — Components (v2.6 “Dockside Pickup”)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9.
-> - The live build is `play.html` — **v2.5 “Warm Wharf”** (`KEY hanse-hotseat-v89`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v2.6 “Dockside Pickup”** (`KEY hanse-hotseat-v90`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - Cross-reference for tile families: §3 boards, §4 supply, §5–11 the seven families A–G, §12 player board, §13 starting setup, §14 box footprint. Expansion add-ons are §15; cross-references §16.
 
 ---
@@ -73,7 +73,7 @@ A brewed beer in one of three states: **maturing** (vessel) → **deployed** (sl
 
 ## 6. Ship tiles · family B (20-tile deck)
 
-Neutral, destination-bound hulls. Drawn from a shuffled deck into a face-up **market of 3** at the Market. Commission (`2 G`) places one on a slot with a free first load of one of your **deployed** casks (v2.2).
+Neutral, destination-bound hulls. Drawn from a shuffled deck into a face-up **market of 3** at the Market. Commission (`2 G`) places one on an open slot — or **onto a slot whose cask can board it** (v2.6 dockside pickup: the cask loads at once; a rival’s follows the rival-loading rules) — with a free first load of one of your **deployed** casks (v2.2).
 
 | Hull | Capacity | Qty | Destination spread |
 |---|---|---|---|

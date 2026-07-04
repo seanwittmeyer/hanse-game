@@ -1,8 +1,10 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v2.5 “Warm Wharf”)
+# Brewhouses of the Hanse — Turn & Round Rules (v2.6 “Dockside Pickup”)
 
 > **Status: live (2026-07-04).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
-> playable build is `play.html` (v2.4.1 “Three Tiles” — the tile-taxonomy + Floor-lane pass: three
+> playable build is `play.html` (v2.6 “Dockside Pickup” — Commission may place the hull onto a slot
+> whose cask can board it; on v2.5 “Warm Wharf” (2 neutral starting Buildings; greyed-not-hidden
+> actions) and v2.4.1 “Three Tiles” — the tile-taxonomy + Floor-lane pass: three
 > colour-coded tile types — **PRIVILEGE** (blue, pays its owner only) · **BUILDING** (green, serves
 > everyone) · **SPECIALIST** (purple, private, on your brewery board) — London pays a
 > Privilege/Building OR a Specialist, the Q3+ **Hire** cask action, and the Floor-lane re-prices; on v2.3 “Privileges & Works” — the delivery-arithmetic keystone on
@@ -156,8 +158,9 @@ Do **one**: take **2 goods** (any mix), **or acquire one tile** (pay its goods c
 - a **building** from the face-up display (`⚙ G` by tier) — **buy it and place it on a slot at
   once** (§5; v2.2: buildings are never held — every acquisition is *choose from the display →
   place now*);
-- a **ship commission** (`2 G` ⚙ — place a face-up ship on a slot + free-load one of your
-  **deployed** casks — §6);
+- a **ship commission** (`2 G` ⚙ — place a face-up ship on an open slot **or onto a slot whose
+  cask can board it** (v2.6 “dockside pickup” — the cask loads at once as a normal load; a
+  rival’s follows the rival-loading rules) + free-load one of your **deployed** casks — §6);
 - a **charter contract** (`1 G` ⚙ — §6).
 
 ### B · Brewhouse — *Brew (+ deploy anywhere)*
@@ -308,8 +311,11 @@ player's turn.** No out-of-turn gains.
 ## 6. Ships · Charter · Enshrine (the cash-out — kept)
 
 - **Ships** are neutral, destination-bound hulls (Cog 2 / Hulk 3) off a shuffled deck; a face-up
-  **market of 3**. **Commission** (`2 G`) places one on a slot **+ a free load of one of your
-  DEPLOYED casks** (v2.2 — the vessel-outlet grammar, §4C). Load deployed casks aboard; a ship
+  **market of 3**. **Commission** (`2 G`) places one on an open slot — **or onto a slot whose cask can board it**
+  (v2.6 **dockside pickup**: the cask loads at once, its dock privilege captured; a rival’s cask
+  follows the rival-loading rules — owner scores, you chose the destination + take the `1 G`;
+  a hull filled by the pickup sails immediately) — **+ a free load of one of your DEPLOYED
+  casks** (v2.2 — the vessel-outlet grammar, §4C). Load deployed casks aboard; a ship
   **sails the moment it is full** (v2.2: including when its capacity *shrinks* — e.g. a Cooperage
   overbuilt under a part-loaded hull) → every cask **delivers**, value (§7) + majority
   count sealing **on delivery** in load order. **Dock a ship on your value-building for a rich

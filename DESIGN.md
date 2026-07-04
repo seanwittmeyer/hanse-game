@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v2.5 “Warm Wharf”)
+# Brewhouses of the Hanse — Design (v2.6 “Dockside Pickup”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -223,6 +223,17 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v2.6 "Dockside Pickup" — commission onto casks** *(2026-07-04, `play.html` KEY v90)* — Designer-approved:
+**Commission may place the face-up ship ONTO a slot whose cask can board it** (effective quality vs the
+gate; Customs/Gauger on that slot count) — the cask **loads at once as a normal load** (its dock privilege
+captured on the die; **a rival's cask follows the v0.12 rival-loading rules** — owner scores on delivery,
+the commissioner chose the destination and takes the 1G). The regular free-load follows; **a hull filled by
+the pickup sails immediately** ("boats pick casks up; commissioning is worth more" — designer). No new
+arithmetic: cask-target tiles set the die, ship-target tiles bump at sail — disjoint, no double-dip.
+*Gates (KEY v90):* `verify-v90` 8 checks PASS + v87/v88/v89 green; sim 300 → 0 crash/deadlock, pace in band
+(avg ~16, band 98%+); render-smoke ALL PASS. *Watch (⚙): pace — the Cog insta-sail combo adds sails/turn;
+`SAILED_CAP` is the dial if the round count drifts down.*
 
 **v2.5 "Warm Wharf" — the table-feel pass** *(2026-07-04, `play.html` KEY v89)* — Two designer asks.
 **(1) Greyed, not hidden:** every stop / harbor option now renders but is **disabled when it has no legal

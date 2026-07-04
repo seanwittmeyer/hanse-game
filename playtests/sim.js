@@ -131,7 +131,7 @@ function stopPrio(s){
 }
 function botStops(){var bi=0,bp=1e9;UI.stops.forEach(function(s,i){var pr=stopPrio(s);if(pr<bp){bp=pr;bi=i;}});resolveStop(bi);}
 function botMarket(p){
-  if(UI.stage==='place'){placeSlot(emptySlots()[0].id);return;}                 // a commissioned ship → a slot
+  if(UI.stage==='place'){var pk=commPlaceable(UI.tmp.placeTile.dest);placeSlot(pk[0]);return;}                 // a commissioned ship → a slot (v2.6: empties first, else a pickup)
   if(UI.stage==='commload'){var el=commEligible(p,UI.tmp.commShipSlot);
     if(!el.length){commSkip();return;}el.sort(function(a,b){return b.q-a.q;});commLoad(el[0].ref);return;}
   // (v2.2: no buildings-in-hand — every acquisition is display → place at once)
