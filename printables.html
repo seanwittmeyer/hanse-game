@@ -579,13 +579,13 @@ const DEVELOP_PTS=3;     // v2.2 developer ★: banked IMMEDIATELY when a buildi
 // v82 "Scarce Improvements": these now form a SHUFFLED DECK of (n−1) copies of each type (n=players) feeding a
 // face-up DISPLAY of 4 at the Cellar (refills from the deck). 3 copies/type covers a 4-player deck (n−1=3).
 const IMPROVE=[   // SPECIALISTS = PURPLE (the third tile type, v2.4.1) · bought at the CELLAR, hired via the Q3+ Hire action, or London's benefit · v82: deck of n−1/type (3 each = the 4p deck)
-  {ic:'wrench',     nm:'Coppersmith', art:'a gleaming copper brew kettle',   act:'+1 vessel · cap 3', g:3, c:'#5b3a8e', n:3},
-  {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'maturation −1 step', g:4, c:'#5b3a8e', n:3},
-  {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'gain '+LU('wheat','g ic')+' → +1', g:3, c:'#5b3a8e', n:3},
-  {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'gain '+LU('sprout','h ic')+' → +1', g:4, c:'#5b3a8e', n:3},
-  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Harbor loads 2 casks', g:3, c:'#5b3a8e', n:3},
-  {ic:'snowflake',  nm:'Lagerkeeper', art:'stacked casks dusted with frost and icicles',act:'EVERY maturing cask +1/turn', g:2, c:'#5b3a8e', n:3},
-  {ic:'anchor',     nm:'Quaymaster', art:'a private wooden jetty with a rope-wound mooring bollard',   act:'ship casks from vessels', g:3, c:'#5b3a8e', n:3},
+  {ic:'wrench',     nm:'Coppersmith', art:'a gleaming copper brew kettle',   act:'Extra Vessel', g:3, c:'#5b3a8e', n:3},
+  {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Age +1 '+LU('hourglass'), g:4, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:3, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:4, c:'#5b3a8e', n:3},
+  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Load 2 casks when Loading', g:3, c:'#5b3a8e', n:3},
+  {ic:'snowflake',  nm:'Lagerkeeper', art:'stacked casks dusted with frost and icicles',act:'All vessels +1 '+LU('hourglass')+' each turn', g:2, c:'#5b3a8e', n:3},
+  {ic:'anchor',     nm:'Quaymaster', art:'a private wooden jetty with a rope-wound mooring bollard',   act:LU('package-plus')+' / '+LU('crown')+' from Vessels', g:3, c:'#5b3a8e', n:3},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a

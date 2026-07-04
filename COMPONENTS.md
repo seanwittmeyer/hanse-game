@@ -150,12 +150,12 @@ Private brewery-board tiles (**SPECIALISTS — purple**, the third tile type; v2
 | Improvement | Effect ⚙ | Cost ⚙ |
 |---|---|---|
 | **Coppersmith** *(a gleaming copper brew kettle)* | +1 brewing lane (vessels start 2, cap 3) | `3 G` |
-| **Cellarman** *(an oak cask racked on a stillage)* | maturation −1 step | `4 G` |
+| **Cellarman** *(an oak cask racked on a stillage)* | Age +1 — brews mature one step sooner | `4 G` |
 | **Grain Factor** *(a burlap sack of barley)* | when you gain grain, +1 extra | `3 G` |
 | **Hop Gardener** *(a hop bine with cones on a pole)* | when you gain hops, +1 extra | `4 G` |
-| **Stevedore** *(a wooden treadwheel harbor crane)* | your Harbor load sets out 2 casks (not 1) | `3 G` |
-| **Lagerkeeper** *(frost-dusted stacked casks)* | each of your turns: EVERY maturing cask +1 age | `2 G` |
-| **Quaymaster** *(a private jetty + mooring bollard)* | load Ready casks straight from vessels onto ships | `3 G` |
+| **Stevedore** *(a wooden treadwheel harbor crane)* | Load 2 casks when Loading | `3 G` |
+| **Lagerkeeper** *(frost-dusted stacked casks)* | all vessels +1 age each of your turns | `2 G` |
+| **Quaymaster** *(a private jetty + mooring bollard)* | Load OR Enshrine straight from your vessels (v2.7) | `3 G` |
 
 **Print: 21 improvement tiles** (3 copies × 7 types covers up to 4 players).
 

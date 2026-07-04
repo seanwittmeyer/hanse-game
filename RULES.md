@@ -215,9 +215,10 @@ ships **sail only when full**. **Or Enshrine** at the Hall (§6). **Or Charter**
 > **THE ONE VESSEL-OUTLET GRAMMAR (v2.2).** *A cask leaves your vessels only two ways: **Deploy**
 > it, or **Charter** it.* Every load verb on the board — the Harbor Load, a cask's free-Load
 > action, a ship's line-fire, the commission free-load — touches **deployed** casks only.
-> the **Quaymaster** (ex Private Quay) is the invested exception: it upgrades *your Harbor Load* to reach your own
-> vessels. **Enshrine takes deployed casks only** — *the Hall demands a public showing* (the
-> deploy-first contestability principle, kept deliberately). **Every gate check uses EFFECTIVE
+> the **Quaymaster** (ex Private Quay) is the invested exception: it opens **both private outlets** —
+> **Load OR Enshrine straight from your vessels** (v2.7). For everyone else **Enshrine takes deployed
+> casks only** — *the Hall demands a public showing* (the deploy-first principle, kept deliberately;
+> the Quaymaster is the paid way past it). **Every gate check uses EFFECTIVE
 > quality** (kilns, Duckstein, Customs/Gauger — one rule for every verb).
 
 ---
@@ -385,8 +386,7 @@ Hire action, or taken as London's benefit; the v2.4 re-prices lift the floor ⚙
 **Coppersmith** (+1 vessel, `3 G`), **Cellarman** (maturation −1 step, `4 G`), **Grain Factor** (+1 extra
 grain, `3 G`), **Hop Gardener** (+1 extra hops, `4 G` — the parity probe's outlier pays a premium in the
 hops-led economy), **Stevedore** (your Harbor load sets out **2 casks**, `3 G`), **Lagerkeeper** (each of
-**your turns**, **EVERY** maturing cask **+1 age**, `2 G` — the Floor-lane keystone), and **Quaymaster** (load **Ready casks
-straight from your vessels** onto ships, `3 G` — the only door past Deploy).
+**your turns**, **EVERY** maturing cask **+1 age**, `2 G` — the Floor-lane keystone), and **Quaymaster** (**Load OR Enshrine** Ready casks **straight from your vessels**, `3 G` — the paid door past Deploy, v2.7).
 Your **improvements area holds at most 4 tiles** (these + any flipped buildings, §5) — so the engine is a real
 choice, not a buffet. *(v1.7 moved the buy from the Market to the Cellar — sim showed the barrier was the
 Market action's opportunity cost, not the goods. The free-starting-improvement study made **Hop Gardener** the
