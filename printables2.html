@@ -777,9 +777,11 @@ const DEVELOP_PTS=3;     // v2.2 developer ★: banked IMMEDIATELY when a buildi
 // ============================================================================
 // SPECIALIST TILE ART — IMAGE-GENERATION SPEC (for the art agent; v2.6.1)
 // ============================================================================
-// Generate ONE image per Specialist, saved as art/improve-<slug>.png where <slug> = the kit's own
+// Generate ONE image per Specialist, saved as art/improve-<slug>.jpg (JPEG, not PNG — a flat-field
+// object shot with no transparency needs no alpha channel, and compresses ~8x smaller at quality
+// ~88 with no visible loss; every other art/ family stays .png) where <slug> = the kit's own
 // slug(d.nm) (lowercased, non-alphanumeric runs → a single hyphen — e.g. Coppersmith →
-// improve-coppersmith.png, Grain Factor → improve-grain-factor.png; NOTE the hyphen — a prior
+// improve-coppersmith.jpg, Grain Factor → improve-grain-factor.jpg; NOTE the hyphen — a prior
 // version of this comment said "grainfactor"/"hopgardener" with no hyphen, which does not match
 // what slug() actually emits at runtime; always derive the filename from slug(), not by hand).
 // STYLE (all seven, identical treatment):
@@ -924,14 +926,14 @@ function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--
   +(it.big?'<div class="g-big">'+it.big+'</div>':'')
   +(it.g?'<div class="g-cost">'+cost(it.g,it.h)+'</div>':'')+'</div>';}
 // SPECIALIST CARD (v10) — now a SQUARE 2in×2in card, matching the Building card's footprint (was a half-height
-// 2in×1in strip). Full-bleed OBJECT art (improve-<slug>.png — a single trade-tool icon on a plain beige field,
+// 2in×1in strip). Full-bleed OBJECT art (improve-<slug>.jpg — a single trade-tool icon on a plain beige field,
 // no scene) + scrim, name/icon on top, and a PURPLE foot bar carrying the effect + cost. Same art-card grammar
 // as the casks/ships/buildings. Card bg = the same purple as the foot, so any html2canvas foot-edge hairline
 // is purple-on-purple.
 const IMP_FOOT='#4a3a6e';   // Specialist foot/base — PURPLE (the third tile type, v2.4.1; was Cellar-green)
 function improveTile(d){const k=slug(d.nm);
   return '<div class="icard" style="--c:'+IMP_FOOT+'">'
-  +artLayer('improve-'+k+'.png')
+  +artLayer('improve-'+k+'.jpg')   // .jpg not .png — a flat-colour-field object shot compresses ~8x smaller as JPEG at no visible quality loss
   +'<div class="ic-top"><span class="ic-ic">'+LU(d.ic)+'</span><span class="ic-nm">'+d.nm+'</span></div>'
   +'<div class="ic-foot"><span class="ic-act">'+d.act+'</span><span class="ic-cost">'+cost(d.g,d.h)+'</span></div>'
   +'</div>';}
