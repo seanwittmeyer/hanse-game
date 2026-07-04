@@ -1,9 +1,9 @@
-# Brewhouses of the Hanse — Components (v2.2 “One Grammar”)
+# Brewhouses of the Hanse — Components (v2.3 “Privileges & Works”)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9.
-> - The live build is `play.html` — **v2.2 “One Grammar”** (`KEY hanse-hotseat-v86`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v2.3 “Privileges & Works”** (`KEY hanse-hotseat-v87`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - Cross-reference for tile families: §3 boards, §4 supply, §5–11 the seven families A–G, §12 player board, §13 starting setup, §14 box footprint. Expansion add-ons are §15; cross-references §16.
 
 ---
@@ -13,7 +13,7 @@
 - **Goods:** `G` = grain, `H` = hops — the only currency.
 - **A line** = a row or column of the Wharf = two stations + the two slots beside them.
 - **A slot stack** (max two layers): `[building?] + [ship+casks | cask]`.
-- **Owned-but-shared:** any building works for whoever docks on it; the owner gets the full effect, a rival gets a reduced effect and pays the owner a small **wharfage** in points. *(⚙ under review — see `DESIGN.md` parking lot.)*
+- **Privileges & Works (v2.3):** a **value** building is a *privilege* — it pays **its owner only** (a rival docking there banks nothing); a **transform** building is a *work* — it serves **whoever docks**. No payments between players at delivery (wharfage and the rival-½ are retired).
 - **End clock:** the Sailed-Ships track fills by one per voyage (a full sail, a Charter, or an Enshrine).
 
 ---
@@ -34,7 +34,7 @@
 |---|---|---|
 | Grain cubes (`G`) | ~60 | Currency + brew input. |
 | Hops cubes (`H`) | ~40 | Currency + brew input. |
-| Demand dice (d6) | 8 | Reusable value-bonus carrier — pips = the ★ a cask banks on delivery from a value building. |
+| Demand dice (d6) | 8 | Reusable value-bonus carrier — pips = the ★ a cask banks on delivery from **its owner’s** value building(s); ship-slot value buildings bump the same die at the sail (one die per cask, max 6). |
 | Quality-boost markers | 6 | Ride a cask from a Malt Kiln / Hop Yard, raising its effective quality at delivery. |
 | Charter contracts (cards) | 20 | Spend 1 + a flat `2 G` fare to Charter; buyable at the Market (`1 G`). |
 | First-player marker | 1 | Fixed all game (turn order does not rotate). |
@@ -48,7 +48,7 @@
 | Component | Qty per house ⚙ | Notes |
 |---|---|---|
 | Worker pawn | 1 | Moves between stations. |
-| Ownership / presence discs (player colour) | 14 | Single token in three lives: ownership on a slot → rides on a ship → plants at the kontor as your presence (the majority count); also marks whose building sits on a slot (wharfage routing). **Finite supply = your trade-factor cap.** Enshrining returns a disc; the Hall is unlimited. |
+| Ownership / presence discs (player colour) | 14 | Single token in three lives: ownership on a slot → rides on a ship → plants at the kontor as your presence (the majority count); also marks whose building sits on a slot. **Finite supply = your trade-factor cap.** Enshrining returns a disc; the Hall is unlimited. |
 
 ---
 
@@ -92,14 +92,14 @@ Always acquired **from the face-up display and placed on a slot at once** (v2.2 
 
 | Tile | Target | Effect ⚙ | Cost ⚙ | Qty ⚙ |
 |---|---|---|---|---|
-| Rich Berth | ship | each cask the ship delivers: +2★ | `3 G` | 2 |
+| Rich Berth | ship | each of the owner’s casks’ dice +2 at the sail | `3 G` | 2 |
 | Staple Hall | cask | a cask from here delivers +3★ (any kontor) | `3 G` | 2 |
 | Burgomaster's Favor | cask | a cask from here: +1★ per quality level | `3 G` | 2 |
 | Connoisseur's Cellar | cask | a Q4+ cask from here: +4★ | `3 G` | 1 |
 | The Hanse Diet | cask | a cask to a kontor where you LEAD: +3★ | `3 G` | 1 |
-| Festkeller | ship | a FULL ship here: +1★ per cask | `3 G` | 1 |
+| Festkeller | ship | a HULK here: each of the owner’s casks’ dice +3 at the sail | `3 G` | 1 |
 | Reliquary | cask | a cask enshrined from here: +2★ prestige | `3 G` | 1 |
-| Almoner's Stall | owner | your wharfage cut from rivals: +1★ more | `3 G` | 1 |
+| Almoner's Stall | cask | a cask from here to a kontor where you do NOT lead: +3★ | `3 G` | 1 |
 | Bruges Hanzehuis | cask | a cask from here to Bruges: +4★ | `2 G` | 1 |
 | London Steelyard | cask | a cask from here to London: +4★ | `2 G` | 1 |
 | Bergen Bryggen | cask | a cask from here to Bergen: +4★ | `2 G` | 1 |
@@ -120,8 +120,8 @@ Always acquired **from the face-up display and placed on a slot at once** (v2.2 
 
 ### 7C. Building behaviour (one-line reminders)
 
-- **Captured on ship-through.** A cask passing a value building takes a **demand die** into its berth — **a real d6, max 6** (v2.2): set it to the building's printed ★ **plus the quality premium**, never accumulated (only buildings modify dice; the destination is the cask's *starting value*). Quality transforms ride a **+1-quality marker**. Ship value buildings (Rich Berth · Festkeller) resolve live when the hull sails.
-- **Quality premium (v1.8 · v2.2 part of the die).** Cask value buildings pay their printed ★ at Q1–Q3; a **Q4** cask sets the die **+2** higher, a **Q5** cask **+3** higher (die max 6). Reliquary/Hall excluded. Ship value buildings stay flat.
+- **Captured on ship-through.** A cask passing **its owner’s** value building takes a **demand die** into its berth — **a real d6, max 6** (v2.2): set it to the building’s printed ★ **plus the quality premium**, never accumulated (only buildings modify dice; the destination is the cask’s *starting value*; a rival’s cargo sets no die — v2.3). Quality transforms ride a **+1-quality marker** (works — they serve any dock). Ship value buildings (Rich Berth · Festkeller) **bump the owner’s casks’ dice when the hull sails** (a die-less cask takes one at the bump value; the one die stays capped at 6).
+- **Quality premium (v1.8 · v2.2 part of the die).** Cask value buildings pay their printed ★ at Q1–Q3; a **Q4** cask sets the die **+2** higher, a **Q5** cask **+3** higher (die max 6). Reliquary/Hall excluded. Ship value buildings stay flat (a fixed bump, no premium).
 - **Displacement — one rule (v2.2).** Placing on an occupied slot displaces the tile there: its **owner banks +3★ immediately** (self-overbuild included — the tile's printed back is the record) and the tile **flips into their improvements/floor slots** (a Wild on the back, fired via the Floor); **floor full → the tile is discarded** (the ★ still banked).
 
 ---
@@ -189,7 +189,7 @@ All open from setup. **Kontor delivery value = base + the value-building bonuses
 | Novgorod (Peterhof) | Q3 | scales: Q3·2 / Q4·4 / Q5·6 | refine — a maturing cask +1 age | 8 / 5 / 2 |
 | The Hall | Q2 (deployed) | fixed ladder: Q2·3 / Q3·5 / Q4·7 / Q5·9 | — | — |
 
-**Notes:** 2-player games skip 2nd place; ties split the occupied tiers. **Delivery = the destination's starting value + the demand die in the berth. Benefits resolve when gained, owner's choice** (Novgorod's refine: the owner picks which maturing cask; London's Building: chosen + placed at once), whoever's turn it is (v2.2).
+**Notes:** 2-player games skip 2nd place; ties split the occupied tiers. **Delivery = the destination’s starting value + the demand die in the berth — nothing else** (v2.3: no shares, no wharfage). **Benefits resolve when gained, owner's choice** (Novgorod's refine: the owner picks which maturing cask; London's Building: chosen + placed at once), whoever's turn it is (v2.2).
 
 ---
 
@@ -274,7 +274,7 @@ Recipe buys ⚙: Gose `1 G` · Zerbster `1 H` · Duckstein `1 G`.
 
 | Tile | Target | Effect ⚙ | Cost ⚙ | Qty ⚙ |
 |---|---|---|---|---|
-| Salt House | cask | a cask from here: owner +1 `G` +1 `H` on delivery | `2 G` | 1 |
+| Salt House | cask | a cask from here: +1 `G` +1 `H` on delivery (a privilege — the owner’s casks only) | `2 G` | 1 |
 | Smoke Kiln | cask | a cask from here ships +1 quality (cap Q5) | `2 G` | 1 |
 | Parti-Gyle Tun | cask | deploy a cask here: rack a free Gruit | `2 G` | 1 |
 

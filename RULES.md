@@ -1,10 +1,13 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v2.2 “One Grammar”)
+# Brewhouses of the Hanse — Turn & Round Rules (v2.3 “Privileges & Works”)
 
 > **Status: live (2026-07-04).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
-> playable build is `play.html` (v2.2 “One Grammar” — the designer-approved rules-consistency
-> keystone: one load grammar, one gate rule, benefits-when-gained, buildings always placed from the
-> display, the Floor as the standing 3rd line, the demand die a real d6; the three
+> playable build is `play.html` (v2.3 “Privileges & Works” — the delivery-arithmetic keystone on
+> top of v2.2 “One Grammar”: value buildings are privileges (owner-only), transforms are works
+> (serve any dock), wharfage and the rival-½ are retired, and delivery is always *starting value +
+> the one demand die* (a real d6, max 6 — ship-slot value buildings bump the same die at the sail);
+> v2.2 carries one load grammar, one gate rule, benefits-when-gained, buildings always placed from
+> the display, the Floor as the standing 3rd line; the three
 > opt-in expansions — **Specialty Beers** (incl. blending + 3 thematic Buildings), the **Jopenbier**
 > capstone, and **The Trade Roads** (an Overland inland map of claimable Staple-Right slots that replaces the kontor majorities) —
 > are §12) — these rules are implemented there.** (The prior
@@ -252,27 +255,37 @@ for the wrong occupant, and is **never a stop of its own** — a building-only s
 simply Deploy. *(v1.5: the two old **line-effect** buildings, **Harbor Crane** and **Lagering
 Cellar**, were really private engine perks — they became **private improvements**, §8.)*
 
-- **Value buildings (the "demand"):** the occupant scores **bonus value on delivery.** On a
-  **ship**, this is a **rich berth** — *every* cask the ship delivers scores the bonus (the
-  three-tier payoff), resolved live at the sail. On a **cask**, the bonus is **captured as the
-  cask ships through** the building and carried on a **reusable demand die** that rides the
+- **Value buildings (the "demand") — PRIVILEGES.** The occupant scores **bonus value on
+  delivery — for the building's OWNER only** (§5b). On a **cask**, the bonus is **captured as
+  the cask ships through** the building and carried on a **reusable demand die** that rides the
   cask in the berth — **a real d6 (v2.2): the building's printed ★ plus the quality premium
-  (§7), SET when captured, never accumulated, hard max 6.** Destinations never touch the die —
-  they are the cask's *starting value*. (A quality transform instead rides a +1-quality marker.)
-  *This is the variable kontor value — what's worth chasing, authored on the living board.*
-- **Transform buildings:** the occupant is **changed.** E.g. a docked cask **ages faster / gains
-  +1 quality / gains a second action**; a docked ship **carries +1 cask / may re-flag its
-  destination / lowers its quality gate.** The engine/"get-ahead" layer.
+  (§7), SET when captured, never accumulated, hard max 6.** On a **ship**, a value building is
+  a **rich berth** that **bumps the SAME die at the sail** (v2.3 — e.g. Rich Berth: each of the
+  owner's casks' dice **+2**; a cask with no die takes one at the bump value; **the one die
+  stays capped at 6**). Destinations never touch the die — they are the cask's *starting value*.
+  (A quality transform instead rides a +1-quality marker.) *This is the variable kontor value —
+  what's worth chasing, authored on the living board.*
+- **Transform buildings — WORKS.** The occupant is **changed, whoever it belongs to** (§5b).
+  E.g. a docked cask **ships at +1 quality / acts as Wild**; a docked ship **carries +1 cask /
+  lowers its quality gate.** The engine/"get-ahead" layer.
 
-### 5b. Owned, but shared (the GWT/Keyflower feel — points, not a toll) *(⚙ UNDER REVIEW — the
-rival "reduced effect" / wharfage formulation is being reworked for clarity; see `DESIGN.md`
-parking lot. The current rule below stands until then.)*
-A building **serves the whole ring**, but **benefits its owner most:**
-- **The owner** gets the building's **full effect** and may always dock their own cargo on it.
-- **A rival** may dock their cask/ship on your building too (the slots are shared) — they get a
-  **reduced effect**, and **you (owner) take a small points cut** ⚙ when their cargo delivers
-  through it (a "wharfage" — **points, capped — never a goods-skim**, which caused
-  rich-get-richer in v0.6). *Build the dock; tax the traffic — gently.*
+### 5b. Privileges & Works — the one sharing rule (v2.3)
+**The verb printed on the tile IS the sharing rule** — one sentence covers all 21 buildings:
+
+> **Value pays its owner; Works serve the wharf.**
+
+- A **VALUE** building is a **privilege** — a personal grant (a Staple Hall, a kontor charter,
+  a patron's favor). **Only the owner's cargo banks its ★.** A rival may still dock a cask or
+  ship there (the slots are shared ground), but their cargo passes through and **banks nothing**
+  — no die is set, and **nothing is paid to anyone.**
+- A **TRANSFORM** building is a **work** — physical infrastructure (a kiln, a hop yard, a
+  cooperage, a customs house). **It serves whoever docks on it,** at full effect.
+
+There are **no payments between players at delivery** — the old rival-½ share and the
+"wharfage" points trickle are **retired** (they were arithmetic where the game wanted a rule).
+The building contest is **structural**: dock on a rival's privilege to **deny it** (they can
+clear you by loading your cask away — §4C), **overbuild** it (+3★ to the displaced owner, §5a),
+or make them pay the **occupancy toll** on your station.
 
 ### 5c. One-fire rule (kept)
 When a line fires, the active player **may** use each slot on it — the occupant's action (a
@@ -319,11 +332,12 @@ is the cask's starting value; the **die** carries everything the *board* added.
 the **climb**: it pays its printed value for Q1–Q3, but a **Q4** cask banks **+2★** and a **Q5**
 cask **+3★** on top — and **the premium is part of the die**: set the d6 to *printed ★ + premium*
 when the cask ships through, **hard max 6** (a real d6 — e.g. Connoisseur 4 + Q5 premium 3 caps at
-6). The die is **set, never accumulated** — the most recent modification wins, and **only
-buildings modify dice**. So a Bock routed through demand is worth its investment — e.g. *Bruges
-starting value 1 + a Staple die at 6 + a Rich Berth 2 = **9***. The **Hall's reliquary is
-excluded** — its fixed 3/5/7/9 prestige ladder already scales with quality. *(The export-premium
-table and the Masterpiece from v0.16 are folded into this / cut.)*
+6). The die is **set, never accumulated** — the most recent modification wins, **only your own
+value buildings set your dice** (§5b), and a ship-slot rich berth **bumps the same die at the
+sail** — the one die never exceeds 6. So a Bock routed through demand is worth its investment —
+e.g. *Bruges starting value 1 + a Staple die (3 + premium 3, capped) = **7***. The **Hall's
+reliquary is excluded** — its fixed 3/5/7/9 prestige ladder already scales with quality. *(The
+export-premium table and the Masterpiece from v0.16 are folded into this / cut.)*
 
 **Benefits resolve WHEN GAINED, owner's choice (v2.2).** Every on-delivery benefit is taken by the
 cask's **owner, immediately, whoever's turn it is** (a rival tops off a hull carrying your cask →
@@ -392,8 +406,8 @@ table. Pace target **~12–25 rounds.**
 1. **Hall — FIXED.** Each enshrined cask scores its quality's fixed ladder value (3/5/7/9 ⚙).
    *The steady beginner path — low risk, always open.*
 2. **Kontore — VARIABLE.** Each delivered cask scores **its destination's starting value + the
-   demand die in its berth** (§7), plus any **wharfage cut** you owe/collect (§5b). *The
-   risk/reward path — read the board, route your brews.*
+   demand die in its berth** (§7) — nothing else, ever. *The risk/reward path — read the board,
+   route your brews through your own privileges.*
 3. **The developer bonus** (v1.2 · v2.2: banked immediately) — **+3★** ⚙ the moment one of your
    buildings is **overbuilt** — self or rival (§5a). *The crowded-ring / authorship reward.*
 
@@ -546,14 +560,13 @@ keystone — delivery, quality, the demand die — and EXTEND a lane, not sit be
 ## Open / to-tune
 
 1. **The building deck** — the value/transform vocabulary, magnitudes, deck size, display width.
-   *The keystone's heart* (`COMPONENTS.md`).
-2. **Wharfage cut** (§5b) — points size & cap, so owned-but-shared pays the owner without
-   rich-get-richer.
-3. **Three-tier interactions** — building+ship+casks edge cases (rich berth + a full Hulk could
-   spike hard); cap or curve ⚙.
-4. **Private improvements** (§8) — which (if any) stay private vs fold into buildings; how earned.
-5. **Base values vs building bonuses** — the flat-vs-spiky dial; keep the Hall's fixed ladder the
+   *The keystone's heart* (`COMPONENTS.md`). v2.3 magnitudes to watch: the redesigned
+   **Festkeller** (Hulk +3) and **Almoner** (+3 where you don't lead).
+2. **Three-tier interactions** — building+ship+casks edge cases are now bounded by the **one-die
+   cap** (a rich berth bumps the same d6, max 6); confirm the cap reads cleanly at the table.
+3. **Private improvements** (§8) — which (if any) stay private vs fold into buildings; how earned.
+4. **Base values vs building bonuses** — the flat-vs-spiky dial; keep the Hall's fixed ladder the
    legible floor.
-6. **Majority numbers** — re-tune now that kontor value is building-driven.
-7. **Cuts to confirm** — export premium, the Masterpiece (fold into buildings/Flight?).
-8. **Slot pressure** — buildings + casks + ships sharing 8 slots; keep it tight but never locked.
+5. **Majority numbers** — re-tune now that kontor value is building-driven.
+6. **Cuts to confirm** — export premium, the Masterpiece (fold into buildings/Flight?).
+7. **Slot pressure** — buildings + casks + ships sharing 8 slots; keep it tight but never locked.

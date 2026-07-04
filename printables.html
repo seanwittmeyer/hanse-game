@@ -481,7 +481,7 @@
 </head>
 <body>
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v2.2 &ldquo;One Grammar&rdquo;</span></h1>
+  <h1>Brewhouses of the Hanse — Print &amp; Play <span style="font-weight:normal;opacity:.7">v2.3 &ldquo;Privileges &amp; Works&rdquo;</span></h1>
   <button class="bartoggle" id="bartoggle" onclick="toggleBar()" title="Collapse / expand the toolbar">▾ Hide</button>
   <button onclick="window.print()">🖨 Print</button>
   <span class="seg"><button id="vall" class="on" onclick="setView('all')">All sheets</button><button id="vboards" onclick="setView('boards')">Boards</button><button id="vtiles" onclick="setView('tiles')">Tiles</button><button id="vbits" onclick="setView('bits')">Tokens &amp; Bits</button><button id="vcards" onclick="setView('cards')">Cards</button><button id="vlist" onclick="setView('list')">Checklist</button></span>
@@ -543,17 +543,17 @@ const SHIP_DECK=[
 // ---- BUILDINGS (v1.0 KEYSTONE): the one OWNED tile family on the living slots (mirrors play.html BUILDINGS).
 // One grammar — "a building modifies the OCCUPANT docked on it" — in two verbs: VALUE (bonus ★ on delivery)
 // & TRANSFORM (changes the cask/ship). tgt = what it touches (cask/ship/line/owner), shown as a glyph.
-const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a SHIP docked here'},owner:{ic:'user-round',lbl:'YOU (passive)'}};   // v2.2: buildings are passive modifiers of their docked occupant — no line targets
+const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a SHIP docked here'}};   // v2.3: every building modifies its docked occupant (value = a privilege, owner-only; transform = a work, serves any dock)
 const BUILDINGS=[
   // VALUE — trading privileges & patrons
-  {k:'richberth', nm:'Rich Berth',           verb:'value', tgt:'ship', ic:'anchor',      g:3, n:2, eff:'each cask this ship delivers +2★'},
+  {k:'richberth', nm:'Rich Berth',           verb:'value', tgt:'ship', ic:'anchor',      g:3, n:2, eff:'each of your casks’ dice +2 at the sail'},
   {k:'staple',    nm:'Staple Hall',          verb:'value', tgt:'cask', ic:'warehouse',   g:3, n:2, eff:'a cask shipped from here +3★ (any kontor)'},
   {k:'burgomstr', nm:'Burgomaster’s Favor',  verb:'value', tgt:'cask', ic:'crown',       g:3, n:2, eff:'a cask from here +1★ per quality level'},
   {k:'connoiss',  nm:'Connoisseur’s Cellar', verb:'value', tgt:'cask', ic:'wine',        g:3, n:1, eff:'a Q4+ cask from here +4★'},
   {k:'hansediet', nm:'The Hanse Diet',       verb:'value', tgt:'cask', ic:'gavel',       g:3, n:1, eff:'a cask to a kontor you LEAD +3★'},
-  {k:'festkeller',nm:'Festkeller',           verb:'value', tgt:'ship', ic:'beer',        g:3, n:1, eff:'a FULL ship here +1★ per cask'},
+  {k:'festkeller',nm:'Festkeller',           verb:'value', tgt:'ship', ic:'beer',        g:3, n:1, eff:'a HULK here: your casks’ dice +3 at the sail'},
   {k:'reliquary', nm:'Reliquary',            verb:'value', tgt:'cask', ic:'church',      g:3, n:1, eff:'a cask ENSHRINED from here +2★'},
-  {k:'almoner',   nm:'Almoner’s Stall',      verb:'value', tgt:'owner',ic:'heart',       g:3, n:1, eff:'your wharfage cut from rivals +1★'},
+  {k:'almoner',   nm:'Almoner’s Stall',      verb:'value', tgt:'cask', ic:'heart',       g:3, n:1, eff:'to a kontor where you do NOT lead +3★'},
   {k:'ch_bruges', nm:'Bruges Hanzehuis',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'a cask from here → Bruges +4★'},
   {k:'ch_london', nm:'London Steelyard',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'a cask from here → London +4★'},
   {k:'ch_bergen', nm:'Bergen Bryggen',       verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'a cask from here → Bergen +4★'},
@@ -571,7 +571,7 @@ const BUILDINGS=[
   {k:'partigyle', nm:'Parti-Gyle Tun',      verb:'transform', tgt:'cask', ic:'split',         g:2, n:1, eff:'deploy a cask here → a free small Gruit to an open vessel'},
 ];
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
-const WHARFAGE=1;        // owner's points cut when a rival routes through their building (+1 with Almoner's Stall)
+// (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
 const DEVELOP_PTS=3;     // v2.2 developer ★: banked IMMEDIATELY when a building is displaced (self or rival); the tile flips to the owner's floor (a Wild), or is discarded if the 4 slots are full
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
 // CELLAR (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
@@ -733,7 +733,7 @@ function aidFront(){
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
         +'<div class="ln"><b>Sailed-Ships</b> fills (6/10/13 for 2/3/4p) → finish the round → score:</div>'
         +'<div class="ln">'+LU('crown','vi')+' <b>Hall</b> 3/5/7/9 · '+LU('landmark','vi')+' <b>kontor</b> starting value + the demand die · <b>majorities</b> · <span class="em">Flight</span> 3→4·4→9·5→16 (6→25 w/ Jopenbier) · <b>developer</b> +3'+LU('star','vi')+' banked at each overbuild.</div>'
-        +'<div class="ln"><span class="em">The demand die:</span> a real d6, <b>max 6</b> — set it to the value-Building’s ★ <b>+ the premium</b> (Q4 +2 · Q5 +3), never added up. Delivery = destination starting value + the die.</div>'
+        +'<div class="ln"><span class="em">The demand die:</span> a real d6, <b>max 6</b> — <b>your</b> cask through <b>your</b> value Building sets it to the ★ <b>+ the premium</b> (Q4 +2 · Q5 +3); a ship-slot value Building bumps the same die at the sail. A rival’s cargo on your Building banks nothing (value = a privilege; transforms serve anyone). Delivery = destination starting value + the die.</div>'
       +'</div>'
     +'</div></div>';}
 function aidBack(){
@@ -808,7 +808,7 @@ function pboard(p){
     +'<div class="pb-head">'
       +'<div class="crest">'+LU('beer')+'</div>'
       +'<div class="pb-title"><div class="pb-name">'+p.nm+' Brewhouse</div>'
-        +'<div class="pb-sub">Brewhouses of the Hanse · your private brewery · v2.2 “One Grammar”</div></div>'
+        +'<div class="pb-sub">Brewhouses of the Hanse · your private brewery · v2.3 “Privileges & Works”</div></div>'
       +'<div class="pb-store"><span class="slbl">'+LU('warehouse')+'Storage</span>'
         +'<div class="szone"><span class="si">'+LU('wheat','g ic')+'Grain</span><span class="si">'+LU('sprout','h ic')+'Hops</span><span class="cap">max <b>8</b></span></div></div>'
     +'</div>'
@@ -1091,7 +1091,7 @@ function checklist(pages,famPages){
   const row=(bx,nm,n,note)=>'<tr>'+(bx?'<td class="bx"></td>':'<td></td>')+'<td>'+nm+'</td><td class="n">'+n+'</td><td>'+(note||'')+'</td></tr>';
   const bp=pages.filter(p=>p.section==='boards');
   const pbRef=bp.length>4?'S'+bp[3].no+'–S'+bp[bp.length-1].no:'S'+bp[3].no+' (proof: 1 of '+PLAYERS.length+' shown)';
-  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v2.2 “One Grammar”)</h2><div class="cols2">';
+  let h='<div class="check"><h2>Component checklist — full manufacturing manifest (v2.3 “Privileges & Works”)</h2><div class="cols2">';
   h+='<table><tr><th></th><th>Boards (mount on chipboard)</th><th>qty</th><th>sheet</th></tr>'
     +row(1,'Main board — the Wharf (stations · 8 slots · Sailed-Ships + round tracks)','1','S'+bp[0].no)
     +row(1,'Destinations board (4 kontore + the Hall · Building display · majority chart)','1','S'+bp[1].no)
@@ -1142,7 +1142,7 @@ function checklist(pages,famPages){
     +row(1,'First-player marker 0.8″ (fixed all game)','1','')
     +row(1,'Round marker 0.8″ (the 1–25 track on the main board)','1','')
     +row(1,'Brewery markers — vessel maturation (1 per vessel) &amp; the Flight (1 per beer): use small cubes/discs','—','board aids — provide spares')
-    +row(1,'<b>Demand dice</b> — standard d6 (provide your own) — the reusable value-bonus carrier: a cask shipped through a value Building rides a die in its berth, set to the building’s ★ + the Q4/Q5 premium (a real d6, max 6; returns to the pool)','8','—')
+    +row(1,'<b>Demand dice</b> — standard d6 (provide your own) — the reusable value-bonus carrier: a cask shipped through ITS OWNER’S value Building rides a die in its berth, set to the building’s ★ + the Q4/Q5 premium; ship-slot value Buildings bump the same die at the sail (a real d6, max 6; returns to the pool)','8','—')
     +row(1,'Quality-boost markers (+1Q) — a small token a cask carries from a Malt Kiln / Hop Yard to delivery','6','—')
     +row(0,'<i><b>Developer ★</b> is now the <b>back</b> of each Building tile (Wild + '+DEVELOP_PTS+'★) — see Building backs above; no separate chits</i>','—','—')
     +'</table>';

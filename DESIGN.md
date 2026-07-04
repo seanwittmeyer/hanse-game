@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v2.2 “One Grammar”)
+# Brewhouses of the Hanse — Design (v2.3 “Privileges & Works”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v2.2 “One Grammar”** — live; the designer-approved **rules-consistency keystone** (one load grammar · one gate rule · benefits-when-gained · buildings display→placed-at-once · the Floor as the standing 3rd line · overbuild one-rule · the demand die a real d6 · Jopenbier in the Flight); **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — the **Hanse Network**: a tree from **Hamburg** (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul) that **REPLACES the kontor majorities**. A **voyage** to a kontor pushes your **caravan** one node along its road (**per voyage**, gated by cask quality); reaching a town lets each cask aboard **claim a Staple-Right slot** (a distinct one-shot bonus, flavoured by lane: Rhineland=craft · London=infrastructure · Bergen=logistics · East=points), in load order; a full town pays an overflow bonus. Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
+|**Status**     |**v2.3 “Privileges & Works”** — live; the **delivery-arithmetic keystone** (value = a privilege, owner-only · transform = a work, serves any dock · wharfage/rival-½ retired · delivery = starting value + the ONE die, max 6) on the designer-approved v2.2 **rules-consistency keystone** (one load grammar · one gate rule · benefits-when-gained · buildings display→placed-at-once · the Floor as the standing 3rd line · overbuild one-rule · the demand die a real d6 · Jopenbier in the Flight); **three opt-in New Game toggles** on a new **expansion spine** (a registry + hook seams, so the core stays clean): *Specialty Beers* (the 3-of-7 draft + Blending + 3 thematic Buildings), the *Jopenbier* **Q6 capstone**, and **The Trade Roads** (Overland) — the **Hanse Network**: a tree from **Hamburg** (West to the Bruges gateway → London/Bergen/Rhineland; East = the deep Novgorod haul) that **REPLACES the kontor majorities**. A **voyage** to a kontor pushes your **caravan** one node along its road (**per voyage**, gated by cask quality); reaching a town lets each cask aboard **claim a Staple-Right slot** (a distinct one-shot bonus, flavoured by lane: Rhineland=craft · London=infrastructure · Bergen=logistics · East=points), in load order; a full town pays an overflow bonus. Reach (breadth) and quality (depth, gated) both win. **Base game byte-for-byte unchanged when all off.** Base ruleset: **v1.8 “Quality Pays”**. `play.html` implements all. |
 
 ---
 
@@ -78,7 +78,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v2.2 “One Grammar”)
+## 6. The current architecture (v2.3 “Privileges & Works”)
 
 Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -92,8 +92,11 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   an **occupant** (a cask, or a ship that holds casks): *dock → building → ship → cargo.* A
   building, under one grammar — *"it modifies the occupant docked on it"* — either **boosts a
   delivery's value** (the variable "demand") or **transforms** the occupant (quality / cargo /
-  route). **Owned-but-shared:** the owner benefits most; rivals may route through for less + a
-  small points "wharfage." Buildings replace v0.16's goal tiles, neutral buildings, and most
+  route). **Privileges & Works (v2.3):** a **value** building pays **its owner only** (a
+  privilege — a rival's cargo docking there banks nothing); a **transform** serves **whoever
+  docks** (a work). No payments between players at delivery — the v1.0 "owned-but-shared"
+  rival-½ + wharfage formulation is retired (the contest is denial, overbuild, and the toll).
+  Buildings replace v0.16's goal tiles, neutral buildings, and most
   upgrades — one content family under one rule. **A line is half-fixed (its two stations) and
   half-emergent (its two slots), so your engine *grows into the board*** — placing a building
   beside a high-traffic line is the core optimization (the heart of v1.0).
@@ -113,6 +116,10 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   building); **overbuild**: +3★ banked immediately + the tile flips to the owner's floor (self =
   rival; floor full → discard); the **demand die is a real d6, max 6** (building ★ + Q4/Q5
   premium, set not accumulated; destinations are the cask's starting value).
+- **Privileges & Works (v2.3)** — one sharing rule along the printed verb: **value pays its
+  owner; works serve the wharf.** Delivery = **starting value + the one die, nothing else** —
+  ship-slot value buildings bump the same die at the sail (hard max 6 on the sum); wharfage,
+  the rival-½, and the delivery side-payments are gone.
 - **Kept from v0.16:** ships sail-when-full; the Charter relief valve (scarce contracts); the
   Sailed-Ships end clock; the no-dice/cards/money constraints.
 - **The expansion spine (v2.0):** a tiny `registerExpansion` registry + hook seams
@@ -177,11 +184,11 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
 ### Parking lot — recorded for future discussion (NOT yet decided)
-- **Delivery arithmetic diet (2026-07-04).** Discuss after the rules-consistency exercise: the delivery moment
-  stacks base + building ★ + the Q4/Q5 premium + the rival share + the ship-berth bonus + wharfage — the game's
-  heaviest table math, at its payoff moment. To be reworked together with the **rival "reduced effect" rule**
-  and **wharfage itself** (owner-full / rival-reduced / the points trickle all need one clearer, simpler
-  formulation — revisit as one conversation).
+- **Delivery arithmetic + rival effect + wharfage: RESOLVED (2026-07-04) → v2.3 "Privileges & Works"** (§9).
+  Path C of the options exercise: value = a privilege (owner-only), transform = a work (anyone), wharfage and
+  the rival-½ retired, ship-slot value buildings folded into the one demand die (max 6 on the sum). The
+  deferred sub-question — whether transform authorship needs an owner kicker ("B's penny on works only") — is
+  a dial held in reserve for the improvement-parity / balance pass.
 - **Enshrine — public-first vs vessel-direct: RESOLVED (2026-07-04) — deploy-first stands.** Enshrine stays
   from **deployed casks only**; the v0.15 structural throttle (contestable before it scores) is kept and gets
   stated in the rulebook as a principle ("the Hall demands a public showing"). The vessel-direct idea is
@@ -204,6 +211,45 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v2.3 "Privileges & Works" — the delivery-arithmetic keystone** *(2026-07-04, `play.html` KEY v87)* —
+**The designer-approved rework of the rival "reduced effect" + wharfage tangle** (Path C of the 2026-07-04
+options exercise; the parked parking-lot conversation, resolved). The design target, in the designer's words:
+*complexity from strategy, not analysis — deep decisions good, hard-because-of-arithmetic bad.* **(1) One
+sharing rule along the printed verb** — a **VALUE building is a PRIVILEGE**: it pays **its owner only** (a
+Staple Hall / kontor charter / patron's favor is a personal grant); a rival's cargo docking there banks
+**nothing** — the v1.0 rival-½ share is gone. A **TRANSFORM building is a WORK**: it serves **whoever docks**
+(unchanged in behaviour — now stated as the rule). The audit evidence made this the honest fix: the table
+rules never actually stated the ½ (only the engine halved — RULES/index/printables all said "set the die to
+the printed ★"), and wharfage fired invisibly on transforms and per-cask from ship-slot buildings — arithmetic
+no table could track. **(2) Wharfage retired wholesale** — `wharfageRate`, `p.wharfage`, the score-table
+column, the tableau chip, the printables' wharfage chips: no payments between players at delivery, ever. The
+building contest is **structural** — occupancy denial (squat on a rival's privilege; they clear you by
+rival-loading), overbuild (+3★ banked to the displaced owner), and the occupancy toll. *(Lesson honoured:
+correct friction with a structure lever, not a value lever.)* **(3) Delivery = starting value + THE die,
+nothing else** — the ship-slot value buildings **fold into the one demand die** (a rich berth **bumps its
+owner's casks' dice at the sail**; a die-less cask takes one at the bump value; **hard max 6 on the sum** —
+the old third scoring term and its uncapped top-end are gone). **(4) Tile redesigns:** **Festkeller** (its "a
+FULL ship" condition had been vacuous since v0.16 sail-when-full) → the big-hull specialist, *a HULK here:
+each of the owner's casks' dice +3*; **Almoner's Stall** (its wharfage-rate boost died with wharfage) → the
+catch-up privilege, *a cask from here to a kontor where you do NOT lead +3★* (the mirror of the Hanse Diet);
+**Salt House** stays a goods perk but pays only its owner's casks (a privilege, not a die). The `BTGT`
+'owner' target is gone — every building modifies its docked occupant. All magnitudes ⚙.
+*Gates (KEY v87):* **`verify-v87` — 30 targeted checks PASS** (privilege die + cap · rival-banks-nothing ·
+no-payment · works-serve-rivals · ship-slot fold + the one-die cap · Festkeller Hulk/Cog · Almoner lead/trail
+· Salt House owner-only · the v86 regressions: Floor, toll, overbuild, effQ, Cooperage sail, human-gate,
+refine, Flight 6→25); base `sim.js 500` → **0 crash/deadlock 2–4p, 96–100% pace-in-band, clock 96–99%**, seats
+51/49 at 2p; `EXPANSION+JOPEN 300` + `OVERLAND 300` → **0 crash/deadlock, pace in band**; `ai-render-smoke`
+**ALL PASS**; `ai-ladder 600` — **0 errors**, fast rungs pass (journeyman 86.2% · trader 69.2% · GM 61.7%);
+the in-ladder GM|CM smoke rung (n=10, tiny budget) read a noise 50%, so the rung was re-measured **sharded at
+full budget** (3×25, `CELLAR_MS=220` — `oracle-gmcm-v87.txt`): **Cellarmaster 74.7%** (v86: 73.3%) — **ladder
+PASS**; `ai-tune` (CEM) → **KEEP the incumbent `AI_W`** (best challenger 48.5%).
+*PATHWAYS re-baseline (400×, ⚙ recorded not tuned):* 2p **prestige eased 56→53%** (the v86 watch-item), deep
+~52, majority ~53, volume ~47, demand ~41; **3p prestige reads hot (44.9% vs fair 33.3)** and 4p warm (31.6 vs
+25) — expected direction (kontor-lane bots lost the rival-½ income while the Hall's fixed ladder is untouched,
+and the greedy personas under-author their own privileges). **Decision: recorded, not dialed** — the CM-vs-CM
+oracle (v86) showed the Hall at a healthy 22.5% of strong-play deliveries, the improvement-parity pass is
+still parked, and the Hall-curve/Enshrine-throttle dials stay available; re-read after parity + a human table.
 
 **v2.2 "One Grammar" — the rules-consistency keystone** *(2026-07-04, `play.html` KEY v86)* —
 **The designer-approved pass that collapses the grown-per-version verb exceptions into single rules** (the
@@ -835,7 +881,10 @@ automatically.
 - **Line** — a row or column: its two stations + their two slots (the 4-stop activation).
 - **Cask** — the dual-role tile: quality + a slot-action; maturing → deployed → delivered.
 - **Building** — an owned slot tile that modifies the occupant docked on it (value or transform).
-- **Wharfage** — the small points cut a building's owner takes when a rival routes through it.
+- **Privileges & Works** — the v2.3 sharing rule: a **value** building pays its **owner only** (a
+  privilege); a **transform** building serves **whoever docks** (a work). No delivery payments
+  between players.
+- **Wharfage** — *(retired, v2.3)* the old points cut a building's owner took when a rival routed through it; see **Privileges & Works**.
 - **The Floor** — your private line: run your built-up brewery instead of a grid line.
 - **Kontor** — a foreign trading post (Bruges/London/Bergen/Novgorod); ship there for value +
   majority.
