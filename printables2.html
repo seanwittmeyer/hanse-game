@@ -555,7 +555,6 @@
   .score-ring{position:absolute;inset:0}
   .ringcell{position:absolute;border:1px solid rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;
     font-size:.13in;font-weight:bold;color:var(--ink2);background:rgba(255,255,255,.55);overflow:hidden}
-  .ringcell.corner{background:rgba(184,134,11,.14)}
   .ringcell.start{background:var(--red);color:#fff;flex-direction:column;gap:.015in;text-align:center}
   .ringcell.start svg,.ringcell.start .ic{width:.17in;height:.17in}
   .ringcell.start .lap{font-size:.056in;font-weight:normal;font-variant:small-caps;line-height:1.05;opacity:.9}
@@ -593,8 +592,11 @@
   .restock svg,.restock .ic{width:.14in;height:.14in}
   .disp-bd{display:flex;gap:.1in;align-items:center}
   .dslot{width:2in;height:2in;border:1.7px dashed var(--sea);border-radius:.07in;background:rgba(255,255,255,.5);
-    display:flex;flex-direction:column;gap:.04in;align-items:center;justify-content:center;color:var(--sea);flex:0 0 auto}
+    display:flex;flex-direction:column;gap:.04in;align-items:center;justify-content:center;color:var(--sea);flex:0 0 auto;position:relative}
   .dslot svg,.dslot .ic{width:.6in;height:.6in;opacity:.32}
+  /* OVERLAY proof: a real component render ghosted into its slot — native size, half opacity, never printed */
+  .dslot .ovl{position:absolute;inset:0;opacity:.5;pointer-events:none;z-index:2}
+  @media print{.dslot .ovl{display:none}}
   .dslot.b{border-color:var(--green);color:var(--green)}
   .dslot.i{border-color:var(--violet);color:var(--violet)}
   .dslot.s,.ddeck.s{width:2.5in;height:2.5in}
@@ -602,13 +604,8 @@
   .dslot.r svg,.dslot.r .ic{width:.5in;height:.5in}
   .dslot.r .rn{font-variant:small-caps;font-weight:bold;font-size:.1in;opacity:.7}
   .dslot.r.ct{border-color:var(--sea);color:var(--sea)}
-  /* the STORES strip — printed bins for the loose bits (cubes · demand dice · quality markers) */
-  .stores{display:flex;gap:.12in}
-  .bin{flex:1;height:.72in;border:1.6px solid var(--line);border-radius:.09in;background:rgba(255,255,255,.45);
-    display:flex;align-items:center;justify-content:center;gap:.06in;font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--ink2)}
-  .bin svg,.bin .ic{width:.2in;height:.2in}
-  .bin.bin-grain{border-color:#9c7414;color:#9c7414}.bin.bin-hops{border-color:#5d7d34;color:#5d7d34}
-  .bin.bin-dice{border-color:var(--sea);color:var(--sea)}.bin.bin-qual{border-color:var(--red);color:var(--red)}
+  /* (the goods/dice/marker bins moved OFF the board — the loose bits live in a supply tray; the Round
+     backstop is rules-side only, untracked on the table) */
   .ddeck{width:2in;height:2in;border-radius:.07in;background:var(--sea);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;
     text-shadow:0 1px 1px rgba(0,0,0,.3);box-shadow:.05in -.05in 0 rgba(0,0,0,.18),inset 0 0 0 1.5px rgba(255,255,255,.22)}
   .ddeck.b{background:var(--green)}
@@ -716,6 +713,7 @@
   </select>
   <span class="seg"><button id="bfull" class="on" onclick="setMode('full')">Full</button><button id="bproof" onclick="setMode('proof')">Proof</button></span>
   <span class="seg"><button id="lart" class="on" onclick="setLayer('art')">Art</button><button id="lcut" onclick="setLayer('cut')">Cut</button><button id="lboth" onclick="setLayer('both')">Both</button></span>
+  <span class="seg"><button id="bovl" onclick="setOverlay()" title="Ghost sample components into the Market &amp; Stores board's slots (50% opacity, true size)">Overlay</button></span>
 </div>
 <div id="out"></div>
 
@@ -887,7 +885,7 @@ const CARD_GEO={w:10.4,h:7.9,y0:0.95,yMax:7.9};
 // LARGE-FORMAT (22″-wide) plotter sheets — each TRIMMED to its own content height so we don't run blank media.
 // (render() emits a named @page + .lgNN rule per distinct height — see lgClass / the dynpage stylesheet.)
 const WHARF_GEO ={w:22,h:10.5, y0:0.45,yMax:10.22};  // the Wharf cross (9.4″) + tokens tucked on the right
-const SUPPLY_GEO={w:22,h:13.1, y0:0.45,yMax:12.82};  // the Market & Stores board sheet (board prints ~10.2×12.6)
+const SUPPLY_GEO={w:22,h:11.9, y0:0.45,yMax:11.62};  // the Market & Stores board sheet (board prints ~10.2×11.4)
 // The Supply & Tracks board — DESIGNED to its components (all native in, print ×0.8):
 //   · every display slot is CUT to its family's native tile size (ships 2.5 · buildings/improvements 2 ·
 //     recipe/contract cards 1.85×2.55), so the printed card drops exactly into its printed space;
@@ -896,7 +894,7 @@ const SUPPLY_GEO={w:22,h:13.1, y0:0.45,yMax:12.82};  // the Market & Stores boar
 //   · the SCORE track wraps the outer edge as a 50-cell ring (0–49 + a 50/100 lap, Carcassonne-style):
 //     50 cells — not 100 — because the mover is the 0.5″ ownership disc, and a disc needs a ≥0.6″ printed
 //     cell to sit in legibly (COMPONENTS.md §17 #7 offers exactly this "50/100 lap marker" resolution).
-const SUPPLY_NW=12.75, SUPPLY_NH=15.7;   // board native size — ring + interior computed below
+const SUPPLY_NW=12.75, SUPPLY_NH=14.2;   // board native size — ring + interior computed below
 const SCORE_CELLS=50;     // one lap = 0–49; a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
 const SCORE_RING_T=0.8;   // ring thickness (native) → prints 0.64″ — a comfortable seat for the 0.5″ disc
 const TILE_GEO  ={w:22,h:5.75, y0:0.45,yMax:5.47};   // building FRONTS sheet + its mirrored BACKS sheet (27 tiles, 3 rows)
@@ -908,6 +906,8 @@ const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2.5,2.5],bld:[
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
+let OVERLAY=false;   // proofing aid: ghost sample components (50% opacity, native size) into the Market & Stores board's slots
+function setOverlay(){OVERLAY=!OVERLAY;const b=document.getElementById('bovl');if(b)b.classList.toggle('on',OVERLAY);render();}
 const cnt=n=>MODE==='proof'?1:n;
 function setMode(m){MODE=m;document.getElementById('bproof').classList.toggle('on',m==='proof');document.getElementById('bfull').classList.toggle('on',m==='full');render();}
 function setView(v){VIEW=v;const sel=document.getElementById('vsel');if(sel&&sel.value!==v)sel.value=v;render();}
@@ -1399,42 +1399,45 @@ function scoreRingHtml(NW,NH,T){
 //     4 + deck). Every slot is the family's native footprint, so the printed card drops exactly in.
 //   · All four DECKS align in one right-edge "stockroom" column — displays face the table, refill is a
 //     one-hand slide from the deck beside the gap.
-//   · The STORES strip gives the loose bits printed homes: grain · hops · demand dice · quality markers.
-//   · TRACKS at the foot: the Sailed-Ships end clock printed at 15 cells with DUAL end marks per player
-//     count — base 6/10/13 (flag) and The Trade Roads' +2 → 8/12/15 (truck) — and the Round track (1–25).
+//   · The Sailed-Ships end clock at the foot: 15 cells with DUAL end marks per player count — base
+//     6/10/13 (flag) and The Trade Roads' +2 → 8/12/15 (truck). (The Round backstop is rules-side only,
+//     and the loose bits — goods cubes · demand dice · quality markers — live in a supply tray, not here.)
 //   · SCORE wraps the outer edge as the 50-cell ring (see scoreRingCells) — banked constantly, it belongs
 //     on the rim where every seat can reach it without leaning over the displays.
+//   · The OVERLAY bar toggle ghosts a sample component into every slot (native size, 50% opacity) to proof
+//     the fit of the printed cards against the printed spaces.
 function supplyBoard(){
-  const dslot=(fam,ic)=>'<div class="dslot '+fam+'">'+LU(ic)+'</div>';
+  const dslot=(fam,ic,smp)=>'<div class="dslot '+fam+'">'+LU(ic)
+    +(OVERLAY&&smp?'<div class="ovl">'+smp+'</div>':'')+'</div>';
   const ddeck=(fam,nm)=>'<div class="ddeck '+fam+'">'+LU('layers')+'<span class="dn">'+nm+'</span></div>';
   const shelf=(lbl,ic,slots,deck)=>'<div class="shelf-lbl">'+LU(ic)+lbl+'</div>'
     +'<div class="shelf">'+slots+'<span class="restock">'+LU('arrow-left')+'refill</span>'+deck+'</div>';
+  // overlay samples — one real render per family, varied so both tile verbs/colours get proofed
+  const smpBld=['staple','connoiss','maltkiln','cooperage'].map(k=>buildingCard(BUILDINGS.find(b=>b.k===k)));
+  const smpShip=[shipCard('cog','Bruges'),shipCard('hulk','Bergen'),shipCard('cog','Novgorod')];
+  const smpRec=RECIPES.slice(0,4).map(recipeCard), smpCon=contractCard();
+  const smpImp=[0,1,4,6].map(i=>improveTile(IMPROVE[i]));
   const market='<div class="disp-h m">'+LU('store')+'Market<span class="sm">— a Market visit buys any ONE of these (or take 2 goods)</span></div>'
-    +shelf('Buildings — the Wharf display of 4','building-2',dslot('b','building-2').repeat(4),ddeck('b','Building deck'))
-    +shelf('Ships — the market of 3 · commission 2G','sailboat',dslot('s','sailboat').repeat(3),ddeck('s','Ship deck'))
+    +shelf('Buildings — the Wharf display of 4','building-2',smpBld.map(s=>dslot('b','building-2',s)).join(''),ddeck('b','Building deck'))
+    +shelf('Ships — the market of 3 · commission 2G','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''),ddeck('s','Ship deck'))
     +'<div class="shelf-lbl">'+LU('scroll-text')+'Recipes — the dealt export stacks &amp; the Charter contracts (1G)</div>'
-    +'<div class="shelf">'+dslot('r','scroll-text').repeat(4)+'<span class="restock"></span><div class="dslot r ct">'+LU('ticket')+'<span class="rn">Contracts</span></div></div>';
+    +'<div class="shelf">'+smpRec.map(s=>dslot('r','scroll-text',s)).join('')+'<span class="restock"></span>'
+      +'<div class="dslot r ct">'+LU('ticket')+'<span class="rn">Contracts</span>'+(OVERLAY?'<div class="ovl">'+smpCon+'</div>':'')+'</div></div>';
   const cellar='<div class="disp-h i">'+LU('wrench')+'Cellar<span class="sm">— Improvements: buy here, Hire (Q3+), or London’s benefit</span></div>'
-    +shelf('Improvements — the Cellar display of 4','wrench',dslot('i','wrench').repeat(4),ddeck('i','Improvement deck'));
-  const bin=(ic,nm,cls)=>'<div class="bin '+(cls||'')+'">'+LU(ic)+'<span>'+nm+'</span></div>';   // NB: modifier classes must not reuse the global single-letter tile classes (.q/.g/.h)
-  const stores='<div class="stores">'+bin('wheat','Grain','bin-grain')+bin('sprout','Hops','bin-hops')
-    +bin('dice-5','Demand dice','bin-dice')+bin('badge-plus','Quality +1','bin-qual')+'</div>';
+    +shelf('Improvements — the Cellar display of 4','wrench',smpImp.map(s=>dslot('i','wrench',s)).join(''),ddeck('i','Improvement deck'));
   // Sailed-Ships: 15 cells, both end-marks printed — base (flag) and The Trade Roads +2 (truck)
   const ROADS_SAILED={2:8,3:12,4:15};
   let clk='';for(let i=1;i<=15;i++){
     let base='',roads='';for(const p in SAILED){if(SAILED[p]===i)base=p+'p';if(ROADS_SAILED[p]===i)roads=p+'p';}
     clk+='<div class="cc'+(base?' end':'')+(roads?' rend':'')+'">'
       +(base?LU('flag')+'<b>'+base+'</b>':(roads?LU('truck')+'<b>'+roads+'</b>':'<span class="n">'+i+'</span>'))+'</div>';}
-  let rnd='<div class="rc z">start</div>';for(let i=1;i<=MAX_ROUND;i++)rnd+='<div class="rc'+(i===MAX_ROUND?' cap':'')+'">'+i+'</div>';
   const inner='<div class="mboard supply" style="position:absolute;left:'+SCORE_RING_T+'in;top:'+SCORE_RING_T+'in;'
       +'width:'+(SUPPLY_NW-2*SCORE_RING_T).toFixed(3)+'in;height:'+(SUPPLY_NH-2*SCORE_RING_T).toFixed(3)+'in">'
-    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays &amp; the game tracks · score laps the rim (0–49, then +50)</span></div>'
-    +market+cellar+stores
+    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays &amp; the end clock · score laps the rim (0–49, then +50)</span></div>'
+    +market+cellar
     +'<div class="tracks">'
       +'<div class="trk-h">'+LU('sailboat')+'Sailed-Ships<span class="sm">every voyage (full sail · Charter · Enshrine) fills one — at your count’s '+LU('flag')+' finish the round &amp; score ('+LU('truck')+' = with The Trade Roads)</span></div>'
       +'<div class="ctrack">'+clk+'</div>'
-      +'<div class="trk-h">'+LU('hourglass')+'Round<span class="sm">advance one each full round · backstop '+MAX_ROUND+'</span></div>'
-      +'<div class="rtrack">'+rnd+'</div>'
     +'</div>'
   +'</div>';
   return '<div class="supply-outer">'+scoreRingHtml(SUPPLY_NW,SUPPLY_NH,SCORE_RING_T)+inner+'</div>';}
@@ -1653,7 +1656,7 @@ function checklist(pages,famPages){
   h+=T('Boards')
     +R('Main board — the Wharf','The 2×2 of stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots, plus the Sailed-Ships end-clock track.','1')
     +R('Destinations board','The four kontore (Bruges · London · Bergen · Novgorod) + the Hall — each with its quality gate, base value, on-delivery benefit, and (kontore) a majority track.','1')
-    +R('Market &amp; Stores board','The shared displays at component size (Buildings 4+deck · Ships 3+deck · recipe stacks + contracts · Improvements 4+deck), the stores bins (grain · hops · demand dice · quality markers), the Sailed-Ships clock (15 cells, dual END marks — base and The Trade Roads), the Round track, and the 50-cell score ring wrapping the rim (0–49, +50 on the second lap).','1')
+    +R('Market &amp; Stores board','The shared displays at component size (Buildings 4+deck · Ships 3+deck · recipe stacks + contracts · Improvements 4+deck), the Sailed-Ships clock (15 cells, dual END marks — base and The Trade Roads), and the 50-cell score ring wrapping the rim (0–49, +50 on the second lap). Loose bits (goods cubes · demand dice · quality markers) live in a supply tray.','1')
     +R('Player brewery boards','One per player: vessel lanes (start 2, cap 3), the maturation track, a recipe rack, improvement slots, the Flight strip, and goods storage (cap 8).',PLAYERS.length)
     +'</table>';
   h+=T('Tiles (mount on chipboard, laser-cut)')
