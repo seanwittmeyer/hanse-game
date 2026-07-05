@@ -606,6 +606,39 @@
   .dslot.r.ct{border-color:var(--sea);color:var(--sea)}
   /* (the goods/dice/marker bins moved OFF the board — the loose bits live in a supply tray; the Round
      backstop is rules-side only, untracked on the table) */
+  /* ---- Market & Stores two-column interior: displays left · destinations right ---- */
+  .sup-cols{display:flex;gap:.2in;flex:1;min-height:0}
+  .sup-main{flex:0 0 auto;width:10.75in;display:flex;flex-direction:column;gap:.08in}
+  .sup-main .tracks{margin-top:auto}
+  .sup-dests{flex:1;display:flex;flex-direction:column;gap:.09in;min-width:0}
+  .disp-h.k{background:var(--sea)}
+  .disp-h.hall{background:#5b3a8e}
+  /* a destination mini-panel: gate · value · benefit · majority · a presence-disc zone */
+  .kp{flex:1;border:2px solid var(--kc);border-radius:.09in;background:var(--kt,#fff);display:flex;flex-direction:column;overflow:hidden}
+  .kp.hall{flex:0 0 auto}   /* the Hall sizes to its ladder; the four kontor panels share the rest evenly */
+  .kp-t{background:var(--kc);color:#fff;display:flex;align-items:center;gap:.05in;padding:.03in .08in;
+    font-variant:small-caps;font-weight:bold;font-size:.14in;text-shadow:0 1px 1px rgba(0,0,0,.3)}
+  .kp-t svg,.kp-t .ic{width:.15in;height:.15in}
+  .kp-q{margin-left:auto;display:inline-flex;align-items:center;gap:.02in;background:rgba(255,255,255,.25);border-radius:.04in;
+    padding:.008in .05in;font-size:.11in}
+  .kp-q svg,.kp-q .ic{width:.12in;height:.12in}
+  .kp-rows{flex:1;display:flex;gap:.06in;padding:.05in .07in;min-height:0}
+  .kp-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.02in;text-align:center;min-width:0}
+  .kp-ch{display:inline-flex;align-items:center;gap:.02in;font-variant:small-caps;font-weight:bold;font-size:.075in;color:var(--ink2);white-space:nowrap}
+  .kp-ch svg,.kp-ch .ic{width:.09in;height:.09in}
+  .kp-big{display:inline-flex;align-items:center;gap:.02in;font-weight:900;font-size:.19in;color:var(--kc);line-height:1}
+  .kp-big svg,.kp-big .ic{width:.16in;height:.16in}
+  .kp-scale{font-weight:bold;font-size:.1in;color:var(--kc)} .kp-scale b{font-size:.15in}
+  .kp-note{font-size:.07in;font-style:italic;color:var(--ink2);line-height:1.12}
+  .kp-note.ctr{text-align:center;padding:.02in .1in .05in}
+  /* presence zone — the ownership discs pile here (the majority count); circles = the disc's printed 0.5″ */
+  .kp-pz{display:flex;align-items:center;gap:.06in;border-top:1.4px dashed var(--kc);padding:.045in .08in;background:rgba(255,255,255,.4)}
+  .kp-c{width:.625in;height:.625in;flex:0 0 auto;border-radius:50%;border:1.4px dashed var(--kc);opacity:.55}   /* 0.625 native = the disc's printed 0.5″, exactly */
+  .kp-pl{font-size:.075in;font-style:italic;color:var(--ink2);line-height:1.2;margin-left:.03in}
+  .kp.hall .kp-lad{display:flex;justify-content:center;gap:.14in;padding:.05in .08in .02in}
+  .kp.hall .kp-lad .lr{display:inline-flex;align-items:center;gap:.03in;font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--ink2)}
+  .kp.hall .kp-lad .lr b{display:inline-flex;align-items:center;gap:.015in;font-size:.19in;color:var(--kc)}
+  .kp.hall .kp-lad .lr b svg,.kp.hall .kp-lad .lr b .ic{width:.16in;height:.16in}
   .ddeck{width:2in;height:2in;border-radius:.07in;background:var(--sea);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;
     text-shadow:0 1px 1px rgba(0,0,0,.3);box-shadow:.05in -.05in 0 rgba(0,0,0,.18),inset 0 0 0 1.5px rgba(255,255,255,.22)}
   .ddeck.b{background:var(--green)}
@@ -885,7 +918,7 @@ const CARD_GEO={w:10.4,h:7.9,y0:0.95,yMax:7.9};
 // LARGE-FORMAT (22″-wide) plotter sheets — each TRIMMED to its own content height so we don't run blank media.
 // (render() emits a named @page + .lgNN rule per distinct height — see lgClass / the dynpage stylesheet.)
 const WHARF_GEO ={w:22,h:10.5, y0:0.45,yMax:10.22};  // the Wharf cross (9.4″) + tokens tucked on the right
-const SUPPLY_GEO={w:22,h:11.9, y0:0.45,yMax:11.62};  // the Market & Stores board sheet (board prints ~10.2×11.4)
+const SUPPLY_GEO={w:22,h:11.9, y0:0.45,yMax:11.62};  // the Market & Stores board sheet (board prints ~13×11.4)
 // The Supply & Tracks board — DESIGNED to its components (all native in, print ×0.8):
 //   · every display slot is CUT to its family's native tile size (ships 2.5 · buildings/improvements 2 ·
 //     recipe/contract cards 1.85×2.55), so the printed card drops exactly into its printed space;
@@ -894,7 +927,8 @@ const SUPPLY_GEO={w:22,h:11.9, y0:0.45,yMax:11.62};  // the Market & Stores boar
 //   · the SCORE track wraps the outer edge as a 50-cell ring (0–49 + a 50/100 lap, Carcassonne-style):
 //     50 cells — not 100 — because the mover is the 0.5″ ownership disc, and a disc needs a ≥0.6″ printed
 //     cell to sit in legibly (COMPONENTS.md §17 #7 offers exactly this "50/100 lap marker" resolution).
-const SUPPLY_NW=12.75, SUPPLY_NH=14.2;   // board native size — ring + interior computed below
+const SUPPLY_NW=16.25, SUPPLY_NH=14.2;   // board native size — ring + interior computed below
+const SUPPLY_MAIN_W=10.75;               // the left (displays) column's width; the destinations column takes the rest
 const SCORE_CELLS=50;     // one lap = 0–49; a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
 const SCORE_RING_T=0.8;   // ring thickness (native) → prints 0.64″ — a comfortable seat for the 0.5″ disc
 const TILE_GEO  ={w:22,h:5.75, y0:0.45,yMax:5.47};   // building FRONTS sheet + its mirrored BACKS sheet (27 tiles, 3 rows)
@@ -1431,13 +1465,43 @@ function supplyBoard(){
     let base='',roads='';for(const p in SAILED){if(SAILED[p]===i)base=p+'p';if(ROADS_SAILED[p]===i)roads=p+'p';}
     clk+='<div class="cc'+(base?' end':'')+(roads?' rend':'')+'">'
       +(base?LU('flag')+'<b>'+base+'</b>':(roads?LU('truck')+'<b>'+roads+'</b>':'<span class="n">'+i+'</span>'))+'</div>';}
+  // DESTINATIONS column — the right rim: where a voyage pays. The four kontore read as ONE family
+  // (uniform panel anatomy: gate · value · benefit · majority · a presence zone for the discs);
+  // the HALL sits apart below with its own header — the volume-vs-prestige fork, printed as layout.
+  const kMini=d=>{
+    const val=d.scale
+      ?'<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value · by Q</span><span class="kp-scale">'+d.scale.map(qv=>'Q'+qv[0]+'·<b>'+qv[1]+'</b>').join(' ')+'</span></div>'
+      :'<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU(VP)+d.val+'</span></div>';
+    return '<div class="kp" style="--kc:'+d.kc+';--kt:'+d.tint+'">'
+      +'<div class="kp-t">'+LU('landmark')+d.nm+'<span class="kp-q">'+LU(QI)+d.req+'+</span></div>'
+      +'<div class="kp-rows">'+val
+        +'<div class="kp-cell"><span class="kp-ch">'+LU('gift')+'on delivery</span><span class="kp-big">'+d.ben.n+' '+LU(d.ben.ic)+'</span><span class="kp-note">'+d.bnote+'</span></div>'
+        +'<div class="kp-cell"><span class="kp-ch">'+LU('landmark')+'majority 1·2·3</span><span class="kp-big">'+d.maj.join(' / ')+'</span></div>'
+      +'</div>'
+      +'<div class="kp-pz">'+'<span class="kp-c"></span>'.repeat(3)+'<span class="kp-pl">presence — one disc per delivered cask; most leads (2p: 1st only)</span></div>'
+    +'</div>';};
+  const hallMini='<div class="kp hall" style="--kc:'+HALL.kc+';--kt:'+HALL.tint+'">'
+    +'<div class="kp-t">'+LU('crown')+HALL.nm+'<span class="kp-q">'+LU(QI)+HALL.req+'+</span></div>'
+    +'<div class="kp-lad">'+HALL.ladder.map(qv=>'<span class="lr">Q'+qv[0]+'<b>'+LU(VP)+qv[1]+'</b></span>').join('')+'</div>'
+    +'<div class="kp-note ctr"><b>Enshrine</b> — withdraw a DEPLOYED Q2+ cask · no ship, no fare · advances the clock · no majority, no benefit</div>'
+  +'</div>';
+  const dests='<div class="sup-dests">'
+    +'<div class="disp-h k">'+LU('landmark')+'Kontore<span class="sm">— ship there: value + the die · majorities at game end</span></div>'
+    +DESTS.map(kMini).join('')
+    +'<div class="disp-h hall">'+LU('crown')+'The Hall<span class="sm">— prestige, out of commerce</span></div>'
+    +hallMini
+  +'</div>';
   const inner='<div class="mboard supply" style="position:absolute;left:'+SCORE_RING_T+'in;top:'+SCORE_RING_T+'in;'
       +'width:'+(SUPPLY_NW-2*SCORE_RING_T).toFixed(3)+'in;height:'+(SUPPLY_NH-2*SCORE_RING_T).toFixed(3)+'in">'
-    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays &amp; the end clock · score laps the rim (0–49, then +50)</span></div>'
-    +market+cellar
-    +'<div class="tracks">'
-      +'<div class="trk-h">'+LU('sailboat')+'Sailed-Ships<span class="sm">every voyage (full sail · Charter · Enshrine) fills one — at your count’s '+LU('flag')+' finish the round &amp; score ('+LU('truck')+' = with The Trade Roads)</span></div>'
-      +'<div class="ctrack">'+clk+'</div>'
+    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays · the destinations · the end clock — score laps the rim (0–49, then +50)</span></div>'
+    +'<div class="sup-cols">'
+      +'<div class="sup-main">'+market+cellar
+        +'<div class="tracks">'
+          +'<div class="trk-h">'+LU('sailboat')+'Sailed-Ships<span class="sm">every voyage (full sail · Charter · Enshrine) fills one — at your count’s '+LU('flag')+' finish the round &amp; score ('+LU('truck')+' = with The Trade Roads)</span></div>'
+          +'<div class="ctrack">'+clk+'</div>'
+        +'</div>'
+      +'</div>'
+      +dests
     +'</div>'
   +'</div>';
   return '<div class="supply-outer">'+scoreRingHtml(SUPPLY_NW,SUPPLY_NH,SCORE_RING_T)+inner+'</div>';}
@@ -1656,7 +1720,7 @@ function checklist(pages,famPages){
   h+=T('Boards')
     +R('Main board — the Wharf','The 2×2 of stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots, plus the Sailed-Ships end-clock track.','1')
     +R('Destinations board','The four kontore (Bruges · London · Bergen · Novgorod) + the Hall — each with its quality gate, base value, on-delivery benefit, and (kontore) a majority track.','1')
-    +R('Market &amp; Stores board','The shared displays at component size (Buildings 4+deck · Ships 3+deck · recipe stacks + contracts · Improvements 4+deck), the Sailed-Ships clock (15 cells, dual END marks — base and The Trade Roads), and the 50-cell score ring wrapping the rim (0–49, +50 on the second lap). Loose bits (goods cubes · demand dice · quality markers) live in a supply tray.','1')
+    +R('Market &amp; Stores board','The shared displays at component size (Buildings 4+deck · Ships 3+deck · recipe stacks + contracts · Improvements 4+deck), the DESTINATIONS column (the four kontore — gate · value · benefit · majority · a presence-disc zone — with the Hall set apart), the Sailed-Ships clock (15 cells, dual END marks — base and The Trade Roads), and the 50-cell score ring wrapping the rim (0–49, +50 on the second lap). Loose bits (goods cubes · demand dice · quality markers) live in a supply tray.','1')
     +R('Player brewery boards','One per player: vessel lanes (start 2, cap 3), the maturation track, a recipe rack, improvement slots, the Flight strip, and goods storage (cap 8).',PLAYERS.length)
     +'</table>';
   h+=T('Tiles (mount on chipboard, laser-cut)')
