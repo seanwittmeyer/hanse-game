@@ -614,15 +614,21 @@
   .disp-h.hall{background:#5b3a8e}
   /* a destination panel: gate · value · benefit · majority at POSTER scale (read standing, across a table)
      over an open presence ZONE (discs pile freely; no per-disc slots) */
-  .kp{flex:1;border:3px solid var(--kc);border-radius:.1in;background:var(--kt,#fff);display:flex;flex-direction:column;overflow:hidden}
+  .kp{flex:1;border:3px solid var(--kc);border-radius:.1in;background:var(--kt,#fff);display:flex;flex-direction:column;overflow:hidden;position:relative}
   .kp.hall{flex:1.5}   /* the Hall is a CORE path — it gets MORE room than a kontor, not less */
+  /* the destination SCENE: full-bleed art + a flat parchment wash (flat rgba — html2canvas-safe, no gradient seams) */
+  .kp-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+  .kp-wash{position:absolute;inset:0;z-index:1;background:rgba(243,233,210,.28)}
+  .kp-t,.kp-rows,.kp-pz{position:relative;z-index:2}
   .kp-t{background:var(--kc);color:#fff;display:flex;align-items:center;gap:.07in;padding:.05in .11in;
     font-variant:small-caps;font-weight:bold;font-size:.22in;text-shadow:0 1px 1.5px rgba(0,0,0,.35)}
   .kp-t svg,.kp-t .ic{width:.21in;height:.21in}
   .kp-q{margin-left:auto;display:inline-flex;align-items:center;gap:.03in;background:rgba(255,255,255,.3);border-radius:.06in;
     padding:.02in .08in;font-size:.2in;font-weight:900}
   .kp-q svg,.kp-q .ic{width:.19in;height:.19in}
-  .kp-rows{flex:0 0 auto;display:flex;gap:.1in;padding:.09in .11in .06in;min-height:0}
+  .kp-rows{flex:0 0 auto;display:flex;gap:.1in;padding:.07in .1in .06in;min-height:0;
+    background:rgba(247,239,220,.93);border:1px solid rgba(0,0,0,.14);border-radius:.07in;margin:.07in .09in 0}   /* the parchment PLATE — stats stay readable over any art */
+  .kp-rows.col{flex-direction:column;gap:.03in;align-items:stretch}
   .kp-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.05in;text-align:center;min-width:0}
   .kp-ch{display:inline-flex;align-items:center;gap:.03in;font-variant:small-caps;font-weight:bold;font-size:.115in;color:var(--ink2);white-space:nowrap}
   .kp-ch svg,.kp-ch .ic{width:.13in;height:.13in}
@@ -632,9 +638,9 @@
   .kp-note{font-size:.13in;font-style:italic;color:var(--ink2);line-height:1.2}
   .kp-note.ctr{text-align:center;padding:.04in .14in .08in;font-size:.13in}
   /* presence ZONE — the panel's open floor: ownership discs pile here (the majority count) */
-  .kp-pz{flex:1;min-height:.7in;border-top:1.8px dashed var(--kc);
-    margin:0 .09in .08in;background:rgba(255,255,255,.35);border-radius:0 0 .07in .07in}
-  .kp.hall .kp-lad{flex:1;display:flex;align-items:center;justify-content:space-evenly;gap:.12in;padding:.1in .12in .05in}
+  .kp-pz{flex:1;min-height:.7in;border-top:1.8px dashed var(--kc);margin:.06in .09in .08in;border-radius:0 0 .07in .07in}
+  .kp-pz.nb{border-top:none;min-height:.2in}   /* the Hall's foot: open art, no zone line (no majority there) */
+  .kp.hall .kp-lad{display:flex;align-items:center;justify-content:space-evenly;gap:.12in;padding:.05in .12in .02in}
   .kp.hall .kp-lad .lr{display:flex;flex-direction:column;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.17in;color:var(--ink2)}
   .kp.hall .kp-lad .lr b{display:inline-flex;align-items:center;gap:.03in;font-size:.4in;color:var(--kc)}
   .kp.hall .kp-lad .lr b svg,.kp.hall .kp-lad .lr b .ic{width:.31in;height:.31in}
@@ -1469,11 +1475,14 @@ function supplyBoard(){
   // (uniform panel anatomy: gate · value · benefit · majority · a presence zone for the discs);
   // the HALL sits apart below with its own header — the volume-vs-prestige fork, printed as layout.
   const BNOTE_SHORT={Bruges:'any mix of goods',London:'a Building or a Specialist, free',Bergen:'a free Reach (+1 presence)',Novgorod:'refine: a maturing cask +1 age'};
+  // each destination panel carries its generated scene (art/kontor-<key>.png) full-bleed under a flat
+  // parchment wash; the stats sit on an opaque parchment PLATE so the numbers always read first.
+  const kArt=k=>ART_ON?'<img class="kp-art" src="'+ART_DIR+'kontor-'+k+'.png" alt=""><div class="kp-wash"></div>':'';
   const kMini=d=>{
     const val=d.scale
       ?'<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value · by Q</span><span class="kp-scale">'+d.scale.map(qv=>'Q'+qv[0]+'·<b>'+qv[1]+'</b>').join(' ')+'</span></div>'
       :'<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU(VP)+d.val+'</span></div>';
-    return '<div class="kp" style="--kc:'+d.kc+';--kt:'+d.tint+'">'
+    return '<div class="kp" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+kArt(d.nm.toLowerCase())
       +'<div class="kp-t">'+LU('landmark')+d.nm+'<span class="kp-q">'+LU(QI)+d.req+'+</span></div>'
       +'<div class="kp-rows">'+val
         +'<div class="kp-cell"><span class="kp-ch">'+LU('gift')+'on delivery</span><span class="kp-big">'+d.ben.n+' '+LU(d.ben.ic)+'</span><span class="kp-note">'+(BNOTE_SHORT[d.nm]||d.bnote)+'</span></div>'
@@ -1481,10 +1490,11 @@ function supplyBoard(){
       +'</div>'
       +'<div class="kp-pz"></div>'
     +'</div>';};
-  const hallMini='<div class="kp hall" style="--kc:'+HALL.kc+';--kt:'+HALL.tint+'">'
+  const hallMini='<div class="kp hall" style="--kc:'+HALL.kc+';--kt:'+HALL.tint+'">'+kArt('hall')
     +'<div class="kp-t">'+LU('crown')+HALL.nm+'<span class="kp-q">'+LU(QI)+HALL.req+'+</span></div>'
-    +'<div class="kp-lad">'+HALL.ladder.map(qv=>'<span class="lr">Q'+qv[0]+'<b>'+LU(VP)+qv[1]+'</b></span>').join('')+'</div>'
-    +'<div class="kp-note ctr"><b>Enshrine</b> — withdraw a DEPLOYED Q2+ cask · no ship, no fare · advances the clock · no majority, no benefit</div>'
+    +'<div class="kp-rows col"><div class="kp-lad">'+HALL.ladder.map(qv=>'<span class="lr">Q'+qv[0]+'<b>'+LU(VP)+qv[1]+'</b></span>').join('')+'</div>'
+    +'<div class="kp-note ctr"><b>Enshrine</b> — withdraw a DEPLOYED Q2+ cask · no ship, no fare · advances the clock · no majority, no benefit</div></div>'
+    +'<div class="kp-pz nb"></div>'
   +'</div>';
   const dests='<div class="sup-dests">'
     +'<div class="disp-h k">'+LU('landmark')+'Kontore<span class="sm">— ship there: value + the die · majorities at game end</span></div>'

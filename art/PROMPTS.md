@@ -83,6 +83,24 @@ Vary the wood tone, contents glow, and mood per beer:
 - **cask-duckstein.png** — a smoke-cured Königslutter cask beside a glowing kiln; smoky **brown**, drifting smoke.
 - **cask-jopenbier.png** — a vintage Danzig "Jopenbier" cask aging in a candlelit cellar; dark **wine-red**, dusty, cobwebbed, precious.
 
+## Kontor panels (Market & Stores board) — subject: the DESTINATION as a place (2026-07-05)
+Wide **16:9 landscape banners** behind the destination panels' parchment stat-plates — unlike the building
+cards these ARE scenes (a port you sail to), so the single-building rule does not apply. Same shared style
+block, with the full-bleed / no-lettering gotchas, plus "calm sky and lower foreground" (the plate covers the
+middle band; the panel foot is the open presence zone, so the waterline should read there). Files:
+`kontor-bruges.png` · `kontor-london.png` · `kontor-bergen.png` · `kontor-novgorod.png` · `kontor-hall.png`.
+
+- **kontor-bruges.png** — a Flemish canal-side merchant wharf: stepped-gable brick trading houses on a stone
+  quay, ONE wooden treadwheel crane, laden flat barges, still canal water across the foreground; slate-blue over warm brick.
+- **kontor-london.png** — the walled riverside trading enclave (the Steelyard): stone river-gate + timber warehouses
+  behind a busy wharf, a small crane, one moored cog, wide calm water; warm golden-ochre afternoon light.
+- **kontor-bergen.png** — the Bryggen harbourfront: tall narrow pointed wooden gabled trading houses (ochre/rust/green),
+  jetties with dried fish and barrels, cold fjord + dark mountains behind, pale northern light.
+- **kontor-novgorod.png** — a white-stone walled river compound with helmet-domed churches over a broad slow river,
+  wooden palisade + log jetty, birches and early snow, cold pale light with red-brown accents.
+- **kontor-hall.png** — the candlelit brick-Gothic guild-hall interior: soaring dark timber roof, long oak tables,
+  ONE venerated beer cask enshrined on a stone dais between tall candles, amber glow into violet shadow.
+
 ## Ship tiles — subject: the neutral Hanseatic hull the cask is loaded onto
 - **ship-cog.png** — *a single-masted, clinker-built Hanseatic **cog** with one square sail, a small sturdy
   merchant ship, moored at a wooden wharf in calm harbor water; modest size.* Cool **blue-grey sea** tones.
