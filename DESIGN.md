@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v2.6 “Dockside Pickup”)
+# Brewhouses of the Hanse — Design (v2.8 “Deploy First”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -110,8 +110,12 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
 - **The Floor** — the standing 3rd line (v2.2): after moving, always choosable instead of the
   row/column — every vessel cask's action + a Wild per flipped building, never tolled
   (engine payoff + the boutique brewer's self-sufficiency; `PLAN.md` §1B).
-- **One grammar (v2.2)** — casks leave vessels only by **Deploy or Charter** (Private Quay = the
-  invested Harbor exception); every gate check uses **effective quality**; **benefits resolve when
+- **One grammar — deploy first (v2.8, supersedes v2.2's outlet rule)** — **Load, Charter and
+  Enshrine all take a DEPLOYED cask** (a public showing — contestable, rival-loadable — is the
+  price of every sale); the **Quaymaster** is the one invested exception (all three verbs reach
+  its owner's vessels); **Commission is the one universal vessel-direct door** (its free load
+  takes ANY player's deployed cask under the rival-loading rules, or a Ready cask straight from
+  your own vessels). Every gate check uses **effective quality**; **benefits resolve when
   gained, owner's choice**; **buildings always display → placed at once** (no hand, no starting
   building); **overbuild**: +3★ banked immediately + the tile flips to the owner's floor (self =
   rival; floor full → discard); the **demand die is a real d6, max 6** (building ★ + Q4/Q5
@@ -223,6 +227,24 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v2.8 "Deploy First" — the final vessel-outlet grammar** *(2026-07-05, `play.html` KEY v92)* —
+Designer-ruled, three points. **(1) Deploy first, everywhere:** Load, Charter and Enshrine all require the
+cask be **DEPLOYED** — the Charter's old vessel reach (v2.2's "one of two doors") is gone; a public showing
+is the price of every sale, and the risk (a rival may ship your public cask somewhere you didn't want) is
+the point. **(2) The Quaymaster is the one invested exception** — Load, Charter or Enshrine straight from
+your own vessels (3G + the buy action; supersedes v2.7 "Quaymaster's Key", KEY v91, which had opened
+Enshrine-from-vessels; v2.8 completes the trio with Charter). This is the tile's whole identity: it buys
+out the public-showing risk. **(3) Commission is the one universal vessel-direct door** — its free load now
+takes **ANY player's deployed cask** (rival-loading rules: owner scores, commissioner takes the 1G + chose
+the destination) **or a Ready cask straight from your own vessels** ("we want to promote that" — designer).
+*Why:* one memorable sentence replaces three per-verb exceptions; the Quaymaster gets a sharp, sellable
+job; commissioning gains real pull as the only free vessel outlet. *Gates (KEY v92):* `verify-v92` 11
+checks PASS + v87 (two tests updated to the new grammar) /v88/v89/v90 green; sim 500 → **0 crash/deadlock**
+at 2–4p (the deadlock watch after Charter lost universal vessel reach — commission's vessel door + the
+Quaymaster cover it), pace in band (2p 15.6 / 3p ~16.7 / 4p 16.2, ≥95% in 12–25, ~98% clock-ended);
+render-smoke ALL PASS. *Watch (⚙): the Quaymaster's pick-rate (it now sells risk-avoidance — re-probe
+parity); charter rate at 4p held ~2.3/game.*
 
 **v2.6 "Dockside Pickup" — commission onto casks** *(2026-07-04, `play.html` KEY v90)* — Designer-approved:
 **Commission may place the face-up ship ONTO a slot whose cask can board it** (effective quality vs the

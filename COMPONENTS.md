@@ -1,9 +1,9 @@
-# Brewhouses of the Hanse — Components (v2.6 “Dockside Pickup”)
+# Brewhouses of the Hanse — Components (v2.8 “Deploy First”)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9.
-> - The live build is `play.html` — **v2.6 “Dockside Pickup”** (`KEY hanse-hotseat-v90`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v2.8 “Deploy First”** (`KEY hanse-hotseat-v92`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - Cross-reference for tile families: §3 boards, §4 supply, §5–11 the seven families A–G, §12 player board, §13 starting setup, §14 box footprint. Expansion add-ons are §15; cross-references §16.
 
 ---
@@ -73,7 +73,7 @@ A brewed beer in one of three states: **maturing** (vessel) → **deployed** (sl
 
 ## 6. Ship tiles · family B (20-tile deck)
 
-Neutral, destination-bound hulls. Drawn from a shuffled deck into a face-up **market of 3** at the Market. Commission (`2 G`) places one on an open slot — or **onto a slot whose cask can board it** (v2.6 dockside pickup: the cask loads at once; a rival’s follows the rival-loading rules) — with a free first load of one of your **deployed** casks (v2.2).
+Neutral, destination-bound hulls. Drawn from a shuffled deck into a face-up **market of 3** at the Market. Commission (`2 G`) places one on an open slot — or **onto a slot whose cask can board it** (v2.6 dockside pickup: the cask loads at once; a rival’s follows the rival-loading rules) — with a free first load: **any player’s deployed cask** (a rival’s → the rival-loading rules) **or a Ready cask straight from your own vessels** (v2.8 — commission is the one universal vessel-direct door past deploy-first).
 
 | Hull | Capacity | Qty | Destination spread |
 |---|---|---|---|
@@ -155,7 +155,7 @@ Private brewery-board tiles (**SPECIALISTS — purple**, the third tile type; v2
 | **Hop Gardener** *(a hop bine with cones on a pole)* | when you gain hops, +1 extra | `4 G` |
 | **Stevedore** *(a wooden treadwheel harbor crane)* | Load 2 casks when Loading | `3 G` |
 | **Lagerkeeper** *(frost-dusted stacked casks)* | all vessels +1 age each of your turns | `2 G` |
-| **Quaymaster** *(a private jetty + mooring bollard)* | Load OR Enshrine straight from your vessels (v2.7) | `3 G` |
+| **Quaymaster** *(a private jetty + mooring bollard)* | Load, Charter OR Enshrine straight from your vessels — the one invested exception to deploy-first (v2.8) | `3 G` |
 
 **Print: 21 improvement tiles** (3 copies × 7 types covers up to 4 players).
 

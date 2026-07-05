@@ -120,7 +120,9 @@ ok('Salt House pays goods to its owner\\'s cask', S.players[0].grain===1&&S.play
 deliverCask(S.players[1],{owner:1,style:'gruit',q:1,bld:{b:'salthouse',owner:0},vintage:0},'bruges',null,false);
 ok('Salt House pays NOTHING on a rival\\'s cask', S.players[1].grain===0&&S.players[1].hops===0);
 
-// (l) commission pool = DEPLOYED only + effective quality (v86 regression)
+// (l) commission pool: effective quality on deployed casks; v2.8 opened the pool to Ready
+// VESSEL casks too (commission = the one universal vessel-direct door), so the kilned Q2
+// slot cask AND the Ready Q5 vessel bock both list.
 S=freshState(2,['H','A']);S.active=0;
 SLOTS.forEach(sl=>{S.slots[sl.id]=null;S.buildings[sl.id]=null;});
 S.slots['s1']={type:'ship',ship:'cog',dest:'novgorod',load:[]};
@@ -128,13 +130,16 @@ S.players[0].vessels=[{style:'bock',q:5,step:3,ready:3},null];
 S.slots['s2']={type:'cask',owner:0,style:'hopped',q:2,act:'age'};
 S.buildings['s2']={b:'maltkiln',owner:0};
 const el=commEligible(S.players[0],'s1');
-ok('commission pool excludes vessels + uses effQ (kilned Q2 boards a Q3 hull)', el.length===1&&el[0].ref==='s2'&&el[0].q===3);
+const elS2=el.find(o=>o.ref==='s2'),elV0=el.find(o=>o.ref==='v:0');
+ok('commission pool uses effQ (kilned Q2 boards a Q3 hull) + lists the Ready vessel cask (v2.8)', el.length===2&&!!elS2&&elS2.q===3&&!!elV0&&elV0.q===5);
 
 // (m) charter uses effective quality for vessel casks (v86 regression)
+// v2.8 deploy-first: vessels list ONLY with the Quaymaster — grant it so the effQ check still runs.
 EXPANSION=true;S=freshState(2,['H','A']);S.active=0;EXPANSION=false;
+S.players[0].upgrades=['quay'];
 S.players[0].vessels=[{style:'duckstein',q:2,step:2,ready:2},null];
 const ccs=charterCasks(S.players[0]);
-ok('charterCasks lists the vessel cask at effective quality', ccs.length>=1&&ccs[0].ref==='v:0'&&ccs[0].q===3);
+ok('charterCasks (with Quaymaster) lists the vessel cask at effective quality', ccs.length>=1&&ccs[0].ref==='v:0'&&ccs[0].q===3);
 
 // (n) Cooperage capacity-shrink sail (v86 regression)
 S=freshState(2,['H','A']);S.active=0;

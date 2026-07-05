@@ -1,8 +1,12 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v2.6 “Dockside Pickup”)
+# Brewhouses of the Hanse — Turn & Round Rules (v2.8 “Deploy First”)
 
-> **Status: live (2026-07-04).** This is the canonical rulebook for the *living, composable Wharf
+> **Status: live (2026-07-05).** This is the canonical rulebook for the *living, composable Wharf
 > slots + dead-simple scoring* direction (`PLAN.md`). Numbers are placeholders ⚙. **The live,
-> playable build is `play.html` (v2.6 “Dockside Pickup” — Commission may place the hull onto a slot
+> playable build is `play.html` (v2.8 “Deploy First” — the final vessel-outlet grammar: **Load,
+> Charter and Enshrine all take a DEPLOYED cask**; the **Quaymaster** is the one invested exception
+> (all three verbs reach your vessels); **Commission** is the one universal vessel-direct door — its
+> free load takes ANY player’s deployed cask or a Ready cask straight from your vessels; on
+> v2.6 “Dockside Pickup” — Commission may place the hull onto a slot
 > whose cask can board it; on v2.5 “Warm Wharf” (2 neutral starting Buildings; greyed-not-hidden
 > actions) and v2.4.1 “Three Tiles” — the tile-taxonomy + Floor-lane pass: three
 > colour-coded tile types — **PRIVILEGE** (blue, pays its owner only) · **BUILDING** (green, serves
@@ -212,14 +216,18 @@ freshly-brewed cask. *(No more forced Age-first, no more "only one of Tap / Impr
 ship/destination; loading a rival's cask: you take **1 `G`**, the owner scores it on delivery);
 ships **sail only when full**. **Or Enshrine** at the Hall (§6). **Or Charter** (§6).
 
-> **THE ONE VESSEL-OUTLET GRAMMAR (v2.2).** *A cask leaves your vessels only two ways: **Deploy**
-> it, or **Charter** it.* Every load verb on the board — the Harbor Load, a cask's free-Load
-> action, a ship's line-fire, the commission free-load — touches **deployed** casks only.
-> the **Quaymaster** (ex Private Quay) is the invested exception: it opens **both private outlets** —
-> **Load OR Enshrine straight from your vessels** (v2.7). For everyone else **Enshrine takes deployed
-> casks only** — *the Hall demands a public showing* (the deploy-first principle, kept deliberately;
-> the Quaymaster is the paid way past it). **Every gate check uses EFFECTIVE
-> quality** (kilns, Duckstein, Customs/Gauger — one rule for every verb).
+> **DEPLOY FIRST — THE VESSEL-OUTLET GRAMMAR (v2.8).** ***Load, Charter and Enshrine all take a
+> DEPLOYED cask.*** A cask must stand on a public slot — contestable, loadable by rivals — before
+> it can go anywhere: *a public showing is the price of every sale.* Two doors past the rule:
+> - the **Quaymaster** (the purple Specialist) is the **one invested exception** — its owner may
+>   **Load, Charter or Enshrine straight from their own vessels**, skipping the public showing
+>   and the risk that a rival ships your cask somewhere you didn't want it to go;
+> - **Commission is the one universal vessel-direct door** — its free load takes **ANY player's
+>   deployed cask** (rival-loading rules apply) **or a Ready cask straight from YOUR vessels**
+>   (deploy-first is waived here, deliberately, to promote commissioning).
+>
+> **Every gate check uses EFFECTIVE quality** (kilns, Duckstein, Customs/Gauger — one rule for
+> every verb).
 
 ---
 
@@ -315,18 +323,19 @@ player's turn.** No out-of-turn gains.
   **market of 3**. **Commission** (`2 G`) places one on an open slot — **or onto a slot whose cask can board it**
   (v2.6 **dockside pickup**: the cask loads at once, its dock privilege captured; a rival’s cask
   follows the rival-loading rules — owner scores, you chose the destination + take the `1 G`;
-  a hull filled by the pickup sails immediately) — **+ a free load of one of your DEPLOYED
-  casks** (v2.2 — the vessel-outlet grammar, §4C). Load deployed casks aboard; a ship
+  a hull filled by the pickup sails immediately) — **+ a free load: ANY player's deployed cask
+  (a rival's → the rival-loading rules) or a Ready cask straight from YOUR vessels** (v2.8 —
+  commission is the one universal vessel-direct door, §4C). Load deployed casks aboard; a ship
   **sails the moment it is full** (v2.2: including when its capacity *shrinks* — e.g. a Cooperage
   overbuilt under a part-loaded hull) → every cask **delivers**, value (§7) + majority
   count sealing **on delivery** in load order. **Dock a ship on your value-building for a rich
   berth** (§5a). The hull returns to the deck; the voyage **advances the clock** (§10).
-- **Charter** — spend a **contract** + flat `2 G` fare → one Ready cask (**vessel or slot** — the
-  Charter and Deploy are the only two doors out of your vessels) on an immediate single-cask
-  voyage to a **kontor**. The deadlock guard (always-legal escape).
+- **Charter** — spend a **contract** + flat `2 G` fare → one of your **DEPLOYED** Ready casks
+  (v2.8 deploy-first; the **Quaymaster** also reaches your vessels) on an immediate single-cask
+  voyage to a **kontor**. The deadlock guard (always-legal escape once a cask stands public).
 - **Enshrine** — local Harbor action (no ship/fare): withdraw a deployed **Q2+** cask into the
   **Hall** for **fixed** prestige (§11). Deploy-first keeps it contestable — *the Hall demands a
-  public showing.* Advances the clock.
+  public showing* (the **Quaymaster** may enshrine straight from the vessels). Advances the clock.
 
 ---
 
@@ -386,7 +395,7 @@ Hire action, or taken as London's benefit; the v2.4 re-prices lift the floor ⚙
 **Coppersmith** (+1 vessel, `3 G`), **Cellarman** (maturation −1 step, `4 G`), **Grain Factor** (+1 extra
 grain, `3 G`), **Hop Gardener** (+1 extra hops, `4 G` — the parity probe's outlier pays a premium in the
 hops-led economy), **Stevedore** (your Harbor load sets out **2 casks**, `3 G`), **Lagerkeeper** (each of
-**your turns**, **EVERY** maturing cask **+1 age**, `2 G` — the Floor-lane keystone), and **Quaymaster** (**Load OR Enshrine** Ready casks **straight from your vessels**, `3 G` — the paid door past Deploy, v2.7).
+**your turns**, **EVERY** maturing cask **+1 age**, `2 G` — the Floor-lane keystone), and **Quaymaster** (**Load, Charter OR Enshrine** Ready casks **straight from your vessels**, `3 G` — the one invested exception to deploy-first, v2.8).
 Your **improvements area holds at most 4 tiles** (these + any flipped buildings, §5) — so the engine is a real
 choice, not a buffet. *(v1.7 moved the buy from the Market to the Cellar — sim showed the barrier was the
 Market action's opportunity cost, not the goods. The free-starting-improvement study made **Hop Gardener** the
