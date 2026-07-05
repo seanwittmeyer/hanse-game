@@ -587,9 +587,8 @@
   .shelf{display:flex;gap:.12in;align-items:flex-start}
   .shelf-lbl{display:flex;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.105in;color:var(--ink2);margin-top:.02in}
   .shelf-lbl svg,.shelf-lbl .ic{width:.13in;height:.13in}
-  .restock{margin-left:auto;align-self:center;display:flex;align-items:center;gap:.03in;
-    font-variant:small-caps;font-size:.08in;color:var(--ink2);opacity:.75}
-  .restock svg,.restock .ic{width:.14in;height:.14in}
+  .shelf-lbl .bag{margin-left:auto;display:inline-flex;align-items:center;opacity:.7}   /* refill from this family's DRAW BAG (tile backs reveal the type, so the supply hides in a bag) */
+  .shelf-lbl .bag svg,.shelf-lbl .bag .ic{width:.16in;height:.16in}
   .disp-bd{display:flex;gap:.1in;align-items:center}
   .dslot{width:2in;height:2in;border:1.7px dashed var(--sea);border-radius:.07in;background:rgba(255,255,255,.5);
     display:flex;flex-direction:column;gap:.04in;align-items:center;justify-content:center;color:var(--sea);flex:0 0 auto;position:relative}
@@ -608,7 +607,7 @@
      backstop is rules-side only, untracked on the table) */
   /* ---- Market & Stores two-column interior: displays left · destinations right ---- */
   .sup-cols{display:flex;gap:.2in;flex:1;min-height:0}
-  .sup-main{flex:0 0 auto;width:10.75in;display:flex;flex-direction:column;gap:.08in}
+  .sup-main{flex:0 0 auto;width:9.7in;display:flex;flex-direction:column;gap:.08in}
   .sup-main .tracks{margin-top:auto}
   .sup-dests{flex:1;display:flex;flex-direction:column;gap:.09in;min-width:0}
   .disp-h.k{background:var(--sea)}
@@ -617,31 +616,28 @@
      over an open presence ZONE (discs pile freely; no per-disc slots) */
   .kp{flex:1;border:3px solid var(--kc);border-radius:.1in;background:var(--kt,#fff);display:flex;flex-direction:column;overflow:hidden}
   .kp.hall{flex:1.5}   /* the Hall is a CORE path — it gets MORE room than a kontor, not less */
-  .kp-t{background:var(--kc);color:#fff;display:flex;align-items:center;gap:.08in;padding:.06in .12in;
-    font-variant:small-caps;font-weight:bold;font-size:.27in;text-shadow:0 1px 1.5px rgba(0,0,0,.35)}
-  .kp-t svg,.kp-t .ic{width:.26in;height:.26in}
+  .kp-t{background:var(--kc);color:#fff;display:flex;align-items:center;gap:.07in;padding:.05in .11in;
+    font-variant:small-caps;font-weight:bold;font-size:.22in;text-shadow:0 1px 1.5px rgba(0,0,0,.35)}
+  .kp-t svg,.kp-t .ic{width:.21in;height:.21in}
   .kp-q{margin-left:auto;display:inline-flex;align-items:center;gap:.03in;background:rgba(255,255,255,.3);border-radius:.06in;
-    padding:.02in .09in;font-size:.26in;font-weight:900}
-  .kp-q svg,.kp-q .ic{width:.24in;height:.24in}
+    padding:.02in .08in;font-size:.2in;font-weight:900}
+  .kp-q svg,.kp-q .ic{width:.19in;height:.19in}
   .kp-rows{flex:0 0 auto;display:flex;gap:.1in;padding:.09in .11in .06in;min-height:0}
   .kp-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.05in;text-align:center;min-width:0}
-  .kp-ch{display:inline-flex;align-items:center;gap:.03in;font-variant:small-caps;font-weight:bold;font-size:.135in;color:var(--ink2);white-space:nowrap}
-  .kp-ch svg,.kp-ch .ic{width:.15in;height:.15in}
-  .kp-big{display:inline-flex;align-items:center;gap:.04in;font-weight:900;font-size:.46in;color:var(--kc);line-height:1;white-space:nowrap}
-  .kp-big svg,.kp-big .ic{width:.36in;height:.36in}
-  .kp-scale{font-weight:bold;font-size:.17in;color:var(--kc);line-height:1.1;white-space:nowrap} .kp-scale b{font-size:.32in}
+  .kp-ch{display:inline-flex;align-items:center;gap:.03in;font-variant:small-caps;font-weight:bold;font-size:.115in;color:var(--ink2);white-space:nowrap}
+  .kp-ch svg,.kp-ch .ic{width:.13in;height:.13in}
+  .kp-big{display:inline-flex;align-items:center;gap:.04in;font-weight:900;font-size:.34in;color:var(--kc);line-height:1;white-space:nowrap}
+  .kp-big svg,.kp-big .ic{width:.27in;height:.27in}
+  .kp-scale{font-weight:bold;font-size:.14in;color:var(--kc);line-height:1.1;white-space:nowrap} .kp-scale b{font-size:.25in}
   .kp-note{font-size:.13in;font-style:italic;color:var(--ink2);line-height:1.2}
-  .kp-note.ctr{text-align:center;padding:.04in .14in .08in;font-size:.15in}
+  .kp-note.ctr{text-align:center;padding:.04in .14in .08in;font-size:.13in}
   /* presence ZONE — the panel's open floor: ownership discs pile here (the majority count) */
-  .kp-pz{flex:1;display:flex;align-items:flex-end;justify-content:center;border-top:1.8px dashed var(--kc);
-    margin:0 .09in .08in;padding:.06in;background:rgba(255,255,255,.35);border-radius:0 0 .07in .07in}
-  .kp-pl{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.05in;font-variant:small-caps;font-weight:bold;font-size:.14in;color:var(--ink2);opacity:.85;text-align:center}
-  .kp-pl svg,.kp-pl .ic{width:.17in;height:.17in}
-  .kp-pl i{font-variant:normal;font-weight:normal;font-style:italic}
+  .kp-pz{flex:1;min-height:.7in;border-top:1.8px dashed var(--kc);
+    margin:0 .09in .08in;background:rgba(255,255,255,.35);border-radius:0 0 .07in .07in}
   .kp.hall .kp-lad{flex:1;display:flex;align-items:center;justify-content:space-evenly;gap:.12in;padding:.1in .12in .05in}
-  .kp.hall .kp-lad .lr{display:flex;flex-direction:column;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.21in;color:var(--ink2)}
-  .kp.hall .kp-lad .lr b{display:inline-flex;align-items:center;gap:.03in;font-size:.52in;color:var(--kc)}
-  .kp.hall .kp-lad .lr b svg,.kp.hall .kp-lad .lr b .ic{width:.4in;height:.4in}
+  .kp.hall .kp-lad .lr{display:flex;flex-direction:column;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.17in;color:var(--ink2)}
+  .kp.hall .kp-lad .lr b{display:inline-flex;align-items:center;gap:.03in;font-size:.4in;color:var(--kc)}
+  .kp.hall .kp-lad .lr b svg,.kp.hall .kp-lad .lr b .ic{width:.31in;height:.31in}
   .ddeck{width:2in;height:2in;border-radius:.07in;background:var(--sea);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;
     text-shadow:0 1px 1px rgba(0,0,0,.3);box-shadow:.05in -.05in 0 rgba(0,0,0,.18),inset 0 0 0 1.5px rgba(255,255,255,.22)}
   .ddeck.b{background:var(--green)}
@@ -930,8 +926,8 @@ const SUPPLY_GEO={w:22,h:11.9, y0:0.45,yMax:11.62};  // the Market & Stores boar
 //   · the SCORE track wraps the outer edge as a 50-cell ring (0–49 + a 50/100 lap, Carcassonne-style):
 //     50 cells — not 100 — because the mover is the 0.5″ ownership disc, and a disc needs a ≥0.6″ printed
 //     cell to sit in legibly (COMPONENTS.md §17 #7 offers exactly this "50/100 lap marker" resolution).
-const SUPPLY_NW=17.55, SUPPLY_NH=14.2;   // board native size — ring + interior computed below
-const SUPPLY_MAIN_W=10.75;               // the left (displays) column's width; the destinations column takes the rest
+const SUPPLY_NW=16.5, SUPPLY_NH=14.2;   // board native size — ring + interior computed below
+const SUPPLY_MAIN_W=9.7;                 // the left (displays) column's width; the destinations column takes the rest
 const SCORE_CELLS=50;     // one lap = 0–49; a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
 const SCORE_RING_T=0.8;   // ring thickness (native) → prints 0.64″ — a comfortable seat for the 0.5″ disc
 const TILE_GEO  ={w:22,h:5.75, y0:0.45,yMax:5.47};   // building FRONTS sheet + its mirrored BACKS sheet (27 tiles, 3 rows)
@@ -1446,22 +1442,23 @@ function scoreRingHtml(NW,NH,T){
 function supplyBoard(){
   const dslot=(fam,ic,smp)=>'<div class="dslot '+fam+'">'+LU(ic)
     +(OVERLAY&&smp?'<div class="ovl">'+smp+'</div>':'')+'</div>';
-  const ddeck=(fam,nm)=>'<div class="ddeck '+fam+'">'+LU('layers')+'<span class="dn">'+nm+'</span></div>';
-  const shelf=(lbl,ic,slots,deck)=>'<div class="shelf-lbl">'+LU(ic)+lbl+'</div>'
-    +'<div class="shelf">'+slots+'<span class="restock">'+LU('arrow-left')+'refill</span>'+deck+'</div>';
+  // the tile supplies live in DRAW BAGS (their backs reveal the type), so the board carries NO deck
+  // spaces — each shelf label ends in the bag glyph: refill the display from the family's bag.
+  const shelf=(lbl,ic,slots)=>'<div class="shelf-lbl">'+LU(ic)+lbl+'<span class="bag">'+LU('shopping-bag')+'</span></div>'
+    +'<div class="shelf">'+slots+'</div>';
   // overlay samples — one real render per family, varied so both tile verbs/colours get proofed
   const smpBld=['staple','connoiss','maltkiln','cooperage'].map(k=>buildingCard(BUILDINGS.find(b=>b.k===k)));
   const smpShip=[shipCard('cog','Bruges'),shipCard('hulk','Bergen'),shipCard('cog','Novgorod')];
   const smpRec=RECIPES.slice(0,4).map(recipeCard), smpCon=contractCard();
   const smpImp=[0,1,4,6].map(i=>improveTile(IMPROVE[i]));
   const market='<div class="disp-h m">'+LU('store')+'Market<span class="sm">— a Market visit buys any ONE of these (or take 2 goods)</span></div>'
-    +shelf('Buildings — the Wharf display of 4','building-2',smpBld.map(s=>dslot('b','building-2',s)).join(''),ddeck('b','Building deck'))
-    +shelf('Ships — the market of 3 · commission 2G','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''),ddeck('s','Ship deck'))
+    +shelf('Buildings — the Wharf display of 4','building-2',smpBld.map(s=>dslot('b','building-2',s)).join(''))
+    +shelf('Ships — the market of 3 · commission 2G','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''))
     +'<div class="shelf-lbl">'+LU('scroll-text')+'Recipes — the dealt export stacks &amp; the Charter contracts (1G)</div>'
-    +'<div class="shelf">'+smpRec.map(s=>dslot('r','scroll-text',s)).join('')+'<span class="restock"></span>'
+    +'<div class="shelf">'+smpRec.map(s=>dslot('r','scroll-text',s)).join('')
       +'<div class="dslot r ct">'+LU('ticket')+'<span class="rn">Contracts</span>'+(OVERLAY?'<div class="ovl">'+smpCon+'</div>':'')+'</div></div>';
   const cellar='<div class="disp-h i">'+LU('wrench')+'Cellar<span class="sm">— Specialists: buy here, Hire (Q3+), or London’s benefit</span></div>'
-    +shelf('Specialists — the Cellar display of 4','wrench',smpImp.map(s=>dslot('i','wrench',s)).join(''),ddeck('i','Specialist deck'));
+    +shelf('Specialists — the Cellar display of 4','wrench',smpImp.map(s=>dslot('i','wrench',s)).join(''));
   // Sailed-Ships: 15 cells, both end-marks printed — base (flag) and The Trade Roads +2 (truck)
   const ROADS_SAILED={2:8,3:12,4:15};
   let clk='';for(let i=1;i<=15;i++){
@@ -1482,7 +1479,7 @@ function supplyBoard(){
         +'<div class="kp-cell"><span class="kp-ch">'+LU('gift')+'on delivery</span><span class="kp-big">'+d.ben.n+' '+LU(d.ben.ic)+'</span><span class="kp-note">'+(BNOTE_SHORT[d.nm]||d.bnote)+'</span></div>'
         +'<div class="kp-cell"><span class="kp-ch">'+LU('landmark')+'majority 1·2·3</span><span class="kp-big">'+d.maj.join('/')+'</span></div>'
       +'</div>'
-      +'<div class="kp-pz"><span class="kp-pl">'+LU('circle')+'presence zone — most delivered leads <i>(2p: 1st only)</i></span></div>'
+      +'<div class="kp-pz"></div>'
     +'</div>';};
   const hallMini='<div class="kp hall" style="--kc:'+HALL.kc+';--kt:'+HALL.tint+'">'
     +'<div class="kp-t">'+LU('crown')+HALL.nm+'<span class="kp-q">'+LU(QI)+HALL.req+'+</span></div>'
@@ -1724,7 +1721,7 @@ function checklist(pages,famPages){
   h+=T('Boards')
     +R('Main board — the Wharf','The 2×2 of stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots, plus the Sailed-Ships end-clock track.','1')
     +R('Destinations board','The four kontore (Bruges · London · Bergen · Novgorod) + the Hall — each with its quality gate, base value, on-delivery benefit, and (kontore) a majority track.','1')
-    +R('Market &amp; Stores board','The shared displays at component size (Buildings 4+deck · Ships 3+deck · recipe stacks + contracts · Improvements 4+deck), the DESTINATIONS column (the four kontore — gate · value · benefit · majority · a presence-disc zone — with the Hall set apart), the Sailed-Ships clock (15 cells, dual END marks — base and The Trade Roads), and the 50-cell score ring wrapping the rim (0–49, +50 on the second lap). Loose bits (goods cubes · demand dice · quality markers) live in a supply tray.','1')
+    +R('Market &amp; Stores board','The shared displays at component size (Buildings 4 · Ships 3 · recipe stacks + contracts · Specialists 4 — each display refills from its DRAW BAG, no deck spaces), the DESTINATIONS column (the four kontore — gate · value · benefit · majority · an open presence zone — with the Hall set apart), the Sailed-Ships clock (15 cells, dual END marks — base and The Trade Roads), and the 50-cell score ring wrapping the rim (0–49, +50 on the second lap). Loose bits (goods cubes · demand dice · quality markers) live in a supply tray.','1')
     +R('Player brewery boards','One per player: vessel lanes (start 2, cap 3), the maturation track, a recipe rack, improvement slots, the Flight strip, and goods storage (cap 8).',PLAYERS.length)
     +'</table>';
   h+=T('Tiles (mount on chipboard, laser-cut)')
@@ -1743,6 +1740,7 @@ function checklist(pages,famPages){
     +R('Hops cubes','Currency &amp; brew input (H).','40')
     +R('Worker pawns','One per player; moved between stations.',PLAYERS.length)
     +R('Ownership / presence discs','Per player colour — marks a cask you own, then plants at a kontor as your presence (for majorities).',OWN_DISCS+' ea')
+    +R('Draw bags','One per hidden tile supply — Ships · Buildings/Privileges · Specialists (their backs reveal the type, so the supply hides in a bag; displays refill by blind draw).','3')
     +R('Building-owner frames','Per player colour — a card-kit-specific overlay marking whose building card sits on a slot (printables.html marks this with the same disc instead).','6 ea')
     +R('Demand dice (d6)','The reusable value carrier — a cask shipped through ITS OWNER’S value building rides one in its berth (ship-slot value buildings bump the same die at the sail; max 6); the pips are the ★ it banks on delivery.','8')
     +R('Quality-boost markers','A +1-quality token a cask carries from a Malt Kiln / Hop Yard to delivery.','6')

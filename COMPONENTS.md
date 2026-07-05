@@ -40,6 +40,7 @@
 | First-player marker | 1 | Fixed all game (turn order does not rotate). |
 | Round / Sailed-Ships marker | 2 | Round clock; voyage counter. |
 | Score pad or track | 1 | Scoring is in-game; pads or a shared track both work. |
+| Draw bags | 3 | One per hidden tile supply — **ships** · **Privileges & Buildings** · **Specialists**. Tile backs reveal the type, so each supply hides in a bag and its display refills by blind draw (2026-07-05; the printed boards carry no deck spaces). |
 
 ---
 
