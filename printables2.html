@@ -546,11 +546,14 @@
   .rc:last-child{border-right:none} .rc.band{background:rgba(184,134,11,.16)}
   .rc.cap{background:var(--gold);color:#fff;font-weight:bold;font-size:.07in;text-align:center;line-height:1}
   .rc.z{background:rgba(124,33,40,.12);font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.07in}
-  /* printables2: the SCORE track (start + 1–50, wrapped 3×17) + shared-track headers */
-  .strack{display:grid;grid-template-columns:repeat(17,1fr);border:1.5px solid var(--gold);border-radius:.05in;overflow:hidden}
-  .sc{border-right:1px solid rgba(0,0,0,.12);border-bottom:1px solid rgba(0,0,0,.12);min-height:.36in;display:flex;align-items:center;justify-content:center;font-size:.1in;color:var(--ink2);background:rgba(255,255,255,.5)}
-  .sc.start{background:rgba(124,33,40,.12);font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.082in}
-  .sc.ten{background:rgba(184,134,11,.2);font-weight:bold;color:var(--ink)}
+  /* printables2: the SCORE RING — one lap of cells wrapping the Supply board's outer edge (start → SCORE_MAX) */
+  .supply-outer{position:relative;width:100%;height:100%}
+  .score-ring{position:absolute;inset:0}
+  .ringcell{position:absolute;border:1px solid rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;
+    font-size:.078in;color:var(--ink2);background:rgba(255,255,255,.55);overflow:hidden}
+  .ringcell.start{background:var(--red);color:#fff;font-weight:bold}
+  .ringcell.start svg,.ringcell.start .ic{width:.14in;height:.14in}
+  .ringcell.ten{background:rgba(184,134,11,.28);font-weight:bold;color:var(--ink)}
   .trk-h{font-variant:small-caps;font-weight:bold;font-size:.12in;color:var(--sea);display:flex;align-items:center;gap:.05in;margin:.07in 0 .03in}
   .trk-h svg,.trk-h .ic{width:.14in;height:.14in}
   .trk-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;color:var(--ink2);margin-left:.06in}
@@ -571,17 +574,26 @@
   .disp-h{display:inline-flex;align-items:center;gap:.05in;background:var(--sea);color:#fff;border-radius:.06in;
     padding:.035in .12in;font-variant:small-caps;font-weight:bold;font-size:.125in;letter-spacing:.3px;margin-bottom:.07in;text-shadow:0 1px 1px rgba(0,0,0,.25)}
   .disp-h svg,.disp-h .ic{width:.15in;height:.15in}
+  .disp-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;opacity:.85;margin-left:.06in}
   .disp-h.b{background:var(--green)}
+  .disp-h.m{background:#9c7414}
+  .disp-h.i{background:var(--violet)}
+  .mkt-row{display:flex;gap:.16in;align-items:flex-start;flex-wrap:wrap}
+  .mkt-col{display:flex;flex-direction:column;gap:.05in}
+  .mkt-lbl{display:inline-flex;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--ink2)}
+  .mkt-lbl svg,.mkt-lbl .ic{width:.13in;height:.13in}
   .disp-bd{display:flex;gap:.1in;align-items:center}
   .bgrid{display:grid;grid-template-columns:repeat(2,2in);gap:.1in}
   .dslot{width:2in;height:2in;border:1.7px dashed var(--sea);border-radius:.07in;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;color:var(--sea)}
   .dslot svg,.dslot .ic{width:.6in;height:.6in;opacity:.32}
   .dslot.b{border-color:var(--green);color:var(--green)}
+  .dslot.i{border-color:var(--violet);color:var(--violet)}
   .bgrid.sm{grid-template-columns:repeat(2,2.5in)}   /* ship market holds 2.5″ ships */
   .dslot.s,.ddeck.s{width:2.5in;height:2.5in}
   .ddeck{width:2in;height:2in;border-radius:.07in;background:var(--sea);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;
     text-shadow:0 1px 1px rgba(0,0,0,.3);box-shadow:.05in -.05in 0 rgba(0,0,0,.18),inset 0 0 0 1.5px rgba(255,255,255,.22)}
   .ddeck.b{background:var(--green)}
+  .ddeck.i{background:var(--violet)}
   .ddeck svg,.ddeck .ic{width:.45in;height:.45in;opacity:.92}
   .ddeck .dn{font-size:.12in}
   .ddeck .dn{font-variant:small-caps;font-weight:bold;font-size:.092in;text-align:center;line-height:1.05}
@@ -857,6 +869,9 @@ const CARD_GEO={w:10.4,h:7.9,y0:0.95,yMax:7.9};
 // (render() emits a named @page + .lgNN rule per distinct height — see lgClass / the dynpage stylesheet.)
 const WHARF_GEO ={w:22,h:10.5, y0:0.45,yMax:10.22};  // the Wharf cross (9.4″) + tokens tucked on the right
 const SUPPLY_GEO={w:22,h:11.5, y0:0.45,yMax:11.22};  // the Supply & Tracks board (10.8″), centred — work in progress
+const SUPPLY_NW=9.3, SUPPLY_NH=13.5;  // the Supply & Tracks board's native design size (in) — shared by supplyBoard() and its sheet placement
+const SCORE_MAX=99;   // the wrap-around score ring covers 0–99 in one lap (winner totals run to ~90 in strong play — COMPONENTS.md §17 #7)
+const SCORE_RING_T=0.4;   // ring-cell thickness (in) — the perimeter track's "width" band around the board edge
 const TILE_GEO  ={w:22,h:5.75, y0:0.45,yMax:5.47};   // building FRONTS sheet + its mirrored BACKS sheet (27 tiles, 3 rows)
 const IMPF_GEO  ={w:22,h:8.5,  y0:0.45,yMax:8.22};   // improvements + owner frames (2.5″ rings, 3 rows) — single-sided, their own sheet
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
@@ -1323,33 +1338,61 @@ function wharfCross(){
   // padding grows by the bleed so the inner grid stays centered/put while the element (and its clipped art) extends outward
   return clip+'<div class="mboard cross" style="padding:'+(0.3+CROSS_BLEED).toFixed(3)+'in">'+wharf+'</div>';
 }
-// printables2: the SUPPLY board — the two face-up market displays + the three shared tracks
-// (Sailed-Ships end clock · Round · Score start→50). Sits beside the Wharf on the same large sheet.
+// printables2: the SCORE RING — a single lap of cells wrapping the outer edge of the Supply board (0…SCORE_MAX),
+// proportioned to each edge's length so the cells stay roughly square-ish all the way round. Walks clockwise
+// starting at the top-left corner: top (L→R) → right (T→B) → bottom (R→L) → left (B→T), back to 0.
+function scoreRingCells(NW,NH,T){
+  const uw=NW-2*T, uh=NH-2*T;                 // usable edge length inside the corners
+  const per=2*(uw+uh), cellLen=per/(SCORE_MAX+1);
+  const nTop=Math.max(1,Math.round(uw/cellLen)), nSide=Math.max(1,Math.round(uh/cellLen));
+  const nBottom=nTop, nLeft=(SCORE_MAX+1)-(nTop+nSide+nBottom);   // left edge absorbs the rounding remainder
+  const wTop=uw/nTop, wBot=uw/nBottom, hSide=uh/nSide, hLeft=uh/nLeft;
+  const cells=[];let i=0;
+  for(let c=0;c<nTop;c++)cells.push({i:i++,x:T+c*wTop,y:0,w:wTop,h:T});                              // top: L→R
+  for(let c=0;c<nSide;c++)cells.push({i:i++,x:NW-T,y:T+c*hSide,w:T,h:hSide});                        // right: T→B
+  for(let c=0;c<nBottom;c++)cells.push({i:i++,x:NW-T-(c+1)*wBot,y:NH-T,w:wBot,h:T});                 // bottom: R→L
+  for(let c=0;c<nLeft;c++)cells.push({i:i++,x:0,y:NH-T-(c+1)*hLeft,w:T,h:hLeft});                    // left: B→T
+  return cells;
+}
+function scoreRingHtml(NW,NH,T){
+  const cells=scoreRingCells(NW,NH,T);
+  const box=c=>{const cls=c.i===0?' start':(c.i%10===0?' ten':'');
+    return '<div class="ringcell'+cls+'" style="left:'+c.x.toFixed(3)+'in;top:'+c.y.toFixed(3)+'in;width:'+c.w.toFixed(3)+'in;height:'+c.h.toFixed(3)+'in">'+(c.i===0?LU('flag'):c.i)+'</div>';};
+  return '<div class="score-ring">'+cells.map(box).join('')+'</div>';
+}
+// printables2: the SUPPLY board — the shared MARKET displays (Buildings + Ships, bought when you visit the
+// Market) · the CELLAR's Improvement display (acquired at the Cellar) · the Sailed-Ships &amp; Round tracks ·
+// and a SCORE track that wraps the board's own outer edge (start → SCORE_MAX), so score never needs its own
+// interior real estate. Sits beside the Wharf on the same large sheet.
 function supplyBoard(){
-  const dslot=fam=>'<div class="dslot '+fam+'">'+LU(fam==='b'?'building-2':'sailboat')+'</div>';
+  const dslot=fam=>'<div class="dslot '+fam+'">'+LU(fam==='b'?'building-2':fam==='i'?'wrench':'sailboat')+'</div>';
   const ddeck=(fam,nm)=>'<div class="ddeck '+fam+'">'+LU('layers')+'<span class="dn">'+nm+'</span></div>';
   const disp='<div class="disp">'
-    +'<div><div class="disp-h b">'+LU('building-2')+'Building display</div>'
-      +'<div class="disp-bd"><div class="bgrid">'+dslot('b')+dslot('b')+dslot('b')+dslot('b')+'</div>'+ddeck('b','Building deck')+'</div></div>'
-    +'<div><div class="disp-h">'+LU('sailboat')+'Ship market</div>'
-      +'<div class="bgrid sm">'+dslot('s')+dslot('s')+dslot('s')+ddeck('s','Ship deck')+'</div></div>'
+    +'<div class="disp-h m">'+LU('store')+'Market<span class="sm">— buy any of these when you visit</span></div>'
+    +'<div class="mkt-row">'
+      +'<div class="mkt-col"><div class="mkt-lbl">'+LU('building-2')+'Buildings</div>'
+        +'<div class="disp-bd"><div class="bgrid">'+dslot('b')+dslot('b')+dslot('b')+dslot('b')+'</div>'+ddeck('b','Building deck')+'</div></div>'
+      +'<div class="mkt-col"><div class="mkt-lbl">'+LU('sailboat')+'Ships</div>'
+        +'<div class="disp-bd"><div class="bgrid sm">'+dslot('s')+dslot('s')+dslot('s')+ddeck('s','Ship deck')+'</div></div></div>'
+    +'</div>'
+    +'<div class="disp-h i">'+LU('wrench')+'Improvements<span class="sm">— acquired at the Cellar</span></div>'
+    +'<div class="disp-bd"><div class="bgrid">'+dslot('i')+dslot('i')+dslot('i')+dslot('i')+'</div>'+ddeck('i','Improvement deck')+'</div>'
   +'</div>';
   let clk='';for(let i=1;i<=13;i++){let end='';for(const p in SAILED)if(SAILED[p]===i)end=p+'p';
     clk+='<div class="cc'+(end?' end':'')+'">'+(end?end+'<br>END':'<span class="n">'+i+'</span>')+'</div>';}
   let rnd='<div class="rc z">start</div>';for(let i=1;i<=MAX_ROUND;i++)rnd+='<div class="rc'+(i===MAX_ROUND?' cap':'')+'">'+i+'</div>';
-  let sc='<div class="sc start">start</div>';for(let i=1;i<=50;i++)sc+='<div class="sc'+(i%10===0?' ten':'')+'">'+i+'</div>';
-  return '<div class="mboard supply">'
-    +'<div class="mb-head"><h2>'+LU('store')+'Supply &amp; Tracks</h2><span class="sub">the shared market displays &amp; the game tracks</span></div>'
+  const inner='<div class="mboard supply" style="position:absolute;left:'+SCORE_RING_T+'in;top:'+SCORE_RING_T+'in;'
+      +'width:'+(SUPPLY_NW-2*SCORE_RING_T).toFixed(3)+'in;height:'+(SUPPLY_NH-2*SCORE_RING_T).toFixed(3)+'in">'
+    +'<div class="mb-head"><h2>'+LU('store')+'Supply &amp; Tracks</h2><span class="sub">the shared market &amp; Cellar displays, the game tracks — score wraps the board edge</span></div>'
     +disp
     +'<div class="tracks">'
       +'<div class="trk-h">'+LU('sailboat')+'Sailed-Ships<span class="sm">the end clock — every voyage (a full sail · Charter · Enshrine) fills one; at your player-count END, finish the round &amp; score</span></div>'
       +'<div class="ctrack">'+clk+'</div>'
       +'<div class="trk-h">'+LU('hourglass')+'Round<span class="sm">advance one each full round (length backstop '+MAX_ROUND+')</span></div>'
       +'<div class="rtrack">'+rnd+'</div>'
-      +'<div class="trk-h">'+LU('star')+'Score<span class="sm">bank points as you play — start → 50</span></div>'
-      +'<div class="strack">'+sc+'</div>'
     +'</div>'
-  +'</div>';}
+  +'</div>';
+  return '<div class="supply-outer">'+scoreRingHtml(SUPPLY_NW,SUPPLY_NH,SCORE_RING_T)+inner+'</div>';}
 
 //==================================================================
 // PAGINATION — deterministic sheets of absolutely positioned items
@@ -1429,8 +1472,8 @@ function wharfBoardSheet(pages){
 // the SUPPLY & TRACKS board → its OWN trimmed sheet (work-in-progress; kept off the main board sheet for now), centred.
 function supplyBoardSheet(pages){
   const G=SUPPLY_GEO;const pg=newPage(pages,'boards','Supply &amp; Tracks board (work in progress)',G);
-  const w=+(9.3*SCALE).toFixed(4),h=+(13.5*SCALE).toFixed(4),x=+((G.w-w)/2).toFixed(3),y=+((G.h-h)/2).toFixed(3);
-  pg.items.push({x,y,w,h,nat:[9.3,13.5],html:supplyBoard()});
+  const w=+(SUPPLY_NW*SCALE).toFixed(4),h=+(SUPPLY_NH*SCALE).toFixed(4),x=+((G.w-w)/2).toFixed(3),y=+((G.h-h)/2).toFixed(3);
+  pg.items.push({x,y,w,h,nat:[SUPPLY_NW,SUPPLY_NH],html:supplyBoard()});
   pg.rrect={x,y,w,h,r:0.14};
 }
 // double-sided player aid: N IDENTICAL cards on a centred, SYMMETRIC 2×2 grid (full) or 1 centred (proof).
