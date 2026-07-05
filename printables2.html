@@ -537,23 +537,29 @@
   .srow .sic{flex:0 0 auto;margin-top:.005in} .srow .sic svg,.srow .sic .ic{width:.14in;height:.14in}
   .srow b{font-variant:small-caps}
   .mtrack-l{font-size:.082in;font-style:italic;color:var(--ink2);text-align:center}
-  .ctrack{display:flex;height:.42in;border:1.5px solid var(--sea);border-radius:.05in;overflow:hidden}
-  .cc{flex:1;min-width:0;border-right:1px solid rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.08in;color:var(--ink2);background:rgba(255,255,255,.4)}
-  .cc:last-child{border-right:none} .cc .n{font-size:.075in;color:#999}
-  .cc.end{background:var(--sea);color:#fff;font-weight:bold;font-size:.075in;text-align:center;line-height:1}
+  .ctrack{display:flex;height:.55in;border:1.5px solid var(--sea);border-radius:.05in;overflow:hidden}
+  .cc{flex:1;min-width:0;border-right:1px solid rgba(0,0,0,.15);display:flex;flex-direction:column;gap:.015in;align-items:center;justify-content:center;font-size:.08in;color:var(--ink2);background:rgba(255,255,255,.4)}
+  .cc:last-child{border-right:none} .cc .n{font-size:.1in;color:#999}
+  .cc svg,.cc .ic{width:.14in;height:.14in}
+  .cc b{font-size:.085in;line-height:1}
+  .cc.end{background:var(--sea);color:#fff;font-weight:bold;text-align:center;line-height:1}
+  .cc.rend{background:rgba(122,82,54,.22);color:#7a5236;font-weight:bold;text-align:center;line-height:1}
   .rtrack{display:flex;height:.3in;border:1.5px solid var(--gold);border-radius:.05in;overflow:hidden}
   .rc{flex:1;min-width:0;border-right:1px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:.078in;color:var(--ink2);background:rgba(255,255,255,.4)}
   .rc:last-child{border-right:none} .rc.band{background:rgba(184,134,11,.16)}
   .rc.cap{background:var(--gold);color:#fff;font-weight:bold;font-size:.07in;text-align:center;line-height:1}
   .rc.z{background:rgba(124,33,40,.12);font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.07in}
-  /* printables2: the SCORE RING — one lap of cells wrapping the Supply board's outer edge (start → SCORE_MAX) */
-  .supply-outer{position:relative;width:100%;height:100%}
+  /* printables2: the SCORE RING — 50 disc-sized cells (0–49 + lap) wrapping the Supply board's outer edge */
+  .supply-outer{position:relative;width:100%;height:100%;background:var(--parch);border-radius:.14in;overflow:hidden;
+    box-shadow:inset 0 0 0 2px var(--gold)}
   .score-ring{position:absolute;inset:0}
-  .ringcell{position:absolute;border:1px solid rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;
-    font-size:.078in;color:var(--ink2);background:rgba(255,255,255,.55);overflow:hidden}
-  .ringcell.start{background:var(--red);color:#fff;font-weight:bold}
-  .ringcell.start svg,.ringcell.start .ic{width:.14in;height:.14in}
-  .ringcell.ten{background:rgba(184,134,11,.28);font-weight:bold;color:var(--ink)}
+  .ringcell{position:absolute;border:1px solid rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;
+    font-size:.13in;font-weight:bold;color:var(--ink2);background:rgba(255,255,255,.55);overflow:hidden}
+  .ringcell.corner{background:rgba(184,134,11,.14)}
+  .ringcell.start{background:var(--red);color:#fff;flex-direction:column;gap:.015in;text-align:center}
+  .ringcell.start svg,.ringcell.start .ic{width:.17in;height:.17in}
+  .ringcell.start .lap{font-size:.056in;font-weight:normal;font-variant:small-caps;line-height:1.05;opacity:.9}
+  .ringcell.ten{background:rgba(184,134,11,.3);color:var(--ink)}
   .trk-h{font-variant:small-caps;font-weight:bold;font-size:.12in;color:var(--sea);display:flex;align-items:center;gap:.05in;margin:.07in 0 .03in}
   .trk-h svg,.trk-h .ic{width:.14in;height:.14in}
   .trk-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;color:var(--ink2);margin-left:.06in}
@@ -561,9 +567,8 @@
   /* +.3in outline padding: the grid sits inset, the cut plus runs .3in outside the slots */
   .mboard.cross{background:#e9dcc0 url('art/wharf-board.png') center/cover;border:none;border-radius:0;padding:.3in;display:block;
     clip-path:url(#crossclip)}
-  .mboard.supply{display:flex;flex-direction:column}
-  .mboard.supply .disp{flex:0 0 auto;margin-top:0}
-  .mboard.supply .tracks{flex:0 0 auto}
+  .mboard.supply{display:flex;flex-direction:column;gap:.08in;padding:.18in .2in;border:none;background:transparent;border-radius:0}
+  .mboard.supply .tracks{flex:0 0 auto;margin-top:auto}
   /* a printed label on the large sheet (above each cut board) */
   .sheetlbl{font-variant:small-caps;color:var(--sea);font-weight:bold;font-size:.28in;display:flex;align-items:center;gap:.1in;height:100%}
   .sheetlbl svg,.sheetlbl .ic{width:.26in;height:.26in}
@@ -575,21 +580,35 @@
     padding:.035in .12in;font-variant:small-caps;font-weight:bold;font-size:.125in;letter-spacing:.3px;margin-bottom:.07in;text-shadow:0 1px 1px rgba(0,0,0,.25)}
   .disp-h svg,.disp-h .ic{width:.15in;height:.15in}
   .disp-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;opacity:.85;margin-left:.06in}
+  .disp-h .sm svg,.disp-h .sm .ic{width:.1in;height:.1in;vertical-align:-.015in}
   .disp-h.b{background:var(--green)}
   .disp-h.m{background:#9c7414}
   .disp-h.i{background:var(--violet)}
-  .mkt-row{display:flex;gap:.16in;align-items:flex-start;flex-wrap:wrap}
-  .mkt-col{display:flex;flex-direction:column;gap:.05in}
-  .mkt-lbl{display:inline-flex;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--ink2)}
-  .mkt-lbl svg,.mkt-lbl .ic{width:.13in;height:.13in}
+  /* market SHELVES — one family per row at its native footprint; deck right-aligned = the stockroom column */
+  .shelf{display:flex;gap:.12in;align-items:flex-start}
+  .shelf-lbl{display:flex;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.105in;color:var(--ink2);margin-top:.02in}
+  .shelf-lbl svg,.shelf-lbl .ic{width:.13in;height:.13in}
+  .restock{margin-left:auto;align-self:center;display:flex;align-items:center;gap:.03in;
+    font-variant:small-caps;font-size:.08in;color:var(--ink2);opacity:.75}
+  .restock svg,.restock .ic{width:.14in;height:.14in}
   .disp-bd{display:flex;gap:.1in;align-items:center}
-  .bgrid{display:grid;grid-template-columns:repeat(2,2in);gap:.1in}
-  .dslot{width:2in;height:2in;border:1.7px dashed var(--sea);border-radius:.07in;background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;color:var(--sea)}
+  .dslot{width:2in;height:2in;border:1.7px dashed var(--sea);border-radius:.07in;background:rgba(255,255,255,.5);
+    display:flex;flex-direction:column;gap:.04in;align-items:center;justify-content:center;color:var(--sea);flex:0 0 auto}
   .dslot svg,.dslot .ic{width:.6in;height:.6in;opacity:.32}
   .dslot.b{border-color:var(--green);color:var(--green)}
   .dslot.i{border-color:var(--violet);color:var(--violet)}
-  .bgrid.sm{grid-template-columns:repeat(2,2.5in)}   /* ship market holds 2.5″ ships */
   .dslot.s,.ddeck.s{width:2.5in;height:2.5in}
+  .dslot.r{width:1.85in;height:2.55in;border-color:#8a6408;color:#8a6408}   /* recipe/contract cards, 1.85×2.55 */
+  .dslot.r svg,.dslot.r .ic{width:.5in;height:.5in}
+  .dslot.r .rn{font-variant:small-caps;font-weight:bold;font-size:.1in;opacity:.7}
+  .dslot.r.ct{border-color:var(--sea);color:var(--sea)}
+  /* the STORES strip — printed bins for the loose bits (cubes · demand dice · quality markers) */
+  .stores{display:flex;gap:.12in}
+  .bin{flex:1;height:.72in;border:1.6px solid var(--line);border-radius:.09in;background:rgba(255,255,255,.45);
+    display:flex;align-items:center;justify-content:center;gap:.06in;font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--ink2)}
+  .bin svg,.bin .ic{width:.2in;height:.2in}
+  .bin.bin-grain{border-color:#9c7414;color:#9c7414}.bin.bin-hops{border-color:#5d7d34;color:#5d7d34}
+  .bin.bin-dice{border-color:var(--sea);color:var(--sea)}.bin.bin-qual{border-color:var(--red);color:var(--red)}
   .ddeck{width:2in;height:2in;border-radius:.07in;background:var(--sea);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;
     text-shadow:0 1px 1px rgba(0,0,0,.3);box-shadow:.05in -.05in 0 rgba(0,0,0,.18),inset 0 0 0 1.5px rgba(255,255,255,.22)}
   .ddeck.b{background:var(--green)}
@@ -868,10 +887,18 @@ const CARD_GEO={w:10.4,h:7.9,y0:0.95,yMax:7.9};
 // LARGE-FORMAT (22″-wide) plotter sheets — each TRIMMED to its own content height so we don't run blank media.
 // (render() emits a named @page + .lgNN rule per distinct height — see lgClass / the dynpage stylesheet.)
 const WHARF_GEO ={w:22,h:10.5, y0:0.45,yMax:10.22};  // the Wharf cross (9.4″) + tokens tucked on the right
-const SUPPLY_GEO={w:22,h:11.5, y0:0.45,yMax:11.22};  // the Supply & Tracks board (10.8″), centred — work in progress
-const SUPPLY_NW=9.3, SUPPLY_NH=13.5;  // the Supply & Tracks board's native design size (in) — shared by supplyBoard() and its sheet placement
-const SCORE_MAX=99;   // the wrap-around score ring covers 0–99 in one lap (winner totals run to ~90 in strong play — COMPONENTS.md §17 #7)
-const SCORE_RING_T=0.4;   // ring-cell thickness (in) — the perimeter track's "width" band around the board edge
+const SUPPLY_GEO={w:22,h:13.1, y0:0.45,yMax:12.82};  // the Market & Stores board sheet (board prints ~10.2×12.6)
+// The Supply & Tracks board — DESIGNED to its components (all native in, print ×0.8):
+//   · every display slot is CUT to its family's native tile size (ships 2.5 · buildings/improvements 2 ·
+//     recipe/contract cards 1.85×2.55), so the printed card drops exactly into its printed space;
+//   · the widest shelf (buildings: 4 slots + deck = 10.66) sets the interior width; decks align in one
+//     "stockroom" column on the right edge, displays face the table on the left — refill is a one-hand slide;
+//   · the SCORE track wraps the outer edge as a 50-cell ring (0–49 + a 50/100 lap, Carcassonne-style):
+//     50 cells — not 100 — because the mover is the 0.5″ ownership disc, and a disc needs a ≥0.6″ printed
+//     cell to sit in legibly (COMPONENTS.md §17 #7 offers exactly this "50/100 lap marker" resolution).
+const SUPPLY_NW=12.75, SUPPLY_NH=15.7;   // board native size — ring + interior computed below
+const SCORE_CELLS=50;     // one lap = 0–49; a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
+const SCORE_RING_T=0.8;   // ring thickness (native) → prints 0.64″ — a comfortable seat for the 0.5″ disc
 const TILE_GEO  ={w:22,h:5.75, y0:0.45,yMax:5.47};   // building FRONTS sheet + its mirrored BACKS sheet (27 tiles, 3 rows)
 const IMPF_GEO  ={w:22,h:8.5,  y0:0.45,yMax:8.22};   // improvements + owner frames (2.5″ rings, 3 rows) — single-sided, their own sheet
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
@@ -1338,57 +1365,75 @@ function wharfCross(){
   // padding grows by the bleed so the inner grid stays centered/put while the element (and its clipped art) extends outward
   return clip+'<div class="mboard cross" style="padding:'+(0.3+CROSS_BLEED).toFixed(3)+'in">'+wharf+'</div>';
 }
-// printables2: the SCORE RING — a single lap of cells wrapping the outer edge of the Supply board (0…SCORE_MAX),
-// proportioned to each edge's length so the cells stay roughly square-ish all the way round. Walks clockwise
-// starting at the top-left corner: top (L→R) → right (T→B) → bottom (R→L) → left (B→T), back to 0.
+// printables2: the SCORE RING — one clockwise lap of SCORE_CELLS cells wrapping the Supply board's outer
+// edge, in the classic corner-anchored pattern: 4 square CORNER cells (T×T) + straight runs between them,
+// each edge's run divided evenly so its cells stay near-square. Numbering starts at the top-left corner
+// (0, the start flag) and runs clockwise; passing 49 flips the disc's lap marker (50/100 — the second lap).
 function scoreRingCells(NW,NH,T){
-  const uw=NW-2*T, uh=NH-2*T;                 // usable edge length inside the corners
-  const per=2*(uw+uh), cellLen=per/(SCORE_MAX+1);
-  const nTop=Math.max(1,Math.round(uw/cellLen)), nSide=Math.max(1,Math.round(uh/cellLen));
-  const nBottom=nTop, nLeft=(SCORE_MAX+1)-(nTop+nSide+nBottom);   // left edge absorbs the rounding remainder
-  const wTop=uw/nTop, wBot=uw/nBottom, hSide=uh/nSide, hLeft=uh/nLeft;
+  const uw=NW-2*T, uh=NH-2*T;                                     // straight-run lengths between corner squares
+  const nEdge=SCORE_CELLS-4;                                      // cells left after the 4 corners
+  const nTop=Math.max(1,Math.round(nEdge*uw/(2*(uw+uh)))), nSide=(nEdge-2*nTop)/2;
+  const wT=uw/nTop, hS=uh/nSide;
   const cells=[];let i=0;
-  for(let c=0;c<nTop;c++)cells.push({i:i++,x:T+c*wTop,y:0,w:wTop,h:T});                              // top: L→R
-  for(let c=0;c<nSide;c++)cells.push({i:i++,x:NW-T,y:T+c*hSide,w:T,h:hSide});                        // right: T→B
-  for(let c=0;c<nBottom;c++)cells.push({i:i++,x:NW-T-(c+1)*wBot,y:NH-T,w:wBot,h:T});                 // bottom: R→L
-  for(let c=0;c<nLeft;c++)cells.push({i:i++,x:0,y:NH-T-(c+1)*hLeft,w:T,h:hLeft});                    // left: B→T
+  const C=(x,y)=>cells.push({i:i++,x,y,w:T,h:T,corner:true});
+  C(0,0);                                                                                   // 0 · top-left (START)
+  for(let c=0;c<nTop;c++)cells.push({i:i++,x:T+c*wT,y:0,w:wT,h:T});                         // top: L→R
+  C(NW-T,0);                                                                                // top-right corner
+  for(let c=0;c<nSide;c++)cells.push({i:i++,x:NW-T,y:T+c*hS,w:T,h:hS});                     // right: T→B
+  C(NW-T,NH-T);                                                                             // bottom-right corner
+  for(let c=0;c<nTop;c++)cells.push({i:i++,x:NW-T-wT*(c+1),y:NH-T,w:wT,h:T});               // bottom: R→L
+  C(0,NH-T);                                                                                // bottom-left corner
+  for(let c=0;c<nSide;c++)cells.push({i:i++,x:0,y:NH-T-hS*(c+1),w:T,h:hS});                 // left: B→T
   return cells;
 }
 function scoreRingHtml(NW,NH,T){
   const cells=scoreRingCells(NW,NH,T);
-  const box=c=>{const cls=c.i===0?' start':(c.i%10===0?' ten':'');
-    return '<div class="ringcell'+cls+'" style="left:'+c.x.toFixed(3)+'in;top:'+c.y.toFixed(3)+'in;width:'+c.w.toFixed(3)+'in;height:'+c.h.toFixed(3)+'in">'+(c.i===0?LU('flag'):c.i)+'</div>';};
+  const box=c=>{const cls=(c.i===0?' start':(c.i%10===0?' ten':''))+(c.corner?' corner':'');
+    return '<div class="ringcell'+cls+'" style="left:'+c.x.toFixed(3)+'in;top:'+c.y.toFixed(3)+'in;width:'+c.w.toFixed(3)+'in;height:'+c.h.toFixed(3)+'in">'
+      +(c.i===0?LU('flag')+'<span class="lap">+50 on the 2nd lap</span>':c.i)+'</div>';};
   return '<div class="score-ring">'+cells.map(box).join('')+'</div>';
 }
-// printables2: the SUPPLY board — the shared MARKET displays (Buildings + Ships, bought when you visit the
-// Market) · the CELLAR's Improvement display (acquired at the Cellar) · the Sailed-Ships &amp; Round tracks ·
-// and a SCORE track that wraps the board's own outer edge (start → SCORE_MAX), so score never needs its own
-// interior real estate. Sits beside the Wharf on the same large sheet.
+// printables2: the SUPPLY board — the town's MARKET HALL, designed to its components.
+//   · Three MARKET shelves (what a Market visit buys): Buildings (4 + deck) · Ships (market of 3 + deck) ·
+//     Recipes (the dealt export stacks) + the Charter-contract pile. One CELLAR shelf below (Improvements,
+//     4 + deck). Every slot is the family's native footprint, so the printed card drops exactly in.
+//   · All four DECKS align in one right-edge "stockroom" column — displays face the table, refill is a
+//     one-hand slide from the deck beside the gap.
+//   · The STORES strip gives the loose bits printed homes: grain · hops · demand dice · quality markers.
+//   · TRACKS at the foot: the Sailed-Ships end clock printed at 15 cells with DUAL end marks per player
+//     count — base 6/10/13 (flag) and The Trade Roads' +2 → 8/12/15 (truck) — and the Round track (1–25).
+//   · SCORE wraps the outer edge as the 50-cell ring (see scoreRingCells) — banked constantly, it belongs
+//     on the rim where every seat can reach it without leaning over the displays.
 function supplyBoard(){
-  const dslot=fam=>'<div class="dslot '+fam+'">'+LU(fam==='b'?'building-2':fam==='i'?'wrench':'sailboat')+'</div>';
+  const dslot=(fam,ic)=>'<div class="dslot '+fam+'">'+LU(ic)+'</div>';
   const ddeck=(fam,nm)=>'<div class="ddeck '+fam+'">'+LU('layers')+'<span class="dn">'+nm+'</span></div>';
-  const disp='<div class="disp">'
-    +'<div class="disp-h m">'+LU('store')+'Market<span class="sm">— buy any of these when you visit</span></div>'
-    +'<div class="mkt-row">'
-      +'<div class="mkt-col"><div class="mkt-lbl">'+LU('building-2')+'Buildings</div>'
-        +'<div class="disp-bd"><div class="bgrid">'+dslot('b')+dslot('b')+dslot('b')+dslot('b')+'</div>'+ddeck('b','Building deck')+'</div></div>'
-      +'<div class="mkt-col"><div class="mkt-lbl">'+LU('sailboat')+'Ships</div>'
-        +'<div class="disp-bd"><div class="bgrid sm">'+dslot('s')+dslot('s')+dslot('s')+ddeck('s','Ship deck')+'</div></div></div>'
-    +'</div>'
-    +'<div class="disp-h i">'+LU('wrench')+'Improvements<span class="sm">— acquired at the Cellar</span></div>'
-    +'<div class="disp-bd"><div class="bgrid">'+dslot('i')+dslot('i')+dslot('i')+dslot('i')+'</div>'+ddeck('i','Improvement deck')+'</div>'
-  +'</div>';
-  let clk='';for(let i=1;i<=13;i++){let end='';for(const p in SAILED)if(SAILED[p]===i)end=p+'p';
-    clk+='<div class="cc'+(end?' end':'')+'">'+(end?end+'<br>END':'<span class="n">'+i+'</span>')+'</div>';}
+  const shelf=(lbl,ic,slots,deck)=>'<div class="shelf-lbl">'+LU(ic)+lbl+'</div>'
+    +'<div class="shelf">'+slots+'<span class="restock">'+LU('arrow-left')+'refill</span>'+deck+'</div>';
+  const market='<div class="disp-h m">'+LU('store')+'Market<span class="sm">— a Market visit buys any ONE of these (or take 2 goods)</span></div>'
+    +shelf('Buildings — the Wharf display of 4','building-2',dslot('b','building-2').repeat(4),ddeck('b','Building deck'))
+    +shelf('Ships — the market of 3 · commission 2G','sailboat',dslot('s','sailboat').repeat(3),ddeck('s','Ship deck'))
+    +'<div class="shelf-lbl">'+LU('scroll-text')+'Recipes — the dealt export stacks &amp; the Charter contracts (1G)</div>'
+    +'<div class="shelf">'+dslot('r','scroll-text').repeat(4)+'<span class="restock"></span><div class="dslot r ct">'+LU('ticket')+'<span class="rn">Contracts</span></div></div>';
+  const cellar='<div class="disp-h i">'+LU('wrench')+'Cellar<span class="sm">— Improvements: buy here, Hire (Q3+), or London’s benefit</span></div>'
+    +shelf('Improvements — the Cellar display of 4','wrench',dslot('i','wrench').repeat(4),ddeck('i','Improvement deck'));
+  const bin=(ic,nm,cls)=>'<div class="bin '+(cls||'')+'">'+LU(ic)+'<span>'+nm+'</span></div>';   // NB: modifier classes must not reuse the global single-letter tile classes (.q/.g/.h)
+  const stores='<div class="stores">'+bin('wheat','Grain','bin-grain')+bin('sprout','Hops','bin-hops')
+    +bin('dice-5','Demand dice','bin-dice')+bin('badge-plus','Quality +1','bin-qual')+'</div>';
+  // Sailed-Ships: 15 cells, both end-marks printed — base (flag) and The Trade Roads +2 (truck)
+  const ROADS_SAILED={2:8,3:12,4:15};
+  let clk='';for(let i=1;i<=15;i++){
+    let base='',roads='';for(const p in SAILED){if(SAILED[p]===i)base=p+'p';if(ROADS_SAILED[p]===i)roads=p+'p';}
+    clk+='<div class="cc'+(base?' end':'')+(roads?' rend':'')+'">'
+      +(base?LU('flag')+'<b>'+base+'</b>':(roads?LU('truck')+'<b>'+roads+'</b>':'<span class="n">'+i+'</span>'))+'</div>';}
   let rnd='<div class="rc z">start</div>';for(let i=1;i<=MAX_ROUND;i++)rnd+='<div class="rc'+(i===MAX_ROUND?' cap':'')+'">'+i+'</div>';
   const inner='<div class="mboard supply" style="position:absolute;left:'+SCORE_RING_T+'in;top:'+SCORE_RING_T+'in;'
       +'width:'+(SUPPLY_NW-2*SCORE_RING_T).toFixed(3)+'in;height:'+(SUPPLY_NH-2*SCORE_RING_T).toFixed(3)+'in">'
-    +'<div class="mb-head"><h2>'+LU('store')+'Supply &amp; Tracks</h2><span class="sub">the shared market &amp; Cellar displays, the game tracks — score wraps the board edge</span></div>'
-    +disp
+    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays &amp; the game tracks · score laps the rim (0–49, then +50)</span></div>'
+    +market+cellar+stores
     +'<div class="tracks">'
-      +'<div class="trk-h">'+LU('sailboat')+'Sailed-Ships<span class="sm">the end clock — every voyage (a full sail · Charter · Enshrine) fills one; at your player-count END, finish the round &amp; score</span></div>'
+      +'<div class="trk-h">'+LU('sailboat')+'Sailed-Ships<span class="sm">every voyage (full sail · Charter · Enshrine) fills one — at your count’s '+LU('flag')+' finish the round &amp; score ('+LU('truck')+' = with The Trade Roads)</span></div>'
       +'<div class="ctrack">'+clk+'</div>'
-      +'<div class="trk-h">'+LU('hourglass')+'Round<span class="sm">advance one each full round (length backstop '+MAX_ROUND+')</span></div>'
+      +'<div class="trk-h">'+LU('hourglass')+'Round<span class="sm">advance one each full round · backstop '+MAX_ROUND+'</span></div>'
       +'<div class="rtrack">'+rnd+'</div>'
     +'</div>'
   +'</div>';
@@ -1469,9 +1514,9 @@ function wharfBoardSheet(pages){
   pg.cutXform='matrix('+SCALE+',0,0,'+SCALE+','+(+(Ox*(1-SCALE)).toFixed(4))+','+(+(Oy*(1-SCALE)).toFixed(4))+')';
   return pg;
 }
-// the SUPPLY & TRACKS board → its OWN trimmed sheet (work-in-progress; kept off the main board sheet for now), centred.
+// the MARKET & STORES board (supply displays · stores bins · tracks · the score ring) → its own trimmed sheet, centred.
 function supplyBoardSheet(pages){
-  const G=SUPPLY_GEO;const pg=newPage(pages,'boards','Supply &amp; Tracks board (work in progress)',G);
+  const G=SUPPLY_GEO;const pg=newPage(pages,'boards','Market &amp; Stores board (supply · tracks · score ring)',G);
   const w=+(SUPPLY_NW*SCALE).toFixed(4),h=+(SUPPLY_NH*SCALE).toFixed(4),x=+((G.w-w)/2).toFixed(3),y=+((G.h-h)/2).toFixed(3);
   pg.items.push({x,y,w,h,nat:[SUPPLY_NW,SUPPLY_NH],html:supplyBoard()});
   pg.rrect={x,y,w,h,r:0.14};
@@ -1608,6 +1653,7 @@ function checklist(pages,famPages){
   h+=T('Boards')
     +R('Main board — the Wharf','The 2×2 of stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots, plus the Sailed-Ships end-clock track.','1')
     +R('Destinations board','The four kontore (Bruges · London · Bergen · Novgorod) + the Hall — each with its quality gate, base value, on-delivery benefit, and (kontore) a majority track.','1')
+    +R('Market &amp; Stores board','The shared displays at component size (Buildings 4+deck · Ships 3+deck · recipe stacks + contracts · Improvements 4+deck), the stores bins (grain · hops · demand dice · quality markers), the Sailed-Ships clock (15 cells, dual END marks — base and The Trade Roads), the Round track, and the 50-cell score ring wrapping the rim (0–49, +50 on the second lap).','1')
     +R('Player brewery boards','One per player: vessel lanes (start 2, cap 3), the maturation track, a recipe rack, improvement slots, the Flight strip, and goods storage (cap 8).',PLAYERS.length)
     +'</table>';
   h+=T('Tiles (mount on chipboard, laser-cut)')
