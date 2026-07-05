@@ -2868,10 +2868,10 @@ function renderAid(){
     ['package','<b>Goods</b> / storage'],['building-2','<b>Privilege / Building</b> (owned slot tiles)'],['wrench','<b>Specialist</b> (private)'],
     ['layers','<b>The Flight</b> (range of tiers)'],['anchor','<b>Slot</b> (perimeter ring)'],['sailboat','<b>Ship</b> (neutral, destination-bound)'],['hourglass','<b>Age</b> a cask'],
     ['map-pin','<b>Presence</b> / Reach'],['store','<b>Market</b> station'],['flask-conical','<b>Brew</b> / vessel · the Floor'],['scroll-text','<b>Recipe</b>'],
-    ['ticket','<b>Charter</b> (single-cask voyage)'],['package-plus','<b>Load</b> a cask'],['arrow-left-right','<b>Convert</b> goods G↔H'],['search','<b>Survey</b> (a Building from the display, placed at once)'],
+    ['ticket','<b>Charter</b> (single-cask voyage)'],['package-plus','<b>Load</b> a cask'],['arrow-left-right','<b>Convert</b> goods G↔H'],['search','<b>Survey</b> (a Privilege/Building from the Wharf display, placed at once)'],
     ['coins','<b>Source</b> (take goods)'],['sparkles','<b>Wild</b> action (Q4+)']];
   const dRow=d=>{const D=DEST[d];const val=d==='hall'?'3·5·7·9 by Q (fixed)':(D.sval?'2·4·6 by Q (scales)':('+'+D.value+' base + buildings'));const maj=D.maj.length?D.maj.join(' / '):'—';
-    const ben=d==='hall'?'prestige':(D.benefit==='building'?'a free Building (display → place now)':D.benefit==='reach'?'a free Reach (+1 presence)':D.benefit==='age'?'refine a cask (+1 age)':'2 goods');
+    const ben=d==='hall'?'prestige':(D.benefit==='building'?'a free Building (placed now) OR a Specialist':D.benefit==='reach'?'a free Reach (+1 presence)':D.benefit==='age'?'refine a cask (+1 age)':'2 goods');
     return '<tr><td>'+(D.kontor?ic('landmark'):ic('crown'))+' '+D.name+'</td><td>Q'+D.gate+'+</td><td>'+val+'</td><td>'+maj+'</td><td>'+ben+'</td></tr>';};
   const dests=['bruges','london','bergen','novgorod','hall'].map(dRow).join('');
   const acts=CASK_ACT_POOL.map(k=>'<span class="atag">'+ic(CASK_ACT_ICON[k])+' <b style="text-transform:capitalize">'+k+'</b> — '+CASK_ACT[k]+'</span>').join('');
@@ -2891,7 +2891,7 @@ function renderAid(){
       +'<div class="atags" style="margin-top:5px">'+vb+'</div><div class="atags" style="margin-top:4px">'+tb+'</div></div>'
     +'<div class="asec"><b>Destinations</b> <span class="note">gate · starting value · majority 1st/2nd/3rd · benefit · (Hall = local Enshrine; ships sail to kontore only)</span>'
       +'<table class="atable"><tr><th>Destination</th><th>Gate</th><th>Value</th><th>Majority</th><th>Benefit</th></tr>'+dests+'</table>'
-      +'<div class="note"><b>Delivery = the destination’s starting value + the demand die in the berth.</b> Benefits resolve <b>when gained, owner’s choice</b> — whoever’s turn it is (Bruges: 2 goods any mix · London: a Building, placed at once · Bergen: a Reach · Novgorod: refine a maturing cask of your choice). <b>2-player skips 2nd place.</b> A '+ic('map-pin')+' <b>Reach</b> can add presence <b>only at a kontor you’ve already delivered to</b>.</div></div>'
+      +'<div class="note"><b>Delivery = the destination’s starting value + the demand die in the berth.</b> Benefits resolve <b>when gained, owner’s choice</b> — whoever’s turn it is (Bruges: 2 goods any mix · London: a Building placed at once OR a Specialist · Bergen: a Reach · Novgorod: refine a maturing cask of your choice). <b>2-player skips 2nd place.</b> A '+ic('map-pin')+' <b>Reach</b> can add presence <b>only at a kontor you’ve already delivered to</b>.</div></div>'
     +'<div class="asec"><b>Cask slot actions</b> <span class="note">(face-up pile tops; Gruit is always Source)</span><div class="atags">'+acts+'</div></div>'
     +'<div class="asec"><b>Scoring</b><ol class="ascore">'
       +'<li><b>Banked as you play:</b> delivery value (starting value + the die) · the Hall’s fixed ladder (3/5/7/9) · <b>developer</b> +'+DEVELOP_PTS+'★ each time your building is overbuilt.</li>'
@@ -3160,7 +3160,7 @@ function renderDests(){
       ?'<span data-tip="'+attr('Prestige by quality: Q2→3 · Q3→5 · Q4→7 · Q5→9 (fixed). Enshrine at the Harbor — no boat.')+'"><b>3·5·7·9</b><span class="vstar">★</span></span>'
       :D.sval?'<span data-tip="'+attr('Value scales with quality: Q3→2 · Q4→4 · Q5→6 (+ value-Buildings shipped through).')+'"><b>2·4·6</b><span class="vstar">★</span><span style="font-size:.62rem;opacity:.8">by Q</span></span>'
       :'<span data-tip="'+attr(D.value+'★ base/cask + the value-Buildings it shipped through (the variable value).')+'"><b>'+D.value+'</b><span class="vstar">★</span><span style="font-size:.68rem;opacity:.8;margin-left:1px">+'+LU('building-2')+'</span></span>';
-    const ben=D.benefit==='building'?'<span data-tip="'+attr('Benefit: choose a Building from the display, free, and place it now. London only.')+'">+'+LU('building-2')+'</span>'
+    const ben=D.benefit==='building'?'<span data-tip="'+attr('Benefit: choose a Privilege/Building from the display (placed at once) OR take a free Specialist. London only.')+'">+'+LU('building-2')+'</span>'
       :D.benefit==='goods'?'<span data-tip="'+attr('Benefit: take 2 goods (any mix) on each delivery.')+'">+2'+LU('coins')+'</span>'
       :D.benefit==='reach'?'<span data-tip="'+attr('Benefit: free Reach — +1 presence at any kontor (feeds majorities).')+'">+'+LU('map-pin')+'</span>'
       :D.benefit==='age'?'<span data-tip="'+attr('Benefit: refine — advance a maturing cask +1 step toward Ready.')+'">+'+LU('hourglass')+'</span>':'';
@@ -3189,7 +3189,7 @@ function renderShop(){
       +(st.sig?'<span class="note" style="font-size:.7rem;display:block;margin-top:2px"><b>'+LU('sparkles')+'Signature:</b> '+st.sig+'</span>':'');
     const cost=RECIPE_BUY[style];const can=canPay(p,cost);
     h+='<div class="item"><span data-tip="'+attr(st.name+' recipe (Q'+st.q+') — permanent · brew cost '+costStr(st.in))+'">'+nm+'</span><span class="cost">'+costIcons(cost)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyRecipe(\''+style+'\')">buy</button>':'')+'</span></div>';});
-  // EXPANSION CAPSTONE — Jopenbier: always acquirable when the toggle is on (not in the draft, not in the Flight)
+  // EXPANSION CAPSTONE — Jopenbier: always acquirable when the toggle is on (not in the draft; counts for the Flight since v2.2)
   if(S.jopen&&!p.recipes.includes('jopenbier')){const st=STYLES.jopenbier;const jc=RECIPE_BUY.jopenbier;const can=canPay(p,jc);
     h+='<div class="item"><span data-tip="'+attr(st.sig)+'">'+LU('scroll-text')+' <b>'+st.name+'</b> <span class="qpd">'+qPips(st.q)+'<b>Q6</b></span><span class="note" style="font-size:.72rem;display:block;margin-top:2px">brew '+costIcons(st.in)+' · ready '+st.ready+' · '+LU('sparkles')+'self-contained '+JOPEN_BASE+'★+ · cellars +★/turn deployed</span></span><span class="cost">'+costIcons(jc)+' '+(buying?'<button '+(can?'':'disabled')+' onclick="buyRecipe(\'jopenbier\')">buy</button>':'')+'</span></div>';}
   // CHARTER CONTRACTS (v0.16): an always-available Market acquire — the scarce certificate that lets you charter

@@ -147,7 +147,7 @@ Print 4 copies of each export recipe (covers 4 houses each picking up the full l
 
 Private brewery-board tiles (**SPECIALISTS — purple**, the third tile type; v2.6.1 persona names — each tile carries an `art` brief: a **beige field, one centered object**, the specialist’s trade), bought at the **Cellar** for goods — or gained free via **Hire** (the Q3+ cask action) or a **London** delivery (v2.4). The deck holds `n − 1` copies of each type (n = player count → 7 / 14 / 21 tiles). A face-up **display of 4** at the Cellar refills from the deck. A house cannot own two of the same type. The improvements area holds **4 tiles total** (improvements + flipped buildings).
 
-| Improvement | Effect ⚙ | Cost ⚙ |
+| Specialist | Effect ⚙ | Cost ⚙ |
 |---|---|---|
 | **Coppersmith** *(a gleaming copper brew kettle)* | +1 brewing lane (vessels start 2, cap 3) | `3 G` |
 | **Cellarman** *(an oak cask racked on a stillage)* | Age +1 — brews mature one step sooner | `4 G` |

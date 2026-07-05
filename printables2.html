@@ -1096,7 +1096,7 @@ function aidFront(){
         +'<h5>'+LU('anchor')+'The Four Stations</h5>'
         +'<div class="ln">'+LU('store')+' <b>Market</b> — 2 goods, <i>or</i> 1: recipe · Building (display → <b>place at once</b>) · ship '+LU('sailboat')+' ('+G+'2, + free-load a deployed cask) · contract '+LU('ticket')+' ('+G+'1).</div>'
         +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — Brew a recipe into an open vessel; or '+LU('barrel')+' <b>Deploy</b> a Ready cask.</div>'
-        +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — any order: <b>Age</b> (3 pts, once) · <b>Tap</b> casks (the modified action, repeatable) · buy <b>Improvements</b> '+LU('wrench')+'.</div>'
+        +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — any order: <b>Age</b> (3 pts, once) · <b>Tap</b> casks (the modified action, repeatable) · buy <b>Specialists</b> '+LU('wrench')+'.</div>'
         +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — Load any <b>deployed</b> cask onto a ship (<b>sails when full</b>), <b>Enshrine</b> a Q2+ deployed cask, or <b>Charter</b> a deployed cask — <b>deploy first</b>; only the Quaymaster reaches the vessels.</div>'
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
         +'<div class="ln"><b>Sailed-Ships</b> fills (6/10/13 for 2/3/4p) → finish the round → score:</div>'
@@ -1128,7 +1128,7 @@ function aidBack(){
       +'</div></div>'
       +'<div class="acol"><div class="leg">'
         +row('arrow-left-right','Convert','up to 2 goods G↔H')
-        +row('search','Survey','a Building from the display, placed at once')
+        +row('search','Survey','a Privilege/Building from the Wharf display, placed at once')
         +row('wrench','Hire','a Specialist from the display, free (Q3+)')
         +row('sparkles','Wild','any base action (Q4+)')
         +'<h5>'+LU('building-2')+'Buildings &amp; Targets</h5>'
@@ -1423,8 +1423,8 @@ function supplyBoard(){
     +'<div class="shelf-lbl">'+LU('scroll-text')+'Recipes — the dealt export stacks &amp; the Charter contracts (1G)</div>'
     +'<div class="shelf">'+smpRec.map(s=>dslot('r','scroll-text',s)).join('')+'<span class="restock"></span>'
       +'<div class="dslot r ct">'+LU('ticket')+'<span class="rn">Contracts</span>'+(OVERLAY?'<div class="ovl">'+smpCon+'</div>':'')+'</div></div>';
-  const cellar='<div class="disp-h i">'+LU('wrench')+'Cellar<span class="sm">— Improvements: buy here, Hire (Q3+), or London’s benefit</span></div>'
-    +shelf('Improvements — the Cellar display of 4','wrench',smpImp.map(s=>dslot('i','wrench',s)).join(''),ddeck('i','Improvement deck'));
+  const cellar='<div class="disp-h i">'+LU('wrench')+'Cellar<span class="sm">— Specialists: buy here, Hire (Q3+), or London’s benefit</span></div>'
+    +shelf('Specialists — the Cellar display of 4','wrench',smpImp.map(s=>dslot('i','wrench',s)).join(''),ddeck('i','Specialist deck'));
   // Sailed-Ships: 15 cells, both end-marks printed — base (flag) and The Trade Roads +2 (truck)
   const ROADS_SAILED={2:8,3:12,4:15};
   let clk='';for(let i=1;i<=15;i++){
@@ -1605,7 +1605,7 @@ function buildPages(){
   tagFamilies(bldFrontPages,bldMeta);
   mirrorBackPages(bldFrontPages,bldMeta,TILE_GEO,'Building tile BACKS (mirror — flip LEFT↔RIGHT): each building’s Wild + '+DEVELOP_PTS+'★','bits');
   // IMPROVEMENTS + owner FRAMES are SINGLE-SIDED → their own trimmed sheet (no back).
-  const TLBL_IMPF='Improvements + owner frames (22″ plotter · single-sided · cut apart)';
+  const TLBL_IMPF='Specialists + owner frames (22″ plotter · single-sided · cut apart)';
   const imps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)imps.push(improveTile(d));});
   packRun(pages,'bits',TLBL_IMPF,'imp',imps,'Improvements',famPages,IMPF_GEO);
   const frames=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(6);i++)frames.push(frameTile(p.c,p.nm));});
@@ -1663,7 +1663,7 @@ function checklist(pages,famPages){
     +R('Cask tiles — the beer supply','A shared pool, brewed not bought (min 6 per type): Gruit ×16 · Hopped ×20 · Broyhan ×6 · Keut ×6 · Mumme ×8 · Bock ×6. Each shows a quality (Q1–Q5) and one slot-action. Deal 3 of the 4 export beers each game.','62')
     +R('Ship tiles','Neutral hulls, a kontor printed on each — Cog (holds 2) ×11 · Hulk (holds 3) ×9; five to each of the four kontore. Drawn off a shuffled deck into a face-up market of 3.','20')
     +R('Building tiles','The owned slot modifiers, '+baseBld.length+' designs (each tile double-sided: art front / displaced Wild back, +'+DEVELOP_PTS+'★). <b>Value —</b> '+designs(baseVal)+'. <b>Transform —</b> '+designs(baseTr)+'.',sumN(baseBld))
-    +R('Improvement tiles','The private upgrades, 7 designs: '+IMPROVE.map(d=>d.nm).join(' · ')+'. A shuffled display at the Cellar — 3 copies of each type (n−1 per type), enough for 4 players.',impTotal)
+    +R('Specialist tiles','The private brewery-board tiles, 7 designs: '+IMPROVE.map(d=>d.nm).join(' · ')+'. A shuffled display at the Cellar — 3 copies of each type (n−1 per type), enough for 4 players.',impTotal)
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')
     +R('Recipe cards (export)','One set of four per player: Broyhan · Keut · Mumme · Bock. (Gruit &amp; Hopped are printed on the brewery board.)',4*PLAYERS.length)
