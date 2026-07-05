@@ -613,32 +613,35 @@
   .sup-dests{flex:1;display:flex;flex-direction:column;gap:.09in;min-width:0}
   .disp-h.k{background:var(--sea)}
   .disp-h.hall{background:#5b3a8e}
-  /* a destination mini-panel: gate · value · benefit · majority · a presence-disc zone */
-  .kp{flex:1;border:2px solid var(--kc);border-radius:.09in;background:var(--kt,#fff);display:flex;flex-direction:column;overflow:hidden}
-  .kp.hall{flex:0 0 auto}   /* the Hall sizes to its ladder; the four kontor panels share the rest evenly */
-  .kp-t{background:var(--kc);color:#fff;display:flex;align-items:center;gap:.05in;padding:.03in .08in;
-    font-variant:small-caps;font-weight:bold;font-size:.14in;text-shadow:0 1px 1px rgba(0,0,0,.3)}
-  .kp-t svg,.kp-t .ic{width:.15in;height:.15in}
-  .kp-q{margin-left:auto;display:inline-flex;align-items:center;gap:.02in;background:rgba(255,255,255,.25);border-radius:.04in;
-    padding:.008in .05in;font-size:.11in}
-  .kp-q svg,.kp-q .ic{width:.12in;height:.12in}
-  .kp-rows{flex:1;display:flex;gap:.06in;padding:.05in .07in;min-height:0}
-  .kp-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.02in;text-align:center;min-width:0}
-  .kp-ch{display:inline-flex;align-items:center;gap:.02in;font-variant:small-caps;font-weight:bold;font-size:.075in;color:var(--ink2);white-space:nowrap}
-  .kp-ch svg,.kp-ch .ic{width:.09in;height:.09in}
-  .kp-big{display:inline-flex;align-items:center;gap:.02in;font-weight:900;font-size:.19in;color:var(--kc);line-height:1}
-  .kp-big svg,.kp-big .ic{width:.16in;height:.16in}
-  .kp-scale{font-weight:bold;font-size:.1in;color:var(--kc)} .kp-scale b{font-size:.15in}
-  .kp-note{font-size:.07in;font-style:italic;color:var(--ink2);line-height:1.12}
-  .kp-note.ctr{text-align:center;padding:.02in .1in .05in}
-  /* presence zone — the ownership discs pile here (the majority count); circles = the disc's printed 0.5″ */
-  .kp-pz{display:flex;align-items:center;gap:.06in;border-top:1.4px dashed var(--kc);padding:.045in .08in;background:rgba(255,255,255,.4)}
-  .kp-c{width:.625in;height:.625in;flex:0 0 auto;border-radius:50%;border:1.4px dashed var(--kc);opacity:.55}   /* 0.625 native = the disc's printed 0.5″, exactly */
-  .kp-pl{font-size:.075in;font-style:italic;color:var(--ink2);line-height:1.2;margin-left:.03in}
-  .kp.hall .kp-lad{display:flex;justify-content:center;gap:.14in;padding:.05in .08in .02in}
-  .kp.hall .kp-lad .lr{display:inline-flex;align-items:center;gap:.03in;font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--ink2)}
-  .kp.hall .kp-lad .lr b{display:inline-flex;align-items:center;gap:.015in;font-size:.19in;color:var(--kc)}
-  .kp.hall .kp-lad .lr b svg,.kp.hall .kp-lad .lr b .ic{width:.16in;height:.16in}
+  /* a destination panel: gate · value · benefit · majority at POSTER scale (read standing, across a table)
+     over an open presence ZONE (discs pile freely; no per-disc slots) */
+  .kp{flex:1;border:3px solid var(--kc);border-radius:.1in;background:var(--kt,#fff);display:flex;flex-direction:column;overflow:hidden}
+  .kp.hall{flex:1.5}   /* the Hall is a CORE path — it gets MORE room than a kontor, not less */
+  .kp-t{background:var(--kc);color:#fff;display:flex;align-items:center;gap:.08in;padding:.06in .12in;
+    font-variant:small-caps;font-weight:bold;font-size:.27in;text-shadow:0 1px 1.5px rgba(0,0,0,.35)}
+  .kp-t svg,.kp-t .ic{width:.26in;height:.26in}
+  .kp-q{margin-left:auto;display:inline-flex;align-items:center;gap:.03in;background:rgba(255,255,255,.3);border-radius:.06in;
+    padding:.02in .09in;font-size:.26in;font-weight:900}
+  .kp-q svg,.kp-q .ic{width:.24in;height:.24in}
+  .kp-rows{flex:0 0 auto;display:flex;gap:.1in;padding:.09in .11in .06in;min-height:0}
+  .kp-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.05in;text-align:center;min-width:0}
+  .kp-ch{display:inline-flex;align-items:center;gap:.03in;font-variant:small-caps;font-weight:bold;font-size:.135in;color:var(--ink2);white-space:nowrap}
+  .kp-ch svg,.kp-ch .ic{width:.15in;height:.15in}
+  .kp-big{display:inline-flex;align-items:center;gap:.04in;font-weight:900;font-size:.46in;color:var(--kc);line-height:1;white-space:nowrap}
+  .kp-big svg,.kp-big .ic{width:.36in;height:.36in}
+  .kp-scale{font-weight:bold;font-size:.17in;color:var(--kc);line-height:1.1;white-space:nowrap} .kp-scale b{font-size:.32in}
+  .kp-note{font-size:.13in;font-style:italic;color:var(--ink2);line-height:1.2}
+  .kp-note.ctr{text-align:center;padding:.04in .14in .08in;font-size:.15in}
+  /* presence ZONE — the panel's open floor: ownership discs pile here (the majority count) */
+  .kp-pz{flex:1;display:flex;align-items:flex-end;justify-content:center;border-top:1.8px dashed var(--kc);
+    margin:0 .09in .08in;padding:.06in;background:rgba(255,255,255,.35);border-radius:0 0 .07in .07in}
+  .kp-pl{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.05in;font-variant:small-caps;font-weight:bold;font-size:.14in;color:var(--ink2);opacity:.85;text-align:center}
+  .kp-pl svg,.kp-pl .ic{width:.17in;height:.17in}
+  .kp-pl i{font-variant:normal;font-weight:normal;font-style:italic}
+  .kp.hall .kp-lad{flex:1;display:flex;align-items:center;justify-content:space-evenly;gap:.12in;padding:.1in .12in .05in}
+  .kp.hall .kp-lad .lr{display:flex;flex-direction:column;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.21in;color:var(--ink2)}
+  .kp.hall .kp-lad .lr b{display:inline-flex;align-items:center;gap:.03in;font-size:.52in;color:var(--kc)}
+  .kp.hall .kp-lad .lr b svg,.kp.hall .kp-lad .lr b .ic{width:.4in;height:.4in}
   .ddeck{width:2in;height:2in;border-radius:.07in;background:var(--sea);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;
     text-shadow:0 1px 1px rgba(0,0,0,.3);box-shadow:.05in -.05in 0 rgba(0,0,0,.18),inset 0 0 0 1.5px rgba(255,255,255,.22)}
   .ddeck.b{background:var(--green)}
@@ -927,7 +930,7 @@ const SUPPLY_GEO={w:22,h:11.9, y0:0.45,yMax:11.62};  // the Market & Stores boar
 //   · the SCORE track wraps the outer edge as a 50-cell ring (0–49 + a 50/100 lap, Carcassonne-style):
 //     50 cells — not 100 — because the mover is the 0.5″ ownership disc, and a disc needs a ≥0.6″ printed
 //     cell to sit in legibly (COMPONENTS.md §17 #7 offers exactly this "50/100 lap marker" resolution).
-const SUPPLY_NW=16.25, SUPPLY_NH=14.2;   // board native size — ring + interior computed below
+const SUPPLY_NW=17.55, SUPPLY_NH=14.2;   // board native size — ring + interior computed below
 const SUPPLY_MAIN_W=10.75;               // the left (displays) column's width; the destinations column takes the rest
 const SCORE_CELLS=50;     // one lap = 0–49; a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
 const SCORE_RING_T=0.8;   // ring thickness (native) → prints 0.64″ — a comfortable seat for the 0.5″ disc
@@ -1468,6 +1471,7 @@ function supplyBoard(){
   // DESTINATIONS column — the right rim: where a voyage pays. The four kontore read as ONE family
   // (uniform panel anatomy: gate · value · benefit · majority · a presence zone for the discs);
   // the HALL sits apart below with its own header — the volume-vs-prestige fork, printed as layout.
+  const BNOTE_SHORT={Bruges:'any mix of goods',London:'a Building or a Specialist, free',Bergen:'a free Reach (+1 presence)',Novgorod:'refine: a maturing cask +1 age'};
   const kMini=d=>{
     const val=d.scale
       ?'<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value · by Q</span><span class="kp-scale">'+d.scale.map(qv=>'Q'+qv[0]+'·<b>'+qv[1]+'</b>').join(' ')+'</span></div>'
@@ -1475,10 +1479,10 @@ function supplyBoard(){
     return '<div class="kp" style="--kc:'+d.kc+';--kt:'+d.tint+'">'
       +'<div class="kp-t">'+LU('landmark')+d.nm+'<span class="kp-q">'+LU(QI)+d.req+'+</span></div>'
       +'<div class="kp-rows">'+val
-        +'<div class="kp-cell"><span class="kp-ch">'+LU('gift')+'on delivery</span><span class="kp-big">'+d.ben.n+' '+LU(d.ben.ic)+'</span><span class="kp-note">'+d.bnote+'</span></div>'
-        +'<div class="kp-cell"><span class="kp-ch">'+LU('landmark')+'majority 1·2·3</span><span class="kp-big">'+d.maj.join(' / ')+'</span></div>'
+        +'<div class="kp-cell"><span class="kp-ch">'+LU('gift')+'on delivery</span><span class="kp-big">'+d.ben.n+' '+LU(d.ben.ic)+'</span><span class="kp-note">'+(BNOTE_SHORT[d.nm]||d.bnote)+'</span></div>'
+        +'<div class="kp-cell"><span class="kp-ch">'+LU('landmark')+'majority 1·2·3</span><span class="kp-big">'+d.maj.join('/')+'</span></div>'
       +'</div>'
-      +'<div class="kp-pz">'+'<span class="kp-c"></span>'.repeat(3)+'<span class="kp-pl">presence — one disc per delivered cask; most leads (2p: 1st only)</span></div>'
+      +'<div class="kp-pz"><span class="kp-pl">'+LU('circle')+'presence zone — most delivered leads <i>(2p: 1st only)</i></span></div>'
     +'</div>';};
   const hallMini='<div class="kp hall" style="--kc:'+HALL.kc+';--kt:'+HALL.tint+'">'
     +'<div class="kp-t">'+LU('crown')+HALL.nm+'<span class="kp-q">'+LU(QI)+HALL.req+'+</span></div>'
