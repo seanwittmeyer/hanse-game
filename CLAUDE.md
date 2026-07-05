@@ -2,8 +2,8 @@
 
 ## Get fully up to speed before any revision (do this first, every session)
 - **Before making revisions to values/actions — or any game change — be 100% up to date on the entire game system.** Don't start from a partial picture, and don't ask whether to do this: it is standing. Do it at the top of every session.
-- **Completely read the canonical set:** `CLAUDE.md`, `DESIGN.md`, and the full base catalog — `COMPONENTS.md`, `RULES.md`, and the four HTML pages: `index.html`, `play.html`, `printables.html`, `learn.html`.
-- **`play.html` is canonical** (correctness fixes there are rules fixes); its `KEY` constant is the source of truth for the **live version** — this doc's narrative can lag behind it, so reconcile against `play.html` and flag any drift.
+- **Completely read the canonical set:** `CLAUDE.md`, `DESIGN.md`, and the full base catalog — `COMPONENTS.md`, `RULES.md`, and the HTML pages: `index.html`, `printables2.html`, `play.html`, `printables.html`, `learn.html`. (The `/hanse-start` skill packages this session-start read + the table-first designer lens.)
+- **Source of truth: `RULES.md` · `COMPONENTS.md` · `index.html` · `printables2.html`** (the specs + the published component kit). **`play.html` is the mirror** — the playable reference implementation; its `KEY` constant marks the **live version**. Reconcile every surface and flag any drift; when the mirror and the specs disagree, fix the disagreement itself (decide which is right, then align ALL surfaces), never just one side.
 - Only then map a change through the interlocks below before touching anything.
 
 ## Response style
@@ -38,7 +38,7 @@
 - `RULES.md` — operational turn/economy rules (**v2.8 “Deploy First”**; the live *playable* build is `play.html` (v2.8, `KEY v92`); the v0.16 build is archived at `archive/play.html`).
 - `DESIGN.md` — pillars, lineage/comps, the **current architecture (§6)**, the **change log (§9)**, and the balance lessons (the *why*); **compacted** — the full pre-v1.0 history is in `archive/v0.16/DESIGN.md`.
 - `COMPONENTS.md` — the single physical manifest: boards · tokens · the tile families (casks · ships · **buildings** · recipes) · the **player brewery board** · destinations. *(v1.0 folds the old neutral buildings, goal tiles, and most upgrades into the one **building** family.)*
-- **Five HTML pages:** `learn.html` (beginner primer) · `index.html` (**Rulebook & Components** — the complete rules + the visual component reference; absorbed the former `rulebook.html`) · `printables.html` (cut sheets — the **tile** version) · `printables2.html` (an **alternative card-based** cut-sheet kit, in active development; both stay current with the live game data) · `play.html` (the playable reference implementation: DATA → STATE → TURN MACHINE → CELL HANDLERS → SCORING → RENDER). `play.html` is canonical — correctness fixes there are rules fixes.
+- **Five HTML pages:** `learn.html` (beginner primer) · `index.html` (**Rulebook & Components** — the complete rules + the visual component reference; absorbed the former `rulebook.html`) · `printables.html` (cut sheets — the **tile** version) · `printables2.html` (an **alternative card-based** cut-sheet kit, in active development; both stay current with the live game data) · `play.html` (the playable reference implementation: DATA → STATE → TURN MACHINE → CELL HANDLERS → SCORING → RENDER). `play.html` **mirrors** the source-of-truth set (`RULES.md` · `COMPONENTS.md` · `index.html` · `printables2.html`); an engine correctness fix is a rules fix and must land on every surface.
 - `DESIGN.md` §9 — compact version history (v0.1→v1.0) + the balance lessons carried forward (the former `CHANGELOG.md`, folded in). `PLAN.md` is the active v1.0 plan. `README.md` orients the repo.
 
 ### Before you commit any game change, check the interlocks
