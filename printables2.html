@@ -554,11 +554,11 @@
     box-shadow:inset 0 0 0 2px var(--gold)}
   .score-ring{position:absolute;inset:0}
   .ringcell{position:absolute;border:1px solid rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;
-    font-size:.13in;font-weight:bold;color:var(--ink2);background:rgba(255,255,255,.55);overflow:hidden}
-  .ringcell.start{background:var(--red);color:#fff;flex-direction:column;gap:.015in;text-align:center}
-  .ringcell.start svg,.ringcell.start .ic{width:.17in;height:.17in}
-  .ringcell.start .lap{font-size:.056in;font-weight:normal;font-variant:small-caps;line-height:1.05;opacity:.9}
-  .ringcell.ten{background:rgba(184,134,11,.3);color:var(--ink)}
+    font-size:.21in;font-weight:900;color:var(--ink2);background:rgba(255,255,255,.55);overflow:hidden}
+  .ringcell.start{background:var(--red);color:#fff;flex-direction:column;gap:.02in;text-align:center}
+  .ringcell.start svg,.ringcell.start .ic{width:.19in;height:.19in}
+  .ringcell.start .lap{font-size:.11in;font-weight:bold;line-height:1;opacity:.95}
+  .ringcell.five{background:rgba(184,134,11,.3);color:var(--ink)}
   .trk-h{font-variant:small-caps;font-weight:bold;font-size:.12in;color:var(--sea);display:flex;align-items:center;gap:.05in;margin:.07in 0 .03in}
   .trk-h svg,.trk-h .ic{width:.14in;height:.14in}
   .trk-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;color:var(--ink2);margin-left:.06in}
@@ -610,12 +610,19 @@
   .sup-main{flex:0 0 auto;width:9.7in;display:flex;flex-direction:column;gap:.08in}
   .sup-main .tracks{margin-top:auto}
   .sup-dests{flex:1;display:flex;flex-direction:column;gap:.09in;min-width:0}
+  /* the vertical Sailed-Ships CLOCK — its own slim third column, the ship at its head */
+  .sup-clock{flex:0 0 auto;width:.74in;display:flex;flex-direction:column;align-items:center;gap:.05in}
+  .sup-clock .cicon{color:var(--sea);display:flex;align-items:center;justify-content:center}
+  .sup-clock .cicon svg,.sup-clock .cicon .ic{width:.4in;height:.4in;stroke-width:1.6}
+  .vtrack{flex:1;width:100%;display:flex;flex-direction:column;border:1.5px solid var(--sea);border-radius:.05in;overflow:hidden}
+  .vtrack .cc{border-right:none;border-bottom:1px solid rgba(0,0,0,.15)}
+  .vtrack .cc:last-child{border-bottom:none}
   .disp-h.k{background:var(--sea)}
   .disp-h.hall{background:#5b3a8e}
   /* a destination panel: gate · value · benefit · majority at POSTER scale (read standing, across a table)
      over an open presence ZONE (discs pile freely; no per-disc slots) */
   .kp{flex:1;border:3px solid var(--kc);border-radius:.1in;background:var(--kt,#fff);display:flex;flex-direction:column;overflow:hidden;position:relative}
-  .kp.hall{flex:1.5}   /* the Hall is a CORE path — it gets MORE room than a kontor, not less */
+  .kp.hall{flex:1.2}   /* the Hall is a CORE path — a touch more room than a kontor */
   /* the destination SCENE: full-bleed art; a dark inline-SVG gradient rises from the FOOT (where the
      white stats sit); the middle stays open art — the presence discs land on the quay */
   .kp-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
@@ -924,7 +931,7 @@ const CARD_GEO={w:10.4,h:7.9,y0:0.95,yMax:7.9};
 // LARGE-FORMAT (22″-wide) plotter sheets — each TRIMMED to its own content height so we don't run blank media.
 // (render() emits a named @page + .lgNN rule per distinct height — see lgClass / the dynpage stylesheet.)
 const WHARF_GEO ={w:22,h:10.5, y0:0.45,yMax:10.22};  // the Wharf cross (9.4″) + tokens tucked on the right
-const SUPPLY_GEO={w:22,h:11.9, y0:0.45,yMax:11.62};  // the Market & Stores board sheet (board prints ~13×11.4)
+const SUPPLY_GEO={w:22,h:11.7, y0:0.45,yMax:11.42};  // the Market & Stores board sheet (board prints ~13.8×11.2)
 // The Supply & Tracks board — DESIGNED to its components (all native in, print ×0.8):
 //   · every display slot is CUT to its family's native tile size (ships 2.5 · buildings/improvements 2 ·
 //     recipe/contract cards 1.85×2.55), so the printed card drops exactly into its printed space;
@@ -933,9 +940,9 @@ const SUPPLY_GEO={w:22,h:11.9, y0:0.45,yMax:11.62};  // the Market & Stores boar
 //   · the SCORE track wraps the outer edge as a 50-cell ring (0–49 + a 50/100 lap, Carcassonne-style):
 //     50 cells — not 100 — because the mover is the 0.5″ ownership disc, and a disc needs a ≥0.6″ printed
 //     cell to sit in legibly (COMPONENTS.md §17 #7 offers exactly this "50/100 lap marker" resolution).
-const SUPPLY_NW=16.5, SUPPLY_NH=14.2;   // board native size — ring + interior computed below
+const SUPPLY_NW=17.2, SUPPLY_NH=14.0;   // board native size — defined by the content columns (displays · destinations · the vertical clock), not a page
 const SUPPLY_MAIN_W=9.7;                 // the left (displays) column's width; the destinations column takes the rest
-const SCORE_CELLS=50;     // one lap = 0–49; a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
+const SCORE_CELLS=50;     // one lap = 0–49 (the start corner reads 0/50); a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
 const SCORE_RING_T=0.8;   // ring thickness (native) → prints 0.64″ — a comfortable seat for the 0.5″ disc
 const TILE_GEO  ={w:22,h:5.75, y0:0.45,yMax:5.47};   // building FRONTS sheet + its mirrored BACKS sheet (27 tiles, 3 rows)
 const IMPF_GEO  ={w:22,h:8.5,  y0:0.45,yMax:8.22};   // improvements + owner frames (2.5″ rings, 3 rows) — single-sided, their own sheet
@@ -1405,32 +1412,31 @@ function wharfCross(){
   // padding grows by the bleed so the inner grid stays centered/put while the element (and its clipped art) extends outward
   return clip+'<div class="mboard cross" style="padding:'+(0.3+CROSS_BLEED).toFixed(3)+'in">'+wharf+'</div>';
 }
-// printables2: the SCORE RING — one clockwise lap of SCORE_CELLS cells wrapping the Supply board's outer
-// edge, in the classic corner-anchored pattern: 4 square CORNER cells (T×T) + straight runs between them,
-// each edge's run divided evenly so its cells stay near-square. Numbering starts at the top-left corner
-// (0, the start flag) and runs clockwise; passing 49 flips the disc's lap marker (50/100 — the second lap).
+// printables2: the SCORE RING — one clockwise lap of 50 cells with a FIXED, elegant walk: 15 spaces along
+// the top and bottom, 10 down each side, so every CORNER lands on a multiple of 5 — 0/50 (top-left, the
+// start), 15 (top-right), 25 (bottom-right), 40 (bottom-left) — and every 5th cell carries the alternate
+// band (count by fives). Passing 49 flips the disc's lap marker (+50 — the second lap).
 function scoreRingCells(NW,NH,T){
-  const uw=NW-2*T, uh=NH-2*T;                                     // straight-run lengths between corner squares
-  const nEdge=SCORE_CELLS-4;                                      // cells left after the 4 corners
-  const nTop=Math.max(1,Math.round(nEdge*uw/(2*(uw+uh)))), nSide=(nEdge-2*nTop)/2;
+  const uw=NW-2*T, uh=NH-2*T;
+  const nTop=14, nSide=9;                       // runs between the corner squares: 14+corner=15 · 9+corner=10
   const wT=uw/nTop, hS=uh/nSide;
   const cells=[];let i=0;
   const C=(x,y)=>cells.push({i:i++,x,y,w:T,h:T,corner:true});
-  C(0,0);                                                                                   // 0 · top-left (START)
-  for(let c=0;c<nTop;c++)cells.push({i:i++,x:T+c*wT,y:0,w:wT,h:T});                         // top: L→R
-  C(NW-T,0);                                                                                // top-right corner
-  for(let c=0;c<nSide;c++)cells.push({i:i++,x:NW-T,y:T+c*hS,w:T,h:hS});                     // right: T→B
-  C(NW-T,NH-T);                                                                             // bottom-right corner
-  for(let c=0;c<nTop;c++)cells.push({i:i++,x:NW-T-wT*(c+1),y:NH-T,w:wT,h:T});               // bottom: R→L
-  C(0,NH-T);                                                                                // bottom-left corner
-  for(let c=0;c<nSide;c++)cells.push({i:i++,x:0,y:NH-T-hS*(c+1),w:T,h:hS});                 // left: B→T
+  C(0,0);                                                                                   // 0 / 50 · START
+  for(let c=0;c<nTop;c++)cells.push({i:i++,x:T+c*wT,y:0,w:wT,h:T});                         // top: 1–14
+  C(NW-T,0);                                                                                // 15 · top-right
+  for(let c=0;c<nSide;c++)cells.push({i:i++,x:NW-T,y:T+c*hS,w:T,h:hS});                     // right: 16–24
+  C(NW-T,NH-T);                                                                             // 25 · bottom-right
+  for(let c=0;c<nTop;c++)cells.push({i:i++,x:NW-T-wT*(c+1),y:NH-T,w:wT,h:T});               // bottom: 26–39
+  C(0,NH-T);                                                                                // 40 · bottom-left
+  for(let c=0;c<nSide;c++)cells.push({i:i++,x:0,y:NH-T-hS*(c+1),w:T,h:hS});                 // left: 41–49
   return cells;
 }
 function scoreRingHtml(NW,NH,T){
   const cells=scoreRingCells(NW,NH,T);
-  const box=c=>{const cls=(c.i===0?' start':(c.i%10===0?' ten':''))+(c.corner?' corner':'');
+  const box=c=>{const cls=(c.i===0?' start':(c.i%5===0?' five':''));
     return '<div class="ringcell'+cls+'" style="left:'+c.x.toFixed(3)+'in;top:'+c.y.toFixed(3)+'in;width:'+c.w.toFixed(3)+'in;height:'+c.h.toFixed(3)+'in">'
-      +(c.i===0?LU('flag')+'<span class="lap">+50 on the 2nd lap</span>':c.i)+'</div>';};
+      +(c.i===0?LU('flag')+'<span class="lap">0 / 50</span>':c.i)+'</div>';};
   return '<div class="score-ring">'+cells.map(box).join('')+'</div>';
 }
 // printables2: the SUPPLY board — the town's MARKET HALL, designed to its components.
@@ -1509,17 +1515,14 @@ function supplyBoard(){
     +'<div class="disp-h hall">'+LU('crown')+'The Hall<span class="sm">— prestige, out of commerce</span></div>'
     +hallMini
   +'</div>';
+  const clock='<div class="sup-clock"><div class="cicon">'+LU('sailboat')+'</div><div class="vtrack">'+clk+'</div></div>';
   const inner='<div class="mboard supply" style="position:absolute;left:'+SCORE_RING_T+'in;top:'+SCORE_RING_T+'in;'
       +'width:'+(SUPPLY_NW-2*SCORE_RING_T).toFixed(3)+'in;height:'+(SUPPLY_NH-2*SCORE_RING_T).toFixed(3)+'in">'
-    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays · the destinations · the end clock — score laps the rim (0–49, then +50)</span></div>'
+    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays · the destinations · the end clock ('+LU('flag')+' finish the round &amp; score · '+LU('truck')+' = with The Trade Roads) — score laps the rim by fives (0–49, then +50)</span></div>'
     +'<div class="sup-cols">'
-      +'<div class="sup-main">'+market+cellar
-        +'<div class="tracks">'
-          +'<div class="trk-h">'+LU('sailboat')+'Sailed-Ships<span class="sm">every voyage (full sail · Charter · Enshrine) fills one — at your count’s '+LU('flag')+' finish the round &amp; score ('+LU('truck')+' = with The Trade Roads)</span></div>'
-          +'<div class="ctrack">'+clk+'</div>'
-        +'</div>'
-      +'</div>'
+      +'<div class="sup-main">'+market+cellar+'</div>'
       +dests
+      +clock
     +'</div>'
   +'</div>';
   return '<div class="supply-outer">'+scoreRingHtml(SUPPLY_NW,SUPPLY_NH,SCORE_RING_T)+inner+'</div>';}
