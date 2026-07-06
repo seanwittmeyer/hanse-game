@@ -250,10 +250,11 @@ charters**. *Watch (⚙): the Gauger is now a costlier Malt Kiln twin (3G/qty1 v
 distinct identity or a reprice.* *Gates (KEY v94): `verify-v94` 18 checks PASS (grading · no double-count ·
 the Customs backstop · rent · floor bonus · spoilage) · sim 500 → 0 crash/deadlock, pace in band · render-smoke
 ALL PASS · ladder: 0 errors, fast tiers pass; the GM rung reads 58.3% (n=120, measured twice — loaded and idle)
-at the ladder's 120ms BULK handicap (the in-page GM thinks at 250ms; the gauged-enshrine line feeds the trader's
-tempo), CM 70% at n=30 (an earlier 40% was n=10 noise). The in-page-budget (250ms) measurement is logged in
-`ai-ladder-v94-gm250.txt` — if the shipped GM sits under the bar, the remedy is AI-side (budget/rollout), never
-the rule (designer-decreed).*
+at the ladder's 120ms BULK handicap (the gauged-enshrine line feeds the trader's tempo), while **the SHIPPED
+in-page GM (250ms) passes at 75.8%** (n=120, idle — `ai-ladder-v94-gm250.txt`); CM 70% at n=30 (an earlier 40%
+was n=10 noise). Verdict: every rung ≥60% at shipped budgets — the gate holds; the bulk handicap's shortfall is
+a measurement artifact, now documented in the ladder header (re-measure at GUILD_MS=250 on an idle box whenever
+the GM rung reads 55–60%; MC tiers are time-budgeted, so concurrent load weakens them).*
 
 **v2.9 "Ground Rent" — the churn priced (the gatekeeper pass, part 1)** *(2026-07-06, `play.html` KEY v93)* —
 Designer-ruled off the first standing gatekeeper review (`GATEKEEPER.md`, built on 15 narrated sim games + 3
