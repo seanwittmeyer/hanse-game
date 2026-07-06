@@ -622,7 +622,7 @@
   /* a destination panel: gate · value · benefit · majority at POSTER scale (read standing, across a table)
      over an open presence ZONE (discs pile freely; no per-disc slots) */
   .kp{flex:1;border:3px solid var(--kc);border-radius:.1in;background:var(--kt,#fff);display:flex;flex-direction:column;overflow:hidden;position:relative}
-  .kp.hall{flex:1.2}   /* the Hall is a CORE path — a touch more room than a kontor */
+  .kp.hall{flex:1.05}  /* the Hall is a CORE path — a touch more room than a kontor */
   /* the destination SCENE: full-bleed art; a dark inline-SVG gradient rises from the FOOT (where the
      white stats sit); the middle stays open art — the presence discs land on the quay */
   .kp-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
@@ -931,7 +931,7 @@ const CARD_GEO={w:10.4,h:7.9,y0:0.95,yMax:7.9};
 // LARGE-FORMAT (22″-wide) plotter sheets — each TRIMMED to its own content height so we don't run blank media.
 // (render() emits a named @page + .lgNN rule per distinct height — see lgClass / the dynpage stylesheet.)
 const WHARF_GEO ={w:22,h:10.5, y0:0.45,yMax:10.22};  // the Wharf cross (9.4″) + tokens tucked on the right
-const SUPPLY_GEO={w:22,h:11.7, y0:0.45,yMax:11.42};  // the Market & Stores board sheet (board prints ~13.8×11.2)
+const SUPPLY_GEO={w:22,h:11.1, y0:0.45,yMax:10.82};  // the Market & Stores board sheet (board prints ~13.8×10.6)
 // The Supply & Tracks board — DESIGNED to its components (all native in, print ×0.8):
 //   · every display slot is CUT to its family's native tile size (ships 2.5 · buildings/improvements 2 ·
 //     recipe/contract cards 1.85×2.55), so the printed card drops exactly into its printed space;
@@ -940,7 +940,7 @@ const SUPPLY_GEO={w:22,h:11.7, y0:0.45,yMax:11.42};  // the Market & Stores boar
 //   · the SCORE track wraps the outer edge as a 50-cell ring (0–49 + a 50/100 lap, Carcassonne-style):
 //     50 cells — not 100 — because the mover is the 0.5″ ownership disc, and a disc needs a ≥0.6″ printed
 //     cell to sit in legibly (COMPONENTS.md §17 #7 offers exactly this "50/100 lap marker" resolution).
-const SUPPLY_NW=17.2, SUPPLY_NH=14.0;   // board native size — defined by the content columns (displays · destinations · the vertical clock), not a page
+const SUPPLY_NW=17.2, SUPPLY_NH=13.25;  // board native size — defined by the content columns (displays · destinations · the vertical clock), not a page
 const SUPPLY_MAIN_W=9.7;                 // the left (displays) column's width; the destinations column takes the rest
 const SCORE_CELLS=50;     // one lap = 0–49 (the start corner reads 0/50); a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
 const SCORE_RING_T=0.8;   // ring thickness (native) → prints 0.64″ — a comfortable seat for the 0.5″ disc
