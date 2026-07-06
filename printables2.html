@@ -566,7 +566,7 @@
   /* +.3in outline padding: the grid sits inset, the cut plus runs .3in outside the slots */
   .mboard.cross{background:#e9dcc0 url('art/wharf-board.png') center/cover;border:none;border-radius:0;padding:.3in;display:block;
     clip-path:url(#crossclip)}
-  .mboard.supply{display:flex;flex-direction:column;gap:.08in;padding:.18in .2in;border:none;background:transparent;border-radius:0}
+  .mboard.supply{display:flex;flex-direction:column;gap:.08in;padding:.18in .2in .32in;border:none;background:transparent;border-radius:0}   /* extra foot padding — the content shouldn't ride the ring */
   .mboard.supply .tracks{flex:0 0 auto;margin-top:auto}
   /* a printed label on the large sheet (above each cut board) */
   .sheetlbl{font-variant:small-caps;color:var(--sea);font-weight:bold;font-size:.28in;display:flex;align-items:center;gap:.1in;height:100%}
@@ -611,9 +611,10 @@
   .sup-main .tracks{margin-top:auto}
   .sup-dests{flex:1;display:flex;flex-direction:column;gap:.09in;min-width:0}
   /* the vertical Sailed-Ships CLOCK — its own slim third column, the ship at its head */
-  .sup-clock{flex:0 0 auto;width:.74in;display:flex;flex-direction:column;align-items:center;gap:.05in}
+  .sup-clock{flex:0 0 auto;width:.74in;display:flex;flex-direction:column;align-items:center;gap:.03in}
   .sup-clock .cicon{color:var(--sea);display:flex;align-items:center;justify-content:center}
-  .sup-clock .cicon svg,.sup-clock .cicon .ic{width:.4in;height:.4in;stroke-width:1.6}
+  .sup-clock .cicon svg,.sup-clock .cicon .ic{width:.34in;height:.34in;stroke-width:1.6}
+  .sup-clock .clbl{font-variant:small-caps;font-weight:bold;font-size:.088in;color:var(--sea);text-align:center;line-height:1.1}
   .vtrack{flex:1;width:100%;display:flex;flex-direction:column;border:1.5px solid var(--sea);border-radius:.05in;overflow:hidden}
   .vtrack .cc{border-right:none;border-bottom:1px solid rgba(0,0,0,.15)}
   .vtrack .cc:last-child{border-bottom:none}
@@ -940,7 +941,7 @@ const SUPPLY_GEO={w:22,h:11.1, y0:0.45,yMax:10.82};  // the Market & Stores boar
 //   · the SCORE track wraps the outer edge as a 50-cell ring (0–49 + a 50/100 lap, Carcassonne-style):
 //     50 cells — not 100 — because the mover is the 0.5″ ownership disc, and a disc needs a ≥0.6″ printed
 //     cell to sit in legibly (COMPONENTS.md §17 #7 offers exactly this "50/100 lap marker" resolution).
-const SUPPLY_NW=17.2, SUPPLY_NH=13.25;  // board native size — defined by the content columns (displays · destinations · the vertical clock), not a page
+const SUPPLY_NW=17.2, SUPPLY_NH=13.4;   // board native size — defined by the content columns (displays · destinations · the vertical clock), not a page
 const SUPPLY_MAIN_W=9.7;                 // the left (displays) column's width; the destinations column takes the rest
 const SCORE_CELLS=50;     // one lap = 0–49 (the start corner reads 0/50); a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
 const SCORE_RING_T=0.8;   // ring thickness (native) → prints 0.64″ — a comfortable seat for the 0.5″ disc
@@ -1515,7 +1516,7 @@ function supplyBoard(){
     +'<div class="disp-h hall">'+LU('crown')+'The Hall<span class="sm">— prestige, out of commerce</span></div>'
     +hallMini
   +'</div>';
-  const clock='<div class="sup-clock"><div class="cicon">'+LU('sailboat')+'</div><div class="vtrack">'+clk+'</div></div>';
+  const clock='<div class="sup-clock"><div class="cicon">'+LU('sailboat')+'</div><span class="clbl">Sailed<br>Ships</span><div class="vtrack">'+clk+'</div></div>';
   const inner='<div class="mboard supply" style="position:absolute;left:'+SCORE_RING_T+'in;top:'+SCORE_RING_T+'in;'
       +'width:'+(SUPPLY_NW-2*SCORE_RING_T).toFixed(3)+'in;height:'+(SUPPLY_NH-2*SCORE_RING_T).toFixed(3)+'in">'
     +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays · the destinations · the end clock ('+LU('flag')+' finish the round &amp; score · '+LU('truck')+' = with The Trade Roads) — score laps the rim by fives (0–49, then +50)</span></div>'
