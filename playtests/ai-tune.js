@@ -115,8 +115,8 @@ const DIMS = [
   ['goalW',     0.0, 2.5],
   ['buyFlush',  4.0, 10.0],
 ];
-const DEFAULTS = { swing: 1.0, upBen: 1.45, goodsBen: 1.4, hallBase: 0.45, hallRamp: 0.9,
-  leanVal: 0.91, leanSwing: 1.01, leanHall: 0.91, goalW: 1.94, buyFlush: 8.68 };   // keep in sync with AI_W in play.html
+const DEFAULTS = { swing: 0.488, upBen: 0.563, goodsBen: 0.9, hallBase: 0.883, hallRamp: 1.094,
+  leanVal: 0.935, leanSwing: 1.123, leanHall: 0.928, goalW: 1.443, buyFlush: 5.153 };   // keep in sync with AI_W in play.html (v2.9: synced to the LIVE v1.3 weights — the old defaults had drifted, which invalidated the v2.9 tuner's "vs incumbent" comparison)
 
 const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
 const gauss = () => { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random();

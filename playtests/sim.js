@@ -157,7 +157,9 @@ function botMarket(p){
   // v1.7: improvements are no longer a Market buy — they're acquired at the Cellar (botTap).
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
-function botPlaceBldg(){var bs=aBuildSlots();placeBldgOn((bs[0]||SLOTS[0]).id);}
+function botPlaceBldg(){var p=cur();var legal=(typeof bldgTargets==='function')?bldgTargets(p):SLOTS;   // v2.9: occupied slots need the ground rent — placeBldgOn ignores illegal clicks, so filter first
+  var bs=aBuildSlots().filter(function(s){return legal.indexOf(s)>=0;});
+  placeBldgOn(((bs[0]||legal[0])||SLOTS[0]).id);}
 // EXPANSION CAPSTONE — cellar a deployed Jopenbier until ripe / ending (mirrors the in-page AI).
 function botJopenHold(ref){var c=(typeof ref==='string'&&S.slots[ref])?S.slots[ref]:null;
   if(!c||c.style!=='jopenbier')return false; if(S.ending)return false; return (c.vintage||0)<JOPEN_VINTAGE_CAP-1;}

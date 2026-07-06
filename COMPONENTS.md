@@ -1,9 +1,9 @@
-# Brewhouses of the Hanse — Components (v2.8 “Deploy First”)
+# Brewhouses of the Hanse — Components (v2.9 “Ground Rent”)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9.
-> - The live build is `play.html` — **v2.8 “Deploy First”** (`KEY hanse-hotseat-v92`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v2.9 “Ground Rent”** (`KEY hanse-hotseat-v93`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - Cross-reference for tile families: §3 boards, §4 supply, §5–11 the seven families A–G, §12 player board, §13 starting setup, §14 box footprint. Expansion add-ons are §15; cross-references §16.
 
 ---
@@ -87,7 +87,7 @@ Neutral, destination-bound hulls. Drawn from a shuffled deck into a face-up **ma
 
 ## 7. Slot tiles — Privileges & Buildings · family C (the owned slot layer)
 
-Always acquired **from the face-up display and placed on a slot at once** (v2.2 — no hand): buy at the Market, or free via a London delivery or the Survey action. **One grammar:** a building modifies the occupant docked on it **now** (positional — nothing is rewritten) — `tgt` is what it acts on (cask or ship). **One sharing rule, one colour code: PRIVILEGE (blue) = pays its owner only · BUILDING (green) = serves any dock** — the tile faces print the type badge. A face-up **Wharf display of 4** at the Market refills from the shuffled deck.
+Always acquired **from the face-up display and placed on a slot at once** (v2.2 — no hand): buy at the Market, or free via a London delivery or the Survey action. **Placing on an occupied slot costs the `1 G` ground rent** (v2.9 — see 7C). **One grammar:** a building modifies the occupant docked on it **now** (positional — nothing is rewritten) — `tgt` is what it acts on (cask or ship). **One sharing rule, one colour code: PRIVILEGE (blue) = pays its owner only · BUILDING (green) = serves any dock** — the tile faces print the type badge; **the back prints the flip side: a Wild action + the `3★ at game end` reminder** (v2.9). A face-up **Wharf display of 4** at the Market refills from the shuffled deck.
 
 ### 7A. PRIVILEGES (blue) — the owner’s cask/ship banks bonus ★ on delivery
 
@@ -123,7 +123,7 @@ Always acquired **from the face-up display and placed on a slot at once** (v2.2 
 
 - **Captured on ship-through.** A cask passing **its owner’s** value building takes a **demand die** into its berth — **a real d6, max 6** (v2.2): set it to the building’s printed ★ **plus the quality premium**, never accumulated (only buildings modify dice; the destination is the cask’s *starting value*; a rival’s cargo sets no die — v2.3). Quality transforms ride a **+1-quality marker** (works — they serve any dock). Ship value buildings (Rich Berth · Festkeller) **bump the owner’s casks’ dice when the hull sails** (a die-less cask takes one at the bump value; the one die stays capped at 6).
 - **Quality premium (v1.8 · v2.2 part of the die).** Cask value buildings pay their printed ★ at Q1–Q3; a **Q4** cask sets the die **+2** higher, a **Q5** cask **+3** higher (die max 6). Reliquary/Hall excluded. Ship value buildings stay flat (a fixed bump, no premium).
-- **Displacement — one rule (v2.2).** Placing on an occupied slot displaces the tile there: its **owner banks +3★ immediately** (self-overbuild included — the tile's printed back is the record) and the tile **flips into their improvements/floor slots** (a Wild on the back, fired via the Floor); **floor full → the tile is discarded** (the ★ still banked).
+- **Displacement — the ground rent (v2.9).** Placing on an occupied slot costs the builder **`1 G` ⚙ to the stores** (self, rival or neutral alike; can't pay → occupied slots aren't legal targets). The displaced tile banks **nothing at displacement** — it **flips into its owner's improvements/floor slots** (a Wild on the back, fired via the Floor) and scores **+3★ ⚙ at game end if still there**; **floor full → the tile is returned to the box** (nothing banks). The tile's printed back is the Wild; the floor is the scoring record.
 
 ---
 
@@ -146,7 +146,7 @@ Print 4 copies of each export recipe (covers 4 houses each picking up the full l
 
 ## 9. Specialist tiles · family E (7 designs, scarce deck)
 
-Private brewery-board tiles (**SPECIALISTS — purple**, the third tile type; v2.6.1 persona names — each tile carries an `art` brief: a **beige field, one centered object**, the specialist’s trade), bought at the **Cellar** for goods — or gained free via **Hire** (the Q3+ cask action) or a **London** delivery (v2.4). The deck holds `n − 1` copies of each type (n = player count → 7 / 14 / 21 tiles). A face-up **display of 4** at the Cellar refills from the deck. A house cannot own two of the same type. The improvements area holds **4 tiles total** (improvements + flipped buildings).
+Private brewery-board tiles (**SPECIALISTS — purple**, the third tile type; v2.6.1 persona names — each tile carries an `art` brief: a **beige field, one centered object**, the specialist’s trade), bought at the **Cellar** for goods — or gained free via **Hire** (the Q3+ cask action) or a **London** delivery (v2.4). The deck holds `n − 1` copies of each type (n = player count → 7 / 14 / 21 tiles). A face-up **display of 4** at the Cellar refills from the deck. A house cannot own two of the same type. The improvements area holds **4 tiles total** (improvements + flipped buildings) — and it is the **banked-points capacity (v2.9)**: each flipped building still there at game end scores **+3★ ⚙**, so every Specialist fitted spends a slot that could have held floor value.
 
 | Specialist | Effect ⚙ | Cost ⚙ |
 |---|---|---|
@@ -188,10 +188,10 @@ All open from setup. **Kontor delivery value = base + the value-building bonuses
 | Bruges (Hub) | Q1 | +1 ★ | 2 goods (owner's choice) | 4 / 2 / 0 |
 | London (Steelyard) | Q2 | +1 ★ | a Privilege/Building (placed) OR a Specialist, free | 5 / 3 / 1 |
 | Bergen (Bryggen) | Q2 | +1 ★ | free Reach (+1 presence) | 9 / 5 / 2 |
-| Novgorod (Peterhof) | Q3 | scales: Q3·2 / Q4·4 / Q5·6 | refine — a maturing cask +1 age | 8 / 5 / 2 |
+| Novgorod (Peterhof) | Q3 | scales: Q3·2 / Q4·4 / Q5·6 (floor 1) | refine — a maturing cask +1 age | 8 / 5 / 2 |
 | The Hall | Q2 (deployed) | fixed ladder: Q2·3 / Q3·5 / Q4·7 / Q5·9 | — | — |
 
-**Notes:** 2-player games skip 2nd place; ties split the occupied tiers. **Delivery = the destination’s starting value + the demand die in the berth — nothing else** (v2.3: no shares, no wharfage). **Benefits resolve when gained, owner's choice** (Novgorod's refine: the owner picks which maturing cask; London's Building: chosen + placed at once), whoever's turn it is (v2.2).
+**Notes:** 2-player games skip 2nd place; ties split the occupied tiers. **Delivery = the destination’s starting value + the demand die in the berth — nothing else** (v2.3: no shares, no wharfage), and **never less than 1★** (v2.9 — a below-gate cask lifted in by Gauger's/Customs sells at the 1★ floor; no zero-point deliveries). **Benefits resolve when gained, owner's choice** (Novgorod's refine: the owner picks which maturing cask; London's Building: chosen + placed at once), whoever's turn it is (v2.2).
 
 ---
 

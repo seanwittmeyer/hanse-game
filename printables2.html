@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · Cask Cards · v2.8 “Deploy First”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · Cask Cards · v2.9 “Ground Rent”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -746,7 +746,7 @@
 </head>
 <body>
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · Cask Cards · v2.8 “Deploy First”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · Cask Cards · v2.9 “Ground Rent”</span></h1>
   <a href="play.html">▶ Play</a>
   <a href="index.html">📖 Rules</a>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
@@ -847,7 +847,7 @@ const BUILDINGS=[
 ];
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 // (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
-const DEVELOP_PTS=3;     // v2.2 developer ★: banked IMMEDIATELY when a building is displaced (self or rival); the tile flips to the owner's floor (a Wild), or is discarded if the 4 slots are full
+const DEVELOP_PTS=3;     // v2.9 floor ★: a displaced building flips to its owner's floor (a Wild) and scores +3★ AT GAME END if still there; floor full → boxed, nothing banks. The overbuilder pays a 1G ground rent.
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
 // CELLAR (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
 // v82 "Scarce Improvements": these now form a SHUFFLED DECK of (n−1) copies of each type (n=players) feeding a
@@ -905,12 +905,12 @@ const RECIPES=[  // EXPORT recipe cards only — Gruit & Hopped are printed on t
 ];
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'}];
 // v1.1 destinations — four DISTINCT lanes. Kontor per-cask value is SMALL & flat (base) — the real value is
-// the value-Buildings a cask ships through. Novgorod's value SCALES with quality (Q3·2 / Q4·4 / Q5·6).
+// the value-Buildings a cask ships through. Novgorod's value SCALES with quality (Q3·2 / Q4·4 / Q5·6 · floor 1 — every kontor pays ≥1★, v2.9).
 const DESTS=[
   {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, val:'1',                maj:[4,2,0], role:'The Hub — the economy',          ben:{n:'+2',ic:'coins'},      bnote:'goods (liquidity)'},
   {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, val:'1',                maj:[5,3,1], role:'The Steelyard — the engine',     ben:{n:'+1',ic:'building-2'}, bnote:'a Privilege/Building (placed) OR a Specialist, free'},
   {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, val:'1',                maj:[9,5,2], role:'Bryggen — the rich majority',    ben:{n:'+1',ic:'map-pin'},    bnote:'a free Reach (+1 presence)'},
-  {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, scale:[[3,2],[4,4],[5,6]], maj:[8,5,2], role:'The Long Haul — the quality climb', ben:{n:'+1',ic:'hourglass'},  bnote:'refine a maturing cask (+1 age)'},
+  {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, scale:[['&lt;3',1],[3,2],[4,4],[5,6]], maj:[8,5,2], role:'The Long Haul — the quality climb', ben:{n:'+1',ic:'hourglass'},  bnote:'refine a maturing cask (+1 age)'},   // v2.9: the Q<3 row = the 1★ kontor floor (a below-gate cask lifted in by Gauger's/Customs)
 ];
 const HALL={nm:'The Hall', kc:'#5b3a8e', tint:'#efeaf6', req:2, role:'Prestige — the local Enshrine (no ship)', ladder:[[2,3],[3,5],[4,7],[5,9]]};
 const SAILED={2:6,3:10,4:13};        // Sailed-Ships end clock per player count ⚙ (RULES §8 — 2–4p; v1.3 trimmed 7/11/14→6/10/13)
@@ -991,16 +991,17 @@ function buildingCard(d){const tg=BTGT[d.tgt];const foot=(d.verb==='value'?PRIV_
   +'<div class="bc-foot"><div class="bc-eff">'+d.eff+'</div>'
     +'<div class="bc-row"><span class="bc-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span>'+wf+cost(d.g,0)+'</div></div>'
   +'</div>';}
-// BUILDING CARD BACK (v6) — the flipped/displaced face: when a RIVAL overbuilds your Building it returns to you
-// flipped to its WILD side and parks in an improvement slot (scores +DEVELOP_PTS★ at game end). v6: shows the
-// SAME building art + title (muted) so it's identifiable, with the Wild action + the developer ★ in the foot.
+// BUILDING CARD BACK (v2.9) — the flipped/displaced face: when your Building is overbuilt (the builder pays the
+// 1G ground rent) it returns to you flipped to its WILD side and parks in an improvement slot — it scores
+// +DEVELOP_PTS★ AT GAME END if still there (floor full → boxed). Shows the SAME building art + title (muted)
+// so it's identifiable, with the Wild action + the floor ★ in the foot.
 function buildingBack(d){
   return '<div class="bcard bc-bk" style="--c:'+BLD_FOOT+'">'
   +artLayer('building-'+d.k+'.png')
   +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span></div>'
   +'<div class="bc-foot">'
     +'<div class="bc-row"><span class="bc-tgt">'+LU('sparkles')+'</span><span class="bc-wild">a <b>Wild</b> action on your Floor</span></div>'
-    +'<div class="bc-row"><span class="bc-sub">banked when<br>displaced</span><span class="bc-dev">+'+DEVELOP_PTS+LU('star')+'</span></div>'
+    +'<div class="bc-row"><span class="bc-sub">at game end,<br>on your floor</span><span class="bc-dev">+'+DEVELOP_PTS+LU('star')+'</span></div>'
   +'</div></div>';}
 // NEUTRAL destination-bound ship tile (v0.11): hull + capacity · printed destination + quality gate · commission 2 G
 function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
@@ -1143,12 +1144,12 @@ function aidFront(){
       +'<div class="acol">'
         +'<h5>'+LU('anchor')+'The Four Stations</h5>'
         +'<div class="ln">'+LU('store')+' <b>Market</b> — 2 goods, <i>or</i> 1: recipe · Building (display → <b>place at once</b>) · ship '+LU('sailboat')+' ('+G+'2, + free-load a deployed cask) · contract '+LU('ticket')+' ('+G+'1).</div>'
-        +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — Brew a recipe into an open vessel; or '+LU('barrel')+' <b>Deploy</b> a Ready cask.</div>'
+        +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — Brew a recipe into an open vessel; or '+LU('barrel')+' <b>Deploy</b> a Ready cask (a Q4+ may take a deployed Q1&rsquo;s berth — the stale ale is boxed).</div>'
         +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — any order: <b>Age</b> (3 pts, once) · <b>Tap</b> casks (the modified action, repeatable) · buy <b>Specialists</b> '+LU('wrench')+'.</div>'
         +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — Load any <b>deployed</b> cask onto a ship (<b>sails when full</b>), <b>Enshrine</b> a Q2+ deployed cask, or <b>Charter</b> a deployed cask — <b>deploy first</b>; only the Quaymaster reaches the vessels.</div>'
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
         +'<div class="ln"><b>Sailed-Ships</b> fills (6/10/13 for 2/3/4p) → finish the round → score:</div>'
-        +'<div class="ln">'+LU('crown','vi')+' <b>Hall</b> 3/5/7/9 · '+LU('landmark','vi')+' <b>kontor</b> starting value + the demand die · <b>majorities</b> · <span class="em">Flight</span> 3→4·4→9·5→16 (6→25 w/ Jopenbier) · <b>developer</b> +3'+LU('star','vi')+' banked at each overbuild.</div>'
+        +'<div class="ln">'+LU('crown','vi')+' <b>Hall</b> 3/5/7/9 · '+LU('landmark','vi')+' <b>kontor</b> starting value + the demand die (min 1'+LU('star','vi')+') · <b>majorities</b> · <span class="em">Flight</span> 3→4·4→9·5→16 (6→25 w/ Jopenbier) · <b>floor</b> +3'+LU('star','vi')+' per displaced Building kept on your floor.</div>'
         +'<div class="ln"><span class="em">The demand die:</span> a real d6, <b>max 6</b> — <b>your</b> cask through <b>your</b> value Building sets it to the ★ <b>+ the premium</b> (Q4 +2 · Q5 +3); a ship-slot value Building bumps the same die at the sail. A rival’s cargo on your Building banks nothing (value = a privilege; transforms serve anyone). Delivery = destination starting value + the die.</div>'
       +'</div>'
     +'</div></div>';}
@@ -1736,7 +1737,7 @@ function checklist(pages,famPages){
   const D='style="font-size:.085in;color:#5b4a37;font-weight:normal;line-height:1.26;margin-top:.005in"';
   const R=(nm,detail,n)=>'<tr><td class="bx"></td><td><b>'+nm+'</b>'+(detail?'<div '+D+'>'+detail+'</div>':'')+'</td><td class="n">'+n+'</td></tr>';
   const T=title=>'<table><tr><th></th><th>'+title+'</th><th>qty</th></tr>';
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v2.8 “Deploy First”)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v2.9 “Ground Rent”)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The base game below; the three opt-in expansions are listed last. With all expansions off, the box is exactly the base set. (Counts are a working first pass.)</p>'
     +'<div class="cols2">';
   h+=T('Boards')

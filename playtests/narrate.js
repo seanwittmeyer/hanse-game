@@ -106,7 +106,7 @@ function __digest(){
   var rows=finalRows().rows;
   rows.forEach(function(r,i){var p=r.p,sc=r.sc;
     out.push((i===0?'WINNER  ':'   #'+(i+1)+'   ')+p.name+' ['+p.ai.tier+(p.ai.persona?'/'+p.ai.persona:'')+'] — TOTAL '+sc.total
-      +'  (deliveries '+sc.deliv+' · majorities '+sc.maj+' · flight '+sc.flight+' · developer '+sc.developed+')');
+      +'  (deliveries '+sc.deliv+' · majorities '+sc.maj+' · flight '+sc.flight+' · floor '+sc.developed+')');
     var byDest={};(p.delivered||[]).forEach(function(d){(byDest[d.dest]=byDest[d.dest]||[]).push(d);});
     DESTS.forEach(function(d){var l=byDest[d];if(!l)return;
       out.push('        '+DEST[d].name+': '+l.map(function(x){return styleShort(x.style)+' Q'+x.q+'='+(x.val||0);}).join(', '));});

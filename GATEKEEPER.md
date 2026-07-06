@@ -82,6 +82,19 @@ Intended engine: **depth** (the comps say so; the sim-gate discipline says so). 
 
 **A — price the overbuild churn.** It rescues the demand lane (the game's ceiling), stabilizes the late board (GWT face-off), shrinks a whole scoring system (E falls out of it), and reduces AP (a stable board reads once). Every other fix lands better on a board that holds still long enough to mean something.
 
+### Disposition (v2.9 "Ground Rent", 2026-07-06 — designer-ruled)
+- **A — shipped, modified:** ground rent = a flat `1 G` (no tile-price component); the displaced +3★
+  moved to **end-game, per flipped building still on the floor** (shared 4 slots with Specialists;
+  full → boxed, nothing banks) — this also **implements E** (developer points retired as an in-game
+  line). Value 3★ kept for now; **2★ is the fallback dial** if the lane runs hot.
+- **B — rejected:** the Hall stays repeatable (one-rung-per-tier read as merging it with the Flight;
+  the Hall is the alternative path and should stay a competitive destination — values are the dial).
+- **C — reframed as a bug and fixed:** every kontor has a ≥1★ value floor (Novgorod's Q-scale floors
+  at 1); zero-point deliveries are impossible.
+- **D — Taproom tabled** (conflicts with the Hall's and the Floor's identities); **freshness shipped
+  as SPOILAGE:** a Ready Q4+ cask may displace a deployed Q1 (the stale ale is boxed) — buffs the
+  climb, unclogs the low-Q squatters, keeps the thematic spoilage.
+
 ### What only the table can settle
 
 Whether freshness reads as pressure or bookkeeping (the sim can't feel annoyance); whether one-rung-per-tier Hall feels fair at 2p (fewer casks to diversify with); whether the Taproom's no-clock-tick property makes turtling viable at 2p; whether the eviction fee makes the building market feel too illiquid in the first 3 rounds. These four go on the next human-playtest card.
