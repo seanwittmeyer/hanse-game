@@ -192,6 +192,11 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   turn-1 edge flatten it. (v1.7 REMOVED the +1 `G`/later-seat compensation — it over-corrected under strong play.)
 - **Content, not rules.** Depth belongs in placement/timing/interaction and a deck of content
   under one grammar — not in action complexity (the v0.7 reel-in is the founding lesson).
+- **The pole test (designer, v2.9): a lane may run HOT; the failure is NEGATION.** The game walks
+  fine lines between its poles — the Floor vs the wharf lines, and the Hall vs the kontore vs the
+  charters. A hot lane (e.g. prestige in the v93 PATHWAYS read) is acceptable; rebalance only when
+  one pole *negates the value* of another (nobody sane picks the other side). Measure with
+  persona/CELLAR runs, judge by the negation test, not by win-rate deltas alone.
 
 ---
 
@@ -231,6 +236,24 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v2.9.1 "Graded at the Gauge" — a gate adjusted is a quality adjusted** *(2026-07-06, `play.html` KEY v94)* —
+Designer clarification off the v2.9 review: *"when a gate is adjusted with a building, it should also adjust the
+quality — hopped is Q3 for scoring."* The **Gauger's Office** was the one gate-only adjuster (it admitted a cask
+above its quality but scored it at the un-lifted value — the actual root of the v2.9 zero-point bug); it is now a
+**QUALITY lift, one rule with the kilns**: +1 effective quality (cap Q5), counted for **gates and points alike**
+(engine: `caskEffQ` gains the gauger; the separate gate-relief in `gateNeed`/`commPickupOK` is removed so it can't
+double-count). A gauged Q2 into Novgorod scores as Q3 (2★); a gauged cask enshrines a rung higher — exactly as a
+kiln'd cask always has. The **≥1★ kontor floor stays** as the backstop for the two remaining sub-gate doors:
+**Customs-admitted boardings** (the ship's bar drops; the beer isn't better) and **Overland sub-gate road
+charters**. *Watch (⚙): the Gauger is now a costlier Malt Kiln twin (3G/qty1 vs kiln 2G/qty2) — candidate for a
+distinct identity or a reprice.* *Gates (KEY v94): `verify-v94` 18 checks PASS (grading · no double-count ·
+the Customs backstop · rent · floor bonus · spoilage) · sim 500 → 0 crash/deadlock, pace in band · render-smoke
+ALL PASS · ladder: 0 errors, fast tiers pass; the GM rung reads 58.3% (n=120, measured twice — loaded and idle)
+at the ladder's 120ms BULK handicap (the in-page GM thinks at 250ms; the gauged-enshrine line feeds the trader's
+tempo), CM 70% at n=30 (an earlier 40% was n=10 noise). The in-page-budget (250ms) measurement is logged in
+`ai-ladder-v94-gm250.txt` — if the shipped GM sits under the bar, the remedy is AI-side (budget/rollout), never
+the rule (designer-decreed).*
 
 **v2.9 "Ground Rent" — the churn priced (the gatekeeper pass, part 1)** *(2026-07-06, `play.html` KEY v93)* —
 Designer-ruled off the first standing gatekeeper review (`GATEKEEPER.md`, built on 15 narrated sim games + 3

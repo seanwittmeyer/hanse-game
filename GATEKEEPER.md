@@ -90,10 +90,18 @@ Intended engine: **depth** (the comps say so; the sim-gate discipline says so). 
 - **B — rejected:** the Hall stays repeatable (one-rung-per-tier read as merging it with the Flight;
   the Hall is the alternative path and should stay a competitive destination — values are the dial).
 - **C — reframed as a bug and fixed:** every kontor has a ≥1★ value floor (Novgorod's Q-scale floors
-  at 1); zero-point deliveries are impossible.
+  at 1); zero-point deliveries are impossible. **v2.9.1 follow-through:** the true root was the Gauger's
+  Office being a *gate-only* adjuster — designer rule: *a gate adjusted by a building adjusts the
+  quality*, so the Gauger's is now a +1-quality lift scored at the gauged Q (one rule with the kilns);
+  the 1★ floor remains as the backstop for Customs-admitted / Overland sub-gate entries.
 - **D — Taproom tabled** (conflicts with the Hall's and the Floor's identities); **freshness shipped
   as SPOILAGE:** a Ready Q4+ cask may displace a deployed Q1 (the stale ale is boxed) — buffs the
   climb, unclogs the low-Q squatters, keeps the thematic spoilage.
+
+### The standing balance criterion (designer, post-v2.9)
+A lane running **hot is acceptable** (the prestige/Hall read at 3–4p included); the game deliberately
+walks fine lines between the Floor and the wharf lines, and between the Hall, the kontore, and the
+charters. **Rebalance only on NEGATION** — when one pole makes another not worth playing.
 
 ### What only the table can settle
 

@@ -6,7 +6,8 @@
 > `1 G` ground rent** and the displaced tile's +3★ moved to **end-game, for flipped buildings
 > still on your floor** (floor full → the tile is boxed, nothing banks); **spoilage** — a Ready
 > Q4+ cask may take a deployed Q1's berth (the stale ale is boxed); **every kontor pays ≥1★**
-> (no zero-point deliveries); on v2.8 “Deploy First” — the final vessel-outlet grammar: **Load,
+> (no zero-point deliveries); v2.9.1 “Graded at the Gauge” — the Gauger’s Office is a QUALITY lift
+> (a gate adjusted by a building adjusts the quality: gates AND points alike); on v2.8 “Deploy First” — the final vessel-outlet grammar: **Load,
 > Charter and Enshrine all take a DEPLOYED cask**; the **Quaymaster** is the one invested exception
 > (all three verbs reach your vessels); **Commission** is the one universal vessel-direct door — its
 > free load takes ANY player’s deployed cask or a Ready cask straight from your vessels; on
@@ -234,7 +235,8 @@ ships **sail only when full**. **Or Enshrine** at the Hall (§6). **Or Charter**
 >   deployed cask** (rival-loading rules apply) **or a Ready cask straight from YOUR vessels**
 >   (deploy-first is waived here, deliberately, to promote commissioning).
 >
-> **Every gate check uses EFFECTIVE quality** (kilns, Duckstein, Customs/Gauger — one rule for
+> **Every gate check uses EFFECTIVE quality** (the kilns, the Gauger’s gauging, Duckstein — quality
+> lifts count for gates AND points (v2.9.1); Customs instead relieves the ship’s boarding gate — one rule for
 > every verb).
 
 ---
@@ -364,8 +366,10 @@ Five destinations, all open from start (⚙ table in `COMPONENTS.md`):
 **Delivery = the destination's STARTING VALUE + the demand die in the berth** (v2.2 — the whole
 table procedure in one sentence). The destination's printed value (Novgorod's Q-scaling included)
 is the cask's starting value; the **die** carries everything the *board* added. **Every kontor
-pays at least 1★ per cask (v2.9)** — a below-gate cask lifted in by the Gauger's Office / Customs
-House sells at the 1★ floor; **there is no zero-point delivery.**
+pays at least 1★ per cask (v2.9)** — and a **quality lift counts for points** (v2.9.1: a cask gauged
++1 by the Gauger's Office *scores* at the gauged quality, like the kilns); only a below-gate cask
+admitted by the **Customs House** (or an Overland sub-gate road charter) sells at the 1★ floor.
+**There is no zero-point delivery.**
 
 **The quality premium (v1.8 "Quality Pays" · v2.2 "part of the die").** A value building rewards
 the **climb**: it pays its printed value for Q1–Q3, but a **Q4** cask banks **+2★** and a **Q5**

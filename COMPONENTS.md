@@ -3,7 +3,7 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9.
-> - The live build is `play.html` — **v2.9 “Ground Rent”** (`KEY hanse-hotseat-v93`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v2.9.1 “Graded at the Gauge”** (`KEY hanse-hotseat-v94`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - Cross-reference for tile families: §3 boards, §4 supply, §5–11 the seven families A–G, §12 player board, §13 starting setup, §14 box footprint. Expansion add-ons are §15; cross-references §16.
 
 ---
@@ -114,7 +114,7 @@ Always acquired **from the face-up display and placed on a slot at once** (v2.2 
 | Hop Yard | cask | a Q2+ cask from here ships as +1 quality | `3 G` | 1 |
 | Cooperage | ship | a ship here carries +1 cask | `2 G` | 2 |
 | Customs House | ship | a ship here may board casks one gate lower | `2 G` | 2 |
-| Gauger's Office | cask | a cask from here may deliver one gate higher | `3 G` | 1 |
+| Gauger's Office | cask | a cask from here is gauged **+1 quality** (cap Q5) — gates and points alike (v2.9.1) | `3 G` | 1 |
 | Brewmaster's Workshop | cask | a cask deployed here upgrades its slot-action to Wild | `3 G` | 1 |
 
 **Deck totals:** ~24 tiles across 18 designs. **Display:** 4 face-up.
@@ -191,7 +191,7 @@ All open from setup. **Kontor delivery value = base + the value-building bonuses
 | Novgorod (Peterhof) | Q3 | scales: Q3·2 / Q4·4 / Q5·6 (floor 1) | refine — a maturing cask +1 age | 8 / 5 / 2 |
 | The Hall | Q2 (deployed) | fixed ladder: Q2·3 / Q3·5 / Q4·7 / Q5·9 | — | — |
 
-**Notes:** 2-player games skip 2nd place; ties split the occupied tiers. **Delivery = the destination’s starting value + the demand die in the berth — nothing else** (v2.3: no shares, no wharfage), and **never less than 1★** (v2.9 — a below-gate cask lifted in by Gauger's/Customs sells at the 1★ floor; no zero-point deliveries). **Benefits resolve when gained, owner's choice** (Novgorod's refine: the owner picks which maturing cask; London's Building: chosen + placed at once), whoever's turn it is (v2.2).
+**Notes:** 2-player games skip 2nd place; ties split the occupied tiers. **Delivery = the destination’s starting value + the demand die in the berth — nothing else** (v2.3: no shares, no wharfage), and **never less than 1★** (v2.9; v2.9.1: the Gauger's lift is a QUALITY lift and scores at the gauged Q — only a Customs-admitted below-gate cask sells at the 1★ floor; no zero-point deliveries). **Benefits resolve when gained, owner's choice** (Novgorod's refine: the owner picks which maturing cask; London's Building: chosen + placed at once), whoever's turn it is (v2.2).
 
 ---
 
