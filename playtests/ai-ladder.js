@@ -33,7 +33,7 @@ snapshot=function(){};
 // bulk-run budget for the guildmaster's Monte Carlo (the page default is 250ms/decision — far too
 // slow for thousands of games; 40ms still gives it ~10-20 playouts per decision).
 // SHARD THE GUILDMASTER for big runs — see the header note at the top of this file.
-GUILD_MS=(typeof __GMS!=='undefined'&&__GMS)?__GMS:120;GUILD_MIN=1;   // GM bulk budget (GUILD_MS env overrides). v1.4: 40→120 — the stronger v1.4 Trader needs the GM given a realistic think to show its edge (40ms under-rated it; in-page GM is 250ms).
+GUILD_MS=(typeof __GMS!=='undefined'&&__GMS)?__GMS:120;GUILD_MIN=1;   // GM bulk budget (GUILD_MS env overrides). v1.4: 40→120 — the stronger v1.4 Trader needs the GM given a realistic think to show its edge (40ms under-rated it; in-page GM is 250ms). v2.9.1: in the v94 meta the 120ms handicap under-rates the GM BELOW the gate line (58.3% at n=120; the gauged-enshrine line feeds the trader) while the SHIPPED 250ms GM passes at 75.8% — when the GM rung reads 55-60%, re-measure at GUILD_MS=250 GMN=120 on an IDLE box before calling the gate (MC tiers are time-budgeted; concurrent load weakens them).
 if(typeof CELLAR_MS!=='undefined'){CELLAR_MS=__CMS||80;CELLAR_MIN=1;CELLAR_CAP=600;if(typeof __CROLL==='string'&&__CROLL)CELLAR_ROLL=__CROLL;if(__CMCTS==='0')CELLAR_MCTS=false;if(__CMCTS==='1')CELLAR_MCTS=true;}   // cellarmaster bulk budget (CELLAR_MS env overrides) — small; SHARD the cellarmaster pairing. CELLAR_ROLL/CELLAR_MCTS env A/B the rollout policy & Path-C tree.
 
 function aiTestGame(tiers){

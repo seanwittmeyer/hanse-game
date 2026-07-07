@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (v2.6 “Dockside Pickup”)
+# Brewhouses of the Hanse — Design (v2.9 “Ground Rent”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -102,20 +102,28 @@ Canonical detail is in `PLAN.md` / `RULES.md` / `COMPONENTS.md`; the shape:
   beside a high-traffic line is the core optimization (the heart of v1.0).
 - **Legible scoring.** *In-game:* **Hall enshrine = fixed** (the beginner floor, ladder 3/5/7/9) ·
   **kontor deliver = variable** (base + the value-buildings shipped through, captured-on-ship-through
-  onto a **reusable demand die** that rides the cask in the berth — pips = the ★ banked on delivery;
-  `COMPONENTS.md §2`). *End-game:* **majorities** (delivered-cask count) + **the Flight** (distinct
-  **beers**, (beers−1)², min 3).
+  onto a **reusable demand die** that rides the cask in the berth — pips = the ★ banked on delivery,
+  **never less than 1★ total**, v2.9; `COMPONENTS.md §2`). *End-game:* **majorities** (delivered-cask
+  count) + **the Flight** (distinct **beers**, (beers−1)², min 3) + **the floor bonus** (v2.9 — +3★ ⚙
+  per displaced building still on your floor; Specialists share the same 4 slots).
 - **The five lanes — each a complete path** (no half-measures; braiding emerges, it isn't a
   goal): **Prestige/Hall · Demand/value · Volume/majority · Range/Flight · Authorship/engine.**
 - **The Floor** — the standing 3rd line (v2.2): after moving, always choosable instead of the
   row/column — every vessel cask's action + a Wild per flipped building, never tolled
   (engine payoff + the boutique brewer's self-sufficiency; `PLAN.md` §1B).
-- **One grammar (v2.2)** — casks leave vessels only by **Deploy or Charter** (Private Quay = the
-  invested Harbor exception); every gate check uses **effective quality**; **benefits resolve when
+- **One grammar — deploy first (v2.8, supersedes v2.2's outlet rule)** — **Load, Charter and
+  Enshrine all take a DEPLOYED cask** (a public showing — contestable, rival-loadable — is the
+  price of every sale); the **Quaymaster** is the one invested exception (all three verbs reach
+  its owner's vessels); **Commission is the one universal vessel-direct door** (its free load
+  takes ANY player's deployed cask under the rival-loading rules, or a Ready cask straight from
+  your own vessels). Every gate check uses **effective quality**; **benefits resolve when
   gained, owner's choice**; **buildings always display → placed at once** (no hand, no starting
-  building); **overbuild**: +3★ banked immediately + the tile flips to the owner's floor (self =
-  rival; floor full → discard); the **demand die is a real d6, max 6** (building ★ + Q4/Q5
-  premium, set not accumulated; destinations are the cask's starting value).
+  building); **overbuild (v2.9 "Ground Rent")**: the builder pays `1 G` to the stores (can't pay →
+  not a legal target) + the displaced tile flips to its owner's floor (a Wild; **+3★ at game end
+  if still there** — floor full → boxed, nothing banks); **spoilage (v2.9)**: a Ready Q4+ cask may
+  take a deployed Q1's berth (the stale ale is boxed); the **demand die is a real d6, max 6**
+  (building ★ + Q4/Q5 premium, set not accumulated; destinations are the cask's starting value —
+  every kontor pays ≥1★, v2.9).
 - **Three tile types (v2.4.1)** — every ownable tile is one of three colour-coded first-class
   types: **PRIVILEGE** (bright blue; owner-only value, on the slots) · **BUILDING** (green;
   serves-any-dock transform, on the slots) · **SPECIALIST** (purple; the private brewery-board
@@ -184,6 +192,11 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   turn-1 edge flatten it. (v1.7 REMOVED the +1 `G`/later-seat compensation — it over-corrected under strong play.)
 - **Content, not rules.** Depth belongs in placement/timing/interaction and a deck of content
   under one grammar — not in action complexity (the v0.7 reel-in is the founding lesson).
+- **The pole test (designer, v2.9): a lane may run HOT; the failure is NEGATION.** The game walks
+  fine lines between its poles — the Floor vs the wharf lines, and the Hall vs the kontore vs the
+  charters. A hot lane (e.g. prestige in the v93 PATHWAYS read) is acceptable; rebalance only when
+  one pole *negates the value* of another (nobody sane picks the other side). Measure with
+  persona/CELLAR runs, judge by the negation test, not by win-rate deltas alone.
 
 ---
 
@@ -223,6 +236,72 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v2.9.1 "Graded at the Gauge" — a gate adjusted is a quality adjusted** *(2026-07-06, `play.html` KEY v94)* —
+Designer clarification off the v2.9 review: *"when a gate is adjusted with a building, it should also adjust the
+quality — hopped is Q3 for scoring."* The **Gauger's Office** was the one gate-only adjuster (it admitted a cask
+above its quality but scored it at the un-lifted value — the actual root of the v2.9 zero-point bug); it is now a
+**QUALITY lift, one rule with the kilns**: +1 effective quality (cap Q5), counted for **gates and points alike**
+(engine: `caskEffQ` gains the gauger; the separate gate-relief in `gateNeed`/`commPickupOK` is removed so it can't
+double-count). A gauged Q2 into Novgorod scores as Q3 (2★); a gauged cask enshrines a rung higher — exactly as a
+kiln'd cask always has. The **≥1★ kontor floor stays** as the backstop for the two remaining sub-gate doors:
+**Customs-admitted boardings** (the ship's bar drops; the beer isn't better) and **Overland sub-gate road
+charters**. *Watch (⚙): the Gauger is now a costlier Malt Kiln twin (3G/qty1 vs kiln 2G/qty2) — candidate for a
+distinct identity or a reprice.* *Gates (KEY v94): `verify-v94` 18 checks PASS (grading · no double-count ·
+the Customs backstop · rent · floor bonus · spoilage) · sim 500 → 0 crash/deadlock, pace in band · render-smoke
+ALL PASS · ladder: 0 errors, fast tiers pass; the GM rung reads 58.3% (n=120, measured twice — loaded and idle)
+at the ladder's 120ms BULK handicap (the gauged-enshrine line feeds the trader's tempo), while **the SHIPPED
+in-page GM (250ms) passes at 75.8%** (n=120, idle — `ai-ladder-v94-gm250.txt`); CM 70% at n=30 (an earlier 40%
+was n=10 noise). Verdict: every rung ≥60% at shipped budgets — the gate holds; the bulk handicap's shortfall is
+a measurement artifact, now documented in the ladder header (re-measure at GUILD_MS=250 on an idle box whenever
+the GM rung reads 55–60%; MC tiers are time-budgeted, so concurrent load weakens them).*
+
+**v2.9 "Ground Rent" — the churn priced (the gatekeeper pass, part 1)** *(2026-07-06, `play.html` KEY v93)* —
+Designer-ruled off the first standing gatekeeper review (`GATEKEEPER.md`, built on 15 narrated sim games + 3
+human logs — the overbuild carousel, the enshrine treadmill, and the zero-point delivery were its must-fixes).
+Four changes. **(1) Overbuild costs a `1 G` GROUND RENT** — paid by the builder to the stores (self, rival or
+neutral alike); can't pay → occupied slots aren't legal targets, and every placement path (Market buy · Survey
+· London benefit · Trade Roads grant) prechecks a legal target, so a free building can never force an
+unaffordable eviction. **(2) The immediate developer +3★ is RETIRED → the end-game FLOOR BONUS** — a displaced
+building banks nothing at displacement; it still flips to its owner's floor (a Wild on its back) and each
+flipped building **still on your floor at game end scores +3★ ⚙** (candidate 2 if hot). The floor's 4 slots
+stay SHARED with Specialists — the private engine now spends banked-points capacity, and a tile arriving at a
+full floor is **returned to the box** (nothing banks — the old "+3 even when discarded" pump is closed, and
+self-overbuild no longer prints points). **(3) SPOILAGE** — a Ready **Q4+** cask may deploy ONTO a deployed
+**Q1** cask (any owner's, own included): the stale ale is boxed, the premium cask takes the berth (buffs the
+climb; unclogs the Gruit squatters the playtest logs flagged; hops preserve — thematically exact). **(4) Every
+kontor pays ≥1★** — Novgorod's Q-scale floors at 1 (a Gauger/Customs-lifted below-gate cask used to sell for
+0; the "sell beer for nothing to end the game" clock exploit is gone). *Rejected from the same review (designer):
+the Hall one-rung-per-tier limit (the Hall stays a repeatable, competitive destination — the alternative path,
+not a Flight clone) and the Taproom (conflicts with the Hall's and the Floor's identities; tabled).* Plus a bot
+fix: `aiDeploy` no longer parks casks under ship-target privileges (Rich Berth/Festkeller — the die could never
+set). *Gates (KEY v93):* sim 500 → **0 crash/deadlock** at 2–4p, pace in band (2p 15.8 / 3p 17.3 / 4p 16.9;
+95–100% in 12–25; ~95–98% clock-ended); ladder 600 **PASS** (GM 75.8 / CM 60.0; `ai-ladder-v93.txt`);
+render-smoke ALL PASS; the same-seed narrate re-runs kill the carousel (3p-3 dev 12→0 · 3p-4 dev 45→12;
+spoilage, rent, and the can't-pay guard all fire). The **ai-tune run was REJECTED on gate** — its DEFAULTS
+had drifted from the live AI_W so "beats the incumbent" was mis-baselined, and adopting broke the ladder
+(GM 59.2%); weights kept at v1.3, DEFAULTS re-synced (`ai-tune-v93.txt`). *Watch (⚙): the floor-bonus
+value (3 vs 2) once persona/human data lands; dev-share of table scores (target < 10%); whether spoilage
+wants a Q2 extension (currently Q1-only); **the prestige/Hall lane runs hot in the v93 PATHWAYS read**
+(3p 50.3% / 4p 35.9% vs fair 33.3/25 — the designer wants the Hall competitive, values are the later dial).*
+
+**v2.8 "Deploy First" — the final vessel-outlet grammar** *(2026-07-05, `play.html` KEY v92)* —
+Designer-ruled, three points. **(1) Deploy first, everywhere:** Load, Charter and Enshrine all require the
+cask be **DEPLOYED** — the Charter's old vessel reach (v2.2's "one of two doors") is gone; a public showing
+is the price of every sale, and the risk (a rival may ship your public cask somewhere you didn't want) is
+the point. **(2) The Quaymaster is the one invested exception** — Load, Charter or Enshrine straight from
+your own vessels (3G + the buy action; supersedes v2.7 "Quaymaster's Key", KEY v91, which had opened
+Enshrine-from-vessels; v2.8 completes the trio with Charter). This is the tile's whole identity: it buys
+out the public-showing risk. **(3) Commission is the one universal vessel-direct door** — its free load now
+takes **ANY player's deployed cask** (rival-loading rules: owner scores, commissioner takes the 1G + chose
+the destination) **or a Ready cask straight from your own vessels** ("we want to promote that" — designer).
+*Why:* one memorable sentence replaces three per-verb exceptions; the Quaymaster gets a sharp, sellable
+job; commissioning gains real pull as the only free vessel outlet. *Gates (KEY v92):* `verify-v92` 11
+checks PASS + v87 (two tests updated to the new grammar) /v88/v89/v90 green; sim 500 → **0 crash/deadlock**
+at 2–4p (the deadlock watch after Charter lost universal vessel reach — commission's vessel door + the
+Quaymaster cover it), pace in band (2p 15.6 / 3p ~16.7 / 4p 16.2, ≥95% in 12–25, ~98% clock-ended);
+render-smoke ALL PASS. *Watch (⚙): the Quaymaster's pick-rate (it now sells risk-avoidance — re-probe
+parity); charter rate at 4p held ~2.3/game.*
 
 **v2.6 "Dockside Pickup" — commission onto casks** *(2026-07-04, `play.html` KEY v90)* — Designer-approved:
 **Commission may place the face-up ship ONTO a slot whose cask can board it** (effective quality vs the

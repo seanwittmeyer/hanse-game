@@ -1,0 +1,56 @@
+# Deploy the site to GitHub Pages — replaces the implicit "pages build and deployment" pipeline.
+#
+# WHY THIS EXISTS (2026-07-06): the classic branch-based Pages pipeline was failing ~1 run in 6 with
+# "Deployment failed, try again later" — the build job always succeeded, the deployment was created,
+# and the status poll returned deployment_failed within seconds; the identical tree then deployed fine
+# on the next push. The tree itself is clean (no symlinks, no large files, 37MB) — the rejection is
+# transient in the Pages deployment service. The classic pipeline offers NO retry, so a flake = a red X
+# and a stale site until the next push. This workflow owns the deployment instead and RETRIES the
+# deploy step once after a pause, turning the transient into a non-event.
+#
+# configure-pages flips the repo's Pages source to "GitHub Actions" on first run (needs pages:write),
+# which retires the implicit branch pipeline — no settings change required.
+name: Deploy site to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# one deployment at a time; a newer push supersedes an in-flight one
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url || steps.deploy_retry.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure Pages (switches the source to workflow on first run)
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .   # the site is the repo — all client-side static files (.git/.github are excluded by the action)
+      - name: Deploy to Pages
+        id: deploy
+        uses: actions/deploy-pages@v5
+        continue-on-error: true   # first attempt may hit the transient "try again later" rejection
+      - name: Pause before retry
+        if: steps.deploy.outcome == 'failure'
+        run: sleep 45
+      - name: Deploy to Pages (retry after transient failure)
+        id: deploy_retry
+        if: steps.deploy.outcome == 'failure'
+        uses: actions/deploy-pages@v5

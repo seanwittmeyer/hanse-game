@@ -1,0 +1,16 @@
+ai-tune.js — CEM over AI_W at v2.9 "Ground Rent" (KEY hanse-hotseat-v93), 2026-07-06
+(10 generations; confirmation 2p n=2000 each + 4p n=600)
+
+final-mean  vs incumbent 52.0% (±2.2)  vs journeyman 69.5%  4p share 28.3% (fair 25)
+best-ever   vs incumbent 52.8% (±2.2)  vs journeyman 70.4%  4p share 25.7% (fair 25)
+            swing=0.284 upBen=1.687 goodsBen=0.844 hallBase=0.706 hallRamp=1.153 leanVal=0.972 leanSwing=0.923 leanHall=1.125 goalW=1.31 buyFlush=8.675
+tool RECOMMENDATION: ADOPT best-ever (beats "incumbent" 52.8%, CI excludes 50%).
+
+VERDICT: **REJECTED ON GATE.**
+- The tuner's incumbent was its own DEFAULTS constant, which had DRIFTED from the live AI_W
+  (v1.3 weights) — so "beats the incumbent" was measured against the wrong baseline.
+- Adopting best-ever broke the ladder gate: trader vs guildmaster fell to GM 59.2% (< the 60% bar;
+  the stronger trader squeezed the GM rung) — see playtests/ai-ladder-v93-post-tune.txt.
+- With the live v1.3 weights the ladder PASSES (GM 75.8%, CM 60.0%) — playtests/ai-ladder-v93.txt.
+RESOLUTION: AI_W kept at the v1.3 weights; ai-tune DEFAULTS synced to those (drift fixed), so the
+next tuner run compares against the true incumbent. Re-tune after the next balance pass.
