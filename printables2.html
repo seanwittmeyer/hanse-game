@@ -640,8 +640,11 @@
   .kp-q{margin-left:auto;display:inline-flex;align-items:center;gap:.03in;background:rgba(255,255,255,.3);border-radius:.06in;
     padding:.02in .08in;font-size:.2in;font-weight:900}
   .kp-q svg,.kp-q .ic{width:.19in;height:.19in}
-  .kp-rows{flex:0 0 auto;display:flex;flex-direction:column;gap:.03in;padding:.04in .12in .11in;min-height:0}   /* anchored at the FOOT, over the gradient */
+  .kp-rows{flex:0 0 auto;display:flex;flex-direction:column;gap:.04in;padding:.04in .12in .11in;min-height:0}   /* anchored at the FOOT, over the gradient */
   .kp-cr{display:flex;gap:.1in;align-items:flex-end}
+  .kp-cr.two{gap:.22in}   /* Novgorod: only 2 cells here (value moved to its own full-width row above), so give each more breathing room */
+  /* the by-quality scale gets its OWN full-width row, not a 3rd cramped column — see kMini's comment */
+  .kp-scalerow{display:flex;flex-direction:column;align-items:center;gap:.02in}
   /* v2.9.2: dropped the hardcoded white-space:nowrap on .kp-ch/.kp-scale/.kp-note.bnote — at the real print
      font (a wide serif, not this sandbox's fallback) a "no wrap, ever" rule doesn't shrink the text, it just
      overflows the narrow art panel silently past .kp's overflow:hidden edge. Wrapping + shorter copy below
@@ -652,9 +655,11 @@
   .kp-ch svg,.kp-ch .ic{width:.12in;height:.12in;flex:0 0 auto}
   .kp-big{display:inline-flex;align-items:center;gap:.04in;font-weight:900;font-size:.34in;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 1.5px 3px rgba(0,0,0,.8)}
   .kp-big svg,.kp-big .ic{width:.27in;height:.27in}
-  /* the by-quality scale — a STACKED chip per tier (Q above, ★ value below), not one long joined line, so it
-     scales to however many tiers a kontor prints (Novgorod's v2.9 floor row made it four) without overflowing */
-  .kp-scale{display:flex;gap:.08in;justify-content:center;flex-wrap:wrap}
+  /* the by-quality scale — a STACKED chip per tier (Q above, ★ value below), not one long joined line, laid
+     out on its OWN full-width row (kp-scalerow) instead of a 1-of-3 cell, so it scales to however many tiers
+     a kontor prints (Novgorod's v2.9 floor row made it four) without wrapping to a 2nd line and colliding
+     with the row below. flex-wrap stays as a last-resort safety net, not the primary fit strategy. */
+  .kp-scale{display:flex;gap:.14in;justify-content:center;flex-wrap:wrap}
   .kp-scale .qv{display:flex;flex-direction:column;align-items:center;gap:.01in;flex:0 0 auto}
   .kp-scale .qv .qq{font-size:.088in;font-variant:small-caps;font-weight:bold;color:rgba(255,255,255,.8);white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.75)}
   .kp-scale .qv .qn{font-weight:900;font-size:.2in;color:#fff;line-height:1;text-shadow:0 1.5px 3px rgba(0,0,0,.8)}
@@ -1508,17 +1513,19 @@ function supplyBoard(){
     +'<stop offset=".72" stop-color="#14100b" stop-opacity=".14"/><stop offset="1" stop-color="#14100b" stop-opacity="0"/>'
     +'</linearGradient></defs><rect width="1" height="1" fill="url(#kpgrad)"/></svg>':'';
   const kMini=d=>{
-    // by-quality scale: a stacked chip PER TIER (Q above, ★ below) — not one long nowrap line — so it holds
-    // however many tiers a kontor prints (Novgorod's v2.9 floor row made it four: <3/3/4/5).
-    const val=d.scale
-      ?'<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value · by Q</span><span class="kp-scale">'
-          +d.scale.map(qv=>'<span class="qv"><span class="qq">Q'+qv[0]+'</span><span class="qn">'+LU(VP)+qv[1]+'</span></span>').join('')
-        +'</span></div>'
-      :'<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU(VP)+d.val+'</span></div>';
+    // by-quality scale: its own FULL-WIDTH row (not one of 3 narrow columns) — a stacked chip PER TIER
+    // (Q above, ★ below). Squeezed into a 1-of-3 cell it wrapped to a 2nd line and collided with the row
+    // below (Novgorod's v2.9 floor row made it four tiers: <3/3/4/5, too many for a narrow cell at any
+    // reasonable chip size); a full-width row gives 4 small chips plenty of room to sit on ONE line, and
+    // on-delivery/majority get a wider 2-cell row instead of 3, so nothing here is fighting for space.
+    const scaleRow=d.scale?'<div class="kp-scalerow"><span class="kp-ch">'+LU(VP)+'value · by Q</span><span class="kp-scale">'
+        +d.scale.map(qv=>'<span class="qv"><span class="qq">Q'+qv[0]+'</span><span class="qn">'+LU(VP)+qv[1]+'</span></span>').join('')
+      +'</span></div>':'';
+    const valCell=d.scale?'':'<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU(VP)+d.val+'</span></div>';
     return '<div class="kp" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+kArt(d.nm.toLowerCase())
       +'<div class="kp-t">'+LU('landmark')+d.nm+'<span class="kp-q">'+LU(QI)+d.req+'+</span></div>'
       +'<div class="kp-pz"></div>'
-      +'<div class="kp-rows"><div class="kp-cr">'+val
+      +'<div class="kp-rows">'+scaleRow+'<div class="kp-cr'+(d.scale?' two':'')+'">'+valCell
         +'<div class="kp-cell"><span class="kp-ch">'+LU('gift')+'on delivery</span><span class="kp-big">'+d.ben.n+' '+LU(d.ben.ic)+'</span></div>'
         +'<div class="kp-cell"><span class="kp-ch">'+LU('landmark')+'majority</span><span class="kp-big">'+d.maj.join('/')+'</span></div>'
       +'</div><div class="kp-note bnote">'+(BNOTE_SHORT[d.nm]||d.bnote)+'</div></div>'
