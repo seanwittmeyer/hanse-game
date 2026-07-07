@@ -629,6 +629,11 @@
      over an open presence ZONE (discs pile freely; no per-disc slots) */
   .kp{flex:1;border:3px solid var(--kc);border-radius:.1in;background:var(--kt,#fff);display:flex;flex-direction:column;overflow:hidden;position:relative}
   .kp.hall{flex:1.05}  /* the Hall is a CORE path — a touch more room than a kontor */
+  /* v2.9.3: Novgorod's extra by-quality scale row makes its stat block genuinely taller than the other three
+     kontors' (measured: ~178px of content wanting to fit a ~149px equal-share panel) — an equal flex:1 share
+     wasn't enough even after the row stopped wrapping; it was just overflowing straight past the panel's
+     bottom edge instead (still clipped, just no longer via a wrapped 2nd line). Give it more of the column. */
+  .kp.scale{flex:1.22}
   /* the destination SCENE: full-bleed art; a dark inline-SVG gradient rises from the FOOT (where the
      white stats sit); the middle stays open art — the presence discs land on the quay */
   .kp-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
@@ -653,7 +658,7 @@
   .kp-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.04in;text-align:center;min-width:0}
   .kp-ch{display:inline-flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.03in;font-variant:small-caps;font-weight:bold;font-size:.108in;color:rgba(255,255,255,.88);text-shadow:0 1px 2px rgba(0,0,0,.75)}
   .kp-ch svg,.kp-ch .ic{width:.12in;height:.12in;flex:0 0 auto}
-  .kp-big{display:inline-flex;align-items:center;gap:.04in;font-weight:900;font-size:.34in;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 1.5px 3px rgba(0,0,0,.8)}
+  .kp-big{display:inline-flex;align-items:center;gap:.04in;font-weight:900;font-size:.3in;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 1.5px 3px rgba(0,0,0,.8)}
   .kp-big svg,.kp-big .ic{width:.27in;height:.27in}
   /* the by-quality scale — a STACKED chip per tier (Q above, ★ value below), not one long joined line, laid
      out on its OWN full-width row (kp-scalerow) instead of a 1-of-3 cell, so it scales to however many tiers
@@ -666,8 +671,8 @@
   .kp-note{font-size:.12in;font-style:italic;color:rgba(255,255,255,.92);line-height:1.22;text-shadow:0 1px 2px rgba(0,0,0,.75)}
   .kp-note.ctr{text-align:center;padding:.03in .16in .02in;font-size:.12in}
   /* presence ZONE — the panel's open floor: ownership discs pile here (the majority count) */
-  .kp-pz{flex:1;min-height:.6in}   /* the open middle — pure art; the presence discs pile here, untaught */
-  .kp-pz.nb{min-height:.22in}   /* the Hall's shorter note needs less clearance below it now that it's one short line */
+  .kp-pz{flex:1;min-height:.42in}   /* the open middle — pure art; the presence discs pile here, untaught */
+  .kp-pz.nb{min-height:.18in}   /* the Hall's shorter note needs less clearance below it now that it's one short line */
   .kp.hall .kp-lad{display:flex;align-items:center;justify-content:space-evenly;gap:.12in;padding:.05in .12in .02in}
   .kp.hall .kp-lad .lr{display:flex;flex-direction:column;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.17in;color:rgba(255,255,255,.88);text-shadow:0 1px 2px rgba(0,0,0,.75)}
   .kp.hall .kp-lad .lr b{display:inline-flex;align-items:center;gap:.03in;font-size:.4in;color:#fff;text-shadow:0 1.5px 3px rgba(0,0,0,.8)}
@@ -1522,7 +1527,7 @@ function supplyBoard(){
         +d.scale.map(qv=>'<span class="qv"><span class="qq">Q'+qv[0]+'</span><span class="qn">'+LU(VP)+qv[1]+'</span></span>').join('')
       +'</span></div>':'';
     const valCell=d.scale?'':'<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU(VP)+d.val+'</span></div>';
-    return '<div class="kp" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+kArt(d.nm.toLowerCase())
+    return '<div class="kp'+(d.scale?' scale':'')+'" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+kArt(d.nm.toLowerCase())
       +'<div class="kp-t">'+LU('landmark')+d.nm+'<span class="kp-q">'+LU(QI)+d.req+'+</span></div>'
       +'<div class="kp-pz"></div>'
       +'<div class="kp-rows">'+scaleRow+'<div class="kp-cr'+(d.scale?' two':'')+'">'+valCell
