@@ -457,24 +457,25 @@
   .kname svg,.kname .ic{width:.22in;height:.22in}
   .kreq{font-size:.13in;font-weight:bold;background:rgba(255,255,255,.24);border-radius:.05in;padding:.018in .06in;display:flex;align-items:center;gap:.03in;flex:0 0 auto}
   .kreq svg,.kreq .ic{width:.15in;height:.15in}
-  .kbody{flex:1;display:flex;flex-direction:column;gap:.07in;padding:.08in .07in .09in}
+  .kbody{flex:1;display:flex;flex-direction:column;gap:.06in;padding:.08in .07in .09in}
   .krole{font-size:.1in;font-style:italic;color:var(--ink2);line-height:1.12;text-align:center;min-height:.22in}
   /* a section card inside the panel: white, kontor-edged, with a small small-caps heading. value/benefit are
-     compact; the MAJORITY card grows so its presence zone fills the panel. */
-  .ksect{flex:1 1 0;background:#fff;border:1.5px solid var(--kc);border-radius:.07in;padding:.06in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in}
-  .ksh{font-variant:small-caps;font-weight:bold;font-size:.098in;color:var(--kc);letter-spacing:.4px;display:flex;align-items:center;gap:.035in;opacity:.92}
-  .ksh svg,.ksh .ic{width:.13in;height:.13in;opacity:.85}
-  .ksh .mt-t{color:var(--ink2);font-weight:normal;font-variant:normal;font-style:italic;font-size:.08in;margin-left:.03in}
-  .ksub{font-size:.085in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.08}
+     compact; the MAJORITY card grows so its presence zone fills the panel. Headings/notes wrap rather than
+     clip — a panel this narrow, at a real serif font, can't guarantee a long label fits on one line. */
+  .ksect{flex:1 1 0;background:#fff;border:1.5px solid var(--kc);border-radius:.07in;padding:.05in .04in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in}
+  .ksh{font-variant:small-caps;font-weight:bold;font-size:.09in;color:var(--kc);letter-spacing:.3px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.03in;opacity:.92;text-align:center;row-gap:0}
+  .ksh svg,.ksh .ic{width:.12in;height:.12in;opacity:.85}
+  .ksh .mt-t{color:var(--ink2);font-weight:normal;font-variant:normal;font-style:italic;font-size:.078in;margin-left:.02in}
+  .ksub{font-size:.08in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.1}
   .ksub b{color:var(--kc);font-style:normal}
   /* per-cask value — a readable star number, or a by-quality mini-row for the Long Haul */
-  .kval{display:flex;align-items:center;justify-content:center;gap:.04in;font-weight:900;font-size:.44in;color:var(--kc);line-height:.92}
-  .kval svg,.kval .ic{width:.3in;height:.3in;color:var(--vp);stroke-width:2.5}
-  .kvscale{display:flex;gap:.1in;justify-content:center;align-items:flex-end}
-  .kvscale .qv{display:flex;flex-direction:column;align-items:center;gap:.015in}
-  .kvscale .qv .qq{font-size:.1in;font-variant:small-caps;font-weight:bold;color:var(--ink2)}
-  .kvscale .qv .qn{display:flex;align-items:center;gap:.025in;font-weight:900;font-size:.28in;color:var(--kc);line-height:1}
-  .kvscale .qv .qn svg,.kvscale .qv .qn .ic{width:.2in;height:.2in;color:var(--vp);stroke-width:2.6}
+  .kval{display:flex;align-items:center;justify-content:center;gap:.04in;font-weight:900;font-size:.42in;color:var(--kc);line-height:.92}
+  .kval svg,.kval .ic{width:.28in;height:.28in;color:var(--vp);stroke-width:2.5}
+  .kvscale{display:flex;gap:.06in;justify-content:center;align-items:flex-end}
+  .kvscale .qv{display:flex;flex-direction:column;align-items:center;gap:.01in;flex:0 0 auto}
+  .kvscale .qv .qq{font-size:.09in;font-variant:small-caps;font-weight:bold;color:var(--ink2);white-space:nowrap}
+  .kvscale .qv .qn{display:flex;align-items:center;gap:.02in;font-weight:900;font-size:.22in;color:var(--kc);line-height:1;white-space:nowrap}
+  .kvscale .qv .qn svg,.kvscale .qv .qn .ic{width:.16in;height:.16in;color:var(--vp);stroke-width:2.6;flex:0 0 auto}
   /* on-delivery benefit — iconic + a one-line note */
   .kben{display:flex;align-items:center;justify-content:center;gap:.05in;font-weight:900;font-size:.36in;color:var(--kc);line-height:1}
   .kben svg,.kben .ic{width:.42in;height:.42in;color:var(--kc);stroke-width:2.1}
@@ -494,7 +495,11 @@
   .kladder .lr .lq{font-size:.15in;font-variant:small-caps;color:var(--ink2)}
   .kladder .lr .lv{display:flex;align-items:center;gap:.035in;font-size:.3in}
   .kladder .lr svg,.kladder .lr .ic{width:.24in;height:.24in;color:var(--vp);stroke-width:2.5}
-  .hall-note{font-size:.092in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.16;margin-top:auto;padding-top:.05in}
+  /* v11: was margin-top:auto, which glued this to the very bottom edge of the panel with almost no
+     clearance — a real (wider) serif font could wrap it to 2 lines with nothing below to absorb that,
+     clipping it against .kpanel's overflow:hidden. A fixed gap + shorter copy fixes both: it now sits
+     just under the ladder with real breathing room instead of pinned to the border. */
+  .hall-note{font-size:.086in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.14;margin-top:.1in}
   .hall-note b{color:var(--kc);font-style:normal}
   /* ====================== MAIN BOARD — THE WHARF ====================== */
   .mboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--sea);border-radius:.12in;padding:.14in .16in;display:flex;flex-direction:column;gap:.04in;color:var(--ink)}
@@ -830,9 +835,9 @@ const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',
 // the value-Buildings a cask ships through. Novgorod's value SCALES with quality (Q3·2 / Q4·4 / Q5·6).
 const DESTS=[
   {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, val:'1',                maj:[4,2,0], role:'The Hub — the economy',          ben:{n:'+2',ic:'coins'},      bnote:'goods (liquidity)'},
-  {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, val:'1',                maj:[5,3,1], role:'The Steelyard — the engine',     ben:{n:'+1',ic:'building-2'}, bnote:'a Privilege/Building (placed) OR a Specialist, free'},
-  {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, val:'1',                maj:[9,5,2], role:'Bryggen — the rich majority',    ben:{n:'+1',ic:'map-pin'},    bnote:'a free Reach (+1 presence)'},
-  {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, scale:[[3,2],[4,4],[5,6]], maj:[8,5,2], role:'The Long Haul — the quality climb', ben:{n:'+1',ic:'hourglass'},  bnote:'refine a maturing cask (+1 age)'},
+  {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, val:'1',                maj:[5,3,1], role:'The Steelyard — the engine',     ben:{n:'+1',ic:'building-2'}, bnote:'a Building or Specialist, free'},
+  {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, val:'1',                maj:[9,5,2], role:'Bryggen — the rich majority',    ben:{n:'+1',ic:'map-pin'},    bnote:'free Reach (+1 presence)'},
+  {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, scale:[[3,2],[4,4],[5,6]], maj:[8,5,2], role:'The Long Haul — the quality climb', ben:{n:'+1',ic:'hourglass'},  bnote:'refine a cask, +1 age'},
 ];
 const HALL={nm:'The Hall', kc:'#5b3a8e', tint:'#efeaf6', req:2, role:'Prestige — the local Enshrine (no ship)', ladder:[[2,3],[3,5],[4,7],[5,9]]};
 const SAILED={2:6,3:10,4:13};        // Sailed-Ships end clock per player count ⚙ (RULES §8 — 2–4p; v1.3 trimmed 7/11/14→6/10/13)
@@ -1155,13 +1160,13 @@ function kpanel(d,hall){
   if(hall){
     // THE HALL — a prestige ladder (Q → ★), reached by the local Enshrine (no ship)
     const ladder='<div class="kladder">'+d.ladder.map(qv=>'<div class="lr"><span class="lq">Q'+qv[0]+'</span><span class="lv">'+LU(VP)+qv[1]+'</span></div>').join('')+'</div>';
-    const body='<div class="ksect hall"><div class="ksh">'+LU('crown')+'prestige · by quality</div>'+ladder+'</div>'
-      +'<div class="hall-note"><b>Enshrine</b> — a deployed Q2+ cask, no ship</div>';
+    const body='<div class="ksect hall"><div class="ksh">'+LU('crown')+'prestige · by Q</div>'+ladder+'</div>'
+      +'<div class="hall-note"><b>Enshrine</b> — Q2+ deployed, no ship</div>';
     return '<div class="kpanel hall" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+title+'<div class="kbody"><div class="krole">'+d.role+'</div>'+body+'</div></div>';
   }
   // per-cask VALUE — flat star number, or a by-quality mini-row for Novgorod (scales with quality)
   const valSect = d.scale
-    ? '<div class="ksect"><div class="ksh">'+LU(VP)+'value · by quality</div>'
+    ? '<div class="ksect"><div class="ksh">'+LU(VP)+'value · by Q</div>'
         +'<div class="kvscale">'+d.scale.map(qv=>'<div class="qv"><span class="qq">Q'+qv[0]+'</span><span class="qn">'+LU(VP)+qv[1]+'</span></div>').join('')+'</div></div>'
     : '<div class="ksect"><div class="ksh">'+LU(VP)+'per-cask value</div>'
         +'<div class="kval">'+LU(VP)+d.val+'</div></div>';
