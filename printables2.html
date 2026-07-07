@@ -388,9 +388,12 @@
      A bench sized to the TILES, not the page: 4 building/improvement slots (2in) + a compact Flight strip on
      top; ONE recipe-stack slot + 3 cask-vessel slots (2.46in, hold the 2.5in cask cards) on the bottom. No
      header/storage block, no rules text — just the slots. The die-cut hugs the cluster (see the call site). */
-  .pb2{--pc:#7c2128;width:100%;height:100%;background:var(--parch);color:var(--ink);
-    border:3px solid var(--pc);border-radius:.18in;padding:.13in;display:flex;flex-direction:column;gap:.1in;
-    box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.45)}
+  .pb2{--pc:#7c2128;width:100%;height:100%;background:var(--parch);color:var(--ink);position:relative;
+    border:3px solid var(--pc);border-radius:.18in;padding:.13in;display:flex;flex-direction:column;gap:.1in}
+  /* the white highlight line is an ::after overlay border, not an inset box-shadow — html2canvas floods
+     inset shadows across the whole element (the player-board sheet PNG exported 45%-white-washed; same
+     export bug that painted the Market & Stores board gold — see .supply-outer) */
+  .pb2::after{content:"";position:absolute;inset:0;border:1.5px solid rgba(255,255,255,.45);border-radius:.14in;pointer-events:none;z-index:6}
   .pb2 svg,.pb2 .ic{stroke-width:1.8}
   /* identity — a small colour crest + house name + a tiny goods-cap reminder (no storage block) */
   .pb2-id{display:flex;align-items:center;gap:.08in;flex:0 0 auto;padding:0 .02in}
@@ -555,8 +558,13 @@
   .rc.cap{background:var(--gold);color:#fff;font-weight:bold;font-size:.07in;text-align:center;line-height:1}
   .rc.z{background:rgba(124,33,40,.12);font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.07in}
   /* printables2: the SCORE RING — 50 disc-sized cells (0–49 + lap) wrapping the Supply board's outer edge */
-  .supply-outer{position:relative;width:100%;height:100%;background:var(--parch);border-radius:.14in;overflow:hidden;
-    box-shadow:inset 0 0 0 2px var(--gold)}
+  /* the gold rim is an ::after overlay border, NOT an inset box-shadow: html2canvas mis-renders inset
+     box-shadows by FLOODING the whole element with the shadow colour — the S2 sheet PNG exported with the
+     entire board interior painted gold (#b8860b) instead of parchment. Same bug class as the documented
+     gradient/filter/clip-path quirks in the export review note; the ::after border pattern is already
+     proven in exports by the goods tokens' .tok::after inner ring. */
+  .supply-outer{position:relative;width:100%;height:100%;background:var(--parch);border-radius:.14in;overflow:hidden}
+  .supply-outer::after{content:"";position:absolute;inset:0;border:2px solid var(--gold);border-radius:.14in;pointer-events:none;z-index:6}
   .score-ring{position:absolute;inset:0}
   .ringcell{position:absolute;border:1px solid rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;
     font-size:.21in;font-weight:900;color:var(--ink2);background:rgba(255,255,255,.55);overflow:hidden}
@@ -1636,7 +1644,10 @@ function wharfBoardSheet(pages){
 }
 // the MARKET & STORES board (supply displays · stores bins · tracks · the score ring) → its own trimmed sheet, centred.
 function supplyBoardSheet(pages){
-  const G=SUPPLY_GEO;const pg=newPage(pages,'boards','Market &amp; Stores board (supply · tracks · score ring)',G);
+  // label stays PLAIN TEXT (no &amp; entity): every consumer escapes for itself — esc() for the reg-mark
+  // SVG title (an entity here double-escaped to a literal "&amp;" on the printed sheet) and slug() for the
+  // export filename (the entity slugged to "market-amp-stores-…").
+  const G=SUPPLY_GEO;const pg=newPage(pages,'boards','Market & Stores board (supply · tracks · score ring)',G);
   const w=+(SUPPLY_NW*SCALE).toFixed(4),h=+(SUPPLY_NH*SCALE).toFixed(4),x=+((G.w-w)/2).toFixed(3),y=+((G.h-h)/2).toFixed(3);
   pg.items.push({x,y,w,h,nat:[SUPPLY_NW,SUPPLY_NH],html:supplyBoard()});
   pg.rrect={x,y,w,h,r:0.14};
