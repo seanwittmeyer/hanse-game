@@ -407,6 +407,7 @@
     </div>
     <div>
       <div class="panel"><h3>Market</h3><div class="shop" id="shop"></div></div>
+      <div class="panel"><h3>The Seals <span class="note">(what a Privilege hands your cask)</span></h3><div id="sealref"></div></div>
       <div class="panel"><h3>The Voyage <span class="note">(end clock)</span></h3><div id="voyage"></div></div>
       <div class="panel"><h3>Log <button class="copybtn" onclick="copyDiag(this)" data-tip="Copy the game log + full diagnostic state (turn, UI, AI runtime, board, raw JSON) to the clipboard.">⧉ Copy log + diagnostics</button></h3><div id="log"></div></div>
       <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
@@ -1147,6 +1148,26 @@ function sealChip(sl,cls){if(!sl)return '';const def=SEALS[sl.b]||{};const v=sea
   return '<span class="seal'+(sl.gilt?' gilt':'')+(cls?' '+cls:'')+'" data-tip="'+attr('Seal — '+bName(sl.b)+': +'+v+'★ printed'+(sl.gilt?' (gilt face — the Q4+ premium, pre-summed)':'')+(def.cond==='lead'?' · pays at a kontor where you LEAD':def.cond==='trail'?' · pays where you do NOT lead':'')+(def.kontor?' · at '+DEST[def.kontor].name+' only':'')+(def.hall?' · at the Hall only':'')+'. Taken at load — nothing ever recalculates; read at delivery.')+'">+'+v+'</span>';}
 // the seal a DEPLOYED cask would take from its dock (preview — the tile still holds it until the load)
 function caskPreviewBonus(slotId){return sealFor(slotId);}
+// ---- THE SEAL REFERENCE PANEL — every seal in the box, both printed faces, and when it's taken.
+// Derived from the SEALS table (the one source), so the reference can never drift from the engine.
+function renderSealRef(){const el=document.getElementById('sealref');if(!el)return;
+  const chip=(v,gilt)=>'<span class="seal'+(gilt?' gilt':'')+'" style="width:26px;height:26px;font-size:.72rem;flex:none">+'+v+'</span>';
+  const row=(k,when)=>{const def=SEALS[k];if(!def)return '';
+    const plain=def.plain>0?chip(def.plain,false):'<span class="note" style="font-size:.64rem;width:26px;text-align:center;flex:none">—</span>';
+    const gilt=def.gilt>def.plain?chip(def.gilt,true):'<span class="note" style="font-size:.64rem;flex:none">no gilt</span>';
+    const cond=def.hall?'pays at the Hall only':def.kontor?('pays at '+DEST[def.kontor].name+' only'):def.cond==='lead'?'pays where you LEAD':def.cond==='trail'?'pays where you do NOT lead':def.plain===0?'Q4+ casks only':'any kontor';
+    return '<div style="display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid rgba(0,0,0,.06)">'
+      +'<span style="flex:1;min-width:0"><b style="font-size:.79rem">'+bName(k)+'</b><span class="note" style="display:block;font-size:.65rem">'+when+' · '+cond+'</span></span>'
+      +plain+gilt+'</div>';};
+  let h='<div class="note" style="font-size:.72rem;margin-bottom:5px">Each Privilege carries its printed '+LU('stamp')+' <b>seal tokens</b>. Your cask <b>takes one onto its card</b> when it ships from your privilege — dock seals at the <b>load/Enshrine</b>, berth seals at the <b>sail</b> (one per of-your casks aboard). Flip to the <b>gilt face</b> when the cask is effective <b>Q4+</b> (the premium, pre-summed — no adding). Max <b>one dock + one berth</b> seal per cask. Printed conditions are read at delivery; the seal then <b>returns to its tile</b>. ⚙ supply: 2 seals per dock privilege · 3 per berth privilege.</div>';
+  h+='<div class="note" style="font-size:.64rem;text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Dock seals — taken at the load</div>';
+  h+=['staple','burgomstr','connoiss','hansediet','almoner','ch_bruges','ch_london','ch_bergen','ch_novgo'].map(k=>row(k,'dock')).join('');
+  h+='<div class="note" style="font-size:.64rem;text-transform:uppercase;letter-spacing:.5px;margin-top:4px">The Hall seal — taken at the Enshrine</div>';
+  h+=row('reliquary','dock');
+  h+='<div class="note" style="font-size:.64rem;text-transform:uppercase;letter-spacing:.5px;margin-top:4px">Berth seals — handed at the sail</div>';
+  h+=row('richberth','berth')+row('festkeller','berth · HULKS only');
+  h+='<div class="note" style="font-size:.65rem;margin-top:4px">The Salt House pays goods, not a seal. Under House Almanacs your seal tokens match your tiles’ colour — whose seal rides whose cask is never a question.</div>';
+  el.innerHTML=h;}
 function pCaskFace(t,bonus,actOv){const st=STYLES[t.style]||{};const o=(t.owner!=null)?S.players[t.owner]:null;const act=actOv||caskAct(t);
   return '<div class="ptile pcask" style="--tc:'+(STYLE_COLOR[t.style]||'#777')+'">'
     +'<span class="pq">'+LU('beer')+t.q+'</span>'
@@ -2981,7 +3002,7 @@ function renderAiSpeed(){
 //==================================================================
 function render(){
   if(!S)return;
-  renderBar();renderGrid();renderDests();expRender();renderBuildings();renderShop();renderVoyage();renderTableaus();renderAiSpeed();
+  renderBar();renderGrid();renderDests();expRender();renderBuildings();renderShop();renderSealRef();renderVoyage();renderTableaus();renderAiSpeed();
   document.getElementById('log').innerHTML=S.log.join('');
   document.getElementById('turnlbl').textContent='Round '+S.turn+(S.ending?' · FINAL':'');
   refreshIcons();
