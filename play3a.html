@@ -86,6 +86,8 @@
   .slot .tpip{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.32)}
   .slot .tpip.on{background:#fff;box-shadow:0 0 2px rgba(0,0,0,.4)}
   .slot.place{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite;color:var(--gold);border-color:var(--gold)}
+  .slot.mine{outline:3px dashed var(--gold2);outline-offset:2px}   /* the station's own slots — what this turn touches */
+  .cell.here{outline:3px dashed var(--gold2);outline-offset:2px}
   .slot{position:relative;container-type:size}
   .slot.pfilled{border:none;padding:0;background:transparent;overflow:visible}
   /* a BUILDING is the slot's FULL tile (the keystone's authored layer); the occupant is a token on it */
@@ -1100,7 +1102,7 @@ function tileTip(t,slot){
   const b=slot?bAt(slot):null;const btip=b?(' · '+bldgTip(b)):'';
   if(!t)return (b?bldgTip(b)+' · ':'')+'Open slot — deploy a Ready cask or commission a ship'+(b?'':'; place a Building to author value');
   if(t.type==='cask'){const o=S.players[t.owner];
-    return o.name+'’s '+STYLES[t.style].name+' Q'+t.q+' · '+CASK_ACT[(slot?slotEffAct(slot):null)||caskAct(t)]+' · load to a ship to deliver'+btip;}
+    return o.name+'’s '+STYLES[t.style].name+' Q'+t.q+' · '+CASK_ACT[(slot?slotEffAct(slot):null)||caskAct(t)]+' · SEND it (ship · the Hall · charter) to deliver'+btip;}
   if(t.type==='ship'){
     const cargo=t.load.length?(' · aboard '+t.load.map(L=>S.players[L.owner].name+'’s '+styleShort(L.style)).join(', ')):'';
     return shipName(t)+' → '+DEST[t.dest].name+' · '+t.load.length+'/'+effCap(t)+' · Q'+DEST[t.dest].gate+'+ only · full → sails & delivers'+cargo+btip;}
@@ -3088,7 +3090,7 @@ function renderBar(){
     acts=btn(LINES[o.row].label,'chooseLine(\'row\')','go')+btn(LINES[o.col].label,'chooseLine(\'col\')','go')
       +(fes.length?btn(LU('home')+' The Floor · '+fes.length+' private stop'+(fes.length===1?'':'s'),'chooseLine(\'floor\')','go'):'');}
   else if(U==='stops'){
-    prompt='Resolve '+(UI.line==='floor'?'your <b>Floor</b>’s stops':'this line’s stops')+' <b>in any order</b> — pick the next ('+UI.stops.length+' left). All optional.';
+    prompt='Resolve '+(UI.line==='floor'?'your <b>Floor</b>’s stops':'this line’s stops')+' <b>in any order</b> ('+UI.stops.length+' left, all optional) — <b>click a glowing station or slot on the board</b>, or use these buttons.';
     acts=UI.stops.map((s,i)=>stopAvail(s)?btn(stopLabel(s),'resolveStop('+i+')','go'):btnOff(stopLabel(s))).join('');}
   else if(U==='cell'){const r=cellRender(p);prompt=r.prompt;acts=r.acts;}
   else if(U==='brew'){prompt='Brew — load a recipe into an open vessel. <span class="note">Each shows the slot-action its cask will take (the face-up top of that quality’s pile — steerable).</span>';
@@ -3175,7 +3177,10 @@ function renderBar(){
   document.getElementById('prompt').innerHTML=prompt;
   document.getElementById('acts').innerHTML=acts;
   document.getElementById('boardnote').innerHTML =
-      U==='stops'? 'A line fires <b>both stations</b> (one verb each) + each slot’s stop — an empty slot DEPLOYS onto itself, a cask fires its action, a ship loads itself — in <b>any order</b>. Stations are never closed.'
+      U==='stops'? 'CLICK a glowing station or slot to resolve it — an empty slot DEPLOYS onto itself, a cask fires its action, a ship loads itself. Any order; all optional.'
+    : (U==='cell'&&UI.stage==='send_cask')? 'CLICK a glowing cask — that is the barrel you will send.'
+    : (U==='cell'&&UI.stage==='send_route')? 'CLICK a glowing ship (or the glowing Hall card above) — that is where it goes.'
+    : (U==='cell'&&UI.cell==='A'&&!UI.stage)? 'Buying? Use the MARKET panel on the right — recipes · your almanac · ships · contracts. Or take goods in the bar.'
     : U==='placebldg'||(U==='cell'&&UI.stage==='place')? 'Click a glowing slot.'
     : 'The Wharf: '+LU('store')+' <b>Source</b> → '+LU('flask-conical')+' <b>Brew</b> → '+LU('hourglass')+' <b>Age</b> → '+LU('ship')+' <b>Ship</b>. A Ready cask deploys to a '+LU('anchor')+' slot, then ships on a '+LU('sailboat')+' to a destination for points.';
 }
@@ -3231,14 +3236,14 @@ function cellRender(p){
   }
   if(UI.cell==='C'){   // v3.0-A: the unified SEND — pick the cask, then the route
     if(UI.stage==='send_cask'){const refs=sendCasks(p);
-      return {prompt:LU('ship')+' <b>Send</b> — pick ONE deployed cask'+(hasUpgrade(p,'quay')?' (or one in your vessels — the Quaymaster)':'')+((UI.sendsLeft||1)>1?' · '+UI.sendsLeft+' sends left (Stevedore)':'')+'. <span class="note">A rival’s cask can be sent by ship only — its owner scores; you take '+Gi(1)+' and choose the destination.</span>',
+      return {prompt:LU('ship')+' <b>Send</b> — <b>click a glowing cask on the board</b> (or below): pick ONE'+(hasUpgrade(p,'quay')?' (or one in your vessels — the Quaymaster)':'')+((UI.sendsLeft||1)>1?' · '+UI.sendsLeft+' sends left (Stevedore)':'')+'. <span class="note">A rival’s cask can be sent by ship only — its owner scores; you take '+Gi(1)+' and choose the destination.</span>',
         acts:refs.map(ref=>{const ct=refCask(ref);return btn(LU('beer')+ownSq(refOwner(ref))+styleShort(ct.style)+' Q'+caskEffQ(ref)+(isVRef(ref)?' · vessel':''),'sendPickCask(\''+ref+'\')','go');}).join('')+btn('Done','sendDone()','ghost')};}
     if(UI.stage==='send_route'){const ref=UI.tmp.sendCask;const ct=refCask(ref);const rs=sendRoutesFor(p,ref);
       const bs=rs.map(r=>{
         if(r.kind==='ship'){const sh=S.slots[r.slot];return btn(LU('sailboat')+' '+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+') · free','sendRoute(\'ship\',\''+r.slot+'\')','go');}
         if(r.kind==='hall')return btn(LU('crown')+' Enshrine → the Hall (local)','sendRoute(\'hall\')','go');
         return btn(LU('ticket')+' Charter → a kontor ('+costStr(charterCost(p))+' + a contract; you hold '+(p.contracts||0)+')','sendRoute(\'charter\')','go');}).join('');
-      return {prompt:'Send '+LU('beer')+ownSq(refOwner(ref))+styleShort(ct.style)+' Q'+caskEffQ(ref)+' — which route?',acts:bs+btn('◂ Back','sendBack()','ghost')+btn('Done','sendDone()','ghost')};}
+      return {prompt:'Send '+LU('beer')+ownSq(refOwner(ref))+styleShort(ct.style)+' Q'+caskEffQ(ref)+' — <b>which route?</b> Click a glowing <b>ship</b> on the board, the glowing <b>Hall card</b> above, or a button here.',acts:bs+btn('◂ Back','sendBack()','ghost')+btn('Done','sendDone()','ghost')};}
     if(UI.stage==='send_charter'){const ref=UI.tmp.sendCask;const c=refCask(ref);const cq=caskEffQ(ref);
       const ds=DESTS.filter(d=>d!=='hall'&&cq>=olCharterGate(p,d));
       const rhine=(typeof olCanRhine==='function'&&olCanRhine(p,cq));
@@ -3258,26 +3263,44 @@ function renderGrid(){
     const depAny=!aiTurn()&&(UI.sub==='deploy'&&UI.deploy&&UI.deploy.slot==null&&UI.deploy.vi!=null&&!t);   // v3.0-A.1: the Brewhouse verb — any open slot
     const occPlacing=!aiTurn()&&(UI.sub==='cell'&&UI.cell==='A'&&UI.stage==='place'&&(!t||commPickupOK(s.id,UI.tmp.placeTile.dest)));
     const bldgPlacing=(!aiTurn()||humanGate())&&UI.sub==='placebldg'&&(!b||canPay(S.players[UI.tmp.placeBldg.owner],OVERBUILD_FEE));   // v2.9: occupied slots only when the ground rent is payable; the human-gate lets an off-turn owner place mid-AI-turn
-    if(occPlacing||bldgPlacing||depTarget||depAny)cls+=' place';
+    // v3.0 BOARD-FIRST: pending line stops glow and resolve by CLICKING the slot; the send picks its
+    // cask and its ship on the board itself. The bar buttons mirror everything for accessibility.
+    let stopIdx=-1;
+    if(!aiTurn()&&UI.sub==='stops'&&UI.stops)stopIdx=UI.stops.findIndex(st=>(st.kind==='cap'||st.kind==='deploy')&&st.slot===s.id);
+    const stopOK=stopIdx>=0&&stopAvail(UI.stops[stopIdx]);
+    const sendCaskOK=!aiTurn()&&UI.sub==='cell'&&UI.stage==='send_cask'&&t&&t.type==='cask'&&sendCasks(cur()).includes(s.id);
+    const sendShipOK=!aiTurn()&&UI.sub==='cell'&&UI.stage==='send_route'&&t&&t.type==='ship'&&UI.tmp&&UI.tmp.sendCask&&sendRoutesFor(cur(),UI.tmp.sendCask).some(r=>r.kind==='ship'&&r.slot===s.id);
+    
+    if(occPlacing||bldgPlacing||depTarget||depAny||stopOK||sendCaskOK||sendShipOK)cls+=' place';
     let inner;let style='';
     if(b&&t){   // both a building and an occupant → an offset stack (tap to swap which is on top)
       cls+=' pfilled stack';inner=stackHtml(b,t,s.id);
     }else if(b){cls+=' pfilled';inner=pBldgFace(b);}
     else if(t){cls+=' pfilled';inner=(t.type==='cask'?pCaskFace(t,caskPreviewBonus(s.id),slotEffAct(s.id)):pShipFace(t));}
-    else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Deploy a Ready cask here — an empty slot’s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span></span>';
-    let click=bldgPlacing?'placeBldgOn':(occPlacing?'placeSlot':(depAny?'deployAnyTo':null));
-    if(!click&&b&&t)click='toggleStack';   // not placing → tapping a stacked slot swaps the visible order
-    h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
+    else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Deploy a Ready cask here — an empty slot’s stop deploys onto THIS slot')+'"><i data-lucide="barrel" class="ic"></i></span></span>';
+    let clickAttr='';
+    if(bldgPlacing)clickAttr='placeBldgOn(\''+s.id+'\')';
+    else if(occPlacing)clickAttr='placeSlot(\''+s.id+'\')';
+    else if(depAny)clickAttr='deployAnyTo(\''+s.id+'\')';
+    else if(stopOK)clickAttr='resolveStop('+stopIdx+')';
+    else if(sendCaskOK)clickAttr='sendPickCask(\''+s.id+'\')';
+    else if(sendShipOK)clickAttr='sendRoute(\'ship\',\''+s.id+'\')';
+    else if(b&&t)clickAttr='toggleStack(\''+s.id+'\')';   // not placing → tapping a stacked slot swaps the visible order
+    h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(clickAttr?'onclick="'+clickAttr+'"':'')+'>'+inner+'</div>';
   });
   ['A','B','C','D'].forEach(c=>{const act=CELLNAME[c];
     const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+p.name+'"></span>').join('');
     let cls='cell '+c+' c'+c;
     const legal=(UI.sub==='move'&&!aiTurn()&&(!cur().placed||ADJ[cur().cell].includes(c)));
-    if(legal)cls+=' legal';
+    let cellStopIdx=-1;
+    if(!aiTurn()&&UI.sub==='stops'&&UI.stops)cellStopIdx=UI.stops.findIndex(st=>st.kind==='cell'&&st.cell===c);
+    const cellStopOK=cellStopIdx>=0&&stopAvail(UI.stops[cellStopIdx]);   // v3.0 board-first: a pending station stop is clickable
+    if(legal||cellStopOK)cls+=' legal';
+    
     const grps=STATION_ACTS[act]||[(YIELD[act]||[])];   // groups: icons within a group are OR (slash); groups are AND (gap)
     const ico=n=>'<span class="iw" data-tip="'+attr(STATION_ICON_TIP[n]||ICONTIP[n]||'')+'"><i data-lucide="'+n+'" class="ic"></i></span>';
     const yields=grps.map(grp=>grp.map(ico).join('')).join('<span class="yand">+</span>');
-    h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'>'
+    h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(legal?'onclick="doMove(\''+c+'\')"':(cellStopOK?'onclick="resolveStop('+cellStopIdx+')"':''))+'>'
       +'<div class="stn">'
       +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="role">'+CELLROLE[c]+'</div><div class="nm">'+act+'</div></div></div>'
       +'<div class="yield">'+yields+'</div>'
@@ -3332,7 +3355,8 @@ function renderDests(){
       :D.benefit==='goods'?'<span data-tip="'+attr('Benefit: take 2 goods (any mix) on each delivery.')+'">+2'+LU('coins')+'</span>'
       :D.benefit==='reach'?'<span data-tip="'+attr('Benefit: free Reach — +1 presence at any kontor (feeds majorities).')+'">+'+LU('map-pin')+'</span>'
       :D.benefit==='age'?'<span data-tip="'+attr('Benefit: refine — advance a maturing cask +1 step toward Ready.')+'">+'+LU('hourglass')+'</span>':'';
-    h+='<div class="route '+d+'" data-tip="'+attr(D.name+' · '+D.role)+'">'
+    const hallSend=!aiTurn()&&UI.sub==='cell'&&UI.stage==='send_route'&&d==='hall'&&UI.tmp&&UI.tmp.sendCask&&sendRoutesFor(cur(),UI.tmp.sendCask).some(r=>r.kind==='hall');   // v3.0 board-first: Enshrine by clicking the Hall
+    h+='<div class="route '+d+(hallSend?' shipable':'')+'" '+(hallSend?'onclick="sendRoute(\'hall\')" ':'')+'data-tip="'+attr(D.name+' · '+D.role+(hallSend?' — CLICK to Enshrine the picked cask here':''))+'">'
       +'<div class="rh"><span class="ric">'+(D.kontor?LU('landmark'):LU('crown'))+'</span>'
       +((D.maj&&D.maj.length)?'<span class="rmaj'+(majOff?' off':'')+'" data-tip="'+attr(majOff?('Majorities OFF this game — The Trade Roads replaces them with the inland-roads network (see the Trade Roads panel). Printed base: '+D.maj.join('/')+'.'):('End-game majority '+D.maj.join('/')+' — to 1st/2nd/3rd by delivered-cask count (2p skips 2nd).'))+'">'+D.maj.join('/')+'</span>':'')+'</div>'
       +'<div class="rn">'+D.name+'</div>'
