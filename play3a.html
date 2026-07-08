@@ -459,7 +459,7 @@ const ICONTIP={
   sprout:'Hops (H) — a brewing input; the beer that travels.',
   beer:'Cask — a brewed beer tile (matures → slot → delivered).',
   store:'Market — Source: gain 2 goods, or acquire one tile (a recipe · a Privilege/Building to place · a ship commission · a charter contract). Specialists are hired at the Cellar.',
-  'flask-conical':'Brewhouse — Brew: load a recipe into an open vessel (the cask takes the face-up action of that quality\'s pile).',
+  'flask-conical':'Brewhouse — ONE choice: Brew (a recipe → an open vessel) OR deploy one Ready cask onto any open slot.',
   hourglass:'Cellar — ONE choice: Age (a pool of age points across your vessels) OR fit one Specialist.',
   ship:'Harbor — SEND one deployed cask: onto a docked ship (free) · to the Hall (Enshrine, Q2+) · by Charter (a contract + the fare).',
   anchor:'Slot — one of the 8 shared perimeter spaces; holds a BUILDING (owned modifier) and/or an occupant (a cask, or a ship with casks).',
@@ -553,7 +553,7 @@ function slotEffAct(id){const t=S.slots[id];if(!t||t.type!=='cask')return null;
 // alternatives (OR — shown with a "/" between them); separate groups are both done (AND — just listed).
 const STATION_ACTS={
   Market:[['coins','scroll-text','landmark','sailboat','ticket']],   // OR — Source: take goods, or acquire ONE tile (recipe/Building/ship/contract)
-  Brewhouse:[['beer']],                                              // ONE verb — Brew (v3.0-A: Deploy moved to the slots — an empty slot's stop deploys onto ITSELF)
+  Brewhouse:[['beer','barrel']],                                     // OR — Brew 1 cask, OR deploy 1 Ready cask (v3.0-A.1 — the §2-A2 valve; still one decision)
   Cellar:[['hourglass','wrench']],                                   // OR — ONE choice: Age a pool, OR fit a Specialist (Tap is CUT; the Floor absorbs its job)
   Harbor:[['package-plus','crown','ticket']],                        // ONE verb — SEND one deployed cask: ship (free) / the Hall / Charter
 };
@@ -797,7 +797,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-3a-v1'; // v3.0-A “One Stop, One Seal” PROTOTYPE — the Round-1 table pass (TABLE-PASS.md §6) built on the v2.9.1 engine: (A1) ONE VERB PER STATION — Market unchanged (2 goods OR 1 tile; the commission free-load picker is CUT, dockside pickup is the only free load) · Brewhouse = Brew only · Cellar = Age-pool OR fit 1 Specialist (Tap CUT; Blend rides as the expansion or-branch) · Harbor = the unified SEND (one deployed cask: docked ship free / Hall Q2+ / Charter contract+fare; Stevedore = send 2; Quaymaster = vessels too). (A2) SLOTS ACT ON THEMSELVES — an empty slot's stop deploys onto THAT slot; a Q1 cask stop offers the spoilage-deploy either/or; a ship stop loads that ship. (A3) SPECIALISTS AS FLOOR STOPS — Grain Factor (+2G) · Hop Gardener (+2H) · Lagerkeeper (all maturing +2) fire when you work the Floor; the per-turn Lagerkeeper tick and +1-on-gain passives are retired. (B1) SEALS REPLACE THE DEMAND DICE — a cask shipping from its owner's Privilege takes a printed SEAL (plain/gilt two-sided, gilt = the Q4+ premium pre-summed); a berth Privilege hands its seal at the sail; delivery = destination value + at most one dock seal + one berth seal, NO cap-6 arithmetic. Plus Flight milestones (3rd beer +1G1H · 4th +1 contract · 5th a free Reach — tempo, not points) and the Hall trophy shelf. All numbers ⚙. The stable game lives at archive/v2.9/play.html (KEY hanse-hotseat-v94).
+const KEY='hanse-3a-v2'; // v3.0-A.1 “The Brewhouse Valve”: the Brewhouse face is Brew 1 cask OR deploy 1 Ready cask onto any open slot (still ONE decision) — the release valve TABLE-PASS §2-A2 prescribed, adopted on sim evidence (slot-local deploy throttled the VOLUME lanes at 4p; see playtests/sim3a-personas-v1/v2). Bump discards stale 3a-v1 state. // v3.0-A “One Stop, One Seal” PROTOTYPE — the Round-1 table pass (TABLE-PASS.md §6) built on the v2.9.1 engine: (A1) ONE VERB PER STATION — Market unchanged (2 goods OR 1 tile; the commission free-load picker is CUT, dockside pickup is the only free load) · Brewhouse = Brew only · Cellar = Age-pool OR fit 1 Specialist (Tap CUT; Blend rides as the expansion or-branch) · Harbor = the unified SEND (one deployed cask: docked ship free / Hall Q2+ / Charter contract+fare; Stevedore = send 2; Quaymaster = vessels too). (A2) SLOTS ACT ON THEMSELVES — an empty slot's stop deploys onto THAT slot; a Q1 cask stop offers the spoilage-deploy either/or; a ship stop loads that ship. (A3) SPECIALISTS AS FLOOR STOPS — Grain Factor (+2G) · Hop Gardener (+2H) · Lagerkeeper (all maturing +2) fire when you work the Floor; the per-turn Lagerkeeper tick and +1-on-gain passives are retired. (B1) SEALS REPLACE THE DEMAND DICE — a cask shipping from its owner's Privilege takes a printed SEAL (plain/gilt two-sided, gilt = the Q4+ premium pre-summed); a berth Privilege hands its seal at the sail; delivery = destination value + at most one dock seal + one berth seal, NO cap-6 arithmetic. Plus Flight milestones (3rd beer +1G1H · 4th +1 contract · 5th a free Reach — tempo, not points) and the Hall trophy shelf. All numbers ⚙. The stable game lives at archive/v2.9/play.html (KEY hanse-hotseat-v94).
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1055,7 +1055,7 @@ function lineGlyph(lk){const lit=LINES[lk].cells;return '<span class="lg" data-t
 // ---- tooltips for stations & slots ----
 const CELLTIP={
   Market:'Market · Source. ONE decision: take 2 goods, OR acquire one tile — a recipe · a Privilege/Building (buy + place) · a ship commission · a charter contract. (1G toll when you work a public line while sharing a station.)',
-  Brewhouse:'Brewhouse · Brew. ONE verb: load a recipe into an open vessel — the cask takes the face-up action of that quality’s pile. (Deploy now lives on the slots.) (1G to join a rival.)',
+  Brewhouse:'Brewhouse · Brew. ONE choice: brew (a recipe → an open vessel; the cask takes the face-up pile action) OR deploy one Ready cask onto any open slot (the station verb reaches the wharf; a slot’s stop stays local). (1G to join a rival.)',
   Cellar:'Cellar · Age. ONE choice: Age ('+CELLAR_POOL+' points across your vessels) OR fit one Specialist. (Tap is cut — the Floor fires your held casks without discarding them.) (1G to join a rival.)',
   Harbor:'Harbor · Ship. ONE verb — SEND one deployed cask: onto a docked ship (free · a rival’s cask earns you the loader bonus) · to the Hall (Enshrine, Q2+) · by Charter (contract + fare). The Stevedore sends two; the Quaymaster also reaches your vessels. (1G to join a rival.)',
 };
@@ -1311,7 +1311,7 @@ function resolveStop(i){
 function resume(rt){
   if(rt==='sendmore'){UI.sub='cell';UI.cell='C';UI.stage='send_cask';UI.tmp=UI.tmp||{};render();return;}   // v3.0-A: the Stevedore's 2nd send (benefits drained first)
   UI.cell=null;UI.stage=null;UI.tmp=null;
-  UI.age=UI.brew=UI.src=UI.load=UI.cvt=UI.reach=UI.wild=UI.deploy=UI.benefit=UI.survey=UI.hire=UI.goods=UI.breach=UI.brefine=UI.tap=UI.spoil=null;
+  UI.age=UI.brew=UI.src=UI.load=UI.cvt=UI.reach=UI.wild=UI.deploy=UI.benefit=UI.survey=UI.hire=UI.goods=UI.breach=UI.brefine=UI.tap=UI.spoil=UI.bhRt=null;
   if(rt==='benefitcont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}
   if(rt==='olbrewcont'){if(UI.pendingOlBrew)UI.pendingOlBrew.shift();const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}   // The Trade Roads — a manual 'brew' slot finished → continue the pending queue
   if(rt==='line')UI.sub='line';
@@ -1324,10 +1324,36 @@ function cellDone(){resume('stops');}
 
 function enterCell(cell){
   if(cell==='A'){UI.sub='cell';UI.cell='A';UI.stage=null;UI.tmp={};render();}
-  else if(cell==='B'){enterBrew('stops');}                 // v3.0-A: Brewhouse = ONE verb (Deploy lives on the slots)
+  else if(cell==='B'){enterBrewhouse('stops');}            // v3.0-A.1: Brew 1 cask OR deploy 1 Ready cask (the §2-A2 valve)
   else if(cell==='C'){enterSend('stops');}                 // v3.0-A: Harbor = the unified SEND
   else if(cell==='D'){enterCellarChoice('stops');}         // v3.0-A: Cellar = Age OR fit one Specialist (one choice)
 }
+// v3.0-A.1 "THE BREWHOUSE VALVE" — the release valve TABLE-PASS §2-A2 prescribed, adopted on sim
+// evidence (sim3a-personas-v1: slot-local deploy throttled the VOLUME lanes at 4p — prestige read 48.3%
+// vs fair 25). The Brewhouse's face is still ONE decision: Brew 1 cask OR deploy 1 Ready cask onto any
+// open slot. The two-tier reach rule holds and gets its teaching example: SLOTS are local (a slot's stop
+// deploys onto itself); STATIONS reach the whole wharf (the Brewhouse's Deploy verb reaches any open slot).
+function bhCanBrew(p){return openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r));}
+function bhCanDeploy(p){return readyInVessels(p).length>0&&emptySlots().length>0;}
+function enterBrewhouse(rt){const p=cur();
+  const b=bhCanBrew(p),d=bhCanDeploy(p);
+  if(!b&&!d){log('↳ Brewhouse: no affordable brew, and no deploy (no Ready cask or no open slot).');resume(rt);return;}
+  if(b&&!d){enterBrew(rt);return;}
+  if(!b&&d){enterDeployAnywhere(rt);return;}
+  UI.sub='cell';UI.cell='B';UI.stage=null;UI.bhRt=rt;render();}
+function bhPick(which){const rt=UI.bhRt||'stops';UI.bhRt=null;
+  if(which==='brew')enterBrew(rt);else enterDeployAnywhere(rt);}
+// the STATION deploy verb: pick a Ready cask, set it onto ANY open slot (spoilage stays a slot-stop rule)
+function enterDeployAnywhere(rt){const p=cur();
+  if(!readyInVessels(p).length||!emptySlots().length){log('↳ nothing to deploy / no open slot.');resume(rt);return;}
+  UI.sub='deploy';UI.deploy={returnTo:rt,slot:null,vi:null};render();}   // slot:null = the station verb
+function deployPickA(vi){if(!UI.deploy||UI.deploy.slot!==null)return;UI.deploy.vi=vi;render();}
+function deployAnyTo(slot){if(!UI.deploy||UI.deploy.vi==null||UI.deploy.slot!==null)return;
+  const p=cur();const vi=UI.deploy.vi;const c=p.vessels[vi];
+  if(!c||c.step<c.ready||S.slots[slot])return;
+  snapshot();
+  const rt=UI.deploy.returnTo;UI.deploy=null;
+  deployCask(vi,slot);resume(rt);}
 
 // ---------- MARKET (Source) ----------
 function marketGoods(g,h){snapshot();gain(cur(),g,h);log(cur().name+' sources goods at the '+LU('store')+' <b>Market</b>.',true);cellDone();}
@@ -1521,7 +1547,7 @@ function enterDeployHere(slot,rt){const p=cur();
   if(!readyInVessels(p).length){log('↳ no Ready cask to deploy.');resume(rt);return;}
   UI.sub='deploy';UI.deploy={returnTo:rt,slot};render();
 }
-function deployPick(vi){if(!UI.deploy)return;const p=cur();const c=p.vessels[vi];
+function deployPick(vi){if(!UI.deploy||UI.deploy.slot==null)return;const p=cur();const c=p.vessels[vi];
   if(!c||c.step<c.ready||S.slots[UI.deploy.slot])return;
   snapshot();
   const slot=UI.deploy.slot;const rt=UI.deploy.returnTo;UI.deploy=null;
@@ -2290,7 +2316,7 @@ function aiBestCargo(p){let best=null;
 // ---- per-prompt decisions ----
 function aiCellValue(c,p){const role=CELLROLE[c];
   if(role==='Source')return 1+(aiNeedShip(p)?1.5:0)+(aiBuyableExports(p).length?0.4:0);
-  if(role==='Brew')return (openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)))?3:0.1;
+  if(role==='Brew'){if(bhCanBrew(p))return 3;return bhCanDeploy(p)?2.2:0.1;}   // v3.0-A.1: the or-branch deploy has real value
   if(role==='Age'){const mat=p.vessels.filter(v=>v&&v.step<v.ready);
     if(!mat.length)return cellarCanImp(p)?1:0.1;
     return 2+(mat.some(v=>v.ready-v.step<=3)?1:0);}
@@ -2423,7 +2449,11 @@ function aiHarbor(p){
   if(sendCasks(p).length){enterSend('stops');return;}
   cellDone();
 }
-function aiCellAct(p){const role=CELLROLE[UI.cell];if(role==='Source')aiMarket(p);else if(role==='Ship')aiHarbor(p);else cellDone();}
+function aiCellAct(p){const role=CELLROLE[UI.cell];if(role==='Source')aiMarket(p);else if(role==='Ship')aiHarbor(p);else if(role==='Brew')aiBrewhouse(p);else cellDone();}
+function aiBrewhouse(p){const b=bhCanBrew(p),d=bhCanDeploy(p);   // prefer brewing; deploy when Ready casks clog the vessels
+  if(b&&d){bhPick(readyInVessels(p).length>=2?'deploy':'brew');return;}
+  if(b||d){bhPick(b?'brew':'deploy');return;}
+  cellDone();}
 function aiBrew(p){const aff=p.recipes.filter(r=>canBrew(p,r)&&openVessel(p)>=0);
   if(!aff.length){resume(UI.brew.returnTo);return;}
   if(aiIsApp(p)||aiNoisy(p)){brewPick(aiRandOf(aff));return;}   // the apprentice brews whatever
@@ -2478,6 +2508,11 @@ function aiLoad(p){const L=UI.load;
   loadOnto(ships[0]);}
 function aiDeploy(p){const ready=readyInVessels(p);   // v3.0-A: the SLOT is fixed — pick WHICH cask takes this berth
   if(!UI.deploy||!ready.length){deploySkip();return;}
+  if(UI.deploy.slot==null){   // v3.0-A.1: the Brewhouse's anywhere-deploy
+    if(UI.deploy.vi==null){const r2=ready.slice().sort((a,b)=>b.c.q-a.c.q);deployPickA(r2[0].i);return;}
+    let es=emptySlots();if(!es.length){deploySkip();return;}
+    const vs=es.filter(sl=>{const b=bAt(sl.id);return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value'&&BUILDINGS[b.b].tgt==='cask';});
+    deployAnyTo((vs[0]||es[0]).id);return;}
   ready.sort((a,b)=>b.c.q-a.c.q);
   let pick=ready[0];
   const bd=bAt(UI.deploy.slot);
@@ -2724,6 +2759,10 @@ function aiGmOptions(p){
   // main-thread freeze — for ~no strength. Delegate to the trader policy; the meaningful sub-actions a stop
   // opens (market buys, harbor load/enshrine, deploy) still get their own MC.
   if(U==='stops')return null;
+  if(U==='cell'&&UI.cell==='B'){const o=[];
+    if(bhCanBrew(p))o.push(()=>bhPick('brew'));
+    if(bhCanDeploy(p))o.push(()=>bhPick('deploy'));
+    o.push(()=>cellDone());return o;}
   if(U==='cell'&&UI.cell==='A'){
     if(UI.stage==='place')return commPlaceable(UI.tmp.placeTile.dest).map(id=>()=>placeSlot(id));
     const o=[()=>marketGoods(2,0),()=>marketGoods(1,1),()=>marketGoods(0,2)];
@@ -2758,7 +2797,11 @@ function aiGmOptions(p){
     if(cellarCanAge(p))o.push(()=>cellarAge());
     Array.from(new Set(S.impDisplay||[])).forEach(k=>{if(grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&impArea(p)<IMP_AREA_CAP)o.push(()=>buyImprovement(k));});
     o.push(()=>cellarDone());return o;}
-  if(U==='deploy'){return readyInVessels(p).map(o2=>()=>deployPick(o2.i)).concat([()=>deploySkip()]);}   // v3.0-A: the slot is fixed — which cask takes it
+  if(U==='deploy'){
+    if(UI.deploy.slot==null){   // v3.0-A.1: the Brewhouse verb — cask, then any open slot
+      if(UI.deploy.vi==null)return readyInVessels(p).map(o2=>()=>deployPickA(o2.i)).concat([()=>deploySkip()]);
+      return emptySlots().map(sl=>()=>deployAnyTo(sl.id)).concat([()=>deploySkip()]);}
+    return readyInVessels(p).map(o2=>()=>deployPick(o2.i)).concat([()=>deploySkip()]);}   // slot fixed — which cask takes it
   if(U==='spoilopt'){const o=[()=>spoilAct()];
     readyInVessels(p).forEach(o2=>{if(o2.c.q>=SPOIL_MINQ)o.push(()=>spoilDeploy(o2.i));});return o;}
   if(U==='placebldg'){const own=S.players[UI.tmp.placeBldg.owner];const legal=bldgTargets(own);const bs=legal.filter(s=>!bAt(s.id));return (bs.length?bs:legal).map(s=>()=>placeBldgOn(s.id));}   // v2.9: occupied slots only when the ground rent is payable
@@ -2921,7 +2964,7 @@ function renderAid(){
     +'<div class="asec"><b>Your turn</b><div class="note">Move to an adjacent station → choose one of <b>THREE lines</b>: the station’s <b>row</b>, its <b>column</b>, or your <b>Floor</b> (the private 3rd line — every held cask’s action + your verb Specialists’ stops + a Wild per flipped building). Resolve the line’s stops <b>in any order, all optional</b>. The 1 '+ic('wheat')+' <b>occupancy toll</b> applies only when you activate a <b>public</b> line while sharing the station with a rival — the Floor is never tolled.</div></div>'
     +'<div class="asec"><b>The four stations — ONE verb each (v3.0-A)</b><div class="note">'
       +ic('store')+' <b>Market</b> (Source): take 2 goods, <b>OR</b> acquire one tile — a recipe · a '+ic('building-2')+' Privilege/Building (buy + place) · a '+ic('sailboat')+' ship commission (place it; dropping it ONTO an eligible cask is the one free load) · a charter contract.<br>'
-      +ic('flask-conical')+' <b>Brewhouse</b> (Brew): <b>Brew 1 cask</b> — pay a recipe → a young cask takes the FACE-UP action of that quality’s pile. (Deploy lives on the slots now.)<br>'
+      +ic('flask-conical')+' <b>Brewhouse</b> (Brew): <b>Brew 1 cask OR deploy 1 Ready cask</b> onto any open slot — one or the other. (The station verb reaches the wharf; a slot’s own stop deploys onto itself.)<br>'
       +ic('hourglass')+' <b>Cellar</b> (Age): <b>Age</b> ('+CELLAR_POOL+' points across your vessels) <b>OR fit one</b> '+ic('wrench')+' <b>Specialist</b> (max '+IMP_AREA_CAP+' in your area). One or the other. (Casks also age +1 automatically at the start of your turn. Tap is cut — the Floor fires held casks without discarding them.)<br>'
       +ic('anchor')+' <b>Harbor</b> (Ship): <b>SEND one deployed cask</b> — onto a docked ship (free; sails when full) · to the '+ic('crown')+' Hall (Enshrine, Q2+, local) · by Charter (a contract + the fare). A rival’s cask goes by ship only (its owner scores; you take 1G + choose the destination). The Stevedore sends two; the Quaymaster also reaches your vessels.</div></div>'
     +'<div class="asec"><b>Deploy first — where casks move from</b><div class="note"><b>The SEND takes a DEPLOYED cask.</b> A cask must stand on a public slot — contestable, sendable by rivals (by ship only: its owner scores; the sender takes the 1'+ic('wheat')+' loader bonus and chooses the destination). The purple '+ic('wrench')+' <b>Quaymaster</b> is the invested exception — its owner’s Send also reaches their own vessels. '+ic('sailboat')+' <b>Commission:</b> buy the boat, drop it on the dock; placing it ONTO an eligible cask is the ONE free load (the dockside pickup — the separate commission free-load is cut). Every gate check uses <b>effective quality</b> (the kilns · the Gauger · Duckstein; Customs relieves the ship’s boarding gate).</div></div>'
@@ -3002,9 +3045,16 @@ function renderBar(){
     else{const lc=refCask(L.cask);prompt='Load '+LU('beer')+ownSq(refOwner(L.cask))+styleShort(lc.style)+' onto which ship?';
       const ships=L.ships.filter(s=>canTake(s,L.cask));
       acts=ships.map(s=>{const sh=S.slots[s];return btn(LU('sailboat')+' '+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+')','loadOnto(\''+s+'\')','go');}).join('')+btn('Back','loadBack()','ghost')+btn('Skip','loadSkip()','ghost');}}
-  else if(U==='deploy'){const b=bAt(UI.deploy.slot);
-    prompt='Deploy onto <b>'+(b?bName(b.b):('slot '+UI.deploy.slot))+'</b> — pick which Ready cask takes this berth. <span class="note">(v3.0-A: slots act on themselves — the cask lands HERE.)</span>';
-    acts=readyInVessels(p).map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.c.style)+' Q'+o.c.q,'deployPick('+o.i+')','go')).join('')+btn('Skip','deploySkip()','ghost');}
+  else if(U==='deploy'){
+    if(UI.deploy.slot==null){   // v3.0-A.1: the Brewhouse's station verb — any open slot
+      if(UI.deploy.vi==null){prompt='Deploy (Brewhouse) — pick which Ready cask to set out.';
+        acts=readyInVessels(p).map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.c.style)+' Q'+o.c.q,'deployPickA('+o.i+')','go')).join('')+btn('Skip','deploySkip()','ghost');}
+      else{const c=p.vessels[UI.deploy.vi];
+        prompt='Deploy '+LU('beer')+styleShort(c.style)+' onto <b>any open slot</b> (click a glowing slot). <span class="note">(The station verb reaches the whole wharf; a slot’s own stop stays local.)</span>';
+        acts=btn('◂ Pick a different cask','deployPickA(null)','ghost')+btn('Skip','deploySkip()','ghost');}}
+    else{const b=bAt(UI.deploy.slot);
+      prompt='Deploy onto <b>'+(b?bName(b.b):('slot '+UI.deploy.slot))+'</b> — pick which Ready cask takes this berth. <span class="note">(v3.0-A: slots act on themselves — the cask lands HERE.)</span>';
+      acts=readyInVessels(p).map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.c.style)+' Q'+o.c.q,'deployPick('+o.i+')','go')).join('')+btn('Skip','deploySkip()','ghost');}}
   else if(U==='spoilopt'){const t=S.slots[UI.spoil.slot];const act=t?slotEffAct(UI.spoil.slot):null;
     prompt='A '+LU('beer')+'<b>'+(t?styleShort(t.style):'')+' Q1</b> holds this berth — fire its action, or <b>spoil it</b> (dump the stale ale; a Ready Q4+ of yours takes the berth).';
     acts=btn(LU(CASK_ACT_ICON[act]||'sparkles')+' Fire its '+(act||'')+' action','spoilAct()','go')
@@ -3073,7 +3123,7 @@ function actAvail(p,act){
 function stopAvail(st){const p=cur();
   if(st.kind==='cell'){
     if(st.cell==='A')return true;   // Source 2 goods always works
-    if(st.cell==='B')return (openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)));   // v3.0-A: Brew only
+    if(st.cell==='B')return bhCanBrew(p)||bhCanDeploy(p);   // v3.0-A.1: Brew OR deploy
     if(st.cell==='C')return sendCasks(p).length>0;                                  // v3.0-A: the unified SEND
     if(st.cell==='D')return cellarCanAge(p)||cellarCanImp(p)||(typeof canBlend==='function'&&canBlend(p));
     return true;}
@@ -3098,6 +3148,12 @@ function stopLabel(s){
   return '';
 }
 function cellRender(p){
+  if(UI.cell==='B'){   // v3.0-A.1: the Brewhouse or-branch — ONE decision
+    return {prompt:LU('flask-conical')+' <b>Brewhouse</b> — one or the other: <b>Brew</b> 1 cask, or <b>Deploy</b> 1 Ready cask onto any open slot.',
+      acts:(bhCanBrew(p)?btn(LU('beer')+' Brew a cask','bhPick(\'brew\')','go'):btnOff(LU('beer')+' Brew a cask','No open vessel or affordable recipe.'))
+        +(bhCanDeploy(p)?btn(LU('barrel')+' Deploy a Ready cask','bhPick(\'deploy\')','go'):btnOff(LU('barrel')+' Deploy a Ready cask','No Ready cask / no open slot.'))
+        +btn('Skip','cellDone()','ghost')};
+  }
   if(UI.cell==='A'){
     if(UI.stage==='place')return {prompt:'Click an open slot — or a slot whose cask can board (v2.6: dockside pickup — the cask loads at once).',acts:''};
     return {prompt:'Gain 2 goods, or acquire one tile → <span class="note">(buy from the shop panel: a recipe · a Building [buy + place] · a ship · a contract)</span>',
@@ -3129,16 +3185,17 @@ function renderGrid(){
   const ag=document.getElementById('ag');let h='';
   SLOTS.forEach(s=>{const t=S.slots[s.id];const b=bAt(s.id);let cls='slot '+s.id;
     const depTarget=(UI.sub==='deploy'&&UI.deploy&&UI.deploy.slot===s.id);   // v3.0-A: deploy is slot-local — the fixed target glows; the cask is picked in the bar
+    const depAny=!aiTurn()&&(UI.sub==='deploy'&&UI.deploy&&UI.deploy.slot==null&&UI.deploy.vi!=null&&!t);   // v3.0-A.1: the Brewhouse verb — any open slot
     const occPlacing=!aiTurn()&&(UI.sub==='cell'&&UI.cell==='A'&&UI.stage==='place'&&(!t||commPickupOK(s.id,UI.tmp.placeTile.dest)));
     const bldgPlacing=(!aiTurn()||humanGate())&&UI.sub==='placebldg'&&(!b||canPay(S.players[UI.tmp.placeBldg.owner],OVERBUILD_FEE));   // v2.9: occupied slots only when the ground rent is payable; the human-gate lets an off-turn owner place mid-AI-turn
-    if(occPlacing||bldgPlacing||depTarget)cls+=' place';
+    if(occPlacing||bldgPlacing||depTarget||depAny)cls+=' place';
     let inner;let style='';
     if(b&&t){   // both a building and an occupant → an offset stack (tap to swap which is on top)
       cls+=' pfilled stack';inner=stackHtml(b,t,s.id);
     }else if(b){cls+=' pfilled';inner=pBldgFace(b);}
     else if(t){cls+=' pfilled';inner=(t.type==='cask'?pCaskFace(t,caskPreviewBonus(s.id),slotEffAct(s.id)):pShipFace(t));}
     else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Deploy a Ready cask here — an empty slot’s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span></span>';
-    let click=bldgPlacing?'placeBldgOn':(occPlacing?'placeSlot':null);
+    let click=bldgPlacing?'placeBldgOn':(occPlacing?'placeSlot':(depAny?'deployAnyTo':null));
     if(!click&&b&&t)click='toggleStack';   // not placing → tapping a stacked slot swaps the visible order
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
   });

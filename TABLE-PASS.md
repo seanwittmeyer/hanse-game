@@ -1,7 +1,14 @@
 # The Table Pass — one stop, one seal (the v3.0 exploration)
 
 > **Status: BUILT (2026-07-08) — the §6 recommendation is playable as `play3a.html` (v3.0-A “One
-> Stop, One Seal”, KEY `hanse-3a-v1`).** As-built decisions beyond this document (all ⚙): SEAL
+> Stop, One Seal”, KEY `hanse-3a-v2`).** **v3.0-A.1 “The Brewhouse Valve” (self-review pass):** the
+> §2-A2 prescribed release valve is ADOPTED on sim evidence — slot-local deploy throttled the VOLUME
+> lanes at 4p (prestige 48.3% vs fair 25; v2.9 baseline 35.9%). The Brewhouse face is now **Brew 1 cask
+> OR deploy 1 Ready cask onto any open slot** (still one decision; the two-tier reach rule gets its
+> teaching example — a station verb reaches the wharf, a slot’s stop stays local). A/B at 300×4p:
+> prestige 48.3→44.7, volume +2.4, majority +3.0, pace unchanged (`sim3a-personas-v2.txt`). The
+> remaining heat is the Tap cut + the uncontested Hall (both deliberate); dials if the table confirms:
+> the Hall curve · the gilt values · an Enshrine cooldown — value levers LAST per the v0.15 lesson.** As-built decisions beyond this document (all ⚙): SEAL
 > values — Staple 3/5 · Burgomaster 2/5 · Connoisseur gilt-only 6 (Q4+) · Diet/Almoner 3/5
 > (lead/trail read at delivery) · kontor charters 4/6 · Reliquary 2 (no gilt) · Rich Berth 2/4 ·
 > Festkeller 3/5 (hulk); gilt = plain+2, flipped when the shipping cask is effective Q4+; NO cap-6

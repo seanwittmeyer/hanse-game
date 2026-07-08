@@ -2,6 +2,10 @@
 // On top of the sim3a adaptations, the bot plays the ROSTER turn engine: it picks a
 // station × verb (or the Recall) at move time, drives the 'verb' UI state, and hires
 // Journeymen via the Build verb.
+// KNOWN BOT BLIND SPOT (v3.0-B.1): the greedy per-turn verb auction CANNOT pilot multi-turn
+// investments — it never strings Build-recipe → Source → Brew for Q4/Q5 (a scripted line reaches a
+// Ready Bock by turn ~6, so the climb is human-viable; see TABLE-PASS-2). Do NOT read Q4+/Q5 rates
+// from this harness as a lane verdict — use a committed human/oracle test.
 // A fork of playtests/sim.js with the bot adapted to the 3A state machine: one-verb stations,
 // the unified Harbor SEND (send_cask/send_route/send_charter stages), slot-local deploy
 // (deployPick — the slot is fixed), the one-choice Cellar (Age OR fit a Specialist; Tap cut),
@@ -141,11 +145,12 @@ function botMove(p){
   var un=rosterUnused(p);
   var best=null,bestv=-1e9,which=null;
   var spent=rosterTiles(p).length-un.length;
-  var recallV=2+spent*0.6+(un.length===0?100:0);
+  var recallV=2+spent*0.6+(un.length===0?100:0)+0.5*p.vessels.filter(function(c){return c&&c.step<c.ready;}).length;   // v3.0-B.1: the recall ages the brewery
   p.vessels.forEach(function(c){if(c)recallV+=0.5;});
   cands.forEach(function(tc){var toll=placing?0:cellToll(tc,p);
-    var slotV=botSlotValue(p,tc);
+    var slotV=botSlotValue(p,tc)+((tc==='D'&&p.vessels.some(function(c){return c&&c.step<c.ready;}))?0.8:0);   // the Cellar's any-verb age
     un.forEach(function(k){var v=botVerbValue(p,k)+slotV-toll+Math.random()*0.4;
+      if(HOME_OF[k]===tc)v+=0.8;   // v3.0-B.1: the home kicker
       if(v>bestv){bestv=v;best=tc;which=k;}});
     if(recallV+Math.random()*0.3>bestv){bestv=recallV;best=tc;which='recall';}
   });

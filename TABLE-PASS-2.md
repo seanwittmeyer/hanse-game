@@ -1,7 +1,19 @@
 # The Table Pass, Round 2 — the wide net (v3.0 options)
 
 > **Status: PACKAGE β BUILT (2026-07-08) — playable as `play3b.html` (v3.0-B “The Roster”, KEY
-> `hanse-3b-v1`), on the 3A foundation (slot-local stops · seals · the one commission gesture).**
+> `hanse-3b-v2`), on the 3A foundation (slot-local stops · seals · the one commission gesture).**
+> **v3.0-B.1 “Home Bonuses & the Home Day” (self-review pass):** two structural fixes for what the
+> build overshot. (1) **HOME BONUSES** ⚙ — pure-place quarters erased the board’s Source→Brew→Age→Ship
+> reading (an interlock) and left the Cellar with no identity (no Age verb anywhere). Each quarter now
+> pays ONE printed courtesy for its own work: Build@Market +1G · Brew@Brewhouse the new cask ages +1 ·
+> Send@Harbor +1G · ANY verb@the Cellar one maturing cask +1 — geography as content, not rules; movement
+> is a real decision every turn. (2) **THE RECALL AGES THE BREWERY** — every maturing cask +1 on the
+> recall (the home day): push the roster for tempo, mature the cellar on the breath. **Measurement
+> honesty:** the greedy bot’s Q4+/Q5 flatline is a BOT blind spot, not a dead lane — the myopic
+> per-turn verb auction can’t string Build-recipe→Source→Brew together; a scripted line reaches a
+> Ready Bock by turn ~6 (delivered ~turn 8 of ~25). Recorded in `sim3b.js`’s header so nobody reads
+> bot Q-rates as a lane verdict; the four lanes stay balanced after both changes (4p 22.7–27.7%,
+> `sim3b-personas-v2.txt`).**
 > As-built decisions beyond §2/§9 (all ⚙): verbs are PORTABLE (any tile at any station — the
 > station is a place: its two adjacent slots + occupancy + the toll; the four quarters keep their
 > names as geography); the base roster is Source · Brew · Send · Build · Reach — **no base Age

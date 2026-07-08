@@ -99,7 +99,7 @@ function personaDest(p,q){
 function cellValue(c,p){
   var role=CELLROLE[c];
   if(role==='Source')return 1+(needShip(p)?1.5:0)+(wantRecipe(p)?0.4:0);
-  if(role==='Brew')return (openVessel(p)>=0 && p.recipes.some(function(r){return canBrew(p,r);}))?3:0.1;
+  if(role==='Brew'){if(bhCanBrew(p))return 3;return bhCanDeploy(p)?2.2:0.1;}   // v3.0-A.1: the or-branch deploy
   if(role==='Age'){var mat=p.vessels.filter(function(v){return v&&v.step<v.ready;});if(!mat.length)return 0.1;
     return 2+(mat.some(function(v){return v.ready-v.step<=3;})?1:0);}
   if(role==='Ship')return sendCasks(p).length?4:0.1;   // v3.0-A: the unified SEND
@@ -203,7 +203,11 @@ function botHarbor(p){   // v3.0-A: the unified SEND — pick the cask, then the
 function qRefBind(p){var qs=[];p.vessels.forEach(function(c){if(c)qs.push(c.q);});
   wharfCaskSlots().forEach(function(id){if(S.slots[id].owner===p.id)qs.push(S.slots[id].q);});
   return qs.length?Math.max.apply(null,qs):achQ(p);}
-function botCell(p){var role=CELLROLE[UI.cell];if(role==='Source')botMarket(p);else if(role==='Ship')botHarbor(p);else cellDone();}
+function botCell(p){var role=CELLROLE[UI.cell];if(role==='Source')botMarket(p);else if(role==='Ship')botHarbor(p);else if(role==='Brew')botBrewhouse(p);else cellDone();}
+function botBrewhouse(p){var b=bhCanBrew(p),d=bhCanDeploy(p);
+  if(b&&d){bhPick(readyInVessels(p).length>=2?'deploy':'brew');return;}
+  if(b||d){bhPick(b?'brew':'deploy');return;}
+  cellDone();}
 function botBrew(p){var aff=p.recipes.filter(function(r){return canBrew(p,r)&&openVessel(p)>=0;});
   if(!aff.length){resume(UI.brew.returnTo);return;}aff.sort(function(a,b){return STYLES[b].q-STYLES[a].q;});brewPick(aff[0]);}
 function botAge(p){var mat=p.vessels.map(function(c,i){return {c:c,i:i};}).filter(function(o){return o.c&&o.c.step<o.c.ready;});
@@ -238,6 +242,11 @@ function botLoad(p){var L=UI.load;
 function botDeploy(){var p=cur();   // v3.0-A: the SLOT is fixed — pick which cask takes it
   var ready=readyInVessels(p);
   if(!UI.deploy||!ready.length){deploySkip();return;}
+  if(UI.deploy.slot==null){   // v3.0-A.1: the Brewhouse's anywhere-deploy
+    if(UI.deploy.vi==null){var r2=ready.slice().sort(function(a,b){return b.c.q-a.c.q;});deployPickA(r2[0].i);return;}
+    var es2=emptySlots();if(!es2.length){deploySkip();return;}
+    var vs2=es2.filter(function(sl){var b2=S.buildings[sl.id];return b2&&b2.owner===p.id&&BUILDINGS[b2.b].verb==='value';});
+    deployAnyTo(((vs2[0]||es2[0])).id);return;}
   ready.sort(function(a,b){return b.c.q-a.c.q;});
   var bd=S.buildings[UI.deploy.slot];var pick=ready[0];
   if(!(bd&&bd.owner===p.id&&BUILDINGS[bd.b].verb==='value')&&ready.length>1){
