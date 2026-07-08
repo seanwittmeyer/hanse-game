@@ -1,5 +1,27 @@
 # The Table Pass, Round 2 — the wide net (v3.0 options)
 
+> **Status: PACKAGE β BUILT (2026-07-08) — playable as `play3b.html` (v3.0-B “The Roster”, KEY
+> `hanse-3b-v1`), on the 3A foundation (slot-local stops · seals · the one commission gesture).**
+> As-built decisions beyond §2/§9 (all ⚙): verbs are PORTABLE (any tile at any station — the
+> station is a place: its two adjacent slots + occupancy + the toll; the four quarters keep their
+> names as geography); the base roster is Source · Brew · Send · Build · Reach — **no base Age
+> verb** (beer ages by TIME: the auto-age tick, plus the Cellarman/Lagerkeeper journeymen); the
+> RECALL replaces moving-and-flipping (unflip all + run the brewery; a bare brewery takes 2 goods);
+> the 7 Specialists → 7 JOURNEYMAN roster tiles (max 3 sockets; Coppersmith Brew+3rd vessel ·
+> Cellarman mature-one-to-Ready · Grain Factor 2G1H · Hop Gardener 1G2H · Stevedore Send×2 ·
+> Lagerkeeper all-maturing+2 · Quaymaster Send-from-vessels), hired via Build / the Q3+ Hire cask
+> action / London; the flipped-building floor caps separately at 4; FAIR DAYS at ⅓ and ⅔ of the
+> clock pay the leader HALF each kontor's 1st tier (off under The Trade Roads); the clock is
+> trimmed to 5/8/10 and the round ceiling raised to 45 (turns are THIN — one verb — so the v2.x
+> 12–25-round band does not apply; judge pace by clock-dominance). Gate results
+> (`playtests/sim3b-results-v1.txt`): 0 crashes/deadlocks at 500×2–4p · clock 99.6–100% · rounds
+> avg 23–26. **Lane read (`sim3b-personas-v1.txt`): remarkably balanced — all four lanes 22–40%
+> across counts, no hot pole.** Watch-items: the greedy bot never reaches Q5 (Q4+/g ~0.4 — the
+> quality climb leans on journeymen the bot under-buys; a table question), and the 3p seat spread
+> read 17pts (P2-favoured) at n=500. Blending is dormant in 3B (no Cellar menu to host it).
+>
+> *(Original exploration header below, kept for the record.)*
+>
 > **Status: EXPLORATION (2026-07-08) — no rules changed.** Round 1 (`TABLE-PASS.md`) diagnosed
 > the table costs and proposed the conservative repair: one-verb stations, slot-local stops,
 > seals for dice. The designer's follow-up brief: *"reach wide and far… pull from other great

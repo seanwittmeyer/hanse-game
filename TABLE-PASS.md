@@ -1,5 +1,24 @@
 # The Table Pass — one stop, one seal (the v3.0 exploration)
 
+> **Status: BUILT (2026-07-08) — the §6 recommendation is playable as `play3a.html` (v3.0-A “One
+> Stop, One Seal”, KEY `hanse-3a-v1`).** As-built decisions beyond this document (all ⚙): SEAL
+> values — Staple 3/5 · Burgomaster 2/5 · Connoisseur gilt-only 6 (Q4+) · Diet/Almoner 3/5
+> (lead/trail read at delivery) · kontor charters 4/6 · Reliquary 2 (no gilt) · Rich Berth 2/4 ·
+> Festkeller 3/5 (hulk); gilt = plain+2, flipped when the shipping cask is effective Q4+; NO cap-6
+> (the two-seal structural cap replaces it). Flight milestones are TEMPO only: 3rd beer +1G+1H ·
+> 4th +1 contract · 5th a free Reach. Specialist verbs → Floor stops: Grain Factor +2G · Hop
+> Gardener +2H · Lagerkeeper all-maturing +2 (its per-turn tick and the +1-on-gain passives are
+> retired); Stevedore = SEND ×2, Quaymaster = SEND reaches vessels. The commission free-load
+> picker is CUT (dockside pickup is the one free load). Gate results (`playtests/sim3a-results-v1.txt`):
+> 0 crashes/deadlocks at 500×2–4p · pace 17–19 rounds (99.6–100% in band) · clock ~99.5% · charters
+> 0.3–0.4/game (no jam signature — the A2 seize risk did not materialize). **Watch-item
+> (`sim3a-personas-v1.txt`): the prestige lane is HOT under seals + the unified SEND (3p 52.5% ·
+> 4p 48.3% vs fair 33.3/25)** — hotter than v2.9's already-hot read; no negation (every lane still
+> wins games), but the Hall curve / seal gilt values / an Enshrine throttle inside SEND are the
+> dials if the table confirms it. Sibling build: `play3b.html` (TABLE-PASS-2 package β).
+>
+> *(Original exploration header below, kept for the record.)*
+>
 > **Status: EXPLORATION (2026-07-08) — no rules changed.** Direction-setting off the 2026-07-07
 > physical playtest. The brief, in the designer's words: the stations are "too much" (multiple
 > options, some multiple actions); deploy-to-anywhere confused the table; the slot stack

@@ -1,10 +1,14 @@
 # Brewhouses of the Hanse
 
-> **STATUS (2026-07-08): this root directory is the v3.0 WORKING DIRECTORY.** The v3.0 table
-> pass is in design (`TABLE-PASS.md` — one-verb stations · slot-local stops · seals for dice);
-> the root `play.html` still runs the v2.9.1 engine until v3.0 ships. **To play the stable game
-> as it stood before the pass: `archive/v2.9/play.html`** (frozen v2.9.1 "Graded at the Gauge",
-> its own save slot — see `archive/README.md`).
+> **STATUS (2026-07-08): this root directory is the v3.0 WORKING DIRECTORY — and the two v3.0
+> candidates are BUILT and playable side by side.** **`play3a.html` = v3.0-A “One Stop, One Seal”**
+> (Round 1 of the table pass: one verb per station · slots act on themselves · Tap cut, Specialists
+> as Floor stops · SEALS replace the demand dice · Flight milestones) and **`play3b.html` = v3.0-B
+> “The Roster”** (package β: verbs are flip-to-exhaust ROSTER TILES · the Floor is the RECALL ·
+> Specialists become hired JOURNEYMEN · two FAIR DAYS score interim majorities — on the 3A
+> foundation). Own save slots; both sim-gated (0 crashes/deadlocks at 500 games × 2–4p). Design
+> rationale: `TABLE-PASS.md` (3A) · `TABLE-PASS-2.md` (3B). The root `play.html` still runs the
+> stable v2.9.1 engine; the frozen archive is `archive/v2.9/play.html` (see `archive/README.md`).
 
 A theme-first **medium euro** for **2–4 players** (~45–60 min at 2p). It's c. 1350: you run a Hanseatic **merchant brewing house**. The whole game happens at **the Wharf** — four action stations on a shared 2×2 (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots, where the work runs **Source → Brew → Age → Ship.** A brewed **cask** matures in your private brewery, then sits on a shared **slot** — a living commons that also holds your **owned Buildings** (one family: value or transform) modifying the cask/ship docked there — as a public action *and* your cargo-in-waiting, then **ships out on a neutral, destination-bound hull** (commissioned from a face-up market of 3) to a **kontor** — or is **enshrined** at the Hall (a local Harbor action, no boat) — for points, and leaves. Value-building bonuses are tracked physically by a reusable **d6 “demand die”** that rides the cask in the ship's berth — a real d6: **your own** building's ★ + the Q4/Q5 quality premium (v2.3 — value buildings are *privileges*, they pay their owner only; transforms are *works*, serving any dock; no payments between players), set not accumulated, max 6 — ship-slot value buildings bump the same die at the sail; a stranded cask never banks. Where you send it is the choice — go **wide** (kontore: volume & majorities) or go **deep** (the quality climb: the Hall's prestige via **Enshrine** + the **Flight**). No dice as randomness, no cards, no money; goods are the only currency, and the demand dice are score counters, not randomizers. *(Prototype — **v2.4.1 “Three Tiles”** (three colour-coded tile types: blue PRIVILEGE (owner-only) · green BUILDING (serves everyone) · purple SPECIALIST (private); London pays a Privilege/Building OR a Specialist; the Q3+ Hire action; Floor-lane re-prices) on v2.3 “Privileges & Works” (delivery = starting value + the one die; privileges owner-only, works public) and v2.2 “One Grammar”; all numbers are tunable `⚙` placeholders.)*
 
