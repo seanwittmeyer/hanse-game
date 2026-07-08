@@ -1,7 +1,4 @@
-# Brewhouses of the Hanse — Design (v3.0 in design — the table pass · live build v2.9.1)
-
-> **v3.0 status (2026-07-08):** the root is the v3.0 working directory; the exploration is
-> `TABLE-PASS.md`. The stable **v2.9.1** build is frozen playable at `archive/v2.9/play.html`.
+# Brewhouses of the Hanse — Design (v2.9 “Ground Rent”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in

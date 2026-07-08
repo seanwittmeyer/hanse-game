@@ -1,18 +1,18 @@
-# Archive — Brewhouses of the Hanse, v0.16.1 "The Wharf"
+# Archive — frozen, playable snapshots of Brewhouses of the Hanse
 
-A frozen, **playable** snapshot of the game as it stood on 2026-06-16, just before the
-v1.0 "Demand" clean-sheet began.
+The root of the repo is always the **working directory for the next version** (currently the
+**v3.0** table pass — see `/TABLE-PASS.md`). Superseded stable builds are filed here, each
+playable on the live Pages site, each with its **own localStorage save key** so playing an
+archive never touches — and is never wiped by — the live build.
 
-- **Play it:** open `archive/play.html` (live: `…/archive/play.html` on the Pages site).
-  It is the complete v0.16.1 reference implementation — hotseat + AI seats, fully offline.
-- **Save isolation:** this copy uses its own `localStorage` key (`hanse-archive-v0.16.1`),
-  so playing the archive never touches — and is never wiped by — the live/v1.0 build.
-- **Full source revert point:** branch `archive/main-v0.16.1` (commit `31311b7`) holds the
-  entire repo at this version (docs, pages, playtests). This folder is just the play page.
-- **In-tree snapshot:** `archive/v0.16/` holds file-by-file copies of the v0.16.1 design docs
-  and pages (RULES · COMPONENTS · DESIGN · CHANGELOG · README · AUTOMA · the four HTML pages),
-  kept for easy reference while the canonical root files are edited forward. **Reference only —
-  do not edit.**
+| Snapshot | Frozen | Play it | Save key | What it is |
+|---|---|---|---|---|
+| **`archive/v2.9/`** | 2026-07-08 | `…/archive/v2.9/play.html` | `hanse-archive-v2.9.1` | **v2.9.1 “Graded at the Gauge”** (KEY v94) — the last build before the v3.0 table pass: living slots · demand dice · ground rent · spoilage · the three expansions. Full doc set + all five pages (printables art repointed to the shared `/art/`). |
+| **`archive/play.html`** (+ `archive/v0.16/`) | 2026-06-16 | `…/archive/play.html` | `hanse-archive-v0.16.1` | **v0.16.1 “The Wharf”** — the pre-“Living Slots” build (fixed per-cask values, no buildings layer). `archive/v0.16/` holds its doc set. Full repo state: branch `archive/main-v0.16.1` (commit `31311b7`). |
 
-Why it exists: the next chapter reconceives scoring + the slot layer around **living,
-composable Wharf slots** (see `/PLAN.md`). The Wharf build was good and worth keeping reachable.
+Also in git (branches, not folders): `archive/option-b-inland` — the rolled-back Inland Road
+prototype (v69–v72).
+
+**Reference only — do not edit archived files.** The canonical, evolving surfaces live at the
+repo root; the standing rule (fix every surface together, mirror = `play.html`) applies to root
+only.
