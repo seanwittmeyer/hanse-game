@@ -32,6 +32,23 @@
 > quality climb leans on journeymen the bot under-buys; a table question), and the 3p seat spread
 > read 17pts (P2-favoured) at n=500. Blending is dormant in 3B (no Cellar menu to host it).
 >
+> **HOUSE ALMANACS BUILT (designer-directed) — option 5 is now IN BOTH BUILDS** (play3a.html KEY
+> `hanse-3a-v3` · play3b.html KEY `hanse-3b-v3` — identical in both so the side-by-side stays pure
+> on the turn engine). As-built ⚙: each house owns SIX double-sided tiles — The Berth (Rich
+> Berth/Festkeller) · The Staple (Staple Hall/Burgomaster) · The Charter (a house-specific kontor
+> pair, dealt by seat: Bruges+London / London+Bergen / Bergen+Novgorod / Novgorod+Bruges) · The
+> Politics (Hanse Diet/Almoner) · The Cellar Door (Connoisseur/Reliquary) · The Works (Malt
+> Kiln/Hop Yard) — plus The Speciality (Salt House/Smoke Kiln) with Specialty Beers. Face chosen
+> AT BUILD ⚙ (the GWT setup-draft side-lock is the parked variant); each tile builds once; the
+> deck/display/bag/owner-ring RETIRE; London & Survey build one of YOUR tiles free; the warm-start
+> neutrals become the fixed TOWN’S WORKS (Cooperage + Customs); the Gauger (the flagged kiln twin),
+> the Workshop, and (almanac-mode) the Parti-Gyle Tun park out of the kit. Gates green on both
+> (`*-results-v3.txt`: 0 crashes/deadlocks at 500×2–4p, clock ~99%+). Lane read: the almanacs
+> HELPED 3A’s balance — 3p volume/demand/majority rose to 27–30% with prestige easing to 47.7%
+> (guaranteed privilege access for every house); 3B stays balanced (4p 19–29%). The acknowledged
+> trade: the shared-display race is gone — the slot race and the Charter-pair asymmetry carry the
+> contest.
+>
 > *(Original exploration header below, kept for the record.)*
 >
 > **Status: EXPLORATION (2026-07-08) — no rules changed.** Round 1 (`TABLE-PASS.md`) diagnosed

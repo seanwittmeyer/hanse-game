@@ -471,7 +471,7 @@ const ICONTIP={
   'stamp':'Seal — a printed token a cask takes when it ships from its owner’s Privilege; its ★ are read at delivery (gilt face = the Q4+ premium, pre-summed).',
   wrench:'Specialist — a private tile on your brewery board (bought at the Cellar; max 4 in your area).',
   ticket:'Charter contract — spend one (+ the flat fare) to ship a single deployed Ready cask to a kontor now (the relief valve; the Quaymaster also reaches your vessels).',
-  search:'Survey — choose a Building from the face-up display and place it on a slot at once (free).',
+  search:'Survey — build a tile from YOUR house almanac on a slot at once (free; the tile is spent).',
   'map-pin':'Presence — your delivered casks at a kontor (counts for majorities).',
   coins:'Goods.',
   package:'Storage — how many goods you can hold.',
@@ -527,7 +527,7 @@ const RECIPE_BUY={broyhan:{h:1},keut:{g:1},mumme:{h:2},bock:{g:1,h:1},
   gose:{g:1},zerbster:{h:1},duckstein:{g:1},jopenbier:{g:1,h:1}};  // v1.6: export-card buys lean HOPS up the ladder (keut stays the grain-path Q3). Gruit+Hopped are free starters. (expansion: gose/duckstein grain-path, zerbster hops; jopenbier = the capstone)
 const CASK_ACT={source:'gain 2 goods',age:'Age a cask 2 steps',
   load:'Load — a Ready cask onto a ship, free',reach:'Reach — +1 presence at a kontor',
-  convert:'Convert — up to 2 goods G↔H',survey:'Survey — a Privilege/Building from the Wharf display, placed at once',
+  convert:'Convert — up to 2 goods G↔H',survey:'Survey — build a tile from YOUR house almanac, free, placed at once',
   hire:'Hire — a Specialist from the Cellar display, free (Q3+ casks only)',
   wild:'Wild — take any base action'};
 // ⚙ v0.12 — VARIABLE cask actions: a cask's signature slot-action, decoupled from quality. v1.0 makes
@@ -576,7 +576,7 @@ const STATION_ICON_TIP={coins:'Source — take 2 goods',
 // quality-scaling value fn.
 const DEST={
   bruges  :{name:'Bruges',  gate:1, value:1, maj:[4,2,0],   benefit:'goods',    kontor:true,  role:'Hub · the economy — 2 goods + a starter majority'},
-  london  :{name:'London',  gate:2, value:1, maj:[5,3,1],   benefit:'building', kontor:true,  role:'Steelyard · the engine — a free Privilege/Building (placed at once) OR a free Specialist (v2.4)'},
+  london  :{name:'London',  gate:2, value:1, maj:[5,3,1],   benefit:'building', kontor:true,  role:'Steelyard · the engine — build a tile from YOUR almanac free (placed at once), OR take a free private tile'},
   bergen  :{name:'Bergen',  gate:2, value:1, maj:[9,5,2],   benefit:'reach',    kontor:true,  role:'Bryggen · the majority — a free Reach (+1 presence) feeds THE rich majority'},
   novgorod:{name:'Novgorod',gate:3, value:2, sval:q=>Math.max(1,2*(q-2)), maj:[8,5,2], benefit:'age', kontor:true, role:'Long Haul · the quality climb — value SCALES with quality (Q3→2·Q4→4·Q5→6; a below-gate cask admitted by Customs sells at the 1★ floor) + the long trade refines a cask (+1 age)'},   // v2.9: every kontor has a ≥1★ value floor — no delivery is ever worth 0. v2.9.1: the Gauger's lift is now a QUALITY lift (scores at the gauged Q), so only Customs-admitted / Overland sub-gate casks can still land below the scale — the floor is their backstop
   hall    :{name:'The Hall',gate:2, value:0, maj:[],        benefit:'none',     kontor:false, role:'Prestige · 3/5/7/9 by quality · the local Enshrine (no boat)'},
@@ -694,7 +694,44 @@ function bDesc(k){return (BUILDINGS[k]||{desc:''}).desc;}
 // what each building's effect TARGETS (the occupant docked on it, or a line/owner) — for clear labels & glyphs
 const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a SHIP docked here'}};   // v2.2: the vestigial 'line' target is gone; v2.3: the 'owner' target too (the Almoner redesign) — every building is a passive modifier of its docked occupant
 function bTgt(k){return (BUILDINGS[k]||{tgt:'cask'}).tgt;}
-const BUILD_DISPLAY=4;          // face-up Building display at the Market ⚙ (refills from the shuffled deck)
+const BUILD_DISPLAY=4;          // (retired by House Almanacs — kept for save-shape compat)
+// ---- HOUSE ALMANACS (TABLE-PASS-2 option 5, the GWT adoption ⚙) ----
+// The shared Wharf deck / display / draw bag RETIRE. Each house owns a printed ALMANAC of SIX
+// double-sided slot tiles (+ a 7th with Specialty Beers). AUTHORING = building one of YOUR OWN
+// tiles — choose its face when you build ⚙ (a setup-draft side-lock is the parked variant) — at the
+// face's printed cost; each tile builds ONCE (the tile is spent; a displaced tile still flips to
+// your floor per v2.9). Ownership is visually free: your tiles are your colour — the owner-ring
+// token DIES. London's benefit and the Survey cask action re-home to "build one of YOUR tiles,
+// free". The two warm-start neutrals become THE TOWN'S WORKS — a fixed Cooperage + Customs House
+// (deterministic setup; a privilege can never be neutral). PARKED out of the base kit: the Gauger's
+// Office (the flagged Malt-Kiln twin), the Brewmaster's Workshop, and (almanac-mode) the Parti-Gyle
+// Tun. The trade acknowledged in TABLE-PASS-2: the shared-display race is gone — the slot race and
+// the house-specific Charter pairs carry the contest instead.
+const ALMANAC_TILES=[
+  {name:'The Berth',       a:'richberth', b:'festkeller'},
+  {name:'The Staple',      a:'staple',    b:'burgomstr'},
+  {name:'The Charter',     a:null,        b:null},          // the house-specific kontor pair (dealt by seat)
+  {name:'The Politics',    a:'hansediet', b:'almoner'},
+  {name:'The Cellar Door', a:'connoiss',  b:'reliquary'},
+  {name:'The Works',       a:'maltkiln',  b:'hopyard'},
+];
+const ALMANAC_CHARTERS=[['ch_bruges','ch_london'],['ch_london','ch_bergen'],['ch_bergen','ch_novgo'],['ch_novgo','ch_bruges'],['ch_bruges','ch_bergen']];   // ⚙ by seat — which kontore each house can charter
+const ALMANAC_EXP={name:'The Speciality',a:'salthouse',b:'smokekiln'};   // Specialty Beers ON → the 7th tile
+function almanacFor(seat){const t=ALMANAC_TILES.map(x=>({name:x.name,a:x.a,b:x.b,used:false}));
+  const ch=ALMANAC_CHARTERS[seat%ALMANAC_CHARTERS.length];
+  const ct=t.find(x=>x.name==='The Charter');ct.a=ch[0];ct.b=ch[1];
+  if(EXPANSION)t.push({name:ALMANAC_EXP.name,a:ALMANAC_EXP.a,b:ALMANAC_EXP.b,used:false});
+  return t;}
+function almFaces(p){const out=[];(p.almanac||[]).forEach((t,i)=>{if(t.used)return;
+  out.push({ti:i,face:'a',key:t.a});if(t.b&&t.b!==t.a)out.push({ti:i,face:'b',key:t.b});});
+  return out;}
+function almBuyable(p){return almFaces(p).filter(f=>canPay(p,BUILDINGS[f.key].cost));}
+// the AI/bot face pick — the old display preference order, over the house's remaining faces
+function aiPickAlmFaceFrom(p,faces){if(!faces.length)return null;
+  const pref=['staple','richberth','burgomstr','ch_bruges','ch_london','ch_bergen','ch_novgo','almoner','maltkiln','smokekiln','salthouse','connoiss','festkeller','hopyard','reliquary','hansediet'];
+  for(const k of pref){const f=faces.find(x=>x.key===k);if(f)return f;}
+  return faces[0];}
+function aiPickAlmFace(p){return aiPickAlmFaceFrom(p,almFaces(p));}
 // (v2.3 "Privileges & Works": the WHARFAGE constant is RETIRED — no payments between players at delivery.
 //  Value = the owner's privilege; transform = a public work. The building interaction is occupancy denial,
 //  overbuild (the ground rent + the flip), and the occupancy toll.)
@@ -797,7 +834,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-3a-v2'; // v3.0-A.1 “The Brewhouse Valve”: the Brewhouse face is Brew 1 cask OR deploy 1 Ready cask onto any open slot (still ONE decision) — the release valve TABLE-PASS §2-A2 prescribed, adopted on sim evidence (slot-local deploy throttled the VOLUME lanes at 4p; see playtests/sim3a-personas-v1/v2). Bump discards stale 3a-v1 state. // v3.0-A “One Stop, One Seal” PROTOTYPE — the Round-1 table pass (TABLE-PASS.md §6) built on the v2.9.1 engine: (A1) ONE VERB PER STATION — Market unchanged (2 goods OR 1 tile; the commission free-load picker is CUT, dockside pickup is the only free load) · Brewhouse = Brew only · Cellar = Age-pool OR fit 1 Specialist (Tap CUT; Blend rides as the expansion or-branch) · Harbor = the unified SEND (one deployed cask: docked ship free / Hall Q2+ / Charter contract+fare; Stevedore = send 2; Quaymaster = vessels too). (A2) SLOTS ACT ON THEMSELVES — an empty slot's stop deploys onto THAT slot; a Q1 cask stop offers the spoilage-deploy either/or; a ship stop loads that ship. (A3) SPECIALISTS AS FLOOR STOPS — Grain Factor (+2G) · Hop Gardener (+2H) · Lagerkeeper (all maturing +2) fire when you work the Floor; the per-turn Lagerkeeper tick and +1-on-gain passives are retired. (B1) SEALS REPLACE THE DEMAND DICE — a cask shipping from its owner's Privilege takes a printed SEAL (plain/gilt two-sided, gilt = the Q4+ premium pre-summed); a berth Privilege hands its seal at the sail; delivery = destination value + at most one dock seal + one berth seal, NO cap-6 arithmetic. Plus Flight milestones (3rd beer +1G1H · 4th +1 contract · 5th a free Reach — tempo, not points) and the Hall trophy shelf. All numbers ⚙. The stable game lives at archive/v2.9/play.html (KEY hanse-hotseat-v94).
+const KEY='hanse-3a-v3'; // v3.0-A.2 “House Almanacs” (TABLE-PASS-2 option 5, the GWT adoption — designer-directed): the shared Wharf deck/display/bag RETIRE; each house owns a printed ALMANAC of six double-sided tiles (Berth: Rich Berth/Festkeller · Staple: Staple Hall/Burgomaster · Charter: a house-specific kontor pair by seat · Politics: Diet/Almoner · Cellar Door: Connoisseur/Reliquary · Works: Malt Kiln/Hop Yard · +Speciality: Salt House/Smoke Kiln with Specialty Beers). Build a face at its printed cost (the tile is spent; face picked at build ⚙ — setup-draft lock parked); London & Survey build one of YOURS free; the warm-start neutrals are the fixed TOWN’S WORKS (Cooperage + Customs); the owner-ring token DIES (your tiles are your colour); Gauger/Workshop/Parti-Gyle park out of the kit. Bump discards stale 3a-v2 state. // v3.0-A.1 “The Brewhouse Valve”: the Brewhouse face is Brew 1 cask OR deploy 1 Ready cask onto any open slot (still ONE decision) — the release valve TABLE-PASS §2-A2 prescribed, adopted on sim evidence (slot-local deploy throttled the VOLUME lanes at 4p; see playtests/sim3a-personas-v1/v2). Bump discards stale 3a-v1 state. // v3.0-A “One Stop, One Seal” PROTOTYPE — the Round-1 table pass (TABLE-PASS.md §6) built on the v2.9.1 engine: (A1) ONE VERB PER STATION — Market unchanged (2 goods OR 1 tile; the commission free-load picker is CUT, dockside pickup is the only free load) · Brewhouse = Brew only · Cellar = Age-pool OR fit 1 Specialist (Tap CUT; Blend rides as the expansion or-branch) · Harbor = the unified SEND (one deployed cask: docked ship free / Hall Q2+ / Charter contract+fare; Stevedore = send 2; Quaymaster = vessels too). (A2) SLOTS ACT ON THEMSELVES — an empty slot's stop deploys onto THAT slot; a Q1 cask stop offers the spoilage-deploy either/or; a ship stop loads that ship. (A3) SPECIALISTS AS FLOOR STOPS — Grain Factor (+2G) · Hop Gardener (+2H) · Lagerkeeper (all maturing +2) fire when you work the Floor; the per-turn Lagerkeeper tick and +1-on-gain passives are retired. (B1) SEALS REPLACE THE DEMAND DICE — a cask shipping from its owner's Privilege takes a printed SEAL (plain/gilt two-sided, gilt = the Q4+ premium pre-summed); a berth Privilege hands its seal at the sail; delivery = destination value + at most one dock seal + one berth seal, NO cap-6 arithmetic. Plus Flight milestones (3rd beer +1G1H · 4th +1 contract · 5th a free Reach — tempo, not points) and the Hall trophy shelf. All numbers ⚙. The stable game lives at archive/v2.9/play.html (KEY hanse-hotseat-v94).
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -852,9 +889,9 @@ function freshState(n,names){
   st.pinnacleQ=Math.max(...st.exports.map(s=>STYLES[s].q));   // the game's top export tier (Q5 if Bock dealt, else Q4)
   SLOTS.forEach(s=>{st.slots[s.id]=null;st.buildings[s.id]=null;});   // two layers: slots = occupants · buildings = owned modifiers
   for(let q=2;q<=5;q++)st.pileTop[q]=pileDraw(q);                     // steerable: a face-up action atop each quality pile
-  // ---- the Building deck + face-up Market display ----
-  st.buildDeck=buildBuildingDeck();
-  while(st.buildDisplay.length<BUILD_DISPLAY&&st.buildDeck.length)st.buildDisplay.push(st.buildDeck.shift());
+  // ---- HOUSE ALMANACS: no shared deck/display — each house's printed set (the Charter pair by seat) ----
+  st.buildDeck=[];st.buildDisplay=[];   // kept empty for save-shape/diagnostic compat
+  st.players.forEach((p,i)=>{p.almanac=almanacFor(i);});
   // ---- the Improvement deck (n-1 of each type) + face-up Cellar display (v82) ----
   st.impDeck=buildImpDeck(n);
   while(st.impDisplay.length<IMP_DISPLAY&&st.impDeck.length)st.impDisplay.push(st.impDeck.shift());
@@ -874,16 +911,14 @@ function freshState(n,names){
     const L=cands[0], id=lineSlots[L].find(id=>!st.slots[id]);
     st.slots[id]=t; lineWt[L]+=wt; return true;
   };
-  // v2.5: TWO NEUTRAL STARTING BUILDINGS (green, serves-anyone) seed the ring alongside the two warm-start
-  // ships — the wharf opens with working infrastructure. Drawn from the deck (transform verb only — a
-  // PRIVILEGE is a personal grant and cannot be neutral), owner:null: they serve any dock; overbuilding one
-  // still costs the v2.9 ground rent, pays nobody (there is no owner) and the tile is discarded. Spread across lines like the ships.
-  for(let nb=0;nb<2;nb++){const bi2=st.buildDeck.findIndex(k=>BUILDINGS[k].verb==='transform');
-    if(bi2<0)break;const bk=st.buildDeck.splice(bi2,1)[0];
+  // v3.0 almanac-mode warm start: THE TOWN'S WORKS — a fixed Cooperage + Customs House seed the ring
+  // (deterministic; both TRANSFORMS — a privilege is personal and can never be neutral). Overbuilding
+  // one still costs the v2.9 ground rent, pays nobody, and the tile is discarded.
+  ['cooperage','customs'].forEach(bk=>{
     const open=SLOTS.map(x=>x.id).filter(id=>!st.buildings[id]&&!st.slots[id]);
-    if(!open.length){st.buildDeck.push(bk);break;}
-    st.buildings[open[Math.floor(Math.random()*open.length)]]={b:bk,owner:null};}
-  st.shipDeck=shuffle(SHIP_DECK_MIX.map(x=>({ship:x[0],dest:x[1]})));
+    if(!open.length)return;
+    st.buildings[open[Math.floor(Math.random()*open.length)]]={b:bk,owner:null};});
+  st.shipDeck=shuffle(SHIP_DECK_MIX.map(x=>({ship:x[0],dest:x[1]})));  st.shipDeck=shuffle(SHIP_DECK_MIX.map(x=>({ship:x[0],dest:x[1]})));
   const bi=st.shipDeck.findIndex(x=>x.ship==='hulk'&&x.dest==='bruges');
   const hb=(bi>=0)?st.shipDeck.splice(bi,1)[0]:{ship:'hulk',dest:'bruges'};
   placeBalanced({type:'ship',ship:hb.ship,dest:hb.dest,load:[]},1);
@@ -1223,7 +1258,7 @@ function startGame(){
   S.players.forEach((p,i)=>{p.ai=ais[i];});
   document.getElementById('setup').classList.add('hidden');
   log('Game begins — '+setupN+' brewing houses'+(ais.some(a=>a)?' · AI seats: '+S.players.filter(p=>p.ai).map(p=>p.name+' ('+aiLabel(p)+')').join(', '):'')+'.'+(EXPANSION?' '+LU('sparkles')+'<b>Specialty Beers</b> expansion ON.':'')+(JOPEN?' '+LU('sparkles')+'<b>Jopenbier</b> capstone ON.':'')+(OVERLAND?' '+LU('sparkles')+'<b>The Trade Roads</b> (Overland) ON — deliver to a kontor to push your road inland; kontor majorities are OFF.':'')+' The export beers this game ('+(EXPANSION?'3 of 7':'3 of 4')+'): '+exportLabel()+(JOPEN?' · plus the '+LU('beer')+'Jopenbier capstone (always acquirable).':'.'));
-  log('Warm start: a Hulk → Bruges plus one more ship sit on the slots, a ship market of 3 + a Wharf display of 4 (Privileges & Buildings) are face-up at the Market, and every house holds a Ready Gruit in vessel 1 (deploy it turn 1). Buildings are always chosen from the display and placed at once.');
+  log('Warm start: a Hulk → Bruges plus one more ship sit on the slots, the TOWN’S WORKS (a neutral Cooperage + Customs House) seed the ring, a ship market of 3 is face-up, and every house holds a Ready Gruit in vessel 1 (deploy it turn 1). '+LU('book-open')+' <b>House Almanacs:</b> each house owns six double-sided slot tiles (its Charter pair differs by seat) — building a face spends the tile; there is no shared building market.');
   save();render();maybeRunAI();
 }
 
@@ -1392,11 +1427,12 @@ function buyTile(id){commissionShip();}   // legacy alias (the headless harness 
 // ---- BUILDINGS at the Market (v1.0 keystone · v2.2 "always from the display"): buy one of the 4 face-up
 // tiles and PLACE IT IMMEDIATELY. There is no hand — every acquisition (Market buy · London benefit ·
 // Survey) is the same gesture: choose from the display, place on a slot, refill.
-function buyBuilding(idx){const p=cur();const disp=S.buildDisplay||[];const key=disp[idx];
-  if(!key)return;const cost=BUILDINGS[key].cost;if(!canPay(p,cost))return;
+function buyAlmanac(ti,face){const p=cur();const t=(p.almanac||[])[ti];
+  if(!t||t.used)return;const key=(face==='b')?t.b:t.a;if(!key)return;
+  const cost=BUILDINGS[key].cost;if(!canPay(p,cost))return;
   if(!buildableSlots().length&&(p.grain-(cost.g||0))<(OVERBUILD_FEE.g||0))return;   // v2.9: fully-built wharf → the buy must leave the ground rent payable
-  snapshot();pay(p,cost);takeBuildFromDisplay(key);
-  log(p.name+' buys '+LU('building-2')+' <b>'+bName(key)+'</b> at the '+LU('store')+' Market — place it on a slot.',true);
+  snapshot();pay(p,cost);t.used=true;
+  log(p.name+' opens the house almanac — builds '+LU('building-2')+' <b>'+bName(key)+'</b> ('+t.name+' · face '+face.toUpperCase()+') — place it on a slot.',true);
   beginPlaceBldg(key,p.id,'stops');}
 // v1.7: improvements are bought at the CELLAR (offered alongside Tap), capped by the improvements area.
 function buyImprovement(key){const p=cur();const def=IMPROVEMENTS[key];
@@ -1440,7 +1476,7 @@ function placeBldgOn(slot){const b=UI.tmp&&UI.tmp.placeBldg;if(!b)return;
 }
 // SURVEY (the cask action) — v2.2: choose one of the face-up display Buildings and PLACE IT NOW, free.
 function enterSurvey(rt){
-  if(!(S.buildDisplay||[]).length){log('↳ Survey: the Building display is empty.');resume(rt);return;}
+  if(!almFaces(cur()).length){log('↳ Survey: your house almanac is spent.');resume(rt);return;}
   if(!bldgTargets(cur()).length){log('↳ Survey — the wharf is fully built and the ground rent ('+costStr(OVERBUILD_FEE)+') is unaffordable: no legal slot.');resume(rt);return;}   // v2.9
   UI.survey={returnTo:rt};UI.sub='survey';render();}
 // HIRE (v2.4, the Q3+ cask action): take an eligible IMPROVEMENT from the Cellar display, free —
@@ -1456,11 +1492,13 @@ function hirePick(key){const p=cur();const rt=UI.hire?UI.hire.returnTo:null;
   if(key&&hireable(p).includes(key)){snapshot();grantUpgrade(p,key);takeImpFromDisplay(key);
     log(p.name+' hires the '+LU('wrench')+' <b>'+upName(key)+'</b> (free, the cask action).',true);}
   UI.hire=null;resume(rt);}
-function surveyPick(key){const p=cur();const rt=UI.survey?UI.survey.returnTo:null;UI.survey=null;
-  if(!key||!(S.buildDisplay||[]).includes(key)){resume(rt);return;}   // skip (display empty)
+function surveyPick(ti,face){const p=cur();const rt=UI.survey?UI.survey.returnTo:null;UI.survey=null;
+  const t=(ti!=null&&p.almanac)?p.almanac[ti]:null;
+  if(!t||t.used){resume(rt);return;}   // skip
   if(!bldgTargets(p).length){resume(rt);return;}   // v2.9 defensive: no legal slot (enterSurvey prechecks)
-  snapshot();takeBuildFromDisplay(key);
-  log('↳ '+p.name+' surveys the guild — takes '+LU('building-2')+' <b>'+bName(key)+'</b> from the display; place it on a slot (free).');
+  const key=(face==='b')?t.b:t.a;
+  snapshot();t.used=true;
+  log('↳ '+p.name+' surveys the house almanac — builds '+LU('building-2')+' <b>'+bName(key)+'</b> ('+t.name+'), free; place it on a slot.');
   beginPlaceBldg(key,p.id,rt);}
 
 // v2.6 "Dockside Pickup": a commissioned ship may be placed ONTO a slot whose cask can board it —
@@ -1755,10 +1793,13 @@ function aiGoodsAuto(lp,dest){
   const hT=lp.recipes.some(r=>STYLES[r].in.h>=2)?3:1;
   if(lp.hops<hT)gain(lp,1,1);else gain(lp,2,0);
   log('↳ '+lp.name+' takes the '+DEST[dest].name+' liquidity benefit (2 goods).');}
-function aiBenefitAuto(lp,dest){const disp=S.buildDisplay||[];
+function aiBenefitAuto(lp,dest){
   let bs=buildableSlots();
   if(!bs.length&&canPay(lp,OVERBUILD_FEE))bs=SLOTS.filter(s=>{const bb=bAt(s.id);return bb&&bb.owner===lp.id;});   // no free dock → overbuild its OWN building (never auto-gift a rival floor value); v2.9: only if the ground rent is payable
-  if(disp.length&&bs.length){const key=aiPickBuilding(lp,disp.slice());takeBuildFromDisplay(key);commitBldg(bs[0].id,key,lp.id);return;}
+  const f=aiPickAlmFace(lp);
+  if(f&&bs.length){lp.almanac[f.ti].used=true;
+    log('↳ '+lp.name+' builds '+LU('building-2')+' <b>'+bName(f.key)+'</b> from the house almanac ('+DEST[dest].name+' benefit).');
+    commitBldg(bs[0].id,f.key,lp.id);return;}
   const el=hireable(lp);   // v2.4: no building to take/place → the London benefit may take a free IMPROVEMENT instead
   if(el.length){const pref=['cellar','hopgarden','granary','vessel','crane','lagering','quay'];const k=pref.find(x=>el.includes(x))||el[0];
     grantUpgrade(lp,k);takeImpFromDisplay(k);log('↳ '+lp.name+' takes the '+LU('wrench')+' <b>'+upName(k)+'</b> Specialist free ('+DEST[dest].name+' benefit).');return;}
@@ -1810,12 +1851,14 @@ function benefitPickImp(key){const b=UI.pendingBenefits[0];const lp=S.players[b.
   log('↳ '+lp.name+' takes the '+LU('wrench')+' <b>'+upName(key)+'</b> Specialist free ('+DEST[b.dest].name+' benefit).');
   UI.pendingBenefits.shift();const rt=UI.benefit.returnTo;UI.benefit=null;afterSail(rt);maybeRunAI();
 }
-function benefitPick(key){const b=UI.pendingBenefits[0];
-  if(!key||!(S.buildDisplay||[]).includes(key)||!bldgTargets(S.players[b.pid]).length){   // nothing to take (display empty / v2.9 no legal slot) → skip this benefit
+function benefitPick(ti,face){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];
+  const t=(ti!=null&&lp.almanac)?lp.almanac[ti]:null;
+  if(!t||t.used||!bldgTargets(lp).length){   // nothing to take (almanac spent / v2.9 no legal slot) → skip this benefit
     UI.pendingBenefits.shift();const rt=UI.benefit.returnTo;UI.benefit=null;afterSail(rt);maybeRunAI();return;}
-  snapshot();takeBuildFromDisplay(key);
+  const key=(face==='b')?t.b:t.a;
+  snapshot();t.used=true;
   UI.pendingBenefits.shift();const rt=UI.benefit.returnTo;UI.benefit=null;UI.afterRt=rt;
-  log('↳ '+S.players[b.pid].name+' takes '+LU('building-2')+' <b>'+bName(key)+'</b> from the display ('+DEST[b.dest].name+' benefit) — place it on a slot now, free.');
+  log('↳ '+lp.name+' opens the house almanac ('+DEST[b.dest].name+' benefit) — '+LU('building-2')+' <b>'+bName(key)+'</b> ('+t.name+'), free; place it on a slot now.');
   beginPlaceBldg(key,b.pid,'benefitcont');
 }
 
@@ -2056,7 +2099,7 @@ function diagText(){
         :('SHIP '+shipName(t)+'→'+DEST[t.dest].name+' '+t.load.length+'/'+effCap(t)));
       L.push(d);});
     L.push('');L.push('--- market ---');
-    L.push('  build display: '+(S.buildDisplay||[]).map(bName).join(', ')+'  (deck left: '+((S.buildDeck||[]).length)+')');
+    L.push('  almanacs: '+S.players.map(pp=>pp.name+' '+almFaces(pp).length+' faces').join(' · ')+'  (House Almanacs — no shared display)');
     L.push('  imp display: '+(S.impDisplay||[]).map(upName).join(', ')+'  (deck left: '+((S.impDeck||[]).length)+')');
     L.push('  ship market: '+(S.shipDisplay||[]).map(t=>shipName(t)+'→'+DEST[t.dest].name).join(', ')+'  (deck left: '+((S.shipDeck||[]).length)+')');
     L.push('  exports this game: '+(S.exports||[]).map(e=>STYLES[e].name).join(', '));
@@ -2390,10 +2433,10 @@ function aiMarket(p){
     const ownVal=SLOTS.filter(s=>{const b=bAt(s.id);return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value';}).length;
     const hasCargo=readyInVessels(p).length||wharfLoadableCasks(p).length||p.vessels.some(c=>c&&c.q>=2);
     if(ownVal<2&&hasCargo){
-      const aff=(S.buildDisplay||[]).filter(k=>p.grain>=(BUILDINGS[k].cost.g||0)+1&&canPay(p,BUILDINGS[k].cost));
-      const vcands=aff.filter(k=>BUILDINGS[k].verb==='value');
+      const aff=almBuyable(p).filter(f=>p.grain>=(BUILDINGS[f.key].cost.g||0)+1);
+      const vcands=aff.filter(f=>BUILDINGS[f.key].verb==='value');
       const pool=vcands.length?vcands:(p.grain>=5?aff:[]);
-      if(pool.length){buyBuilding((S.buildDisplay||[]).indexOf(aiPickBuilding(p,pool)));return;}}}
+      if(pool.length){const f=aiPickAlmFaceFrom(p,pool);buyAlmanac(f.ti,f.face);return;}}}
   // v1.7: improvements are no longer a Market buy — the heuristic AI now acquires them at the Cellar (aiCellarBuy).
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
@@ -2532,13 +2575,14 @@ function aiTap(p){   // v3.0-A Cellar: ONE choice — Age the pool, or fit a Spe
     for(let i=0;i<pref.length;i++){const k=pref[i];if((S.impDisplay||[]).includes(k)&&grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&p.grain>=(IMPROVEMENTS[k].cost.g||0)+1){buyImprovement(k);return;}}
     const el=impDisplayBuyable(p);if(el.length){buyImprovement(el[0]);return;}}
   cellarDone();}
-function aiBenefit(){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];const disp=S.buildDisplay||[];
-  if(disp.length){benefitPick(aiPickBuilding(lp,disp.slice()));return;}
-  const el=hireable(lp);if(el.length){benefitPickImp(el[0]);return;}   // v2.4 fallback: a free improvement
-  benefitPick(null);}
-function aiSurvey(){const p=cur();const disp=S.buildDisplay||[];
-  if(!disp.length){surveyPick(null);return;}
-  surveyPick(aiPickBuilding(p,disp.slice()));}
+function aiBenefit(){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];
+  const f=bldgTargets(lp).length?aiPickAlmFace(lp):null;
+  if(f){benefitPick(f.ti,f.face);return;}
+  const el=hireable(lp);if(el.length){benefitPickImp(el[0]);return;}
+  benefitPick(null,null);}
+function aiSurvey(){const p=cur();const f=aiPickAlmFace(p);
+  if(!f){surveyPick(null,null);return;}
+  surveyPick(f.ti,f.face);}
 function aiBreach(p){const b=UI.pendingReach[0];const lp=S.players[b.pid];   // reinforce the best road (Overland) / best majority swing (base)
   const ks=reachBenKontore(lp);if(!ks.length){breachPick(null);return;}
   const olOn=(typeof olEnabled==='function'&&olEnabled());
@@ -2772,7 +2816,7 @@ function aiGmOptions(p){
       (S.shipDisplay||[]).forEach((sn,i)=>{if(reachQ>=DEST[sn.dest].gate)o.push(()=>commissionShip(i));});
     }
     if(canPay(p,CONTRACT_BUY))o.push(()=>buyContract());
-    if(aBuildSlotsAI().length)(S.buildDisplay||[]).forEach((k,i)=>{if(canPay(p,BUILDINGS[k].cost))o.push(()=>buyBuilding(i));});   // buy + place a Building (v2.2: always from the display, no hand)
+    if(aBuildSlotsAI().length)almBuyable(p).forEach(f=>o.push(()=>buyAlmanac(f.ti,f.face)));   // build a face of YOUR almanac (House Almanacs)
     return o;}   // v1.7: improvements moved to the Cellar (the 'tap' stage, below)
   if(U==='cell'&&UI.cell==='C'){
     if(UI.stage==='send_cask'){const o=sendCasks(p).map(ref=>()=>sendPickCask(ref));o.push(()=>sendDone());return o;}
@@ -2805,11 +2849,11 @@ function aiGmOptions(p){
   if(U==='spoilopt'){const o=[()=>spoilAct()];
     readyInVessels(p).forEach(o2=>{if(o2.c.q>=SPOIL_MINQ)o.push(()=>spoilDeploy(o2.i));});return o;}
   if(U==='placebldg'){const own=S.players[UI.tmp.placeBldg.owner];const legal=bldgTargets(own);const bs=legal.filter(s=>!bAt(s.id));return (bs.length?bs:legal).map(s=>()=>placeBldgOn(s.id));}   // v2.9: occupied slots only when the ground rent is payable
-  if(U==='benefit'){const lp2=S.players[UI.pendingBenefits[0].pid];const disp=bldgTargets(lp2).length?Array.from(new Set(S.buildDisplay||[])):[];   // v2.9: no legal slot → the building option is off
-    const o2=disp.map(k=>()=>benefitPick(k)).concat(hireable(lp2).map(k=>()=>benefitPickImp(k)));   // v2.4: London = a Building OR an Improvement
-    return o2.length?o2:[()=>benefitPick(null)];}
-  if(U==='survey'){const disp=Array.from(new Set(S.buildDisplay||[]));
-    return disp.length?disp.map(k=>()=>surveyPick(k)):[()=>surveyPick(null)];}
+  if(U==='benefit'){const lp2=S.players[UI.pendingBenefits[0].pid];
+    const o2=(bldgTargets(lp2).length?almFaces(lp2):[]).map(f=>()=>benefitPick(f.ti,f.face)).concat(hireable(lp2).map(k=>()=>benefitPickImp(k)));
+    return o2.length?o2:[()=>benefitPick(null,null)];}
+  if(U==='survey'){const fs2=almFaces(p);
+    return fs2.length?fs2.map(f=>()=>surveyPick(f.ti,f.face)):[()=>surveyPick(null,null)];}
   if(U==='hire'){const el=hireable(p);return el.length?el.map(k=>()=>hirePick(k)).concat([()=>hirePick(null)]):[()=>hirePick(null)];}
   if(U==='goodspick'){const lp=S.players[UI.pendingGoods[0].pid];   // Bruges: a recipe (Overland) or the goods mix — the GM evaluates each
     const recs=olEnabled()?(S.exports||[]).filter(s=>!lp.recipes.includes(s)):[];
@@ -2969,7 +3013,7 @@ function renderAid(){
       +ic('anchor')+' <b>Harbor</b> (Ship): <b>SEND one deployed cask</b> — onto a docked ship (free; sails when full) · to the '+ic('crown')+' Hall (Enshrine, Q2+, local) · by Charter (a contract + the fare). A rival’s cask goes by ship only (its owner scores; you take 1G + choose the destination). The Stevedore sends two; the Quaymaster also reaches your vessels.</div></div>'
     +'<div class="asec"><b>Deploy first — where casks move from</b><div class="note"><b>The SEND takes a DEPLOYED cask.</b> A cask must stand on a public slot — contestable, sendable by rivals (by ship only: its owner scores; the sender takes the 1'+ic('wheat')+' loader bonus and chooses the destination). The purple '+ic('wrench')+' <b>Quaymaster</b> is the invested exception — its owner’s Send also reaches their own vessels. '+ic('sailboat')+' <b>Commission:</b> buy the boat, drop it on the dock; placing it ONTO an eligible cask is the ONE free load (the dockside pickup — the separate commission free-load is cut). Every gate check uses <b>effective quality</b> (the kilns · the Gauger · Duckstein; Customs relieves the ship’s boarding gate).</div></div>'
     +'<div class="asec"><b>Slots act on themselves (v3.0-A)</b><div class="note"><b>Slots are local; stations reach the whole wharf.</b> An <b>empty slot’s stop deploys one Ready cask onto THAT slot</b> — where you work is where your cask lands, so which line you fire (and whose buildings sit on it) is the placement decision. A <b>cask’s stop</b> fires its printed action; if it is a <b>Q1</b> and you hold a Ready <b>Q4+</b>, the stop is an either/or — fire the action, or <b>spoil it</b>: the stale ale is returned to the box and your premium cask takes the berth. A <b>ship’s stop</b> loads a cask onto that ship.</div></div>'
-    +'<div class="asec"><b>The living slots (the keystone)</b><div class="note">Each of the 8 slots holds an owned '+ic('building-2')+' <b>slot tile — a Privilege or a Building</b> (a passive modifier of whatever docks on it NOW) and/or an occupant (a cask, or a ship with casks). A <b>Privilege</b> hands a printed '+ic('stamp')+' <b>SEAL</b> to a cask of its owner that ships from it — two-sided: plain face, or the <b>gilt</b> face when the cask is <b>Q4+</b> (the quality premium, pre-summed at print). The seal leaves the tile at load, so <b>nothing ever recalculates</b>; a berth Privilege (Rich Berth · Festkeller) hands its seal at the sail. At most <b>one dock seal + one berth seal</b> per cask. A <b>Building</b> changes the cask/ship while docked. <b>Three tile types (v2.4.1):</b> a bright-blue <b>PRIVILEGE pays its owner only</b> (a rival docking there banks nothing); a green <b>BUILDING serves whoever docks</b>; a purple <b>SPECIALIST</b> is private, on your brewery board. No payments between players. <b>Overbuild:</b> placing onto an occupied slot costs the builder the <b>'+costStr(OVERBUILD_FEE)+' ground rent</b> (can’t pay → not a legal slot) and displaces the building there — the tile flips to its owner’s floor as a '+ic('sparkles')+'Wild worth <b>'+DEVELOP_PTS+'★ at game end</b> (floor full → returned to the box, nothing banked).</div>'
+    +'<div class="asec"><b>The living slots (the keystone)</b><div class="note">Each of the 8 slots holds an owned '+ic('building-2')+' <b>slot tile — a Privilege or a Building</b> (a passive modifier of whatever docks on it NOW) and/or an occupant (a cask, or a ship with casks). A <b>Privilege</b> hands a printed '+ic('stamp')+' <b>SEAL</b> to a cask of its owner that ships from it — two-sided: plain face, or the <b>gilt</b> face when the cask is <b>Q4+</b> (the quality premium, pre-summed at print). The seal leaves the tile at load, so <b>nothing ever recalculates</b>; a berth Privilege (Rich Berth · Festkeller) hands its seal at the sail. At most <b>one dock seal + one berth seal</b> per cask. A <b>Building</b> changes the cask/ship while docked. <b>Three tile types (v2.4.1):</b> a bright-blue <b>PRIVILEGE pays its owner only</b> (a rival docking there banks nothing); a green <b>BUILDING serves whoever docks</b>; a purple <b>SPECIALIST</b> is private, on your brewery board. No payments between players. <b>Overbuild:</b> placing onto an occupied slot costs the builder the <b>'+costStr(OVERBUILD_FEE)+' ground rent</b> (can’t pay → not a legal slot) and displaces the building there — the tile flips to its owner’s floor as a '+ic('sparkles')+'Wild worth <b>'+DEVELOP_PTS+'★ at game end</b> (floor full → returned to the box, nothing banked). <b>House Almanacs (v3.0):</b> there is no shared building market — each house owns a printed almanac of <b>six double-sided tiles</b> (its Charter pair differs by house; a 7th with Specialty Beers); building spends the tile, faces are chosen when you build, and every tile on the wharf is visibly one house’s colour — the ownership ring is gone.</div>'
       +'<div class="atags" style="margin-top:5px">'+vb+'</div><div class="atags" style="margin-top:4px">'+tb+'</div></div>'
     +'<div class="asec"><b>Destinations</b> <span class="note">gate · starting value · majority 1st/2nd/3rd · benefit · (Hall = local Enshrine; ships sail to kontore only)</span>'
       +'<table class="atable"><tr><th>Destination</th><th>Gate</th><th>Value</th><th>Majority</th><th>Benefit</th></tr>'+dests+'</table>'
@@ -3070,13 +3114,13 @@ function renderBar(){
     acts=rdy.map(o=>btn((o.i===f?'✓ ':'')+LU('beer')+ownSq(p.id)+styleShort(o.c.style)+' Q'+o.c.q,'blendPick('+o.i+')',o.i===f?'primary':'go')).join('')+btn('Skip','blendSkip()','ghost');}
   else if(U==='benefit'){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];const el=hireable(lp);
     const bldgOK=bldgTargets(lp).length>0;   // v2.9: fully-built wharf + unaffordable ground rent → no building option
-    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — choose a '+LU('building-2')+' <b>Privilege/Building</b> (placed now) <b>OR</b> a '+LU('wrench')+' <b>Specialist</b>, free.'+(bldgOK?'':' <span class="note">(no legal slot for a building — the wharf is fully built and the ground rent is unaffordable)</span>');
-    acts=(bldgOK?(S.buildDisplay||[]):[]).map(k=>btn(LU('building-2')+bName(k),'benefitPick(\''+k+'\')','go')).join('')
+    prompt=lp.name+' delivered to '+DEST[b.dest].name+' — build a tile from <b>your almanac</b> (placed now) <b>OR</b> take a free '+LU('wrench')+' tile.'+(bldgOK?'':' <span class="note">(no legal slot — the wharf is fully built and the ground rent is unaffordable)</span>');
+    acts=(bldgOK?almFaces(lp):[]).map(f=>btn(LU('building-2')+bName(f.key)+' <span style="opacity:.75;font-size:.72rem">('+lp.almanac[f.ti].name+' '+f.face+')</span>','benefitPick('+f.ti+',\''+f.face+'\')','go')).join('')
       +el.map(k=>btn(LU('wrench')+upName(k),'benefitPickImp(\''+k+'\')','go')).join('')
-      +(((bldgOK&&(S.buildDisplay||[]).length)||el.length)?'':'<span class="note">nothing available</span>')+btn('Skip','benefitPick(null)','ghost');}
-  else if(U==='survey'){
-    prompt=LU('search')+' <b>Survey</b> — choose a '+LU('building-2')+' <b>Building</b> from the display and <b>place it now</b> (free).';
-    acts=(S.buildDisplay||[]).map(k=>btn(LU('building-2')+bName(k),'surveyPick(\''+k+'\')','go')).join('')+((S.buildDisplay||[]).length?'':'<span class="note">display empty</span>'+btn('Skip','surveyPick(null)','ghost'));}
+      +(((bldgOK&&almFaces(lp).length)||el.length)?'':'<span class="note">nothing available</span>')+btn('Skip','benefitPick(null,null)','ghost');}
+  else if(U==='survey'){const fsv=almFaces(p);
+    prompt=LU('search')+' <b>Survey</b> — build a tile from <b>your house almanac</b>, free (pick a face — the tile is spent).';
+    acts=fsv.map(f=>btn(LU('building-2')+bName(f.key)+' <span style="opacity:.75;font-size:.72rem">('+p.almanac[f.ti].name+' '+f.face+')</span>','surveyPick('+f.ti+',\''+f.face+'\')','go')).join('')+(fsv.length?'':'<span class="note">almanac spent</span>')+btn('Skip','surveyPick(null,null)','ghost');}
   else if(U==='hire'){const el=hireable(p);
     prompt=LU('wrench')+' <b>Hire</b> (the Q3+ cask action) — take an eligible '+LU('wrench')+' <b>Specialist</b> from the Cellar display, free.';
     acts=el.map(k=>btn(LU('wrench')+upName(k),'hirePick(\''+k+'\')','go')).join('')+btn('Skip','hirePick(null)','ghost');}
@@ -3117,7 +3161,7 @@ function actAvail(p,act){
   if(act==='age')return p.vessels.some(c=>c&&c.step<c.ready);
   if(act==='load')return myShips(p).some(sh=>shipLoadableCasks(p).some(cs=>canTake(sh,cs)));
   if(act==='reach')return reachBenKontore(p).length>0;
-  if(act==='survey')return (S.buildDisplay||[]).length>0;
+  if(act==='survey')return almFaces(p).length>0&&bldgTargets(p).length>0;
   if(act==='hire')return hireable(p).length>0;
   return true;}
 function stopAvail(st){const p=cur();
@@ -3258,7 +3302,7 @@ function renderDests(){
       ?'<span data-tip="'+attr('Prestige by quality: Q2→3 · Q3→5 · Q4→7 · Q5→9 (fixed). Enshrine at the Harbor — no boat.')+'"><b>3·5·7·9</b><span class="vstar">★</span></span>'
       :D.sval?'<span data-tip="'+attr('Value scales with quality: Q3→2 · Q4→4 · Q5→6 (+ value-Buildings shipped through).')+'"><b>2·4·6</b><span class="vstar">★</span><span style="font-size:.62rem;opacity:.8">by Q</span></span>'
       :'<span data-tip="'+attr(D.value+'★ base/cask + the value-Buildings it shipped through (the variable value).')+'"><b>'+D.value+'</b><span class="vstar">★</span><span style="font-size:.68rem;opacity:.8;margin-left:1px">+'+LU('building-2')+'</span></span>';
-    const ben=D.benefit==='building'?'<span data-tip="'+attr('Benefit: choose a Privilege/Building from the display (placed at once) OR take a free Specialist. London only.')+'">+'+LU('building-2')+'</span>'
+    const ben=D.benefit==='building'?'<span data-tip="'+attr('Benefit: build a tile from YOUR house almanac (free, placed at once) OR take a free private tile. London only.')+'">+'+LU('building-2')+'</span>'
       :D.benefit==='goods'?'<span data-tip="'+attr('Benefit: take 2 goods (any mix) on each delivery.')+'">+2'+LU('coins')+'</span>'
       :D.benefit==='reach'?'<span data-tip="'+attr('Benefit: free Reach — +1 presence at any kontor (feeds majorities).')+'">+'+LU('map-pin')+'</span>'
       :D.benefit==='age'?'<span data-tip="'+attr('Benefit: refine — advance a maturing cask +1 step toward Ready.')+'">+'+LU('hourglass')+'</span>':'';
@@ -3299,12 +3343,15 @@ function renderShop(){
   if(sdisp.length)h+='<div class="shopgrid">'+sdisp.map((sn,i)=>{const can=canPay(p,COMMISSION_COST)&&emptySlots().length>0;
     return '<div class="shopcell"><div class="mtile" data-tip="'+attr(SHIP_NAME[sn.ship]+' → '+DEST[sn.dest].name+' (cap '+SHIP_CAP[sn.ship]+') · commission '+costStr(COMMISSION_COST)+': place on a slot + free-load one cask. Shared hull.')+'">'+pShipFace({ship:sn.ship,dest:sn.dest})+'</div>'+(buying?'<button '+(can?'':'disabled')+' onclick="commissionShip('+i+')">commission</button>':'')+'</div>';}).join('')+'</div>';
   else h+='<div class="note" style="opacity:.7">'+LU('sailboat')+' ship market empty <span class="note">(charters still sail)</span></div>';
-  // the BUILDING display (v1.0 keystone): buy + place one (or earn one free at London/Novgorod)
+  // HOUSE ALMANACS: the current player's own double-sided tiles (each builds once; face picked at build)
   const noslot=!buildableSlots().length;
-  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('building-2')+' Wharf display</b> <span class="note">(Privileges &amp; Buildings)</span> <span class="note">('+(S.buildDisplay||[]).length+' face-up · '+S.buildDeck.length+' in the deck — buy + place, or earn free at '+LU('landmark')+' London)</span></div>';
-  h+='<div class="shopgrid">'+(S.buildDisplay||[]).map((key,i)=>{const def=BUILDINGS[key];const can=canPay(p,def.cost)&&(!noslot||(p.grain-(def.cost.g||0))>=(OVERBUILD_FEE.g||0));   // v2.9: a fully-built wharf still sells — if the buy leaves the ground rent payable
-    return '<div class="shopcell"><div class="mtile" data-tip="'+attr((def.verb==='value'?'PRIVILEGE — pays its owner only':'BUILDING — serves any dock')+' — '+def.desc)+'">'+pBldgFace({b:key})+'</div>'+(buying?'<button '+(can?'':'disabled')+' onclick="buyBuilding('+i+')">buy + place</button>':'')+'</div>';}).join('')+'</div>';
-  if(!(S.buildDisplay||[]).length)h+='<div class="note">(building deck exhausted)</div>';
+  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('book-open')+' '+p.name+'’s house almanac</b> <span class="note">('+almFaces(p).length+' faces unbuilt · your OWN tiles, no shared market — build a face, the tile is spent; London &amp; Survey build one free)</span></div>';
+  h+='<div class="shopgrid">'+(p.almanac||[]).map((t,ti)=>{if(t.used)return '';
+    return ['a','b'].map(face=>{const key=(face==='b')?t.b:t.a;if(!key)return '';const def=BUILDINGS[key];
+      const can=canPay(p,def.cost)&&(!noslot||(p.grain-(def.cost.g||0))>=(OVERBUILD_FEE.g||0));
+      return '<div class="shopcell"><div class="mtile" data-tip="'+attr(t.name+' · face '+face.toUpperCase()+' — '+(def.verb==='value'?'PRIVILEGE (pays its owner only)':'BUILDING (serves any dock)')+' — '+def.desc+' · building this face spends the whole tile')+'">'+pBldgFace({b:key,owner:p.id})+'</div>'+(buying?'<button '+(can?'':'disabled')+' onclick="buyAlmanac('+ti+',\''+face+'\')">build '+face.toUpperCase()+' · '+costStr(def.cost)+'</button>':'<span class="note" style="font-size:.66rem;text-align:center">'+t.name+' '+face.toUpperCase()+'</span>')+'</div>';}).join('');
+  }).join('')+'</div>';
+  if(!almFaces(p).length)h+='<div class="note">(the almanac is spent — six tiles built)</div>';
   if(noslot)h+='<div class="note" style="font-size:.7rem">every slot already has a building — placing means overbuilding (+'+costStr(OVERBUILD_FEE)+' ground rent)</div>';
   // v82 "Scarce Improvements": a face-up DISPLAY of IMP_DISPLAY drawn from a shuffled deck (n-1 of each type),
   // bought at the CELLAR (refills from the deck). Shown here always so the supply is visible; buyable when you're
@@ -3388,6 +3435,7 @@ function renderTableaus(){
       +floorHTML
       +'<div class="tsec"><b class="note">'+LU('scroll-text')+' Recipes:</b><div class="trow">'+recipes+'</div></div>'
       +'<div class="tsec"><b class="note">'+LU('building-2')+' Buildings (yours, on slots):</b><div class="trow">'+myBldgs+'</div></div>'
+      +'<div class="tsec"><b class="note">'+LU('book-open')+' House almanac ('+almFaces(p).length+' faces unbuilt):</b><div class="trow">'+((p.almanac||[]).map(t=>t.used?'':'<span class="tag" data-tip="'+attr(t.name+' — a: '+bDesc(t.a)+' · b: '+bDesc(t.b)+' (build either face; the tile is spent)')+'">'+t.name+': '+bName(t.a)+' / '+bName(t.b)+'</span>').join('')||'<span class="note">spent</span>')+'</div></div>'
       +'<b class="note">'+LU('anchor')+' On slots (yours):</b> '+wharf+'<br>'
       +'<b class="note">'+LU('landmark')+' Delivered:</b> '+delivered+'<br>'
       +'<b class="note">'+LU('layers')+' Flight (distinct beers delivered, any destination):</b> '+flightStr+' <span class="note">· milestones ⚙: 3rd beer +1G+1H · 4th +1 contract · 5th a free Reach</span>'
@@ -3571,12 +3619,12 @@ function olGrantFreeCask(lp,style){const vi=openVessel(lp);const st=STYLES[style
 function olGrantVessel(lp){if(lp.maxVessels<3){lp.maxVessels++;lp.vessels.push(null);olLog(lp,'fits +1 vessel');}else{olLog(lp,'(vessels full → goods)');gain(lp,2,0);}}
 // v2.2: buildings always come from the DISPLAY and place immediately — the Trade Roads Building slot grants
 // one via the same auto path the benefits use (choice picker deferred to the Trade Roads review pass ⚙).
-function olGrantBuilding(lp){const disp=S.buildDisplay||[];
-  if(!disp.length){olLog(lp,'(no Building in the display → goods)');gain(lp,2,0);return;}
-  const key=aiPickBuilding(lp,disp.slice());takeBuildFromDisplay(key);
+function olGrantBuilding(lp){const f=aiPickAlmFace(lp);
+  if(!f){olLog(lp,'(the house almanac is spent → goods)');gain(lp,2,0);return;}
   let bs=buildableSlots();if(!bs.length&&canPay(lp,OVERBUILD_FEE))bs=SLOTS.filter(s=>{const bb=bAt(s.id);return bb&&bb.owner===lp.id;});   // v2.9: overbuild fallback only if the ground rent is payable
-  if(!bs.length){olLog(lp,'(nowhere to place '+bName(key)+' → goods)');gain(lp,2,0);return;}
-  olLog(lp,'takes '+bName(key)+' from the display');commitBldg(bs[0].id,key,lp.id);}
+  if(!bs.length){olLog(lp,'(nowhere to place '+bName(f.key)+' → goods)');gain(lp,2,0);return;}
+  lp.almanac[f.ti].used=true;
+  olLog(lp,'builds '+bName(f.key)+' from the house almanac');commitBldg(bs[0].id,f.key,lp.id);}
 // FREE IMPROVEMENT (the private Cellar upgrades, fitted free). v1 auto-picks a useful one; respects the area cap.
 function olGrantImprovement(lp){const pref=['cellar','hopgarden','granary','vessel','crane','lagering','quay'];
   for(const key of pref){if(grantableBuy(lp,key)&&impArea(lp)<IMP_AREA_CAP){grantUpgrade(lp,key);olLog(lp,'fits '+upName(key)+' (free)');return;}}

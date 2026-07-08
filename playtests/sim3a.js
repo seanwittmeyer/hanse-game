@@ -151,10 +151,10 @@ function botMarket(p){
     var hasCargo=readyInVessels(p).length||wharfLoadableCasks(p).length||p.vessels.some(function(c){return c&&c.q>=2;});
     var dem=(persona(p)==='demand');var cap=dem?3:2;var buf=dem?0:1;
     if(ownVal<cap && hasCargo){
-      var aff=(S.buildDisplay||[]).filter(function(k){return p.grain>=(BUILDINGS[k].cost.g||0)+buf && canPay(p,BUILDINGS[k].cost);});
-      var vc=aff.filter(function(k){return BUILDINGS[k].verb==='value';});
+      var aff=almBuyable(p).filter(function(f){return p.grain>=(BUILDINGS[f.key].cost.g||0)+buf;});
+      var vc=aff.filter(function(f){return BUILDINGS[f.key].verb==='value';});
       var pool=vc.length?vc:(p.grain>=5?aff:[]);
-      if(pool.length){buyBuilding((S.buildDisplay||[]).indexOf(pickBuilding(pool)));return;}}}
+      if(pool.length){var fpk=aiPickAlmFaceFrom(p,pool);buyAlmanac(fpk.ti,fpk.face);return;}}}
   // v1.7: improvements are no longer a Market buy — they're acquired at the Cellar (botTap).
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
@@ -253,10 +253,13 @@ function botDeploy(){var p=cur();   // v3.0-A: the SLOT is fixed — pick which 
     var openPriv=SLOTS.some(function(sl){var b2=S.buildings[sl.id];return sl.id!==UI.deploy.slot&&!S.slots[sl.id]&&b2&&b2.owner===p.id&&BUILDINGS[b2.b].verb==='value';});
     if(openPriv)pick=ready[ready.length-1];}   // save the premium cask for my open privilege elsewhere
   deployPick(pick.i);}
-function botBenefit(){var disp=S.buildDisplay||[];if(!disp.length){benefitPick(null);return;}   // London/Novgorod → a free Building
-  benefitPick(pickBuilding(disp.slice()));}
-function botSurvey(){var disp=S.buildDisplay||[];if(!disp.length){surveyPick(null);return;}     // Survey → CHOOSE one of the face-up display Buildings
-  surveyPick(pickBuilding(disp.slice()));}
+function botBenefit(){var lp=S.players[UI.pendingBenefits[0].pid];   // London → build from the OWNER's almanac, free
+  var f=(bldgTargets(lp).length)?aiPickAlmFace(lp):null;
+  if(f){benefitPick(f.ti,f.face);return;}
+  benefitPick(null,null);}
+function botSurvey(){var p=cur();var f=aiPickAlmFace(p);              // Survey → build from YOUR almanac, free
+  if(f&&bldgTargets(p).length){surveyPick(f.ti,f.face);return;}
+  surveyPick(null,null);}
 // v1.4.1 "Flexible Cellar": the Cellar is now an ANY-ORDER menu (Age · Tap · buy Improvement · Done) on the
 // UI.sub==='tap' literal. ONE step per call (each routes back to the menu): AGE the closest-to-Ready cask first
 // (the core Cellar use — was the forced step pre-v1.4.1), then TAP to relieve a slot jam, then buy a high-value
