@@ -662,19 +662,19 @@ function charterCost(p){return CHARTER_FLAT_FARE;}   // flat; the scarce CONTRAC
 // Quality transforms raise the cask's EFFECTIVE delivery quality (caskEffQ). tgt = what the building touches.
 const BUILDINGS={
   // VALUE — trading privileges & patrons
-  richberth :{name:'Rich Berth',          verb:'value', tgt:'ship', icon:'anchor',        cost:{g:3}, qty:2, desc:'a ship here: each of your casks’ dice +2 at the sail'},
-  staple    :{name:'Staple Hall',          verb:'value', tgt:'cask', icon:'warehouse',     cost:{g:3}, qty:2, desc:'a cask shipped from here delivers +3★ (any kontor)'},
-  burgomstr :{name:'Burgomaster’s Favor',  verb:'value', tgt:'cask', icon:'crown',         cost:{g:3}, qty:2, desc:'a cask from here: +1★ per quality level'},
-  connoiss  :{name:'Connoisseur’s Cellar', verb:'value', tgt:'cask', icon:'wine',          cost:{g:3}, qty:1, desc:'a Q4+ cask from here +4★'},
-  hansediet :{name:'The Hanse Diet',       verb:'value', tgt:'cask', icon:'gavel',         cost:{g:3}, qty:1, desc:'a cask from here to a kontor where you LEAD +3★'},
-  festkeller:{name:'Festkeller',           verb:'value', tgt:'ship', icon:'beer',          cost:{g:3}, qty:1, desc:'a HULK here: each of your casks’ dice +3 at the sail'},   // v2.3: the old "a FULL ship" condition was vacuous (ships only sail full since v0.16) — now the big-hull specialist (a Cog gets nothing)
-  reliquary :{name:'Reliquary',            verb:'value', tgt:'cask', icon:'church',        cost:{g:3}, qty:1, desc:'a cask ENSHRINED from here +2★ prestige'},
-  almoner   :{name:'Almoner’s Stall',      verb:'value', tgt:'cask', icon:'heart',         cost:{g:3}, qty:1, desc:'a cask from here to a kontor where you do NOT lead +3★'},   // v2.3: redesigned (was the wharfage-rate booster) — alms for the striving house, the catch-up mirror of the Hanse Diet
+  richberth :{name:'Rich Berth',          verb:'value', tgt:'ship', icon:'anchor',        cost:{g:3}, qty:2, desc:'a ship here: your cask takes the berth SEAL at the sail — 2★ (gilt 4★ if the cask is Q4+)'},
+  staple    :{name:'Staple Hall',          verb:'value', tgt:'cask', icon:'warehouse',     cost:{g:3}, qty:2, desc:'a cask shipped from here takes the SEAL — 3★ (gilt 5★ at Q4+), any kontor'},
+  burgomstr :{name:'Burgomaster’s Favor',  verb:'value', tgt:'cask', icon:'crown',         cost:{g:3}, qty:2, desc:'a cask from here takes the SEAL — 2★ (gilt 5★ at Q4+)'},
+  connoiss  :{name:'Connoisseur’s Cellar', verb:'value', tgt:'cask', icon:'wine',          cost:{g:3}, qty:1, desc:'the gilt-only SEAL — 6★ (Q4+ casks only; a lesser cask takes nothing)'},
+  hansediet :{name:'The Hanse Diet',       verb:'value', tgt:'cask', icon:'gavel',         cost:{g:3}, qty:1, desc:'the SEAL — 3★ (gilt 5★) — pays only at a kontor where you LEAD'},
+  festkeller:{name:'Festkeller',           verb:'value', tgt:'ship', icon:'beer',          cost:{g:3}, qty:1, desc:'a HULK here: your cask takes the berth SEAL at the sail — 3★ (gilt 5★ at Q4+)'},   // v2.3: the old "a FULL ship" condition was vacuous (ships only sail full since v0.16) — now the big-hull specialist (a Cog gets nothing)
+  reliquary :{name:'Reliquary',            verb:'value', tgt:'cask', icon:'church',        cost:{g:3}, qty:1, desc:'a cask ENSHRINED from here takes the SEAL — 2★ (no gilt face; the Hall ladder already scales)'},
+  almoner   :{name:'Almoner’s Stall',      verb:'value', tgt:'cask', icon:'heart',         cost:{g:3}, qty:1, desc:'the SEAL — 3★ (gilt 5★) — pays only at a kontor where you do NOT lead'},   // v2.3: redesigned (was the wharfage-rate booster) — alms for the striving house, the catch-up mirror of the Hanse Diet
   // KONTOR CHARTERS — one per kontor (a cask to ITS OWN kontor from here +4★)
-  ch_bruges :{name:'Bruges Hanzehuis',     verb:'value', tgt:'cask', icon:'landmark', kontor:'bruges',  cost:{g:2}, qty:1, desc:'a cask from here to Bruges +4★'},
-  ch_london :{name:'London Steelyard',     verb:'value', tgt:'cask', icon:'landmark', kontor:'london',  cost:{g:2}, qty:1, desc:'a cask from here to London +4★'},
-  ch_bergen :{name:'Bergen Bryggen',       verb:'value', tgt:'cask', icon:'landmark', kontor:'bergen',  cost:{g:2}, qty:1, desc:'a cask from here to Bergen +4★'},
-  ch_novgo  :{name:'Novgorod Peterhof',    verb:'value', tgt:'cask', icon:'landmark', kontor:'novgorod',cost:{g:2}, qty:1, desc:'a cask from here to Novgorod +4★'},
+  ch_bruges :{name:'Bruges Hanzehuis',     verb:'value', tgt:'cask', icon:'landmark', kontor:'bruges',  cost:{g:2}, qty:1, desc:'a cask from here to Bruges takes the SEAL — 4★ (gilt 6★ at Q4+)'},
+  ch_london :{name:'London Steelyard',     verb:'value', tgt:'cask', icon:'landmark', kontor:'london',  cost:{g:2}, qty:1, desc:'a cask from here to London takes the SEAL — 4★ (gilt 6★ at Q4+)'},
+  ch_bergen :{name:'Bergen Bryggen',       verb:'value', tgt:'cask', icon:'landmark', kontor:'bergen',  cost:{g:2}, qty:1, desc:'a cask from here to Bergen takes the SEAL — 4★ (gilt 6★ at Q4+)'},
+  ch_novgo  :{name:'Novgorod Peterhof',    verb:'value', tgt:'cask', icon:'landmark', kontor:'novgorod',cost:{g:2}, qty:1, desc:'a cask from here to Novgorod takes the SEAL — 4★ (gilt 6★ at Q4+)'},
   // TRANSFORM — the brewer's craft & harbor works
   maltkiln  :{name:'Malt Kiln',            verb:'transform', tgt:'cask', icon:'flame',      cost:{g:2}, qty:2, desc:'a cask from here ships as +1 quality (cap Q5)'},
   hopyard   :{name:'Hop Yard',             verb:'transform', tgt:'cask', icon:'sprout',     cost:{g:3}, qty:1, desc:'a Q2+ cask from here ships as +1 quality'},
@@ -684,7 +684,7 @@ const BUILDINGS={
   gauger    :{name:'Gauger’s Office',      verb:'transform', tgt:'cask', icon:'ruler',      cost:{g:3}, qty:1, desc:'a cask from here is gauged +1 quality (cap Q5) — gates and points alike'},   // v2.9.1: was gate-only ("deliver one gate higher") — a gate adjusted by a building adjusts the QUALITY (designer); now one rule with the kilns. ⚙ watch: a costlier Malt Kiln twin (3G/qty1 vs 2G/qty2) — candidate for a distinct identity or reprice
   workshop  :{name:'Brewmaster’s Workshop',verb:'transform', tgt:'cask', icon:'hammer',     cost:{g:3}, qty:1, desc:'a cask docked here acts as Wild (while it stays)'},   // v2.2: POSITIONAL — the building modifies whatever is docked NOW; nothing is permanently rewritten
   // ---- EXPANSION "Specialty Beers" (Option A) thematic buildings — in the deck ONLY when that toggle is on (exp:true) ----
-  salthouse :{name:'Salt House',           verb:'value',     tgt:'cask', icon:'gem',         cost:{g:2}, qty:1, exp:true, desc:'a cask shipped from here: its owner gains +1G +1H on delivery (the salt trade)'},
+  salthouse :{name:'Salt House',           verb:'value',     tgt:'cask', icon:'gem',         cost:{g:2}, qty:1, exp:true, desc:'a cask shipped from here: its owner gains +1G +1H on delivery (the salt trade — goods, not a seal)'},
   smokekiln :{name:'Smoke Kiln',           verb:'transform', tgt:'cask', icon:'cloud',       cost:{g:2}, qty:1, exp:true, desc:'a cask from here ships as +1 quality (cap Q5) — smoke-cured'},
   partigyle :{name:'Parti-Gyle Tun',       verb:'transform', tgt:'cask', icon:'split',       cost:{g:2}, qty:1, exp:true, desc:'when a cask deploys here, also fill an open vessel with a free small Gruit'},
 };
@@ -1760,7 +1760,12 @@ function deliverCask(lp,L,dest,shipSlot,full){
   }else{
     val=destValue(dest,L.q);
     // v3.0-A SEALS: at most one dock seal + one berth seal ride the cask — printed values, read here.
-    val+=sealValue(L.seal,dest,L.owner)+sealValue(L.berthSeal,dest,L.owner);
+    const s1=sealValue(L.seal,dest,L.owner),s2=sealValue(L.berthSeal,dest,L.owner);
+    val+=s1+s2;
+    if((s1>0||s2>0)&&!aiSimulating)log('↳ '+LU('stamp')+' the seals pay: '
+      +(s1>0?('+'+s1+'★ '+bName(L.seal.b)+(L.seal.gilt?' <b>(gilt)</b>':'')):'')
+      +((s1>0&&s2>0)?' · ':'')
+      +(s2>0?('+'+s2+'★ '+bName(L.berthSeal.b)+(L.berthSeal.gilt?' <b>(gilt)</b>':'')):'')+'.');
   }
   lp.delivered.push({style:L.style,q:L.q,dest,val});
   // v3.0-A FLIGHT MILESTONES ⚙ — mid-game feedback for range: the 3rd/4th/5th DISTINCT beer delivered
