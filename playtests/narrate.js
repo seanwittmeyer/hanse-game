@@ -6,7 +6,7 @@
 // QUALITATIVE review: what players actually do turn to turn (sequences, little wins, lane execution,
 // failure moments, interaction, the endgame) — the thing sim.js's aggregates can't show.
 //
-// Usage:  node playtests/narrate.js            (runs the full 15-game matrix below → playtests/logs/)
+// Usage:  node playtests/narrate.js            (runs the full 30-game matrix below → playtests/logs/)
 //         node playtests/narrate.js 2p-3       (run a single game by id)
 // Env:    GUILD_MS / CELLAR_MS override the bulk MC budgets (defaults 120 / 200).
 //
@@ -29,7 +29,7 @@ const engine = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]
 const OUTDIR = path.join(__dirname, 'logs');
 fs.mkdirSync(OUTDIR, { recursive: true });
 
-// ---- the 15-game matrix: 5 per player count, mixing trader personas, guildmaster, cellarmaster ----
+// ---- the 30-game matrix: 10 per player count, mixing trader personas, guildmaster, cellarmaster ----
 // Seat names ARE the tier (they appear in every log line, so the lane analysis reads at a glance).
 const T = p => ({ name: 'Trader' + p[0].toUpperCase(), ai: { tier: 'trader', persona: p } });
 const G = n => ({ name: 'Guild' + (n || ''), ai: { tier: 'guildmaster', persona: null } });
@@ -40,16 +40,31 @@ const GAMES = [
   { id: '2p-3', seed: 213, seats: [G(), C()] },
   { id: '2p-4', seed: 214, seats: [T('majority'), T('prestige')] },
   { id: '2p-5', seed: 215, seats: [C(), G()] },
+  { id: '2p-6', seed: 216, seats: [T('volume'), T('prestige')] },
+  { id: '2p-7', seed: 217, seats: [C(), C(2)] },
+  { id: '2p-8', seed: 218, seats: [G(), T('majority')] },
+  { id: '2p-9', seed: 219, seats: [T('prestige'), C()] },
+  { id: '2p-10', seed: 220, seats: [G(), G(2)] },
   { id: '3p-1', seed: 311, seats: [T('volume'), G(), C()] },
   { id: '3p-2', seed: 312, seats: [T('prestige'), T('majority'), G()] },
   { id: '3p-3', seed: 313, seats: [C(), T('volume'), T('prestige')] },
   { id: '3p-4', seed: 314, seats: [G(), C(), T('majority')] },
   { id: '3p-5', seed: 315, seats: [T('volume'), T('prestige'), T('majority')] },
+  { id: '3p-6', seed: 316, seats: [C(), G(), T('volume')] },
+  { id: '3p-7', seed: 317, seats: [T('majority'), C(), G()] },
+  { id: '3p-8', seed: 318, seats: [G(), T('prestige'), T('volume')] },
+  { id: '3p-9', seed: 319, seats: [C(), C(2), G()] },
+  { id: '3p-10', seed: 320, seats: [T('prestige'), G(), C()] },
   { id: '4p-1', seed: 411, seats: [T('volume'), T('prestige'), G(), C()] },
   { id: '4p-2', seed: 412, seats: [G(), T('majority'), C(), T('volume')] },
   { id: '4p-3', seed: 413, seats: [T('volume'), T('prestige'), T('majority'), T('volume')] },
   { id: '4p-4', seed: 414, seats: [C(), G(), T('prestige'), T('majority')] },
   { id: '4p-5', seed: 415, seats: [G(), G(2), T('volume'), T('prestige')] },
+  { id: '4p-6', seed: 416, seats: [C(), T('volume'), G(), T('majority')] },
+  { id: '4p-7', seed: 417, seats: [T('prestige'), C(), T('volume'), G()] },
+  { id: '4p-8', seed: 418, seats: [G(), G(2), C(), C(2)] },
+  { id: '4p-9', seed: 419, seats: [T('majority'), T('volume'), T('prestige'), C()] },
+  { id: '4p-10', seed: 420, seats: [C(), G(), T('majority'), T('prestige')] },
 ].filter(g => !ONLY || g.id === ONLY);
 // de-dupe seat names within a game (TraderV twice at 4p-3)
 GAMES.forEach(g => { const seen = {}; g.seats.forEach(s => { if (seen[s.name]) s.name += ++seen[s.name]; else seen[s.name] = 1; }); });
