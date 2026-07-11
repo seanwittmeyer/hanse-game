@@ -345,3 +345,41 @@ Privileges-pay-owner / Works-serve-all · the destination values, majority tiers
 recipe costs (Bock total stays 5 — the twice-rejected probe) · the occupancy toll · the ground
 rent · the warm start · the three-colour taxonomy · the steerable piles · the three expansions
 on their spine (Jopenbier's vintage cube remains the one bespoke rider, by identity).
+
+---
+
+## Appendix — the two independent fresh-eyes passes vs this plan
+
+Two clean-context explorations answered the same brief independently: `FRESH-EYES.md` (this
+repo's agent pass) and `v3-thoughts.md` (a second, separate session). Neither saw the other or
+any prior internal exploration. Where they agree, treat it as strong signal; where this plan
+diverges from both, it is because the designer has ruled.
+
+**Both passes independently converged on:** ≤2-verb printed station faces · slot stops act on
+their own slot · retiring the demand die by moving the privilege payout to a single immediate
+moment ("bank at the gangplank" / "bank it at the sale") · keeping the Privilege class and the
+authored-demand lane (both explicitly reject the all-Works wharf) · cutting the Gauger's Office ·
+a null Floor being illegal · the Hall as a physical display + the Flight made publicly visible ·
+no new scoring lanes · pricing the cheap enshrine tick as a pace dial · the same validation
+shape (same-seed pathology regression tests).
+
+**Where they fork from each other:**
+- **Tap's ghost:** `FRESH-EYES` retires Tap entirely (recall lives in upgrade-in-place/spoilage);
+  `v3-thoughts` moves Tap to the Floor as its signature self-throttling harvest verb. This plan
+  takes the designer's third answer — Tap as the over-deploy bonus (§3.2).
+- **Load locality:** `FRESH-EYES` keeps the Harbor's global Load; `v3-thoughts` deletes it
+  (ship-local only, Harbor = Enshrine/Charter). This plan keeps Load global per the designer's
+  "load + dispatch" face (§2) — the ship-local variant remains a live dial ⚙.
+- **The ship channel:** commission-onto-building-slots (`FRESH-EYES`) vs the Tide + a paid
+  sail-one-short Dispatch (`v3-thoughts`). This plan carries the first as [open ⚙] (§3); the
+  Tide/paid-early-sail ideas join the dial shelf ⚙.
+
+**The one place this plan overrules both (by designer ruling):** the dice stay (§4). Both
+consultants chose immediate banking; both anticipated the v0.16 objection the designer raised —
+their versions keep the DESTINATION's value + benefit + majority + Flight sealing at delivery,
+so hull-filling motivation is preserved; only the *building's* cut banks early, and
+`v3-thoughts` §3.2 argues bank-at-departure is the only fully memoryless timing. Recorded here
+so the fork is decided with both cases on the table: **(i)** dice-stay + one-read set + carrier
+UX (this plan, §4) vs **(ii)** no dice, privilege ★ banks at departure, delivery = printed
+lookup. If the paper table finds the die still finicky even at one-read, (ii) is the tested,
+twice-independently-derived fallback.
