@@ -1,5 +1,9 @@
 # The Table Pass — one stop, one seal (the v3.0 exploration)
 
+> **SHELVED (2026-07-11).** The designer chose a different path for v3.0. The build, its sibling, the
+> harnesses, and all sim evidence live in this folder (`play3a.html` — still playable). Salvage list in
+> `archive/v3-exploration/README.md`.
+
 > **Status: BUILT (2026-07-08) — the §6 recommendation is playable as `play3a.html` (v3.0-A “One
 > Stop, One Seal”, KEY `hanse-3a-v2`).** **v3.0-A.1 “The Brewhouse Valve” (self-review pass):** the
 > §2-A2 prescribed release valve is ADOPTED on sim evidence — slot-local deploy throttled the VOLUME

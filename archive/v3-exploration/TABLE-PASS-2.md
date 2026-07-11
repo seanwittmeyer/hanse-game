@@ -1,5 +1,8 @@
 # The Table Pass, Round 2 — the wide net (v3.0 options)
 
+> **SHELVED (2026-07-11).** The designer chose a different path for v3.0. Package β’s build
+> (`play3b.html`) and every option write-up stay here for reference and salvage.
+
 > **Status: PACKAGE β BUILT (2026-07-08) — playable as `play3b.html` (v3.0-B “The Roster”, KEY
 > `hanse-3b-v2`), on the 3A foundation (slot-local stops · seals · the one commission gesture).**
 > **v3.0-B.1 “Home Bonuses & the Home Day” (self-review pass):** two structural fixes for what the

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play · v3.0-B “The Roster” PROTOTYPE</title>
+<title>Brewhouses of the Hanse — v3.0-A “One Stop, One Seal” · ARCHIVED EXPLORATION</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -388,7 +388,7 @@
     <span class="prompt" id="prompt">Loading…</span>
     <span class="links">
       <a href="#" onclick="toggleAid();return false">📖 Player Aid</a>
-      <a href="play3a.html" style="color:#ffd27a">⇄ 3A One Seal</a><a href="archive/v2.9/play.html">v2.9 stable</a><a href="index.html">Rulebook</a>
+      <a href="play3b.html" style="color:#ffd27a">⇄ 3B Roster</a><a href="../v2.9/play.html">v2.9 stable</a><a href="../../index.html">Rulebook</a>
       <a href="#" onclick="newGame();return false">New Game</a>
     </span>
   </div>
@@ -415,7 +415,7 @@
       <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>v3.0-B “The Roster” — PROTOTYPE</b> <span class="note">(package β on the 3A foundation: your verbs are ROSTER TILES that flip as used — the Floor is the RECALL; Specialists become hired JOURNEYMEN tiles; two FAIR DAYS score interim majorities; slots act on themselves; seals replace the dice). Side-by-side sibling: <a href="play3a.html">3A “One Stop, One Seal”</a> · stable game: <a href="archive/v2.9/play.html">v2.9.1</a>.</span> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
+  <p class="note" style="text-align:center"><b>v3.0-A “One Stop, One Seal” — ARCHIVED EXPLORATION</b> <span class="note">(shelved 2026-07-11 — the designer took a different path for v3.0; kept playable for reference.)</span><br><b>Was:</b> <span class="note">(the Round-1 table pass built: one verb per station · slots act on themselves · Tap cut, Specialists on the Floor · SEALS replace the demand dice · Flight milestones). Side-by-side sibling: <a href="play3b.html">3B “The Roster”</a> · the live game: <a href="../../play.html">play.html (v2.9.1)</a>.</span> The full rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and the <a href="index.html">Rulebook &amp; Components</a>; the gentle intro is the <a href="learn.html">Learn</a> page. All numbers are placeholders ⚙.</p>
 </main>
 
 <div id="setup" class="modal hidden" onclick="if(event.target===this)closeSetup()">
@@ -428,7 +428,7 @@
     <div style="margin-top:14px">
       <div class="note" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Expansions <span style="text-transform:none;letter-spacing:0">(optional)</span></div>
       <label class="ng-row" for="expansion">
-        <span class="ng-lbl"><b>Specialty Beers</b><span class="ng-sub">3 extra beers to draft (Blending is dormant in 3B)</span></span>
+        <span class="ng-lbl"><b>Specialty Beers</b><span class="ng-sub">3 extra beers to draft</span></span>
         <span class="ng-switch"><input type="checkbox" id="expansion"><span class="ng-tk"></span></span>
       </label>
       <label class="ng-row" for="jopen">
@@ -461,10 +461,10 @@ const ICONTIP={
   wheat:'Grain (G) — a brewing input and the medium of exchange.',
   sprout:'Hops (H) — a brewing input; the beer that travels.',
   beer:'Cask — a brewed beer tile (matures → slot → delivered).',
-  store:'Market — a wharf quarter: its two slots (s1 · s8) + occupancy. Your verbs live on your ROSTER.',
-  'flask-conical':'Brewhouse — a wharf quarter: its two slots (s2 · s3) + occupancy.',
-  hourglass:'Cellar — a wharf quarter: its two slots (s4 · s5) + occupancy.',
-  ship:'Harbor — a wharf quarter: its two slots (s6 · s7) + occupancy. (The SEND verb lives on your roster.)',
+  store:'Market — Source: gain 2 goods, or acquire one tile (a recipe · a Privilege/Building to place · a ship commission · a charter contract). Specialists are hired at the Cellar.',
+  'flask-conical':'Brewhouse — ONE choice: Brew (a recipe → an open vessel) OR deploy one Ready cask onto any open slot.',
+  hourglass:'Cellar — ONE choice: Age (a pool of age points across your vessels) OR fit one Specialist.',
+  ship:'Harbor — SEND one deployed cask: onto a docked ship (free) · to the Hall (Enshrine, Q2+) · by Charter (a contract + the fare).',
   anchor:'Slot — one of the 8 shared perimeter spaces; holds a BUILDING (owned modifier) and/or an occupant (a cask, or a ship with casks).',
   sailboat:'Ship — a neutral, destination-bound hull (from the ship deck); anyone loads their own casks; it sails when full.',
   landmark:'Kontor — a trade destination (variable value + majorities).',
@@ -472,7 +472,7 @@ const ICONTIP={
   crown:'The Hall — the prestige destination (fixed ladder; the local Enshrine, no boat).',
   'scroll-text':'Recipe — permission to brew a type of beer.',
   'stamp':'Seal — a printed token a cask takes when it ships from its owner’s Privilege; its ★ are read at delivery (gilt face = the Q4+ premium, pre-summed).',
-  wrench:'Journeyman — a hired ROSTER TILE (a stronger verb; max 3 sockets). Hired via the Build verb, the Q3+ Hire cask action, or London.',
+  wrench:'Specialist — a private tile on your brewery board (bought at the Cellar; max 4 in your area).',
   ticket:'Charter contract — spend one (+ the flat fare) to ship a single deployed Ready cask to a kontor now (the relief valve; the Quaymaster also reaches your vessels).',
   search:'Survey — build a tile from YOUR house almanac on a slot at once (free; the tile is spent).',
   'map-pin':'Presence — your delivered casks at a kontor (counts for majorities).',
@@ -531,7 +531,7 @@ const RECIPE_BUY={broyhan:{h:1},keut:{g:1},mumme:{h:2},bock:{g:1,h:1},
 const CASK_ACT={source:'gain 2 goods',age:'Age a cask 2 steps',
   load:'Load — a Ready cask onto a ship, free',reach:'Reach — +1 presence at a kontor',
   convert:'Convert — up to 2 goods G↔H',survey:'Survey — build a tile from YOUR house almanac, free, placed at once',
-  hire:'Hire — a Journeyman from the display, free (Q3+ casks only; joins your roster)',
+  hire:'Hire — a Specialist from the Cellar display, free (Q3+ casks only)',
   wild:'Wild — take any base action'};
 // ⚙ v0.12 — VARIABLE cask actions: a cask's signature slot-action, decoupled from quality. v1.0 makes
 // the draw STEERABLE: the top action of every quality pile is FACE-UP (S.pileTop), so at the Brewhouse you
@@ -554,11 +554,11 @@ function slotEffAct(id){const t=S.slots[id];if(!t||t.type!=='cask')return null;
 // ⚙ the four stations' FULL action sets, shown as icons on the board (no hover needed)
 // The station "yield" rows list EVERY action there. Each station is an array of GROUPS: icons within a group are
 // alternatives (OR — shown with a "/" between them); separate groups are both done (AND — just listed).
-const STATION_ACTS={   // v3.0-B: stations print NO verbs — the ROSTER carries them; a station is a place (its two slots + occupancy)
-  Market:[],
-  Brewhouse:[],
-  Cellar:[],
-  Harbor:[],
+const STATION_ACTS={
+  Market:[['coins','scroll-text','landmark','sailboat','ticket']],   // OR — Source: take goods, or acquire ONE tile (recipe/Building/ship/contract)
+  Brewhouse:[['beer','barrel']],                                     // OR — Brew 1 cask, OR deploy 1 Ready cask (v3.0-A.1 — the §2-A2 valve; still one decision)
+  Cellar:[['hourglass','wrench']],                                   // OR — ONE choice: Age a pool, OR fit a Specialist (Tap is CUT; the Floor absorbs its job)
+  Harbor:[['package-plus','crown','ticket']],                        // ONE verb — SEND one deployed cask: ship (free) / the Hall / Charter
 };
 // per-icon tooltip for the yield row — each action icon explains itself (so the barrel reads as DEPLOY, not Tap)
 const STATION_ICON_TIP={coins:'Source — take 2 goods',
@@ -757,17 +757,17 @@ const SPOIL_MINQ=4;             // ⚙ v2.9 SPOILAGE — a Ready Q4+ cask may de
 // SPECIALIST ART METADATA (v2.6.1): each tile carries art:'…' — the illustration brief for the image agent
 // (style: a BEIGE field, ONE object centered — the specialist's trade — so Specialists read apart at a glance).
 const IMPROVEMENTS={
-  vessel   :{name:'Coppersmith', art:'a gleaming copper brew kettle', desc:'Journeyman tile — BREW; hiring him also opens your 3rd vessel', cost:{g:3}},
-  cellar   :{name:'Cellarman', art:'an oak cask racked on a wooden stillage', desc:'Journeyman tile — MATURE: age one maturing cask fully to Ready', cost:{g:4}},
-  granary  :{name:'Grain Factor', art:'a tied burlap sack overflowing with barley',desc:'Journeyman tile — SOURCE+: take 2 grain + 1 hops', cost:{g:3}},
-  hopgarden:{name:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',   desc:'Journeyman tile — SOURCE+: take 1 grain + 2 hops', cost:{g:4}},
+  vessel   :{name:'Coppersmith', art:'a gleaming copper brew kettle', desc:'Extra Vessel — +1 brewing lane (start 2 → cap 3; one per house)', cost:{g:3}},   // v2.4 ⚙ 4→3 — lift the floor (the Floor line pays it now)
+  cellar   :{name:'Cellarman', art:'an oak cask racked on a wooden stillage', desc:'Age +1 — your brews mature one step sooner (Ready −1)', cost:{g:4}},
+  granary  :{name:'Grain Factor', art:'a tied burlap sack overflowing with barley',desc:'a FLOOR stop — take 2 grain when you work the Floor', cost:{g:3}},   // v3.0-A: the silent +1-on-gain passive becomes a tactile Floor stop
+  hopgarden:{name:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',   desc:'a FLOOR stop — take 2 hops when you work the Floor', cost:{g:4}},   // v3.0-A Floor stop (was the +1-on-gain passive)
   // v1.5 "Improvements": two ex-Buildings reborn as private upgrades + the load-from-vessel valve ⚙
-  crane    :{name:'Stevedore', art:'a medieval wooden treadwheel harbor crane', desc:'Journeyman tile — SEND up to TWO casks', cost:{g:3}},
-  lagering :{name:'Lagerkeeper', art:'stacked casks dusted with frost and icicles',desc:'Journeyman tile — LAGER: every maturing cask ages +2', cost:{g:2}},
-  quay     :{name:'Quaymaster', art:'a private wooden jetty with a rope-wound mooring bollard', desc:'Journeyman tile — SEND one cask, reaching your own vessels too', cost:{g:3}},
+  crane    :{name:'Stevedore', art:'a medieval wooden treadwheel harbor crane', desc:'Send 2 — your Harbor SEND may send a second cask', cost:{g:3}},   // v3.0-A: modifies the unified SEND
+  lagering :{name:'Lagerkeeper', art:'stacked casks dusted with frost and icicles',desc:'a FLOOR stop — every maturing cask ages +2 when you work the Floor', cost:{g:2}},   // v3.0-A: the every-turn tick becomes a tactile Floor stop (no more per-turn upkeep)
+  quay     :{name:'Quaymaster', art:'a private wooden jetty with a rope-wound mooring bollard', desc:'your SEND also reaches your vessels (the invested exception to deploy-first)', cost:{g:3}},
 };
-const IMP_AREA_CAP=3;          // v3.0-B: = ROSTER_SOCKETS — the hiring cap (Journeymen only; flipped
-                               // buildings live on the separate FLOOR_CAP=4 floor slots — see commitBldg).
+const IMP_AREA_CAP=4;          // ⚙ v1.7: the player's improvements area holds at most this many tiles TOTAL —
+                               // bought improvements + FLIPPED buildings (a building a rival overbuilt flips here).
 const IMPROVEMENT_KEYS=Object.keys(IMPROVEMENTS);
 // ---- v82 "Scarce Improvements": improvements are no longer an always-available catalog. They form a SHUFFLED
 // DECK with (n-1) copies of EACH type (n = player count), feeding a face-up DISPLAY of IMP_DISPLAY at the Cellar
@@ -780,58 +780,6 @@ const UP=IMPROVEMENTS;          // alias kept for hasUpgrade / grantUpgrade / re
 function upName(k){return (UP[k]||{name:k}).name;}
 function upDesc(k){return (UP[k]||{desc:''}).desc;}
 
-// ---- THE ROSTER (v3.0-B): your five printed verb tiles + hired JOURNEYMEN sockets ----
-// A wharf turn flips ONE unflipped tile; the RECALL (the Floor) unflips them all.
-const ROSTER_BASE=['source','brew','send','build','reach'];
-const ROSTER_SOCKETS=3;   // ⚙ max hired Journeymen (extra roster tiles)
-const FLOOR_CAP=4;        // ⚙ the floor slots for FLIPPED (displaced) buildings — Journeymen live on the roster now
-const RECALL_FLOOR_GOODS=2;   // ⚙ a bare-brewery recall still pays 2 goods (never a dead turn)
-const ROSTER_VERB={
-  source :{name:'Source',   icon:'coins',        desc:'take 2 goods'},
-  brew   :{name:'Brew',     icon:'flask-conical',desc:'brew 1 cask (a recipe → an open vessel)'},
-  send   :{name:'Send',     icon:'ship',         desc:'send ONE deployed cask — docked ship (free) · the Hall (Q2+) · Charter'},
-  build  :{name:'Build',    icon:'store',        desc:'acquire 1 tile — recipe · Privilege/Building (buy + place) · ship commission · contract · hire a Journeyman'},
-  reach  :{name:'Reach',    icon:'map-pin',      desc:'+1 presence at a kontor you have delivered to'},
-  // the seven JOURNEYMAN verbs (hired tiles — see IMPROVEMENTS):
-  jbrew  :{name:'Brew+',    icon:'flask-conical',desc:'Coppersmith — brew 1 cask'},
-  agefull:{name:'Mature',   icon:'hourglass',    desc:'Cellarman — age ONE maturing cask fully to Ready'},
-  src3g  :{name:'Source+',  icon:'wheat',        desc:'Grain Factor — take 2 grain + 1 hops'},
-  src3h  :{name:'Source+',  icon:'sprout',       desc:'Hop Gardener — take 1 grain + 2 hops'},
-  send2  :{name:'Send ×2',  icon:'ship',         desc:'Stevedore — send up to TWO casks'},
-  ageall :{name:'Lager',    icon:'hourglass',    desc:'Lagerkeeper — every maturing cask ages +2'},
-  sendv  :{name:'Send (vessels)',icon:'anchor',  desc:'Quaymaster — send one cask, reaching your own vessels too'},
-};
-const JOURNEYMAN_VERB={vessel:'jbrew',cellar:'agefull',granary:'src3g',hopgarden:'src3h',crane:'send2',lagering:'ageall',quay:'sendv'};
-// v3.0-B.1 "HOME BONUSES" ⚙ — verbs are portable, but each quarter pays a small printed courtesy when
-// its OWN work is done there (geography as content, not rules — the Source→Brew→Age→Ship reading of the
-// board survives the roster). ONE line per station face:
-//   Market  — flip BUILD here: +1G at once (the guild's discount, spendable on the acquire)
-//   Brewhouse — flip BREW here: the cask you brew this turn ages +1 at once
-//   Harbor  — flip a SEND here: +1G at once (the wharfage rebate)
-//   Cellar  — flip ANY verb here: one maturing cask ages +1 (closest to Ready) — the quarter where time
-//             lives; the ageless roster's small geographic age faucet (base tiles only ⚙ — journeymen
-//             are already upgraded verbs, except the Cellar's any-verb welcome which pays for all).
-const HOME_OF={build:'A',brew:'B',send:'C',send2:'C',sendv:'C'};   // jbrew is the Coppersmith's own kettle — no home kicker ⚙
-const HOME_TXT={A:'Build here: +1G',B:'Brew here: cask ages +1',C:'Send here: +1G',D:'any verb: age a cask +1'};
-function rosterTiles(p){return ROSTER_BASE.concat((p.upgrades||[]).map(k=>JOURNEYMAN_VERB[k]).filter(Boolean));}
-function rosterUnused(p){return rosterTiles(p).filter(k=>!(p.used&&p.used[k]));}
-
-// ---- FAIR DAYS (v3.0-B, the El Grande adoption): two interim majority scorings on the clock ⚙ ----
-const FAIR_DIV=2;   // ⚙ the Fair pays the 1st tier ÷ 2, leader(s) only; the finale scores full tiers as today
-function fairMarks(){const c=S.sailedCap;return [Math.ceil(c/3),Math.ceil(2*c/3)];}
-function advanceClock(){S.sailed++;checkFair();}
-function checkFair(){
-  if(EXPANSIONS.some(m=>expOn(m)&&m.replacesMajorities))return;   // The Trade Roads replaces majorities — no fairs
-  S.fairsHeld=S.fairsHeld||0;const marks=fairMarks();
-  while(S.fairsHeld<marks.length&&S.sailed>=marks[S.fairsHeld]){S.fairsHeld++;
-    log('🎪 <b>FAIR DAY '+S.fairsHeld+'!</b> An interim majority scoring — the leader at each kontor banks half its 1st tier.');
-    KONTORE.forEach(k=>{const lead=leadersAt(k);if(!lead.length)return;
-      const amt=Math.floor((DEST[k].maj[0]||0)/FAIR_DIV/lead.length);
-      if(amt<=0)return;
-      lead.forEach(pl=>{pl.fairPts=(pl.fairPts||0)+amt;log('↳ 🎪 '+pl.name+' banks +'+amt+'★ at '+DEST[k].name+' (the Fair Day lead).');});});
-  }
-}
-
 // ---- THE GRID (positions identical to the box; v0.7 loop labels) ----
 // 8 perimeter slots → the line each belongs to
 const SLOTS=[
@@ -843,7 +791,6 @@ const LINES={rowT:{cells:['A','B'],caps:['s8','s3'],label:'Top row · Market + B
              colL:{cells:['A','C'],caps:['s1','s6'],label:'Left col · Market + Harbor'},
              colR:{cells:['B','D'],caps:['s2','s5'],label:'Right col · Brewhouse + Cellar'}};
 const ADJ={A:['B','C'],B:['A','D'],C:['A','D'],D:['B','C']};   // orthogonal only — never the diagonal
-const STATION_SLOTS={A:['s1','s8'],B:['s2','s3'],C:['s6','s7'],D:['s4','s5']};   // v3.0-B: a turn touches YOUR station's two slots
 const CELLNAME={A:'Market',B:'Brewhouse',C:'Harbor',D:'Cellar'};
 const CELLROLE={A:'Source',B:'Brew',C:'Ship',D:'Age'};
 const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C:{row:'rowB',col:'colL'},D:{row:'rowB',col:'colR'}})[cell];
@@ -855,8 +802,8 @@ const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C
 const OCCUPANCY_TOLL=1;
 
 // ---- pace dials ⚙ ----
-const SAILED_CAP={2:5,3:8,4:10};   // ⚙ v3.0-B: ONE verb per turn — voyages come slower, so the clock is trimmed (first-cut; sim-tuned)  // the Sailed-Ships end clock (per RULES §8) — primary pace dial ⚙. v1.3 "Tap a Cask" trimmed each by 1 (7/11/14→6/10/13): deploy-via-line + Tap cut voyages-per-round, so the track filled slower and games drifted to the round ceiling; the trim restores a clock-dominant finish in the 12–25 band. 2–4p only (5p falls back to 10).
-const MAX_ROUND=45;   // ⚙ v3.0-B: a round is THIN (one verb); the band shifts — judge pace by clock-dominance, not the v2.x 12–25 rounds                      // round ceiling / backstop ⚙ — top of the 12–25-round target band (good play ends earlier on the clock)
+const SAILED_CAP={2:6,3:10,4:13};  // the Sailed-Ships end clock (per RULES §8) — primary pace dial ⚙. v1.3 "Tap a Cask" trimmed each by 1 (7/11/14→6/10/13): deploy-via-line + Tap cut voyages-per-round, so the track filled slower and games drifted to the round ceiling; the trim restores a clock-dominant finish in the 12–25 band. 2–4p only (5p falls back to 10).
+const MAX_ROUND=25;                      // round ceiling / backstop ⚙ — top of the 12–25-round target band (good play ends earlier on the clock)
 const CELLAR_POOL=3;                     // Cellar age points ⚙
 const AUTO_AGE=true;                      // casks age +1 at the start of your turn (the free "time passes" aging). v1.1 tried removing this (v54) but it stole the turns players needed to fund high-Q + slowed setup past the short 2p clock → reverted. The Cellar/age-action/Novgorod SPEED it. (Flag kept to experiment.)
 const START_GOODS={g:3,h:2};
@@ -890,7 +837,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-3b-v3'; // v3.0-B.2 “House Almanacs” (TABLE-PASS-2 option 5, the GWT adoption — designer-directed; identical to 3A’s so the side-by-side stays pure on the turn engine): the shared Wharf deck/display/bag retire; each house owns six double-sided tiles (Charter pair by seat; +Speciality with Specialty Beers); build a face at its printed cost via the BUILD verb (the tile is spent); London & Survey build one of YOURS free; the warm-start neutrals are the fixed TOWN’S WORKS (Cooperage + Customs); the owner-ring dies; Gauger/Workshop/Parti-Gyle park. Bump discards stale 3b-v2 state. // v3.0-B.1 “Home Bonuses & the Home Day”: THE RECALL AGES THE BREWERY — every maturing cask +1 when the crew comes home (the structural fix for the measured DEAD quality climb: a CELLAR=1 committed seat read Q4+ 0.3/game and Q5 0.0 before this — the climb now has a rhythm-native engine: push the roster for tempo, mature the cellar on the breath). Plus “Home Bonuses”: each quarter pays a printed courtesy when its own work is done there — Build@Market +1G · Brew@Brewhouse the new cask ages +1 · Send@Harbor +1G · ANY verb@Cellar one maturing cask ages +1 (closest to Ready, auto). Geography returns as content, not rules: the board reads Source→Brew→Age→Ship again, movement is a real decision every turn, the ageless Cellar quarter gets its identity back, and the measured Q4+/Q5 flatline (sim3b-personas-v1) gets an age faucet. Bump discards stale 3b-v1 state. // v3.0-B “The Roster” PROTOTYPE — package β (TABLE-PASS-2.md §2/§9) built on the 3A foundation (slot-local stops · seals · one commission gesture). THE TURN ENGINE IS CONCORDIA-AS-TILES: (1) your PLAYER BOARD prints a ROSTER of five verb tiles — Source (2 goods) · Brew (1 cask) · Send (the unified 3A send) · Build (acquire ONE tile: recipe / Privilege·Building / ship commission / contract / hire a Journeyman) · Reach (+1 presence where you've delivered). A wharf turn = move to an adjacent station, FLIP one unflipped tile, resolve the verb + your station's TWO slot stops (any order, all optional; verbs are portable — the station is a PLACE: its slots, its occupancy, the toll). Flipped tiles stay flipped. (2) THE RECALL — instead of moving, take the Floor: unflip your whole roster and run your brewery (each vessel cask's action + a Wild per flipped building; a bare brewery takes 2 goods ⚙). The wharf-vs-home fork is the game's breathing rhythm. (3) SPECIALISTS DISSOLVE INTO JOURNEYMEN — the seven purple tiles are now hired ROSTER TILES (max 3 sockets ⚙), bought via Build or the old free channels: Coppersmith (Brew + opens the 3rd vessel) · Cellarman (age one cask to Ready) · Grain Factor/Hop Gardener (3 goods) · Stevedore (Send ×2) · Lagerkeeper (all maturing +2) · Quaymaster (Send, reaching your vessels). There is NO base Age verb — beer ages by TIME (the auto-age tick) and by journeymen. (4) FAIR DAYS — at ⅓ and ⅔ of the Sailed-Ships track an interim majority scoring fires: the leader at each kontor banks HALF its 1st tier ⚙ (off under The Trade Roads). The stable game: archive/v2.9/play.html.
+const KEY='hanse-3a-v3'; // v3.0-A.2 “House Almanacs” (TABLE-PASS-2 option 5, the GWT adoption — designer-directed): the shared Wharf deck/display/bag RETIRE; each house owns a printed ALMANAC of six double-sided tiles (Berth: Rich Berth/Festkeller · Staple: Staple Hall/Burgomaster · Charter: a house-specific kontor pair by seat · Politics: Diet/Almoner · Cellar Door: Connoisseur/Reliquary · Works: Malt Kiln/Hop Yard · +Speciality: Salt House/Smoke Kiln with Specialty Beers). Build a face at its printed cost (the tile is spent; face picked at build ⚙ — setup-draft lock parked); London & Survey build one of YOURS free; the warm-start neutrals are the fixed TOWN’S WORKS (Cooperage + Customs); the owner-ring token DIES (your tiles are your colour); Gauger/Workshop/Parti-Gyle park out of the kit. Bump discards stale 3a-v2 state. // v3.0-A.1 “The Brewhouse Valve”: the Brewhouse face is Brew 1 cask OR deploy 1 Ready cask onto any open slot (still ONE decision) — the release valve TABLE-PASS §2-A2 prescribed, adopted on sim evidence (slot-local deploy throttled the VOLUME lanes at 4p; see playtests/sim3a-personas-v1/v2). Bump discards stale 3a-v1 state. // v3.0-A “One Stop, One Seal” PROTOTYPE — the Round-1 table pass (TABLE-PASS.md §6) built on the v2.9.1 engine: (A1) ONE VERB PER STATION — Market unchanged (2 goods OR 1 tile; the commission free-load picker is CUT, dockside pickup is the only free load) · Brewhouse = Brew only · Cellar = Age-pool OR fit 1 Specialist (Tap CUT; Blend rides as the expansion or-branch) · Harbor = the unified SEND (one deployed cask: docked ship free / Hall Q2+ / Charter contract+fare; Stevedore = send 2; Quaymaster = vessels too). (A2) SLOTS ACT ON THEMSELVES — an empty slot's stop deploys onto THAT slot; a Q1 cask stop offers the spoilage-deploy either/or; a ship stop loads that ship. (A3) SPECIALISTS AS FLOOR STOPS — Grain Factor (+2G) · Hop Gardener (+2H) · Lagerkeeper (all maturing +2) fire when you work the Floor; the per-turn Lagerkeeper tick and +1-on-gain passives are retired. (B1) SEALS REPLACE THE DEMAND DICE — a cask shipping from its owner's Privilege takes a printed SEAL (plain/gilt two-sided, gilt = the Q4+ premium pre-summed); a berth Privilege hands its seal at the sail; delivery = destination value + at most one dock seal + one berth seal, NO cap-6 arithmetic. Plus Flight milestones (3rd beer +1G1H · 4th +1 contract · 5th a free Reach — tempo, not points) and the Hall trophy shelf. All numbers ⚙. The stable game lives at archive/v2.9/play.html (KEY hanse-hotseat-v94).
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -898,7 +845,7 @@ const KEY='hanse-3b-v3'; // v3.0-B.2 “House Almanacs” (TABLE-PASS-2 option 5
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v3.0-B “The Roster” · '+KEY;
+const APP_VERSION='v3.0-A “One Stop, One Seal” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -929,7 +876,7 @@ function newPlayer(i,name){
     grain:START_GOODS.g+(i>0?SEAT_COMP:0),hops:START_GOODS.h,storage:START_STORAGE,cell:null,placed:false,
     // start 2 vessels; one holds the warm Ready Gruit (deploy it turn 1)
     vessels:[{style:'gruit',q:1,step:1,ready:1},null], maxVessels:2,
-    recipes:['gruit','hopped'], upgrades:[], flipped:[], delivered:[], developed:0, milestones:[], used:{}, fairPts:0,
+    recipes:['gruit','hopped'], upgrades:[], flipped:[], delivered:[], developed:0, milestones:[],
     presBonus:{bruges:0,london:0,bergen:0,novgorod:0},
     contracts:START_CONTRACTS};
     // v2.2: NO hand — buildings are always chosen from the display and PLACED on acquisition; no starting building.
@@ -989,7 +936,7 @@ function freshState(n,names){
 function cur(){return S.players[S.active];}
 function hasUpgrade(p,key){return (p.upgrades||[]).includes(key);}
 // v1.7: how many tiles sit in the improvements area (bought improvements + flipped buildings) — capped at IMP_AREA_CAP.
-function impArea(p){return (p.upgrades?p.upgrades.length:0);}   // v3.0-B: Journeymen only — the floor (flipped tiles) caps separately at FLOOR_CAP
+function impArea(p){return (p.upgrades?p.upgrades.length:0)+(p.flipped?p.flipped.length:0);}
 // gain/pay are the ONLY goods faucets/drains, so they double as the log's resource LEDGER:
 // every gain and every spend, by anyone, shows up with icons (the actual applied amounts —
 // upgrade bonuses included, storage-capped overflow noted).
@@ -1007,7 +954,7 @@ function costStr(c){let a=[];if(c.g)a.push(c.g+'G');if(c.h)a.push(c.h+'H');retur
 function costIcons(c){let a=[];if(c.g)a.push(Gi(c.g));if(c.h)a.push(Hi(c.h));return a.join(' ')||'<span class="note">free</span>';}
 function styleShort(style){return STYLES[style].name.split(' ')[0];}
 function shipName(t){return SHIP_NAME[t.ship];}
-function effReady(p,style){return Math.max(1,STYLES[style].ready);}   // v3.0-B: the Cellarman is a MATURE verb tile, not a ready−1 passive
+function effReady(p,style){return Math.max(1,STYLES[style].ready-(hasUpgrade(p,'cellar')?1:0));}
 function openVessel(p){return p.vessels.findIndex(v=>v===null);}
 function emptySlots(){return SLOTS.filter(s=>!S.slots[s.id]);}   // slots with no OCCUPANT (a building may still sit there)
 // v2.9 SPOILAGE: the slots a given Ready cask could take by displacing a STALE Q1 (any owner's, your own
@@ -1144,11 +1091,11 @@ function ownSq(pid){const o=S.players[pid];return '<span class="osq" style="back
 function lineGlyph(lk){const lit=LINES[lk].cells;return '<span class="lg" data-tip="'+attr(LINES[lk].label)+'">'+['A','B','C','D'].map(c=>'<span class="'+(lit.includes(c)?'on':'')+'"></span>').join('')+'</span>';}
 
 // ---- tooltips for stations & slots ----
-const CELLTIP={   // v3.0-B: a station is a PLACE — its two slots + occupancy; the verbs live on your roster
-  Market:'The Market quarter — its two slots (s1 · s8) + occupancy. HOME BONUS: flip BUILD here → +1G (the guild’s discount). 1G toll when you flip while sharing.',
-  Brewhouse:'The Brewhouse quarter — its two slots (s2 · s3) + occupancy. HOME BONUS: flip BREW here → the new cask ages +1 at once.',
-  Cellar:'The Cellar quarter — its two slots (s4 · s5) + occupancy. HOME BONUS: flip ANY verb here → one maturing cask ages +1 (where time lives).',
-  Harbor:'The Harbor quarter — its two slots (s6 · s7) + occupancy. HOME BONUS: flip a SEND here → +1G (the wharfage rebate).',
+const CELLTIP={
+  Market:'Market · Source. ONE decision: take 2 goods, OR acquire one tile — a recipe · a Privilege/Building (buy + place) · a ship commission · a charter contract. (1G toll when you work a public line while sharing a station.)',
+  Brewhouse:'Brewhouse · Brew. ONE choice: brew (a recipe → an open vessel; the cask takes the face-up pile action) OR deploy one Ready cask onto any open slot (the station verb reaches the wharf; a slot’s stop stays local). (1G to join a rival.)',
+  Cellar:'Cellar · Age. ONE choice: Age ('+CELLAR_POOL+' points across your vessels) OR fit one Specialist. (Tap is cut — the Floor fires your held casks without discarding them.) (1G to join a rival.)',
+  Harbor:'Harbor · Ship. ONE verb — SEND one deployed cask: onto a docked ship (free · a rival’s cask earns you the loader bonus) · to the Hall (Enshrine, Q2+) · by Charter (contract + fare). The Stevedore sends two; the Quaymaster also reaches your vessels. (1G to join a rival.)',
 };
 function bldgTip(b){if(!b)return '';const def=BUILDINGS[b.b];return def.name+' ('+(b.owner==null?'neutral — the town’s':S.players[b.owner].name)+') · '+(def.verb==='value'?'PRIVILEGE — pays its owner only':'BUILDING — serves any dock')+' — '+def.desc;}
 function tileTip(t,slot){
@@ -1257,7 +1204,7 @@ function pBldgFace(b){const def=BUILDINGS[b.b];const o=(b.owner!=null)?S.players
 // a private IMPROVEMENT rendered as a tile (Market display)
 function pImpFace(key){const def=IMPROVEMENTS[key];
   return '<div class="ptile pbld imp">'
-    +'<span class="pbtop">'+LU('wrench')+'<span class="pverb">Journeyman</span></span>'
+    +'<span class="pbtop">'+LU('wrench')+'<span class="pverb">Specialist</span></span>'
     +'<span class="pbnm">'+def.name+'</span>'
     +'<span class="pbeff">'+def.desc+'</span>'
     +'<span class="pbfoot">'+(def.cost?pCost(def.cost.g,def.cost.h):'')+'</span>'
@@ -1345,90 +1292,50 @@ function doMove(cell){
   snapshot();
   const p=cur();const placing=!p.placed;p.placed=true;p.cell=cell;
   log(p.name+(placing?' places their worker at ':' moves to ')+LU(ICON[CELLNAME[cell]])+' <b>'+CELLNAME[cell]+'</b> '+cellGlyph(cell),true);
-  UI={sub:'verb'};render();   // v3.0-B: flip one roster tile, or Recall
+  UI={sub:'line'};render();
 }
-// v3.0-B THE ROSTER: after moving, FLIP one unflipped roster tile — its verb + your station's TWO slot
-// stops resolve in any order (all optional). Verbs are PORTABLE: the station is a PLACE (its slots, its
-// occupancy, the toll) — the roster carries what you can do. Flipped tiles stay flipped until the RECALL.
-// The occupancy toll (1 G) applies when you flip a verb while sharing the station; the Recall is never tolled.
-function verbUsable(p,k){
-  if(k==='brew'||k==='jbrew')return openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r));
-  if(k==='send'||k==='send2')return sendCasks(p,false).length>0;
-  if(k==='sendv')return sendCasks(p,true).length>0;
-  if(k==='reach')return reachBenKontore(p).length>0;
-  if(k==='agefull'||k==='ageall')return p.vessels.some(c=>c&&c.step<c.ready);
-  return true;}   // source / src3g / src3h / build always work
-function chooseVerb(k){
-  const p=cur();
-  if(!rosterUnused(p).includes(k))return;
+// v2.2 "One Grammar": after moving, the player chooses among THREE lines — the station's row, its column,
+// or THE FLOOR (the standing private 3rd line: your vessel casks' actions + your flipped-building Wilds,
+// any order, all optional). The occupancy toll (1 G, capped at what you hold) applies ONLY when you activate
+// a PUBLIC line while sharing the station with a rival — the Floor is never tolled. Opening round is free.
+function chooseLine(which){
   snapshot();
+  const p=cur();
+  if(which==='floor'){activateFloor();return;}
+  const lk=cellOfLine(p.cell)[which];
   const shared=S.turn>1 && S.players.some(q=>q.id!==p.id&&q.cell===p.cell);
-  if(shared){const toll=Math.min(OCCUPANCY_TOLL,p.grain);
-    if(toll>0){p.grain-=toll;log(p.name+' pays −'+Gi(toll)+' occupancy toll for sharing <b>'+CELLNAME[p.cell]+'</b>.',true);}}
-  p.used=p.used||{};p.used[k]=true;
-  log(p.name+' flips the '+LU(ROSTER_VERB[k].icon)+' <b>'+ROSTER_VERB[k].name+'</b> tile at '+LU(ICON[CELLNAME[p.cell]])+' <b>'+CELLNAME[p.cell]+'</b> ('+rosterUnused(p).length+' unflipped before the recall).',true);
-  // v3.0-B.1 HOME BONUSES — the quarter's printed courtesy, paid at the flip
-  let homeBrew=false;
-  if(HOME_OF[k]===p.cell){
-    if(k==='build'){log('↳ home bonus — the Market guild discounts the acquire (+'+Gi(1)+' now).');gain(p,1,0);}
-    else if(k==='brew'){homeBrew=true;log('↳ home bonus — brewed at the Brewhouse: the new cask will age +1 at once.');}
-    else{log('↳ home bonus — the Harbor rebates the wharfage (+'+Gi(1)+').');gain(p,1,0);}
+  if(shared){
+    const toll=Math.min(OCCUPANCY_TOLL,p.grain);
+    if(toll>0){p.grain-=toll;log(p.name+' pays −'+Gi(toll)+' occupancy toll for sharing <b>'+CELLNAME[p.cell]+'</b>.',true);}
   }
-  if(p.cell==='D'){const m=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step<o.c.ready)
-      .sort((a,b)=>(a.c.ready-a.c.step)-(b.c.ready-b.c.step));
-    if(m.length){m[0].c.step++;
-      log('↳ the Cellar quarter — '+LU('hourglass')+styleShort(m[0].c.style)+' ages +1 → '+m[0].c.step+'/'+m[0].c.ready+(m[0].c.step>=m[0].c.ready?' '+LU('check')+' <b>READY</b>':'')+'.');}}
-  const stops=[{kind:'verb',k}];
-  (STATION_SLOTS[p.cell]||[]).forEach(cid=>{ if(S.slots[cid])stops.push({kind:'cap',slot:cid});
-    else stops.push({kind:'deploy',slot:cid}); });
-  UI={sub:'stops',line:'verb',stops,pendingBenefits:[]};
-  if(homeBrew)UI.homeBrew=true;   // consumed by brewPick this turn
-  render();
+  activateLine(lk);
 }
-// THE RECALL — the Floor as the game's breath: unflip the whole roster, then run the brewery (each vessel
-// cask's action + a Wild per flipped building). A bare brewery still takes RECALL_FLOOR_GOODS goods — the
-// recall is never a dead turn. Never tolled.
+// THE FLOOR — the private line: one stop per cask in your vessels (its slot-action, the cask STAYS) plus
+// one Wild per flipped building. Resolved through the same stops picker as a public line (any order, all
+// optional). No stations, no slots, no toll.
 function floorEntries(p){
   const stops=[];
   p.vessels.forEach((c,i)=>{if(c)stops.push({kind:'fcask',vi:i});});
+  // v3.0-A (A3): verb Specialists are FLOOR STOPS — the Floor is the line you BUILD.
+  ['granary','hopgarden','lagering'].forEach(k=>{if(hasUpgrade(p,k))stops.push({kind:'fspec',k});});
   (p.flipped||[]).forEach((k,i)=>stops.push({kind:'fwild',k,fi:i}));
   return stops;
 }
-function chooseRecall(){
-  const p=cur();
-  snapshot();
-  const spent=rosterTiles(p).length-rosterUnused(p).length;
-  p.used={};
-  // v3.0-B.1: THE RECALL AGES THE BREWERY — every maturing cask +1 (the home day; the climb's heartbeat).
-  // Without a base Age verb, pushing the roster deep delays your cellar; bringing the crew home matures it.
-  {const m=p.vessels.filter(c=>c&&c.step<c.ready);
-   if(m.length){m.forEach(c=>c.step++);
-     log('↳ the home day — every maturing cask ages +1 ('+m.map(c=>styleShort(c.style)+' '+c.step+'/'+c.ready).join(', ')+').');}}
-  const stops=floorEntries(p);
-  log(p.name+' <b>RECALLS the roster</b> '+LU('home')+' — '+spent+' tile'+(spent===1?'':'s')+' unflip; the brewery runs ('+p.vessels.filter(c=>c).length+' cask'+(p.vessels.filter(c=>c).length===1?'':'s')+((p.flipped||[]).length?' + '+(p.flipped||[]).length+' flipped '+LU('sparkles')+'Wild'+((p.flipped||[]).length>1?'s':''):'')+' · never tolled).',true);
-  if(!stops.length){gain(p,RECALL_FLOOR_GOODS,0);log('↳ a bare brewery — the recall still pays '+Gi(RECALL_FLOOR_GOODS)+'.');UI={sub:'end'};render();return;}
-  UI={sub:'stops',line:'floor',stops,pendingBenefits:[]};
+function activateFloor(){
+  const p=cur();const stops=floorEntries(p);
+  log(p.name+' works the '+LU('home')+' <b>Floor</b> — the private line ('+p.vessels.filter(c=>c).length+' cask'+(p.vessels.filter(c=>c).length===1?'':'s')+((p.flipped||[]).length?' + '+(p.flipped||[]).length+' flipped '+LU('sparkles')+'Wild'+((p.flipped||[]).length>1?'s':''):'')+' · no toll, no stations).',true);
+  UI={sub:stops.length?'stops':'end',line:'floor',stops,pendingBenefits:[]};
   render();
 }
-// the ROSTER VERB dispatch — the one place a flipped tile's verb resolves
-function fireVerb(k){const p=cur();
-  switch(k){
-    case 'source':enterSource(2,'stops');return;
-    case 'brew':case 'jbrew':enterBrew('stops');return;
-    case 'send':enterSend('stops',{sends:1,vessels:false});return;
-    case 'send2':enterSend('stops',{sends:2,vessels:false});return;
-    case 'sendv':enterSend('stops',{sends:1,vessels:true});return;
-    case 'build':UI.sub='cell';UI.cell='A';UI.stage=null;UI.tmp={};render();return;   // the acquire menu (shop panel)
-    case 'reach':enterReach('stops');return;
-    case 'src3g':log('↳ the '+LU('wrench')+'Grain Factor sources.');gain(p,2,1);backToStops();return;
-    case 'src3h':log('↳ the '+LU('wrench')+'Hop Gardener picks.');gain(p,1,2);backToStops();return;
-    case 'agefull':enterAge(9,'single','stops');return;   // MATURE: one cask, fully to Ready
-    case 'ageall':{const m=p.vessels.filter(c=>c&&c.step<c.ready);
-      if(!m.length){log('↳ Lager: nothing maturing.');backToStops();return;}
-      m.forEach(c=>{c.step=Math.min(c.ready,c.step+2);});
-      log('↳ the '+LU('wrench')+'Lagerkeeper lagers every maturing cask +2 ('+m.map(c=>styleShort(c.style)).join(', ')+').');backToStops();return;}
-    default:backToStops();return;
-  }
+// build & fire a line's stops: both stations + each cap slot (its occupant, or Deploy when empty)
+function activateLine(lk){const L=LINES[lk];const p=cur();
+  log(p.name+' activates '+lineGlyph(lk)+' <b>'+L.label+'</b> '+L.cells.map(c=>LU(ICON[CELLNAME[c]])).join(''),true);
+  const stops=[];
+  L.cells.forEach(c=>stops.push({kind:'cell',cell:c}));
+  L.caps.forEach(cid=>{ if(S.slots[cid])stops.push({kind:'cap',slot:cid});
+    else stops.push({kind:'deploy',slot:cid}); });   // v1.4 "Deploy": an EMPTY slot's default action IS Deploy (a Ready cask → any open slot)
+  UI={sub:stops.length?'stops':'end',line:lk,stops,pendingBenefits:[]};
+  render();
 }
 function resolveStop(i){
   const stop=UI.stops[i];if(!stop)return;
@@ -1441,7 +1348,14 @@ function resolveStop(i){
     log('↳ Floor — '+LU('beer')+styleShort(c.style)+'’s '+LU(CASK_ACT_ICON[act]||'')+' '+act+' action.');
     fireCaskAct(act,'stops');return;}
   if(stop.kind==='fwild'){log('↳ Floor — flipped '+LU('building-2')+bName(stop.k)+' fires a '+LU('sparkles')+' Wild.');enterWild('stops');return;}
-  if(stop.kind==='verb'){fireVerb(stop.k);return;}   // v3.0-B: the flipped roster tile's verb
+  if(stop.kind==='fspec'){const p=cur();   // v3.0-A: a Specialist's Floor stop
+    if(stop.k==='granary'){log('↳ Floor — the '+LU('wrench')+'<b>Grain Factor</b> sources grain.');gain(p,2,0);backToStops();return;}
+    if(stop.k==='hopgarden'){log('↳ Floor — the '+LU('wrench')+'<b>Hop Gardener</b> picks hops.');gain(p,0,2);backToStops();return;}
+    if(stop.k==='lagering'){const m=p.vessels.filter(c=>c&&c.step<c.ready);
+      if(!m.length){log('↳ Floor — the Lagerkeeper: nothing maturing.');backToStops();return;}
+      m.forEach(c=>{c.step=Math.min(c.ready,c.step+2);});
+      log('↳ Floor — the '+LU('wrench')+'<b>Lagerkeeper</b> ages every maturing cask +2 ('+m.map(c=>styleShort(c.style)).join(', ')+').');backToStops();return;}
+    backToStops();return;}
   const t=S.slots[stop.slot];
   if(!t){backToStops();return;}
   if(t.type==='cask'){const p=cur();
@@ -1455,7 +1369,7 @@ function resolveStop(i){
 function resume(rt){
   if(rt==='sendmore'){UI.sub='cell';UI.cell='C';UI.stage='send_cask';UI.tmp=UI.tmp||{};render();return;}   // v3.0-A: the Stevedore's 2nd send (benefits drained first)
   UI.cell=null;UI.stage=null;UI.tmp=null;
-  UI.age=UI.brew=UI.src=UI.load=UI.cvt=UI.reach=UI.wild=UI.deploy=UI.benefit=UI.survey=UI.hire=UI.goods=UI.breach=UI.brefine=UI.tap=UI.spoil=null;
+  UI.age=UI.brew=UI.src=UI.load=UI.cvt=UI.reach=UI.wild=UI.deploy=UI.benefit=UI.survey=UI.hire=UI.goods=UI.breach=UI.brefine=UI.tap=UI.spoil=UI.bhRt=null;
   if(rt==='benefitcont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}
   if(rt==='olbrewcont'){if(UI.pendingOlBrew)UI.pendingOlBrew.shift();const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}   // The Trade Roads — a manual 'brew' slot finished → continue the pending queue
   if(rt==='line')UI.sub='line';
@@ -1468,10 +1382,36 @@ function cellDone(){resume('stops');}
 
 function enterCell(cell){
   if(cell==='A'){UI.sub='cell';UI.cell='A';UI.stage=null;UI.tmp={};render();}
-  else if(cell==='B'){enterBrew('stops');}                 // v3.0-A: Brewhouse = ONE verb (Deploy lives on the slots)
+  else if(cell==='B'){enterBrewhouse('stops');}            // v3.0-A.1: Brew 1 cask OR deploy 1 Ready cask (the §2-A2 valve)
   else if(cell==='C'){enterSend('stops');}                 // v3.0-A: Harbor = the unified SEND
   else if(cell==='D'){enterCellarChoice('stops');}         // v3.0-A: Cellar = Age OR fit one Specialist (one choice)
 }
+// v3.0-A.1 "THE BREWHOUSE VALVE" — the release valve TABLE-PASS §2-A2 prescribed, adopted on sim
+// evidence (sim3a-personas-v1: slot-local deploy throttled the VOLUME lanes at 4p — prestige read 48.3%
+// vs fair 25). The Brewhouse's face is still ONE decision: Brew 1 cask OR deploy 1 Ready cask onto any
+// open slot. The two-tier reach rule holds and gets its teaching example: SLOTS are local (a slot's stop
+// deploys onto itself); STATIONS reach the whole wharf (the Brewhouse's Deploy verb reaches any open slot).
+function bhCanBrew(p){return openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r));}
+function bhCanDeploy(p){return readyInVessels(p).length>0&&emptySlots().length>0;}
+function enterBrewhouse(rt){const p=cur();
+  const b=bhCanBrew(p),d=bhCanDeploy(p);
+  if(!b&&!d){log('↳ Brewhouse: no affordable brew, and no deploy (no Ready cask or no open slot).');resume(rt);return;}
+  if(b&&!d){enterBrew(rt);return;}
+  if(!b&&d){enterDeployAnywhere(rt);return;}
+  UI.sub='cell';UI.cell='B';UI.stage=null;UI.bhRt=rt;render();}
+function bhPick(which){const rt=UI.bhRt||'stops';UI.bhRt=null;
+  if(which==='brew')enterBrew(rt);else enterDeployAnywhere(rt);}
+// the STATION deploy verb: pick a Ready cask, set it onto ANY open slot (spoilage stays a slot-stop rule)
+function enterDeployAnywhere(rt){const p=cur();
+  if(!readyInVessels(p).length||!emptySlots().length){log('↳ nothing to deploy / no open slot.');resume(rt);return;}
+  UI.sub='deploy';UI.deploy={returnTo:rt,slot:null,vi:null};render();}   // slot:null = the station verb
+function deployPickA(vi){if(!UI.deploy||UI.deploy.slot!==null)return;UI.deploy.vi=vi;render();}
+function deployAnyTo(slot){if(!UI.deploy||UI.deploy.vi==null||UI.deploy.slot!==null)return;
+  const p=cur();const vi=UI.deploy.vi;const c=p.vessels[vi];
+  if(!c||c.step<c.ready||S.slots[slot])return;
+  snapshot();
+  const rt=UI.deploy.returnTo;UI.deploy=null;
+  deployCask(vi,slot);resume(rt);}
 
 // ---------- MARKET (Source) ----------
 function marketGoods(g,h){snapshot();gain(cur(),g,h);log(cur().name+' sources goods at the '+LU('store')+' <b>Market</b>.',true);cellDone();}
@@ -1536,9 +1476,9 @@ function commitBldg(slot,key,ownerId){
     pay(np,OVERBUILD_FEE);log('↳ '+np.name+' pays the ground rent to overbuild.');}
   if(old&&old.owner==null){log('↳ the neutral '+LU('building-2')+bName(old.b)+' is torn down (no owner — the tile is discarded).');}
   else if(old){const op=S.players[old.owner];
-    if((op.flipped||[]).length<FLOOR_CAP){(op.flipped=op.flipped||[]).push(old.b);
+    if(impArea(op)<IMP_AREA_CAP){(op.flipped=op.flipped||[]).push(old.b);
       log('↳ '+LU('building-2')+bName(old.b)+' is displaced — the tile FLIPS to '+op.name+'’s floor (a '+LU('sparkles')+' Wild on its back · <b>'+DEVELOP_PTS+'★ at game end</b>).');}
-    else log('↳ '+LU('building-2')+bName(old.b)+' is displaced — '+op.name+'’s floor is full ('+FLOOR_CAP+'), so the tile is returned to the box (nothing banked).');}
+    else log('↳ '+LU('building-2')+bName(old.b)+' is displaced — '+op.name+'’s floor is full ('+IMP_AREA_CAP+'), so the tile is returned to the box (nothing banked).');}
   S.buildings[slot]={b:key,owner:ownerId};
   log(S.players[ownerId].name+' authors '+LU('building-2')+' <b>'+bName(key)+'</b> on a '+LU('anchor')+' slot'+(old?' (replacing '+bName(old.b)+')':'')+' — '+BUILDINGS[key].desc+'.',true);
   // v2.2 (B1): capacity can SHRINK when a Cooperage is overbuilt — a ship is full the moment load ≥ cap → it sails.
@@ -1612,8 +1552,6 @@ function enterBrew(rt){const p=cur();
 function brewPick(style){const p=cur();if(!canBrew(p,style))return;const vi=openVessel(p);if(vi<0){alert('No open vessel.');return;}
   snapshot();pay(p,STYLES[style].in);
   p.vessels[vi]={style,q:STYLES[style].q,step:0,ready:effReady(p,style),act:takePileTop(STYLES[style].q,style)};
-  if(UI.homeBrew){UI.homeBrew=null;p.vessels[vi].step=Math.min(p.vessels[vi].ready,1);
-    log('↳ home bonus — the fresh '+LU('beer')+styleShort(style)+' ages +1 at once ('+p.vessels[vi].step+'/'+p.vessels[vi].ready+').');}
   log(p.name+' '+LU('flask-conical')+' brews '+LU('beer')+' <b>'+STYLES[style].name+'</b> (Q'+STYLES[style].q+' · matures in '+effReady(p,style)+' step'+(effReady(p,style)===1?'':'s')+').',true);
   // EXPANSION — Zerbster's PARTI-GYLE: the same mash throws a small second-runnings cask (a Gruit-rung
   // Dünnbier) into another open vessel for free; if none is open, the weak runnings are lost.
@@ -1670,7 +1608,7 @@ function enterDeployHere(slot,rt){const p=cur();
   if(!readyInVessels(p).length){log('↳ no Ready cask to deploy.');resume(rt);return;}
   UI.sub='deploy';UI.deploy={returnTo:rt,slot};render();
 }
-function deployPick(vi){if(!UI.deploy)return;const p=cur();const c=p.vessels[vi];
+function deployPick(vi){if(!UI.deploy||UI.deploy.slot==null)return;const p=cur();const c=p.vessels[vi];
   if(!c||c.step<c.ready||S.slots[UI.deploy.slot])return;
   snapshot();
   const slot=UI.deploy.slot;const rt=UI.deploy.returnTo;UI.deploy=null;
@@ -1797,7 +1735,7 @@ function sailShip(slot,creditId){const t=S.slots[slot];
   t.load.forEach(L=>{L.berthSeal=berthSealFor(slot,L,t.ship);});   // v3.0-A: the berth privilege hands its seal at the sail
   t.load.forEach(L=>{const owner=S.players[L.owner];deliverCask(owner,L,t.dest,slot,full);grantImmediate(owner,t.dest);});
   fire('voyage',{ship:t,slot});   // EXPANSION SPINE: The Trade Roads advances each owner's caravan ONCE per voyage (not per cask)
-  S.slots[slot]=null;advanceClock();
+  S.slots[slot]=null;S.sailed++;
   // the hull returns to the yard (the supply never dries up); the building stays on its slot.
   S.shipDeck.push({ship:t.ship,dest:t.dest});
   refillShipDisplay();
@@ -1962,19 +1900,17 @@ function sendRoutesFor(p,ref){const routes=[];const own=refOwner(ref)===p.id;con
   if(own&&q>=DEST.hall.gate)routes.push({kind:'hall'});
   if(own&&(p.contracts||0)>0&&canPay(p,charterCost(p)))routes.push({kind:'charter'});
   return routes;}
-function sendCasks(p,inclV){const out=[];
+function sendCasks(p){const out=[];
   wharfCaskSlots().forEach(id=>{if(sendRoutesFor(p,id).length)out.push(id);});
-  const iv=(inclV===undefined)?!!UI.sendVessels:inclV;   // v3.0-B: the Quaymaster is a SEND-verb tile — vessels ride the verb, not a passive
-  if(iv)readyInVessels(p).forEach(o=>{if(sendRoutesFor(p,'v:'+o.i).length)out.push('v:'+o.i);});
+  if(hasUpgrade(p,'quay'))readyInVessels(p).forEach(o=>{if(sendRoutesFor(p,'v:'+o.i).length)out.push('v:'+o.i);});
   return out;}
-function enterSend(rt,opts){const p=cur();
-  UI.sendVessels=!!(opts&&opts.vessels);
-  if(!sendCasks(p).length){log('↳ Send: no deployed cask with a legal route'+(UI.sendVessels?' (vessels included)':' (deploy first — the Quaymaster tile reaches your vessels)')+'.');UI.sendVessels=false;resume(rt);return;}
+function enterSend(rt){const p=cur();
+  if(!sendCasks(p).length){log('↳ Send: no deployed cask with a legal route (deploy first — the Quaymaster also reaches your vessels).');resume(rt);return;}
   UI.sub='cell';UI.cell='C';UI.stage='send_cask';UI.tmp=UI.tmp||{};
-  UI.sendsLeft=(opts&&opts.sends)||1;UI.sendRt=rt;render();}
+  UI.sendsLeft=hasUpgrade(p,'crane')?2:1;UI.sendRt=rt;render();}
 function sendPickCask(ref){UI.tmp.sendCask=ref;UI.stage='send_route';render();}
 function sendBack(){UI.tmp.sendCask=null;UI.stage='send_cask';render();}
-function sendDone(){const rt=UI.sendRt||'stops';UI.sendsLeft=0;UI.sendRt=null;UI.sendVessels=false;UI.stage=null;afterSail(rt);}
+function sendDone(){const rt=UI.sendRt||'stops';UI.sendsLeft=0;UI.sendRt=null;UI.stage=null;afterSail(rt);}
 function sendNext(){const p=cur();UI.sendsLeft=(UI.sendsLeft||1)-1;if(UI.tmp)UI.tmp.sendCask=null;
   if(UI.sendsLeft>0&&sendCasks(p).length){UI.stage='send_cask';afterSail('sendmore');return;}   // the Stevedore's 2nd send — after any delivery benefits resolve
   sendDone();}
@@ -1993,7 +1929,7 @@ function sendRoute(kind,arg){const p=cur();const ref=UI.tmp.sendCask;if(!refCask
     const ct=refCask(ref);const L=captureLoad(ref);
     if(isVRef(ref))p.vessels[+ref.slice(2)]=null;else S.slots[ref]=null;
     if(!aiSimulating)log(p.name+' enshrines '+LU('beer')+' '+styleShort(ct.style)+' Q'+L.q+' at the '+LU('crown')+' <b>Hall</b> — a local act of prestige'+(L.seal&&L.seal.b==='reliquary'?' (consecrated)':'')+'. (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')',true);
-    deliverCask(p,L,'hall',null,false);advanceClock();
+    deliverCask(p,L,'hall',null,false);S.sailed++;
     sendNext();return;}
   if(kind==='charter'){UI.stage='send_charter';render();return;}}
 // Charter inside the SEND: spend a contract + the flat fare — a single-cask kontor voyage, now.
@@ -2012,7 +1948,7 @@ function sendCharterDest(dest){const p=cur();
   if(cq>=DEST[seaDest].gate)grantImmediate(p,seaDest);   // sub-gate charter: the caravan advances, no under-gate kontor sea benefit
   deliverCask(p,L,seaDest,null,false);
   if(rhine)olRhineLeap(p); else fire('voyage',{ship:{load:[L],dest:dest},slot:null});   // a charter is a one-cask voyage — it advances the caravan too
-  advanceClock();sendNext();
+  S.sailed++;sendNext();
 }
 
 // ---------- cap dispatchers (an occupant's slot-action; buildings are passive modifiers) ----------// ---------- cap dispatchers (an occupant's slot-action; buildings are passive modifiers) ----------
@@ -2077,8 +2013,7 @@ function scorePlayer(p){
   const flight=flightScore(p);                          // the range-of-tiers bonus
   const developed=DEVELOP_PTS*((p.flipped||[]).length);  // v2.9 the FLOOR bonus: END-GAME ★ per displaced Building kept on your floor (Specialists crowd the same 4 slots; a tile boxed on arrival pays nothing)
   const ext=collect(m=>m.score&&m.score(p));            // EXPANSION SPINE: expansion scoring lanes (e.g. the inland network)
-  const fair=p.fairPts||0;                              // v3.0-B FAIR DAYS: interim majority banks
-  return {deliv,maj,fair,goals:0,flight,master:0,wharf:0,developed,ext,total:deliv+maj+fair+flight+developed+ext};
+  return {deliv,maj,goals:0,flight,master:0,wharf:0,developed,ext,total:deliv+maj+flight+developed+ext};   // wharf kept as a 0 stub (payload shape)
 }
 // the COMBINED effective quality of a house's DEPLOYED (on-slot) casks — the tiebreak. Rewards built-but-
 // undelivered big casks in a tie; for normal scoring you must still DELIVER to bank them. Vessels (private/
@@ -2102,11 +2037,10 @@ function gameOver(){
   if(!S.endedAt)S.endedAt=new Date().toISOString();
   const {rows,cmp}=finalRows();const win=rows[0];
   const anyDev=rows.some(r=>r.sc.developed);
-  const anyFair=rows.some(r=>r.sc.fair);
   const olOn=(typeof olEnabled==='function'&&olEnabled());   // The Trade Roads replaces the Majorities column with the Inland-roads network
   const midHdr=olOn?'Inland roads<br><span class="note">(Staple Rights)</span>':'Majorities';
-  let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries</th><th>'+midHdr+'</th>'+(anyFair?'<th>Fairs 🎪</th>':'')+'<th>Flight</th>'+(anyDev?'<th>Floor<br><span class="note">(flipped tiles)</span></th>':'')+'<th>Total</th></tr>';
-  rows.forEach(r=>{const mid=olOn?(r.sc.ext||0):r.sc.maj;h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+'</td><td>'+mid+'</td>'+(anyFair?'<td>'+(r.sc.fair||'·')+'</td>':'')+'<td>'+(r.sc.flight||'·')+'</td>'+(anyDev?'<td>'+(r.sc.developed||'·')+'</td>':'')+'<td><b>'+r.sc.total+'</b></td></tr>';});
+  let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries</th><th>'+midHdr+'</th><th>Flight</th>'+(anyDev?'<th>Floor<br><span class="note">(flipped tiles)</span></th>':'')+'<th>Total</th></tr>';
+  rows.forEach(r=>{const mid=olOn?(r.sc.ext||0):r.sc.maj;h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+'</td><td>'+mid+'</td><td>'+(r.sc.flight||'·')+'</td>'+(anyDev?'<td>'+(r.sc.developed||'·')+'</td>':'')+'<td><b>'+r.sc.total+'</b></td></tr>';});
   h+='</table><p class="note">Score = <b>delivery value</b> (each cask\'s starting value + its printed seals) + kontor <b>majorities</b> + the <b>Flight</b> (distinct beers delivered — '+FLIGHT_MIN+'+ to score) + the <b>Floor</b> bonus ('+DEVELOP_PTS+'★ per displaced Building still on your floor). The Hall is a fixed prestige floor; the kontore are the variable demand. (Tiebreak: the combined <b>quality of your deployed casks on slots</b> — built but not yet delivered — then goods.)</p>'
     +'<button onclick="hideOver()">⚓ View the final board</button> <button onclick="openStudio()">⇪ Send to Studio'+(S.studioSent?' ✓':'')+'</button> <button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
@@ -2453,7 +2387,7 @@ function aiBestCargo(p){let best=null;
 // ---- per-prompt decisions ----
 function aiCellValue(c,p){const role=CELLROLE[c];
   if(role==='Source')return 1+(aiNeedShip(p)?1.5:0)+(aiBuyableExports(p).length?0.4:0);
-  if(role==='Brew')return (openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)))?3:0.1;
+  if(role==='Brew'){if(bhCanBrew(p))return 3;return bhCanDeploy(p)?2.2:0.1;}   // v3.0-A.1: the or-branch deploy has real value
   if(role==='Age'){const mat=p.vessels.filter(v=>v&&v.step<v.ready);
     if(!mat.length)return cellarCanImp(p)?1:0.1;
     return 2+(mat.some(v=>v.ready-v.step<=3)?1:0);}
@@ -2467,60 +2401,44 @@ function aiFloorValue(p){
   let v=0;
   p.vessels.forEach(c=>{if(!c)return;const a=caskAct(c);v+=({source:1.6,age:0.9,load:1.2,reach:0.6,convert:0.6,survey:1.0,wild:1.4})[a]||0.8;});
   v+=(p.flipped||[]).length*1.3;
-  return v;}
-// v3.0-B: a roster verb's rough worth (before the station's slot stops are added)
-function aiVerbValue(p,k){
-  if(k==='source')return 1.5+(aiNeedShip(p)?0.8:0)+((p.grain+p.hops)<3?0.7:0);
-  if(k==='src3g'||k==='src3h')return 1.9+((p.grain+p.hops)<3?0.7:0);
-  if(k==='brew'||k==='jbrew')return (openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)))?3:0;
-  if(k==='send')return sendCasks(p,false).length?4:0;
-  if(k==='send2')return sendCasks(p,false).length?4.4:0;
-  if(k==='sendv')return sendCasks(p,true).length?4.2:0;
-  if(k==='build'){let v=0.4;
-    if(aiCommissionIdx(p)>=0)v=Math.max(v,2.6);
-    if(aiBuyableExports(p).length)v=Math.max(v,2.2);
-    if(aiIsTrader(p)&&aBuildSlotsAI().length&&almBuyable(p).length)v=Math.max(v,1.8);
-    if(cellarCanImp(p)&&p.grain>=4)v=Math.max(v,1.7);
-    return v;}
-  if(k==='reach')return reachBenKontore(p).length?(aiIsTrader(p)?1.6:0.8):0;
-  if(k==='agefull'){const m=p.vessels.filter(c=>c&&c.step<c.ready);return m.length?(m.some(c=>c.ready-c.step>=2)?3:1.8):0;}
-  if(k==='ageall'){const m=p.vessels.filter(c=>c&&c.step<c.ready);return m.length>=2?3:(m.length?1.5:0);}
-  return 0.5;}
-// what this station's TWO slots offer me right now (deploy-here · cask actions · ship loads)
-function aiSlotStopsValue(p,cell){let v=0;const ready=readyInVessels(p);
-  (STATION_SLOTS[cell]||[]).forEach(cid=>{const t=S.slots[cid];
-    if(!t){if(ready.length){v+=1.2;const b=bAt(cid);
-      if(b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value'&&BUILDINGS[b.b].tgt==='cask')v+=1.5+0.8*Math.max(...ready.map(o=>o.c.q));}return;}
-    if(t.type==='cask')v+=0.8;
-    if(t.type==='ship'&&t.load.length<effCap(t)&&shipLoadableCasks(p).some(cs=>canTake(cid,cs)))v+=1.6;});
+  ['granary','hopgarden'].forEach(k=>{if(hasUpgrade(p,k))v+=1.6;});   // v3.0-A: Specialist Floor stops
+  if(hasUpgrade(p,'lagering')&&p.vessels.some(c=>c&&c.step<c.ready))v+=1.2;
   return v;}
 function aiMove(p){
   const placing=!p.placed;const cands=placing?['A','B','C','D']:ADJ[p.cell];
-  const un=rosterUnused(p);
-  if(aiNoisy(p)){aiChosenWhich=un.length?aiRandOf(un):'recall';doMove(aiRandOf(cands));return;}
-  let best=cands[0],bestv=-1e9,which=null;
-  const spent=rosterTiles(p).length-un.length;
-  const recallV=aiFloorValue(p)+spent*0.55+(un.length===0?100:0)+Math.random()*0.3
-    +0.5*p.vessels.filter(c=>c&&c.step<c.ready).length;   // v3.0-B.1: the recall ages the brewery — worth more with casks maturing
+  if(aiNoisy(p)){aiChosenWhich=aiRandOf(['row','col']);doMove(aiRandOf(cands));return;}
+  let best=cands[0],bestv=-1e9,which='row';
+  const ready=readyInVessels(p).length;
+  const floorV=aiFloorValue(p)+Math.random()*0.2;   // the same private line whichever cell you stand on
   cands.forEach(tc=>{const toll=placing?0:aiCellToll(tc,p);
-    const slotV=aiSlotStopsValue(p,tc)+(tc==='D'&&p.vessels.some(c=>c&&c.step<c.ready)?0.8:0);   // the Cellar's any-verb age
-    un.forEach(k=>{let v=aiVerbValue(p,k)+slotV-toll+Math.random()*0.3;
-      if(HOME_OF[k]===tc)v+=0.8;   // v3.0-B.1: the home kicker
-      if(v>bestv){bestv=v;best=tc;which=k;}});
-    if(recallV>bestv){bestv=recallV;best=tc;which='recall';}
+    ['row','col'].forEach(w=>{
+    const lk=cellOfLine(tc)[w];
+    let v=LINES[lk].cells.reduce((a,c)=>a+aiCellValue(c,p),0)-toll+Math.random()*0.4;
+    // v1.3: deploy now rides line activation — value a line I can DEPLOY on (avoid the vessel clog),
+    // and (trader edge) a line that lets me ROUTE a Ready cask onto my OWN value building (demand capture).
+    if(ready&&!aiIsApp(p)){
+      const caps=LINES[lk].caps;
+      if(caps.some(cid=>!S.slots[cid]))v+=1.5;   // v3.0-A: deploy is SLOT-LOCAL — only a line with an open cap slot can deploy
+      if(aiIsTrader(p)){
+        const myVal=cid=>{const bd=bAt(cid);return bd&&bd.owner===p.id&&BUILDINGS[bd.b].verb==='value'&&BUILDINGS[bd.b].tgt==='cask';};
+        const routeable=caps.some(cid=>!S.slots[cid]&&myVal(cid));
+        // weight by my best Ready cask's quality — routing a premium cask through my own privilege is the trader's whole edge
+        if(routeable){const bq=Math.max(...readyInVessels(p).map(o=>o.c.q));v+=2.0+1.2*bq;}
+      }
+    }
+    if(v>bestv){bestv=v;best=tc;which=w;}});
+    if(!aiIsApp(p)&&floorV>bestv){bestv=floorV;best=tc;which='floor';}   // the Floor never pays a toll
   });
-  aiChosenWhich=which||'recall';doMove(best);
+  aiChosenWhich=which;doMove(best);
 }
-function aiLine(p){const w=aiChosenWhich;   // the verb (or recall) — decided at move time (aiMove)
-  if(w==='recall'||!rosterUnused(p).includes(w)){chooseRecall();return;}
-  chooseVerb(w);}
+function aiLine(p){chooseLine(aiChosenWhich||'row');}   // row / col / floor — decided at move time (aiMove)
 function aiStopPrio(s){
   if(s.kind==='cell')return {Source:0,Brew:1,Age:2,Ship:4}[CELLROLE[s.cell]];
   if(s.kind==='deploy')return 2.5;   // an empty slot's Deploy action; after the cheap stations, before Ship
   if(s.kind==='fcask'){const c=cur().vessels[s.vi];if(!c)return 99;   // a Floor stop: the held cask's action
     const pr={source:0,wild:1,age:2,reach:2,load:4,convert:1,survey:1}[caskAct(c)];return pr==null?2:pr;}
   if(s.kind==='fwild')return 1;   // a flipped building's Wild
-  if(s.kind==='verb'){const pr=({source:0,src3g:0,src3h:0,brew:1,jbrew:1,build:0.5,reach:2,agefull:2,ageall:2,send:4,send2:4,sendv:4})[s.k];return pr==null?1:pr;}   // v3.0-B: the flipped tile's verb
+  if(s.kind==='fspec')return ({granary:0.5,hopgarden:0.5,lagering:2})[s.k]||1;   // v3.0-A: a Specialist's Floor stop
   const t=S.slots[s.slot];if(!t)return 99;
   if(t.type==='cask'){const pr={source:0,wild:1,age:2,reach:2,load:4,convert:1,survey:1}[slotEffAct(s.slot)];return pr==null?2:pr;}
   if(t.type==='ship')return 4;
@@ -2547,10 +2465,8 @@ function aiMarket(p){
       const vcands=aff.filter(f=>BUILDINGS[f.key].verb==='value');
       const pool=vcands.length?vcands:(p.grain>=5?aff:[]);
       if(pool.length){const f=aiPickAlmFaceFrom(p,pool);buyAlmanac(f.ti,f.face);return;}}}
-  // v3.0-B: hire a Journeyman as the Build acquire when flush (the roster grows)
-  if(cellarCanImp(p)){const pref=['crane','cellar','lagering','granary','hopgarden','vessel','quay'];
-    for(const k of pref){if((S.impDisplay||[]).includes(k)&&grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&p.grain>=(IMPROVEMENTS[k].cost.g||0)+1){buyImprovement(k);return;}}}
-  cellDone();   // nothing worth buying — the Build verb ends (Source is its own tile)
+  // v1.7: improvements are no longer a Market buy — the heuristic AI now acquires them at the Cellar (aiCellarBuy).
+  if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
 function aiPlaceBldg(p){let bs=aBuildSlotsAI();
   if(!bs.length){const rank=s=>{const b=bAt(s.id);return b.owner==null?0:(b.owner===p.id?1:2);}   // v2.9 overbuild order: neutral (no one compensated) → own (my floor value) → a rival's (gifts THEM floor value)
@@ -2604,7 +2520,11 @@ function aiHarbor(p){
   if(sendCasks(p).length){enterSend('stops');return;}
   cellDone();
 }
-function aiCellAct(p){const role=CELLROLE[UI.cell];if(role==='Source')aiMarket(p);else if(role==='Ship')aiHarbor(p);else cellDone();}
+function aiCellAct(p){const role=CELLROLE[UI.cell];if(role==='Source')aiMarket(p);else if(role==='Ship')aiHarbor(p);else if(role==='Brew')aiBrewhouse(p);else cellDone();}
+function aiBrewhouse(p){const b=bhCanBrew(p),d=bhCanDeploy(p);   // prefer brewing; deploy when Ready casks clog the vessels
+  if(b&&d){bhPick(readyInVessels(p).length>=2?'deploy':'brew');return;}
+  if(b||d){bhPick(b?'brew':'deploy');return;}
+  cellDone();}
 function aiBrew(p){const aff=p.recipes.filter(r=>canBrew(p,r)&&openVessel(p)>=0);
   if(!aff.length){resume(UI.brew.returnTo);return;}
   if(aiIsApp(p)||aiNoisy(p)){brewPick(aiRandOf(aff));return;}   // the apprentice brews whatever
@@ -2659,6 +2579,11 @@ function aiLoad(p){const L=UI.load;
   loadOnto(ships[0]);}
 function aiDeploy(p){const ready=readyInVessels(p);   // v3.0-A: the SLOT is fixed — pick WHICH cask takes this berth
   if(!UI.deploy||!ready.length){deploySkip();return;}
+  if(UI.deploy.slot==null){   // v3.0-A.1: the Brewhouse's anywhere-deploy
+    if(UI.deploy.vi==null){const r2=ready.slice().sort((a,b)=>b.c.q-a.c.q);deployPickA(r2[0].i);return;}
+    let es=emptySlots();if(!es.length){deploySkip();return;}
+    const vs=es.filter(sl=>{const b=bAt(sl.id);return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value'&&BUILDINGS[b.b].tgt==='cask';});
+    deployAnyTo((vs[0]||es[0]).id);return;}
   ready.sort((a,b)=>b.c.q-a.c.q);
   let pick=ready[0];
   const bd=bAt(UI.deploy.slot);
@@ -2896,11 +2821,9 @@ function aiGmOptions(p){
   const U=UI.sub;
   if(U==='move'){
     const cands=(!p.placed)?['A','B','C','D']:ADJ[p.cell];
-    const un=rosterUnused(p);
-    const o=[];cands.forEach(c=>{
-      un.forEach(k=>o.push(()=>{aiChosenWhich=k;doMove(c);}));
-      o.push(()=>{aiChosenWhich='recall';doMove(c);});
-    });
+    const hasFloor=p.vessels.some(c=>c)||(p.flipped||[]).length;   // v2.2: the Floor is the standing 3rd line
+    const o=[];cands.forEach(c=>{const ws=hasFloor?['row','col','floor']:['row','col'];
+      ws.forEach(w=>o.push(()=>{aiChosenWhich=w;doMove(c);}));});
     return o;}
   // stop ORDERING is low-leverage — the same up-to-4 stops all resolve this turn regardless of order, and the
   // trader heuristic (aiStops) already sorts them into the canonical Source→Brew→Age→Ship order. A full Monte
@@ -2908,9 +2831,13 @@ function aiGmOptions(p){
   // main-thread freeze — for ~no strength. Delegate to the trader policy; the meaningful sub-actions a stop
   // opens (market buys, harbor load/enshrine, deploy) still get their own MC.
   if(U==='stops')return null;
+  if(U==='cell'&&UI.cell==='B'){const o=[];
+    if(bhCanBrew(p))o.push(()=>bhPick('brew'));
+    if(bhCanDeploy(p))o.push(()=>bhPick('deploy'));
+    o.push(()=>cellDone());return o;}
   if(U==='cell'&&UI.cell==='A'){
     if(UI.stage==='place')return commPlaceable(UI.tmp.placeTile.dest).map(id=>()=>placeSlot(id));
-    const o=[];   // v3.0-B: Build acquires only — Source is its own roster tile
+    const o=[()=>marketGoods(2,0),()=>marketGoods(1,1),()=>marketGoods(0,2)];
     (S.exports||[]).forEach(st=>{if(!p.recipes.includes(st)&&canPay(p,RECIPE_BUY[st]))o.push(()=>buyRecipe(st));});
     if(emptySlots().length&&canPay(p,COMMISSION_COST)){
       const reachQ=Math.max(aiBestCargo(p).q,aiAchQ(p));   // don't even consider a hull our cargo can't gate for (the Adaline→Novgorod self-clog trap): cap by current best cargo OR the best quality our recipes can brew
@@ -2918,9 +2845,7 @@ function aiGmOptions(p){
     }
     if(canPay(p,CONTRACT_BUY))o.push(()=>buyContract());
     if(aBuildSlotsAI().length)almBuyable(p).forEach(f=>o.push(()=>buyAlmanac(f.ti,f.face)));   // build a face of YOUR almanac (House Almanacs)
-    Array.from(new Set(S.impDisplay||[])).forEach(k=>{if(grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&impArea(p)<IMP_AREA_CAP)o.push(()=>buyImprovement(k));});   // hire a Journeyman
-    o.push(()=>cellDone());
-    return o;}
+    return o;}   // v1.7: improvements moved to the Cellar (the 'tap' stage, below)
   if(U==='cell'&&UI.cell==='C'){
     if(UI.stage==='send_cask'){const o=sendCasks(p).map(ref=>()=>sendPickCask(ref));o.push(()=>sendDone());return o;}
     if(UI.stage==='send_route'){const rs=sendRoutesFor(p,UI.tmp.sendCask);
@@ -2944,7 +2869,11 @@ function aiGmOptions(p){
     if(cellarCanAge(p))o.push(()=>cellarAge());
     Array.from(new Set(S.impDisplay||[])).forEach(k=>{if(grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&impArea(p)<IMP_AREA_CAP)o.push(()=>buyImprovement(k));});
     o.push(()=>cellarDone());return o;}
-  if(U==='deploy'){return readyInVessels(p).map(o2=>()=>deployPick(o2.i)).concat([()=>deploySkip()]);}   // v3.0-A: the slot is fixed — which cask takes it
+  if(U==='deploy'){
+    if(UI.deploy.slot==null){   // v3.0-A.1: the Brewhouse verb — cask, then any open slot
+      if(UI.deploy.vi==null)return readyInVessels(p).map(o2=>()=>deployPickA(o2.i)).concat([()=>deploySkip()]);
+      return emptySlots().map(sl=>()=>deployAnyTo(sl.id)).concat([()=>deploySkip()]);}
+    return readyInVessels(p).map(o2=>()=>deployPick(o2.i)).concat([()=>deploySkip()]);}   // slot fixed — which cask takes it
   if(U==='spoilopt'){const o=[()=>spoilAct()];
     readyInVessels(p).forEach(o2=>{if(o2.c.q>=SPOIL_MINQ)o.push(()=>spoilDeploy(o2.i));});return o;}
   if(U==='placebldg'){const own=S.players[UI.tmp.placeBldg.owner];const legal=bldgTargets(own);const bs=legal.filter(s=>!bAt(s.id));return (bs.length?bs:legal).map(s=>()=>placeBldgOn(s.id));}   // v2.9: occupied slots only when the ground rent is payable
@@ -2987,7 +2916,7 @@ function aiStep(){
     }
     switch(UI.sub){
       case 'move':return aiMove(p);
-      case 'verb':return aiLine(p);
+      case 'line':return aiLine(p);
       case 'stops':return aiStops(p);
       case 'cell':return aiCellAct(p);
       case 'brew':return aiBrew(p);
@@ -3103,18 +3032,14 @@ function renderAid(){
   const vb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='value').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   const tb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='transform').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   document.getElementById('aidcard').innerHTML=
-    '<h2>'+ic('scroll-text')+' Player Aid — v3.0-B “The Roster” (prototype)</h2>'
-    +'<div class="asec"><b>Your turn (v3.0-B — the Roster)</b><div class="note">Move to an adjacent station, then either <b>FLIP one roster tile</b> — resolve its verb + the station’s <b>two slots</b> in any order, all optional — or <b>RECALL</b>: unflip your whole roster, <b>age every maturing cask +1</b> (the home day), and run the brewery (each held cask’s action + a Wild per flipped building; a bare brewery still takes '+RECALL_FLOOR_GOODS+' goods). Flipped tiles stay flipped between recalls — push your crew for tempo, or bring them home. The 1 '+ic('wheat')+' <b>occupancy toll</b> applies only when you flip while sharing the station with a rival; the Recall is never tolled.</div></div>'
-    +'<div class="asec"><b>The roster — your verbs (portable; a station is a PLACE)</b><div class="note">'
-      +ic('coins')+' <b>Source</b>: take 2 goods.<br>'
-      +ic('flask-conical')+' <b>Brew</b>: pay a recipe → a young cask takes the FACE-UP action of that quality’s pile.<br>'
-      +ic('ship')+' <b>Send</b>: ONE deployed cask — onto a docked ship (free; sails when full) · to the '+ic('crown')+' Hall (Enshrine, Q2+, local) · by Charter (a contract + the fare). A rival’s cask goes by ship only (its owner scores; you take 1G + choose the destination).<br>'
-      +ic('store')+' <b>Build</b>: acquire ONE tile — a recipe · a '+ic('building-2')+' Privilege/Building (buy + place) · a '+ic('sailboat')+' ship commission (dropping it ONTO an eligible cask is the one free load) · a charter contract · hire a '+ic('wrench')+' Journeyman.<br>'
-      +ic('map-pin')+' <b>Reach</b>: +1 presence at a kontor you have delivered to.<br>'
-      +'<b>Home bonuses ⚙</b> — verbs are portable, but each quarter pays a printed courtesy for its own work: <b>Build @ Market</b> +1G · <b>Brew @ Brewhouse</b> the new cask ages +1 · <b>Send @ Harbor</b> +1G · <b>any verb @ the Cellar</b> one maturing cask ages +1 (the quarter where time lives). The Source→Brew→Age→Ship reading of the board survives the roster.<br>'
-      +ic('wrench')+' <b>Journeymen</b> (hired roster tiles, max '+IMP_AREA_CAP+' sockets): Coppersmith (Brew · opens the 3rd vessel) · Cellarman (mature ONE cask to Ready) · Grain Factor / Hop Gardener (3 goods) · Stevedore (Send ×2) · Lagerkeeper (all maturing +2) · Quaymaster (Send, reaching your vessels). <b>There is no base Age verb — beer ages by TIME</b> (all your maturing casks +1 at the start of your turn) and by journeymen.</div></div>'
-    +'<div class="asec"><b>Fair Days 🎪</b><div class="note">Two Fair marks sit at ⅓ and ⅔ of the Sailed-Ships track. When the voyage marker reaches one, an <b>interim majority scoring</b> fires at once: the LEADER at each kontor banks <b>half its 1st tier</b> ⚙ (ties split; the finale still scores full tiers). Ship before the Fair — or race the clock into it. (Off under The Trade Roads.)</div></div>'
-    +'<div class="asec"><b>Deploy first — where casks move from</b><div class="note"><b>The SEND takes a DEPLOYED cask.</b> A cask must stand on a public slot — contestable, sendable by rivals (by ship only: its owner scores; the sender takes the 1'+ic('wheat')+' loader bonus and chooses the destination). The '+ic('wrench')+' <b>Quaymaster</b> tile is the invested exception — its Send also reaches your own vessels. '+ic('sailboat')+' <b>Commission:</b> buy the boat, drop it on the dock; placing it ONTO an eligible cask is the one free load (the dockside pickup). Every gate check uses <b>effective quality</b> (the kilns · the Gauger · Duckstein; Customs relieves the ship’s boarding gate).</div></div>'
+    '<h2>'+ic('scroll-text')+' Player Aid — v3.0-A “One Stop, One Seal” (prototype)</h2>'
+    +'<div class="asec"><b>Your turn</b><div class="note">Move to an adjacent station → choose one of <b>THREE lines</b>: the station’s <b>row</b>, its <b>column</b>, or your <b>Floor</b> (the private 3rd line — every held cask’s action + your verb Specialists’ stops + a Wild per flipped building). Resolve the line’s stops <b>in any order, all optional</b>. The 1 '+ic('wheat')+' <b>occupancy toll</b> applies only when you activate a <b>public</b> line while sharing the station with a rival — the Floor is never tolled.</div></div>'
+    +'<div class="asec"><b>The four stations — ONE verb each (v3.0-A)</b><div class="note">'
+      +ic('store')+' <b>Market</b> (Source): take 2 goods, <b>OR</b> acquire one tile — a recipe · a '+ic('building-2')+' Privilege/Building (buy + place) · a '+ic('sailboat')+' ship commission (place it; dropping it ONTO an eligible cask is the one free load) · a charter contract.<br>'
+      +ic('flask-conical')+' <b>Brewhouse</b> (Brew): <b>Brew 1 cask OR deploy 1 Ready cask</b> onto any open slot — one or the other. (The station verb reaches the wharf; a slot’s own stop deploys onto itself.)<br>'
+      +ic('hourglass')+' <b>Cellar</b> (Age): <b>Age</b> ('+CELLAR_POOL+' points across your vessels) <b>OR fit one</b> '+ic('wrench')+' <b>Specialist</b> (max '+IMP_AREA_CAP+' in your area). One or the other. (Casks also age +1 automatically at the start of your turn. Tap is cut — the Floor fires held casks without discarding them.)<br>'
+      +ic('anchor')+' <b>Harbor</b> (Ship): <b>SEND one deployed cask</b> — onto a docked ship (free; sails when full) · to the '+ic('crown')+' Hall (Enshrine, Q2+, local) · by Charter (a contract + the fare). A rival’s cask goes by ship only (its owner scores; you take 1G + choose the destination). The Stevedore sends two; the Quaymaster also reaches your vessels.</div></div>'
+    +'<div class="asec"><b>Deploy first — where casks move from</b><div class="note"><b>The SEND takes a DEPLOYED cask.</b> A cask must stand on a public slot — contestable, sendable by rivals (by ship only: its owner scores; the sender takes the 1'+ic('wheat')+' loader bonus and chooses the destination). The purple '+ic('wrench')+' <b>Quaymaster</b> is the invested exception — its owner’s Send also reaches their own vessels. '+ic('sailboat')+' <b>Commission:</b> buy the boat, drop it on the dock; placing it ONTO an eligible cask is the ONE free load (the dockside pickup — the separate commission free-load is cut). Every gate check uses <b>effective quality</b> (the kilns · the Gauger · Duckstein; Customs relieves the ship’s boarding gate).</div></div>'
     +'<div class="asec"><b>Slots act on themselves (v3.0-A)</b><div class="note"><b>Slots are local; stations reach the whole wharf.</b> An <b>empty slot’s stop deploys one Ready cask onto THAT slot</b> — where you work is where your cask lands, so which line you fire (and whose buildings sit on it) is the placement decision. A <b>cask’s stop</b> fires its printed action; if it is a <b>Q1</b> and you hold a Ready <b>Q4+</b>, the stop is an either/or — fire the action, or <b>spoil it</b>: the stale ale is returned to the box and your premium cask takes the berth. A <b>ship’s stop</b> loads a cask onto that ship.</div></div>'
     +'<div class="asec"><b>The living slots (the keystone)</b><div class="note">Each of the 8 slots holds an owned '+ic('building-2')+' <b>slot tile — a Privilege or a Building</b> (a passive modifier of whatever docks on it NOW) and/or an occupant (a cask, or a ship with casks). A <b>Privilege</b> hands a printed '+ic('stamp')+' <b>SEAL</b> to a cask of its owner that ships from it — two-sided: plain face, or the <b>gilt</b> face when the cask is <b>Q4+</b> (the quality premium, pre-summed at print). The seal leaves the tile at load, so <b>nothing ever recalculates</b>; a berth Privilege (Rich Berth · Festkeller) hands its seal at the sail. At most <b>one dock seal + one berth seal</b> per cask. A <b>Building</b> changes the cask/ship while docked. <b>Three tile types (v2.4.1):</b> a bright-blue <b>PRIVILEGE pays its owner only</b> (a rival docking there banks nothing); a green <b>BUILDING serves whoever docks</b>; a purple <b>SPECIALIST</b> is private, on your brewery board. No payments between players. <b>Overbuild:</b> placing onto an occupied slot costs the builder the <b>'+costStr(OVERBUILD_FEE)+' ground rent</b> (can’t pay → not a legal slot) and displaces the building there — the tile flips to its owner’s floor as a '+ic('sparkles')+'Wild worth <b>'+DEVELOP_PTS+'★ at game end</b> (floor full → returned to the box, nothing banked). <b>House Almanacs (v3.0):</b> there is no shared building market — each house owns a printed almanac of <b>six double-sided tiles</b> (its Charter pair differs by house; a 7th with Specialty Beers); building spends the tile, faces are chosen when you build, and every tile on the wharf is visibly one house’s colour — the ownership ring is gone.</div>'
       +'<div class="atags" style="margin-top:5px">'+vb+'</div><div class="atags" style="margin-top:4px">'+tb+'</div></div>'
@@ -3125,8 +3050,7 @@ function renderAid(){
     +'<div class="asec"><b>Scoring</b><ol class="ascore">'
       +'<li><b>Banked as you play:</b> delivery value (starting value + the printed seals — every kontor pays at least 1★) · the Hall’s fixed ladder (3/5/7/9) · Flight milestones (3rd/4th/5th distinct beer → +1G+1H / +1 contract / a free Reach — tempo, not points).</li>'
       +'<li><b>Majorities (end-game)</b> — 1st/2nd/3rd at each kontor by delivered-cask count.</li>'
-      +'<li><b>Fair Days 🎪 (mid-game)</b> — at ⅓ and ⅔ of the clock, the leader at each kontor banks half its 1st tier.</li>'
-      +'<li><b>The Floor (end-game)</b> '+ic('sparkles')+' — <b>'+DEVELOP_PTS+'★ per displaced Building still on your floor</b> (the '+FLOOR_CAP+' floor slots; Journeymen live on the roster now).</li>'
+      +'<li><b>The Floor (end-game)</b> '+ic('sparkles')+' — <b>'+DEVELOP_PTS+'★ per displaced Building still on your floor</b> (Specialists share the same '+IMP_AREA_CAP+' slots — an engine of Specialists spends this capacity).</li>'
       +'<li><b>The Flight (end-game)</b> '+ic('layers')+' — distinct <b>beers</b> delivered anywhere: <b>3 → '+FLIGHT_PTS[3]+' · 4 → '+FLIGHT_PTS[4]+' · 5 → '+FLIGHT_PTS[5]+(S&&S.jopen?' · 6 → '+FLIGHT_PTS[6]:'')+'</b> (min 3; the Jopenbier capstone counts when in play'+(S&&S.jopen?' — 6 types this game':'')+').</li>'
       +'</ol></div>'
     +'<div class="asec"><b>Icon key</b><div class="akey">'+keys.map(k=>'<div class="akrow">'+ic(k[0])+'<span>'+k[1]+'</span></div>').join('')+'</div></div>'
@@ -3159,18 +3083,14 @@ function renderBar(){
     prompt=placing?'<b>Turn 1:</b> place your worker on any cell (click a glowing cell).':'Move your worker to an adjacent cell.';
     const cells=placing?['A','B','C','D']:ADJ[p.cell];
     acts=cells.map(c=>btn((placing?'⚑ ':'→ ')+CELLNAME[c],'doMove(\''+c+'\')','primary')).join('');}
-  else if(U==='verb'){const all=rosterTiles(p);const un=rosterUnused(p);
-    const shared=S.turn>1&&S.players.some(q=>q.id!==p.id&&q.cell===p.cell);
-    const tollNote=shared?' <span class="note">(a rival is here — flipping a verb costs the '+Gi(Math.min(OCCUPANCY_TOLL,p.grain))+' toll; the Recall is free)</span>':'';
-    prompt='Your <b>roster</b> (the verb tiles on your player board): flip <b>ONE</b> — it fires here at <b>'+CELLNAME[p.cell]+'</b> along with the station’s two <b>outlined slots</b> — or <b>Recall</b> (unflip everything + run the brewery).'+tollNote;
-    acts=all.map(k=>{const flipped=!un.includes(k);
-      if(flipped)return btnOff(LU(ROSTER_VERB[k].icon)+' '+ROSTER_VERB[k].name+' ✗',ROSTER_VERB[k].desc+' — FLIPPED (spent until you Recall).');
-      return verbUsable(p,k)
-        ?btn(LU(ROSTER_VERB[k].icon)+' '+ROSTER_VERB[k].name,'chooseVerb(\''+k+'\')','go')
-        :btnOff(LU(ROSTER_VERB[k].icon)+' '+ROSTER_VERB[k].name,ROSTER_VERB[k].desc+' — no legal use right now (flipping it would waste the tile).');}).join('')
-      +btn(LU('home')+' Recall the roster','chooseRecall()',un.length?'ghost':'primary');}
+  else if(U==='line'){const o=cellOfLine(p.cell);
+    const fes=floorEntries(p);const shared=S.turn>1&&S.players.some(q=>q.id!==p.id&&q.cell===p.cell);
+    const tollNote=shared?' <span class="note">(a rival is here — a public line costs the '+Gi(Math.min(OCCUPANCY_TOLL,p.grain))+' toll; the Floor is free)</span>':'';
+    prompt='Choose your line — the <b>row</b>, the <b>column</b>, or your <b>Floor</b> (the private 3rd line).'+tollNote;
+    acts=btn(LINES[o.row].label,'chooseLine(\'row\')','go')+btn(LINES[o.col].label,'chooseLine(\'col\')','go')
+      +(fes.length?btn(LU('home')+' The Floor · '+fes.length+' private stop'+(fes.length===1?'':'s'),'chooseLine(\'floor\')','go'):'');}
   else if(U==='stops'){
-    prompt='Resolve '+(UI.line==='floor'?'the <b>Recall</b>’s stops':'your <b>verb</b> + this station’s two slots')+' <b>in any order</b> ('+UI.stops.length+' left, all optional) — <b>click a glowing slot on the board</b>, or use these buttons.';
+    prompt='Resolve '+(UI.line==='floor'?'your <b>Floor</b>’s stops':'this line’s stops')+' <b>in any order</b> ('+UI.stops.length+' left, all optional) — <b>click a glowing station or slot on the board</b>, or use these buttons.';
     acts=UI.stops.map((s,i)=>stopAvail(s)?btn(stopLabel(s),'resolveStop('+i+')','go'):btnOff(stopLabel(s))).join('');}
   else if(U==='cell'){const r=cellRender(p);prompt=r.prompt;acts=r.acts;}
   else if(U==='brew'){prompt='Brew — load a recipe into an open vessel. <span class="note">Each shows the slot-action its cask will take (the face-up top of that quality’s pile — steerable).</span>';
@@ -3197,9 +3117,16 @@ function renderBar(){
     else{const lc=refCask(L.cask);prompt='Load '+LU('beer')+ownSq(refOwner(L.cask))+styleShort(lc.style)+' onto which ship?';
       const ships=L.ships.filter(s=>canTake(s,L.cask));
       acts=ships.map(s=>{const sh=S.slots[s];return btn(LU('sailboat')+' '+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+')','loadOnto(\''+s+'\')','go');}).join('')+btn('Back','loadBack()','ghost')+btn('Skip','loadSkip()','ghost');}}
-  else if(U==='deploy'){const b=bAt(UI.deploy.slot);
-    prompt='Deploy onto <b>'+(b?bName(b.b):('slot '+UI.deploy.slot))+'</b> — pick which Ready cask takes this berth. <span class="note">(v3.0-A: slots act on themselves — the cask lands HERE.)</span>';
-    acts=readyInVessels(p).map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.c.style)+' Q'+o.c.q,'deployPick('+o.i+')','go')).join('')+btn('Skip','deploySkip()','ghost');}
+  else if(U==='deploy'){
+    if(UI.deploy.slot==null){   // v3.0-A.1: the Brewhouse's station verb — any open slot
+      if(UI.deploy.vi==null){prompt='Deploy (Brewhouse) — pick which Ready cask to set out.';
+        acts=readyInVessels(p).map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.c.style)+' Q'+o.c.q,'deployPickA('+o.i+')','go')).join('')+btn('Skip','deploySkip()','ghost');}
+      else{const c=p.vessels[UI.deploy.vi];
+        prompt='Deploy '+LU('beer')+styleShort(c.style)+' onto <b>any open slot</b> (click a glowing slot). <span class="note">(The station verb reaches the whole wharf; a slot’s own stop stays local.)</span>';
+        acts=btn('◂ Pick a different cask','deployPickA(null)','ghost')+btn('Skip','deploySkip()','ghost');}}
+    else{const b=bAt(UI.deploy.slot);
+      prompt='Deploy onto <b>'+(b?bName(b.b):('slot '+UI.deploy.slot))+'</b> — pick which Ready cask takes this berth. <span class="note">(v3.0-A: slots act on themselves — the cask lands HERE.)</span>';
+      acts=readyInVessels(p).map(o=>btn(LU('beer')+ownSq(p.id)+styleShort(o.c.style)+' Q'+o.c.q,'deployPick('+o.i+')','go')).join('')+btn('Skip','deploySkip()','ghost');}}
   else if(U==='spoilopt'){const t=S.slots[UI.spoil.slot];const act=t?slotEffAct(UI.spoil.slot):null;
     prompt='A '+LU('beer')+'<b>'+(t?styleShort(t.style):'')+' Q1</b> holds this berth — fire its action, or <b>spoil it</b> (dump the stale ale; a Ready Q4+ of yours takes the berth).';
     acts=btn(LU(CASK_ACT_ICON[act]||'sparkles')+' Fire its '+(act||'')+' action','spoilAct()','go')
@@ -3240,7 +3167,7 @@ function renderBar(){
     const m=lp.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step<o.c.ready);
     prompt=lp.name+' delivered to '+DEST[b.dest].name+' — <b>refine</b>: pick one of your maturing casks to age <b>+1</b>.';
     acts=m.map(o=>btn(LU('beer')+styleShort(o.c.style)+' '+o.c.step+'/'+o.c.ready,'brefinePick('+o.i+')','go')).join('')+btn('Skip','brefinePick(-1)','ghost');}
-  else if(U==='end'){prompt='Turn resolved.';acts=btn('End Turn ▸','endTurn()','primary');}
+  else if(U==='end'){prompt='Line resolved.';acts=btn('End Turn ▸','endTurn()','primary');}
   // End Turn is available at ALL times — every turn action is optional. Hidden only before the turn-1
   // worker placement, in the 'end' state (it already has it), and during the forced delivery-benefit picks
   // (which would forfeit a reward — including a rival's). endTurn() resets UI cleanly from any sub-state.
@@ -3250,11 +3177,10 @@ function renderBar(){
   document.getElementById('prompt').innerHTML=prompt;
   document.getElementById('acts').innerHTML=acts;
   document.getElementById('boardnote').innerHTML =
-      U==='stops'? 'CLICK a glowing slot to resolve it — an empty slot DEPLOYS onto itself, a cask fires its action, a ship loads itself. Your verb is in the bar. Any order; all optional.'
-    : U==='verb'? 'The DASHED OUTLINE marks your station + its two slots — that is everything this turn touches. Flip a roster tile in the bar (your player board), or Recall.'
+      U==='stops'? 'CLICK a glowing station or slot to resolve it — an empty slot DEPLOYS onto itself, a cask fires its action, a ship loads itself. Any order; all optional.'
     : (U==='cell'&&UI.stage==='send_cask')? 'CLICK a glowing cask — that is the barrel you will send.'
     : (U==='cell'&&UI.stage==='send_route')? 'CLICK a glowing ship (or the glowing Hall card above) — that is where it goes.'
-    : (U==='cell'&&UI.cell==='A'&&!UI.stage)? 'BUILD: acquire in the MARKET panel on the right — recipes · your almanac · ships · contracts · journeymen. Or Skip in the bar.'
+    : (U==='cell'&&UI.cell==='A'&&!UI.stage)? 'Buying? Use the MARKET panel on the right — recipes · your almanac · ships · contracts. Or take goods in the bar.'
     : U==='placebldg'||(U==='cell'&&UI.stage==='place')? 'Click a glowing slot.'
     : 'The Wharf: '+LU('store')+' <b>Source</b> → '+LU('flask-conical')+' <b>Brew</b> → '+LU('hourglass')+' <b>Age</b> → '+LU('ship')+' <b>Ship</b>. A Ready cask deploys to a '+LU('anchor')+' slot, then ships on a '+LU('sailboat')+' to a destination for points.';
 }
@@ -3272,11 +3198,10 @@ function actAvail(p,act){
 function stopAvail(st){const p=cur();
   if(st.kind==='cell'){
     if(st.cell==='A')return true;   // Source 2 goods always works
-    if(st.cell==='B')return (openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)));   // v3.0-A: Brew only
+    if(st.cell==='B')return bhCanBrew(p)||bhCanDeploy(p);   // v3.0-A.1: Brew OR deploy
     if(st.cell==='C')return sendCasks(p).length>0;                                  // v3.0-A: the unified SEND
     if(st.cell==='D')return cellarCanAge(p)||cellarCanImp(p)||(typeof canBlend==='function'&&canBlend(p));
     return true;}
-  if(st.kind==='verb')return verbUsable(p,st.k);   // v3.0-B: the flipped tile's verb
   if(st.kind==='deploy')return readyInVessels(p).length>0&&!S.slots[st.slot];   // v3.0-A: THIS slot must still be open
   if(st.kind==='fcask'){const c=p.vessels[st.vi];return !!c&&actAvail(p,caskAct(c));}
   if(st.kind==='fwild')return true;
@@ -3291,21 +3216,27 @@ function stopLabel(s){
   if(s.kind==='fcask'){const c=cur().vessels[s.vi];if(!c)return '(empty vessel)';   // a Floor stop: the held cask's action
     const a=caskAct(c);return LU('beer')+styleShort(c.style)+' · '+LU(CASK_ACT_ICON[a]||'')+(P_ACT_TXT[a]||a);}
   if(s.kind==='fwild')return LU('building-2')+bName(s.k)+' · '+LU('sparkles')+'Wild';
-  if(s.kind==='verb')return LU(ROSTER_VERB[s.k].icon)+' '+ROSTER_VERB[s.k].name;
+  if(s.kind==='fspec')return LU('wrench')+upName(s.k)+' · '+({granary:'+2 grain',hopgarden:'+2 hops',lagering:'age all +2'})[s.k];
   const t=S.slots[s.slot];if(!t)return '(empty)';
   if(t.type==='cask')return LU('beer')+ownSq(t.owner)+'Cask · '+styleShort(t.style);
   if(t.type==='ship')return LU('sailboat')+' Ship · load '+shipName(t)+'→'+DEST[t.dest].name;
   return '';
 }
 function cellRender(p){
+  if(UI.cell==='B'){   // v3.0-A.1: the Brewhouse or-branch — ONE decision
+    return {prompt:LU('flask-conical')+' <b>Brewhouse</b> — one or the other: <b>Brew</b> 1 cask, or <b>Deploy</b> 1 Ready cask onto any open slot.',
+      acts:(bhCanBrew(p)?btn(LU('beer')+' Brew a cask','bhPick(\'brew\')','go'):btnOff(LU('beer')+' Brew a cask','No open vessel or affordable recipe.'))
+        +(bhCanDeploy(p)?btn(LU('barrel')+' Deploy a Ready cask','bhPick(\'deploy\')','go'):btnOff(LU('barrel')+' Deploy a Ready cask','No Ready cask / no open slot.'))
+        +btn('Skip','cellDone()','ghost')};
+  }
   if(UI.cell==='A'){
     if(UI.stage==='place')return {prompt:'Click an open slot — or a slot whose cask can board (v2.6: dockside pickup — the cask loads at once).',acts:''};
-    return {prompt:LU('store')+' <b>Build</b> — acquire ONE tile → <span class="note">(buy from the shop panel: a recipe · a Privilege/Building [buy + place] · a ship commission · a contract · hire a Journeyman)</span>',
-      acts:btn('Skip','cellDone()','ghost')};
+    return {prompt:'Gain 2 goods, or acquire one tile → <span class="note">(buy from the shop panel: a recipe · a Building [buy + place] · a ship · a contract)</span>',
+      acts:btn('Take '+Gi(2),'marketGoods(2,0)','go')+btn('Take '+Gi(1)+Hi(1),'marketGoods(1,1)','go')+btn('Take '+Hi(2),'marketGoods(0,2)','go')+btn('Skip','cellDone()','ghost')};
   }
   if(UI.cell==='C'){   // v3.0-A: the unified SEND — pick the cask, then the route
     if(UI.stage==='send_cask'){const refs=sendCasks(p);
-      return {prompt:LU('ship')+' <b>Send</b> — <b>click a glowing cask on the board</b> (or below): pick ONE'+(UI.sendVessels?' (or one in your vessels — the Quaymaster)':'')+((UI.sendsLeft||1)>1?' · '+UI.sendsLeft+' sends left (Stevedore)':'')+'. <span class="note">A rival’s cask can be sent by ship only — its owner scores; you take '+Gi(1)+' and choose the destination.</span>',
+      return {prompt:LU('ship')+' <b>Send</b> — <b>click a glowing cask on the board</b> (or below): pick ONE'+(hasUpgrade(p,'quay')?' (or one in your vessels — the Quaymaster)':'')+((UI.sendsLeft||1)>1?' · '+UI.sendsLeft+' sends left (Stevedore)':'')+'. <span class="note">A rival’s cask can be sent by ship only — its owner scores; you take '+Gi(1)+' and choose the destination.</span>',
         acts:refs.map(ref=>{const ct=refCask(ref);return btn(LU('beer')+ownSq(refOwner(ref))+styleShort(ct.style)+' Q'+caskEffQ(ref)+(isVRef(ref)?' · vessel':''),'sendPickCask(\''+ref+'\')','go');}).join('')+btn('Done','sendDone()','ghost')};}
     if(UI.stage==='send_route'){const ref=UI.tmp.sendCask;const ct=refCask(ref);const rs=sendRoutesFor(p,ref);
       const bs=rs.map(r=>{
@@ -3329,6 +3260,7 @@ function renderGrid(){
   const ag=document.getElementById('ag');let h='';
   SLOTS.forEach(s=>{const t=S.slots[s.id];const b=bAt(s.id);let cls='slot '+s.id;
     const depTarget=(UI.sub==='deploy'&&UI.deploy&&UI.deploy.slot===s.id);   // v3.0-A: deploy is slot-local — the fixed target glows; the cask is picked in the bar
+    const depAny=!aiTurn()&&(UI.sub==='deploy'&&UI.deploy&&UI.deploy.slot==null&&UI.deploy.vi!=null&&!t);   // v3.0-A.1: the Brewhouse verb — any open slot
     const occPlacing=!aiTurn()&&(UI.sub==='cell'&&UI.cell==='A'&&UI.stage==='place'&&(!t||commPickupOK(s.id,UI.tmp.placeTile.dest)));
     const bldgPlacing=(!aiTurn()||humanGate())&&UI.sub==='placebldg'&&(!b||canPay(S.players[UI.tmp.placeBldg.owner],OVERBUILD_FEE));   // v2.9: occupied slots only when the ground rent is payable; the human-gate lets an off-turn owner place mid-AI-turn
     // v3.0 BOARD-FIRST: pending line stops glow and resolve by CLICKING the slot; the send picks its
@@ -3338,9 +3270,8 @@ function renderGrid(){
     const stopOK=stopIdx>=0&&stopAvail(UI.stops[stopIdx]);
     const sendCaskOK=!aiTurn()&&UI.sub==='cell'&&UI.stage==='send_cask'&&t&&t.type==='cask'&&sendCasks(cur()).includes(s.id);
     const sendShipOK=!aiTurn()&&UI.sub==='cell'&&UI.stage==='send_route'&&t&&t.type==='ship'&&UI.tmp&&UI.tmp.sendCask&&sendRoutesFor(cur(),UI.tmp.sendCask).some(r=>r.kind==='ship'&&r.slot===s.id);
-    const mineSlot=!aiTurn()&&UI.sub==='verb'&&(STATION_SLOTS[cur().cell]||[]).includes(s.id);   // v3.0-B: the two slots this turn touches
-    if(mineSlot)cls+=' mine';
-    if(occPlacing||bldgPlacing||depTarget||stopOK||sendCaskOK||sendShipOK)cls+=' place';
+    
+    if(occPlacing||bldgPlacing||depTarget||depAny||stopOK||sendCaskOK||sendShipOK)cls+=' place';
     let inner;let style='';
     if(b&&t){   // both a building and an occupant → an offset stack (tap to swap which is on top)
       cls+=' pfilled stack';inner=stackHtml(b,t,s.id);
@@ -3350,7 +3281,7 @@ function renderGrid(){
     let clickAttr='';
     if(bldgPlacing)clickAttr='placeBldgOn(\''+s.id+'\')';
     else if(occPlacing)clickAttr='placeSlot(\''+s.id+'\')';
-    
+    else if(depAny)clickAttr='deployAnyTo(\''+s.id+'\')';
     else if(stopOK)clickAttr='resolveStop('+stopIdx+')';
     else if(sendCaskOK)clickAttr='sendPickCask(\''+s.id+'\')';
     else if(sendShipOK)clickAttr='sendRoute(\'ship\',\''+s.id+'\')';
@@ -3365,11 +3296,10 @@ function renderGrid(){
     if(!aiTurn()&&UI.sub==='stops'&&UI.stops)cellStopIdx=UI.stops.findIndex(st=>st.kind==='cell'&&st.cell===c);
     const cellStopOK=cellStopIdx>=0&&stopAvail(UI.stops[cellStopIdx]);   // v3.0 board-first: a pending station stop is clickable
     if(legal||cellStopOK)cls+=' legal';
-    if(!aiTurn()&&UI.sub==='verb'&&cur().cell===c)cls+=' here';   // v3.0-B: the quarter this turn works
+    
     const grps=STATION_ACTS[act]||[(YIELD[act]||[])];   // groups: icons within a group are OR (slash); groups are AND (gap)
     const ico=n=>'<span class="iw" data-tip="'+attr(STATION_ICON_TIP[n]||ICONTIP[n]||'')+'"><i data-lucide="'+n+'" class="ic"></i></span>';
-    let yields=grps.map(grp=>grp.map(ico).join('')).join('<span class="yand">+</span>');
-    yields+='<span style="font-size:6.4cqmin;opacity:.9;font-variant:small-caps" data-tip="'+attr('Home bonus (v3.0-B.1) — the quarter pays a printed courtesy when its own work is done here: '+HOME_TXT[c])+'">'+HOME_TXT[c]+'</span>';   // the quarter's ONE printed line
+    const yields=grps.map(grp=>grp.map(ico).join('')).join('<span class="yand">+</span>');
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(legal?'onclick="doMove(\''+c+'\')"':(cellStopOK?'onclick="resolveStop('+cellStopIdx+')"':''))+'>'
       +'<div class="stn">'
       +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="role">'+CELLROLE[c]+'</div><div class="nm">'+act+'</div></div></div>'
@@ -3440,7 +3370,7 @@ function renderDests(){
 
 function renderShop(){
   const p=cur();const buying=!aiTurn()&&(UI.sub==='cell'&&UI.cell==='A'&&UI.stage===null);
-  const cellarBuy=buying;   // v3.0-B: Journeymen are hired via the BUILD verb (the same acquire window as every tile)
+  const cellarBuy=!aiTurn()&&UI.sub==='tap';   // v1.7: improvements are bought at the Cellar (the Tap stage)
   // export recipes (this game's 3 dealt beers, by quality) + always-available ships
   let h='';(S.exports||[]).slice().sort((a,b)=>STYLES[a].lvl-STYLES[b].lvl).forEach(style=>{
     if(p.recipes.includes(style))return;
@@ -3476,19 +3406,18 @@ function renderShop(){
   // v82 "Scarce Improvements": a face-up DISPLAY of IMP_DISPLAY drawn from a shuffled deck (n-1 of each type),
   // bought at the CELLAR (refills from the deck). Shown here always so the supply is visible; buyable when you're
   // at the Cellar. Duplicate tiles can appear (3p/4p have ≥2 copies of a type).
-  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Journeyman display</b> <span class="note">('+(S.impDisplay||[]).length+' face-up · '+(S.impDeck||[]).length+' in the deck — hired via the '+LU('store')+' <b>Build</b> verb · max '+IMP_AREA_CAP+' roster sockets'+(cellarBuy?' · hire now':'')+')</span></div>';
+  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Specialist display</b> <span class="note">('+(S.impDisplay||[]).length+' face-up · '+(S.impDeck||[]).length+' in the deck — bought at the '+LU('hourglass')+' <b>Cellar</b> · max '+IMP_AREA_CAP+' in your area'+(cellarBuy?' · buy now':'')+')</span></div>';
   h+='<div class="shopgrid">'+(S.impDisplay||[]).map((key,i)=>{const def=IMPROVEMENTS[key];const owned=!grantableBuy(p,key);const full=impArea(p)>=IMP_AREA_CAP;const can=canPay(p,def.cost)&&!owned&&!full;
-    return '<div class="shopcell"><div class="mtile" data-tip="'+attr(def.name+' — '+def.desc+' · '+costStr(def.cost)+' via the Build verb')+'">'+pImpFace(key)+'</div>'+(owned?'<span class="note">(have)</span>':(full?'<span class="note">(area full)</span>':(cellarBuy?'<button '+(can?'':'disabled')+' onclick="buyImprovement(\''+key+'\')">buy</button>':'<span class="note" style="font-size:.66rem">'+costIcons(def.cost)+' @'+LU('hourglass')+'</span>')))+'</div>';}).join('')+'</div>';
+    return '<div class="shopcell"><div class="mtile" data-tip="'+attr(def.name+' — '+def.desc+' · '+costStr(def.cost)+' at the Cellar')+'">'+pImpFace(key)+'</div>'+(owned?'<span class="note">(have)</span>':(full?'<span class="note">(area full)</span>':(cellarBuy?'<button '+(can?'':'disabled')+' onclick="buyImprovement(\''+key+'\')">buy</button>':'<span class="note" style="font-size:.66rem">'+costIcons(def.cost)+' @'+LU('hourglass')+'</span>')))+'</div>';}).join('')+'</div>';
   if(!(S.impDisplay||[]).length)h+='<div class="note">(Specialist deck exhausted)</div>';
   document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">At the '+LU('store')+' <b>Market</b>: take goods, OR acquire one tile — a recipe, a '+LU('building-2')+' Building (buy from the display + place at once; London and Survey grant one free the same way), a '+LU('sailboat')+' ship, or a charter contract. Overbuilding costs the '+costStr(OVERBUILD_FEE)+' ground rent and <b>displaces</b> the building there: the tile flips to its owner’s floor as a '+LU('sparkles')+'Wild worth '+DEVELOP_PTS+'★ at game end (floor full → returned to the box). A blue <b>Privilege</b> hands a printed '+LU('stamp')+' <b>seal</b> to a cask shipping from it (gilt face = the Q4+ premium, pre-summed) — the seal is what scores at delivery; no dice, no arithmetic.</div>';
 }
 
 function renderVoyage(){
-  let trk='';const fm=fairMarks();
-  for(let i=0;i<S.sailedCap;i++){const isFair=fm.includes(i+1);
-    trk+='<div class="spw"><div class="sp'+(i<S.sailed?' on':'')+'"'+(isFair?' style="outline:2px solid var(--gold)" data-tip="Fair Day — an interim majority scoring fires when the marker reaches this space"':'')+'>'+(i<S.sailed?'⛵':(isFair?'🎪':''))+'</div>'+(isFair?'<div class="spf">Fair</div>':'')+'</div>';}
+  let trk='';for(let i=0;i<S.sailedCap;i++){
+    trk+='<div class="spw"><div class="sp'+(i<S.sailed?' on':'')+'">'+(i<S.sailed?'⛵':'')+'</div></div>';}
   let h='<div class="voybox">'+LU('sailboat')+' <b>Sailed-Ships</b> '+S.sailed+' / '+S.sailedCap+(S.ending?' · <b style="color:var(--red)">FINAL ROUND</b>':'')
-    +'<div class="track">'+trk+'</div><div class="note" style="font-size:.66rem;margin-top:2px">⛵ the end clock — each voyage (a ship sailing, a charter, or an enshrine) fills one · 🎪 a Fair Day: the leader at each kontor banks half its 1st tier</div></div>';
+    +'<div class="track">'+trk+'</div><div class="note" style="font-size:.66rem;margin-top:2px">⛵ the end clock — each voyage (a ship sailing, a charter, or an enshrine) fills one</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>'+LU('ticket')+' Charter contracts:</b> '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+(p.contracts||0)+'</span>').join(' · ')+' <span class="note">(spend 1 + '+costStr(CHARTER_FLAT_FARE)+' to charter; buy more at the Market)</span></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game ('+(S.expansion?'3 of 7 · '+LU('sparkles')+'Specialty Beers ON':'3 of 4')+'):</b> '+exportLabel()+(S.jopen?' · + '+LU('sparkles')+'<b>Jopenbier</b> capstone (always acquirable)':'')+'.</div>';
   // the steerable BREW PILES — each brewable beer as its real cask tile (name · quality · brew cost) +
@@ -3517,19 +3446,18 @@ function renderTableaus(){
       vcells.push('<div class="vcell"><div class="mtile" data-tip="'+attr(STYLES[c.style].name+' Q'+c.q+' · '+CASK_ACT[caskAct(c)]+' · '+(ready?'READY ▸ deploy/ship':'aging '+c.step+'/'+c.ready))+'">'+pCaskFace(c)+'</div>'
         +'<div class="vmat">'+(ready?'<span class="tag good">'+LU('check')+' READY ▸ ship</span>':'<span class="note">aging '+c.step+'/'+c.ready+'</span>')+'<div class="vtrack">'+tr+'</div></div></div>');
     }
-    // v3.0-B: THE ROSTER — base verbs + hired Journeymen (flip state); the FLOOR holds flipped buildings only
-    const rosterHTML=rosterTiles(p).map(k=>{const u=p.used&&p.used[k];
-      return '<span class="tag'+(u?' dim':' good')+'" data-tip="'+attr(ROSTER_VERB[k].desc+(u?' — FLIPPED (recall to refresh)':' — ready'))+'">'+LU(ROSTER_VERB[k].icon)+' '+ROSTER_VERB[k].name+(u?' ✗':'')+'</span>';}).join(' ');
+    // improvement cells: 4 slots — bought improvements + flipped (displaced) Buildings, padded with empty slots
+    const impItems=p.upgrades.map(k=>({t:'imp',k})).concat((p.flipped||[]).map(k=>({t:'flip',k})));
     const icells=[];
-    for(let ii=0;ii<FLOOR_CAP;ii++){const k=(p.flipped||[])[ii];
-      if(!k){icells.push('<div class="mtile empty" data-tip="'+attr('Floor slot — a displaced slot tile flips in here (a Wild fired on the RECALL + '+DEVELOP_PTS+'★ at game end). All '+FLOOR_CAP+' full → a displaced tile is returned to the box.')+'">'+LU('sparkles')+'</div>');continue;}
-      icells.push('<div class="mtile flip" data-tip="'+attr('Flipped '+bName(k)+' — a Wild on its back (fires on the RECALL) + '+DEVELOP_PTS+'★ at game end')+'">'+pBldgFace({b:k,owner:p.id})+'</div>');
+    for(let ii=0;ii<IMP_AREA_CAP;ii++){const it=impItems[ii];
+      if(!it){icells.push('<div class="mtile empty" data-tip="'+attr('Specialist slot — hire/buy at the Cellar, or a displaced slot tile flips in here (a Floor Wild + '+DEVELOP_PTS+'★ at game end). All 4 full → a displaced tile is returned to the box.')+'">'+LU('wrench')+'</div>');continue;}
+      if(it.t==='imp')icells.push('<div class="mtile" data-tip="'+attr(upName(it.k)+' — '+upDesc(it.k))+'">'+pImpFace(it.k)+'</div>');
+      else icells.push('<div class="mtile flip" data-tip="'+attr('Flipped '+bName(it.k)+' — a Wild on its back (fired when you work the Floor) + '+DEVELOP_PTS+'★ at game end')+'">'+pBldgFace({b:it.k,owner:p.id})+'</div>');
     }
-    const floorHTML='<div class="floor"><div class="floortop"><b class="note">'+LU('home')+' THE ROSTER &amp; THE FLOOR</b><span class="note">your verb tiles · your brewery · the recall line</span></div>'
-      +'<div style="margin:5px 0 3px">'+rosterHTML+' <span class="note" style="font-size:.68rem">('+rosterUnused(p).length+'/'+rosterTiles(p).length+' unflipped · '+(IMP_AREA_CAP-(p.upgrades||[]).length)+' empty socket'+((IMP_AREA_CAP-(p.upgrades||[]).length)===1?'':'s')+')</span></div>'
+    const floorHTML='<div class="floor"><div class="floortop"><b class="note">'+LU('home')+' THE FLOOR</b><span class="note">your vessels &amp; Specialists — your private line</span></div>'
       +'<div class="floorgrid">'
       +'<div class="fhalf"><b class="note">'+LU('flask-conical')+' Vessels &amp; Maturation ('+p.vessels.filter(c=>c).length+'/'+p.maxVessels+')</b><div class="vrow">'+vcells.join('')+'</div></div>'
-      +'<div class="fhalf"><b class="note">'+LU('sparkles')+' The Floor ('+(p.flipped||[]).length+'/'+FLOOR_CAP+') <span class="note">displaced slot tiles — Wilds on the recall</span></b><div class="irow">'+icells.join('')+'</div></div>'
+      +'<div class="fhalf"><b class="note">'+LU('wrench')+' Specialists ('+impArea(p)+'/'+IMP_AREA_CAP+') <span class="note">+ displaced slot tiles</span></b><div class="irow">'+icells.join('')+'</div></div>'
       +'</div></div>';
     const recipes=p.recipes.map(r=>{const st=STYLES[r];const locked=st.cellar&&!hasUpgrade(p,'cellar');
       return '<span class="rcard"'+(locked?' style="opacity:.55"':'')+' data-tip="'+attr(st.name+' — quality Q'+st.q+', brew cost '+costStr(st.in)+(locked?'. Needs the Aging Cellar to brew.':'.')+(st.sig?' SIGNATURE: '+st.sig:''))+'">'
@@ -3756,7 +3684,7 @@ function olGrantImprovement(lp){const pref=['cellar','hopgarden','granary','vess
 function olGrantEnshrine(lp){const cands=SLOTS.map(s=>s.id).filter(id=>{const t=S.slots[id];return t&&t.type==='cask'&&t.owner===lp.id&&caskEffQ(id)>=DEST.hall.gate;});
   if(!cands.length){olLog(lp,'(no Q2+ cask deployed to enshrine → goods)');gain(lp,2,0);return;}
   cands.sort((a,b)=>caskEffQ(b)-caskEffQ(a));const ref=cands[0];const L=captureLoad(ref);S.slots[ref]=null;
-  deliverCask(lp,L,'hall',null,false);advanceClock();olLog(lp,'enshrines '+styleShort(L.style)+' Q'+L.q+' at the Hall (free)');}
+  deliverCask(lp,L,'hall',null,false);S.sailed++;olLog(lp,'enshrines '+styleShort(L.style)+' Q'+L.q+' at the Hall (free)');}
 
 // ---- claim a cask at the node it reached (core → just base pts; town → a slot or overflow) ----
 function olTakeSlot(lp,nodeKey,idx){(S.overland.slots[nodeKey]=S.overland.slots[nodeKey]||[]).push({pid:lp.id,slot:idx});
