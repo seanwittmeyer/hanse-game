@@ -1,0 +1,11 @@
+4p-mx-10 ok     rounds 19  winner Cellar     totals Cellar:61 Guild2:15 Guild:19 TraderV:26  -> playtests/logs/v3-corpus/pbp-4p-mx-10.log
+4p-mx-11 ok     rounds 20  winner Cellar     totals Guild:37 TraderP:38 Cellar:52 Cellar2:26  -> playtests/logs/v3-corpus/pbp-4p-mx-11.log
+4p-mx-12 ok     rounds 21  winner Cellar     totals TraderM:26 Guild:24 TraderV:36 Cellar:56  -> playtests/logs/v3-corpus/pbp-4p-mx-12.log
+4p-mx-13 ok     rounds 13  winner Cellar     totals Cellar:45 Guild:19 TraderP:27 TraderM:29  -> playtests/logs/v3-corpus/pbp-4p-mx-13.log
+4p-mx-14 ok     rounds 20  winner Cellar     totals Guild:25 Cellar:35 Guild2:29 TraderV:35  -> playtests/logs/v3-corpus/pbp-4p-mx-14.log
+4p-mx-15 ok     rounds 14  winner Cellar     totals TraderP:31 Cellar:33 Guild:25 Cellar2:22  -> playtests/logs/v3-corpus/pbp-4p-mx-15.log
+4p-mx-16 ok     rounds 24  winner Cellar     totals Cellar:58 Guild2:32 Guild:37 TraderM:16  -> playtests/logs/v3-corpus/pbp-4p-mx-16.log
+4p-mx-17 ok     rounds 19  winner Cellar2    totals Guild:30 TraderV:32 Cellar:25 Cellar2:44  -> playtests/logs/v3-corpus/pbp-4p-mx-17.log
+4p-mx-18 ok     rounds 18  winner TraderP    totals TraderP:43 Guild:22 TraderM:38 Cellar:24  -> playtests/logs/v3-corpus/pbp-4p-mx-18.log
+
+9 games (KEY hanse-v3a-v2) in 279.6s · errors 0

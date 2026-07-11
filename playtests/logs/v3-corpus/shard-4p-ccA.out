@@ -1,0 +1,11 @@
+4p-cc-1 ok     rounds 14  winner Cellar     totals Cellar:44 Cellar2:29 Cellar3:33 Cellar4:42  -> playtests/logs/v3-corpus/pbp-4p-cc-1.log
+4p-cc-2 ok     rounds 13  winner Cellar2    totals Cellar:38 Cellar2:41 Cellar3:33 Cellar4:25  -> playtests/logs/v3-corpus/pbp-4p-cc-2.log
+4p-cc-3 ok     rounds 21  winner Cellar3    totals Cellar:29 Cellar2:36 Cellar3:50 Cellar4:47  -> playtests/logs/v3-corpus/pbp-4p-cc-3.log
+4p-cc-4 ok     rounds 21  winner Cellar4    totals Cellar:41 Cellar2:37 Cellar3:32 Cellar4:43  -> playtests/logs/v3-corpus/pbp-4p-cc-4.log
+4p-cc-5 ok     rounds 12  winner Cellar4    totals Cellar:32 Cellar2:31 Cellar3:26 Cellar4:43  -> playtests/logs/v3-corpus/pbp-4p-cc-5.log
+4p-cc-6 ok     rounds 19  winner Cellar3    totals Cellar:35 Cellar2:32 Cellar3:53 Cellar4:16  -> playtests/logs/v3-corpus/pbp-4p-cc-6.log
+4p-cc-7 ok     rounds 11  winner Cellar4    totals Cellar:26 Cellar2:20 Cellar3:28 Cellar4:36  -> playtests/logs/v3-corpus/pbp-4p-cc-7.log
+4p-cc-8 ok     rounds 16  winner Cellar     totals Cellar:44 Cellar2:22 Cellar3:40 Cellar4:30  -> playtests/logs/v3-corpus/pbp-4p-cc-8.log
+4p-cc-9 ok     rounds 17  winner Cellar3    totals Cellar:28 Cellar2:37 Cellar3:40 Cellar4:24  -> playtests/logs/v3-corpus/pbp-4p-cc-9.log
+
+9 games (KEY hanse-v3a-v2) in 414.8s · errors 0

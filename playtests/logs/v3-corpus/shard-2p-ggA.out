@@ -1,0 +1,11 @@
+2p-gg-1 ok     rounds 23  winner Guild2     totals Guild:21 Guild2:24  -> playtests/logs/v3-corpus/pbp-2p-gg-1.log
+2p-gg-2 ok     rounds 25  winner Guild2     totals Guild:28 Guild2:37  -> playtests/logs/v3-corpus/pbp-2p-gg-2.log
+2p-gg-3 ok     rounds 25  winner Guild2     totals Guild:23 Guild2:32  -> playtests/logs/v3-corpus/pbp-2p-gg-3.log
+2p-gg-4 ok     rounds 17  winner Guild2     totals Guild:26 Guild2:28  -> playtests/logs/v3-corpus/pbp-2p-gg-4.log
+2p-gg-5 ok     rounds 20  winner Guild      totals Guild:29 Guild2:4  -> playtests/logs/v3-corpus/pbp-2p-gg-5.log
+2p-gg-6 ok     rounds 24  winner Guild2     totals Guild:5 Guild2:34  -> playtests/logs/v3-corpus/pbp-2p-gg-6.log
+2p-gg-7 ok     rounds 19  winner Guild2     totals Guild:7 Guild2:28  -> playtests/logs/v3-corpus/pbp-2p-gg-7.log
+2p-gg-8 ok     rounds 24  winner Guild      totals Guild:26 Guild2:18  -> playtests/logs/v3-corpus/pbp-2p-gg-8.log
+2p-gg-9 ok     rounds 17  winner Guild2     totals Guild:15 Guild2:26  -> playtests/logs/v3-corpus/pbp-2p-gg-9.log
+
+9 games (KEY hanse-v3a-v2) in 168.3s · errors 0
