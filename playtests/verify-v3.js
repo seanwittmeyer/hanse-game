@@ -167,6 +167,28 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
   ok('a maturing cask is not loadable', !canTake&&true||true);   // canTake takes a slot ref; checked in-game paths
 })();
 
+// ---- 11b. commission: dockside pickup CONSUMES the free load; empty-slot keeps it ----
+(function(){var p=fresh();S.active=0;
+  // (a) placed ONTO a qualifying cask → the pickup IS the free load (no commload stage)
+  S.slots.s5={type:'cask',owner:0,style:'broyhan',q:3,act:'age'};
+  p.vessels[0]={style:'hopped',q:2,step:1,ready:1,act:'age'};   // a loadable vessel cask that would tempt a 2nd load
+  UI={sub:'cell',cell:'A',stage:'place',stops:[],pendingBenefits:[],tmp:{placeTile:{type:'ship',ship:'hulk',dest:'bruges',load:[]}}};
+  placeSlot('s5');
+  ok('pickup boards the slot cask', S.slots.s5&&S.slots.s5.type==='ship'&&S.slots.s5.load.length===1&&S.slots.s5.load[0].style==='broyhan');
+  ok('pickup consumes the free load (no commload picker)', UI.stage!=='commload', 'stage '+UI.stage);
+  // (b) a below-gate cask is NOT a legal pickup target
+  var p2=fresh();S.active=0;
+  S.slots.s6={type:'cask',owner:1,style:'gruit',q:1,act:'source'};
+  ok('a Q1 does not qualify for a Q3 hull', !commPickupOK('s6','novgorod'));
+  ok('a Q1 still qualifies for the Q1 Bruges hull', commPickupOK('s6','bruges'));
+  // (c) placed on an EMPTY slot → the free-load picker still fires
+  var p3=fresh();S.active=0;
+  S.slots.s7={type:'cask',owner:0,style:'broyhan',q:3,act:'age'};   // a deployed cask the free load can take
+  UI={sub:'cell',cell:'A',stage:'place',stops:[],pendingBenefits:[],tmp:{placeTile:{type:'ship',ship:'hulk',dest:'bruges',load:[]}}};
+  placeSlot('s8');
+  ok('empty-slot commission keeps the free-load picker', UI.stage==='commload', 'stage '+UI.stage);
+})();
+
 // ---- 12. the Cellar is one choice (Tap is gone) ----
 (function(){
   ok('tapPick is retired', typeof tapPick==='undefined');

@@ -154,10 +154,11 @@ from the face-up pile top; Gruit fixed to **Gain 2 goods** — §8). Three state
 **Source:** take **2 goods** (any mix). **Or Acquire ONE tile** (pay its cost ⚙):
 - a **recipe** (a brewable quality; export recipes cost more);
 - a **Privilege/Building** from the face-up display — **buy it and place it at once** (§5);
-- a **ship commission** (`2 G` ⚙ — place a face-up hull on an open slot **or onto a slot whose
-  cask can board it** (dockside pickup — the cask loads at once; a rival’s follows the
-  rival-loading rules) + a free load: ANY player’s deployed cask or a Ready cask straight from
-  YOUR vessels — §6);
+- a **ship commission** (`2 G` ⚙ — place a face-up hull on an **open slot** and take the free
+  load (ANY player’s deployed cask, or a Ready cask straight from YOUR vessels), **or onto a
+  slot whose cask QUALIFIES for the hull’s printed destination** — the dockside pickup: that
+  cask boards **as the free load** (no second load; a rival’s follows the rival-loading rules) —
+  §6);
 - a **charter contract** (`1 G` ⚙ — §6).
 
 ### B · Brewhouse — **BREW or DEPLOY**
@@ -291,8 +292,11 @@ When a line fires, the active player **may** use each of its stops once — the 
 ## 6. Ships · Dispatch (the cash-out)
 
 - **Ships** are neutral, destination-bound hulls (Cog 2 / Hulk 3) off a shuffled deck; a face-up
-  **market of 3**. **Commission** (`2 G`) places one on an open slot — or onto a boardable
-  cask’s slot (dockside pickup) — + the free load (§4A). Load deployed casks aboard; a ship
+  **market of 3**. **Commission** (`2 G`) places one on an **open slot + the free load**, or
+  **onto a slot whose cask qualifies for the hull’s port** — the pickup consumes the free load
+  (§4A). *The squeeze this prints: a wharf of parked Q1 Gruit walls every higher-gate hull off
+  the ring (Bruges still boards Q1) — the answer is over-deploying better beer, which sours the
+  squatters (§3).* Load deployed casks aboard; a ship
   **sails the moment it is full** → every cask **delivers** (§7), value + majority presence
   sealing **on delivery** in load order. **The hull is the carrier component:** each berth well
   holds the owner’s **cask cube** + the cask’s **demand die** (if set) + any **+1Q marker**; the
