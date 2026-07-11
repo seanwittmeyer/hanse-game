@@ -246,6 +246,61 @@ adds a 5th ⚙.)*
 
 ---
 
+## 7b. The Hall — the shelf board [ruled in direction; values ⚙]
+
+**The fixed 3/5/7/9 payout table becomes a BOARD** — the Orléans read (Beneficial Deeds): a
+printed Hall with **shelf rows gated by quality**, each shelf holding a small number of **cask
+spaces**, each space printing **one bonus icon**. Enshrining is now *placing your beer in the
+guild's hall* — visibly, permanently, on a shelf the whole table reads.
+
+**The structure ⚙:**
+
+| Shelf | Gate | Row ★ ⚙ | Spaces ⚙ | Space bonuses (one icon each, from the §8 gain vocabulary) ⚙ |
+|---|---|---|---|---|
+| IV — the High Board | Q5 | **9** | 2–3 | unlock 1 Floor slot · +3★ · gain 1 Building (free, placed at once) |
+| III — the Masters' Shelf | Q4+ | **7** | 3 | gain 1 Specialist (free) · place 2 presence · age all vessels +1 |
+| II — the Long Shelf | Q3+ | **5** | 4 | place 1 presence · gain 1 recipe (free) · +3 goods · age a cask +2 |
+| I — the Common Shelf | Q2+ | **3** | 4–5 | +2 goods · +1 contract · age +2 · +1G +1H |
+
+*(Row ★ = the familiar ladder, kept as the row label — one read. The space adds one bonus
+icon — a second read. Nothing is computed anywhere.)*
+
+**The rules ⚙:**
+
+- **Enshrine (via Dispatch, or the Q4+ cask action)** = choose any **open space on a shelf whose
+  gate your cask's effective quality meets** — a Bock may take a Common-Shelf space for its
+  bonus instead of the High Board's glory (a real, readable choice). Bank the **row ★**, take
+  the **space's bonus**, **mark the space with your cube** (the cask card retires; the cube is
+  the trophy and the record).
+- **Never nothing:** if every shelf you qualify for is full, enshrine anyway for the best
+  qualifying row's ★ — no bonus, no cube ⚙. The Hall stays the always-open outlet; only the
+  *honors* are scarce.
+- Kiln/gauge lifts reach higher shelves (effective quality, one rule as everywhere); the
+  **Reliquary** privilege still adds its +2★ ⚙ on the way in; an enshrine still **ticks the
+  clock as a dispatch** (§9, unchanged).
+- Active spaces per shelf scale with player count ⚙ (≈ n+1, bounded by the printed row — the
+  same convention as the Trade Roads slots).
+
+**What this buys:** the Hall becomes the table's second visible race (the majority chart's
+missing twin) — every enshrine is a public claim rivals price, and the "quiet private ladder"
+problem dies at the root. The bonus menu speaks the same icon language as the cask actions (§8)
+and the action-works (§5b), so it teaches for free; a High-Board space feeding the Floor unlock
+track (§7) ties the prestige and engine lanes together with zero new rules.
+
+**What it costs, honestly:** the Hall's designed identity was the **uncontested pole**
+(contested kontore vs the uncontested Hall). The shelf board contests the *honors* while the
+overflow keeps the *outlet* uncontested — the intended compromise, and the pole-test watch-item
+⚙: if space-racing makes late enshrines feel negated, widen shelves or fatten the overflow.
+Second watch: bonuses make cheap enshrines *more* attractive — the Common Shelf must stay
+goods/tempo only (never engine pieces), and the enshrine-tick pace dial (§9) stays on standby.
+Third: at the corpus's ~2–5 enshrines/game, shelves fill mostly at 3–4p — pressure, not
+starvation, but the counts ⚙ want sim + table reads.
+
+**Component:** one printed Hall board (supersedes the passive "display shelf" idea in §9);
+reuses the player cubes (§10 supply check ⚙).
+
+---
+
 ## 8. Cask actions — specific gains [ruled in direction; pool ⚙]
 
 The 8-verb pool is replaced by **concrete acquisition verbs**, steerable piles unchanged (top of
@@ -270,8 +325,8 @@ Wilds only ⚙). Nine verbs, every one a specific gain — "what do I get" is pr
 
 ## 9. Lanes, scoring, and the clock
 
-- **In-game:** Hall (printed ladder 3/5/7/9, via Dispatch) · kontor deliveries (destination
-  starting value + the die). **[ruled: both stay]**
+- **In-game:** the Hall **shelf board** (row ★ + space bonus, via Dispatch — §7b) · kontor
+  deliveries (destination starting value + the die). **[ruled: both stay as lanes]**
 - **End-game:** kontor **majorities** (unchanged tiers; presence discs finite — printed cap 12 ⚙
   as the Reach wall **[open ⚙]**) · the **Flight** (points and/or unlocks, §7). **Floor bonus:
   gone** (§6).
@@ -279,8 +334,8 @@ Wilds only ⚙). Nine verbs, every one a specific gain — "what do I get" is pr
   sailing, a charter, an enshrine. No new trackers. *(The Q-gated enshrine tick from FRESH-EYES
   §5.3 remains on the shelf as a pace dial ⚙ — the corpus's R9 stampedes and leader door-slams
   are real; re-read after this package changes the tempo economy.)*
-- **Lane visibility [open ⚙, recommended]:** the Hall as a display (enshrined casks sit on rung
-  shelves); the Flight strips public. Zero new rules; two component moves.
+- **Lane visibility:** the Hall shelf board (§7b) IS the display **[ruled]**; the Flight strips
+  public **[open ⚙, recommended]**.
 
 ---
 
@@ -289,12 +344,13 @@ Wilds only ⚙). Nine verbs, every one a specific gain — "what do I get" is pr
 | Family | Count ⚙ | Notes |
 |---|---|---|
 | Wharf board | 1 | 4 stations (new ≤2-action faces printed) · 8 slots · Sailed-Ships track |
-| Destination board | 1 | 4 kontore (values + majority tiers) + **Hall display shelf** |
+| Destination board | 1 | 4 kontore (values + majority tiers) |
+| **Hall board** | 1 | 4 quality-gated shelves × 2–5 bonus spaces (§7b); claimed with cubes |
 | Player boards | 4 | vessels/specialist/flip **slot rows with unlock covers** + Flight/unlock strip + manifest row + storage + contracts |
 | Cask cards | ~62 | 6 beers (16 Gruit · 20 Hopped · 6/6 Q3s · 8 Mumme · 6 Bock) — unchanged |
 | Cask-action piles | 4 piles (Q2–Q5) | the §8 specific-gain verbs; top card face-up |
 | **Hull boards** | 20 (11 Cog · 9 Hulk) | **new carrier format**: destination chip + gate + printed value row + numbered berth wells (§4b) |
-| **Cask cubes** | ~24 (6 × 4 colours) | ride the berth wells |
+| **Cask cubes** | ~32 (8 × 4 colours) ⚙ | ride the berth wells + mark Hall shelf spaces (§7b) |
 | Demand dice (d6) | 8 | set to ONE printed number, once, at departure |
 | +1Q markers | 6 | the only other rider |
 | Privileges & Buildings deck | ~22 tiles / 19 designs | §5a/§5b (Gauger + Festkeller out; 5 new works in) |
@@ -325,6 +381,9 @@ Added: hull boards + cubes, 5 new works, unlock covers, the Hall shelf.
 7. Enshrine-as-cask-action (Q4+): does a line-fired enshrine tick feel right? (§8)
 8. The shelved pace dial: Q-gated enshrine ticks, if R≤11 collapses persist. (§9)
 9. Ship-channel guarantee: hull onto building-only slots. (§3)
+10. The Hall board: space counts per shelf (n+1?), the bonus menu, whether a premium cask taking
+    a low shelf banks the low row's ★ or its quality row's ★ (default: the low row — the bonus
+    is the trade), and the pole-test read once contested honors land. (§7b)
 
 ## 12. Validation plan (when we DO build)
 
@@ -341,7 +400,8 @@ against `REVIEW-NOTES-v94.md` — each named v94 pathology (2p-10 stall · 3p-8 
 
 The 2×2 + 8-slot wharf and move-then-activate · the dual-role cask in three states ·
 sail-only-when-full · deploy-first + the Quaymaster exception + commission's vessel door ·
-Privileges-pay-owner / Works-serve-all · the destination values, majority tiers, Hall ladder,
+Privileges-pay-owner / Works-serve-all · the destination values, majority tiers, the Hall's
+row-★ curve (3/5/7/9 survives as the shelf labels, §7b) ·
 recipe costs (Bock total stays 5 — the twice-rejected probe) · the occupancy toll · the ground
 rent · the warm start · the three-colour taxonomy · the steerable piles · the three expansions
 on their spine (Jopenbier's vintage cube remains the one bespoke rider, by identity).
