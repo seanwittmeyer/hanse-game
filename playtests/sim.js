@@ -25,7 +25,8 @@ var NAMES=['P1','P2','P3','P4','P5'];
 
 function achQ(p){var qs=p.recipes.map(function(r){return (STYLES[r].cellar&&!hasUpgrade(p,'cellar'))?0:STYLES[r].q;});return Math.max.apply(null,qs);}
 function needShip(p){
-  if(!(S.shipDisplay&&S.shipDisplay.length)||emptySlots().length===0||!canPay(p,{g:2}))return false;
+  if(!(S.shipDisplay&&S.shipDisplay.length)||!canPay(p,{g:2}))return false;
+  if(!S.shipDisplay.some(function(sn){return commPlaceable(sn.dest).length;}))return false;   // dockside pickup counts
   var qs=[];p.vessels.forEach(function(c){if(c)qs.push(c.q);});
   wharfCaskSlots().forEach(function(id){var t=S.slots[id];if(t.owner===p.id)qs.push(t.q);});
   var bq=qs.length?Math.max.apply(null,qs):achQ(p);
@@ -100,8 +101,8 @@ function cellValue(c,p){
     return 2+(mat.some(function(v){return v.ready-v.step<=3;})?1:0);}
   if(role==='Ship'){var load=myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});});
     if(load)return 4;
-    var rdy=readyInVessels(p).length||wharfCaskSlots().some(function(id){return S.slots[id].owner===p.id;});
-    return (rdy&&canPay(p,charterCost(p)))?2:0.1;}
+    var canDisp=dispatchCasks(p).length&&(enshrineCasks(p).length||dispatchKontorOK(p));   // v3.0-A Dispatch
+    return canDisp?2:0.1;}
   return 0;
 }
 // Occupancy toll the bot would pay for MOVING onto cell c (0 unless an engine defines OCCUPANCY_TOLL):
@@ -110,6 +111,14 @@ function cellToll(c,p){
   if(typeof OCCUPANCY_TOLL==='undefined'||!OCCUPANCY_TOLL)return 0;
   return S.players.some(function(q){return q.id!==p.id&&q.cell===c;})?OCCUPANCY_TOLL:0;
 }
+// v3.0-A: a rough stay-home Floor value (the Age pool + each vessel cask's action + flip Wilds)
+function botFloorValue(p){
+  var v=0;var mat=p.vessels.filter(function(c){return c&&c.step<c.ready;}).length;
+  if(mat)v+=Math.min(FLOOR_AGE+(hasUpgrade(p,'lagering')?2:0),mat*2)*0.7;
+  p.vessels.forEach(function(c){if(!c)return;var a=caskAct(c);
+    v+=({source:1.6,age:0.9,load:1.2,reach:0.6,recipe:1.0,convert:0.6,survey:1.0,hire:1.1,brew:1.3,enshrine:1.0,wild:1.4})[a]||0.8;});
+  v+=Math.min(FLIP_CAP,(p.flipped||[]).length)*1.3;
+  return v;}
 function botMove(p){
   var placing=!p.placed;var cands=placing?['A','B','C','D']:ADJ[p.cell];
   var best=null,bestv=-1,which='row';
@@ -117,15 +126,19 @@ function botMove(p){
     var lk=cellOfLine(tc)[w];var cells=LINES[lk].cells;
     var v=cells.reduce(function(a,c){return a+cellValue(c,p);},0)-toll+Math.random()*0.4;
     if(v>bestv){bestv=v;best=tc;which=w;}});});
+  if(!placing&&floorLegal(p)&&(botFloorValue(p)+Math.random()*0.2)>bestv){stayFloor();return;}   // v3.0-A stay-home
   __chosenWhich=which;doMove(best);
 }
-function botLine(p){chooseLine(__chosenWhich||'row');}   // v1.3: deploy rides the line/Brewhouse, no longer a free pre-line action
+function botLine(p){chooseLine(__chosenWhich||'row');}   // row / col; the Floor is stay-home (botMove)
 function stopPrio(s){
   if(s.kind==='cell')return {Source:0,Brew:1,Age:2,Ship:4}[CELLROLE[s.cell]];
-  if(s.kind==='deploy')return 2.5;   // an empty slot's Deploy action
-  if(s.kind==='bldg')return 3;   // a line-effect Building (Crane / Lagering)
-  var t=S.slots[s.slot];if(!t)return 99;
-  if(t.type==='cask'){var a=t.act||STYLES[t.style].act;var pr={source:0,wild:1,age:2,reach:2,load:4,convert:1,survey:1}[a];return pr==null?2:pr;}
+  if(s.kind==='deploy')return 2.5;   // an empty slot's stop (deploy HERE / the building's printed action)
+  if(s.kind==='fage')return 2;       // the Floor's Age pool
+  if(s.kind==='fcask'){var c=cur().vessels[s.vi];if(!c)return 99;
+    var pa={source:0,wild:1,age:2,reach:2,recipe:1,load:4,convert:1,survey:1,hire:1,brew:1,enshrine:4}[caskAct(c)];return pa==null?2:pa;}
+  if(s.kind==='fwild')return 1;
+  var t=S.slots[s.slot];if(!t)return 2.5;   // a 'cap' whose occupant left mid-line — a deploy-here chance
+  if(t.type==='cask'){if(t.maturing)return 3;var a=slotEffAct(s.slot)||caskAct(t);var pr={source:0,wild:1,age:2,reach:2,recipe:1,load:4,convert:1,survey:1,hire:1,brew:1,enshrine:4}[a];return pr==null?2:pr;}
   if(t.type==='ship')return 4;
   return 50;
 }
@@ -135,9 +148,10 @@ function botMarket(p){
   if(UI.stage==='commload'){var el=commEligible(p,UI.tmp.commShipSlot);
     if(!el.length){commSkip();return;}el.sort(function(a,b){return b.q-a.q;});commLoad(el[0].ref);return;}
   // (v2.2: no buildings-in-hand — every acquisition is display → place at once)
-  if(needShip(p)){var olk=olPersonaKon(p),sidx=0;
-    if(olk&&S.shipDisplay){var ti=S.shipDisplay.findIndex(function(s){return s.dest===olk;});if(ti>=0)sidx=ti;}   // commission a ship bound for the lane's kontor
-    commissionShip(sidx);return;}
+  if(needShip(p)){var olk=olPersonaKon(p),sidx=-1;
+    if(olk&&S.shipDisplay){var ti=S.shipDisplay.findIndex(function(s){return s.dest===olk&&commPlaceable(s.dest).length;});if(ti>=0)sidx=ti;}   // commission a ship bound for the lane's kontor
+    if(sidx<0)sidx=S.shipDisplay.findIndex(function(s){return commPlaceable(s.dest).length;});   // else the first hull that can actually dock
+    if(sidx>=0){commissionShip(sidx);return;}}
   if((p.contracts||0)===0&&canPay(p,CONTRACT_BUY)
      &&(emptySlots().length<=1||S.ending||(myShips(p).length===0&&readyInVessels(p).length>0))){buyContract();return;}
   var ex=buyableExports(p);
@@ -164,29 +178,87 @@ function botPlaceBldg(){var p=cur();var legal=(typeof bldgTargets==='function')?
 function botJopenHold(ref){var c=(typeof ref==='string'&&S.slots[ref])?S.slots[ref]:null;
   if(!c||c.style!=='jopenbier')return false; if(S.ending)return false; return (c.vintage||0)<JOPEN_VINTAGE_CAP-1;}
 function botHarbor(p){
-  if(UI.stage==='enshrine'){var ec=enshrineCasks(p).filter(function(o){return personaDest(p,o.q)==='hall'&&!botJopenHold(o.ref);}).sort(function(a,b){return b.q-a.q;});
-    if(ec.length){enshrinePick(ec[0].ref);return;}afterSail('stops');return;}
-  if(UI.stage==='charter_cask'){var cs=charterCasks(p).slice();var nonJ=cs.filter(function(o){return o.style!=='jopenbier';});if(!S.ending&&nonJ.length)cs=nonJ;cs.sort(function(a,b){return b.q-a.q;});charterPickCask(cs[0].ref);return;}
-  if(UI.stage==='charter_dest'){var ref=UI.tmp.charterCask;var c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
-    var ds=DESTS.filter(function(d){return d!=='hall'&&c.q>=DEST[d].gate;});var d=personaDest(p,c.q);charterDest(ds.indexOf(d)>=0?d:(ds[0]||'bruges'));return;}
-  // ENSHRINE (v0.15): a Ready Q2+ cask whose persona-destination is the Hall → showcase it locally (no boat)
-  if(enshrineCasks(p).some(function(o){return personaDest(p,o.q)==='hall'&&!botJopenHold(o.ref);})){harborEnshrine();return;}
+  // ENSHRINE: a Ready Q2+ cask whose persona-destination is the Hall → Dispatch it there (free, shelf board)
+  if(enshrineCasks(p).some(function(o){return personaDest(p,o.q)==='hall'&&!botJopenHold(o.ref);})){enterDispatch('stops','hallonly');return;}
   var canLoad=myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});});
   if(canLoad){harborLoad();return;}
-  // Charter only as a genuine relief valve: wharf jammed, end-game rush, or no hull & can't build one.
-  var canCharter=(p.contracts||0)>0&&canPay(p,charterCost(p))&&charterCasks(p).length>0;
+  // a KONTOR dispatch only as a genuine relief valve: wharf jammed, end-game rush, or no hull & can't build one.
+  var canCharter=dispatchKontorOK(p)&&dispatchCasks(p).length>0;
   var jammed=emptySlots().length===0;
   var noHull=myShips(p).length===0 && !canPay(p,{g:2});
-  // v0.16: no partial early-launch — a hull sails only when full (loadOnto handles it). The relief valve
-  // is the contract-gated Charter when the slots jam, the end nears, or there's a stranded Ready cask.
-  if(canCharter && (jammed || S.ending || noHull)){__charters++;harborCharter();return;}
+  if(canCharter && (jammed || S.ending || noHull)){__charters++;harborDispatch();return;}
   cellDone();
 }
+// v3.0-A DISPATCH picker (cask → route); hallonly auto-routes on pick
+function botDispatch(p){
+  var d=UI.disp;if(!d){backToStops();return;}
+  var cs=dispatchCasks(p).filter(function(o){return d.mode==='hallonly'?o.q>=DEST.hall.gate:true;});
+  if(!cs.length){dispatchSkip();return;}
+  if(!d.cask){
+    var pool=cs.filter(function(o){return !botJopenHold(o.ref);});if(!pool.length)pool=cs;
+    if(d.mode!=='hallonly'&&!S.ending){var nonJ=pool.filter(function(o){return o.style!=='jopenbier';});if(nonJ.length)pool=nonJ;}
+    pool.sort(function(a,b){return b.q-a.q;});dispatchPickCask(pool[0].ref);return;}
+  var cq=caskEffQ(d.cask);var c=refCask(d.cask);
+  if(!c){dispatchSkip();return;}
+  var hallOK=cq>=DEST.hall.gate||c.style==='jopenbier';
+  var want=personaDest(p,cq);
+  if(hallOK&&(!dispatchKontorOK(p)||want==='hall')){dispatchRoute('hall');return;}
+  if(!dispatchKontorOK(p)){dispatchSkip();return;}
+  if(typeof olCanRhine==='function'&&olCanRhine(p,cq)){dispatchRoute('rhine');return;}
+  var ds=DESTS.filter(function(dd){return dd!=='hall'&&cq>=olCharterGate(p,dd);});
+  if(!ds.length){if(hallOK){dispatchRoute('hall');return;}dispatchSkip();return;}
+  dispatchRoute(ds.indexOf(want)>=0?want:ds[0]);
+}
+// v3.0-A Hall shelf space: highest shelf first, then the bonus preference
+function botHallspace(p){var h=UI.hsp;if(!h){backToStops();return;}
+  var c=refCask(h.ref);var q=Math.min(5,(c&&c.style==='jopenbier')?6:caskEffQ(h.ref));
+  var opts=hallOptionsFor(q);
+  if(!opts.length){UI.hsp=null;hallCommit(h.ref,-1,-1,h.returnTo);return;}
+  var pref={unlock:9,star3:8,bldgfree:8,spec:7,pres2:7,recipefree:6,ageall1:5,pres1:5,age2:4,goods3:4,contract:3,g1h1:2,goods2:2};
+  var best=opts[0],bv=-1e9;
+  opts.forEach(function(o){var sh=HALL_SHELVES[o.si];var v=sh.star*2+(pref[sh.spaces[o.sp]]||0);if(v>bv){bv=v;best=o;}});
+  hallSpacePick(best.si,best.sp);}
+// v3.0-A slot/cask stop this-or-thats + slot-local deploy
+function botSlotstop(p){var st=UI.sstop;var b=st?bAt(st.slot):null;
+  if(!st||!b){backToStops();return;}
+  if(slotDeployOK(p,st.slot)&&readyInVessels(p).length){slotstopDeploy();return;}
+  if(bldgActAvail(p,BUILDINGS[b.b].act)){slotstopAct();return;}
+  backToStops();}
+function botCaskstop(p){var st=UI.cstop;var t=st?S.slots[st.slot]:null;
+  if(!t){backToStops();return;}
+  var a=slotEffAct(st.slot)||caskAct(t);
+  if(!t.maturing&&actAvail(p,a)){caskstopAct();return;}
+  if(readyInVessels(p).some(function(o){return overDeploySlots(o.c,p.id).some(function(s){return s.id===st.slot;});})){caskstopOver();return;}
+  backToStops();}
+function botLDeploy(p){var st=UI.ldep;if(!st){backToStops();return;}
+  var cands=localDeployCasks(p,st.slot);
+  if(!cands.length){localDeploySkip();return;}
+  cands.sort(function(a,b){return b.c.q-a.c.q;});localDeployPick(cands[0].i);}
+function botRecipeGain(p){var opts=recipeGainable(p);
+  if(!opts.length){recipeGainPick(null);return;}
+  opts.sort(function(a,b){return STYLES[a].q-STYLES[b].q;});recipeGainPick(opts[0]);}
 // Bind a new ship to the best-value destination its CURRENT casks can actually fill.
 function qRefBind(p){var qs=[];p.vessels.forEach(function(c){if(c)qs.push(c.q);});
   wharfCaskSlots().forEach(function(id){if(S.slots[id].owner===p.id)qs.push(S.slots[id].q);});
   return qs.length?Math.max.apply(null,qs):achQ(p);}
-function botCell(p){var role=CELLROLE[UI.cell];if(role==='Source')botMarket(p);else if(role==='Ship')botHarbor(p);else cellDone();}
+function botCell(p){var role=CELLROLE[UI.cell];
+  if(role==='Source')botMarket(p);
+  else if(role==='Ship')botHarbor(p);
+  else if(role==='Brew')botBrewhouse(p);
+  else if(role==='Age')botCellar(p);
+  else cellDone();}
+// v3.0-A Brewhouse: BREW first (the engine), else DEPLOY-anywhere to clear the vessels
+function botBrewhouse(p){
+  if(openVessel(p)>=0&&p.recipes.some(function(r){return canBrew(p,r);})){enterBrew('stops');return;}
+  var rdy=readyInVessels(p);
+  if(rdy.length&&(emptySlots().length||rdy.some(function(o){return overDeploySlots(o.c,p.id).length;}))){enterDeployAction('stops');return;}
+  cellDone();}
+// v3.0-A Cellar: AGE or UPGRADE (one choice per visit; Tap is retired)
+function botCellar(p){
+  if(cellarCanAge(p)){enterAge(CELLAR_POOL,'pool','stops');return;}
+  if(cellarCanImp(p)){var pref=['hopgarden','granary','cellar','vessel','quay','crane','lagering'];
+    for(var i=0;i<pref.length;i++){var k=pref[i];if((S.impDisplay||[]).includes(k)&&grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&p.grain>=(IMPROVEMENTS[k].cost.g||0)+1){buyImprovement(k);return;}}}
+  cellDone();}
 function botBrew(p){var aff=p.recipes.filter(function(r){return canBrew(p,r)&&openVessel(p)>=0;});
   if(!aff.length){resume(UI.brew.returnTo);return;}aff.sort(function(a,b){return STYLES[b].q-STYLES[a].q;});brewPick(aff[0]);}
 function botAge(p){var mat=p.vessels.map(function(c,i){return {c:c,i:i};}).filter(function(o){return o.c&&o.c.step<o.c.ready;});
@@ -221,7 +293,8 @@ function botLoad(p){var L=UI.load;
 function botDeploy(){var p=cur();   // v1.4 two-step: pick which Ready cask, then which open slot
   if(UI.deploy.vi==null){var ready=readyInVessels(p);if(!ready.length){deploySkip();return;}
     ready.sort(function(a,b){return b.c.q-a.c.q;});deployPickCask(ready[0].i);return;}
-  var es=emptySlots();if(!es.length){deploySkip();return;}
+  var es=emptySlots();
+  if(!es.length){es=overDeploySlots(p.vessels[UI.deploy.vi],p.id);if(!es.length){deploySkip();return;}}   // v3.0-A: over-deploy (tap-out / spoilage)
   var lk=p.cell?cellOfLine(p.cell)[__chosenWhich||'row']:null;
   // ROUTE THE DEMAND: onto my OWN value-building slot, ideally on the firing line (flips that slot's Deploy → the cask's action)
   var vs=es.filter(function(s){var b=S.buildings[s.id];return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value';});
@@ -234,18 +307,6 @@ function botBenefit(){var disp=S.buildDisplay||[];if(!disp.length){benefitPick(n
   benefitPick(pickBuilding(disp.slice()));}
 function botSurvey(){var disp=S.buildDisplay||[];if(!disp.length){surveyPick(null);return;}     // Survey → CHOOSE one of the face-up display Buildings
   surveyPick(pickBuilding(disp.slice()));}
-// v1.4.1 "Flexible Cellar": the Cellar is now an ANY-ORDER menu (Age · Tap · buy Improvement · Done) on the
-// UI.sub==='tap' literal. ONE step per call (each routes back to the menu): AGE the closest-to-Ready cask first
-// (the core Cellar use — was the forced step pre-v1.4.1), then TAP to relieve a slot jam, then buy a high-value
-// improvement when flush, else Done. (cellarCan*/cellarMenuAge/cellarDone are play.html funcs, in-scope here.)
-function botTap(p){
-  if(cellarCanAge(p)){cellarMenuAge();return;}
-  var ready=readyInVessels(p);
-  if(!(UI.cellar&&UI.cellar.usedTap)&&cellarCanTap(p)&&ready.length&&emptySlots().length===0){ready.sort(function(a,b){return a.c.q-b.c.q;});tapPick('v:'+ready[0].i);return;}   // relieve a jam — v83: tap ONCE (usedTap throttle; humans/MC may multi-tap)
-  if(cellarCanImp(p)){var pref=['hopgarden','granary','cellar','vessel'];   // v82: only buy what's face-up in the scarce display
-    for(var i=0;i<pref.length;i++){var k=pref[i];if((S.impDisplay||[]).includes(k)&&grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&p.grain>=(IMPROVEMENTS[k].cost.g||0)+1){buyImprovement(k);return;}}}
-  cellarDone();}
-
 function botActOnce(){var p=cur();var U=UI.sub;
   switch(U){
     case 'move':return botMove(p);
@@ -260,7 +321,16 @@ function botActOnce(){var p=cur();var U=UI.sub;
     case 'wild':return botWild(p);
     case 'load':return botLoad(p);
     case 'deploy':return botDeploy();
-    case 'tap':return botTap(p);
+    case 'dispatch':return botDispatch(p);
+    case 'slotstop':return botSlotstop(p);
+    case 'caskstop':return botCaskstop(p);
+    case 'ldeploy':return botLDeploy(p);
+    case 'recipegain':return botRecipeGain(p);
+    case 'hallspace':return botHallspace(p);
+    case 'unlock':return unlockPick(canUnlockVessel(p)?'cask':'spec');
+    case 'pilotdest':{var pd=UI.pdest;var pt=S.slots[pd.slot];var pds=pilotDests(pd.slot),pb=pds[0],pv=-1e9;
+      pds.forEach(function(dd){var v=0;(pt.load||[]).forEach(function(L){v+=Math.max(1,destValue(dd,L.q))+(L.die&&dd===pt.dest?L.die:0);});if(v>pv){pv=v;pb=dd;}});
+      return pilotGo(pb);}
     case 'benefit':return botBenefit();
     case 'survey':return botSurvey();
     case 'hire':{var eh=hireable(p);return hirePick(eh.length?eh[0]:null);}   // v2.4 — the Q3+ Hire cask action: take the first eligible improvement
@@ -308,7 +378,8 @@ function runGame(n){
   while(true){
     botActOnce();
     if(++guard>300000)return {error:'guard-tripped',n:n,round:S.turn};
-    if(S.ending&&S.active===S.first&&UI.sub==='end')break; // gameOver fired inside endTurn
+    if(S.over)break;                                       // gameOver fired inside endTurn
+    if(S.ending&&S.active===S.first&&UI.sub==='end')break; // legacy belt-and-braces
   }
   var scores=S.players.map(function(p){return scorePlayer(p);});
   // winner via the engine's tiebreak (total → quality of deployed slot casks → goods)

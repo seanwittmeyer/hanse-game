@@ -443,3 +443,22 @@ so the fork is decided with both cases on the table: **(i)** dice-stay + one-rea
 UX (this plan, §4) vs **(ii)** no dice, privilege ★ banks at departure, delivery = printed
 lookup. If the paper table finds the die still finicky even at one-read, (ii) is the tested,
 twice-independently-derived fallback.
+
+---
+
+## 14. As built (2026-07-11 — KEY `hanse-v3a-v1`)
+
+The build followed this plan with three recorded deviations, each deliberate:
+
+1. **Coppersmith (§5c):** built as **“+1 vessel slot directly”** (the paid shortcut past the
+   unlock track), not the “counts as one already-unlocked slot of your choice” rework — simpler
+   to print, same job. `RULES.md` §8 is the canon.
+2. **Or/and (§2):** every station shipped as a strict **or** (one choice per visit) — the “each
+   once” variant stays a table dial.
+3. **Deck count:** the §5a/§5b tables sum to **27 tiles** (12 privileges + 15 works), not the
+   “≈22” estimate; 27 is what ships.
+
+First sim reads (see `playtests/sim-results-vhanse-v3a-v1.txt` / `sim-pathways-…` /
+`ai-ladder-…`): 0 crashes/deadlocks at 2–4p over 500 games + all AI gates green; pace in band;
+**watch-items** — the prestige lane runs hot with the shelf honors (the §7b pole-test dial), and
+the greedy-bot corpus ends ceiling-heavy at 3–4p (the §9 clock dial).
