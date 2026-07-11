@@ -5,7 +5,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const DIR = path.join(__dirname, 'logs');
+const DIR = path.join(__dirname, 'logs', process.env.DIR || '');
 const files = fs.readdirSync(DIR).filter(f => /^pbp-\d+p-\d+\.log$/.test(f))
   .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 

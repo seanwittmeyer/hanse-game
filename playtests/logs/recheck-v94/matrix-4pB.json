@@ -1,0 +1,682 @@
+[
+ {
+  "id": "4p-21",
+  "seed": 441,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-22",
+  "seed": 442,
+  "seats": [
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-23",
+  "seed": 443,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderV",
+    "ai": {
+     "tier": "trader",
+     "persona": "volume"
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-24",
+  "seed": 444,
+  "seats": [
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderP",
+    "ai": {
+     "tier": "trader",
+     "persona": "prestige"
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-25",
+  "seed": 445,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-26",
+  "seed": 446,
+  "seats": [
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderM",
+    "ai": {
+     "tier": "trader",
+     "persona": "majority"
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderV",
+    "ai": {
+     "tier": "trader",
+     "persona": "volume"
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-27",
+  "seed": 447,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderP",
+    "ai": {
+     "tier": "trader",
+     "persona": "prestige"
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-28",
+  "seed": 448,
+  "seats": [
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-29",
+  "seed": 449,
+  "seats": [
+   {
+    "name": "TraderM",
+    "ai": {
+     "tier": "trader",
+     "persona": "majority"
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-30",
+  "seed": 450,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderV",
+    "ai": {
+     "tier": "trader",
+     "persona": "volume"
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-31",
+  "seed": 451,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-32",
+  "seed": 452,
+  "seats": [
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-33",
+  "seed": 453,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderP",
+    "ai": {
+     "tier": "trader",
+     "persona": "prestige"
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-34",
+  "seed": 454,
+  "seats": [
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderM",
+    "ai": {
+     "tier": "trader",
+     "persona": "majority"
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-35",
+  "seed": 455,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-36",
+  "seed": 456,
+  "seats": [
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderV",
+    "ai": {
+     "tier": "trader",
+     "persona": "volume"
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderP",
+    "ai": {
+     "tier": "trader",
+     "persona": "prestige"
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-37",
+  "seed": 457,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderM",
+    "ai": {
+     "tier": "trader",
+     "persona": "majority"
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-38",
+  "seed": 458,
+  "seats": [
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-39",
+  "seed": 459,
+  "seats": [
+   {
+    "name": "TraderV",
+    "ai": {
+     "tier": "trader",
+     "persona": "volume"
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "4p-40",
+  "seed": 460,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderP",
+    "ai": {
+     "tier": "trader",
+     "persona": "prestige"
+    }
+   }
+  ]
+ }
+]

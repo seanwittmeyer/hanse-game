@@ -9,6 +9,9 @@
 // Usage:  node playtests/narrate.js            (runs the full 30-game matrix below → playtests/logs/)
 //         node playtests/narrate.js 2p-3       (run a single game by id)
 // Env:    GUILD_MS / CELLAR_MS override the bulk MC budgets (defaults 120 / 200).
+//         MATRIX=path.json  load the game matrix from a JSON file instead of the inline 30
+//                           (entries: {id, seed, seats:[{name, ai:{tier, persona}}]}).
+//         OUT=subdir        write logs to playtests/logs/<subdir>/ instead of playtests/logs/.
 //
 // Design notes (mirrors the other harnesses — keep in sync if the engine bootstrap changes):
 //  • log() is a reassignable function declaration — we replace it with a capture that strips the
@@ -26,7 +29,7 @@ const path = require('path');
 const ONLY = process.argv[2] || '';
 const html = fs.readFileSync(path.join(__dirname, '..', 'play.html'), 'utf8');
 const engine = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).join('\n');
-const OUTDIR = path.join(__dirname, 'logs');
+const OUTDIR = path.join(__dirname, 'logs', process.env.OUT || '');
 fs.mkdirSync(OUTDIR, { recursive: true });
 
 // ---- the 30-game matrix: 10 per player count, mixing trader personas, guildmaster, cellarmaster ----
@@ -66,6 +69,11 @@ const GAMES = [
   { id: '4p-9', seed: 419, seats: [T('majority'), T('volume'), T('prestige'), C()] },
   { id: '4p-10', seed: 420, seats: [C(), G(), T('majority'), T('prestige')] },
 ].filter(g => !ONLY || g.id === ONLY);
+let GAMES_ = GAMES;
+if (process.env.MATRIX) {
+  GAMES_ = JSON.parse(fs.readFileSync(process.env.MATRIX, 'utf8')).filter(g => !ONLY || g.id === ONLY);
+  GAMES.length = 0; GAMES.push(...GAMES_);
+}
 // de-dupe seat names within a game (TraderV twice at 4p-3)
 GAMES.forEach(g => { const seen = {}; g.seats.forEach(s => { if (seen[s.name]) s.name += ++seen[s.name]; else seen[s.name] = 1; }); });
 

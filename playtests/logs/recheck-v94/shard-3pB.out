@@ -1,0 +1,22 @@
+3p-21  ok     rounds 17  winner Cellar     totals Cellar:35 Guild:32 Cellar2:33  -> playtests/logs/recheck-v94/pbp-3p-21.log
+3p-22  ok     rounds 16  winner Guild2     totals Guild:6 Cellar:41 Guild2:47  -> playtests/logs/recheck-v94/pbp-3p-22.log
+3p-23  ok     rounds 15  winner Cellar     totals Cellar:39 Guild:36 TraderM:38  -> playtests/logs/recheck-v94/pbp-3p-23.log
+3p-24  ok     rounds 17  winner Cellar2    totals Guild:29 Cellar2:39 Cellar:33  -> playtests/logs/recheck-v94/pbp-3p-24.log
+3p-25  ok     rounds 15  winner TraderV    totals Cellar:35 TraderV:36 Guild:21  -> playtests/logs/recheck-v94/pbp-3p-25.log
+3p-26  ok     rounds 21  winner Guild      totals Guild:54 Guild2:38 Cellar:49  -> playtests/logs/recheck-v94/pbp-3p-26.log
+3p-27  ok     rounds 16  winner Guild      totals Cellar:32 Cellar2:32 Guild:37  -> playtests/logs/recheck-v94/pbp-3p-27.log
+3p-28  ok     rounds 23  winner Cellar     totals Guild:25 Cellar:52 TraderP:28  -> playtests/logs/recheck-v94/pbp-3p-28.log
+3p-29  ok     rounds 25  winner Guild2     totals Cellar:30 Guild:39 Guild2:48  -> playtests/logs/recheck-v94/pbp-3p-29.log
+3p-30  ok     rounds 18  winner Guild      totals TraderM:44 Cellar:53 Guild:61  -> playtests/logs/recheck-v94/pbp-3p-30.log
+3p-31  ok     rounds 21  winner Cellar     totals Cellar:33 Guild:18 Cellar2:30  -> playtests/logs/recheck-v94/pbp-3p-31.log
+3p-32  ok     rounds 23  winner Guild2     totals Guild:36 Cellar:58 Guild2:72  -> playtests/logs/recheck-v94/pbp-3p-32.log
+3p-33  ok     rounds 23  winner TraderV    totals Cellar:40 Guild:35 TraderV:40  -> playtests/logs/recheck-v94/pbp-3p-33.log
+3p-34  ok     rounds 22  winner Cellar     totals Guild:32 Cellar2:37 Cellar:44  -> playtests/logs/recheck-v94/pbp-3p-34.log
+3p-35  ok     rounds 15  winner TraderP    totals Cellar:32 TraderP:47 Guild:32  -> playtests/logs/recheck-v94/pbp-3p-35.log
+3p-36  ok     rounds 18  winner Guild      totals Guild:39 Guild2:26 Cellar:24  -> playtests/logs/recheck-v94/pbp-3p-36.log
+3p-37  ok     rounds 17  winner Cellar     totals Cellar:39 Cellar2:34 Guild:12  -> playtests/logs/recheck-v94/pbp-3p-37.log
+3p-38  ok     rounds 15  winner Cellar     totals Guild:40 Cellar:44 TraderM:36  -> playtests/logs/recheck-v94/pbp-3p-38.log
+3p-39  ok     rounds 23  winner Cellar     totals Cellar:60 Guild:56 Guild2:23  -> playtests/logs/recheck-v94/pbp-3p-39.log
+3p-40  ok     rounds 22  winner Guild      totals TraderV:40 Cellar:61 Guild:66  -> playtests/logs/recheck-v94/pbp-3p-40.log
+
+20 games (KEY hanse-hotseat-v94) in 591.0s · errors 0
