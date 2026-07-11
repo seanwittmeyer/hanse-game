@@ -1,4 +1,4 @@
-############ GAME 2p-4 · seed 214 · 2p · KEY hanse-hotseat-v92 ############
+############ GAME 2p-4 · seed 214 · 2p · KEY hanse-hotseat-v94 ############
 seats: TraderM [trader/majority] · TraderP [trader/prestige]
 exports dealt: Q3 Broyhan · Q4 Mumme · Q5 Bock · sailed-ships cap 6 · warm start:
   s2 (colR): [bldg Gauger’s Office neutral] 
@@ -272,13 +272,13 @@ exports dealt: Q3 Broyhan · Q4 Mumme · Q5 Bock · sailed-ships cap 6 · warm s
   TraderP authors Burgomaster’s Favor on a slot — a cask from here: +1★ per quality level.
 
 ================ FINAL — round 11 · sailed 6/6 · ended by CLOCK ================
-WINNER  TraderM [trader/majority] — TOTAL 40  (deliveries 18 · majorities 13 · flight 9 · developer 0)
+WINNER  TraderM [trader/majority] — TOTAL 42  (deliveries 20 · majorities 13 · flight 9 · floor 0)
         Bruges: Hopped Q2=1, Gruit Q1=1
         Bergen: Hopped Q3=1, Broyhan Q3=1
-        Novgorod: Hopped Q2=0
+        Novgorod: Hopped Q3=2
         The Hall: Bock Q5=9, Broyhan Q3=5
         flight beers: Hopped, Gruit, Broyhan, Bock (4) · specialists: none · flipped: 0
-   #2   TraderP [trader/prestige] — TOTAL 26  (deliveries 14 · majorities 8 · flight 4 · developer 0)
+   #2   TraderP [trader/prestige] — TOTAL 26  (deliveries 14 · majorities 8 · flight 4 · floor 0)
         Bruges: Gruit Q2=1
         Bergen: Broyhan Q3=1
         Novgorod: Broyhan Q3=2, Hopped Q3=2, Broyhan Q4=4, Broyhan Q4=4

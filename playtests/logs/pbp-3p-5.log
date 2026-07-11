@@ -1,4 +1,4 @@
-############ GAME 3p-5 · seed 315 · 3p · KEY hanse-hotseat-v92 ############
+############ GAME 3p-5 · seed 315 · 3p · KEY hanse-hotseat-v94 ############
 seats: TraderV [trader/volume] · TraderP [trader/prestige] · TraderM [trader/majority]
 exports dealt: Q3 Keut · Q3 Broyhan · Q4 Mumme · sailed-ships cap 10 · warm start:
   s1 (colL): ship Cog->Novgorod
@@ -411,19 +411,19 @@ exports dealt: Q3 Keut · Q3 Broyhan · Q4 Mumme · sailed-ships cap 10 · warm 
   ★ The Sailed-Ships track is full (10/10) — final round!
 
 ================ FINAL — round 11 · sailed 10/10 · ended by CLOCK ================
-WINNER  TraderP [trader/prestige] — TOTAL 33  (deliveries 13 · majorities 20 · flight 0 · developer 0)
+WINNER  TraderP [trader/prestige] — TOTAL 33  (deliveries 13 · majorities 20 · flight 0 · floor 0)
         Bruges: Gruit Q1=1, Keut Q3=1
         London: Keut Q3=1
         Bergen: Keut Q3=1
         Novgorod: Keut Q3=2, Keut Q3=2
         The Hall: Keut Q3=5
         flight beers: Keut, Gruit (2) · specialists: Grain Factor, Hop Gardener, Coppersmith · flipped: 0
-   #2   TraderV [trader/volume] — TOTAL 29  (deliveries 18 · majorities 11 · flight 0 · developer 0)
+   #2   TraderV [trader/volume] — TOTAL 29  (deliveries 18 · majorities 11 · flight 0 · floor 0)
         London: Keut Q3=1, Keut Q3=1
         Novgorod: Keut Q3=2, Keut Q3=2
         The Hall: Broyhan Q4=7, Keut Q3=5
         flight beers: Keut, Broyhan (2) · specialists: Cellarman · flipped: 0
-   #3   TraderM [trader/majority] — TOTAL 26  (deliveries 11 · majorities 11 · flight 4 · developer 0)
+   #3   TraderM [trader/majority] — TOTAL 26  (deliveries 11 · majorities 11 · flight 4 · floor 0)
         Bruges: Gruit Q1=1, Keut Q3=1, Gruit Q1=1
         Bergen: Mumme Q4=1
         Novgorod: Keut Q3=2
