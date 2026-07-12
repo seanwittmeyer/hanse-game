@@ -26,7 +26,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v3.0-A.1 “Path A”** — live (`play.html`, KEY `hanse-v3a-v2`); the **keystone rebuild** ruled in `V3-PATH-A.md` off the FRESH-EYES exploration + the 2026-07-11 playtest. The eight moves: **stations ≤2 printed actions** (Source/Acquire · Brew/Deploy · Age/Upgrade · Load/DISPATCH) · **slot locality** (a slot’s stop acts on that slot) · **over-deploy** (own lower Ready cask taps out · anyone’s Q1 sours) · **one-read dice** (a Privilege prints ONE number, set at departure; premium/cap/sail-bump arithmetic deleted) · **the Hall shelf board** (quality-gated shelves, row ★ 3/5/7/9 + one printed honor per space, cube claims, never-nothing) · **the stay-home Floor** (Age-3 pool + vessel-cask actions + ≤2 flip Wilds; flips score 0) · **Flight unlocks** (distinct beers BREWED open Floor slots; delivered still score) · **nine specific-gain cask actions**. v3.0-A.1: the dockside pickup consumes the commission’s free load. Prior live build archived, playable, at `archive/v2.9/`. **Three opt-in toggles** unchanged on the expansion spine: *Specialty Beers* · *Jopenbier* · *The Trade Roads* (replaces the majorities). Strong-play corpus (162 games): clock-dominant, pace 17–19 rounds, every new mechanism live (`playtests/logs/v3-corpus/`). |
+|**Status**     |**v3.1 “One Row”** — live (`play.html`, KEY `hanse-v31`); the v3.0-A keystone + the first human-playtest pass (2026-07-12): **the player board is ONE Floor row** (7 printed slots — vessels, Specialists and flips compete for the same spaces; slot 1 vessel-only; the Flight auto-opens covers) + four dials (Bruges Hanzehuis die 3 · Connoisseur die 4 · Hall rows 3/5/6/8 · 2p clock 7). Beneath it, the **keystone rebuild** ruled in `V3-PATH-A.md` off the FRESH-EYES exploration + the 2026-07-11 playtest. The eight moves: **stations ≤2 printed actions** (Source/Acquire · Brew/Deploy · Age/Upgrade · Load/DISPATCH) · **slot locality** (a slot’s stop acts on that slot) · **over-deploy** (own lower Ready cask taps out · anyone’s Q1 sours) · **one-read dice** (a Privilege prints ONE number, set at departure; premium/cap/sail-bump arithmetic deleted) · **the Hall shelf board** (quality-gated shelves, row ★ 3/5/7/9 + one printed honor per space, cube claims, never-nothing) · **the stay-home Floor** (Age-3 pool + vessel-cask actions + ≤2 flip Wilds; flips score 0) · **Flight unlocks** (distinct beers BREWED open Floor slots; delivered still score) · **nine specific-gain cask actions**. v3.0-A.1: the dockside pickup consumes the commission’s free load. Prior live build archived, playable, at `archive/v2.9/`. **Three opt-in toggles** unchanged on the expansion spine: *Specialty Beers* · *Jopenbier* · *The Trade Roads* (replaces the majorities). Strong-play corpus (162 games): clock-dominant, pace 17–19 rounds, every new mechanism live (`playtests/logs/v3-corpus/`). |
 
 ---
 
@@ -81,7 +81,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v3.0-A.1 “Path A”)
+## 6. The current architecture (v3.1 “One Row” on the v3.0-A “Path A” keystone)
 
 Canonical detail is in `RULES.md` / `COMPONENTS.md` / `V3-PATH-A.md`; the shape:
 
@@ -224,6 +224,20 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v3.1 "One Row"** *(2026-07-12, `play.html` KEY `hanse-v31`)* — The first human-vs-Cellarmaster playtest
+(76–28 in 8 rounds; the log in the session record) ruled four dials and one structure. **THE STRUCTURE — the
+player board is ONE ROW:** the vessel row, Specialist row and flip shelf collapse into a single Floor line of
+**7 printed slots** (slots 1–2 open; covers on 3–7; **slot 1 printed VESSEL-ONLY** so a tile can never take the
+last brewing slot). A slot holds ONE of: a maturing cask · a seated Specialist · a face-down flip. **The Flight
+is the forcing mechanism** — each new distinct beer BREWED (from the 2nd) auto-opens the next cover (the
+row-choice is gone); the Coppersmith (reworked: +1 Floor slot, seats no tile) and the High Board honor open one
+too. Seat an upgrade early → brew one-at-a-time until the next new beer. **THE DIALS (playtest findings):**
+Bruges Hanzehuis die 4→3 (the 1G-Gruit-through-die-4 pump paid 5★/grain — the Q1 port's charter now pays less);
+Connoisseur's Cellar die 5→4; the Hall rows 3/5/7/9 → **3/5/6/8** (the shelf honors carry real value — free
+Building/Specialist/unlock — so the high rows pay less raw ★); SAILED_CAP 2p 6→**7** (one seat raced the
+6-clock out in 8 rounds, ending the game before the engine player's first Mumme paid). *Lesson kept: the port
+gate is itself the quality read — Bruges needed a smaller die, not a minq gate.*
 
 **v3.0-A.1 "Pickup Pays the Fee"** *(2026-07-11, `play.html` KEY `hanse-v3a-v2`)* — Designer-ruled tightening of
 commissioning: placing a hull **onto a cask slot** is legal only when that cask **qualifies for the hull's printed

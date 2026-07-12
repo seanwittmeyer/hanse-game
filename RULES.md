@@ -1,10 +1,11 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v3.0-A “Path A”)
+# Brewhouses of the Hanse — Turn & Round Rules (v3.1 “One Row”)
 
-> **Status: live (2026-07-11).** This is the canonical rulebook for the **v3.0-A “Path A”
-> keystone rebuild** — the follow-through of the 2026-07-11 playtest + fresh-eyes exploration,
-> designer-ruled in `V3-PATH-A.md`. Numbers are placeholders ⚙. **The live, playable build is
-> `play.html` (KEY `hanse-v3a-v1`).** The prior live build (v2.9.1 “Graded at the Gauge”, KEY
-> v94) is archived, playable, at **`archive/v2.9/`**; the v0.16.1 build at `archive/play.html`.
+> **Status: live (2026-07-12).** The **v3.0-A “Path A” keystone** (designer-ruled in
+> `V3-PATH-A.md`) plus **v3.1 “One Row”** — the first human-playtest follow-through: the player
+> board’s three rows collapse into ONE Floor line (§8), and four dials move (Bruges Hanzehuis
+> die 3 · Connoisseur die 4 · Hall rows 3/5/6/8 · the 2p clock 7). Numbers are placeholders ⚙.
+> **The live, playable build is `play.html` (KEY `hanse-v31`).** The prior live build (v2.9.1,
+> KEY v94) is archived, playable, at **`archive/v2.9/`**; the v0.16.1 build at `archive/play.html`.
 >
 > **The eight moves of Path A:**
 > 1. **Stations compress to ≤2 printed actions** — each station is a this-or-that face.
@@ -13,12 +14,13 @@
 >    anyone’s Q1 (it has **soured** — boxed). Tap-the-menu is retired.
 > 4. **One-read dice** — a Privilege prints **ONE die number**; the die is set to it at
 >    departure. The premium/cap/sail-bump arithmetic is deleted.
-> 5. **The Hall is a shelf board** — quality-gated shelves, row ★ 3/5/7/9, one printed bonus per
->    space, claimed with your cube.
+> 5. **The Hall is a shelf board** — quality-gated shelves, row ★ **3/5/6/8** (v3.1 ⚙), one
+>    printed bonus per space, claimed with your cube.
 > 6. **The Floor is stay-home** — a whole turn on your player board (Age pool + every vessel
 >    cask’s action + flip Wilds); flipped tiles score **nothing**.
 > 7. **The Flight is (also) an unlock track** — each distinct beer you **brew** (from the 2nd)
->    unlocks a Floor slot; distinct beers **delivered** still score the ladder.
+>    opens the next covered **Floor slot** (v3.1: one row — no row choice); distinct beers
+>    **delivered** still score the ladder.
 > 8. **Cask actions are specific gains** — nine concrete verbs; “what do I get” is printed.
 >
 > **The pitch:** a merchant brewing house at the Wharf, where work runs **Source → Brew → Age →
@@ -56,9 +58,10 @@ randomizers / no-cards-as-hand / no-money constraints; the sim-gate discipline.
 Each house starts with (⚙):
 - **3 `G` (grain), 2 `H` (hops)** — equal for every seat. Storage cap 8 ⚙.
 - The **Gruit** and **Hopped** recipes (the symmetric on-ramp). More recipes at the Market.
-- A **player board** (§8) with printed slot rows under **unlock covers**: **2 open vessel slots**
-  (of 4 printed), **2 open Specialist slots** (of 4 printed), a **flip shelf of 2**, and the
-  **Flight/unlock strip** (one space per beer type this game).
+- A **player board** (§8) with **ONE Floor row of 7 printed slots** (v3.1 “One Row”): **slots
+  1–2 open** (unlock covers on 3–7), **slot 1 printed VESSEL-ONLY**, plus the **Flight/unlock
+  strip** (one space per beer type this game). A slot holds ONE of: a maturing cask (a vessel) ·
+  a seated Specialist · a flipped tile.
 - **2 charter contracts** (the kontor-Dispatch certificates; buy more at the Market — §6).
 - A **warm start** so the Wharf is live turn 1: a guaranteed **Hulk → Bruges** + one more ship
   dealt onto slots (spread across lines); **two NEUTRAL green Buildings** dealt from the deck
@@ -140,7 +143,8 @@ from the face-up pile top; Gruit fixed to **Gain 2 goods** — §8). Three state
 > tiles per type** (staples deeper: 16 Gruit / 20 Hopped). Counts in `COMPONENTS.md`.
 
 > **The squeeze (state it to players):**
-> - **You can’t brew everything** — 2 vessels (unlocks to 4), the recipe ladder, and time.
+> - **You can’t brew everything** — 2 open Floor slots that vessels, Specialists and flips all
+>   compete for (the Flight opens more), the recipe ladder, and time.
 > - **You can’t deliver everywhere** — scarce ships and slots, the gates, one clock.
 > - **You can’t hold everything** — a Ready cask in a vessel powers your Floor but clogs the
 >   vessel; deploying frees it and makes it public.
@@ -186,9 +190,9 @@ wharf-wide valve behind slot locality.
 ### D · Cellar — **AGE or UPGRADE**
 **Age:** gain **3 age points** ⚙ and allocate them across your maturing vessels (each cask also
 ages **+1** automatically at the start of your turn). **Or Upgrade:** buy **one Specialist**
-from the face-up display (pay its goods cost) into an open Specialist slot on your player board
-(§8 — the row is unlockable; full → no buy). *(With the Specialty Beers toggle, **Blend** is a
-third or-branch — §12.)* One choice per visit. **Tap is retired** (§3).
+from the face-up display (pay its goods cost) — it **seats in an open Floor slot**, consuming it
+(§8 — no seatable slot → no buy; slot 1 is vessel-only). *(With the Specialty Beers toggle,
+**Blend** is a third or-branch — §12.)* One choice per visit. **Tap is retired** (§3).
 
 ### C · Harbor — **LOAD or DISPATCH**
 **Load:** one deployed cask (yours or a rival’s) onto a ship it qualifies for — you choose the
@@ -234,9 +238,9 @@ building** cask action. The display refills from the deck.
 
 **OVERBUILD — the ground rent.** Placing onto a slot that already has a tile costs the builder
 **`1 G` ⚙** (self, rival, or neutral alike; can’t pay → occupied slots aren’t legal targets).
-The displaced tile **FLIPS face-down onto its owner’s flip shelf** (max **2** ⚙ — full → the
-tile is **returned to the box**): a flipped tile is a **Wild stop on their Floor** and **scores
-NOTHING at game end** (v3.0-A [ruled] — a flip is engine, never score). Neutral tiles are
+The displaced tile **FLIPS face-down into an open Floor slot of its owner’s** (v3.1: it seats in
+the one row — no open seatable slot → the tile is **returned to the box**): a flipped tile is a
+**Wild stop on their Floor** and **scores NOTHING at game end** (v3.0-A [ruled] — a flip is engine, never score). Neutral tiles are
 discarded. The 8 slots never lock; the churn has a price.
 
 ### 5b. Privileges — the ONE-READ die (v3.0-A)
@@ -252,8 +256,9 @@ through and banks nothing.
 |---|---|---|
 | Staple Hall | **3** (any kontor) | 2 |
 | Burgomaster’s Favor | **= the cask’s quality** (count the pips, max 5) | 2 |
-| Connoisseur’s Cellar | **5**, Q4+ casks only | 1 |
-| Bruges Hanzehuis / London Steelyard / Bergen Bryggen / Novgorod Peterhof | **4**, to the printed kontor only | 1 each |
+| Connoisseur’s Cellar | **4**, Q4+ casks only (v3.1 ⚙ 5→4) | 1 |
+| London Steelyard / Bergen Bryggen / Novgorod Peterhof | **4**, to the printed kontor only | 1 each |
+| Bruges Hanzehuis | **3**, Bruges only (v3.1 ⚙ 4→3 — Bruges is the Q1 port; its charter pays less, or the 1G Gruit becomes the best cask in the game) | 1 |
 | The Hanse Diet | **2** + place 1 presence at the destination | 1 |
 | Almoner’s Stall | **3** if you have no presence at the destination yet | 1 |
 | Reliquary | **2**, on a Hall dispatch from here | 1 |
@@ -319,7 +324,7 @@ When a line fires, the active player **may** use each of its stops once — the 
 | **London** (Steelyard) | Q2 | +1 ★ | a **Privilege/Building** (placed at once) **OR** a **Specialist**, free | 5 / 3 / 1 |
 | **Bergen** (Bryggen) | Q2 | +1 ★ | **free Reach** (+1 presence at a kontor you’ve delivered to) | 9 / 5 / 2 (anchor) |
 | **Novgorod** (Peterhof) | Q3 | scales: Q3→2 · Q4→4 · Q5→6 · floor 1 | **refine** (a maturing cask +1 age) | 8 / 5 / 2 |
-| **The Hall** | Q2 | **shelf row ★ 3/5/7/9** + the space’s honor | — (§7b) | — |
+| **The Hall** | Q2 | **shelf row ★ 3/5/6/8** (v3.1 ⚙) + the space’s honor | — (§7b) | — |
 
 **Delivery = the destination’s printed value + the demand die in the berth.** The die was set
 once, at departure, to the Privilege’s one printed number (§5b) — nothing else ever touches it.
@@ -341,8 +346,8 @@ printed row):
 
 | Shelf | Gate | Row ★ ⚙ | Space honors (one icon each) ⚙ |
 |---|---|---|---|
-| **The High Board** | Q5 | **9** | unlock 1 Floor slot · +3★ · gain 1 Building (free, placed) |
-| **The Masters’ Shelf** | Q4 | **7** | gain 1 Specialist (free) · place 2 presence · age ALL vessels +1 |
+| **The High Board** | Q5 | **8** (v3.1 ⚙ 9→8) | unlock 1 Floor slot · +3★ · gain 1 Building (free, placed) |
+| **The Masters’ Shelf** | Q4 | **6** (v3.1 ⚙ 7→6) | gain 1 Specialist (free) · place 2 presence · age ALL vessels +1 |
 | **The Long Shelf** | Q3 | **5** | place 1 presence · gain 1 recipe (free) · +3 goods · age a cask +2 |
 | **The Common Shelf** | Q2 | **3** | +2 goods · +1 contract · age a cask +2 · +1G +1H · +2 goods |
 
@@ -358,37 +363,43 @@ are scarce. *(Guardrail ⚙: the Common Shelf stays goods/tempo only — never e
 
 ---
 
-## 8. The player board (private engine) — the Floor · vessels · Specialists · the Flight strip
+## 8. The player board (private engine) — ONE Floor row · the Flight strip (v3.1 “One Row”)
 
-Your player board carries the **slot rows** (printed, under unlock covers), the **flip shelf**,
-and the **Flight/unlock strip**:
+Your player board is **a single Floor line of 7 printed slots ⚙** plus the **Flight/unlock
+strip**. Every private thing you own competes for the same row:
 
-- **VESSEL row** — start **2 open of 4 printed** ⚙. A vessel holds one maturing/Ready cask.
-- **SPECIALIST row** — start **2 open of 4 printed** ⚙. Bought at the Cellar (Upgrade), hired
-  via the **Gain 1 specialist** cask action, or London’s benefit.
-- **FLIP SHELF** — **2 spaces**, never grows. Displaced slot tiles land here face-down (§5a);
-  each is a Wild stop on your Floor; **they score nothing**.
+- **A slot holds ONE of:** a **maturing/Ready cask** (the slot is a vessel) · a **seated
+  Specialist tile** · a **flipped tile** (face-down, a Floor Wild). Tiles are permanent once
+  seated; a cask frees its slot when it deploys.
+- **Slots 1–2 open at start ⚙; covers on 3–7.** **SLOT 1 IS PRINTED VESSEL-ONLY** — Specialists
+  and flips may never take your **last** brewing slot (you cannot build yourself out of beer):
+  a tile may only seat while at least one other vessel-capable slot remains.
+- **Opening covers:** each **new distinct beer you BREW** (from the 2nd on — the Flight strip is
+  the record) opens the next cover **automatically**; the **Coppersmith** Specialist and the
+  **High Board’s** *unlock* honor each open one too. *(The Flight is the forcing mechanism:
+  seat an upgrade early and you brew one-at-a-time until your next new beer opens the room.)*
 - **THE FLIGHT/UNLOCK STRIP** — one space per beer type this game (5 base; 6 with Jopenbier).
-  Mark a beer when you **first BREW it**; from your **2nd distinct beer on, each new mark grants
-  ONE UNLOCK: remove a cover from the vessel row or the Specialist row, your choice.** Distinct
-  beers **DELIVERED** still score the Flight ladder (§11) — one strip, two mark states.
+  Mark a beer when you **first BREW it** (unlock currency); distinct beers **DELIVERED** still
+  score the Flight ladder (§11) — one strip, two mark states.
 
-**THE FLOOR — stay home to work it (v3.0-A).** Choosing the Floor instead of moving (§2) is a
-whole turn on your board, any order, all optional:
+**THE FLOOR — stay home to work it.** Choosing the Floor instead of moving (§2) is a whole turn
+on your board, any order, all optional:
 1. **AGE 3 points ⚙** across your vessels (the Floor adopts the Cellar’s signature; the
    **Lagerkeeper** Specialist adds +2 to this pool);
 2. **every vessel cask’s printed action** (the cask stays — holding casks powers the house);
-3. **one Wild per flipped tile** (max 2).
+3. **one Wild per flipped tile** in the row.
 
-*The positional price is the tension: a Floor turn is a turn not spent on the wharf.*
+*The positional price is the tension: a Floor turn is a turn not spent on the wharf — and every
+seated tile is a vessel you don’t have.*
 
 **The SPECIALISTS (7 designs · scarce deck of n−1 copies each · display of 4 at the Cellar):**
-**Coppersmith** (+1 vessel slot **directly**, `3 G` — the paid shortcut past the unlock track),
-**Cellarman** (maturation −1 step, `4 G`), **Grain Factor** (+1 extra grain, `3 G`),
-**Hop Gardener** (+1 extra hops, `4 G`), **Stevedore** (your Harbor Load sets out 2 casks,
-`3 G`), **Lagerkeeper** (**+2 to your Floor’s Age pool**, `2 G` — v3.0-A rework), and
+**Coppersmith** (**+1 Floor slot** — opens the next cover, seats no tile, `3 G` — the paid
+shortcut past the unlock track), **Cellarman** (maturation −1 step, `4 G`), **Grain Factor**
+(+1 extra grain, `3 G`), **Hop Gardener** (+1 extra hops, `4 G`), **Stevedore** (your Harbor
+Load sets out 2 casks, `3 G`), **Lagerkeeper** (**+2 to your Floor’s Age pool**, `2 G`), and
 **Quaymaster** (Load/Dispatch straight from your vessels, `3 G` — the deploy-first exception).
-A player never owns two of a type.
+A player never owns two of a type. **Each seated Specialist occupies a Floor slot** (the
+Coppersmith excepted — it is pure capacity).
 
 **The CASK ACTIONS — nine specific gains** (steerable piles unchanged: the top of each quality
 pile is face-up; Gruit pinned):
@@ -421,7 +432,8 @@ prestige.
 
 The shared **Sailed-Ships track** advances by one on every **dispatch** — a ship sailing full, a
 kontor Dispatch (charter), or a Hall Dispatch (enshrine). When it fills → **finish the round →
-score.** Length **6 / 10 / 13** for 2/3/4p ⚙ (+2 with The Trade Roads); a **MAX_ROUND ceiling**
+score.** Length **7 / 10 / 13** for 2/3/4p ⚙ (v3.1: 2p 6→7 — the first human playtest raced the
+6-clock out in 8 rounds; +2 with The Trade Roads); a **MAX_ROUND ceiling**
 (~25 ⚙) backstops a slow table. Pace target **~12–25 rounds.**
 
 ---
@@ -429,7 +441,7 @@ score.** Length **6 / 10 / 13** for 2/3/4p ⚙ (+2 with The Trade Roads); a **MA
 ## 11. Scoring — the clear spine
 
 **In-game (banked as you play):**
-1. **The Hall — shelf rows.** Each enshrined cask banks its shelf’s **row ★ (3/5/7/9)** + took
+1. **The Hall — shelf rows.** Each enshrined cask banks its shelf’s **row ★ (3/5/6/8 ⚙)** + took
    its space’s honor when placed (§7b). *The prestige lane — visible, claimable, always open.*
 2. **Kontore — value + die.** Each delivered cask scores **its destination’s printed value +
    the one demand die** (§7) — never less than 1★. *The volume/demand lane — author privileges,

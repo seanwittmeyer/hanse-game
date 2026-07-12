@@ -1,5 +1,11 @@
 # Automa / AI Opponent — Plan & Status
 
+> **v3.1 addendum (2026-07-12):** the Trader gained a fourth persona — **racer**, the charter-pump
+> clock-racer modeled on the first human playtest's winning line (author a kontor-charter Privilege
+> early · pump cheap fast casks through it · dispatch to close the clock once ahead). Built as the
+> standing pressure-test opponent; seat it as `trader`/`racer` (`playtests/v31-matrix.js` uses it).
+
+
 > The plan for an AI opponent you can play against in `play.html`, with **variable difficulty** and **any mix of humans and AIs at 2–4p** (current build **v3.0-A.1 “Path A”**) — plus a derived **physical automa deck** for tabletop solo play. Compares the candidate systems (heuristic policy, flat Monte Carlo, MCTS, depth-limited search, learning) and lays out a staged path. Queued in `DESIGN.md` §21 (v0.9 "Still open / next": *"a solo Automa from the existing bot"*).
 >
 > **STATUS — ALL THREE PHASES SHIPPED (Phase 3: 2026-06-12, `play.html` `KEY → v24`).**

@@ -462,3 +462,24 @@ First sim reads (see `playtests/sim-results-vhanse-v3a-v1.txt` / `sim-pathways-�
 `ai-ladder-…`): 0 crashes/deadlocks at 2–4p over 500 games + all AI gates green; pace in band;
 **watch-items** — the prestige lane runs hot with the shelf honors (the §7b pole-test dial), and
 the greedy-bot corpus ends ceiling-heavy at 3–4p (the §9 clock dial).
+
+
+---
+
+## Post-keystone: v3.1 “One Row” (2026-07-12 — the first human playtest’s rulings)
+
+The first human-vs-Cellarmaster game (76–28 in 8 rounds) ruled one structure + four dials, built as
+**v3.1 “One Row”** (KEY `hanse-v31`):
+
+1. **The player board is ONE ROW** — the vessel row, Specialist row and flip shelf collapse into a
+   single Floor line of **7 printed slots** (1–2 open · covers on 3–7 · **slot 1 vessel-only**). A
+   slot holds ONE of: a maturing cask · a seated Specialist · a face-down flip. **The Flight forces
+   the tempo:** each new distinct beer brewed (from the 2nd) auto-opens the next cover; the
+   Coppersmith (reworked: +1 Floor slot, seats no tile) and the High Board honor open one too.
+   Take an upgrade early → brew one-at-a-time until your next new beer.
+2. **Bruges Hanzehuis die 4 → 3** — the playtest’s 1G-Gruit/5★ pump; the Q1 port’s charter pays less.
+3. **Connoisseur’s Cellar die 5 → 4.**
+4. **The Hall rows 3/5/7/9 → 3/5/6/8** — the shelf honors carry real value; the high rows pay less raw ★.
+5. **SAILED_CAP 2p 6 → 7** — one seat raced the 6-clock out in 8 rounds.
+
+Gates re-run green (verify-v3 61 checks · sim 500/count crash-free, pace in band · ladder · render-smoke).

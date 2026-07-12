@@ -1,0 +1,392 @@
+############ GAME 3p-racer-smoke-3 · seed 9903 · 3p · KEY hanse-v31 ############
+seats: Racer [trader/racer] · TraderM [trader/majority] · TraderV [trader/volume]
+exports dealt: Q3 Keut · Q3 Broyhan · Q4 Mumme · sailed-ships cap 10 · warm start:
+  s1 (colL): [bldg Brewmaster’s Workshop neutral] 
+  s7 (rowB): ship Hulk->Bruges
+  s6 (colL): [bldg Rich Berth neutral] 
+  s5 (colR): ship Cog->Bruges
+
+== R1 · turn 1 · Racer [trader/racer] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Racer places their worker at Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −G1
+  Racer buys the Keut recipe (Q3).
+  ↳ Racer spends −G2 −H1
+  Racer brews Keut (Q3 · matures in 2 steps).
+  ↳ Racer’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  Racer sets a Ready Gruit on a slot.
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R1 · turn 2 · TraderM [trader/majority] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  TraderM places their worker at Brewhouse
+  TraderM activates Top row · Market + Brewhouse
+  ↳ TraderM spends −G1
+  TraderM buys the Keut recipe (Q3).
+  ↳ TraderM gains +G2
+  ↳ TraderM spends −G2 −H1
+  TraderM brews Keut (Q3 · matures in 2 steps).
+  ↳ TraderM’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  TraderM sets a Ready Gruit on a slot.
+
+== R1 · turn 3 · TraderV [trader/volume] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  TraderV places their worker at Brewhouse
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV spends −G1
+  TraderV buys the Keut recipe (Q3).
+  ↳ TraderV gains +G2
+  ↳ TraderV gains +G2
+  ↳ TraderV spends −G2 −H1
+  TraderV brews Keut (Q3 · matures in 2 steps).
+  ↳ TraderV’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  Racer’s casks mature (+1) over the turn.
+
+== R2 · turn 4 · Racer [trader/racer] · G0 H1 ct2 | vessels[-,Keut 1/2,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Racer moves to Harbor
+  Racer activates Bottom row · Harbor + Cellar
+  ↳ Keut ages +1 → 2/2 READY.
+  Racer sets a Ready Keut on a slot.
+  Racer loads Gruit onto the Hulk → Bruges (1/3).
+  Racer loads Keut onto the Hulk → Bruges (2/3).
+  TraderM’s casks mature (+1) over the turn.
+
+== R2 · turn 5 · TraderM [trader/majority] · G2 H1 ct2 | vessels[-,Keut 1/2,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  TraderM moves to Cellar
+  TraderM activates Bottom row · Harbor + Cellar
+  ↳ Keut ages +1 → 2/2 READY.
+  TraderM sets a Ready Keut on a slot.
+  TraderM loads Gruit onto the Hulk → Bruges (3/3).
+  ★ the Hulk sails to Bruges with 3 casks! Every cask aboard is delivered. (Sailed-Ships 1/10)
+  ↳ Racer gains +G2
+  ↳ Racer takes the Bruges liquidity benefit (2 goods).
+  ↳ Racer gains +G2
+  ↳ Racer takes the Bruges liquidity benefit (2 goods).
+  ↳ TraderM gains +G2
+  ↳ TraderM takes the Bruges liquidity benefit (2 goods).
+  ↳ s7 — nothing to do here (no Ready cask to deploy onto the open slot).
+  TraderV’s casks mature (+1) over the turn.
+
+== R2 · turn 6 · TraderV [trader/volume] · G4 H1 ct2 | vessels[Gruit!,Keut 1/2,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  TraderV moves to Market
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV spends −G2
+  TraderV commissions the Cog bound for Novgorod — place it on a slot.
+  ↳ Cog placed on a slot, bound for Novgorod.
+  ↳ TraderV gains +G1
+  ↳ TraderV takes the loader bonus for shipping TraderM’s cask (and chose the destination).
+  TraderV loads Keut onto the new Cog (free, on commission) — 1/2.
+  ↳ TraderV spends −G2 −H1
+  TraderV brews Keut (Q3 · matures in 2 steps).
+  TraderV sets a Ready Gruit on a slot.
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R3 · turn 7 · Racer [trader/racer] · G4 H1 ct2 | vessels[-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Racer moves to Market
+  Racer pays −G1 occupancy toll for sharing Market.
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −H1
+  Racer buys the Broyhan recipe (Q3).
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G2 −H1
+  Racer brews Keut (Q3 · matures in 2 steps).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R3 · turn 8 · TraderM [trader/majority] · G4 H1 ct2 | vessels[-,-,-] deployed:0 | score 3 (dlv 1 maj 2 flt 0)
+  TraderM moves to Brewhouse
+  TraderM activates Top row · Market + Brewhouse
+  ↳ TraderM spends −H1
+  TraderM buys the Broyhan recipe (Q3).
+  ↳ TraderM gains +G1 +H1
+  ↳ TraderM spends −G2 −H1
+  TraderM brews Keut (Q3 · matures in 2 steps).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+  TraderV’s casks mature (+1) over the turn.
+
+== R3 · turn 9 · TraderV [trader/volume] · G1 H0 ct2 | vessels[-,Keut!,Keut 1/2] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  TraderV moves to Harbor
+  TraderV activates Bottom row · Harbor + Cellar
+  ↳ Keut ages +1 → 2/2 READY.
+  TraderV sets a Ready Keut on a slot.
+  TraderV sets a Ready Keut on a slot.
+  TraderV loads Keut onto the Cog → Novgorod (2/2).
+  ★ the Cog sails to Novgorod with 2 casks! Every cask aboard is delivered. (Sailed-Ships 2/10)
+  ↳ TraderM refines a cask on the long haul (Novgorod): Keut ages +1 → 1/2.
+  ↳ TraderV — nothing maturing to refine (Novgorod).
+  Racer’s casks mature (+1) over the turn.
+
+== R4 · turn 10 · Racer [trader/racer] · G2 H0 ct2 | vessels[Keut 1/2,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Racer moves to Brewhouse
+  Racer pays −G1 occupancy toll for sharing Brewhouse.
+  Racer activates Right col · Brewhouse + Cellar
+  ↳ Racer spends −G1
+  Racer brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Keut ages +1 → 2/2 READY.
+  ↳ Gruit ages +1 → 1/1 READY.
+  Racer sets a Ready Keut on a slot.
+  Racer loads Keut onto the Cog → Bruges (1/2).
+  TraderM’s casks mature (+1) over the turn.
+
+== R4 · turn 11 · TraderM [trader/majority] · G3 H0 ct2 | vessels[Keut!,-,-] deployed:0 | score 11 (dlv 3 maj 8 flt 0)
+  TraderM moves to Market
+  TraderM activates Top row · Market + Brewhouse
+  ↳ TraderM gains +G1 +H1
+  TraderM sources goods at the Market.
+  ↳ TraderM gains +G1 +H1
+  ↳ TraderM spends −G2 −H1
+  TraderM brews Keut (Q3 · matures in 2 steps).
+  TraderM sets a Ready Keut on a slot.
+
+== R4 · turn 12 · TraderV [trader/volume] · G1 H0 ct2 | vessels[-,-,-] deployed:2 | score 8 (dlv 2 maj 6 flt 0)
+  TraderV moves to Cellar
+  TraderV activates Bottom row · Harbor + Cellar
+  TraderV hires the Cellarman (free, the cask action).
+  ↳ s7 — nothing to do here (no Ready cask to deploy onto the open slot).
+  TraderV loads Gruit onto the Cog → Bruges (2/2).
+  ★ the Cog sails to Bruges with 2 casks! Every cask aboard is delivered. (Sailed-Ships 3/10)
+  ↳ Racer gains +G1 +H1
+  ↳ Racer takes the Bruges liquidity benefit (2 goods).
+  ↳ TraderV gains +G1 +H1
+  ↳ TraderV takes the Bruges liquidity benefit (2 goods).
+
+== R5 · turn 13 · Racer [trader/racer] · G1 H1 ct2 | vessels[-,Gruit!,-] deployed:0 | score 7 (dlv 3 maj 4 flt 0)
+  Racer moves to Market
+  Racer pays −G1 occupancy toll for sharing Market.
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer spends −G1 −H2
+  Racer brews Broyhan (Q3 · matures in 1 step).
+  ↳ Racer’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  Racer hires the Hop Gardener (free, the cask action).
+  Racer sets a Ready Gruit on a slot.
+  TraderM’s casks mature (+1) over the turn.
+
+== R5 · turn 14 · TraderM [trader/majority] · G3 H1 ct2 | vessels[-,Keut 1/2,-] deployed:1 | score 10 (dlv 3 maj 7 flt 0)
+  TraderM moves to Brewhouse
+  TraderM activates Right col · Brewhouse + Cellar
+  ↳ TraderM spends −G2 −H1
+  TraderM brews Keut (Q3 · matures in 2 steps).
+  ↳ Keut ages +1 → 2/2 READY.
+  ↳ Keut ages +1 → 1/2.
+  ↳ Keut ages +1 → 2/2 READY.
+  TraderM sets a Ready Keut on a slot.
+  TraderM sets a Ready Keut on a slot.
+
+== R5 · turn 15 · TraderV [trader/volume] · G2 H1 ct2 | vessels[-,-] deployed:1 | score 10 (dlv 3 maj 7 flt 0)
+  TraderV moves to Harbor
+  TraderV activates Left col · Market + Harbor
+  ↳ TraderV spends −G2
+  TraderV commissions the Hulk bound for Bergen — place it on a slot.
+  ↳ the Hulk docks ON Keut — dockside pickup: the cask boards as the commission’s free load (1/3).
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  Racer’s casks mature (+1) over the turn.
+
+== R6 · turn 16 · Racer [trader/racer] · G0 H0 ct2 | vessels[Broyhan!,-,-] deployed:1 | score 7 (dlv 3 maj 4 flt 0)
+  Racer moves to Harbor
+  Racer activates Left col · Market + Harbor
+  ↳ Racer gains +G1 +H2
+  Racer sources goods at the Market.
+  Racer sets a Ready Broyhan on a slot (under Brewmaster’s Workshop).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  Racer loads Broyhan onto the Hulk → Bergen (2/3).
+
+== R6 · turn 17 · TraderM [trader/majority] · G1 H0 ct2 | vessels[-,-,-] deployed:3 | score 10 (dlv 3 maj 7 flt 0)
+  TraderM moves to Market
+  TraderM activates Left col · Market + Harbor
+  ↳ TraderM gains +G1 +H1
+  TraderM sources goods at the Market.
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  TraderM loads Keut onto the Hulk → Bergen (3/3).
+  ★ the Hulk sails to Bergen with 3 casks! Every cask aboard is delivered. (Sailed-Ships 4/10)
+  ↳ TraderV takes a free Reach (+1 presence at Bergen).
+  ↳ Racer takes a free Reach (+1 presence at Bruges).
+  ↳ TraderM takes a free Reach (+1 presence at Novgorod).
+
+== R6 · turn 18 · TraderV [trader/volume] · G0 H1 ct2 | vessels[-,-] deployed:0 | score 19 (dlv 4 maj 15 flt 0)
+  TraderV moves to Cellar
+  TraderV activates Right col · Brewhouse + Cellar
+  ↳ TraderV gains +G2
+  ↳ TraderV spends −G2 −H1
+  TraderV brews Keut (Q3 · matures in 1 step).
+  ↳ Keut ages +1 → 1/1 READY.
+  TraderV sets a Ready Keut on a slot.
+
+== R7 · turn 19 · Racer [trader/racer] · G1 H2 ct2 | vessels[-,-,-] deployed:1 | score 14 (dlv 4 maj 6 flt 4)
+  Racer moves to Market
+  Racer pays −G1 occupancy toll for sharing Market.
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −H2
+  Racer buys the Mumme recipe (Q4).
+  ↳ Racer gains +G1 +H2
+  ↳ Racer spends −G1 −H2
+  Racer brews Broyhan (Q3 · matures in 1 step).
+  Racer hires the Coppersmith (free, the cask action).
+
+== R7 · turn 20 · TraderM [trader/majority] · G2 H1 ct2 | vessels[-,-,-] deployed:2 | score 18 (dlv 4 maj 14 flt 0)
+  TraderM moves to Brewhouse
+  TraderM activates Top row · Market + Brewhouse
+  ↳ TraderM spends −G2
+  TraderM commissions the Hulk bound for London — place it on a slot.
+  ↳ the Hulk docks ON Keut — dockside pickup: the cask boards as the commission’s free load (1/3).
+  ↳ TraderM gains +G1 +H1
+  ↳ TraderM spends −G1 −H2
+  TraderM brews Broyhan (Q3 · matures in 1 step).
+  ↳ TraderM’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  TraderM loads Keut onto the Hulk → London (2/3).
+
+== R7 · turn 21 · TraderV [trader/volume] · G0 H0 ct2 | vessels[-,-] deployed:1 | score 19 (dlv 4 maj 15 flt 0)
+  TraderV moves to Harbor
+  TraderV activates Left col · Market + Harbor
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  TraderV enshrines Keut Q3 on the Long Shelf (5★ · gain 1 recipe (free)). (Sailed-Ships 5/10)
+  ↳ TraderV gains the Mumme recipe (the Hall’s honor, free).
+  Racer’s casks mature (+1) over the turn.
+
+== R8 · turn 22 · Racer [trader/racer] · G0 H0 ct2 | vessels[Broyhan!,-,-,-] deployed:1 | score 14 (dlv 4 maj 6 flt 4)
+  Racer moves to Harbor
+  Racer activates Left col · Market + Harbor
+  ↳ Racer gains +G1 +H2
+  Racer sources goods at the Market.
+  Racer sets a Ready Broyhan on a slot (under Brewmaster’s Workshop).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  Racer enshrines Broyhan Q3 on the Long Shelf (5★ · place 1 presence). (Sailed-Ships 6/10)
+  ↳ +1 presence at Bergen (the Hall’s honor).
+  TraderM’s casks mature (+1) over the turn.
+
+== R8 · turn 23 · TraderM [trader/majority] · G0 H0 ct2 | vessels[Broyhan!,-,-,-] deployed:0 | score 16 (dlv 4 maj 12 flt 0)
+  TraderM moves to Market
+  TraderM activates Left col · Market + Harbor
+  ↳ TraderM gains +G1 +H1
+  TraderM sources goods at the Market.
+  TraderM sets a Ready Broyhan on a slot (under Brewmaster’s Workshop).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  TraderM enshrines Broyhan Q3 on the Long Shelf (5★ · +3 goods). (Sailed-Ships 7/10)
+  ↳ TraderM gains +G2 +H1
+
+== R8 · turn 24 · TraderV [trader/volume] · G1 H1 ct2 | vessels[-,-] deployed:0 | score 24 (dlv 9 maj 15 flt 0)
+  TraderV moves to Market
+  TraderV pays −G1 occupancy toll for sharing Market.
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV spends −H1
+  TraderV buys the Broyhan recipe (Q3).
+  ↳ TraderV gains +G1 +H1
+  ↳ TraderV spends −G1 −H1
+  TraderV brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ TraderV’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  ↳ Hulk (→ London) — nothing eligible to load.
+
+== R9 · turn 25 · Racer [trader/racer] · G1 H2 ct2 | vessels[-,-,-,-] deployed:1 | score 20 (dlv 9 maj 7 flt 4)
+  Racer moves to Cellar
+  Racer activates Right col · Brewhouse + Cellar
+  ↳ Racer spends −G1 −H2
+  Racer brews Broyhan (Q3 · matures in 1 step).
+  ↳ Broyhan ages +1 → 1/1 READY.
+  Racer sets a Ready Broyhan on a slot.
+  ↳ s5 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R9 · turn 26 · TraderM [trader/majority] · G3 H2 ct2 | vessels[-,-,-,-] deployed:0 | score 25 (dlv 9 maj 12 flt 4)
+  TraderM moves to Brewhouse
+  TraderM activates Top row · Market + Brewhouse
+  ↳ TraderM spends −H2
+  TraderM buys the Mumme recipe (Q4).
+  ↳ TraderM gains +G1 +H1
+  ↳ TraderM spends −G2 −H1
+  TraderM brews Keut (Q3 · matures in 2 steps).
+  TraderV’s casks mature (+1) over the turn.
+
+== R9 · turn 27 · TraderV [trader/volume] · G0 H0 ct2 | vessels[Hopped!,-,-] deployed:0 | score 24 (dlv 9 maj 15 flt 0)
+  TraderV moves to Harbor
+  TraderV activates Left col · Market + Harbor
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  TraderV sets a Ready Hopped on a slot (under Brewmaster’s Workshop).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  TraderV enshrines Hopped Q2 on the Common Shelf (3★ · age a cask +2). (Sailed-Ships 8/10)
+
+== R10 · turn 28 · Racer [trader/racer] · G0 H0 ct2 | vessels[-,-,-,-] deployed:2 | score 20 (dlv 9 maj 7 flt 4)
+  Racer moves to Harbor
+  Racer activates Left col · Market + Harbor
+  ↳ Racer gains +G1 +H2
+  Racer sources goods at the Market.
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  Racer enshrines Broyhan Q3 on the Long Shelf (5★ · age a cask +2). (Sailed-Ships 9/10)
+  TraderM’s casks mature (+1) over the turn.
+
+== R10 · turn 29 · TraderM [trader/majority] · G2 H0 ct2 | vessels[Keut 1/2,-,-,-] deployed:0 | score 25 (dlv 9 maj 12 flt 4)
+  TraderM moves to Cellar
+  TraderM activates Right col · Brewhouse + Cellar
+  ↳ TraderM spends −G1
+  TraderM brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Keut ages +1 → 2/2 READY.
+  ↳ Gruit ages +1 → 1/1 READY.
+  TraderM sets a Ready Keut on a slot.
+  TraderM sets a Ready Gruit on a slot.
+
+== R10 · turn 30 · TraderV [trader/volume] · G1 H1 ct2 | vessels[-,-,-] deployed:0 | score 31 (dlv 12 maj 15 flt 4)
+  TraderV moves to Market
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  ↳ TraderV gains +G1 +H1
+  ↳ TraderV spends −G1 −H3
+  TraderV brews Mumme (Q4 · matures in 2 steps).
+  ↳ TraderV’s 4th distinct beer opens Floor slot 5 (the Flight track).
+
+== R11 · turn 31 · Racer [trader/racer] · G1 H2 ct2 | vessels[-,-,-,-] deployed:1 | score 25 (dlv 14 maj 7 flt 4)
+  Racer moves to Market
+  Racer pays −G1 occupancy toll for sharing Market.
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G2
+  Racer sources goods at the Market.
+  ↳ Racer gains +G1 +H2
+  ↳ Racer spends −G1 −H3
+  Racer brews Mumme (Q4 · matures in 3 steps).
+  ↳ Racer’s 4th distinct beer opens Floor slot 6 (the Flight track).
+
+== R11 · turn 32 · TraderM [trader/majority] · G1 H0 ct2 | vessels[-,-,-,-] deployed:2 | score 25 (dlv 9 maj 12 flt 4)
+  TraderM moves to Harbor
+  TraderM activates Left col · Market + Harbor
+  ↳ TraderM gains +G1 +H1
+  TraderM sources goods at the Market.
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  TraderM enshrines Keut Q3 on the Common Shelf (3★ · +1 charter contract). (Sailed-Ships 10/10)
+  ↳ +1 charter contract (the Hall’s honor).
+  ★ The Sailed-Ships track is full (10/10) — final round!
+  TraderV’s casks mature (+1) over the turn.
+
+== R11 · turn 33 · TraderV [trader/volume] · G2 H0 ct2 | vessels[Mumme 1/2,-,-,-] deployed:0 | score 31 (dlv 12 maj 15 flt 4)
+  TraderV moves to Brewhouse
+  TraderV activates Right col · Brewhouse + Cellar
+  ↳ TraderV gains +G1 +H1
+  ↳ TraderV spends −G2 −H1
+  TraderV brews Keut (Q3 · matures in 1 step).
+  ↳ Mumme ages +1 → 2/2 READY.
+  ↳ Keut ages +1 → 1/1 READY.
+  TraderV sets a Ready Mumme on a slot.
+
+================ FINAL — round 11 · sailed 10/10 · ended by CLOCK ================
+WINNER  TraderV [trader/volume] — TOTAL 31  (deliveries 12 · majorities 15 · flight 4 · floor 0)
+        Bruges: Gruit Q1=1
+        Bergen: Keut Q3=1
+        Novgorod: Keut Q3=2
+        The Hall: Keut Q3=5, Hopped Q2=3
+        flight beers: Keut, Gruit, Hopped (3) · specialists: Cellarman · flipped: 0
+   #2   TraderM [trader/majority] — TOTAL 28  (deliveries 12 · majorities 12 · flight 4 · floor 0)
+        Bruges: Gruit Q1=1
+        Bergen: Keut Q3=1
+        Novgorod: Keut Q3=2
+        The Hall: Broyhan Q3=5, Keut Q3=3
+        flight beers: Gruit, Keut, Broyhan (3) · specialists: none · flipped: 0
+   #3   Racer [trader/racer] — TOTAL 25  (deliveries 14 · majorities 7 · flight 4 · floor 0)
+        Bruges: Gruit Q1=1, Keut Q3=1, Keut Q3=1
+        Bergen: Broyhan Q3=1
+        The Hall: Broyhan Q3=5, Broyhan Q3=5
+        flight beers: Gruit, Keut, Broyhan (3) · specialists: Hop Gardener · flipped: 0
+  majorities: Bruges[Racer+4 TraderM+1 TraderV+1]  London[none]  Bergen[Racer+3 TraderM+3 TraderV+9]  Novgorod[TraderM+8 TraderV+5]
+  buildings on the wharf at end: Brewmaster’s Workshop(ntl) · Rich Berth(ntl)

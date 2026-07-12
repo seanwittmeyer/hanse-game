@@ -55,7 +55,7 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
   S.slots.s4={type:'cask',owner:0,style:'bock',q:5,act:'age'};
   var st0=scorePlayer(p).total,sailed0=S.sailed;
   hallCommit('s4',3,1,'end');   // High Board space 1 = star3 (+3 honor)
-  ok('High Board banks row 9★ + the +3★ honor', scorePlayer(p).total===st0+9+3, 'delta '+(scorePlayer(p).total-st0));
+  ok('High Board banks row 8★ + the +3★ honor (v3.1)', scorePlayer(p).total===st0+8+3, 'delta '+(scorePlayer(p).total-st0));
   ok('the space is cube-claimed', hallClaims(3).some(function(c){return c.pid===0&&c.space===1;}));
   ok('the enshrine ticked the clock', S.sailed===sailed0+1);
   ok('the cask left the slot', !S.slots.s4);
@@ -68,19 +68,31 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
   ok('overflow: full shelves still pay the best row ★ (3)', scorePlayer(p2).total===t0+3, 'delta '+(scorePlayer(p2).total-t0));
 })();
 
-// ---- 4. the Flight unlock track ----
+// ---- 4. the Flight unlock track (v3.1 ONE ROW: auto-opens the next cover) ----
 (function(){var p=fresh();S.active=0;
-  ok('start: 2 vessel slots of 4', p.maxVessels===VESSEL_START&&VESSEL_MAX===4);
+  ok('start: 2 open Floor slots of 7', p.floorCap===FLOOR_START&&FLOOR_SLOTS===7);
   markBrewed(p,'gruit');
-  ok('1st beer: no unlock', (p.unlocksPending||0)===0);
+  ok('1st beer: no unlock', p.floorCap===FLOOR_START);
   markBrewed(p,'hopped');
-  ok('2nd distinct beer grants an unlock', p.unlocksPending===1);
+  ok('2nd distinct beer opens Floor slot 3', p.floorCap===3&&p.vessels.length===3);
   markBrewed(p,'hopped');
-  ok('re-brewing the same beer grants nothing', p.unlocksPending===1);
-  applyUnlock(p,'cask');
-  ok('unlock opens vessel slot 3', p.maxVessels===3&&p.vessels.length===3);
-  markBrewed(p,'bock');p.unlocksPending&&applyUnlock(p,'spec');
-  ok('unlock opens Specialist slot 3', p.specCap===3);
+  ok('re-brewing the same beer opens nothing', p.floorCap===3);
+  markBrewed(p,'bock');
+  ok('3rd distinct beer opens Floor slot 4', p.floorCap===4);
+  grantUpgrade(p,'vessel');
+  ok('the Coppersmith opens a cover (no tile seated)', p.floorCap===5&&specCount(p)===0);
+})();
+
+// ---- 4b. ONE ROW seating: tiles consume slots; slot 1 stays vessel-only ----
+(function(){var p=fresh();S.active=0;   // floorCap 2 · vessels [gruit, null]
+  ok('a Specialist can seat in the open slot', canAddTile(p));
+  grantUpgrade(p,'granary');
+  ok('the seated tile consumed the empty slot', p.vessels.length===1&&specCount(p)===1);
+  ok('no second tile: slot 1 is vessel-only', !canAddTile(p)&&!specRoom(p)&&!flipRoom(p));
+  p.vessels[0]=null;   // the warm Gruit deploys — the slot is free again…
+  ok('…but still not seatable (it is the last brewing slot)', !canAddTile(p));
+  markBrewed(p,'hopped');   // 2nd distinct beer → slot 3 opens
+  ok('a new beer reopens seating room', canAddTile(p));
 })();
 
 // ---- 5. Dispatch — kontor route (contract + fare + clock + delivery) ----
@@ -117,11 +129,22 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
   ok('delivery = printed value (Q5→6) + die (5)', scorePlayer(p).deliv===t0+11, 'delta '+(scorePlayer(p).deliv-t0));
 })();
 
-// ---- 7. flips score 0 + the flip-shelf cap ----
+// ---- 6b. the v3.1 playtest tunes ----
+(function(){
+  ok('Bruges Hanzehuis prints die 3 (v3.1)', BUILDINGS.ch_bruges.die===3);
+  ok('Connoisseur’s Cellar prints die 4 (v3.1)', BUILDINGS.connoiss.die===4&&BUILDINGS.connoiss.minq===4);
+  ok('the Hall rows read 3/5/6/8 (v3.1)', HALL_PTS[2]===3&&HALL_PTS[3]===5&&HALL_PTS[4]===6&&HALL_PTS[5]===8
+    &&HALL_SHELVES[2].star===6&&HALL_SHELVES[3].star===8);
+  ok('the 2p Sailed-Ships clock is 7 (v3.1)', SAILED_CAP[2]===7&&SAILED_CAP[3]===10&&SAILED_CAP[4]===13);
+})();
+
+// ---- 7. flips score 0 + flips seat in the one row ----
 (function(){var p=fresh();S.active=0;
-  p.flipped=['staple','maltkiln'];
+  p.flipped=['staple','maltkiln'];p.vessels=[null];p.floorCap=4;   // 4 open: 2 flips seated + 1 free + 1 implied cask slot
   ok('flipped tiles score nothing', scorePlayer(p).developed===0&&DEVELOP_PTS===0);
-  ok('flip shelf caps at 2', FLIP_CAP===2&&!flipRoom(p));
+  ok('a 3rd tile may seat while a spare slot is free', canAddTile(p));
+  p.floorCap=3;   // 3 open: 2 flips + the last (vessel-only) slot
+  ok('no seat when only the last brewing slot is free', !flipRoom(p));
 })();
 
 // ---- 8. the Floor: stay-home line + null-Floor illegal ----

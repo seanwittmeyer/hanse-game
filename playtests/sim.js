@@ -117,7 +117,7 @@ function botFloorValue(p){
   if(mat)v+=Math.min(FLOOR_AGE+(hasUpgrade(p,'lagering')?2:0),mat*2)*0.7;
   p.vessels.forEach(function(c){if(!c)return;var a=caskAct(c);
     v+=({source:1.6,age:0.9,load:1.2,reach:0.6,recipe:1.0,convert:0.6,survey:1.0,hire:1.1,brew:1.3,enshrine:1.0,wild:1.4})[a]||0.8;});
-  v+=Math.min(FLIP_CAP,(p.flipped||[]).length)*1.3;
+  v+=(p.flipped||[]).length*1.3;
   return v;}
 function botMove(p){
   var placing=!p.placed;var cands=placing?['A','B','C','D']:ADJ[p.cell];
@@ -327,7 +327,6 @@ function botActOnce(){var p=cur();var U=UI.sub;
     case 'ldeploy':return botLDeploy(p);
     case 'recipegain':return botRecipeGain(p);
     case 'hallspace':return botHallspace(p);
-    case 'unlock':return unlockPick(canUnlockVessel(p)?'cask':'spec');
     case 'pilotdest':{var pd=UI.pdest;var pt=S.slots[pd.slot];var pds=pilotDests(pd.slot),pb=pds[0],pv=-1e9;
       pds.forEach(function(dd){var v=0;(pt.load||[]).forEach(function(L){v+=Math.max(1,destValue(dd,L.q))+(L.die&&dd===pt.dest?L.die:0);});if(v>pv){pv=v;pb=dd;}});
       return pilotGo(pb);}
