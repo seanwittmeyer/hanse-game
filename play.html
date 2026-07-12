@@ -708,33 +708,33 @@ function charterCost(p){return CHARTER_FLAT_FARE;}   // flat; the scarce CONTRAC
 // spaces as it is authored — the Agricola read).
 const BUILDINGS={
   // PRIVILEGES (blue) — one printed die number, owner-only, set at departure
-  staple    :{name:'Staple Hall',          verb:'value', tgt:'cask', icon:'warehouse',     cost:{g:3}, qty:2, die:3, desc:'your departing cask takes a die of 3 (any kontor)'},
-  burgomstr :{name:'Burgomaster’s Favor',  verb:'value', tgt:'cask', icon:'crown',         cost:{g:3}, qty:2, die:'q', desc:'your departing cask takes a die = its quality (max 5) — count the pips'},
-  connoiss  :{name:'Connoisseur’s Cellar', verb:'value', tgt:'cask', icon:'wine',          cost:{g:3}, qty:1, die:5, minq:4, desc:'your departing Q4+ cask takes a die of 5'},
-  hansediet :{name:'The Hanse Diet',       verb:'value', tgt:'cask', icon:'gavel',         cost:{g:3}, qty:1, die:2, pres:1, desc:'your departing cask takes a die of 2 AND places +1 presence at its destination'},
-  reliquary :{name:'Reliquary',            verb:'value', tgt:'cask', icon:'church',        cost:{g:3}, qty:1, die:2, hall:true, desc:'your cask enshrined from here takes a die of 2 (the Hall only)'},
-  almoner   :{name:'Almoner’s Stall',      verb:'value', tgt:'cask', icon:'heart',         cost:{g:3}, qty:1, die:3, nopres:true, desc:'your departing cask takes a die of 3 if you have NO presence at its destination yet'},
+  staple    :{name:'Staple Hall',          verb:'value', tgt:'cask', icon:'warehouse',     cost:{g:3}, qty:2, die:3, desc:'Your cask departs: die 3'},
+  burgomstr :{name:'Burgomaster’s Favor',  verb:'value', tgt:'cask', icon:'crown',         cost:{g:3}, qty:2, die:'q', desc:'Your cask departs: die = its quality (max 5)'},
+  connoiss  :{name:'Connoisseur’s Cellar', verb:'value', tgt:'cask', icon:'wine',          cost:{g:3}, qty:1, die:5, minq:4, desc:'Your Q4+ cask departs: die 5'},
+  hansediet :{name:'The Hanse Diet',       verb:'value', tgt:'cask', icon:'gavel',         cost:{g:3}, qty:1, die:2, pres:1, desc:'Your cask departs: die 2 + 1 presence there'},
+  reliquary :{name:'Reliquary',            verb:'value', tgt:'cask', icon:'church',        cost:{g:3}, qty:1, die:2, hall:true, desc:'Enshrined from here: die 2'},
+  almoner   :{name:'Almoner’s Stall',      verb:'value', tgt:'cask', icon:'heart',         cost:{g:3}, qty:1, die:3, nopres:true, desc:'Your cask departs: die 3 if no presence there'},
   // KONTOR CHARTERS — one per kontor (die 4, to the printed kontor only)
-  ch_bruges :{name:'Bruges Hanzehuis',     verb:'value', tgt:'cask', icon:'landmark', kontor:'bruges',  cost:{g:2}, qty:1, die:4, desc:'your departing cask takes a die of 4, to Bruges only'},
-  ch_london :{name:'London Steelyard',     verb:'value', tgt:'cask', icon:'landmark', kontor:'london',  cost:{g:2}, qty:1, die:4, desc:'your departing cask takes a die of 4, to London only'},
-  ch_bergen :{name:'Bergen Bryggen',       verb:'value', tgt:'cask', icon:'landmark', kontor:'bergen',  cost:{g:2}, qty:1, die:4, desc:'your departing cask takes a die of 4, to Bergen only'},
-  ch_novgo  :{name:'Novgorod Peterhof',    verb:'value', tgt:'cask', icon:'landmark', kontor:'novgorod',cost:{g:2}, qty:1, die:4, desc:'your departing cask takes a die of 4, to Novgorod only'},
+  ch_bruges :{name:'Bruges Hanzehuis',     verb:'value', tgt:'cask', icon:'landmark', kontor:'bruges',  cost:{g:2}, qty:1, die:4, desc:'Your cask departs: die 4. Bruges only'},
+  ch_london :{name:'London Steelyard',     verb:'value', tgt:'cask', icon:'landmark', kontor:'london',  cost:{g:2}, qty:1, die:4, desc:'Your cask departs: die 4. London only'},
+  ch_bergen :{name:'Bergen Bryggen',       verb:'value', tgt:'cask', icon:'landmark', kontor:'bergen',  cost:{g:2}, qty:1, die:4, desc:'Your cask departs: die 4. Bergen only'},
+  ch_novgo  :{name:'Novgorod Peterhof',    verb:'value', tgt:'cask', icon:'landmark', kontor:'novgorod',cost:{g:2}, qty:1, die:4, desc:'Your cask departs: die 4. Novgorod only'},
   // WORKS (green) — serve any dock; several print an ACTION for their building-only slot stop
-  maltkiln  :{name:'Malt Kiln',            verb:'transform', tgt:'cask', icon:'flame',      cost:{g:2}, qty:2, desc:'a cask from here ships as +1 quality (cap Q5)'},
-  hopyard   :{name:'Hop Yard',             verb:'transform', tgt:'cask', icon:'sprout',     cost:{g:3}, qty:1, desc:'a Q2+ cask from here ships as +1 quality'},
-  cooperage :{name:'Cooperage',            verb:'transform', tgt:'ship', icon:'package',    cost:{g:2}, qty:2, desc:'a ship here carries +1 cask'},
-  customs   :{name:'Customs House',        verb:'transform', tgt:'ship', icon:'scroll-text',cost:{g:2}, qty:2, desc:'a ship here may board casks one gate lower'},
-  workshop  :{name:'Brewmaster’s Workshop',verb:'transform', tgt:'cask', icon:'hammer',     cost:{g:3}, qty:1, desc:'a cask docked here acts as Wild (while it stays)'},
-  richberth :{name:'Rich Berth',           verb:'transform', tgt:'ship', icon:'anchor',     cost:{g:2}, qty:2, desc:'a hull docked here sails one berth short (min 1) — the cooper’s crew finishes the stowage'},   // v3.0-A rework: the slot-rot valve (the anti-Cooperage)
-  pilot     :{name:'Pilot’s House',        verb:'transform', tgt:'ship', icon:'compass',    cost:{g:3}, qty:1, desc:'when a hull sails from here, the sailer may re-destination it to a kontor one gate up or down'},   // v3.0-A new: routing as loop-manipulation (dissolves the premature-commission trap)
-  staithe   :{name:'Open Staithe',         verb:'transform', tgt:'cask', icon:'sun',        cost:{g:2}, qty:1, desc:'an UN-READY cask may deploy here; it matures +1 on its owner’s turn while docked (public cellaring)'},   // v3.0-A new: frees vessels, feeds the climb, stays contestable
-  ropewalk  :{name:'Rope Walk',            verb:'transform', tgt:'cask', icon:'cable',      cost:{g:2}, qty:1, act:'contract', desc:'this slot’s stop (when no occupant): gain 1 charter contract'},   // v3.0-A new action-work
-  grainex   :{name:'Grain Exchange',       verb:'transform', tgt:'cask', icon:'arrow-left-right', cost:{g:2}, qty:1, act:'convert', desc:'this slot’s stop (when no occupant): convert up to 2 goods G↔H'},   // v3.0-A new action-work (Convert’s new home)
-  missionq  :{name:'Mission Quay',         verb:'transform', tgt:'cask', icon:'church',     cost:{g:2}, qty:1, act:'age1', desc:'this slot’s stop (when no occupant): age one of your vessel casks +1'},   // v3.0-A new action-work
+  maltkiln  :{name:'Malt Kiln',            verb:'transform', tgt:'cask', icon:'flame',      cost:{g:2}, qty:2, desc:'Cask ships +1 quality (max Q5)'},
+  hopyard   :{name:'Hop Yard',             verb:'transform', tgt:'cask', icon:'sprout',     cost:{g:3}, qty:1, desc:'Q2+ cask ships +1 quality'},
+  cooperage :{name:'Cooperage',            verb:'transform', tgt:'ship', icon:'package',    cost:{g:2}, qty:2, desc:'Ship here holds +1 cask'},
+  customs   :{name:'Customs House',        verb:'transform', tgt:'ship', icon:'scroll-text',cost:{g:2}, qty:2, desc:'Ship here boards casks 1 gate lower'},
+  workshop  :{name:'Brewmaster’s Workshop',verb:'transform', tgt:'cask', icon:'hammer',     cost:{g:3}, qty:1, desc:'Cask here acts as Wild'},
+  richberth :{name:'Rich Berth',           verb:'transform', tgt:'ship', icon:'anchor',     cost:{g:2}, qty:2, desc:'Ship here may sail 1 berth short'},   // v3.0-A rework: the slot-rot valve (the anti-Cooperage)
+  pilot     :{name:'Pilot’s House',        verb:'transform', tgt:'ship', icon:'compass',    cost:{g:3}, qty:1, desc:'On sail: reroute to a kontor ±1 gate'},   // v3.0-A new: routing as loop-manipulation (dissolves the premature-commission trap)
+  staithe   :{name:'Open Staithe',         verb:'transform', tgt:'cask', icon:'sun',        cost:{g:2}, qty:1, desc:'Un-Ready casks may deploy here; age +1 per turn'},   // v3.0-A new: frees vessels, feeds the climb, stays contestable
+  ropewalk  :{name:'Rope Walk',            verb:'transform', tgt:'cask', icon:'cable',      cost:{g:2}, qty:1, act:'contract', desc:'Empty stop: gain 1 contract'},   // v3.0-A new action-work
+  grainex   :{name:'Grain Exchange',       verb:'transform', tgt:'cask', icon:'arrow-left-right', cost:{g:2}, qty:1, act:'convert', desc:'Empty stop: convert 2 goods'},   // v3.0-A new action-work (Convert’s new home)
+  missionq  :{name:'Mission Quay',         verb:'transform', tgt:'cask', icon:'church',     cost:{g:2}, qty:1, act:'age1', desc:'Empty stop: age a cask +1'},   // v3.0-A new action-work
   // ---- EXPANSION "Specialty Beers" thematic tiles — in the deck ONLY when that toggle is on (exp:true) ----
-  salthouse :{name:'Salt House',           verb:'value',     tgt:'cask', icon:'gem',         cost:{g:2}, qty:1, exp:true, die:0, goods:true, desc:'your departing cask: gain +1G +1H (the salt trade — goods, no die)'},
-  smokekiln :{name:'Smoke Kiln',           verb:'transform', tgt:'cask', icon:'cloud',       cost:{g:2}, qty:1, exp:true, desc:'a cask from here ships as +1 quality (cap Q5) — smoke-cured'},
-  partigyle :{name:'Parti-Gyle Tun',       verb:'transform', tgt:'cask', icon:'split',       cost:{g:2}, qty:1, exp:true, desc:'when a cask deploys here, also fill an open vessel with a free small Gruit'},
+  salthouse :{name:'Salt House',           verb:'value',     tgt:'cask', icon:'gem',         cost:{g:2}, qty:1, exp:true, die:0, goods:true, desc:'Your cask departs: +1G +1H'},
+  smokekiln :{name:'Smoke Kiln',           verb:'transform', tgt:'cask', icon:'cloud',       cost:{g:2}, qty:1, exp:true, desc:'Cask ships +1 quality (max Q5)'},
+  partigyle :{name:'Parti-Gyle Tun',       verb:'transform', tgt:'cask', icon:'split',       cost:{g:2}, qty:1, exp:true, desc:'Deploy here: a free Gruit to a vessel'},
 };
 const BUILDING_KEYS=Object.keys(BUILDINGS);
 function bName(k){return (BUILDINGS[k]||{name:k}).name;}
@@ -782,14 +782,14 @@ const PRESENCE_CAP=12;          // ⚙ the finite presence-disc supply — total
 // SPECIALIST ART METADATA (v2.6.1): each tile carries art:'…' — the illustration brief for the image agent
 // (style: a BEIGE field, ONE object centered — the specialist's trade — so Specialists read apart at a glance).
 const IMPROVEMENTS={
-  vessel   :{name:'Coppersmith', art:'a gleaming copper brew kettle', desc:'Extra Vessel — +1 brewing lane now (start 2 · cap '+4+'; no row tile)', cost:{g:3}},   // v3.0-A: direct capacity — vessel growth otherwise rides the Flight unlock track
-  cellar   :{name:'Cellarman', art:'an oak cask racked on a wooden stillage', desc:'Age +1 — your brews mature one step sooner (Ready −1)', cost:{g:4}},
-  granary  :{name:'Grain Factor', art:'a tied burlap sack overflowing with barley',desc:'gain grain → +1 extra', cost:{g:3}},
-  hopgarden:{name:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',   desc:'gain hops → +1 extra', cost:{g:4}},   // v2.4 ⚙ 3→4 — the +17-pt outlier of the parity probe pays a premium in the hops-led economy
+  vessel   :{name:'Coppersmith', art:'a gleaming copper brew kettle', desc:'+1 vessel slot', cost:{g:3}},   // v3.0-A: direct capacity — vessel growth otherwise rides the Flight unlock track
+  cellar   :{name:'Cellarman', art:'an oak cask racked on a wooden stillage', desc:'Your brews mature 1 step sooner', cost:{g:4}},
+  granary  :{name:'Grain Factor', art:'a tied burlap sack overflowing with barley',desc:'Gain grain: +1 extra', cost:{g:3}},
+  hopgarden:{name:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',   desc:'Gain hops: +1 extra', cost:{g:4}},   // v2.4 ⚙ 3→4 — the +17-pt outlier of the parity probe pays a premium in the hops-led economy
   // v1.5 "Improvements": two ex-Buildings reborn as private upgrades + the load-from-vessel valve ⚙
-  crane    :{name:'Stevedore', art:'a medieval wooden treadwheel harbor crane', desc:'Load 2 casks when Loading (your Harbor load)', cost:{g:3}},
-  lagering :{name:'Lagerkeeper', art:'stacked casks dusted with frost and icicles',desc:'+2 to your Floor’s Age pool (3 → 5)', cost:{g:2}},   // v3.0-A rework: feeds the Floor's adopted Age (no per-turn tick)
-  quay     :{name:'Quaymaster', art:'a private wooden jetty with a rope-wound mooring bollard', desc:'Load, Charter or Enshrine straight from your vessels (the invested exception to deploy-first)', cost:{g:3}},   // v2.4 ⚙ 4→3 — the only way past Deploy (the one-outlet grammar’s invested exception)
+  crane    :{name:'Stevedore', art:'a medieval wooden treadwheel harbor crane', desc:'Your Load: 2 casks', cost:{g:3}},
+  lagering :{name:'Lagerkeeper', art:'stacked casks dusted with frost and icicles',desc:'Floor Age pool +2', cost:{g:2}},   // v3.0-A rework: feeds the Floor's adopted Age (no per-turn tick)
+  quay     :{name:'Quaymaster', art:'a private wooden jetty with a rope-wound mooring bollard', desc:'Load/Dispatch straight from your vessels', cost:{g:3}},   // v2.4 ⚙ 4→3 — the only way past Deploy (the one-outlet grammar’s invested exception)
 };
 const IMP_AREA_CAP=4;          // legacy alias of SPEC_MAX (v3.0-A: the Specialist row prints 4 slots; harness compat)
 const IMPROVEMENT_KEYS=Object.keys(IMPROVEMENTS);
