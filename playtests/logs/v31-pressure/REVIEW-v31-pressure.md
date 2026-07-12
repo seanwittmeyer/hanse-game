@@ -77,8 +77,11 @@ author a kontor-charter Privilege first, pump cheap fast casks through it, race 
 - Bulk-budget full ladder (n=600 fast tiers): **0 errors**, apprentice < journeyman < trader <
   GM all ≥60%. The GM-vs-CM rung read 50% at the starved bulk budget (n=10, CELLAR_MS 80) — the
   known harness artifact.
-- Full-budget retest (6 parallel shards, GUILD_MS/CELLAR_MS 250, n=60): **see below** —
-  RUNG-RESULT-PLACEHOLDER
+- **Full-budget retest (6 parallel shards, GUILD_MS/CELLAR_MS 250, n=60): the CM beats the GM
+  43/60 = 71.7%** (shards: 80/50/50/80/80/90; avg score CM 40.4 vs GM 28.1; 0 errors; clock
+  95%). **The ladder is fully ordered at realistic budgets** — apprentice < journeyman < trader
+  < Guildmaster < Cellarmaster. The bulk-budget 50% was the documented starvation artifact
+  (n=10 at CELLAR_MS 80); the v3.1 keystone did NOT break the top tier.
 
 ## Verdict
 
