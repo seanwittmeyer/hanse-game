@@ -1,0 +1,46 @@
+v3-behavior: 126 games · 378 seats
+
+================ OPENINGS ================
+turn-1 worker placement: Market 37% · Brewhouse 37% · Harbor 13% · Cellar 13%
+turn-1 line:             Top row 57% · Left col 16% · Right col 15% · Bottom row 12%
+acquisitions in a seat's first 3 turns: recipe:Broyhan 148 · recipe:Keut 148 · recipe:Bock 65 · tile 56 · ship 47 · recipe:Mumme 36 · contract 16
+FIRST brew: Hopped 49% (avg R2.5) · Keut 19% (avg R1.3) · Gruit 15% (avg R3.3) · Broyhan 11% (avg R2.0) · Bock 3% (avg R5.3) · Mumme 2% (avg R5.0)
+SECOND brew: Hopped 38% · Gruit 25% · Keut 15% · Broyhan 14% · Bock 4% · Mumme 4%
+
+================ HOW WINNERS SHIP (winners vs the field) ================
+deliveries/seat: winners 7.0 vs losers 5.4   (kontor 5.3 vs 4.3 · hall 1.7 vs 1.1)
+avg delivered Q: winners 2.70 vs losers 2.57
+avg ★/cask:      winners 2.69 vs losers 2.31
+first delivery (dispatch/enshrine) round: winners 10.8 vs losers 11.8
+kontor dispatches/seat: winners 0.7 vs 0.4 · rival-loads: 0.5 vs 0.6 · floor turns: 1.0 vs 1.9 · brews: 7.8 vs 7.4
+winner destination mix: Bruges 27% · London 12% · Bergen 20% · Novgorod 17% · The Hall 24%
+loser  destination mix: Bruges 32% · London 14% · Bergen 18% · Novgorod 16% · The Hall 20%
+
+================ BEER PERFORMANCE (all seats) ================
+style      brewed  delivered  avg★(kontor)  avg★(hall)  in winner hands  ★/brew-good
+Gruit        577       512         1.10       3.00             36%        1.11
+Hopped       768       609         1.17       3.27             40%        0.76
+Broyhan      470       366         1.83       4.83             37%        0.89
+Keut         488       367         1.69       5.07             38%        0.85
+Mumme        178       138         2.94       6.02             47%        1.05
+Bock         371       259         4.39       7.62             46%        1.18
+exports dealt (games): Broyhan 90 · Mumme 91 · Bock 101 · Keut 96
+
+================ QUALITY vs VOLUME — 2p head-to-heads ================
+the 2p winner had: more casks & higher Q 15 · volume edge only 18 · quality edge only 7 · neither (fewer & lower) 0 · even 2
+PURE quality-over-volume wins (fewer casks, higher Q): 4/42 — 2p-cc-2, 2p-mx-4, 2p-mx-11, 2p-rt-2
+  2p-cc-2: Cellar2 won 20-14 on 5 casks (avgQ 2.80, hall 0) vs 6 casks (avgQ 1.83)
+  2p-mx-4: Guild won 35-33 on 6 casks (avgQ 3.00, hall 0) vs 8 casks (avgQ 2.75)
+  2p-mx-11: Guild won 39-37 on 6 casks (avgQ 2.83, hall 1) vs 8 casks (avgQ 2.50)
+  2p-rt-2: Racer won 35-28 on 7 casks (avgQ 2.57, hall 1) vs 8 casks (avgQ 1.88)
+
+win rate by a seat's Q4+ delivery count (all counts):
+  0 premium   seats 119 · win 18% (weighted fair ≈ 32.5%)
+  1 premium   seats 125 · win 32% (weighted fair ≈ 32.9%)
+  2 premium   seats  87 · win 48% (weighted fair ≈ 34.3%)
+  3+ premium  seats  47 · win 49% (weighted fair ≈ 34.8%)
+win rate by hall share of a seat's deliveries:
+  0%      seats 107 · win 19%
+  1-33%   seats 186 · win 40%
+  34-66%  seats  76 · win 41%
+  67%+    seats   7 · win 14%

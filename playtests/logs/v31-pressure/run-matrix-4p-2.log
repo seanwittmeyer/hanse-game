@@ -1,0 +1,9 @@
+4p-rc-8 ok     rounds 20  winner Racer      totals Cellar3:20 Racer:40 Cellar:33 Cellar2:17  -> playtests/logs/v31-pressure/pbp-4p-rc-8.log
+4p-rg-1 ok     rounds 25  winner Guild2     totals Racer:18 Guild:31 Guild2:43 Guild3:29  -> playtests/logs/v31-pressure/pbp-4p-rg-1.log
+4p-rg-2 ok     rounds 25  winner Guild2     totals Guild:20 Guild2:39 Guild3:14 Racer:0  -> playtests/logs/v31-pressure/pbp-4p-rg-2.log
+4p-rg-3 ok     rounds 19  winner Guild      totals Guild2:42 Guild3:36 Racer:33 Guild:50  -> playtests/logs/v31-pressure/pbp-4p-rg-3.log
+4p-rg-4 ok     rounds 23  winner Racer      totals Guild3:24 Racer:50 Guild:34 Guild2:32  -> playtests/logs/v31-pressure/pbp-4p-rg-4.log
+4p-rg-5 ok     rounds 22  winner Guild3     totals Racer:34 Guild:41 Guild2:33 Guild3:41  -> playtests/logs/v31-pressure/pbp-4p-rg-5.log
+4p-rg-6 ok     rounds 25  winner Racer      totals Guild:30 Guild2:38 Guild3:26 Racer:41  -> playtests/logs/v31-pressure/pbp-4p-rg-6.log
+
+7 games (KEY hanse-v31) in 260.3s · errors 0

@@ -49,11 +49,12 @@ G.forEach(g => {
     const a = agg[k] = agg[k] || { seats: 0, wins: 0, sc: 0, floor: 0, buysPriv: 0, dieSets: 0, ensh: 0, kdisp: 0, brews: 0 };
     a.seats++; a.sc += s.total; if (s.rank === 0) a.wins++;
     const esc = s.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    a.floor += (g.txt.match(new RegExp('^' + esc + ' stays home', 'gm')) || []).length;
-    a.buysPriv += (g.txt.match(new RegExp('^' + esc + ' buys ', 'gm')) || []).length;
-    a.ensh += (g.txt.match(new RegExp('^' + esc + ' enshrines ', 'gm')) || []).length;
-    a.kdisp += (g.txt.match(new RegExp('^' + esc + ' dispatches ', 'gm')) || []).length;
-    a.brews += (g.txt.match(new RegExp('^' + esc + ' brews ', 'gm')) || []).length;
+    const cnt = re => (g.txt.match(new RegExp('^\\s*' + esc + ' ' + re, 'gm')) || []).length;   // narrate lines are indented
+    a.floor += cnt('stays home');
+    a.buysPriv += cnt('buys ');
+    a.ensh += cnt('enshrines ');
+    a.kdisp += cnt('dispatches ');
+    a.brews += cnt('brews ');
   });
 });
 Object.keys(agg).sort().forEach(k => {

@@ -1,0 +1,34 @@
+v31-pressure racer report — 126 games
+
+== RACER performance (win rate = racer seats that finished #1) ==
+  rc 2p: games 8 · racer wins 0/8 (0%) · racer avg 15.5 vs field 55.6
+  rc 3p: games 8 · racer wins 0/8 (0%) · racer avg 26.6 vs field 38.0
+  rc 4p: games 8 · racer wins 2/8 (25%) · racer avg 24.5 vs field 31.9
+  rg 2p: games 6 · racer wins 0/6 (0%) · racer avg 29.3 vs field 46.3
+  rg 3p: games 6 · racer wins 3/6 (50%) · racer avg 36.3 vs field 32.2
+  rg 4p: games 6 · racer wins 2/6 (33%) · racer avg 29.3 vs field 33.5
+  rt 2p: games 6 · racer wins 1/6 (17%) · racer avg 27.7 vs field 39.3
+  rt 3p: games 6 · racer wins 4/6 (67%) · racer avg 33.5 vs field 37.9
+  rt 4p: games 6 · racer wins 1/6 (17%) · racer avg 25.3 vs field 29.9
+  mx 2p: games 10 · racer wins 0/10 (0%) · racer avg 24.3 vs field 47.8
+  mx 3p: games 14 · racer wins 2/14 (14%) · racer avg 28.6 vs field 38.1
+  mx 4p: games 14 · racer wins 1/14 (7%) · racer avg 26.6 vs field 33.4
+
+== per-seat variety (all games) ==
+  cellarmaster       seats 158 · win  46% · avg  36.4 · per game: floor 0.8 · buys 2.2 · brews 6.3 · enshrine 1.8 · k-dispatch 0.9
+  guildmaster        seats  64 · win  31% · avg  33.8 · per game: floor 1.2 · buys 2.7 · brews 6.8 · enshrine 0.6 · k-dispatch 0.8
+  trader/majority    seats  19 · win  26% · avg  33.0 · per game: floor 2.3 · buys 2.6 · brews 7.9 · enshrine 1.6 · k-dispatch 0.0
+  trader/prestige    seats  20 · win  25% · avg  30.9 · per game: floor 1.4 · buys 3.0 · brews 9.1 · enshrine 1.7 · k-dispatch 0.1
+  trader/racer       seats  98 · win  16% · avg  26.9 · per game: floor 3.0 · buys 3.0 · brews 9.3 · enshrine 0.7 · k-dispatch 0.1
+  trader/volume      seats  19 · win  37% · avg  35.0 · per game: floor 1.3 · buys 2.9 · brews 9.3 · enshrine 1.8 · k-dispatch 0.0
+
+== head-to-head (2p games only, any cohort) ==
+  cellarmaster  vs  cellarmaster: n=8 → cellarmaster 8
+  cellarmaster  vs  guildmaster: n=2 → cellarmaster 2
+  cellarmaster  vs  trader/prestige: n=1 → cellarmaster 1
+  cellarmaster  vs  trader/racer: n=12 → cellarmaster 12
+  cellarmaster  vs  trader/volume: n=1 → cellarmaster 1
+  guildmaster  vs  trader/racer: n=10 → guildmaster 10
+  trader/majority  vs  trader/racer: n=3 → trader/majority 3
+  trader/prestige  vs  trader/racer: n=3 → trader/prestige 2 · trader/racer 1
+  trader/racer  vs  trader/volume: n=2 → trader/volume 2
