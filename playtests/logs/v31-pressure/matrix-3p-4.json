@@ -1,0 +1,191 @@
+[
+ {
+  "id": "3p-cc-2",
+  "seed": 682,
+  "seats": [
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar3",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-cc-3",
+  "seed": 683,
+  "seats": [
+   {
+    "name": "Cellar3",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-cc-4",
+  "seed": 684,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar3",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-cc-5",
+  "seed": 685,
+  "seats": [
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar3",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-cc-6",
+  "seed": 686,
+  "seats": [
+   {
+    "name": "Cellar3",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-cc-7",
+  "seed": 687,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar3",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-cc-8",
+  "seed": 688,
+  "seats": [
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar3",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ }
+]

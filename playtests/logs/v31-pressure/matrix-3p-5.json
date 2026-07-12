@@ -1,0 +1,191 @@
+[
+ {
+  "id": "3p-mx-1",
+  "seed": 689,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-mx-2",
+  "seed": 690,
+  "seats": [
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderP",
+    "ai": {
+     "tier": "trader",
+     "persona": "prestige"
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-mx-3",
+  "seed": 691,
+  "seats": [
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-mx-4",
+  "seed": 692,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "TraderM",
+    "ai": {
+     "tier": "trader",
+     "persona": "majority"
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-mx-5",
+  "seed": 693,
+  "seats": [
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-mx-6",
+  "seed": 694,
+  "seats": [
+   {
+    "name": "TraderV",
+    "ai": {
+     "tier": "trader",
+     "persona": "volume"
+    }
+   },
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-mx-7",
+  "seed": 695,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   }
+  ]
+ }
+]
