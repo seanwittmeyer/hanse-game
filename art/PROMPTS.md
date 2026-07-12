@@ -134,6 +134,13 @@ buildings = the brewer's craft & harbor works.* The subjects used:
 - **building-smokekiln.png** — a smokehouse / smoke kiln, a dark timber curing hut with drifting blue woodsmoke from its roof.
 - **building-partigyle.png** — a brewing tun-house, a large wooden mash/lauter tun splitting the runnings, wort flowing into vessels.
 
+### v3.0-A — the five NEW works (queued; printables2 rides interim stand-ins until these exist)
+- **building-pilot.png** — a harbour pilot's house on a headland, a small lookout tower with a signal beacon and a pilot gig boat below. *(stand-in: ship-cog.png)*
+- **building-staithe.png** — an open riverside staithe, casks racked in the open air on a timber wharf, sun and drying breeze. *(stand-in: building-festkeller.png)*
+- **building-ropewalk.png** — a long low ropewalk shed, great coils of hemp rope and a rope-twisting frame stretching into perspective. *(stand-in: ship-back.png)*
+- **building-grainex.png** — a grain exchange hall, an open arcaded corn market with sacks, scoops and a balance scale. *(stand-in: building-gauger.png)*
+- **building-missionq.png** — a small seamen's mission chapel on the quay, a lantern over its door, nets and a moored skiff beside. *(stand-in: building-reliquary.png)*
+
 ## Notes
 - Keep all ten cask images **consistent** (same wharf, same angle/lighting) so the deck reads as one family —
   only the wood/contents/mood change per beer. Same for the two ships, and for the 21 building structures.

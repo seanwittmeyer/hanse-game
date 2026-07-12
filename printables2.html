@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · Cask Cards · v2.9 “Ground Rent”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · Cask Cards · v3.0-A.1 “Path A”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -412,7 +412,7 @@
   .pb2-slot .sn{position:absolute;top:.05in;left:0;right:0;font-variant:small-caps;font-weight:bold;font-size:.08in;opacity:.62;line-height:1.05}
   .pb2-slot .si{display:flex;gap:.06in;opacity:.4} .pb2-slot .si svg,.pb2-slot .si .ic{width:.32in;height:.32in}
   .pb2-bld{width:2in;height:2in}
-  .pb2-vsl{width:2.46in;height:2.46in;border-style:solid}
+  .pb2-vsl{width:2.4in;height:2.4in;border-style:solid}
   .pb2-vsl.extra{border-style:dashed}
   .pb2-vsl .si svg,.pb2-vsl .si .ic{width:.46in;height:.46in}
   /* flight — a compact tally column, top-right */
@@ -527,9 +527,9 @@
   .stn .bigic svg,.stn .bigic .ic{width:.8in;height:.8in;stroke-width:1.6}
   .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.32in;line-height:1}
   /* the action line, in the board's icon grammar: "/" = or · juxtaposed = both · ":" = per-each */
-  .stn .yield{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:.035in;margin-top:.06in;opacity:.95}
-  .stn .yield svg,.stn .yield .ic{width:.22in;height:.22in}
-  .stn .yield b{font-size:.2in;font-weight:900;line-height:1}
+  .stn .yield{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:.06in;margin-top:.06in;opacity:.95}
+  .stn .yield svg,.stn .yield .ic{width:.36in;height:.36in}
+  .stn .yield b{font-size:.3in;font-weight:900;line-height:1}
   .stn .yield .sep{font-weight:bold;font-size:.15in;opacity:.85;line-height:1}
   .stn.A{background:linear-gradient(155deg,#cda522,#9c7414)} .stn.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .stn.C{background:linear-gradient(155deg,#3d6b7e,#244554)} .stn.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
@@ -745,6 +745,58 @@
   .oln-gwb i{color:var(--ink2)}
   .oln-gwa{display:inline-flex;align-items:center;gap:.03in;font-weight:bold}
   .oln-gwa svg,.oln-gwa .ic{width:.11in;height:.11in}
+  /* ---- v3.0-A player-board additions: covers · flip shelf · the Floor bar · the two-state Flight strip ---- */
+  .pb2-goods.nomargin{margin-left:.12in}
+  .pb2-row{display:flex;gap:.1in;flex:0 0 auto}
+  .pb2-slot.cov{border-style:dotted;background:repeating-linear-gradient(45deg,rgba(0,0,0,.055),rgba(0,0,0,.055) .07in,rgba(255,255,255,.3) .07in,rgba(255,255,255,.3) .14in)}
+  .pb2-slot .cvt{position:absolute;bottom:.06in;left:.05in;right:.05in;font-size:.078in;font-variant:small-caps;font-weight:bold;color:var(--pc);opacity:.8;display:flex;align-items:center;justify-content:center;gap:.02in;line-height:1.1}
+  .pb2-slot .cvt svg,.pb2-slot .cvt .ic{width:.1in;height:.1in;flex:0 0 auto}
+  .pb2-flipsh{flex:1;border:1.6px dashed var(--pc);border-radius:.06in;background:rgba(255,255,255,.35);padding:.05in .06in;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr auto;gap:.03in .06in}
+  .pb2-flipsh .fsh{grid-column:1/3;font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--pc);display:flex;align-items:center;gap:.03in}
+  .pb2-flipsh .fsh svg,.pb2-flipsh .fsh .ic{width:.12in;height:.12in}
+  .pb2-flipsh .pb2-flip{width:auto;height:auto;min-height:1.1in}
+  .pb2-flipsh .fnote{grid-column:1/3;font-size:.072in;font-style:italic;color:var(--ink2);line-height:1.15}
+  .pb3-flight{flex:0 0 auto;border:1.6px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.4);padding:.05in .08in;display:flex;flex-direction:column;gap:.035in}
+  .pb3-flight .fh{font-variant:small-caps;font-weight:bold;font-size:.115in;color:var(--pc);display:flex;align-items:center;gap:.04in}
+  .pb3-flight .fh svg,.pb3-flight .fh .ic{width:.13in;height:.13in}
+  .pb3-flight .fsub{font-size:.08in;font-style:italic;color:var(--ink2);line-height:1.2}
+  .pb3-fboxes{display:flex;gap:.06in}
+  .pb3-fbox{flex:1;display:flex;flex-direction:column;align-items:center;gap:.03in;border:1.2px solid var(--pc);border-radius:.035in;background:rgba(255,255,255,.5);padding:.03in}
+  .pb3-fbox .fn{font-weight:900;font-size:.095in;font-variant:small-caps;color:var(--pc)}
+  .pb3-fbox .fmk{display:flex;flex-direction:column;gap:.02in;width:100%}
+  .pb3-fbox .fmk .m{display:flex;align-items:center;justify-content:center;gap:.03in;font-size:.075in;font-variant:small-caps;color:var(--ink2);border:1px dotted var(--pc);border-radius:.03in;padding:.014in .03in}
+  .pb3-fbox .fmk .m svg,.pb3-fbox .fmk .m .ic{width:.09in;height:.09in}
+  .pb3-fbox.z{opacity:.55}
+  .pb2-floor{flex:0 0 auto;display:flex;align-items:center;gap:.06in;border-radius:.06in;background:var(--pc);color:#fff;padding:.045in .09in;font-size:.098in;line-height:1.25}
+  .pb2-floor svg,.pb2-floor .ic{width:.15in;height:.15in;flex:0 0 auto}
+  /* ---- UNLOCK COVER tile ---- */
+  .cover{background:var(--c);border-radius:.1in;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.05in;color:#fff;box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
+  .cover svg,.cover .ic{width:.42in;height:.42in;opacity:.9}
+  .cover span{font-variant:small-caps;font-weight:bold;font-size:.12in;text-align:center;line-height:1.25;opacity:.92}
+  /* ---- the one-read die chip on Privilege tiles ---- */
+  .diech svg,.diech .ic{width:.14in;height:.14in;vertical-align:-.025in}
+  /* ====================== THE HALL SHELF BOARD (v3.0-A) ====================== */
+  .hallb{position:absolute;inset:0;background:linear-gradient(160deg,#f3ecdd,#e9dcc0);border:2.5px solid #5b3a8e;border-radius:.14in;padding:.16in .2in;display:flex;flex-direction:column;gap:.08in}
+  .hallb .hb-head{display:flex;align-items:flex-start;gap:.14in;border-bottom:2px solid #b8860b;padding-bottom:.05in}
+  .hallb h2{margin:0;font-variant:small-caps;color:#5b3a8e;font-size:.24in;display:flex;align-items:center;gap:.06in;white-space:nowrap}
+  .hallb h2 svg,.hallb h2 .ic{width:.24in;height:.24in}
+  .hallb .hb-sub{font-size:.098in;color:#5b4a37;font-style:italic;line-height:1.25;flex:1}
+  .hb-shelves{flex:1;display:flex;flex-direction:column;gap:.08in}
+  .hb-shelf{flex:1;display:flex;gap:.1in;align-items:stretch;background:rgba(255,255,255,.5);border:1.8px solid #5b3a8e;border-radius:.08in;padding:.055in .08in}
+  .hb-side{width:1.9in;flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:.02in;border-right:1.5px dotted #b39ddb;padding-right:.08in}
+  .hb-side .hb-nm{font-variant:small-caps;font-weight:900;color:#5b3a8e;font-size:.15in;line-height:1.05}
+  .hb-side .hb-gate{display:inline-flex;align-items:center;gap:.03in;font-weight:bold;font-size:.1in;color:#5b4a37}
+  .hb-side .hb-gate svg,.hb-side .hb-gate .ic{width:.12in;height:.12in}
+  .hb-side .hb-star{display:inline-flex;align-items:center;gap:.02in;font-weight:900;font-size:.24in;color:#8a6408}
+  .hb-side .hb-star i{font-size:.095in;font-style:normal;color:#5b4a37;font-weight:normal}
+  .hb-side .hb-star svg,.hb-side .hb-star .ic{width:.2in;height:.2in;color:#8a6408}
+  .hb-spaces{flex:1;display:flex;gap:.08in}
+  .hb-sp{position:relative;flex:1;border:2px dashed #5b3a8e;border-radius:.06in;background:rgba(91,58,142,.06);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;text-align:center;padding:.05in .04in}
+  .hb-sp svg,.hb-sp .ic{width:.2in;height:.2in;color:#5b3a8e}
+  .hb-sp .t{font-size:.086in;font-weight:bold;color:#3a3342;line-height:1.1}
+  .hb-sp .cube{width:.34in;height:.34in;border:1.5px dotted #9c7bbd;border-radius:.04in;background:rgba(255,255,255,.6)}
+  .hb-sp .lbadge{position:absolute;top:-.065in;right:-.035in;background:#7c2128;color:#fff;font-size:.07in;font-weight:900;border-radius:.03in;padding:.006in .028in}
+  .hb-foot{font-size:.094in;color:#5b4a37;border-top:1px solid #c8b48a;padding-top:.045in;line-height:1.3}
   /* ====================== CHECKLIST ====================== */
   .check{position:absolute;left:.35in;top:.38in;width:9.7in;height:7.42in;font-size:.094in;display:flex;flex-direction:column;gap:.05in}
   .check h2{margin:0;font-variant:small-caps;color:var(--red);font-size:.2in;border-bottom:2px solid var(--gold);padding-bottom:.03in}
@@ -778,7 +830,7 @@
 </head>
 <body>
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · Cask Cards · v2.9 “Ground Rent”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · Cask Cards · v3.0-A.1 “Path A”</span></h1>
   <a href="play.html">▶ Play</a>
   <a href="index.html">📖 Rules</a>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
@@ -807,19 +859,23 @@ const LU=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"'
 const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc">'+LU('sprout','h')+h+'</span>');return a.join('');};
 const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · victory-point icon
 
-// v1.0/v1.1 — a cask's slot-action is STEERABLE at the kettle: the face-up top of each quality pile is
-// visible, so you brew toward the action you want. Physically the supply per quality is a MIX of this
-// 7-action pool, printed on the tile. Gruit is PINNED to Source; Wild is Q4+ only. Icons mirror play.html.
+// v3.0-A "SPECIFIC GAINS" — a cask's slot-action is one of NINE concrete acquisitions, printed on the
+// tile and steerable at the kettle (the face-up top of each quality pile). The pool is quality-gated:
+// survey/hire join at Q3+, brew/enshrine at Q4+. Convert and the pool Wild are CUT (Convert -> the Grain
+// Exchange work; Wild survives only as the Workshop dock effect + the flipped-tile Floor stops).
+// Gruit is PINNED to Source. Icons/texts mirror play.html CASK_ACT.
 const CASK_POOL=[
-  {k:'source', ai:'coins',            act:'+2 goods'},
-  {k:'age',    ai:'hourglass',        act:'Age a cask +2'},
-  {k:'load',   ai:'package-plus',     act:'free Load'},
-  {k:'reach',  ai:'map-pin',          act:'+1 Reach'},
-  {k:'convert',ai:'arrow-left-right', act:'Convert 2 goods'},
-  {k:'survey', ai:'search',           act:'gain 1 building'},
-  {k:'hire',   ai:'wrench',           act:'free Specialist (Q3+)'},
+  {k:'source',  ai:'coins',         act:'Gain 2 goods',             q:2},
+  {k:'age',     ai:'hourglass',     act:'Age a cask +2',            q:2},
+  {k:'load',    ai:'package-plus',  act:'Load 1 cask, free',        q:2},
+  {k:'reach',   ai:'map-pin',       act:'+1 presence',              q:2},
+  {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe (−1G)',      q:2},
+  {k:'survey',  ai:'search',        act:'Gain 1 building',          q:3},
+  {k:'hire',    ai:'wrench',        act:'Gain 1 specialist, free',  q:3},
+  {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:4},
+  {k:'enshrine',ai:'crown',         act:'Enshrine 1 deployed cask', q:4},
 ];
-const CASK_WILD={k:'wild', ai:'sparkles', act:'Wild — any base action'};   // Q4+ only
+const poolFor=q=>CASK_POOL.filter(a=>q>=a.q);   // the printed mix per quality tier
 // cask supply — fixed global counts (COMPONENTS §5; the scarce high-Q exports are intentional). Gruit PINNED to Source; Q2+ draw at brew (steerable).
 // ready = maturation steps (v1.1: Hopped & Broyhan are FAST = ready 1; Keut ready 2; Mumme/Bock ready 3).
 const CASKS=[
@@ -827,8 +883,8 @@ const CASKS=[
   {nm:'Hopped',  c:'#c2922f', q:2, g:1,h:1, n:20, ready:1},
   {nm:'Broyhan', c:'#b06a34', q:3, g:1,h:2, n:6,  ready:1},
   {nm:'Keut',    c:'#9c5f2e', q:3, g:2,h:1, n:6,  ready:2, tag:'<b>+1</b> '+LU('map-pin')+'<br>presence'},
-  {nm:'Mumme',   c:'#caa12a', q:4, g:1,h:3, n:8,  ready:3, wild:true},
-  {nm:'Bock',    c:'#7c2128', q:5, g:2,h:3, n:6,  ready:3, wild:true},
+  {nm:'Mumme',   c:'#caa12a', q:4, g:1,h:3, n:8,  ready:3},
+  {nm:'Bock',    c:'#7c2128', q:5, g:2,h:3, n:6,  ready:3},
   // ---- EXPANSION "Specialty Beers" (v1.9, opt-in) — PINNED-signature casks; drafted 3-of-7 only with the toggle ----
   {nm:'Gose',     c:'#6e8b74', q:2, g:2,h:0, n:8, ready:1, pin:CASK_POOL[0], tag:'salt trade:<br>+'+LU('wheat')+LU('sprout')},
   {nm:'Zerbster', c:'#5f7a3c', q:3, g:0,h:3, n:6, ready:1, pin:CASK_POOL[2], tag:'parti-gyle:<br>+free Gruit'},
@@ -847,39 +903,51 @@ const SHIP_DECK=[
   ['cog','Bergen'],['cog','Bergen'],['hulk','Bergen'],['hulk','Bergen'],['hulk','Bergen'],
   ['cog','Novgorod'],['cog','Novgorod'],['cog','Novgorod'],['hulk','Novgorod'],['hulk','Novgorod'],
 ];
-// ---- BUILDINGS (v1.0 KEYSTONE): the one OWNED tile family on the living slots (mirrors play.html BUILDINGS).
-// One grammar — "a building modifies the OCCUPANT docked on it" — in two verbs: VALUE (bonus ★ on delivery)
-// & TRANSFORM (changes the cask/ship). tgt = what it touches (cask/ship/line/owner), shown as a glyph.
-const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a SHIP docked here'}};   // v2.3: every building modifies its docked occupant (value = a privilege, owner-only; transform = a work, serves any dock)
+// ---- SLOT TILES (v3.0-A): PRIVILEGES & BUILDINGS — the one owned family on the living slots (mirrors
+// play.html BUILDINGS). One grammar: "a tile modifies the OCCUPANT docked on it", in two verbs —
+//   • VALUE = a PRIVILEGE (blue): prints ONE die number. When the OWNER's cask departs the slot toward a
+//     sale, its demand die is SET to exactly that number — once, at departure, nothing recalculated
+//     (no premium, no cap rule, no sail-time bump). A rival's cargo banks nothing.
+//   • TRANSFORM = a WORK (green): changes the docked cask/ship, for WHOEVER docks there. Three works
+//     print an ACTION — their slot's stop offers "deploy here OR the printed action".
+// v3.0-A cuts the Gauger's Office + the Festkeller; Rich Berth is reworked to the sail-short valve;
+// Pilot's House · Open Staithe · Rope Walk · Grain Exchange · Mission Quay are new works.
+// art: — the five new works ride interim stand-in art (the cut tiles' freed files + ship art) until
+// their own images are generated; briefs are queued in art/PROMPTS.md.
+const DIE=n=>'<span class="diech">'+LU('dice-'+n)+'</span>';
+const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a SHIP docked here'}};
 const BUILDINGS=[
-  // VALUE — trading privileges & patrons
-  {k:'richberth', nm:'Rich Berth',           verb:'value', tgt:'ship', ic:'anchor',      g:3, n:2, eff:'each of your casks’ dice +2 at the sail'},
-  {k:'staple',    nm:'Staple Hall',          verb:'value', tgt:'cask', ic:'warehouse',   g:3, n:2, eff:'a cask shipped from here +3★ (any kontor)'},
-  {k:'burgomstr', nm:'Burgomaster’s Favor',  verb:'value', tgt:'cask', ic:'crown',       g:3, n:2, eff:'a cask from here +1★ per quality level'},
-  {k:'connoiss',  nm:'Connoisseur’s Cellar', verb:'value', tgt:'cask', ic:'wine',        g:3, n:1, eff:'a Q4+ cask from here +4★'},
-  {k:'hansediet', nm:'The Hanse Diet',       verb:'value', tgt:'cask', ic:'gavel',       g:3, n:1, eff:'a cask to a kontor you LEAD +3★'},
-  {k:'festkeller',nm:'Festkeller',           verb:'value', tgt:'ship', ic:'beer',        g:3, n:1, eff:'a HULK here: your casks’ dice +3 at the sail'},
-  {k:'reliquary', nm:'Reliquary',            verb:'value', tgt:'cask', ic:'church',      g:3, n:1, eff:'a cask ENSHRINED from here +2★'},
-  {k:'almoner',   nm:'Almoner’s Stall',      verb:'value', tgt:'cask', ic:'heart',       g:3, n:1, eff:'to a kontor where you do NOT lead +3★'},
-  {k:'ch_bruges', nm:'Bruges Hanzehuis',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'a cask from here → Bruges +4★'},
-  {k:'ch_london', nm:'London Steelyard',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'a cask from here → London +4★'},
-  {k:'ch_bergen', nm:'Bergen Bryggen',       verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'a cask from here → Bergen +4★'},
-  {k:'ch_novgo',  nm:'Novgorod Peterhof',    verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'a cask from here → Novgorod +4★'},
-  // TRANSFORM — the brewer's craft & harbor works
-  {k:'maltkiln',  nm:'Malt Kiln',            verb:'transform', tgt:'cask', ic:'flame',       g:2, n:2, eff:'a cask from here ships +1 quality (cap Q5)'},
-  {k:'hopyard',   nm:'Hop Yard',             verb:'transform', tgt:'cask', ic:'sprout',      g:3, n:1, eff:'a Q2+ cask from here ships +1 quality'},
-  {k:'cooperage', nm:'Cooperage',           verb:'transform', tgt:'ship', ic:'package',      g:2, n:2, eff:'a ship here carries +1 cask'},
-  {k:'customs',   nm:'Customs House',        verb:'transform', tgt:'ship', ic:'scroll-text',  g:2, n:2, eff:'a ship here may board casks one gate lower'},
-  {k:'gauger',    nm:'Gauger’s Office',      verb:'transform', tgt:'cask', ic:'ruler',        g:3, n:1, eff:'a cask from here is gauged +1 quality (cap Q5) — gates &amp; points alike'},
-  {k:'workshop',  nm:'Brewmaster’s Workshop',verb:'transform', tgt:'cask', ic:'hammer',       g:3, n:1, eff:'a cask docked here acts as Wild (while it stays)'},
-  // EXPANSION "Specialty Beers" (Option A) thematic buildings — print with the kit; use only with that module
-  {k:'salthouse', nm:'Salt House',          verb:'value',     tgt:'cask', ic:'gem',           g:2, n:1, eff:'a cask from here: owner +1'+LU('wheat','g')+' +1'+LU('sprout','h')+' on delivery (the salt trade)'},
-  {k:'smokekiln', nm:'Smoke Kiln',          verb:'transform', tgt:'cask', ic:'cloud',         g:2, n:1, eff:'a cask from here ships +1 quality (cap Q5)'},
-  {k:'partigyle', nm:'Parti-Gyle Tun',      verb:'transform', tgt:'cask', ic:'split',         g:2, n:1, eff:'deploy a cask here → a free small Gruit to an open vessel'},
+  // PRIVILEGES (blue, 12 tiles) — one printed die number, owner-only, set at departure
+  {k:'staple',    nm:'Staple Hall',          verb:'value', tgt:'cask', ic:'warehouse',   g:3, n:2, eff:'Your cask departs: die 3 '+DIE(3)},
+  {k:'burgomstr', nm:'Burgomaster’s Favor',  verb:'value', tgt:'cask', ic:'crown',       g:3, n:2, eff:'Your cask departs: die = its quality (max 5)'},
+  {k:'connoiss',  nm:'Connoisseur’s Cellar', verb:'value', tgt:'cask', ic:'wine',        g:3, n:1, eff:'Your Q4+ cask departs: die 5 '+DIE(5)},
+  {k:'hansediet', nm:'The Hanse Diet',       verb:'value', tgt:'cask', ic:'gavel',       g:3, n:1, eff:'Your cask departs: die 2 '+DIE(2)+' + 1 presence there'},
+  {k:'almoner',   nm:'Almoner’s Stall',      verb:'value', tgt:'cask', ic:'heart',       g:3, n:1, eff:'Your cask departs: die 3 '+DIE(3)+' if no presence there'},
+  {k:'reliquary', nm:'Reliquary',            verb:'value', tgt:'cask', ic:'church',      g:3, n:1, eff:'Enshrined from here: die 2 '+DIE(2)},
+  {k:'ch_bruges', nm:'Bruges Hanzehuis',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask departs: die 4 '+DIE(4)+'. Bruges only'},
+  {k:'ch_london', nm:'London Steelyard',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask departs: die 4 '+DIE(4)+'. London only'},
+  {k:'ch_bergen', nm:'Bergen Bryggen',       verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask departs: die 4 '+DIE(4)+'. Bergen only'},
+  {k:'ch_novgo',  nm:'Novgorod Peterhof',    verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask departs: die 4 '+DIE(4)+'. Novgorod only'},
+  // WORKS (green, 15 tiles) — serve any dock; three print an action on their slot's stop
+  {k:'maltkiln',  nm:'Malt Kiln',            verb:'transform', tgt:'cask', ic:'flame',            g:2, n:2, eff:'Cask ships +1 quality (max Q5)'},
+  {k:'hopyard',   nm:'Hop Yard',             verb:'transform', tgt:'cask', ic:'sprout',           g:3, n:1, eff:'Q2+ cask ships +1 quality'},
+  {k:'cooperage', nm:'Cooperage',            verb:'transform', tgt:'ship', ic:'package',          g:2, n:2, eff:'Ship here holds +1 cask'},
+  {k:'customs',   nm:'Customs House',        verb:'transform', tgt:'ship', ic:'scroll-text',      g:2, n:2, eff:'Ship here boards casks 1 gate lower'},
+  {k:'workshop',  nm:'Brewmaster’s Workshop',verb:'transform', tgt:'cask', ic:'hammer',          g:3, n:1, eff:'Cask here acts as Wild'},
+  {k:'richberth', nm:'Rich Berth',           verb:'transform', tgt:'ship', ic:'anchor',           g:2, n:2, eff:'Ship here may sail 1 berth short'},
+  {k:'pilot',     nm:'Pilot’s House',        verb:'transform', tgt:'ship', ic:'compass',          g:3, n:1, eff:'On sail: reroute to a kontor ±1 gate', art:'ship-cog.png'},
+  {k:'staithe',   nm:'Open Staithe',         verb:'transform', tgt:'cask', ic:'sun',              g:2, n:1, eff:'Un-Ready casks may deploy here; age +1 per turn', art:'building-festkeller.png'},
+  {k:'ropewalk',  nm:'Rope Walk',            verb:'transform', tgt:'cask', ic:'cable',            g:2, n:1, eff:'Empty stop: gain 1 contract', art:'ship-back.png'},
+  {k:'grainex',   nm:'Grain Exchange',       verb:'transform', tgt:'cask', ic:'arrow-left-right', g:2, n:1, eff:'Empty stop: convert 2 goods', art:'building-gauger.png'},
+  {k:'missionq',  nm:'Mission Quay',         verb:'transform', tgt:'cask', ic:'church',           g:2, n:1, eff:'Empty stop: age a cask +1', art:'building-reliquary.png'},
+  // EXPANSION "Specialty Beers" (Option A) thematic tiles — print with the kit; use only with that module
+  {k:'salthouse', nm:'Salt House',          verb:'value',     tgt:'cask', ic:'gem',           g:2, n:1, eff:'Your cask departs: +1'+LU('wheat','g')+' +1'+LU('sprout','h')+' (no die)'},
+  {k:'smokekiln', nm:'Smoke Kiln',          verb:'transform', tgt:'cask', ic:'cloud',         g:2, n:1, eff:'Cask ships +1 quality (max Q5)'},
+  {k:'partigyle', nm:'Parti-Gyle Tun',      verb:'transform', tgt:'cask', ic:'split',         g:2, n:1, eff:'Deploy here: a free Gruit to a vessel'},
 ];
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 // (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
-const DEVELOP_PTS=3;     // v2.9 floor ★: a displaced building flips to its owner's floor (a Wild) and scores +3★ AT GAME END if still there; floor full → boxed, nothing banks. The overbuilder pays a 1G ground rent.
+const DEVELOP_PTS=0;     // v3.0-A [ruled]: flips score NOTHING — a displaced tile goes face-down to its owner's FLIP SHELF (max 2; full → boxed) as a Floor Wild, pure engine. The overbuilder still pays the 1G ground rent.
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
 // CELLAR (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
 // v82 "Scarce Improvements": these now form a SHUFFLED DECK of (n−1) copies of each type (n=players) feeding a
@@ -910,14 +978,14 @@ const DEVELOP_PTS=3;     // v2.9 floor ★: a displaced building flips to its ow
 //   lagerkeeper    → stacked casks dusted with frost and icicles
 //   quaymaster     → a private wooden jetty with a rope-wound mooring bollard
 // ============================================================================
-const IMPROVE=[   // SPECIALISTS = PURPLE (the third tile type, v2.4.1) · bought at the CELLAR, hired via the Q3+ Hire action, or London's benefit · v82: deck of n−1/type (3 each = the 4p deck)
-  {ic:'wrench',     nm:'Coppersmith', art:'a gleaming copper brew kettle',   act:'Extra Vessel', g:3, c:'#5b3a8e', n:3},
-  {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Age +1 '+LU('hourglass'), g:4, c:'#5b3a8e', n:3},
+const IMPROVE=[   // SPECIALISTS = PURPLE · bought at the CELLAR (Upgrade), hired free via the Q3+ 'Gain 1 specialist' cask action, or London's benefit · deck of n−1/type (3 each = the 4p deck) · they fill the player board's SPECIALIST ROW (2 open of 4; the Flight unlocks the covers)
+  {ic:'wrench',     nm:'Coppersmith', art:'a gleaming copper brew kettle',   act:'+1 vessel slot', g:3, c:'#5b3a8e', n:3},
+  {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Brews mature 1 step sooner', g:4, c:'#5b3a8e', n:3},
   {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:3, c:'#5b3a8e', n:3},
   {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:4, c:'#5b3a8e', n:3},
-  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Load 2 casks when Loading', g:3, c:'#5b3a8e', n:3},
-  {ic:'snowflake',  nm:'Lagerkeeper', art:'stacked casks dusted with frost and icicles',act:'All vessels +1 '+LU('hourglass')+' each turn', g:2, c:'#5b3a8e', n:3},
-  {ic:'anchor',     nm:'Quaymaster', art:'a private wooden jetty with a rope-wound mooring bollard',   act:LU('package-plus')+' / '+LU('ticket')+' / '+LU('crown')+' from Vessels', g:3, c:'#5b3a8e', n:3},
+  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Your Load: 2 casks', g:3, c:'#5b3a8e', n:3},
+  {ic:'snowflake',  nm:'Lagerkeeper', art:'stacked casks dusted with frost and icicles',act:'Floor Age pool +2', g:2, c:'#5b3a8e', n:3},
+  {ic:'anchor',     nm:'Quaymaster', art:'a private wooden jetty with a rope-wound mooring bollard',   act:LU('package-plus')+' Load / '+LU('navigation')+' Dispatch from your vessels', g:3, c:'#5b3a8e', n:3},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
@@ -925,9 +993,9 @@ const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'
 const CONTRACTS={nm:'Charter Contract', n:20};
 const RECIPES=[  // EXPORT recipe cards only — Gruit & Hopped are printed on the brewery board's tuck strip.
   // buy = Market acquire cost (RECIPE_BUY in play.html) · g/h = the BREW cost on the tucked edge.
-  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{h:1},     reach:'Q3 · all kontore (Hall via Enshrine) · FAST: ready 1'},
+  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{h:1},     reach:'Q3 · all kontore (the Hall via Dispatch) · FAST: ready 1'},
   {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'Q3 · all kontore · +1 presence on a kontor delivery'},
-  {nm:'Mumme',   cc:'#9a5526', L:4, g:1,h:3, buy:{h:2},     reach:'Q4 · all kontore (Hall via Enshrine)'},
+  {nm:'Mumme',   cc:'#9a5526', L:4, g:1,h:3, buy:{h:2},     reach:'Q4 · all kontore (the Hall via Dispatch)'},
   {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{g:1,h:1}, reach:'Q5 · all kontore · ungated'},
   // EXPANSION "Specialty Beers" (v1.9, opt-in) — the 3 specialty export recipe cards
   {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, buy:{g:1}, reach:'Q2 · grain-path (no hops) · SALT TRADE: a kontor delivery → +1G +1H'},
@@ -942,12 +1010,30 @@ const DESTS=[
   {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, val:'1',                maj:[4,2,0], role:'The Hub — the economy',          ben:{n:'+2',ic:'coins'},      bnote:'goods (liquidity)'},
   {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, val:'1',                maj:[5,3,1], role:'The Steelyard — the engine',     ben:{n:'+1',ic:'building-2'}, bnote:'a Building or Specialist, free'},
   {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, val:'1',                maj:[9,5,2], role:'Bryggen — the rich majority',    ben:{n:'+1',ic:'map-pin'},    bnote:'free Reach (+1 presence)'},
-  {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, scale:[['&lt;3',1],[3,2],[4,4],[5,6]], maj:[8,5,2], role:'The Long Haul — the quality climb', ben:{n:'+1',ic:'hourglass'},  bnote:'refine a cask, +1 age'},   // v2.9: the Q<3 row = the 1★ kontor floor (v2.9.1: only a Customs-admitted below-gate cask — the Gauger's now GRADES the cask +1, scoring at the gauged Q)
+  {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, scale:[['&lt;3',1],[3,2],[4,4],[5,6]], maj:[8,5,2], role:'The Long Haul — the quality climb', ben:{n:'+1',ic:'hourglass'},  bnote:'refine a cask, +1 age'},   // the Q<3 row = the 1★ kontor floor (only a Customs-admitted below-gate cask can land there; the Gauger is cut in v3.0-A)
 ];
-const HALL={nm:'The Hall', kc:'#5b3a8e', tint:'#efeaf6', req:2, role:'Prestige — the local Enshrine (no ship)', ladder:[[2,3],[3,5],[4,7],[5,9]]};
+const HALL={nm:'The Hall', kc:'#5b3a8e', tint:'#efeaf6', req:2, role:'Prestige — the shelf board · Dispatch (no ship)', ladder:[[2,3],[3,5],[4,7],[5,9]]};
+// v3.0-A THE HALL SHELF BOARD (mirrors play.html HALL_SHELVES): four quality-gated shelves, each a row of
+// printed HONOR spaces claimed with a cask cube. A Hall Dispatch (free, no boat; a deployed Q2+ cask) takes
+// any OPEN space on a shelf its effective quality reaches: bank the ROW ★ + the space's one honor + mark it.
+// All qualifying shelves full → the best row's ★ anyway (no honor, no cube — never nothing).
+// Active spaces per shelf ≈ n+1 (bounded by the printed row): the 4th space opens at 3p, the 5th at 4p.
+const HALL_SHELVES=[   // printed top-down, High Board first
+  {q:5, star:9, name:'The High Board',     spaces:['unlock','star3','bldgfree']},
+  {q:4, star:7, name:'The Masters’ Shelf', spaces:['spec','pres2','ageall1']},
+  {q:3, star:5, name:'The Long Shelf',     spaces:['pres1','recipefree','goods3','age2']},
+  {q:2, star:3, name:'The Common Shelf',   spaces:['goods2','contract','age2','g1h1','goods2']},   // goods/tempo only — never engine pieces
+];
+const HALL_HONOR={goods2:['coins','+2 goods'],contract:['ticket','+1 contract'],age2:['hourglass','age a cask +2'],
+  g1h1:['wheat','+1G +1H'],pres1:['map-pin','place 1 presence'],recipefree:['scroll-text','1 recipe, free'],
+  goods3:['package','+3 goods'],spec:['wrench','1 Specialist, free'],pres2:['map-pin','place 2 presence'],
+  ageall1:['hourglass','age ALL vessels +1'],unlock:['unlock','unlock 1 Floor slot'],star3:['star','+3★'],
+  bldgfree:['building-2','1 Building, free']};
 const SAILED={2:6,3:10,4:13};        // Sailed-Ships end clock per player count ⚙ (RULES §8 — 2–4p; v1.3 trimmed 7/11/14→6/10/13)
 const MAX_ROUND=25;                  // round ceiling ⚙ — top of the 12–25-round target band
-const OWN_DISCS=14;                  // ownership / presence discs per colour ⚙ — rides a cask → plants as kontor presence (majorities); also marks who owns a building on a slot
+const PRES_DISCS=12;                 // presence discs per colour ⚙ — ownership on a slot tile → delivered presence at a kontor; FINITE (the printed Reach wall)
+const CASK_CUBES=8;                  // cask cubes per colour ⚙ — ride a hull's berth well (the loaded cask's owner) + claim Hall shelf spaces
+const MAT_MARKERS=4;                 // maturation markers per colour ⚙ — one per vessel lane, sits on the cask card's printed aging track
 
 //==================================================================
 // GEOMETRY — one coordinate system (inches) drives the HTML layout,
@@ -982,7 +1068,7 @@ const IMPF_GEO  ={w:22,h:8.5,  y0:0.45,yMax:8.22};   // improvements + owner fra
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
 // NATIVE component sizes (in) — the design size each piece renders at; packRun scales the FOOTPRINT by SCALE and
 // the render wrapper scales the CONTENT to match. casks/ships 2.5″ · buildings 2″ · improvement cards 2×1″ · frames 2.5″.
-const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2.5,2.5],bld:[2,2],imp:[2,2],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};
+const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2.5,2.5],bld:[2,2],imp:[2,2],frame:[2.5,2.5],coverV:[2.4,2.4],coverS:[2,2],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
@@ -1018,22 +1104,21 @@ function buildingCard(d){const tg=BTGT[d.tgt];const foot=(d.verb==='value'?PRIV_
   // verb badge carries the sharing rule, no per-card payment chip needed.)
   const wf='';
   return '<div class="bcard" style="--c:'+foot+'">'
-  +artLayer('building-'+d.k+'.png')
+  +artLayer(d.art||('building-'+d.k+'.png'))
   +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span><span class="bc-verb">'+(d.verb==='value'?'PRIVILEGE':'BUILDING')+'</span></div>'
   +'<div class="bc-foot"><div class="bc-eff">'+d.eff+'</div>'
     +'<div class="bc-row"><span class="bc-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span>'+wf+cost(d.g,0)+'</div></div>'
   +'</div>';}
-// BUILDING CARD BACK (v2.9) — the flipped/displaced face: when your Building is overbuilt (the builder pays the
-// 1G ground rent) it returns to you flipped to its WILD side and parks in an improvement slot — it scores
-// +DEVELOP_PTS★ AT GAME END if still there (floor full → boxed). Shows the SAME building art + title (muted)
-// so it's identifiable, with the Wild action + the floor ★ in the foot.
+// BUILDING CARD BACK (v3.0-A) — the flipped/displaced face: when your tile is overbuilt (the builder pays
+// the 1G ground rent) it returns to you FACE-DOWN on your flip shelf (max 2; full → boxed) — a Floor WILD
+// stop, pure engine: flips score NOTHING. Shows the SAME building art + title (muted) so it's identifiable.
 function buildingBack(d){
   return '<div class="bcard bc-bk" style="--c:'+BLD_FOOT+'">'
-  +artLayer('building-'+d.k+'.png')
+  +artLayer(d.art||('building-'+d.k+'.png'))
   +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span></div>'
   +'<div class="bc-foot">'
     +'<div class="bc-row"><span class="bc-tgt">'+LU('sparkles')+'</span><span class="bc-wild">a <b>Wild</b> action on your Floor</span></div>'
-    +'<div class="bc-row"><span class="bc-sub">at game end,<br>on your floor</span><span class="bc-dev">+'+DEVELOP_PTS+LU('star')+'</span></div>'
+    +'<div class="bc-row"><span class="bc-sub">face-down on your<br>flip shelf (max 2)</span><span class="bc-dev">0'+LU('star')+'</span></div>'
   +'</div></div>';}
 // NEUTRAL destination-bound ship tile (v0.11): hull + capacity · printed destination + quality gate · commission 2 G
 function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
@@ -1126,10 +1211,13 @@ function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm
 function shipBack(){return '<div class="ccard ship-back" style="background:#33445a">'
   +'<div class="artbg"><img class="artbg-img" src="'+ART_DIR+'ship-back.png" alt=""></div></div>';}
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
-function disc(c){return '<div class="disc" style="--c:'+c+'">'+LU('circle')+'</div>';}
+function disc(c,ic){return '<div class="disc" style="--c:'+c+'">'+LU(ic||'circle')+'</div>';}
 // BUILDING OWNERSHIP FRAME (printables2) — a 2.5in player-colour base; a 2in Building tile sits on it, the
 // colour edge marking ownership. Drops into a 2.5in wharf slot.
 function frameTile(c,nm){return '<div class="frame" style="--c:'+c+'">'+(nm?'<span class="fl">'+nm+'</span>':'')+'</div>';}
+// UNLOCK COVER (v3.0-A) — a player-colour blank that sits on a locked vessel/Specialist slot; a Flight
+// unlock (your 2nd distinct beer BREWED, and on) removes one — either row, the player's choice.
+function coverTile(c,w){return '<div class="cover" style="--c:'+c+';width:'+w+'in;height:'+w+'in">'+LU('lock')+'<span>locked —<br>a Flight unlock<br>opens this slot</span></div>';}
 function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?'<span>'+d.nm+'</span>':'')+'</div>';}
 
 function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
@@ -1165,24 +1253,24 @@ function aidFront(){
     +'<div class="acols">'
       +'<div class="acol">'
         +'<h5>'+LU('list-ordered')+'Your Turn</h5>'
-        +'<div class="step"><span class="sn">1</span><span class="sx"><b>Move</b> to an orthogonally adjacent station (mandatory).</span></div>'
-        +'<div class="step"><span class="sn">2</span><span class="sx"><b>Choose a line</b>: the <b>row</b>, the <b>column</b>, or your <span class="em">Floor</span>. A <b>public</b> line while a rival shares your station: pay '+G+'1 (the Floor is free).</span></div>'
-        +'<div class="step"><span class="sn">3</span><span class="sx"><b>Resolve</b> the line’s stops in any order — <b>all optional</b>. Both stations fire; a slot’s occupant acts <i>as modified by</i> the building under it.</span></div>'
-        +'<h5>'+LU('home')+'The Floor</h5>'
-        +'<div class="ln">The standing <b>3rd line</b>: every vessel cask’s action + a <b>Wild</b> per flipped building — any order, all optional, <b>never tolled</b>.</div>'
-        +'<h5>'+LU('beer')+'The Cask</h5>'
-        +'<div class="ln"><b>Maturing</b> (vessel) → <b>Deployed</b> (a slot: public action + cargo) → <b>Delivered</b> (scores · leaves).</div>'
+        +'<div class="step"><span class="sn">1</span><span class="sx"><b>Move</b> to an adjacent station — or <b>stay home</b> and work your <span class="em">Floor</span>.</span></div>'
+        +'<div class="step"><span class="sn">2</span><span class="sx"><b>Choose a line</b> — the row or the column. A rival on your station: pay '+G+'1 (the Floor is never tolled).</span></div>'
+        +'<div class="step"><span class="sn">3</span><span class="sx"><b>Resolve the stops</b> in any order, all optional. A station = its printed <b>this-or-that</b>. A slot’s stop acts <b>on that slot</b>: empty → deploy HERE · your cask → its action · a ship → load THAT hull.</span></div>'
+        +'<h5>'+LU('home')+'The Floor (stay home)</h5>'
+        +'<div class="ln">Age <b>3</b> pool (+2 w/ the Lagerkeeper) · every vessel cask’s action · a <b>Wild</b> per flipped tile (max 2). Never tolled.</div>'
+        +'<h5>'+LU('barrel')+'Over-deploy</h5>'
+        +'<div class="ln">Onto <b>your own lower</b> Ready cask → it’s <b>tapped out</b> (its action fires, then boxed). Onto <b>anyone’s Q1</b> → it <b>sours</b> (boxed, nothing fires).</div>'
       +'</div>'
       +'<div class="acol">'
-        +'<h5>'+LU('anchor')+'The Four Stations</h5>'
-        +'<div class="ln">'+LU('store')+' <b>Market</b> — 2 goods, <i>or</i> 1: recipe · Building (display → <b>place at once</b>) · ship '+LU('sailboat')+' ('+G+'2, + free-load a deployed cask) · contract '+LU('ticket')+' ('+G+'1).</div>'
-        +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — Brew a recipe into an open vessel; or '+LU('barrel')+' <b>Deploy</b> a Ready cask (a Q4+ may take a deployed Q1&rsquo;s berth — the stale ale is boxed).</div>'
-        +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — any order: <b>Age</b> (3 pts, once) · <b>Tap</b> casks (the modified action, repeatable) · buy <b>Specialists</b> '+LU('wrench')+'.</div>'
-        +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — Load any <b>deployed</b> cask onto a ship (<b>sails when full</b>), <b>Enshrine</b> a Q2+ deployed cask, or <b>Charter</b> a deployed cask — <b>deploy first</b>; only the Quaymaster reaches the vessels.</div>'
+        +'<h5>'+LU('anchor')+'The Four Stations (this-or-that)</h5>'
+        +'<div class="ln">'+LU('store')+' <b>Market</b> — <b>Source</b> 2 goods <i>or</i> <b>Acquire</b> 1: recipe · slot tile (placed at once) · ship '+LU('sailboat')+' ('+G+'2 + a free load; onto a QUALIFYING cask’s slot, the pickup IS the load) · contract ('+G+'1).</div>'
+        +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — <b>Brew</b> <i>or</i> <b>Deploy</b> a Ready cask to any open slot.</div>'
+        +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — <b>Age</b> (3 pts) <i>or</i> <b>Upgrade</b> (buy 1 Specialist).</div>'
+        +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — <b>Load</b> a deployed cask <i>or</i> <b>Dispatch</b> ONE deployed cask: the <b>Hall</b> (free — claim a shelf space: row ★ + an honor) or a <b>kontor</b> (a contract + '+G+'2). Ships <b>sail when full</b>.</div>'
+        +'<h5>'+LU('dice-3')+'The Demand Die — one read</h5>'
+        +'<div class="ln">Your cask departs YOUR Privilege’s slot → its die is <b>set to the printed number</b>. Once, at departure — nothing recalculated. A rival’s cargo banks nothing. Delivery = destination value + the die.</div>'
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
-        +'<div class="ln"><b>Sailed-Ships</b> fills (6/10/13 for 2/3/4p) → finish the round → score:</div>'
-        +'<div class="ln">'+LU('crown','vi')+' <b>Hall</b> 3/5/7/9 · '+LU('landmark','vi')+' <b>kontor</b> starting value + the demand die (min 1'+LU('star','vi')+') · <b>majorities</b> · <span class="em">Flight</span> 3→4·4→9·5→16 (6→25 w/ Jopenbier) · <b>floor</b> +3'+LU('star','vi')+' per displaced Building kept on your floor.</div>'
-        +'<div class="ln"><span class="em">The demand die:</span> a real d6, <b>max 6</b> — <b>your</b> cask through <b>your</b> value Building sets it to the ★ <b>+ the premium</b> (Q4 +2 · Q5 +3); a ship-slot value Building bumps the same die at the sail. A rival’s cargo on your Building banks nothing (value = a privilege; transforms serve anyone). Delivery = destination starting value + the die.</div>'
+        +'<div class="ln"><b>Sailed-Ships</b> fills (6/10/13 for 2/3/4p) → finish the round → <b>majorities</b> + <span class="em">Flight</span> (beers delivered) 3→4 · 4→9 · 5→16 (6→25 w/ Jopenbier). Deliveries &amp; shelf ★ were banked in play; flips score 0.</div>'
       +'</div>'
     +'</div></div>';}
 function aidBack(){
@@ -1197,32 +1285,31 @@ function aidBack(){
         +'<h5>'+LU('coins')+'Goods &amp; Stations</h5>'
         +row('wheat','Grain','currency + brew input','gi')
         +row('sprout','Hops','currency + brew input','hi')
-        +row('store','Market','Source — goods / acquire a tile')
-        +row('flask-conical','Brewhouse','Brew (+ Deploy)')
-        +row('hourglass','Cellar','Age / Tap / Improve (any order)')
-        +row('ship','Harbor','Ship / Enshrine / Charter')
-        +'<h5>'+LU('beer')+'Cask Slot-Actions</h5>'
-        +row('coins','Source','+2 goods')
+        +row('store','Market','Source 2 goods / Acquire 1 tile')
+        +row('flask-conical','Brewhouse','Brew / Deploy')
+        +row('hourglass','Cellar','Age 3 / Upgrade (a Specialist)')
+        +row('ship','Harbor','Load / Dispatch (Hall free · kontor '+LU('ticket')+')')
+        +'<h5>'+LU('beer')+'Cask Actions — nine gains</h5>'
+        +row('coins','Source','+2 goods (any mix)')
         +row('hourglass','Age','age a cask +2')
-        +row('package-plus','Load','load a cask onto a ship (free)')
+        +row('package-plus','Load','load 1 cask, free')
         +row('map-pin','Reach','+1 presence (where delivered)')
+        +row('scroll-text','Recipe','a dealt export, buy −1G')
       +'</div></div>'
       +'<div class="acol"><div class="leg">'
-        +row('arrow-left-right','Convert','up to 2 goods G↔H')
-        +row('search','Survey','a Privilege/Building from the Wharf display, placed at once')
-        +row('wrench','Hire','a Specialist from the display, free (Q3+)')
-        +row('sparkles','Wild','any base action (Q4+)')
-        +'<h5>'+LU('building-2')+'Buildings &amp; Targets</h5>'
-        +row('star','Privilege','BLUE — pays its owner only (the die)','vi')
-        +row('hammer','Building','GREEN — serves any dock')
-        +row('wrench','Specialist','PURPLE — private, on your brewery board')
-        +row('beer','Cask','the occupant a building modifies')
-        +row('sailboat','Ship','neutral hull (Cog 2 / Hulk 3)')
+        +row('search','Building','from the Wharf display, placed (Q3+)')
+        +row('wrench','Specialist','from the Cellar display, free (Q3+)')
+        +row('flask-conical','Brew','brew 1 cask (Q4+)')
+        +row('crown','Enshrine','dispatch 1 deployed cask → the Hall (Q4+)')
+        +'<h5>'+LU('building-2')+'Slot Tiles</h5>'
+        +row('dice-3','Privilege','BLUE — prints ONE die number; owner only','vi')
+        +row('hammer','Building','GREEN — a work; serves any dock')
+        +row('sparkles','Flip','face-down on the flip shelf — a Floor Wild, 0★')
         +'<h5>'+LU('trophy')+'Shipping &amp; Score</h5>'
-        +row('ticket','Charter','a contract + '+G+'2 fare → 1 cask')
-        +row('crown','Enshrine','a Q2+ deployed cask → the Hall')
-        +row('star','★ Points','value · majority · prestige','vi')
-        +row('layers','Flight','distinct beers delivered')
+        +row('sailboat','Ship','neutral hull (Cog 2 / Hulk 3) — sails FULL')
+        +row('navigation','Dispatch','1 deployed cask: Hall free · kontor = '+LU('ticket')+' + '+G+'2')
+        +row('crown','Hall shelf','row ★ 3/5/7/9 + an honor · a cask cube claims')
+        +row('layers','Flight','distinct beers delivered · (n−1)²')
       +'</div></div>'
     +'</div></div>';}
 
@@ -1245,16 +1332,18 @@ function rkPrinted(cc,L,nm,g,h){   // a clone of a recipe card's bottom "c-strip
   return '<div class="rk printed" style="--cc:'+cc+'">'
     +'<div class="c-row"><span class="c-rung">'+LU(QI)+L+'</span><span class="c-nm">'+nm+'</span></div>'
     +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(g,h)+'</span></div></div>';}
-// ---- player board v3 — a TILE-SLOT bench sized to the components (not the page), chrome-stripped.
-// Top: 4 building/improvement slots (2in) + a compact Flight tally. Bottom: ONE recipe-stack slot (cards
-// are made to stack) + 3 cask-vessel slots (2.46in). The die-cut hugs this cluster (see the call site). ----
-function pbFlight(){   // v2.2: one space PER BEER — the component IS the record (a bare count can't be maintained).
-  // Gruit + Hopped (always) · 3 blank spaces for the dealt exports · Jopenbier (capstone — counts when in play).
-  // Scoring: (beers−1)², min 3 → 3→4 · 4→9 · 5→16 · 6→25.
+// ---- player board v4 (v3.0-A) — the board made physical: a VESSEL row (4 printed · 2 open) and a
+// SPECIALIST row (4 printed · 2 open) whose locked halves wear UNLOCK COVERS, a 2-space FLIP SHELF
+// (displaced tiles, face-down = Floor Wilds, 0★), the FLIGHT/UNLOCK strip (brewed = a mark + a cover
+// comes off from the 2nd beer on · delivered = the scoring state), the recipe rack, and the stay-home
+// Floor bar. Cask cards carry their own aging track; the vessel squares just seat the cards. ----
+function pbFlight(){   // one space PER BEER — the component IS the record; two states (brewed / delivered)
   const spaces=[['Gruit',''],['Hopped',''],['export',' z'],['export',' z'],['export',' z'],['Jopenbier',' z']];
-  const boxes=spaces.map(b=>'<div class="pb2-fbox'+b[1]+'"><span class="fn">'+b[0]+'</span><span class="fp">'+LU('beer')+'</span></div>').join('');
-  return '<div class="pb2-flight"><div class="fh">'+LU('layers')+'Flight</div>'
-    +'<div class="fsub">mark each beer’s first delivery · 3→4 · 4→9 · 5→16 · 6→25</div><div class="pb2-fboxes">'+boxes+'</div></div>';}
+  const boxes=spaces.map(b=>'<div class="pb3-fbox'+b[1]+'"><span class="fn">'+b[0]+'</span>'
+    +'<span class="fmk"><span class="m">'+LU('flask-conical')+'brewed</span><span class="m">'+LU('sailboat')+'delivered</span></span></div>').join('');
+  return '<div class="pb3-flight"><div class="fh">'+LU('layers')+'The Flight &amp; the Unlocks</div>'
+    +'<div class="fsub">1st brew of a beer → mark BREWED; from your 2nd beer on, each brewed mark removes an unlock cover (either row) · beers DELIVERED score 3→4 · 4→9 · 5→16 · 6→25</div>'
+    +'<div class="pb3-fboxes">'+boxes+'</div></div>';}
 function pbRecipe(){   // Gruit & Hopped (the starters) printed at the TOP; acquired recipe cards slide UP under them, stacking in the zone below
   const bar=(cc,L,nm,g,h)=>'<div class="pb2-rbar" style="background:'+cc+'"><span class="rq">'+LU(QI)+L+'</span>'
     +'<span class="rn">'+nm+'</span><span class="rc">'+cost(g,h)+'</span></div>';
@@ -1262,26 +1351,50 @@ function pbRecipe(){   // Gruit & Hopped (the starters) printed at the TOP; acqu
     +'<div class="pb2-rbase">'+bar('#6f7a82',1,'Gruit',1,0)+bar('#a67c1e',2,'Hopped',1,1)+'</div>'
     +'<div class="pb2-rstack">'+LU('layers')+'slide cards under</div></div>';}
 function pboard(p){
-  let blds='';for(let i=0;i<4;i++)blds+='<div class="pb2-slot pb2-bld"><span class="sn">Building /<br>Improvement</span>'
-    +'<span class="si">'+LU('building-2')+LU('wrench')+'</span></div>';
-  const vlabels=[['Vessel 1',false],['Vessel 2',false],['Extra Vessel',true]];
-  const vessels=vlabels.map(v=>'<div class="pb2-slot pb2-vsl'+(v[1]?' extra':'')+'"><span class="sn">'+v[0]+'</span>'
-    +'<span class="si">'+LU('beer')+'</span></div>').join('');
+  const slot=(cls,nm,ics,cov)=>'<div class="pb2-slot '+cls+(cov?' cov':'')+'">'
+    +(cov?'<span class="cvt">'+LU('lock')+'cover — a Flight unlock opens</span>':'')
+    +'<span class="sn">'+nm+'</span><span class="si">'+ics+'</span></div>';
+  let vessels='';for(let i=1;i<=4;i++)vessels+=slot('pb2-vsl','Vessel '+i,LU('beer'),i>2);
+  let specs='';for(let i=1;i<=4;i++)specs+=slot('pb2-bld','Specialist '+i,LU('wrench'),i>2);
+  const flipsh='<div class="pb2-flipsh"><div class="fsh">'+LU('undo-2')+'Flip shelf</div>'
+    +'<div class="pb2-slot pb2-flip"><span class="sn">Flip 1</span><span class="si">'+LU('sparkles')+'</span></div>'
+    +'<div class="pb2-slot pb2-flip"><span class="sn">Flip 2</span><span class="si">'+LU('sparkles')+'</span></div>'
+    +'<div class="fnote">displaced tiles, face-down — a Floor <b>Wild</b> each · max 2 · score 0</div></div>';
   return '<div class="pb2" style="--pc:'+p.c+'">'
     +'<div class="pb2-id"><div class="pb2-crest">'+LU('beer')+'</div><div class="pb2-name">'+p.nm+'</div>'
-      +'<div class="pb2-goods">'+LU('wheat')+LU('sprout')+'goods max&nbsp;<b>8</b></div></div>'
-    +'<div class="pb2-top"><div class="pb2-blds">'+blds+'</div>'+pbFlight()+'</div>'
-    +'<div class="pb2-bot">'+pbRecipe()+'<div class="pb2-vessels">'+vessels+'</div></div>'
+      +'<div class="pb2-goods">'+LU('ticket')+'start&nbsp;<b>2</b>&nbsp;contracts</div>'
+      +'<div class="pb2-goods nomargin">'+LU('wheat')+LU('sprout')+'goods max&nbsp;<b>8</b></div></div>'
+    +'<div class="pb2-row"><div class="pb2-vessels">'+vessels+'</div>'+pbRecipe()+'</div>'
+    +'<div class="pb2-row"><div class="pb2-blds">'+specs+'</div>'+flipsh+'</div>'
+    +pbFlight()
+    +'<div class="pb2-floor">'+LU('home')+'<span><b>THE FLOOR — stay home:</b> instead of moving, work your board — Age <b>3</b> pool (+2 with the Lagerkeeper) · every vessel cask’s action · a Wild per flipped tile · never tolled</span></div>'
   +'</div>';}
 
+// ---- THE HALL SHELF BOARD (v3.0-A) — its own letter board: four quality-gated shelves, each a row of
+// honor spaces with a printed cube seat; claimed by a Hall Dispatch (row ★ + the space's one honor). ----
+function hallBoard(){
+  const shelf=sh=>{
+    const sp=sh.spaces.map((k,i)=>{const h=HALL_HONOR[k];
+      const b=i===3?'<span class="lbadge">3p+</span>':(i===4?'<span class="lbadge">4p</span>':'');
+      return '<div class="hb-sp">'+b+LU(h[0])+'<span class="t">'+h[1]+'</span><div class="cube"></div></div>';}).join('');
+    return '<div class="hb-shelf"><div class="hb-side"><span class="hb-nm">'+sh.name+'</span>'
+      +'<span class="hb-gate">'+LU(QI)+'Q'+sh.q+'+ · deployed</span>'
+      +'<span class="hb-star">'+LU(VP)+sh.star+'<i>&nbsp;row ★</i></span></div>'
+      +'<div class="hb-spaces">'+sp+'</div></div>';};
+  return '<div class="hallb">'
+    +'<div class="hb-head"><h2>'+LU('crown')+'The Hall — the shelf board</h2>'
+    +'<span class="hb-sub"><b>Dispatch</b> (Harbor · free, no ship): withdraw one of your <b>deployed Q2+</b> casks and claim any OPEN space on a shelf its effective quality reaches — bank the <b>row ★</b> + the space’s <b>one honor</b>, mark the space with your <b>cask cube</b>, and advance the Sailed-Ships clock.</span></div>'
+    +'<div class="hb-shelves">'+HALL_SHELVES.map(shelf).join('')+'</div>'
+    +'<div class="hb-foot"><b>Active spaces = players + 1</b> per shelf (the <b>3p+</b> / <b>4p</b> badges mark the late spaces). A higher cask may take a lower shelf’s space (a Bock on the Common Shelf, for its honor). Every shelf you qualify for full → bank the best qualifying row’s ★ anyway — no honor, no cube (<i>never nothing</i>).</div>'
+  +'</div>';}
 // ---- destinations board ----
 function kpanel(d,hall){
   const title='<div class="ktitle"><span class="kname">'+LU(hall?'crown':'landmark')+d.nm+'</span><span class="kreq">'+LU(QI)+d.req+'+</span></div>';
   if(hall){
     // THE HALL — a prestige ladder (Q → ★), reached by the local Enshrine (no ship)
     const ladder='<div class="kladder">'+d.ladder.map(qv=>'<div class="lr"><span class="lq">Q'+qv[0]+'</span><span class="lv">'+LU(VP)+qv[1]+'</span></div>').join('')+'</div>';
-    const body='<div class="ksect hall"><div class="ksh">'+LU('crown')+'prestige · by Q</div>'+ladder+'</div>'
-      +'<div class="hall-note"><b>Enshrine</b> — Q2+ deployed, no ship</div>';
+    const body='<div class="ksect hall"><div class="ksh">'+LU('crown')+'row ★ · by shelf gate</div>'+ladder+'</div>'
+      +'<div class="hall-note"><b>Dispatch</b> — Q2+ deployed, free, no ship · claim a space on the <b>Hall shelf board</b> (row ★ + an honor)</div>';
     return '<div class="kpanel hall" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+title+'<div class="kbody"><div class="krole">'+d.role+'</div>'+body+'</div></div>';
   }
   // per-cask VALUE — flat star number, or a by-quality mini-row for Novgorod (scales with quality)
@@ -1305,7 +1418,7 @@ function dboard(){
   // 1.25″ tile stacks — wrong size for this kit's 2″ cask CARDS — so it was removed; the cask cards ARE the supply.)
   return '<div class="dboard">'
     +'<div class="db-head"><h2>'+LU('landmark')+'Destinations</h2>'
-      +'<span class="dsub">where you ship — the four kontore (value &amp; majorities) · the Hall (prestige)</span>'
+      +'<span class="dsub">where you ship — the four kontore (value &amp; majorities) · the Hall claims on its own SHELF BOARD (prestige)</span>'
       +'<span class="legend"><span><b>'+LU(QI,'ql')+'</b> min cask quality</span><span><b>'+LU(VP,'vp')+'</b> per-cask value <i>(+ value-Buildings)</i></span><span><b>'+LU('landmark','vp')+' 1/2/3</b> end-game majority</span></span></div>'
     +'<div class="kontor-row">'+DESTS.map(d=>kpanel(d,false)).join('')+kpanel(HALL,true)+'</div>'
   +'</div>';}
@@ -1430,15 +1543,14 @@ const CROSS_ART=(function(){const Wd=WHARF_W+2*CROSS_BLEED, halfArm=(CROSS_B-CRO
 function wharfCross(){
   const slot='<div class="wslot">'+LU('barrel')+'</div>';   // empty slot's default action = Deploy (the barrel icon)
   const clip='<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="crossclip" clipPathUnits="objectBoundingBox"><path d="'+roundedPlusPath(CROSS_ART.a,CROSS_ART.b,CROSS_ART.r).d+'"/></clipPath></defs></svg>';
-  const OR='<span class="sep">/</span>';
-  const AND='<span class="sep">+</span>';   // brew AND deploy (both happen), vs OR alternatives
+  const OR='<span class="sep">/</span>';   // v3.0-A: every station is a printed THIS-OR-THAT — two actions, big
   const wharf='<div class="wharf">'
     +'<div></div>'+slot+slot+'<div></div>'
     +slot
-    +station('A','Market','store','<b>2</b>'+LU('coins')+OR+LU('scroll-text')+OR+LU('building-2')+OR+LU('sailboat'))
-    +station('B','Brewhouse','flask-conical',LU('beer')+AND+LU('barrel'))
+    +station('A','Market','store','<b>2</b>'+LU('coins')+OR+LU('shopping-cart'))
+    +station('B','Brewhouse','flask-conical',LU('beer')+OR+LU('barrel'))
     +slot+slot
-    +station('C','Harbor','ship',LU('package-plus')+OR+LU('crown')+OR+LU('ticket'))
+    +station('C','Harbor','ship',LU('package-plus')+OR+LU('navigation'))
     +station('D','Cellar','hourglass','<b>3</b>'+LU('hourglass')+OR+LU('wrench'))
     +slot
     +'<div></div>'+slot+slot+'<div></div>'
@@ -1498,13 +1610,13 @@ function supplyBoard(){
   const smpShip=[shipCard('cog','Bruges'),shipCard('hulk','Bergen'),shipCard('cog','Novgorod')];
   const smpRec=RECIPES.slice(0,4).map(recipeCard), smpCon=contractCard();
   const smpImp=[0,1,4,6].map(i=>improveTile(IMPROVE[i]));
-  const market='<div class="disp-h m">'+LU('store')+'Market<span class="sm">— a Market visit buys any ONE of these (or take 2 goods)</span></div>'
-    +shelf('Buildings — the Wharf display of 4','building-2',smpBld.map(s=>dslot('b','building-2',s)).join(''))
+  const market='<div class="disp-h m">'+LU('store')+'Market<span class="sm">— Acquire buys any ONE of these (or Source 2 goods)</span></div>'
+    +shelf('Privileges &amp; Buildings — the Wharf display of 4','building-2',smpBld.map(s=>dslot('b','building-2',s)).join(''))
     +shelf('Ships — the market of 3 · commission 2G','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''))
     +'<div class="shelf-lbl">'+LU('scroll-text')+'Recipes — the dealt export stacks &amp; the Charter contracts (1G)</div>'
     +'<div class="shelf">'+smpRec.map(s=>dslot('r','scroll-text',s)).join('')
       +'<div class="dslot r ct">'+LU('ticket')+'<span class="rn">Contracts</span>'+(OVERLAY?'<div class="ovl">'+smpCon+'</div>':'')+'</div></div>';
-  const cellar='<div class="disp-h i">'+LU('wrench')+'Cellar<span class="sm">— Specialists: buy here, Hire (Q3+), or London’s benefit</span></div>'
+  const cellar='<div class="disp-h i">'+LU('wrench')+'Cellar<span class="sm">— Specialists: Upgrade buys here · the Q3+ cask action hires free · London’s benefit</span></div>'
     +shelf('Specialists — the Cellar display of 4','wrench',smpImp.map(s=>dslot('i','wrench',s)).join(''));
   // Sailed-Ships: 15 cells, both end-marks printed — base (flag) and The Trade Roads +2 (truck)
   const ROADS_SAILED={2:8,3:12,4:15};
@@ -1547,7 +1659,7 @@ function supplyBoard(){
     +'<div class="kp-t">'+LU('crown')+HALL.nm+'<span class="kp-q">'+LU(QI)+HALL.req+'+</span></div>'
     +'<div class="kp-pz nb"></div>'
     +'<div class="kp-rows col"><div class="kp-lad">'+HALL.ladder.map(qv=>'<span class="lr">Q'+qv[0]+'<b>'+LU(VP)+qv[1]+'</b></span>').join('')+'</div>'
-    +'<div class="kp-note ctr"><b>Enshrine</b> — Q2+ deployed, no ship</div></div>'
+    +'<div class="kp-note ctr"><b>Dispatch</b> — Q2+ deployed, free · claim on the shelf board</div></div>'
   +'</div>';
   const dests='<div class="sup-dests">'
     +'<div class="disp-h k">'+LU('landmark')+'Kontore<span class="sm">— ship there: value + the die · majorities at game end</span></div>'
@@ -1671,11 +1783,15 @@ function buildPages(){
   const wpg=pages[pages.length-1];
   const wtok=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wtok.push(tok(d));});
   packRegion(pages,wpg,'tok',wtok,10.0,0.7,21.9,6.2,'Goods tokens',famPages);
-  const wdisc=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(OWN_DISCS);i++)wdisc.push(disc(p.c));});
-  packRegion(pages,wpg,'disc',wdisc,10.0,6.4,21.9,9.9,'Ownership discs',famPages);
+  const wdisc=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(PRES_DISCS);i++)wdisc.push(disc(p.c));});
+  packRegion(pages,wpg,'disc',wdisc,10.0,6.4,21.9,8.05,'Presence discs',famPages);
+  const wbits=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(CASK_CUBES);i++)wbits.push(disc(p.c,'beer'));
+    for(let i=0;i<cnt(MAT_MARKERS);i++)wbits.push(disc(p.c,'hourglass'));});
+  packRegion(pages,wpg,'disc',wbits,10.0,8.15,21.9,9.9,'Cask cubes (beer) + maturation markers (hourglass)',famPages);
   supplyBoardSheet(pages);   // the Supply & Tracks board — its own sheet (work in progress; not finalized)
   letterBoard(pages,'boards','Destinations board',dboard());
   letterBoard(pages,'boards','Trade Roads — Overland (back of Destinations)',olboard());
+  letterBoard(pages,'boards','The Hall shelf board',hallBoard());
   // (player brewery boards are generated LAST — at the bottom of the page — see below)
   // --- CARDS vs TILES — split by HOW they print, but BOTH are duplex (a FRONT sheet + a matching reversed BACK
   // sheet — fronts and backs never share a sheet):
@@ -1706,9 +1822,9 @@ function buildPages(){
     const fam=meta[i++].fam;(famPages[fam]=famPages[fam]||new Set()).add(pages.indexOf(fp));}));}
 
   // --- CASK & SHIP CARDS → LETTER (8.5×11), double-sided (flip LEFT↔RIGHT) ---
-  // cask cards: Gruit all-Source (pinned); Q2+ cycle the draw-pool (Q4/Q5 include Wild) — the printed mix IS the brew-draw
+  // cask cards: Gruit all-Source (pinned); Q2+ cycle their quality's GATED pool (survey/hire Q3+ · brew/enshrine Q4+) — the printed mix IS the brew-draw
   const cardFronts=[];
-  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:(d.wild?CASK_POOL.concat([CASK_WILD]):CASK_POOL);
+  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);
     for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];cardFronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
   const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
   shipList.forEach(([hull,dest])=>cardFronts.push({fam:'Ships',kind:'ship',ship:true,html:shipCard(hull,dest)}));   // ships = full-bleed 2.5″ cards
@@ -1731,13 +1847,17 @@ function buildPages(){
   packRun(pages,'bits',TLBL_BLD,'bld',bldFrontHtml,null,famPages,TILE_GEO);
   const bldFrontPages=pages.slice(tStart);
   tagFamilies(bldFrontPages,bldMeta);
-  mirrorBackPages(bldFrontPages,bldMeta,TILE_GEO,'Building tile BACKS (mirror — flip LEFT↔RIGHT): each building’s Wild + '+DEVELOP_PTS+'★','bits');
+  mirrorBackPages(bldFrontPages,bldMeta,TILE_GEO,'Building tile BACKS (mirror — flip LEFT↔RIGHT): each tile’s face-down Wild (flips score nothing)','bits');
   // IMPROVEMENTS + owner FRAMES are SINGLE-SIDED → their own trimmed sheet (no back).
   const TLBL_IMPF='Specialists + owner frames (22″ plotter · single-sided · cut apart)';
   const imps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)imps.push(improveTile(d));});
   packRun(pages,'bits',TLBL_IMPF,'imp',imps,'Improvements',famPages,IMPF_GEO);
   const frames=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(6);i++)frames.push(frameTile(p.c,p.nm));});
   packRun(pages,'bits',TLBL_IMPF,'frame',frames,'Building frames',famPages,IMPF_GEO);
+  // UNLOCK COVERS (v3.0-A) — 2 vessel-size + 2 Specialist-size per player (COMPONENTS §4)
+  const covV=[],covS=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(2);i++){covV.push(coverTile(p.c,2.4));covS.push(coverTile(p.c,2));}});
+  packRun(pages,'bits',TLBL_IMPF,'coverV',covV,'Unlock covers',famPages,IMPF_GEO);
+  packRun(pages,'bits',TLBL_IMPF,'coverS',covS,'Unlock covers',famPages,IMPF_GEO);
   // --- RECIPE CARDS (cardstock — do not mount; they tuck under the board edge) ---
   const cards=[];const sets=MODE==='proof'?1:PLAYERS.length;
   for(let s=0;s<sets;s++)RECIPES.forEach(r=>cards.push(recipeCard(r)));
@@ -1751,7 +1871,7 @@ function buildPages(){
   pages.filter(p=>p.section==='cards').forEach(p=>p.papercut=true);
   // --- PLAYER BOARDS (moved to the BOTTOM of the page, just before the checklist) ---
   PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>{   // tight die-cut hugging the slot cluster (not a page-filling rect)
-    const W=9.64,H=5.25,sw=+(W*SCALE).toFixed(4),sh=+(H*SCALE).toFixed(4),X=+((PG.w-sw)/2).toFixed(2),Y=0.55,pg=newPage(pages,'boards','Player board — '+p.nm);
+    const W=12.0,H=7.0,sw=+(W*SCALE).toFixed(4),sh=+(H*SCALE).toFixed(4),X=+((PG.w-sw)/2).toFixed(2),Y=0.55,pg=newPage(pages,'boards','Player board — '+p.nm);
     pg.items.push({x:X,y:Y,w:sw,h:sh,nat:[W,H],html:pboard(p)});
     pg.rrect={x:X,y:Y,w:sw,h:sh,r:+(0.18*SCALE).toFixed(4)};
   });
@@ -1778,35 +1898,39 @@ function checklist(pages,famPages){
   const D='style="font-size:.085in;color:#5b4a37;font-weight:normal;line-height:1.26;margin-top:.005in"';
   const R=(nm,detail,n)=>'<tr><td class="bx"></td><td><b>'+nm+'</b>'+(detail?'<div '+D+'>'+detail+'</div>':'')+'</td><td class="n">'+n+'</td></tr>';
   const T=title=>'<table><tr><th></th><th>'+title+'</th><th>qty</th></tr>';
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v2.9 “Ground Rent”)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v3.0-A.1 “Path A”)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The base game below; the three opt-in expansions are listed last. With all expansions off, the box is exactly the base set. (Counts are a working first pass.)</p>'
     +'<div class="cols2">';
   h+=T('Boards')
     +R('Main board — the Wharf','The 2×2 of stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots, plus the Sailed-Ships end-clock track.','1')
-    +R('Destinations board','The four kontore (Bruges · London · Bergen · Novgorod) + the Hall — each with its quality gate, base value, on-delivery benefit, and (kontore) a majority track.','1')
+    +R('Destinations board','The four kontore (Bruges · London · Bergen · Novgorod) — each with its quality gate, printed value, on-delivery benefit, and majority track (the Hall panel points at its shelf board).','1')
+    +R('The Hall shelf board','Four quality-gated shelves (Q2→3★ · Q3→5★ · Q4→7★ · Q5→9★), each a row of printed honor spaces claimed with cask cubes — active spaces = players +1. A Hall Dispatch (free, no ship) banks the row ★ + one honor.','1')
     +R('Market &amp; Stores board','The shared displays at component size (Buildings 4 · Ships 3 · recipe stacks + contracts · Specialists 4 — each display refills from its DRAW BAG, no deck spaces), the DESTINATIONS column (the four kontore — gate · value · benefit · majority · an open presence zone — with the Hall set apart), the Sailed-Ships clock (15 cells, dual END marks — base and The Trade Roads), and the 50-cell score ring wrapping the rim (0–49, +50 on the second lap). Loose bits (goods cubes · demand dice · quality markers) live in a supply tray.','1')
-    +R('Player brewery boards','One per player: vessel lanes (start 2, cap 3), the maturation track, a recipe rack, improvement slots, the Flight strip, and goods storage (cap 8).',PLAYERS.length)
+    +R('Player brewery boards','One per player: the vessel row (4 printed · 2 open), the Specialist row (4 printed · 2 open), the flip shelf (2), the Flight/unlock strip (brewed / delivered), a recipe rack, the stay-home Floor bar, and goods storage (cap 8).',PLAYERS.length)
     +'</table>';
   h+=T('Tiles (mount on chipboard, laser-cut)')
-    +R('Cask tiles — the beer supply','A shared pool, brewed not bought (min 6 per type): Gruit ×16 · Hopped ×20 · Broyhan ×6 · Keut ×6 · Mumme ×8 · Bock ×6. Each shows a quality (Q1–Q5) and one slot-action. Deal 3 of the 4 export beers each game.','62')
+    +R('Cask tiles — the beer supply','A shared pool, brewed not bought (min 6 per type): Gruit ×16 · Hopped ×20 · Broyhan ×6 · Keut ×6 · Mumme ×8 · Bock ×6. Each shows a quality (Q1–Q5) and ONE specific-gain slot-action (the pool is quality-gated). Deal 3 of the 4 export beers each game; a NEW distinct beer brewed marks the Flight strip.','62')
     +R('Ship tiles','Neutral hulls, a kontor printed on each — Cog (holds 2) ×11 · Hulk (holds 3) ×9; five to each of the four kontore. Drawn off a shuffled deck into a face-up market of 3.','20')
-    +R('Building tiles','The owned slot modifiers, '+baseBld.length+' designs (each tile double-sided: art front / displaced Wild back, +'+DEVELOP_PTS+'★). <b>Value —</b> '+designs(baseVal)+'. <b>Transform —</b> '+designs(baseTr)+'.',sumN(baseBld))
+    +R('Slot tiles — Privileges &amp; Buildings','The owned slot modifiers, '+baseBld.length+' designs (double-sided: art front / a face-down Wild back — flips score nothing). <b>Privileges (blue — one printed die number) —</b> '+designs(baseVal)+'. <b>Buildings / works (green) —</b> '+designs(baseTr)+'.',sumN(baseBld))
     +R('Specialist tiles','The private brewery-board tiles, 7 designs: '+IMPROVE.map(d=>d.nm).join(' · ')+'. A shuffled display at the Cellar — 3 copies of each type (n−1 per type), enough for 4 players.',impTotal)
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')
     +R('Recipe cards (export)','One set of four per player: Broyhan · Keut · Mumme · Bock. (Gruit &amp; Hopped are printed on the brewery board.)',4*PLAYERS.length)
-    +R('Charter contracts','The relief-valve certificates — start 2 per house, buy more (1 G), spend one + a 2 G fare for a single-cask voyage.',CONTRACTS.n)
+    +R('Charter contracts','The kontor-Dispatch certificates — start 2 per house, buy more (1 G); a kontor Dispatch spends one + the flat 2 G fare.',CONTRACTS.n)
     +R('Player aid cards','Double-sided quick reference (a turn / the icon key), one per player.',PLAYERS.length)
     +'</table>';
   h+=T('Tokens &amp; bits')
     +R('Grain cubes','Currency &amp; brew input (G).','60')
     +R('Hops cubes','Currency &amp; brew input (H).','40')
     +R('Worker pawns','One per player; moved between stations.',PLAYERS.length)
-    +R('Ownership / presence discs','Per player colour — marks a cask you own, then plants at a kontor as your presence (for majorities).',OWN_DISCS+' ea')
+    +R('Presence discs','Per player colour — ownership on a slot tile (with a frame) → delivered presence at a kontor (majorities). FINITE: the printed Reach wall.',PRES_DISCS+' ea')
+    +R('Cask cubes','Per player colour — ride a hull’s berth well (the loaded cask’s owner) and claim Hall shelf spaces.',CASK_CUBES+' ea')
+    +R('Maturation markers','Per player colour — one per vessel lane, advances on the cask card’s printed aging track.',MAT_MARKERS+' ea')
+    +R('Unlock covers','Per player colour — sit on the locked vessel/Specialist slots (2 each); a Flight unlock removes one (either row).','4 ea')
     +R('Draw bags','One per hidden tile supply — Ships · Buildings/Privileges · Specialists (their backs reveal the type, so the supply hides in a bag; displays refill by blind draw).','3')
     +R('Building-owner frames','Per player colour — a card-kit-specific overlay marking whose building card sits on a slot (printables.html marks this with the same disc instead).','6 ea')
-    +R('Demand dice (d6)','The reusable value carrier — a cask shipped through ITS OWNER’S value building rides one in its berth (ship-slot value buildings bump the same die at the sail; max 6); the pips are the ★ it banks on delivery.','8')
-    +R('Quality-boost markers','A +1-quality token a cask carries from a Malt Kiln / Hop Yard to delivery.','6')
+    +R('Demand dice (d6)','The one-read value carrier — set ONCE, at departure, to the number printed on the owner’s Privilege; rides the hull’s berth well; the pips are the ★ banked on delivery. Never rolled, never recalculated.','8')
+    +R('Quality-boost markers','A +1-quality token a cask carries from a Malt Kiln / Hop Yard (gates AND points) to delivery.','6')
     +R('First-player &amp; round markers','Turn order (fixed all game) + the round track.','2')
     +'</table>';
   h+=T('Expansions (opt-in — added only when used)')
@@ -1890,10 +2014,10 @@ function exportItems(){
   // BOARDS — the wharf cross (its own scale: a big board upscales the 1024² art, so a modest ×2 keeps the file sane)
   it.push({type:'board',name:'wharf',side:'',w:WHARF_W+2*CROSS_BLEED,h:WHARF_W+2*CROSS_BLEED,scale:2,clip:'cross',html:wharfCross()});
   // CASKS — EVERY distinct tile (beer × action). The slot-action drawn at brew is the replayability: pinned beers
-  // are one variant; Q2+ beers cycle the 6-action pool (Mumme & Bock add the Q4+ Wild). We mirror exactly what the
+  // are one variant; Q2+ beers cycle their quality's gated pool (survey/hire Q3+ · brew/enshrine Q4+). We mirror exactly what the
   // print sheets lay down (buildPages) and emit one asset per DISTINCT action — identical copies are byte-identical
   // PNGs, so deduping by action key gives the full variety with no redundant files. Named cask-<beer>-<action>.
-  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:(d.wild?CASK_POOL.concat([CASK_WILD]):CASK_POOL);
+  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);
     const seen=new Set();
     for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];if(seen.has(act.k))continue;seen.add(act.k);
       const nm=slug(d.nm)+'-'+act.k;
