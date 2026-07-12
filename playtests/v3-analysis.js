@@ -40,8 +40,8 @@ for (const f of files) {
   g.pickups = (txt.match(/dockside pickup/g) || []).length;
   g.rent = (txt.match(/pays the ground rent/g) || []).length;
   g.boxed = (txt.match(/returned to the box/g) || []).length;
-  g.unlV = (txt.match(/unlocks vessel slot/g) || []).length;
-  g.unlS = (txt.match(/unlocks Specialist slot/g) || []).length;
+  g.unlV = (txt.match(/opens Floor slot/g) || []).length;   // v3.1 ONE ROW: unlocks open the next cover (no rows)
+  g.unlS = 0;
   g.specBuys = (txt.match(/fits the .* Specialist/g) || []).length;
   g.dieSets = (txt.match(/the die is set to/g) || []).length;
   g.overflow = (txt.match(/shelves are full — open floor/g) || []).length;

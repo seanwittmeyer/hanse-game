@@ -1,0 +1,495 @@
+############ GAME 2p-rg-4 · seed 572 · 2p · KEY hanse-v31 ############
+seats: Guild [guildmaster] · Racer [trader/racer]
+exports dealt: Q3 Broyhan · Q4 Mumme · Q5 Bock · sailed-ships cap 7 · warm start:
+  s4 (rowB): [bldg Customs House neutral] 
+  s6 (colL): ship Hulk->Bruges
+  s5 (colR): [bldg Malt Kiln neutral] ship Hulk->London
+
+== R1 · turn 1 · Guild [guildmaster] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild places their worker at Market
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G1 +H1
+  Guild sources goods at the Market.
+  ↳ Guild spends −G1
+  Guild brews Gruit Ale (Q1 · matures in 1 step).
+  Guild sets a Ready Gruit on a slot.
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R1 · turn 2 · Racer [trader/racer] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Racer places their worker at Brewhouse
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −H1
+  Racer buys the Broyhan recipe (Q3).
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G1 −H2
+  Racer brews Broyhan (Q3 · matures in 1 step).
+  ↳ Racer’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  Racer sets a Ready Gruit on a slot.
+  Guild’s casks mature (+1) over the turn.
+
+== R2 · turn 3 · Guild [guildmaster] · G3 H3 ct2 | vessels[-,Gruit!] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Guild moves to Brewhouse
+  Guild pays −G1 occupancy toll for sharing Brewhouse.
+  Guild activates Right col · Brewhouse + Cellar
+  ↳ Guild spends −G1 −H1
+  Guild brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Guild’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  ↳ Hopped ages +1 → 1/1 READY.
+  Guild sets a Ready Hopped on a slot.
+  Guild loads Hopped onto the Hulk → London (1/3).
+  Racer’s casks mature (+1) over the turn.
+
+== R2 · turn 4 · Racer [trader/racer] · G3 H0 ct2 | vessels[-,Broyhan!,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Racer moves to Market
+  Racer activates Left col · Market + Harbor
+  ↳ Racer spends −G2
+  Racer buys Bergen Bryggen at the Market — place it on a slot.
+  Racer authors Bergen Bryggen on a slot — Your cask departs: die 4. Bergen only.
+  Racer sets a Ready Broyhan on a slot (under Bergen Bryggen).
+  Racer loads Broyhan onto the Hulk → London (2/3).
+  Racer loads Gruit onto the Hulk → Bruges (1/3).
+
+== R3 · turn 5 · Guild [guildmaster] · G1 H2 ct2 | vessels[-,Gruit!,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Guild moves to Market
+  Guild pays −G1 occupancy toll for sharing Market.
+  Guild activates Left col · Market + Harbor
+  ↳ Guild spends −H2
+  Guild buys the Mumme recipe (Q4).
+  Guild sets a Ready Gruit on a slot (under Bergen Bryggen).
+
+== R3 · turn 6 · Racer [trader/racer] · G1 H0 ct2 | vessels[-,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Racer moves to Brewhouse
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G1 −H2
+  Racer brews Broyhan (Q3 · matures in 1 step).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R4 · turn 7 · Guild [guildmaster] · G0 H0 ct2 | vessels[-,-,-] deployed:2 | score 0 (dlv 0 maj 0 flt 0)
+  Guild moves to Harbor
+  Guild activates Bottom row · Harbor + Cellar
+  ↳ s7 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+  Racer’s casks mature (+1) over the turn.
+
+== R4 · turn 8 · Racer [trader/racer] · G2 H0 ct2 | vessels[Broyhan!,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Racer moves to Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G1 −H2
+  Racer brews Broyhan (Q3 · matures in 1 step).
+  Racer sets a Ready Broyhan on a slot.
+
+== R5 · turn 9 · Guild [guildmaster] · G0 H0 ct2 | vessels[-,-,-] deployed:2 | score 0 (dlv 0 maj 0 flt 0)
+  Guild moves to Market
+  Guild activates Left col · Market + Harbor
+  ↳ Guild gains +G2
+  Guild sources goods at the Market.
+  ↳ Guild gains +G1 +H1
+  Guild loads Gruit onto the Hulk → Bruges (2/3).
+  Guild loads Gruit onto the Hulk → Bruges (3/3).
+  ★ the Hulk sails to Bruges with 3 casks! Every cask aboard is delivered. (Sailed-Ships 1/7)
+  ↳ Racer gains +G1 +H1
+  ↳ Racer takes the Bruges liquidity benefit (2 goods).
+  ↳ Guild gains +G1 +H1
+  ↳ Guild takes the Bruges liquidity benefit (2 goods).
+  ↳ Guild gains +G1 +H1
+  ↳ Guild takes the Bruges liquidity benefit (2 goods).
+  Racer’s casks mature (+1) over the turn.
+
+== R5 · turn 10 · Racer [trader/racer] · G4 H1 ct2 | vessels[-,Broyhan!,-] deployed:1 | score 1 (dlv 1 maj 0 flt 0)
+  Racer moves to Harbor
+  Racer activates Left col · Market + Harbor
+  ↳ Racer spends −G2
+  Racer commissions the Hulk bound for Bergen — place it on a slot.
+  ↳ the Hulk docks ON Broyhan — dockside pickup: the cask boards as the commission’s free load (1/3).
+  Racer sets a Ready Broyhan on a slot (under Bergen Bryggen).
+  ↳ s6 — nothing to do here (no Ready cask to deploy onto the open slot).
+  Racer loads Broyhan onto the Hulk → London (3/3).
+  ★ the Hulk sails to London with 3 casks! Every cask aboard is delivered. (Sailed-Ships 2/7)
+  Guild authors Burgomaster’s Favor on a slot — Your cask departs: die = its quality (max 5).
+  Racer authors Novgorod Peterhof on a slot — Your cask departs: die 4. Novgorod only.
+  Racer authors Burgomaster’s Favor on a slot — Your cask departs: die = its quality (max 5).
+
+== R6 · turn 11 · Guild [guildmaster] · G5 H3 ct2 | vessels[-,-,-] deployed:0 | score 7 (dlv 3 maj 4 flt 0)
+  Guild moves to Brewhouse
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild spends −G3
+  Guild buys The Hanse Diet at the Market — place it on a slot.
+  Guild authors The Hanse Diet on a slot — Your cask departs: die 2 + 1 presence there.
+  ↳ Guild spends −G1 −H3
+  Guild brews Mumme (Q4 · matures in 3 steps).
+  ↳ Guild’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R6 · turn 12 · Racer [trader/racer] · G2 H1 ct2 | vessels[-,-,-] deployed:0 | score 8 (dlv 3 maj 5 flt 0)
+  Racer moves to Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −G1 −H1
+  Racer buys the Bock recipe (Q5).
+  ↳ Racer spends −G1
+  Racer brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  Guild’s casks mature (+1) over the turn.
+
+== R7 · turn 13 · Guild [guildmaster] · G1 H0 ct2 | vessels[Mumme 1/3,-,-,-] deployed:0 | score 7 (dlv 3 maj 4 flt 0)
+  Guild moves to Cellar
+  Guild activates Right col · Brewhouse + Cellar
+  ↳ Guild spends −G1
+  Guild brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gruit ages +1 → 1/1 READY.
+  ↳ Mumme ages +1 → 2/3.
+  ↳ Mumme ages +1 → 3/3 READY.
+  Guild sets a Ready Mumme on a slot (under Malt Kiln).
+  Racer’s casks mature (+1) over the turn.
+
+== R7 · turn 14 · Racer [trader/racer] · G0 H0 ct2 | vessels[Gruit!,-,-] deployed:0 | score 8 (dlv 3 maj 5 flt 0)
+  Racer moves to Harbor
+  Racer activates Left col · Market + Harbor
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  Racer sets a Ready Gruit on a slot (under Bergen Bryggen).
+  ↳ s6 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R8 · turn 15 · Guild [guildmaster] · G0 H0 ct2 | vessels[-,Gruit!,-,-] deployed:1 | score 7 (dlv 3 maj 4 flt 0)
+  Guild moves to Harbor
+  Guild activates Left col · Market + Harbor
+  ↳ Guild gains +G2
+  Guild sources goods at the Market.
+  ↳ Guild gains +G1 +H1
+  Guild sets a Ready Gruit on a slot.
+
+== R8 · turn 16 · Racer [trader/racer] · G1 H1 ct2 | vessels[-,-,-] deployed:1 | score 8 (dlv 3 maj 5 flt 0)
+  Racer moves to Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer spends −G1
+  Racer brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+
+== R9 · turn 17 · Guild [guildmaster] · G3 H1 ct2 | vessels[-,-,-,-] deployed:2 | score 7 (dlv 3 maj 4 flt 0)
+  Guild moves to Cellar
+  Guild activates Bottom row · Harbor + Cellar
+  ↳ Guild spends −G3
+  Guild fits the Stevedore Specialist at the Cellar.
+  ↳ s7 — nothing to do here (no Ready cask to deploy).
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+  Guild enshrines Mumme Q5 on the Masters’ Shelf (6★ · place 2 presence). (Sailed-Ships 3/7)
+  ↳ +2 presence at London (the Hall’s honor).
+  Racer’s casks mature (+1) over the turn.
+
+== R9 · turn 18 · Racer [trader/racer] · G1 H2 ct2 | vessels[Gruit!,-,-] deployed:1 | score 3 (dlv 3 maj 0 flt 0)
+  Racer moves to Brewhouse
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −H2
+  Racer buys the Mumme recipe (Q4).
+  ↳ Racer spends −G1
+  Racer brews Gruit Ale (Q1 · matures in 1 step).
+  Racer sets a Ready Gruit on a slot (under Novgorod Peterhof).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R10 · turn 19 · Guild [guildmaster] · G0 H1 ct2 | vessels[-,-,-] deployed:1 | score 22 (dlv 9 maj 9 flt 4)
+  Guild moves to Brewhouse
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild spends −H1
+  Guild buys the Broyhan recipe (Q3).
+  ↳ Guild gains +G1 +H1
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  Racer’s casks mature (+1) over the turn.
+
+== R10 · turn 20 · Racer [trader/racer] · G0 H0 ct2 | vessels[-,Gruit!,-] deployed:2 | score 3 (dlv 3 maj 0 flt 0)
+  Racer moves to Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G1 −H2
+  Racer brews Broyhan (Q3 · matures in 1 step).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R11 · turn 21 · Guild [guildmaster] · G1 H1 ct2 | vessels[-,-,-] deployed:1 | score 22 (dlv 9 maj 9 flt 4)
+  Guild moves to Cellar
+  Guild activates Right col · Brewhouse + Cellar
+  ↳ Guild spends −G1
+  Guild brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ s2 — nothing to do here (no Ready cask to deploy).
+  ↳ s5 — nothing to do here (no Ready cask to deploy).
+  Racer’s casks mature (+1) over the turn.
+
+== R11 · turn 22 · Racer [trader/racer] · G1 H0 ct2 | vessels[Broyhan!,Gruit!,-] deployed:2 | score 3 (dlv 3 maj 0 flt 0)
+  Racer moves to Brewhouse
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G1 −H2
+  Racer brews Broyhan (Q3 · matures in 1 step).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  Guild’s casks mature (+1) over the turn.
+
+== R12 · turn 23 · Guild [guildmaster] · G0 H1 ct2 | vessels[Gruit!,-,-] deployed:1 | score 22 (dlv 9 maj 9 flt 4)
+  Guild moves to Brewhouse
+  Guild activates Right col · Brewhouse + Cellar
+  Guild sets a Ready Gruit on a slot (under Burgomaster’s Favor).
+  ↳ Guild gains +G1 +H1
+  ↳ s5 — nothing to do here (no Ready cask to deploy).
+  Racer’s casks mature (+1) over the turn.
+
+== R12 · turn 24 · Racer [trader/racer] · G2 H0 ct2 | vessels[Broyhan!,Gruit!,Broyhan!] deployed:2 | score 3 (dlv 3 maj 0 flt 0)
+  Racer stays home and works the Floor — the worker keeps its station (3 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Racer gains +G1 +H1
+  ↳ Floor — Broyhan’s survey action.
+  ↳ Racer surveys the guild — takes Staple Hall from the display; place it on a slot (free).
+  Racer authors Staple Hall on a slot — Your cask departs: die 3.
+  ↳ Floor — Broyhan’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+
+== R13 · turn 25 · Guild [guildmaster] · G1 H2 ct2 | vessels[-,-,-] deployed:2 | score 22 (dlv 9 maj 9 flt 4)
+  Guild moves to Cellar
+  Guild activates Bottom row · Harbor + Cellar
+  ↳ s7 — nothing to do here (no Ready cask to deploy).
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+
+== R13 · turn 26 · Racer [trader/racer] · G3 H1 ct2 | vessels[Broyhan!,Gruit!,Broyhan!] deployed:2 | score 3 (dlv 3 maj 0 flt 0)
+  Racer stays home and works the Floor — the worker keeps its station (3 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Racer gains +G1 +H1
+  ↳ Floor — Broyhan’s survey action.
+  ↳ Racer surveys the guild — takes Almoner’s Stall from the display; place it on a slot (free).
+  ↳ Racer spends −G1
+  ↳ Racer pays the ground rent to overbuild.
+  ↳ Novgorod Peterhof is displaced — Racer has no open Floor slot to seat it, so the tile is returned to the box.
+  Racer authors Almoner’s Stall on a slot (replacing Novgorod Peterhof) — Your cask departs: die 3 if no presence there.
+  ↳ Floor — Broyhan’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+
+== R14 · turn 27 · Guild [guildmaster] · G1 H2 ct2 | vessels[-,-,-] deployed:2 | score 22 (dlv 9 maj 9 flt 4)
+  Guild moves to Brewhouse
+  Guild pays −G1 occupancy toll for sharing Brewhouse.
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G2
+  Guild sources goods at the Market.
+  ↳ Guild gains +G1 +H1
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R14 · turn 28 · Racer [trader/racer] · G3 H2 ct2 | vessels[Broyhan!,Gruit!,Broyhan!] deployed:2 | score 3 (dlv 3 maj 0 flt 0)
+  Racer moves to Cellar
+  Racer activates Bottom row · Harbor + Cellar
+  Racer sets a Ready Broyhan on a slot (under The Hanse Diet).
+  Racer sets a Ready Broyhan on a slot (under Customs House).
+  Racer loads Broyhan onto the Hulk → Bergen (2/3).
+
+== R15 · turn 29 · Guild [guildmaster] · G3 H3 ct2 | vessels[-,-,-] deployed:2 | score 22 (dlv 9 maj 9 flt 4)
+  Guild moves to Cellar
+  Guild pays −G1 occupancy toll for sharing Cellar.
+  Guild activates Right col · Brewhouse + Cellar
+  ↳ Guild gains +G2
+  ↳ Guild spends −G1 −H1
+  Guild brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ s5 — nothing to do here (no Ready cask to deploy).
+
+== R15 · turn 30 · Racer [trader/racer] · G3 H2 ct2 | vessels[-,Gruit!,-] deployed:3 | score 3 (dlv 3 maj 0 flt 0)
+  Racer moves to Harbor
+  Racer activates Bottom row · Harbor + Cellar
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Racer spends −G2
+  Racer fits the Lagerkeeper Specialist at the Cellar.
+  Racer sets a Ready Gruit on a slot (under The Hanse Diet).
+  Racer loads Broyhan onto the Hulk → Bergen (3/3).
+  ★ the Hulk sails to Bergen with 3 casks! Every cask aboard is delivered. (Sailed-Ships 4/7)
+  ↳ Racer takes a free Reach (+1 presence at Bergen).
+  ↳ Racer takes a free Reach (+1 presence at Bergen).
+  ↳ Racer takes a free Reach (+1 presence at Bergen).
+  Guild’s casks mature (+1) over the turn.
+
+== R16 · turn 31 · Guild [guildmaster] · G3 H2 ct2 | vessels[Hopped!,-,-] deployed:2 | score 22 (dlv 9 maj 9 flt 4)
+  Guild moves to Brewhouse
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild spends −G1 −H1
+  Guild buys the Bock recipe (Q5).
+  ↳ Guild gains +G1 +H1
+  ↳ Guild spends −G1 −H1
+  Guild brews Hopped Beer (Q2 · matures in 1 step).
+  Guild sets a Ready Hopped on a slot (under Burgomaster’s Favor).
+
+== R16 · turn 32 · Racer [trader/racer] · G1 H2 ct2 | vessels[-,-] deployed:3 | score 15 (dlv 6 maj 9 flt 0)
+  Racer moves to Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G2
+  Racer sources goods at the Market.
+  ↳ Racer gains +G1 +H1
+  ↳ Racer gains +G2
+  ↳ Racer spends −G2 −H3
+  Racer brews Bock (Q5 · matures in 3 steps).
+  ↳ Racer’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  Guild’s casks mature (+1) over the turn.
+
+== R17 · turn 33 · Guild [guildmaster] · G2 H1 ct2 | vessels[-,Hopped!,-] deployed:3 | score 22 (dlv 9 maj 9 flt 4)
+  Guild moves to Market
+  Guild pays −G1 occupancy toll for sharing Market.
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G1 +H1
+  Guild sources goods at the Market.
+  ↳ Racer’s stale Gruit has soured — dumped in the harbor (a Q2 cask takes the berth).
+  Guild sets a Ready Hopped on a slot (under Almoner’s Stall).
+  ↳ Guild gains +G1 +H1
+  ↳ Guild spends −G1 −H2
+  Guild brews Broyhan (Q3 · matures in 1 step).
+  ↳ Guild’s 4th distinct beer opens Floor slot 5 (the Flight track).
+  Racer’s casks mature (+1) over the turn.
+
+== R17 · turn 34 · Racer [trader/racer] · G4 H0 ct2 | vessels[Bock 1/3,-,-] deployed:2 | score 15 (dlv 6 maj 9 flt 0)
+  Racer moves to Brewhouse
+  Racer activates Right col · Brewhouse + Cellar
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G1 −H1
+  Racer brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Racer’s 4th distinct beer opens Floor slot 5 (the Flight track).
+  ↳ Hopped ages +1 → 1/1 READY.
+  ↳ Bock ages +1 → 2/3.
+  ↳ Bock ages +1 → 3/3 READY.
+  Racer sets a Ready Bock on a slot (under Malt Kiln).
+  Guild’s casks mature (+1) over the turn.
+
+== R18 · turn 35 · Guild [guildmaster] · G2 H1 ct2 | vessels[Broyhan!,-,-,-] deployed:4 | score 22 (dlv 9 maj 9 flt 4)
+  Guild moves to Brewhouse
+  Guild pays −G1 occupancy toll for sharing Brewhouse.
+  Guild activates Right col · Brewhouse + Cellar
+  Guild over-deploys — the displaced Gruit is tapped on the way out (its source action fires, then it is boxed).
+  Guild sets a Ready Broyhan on a slot (under Burgomaster’s Favor).
+  ↳ Guild gains +G1 +H1
+  ↳ Guild gains +G1 +H1
+  ↳ Guild spends −G1 −H3
+  Guild brews Mumme (Q4 · matures in 3 steps).
+  ↳ Mumme ages +1 → 1/3.
+  ↳ Mumme ages +1 → 2/3.
+  ↳ Mumme ages +1 → 3/3 READY.
+
+== R18 · turn 36 · Racer [trader/racer] · G4 H0 ct2 | vessels[-,Hopped!,-,-] deployed:3 | score 15 (dlv 6 maj 9 flt 0)
+  Racer moves to Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −G2
+  Racer commissions the Hulk bound for Novgorod — place it on a slot.
+  ↳ the Hulk docks ON Bock — dockside pickup: the cask boards as the commission’s free load (1/3).
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G1 −H1
+  Racer brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Hopped ages +1 → 1/1 READY.
+
+== R19 · turn 37 · Guild [guildmaster] · G2 H0 ct2 | vessels[Mumme!,-,-,-] deployed:4 | score 22 (dlv 9 maj 9 flt 4)
+  Guild moves to Market
+  Guild pays −G1 occupancy toll for sharing Market.
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +H2
+  Guild sources goods at the Market.
+  Guild over-deploys — the displaced Hopped is tapped on the way out (its source action fires, then it is boxed).
+  Guild sets a Ready Mumme on a slot (under Burgomaster’s Favor).
+  ↳ Guild gains +G1 +H1
+  ↳ Guild spends −G2 −H3
+  Guild brews Bock (Q5 · matures in 3 steps).
+  ↳ Guild’s 5th distinct beer opens Floor slot 6 (the Flight track).
+  ↳ Bock ages +2 → 2/3.
+
+== R19 · turn 38 · Racer [trader/racer] · G2 H0 ct2 | vessels[Hopped!,Hopped!,-,-] deployed:2 | score 15 (dlv 6 maj 9 flt 0)
+  Racer moves to Brewhouse
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −G2
+  Racer commissions the Cog bound for London — place it on a slot.
+  ↳ Cog placed on a slot, bound for London.
+  ↳ Racer gains +G1
+  ↳ Racer takes the loader bonus for shipping Guild’s cask (and chose the destination).
+  Racer loads Mumme onto the new Cog (free, on commission) — 1/2.
+  ↳ Racer spends −G1
+  Racer brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gruit ages +1 → 1/1 READY.
+  Racer sets a Ready Hopped on a slot (under Burgomaster’s Favor).
+  Guild’s casks mature (+1) over the turn.
+
+== R20 · turn 39 · Guild [guildmaster] · G0 H0 ct2 | vessels[Bock!,-,-,-,-] deployed:3 | score 22 (dlv 9 maj 9 flt 4)
+  Guild moves to Harbor
+  Guild activates Bottom row · Harbor + Cellar
+  ↳ the die is set to 3 — Burgomaster’s Favor pays its owner as the cask departs.
+  Guild loads Broyhan onto the Cog → London (2/2).
+  ★ the Cog sails to London with 2 casks! Every cask aboard is delivered. (Sailed-Ships 5/7)
+  ↳ Guild takes the Hop Gardener Specialist free (London benefit).
+  ↳ Guild takes the Cellarman Specialist free (London benefit).
+  Guild sets a Ready Bock on a slot (under Customs House).
+
+== R20 · turn 40 · Racer [trader/racer] · G0 H0 ct2 | vessels[-,Hopped!,Gruit!,-] deployed:3 | score 15 (dlv 6 maj 9 flt 0)
+  Racer moves to Market
+  Racer activates Left col · Market + Harbor
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer gains +G1 +H1
+  ↳ Racer gains +G1 +H1
+
+== R21 · turn 41 · Guild [guildmaster] · G0 H0 ct2 | vessels[-,-,-] deployed:3 | score 32 (dlv 14 maj 9 flt 9)
+  Guild moves to Market
+  Guild activates Left col · Market + Harbor
+  ↳ Guild gains +G2
+  Guild sources goods at the Market.
+  ↳ Guild gains +G1 +H2
+  ↳ Guild gains +G1 +H2
+  ↳ Guild spends −G2
+  Guild dispatches Bock → Novgorod by charter (a contract + the fare; 1 left). (Sailed-Ships 6/7)
+  ↳ Guild — nothing maturing to refine (Novgorod).
+
+== R21 · turn 42 · Racer [trader/racer] · G3 H3 ct2 | vessels[-,Hopped!,Gruit!,-] deployed:3 | score 15 (dlv 6 maj 9 flt 0)
+  Racer moves to Brewhouse
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −G2
+  Racer commissions the Cog bound for Bruges — place it on a slot.
+  ↳ the Cog docks ON Gruit — dockside pickup: the cask boards as the commission’s free load (1/2).
+  ↳ Racer gains +G2
+  ↳ Racer spends −G2 −H3
+  Racer brews Bock (Q5 · matures in 3 steps).
+  ↳ Bock ages +2 → 2/3.
+
+== R22 · turn 43 · Guild [guildmaster] · G2 H4 ct1 | vessels[-,-,-] deployed:2 | score 53 (dlv 20 maj 17 flt 16)
+  Guild moves to Harbor
+  Guild activates Bottom row · Harbor + Cellar
+  ↳ Guild gains +G2
+  ↳ Guild spends −G3
+  Guild fits the Grain Factor Specialist at the Cellar.
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+  Guild loads Hopped onto the Cog → Bruges (2/2).
+  ★ the Cog sails to Bruges with 2 casks! Every cask aboard is delivered. (Sailed-Ships 7/7)
+  ↳ Racer gains +G1 +H1
+  ↳ Racer takes the Bruges liquidity benefit (2 goods).
+  ↳ Guild gains +G3
+  ↳ Guild takes the Bruges liquidity benefit (2 goods).
+  ★ The Sailed-Ships track is full (7/7) — final round!
+  Racer’s casks mature (+1) over the turn.
+
+== R22 · turn 44 · Racer [trader/racer] · G2 H1 ct2 | vessels[Bock!,Hopped!,Gruit!,-] deployed:2 | score 16 (dlv 7 maj 9 flt 0)
+  Racer moves to Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G1
+  Racer brews Gruit Ale (Q1 · matures in 1 step).
+  Racer sets a Ready Bock on a slot (under Almoner’s Stall).
+
+================ FINAL — round 22 · sailed 7/7 · ended by CLOCK ================
+WINNER  Guild [guildmaster] — TOTAL 54  (deliveries 21 · majorities 17 · flight 16 · floor 0)
+        Bruges: Gruit Q1=1, Gruit Q1=1, Hopped Q2=1
+        London: Hopped Q2=1, Mumme Q4=1, Broyhan Q3=4
+        Novgorod: Bock Q5=6
+        The Hall: Mumme Q5=6
+        flight beers: Gruit, Hopped, Mumme, Broyhan, Bock (5) · specialists: Stevedore, Hop Gardener, Cellarman, Grain Factor · flipped: 0
+   #2   Racer [trader/racer] — TOTAL 16  (deliveries 7 · majorities 9 · flight 0 · floor 0)
+        Bruges: Gruit Q1=1, Gruit Q1=1
+        London: Broyhan Q3=1, Broyhan Q3=1
+        Bergen: Broyhan Q3=1, Broyhan Q3=1, Broyhan Q3=1
+        flight beers: Gruit, Broyhan (2) · specialists: Lagerkeeper · flipped: 0
+  majorities: Bruges[Guild+4]  London[Guild+5]  Bergen[Racer+9]  Novgorod[Guild+8]
+  buildings on the wharf at end: Bergen Bryggen(Racer) · Burgomaster’s Favor(Guild) · Almoner’s Stall(Racer) · Burgomaster’s Favor(Racer) · The Hanse Diet(Guild) · Customs House(ntl) · Staple Hall(Racer) · Malt Kiln(ntl)

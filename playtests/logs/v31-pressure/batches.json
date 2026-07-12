@@ -24,9 +24,5 @@
   "playtests/logs/v31-pressure/matrix-2p-1.json",
   "playtests/logs/v31-pressure/matrix-2p-3.json"
  ],
- [
-  "playtests/logs/v31-pressure/matrix-4p-6.json",
-  "playtests/logs/v31-pressure/matrix-4p-2.json",
-  "playtests/logs/v31-pressure/matrix-2p-2.json"
- ]
+ []
 ]
