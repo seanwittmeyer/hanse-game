@@ -1,30 +1,33 @@
-# Brewhouses of the Hanse — Components (v2.9 “Ground Rent”)
+# Brewhouses of the Hanse — Components (v3.0-A.1 “Path A”)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
-> - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9.
-> - The live build is `play.html` — **v2.9.1 “Graded at the Gauge”** (`KEY hanse-hotseat-v94`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - Cross-reference for tile families: §3 boards, §4 supply, §5–11 the seven families A–G, §12 player board, §13 starting setup, §14 box footprint. Expansion add-ons are §15; cross-references §16.
+> - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9; the build plan `V3-PATH-A.md`.
+> - The live build is `play.html` — **v3.0-A.1 “Path A”** (`KEY hanse-v3a-v2`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it. The prior manifest is archived at `archive/v2.9/COMPONENTS.md`.
+> - **The print kit is `printables2.html` (the card kit) — the only kit in use.** Printables generate from this doc, never the other way around.
+> - Cross-reference: §2 boards, §3–4 supply, §5–11 the tile families, §12 player board, §13 setup, §14 box footprint, §15 expansions, §16 cross-refs, §17 gaps.
 
 ---
 
 ## 1. Conventions for the tables
 
 - **Goods:** `G` = grain, `H` = hops — the only currency.
-- **A line** = a row or column of the Wharf = two stations + the two slots beside them.
-- **A slot stack** (max two layers): `[building?] + [ship+casks | cask]`.
-- **Three tile types, three colours (v2.4.1):** a **PRIVILEGE** (bright **blue**) — an owner-only value tile on the slots (a rival docking there banks nothing); a **BUILDING** (**green**) — a serves-any-dock transform tile on the slots; a **SPECIALIST** (**purple**) — a private brewery-board tile. No payments between players at delivery (wharfage and the rival-½ retired, v2.3).
-- **End clock:** the Sailed-Ships track fills by one per voyage (a full sail, a Charter, or an Enshrine).
+- **A line** = a row or column of the Wharf = two stations + the two slots beside them. **Slot locality (v3.0-A):** a slot’s line-stop acts on that slot.
+- **A slot stack** (max two layers): `[slot tile?] + [ship+casks | cask]`.
+- **Three tile types, three colours:** a **PRIVILEGE** (bright **blue**) — prints **ONE die number**; the owner’s departing cask carries the die at that value (a rival docking there banks nothing); a **BUILDING / work** (**green**) — serves any dock (some print an action on their slot’s stop); a **SPECIALIST** (**purple**) — a private player-board tile.
+- **End clock:** the Sailed-Ships track fills by one per **dispatch** — a full sail, a kontor Dispatch (charter), or a Hall Dispatch (enshrine).
 
 ---
 
-## 2. Boards (3 pieces)
+## 2. Boards (4 kinds)
 
 | Board | Qty | Holds |
 |---|---|---|
-| Main board — **the Wharf** | 1 | 2×2 of stations **A Market · B Brewhouse · C Harbor · D Cellar**, ringed by 8 slots; the Sailed-Ships track. |
-| Destination board | 1 | The four kontore (Bruges · London · Bergen · Novgorod) + the Hall; each kontor's majority track. |
-| Player brewery boards | 4 | Vessels (2, cap 3), maturation track, recipe rack, improvements area, storage. |
+| Main board — **the Wharf** | 1 | 2×2 stations **A Market · B Brewhouse · C Harbor · D Cellar** — each face printing its **TWO actions** (`[icon] / [icon]`: Source/Acquire · Brew/Deploy · Load/Dispatch · Age/Upgrade) — ringed by 8 slots. |
+| Destination board | 1 | The four kontore (Bruges · London · Bergen · Novgorod): gate, printed value, benefit, majority track. |
+| **The Hall shelf board** *(new, v3.0-A)* | 1 | Four quality-gated shelves — **Q2→3★ · Q3→5★ · Q4→7★ · Q5→9★** — each a row of printed **honor spaces** claimed with cask cubes (§11B). Active spaces per shelf ≈ n+1 ⚙. |
+| Player boards | 4 | Vessel row (4 printed slots, 2 open), Specialist row (4 printed, 2 open), flip shelf (2), Flight/unlock strip, recipe rack, storage (§12). |
+| Market & Stores board *(printables2)* | 1 | The supply displays (ships 3 · Wharf tiles 4 · Specialists 4), the Sailed-Ships track (15 cells, END marks per count), the 50-cell score ring. |
 
 ---
 
@@ -34,13 +37,12 @@
 |---|---|---|
 | Grain cubes (`G`) | ~60 | Currency + brew input. |
 | Hops cubes (`H`) | ~40 | Currency + brew input. |
-| Demand dice (d6) | 8 | Reusable value-bonus carrier — pips = the ★ a cask banks on delivery from **its owner’s** value building(s); ship-slot value buildings bump the same die at the sail (one die per cask, max 6). |
-| Quality-boost markers | 6 | Ride a cask from a Malt Kiln / Hop Yard, raising its effective quality at delivery. |
-| Charter contracts (cards) | 20 | Spend 1 + a flat `2 G` fare to Charter; buyable at the Market (`1 G`). |
+| Demand dice (d6) | 8 | **One-read value carrier (v3.0-A):** set once, at departure, to the ONE number printed on the owner’s Privilege. Rides the hull’s berth well; returns to the pool after delivery. Never rolled. |
+| Quality-boost (+1Q) markers | 6 | Ride a cask from a Malt Kiln / Hop Yard / Smoke Kiln; effective quality for gates AND points. |
+| Charter contracts (cards) | 20 | A kontor Dispatch spends 1 + the flat `2 G` fare; buyable at the Market (`1 G`). |
 | First-player marker | 1 | Fixed all game (turn order does not rotate). |
-| Round / Sailed-Ships marker | 2 | Round clock; voyage counter. |
-| Score pad or track | 1 | Scoring is in-game; pads or a shared track both work. |
-| Draw bags | 3 | One per hidden tile supply — **ships** · **Privileges & Buildings** · **Specialists**. Tile backs reveal the type, so each supply hides in a bag and its display refills by blind draw (2026-07-05; the printed boards carry no deck spaces). |
+| Round / Sailed-Ships marker | 2 | Round clock; dispatch counter. |
+| Draw bags | 3 | One per hidden tile supply — **ships** · **Privileges & Buildings** · **Specialists**; displays refill by blind draw. |
 
 ---
 
@@ -48,14 +50,18 @@
 
 | Component | Qty per house ⚙ | Notes |
 |---|---|---|
-| Worker pawn | 1 | Moves between stations. |
-| Ownership / presence discs (player colour) | 14 | Single token in three lives: ownership on a slot → rides on a ship → plants at the kontor as your presence (the majority count); also marks whose building sits on a slot. **Finite supply = your trade-factor cap.** Enshrining returns a disc; the Hall is unlimited. |
+| Worker pawn | 1 | Moves between stations — or **stays home** on a Floor turn. |
+| Presence discs (player colour) | 12 | Ownership on a slot tile (with a frame) → delivered presence at a kontor (the majority count). **Finite = the printed Reach wall** (bonus presence can’t push a kontor past the supply). |
+| **Cask cubes** (player colour) *(new)* | 8 | Ride a hull’s **berth well** (the loaded cask’s owner) and **claim Hall shelf spaces** (the enshrine trophy). |
+| Owner frames | 6 | Mark whose Privilege/Building sits on a slot (confirmed direction, 2026-07-04). |
+| **Unlock covers** *(new)* | 4 | Sit on the locked vessel/Specialist slots (2 each); a Flight unlock removes one (either row, your choice). |
+| Maturation markers | 4 | One per vessel lane — sits on the cask card’s printed aging track. |
 
 ---
 
 ## 5. Cask tiles · family A (~62, shared supply)
 
-A brewed beer in one of three states: **maturing** (vessel) → **deployed** (slot, cargo + a public action) → **delivered** (scores, gone). Each cask carries a printed quality and, on brewing, a slot-action drawn from the top of its quality pile (Gruit is pinned to Source).
+A brewed beer in one of three states: **maturing** (vessel) → **deployed** (slot — cargo + a public action) → **delivered** (scores, gone). Each cask carries a printed quality and, on brewing, an action drawn from the top of its quality pile (Gruit pinned). **Brewing a new distinct beer marks the Flight strip — from the 2nd on, each mark grants a Floor-slot unlock.**
 
 | Quality | Beer | Brew cost | Matures | Reaches | Qty ⚙ |
 |---|---|---|---|---|---|
@@ -64,72 +70,76 @@ A brewed beer in one of three states: **maturing** (vessel) → **deployed** (sl
 | Q3 | Broyhan | `G H H` | 1 | + Novgorod | 6 |
 | Q3 | Keut *(+1 presence on a kontor delivery)* | `G G H` | 2 | + Novgorod | 6 |
 | Q4 | Mumme | `G H H H` | 3 | all | 8 |
-| Q5 | Bock | `G G H H H` | 3 (2 with Aging Cellar) | all | 6 |
+| Q5 | Bock | `G G H H H` | 3 (2 with the Cellarman) | all | 6 |
 
-**Draft:** the export ladder deals **3 of the 4** export beers each game (so dropping one varies the climb). Gruit + Hopped are always available.
-
-**Supply floor:** a **minimum of 6 tiles per cask type** so no beer runs dry mid-game — the staples run deeper (Gruit 16 · Hopped 20). *(The Jopenbier capstone also stocks 6 — §15B.)* Casks are a shared pool, **brewed never bought**; `play.html` does not cap the supply (the counts are a physical-manifest concern).
+**Draft:** deal **3 of the 4** export beers each game. Gruit + Hopped are always available.
+**Supply floor:** a **minimum of 6 tiles per type** (staples deeper: Gruit 16 · Hopped 20; the Jopenbier capstone also stocks 6 — §15B). Casks are **brewed, never bought**; `play.html` does not cap the supply.
+**Over-deploy (printed on the aid, not the tile):** your own lower **Ready** cask under a higher one is **tapped on the way out** (action fires once, then boxed); **anyone’s Q1** under a higher cask **sours** (boxed, no action); a maturing (Staithe) cask is safe except the Q1 rule.
 
 ---
 
-## 6. Ship tiles · family B (20-tile deck)
+## 6. Hull tiles · family B (20-tile deck) — the carrier component
 
-Neutral, destination-bound hulls. Drawn from a shuffled deck into a face-up **market of 3** at the Market. Commission (`2 G`) places one on an open slot — or **onto a slot whose cask can board it** (v2.6 dockside pickup: the cask loads at once; a rival’s follows the rival-loading rules) — with a free first load: **any player’s deployed cask** (a rival’s → the rival-loading rules) **or a Ready cask straight from your own vessels** (v2.8 — commission is the one universal vessel-direct door past deploy-first).
+Neutral, destination-bound hulls, drawn from a shuffled deck into a face-up **market of 3**. **The hull is the carrier (v3.0-A):** it prints its destination chip, **quality gate**, and **numbered berth wells** — each well holds the loading owner’s **cask cube** + the cask’s **demand die** (if set) + any **+1Q marker**. The cask card leaves the wharf at load and waits face-up by its owner (the manifest row) until the hull sails.
 
 | Hull | Capacity | Qty | Destination spread |
 |---|---|---|---|
 | Cog | 2 casks | 11 | 3 Bruges · 3 London · 2 Bergen · 3 Novgorod |
 | Hulk | 3 casks | 9 | 2 Bruges · 2 London · 3 Bergen · 2 Novgorod |
 
-**Sails only when full** → every cask delivers, in load order, then the hull returns to the bottom of the deck. **The Hall is never a ship destination** (it is reached by Enshrine).
+**Commission** (`2 G`): place a face-up hull on an **open slot + the free load** (any player’s deployed cask, or a Ready cask straight from YOUR vessels), **or onto a slot whose cask QUALIFIES for the hull’s port** — the dockside pickup: that cask boards **as** the free load (v3.0-A.1 — no second load).
+**Sails only when full** → every cask delivers in load order; the hull returns to the bottom of the deck. **The Hall is never a ship destination** (a Hall Dispatch, no boat).
 
 ---
 
-## 7. Slot tiles — Privileges & Buildings · family C (the owned slot layer)
+## 7. Slot tiles — Privileges & Buildings · family C (27 tiles)
 
-Always acquired **from the face-up display and placed on a slot at once** (v2.2 — no hand): buy at the Market, or free via a London delivery or the Survey action. **Placing on an occupied slot costs the `1 G` ground rent** (v2.9 — see 7C). **One grammar:** a building modifies the occupant docked on it **now** (positional — nothing is rewritten) — `tgt` is what it acts on (cask or ship). **One sharing rule, one colour code: PRIVILEGE (blue) = pays its owner only · BUILDING (green) = serves any dock** — the tile faces print the type badge; **the back prints the flip side: a Wild action + the `3★ at game end` reminder** (v2.9). A face-up **Wharf display of 4** at the Market refills from the shuffled deck.
+Always acquired **from the face-up Wharf display of 4 and placed at once** (no hand): buy at the Market, free via London, or the **Gain 1 building** cask action. **Overbuild = the `1 G` ground rent**; the displaced tile flips face-down to its owner’s **flip shelf** (max 2; full → boxed) as a Floor Wild — **flips score nothing**.
 
-### 7A. PRIVILEGES (blue) — the owner’s cask/ship banks bonus ★ on delivery
+### 7A. PRIVILEGES (blue, 12 tiles) — print ONE die number; the owner’s departing cask carries it
 
-| Tile | Target | Effect ⚙ | Cost ⚙ | Qty ⚙ |
-|---|---|---|---|---|
-| Rich Berth | ship | each of the owner’s casks’ dice +2 at the sail | `3 G` | 2 |
-| Staple Hall | cask | a cask from here delivers +3★ (any kontor) | `3 G` | 2 |
-| Burgomaster's Favor | cask | a cask from here: +1★ per quality level | `3 G` | 2 |
-| Connoisseur's Cellar | cask | a Q4+ cask from here: +4★ | `3 G` | 1 |
-| The Hanse Diet | cask | a cask to a kontor where you LEAD: +3★ | `3 G` | 1 |
-| Festkeller | ship | a HULK here: each of the owner’s casks’ dice +3 at the sail | `3 G` | 1 |
-| Reliquary | cask | a cask enshrined from here: +2★ prestige | `3 G` | 1 |
-| Almoner's Stall | cask | a cask from here to a kontor where you do NOT lead: +3★ | `3 G` | 1 |
-| Bruges Hanzehuis | cask | a cask from here to Bruges: +4★ | `2 G` | 1 |
-| London Steelyard | cask | a cask from here to London: +4★ | `2 G` | 1 |
-| Bergen Bryggen | cask | a cask from here to Bergen: +4★ | `2 G` | 1 |
-| Novgorod Peterhof | cask | a cask from here to Novgorod: +4★ | `2 G` | 1 |
+| Tile | Printed text | Cost ⚙ | Qty ⚙ |
+|---|---|---|---|
+| Staple Hall | Your cask departs: die 3 | `3 G` | 2 |
+| Burgomaster’s Favor | Your cask departs: die = its quality (max 5) | `3 G` | 2 |
+| Connoisseur’s Cellar | Your Q4+ cask departs: die 5 | `3 G` | 1 |
+| The Hanse Diet | Your cask departs: die 2 + 1 presence there | `3 G` | 1 |
+| Almoner’s Stall | Your cask departs: die 3 if no presence there | `3 G` | 1 |
+| Reliquary | Enshrined from here: die 2 | `3 G` | 1 |
+| Bruges Hanzehuis | Your cask departs: die 4. Bruges only | `2 G` | 1 |
+| London Steelyard | Your cask departs: die 4. London only | `2 G` | 1 |
+| Bergen Bryggen | Your cask departs: die 4. Bergen only | `2 G` | 1 |
+| Novgorod Peterhof | Your cask departs: die 4. Novgorod only | `2 G` | 1 |
 
-### 7B. BUILDINGS (green) — the docked cask/ship is changed, for whoever docks
+### 7B. BUILDINGS / works (green, 15 tiles) — serve any dock; three print an action on their slot’s stop
 
-| Tile | Target | Effect ⚙ | Cost ⚙ | Qty ⚙ |
-|---|---|---|---|---|
-| Malt Kiln | cask | a cask from here ships as +1 quality (cap Q5) | `2 G` | 2 |
-| Hop Yard | cask | a Q2+ cask from here ships as +1 quality | `3 G` | 1 |
-| Cooperage | ship | a ship here carries +1 cask | `2 G` | 2 |
-| Customs House | ship | a ship here may board casks one gate lower | `2 G` | 2 |
-| Gauger's Office | cask | a cask from here is gauged **+1 quality** (cap Q5) — gates and points alike (v2.9.1) | `3 G` | 1 |
-| Brewmaster's Workshop | cask | a cask deployed here upgrades its slot-action to Wild | `3 G` | 1 |
+| Tile | Printed text | Cost ⚙ | Qty ⚙ |
+|---|---|---|---|
+| Malt Kiln | Cask ships +1 quality (max Q5) | `2 G` | 2 |
+| Hop Yard | Q2+ cask ships +1 quality | `3 G` | 1 |
+| Cooperage | Ship here holds +1 cask | `2 G` | 2 |
+| Customs House | Ship here boards casks 1 gate lower | `2 G` | 2 |
+| Brewmaster’s Workshop | Cask here acts as Wild | `3 G` | 1 |
+| Rich Berth | Ship here may sail 1 berth short | `2 G` | 2 |
+| Pilot’s House *(new)* | On sail: reroute to a kontor ±1 gate | `3 G` | 1 |
+| Open Staithe *(new)* | Un-Ready casks may deploy here; age +1 per turn | `2 G` | 1 |
+| Rope Walk *(new)* | Empty stop: gain 1 contract | `2 G` | 1 |
+| Grain Exchange *(new)* | Empty stop: convert 2 goods | `2 G` | 1 |
+| Mission Quay *(new)* | Empty stop: age a cask +1 | `2 G` | 1 |
 
-**Deck totals:** ~24 tiles across 18 designs. **Display:** 4 face-up.
+**Cut (v3.0-A):** the Gauger’s Office · the Festkeller. **Tile backs** print the flip side: a `Wild` face (no ★ — flips are engine, never score).
 
-### 7C. Building behaviour (one-line reminders)
+### 7C. Behaviour (one-line reminders)
 
-- **Captured on ship-through.** A cask passing **its owner’s** value building takes a **demand die** into its berth — **a real d6, max 6** (v2.2): set it to the building’s printed ★ **plus the quality premium**, never accumulated (only buildings modify dice; the destination is the cask’s *starting value*; a rival’s cargo sets no die — v2.3). Quality transforms ride a **+1-quality marker** (works — they serve any dock). Ship value buildings (Rich Berth · Festkeller) **bump the owner’s casks’ dice when the hull sails** (a die-less cask takes one at the bump value; the one die stays capped at 6).
-- **Quality premium (v1.8 · v2.2 part of the die).** Cask value buildings pay their printed ★ at Q1–Q3; a **Q4** cask sets the die **+2** higher, a **Q5** cask **+3** higher (die max 6). Reliquary/Hall excluded. Ship value buildings stay flat (a fixed bump, no premium).
-- **Displacement — the ground rent (v2.9).** Placing on an occupied slot costs the builder **`1 G` ⚙ to the stores** (self, rival or neutral alike; can't pay → occupied slots aren't legal targets). The displaced tile banks **nothing at displacement** — it **flips into its owner's improvements/floor slots** (a Wild on the back, fired via the Floor) and scores **+3★ ⚙ at game end if still there**; **floor full → the tile is returned to the box** (nothing banks). The tile's printed back is the Wild; the floor is the scoring record.
+- **The die is set ONCE, at departure**, to the Privilege’s printed number — no premium, no sail-time bump, no cap arithmetic (no tile prints above 6). Conditions are printed on the tile and read at departure. The climb pays where quality is *read*: Novgorod’s scale, the Hall’s shelf gates, the quality-keyed tiles.
+- **Quality works** ride a **+1Q marker** (gates AND points).
+- **Overbuild:** `1 G` to the stores (self, rival, neutral alike; can’t pay → not a legal target); the displaced tile → its owner’s flip shelf, face-down (a Floor Wild; **0★**); shelf full → boxed. Neutral tiles are discarded.
 
 ---
 
 ## 8. Recipe cards · family D (6 designs)
 
-Permission to brew a quality. Permanent; never consumed. Two are start-printed.
+Permission to brew a quality. Permanent. Gruit + Hopped print on the player board.
 
 | Recipe | Quality | Buy ⚙ | Brew ⚙ |
 |---|---|---|---|
@@ -140,82 +150,96 @@ Permission to brew a quality. Permanent; never consumed. Two are start-printed.
 | Mumme | Q4 | `2 H` | `G H H H` |
 | Bock | Q5 | `1 G 1 H` | `G G H H H` |
 
-Print 4 copies of each export recipe (covers 4 houses each picking up the full ladder), plus 4 each of Gruit / Hopped as printed starter cards.
+Print **16 export cards** (4 copies × 4 exports); starters printed on the boards. The **Gain 1 recipe** cask action takes a dealt export card at its buy cost **−1 G** ⚙.
 
 ---
 
 ## 9. Specialist tiles · family E (7 designs, scarce deck)
 
-Private brewery-board tiles (**SPECIALISTS — purple**, the third tile type; v2.6.1 persona names — each tile carries an `art` brief: a **beige field, one centered object**, the specialist’s trade), bought at the **Cellar** for goods — or gained free via **Hire** (the Q3+ cask action) or a **London** delivery (v2.4). The deck holds `n − 1` copies of each type (n = player count → 7 / 14 / 21 tiles). A face-up **display of 4** at the Cellar refills from the deck. A house cannot own two of the same type. The improvements area holds **4 tiles total** (improvements + flipped buildings) — and it is the **banked-points capacity (v2.9)**: each flipped building still there at game end scores **+3★ ⚙**, so every Specialist fitted spends a slot that could have held floor value.
+Private player-board tiles (**purple**; each carries an `art` brief — a beige field, one centered object). Bought at the **Cellar (Upgrade)**, hired free via the **Gain 1 specialist** cask action (Q3+), or London’s benefit. Deck = `n − 1` copies of each type (7 / 14 / 21 tiles); face-up **display of 4**. No duplicates per house. They fill the **Specialist row: 2 slots open at start, 4 printed** — the Flight unlocks the covers.
 
-| Specialist | Effect ⚙ | Cost ⚙ |
+| Specialist | Printed text | Cost ⚙ |
 |---|---|---|
-| **Coppersmith** *(a gleaming copper brew kettle)* | +1 brewing lane (vessels start 2, cap 3) | `3 G` |
-| **Cellarman** *(an oak cask racked on a stillage)* | Age +1 — brews mature one step sooner | `4 G` |
-| **Grain Factor** *(a burlap sack of barley)* | when you gain grain, +1 extra | `3 G` |
-| **Hop Gardener** *(a hop bine with cones on a pole)* | when you gain hops, +1 extra | `4 G` |
-| **Stevedore** *(a wooden treadwheel harbor crane)* | Load 2 casks when Loading | `3 G` |
-| **Lagerkeeper** *(frost-dusted stacked casks)* | all vessels +1 age each of your turns | `2 G` |
-| **Quaymaster** *(a private jetty + mooring bollard)* | Load, Charter OR Enshrine straight from your vessels — the one invested exception to deploy-first (v2.8) | `3 G` |
+| **Coppersmith** *(a gleaming copper brew kettle)* | +1 vessel slot | `3 G` |
+| **Cellarman** *(an oak cask racked on a stillage)* | Your brews mature 1 step sooner | `4 G` |
+| **Grain Factor** *(a burlap sack of barley)* | Gain grain: +1 extra | `3 G` |
+| **Hop Gardener** *(a hop bine with cones on a pole)* | Gain hops: +1 extra | `4 G` |
+| **Stevedore** *(a wooden treadwheel harbor crane)* | Your Load: 2 casks | `3 G` |
+| **Lagerkeeper** *(frost-dusted stacked casks)* | Floor Age pool +2 | `2 G` |
+| **Quaymaster** *(a private jetty + mooring bollard)* | Load/Dispatch straight from your vessels | `3 G` |
 
-**Print: 21 improvement tiles** (3 copies × 7 types covers up to 4 players).
+**Print: 21 tiles** (3 × 7 covers up to 4 players).
 
 ---
 
-## 10. Cask-action pool · family F (steerable kettle)
+## 10. Cask-action pool · family F (nine specific gains, steerable kettle)
 
-Each quality's casks form a face-up pile; the **top action** of every quality pile is visible, so brewing chooses among them. Gruit is pinned to Source (`+2 goods`).
+Each quality’s casks form a face-up pile; the **top action** of every pile is visible, so brewing chooses among them. Gruit is pinned.
 
-| Action | Effect | Where it draws |
+| Action | Effect | Pile gate ⚙ |
 |---|---|---|
-| Source | gain 2 goods | Q1 (pinned) · Q2–Q5 pool |
-| Age | age 1 cask 2 steps | Q2–Q5 pool |
-| Load | free-load a Ready cask onto a ship | Q2–Q5 pool |
-| Reach | +1 presence at a kontor you've delivered to | Q2–Q5 pool |
-| Convert | up to 2 goods G↔H | Q2–Q5 pool |
-| Survey | choose a Building from the display + place it at once | Q2–Q5 pool |
-| Hire | take an eligible Specialist from the Cellar display, free | Q3–Q5 pool (v2.4) |
-| Wild | take any one base action | Q4+ pool only |
+| Gain 2 goods | any mix | Q1 (pin) · Q2+ |
+| Age a cask +2 | one vessel cask | Q2+ |
+| Load 1 cask | onto any eligible hull, free | Q2+ |
+| Place 1 presence | at a kontor you’ve delivered to | Q2+ |
+| Gain 1 recipe | a dealt export card at buy cost −1 G | Q2+ |
+| Gain 1 building | from the Wharf display, placed at once (rent applies) | Q3+ |
+| Gain 1 specialist | from the Cellar display, free | Q3+ |
+| Brew 1 cask | pay its cost into an open vessel | Q4+ |
+| Enshrine 1 cask | dispatch one deployed Q2+ cask to the Hall (ticks the clock) | Q4+ |
+
+**Cut (v3.0-A):** Convert (→ the Grain Exchange work) · the pool Wild (Wild survives as the Workshop’s dock effect and the flipped tiles’ Floor stops).
 
 ---
 
-## 11. Destinations · family G (on the destination board)
+## 11. Destinations · family G
 
-All open from setup. **Kontor delivery value = base + the value-building bonuses the cask shipped through.** The Hall pays a fixed prestige ladder; the Hall is reached by Enshrine, not a ship.
+### 11A. The kontore (destination board)
 
-| Destination | Quality gate | Base value ⚙ | On-delivery benefit ⚙ | Majority (1 / 2 / 3) ⚙ |
+| Destination | Gate | Value ⚙ | On-delivery benefit ⚙ | Majority (1 / 2 / 3) ⚙ |
 |---|---|---|---|---|
-| Bruges (Hub) | Q1 | +1 ★ | 2 goods (owner's choice) | 4 / 2 / 0 |
+| Bruges (Hub) | Q1 | +1 ★ | 2 goods (owner’s choice) | 4 / 2 / 0 |
 | London (Steelyard) | Q2 | +1 ★ | a Privilege/Building (placed) OR a Specialist, free | 5 / 3 / 1 |
 | Bergen (Bryggen) | Q2 | +1 ★ | free Reach (+1 presence) | 9 / 5 / 2 |
 | Novgorod (Peterhof) | Q3 | scales: Q3·2 / Q4·4 / Q5·6 (floor 1) | refine — a maturing cask +1 age | 8 / 5 / 2 |
-| The Hall | Q2 (deployed) | fixed ladder: Q2·3 / Q3·5 / Q4·7 / Q5·9 | — | — |
 
-**Notes:** 2-player games skip 2nd place; ties split the occupied tiers. **Delivery = the destination’s starting value + the demand die in the berth — nothing else** (v2.3: no shares, no wharfage), and **never less than 1★** (v2.9; v2.9.1: the Gauger's lift is a QUALITY lift and scores at the gauged Q — only a Customs-admitted below-gate cask sells at the 1★ floor; no zero-point deliveries). **Benefits resolve when gained, owner's choice** (Novgorod's refine: the owner picks which maturing cask; London's Building: chosen + placed at once), whoever's turn it is (v2.2).
+**Delivery = the printed value + the demand die the cask carries** — never less than 1★. Benefits resolve when gained, owner’s choice. 2p skips 2nd place; ties split.
+
+### 11B. The Hall shelf board (v3.0-A)
+
+A Hall Dispatch (free, no boat; a deployed Q2+ cask) claims any **open space on a shelf its effective quality reaches**: bank the **row ★** + the space’s **one printed honor** + mark it with a **cask cube**. All qualifying shelves full → the best row’s ★ anyway (no honor, no cube — never nothing).
+
+| Shelf | Gate | Row ★ ⚙ | Printed spaces (one honor each) ⚙ |
+|---|---|---|---|
+| The High Board | Q5 | 9 | unlock 1 Floor slot · +3★ · gain 1 Building (free, placed) |
+| The Masters’ Shelf | Q4 | 7 | gain 1 Specialist (free) · place 2 presence · age ALL vessels +1 |
+| The Long Shelf | Q3 | 5 | place 1 presence · gain 1 recipe (free) · +3 goods · age a cask +2 |
+| The Common Shelf | Q2 | 3 | +2 goods · +1 contract · age a cask +2 · +1G +1H · +2 goods |
+
+Active spaces per shelf ≈ **n+1** ⚙ (bounded by the printed row). *(Guardrail: the Common Shelf stays goods/tempo only — never engine pieces.)*
 
 ---
 
 ## 12. The player board (×4)
 
-Printed schematic, no tokens of its own beyond what's listed in §4.
-
 ```
-┌──────────────────────────────────────────────────────────────┐
-│  ⚑ HOUSE          STORAGE ▢▢▢▢ ▢▢▢▢  (G/H, cap 8)            │
-│  VESSELS (start 2, cap 3)                                    │
-│   V1 [ BREW ]→[ ferment ]→[ AGE ]→[ READY ▸ deploy ]         │
-│   V2 [ BREW ]→[ ferment ]→[ AGE ]→[ READY ▸ deploy ]         │
-│   V3 ▒ locked — unlocks with the Coppersmith ▒                  │
-│  RECIPES   ▤Gruit ▤Hopped  ▤ ▤ …                             │
-│  IMPROVEMENTS  [ ] [ ] [ ] [ ] (cap 4)   CONTRACTS  ▣▣       │
-│  THE FLOOR — run your maturing casks' actions as a private   │
-│              line                                            │
-│  FLIGHT STRIP  ▤Gruit ▤Hopped ▢ ▢ ▢  (mark on delivery)      │
-└──────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────┐
+│  ⚑ HOUSE            STORAGE ▢▢▢▢ ▢▢▢▢  (G/H, cap 8)            │
+│  VESSEL ROW (4 printed · 2 open)                                │
+│   V1 [cask + maturation marker]   V2 [cask]   V3 ▒cover▒  V4 ▒cover▒ │
+│  SPECIALIST ROW (4 printed · 2 open)                            │
+│   S1 [tile]  S2 [tile]  S3 ▒cover▒  S4 ▒cover▒                  │
+│  FLIP SHELF  [ ][ ]  (displaced tiles, face-down — Floor Wilds) │
+│  RECIPES   ▤Gruit ▤Hopped  + export cards      CONTRACTS ▣▣    │
+│  FLIGHT / UNLOCK STRIP  ▤Gruit ▤Hopped ▢ ▢ ▢ (▢ Jopenbier)     │
+│    mark when BREWED (2nd+ = remove a cover) · flip when DELIVERED │
+│  THE FLOOR — stay home: Age 3 ⚙ pool · every vessel cask’s      │
+│              action · a Wild per flipped tile                   │
+└────────────────────────────────────────────────────────────────┘
 ```
 
-- **The Floor (v2.2 — the standing 3rd line):** after moving, choose the row, the column, **or the Floor** — the slot-actions of every cask in your vessels + a Wild per flipped building, any order, all optional. Never tolled. Scales with what you've held back.
-- **The Flight strip:** one named space per beer — mark a beer the first time you deliver it; counted at game end (3→4 · 4→9 · 5→16 · 6→25 with Jopenbier in play, which counts).
+- **The Floor (v3.0-A — stay home):** instead of moving, run your board as the whole turn. Never tolled; a Floor with no live stop is not legal.
+- **The Flight/unlock strip:** one space per beer type. **Brewed** (first time) = a mark; from the 2nd mark, each grants an **unlock** (remove a vessel or Specialist cover). **Delivered** = the second mark state; distinct beers delivered score the ladder (3→4 · 4→9 · 5→16 · 6→25 with Jopenbier).
 
 ---
 
@@ -225,12 +249,13 @@ Printed schematic, no tokens of its own beyond what's listed in §4.
 |---|---|---|
 | Starting goods | 3 `G` + 2 `H` | from supply |
 | Starting recipes | Gruit + Hopped | printed on the board |
-| Open vessels | 2 | printed (V3 locked) |
+| Open vessel slots | 2 (of 4 printed; covers on 3–4) | board + covers |
+| Open Specialist slots | 2 (of 4 printed; covers on 3–4) | board + covers |
 | Charter contracts | 2 | from supply |
-| Ready Gruit in V1 | 1 | from the cask supply |
-| Worker placement | 1 | choose any station, free (no toll) |
+| Ready Gruit in V1 | 1 | cask supply (mark its Flight space brewed) |
+| Worker placement | 1 | any station, free (no toll) |
 
-Shared setup: 2 ships dealt onto slots (spread across lines, includes a guaranteed Hulk→Bruges); **2 neutral green Buildings** dealt from the deck onto open slots (v2.5 — no owner; overbuilt = discarded, nothing banked); ship market filled to 3; Building display filled to 4; Improvement display filled to 4 (deck = `n−1` × 7); export draft of 3 of 4; Sailed-Ships track length set (§14). *(v2.2: no starting building.)*
+Shared setup: 2 hulls dealt onto slots (incl. a guaranteed Hulk→Bruges); **2 neutral green works** dealt onto open slots (no owner; overbuilt = discarded); ship market 3; Wharf display 4; Specialist display 4 (deck `n−1` × 7); export draft 3 of 4; the Hall shelf board out (n+1 spaces active); Sailed-Ships length set (§14).
 
 ---
 
@@ -238,120 +263,88 @@ Shared setup: 2 ships dealt onto slots (spread across lines, includes a guarante
 
 | Family | Count ⚙ | Designs |
 |---|---|---|
-| Boards | 3 (1 Wharf · 1 destinations · 4 brewery) | — |
+| Boards | 4 kinds (1 Wharf · 1 destinations · 1 Hall shelf · 4 player · 1 Market & Stores) | — |
 | Casks (A) | 62 | 6 beers |
-| Ships (B) | 20 | 2 hulls × 4 destinations |
-| Buildings (C) | 24 | 18 |
-| Recipes (D) | 24 cards | 6 |
-| Improvements (E) | 21 | 7 |
+| Hulls (B) | 20 | 2 hulls × 4 destinations |
+| Slot tiles (C) | 27 | 21 designs (12 blue + 15 green tiles) |
+| Recipes (D) | 16 cards | 4 exports × 4 |
+| Specialists (E) | 21 | 7 |
 | Charter contracts | 20 cards | 1 |
 | Goods cubes | ~100 (60 `G` + 40 `H`) | 2 |
 | Demand dice | 8 (d6) | 1 |
-| Quality-boost markers | 6 | 1 |
+| +1Q markers | 6 | 1 |
 | Worker pawns | 4 | 4 colours |
-| Ownership / presence discs | 56 (14 / colour) | 4 colours |
-| Sailed-Ships track length | 6 / 10 / 13 slots for 2 / 3 / 4 p | — |
+| Presence discs | 48 (12 / colour) | 4 colours |
+| Cask cubes | 32 (8 / colour) | 4 colours |
+| Owner frames | 24 (6 / colour) | 4 colours |
+| Unlock covers | 16 (4 / colour) | 1 design |
+| Maturation markers | 16 (4 / colour) | 1 design |
+| Sailed-Ships track | 6 / 10 / 13 cells for 2 / 3 / 4 p (printed 15 with END marks) | — |
 
-**Pace dial:** Sailed-Ships fills end the game (max round ceiling 25 as backstop). The track is printed at length 13 (the 4-player figure); the shorter player counts cover the higher slots.
+**Pace dial:** the Sailed-Ships track is primary (MAX_ROUND ≈ 25 the backstop). Strong-play corpus (162 games, `playtests/logs/v3-corpus/`): 158/162 clock endings, rounds 17–19.
 
 ---
 
 ## 15. Expansion add-ons (three opt-in toggles, mix freely)
 
-The base box is byte-identical when all three toggles are off. Each module is a small content add-on.
+The base box is byte-identical when all three are off.
 
 ### 15A. Specialty Beers — adds to families A, C, D
 
-Adds 3 specialty beers to the export draft (deal 3 of 7; ≥1 base Q4+ guaranteed). Each is **pinned** (printed slot-action) and carries one always-on signature.
+Adds 3 specialty beers to the export draft (deal 3 of 7; ≥1 base Q4+ guaranteed). Each **pinned** + one always-on signature.
 
 | Quality | Beer (town) | Brew ⚙ | Matures | Pinned act | Signature | Qty ⚙ |
 |---|---|---|---|---|---|---|
-| Q2 | Gose (Goslar) | `G G` (no hops) | 1 | Source | Salt Trade — a kontor delivery: owner +1 `G` +1 `H` | 8 |
-| Q3 | Zerbster (Zerbst) | `H H H` | 1 | Load | Parti-Gyle — brewing also racks a free Gruit | 6 |
-| Q2 | Duckstein (Königslutter) | `G H` | 2 | Reach | Smoke-Hardy — ships & scores as +1 quality | 8 |
+| Q2 | Gose (Goslar) | `G G` | 1 | Gain 2 goods | Salt Trade — kontor delivery: owner +1 `G` +1 `H` | 8 |
+| Q3 | Zerbster (Zerbst) | `H H H` | 1 | Load 1 cask | Parti-Gyle — brewing also racks a free Gruit | 6 |
+| Q2 | Duckstein (Königslutter) | `G H` | 2 | Place 1 presence | Smoke-Hardy — ships & scores +1 quality | 8 |
 
 Recipe buys ⚙: Gose `1 G` · Zerbster `1 H` · Duckstein `1 G`.
 
-**Adds 3 thematic Buildings (deck only when on):**
-
-| Tile | Target | Effect ⚙ | Cost ⚙ | Qty ⚙ |
-|---|---|---|---|---|
-| Salt House | cask | a cask from here: +1 `G` +1 `H` on delivery (a privilege — the owner’s casks only) | `2 G` | 1 |
-| Smoke Kiln | cask | a cask from here ships +1 quality (cap Q5) | `2 G` | 1 |
-| Parti-Gyle Tun | cask | deploy a cask here: rack a free Gruit | `2 G` | 1 |
-
-**Also adds:** the **Blending** action at the Cellar (combine two Ready vessel casks → one premium cask at +1 quality, cap Q5, in a freed vessel). No new component.
+**Adds 3 thematic slot tiles** (deck only when on): **Salt House** (blue — *Your cask departs: +1G +1H*, `2 G`, ×1) · **Smoke Kiln** (green — *Cask ships +1 quality (max Q5)*, `2 G`, ×1) · **Parti-Gyle Tun** (green — *Deploy here: a free Gruit to a vessel*, `2 G`, ×1).
+**Also adds Blending** — a Cellar or-branch: two Ready vessel casks → one premium cask at +1 quality (cap Q5). No new component ⚙ (carrier: gap §17.10).
 
 ### 15B. Jopenbier capstone (independent toggle)
 
 | Quality | Beer (town) | Brew ⚙ | Matures | Pinned act | Always acquirable | Qty ⚙ |
 |---|---|---|---|---|---|---|
-| Q6 (display) | Jopenbier (Danzig) | `G G H H H H` | 4 | Source | yes (not in draft) | 6 |
+| Q6 (display) | Jopenbier (Danzig) | `G G H H H H` | 4 | Gain 2 goods | yes (not in draft) | 6 |
 
-Scored **self-contained**: 8★ kontor / 9★ Hall, **+1★ per owner-turn while deployed (cap +5)**. **Counts for the Flight** (v2.2 — six types with the toggle on; 6→25). Recipe buy ⚙ `1 G 1 H`.
+Scored **self-contained**: 8★ kontor / 9★ Hall (any shelf), **+1★ per owner-turn deployed (cap +5)**. **Counts for the Flight** (6 types → 6→25) and grants a Flight unlock when brewed. Recipe buy ⚙ `1 G 1 H`.
 
 ### 15C. The Trade Roads — Overland (replaces the kontor majorities)
 
-Adds one inland-network board sitting beside the destination board. Per-house: presence markers are placed on the slots claimed.
-
-**Components added:**
-
 | Component | Qty ⚙ | Notes |
 |---|---|---|
-| Overland network board | 1 | Tree rooted at Hamburg (home). West → Bruges → London / Bergen / Rhineland; East → Novgorod. |
-| Sailed-Ships track length | +2 slots | Extends each player count: 8 / 12 / 15. |
+| Overland network board | 1 | Tree rooted at Hamburg. West → Bruges → London / Bergen / Rhineland; East → Novgorod. |
+| Sailed-Ships track | +2 cells | 8 / 12 / 15 per count. |
 
-**Toggles OFF:** the kontor **majorities** (the contest moves inland; the majority chart on the destination board is not used).
-
-**Town slots** (n+1 active per node — 2p uses 3, 3p/4p use 4, bounded by a node's printed slots; deep ◆ = high-gate terminals — Pskov scarce with its single slot, Frankfurt the rich 4-slot Rhineland outlet):
-
-| Node | Gate | Base ★ | Slot menu (best-first) | Overflow |
-|---|---|---|---|---|
-| Bruges *(gateway, no slots)* | Q1 | — | take a recipe **OR** 2 goods | — |
-| Cologne (Rhineland) | Q2 | +2 | recipe · free Gruit to a vessel · brew · brew | +2 age |
-| Frankfurt (Rhineland) ◆ | Q3 | +3 | free Q3 to a vessel · free Enshrine · +2 age · +6★ | +2★ |
-| Antwerp (London road) | Q2 | +2 | Building (display → placed) · brew · +3 goods · Building (display → placed) | Building (display → placed) |
-| London (kontor) | Q2 | +3 | Building (display → placed) · free Improvement · +3 goods · free Improvement | Building (display → placed) |
-| Tønsberg (Bergen road) | Q2 | +2 | +1 charter · brew · +2 `G` · brew | +2 `G` |
-| Bergen (kontor) | Q2 | +3 | +1 charter · +3 goods · +1 vessel · +1 vessel | +2 `G` |
-| Visby (East) | Q2 | +2 | +2 `G` · free road step · +2 age · +3★ | +2★ |
-| Tallinn (East) | Q3 | +3 | +1 vessel · +1 quality · brew · +5★ | +2★ |
-| Novgorod (kontor) | Q3 | ★ = delivered quality | +1 quality · +1 vessel · +2 age · +5★ | +2★ |
-| Pskov (East) ◆ | Q5 | +5 | +8★ (every later delivery: +5★) | +5★ |
-
-**Movement & claims:**
-
-- Each ship that sails (full keystone) or each Charter advances each owner's caravan **one node** along that kontor's route, if a cask aboard meets the next node's quality gate.
-- Each cask aboard then **claims an open slot** at the node reached, in load order. A 2-cask voyage = 2 slots.
-- **Rhine Charter:** a Q4+ Charter may skip Bruges → Cologne (the cask still delivers at Bruges).
-- **Re-homed (no orphans):** Bergen's free Reach and the Reach cask-action become **+1 caravan road step** to a city of your choice (gate-cap Q3).
+Majorities turn OFF (the contest moves inland). Movement per voyage (one node per owner, quality-gated); each cask aboard claims a printed **Staple-Right slot** in load order; never-nothing overflow; the **Rhine Charter** (a Q4+ kontor Dispatch skips Bruges → Cologne). Node/slot tables unchanged from v2.9 (`archive/v2.9/COMPONENTS.md` §15C) except: Frankfurt’s *free Enshrine* = a free **Hall Dispatch** (the shelf board applies); London’s *free Improvement* = a free **Specialist**; the re-homed Reach stays a road step.
 
 ---
 
 ## 16. Cross-references
 
-- **Why the family is shaped this way** — `DESIGN.md` §6 (architecture) and §9 (change log).
-- **How a tile is used during a turn** — `RULES.md` §2–§7.
-- **The live numbers** — `play.html` (constants at the top of the `<script>` block: `STYLES`, `DEST`, `BUILDINGS`, `IMPROVEMENTS`, `SHIP_DECK_MIX`, `SAILED_CAP`, `MAX_ROUND`).
-- **Printed cut sheets** — `printables.html`. *(Do not back-fill this manifest from the printables; printables generate from this doc, not the other way around.)*
+- **Why the family is shaped this way** — `DESIGN.md` §6 (architecture) · §9 (change log) · `V3-PATH-A.md` (the ruled plan + as-built notes).
+- **How a tile is used during a turn** — `RULES.md` §2–§8.
+- **The live numbers** — `play.html` (constants: `STYLES`, `DEST`, `HALL_SHELVES`, `BUILDINGS`, `IMPROVEMENTS`, `CASK_ACT`, `SAILED_CAP`, `MAX_ROUND`).
+- **Printed cut sheets** — **`printables2.html` (the card kit — the only kit in use)**. `printables.html` (the tile kit) is retired. Printables generate from this doc, never the reverse.
 
 ---
 
-## 17. Known component gaps (recorded 2026-07-04 · resolve in the components revision)
+## 17. Known component gaps (refreshed 2026-07-11 · v3.0-A.1)
 
-> **Direction (designer, 2026-07-04):** the **card kit (`printables2.html`) is the direction of the game** (the tile kit's tokens-and-tiles density problem is real). **Owner frames are the confirmed solution** for marking building ownership — supersedes this doc's §4 note that the disc marks it. A **new board carrying the supply displays, the round tracker, and the score track** will be designed later; not a concern now. Until that revision, the table below records every gap between what the digital reference (`play.html`) tracks and what the printed components can carry — the standing rule is that **all game state must live in the components on the table**.
+> Standing rule: **all game state must live in the components on the table.**
 
 | # | Gap | State it must carry | Sketch of a fix |
 |---|---|---|---|
-| 1 | **Maturation markers missing** — no token is manifested to sit on the cask card's printed aging track (the old "per-vessel maturation marker" note was lost in the DESIGN compaction) | each maturing cask's step | ~3 markers per player colour (one per vessel), or spare cubes |
-| 2 | ~~Flight strip is count-based~~ **FIXED in v2.2** — the `printables2` player board now carries per-beer named spaces (+ a 6th Jopenbier space) | distinct beers delivered | shipped with the v2.2 pass |
-| 3 | **Loaded-cargo procedure unspecified** — 2.5″ cask cards can't sit in the die-sized printed berths; where cargo cards go and how load order is preserved is undefined | a ship's cargo + load order | e.g. tuck cargo cards under the ship card's edge in berth order; the demand die sits in the printed berth |
-| 4 | **Jopenbier vintage counter** — nothing tracks the deployed capstone's +1★/turn (0–5) | the vintage count | print a 0–5 strip on the Jopenbier card + a cube |
-| 5 | ~~Improvement display has no printed zone~~ **FIXED (2026-07-05)** — the `printables2` Market & Stores board carries the Cellar's Improvement display of 4 + deck | the face-up improvement display + deck | shipped on the Market & Stores board |
-| 6 | ~~Sailed-Ships track prints 13 cells~~ **FIXED (2026-07-05)** — the Market & Stores board prints 15 cells with dual END marks per player count (base flag 6/10/13 · Trade Roads 8/12/15) | the end clock with the expansion on | shipped on the Market & Stores board |
-| 7 | ~~Score track runs 0–50~~ **FIXED (2026-07-05)** — a 50-cell score ring wraps the Market & Stores board's rim (0–49 + a 50/100 lap marker; cells sized to the 0.5″ disc) | banked score | shipped on the Market & Stores board |
-| 8 | **Recipe-card count drift** — §8 says 24 cards (incl. 4× Gruit/Hopped); both kits print 16 export-only cards with the starters printed on the player board | — | manifest adopts the kits' model: 16 export cards + printed starters |
-| 9 | **Owner frames absent from the manifest** — `printables2` ships 6 per colour; §4 still assigns building-marking to the disc | building ownership on slots | add frames to §4 (confirmed direction); reword the disc's "three lives" |
-| 10 | **Blend's +1 quality** (Specialty Beers) has no stated carrier; the 6 quality-boost markers are already claimed by the kilns | a blended cask's raised quality | more boost markers, or a printed carrier rule + a supply count check |
-| 11 | **Trade Roads free-Improvement** grants a tile from outside the printed `n − 1` deck supply | — | resolve in the Trade Roads review pass |
-| 12 | **Demand dice supply (8)** unverified against worst-case simultaneous loaded bonuses | dice riding berths | count check at the table |
+| 1 | **Maturation markers** — now manifested (§4, ×4/colour); the kit must print them | each maturing cask’s step | punch 4 small markers per colour |
+| 2 | ~~Flight strip~~ **superseded (v3.0-A)** — the strip is now the brewed/delivered two-state unlock track; the kit needs the two mark states legible | brewed vs delivered marks | chit face-up = brewed · flipped = delivered ⚙ |
+| 3 | ~~Loaded-cargo procedure~~ **FIXED (v3.0-A)** — the hull carrier: berth wells hold cube + die + marker; the cask card waits in the owner’s manifest row | a ship’s cargo + load order | shipped in the carrier design |
+| 4 | **Jopenbier vintage counter** — nothing tracks the deployed capstone’s +1★/turn (0–5) | the vintage count | print a 0–5 strip on the Jopenbier card + a cube |
+| 5 | **Unlock-cover fit** — the covers must sit stably on the printed row slots | locked/open slots | punchboard squares sized to the slot ⚙ |
+| 6 | **Hall cube supply** — 8 cask cubes per colour serve berths AND shelf claims; worst-case check at 4p | shelf claims + loaded berths | count check at the table; +2 cubes if tight |
+| 7 | **Recipe-card model** — 16 export cards + printed starters (adopted from the kits) | — | done; keep in sync |
+| 8 | **Owner frames** — confirmed direction; 6/colour in §4 | slot-tile ownership | shipped in printables2 |
+| 9 | **Blend’s +1 quality** (Specialty Beers) — carrier for a blended cask’s raised quality; the 6 markers are claimed by the kilns | a blended cask’s quality | more +1Q markers ⚙, or print-side rule |
+| 10 | **Demand dice supply (8)** — unverified worst case (max simultaneous loaded berths with dies) | dice riding berths | count check at the table |

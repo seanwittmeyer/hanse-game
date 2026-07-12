@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — “Living Slots” reset — PLAN (SHIPPED · live build now v2.4.1 “Three Tiles”)
+# Brewhouses of the Hanse — “Living Slots” reset — PLAN (SHIPPED · historical — the ACTIVE plan is `V3-PATH-A.md`; live build v3.0-A.1 “Path A”)
 
 > **Status: SHIPPED — this plan opened as the v1.0 “Living Slots” reset (2026-06-16); v1.7–v2.4.1 shipped on top, live build now v2.4.1 “Three Tiles”.** The
 > keystone rebuild this plan called for has **shipped**: the *living, composable Wharf slots*, the
