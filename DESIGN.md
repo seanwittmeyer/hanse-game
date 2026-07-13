@@ -26,7 +26,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v3.1 “One Row”** — live (`play.html`, KEY `hanse-v31`); the v3.0-A keystone + the first human-playtest pass (2026-07-12): **the player board is ONE Floor row** (7 printed slots — vessels, Specialists and flips compete for the same spaces; slot 1 vessel-only; the Flight auto-opens covers) + four dials (Bruges Hanzehuis die 3 · Connoisseur die 4 · Hall rows 3/5/6/8 · 2p clock 7). Beneath it, the **keystone rebuild** ruled in `V3-PATH-A.md` off the FRESH-EYES exploration + the 2026-07-11 playtest. The eight moves: **stations ≤2 printed actions** (Source/Acquire · Brew/Deploy · Age/Upgrade · Load/DISPATCH) · **slot locality** (a slot’s stop acts on that slot) · **over-deploy** (own lower Ready cask taps out · anyone’s Q1 sours) · **one-read dice** (a Privilege prints ONE number, set at departure; premium/cap/sail-bump arithmetic deleted) · **the Hall shelf board** (quality-gated shelves, row ★ 3/5/7/9 + one printed honor per space, cube claims, never-nothing) · **the stay-home Floor** (Age-3 pool + vessel-cask actions + ≤2 flip Wilds; flips score 0) · **Flight unlocks** (distinct beers BREWED open Floor slots; delivered still score) · **nine specific-gain cask actions**. v3.0-A.1: the dockside pickup consumes the commission’s free load. Prior live build archived, playable, at `archive/v2.9/`. **Three opt-in toggles** unchanged on the expansion spine: *Specialty Beers* · *Jopenbier* · *The Trade Roads* (replaces the majorities). Strong-play corpus (162 games): clock-dominant, pace 17–19 rounds, every new mechanism live (`playtests/logs/v3-corpus/`). |
+|**Status**     |**v3.2 “Three Coins”** — live (`play.html`, KEY `hanse-v32`): the Hall becomes **the Guild’s Three Coins** (each shelf prints FAME/CRAFT/FAVOR one-shot coins — an enshrine buys exactly ONE, or launches for ★ = quality; FAME 5/7/10/13; ruled off `HALL-STUDY.md` §4E) + the **presence clock** (14 public discs each; every delivered cask and presence bump spends one; the last disc placed sets the final round, ALONGSIDE the retuned Sailed-Ships track 5/8/10 — ships + charters only, enshrines never tick; first trigger fires). Beneath it, **v3.1 “One Row”** — the v3.0-A keystone + the first human-playtest pass (2026-07-12): **the player board is ONE Floor row** (7 printed slots — vessels, Specialists and flips compete for the same spaces; slot 1 vessel-only; the Flight auto-opens covers) + four dials (Bruges Hanzehuis die 3 · Connoisseur die 4 · Hall rows 3/5/6/8 · 2p clock 7). Beneath it, the **keystone rebuild** ruled in `V3-PATH-A.md` off the FRESH-EYES exploration + the 2026-07-11 playtest. The eight moves: **stations ≤2 printed actions** (Source/Acquire · Brew/Deploy · Age/Upgrade · Load/DISPATCH) · **slot locality** (a slot’s stop acts on that slot) · **over-deploy** (own lower Ready cask taps out · anyone’s Q1 sours) · **one-read dice** (a Privilege prints ONE number, set at departure; premium/cap/sail-bump arithmetic deleted) · **the Hall shelf board** (superseded by the v3.2 Three Coins) · **the stay-home Floor** (Age-3 pool + vessel-cask actions + ≤2 flip Wilds; flips score 0) · **Flight unlocks** (distinct beers BREWED open Floor slots; delivered still score) · **nine specific-gain cask actions**. v3.0-A.1: the dockside pickup consumes the commission’s free load. Prior live build archived, playable, at `archive/v2.9/`. **Three opt-in toggles** unchanged on the expansion spine: *Specialty Beers* · *Jopenbier* · *The Trade Roads* (replaces the majorities). Strong-play corpus (162 games): clock-dominant, pace 17–19 rounds, every new mechanism live (`playtests/logs/v3-corpus/`). |
 
 ---
 
@@ -81,7 +81,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v3.1 “One Row” on the v3.0-A “Path A” keystone)
+## 6. The current architecture (v3.2 “Three Coins” on the v3.1 “One Row” + v3.0-A “Path A” keystone)
 
 Canonical detail is in `RULES.md` / `COMPONENTS.md` / `V3-PATH-A.md`; the shape:
 
@@ -110,19 +110,22 @@ Canonical detail is in `RULES.md` / `COMPONENTS.md` / `V3-PATH-A.md`; the shape:
   print an action on their slot’s stop — the wharf grows action spaces as it is authored). The
   quality climb pays where quality is *read*: Novgorod’s printed scale, the Hall’s shelf
   gates, the quality-keyed tiles (Connoisseur · Burgomaster).
-- **The Hall is a shelf board (the Orléans read).** A Hall Dispatch (free, no boat; a deployed
-  Q2+ cask) claims any open space on a shelf its effective quality reaches: bank the **row ★
-  (3/5/7/9)** + the space’s **one printed honor** + mark it with your cube. All qualifying
-  shelves full → the best row’s ★ anyway (never nothing). The Hall is now the table’s second
-  visible race — and its presence honors couple it into the majorities.
+- **The Hall is the Guild’s Three Coins (v3.2 — the Hamlet-award read).** Each quality-gated
+  shelf prints **three one-shot coins — FAME ★ (5/7/10/13) · CRAFT (a power, now) · FAVOR (a
+  thing, free)** — claimed once each, cube-marked; an enshrined cask buys **exactly one** (the
+  points and the powers are unbundled), or **launches** for ★ = quality (the always-open volume
+  floor). Enshrines never tick the ships clock. The Hall is the table’s hot early race — 12
+  coins, gone when they’re gone — while the kontore stay the buildings-boosted delivery lane.
 - **The player board** — the vessel row (2 open of 4 printed) and Specialist row (2 of 4)
   under **unlock covers**, the **flip shelf** (2 — displaced tiles land face-down as Floor
   Wilds; **flips score nothing**), and the **Flight/unlock strip**: distinct beers **BREWED**
   (from the 2nd) each remove a cover — your choice of row; distinct beers **DELIVERED** still
   score the Flight ladder. Breadth pays twice: engine and score.
-- **Legible scoring.** *In-game:* the Hall’s shelf rows + honors · kontor value + the one die
+- **Legible scoring.** *In-game:* the Hall’s FAME coins / launches · kontor value + the one die
   (never less than 1★). *End-game:* majorities (delivered-cask count; presence discs finite,
-  12 ⚙) + the Flight ((beers−1)², min 3). The floor-points lane is **gone**.
+  **14 ⚙ — and they are the second clock:** every delivered cask and presence bump spends one,
+  in public; the last disc placed sets the final round) + the Flight ((beers−1)², min 3). The
+  floor-points lane is **gone**.
 - **One grammar — deploy first** — Load and Dispatch take a DEPLOYED cask; the **Quaymaster**
   is the one invested exception; **Commission** is the one universal vessel-direct door — and
   (v3.0-A.1) a commission placed **onto a qualifying cask** consumes its free load (the pickup
@@ -130,7 +133,8 @@ Canonical detail is in `RULES.md` / `COMPONENTS.md` / `V3-PATH-A.md`; the shape:
   tiles always display → placed at once; **overbuild = the 1 G ground rent** (can’t pay → not
   a legal target).
 - **Kept from v0.16:** ships sail-when-full; the scarce-contract relief valve (now the kontor
-  Dispatch); the Sailed-Ships end clock; no dice-as-randomizers / no hand / no money.
+  Dispatch); the Sailed-Ships end clock (v3.2: 5/8/10, voyages only — the presence clock runs
+  beside it); no dice-as-randomizers / no hand / no money.
 - **The expansion spine (v2.0):** unchanged — `registerExpansion` + hook seams; **The Trade
   Roads** (replaces the majorities; Staple-Right slots per cask, per-voyage movement,
   quality-gated depth), *Specialty Beers* (3-of-7 draft + Blending + 3 tiles), the *Jopenbier*
@@ -224,6 +228,21 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v3.2 "Three Coins"** *(2026-07-13, `play.html` KEY `hanse-v32`)* — The Hall study (`HALL-STUDY.md` — Orléans/
+Altiplano/Hamlet research + the internal bonus catalog + the pairings miner) diagnosed the v3.1 Hall as
+transactional: 11 of its 13 honors duplicated rewards purchasable in 3–7 other systems. The designer ruled
+Direction E v2 canon: **each shelf prints THREE one-shot COINS — FAME (pure ★: 5/7/10/13) · CRAFT (a novel
+power, now: batch-brew · double gyle · double load · age-all-to-Ready — mined from real-game pipeline friction)
+· FAVOR (a free thing: +4 goods · 2 recipes · a free kontor delivery NOW · a Building/Specialist)** — an
+enshrine buys exactly ONE (points and powers unbundled), or **launches** for ★ = quality (the never-nothing
+volume floor). And **the presence clock**: 14 discs per house, **public**; every delivered cask (kontor or
+Hall) and every presence bump spends one; the last disc placed sets the final round — the runway is countable,
+and majorities compete with guaranteed ★ for the same discs. Enshrines stop ticking the ships track (free
+enshrines keep the Hall hot early); the Sailed-Ships track retunes 7/10/13 → **5/8/10** and runs alongside —
+first trigger fires. The 2p prestige watch and the Masters'-Shelf presence-honor coupling (v31-pressure W1)
+both dissolve — the presence honor is cut; presence now costs clock. *Component consequences:* the Three Coins
+Hall board (12 coin spaces), 14 presence discs/colour (was 12), END marks at 5/8/10.
 
 **v3.1 "One Row"** *(2026-07-12, `play.html` KEY `hanse-v31`)* — The first human-vs-Cellarmaster playtest
 (76–28 in 8 rounds; the log in the session record) ruled four dials and one structure. **THE STRUCTURE — the

@@ -1,10 +1,12 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v3.1 “One Row”)
+# Brewhouses of the Hanse — Turn & Round Rules (v3.2 “Three Coins”)
 
 > **Status: live (2026-07-12).** The **v3.0-A “Path A” keystone** (designer-ruled in
-> `V3-PATH-A.md`) plus **v3.1 “One Row”** — the first human-playtest follow-through: the player
-> board’s three rows collapse into ONE Floor line (§8), and four dials move (Bruges Hanzehuis
-> die 3 · Connoisseur die 4 · Hall rows 3/5/6/8 · the 2p clock 7). Numbers are placeholders ⚙.
-> **The live, playable build is `play.html` (KEY `hanse-v31`).** The prior live build (v2.9.1,
+> `V3-PATH-A.md`) + **v3.1 “One Row”** (the one-row player board + four dials) + **v3.2 “Three
+> Coins”** (designer-ruled off `HALL-STUDY.md` §4E): the Hall becomes the **Guild’s Three Coins**
+> board (§7b) and the game gains the **presence clock** — **14 public discs** per house; every
+> delivered cask spends one; the last disc placed sets the final round, **alongside** a retuned
+> Sailed-Ships track (5/8/10 — ships + charters only; enshrines never tick). Numbers ⚙.
+> **The live, playable build is `play.html` (KEY `hanse-v32`).** The prior live build (v2.9.1,
 > KEY v94) is archived, playable, at **`archive/v2.9/`**; the v0.16.1 build at `archive/play.html`.
 >
 > **The eight moves of Path A:**
@@ -14,8 +16,9 @@
 >    anyone’s Q1 (it has **soured** — boxed). Tap-the-menu is retired.
 > 4. **One-read dice** — a Privilege prints **ONE die number**; the die is set to it at
 >    departure. The premium/cap/sail-bump arithmetic is deleted.
-> 5. **The Hall is a shelf board** — quality-gated shelves, row ★ **3/5/6/8** (v3.1 ⚙), one
->    printed bonus per space, claimed with your cube.
+> 5. **The Hall is a coin board** — quality-gated shelves, each printing THREE coins (v3.2
+>    “Three Coins”: **FAME ★ · CRAFT · FAVOR**, each claimable once); an enshrine buys exactly
+>    ONE, or launches for ★ = quality (§7b).
 > 6. **The Floor is stay-home** — a whole turn on your player board (Age pool + every vessel
 >    cask’s action + flip Wilds); flipped tiles score **nothing**.
 > 7. **The Flight is (also) an unlock track** — each distinct beer you **brew** (from the 2nd)
@@ -63,6 +66,8 @@ Each house starts with (⚙):
   strip** (one space per beer type this game). A slot holds ONE of: a maturing cask (a vessel) ·
   a seated Specialist · a flipped tile.
 - **2 charter contracts** (the kontor-Dispatch certificates; buy more at the Market — §6).
+- **14 presence discs ⚙ — your whole delivery runway, in public view.** Every delivered cask
+  (kontor or Hall) and every presence bump spends one (§10); what is left is always countable.
 - A **warm start** so the Wharf is live turn 1: a guaranteed **Hulk → Bruges** + one more ship
   dealt onto slots (spread across lines); **two NEUTRAL green Buildings** dealt from the deck
   onto open slots (they serve any dock; no owner — overbuilding one still costs the ground rent,
@@ -70,7 +75,7 @@ Each house starts with (⚙):
   **one Ready Gruit** per house.
 
 Shared board: the **Wharf** (4 stations + 8 slots) with the warm-start ships; the four kontore
-(Bruges/London/Bergen/Novgorod) + the **Hall shelf board** (§7b) all open; **deal 3 of the 4
+(Bruges/London/Bergen/Novgorod) + the **Hall’s Three Coins board** (§7b) all open; **deal 3 of the 4
 export beers** (the variable quality ladder); shuffle the **Privileges & Buildings deck** and
 deal a face-up **display of 4** ⚙ at the Market; shuffle the **Specialist deck** (n−1 copies of
 each of the 7) and deal a face-up **display of 4** at the Cellar; set the **Sailed-Ships track**
@@ -198,11 +203,12 @@ from the face-up display (pay its goods cost) — it **seats in an open Floor sl
 **Load:** one deployed cask (yours or a rival’s) onto a ship it qualifies for — you choose the
 hull; loading a rival’s cask: you take **1 `G`**, the owner scores it on delivery. Ships **sail
 only when full**. **Or Dispatch:** send **ONE deployed cask** of yours on its own —
-- **to the HALL** (free, no boat): claim a shelf space — §7b; or
+- **to the HALL** (free, no boat): buy ONE coin on the Three Coins board, or launch — §7b; or
 - **to a KONTOR** (spend a **charter contract** + the flat **2 `G` fare** ⚙): an immediate
   single-cask voyage — the deadlock relief valve.
 
-Both Dispatch routes **advance the clock** (§10).
+Only the **kontor** route ticks the Sailed-Ships track; the Hall never does. **Every delivered
+cask — either route — spends a presence disc** (§10).
 
 > **DEPLOY FIRST — THE VESSEL-OUTLET GRAMMAR.** ***Load and Dispatch take a DEPLOYED cask.***
 > A cask must stand on a public slot — contestable, loadable by rivals — before it can go
@@ -309,10 +315,11 @@ When a line fires, the active player **may** use each of its stops once — the 
   **advances the clock**.
 - **Dispatch — kontor route** (the old Charter): a **contract** + flat `2 G` fare → one of your
   **deployed** Ready casks (the Quaymaster also reaches your vessels) sails alone to a kontor.
-  Advances the clock.
+  Ticks the Sailed-Ships track.
 - **Dispatch — Hall route** (the old Enshrine): free, no boat — a deployed **Q2+** cask is
-  presented at the **Hall shelf board** (§7b). Deploy-first keeps it contestable — *the Hall
-  demands a public showing.* Advances the clock.
+  presented at the **Three Coins board** (§7b). Deploy-first keeps it contestable — *the Hall
+  demands a public showing.* Never ticks the ships track (the presence disc it spends is its
+  clock).
 
 ---
 
@@ -324,7 +331,7 @@ When a line fires, the active player **may** use each of its stops once — the 
 | **London** (Steelyard) | Q2 | +1 ★ | a **Privilege/Building** (placed at once) **OR** a **Specialist**, free | 5 / 3 / 1 |
 | **Bergen** (Bryggen) | Q2 | +1 ★ | **free Reach** (+1 presence at a kontor you’ve delivered to) | 9 / 5 / 2 (anchor) |
 | **Novgorod** (Peterhof) | Q3 | scales: Q3→2 · Q4→4 · Q5→6 · floor 1 | **refine** (a maturing cask +1 age) | 8 / 5 / 2 |
-| **The Hall** | Q2 | **shelf row ★ 3/5/6/8** (v3.1 ⚙) + the space’s honor | — (§7b) | — |
+| **The Hall** | Q2 | **ONE coin — FAME ★ 5/7/10/13 ⚙, or a CRAFT/FAVOR power (0★)** — or launch for ★ = quality | — (§7b) | — |
 
 **Delivery = the destination’s printed value + the demand die in the berth.** The die was set
 once, at departure, to the Privilege’s one printed number (§5b) — nothing else ever touches it.
@@ -334,32 +341,38 @@ AND points; only a below-gate cask admitted by the Customs House sells at the 1�
 **Benefits resolve WHEN GAINED, owner’s choice** — whoever’s turn it is (a rival tops off a hull
 carrying your cask → you choose your benefit right then). No queues, nothing to remember.
 
-> **Presence is standing earned by trade.** A **Reach** (the cask action, Bergen’s benefit) adds
-> presence **only at a kontor you’ve already delivered to** — and bonus presence can never push
-> a kontor’s total past the printed disc supply (**12** ⚙ per kontor; deliveries always count).
+> **Presence is standing earned by trade — and the discs are the clock (v3.2).** A **Reach**
+> (the cask action, Bergen’s benefit) adds presence **only at a kontor you’ve already delivered
+> to**, and it **spends a disc from your pool of 14** like any delivery — no discs left, no
+> Reach. The pool is the printed wall: bonus presence can never outrun the supply.
 
-## 7b. The Hall — the shelf board (v3.0-A)
+## 7b. The Hall — the Guild’s Three Coins (v3.2)
 
-The Hall is a printed board of **four quality-gated shelves**; each shelf prints its **row ★**
-and a row of **bonus spaces** (active spaces scale ≈ n+1 with player count ⚙, bounded by the
-printed row):
+The Hall is a printed board of **four quality-gated shelves**; each shelf prints **three
+COINS — FAME ★ · CRAFT · FAVOR — and each coin is claimable ONCE per game** (mark it with your
+cask cube; 12 coins on the board, ever). An enshrined cask buys **exactly one coin** — the
+points and the powers are unbundled; a cask never takes both:
 
-| Shelf | Gate | Row ★ ⚙ | Space honors (one icon each) ⚙ |
-|---|---|---|---|
-| **The High Board** | Q5 | **8** (v3.1 ⚙ 9→8) | unlock 1 Floor slot · +3★ · gain 1 Building (free, placed) |
-| **The Masters’ Shelf** | Q4 | **6** (v3.1 ⚙ 7→6) | gain 1 Specialist (free) · place 2 presence · age ALL vessels +1 |
-| **The Long Shelf** | Q3 | **5** | place 1 presence · gain 1 recipe (free) · +3 goods · age a cask +2 |
-| **The Common Shelf** | Q2 | **3** | +2 goods · +1 contract · age a cask +2 · +1G +1H · +2 goods |
+| Shelf | Gate | FAME ⚙ | CRAFT (a power, now — 0★) ⚙ | FAVOR (a thing, free — 0★) ⚙ |
+|---|---|---|---|---|
+| **The High Board** | Q5 | **13★** | the Lagerkeeper’s Miracle — age ALL your casks to Ready | a Building (placed) or a Specialist, free |
+| **The Masters’ Shelf** | Q4 | **10★** | the Stevedore’s Shift — load 2 casks, free | **the Masters’ passage — a free kontor delivery, NOW** (no contract, no fare; it is a voyage: it ticks the ships track and spends its own disc) |
+| **The Long Shelf** | Q3 | **7★** | the Double Gyle — brew twice, now | gain **2 recipes**, free |
+| **The Common Shelf** | Q2 | **5★** | the Guild’s Batch — +1G +1H & brew one, now | **+4 goods** |
 
-**Enshrining (a Hall Dispatch, or the Q4+ cask action):** choose any **OPEN space on a shelf
-whose gate your cask’s effective quality meets** — a Bock may take a Common-Shelf space for its
-honor instead of the High Board’s glory. Bank the **row ★** (+ the Reliquary’s die if dispatched
-from it), take the **space’s one honor**, and **mark the space with your cube** — the trophy and
-the record. The cask retires to the box.
+**Enshrining (a Hall Dispatch, or the Q4+ cask action):** present a deployed cask whose
+**effective quality meets the shelf’s gate** (a Bock may buy a lower shelf’s coin — reach digs
+down, never up), take the **one coin**, cube it. A FAME coin banks the printed ★ (+ the
+Reliquary’s die if dispatched from it); a CRAFT/FAVOR coin banks **0★** — the cask bought the
+power. The cask retires to the box.
 
-**Never nothing:** if every shelf you qualify for is full, enshrine anyway for the **best
-qualifying row’s ★** — no honor, no cube. The Hall stays the always-open outlet; only the honors
-are scarce. *(Guardrail ⚙: the Common Shelf stays goods/tempo only — never engine pieces.)*
+**The launch — never nothing, always open:** with or without coins left, a cask may instead
+**launch** for **★ = its quality** (no coin, no cube, no honor). Once the coins you covet are
+gone, the Hall remains the volume outlet at a fair, flat rate.
+
+**No tick, but a disc:** the Hall never advances the Sailed-Ships track — but every enshrine
+and every launch is a delivery, and **spends a presence disc** (§10). *(Guardrail ⚙: the Common
+Shelf stays goods/tempo only — never engine pieces.)*
 
 ---
 
@@ -428,21 +441,31 @@ prestige.
 
 ---
 
-## 10. End of the game (the clock)
+## 10. End of the game (the DUAL clock, v3.2)
 
-The shared **Sailed-Ships track** advances by one on every **dispatch** — a ship sailing full, a
-kontor Dispatch (charter), or a Hall Dispatch (enshrine). When it fills → **finish the round →
-score.** Length **7 / 10 / 13** for 2/3/4p ⚙ (v3.1: 2p 6→7 — the first human playtest raced the
-6-clock out in 8 rounds; +2 with The Trade Roads); a **MAX_ROUND ceiling**
-(~25 ⚙) backstops a slow table. Pace target **~12–25 rounds.**
+Two public clocks run side by side; **the first to fire ends the game** (finish the round →
+score):
+
+1. **The Sailed-Ships track** — advances by one on every **voyage**: a ship sailing full or a
+   kontor Dispatch (charter, including the Masters’ passage). **Enshrines never tick.** Length
+   **5 / 8 / 10** for 2/3/4p ⚙ (v3.2 retune — the track lost the enshrine ticks; +2 with The
+   Trade Roads).
+2. **The presence clock** — each house owns **14 discs ⚙, in public view**. **Every delivered
+   cask — kontor or Hall — and every presence bump (Reach, Keut, honors) spends one.** The
+   player who places their **last** disc sets the final round. *The tension is the point: fight
+   for kontor majorities disc by disc, or bank guaranteed ★ — the same 14 discs pay for both,
+   and everyone can count yours.*
+
+A **MAX_ROUND ceiling** (~25 ⚙) backstops a slow table. Pace target **~12–25 rounds.**
 
 ---
 
 ## 11. Scoring — the clear spine
 
 **In-game (banked as you play):**
-1. **The Hall — shelf rows.** Each enshrined cask banks its shelf’s **row ★ (3/5/6/8 ⚙)** + took
-   its space’s honor when placed (§7b). *The prestige lane — visible, claimable, always open.*
+1. **The Hall — the Three Coins.** A FAME coin banked its shelf’s **★ (5/7/10/13 ⚙)**; a
+   CRAFT/FAVOR coin banked its power instead; a launch banked **★ = quality** (§7b). *The
+   prestige lane — visible, claimable once, and hot early: the best coins go to the quick.*
 2. **Kontore — value + die.** Each delivered cask scores **its destination’s printed value +
    the one demand die** (§7) — never less than 1★. *The volume/demand lane — author privileges,
    route your brews through them.*
@@ -505,8 +528,8 @@ that kontor’s route (quality gates depth); each cask aboard then **claims a St
 at the node (node ★ + a one-shot printed bonus, in load order; never-nothing overflow). The
 **Rhine Charter**: a Q4+ kontor Dispatch may skip Bruges → Cologne. Sailed-Ships **+2**.
 Full node/slot tables: `COMPONENTS.md` §Overland and the in-game panel. *(Unchanged by v3.0-A
-except: Frankfurt’s “free Enshrine” slot now grants a free Hall Dispatch — the shelf board
-applies; Reach re-homes to road steps as before.)*
+except: Frankfurt’s “free Enshrine” slot now grants a free Hall Dispatch — the Three Coins
+board applies; Reach re-homes to road steps as before.)*
 
 ---
 
@@ -520,9 +543,11 @@ applies; Reach re-homes to road steps as before.)*
    through Novgorod/the Hall/Connoisseur/Burgomaster? (first PATHWAYS read)
 5. **Floor churn** — buildings gained from Floor turns/game (the survey-loop watch).
 6. **The Flight double-pay** — unlocks AND points; trim the ladder if breadth double-pays.
-7. **Enshrine-as-cask-action** (Q4+) — does a line-fired clock tick feel right?
-8. **Hall shelf counts** — n+1 active spaces; the pole test (does contesting honors negate late
-   enshrines?); the Common Shelf stays goods-only.
+7. **Enshrine-as-cask-action** (Q4+) — a free line-fired enshrine (no tick) — watch its tempo.
+8. **The coin race** — 12 one-shot coins at every count: is the Hall hot enough early at 2p,
+   and does the launch rate (★ = quality) hold up as the late-game floor? The Common Shelf
+   stays goods-only.
 9. **Ship-channel guarantee** — commissioning onto building-only slots (open).
-10. **Clock lengths** — the greedy-bot corpus runs ceiling-heavy at 3–4p ⚙; watch `SAILED_CAP`
-    once human/table pace data lands.
+10. **The dual clock** — `SAILED_CAP` 5/8/10 vs the 14-disc pool: the corpus splits its endings
+    between the two triggers (by design); watch which one the table actually races, and the
+    ceiling share, once human pace data lands.

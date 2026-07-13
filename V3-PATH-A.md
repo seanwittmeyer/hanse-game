@@ -246,7 +246,13 @@ adds a 5th ⚙.)*
 
 ---
 
-## 7b. The Hall — the shelf board [ruled in direction; values ⚙]
+## 7b. The Hall — the shelf board [ruled in direction; values ⚙] — **SUPERSEDED by v3.2 “Three Coins”**
+
+> *(2026-07-13: the shelf-honor board below shipped in v3.0-A/v3.1 and was then redesigned — the
+> Hall is now **the Guild’s Three Coins** (`HALL-STUDY.md`, ruled §4E v2): each shelf prints
+> FAME/CRAFT/FAVOR one-shot coins, an enshrine buys exactly one or launches for ★ = quality, and
+> the **presence clock** (14 public discs) runs beside a retuned Sailed-Ships track (5/8/10,
+> voyages only). Canon: `RULES.md` §7b/§10. The section below stands as the v3.0-A record.)*
 
 **The fixed 3/5/7/9 payout table becomes a BOARD** — the Orléans read (Beneficial Deeds): a
 printed Hall with **shelf rows gated by quality**, each shelf holding a small number of **cask
@@ -483,3 +489,16 @@ The first human-vs-Cellarmaster game (76–28 in 8 rounds) ruled one structure +
 5. **SAILED_CAP 2p 6 → 7** — one seat raced the 6-clock out in 8 rounds.
 
 Gates re-run green (verify-v3 61 checks · sim 500/count crash-free, pace in band · ladder · render-smoke).
+
+---
+
+## Post-keystone: v3.2 “Three Coins” (2026-07-12/13 — the Hall study’s ruling)
+
+The Hall study (`HALL-STUDY.md`) found the shelf-honor Hall transactional (11 of 13 honors
+duplicated elsewhere) and ruled **Direction E v2** canon as **v3.2** (KEY `hanse-v32`): each shelf
+prints **FAME (5/7/10/13★) · CRAFT (a power now) · FAVOR (a free thing)** — one-shot coins, one per
+enshrine, or **launch** for ★ = quality; enshrines stop ticking the ships track; the **presence
+clock** joins (**14 public discs** each — every delivered cask and presence bump spends one; the
+last disc placed sets the final round) beside the retuned **Sailed-Ships track 5/8/10** — first
+trigger fires. Gates re-run green (verify-v3 82 checks · sim 500/count crash-free · ladder ordered ·
+render-smoke). Details: `DESIGN.md` §9 · `RULES.md` §7b/§10 · `COMPONENTS.md` §11B.

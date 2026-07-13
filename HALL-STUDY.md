@@ -5,6 +5,15 @@ survey · the complete internal bonus catalog · a 5-family shelf-power design s
 from the two strong-play corpora (288 games: `playtests/logs/v3-corpus/`, `logs/v31-pressure/`).
 This is a study with a recommended package — no ruling is implemented here.*
 
+> **RULED — CANON as v3.2 “Three Coins” (2026-07-12/13).** Direction E v2 (§4E) shipped in
+> `play.html` (`KEY hanse-v32`) with the designer’s revisions: **FAME 5/7/10/13** · Common FAVOR
+> **+4 goods** · Long FAVOR **2 free recipes** · Masters’ FAVOR **a free kontor delivery, now**
+> (replacing the 2-presence honor — v31-pressure W1 dissolved) · the launch (★ = quality) · free
+> enshrines (no ships tick) · the **presence clock at 14 public discs**, running ALONGSIDE a
+> retuned Sailed-Ships track (**5/8/10**, voyages only; first trigger fires — resolving §⚗’s “a
+> private pool can’t be the sole clock”). Canon lives in `RULES.md` §7b/§10 · `COMPONENTS.md`
+> §11B · `DESIGN.md` §9. The sections below stand as the study record. Crowns stay tabled.
+
 ---
 
 ## 1. The Hall as built (v3.1)
