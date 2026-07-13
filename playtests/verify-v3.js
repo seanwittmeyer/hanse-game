@@ -188,6 +188,17 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
   ok('v3.2 the passage spends NO contract and NO fare', (p6.contracts||0)===k6&&p6.grain===g6, 'contracts '+(p6.contracts||0)+'/'+k6+' grain '+p6.grain+'/'+g6);
   ok('v3.2 the passage delivers (cask gone, ★ banked) and ticks the ships track', S.slots.s7===null&&scorePlayer(p6).deliv>d6&&S.sailed===sl6+1);
   ok('v3.2 the passage never routes to the Hall', S.hall2[2].favor===0);
+  // the MC tiers' enumerator sees the COINS (the v3.2 CM-retarget guard): at a v2 hallspace prompt
+  // aiGmOptions must offer hall2 options, and applying one must never tick the ships track
+  var p7=fresh();S.active=0;
+  S.slots.s6={type:'cask',owner:0,style:'bock',q:5,act:'age'};
+  UI={sub:'hallspace',hsp:{ref:'s6',returnTo:'end',v2:true},stops:[],pendingBenefits:[]};
+  var gmo=aiGmOptions(p7);
+  ok('v3.2 aiGmOptions enumerates the coin menu (12 coins + launch at Q5, fresh board)', gmo&&gmo.length===13, 'got '+(gmo?gmo.length:'null'));
+  var sl7=S.sailed,d7=scorePlayer(p7).deliv;
+  gmo[0]();   // the first option (a coin or the launch) applies through the v2 commit
+  ok('v3.2 an enumerated enshrine option never ticks the ships track', S.sailed===sl7);
+  ok('v3.2 the enumerated option resolves through the v2 commit (cask delivered)', S.slots.s6===null&&p7.delivered.length===1);
   // presence pool: EVERY delivery spends a disc; the last ends the game
   var p2=fresh();S.active=0;p2.presPool=2;
   deliverCask(p2,{style:'hopped',q:2,die:0},'bruges',null,false);

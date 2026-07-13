@@ -2621,8 +2621,9 @@ function aiDest(p,q,style){
   const W=aiW(p);
   const lean=p.ai.persona||'volume';
   // The Hall pays score only (no benefit, no majority position), so it is END-weighted: engine and
-  // kontor races compound early, prestige banks late. prog runs the clock 0 → 1.
-  const prog=Math.min(1,S.sailed/Math.max(1,S.sailedCap));
+  // kontor races compound early, prestige banks late. prog runs the DUAL clock 0 → 1 (v3.2:
+  // whichever trigger — the ships track or any house's presence pool — is closer to firing).
+  const prog=aiClockProg();
   let best=elig[0],bv=-1e9;
   const ownPriv=lean==='racer'?aiOwnPrivDests(p):null;   // v3.1 racer: my authored demand's ports
   elig.forEach(d=>{let s;
@@ -2935,6 +2936,9 @@ function aiOlClaim(){const b=(UI.pendingOlClaim||[])[0];if(!b){olClaimPick(0);re
 // objective). Round-robin playouts under a time budget; best mean margin wins; the option is then
 // applied for real. Same-scope global swap with restore — the engine needs no refactor, and because
 // playouts run the live rules, every future rules revision is absorbed automatically.
+function aiClockProg(){let pr=Math.min(1,S.sailed/Math.max(1,S.sailedCap));   // v3.2 the DUAL clock: first trigger fires
+  if(S.presEnd){const pool=Math.max(1,PRES_POOL);S.players.forEach(q=>{pr=Math.max(pr,(pool-(q.presPool!=null?q.presPool:pool))/pool);});}
+  return pr;}
 function aiMCMargin(meId){
   const sc=S.players.map(q=>scorePlayer(q).total);
   let best=-1e9;sc.forEach((v,i)=>{if(i!==meId&&v>best)best=v;});
@@ -3188,6 +3192,7 @@ function aiGmOptions(p){
     return localDeployCasks(p,st.slot).map(x=>()=>localDeployPick(x.i)).concat([()=>localDeploySkip()]);}
   if(U==='recipegain'){const o=recipeGainable(p).map(s=>()=>recipeGainPick(s));o.push(()=>recipeGainPick(null));return o;}
   if(U==='hallspace'){const h=UI.hsp;const c2=refCask(h.ref);const q=Math.min(5,(c2&&c2.style==='jopenbier')?6:caskEffQ(h.ref));
+    if(h.v2)return hall2Options(q).map(x=>()=>hall2Pick(x.si,x.coin));   // v3.2: the MC tiers SEARCH the coin menu (FAME/CRAFT/FAVOR + the launch) — playout-priced, not heuristic
     return hallOptionsFor(q).map(x=>()=>hallSpacePick(x.si,x.sp));}
   if(U==='brew'){const aff=p.recipes.filter(r=>canBrew(p,r)&&openVessel(p)>=0);
     if(!aff.length)return null;
@@ -3355,22 +3360,22 @@ function renderAid(){
     ['map-pin','<b>Presence</b> / Reach'],['store','<b>Market</b> station'],['flask-conical','<b>Brew</b> / vessel · the Floor'],['scroll-text','<b>Recipe</b>'],
     ['ticket','<b>Charter contract</b> (a kontor Dispatch spends one)'],['send','<b>Dispatch</b> (one cask → the Hall or a kontor)'],['package-plus','<b>Load</b> a cask'],['arrow-left-right','<b>Convert</b> goods G↔H (Grain Exchange)'],['search','<b>Survey</b> (a Privilege/Building from the Wharf display, placed at once)'],
     ['coins','<b>Source</b> (take goods)'],['unlock','<b>Flight unlock</b> (a Floor slot)'],['sparkles','<b>Wild</b> (a flipped tile’s Floor stop)']];
-  const dRow=d=>{const D=DEST[d];const val=d==='hall'?'shelf row ★ 3·5·7·9':(D.sval?'2·4·6 by Q (scales)':('+'+D.value+' base + die'));const maj=D.maj.length?D.maj.join(' / '):'—';
-    const ben=d==='hall'?'the claimed space’s honor':(D.benefit==='building'?'a free Building (placed now) OR a Specialist':D.benefit==='reach'?'a free Reach (+1 presence)':D.benefit==='age'?'refine a cask (+1 age)':'2 goods');
+  const dRow=d=>{const D=DEST[d];const val=d==='hall'?'ONE coin: FAME 5·7·10·13★ — or launch, ★ = quality':(D.sval?'2·4·6 by Q (scales)':('+'+D.value+' base + die'));const maj=D.maj.length?D.maj.join(' / '):'—';
+    const ben=d==='hall'?'a CRAFT or FAVOR coin instead of ★':(D.benefit==='building'?'a free Building (placed now) OR a Specialist':D.benefit==='reach'?'a free Reach (+1 presence)':D.benefit==='age'?'refine a cask (+1 age)':'2 goods');
     return '<tr><td>'+(D.kontor?ic('landmark'):ic('crown'))+' '+D.name+'</td><td>Q'+D.gate+'+</td><td>'+val+'</td><td>'+maj+'</td><td>'+ben+'</td></tr>';};
   const dests=['bruges','london','bergen','novgorod','hall'].map(dRow).join('');
   const acts=CASK_ACT_POOL.map(k=>'<span class="atag">'+ic(CASK_ACT_ICON[k])+' <b style="text-transform:capitalize">'+k+'</b> — '+CASK_ACT[k]+'</span>').join('');
   const vb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='value').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   const tb=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].verb==='transform').map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
-  const shelves=HALL_SHELVES.map(sh=>'<span class="atag">'+ic('crown')+' <b>'+sh.name+'</b> (Q'+sh.q+'+ · '+sh.star+'★) — '+sh.spaces.map(bk=>HALL_BONUS_LBL[bk]).join(' · ')+'</span>').join('');
+  const shelves=HALL2_SHELVES.map(sh=>'<span class="atag">'+ic('crown')+' <b>'+sh.name+'</b> (Q'+sh.q+'+) — FAME <b>'+sh.fame+'★</b> · CRAFT: '+HALL2_LBL[sh.craft]+' · FAVOR: '+HALL2_LBL[sh.favor]+'</span>').join('');
   document.getElementById('aidcard').innerHTML=
-    '<h2>'+ic('scroll-text')+' Player Aid — v3.1 “One Row”</h2>'
+    '<h2>'+ic('scroll-text')+' Player Aid — v3.2 “Three Coins”</h2>'
     +'<div class="asec"><b>Your turn</b><div class="note"><b>Move</b> to an adjacent station and activate its <b>row</b> or <b>column</b> — OR <b>stay home and work your Floor</b> (the worker keeps its station; you skip the wharf entirely this turn). Resolve the line’s stops <b>in any order, all optional</b>. The 1 '+ic('wheat')+' <b>occupancy toll</b> applies only when you activate a line while sharing the station with a rival — the Floor is never tolled.</div></div>'
     +'<div class="asec"><b>The four stations — each a printed THIS-or-THAT (one choice per visit)</b><div class="note">'
       +ic('store')+' <b>Market</b> — SOURCE (take 2 goods) or ACQUIRE (buy one tile: a recipe · a '+ic('building-2')+' Privilege/Building, <b>placed at once</b> · a '+ic('sailboat')+' ship · a charter contract).<br>'
       +ic('flask-conical')+' <b>Brewhouse</b> — BREW (pay a recipe → a young cask; it takes the FACE-UP action of that quality’s pile) or DEPLOY (set a Ready cask onto <b>any</b> open slot — the wharf-wide valve).<br>'
       +ic('hourglass')+' <b>Cellar</b> — AGE ('+CELLAR_POOL+' points across your vessels; casks also age +1 automatically at the start of your turn) or UPGRADE (buy one '+ic('wrench')+' Specialist from the display — your Specialist row must have an open slot).<br>'
-      +ic('anchor')+' <b>Harbor</b> — LOAD (one cask onto a ship; it sails when full → delivers) or DISPATCH (send ONE deployed cask: to the '+ic('crown')+' <b>Hall shelf board</b>, free — or to a kontor by charter, a contract + the '+costStr(CHARTER_FLAT_FARE)+' fare). Every voyage ticks the clock.</div></div>'
+      +ic('anchor')+' <b>Harbor</b> — LOAD (one cask onto a ship; it sails when full → delivers) or DISPATCH (send ONE deployed cask: to the '+ic('crown')+' <b>Hall’s Three Coins</b>, free — no ships tick — or to a kontor by charter, a contract + the '+costStr(CHARTER_FLAT_FARE)+' fare; kontor routes tick). <b>Every delivered cask spends one of your '+PRES_POOL+' presence discs.</b></div></div>'
     +'<div class="asec"><b>Slot locality — a slot’s stop acts on THAT slot</b><div class="note">An <b>empty slot’s</b> stop deploys a Ready cask <b>here</b> (a building underneath modifies it; Rope Walk/Grain Exchange/Mission Quay offer their printed action instead). A <b>ship’s</b> stop loads <b>this</b> hull. A <b>cask’s</b> stop fires its printed action — or <b>over-deploy</b> onto it: your own lower cask is <b>tapped on the way out</b> (its action fires once, then it is boxed); <b>anyone’s Q1</b> under your higher cask has <b>soured</b> (boxed, no action). The stations reach the whole wharf; the slots don’t.</div></div>'
     +'<div class="asec"><b>Deploy first — where casks move from</b><div class="note"><b>Load and Dispatch take a DEPLOYED cask.</b> A cask must stand on a public slot — contestable, loadable by rivals — before it can go anywhere. Load anyone’s deployed cask (its owner scores; you take the 1'+ic('wheat')+' loader bonus and choose the destination). The purple '+ic('wrench')+' <b>Quaymaster</b> is the one invested exception: its owner may Load or Dispatch straight from their own vessels. '+ic('sailboat')+' <b>Commission</b> is the one universal vessel-direct door: placed on an <b>open</b> slot, its free load takes ANY player’s deployed cask or a Ready cask straight from your own vessels; placed <b>onto a qualifying cask</b>, that pickup IS the free load (no second load). Every gate check uses <b>effective quality</b> (the kilns, Duckstein — quality lifts count for gates AND points).</div></div>'
     +'<div class="asec"><b>The living slots (the keystone)</b><div class="note">Each of the 8 slots holds an owned '+ic('building-2')+' <b>slot tile — a Privilege or a Building</b> (a passive modifier of whatever docks on it NOW) and/or an occupant (a cask, or a ship). A bright-blue <b>PRIVILEGE prints ONE die number</b> — its owner’s cask departing this slot carries a '+ic('dice-5')+' demand die set to that number (one read; conditions are printed on the tile; a rival docking there banks nothing). A green <b>BUILDING serves whoever docks</b>. A purple <b>SPECIALIST</b> is private, on your player board. <b>Overbuild:</b> placing onto a built slot costs the '+costStr(OVERBUILD_FEE)+' ground rent (can’t pay → not a legal slot); the displaced tile flips face-down into an open <b>Floor slot</b> of its owner’s (none open → boxed) — a '+ic('sparkles')+'Wild stop on their Floor. <b>Flips score nothing.</b></div>'
@@ -3379,11 +3384,12 @@ function renderAid(){
     +'<div class="asec"><b>Destinations</b> <span class="note">gate · value · majority 1st/2nd/3rd · benefit · (Hall = a local Dispatch; ships sail to kontore only)</span>'
       +'<table class="atable"><tr><th>Destination</th><th>Gate</th><th>Value</th><th>Majority</th><th>Benefit</th></tr>'+dests+'</table>'
       +'<div class="note"><b>Delivery = the destination’s value + the demand die in the berth.</b> Benefits resolve <b>when gained, owner’s choice</b> (Bruges: 2 goods · London: a Building placed at once OR a Specialist · Bergen: a Reach · Novgorod: refine). <b>2-player skips 2nd place.</b> A '+ic('map-pin')+' <b>Reach</b> adds presence <b>only at a kontor you’ve already delivered to</b>.</div></div>'
-    +'<div class="asec"><b>The Hall shelf board</b> <span class="note">(Dispatch → the Hall: claim any OPEN space on a shelf your quality reaches — bank the row ★ + the space’s honor + mark it with your cube; all qualifying shelves full → the best row’s ★ anyway)</span><div class="atags">'+shelves+'</div></div>'
+    +'<div class="asec"><b>The Hall — the Guild’s Three Coins</b> <span class="note">(Dispatch → the Hall: a cask buys exactly ONE coin on a shelf its quality reaches — FAME banks the ★, CRAFT fires a power now, FAVOR grants a thing free (each coin once, cube it) — or LAUNCH for ★ = quality, always open. Enshrines never tick the ships track; the delivery spends a presence disc.)</span><div class="atags">'+shelves+'</div></div>'
     +'<div class="asec"><b>Cask slot actions</b> <span class="note">(face-up pile tops; Gruit is always Source)</span><div class="atags">'+acts+'</div></div>'
     +'<div class="asec"><b>Scoring</b><ol class="ascore">'
-      +'<li><b>Banked as you play:</b> delivery value (value + die — every kontor pays at least 1★) · the Hall’s shelf rows (3/5/7/9).</li>'
+      +'<li><b>Banked as you play:</b> delivery value (value + die — every kontor pays at least 1★) · the Hall’s FAME coins (5/7/10/13★) and launches (★ = quality).</li>'
       +'<li><b>Majorities (end-game)</b> — 1st/2nd/3rd at each kontor by delivered-cask count.</li>'
+      +'<li><b>The DUAL clock</b> — the Sailed-Ships track ('+ic('sailboat')+' voyages only) and the presence pool ('+PRES_POOL+' public discs each; the last disc placed sets the final round) — the first to fire ends the game.</li>'
       +'<li><b>The Flight (end-game)</b> '+ic('layers')+' — distinct <b>beers</b> delivered anywhere: <b>3 → '+FLIGHT_PTS[3]+' · 4 → '+FLIGHT_PTS[4]+' · 5 → '+FLIGHT_PTS[5]+(S&&S.jopen?' · 6 → '+FLIGHT_PTS[6]:'')+'</b> (min 3; the Jopenbier capstone counts when in play'+(S&&S.jopen?' — 6 types this game':'')+'). Brewing them also unlocked your Floor along the way.</li>'
       +'</ol></div>'
     +'<div class="asec"><b>Icon key</b><div class="akey">'+keys.map(k=>'<div class="akrow">'+ic(k[0])+'<span>'+k[1]+'</span></div>').join('')+'</div></div>'
@@ -4048,11 +4054,17 @@ function olGrantImprovement(lp){const pref=['cellar','hopgarden','granary','vess
   for(const key of pref){if(grantableBuy(lp,key)&&(key==='vessel'||specRoom(lp))){grantUpgrade(lp,key);olLog(lp,'fits '+upName(key)+' (free)');return;}}
   olLog(lp,'(no improvement to fit → goods)');gain(lp,2,0);}
 // FREE ENSHRINE (the Hall prestige action): present a deployed Q2+ cask to the Hall, no boat/fare. v1 auto-picks
-// the highest-quality eligible deployed cask. Advances the clock like any enshrine.
+// the highest-quality eligible deployed cask. v3.2: routes the THREE COINS — the best open FAME coin
+// the cask reaches (cube it), else the launch (★ = quality); enshrines never tick the ships track.
 function olGrantEnshrine(lp){const cands=SLOTS.map(s=>s.id).filter(id=>{const t=S.slots[id];return t&&t.type==='cask'&&!t.maturing&&t.owner===lp.id&&caskEffQ(id)>=DEST.hall.gate;});
   if(!cands.length){olLog(lp,'(no Q2+ cask deployed to enshrine → goods)');gain(lp,2,0);return;}
   cands.sort((a,b)=>caskEffQ(b)-caskEffQ(a));const ref=cands[0];const L=captureLoad(ref,'hall');S.slots[ref]=null;
-  const q=Math.min(5,L.q);const opts=hallOptionsFor(q);   // v3.0-A: the free enshrine claims the best open shelf space (auto), else overflows
+  const q=Math.min(5,L.q);
+  if(S.hallV2){let bi=-1;HALL2_SHELVES.forEach((sh,si)=>{if(q>=sh.q&&(((S.hall2&&S.hall2[si])||{}).fame==null)&&(bi<0||sh.fame>HALL2_SHELVES[bi].fame))bi=si;});
+    let val;if(bi>=0){(S.hall2[bi]=S.hall2[bi]||{}).fame=lp.id;val=HALL2_SHELVES[bi].fame;}else val=Math.max(1,q);
+    deliverCask(lp,L,'hall',null,false,val);
+    olLog(lp,'enshrines '+styleShort(L.style)+' Q'+L.q+' at the Hall (free — '+(bi>=0?('the '+HALL2_SHELVES[bi].name+' FAME coin, '+val+'★'):('a launch, '+val+'★'))+')');return;}
+  const opts=hallOptionsFor(q);   // v1 path (archived boards only)
   let rowStar,bonus=null;
   if(opts.length){let best=opts[0];opts.forEach(o=>{if(HALL_SHELVES[o.si].star>HALL_SHELVES[best.si].star)best=o;});
     const sh=HALL_SHELVES[best.si];rowStar=sh.star;bonus=sh.spaces[best.sp];(S.hall[best.si]=S.hall[best.si]||[]).push({pid:lp.id,space:best.sp});}
