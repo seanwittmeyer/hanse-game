@@ -888,9 +888,9 @@ const CASKS=[
   {nm:'Gruit',   c:'#8a949c', q:1, g:1,h:0, n:16, ready:1, pin:CASK_POOL[0]},
   {nm:'Hopped',  c:'#c2922f', q:2, g:1,h:1, n:20, ready:1},
   {nm:'Broyhan', c:'#b06a34', q:3, g:1,h:2, n:6,  ready:1},
-  {nm:'Keut',    c:'#9c5f2e', q:3, g:2,h:1, n:6,  ready:2, tag:'<b>+1</b> '+LU('map-pin')+'<br>presence'},
-  {nm:'Mumme',   c:'#caa12a', q:4, g:1,h:3, n:8,  ready:3},
-  {nm:'Bock',    c:'#7c2128', q:5, g:2,h:3, n:6,  ready:3},
+  {nm:'Keut',    c:'#9c5f2e', q:3, g:2,h:1, n:6,  ready:2, off:6, tag:'<b>+1</b> '+LU('map-pin')+'<br>presence'},
+  {nm:'Mumme',   c:'#caa12a', q:4, g:1,h:3, n:8,  ready:3, off:1},
+  {nm:'Bock',    c:'#7c2128', q:5, g:2,h:3, n:6,  ready:3, off:3},
   // ---- EXPANSION "Specialty Beers" (v1.9, opt-in) — PINNED-signature casks; drafted 3-of-7 only with the toggle ----
   {nm:'Gose',     c:'#6e8b74', q:2, g:2,h:0, n:8, ready:1, pin:CASK_POOL[0], tag:'salt trade:<br>+'+LU('wheat')+LU('sprout')},
   {nm:'Zerbster', c:'#5f7a3c', q:3, g:0,h:3, n:6, ready:1, pin:CASK_POOL[2], tag:'parti-gyle:<br>+free Gruit'},
@@ -1839,8 +1839,8 @@ function buildPages(){
   // --- CASK & SHIP CARDS → LETTER (8.5×11), double-sided (flip LEFT↔RIGHT) ---
   // cask cards: Gruit all-Source (pinned); Q2+ cycle their quality's GATED pool (survey/hire Q3+ · brew/enshrine Q4+) — the printed mix IS the brew-draw
   const cardFronts=[];
-  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);
-    for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];cardFronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
+  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);   // off = cycle offset — the tier's tiles collectively cover the whole gated pool (Bock reaches brew/enshrine)
+    for(let i=0;i<cnt(d.n);i++){const act=pool[(i+(d.off||0))%pool.length];cardFronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
   const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
   shipList.forEach(([hull,dest])=>cardFronts.push({fam:'Ships',kind:'ship',ship:true,html:shipCard(hull,dest)}));   // ships = full-bleed 2.5″ cards
   const CLBL='Cask &amp; Ship CARDS — fronts · LETTER 8.5×11 · 2″, centred — print DOUBLE-SIDED, flip on the SHORT edge (LEFT↔RIGHT)';
@@ -2033,7 +2033,7 @@ function exportItems(){
   // PNGs, so deduping by action key gives the full variety with no redundant files. Named cask-<beer>-<action>.
   CASKS.forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);
     const seen=new Set();
-    for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];if(seen.has(act.k))continue;seen.add(act.k);
+    for(let i=0;i<cnt(d.n);i++){const act=pool[(i+(d.off||0))%pool.length];if(seen.has(act.k))continue;seen.add(act.k);
       const nm=slug(d.nm)+'-'+act.k;
       it.push({type:'cask',name:nm,side:'front',w:2.5,h:2.5,html:caskCardFront(d,act)});
       it.push({type:'cask',name:nm,side:'back', w:2.5,h:2.5,html:caskCardBack(d,act)});}});
