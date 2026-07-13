@@ -101,7 +101,7 @@ Always acquired **from the face-up Wharf display of 4 and placed at once** (no h
 | Tile | Printed text | Cost ⚙ | Qty ⚙ |
 |---|---|---|---|
 | Staple Hall | Your cask: **+3★** | `3 G` | 2 |
-| Burgomaster’s Favor | Your cask: **+★ = its quality** (max 5) | `3 G` | 2 |
+| Burgomaster’s Favor | Your cask: **+★ = its quality** | `3 G` | 2 |
 | Connoisseur’s Cellar | Your Q4+ cask: **+4★** *(v3.1 ⚙ 5→4)* | `3 G` | 1 |
 | The Hanse Diet | Your cask: **+2★**, and place 1 presence there | `3 G` | 1 |
 | Almoner’s Stall | Your cask: **+3★** where you have no presence yet | `3 G` | 1 |

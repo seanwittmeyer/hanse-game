@@ -262,7 +262,7 @@ there passes through and banks nothing.
 | Privilege | Printed bonus ⚙ | Qty ⚙ |
 |---|---|---|
 | Staple Hall | **+3★** (any kontor) | 2 |
-| Burgomaster’s Favor | **+★ = the cask’s quality** (max 5) | 2 |
+| Burgomaster’s Favor | **+★ = the cask’s quality** | 2 |
 | Connoisseur’s Cellar | **+4★**, Q4+ casks only (v3.1 ⚙ 5→4) | 1 |
 | London Steelyard / Bergen Bryggen / Novgorod Peterhof | **+4★**, to the printed kontor only | 1 each |
 | Bruges Hanzehuis | **+3★**, Bruges only (v3.1 ⚙ 4→3 — Bruges is the Q1 port; its charter pays less, or the 1G Gruit becomes the best cask in the game) | 1 |
