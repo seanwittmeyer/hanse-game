@@ -911,9 +911,9 @@ const SHIP_DECK=[
 ];
 // ---- SLOT TILES (v3.0-A): PRIVILEGES & BUILDINGS — the one owned family on the living slots (mirrors
 // play.html BUILDINGS). One grammar: "a tile modifies the OCCUPANT docked on it", in two verbs —
-//   • VALUE = a PRIVILEGE (blue): prints ONE die number. When the OWNER's cask departs the slot toward a
-//     sale, its demand die is SET to exactly that number — once, at departure, nothing recalculated
-//     (no premium, no cap rule, no sail-time bump). A rival's cargo banks nothing.
+//   • VALUE = a PRIVILEGE (blue): prints a plain +N★ bonus. When the OWNER's cask departs the slot
+//     toward a sale, set its demand die to N — once, at departure, nothing recalculated (the pips ARE
+//     the ★ banked on delivery; no premium, no cap rule, no sail-time bump). A rival's cargo banks nothing.
 //   • TRANSFORM = a WORK (green): changes the docked cask/ship, for WHOEVER docks there. Three works
 //     print an ACTION — their slot's stop offers "deploy here OR the printed action".
 // v3.0-A cuts the Gauger's Office + the Festkeller; Rich Berth is reworked to the sail-short valve;
@@ -923,7 +923,7 @@ const SHIP_DECK=[
 const DIE=n=>'<span class="diech">'+LU('dice-'+n)+'</span>';
 const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a SHIP docked here'}};
 const BUILDINGS=[
-  // PRIVILEGES (blue, 12 tiles) — one printed die number, owner-only, set at departure
+  // PRIVILEGES (blue, 12 tiles) — each prints a +N★ bonus, owner-only; the demand die (set to N at departure) carries it
   {k:'staple',    nm:'Staple Hall',          verb:'value', tgt:'cask', ic:'warehouse',   g:3, n:2, eff:'Your cask: +3★ '+DIE(3)},
   {k:'burgomstr', nm:'Burgomaster’s Favor',  verb:'value', tgt:'cask', ic:'crown',       g:3, n:2, eff:'Your cask: +★ = its quality'},
   {k:'connoiss',  nm:'Connoisseur’s Cellar', verb:'value', tgt:'cask', ic:'wine',        g:3, n:1, eff:'Your Q4+ cask: +4★ '+DIE(4)},
@@ -947,7 +947,7 @@ const BUILDINGS=[
   {k:'grainex',   nm:'Grain Exchange',       verb:'transform', tgt:'cask', ic:'arrow-left-right', g:2, n:1, eff:'Empty stop: convert 2 goods', art:'building-gauger.png'},
   {k:'missionq',  nm:'Mission Quay',         verb:'transform', tgt:'cask', ic:'church',           g:2, n:1, eff:'Empty stop: age a cask +1', art:'building-reliquary.png'},
   // EXPANSION "Specialty Beers" (Option A) thematic tiles — print with the kit; use only with that module
-  {k:'salthouse', nm:'Salt House',          verb:'value',     tgt:'cask', ic:'gem',           g:2, n:1, eff:'Your cask departs: +1'+LU('wheat','g')+' +1'+LU('sprout','h')+' (no die)'},
+  {k:'salthouse', nm:'Salt House',          verb:'value',     tgt:'cask', ic:'gem',           g:2, n:1, eff:'Your cask: +1'+LU('wheat','g')+' +1'+LU('sprout','h')},
   {k:'smokekiln', nm:'Smoke Kiln',          verb:'transform', tgt:'cask', ic:'cloud',         g:2, n:1, eff:'Cask ships +1 quality (max Q5)'},
   {k:'partigyle', nm:'Parti-Gyle Tun',      verb:'transform', tgt:'cask', ic:'split',         g:2, n:1, eff:'Deploy here: a free Gruit to a vessel'},
 ];
@@ -1502,7 +1502,7 @@ function olboard(){
     +'<div class="ol-tree">'+svg+labels+nodes+'</div>'
   +'</div>';}
 
-// ---- MAIN BOARD — the Wharf (stations + 8 slots + both shared tracks) ----
+// ---- MAIN BOARD — the Wharf (the stations + 8-slot cross; the clocks & score ring live on Market & Stores) ----
 // Board-design principle: the board carries shapes & icons only (a 1.25" tile fits a 1.3" dashed
 // square; that's the affordance) — the verbose station reference lives in the side column.
 // the roof-tile texture, drawn as a tiled SVG <pattern> (scalloped arcs) — exports cleanly via html2canvas
@@ -1685,7 +1685,7 @@ function supplyBoard(){
   const clock='<div class="sup-clock"><div class="cicon">'+LU('sailboat')+'</div><span class="clbl">Sailed<br>Ships</span><div class="vtrack">'+clk+'</div></div>';
   const inner='<div class="mboard supply" style="position:absolute;left:'+SCORE_RING_T+'in;top:'+SCORE_RING_T+'in;'
       +'width:'+(SUPPLY_NW-2*SCORE_RING_T).toFixed(3)+'in;height:'+(SUPPLY_NH-2*SCORE_RING_T).toFixed(3)+'in">'
-    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays · the destinations · the end clock ('+LU('flag')+' finish the round &amp; score · '+LU('truck')+' = with The Trade Roads) — score laps the rim by fives (0–49, then +50)</span></div>'
+    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays · the destinations · the Sailed-Ships clock ('+LU('flag')+' voyages only · '+LU('truck')+' = with The Trade Roads) — its twin is the '+LU('map-pin')+' <b>presence clock</b>: a house’s LAST disc placed sets the final round; the FIRST trigger fires — score laps the rim by fives (0–49, then +50)</span></div>'
     +'<div class="sup-cols">'
       +'<div class="sup-main">'+market+cellar+'</div>'
       +dests
@@ -1916,7 +1916,7 @@ function checklist(pages,famPages){
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The base game below; the three opt-in expansions are listed last. With all expansions off, the box is exactly the base set. (Counts are a working first pass.)</p>'
     +'<div class="cols2">';
   h+=T('Boards')
-    +R('Main board — the Wharf','The 2×2 of stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots, plus the Sailed-Ships end-clock track.','1')
+    +R('Main board — the Wharf','The 2×2 of stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots — the cross board. (The clocks and score ring live on the Market &amp; Stores board.)','1')
     +R('Destinations board','The four kontore (Bruges · London · Bergen · Novgorod) — each with its quality gate, printed value, on-delivery benefit, and majority track (the Hall panel points at its Three-Coins board).','1')
     +R('The Hall board — the Guild’s Three Coins','Four quality-gated shelves (Common Q2 · Long Q3 · Masters’ Q4 · High Board Q5 — v3.2), each printing exactly THREE one-shot coin spaces: FAME (5/7/10/13★) · CRAFT (a power fired now) · FAVOR (a free thing) — claimed with cask cubes. A Hall Dispatch (free, no ship) buys ONE coin, or LAUNCHES the cask: ★ = quality. The Hall never ticks the Sailed-Ships track.','1')
     +R('Market &amp; Stores board','The shared displays at component size (Buildings 4 · Ships 3 · recipe stacks + contracts · Specialists 4 — each display refills from its DRAW BAG, no deck spaces), the DESTINATIONS column (the four kontore — gate · value · benefit · majority · an open presence zone — with the Hall set apart), the Sailed-Ships clock (15 cells, dual END marks — base 5/8/10 and The Trade Roads 7/10/12; voyages only, the Hall never ticks it), and the 50-cell score ring wrapping the rim (0–49, +50 on the second lap). Loose bits (goods cubes · demand dice · quality markers) live in a supply tray.','1')
@@ -1943,7 +1943,7 @@ function checklist(pages,famPages){
     +R('Unlock covers','Per player colour — sit on Floor slots 3–7; each new distinct beer brewed (from the 2nd) or the Coppersmith removes the next one.','5 ea')
     +R('Draw bags','One per hidden tile supply — Ships · Buildings/Privileges · Specialists (their backs reveal the type, so the supply hides in a bag; displays refill by blind draw).','3')
     +R('Building-owner frames','Per player colour — a card-kit-specific overlay marking whose building card sits on a slot (printables.html marks this with the same disc instead).','6 ea')
-    +R('Demand dice (d6)','The one-read value carrier — set ONCE, at departure, to the number printed on the owner’s Privilege; rides the hull’s berth well; the pips are the ★ banked on delivery. Never rolled, never recalculated.','8')
+    +R('Demand dice (d6)','The one-read value carrier — set ONCE, at departure, to the owner’s Privilege’s printed +N★; rides the hull’s berth well; the pips ARE the ★ banked on delivery. Never rolled, never recalculated.','8')
     +R('Quality-boost markers','A +1-quality token a cask carries from a Malt Kiln / Hop Yard (gates AND points) to delivery.','6')
     +R('First-player &amp; round markers','Turn order (fixed all game) + the round track.','2')
     +'</table>';
