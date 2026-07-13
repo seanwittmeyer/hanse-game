@@ -151,9 +151,9 @@ __GAMES.forEach(function(cfg){
   Math.random=__mulberry32(cfg.seed);
   __buf=[];__turnNo=0;
   EXPANSION=false;JOPEN=false;OVERLAND=false;
-  EXP_HALLV2=(typeof __HALLV2!=='undefined'&&__HALLV2);EXP_PRESEND=(typeof __PRESEND!=='undefined'&&__PRESEND);   // ⚗ hall2/presence-clock experiment hooks
+  if(typeof __HALLV2!=='undefined'&&__HALLV2!==null)EXP_HALLV2=__HALLV2;if(typeof __PRESEND!=='undefined'&&__PRESEND!==null)EXP_PRESEND=__PRESEND;   // v3.2 CANON ON — =0 regresses
   if(typeof __POOL!=='undefined'&&__POOL)PRES_POOL=__POOL;
-  PRES_ALL=(typeof __POOLALL!=='undefined'&&__POOLALL);
+  if(typeof __CAPS!=='undefined'&&__CAPS)SAILED_CAP=__CAPS;
   S=freshState(cfg.seats.length,cfg.seats.map(function(s){return s.name;}));
   UI={sub:'move'};undoStack=[];activeTab=0;
   S.players.forEach(function(p,i){p.ai=cfg.seats[i].ai;});
@@ -196,7 +196,7 @@ const MathClone = {};
 Object.getOwnPropertyNames(Math).forEach(k => { MathClone[k] = Math[k]; });
 
 const ctx = {
-  __HALLV2: process.env.HALLV2==='1', __PRESEND: process.env.PRESEND==='1', __POOL: parseInt(process.env.POOL||'0',10), __POOLALL: process.env.POOLALL==='1',
+  __HALLV2: process.env.HALLV2===undefined?null:process.env.HALLV2==='1', __PRESEND: process.env.PRESEND===undefined?null:process.env.PRESEND==='1', __POOL: parseInt(process.env.POOL||'0',10), __CAPS: process.env.CAPS?(function(a){return {2:+a[0],3:+a[1],4:+a[2]};})(process.env.CAPS.split(',')):null,
   document: documentStub, localStorage: localStorageStub, console, Math: MathClone,
   JSON, Date, Set, Map, Array, Object, String, Number, Boolean,
   parseInt, parseFloat, isNaN, alert: noop, setTimeout: noop, clearTimeout: noop,

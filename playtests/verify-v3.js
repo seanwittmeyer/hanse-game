@@ -129,12 +129,15 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
   ok('delivery = printed value (Q5→6) + die (5)', scorePlayer(p).deliv===t0+11, 'delta '+(scorePlayer(p).deliv-t0));
 })();
 
-// ---- 6c. ⚗ the Hall v2 + presence-clock experiment (toggles ON only inside this block) ----
+// ---- 6c. the Hall "Three Coins" + the presence clock (v3.2 CANON) ----
 (function(){
-  EXP_HALLV2=true;EXP_PRESEND=true;PRES_POOL=15;
+  PRES_POOL=14;
   var p=fresh();S.active=0;
-  ok('⚗ v2 state seeded', S.hallV2===true&&S.presEnd===true&&S.hall2.length===4&&p.presPool===15);
-  ok('⚗ presence clock: the ships clock is off', S.sailedCap===999);
+  ok('v3.2 state seeded (canon flags + pool 14)', S.hallV2===true&&S.presEnd===true&&S.hall2.length===4&&p.presPool===14);
+  ok('v3.2 DUAL clock: the ships track runs alongside (2p cap 5)', S.sailedCap===5);
+  ok('v3.2 shelf menu: FAME 5/7/10/13 · goods4f · recipe2x · freedeliv · tilefree',
+    HALL2_SHELVES[0].fame===5&&HALL2_SHELVES[1].fame===7&&HALL2_SHELVES[2].fame===10&&HALL2_SHELVES[3].fame===13
+    &&HALL2_SHELVES[0].favor==='goods4f'&&HALL2_SHELVES[1].favor==='recipe2x'&&HALL2_SHELVES[2].favor==='freedeliv'&&HALL2_SHELVES[3].favor==='tilefree');
   // FAME coin: Q5 cask takes the High Board fame 13, once; no tick
   S.slots.s3={type:'cask',owner:0,style:'bock',q:5,act:'age'};
   var sailed0=S.sailed,d0=scorePlayer(p).deliv;
@@ -158,7 +161,34 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
   hall2Pick(3,'craft');
   ok('⚗ the Miracle ages ALL to Ready', p.vessels.every(function(c){return !c||c.step>=c.ready;}));
   ok('⚗ a CRAFT coin banks no ★', scorePlayer(p).deliv===d2, 'delta '+(scorePlayer(p).deliv-d2));
-  // presence pool: kontor deliveries spend discs; the 15th ends the game
+  // the Common FAVOR: +4 goods (2G2H), no ★, the coin spent
+  var p4=fresh();S.active=0;
+  S.slots.s6={type:'cask',owner:0,style:'hopped',q:2,act:'age'};
+  var g4=p4.grain,h4=p4.hops,d4=scorePlayer(p4).deliv;
+  UI={sub:'hallspace',hsp:{ref:'s6',returnTo:'end',v2:true},stops:[],pendingBenefits:[]};
+  hall2Pick(0,'favor');
+  ok('v3.2 Common FAVOR pays +4 goods (2G2H)', p4.grain===g4+2&&p4.hops===h4+2, 'g '+(p4.grain-g4)+' h '+(p4.hops-h4));
+  ok('v3.2 Common FAVOR banks no ★, coin spent', scorePlayer(p4).deliv===d4&&S.hall2[0].favor===0);
+  // the Long FAVOR: 2 free recipes
+  var p5=fresh();S.active=0;
+  S.slots.s6={type:'cask',owner:0,style:'bock',q:3,act:'age'};
+  var r5=p5.recipes.length;
+  UI={sub:'hallspace',hsp:{ref:'s6',returnTo:'end',v2:true},stops:[],pendingBenefits:[]};
+  hall2Pick(1,'favor');
+  ok('v3.2 Long FAVOR grants 2 recipes, free', p5.recipes.length===r5+2, 'gained '+(p5.recipes.length-r5));
+  // the Masters' FAVOR: a free kontor delivery — no contract, no fare, and the voyage ticks
+  var p6=fresh();S.active=0;
+  S.slots.s6={type:'cask',owner:0,style:'bock',q:4,act:'age'};
+  S.slots.s7={type:'cask',owner:0,style:'hopped',q:2,act:'age'};
+  var k6=p6.contracts||0,g6=p6.grain,sl6=S.sailed,d6=scorePlayer(p6).deliv;
+  UI={sub:'hallspace',hsp:{ref:'s6',returnTo:'end',v2:true},stops:[],pendingBenefits:[]};
+  hall2Pick(2,'favor');
+  ok('v3.2 Masters’ FAVOR opens the free passage picker', UI.sub==='dispatch'&&UI.disp&&UI.disp.mode==='freekontor');
+  dispatchPickCask('s7');dispatchRoute('bruges');
+  ok('v3.2 the passage spends NO contract and NO fare', (p6.contracts||0)===k6&&p6.grain===g6, 'contracts '+(p6.contracts||0)+'/'+k6+' grain '+p6.grain+'/'+g6);
+  ok('v3.2 the passage delivers (cask gone, ★ banked) and ticks the ships track', S.slots.s7===null&&scorePlayer(p6).deliv>d6&&S.sailed===sl6+1);
+  ok('v3.2 the passage never routes to the Hall', S.hall2[2].favor===0);
+  // presence pool: EVERY delivery spends a disc; the last ends the game
   var p2=fresh();S.active=0;p2.presPool=2;
   deliverCask(p2,{style:'hopped',q:2,die:0},'bruges',null,false);
   ok('⚗ a kontor delivery spends a disc', p2.presPool===1);
@@ -169,7 +199,7 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
   var p3=fresh();S.active=0;p3.presPool=1;p3.delivered.push({style:'gruit',q:1,dest:'bruges',val:1});
   addPresence(p3,'bruges',2);
   ok('⚗ Reach is disc-bounded', (p3.presBonus.bruges||0)===1&&p3.presPool===0);
-  EXP_HALLV2=false;EXP_PRESEND=false;PRES_POOL=15;
+  PRES_POOL=14;   // canon stays ON — no toggle-off
 })();
 
 // ---- 6b. the v3.1 playtest tunes ----
@@ -178,7 +208,7 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
   ok('Connoisseur’s Cellar prints die 4 (v3.1)', BUILDINGS.connoiss.die===4&&BUILDINGS.connoiss.minq===4);
   ok('the Hall rows read 3/5/6/8 (v3.1)', HALL_PTS[2]===3&&HALL_PTS[3]===5&&HALL_PTS[4]===6&&HALL_PTS[5]===8
     &&HALL_SHELVES[2].star===6&&HALL_SHELVES[3].star===8);
-  ok('the 2p Sailed-Ships clock is 7 (v3.1)', SAILED_CAP[2]===7&&SAILED_CAP[3]===10&&SAILED_CAP[4]===13);
+  ok('the Sailed-Ships clock reads 5/8/10 (v3.2 — ships+charters only)', SAILED_CAP[2]===5&&SAILED_CAP[3]===8&&SAILED_CAP[4]===10);
 })();
 
 // ---- 7. flips score 0 + flips seat in the one row ----

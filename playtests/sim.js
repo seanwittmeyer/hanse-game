@@ -192,6 +192,12 @@ function botHarbor(p){
 // v3.0-A DISPATCH picker (cask → route); hallonly auto-routes on pick
 function botDispatch(p){
   var d=UI.disp;if(!d){backToStops();return;}
+  if(d.mode==='freekontor'){   // v3.2 the Masters' passage — kontore only, no contract/fare (the engine AI helpers read p.ai, so the bot picks itself)
+    if(!d.cask){var fc=freeKontorCasks(p);if(!fc.length){dispatchSkip();return;}
+      fc.sort(function(a,b){return b.q-a.q;});dispatchPickCask(fc[0].ref);return;}
+    var fq=caskEffQ(d.cask);var fds=DESTS.filter(function(dd){return dd!=='hall'&&fq>=olCharterGate(p,dd);});
+    if(!fds.length){dispatchSkip();return;}
+    var fw=personaDest(p,fq);dispatchRoute(fds.indexOf(fw)>=0?fw:fds[0]);return;}
   var cs=dispatchCasks(p).filter(function(o){return d.mode==='hallonly'?o.q>=DEST.hall.gate:true;});
   if(!cs.length){dispatchSkip();return;}
   if(!d.cask){
@@ -351,10 +357,10 @@ function botActOnce(){var p=cur();var U=UI.sub;
 function tbVec(p){var sc=scorePlayer(p);return [sc.total, deployedCaskQ(p), p.grain+p.hops];}   // matches the engine: total → quality of deployed slot casks → goods
 function runGame(n){
   EXPANSION=(typeof __EXPANSION!=='undefined'&&__EXPANSION);
-  EXP_HALLV2=(typeof __HALLV2!=='undefined'&&__HALLV2);          // ⚗ HALLV2=1 — the Three Coins experiment
-  EXP_PRESEND=(typeof __PRESEND!=='undefined'&&__PRESEND);       // ⚗ PRESEND=1 — the presence clock experiment
-  if(typeof __POOL!=='undefined'&&__POOL)PRES_POOL=__POOL;
-  PRES_ALL=(typeof __POOLALL!=='undefined'&&__POOLALL);       // ⚗ POOL=n — presence discs per player   // EXPANSION "Specialty Beers" sim hook (injected via ctx) — off by default → base-game regression; EXPANSION=1 tests the opt-in module
+  if(typeof __HALLV2!=='undefined'&&__HALLV2!==null)EXP_HALLV2=__HALLV2;      // v3.2 CANON ON — HALLV2=0 regresses to the v1 shelves
+  if(typeof __PRESEND!=='undefined'&&__PRESEND!==null)EXP_PRESEND=__PRESEND;  // v3.2 CANON ON — PRESEND=0 turns the presence clock off
+  if(typeof __POOL!=='undefined'&&__POOL)PRES_POOL=__POOL;                    // POOL=n — presence discs per player (sweep)
+  if(typeof __CAPS!=='undefined'&&__CAPS)SAILED_CAP=__CAPS;                   // CAPS="5,8,10" — the ships-clock sweep (2/3/4p)
   JOPEN=(typeof __JOPEN!=='undefined'&&__JOPEN);               // EXPANSION CAPSTONE "Jopenbier" sim hook — JOPEN=1 confirms the flag doesn't break the base flow (the greedy bot doesn't pilot the capstone)
   if(typeof OVERLAND!=='undefined')OVERLAND=(typeof __OVERLAND!=='undefined'&&__OVERLAND);   // EXPANSION "The Trade Roads" sim hook — OVERLAND=1; the greedy bot grows roads PASSIVELY (delivering rides the road), which gates robustness/pace
   S=freshState(n,NAMES.slice(0,n));UI={sub:'move'};undoStack=[];activeTab=0;
@@ -506,7 +512,7 @@ const ctx = {
   __N: N, __COUNTS: COUNTS, __SC, __PERSONAS: PERSONAS, __CELLAR: CELLAR, __TUNE, __STK: !!process.env.STK,
   __FREEIMP: process.env.FREE_IMP==='1',
   __EXPANSION: process.env.EXPANSION==='1',
-  __HALLV2: process.env.HALLV2==='1', __PRESEND: process.env.PRESEND==='1', __POOL: parseInt(process.env.POOL||'0',10), __POOLALL: process.env.POOLALL==='1',
+  __HALLV2: process.env.HALLV2===undefined?null:process.env.HALLV2==='1', __PRESEND: process.env.PRESEND===undefined?null:process.env.PRESEND==='1', __POOL: parseInt(process.env.POOL||'0',10), __CAPS: process.env.CAPS?(function(a){return {2:+a[0],3:+a[1],4:+a[2]};})(process.env.CAPS.split(',')):null,
   __JOPEN: process.env.JOPEN==='1',
   __OVERLAND: process.env.OVERLAND==='1',
 };
