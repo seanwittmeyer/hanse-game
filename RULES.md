@@ -267,8 +267,8 @@ there passes through and banks nothing.
 | London Steelyard / Bergen Bryggen / Novgorod Peterhof | **+4★**, to the printed kontor only | 1 each |
 | Bruges Hanzehuis | **+3★**, Bruges only (v3.1 ⚙ 4→3 — Bruges is the Q1 port; its charter pays less, or the 1G Gruit becomes the best cask in the game) | 1 |
 | The Hanse Diet | **+2★**, and place 1 presence at the destination | 1 |
-| Almoner’s Stall | **+3★** where you have no presence at the destination yet | 1 |
-| Reliquary | **+2★**, on a Hall dispatch from here | 1 |
+| Almoner’s Stall | **+3★** if no presence there | 1 |
+| Reliquary | **+2★** when enshrined | 1 |
 | Salt House *(exp)* | no ★ — the owner gains +1G +1H at departure | 1 |
 
 *(The quality climb is paid where quality is READ, not computed: Novgorod’s printed scale, the
