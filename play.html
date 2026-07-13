@@ -731,12 +731,12 @@ function charterCost(p){return CHARTER_FLAT_FARE;}   // flat; the scarce CONTRAC
 // spaces as it is authored — the Agricola read).
 const BUILDINGS={
   // PRIVILEGES (blue) — one printed die number, owner-only, set at departure
-  staple    :{name:'Staple Hall',          verb:'value', tgt:'cask', icon:'warehouse',     cost:{g:3}, qty:2, die:3, desc:'Your departing cask: +3★'},
-  burgomstr :{name:'Burgomaster’s Favor',  verb:'value', tgt:'cask', icon:'crown',         cost:{g:3}, qty:2, die:'q', desc:'Your departing cask: +★ = its quality (max 5)'},
-  connoiss  :{name:'Connoisseur’s Cellar', verb:'value', tgt:'cask', icon:'wine',          cost:{g:3}, qty:1, die:4, minq:4, desc:'Your departing Q4+ cask: +4★'},   // v3.1 ⚙ 5→4 (playtest: 11★ Novgorod Bocks ran away)
-  hansediet :{name:'The Hanse Diet',       verb:'value', tgt:'cask', icon:'gavel',         cost:{g:3}, qty:1, die:2, pres:1, desc:'Your departing cask: +2★, and place 1 presence there'},
+  staple    :{name:'Staple Hall',          verb:'value', tgt:'cask', icon:'warehouse',     cost:{g:3}, qty:2, die:3, desc:'Your cask: +3★'},
+  burgomstr :{name:'Burgomaster’s Favor',  verb:'value', tgt:'cask', icon:'crown',         cost:{g:3}, qty:2, die:'q', desc:'Your cask: +★ = its quality (max 5)'},
+  connoiss  :{name:'Connoisseur’s Cellar', verb:'value', tgt:'cask', icon:'wine',          cost:{g:3}, qty:1, die:4, minq:4, desc:'Your Q4+ cask: +4★'},   // v3.1 ⚙ 5→4 (playtest: 11★ Novgorod Bocks ran away)
+  hansediet :{name:'The Hanse Diet',       verb:'value', tgt:'cask', icon:'gavel',         cost:{g:3}, qty:1, die:2, pres:1, desc:'Your cask: +2★, and place 1 presence there'},
   reliquary :{name:'Reliquary',            verb:'value', tgt:'cask', icon:'church',        cost:{g:3}, qty:1, die:2, hall:true, desc:'Enshrined from here: +2★'},
-  almoner   :{name:'Almoner’s Stall',      verb:'value', tgt:'cask', icon:'heart',         cost:{g:3}, qty:1, die:3, nopres:true, desc:'Your departing cask: +3★ where you have no presence yet'},
+  almoner   :{name:'Almoner’s Stall',      verb:'value', tgt:'cask', icon:'heart',         cost:{g:3}, qty:1, die:3, nopres:true, desc:'Your cask: +3★ where you have no presence yet'},
   // KONTOR CHARTERS — one per kontor (+4★ to the printed kontor only; Bruges +3★, v3.1)
   ch_bruges :{name:'Bruges Hanzehuis',     verb:'value', tgt:'cask', icon:'landmark', kontor:'bruges',  cost:{g:2}, qty:1, die:3, desc:'Your cask to Bruges: +3★'},   // v3.1 ⚙ 4→3 (playtest: the 1G-Gruit 5★ pump — Bruges is the Q1 port, its charter pays less)
   ch_london :{name:'London Steelyard',     verb:'value', tgt:'cask', icon:'landmark', kontor:'london',  cost:{g:2}, qty:1, die:4, desc:'Your cask to London: +4★'},
@@ -755,7 +755,7 @@ const BUILDINGS={
   grainex   :{name:'Grain Exchange',       verb:'transform', tgt:'cask', icon:'arrow-left-right', cost:{g:2}, qty:1, act:'convert', desc:'Empty stop: convert 2 goods'},   // v3.0-A new action-work (Convert’s new home)
   missionq  :{name:'Mission Quay',         verb:'transform', tgt:'cask', icon:'church',     cost:{g:2}, qty:1, act:'age1', desc:'Empty stop: age a cask +1'},   // v3.0-A new action-work
   // ---- EXPANSION "Specialty Beers" thematic tiles — in the deck ONLY when that toggle is on (exp:true) ----
-  salthouse :{name:'Salt House',           verb:'value',     tgt:'cask', icon:'gem',         cost:{g:2}, qty:1, exp:true, die:0, goods:true, desc:'Your departing cask: +1G +1H'},
+  salthouse :{name:'Salt House',           verb:'value',     tgt:'cask', icon:'gem',         cost:{g:2}, qty:1, exp:true, die:0, goods:true, desc:'Your cask: +1G +1H'},
   smokekiln :{name:'Smoke Kiln',           verb:'transform', tgt:'cask', icon:'cloud',       cost:{g:2}, qty:1, exp:true, desc:'Cask ships +1 quality (max Q5)'},
   partigyle :{name:'Parti-Gyle Tun',       verb:'transform', tgt:'cask', icon:'split',       cost:{g:2}, qty:1, exp:true, desc:'Deploy here: a free Gruit to a vessel'},
 };
