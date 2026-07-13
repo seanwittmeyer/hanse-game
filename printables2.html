@@ -178,7 +178,7 @@
   .ship-card .ce.top .cnm svg,.ship-card .ce.top .cnm .ic{width:.26in;height:.26in}
   .ship-card .ccost{font-size:.17in}
   .ship-card .sberth{display:inline-flex;align-items:center;gap:.07in;background:rgba(0,0,0,.34);border-radius:.06in;padding:.055in .09in}
-  .ship-card .sbn{width:.34in;height:.34in;border:1.8px solid rgba(255,255,255,.92);border-radius:.05in;display:flex;align-items:center;justify-content:center;font-size:.18in;font-weight:900}
+  .ship-card .sbn{width:.42in;height:.42in;border:1.8px solid rgba(255,255,255,.92);border-radius:.05in;display:flex;align-items:center;justify-content:center;font-size:.18in;font-weight:900}   /* prints 0.336in — seats an 8mm cask cube; the demand die rides BESIDE the hull */
   .ship-card .ce.bot .ce-row{align-items:flex-end}
   .ship-card .ce.bot .sdest{font-size:.22in;font-variant:small-caps;font-weight:bold;display:inline-flex;align-items:center;gap:.06in}
   .ship-card .ce.bot .sdest svg,.ship-card .ce.bot .sdest .ic{width:.2in;height:.2in}
@@ -386,8 +386,9 @@
   .rk.printed .c-cost .gc svg,.rk.printed .c-cost .gc .ic{width:.13in;height:.13in}
   /* ====================== PLAYER BOARD v3 (component-driven · tight die-cut · chrome-stripped) ==========
      A bench sized to the TILES, not the page: 4 building/improvement slots (2in) + a compact Flight strip on
-     top; ONE recipe-stack slot + 3 cask-vessel slots (2.5in — they seat the 2.5in cask cards) on the bottom. No
-     header/storage block, no rules text — just the slots. The die-cut hugs the cluster (see the call site). */
+     v3.1 ONE ROW: seven 2.5in Floor slots (they seat the 2.5in cask cards) wrapped as two visual runs
+     (F1–F4 + the recipe rack · F5–F7 + the Floor rules panel), the Flight strip below. The die-cut hugs
+     the cluster (see the call site). */
   .pb2{--pc:#7c2128;width:100%;height:100%;background:var(--parch);color:var(--ink);position:relative;
     border:3px solid var(--pc);border-radius:.18in;padding:.13in;display:flex;flex-direction:column;gap:.1in}
   /* the white highlight line is an ::after overlay border, not an inset box-shadow — html2canvas floods
@@ -769,6 +770,11 @@
   .pb3-fbox.z{opacity:.55}
   .pb2-floor{flex:0 0 auto;display:flex;align-items:center;gap:.06in;border-radius:.06in;background:var(--pc);color:#fff;padding:.045in .09in;font-size:.098in;line-height:1.25}
   .pb2-floor svg,.pb2-floor .ic{width:.15in;height:.15in;flex:0 0 auto}
+  /* the ONE-ROW Floor rules panel (sits beside slots 5–7) — the teaching text, in the board's own language */
+  .pb2-floorbox{flex:1;display:flex;gap:.08in;align-items:flex-start;border:1.6px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.4);padding:.08in .1in;font-size:.102in;line-height:1.3;color:var(--ink)}
+  .pb2-floorbox svg,.pb2-floorbox .ic{width:.18in;height:.18in;flex:0 0 auto;color:var(--pc)}
+  .pb2-floorbox b{color:var(--pc)}
+  .pb2-floorbox .fbnote{display:block;margin-top:.035in;font-size:.09in;color:var(--ink2)}
   /* ---- UNLOCK COVER tile ---- */
   .cover{background:var(--c);border-radius:.1in;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.05in;color:#fff;box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
   .cover svg,.cover .ic{width:.42in;height:.42in;opacity:.9}
@@ -1073,7 +1079,7 @@ const SUPPLY_NW=17.2, SUPPLY_NH=13.4;   // board native size — defined by the 
 const SUPPLY_MAIN_W=9.7;                 // the left (displays) column's width; the destinations column takes the rest
 const SCORE_CELLS=50;     // one lap = 0–49 (the start corner reads 0/50); a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
 const SCORE_RING_T=0.8;   // ring thickness (native) → prints 0.64″ — a comfortable seat for the 0.5″ disc
-const TILE_GEO  ={w:22,h:5.75, y0:0.45,yMax:5.47};   // building FRONTS sheet + its mirrored BACKS sheet (27 tiles, 3 rows)
+const TILE_GEO  ={w:22,h:5.75, y0:0.45,yMax:5.47};   // building FRONTS sheet + its mirrored BACKS sheet (30 tiles incl. the 3 Specialty-Beers works, 3 rows)
 const IMPF_GEO  ={w:22,h:8.5,  y0:0.45,yMax:8.22};   // improvements + owner frames (2.5″ rings, 3 rows) — single-sided, their own sheet
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
 // NATIVE component sizes (in) — the design size each piece renders at; packRun scales the FOOTPRINT by SCALE and
@@ -1198,7 +1204,7 @@ function caskCardBack(d,act){
     +artLayer('cask-'+d.nm.toLowerCase()+'.png')
     +'<div class="ce top"><div class="ce-row sb">'+qTop+'</div></div>'
     +'<div class="cc-actfloat"><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div>'
-    +'<div class="ce bot"><div class="ce-row">'+q+'<span class="cc-mark" title="quality die / presence marker"></span></div></div>'
+    +'<div class="ce bot"><div class="ce-row">'+q+'<span class="cc-mark" title="a +1Q / presence marker rides beside the card"></span></div></div>'
   +'</div>';
 }
 // printables2 v4: a SHIP is a full-bleed 2.5″ CARD (was a small tile) — the destination's CITY is the
@@ -1843,12 +1849,12 @@ function buildPages(){
     for(let i=0;i<cnt(d.n);i++){const act=pool[(i+(d.off||0))%pool.length];cardFronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
   const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
   shipList.forEach(([hull,dest])=>cardFronts.push({fam:'Ships',kind:'ship',ship:true,html:shipCard(hull,dest)}));   // ships = full-bleed 2.5″ cards
-  const CLBL='Cask &amp; Ship CARDS — fronts · LETTER 8.5×11 · 2″, centred — print DOUBLE-SIDED, flip on the SHORT edge (LEFT↔RIGHT)';
+  const CLBL='Cask & Ship CARDS — fronts · LETTER 8.5×11 · 2″, centred — print DOUBLE-SIDED, flip on the SHORT edge (LEFT↔RIGHT)';   // PLAIN text — every consumer escapes for itself
   const cStart=pages.length;
   ['caskc','ship'].forEach(k=>packRun(pages,'tiles',CLBL,k,cardFronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,CARD_GEO));
   const cardFrontPages=pages.slice(cStart);
   tagFamilies(cardFrontPages,cardFronts);
-  mirrorBackPages(cardFrontPages,cardFronts,CARD_GEO,'Cask &amp; Ship CARD BACKS · LETTER 8.5×11 (mirror — flip LEFT↔RIGHT): cask brewed-side · a ship at sea behind ships');
+  mirrorBackPages(cardFrontPages,cardFronts,CARD_GEO,'Cask & Ship CARD BACKS · LETTER 8.5×11 (mirror — flip LEFT↔RIGHT): cask brewed-side · a ship at sea behind ships');
 
   // --- BUILDING TILES → a 22-wide FRONT sheet + its LEFT↔RIGHT MIRRORED back sheet. Buildings are DOUBLE-SIDED
   // (front art / Wild + ★ back), so — exactly like the cask/ship cards above — the FRONTS go on one sheet and a
@@ -1875,7 +1881,7 @@ function buildPages(){
   // --- RECIPE CARDS (cardstock — do not mount; they tuck under the board edge) ---
   const cards=[];const sets=MODE==='proof'?1:PLAYERS.length;
   for(let s=0;s<sets;s++)RECIPES.forEach(r=>cards.push(recipeCard(r)));
-  packRun(pages,'cards','Export recipe cards — 1 set per player','card',cards,'Recipe cards',famPages);
+  packRun(pages,'cards','Export recipe cards (1 set per player) + charter contracts','card',cards,'Recipe cards',famPages);
   const contractCards=[];for(let i=0;i<cnt(CONTRACTS.n);i++)contractCards.push(contractCard());   // v0.16 charter contracts = cards
   packRun(pages,'cards','Charter contract cards','card',contractCards,'Charter contracts',famPages);
   // PLAYER AID — a double-sided reference card (front: a turn · back: icon reference); 2 sheets, duplex
@@ -1934,18 +1940,18 @@ function checklist(pages,famPages){
     +R('Player aid cards','Double-sided quick reference (a turn / the icon key), one per player.',PLAYERS.length)
     +'</table>';
   h+=T('Tokens &amp; bits')
-    +R('Grain cubes','Currency &amp; brew input (G).','60')
-    +R('Hops cubes','Currency &amp; brew input (H).','40')
-    +R('Worker pawns','One per player; moved between stations.',PLAYERS.length)
+    +R('Grain cubes','Currency &amp; brew input (G). <i>Sourced — not printed (any small cubes).</i>','60')
+    +R('Hops cubes','Currency &amp; brew input (H). <i>Sourced — not printed.</i>','40')
+    +R('Worker pawns','One per player; moved between stations. <i>Sourced — not printed (any pawn/meeple).</i>',PLAYERS.length)
     +R('Presence discs','Per player colour — ownership on a slot tile (with a frame) → delivered presence at a kontor (majorities). FINITE: the printed Reach wall AND the presence END CLOCK — every delivered cask &amp; presence bump spends one; the last disc placed sets the final round (first trigger with Sailed-Ships fires).',PRES_DISCS+' ea')
     +R('Cask cubes','Per player colour — ride a hull’s berth well (the loaded cask’s owner) and claim Hall coins.',CASK_CUBES+' ea')
     +R('Maturation markers','Per player colour — one per brewing slot in use, advances on the cask card’s printed aging track.',MAT_MARKERS+' ea')
     +R('Unlock covers','Per player colour — sit on Floor slots 3–7; each new distinct beer brewed (from the 2nd) or the Coppersmith removes the next one.','5 ea')
-    +R('Draw bags','One per hidden tile supply — Ships · Buildings/Privileges · Specialists (their backs reveal the type, so the supply hides in a bag; displays refill by blind draw).','3')
+    +R('Draw bags','One per hidden tile supply — Ships · Buildings/Privileges · Specialists (their backs reveal the type, so the supply hides in a bag; displays refill by blind draw). <i>Sourced.</i>','3')
     +R('Building-owner frames','Per player colour — an overlay base marking whose building card sits on a slot.','6 ea')
-    +R('Demand dice (d6)','The one-read value carrier — set ONCE, at departure, to the owner’s Privilege’s printed +N★; rides the hull’s berth well; the pips ARE the ★ banked on delivery. Never rolled, never recalculated.','8')
-    +R('Quality-boost markers','A +1-quality token a cask carries from a Malt Kiln / Hop Yard (gates AND points) to delivery.','6')
-    +R('First-player, round &amp; Sailed-Ships markers','Turn order (fixed all game) · the round track · the Sailed-Ships track mover.','3')
+    +R('Demand dice (d6)','The one-read value carrier — set ONCE, at departure, to the owner’s Privilege’s printed +N★; rides beside the hull’s berth (the pips ARE the ★ banked on delivery). Never rolled, never recalculated. <i>Sourced — ordinary d6s.</i>','8')
+    +R('Quality-boost markers','A +1-quality token a cask carries from a Malt Kiln / Hop Yard (gates AND points) to delivery. <i>Sourced — any 6 distinct tokens.</i>','6')
+    +R('First-player, round &amp; Sailed-Ships markers','Turn order (fixed all game) · the Sailed-Ships track mover · a round counter for the 25-round backstop. <i>Sourced.</i>','3')
     +'</table>';
   h+=T('Expansions (opt-in — added only when used)')
     +R('Specialty Beers — cask tiles','Gose ×8 (Q2) · Zerbster ×6 (Q3) · Duckstein ×8 (Q2) — pinned-signature beers; with them in, deal 3 of 7 exports.','22')
@@ -2031,9 +2037,9 @@ function exportItems(){
   // are one variant; Q2+ beers cycle their quality's gated pool (survey/hire Q3+ · brew/enshrine Q4+). We mirror exactly what the
   // print sheets lay down (buildPages) and emit one asset per DISTINCT action — identical copies are byte-identical
   // PNGs, so deduping by action key gives the full variety with no redundant files. Named cask-<beer>-<action>.
-  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);
+  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);   // FULL counts always — the export manifest must not shrink in Proof mode
     const seen=new Set();
-    for(let i=0;i<cnt(d.n);i++){const act=pool[(i+(d.off||0))%pool.length];if(seen.has(act.k))continue;seen.add(act.k);
+    for(let i=0;i<d.n;i++){const act=pool[(i+(d.off||0))%pool.length];if(seen.has(act.k))continue;seen.add(act.k);
       const nm=slug(d.nm)+'-'+act.k;
       it.push({type:'cask',name:nm,side:'front',w:2.5,h:2.5,html:caskCardFront(d,act)});
       it.push({type:'cask',name:nm,side:'back', w:2.5,h:2.5,html:caskCardBack(d,act)});}});
