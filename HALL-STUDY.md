@@ -108,6 +108,52 @@ Fully adopting C dilutes honor identity and adds end-game counting rows; **adopt
 Cupboard** (into Direction A) and shelve the rest. Per-shelf majorities are explicitly rejected —
 the Hall is the *uncontested* counterweight by pillar.
 
+## 4E. Direction E — "The Guild's Three Coins" *(designer-sparked, 2026-07-12 — supersedes A as the contender; absorbs D)*
+
+The designer's read: the Hall lacks TENSION because every enshrine is additive (★ + honor, no fork),
+and presence is the *intended* connective tissue between the Hall and the kontor game — the flaw was
+bundling it with the stars, not its existence. The fix: **unbundle points from actions**. Enshrining
+= choosing exactly ONE coin; the cask's whole value cashes in that currency.
+
+**The board:** four shelves (gates unchanged), each printing THREE COINS — choose one ⚙:
+
+| Shelf | FAME (★) | CRAFT (dispensation) | FAVOR (influence) |
+|---|---|---|---|
+| Common Q2+ | 4★ | free **Source** now | +3 goods |
+| Long Q3+ | 6★ | free **Brew** or **Deploy** now | 1 presence + 2 goods |
+| Masters Q4+ | 9★ | free **Load** or **Acquire** now | 2 presence |
+| High Q5+ | 13★ | one station fires **BOTH actions** this turn | 3 presence |
+
+- **CRAFT is the differentiator**: the whole v3.0-A grammar is once-per-visit this-or-that; the Hall
+  becomes the game's ONLY repetition-dealer, topping out at "break the this-or-that" (the designer's
+  "enshrine → brew ×2, no points for the Mumme that bought it"). No kontor can imitate it.
+- **FAVOR prices the presence coupling** instead of banishing it (revises the Direction-A rec):
+  2 presence now costs you 9★ of fame — a real fork, not a bundle. W1 closes by economics.
+- **12 printed coin texts replace 15 honor spaces** — the duplicate-errand economy is deleted
+  wholesale; board rules get SIMPLER. One choice of three printed options = a station-face decision
+  shape. Zero markers; only FAME touches the score track.
+
+**The tension layer (Direction D + the Hamlet read):** the enshrined cask tile STAYS on its plinth
+(n+1 per shelf). At game end each beer type's finest displayed cask takes its **Crown (+3★ ⚙)** —
+highest quality, earliest-placed tiebreak. With fixed-quality beers the tiebreak makes most crowns a
+visible **first-to race** (Hamlet's first-half); kilns/blending let latecomers outbrew an incumbent
+(the most/best-half). This is the Hall's RISK axis, the piece the current design lacks:
+
+> Kontore pay **certain value now** (printed + die, locked at delivery, plus slow majority equity).
+> The Hall pays **your chosen coin now — but its biggest prize stays contested until the end.**
+
+**Dump-case guards:** free entry stays (the deadlock valve); a junk cask buys a junk coin; full
+shelf → floor FAME only (never-nothing intact); every enshrine still ticks the clock.
+
+**Flags before commitment:** (1) CRAFT is compounding tempo — sim before numbers; (2) FAME 13 vs
+Novgorod 11+die needs a corpus check (ships must stay attractive to the deep player); (3) plinth
+real estate — 4 shelves × up to 5 cask tiles is a genuinely bigger board; (4) crowns skirt the cut
+goal system — kept on the right side by being one judged number per beer with a printed tiebreak,
+not a card subsystem.
+
+**Next step on a ruling:** mock the Three Coins board in printables2 + engine behind a toggle +
+an E-vs-v3.1 corpus, so the next human table plays both.
+
 ## 5. What deliberately does NOT change
 
 Never-nothing overflow · quality gates · n+1 scaling · step-down *access* (the anti-lock-in valve;
