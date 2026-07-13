@@ -636,7 +636,7 @@ const HALL2_SHELVES=[   // v3.2 ruled numbers: FAME 5/7/10/13 · Common +4 goods
 ];
 const HALL2_LBL={batch:'the Guild’s Batch — +1G +1H & brew one, now',gyle2:'the Double Gyle — brew twice, now',
   load2:'the Stevedore’s Shift — load 2 casks, free',ageall:'the Lagerkeeper’s Miracle — age ALL your casks to Ready',
-  goods4f:'+4 goods',recipe2x:'gain 2 recipes, free',freedeliv:'a free kontor delivery, now (no contract, no fare)',tilefree:'a Building (placed) or a Specialist, free'};
+  goods4f:'+4 goods',recipe2x:'gain 2 recipes, free',freedeliv:'a free kontor delivery, now (no contract, no fare — it ticks the ships track)',tilefree:'a Building (placed) or a Specialist, free'};
 function hall2Options(q){const out=[];HALL2_SHELVES.forEach((sh,si)=>{if(q<sh.q)return;const st=(S.hall2&&S.hall2[si])||{};
   ['fame','craft','favor'].forEach(cn=>{if(st[cn]==null)out.push({si,coin:cn});});});
   out.push({si:-1,coin:'launch'});return out;}   // the launch (★ = quality) is a standing option

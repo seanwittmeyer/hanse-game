@@ -389,9 +389,9 @@ strip**. Every private thing you own competes for the same row:
   and flips may never take your **last** brewing slot (you cannot build yourself out of beer):
   a tile may only seat while at least one other vessel-capable slot remains.
 - **Opening covers:** each **new distinct beer you BREW** (from the 2nd on — the Flight strip is
-  the record) opens the next cover **automatically**; the **Coppersmith** Specialist and the
-  **High Board’s** *unlock* honor each open one too. *(The Flight is the forcing mechanism:
-  seat an upgrade early and you brew one-at-a-time until your next new beer opens the room.)*
+  the record) opens the next cover **automatically**; the **Coppersmith** Specialist opens one
+  too. *(The Flight is the forcing mechanism: seat an upgrade early and you brew one-at-a-time
+  until your next new beer opens the room.)*
 - **THE FLIGHT/UNLOCK STRIP** — one space per beer type this game (5 base; 6 with Jopenbier).
   Mark a beer when you **first BREW it** (unlock currency); distinct beers **DELIVERED** still
   score the Flight ladder (§11) — one strip, two mark states.
