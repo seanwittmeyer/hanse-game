@@ -14,8 +14,8 @@
 > 2. **Slot locality** — a slot’s stop acts **on that slot**; only the stations reach the wharf.
 > 3. **Over-deploy** — deploy onto your own lower cask (it is **tapped on the way out**) or onto
 >    anyone’s Q1 (it has **soured** — boxed). Tap-the-menu is retired.
-> 4. **One-read dice** — a Privilege prints **ONE die number**; the die is set to it at
->    departure. The premium/cap/sail-bump arithmetic is deleted.
+> 4. **One-read dice** — a Privilege prints one plain **+N★**; the demand die is set to N at
+>    departure (the pips are the ★). The premium/cap/sail-bump arithmetic is deleted.
 > 5. **The Hall is a coin board** — quality-gated shelves, each printing THREE coins (v3.2
 >    “Three Coins”: **FAME ★ · CRAFT · FAVOR**, each claimable once); an enshrine buys exactly
 >    ONE, or launches for ★ = quality (§7b).
@@ -252,23 +252,24 @@ discarded. The 8 slots never lock; the churn has a price.
 ### 5b. Privileges — the ONE-READ die (v3.0-A)
 > **A Privilege pays its owner; a Building serves the wharf.** No payments between players.
 
-A Privilege prints **ONE die number**. When the **owner’s cask departs that slot** (loaded,
-chartered, enshrined), its **demand die is SET to that printed number** — one read, nothing
-recalculated, no premium arithmetic, no sail-time bump, no cap rule (no tile prints above 6).
-Conditions are printed on the tile and read at departure. A rival’s cargo docking there passes
-through and banks nothing.
+A Privilege prints its payout in plain sight: **+N★ for the owner’s departing cask.** The
+demand die is simply the carrier — when the **owner’s cask departs that slot** (loaded,
+chartered, enshrined), **set the die to N**; the pips ARE the ★ banked at delivery. One read,
+nothing recalculated, no premium arithmetic, no sail-time bump, no cap rule (no tile prints
+above +6★). Conditions are printed on the tile and read at departure. A rival’s cargo docking
+there passes through and banks nothing.
 
-| Privilege | Printed die ⚙ | Qty ⚙ |
+| Privilege | Printed bonus ⚙ | Qty ⚙ |
 |---|---|---|
-| Staple Hall | **3** (any kontor) | 2 |
-| Burgomaster’s Favor | **= the cask’s quality** (count the pips, max 5) | 2 |
-| Connoisseur’s Cellar | **4**, Q4+ casks only (v3.1 ⚙ 5→4) | 1 |
-| London Steelyard / Bergen Bryggen / Novgorod Peterhof | **4**, to the printed kontor only | 1 each |
-| Bruges Hanzehuis | **3**, Bruges only (v3.1 ⚙ 4→3 — Bruges is the Q1 port; its charter pays less, or the 1G Gruit becomes the best cask in the game) | 1 |
-| The Hanse Diet | **2** + place 1 presence at the destination | 1 |
-| Almoner’s Stall | **3** if you have no presence at the destination yet | 1 |
-| Reliquary | **2**, on a Hall dispatch from here | 1 |
-| Salt House *(exp)* | no die — owner gains +1G +1H at departure | 1 |
+| Staple Hall | **+3★** (any kontor) | 2 |
+| Burgomaster’s Favor | **+★ = the cask’s quality** (max 5) | 2 |
+| Connoisseur’s Cellar | **+4★**, Q4+ casks only (v3.1 ⚙ 5→4) | 1 |
+| London Steelyard / Bergen Bryggen / Novgorod Peterhof | **+4★**, to the printed kontor only | 1 each |
+| Bruges Hanzehuis | **+3★**, Bruges only (v3.1 ⚙ 4→3 — Bruges is the Q1 port; its charter pays less, or the 1G Gruit becomes the best cask in the game) | 1 |
+| The Hanse Diet | **+2★**, and place 1 presence at the destination | 1 |
+| Almoner’s Stall | **+3★** where you have no presence at the destination yet | 1 |
+| Reliquary | **+2★**, on a Hall dispatch from here | 1 |
+| Salt House *(exp)* | no ★ — the owner gains +1G +1H at departure | 1 |
 
 *(The quality climb is paid where quality is READ, not computed: Novgorod’s printed scale, the
 Hall’s shelf gates, the Connoisseur/Burgomaster tiles. The v1.8 +2/+3 premium formula is

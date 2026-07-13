@@ -14,7 +14,7 @@
 - **Goods:** `G` = grain, `H` = hops — the only currency.
 - **A line** = a row or column of the Wharf = two stations + the two slots beside them. **Slot locality (v3.0-A):** a slot’s line-stop acts on that slot.
 - **A slot stack** (max two layers): `[slot tile?] + [ship+casks | cask]`.
-- **Three tile types, three colours:** a **PRIVILEGE** (bright **blue**) — prints **ONE die number**; the owner’s departing cask carries the die at that value (a rival docking there banks nothing); a **BUILDING / work** (**green**) — serves any dock (some print an action on their slot’s stop); a **SPECIALIST** (**purple**) — a private player-board tile.
+- **Three tile types, three colours:** a **PRIVILEGE** (bright **blue**) — prints a plain **+N★ bonus**; the owner’s departing cask banks it, carried on the demand die set to N (a rival docking there banks nothing); a **BUILDING / work** (**green**) — serves any dock (some print an action on their slot’s stop); a **SPECIALIST** (**purple**) — a private player-board tile.
 - **End clock (v3.2 — DUAL):** the **Sailed-Ships track** fills by one per **voyage** (a full sail or a kontor Dispatch — enshrines never tick) **and** the **presence clock** runs beside it — every delivered cask and presence bump spends one of a house’s **14 public discs**; the last disc placed sets the final round. First trigger fires.
 
 ---
@@ -96,20 +96,20 @@ Neutral, destination-bound hulls, drawn from a shuffled deck into a face-up **ma
 
 Always acquired **from the face-up Wharf display of 4 and placed at once** (no hand): buy at the Market, free via London, or the **Gain 1 building** cask action. **Overbuild = the `1 G` ground rent**; the displaced tile flips face-down into an open **Floor slot** of its owner’s (v3.1 — none seatable → boxed) as a Floor Wild — **flips score nothing**.
 
-### 7A. PRIVILEGES (blue, 12 tiles) — print ONE die number; the owner’s departing cask carries it
+### 7A. PRIVILEGES (blue, 12 tiles) — each prints a plain **+N★**; the demand die (set to N) carries it
 
 | Tile | Printed text | Cost ⚙ | Qty ⚙ |
 |---|---|---|---|
-| Staple Hall | Your cask departs: die 3 | `3 G` | 2 |
-| Burgomaster’s Favor | Your cask departs: die = its quality (max 5) | `3 G` | 2 |
-| Connoisseur’s Cellar | Your Q4+ cask departs: die 4 *(v3.1 ⚙ 5→4)* | `3 G` | 1 |
-| The Hanse Diet | Your cask departs: die 2 + 1 presence there | `3 G` | 1 |
-| Almoner’s Stall | Your cask departs: die 3 if no presence there | `3 G` | 1 |
-| Reliquary | Enshrined from here: die 2 | `3 G` | 1 |
-| Bruges Hanzehuis | Your cask departs: die 3. Bruges only *(v3.1 ⚙ 4→3 — the Q1 port’s charter pays less)* | `2 G` | 1 |
-| London Steelyard | Your cask departs: die 4. London only | `2 G` | 1 |
-| Bergen Bryggen | Your cask departs: die 4. Bergen only | `2 G` | 1 |
-| Novgorod Peterhof | Your cask departs: die 4. Novgorod only | `2 G` | 1 |
+| Staple Hall | Your departing cask: **+3★** | `3 G` | 2 |
+| Burgomaster’s Favor | Your departing cask: **+★ = its quality** (max 5) | `3 G` | 2 |
+| Connoisseur’s Cellar | Your departing Q4+ cask: **+4★** *(v3.1 ⚙ 5→4)* | `3 G` | 1 |
+| The Hanse Diet | Your departing cask: **+2★**, and place 1 presence there | `3 G` | 1 |
+| Almoner’s Stall | Your departing cask: **+3★** where you have no presence yet | `3 G` | 1 |
+| Reliquary | Enshrined from here: **+2★** | `3 G` | 1 |
+| Bruges Hanzehuis | Your cask to Bruges: **+3★** *(v3.1 ⚙ 4→3 — the Q1 port’s charter pays less)* | `2 G` | 1 |
+| London Steelyard | Your cask to London: **+4★** | `2 G` | 1 |
+| Bergen Bryggen | Your cask to Bergen: **+4★** | `2 G` | 1 |
+| Novgorod Peterhof | Your cask to Novgorod: **+4★** | `2 G` | 1 |
 
 ### 7B. BUILDINGS / works (green, 15 tiles) — serve any dock; three print an action on their slot’s stop
 

@@ -924,16 +924,16 @@ const DIE=n=>'<span class="diech">'+LU('dice-'+n)+'</span>';
 const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a SHIP docked here'}};
 const BUILDINGS=[
   // PRIVILEGES (blue, 12 tiles) — one printed die number, owner-only, set at departure
-  {k:'staple',    nm:'Staple Hall',          verb:'value', tgt:'cask', ic:'warehouse',   g:3, n:2, eff:'Your cask departs: die 3 '+DIE(3)},
-  {k:'burgomstr', nm:'Burgomaster’s Favor',  verb:'value', tgt:'cask', ic:'crown',       g:3, n:2, eff:'Your cask departs: die = its quality (max 5)'},
-  {k:'connoiss',  nm:'Connoisseur’s Cellar', verb:'value', tgt:'cask', ic:'wine',        g:3, n:1, eff:'Your Q4+ cask departs: die 4 '+DIE(4)},
-  {k:'hansediet', nm:'The Hanse Diet',       verb:'value', tgt:'cask', ic:'gavel',       g:3, n:1, eff:'Your cask departs: die 2 '+DIE(2)+' + 1 presence there'},
-  {k:'almoner',   nm:'Almoner’s Stall',      verb:'value', tgt:'cask', ic:'heart',       g:3, n:1, eff:'Your cask departs: die 3 '+DIE(3)+' if no presence there'},
-  {k:'reliquary', nm:'Reliquary',            verb:'value', tgt:'cask', ic:'church',      g:3, n:1, eff:'Enshrined from here: die 2 '+DIE(2)},
-  {k:'ch_bruges', nm:'Bruges Hanzehuis',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask departs: die 3 '+DIE(3)+'. Bruges only'},   // v3.1 ⚙ 4→3
-  {k:'ch_london', nm:'London Steelyard',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask departs: die 4 '+DIE(4)+'. London only'},
-  {k:'ch_bergen', nm:'Bergen Bryggen',       verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask departs: die 4 '+DIE(4)+'. Bergen only'},
-  {k:'ch_novgo',  nm:'Novgorod Peterhof',    verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask departs: die 4 '+DIE(4)+'. Novgorod only'},
+  {k:'staple',    nm:'Staple Hall',          verb:'value', tgt:'cask', ic:'warehouse',   g:3, n:2, eff:'Your departing cask: +3★ '+DIE(3)},
+  {k:'burgomstr', nm:'Burgomaster’s Favor',  verb:'value', tgt:'cask', ic:'crown',       g:3, n:2, eff:'Your departing cask: +★ = its quality (max 5)'},
+  {k:'connoiss',  nm:'Connoisseur’s Cellar', verb:'value', tgt:'cask', ic:'wine',        g:3, n:1, eff:'Your departing Q4+ cask: +4★ '+DIE(4)},
+  {k:'hansediet', nm:'The Hanse Diet',       verb:'value', tgt:'cask', ic:'gavel',       g:3, n:1, eff:'Your departing cask: +2★ '+DIE(2)+', and place 1 presence there'},
+  {k:'almoner',   nm:'Almoner’s Stall',      verb:'value', tgt:'cask', ic:'heart',       g:3, n:1, eff:'Your departing cask: +3★ '+DIE(3)+' where you have no presence yet'},
+  {k:'reliquary', nm:'Reliquary',            verb:'value', tgt:'cask', ic:'church',      g:3, n:1, eff:'Enshrined from here: +2★ '+DIE(2)},
+  {k:'ch_bruges', nm:'Bruges Hanzehuis',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask to Bruges: +3★ '+DIE(3)},   // v3.1 ⚙ 4→3
+  {k:'ch_london', nm:'London Steelyard',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask to London: +4★ '+DIE(4)},
+  {k:'ch_bergen', nm:'Bergen Bryggen',       verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask to Bergen: +4★ '+DIE(4)},
+  {k:'ch_novgo',  nm:'Novgorod Peterhof',    verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask to Novgorod: +4★ '+DIE(4)},
   // WORKS (green, 15 tiles) — serve any dock; three print an action on their slot's stop
   {k:'maltkiln',  nm:'Malt Kiln',            verb:'transform', tgt:'cask', ic:'flame',            g:2, n:2, eff:'Cask ships +1 quality (max Q5)'},
   {k:'hopyard',   nm:'Hop Yard',             verb:'transform', tgt:'cask', ic:'sprout',           g:3, n:1, eff:'Q2+ cask ships +1 quality'},
@@ -1278,7 +1278,7 @@ function aidFront(){
         +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — <b>Age</b> (3 pts) <i>or</i> <b>Upgrade</b> (buy 1 Specialist).</div>'
         +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — <b>Load</b> a deployed cask <i>or</i> <b>Dispatch</b> ONE deployed cask: the <b>Hall</b> (free — buy ONE coin or launch: ★ = quality; never ticks the ships track) or a <b>kontor</b> (a contract + '+G+'2 — ticks). Ships <b>sail when full</b>.</div>'
         +'<h5>'+LU('dice-3')+'The Demand Die — one read</h5>'
-        +'<div class="ln">Your cask departs YOUR Privilege’s slot → its die is <b>set to the printed number</b>. Once, at departure — nothing recalculated. A rival’s cargo banks nothing. Delivery = destination value + the die.</div>'
+        +'<div class="ln">Your cask departs YOUR Privilege’s slot → it banks the printed <b>+N★</b>: set its demand die to N, once, at departure — the pips are the ★. A rival’s cargo banks nothing. Delivery = destination value + the die.</div>'
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
         +'<div class="ln"><b>DUAL clock</b> — <b>Sailed-Ships</b> fills (5/8/10 for 2/3/4p; voyages only) <i>or</i> the <b>presence clock</b> (14 public discs each — every delivered cask &amp; presence bump spends one; the last disc placed sets the final round). First trigger fires → finish the round → <b>majorities</b> + <span class="em">Flight</span> (beers delivered) 3→4 · 4→9 · 5→16 (6→25 w/ Jopenbier). Deliveries &amp; Hall ★ were banked in play; flips score 0.</div>'
       +'</div>'
@@ -1312,7 +1312,7 @@ function aidBack(){
         +row('flask-conical','Brew','brew 1 cask (Q4+)')
         +row('crown','Enshrine','dispatch 1 deployed cask → the Hall: a coin or a launch (Q4+)')
         +'<h5>'+LU('building-2')+'Slot Tiles</h5>'
-        +row('dice-3','Privilege','BLUE — prints ONE die number; owner only','vi')
+        +row('dice-3','Privilege','BLUE — prints +N★ for the owner’s departing cask (the die carries it)','vi')
         +row('hammer','Building','GREEN — a work; serves any dock')
         +row('sparkles','Flip','face-down in a Floor slot — a Wild, 0★')
         +'<h5>'+LU('trophy')+'Shipping &amp; Score</h5>'
@@ -1925,7 +1925,7 @@ function checklist(pages,famPages){
   h+=T('Tiles (mount on chipboard, laser-cut)')
     +R('Cask tiles — the beer supply','A shared pool, brewed not bought (min 6 per type): Gruit ×16 · Hopped ×20 · Broyhan ×6 · Keut ×6 · Mumme ×8 · Bock ×6. Each shows a quality (Q1–Q5) and ONE specific-gain slot-action (the pool is quality-gated). Deal 3 of the 4 export beers each game; a NEW distinct beer brewed marks the Flight strip.','62')
     +R('Ship tiles','Neutral hulls, a kontor printed on each — Cog (holds 2) ×11 · Hulk (holds 3) ×9; five to each of the four kontore. Drawn off a shuffled deck into a face-up market of 3.','20')
-    +R('Slot tiles — Privileges &amp; Buildings','The owned slot modifiers, '+baseBld.length+' designs (double-sided: art front / a face-down Wild back — flips score nothing). <b>Privileges (blue — one printed die number) —</b> '+designs(baseVal)+'. <b>Buildings / works (green) —</b> '+designs(baseTr)+'.',sumN(baseBld))
+    +R('Slot tiles — Privileges &amp; Buildings','The owned slot modifiers, '+baseBld.length+' designs (double-sided: art front / a face-down Wild back — flips score nothing). <b>Privileges (blue — each prints a +N★ bonus) —</b> '+designs(baseVal)+'. <b>Buildings / works (green) —</b> '+designs(baseTr)+'.',sumN(baseBld))
     +R('Specialist tiles','The private brewery-board tiles, 7 designs: '+IMPROVE.map(d=>d.nm).join(' · ')+'. A shuffled display at the Cellar — 3 copies of each type (n−1 per type), enough for 4 players.',impTotal)
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')
