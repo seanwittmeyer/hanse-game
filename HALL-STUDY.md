@@ -157,6 +157,32 @@ with the shelf ⚙:
   reachable ~round 15–20 by a committed volume seat per corpus delivery rates — confirm the three
   pressures still land games in the 12–25 band (MAX_ROUND backstop unchanged).
 
+### ⚗ The presence-clock sim (2026-07-12 — KEY `hanse-v31e`, toggles `EXP_HALLV2`/`EXP_PRESEND`/`PRES_ALL`)
+
+Three Coins v2 + the disc clock are BUILT (behind New Game ⚗ toggles; 74 verify checks green; 0
+crashes in ~4,800 sweep games + 24 tier games). Findings:
+
+**The cube count: 15 is right under natural play.** Greedy sweep (400 games/count/config):
+- POOL 12 — too hot: rounds 15.4–17.1, 4p drops to 81% in-band, brews/seat 6.3–8.5 (below target).
+- **POOL 15 — the target zone: rounds 18.8–21.0 (98–99.5% in-band), presence endings 69–82%,
+  brews/seat 9.9 / 8.4 / 7.2 at 2/3/4p, ~3–6 discs of bump headroom.** 2p/3p sit inside the 8–11
+  brew goal; 4p runs slightly under (candidate: 16 at 4p ⚙, or accept — the race is the point).
+- POOL 18 — too slack: ceiling endings 51–55%, rounds 22.6–23.3.
+- `PRES_ALL` (Hall dispatches spend a disc too — "the disc marks the house wherever the beer went")
+  reads nearly identical under natural play and is the cleaner rule (unifies the arithmetic:
+  pool ≈ total deliveries + bumps). Recommended if the clock ships.
+
+**The structural finding (the real result): a presence-ONLY clock hands trailing players a stall
+lever.** With real MC tiers, 9/12 (kontor-only) and 6/12 (`PRES_ALL`) probe games ran to the
+round-25 backstop: the disc pool is PRIVATE, so a player who is behind simply stops spending —
+unlike the ships clock, no rival's normal play can push the game to a close. The greedy bots race
+(92%+ presence endings); experts stall. *(Caveat: the MC tiers weren't retrained for the variant —
+but the incentive analysis holds: a private pool can't be a sole clock.)* Options if the direction
+proceeds: (a) keep the presence trigger AND lower `MAX_ROUND` to ~20 as an honest co-clock ⚙;
+(b) hybrid — presence trigger + a slimmer ships clock, first to fire wins; (c) drop to
+presence-as-accelerator only. The sim files: `playtests/sim-hall2-*.txt` · probes:
+`playtests/logs/hall2-probe*/`.
+
 ### Tabled + the hard line
 
 - **Crowns / displayed casks: TABLED** (ruled). Ownerless tiles on plinths can't say whose they

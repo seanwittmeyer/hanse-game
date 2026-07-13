@@ -129,6 +129,49 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
   ok('delivery = printed value (Q5→6) + die (5)', scorePlayer(p).deliv===t0+11, 'delta '+(scorePlayer(p).deliv-t0));
 })();
 
+// ---- 6c. ⚗ the Hall v2 + presence-clock experiment (toggles ON only inside this block) ----
+(function(){
+  EXP_HALLV2=true;EXP_PRESEND=true;PRES_POOL=15;
+  var p=fresh();S.active=0;
+  ok('⚗ v2 state seeded', S.hallV2===true&&S.presEnd===true&&S.hall2.length===4&&p.presPool===15);
+  ok('⚗ presence clock: the ships clock is off', S.sailedCap===999);
+  // FAME coin: Q5 cask takes the High Board fame 13, once; no tick
+  S.slots.s3={type:'cask',owner:0,style:'bock',q:5,act:'age'};
+  var sailed0=S.sailed,d0=scorePlayer(p).deliv;
+  UI={sub:'hallspace',hsp:{ref:'s3',returnTo:'end',v2:true},stops:[],pendingBenefits:[]};
+  hall2Pick(3,'fame');
+  ok('⚗ FAME 13 banked as the delivery value', scorePlayer(p).deliv===d0+13, 'delta '+(scorePlayer(p).deliv-d0));
+  ok('⚗ v2 enshrine does NOT tick', S.sailed===sailed0);
+  ok('⚗ the coin is spent (cube on it)', S.hall2[3].fame===0);
+  // the same coin can't be taken again → options exclude it; the launch pays ★=Q
+  S.slots.s4={type:'cask',owner:0,style:'bock',q:5,act:'age'};
+  ok('⚗ spent coins leave the option list', !hall2Options(5).some(function(o){return o.si===3&&o.coin==='fame';}));
+  var d1=scorePlayer(p).deliv;
+  UI={sub:'hallspace',hsp:{ref:'s4',returnTo:'end',v2:true},stops:[],pendingBenefits:[]};
+  hall2Pick(-1,'launch');
+  ok('⚗ launch pays ★ = quality', scorePlayer(p).deliv===d1+5, 'delta '+(scorePlayer(p).deliv-d1));
+  // CRAFT ageall: all maturing casks to Ready, val 0
+  p.vessels=[{style:'bock',q:5,step:0,ready:3},{style:'hopped',q:2,step:0,ready:1}];
+  S.slots.s5={type:'cask',owner:0,style:'bock',q:5,act:'age'};
+  var d2=scorePlayer(p).deliv;
+  UI={sub:'hallspace',hsp:{ref:'s5',returnTo:'end',v2:true},stops:[],pendingBenefits:[]};
+  hall2Pick(3,'craft');
+  ok('⚗ the Miracle ages ALL to Ready', p.vessels.every(function(c){return !c||c.step>=c.ready;}));
+  ok('⚗ a CRAFT coin banks no ★', scorePlayer(p).deliv===d2, 'delta '+(scorePlayer(p).deliv-d2));
+  // presence pool: kontor deliveries spend discs; the 15th ends the game
+  var p2=fresh();S.active=0;p2.presPool=2;
+  deliverCask(p2,{style:'hopped',q:2,die:0},'bruges',null,false);
+  ok('⚗ a kontor delivery spends a disc', p2.presPool===1);
+  ok('⚗ pool not empty → no ending yet', !S.ending);
+  deliverCask(p2,{style:'hopped',q:2,die:0},'bruges',null,false);
+  ok('⚗ the LAST disc sets the final round', S.ending===true&&S.endReason==='presence');
+  // Reach spends discs too and is dead at 0
+  var p3=fresh();S.active=0;p3.presPool=1;p3.delivered.push({style:'gruit',q:1,dest:'bruges',val:1});
+  addPresence(p3,'bruges',2);
+  ok('⚗ Reach is disc-bounded', (p3.presBonus.bruges||0)===1&&p3.presPool===0);
+  EXP_HALLV2=false;EXP_PRESEND=false;PRES_POOL=15;
+})();
+
 // ---- 6b. the v3.1 playtest tunes ----
 (function(){
   ok('Bruges Hanzehuis prints die 3 (v3.1)', BUILDINGS.ch_bruges.die===3);

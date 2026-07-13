@@ -212,6 +212,7 @@ function botDispatch(p){
 // v3.0-A Hall shelf space: highest shelf first, then the bonus preference
 function botHallspace(p){var h=UI.hsp;if(!h){backToStops();return;}
   var c=refCask(h.ref);var q=Math.min(5,(c&&c.style==='jopenbier')?6:caskEffQ(h.ref));
+  if(h.v2)return aiHallspace(p);   // ⚗ HALL v2: the in-page coin heuristic serves the greedy bot too
   var opts=hallOptionsFor(q);
   if(!opts.length){UI.hsp=null;hallCommit(h.ref,-1,-1,h.returnTo);return;}
   var pref={unlock:9,star3:8,bldgfree:8,spec:7,pres2:7,recipefree:6,ageall1:5,pres1:5,age2:4,goods3:4,contract:3,g1h1:2,goods2:2};
@@ -349,7 +350,11 @@ function botActOnce(){var p=cur();var U=UI.sub;
 
 function tbVec(p){var sc=scorePlayer(p);return [sc.total, deployedCaskQ(p), p.grain+p.hops];}   // matches the engine: total → quality of deployed slot casks → goods
 function runGame(n){
-  EXPANSION=(typeof __EXPANSION!=='undefined'&&__EXPANSION);   // EXPANSION "Specialty Beers" sim hook (injected via ctx) — off by default → base-game regression; EXPANSION=1 tests the opt-in module
+  EXPANSION=(typeof __EXPANSION!=='undefined'&&__EXPANSION);
+  EXP_HALLV2=(typeof __HALLV2!=='undefined'&&__HALLV2);          // ⚗ HALLV2=1 — the Three Coins experiment
+  EXP_PRESEND=(typeof __PRESEND!=='undefined'&&__PRESEND);       // ⚗ PRESEND=1 — the presence clock experiment
+  if(typeof __POOL!=='undefined'&&__POOL)PRES_POOL=__POOL;
+  PRES_ALL=(typeof __POOLALL!=='undefined'&&__POOLALL);       // ⚗ POOL=n — presence discs per player   // EXPANSION "Specialty Beers" sim hook (injected via ctx) — off by default → base-game regression; EXPANSION=1 tests the opt-in module
   JOPEN=(typeof __JOPEN!=='undefined'&&__JOPEN);               // EXPANSION CAPSTONE "Jopenbier" sim hook — JOPEN=1 confirms the flag doesn't break the base flow (the greedy bot doesn't pilot the capstone)
   if(typeof OVERLAND!=='undefined')OVERLAND=(typeof __OVERLAND!=='undefined'&&__OVERLAND);   // EXPANSION "The Trade Roads" sim hook — OVERLAND=1; the greedy bot grows roads PASSIVELY (delivering rides the road), which gates robustness/pace
   S=freshState(n,NAMES.slice(0,n));UI={sub:'move'};undoStack=[];activeTab=0;
@@ -405,7 +410,8 @@ function runGame(n){
       tiers:Object.keys(ts).length,flight:scores[i].flight,master:scores[i].master};});
   return {
     n:n, round:S.turn, sailed:S.sailed, sailedCap:S.sailedCap,
-    trigger:(S.sailed>=S.sailedCap?'clock':(S.turn>=MAX_ROUND?'ceiling':'other')),
+    trigger:(S.endReason||(S.sailed>=S.sailedCap?'clock':(S.turn>=MAX_ROUND?'ceiling':'other'))),
+    brews:S.players.map(function(p){return p._brews||0;}), presLeft:S.players.map(function(p){return p.presPool||0;}),
     winSeat:win, winTotal:scores[win].total, secondTotal:scores[second].total,
     winDeliv:scores[win].deliv, winMaj:scores[win].maj, winGoals:scores[win].goals,
     winByDest:byDest, winValKontor:valDest.kontor, winValHall:valDest.hall,
@@ -500,6 +506,7 @@ const ctx = {
   __N: N, __COUNTS: COUNTS, __SC, __PERSONAS: PERSONAS, __CELLAR: CELLAR, __TUNE, __STK: !!process.env.STK,
   __FREEIMP: process.env.FREE_IMP==='1',
   __EXPANSION: process.env.EXPANSION==='1',
+  __HALLV2: process.env.HALLV2==='1', __PRESEND: process.env.PRESEND==='1', __POOL: parseInt(process.env.POOL||'0',10), __POOLALL: process.env.POOLALL==='1',
   __JOPEN: process.env.JOPEN==='1',
   __OVERLAND: process.env.OVERLAND==='1',
 };
@@ -545,7 +552,14 @@ function summarize(n, arr) {
   console.log(`\n================  ${n} PLAYERS  (${arr.length} games)  ================`);
   console.log(`crashes/stuck:        ${errs.length}` + (errs.length ? '  -> ' + JSON.stringify(errs.slice(0, 3)) : '  (none)'));
   console.log(`rounds:               avg ${fmt(avg(rounds))}   min ${Math.min(...rounds)}   max ${Math.max(...rounds)}   in 12-25 band: ${pct(within, ok.length)}`);
-  console.log(`end trigger:          clock ${pct(clock, ok.length)}   ceiling ${pct(ceiling, ok.length)}`);
+  const presEnd = ok.filter(r => r.trigger === 'presence').length;
+  console.log(`end trigger:          clock ${pct(clock, ok.length)}   ceiling ${pct(ceiling, ok.length)}` + (presEnd ? `   presence ${pct(presEnd, ok.length)}` : ''));
+  if (ok[0].brews) {   // ⚗ experiment metrics: brews/seat + presence discs left at game end
+    const allBrews = [], allLeft = [];
+    ok.forEach(r => { (r.brews||[]).forEach(b => allBrews.push(b)); (r.presLeft||[]).forEach(l => allLeft.push(l)); });
+    console.log(`brews/seat:           avg ${fmt(avg(allBrews))}   min ${Math.min(...allBrews)}   max ${Math.max(...allBrews)}`);
+    if (allLeft.some(x => x > 0) || presEnd) console.log(`presence discs left:  avg ${fmt(avg(allLeft))}   (of POOL — spent = POOL − left)`);
+  }
   console.log(`sailed/cap at end:    avg ${fmt(avg(ok.map(r => r.sailed)))} / ${ok[0].sailedCap}`);
   console.log(`winner total score:   avg ${fmt(avg(winTotals))}   min ${Math.min(...winTotals)}   max ${Math.max(...winTotals)}`);
   console.log(`win margin (1st-2nd): avg ${fmt(avg(margins))}   (ties: ${margins.filter(m => m === 0).length})`);

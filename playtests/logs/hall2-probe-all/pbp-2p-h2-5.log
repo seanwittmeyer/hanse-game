@@ -1,0 +1,420 @@
+############ GAME 2p-h2-5 · seed 885 · 2p · KEY hanse-v31e ############
+seats: TraderV [trader/volume] · Guild [guildmaster]
+exports dealt: Q3 Broyhan · Q4 Mumme · Q5 Bock · sailed-ships cap 999 · warm start:
+  s1 (colL): ship Cog->Bergen
+  s7 (rowB): ship Hulk->Bruges
+  s6 (colL): [bldg Brewmaster’s Workshop neutral] 
+  s5 (colR): [bldg Cooperage neutral] 
+
+== R1 · turn 1 · TraderV [trader/volume] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  TraderV places their worker at Brewhouse
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV spends −H1
+  TraderV buys the Broyhan recipe (Q3).
+  ↳ TraderV spends −G1 −H1
+  TraderV brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ TraderV’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  TraderV sets a Ready Gruit on a slot.
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R1 · turn 2 · Guild [guildmaster] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild places their worker at Market
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild spends −G2
+  Guild buys Customs House at the Market — place it on a slot.
+  Guild authors Customs House on a slot — Ship here boards casks 1 gate lower.
+  ↳ Guild gains +G2
+  ↳ Guild spends −G1 −H1
+  Guild brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Guild’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  Guild sets a Ready Gruit on a slot.
+  TraderV’s casks mature (+1) over the turn.
+
+== R2 · turn 3 · TraderV [trader/volume] · G2 H0 ct2 | vessels[-,Hopped!,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  TraderV moves to Market
+  TraderV pays −G1 occupancy toll for sharing Market.
+  TraderV activates Left col · Market + Harbor
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  TraderV sets a Ready Hopped on a slot (under Brewmaster’s Workshop).
+  TraderV loads Gruit onto the Hulk → Bruges (1/3).
+  TraderV loads Hopped onto the Cog → Bergen (1/2).
+  Guild’s casks mature (+1) over the turn.
+
+== R2 · turn 4 · Guild [guildmaster] · G2 H1 ct2 | vessels[-,Hopped!,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Guild stays home and works the Floor — the worker keeps its station (1 cask + the 3-pt Age pool · no toll).
+  ↳ Floor — Hopped’s source action.
+  ↳ Guild gains +G2
+
+== R3 · turn 5 · TraderV [trader/volume] · G2 H1 ct2 | vessels[-,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  TraderV moves to Brewhouse
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV spends −G1 −H1
+  TraderV buys the Bock recipe (Q5).
+  ↳ TraderV gains +G1 +H1
+  ↳ TraderV spends −G1 −H1
+  TraderV brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ s8 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R3 · turn 6 · Guild [guildmaster] · G4 H1 ct2 | vessels[-,Hopped!,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Guild moves to Harbor
+  Guild activates Left col · Market + Harbor
+  ↳ Guild spends −G3
+  Guild buys Burgomaster’s Favor at the Market — place it on a slot.
+  Guild authors Burgomaster’s Favor on a slot — Your cask departs: die = its quality (max 5).
+  Guild sets a Ready Hopped on a slot (under Brewmaster’s Workshop).
+  Guild loads Gruit onto the Hulk → Bruges (2/3).
+  Guild loads Hopped onto the Cog → Bergen (2/2).
+  ★ the Cog sails to Bergen with 2 casks! Every cask aboard is delivered. (Sailed-Ships 1/999)
+  ↳ TraderV takes a free Reach (+1 presence at Bergen).
+  ↳ Guild takes a free Reach (+1 presence at Bergen).
+  TraderV’s casks mature (+1) over the turn.
+
+== R4 · turn 7 · TraderV [trader/volume] · G1 H0 ct2 | vessels[Hopped!,-,-] deployed:0 | score 5 (dlv 1 maj 4 flt 0)
+  TraderV moves to Market
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  ↳ TraderV spends −G1 −H1
+  TraderV brews Hopped Beer (Q2 · matures in 1 step).
+  TraderV sets a Ready Hopped on a slot.
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R4 · turn 8 · Guild [guildmaster] · G1 H1 ct2 | vessels[-,-,-] deployed:0 | score 5 (dlv 1 maj 4 flt 0)
+  Guild moves to Market
+  Guild pays −G1 occupancy toll for sharing Market.
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild spends −H1
+  Guild buys the Broyhan recipe (Q3).
+  ↳ Guild gains +1 presence at Bergen (majority help).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+  TraderV’s casks mature (+1) over the turn.
+
+== R5 · turn 9 · TraderV [trader/volume] · G1 H0 ct2 | vessels[-,Hopped!,-] deployed:1 | score 1 (dlv 1 maj 0 flt 0)
+  TraderV moves to Harbor
+  TraderV activates Left col · Market + Harbor
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  TraderV sets a Ready Hopped on a slot (under Burgomaster’s Favor).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  TraderV loads Hopped onto the Hulk → Bruges (3/3).
+  ★ the Hulk sails to Bruges with 3 casks! Every cask aboard is delivered. (Sailed-Ships 2/999)
+  ↳ TraderV gains +G1 +H1
+  ↳ TraderV takes the Bruges liquidity benefit (2 goods).
+  ↳ Guild gains +G1 +H1
+  ↳ Guild takes the Bruges liquidity benefit (2 goods).
+  ↳ TraderV gains +G1 +H1
+  ↳ TraderV takes the Bruges liquidity benefit (2 goods).
+
+== R5 · turn 10 · Guild [guildmaster] · G1 H1 ct2 | vessels[-,-,-] deployed:0 | score 11 (dlv 2 maj 9 flt 0)
+  Guild moves to Brewhouse
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G1 +H1
+  Guild sources goods at the Market.
+  ↳ Guild gains +1 presence at Bruges (majority help).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R6 · turn 11 · TraderV [trader/volume] · G4 H3 ct2 | vessels[-,-,-] deployed:1 | score 5 (dlv 3 maj 2 flt 0)
+  TraderV moves to Market
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV spends −G2
+  TraderV commissions the Cog bound for London — place it on a slot.
+  ↳ the Cog docks ON Hopped — dockside pickup: the cask boards as the commission’s free load (1/2).
+  ↳ TraderV spends −G2 −H3
+  TraderV brews Bock (Q5 · matures in 3 steps).
+  ↳ TraderV’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ Cog (→ London) — nothing eligible to load.
+
+== R6 · turn 12 · Guild [guildmaster] · G2 H2 ct2 | vessels[-,-,-] deployed:0 | score 13 (dlv 2 maj 11 flt 0)
+  Guild moves to Cellar
+  Guild activates Right col · Brewhouse + Cellar
+  ↳ Guild spends −G1 −H2
+  Guild brews Broyhan (Q3 · matures in 1 step).
+  ↳ Guild’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  ↳ Broyhan ages +1 → 1/1 READY.
+  Guild sets a Ready Broyhan on a slot.
+  ↳ s5 — nothing to do here (no Ready cask to deploy).
+  TraderV’s casks mature (+1) over the turn.
+
+== R7 · turn 13 · TraderV [trader/volume] · G0 H0 ct2 | vessels[Bock 1/3,-,-,-] deployed:0 | score 5 (dlv 3 maj 2 flt 0)
+  TraderV moves to Harbor
+  TraderV activates Bottom row · Harbor + Cellar
+  ↳ Bock ages +1 → 2/3.
+  ↳ Bock ages +1 → 3/3 READY.
+  TraderV sets a Ready Bock on a slot (under Customs House).
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+  TraderV enshrines Bock Q5 on the High Board — the FAME coin (13★).
+
+== R7 · turn 14 · Guild [guildmaster] · G1 H0 ct2 | vessels[-,-,-,-] deployed:1 | score 13 (dlv 2 maj 11 flt 0)
+  Guild moves to Brewhouse
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G2
+  Guild sources goods at the Market.
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+  Guild loads Broyhan onto the Cog → London (2/2).
+  ★ the Cog sails to London with 2 casks! Every cask aboard is delivered. (Sailed-Ships 3/999)
+  TraderV authors Staple Hall on a slot — Your cask departs: die 3.
+  Guild authors London Steelyard on a slot — Your cask departs: die 4. London only.
+
+== R8 · turn 15 · TraderV [trader/volume] · G0 H0 ct2 | vessels[-,-,-,-] deployed:0 | score 25 (dlv 17 maj 4 flt 4)
+  TraderV moves to Market
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  ↳ TraderV spends −G1 −H1
+  TraderV brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R8 · turn 16 · Guild [guildmaster] · G3 H0 ct2 | vessels[-,-,-,-] deployed:0 | score 20 (dlv 3 maj 13 flt 4)
+  Guild moves to Market
+  Guild pays −G1 occupancy toll for sharing Market.
+  Guild activates Left col · Market + Harbor
+  ↳ Guild spends −G2
+  Guild buys Bergen Bryggen at the Market — place it on a slot.
+  Guild authors Bergen Bryggen on a slot — Your cask departs: die 4. Bergen only.
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  TraderV’s casks mature (+1) over the turn.
+
+== R9 · turn 17 · TraderV [trader/volume] · G0 H0 ct2 | vessels[Hopped!,-,-,-] deployed:0 | score 25 (dlv 17 maj 4 flt 4)
+  TraderV moves to Brewhouse
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  ↳ TraderV spends −G1 −H1
+  TraderV brews Hopped Beer (Q2 · matures in 1 step).
+  TraderV sets a Ready Hopped on a slot (under London Steelyard).
+  ↳ s3 — nothing to do here (no Ready cask to deploy).
+
+== R9 · turn 18 · Guild [guildmaster] · G0 H0 ct2 | vessels[-,-,-,-] deployed:0 | score 20 (dlv 3 maj 13 flt 4)
+  Guild moves to Harbor
+  Guild activates Bottom row · Harbor + Cellar
+  ↳ s7 — nothing to do here (no Ready cask to deploy).
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+  TraderV’s casks mature (+1) over the turn.
+
+== R10 · turn 19 · TraderV [trader/volume] · G0 H0 ct2 | vessels[-,Hopped!,-,-] deployed:1 | score 25 (dlv 17 maj 4 flt 4)
+  TraderV moves to Market
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  ↳ TraderV spends −G1 −H1
+  TraderV brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ TraderV gains +1 presence at Bergen (majority help).
+  TraderV sets a Ready Hopped on a slot (under Bergen Bryggen).
+
+== R10 · turn 20 · Guild [guildmaster] · G0 H0 ct2 | vessels[-,-,-,-] deployed:0 | score 15 (dlv 3 maj 8 flt 4)
+  Guild moves to Market
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G1 +H1
+  Guild sources goods at the Market.
+  ↳ Guild spends −G1
+  Guild brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Guild spends −H1
+  Guild gains the Bock recipe (the cask action, −1G).
+  ↳ Guild gains +1 presence at Bergen (majority help).
+  TraderV’s casks mature (+1) over the turn.
+
+== R11 · turn 21 · TraderV [trader/volume] · G0 H0 ct2 | vessels[Hopped!,-,-,-] deployed:2 | score 25 (dlv 17 maj 4 flt 4)
+  TraderV moves to Brewhouse
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  ↳ TraderV spends −G1 −H1
+  TraderV brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ TraderV gains +1 presence at Bergen (majority help).
+  Guild’s casks mature (+1) over the turn.
+
+== R11 · turn 22 · Guild [guildmaster] · G0 H0 ct2 | vessels[Gruit!,-,-,-] deployed:0 | score 15 (dlv 3 maj 8 flt 4)
+  Guild moves to Harbor
+  Guild activates Bottom row · Harbor + Cellar
+  Guild sets a Ready Gruit on a slot (under Customs House).
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+  TraderV’s casks mature (+1) over the turn.
+
+== R12 · turn 23 · TraderV [trader/volume] · G0 H0 ct2 | vessels[Hopped!,Hopped!,-,-] deployed:2 | score 29 (dlv 17 maj 8 flt 4)
+  TraderV moves to Market
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  ↳ TraderV spends −G1 −H1
+  TraderV brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ TraderV gains +1 presence at Bergen (majority help).
+
+== R12 · turn 24 · Guild [guildmaster] · G0 H0 ct2 | vessels[-,-,-,-] deployed:1 | score 11 (dlv 3 maj 4 flt 4)
+  Guild moves to Market
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G2
+  Guild sources goods at the Market.
+  ↳ Guild spends −G1
+  Guild brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Guild gains +1 presence at Bergen (majority help).
+  TraderV’s casks mature (+1) over the turn.
+
+== R13 · turn 25 · TraderV [trader/volume] · G0 H0 ct2 | vessels[Hopped!,Hopped!,Hopped!,-] deployed:2 | score 29 (dlv 17 maj 8 flt 4)
+  TraderV moves to Brewhouse
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  ↳ TraderV spends −G1 −H1
+  TraderV brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ TraderV gains +1 presence at Bergen (majority help).
+  Guild’s casks mature (+1) over the turn.
+
+== R13 · turn 26 · Guild [guildmaster] · G1 H0 ct2 | vessels[Gruit!,-,-,-] deployed:1 | score 11 (dlv 3 maj 4 flt 4)
+  Guild moves to Harbor
+  Guild activates Bottom row · Harbor + Cellar
+  ↳ Guild gains +G1 +H1
+  Guild sets a Ready Gruit on a slot.
+  TraderV’s casks mature (+1) over the turn.
+
+== R14 · turn 27 · TraderV [trader/volume] · G0 H0 ct2 | vessels[Hopped!,Hopped!,Hopped!,Hopped!] deployed:2 | score 34 (dlv 17 maj 13 flt 4)
+  TraderV moves to Market
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  TraderV sets a Ready Hopped on a slot (under Staple Hall).
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ TraderV gains +1 presence at London (majority help).
+
+== R14 · turn 28 · Guild [guildmaster] · G2 H1 ct2 | vessels[-,-,-,-] deployed:2 | score 9 (dlv 3 maj 2 flt 4)
+  Guild moves to Market
+  Guild pays −G1 occupancy toll for sharing Market.
+  Guild activates Left col · Market + Harbor
+  ↳ Guild gains +G1 +H1
+  Guild sources goods at the Market.
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+
+== R15 · turn 29 · TraderV [trader/volume] · G1 H1 ct2 | vessels[-,Hopped!,Hopped!,Hopped!] deployed:3 | score 37 (dlv 17 maj 16 flt 4)
+  TraderV moves to Brewhouse
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  ↳ TraderV spends −G1 −H2
+  TraderV brews Broyhan (Q3 · matures in 1 step).
+  ↳ TraderV’s 4th distinct beer opens Floor slot 5 (the Flight track).
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ TraderV gains +1 presence at Bruges (majority help).
+
+== R15 · turn 30 · Guild [guildmaster] · G2 H2 ct2 | vessels[-,-,-,-] deployed:2 | score 7 (dlv 3 maj 0 flt 4)
+  Guild moves to Harbor
+  Guild activates Left col · Market + Harbor
+  ↳ Guild spends −G2
+  Guild commissions the Cog bound for Bruges — place it on a slot.
+  ↳ the Cog docks ON Gruit — dockside pickup: the cask boards as the commission’s free load (1/2).
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  Guild loads Gruit onto the Cog → Bruges (2/2).
+  ★ the Cog sails to Bruges with 2 casks! Every cask aboard is delivered. (Sailed-Ships 4/999)
+  ↳ Guild gains +G1 +H1
+  ↳ Guild takes the Bruges liquidity benefit (2 goods).
+  ↳ Guild gains +G2
+  ↳ Guild takes the Bruges liquidity benefit (2 goods).
+  TraderV’s casks mature (+1) over the turn.
+
+== R16 · turn 31 · TraderV [trader/volume] · G1 H0 ct2 | vessels[Broyhan!,Hopped!,Hopped!,Hopped!,-] deployed:3 | score 35 (dlv 17 maj 14 flt 4)
+  TraderV moves to Market
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  ↳ TraderV spends −G1 −H1
+  TraderV brews Hopped Beer (Q2 · matures in 1 step).
+  TraderV over-deploys — the displaced Hopped is tapped on the way out (its recipe action fires, then it is boxed).
+  TraderV sets a Ready Broyhan on a slot (under Bergen Bryggen).
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ TraderV gains +1 presence at Bruges (majority help).
+
+== R16 · turn 32 · Guild [guildmaster] · G3 H3 ct2 | vessels[-,-,-,-] deployed:0 | score 11 (dlv 5 maj 2 flt 4)
+  Guild moves to Market
+  Guild pays −G1 occupancy toll for sharing Market.
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G2
+  Guild sources goods at the Market.
+  ↳ Guild spends −G1
+  Guild brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Guild gains +1 presence at Bergen (majority help).
+  ↳ Gruit ages +1 → 1/1 READY.
+  TraderV’s casks mature (+1) over the turn.
+
+== R17 · turn 33 · TraderV [trader/volume] · G1 H0 ct2 | vessels[-,Hopped!,Hopped!,Hopped!,Hopped!] deployed:3 | score 32 (dlv 17 maj 11 flt 4)
+  TraderV moves to Brewhouse
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  ↳ TraderV spends −G1 −H1
+  TraderV brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ TraderV gains +1 presence at Bergen (majority help).
+  ↳ Hopped ages +1 → 1/1 READY.
+
+== R17 · turn 34 · Guild [guildmaster] · G3 H3 ct2 | vessels[Gruit!,-,-,-] deployed:0 | score 11 (dlv 5 maj 2 flt 4)
+  Guild moves to Brewhouse
+  Guild pays −G1 occupancy toll for sharing Brewhouse.
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G2
+  Guild sources goods at the Market.
+  Guild sets a Ready Gruit on a slot (under Burgomaster’s Favor).
+  ↳ Guild gains +1 presence at Bergen (majority help).
+  ↳ nothing to age.
+
+== R18 · turn 35 · TraderV [trader/volume] · G1 H0 ct2 | vessels[Hopped!,Hopped!,Hopped!,Hopped!,Hopped!] deployed:3 | score 32 (dlv 17 maj 11 flt 4)
+  TraderV moves to Market
+  TraderV activates Left col · Market + Harbor
+  ↳ TraderV gains +G1 +H1
+  TraderV sources goods at the Market.
+  ↳ TraderV gains +G1 +H1
+  TraderV sets a Ready Hopped on a slot (under Brewmaster’s Workshop).
+
+== R18 · turn 36 · Guild [guildmaster] · G4 H3 ct2 | vessels[-,-,-,-] deployed:1 | score 15 (dlv 5 maj 6 flt 4)
+  Guild moves to Market
+  Guild pays −G1 occupancy toll for sharing Market.
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G2
+  Guild sources goods at the Market.
+  ↳ Guild gains +1 presence at Bergen (majority help).
+  ↳ nothing to age.
+
+== R19 · turn 37 · TraderV [trader/volume] · G3 H2 ct2 | vessels[-,Hopped!,Hopped!,Hopped!,Hopped!] deployed:4 | score 28 (dlv 17 maj 7 flt 4)
+  TraderV moves to Brewhouse
+  TraderV activates Top row · Market + Brewhouse
+  ↳ TraderV spends −G2
+  TraderV commissions the Hulk bound for Novgorod — place it on a slot.
+  ↳ the Hulk docks ON Broyhan — dockside pickup: the cask boards as the commission’s free load (1/3).
+  ↳ TraderV spends −G1 −H2
+  TraderV brews Broyhan (Q3 · matures in 1 step).
+  ★ TraderV places their last presence disc — the final round!
+  ↳ TraderV gains +1 presence at Bergen (majority help).
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R19 · turn 38 · Guild [guildmaster] · G5 H3 ct2 | vessels[-,-,-,-] deployed:1 | score 15 (dlv 5 maj 6 flt 4)
+  Guild moves to Harbor
+  Guild activates Left col · Market + Harbor
+  ↳ Guild gains +G2
+  Guild sources goods at the Market.
+  ↳ Guild gains +G1 (storage full)
+  ↳ Guild spends −G2
+  ↳ the die is set to 1 — Burgomaster’s Favor pays its owner as the cask departs.
+  Guild dispatches Gruit → Bruges by charter (a contract + the fare; 1 left). (Sailed-Ships 5/999)
+  ↳ Guild gains +G2
+  ↳ Guild takes the Bruges liquidity benefit (2 goods).
+
+================ FINAL — round 19 · sailed 5/999 · ended by ROUND CEILING ================
+WINNER  TraderV [trader/volume] — TOTAL 30  (deliveries 17 · majorities 9 · flight 4 · floor 0)
+        Bruges: Gruit Q1=1, Hopped Q2=1
+        London: Hopped Q2=1
+        Bergen: Hopped Q2=1
+        The Hall: Bock Q5=13
+        flight beers: Hopped, Gruit, Bock (3) · specialists: none · flipped: 0
+   #2   Guild [guildmaster] — TOTAL 19  (deliveries 7 · majorities 8 · flight 4 · floor 0)
+        Bruges: Gruit Q1=1, Gruit Q1=1, Gruit Q1=1, Gruit Q1=2
+        London: Broyhan Q3=1
+        Bergen: Hopped Q2=1
+        flight beers: Hopped, Gruit, Broyhan (3) · specialists: none · flipped: 0
+  majorities: Bruges[Guild+4]  London[TraderV+5]  Bergen[TraderV+4 Guild+4]  Novgorod[none]
+  buildings on the wharf at end: Burgomaster’s Favor(Guild) · Staple Hall(TraderV) · London Steelyard(Guild) · Bergen Bryggen(Guild) · Customs House(Guild) · Brewmaster’s Workshop(ntl) · Cooperage(ntl)

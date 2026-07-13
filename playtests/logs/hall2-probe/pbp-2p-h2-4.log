@@ -1,0 +1,544 @@
+############ GAME 2p-h2-4 · seed 884 · 2p · KEY hanse-v31e ############
+seats: Racer [trader/racer] · Cellar [cellarmaster]
+exports dealt: Q3 Broyhan · Q4 Mumme · Q5 Bock · sailed-ships cap 999 · warm start:
+  s1 (colL): [bldg Customs House neutral] 
+  s4 (rowB): [bldg Malt Kiln neutral] ship Hulk->Bruges
+  s6 (colL): ship Cog->London
+
+== R1 · turn 1 · Racer [trader/racer] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Racer places their worker at Brewhouse
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −H1
+  Racer buys the Broyhan recipe (Q3).
+  ↳ Racer spends −G1 −H1
+  Racer brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Racer’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  Racer sets a Ready Gruit on a slot.
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R1 · turn 2 · Cellar [cellarmaster] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar places their worker at Cellar
+  Cellar activates Bottom row · Harbor + Cellar
+  Cellar sets a Ready Gruit on a slot.
+  Racer’s casks mature (+1) over the turn.
+
+== R2 · turn 3 · Racer [trader/racer] · G2 H0 ct2 | vessels[-,Hopped!,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Racer moves to Market
+  Racer activates Left col · Market + Harbor
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  Racer sets a Ready Hopped on a slot (under Customs House).
+  Racer loads Hopped onto the Cog → London (1/2).
+  ↳ Cog (→ London) — nothing eligible to load.
+
+== R2 · turn 4 · Cellar [cellarmaster] · G3 H2 ct2 | vessels[-,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar moves to Harbor
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar spends −G1 −H1
+  Cellar buys the Bock recipe (Q5).
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  Cellar loads Gruit onto the Hulk → Bruges (1/3).
+  ↳ Cellar gains +G1
+  ↳ Cellar takes a loader bonus for shipping Racer’s cask (and chose the destination).
+  ↳ Cog (→ London) — nothing eligible to load.
+
+== R3 · turn 5 · Racer [trader/racer] · G3 H1 ct2 | vessels[-,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Racer moves to Brewhouse
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −G1 −H1
+  Racer buys the Bock recipe (Q5).
+  ↳ Racer spends −G1
+  Racer brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ s8 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R3 · turn 6 · Cellar [cellarmaster] · G3 H1 ct2 | vessels[-,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar moves to Market
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar gains +G1 +H1
+  Cellar sources goods at the Market.
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  Cellar loads Gruit onto the Hulk → Bruges (2/3).
+  ↳ Cog (→ London) — nothing eligible to load.
+  Racer’s casks mature (+1) over the turn.
+
+== R4 · turn 7 · Racer [trader/racer] · G1 H0 ct2 | vessels[Gruit!,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Racer moves to Market
+  Racer pays −G1 occupancy toll for sharing Market.
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer spends −G1 −H1
+  Racer brews Hopped Beer (Q2 · matures in 1 step).
+  Racer sets a Ready Gruit on a slot.
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R4 · turn 8 · Cellar [cellarmaster] · G4 H2 ct2 | vessels[-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar moves to Harbor
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar gains +G1 +H1
+  Cellar sources goods at the Market.
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  ↳ Cog (→ London) — nothing eligible to load.
+  Racer’s casks mature (+1) over the turn.
+
+== R5 · turn 9 · Racer [trader/racer] · G0 H0 ct2 | vessels[-,Hopped!,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Racer moves to Harbor
+  Racer activates Left col · Market + Harbor
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  Racer sets a Ready Hopped on a slot (under Customs House).
+  Racer loads Hopped onto the Cog → London (2/2).
+  ★ the Cog sails to London with 2 casks! Every cask aboard is delivered. (Sailed-Ships 1/999)
+  Racer authors London Steelyard on a slot — Your cask departs: die 4. London only.
+  Racer authors Staple Hall on a slot — Your cask departs: die 3.
+  ↳ s6 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R5 · turn 10 · Cellar [cellarmaster] · G5 H3 ct2 | vessels[-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar moves to Cellar
+  Cellar activates Bottom row · Harbor + Cellar
+  ↳ Cellar spends −G4
+  Cellar fits the Hop Gardener Specialist at the Cellar.
+  ↳ s7 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ the die is set to 3 — Staple Hall pays its owner as the cask departs.
+  Cellar loads Gruit onto the Hulk → Bruges (3/3).
+  ↳ Cellar gains +G1
+  ↳ Cellar takes a loader bonus for shipping Racer’s cask (and chose the destination).
+  ★ the Hulk sails to Bruges with 3 casks! Every cask aboard is delivered. (Sailed-Ships 2/999)
+  ↳ Racer gains +G1 +H1
+  ↳ Racer takes the Bruges liquidity benefit (2 goods).
+  ↳ Cellar gains +G2
+  ↳ Cellar takes the Bruges liquidity benefit (2 goods).
+  ↳ Racer gains +G1 +H1
+  ↳ Racer takes the Bruges liquidity benefit (2 goods).
+
+== R6 · turn 11 · Racer [trader/racer] · G3 H3 ct2 | vessels[-,-,-] deployed:0 | score 16 (dlv 7 maj 9 flt 0)
+  Racer moves to Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −G2
+  Racer commissions the Cog bound for Novgorod — place it on a slot.
+  ↳ Cog placed on a slot, bound for Novgorod.
+  ↳ Racer spends −G1
+  Racer brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R6 · turn 12 · Cellar [cellarmaster] · G4 H3 ct2 | vessels[-] deployed:0 | score 1 (dlv 1 maj 0 flt 0)
+  Cellar moves to Harbor
+  Cellar activates Bottom row · Harbor + Cellar
+  ↳ s7 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+  Racer’s casks mature (+1) over the turn.
+
+== R7 · turn 13 · Racer [trader/racer] · G0 H3 ct2 | vessels[Gruit!,-,-] deployed:0 | score 16 (dlv 7 maj 9 flt 0)
+  Racer moves to Brewhouse
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −H2
+  Racer buys the Mumme recipe (Q4).
+  Racer sets a Ready Gruit on a slot (under Staple Hall).
+  ↳ Racer gains +G1 +H1
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R7 · turn 14 · Cellar [cellarmaster] · G4 H3 ct2 | vessels[-] deployed:0 | score 1 (dlv 1 maj 0 flt 0)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar spends −H1
+  Cellar buys the Broyhan recipe (Q3).
+  ↳ Cellar gains +G1 +H2
+  ↳ Cellar spends −G2 −H3
+  Cellar brews Bock (Q5 · matures in 3 steps).
+  ↳ Cellar’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R8 · turn 15 · Racer [trader/racer] · G1 H2 ct2 | vessels[-,-,-] deployed:1 | score 16 (dlv 7 maj 9 flt 0)
+  Racer moves to Cellar
+  Racer activates Right col · Brewhouse + Cellar
+  ↳ Racer spends −G1
+  Racer brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gruit ages +1 → 1/1 READY.
+  Racer sets a Ready Gruit on a slot (under London Steelyard).
+  ↳ s5 — nothing to do here (no Ready cask to deploy onto the open slot).
+  Cellar’s casks mature (+1) over the turn.
+
+== R8 · turn 16 · Cellar [cellarmaster] · G3 H1 ct2 | vessels[Bock 1/3,-] deployed:0 | score 1 (dlv 1 maj 0 flt 0)
+  Cellar moves to Brewhouse
+  Cellar activates Right col · Brewhouse + Cellar
+  ↳ Cellar gains +G1 +H2
+  ↳ Cellar spends −G1 −H2
+  Cellar brews Broyhan (Q3 · matures in 1 step).
+  ↳ Cellar’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  ↳ s5 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R9 · turn 17 · Racer [trader/racer] · G0 H2 ct2 | vessels[-,-,-] deployed:2 | score 16 (dlv 7 maj 9 flt 0)
+  Racer moves to Harbor
+  Racer activates Left col · Market + Harbor
+  ↳ Racer gains +G2
+  Racer sources goods at the Market.
+  ↳ s6 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ Cog (→ Novgorod) — nothing eligible to load.
+  Cellar’s casks mature (+1) over the turn.
+
+== R9 · turn 18 · Cellar [cellarmaster] · G3 H1 ct2 | vessels[Bock 2/3,Broyhan!,-] deployed:0 | score 1 (dlv 1 maj 0 flt 0)
+  Cellar stays home and works the Floor — the worker keeps its station (2 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Bock’s brew action.
+  ↳ Floor — Broyhan’s survey action.
+  ↳ Cellar surveys the guild — takes Connoisseur’s Cellar from the display; place it on a slot (free).
+  Cellar authors Connoisseur’s Cellar on a slot — Your Q4+ cask departs: die 4.
+  ↳ Bock ages +1 → 3/3 READY.
+
+== R10 · turn 19 · Racer [trader/racer] · G2 H2 ct2 | vessels[-,-,-] deployed:2 | score 16 (dlv 7 maj 9 flt 0)
+  Racer moves to Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −G2
+  Racer commissions the Hulk bound for Bruges — place it on a slot.
+  ↳ the Hulk docks ON Gruit — dockside pickup: the cask boards as the commission’s free load (1/3).
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G1 −H3
+  Racer brews Mumme (Q4 · matures in 3 steps).
+  ↳ Racer’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R10 · turn 20 · Cellar [cellarmaster] · G3 H1 ct2 | vessels[Bock!,Broyhan!,-] deployed:0 | score 1 (dlv 1 maj 0 flt 0)
+  Cellar stays home and works the Floor — the worker keeps its station (2 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Bock’s brew action.
+  ↳ Cellar spends −G1 −H1
+  Cellar brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Cellar’s 4th distinct beer opens Floor slot 5 (the Flight track).
+  ↳ Floor — Broyhan’s survey action.
+  ↳ Cellar surveys the guild — takes Hop Yard from the display; place it on a slot (free).
+  Cellar authors Hop Yard on a slot — Q2+ cask ships +1 quality.
+  Racer’s casks mature (+1) over the turn.
+
+== R11 · turn 21 · Racer [trader/racer] · G0 H0 ct2 | vessels[Mumme 1/3,-,-,-] deployed:1 | score 16 (dlv 7 maj 9 flt 0)
+  Racer moves to Harbor
+  Racer activates Bottom row · Harbor + Cellar
+  ↳ Mumme ages +1 → 2/3.
+  ↳ Mumme ages +1 → 3/3 READY.
+  Racer sets a Ready Mumme on a slot.
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+  ↳ the die is set to 3 — Staple Hall pays its owner as the cask departs.
+  Racer loads Gruit onto the Hulk → Bruges (2/3).
+  Cellar’s casks mature (+1) over the turn.
+
+== R11 · turn 22 · Cellar [cellarmaster] · G2 H0 ct2 | vessels[Bock!,Broyhan!,Hopped!,-] deployed:0 | score 1 (dlv 1 maj 0 flt 0)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +H3
+  Cellar sources goods at the Market.
+  Cellar sets a Ready Hopped on a slot (under Staple Hall).
+  Cellar sets a Ready Broyhan on a slot.
+
+== R12 · turn 23 · Racer [trader/racer] · G0 H0 ct2 | vessels[-,-,-,-] deployed:1 | score 16 (dlv 7 maj 9 flt 0)
+  Racer moves to Cellar
+  Racer activates Bottom row · Harbor + Cellar
+  ↳ Racer surveys the guild — takes Burgomaster’s Favor from the display; place it on a slot (free).
+  Racer authors Burgomaster’s Favor on a slot — Your cask departs: die = its quality (max 5).
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+  ↳ the die is set to 4 — Burgomaster’s Favor pays its owner as the cask departs.
+  Racer loads Mumme onto the Hulk → Bruges (3/3).
+  ★ the Hulk sails to Bruges with 3 casks! Every cask aboard is delivered. (Sailed-Ships 3/999)
+  ↳ Racer gains +G1 +H1
+  ↳ Racer takes the Bruges liquidity benefit (2 goods).
+  ↳ Racer gains +G1 +H1
+  ↳ Racer takes the Bruges liquidity benefit (2 goods).
+  ↳ Racer gains +G1 +H1
+  ↳ Racer takes the Bruges liquidity benefit (2 goods).
+
+== R12 · turn 24 · Cellar [cellarmaster] · G2 H3 ct2 | vessels[Bock!,-,-,-] deployed:2 | score 1 (dlv 1 maj 0 flt 0)
+  Cellar moves to Brewhouse
+  Cellar activates Right col · Brewhouse + Cellar
+  Cellar sets a Ready Bock on a slot (under London Steelyard).
+  ↳ Cellar spends −G2 −H3
+  Cellar brews Bock (Q5 · matures in 3 steps).
+  ↳ Bock ages +1 → 1/3.
+  ↳ Bock ages +1 → 2/3.
+  ↳ Bock ages +1 → 3/3 READY.
+  Cellar sets a Ready Bock on a slot (under Connoisseur’s Cellar).
+
+== R13 · turn 25 · Racer [trader/racer] · G3 H3 ct2 | vessels[-,-,-,-] deployed:0 | score 30 (dlv 17 maj 9 flt 4)
+  Racer moves to Brewhouse
+  Racer pays −G1 occupancy toll for sharing Brewhouse.
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G2
+  Racer sources goods at the Market.
+  ↳ Racer spends −G1
+  Racer brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Racer surveys the guild — takes Staple Hall from the display; place it on a slot (free).
+  Racer authors Staple Hall on a slot — Your cask departs: die 3.
+  ↳ Racer gains +1 presence at Bruges (majority help).
+
+== R13 · turn 26 · Cellar [cellarmaster] · G0 H0 ct2 | vessels[-,-,-,-] deployed:4 | score 1 (dlv 1 maj 0 flt 0)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G1 +H2
+  Cellar sources goods at the Market.
+  ↳ Cellar spends −G1 −H2
+  Cellar brews Broyhan (Q3 · matures in 1 step).
+  ↳ Survey — the wharf is fully built and the ground rent (1G) is unaffordable: no legal slot.
+  ↳ Cellar gains +1 presence at Bruges (majority help).
+  Racer’s casks mature (+1) over the turn.
+
+== R14 · turn 27 · Racer [trader/racer] · G3 H3 ct2 | vessels[Gruit!,-,-,-] deployed:0 | score 30 (dlv 17 maj 9 flt 4)
+  Racer moves to Market
+  Racer pays −G1 occupancy toll for sharing Market.
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G2
+  Racer sources goods at the Market.
+  ↳ Racer spends −G1
+  Racer brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Racer surveys the guild — takes Burgomaster’s Favor from the display; place it on a slot (free).
+  ↳ Racer spends −G1
+  ↳ Racer pays the ground rent to overbuild.
+  ↳ Staple Hall is displaced — the tile FLIPS face-down into a Floor slot of Racer’s (a Wild stop; flips score nothing).
+  Racer authors Burgomaster’s Favor on a slot (replacing Staple Hall) — Your cask departs: die = its quality (max 5).
+  ↳ Racer gains +1 presence at London (majority help).
+  Cellar’s casks mature (+1) over the turn.
+
+== R14 · turn 28 · Cellar [cellarmaster] · G0 H0 ct2 | vessels[Broyhan!,-,-,-] deployed:4 | score 1 (dlv 1 maj 0 flt 0)
+  Cellar moves to Brewhouse
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G1 +H2
+  Cellar sources goods at the Market.
+  ↳ Cellar surveys the guild — takes Grain Exchange from the display; place it on a slot (free).
+  ↳ Cellar spends −G1
+  ↳ Cellar pays the ground rent to overbuild.
+  ↳ Staple Hall is displaced — the tile FLIPS face-down into a Floor slot of Racer’s (a Wild stop; flips score nothing).
+  Cellar authors Grain Exchange on a slot (replacing Staple Hall) — Empty stop: convert 2 goods.
+  ↳ Cellar gains +1 presence at Bruges (majority help).
+  Racer’s casks mature (+1) over the turn.
+
+== R15 · turn 29 · Racer [trader/racer] · G2 H3 ct2 | vessels[Gruit!,Gruit!] deployed:0 | score 30 (dlv 17 maj 9 flt 4)
+  Racer stays home and works the Floor — the worker keeps its station (2 casks + 2 flipped Wilds + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Racer gains +G2
+  ↳ Floor — Gruit’s source action.
+  ↳ Racer gains +G2
+  ↳ Floor — flipped Staple Hall fires a Wild.
+  ↳ Racer gains +G2
+  ↳ Floor — flipped Staple Hall fires a Wild.
+
+== R15 · turn 30 · Cellar [cellarmaster] · G0 H2 ct2 | vessels[Broyhan!,-,-,-] deployed:4 | score 1 (dlv 1 maj 0 flt 0)
+  Cellar moves to Market
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar spends −H2
+  Cellar buys the Mumme recipe (Q4).
+  Cellar sets a Ready Broyhan on a slot (under Hop Yard).
+  Cellar loads Broyhan onto the Cog → Novgorod (1/2).
+
+== R16 · turn 31 · Racer [trader/racer] · G8 H3 ct2 | vessels[Gruit!,Gruit!] deployed:0 | score 30 (dlv 17 maj 9 flt 4)
+  Racer stays home and works the Floor — the worker keeps its station (2 casks + 2 flipped Wilds + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — flipped Staple Hall fires a Wild.
+  ↳ Floor — flipped Staple Hall fires a Wild.
+
+== R16 · turn 32 · Cellar [cellarmaster] · G0 H0 ct2 | vessels[-,-,-,-] deployed:4 | score 1 (dlv 1 maj 0 flt 0)
+  Cellar moves to Harbor
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar gains +G1 +H2
+  Cellar sources goods at the Market.
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  Cellar enshrines Bock Q5 on the Long Shelf (5★ · +3 goods). (Sailed-Ships 4/999)
+  ↳ Cellar gains +G2 +H2
+  ↳ the die is set to 4 — Connoisseur’s Cellar pays its owner as the cask departs.
+  Cellar loads Bock onto the Cog → Novgorod (2/2).
+  ★ the Cog sails to Novgorod with 2 casks! Every cask aboard is delivered. (Sailed-Ships 5/999)
+  ↳ Cellar — nothing maturing to refine (Novgorod).
+  ↳ Cellar — nothing maturing to refine (Novgorod).
+
+== R17 · turn 33 · Racer [trader/racer] · G8 H3 ct2 | vessels[Gruit!,Gruit!] deployed:0 | score 30 (dlv 17 maj 9 flt 4)
+  Racer stays home and works the Floor — the worker keeps its station (2 casks + 2 flipped Wilds + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — flipped Staple Hall fires a Wild.
+  ↳ Floor — flipped Staple Hall fires a Wild.
+
+== R17 · turn 34 · Cellar [cellarmaster] · G3 H4 ct2 | vessels[-,-,-,-] deployed:2 | score 32 (dlv 20 maj 8 flt 4)
+  Cellar moves to Cellar
+  Cellar activates Bottom row · Harbor + Cellar
+  ↳ s7 — nothing to do here (no Ready cask to deploy).
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+
+== R18 · turn 35 · Racer [trader/racer] · G8 H3 ct2 | vessels[Gruit!,Gruit!] deployed:0 | score 30 (dlv 17 maj 9 flt 4)
+  Racer moves to Brewhouse
+  Racer activates Top row · Market + Brewhouse
+  Racer sources goods at the Market.
+  Racer sets a Ready Gruit on a slot (under London Steelyard).
+  ↳ Racer surveys the guild — takes Almoner’s Stall from the display; place it on a slot (free).
+  ↳ Racer spends −G1
+  ↳ Racer pays the ground rent to overbuild.
+  ↳ Burgomaster’s Favor is displaced — the tile FLIPS face-down into a Floor slot of Racer’s (a Wild stop; flips score nothing).
+  Racer authors Almoner’s Stall on a slot (replacing Burgomaster’s Favor) — Your cask departs: die 3 if no presence there.
+  ↳ Racer gains +1 presence at Bruges (majority help).
+
+== R18 · turn 36 · Cellar [cellarmaster] · G3 H4 ct2 | vessels[-,-,-,-] deployed:2 | score 32 (dlv 20 maj 8 flt 4)
+  Cellar moves to Harbor
+  Cellar activates Bottom row · Harbor + Cellar
+  ↳ Cellar spends −G2
+  Cellar fits the Lagerkeeper Specialist at the Cellar.
+  ↳ s7 — nothing to do here (no Ready cask to deploy).
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+
+== R19 · turn 37 · Racer [trader/racer] · G7 H3 ct2 | vessels[Gruit!] deployed:1 | score 30 (dlv 17 maj 9 flt 4)
+  Racer moves to Cellar
+  Racer activates Bottom row · Harbor + Cellar
+  Racer sets a Ready Gruit on a slot (under Burgomaster’s Favor).
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+
+== R19 · turn 38 · Cellar [cellarmaster] · G1 H4 ct2 | vessels[-,-,-] deployed:2 | score 32 (dlv 20 maj 8 flt 4)
+  Cellar moves to Cellar
+  Cellar pays −G1 occupancy toll for sharing Cellar.
+  Cellar activates Right col · Brewhouse + Cellar
+  ↳ Cellar gains +G2
+  ↳ Cellar spends −G2 −H3
+  Cellar brews Bock (Q5 · matures in 3 steps).
+  ↳ Bock ages +1 → 1/3.
+  ↳ Bock ages +1 → 2/3.
+  ↳ Bock ages +1 → 3/3 READY.
+  Cellar sets a Ready Bock on a slot (under Connoisseur’s Cellar).
+
+== R20 · turn 39 · Racer [trader/racer] · G7 H3 ct2 | vessels[-] deployed:2 | score 30 (dlv 17 maj 9 flt 4)
+  Racer moves to Brewhouse
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 (storage full)
+  Racer sources goods at the Market.
+  ↳ Racer spends −G2 −H3
+  Racer brews Bock (Q5 · matures in 3 steps).
+  ↳ Racer’s 4th distinct beer opens Floor slot 5 (the Flight track).
+  ↳ Racer surveys the guild — takes Bruges Hanzehuis from the display; place it on a slot (free).
+  ↳ Racer spends −G1
+  ↳ Racer pays the ground rent to overbuild.
+  ↳ Almoner’s Stall is displaced — the tile FLIPS face-down into a Floor slot of Racer’s (a Wild stop; flips score nothing).
+  Racer authors Bruges Hanzehuis on a slot (replacing Almoner’s Stall) — Your cask departs: die 3. Bruges only.
+  ↳ Racer gains +1 presence at London (majority help).
+
+== R20 · turn 40 · Cellar [cellarmaster] · G0 H1 ct2 | vessels[-,-,-] deployed:3 | score 32 (dlv 20 maj 8 flt 4)
+  Cellar moves to Harbor
+  Cellar activates Bottom row · Harbor + Cellar
+  ↳ Cellar gains +G1 +H2
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+  Cellar enshrines Bock Q5 on the High Board (8★ · +3★). (Sailed-Ships 6/999)
+  ↳ +3★ banked (the High Board’s honor).
+  Racer’s casks mature (+1) over the turn.
+
+== R21 · turn 41 · Racer [trader/racer] · G5 H0 ct2 | vessels[Bock 1/3] deployed:2 | score 30 (dlv 17 maj 9 flt 4)
+  Racer stays home and works the Floor — the worker keeps its station (1 cask + 4 flipped Wilds + the 3-pt Age pool · no toll).
+  ↳ Floor — flipped Staple Hall fires a Wild.
+  ↳ Bock ages +1 → 2/3.
+  ↳ Bock ages +1 → 3/3 READY.
+  ↳ Floor — flipped Staple Hall fires a Wild.
+  ↳ Racer gains +G1 +H1
+  ↳ Floor — flipped Burgomaster’s Favor fires a Wild.
+  ↳ Racer gains +G1 +H1
+  ↳ Floor — flipped Almoner’s Stall fires a Wild.
+  ↳ Racer gains +G1 +H1
+  ↳ nothing to age.
+  ↳ Floor — Bock’s load action.
+  ↳ nothing to load.
+
+== R21 · turn 42 · Cellar [cellarmaster] · G1 H3 ct2 | vessels[-,-,-] deployed:2 | score 43 (dlv 31 maj 8 flt 4)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G2
+  Cellar sources goods at the Market.
+  ↳ Cellar spends −G2 −H3
+  Cellar brews Bock (Q5 · matures in 3 steps).
+  ↳ Cellar surveys the guild — takes Rope Walk from the display; place it on a slot (free).
+  ↳ Cellar spends −G1
+  ↳ Cellar pays the ground rent to overbuild.
+  ↳ Grain Exchange is displaced — the tile FLIPS face-down into a Floor slot of Cellar’s (a Wild stop; flips score nothing).
+  Cellar authors Rope Walk on a slot (replacing Grain Exchange) — Empty stop: gain 1 contract.
+  ↳ Cellar gains +1 presence at Novgorod (majority help).
+
+== R22 · turn 43 · Racer [trader/racer] · G8 H3 ct2 | vessels[Bock!] deployed:2 | score 30 (dlv 17 maj 9 flt 4)
+  Racer stays home and works the Floor — the worker keeps its station (1 cask + 4 flipped Wilds + the 3-pt Age pool · no toll).
+  ↳ Floor — flipped Staple Hall fires a Wild.
+  ↳ Floor — flipped Staple Hall fires a Wild.
+  ↳ Floor — flipped Burgomaster’s Favor fires a Wild.
+  ↳ Floor — flipped Almoner’s Stall fires a Wild.
+  ↳ Floor — Bock’s load action.
+  ↳ nothing to load.
+  Cellar’s casks mature (+1) over the turn.
+
+== R22 · turn 44 · Cellar [cellarmaster] · G0 H0 ct2 | vessels[Bock 1/3,-] deployed:2 | score 43 (dlv 31 maj 8 flt 4)
+  Cellar moves to Harbor
+  Cellar activates Bottom row · Harbor + Cellar
+  ↳ Cellar gains +G1 +H2
+  ↳ Bock ages +1 → 2/3.
+  ↳ Bock ages +1 → 3/3 READY.
+  Cellar sets a Ready Bock on a slot (under Malt Kiln).
+  Cellar enshrines Bock Q5 on the Masters’ Shelf (6★ · place 2 presence). (Sailed-Ships 7/999)
+  ↳ +2 presence at Bruges (the Hall’s honor).
+
+== R23 · turn 45 · Racer [trader/racer] · G8 H3 ct2 | vessels[Bock!] deployed:2 | score 30 (dlv 17 maj 9 flt 4)
+  Racer stays home and works the Floor — the worker keeps its station (1 cask + 4 flipped Wilds + the 3-pt Age pool · no toll).
+  ↳ Floor — flipped Staple Hall fires a Wild.
+  ↳ Floor — flipped Staple Hall fires a Wild.
+  ↳ Floor — flipped Burgomaster’s Favor fires a Wild.
+  ↳ Floor — flipped Almoner’s Stall fires a Wild.
+  ↳ Floor — Bock’s load action.
+  ↳ nothing to load.
+
+== R23 · turn 46 · Cellar [cellarmaster] · G1 H2 ct2 | vessels[-,-] deployed:2 | score 49 (dlv 37 maj 8 flt 4)
+  Cellar moves to Cellar
+  Cellar activates Right col · Brewhouse + Cellar
+  ↳ Cellar gains +G1 +H2
+  ↳ Cellar spends −G1 −H3
+  Cellar brews Mumme (Q4 · matures in 3 steps).
+  ↳ Cellar’s 5th distinct beer opens Floor slot 6 (the Flight track).
+  ↳ s5 — nothing to do here (no Ready cask to deploy).
+
+== R24 · turn 47 · Racer [trader/racer] · G8 H3 ct2 | vessels[Bock!] deployed:2 | score 30 (dlv 17 maj 9 flt 4)
+  Racer stays home and works the Floor — the worker keeps its station (1 cask + 4 flipped Wilds + the 3-pt Age pool · no toll).
+  ↳ Floor — flipped Staple Hall fires a Wild.
+  ↳ Floor — flipped Staple Hall fires a Wild.
+  ↳ Floor — flipped Burgomaster’s Favor fires a Wild.
+  ↳ Floor — flipped Almoner’s Stall fires a Wild.
+  ↳ Floor — Bock’s load action.
+  ↳ nothing to load.
+  Cellar’s casks mature (+1) over the turn.
+
+== R24 · turn 48 · Cellar [cellarmaster] · G1 H1 ct2 | vessels[Mumme 1/3,-,-] deployed:2 | score 49 (dlv 37 maj 8 flt 4)
+  Cellar moves to Brewhouse
+  Cellar pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar activates Right col · Brewhouse + Cellar
+  ↳ Cellar gains +G1 +H2
+  ↳ Cellar spends −G1 −H3
+  Cellar brews Mumme (Q4 · matures in 3 steps).
+  ↳ Mumme ages +1 → 2/3.
+  ↳ Mumme ages +1 → 3/3 READY.
+  ↳ Mumme ages +1 → 1/3.
+  Cellar sets a Ready Mumme on a slot (under Connoisseur’s Cellar).
+
+== R25 · turn 49 · Racer [trader/racer] · G8 H3 ct2 | vessels[Bock!] deployed:2 | score 30 (dlv 17 maj 9 flt 4)
+  Racer stays home and works the Floor — the worker keeps its station (1 cask + 4 flipped Wilds + the 3-pt Age pool · no toll).
+  ↳ Floor — flipped Staple Hall fires a Wild.
+  ↳ Floor — flipped Staple Hall fires a Wild.
+  ↳ Floor — flipped Burgomaster’s Favor fires a Wild.
+  ↳ Floor — flipped Almoner’s Stall fires a Wild.
+  ↳ Floor — Bock’s load action.
+  ↳ nothing to load.
+  ★ Round 25 reached — final round (safety).
+  Cellar’s casks mature (+1) over the turn.
+
+== R25 · turn 50 · Cellar [cellarmaster] · G0 H0 ct2 | vessels[-,Mumme 2/3,-] deployed:3 | score 49 (dlv 37 maj 8 flt 4)
+  Cellar moves to Cellar
+  Cellar activates Bottom row · Harbor + Cellar
+  ↳ Cellar gains +G1 +H2
+  ↳ Mumme ages +1 → 3/3 READY.
+  Cellar sets a Ready Mumme on a slot (under Malt Kiln).
+  Cellar enshrines Mumme Q5 on the High Board (8★ · unlock 1 Floor slot). (Sailed-Ships 8/999)
+  ↳ the Hall opens Floor slot 7.
+
+================ FINAL — round 25 · sailed 8/999 · ended by ROUND CEILING ================
+WINNER  Cellar [cellarmaster] — TOTAL 62  (deliveries 45 · majorities 8 · flight 9 · floor 0)
+        Bruges: Gruit Q1=1
+        Novgorod: Broyhan Q4=4, Bock Q5=10
+        The Hall: Bock Q5=5, Bock Q5=8, Bock Q5=6, Mumme Q5=8
+        flight beers: Gruit, Bock, Broyhan, Mumme (4) · specialists: Hop Gardener, Lagerkeeper · flipped: 1
+   #2   Racer [trader/racer] — TOTAL 30  (deliveries 17 · majorities 9 · flight 4 · floor 0)
+        Bruges: Gruit Q1=1, Gruit Q1=4, Gruit Q1=1, Gruit Q1=4, Mumme Q4=5
+        London: Hopped Q2=1, Hopped Q2=1
+        flight beers: Hopped, Gruit, Mumme (3) · specialists: none · flipped: 4
+  majorities: Bruges[Racer+4]  London[Racer+5]  Bergen[none]  Novgorod[Cellar+8]
+  buildings on the wharf at end: Customs House(ntl) · London Steelyard(Racer) · Bruges Hanzehuis(Racer) · Rope Walk(Cellar) · Burgomaster’s Favor(Racer) · Malt Kiln(ntl) · Hop Yard(Cellar) · Connoisseur’s Cellar(Cellar)
