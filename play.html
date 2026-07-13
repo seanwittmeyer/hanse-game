@@ -2485,17 +2485,17 @@ function aiLeadingNow(p){let my=0,best=-1e9;S.players.forEach(q=>{const t=scoreP
 // playtests/ai-tune.js (CEM: candidate vs these incumbent defaults + Journeyman, fitness = win-rate);
 // the values below are the adopted set. A per-seat override rides on p.ai.w — that is how the tuner
 // pits two weight sets inside one game. Apprentice/Journeyman read NONE of these (frozen baselines).
-const AI_W={   // v1.3 "Tap a Cask" weights KEPT at v2.9 — the v2.9 tuner run said ADOPT, but its incumbent had drifted (stale DEFAULTS) and the adopted weights broke the ladder gate (GM 59.2% < 60 vs the stronger trader; see playtests/ai-tune-v93.txt) — rejected on gate
-  swing   :0.488,  // majority-swing weight in the destination score
-  upBen   :0.563,  // an upgrade benefit's worth (London/Novgorod) in the destination score
-  goodsBen:0.9,    // a goods benefit's worth (Bruges/Bergen)
-  hallBase:0.883,  // Hall multiplier at clock 0 …
-  hallRamp:1.094,  // … rising to hallBase+hallRamp as the clock fills (Hall even more end-loaded)
-  leanVal :0.935,  // the persona tilts flattened to ≈1 — leans are flavour, the core does the work
-  leanSwing:1.123,
-  leanHall:0.928,
-  goalW   :1.443,
-  buyFlush:5.153,  // grain threshold for buying a non-tempo upgrade at the Market
+const AI_W={   // v3.2 "Three Coins" CEM adopt (playtests/ai-tune-vhanse-v32.txt: best-ever beats the v3.1 incumbent 54.4%, CI excludes 50) — the meta shifts the tuner found: majorities cost clock discs now (swing halves), goods are tempo under the tight dual clock (goodsBen doubles), and the Hall is FRONT-loaded (the coin race: hallBase up, hallRamp down)
+  swing   :0.24,   // majority-swing weight in the destination score (v3.1: 0.488 — presence spends the clock now)
+  upBen   :0.198,  // an upgrade benefit's worth (London/Novgorod) in the destination score
+  goodsBen:2.049,  // a goods benefit's worth (Bruges/Bergen) — tempo
+  hallBase:1.063,  // Hall multiplier at clock 0 … (the coins are hot EARLY)
+  hallRamp:0.893,  // … rising to hallBase+hallRamp as the clock fills
+  leanVal :0.936,  // the persona tilts flattened to ≈1 — leans are flavour, the core does the work
+  leanSwing:1.046,
+  leanHall:0.931,
+  goalW   :1.284,
+  buyFlush:6.659,  // grain threshold for buying a non-tempo upgrade at the Market
 };
 function aiW(p){return (p.ai&&p.ai.w)||AI_W;}
 const AI_DELAYS={slow:900,normal:450,instant:0};   // ms between AI decisions ⚙
