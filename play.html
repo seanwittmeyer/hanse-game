@@ -2611,7 +2611,8 @@ function aiDest(p,q,style){
   // completion-biased rollout: realize the DEEP payoff so the GM can price it — ship the top tiers to the
   // Hall (prestige + the Flight's top tier + the Masterpiece). Only bites once a player has climbed (q>=4),
   // so it credits deep play that's actually set up rather than force-feeding prestige into volume games.
-  if(aiDeepRollout()&&q>=4&&elig.includes("hall")&&Math.random()<0.6)return "hall";
+  if(aiDeepRollout()&&q>=4&&elig.includes("hall")&&Math.random()<0.6
+    &&(!S.hallV2||destValue('hall',q)>Math.max(1,Math.min(5,q))))return "hall";   // v3.2: bias only while a FAME coin above the launch rate is still open — a spent board makes the launch a leak at Q4+
   if(!aiIsTrader(p)){
     // v0.14: the journeyman NEVER ships the Hall — prestige + the deep Flight is the Trader's exclusive edge,
     // which keeps the tiers cleanly ordered now that both climb the quality ladder for the Flight bonus.
