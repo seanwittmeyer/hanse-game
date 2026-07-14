@@ -1,7 +1,8 @@
 # Brewhouses of the Hanse — Kickstarter Go-To-Market Plan (v1 · 2026-07-14)
 
 > **The publisher read, in one line:** plan of record is a **$275–400k campaign
-> (3,500–5,000 backers at a $75–85 blended pledge)** with the full stack executing — top-tier
+> (≈4,000–5,800 backers at the adopted **$54-core / $62–72 blended** pledge frame — §6)**
+> with the full stack executing — top-tier
 > art, balance/onboarding gaps closed, solo automa in the box; **$450–650k** is the
 > top-quartile outcome those conditions make *possible*, and **8k+ backers is the
 > struck-a-chord tail, not the plan** (§2 shows the bottom-up math). The mechanics clear the
@@ -83,26 +84,30 @@ $41k — but the **mid-heavy euro comp set is a different distribution entirely*
 The house list (~5–6k unique backers) plus two fulfilled campaigns puts us in the
 "established small studio" cohort — above true first-timers, below Mindclash brand equity.
 
-**Forecast bands (30-day KS, $69 core / ~$99–109 deluxe, late pledge via pledge manager).**
+**Forecast bands (30-day KS, adopted frame: $54 core / ~$89–99 deluxe, late pledge via
+pledge manager).**
 *Method note (revised 2026-07-14): the comp table above is a survivor cohort — the campaigns
 everyone cites because they broke out. Each 8k+ comp had a chord (Distilled: whiskey-hobby
 crossover + first-mover; Kelp: a meme-able duel + a 54%-converting $1 funnel; Hegemony:
 identity resonance; Septima: Mindclash's list; White Castle: Devir brand + Essen heat + a
 cheap pledge that inflates backer counts). The plan-of-record number is built bottom-up
-instead:* house list ~5.3k unique × 8–15% cross-sell to a heavier $69 euro = **450–800** ·
+instead:* house list ~5.3k unique × 8–15% cross-sell to a GWT-weight euro (the $54 ask
+supports the upper half of that band) = **450–800** ·
 paid pre-launch $20–25k at $3–4/follower → 5.5–8k followers × 15–30% = **900–2,000** ·
 creator wave + BGG + organic ≈ 0.8–1.2× that base = **1,100–2,800** · late pledge +10–20%
 = **+250–700**.
 
-- **Plan of record (median): $275k–$400k · 3,500–5,000 backers.** Funds a 3–5k-unit run
-  comfortably; sits right on the "trusted niche euro" anchor (~$385k). Budget and goal
-  should be built on THIS number.
-- **Good case: $450k–$650k · 6–8k backers.** Top-quartile execution — the funnel actually
-  hits ≥15k emails/8–10k followers with deposit-backed intent, the art stops the scroll,
-  no viral moment required.
-- **Chord case (tail, not a plan): $800k+ · 10k+ backers.** Requires ≥2 of: the hook video
-  landing as a *moment*, an early SU&SD/Space-Biff rave (unbuyable), a widened entry tier
-  (~$49–55) pulling backer counts up the White Castle way.
+- **Plan of record (median): $275k–$400k · ≈4,000–5,800 backers** at the $62–72 blended
+  AOV the $54 core produces. Funds a 3–5k-unit run comfortably; sits right on the "trusted
+  niche euro" anchor (~$385k). Budget and goal should be built on THIS number — the $54
+  frame trades pledge size for backer count at roughly flat dollars, and the count is the
+  asset (list growth compounds into the next campaign).
+- **Good case: $450k–$650k · ≈6,500–9,000 backers.** Top-quartile execution — the funnel
+  actually hits ≥15k emails/8–10k followers with deposit-backed intent, the art stops the
+  scroll, no viral moment required.
+- **Chord case (tail, not a plan): $800k+ · 11k+ backers.** The $54 core already plays the
+  White-Castle wide-tier card, so the chord case rests on the unbuyables: the hook video
+  landing as a *moment* and/or an early SU&SD/Space-Biff rave.
 - **Floor: $120–200k · 2,000–2,500 backers.** Art reads generic-medieval, rulebook stumbles,
   or no solo mode. Funds, disappoints.
 
@@ -217,20 +222,26 @@ update that writes itself. Budget a Turczi-tier consult for credibility if desir
 - **Platform:** Kickstarter for reach (our list lives there via PDX/RDJ), **BackerKit for
   pledge manager + late pledge** (platform data says late-pledge/PM dollars now rival
   campaign dollars in aggregate). Charge real shipping at the PM, estimates only on the page.
-- **Pricing & MSRP (grounded in the house's own Panda quotes):** PDX quotes $6.25/unit at
-  7,500 (EXW Shenzhen, Apr 2026); RDJ $7.13 at 4,200. Brewhouses' BOM is heavier than both —
-  ~8–10 punchboard sheets (130 large tiles), 3 shared boards incl. the oversized wharf cross,
-  4 player boards, ~70 cards, ~230 wood bits, 8 dice, 3 cloth bags — building up to an
-  estimated **FOB $10–13 at 3–5k units**. Landed at the current 10% surcharge + freight ≈
-  **$13.50–16.50** (bad-tariff scenario $16–19). The 5× retail rule supports **$79.99 core
-  MSRP** (4.8–5.9× in the good case; ~4.2× if tariffs bite), on a shelf where GWT 2e streets
-  $70–80 and Nucleum/Apiary $65–70. Ladder: **KS core $64–69** (mirrors the house's own PDX
-  Economy $64 / RDJ Standard $59 tiers, nudged for 2026 costs) · **deluxe KS $99–109**
-  (screen-printed casks, metal contracts, dual-layer rows — the RDJ All-In $104 / PDX First
-  Class $108 pattern the list already buys) · optional **$49–55 "harbor" tier** (retail-lite)
-  only if the backer-count-widening play is wanted. Blended AOV target $75–85. Trim lever if
-  FOB runs hot: the Market & Stores board is the fold-candidate (its displays can live on the
-  wharf sheet edges) — a design decision, not a print decision.
+- **Pricing & MSRP — ADOPTED FRAME (2026-07-14): $64 core MSRP · $54 KS core.** Grounding
+  (the house's own Panda quotes): PDX $6.25/unit at 7,500 (EXW Shenzhen, Apr 2026); RDJ $7.13
+  at 4,200. Brewhouses' BOM as manifested is heavier than both — ~8–10 punchboard sheets
+  (130 large tiles), 3 shared boards incl. the oversized wharf cross, 4 player boards, ~70
+  cards, ~230 wood bits, 8 dice, 3 cloth bags — estimating **FOB $10–13 at 3–5k units**,
+  landed ≈ **$13.50–16.50** at the current 10% surcharge (bad-tariff $16–19). At $64 that's
+  a **3.9–4.7× multiple — thin for distribution**, so the frame forces a choice, and the
+  plan's choice is the **component diet, not a reprice**: fold the Market & Stores board's
+  displays onto the wharf-sheet edges (design decision, already flagged), drop cask tiles
+  2.5"→2.25" (~20% punchboard area), audit wood (~230 → ~190 bits; the 14-disc presence
+  clock and 8/colour casks are sacred, the goods cube count is not), keep the 3 bags and the
+  8 dice (the die-set is a marketing asset). Target **FOB ≤$10.50 → landed ≈$12.80 → a true
+  5× at $64**. If the diet can't get there without gutting table presence, the fallback is
+  $69.99 MSRP — not a thinner box. Ladder: **KS core $54** (undercuts Distilled's $68 debut
+  ask and our own PDX Economy $64; the sharpest value pitch on the GWT-weight shelf) ·
+  **deluxe KS $89–99** (screen-printed casks, metal contracts, dual-layer rows — the RDJ
+  All-In $104 / PDX First Class $108 pattern, re-anchored under the lower core) · no
+  retail-lite tier (at $54 the core *is* the wide tier). Blended AOV expectation drops to
+  **$62–72**, so the §2 dollar bands hold only if backer count runs ~10–15% above the
+  same-scenario counts — the $54 hook is what buys that; hold the funnel targets (§6) firm.
 
 ## 7 · Risks the plan must carry
 
@@ -271,8 +282,10 @@ Studio has 2027-07-02 as target launch. Recommended shape (dates relative, ~12 m
 
 ## 9 · The gatekeeper read (fresh pass, this build — abridged)
 
-Full reasoning with corpus evidence in `playtests/logs/cm-v32d/ANALYSIS.md` §5. The
-one-paragraph version a hard-nosed reviewer files after two plays of v3.2d:
+**The full standing-board review is `GATEKEEPER-v32d.md`** (2026-07-14, run at the adopted
+$64/$54 frame — four-panel verdicts, comp face-off, and the prioritized path forward);
+corpus evidence in `playtests/logs/cm-v32d/ANALYSIS.md` §5. The one-paragraph version a
+hard-nosed reviewer files after two plays of v3.2d:
 
 > *The cask-as-shared-action is a genuine idea, the wharf is tight, and the dual clock makes
 > the ending everyone's business — this is a real game with a real signature, and skill
