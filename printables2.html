@@ -722,24 +722,25 @@
   /* a SHELF: the name/gate end-cap (full height) + [ the three coin SPACES / the LAUNCH row ] on a plank */
   .hshelf2{flex:1;display:flex;border:2.5px solid #5b3a8e;border-radius:.08in;background:rgba(255,255,255,.55);overflow:hidden;position:relative}
   .hshelf2::after{content:"";position:absolute;left:0;right:0;bottom:0;height:.09in;background:#7a5236;border-top:1.5px solid #4d3524}  /* the plank */
-  .hs-main{flex:1;display:flex;flex-direction:column;min-width:0}
-  .hs-coins{flex:1;display:flex}
-  .hs-launch{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:.12in;border-top:1.5px dashed #9c7bbd;padding:.1in .06in .19in}   /* roomier: real padding above AND below, hugging the coin columns */
-  .hs-launch .lq{display:inline-flex;align-items:center;gap:.02in;color:#5b3a8e;font-weight:900;font-size:.3in;line-height:1}
+  .hs-main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+  /* the COIN row is COMPACT (icon · label · cube, no dead band); the LAUNCH row takes the freed height */
+  .hs-coins{flex:0 0 auto;display:flex;min-width:0}
+  .hs-launch{flex:1;display:flex;align-items:center;justify-content:center;gap:.1in;border-top:1.5px dashed #9c7bbd;padding:.06in .06in .15in;min-width:0}
+  .hs-launch .lq{display:inline-flex;align-items:center;gap:.02in;color:#5b3a8e;font-weight:900;font-size:.3in;line-height:1;flex:0 0 auto}
   .hs-launch .lq svg,.hs-launch .lq .ic{width:.28in;height:.28in;color:#9c7414;fill:none}
-  .hs-launch .llbl{font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--ink2);margin-right:.05in}
-  .hs-launch .lcubes{display:flex;gap:.06in}
-  .hs-launch .lcube{width:.42in;height:.42in;border:2px dashed #9c7bbd;border-radius:.04in;background:rgba(255,255,255,.7)}
+  .hs-launch .llbl{font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--ink2);margin-right:.04in;flex:0 0 auto}
+  .hs-launch .lcubes{display:flex;gap:.05in;flex:0 1 auto;min-width:0}
+  .hs-launch .lcube{width:.4in;height:.4in;border:2px dashed #9c7bbd;border-radius:.04in;background:rgba(255,255,255,.7);flex:0 0 auto}
   .hs-side{flex:0 0 auto;width:1.05in;background:#5b3a8e;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;text-align:center;padding:.04in}
   .hs-side .nm{font-variant:small-caps;font-weight:bold;font-size:.125in;line-height:1.08}
   .hs-side .gate{font-weight:900;font-size:.3in;line-height:1}
-  .hs-sp{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.025in;padding:.05in .03in .14in;text-align:center;border-left:1.5px dashed #9c7bbd}
+  .hs-sp{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.025in;padding:.05in .03in .08in;text-align:center;border-left:1.5px dashed #9c7bbd}
   .hs-sp .bic{display:flex;align-items:center;justify-content:center;gap:.02in;color:#5b3a8e;font-weight:900;font-size:.3in;line-height:1}
   .hs-sp .bic svg,.hs-sp .bic .ic{width:.3in;height:.3in}
   .hs-sp.fame .bic{font-size:.36in}
   .hs-sp.fame .bic svg,.hs-sp.fame .bic .ic{width:.3in;height:.3in;color:#9c7414}
   .hs-sp .lbl{font-variant:small-caps;font-weight:bold;font-size:.115in;line-height:1.05;color:var(--ink)}
-  .hs-sp .cube{margin-top:auto;width:.42in;height:.42in;border:2px dashed #9c7bbd;border-radius:.04in;background:rgba(255,255,255,.7)}
+  .hs-sp .cube{margin-top:.05in;width:.42in;height:.42in;border:2px dashed #9c7bbd;border-radius:.04in;background:rgba(255,255,255,.7);flex:0 0 auto}   /* right under the label — no dead band; the launch row owns the slack */
   /* the LAUNCH strip — the always-open floor of the column */
   .hlaunch{flex:0 0 auto;height:.52in;border:2.5px solid #5b3a8e;border-radius:.08in;background:#5b3a8e;color:#fff;display:flex;align-items:center;justify-content:center;gap:.08in;font-variant:small-caps;font-weight:bold;font-size:.17in}
   .hlaunch svg,.hlaunch .ic{width:.2in;height:.2in}
