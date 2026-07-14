@@ -51,7 +51,7 @@
 |---|---|---|
 | Worker pawn | 1 | Moves between stations — or **stays home** on a Floor turn. |
 | Presence discs (player colour) | **14** ⚙ | Ownership on a slot tile (with a frame) → delivered presence at a kontor (majorities) — **and the CLOCK (v3.2):** every delivered cask (kontor or Hall) and every presence bump spends one, in public view; **placing your last disc sets the final round.** Finite = the printed Reach wall too. |
-| **Cask cubes** (player colour) *(new)* | 8 | Ride a hull’s **berth well** (the loaded cask’s owner) and **claim Hall coins** (the enshrine trophy — one cube per coin, v3.2). |
+| **Cask cubes** (player colour) *(new)* | 8 | Ride a hull’s **berth well** (the loaded cask’s owner), **claim Hall coins** (one cube per coin), and **mark the Hall’s launch rows** (v3.2b — a cube per launch; a heavy launch game watches the supply ⚙). |
 | Owner frames | 6 | Mark whose Privilege/Building sits on a slot (confirmed direction, 2026-07-04). |
 | **Unlock covers** *(new)* | 5 | Sit on Floor slots 3–7 (v3.1 “One Row”); a Flight unlock (each new distinct beer brewed, from the 2nd), the Coppersmith, or the High Board honor removes the next one. |
 | Maturation markers | 5 ⚙ | One per brewing slot in use — sits on the cask card’s printed aging track. |
@@ -206,7 +206,7 @@ Each quality’s casks form a face-up pile; the **top action** of every pile is 
 
 ### 11B. The Hall — the Guild’s Three Coins (v3.2)
 
-A Hall Dispatch (free, no boat; a deployed Q2+ cask) buys **exactly ONE coin** on a shelf its effective quality reaches — **FAME** banks the printed ★; **CRAFT** fires a power now (0★); **FAVOR** grants a thing, free (0★). Cube the coin — each of the **12 coins** is claimable **once per game**. Or **launch** for **★ = quality** (no coin, no cube — the always-open volume outlet). No ships-track tick either way; every enshrine/launch spends a presence disc.
+A Hall Dispatch (free, no boat; a deployed Q2+ cask) buys **exactly ONE coin** on a shelf its effective quality reaches — **FAME** banks the printed ★; **CRAFT** fires a power now (0★); **FAVOR** grants a thing, free (0★). Cube the coin — each of the **12 coins** is claimable **once per game**. Or **launch** for **★ = quality** (no coin — **a cask cube marks the quality shelf’s LAUNCH ROW**, the 4th printed zone; the always-open volume outlet). No ships-track tick either way; every enshrine/launch spends a presence disc.
 
 | Shelf | Gate | FAME ⚙ | CRAFT (now, 0★) ⚙ | FAVOR (free, 0★) ⚙ |
 |---|---|---|---|---|

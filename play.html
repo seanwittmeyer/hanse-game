@@ -892,7 +892,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v32a'; // v3.2a on "Three Coins": DISPLACED TILES PAY — an overbuilt tile whose owner has no open Floor slot is discarded for +3★ ⚙ (was: boxed for nothing); seated flips remain 0★ Floor Wilds. Card backs print the two faces.
+const KEY='hanse-v32b'; // v3.2b on v3.2a: THE LAUNCH ROW — every Hall shelf prints a 4th zone (star-outline Q rate + cube outlines); a LAUNCH now places the enshriner's cask cube in the quality shelf's launch row (the public record; scoring unchanged: ★ = quality, no coin, no ships tick).
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -2089,8 +2089,10 @@ function hall2Pick(si,coin){const h=UI.hsp;if(!h||!h.v2)return;
 function hall2Commit(ref,si,coin,rt){const p=cur();const c=refCask(ref);if(!c){resume(rt);return;}
   const L=captureLoad(ref,'hall');
   if(isVRef(ref))p.vessels[+ref.slice(2)]=null;else S.slots[ref]=null;
-  if(coin==='launch'||si<0){const val=Math.max(1,Math.min(5,L.q))+(L.die||0);
-    if(!aiSimulating)log(p.name+' launches '+LU('beer')+' '+styleShort(c.style)+' Q'+L.q+' at the Hall — <b>★ = quality</b> ('+val+'★'+(L.die?' incl. the consecrated die':'')+'). No coin, no cube, no tick.',true);
+  if(coin==='launch'||si<0){const qc=Math.max(2,Math.min(5,L.q));const val=Math.max(1,Math.min(5,L.q))+(L.die||0);
+    let li=0;HALL2_SHELVES.forEach((sh,i)=>{if(qc>=sh.q)li=i;});   // v3.2b: the launch ROW of the cask's quality shelf takes a cube — the public record
+    ((S.hall2[li]=S.hall2[li]||{}).launch=(S.hall2[li].launch||[])).push(p.id);
+    if(!aiSimulating)log(p.name+' launches '+LU('beer')+' '+styleShort(c.style)+' Q'+L.q+' at the Hall — <b>★ = quality</b> ('+val+'★'+(L.die?' incl. the consecrated die':'')+'). A cube marks '+HALL2_SHELVES[li].name+'’s launch row; no coin, no tick.',true);
     deliverCask(p,L,'hall',null,false,val);afterSail(rt);return;}
   const sh=HALL2_SHELVES[si];(S.hall2[si]=S.hall2[si]||{})[coin]=p.id;
   if(coin==='fame'){const val=sh.fame+(L.die||0);
@@ -3726,7 +3728,8 @@ function renderDests(){
         if(owner!=null)return '<span class="hsp taken" style="background:'+S.players[owner].color+'" data-tip="'+attr(S.players[owner].name+' spent this coin ('+lbl+').')+'">'+LU('check')+'</span>';
         return '<span class="hsp" data-tip="'+attr(sh.name+' (Q'+sh.q+'+) · the '+cn.toUpperCase()+' coin: '+lbl+' — one claim, ever.')+'">'+LU(cn==='fame'?'star':cn==='craft'?'hammer':'gift')+'</span>';
       }).join('');
-      return '<div class="hshelf" data-tip="'+attr(sh.name+' — Q'+sh.q+'+ · pick ONE coin, or launch for ★ = quality (no tick).')+'"><span class="hq">Q'+sh.q+'+</span>'+cells+'</div>';
+      const ln=(st.launch||[]).map(pid=>'<span class="hsp taken lnc" style="background:'+S.players[pid].color+'" data-tip="'+attr(S.players[pid].name+' launched here (★ = quality).')+'"></span>').join('');
+      return '<div class="hshelf" data-tip="'+attr(sh.name+' — Q'+sh.q+'+ · pick ONE coin, or launch for ★ = quality (no tick; a cube marks the launch row).')+'"><span class="hq">Q'+sh.q+'+</span>'+cells+(ln?'<span class="hsep">·</span>'+ln:'')+'</div>';
     }).join('')+'</div>'):d==='hall'?('<div class="hallshelves">'+HALL_SHELVES.map((sh,si)=>{
       const act=hallShelfActive(si);const claims=hallClaims(si);
       const cells=sh.spaces.map((bk,sp)=>{

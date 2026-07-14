@@ -368,8 +368,9 @@ Reliquary’s die if dispatched from it); a CRAFT/FAVOR coin banks **0★** — 
 power. The cask retires to the box.
 
 **The launch — never nothing, always open:** with or without coins left, a cask may instead
-**launch** for **★ = its quality** (no coin, no cube, no honor). Once the coins you covet are
-gone, the Hall remains the volume outlet at a fair, flat rate.
+**launch** for **★ = its quality** (no coin) — **place one of your cask cubes in its quality
+shelf’s LAUNCH ROW** (the 4th printed zone; the public record of the Hall’s traffic). Once the
+coins you covet are gone, the Hall remains the volume outlet at a fair, flat rate.
 
 **No tick, but a disc:** the Hall never advances the Sailed-Ships track — but every enshrine
 and every launch is a delivery, and **spends a presence disc** (§10). *(Guardrail ⚙: the Common

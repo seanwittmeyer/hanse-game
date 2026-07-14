@@ -703,12 +703,20 @@
   .db-kcol{flex:0 0 auto;width:3.1in;display:flex;flex-direction:column;gap:.09in;min-height:0}
   .db-hcol{flex:1;display:flex;flex-direction:column;gap:.09in;min-height:0}
   /* the Hall header — a kontor-style art panel, so the Hall reads as the fifth destination */
-  .db-hhead{flex:0 0 auto;height:1.5in;border:3px solid #5b3a8e;border-radius:.1in;background:#efeaf6;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+  .db-hhead{flex:0 0 auto;height:1.5in;border:3px solid #5b3a8e;border-radius:.1in;background:#efeaf6;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}   /* the title bar rides the TOP, like the kontor panels; the dispatch note sits at the foot */
   .db-hhead .kp-t{font-size:.26in}
   .db-hhead .hnote{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:.06in;font-variant:small-caps;font-weight:bold;font-size:.15in;color:#fff;text-shadow:0 1px 2.5px rgba(0,0,0,.85);padding:.03in 0 .07in}
-  /* a SHELF: the name/gate end-cap + three coin SPACES standing on a plank */
+  /* a SHELF: the name/gate end-cap (full height) + [ the three coin SPACES / the LAUNCH row ] on a plank */
   .hshelf2{flex:1;display:flex;border:2.5px solid #5b3a8e;border-radius:.08in;background:rgba(255,255,255,.55);overflow:hidden;position:relative}
   .hshelf2::after{content:"";position:absolute;left:0;right:0;bottom:0;height:.09in;background:#7a5236;border-top:1.5px solid #4d3524}  /* the plank */
+  .hs-main{flex:1;display:flex;flex-direction:column;min-width:0}
+  .hs-coins{flex:1;display:flex}
+  .hs-launch{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:.1in;border-top:1.5px dashed #9c7bbd;padding:.045in .06in .13in}
+  .hs-launch .lq{display:inline-flex;align-items:center;gap:.02in;color:#5b3a8e;font-weight:900;font-size:.26in;line-height:1}
+  .hs-launch .lq svg,.hs-launch .lq .ic{width:.24in;height:.24in;color:#9c7414;fill:none}
+  .hs-launch .llbl{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--ink2);margin-right:.04in}
+  .hs-launch .lcubes{display:flex;gap:.05in}
+  .hs-launch .lcube{width:.34in;height:.34in;border:2px dashed #9c7bbd;border-radius:.04in;background:rgba(255,255,255,.7)}
   .hs-side{flex:0 0 auto;width:1.05in;background:#5b3a8e;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;text-align:center;padding:.04in}
   .hs-side .nm{font-variant:small-caps;font-weight:bold;font-size:.125in;line-height:1.08}
   .hs-side .gate{font-weight:900;font-size:.3in;line-height:1}
@@ -1699,11 +1707,14 @@ function destBoard(){
   };
   const space=(cls,icHtml,lbl)=>'<div class="hs-sp '+cls+'"><span class="bic">'+icHtml+'</span><span class="lbl">'+lbl+'</span><div class="cube"></div></div>';
   const shelf=sh=>{const sp=SP[sh.q];
+    const cubes='<span class="lcube"></span>'.repeat(4);
     return '<div class="hshelf2">'
       +'<div class="hs-side"><span class="nm">'+sh.name.replace(/^The /,'')+'</span><span class="gate">Q'+sh.q+'+</span></div>'
-      +space('fame',LU(VP)+sh.fame,'fame')
-      +space('craft',LU(sp.craft[0]),sp.craft[1])
-      +space('favor',LU(sp.favor[0]),sp.favor[1])
+      +'<div class="hs-main"><div class="hs-coins">'
+        +space('fame',LU(VP)+sh.fame,'fame')
+        +space('craft',LU(sp.craft[0]),sp.craft[1])
+        +space('favor',LU(sp.favor[0]),sp.favor[1])
+      +'</div><div class="hs-launch"><span class="lq">'+LU('star')+'Q</span><span class="llbl">fame</span><span class="lcubes">'+cubes+'</span></div></div>'
     +'</div>';};
   const hcol='<div class="db-hcol">'
     +'<div class="disp-h hall">'+LU('crown')+'The Hall</div>'
@@ -1712,7 +1723,6 @@ function destBoard(){
       +'<div class="hnote">'+LU('send')+'Dispatch — free · no ship · 1 coin</div>'
     +'</div>'
     +HALL_SHELVES.map(shelf).join('')
-    +'<div class="hlaunch">'+LU('rocket')+'launch: '+LU(VP)+' = quality</div>'
   +'</div>';
   return '<div class="destb">'+kcol+hcol+'</div>';}
 
