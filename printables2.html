@@ -294,11 +294,10 @@
   .card .c-strip .c-gate{display:inline-flex;align-items:center;gap:.02in;font-size:.085in;font-style:italic}
   .card .c-strip .c-gate svg,.card .c-strip .c-gate .ic{width:.12in;height:.12in}
   /* the BREWED face (v3.2d): a big check stamped on the bottom-right corner, riding above the strip */
-  .card .c-brewed{position:absolute;right:.05in;bottom:.05in;width:.48in;height:.48in;border-radius:50%;z-index:2;
-    background:#4a6b3a;border:2.5px solid #f7efdc;box-shadow:0 1.5px 4px rgba(0,0,0,.4);color:#fff;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.005in}
-  .card .c-brewed svg,.card .c-brewed .ic{width:.24in;height:.24in;stroke-width:3.2}
-  .card .c-brewed span{font-variant:small-caps;font-weight:bold;font-size:.06in;line-height:1}
+  .card .c-brewed{position:absolute;right:.04in;bottom:.04in;width:.24in;height:.24in;border-radius:50%;z-index:2;
+    background:#4a6b3a;border:2px solid #f7efdc;box-shadow:0 1px 3px rgba(0,0,0,.4);color:#fff;
+    display:flex;align-items:center;justify-content:center}
+  .card .c-brewed svg,.card .c-brewed .ic{width:.15in;height:.15in;stroke-width:3.4}
   /* ====================== PLAYER AID CARD (double-sided: A = a turn · B = icon reference) ======================
      Two sheets (FRONT / BACK). Every card on a sheet is IDENTICAL, on a centred & symmetric 2×2 grid, so the
      outlines register under EITHER duplex flip edge — "front aligns with back" holds regardless of the printer.
@@ -1249,7 +1248,7 @@ function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?
 
 function recipeCard(r,brewed){return '<div class="card" style="--cc:'+r.cc+'">'
   +artLayer('cask-'+r.nm.toLowerCase()+'.png')
-  +(brewed?'<div class="c-brewed">'+LU('check')+'<span>brewed</span></div>':'')
+  +(brewed?'<div class="c-brewed">'+LU('check')+'</div>':'')
   +'<div class="c-costpanel">'+(r.start
     ? '<span class="clab">starting recipe</span>'
     : '<span class="clab">cost</span><span class="cbig">'+cost(r.buy.g,r.buy.h)+'</span>')+'</div>'
