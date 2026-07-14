@@ -252,7 +252,20 @@
   /* ====== RECIPE CARDS — 1.85×2.55in, square corners, gapless grid ====== */
   .card{width:1.85in;height:2.55in;background:#f7efdc;color:var(--ink);
     position:relative;padding:0;display:flex;flex-direction:column;overflow:hidden}
-  .card .c-reach{padding:.07in .14in 0;font-size:.092in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.15}
+  /* the cask art fills the face; the COST panel floats over it; the tuck strip stays at the foot */
+  .card>.art{position:absolute;inset:0;z-index:0}
+  .card>.art img{width:100%;height:100%;object-fit:cover;object-position:center}
+  .card .c-costpanel{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.03in;
+    margin:.12in auto 0;padding:.06in .14in;background:rgba(247,239,220,.92);border:1px solid rgba(0,0,0,.18);border-radius:.06in;align-self:center;flex:0 0 auto}
+  .card .c-costpanel .clab{font-variant:small-caps;font-weight:bold;font-size:.13in;color:var(--ink2);letter-spacing:.5px}
+  .card .c-costpanel .cbig{font-size:.24in;font-weight:900}
+  .card .c-costpanel .cbig .gc{gap:.03in}
+  .card .c-costpanel .cbig svg,.card .c-costpanel .cbig .ic{width:.26in;height:.26in}
+  /* the CHARTER: the vertical cask → ship → kontor column */
+  .card .c-chart{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.015in;color:#8a6408}
+  .card .c-chart .ci svg,.card .c-chart .ci .ic{width:.34in;height:.34in}
+  .card .c-chart .ca{font-size:.2in;font-weight:bold;line-height:1}
+  .card .c-chart .clab2{margin-top:.05in;font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--ink2);text-align:center;line-height:1.25}
   .card .c-buy{flex:1;margin:.06in .14in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;
     background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.14);border-radius:.06in;padding:.06in .1in;
     font-size:.1in;line-height:1.2;text-align:center}
@@ -262,7 +275,7 @@
   .card .c-buy .gate svg,.card .c-buy .gate .ic{width:.12in;height:.12in}
   /* title + BREW-cost strip — the visible edge when the card is tucked up under the board.
      FIXED two-row layout (rung+name / cost) so every card's bottom edge reads identically. */
-  .card .c-strip{flex:0 0 .56in;background:var(--cc,#8a6408);color:#fff;display:flex;flex-direction:column;justify-content:center;gap:.035in;
+  .card .c-strip{position:relative;z-index:1;margin-top:auto;flex:0 0 .56in;background:var(--cc,#8a6408);color:#fff;display:flex;flex-direction:column;justify-content:center;gap:.035in;
     padding:.05in .12in;text-shadow:0 1px 1.5px rgba(0,0,0,.45)}
   .card .c-strip .c-row{display:flex;align-items:center;gap:.06in;line-height:1;white-space:nowrap}
   .card .c-strip svg,.card .c-strip .ic{width:.14in;height:.14in;flex:0 0 auto}
@@ -1281,12 +1294,10 @@ function coverTile(c,w){return '<div class="cover" style="--c:'+c+';width:'+w+'i
 function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?'<span>'+d.nm+'</span>':'')+'</div>';}
 
 function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
-  +'<div class="c-reach">reaches: '+r.reach+'</div>'
-  +'<div class="c-buy">'+(r.start
-    ? '<span class="lbl">'+LU('home')+' starting recipe</span><span>printed on your brewery board — always available</span>'
-    : '<span class="lbl">'+LU('store')+' acquire at the Market</span>'
-      +'<span class="gc">'+cost(r.buy.g,r.buy.h)+'</span>'
-      +'<span>permanent — brewing never consumes it</span>')+'</div>'
+  +artLayer('cask-'+r.nm.toLowerCase()+'.png')
+  +'<div class="c-costpanel">'+(r.start
+    ? '<span class="clab">starting recipe</span>'
+    : '<span class="clab">cost</span><span class="cbig">'+cost(r.buy.g,r.buy.h)+'</span>')+'</div>'
   +'<div class="c-strip">'
     +'<div class="c-row"><span class="c-rung">'+LU(QI)+r.L+'</span><span class="c-nm">'+r.nm+'</span></div>'
     +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(r.g,r.h)+'</span></div>'
@@ -1295,9 +1306,11 @@ function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
 
 // charter-contract CARD (v0.16) — icon-first: the effect (a cask → a kontor) + the fare; the card IS the contract you spend
 function contractCard(){return '<div class="card" style="--cc:#8a6408">'
-  +'<div class="c-buy" style="justify-content:center;gap:.1in">'
-    +'<div style="display:flex;align-items:center;gap:.06in;font-size:.32in;color:#8a6408">'+LU('beer')+'<span style="font-size:.17in;font-weight:bold">→</span>'+LU('sailboat')+'<span style="font-size:.17in;font-weight:bold">→</span>'+LU('landmark')+'</div>'
-    +'<span class="lbl">one cask · single voyage → a kontor</span></div>'
+  +'<div class="c-chart">'
+    +'<span class="ci">'+LU('beer')+'</span><span class="ca">↓</span>'
+    +'<span class="ci">'+LU('sailboat')+'</span><span class="ca">↓</span>'
+    +'<span class="ci">'+LU('landmark')+'</span>'
+    +'<span class="clab2">one cask · single voyage<br>→ a kontor</span></div>'
   +'<div class="c-strip">'
     +'<div class="c-row"><span class="c-rung">'+LU('ticket')+'</span><span class="c-nm">Charter</span></div>'
     +'<div class="c-row"><span class="c-lbl">spend + fare</span><span class="c-cost">'+cost(2,0)+'</span></div>'
