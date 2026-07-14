@@ -117,7 +117,10 @@
   .bcard .bc-opt{display:flex;flex-direction:column;align-items:center;gap:.015in;text-align:center}
   .bcard .bc-big{display:inline-flex;align-items:center;gap:.04in;font-size:.24in;font-weight:900;line-height:1}
   .bcard .bc-big svg,.bcard .bc-big .ic{width:.22in;height:.22in}
-  .bcard .bc-sub2{font-size:.105in;font-variant:small-caps;font-weight:bold;opacity:.92}
+  .bcard .bc-sub2{font-size:.095in;font-variant:small-caps;font-weight:normal;opacity:.92;line-height:1.2}
+  .bcard .bc-circ{display:inline-flex;align-items:center;justify-content:center;width:.3in;height:.3in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
+  .bcard .bc-circ svg,.bcard .bc-circ .ic{width:.18in;height:.18in;color:#23201c;stroke-width:2.1}
+  .bcard .bc-opt.pts .bc-big svg,.bcard .bc-opt.pts .bc-big .ic{color:#e0b232}   /* the points star in the kit gold (dark-ground tint) */
   .bcard .bc-slash{font-size:.3in;font-weight:300;opacity:.65}
   .bcard .bc-ic{flex:0 0 auto} .bcard .bc-ic svg,.bcard .bc-ic .ic{width:.2in;height:.2in;stroke-width:1.8}
   /* (v2.3: the WHARFAGE chip is retired — value = a privilege, owner-only; no delivery payments between players) */
@@ -261,6 +264,7 @@
   .card .c-costpanel .cbig{font-size:.24in;font-weight:900}
   .card .c-costpanel .cbig .gc{gap:.03in}
   .card .c-costpanel .cbig svg,.card .c-costpanel .cbig .ic{width:.26in;height:.26in}
+  .card .c-costpanel .g{color:#9c7414} .card .c-costpanel .h{color:#5d7d34}   /* the canonical goods colours — the global .g/.h tints are for dark grounds */
   /* the CHARTER: the vertical cask → ship → kontor column */
   .card .c-chart{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.015in;color:#8a6408}
   .card .c-chart .ci svg,.card .c-chart .ci .ic{width:.34in;height:.34in}
@@ -1192,9 +1196,9 @@ function buildingBack(d){
   +artLayer(d.art||('building-'+d.k+'.png'))
   +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span></div>'
   +'<div class="bc-foot"><div class="bc-or">'
-    +'<div class="bc-opt"><span class="bc-big">'+LU('sparkles')+' <b>Wild</b></span><span class="bc-sub2">place in a Floor slot</span></div>'
+    +'<div class="bc-opt"><span class="bc-big"><span class="bc-circ">'+LU('sparkles')+'</span> <b>Wild</b></span><span class="bc-sub2">place in a<br>Floor slot</span></div>'
     +'<span class="bc-slash">/</span>'
-    +'<div class="bc-opt"><span class="bc-big">'+LU('star')+' <b>3</b></span><span class="bc-sub2">&amp; discard</span></div>'
+    +'<div class="bc-opt pts"><span class="bc-big">'+LU('star')+' <b>3</b></span><span class="bc-sub2">&amp; discard</span></div>'
   +'</div></div></div>';}
 // NEUTRAL destination-bound ship tile (v0.11): hull + capacity · printed destination + quality gate · commission 2 G
 function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
