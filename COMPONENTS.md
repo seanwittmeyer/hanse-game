@@ -24,10 +24,9 @@
 | Board | Qty | Holds |
 |---|---|---|
 | Main board — **the Wharf** | 1 | 2×2 stations **A Market · B Brewhouse · C Harbor · D Cellar** — each face printing its **TWO actions** (`[icon] / [icon]`: Source/Acquire · Brew/Deploy · Load/Dispatch · Age/Upgrade) — ringed by 8 slots. |
-| Destination board | 1 | The four kontore (Bruges · London · Bergen · Novgorod): gate, printed value, benefit, majority track. |
-| **The Hall — the Three Coins board** *(v3.2)* | 1 | Four quality-gated shelves, each printing **three one-shot COINS — FAME ★ (5/7/10/13) · CRAFT · FAVOR** — claimed with cask cubes, each once per game (§11B). An enshrine buys exactly ONE coin, or **launches** for ★ = quality (always open). |
+| **Destinations & Hall board** | 1 | Narrow, the same height as Market & Stores (the table pair). LEFT: the four kontore (gate · value · benefit · majority · presence zone). RIGHT: **the Hall — the Three Coins**: a kontor-style art header, four quality-gated SHELVES (each coin space prints one icon + a ≤3-word label + the claim-cube outline; FAME 5/7/10/13) and the LAUNCH strip (★ = quality, always open). |
 | Player boards | 4 | **ONE Floor row of 7 printed slots** (v3.1 “One Row”: slots 1–2 open · slot 1 vessel-only · covers on 3–7; a slot holds a maturing cask, a seated Specialist, or a flipped tile), the Flight/unlock strip, recipe rack, storage (§12). |
-| Market & Stores board *(printables2)* | 1 | The supply displays (ships 3 · Wharf tiles 4 · Specialists 4), the Sailed-Ships track (15 cells, END marks at 5/8/10 — v3.2), the 50-cell score ring. |
+| Market & Stores board *(printables2)* | 1 | The supply displays — the Market column (Wharf tiles 4 · ships 3 · recipes + contracts) and the Cellar column (Specialists 4) — plus the Sailed-Ships track (15 cells, END marks at 5/8/10 — v3.2) and the 50-cell score ring. |
 
 ---
 
@@ -267,7 +266,7 @@ Shared setup: 2 hulls dealt onto slots (incl. a guaranteed Hulk→Bruges); **2 n
 
 | Family | Count ⚙ | Designs |
 |---|---|---|
-| Boards | 4 kinds (1 Wharf · 1 destinations · 1 Hall Three Coins · 4 player · 1 Market & Stores) | — |
+| Boards | 4 kinds (1 Wharf · 1 **Destinations & Hall** · 4 player · 1 Market & Stores) | — |
 | Casks (A) | 62 | 6 beers |
 | Hulls (B) | 20 | 2 hulls × 4 destinations |
 | Slot tiles (C) | 27 | 21 designs (12 blue + 15 green tiles) |
