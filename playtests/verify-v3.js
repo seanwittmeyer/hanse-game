@@ -43,6 +43,12 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
   deployLand(0,'s2','stops');
   ok('spoilage: rival Q1 boxed, my Q2 takes the berth', S.slots.s2&&S.slots.s2.q===2&&S.slots.s2.owner===0);
   ok('spoilage fires no action', UI.sub!=='source'&&p.grain===g0);
+  // v3.2a: a displaced tile with NO open Floor slot pays DISPLACE_PTS and is discarded
+  (function(){var q=S.players[1];q.floorOpen=2;q.vessels=[{style:'gruit',q:1,step:0,ready:1},{style:'gruit',q:1,step:0,ready:1}];   // both open slots hold casks → no seat for a flip
+    S.buildings.s5={b:'staple',owner:1};var d0=q.dispStars||0,f0=(q.flipped||[]).length;
+    S.players[0].grain=5;commitBldg('s5','maltkiln',0);
+    ok('v3.2a a displaced tile with no open Floor slot pays +'+DISPLACE_PTS+'★ (discarded)', (q.dispStars||0)===d0+DISPLACE_PTS&&(q.flipped||[]).length===f0);
+    ok('v3.2a the discard ★ bank into the score', scorePlayer(q).developed===d0+DISPLACE_PTS);})();
   // and: a rival's Q2 is NOT a legal target
   S.slots.s3={type:'cask',owner:1,style:'hopped',q:2,act:'age'};
   p.vessels[1]={style:'bock',q:5,step:3,ready:3,act:'age'};

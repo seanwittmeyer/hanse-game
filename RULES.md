@@ -50,7 +50,7 @@ randomizers / no-cards-as-hand / no-money constraints; the sim-gate discipline.
 - **The Gauger’s Office and Festkeller are cut** from the deck; **five new works** join it
   (Pilot’s House · Open Staithe · Rope Walk · Grain Exchange · Mission Quay), and the **Rich
   Berth** is redesigned (a hull docked there sails one berth short).
-- **The floor-points lane is gone** (flips score 0) — a flip is engine, never score.
+- **The floor-points lane is gone** (seated flips score 0) — a flip is engine, never score. *(v3.2a: a displaced tile with **no open Floor slot** is **discarded for +3★ ⚙** — never nothing.)*
 - **Enshrine + Charter become one Harbor gesture: DISPATCH** (one deployed cask → the Hall,
   free, or a kontor, contract + fare).
 
@@ -477,7 +477,7 @@ A **MAX_ROUND ceiling** (~25 ⚙) backstops a slow table. Pace target **~12–25
 4. **The Flight** — distinct **beers delivered**: **(beers−1)², min 3** (3→4 · 4→9 · 5→16 ·
    6→25 with the Jopenbier capstone). *Brewing them also unlocked your Floor along the way (§8).*
 
-*(The floor/developer points lane is **gone** — flipped tiles score nothing; they are engine.)*
+*(The floor/developer points lane is **gone** — seated flips score nothing; they are engine. A displaced tile that finds **no open Floor slot** is discarded for **+3★ ⚙**, banked at once.)*
 
 5. **Tiebreak:** the combined quality of your deployed casks on slots, then most goods.
 

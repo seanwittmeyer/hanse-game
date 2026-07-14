@@ -112,6 +112,13 @@
   .bcard > .artbg{z-index:0}
   .bcard .bc-top{display:flex;align-items:flex-start;gap:.05in;padding:.15in .17in 0}
   /* (the PRIVILEGE/BUILDING verb badge is retired — the foot colour IS the type: blue pays its owner, green serves any dock) */
+  /* the card BACK's two faces of displacement: seat the Wild / +3★ & discard */
+  .bcard .bc-or{display:flex;align-items:center;justify-content:space-evenly;gap:.06in;width:100%}
+  .bcard .bc-opt{display:flex;flex-direction:column;align-items:center;gap:.015in;text-align:center}
+  .bcard .bc-big{display:inline-flex;align-items:center;gap:.04in;font-size:.24in;font-weight:900;line-height:1}
+  .bcard .bc-big svg,.bcard .bc-big .ic{width:.22in;height:.22in}
+  .bcard .bc-sub2{font-size:.105in;font-variant:small-caps;font-weight:bold;opacity:.92}
+  .bcard .bc-slash{font-size:.3in;font-weight:300;opacity:.65}
   .bcard .bc-ic{flex:0 0 auto} .bcard .bc-ic svg,.bcard .bc-ic .ic{width:.2in;height:.2in;stroke-width:1.8}
   /* (v2.3: the WHARFAGE chip is retired — value = a privilege, owner-only; no delivery payments between players) */
   .bcard .bc-wf{display:none;
@@ -152,8 +159,11 @@
   .ccard .ccost{display:inline-flex;gap:.05in;font-weight:bold;font-size:.135in;align-items:center}
   .ccard .ccost .gc{gap:.02in} .ccard .ccost .gc svg,.ccard .ccost .gc .ic{width:.14in;height:.14in}
   .ccard .ctitle{display:flex;flex-direction:column;align-items:flex-end;gap:.02in;line-height:1.05;text-align:right}   /* title + cost stacked on the right, beside the big quality */
-  .ccard .clbl{font-size:.13in;font-weight:600;line-height:1.12;opacity:1}
-  .ccard .clbl svg,.ccard .clbl .ic{width:.14in;height:.14in;vertical-align:-.025in}
+  /* the SPECIAL (Keut presence / specialty signatures) — a centered band UNDER the aging track, aging side only */
+  .ccard .cc-perk{margin-top:.05in;text-align:center;font-size:.17in;font-weight:700;line-height:1.15;color:#fff;
+    background:rgba(20,14,8,.5);border-radius:.05in;padding:.03in .08in;align-self:center}
+  .ccard .cc-perk svg,.ccard .cc-perk .ic{width:.18in;height:.18in;vertical-align:-.035in}
+  .ccard .cc-perk b{font-size:.2in}
   .ccard .cact{display:flex;align-items:center;gap:.05in;background:rgba(0,0,0,.3);border-radius:.05in;padding:.05in .06in;font-size:.155in;line-height:1.12}
   .ccard .cact .ac{display:inline-flex;align-items:center;justify-content:center;width:.27in;height:.27in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
   .ccard .cact .ac svg,.ccard .cact .ac .ic{width:.15in;height:.15in;color:#23201c;stroke-width:2.1}
@@ -162,7 +172,7 @@
   /* FRONT centre = the maturation track on ONE line over a brewhouse-interior illustration (light parchment scrim keeps the ink legible) */
   .cc-age{margin:.04in .05in;color:#fff;border-radius:.07in;padding:.05in .05in;overflow:hidden;
     background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),url('art/brewhouse.png');background-size:cover;background-position:center;
-    display:flex;align-items:center;justify-content:center;flex:1}
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.05in;flex:1}   /* column: the track, then the special band below it */
   .cc-agerow{display:flex;gap:.07in;align-items:center;justify-content:center;flex-wrap:nowrap}
   .cc-step{width:.4in;height:.4in;border:1.9px solid rgba(255,255,255,.92);border-radius:.06in;display:flex;align-items:center;justify-content:center;font-size:.21in;font-weight:bold;color:#fff;background:transparent;text-shadow:0 1px 2px rgba(0,0,0,.75);flex:0 0 auto}
   .cc-step.rdy{border-color:var(--green);background:var(--green);color:#fff;text-shadow:none;box-shadow:0 1px 2px rgba(0,0,0,.4)}   /* READY = flip the card to its brewed side */
@@ -985,7 +995,7 @@ const BUILDINGS=[
 ];
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 // (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
-const DEVELOP_PTS=0;     // [ruled]: flips score NOTHING — a displaced tile goes face-down into an OPEN Floor slot of its owner's one row (none open → boxed) as a Floor Wild, pure engine. The overbuilder still pays the 1G ground rent.
+const DEVELOP_PTS=0;     // [ruled v3.2a]: a seated flip scores NOTHING (pure Floor-Wild engine); a displaced tile with NO open Floor slot is DISCARDED FOR +3★. The overbuilder still pays the 1G ground rent.
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
 // CELLAR (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
 // v82 "Scarce Improvements": these now form a SHUFFLED DECK of (n−1) copies of each type (n=players) feeding a
@@ -1159,10 +1169,11 @@ function buildingBack(d){
   return '<div class="bcard bc-bk" style="--c:'+BLD_FOOT+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
   +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span></div>'
-  +'<div class="bc-foot">'
-    +'<div class="bc-row"><span class="bc-tgt">'+LU('sparkles')+'</span><span class="bc-wild">a <b>Wild</b> action on your Floor</span></div>'
-    +'<div class="bc-row"><span class="bc-sub">face-down in an open<br>Floor slot (none open → boxed)</span><span class="bc-dev">0'+LU('star')+'</span></div>'
-  +'</div></div>';}
+  +'<div class="bc-foot"><div class="bc-or">'
+    +'<div class="bc-opt"><span class="bc-big">'+LU('sparkles')+' <b>Wild</b></span><span class="bc-sub2">place in a Floor slot</span></div>'
+    +'<span class="bc-slash">/</span>'
+    +'<div class="bc-opt"><span class="bc-big">'+LU('star')+' <b>3</b></span><span class="bc-sub2">&amp; discard</span></div>'
+  +'</div></div></div>';}
 // NEUTRAL destination-bound ship tile (v0.11): hull + capacity · printed destination + quality gate · commission 2 G
 function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
   let berths='';for(let i=1;i<=cap;i++)berths+='<div class="bn">'+i+'</div>';   // numbered load-order berths (v0.16)
@@ -1216,17 +1227,15 @@ function caskCardFront(d,act){
   track+='<div class="cc-step rdy">'+LU('undo-2')+'</div>';   // Ready → flip the card to its brewed side
   return '<div class="ccard cc-front" style="--c:'+d.c+'">'
     +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span>'
-      +'<span class="ctitle"><span class="cnm">'+d.nm+'</span>'+(d.tag?'<span class="clbl">'+d.tag+'</span>':'')+'<span class="ccost">'+c+'</span></span></div></div>'
-    +'<div class="cc-age"><div class="cc-agerow">'+track+'</div></div>'
+      +'<span class="ctitle"><span class="cnm">'+d.nm+'</span><span class="ccost">'+c+'</span></span></div></div>'
+    +'<div class="cc-age"><div class="cc-agerow">'+track+'</div>'+(d.tag?'<div class="cc-perk">'+d.tag.split('<br>').join(' ')+'</div>':'')+'</div>'
     +'<div class="ce bot"><div class="ce-row sb"><span class="cq">'+LU(QI)+d.q+'</span><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div></div>'
   +'</div>';
 }
 function caskCardBack(d,act){
   // both ends show Q + title; only the BOTTOM end carries the die/presence marker space
   const q='<span class="cq">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span>';
-  // TOP end also carries the pinned-signature tag (Gose/Zerbster/Duckstein/Jopenbier) — this is the brewed/in-play
-  // face, where the passive ability actually matters (a slot cask's owner needs the reminder, not just the buy side)
-  const qTop='<span class="cq">'+LU(QI)+d.q+'</span><span class="ctitle"><span class="cnm">'+d.nm+'</span>'+(d.tag?'<span class="clbl">'+d.tag+'</span>':'')+'</span>';
+  const qTop='<span class="cq">'+LU(QI)+d.q+'</span><span class="ctitle"><span class="cnm">'+d.nm+'</span></span>';   // [ruled] the special prints on the AGING side only — this face stays clean
   return '<div class="ccard cc-back" style="--c:'+d.c+'">'
     +artLayer('cask-'+d.nm.toLowerCase()+'.png')
     +'<div class="ce top"><div class="ce-row sb">'+qTop+'</div></div>'
@@ -1877,7 +1886,7 @@ function buildPages(){
   packRun(pages,'bits',TLBL_BLD,'bld',bldFrontHtml,null,famPages,TILE_GEO);
   const bldFrontPages=pages.slice(tStart);
   tagFamilies(bldFrontPages,bldMeta);
-  mirrorBackPages(bldFrontPages,bldMeta,TILE_GEO,'Building tile BACKS (mirror — flip LEFT↔RIGHT): each tile’s face-down Wild (flips score nothing)','bits');
+  mirrorBackPages(bldFrontPages,bldMeta,TILE_GEO,'Building tile BACKS (mirror — flip LEFT↔RIGHT): the displaced face — seat the Floor Wild / +3★ & discard','bits');
   // IMPROVEMENTS + owner FRAMES are SINGLE-SIDED → their own trimmed sheet (no back).
   const TLBL_IMPF='Specialists + owner frames (22″ plotter · single-sided · cut apart)';
   const imps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)imps.push(improveTile(d));});
@@ -1940,7 +1949,7 @@ function checklist(pages,famPages){
   h+=T('Tiles (mount on chipboard, laser-cut)')
     +R('Cask tiles — the beer supply','A shared pool, brewed not bought (min 6 per type): Gruit ×16 · Hopped ×20 · Broyhan ×6 · Keut ×6 · Mumme ×8 · Bock ×6. Each shows a quality (Q1–Q5) and ONE specific-gain slot-action (the pool is quality-gated). Deal 3 of the 4 export beers each game; a NEW distinct beer brewed marks the Flight strip.','62')
     +R('Ship tiles','Neutral hulls, a kontor printed on each — Cog (holds 2) ×11 · Hulk (holds 3) ×9; five to each of the four kontore. Drawn off a shuffled deck into a face-up market of 3.','20')
-    +R('Slot tiles — Privileges &amp; Buildings','The owned slot modifiers, '+baseBld.length+' designs (double-sided: art front / a face-down Wild back — flips score nothing). <b>Privileges (blue — each prints a +N★ bonus) —</b> '+designs(baseVal)+'. <b>Buildings / works (green) —</b> '+designs(baseTr)+'.',sumN(baseBld))
+    +R('Slot tiles — Privileges &amp; Buildings','The owned slot modifiers, '+baseBld.length+' designs (double-sided: art front / the displaced back — seat the Floor Wild, or +3★ &amp; discard when no slot is open). <b>Privileges (blue — each prints a +N★ bonus) —</b> '+designs(baseVal)+'. <b>Buildings / works (green) —</b> '+designs(baseTr)+'.',sumN(baseBld))
     +R('Specialist tiles','The private brewery-board tiles, 7 designs: '+IMPROVE.map(d=>d.nm).join(' · ')+'. A shuffled display at the Cellar — 3 copies of each type (n−1 per type), enough for 4 players.',impTotal)
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')

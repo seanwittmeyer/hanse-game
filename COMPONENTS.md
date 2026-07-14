@@ -93,7 +93,7 @@ Neutral, destination-bound hulls, drawn from a shuffled deck into a face-up **ma
 
 ## 7. Slot tiles — Privileges & Buildings · family C (27 tiles)
 
-Always acquired **from the face-up Wharf display of 4 and placed at once** (no hand): buy at the Market, free via London, or the **Gain 1 building** cask action. **Overbuild = the `1 G` ground rent**; the displaced tile flips face-down into an open **Floor slot** of its owner’s (v3.1 — none seatable → boxed) as a Floor Wild — **flips score nothing**.
+Always acquired **from the face-up Wharf display of 4 and placed at once** (no hand): buy at the Market, free via London, or the **Gain 1 building** cask action. **Overbuild = the `1 G` ground rent**; the displaced tile flips face-down into an open **Floor slot** of its owner’s as a Floor Wild (**flips score nothing**) — none seatable → **discarded for +3★ ⚙** (v3.2a: never nothing).
 
 ### 7A. PRIVILEGES (blue, 12 tiles) — each prints a plain **+N★**; the demand die (set to N) carries it
 
