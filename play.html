@@ -537,11 +537,11 @@ const RECIPE_BUY={broyhan:{h:1},keut:{g:1},mumme:{h:2},bock:{g:1,h:1},
 // as the Brewmaster's Workshop dock effect + the flipped-tile Floor stops).
 const CASK_ACT={source:'Gain 2 goods (any mix)',age:'Age a cask +2',
   load:'Load 1 cask onto a ship, free',reach:'Place 1 presence at a kontor you’ve delivered to',
-  recipe:'Gain 1 recipe — a dealt export card at its buy cost −1G',
+  recipe:'Gain 1 recipe — a dealt export card, free',
   survey:'Gain 1 building — from the Wharf display, placed at once (Q3+ casks)',
   hire:'Gain 1 specialist — from the Cellar display, free (Q3+ casks)',
   brew:'Brew 1 cask — pay its cost into an open vessel (Q4+ casks)',
-  enshrine:'Enshrine 1 deployed Q2+ cask at the Hall (Q4+ casks)',
+  enshrine:'Enshrine 1 cask — a deployed Q2+ cask to the Hall (Q4+ casks)',
   wild:'Wild — take any base action (Workshop dock / flipped tiles only)',
   convert:'Convert — up to 2 goods G↔H (Grain Exchange only)'};
 // ⚙ v0.12 — VARIABLE cask actions: a cask's signature slot-action, decoupled from quality. v1.0 makes
@@ -892,7 +892,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v32b'; // v3.2b on v3.2a: THE LAUNCH ROW — every Hall shelf prints a 4th zone (star-outline Q rate + cube outlines); a LAUNCH now places the enshriner's cask cube in the quality shelf's launch row (the public record; scoring unchanged: ★ = quality, no coin, no ships tick).
+const KEY='hanse-v32c'; // v3.2c on v3.2b: the 'Gain 1 recipe' cask action is FREE (was buy −1G); card text trims — 'Enshrine 1 cask' · 'Gain 1 recipe' · 'Gain 1 specialist' (the free-ness lives in the rules, not on the tile).
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -2202,14 +2202,14 @@ function enterShipLineFire(slot,t){const p=cur();
   enterLoad([slot],shipLoadableCasks(p),true,'stops',1,'linefire');
 }
 // v3.0-A 'Gain 1 recipe' — take a dealt-export recipe card at its buy cost −1G ⚙ (min free).
-function recipeGainCost(style){const c=RECIPE_BUY[style]||{};return {g:Math.max(0,(c.g||0)-1),h:c.h||0};}
+function recipeGainCost(style){return {};}   // v3.2c [ruled]: the 'Gain 1 recipe' cask action is FREE (was buy cost −1G)
 function recipeGainable(p){return (S.exports||[]).filter(s=>!p.recipes.includes(s)&&canPay(p,recipeGainCost(s)));}
 function enterRecipeGain(rt){const p=cur();const opts=recipeGainable(p);
   if(!opts.length){log('↳ Gain a recipe — nothing new you can afford.');resume(rt);return;}
   UI.sub='recipegain';UI.rgain={returnTo:rt};render();}
 function recipeGainPick(style){const p=cur();const rt=UI.rgain?UI.rgain.returnTo:'stops';
   if(style&&recipeGainable(p).includes(style)){snapshot();pay(p,recipeGainCost(style));p.recipes.push(style);
-    log(p.name+' gains the '+LU('scroll-text')+' <b>'+STYLES[style].name+'</b> recipe (the cask action, −1G).',true);}
+    log(p.name+' gains the '+LU('scroll-text')+' <b>'+STYLES[style].name+'</b> recipe (the cask action, free).',true);}
   UI.rgain=null;resume(rt);}
 
 // ---------- end of turn ----------
@@ -3481,7 +3481,7 @@ function renderBar(){
     prompt=LU('barrel')+' Deploy onto <b>'+st.slot+'</b>'+(bAt(st.slot)?' (under '+bName(bAt(st.slot).b)+')':'')+(t?' — over '+ownSq(t.owner)+styleShort(t.style)+' Q'+t.q:'')+' — pick the cask.';
     acts=cands.map(o=>btn(LU('beer')+styleShort(o.c.style)+' Q'+o.c.q+(o.c.step<o.c.ready?' · '+o.c.step+'/'+o.c.ready+' → staithe':''),'localDeployPick('+o.i+')','go')).join('')+btn('Skip','localDeploySkip()','ghost');}
   else if(U==='recipegain'){const opts=recipeGainable(p);
-    prompt=LU('scroll-text')+' <b>Gain a recipe</b> (the cask action) — take a dealt export recipe at its Market cost <b>−1'+LU('wheat')+'</b>.';
+    prompt=LU('scroll-text')+' <b>Gain a recipe</b> (the cask action) — take a dealt export recipe, <b>free</b>.';
     acts=opts.map(s=>btn(LU('scroll-text')+STYLES[s].name+' Q'+STYLES[s].q+' '+costIcons(recipeGainCost(s)),'recipeGainPick(\''+s+'\')','go')).join('')+btn('Skip','recipeGainPick(null)','ghost');}
   else if(U==='dispatch'){const d=UI.disp;const free=d.mode==='freekontor';const cs=free?freeKontorCasks(p):dispatchCasks(p).filter(o=>d.mode==='hallonly'?o.q>=DEST.hall.gate:true);
     if(!d.cask){prompt=free?(LU('send')+' <b>The Masters’ passage</b> — the Guild pays ONE kontor delivery (no contract, no fare). Pick the cask.')

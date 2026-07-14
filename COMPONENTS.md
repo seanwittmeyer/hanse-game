@@ -181,7 +181,7 @@ Each quality’s casks form a face-up pile; the **top action** of every pile is 
 | Age a cask +2 | one vessel cask | Q2+ |
 | Load 1 cask | onto any eligible hull, free | Q2+ |
 | Place 1 presence | at a kontor you’ve delivered to | Q2+ |
-| Gain 1 recipe | a dealt export card at buy cost −1 G | Q2+ |
+| Gain 1 recipe | a dealt export card, free | Q2+ |
 | Gain 1 building | from the Wharf display, placed at once (rent applies) | Q3+ |
 | Gain 1 specialist | from the Cellar display, free | Q3+ |
 | Brew 1 cask | pay its cost into an open vessel | Q4+ |

@@ -711,12 +711,12 @@
   .hshelf2::after{content:"";position:absolute;left:0;right:0;bottom:0;height:.09in;background:#7a5236;border-top:1.5px solid #4d3524}  /* the plank */
   .hs-main{flex:1;display:flex;flex-direction:column;min-width:0}
   .hs-coins{flex:1;display:flex}
-  .hs-launch{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:.1in;border-top:1.5px dashed #9c7bbd;padding:.045in .06in .13in}
-  .hs-launch .lq{display:inline-flex;align-items:center;gap:.02in;color:#5b3a8e;font-weight:900;font-size:.26in;line-height:1}
-  .hs-launch .lq svg,.hs-launch .lq .ic{width:.24in;height:.24in;color:#9c7414;fill:none}
-  .hs-launch .llbl{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--ink2);margin-right:.04in}
-  .hs-launch .lcubes{display:flex;gap:.05in}
-  .hs-launch .lcube{width:.34in;height:.34in;border:2px dashed #9c7bbd;border-radius:.04in;background:rgba(255,255,255,.7)}
+  .hs-launch{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:.12in;border-top:1.5px dashed #9c7bbd;padding:.1in .06in .19in}   /* roomier: real padding above AND below, hugging the coin columns */
+  .hs-launch .lq{display:inline-flex;align-items:center;gap:.02in;color:#5b3a8e;font-weight:900;font-size:.3in;line-height:1}
+  .hs-launch .lq svg,.hs-launch .lq .ic{width:.28in;height:.28in;color:#9c7414;fill:none}
+  .hs-launch .llbl{font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--ink2);margin-right:.05in}
+  .hs-launch .lcubes{display:flex;gap:.06in}
+  .hs-launch .lcube{width:.42in;height:.42in;border:2px dashed #9c7bbd;border-radius:.04in;background:rgba(255,255,255,.7)}
   .hs-side{flex:0 0 auto;width:1.05in;background:#5b3a8e;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;text-align:center;padding:.04in}
   .hs-side .nm{font-variant:small-caps;font-weight:bold;font-size:.125in;line-height:1.08}
   .hs-side .gate{font-weight:900;font-size:.3in;line-height:1}
@@ -925,11 +925,11 @@ const CASK_POOL=[
   {k:'age',     ai:'hourglass',     act:'Age a cask +2',            q:2},
   {k:'load',    ai:'package-plus',  act:'Load 1 cask, free',        q:2},
   {k:'reach',   ai:'map-pin',       act:'+1 presence',              q:2},
-  {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe (−1G)',      q:2},
+  {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe',            q:2},
   {k:'survey',  ai:'search',        act:'Gain 1 building',          q:3},
-  {k:'hire',    ai:'wrench',        act:'Gain 1 specialist, free',  q:3},
+  {k:'hire',    ai:'wrench',        act:'Gain 1 specialist',        q:3},
   {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:4},
-  {k:'enshrine',ai:'crown',         act:'Enshrine 1 deployed Q2+ cask', q:4},
+  {k:'enshrine',ai:'crown',         act:'Enshrine 1 cask',          q:4},
 ];
 const poolFor=q=>CASK_POOL.filter(a=>q>=a.q);   // the printed mix per quality tier
 // cask supply — fixed global counts (COMPONENTS §5; the scarce high-Q exports are intentional). Gruit PINNED to Source; Q2+ draw at brew (steerable).
@@ -1354,13 +1354,13 @@ function aidBack(){
         +row('hourglass','Age','age a cask +2')
         +row('package-plus','Load','load 1 cask, free')
         +row('map-pin','Reach','+1 presence (where delivered)')
-        +row('scroll-text','Recipe','a dealt export, buy −1G')
+        +row('scroll-text','Recipe','a dealt export, free')
       +'</div></div>'
       +'<div class="acol"><div class="leg">'
         +row('search','Building','from the Wharf display, placed (Q3+)')
         +row('wrench','Specialist','from the Cellar display, free (Q3+)')
         +row('flask-conical','Brew','brew 1 cask (Q4+)')
-        +row('crown','Enshrine','dispatch 1 deployed cask → the Hall: a coin or a launch (Q4+)')
+        +row('crown','Enshrine','1 deployed Q2+ cask → the Hall: a coin or a launch (Q4+)')
         +'<h5>'+LU('building-2')+'Slot Tiles</h5>'
         +row('dice-3','Privilege','BLUE — prints +N★ for the owner’s departing cask (the die carries it)','vi')
         +row('hammer','Building','GREEN — a work; serves any dock')
