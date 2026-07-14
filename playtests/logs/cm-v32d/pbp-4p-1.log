@@ -1,0 +1,971 @@
+############ GAME 4p-1 · seed 7411 · 4p · KEY hanse-v32d ############
+seats: Cellar1 [cellarmaster] · Cellar2 [cellarmaster] · Cellar3 [cellarmaster] · Cellar4 [cellarmaster]
+exports dealt: Q3 Broyhan · Q3 Keut · Q4 Mumme · sailed-ships cap 10 · warm start:
+  s1 (colL): ship Cog->Bruges
+  s2 (colR): [bldg Malt Kiln neutral] 
+  s3 (rowT): [bldg Rich Berth neutral] 
+  s7 (rowB): ship Hulk->Bruges
+
+== R1 · turn 1 · Cellar1 [cellarmaster] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar1 places their worker at Harbor
+  Cellar1 activates Left col · Market + Harbor
+  ↳ Cellar1 spends −H2
+  Cellar1 buys the Mumme recipe (Q4).
+  Cellar1 sets a Ready Gruit on a slot.
+  Cellar1 loads Gruit onto the Hulk → Bruges (1/3).
+  ↳ Cog (→ Bruges) — nothing eligible to load.
+
+== R1 · turn 2 · Cellar2 [cellarmaster] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar2 places their worker at Brewhouse
+  Cellar2 activates Top row · Market + Brewhouse
+  ↳ Cellar2 spends −H2
+  Cellar2 buys the Mumme recipe (Q4).
+  ↳ Cellar2 spends −G1
+  Cellar2 brews Gruit Ale (Q1 · matures in 1 step).
+  Cellar2 sets a Ready Gruit on a slot.
+  ↳ s3 — nothing to do here (no Ready cask to deploy).
+
+== R1 · turn 3 · Cellar3 [cellarmaster] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar3 places their worker at Market
+  Cellar3 activates Top row · Market + Brewhouse
+  ↳ Cellar3 spends −G2
+  Cellar3 commissions the Hulk bound for Bergen — place it on a slot.
+  ↳ Hulk placed on a slot, bound for Bergen.
+  ↳ Cellar3 gains +G2
+  ↳ Cellar3 spends −G1 −H1
+  Cellar3 brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Cellar3’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  Cellar3 sets a Ready Gruit on a slot (under Rich Berth).
+
+== R1 · turn 4 · Cellar4 [cellarmaster] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar4 places their worker at Brewhouse
+  Cellar4 activates Top row · Market + Brewhouse
+  ↳ Cellar4 spends −G3
+  Cellar4 buys Staple Hall at the Market — place it on a slot.
+  Cellar4 authors Staple Hall on a slot — Your cask: +3★.
+  ↳ Cellar4 gains +G2
+  ↳ Cellar4 gains +G2
+
+== R2 · turn 5 · Cellar1 [cellarmaster] · G3 H0 ct2 | vessels[-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar1 moves to Market
+  Cellar1 pays −G1 occupancy toll for sharing Market.
+  Cellar1 activates Top row · Market + Brewhouse
+  ↳ Cellar1 spends −G2
+  Cellar1 buys Novgorod Peterhof at the Market — place it on a slot.
+  Cellar1 authors Novgorod Peterhof on a slot — Your cask to Novgorod: +4★.
+  ↳ Cellar1 gains +G1 +H1
+  ↳ Cellar1 gains +G1 +H1
+  Cellar2’s casks mature (+1) over the turn.
+
+== R2 · turn 6 · Cellar2 [cellarmaster] · G2 H0 ct2 | vessels[-,Gruit!] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar2 moves to Cellar
+  Cellar2 activates Bottom row · Harbor + Cellar
+  Cellar2 sets a Ready Gruit on a slot.
+  Cellar3’s casks mature (+1) over the turn.
+
+== R2 · turn 7 · Cellar3 [cellarmaster] · G2 H1 ct2 | vessels[-,Hopped!,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar3 moves to Brewhouse
+  Cellar3 pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar3 activates Top row · Market + Brewhouse
+  ↳ Cellar3 spends −H1
+  Cellar3 buys the Broyhan recipe (Q3).
+  ↳ Cellar3 gains +G1 +H1
+  ↳ Cellar3 gains +G1 +H1
+  ↳ Cellar3 spends −G1 −H2
+  Cellar3 brews Broyhan (Q3 · matures in 1 step).
+  ↳ Cellar3’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+
+== R2 · turn 8 · Cellar4 [cellarmaster] · G4 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar4 moves to Market
+  Cellar4 pays −G1 occupancy toll for sharing Market.
+  Cellar4 activates Left col · Market + Harbor
+  ↳ Cellar4 spends −G1
+  Cellar4 acquires a charter contract at the Market (3 in hand).
+  Cellar4 sets a Ready Gruit on a slot.
+  Cellar4 loads Gruit onto the Cog → Bruges (1/2).
+
+== R3 · turn 9 · Cellar1 [cellarmaster] · G2 H2 ct2 | vessels[-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar1 moves to Harbor
+  Cellar1 activates Left col · Market + Harbor
+  ↳ Cellar1 spends −G2
+  Cellar1 commissions the Hulk bound for London — place it on a slot.
+  ↳ Hulk placed on a slot, bound for London.
+  ↳ s6 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R3 · turn 10 · Cellar2 [cellarmaster] · G2 H0 ct2 | vessels[-,-] deployed:2 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar2 moves to Brewhouse
+  Cellar2 pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar2 activates Top row · Market + Brewhouse
+  ↳ Cellar2 gains +H2
+  Cellar2 sources goods at the Market.
+  ↳ Cellar2 gains +G1 +H1
+  ↳ Cellar2 gains +G2
+  ↳ Cellar2 spends −G1 −H3
+  Cellar2 brews Mumme (Q4 · matures in 3 steps).
+  ↳ Cellar2’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  Cellar3’s casks mature (+1) over the turn.
+
+== R3 · turn 11 · Cellar3 [cellarmaster] · G2 H0 ct2 | vessels[Broyhan!,Hopped!,-,-] deployed:1 | score 4 (dlv 0 maj 0 flt 4)
+  Cellar3 moves to Market
+  Cellar3 pays −G1 occupancy toll for sharing Market.
+  Cellar3 activates Top row · Market + Brewhouse
+  ↳ Cellar3 gains +G1 +H1
+  Cellar3 sources goods at the Market.
+  ↳ Cellar3 gains +G1 +H1
+  Cellar3 over-deploys — the displaced Gruit is tapped on the way out (its source action fires, then it is boxed).
+  Cellar3 sets a Ready Hopped on a slot (under Rich Berth).
+  ↳ Cellar3 gains +G1 +H1
+  ↳ Cellar2’s stale Gruit has soured — dumped in the harbor (a Q3 cask takes the berth).
+  Cellar3 sets a Ready Broyhan on a slot.
+
+== R3 · turn 12 · Cellar4 [cellarmaster] · G2 H2 ct3 | vessels[-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar4 moves to Brewhouse
+  Cellar4 pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar4 activates Top row · Market + Brewhouse
+  ↳ Cellar4 gains +G2
+  Cellar4 sources goods at the Market.
+  ↳ Cellar4 gains +G2
+  ↳ Cellar4 spends −G1
+  Cellar4 brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gruit ages +1 → 1/1 READY.
+
+== R4 · turn 13 · Cellar1 [cellarmaster] · G0 H2 ct2 | vessels[-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar1 moves to Market
+  Cellar1 activates Top row · Market + Brewhouse
+  ↳ Cellar1 gains +G2
+  Cellar1 sources goods at the Market.
+  ↳ Cellar1 gains +G1 +H1
+  ↳ nothing to age.
+  Cellar2’s casks mature (+1) over the turn.
+
+== R4 · turn 14 · Cellar2 [cellarmaster] · G3 H0 ct2 | vessels[Mumme 1/3,-,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar2 stays home and works the Floor — the worker keeps its station (1 cask + the 3-pt Age pool · no toll).
+  ↳ Mumme ages +1 → 2/3.
+  ↳ Mumme ages +1 → 3/3 READY.
+  ↳ Floor — Mumme’s age action.
+  ↳ nothing to age.
+
+== R4 · turn 15 · Cellar3 [cellarmaster] · G4 H3 ct2 | vessels[-,-,-,-] deployed:2 | score 4 (dlv 0 maj 0 flt 4)
+  Cellar3 moves to Harbor
+  Cellar3 activates Bottom row · Harbor + Cellar
+  Cellar3 enshrines Broyhan Q3 on the Common Shelf — the FAME coin (5★).
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R4 · turn 16 · Cellar4 [cellarmaster] · G4 H2 ct3 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar4 moves to Market
+  Cellar4 pays −G1 occupancy toll for sharing Market.
+  Cellar4 activates Left col · Market + Harbor
+  ↳ Cellar4 spends −H1
+  Cellar4 buys the Broyhan recipe (Q3).
+  Cellar4 sets a Ready Gruit on a slot.
+
+== R5 · turn 17 · Cellar1 [cellarmaster] · G3 H3 ct2 | vessels[-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar1 moves to Brewhouse
+  Cellar1 pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar1 activates Top row · Market + Brewhouse
+  ↳ Cellar1 spends −G2
+  Cellar1 commissions the Cog bound for London — place it on a slot.
+  ↳ the Cog docks ON Hopped — dockside pickup: the cask boards as the commission’s free load (1/2).
+  ↳ Cellar1 gains +G1
+  ↳ Cellar1 takes the loader bonus for shipping Cellar3’s cask (and chose the destination).
+  ★ the Cog sails to London with 1 cask! Every cask aboard is delivered. (Sailed-Ships 1/10)
+  Cellar3 authors Customs House on a slot — Ship here boards casks 1 gate lower.
+  ↳ Cellar1 gains +G2
+  ↳ Cellar1 spends −G1 −H3
+  Cellar1 brews Mumme (Q4 · matures in 3 steps).
+  ↳ Cellar1’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  ↳ s3 — nothing to do here (no Ready cask to deploy).
+
+== R5 · turn 18 · Cellar2 [cellarmaster] · G3 H0 ct2 | vessels[Mumme!,-,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar2 moves to Market
+  Cellar2 pays −G1 occupancy toll for sharing Market.
+  Cellar2 activates Left col · Market + Harbor
+  ↳ Cellar2 spends −G2
+  Cellar2 commissions the Cog bound for Bergen — place it on a slot.
+  ↳ Cog placed on a slot, bound for Bergen.
+  ↳ Cellar4’s stale Gruit has soured — dumped in the harbor (a Q4 cask takes the berth).
+  Cellar2 sets a Ready Mumme on a slot.
+
+== R5 · turn 19 · Cellar3 [cellarmaster] · G4 H3 ct2 | vessels[-,-,-,-] deployed:0 | score 15 (dlv 6 maj 5 flt 4)
+  Cellar3 moves to Cellar
+  Cellar3 activates Right col · Brewhouse + Cellar
+  ↳ Cellar3 spends −G1 −H1
+  Cellar3 brews Hopped Beer (Q2 · matures in 1 step).
+
+== R5 · turn 20 · Cellar4 [cellarmaster] · G3 H1 ct3 | vessels[-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar4 moves to Harbor
+  Cellar4 activates Left col · Market + Harbor
+  ↳ Cellar4 spends −G2
+  Cellar4 commissions the Hulk bound for Bergen — place it on a slot.
+  ↳ the Hulk docks ON Mumme — dockside pickup: the cask boards as the commission’s free load (1/3).
+  ↳ Cellar4 gains +G1
+  ↳ Cellar4 takes the loader bonus for shipping Cellar2’s cask (and chose the destination).
+  Cellar4 loads Gruit onto the Cog → Bruges (2/2).
+  ↳ Cellar4 gains +G1
+  ↳ Cellar4 takes a loader bonus for shipping Cellar2’s cask (and chose the destination).
+  ★ the Cog sails to Bruges with 2 casks! Every cask aboard is delivered. (Sailed-Ships 2/10)
+  ↳ Cellar4 gains +G1 +H1
+  ↳ Cellar4 takes the Bruges liquidity benefit (2 goods).
+  ↳ Cellar2 gains +G1 +H1
+  ↳ Cellar2 takes the Bruges liquidity benefit (2 goods).
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  Cellar1’s casks mature (+1) over the turn.
+
+== R6 · turn 21 · Cellar1 [cellarmaster] · G2 H0 ct2 | vessels[Mumme 1/3,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar1 moves to Cellar
+  Cellar1 pays −G1 occupancy toll for sharing Cellar.
+  Cellar1 activates Bottom row · Harbor + Cellar
+  ↳ Mumme ages +1 → 2/3.
+  ↳ Mumme ages +1 → 3/3 READY.
+  Cellar1 sets a Ready Mumme on a slot.
+  Cellar1 enshrines Mumme Q4 on the Long Shelf — the FAME coin (7★).
+  ↳ Hulk (→ Bruges) — nothing eligible to load.
+
+== R6 · turn 22 · Cellar2 [cellarmaster] · G1 H1 ct2 | vessels[-,-,-] deployed:0 | score 4 (dlv 1 maj 3 flt 0)
+  Cellar2 moves to Brewhouse
+  Cellar2 activates Right col · Brewhouse + Cellar
+  ↳ Cellar2 spends −G1
+  Cellar2 brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gruit ages +1 → 1/1 READY.
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  ↳ Hulk (→ London) — nothing eligible to load.
+  Cellar3’s casks mature (+1) over the turn.
+
+== R6 · turn 23 · Cellar3 [cellarmaster] · G3 H2 ct2 | vessels[Hopped!,-,-,-] deployed:0 | score 15 (dlv 6 maj 5 flt 4)
+  Cellar3 stays home and works the Floor — the worker keeps its station (1 cask + the 3-pt Age pool · no toll).
+  ↳ Floor — Hopped’s recipe action.
+  Cellar3 gains the Mumme recipe (the cask action, free).
+
+== R6 · turn 24 · Cellar4 [cellarmaster] · G4 H2 ct3 | vessels[-,-] deployed:0 | score 4 (dlv 1 maj 3 flt 0)
+  Cellar4 moves to Cellar
+  Cellar4 pays −G1 occupancy toll for sharing Cellar.
+  Cellar4 activates Bottom row · Harbor + Cellar
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ Hulk (→ Bruges) — nothing eligible to load.
+
+== R7 · turn 25 · Cellar1 [cellarmaster] · G1 H0 ct2 | vessels[-,-,-] deployed:0 | score 7 (dlv 7 maj 0 flt 0)
+  Cellar1 moves to Brewhouse
+  Cellar1 pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar1 activates Top row · Market + Brewhouse
+  ↳ Cellar1 gains +G1 +H1
+  Cellar1 sources goods at the Market.
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ Cog (→ Bergen) — nothing eligible to load.
+
+== R7 · turn 26 · Cellar2 [cellarmaster] · G0 H1 ct2 | vessels[Gruit!,-,-] deployed:0 | score 4 (dlv 1 maj 3 flt 0)
+  Cellar2 moves to Cellar
+  Cellar2 activates Bottom row · Harbor + Cellar
+  Cellar2 sets a Ready Gruit on a slot.
+  Cellar2 loads Gruit onto the Hulk → Bruges (2/3).
+
+== R7 · turn 27 · Cellar3 [cellarmaster] · G3 H2 ct2 | vessels[Hopped!,-,-,-] deployed:0 | score 15 (dlv 6 maj 5 flt 4)
+  Cellar3 moves to Harbor
+  Cellar3 activates Left col · Market + Harbor
+  ↳ Cellar3 gains +G1 +H1
+  Cellar3 sources goods at the Market.
+  Cellar3 sets a Ready Hopped on a slot (under Novgorod Peterhof).
+  Cellar3 loads Hopped onto the Hulk → Bergen (2/3).
+
+== R7 · turn 28 · Cellar4 [cellarmaster] · G3 H2 ct3 | vessels[-,-] deployed:0 | score 4 (dlv 1 maj 3 flt 0)
+  Cellar4 moves to Brewhouse
+  Cellar4 pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar4 activates Top row · Market + Brewhouse
+  ↳ Cellar4 spends −H2
+  Cellar4 buys the Mumme recipe (Q4).
+  ↳ Cellar4 spends −G1
+  Cellar4 brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ Cog (→ Bergen) — nothing eligible to load.
+
+== R8 · turn 29 · Cellar1 [cellarmaster] · G1 H1 ct2 | vessels[-,-,-] deployed:0 | score 7 (dlv 7 maj 0 flt 0)
+  Cellar1 moves to Market
+  Cellar1 activates Left col · Market + Harbor
+  ↳ Cellar1 gains +G2
+  Cellar1 sources goods at the Market.
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R8 · turn 30 · Cellar2 [cellarmaster] · G0 H1 ct2 | vessels[-,-,-] deployed:0 | score 4 (dlv 1 maj 3 flt 0)
+  Cellar2 moves to Brewhouse
+  Cellar2 activates Right col · Brewhouse + Cellar
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  ↳ Hulk (→ London) — nothing eligible to load.
+
+== R8 · turn 31 · Cellar3 [cellarmaster] · G4 H3 ct2 | vessels[-,-,-,-] deployed:0 | score 15 (dlv 6 maj 5 flt 4)
+  Cellar3 moves to Cellar
+  Cellar3 activates Right col · Brewhouse + Cellar
+  ↳ Cellar3 spends −G1 −H3
+  Cellar3 brews Mumme (Q4 · matures in 3 steps).
+  ↳ Cellar3’s 4th distinct beer opens Floor slot 5 (the Flight track).
+  ↳ Mumme ages +1 → 1/3.
+  ↳ Mumme ages +1 → 2/3.
+  ↳ Mumme ages +1 → 3/3 READY.
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  ↳ Hulk (→ London) — nothing eligible to load.
+  Cellar4’s casks mature (+1) over the turn.
+
+== R8 · turn 32 · Cellar4 [cellarmaster] · G1 H0 ct3 | vessels[Gruit!,-] deployed:0 | score 4 (dlv 1 maj 3 flt 0)
+  Cellar4 stays home and works the Floor — the worker keeps its station (1 cask + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Cellar4 gains +G1 +H1
+
+== R9 · turn 33 · Cellar1 [cellarmaster] · G3 H1 ct2 | vessels[-,-,-] deployed:0 | score 7 (dlv 7 maj 0 flt 0)
+  Cellar1 moves to Harbor
+  Cellar1 activates Left col · Market + Harbor
+  ↳ Cellar1 spends −H1
+  Cellar1 buys the Broyhan recipe (Q3).
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R9 · turn 34 · Cellar2 [cellarmaster] · G0 H1 ct2 | vessels[-,-,-] deployed:0 | score 4 (dlv 1 maj 3 flt 0)
+  Cellar2 moves to Market
+  Cellar2 activates Top row · Market + Brewhouse
+  ↳ Cellar2 gains +G2
+  Cellar2 sources goods at the Market.
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ Cog (→ Bergen) — nothing eligible to load.
+
+== R9 · turn 35 · Cellar3 [cellarmaster] · G3 H0 ct2 | vessels[Mumme!,-,-,-,-] deployed:0 | score 20 (dlv 6 maj 5 flt 9)
+  Cellar3 moves to Harbor
+  Cellar3 pays −G1 occupancy toll for sharing Harbor.
+  Cellar3 activates Bottom row · Harbor + Cellar
+  Cellar3 sets a Ready Mumme on a slot.
+  Cellar3 enshrines Mumme Q4 on the Masters’ Shelf — the FAME coin (10★).
+  ↳ Hulk (→ Bruges) — nothing eligible to load.
+
+== R9 · turn 36 · Cellar4 [cellarmaster] · G2 H1 ct3 | vessels[Gruit!,-] deployed:0 | score 4 (dlv 1 maj 3 flt 0)
+  Cellar4 moves to Cellar
+  Cellar4 activates Right col · Brewhouse + Cellar
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  ↳ Hulk (→ London) — nothing eligible to load.
+
+== R10 · turn 37 · Cellar1 [cellarmaster] · G3 H0 ct2 | vessels[-,-,-] deployed:0 | score 7 (dlv 7 maj 0 flt 0)
+  Cellar1 moves to Cellar
+  Cellar1 pays −G1 occupancy toll for sharing Cellar.
+  Cellar1 activates Bottom row · Harbor + Cellar
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ Hulk (→ Bruges) — nothing eligible to load.
+
+== R10 · turn 38 · Cellar2 [cellarmaster] · G2 H1 ct2 | vessels[-,-,-] deployed:0 | score 4 (dlv 1 maj 3 flt 0)
+  Cellar2 moves to Harbor
+  Cellar2 pays −G1 occupancy toll for sharing Harbor.
+  Cellar2 activates Bottom row · Harbor + Cellar
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ Hulk (→ Bruges) — nothing eligible to load.
+
+== R10 · turn 39 · Cellar3 [cellarmaster] · G2 H0 ct2 | vessels[-,-,-,-,-] deployed:0 | score 30 (dlv 16 maj 5 flt 9)
+  Cellar3 moves to Cellar
+  Cellar3 pays −G1 occupancy toll for sharing Cellar.
+  Cellar3 activates Bottom row · Harbor + Cellar
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ Hulk (→ Bruges) — nothing eligible to load.
+
+== R10 · turn 40 · Cellar4 [cellarmaster] · G2 H1 ct3 | vessels[Gruit!,-] deployed:0 | score 4 (dlv 1 maj 3 flt 0)
+  Cellar4 stays home and works the Floor — the worker keeps its station (1 cask + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Cellar4 gains +G1 +H1
+
+== R11 · turn 41 · Cellar1 [cellarmaster] · G2 H0 ct2 | vessels[-,-,-] deployed:0 | score 7 (dlv 7 maj 0 flt 0)
+  Cellar1 moves to Harbor
+  Cellar1 pays −G1 occupancy toll for sharing Harbor.
+  Cellar1 activates Bottom row · Harbor + Cellar
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ Hulk (→ Bruges) — nothing eligible to load.
+
+== R11 · turn 42 · Cellar2 [cellarmaster] · G1 H1 ct2 | vessels[-,-,-] deployed:0 | score 4 (dlv 1 maj 3 flt 0)
+  Cellar2 moves to Market
+  Cellar2 activates Left col · Market + Harbor
+  ↳ Cellar2 gains +G1 +H1
+  Cellar2 sources goods at the Market.
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R11 · turn 43 · Cellar3 [cellarmaster] · G1 H0 ct2 | vessels[-,-,-,-,-] deployed:0 | score 30 (dlv 16 maj 5 flt 9)
+  Cellar3 moves to Brewhouse
+  Cellar3 activates Right col · Brewhouse + Cellar
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  ↳ Hulk (→ London) — nothing eligible to load.
+
+== R11 · turn 44 · Cellar4 [cellarmaster] · G3 H2 ct3 | vessels[Gruit!,-] deployed:0 | score 4 (dlv 1 maj 3 flt 0)
+  Cellar4 moves to Harbor
+  Cellar4 pays −G1 occupancy toll for sharing Harbor.
+  Cellar4 activates Left col · Market + Harbor
+  ↳ Cellar4 gains +G1 +H1
+  Cellar4 sources goods at the Market.
+  Cellar4 sets a Ready Gruit on a slot (under Novgorod Peterhof).
+  Cellar4 loads Gruit onto the Hulk → Bruges (3/3).
+  ★ the Hulk sails to Bruges with 3 casks! Every cask aboard is delivered. (Sailed-Ships 3/10)
+  ↳ Cellar1 gains +G1 +H1
+  ↳ Cellar1 takes the Bruges liquidity benefit (2 goods).
+  ↳ Cellar2 gains +G1 +H1
+  ↳ Cellar2 takes the Bruges liquidity benefit (2 goods).
+  ↳ Cellar4 gains +G2
+  ↳ Cellar4 takes the Bruges liquidity benefit (2 goods).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R12 · turn 45 · Cellar1 [cellarmaster] · G2 H1 ct2 | vessels[-,-,-] deployed:0 | score 8 (dlv 8 maj 0 flt 0)
+  Cellar1 moves to Market
+  Cellar1 pays −G1 occupancy toll for sharing Market.
+  Cellar1 activates Top row · Market + Brewhouse
+  ↳ Cellar1 spends −G1
+  Cellar1 acquires a charter contract at the Market (3 in hand).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ Cog (→ Bergen) — nothing eligible to load.
+
+== R12 · turn 46 · Cellar2 [cellarmaster] · G3 H3 ct2 | vessels[-,-,-] deployed:0 | score 5 (dlv 2 maj 3 flt 0)
+  Cellar2 moves to Brewhouse
+  Cellar2 pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar2 activates Top row · Market + Brewhouse
+  ↳ Cellar2 spends −H1
+  Cellar2 buys the Broyhan recipe (Q3).
+  ↳ Cellar2 spends −G1 −H1
+  Cellar2 brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Cellar2’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ Cog (→ Bergen) — nothing eligible to load.
+
+== R12 · turn 47 · Cellar3 [cellarmaster] · G1 H0 ct2 | vessels[-,-,-,-,-] deployed:0 | score 30 (dlv 16 maj 5 flt 9)
+  Cellar3 moves to Cellar
+  Cellar3 activates Right col · Brewhouse + Cellar
+  ↳ Cellar3 spends −G1
+  Cellar3 brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gruit ages +1 → 1/1 READY.
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  ↳ Hulk (→ London) — nothing eligible to load.
+
+== R12 · turn 48 · Cellar4 [cellarmaster] · G5 H3 ct3 | vessels[-,-] deployed:0 | score 5 (dlv 2 maj 3 flt 0)
+  Cellar4 moves to Cellar
+  Cellar4 pays −G1 occupancy toll for sharing Cellar.
+  Cellar4 activates Right col · Brewhouse + Cellar
+  ↳ Cellar4 spends −G1 −H3
+  Cellar4 brews Mumme (Q4 · matures in 3 steps).
+  ↳ Cellar4’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  ↳ Mumme ages +1 → 1/3.
+  ↳ Mumme ages +1 → 2/3.
+  ↳ Mumme ages +1 → 3/3 READY.
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  ↳ Hulk (→ London) — nothing eligible to load.
+
+== R13 · turn 49 · Cellar1 [cellarmaster] · G0 H1 ct3 | vessels[-,-,-] deployed:0 | score 8 (dlv 8 maj 0 flt 0)
+  Cellar1 moves to Harbor
+  Cellar1 activates Bottom row · Harbor + Cellar
+  ↳ s7 — nothing to do here (no Ready cask to deploy).
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+  Cellar2’s casks mature (+1) over the turn.
+
+== R13 · turn 50 · Cellar2 [cellarmaster] · G1 H1 ct2 | vessels[Hopped!,-,-,-] deployed:0 | score 9 (dlv 2 maj 3 flt 4)
+  Cellar2 moves to Market
+  Cellar2 activates Top row · Market + Brewhouse
+  ↳ Cellar2 spends −G1
+  Cellar2 acquires a charter contract at the Market (3 in hand).
+  Cellar2 sets a Ready Hopped on a slot (under Customs House).
+  Cellar2 loads Hopped onto the Cog → Bergen (1/2).
+  ★ the Cog sails to Bergen with 1 cask! Every cask aboard is delivered. (Sailed-Ships 4/10)
+  ↳ Cellar2 takes a free Reach (+1 presence at Bergen).
+
+== R13 · turn 51 · Cellar3 [cellarmaster] · G0 H0 ct2 | vessels[Gruit!,-,-,-,-] deployed:0 | score 30 (dlv 16 maj 5 flt 9)
+  Cellar3 moves to Harbor
+  Cellar3 activates Left col · Market + Harbor
+  ↳ Cellar3 gains +G2
+  Cellar3 sources goods at the Market.
+  Cellar3 sets a Ready Gruit on a slot (under Novgorod Peterhof).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R13 · turn 52 · Cellar4 [cellarmaster] · G3 H0 ct3 | vessels[Mumme!,-,-] deployed:0 | score 5 (dlv 2 maj 3 flt 0)
+  Cellar4 moves to Harbor
+  Cellar4 pays −G1 occupancy toll for sharing Harbor.
+  Cellar4 activates Left col · Market + Harbor
+  ↳ Cellar4 spends −G2
+  Cellar4 commissions the Hulk bound for Novgorod — place it on a slot.
+  ↳ Hulk placed on a slot, bound for Novgorod.
+  ↳ Cellar4 gains +G1 +H1
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R14 · turn 53 · Cellar1 [cellarmaster] · G0 H1 ct3 | vessels[-,-,-] deployed:0 | score 8 (dlv 8 maj 0 flt 0)
+  Cellar1 moves to Market
+  Cellar1 activates Top row · Market + Brewhouse
+  ↳ Cellar1 gains +G2
+  Cellar1 sources goods at the Market.
+  ↳ Cellar1 spends −G1 −H1
+  Cellar1 brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Cellar1’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R14 · turn 54 · Cellar2 [cellarmaster] · G0 H1 ct3 | vessels[-,-,-,-] deployed:0 | score 19 (dlv 3 maj 12 flt 4)
+  Cellar2 moves to Brewhouse
+  Cellar2 activates Top row · Market + Brewhouse
+  ↳ Cellar2 gains +G2
+  Cellar2 sources goods at the Market.
+  ↳ Cellar2 spends −G1 −H1
+  Cellar2 brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R14 · turn 55 · Cellar3 [cellarmaster] · G2 H0 ct2 | vessels[-,-,-,-,-] deployed:1 | score 30 (dlv 16 maj 5 flt 9)
+  Cellar3 moves to Market
+  Cellar3 pays −G1 occupancy toll for sharing Market.
+  Cellar3 activates Left col · Market + Harbor
+  ↳ Cellar3 spends −G1
+  Cellar3 acquires a charter contract at the Market (3 in hand).
+  ↳ Cellar3 gains +G1 +H1
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R14 · turn 56 · Cellar4 [cellarmaster] · G1 H1 ct3 | vessels[Mumme!,-,-] deployed:0 | score 5 (dlv 2 maj 3 flt 0)
+  Cellar4 moves to Cellar
+  Cellar4 activates Bottom row · Harbor + Cellar
+  Cellar4 sets a Ready Mumme on a slot (under Staple Hall).
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ the die is set to 3 — Staple Hall pays its owner as the cask departs.
+  Cellar4 loads Mumme onto the Hulk → Bergen (3/3).
+  ★ the Hulk sails to Bergen with 3 casks! Every cask aboard is delivered. (Sailed-Ships 5/10)
+  ↳ Cellar2 takes a free Reach (+1 presence at Bergen).
+  ↳ Cellar3 takes a free Reach (+1 presence at London).
+  ↳ Cellar4 takes a free Reach (+1 presence at Bergen).
+  Cellar1’s casks mature (+1) over the turn.
+
+== R15 · turn 57 · Cellar1 [cellarmaster] · G1 H0 ct3 | vessels[Hopped!,-,-,-] deployed:0 | score 12 (dlv 8 maj 0 flt 4)
+  Cellar1 moves to Harbor
+  Cellar1 activates Left col · Market + Harbor
+  ↳ Cellar1 spends −G1
+  Cellar1 acquires a charter contract at the Market (4 in hand).
+  ↳ Cellar1 gains +G1 +H1
+  Cellar1 sets a Ready Hopped on a slot.
+  Cellar1 loads Hopped onto the Hulk → London (1/3).
+  Cellar2’s casks mature (+1) over the turn.
+
+== R15 · turn 58 · Cellar2 [cellarmaster] · G1 H0 ct3 | vessels[Hopped!,-,-,-] deployed:0 | score 20 (dlv 4 maj 12 flt 4)
+  Cellar2 moves to Market
+  Cellar2 pays −G1 occupancy toll for sharing Market.
+  Cellar2 activates Left col · Market + Harbor
+  ↳ Cellar2 gains +G2
+  Cellar2 sources goods at the Market.
+  ↳ Cellar2 gains +G1 +H1
+  Cellar2 sets a Ready Hopped on a slot.
+  Cellar2 loads Hopped onto the Hulk → Bergen (1/3).
+
+== R15 · turn 59 · Cellar3 [cellarmaster] · G1 H1 ct3 | vessels[-,-,-,-,-] deployed:1 | score 33 (dlv 17 maj 7 flt 9)
+  Cellar3 moves to Harbor
+  Cellar3 pays −G1 occupancy toll for sharing Harbor.
+  Cellar3 activates Bottom row · Harbor + Cellar
+  ↳ s7 — nothing to do here (no Ready cask to deploy).
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R15 · turn 60 · Cellar4 [cellarmaster] · G1 H1 ct3 | vessels[-,-,-] deployed:0 | score 14 (dlv 6 maj 8 flt 0)
+  Cellar4 moves to Brewhouse
+  Cellar4 activates Right col · Brewhouse + Cellar
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  ↳ Hulk (→ London) — nothing eligible to load.
+
+== R16 · turn 61 · Cellar1 [cellarmaster] · G1 H1 ct4 | vessels[-,-,-,-] deployed:0 | score 12 (dlv 8 maj 0 flt 4)
+  Cellar1 moves to Market
+  Cellar1 pays −G1 occupancy toll for sharing Market.
+  Cellar1 activates Top row · Market + Brewhouse
+  ↳ Cellar1 gains +G1 +H1
+  Cellar1 sources goods at the Market.
+  ↳ Cellar1 spends −G1 −H2
+  Cellar1 brews Broyhan (Q3 · matures in 1 step).
+  ↳ Cellar1’s 4th distinct beer opens Floor slot 5 (the Flight track).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R16 · turn 62 · Cellar2 [cellarmaster] · G3 H1 ct3 | vessels[-,-,-,-] deployed:0 | score 20 (dlv 4 maj 12 flt 4)
+  Cellar2 moves to Brewhouse
+  Cellar2 pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar2 activates Top row · Market + Brewhouse
+  ↳ Cellar2 gains +G1 +H1
+  Cellar2 sources goods at the Market.
+  ↳ Cellar2 spends −G1 −H2
+  Cellar2 brews Broyhan (Q3 · matures in 1 step).
+  ↳ Cellar2’s 4th distinct beer opens Floor slot 5 (the Flight track).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R16 · turn 63 · Cellar3 [cellarmaster] · G0 H1 ct3 | vessels[-,-,-,-,-] deployed:1 | score 33 (dlv 17 maj 7 flt 9)
+  Cellar3 moves to Market
+  Cellar3 activates Top row · Market + Brewhouse
+  ↳ Cellar3 gains +G2
+  Cellar3 sources goods at the Market.
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R16 · turn 64 · Cellar4 [cellarmaster] · G1 H1 ct3 | vessels[-,-,-] deployed:0 | score 14 (dlv 6 maj 8 flt 0)
+  Cellar4 moves to Market
+  Cellar4 pays −G1 occupancy toll for sharing Market.
+  Cellar4 activates Top row · Market + Brewhouse
+  ↳ Cellar4 gains +G1 +H1
+  Cellar4 sources goods at the Market.
+  ↳ Cellar4 spends −G1 −H1
+  Cellar4 brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Cellar4’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+  Cellar1’s casks mature (+1) over the turn.
+
+== R17 · turn 65 · Cellar1 [cellarmaster] · G0 H0 ct4 | vessels[Broyhan!,-,-,-,-] deployed:0 | score 17 (dlv 8 maj 0 flt 9)
+  Cellar1 moves to Brewhouse
+  Cellar1 activates Top row · Market + Brewhouse
+  ↳ Cellar1 gains +G2
+  Cellar1 sources goods at the Market.
+  ↳ Cellar1 spends −G1
+  Cellar1 brews Gruit Ale (Q1 · matures in 1 step).
+  Cellar1 sets a Ready Broyhan on a slot (under Customs House).
+  Cellar1 loads Broyhan onto the Hulk → Novgorod (1/3).
+  Cellar2’s casks mature (+1) over the turn.
+
+== R17 · turn 66 · Cellar2 [cellarmaster] · G2 H0 ct3 | vessels[Broyhan!,-,-,-,-] deployed:0 | score 25 (dlv 4 maj 12 flt 9)
+  Cellar2 moves to Market
+  Cellar2 pays −G1 occupancy toll for sharing Market.
+  Cellar2 activates Top row · Market + Brewhouse
+  ↳ Cellar2 gains +G1 +H1
+  Cellar2 sources goods at the Market.
+  ↳ Cellar2 spends −G1 −H1
+  Cellar2 brews Hopped Beer (Q2 · matures in 1 step).
+  Cellar2 sets a Ready Broyhan on a slot (under Customs House).
+  Cellar2 loads Broyhan onto the Hulk → Novgorod (2/3).
+  ★ the Hulk sails to Novgorod with 2 casks! Every cask aboard is delivered. (Sailed-Ships 6/10)
+  ↳ Cellar1 refines a cask on the long haul (Novgorod): Gruit ages +1 → 1/1 READY.
+  ↳ Cellar2 refines a cask on the long haul (Novgorod): Hopped ages +1 → 1/1 READY.
+
+== R17 · turn 67 · Cellar3 [cellarmaster] · G2 H1 ct3 | vessels[-,-,-,-,-] deployed:1 | score 33 (dlv 17 maj 7 flt 9)
+  Cellar3 moves to Brewhouse
+  Cellar3 pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar3 activates Right col · Brewhouse + Cellar
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  ↳ Hulk (→ London) — nothing eligible to load.
+  Cellar4’s casks mature (+1) over the turn.
+
+== R17 · turn 68 · Cellar4 [cellarmaster] · G0 H1 ct3 | vessels[Hopped!,-,-,-] deployed:0 | score 18 (dlv 6 maj 8 flt 4)
+  Cellar4 moves to Brewhouse
+  Cellar4 activates Top row · Market + Brewhouse
+  ↳ Cellar4 gains +G1 +H1
+  Cellar4 sources goods at the Market.
+  ↳ Cellar4 spends −G1 −H2
+  Cellar4 brews Broyhan (Q3 · matures in 1 step).
+  ↳ Cellar4’s 4th distinct beer opens Floor slot 5 (the Flight track).
+  Cellar4 sets a Ready Hopped on a slot (under Customs House).
+  ↳ s3 — nothing to do here (no Ready cask to deploy).
+
+== R18 · turn 69 · Cellar1 [cellarmaster] · G1 H0 ct4 | vessels[-,Gruit!,-,-,-] deployed:0 | score 25 (dlv 10 maj 6 flt 9)
+  Cellar1 moves to Market
+  Cellar1 pays −G1 occupancy toll for sharing Market.
+  Cellar1 activates Top row · Market + Brewhouse
+  ↳ Cellar1 gains +G1 +H1
+  Cellar1 sources goods at the Market.
+  ↳ Cellar1 spends −G1 −H1
+  Cellar1 brews Hopped Beer (Q2 · matures in 1 step).
+  Cellar1 sets a Ready Gruit on a slot (under Rich Berth).
+
+== R18 · turn 70 · Cellar2 [cellarmaster] · G1 H0 ct3 | vessels[-,Hopped!,-,-,-] deployed:0 | score 33 (dlv 6 maj 18 flt 9)
+  Cellar2 moves to Harbor
+  Cellar2 activates Left col · Market + Harbor
+  ↳ Cellar2 spends −G1
+  Cellar2 buys the Keut recipe (Q3).
+  ↳ Cellar2 gains +G1 +H1
+  Cellar2 sets a Ready Hopped on a slot.
+  Cellar2 loads Hopped onto the Hulk → London (2/3).
+
+== R18 · turn 71 · Cellar3 [cellarmaster] · G1 H1 ct3 | vessels[-,-,-,-,-] deployed:1 | score 33 (dlv 17 maj 7 flt 9)
+  Cellar3 moves to Cellar
+  Cellar3 activates Bottom row · Harbor + Cellar
+  ↳ s7 — nothing to do here (no Ready cask to deploy).
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+  Cellar4’s casks mature (+1) over the turn.
+
+== R18 · turn 72 · Cellar4 [cellarmaster] · G0 H0 ct3 | vessels[-,Broyhan!,-,-,-] deployed:1 | score 23 (dlv 6 maj 8 flt 9)
+  Cellar4 moves to Market
+  Cellar4 activates Left col · Market + Harbor
+  ↳ Cellar4 gains +G2
+  Cellar4 sources goods at the Market.
+  ↳ Cellar4 gains +G1 +H1
+  Cellar4 sets a Ready Broyhan on a slot.
+  ↳ Cellar4 spends −G2
+  Cellar4 dispatches Broyhan → Novgorod by charter (a contract + the fare; 2 left). (Sailed-Ships 7/10)
+  ↳ Cellar4 — nothing maturing to refine (Novgorod).
+  Cellar1’s casks mature (+1) over the turn.
+
+== R19 · turn 73 · Cellar1 [cellarmaster] · G0 H0 ct4 | vessels[Hopped!,-,-,-,-] deployed:1 | score 24 (dlv 10 maj 5 flt 9)
+  Cellar1 moves to Harbor
+  Cellar1 activates Left col · Market + Harbor
+  ↳ Cellar1 gains +G2
+  Cellar1 sources goods at the Market.
+  ↳ Cellar1 gains +G1 +H1
+  Cellar1 sets a Ready Hopped on a slot.
+
+== R19 · turn 74 · Cellar2 [cellarmaster] · G1 H1 ct3 | vessels[-,-,-,-,-] deployed:0 | score 32 (dlv 6 maj 17 flt 9)
+  Cellar2 moves to Market
+  Cellar2 pays −G1 occupancy toll for sharing Market.
+  Cellar2 activates Left col · Market + Harbor
+  ↳ Cellar2 gains +G1 +H1
+  Cellar2 sources goods at the Market.
+  ↳ Cellar2 gains +G1 +H1
+  ↳ nothing to age.
+  Cellar2 loads Hopped onto the Hulk → London (3/3).
+  ↳ Cellar2 gains +G1
+  ↳ Cellar2 takes a loader bonus for shipping Cellar1’s cask (and chose the destination).
+  ★ the Hulk sails to London with 3 casks! Every cask aboard is delivered. (Sailed-Ships 8/10)
+  Cellar1 authors Malt Kiln on a slot — Cask ships +1 quality (max Q5).
+  Cellar2 authors Cooperage on a slot — Ship here holds +1 cask.
+  Cellar1 authors Connoisseur’s Cellar on a slot — Your Q4+ cask: +4★.
+
+== R19 · turn 75 · Cellar3 [cellarmaster] · G1 H1 ct3 | vessels[-,-,-,-,-] deployed:1 | score 32 (dlv 17 maj 6 flt 9)
+  Cellar3 moves to Brewhouse
+  Cellar3 activates Top row · Market + Brewhouse
+  ↳ Cellar3 spends −G1
+  Cellar3 buys the Keut recipe (Q3).
+  ↳ Cellar3 gains +G1 +H1
+  ↳ Cellar3 spends −G1 −H2
+  Cellar3 brews Broyhan (Q3 · matures in 1 step).
+
+== R19 · turn 76 · Cellar4 [cellarmaster] · G1 H1 ct2 | vessels[-,-,-,-,-] deployed:1 | score 30 (dlv 8 maj 13 flt 9)
+  Cellar4 moves to Brewhouse
+  Cellar4 pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar4 activates Top row · Market + Brewhouse
+  ↳ Cellar4 gains +G2
+  Cellar4 sources goods at the Market.
+  ↳ Cellar4 gains +G1 +H1
+  ↳ Cellar4 spends −G1 −H1
+  Cellar4 brews Hopped Beer (Q2 · matures in 1 step).
+
+== R20 · turn 77 · Cellar1 [cellarmaster] · G3 H1 ct4 | vessels[-,-,-,-,-] deployed:1 | score 30 (dlv 12 maj 9 flt 9)
+  Cellar1 moves to Cellar
+  Cellar1 activates Right col · Brewhouse + Cellar
+  ↳ Cellar1 spends −G1 −H1
+  Cellar1 brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Hopped ages +1 → 1/1 READY.
+  Cellar1 sets a Ready Hopped on a slot (under Connoisseur’s Cellar).
+
+== R20 · turn 78 · Cellar2 [cellarmaster] · G3 H3 ct3 | vessels[-,-,-,-,-] deployed:0 | score 34 (dlv 7 maj 18 flt 9)
+  Cellar2 moves to Brewhouse
+  Cellar2 pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar2 activates Right col · Brewhouse + Cellar
+  ↳ Cellar2 spends −G2 −H1
+  Cellar2 brews Keut (Q3 · matures in 2 steps).
+  ↳ Cellar2’s 5th distinct beer opens Floor slot 6 (the Flight track).
+  ↳ Keut ages +2 → 2/2 READY.
+  Cellar2 loads Hopped onto the Hulk → Bergen (2/3).
+  ↳ Cellar2 gains +G1
+  ↳ Cellar2 takes a loader bonus for shipping Cellar4’s cask (and chose the destination).
+  Cellar3’s casks mature (+1) over the turn.
+
+== R20 · turn 79 · Cellar3 [cellarmaster] · G0 H0 ct3 | vessels[Broyhan!,-,-,-,-] deployed:1 | score 32 (dlv 17 maj 6 flt 9)
+  Cellar3 moves to Market
+  Cellar3 activates Top row · Market + Brewhouse
+  ↳ Cellar3 gains +G2
+  Cellar3 sources goods at the Market.
+  ↳ Cellar1’s stale Gruit has soured — dumped in the harbor (a Q3 cask takes the berth).
+  Cellar3 sets a Ready Broyhan on a slot (under Rich Berth).
+  ↳ Cellar3 spends −G1
+  Cellar3 brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  Cellar4’s casks mature (+1) over the turn.
+
+== R20 · turn 80 · Cellar4 [cellarmaster] · G2 H1 ct2 | vessels[Hopped!,-,-,-,-] deployed:0 | score 30 (dlv 8 maj 13 flt 9)
+  Cellar4 moves to Market
+  Cellar4 pays −G1 occupancy toll for sharing Market.
+  Cellar4 activates Top row · Market + Brewhouse
+  ↳ Cellar4 gains +G2
+  Cellar4 sources goods at the Market.
+  Cellar4 sets a Ready Hopped on a slot (under Staple Hall).
+  ↳ Cellar4 gains +1 presence at Novgorod (majority help).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+
+== R21 · turn 81 · Cellar1 [cellarmaster] · G2 H0 ct4 | vessels[-,-,-,-,-] deployed:1 | score 28 (dlv 12 maj 7 flt 9)
+  Cellar1 moves to Harbor
+  Cellar1 activates Bottom row · Harbor + Cellar
+  ↳ Cellar1 gains +1 presence at London (majority help).
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+  Cellar1 loads Hopped onto the Hulk → Bergen (3/3).
+  ★ the Hulk sails to Bergen with 3 casks! Every cask aboard is delivered. (Sailed-Ships 9/10)
+  ↳ Cellar2 takes a free Reach (+1 presence at Bergen).
+  ↳ Cellar4 takes a free Reach (+1 presence at Novgorod).
+  ↳ Cellar1 takes a free Reach (+1 presence at Novgorod).
+
+== R21 · turn 82 · Cellar2 [cellarmaster] · G1 H2 ct3 | vessels[Keut!,-,-,-,-,-] deployed:0 | score 39 (dlv 8 maj 15 flt 16)
+  Cellar2 moves to Cellar
+  Cellar2 activates Right col · Brewhouse + Cellar
+  ↳ Cellar2 spends −G1
+  Cellar2 brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gruit ages +1 → 1/1 READY.
+  Cellar2 sets a Ready Keut on a slot (under Malt Kiln).
+  Cellar2 sets a Ready Gruit on a slot (under Connoisseur’s Cellar).
+  Cellar3’s casks mature (+1) over the turn.
+
+== R21 · turn 83 · Cellar3 [cellarmaster] · G1 H0 ct3 | vessels[Gruit!,-,-,-,-] deployed:2 | score 30 (dlv 17 maj 4 flt 9)
+  Cellar3 moves to Brewhouse
+  Cellar3 activates Top row · Market + Brewhouse
+  ↳ Cellar3 gains +G1 +H1
+  Cellar3 sources goods at the Market.
+  ↳ Cellar3 spends −G2 −H1
+  Cellar3 brews Keut (Q3 · matures in 2 steps).
+  ↳ Cellar3’s 5th distinct beer opens Floor slot 6 (the Flight track).
+  ↳ Cellar3 gains +1 presence at London (majority help).
+  Cellar3 sets a Ready Gruit on a slot (under Customs House).
+
+== R21 · turn 84 · Cellar4 [cellarmaster] · G3 H1 ct2 | vessels[-,-,-,-,-] deployed:1 | score 34 (dlv 9 maj 16 flt 9)
+  Cellar4 moves to Brewhouse
+  Cellar4 pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar4 activates Top row · Market + Brewhouse
+  ↳ Cellar4 gains +G2
+  Cellar4 sources goods at the Market.
+  ↳ Cellar4 gains +G1 +H1
+  ↳ Cellar4 spends −G1 −H2
+  Cellar4 brews Broyhan (Q3 · matures in 1 step).
+  ↳ Cellar4 gains +1 presence at Bruges (majority help).
+
+== R22 · turn 85 · Cellar1 [cellarmaster] · G2 H0 ct4 | vessels[-,-,-,-,-] deployed:0 | score 32 (dlv 13 maj 10 flt 9)
+  Cellar1 moves to Cellar
+  Cellar1 pays −G1 occupancy toll for sharing Cellar.
+  Cellar1 activates Bottom row · Harbor + Cellar
+  ↳ Cellar1 gains +1 presence at London (majority help).
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+
+== R22 · turn 86 · Cellar2 [cellarmaster] · G0 H2 ct3 | vessels[-,-,-,-,-,-] deployed:2 | score 38 (dlv 8 maj 14 flt 16)
+  Cellar2 moves to Brewhouse
+  Cellar2 activates Top row · Market + Brewhouse
+  ↳ Cellar2 gains +G2
+  Cellar2 sources goods at the Market.
+  ↳ Cellar2 gains +G1 +H1
+  ↳ Cellar2 spends −G1
+  Cellar2 brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Cellar2 gains +1 presence at Bruges (majority help).
+  Cellar3’s casks mature (+1) over the turn.
+
+== R22 · turn 87 · Cellar3 [cellarmaster] · G0 H0 ct3 | vessels[-,Keut 1/2,-,-,-,-] deployed:3 | score 37 (dlv 17 maj 4 flt 16)
+  Cellar3 moves to Cellar
+  Cellar3 activates Bottom row · Harbor + Cellar
+  ↳ Keut ages +1 → 2/2 READY.
+  ↳ Cellar3 gains +1 presence at London (majority help).
+  Cellar3 sets a Ready Keut on a slot (under Malt Kiln).
+  Cellar4’s casks mature (+1) over the turn.
+
+== R22 · turn 88 · Cellar4 [cellarmaster] · G4 H0 ct2 | vessels[Broyhan!,-,-,-,-] deployed:1 | score 34 (dlv 9 maj 16 flt 9)
+  Cellar4 moves to Market
+  Cellar4 activates Top row · Market + Brewhouse
+  ↳ Cellar4 spends −G1
+  Cellar4 buys the Keut recipe (Q3).
+  ↳ Cellar4 gains +G1 +H1
+  ↳ Cellar4 spends −G1 −H1
+  Cellar4 brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Cellar4 gains +1 presence at Bruges (majority help).
+
+== R23 · turn 89 · Cellar1 [cellarmaster] · G1 H0 ct4 | vessels[-,-,-,-,-] deployed:0 | score 32 (dlv 13 maj 10 flt 9)
+  Cellar1 moves to Brewhouse
+  Cellar1 pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar1 activates Top row · Market + Brewhouse
+  ↳ Cellar1 gains +G2
+  Cellar1 sources goods at the Market.
+  ↳ Cellar1 gains +G1 +H1
+  ↳ Cellar1 spends −G1
+  Cellar1 brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Cellar1 gains +1 presence at Novgorod (majority help).
+  Cellar2’s casks mature (+1) over the turn.
+
+== R23 · turn 90 · Cellar2 [cellarmaster] · G2 H3 ct3 | vessels[Gruit!,-,-,-,-,-] deployed:2 | score 38 (dlv 8 maj 14 flt 16)
+  Cellar2 moves to Cellar
+  Cellar2 pays −G1 occupancy toll for sharing Cellar.
+  Cellar2 activates Bottom row · Harbor + Cellar
+  Cellar2 hires the Cellarman (free, the cask action).
+  ↳ Cellar2 gains +1 presence at Bruges (majority help).
+  Cellar2 launches Keut Q4 at the Hall — ★ = quality (4★). A cube marks the Masters’ Shelf’s launch row; no coin, no tick.
+
+== R23 · turn 91 · Cellar3 [cellarmaster] · G0 H0 ct3 | vessels[-,-,-,-,-,-] deployed:4 | score 38 (dlv 17 maj 5 flt 16)
+  Cellar3 moves to Harbor
+  Cellar3 activates Bottom row · Harbor + Cellar
+  Cellar3 hires the Cellarman (free, the cask action).
+  ↳ Cellar3 gains +1 presence at London (majority help).
+  Cellar3 launches Keut Q4 at the Hall — ★ = quality (4★). A cube marks the Masters’ Shelf’s launch row; no coin, no tick.
+  Cellar4’s casks mature (+1) over the turn.
+
+== R23 · turn 92 · Cellar4 [cellarmaster] · G3 H0 ct2 | vessels[Broyhan!,Hopped!,-,-,-] deployed:1 | score 32 (dlv 9 maj 14 flt 9)
+  Cellar4 moves to Harbor
+  Cellar4 pays −G1 occupancy toll for sharing Harbor.
+  Cellar4 activates Left col · Market + Harbor
+  ↳ Cellar4 spends −G2
+  Cellar4 commissions the Hulk bound for Novgorod — place it on a slot.
+  ↳ Hulk placed on a slot, bound for Novgorod.
+  ↳ Cellar4 gains +G1
+  ↳ Cellar4 takes the loader bonus for shipping Cellar3’s cask (and chose the destination).
+  Cellar4 loads Broyhan onto the new Hulk (free, on commission) — 1/3.
+  ↳ Cellar4 gains +G1 +H1
+  Cellar4 sets a Ready Broyhan on a slot (under Cooperage).
+  Cellar4 enshrines Broyhan Q3 on the Long Shelf — the CRAFT coin: the Double Gyle — brew twice, now (no ★ — the cask bought the coin).
+  ↳ Cellar4 spends −G2 −H1
+  Cellar4 brews Keut (Q3 · matures in 2 steps).
+  ↳ Cellar4’s 5th distinct beer opens Floor slot 6 (the Flight track).
+  Cellar1’s casks mature (+1) over the turn.
+
+== R24 · turn 93 · Cellar1 [cellarmaster] · G2 H1 ct4 | vessels[Gruit!,-,-,-,-] deployed:0 | score 32 (dlv 13 maj 10 flt 9)
+  Cellar1 moves to Market
+  Cellar1 activates Top row · Market + Brewhouse
+  ↳ Cellar1 spends −G2
+  Cellar1 commissions the Hulk bound for London — place it on a slot.
+  ↳ Hulk placed on a slot, bound for London.
+  ↳ the die is set to 3 — Staple Hall pays its owner as the cask departs.
+  ↳ Cellar1 gains +G1
+  ↳ Cellar1 takes the loader bonus for shipping Cellar4’s cask (and chose the destination).
+  Cellar1 loads Hopped onto the new Hulk (free, on commission) — 1/3.
+  ↳ Cellar1 gains +G1 +H1
+  ↳ s3 — nothing to do here (no Ready cask to deploy).
+
+== R24 · turn 94 · Cellar2 [cellarmaster] · G1 H3 ct3 | vessels[Gruit!,-,-,-,-] deployed:1 | score 43 (dlv 12 maj 15 flt 16)
+  Cellar2 moves to Harbor
+  Cellar2 pays −G1 occupancy toll for sharing Harbor.
+  Cellar2 activates Bottom row · Harbor + Cellar
+  Cellar2 sets a Ready Gruit on a slot (under Staple Hall).
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+
+== R24 · turn 95 · Cellar3 [cellarmaster] · G0 H0 ct3 | vessels[-,-,-,-,-] deployed:2 | score 43 (dlv 21 maj 6 flt 16)
+  Cellar3 moves to Market
+  Cellar3 activates Top row · Market + Brewhouse
+  ↳ Cellar3 gains +G2
+  Cellar3 sources goods at the Market.
+  ↳ Cellar3 gains +G1 +H1
+  ↳ Cellar3 spends −G1
+  Cellar3 brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Hulk (→ London) — nothing eligible to load.
+  Cellar4’s casks mature (+1) over the turn.
+
+== R24 · turn 96 · Cellar4 [cellarmaster] · G0 H0 ct2 | vessels[Keut 1/2,Hopped!,-,-,-,-] deployed:0 | score 39 (dlv 9 maj 14 flt 16)
+  Cellar4 moves to Market
+  Cellar4 activates Top row · Market + Brewhouse
+  ↳ Cellar4 gains +H2
+  Cellar4 sources goods at the Market.
+  ↳ Cellar3’s stale Gruit has soured — dumped in the harbor (a Q2 cask takes the berth).
+  Cellar4 sets a Ready Hopped on a slot (under Customs House).
+  Cellar4 loads Hopped onto the Hulk → London (2/3).
+  ★ the Hulk sails to London with 2 casks! Every cask aboard is delivered. (Sailed-Ships 10/10)
+  ↳ Cellar4 takes the Cellarman Specialist free (London benefit).
+  ↳ Cellar4 takes the Hop Gardener Specialist free (London benefit).
+  ★ The Sailed-Ships track is full (10/10) — final round!
+
+================ FINAL — round 24 · sailed 10/10 · ended by CLOCK ================
+WINNER  Cellar4 [cellarmaster] — TOTAL 45  (deliveries 14 · majorities 15 · flight 16 · floor 0)
+        Bruges: Gruit Q1=1, Gruit Q1=1
+        London: Hopped Q2=4, Hopped Q2=1
+        Bergen: Mumme Q4=4, Hopped Q2=1
+        Novgorod: Broyhan Q3=2
+        The Hall: Broyhan Q3=0
+        flight beers: Gruit, Mumme, Broyhan, Hopped (4) · specialists: Cellarman, Hop Gardener · flipped: 0
+   #2   Cellar3 [cellarmaster] — TOTAL 43  (deliveries 21 · majorities 6 · flight 16 · floor 0)
+        London: Hopped Q2=1
+        Bergen: Hopped Q2=1
+        The Hall: Broyhan Q3=5, Mumme Q4=10, Keut Q4=4
+        flight beers: Broyhan, Hopped, Mumme, Keut (4) · specialists: Cellarman · flipped: 0
+   #3   Cellar2 [cellarmaster] — TOTAL 42  (deliveries 12 · majorities 14 · flight 16 · floor 0)
+        Bruges: Gruit Q1=1, Gruit Q1=1
+        London: Hopped Q2=1
+        Bergen: Hopped Q2=1, Mumme Q4=1, Hopped Q2=1
+        Novgorod: Broyhan Q3=2
+        The Hall: Keut Q4=4
+        flight beers: Gruit, Hopped, Mumme, Broyhan, Keut (5) · specialists: Cellarman · flipped: 0
+   #4   Cellar1 [cellarmaster] — TOTAL 32  (deliveries 13 · majorities 10 · flight 9 · floor 0)
+        Bruges: Gruit Q1=1
+        London: Hopped Q2=1, Hopped Q2=1
+        Bergen: Hopped Q2=1
+        Novgorod: Broyhan Q3=2
+        The Hall: Mumme Q4=7
+        flight beers: Mumme, Gruit, Broyhan, Hopped (4) · specialists: none · flipped: 0
+  majorities: Bruges[Cellar1+0 Cellar2+3 Cellar4+3]  London[Cellar1+3 Cellar3+5 Cellar4+1]  Bergen[Cellar1+1 Cellar2+9 Cellar3+1 Cellar4+5]  Novgorod[Cellar1+6 Cellar2+2 Cellar4+6]
+  buildings on the wharf at end: Novgorod Peterhof(Cellar1) · Malt Kiln(ntl) · Customs House(Cellar3) · Rich Berth(ntl) · Staple Hall(Cellar4) · Malt Kiln(Cellar1) · Cooperage(Cellar2) · Connoisseur’s Cellar(Cellar1)
