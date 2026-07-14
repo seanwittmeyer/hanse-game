@@ -60,10 +60,11 @@ randomizers / no-cards-as-hand / no-money constraints; the sim-gate discipline.
 
 Each house starts with (⚙):
 - **3 `G` (grain), 2 `H` (hops)** — equal for every seat. Storage cap 8 ⚙.
-- The **Gruit** and **Hopped** recipes (the symmetric on-ramp). More recipes at the Market.
+- The **Gruit** and **Hopped** recipe **cards** (the symmetric on-ramp; Gruit dealt flipped to
+  its BREWED face — the warm start counts). More recipes at the Market.
 - A **player board** (§8) with **ONE Floor row of 7 printed slots** (v3.1 “One Row”): **slots
-  1–2 open** (unlock covers on 3–7), **slot 1 printed VESSEL-ONLY**, plus the **Flight/unlock
-  strip** (one space per beer type this game). A slot holds ONE of: a maturing cask (a vessel) ·
+  1–2 open** (unlock covers on 3–7), **slot 1 printed VESSEL-ONLY** — nothing else prints on it
+  (v3.2d: your recipe cards carry the Flight). A slot holds ONE of: a maturing cask (a vessel) ·
   a seated Specialist · a flipped tile.
 - **2 charter contracts** (the kontor-Dispatch certificates; buy more at the Market — §6).
 - **14 presence discs ⚙ — your whole delivery runway, in public view.** Every delivered cask
@@ -174,8 +175,9 @@ from the face-up pile top; Gruit fixed to **Gain 2 goods** — §8). Three state
 **Brew:** load one recipe you hold (paying its `G/H`) into an **open vessel** → a young cask at
 step 0. It takes the **face-up top action of that quality’s pile** — every pile top is visible,
 so you brew toward the action you want (steerable variance). Gruit is pinned to *Gain 2 goods*.
-**Brewing a beer type for the first time marks your Flight strip — from the 2nd distinct beer
-on, each new mark grants a FLOOR-SLOT UNLOCK (§8).**
+**Brewing a beer type for the first time FLIPS its recipe card to the BREWED face (the big
+check) — from the 2nd distinct beer on, each flip grants a FLOOR-SLOT UNLOCK (§8). Your flipped
+cards ARE the Flight (§11).**
 **Or Deploy:** set one Ready cask onto **any** open slot (over-deploy rules apply) — the
 wharf-wide valve behind slot locality.
 
@@ -378,10 +380,11 @@ Shelf stays goods/tempo only — never engine pieces.)*
 
 ---
 
-## 8. The player board (private engine) — ONE Floor row · the Flight strip (v3.1 “One Row”)
+## 8. The player board (private engine) — ONE Floor row (v3.1 “One Row” · v3.2d: the Flight lives on your recipe cards)
 
-Your player board is **a single Floor line of 7 printed slots ⚙** plus the **Flight/unlock
-strip**. Every private thing you own competes for the same row:
+Your player board is **a single Floor line of 7 printed slots ⚙** — nothing else prints on it.
+Your recipe cards sit beside it; **flipped (BREWED) cards are the Flight record**. Every private
+thing you own competes for the same row:
 
 - **A slot holds ONE of:** a **maturing/Ready cask** (the slot is a vessel) · a **seated
   Specialist tile** · a **flipped tile** (face-down, a Floor Wild). Tiles are permanent once
@@ -389,13 +392,14 @@ strip**. Every private thing you own competes for the same row:
 - **Slots 1–2 open at start ⚙; covers on 3–7.** **SLOT 1 IS PRINTED VESSEL-ONLY** — Specialists
   and flips may never take your **last** brewing slot (you cannot build yourself out of beer):
   a tile may only seat while at least one other vessel-capable slot remains.
-- **Opening covers:** each **new distinct beer you BREW** (from the 2nd on — the Flight strip is
-  the record) opens the next cover **automatically**; the **Coppersmith** Specialist opens one
+- **Opening covers:** each **new distinct beer you BREW** (from the 2nd on — your flipped
+  recipe cards are the record) opens the next cover **automatically**; the **Coppersmith** Specialist opens one
   too. *(The Flight is the forcing mechanism: seat an upgrade early and you brew one-at-a-time
   until your next new beer opens the room.)*
-- **THE FLIGHT/UNLOCK STRIP** — one space per beer type this game (5 base; 6 with Jopenbier).
-  Mark a beer when you **first BREW it** (unlock currency); distinct beers **DELIVERED** still
-  score the Flight ladder (§11) — one strip, two mark states.
+- **THE FLIGHT ON THE CARDS (v3.2d)** — recipe cards are **double-sided**: flip a card to its
+  **BREWED** face (the big check) the first time you brew that beer. The flipped cards are the
+  unlock currency AND the scoring record — the Flight ladder (§11) counts distinct beers
+  **BREWED** ⚙. *(One record, carried by the card in front of you — no strip, no memory.)*
 
 **THE FLOOR — stay home to work it.** Choosing the Floor instead of moving (§2) is a whole turn
 on your board, any order, all optional:
@@ -475,7 +479,8 @@ A **MAX_ROUND ceiling** (~25 ⚙) backstops a slow table. Pace target **~12–25
 **End-game:**
 3. **Majorities** — at each kontor, by **delivered-cask count** (presence), tiered (Bruges 4/2/0
    · London 5/3/1 · Novgorod 8/5/2 · Bergen 9/5/2 ⚙; 2p skips 2nd; ties split).
-4. **The Flight** — distinct **beers delivered**: **(beers−1)², min 3** (3→4 · 4→9 · 5→16 ·
+4. **The Flight** — distinct **beers BREWED** (your flipped recipe cards ⚙ v3.2d):
+   **(beers−1)², min 3** (3→4 · 4→9 · 5→16 ·
    6→25 with the Jopenbier capstone). *Brewing them also unlocked your Floor along the way (§8).*
 
 *(The floor/developer points lane is **gone** — seated flips score nothing; they are engine. A displaced tile that finds **no open Floor slot** is discarded for **+3★ ⚙**, banked at once.)*

@@ -25,7 +25,7 @@
 |---|---|---|
 | Main board — **the Wharf** | 1 | 2×2 stations **A Market · B Brewhouse · C Harbor · D Cellar** — each face printing its **TWO actions** (`[icon] / [icon]`: Source/Acquire · Brew/Deploy · Load/Dispatch · Age/Upgrade) — ringed by 8 slots. |
 | **Destinations & Hall board** | 1 | Narrow, the same height as Market & Stores (the table pair). LEFT: the four kontore (gate · value · benefit · majority · presence zone). RIGHT: **the Hall — the Three Coins**: a kontor-style art header, four quality-gated SHELVES (each coin space prints one icon + a ≤3-word label + the claim-cube outline; FAME 5/7/10/13) and the LAUNCH strip (★ = quality, always open). |
-| Player boards | 4 | **ONE Floor row of 7 printed slots** (v3.1 “One Row”: slots 1–2 open · slot 1 vessel-only · covers on 3–7; a slot holds a maturing cask, a seated Specialist, or a flipped tile), the Flight/unlock strip, recipe rack, storage (§12). |
+| Player boards | 4 | **ONE Floor row of 7 printed slots** (v3.1 “One Row”: slots 1–2 open · slot 1 vessel-only · covers on 3–7; a slot holds a maturing cask, a seated Specialist, or a flipped tile) — nothing else prints on it (v3.2d: the Flight lives on the recipe cards; goods cap 8, §12). |
 | Market & Stores board *(printables2)* | 1 | The supply displays — the Market column (Wharf tiles 4 · ships 3 · recipes + contracts) and the Cellar column (Specialists 4) — plus the Sailed-Ships track (15 cells, END marks at 5/8/10 — v3.2) and the 50-cell score ring. |
 
 ---
@@ -60,7 +60,7 @@
 
 ## 5. Cask tiles · family A (~62, shared supply)
 
-A brewed beer in one of three states: **maturing** (vessel) → **deployed** (slot — cargo + a public action) → **delivered** (scores, gone). Each cask carries a printed quality and, on brewing, an action drawn from the top of its quality pile (Gruit pinned). **Brewing a new distinct beer marks the Flight strip — from the 2nd on, each mark grants a Floor-slot unlock.**
+A brewed beer in one of three states: **maturing** (vessel) → **deployed** (slot — cargo + a public action) → **delivered** (scores, gone). Each cask carries a printed quality and, on brewing, an action drawn from the top of its quality pile (Gruit pinned). **Brewing a new distinct beer FLIPS its recipe card to the BREWED face — from the 2nd on, each flip grants a Floor-slot unlock, and the flipped cards score the Flight ladder (v3.2d).**
 
 | Quality | Beer | Brew cost | Matures | Reaches | Qty ⚙ |
 |---|---|---|---|---|---|
@@ -138,7 +138,7 @@ Always acquired **from the face-up Wharf display of 4 and placed at once** (no h
 
 ## 8. Recipe cards · family D (6 designs)
 
-Permission to brew a quality. Permanent. Gruit + Hopped print on the player board.
+Permission to brew a quality. Permanent. **Double-sided (v3.2d): the cost face / the BREWED face** (a big check, bottom-right) — flip a card the first time you brew that beer; **your flipped cards ARE the Flight** (the unlock currency and the ladder record). Gruit + Hopped are **starter cards**, one each per player, dealt at setup (Gruit flipped — the warm start is brewed).
 
 | Recipe | Quality | Buy ⚙ | Brew ⚙ |
 |---|---|---|---|
@@ -149,7 +149,7 @@ Permission to brew a quality. Permanent. Gruit + Hopped print on the player boar
 | Mumme | Q4 | `2 H` | `G H H H` |
 | Bock | Q5 | `1 G 1 H` | `G G H H H` |
 
-Print **16 export cards** (4 copies × 4 exports); starters printed on the boards. The **Gain 1 recipe** cask action takes a dealt export card at its buy cost **−1 G** ⚙.
+Print **24 base cards** (4 copies × [2 starters + 4 exports]), all double-sided. The **Gain 1 recipe** cask action takes a dealt export card **free** ⚙ (v3.2c).
 
 ---
 
@@ -242,20 +242,20 @@ A Hall Dispatch (free, no boat; a deployed Q2+ cask) buys **exactly ONE coin** o
   a cask frees its slot when it deploys.
 - **The Floor (stay home):** instead of moving, run your board as the whole turn. Never tolled;
   a Floor with no live stop is not legal.
-- **The Flight/unlock strip:** one space per beer type. **Brewed** (first time) = a mark; from
-  the 2nd mark on, each **opens the next covered slot automatically**. **Delivered** = the
-  second mark state; distinct beers delivered score the ladder (3→4 · 4→9 · 5→16 · 6→25 with
-  Jopenbier).
+- **The Flight on the cards (v3.2d):** recipe cards are double-sided — flip to the **BREWED**
+  face on your first brew of that beer. From the 2nd flip on, each **opens the next covered
+  slot automatically**, and the flipped cards score the ladder (3→4 · 4→9 · 5→16 · 6→25 with
+  Jopenbier). No strip on the board — the card is the record.
 
 ## 13. Starting setup (per house)
 
 | Item | Quantity | Source |
 |---|---|---|
 | Starting goods | 3 `G` + 2 `H` | from supply |
-| Starting recipes | Gruit + Hopped | printed on the board |
+| Starting recipes | Gruit + Hopped cards (Gruit flipped to BREWED) | recipe supply |
 | Open Floor slots | 2 (of 7 printed; covers on 3–7; slot 1 vessel-only) | board + covers |
 | Charter contracts | 2 | from supply |
-| Ready Gruit in V1 | 1 | cask supply (mark its Flight space brewed) |
+| Ready Gruit in V1 | 1 | cask supply (the flipped Gruit card records it) |
 | Worker placement | 1 | any station, free (no toll) |
 
 Shared setup: 2 hulls dealt onto slots (incl. a guaranteed Hulk→Bruges); **2 neutral green works** dealt onto open slots (no owner; overbuilt = discarded); ship market 3; Wharf display 4; Specialist display 4 (deck `n−1` × 7); export draft 3 of 4; the Three Coins board out (all 12 coins open at every count); Sailed-Ships length set (§14); **each house takes its 14 presence discs — the pool sits in public view.**
@@ -342,7 +342,7 @@ Majorities turn OFF (the contest moves inland). Movement per voyage (one node pe
 | # | Gap | State it must carry | Sketch of a fix |
 |---|---|---|---|
 | 1 | **Maturation markers** — now manifested (§4, ×4/colour); the kit must print them | each maturing cask’s step | punch 5 small markers per colour |
-| 2 | ~~Flight strip~~ **superseded (v3.0-A)** — the strip is now the brewed/delivered two-state unlock track; the kit needs the two mark states legible | brewed vs delivered marks | chit face-up = brewed · flipped = delivered ⚙ |
+| 2 | ~~Flight strip~~ **retired (v3.2d)** — the Flight lives on the double-sided recipe cards (flip = brewed); no board strip, no chits | — | the card flip IS the record |
 | 3 | ~~Loaded-cargo procedure~~ **FIXED (v3.0-A)** — the hull carrier: berth wells hold cube + die + marker; the cask card waits in the owner’s manifest row | a ship’s cargo + load order | shipped in the carrier design |
 | 4 | **Jopenbier vintage counter** — nothing tracks the deployed capstone’s +1★/turn (0–5) | the vintage count | print a 0–5 strip on the Jopenbier card + a cube |
 | 5 | **Unlock-cover fit** — the covers must sit stably on the printed row slots | locked/open slots | punchboard squares sized to the slot ⚙ |

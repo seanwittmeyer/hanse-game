@@ -229,6 +229,14 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
 
+**v3.2d "The Flight on the cards"** *(2026-07-14, KEY `hanse-v32d`)* — Recipe cards go **double-sided**
+(cost face / **BREWED** face — a big check): flip on the first brew of that beer. The flipped cards ARE the
+Flight — the unlock currency AND the ladder record: **the Flight now scores distinct beers BREWED** ⚙ (was
+delivered; one on-component record, per the component-state hard line). The player board sheds its Flight
+strip, recipe rack and rules box (pure slots); **Gruit + Hopped become starter cards** (one each per player;
+Gruit dealt flipped — the warm start). With v3.2a (displaced tiles pay +3★), v3.2b (launch rows cube-marked),
+v3.2c (Gain-recipe/specialist cask actions free).
+
 **v3.2 "Three Coins"** *(2026-07-13, `play.html` KEY `hanse-v32`)* — The Hall study (`HALL-STUDY.md` — Orléans/
 Altiplano/Hamlet research + the internal bonus catalog + the pairings miner) diagnosed the v3.1 Hall as
 transactional: 11 of its 13 honors duplicated rewards purchasable in 3–7 other systems. The designer ruled

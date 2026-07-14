@@ -303,6 +303,16 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
 })();
 
 // ---- 12. the Cellar is one choice (Tap is gone) ----
+// ---- v3.2d: THE FLIGHT ON THE CARDS — the ladder counts distinct beers BREWED (the flipped recipe cards) ----
+(function(){var p=fresh(2);
+  ok('setup Gruit counts as brewed (the dealt-flipped card)', p.brewed&&p.brewed.gruit===1);
+  p.brewed={gruit:1,hopped:1,keut:1};p.delivered=[];
+  ok('flightBeers counts BREWED, not delivered', flightBeers(p)===3, 'got '+flightBeers(p));
+  ok('3 brewed beers score the ladder with zero deliveries', flightScore(p)===FLIGHT_PTS[3], 'got '+flightScore(p));
+  p.brewed={gruit:1,hopped:1};
+  ok('below FLIGHT_MIN scores 0', flightScore(p)===0);
+})();
+
 (function(){
   ok('tapPick is retired', typeof tapPick==='undefined');
   ok('cellarMenuAge is retired', typeof cellarMenuAge==='undefined');

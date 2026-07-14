@@ -472,7 +472,7 @@ const ICONTIP={
   landmark:'Kontor — a trade destination (value + die on delivery, majorities at the end).',
   'building-2':'Slot tile — an OWNED modifier of whatever docks on it: a blue PRIVILEGE prints a +N★ bonus for the owner’s departing cask (carried on the demand die); a green BUILDING serves any dock.',
   crown:'The Hall — the Guild\'s Three Coins: Dispatch a Q2+ deployed cask (no boat) to buy ONE coin — FAME ★ (5/7/10/13), a CRAFT power, or a FAVOR — or launch for ★ = quality. Never ticks the ships track; spends a presence disc.',
-  'scroll-text':'Recipe — permission to brew a type of beer. First-time brews mark your Flight strip (unlocks from the 2nd).',
+  'scroll-text':'Recipe — permission to brew a type of beer. Flip the card (BREWED face) on your first brew — your flipped recipes ARE the Flight (unlocks from the 2nd; the ladder scores beers brewed).',
   wrench:'Specialist — a private tile on your player board (bought at the Cellar; the row starts 2 of 4 — the Flight unlocks more).',
   ticket:'Charter contract — a kontor Dispatch spends one (+ the flat fare) to sail a single deployed Ready cask now (the relief valve; the Quaymaster also reaches your vessels).',
   search:'Survey — choose a Building from the face-up display and place it on a slot at once (free).',
@@ -480,7 +480,7 @@ const ICONTIP={
   'map-pin':'Presence — your delivered casks at a kontor (counts for majorities).',
   coins:'Goods.',
   package:'Storage — how many goods you can hold.',
-  layers:'The Flight — your range: distinct beers BREWED unlock Floor slots (from the 2nd); distinct beers DELIVERED score the ladder.',
+  layers:'The Flight — your range: distinct beers BREWED (your flipped recipe cards) unlock Floor slots (from the 2nd) AND score the ladder (v3.2d).',
   check:'Ready — this cask is matured; deploy it to a slot.',
   'user-round':'Worker — move it between the four stations, or stay home to work your Floor.',
   unlock:'Flight unlock — a new distinct beer brewed (from the 2nd) opens a Floor slot: the vessel row or the Specialist row, your choice.',
@@ -666,7 +666,7 @@ const FLIGHT_PTS={1:0,2:0,3:4,4:9,5:16,6:25};   // ⚙ Lisboa-style heavy back-l
 // v2.2: JOPENBIER COUNTS — "it is a beer you brew like the others" (designer). With the capstone toggle on,
 // SIX types exist and the 6-beer flight (25) is the new ceiling.
 function flightTypes(){const t=['gruit','hopped'].concat((S.exports||[]).slice().sort((a,b)=>STYLES[a].q-STYLES[b].q));if(S.jopen)t.push('jopenbier');return t;}
-function flightBeers(p){return new Set(p.delivered.filter(d=>STYLES[d.style]).map(d=>d.style)).size;}   // distinct BEERS only (the Hall's +3★ honor chit is not a beer)
+function flightBeers(p){return Object.keys(p.brewed||{}).filter(st=>STYLES[st]).length;}   // v3.2d: distinct beers BREWED — the flipped recipe cards ARE the record (the setup Gruit counts; the Hall's honor chit never did)
 function flightScore(p){const t=flightBeers(p);return (t>=FLIGHT_MIN)?(FLIGHT_PTS[t]||0):0;}
 // v1.0: the Masterpiece is CUT (folded into the Flight + value-Buildings, for scoring clarity).
 const ENSHRINE_FEE={};   // ⚙ v0.15: no fare/fee — the throttle is STRUCTURAL (the cask must be DEPLOYED to a slot first; keeps it contestable) + action-economy (one Harbor visit). Corrective is structure, not a fee.
@@ -892,7 +892,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v32c'; // v3.2c on v3.2b: the 'Gain 1 recipe' cask action is FREE (was buy −1G); card text trims — 'Enshrine 1 cask' · 'Gain 1 recipe' · 'Gain 1 specialist' (the free-ness lives in the rules, not on the tile).
+const KEY='hanse-v32d'; // v3.2d on v3.2c: THE FLIGHT ON THE CARDS — recipe cards are double-sided (cost face / BREWED face); flip on the first brew of that beer. The flipped cards ARE the Flight: the unlock currency AND the ladder record — the Flight now scores distinct beers BREWED ⚙ (was delivered). The board's Flight strip, recipe rack and rules box are gone; Gruit+Hopped are starter cards (Gruit flipped at setup).
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1935,7 +1935,7 @@ function grantUpgrade(p,key){   // the Specialists — a tile SEATS in an open F
 }
 // ---- v3.0-A THE FLIGHT UNLOCK TRACK: distinct beers BREWED unlock Floor slots (from the 2nd on) ----
 function markBrewed(p,style){if(!STYLES[style])return;p.brewed=p.brewed||{};
-  if(p.brewed[style])return;p.brewed[style]=1;
+  if(p.brewed[style])return;p.brewed[style]=1;   // v3.2d: on the table this IS the card flip — the BREWED face up
   const n=Object.keys(p.brewed).length;
   if(n>=2){const k=openFloorSlot(p,1);   // v3.1 ONE ROW: the unlock is AUTOMATIC — the next cover comes off (one row, no choice)
     if(!aiSimulating)log('↳ '+LU('unlock')+' '+p.name+'’s <b>'+n+(n===2?'nd':n===3?'rd':'th')+' distinct beer</b> '+(k?'opens <b>Floor slot '+p.floorCap+'</b>':'— every printed Floor slot is already open')+' (the Flight track).');}
@@ -2290,7 +2290,7 @@ function gameOver(){
   const midHdr=olOn?'Inland roads<br><span class="note">(Staple Rights)</span>':'Majorities';
   let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries</th><th>'+midHdr+'</th><th>Flight</th>'+(anyDev?'<th>Tiles<br><span class="note">(displaced, discarded)</span></th>':'')+'<th>Total</th></tr>';
   rows.forEach(r=>{const mid=olOn?(r.sc.ext||0):r.sc.maj;h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+'</td><td>'+mid+'</td><td>'+(r.sc.flight||'·')+'</td>'+(anyDev?'<td>'+(r.sc.developed||'·')+'</td>':'')+'<td><b>'+r.sc.total+'</b></td></tr>';});
-  h+='</table><p class="note">Score = <b>delivery value</b> (each cask\'s starting value + its demand die) + kontor <b>majorities</b> + the <b>Flight</b> (distinct beers delivered — '+FLIGHT_MIN+'+ to score) (flipped tiles score nothing — they are Floor engine). The Hall shelves are the prestige race; the kontore are the variable demand. (Tiebreak: the combined <b>quality of your deployed casks on slots</b> — built but not yet delivered — then goods.)</p>'
+  h+='</table><p class="note">Score = <b>delivery value</b> (each cask\'s starting value + its demand die) + kontor <b>majorities</b> + the <b>Flight</b> (distinct beers BREWED — the flipped recipe cards; '+FLIGHT_MIN+'+ to score) (flipped tiles score nothing — they are Floor engine). The Hall shelves are the prestige race; the kontore are the variable demand. (Tiebreak: the combined <b>quality of your deployed casks on slots</b> — built but not yet delivered — then goods.)</p>'
     +'<button onclick="hideOver()">⚓ View the final board</button> <button onclick="openStudio()">⇪ Send to Studio'+(S.studioSent?' ✓':'')+'</button> <button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
 }
@@ -3395,7 +3395,7 @@ function renderAid(){
       +'<li><b>Banked as you play:</b> delivery value (value + die — every kontor pays at least 1★) · the Hall’s FAME coins (5/7/10/13★) and launches (★ = quality).</li>'
       +'<li><b>Majorities (end-game)</b> — 1st/2nd/3rd at each kontor by delivered-cask count.</li>'
       +'<li><b>The DUAL clock</b> — the Sailed-Ships track ('+ic('sailboat')+' voyages only) and the presence pool ('+PRES_POOL+' public discs each; the last disc placed sets the final round) — the first to fire ends the game.</li>'
-      +'<li><b>The Flight (end-game)</b> '+ic('layers')+' — distinct <b>beers</b> delivered anywhere: <b>3 → '+FLIGHT_PTS[3]+' · 4 → '+FLIGHT_PTS[4]+' · 5 → '+FLIGHT_PTS[5]+(S&&S.jopen?' · 6 → '+FLIGHT_PTS[6]:'')+'</b> (min 3; the Jopenbier capstone counts when in play'+(S&&S.jopen?' — 6 types this game':'')+'). Brewing them also unlocked your Floor along the way.</li>'
+      +'<li><b>The Flight (end-game)</b> '+ic('layers')+' — distinct <b>beers BREWED</b> (your flipped recipe cards): <b>3 → '+FLIGHT_PTS[3]+' · 4 → '+FLIGHT_PTS[4]+' · 5 → '+FLIGHT_PTS[5]+(S&&S.jopen?' · 6 → '+FLIGHT_PTS[6]:'')+'</b> (min 3; the Jopenbier capstone counts when in play'+(S&&S.jopen?' — 6 types this game':'')+'). Brewing them also unlocked your Floor along the way.</li>'
       +'</ol></div>'
     +'<div class="asec"><b>Icon key</b><div class="akey">'+keys.map(k=>'<div class="akrow">'+ic(k[0])+'<span>'+k[1]+'</span></div>').join('')+'</div></div>'
     +'<div style="text-align:center;margin-top:10px"><button class="primary" onclick="toggleAid()">Close</button></div>';
@@ -3852,9 +3852,9 @@ function renderTableaus(){
     // FLIGHT tracker: distinct BEERS delivered ANYWHERE → (beers-1)², min 3. Base = 5 types; with the
     // Jopenbier capstone on there are SIX (v2.2 — the capstone counts), so the ceiling is flightTypes().length.
     const ftypes=flightTypes();const fmax=ftypes.length;
-    const fdt={};p.delivered.forEach(x=>fdt[x.style]=1);const fbeers=Object.keys(fdt).length;const fcur=flightScore(p);
+    const fdt=p.brewed||{};const fbeers=flightBeers(p);const fcur=flightScore(p);   // v3.2d: the flipped recipe cards are the record
     const fnext=fbeers<fmax?(FLIGHT_PTS[fbeers+1]||0):null;
-    const fpips=ftypes.map(st=>'<span class="fpip'+(fdt[st]?' on':'')+'" data-tip="'+attr(STYLES[st].name+' (Q'+STYLES[st].q+')'+(fdt[st]?': delivered ✓':': not yet delivered'))+'">'+styleShort(st)+'</span>').join('');
+    const fpips=ftypes.map(st=>'<span class="fpip'+(fdt[st]?' on':'')+'" data-tip="'+attr(STYLES[st].name+' (Q'+STYLES[st].q+')'+(fdt[st]?': brewed ✓ (the card is flipped)':': not yet brewed'))+'">'+styleShort(st)+'</span>').join('');
     const flightStr=fpips+' <span class="note"><b>'+fcur+'★</b>'+(fbeers>=fmax?' — full flight!':(fnext!=null&&fnext>fcur?' · +'+(fnext-fcur)+' at '+(fbeers+1)+' beers':(fbeers<FLIGHT_MIN?' · need '+FLIGHT_MIN+'+ beers to score':'')))+'</span>';
     body+='<div class="tableau '+(i===activeTab?'show':'')+'">'
       +'<div style="margin-bottom:6px"><span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
@@ -3867,7 +3867,7 @@ function renderTableaus(){
       +'<div class="tsec"><b class="note">'+LU('building-2')+' Buildings (yours, on slots):</b><div class="trow">'+myBldgs+'</div></div>'
       +'<b class="note">'+LU('anchor')+' On slots (yours):</b> '+wharf+'<br>'
       +'<b class="note">'+LU('landmark')+' Delivered:</b> '+delivered+'<br>'
-      +'<b class="note">'+LU('layers')+' Flight (distinct beers delivered, any destination):</b> '+flightStr
+      +'<b class="note">'+LU('layers')+' Flight (distinct beers brewed — flipped recipe cards):</b> '+flightStr
       +'</div>';
   });
   document.getElementById('tabs').innerHTML=tabs;
@@ -4038,7 +4038,7 @@ function olGrantBrew(lp){const vi=openVessel(lp);if(vi<0){olLog(lp,'(no open ves
   const aff=lp.recipes.filter(r=>canBrew(lp,r));if(!aff.length){olLog(lp,'(no affordable recipe → goods)');gain(lp,1,1);return;}
   aff.sort((a,b)=>STYLES[b].q-STYLES[a].q);const style=aff[0];pay(lp,STYLES[style].in);
   lp.vessels[vi]={style,q:STYLES[style].q,step:0,ready:effReady(lp,style),act:takePileTop(STYLES[style].q,style)};
-  markBrewed(lp,style);   // v3.0-A: a road-slot brew is a brew — it marks the Flight strip / unlocks like any other
+  markBrewed(lp,style);   // v3.0-A: a road-slot brew is a brew — it flips the recipe card (the Flight) / unlocks like any other
   olLog(lp,'brews '+STYLES[style].name);}
 // FREE CASK (gruitfree / q3free): rack a free cask of the given style straight into an open vessel to cellar —
 // no recipe, no cost, no choice (distinct from the 'brew' slot, which lets you choose + pay). Goods fallback if full.

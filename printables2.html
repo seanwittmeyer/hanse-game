@@ -293,6 +293,12 @@
   .card .c-strip .c-lbl{font-size:.085in;font-style:italic;opacity:.85}
   .card .c-strip .c-gate{display:inline-flex;align-items:center;gap:.02in;font-size:.085in;font-style:italic}
   .card .c-strip .c-gate svg,.card .c-strip .c-gate .ic{width:.12in;height:.12in}
+  /* the BREWED face (v3.2d): a big check stamped on the bottom-right corner, riding above the strip */
+  .card .c-brewed{position:absolute;right:.07in;bottom:.5in;width:.66in;height:.66in;border-radius:50%;z-index:2;
+    background:#4a6b3a;border:3px solid #f7efdc;box-shadow:0 1.5px 4px rgba(0,0,0,.4);color:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.01in}
+  .card .c-brewed svg,.card .c-brewed .ic{width:.34in;height:.34in;stroke-width:3.2}
+  .card .c-brewed span{font-variant:small-caps;font-weight:bold;font-size:.078in;line-height:1}
   /* ====================== PLAYER AID CARD (double-sided: A = a turn · B = icon reference) ======================
      Two sheets (FRONT / BACK). Every card on a sheet is IDENTICAL, on a centred & symmetric 2×2 grid, so the
      outlines register under EITHER duplex flip edge — "front aligns with back" holds regardless of the printer.
@@ -393,32 +399,10 @@
   .fmeta{display:flex;flex-direction:column;line-height:1.08;min-width:0}
   .fmeta .fn{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--ink)}
   .fmeta .fq{font-size:.078in;color:var(--ink2)}
-  /* --- RECIPE RACK: bottom edge — slide export recipe cards up; the exposed strip = the card's brew face.
-     Gruit & Hopped are printed here as clones of a recipe card's bottom c-strip. --- */
-  .rack{margin:auto -.16in -.16in;padding:.06in .12in 0;border-top:1.6px dashed var(--pc);
-    background:repeating-linear-gradient(90deg,rgba(0,0,0,.025) 0 1.85in,transparent 1.85in 3.7in)}
-  .rack-h{font-variant:small-caps;font-weight:bold;font-size:.105in;color:var(--pc);display:flex;align-items:center;gap:.05in;margin-bottom:.05in}
-  .rack-h svg,.rack-h .ic{width:.13in;height:.13in} .rack-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.085in;color:var(--ink2);margin-left:auto}
-  .rack-row{display:flex;gap:.04in;justify-content:center}
-  .rk{width:1.85in;height:.56in;flex:0 0 auto;border-radius:.05in .05in 0 0;border:1.3px solid var(--pc);border-bottom:none;overflow:hidden}
-  .rk.tuck{border-style:dashed;background:rgba(255,255,255,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.02in;color:var(--pc);font-size:.092in;text-align:center}
-  .rk.tuck svg,.rk.tuck .ic{width:.15in;height:.15in;opacity:.55}
-  .rk.printed{background:var(--cc);color:#fff;display:flex;flex-direction:column;justify-content:center;gap:.04in;padding:.05in .12in;text-shadow:0 1px 1.5px rgba(0,0,0,.45)}
-  .rk.printed .c-row{display:flex;align-items:center;gap:.06in;line-height:1;white-space:nowrap}
-  .rk.printed svg,.rk.printed .ic{width:.14in;height:.14in;flex:0 0 auto}
-  .rk.printed .c-rung{display:inline-flex;align-items:center;gap:.015in;background:rgba(255,255,255,.92);color:var(--cc);
-    border-radius:.04in;padding:.025in .05in;font-size:.115in;font-weight:bold;text-shadow:none}
-  .rk.printed .c-rung svg,.rk.printed .c-rung .ic{width:.13in;height:.13in}
-  .rk.printed .c-nm{font-variant:small-caps;font-weight:bold;font-size:.16in}
-  .rk.printed .c-lbl{font-size:.085in;font-style:italic;opacity:.85}
-  .rk.printed .c-cost{display:inline-flex;align-items:center;gap:.06in;font-weight:bold;font-size:.13in}
-  .rk.printed .c-cost .gc{font-size:.13in;gap:.02in}
-  .rk.printed .c-cost .gc svg,.rk.printed .c-cost .gc .ic{width:.13in;height:.13in}
-  /* ====================== PLAYER BOARD v3 (component-driven · tight die-cut · chrome-stripped) ==========
-     A bench sized to the TILES, not the page: 4 building/improvement slots (2in) + a compact Flight strip on
-     v3.1 ONE ROW: seven 2.5in Floor slots (they seat the 2.5in cask cards) wrapped as two visual runs
-     (F1–F4 + the recipe rack · F5–F7 + the Floor rules panel), the Flight strip below. The die-cut hugs
-     the cluster (see the call site). */
+  /* ====================== PLAYER BOARD v6 (component-driven · tight die-cut · chrome-stripped) ==========
+     v3.2d PURE SLOTS: seven 2.5in Floor slots (they seat the 2.5in cask cards) wrapped as two visual
+     runs (F1–F4 · F5–F7) under the id row — nothing else. The Flight lives on the recipe cards; the
+     rules live on the player aid. The die-cut hugs the cluster (see the call site). */
   .pb2{--pc:#7c2128;width:100%;height:100%;background:var(--parch);color:var(--ink);position:relative;
     border:3px solid var(--pc);border-radius:.18in;padding:.13in;display:flex;flex-direction:column;gap:.1in}
   /* the white highlight line is an ::after overlay border, not an inset box-shadow — html2canvas floods
@@ -446,32 +430,6 @@
   .pb2-vsl{width:2.5in;height:2.5in;border-style:solid}
   .pb2-vsl.extra{border-style:dashed}
   .pb2-vsl .si svg,.pb2-vsl .si .ic{width:.46in;height:.46in}
-  /* flight — a compact tally column, top-right */
-  .pb2-flight{flex:1 1 auto;min-width:.95in;display:flex;flex-direction:column;gap:.03in;border:1.6px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.4);padding:.05in .06in}
-  .pb2-flight .fh{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--pc);text-align:center;display:flex;align-items:center;justify-content:center;gap:.03in}
-  .pb2-flight .fh svg,.pb2-flight .fh .ic{width:.12in;height:.12in}
-  .pb2-flight .fsub{font-size:.068in;font-style:italic;color:var(--ink2);text-align:center}
-  .pb2-fboxes{flex:1;display:flex;flex-direction:column;gap:.04in}
-  .pb2-fbox{flex:1;border:1.2px solid var(--pc);border-radius:.035in;background:rgba(255,255,255,.5);
-    display:flex;align-items:center;justify-content:space-between;padding:0 .07in}
-  .pb2-fbox .fn{font-weight:900;font-size:.095in;font-variant:small-caps;color:var(--pc)}
-  .pb2-fbox .fp{display:inline-flex;align-items:center;gap:.015in;font-weight:900;font-size:.105in;color:var(--vp)}
-  .pb2-fbox .fp svg,.pb2-fbox .fp .ic{width:.12in;height:.12in}
-  .pb2-fbox.z{opacity:.5} .pb2-fbox.z .fp{color:var(--ink2);font-weight:normal}
-  /* recipe — Gruit/Hopped printed at the TOP; acquired cards slide UP under them and stack in the zone below. */
-  .pb2-recipe{width:1.78in;flex:0 0 auto;display:flex;flex-direction:column;gap:.05in;border:1.6px dashed var(--pc);border-radius:.06in;background:rgba(255,255,255,.35);padding:.06in}
-  .pb2-recipe .rh{font-variant:small-caps;font-weight:bold;font-size:.095in;color:var(--pc);display:flex;align-items:center;gap:.03in}
-  .pb2-recipe .rh svg,.pb2-recipe .rh .ic{width:.11in;height:.11in}
-  .pb2-rstack{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;color:var(--pc);font-size:.078in;opacity:.6;
-    border:1.3px dashed var(--pc);border-radius:.05in;background:repeating-linear-gradient(0deg,rgba(124,33,40,.05) 0 .04in,transparent .04in .14in)}
-  .pb2-rstack svg,.pb2-rstack .ic{width:.18in;height:.18in;opacity:.8}
-  .pb2-rbase{display:flex;flex-direction:column;gap:.035in}
-  .pb2-rbar{border-radius:.035in;padding:.03in .05in;color:#fff;display:flex;align-items:center;gap:.04in;text-shadow:0 1px 1px rgba(0,0,0,.4)}
-  .pb2-rbar .rq{display:inline-flex;align-items:center;gap:.01in;background:rgba(255,255,255,.92);color:#333;border-radius:.025in;padding:0 .03in;font-weight:bold;font-size:.082in}
-  .pb2-rbar .rq svg,.pb2-rbar .rq .ic{width:.09in;height:.09in}
-  .pb2-rbar .rn{font-variant:small-caps;font-weight:bold;font-size:.1in;flex:1}
-  .pb2-rbar .rc{display:inline-flex;align-items:center;gap:.025in;font-weight:bold;font-size:.092in}
-  .pb2-rbar .rc .gc .ic,.pb2-rbar .rc .gc svg{width:.1in;height:.1in}
   /* ====================== DESTINATIONS BOARD ====================== */
   .dboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--gold);border-radius:.14in;padding:.16in;display:flex;flex-direction:column;gap:.12in;color:var(--ink);box-sizing:border-box}
   .dboard svg,.dboard .ic{stroke-width:1.9}
@@ -808,7 +766,7 @@
   .oln-gwb i{color:var(--ink2)}
   .oln-gwa{display:inline-flex;align-items:center;gap:.03in;font-weight:bold}
   .oln-gwa svg,.oln-gwa .ic{width:.11in;height:.11in}
-  /* ---- v3.0-A player-board additions: covers · flip shelf · the Floor bar · the two-state Flight strip ---- */
+  /* ---- v3.0-A player-board additions (v3.2d: covers only — the strip/shelf generators are retired) ---- */
   .pb2-goods.nomargin{margin-left:.12in}
   .pb2-row{display:flex;gap:.1in;flex:0 0 auto}
   .pb2-slot.cov{border-style:dotted;background:repeating-linear-gradient(45deg,rgba(0,0,0,.055),rgba(0,0,0,.055) .07in,rgba(255,255,255,.3) .07in,rgba(255,255,255,.3) .14in)}
@@ -819,24 +777,8 @@
   .pb2-flipsh .fsh svg,.pb2-flipsh .fsh .ic{width:.12in;height:.12in}
   .pb2-flipsh .pb2-flip{width:auto;height:auto;min-height:1.1in}
   .pb2-flipsh .fnote{grid-column:1/3;font-size:.072in;font-style:italic;color:var(--ink2);line-height:1.15}
-  .pb3-flight{flex:0 0 auto;border:1.6px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.4);padding:.05in .08in;display:flex;flex-direction:column;gap:.035in}
-  .pb3-flight .fh{font-variant:small-caps;font-weight:bold;font-size:.115in;color:var(--pc);display:flex;align-items:center;gap:.04in}
-  .pb3-flight .fh svg,.pb3-flight .fh .ic{width:.13in;height:.13in}
-  .pb3-flight .fsub{font-size:.08in;font-style:italic;color:var(--ink2);line-height:1.2}
-  .pb3-fboxes{display:flex;gap:.06in}
-  .pb3-fbox{flex:1;display:flex;flex-direction:column;align-items:center;gap:.03in;border:1.2px solid var(--pc);border-radius:.035in;background:rgba(255,255,255,.5);padding:.03in}
-  .pb3-fbox .fn{font-weight:900;font-size:.095in;font-variant:small-caps;color:var(--pc)}
-  .pb3-fbox .fmk{display:flex;flex-direction:column;gap:.02in;width:100%}
-  .pb3-fbox .fmk .m{display:flex;align-items:center;justify-content:center;gap:.03in;font-size:.075in;font-variant:small-caps;color:var(--ink2);border:1px dotted var(--pc);border-radius:.03in;padding:.014in .03in}
-  .pb3-fbox .fmk .m svg,.pb3-fbox .fmk .m .ic{width:.09in;height:.09in}
-  .pb3-fbox.z{opacity:.55}
   .pb2-floor{flex:0 0 auto;display:flex;align-items:center;gap:.06in;border-radius:.06in;background:var(--pc);color:#fff;padding:.045in .09in;font-size:.098in;line-height:1.25}
   .pb2-floor svg,.pb2-floor .ic{width:.15in;height:.15in;flex:0 0 auto}
-  /* the ONE-ROW Floor rules panel (sits beside slots 5–7) — the teaching text, in the board's own language */
-  .pb2-floorbox{flex:1;display:flex;gap:.08in;align-items:flex-start;border:1.6px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.4);padding:.08in .1in;font-size:.102in;line-height:1.3;color:var(--ink)}
-  .pb2-floorbox svg,.pb2-floorbox .ic{width:.18in;height:.18in;flex:0 0 auto;color:var(--pc)}
-  .pb2-floorbox b{color:var(--pc)}
-  .pb2-floorbox .fbnote{display:block;margin-top:.035in;font-size:.09in;color:var(--ink2)}
   /* ---- UNLOCK COVER tile ---- */
   .cover{background:var(--c);border-radius:.1in;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.05in;color:#fff;box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
   .cover svg,.cover .ic{width:.42in;height:.42in;opacity:.9}
@@ -1065,7 +1007,13 @@ const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
 // flat 2 G fare to charter a single cask. ~20 supply covers starts + the Market buy pile. Art = contractCard().
 const CONTRACTS={nm:'Charter Contract', n:20};
-const RECIPES=[  // EXPORT recipe cards only — Gruit & Hopped are printed on the brewery board's tuck strip.
+// v3.2d — recipe cards are DOUBLE-SIDED: the cost face / the BREWED face (a big check, bottom-right).
+// Flip a card the first time you brew that beer — your flipped recipe cards ARE the Flight: the unlock
+// currency AND the scoring record (the ladder counts distinct beers BREWED). The board strip is gone.
+const STARTERS=[   // the starting recipes are CARDS since v3.2d — one each per player, dealt at setup (flip Gruit at setup: the warm start is brewed)
+  {nm:'Gruit', cc:'#8a949c', L:1, g:1,h:0, start:1},
+  {nm:'Hopped',cc:'#c2922f', L:2, g:1,h:1, start:1}];
+const RECIPES=[  // EXPORT recipe cards — print in the same double-sided run as the STARTERS above.
   // buy = Market acquire cost (RECIPE_BUY in play.html) · g/h = the BREW cost on the tucked edge.
   {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{h:1},     reach:'Q3 · all kontore (the Hall via Dispatch) · FAST: ready 1'},
   {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'Q3 · all kontore (+ the Hall) · +1 presence on a kontor delivery'},
@@ -1127,7 +1075,8 @@ const PG={w:11,h:8.5,y0:0.75,yMax:7.92};   // FULL letter paper (landscape); con
 const CARD_GEO={w:11,h:8.5,y0:1.25,yMax:8.2};   // full paper; the 15-card grid keeps its physical placement
 // LARGE-FORMAT (22″-wide) plotter sheets — each TRIMMED to its own content height so we don't run blank media.
 // (render() emits a named @page + .lgNN rule per distinct height — see lgClass / the dynpage stylesheet.)
-const WHARF_GEO ={w:22,h:10.5, y0:0.45,yMax:10.22};  // the Wharf cross (9.4″) + tokens tucked on the right
+const WHARF_GEO ={w:22,h:10.5, y0:0.45,yMax:10.22};  // the Wharf cross (9.4″) + the Specialist tiles tucked on the right
+const TOK_GEO   ={w:22,h:6.0,  y0:0.45,yMax:5.75};   // the TOKENS sheet — goods + discs/cubes/markers, single-sided cut circles
 const SUPPLY_GEO={w:22,h:10.1, y0:0.45,yMax:9.82};   // ONE sheet, both table boards (each prints 9.36in tall at ×0.8)
 // The Supply & Tracks board — DESIGNED to its components (all native in, print ×0.8):
 //   · every display slot is CUT to its family's native tile size (ships 2.5 · buildings/improvements 2 ·
@@ -1298,8 +1247,9 @@ function frameTile(c,nm){return '<div class="frame" style="--c:'+c+'">'+(nm?'<sp
 function coverTile(c,w){return '<div class="cover" style="--c:'+c+';width:'+w+'in;height:'+w+'in">'+LU('lock')+'<span>locked —<br>a NEW distinct brew<br>(or the Coppersmith)<br>opens this slot</span></div>';}
 function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?'<span>'+d.nm+'</span>':'')+'</div>';}
 
-function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
+function recipeCard(r,brewed){return '<div class="card" style="--cc:'+r.cc+'">'
   +artLayer('cask-'+r.nm.toLowerCase()+'.png')
+  +(brewed?'<div class="c-brewed">'+LU('check')+'<span>brewed</span></div>':'')
   +'<div class="c-costpanel">'+(r.start
     ? '<span class="clab">starting recipe</span>'
     : '<span class="clab">cost</span><span class="cbig">'+cost(r.buy.g,r.buy.h)+'</span>')+'</div>'
@@ -1392,42 +1342,11 @@ function aidBack(){
     +'</div></div>';}
 
 // ---- player brewery board (v1.6 — rebuilt from scratch) ----
-// A pure TRACKING surface: header + storage zone · THE FLOOR (3 vessel squares + maturation tracks + 3
-// improvement squares) · THE FLIGHT (one space per beer) · a bottom RECIPE RACK (Gruit/Hopped printed as
-// card-edge strips + tuck slots for export recipe cards). No rules text — those live on the player-aid card.
-// maturation START spaces, by how many ages the beer needs (3 · 2 · 1 steps): place your aging marker on the
-// space bearing your beer's name, then advance RIGHT one space per age — READY is always the last space.
-const MSTART=[['Mumme','Bock'],['Keut'],['Gruit','Hopped','Broyhan']];
-function mtrackCells(){
-  let c=MSTART.map(names=>'<div class="ms">'+names.map(n=>'<span class="bn">'+n+'</span>').join('')+'</div>').join('');
-  return c+'<div class="ms fin"><span class="rdy">Ready</span><span class="rsub">ship ▸</span></div>';}
-function vcol(n,locked){
-  return '<div class="vcol'+(locked?' locked':'')+'">'
-    +'<div class="vsq"><span class="vn">Vessel '+n+'</span>'+LU('beer')+'<span>cask</span></div>'
-    +'<div class="vflow">'+LU('arrow-right')+'</div>'
-    +'<div class="mtrack">'+mtrackCells()+'</div></div>';}
-function rkPrinted(cc,L,nm,g,h){   // a clone of a recipe card's bottom "c-strip" (the edge that shows when tucked)
-  return '<div class="rk printed" style="--cc:'+cc+'">'
-    +'<div class="c-row"><span class="c-rung">'+LU(QI)+L+'</span><span class="c-nm">'+nm+'</span></div>'
-    +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(g,h)+'</span></div></div>';}
-// ---- player board v5 (v3.1 "ONE ROW") — a single Floor line of 7 printed slots (wrapped as two
+// ---- player board v6 (v3.2d) — PURE SLOTS: a single Floor line of 7 printed slots (wrapped as two
 // visual runs: F1–F4 · F5–F7). Slot 1 prints VESSEL-ONLY; slots 1–2 open; covers on 3–7. A slot
-// holds ONE of: a maturing cask (card + marker) · a seated Specialist tile · a flipped tile. The
-// Flight strip is the unlock currency (a new distinct beer brewed, from the 2nd, opens the next
-// cover — automatic). Cask cards carry their own aging track; the slots just seat the cards. ----
-function pbFlight(){
-  const spaces=[['Gruit',''],['Hopped',''],['export',' z'],['export',' z'],['export',' z'],['Jopenbier',' z']];
-  const boxes=spaces.map(b=>'<div class="pb3-fbox'+b[1]+'"><span class="fn">'+b[0]+'</span>'
-    +'<span class="fmk"><span class="m">'+LU('flask-conical')+'brewed</span><span class="m">'+LU('sailboat')+'delivered</span></span></div>').join('');
-  return '<div class="pb3-flight"><div class="fh">'+LU('layers')+'The Flight &amp; the Unlocks</div>'
-    +'<div class="fsub">1st brew of a beer → mark BREWED; from your 2nd beer on, each brewed mark opens the next covered Floor slot (automatic) · beers DELIVERED score 3→4 · 4→9 · 5→16 · 6→25</div>'
-    +'<div class="pb3-fboxes">'+boxes+'</div></div>';}
-function pbRecipe(){   // Gruit & Hopped (the starters) printed at the TOP; acquired recipe cards slide UP under them, stacking in the zone below
-  const bar=(cc,L,nm,g,h)=>'<div class="pb2-rbar" style="background:'+cc+'"><span class="rq">'+LU(QI)+L+'</span>'
-    +'<span class="rn">'+nm+'</span><span class="rc">'+cost(g,h)+'</span></div>';
-  return '<div class="pb2-recipe"><div class="rh">'+LU('scroll-text')+'Recipes</div>'
-    +'<div class="pb2-rbase">'+bar('#6f7a82',1,'Gruit',1,0)+bar('#a67c1e',2,'Hopped',1,1)+'</div>'
-    +'<div class="pb2-rstack">'+LU('layers')+'slide cards under</div></div>';}
+// holds ONE of: a maturing cask (card + marker) · a seated Specialist tile · a flipped tile.
+// The Flight strip, the recipe rack, and the Floor-rules box are GONE — the Flight lives on the
+// recipe cards (flip = brewed), and the Floor rules live on the player-aid card. ----
 function pboard(p){
   const fslot=i=>{const cov=i>2, v1=i===1;
     return '<div class="pb2-slot pb2-vsl'+(cov?' cov':'')+(v1?' vonly':'')+'">'
@@ -1436,14 +1355,13 @@ function pboard(p){
       +'<span class="si">'+(v1?LU('beer'):LU('beer')+LU('wrench')+LU('sparkles'))+'</span></div>';};
   let rowA='';for(let i=1;i<=4;i++)rowA+=fslot(i);
   let rowB='';for(let i=5;i<=7;i++)rowB+=fslot(i);
-  const floorBox='<div class="pb2-floorbox">'+LU('home')+'<div><b>THE FLOOR — stay home:</b> instead of moving, work your board — Age <b>3</b> pool (+2 with the Lagerkeeper) · every vessel cask’s action · a Wild per flipped tile · never tolled.<br><span class="fbnote">ONE ROW: a slot holds a cask, a Specialist, or a flip — a seated tile is a vessel you don’t have. Slot 1 stays vessel-only.</span></div></div>';
   return '<div class="pb2" style="--pc:'+p.c+'">'
     +'<div class="pb2-id"><div class="pb2-crest">'+LU('beer')+'</div><div class="pb2-name">'+p.nm+'</div>'
+      +'<div class="pb2-goods">'+LU('scroll-text')+'start&nbsp;<b>Gruit&nbsp;+&nbsp;Hopped</b>&nbsp;cards</div>'
       +'<div class="pb2-goods">'+LU('ticket')+'start&nbsp;<b>2</b>&nbsp;contracts</div>'
       +'<div class="pb2-goods nomargin">'+LU('wheat')+LU('sprout')+'goods max&nbsp;<b>8</b></div></div>'
-    +'<div class="pb2-row"><div class="pb2-vessels">'+rowA+'</div>'+pbRecipe()+'</div>'
-    +'<div class="pb2-row"><div class="pb2-vessels">'+rowB+'</div>'+floorBox+'</div>'
-    +pbFlight()
+    +'<div class="pb2-row"><div class="pb2-vessels">'+rowA+'</div></div>'
+    +'<div class="pb2-row"><div class="pb2-vessels">'+rowB+'</div></div>'
   +'</div>';}
 
 // (the standalone Hall board + Destinations letter boards are RETIRED — the Destinations & Hall
@@ -1846,17 +1764,12 @@ function aidSheet(pages,label,faceHtml){
 function buildPages(){
   const pages=[],famPages={};
   // --- BOARDS ---
-  wharfBoardSheet(pages);   // the Wharf (cross) — its own 22×15 sheet (the Supply board moved to its own sheet, below)
-  // tuck the single-sided TOKENS into the open right side of the Wharf sheet (no separate token sheet needed):
-  // goods cubes upper, ownership discs below — both single-sided, so no back sheet.
+  wharfBoardSheet(pages);   // the Wharf (cross) — its own trimmed 22-wide sheet
+  // tuck the single-sided SPECIALIST tiles into the open right side of the Wharf sheet
+  // (2026-07-14: the tokens moved to their own sheet — see the TOKENS sheet below).
   const wpg=pages[pages.length-1];
-  const wtok=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wtok.push(tok(d));});
-  packRegion(pages,wpg,'tok',wtok,10.0,0.7,21.9,6.2,'Goods tokens',famPages);
-  const wdisc=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(PRES_DISCS);i++)wdisc.push(disc(p.c));});
-  packRegion(pages,wpg,'disc',wdisc,10.0,6.4,21.9,8.05,'Presence discs',famPages);
-  const wbits=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(CASK_CUBES);i++)wbits.push(disc(p.c,'beer'));
-    for(let i=0;i<cnt(MAT_MARKERS);i++)wbits.push(disc(p.c,'hourglass'));});
-  packRegion(pages,wpg,'disc',wbits,10.0,8.15,21.9,9.9,'Cask cubes (beer) + maturation markers (hourglass)',famPages);
+  const wimps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wimps.push(improveTile(d));});
+  packRegion(pages,wpg,'imp',wimps,10.0,0.7,21.9,9.9,'Improvements',famPages);
   supplyBoardSheet(pages);   // the Supply & Tracks board — its own sheet (work in progress; not finalized)
   letterBoard(pages,'boards','Trade Roads — Overland (expansion board)',olboard());
   // (player brewery boards are generated LAST — at the bottom of the page — see below)
@@ -1868,7 +1781,7 @@ function buildPages(){
   //   • TILES    → 22-wide PLOTTER sheets, each TRIMMED to its content height (no blank media). BUILDINGS are
   //                double-sided → a FRONT sheet + its LEFT↔RIGHT MIRRORED back sheet (the back carries the Wild/★
   //                backs; flip/mount, then cut). IMPROVEMENTS + owner FRAMES are single-sided → their own sheet.
-  //   • TOKENS   → single-sided; tucked into the open right side of the Wharf BOARD sheet (see packRegion in BOARDS).
+  //   • TOKENS   → single-sided, their own trimmed 22-wide sheet (the Wharf sheet's right side now holds the Specialists).
   // CASKS & SHIPS are double-sided 2″ CARDS on LETTER (8.5×11) for HOME double-sided printing — a centred grid
   // whose BACKS sheet is the LEFT↔RIGHT mirror of the fronts, so a duplex flip on the SHORT edge lands each
   // card's back on its front; then cut. Each cask front records its data+action so the BACKS pass prints the
@@ -1880,7 +1793,8 @@ function buildPages(){
       addRectCut(bp,mx,it.y,it.w,it.h);                                            // mirrored cut grid → registers the duplex sandwich
       if(f.cask)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:caskCardBack(f.d,f.act)});
       else if(f.bld)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:buildingBack(f.d)});
-      else if(f.ship)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:shipBack()});});
+      else if(f.ship)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:shipBack()});
+      else if(f.rec)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:recipeCard(f.d,true)});});
     (famPages['Card/tile backs']=famPages['Card/tile backs']||new Set()).add(pages.indexOf(bp));
   });}
   // tag each front family by pack order (item order across the pages == meta order)
@@ -1915,19 +1829,30 @@ function buildPages(){
   const bldFrontPages=pages.slice(tStart);
   tagFamilies(bldFrontPages,bldMeta);
   mirrorBackPages(bldFrontPages,bldMeta,TILE_GEO,'Building tile BACKS (mirror — flip LEFT↔RIGHT): the displaced face — seat the Floor Wild / +3★ & discard','bits');
-  // IMPROVEMENTS + owner FRAMES are SINGLE-SIDED → their own trimmed sheet (no back).
-  const TLBL_IMPF='Specialists + owner frames (22″ plotter · single-sided · cut apart)';
-  const imps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)imps.push(improveTile(d));});
-  packRun(pages,'bits',TLBL_IMPF,'imp',imps,'Improvements',famPages,IMPF_GEO);
+  // Owner FRAMES + unlock COVERS are SINGLE-SIDED → their own trimmed sheet (no back).
+  // (The Specialist tiles ride the Wharf sheet's open right side since 2026-07-14.)
+  const TLBL_IMPF='Owner frames + unlock covers (22″ plotter · single-sided · cut apart)';
   const frames=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(6);i++)frames.push(frameTile(p.c,p.nm));});
   packRun(pages,'bits',TLBL_IMPF,'frame',frames,'Building frames',famPages,IMPF_GEO);
   // UNLOCK COVERS (v3.1 ONE ROW) — 5 per player, one size (they sit on Floor slots 3–7)
   const covs=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(5);i++)covs.push(coverTile(p.c,2.4));});
   packRun(pages,'bits',TLBL_IMPF,'coverV',covs,'Unlock covers',famPages,IMPF_GEO);
-  // --- RECIPE CARDS (cardstock — do not mount; they tuck under the board edge) ---
-  const cards=[];const sets=MODE==='proof'?1:PLAYERS.length;
-  for(let s=0;s<sets;s++)RECIPES.forEach(r=>cards.push(recipeCard(r)));
-  packRun(pages,'cards','Export recipe cards (1 set per player) + charter contracts','card',cards,'Recipe cards',famPages);
+  // --- TOKENS → their own single-sided trimmed sheet (moved off the Wharf sheet, 2026-07-14) ---
+  const TLBL_TOK='Tokens (single-sided · cut circles) — goods · presence discs · cask cubes & maturation markers';
+  const wtok=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wtok.push(tok(d));});
+  packRun(pages,'bits',TLBL_TOK,'tok',wtok,'Goods tokens',famPages,TOK_GEO);
+  const wdisc=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(PRES_DISCS);i++)wdisc.push(disc(p.c));});
+  PLAYERS.forEach(p=>{for(let i=0;i<cnt(CASK_CUBES);i++)wdisc.push(disc(p.c,'beer'));
+    for(let i=0;i<cnt(MAT_MARKERS);i++)wdisc.push(disc(p.c,'hourglass'));});
+  packRun(pages,'bits',TLBL_TOK,'disc',wdisc,'Presence discs + cask cubes (beer) + maturation markers (hourglass)',famPages,TOK_GEO);
+  // --- RECIPE CARDS (cardstock — do not mount) — DOUBLE-SIDED since v3.2d: cost face / BREWED face.
+  // One set per player of STARTERS (Gruit · Hopped) + every export; flip a card on your first brew of it.
+  const recMeta=[];const sets=MODE==='proof'?1:PLAYERS.length;
+  for(let s=0;s<sets;s++)STARTERS.concat(RECIPES).forEach(r=>recMeta.push({fam:'Recipe cards',rec:true,d:r}));
+  const rStart=pages.length;
+  packRun(pages,'cards','Recipe cards — fronts (starters + exports, 1 set per player) — print DOUBLE-SIDED, flip LEFT↔RIGHT','card',recMeta.map(f=>recipeCard(f.d)),'Recipe cards',famPages);
+  const recFrontPages=pages.slice(rStart);
+  mirrorBackPages(recFrontPages,recMeta,PG,'Recipe card BACKS (mirror — flip LEFT↔RIGHT): the BREWED face — flip on your first brew; your flipped cards ARE the Flight','cards');
   const contractCards=[];for(let i=0;i<cnt(CONTRACTS.n);i++)contractCards.push(contractCard());   // v0.16 charter contracts = cards
   packRun(pages,'cards','Charter contract cards','card',contractCards,'Charter contracts',famPages);
   // PLAYER AID — a double-sided reference card (front: a turn · back: icon reference); 2 sheets, duplex
@@ -1936,8 +1861,8 @@ function buildPages(){
   // cardstock + paper cutter: cut lines print on the ART layer as grey guides (no laser pass)
   pages.filter(p=>p.section==='cards').forEach(p=>p.papercut=true);
   // --- PLAYER BOARDS (moved to the BOTTOM of the page, just before the checklist) ---
-  PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>{   // tight die-cut hugging the slot cluster (not a page-filling rect)
-    const W=12.45,H=7.25,sw=+(W*SCALE).toFixed(4),sh=+(H*SCALE).toFixed(4),X=+((PG.w-sw)/2).toFixed(2),Y=0.8,pg=newPage(pages,'boards','Player board — '+p.nm);
+  PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>{   // tight die-cut hugging the slot cluster (v3.2d: two rows, no strip/rack)
+    const W=10.55,H=5.95,sw=+(W*SCALE).toFixed(4),sh=+(H*SCALE).toFixed(4),X=+((PG.w-sw)/2).toFixed(2),Y=0.8,pg=newPage(pages,'boards','Player board — '+p.nm);
     pg.items.push({x:X,y:Y,w:sw,h:sh,nat:[W,H],html:pboard(p)});
     pg.rrect={x:X,y:Y,w:sw,h:sh,r:+(0.18*SCALE).toFixed(4)};
   });
@@ -1972,16 +1897,16 @@ function checklist(pages,famPages){
     +R('Destinations &amp; Hall board','Narrow, the same height as Market &amp; Stores — the table pair. LEFT: the four kontor panels (gate · value · on-delivery benefit · majority · an open presence zone). RIGHT: the Hall — a kontor-style art header, then the four Three-Coins SHELVES (each coin space: one icon + a three-word label + the claim-cube outline; FAME 5/7/10/13) and the LAUNCH strip (★ = quality, always open).','1')
 
     +R('Market &amp; Stores board','The shared displays at component size — the MARKET column (Buildings 4 · Ships 3 · recipe stacks + contracts) and the CELLAR column (Specialists 4), each display refilled from its DRAW BAG — plus the Sailed-Ships clock (15 cells, dual END marks — base 5/8/10 and The Trade Roads 7/10/12; voyages only, the Hall never ticks it) and the 50-cell score ring wrapping the rim (0–49, +50 on the second lap). Loose bits (goods cubes · demand dice · quality markers) live in a supply tray.','1')
-    +R('Player brewery boards','One per player (“One Row”): ONE Floor line of 7 printed slots — slots 1–2 open, covers on 3–7, slot 1 vessel-only; a slot holds a maturing cask, a seated Specialist, or a flipped tile — plus the Flight/unlock strip (brewed / delivered), a recipe rack, and goods storage (cap 8).',PLAYERS.length)
+    +R('Player brewery boards','One per player (“One Row”): ONE Floor line of 7 printed slots — slots 1–2 open, covers on 3–7, slot 1 vessel-only; a slot holds a maturing cask, a seated Specialist, or a flipped tile. Nothing else prints on it (v3.2d): the Flight lives on your recipe cards, the Floor rules on the player aid; goods cap 8.',PLAYERS.length)
     +'</table>';
   h+=T('Tiles (mount on chipboard, laser-cut)')
-    +R('Cask tiles — the beer supply','A shared pool, brewed not bought (min 6 per type): Gruit ×16 · Hopped ×20 · Broyhan ×6 · Keut ×6 · Mumme ×8 · Bock ×6. Each shows a quality (Q1–Q5) and ONE specific-gain slot-action (the pool is quality-gated). Deal 3 of the 4 export beers each game; a NEW distinct beer brewed marks the Flight strip.','62')
+    +R('Cask tiles — the beer supply','A shared pool, brewed not bought (min 6 per type): Gruit ×16 · Hopped ×20 · Broyhan ×6 · Keut ×6 · Mumme ×8 · Bock ×6. Each shows a quality (Q1–Q5) and ONE specific-gain slot-action (the pool is quality-gated). Deal 3 of the 4 export beers each game; a NEW distinct beer brewed flips its recipe card — the Flight.','62')
     +R('Ship tiles','Neutral hulls, a kontor printed on each — Cog (holds 2) ×11 · Hulk (holds 3) ×9; five to each of the four kontore. Drawn off a shuffled deck into a face-up market of 3.','20')
     +R('Slot tiles — Privileges &amp; Buildings','The owned slot modifiers, '+baseBld.length+' designs (double-sided: art front / the displaced back — seat the Floor Wild, or +3★ &amp; discard when no slot is open). <b>Privileges (blue — each prints a +N★ bonus) —</b> '+designs(baseVal)+'. <b>Buildings / works (green) —</b> '+designs(baseTr)+'.',sumN(baseBld))
     +R('Specialist tiles','The private brewery-board tiles, 7 designs: '+IMPROVE.map(d=>d.nm).join(' · ')+'. A shuffled display at the Cellar — 3 copies of each type (n−1 per type), enough for 4 players.',impTotal)
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')
-    +R('Recipe cards (export)','One set of four per player: Broyhan · Keut · Mumme · Bock. (Gruit &amp; Hopped are printed on the brewery board.)',4*PLAYERS.length)
+    +R('Recipe cards','DOUBLE-SIDED (v3.2d — the cost face / the BREWED face with the big check): flip a card the first time you brew that beer; your flipped cards ARE the Flight (unlocks from the 2nd; the ladder counts beers brewed). One set of six per player: Gruit · Hopped (the starters, dealt at setup — Gruit flipped, the warm start) + Broyhan · Keut · Mumme · Bock.',6*PLAYERS.length)
     +R('Charter contracts','The kontor-Dispatch certificates — start 2 per house, buy more (1 G); a kontor Dispatch spends one + the flat 2 G fare.',CONTRACTS.n)
     +R('Player aid cards','Double-sided quick reference (a turn / the icon key), one per player.',PLAYERS.length)
     +'</table>';
@@ -2101,12 +2026,9 @@ function exportItems(){
     it.push({type:'building',name:d.k,side:'back', w:2,h:2,html:buildingBack(d)});});
   // IMPROVEMENTS · RECIPES · CONTRACT · PLAYER AID
   IMPROVE.forEach(d=>it.push({type:'improvement',name:slug(d.nm),side:'front',w:2,h:2,html:improveTile(d)}));
-  RECIPES.forEach(r=>it.push({type:'recipe',name:slug(r.nm),side:'front',w:1.85,h:2.55,html:recipeCard(r)}));
-  // Gruit & Hopped recipe cards — for the user's convenience in the PNG export (canon keeps them on the brewery
-  // board, so they're NOT on the printed recipe sheet; this just makes downloadable cards available).
-  [{nm:'Gruit', cc:'#8a949c', L:1, g:1,h:0, start:1, reach:'Q1 · the starting ale — every brewery begins with it'},
-   {nm:'Hopped',cc:'#c2922f', L:2, g:1,h:1, start:1, reach:'Q2 · the first export — hopped beer survives the voyage'}]
-    .forEach(r=>it.push({type:'recipe',name:slug(r.nm),side:'front',w:1.85,h:2.55,html:recipeCard(r)}));
+  STARTERS.concat(RECIPES).forEach(r=>{   // v3.2d: every recipe is double-sided — cost face + BREWED face
+    it.push({type:'recipe',name:slug(r.nm),side:'front',w:1.85,h:2.55,html:recipeCard(r)});
+    it.push({type:'recipe',name:slug(r.nm),side:'back', w:1.85,h:2.55,html:recipeCard(r,true)});});
   it.push({type:'contract',name:'charter',side:'front',w:1.85,h:2.55,html:contractCard()});
   it.push({type:'aid',name:'player-aid',side:'front',w:4.7,h:3.4,html:aidFront()});
   it.push({type:'aid',name:'player-aid',side:'back', w:4.7,h:3.4,html:aidBack()});
