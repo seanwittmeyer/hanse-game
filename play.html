@@ -43,11 +43,11 @@
   .copybtn{float:right;font-family:inherit;font-variant:normal;font-size:.66rem;cursor:pointer;background:var(--ink);color:var(--parch);border:none;border-radius:5px;padding:2px 8px;letter-spacing:.3px}
   .copybtn:hover{background:var(--red2)}
   /* GRID */
-  .agwrap{--bdw:min(62vmin,70vw,820px);display:flex;justify-content:center;padding:calc(var(--bdw)*0.19)}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
-  @media(max-width:700px){.agwrap{--bdw:min(84vmin,66vw)}}   /* portrait phone: height is plentiful — let the board take the width */
+  .agwrap{--bdw:min(78vmin,84vw,1000px);display:flex;justify-content:center;padding:calc(var(--bdw)*0.09)}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
+  @media(max-width:700px){.agwrap{--bdw:min(92vmin,74vw)}}   /* portrait phone: height is plentiful — let the board take the width */
   .ag{display:grid;width:var(--bdw,600px);max-width:100%;margin:0 auto;aspect-ratio:1;   /* v3.3: the wharf IS the screen; sized by --bdw on .agwrap */
     gap:clamp(4px,1.4vw,7px);
-    grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr)}
+    grid-template-columns:2fr 1fr 1fr 2fr;grid-template-rows:2fr 1fr 1fr 2fr}   /* v3.3.1: the slot bands are DOUBLE-DEPTH — inner half buildings, outer half ships/casks */
   /* explicit square rows make every cell a guaranteed square from the GRID — not from each
      item's own aspect-ratio under size-containment (which mobile Safari collapses). */
   .cell,.slot{min-width:0;min-height:0}
@@ -183,7 +183,6 @@
   .pfit .pfin{position:absolute;top:50%;left:50%;transform-origin:center;transform:translate(-50%,-50%) scale(.5)}
   .pring{position:absolute;inset:0;border-radius:10px;background:var(--oc,#8a8577);box-shadow:0 2px 6px rgba(0,0,0,.3)}
   .pring .pfit{inset:8%;border-radius:4px;box-shadow:none}
-  .slot .pown,.mtile .pown{position:absolute;bottom:5cqmin;right:6cqmin;width:12cqmin;height:12cqmin;border-radius:50%;border:2px solid rgba(255,255,255,.9);box-shadow:0 0 0 1.5px rgba(0,0,0,.35);z-index:4}   /* seated IN the card's printed marker space */
   .pqboost{position:absolute;top:4cqmin;left:4cqmin;z-index:4;display:inline-flex;align-items:center;gap:1cqmin;font-weight:900;font-size:12cqmin;color:#fff;background:rgba(20,14,8,.72);border-radius:3cqmin;padding:1cqmin 3cqmin}
   .pqboost .ic,.pqboost svg{width:10cqmin;height:10cqmin}
   .pcomm2{position:absolute;top:3cqmin;right:3cqmin;z-index:4;font-weight:bold;font-size:9cqmin;display:inline-flex;align-items:center;gap:1cqmin;background:rgba(244,234,208,.94);color:#2b2018;border:1px solid rgba(0,0,0,.25);border-radius:3cqmin;padding:1cqmin 2.5cqmin}
@@ -199,29 +198,33 @@
   .tk-right .ptkw{top:4%;right:calc(-14cqmin - var(--fan,0cqmin))} .tk-right .ptkw:hover{right:-98cqmin} .tk-right .ptkw:hover ~ .ptkw{transform:translateX(86cqmin)}
   .tk-up .ptkw{left:4%;top:calc(-14cqmin - var(--fan,0cqmin))}     .tk-up .ptkw:hover{top:-98cqmin}     .tk-up .ptkw:hover ~ .ptkw{transform:translateY(-86cqmin)}
   .tk-down .ptkw{left:4%;bottom:calc(-14cqmin - var(--fan,0cqmin))}.tk-down .ptkw:hover{bottom:-98cqmin}.tk-down .ptkw:hover ~ .ptkw{transform:translateY(86cqmin)}
-  /* on a BUILDING the cask tucks SHALLOW — the printed action band stays exposed (the card was designed for this);
-     in a hull it tucks deep, type-only. The depths mirror the physical tuck. */
-  .tk-left .ptkw.deep{left:-36cqmin} .tk-right .ptkw.deep{right:-36cqmin} .tk-up .ptkw.deep{top:-36cqmin} .tk-down .ptkw.deep{bottom:-36cqmin}
+
   /* THE ONE DIGITAL CHEAT [ruled]: in the top slots (s1/s2) the tucked card hangs upside-down — flip its
      ACTION and TITLE bands 180° in place so they read upright on screen. Nothing else is altered. */
   .tk-up .ptk .cc-back .ce.bot{transform:rotate(180deg)}
   .tk-up .ptk .cc-actfloat{transform:translateY(.13in) rotate(180deg)}
   /* the OWNERSHIP (presence) disc rides the tucked cask's visible edge */
-  .tkown{position:absolute;z-index:9;width:10cqmin;height:10cqmin;border-radius:50%;border:2px solid rgba(255,255,255,.9);box-shadow:0 0 0 1.5px rgba(0,0,0,.35)}
-  /* the disc + die sit at the MARKER-SPACE end of the visible edge (where the card prints their seat) */
-  .tk-left .tkown{left:3cqmin;bottom:7%} .tk-right .tkown{right:3cqmin;top:7%}
-  .tk-up .tkown{top:3cqmin;right:8%}     .tk-down .tkown{bottom:3cqmin;right:8%}
+
   .ptk{position:absolute;inset:0;outline:2.5px solid;border-radius:8px;box-shadow:0 2px 7px rgba(0,0,0,.45);background:#2b2018}
   .tk-left .ptk{transform:rotate(90deg)} .tk-right .ptk{transform:rotate(-90deg)} .tk-up .ptk{transform:rotate(180deg)} .tk-down .ptk{transform:none}
-  .slot.pfilled>.pfit,.slot.pfilled>.pring,.shipside>.pfit{z-index:8}   /* the tile/hull paints ABOVE its tucked cards */
+  .slot .bhalf,.slot .ohalf{position:absolute}
+  .tk-left .bhalf{right:0;top:0;bottom:0;width:50%}   .tk-left .ohalf{left:0;top:0;bottom:0;width:50%}
+  .tk-right .bhalf{left:0;top:0;bottom:0;width:50%}   .tk-right .ohalf{right:0;top:0;bottom:0;width:50%}
+  .tk-up .bhalf{bottom:0;left:0;right:0;height:50%}   .tk-up .ohalf{top:0;left:0;right:0;height:50%}
+  .tk-down .bhalf{top:0;left:0;right:0;height:50%}    .tk-down .ohalf{bottom:0;left:0;right:0;height:50%}
+  .halfemp{position:absolute;inset:6%;border:1.6px dashed var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;opacity:.45}
+  .halfemp .ic,.halfemp svg{width:20cqmin;height:20cqmin}
+  .bhalf .pfit,.bhalf .pring{z-index:8}   /* the building owns its half */
+  .ohalf .pfit{z-index:8}                 /* the hull/cask paints ABOVE its tucked cargo */
+  .tuckcol .ptkw:nth-child(1){z-index:7}.tuckcol .ptkw:nth-child(2){z-index:6}.tuckcol .ptkw:nth-child(3){z-index:5}.tuckcol .ptkw:nth-child(4){z-index:4}   /* each card further OUT sits UNDER the one before */
+  .tuckcol .ptkw:hover{z-index:45}.tuckcol .ptkw:hover ~ .ptkw{z-index:44}   /* the slid-out chain rides above everything */
   .tkdie{position:absolute;z-index:9}
-  .tk-left .tkdie{left:2.5cqmin;bottom:20%} .tk-right .tkdie{right:2.5cqmin;top:20%}
-  .tk-up .tkdie{top:2.5cqmin;right:21%}     .tk-down .tkdie{bottom:2.5cqmin;right:21%}
-  .tkdie .die{width:11cqmin;height:11cqmin}
-    .shipside{position:absolute;width:92cqmin;height:92cqmin;z-index:25;filter:drop-shadow(0 3px 6px rgba(0,0,0,.5))}   /* a hull is the same 2.5in card — it parks OUTSIDE the tile at true scale */
-  .tk-left .shipside{left:-60cqmin;top:4%} .tk-right .shipside{right:-60cqmin;top:4%}
-  .tk-up .shipside{top:-60cqmin;left:4%}   .tk-down .shipside{bottom:-60cqmin;left:4%}
-  .slot .die.dcask,.mtile .die.dcask{position:absolute;bottom:19cqmin;right:5cqmin;width:22cqmin;height:22cqmin;z-index:5}   /* the die stacks above the seated disc */
+  /* the tally die sits at the MARKER-SPACE end of the visible edge (where the card prints its seat) */
+  .tk-left .tkdie{left:3cqmin;bottom:8%} .tk-right .tkdie{right:3cqmin;top:8%}
+  .tk-up .tkdie{top:3cqmin;right:9%}     .tk-down .tkdie{bottom:3cqmin;right:9%}
+  .tkdie .die{width:13cqmin;height:13cqmin}
+  
+  .slot .die.dcask,.mtile .die.dcask{position:absolute;bottom:4.5cqmin;right:5.5cqmin;width:15cqmin;height:15cqmin;z-index:5}   /* seated IN the card's printed marker space */
   .slot.pfilled{overflow:visible;z-index:2}   /* protruding tucks/ships paint OVER neighbouring cells */
   /* ===== demand DIE — pips show the ★ a cask banks from the value building it shipped through ===== */
   .die{display:inline-grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:1cqmin;position:relative;
@@ -1271,24 +1274,24 @@ function pCaskFace(t,bonus,actOv){const d=HC_CASK[t.style];if(!d)return '';
   const o=(t.owner!=null)?S.players[t.owner]:null;
   const maturing=(t.step!=null&&t.ready!=null&&t.step<t.ready);
   const act=hcAct(actOv||caskAct(t));
+  const dv=Math.max((S&&S.presEnd)?1:0,bonus||0);   // v3.4: every deployed cask carries its tally die (floor 1)
   return pfit(maturing?HC.caskCardFront(d,act):HC.caskCardBack(d,act),2.5)
-    +(o?'<span class="pown" style="background:'+o.color+'"></span>':'')
     +(t.q!==d.q?'<span class="pqboost" data-tip="'+attr('Effective quality '+t.q+' (a blend / kiln marker rides the card)')+'">'+LU('beer')+t.q+'</span>':'')
-    +((bonus>0)?dieFace(bonus,'dcask',o?o.color:null):'');}   // v3.4: the tally die in the owner's colour — ownership + value in one read
+    +((o&&dv>0&&!maturing)?dieFace(dv,'dcask',o.color):'');}   // the die IS ownership + value, seated in the card's printed space
 // a TUCKED cask — the card ROTATED 90\u00b0 and slid under the tile's side; its printed bottom
 // edge (name \u00b7 Q \u00b7 the marker space) peeks out reading sideways, the demand die riding it
 function pTuck(L,act,i,onBldg){const d=HC_CASK[L.style];if(!d)return '';
   const op=(L.owner!=null)?S.players[L.owner]:null;const oc=op?op.color:'#8a8577';
   return '<div class="ptkw'+(onBldg?' deep':'')+'" style="--fan:'+((i||0)*14)+'cqmin" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(L.die?' \u00b7 tally die +'+L.die+'\u2605':'')+' \u2014 the whole card is tucked under'+(onBldg?' (action exposed)':' (type only)')+'; hover to slide it out')+'">'
     +'<div class="ptk" style="outline-color:'+oc+'">'+pfit(HC.caskCardBack(d,hcAct(act||'source')),2.5)+'</div>'
-    +(op?'<span class="tkown" style="background:'+oc+'"></span>':'')
-    +(L.die?'<span class="tkdie">'+dieFace(L.die,'dtuck',oc)+'</span>':'')
+    +((op&&Math.max((S&&S.presEnd)?1:0,L.die||0)>0)?'<span class="tkdie">'+dieFace(Math.max(S.presEnd?1:0,L.die||0),'dtuck',oc)+'</span>':'')
   +'</div>';}
+
 // a ship = the printed hull card; its cargo tucks under it, strips + dice showing (the table look)
 function pShipFace(t){const onBoard=!!slotIdOfTile(t);const load=t.load||[];
   return pfit(HC.shipCard(t.ship,DEST[t.dest].name),2.5)
     +(onBoard?'':'<span class="pcomm2">'+pCost(COMMISSION_COST.g,COMMISSION_COST.h)+'</span>')
-    +(load.length?'<div class="tuckcol">'+load.map((L,i)=>pTuck(L,null,i)).join('')+'</div>':'');}
+    +(load.length?'<div class="tuckcol">'+load.map((L,i)=>pTuck(L,null,i)).join('')+'</div>':'');}   // cargo chains outward under the hull
 // a building = the printed card seated in its OWNER FRAME (the colour ring; neutral = weathered grey)
 function pBldgFace(b,noRing){const d=HC_BLD[b.b];if(!d)return '';
   const card=pfit(HC.buildingCard(d),2);
@@ -1298,13 +1301,7 @@ function pBldgFace(b,noRing){const d=HC_BLD[b.b];if(!d)return '';
 // a Specialist = the printed purple tile
 function pImpFace(key){const def=IMPROVEMENTS[key];const d=def&&HC_IMP[def.name.toLowerCase()];
   return d?pfit(HC.improveTile(d),2):'';}
-// BOTH a building and an occupant on one slot — the table stack (no tap-to-flip: everything shows at once)
-function stackHtml(b,t,id){
-  let h=pBldgFace(b);
-  if(t.type==='cask')h+='<div class="tuckcol">'+pTuck({owner:t.owner,style:t.style,q:t.q,die:Math.max(S.presEnd?1:0,caskPreviewBonus(id))},slotEffAct(id)||caskAct(t),0,true)+'</div>';   // v3.4: the tally die rides the tucked cask (floor 1)
-  else h+='<div class="shipside">'+pfit(HC.shipCard(t.ship,DEST[t.dest].name),2.5)
-    +((t.load||[]).length?'<div class="tuckcol">'+(t.load||[]).map((L,i)=>pTuck(L,null,i)).join('')+'</div>':'')+'</div>';
-  return h;}
+
 // scale every imported card into its box (cards are designed in INCHES; 1in = 96px)
 function fitCards(){
   document.querySelectorAll('.pfit').forEach(w=>{const inn=w.firstElementChild;if(!inn)return;
@@ -3704,10 +3701,13 @@ function renderGrid(){
     const bldgPlacing=(!aiTurn()||humanGate())&&UI.sub==='placebldg'&&(!b||canPay(S.players[UI.tmp.placeBldg.owner],OVERBUILD_FEE));   // v2.9: occupied slots only when the ground rent is payable; the human-gate lets an off-turn owner place mid-AI-turn
     if(occPlacing||bldgPlacing)cls+=' place';
     let inner;let style='';
-    if(b&&t){   // both a building and an occupant → an offset stack (tap to swap which is on top)
-      cls+=' pfilled stack';inner=stackHtml(b,t,s.id);
-    }else if(b){cls+=' pfilled';inner=pBldgFace(b);}
-    else if(t){cls+=' pfilled';inner=(t.type==='cask'?pCaskFace(t,Math.max(S.presEnd?1:0,caskPreviewBonus(s.id)),slotEffAct(s.id)):pShipFace(t));}   // v3.4: a deployed cask always shows its tally die (floor 1; a privilege preview turns it higher)
+    // v3.3.1 [ruled]: the slot is DOUBLE-DEPTH along its outward axis — the INNER half seats the
+    // building (its own home, never stacked under); the OUTER half seats the occupant (a ship's
+    // cargo still chains/tucks under the hull, outward).
+    if(b||t){cls+=' pfilled';
+      inner='<div class="bhalf">'+(b?pBldgFace(b):'<span class="halfemp" data-tip="'+attr('The building seat — a Privilege/Building placed here authors this slot')+'"><i data-lucide="building-2" class="ic"></i></span>')+'</div>'
+        +'<div class="ohalf">'+(t?(t.type==='cask'?pCaskFace(t,Math.max(S.presEnd?1:0,caskPreviewBonus(s.id)),slotEffAct(s.id)):pShipFace(t))
+          :'<span class="halfemp" data-tip="'+attr('Deploy a Ready cask here — an empty slot\u2019s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span>')+'</div>';}
     else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Deploy a Ready cask here — an empty slot’s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span></span>';
     let click=bldgPlacing?'placeBldgOn':(occPlacing?(UI.sub==='deploy'?'deployTo':'placeSlot'):null);
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
