@@ -229,6 +229,28 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
 
+**v3.4 "Tally Dice" — the disc/die unification** *(2026-07-19, KEY `hanse-v34`, designer-ruled "all in")* —
+**The presence disc and the demand die become ONE component: 14 player-colour d6 per house.** A die from the
+tray rides every deployed cask (face **1** — ownership in plain sight), is **turned to the Privilege's printed
+N at departure** (the v3.0-A one-read carrier, unchanged), rides the hull's berth well, and **parks at the
+destination on delivery** — it IS the house's presence for majorities, and the same public pool stays the v3.2
+presence clock (last die placed = final round). The kontore's flat **+1★ base folds into the die's floor of 1**
+(Bruges/London/Bergen print no value; Novgorod's printed scale rides on top; a bare delivery pays exactly what
+it did). **Physical gates fall out of the component:** no die in the tray → no deploy, no vessel-direct load,
+no Reach (tap-outs/sourings/displacements return dice). Box: −56 presence discs −8 shared demand dice → +56
+tally dice; component-gap #10 (shared-die supply) closes by construction. **Method:** the design was
+oracle-tested first as a standalone experiment on the v84-era engine (models A "die = quality+mods" vs B
+"die = mods on a floor of 1" over an 8/10/12/14 pool sweep, ~8k games — model B at 14 dice won: near-zero
+saturation, baseline scores, tightest lane balance; `playtests/dice-experiment/REPORT.md`), then ported onto
+the v3.3 canon, which had independently adopted the finite-pool presence clock with discs — the unification
+was the remaining step. *Gates (KEY v34):* `verify-v3` **93/93** (the rival-privilege check updated: a rival's
+slot sends the die at its floor of 1; new bare-slot floor + Bruges-delivery checks); sim 300 + PATHWAYS 300 vs
+a same-day v3.3 baseline — **0 crashes/deadlocks, pace in band**. *⚙ watch items (persona-oracle reads, greedy
+tier):* privileged flat-kontor deliveries pay 1 less than v3.3 → 2p prestige warmed 50→70% (dial: +1 on the
+Staple/charter prints, NOT the die floor); the tray gates slow greedy delivery flow → the round-ceiling share
+rises (13→40% at 3p; the presence trigger still fires 17–51%) — a real-tier corpus on the designer's call.
+All numbers ⚙.
+
 **v3.3 "Three Coins" (the consolidation)** *(2026-07-14, KEY `hanse-v33`)* — The four v3.2 patches fold
 into ONE version, with one ruled simplification: **a displaced tile with no open Floor slot is SIMPLY
 DISCARDED** (the v3.2a +3★ consolation removed — flips are engine, and the 1G ground rent already prices

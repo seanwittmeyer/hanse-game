@@ -423,7 +423,7 @@
      bottom edge instead (still clipped, just no longer via a wrapped 2nd line). Give it more of the column. */
   .kp.scale{flex:1.22}
   /* the destination SCENE: full-bleed art; a dark inline-SVG gradient rises from the FOOT (where the
-     white stats sit); the middle stays open art — the presence discs land on the quay */
+     white stats sit); the middle stays open art — the tally dice land on the quay */
   .kp-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
   .kp-grad{position:absolute;inset:0;width:100%;height:100%;z-index:1}
   .kp-t,.kp-rows,.kp-pz{position:relative;z-index:2}
@@ -459,7 +459,7 @@
   .kp-note{font-size:.12in;font-style:italic;color:rgba(255,255,255,.92);line-height:1.22;text-shadow:0 1px 2px rgba(0,0,0,.75)}
   .kp-note.ctr{text-align:center;padding:.03in .16in .02in;font-size:.12in}
   /* presence ZONE — the panel's open floor: ownership discs pile here (the majority count) */
-  .kp-pz{flex:1;min-height:.42in}   /* the open middle — pure art; the presence discs pile here, untaught */
+  .kp-pz{flex:1;min-height:.42in}   /* the open middle — pure art; the parked tally dice pile here, untaught */
   .kp-pz.nb{min-height:.18in}   /* the Hall's shorter note needs less clearance below it now that it's one short line */
   /* ====================== the DESTINATIONS & HALL board (narrow · pairs with Market & Stores) ====================== */
   .destb{width:100%;height:100%;background:var(--parch);border:2.5px solid #5b3a8e;border-radius:.12in;padding:.16in .18in;display:flex;gap:.16in;color:var(--ink)}
@@ -663,13 +663,13 @@ const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills 
 // (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
 const DEVELOP_PTS=0;     // [ruled v3.3]: a seated flip scores NOTHING (pure Floor-Wild engine); a displaced tile with NO open Floor slot is SIMPLY DISCARDED. The overbuilder still pays the 1G ground rent.
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'}];
-// v1.1 destinations — four DISTINCT lanes. Kontor per-cask value is SMALL & flat (base) — the real value is
-// the value-Buildings a cask ships through. Novgorod's value SCALES with quality (Q3·2 / Q4·4 / Q5·6 · floor 1 — every kontor pays ≥1★, v2.9).
+// v3.4 "Tally Dice" destinations — a kontor pays THE CASK'S TALLY DIE (floor 1 — the old flat base rides the die;
+// a Privilege turns it higher at departure). Novgorod's printed scale rides ON TOP of the die (Q3·2 / Q4·4 / Q5·6).
 const DESTS=[
-  {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, val:'1',                maj:[4,2,0], role:'The Hub — the economy',          ben:{n:'+2',ic:'coins'},      bnote:'goods (liquidity)'},
-  {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, val:'1',                maj:[5,3,1], role:'The Steelyard — the engine',     ben:{n:'+1',ic:'building-2'}, bnote:'a Building or Specialist, free'},
-  {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, val:'1',                maj:[9,5,2], role:'Bryggen — the rich majority',    ben:{n:'+1',ic:'map-pin'},    bnote:'free Reach (+1 presence)'},
-  {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, scale:[['&lt;3',1],[3,2],[4,4],[5,6]], maj:[8,5,2], role:'The Long Haul — the quality climb', ben:{n:'+1',ic:'hourglass'},  bnote:'refine a cask, +1 age'},   // the Q<3 row = the 1★ kontor floor (only a Customs-admitted below-gate cask can land there; the Gauger is cut in v3.0-A)
+  {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, val:'die',                maj:[4,2,0], role:'The Hub — the economy',          ben:{n:'+2',ic:'coins'},      bnote:'goods (liquidity)'},
+  {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, val:'die',                maj:[5,3,1], role:'The Steelyard — the engine',     ben:{n:'+1',ic:'building-2'}, bnote:'a Building or Specialist, free'},
+  {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, val:'die',                maj:[9,5,2], role:'Bryggen — the rich majority',    ben:{n:'+1',ic:'map-pin'},    bnote:'free Reach (+1 presence)'},
+  {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, scale:[[3,2],[4,4],[5,6]], maj:[8,5,2], role:'The Long Haul — the quality climb', ben:{n:'+1',ic:'hourglass'},  bnote:'refine a cask, +1 age'},   // v3.4: the 1★ floor lives on the tally die (no printed <3 row); the scale rides ON TOP of the die
 ];
 const HALL={nm:'The Hall', kc:'#5b3a8e', tint:'#efeaf6', req:2, role:'Prestige — the Guild’s Three Coins · Dispatch (no ship)', ladder:[[2,5],[3,7],[4,10],[5,13]]};   // v3.2 ⚙ ladder = the FAME coin per shelf
 // v3.2 "THREE COINS" — THE HALL BOARD (mirrors play.html): four quality-gated shelves (bottom→top:
@@ -677,7 +677,7 @@ const HALL={nm:'The Hall', kc:'#5b3a8e', tint:'#efeaf6', req:2, role:'Prestige �
 // FAME (banks ★) · CRAFT (a power fired now, 0★) · FAVOR (a free thing, 0★). A Hall Dispatch (free, no
 // boat) spends ONE deployed cask: buy ONE coin on a shelf its effective quality reaches (mark it with a
 // cask cube), or LAUNCH — bank ★ equal to the cask's quality, no coin. The Hall never ticks the
-// Sailed-Ships track; every delivery there still spends a presence disc.
+// Sailed-Ships track; every delivery there still parks a tally die.
 const HALL_SHELVES=[   // printed top-down, High Board first — each shelf: gate q · the three coins
   {q:5, fame:13, name:'The High Board',
     craft:{ic:'hourglass',     nm:'the Lagerkeeper’s Miracle', t:'age ALL your casks to Ready'},
@@ -694,7 +694,7 @@ const HALL_SHELVES=[   // printed top-down, High Board first — each shelf: gat
 ];
 const SAILED={2:5,3:8,4:10};         // Sailed-Ships end clock per player count ⚙ (v3.2: 7/10/13→5/8/10 — voyages only; the presence clock is the second trigger)
 const MAX_ROUND=25;                  // round ceiling ⚙ — top of the 12–25-round target band
-const PRES_DISCS=14;                 // presence discs per colour ⚙ (v3.2: 12→14) — ownership on a slot tile → delivered presence at a kontor; FINITE — the presence END CLOCK (the last disc placed sets the final round)
+const PRES_DISCS=14;                 // TALLY DICE per colour ⚙ (v3.4 — the discs and the shared demand dice unified into player-colour d6; store-bought, not cut) — a die rides every deployed cask/berth, then parks at the destination; FINITE — the presence END CLOCK (the last die placed sets the final round)
 const CASK_CUBES=8;                  // cask cubes per colour ⚙ — ride a hull's berth well (the loaded cask's owner) + claim Hall coins
 const MAT_MARKERS=5;                 // maturation markers per colour ⚙ (v3.1) — one per brewing slot in use, sits on the cask card’s printed aging track
 
@@ -771,7 +771,7 @@ function aidFront(){
         +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — <b>Age</b> (3 pts) <i>or</i> <b>Upgrade</b> (buy 1 Specialist).</div>'
         +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — <b>Load</b> a deployed cask <i>or</i> <b>Dispatch</b> ONE deployed cask: the <b>Hall</b> (free — buy ONE coin or launch: ★ = quality; never ticks the ships track) or a <b>kontor</b> (a contract + '+G+'2 — ticks). Ships <b>sail when full</b>.</div>'
         +'<h5>'+LU('dice-3')+'The Demand Die — one read</h5>'
-        +'<div class="ln">Your cask departs YOUR Privilege’s slot → it banks the printed <b>+N★</b>: set its demand die to N, once, at departure — the pips are the ★. A rival’s cargo banks nothing. Delivery = destination value + the die.</div>'
+        +'<div class="ln">Your cask departs carrying its <b>tally die</b> — turn it to YOUR Privilege’s printed <b>+N★</b> (a bare slot: it stays at 1). The pips are the ★; the die then PARKS at the destination as your presence. Delivery = the die (+ Novgorod’s scale).</div>'
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
         +'<div class="ln"><b>DUAL clock</b> — <b>Sailed-Ships</b> fills (5/8/10 for 2/3/4p; voyages only) <i>or</i> the <b>presence clock</b> (14 public discs each — every delivered cask &amp; presence bump spends one; the last disc placed sets the final round). First trigger fires → finish the round → <b>majorities</b> + <span class="em">Flight</span> (beers delivered) 3→4 · 4→9 · 5→16 (6→25 w/ Jopenbier). Deliveries &amp; Hall ★ were banked in play; flips score 0.</div>'
       +'</div>'
@@ -1012,8 +1012,8 @@ function scoreRingHtml(NW,NH,T){
 //     one-hand slide from the deck beside the gap.
 //   · The Sailed-Ships end clock at the foot: 15 cells with DUAL end marks per player count — base
 //     5/8/10 (flag) and The Trade Roads' +2 → 7/10/12 (truck). Voyages only — the Hall never ticks it;
-//     the SECOND end clock is the presence discs (14 each — the last disc placed sets the final round).
-//     (The Round backstop is rules-side only, and the loose bits — goods cubes · demand dice · quality
+//     the SECOND end clock is the tally dice (14 each — the last die placed sets the final round).
+//     (The Round backstop is rules-side only, and the loose bits — goods cubes · tally dice · quality
 //     markers — live in a supply tray, not here.)
 //   · SCORE wraps the outer edge as the 50-cell ring (see scoreRingCells) — banked constantly, it belongs
 //     on the rim where every seat can reach it without leaning over the displays.
@@ -1032,10 +1032,10 @@ const kMini=d=>{
   // below (Novgorod's v2.9 floor row made it four tiers: <3/3/4/5, too many for a narrow cell at any
   // reasonable chip size); a full-width row gives 4 small chips plenty of room to sit on ONE line, and
   // on-delivery/majority get a wider 2-cell row instead of 3, so nothing here is fighting for space.
-  const scaleRow=d.scale?'<div class="kp-scalerow"><span class="kp-ch">'+LU(VP)+'value · by Q</span><span class="kp-scale">'
+  const scaleRow=d.scale?'<div class="kp-scalerow"><span class="kp-ch">'+LU('dices')+'+ die · by Q</span><span class="kp-scale">'
       +d.scale.map(qv=>'<span class="qv"><span class="qq">Q'+qv[0]+'</span><span class="qn">'+LU(VP)+qv[1]+'</span></span>').join('')
     +'</span></div>':'';
-  const valCell=d.scale?'':'<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU(VP)+d.val+'</span></div>';
+  const valCell=d.scale?'':'<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU('dices')+'</span></div>';   // v3.4: the cask's tally die IS the value (floor 1)
   return '<div class="kp'+(d.scale?' scale':'')+'" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+kArt(d.nm.toLowerCase())
     +'<div class="kp-t">'+LU('landmark')+d.nm+'<span class="kp-q">'+LU(QI)+d.req+'+</span></div>'
     +'<div class="kp-pz"></div>'
@@ -1313,13 +1313,13 @@ function buildPages(){
   const covs=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(5);i++)covs.push(coverTile(p.c,2.4));});
   packRun(pages,'bits',TLBL_IMPF,'coverV',covs,'Unlock covers',famPages,IMPF_GEO);
   // --- TOKENS → their own single-sided trimmed sheet (moved off the Wharf sheet, 2026-07-14) ---
-  const TLBL_TOK='Tokens (single-sided · cut circles) — goods · presence discs · cask cubes & maturation markers';
+  const TLBL_TOK='Tokens (single-sided · cut circles) — goods · cask cubes & maturation markers (v3.4: the tally dice are real d6 — provide 14/colour, nothing to cut)';
   const wtok=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wtok.push(tok(d));});
   packRun(pages,'bits',TLBL_TOK,'tok',wtok,'Goods tokens',famPages,TOK_GEO);
-  const wdisc=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(PRES_DISCS);i++)wdisc.push(disc(p.c));});
+  const wdisc=[];   // v3.4 "Tally Dice": the presence discs are GONE from the cut sheets — 14 real d6 per colour replace them (store-bought, like the old shared demand dice; see the checklist)
   PLAYERS.forEach(p=>{for(let i=0;i<cnt(CASK_CUBES);i++)wdisc.push(disc(p.c,'beer'));
     for(let i=0;i<cnt(MAT_MARKERS);i++)wdisc.push(disc(p.c,'hourglass'));});
-  packRun(pages,'bits',TLBL_TOK,'disc',wdisc,'Presence discs + cask cubes (beer) + maturation markers (hourglass)',famPages,TOK_GEO);
+  packRun(pages,'bits',TLBL_TOK,'disc',wdisc,'Cask cubes (beer) + maturation markers (hourglass)',famPages,TOK_GEO);
   // --- RECIPE CARDS (cardstock — do not mount) — DOUBLE-SIDED since v3.2d: cost face / BREWED face.
   // One set per player of STARTERS (Gruit · Hopped) + every export; flip a card on your first brew of it.
   const recMeta=[];const sets=MODE==='proof'?1:PLAYERS.length;
@@ -1371,7 +1371,7 @@ function checklist(pages,famPages){
     +R('Main board — the Wharf','The 2×2 of stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots — the cross board. (The clocks and score ring live on the Market &amp; Stores board.)','1')
     +R('Destinations &amp; Hall board','Narrow, the same height as Market &amp; Stores — the table pair. LEFT: the four kontor panels (gate · value · on-delivery benefit · majority · an open presence zone). RIGHT: the Hall — a kontor-style art header, then the four Three-Coins SHELVES (each coin space: one icon + a three-word label + the claim-cube outline; FAME 5/7/10/13) and the LAUNCH strip (★ = quality, always open).','1')
 
-    +R('Market &amp; Stores board','The shared displays at component size — the MARKET column (Buildings 4 · Ships 3 · recipe stacks + contracts) and the CELLAR column (Specialists 4), each display refilled from its DRAW BAG — plus the Sailed-Ships clock (15 cells, dual END marks — base 5/8/10 and The Trade Roads 7/10/12; voyages only, the Hall never ticks it) and the 50-cell score ring wrapping the rim (0–49, +50 on the second lap). Loose bits (goods cubes · demand dice · quality markers) live in a supply tray.','1')
+    +R('Market &amp; Stores board','The shared displays at component size — the MARKET column (Buildings 4 · Ships 3 · recipe stacks + contracts) and the CELLAR column (Specialists 4), each display refilled from its DRAW BAG — plus the Sailed-Ships clock (15 cells, dual END marks — base 5/8/10 and The Trade Roads 7/10/12; voyages only, the Hall never ticks it) and the 50-cell score ring wrapping the rim (0–49, +50 on the second lap). Loose bits (goods cubes · tally dice · quality markers) live in a supply tray.','1')
     +R('Player brewery boards','One per player (“One Row”): ONE Floor line of 7 printed slots — slots 1–2 open, covers on 3–7, slot 1 vessel-only; a slot holds a maturing cask, a seated Specialist, or a flipped tile. Nothing else prints on it (v3.2d): the Flight lives on your recipe cards, the Floor rules on the player aid; goods cap 8.',PLAYERS.length)
     +'</table>';
   h+=T('Tiles (mount on chipboard, laser-cut)')
@@ -1389,7 +1389,7 @@ function checklist(pages,famPages){
     +R('Grain cubes','Currency &amp; brew input (G). <i>Sourced — not printed (any small cubes).</i>','60')
     +R('Hops cubes','Currency &amp; brew input (H). <i>Sourced — not printed.</i>','40')
     +R('Worker pawns','One per player; moved between stations. <i>Sourced — not printed (any pawn/meeple).</i>',PLAYERS.length)
-    +R('Presence discs','Per player colour — ownership on a slot tile (with a frame) → delivered presence at a kontor (majorities). FINITE: the printed Reach wall AND the presence END CLOCK — every delivered cask &amp; presence bump spends one; the last disc placed sets the final round (first trigger with Sailed-Ships fires).',PRES_DISCS+' ea')
+    +R('TALLY DICE (real d6 — provide your own)','v3.4: one component for ownership + value + the clock. Per player colour — a die rides every deployed cask (face 1), is turned to a Privilege’s printed +N at departure (the pips = the ★ banked), rides the berth well, then PARKS at the destination as presence (majorities). FINITE: the printed Reach wall AND the presence END CLOCK — the last die placed sets the final round (first trigger with Sailed-Ships fires). Nothing to cut — 14 dice per colour, 12mm d6.',PRES_DISCS+' ea')
     +R('Cask cubes','Per player colour — ride a hull’s berth well (the loaded cask’s owner) and claim Hall coins.',CASK_CUBES+' ea')
     +R('Maturation markers','Per player colour — one per brewing slot in use, advances on the cask card’s printed aging track.',MAT_MARKERS+' ea')
     +R('Unlock covers','Per player colour — sit on Floor slots 3–7; each new distinct beer brewed (from the 2nd) or the Coppersmith removes the next one.','5 ea')

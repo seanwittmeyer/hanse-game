@@ -56,7 +56,7 @@ const SHIP_DECK=[
 // ---- SLOT TILES (v3.0-A): PRIVILEGES & BUILDINGS — the one owned family on the living slots (mirrors
 // play.html BUILDINGS). One grammar: "a tile modifies the OCCUPANT docked on it", in two verbs —
 //   • VALUE = a PRIVILEGE (blue): prints a plain +N★ bonus. When the OWNER's cask departs the slot
-//     toward a sale, set its demand die to N — once, at departure, nothing recalculated (the pips ARE
+//     toward a sale, turn its tally die to N — once, at departure, nothing recalculated (the pips ARE
 //     the ★ banked on delivery; no premium, no cap rule, no sail-time bump). A rival's cargo banks nothing.
 //   • TRANSFORM = a WORK (green): changes the docked cask/ship, for WHOEVER docks there. Three works
 //     print an ACTION — their slot's stop offers "deploy here OR the printed action".
@@ -67,7 +67,7 @@ const SHIP_DECK=[
 const DIE=n=>'<span class="diech">'+LU('dice-'+n)+'</span>';
 const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a SHIP docked here'}};
 const BUILDINGS=[
-  // PRIVILEGES (blue, 12 tiles) — each prints a +N★ bonus, owner-only; the demand die (set to N at departure) carries it
+  // PRIVILEGES (blue, 12 tiles) — each prints a +N★ bonus, owner-only; the cask's tally die (turned to N at departure, floor 1) carries it
   {k:'staple',    nm:'Staple Hall',          verb:'value', tgt:'cask', ic:'warehouse',   g:3, n:2, eff:'Your cask: +3★ '+DIE(3)},
   {k:'burgomstr', nm:'Burgomaster’s Favor',  verb:'value', tgt:'cask', ic:'crown',       g:3, n:2, eff:'Your cask: +★ = its quality'},
   {k:'connoiss',  nm:'Connoisseur’s Cellar', verb:'value', tgt:'cask', ic:'wine',        g:3, n:1, eff:'Your Q4+ cask: +4★ '+DIE(4)},
@@ -412,7 +412,7 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .ship-card .ce.top .cnm svg,.ship-card .ce.top .cnm .ic{width:.26in;height:.26in}\n\
   .ship-card .ccost{font-size:.17in}\n\
   .ship-card .sberth{display:inline-flex;align-items:center;gap:.07in;background:rgba(0,0,0,.34);border-radius:.06in;padding:.055in .09in}\n\
-  .ship-card .sbn{width:.42in;height:.42in;border:1.8px solid rgba(255,255,255,.92);border-radius:.05in;display:flex;align-items:center;justify-content:center;font-size:.18in;font-weight:900}   /* prints 0.336in — seats an 8mm cask cube; the demand die rides BESIDE the hull */\n\
+  .ship-card .sbn{width:.42in;height:.42in;border:1.8px solid rgba(255,255,255,.92);border-radius:.05in;display:flex;align-items:center;justify-content:center;font-size:.18in;font-weight:900}   /* prints 0.336in — seats an 8mm cask cube; the tally die rides BESIDE the hull */\n\
   .ship-card .ce.bot .ce-row{align-items:flex-end}\n\
   .ship-card .ce.bot .sdest{font-size:.22in;font-variant:small-caps;font-weight:bold;display:inline-flex;align-items:center;gap:.06in}\n\
   .ship-card .ce.bot .sdest svg,.ship-card .ce.bot .sdest .ic{width:.2in;height:.2in}\n\

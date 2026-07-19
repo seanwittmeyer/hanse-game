@@ -123,7 +123,14 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
   S.buildings.s2={b:'staple',owner:1};
   S.slots.s2={type:'cask',owner:0,style:'broyhan',q:3,act:'age'};
   var L2=captureLoad('s2','bruges');
-  ok('a rival privilege sets NO die', (L2.die||0)===0, 'die '+L2.die);
+  ok('a rival privilege pays nothing — the die departs at its floor of 1 (v3.4)', (L2.die||0)===1, 'die '+L2.die);
+  // v3.4 "Tally Dice": a BARE slot's kontor departure also carries the die at 1 (the old flat +1 base)
+  S.slots.s4={type:'cask',owner:0,style:'hopped',q:2,act:'age'};
+  var L4=captureLoad('s4','bruges');
+  ok('a bare-slot kontor departure carries die 1 (v3.4 floor)', L4.die===1, 'die '+L4.die);
+  var d0=scorePlayer(p).deliv;
+  deliverCask(p,L4,'bruges',null,false);
+  ok('a bare Bruges delivery = 0 printed + die 1 (v3.4)', scorePlayer(p).deliv===d0+1, 'delta '+(scorePlayer(p).deliv-d0));
   // burgomaster: die = quality
   S.buildings.s3={b:'burgomstr',owner:0};
   S.slots.s3={type:'cask',owner:0,style:'bock',q:5,act:'age'};

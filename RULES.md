@@ -1,4 +1,14 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v3.3 “Three Coins”)
+# Brewhouses of the Hanse — Turn & Round Rules (v3.4 “Tally Dice”)
+
+> **v3.4 “Tally Dice” (designer-ruled 2026-07-19).** The presence disc and the demand die are
+> **ONE component**: each house owns **14 player-colour d6 — the TALLY DICE.** A die from your
+> tray rides every deployed cask (face **1** — ownership in plain sight), is **turned to the
+> Privilege’s printed N at departure** (one read, unchanged), rides the hull’s berth well, and
+> **parks at the destination on delivery** — it IS your presence there, and the same public pool
+> is the presence clock. The kontore’s old flat **+1★ base is folded into the die’s floor of 1**
+> (a bare delivery pays exactly what it did; a privileged delivery to a flat kontor pays 1 less ⚙
+> — the watch item). **No die in the tray → no deploy, no vessel-direct load, no Reach.** The
+> oracle evidence: `playtests/dice-experiment/REPORT.md`.
 
 > **Status: live (2026-07-12).** The **v3.0-A “Path A” keystone** (designer-ruled in
 > `V3-PATH-A.md`) + **v3.1 “One Row”** (the one-row player board + four dials) + **v3.2 “Three
@@ -6,7 +16,7 @@
 > board (§7b) and the game gains the **presence clock** — **14 public discs** per house; every
 > delivered cask spends one; the last disc placed sets the final round, **alongside** a retuned
 > Sailed-Ships track (5/8/10 — ships + charters only; enshrines never tick). Numbers ⚙.
-> **The live, playable build is `play.html` (KEY `hanse-v32`).** The prior live build (v2.9.1,
+> **The live, playable build is `play.html` (KEY `hanse-v34`).** The prior live build (v2.9.1,
 > KEY v94) is archived, playable, at **`archive/v2.9/`**; the v0.16.1 build at `archive/play.html`.
 >
 > **The eight moves of Path A:**
@@ -67,8 +77,11 @@ Each house starts with (⚙):
   (v3.2d: your recipe cards carry the Flight). A slot holds ONE of: a maturing cask (a vessel) ·
   a seated Specialist · a flipped tile.
 - **2 charter contracts** (the kontor-Dispatch certificates; buy more at the Market — §6).
-- **14 presence discs ⚙ — your whole delivery runway, in public view.** Every delivered cask
-  (kontor or Hall) and every presence bump spends one (§10); what is left is always countable.
+- **14 TALLY DICE ⚙ (player-colour d6) — your whole delivery runway, in public view.** A die
+  rides every cask you deploy (face 1), turns to a Privilege’s printed N at departure, and
+  **parks at the destination on delivery** — presence and value on one component. Every
+  delivered cask (kontor or Hall) and every presence bump spends one (§10); tray + at-sea +
+  parked is always countable.
 - A **warm start** so the Wharf is live turn 1: a guaranteed **Hulk → Bruges** + one more ship
   dealt onto slots (spread across lines); **two NEUTRAL green Buildings** dealt from the deck
   onto open slots (they serve any dock; no owner — overbuilding one still costs the ground rent,
@@ -210,7 +223,7 @@ only when full**. **Or Dispatch:** send **ONE deployed cask** of yours on its ow
   single-cask voyage — the deadlock relief valve.
 
 Only the **kontor** route ticks the Sailed-Ships track; the Hall never does. **Every delivered
-cask — either route — spends a presence disc** (§10).
+cask — either route — parks its tally die at the destination** (§10).
 
 > **DEPLOY FIRST — THE VESSEL-OUTLET GRAMMAR.** ***Load and Dispatch take a DEPLOYED cask.***
 > A cask must stand on a public slot — contestable, loadable by rivals — before it can go
@@ -255,11 +268,14 @@ discarded. The 8 slots never lock; the churn has a price.
 > **A Privilege pays its owner; a Building serves the wharf.** No payments between players.
 
 A Privilege prints its payout in plain sight: **+N★ for the owner’s departing cask.** The
-demand die is simply the carrier — when the **owner’s cask departs that slot** (loaded,
-chartered, enshrined), **set the die to N**; the pips ARE the ★ banked at delivery. One read,
+cask’s **tally die** is the carrier — when the **owner’s cask departs that slot** (loaded,
+chartered, enshrined), **turn the die to N**; the pips ARE the ★ banked at delivery. One read,
 nothing recalculated, no premium arithmetic, no sail-time bump, no cap rule (no tile prints
-above +6★). Conditions are printed on the tile and read at departure. A rival’s cargo docking
-there passes through and banks nothing.
+above +6★). Conditions are printed on the tile and read at departure. **v3.4: a kontor-bound
+die never departs below 1** — a bare slot (or a rival’s privilege, which pays its owner
+nothing) sends the die at its floor of 1, the old flat kontor base. A Hall-bound die parks as
+the spent marker (the Reliquary turns it to 2; otherwise its face doesn’t score — the coins and
+launch are the Hall’s printed payout).
 
 | Privilege | Printed bonus ⚙ | Qty ⚙ |
 |---|---|---|
@@ -321,25 +337,26 @@ When a line fires, the active player **may** use each of its stops once — the 
   Ticks the Sailed-Ships track.
 - **Dispatch — Hall route** (the old Enshrine): free, no boat — a deployed **Q2+** cask is
   presented at the **Three Coins board** (§7b). Deploy-first keeps it contestable — *the Hall
-  demands a public showing.* Never ticks the ships track (the presence disc it spends is its
+  demands a public showing.* Never ticks the ships track (the tally die it parks is its
   clock).
 
 ---
 
 ## 7. Destinations & delivery value
 
-| Destination | Gate ⚙ | Value ⚙ | Benefit on delivery ⚙ | Majority (1/2/3) ⚙ |
+| Destination | Gate ⚙ | Value ⚙ (v3.4) | Benefit on delivery ⚙ | Majority (1/2/3) ⚙ |
 |---|---|---|---|---|
-| **Bruges** (Hub) | Q1 | +1 ★ | 2 goods (owner’s choice) | 4 / 2 / 0 |
-| **London** (Steelyard) | Q2 | +1 ★ | a **Privilege/Building** (placed at once) **OR** a **Specialist**, free | 5 / 3 / 1 |
-| **Bergen** (Bryggen) | Q2 | +1 ★ | **free Reach** (+1 presence at a kontor you’ve delivered to) | 9 / 5 / 2 (anchor) |
-| **Novgorod** (Peterhof) | Q3 | scales: Q3→2 · Q4→4 · Q5→6 · floor 1 | **refine** (a maturing cask +1 age) | 8 / 5 / 2 |
+| **Bruges** (Hub) | Q1 | the die (≥1) | 2 goods (owner’s choice) | 4 / 2 / 0 |
+| **London** (Steelyard) | Q2 | the die (≥1) | a **Privilege/Building** (placed at once) **OR** a **Specialist**, free | 5 / 3 / 1 |
+| **Bergen** (Bryggen) | Q2 | the die (≥1) | **free Reach** (+1 presence at a kontor you’ve delivered to) | 9 / 5 / 2 (anchor) |
+| **Novgorod** (Peterhof) | Q3 | the die + printed scale: Q3→2 · Q4→4 · Q5→6 | **refine** (a maturing cask +1 age) | 8 / 5 / 2 |
 | **The Hall** | Q2 | **ONE coin — FAME ★ 5/7/10/13 ⚙, or a CRAFT/FAVOR power (0★)** — or launch for ★ = quality | — (§7b) | — |
 
-**Delivery = the destination’s printed value + the demand die in the berth.** The die was set
-once, at departure, to the Privilege’s one printed number (§5b) — nothing else ever touches it.
-**Every kontor pays at least 1★ per cask**; a quality lift (kiln, Duckstein) counts for gates
-AND points; only a below-gate cask admitted by the Customs House sells at the 1★ floor.
+**Delivery = the tally die the cask carries (+ Novgorod’s printed scale).** The die was turned
+once, at departure — to the Privilege’s one printed number, or left at its **floor of 1** from a
+bare slot (§5b) — nothing else ever touches it. **Every kontor pays at least 1★ per cask** (the
+die guarantees it); a quality lift (kiln, Duckstein) counts for gates AND points; a below-gate
+cask admitted by the Customs House sells at the die’s 1.
 
 **Benefits resolve WHEN GAINED, owner’s choice** — whoever’s turn it is (a rival tops off a hull
 carrying your cask → you choose your benefit right then). No queues, nothing to remember.
@@ -374,8 +391,8 @@ power. The cask retires to the box.
 shelf’s LAUNCH ROW** (the 4th printed zone; the public record of the Hall’s traffic). Once the
 coins you covet are gone, the Hall remains the volume outlet at a fair, flat rate.
 
-**No tick, but a disc:** the Hall never advances the Sailed-Ships track — but every enshrine
-and every launch is a delivery, and **spends a presence disc** (§10). *(Guardrail ⚙: the Common
+**No tick, but a die:** the Hall never advances the Sailed-Ships track — but every enshrine
+and every launch is a delivery, and **parks a tally die** (§10). *(Guardrail ⚙: the Common
 Shelf stays goods/tempo only — never engine pieces.)*
 
 ---
@@ -456,11 +473,14 @@ score):
    kontor Dispatch (charter, including the Masters’ passage). **Enshrines never tick.** Length
    **5 / 8 / 10** for 2/3/4p ⚙ (v3.2 retune — the track lost the enshrine ticks; +2 with The
    Trade Roads).
-2. **The presence clock** — each house owns **14 discs ⚙, in public view**. **Every delivered
-   cask — kontor or Hall — and every presence bump (Reach, Keut, honors) spends one.** The
-   player who places their **last** disc sets the final round. *The tension is the point: fight
-   for kontor majorities disc by disc, or bank guaranteed ★ — the same 14 discs pay for both,
-   and everyone can count yours.*
+2. **The presence clock — the tally dice (v3.4)** — each house owns **14 player-colour d6 ⚙,
+   in public view**. A die leaves your **tray** when a cask deploys (it rides the cask, then the
+   berth), and **parks at the destination on delivery** — every delivered cask (kontor or Hall)
+   and every presence bump (Reach, Keut, honors) parks one. The player who places their **last**
+   die sets the final round. **No die in the tray → no deploy, no vessel-direct load, no
+   Reach** (Tap-outs, sourings and displacements return dice to the tray). *The tension is the
+   point: fight for kontor majorities die by die, or bank guaranteed ★ — the same 14 dice pay
+   for both, and everyone can count yours: tray + at sea + parked.*
 
 A **MAX_ROUND ceiling** (~25 ⚙) backstops a slow table. Pace target **~12–25 rounds.**
 
@@ -472,9 +492,9 @@ A **MAX_ROUND ceiling** (~25 ⚙) backstops a slow table. Pace target **~12–25
 1. **The Hall — the Three Coins.** A FAME coin banked its shelf’s **★ (5/7/10/13 ⚙)**; a
    CRAFT/FAVOR coin banked its power instead; a launch banked **★ = quality** (§7b). *The
    prestige lane — visible, claimable once, and hot early: the best coins go to the quick.*
-2. **Kontore — value + die.** Each delivered cask scores **its destination’s printed value +
-   the one demand die** (§7) — never less than 1★. *The volume/demand lane — author privileges,
-   route your brews through them.*
+2. **Kontore — the die.** Each delivered cask scores **the tally die it carries (+ Novgorod’s
+   printed scale)** (§7) — never less than 1★, the die’s own floor. *The volume/demand lane —
+   author privileges, route your brews through them.*
 
 **End-game:**
 3. **Majorities** — at each kontor, by **delivered-cask count** (presence), tiered (Bruges 4/2/0

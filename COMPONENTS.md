@@ -1,9 +1,13 @@
-# Brewhouses of the Hanse — Components (v3.3 “Three Coins”)
+# Brewhouses of the Hanse — Components (v3.4 “Tally Dice”)
+
+> **v3.4 (designer-ruled 2026-07-19):** the presence disc and the demand die are **one
+> component** — **14 player-colour d6 per house (the TALLY DICE)**. The 56 presence discs and
+> the 8 shared demand dice leave the box; 56 tally dice replace them.
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9; the build plan `V3-PATH-A.md`.
-> - The live build is `play.html` — **v3.3 “Three Coins”** (`KEY hanse-v33`; the v3.2a–d patches consolidated); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it. The prior manifest is archived at `archive/v2.9/COMPONENTS.md`.
+> - The live build is `play.html` — **v3.4 “Tally Dice”** (`KEY hanse-v34`; v3.3 + the disc/die unification); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it. The prior manifest is archived at `archive/v2.9/COMPONENTS.md`.
 > - **The print kit is `printables2.html` (the card kit) — the only kit in use.** Printables generate from this doc, never the other way around.
 > - Cross-reference: §2 boards, §3–4 supply, §5–11 the tile families, §12 player board, §13 setup, §14 box footprint, §15 expansions, §16 cross-refs, §17 gaps.
 
@@ -14,8 +18,8 @@
 - **Goods:** `G` = grain, `H` = hops — the only currency.
 - **A line** = a row or column of the Wharf = two stations + the two slots beside them. **Slot locality (v3.0-A):** a slot’s line-stop acts on that slot.
 - **A slot stack** (max two layers): `[slot tile?] + [ship+casks | cask]`.
-- **Three tile types, three colours:** a **PRIVILEGE** (bright **blue**) — prints a plain **+N★ bonus**; the owner’s departing cask banks it, carried on the demand die set to N (a rival docking there banks nothing); a **BUILDING / work** (**green**) — serves any dock (some print an action on their slot’s stop); a **SPECIALIST** (**purple**) — a private player-board tile.
-- **End clock (v3.2 — DUAL):** the **Sailed-Ships track** fills by one per **voyage** (a full sail or a kontor Dispatch — enshrines never tick) **and** the **presence clock** runs beside it — every delivered cask and presence bump spends one of a house’s **14 public discs**; the last disc placed sets the final round. First trigger fires.
+- **Three tile types, three colours:** a **PRIVILEGE** (bright **blue**) — prints a plain **+N★ bonus**; the owner’s departing cask banks it, its **tally die turned to N** (a rival docking there banks only the die’s floor of 1); a **BUILDING / work** (**green**) — serves any dock (some print an action on their slot’s stop); a **SPECIALIST** (**purple**) — a private player-board tile.
+- **End clock (v3.2 — DUAL; v3.4 dice):** the **Sailed-Ships track** fills by one per **voyage** (a full sail or a kontor Dispatch — enshrines never tick) **and** the **presence clock** runs beside it — every delivered cask and presence bump parks one of a house’s **14 public TALLY DICE**; the last die placed sets the final round. First trigger fires.
 
 ---
 
@@ -36,7 +40,7 @@
 |---|---|---|
 | Grain cubes (`G`) | ~60 | Currency + brew input. |
 | Hops cubes (`H`) | ~40 | Currency + brew input. |
-| Demand dice (d6) | 8 | **One-read value carrier (v3.0-A):** set once, at departure, to the ONE number printed on the owner’s Privilege. Rides the hull’s berth well; returns to the pool after delivery. Never rolled. |
+| ~~Demand dice (shared)~~ | 0 | **Merged into the per-player TALLY DICE (v3.4, §4)** — the die that rides a cask IS the owner’s presence die; nothing returns to a shared pool. |
 | Quality-boost (+1Q) markers | 6 | Ride a cask from a Malt Kiln / Hop Yard / Smoke Kiln; effective quality for gates AND points. |
 | Charter contracts (cards) | 20 | A kontor Dispatch spends 1 + the flat `2 G` fare; buyable at the Market (`1 G`). |
 | First-player marker | 1 | Fixed all game (turn order does not rotate). |
@@ -50,7 +54,7 @@
 | Component | Qty per house ⚙ | Notes |
 |---|---|---|
 | Worker pawn | 1 | Moves between stations — or **stays home** on a Floor turn. |
-| Presence discs (player colour) | **14** ⚙ | Ownership on a slot tile (with a frame) → delivered presence at a kontor (majorities) — **and the CLOCK (v3.2):** every delivered cask (kontor or Hall) and every presence bump spends one, in public view; **placing your last disc sets the final round.** Finite = the printed Reach wall too. |
+| **TALLY DICE (player-colour d6)** *(v3.4 — replaces the presence discs + the shared demand dice)* | **14** ⚙ | One die rides every cask the house deploys (face **1** — ownership in plain sight), is **turned to a Privilege’s printed N at departure** (the one-read carrier, unchanged), rides the hull’s berth well, and **parks at the destination on delivery** — it IS the house’s presence there (majorities) **and the CLOCK:** placing the **last** die sets the final round. Never rolled; never returns from a destination. **No die in the tray → no deploy, no vessel-direct load, no Reach.** |
 | **Cask cubes** (player colour) *(new)* | 8 | Ride a hull’s **berth well** (the loaded cask’s owner), **claim Hall coins** (one cube per coin), and **mark the Hall’s launch rows** (v3.2b — a cube per launch; a heavy launch game watches the supply ⚙). |
 | Owner frames | 6 | Mark whose Privilege/Building sits on a slot (confirmed direction, 2026-07-04). |
 | **Unlock covers** *(new)* | 5 | Sit on Floor slots 3–7 (v3.1 “One Row”); a Flight unlock (each new distinct beer brewed, from the 2nd), the Coppersmith, or the High Board honor removes the next one. |
@@ -79,7 +83,7 @@ A brewed beer in one of three states: **maturing** (vessel) → **deployed** (sl
 
 ## 6. Hull tiles · family B (20-tile deck) — the carrier component
 
-Neutral, destination-bound hulls, drawn from a shuffled deck into a face-up **market of 3**. **The hull is the carrier (v3.0-A):** it prints its destination chip, **quality gate**, and **numbered berth wells** — each well holds the loading owner’s **cask cube** + the cask’s **demand die** (if set) + any **+1Q marker**. The cask card leaves the wharf at load and waits face-up by its owner (the manifest row) until the hull sails.
+Neutral, destination-bound hulls, drawn from a shuffled deck into a face-up **market of 3**. **The hull is the carrier (v3.0-A):** it prints its destination chip, **quality gate**, and **numbered berth wells** — each well holds the cask’s **tally die** (owner colour = whose cargo; pips = the ★ it banks — v3.4: always present, floor 1) + any **+1Q marker**; the **cask cube** still marks the berth. The cask card leaves the wharf at load and waits face-up by its owner (the manifest row) until the hull sails.
 
 | Hull | Capacity | Qty | Destination spread |
 |---|---|---|---|
@@ -95,7 +99,7 @@ Neutral, destination-bound hulls, drawn from a shuffled deck into a face-up **ma
 
 Always acquired **from the face-up Wharf display of 4 and placed at once** (no hand): buy at the Market, free via London, or the **Gain 1 building** cask action. **Overbuild = the `1 G` ground rent**; the displaced tile flips face-down into an open **Floor slot** of its owner’s as a Floor Wild (**flips score nothing**) — none seatable → **simply discarded** (v3.3).
 
-### 7A. PRIVILEGES (blue, 12 tiles) — each prints a plain **+N★**; the demand die (set to N) carries it
+### 7A. PRIVILEGES (blue, 12 tiles) — each prints a plain **+N★**; the cask’s tally die (turned to N) carries it
 
 | Tile | Printed text | Cost ⚙ | Qty ⚙ |
 |---|---|---|---|
@@ -195,18 +199,18 @@ Each quality’s casks form a face-up pile; the **top action** of every pile is 
 
 ### 11A. The kontore (destination board)
 
-| Destination | Gate | Value ⚙ | On-delivery benefit ⚙ | Majority (1 / 2 / 3) ⚙ |
+| Destination | Gate | Value ⚙ (v3.4) | On-delivery benefit ⚙ | Majority (1 / 2 / 3) ⚙ |
 |---|---|---|---|---|
-| Bruges (Hub) | Q1 | +1 ★ | 2 goods (owner’s choice) | 4 / 2 / 0 |
-| London (Steelyard) | Q2 | +1 ★ | a Privilege/Building (placed) OR a Specialist, free | 5 / 3 / 1 |
-| Bergen (Bryggen) | Q2 | +1 ★ | free Reach (+1 presence) | 9 / 5 / 2 |
-| Novgorod (Peterhof) | Q3 | scales: Q3·2 / Q4·4 / Q5·6 (floor 1) | refine — a maturing cask +1 age | 8 / 5 / 2 |
+| Bruges (Hub) | Q1 | the die (≥1) | 2 goods (owner’s choice) | 4 / 2 / 0 |
+| London (Steelyard) | Q2 | the die (≥1) | a Privilege/Building (placed) OR a Specialist, free | 5 / 3 / 1 |
+| Bergen (Bryggen) | Q2 | the die (≥1) | free Reach (+1 presence) | 9 / 5 / 2 |
+| Novgorod (Peterhof) | Q3 | the die + printed scale: Q3·2 / Q4·4 / Q5·6 | refine — a maturing cask +1 age | 8 / 5 / 2 |
 
-**Delivery = the printed value + the demand die the cask carries** — never less than 1★. Benefits resolve when gained, owner’s choice. 2p skips 2nd place; ties split.
+**Delivery = the tally die the cask carries (+ Novgorod’s printed scale)** — never less than 1★ (the die’s floor; the old flat +1 base is folded into it). Benefits resolve when gained, owner’s choice. 2p skips 2nd place; ties split.
 
 ### 11B. The Hall — the Guild’s Three Coins (v3.2)
 
-A Hall Dispatch (free, no boat; a deployed Q2+ cask) buys **exactly ONE coin** on a shelf its effective quality reaches — **FAME** banks the printed ★; **CRAFT** fires a power now (0★); **FAVOR** grants a thing, free (0★). Cube the coin — each of the **12 coins** is claimable **once per game**. Or **launch** for **★ = quality** (no coin — **a cask cube marks the quality shelf’s LAUNCH ROW**, the 4th printed zone; the always-open volume outlet). No ships-track tick either way; every enshrine/launch spends a presence disc.
+A Hall Dispatch (free, no boat; a deployed Q2+ cask) buys **exactly ONE coin** on a shelf its effective quality reaches — **FAME** banks the printed ★; **CRAFT** fires a power now (0★); **FAVOR** grants a thing, free (0★). Cube the coin — each of the **12 coins** is claimable **once per game**. Or **launch** for **★ = quality** (no coin — **a cask cube marks the quality shelf’s LAUNCH ROW**, the 4th printed zone; the always-open volume outlet). No ships-track tick either way; every enshrine/launch parks a tally die at the Hall.
 
 | Shelf | Gate | FAME ⚙ | CRAFT (now, 0★) ⚙ | FAVOR (free, 0★) ⚙ |
 |---|---|---|---|---|
@@ -258,7 +262,7 @@ A Hall Dispatch (free, no boat; a deployed Q2+ cask) buys **exactly ONE coin** o
 | Ready Gruit in V1 | 1 | cask supply (the flipped Gruit card records it) |
 | Worker placement | 1 | any station, free (no toll) |
 
-Shared setup: 2 hulls dealt onto slots (incl. a guaranteed Hulk→Bruges); **2 neutral green works** dealt onto open slots (no owner; overbuilt = discarded); ship market 3; Wharf display 4; Specialist display 4 (deck `n−1` × 7); export draft 3 of 4; the Three Coins board out (all 12 coins open at every count); Sailed-Ships length set (§14); **each house takes its 14 presence discs — the pool sits in public view.**
+Shared setup: 2 hulls dealt onto slots (incl. a guaranteed Hulk→Bruges); **2 neutral green works** dealt onto open slots (no owner; overbuilt = discarded); ship market 3; Wharf display 4; Specialist display 4 (deck `n−1` × 7); export draft 3 of 4; the Three Coins board out (all 12 coins open at every count); Sailed-Ships length set (§14); **each house takes its 14 tally dice — the tray sits in public view.**
 
 ---
 
@@ -274,10 +278,9 @@ Shared setup: 2 hulls dealt onto slots (incl. a guaranteed Hulk→Bruges); **2 n
 | Specialists (E) | 21 | 7 |
 | Charter contracts | 20 cards | 1 |
 | Goods cubes | ~100 (60 `G` + 40 `H`) | 2 |
-| Demand dice | 8 (d6) | 1 |
+| **Tally dice (d6)** *(v3.4 — replaces the presence discs + shared demand dice)* | **56 (14 / colour)** ⚙ | 4 colours |
 | +1Q markers | 6 | 1 |
 | Worker pawns | 4 | 4 colours |
-| Presence discs | **56 (14 / colour)** ⚙ | 4 colours |
 | Cask cubes | 32 (8 / colour) | 4 colours |
 | Owner frames | 24 (6 / colour) | 4 colours |
 | Unlock covers | 20 (5 / colour) | 1 design |
@@ -350,4 +353,4 @@ Majorities turn OFF (the contest moves inland). Movement per voyage (one node pe
 | 7 | **Recipe-card model** — 16 export cards + printed starters (adopted from the kits) | — | done; keep in sync |
 | 8 | **Owner frames** — confirmed direction; 6/colour in §4 | slot-tile ownership | shipped in printables2 |
 | 9 | **Blend’s +1 quality** (Specialty Beers) — carrier for a blended cask’s raised quality; the 6 markers are claimed by the kilns | a blended cask’s quality | more +1Q markers ⚙, or print-side rule |
-| 10 | **Demand dice supply (8)** — unverified worst case (max simultaneous loaded berths with dies) | dice riding berths | count check at the table |
+| 10 | ~~Demand dice supply~~ **RESOLVED (v3.4)** — each cask rides its owner’s own tally die; supply = the 14/house pool by construction | — | — |

@@ -626,11 +626,14 @@ const STATION_ICON_TIP={coins:'Source — take 2 goods (any mix)',
 // Bergen = the majority (a free Reach feeds the big 9/5/2), Novgorod = the quality climb (value SCALES
 // with quality + the long trade REFINES a maturing cask of the owner's choice, +1 age). 'sval' = a
 // quality-scaling value fn.
+// v3.4 "Tally Dice": the flat +1★ kontor base is FOLDED INTO THE DIE — every kontor-bound cask departs
+// carrying its owner's tally die at a FLOOR of 1 (a bare slot sets it to 1; a Privilege sets it to N).
+// The printed kontor value is now only Novgorod's quality scale; the die guarantees the ≥1★ delivery.
 const DEST={
-  bruges  :{name:'Bruges',  gate:1, value:1, maj:[4,2,0],   benefit:'goods',    kontor:true,  role:'Hub · the economy — 2 goods + a starter majority'},
-  london  :{name:'London',  gate:2, value:1, maj:[5,3,1],   benefit:'building', kontor:true,  role:'Steelyard · the engine — a free Privilege/Building (placed at once) OR a free Specialist (v2.4)'},
-  bergen  :{name:'Bergen',  gate:2, value:1, maj:[9,5,2],   benefit:'reach',    kontor:true,  role:'Bryggen · the majority — a free Reach (+1 presence) feeds THE rich majority'},
-  novgorod:{name:'Novgorod',gate:3, value:2, sval:q=>Math.max(1,2*(q-2)), maj:[8,5,2], benefit:'age', kontor:true, role:'Long Haul · the quality climb — value SCALES with quality (Q3→2·Q4→4·Q5→6; a below-gate cask admitted by Customs sells at the 1★ floor) + the long trade refines a cask (+1 age)'},   // v2.9: every kontor has a ≥1★ value floor — no delivery is ever worth 0. v2.9.1: the Gauger's lift is now a QUALITY lift (scores at the gauged Q), so only Customs-admitted / Overland sub-gate casks can still land below the scale — the floor is their backstop
+  bruges  :{name:'Bruges',  gate:1, value:0, maj:[4,2,0],   benefit:'goods',    kontor:true,  role:'Hub · the economy — 2 goods + a starter majority'},
+  london  :{name:'London',  gate:2, value:0, maj:[5,3,1],   benefit:'building', kontor:true,  role:'Steelyard · the engine — a free Privilege/Building (placed at once) OR a free Specialist (v2.4)'},
+  bergen  :{name:'Bergen',  gate:2, value:0, maj:[9,5,2],   benefit:'reach',    kontor:true,  role:'Bryggen · the majority — a free Reach (+1 presence) feeds THE rich majority'},
+  novgorod:{name:'Novgorod',gate:3, value:0, sval:q=>Math.max(0,2*(q-2)), maj:[8,5,2], benefit:'age', kontor:true, role:'Long Haul · the quality climb — the printed scale rides on top of the die (Q3→2·Q4→4·Q5→6) + the long trade refines a cask (+1 age)'},   // v3.4: the 1★ floor moved onto the die (Customs-admitted sub-gate casks still land at the die's 1)
   hall    :{name:'The Hall',gate:2, value:0, maj:[],        benefit:'none',     kontor:false, role:'Prestige · 3/5/7/9 by quality · the local Enshrine (no boat)'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
@@ -928,7 +931,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v33'; // v3.3 "Three Coins" [ruled 2026-07-14] — the CONSOLIDATION: v3.2a–d fold into one version (launch rows cube-marked · free recipe/specialist cask-gains · the Flight on the double-sided recipe cards, ladder = distinct beers BREWED), with one simplification: a displaced tile with NO open Floor slot is SIMPLY DISCARDED (the v3.2a +3★ consolation removed — the 1G ground rent already prices the eviction; flips are engine, never score). The app mirrors the print kit from this version on.
+const KEY='hanse-v34'; // v3.4 "Tally Dice" [designer-ruled 2026-07-19 — "all in"] — the presence disc and the demand die UNIFY into ONE component: 14 player-colour d6 per house (the tally dice). A die rides every deployed cask (face 1 — ownership + the old flat +1 kontor base, now ON the die), turns to the Privilege's printed N at departure (one read, unchanged), rides the berth well, and PARKS at the destination as presence — the same public pool is the presence clock (last die placed = final round, v3.2 semantics unchanged). Kontor flat bases 1→0 (the die's floor of 1 replaces them — value-neutral for bare casks; privileged flat-kontor deliveries pay 1 less, the ⚙ watch item); Novgorod's printed scale rides ON TOP of the die (sval floor 0). Physical gates: a deploy / vessel-direct load / Reach needs a die in the TRAY (pool minus dice at sea) — trayDice()/diceInFlight(). Replaces: 56 presence discs + 8 shared demand dice → 56 tally dice; the oracle evidence is playtests/dice-experiment/REPORT.md (v84-era models A/B; model B = this design). Bump discards stale v33 state. // v3.3 "Three Coins" [ruled 2026-07-14] — the CONSOLIDATION: v3.2a–d fold into one version (launch rows cube-marked · free recipe/specialist cask-gains · the Flight on the double-sided recipe cards, ladder = distinct beers BREWED), with one simplification: a displaced tile with NO open Floor slot is SIMPLY DISCARDED (the v3.2a +3★ consolation removed — the 1G ground rent already prices the eviction; flips are engine, never score). The app mirrors the print kit from this version on.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -936,7 +939,7 @@ const KEY='hanse-v33'; // v3.3 "Three Coins" [ruled 2026-07-14] — the CONSOLID
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v3.1 “One Row” · '+KEY;
+const APP_VERSION='v3.4 “Tally Dice” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -1107,7 +1110,8 @@ function gateNeed(shipSlot,caskSlot){let g=DEST[S.slots[shipSlot].dest].gate;
   if(bKeyAt(shipSlot)==='customs')g--;return Math.max(1,g);}
 function canTake(shipSlot,caskSlot){const sh=S.slots[shipSlot];
   if(!(sh&&sh.type==='ship'&&sh.load.length<effCap(sh)))return false;
-  if(isVRef(caskSlot)){const c=cur().vessels[+caskSlot.slice(2)];if(!(c&&c.step>=c.ready))return false;}
+  if(isVRef(caskSlot)){const c=cur().vessels[+caskSlot.slice(2)];if(!(c&&c.step>=c.ready))return false;
+    if(S.presEnd&&trayDice(cur())<=0)return false;}   // v3.4 Tally Dice: a vessel-direct load sets a die on the cask — no die in the tray, no vessel-load (a wharf cask already carries its die)
   else{const ct=S.slots[caskSlot];if(!(ct&&ct.type==='cask'))return false;
     if(ct.maturing)return false;}   // v3.0-A Open Staithe: an un-Ready cask cellaring on the dock can't board yet
   return caskEffQ(caskSlot)>=gateNeed(shipSlot,caskSlot);}
@@ -1141,14 +1145,24 @@ function privDie(bd,dest,q,ownerId){if(!bd)return 0;const def=BUILDINGS[bd.b];if
 // what a deployed cask would DELIVER for at dest, incl. the owner-share of its current slot's value building.
 function caskValueAt(caskSlot,dest){const ct=refCask(caskSlot);if(!ct)return 0;
   if(ct.style==='jopenbier')return (dest==='hall'?JOPEN_HALL:JOPEN_BASE)+((!isVRef(caskSlot)&&S.slots[caskSlot]&&S.slots[caskSlot].vintage)||0);   // EXPANSION CAPSTONE: self-contained value (+ dock-cellared vintage), never the Q-keyed tables
-  const q=caskEffQ(caskSlot);let v=(dest==='hall')?hallBestRowStar(q):destValue(dest,q);if(isVRef(caskSlot))return v;   // vessel cask carries no slot building; the Hall pays the best qualifying ROW ★ (v3.0-A)
+  const q=caskEffQ(caskSlot);let v=(dest==='hall')?hallBestRowStar(q):destValue(dest,q);
+  if(isVRef(caskSlot))return v+(dest!=='hall'?1:0);   // v3.4: a vessel-direct kontor departure still carries the tally die at its floor of 1
   if(ct.type!=='cask')return 0;const owner=ct.owner;const bd=bAt(caskSlot);
-  if(bd&&bd.owner===owner)v+=privDie(bd,dest,q,owner);   // owner-only, one printed number (v3.0-A)
-  return v;}
+  let pd=0;if(bd&&bd.owner===owner)pd=privDie(bd,dest,q,owner);   // owner-only, one printed number (v3.0-A)
+  return v+(dest!=='hall'?Math.max(1,pd):pd);}   // v3.4: the kontor die floors at 1 (the old flat base rides the die)
 // the empty-occupant slots carrying p's OWN value building (the best deploy targets — capture the bonus).
 function ownValueDeploySlots(p){return SLOTS.filter(s=>{const b=bAt(s.id);return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value'&&!S.slots[s.id];});}
 function deliveredAt(p,dest){return p.delivered.filter(d=>d.dest===dest).length;}
 function presenceAt(p,dest){return deliveredAt(p,dest)+(p.presBonus[dest]||0);}
+// ---- v3.4 "Tally Dice": the presence disc and the demand die are ONE component — a player-colour d6.
+// A die leaves your TRAY when a cask deploys (it marks ownership on the wharf, face 1), rides the berth
+// (turned to the Privilege's N at departure), and PARKS at the destination on delivery (presence; the
+// pool counter presPool tracks the parked/spent side — the v3.2 clock semantics are unchanged).
+// trayDice = what you can still place: the pool minus the dice riding your casks on the wharf & hulls.
+function diceInFlight(p){let n=0;SLOTS.forEach(s=>{const t=S.slots[s.id];if(!t)return;
+  if(t.type==='cask'&&t.owner===p.id)n++;
+  if(t.type==='ship')(t.load||[]).forEach(L=>{if(L.owner===p.id)n++;});});return n;}
+function trayDice(p){return Math.max(0,(p.presPool!=null?p.presPool:PRES_POOL)-diceInFlight(p));}
 function leadersAt(dest){let best=0;S.players.forEach(p=>best=Math.max(best,presenceAt(p,dest)));
   if(best<=0)return [];return S.players.filter(p=>presenceAt(p,dest)===best);}
 function majorityCount(p){return KONTORE.filter(k=>leadersAt(k).some(x=>x.id===p.id)).length;}
@@ -1260,12 +1274,12 @@ function pCaskFace(t,bonus,actOv){const d=HC_CASK[t.style];if(!d)return '';
   return pfit(maturing?HC.caskCardFront(d,act):HC.caskCardBack(d,act),2.5)
     +(o?'<span class="pown" style="background:'+o.color+'"></span>':'')
     +(t.q!==d.q?'<span class="pqboost" data-tip="'+attr('Effective quality '+t.q+' (a blend / kiln marker rides the card)')+'">'+LU('beer')+t.q+'</span>':'')
-    +((bonus>0)?dieFace(bonus,'dcask'):'');}
+    +((bonus>0)?dieFace(bonus,'dcask',o?o.color:null):'');}   // v3.4: the tally die in the owner's colour — ownership + value in one read
 // a TUCKED cask — the card ROTATED 90\u00b0 and slid under the tile's side; its printed bottom
 // edge (name \u00b7 Q \u00b7 the marker space) peeks out reading sideways, the demand die riding it
 function pTuck(L,act,i,onBldg){const d=HC_CASK[L.style];if(!d)return '';
   const op=(L.owner!=null)?S.players[L.owner]:null;const oc=op?op.color:'#8a8577';
-  return '<div class="ptkw'+(onBldg?' deep':'')+'" style="--fan:'+((i||0)*14)+'cqmin" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(L.die?' \u00b7 demand die +'+L.die+'\u2605':'')+' \u2014 the whole card is tucked under'+(onBldg?' (action exposed)':' (type only)')+'; hover to slide it out')+'">'
+  return '<div class="ptkw'+(onBldg?' deep':'')+'" style="--fan:'+((i||0)*14)+'cqmin" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(L.die?' \u00b7 tally die +'+L.die+'\u2605':'')+' \u2014 the whole card is tucked under'+(onBldg?' (action exposed)':' (type only)')+'; hover to slide it out')+'">'
     +'<div class="ptk" style="outline-color:'+oc+'">'+pfit(HC.caskCardBack(d,hcAct(act||'source')),2.5)+'</div>'
     +(op?'<span class="tkown" style="background:'+oc+'"></span>':'')
     +(L.die?'<span class="tkdie">'+dieFace(L.die,'dtuck',oc)+'</span>':'')
@@ -1287,7 +1301,7 @@ function pImpFace(key){const def=IMPROVEMENTS[key];const d=def&&HC_IMP[def.name.
 // BOTH a building and an occupant on one slot — the table stack (no tap-to-flip: everything shows at once)
 function stackHtml(b,t,id){
   let h=pBldgFace(b);
-  if(t.type==='cask')h+='<div class="tuckcol">'+pTuck({owner:t.owner,style:t.style,q:t.q,die:caskPreviewBonus(id)},slotEffAct(id)||caskAct(t),0,true)+'</div>';
+  if(t.type==='cask')h+='<div class="tuckcol">'+pTuck({owner:t.owner,style:t.style,q:t.q,die:Math.max(S.presEnd?1:0,caskPreviewBonus(id))},slotEffAct(id)||caskAct(t),0,true)+'</div>';   // v3.4: the tally die rides the tucked cask (floor 1)
   else h+='<div class="shipside">'+pfit(HC.shipCard(t.ship,DEST[t.dest].name),2.5)
     +((t.load||[]).length?'<div class="tuckcol">'+(t.load||[]).map((L,i)=>pTuck(L,null,i)).join('')+'</div>':'')+'</div>';
   return h;}
@@ -1695,6 +1709,7 @@ function deployCask(vi,slot){const p=cur();const c=p.vessels[vi];if(!c)return fa
 // the shared landing logic — clears an occupied target per the over-deploy rules, then deploys.
 // rt = where the tap-out's fired action should return to.
 function deployLand(vi,slot,rt){const p=cur();const c=p.vessels[vi];const t=S.slots[slot];rt=rt||'stops';
+  if(S.presEnd&&trayDice(p)<=0){log('↳ no tally die left in the tray — a deployed cask must carry one.');return false;}   // v3.4
   if(t){
     if(!c||!overDeploySlots(c,p.id).some(s=>s.id===slot))return false;   // one rule, one gate (maturing = Q1-sour only)
     if(t.owner===p.id&&!t.maturing){   // your own cask → TAPPED on the way out (its action fires once)
@@ -1827,8 +1842,9 @@ function loadPickCask(slot){UI.load.cask=slot;render();}
 // privilege it departs (owner-only; the destination is known at every departure: the hull is printed,
 // the dispatch route was just chosen). The Diet's presence and the Salt House goods ride as flags.
 function captureLoad(caskSlot,dest){
-  if(isVRef(caskSlot)){const c=cur().vessels[+caskSlot.slice(2)];   // Quaymaster: a vessel cask, no slot building → no die
-    return {owner:cur().id,style:c.style,q:(c.style==='jopenbier'?6:caskEffQ(caskSlot)),baseQ:c.q,die:0,vintage:0};}
+  const kontorBound=!!dest&&dest!=='hall';   // v3.4 "Tally Dice": a kontor-bound cask ALWAYS departs with its die — floor 1 (the old flat +1 base, now on the die); a Privilege sets it higher. A Hall-bound die rides as the spent marker (face = the Reliquary's 2, else blank).
+  if(isVRef(caskSlot)){const c=cur().vessels[+caskSlot.slice(2)];   // Quaymaster: a vessel cask, no slot privilege → the die departs at its floor
+    return {owner:cur().id,style:c.style,q:(c.style==='jopenbier'?6:caskEffQ(caskSlot)),baseQ:c.q,die:kontorBound?1:0,vintage:0};}
   const ct=S.slots[caskSlot];const bd=bAt(caskSlot);const owner=ct.owner;
   const q=(ct.style==='jopenbier'?6:caskEffQ(caskSlot));
   let die=0,pres=0,salt=false;
@@ -1838,6 +1854,7 @@ function captureLoad(caskSlot,dest){
     if(def.goods&&def.verb==='value')salt=true;                        // Salt House: +1G+1H to the owner at departure — any destination, the Hall included (RULES §5b)
     if(die>0&&!aiSimulating)log('↳ the die is set to <b>'+die+'</b> — '+bName(bd.b)+' pays its owner as the cask departs.');
   }
+  if(kontorBound)die=Math.max(1,die);   // v3.4: the tally die's floor — no kontor delivery ever departs below 1
   return {owner,style:ct.style,q,baseQ:ct.q,die,pres,salt,vintage:ct.vintage||0};}
 function loadOnto(shipSlot){const p=cur();const caskSlot=UI.load.cask;const sh=S.slots[shipSlot];const ct=refCask(caskSlot);const owId=refOwner(caskSlot);
   snapshot();
@@ -1935,7 +1952,7 @@ function deliverCask(lp,L,dest,shipSlot,full,hallVal){
   }else if(dest==='hall'){
     val=(hallVal!=null?hallVal:hallBestRowStar(L.q))+(L.die||0);   // the shelf's ROW ★ (+ the Reliquary die)
   }else{
-    val=Math.max(1,destValue(dest,L.q))+(L.die||0);   // ≥1★ kontor floor kept; the die was read once, at departure
+    val=Math.max(1,destValue(dest,L.q)+(L.die||0));   // v3.4: the die (floor 1) carries the old flat base — delivery = Novgorod's printed scale + the die; the outer floor is a backstop only
   }
   lp.delivered.push({style:L.style,q:L.q,dest,val});
   // v1.1: a beer's delivery perk — Keut plants +1 presence at the kontor (the majority specialist)
@@ -1952,17 +1969,17 @@ function deliverCask(lp,L,dest,shipSlot,full,hallVal){
 // the cap binds the BONUS side: presBonus additions stop at the cap).
 function addPresence(lp,k,n){const cur0=presenceAt(lp,k);const room=Math.max(0,PRESENCE_CAP-cur0);
   let add=Math.min(n||0,room);
-  if(S.presEnd)add=Math.min(add,lp.presPool||0);   // ⚗ presence clock: bonus presence spends real discs too
+  if(S.presEnd)add=Math.min(add,trayDice(lp));   // v3.4 Tally Dice: bonus presence places a die FROM THE TRAY (dice riding your casks aren't available)
   if(add>0)lp.presBonus[k]=(lp.presBonus[k]||0)+add;
   if(S.presEnd&&add>0)spendPresDisc(lp,add);
-  if(add<(n||0)&&!aiSimulating)log('↳ '+lp.name+'’s presence discs are spent at '+DEST[k].name+'.');return add;}
+  if(add<(n||0)&&!aiSimulating)log('↳ '+lp.name+'’s tally dice are all placed or at sea — no die for '+DEST[k].name+'.');return add;}
 // ⚗ EXPERIMENT presence clock — every disc placed (a kontor delivery = 1; Reach/bonus = each) comes from
 // a finite pool of PRES_POOL; placing the LAST one ends the game (finish the round — same S.ending
 // semantics as the ships clock). Out of discs → deliveries still land (equal final round) but place no
 // presence and Reach is dead. The volume lane carries its own finish line.
 function spendPresDisc(lp,n){lp.presPool=Math.max(0,(lp.presPool||0)-n);
   if(lp.presPool===0&&!S.ending){S.ending=true;S.endReason='presence';
-    log('★ '+lp.name+' places their <b>last presence disc</b> — the final round!');}}
+    log('★ '+lp.name+' places their <b>last tally die</b> — the final round!');}}
 // (v2.3: bldgValueShare is GONE — the owner-only gate + the single d6 cap live inline in deliverCask, and
 //  the display-side helper is bldgShare above. The rival-½ + wharfage formulation is retired.)
 function grantUpgrade(p,key){   // the Specialists — a tile SEATS in an open Floor slot (v3.1 ONE ROW)
@@ -2057,7 +2074,7 @@ function harborLoad(){const p=cur();enterLoad(myShips(p),harborLoadPool(p),false
 // to the HALL (free — the Three Coins, §Hall) or to a KONTOR (spend a contract + the 2G ⚙ fare — the old
 // Charter). v3.2: only KONTOR routes tick the Sailed-Ships clock — the Hall never does (the presence
 // clock covers it: every delivery, Hall included, spends a disc). Deploy-first holds; gates read effective quality.
-function dispatchCasks(p){const out=hasUpgrade(p,'quay')?readyInVessels(p).map(o=>({ref:'v:'+o.i,style:o.c.style,q:caskEffQ('v:'+o.i)})):[];
+function dispatchCasks(p){const out=(hasUpgrade(p,'quay')&&(!S.presEnd||trayDice(p)>0))?readyInVessels(p).map(o=>({ref:'v:'+o.i,style:o.c.style,q:caskEffQ('v:'+o.i)})):[];   // v3.4: a vessel-direct Dispatch sets a die — none in the tray, no Quaymaster door
   wharfCaskSlots().forEach(id=>{const t=S.slots[id];if(t.owner===p.id&&!t.maturing)out.push({ref:id,style:t.style,q:caskEffQ(id)});});return out;}
 function enshrineCasks(p){return dispatchCasks(p).filter(o=>o.q>=DEST.hall.gate);}   // hall-eligible (kept name: availability checks)
 function charterCasks(p){return dispatchCasks(p);}                                    // legacy name (harness/AI compat)
@@ -3690,7 +3707,7 @@ function renderGrid(){
     if(b&&t){   // both a building and an occupant → an offset stack (tap to swap which is on top)
       cls+=' pfilled stack';inner=stackHtml(b,t,s.id);
     }else if(b){cls+=' pfilled';inner=pBldgFace(b);}
-    else if(t){cls+=' pfilled';inner=(t.type==='cask'?pCaskFace(t,caskPreviewBonus(s.id),slotEffAct(s.id)):pShipFace(t));}
+    else if(t){cls+=' pfilled';inner=(t.type==='cask'?pCaskFace(t,Math.max(S.presEnd?1:0,caskPreviewBonus(s.id)),slotEffAct(s.id)):pShipFace(t));}   // v3.4: a deployed cask always shows its tally die (floor 1; a privilege preview turns it higher)
     else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Deploy a Ready cask here — an empty slot’s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span></span>';
     let click=bldgPlacing?'placeBldgOn':(occPlacing?(UI.sub==='deploy'?'deployTo':'placeSlot'):null);
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
@@ -3837,7 +3854,7 @@ function renderVoyage(){
   let h='<div class="voybox">'+LU('sailboat')+' <b>Sailed-Ships</b> '+S.sailed+' / '+S.sailedCap+(S.ending?' · <b style="color:var(--red)">FINAL ROUND</b>':'')
     +'<div class="track">'+trk+'</div><div class="note" style="font-size:.66rem;margin-top:2px">⛵ the end clock — each voyage (a ship sailing full, or a Dispatch to the Hall or a kontor) fills one</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>'+LU('ticket')+' Charter contracts:</b> '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+(p.contracts||0)+'</span>').join(' · ')+' <span class="note">(a kontor Dispatch spends 1 + '+costStr(CHARTER_FLAT_FARE)+'; buy more at the Market)</span></div>';
-  h+='<div class="note"><b>'+LU('map-pin')+' Presence discs:</b> '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+(p.presPool||0)+'</span>').join(' · ')+' <span class="note">(public — every delivered cask & presence bump spends one; the LAST disc placed sets the final round, alongside the Sailed-Ships track)</span></div>';
+  h+='<div class="note"><b>'+LU('dices')+' Tally dice:</b> '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+trayDice(p)+'<span class="note">/'+(p.presPool||0)+'</span></span>').join(' · ')+' <span class="note">(tray/pool, public — a die rides every deployed cask & berth, then PARKS at the destination; the LAST die placed sets the final round, alongside the Sailed-Ships track)</span></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game ('+(S.expansion?'3 of 7 · '+LU('sparkles')+'Specialty Beers ON':'3 of 4')+'):</b> '+exportLabel()+(S.jopen?' · + '+LU('sparkles')+'<b>Jopenbier</b> capstone (always acquirable)':'')+'.</div>';
   // the steerable BREW PILES — each brewable beer as its real cask tile (name · quality · brew cost) +
   // the face-up action that quality's pile currently grants (Gruit pinned to Source).
@@ -3896,7 +3913,7 @@ function renderTableaus(){
       +'<div style="margin-bottom:6px"><span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
       +'<span class="chip" data-tip="Storage cap.">'+LU('package')+'<b>'+p.storage+'</b></span>'
       +'<span class="chip" data-tip="Charter contracts in hand.">'+LU('ticket')+'<b>'+(p.contracts||0)+'</b></span>'
-      +'<span class="chip" data-tip="Presence discs left (public) — every delivered cask and every presence bump spends one; placing your LAST disc sets the final round.">'+LU('map-pin')+'<b>'+(p.presPool||0)+'</b></span>'
+      +'<span class="chip" data-tip="Tally dice (tray / pool, public) — a die rides every deployed cask and loaded berth, then parks at the destination as presence; placing your LAST die sets the final round.">'+LU('dices')+'<b>'+trayDice(p)+'</b><span class="note">/'+(p.presPool||0)+'</span></span>'
       +'<span class="chip" data-tip="Total score.">★ <b>'+sc.total+'</b></span> <span class="note">deliveries '+sc.deliv+' · maj '+sc.maj+(sc.flight?' · flight '+sc.flight:'')+(sc.developed?' · floor '+sc.developed:'')+'</span>'+(p.ai?' <span class="tag" data-tip="An AI seat — same rules, same information; the tiers differ only in decision quality.">'+aiLabel(p)+' AI</span>':'')+'</div>'
       +floorHTML
       +'<div class="tsec"><b class="note">'+LU('scroll-text')+' Recipes:</b><div class="trow">'+recipes+'</div></div>'
