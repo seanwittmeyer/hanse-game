@@ -9,6 +9,7 @@ const path = require('path');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'play.html'), 'utf8');
 const engine = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).join('\n');
+const hclib = fs.readFileSync(path.join(__dirname, '..', 'components.js'), 'utf8');   // v3.3: the real faces render through the shared card library
 
 const driver = `
 //================= RENDER SMOKE (appended; render NOT silenced) =================
@@ -175,7 +176,7 @@ ctx.addEventListener = noop; ctx.removeEventListener = noop;
 
 vm.createContext(ctx);
 try {
-  vm.runInContext(engine + '\n' + driver, ctx, { filename: 'play.html#engine+render-smoke' });
+  vm.runInContext(hclib + '\n' + engine + '\n' + driver, ctx, { filename: 'play.html#engine+render-smoke' });
 } catch (e) {
   console.error('RENDER SMOKE FAIL:', e && e.stack || e);
   process.exit(1);

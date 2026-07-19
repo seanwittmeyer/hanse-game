@@ -508,7 +508,7 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .cover span{font-variant:small-caps;font-weight:bold;font-size:.12in;text-align:center;line-height:1.25;opacity:.92}\n\
   /* ---- the one-read die chip on Privilege tiles ---- */\n\
   .diech svg,.diech .ic{width:.14in;height:.14in;vertical-align:-.025in}';
-if(typeof document!=='undefined'){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS;
-  (document.head||document.documentElement).appendChild(st);}
+if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS;
+  var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
 window.HC={LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,frameTile,coverTile,wtok,recipeCard,contractCard};
 })();

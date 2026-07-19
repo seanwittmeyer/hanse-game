@@ -44,7 +44,7 @@
   .copybtn:hover{background:var(--red2)}
   /* GRID */
   .agwrap{display:flex;justify-content:center}
-  .ag{display:grid;width:100%;max-width:600px;margin:0 auto;aspect-ratio:1;
+  .ag{display:grid;width:100%;max-width:min(88vmin,1000px);margin:0 auto;aspect-ratio:1;   /* v3.3: the wharf IS the screen */
     gap:clamp(4px,1.4vw,7px);
     grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr)}
   /* explicit square rows make every cell a guaranteed square from the GRID — not from each
@@ -176,17 +176,25 @@
   .slot .pocc{position:absolute;left:3cqmin;right:3cqmin;bottom:3cqmin;z-index:3;display:flex;align-items:center;justify-content:center;gap:2cqmin;font-size:8.5cqmin;font-weight:bold;font-variant:small-caps;color:#fff;padding:2cqmin 3cqmin;border-radius:5cqmin;box-shadow:0 1px 3px rgba(0,0,0,.5);white-space:nowrap;overflow:hidden;max-width:calc(100% - 6cqmin)}
   .slot .pocc.ship{background:var(--sea2)}
   .slot .pocc .ic,.slot .pocc svg{width:11cqmin;height:11cqmin}
-  /* ===== two tiles in one slot: an offset STACK; tap to swap which is on top ===== */
-  .slot.stack{cursor:pointer}
-  .scard{position:absolute;width:85%;height:85%;border-radius:8px;overflow:hidden;container-type:size}
-  .scard.front{top:0;left:0;z-index:3;box-shadow:0 4px 9px rgba(0,0,0,.45)}
-  .scard.back{top:15%;left:15%;z-index:1}
-  .scard.back::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.16);z-index:5;pointer-events:none}
-  .scard .spine{position:absolute;left:0;right:0;bottom:0;z-index:6;display:none;align-items:center;justify-content:center;gap:1.5cqmin;
-    font-size:8.5cqmin;font-weight:bold;font-variant:small-caps;color:#fff;background:rgba(20,14,8,.74);padding:2.5cqmin 2cqmin;
-    white-space:nowrap;overflow:hidden;line-height:1.02}
-  .scard.back .spine{display:flex}
-  .scard .spine .ic,.scard .spine svg{width:8.5cqmin;height:8.5cqmin;flex:0 0 auto}
+  /* ===== v3.3: the slots seat the PRINT KIT'S CARDS (components.js) — fitCards() scales inches → the box.
+     Composition mirrors the table: building (owner ring) holds the slot · ship beside · casks tucked under. ===== */
+  .pfit{position:absolute;inset:0;overflow:hidden;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+  .pfit .pfin{position:absolute;top:50%;left:50%;transform-origin:center;transform:translate(-50%,-50%) scale(.5)}
+  .pring{position:absolute;inset:0;border-radius:10px;background:var(--oc,#8a8577);box-shadow:0 2px 6px rgba(0,0,0,.3)}
+  .pring .pfit{inset:8%;border-radius:4px;box-shadow:none}
+  .slot .pown,.mtile .pown{position:absolute;top:4cqmin;right:4cqmin;width:14cqmin;height:14cqmin;border-radius:50%;border:2px solid rgba(255,255,255,.9);box-shadow:0 0 0 1.5px rgba(0,0,0,.35);z-index:4}
+  .pqboost{position:absolute;top:4cqmin;left:4cqmin;z-index:4;display:inline-flex;align-items:center;gap:1cqmin;font-weight:900;font-size:12cqmin;color:#fff;background:rgba(20,14,8,.72);border-radius:3cqmin;padding:1cqmin 3cqmin}
+  .pqboost .ic,.pqboost svg{width:10cqmin;height:10cqmin}
+  .pcomm2{position:absolute;top:3cqmin;right:3cqmin;z-index:4;font-weight:bold;font-size:9cqmin;display:inline-flex;align-items:center;gap:1cqmin;background:rgba(244,234,208,.94);color:#2b2018;border:1px solid rgba(0,0,0,.25);border-radius:3cqmin;padding:1cqmin 2.5cqmin}
+  .pcomm2 .ic,.pcomm2 svg{width:10cqmin;height:10cqmin}
+  .tuckrow{position:absolute;left:5%;right:5%;bottom:-7cqmin;display:flex;gap:2cqmin;z-index:30;justify-content:center}
+  .ptk{position:relative;flex:0 1 30cqmin;min-width:16cqmin;height:17cqmin;overflow:hidden;border-radius:2.5cqmin;border:2px solid;box-shadow:0 2px 5px rgba(0,0,0,.45);background:#2b2018}
+  .ptk .ptkin{position:absolute;left:0;bottom:0;width:240px;height:240px;transform-origin:bottom left}
+  .tkdie{position:absolute;right:1.5cqmin;top:50%;transform:translateY(-50%);z-index:2}
+  .tkdie .die{width:11cqmin;height:11cqmin}
+  .shipside{position:absolute;right:-5cqmin;bottom:14cqmin;width:56cqmin;height:56cqmin;z-index:25;filter:drop-shadow(0 3px 6px rgba(0,0,0,.5))}
+  .slot .die.dcask,.mtile .die.dcask{position:absolute;bottom:5cqmin;right:5cqmin;width:24cqmin;height:24cqmin;z-index:5}
+  .slot.pfilled{overflow:visible;z-index:2}   /* protruding tucks/ships paint OVER neighbouring cells */
   /* ===== demand DIE — pips show the ★ a cask banks from the value building it shipped through ===== */
   .die{display:inline-grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:1cqmin;position:relative;
     background:#f4ead0;border:1.5px solid #8a6a2a;border-radius:3cqmin;padding:2cqmin;box-shadow:0 1px 2px rgba(0,0,0,.45);box-sizing:border-box}
@@ -399,12 +407,12 @@
 </div>
 
 <main>
+  <div class="panel"><h3>The Wharf</h3><div class="agwrap"><div class="ag" id="ag"></div></div>
+    <div class="note" id="boardnote" style="text-align:center;margin-top:6px"></div>
+  </div>
   <div class="panel"><h3>Destinations <span class="note">(where you ship — kontore = volume · the Hall = prestige)</span></h3><div id="dests"></div></div>
   <div class="cols">
     <div>
-      <div class="panel"><h3>Action Grid &amp; Wharf</h3><div class="agwrap"><div class="ag" id="ag"></div></div>
-        <div class="note" id="boardnote" style="text-align:center;margin-top:6px"></div>
-      </div>
       <div class="panel">
         <div class="pbhead"><h3>Player Breweries</h3><div class="tabs" id="tabs"></div></div>
         <div id="tableaus"></div>
@@ -417,7 +425,7 @@
       <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
     </div>
   </div>
-  <p class="note" style="text-align:center"><b>v3.1 “One Row” — prototype.</b> <span class="note">(opt-in expansions: Specialty Beers · Jopenbier · The Trade Roads. The prior v2.9 build stays playable at <a href="archive/v2.9/play.html">archive/v2.9</a>.)</span> The v3.0-A rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and <code>RULES.md</code>; the <a href="index.html">Rulebook</a> and <a href="learn.html">Learn</a> pages still describe v2.9 and will be updated after this build is verified. All numbers are placeholders ⚙.</p>
+  <p class="note" style="text-align:center"><b>v3.3 “Three Coins” — prototype.</b> The board seats the print kit’s own cards (components.js). <span class="note">(opt-in expansions: Specialty Beers · Jopenbier · The Trade Roads. The prior v2.9 build stays playable at <a href="archive/v2.9/play.html">archive/v2.9</a>.)</span> The v3.0-A rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and <code>RULES.md</code>; the <a href="index.html">Rulebook</a> and <a href="learn.html">Learn</a> pages still describe v2.9 and will be updated after this build is verified. All numbers are placeholders ⚙.</p>
 </main>
 
 <div id="setup" class="modal hidden" onclick="if(event.target===this)closeSetup()">
@@ -1205,62 +1213,64 @@ function caskPreviewBonus(slotId){const t=S.slots[slotId];if(!t||t.type!=='cask'
   return def.die==='q'?Math.min(6,caskEffQ(slotId)):(def.die||0);}
 // a LOADED cask in a berth → the die it carries (set at departure; nothing recalculates)
 function loadBonus(L,dest){return (L&&L.die)||0;}
-function pCaskFace(t,bonus,actOv){const st=STYLES[t.style]||{};const o=(t.owner!=null)?S.players[t.owner]:null;const act=actOv||caskAct(t);
-  return '<div class="ptile pcask" style="--tc:'+(STYLE_COLOR[t.style]||'#777')+'">'
-    +'<span class="pq">'+LU('beer')+t.q+'</span>'
+// ---- v3.3: THE SLOTS SEAT THE PRINT KIT'S CARDS (components.js / window.HC — the same faces the
+// kit cuts; the app IMPORTS a card and scales it into the slot via fitCards(), never redraws one).
+// Table composition: a building (in its owner ring) HOLDS the slot · a ship sits BESIDE it · casks
+// TUCK UNDER, the printed bottom strip (name · Q · the marker space) + the demand die showing.
+const HC=(typeof window!=='undefined'&&window.HC)||null;   // absent in the headless harnesses (they stub render, so the faces never run)
+const HC_CASK={},HC_BLD={},HC_IMP={};
+if(HC){HC.CASKS.forEach(r=>HC_CASK[r.nm.toLowerCase()]=r);
+  HC.BUILDINGS.forEach(r=>HC_BLD[r.k]=r);
+  HC.IMPROVE.forEach(r=>HC_IMP[r.nm.toLowerCase()]=r);}
+function hcAct(k){return HC.CASK_POOL.find(a=>a.k===k)||{ai:CASK_ACT_ICON[k]||'sparkles',act:(CASK_ACT[k]||k)};}
+function pfit(cardHtml,natIn,cls){return '<div class="pfit'+(cls?' '+cls:'')+'" data-nat="'+natIn+'"><div class="pfin">'+cardHtml+'</div></div>';}
+// a cask = the printed cask card: the AGING face while maturing in a vessel, the BREWED face once Ready/deployed
+function pCaskFace(t,bonus,actOv){const d=HC_CASK[t.style];if(!d)return '';
+  const o=(t.owner!=null)?S.players[t.owner]:null;
+  const maturing=(t.step!=null&&t.ready!=null&&t.step<t.ready);
+  const act=hcAct(actOv||caskAct(t));
+  return pfit(maturing?HC.caskCardFront(d,act):HC.caskCardBack(d,act),2.5)
     +(o?'<span class="pown" style="background:'+o.color+'"></span>':'')
-    +'<span class="pnm">'+st.name+'</span>'
-    +'<span class="pact"><span class="pac">'+LU(CASK_ACT_ICON[act]||'sparkles')+'</span><span class="ptxt">'+(P_ACT_TXT[act]||act)+'</span></span>'
-    +'<span class="pcost">'+pCost((st.in||{}).g,(st.in||{}).h)
-      +(st.bonusPres?'<span class="pperk">+'+st.bonusPres+LU('map-pin')+'</span>':'')
-      +(t.style==='jopenbier'?'<span class="pperk">'+((t.vintage!=null&&t.vintage>0)?'+'+t.vintage+'★ vintage':'+★/turn')+'</span>':'')+'</span>'
-    +((bonus>0)?dieFace(bonus,'dcask'):'')
+    +(t.q!==d.q?'<span class="pqboost" data-tip="'+attr('Effective quality '+t.q+' (a blend / kiln marker rides the card)')+'">'+LU('beer')+t.q+'</span>':'')
+    +((bonus>0)?dieFace(bonus,'dcask'):'');}
+// a TUCKED cask — slid under the tile/hull sideways, its printed bottom strip peeking out
+function pTuck(L,act){const d=HC_CASK[L.style];if(!d)return '';
+  const op=(L.owner!=null)?S.players[L.owner]:null;const oc=op?op.color:'#8a8577';
+  return '<div class="ptk" style="border-color:'+oc+'" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(L.die?' \u00b7 demand die +'+L.die+'\u2605':'')+' \u2014 tucked under; the bottom strip is the printed card edge')+'">'
+    +'<div class="ptkin">'+HC.caskCardBack(d,hcAct(act||'source'))+'</div>'
+    +(L.die?'<span class="tkdie">'+dieFace(L.die,'dtuck',oc)+'</span>':'')
   +'</div>';}
-function pShipFace(t){const cap=effCap(t);const gate=DEST[t.dest].gate;const load=t.load||[];const onBoard=!!slotIdOfTile(t);let berths='';
-  for(let i=0;i<cap;i++){const L=load[i];
-    if(!L){berths+='<div class="pbn">'+(i+1)+'</div>';continue;}
-    const oc=(S.players[L.owner]||{}).color||'#888';const bonus=loadBonus(L,t.dest);
-    berths+= bonus>0 ? dieFace(bonus,'dberth',oc)
-      : '<div class="pbn" style="background:'+oc+';border-color:rgba(255,255,255,.95)"></div>';}
-  return '<div class="ptile pship">'
-    +(onBoard?'':'<span class="pcomm">'+pCost(COMMISSION_COST.g,COMMISSION_COST.h)+'</span>')
-    +'<span class="phead">'+LU('sailboat')+shipName(t)+'</span>'
-    +'<span class="pdest" style="background:'+(DEST_COLOR[t.dest]||'#555')+'">'+LU('landmark')+DEST[t.dest].name+'</span>'
-    +'<span class="pberths"><span class="pgate">'+LU('beer')+gate+'+</span>'+berths+'</span>'
-  +'</div>';}
-function pBldgFace(b){const def=BUILDINGS[b.b];const o=(b.owner!=null)?S.players[b.owner]:null;const tg=BTGT[def.tgt];
-  return '<div class="ptile pbld '+def.verb+'">'
-    +(o?'<span class="pbown" style="background:'+o.color+'"></span>':'')
-    +'<span class="pbtop">'+LU(def.icon)+'<span class="pverb">'+(def.verb==='value'?'Privilege':'Building')+'</span></span>'
-    +'<span class="pbnm">'+def.name+'</span>'
-    +'<span class="pbeff">'+def.desc+'</span>'
-    +'<span class="pbfoot"><span class="pbtgt">'+LU(tg.ic)+'</span>'+(def.cost?pCost(def.cost.g,def.cost.h):'')+'</span>'
-  +'</div>';}
-// a private IMPROVEMENT rendered as a tile (Market display)
-function pImpFace(key){const def=IMPROVEMENTS[key];
-  return '<div class="ptile pbld imp">'
-    +'<span class="pbtop">'+LU('wrench')+'<span class="pverb">Specialist</span></span>'
-    +'<span class="pbnm">'+def.name+'</span>'
-    +'<span class="pbeff">'+def.desc+'</span>'
-    +'<span class="pbfoot">'+(def.cost?pCost(def.cost.g,def.cost.h):'')+'</span>'
-  +'</div>';}
-function pOccToken(t){
-  if(t.type==='cask')return '<span class="pocc" style="background:'+S.players[t.owner].color+'">'+LU('beer')+styleShort(t.style)+' Q'+t.q+'</span>';
-  if(t.type==='ship')return '<span class="pocc ship">'+LU('sailboat')+DEST[t.dest].name.slice(0,3)+' '+t.load.length+'/'+effCap(t)+'</span>';
-  return '';}
-// when a slot holds BOTH a building and an occupant, render them as an offset STACK (tap the slot to swap
-// which is on top); the back tile shows a one-line spine in its exposed strip so you know what's under.
-let stackFlip={};   // slotId -> true = building on top (default: the occupant sits on top of its dock)
-function toggleStack(id){stackFlip[id]=!stackFlip[id];render();}
-function occSpine(t){
-  if(t.type==='cask')return LU('beer')+styleShort(t.style)+' Q'+t.q;
-  if(t.type==='ship')return LU('sailboat')+shipName(t)+'→'+DEST[t.dest].name.slice(0,3)+' '+t.load.length+'/'+effCap(t);
-  return '';}
-function bldgSpine(b){const def=BUILDINGS[b.b];return LU(def.icon)+' '+def.name;}
-function stackHtml(b,t,id){const bOnTop=!!stackFlip[id];
-  const occCard='<div class="scard '+(bOnTop?'back':'front')+'">'+(t.type==='cask'?pCaskFace(t,caskPreviewBonus(id),slotEffAct(id)):pShipFace(t))+'<div class="spine">'+occSpine(t)+'</div></div>';
-  const bldCard='<div class="scard '+(bOnTop?'front':'back')+'">'+pBldgFace(b)+'<div class="spine">'+bldgSpine(b)+'</div></div>';
-  return bOnTop?(occCard+bldCard):(bldCard+occCard);}   // DOM order: back first, front last
+// a ship = the printed hull card; its cargo tucks under it, strips + dice showing (the table look)
+function pShipFace(t){const onBoard=!!slotIdOfTile(t);const load=t.load||[];
+  return pfit(HC.shipCard(t.ship,DEST[t.dest].name),2.5)
+    +(onBoard?'':'<span class="pcomm2">'+pCost(COMMISSION_COST.g,COMMISSION_COST.h)+'</span>')
+    +(load.length?'<div class="tuckrow">'+load.map(L=>pTuck(L)).join('')+'</div>':'');}
+// a building = the printed card seated in its OWNER FRAME (the colour ring; neutral = weathered grey)
+function pBldgFace(b,noRing){const d=HC_BLD[b.b];if(!d)return '';
+  const card=pfit(HC.buildingCard(d),2);
+  if(noRing)return card;
+  const oc=(b.owner!=null&&S.players[b.owner])?S.players[b.owner].color:'#8a8577';
+  return '<div class="pring" style="--oc:'+oc+'">'+card+'</div>';}
+// a Specialist = the printed purple tile
+function pImpFace(key){const def=IMPROVEMENTS[key];const d=def&&HC_IMP[def.name.toLowerCase()];
+  return d?pfit(HC.improveTile(d),2):'';}
+// BOTH a building and an occupant on one slot — the table stack (no tap-to-flip: everything shows at once)
+function stackHtml(b,t,id){
+  let h=pBldgFace(b);
+  if(t.type==='cask')h+='<div class="tuckrow">'+pTuck({owner:t.owner,style:t.style,q:t.q,die:caskPreviewBonus(id)},slotEffAct(id)||caskAct(t))+'</div>';
+  else h+='<div class="shipside">'+pfit(HC.shipCard(t.ship,DEST[t.dest].name),2.5)+'</div>'
+    +((t.load||[]).length?'<div class="tuckrow">'+(t.load||[]).map(L=>pTuck(L)).join('')+'</div>':'');
+  return h;}
+// scale every imported card into its box (cards are designed in INCHES; 1in = 96px)
+function fitCards(){
+  document.querySelectorAll('.pfit').forEach(w=>{const inn=w.firstElementChild;if(!inn)return;
+    const nat=parseFloat(w.getAttribute('data-nat')||'2.5')*96;
+    const s=Math.min(w.clientWidth,w.clientHeight)/nat;
+    if(isFinite(s)&&s>0)inn.style.transform='translate(-50%,-50%) scale('+s+')';});
+  document.querySelectorAll('.ptk .ptkin').forEach(inn=>{
+    const s=inn.parentElement.clientWidth/240;   // 2.5in card @96dpi, anchored bottom-left → the bottom strip shows
+    if(isFinite(s)&&s>0)inn.style.transform='scale('+s+')';});
+}
 
 //==================================================================
 // PERSISTENCE
@@ -3344,7 +3354,7 @@ function renderAiSpeed(){
 //==================================================================
 function render(){
   if(!S)return;
-  renderBar();renderGrid();renderDests();expRender();renderBuildings();renderShop();renderVoyage();renderTableaus();renderAiSpeed();
+  renderBar();renderGrid();renderDests();expRender();renderBuildings();renderShop();renderVoyage();renderTableaus();renderAiSpeed();fitCards();
   document.getElementById('log').innerHTML=S.log.join('');
   document.getElementById('turnlbl').textContent='Round '+S.turn+(S.ending?' · FINAL':'');
   refreshIcons();
@@ -3655,7 +3665,6 @@ function renderGrid(){
     else if(t){cls+=' pfilled';inner=(t.type==='cask'?pCaskFace(t,caskPreviewBonus(s.id),slotEffAct(s.id)):pShipFace(t));}
     else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Deploy a Ready cask here — an empty slot’s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span></span>';
     let click=bldgPlacing?'placeBldgOn':(occPlacing?(UI.sub==='deploy'?'deployTo':'placeSlot'):null);
-    if(!click&&b&&t)click='toggleStack';   // not placing → tapping a stacked slot swaps the visible order
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
   });
   ['A','B','C','D'].forEach(c=>{const act=CELLNAME[c];
@@ -3904,6 +3913,7 @@ function renderTableaus(){
     hide();
   },true);
   window.addEventListener('scroll',hide,true);
+  window.addEventListener('resize',function(){if(S)fitCards();});
 })();
 
 //==================================================================
