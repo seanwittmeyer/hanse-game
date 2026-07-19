@@ -55,7 +55,7 @@
 |---|---|---|
 | Worker pawn | 1 | Moves between stations — or **stays home** on a Floor turn. |
 | **TALLY DICE (player-colour d6)** *(v3.4 — replaces the presence discs + the shared demand dice)* | **14** ⚙ | One die rides every cask the house deploys (face **1** — ownership in plain sight), is **turned to a Privilege’s printed N at departure** (the one-read carrier, unchanged), rides the hull’s berth well, and **parks at the destination on delivery** — it IS the house’s presence there (majorities) **and the CLOCK:** placing the **last** die sets the final round. Never rolled; never returns from a destination. **No die in the tray → no deploy, no vessel-direct load, no Reach.** |
-| **Cask cubes** (player colour) *(new)* | 8 | Ride a hull’s **berth well** (the loaded cask’s owner), **claim Hall coins** (one cube per coin), and **mark the Hall’s launch rows** (v3.2b — a cube per launch; a heavy launch game watches the supply ⚙). |
+| **Cask cubes** (player colour) | 8 | **Claim Hall coins** (one cube per coin) and **mark the Hall’s launch rows** (v3.2b — a cube per launch). *(v3.4a: the berth-well job is retired — the cask TILE itself rides the hull’s berth.)* |
 | Owner frames | 6 | Mark whose Privilege/Building sits on a slot (confirmed direction, 2026-07-04). |
 | **Unlock covers** *(new)* | 5 | Sit on Floor slots 3–7 (v3.1 “One Row”); a Flight unlock (each new distinct beer brewed, from the 2nd), the Coppersmith, or the High Board honor removes the next one. |
 | Maturation markers | 5 ⚙ | One per brewing slot in use — sits on the cask card’s printed aging track. |
@@ -63,6 +63,8 @@
 ---
 
 ## 5. Cask tiles · family A (~62, shared supply)
+
+> **v3.4a COMPONENT REFIT [ruled 2026-07-19]:** the cask is a **2.5×1″ double-sided TILE** — AGING side (Q·name·special · maturation track · brew cost + action preview) / WHARF side (Q·name · THE ACTION · the printed **die seat**). Buildings are **2×1.32″** (wharf side: art · name · cost · one effect line / floor side: **WILD** only). Ships are vertical **carrier tiles** (above). The player-board Floor slots and wharf slots seat these footprints.
 
 A brewed beer in one of three states: **maturing** (vessel) → **deployed** (slot — cargo + a public action) → **delivered** (scores, gone). Each cask carries a printed quality and, on brewing, an action drawn from the top of its quality pile (Gruit pinned). **Brewing a new distinct beer FLIPS its recipe card to the BREWED face — from the 2nd on, each flip grants a Floor-slot unlock, and the flipped cards score the Flight ladder (v3.2d).**
 
@@ -83,7 +85,7 @@ A brewed beer in one of three states: **maturing** (vessel) → **deployed** (sl
 
 ## 6. Hull tiles · family B (20-tile deck) — the carrier component
 
-Neutral, destination-bound hulls, drawn from a shuffled deck into a face-up **market of 3**. **The hull is the carrier (v3.0-A):** it prints its destination chip, **quality gate**, and **numbered berth wells** — each well holds the cask’s **tally die** (owner colour = whose cargo; pips = the ★ it banks — v3.4: always present, floor 1) + any **+1Q marker**; the **cask cube** still marks the berth. The cask card leaves the wharf at load and waits face-up by its owner (the manifest row) until the hull sails.
+Neutral, destination-bound hulls, drawn from a shuffled deck into a face-up **market of 3**. **The hull is the carrier (v3.4a refit):** a **2.5″-wide vertical tile** — a **1.33″ details head** (hull · commission cost · the kontor banner · quality gate) over **cap × FULL-WIDTH 1″ BERTHS** (Cog 2 → 3.33″ tall · Hulk 3 → 4.33″). **Loading seats the cask TILE itself on a berth**, wharf side up, its **tally die** on the tile’s printed die seat (+ any +1Q marker beside it) — the berth cube proxy and the owner’s manifest row are RETIRED; the board state is the physical stack.
 
 | Hull | Capacity | Qty | Destination spread |
 |---|---|---|---|

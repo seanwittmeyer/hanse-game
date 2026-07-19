@@ -381,7 +381,7 @@
   .shelf-lbl .bag{margin-left:auto;display:inline-flex;align-items:center;opacity:.7}   /* refill from this family's DRAW BAG (tile backs reveal the type, so the supply hides in a bag) */
   .shelf-lbl .bag svg,.shelf-lbl .bag .ic{width:.16in;height:.16in}
   .disp-bd{display:flex;gap:.1in;align-items:center}
-  .dslot{width:2in;height:2in;border:1.7px dashed var(--sea);border-radius:.07in;background:rgba(255,255,255,.5);
+  .dslot{width:2in;height:1.32in;border:1.7px dashed var(--sea);border-radius:.07in;background:rgba(255,255,255,.5);   /* buildings 2×1.32 (v3.4a) */
     display:flex;flex-direction:column;gap:.04in;align-items:center;justify-content:center;color:var(--sea);flex:0 0 auto;position:relative}
   .dslot svg,.dslot .ic{width:.6in;height:.6in;opacity:.32}
   /* OVERLAY proof: a real component render ghosted into its slot — native size, half opacity, never printed */
@@ -389,7 +389,7 @@
   @media print{.dslot .ovl{display:none}}
   .dslot.b{border-color:var(--green);color:var(--green)}
   .dslot.i{border-color:var(--violet);color:var(--violet)}
-  .dslot.s,.ddeck.s{width:2.5in;height:2.5in}
+  .dslot.s,.ddeck.s{width:2.5in;height:4.33in}   /* the ship display seats either hull — sized to the Hulk carrier */
   .dslot.r{width:1.85in;height:2.55in;border-color:#8a6408;color:#8a6408}   /* recipe/contract cards, 1.85×2.55 */
   .dslot.r svg,.dslot.r .ic{width:.5in;height:.5in}
   .dslot.r .rn{font-variant:small-caps;font-weight:bold;font-size:.1in;opacity:.7}
@@ -733,7 +733,7 @@ const IMPF_GEO  ={w:22,h:8.5,  y0:0.45,yMax:8.22};   // improvements + owner fra
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
 // NATIVE component sizes (in) — the design size each piece renders at; packRun scales the FOOTPRINT by SCALE and
 // the render wrapper scales the CONTENT to match. casks/ships 2.5″ · buildings 2″ · improvement cards 2×1″ · frames 2.5″.
-const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2.5,2.5],bld:[2,2],imp:[2,2],frame:[2.5,2.5],coverV:[2.4,2.4],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};
+const SIZE={tile:[1.25,1.25],caskc:[2.5,1],cask:[2.5,1],shipc:[2.5,3.33],shiph:[2.5,4.33],bld:[2,1.32],imp:[2,2],frame:[2.5,2.5],coverV:[2.4,2.4],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // v3.4a refit: cask TILES 2.5×1 · buildings 2×1.32 · carrier ships by hull
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
@@ -1158,8 +1158,8 @@ function packRun(pages,section,label,kind,htmlList,famTag,famPages,geo){
     if(kind==='tok'||kind==='disc'||kind==='wtok')pg.circles.push({cx:cx+w/2,cy:cy+h/2,r:+(CUTR[kind]*SCALE).toFixed(4)});
     else addRectCut(pg,cx,cy,w,h);
     if(kind==='frame'){   // owner RINGS: also cut the interior hole (sized to a building tile, so the ring frames it)
-      const hole=+(SIZE.bld[0]*SCALE).toFixed(4),ins=+((w-hole)/2).toFixed(4);
-      if(ins>0.02)addRectCut(pg,+(cx+ins).toFixed(4),+(cy+ins).toFixed(4),hole,hole);}
+      const hw=+(SIZE.bld[0]*SCALE).toFixed(4),hh=+(SIZE.bld[1]*SCALE).toFixed(4),ix=+((w-hw)/2).toFixed(4),iy=+((h-hh)/2).toFixed(4);
+      if(ix>0.02)addRectCut(pg,+(cx+ix).toFixed(4),+(cy+iy).toFixed(4),hw,hh);}
     if(famTag)(famPages[famTag]=famPages[famTag]||new Set()).add(pages.indexOf(pg));
     cx+=w;rh=h;
   });
@@ -1268,7 +1268,7 @@ function buildPages(){
       addRectCut(bp,mx,it.y,it.w,it.h);                                            // mirrored cut grid → registers the duplex sandwich
       if(f.cask)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:caskCardBack(f.d,f.act)});
       else if(f.bld)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:buildingBack(f.d)});
-      else if(f.ship)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:shipBack()});
+      else if(f.ship)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:shipBack(f.hull)});
       else if(f.rec)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:recipeCard(f.d,true)});});
     (famPages['Card/tile backs']=famPages['Card/tile backs']||new Set()).add(pages.indexOf(bp));
   });}
@@ -1283,10 +1283,10 @@ function buildPages(){
   CASKS.forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);   // off = cycle offset — the tier's tiles collectively cover the whole gated pool (Bock reaches brew/enshrine)
     for(let i=0;i<cnt(d.n);i++){const act=pool[(i+(d.off||0))%pool.length];cardFronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
   const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
-  shipList.forEach(([hull,dest])=>cardFronts.push({fam:'Ships',kind:'ship',ship:true,html:shipCard(hull,dest)}));   // ships = full-bleed 2.5″ cards
+  shipList.forEach(([hull,dest])=>cardFronts.push({fam:'Ships',kind:(hull==='cog'?'shipc':'shiph'),ship:true,hull,html:shipCard(hull,dest)}));   // carrier ships, one run per hull size
   const CLBL='Cask & Ship CARDS — fronts · LETTER 8.5×11 · 2″, centred — print DOUBLE-SIDED, flip on the SHORT edge (LEFT↔RIGHT)';   // PLAIN text — every consumer escapes for itself
   const cStart=pages.length;
-  ['caskc','ship'].forEach(k=>packRun(pages,'tiles',CLBL,k,cardFronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,CARD_GEO));
+  ['caskc','shipc','shiph'].forEach(k=>packRun(pages,'tiles',CLBL,k,cardFronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,CARD_GEO));
   const cardFrontPages=pages.slice(cStart);
   tagFamilies(cardFrontPages,cardFronts);
   mirrorBackPages(cardFrontPages,cardFronts,CARD_GEO,'Cask & Ship CARD BACKS · LETTER 8.5×11 (mirror — flip LEFT↔RIGHT): cask brewed-side · a ship at sea behind ships');
@@ -1375,9 +1375,9 @@ function checklist(pages,famPages){
     +R('Player brewery boards','One per player (“One Row”): ONE Floor line of 7 printed slots — slots 1–2 open, covers on 3–7, slot 1 vessel-only; a slot holds a maturing cask, a seated Specialist, or a flipped tile. Nothing else prints on it (v3.2d): the Flight lives on your recipe cards, the Floor rules on the player aid; goods cap 8.',PLAYERS.length)
     +'</table>';
   h+=T('Tiles (mount on chipboard, laser-cut)')
-    +R('Cask tiles — the beer supply','A shared pool, brewed not bought (min 6 per type): Gruit ×16 · Hopped ×20 · Broyhan ×6 · Keut ×6 · Mumme ×8 · Bock ×6. Each shows a quality (Q1–Q5) and ONE specific-gain slot-action (the pool is quality-gated). Deal 3 of the 4 export beers each game; a NEW distinct beer brewed flips its recipe card — the Flight.','62')
-    +R('Ship tiles','Neutral hulls, a kontor printed on each — Cog (holds 2) ×11 · Hulk (holds 3) ×9; five to each of the four kontore. Drawn off a shuffled deck into a face-up market of 3.','20')
-    +R('Slot tiles — Privileges &amp; Buildings','The owned slot modifiers, '+baseBld.length+' designs (double-sided: art front / the displaced back — seat the Floor Wild; none open → discarded). <b>Privileges (blue — each prints a +N★ bonus) —</b> '+designs(baseVal)+'. <b>Buildings / works (green) —</b> '+designs(baseTr)+'.',sumN(baseBld))
+    +R('Cask tiles — the beer supply','2.5×1″ DOUBLE-SIDED tiles (v3.4a): the AGING side (track · brew cost · action preview) flips to the WHARF side (Q · name · THE ACTION · the printed tally-die seat) at Ready. A shared pool, brewed not bought (min 6 per type): Gruit ×16 · Hopped ×20 · Broyhan ×6 · Keut ×6 · Mumme ×8 · Bock ×6; the tile itself rides wharf slots and ship berths.','62')
+    +R('Ship tiles','Vertical CARRIER tiles (v3.4a): a 1.33″ details head (hull · commission · kontor · gate) + full-width 1″ berths that seat the cask tiles themselves — Cog (2 berths, 3.33″) ×11 · Hulk (3 berths, 4.33″) ×9; five per kontor, drawn into a market of 3.','20')
+    +R('Slot tiles — Privileges &amp; Buildings','2×1.32″ (v3.4a — 66% height), '+baseBld.length+' designs, double-sided: the WHARF side (art · name · cost · one effect line) / the FLOOR side (WILD; none open → discarded). <b>Privileges (blue — each prints a +N★ bonus) —</b> '+designs(baseVal)+'. <b>Buildings / works (green) —</b> '+designs(baseTr)+'.',sumN(baseBld))
     +R('Specialist tiles','The private brewery-board tiles, 7 designs: '+IMPROVE.map(d=>d.nm).join(' · ')+'. A shuffled display at the Cellar — 3 copies of each type (n−1 per type), enough for 4 players.',impTotal)
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')
@@ -1487,17 +1487,17 @@ function exportItems(){
     const seen=new Set();
     for(let i=0;i<d.n;i++){const act=pool[(i+(d.off||0))%pool.length];if(seen.has(act.k))continue;seen.add(act.k);
       const nm=slug(d.nm)+'-'+act.k;
-      it.push({type:'cask',name:nm,side:'front',w:2.5,h:2.5,html:caskCardFront(d,act)});
-      it.push({type:'cask',name:nm,side:'back', w:2.5,h:2.5,html:caskCardBack(d,act)});}});
+      it.push({type:'cask',name:nm,side:'front',w:2.5,h:1,html:caskCardFront(d,act)});
+      it.push({type:'cask',name:nm,side:'back', w:2.5,h:1,html:caskCardBack(d,act)});}});
   // SHIPS — one per distinct hull+destination (front) + the shared back, duplicated per ship for consistent naming
   const seen=new Set();
   SHIP_DECK.forEach(([hull,dest])=>{const key=hull+'-'+slug(dest);if(seen.has(key))return;seen.add(key);
-    it.push({type:'ship',name:key,side:'front',w:2.5,h:2.5,html:shipCard(hull,dest)});
-    it.push({type:'ship',name:key,side:'back', w:2.5,h:2.5,html:shipBack()});});
+    it.push({type:'ship',name:key,side:'front',w:2.5,h:HULL[hull].cap+1.33,html:shipCard(hull,dest)});
+    it.push({type:'ship',name:key,side:'back', w:2.5,h:HULL[hull].cap+1.33,html:shipBack(hull)});});
   // BUILDINGS — front + displaced back per design
   BUILDINGS.forEach(d=>{
-    it.push({type:'building',name:d.k,side:'front',w:2,h:2,html:buildingCard(d)});
-    it.push({type:'building',name:d.k,side:'back', w:2,h:2,html:buildingBack(d)});});
+    it.push({type:'building',name:d.k,side:'front',w:2,h:1.32,html:buildingCard(d)});
+    it.push({type:'building',name:d.k,side:'back', w:2,h:1.32,html:buildingBack(d)});});
   // IMPROVEMENTS · RECIPES · CONTRACT · PLAYER AID
   IMPROVE.forEach(d=>it.push({type:'improvement',name:slug(d.nm),side:'front',w:2,h:2,html:improveTile(d)}));
   STARTERS.concat(RECIPES).forEach(r=>{   // v3.2d: every recipe is double-sided — cost face + BREWED face

@@ -169,26 +169,22 @@ const RECIPES=[  // EXPORT recipe cards — print in the same double-sided run a
 // nests in the 2.5″ player-colour owner FRAME, so the coloured edge around it marks ownership.
 const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(50,79,42,.74)';   // v2.4.1: PRIVILEGE = bright blue (owner-only) · BUILDING = green (serves everyone) — SPECIALIST = purple below
 const BLD_FOOT='rgba(58,51,66,.7)';   // legacy fallback   // building card foot/base — dark purple-grey (#3a3342) at 70% opacity so the illustration bleeds ~30% through the foot. Same on front & back.
+// v3.4a: 66% height (2×1.32in) — the WHARF side keeps the art but tightens to name · cost · one big effect line.
 function buildingCard(d){const tg=BTGT[d.tgt];const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
-  // (v2.3: the wharfage chip is retired — a value building is a privilege that pays its owner only; the
-  // verb badge carries the sharing rule, no per-card payment chip needed.)
-  const wf='';
-  return '<div class="bcard" style="--c:'+foot+'">'
+  return '<div class="btile btW" style="--c:'+foot+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
-  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span></div>'
-  +'<div class="bc-foot"><div class="bc-eff">'+d.eff+'</div>'
-    +'<div class="bc-row"><span class="bc-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span>'+wf+cost(d.g,0)+'</div></div>'
+  +'<div class="bt-top"><span class="bt-ic">'+LU(d.ic)+'</span><span class="bt-nm">'+d.nm+'</span><span class="bt-cost">'+cost(d.g,0)+'</span></div>'
+  +'<div class="bt-foot"><span class="bt-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span><span class="bt-eff">'+d.eff+'</span></div>'
   +'</div>';}
 // BUILDING CARD BACK — the flipped/displaced face: when your tile is overbuilt (the builder pays the 1G
 // ground rent) it returns to you FACE-DOWN into an OPEN Floor slot of your one row (none open → boxed) —
 // a Floor WILD stop, pure engine: flips score NOTHING. Same art + title (muted) so it's identifiable.
-function buildingBack(d){
-  return '<div class="bcard bc-bk" style="--c:'+BLD_FOOT+'">'
+function buildingBack(d){   // the FLOOR side: it only says WILD
+  return '<div class="btile btF" style="--c:'+BLD_FOOT+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
-  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span></div>'
-  +'<div class="bc-foot"><div class="bc-or">'
-    +'<div class="bc-opt"><span class="bc-big"><span class="bc-circ">'+LU('sparkles')+'</span> <b>Wild</b></span><span class="bc-sub2">place in a Floor slot<br>none open → discard</span></div>'
-  +'</div></div></div>';}
+  +'<div class="bt-wild"><span class="bt-circ">'+LU('sparkles')+'</span><b>WILD</b></div>'
+  +'<div class="bt-sub">a Floor slot &middot; none open &rarr; discard</div>'
+  +'</div>';}
 // SPECIALIST CARD (v10) — now a SQUARE 2in×2in card, matching the Building card's footprint (was a half-height
 // 2in×1in strip). Full-bleed OBJECT art (improve-<slug>.jpg — a single trade-tool icon on a plain beige field,
 // no scene) + scrim, name/icon on top, and a PURPLE foot bar carrying the effect + cost. Same art-card grammar
@@ -216,51 +212,48 @@ const ART_ON=true, ART_DIR='art/';
 function artLayer(file){return ART_ON
   ? '<div class="artbg scrim"><img class="artbg-img" src="'+ART_DIR+file+'" alt=""></div>'
   : '<div class="artbg ph" data-art="'+ART_DIR+file+'"></div>';}
-function caskCardFront(d,act){
+// v3.4a: the CASK is a 2.5×1in TILE. It seats on vessels (aging side up), wharf slots and SHIP
+// BERTHS (wharf side up) — the tile itself travels; the berth cube proxy retires. The WHARF side
+// prints the DIE SEAT the tally die parks on.
+function caskCardFront(d,act){   // the AGING side: Q·name (+special) · the maturation track · brew cost + the action preview
   let c=cost(d.g,d.h);if(d.alt)c+='<span style="opacity:.85">/</span>'+cost(d.alt[0],d.alt[1]);
-  // START (place the vessel marker here at brew) → advance one step per turn → READY (ready = the step count)
-  // the maturation track on ONE line: a dashed START (place the vessel marker) → numbered steps → a green
-  // READY=FLIP endpoint (the flip glyph says "turn the card to its brewed side"). No title/rules text — the
-  // brewhouse illustration sits behind it (cc-age background).
-  let track='<div class="cc-step start">'+LU('flask-conical')+'</div>';
-  for(let i=1;i<d.ready;i++)track+='<div class="cc-step">'+i+'</div>';
-  track+='<div class="cc-step rdy">'+LU('undo-2')+'</div>';   // Ready → flip the card to its brewed side
-  return '<div class="ccard cc-front" style="--c:'+d.c+'">'
-    +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span>'
-      +'<span class="ctitle"><span class="cnm">'+d.nm+'</span><span class="ccost">'+c+'</span></span></div></div>'
-    +'<div class="cc-age"><div class="cc-agerow">'+track+'</div>'+(d.tag?'<div class="cc-perk">'+d.tag.split('<br>').join(' ')+'</div>':'')+'</div>'
-    +'<div class="ce bot"><div class="ce-row sb"><span class="cq">'+LU(QI)+d.q+'</span><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div></div>'
-  +'</div>';
-}
-function caskCardBack(d,act){
-  // both ends show Q + title; only the BOTTOM end carries the die/presence marker space
-  const q='<span class="cq">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span>';
-  const qTop='<span class="cq">'+LU(QI)+d.q+'</span><span class="ctitle"><span class="cnm">'+d.nm+'</span></span>';   // [ruled] the special prints on the AGING side only — this face stays clean
-  return '<div class="ccard cc-back" style="--c:'+d.c+'">'
-    +artLayer('cask-'+d.nm.toLowerCase()+'.png')
-    +'<div class="ce top"><div class="ce-row sb">'+qTop+'</div></div>'
-    +'<div class="cc-actfloat"><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div>'
-    +'<div class="ce bot"><div class="ce-row">'+q+'<span class="cc-mark" title="a +1Q / presence marker rides beside the card"></span></div></div>'
-  +'</div>';
-}
+  let track='<div class="ct-step start">'+LU('flask-conical')+'</div>';
+  for(let i=1;i<d.ready;i++)track+='<div class="ct-step">'+i+'</div>';
+  track+='<div class="ct-step rdy">'+LU('undo-2')+'</div>';   // Ready → flip the tile to its wharf side
+  return '<div class="ctile ctA" style="--c:'+d.c+'">'
+    +'<div class="ct-id"><span class="ct-q">'+LU(QI)+d.q+'</span><span class="ct-nm">'+d.nm+'</span>'
+      +(d.tag?'<span class="ct-perk">'+d.tag.split('<br>').join(' ')+'</span>':'')+'</div>'
+    +'<div class="ct-track">'+track+'</div>'
+    +'<div class="ct-end"><span class="ct-cost">'+c+'</span><span class="ct-mini" title="the wharf action on the other side">'+LU(act.ai)+'</span></div>'
+  +'</div>';}
+function caskCardBack(d,act){   // the WHARF side: Q·name · THE ACTION · the die seat
+  return '<div class="ctile ctB" style="--c:'+d.c+'">'
+    +'<div class="ct-id"><span class="ct-q">'+LU(QI)+d.q+'</span><span class="ct-nm">'+d.nm+'</span></div>'
+    +'<div class="ct-act"><span class="ac">'+LU(act.ai)+'</span><span class="t">'+act.act+'</span></div>'
+    +'<div class="ct-die" title="the tally die parks here — face 1 on deploy; a Privilege turns it at departure"></div>'
+  +'</div>';}
 // printables2 v4: a SHIP is a full-bleed 2.5″ CARD (was a small tile) — the destination's CITY is the
 // background art (wharf-<dest>.png), with the cask-card treatment: hull + commission cost over the art on
 // the top end, the quality gate + numbered load-order berths floating low over the wharf, and a gradient
 // FOOT in the destination's colour carrying the kontor name (the ship's identity). NO action — a ship is
 // just hull size · destination · quality gate · cost.
+// v3.4a: the SHIP is a vertical CARRIER tile — a 1.33in details head (the identity: hull · commission ·
+// kontor · gate) + cap × FULL-WIDTH 1in BERTHS. Loading seats the cask TILE itself on a berth (wharf
+// side up, its die riding its printed seat) — the berth cube proxy retires. Hulk = one berth taller.
+const SHIP_H=hull=>1.33+HULL[hull].cap;   // tile height (in) by hull
 function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
-  let berths='';for(let i=1;i<=cap;i++)berths+='<div class="sbn">'+i+'</div>';
-  return '<div class="ccard cc-back ship-card" style="--c:'+d.kc+'">'
-    +artLayer('wharf-'+destNm.toLowerCase()+'.png')
-    +'<div class="ce top"><div class="ce-row sb"><span class="cnm shull">'+LU('sailboat')+(hull==='cog'?'Cog':'Hulk')+'</span><span class="ccost">'+cost(2,0)+'</span></div></div>'
-    +'<div class="cc-actfloat"><div class="sberth">'+berths+'</div></div>'
-    +'<div class="ce bot"><div class="ce-row sb"><span class="sdest">'+LU('landmark')+destNm+'</span><span class="sgate">'+LU(QI)+d.req+'+</span></div></div>'
-  +'</div>';
-}
+  let berths='';for(let i=1;i<=cap;i++)berths+='<div class="st-berth"><span class="st-bn">'+i+'</span><span class="st-bhint">'+LU(QI)+'cask</span></div>';
+  return '<div class="stile" style="--c:'+d.kc+';height:'+SHIP_H(hull)+'in">'
+    +'<div class="st-head">'+artLayer('wharf-'+destNm.toLowerCase()+'.png')
+      +'<div class="st-toprow"><span class="st-hull">'+LU('sailboat')+(hull==='cog'?'Cog':'Hulk')+'</span><span class="st-cost">'+cost(2,0)+'</span></div>'
+      +'<div class="st-dest"><span class="st-k">'+LU('landmark')+destNm+'</span><span class="st-gate">'+LU(QI)+d.req+'+</span></div>'
+    +'</div>'
+    +'<div class="st-slots">'+berths+'</div>'
+  +'</div>';}
 // the SHIP card rear — one shared graphic for every ship (a Hanseatic cog at sea); ships are single-faced/neutral
 // img-based art (not a CSS background) so the PNG export bakes it sharp — a CSS background gets upscaled from the
 // element's CSS size by html2canvas (blurry). No scrim: the ship-at-sea graphic carries no text overlay.
-function shipBack(){return '<div class="ccard ship-back" style="background:#33445a">'
+function shipBack(hull){return '<div class="stile ship-back" style="background:#33445a;height:'+SHIP_H(hull||'cog')+'in">'
   +'<div class="artbg"><img class="artbg-img" src="'+ART_DIR+'ship-back.png" alt=""></div></div>';}
 function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
 function disc(c,ic){return '<div class="disc" style="--c:'+c+'">'+LU(ic||'circle')+'</div>';}
@@ -449,7 +442,7 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   /* BUILDING OWNERSHIP FRAMES (printables2) — a player-colour 2.5in base the 2in Building tile sits on; the\n\
      colour border showing around the smaller tile = whose building it is. Sized to drop into a 2.5in wharf slot. */\n\
   .frame{width:2.5in;height:2.5in;background:var(--c);border-radius:.12in;position:relative;box-shadow:0 1px 3px rgba(0,0,0,.25)}\n\
-  .frame::after{content:"";position:absolute;inset:.25in;border:2px dashed rgba(255,255,255,.85);border-radius:.07in}\n\
+  .frame::after{content:"";position:absolute;left:.25in;right:.25in;top:.59in;bottom:.59in;border:2px dashed rgba(255,255,255,.85);border-radius:.07in}   /* the 2x1.32 building tile seat */\n\
   .frame .fl{position:absolute;left:0;right:0;bottom:.07in;text-align:center;color:#fff;font-variant:small-caps;font-weight:bold;font-size:.12in;text-shadow:0 1px 1.5px rgba(0,0,0,.5)}\n\
   /* worker / marker DISCS — .8in cut circle inside a 1in bleed disc */\n\
   .wtok{width:1in;height:1in;border-radius:50%;background:var(--c);color:#fff;position:relative;\n\
@@ -508,7 +501,8 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .cover span{font-variant:small-caps;font-weight:bold;font-size:.12in;text-align:center;line-height:1.25;opacity:.92}\n\
   /* ---- the one-read die chip on Privilege tiles ---- */\n\
   .diech svg,.diech .ic{width:.14in;height:.14in;vertical-align:-.025in}';
-if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS;
+var HC_CSS2="\n/* ===== v3.4a COMPONENT REFIT \u2014 cask TILES (2.5x1) \u00b7 buildings (2x1.32) \u00b7 carrier SHIPS ===== */\n.ctile{width:2.5in;height:1in;position:relative;overflow:hidden;color:#fff;background:var(--c,#777);\n  display:flex;align-items:center;gap:.07in;padding:.07in .08in;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}\n.ctile .ct-id{display:flex;flex-direction:column;gap:.025in;flex:0 0 auto;width:.74in;min-width:0}\n.ctile .ct-q{display:inline-flex;align-items:center;gap:.03in;font-weight:900;font-size:.27in;line-height:1}\n.ctile .ct-q svg,.ctile .ct-q .ic{width:.21in;height:.21in;stroke-width:2.2;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}\n.ctile .ct-nm{font-variant:small-caps;font-weight:bold;font-size:.15in;line-height:1;white-space:nowrap;overflow:hidden}\n.ctile .ct-perk{font-size:.082in;font-style:italic;line-height:1.12;opacity:.95}\n.ctile .ct-perk b{font-size:.11in;font-style:normal}\n.ctile .ct-perk .ic,.ctile .ct-perk svg{width:.1in;height:.1in}\n.ctA .ct-track{flex:1;display:flex;gap:.06in;align-items:center;justify-content:center;min-width:0}\n.ctA .ct-step{width:.32in;height:.32in;border:1.9px solid rgba(255,255,255,.92);border-radius:.05in;\n  display:flex;align-items:center;justify-content:center;font-size:.17in;font-weight:bold;flex:0 0 auto}\n.ctA .ct-step.rdy{border-color:#4a6b3a;background:#4a6b3a;box-shadow:0 1px 2px rgba(0,0,0,.4)}\n.ctA .ct-step.rdy svg,.ctA .ct-step.rdy .ic{width:.2in;height:.2in;stroke-width:2.4}\n.ctA .ct-step.start{border-style:dashed}\n.ctA .ct-step.start svg,.ctA .ct-step.start .ic{width:.19in;height:.19in}\n.ctA .ct-end{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:.04in;flex:0 0 auto}\n.ctA .ct-cost{display:inline-flex;gap:.05in;font-weight:bold;font-size:.135in;align-items:center}\n.ctA .ct-cost .gc{gap:.02in}.ctA .ct-cost .gc svg,.ctA .ct-cost .gc .ic{width:.14in;height:.14in}\n.ctA .ct-mini{display:inline-flex;align-items:center;justify-content:center;width:.26in;height:.26in;border-radius:50%;background:rgba(255,255,255,.88)}\n.ctA .ct-mini svg,.ctA .ct-mini .ic{width:.15in;height:.15in;color:#23201c;stroke-width:2.1}\n.ctB .ct-act{flex:1;display:flex;align-items:center;gap:.06in;background:rgba(0,0,0,.32);border-radius:.06in;\n  padding:.05in .06in;font-size:.15in;line-height:1.08;font-weight:600;min-width:0}\n.ctB .ct-act .ac{display:inline-flex;align-items:center;justify-content:center;width:.32in;height:.32in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}\n.ctB .ct-act .ac svg,.ctB .ct-act .ac .ic{width:.18in;height:.18in;color:#23201c;stroke-width:2.1}\n.ctB .ct-die{flex:0 0 auto;width:.56in;height:.56in;border:2px dashed rgba(255,255,255,.85);border-radius:.08in;background:rgba(0,0,0,.16);display:flex;align-items:center;justify-content:center}\n.btile{width:2in;height:1.32in;position:relative;overflow:hidden;color:#fff;background:var(--c,#3a3342);\n  display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}\n.btile>*{position:relative;z-index:1}.btile>.artbg{z-index:0}\n.btile .bt-top{display:flex;align-items:center;gap:.05in;padding:.07in .09in 0}\n.btile .bt-ic{flex:0 0 auto}.btile .bt-ic svg,.btile .bt-ic .ic{width:.17in;height:.17in;stroke-width:1.9;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}\n.btile .bt-nm{font-variant:small-caps;font-weight:bold;font-size:.148in;line-height:1;flex:1;white-space:nowrap;overflow:hidden}\n.btile .bt-cost{font-weight:bold;font-size:.13in;display:inline-flex;align-items:center;flex:0 0 auto}\n.btile .bt-cost .gc svg,.btile .bt-cost .gc .ic{width:.14in;height:.14in}\n.btile .bt-foot{background:linear-gradient(to top,var(--c) 0%,var(--c) 68%,transparent 100%);\n  padding:.12in .09in .07in;display:flex;align-items:center;gap:.06in}\n.btile .bt-tgt{display:inline-flex;align-items:center;justify-content:center;width:.24in;height:.24in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}\n.btile .bt-tgt svg,.btile .bt-tgt .ic{width:.14in;height:.14in;color:#23201c;stroke-width:2}\n.btile .bt-eff{font-size:.148in;font-weight:600;line-height:1.1;flex:1}\n.btile .bt-eff::first-letter{text-transform:uppercase}\n.btile .bt-eff .ic,.btile .bt-eff svg{width:.14in;height:.14in;vertical-align:-.02in}\n.btile .bt-eff .g{color:#ffe08a}.btile .bt-eff .h{color:#c4e69c}\n.btile .diech svg,.btile .diech .ic{width:.14in;height:.14in;vertical-align:-.025in}\n.btF .artbg{filter:grayscale(.55) brightness(.72)}\n.btF .bt-wild{flex:1;display:flex;align-items:center;justify-content:center;gap:.08in;font-size:.24in;font-weight:900;letter-spacing:1px}\n.btF .bt-circ{display:inline-flex;align-items:center;justify-content:center;width:.34in;height:.34in;border-radius:50%;background:rgba(255,255,255,.92)}\n.btF .bt-circ svg,.btF .bt-circ .ic{width:.2in;height:.2in;color:#23201c;stroke-width:2.1}\n.btF .bt-sub{text-align:center;font-variant:small-caps;font-weight:bold;font-size:.095in;opacity:.9;padding-bottom:.07in}\n.stile{width:2.5in;position:relative;overflow:hidden;color:#fff;background:#6f6253;\n  display:flex;flex-direction:column;text-shadow:0 1px 1.5px rgba(0,0,0,.5)}\n.stile .st-head{position:relative;flex:0 0 1.33in;display:flex;flex-direction:column;justify-content:space-between}\n.stile .st-head .artbg{position:absolute;inset:0}\n.stile .st-toprow{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;padding:.07in .1in 0}\n.stile .st-hull{display:inline-flex;gap:.05in;align-items:center;font-variant:small-caps;font-weight:bold;font-size:.2in}\n.stile .st-hull svg,.stile .st-hull .ic{width:.2in;height:.2in;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}\n.stile .st-cost{font-weight:bold;font-size:.15in;display:inline-flex;align-items:center}\n.stile .st-dest{position:relative;z-index:1;background:var(--c);display:flex;justify-content:space-between;align-items:center;padding:.05in .1in;font-variant:small-caps;font-weight:bold;font-size:.2in}\n.stile .st-dest svg,.stile .st-dest .ic{width:.17in;height:.17in}\n.stile .st-k{display:inline-flex;align-items:center;gap:.05in}\n.stile .st-gate{font-weight:900;font-size:.18in;display:inline-flex;align-items:center;gap:.02in}\n.stile .st-slots{flex:1;display:flex;flex-direction:column}\n.stile .st-berth{flex:1;position:relative;display:flex;align-items:center;justify-content:center;gap:.09in;\n  border-top:1.8px dashed rgba(255,255,255,.55);\n  background:repeating-linear-gradient(0deg,rgba(0,0,0,.07) 0 .07in,transparent .07in .14in)}\n.stile .st-bn{width:.36in;height:.36in;border:2px solid rgba(255,255,255,.88);border-radius:.05in;\n  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.19in;background:rgba(0,0,0,.26)}\n.stile .st-bhint{font-variant:small-caps;font-weight:bold;font-size:.11in;opacity:.75;display:inline-flex;gap:.04in;align-items:center}\n.stile .st-bhint svg,.stile .st-bhint .ic{width:.13in;height:.13in}\n";
+if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,frameTile,coverTile,wtok,recipeCard,contractCard};
+window.HC={LU,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,frameTile,coverTile,wtok,recipeCard,contractCard};
 })();
