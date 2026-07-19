@@ -328,10 +328,12 @@ When a line fires, the active player **may** use each of its stops once — the 
   the ring (Bruges still boards Q1) — the answer is over-deploying better beer, which sours the
   squatters (§3).* Load deployed casks aboard; a ship
   **sails the moment it is full** → every cask **delivers** (§7), value + majority presence
-  sealing **on delivery** in load order. **The hull is the carrier component:** each berth well
-  holds the owner’s **cask cube** + the cask’s **demand die** (if set) + any **+1Q marker**; the
-  hull prints its destination, gate, and berth numbers. The hull returns to the deck; the voyage
-  **advances the clock**.
+  sealing **on delivery** in load order. **The hull is the carrier component (v3.4b — ALL
+  berths):** the tile is nothing but full-width berth wells, **filled BOTTOM → TOP**; each seats
+  the loaded cask TILE itself (its tally die on the tile’s printed seat, any +1Q marker beside
+  it). The **TOP berth is the TRIGGER** — it prints the hull’s whole identity (hull · commission
+  · kontor · gate), needed only while the ship loads: **the last cask covers it, and the ship
+  SAILS at once.** The hull returns to the deck; the voyage **advances the clock**.
 - **Dispatch — kontor route** (the old Charter): a **contract** + flat `2 G` fare → one of your
   **deployed** Ready casks (the Quaymaster also reaches your vessels) sails alone to a kontor.
   Ticks the Sailed-Ships track.

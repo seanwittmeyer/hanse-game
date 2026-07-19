@@ -85,7 +85,7 @@ A brewed beer in one of three states: **maturing** (vessel) → **deployed** (sl
 
 ## 6. Hull tiles · family B (20-tile deck) — the carrier component
 
-Neutral, destination-bound hulls, drawn from a shuffled deck into a face-up **market of 3**. **The hull is the carrier (v3.4a refit):** a **2.5″-wide vertical tile** — a **1.33″ details head** (hull · commission cost · the kontor banner · quality gate) over **cap × FULL-WIDTH 1″ BERTHS** (Cog 2 → 3.33″ tall · Hulk 3 → 4.33″). **Loading seats the cask TILE itself on a berth**, wharf side up, its **tally die** on the tile’s printed die seat (+ any +1Q marker beside it) — the berth cube proxy and the owner’s manifest row are RETIRED; the board state is the physical stack.
+Neutral, destination-bound hulls, drawn from a shuffled deck into a face-up **market of 3**. **The hull is the carrier (v3.4b — ALL berths):** a **2.5″-wide vertical tile of nothing but full-width 1″ berth wells** (Cog 2 → 2.5×2″ · Hulk 3 → 2.5×3″), **filled BOTTOM → TOP**. The **TOP berth is the TRIGGER**: it prints the hull’s whole identity (hull · commission cost · the kontor banner · quality gate) — information needed only while the ship loads — and **the last cask covers it: the ship sails at once** (the same cover-when-obsolete move as the tally die over the cask’s printed Q). **Loading seats the cask TILE itself on a berth**, wharf side up, its **tally die** on the tile’s printed die seat (+ any +1Q marker beside it) — the berth cube proxy and the owner’s manifest row are RETIRED; the board state is the physical stack.
 
 | Hull | Capacity | Qty | Destination spread |
 |---|---|---|---|
