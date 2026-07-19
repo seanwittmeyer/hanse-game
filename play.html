@@ -43,8 +43,9 @@
   .copybtn{float:right;font-family:inherit;font-variant:normal;font-size:.66rem;cursor:pointer;background:var(--ink);color:var(--parch);border:none;border-radius:5px;padding:2px 8px;letter-spacing:.3px}
   .copybtn:hover{background:var(--red2)}
   /* GRID */
-  .agwrap{display:flex;justify-content:center;padding:6vmin}   /* v3.3: room on EVERY side — tucked cards and parked hulls protrude toward the table edge */
-  .ag{display:grid;width:100%;max-width:min(88vmin,1000px);margin:0 auto;aspect-ratio:1;   /* v3.3: the wharf IS the screen */
+  .agwrap{--bdw:min(62vmin,70vw,820px);display:flex;justify-content:center;padding:calc(var(--bdw)*0.19)}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
+  @media(max-width:700px){.agwrap{--bdw:min(84vmin,66vw)}}   /* portrait phone: height is plentiful — let the board take the width */
+  .ag{display:grid;width:var(--bdw,600px);max-width:100%;margin:0 auto;aspect-ratio:1;   /* v3.3: the wharf IS the screen; sized by --bdw on .agwrap */
     gap:clamp(4px,1.4vw,7px);
     grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr)}
   /* explicit square rows make every cell a guaranteed square from the GRID — not from each
@@ -182,7 +183,7 @@
   .pfit .pfin{position:absolute;top:50%;left:50%;transform-origin:center;transform:translate(-50%,-50%) scale(.5)}
   .pring{position:absolute;inset:0;border-radius:10px;background:var(--oc,#8a8577);box-shadow:0 2px 6px rgba(0,0,0,.3)}
   .pring .pfit{inset:8%;border-radius:4px;box-shadow:none}
-  .slot .pown,.mtile .pown{position:absolute;top:4cqmin;right:4cqmin;width:14cqmin;height:14cqmin;border-radius:50%;border:2px solid rgba(255,255,255,.9);box-shadow:0 0 0 1.5px rgba(0,0,0,.35);z-index:4}
+  .slot .pown,.mtile .pown{position:absolute;bottom:5cqmin;right:6cqmin;width:12cqmin;height:12cqmin;border-radius:50%;border:2px solid rgba(255,255,255,.9);box-shadow:0 0 0 1.5px rgba(0,0,0,.35);z-index:4}   /* seated IN the card's printed marker space */
   .pqboost{position:absolute;top:4cqmin;left:4cqmin;z-index:4;display:inline-flex;align-items:center;gap:1cqmin;font-weight:900;font-size:12cqmin;color:#fff;background:rgba(20,14,8,.72);border-radius:3cqmin;padding:1cqmin 3cqmin}
   .pqboost .ic,.pqboost svg{width:10cqmin;height:10cqmin}
   .pcomm2{position:absolute;top:3cqmin;right:3cqmin;z-index:4;font-weight:bold;font-size:9cqmin;display:inline-flex;align-items:center;gap:1cqmin;background:rgba(244,234,208,.94);color:#2b2018;border:1px solid rgba(0,0,0,.25);border-radius:3cqmin;padding:1cqmin 2.5cqmin}
@@ -206,20 +207,21 @@
   .tk-up .ptk .cc-back .ce.bot{transform:rotate(180deg)}
   .tk-up .ptk .cc-actfloat{transform:translateY(.13in) rotate(180deg)}
   /* the OWNERSHIP (presence) disc rides the tucked cask's visible edge */
-  .tkown{position:absolute;z-index:9;width:11cqmin;height:11cqmin;border-radius:50%;border:2px solid rgba(255,255,255,.9);box-shadow:0 0 0 1.5px rgba(0,0,0,.35)}
-  .tk-left .tkown{left:2.5cqmin;top:22%} .tk-right .tkown{right:2.5cqmin;top:22%}
-  .tk-up .tkown{top:2.5cqmin;left:22%}   .tk-down .tkown{bottom:2.5cqmin;left:22%}
+  .tkown{position:absolute;z-index:9;width:10cqmin;height:10cqmin;border-radius:50%;border:2px solid rgba(255,255,255,.9);box-shadow:0 0 0 1.5px rgba(0,0,0,.35)}
+  /* the disc + die sit at the MARKER-SPACE end of the visible edge (where the card prints their seat) */
+  .tk-left .tkown{left:3cqmin;bottom:7%} .tk-right .tkown{right:3cqmin;top:7%}
+  .tk-up .tkown{top:3cqmin;right:8%}     .tk-down .tkown{bottom:3cqmin;right:8%}
   .ptk{position:absolute;inset:0;outline:2.5px solid;border-radius:8px;box-shadow:0 2px 7px rgba(0,0,0,.45);background:#2b2018}
   .tk-left .ptk{transform:rotate(90deg)} .tk-right .ptk{transform:rotate(-90deg)} .tk-up .ptk{transform:rotate(180deg)} .tk-down .ptk{transform:none}
   .slot.pfilled>.pfit,.slot.pfilled>.pring,.shipside>.pfit{z-index:8}   /* the tile/hull paints ABOVE its tucked cards */
   .tkdie{position:absolute;z-index:9}
-  .tk-left .tkdie{left:2cqmin;top:50%;transform:translateY(-50%)} .tk-right .tkdie{right:2cqmin;top:50%;transform:translateY(-50%)}
-  .tk-up .tkdie{top:2cqmin;left:50%;transform:translateX(-50%)}   .tk-down .tkdie{bottom:2cqmin;left:50%;transform:translateX(-50%)}
-  .tkdie .die{width:12cqmin;height:12cqmin}
+  .tk-left .tkdie{left:2.5cqmin;bottom:20%} .tk-right .tkdie{right:2.5cqmin;top:20%}
+  .tk-up .tkdie{top:2.5cqmin;right:21%}     .tk-down .tkdie{bottom:2.5cqmin;right:21%}
+  .tkdie .die{width:11cqmin;height:11cqmin}
     .shipside{position:absolute;width:92cqmin;height:92cqmin;z-index:25;filter:drop-shadow(0 3px 6px rgba(0,0,0,.5))}   /* a hull is the same 2.5in card — it parks OUTSIDE the tile at true scale */
   .tk-left .shipside{left:-60cqmin;top:4%} .tk-right .shipside{right:-60cqmin;top:4%}
   .tk-up .shipside{top:-60cqmin;left:4%}   .tk-down .shipside{bottom:-60cqmin;left:4%}
-  .slot .die.dcask,.mtile .die.dcask{position:absolute;bottom:5cqmin;right:5cqmin;width:24cqmin;height:24cqmin;z-index:5}
+  .slot .die.dcask,.mtile .die.dcask{position:absolute;bottom:19cqmin;right:5cqmin;width:22cqmin;height:22cqmin;z-index:5}   /* the die stacks above the seated disc */
   .slot.pfilled{overflow:visible;z-index:2}   /* protruding tucks/ships paint OVER neighbouring cells */
   /* ===== demand DIE — pips show the ★ a cask banks from the value building it shipped through ===== */
   .die{display:inline-grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:1cqmin;position:relative;
