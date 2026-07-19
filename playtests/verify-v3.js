@@ -1,4 +1,4 @@
-// Targeted rule checks for the v3.0-A "Path A" keystone (KEY hanse-v3a-v1).
+// Targeted rule checks for the v3 line (live: v3.3 "Three Coins", KEY hanse-v33).
 // Drives the CANONICAL engine (extract play.html's <script>, stub the DOM) and asserts each
 // new rule directly by constructing states — no bot in the loop, so a failure is the engine's.
 // Usage: node playtests/verify-v3.js
@@ -43,12 +43,12 @@ function fresh(n){S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub
   deployLand(0,'s2','stops');
   ok('spoilage: rival Q1 boxed, my Q2 takes the berth', S.slots.s2&&S.slots.s2.q===2&&S.slots.s2.owner===0);
   ok('spoilage fires no action', UI.sub!=='source'&&p.grain===g0);
-  // v3.2a: a displaced tile with NO open Floor slot pays DISPLACE_PTS and is discarded
+  // v3.3: a displaced tile with NO open Floor slot is SIMPLY DISCARDED — nothing seats, nothing banks
   (function(){var q=S.players[1];q.floorOpen=2;q.vessels=[{style:'gruit',q:1,step:0,ready:1},{style:'gruit',q:1,step:0,ready:1}];   // both open slots hold casks → no seat for a flip
-    S.buildings.s5={b:'staple',owner:1};var d0=q.dispStars||0,f0=(q.flipped||[]).length;
+    S.buildings.s5={b:'staple',owner:1};var f0=(q.flipped||[]).length,sc0=scorePlayer(q).total;
     S.players[0].grain=5;commitBldg('s5','maltkiln',0);
-    ok('v3.2a a displaced tile with no open Floor slot pays +'+DISPLACE_PTS+'★ (discarded)', (q.dispStars||0)===d0+DISPLACE_PTS&&(q.flipped||[]).length===f0);
-    ok('v3.2a the discard ★ bank into the score', scorePlayer(q).developed===d0+DISPLACE_PTS);})();
+    ok('v3.3 a displaced tile with no open Floor slot is simply discarded (no flip)', (q.flipped||[]).length===f0);
+    ok('v3.3 the discard banks nothing', typeof DISPLACE_PTS==='undefined'&&scorePlayer(q).total===sc0&&!(q.dispStars));})();
   // and: a rival's Q2 is NOT a legal target
   S.slots.s3={type:'cask',owner:1,style:'hopped',q:2,act:'age'};
   p.vessels[1]={style:'bock',q:5,step:3,ready:3,act:'age'};

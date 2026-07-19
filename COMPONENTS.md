@@ -1,9 +1,9 @@
-# Brewhouses of the Hanse — Components (v3.2 “Three Coins”)
+# Brewhouses of the Hanse — Components (v3.3 “Three Coins”)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md`. Design rationale & version history: `DESIGN.md` §9; the build plan `V3-PATH-A.md`.
-> - The live build is `play.html` — **v3.2 “Three Coins”** (`KEY hanse-v32`); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it. The prior manifest is archived at `archive/v2.9/COMPONENTS.md`.
+> - The live build is `play.html` — **v3.3 “Three Coins”** (`KEY hanse-v33`; the v3.2a–d patches consolidated); it is the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it. The prior manifest is archived at `archive/v2.9/COMPONENTS.md`.
 > - **The print kit is `printables2.html` (the card kit) — the only kit in use.** Printables generate from this doc, never the other way around.
 > - Cross-reference: §2 boards, §3–4 supply, §5–11 the tile families, §12 player board, §13 setup, §14 box footprint, §15 expansions, §16 cross-refs, §17 gaps.
 
@@ -93,7 +93,7 @@ Neutral, destination-bound hulls, drawn from a shuffled deck into a face-up **ma
 
 ## 7. Slot tiles — Privileges & Buildings · family C (27 tiles)
 
-Always acquired **from the face-up Wharf display of 4 and placed at once** (no hand): buy at the Market, free via London, or the **Gain 1 building** cask action. **Overbuild = the `1 G` ground rent**; the displaced tile flips face-down into an open **Floor slot** of its owner’s as a Floor Wild (**flips score nothing**) — none seatable → **discarded for +3★ ⚙** (v3.2a: never nothing).
+Always acquired **from the face-up Wharf display of 4 and placed at once** (no hand): buy at the Market, free via London, or the **Gain 1 building** cask action. **Overbuild = the `1 G` ground rent**; the displaced tile flips face-down into an open **Floor slot** of its owner’s as a Floor Wild (**flips score nothing**) — none seatable → **simply discarded** (v3.3).
 
 ### 7A. PRIVILEGES (blue, 12 tiles) — each prints a plain **+N★**; the demand die (set to N) carries it
 

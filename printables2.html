@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · Cask Cards · v3.2 “Three Coins”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · Cask Cards · v3.3 “Three Coins”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -845,7 +845,7 @@
 </head>
 <body>
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · Cask Cards · v3.2 “Three Coins”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · Cask Cards · v3.3 “Three Coins”</span></h1>
   <a href="play.html">▶ Play</a>
   <a href="index.html">📖 Rules</a>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
@@ -962,7 +962,7 @@ const BUILDINGS=[
 ];
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 // (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
-const DEVELOP_PTS=0;     // [ruled v3.2a]: a seated flip scores NOTHING (pure Floor-Wild engine); a displaced tile with NO open Floor slot is DISCARDED FOR +3★. The overbuilder still pays the 1G ground rent.
+const DEVELOP_PTS=0;     // [ruled v3.3]: a seated flip scores NOTHING (pure Floor-Wild engine); a displaced tile with NO open Floor slot is SIMPLY DISCARDED. The overbuilder still pays the 1G ground rent.
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
 // CELLAR (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
 // v82 "Scarce Improvements": these now form a SHUFFLED DECK of (n−1) copies of each type (n=players) feeding a
@@ -1144,9 +1144,7 @@ function buildingBack(d){
   +artLayer(d.art||('building-'+d.k+'.png'))
   +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span></div>'
   +'<div class="bc-foot"><div class="bc-or">'
-    +'<div class="bc-opt"><span class="bc-big"><span class="bc-circ">'+LU('sparkles')+'</span> <b>Wild</b></span><span class="bc-sub2">place in a<br>Floor slot</span></div>'
-    +'<span class="bc-slash">/</span>'
-    +'<div class="bc-opt pts"><span class="bc-big">'+LU('star')+' <b>3</b></span><span class="bc-sub2">&amp; discard</span></div>'
+    +'<div class="bc-opt"><span class="bc-big"><span class="bc-circ">'+LU('sparkles')+'</span> <b>Wild</b></span><span class="bc-sub2">place in a Floor slot<br>none open → discard</span></div>'
   +'</div></div></div>';}
 // NEUTRAL destination-bound ship tile (v0.11): hull + capacity · printed destination + quality gate · commission 2 G
 function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
@@ -1827,7 +1825,7 @@ function buildPages(){
   packRun(pages,'bits',TLBL_BLD,'bld',bldFrontHtml,null,famPages,TILE_GEO);
   const bldFrontPages=pages.slice(tStart);
   tagFamilies(bldFrontPages,bldMeta);
-  mirrorBackPages(bldFrontPages,bldMeta,TILE_GEO,'Building tile BACKS (mirror — flip LEFT↔RIGHT): the displaced face — seat the Floor Wild / +3★ & discard','bits');
+  mirrorBackPages(bldFrontPages,bldMeta,TILE_GEO,'Building tile BACKS (mirror — flip LEFT↔RIGHT): the displaced face — seat the Floor Wild (none open → discard)','bits');
   // Owner FRAMES + unlock COVERS are SINGLE-SIDED → their own trimmed sheet (no back).
   // (The Specialist tiles ride the Wharf sheet's open right side since 2026-07-14.)
   const TLBL_IMPF='Owner frames + unlock covers (22″ plotter · single-sided · cut apart)';
@@ -1888,7 +1886,7 @@ function checklist(pages,famPages){
   const D='style="font-size:.085in;color:#5b4a37;font-weight:normal;line-height:1.26;margin-top:.005in"';
   const R=(nm,detail,n)=>'<tr><td class="bx"></td><td><b>'+nm+'</b>'+(detail?'<div '+D+'>'+detail+'</div>':'')+'</td><td class="n">'+n+'</td></tr>';
   const T=title=>'<table><tr><th></th><th>'+title+'</th><th>qty</th></tr>';
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v3.2 “Three Coins”)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v3.3 “Three Coins”)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The base game below; the three opt-in expansions are listed last. With all expansions off, the box is exactly the base set. (Counts are a working first pass.)</p>'
     +'<div class="cols2">';
   h+=T('Boards')
@@ -1901,7 +1899,7 @@ function checklist(pages,famPages){
   h+=T('Tiles (mount on chipboard, laser-cut)')
     +R('Cask tiles — the beer supply','A shared pool, brewed not bought (min 6 per type): Gruit ×16 · Hopped ×20 · Broyhan ×6 · Keut ×6 · Mumme ×8 · Bock ×6. Each shows a quality (Q1–Q5) and ONE specific-gain slot-action (the pool is quality-gated). Deal 3 of the 4 export beers each game; a NEW distinct beer brewed flips its recipe card — the Flight.','62')
     +R('Ship tiles','Neutral hulls, a kontor printed on each — Cog (holds 2) ×11 · Hulk (holds 3) ×9; five to each of the four kontore. Drawn off a shuffled deck into a face-up market of 3.','20')
-    +R('Slot tiles — Privileges &amp; Buildings','The owned slot modifiers, '+baseBld.length+' designs (double-sided: art front / the displaced back — seat the Floor Wild, or +3★ &amp; discard when no slot is open). <b>Privileges (blue — each prints a +N★ bonus) —</b> '+designs(baseVal)+'. <b>Buildings / works (green) —</b> '+designs(baseTr)+'.',sumN(baseBld))
+    +R('Slot tiles — Privileges &amp; Buildings','The owned slot modifiers, '+baseBld.length+' designs (double-sided: art front / the displaced back — seat the Floor Wild; none open → discarded). <b>Privileges (blue — each prints a +N★ bonus) —</b> '+designs(baseVal)+'. <b>Buildings / works (green) —</b> '+designs(baseTr)+'.',sumN(baseBld))
     +R('Specialist tiles','The private brewery-board tiles, 7 designs: '+IMPROVE.map(d=>d.nm).join(' · ')+'. A shuffled display at the Cellar — 3 copies of each type (n−1 per type), enough for 4 players.',impTotal)
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')
