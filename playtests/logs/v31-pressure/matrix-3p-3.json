@@ -1,0 +1,191 @@
+[
+ {
+  "id": "3p-rt-1",
+  "seed": 675,
+  "seats": [
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   },
+   {
+    "name": "TraderP",
+    "ai": {
+     "tier": "trader",
+     "persona": "prestige"
+    }
+   },
+   {
+    "name": "TraderM",
+    "ai": {
+     "tier": "trader",
+     "persona": "majority"
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-rt-2",
+  "seed": 676,
+  "seats": [
+   {
+    "name": "TraderV",
+    "ai": {
+     "tier": "trader",
+     "persona": "volume"
+    }
+   },
+   {
+    "name": "TraderP",
+    "ai": {
+     "tier": "trader",
+     "persona": "prestige"
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-rt-3",
+  "seed": 677,
+  "seats": [
+   {
+    "name": "TraderV",
+    "ai": {
+     "tier": "trader",
+     "persona": "volume"
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   },
+   {
+    "name": "TraderM",
+    "ai": {
+     "tier": "trader",
+     "persona": "majority"
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-rt-4",
+  "seed": 678,
+  "seats": [
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   },
+   {
+    "name": "TraderP",
+    "ai": {
+     "tier": "trader",
+     "persona": "prestige"
+    }
+   },
+   {
+    "name": "TraderM",
+    "ai": {
+     "tier": "trader",
+     "persona": "majority"
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-rt-5",
+  "seed": 679,
+  "seats": [
+   {
+    "name": "TraderV",
+    "ai": {
+     "tier": "trader",
+     "persona": "volume"
+    }
+   },
+   {
+    "name": "TraderP",
+    "ai": {
+     "tier": "trader",
+     "persona": "prestige"
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-rt-6",
+  "seed": 680,
+  "seats": [
+   {
+    "name": "TraderV",
+    "ai": {
+     "tier": "trader",
+     "persona": "volume"
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   },
+   {
+    "name": "TraderM",
+    "ai": {
+     "tier": "trader",
+     "persona": "majority"
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-cc-1",
+  "seed": 681,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar3",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   }
+  ]
+ }
+]

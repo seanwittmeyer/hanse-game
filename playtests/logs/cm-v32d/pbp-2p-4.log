@@ -1,0 +1,594 @@
+############ GAME 2p-4 · seed 7214 · 2p · KEY hanse-v32d ############
+seats: Cellar [cellarmaster] · TraderP [trader/prestige]
+exports dealt: Q3 Broyhan · Q3 Keut · Q5 Bock · sailed-ships cap 5 · warm start:
+  s1 (colL): [bldg Rich Berth neutral] 
+  s2 (colR): [bldg Grain Exchange neutral] 
+  s8 (rowT): ship Hulk->Bruges
+  s5 (colR): ship Hulk->Bergen
+
+== R1 · turn 1 · Cellar [cellarmaster] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar places their worker at Cellar
+  Cellar activates Right col · Brewhouse + Cellar
+  ↳ Cellar spends −G1 −H1
+  Cellar brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Cellar’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  ↳ Grain Exchange — its printed action.
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R1 · turn 2 · TraderP [trader/prestige] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  TraderP places their worker at Brewhouse
+  TraderP activates Top row · Market + Brewhouse
+  ↳ TraderP spends −H1
+  TraderP buys the Broyhan recipe (Q3).
+  ↳ TraderP spends −G1 −H1
+  TraderP brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ TraderP’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  TraderP sets a Ready Gruit on a slot.
+  TraderP loads Gruit onto the Hulk → Bruges (1/3).
+  Cellar’s casks mature (+1) over the turn.
+
+== R2 · turn 3 · Cellar [cellarmaster] · G2 H1 ct2 | vessels[Gruit!,Hopped!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar stays home and works the Floor — the worker keeps its station (2 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Cellar gains +G2
+  ↳ Floor — Hopped’s age action.
+  ↳ nothing to age.
+  TraderP’s casks mature (+1) over the turn.
+
+== R2 · turn 4 · TraderP [trader/prestige] · G2 H0 ct2 | vessels[-,Hopped!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  TraderP moves to Market
+  TraderP activates Top row · Market + Brewhouse
+  ↳ TraderP spends −G1
+  TraderP buys the Keut recipe (Q3).
+  ↳ TraderP spends −G1
+  TraderP brews Gruit Ale (Q1 · matures in 1 step).
+  TraderP sets a Ready Hopped on a slot.
+  TraderP loads Hopped onto the Hulk → Bruges (2/3).
+
+== R3 · turn 5 · Cellar [cellarmaster] · G4 H1 ct2 | vessels[Gruit!,Hopped!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar moves to Brewhouse
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar spends −H1
+  Cellar buys the Broyhan recipe (Q3).
+  ↳ Cellar spends −G1
+  Cellar brews Gruit Ale (Q1 · matures in 1 step).
+  Cellar sets a Ready Hopped on a slot.
+  Cellar loads Hopped onto the Hulk → Bruges (3/3).
+  ★ the Hulk sails to Bruges with 3 casks! Every cask aboard is delivered. (Sailed-Ships 1/5)
+  ↳ TraderP gains +G1 +H1
+  ↳ TraderP takes the Bruges liquidity benefit (2 goods).
+  ↳ TraderP gains +G1 +H1
+  ↳ TraderP takes the Bruges liquidity benefit (2 goods).
+  ↳ Cellar gains +G1 +H1
+  ↳ Cellar takes the Bruges liquidity benefit (2 goods).
+  TraderP’s casks mature (+1) over the turn.
+
+== R3 · turn 6 · TraderP [trader/prestige] · G2 H2 ct2 | vessels[Gruit!,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  TraderP moves to Brewhouse
+  TraderP pays −G1 occupancy toll for sharing Brewhouse.
+  TraderP activates Top row · Market + Brewhouse
+  ↳ TraderP spends −G1 −H1
+  TraderP buys the Bock recipe (Q5).
+  TraderP sets a Ready Gruit on a slot.
+  ↳ TraderP gains +G1 +H1
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+  Cellar’s casks mature (+1) over the turn.
+
+== R4 · turn 7 · Cellar [cellarmaster] · G4 H1 ct2 | vessels[Gruit!,-,Gruit!] deployed:0 | score 1 (dlv 1 maj 0 flt 0)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar spends −G2
+  Cellar commissions the Cog bound for Bruges — place it on a slot.
+  ↳ Cog placed on a slot, bound for Bruges.
+  ↳ Cellar gains +G1
+  ↳ Cellar takes the loader bonus for shipping TraderP’s cask (and chose the destination).
+  Cellar loads Gruit onto the new Cog (free, on commission) — 1/2.
+  ★ the Cog sails to Bruges with 1 cask! Every cask aboard is delivered. (Sailed-Ships 2/5)
+  ↳ TraderP gains +G1 +H1
+  ↳ TraderP takes the Bruges liquidity benefit (2 goods).
+  ↳ Cellar spends −G1 −H1
+  Cellar brews Hopped Beer (Q2 · matures in 1 step).
+  Cellar sets a Ready Gruit on a slot.
+  Cellar sets a Ready Gruit on a slot.
+
+== R4 · turn 8 · TraderP [trader/prestige] · G2 H3 ct2 | vessels[-,-,-] deployed:0 | score 7 (dlv 3 maj 4 flt 0)
+  TraderP moves to Market
+  TraderP pays −G1 occupancy toll for sharing Market.
+  TraderP activates Top row · Market + Brewhouse
+  ↳ TraderP gains +G2
+  TraderP sources goods at the Market.
+  ↳ TraderP gains +G2
+  ↳ TraderP gains +G2
+  ↳ TraderP spends −G2 −H3
+  TraderP brews Bock (Q5 · matures in 3 steps).
+  ↳ TraderP’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  Cellar’s casks mature (+1) over the turn.
+
+== R5 · turn 9 · Cellar [cellarmaster] · G2 H0 ct2 | vessels[-,Hopped!,-] deployed:2 | score 1 (dlv 1 maj 0 flt 0)
+  Cellar moves to Brewhouse
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar spends −G1
+  Cellar buys the Keut recipe (Q3).
+  ↳ Cellar gains +G1 +H1
+  ↳ Cellar gains +G1 +H1
+  ↳ Cellar spends −G1 −H2
+  Cellar brews Broyhan (Q3 · matures in 1 step).
+  ↳ Cellar’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  TraderP’s casks mature (+1) over the turn.
+
+== R5 · turn 10 · TraderP [trader/prestige] · G5 H0 ct2 | vessels[Bock 1/3,-,-,-] deployed:0 | score 11 (dlv 3 maj 4 flt 4)
+  TraderP moves to Brewhouse
+  TraderP pays −G1 occupancy toll for sharing Brewhouse.
+  TraderP activates Right col · Brewhouse + Cellar
+  ↳ TraderP spends −G1
+  TraderP brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gruit ages +1 → 1/1 READY.
+  ↳ Bock ages +1 → 2/3.
+  ↳ Bock ages +1 → 3/3 READY.
+  TraderP sets a Ready Bock on a slot (under Grain Exchange).
+  TraderP loads Bock onto the Hulk → Bergen (1/3).
+  Cellar’s casks mature (+1) over the turn.
+
+== R6 · turn 11 · Cellar [cellarmaster] · G2 H0 ct2 | vessels[Broyhan!,Hopped!,-,-] deployed:2 | score 5 (dlv 1 maj 0 flt 4)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G2
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +G1 +H1
+  ↳ Cellar gains +G1 +H1
+
+== R6 · turn 12 · TraderP [trader/prestige] · G3 H0 ct2 | vessels[-,Gruit!,-,-] deployed:0 | score 11 (dlv 3 maj 4 flt 4)
+  TraderP moves to Cellar
+  TraderP activates Right col · Brewhouse + Cellar
+  ↳ TraderP spends −G1
+  TraderP brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gruit ages +1 → 1/1 READY.
+  TraderP sets a Ready Gruit on a slot (under Grain Exchange).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R7 · turn 13 · Cellar [cellarmaster] · G6 H2 ct2 | vessels[Broyhan!,Hopped!,-,-] deployed:2 | score 5 (dlv 1 maj 0 flt 4)
+  Cellar stays home and works the Floor — the worker keeps its station (2 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Broyhan’s reach action.
+  ↳ Cellar gains +1 presence at Bruges (majority help).
+  ↳ Floor — Hopped’s reach action.
+  ↳ Cellar gains +1 presence at Bruges (majority help).
+
+== R7 · turn 14 · TraderP [trader/prestige] · G2 H0 ct2 | vessels[-,Gruit!,-,-] deployed:1 | score 9 (dlv 3 maj 2 flt 4)
+  TraderP moves to Brewhouse
+  TraderP activates Top row · Market + Brewhouse
+  ↳ TraderP gains +G1 +H1
+  TraderP sources goods at the Market.
+  ↳ TraderP gains +G1 +H1
+  ↳ TraderP gains +G1 +H1
+  ↳ TraderP spends −G2 −H3
+  TraderP brews Bock (Q5 · matures in 3 steps).
+
+== R8 · turn 15 · Cellar [cellarmaster] · G6 H2 ct2 | vessels[Broyhan!,Hopped!,-,-] deployed:2 | score 7 (dlv 1 maj 2 flt 4)
+  Cellar moves to Harbor
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar spends −G1 −H1
+  Cellar buys the Bock recipe (Q5).
+  Cellar sets a Ready Broyhan on a slot (under Rich Berth).
+  Cellar sets a Ready Hopped on a slot.
+  ↳ Cellar spends −G2
+  Cellar dispatches Broyhan → Bruges by charter (a contract + the fare; 1 left). (Sailed-Ships 3/5)
+  ↳ Cellar gains +G1 +H1
+  ↳ Cellar takes the Bruges liquidity benefit (2 goods).
+  TraderP’s casks mature (+1) over the turn.
+
+== R8 · turn 16 · TraderP [trader/prestige] · G3 H0 ct2 | vessels[Bock 1/3,Gruit!,-,-] deployed:1 | score 7 (dlv 3 maj 0 flt 4)
+  TraderP moves to Cellar
+  TraderP activates Right col · Brewhouse + Cellar
+  ↳ TraderP gains +G1 +H1
+  ↳ TraderP spends −G2 −H1
+  TraderP brews Keut (Q3 · matures in 2 steps).
+  ↳ TraderP’s 4th distinct beer opens Floor slot 5 (the Flight track).
+  ↳ Bock ages +1 → 2/3.
+  ↳ Bock ages +1 → 3/3 READY.
+  ↳ Keut ages +1 → 1/2.
+
+== R9 · turn 17 · Cellar [cellarmaster] · G4 H2 ct1 | vessels[-,-,-,-] deployed:3 | score 10 (dlv 2 maj 4 flt 4)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +H2
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +G2
+  ↳ Cellar gains +G2
+  ↳ Cellar spends −G1 −H2
+  Cellar brews Broyhan (Q3 · matures in 1 step).
+  TraderP’s casks mature (+1) over the turn.
+
+== R9 · turn 18 · TraderP [trader/prestige] · G2 H0 ct2 | vessels[Bock!,Gruit!,Keut!,-,-] deployed:1 | score 12 (dlv 3 maj 0 flt 9)
+  TraderP moves to Brewhouse
+  TraderP activates Top row · Market + Brewhouse
+  ↳ TraderP gains +G1 +H1
+  TraderP sources goods at the Market.
+  ↳ TraderP gains +G1 +H1
+  ↳ TraderP gains +G1 +H1
+  ↳ TraderP spends −G2 −H3
+  TraderP brews Bock (Q5 · matures in 3 steps).
+  Cellar’s casks mature (+1) over the turn.
+
+== R10 · turn 19 · Cellar [cellarmaster] · G7 H2 ct1 | vessels[Broyhan!,-,-,-] deployed:3 | score 10 (dlv 2 maj 4 flt 4)
+  Cellar moves to Brewhouse
+  Cellar pays −G1 occupancy toll for sharing Brewhouse.
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G1 +H1
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +G1 (storage full)
+  ↳ Cellar spends −G1 −H2
+  Cellar brews Broyhan (Q3 · matures in 1 step).
+  TraderP’s casks mature (+1) over the turn.
+
+== R10 · turn 20 · TraderP [trader/prestige] · G3 H0 ct2 | vessels[Bock!,Gruit!,Keut!,Bock 1/3,-] deployed:1 | score 12 (dlv 3 maj 0 flt 9)
+  TraderP moves to Cellar
+  TraderP activates Right col · Brewhouse + Cellar
+  ↳ TraderP gains +G1 +H1
+  ↳ TraderP spends −G2 −H1
+  TraderP brews Keut (Q3 · matures in 2 steps).
+  ↳ Bock ages +1 → 2/3.
+  ↳ Bock ages +1 → 3/3 READY.
+  ↳ Keut ages +1 → 1/2.
+  Cellar’s casks mature (+1) over the turn.
+
+== R11 · turn 21 · Cellar [cellarmaster] · G7 H1 ct1 | vessels[Broyhan!,Broyhan!,-,-] deployed:3 | score 10 (dlv 2 maj 4 flt 4)
+  Cellar moves to Market
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar spends −G2
+  Cellar buys Bergen Bryggen at the Market — place it on a slot.
+  Cellar authors Bergen Bryggen on a slot — Your cask to Bergen: +4★.
+  Cellar over-deploys — the displaced Hopped is tapped on the way out (its reach action fires, then it is boxed).
+  Cellar sets a Ready Broyhan on a slot.
+  ↳ Cellar gains +1 presence at Bruges (majority help).
+  Cellar sets a Ready Broyhan on a slot (under Rich Berth).
+  TraderP’s casks mature (+1) over the turn.
+
+== R11 · turn 22 · TraderP [trader/prestige] · G2 H0 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 12 (dlv 3 maj 0 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ TraderP gains +G1 +H1
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP gains +1 presence at Bruges (majority help).
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+
+== R12 · turn 23 · Cellar [cellarmaster] · G5 H1 ct1 | vessels[-,-,-,-] deployed:4 | score 10 (dlv 2 maj 4 flt 4)
+  Cellar moves to Harbor
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar spends −G3
+  Cellar buys Hop Yard at the Market — place it on a slot.
+  Cellar authors Hop Yard on a slot — Q2+ cask ships +1 quality.
+  ↳ Cellar surveys the guild — takes Burgomaster’s Favor from the display; place it on a slot (free).
+  Cellar authors Burgomaster’s Favor on a slot — Your cask: +★ = its quality.
+  ↳ Cellar gains +1 presence at Bruges (majority help).
+  Cellar enshrines Broyhan Q3 on the Common Shelf — the FAME coin (5★).
+
+== R12 · turn 24 · TraderP [trader/prestige] · G3 H1 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 12 (dlv 3 maj 0 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ TraderP gains +G1 +H1
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP gains +1 presence at Bruges (majority help).
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+
+== R13 · turn 25 · Cellar [cellarmaster] · G2 H1 ct1 | vessels[-,-,-,-] deployed:3 | score 15 (dlv 7 maj 4 flt 4)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G2
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +G1 +H1
+  ↳ Cellar gains +G1 +H1
+  ↳ Cellar spends −G2 −H1
+  Cellar brews Keut (Q3 · matures in 2 steps).
+  ↳ Cellar’s 4th distinct beer opens Floor slot 5 (the Flight track).
+
+== R13 · turn 26 · TraderP [trader/prestige] · G4 H2 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 12 (dlv 3 maj 0 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ TraderP gains +G1 +H1
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP gains +1 presence at Bruges (majority help).
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+  Cellar’s casks mature (+1) over the turn.
+
+== R14 · turn 27 · Cellar [cellarmaster] · G4 H2 ct1 | vessels[Keut 1/2,-,-,-,-] deployed:3 | score 18 (dlv 7 maj 2 flt 9)
+  Cellar moves to Harbor
+  Cellar activates Bottom row · Harbor + Cellar
+  ↳ Keut ages +1 → 2/2 READY.
+  Cellar sets a Ready Keut on a slot (under Hop Yard).
+  ↳ s4 — nothing to do here (no Ready cask to deploy).
+  Cellar enshrines Keut Q4 on the Masters’ Shelf — the FAME coin (10★).
+
+== R14 · turn 28 · TraderP [trader/prestige] · G5 H3 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 14 (dlv 3 maj 2 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ TraderP gains +G2
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP gains +1 presence at Bruges (majority help).
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+
+== R15 · turn 29 · Cellar [cellarmaster] · G4 H2 ct1 | vessels[-,-,-,-,-] deployed:3 | score 26 (dlv 17 maj 0 flt 9)
+  Cellar moves to Market
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar gains +G2
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +1 presence at Bruges (majority help).
+  ↳ s1 — nothing to do here (no Ready cask to deploy).
+  Cellar enshrines Broyhan Q3 on the Long Shelf — the FAME coin (7★).
+
+== R15 · turn 30 · TraderP [trader/prestige] · G7 H3 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 14 (dlv 3 maj 2 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ TraderP gains +G1 (storage full)
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP gains +1 presence at Bruges (majority help).
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+
+== R16 · turn 31 · Cellar [cellarmaster] · G6 H2 ct1 | vessels[-,-,-,-,-] deployed:2 | score 33 (dlv 24 maj 0 flt 9)
+  Cellar moves to Brewhouse
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G2
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +H1 (storage full)
+  ↳ Cellar spends −G1 −H2
+  Cellar brews Broyhan (Q3 · matures in 1 step).
+
+== R16 · turn 32 · TraderP [trader/prestige] · G8 H3 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 16 (dlv 3 maj 4 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP gains +1 presence at Bruges (majority help).
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+  Cellar’s casks mature (+1) over the turn.
+
+== R17 · turn 33 · Cellar [cellarmaster] · G7 H1 ct1 | vessels[Broyhan!,-,-,-,-] deployed:2 | score 33 (dlv 24 maj 0 flt 9)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G1 (storage full)
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +H1 (storage full)
+  ↳ Cellar gains +H1 (storage full)
+  ↳ Cellar spends −G1 −H2
+  Cellar brews Broyhan (Q3 · matures in 1 step).
+
+== R17 · turn 34 · TraderP [trader/prestige] · G8 H3 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 16 (dlv 3 maj 4 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP gains +1 presence at Bruges (majority help).
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+  Cellar’s casks mature (+1) over the turn.
+
+== R18 · turn 35 · Cellar [cellarmaster] · G7 H1 ct1 | vessels[Broyhan!,Broyhan!,-,-,-] deployed:2 | score 33 (dlv 24 maj 0 flt 9)
+  Cellar moves to Brewhouse
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G1 (storage full)
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +H1 (storage full)
+  ↳ Cellar gains +H1 (storage full)
+  ↳ Cellar spends −G1 −H2
+  Cellar brews Broyhan (Q3 · matures in 1 step).
+
+== R18 · turn 36 · TraderP [trader/prestige] · G8 H3 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 16 (dlv 3 maj 4 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP gains +1 presence at Bruges (majority help).
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+  Cellar’s casks mature (+1) over the turn.
+
+== R19 · turn 37 · Cellar [cellarmaster] · G7 H1 ct1 | vessels[Broyhan!,Broyhan!,Broyhan!,-,-] deployed:2 | score 33 (dlv 24 maj 0 flt 9)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G1 (storage full)
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +H1 (storage full)
+  ↳ Cellar gains +H1 (storage full)
+  ↳ Cellar spends −G2 −H1
+  Cellar brews Keut (Q3 · matures in 2 steps).
+
+== R19 · turn 38 · TraderP [trader/prestige] · G8 H3 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 16 (dlv 3 maj 4 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP gains +1 presence at Bruges (majority help).
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+  Cellar’s casks mature (+1) over the turn.
+
+== R20 · turn 39 · Cellar [cellarmaster] · G6 H2 ct1 | vessels[Broyhan!,Broyhan!,Broyhan!,Keut 1/2,-] deployed:2 | score 33 (dlv 24 maj 0 flt 9)
+  Cellar moves to Brewhouse
+  Cellar activates Right col · Brewhouse + Cellar
+  ↳ Cellar gains +G1 +H1
+  ↳ Cellar spends −G2 −H3
+  Cellar brews Bock (Q5 · matures in 3 steps).
+  ↳ Cellar’s 5th distinct beer opens Floor slot 6 (the Flight track).
+  ↳ Keut ages +1 → 2/2 READY.
+  ↳ Bock ages +1 → 1/3.
+  ↳ Bock ages +1 → 2/3.
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R20 · turn 40 · TraderP [trader/prestige] · G8 H3 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 16 (dlv 3 maj 4 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP’s presence discs are spent at Bruges.
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+  Cellar’s casks mature (+1) over the turn.
+
+== R21 · turn 41 · Cellar [cellarmaster] · G5 H0 ct1 | vessels[Broyhan!,Broyhan!,Broyhan!,Keut!,Bock!,-] deployed:2 | score 40 (dlv 24 maj 0 flt 16)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G1 +H1
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +G1 +H1
+  ↳ Cellar gains +G1 +H1
+  ↳ Cellar spends −G2 −H3
+  Cellar brews Bock (Q5 · matures in 3 steps).
+
+== R21 · turn 42 · TraderP [trader/prestige] · G8 H3 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 16 (dlv 3 maj 4 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP’s presence discs are spent at Bruges.
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+  Cellar’s casks mature (+1) over the turn.
+
+== R22 · turn 43 · Cellar [cellarmaster] · G6 H0 ct1 | vessels[Broyhan!,Broyhan!,Broyhan!,Keut!,Bock!,Bock 1/3] deployed:2 | score 40 (dlv 24 maj 0 flt 16)
+  Cellar moves to Brewhouse
+  Cellar activates Right col · Brewhouse + Cellar
+  ↳ Cellar gains +G1 +H1
+  Cellar sets a Ready Bock on a slot (under Burgomaster’s Favor).
+  ↳ Bock ages +1 → 2/3.
+  ↳ Bock ages +1 → 3/3 READY.
+  ↳ the die is set to 5 — Burgomaster’s Favor pays its owner as the cask departs.
+  Cellar loads Bock onto the Hulk → Bergen (2/3).
+
+== R22 · turn 44 · TraderP [trader/prestige] · G8 H3 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 16 (dlv 3 maj 4 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP’s presence discs are spent at Bruges.
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+
+== R23 · turn 45 · Cellar [cellarmaster] · G7 H1 ct1 | vessels[Broyhan!,Broyhan!,Broyhan!,Keut!,-,Bock!] deployed:2 | score 40 (dlv 24 maj 0 flt 16)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G1 (storage full)
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +H1 (storage full)
+  ↳ Cellar gains +H1 (storage full)
+  ↳ Cellar spends −G2 −H3
+  Cellar brews Bock (Q5 · matures in 3 steps).
+
+== R23 · turn 46 · TraderP [trader/prestige] · G8 H3 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 16 (dlv 3 maj 4 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP’s presence discs are spent at Bruges.
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+  Cellar’s casks mature (+1) over the turn.
+
+== R24 · turn 47 · Cellar [cellarmaster] · G6 H0 ct1 | vessels[Broyhan!,Broyhan!,Broyhan!,Keut!,Bock 1/3,Bock!] deployed:2 | score 40 (dlv 24 maj 0 flt 16)
+  Cellar moves to Harbor
+  Cellar activates Bottom row · Harbor + Cellar
+  ↳ Bock ages +1 → 2/3.
+  ↳ Bock ages +1 → 3/3 READY.
+  Cellar sets a Ready Bock on a slot (under Hop Yard).
+  Cellar sets a Ready Bock on a slot (under Burgomaster’s Favor).
+  Cellar enshrines Bock Q5 on the High Board — the FAME coin (13★).
+
+== R24 · turn 48 · TraderP [trader/prestige] · G8 H3 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 16 (dlv 3 maj 4 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP’s presence discs are spent at Bruges.
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+
+== R25 · turn 49 · Cellar [cellarmaster] · G6 H0 ct1 | vessels[Broyhan!,Broyhan!,Broyhan!,Keut!,-,-] deployed:3 | score 53 (dlv 37 maj 0 flt 16)
+  Cellar moves to Market
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar gains +G2
+  Cellar sources goods at the Market.
+  Cellar sets a Ready Broyhan on a slot (under Rich Berth).
+  Cellar sets a Ready Broyhan on a slot.
+  ↳ the die is set to 5 — Burgomaster’s Favor pays its owner as the cask departs.
+  Cellar loads Bock onto the Hulk → Bergen (3/3).
+  ★ the Hulk sails to Bergen with 3 casks! Every cask aboard is delivered. (Sailed-Ships 4/5)
+  ★ TraderP places their last presence disc — the final round!
+  ↳ TraderP takes a free Reach (+1 presence at Bergen).
+  ↳ Cellar takes a free Reach (+1 presence at Bergen).
+  ↳ Cellar’s presence discs are spent at Bergen.
+
+== R25 · turn 50 · TraderP [trader/prestige] · G8 H3 ct2 | vessels[Bock!,Gruit!,Keut!,Bock!,Keut!] deployed:1 | score 17 (dlv 4 maj 4 flt 9)
+  TraderP stays home and works the Floor — the worker keeps its station (5 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Floor — Bock’s hire action.
+  ↳ Hire — no eligible Specialist face-up (owned/full/empty display).
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Keut’s reach action.
+  ↳ TraderP’s presence discs are spent at Bergen.
+  ↳ Floor — Bock’s age action.
+  ↳ nothing to age.
+
+================ FINAL — round 25 · sailed 4/5 · ended by ROUND CEILING ================
+WINNER  Cellar [cellarmaster] — TOTAL 74  (deliveries 49 · majorities 9 · flight 16 · floor 0)
+        Bruges: Hopped Q2=1, Broyhan Q3=1
+        Bergen: Bock Q5=6, Bock Q5=6
+        The Hall: Broyhan Q3=5, Keut Q4=10, Broyhan Q3=7, Bock Q5=13
+        flight beers: Hopped, Broyhan, Keut, Bock (4) · specialists: none · flipped: 0
+   #2   TraderP [trader/prestige] — TOTAL 17  (deliveries 4 · majorities 4 · flight 9 · floor 0)
+        Bruges: Gruit Q1=1, Hopped Q2=1, Gruit Q1=1
+        Bergen: Bock Q5=1
+        flight beers: Gruit, Hopped, Bock (3) · specialists: none · flipped: 0
+  majorities: Bruges[TraderP+4]  London[none]  Bergen[Cellar+9]  Novgorod[none]
+  buildings on the wharf at end: Rich Berth(ntl) · Grain Exchange(ntl) · Hop Yard(Cellar) · Burgomaster’s Favor(Cellar) · Bergen Bryggen(Cellar)

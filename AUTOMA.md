@@ -1,8 +1,15 @@
 # Automa / AI Opponent — Plan & Status
 
-> The plan for an AI opponent you can play against in `play.html`, with **variable difficulty** and **any mix of humans and AIs at 2–4p** (current build **v2.0 “The Trade Roads”**) — plus a derived **physical automa deck** for tabletop solo play. Compares the candidate systems (heuristic policy, flat Monte Carlo, MCTS, depth-limited search, learning) and lays out a staged path. Queued in `DESIGN.md` §21 (v0.9 "Still open / next": *"a solo Automa from the existing bot"*).
+> **v3.1 addendum (2026-07-12):** the Trader gained a fourth persona — **racer**, the charter-pump
+> clock-racer modeled on the first human playtest's winning line (author a kontor-charter Privilege
+> early · pump cheap fast casks through it · dispatch to close the clock once ahead). Built as the
+> standing pressure-test opponent; seat it as `trader`/`racer` (`playtests/v31-matrix.js` uses it).
+
+
+> The plan for an AI opponent you can play against in `play.html`, with **variable difficulty** and **any mix of humans and AIs at 2–4p** (current build **v3.0-A.1 “Path A”**) — plus a derived **physical automa deck** for tabletop solo play. Compares the candidate systems (heuristic policy, flat Monte Carlo, MCTS, depth-limited search, learning) and lays out a staged path. Queued in `DESIGN.md` §21 (v0.9 "Still open / next": *"a solo Automa from the existing bot"*).
 >
 > **STATUS — ALL THREE PHASES SHIPPED (Phase 3: 2026-06-12, `play.html` `KEY → v24`).**
+> **v3.0-A retarget (2026-07-11):** all five tiers were retargeted to the Path A grammar (stay-home Floor, Dispatch, slot/cask stops, over-deploy, Hall shelf spaces, Flight unlocks) with the ladder gate re-validated at 600 games — every rung ≥60%, 0 errors (`playtests/ai-ladder-vhanse-v3a-v1.txt`); the CM>GM edge widened in the 162-game strong-play corpus (`playtests/logs/v3-corpus/`, mixed tables: CM 70% per-seat vs GM 16%).
 > **Phase 3:** the **Guildmaster** tier is live — flat Monte Carlo over the canonical engine (clone `(S,UI)` per option, Journeyman rollouts to game end, margin objective, `GUILD_MS` ⚙ 250ms/decision budget). Measured at 2p: **Guildmaster > Trader 99.0%** (n=200 at a reduced 40ms test budget; avg score 63.4 vs 26.8) — the flat-MC step-change §2B predicted, with **no engine refactor** (same-scope global swap, `aiSimulating` guards). Flat MC has not plateaued, so UCT/max-n (§2C) stays unbuilt by its own criterion. Full ladder: 66.2% / 62.2% / 99.0% (`playtests/ai-ladder-v24.txt`). *(Perf: the GM enumerates only genuinely high-leverage prompts — **stop ORDERING is delegated to the trader heuristic** (`aiStops`), not Monte-Carlo'd. The same up-to-4 stops resolve this turn whatever the order, and the heuristic already sorts them Source→Brew→Age→Ship, so MC-ing the permutation was ~40% of the GM's per-turn compute / main-thread freeze for ~no strength: cutting it ~halves the per-turn MC count (≈8→≈4.6) with the ladder gate intact — GM still > Trader. The Cellarmaster shares the same enumerator, so it benefits too.)*
 >
 > *(Phase 1 & 2 record:)* **Phases 1 & 2 shipped 2026-06-11.**

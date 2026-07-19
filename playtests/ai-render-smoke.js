@@ -9,6 +9,7 @@ const path = require('path');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'play.html'), 'utf8');
 const engine = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).join('\n');
+const hclib = fs.readFileSync(path.join(__dirname, '..', 'components.js'), 'utf8');   // v3.3: the real faces render through the shared card library
 
 const driver = `
 //================= RENDER SMOKE (appended; render NOT silenced) =================
@@ -43,7 +44,8 @@ if(!S.expansion)throw new Error('EXPANSION flag not recorded on state');
 console.log('render smoke EXPANSION (Specialty Beers) OK — rounds '+S.turn+', exports '+S.exports.join('/'));
 EXPANSION=false;
 // 3a-JOP) the EXPANSION CAPSTONE Jopenbier — drive the Q6 self-contained scoring + dock-cellar vintage +
-// Flight-exclusion + the capstone tiles directly through the REAL render layer (the AI never pilots it).
+// Flight-INCLUSION (v2.2: "a beer you brew like the others" — it counts as a distinct beer; six types when
+// the toggle is on) + the capstone tiles directly through the REAL render layer (the AI never pilots it).
 JOPEN=true;EXPANSION=false;
 S=freshState(2,['P1','P2']);UI={sub:'move'};undoStack=[];activeTab=0;S.active=0;
 render();                                   // renderShop shows the always-acquirable Jopenbier item (P1 doesn't own it yet)
@@ -58,8 +60,10 @@ if(jL.q!==6)throw new Error('jopenbier should record Q6, got '+jL.q);
 deliverCask(S.players[0],jL,'bruges',null,false);
 const jd=S.players[0].delivered.slice(-1)[0];
 if(jd.val!==JOPEN_BASE+2)throw new Error('jopenbier self-contained value wrong: '+jd.val+' (expected '+(JOPEN_BASE+2)+')');
-if(flightBeers(S.players[0])!==0)throw new Error('jopenbier leaked into the Flight');
-console.log('render smoke JOPENBIER capstone OK — banked '+jd.val+'★ (base '+JOPEN_BASE+' + vintage 2 · Q6 · Flight-excluded)');
+if(flightBeers(S.players[0])!==1)throw new Error('jopenbier should count for the Flight (v2.2), flightBeers='+flightBeers(S.players[0]));
+if(flightTypes().length!==6)throw new Error('with the capstone on there should be SIX flight types, got '+flightTypes().length);
+if(FLIGHT_PTS[6]!==25)throw new Error('FLIGHT_PTS[6] should be 25, got '+FLIGHT_PTS[6]);
+console.log('render smoke JOPENBIER capstone OK — banked '+jd.val+'★ (base '+JOPEN_BASE+' + vintage 2 · Q6 · counts for the Flight, 6 types · 6→'+FLIGHT_PTS[6]+')');
 JOPEN=false;
 // 3a-BLEND) EXPANSION blending (Option A) — combine two Ready vessel casks into one +1-quality premium (human Cellar action; the AI doesn't blend).
 EXPANSION=true;
@@ -172,7 +176,7 @@ ctx.addEventListener = noop; ctx.removeEventListener = noop;
 
 vm.createContext(ctx);
 try {
-  vm.runInContext(engine + '\n' + driver, ctx, { filename: 'play.html#engine+render-smoke' });
+  vm.runInContext(hclib + '\n' + engine + '\n' + driver, ctx, { filename: 'play.html#engine+render-smoke' });
 } catch (e) {
   console.error('RENDER SMOKE FAIL:', e && e.stack || e);
   process.exit(1);

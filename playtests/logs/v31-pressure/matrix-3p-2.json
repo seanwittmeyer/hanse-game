@@ -1,0 +1,191 @@
+[
+ {
+  "id": "3p-rc-8",
+  "seed": 668,
+  "seats": [
+   {
+    "name": "Cellar",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Cellar2",
+    "ai": {
+     "tier": "cellarmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-rg-1",
+  "seed": 669,
+  "seats": [
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-rg-2",
+  "seed": 670,
+  "seats": [
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-rg-3",
+  "seed": 671,
+  "seats": [
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-rg-4",
+  "seed": 672,
+  "seats": [
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-rg-5",
+  "seed": 673,
+  "seats": [
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   }
+  ]
+ },
+ {
+  "id": "3p-rg-6",
+  "seed": 674,
+  "seats": [
+   {
+    "name": "Guild2",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   },
+   {
+    "name": "Racer",
+    "ai": {
+     "tier": "trader",
+     "persona": "racer"
+    }
+   },
+   {
+    "name": "Guild",
+    "ai": {
+     "tier": "guildmaster",
+     "persona": null
+    }
+   }
+  ]
+ }
+]

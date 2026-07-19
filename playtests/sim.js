@@ -25,7 +25,8 @@ var NAMES=['P1','P2','P3','P4','P5'];
 
 function achQ(p){var qs=p.recipes.map(function(r){return (STYLES[r].cellar&&!hasUpgrade(p,'cellar'))?0:STYLES[r].q;});return Math.max.apply(null,qs);}
 function needShip(p){
-  if(!(S.shipDisplay&&S.shipDisplay.length)||emptySlots().length===0||!canPay(p,{g:2}))return false;
+  if(!(S.shipDisplay&&S.shipDisplay.length)||!canPay(p,{g:2}))return false;
+  if(!S.shipDisplay.some(function(sn){return commPlaceable(sn.dest).length;}))return false;   // dockside pickup counts
   var qs=[];p.vessels.forEach(function(c){if(c)qs.push(c.q);});
   wharfCaskSlots().forEach(function(id){var t=S.slots[id];if(t.owner===p.id)qs.push(t.q);});
   var bq=qs.length?Math.max.apply(null,qs):achQ(p);
@@ -100,8 +101,8 @@ function cellValue(c,p){
     return 2+(mat.some(function(v){return v.ready-v.step<=3;})?1:0);}
   if(role==='Ship'){var load=myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});});
     if(load)return 4;
-    var rdy=readyInVessels(p).length||wharfCaskSlots().some(function(id){return S.slots[id].owner===p.id;});
-    return (rdy&&canPay(p,charterCost(p)))?2:0.1;}
+    var canDisp=dispatchCasks(p).length&&(enshrineCasks(p).length||dispatchKontorOK(p));   // v3.0-A Dispatch
+    return canDisp?2:0.1;}
   return 0;
 }
 // Occupancy toll the bot would pay for MOVING onto cell c (0 unless an engine defines OCCUPANCY_TOLL):
@@ -110,6 +111,14 @@ function cellToll(c,p){
   if(typeof OCCUPANCY_TOLL==='undefined'||!OCCUPANCY_TOLL)return 0;
   return S.players.some(function(q){return q.id!==p.id&&q.cell===c;})?OCCUPANCY_TOLL:0;
 }
+// v3.0-A: a rough stay-home Floor value (the Age pool + each vessel cask's action + flip Wilds)
+function botFloorValue(p){
+  var v=0;var mat=p.vessels.filter(function(c){return c&&c.step<c.ready;}).length;
+  if(mat)v+=Math.min(FLOOR_AGE+(hasUpgrade(p,'lagering')?2:0),mat*2)*0.7;
+  p.vessels.forEach(function(c){if(!c)return;var a=caskAct(c);
+    v+=({source:1.6,age:0.9,load:1.2,reach:0.6,recipe:1.0,convert:0.6,survey:1.0,hire:1.1,brew:1.3,enshrine:1.0,wild:1.4})[a]||0.8;});
+  v+=(p.flipped||[]).length*1.3;
+  return v;}
 function botMove(p){
   var placing=!p.placed;var cands=placing?['A','B','C','D']:ADJ[p.cell];
   var best=null,bestv=-1,which='row';
@@ -117,28 +126,32 @@ function botMove(p){
     var lk=cellOfLine(tc)[w];var cells=LINES[lk].cells;
     var v=cells.reduce(function(a,c){return a+cellValue(c,p);},0)-toll+Math.random()*0.4;
     if(v>bestv){bestv=v;best=tc;which=w;}});});
+  if(!placing&&floorLegal(p)&&(botFloorValue(p)+Math.random()*0.2)>bestv){stayFloor();return;}   // v3.0-A stay-home
   __chosenWhich=which;doMove(best);
 }
-function botLine(p){chooseLine(__chosenWhich||'row');}   // v1.3: deploy rides the line/Brewhouse, no longer a free pre-line action
+function botLine(p){chooseLine(__chosenWhich||'row');}   // row / col; the Floor is stay-home (botMove)
 function stopPrio(s){
   if(s.kind==='cell')return {Source:0,Brew:1,Age:2,Ship:4}[CELLROLE[s.cell]];
-  if(s.kind==='deploy')return 2.5;   // an empty slot's Deploy action
-  if(s.kind==='bldg')return 3;   // a line-effect Building (Crane / Lagering)
-  var t=S.slots[s.slot];if(!t)return 99;
-  if(t.type==='cask'){var a=t.act||STYLES[t.style].act;var pr={source:0,wild:1,age:2,reach:2,load:4,convert:1,survey:1}[a];return pr==null?2:pr;}
+  if(s.kind==='deploy')return 2.5;   // an empty slot's stop (deploy HERE / the building's printed action)
+  if(s.kind==='fage')return 2;       // the Floor's Age pool
+  if(s.kind==='fcask'){var c=cur().vessels[s.vi];if(!c)return 99;
+    var pa={source:0,wild:1,age:2,reach:2,recipe:1,load:4,convert:1,survey:1,hire:1,brew:1,enshrine:4}[caskAct(c)];return pa==null?2:pa;}
+  if(s.kind==='fwild')return 1;
+  var t=S.slots[s.slot];if(!t)return 2.5;   // a 'cap' whose occupant left mid-line — a deploy-here chance
+  if(t.type==='cask'){if(t.maturing)return 3;var a=slotEffAct(s.slot)||caskAct(t);var pr={source:0,wild:1,age:2,reach:2,recipe:1,load:4,convert:1,survey:1,hire:1,brew:1,enshrine:4}[a];return pr==null?2:pr;}
   if(t.type==='ship')return 4;
   return 50;
 }
 function botStops(){var bi=0,bp=1e9;UI.stops.forEach(function(s,i){var pr=stopPrio(s);if(pr<bp){bp=pr;bi=i;}});resolveStop(bi);}
 function botMarket(p){
-  if(UI.stage==='place'){placeSlot(emptySlots()[0].id);return;}                 // a commissioned ship → a slot
+  if(UI.stage==='place'){var pk=commPlaceable(UI.tmp.placeTile.dest);placeSlot(pk[0]);return;}                 // a commissioned ship → a slot (v2.6: empties first, else a pickup)
   if(UI.stage==='commload'){var el=commEligible(p,UI.tmp.commShipSlot);
     if(!el.length){commSkip();return;}el.sort(function(a,b){return b.q-a.q;});commLoad(el[0].ref);return;}
-  // place a held Building (the starting tile / a Survey draw) so authorship is live
-  if((p.hand||[]).length && aBuildSlots().length){placeHeld(0);return;}
-  if(needShip(p)){var olk=olPersonaKon(p),sidx=0;
-    if(olk&&S.shipDisplay){var ti=S.shipDisplay.findIndex(function(s){return s.dest===olk;});if(ti>=0)sidx=ti;}   // commission a ship bound for the lane's kontor
-    commissionShip(sidx);return;}
+  // (v2.2: no buildings-in-hand — every acquisition is display → place at once)
+  if(needShip(p)){var olk=olPersonaKon(p),sidx=-1;
+    if(olk&&S.shipDisplay){var ti=S.shipDisplay.findIndex(function(s){return s.dest===olk&&commPlaceable(s.dest).length;});if(ti>=0)sidx=ti;}   // commission a ship bound for the lane's kontor
+    if(sidx<0)sidx=S.shipDisplay.findIndex(function(s){return commPlaceable(s.dest).length;});   // else the first hull that can actually dock
+    if(sidx>=0){commissionShip(sidx);return;}}
   if((p.contracts||0)===0&&canPay(p,CONTRACT_BUY)
      &&(emptySlots().length<=1||S.ending||(myShips(p).length===0&&readyInVessels(p).length>0))){buyContract();return;}
   var ex=buyableExports(p);
@@ -158,34 +171,101 @@ function botMarket(p){
   // v1.7: improvements are no longer a Market buy — they're acquired at the Cellar (botTap).
   if(p.hops<2)marketGoods(1,1);else marketGoods(2,0);
 }
-function botPlaceBldg(){var bs=aBuildSlots();placeBldgOn((bs[0]||SLOTS[0]).id);}
+function botPlaceBldg(){var p=cur();var legal=(typeof bldgTargets==='function')?bldgTargets(p):SLOTS;   // v2.9: occupied slots need the ground rent — placeBldgOn ignores illegal clicks, so filter first
+  var bs=aBuildSlots().filter(function(s){return legal.indexOf(s)>=0;});
+  placeBldgOn(((bs[0]||legal[0])||SLOTS[0]).id);}
 // EXPANSION CAPSTONE — cellar a deployed Jopenbier until ripe / ending (mirrors the in-page AI).
 function botJopenHold(ref){var c=(typeof ref==='string'&&S.slots[ref])?S.slots[ref]:null;
   if(!c||c.style!=='jopenbier')return false; if(S.ending)return false; return (c.vintage||0)<JOPEN_VINTAGE_CAP-1;}
 function botHarbor(p){
-  if(UI.stage==='enshrine'){var ec=enshrineCasks(p).filter(function(o){return personaDest(p,o.q)==='hall'&&!botJopenHold(o.ref);}).sort(function(a,b){return b.q-a.q;});
-    if(ec.length){enshrinePick(ec[0].ref);return;}afterSail('stops');return;}
-  if(UI.stage==='charter_cask'){var cs=charterCasks(p).slice();var nonJ=cs.filter(function(o){return o.style!=='jopenbier';});if(!S.ending&&nonJ.length)cs=nonJ;cs.sort(function(a,b){return b.q-a.q;});charterPickCask(cs[0].ref);return;}
-  if(UI.stage==='charter_dest'){var ref=UI.tmp.charterCask;var c=ref[0]==='v'?p.vessels[+ref.slice(2)]:S.slots[ref];
-    var ds=DESTS.filter(function(d){return d!=='hall'&&c.q>=DEST[d].gate;});var d=personaDest(p,c.q);charterDest(ds.indexOf(d)>=0?d:(ds[0]||'bruges'));return;}
-  // ENSHRINE (v0.15): a Ready Q2+ cask whose persona-destination is the Hall → showcase it locally (no boat)
-  if(enshrineCasks(p).some(function(o){return personaDest(p,o.q)==='hall'&&!botJopenHold(o.ref);})){harborEnshrine();return;}
+  // ENSHRINE: a Ready Q2+ cask whose persona-destination is the Hall → Dispatch it there (free, shelf board)
+  if(enshrineCasks(p).some(function(o){return personaDest(p,o.q)==='hall'&&!botJopenHold(o.ref);})){enterDispatch('stops','hallonly');return;}
   var canLoad=myShips(p).length&&wharfLoadableCasks(p).some(function(cs){return myShips(p).some(function(s){return canTake(s,cs);});});
   if(canLoad){harborLoad();return;}
-  // Charter only as a genuine relief valve: wharf jammed, end-game rush, or no hull & can't build one.
-  var canCharter=(p.contracts||0)>0&&canPay(p,charterCost(p))&&charterCasks(p).length>0;
+  // a KONTOR dispatch only as a genuine relief valve: wharf jammed, end-game rush, or no hull & can't build one.
+  var canCharter=dispatchKontorOK(p)&&dispatchCasks(p).length>0;
   var jammed=emptySlots().length===0;
   var noHull=myShips(p).length===0 && !canPay(p,{g:2});
-  // v0.16: no partial early-launch — a hull sails only when full (loadOnto handles it). The relief valve
-  // is the contract-gated Charter when the slots jam, the end nears, or there's a stranded Ready cask.
-  if(canCharter && (jammed || S.ending || noHull)){__charters++;harborCharter();return;}
+  if(canCharter && (jammed || S.ending || noHull)){__charters++;harborDispatch();return;}
   cellDone();
 }
+// v3.0-A DISPATCH picker (cask → route); hallonly auto-routes on pick
+function botDispatch(p){
+  var d=UI.disp;if(!d){backToStops();return;}
+  if(d.mode==='freekontor'){   // v3.2 the Masters' passage — kontore only, no contract/fare (the engine AI helpers read p.ai, so the bot picks itself)
+    if(!d.cask){var fc=freeKontorCasks(p);if(!fc.length){dispatchSkip();return;}
+      fc.sort(function(a,b){return b.q-a.q;});dispatchPickCask(fc[0].ref);return;}
+    var fq=caskEffQ(d.cask);var fds=DESTS.filter(function(dd){return dd!=='hall'&&fq>=olCharterGate(p,dd);});
+    if(!fds.length){dispatchSkip();return;}
+    var fw=personaDest(p,fq);dispatchRoute(fds.indexOf(fw)>=0?fw:fds[0]);return;}
+  var cs=dispatchCasks(p).filter(function(o){return d.mode==='hallonly'?o.q>=DEST.hall.gate:true;});
+  if(!cs.length){dispatchSkip();return;}
+  if(!d.cask){
+    var pool=cs.filter(function(o){return !botJopenHold(o.ref);});if(!pool.length)pool=cs;
+    if(d.mode!=='hallonly'&&!S.ending){var nonJ=pool.filter(function(o){return o.style!=='jopenbier';});if(nonJ.length)pool=nonJ;}
+    pool.sort(function(a,b){return b.q-a.q;});dispatchPickCask(pool[0].ref);return;}
+  var cq=caskEffQ(d.cask);var c=refCask(d.cask);
+  if(!c){dispatchSkip();return;}
+  var hallOK=cq>=DEST.hall.gate||c.style==='jopenbier';
+  var want=personaDest(p,cq);
+  if(hallOK&&(!dispatchKontorOK(p)||want==='hall')){dispatchRoute('hall');return;}
+  if(!dispatchKontorOK(p)){dispatchSkip();return;}
+  if(typeof olCanRhine==='function'&&olCanRhine(p,cq)){dispatchRoute('rhine');return;}
+  var ds=DESTS.filter(function(dd){return dd!=='hall'&&cq>=olCharterGate(p,dd);});
+  if(!ds.length){if(hallOK){dispatchRoute('hall');return;}dispatchSkip();return;}
+  dispatchRoute(ds.indexOf(want)>=0?want:ds[0]);
+}
+// v3.0-A Hall shelf space: highest shelf first, then the bonus preference
+function botHallspace(p){var h=UI.hsp;if(!h){backToStops();return;}
+  var c=refCask(h.ref);var q=Math.min(5,(c&&c.style==='jopenbier')?6:caskEffQ(h.ref));
+  if(h.v2)return aiHallspace(p);   // ⚗ HALL v2: the in-page coin heuristic serves the greedy bot too
+  var opts=hallOptionsFor(q);
+  if(!opts.length){UI.hsp=null;hallCommit(h.ref,-1,-1,h.returnTo);return;}
+  var pref={unlock:9,star3:8,bldgfree:8,spec:7,pres2:7,recipefree:6,ageall1:5,pres1:5,age2:4,goods3:4,contract:3,g1h1:2,goods2:2};
+  var best=opts[0],bv=-1e9;
+  opts.forEach(function(o){var sh=HALL_SHELVES[o.si];var v=sh.star*2+(pref[sh.spaces[o.sp]]||0);if(v>bv){bv=v;best=o;}});
+  hallSpacePick(best.si,best.sp);}
+// v3.0-A slot/cask stop this-or-thats + slot-local deploy
+function botSlotstop(p){var st=UI.sstop;var b=st?bAt(st.slot):null;
+  if(!st||!b){backToStops();return;}
+  if(slotDeployOK(p,st.slot)&&readyInVessels(p).length){slotstopDeploy();return;}
+  if(bldgActAvail(p,BUILDINGS[b.b].act)){slotstopAct();return;}
+  backToStops();}
+function botCaskstop(p){var st=UI.cstop;var t=st?S.slots[st.slot]:null;
+  if(!t){backToStops();return;}
+  var a=slotEffAct(st.slot)||caskAct(t);
+  if(!t.maturing&&actAvail(p,a)){caskstopAct();return;}
+  if(readyInVessels(p).some(function(o){return overDeploySlots(o.c,p.id).some(function(s){return s.id===st.slot;});})){caskstopOver();return;}
+  backToStops();}
+function botLDeploy(p){var st=UI.ldep;if(!st){backToStops();return;}
+  var cands=localDeployCasks(p,st.slot);
+  if(!cands.length){localDeploySkip();return;}
+  cands.sort(function(a,b){return b.c.q-a.c.q;});localDeployPick(cands[0].i);}
+function botRecipeGain(p){var opts=recipeGainable(p);
+  if(!opts.length){recipeGainPick(null);return;}
+  opts.sort(function(a,b){return STYLES[a].q-STYLES[b].q;});recipeGainPick(opts[0]);}
 // Bind a new ship to the best-value destination its CURRENT casks can actually fill.
 function qRefBind(p){var qs=[];p.vessels.forEach(function(c){if(c)qs.push(c.q);});
   wharfCaskSlots().forEach(function(id){if(S.slots[id].owner===p.id)qs.push(S.slots[id].q);});
   return qs.length?Math.max.apply(null,qs):achQ(p);}
-function botCell(p){var role=CELLROLE[UI.cell];if(role==='Source')botMarket(p);else if(role==='Ship')botHarbor(p);else cellDone();}
+function botCell(p){var role=CELLROLE[UI.cell];
+  if(role==='Source')botMarket(p);
+  else if(role==='Ship')botHarbor(p);
+  else if(role==='Brew')botBrewhouse(p);
+  else if(role==='Age')botCellar(p);
+  else cellDone();}
+// v3.0-A Brewhouse: BREW first (the engine), else DEPLOY-anywhere to clear the vessels
+function botBrewhouse(p){
+  if(openVessel(p)>=0&&p.recipes.some(function(r){return canBrew(p,r);})){enterBrew('stops');return;}
+  var rdy=readyInVessels(p);
+  if(rdy.length&&(emptySlots().length||rdy.some(function(o){return overDeploySlots(o.c,p.id).length;}))){enterDeployAction('stops');return;}
+  cellDone();}
+// v3.0-A Cellar: AGE or UPGRADE (one choice per visit; Tap is retired)
+function botCellar(p){
+  if(cellarCanAge(p)){enterAge(CELLAR_POOL,'pool','stops');return;}
+  if(cellarCanImp(p)){var pref=['hopgarden','granary','cellar','vessel','quay','crane','lagering'];
+    for(var i=0;i<pref.length;i++){var k=pref[i];if((S.impDisplay||[]).includes(k)&&grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&p.grain>=(IMPROVEMENTS[k].cost.g||0)+1){buyImprovement(k);return;}}}
+  cellDone();}
 function botBrew(p){var aff=p.recipes.filter(function(r){return canBrew(p,r)&&openVessel(p)>=0;});
   if(!aff.length){resume(UI.brew.returnTo);return;}aff.sort(function(a,b){return STYLES[b].q-STYLES[a].q;});brewPick(aff[0]);}
 function botAge(p){var mat=p.vessels.map(function(c,i){return {c:c,i:i};}).filter(function(o){return o.c&&o.c.step<o.c.ready;});
@@ -220,7 +300,8 @@ function botLoad(p){var L=UI.load;
 function botDeploy(){var p=cur();   // v1.4 two-step: pick which Ready cask, then which open slot
   if(UI.deploy.vi==null){var ready=readyInVessels(p);if(!ready.length){deploySkip();return;}
     ready.sort(function(a,b){return b.c.q-a.c.q;});deployPickCask(ready[0].i);return;}
-  var es=emptySlots();if(!es.length){deploySkip();return;}
+  var es=emptySlots();
+  if(!es.length){es=overDeploySlots(p.vessels[UI.deploy.vi],p.id);if(!es.length){deploySkip();return;}}   // v3.0-A: over-deploy (tap-out / spoilage)
   var lk=p.cell?cellOfLine(p.cell)[__chosenWhich||'row']:null;
   // ROUTE THE DEMAND: onto my OWN value-building slot, ideally on the firing line (flips that slot's Deploy → the cask's action)
   var vs=es.filter(function(s){var b=S.buildings[s.id];return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value';});
@@ -233,18 +314,6 @@ function botBenefit(){var disp=S.buildDisplay||[];if(!disp.length){benefitPick(n
   benefitPick(pickBuilding(disp.slice()));}
 function botSurvey(){var disp=S.buildDisplay||[];if(!disp.length){surveyPick(null);return;}     // Survey → CHOOSE one of the face-up display Buildings
   surveyPick(pickBuilding(disp.slice()));}
-// v1.4.1 "Flexible Cellar": the Cellar is now an ANY-ORDER menu (Age · Tap · buy Improvement · Done) on the
-// UI.sub==='tap' literal. ONE step per call (each routes back to the menu): AGE the closest-to-Ready cask first
-// (the core Cellar use — was the forced step pre-v1.4.1), then TAP to relieve a slot jam, then buy a high-value
-// improvement when flush, else Done. (cellarCan*/cellarMenuAge/cellarDone are play.html funcs, in-scope here.)
-function botTap(p){
-  if(cellarCanAge(p)){cellarMenuAge();return;}
-  var ready=readyInVessels(p);
-  if(!(UI.cellar&&UI.cellar.usedTap)&&cellarCanTap(p)&&ready.length&&emptySlots().length===0){ready.sort(function(a,b){return a.c.q-b.c.q;});tapPick('v:'+ready[0].i);return;}   // relieve a jam — v83: tap ONCE (usedTap throttle; humans/MC may multi-tap)
-  if(cellarCanImp(p)){var pref=['hopgarden','granary','cellar','vessel'];   // v82: only buy what's face-up in the scarce display
-    for(var i=0;i<pref.length;i++){var k=pref[i];if((S.impDisplay||[]).includes(k)&&grantableBuy(p,k)&&canPay(p,IMPROVEMENTS[k].cost)&&p.grain>=(IMPROVEMENTS[k].cost.g||0)+1){buyImprovement(k);return;}}}
-  cellarDone();}
-
 function botActOnce(){var p=cur();var U=UI.sub;
   switch(U){
     case 'move':return botMove(p);
@@ -259,15 +328,26 @@ function botActOnce(){var p=cur();var U=UI.sub;
     case 'wild':return botWild(p);
     case 'load':return botLoad(p);
     case 'deploy':return botDeploy();
-    case 'tap':return botTap(p);
+    case 'dispatch':return botDispatch(p);
+    case 'slotstop':return botSlotstop(p);
+    case 'caskstop':return botCaskstop(p);
+    case 'ldeploy':return botLDeploy(p);
+    case 'recipegain':return botRecipeGain(p);
+    case 'hallspace':return botHallspace(p);
+    case 'pilotdest':{var pd=UI.pdest;var pt=S.slots[pd.slot];var pds=pilotDests(pd.slot),pb=pds[0],pv=-1e9;
+      pds.forEach(function(dd){var v=0;(pt.load||[]).forEach(function(L){v+=Math.max(1,destValue(dd,L.q))+(L.die&&dd===pt.dest?L.die:0);});if(v>pv){pv=v;pb=dd;}});
+      return pilotGo(pb);}
     case 'benefit':return botBenefit();
     case 'survey':return botSurvey();
+    case 'hire':{var eh=hireable(p);return hirePick(eh.length?eh[0]:null);}   // v2.4 — the Q3+ Hire cask action: take the first eligible improvement
     case 'placebldg':return botPlaceBldg();
-    case 'toll':return tollPay();              // the bot pays the occupancy toll (the Floor is a human option)
     case 'goodspick':return goodsPick(2,0);    // liquidity owner-choice — the bot takes 2 grain
     case 'breach':{var lp=S.players[UI.pendingReach[0].pid];var bk=reachBenKontore(lp);if(!bk.length)return breachPick(null);var bb=bk[0],bv=-1e9;  // reinforce best majority swing (presence only where delivered)
       bk.forEach(function(k){lp.presBonus[k]=(lp.presBonus[k]||0)+1;var a=majorityAwards(k);lp.presBonus[k]--;var v=(a[lp.id]||0)+Math.random()*0.1;if(v>bv){bv=v;bb=k;}});return breachPick(bb);}
-    case 'brecipe':{var lp=S.players[UI.pendingRecipe[0].pid];var o=freeRecipeOptions(lp);if(!o.length)return brecipePick(null);o.sort(function(a,b){return STYLES[b].q-STYLES[a].q;});return brecipePick(o[0]);}
+    case 'brefine':{var lp=S.players[UI.pendingRefine[0].pid];   // v2.2 — Novgorod refine: the owner picks a maturing cask; the bot takes closest-to-Ready
+      var m=lp.vessels.map(function(c,i){return {c:c,i:i};}).filter(function(o){return o.c&&o.c.step<o.c.ready;})
+        .sort(function(a,b){return (a.c.ready-a.c.step)-(b.c.ready-b.c.step);});
+      return brefinePick(m.length?m[0].i:-1);}
     case 'olclaim':{var b=(UI.pendingOlClaim||[])[0];if(!b)return olClaimPick(0);var open=olOpenSlots(b.node);return olClaimPick(open.length?olBestSlot(S.players[b.pid],b.node,open):0);}   // The Trade Roads — claim the best open Staple Right
     case 'end':return endTurn();
     default: throw new Error('unknown UI.sub: '+U);
@@ -276,7 +356,11 @@ function botActOnce(){var p=cur();var U=UI.sub;
 
 function tbVec(p){var sc=scorePlayer(p);return [sc.total, deployedCaskQ(p), p.grain+p.hops];}   // matches the engine: total → quality of deployed slot casks → goods
 function runGame(n){
-  EXPANSION=(typeof __EXPANSION!=='undefined'&&__EXPANSION);   // EXPANSION "Specialty Beers" sim hook (injected via ctx) — off by default → base-game regression; EXPANSION=1 tests the opt-in module
+  EXPANSION=(typeof __EXPANSION!=='undefined'&&__EXPANSION);
+  if(typeof __HALLV2!=='undefined'&&__HALLV2!==null)EXP_HALLV2=__HALLV2;      // v3.2 CANON ON — HALLV2=0 regresses to the v1 shelves
+  if(typeof __PRESEND!=='undefined'&&__PRESEND!==null)EXP_PRESEND=__PRESEND;  // v3.2 CANON ON — PRESEND=0 turns the presence clock off
+  if(typeof __POOL!=='undefined'&&__POOL)PRES_POOL=__POOL;                    // POOL=n — presence discs per player (sweep)
+  if(typeof __CAPS!=='undefined'&&__CAPS)SAILED_CAP=__CAPS;                   // CAPS="5,8,10" — the ships-clock sweep (2/3/4p)
   JOPEN=(typeof __JOPEN!=='undefined'&&__JOPEN);               // EXPANSION CAPSTONE "Jopenbier" sim hook — JOPEN=1 confirms the flag doesn't break the base flow (the greedy bot doesn't pilot the capstone)
   if(typeof OVERLAND!=='undefined')OVERLAND=(typeof __OVERLAND!=='undefined'&&__OVERLAND);   // EXPANSION "The Trade Roads" sim hook — OVERLAND=1; the greedy bot grows roads PASSIVELY (delivering rides the road), which gates robustness/pace
   S=freshState(n,NAMES.slice(0,n));UI={sub:'move'};undoStack=[];activeTab=0;
@@ -304,7 +388,8 @@ function runGame(n){
   while(true){
     botActOnce();
     if(++guard>300000)return {error:'guard-tripped',n:n,round:S.turn};
-    if(S.ending&&S.active===S.first&&UI.sub==='end')break; // gameOver fired inside endTurn
+    if(S.over)break;                                       // gameOver fired inside endTurn
+    if(S.ending&&S.active===S.first&&UI.sub==='end')break; // legacy belt-and-braces
   }
   var scores=S.players.map(function(p){return scorePlayer(p);});
   // winner via the engine's tiebreak (total → quality of deployed slot casks → goods)
@@ -324,20 +409,15 @@ function runGame(n){
   var jopenAll=S.players.reduce(function(a,p){return a+p.delivered.filter(function(d){return d.style==='jopenbier';}).length;},0);
   var jopenWin=wp.delivered.filter(function(d){return d.style==='jopenbier';}).length;
   var playerStats=S.players.map(function(p,i){var ts={};p.delivered.forEach(function(d){ts[d.style]=1;});   // distinct BEERS (the Flight metric)
-    var kontorD=p.delivered.filter(function(d){return DEST[d.dest]&&DEST[d.dest].kontor;}).length;
-    var reachN=Object.keys(p.presBonus||{}).reduce(function(a,k){return a+(p.presBonus[k]||0);},0);
     return {persona:persona(p),cellar:!!p.__cellar,startImp:p.__startImp||null,total:scores[i].total,won:(i===win),
       deliv:scores[i].deliv,maj:scores[i].maj,goals:scores[i].goals,
       q5:p.delivered.filter(function(d){return d.q===5;}).length,
       q4plus:p.delivered.filter(function(d){return d.q>=4;}).length, hall:p.delivered.filter(function(d){return d.dest==='hall';}).length,
-      kontorDeliv:kontorD, reachN:reachN, dieUse:kontorD+reachN,   // DICE sizing: dice a player permanently spends (kontor deliveries + presence)
       tiers:Object.keys(ts).length,flight:scores[i].flight,master:scores[i].master};});
   return {
     n:n, round:S.turn, sailed:S.sailed, sailedCap:S.sailedCap,
     trigger:(S.endReason||(S.sailed>=S.sailedCap?'clock':(S.turn>=MAX_ROUND?'ceiling':'other'))),
-    // DICE experiment telemetry: die-value saturation (kontor deliveries clamped at 6) + peak per-player die use
-    diceDeliv:(S.diceDeliv||0), diceHi:(S.diceHi||0), diceLost:(S.diceLost||0),
-    maxDieUse:Math.max.apply(null,playerStats.map(function(s){return s.dieUse;})),
+    brews:S.players.map(function(p){return p._brews||0;}), presLeft:S.players.map(function(p){return p.presPool||0;}),
     winSeat:win, winTotal:scores[win].total, secondTotal:scores[second].total,
     winDeliv:scores[win].deliv, winMaj:scores[win].maj, winGoals:scores[win].goals,
     winByDest:byDest, winValKontor:valDest.kontor, winValHall:valDest.hall,
@@ -432,14 +512,9 @@ const ctx = {
   __N: N, __COUNTS: COUNTS, __SC, __PERSONAS: PERSONAS, __CELLAR: CELLAR, __TUNE, __STK: !!process.env.STK,
   __FREEIMP: process.env.FREE_IMP==='1',
   __EXPANSION: process.env.EXPANSION==='1',
+  __HALLV2: process.env.HALLV2===undefined?null:process.env.HALLV2==='1', __PRESEND: process.env.PRESEND===undefined?null:process.env.PRESEND==='1', __POOL: parseInt(process.env.POOL||'0',10), __CAPS: process.env.CAPS?(function(a){return {2:+a[0],3:+a[1],4:+a[2]};})(process.env.CAPS.split(',')):null,
   __JOPEN: process.env.JOPEN==='1',
   __OVERLAND: process.env.OVERLAND==='1',
-  // ⚙ EXPERIMENT "DICE" — die-only ownership + value + a finite per-player dice pool as a second end trigger.
-  // DICE=1 switches the engine variant on (play.html reads __DICE at load); DICEN=n sets the pool (default 8).
-  __DICE: process.env.DICE==='1',
-  __DICEN: parseInt(process.env.DICEN||'0',10)||0,
-  __DICEV: process.env.DICEV||'',      // value model: 'quality' (A — die carries quality+mods) | 'mods' (B — die carries mods only; destination pays its printed part)
-  __DICEP: process.env.DICEP==='1',    // model-B option: keep the v1.8 Q4/Q5 premium as a die adjustment
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;
@@ -465,7 +540,6 @@ function summarize(n, arr) {
   const within = ok.filter(r => r.round >= 12 && r.round <= 25).length;
   const clock = ok.filter(r => r.trigger === 'clock').length;
   const ceiling = ok.filter(r => r.trigger === 'ceiling').length;
-  const diceTrig = ok.filter(r => r.trigger === 'dice').length;
   const winTotals = ok.map(r => r.winTotal);
   const margins = ok.map(r => r.winTotal - r.secondTotal);
   const seatWins = {}; for (let s = 0; s < n; s++) seatWins[s] = 0;
@@ -484,13 +558,14 @@ function summarize(n, arr) {
   console.log(`\n================  ${n} PLAYERS  (${arr.length} games)  ================`);
   console.log(`crashes/stuck:        ${errs.length}` + (errs.length ? '  -> ' + JSON.stringify(errs.slice(0, 3)) : '  (none)'));
   console.log(`rounds:               avg ${fmt(avg(rounds))}   min ${Math.min(...rounds)}   max ${Math.max(...rounds)}   in 12-25 band: ${pct(within, ok.length)}`);
-  console.log(`end trigger:          clock ${pct(clock, ok.length)}   ceiling ${pct(ceiling, ok.length)}` + (diceTrig ? `   DICE ${pct(diceTrig, ok.length)}` : ``));
-  // die-use telemetry (always computed — in a baseline run it sizes what dice pool N would bind)
-  {const use = ok.flatMap(r => (r.playerStats||[]).map(s => s.dieUse||0));
-   const mx = ok.map(r => r.maxDieUse||0);
-   if (use.length) console.log(`die use (kontor deliveries + presence) per player: avg ${fmt(avg(use))}   game-max avg ${fmt(avg(mx))}   abs max ${Math.max(...mx)}`);
-   const dd = ok.reduce((a,r)=>a+(r.diceDeliv||0),0), dh = ok.reduce((a,r)=>a+(r.diceHi||0),0), dl = ok.reduce((a,r)=>a+(r.diceLost||0),0);
-   if (dd) console.log(`die saturation:       ${pct(dh, dd)} of kontor deliveries clamped at 6   (avg pips lost/game ${fmt(dl/ok.length,2)})`);}
+  const presEnd = ok.filter(r => r.trigger === 'presence').length;
+  console.log(`end trigger:          clock ${pct(clock, ok.length)}   ceiling ${pct(ceiling, ok.length)}` + (presEnd ? `   presence ${pct(presEnd, ok.length)}` : ''));
+  if (ok[0].brews) {   // ⚗ experiment metrics: brews/seat + presence discs left at game end
+    const allBrews = [], allLeft = [];
+    ok.forEach(r => { (r.brews||[]).forEach(b => allBrews.push(b)); (r.presLeft||[]).forEach(l => allLeft.push(l)); });
+    console.log(`brews/seat:           avg ${fmt(avg(allBrews))}   min ${Math.min(...allBrews)}   max ${Math.max(...allBrews)}`);
+    if (allLeft.some(x => x > 0) || presEnd) console.log(`presence discs left:  avg ${fmt(avg(allLeft))}   (of POOL — spent = POOL − left)`);
+  }
   console.log(`sailed/cap at end:    avg ${fmt(avg(ok.map(r => r.sailed)))} / ${ok[0].sailedCap}`);
   console.log(`winner total score:   avg ${fmt(avg(winTotals))}   min ${Math.min(...winTotals)}   max ${Math.max(...winTotals)}`);
   console.log(`win margin (1st-2nd): avg ${fmt(avg(margins))}   (ties: ${margins.filter(m => m === 0).length})`);
@@ -518,7 +593,7 @@ function summarize(n, arr) {
   // Pathways: volume / prestige / majority (personas) + deep (cellarmaster). A cellar seat is reported
   // ONLY as 'deep' (its assigned persona is ignored, since it plays the deep policy).
   if (PERSONAS || CELLAR) {
-    const blank = () => ({ wins:0, n:0, total:0, deliv:0, maj:0, goals:0, flight:0, master:0, hall:0, q4:0, q5:0, tiers:0, reach:0, kontor:0 });
+    const blank = () => ({ wins:0, n:0, total:0, deliv:0, maj:0, goals:0, flight:0, master:0, hall:0, q4:0, q5:0, tiers:0 });
     const lanes = { volume:blank(), demand:blank(), prestige:blank(), majority:blank(), deep:blank(),
       ol_rhine:blank(), ol_london:blank(), ol_bergen:blank(), ol_east:blank() };
     ok.forEach(r => r.playerStats.forEach(s => {
@@ -526,18 +601,17 @@ function summarize(n, arr) {
       const g = lanes[lane];
       g.wins += s.won?1:0; g.n++; g.total += s.total; g.deliv += s.deliv; g.maj += s.maj; g.goals += s.goals;
       g.flight += s.flight||0; g.master += s.master||0; g.hall += s.hall||0; g.q4 += s.q4plus; g.q5 += s.q5; g.tiers += s.tiers;
-      g.reach += s.reachN||0; g.kontor += s.kontorDeliv||0;
     }));
     console.log(`PATHWAYS TO A WIN (per-capita win-rate; fair = ${fmt(100/n)}%):`);
     ['volume','demand','prestige','majority','deep','ol_rhine','ol_london','ol_bergen','ol_east'].forEach(k => { const g = lanes[k]; if (!g.n) return;
       const a = x => fmt(g[x]/g.n);
-      console.log(`   ${k.padEnd(9)} win ${pct(g.wins,g.n).padStart(6)}  score ${a('total').padStart(5)}  |  deliv ${a('deliv')} · maj ${a('maj')} · goals ${a('goals')} · flight ${a('flight')} · master ${a('master')}  |  Hall/g ${a('hall')} · Q4+/g ${a('q4')} · Q5/g ${a('q5')} · tiers ${a('tiers')} · kontor/g ${a('kontor')} · reach/g ${a('reach')}  (n=${g.n})`);
+      console.log(`   ${k.padEnd(9)} win ${pct(g.wins,g.n).padStart(6)}  score ${a('total').padStart(5)}  |  deliv ${a('deliv')} · maj ${a('maj')} · goals ${a('goals')} · flight ${a('flight')} · master ${a('master')}  |  Hall/g ${a('hall')} · Q4+/g ${a('q4')} · Q5/g ${a('q5')} · tiers ${a('tiers')}  (n=${g.n})`);
     });
   }
 }
 
 console.log(`Brewhouses of the Hanse — headless sim (KEY ${R.KEY})  |  N=${N} games per player count`);
-console.log(`scenario: ${SCEN} — ${SC.label}` + (PERSONAS ? `  |  PERSONAS on` : ``) + (process.env.TUNE && process.env.TUNE!=='none' ? `  |  TUNE=${process.env.TUNE} ${JSON.stringify(__TUNE.dest)}` : ``) + (process.env.DICE==='1' ? `  |  DICE variant ON (pool ${process.env.DICEN||8}/player · model ${process.env.DICEV||'quality'}${process.env.DICEP==='1'?' +premium':''})` : ``));
+console.log(`scenario: ${SCEN} — ${SC.label}` + (PERSONAS ? `  |  PERSONAS on` : ``) + (process.env.TUNE && process.env.TUNE!=='none' ? `  |  TUNE=${process.env.TUNE} ${JSON.stringify(__TUNE.dest)}` : ``));
 (R.counts || COUNTS).forEach(n => summarize(n, R[n]));
 
 // ---- FREE STARTING IMPROVEMENT report (only when FREE_IMP=1) ----

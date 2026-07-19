@@ -1,0 +1,2106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brewhouses of the Hanse — Print &amp; Play · Cask Cards · v2.9 “Ground Rent”</title>
+<style>
+  :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
+    --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
+  *{box-sizing:border-box}
+  body{margin:0;background:#e7e2d6;color:var(--ink);font-family:"Iowan Old Style",Georgia,serif;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .bar{position:sticky;top:0;z-index:10;background:var(--ink);color:var(--parch);padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+  .bar h1{font-size:1.05rem;margin:0;font-variant:small-caps;letter-spacing:.5px}
+  .bar a{color:var(--gold);text-decoration:none;font-size:.85rem}
+  .bar button{font-family:inherit;cursor:pointer;border:none;border-radius:6px;padding:6px 13px;font-weight:bold;background:var(--gold);color:var(--ink)}
+  .bar .seg{display:inline-flex;border:1px solid var(--gold);border-radius:6px;overflow:hidden}
+  .bar .seg button{border-radius:0;background:transparent;color:var(--parch);font-weight:normal}
+  .bar .seg button.on{background:var(--gold);color:var(--ink)}
+  .bar .bsub{font-weight:normal;font-size:.66rem;opacity:.55;font-variant:small-caps;letter-spacing:1.5px;margin-left:10px}
+  .bar .bsel{font-family:inherit;font-size:.85rem;border-radius:6px;padding:5px 10px;border:1px solid var(--gold);background:var(--ink);color:var(--parch);cursor:pointer}
+  .bar h1+.bsel{margin-left:auto}   /* push the controls to the right of the title */
+  .note{font-size:.78rem;opacity:.85}
+  /* ====== PAGE = US Letter LANDSCAPE (11×8.5in, .3in margins → 10.4×7.9in canvas) ====== */
+  @media print{ @page{size:letter landscape;margin:.3in} }
+  .page{width:10.4in;height:7.9in;background:#fff;margin:14px auto;box-shadow:0 3px 14px rgba(0,0,0,.25);position:relative;overflow:hidden}
+  /* LARGE-FORMAT sheets (laser cutter / plotter) are 22in wide but each is trimmed to its own content HEIGHT so we
+     don't run blank media — render() emits one named @page + .lgNN rule per distinct height into <style id=dynpage>. */
+  @media print{.no-print{display:none} body{background:#fff} .page{margin:0;box-shadow:none;break-after:page}
+    body.solo .page{display:none} body.solo .page.soloed{display:block}}
+  /* every printed piece sits in an absolutely positioned .it box (inches) — layout is identical in
+     ART and CUT layers; the CUT layer only hides the art and reveals the cut strokes in the overlay svg */
+  .it{position:absolute}
+  body.cut .it{visibility:hidden}
+  /* baseline inline-icon size — body-text icons track the local font; component CSS overrides with explicit sizes */
+  .ic{width:1em;height:1em;vertical-align:-.13em}
+  /* goods-icon colours: the pale palette is for dark tile faces; use the token colours on light text panels */
+  .mbox .g,.pb-sub .g,.card .c-buy .g{color:#9c7414}
+  .mbox .h,.pb-sub .h,.card .c-buy .h{color:#5d7d34}
+  .ov{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+  .ov .cuts{display:none}
+  body.cut .ov .cuts,body.both .ov .cuts{display:block}   /* CUT shows guides only (art hidden); BOTH overlays guides ON the art */
+  /* card sheets are cut with a paper cutter, not the laser — their cut lines print WITH the art */
+  .ov .cuts.always{display:block}
+  .dl{position:absolute;top:.32in;right:.45in;z-index:6;display:flex;gap:4px}
+  .dl button{font-size:.7rem;background:var(--sea);color:#fff;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;font-family:inherit;opacity:.85}
+  /* ====== TILES — 1.25in cut squares, gapless grid (a neighbour's colour is the bleed) ====== */
+  .tile{width:1.25in;height:1.25in;background:var(--c,#777);color:#fff;
+    position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:.096in;overflow:hidden;
+    text-shadow:0 1px 1.5px rgba(0,0,0,.5)}
+  /* SCALE-UP (printables2): keep the tuned 1.25in art; a top-left transform blows it up to the cut size,
+     so every proportion is preserved. casks → 2.5in (×2), ships & buildings → 2.0in (×1.6); improvements stay 1.25in. */
+  .tile.s2{transform:scale(2);transform-origin:top left}
+  .tile.s16{transform:scale(1.6);transform-origin:top left}
+  .tile .ic{width:1em;height:1em;vertical-align:-.15em} .tile svg{stroke-width:2}
+  .q{position:absolute;top:.06in;left:.08in;display:flex;align-items:center;gap:.02in;font-weight:900;font-size:.34in;line-height:1}
+  .q svg,.q .ic{width:.2in;height:.2in;stroke-width:2.2}
+  .t-nm{position:absolute;top:.46in;left:.1in;max-width:1.05in;text-align:left;font-variant:small-caps;font-weight:bold;font-size:.155in;line-height:1.05}
+  .t-act{font-size:.1in;line-height:1.12;background:rgba(0,0,0,.24);border-radius:.04in;padding:.025in .04in;margin-bottom:.03in;display:flex;align-items:center;gap:.03in}
+  .t-act svg,.t-act .ic{width:.13in;height:.13in;flex:0 0 auto}
+  .t-act .ac{display:inline-flex;align-items:center;justify-content:center;width:.22in;height:.22in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
+  .t-act .ac svg,.t-act .ac .ic{width:.12in;height:.12in;stroke-width:2.1;color:#23201c}
+  .t-cost{font-size:.12in;font-weight:bold;display:flex;align-items:center;gap:.04in;line-height:1;flex-wrap:wrap}
+  /* dual brew cost (the shared Q3 pool: Broyhan / Keut) — tightened so both costs sit on one line */
+  .t-cost.dual{gap:.015in;font-size:.11in}
+  .t-cost.dual .gc{gap:.008in;font-size:.11in} .t-cost.dual .gc svg,.t-cost.dual .gc .ic{width:.125in;height:.125in}
+  .g{color:#ffe08a} .h{color:#c4e69c}
+  .gc{display:inline-flex;align-items:center;gap:.02in;font-size:.12in;font-weight:bold}
+  .gc svg,.gc .ic{width:.15in;height:.15in;flex:0 0 auto}
+  .tile.gen{justify-content:flex-start;text-shadow:0 1px 1px rgba(0,0,0,.4)}
+  .gen .g-head{display:flex;align-items:center;gap:.06in;font-variant:small-caps;font-weight:bold;font-size:.125in;line-height:1.02;min-width:0}
+  .gen .g-head .bigic{flex:0 0 auto}
+  .gen .g-head .bigic svg,.gen .g-head .bigic .ic{width:.27in;height:.27in;stroke-width:1.7}
+  .gen .g-head .g-nm{min-width:0;overflow-wrap:break-word;hyphens:auto}
+  .gen .g-sub{font-size:.108in;line-height:1.2;margin-top:.05in;opacity:.97}
+  .gen .g-big{position:absolute;bottom:.072in;right:.096in;font-weight:900;font-size:.46in;line-height:.8;opacity:.92}
+  .gen .g-cost{position:absolute;bottom:.078in;left:.096in}
+  .gen.tn .g-head, .gen.tu .g-head{flex-direction:column;align-items:flex-end;text-align:right;gap:.05in}
+  .gen.tn .g-sub{position:absolute;left:.096in;right:.096in;bottom:.084in;margin-top:0}
+  .gen .g-act{background:rgba(0,0,0,.22);border-radius:.04in;padding:.04in .055in;font-size:.105in;line-height:1.16;margin-top:.06in;align-self:stretch}
+  .gen.tg .g-head .bigic{position:absolute;right:.1in;bottom:.08in}
+  .gen.tg .g-head .bigic svg,.gen.tg .g-head .bigic .ic{width:.34in;height:.34in;opacity:.9}
+  /* ====== SPECIALIST CARD (v10) — SQUARE, matching the 2in×2in building card: full-bleed object art + purple foot ====== */
+  .icard{width:2in;height:2in;background:var(--c,#46663a);color:#fff;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}
+  .icard > *{position:relative;z-index:1}
+  .icard > .artbg{z-index:0}
+  .icard .ic-top{display:flex;align-items:center;gap:.06in;padding:.15in .17in 0}
+  .icard .ic-ic{flex:0 0 auto} .icard .ic-ic svg,.icard .ic-ic .ic{width:.2in;height:.2in;stroke-width:1.8;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}
+  .icard .ic-nm{font-variant:small-caps;font-weight:bold;font-size:.16in;line-height:1.02;flex:1}
+  .icard .ic-foot{background:linear-gradient(to top,var(--c) 0%,var(--c) 52%,transparent 100%);
+    padding:.26in .17in .15in;display:flex;align-items:flex-end;gap:.06in}
+  .icard .ic-act{font-size:.115in;line-height:1.18;flex:1}
+  .icard .ic-act::first-letter{text-transform:uppercase}
+  .icard .ic-act .ic,.icard .ic-act svg{width:.13in;height:.13in;vertical-align:-.02in}
+  .icard .ic-act .g{color:#ffe08a} .icard .ic-act .h{color:#c4e69c}
+  .icard .ic-cost{margin-left:auto;font-weight:bold;font-size:.145in;display:inline-flex;align-items:center;flex:0 0 auto}
+  .icard .ic-cost .gc{gap:.02in} .icard .ic-cost .gc svg,.icard .ic-cost .gc .ic{width:.16in;height:.16in}
+  /* ====== cask PERK strip (e.g. Keut +1 presence) — printed above the cost ====== */
+  .t-perk{position:absolute;top:.06in;right:.08in;text-align:right;font-size:.082in;font-style:italic;line-height:1.08;opacity:.96}
+  .t-perk b{font-size:.16in;font-weight:900;font-style:normal}
+  .t-perk svg,.t-perk .ic{width:.16in;height:.16in;vertical-align:-.03in}
+  /* (v5: the old 1.25″ .tile.bld / .tile.bback building-tile styles were retired — buildings are now .bcard cards, below) */
+  /* ====== printables2: BUILDING CARDS (2″, double-sided) — FRONT full-bleed building art + effect ·
+     BACK the generic Wild + developer ★ (displaced face). Nests in the 2.5″ player-colour owner FRAME
+     (the coloured edge showing around it = whose building it is). Same art-card grammar as the casks/ships. ====== */
+  .bcard{width:2in;height:2in;background:var(--c,#3a3342);color:#fff;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}
+  .bcard > *{position:relative;z-index:1}
+  .bcard > .artbg{z-index:0}
+  .bcard .bc-top{display:flex;align-items:flex-start;gap:.05in;padding:.15in .17in 0}
+  .bcard .bc-verb{margin-left:auto;flex:0 0 auto;font-size:.085in;line-height:1;font-variant:small-caps;font-weight:bold;letter-spacing:.3px;background:rgba(255,255,255,.22);border-radius:.03in;padding:.012in .04in}
+  .bcard .bc-ic{flex:0 0 auto} .bcard .bc-ic svg,.bcard .bc-ic .ic{width:.2in;height:.2in;stroke-width:1.8}
+  /* (v2.3: the WHARFAGE chip is retired — value = a privilege, owner-only; no delivery payments between players) */
+  .bcard .bc-wf{display:none;
+    background:rgba(0,0,0,.34);border-radius:.04in;padding:.022in .05in}
+  .bcard .bc-wf svg,.bcard .bc-wf .ic{width:.13in;height:.13in;stroke-width:2}
+  .bcard .bc-wf .st{color:#ffd24a}
+  .bcard .bc-nm{font-variant:small-caps;font-weight:bold;font-size:.15in;line-height:1.02;flex:1;margin-top:-.01in}
+  .bcard .bc-foot{background:linear-gradient(to top,var(--c) 0%,var(--c) 52%,transparent 100%);
+    padding:.26in .17in .15in;display:flex;flex-direction:column;gap:.055in}
+  .bcard .bc-eff{font-size:.115in;line-height:1.18}
+  .bcard .bc-eff::first-letter{text-transform:uppercase}   /* sentence-case the effect (data stays lowercase) */
+  /* resource icons inside effect text — colour by type (gold grain / green hops), notation: +1 [icon] */
+  .bcard .bc-eff .ic,.bcard .bc-eff svg{width:.12in;height:.12in;vertical-align:-.02in}
+  .bcard .bc-eff .g{color:#ffe08a} .bcard .bc-eff .h{color:#c4e69c}
+  .bcard .bc-row{display:flex;align-items:center;gap:.05in}
+  .bcard .bc-tgt{display:inline-flex;align-items:center;justify-content:center;width:.26in;height:.26in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
+  .bcard .bc-tgt svg,.bcard .bc-tgt .ic{width:.15in;height:.15in;color:#23201c;stroke-width:2}
+  .bcard .bc-row .gc{margin-left:auto;font-size:.14in} .bcard .bc-row .gc svg,.bcard .bc-row .gc .ic{width:.15in;height:.15in}
+  .bcard .bc-top svg,.bcard .bc-top .ic{filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}
+  /* BUILDING CARD BACK (v6) — the SAME building art + title as the front (muted), plus the Wild action + the
+     developer ★. Reuses the front's bc-top/bc-foot layout so a flipped card still reads as its building. */
+  .bcard.bc-bk .artbg{filter:grayscale(.55) brightness(.78)}
+  .bcard .bc-wild{font-size:.1in;line-height:1.15;flex:1}
+  .bcard .bc-sub{font-variant:small-caps;font-size:.092in;opacity:.85;letter-spacing:.3px}
+  .bcard .bc-dev{margin-left:auto;font-weight:900;font-size:.2in;display:inline-flex;align-items:center;gap:.02in}
+  .bcard .bc-dev svg,.bcard .bc-dev .ic{width:.2in;height:.2in;color:#ffd24a}
+  /* ====== printables2: CASK CARDS (double-sided, 2×3) — FRONT buy/age (aging track) · BACK brewed (action) ====== */
+  .ccard{width:2.5in;height:2.5in;background:var(--c,#777);color:#fff;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.5)}
+  .ccard .ce{padding:.12in .17in;display:flex;flex-direction:column;gap:.035in;flex:0 0 auto}   /* content margin (the gradient/art are full-bleed on .ce/.artbg, so this insets text only) */
+  .ccard .ce.bot{padding-top:.05in}
+  .ccard .ce-row{display:flex;align-items:center;gap:.06in}
+  .ccard .ce-row.sb{justify-content:space-between}
+  .ccard .cq{display:inline-flex;align-items:center;gap:.02in;font-weight:900;font-size:.2in;line-height:1;flex:0 0 auto}
+  .ccard .cq svg,.ccard .cq .ic{width:.17in;height:.17in;stroke-width:2.2}
+  .ccard .cq.big{font-size:.4in} .ccard .cq.big svg,.ccard .cq.big .ic{width:.34in;height:.34in}   /* the front top-end quality, 2× */
+  .ccard .cnm{font-variant:small-caps;font-weight:bold;font-size:.165in;line-height:1.02}
+  .ccard .ccost{display:inline-flex;gap:.05in;font-weight:bold;font-size:.135in;align-items:center}
+  .ccard .ccost .gc{gap:.02in} .ccard .ccost .gc svg,.ccard .ccost .gc .ic{width:.14in;height:.14in}
+  .ccard .ctitle{display:flex;flex-direction:column;align-items:flex-end;gap:.02in;line-height:1.05;text-align:right}   /* title + cost stacked on the right, beside the big quality */
+  .ccard .clbl{font-size:.085in;font-style:italic;opacity:.85}
+  .ccard .cact{display:flex;align-items:center;gap:.05in;background:rgba(0,0,0,.3);border-radius:.05in;padding:.05in .06in;font-size:.155in;line-height:1.12}
+  .ccard .cact .ac{display:inline-flex;align-items:center;justify-content:center;width:.27in;height:.27in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
+  .ccard .cact .ac svg,.ccard .cact .ac .ic{width:.15in;height:.15in;color:#23201c;stroke-width:2.1}
+  .ccard .cc-mark{width:.3in;height:.3in;border:1.6px dashed rgba(255,255,255,.85);border-radius:.05in;flex:0 0 auto;margin-left:auto}
+  /* aging track on the FRONT centre */
+  /* FRONT centre = the maturation track on ONE line over a brewhouse-interior illustration (light parchment scrim keeps the ink legible) */
+  .cc-age{margin:.04in .05in;color:#fff;border-radius:.07in;padding:.05in .05in;overflow:hidden;
+    background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),url('../../art/brewhouse.png');background-size:cover;background-position:center;
+    display:flex;align-items:center;justify-content:center;flex:1}
+  .cc-agerow{display:flex;gap:.07in;align-items:center;justify-content:center;flex-wrap:nowrap}
+  .cc-step{width:.4in;height:.4in;border:1.9px solid rgba(255,255,255,.92);border-radius:.06in;display:flex;align-items:center;justify-content:center;font-size:.21in;font-weight:bold;color:#fff;background:transparent;text-shadow:0 1px 2px rgba(0,0,0,.75);flex:0 0 auto}
+  .cc-step.rdy{border-color:var(--green);background:var(--green);color:#fff;text-shadow:none;box-shadow:0 1px 2px rgba(0,0,0,.4)}   /* READY = flip the card to its brewed side */
+  .cc-step.rdy svg,.cc-step.rdy .ic{width:.26in;height:.26in;stroke-width:2.4}
+  .cc-step.start{border-style:dashed}   /* place the vessel marker here at brew (the Brewhouse beaker) */
+  .cc-step.start svg,.cc-step.start .ic{width:.25in;height:.25in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.75))}
+  /* BACK centre */
+  .cc-big{flex:1;display:flex;align-items:center;justify-content:center;opacity:.32}
+  .cc-big svg,.cc-big .ic{width:.85in;height:.85in}
+  .cc-back .ce.bot{gap:.05in;padding-top:.34in;background:linear-gradient(to top,var(--c) 0%,var(--c) 38%,transparent 100%)}   /* the front's beer colour, solid at the foot, fading up into the illustration */
+  .cc-back .ce.top{padding-bottom:.3in;background:linear-gradient(to bottom,var(--c) 0%,var(--c) 36%,transparent 100%)}   /* a matching colour gradient at the top, fading down into the illustration */
+  .cc-actfloat{flex:1;display:flex;align-items:flex-end;justify-content:center;padding-bottom:0;transform:translateY(.13in)}   /* the action / berths float low over the illustration, dropped toward the colour foot */
+  /* SHIP CARD (printables2 v4) — hull + cost over the art, gate + berths floating low, the kontor name in the colour foot */
+  .ship-card .ce.top{background:none;padding-bottom:.08in}   /* ships keep a plain art top (no colour gradient — that's cask-back only) */
+  .ship-card .ce.top .cnm{font-size:.22in;display:inline-flex;align-items:center;gap:.05in}
+  .ship-card .ce.top .cnm svg,.ship-card .ce.top .cnm .ic{width:.26in;height:.26in}
+  .ship-card .ccost{font-size:.17in}
+  .ship-card .sberth{display:inline-flex;align-items:center;gap:.07in;background:rgba(0,0,0,.34);border-radius:.06in;padding:.055in .09in}
+  .ship-card .sbn{width:.34in;height:.34in;border:1.8px solid rgba(255,255,255,.92);border-radius:.05in;display:flex;align-items:center;justify-content:center;font-size:.18in;font-weight:900}
+  .ship-card .ce.bot .ce-row{align-items:flex-end}
+  .ship-card .ce.bot .sdest{font-size:.22in;font-variant:small-caps;font-weight:bold;display:inline-flex;align-items:center;gap:.06in}
+  .ship-card .ce.bot .sdest svg,.ship-card .ce.bot .sdest .ic{width:.2in;height:.2in}
+  .ship-card .ce.bot .sgate{font-weight:900;font-size:.2in;display:inline-flex;align-items:center;gap:.02in}
+  .ship-card .ce.bot .sgate svg,.ship-card .ce.bot .sgate .ic{width:.19in;height:.19in}
+  /* the BACK ends match (Q + title + a marker space), a little larger */
+  .cc-back .ce .cq{font-size:.24in} .cc-back .ce .cq svg,.cc-back .ce .cq .ic{width:.2in;height:.2in}
+  .cc-back .ce .cnm{font-size:.19in}
+  .cc-back .ce.top .cnm{font-size:.225in}   /* the back's top title a touch larger */
+  .cc-back .ce.top .cq{font-size:.44in}   /* big quality + beer icon on the left of the back's top */
+  .cc-back .ce.top .cq svg,.cc-back .ce.top .cq .ic{width:.38in;height:.38in}
+  /* ===== background ART slot (printables2): a layer behind the card/tile content. Placeholder = a faint hatch;
+     when ART_ON, it carries the generated image (art/cask-<beer>.png · art/ship-<hull>.png) with a scrim for legibility. ===== */
+  .ccard > *{position:relative;z-index:1}
+  .ccard > .artbg{z-index:0}
+  .tile.ts > *{position:relative;z-index:1}
+  .tile.ts > .artbg{z-index:0}
+  .artbg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat}
+  .artbg>img.artbg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+  .artbg.ph{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 .09in,rgba(255,255,255,0) .09in .18in)}
+  .artbg.scrim::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5),rgba(0,0,0,.12) 28%,rgba(0,0,0,.12) 72%,rgba(0,0,0,.55))}
+  .artbg.baked::after{content:none}   /* PNG export: scrim is baked into the art <canvas> (see bakeArt) — drop the live pseudo */
+  .cc-back.baked-fg .ce.top,.cc-back.baked-fg .ce.bot{background:none}   /* PNG export: the colour foot is baked into the art <canvas> too */
+  /* keep the white end-icons legible over busy art */
+  .ccard .cq svg,.ccard .cq .ic,.ccard .ccost svg,.ccard .ccost .ic,.tile.ts .g-head svg,.tile.ts .g-head .ic,.tile.ts .berths svg,.tile.ts .berths .ic{filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}
+  /* ship NUMBERED BERTHS — pinned to the BOTTOM with the quality gate */
+  .ts .berths{display:flex;align-items:center;justify-content:center;gap:.04in}
+  .ts .berths .bn{width:.235in;height:.235in;border:1.3px solid rgba(255,255,255,.9);border-radius:.03in;
+    display:flex;align-items:center;justify-content:center;font-size:.13in;font-weight:900;background:rgba(0,0,0,.22);text-shadow:none}
+  .ts .berths .sgate{font-weight:900;font-size:.15in;display:inline-flex;align-items:center;gap:.015in;margin-right:.04in}
+  .ts .berths .sgate svg,.ts .berths .sgate .ic{width:.17in;height:.17in}
+  /* ship = NEUTRAL hull body; destination is a coloured chip, CENTERED in the middle of the tile */
+  .ts .g-dest-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+  .ts .g-dest{display:inline-flex;align-items:center;gap:.04in;color:#fff;font-variant:small-caps;font-weight:bold;font-size:.125in;border-radius:.04in;padding:.025in .08in;text-shadow:0 1px 1px rgba(0,0,0,.45)}
+  .ts .g-dest svg,.ts .g-dest .ic{width:.15in;height:.15in}
+  .ts .t-cost-tr{position:absolute;top:.08in;right:.09in;font-weight:bold}
+  .ts .t-cost-tr .gc{font-size:.12in;gap:.02in} .ts .t-cost-tr .gc svg,.ts .t-cost-tr .gc .ic{width:.15in;height:.15in}
+  /* ====== goods TOKENS — laser-cut .7in circle inside a .95in bleed disc ====== */
+  .tok{width:.95in;height:.95in;border-radius:50%;background:var(--c);color:#fff;position:relative;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4)}
+  .tok::after{content:"";position:absolute;inset:.125in;border:.8pt solid rgba(255,255,255,.75);border-radius:50%}
+  .tok svg{width:.26in;height:.26in}
+  /* ownership DISCS — .5in cut circle inside a .65in bleed disc */
+  .disc{width:.65in;height:.65in;border-radius:50%;background:var(--c);color:#fff;position:relative;
+    display:flex;align-items:center;justify-content:center}
+  .disc::after{content:"";position:absolute;inset:.075in;border:.6pt solid rgba(255,255,255,.7);border-radius:50%}
+  .disc svg{width:.2in;height:.2in}
+  /* BUILDING OWNERSHIP FRAMES (printables2) — a player-colour 2.5in base the 2in Building tile sits on; the
+     colour border showing around the smaller tile = whose building it is. Sized to drop into a 2.5in wharf slot. */
+  .frame{width:2.5in;height:2.5in;background:var(--c);border-radius:.12in;position:relative;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  .frame::after{content:"";position:absolute;inset:.25in;border:2px dashed rgba(255,255,255,.85);border-radius:.07in}
+  .frame .fl{position:absolute;left:0;right:0;bottom:.07in;text-align:center;color:#fff;font-variant:small-caps;font-weight:bold;font-size:.12in;text-shadow:0 1px 1.5px rgba(0,0,0,.5)}
+  /* worker / marker DISCS — .8in cut circle inside a 1in bleed disc */
+  .wtok{width:1in;height:1in;border-radius:50%;background:var(--c);color:#fff;position:relative;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.02in;font-size:.085in;font-variant:small-caps;font-weight:bold;text-align:center;line-height:1;text-shadow:0 1px 1px rgba(0,0,0,.4)}
+  .wtok::after{content:"";position:absolute;inset:.1in;border:.8pt solid rgba(255,255,255,.75);border-radius:50%}
+  .wtok svg{width:.3in;height:.3in}
+  /* ====== RECIPE CARDS — 1.85×2.55in, square corners, gapless grid ====== */
+  .card{width:1.85in;height:2.55in;background:#f7efdc;color:var(--ink);
+    position:relative;padding:0;display:flex;flex-direction:column;overflow:hidden}
+  .card .c-reach{padding:.07in .14in 0;font-size:.092in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.15}
+  .card .c-buy{flex:1;margin:.06in .14in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;
+    background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.14);border-radius:.06in;padding:.06in .1in;
+    font-size:.1in;line-height:1.2;text-align:center}
+  .card .c-buy .lbl{font-variant:small-caps;font-weight:bold;color:var(--ink2)}
+  .card .c-buy .gc{font-size:.14in} .card .c-buy .gc svg,.card .c-buy .gc .ic{width:.17in;height:.17in}
+  .card .c-buy .gate{font-size:.09in;font-style:italic;color:var(--red);display:flex;align-items:center;gap:.03in}
+  .card .c-buy .gate svg,.card .c-buy .gate .ic{width:.12in;height:.12in}
+  /* title + BREW-cost strip — the visible edge when the card is tucked up under the board.
+     FIXED two-row layout (rung+name / cost) so every card's bottom edge reads identically. */
+  .card .c-strip{flex:0 0 .56in;background:var(--cc,#8a6408);color:#fff;display:flex;flex-direction:column;justify-content:center;gap:.035in;
+    padding:.05in .12in;text-shadow:0 1px 1.5px rgba(0,0,0,.45)}
+  .card .c-strip .c-row{display:flex;align-items:center;gap:.06in;line-height:1;white-space:nowrap}
+  .card .c-strip svg,.card .c-strip .ic{width:.14in;height:.14in;flex:0 0 auto}
+  .card .c-strip .c-rung{flex:0 0 auto;display:inline-flex;align-items:center;gap:.015in;
+    background:rgba(255,255,255,.92);color:var(--cc);border-radius:.04in;padding:.025in .05in;font-size:.115in;font-weight:bold;text-shadow:none}
+  .card .c-strip .c-rung svg,.card .c-strip .c-rung .ic{width:.13in;height:.13in}
+  .card .c-strip .c-nm{font-variant:small-caps;font-weight:bold;font-size:.16in}
+  .card .c-strip .c-cost{display:inline-flex;align-items:center;gap:.06in;font-weight:bold;font-size:.13in}
+  .card .c-strip .c-cost .gc{font-size:.13in;gap:.015in}
+  .card .c-strip .c-cost .gc svg,.card .c-strip .c-cost .gc .ic{width:.13in;height:.13in}
+  .card .c-strip .c-lbl{font-size:.085in;font-style:italic;opacity:.85}
+  .card .c-strip .c-gate{display:inline-flex;align-items:center;gap:.02in;font-size:.085in;font-style:italic}
+  .card .c-strip .c-gate svg,.card .c-strip .c-gate .ic{width:.12in;height:.12in}
+  /* ====================== PLAYER AID CARD (double-sided: A = a turn · B = icon reference) ======================
+     Two sheets (FRONT / BACK). Every card on a sheet is IDENTICAL, on a centred & symmetric 2×2 grid, so the
+     outlines register under EITHER duplex flip edge — "front aligns with back" holds regardless of the printer.
+     (Flip on the SHORT edge keeps the back upright.) 4.7×3.4in card. */
+  .aid{width:100%;height:100%;background:#f7efdc;color:var(--ink);border:1.4px solid var(--ink);border-radius:.07in;
+    padding:.09in .11in;display:flex;flex-direction:column;overflow:hidden;font-size:.088in;line-height:1.16}
+  .aid .ic,.aid svg{width:.1in;height:.1in;vertical-align:-.015in;flex:0 0 auto}
+  .aid .gi{color:#9c7414} .aid .hi{color:#5d7d34} .aid .vi{color:var(--gold)}
+  .aid b{color:var(--ink)} .aid .em{color:var(--red);font-weight:bold;font-variant:small-caps}
+  .aid .ahd{display:flex;align-items:center;gap:.07in;border-bottom:2px solid var(--gold);padding-bottom:.035in;margin-bottom:.05in;flex:0 0 auto}
+  .aid .ahd .abi{width:.36in;height:.36in;border-radius:.05in;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .aid .ahd .abi svg,.aid .ahd .abi .ic{width:.24in;height:.24in}
+  .aid .ahd .at{font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.155in;line-height:1}
+  .aid .ahd .as{font-size:.076in;font-style:italic;color:var(--ink2);margin-left:auto;text-align:right;line-height:1.1}
+  .aid .acols{flex:1;display:flex;gap:.14in;min-height:0}
+  .aid .acol{flex:1;display:flex;flex-direction:column;min-width:0}
+  .aid h5{font-variant:small-caps;font-weight:bold;color:var(--sea);font-size:.1in;margin:.05in 0 .02in;
+    border-bottom:1px solid var(--line);padding-bottom:.008in;display:flex;align-items:center;gap:.04in}
+  .aid h5:first-child{margin-top:0}
+  .aid h5 svg,.aid h5 .ic{width:.12in;height:.12in}
+  .aid .step{display:flex;gap:.05in;margin-bottom:.03in}
+  .aid .step .sn{flex:0 0 auto;width:.17in;height:.17in;border-radius:50%;background:var(--sea);color:#fff;font-size:.09in;font-weight:bold;display:flex;align-items:center;justify-content:center}
+  .aid .step .sx,.aid .ln{min-width:0}
+  .aid .ln{margin-bottom:.025in}
+  /* legend grid (back) */
+  .aid .leg{display:flex;flex-direction:column}
+  .aid .lr{display:flex;align-items:flex-start;gap:.05in;margin-bottom:.022in}
+  .aid .lr .lic{flex:0 0 .2in;height:.15in;display:flex;align-items:center;justify-content:center;color:var(--sea)}
+  .aid .lr .lic svg,.aid .lr .lic .ic{width:.15in;height:.15in}
+  .aid .lr .lx{min-width:0} .aid .lr .lx b{font-variant:small-caps}
+  /* ====================== PLAYER BOARD (v1.6 — rebuilt from scratch) ======================
+     A pure TRACKING surface — vessels & maturation (THE FLOOR row) · improvements · THE FLIGHT ·
+     a goods zone · a bottom RECIPE RACK. No rules text (those live on the separate player-aid card).
+     Tile-true: vessel & improvement spaces are 1.25in squares; recipe-rack strips are 1.85in (card width). */
+  .board{--pc:#7c2128;width:100%;height:100%;background:var(--parch);color:var(--ink);border:2.5px solid var(--pc);
+    border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.13in}
+  .board svg,.board .ic{stroke-width:1.8}
+  /* --- header: crest · house name · storage zone --- */
+  .pb-head{display:flex;align-items:stretch;gap:.16in;flex:0 0 auto}
+  .crest{width:.82in;flex:0 0 auto;border-radius:.08in;background:var(--pc);color:#fff;display:flex;align-items:center;justify-content:center}
+  .crest svg,.crest .ic{width:.5in;height:.5in}
+  .pb-title{flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0}
+  .pb-name{font-variant:small-caps;font-weight:bold;font-size:.3in;color:var(--pc);line-height:1}
+  .pb-sub{font-size:.1in;color:var(--ink2);font-style:italic;margin-top:.03in}
+  .pb-store{flex:0 0 auto;display:flex;flex-direction:column;gap:.04in;justify-content:center}
+  .pb-store .slbl{font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--pc);display:flex;align-items:center;gap:.04in}
+  .pb-store .slbl svg,.pb-store .slbl .ic{width:.14in;height:.14in}
+  .szone{width:3.5in;height:.8in;border:1.6px solid var(--pc);border-radius:.07in;background:rgba(255,255,255,.45);
+    display:flex;align-items:center;justify-content:center;gap:.14in;color:var(--pc)}
+  .szone .si{display:inline-flex;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.135in}
+  .szone .si svg,.szone .si .ic{width:.22in;height:.22in}
+  .szone .cap{display:inline-flex;align-items:baseline;gap:.03in;font-size:.1in;font-style:italic;color:var(--ink2)}
+  .szone .cap b{font-size:.17in;font-style:normal;font-weight:900;color:var(--pc)}
+  /* --- section header (a zone label — a noun, never a rule) --- */
+  .pb-sect{font-variant:small-caps;font-weight:bold;font-size:.125in;color:var(--pc);display:flex;align-items:center;gap:.05in;
+    border-bottom:1px solid var(--pc);padding-bottom:.015in;margin-bottom:.05in}
+  .pb-sect svg,.pb-sect .ic{width:.15in;height:.15in}
+  .pb-sect .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.088in;color:var(--ink2);margin-left:auto}
+  /* --- THE FLOOR: ONE line of 3 vessels + 4 improvement slots; maturation tracks under the vessels --- */
+  .floor{flex:0 0 auto}
+  .floor-row{display:flex;align-items:flex-start;gap:.14in}
+  .fgrp{display:flex;flex-direction:column}
+  .grp-lbl{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--pc);display:flex;align-items:center;gap:.04in;margin-bottom:.05in}
+  .grp-lbl svg,.grp-lbl .ic{width:.13in;height:.13in}
+  .grp-lbl .nn{font-variant:normal;font-weight:normal;font-style:italic;opacity:.8;margin-left:.05in}
+  .vgroup,.igroup{display:flex;gap:.1in}
+  .vcol{display:flex;flex-direction:column;align-items:center;width:1.25in}
+  .vsq{width:1.25in;height:1.25in;border:1.6px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.5);position:relative;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--pc);font-size:.092in;text-align:center;gap:.02in}
+  .vsq svg,.vsq .ic{width:.32in;height:.32in;opacity:.42}
+  .vsq .vn{position:absolute;top:.05in;left:.07in;font-variant:small-caps;font-weight:bold;font-size:.092in;opacity:.7}
+  /* forward-flow arrow between the vessel square and its maturation track (you move RIGHT to Ready) */
+  .vflow{width:1.25in;height:.14in;display:flex;align-items:center;justify-content:center;color:var(--pc)}
+  .vflow svg,.vflow .ic{width:.17in;height:.13in;stroke-width:2.4}
+  /* maturation track: a beer STARTS on the space bearing its name, then advances RIGHT to READY (the last space) */
+  .mtrack{display:flex;border:1.3px solid var(--pc);border-radius:.04in;overflow:hidden;width:1.25in}
+  .mtrack .ms{flex:1;height:.52in;border-right:1px solid rgba(0,0,0,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:.014in;padding:.012in;background:rgba(255,255,255,.5);text-align:center}
+  .mtrack .ms:last-child{border-right:none}
+  .mtrack .ms .bn{font-variant:small-caps;font-weight:bold;font-size:.057in;line-height:1.05;color:var(--ink)}
+  .mtrack .ms.fin{background:rgba(74,107,58,.24)}
+  .mtrack .ms.fin .rdy{font-variant:small-caps;font-weight:900;font-size:.086in;color:var(--pc);line-height:1}
+  .mtrack .ms.fin .rsub{font-variant:small-caps;font-size:.054in;color:var(--pc);opacity:.85;line-height:1}
+  /* V3 (the Coppersmith) is identical to V1/V2 — ONLY its tile outline is dashed */
+  .vcol.locked .vsq{border-style:dashed}
+  /* improvement slots — host bought improvements (violet) AND displaced/flipped Buildings; tile-true 1.25in squares */
+  .isq{width:1.25in;height:1.25in;border:1.5px dashed var(--violet);border-radius:.06in;background:rgba(91,58,142,.07);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;color:var(--violet);font-size:.088in;text-align:center}
+  .isq svg,.isq .ic{width:.3in;height:.3in;opacity:.6}
+  /* --- THE FLIGHT: one space per beer type; mark each beer you deliver --- */
+  .flight{flex:0 0 auto}
+  .flight-row{display:flex;gap:.08in}
+  .fbeer{flex:1;border:1.4px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.45);
+    display:flex;align-items:center;gap:.07in;padding:.05in .08in}
+  .fbeer.exp{border-style:dashed}
+  .fdot{width:.4in;height:.4in;flex:0 0 auto;border-radius:50%;border:1.4px solid var(--pc);background:rgba(0,0,0,.03)}
+  .fbeer.exp .fdot{border-style:dashed}
+  .fmeta{display:flex;flex-direction:column;line-height:1.08;min-width:0}
+  .fmeta .fn{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--ink)}
+  .fmeta .fq{font-size:.078in;color:var(--ink2)}
+  /* --- RECIPE RACK: bottom edge — slide export recipe cards up; the exposed strip = the card's brew face.
+     Gruit & Hopped are printed here as clones of a recipe card's bottom c-strip. --- */
+  .rack{margin:auto -.16in -.16in;padding:.06in .12in 0;border-top:1.6px dashed var(--pc);
+    background:repeating-linear-gradient(90deg,rgba(0,0,0,.025) 0 1.85in,transparent 1.85in 3.7in)}
+  .rack-h{font-variant:small-caps;font-weight:bold;font-size:.105in;color:var(--pc);display:flex;align-items:center;gap:.05in;margin-bottom:.05in}
+  .rack-h svg,.rack-h .ic{width:.13in;height:.13in} .rack-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.085in;color:var(--ink2);margin-left:auto}
+  .rack-row{display:flex;gap:.04in;justify-content:center}
+  .rk{width:1.85in;height:.56in;flex:0 0 auto;border-radius:.05in .05in 0 0;border:1.3px solid var(--pc);border-bottom:none;overflow:hidden}
+  .rk.tuck{border-style:dashed;background:rgba(255,255,255,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.02in;color:var(--pc);font-size:.092in;text-align:center}
+  .rk.tuck svg,.rk.tuck .ic{width:.15in;height:.15in;opacity:.55}
+  .rk.printed{background:var(--cc);color:#fff;display:flex;flex-direction:column;justify-content:center;gap:.04in;padding:.05in .12in;text-shadow:0 1px 1.5px rgba(0,0,0,.45)}
+  .rk.printed .c-row{display:flex;align-items:center;gap:.06in;line-height:1;white-space:nowrap}
+  .rk.printed svg,.rk.printed .ic{width:.14in;height:.14in;flex:0 0 auto}
+  .rk.printed .c-rung{display:inline-flex;align-items:center;gap:.015in;background:rgba(255,255,255,.92);color:var(--cc);
+    border-radius:.04in;padding:.025in .05in;font-size:.115in;font-weight:bold;text-shadow:none}
+  .rk.printed .c-rung svg,.rk.printed .c-rung .ic{width:.13in;height:.13in}
+  .rk.printed .c-nm{font-variant:small-caps;font-weight:bold;font-size:.16in}
+  .rk.printed .c-lbl{font-size:.085in;font-style:italic;opacity:.85}
+  .rk.printed .c-cost{display:inline-flex;align-items:center;gap:.06in;font-weight:bold;font-size:.13in}
+  .rk.printed .c-cost .gc{font-size:.13in;gap:.02in}
+  .rk.printed .c-cost .gc svg,.rk.printed .c-cost .gc .ic{width:.13in;height:.13in}
+  /* ====================== PLAYER BOARD v3 (component-driven · tight die-cut · chrome-stripped) ==========
+     A bench sized to the TILES, not the page: 4 building/improvement slots (2in) + a compact Flight strip on
+     top; ONE recipe-stack slot + 3 cask-vessel slots (2.46in, hold the 2.5in cask cards) on the bottom. No
+     header/storage block, no rules text — just the slots. The die-cut hugs the cluster (see the call site). */
+  .pb2{--pc:#7c2128;width:100%;height:100%;background:var(--parch);color:var(--ink);position:relative;
+    border:3px solid var(--pc);border-radius:.18in;padding:.13in;display:flex;flex-direction:column;gap:.1in}
+  /* the white highlight line is an ::after overlay border, not an inset box-shadow — html2canvas floods
+     inset shadows across the whole element (the player-board sheet PNG exported 45%-white-washed; same
+     export bug that painted the Market & Stores board gold — see .supply-outer) */
+  .pb2::after{content:"";position:absolute;inset:0;border:1.5px solid rgba(255,255,255,.45);border-radius:.14in;pointer-events:none;z-index:6}
+  .pb2 svg,.pb2 .ic{stroke-width:1.8}
+  /* identity — a small colour crest + house name + a tiny goods-cap reminder (no storage block) */
+  .pb2-id{display:flex;align-items:center;gap:.08in;flex:0 0 auto;padding:0 .02in}
+  .pb2-crest{width:.32in;height:.32in;border-radius:.05in;background:var(--pc);color:#fff;display:flex;align-items:center;justify-content:center}
+  .pb2-crest svg,.pb2-crest .ic{width:.2in;height:.2in}
+  .pb2-name{font-variant:small-caps;font-weight:bold;font-size:.18in;color:var(--pc);line-height:1}
+  .pb2-goods{margin-left:auto;display:inline-flex;align-items:center;gap:.04in;font-variant:small-caps;font-size:.092in;color:var(--ink2)}
+  .pb2-goods svg,.pb2-goods .ic{width:.12in;height:.12in} .pb2-goods b{color:var(--pc);font-size:.105in}
+  /* rows */
+  .pb2-top,.pb2-bot{display:flex;align-items:stretch;flex:0 0 auto}
+  .pb2-top{gap:.1in} .pb2-bot{gap:.1in}
+  .pb2-blds{display:flex;gap:.1in;flex:0 0 auto}
+  .pb2-vessels{display:flex;gap:.06in;flex:0 0 auto}
+  .pb2-slot{position:relative;border:1.6px dashed var(--pc);border-radius:.06in;background:rgba(255,255,255,.35);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;color:var(--pc);text-align:center}
+  .pb2-slot .sn{position:absolute;top:.05in;left:0;right:0;font-variant:small-caps;font-weight:bold;font-size:.08in;opacity:.62;line-height:1.05}
+  .pb2-slot .si{display:flex;gap:.06in;opacity:.4} .pb2-slot .si svg,.pb2-slot .si .ic{width:.32in;height:.32in}
+  .pb2-bld{width:2in;height:2in}
+  .pb2-vsl{width:2.46in;height:2.46in;border-style:solid}
+  .pb2-vsl.extra{border-style:dashed}
+  .pb2-vsl .si svg,.pb2-vsl .si .ic{width:.46in;height:.46in}
+  /* flight — a compact tally column, top-right */
+  .pb2-flight{flex:1 1 auto;min-width:.95in;display:flex;flex-direction:column;gap:.03in;border:1.6px solid var(--pc);border-radius:.06in;background:rgba(255,255,255,.4);padding:.05in .06in}
+  .pb2-flight .fh{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--pc);text-align:center;display:flex;align-items:center;justify-content:center;gap:.03in}
+  .pb2-flight .fh svg,.pb2-flight .fh .ic{width:.12in;height:.12in}
+  .pb2-flight .fsub{font-size:.068in;font-style:italic;color:var(--ink2);text-align:center}
+  .pb2-fboxes{flex:1;display:flex;flex-direction:column;gap:.04in}
+  .pb2-fbox{flex:1;border:1.2px solid var(--pc);border-radius:.035in;background:rgba(255,255,255,.5);
+    display:flex;align-items:center;justify-content:space-between;padding:0 .07in}
+  .pb2-fbox .fn{font-weight:900;font-size:.095in;font-variant:small-caps;color:var(--pc)}
+  .pb2-fbox .fp{display:inline-flex;align-items:center;gap:.015in;font-weight:900;font-size:.105in;color:var(--vp)}
+  .pb2-fbox .fp svg,.pb2-fbox .fp .ic{width:.12in;height:.12in}
+  .pb2-fbox.z{opacity:.5} .pb2-fbox.z .fp{color:var(--ink2);font-weight:normal}
+  /* recipe — Gruit/Hopped printed at the TOP; acquired cards slide UP under them and stack in the zone below. */
+  .pb2-recipe{width:1.78in;flex:0 0 auto;display:flex;flex-direction:column;gap:.05in;border:1.6px dashed var(--pc);border-radius:.06in;background:rgba(255,255,255,.35);padding:.06in}
+  .pb2-recipe .rh{font-variant:small-caps;font-weight:bold;font-size:.095in;color:var(--pc);display:flex;align-items:center;gap:.03in}
+  .pb2-recipe .rh svg,.pb2-recipe .rh .ic{width:.11in;height:.11in}
+  .pb2-rstack{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;color:var(--pc);font-size:.078in;opacity:.6;
+    border:1.3px dashed var(--pc);border-radius:.05in;background:repeating-linear-gradient(0deg,rgba(124,33,40,.05) 0 .04in,transparent .04in .14in)}
+  .pb2-rstack svg,.pb2-rstack .ic{width:.18in;height:.18in;opacity:.8}
+  .pb2-rbase{display:flex;flex-direction:column;gap:.035in}
+  .pb2-rbar{border-radius:.035in;padding:.03in .05in;color:#fff;display:flex;align-items:center;gap:.04in;text-shadow:0 1px 1px rgba(0,0,0,.4)}
+  .pb2-rbar .rq{display:inline-flex;align-items:center;gap:.01in;background:rgba(255,255,255,.92);color:#333;border-radius:.025in;padding:0 .03in;font-weight:bold;font-size:.082in}
+  .pb2-rbar .rq svg,.pb2-rbar .rq .ic{width:.09in;height:.09in}
+  .pb2-rbar .rn{font-variant:small-caps;font-weight:bold;font-size:.1in;flex:1}
+  .pb2-rbar .rc{display:inline-flex;align-items:center;gap:.025in;font-weight:bold;font-size:.092in}
+  .pb2-rbar .rc .gc .ic,.pb2-rbar .rc .gc svg{width:.1in;height:.1in}
+  /* ====================== DESTINATIONS BOARD ====================== */
+  .dboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--gold);border-radius:.14in;padding:.16in;display:flex;flex-direction:column;gap:.12in;color:var(--ink);box-sizing:border-box}
+  .dboard svg,.dboard .ic{stroke-width:1.9}
+  .db-head{display:flex;align-items:baseline;gap:.14in;border-bottom:2.5px solid var(--gold);padding-bottom:.06in}
+  .db-head h2{margin:0;font-variant:small-caps;color:var(--red);font-size:.30in;letter-spacing:.5px;display:flex;align-items:center;gap:.06in}
+  .db-head h2 svg,.db-head h2 .ic{width:.28in;height:.28in}
+  .db-head .dsub{font-style:italic;color:var(--ink2);font-size:.1in}
+  .db-head .legend{font-size:.088in;color:var(--ink2);margin-left:auto;display:flex;gap:.13in;align-items:center}
+  .db-head .legend b{color:var(--ink)} .db-head .legend svg,.db-head .legend .ic{width:.14in;height:.14in;vertical-align:-.02in}
+  .vp{color:var(--vp)} .ql{color:var(--ink)}
+  /* each destination = a colourful vertical card, washed in its kontor colour */
+  .kontor-row{display:flex;gap:.1in;flex:1;min-height:0}
+  .kpanel{position:relative;flex:1;border:2.5px solid var(--kc);border-radius:.11in;background:var(--kt);display:flex;flex-direction:column;overflow:hidden;color:var(--ink)}
+  .kpanel.hall{flex:.86}   /* the Hall is a touch narrower — no majority track */
+  .ktitle{background:var(--kc);color:#fff;padding:.07in .1in;display:flex;justify-content:space-between;align-items:center;gap:.04in}
+  .kname{font-variant:small-caps;font-weight:bold;font-size:.2in;display:flex;align-items:center;gap:.05in;line-height:1;letter-spacing:.3px}
+  .kname svg,.kname .ic{width:.22in;height:.22in}
+  .kreq{font-size:.13in;font-weight:bold;background:rgba(255,255,255,.24);border-radius:.05in;padding:.018in .06in;display:flex;align-items:center;gap:.03in;flex:0 0 auto}
+  .kreq svg,.kreq .ic{width:.15in;height:.15in}
+  .kbody{flex:1;display:flex;flex-direction:column;gap:.06in;padding:.08in .07in .09in}
+  .krole{font-size:.1in;font-style:italic;color:var(--ink2);line-height:1.12;text-align:center;min-height:.22in}
+  /* a section card inside the panel: white, kontor-edged, with a small small-caps heading. value/benefit are
+     compact; the MAJORITY card grows so its presence zone fills the panel. Headings/notes wrap rather than
+     clip — a panel this narrow, at a real serif font, can't guarantee a long label fits on one line. */
+  .ksect{flex:1 1 0;background:#fff;border:1.5px solid var(--kc);border-radius:.07in;padding:.05in .04in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in}
+  .ksh{font-variant:small-caps;font-weight:bold;font-size:.09in;color:var(--kc);letter-spacing:.3px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.03in;opacity:.92;text-align:center;row-gap:0}
+  .ksh svg,.ksh .ic{width:.12in;height:.12in;opacity:.85}
+  .ksh .mt-t{color:var(--ink2);font-weight:normal;font-variant:normal;font-style:italic;font-size:.078in;margin-left:.02in}
+  .ksub{font-size:.08in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.1}
+  .ksub b{color:var(--kc);font-style:normal}
+  /* per-cask value — a readable star number, or a by-quality mini-row for the Long Haul */
+  .kval{display:flex;align-items:center;justify-content:center;gap:.04in;font-weight:900;font-size:.42in;color:var(--kc);line-height:.92}
+  .kval svg,.kval .ic{width:.28in;height:.28in;color:var(--vp);stroke-width:2.5}
+  .kvscale{display:flex;gap:.06in;justify-content:center;align-items:flex-end}
+  .kvscale .qv{display:flex;flex-direction:column;align-items:center;gap:.01in;flex:0 0 auto}
+  .kvscale .qv .qq{font-size:.09in;font-variant:small-caps;font-weight:bold;color:var(--ink2);white-space:nowrap}
+  .kvscale .qv .qn{display:flex;align-items:center;gap:.02in;font-weight:900;font-size:.22in;color:var(--kc);line-height:1;white-space:nowrap}
+  .kvscale .qv .qn svg,.kvscale .qv .qn .ic{width:.16in;height:.16in;color:var(--vp);stroke-width:2.6;flex:0 0 auto}
+  /* on-delivery benefit — iconic + a one-line note */
+  .kben{display:flex;align-items:center;justify-content:center;gap:.05in;font-weight:900;font-size:.36in;color:var(--kc);line-height:1}
+  .kben svg,.kben .ic{width:.42in;height:.42in;color:var(--kc);stroke-width:2.1}
+  /* majority — the tiered payout + a PRESENCE ZONE (pile your delivered-cask tokens; most leads) */
+  .ksect.maj{flex:1 1 auto}
+  .kmaj{display:flex;align-items:center;justify-content:center;gap:.05in;font-weight:900;font-size:.32in;color:var(--kc);line-height:1}
+  .kmaj svg,.kmaj .ic{width:.22in;height:.22in;color:var(--vp);stroke-width:2.4}
+  .kmaj i{color:var(--ink2);font-style:normal;font-weight:normal;font-size:.2in}
+  .kpz{flex:1 1 auto;align-self:stretch;min-height:.65in;margin-top:.03in;border:1.5px dashed var(--kc);border-radius:.06in;
+    background:rgba(0,0,0,.025);display:flex;align-items:center;justify-content:center;gap:.04in;color:var(--kc)}
+  .kpz svg,.kpz .ic{width:.14in;height:.14in;opacity:.7}
+  .kpz span{font-variant:small-caps;font-weight:bold;font-size:.1in;letter-spacing:.5px;opacity:.78}
+  /* the Hall — a prestige ladder of Q → ★ rows */
+  .ksect.hall{flex:1 1 auto;justify-content:center;gap:.07in}
+  .kladder{display:flex;flex-direction:column;gap:.07in;align-self:stretch;width:100%}
+  .kladder .lr{display:flex;align-items:center;justify-content:space-between;gap:.06in;font-weight:900;color:var(--kc);background:var(--kt);border:1.5px solid var(--kc);border-radius:.06in;padding:.045in .11in}
+  .kladder .lr .lq{font-size:.15in;font-variant:small-caps;color:var(--ink2)}
+  .kladder .lr .lv{display:flex;align-items:center;gap:.035in;font-size:.3in}
+  .kladder .lr svg,.kladder .lr .ic{width:.24in;height:.24in;color:var(--vp);stroke-width:2.5}
+  /* v11: was margin-top:auto, which glued this to the very bottom edge of the panel with almost no
+     clearance — a real (wider) serif font could wrap it to 2 lines with nothing below to absorb that,
+     clipping it against .kpanel's overflow:hidden. A fixed gap + shorter copy fixes both: it now sits
+     just under the ladder with real breathing room instead of pinned to the border. */
+  .hall-note{font-size:.086in;font-style:italic;color:var(--ink2);text-align:center;line-height:1.14;margin-top:.1in}
+  .hall-note b{color:var(--kc);font-style:normal}
+  /* ====================== MAIN BOARD — THE WHARF ====================== */
+  .mboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--sea);border-radius:.12in;padding:.14in .16in;display:flex;flex-direction:column;gap:.04in;color:var(--ink)}
+  .mboard svg,.mboard .ic{stroke-width:1.8}
+  .mb-head{display:flex;align-items:baseline;gap:.14in;margin-bottom:.02in}
+  .mb-head h2{margin:0;font-variant:small-caps;color:var(--sea);font-size:.26in;letter-spacing:.5px;display:flex;align-items:center;gap:.08in}
+  .mb-head h2 svg,.mb-head h2 .ic{width:.2in;height:.2in}
+  .mb-head .sub{font-size:.1in;font-style:italic;color:var(--ink2)}
+  .mb-main{flex:1;display:flex;gap:.14in;min-height:0;align-items:center}
+  /* printables2 SCALE-UP: 8 real 2.5in tile-slots + 0.3in spacing (the cross of stations + slots). */
+  .wharf{flex:0 0 auto;align-self:flex-start;display:grid;gap:.3in;
+    grid-template-columns:repeat(4,2.5in);
+    grid-template-rows:repeat(4,2.5in)}
+  .wslot{border:2.5px dashed rgba(255,255,255,.82);border-radius:.18in;background:rgba(20,14,8,.24);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.75)}
+  .wslot svg,.wslot .ic{width:.5in;height:.5in;opacity:.85;filter:drop-shadow(0 1px 3px rgba(0,0,0,.7))}
+  .stn{border-radius:.2in;color:#fff;padding:.14in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1in;position:relative;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.55);box-shadow:0 3px 10px rgba(0,0,0,.35)}
+  .stn>*{position:relative;z-index:1}
+  /* roof-tile (fish-scale) texture over the station colour — an inline SVG <pattern> (not a CSS radial-gradient)
+     so it survives the PNG export: html2canvas can't rasterize tiled radial-gradients, but it renders inline SVG. */
+  .stn>.stn-tex{position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none}
+  .stn .bigic svg,.stn .bigic .ic{width:.8in;height:.8in;stroke-width:1.6}
+  .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.32in;line-height:1}
+  /* the action line, in the board's icon grammar: "/" = or · juxtaposed = both · ":" = per-each */
+  .stn .yield{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:.035in;margin-top:.06in;opacity:.95}
+  .stn .yield svg,.stn .yield .ic{width:.22in;height:.22in}
+  .stn .yield b{font-size:.2in;font-weight:900;line-height:1}
+  .stn .yield .sep{font-weight:bold;font-size:.15in;opacity:.85;line-height:1}
+  .stn.A{background:linear-gradient(155deg,#cda522,#9c7414)} .stn.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
+  .stn.C{background:linear-gradient(155deg,#3d6b7e,#244554)} .stn.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
+  .mb-side{flex:1;display:flex;flex-direction:column;gap:.055in;min-width:0}
+  .mbox{border:1.5px solid var(--sea);border-radius:.07in;background:#fff;padding:.045in .07in}
+  .mbox h4{margin:0 0 .025in;font-variant:small-caps;font-size:.115in;color:var(--sea);display:flex;align-items:center;gap:.04in;border-bottom:1px solid rgba(0,0,0,.15);padding-bottom:.015in}
+  .mbox h4 svg,.mbox h4 .ic{width:.13in;height:.13in}
+  .mbox .b{font-size:.092in;line-height:1.22}
+  .mbox .b b{color:var(--red)}
+  .mbox ol{margin:.02in 0 0;padding-left:.16in;font-size:.092in;line-height:1.24}
+  .srow{display:flex;gap:.05in;font-size:.09in;line-height:1.2;margin-bottom:.024in}
+  .srow:last-child{margin-bottom:0}
+  .srow .sic{flex:0 0 auto;margin-top:.005in} .srow .sic svg,.srow .sic .ic{width:.14in;height:.14in}
+  .srow b{font-variant:small-caps}
+  .mtrack-l{font-size:.082in;font-style:italic;color:var(--ink2);text-align:center}
+  .ctrack{display:flex;height:.55in;border:1.5px solid var(--sea);border-radius:.05in;overflow:hidden}
+  .cc{flex:1;min-width:0;border-right:1px solid rgba(0,0,0,.15);display:flex;flex-direction:column;gap:.015in;align-items:center;justify-content:center;font-size:.08in;color:var(--ink2);background:rgba(255,255,255,.4)}
+  .cc:last-child{border-right:none} .cc .n{font-size:.1in;color:#999}
+  .cc svg,.cc .ic{width:.14in;height:.14in}
+  .cc b{font-size:.085in;line-height:1}
+  .cc.end{background:var(--sea);color:#fff;font-weight:bold;text-align:center;line-height:1}
+  .cc.rend{background:rgba(122,82,54,.22);color:#7a5236;font-weight:bold;text-align:center;line-height:1}
+  .rtrack{display:flex;height:.3in;border:1.5px solid var(--gold);border-radius:.05in;overflow:hidden}
+  .rc{flex:1;min-width:0;border-right:1px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:.078in;color:var(--ink2);background:rgba(255,255,255,.4)}
+  .rc:last-child{border-right:none} .rc.band{background:rgba(184,134,11,.16)}
+  .rc.cap{background:var(--gold);color:#fff;font-weight:bold;font-size:.07in;text-align:center;line-height:1}
+  .rc.z{background:rgba(124,33,40,.12);font-variant:small-caps;font-weight:bold;color:var(--red);font-size:.07in}
+  /* printables2: the SCORE RING — 50 disc-sized cells (0–49 + lap) wrapping the Supply board's outer edge */
+  /* the gold rim is an ::after overlay border, NOT an inset box-shadow: html2canvas mis-renders inset
+     box-shadows by FLOODING the whole element with the shadow colour — the S2 sheet PNG exported with the
+     entire board interior painted gold (#b8860b) instead of parchment. Same bug class as the documented
+     gradient/filter/clip-path quirks in the export review note; the ::after border pattern is already
+     proven in exports by the goods tokens' .tok::after inner ring. */
+  .supply-outer{position:relative;width:100%;height:100%;background:var(--parch);border-radius:.14in;overflow:hidden}
+  .supply-outer::after{content:"";position:absolute;inset:0;border:2px solid var(--gold);border-radius:.14in;pointer-events:none;z-index:6}
+  .score-ring{position:absolute;inset:0}
+  .ringcell{position:absolute;border:1px solid rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;
+    font-size:.21in;font-weight:900;color:var(--ink2);background:rgba(255,255,255,.55);overflow:hidden}
+  .ringcell.start{background:var(--red);color:#fff;flex-direction:column;gap:.02in;text-align:center}
+  .ringcell.start svg,.ringcell.start .ic{width:.19in;height:.19in}
+  .ringcell.start .lap{font-size:.11in;font-weight:bold;line-height:1;opacity:.95}
+  .ringcell.five{background:rgba(184,134,11,.3);color:var(--ink)}
+  .trk-h{font-variant:small-caps;font-weight:bold;font-size:.12in;color:var(--sea);display:flex;align-items:center;gap:.05in;margin:.07in 0 .03in}
+  .trk-h svg,.trk-h .ic{width:.14in;height:.14in}
+  .trk-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;color:var(--ink2);margin-left:.06in}
+  /* the WHARF board is a CROSS — the cut follows the plus outline; the 4 corners fall away */
+  /* +.3in outline padding: the grid sits inset, the cut plus runs .3in outside the slots */
+  .mboard.cross{background:#e9dcc0 url('../../art/wharf-board.png') center/cover;border:none;border-radius:0;padding:.3in;display:block;
+    clip-path:url(#crossclip)}
+  .mboard.supply{display:flex;flex-direction:column;gap:.08in;padding:.18in .2in .32in;border:none;background:transparent;border-radius:0}   /* extra foot padding — the content shouldn't ride the ring */
+  .mboard.supply .tracks{flex:0 0 auto;margin-top:auto}
+  /* a printed label on the large sheet (above each cut board) */
+  .sheetlbl{font-variant:small-caps;color:var(--sea);font-weight:bold;font-size:.28in;display:flex;align-items:center;gap:.1in;height:100%}
+  .sheetlbl svg,.sheetlbl .ic{width:.26in;height:.26in}
+  .sheetlbl .sub{font-variant:normal;font-weight:normal;font-style:italic;font-size:.13in;color:var(--ink2)}
+  /* ====================== WHARF SIDE — supply DISPLAYS (Building display · Ship market) ====================== */
+  .disp{flex:1;display:flex;flex-direction:column;gap:.18in;min-width:0;margin-top:0}
+  .mb-track{margin-top:.12in}
+  .disp-h{display:inline-flex;align-items:center;gap:.05in;background:var(--sea);color:#fff;border-radius:.06in;
+    padding:.035in .12in;font-variant:small-caps;font-weight:bold;font-size:.125in;letter-spacing:.3px;margin-bottom:.07in;text-shadow:0 1px 1px rgba(0,0,0,.25)}
+  .disp-h svg,.disp-h .ic{width:.15in;height:.15in}
+  .disp-h .sm{font-variant:normal;font-weight:normal;font-style:italic;font-size:.082in;opacity:.85;margin-left:.06in}
+  .disp-h .sm svg,.disp-h .sm .ic{width:.1in;height:.1in;vertical-align:-.015in}
+  .disp-h.b{background:var(--green)}
+  .disp-h.m{background:#9c7414}
+  .disp-h.i{background:var(--violet)}
+  /* market SHELVES — one family per row at its native footprint; deck right-aligned = the stockroom column */
+  .shelf{display:flex;gap:.12in;align-items:flex-start}
+  .shelf-lbl{display:flex;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.105in;color:var(--ink2);margin-top:.02in}
+  .shelf-lbl svg,.shelf-lbl .ic{width:.13in;height:.13in}
+  .shelf-lbl .bag{margin-left:auto;display:inline-flex;align-items:center;opacity:.7}   /* refill from this family's DRAW BAG (tile backs reveal the type, so the supply hides in a bag) */
+  .shelf-lbl .bag svg,.shelf-lbl .bag .ic{width:.16in;height:.16in}
+  .disp-bd{display:flex;gap:.1in;align-items:center}
+  .dslot{width:2in;height:2in;border:1.7px dashed var(--sea);border-radius:.07in;background:rgba(255,255,255,.5);
+    display:flex;flex-direction:column;gap:.04in;align-items:center;justify-content:center;color:var(--sea);flex:0 0 auto;position:relative}
+  .dslot svg,.dslot .ic{width:.6in;height:.6in;opacity:.32}
+  /* OVERLAY proof: a real component render ghosted into its slot — native size, half opacity, never printed */
+  .dslot .ovl{position:absolute;inset:0;opacity:.5;pointer-events:none;z-index:2}
+  @media print{.dslot .ovl{display:none}}
+  .dslot.b{border-color:var(--green);color:var(--green)}
+  .dslot.i{border-color:var(--violet);color:var(--violet)}
+  .dslot.s,.ddeck.s{width:2.5in;height:2.5in}
+  .dslot.r{width:1.85in;height:2.55in;border-color:#8a6408;color:#8a6408}   /* recipe/contract cards, 1.85×2.55 */
+  .dslot.r svg,.dslot.r .ic{width:.5in;height:.5in}
+  .dslot.r .rn{font-variant:small-caps;font-weight:bold;font-size:.1in;opacity:.7}
+  .dslot.r.ct{border-color:var(--sea);color:var(--sea)}
+  /* (the goods/dice/marker bins moved OFF the board — the loose bits live in a supply tray; the Round
+     backstop is rules-side only, untracked on the table) */
+  /* ---- Market & Stores two-column interior: displays left · destinations right ---- */
+  .sup-cols{display:flex;gap:.2in;flex:1;min-height:0}
+  .sup-main{flex:0 0 auto;width:9.7in;display:flex;flex-direction:column;gap:.08in}
+  .sup-main .tracks{margin-top:auto}
+  .sup-dests{flex:1;display:flex;flex-direction:column;gap:.09in;min-width:0}
+  /* the vertical Sailed-Ships CLOCK — its own slim third column, the ship at its head */
+  .sup-clock{flex:0 0 auto;width:.74in;display:flex;flex-direction:column;align-items:center;gap:.03in}
+  .sup-clock .cicon{color:var(--sea);display:flex;align-items:center;justify-content:center}
+  .sup-clock .cicon svg,.sup-clock .cicon .ic{width:.34in;height:.34in;stroke-width:1.6}
+  .sup-clock .clbl{font-variant:small-caps;font-weight:bold;font-size:.088in;color:var(--sea);text-align:center;line-height:1.1}
+  .vtrack{flex:1;width:100%;display:flex;flex-direction:column;border:1.5px solid var(--sea);border-radius:.05in;overflow:hidden}
+  .vtrack .cc{border-right:none;border-bottom:1px solid rgba(0,0,0,.15)}
+  .vtrack .cc:last-child{border-bottom:none}
+  .disp-h.k{background:var(--sea)}
+  .disp-h.hall{background:#5b3a8e}
+  /* a destination panel: gate · value · benefit · majority at POSTER scale (read standing, across a table)
+     over an open presence ZONE (discs pile freely; no per-disc slots) */
+  .kp{flex:1;border:3px solid var(--kc);border-radius:.1in;background:var(--kt,#fff);display:flex;flex-direction:column;overflow:hidden;position:relative}
+  .kp.hall{flex:1.05}  /* the Hall is a CORE path — a touch more room than a kontor */
+  /* v2.9.3: Novgorod's extra by-quality scale row makes its stat block genuinely taller than the other three
+     kontors' (measured: ~178px of content wanting to fit a ~149px equal-share panel) — an equal flex:1 share
+     wasn't enough even after the row stopped wrapping; it was just overflowing straight past the panel's
+     bottom edge instead (still clipped, just no longer via a wrapped 2nd line). Give it more of the column. */
+  .kp.scale{flex:1.22}
+  /* the destination SCENE: full-bleed art; a dark inline-SVG gradient rises from the FOOT (where the
+     white stats sit); the middle stays open art — the presence discs land on the quay */
+  .kp-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+  .kp-grad{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+  .kp-t,.kp-rows,.kp-pz{position:relative;z-index:2}
+  .kp-t{background:var(--kc);color:#fff;display:flex;align-items:center;gap:.07in;padding:.05in .11in;
+    font-variant:small-caps;font-weight:bold;font-size:.22in;text-shadow:0 1px 1.5px rgba(0,0,0,.35)}
+  .kp-t svg,.kp-t .ic{width:.21in;height:.21in}
+  .kp-q{margin-left:auto;display:inline-flex;align-items:center;gap:.03in;background:rgba(255,255,255,.3);border-radius:.06in;
+    padding:.02in .08in;font-size:.2in;font-weight:900}
+  .kp-q svg,.kp-q .ic{width:.19in;height:.19in}
+  .kp-rows{flex:0 0 auto;display:flex;flex-direction:column;gap:.04in;padding:.04in .12in .11in;min-height:0}   /* anchored at the FOOT, over the gradient */
+  .kp-cr{display:flex;gap:.1in;align-items:flex-end}
+  .kp-cr.two{gap:.22in}   /* Novgorod: only 2 cells here (value moved to its own full-width row above), so give each more breathing room */
+  /* the by-quality scale gets its OWN full-width row, not a 3rd cramped column — see kMini's comment */
+  .kp-scalerow{display:flex;flex-direction:column;align-items:center;gap:.02in}
+  /* v2.9.2: dropped the hardcoded white-space:nowrap on .kp-ch/.kp-scale/.kp-note.bnote — at the real print
+     font (a wide serif, not this sandbox's fallback) a "no wrap, ever" rule doesn't shrink the text, it just
+     overflows the narrow art panel silently past .kp's overflow:hidden edge. Wrapping + shorter copy below
+     is the actual fix; nowrap only ever masked it in a narrower-than-real test render. */
+  .kp-note.bnote{text-align:center}
+  .kp-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.04in;text-align:center;min-width:0}
+  .kp-ch{display:inline-flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.03in;font-variant:small-caps;font-weight:bold;font-size:.108in;color:rgba(255,255,255,.88);text-shadow:0 1px 2px rgba(0,0,0,.75)}
+  .kp-ch svg,.kp-ch .ic{width:.12in;height:.12in;flex:0 0 auto}
+  .kp-big{display:inline-flex;align-items:center;gap:.04in;font-weight:900;font-size:.3in;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 1.5px 3px rgba(0,0,0,.8)}
+  .kp-big svg,.kp-big .ic{width:.27in;height:.27in}
+  /* the by-quality scale — a STACKED chip per tier (Q above, ★ value below), not one long joined line, laid
+     out on its OWN full-width row (kp-scalerow) instead of a 1-of-3 cell, so it scales to however many tiers
+     a kontor prints (Novgorod's v2.9 floor row made it four) without wrapping to a 2nd line and colliding
+     with the row below. flex-wrap stays as a last-resort safety net, not the primary fit strategy. */
+  .kp-scale{display:flex;gap:.14in;justify-content:center;flex-wrap:wrap}
+  .kp-scale .qv{display:flex;flex-direction:column;align-items:center;gap:.01in;flex:0 0 auto}
+  .kp-scale .qv .qq{font-size:.088in;font-variant:small-caps;font-weight:bold;color:rgba(255,255,255,.8);white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.75)}
+  .kp-scale .qv .qn{font-weight:900;font-size:.2in;color:#fff;line-height:1;text-shadow:0 1.5px 3px rgba(0,0,0,.8)}
+  .kp-note{font-size:.12in;font-style:italic;color:rgba(255,255,255,.92);line-height:1.22;text-shadow:0 1px 2px rgba(0,0,0,.75)}
+  .kp-note.ctr{text-align:center;padding:.03in .16in .02in;font-size:.12in}
+  /* presence ZONE — the panel's open floor: ownership discs pile here (the majority count) */
+  .kp-pz{flex:1;min-height:.42in}   /* the open middle — pure art; the presence discs pile here, untaught */
+  .kp-pz.nb{min-height:.18in}   /* the Hall's shorter note needs less clearance below it now that it's one short line */
+  .kp.hall .kp-lad{display:flex;align-items:center;justify-content:space-evenly;gap:.12in;padding:.05in .12in .02in}
+  .kp.hall .kp-lad .lr{display:flex;flex-direction:column;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.17in;color:rgba(255,255,255,.88);text-shadow:0 1px 2px rgba(0,0,0,.75)}
+  .kp.hall .kp-lad .lr b{display:inline-flex;align-items:center;gap:.03in;font-size:.4in;color:#fff;text-shadow:0 1.5px 3px rgba(0,0,0,.8)}
+  .kp.hall .kp-lad .lr b svg,.kp.hall .kp-lad .lr b .ic{width:.31in;height:.31in}
+  .ddeck{width:2in;height:2in;border-radius:.07in;background:var(--sea);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;
+    text-shadow:0 1px 1px rgba(0,0,0,.3);box-shadow:.05in -.05in 0 rgba(0,0,0,.18),inset 0 0 0 1.5px rgba(255,255,255,.22)}
+  .ddeck.b{background:var(--green)}
+  .ddeck.i{background:var(--violet)}
+  .ddeck svg,.ddeck .ic{width:.45in;height:.45in;opacity:.92}
+  .ddeck .dn{font-size:.12in}
+  .ddeck .dn{font-variant:small-caps;font-weight:bold;font-size:.092in;text-align:center;line-height:1.05}
+  /* ====================== OVERLAND board (Trade Roads) ====================== */
+  .olboard{width:100%;height:100%;background:var(--parch);border:2.5px solid #7a5236;border-radius:.12in;padding:.16in;display:flex;flex-direction:column;gap:.08in;color:var(--ink)}
+  .olboard svg,.olboard .ic{stroke-width:1.8}
+  .ol-head{display:flex;align-items:baseline;gap:.14in}
+  .ol-head h2{margin:0;font-variant:small-caps;color:#7a5236;font-size:.24in;display:flex;align-items:center;gap:.08in}
+  .ol-head h2 svg,.ol-head h2 .ic{width:.2in;height:.2in}
+  .ol-head .sub{font-size:.1in;font-style:italic;color:var(--ink2)}
+  .ol-legend{display:grid;grid-template-columns:1fr 1fr;gap:.02in .2in;font-size:.088in;line-height:1.2;background:#fff;border:1.5px solid #c9b693;border-radius:.08in;padding:.05in .1in}
+  .ol-legend b{color:#7a5236}
+  .ol-legend svg,.ol-legend .ic{width:.11in;height:.11in;vertical-align:-.02in}
+  /* the tech-tree canvas: one Hamburg root + one Bruges gateway, branching to the 3 western roads + the eastern haul */
+  .ol-tree{position:relative;flex:1;min-height:0}
+  .ol-roads{position:absolute;inset:0;width:100%;height:100%}
+  .ol-roads .ol-reg{fill:rgba(120,90,40,.05);stroke:rgba(0,0,0,.05)}
+  .ol-roads .ol-reg.e{fill:rgba(70,50,20,.07)}
+  .ol-roads line{stroke:#b08d57;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:.4 6;opacity:.85;vector-effect:non-scaling-stroke}
+  .ol-roads .ol-express{stroke:#b08d57;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:.4 6;opacity:.85;vector-effect:non-scaling-stroke}  /* the Q4+ Rhine Charter (Hamburg→Cologne, skip Bruges) — same dotted style as the other roads; the label marks it */
+  .ol-reglbl{position:absolute;font-variant:small-caps;font-style:italic;font-weight:bold;font-size:.1in;color:rgba(90,70,40,.72);letter-spacing:.5px}
+  .ol-reglbl.r{font-style:normal;display:flex;align-items:center;gap:.04in;transform:translateX(-100%)}
+  .ol-reglbl.express{font-style:normal;display:flex;align-items:center;gap:.04in;color:#9c3b2e;font-size:.092in;background:rgba(243,233,210,.85);border-radius:.04in;padding:.005in .035in}
+  .ol-reglbl svg,.ol-reglbl .ic{width:.12in;height:.12in}
+  /* a town node CARD, absolutely positioned & centred on its tree coordinate */
+  .oln{position:absolute;transform:translate(-50%,-50%);border:1.6px solid #c9b693;border-radius:.07in;background:#fff;padding:.04in .05in;display:flex;flex-direction:column;gap:.03in;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+  .oln.home{background:#e6d3a8;border:2px solid #8a6d3b;align-items:center;justify-content:center;text-align:center;gap:.01in;padding:.05in}
+  .oln.home svg,.oln.home .ic{width:.2in;height:.2in;color:#7a5236}
+  .oln.home .oln-nm{font-size:.12in}
+  .oln.home .oln-mt{font-size:.082in;font-style:italic;color:var(--ink2)}
+  .oln.core{border-color:var(--gold);border-width:2.2px;background:#fdf6e6}
+  .oln.deep{box-shadow:0 0 0 1.5px #7c2128,0 1px 3px rgba(0,0,0,.12)}
+  .oln-h{display:flex;align-items:center;gap:.04in;flex-wrap:wrap}
+  .oln-nm{font-variant:small-caps;font-weight:bold;font-size:.12in;display:inline-flex;align-items:center;gap:.03in}
+  .oln-nm svg,.oln-nm .ic{width:.13in;height:.13in;color:var(--gold)}
+  .oln-dp{color:var(--gold);font-weight:900}
+  .oln-q,.oln-pts{display:inline-flex;align-items:center;gap:.012in;font-weight:900;font-size:.092in;border-radius:.03in;padding:0 .035in}
+  .oln-q{background:rgba(0,0,0,.08)} .oln-pts{background:rgba(184,134,11,.2);color:#7a5210;margin-left:auto}
+  .oln-q svg,.oln-q .ic,.oln-pts svg,.oln-pts .ic{width:.11in;height:.11in}
+  /* the PHYSICAL claim-slot squares — a little bigger than a presence token; cover one to claim it */
+  .olsq-row{display:flex;gap:.04in;justify-content:center}
+  .olsq{position:relative;width:.4in;min-width:.4in;height:.46in;border:1.4px dashed #9a8049;border-radius:.04in;background:rgba(120,90,40,.05);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.01in;text-align:center;color:#6a532b}
+  .olsq svg,.olsq .ic{width:.16in;height:.16in;stroke-width:1.9}
+  .olsq .t{font-size:.066in;line-height:1;font-weight:bold;letter-spacing:-.2px}
+  .olsq.fix{border-style:solid;border-width:1.8px;border-color:#6f5530;background:rgba(184,134,11,.16)}  /* always-available (every player count) — prominent: SOLID dark border + the gold fill */
+  .olsq.pts{color:#7a5210}  /* points slot — gold star/text only; its bg + border follow fix(always)/gated(player-count), so a gated pts slot matches its neighbour */
+  .olsq.pts svg,.olsq.pts .ic{color:var(--gold)}
+  .olsq-badge{position:absolute;top:-.06in;right:-.05in;background:var(--red);color:#fff;font-size:.062in;font-weight:900;border-radius:.03in;padding:.004in .025in;letter-spacing:0}
+  .oln-over{display:flex;align-items:center;gap:.03in;font-size:.076in;color:var(--ink2);border-top:1px dotted #c9b693;padding-top:.025in}
+  .oln-over b{color:#7a5236}
+  .oln-over svg,.oln-over .ic{width:.1in;height:.1in}
+  .oln-gwb{display:flex;flex-direction:column;gap:.025in;font-size:.085in}
+  .oln-gwb i{color:var(--ink2)}
+  .oln-gwa{display:inline-flex;align-items:center;gap:.03in;font-weight:bold}
+  .oln-gwa svg,.oln-gwa .ic{width:.11in;height:.11in}
+  /* ====================== CHECKLIST ====================== */
+  .check{position:absolute;left:.35in;top:.38in;width:9.7in;height:7.42in;font-size:.094in;display:flex;flex-direction:column;gap:.05in}
+  .check h2{margin:0;font-variant:small-caps;color:var(--red);font-size:.2in;border-bottom:2px solid var(--gold);padding-bottom:.03in}
+  .check .cols2{columns:2;column-gap:.3in;flex:1}
+  .check table{width:100%;border-collapse:collapse;margin-bottom:.07in;break-inside:avoid}
+  .check th{font-variant:small-caps;text-align:left;color:var(--red);border-bottom:1px solid var(--gold);font-size:.1in;padding:.015in .03in}
+  .check td{border-bottom:1px solid rgba(0,0,0,.12);padding:.012in .03in;vertical-align:top;line-height:1.18}
+  .check td.n{text-align:right;font-weight:bold;white-space:nowrap}
+  .check td.bx::before{content:"☐";font-size:.13in}
+  .check .tot{font-weight:bold;background:rgba(184,134,11,.12)}
+  .check .wf{font-size:.092in;line-height:1.4;border:1.5px solid var(--sea);border-radius:.06in;padding:.05in .08in;background:#fff;break-inside:avoid}
+  .check .wf b{color:var(--sea)}
+  /* ====================== PNG EXPORT view (screen only) ====================== */
+  .exp-wrap{max-width:11in;margin:14px auto;padding:0 16px;color:var(--ink)}
+  .exp-head h2{font-variant:small-caps;color:var(--red);margin:.2in 0 .04in}
+  .exp-head p{font-size:.85rem;color:var(--ink2);margin:0 0 .1in;max-width:7.5in}
+  .exp-head code{background:#0001;padding:1px 5px;border-radius:4px}
+  .exp-group{margin:16px 0;background:#fff;border:1px solid #c9b693;border-radius:10px;padding:12px 14px}
+  .exp-gh{display:flex;align-items:center;gap:12px;border-bottom:1px solid #c9b693;padding-bottom:8px;margin-bottom:10px}
+  .exp-gt{font-variant:small-caps;font-weight:bold;color:var(--sea);font-size:1.1rem;text-transform:capitalize}
+  .exp-gc{color:var(--ink2);font-size:.8rem}
+  .exp-zip{margin-left:auto;cursor:pointer;border:none;border-radius:6px;padding:6px 13px;background:var(--green);color:#fff;font-weight:bold;font-family:inherit;font-size:.82rem}
+  .exp-zip:disabled{opacity:.6;cursor:default}
+  .exp-grid{display:flex;flex-wrap:wrap;gap:16px}
+  .exp-item{display:flex;flex-direction:column;align-items:center;gap:5px;width:1.7in}
+  .exp-thumb{box-shadow:0 2px 8px rgba(0,0,0,.25);overflow:hidden;background:#cdbfa0;border-radius:3px}
+  .exp-dl{cursor:pointer;border:none;border-radius:5px;padding:4px 12px;background:var(--sea);color:#fff;font-family:inherit;font-size:.78rem}
+  .exp-fn{font-size:.6rem;color:var(--ink2);font-family:ui-monospace,Menlo,monospace;text-align:center;word-break:break-all;line-height:1.2}
+</style>
+<style id="dynpage"></style>
+</head>
+<body>
+<div class="bar no-print" id="bar">
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · Cask Cards · v2.9 “Ground Rent”</span></h1>
+  <a href="play.html">▶ Play</a>
+  <a href="index.html">📖 Rules</a>
+  <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
+    <option value="all">All sheets</option>
+    <option value="boards">Boards</option>
+    <option value="tiles">Cask &amp; ship cards</option>
+    <option value="bits">Tiles — plotter (building fronts/backs · improvements · frames)</option>
+    <option value="cards">Recipe / contract / aid cards</option>
+    <option value="png">PNG Export</option>
+    <option value="list">Checklist</option>
+  </select>
+  <span class="seg"><button id="bfull" class="on" onclick="setMode('full')">Full</button><button id="bproof" onclick="setMode('proof')">Proof</button></span>
+  <span class="seg"><button id="lart" class="on" onclick="setLayer('art')">Art</button><button id="lcut" onclick="setLayer('cut')">Cut</button><button id="lboth" onclick="setLayer('both')">Both</button></span>
+  <span class="seg"><button id="bovl" onclick="setOverlay()" title="Ghost sample components into the Market &amp; Stores board's slots (50% opacity, true size)">Overlay</button></span>
+</div>
+<div id="out"></div>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="vendor/html2canvas.min.js"></script>
+<script src="vendor/jszip.min.js"></script>
+<script>
+//==================================================================
+// DATA — mirrors play.html (the canonical engine) & COMPONENTS.md
+//==================================================================
+const LU=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
+const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc">'+LU('sprout','h')+h+'</span>');return a.join('');};
+const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · victory-point icon
+
+// v1.0/v1.1 — a cask's slot-action is STEERABLE at the kettle: the face-up top of each quality pile is
+// visible, so you brew toward the action you want. Physically the supply per quality is a MIX of this
+// 7-action pool, printed on the tile. Gruit is PINNED to Source; Wild is Q4+ only. Icons mirror play.html.
+const CASK_POOL=[
+  {k:'source', ai:'coins',            act:'+2 goods'},
+  {k:'age',    ai:'hourglass',        act:'Age a cask +2'},
+  {k:'load',   ai:'package-plus',     act:'free Load'},
+  {k:'reach',  ai:'map-pin',          act:'+1 Reach'},
+  {k:'convert',ai:'arrow-left-right', act:'Convert 2 goods'},
+  {k:'survey', ai:'search',           act:'gain 1 building'},
+  {k:'hire',   ai:'wrench',           act:'free Specialist (Q3+)'},
+];
+const CASK_WILD={k:'wild', ai:'sparkles', act:'Wild — any base action'};   // Q4+ only
+// cask supply — fixed global counts (COMPONENTS §5; the scarce high-Q exports are intentional). Gruit PINNED to Source; Q2+ draw at brew (steerable).
+// ready = maturation steps (v1.1: Hopped & Broyhan are FAST = ready 1; Keut ready 2; Mumme/Bock ready 3).
+const CASKS=[
+  {nm:'Gruit',   c:'#8a949c', q:1, g:1,h:0, n:16, ready:1, pin:CASK_POOL[0]},
+  {nm:'Hopped',  c:'#c2922f', q:2, g:1,h:1, n:20, ready:1},
+  {nm:'Broyhan', c:'#b06a34', q:3, g:1,h:2, n:6,  ready:1},
+  {nm:'Keut',    c:'#9c5f2e', q:3, g:2,h:1, n:6,  ready:2, tag:'<b>+1</b> '+LU('map-pin')+'<br>presence'},
+  {nm:'Mumme',   c:'#caa12a', q:4, g:1,h:3, n:8,  ready:3, wild:true},
+  {nm:'Bock',    c:'#7c2128', q:5, g:2,h:3, n:6,  ready:3, wild:true},
+  // ---- EXPANSION "Specialty Beers" (v1.9, opt-in) — PINNED-signature casks; drafted 3-of-7 only with the toggle ----
+  {nm:'Gose',     c:'#6e8b74', q:2, g:2,h:0, n:8, ready:1, pin:CASK_POOL[0], tag:'salt trade:<br>+'+LU('wheat')+LU('sprout')},
+  {nm:'Zerbster', c:'#5f7a3c', q:3, g:0,h:3, n:6, ready:1, pin:CASK_POOL[2], tag:'parti-gyle:<br>+free Gruit'},
+  {nm:'Duckstein',c:'#7a5236', q:2, g:1,h:1, n:8, ready:2, pin:CASK_POOL[3], tag:'smoke-hardy:<br>ships +1Q'},
+  // ---- EXPANSION CAPSTONE "Jopenbier" (v1.9, its OWN toggle) — the Q6 vintage super-beer (self-contained scoring) ----
+  {nm:'Jopenbier',c:'#5e2433', q:6, g:2,h:4, n:6, ready:4, pin:CASK_POOL[0], tag:'vintage:<br>+★/turn deployed'},
+];
+// v0.11 — NEUTRAL, destination-bound hulls (the destination is PRINTED on the tile). The 20-tile deck,
+// KONTORE ONLY: Bruges 5 · London 5 · Bergen 5 · Novgorod 5 (11 Cog / 9 Hulk); the Hall is reached by the local Enshrine, not a boat.
+const HULL={cog:{cap:2},hulk:{cap:3}};
+const SHIP_DISPLAY=3;   // face-up ship market at the Market ⚙ (refills from the shuffled ship deck)
+const SHIP_DEST={Bruges:{kc:'#274b5c',req:1},London:{kc:'#b8860b',req:2},Bergen:{kc:'#4a6b3a',req:2},Novgorod:{kc:'#7c2128',req:3}};
+const SHIP_DECK=[
+  ['cog','Bruges'],['cog','Bruges'],['cog','Bruges'],['hulk','Bruges'],['hulk','Bruges'],
+  ['cog','London'],['cog','London'],['cog','London'],['hulk','London'],['hulk','London'],
+  ['cog','Bergen'],['cog','Bergen'],['hulk','Bergen'],['hulk','Bergen'],['hulk','Bergen'],
+  ['cog','Novgorod'],['cog','Novgorod'],['cog','Novgorod'],['hulk','Novgorod'],['hulk','Novgorod'],
+];
+// ---- BUILDINGS (v1.0 KEYSTONE): the one OWNED tile family on the living slots (mirrors play.html BUILDINGS).
+// One grammar — "a building modifies the OCCUPANT docked on it" — in two verbs: VALUE (bonus ★ on delivery)
+// & TRANSFORM (changes the cask/ship). tgt = what it touches (cask/ship/line/owner), shown as a glyph.
+const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a SHIP docked here'}};   // v2.3: every building modifies its docked occupant (value = a privilege, owner-only; transform = a work, serves any dock)
+const BUILDINGS=[
+  // VALUE — trading privileges & patrons
+  {k:'richberth', nm:'Rich Berth',           verb:'value', tgt:'ship', ic:'anchor',      g:3, n:2, eff:'each of your casks’ dice +2 at the sail'},
+  {k:'staple',    nm:'Staple Hall',          verb:'value', tgt:'cask', ic:'warehouse',   g:3, n:2, eff:'a cask shipped from here +3★ (any kontor)'},
+  {k:'burgomstr', nm:'Burgomaster’s Favor',  verb:'value', tgt:'cask', ic:'crown',       g:3, n:2, eff:'a cask from here +1★ per quality level'},
+  {k:'connoiss',  nm:'Connoisseur’s Cellar', verb:'value', tgt:'cask', ic:'wine',        g:3, n:1, eff:'a Q4+ cask from here +4★'},
+  {k:'hansediet', nm:'The Hanse Diet',       verb:'value', tgt:'cask', ic:'gavel',       g:3, n:1, eff:'a cask to a kontor you LEAD +3★'},
+  {k:'festkeller',nm:'Festkeller',           verb:'value', tgt:'ship', ic:'beer',        g:3, n:1, eff:'a HULK here: your casks’ dice +3 at the sail'},
+  {k:'reliquary', nm:'Reliquary',            verb:'value', tgt:'cask', ic:'church',      g:3, n:1, eff:'a cask ENSHRINED from here +2★'},
+  {k:'almoner',   nm:'Almoner’s Stall',      verb:'value', tgt:'cask', ic:'heart',       g:3, n:1, eff:'to a kontor where you do NOT lead +3★'},
+  {k:'ch_bruges', nm:'Bruges Hanzehuis',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'a cask from here → Bruges +4★'},
+  {k:'ch_london', nm:'London Steelyard',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'a cask from here → London +4★'},
+  {k:'ch_bergen', nm:'Bergen Bryggen',       verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'a cask from here → Bergen +4★'},
+  {k:'ch_novgo',  nm:'Novgorod Peterhof',    verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'a cask from here → Novgorod +4★'},
+  // TRANSFORM — the brewer's craft & harbor works
+  {k:'maltkiln',  nm:'Malt Kiln',            verb:'transform', tgt:'cask', ic:'flame',       g:2, n:2, eff:'a cask from here ships +1 quality (cap Q5)'},
+  {k:'hopyard',   nm:'Hop Yard',             verb:'transform', tgt:'cask', ic:'sprout',      g:3, n:1, eff:'a Q2+ cask from here ships +1 quality'},
+  {k:'cooperage', nm:'Cooperage',           verb:'transform', tgt:'ship', ic:'package',      g:2, n:2, eff:'a ship here carries +1 cask'},
+  {k:'customs',   nm:'Customs House',        verb:'transform', tgt:'ship', ic:'scroll-text',  g:2, n:2, eff:'a ship here may board casks one gate lower'},
+  {k:'gauger',    nm:'Gauger’s Office',      verb:'transform', tgt:'cask', ic:'ruler',        g:3, n:1, eff:'a cask from here is gauged +1 quality (cap Q5) — gates &amp; points alike'},
+  {k:'workshop',  nm:'Brewmaster’s Workshop',verb:'transform', tgt:'cask', ic:'hammer',       g:3, n:1, eff:'a cask docked here acts as Wild (while it stays)'},
+  // EXPANSION "Specialty Beers" (Option A) thematic buildings — print with the kit; use only with that module
+  {k:'salthouse', nm:'Salt House',          verb:'value',     tgt:'cask', ic:'gem',           g:2, n:1, eff:'a cask from here: owner +1'+LU('wheat','g')+' +1'+LU('sprout','h')+' on delivery (the salt trade)'},
+  {k:'smokekiln', nm:'Smoke Kiln',          verb:'transform', tgt:'cask', ic:'cloud',         g:2, n:1, eff:'a cask from here ships +1 quality (cap Q5)'},
+  {k:'partigyle', nm:'Parti-Gyle Tun',      verb:'transform', tgt:'cask', ic:'split',         g:2, n:1, eff:'deploy a cask here → a free small Gruit to an open vessel'},
+];
+const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
+// (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
+const DEVELOP_PTS=3;     // v2.9 floor ★: a displaced building flips to its owner's floor (a Wild) and scores +3★ AT GAME END if still there; floor full → boxed, nothing banks. The overbuilder pays a 1G ground rent.
+// ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
+// CELLAR (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
+// v82 "Scarce Improvements": these now form a SHUFFLED DECK of (n−1) copies of each type (n=players) feeding a
+// face-up DISPLAY of 4 at the Cellar (refills from the deck). 3 copies/type covers a 4-player deck (n−1=3).
+// ============================================================================
+// SPECIALIST TILE ART — IMAGE-GENERATION SPEC (for the art agent; v2.6.1)
+// ============================================================================
+// Generate ONE image per Specialist, saved as art/improve-<slug>.jpg (JPEG, not PNG — a flat-field
+// object shot with no transparency needs no alpha channel, and compresses ~8x smaller at quality
+// ~88 with no visible loss; every other art/ family stays .png) where <slug> = the kit's own
+// slug(d.nm) (lowercased, non-alphanumeric runs → a single hyphen — e.g. Coppersmith →
+// improve-coppersmith.jpg, Grain Factor → improve-grain-factor.jpg; NOTE the hyphen — a prior
+// version of this comment said "grainfactor"/"hopgardener" with no hyphen, which does not match
+// what slug() actually emits at runtime; always derive the filename from slug(), not by hand).
+// STYLE (all seven, identical treatment):
+//   • a plain warm BEIGE field (parchment #e9dcc0-ish), edge-to-edge — NO scene, NO border
+//   • ONE object centered — the specialist's trade tool (the art: brief on each row below);
+//     medieval-woodcut / muted-gouache feel, readable at 1 inch print size
+//   • no text, no people, no player-colour hues (the purple foot bar is added by the kit)
+// The card is now SQUARE (2in×2in, matching the Building card): this art sits full-bleed behind a
+// scrim; name on top, effect+cost in the purple foot — so keep the object in the middle 60% of the frame.
+// The seven briefs (also carried per-row as art:'…'):
+//   coppersmith    → a gleaming copper brew kettle
+//   cellarman      → an oak cask racked on a wooden stillage
+//   grain-factor   → a tied burlap sack overflowing with barley
+//   hop-gardener   → a climbing hop bine with cones on a tall pole
+//   stevedore      → a medieval wooden treadwheel harbor crane
+//   lagerkeeper    → stacked casks dusted with frost and icicles
+//   quaymaster     → a private wooden jetty with a rope-wound mooring bollard
+// ============================================================================
+const IMPROVE=[   // SPECIALISTS = PURPLE (the third tile type, v2.4.1) · bought at the CELLAR, hired via the Q3+ Hire action, or London's benefit · v82: deck of n−1/type (3 each = the 4p deck)
+  {ic:'wrench',     nm:'Coppersmith', art:'a gleaming copper brew kettle',   act:'Extra Vessel', g:3, c:'#5b3a8e', n:3},
+  {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Age +1 '+LU('hourglass'), g:4, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:3, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:4, c:'#5b3a8e', n:3},
+  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Load 2 casks when Loading', g:3, c:'#5b3a8e', n:3},
+  {ic:'snowflake',  nm:'Lagerkeeper', art:'stacked casks dusted with frost and icicles',act:'All vessels +1 '+LU('hourglass')+' each turn', g:2, c:'#5b3a8e', n:3},
+  {ic:'anchor',     nm:'Quaymaster', art:'a private wooden jetty with a rope-wound mooring bollard',   act:LU('package-plus')+' / '+LU('ticket')+' / '+LU('crown')+' from Vessels', g:3, c:'#5b3a8e', n:3},
+];
+const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
+// v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
+// flat 2 G fare to charter a single cask. ~20 supply covers starts + the Market buy pile. Art = contractCard().
+const CONTRACTS={nm:'Charter Contract', n:20};
+const RECIPES=[  // EXPORT recipe cards only — Gruit & Hopped are printed on the brewery board's tuck strip.
+  // buy = Market acquire cost (RECIPE_BUY in play.html) · g/h = the BREW cost on the tucked edge.
+  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{h:1},     reach:'Q3 · all kontore (Hall via Enshrine) · FAST: ready 1'},
+  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'Q3 · all kontore · +1 presence on a kontor delivery'},
+  {nm:'Mumme',   cc:'#9a5526', L:4, g:1,h:3, buy:{h:2},     reach:'Q4 · all kontore (Hall via Enshrine)'},
+  {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{g:1,h:1}, reach:'Q5 · all kontore · ungated'},
+  // EXPANSION "Specialty Beers" (v1.9, opt-in) — the 3 specialty export recipe cards
+  {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, buy:{g:1}, reach:'Q2 · grain-path (no hops) · SALT TRADE: a kontor delivery → +1G +1H'},
+  {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, buy:{h:1}, reach:'Q3 · PARTI-GYLE: brewing also yields a free small Gruit (open vessel)'},
+  {nm:'Duckstein',cc:'#7a5236', L:2, g:1,h:1, buy:{g:1}, reach:'Q2 · ready 2 · SMOKE-HARDY: ships &amp; scores as +1 quality (reaches Novgorod)'},
+  {nm:'Jopenbier',cc:'#5e2433', L:6, g:2,h:4, buy:{g:1,h:1}, reach:'Q6 CAPSTONE (own toggle) · self-contained 8★+ · cellars +1★/turn deployed · counts for the Flight (6→25)'},
+];
+const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'}];
+// v1.1 destinations — four DISTINCT lanes. Kontor per-cask value is SMALL & flat (base) — the real value is
+// the value-Buildings a cask ships through. Novgorod's value SCALES with quality (Q3·2 / Q4·4 / Q5·6 · floor 1 — every kontor pays ≥1★, v2.9).
+const DESTS=[
+  {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, val:'1',                maj:[4,2,0], role:'The Hub — the economy',          ben:{n:'+2',ic:'coins'},      bnote:'goods (liquidity)'},
+  {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, val:'1',                maj:[5,3,1], role:'The Steelyard — the engine',     ben:{n:'+1',ic:'building-2'}, bnote:'a Building or Specialist, free'},
+  {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, val:'1',                maj:[9,5,2], role:'Bryggen — the rich majority',    ben:{n:'+1',ic:'map-pin'},    bnote:'free Reach (+1 presence)'},
+  {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, scale:[['&lt;3',1],[3,2],[4,4],[5,6]], maj:[8,5,2], role:'The Long Haul — the quality climb', ben:{n:'+1',ic:'hourglass'},  bnote:'refine a cask, +1 age'},   // v2.9: the Q<3 row = the 1★ kontor floor (v2.9.1: only a Customs-admitted below-gate cask — the Gauger's now GRADES the cask +1, scoring at the gauged Q)
+];
+const HALL={nm:'The Hall', kc:'#5b3a8e', tint:'#efeaf6', req:2, role:'Prestige — the local Enshrine (no ship)', ladder:[[2,3],[3,5],[4,7],[5,9]]};
+const SAILED={2:6,3:10,4:13};        // Sailed-Ships end clock per player count ⚙ (RULES §8 — 2–4p; v1.3 trimmed 7/11/14→6/10/13)
+const MAX_ROUND=25;                  // round ceiling ⚙ — top of the 12–25-round target band
+const OWN_DISCS=14;                  // ownership / presence discs per colour ⚙ — rides a cask → plants as kontor presence (majorities); also marks who owns a building on a slot
+
+//==================================================================
+// GEOMETRY — one coordinate system (inches) drives the HTML layout,
+// the cut overlay, and the SVG export, so the layers always align.
+//==================================================================
+// GLOBAL COMPONENT SCALE (printables2 v8) — every component renders at its NATIVE design size, then a render-time
+// transform scales it (and its footprint on the sheet) by SCALE. So one number shrinks the whole game uniformly:
+// cask/ship cards 2.5″→2.0″, buildings 2″→1.6″, improvements/boards/tokens all ×SCALE, and the sheets re-pack denser.
+const SCALE=0.8;   // 2.0 / 2.5 — the cask/ship card target is 2″
+const PG={w:10.4,h:7.9,y0:0.45,yMax:7.62};
+// CARD_GEO — a LETTER (8.5×11) sheet centred for the (scaled) 2″ double-sided cards: 5 cols × 3 rows = 15/sheet.
+// 5×2.0 = 10.0 wide (x0 .2) · 3×2.0 = 6.0 tall, centred top/bottom (y0 .95). packRun derives cols from the scaled footprint.
+const CARD_GEO={w:10.4,h:7.9,y0:0.95,yMax:7.9};
+// LARGE-FORMAT (22″-wide) plotter sheets — each TRIMMED to its own content height so we don't run blank media.
+// (render() emits a named @page + .lgNN rule per distinct height — see lgClass / the dynpage stylesheet.)
+const WHARF_GEO ={w:22,h:10.5, y0:0.45,yMax:10.22};  // the Wharf cross (9.4″) + tokens tucked on the right
+const SUPPLY_GEO={w:22,h:11.1, y0:0.45,yMax:10.82};  // the Market & Stores board sheet (board prints ~13.8×10.6)
+// The Supply & Tracks board — DESIGNED to its components (all native in, print ×0.8):
+//   · every display slot is CUT to its family's native tile size (ships 2.5 · buildings/improvements 2 ·
+//     recipe/contract cards 1.85×2.55), so the printed card drops exactly into its printed space;
+//   · the widest shelf (buildings: 4 slots + deck = 10.66) sets the interior width; decks align in one
+//     "stockroom" column on the right edge, displays face the table on the left — refill is a one-hand slide;
+//   · the SCORE track wraps the outer edge as a 50-cell ring (0–49 + a 50/100 lap, Carcassonne-style):
+//     50 cells — not 100 — because the mover is the 0.5″ ownership disc, and a disc needs a ≥0.6″ printed
+//     cell to sit in legibly (COMPONENTS.md §17 #7 offers exactly this "50/100 lap marker" resolution).
+const SUPPLY_NW=17.2, SUPPLY_NH=13.4;   // board native size — defined by the content columns (displays · destinations · the vertical clock), not a page
+const SUPPLY_MAIN_W=9.7;                 // the left (displays) column's width; the destinations column takes the rest
+const SCORE_CELLS=50;     // one lap = 0–49 (the start corner reads 0/50); a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
+const SCORE_RING_T=0.8;   // ring thickness (native) → prints 0.64″ — a comfortable seat for the 0.5″ disc
+const TILE_GEO  ={w:22,h:5.75, y0:0.45,yMax:5.47};   // building FRONTS sheet + its mirrored BACKS sheet (27 tiles, 3 rows)
+const IMPF_GEO  ={w:22,h:8.5,  y0:0.45,yMax:8.22};   // improvements + owner frames (2.5″ rings, 3 rows) — single-sided, their own sheet
+const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
+// NATIVE component sizes (in) — the design size each piece renders at; packRun scales the FOOTPRINT by SCALE and
+// the render wrapper scales the CONTENT to match. casks/ships 2.5″ · buildings 2″ · improvement cards 2×1″ · frames 2.5″.
+const SIZE={tile:[1.25,1.25],caskc:[2.5,2.5],cask:[2.5,2.5],ship:[2.5,2.5],bld:[2,2],imp:[2,2],frame:[2.5,2.5],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};
+const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
+
+let MODE='full', VIEW='all', LAYER='art';
+let OVERLAY=false;   // proofing aid: ghost sample components (50% opacity, native size) into the Market & Stores board's slots
+function setOverlay(){OVERLAY=!OVERLAY;const b=document.getElementById('bovl');if(b)b.classList.toggle('on',OVERLAY);render();}
+const cnt=n=>MODE==='proof'?1:n;
+function setMode(m){MODE=m;document.getElementById('bproof').classList.toggle('on',m==='proof');document.getElementById('bfull').classList.toggle('on',m==='full');render();}
+function setView(v){VIEW=v;const sel=document.getElementById('vsel');if(sel&&sel.value!==v)sel.value=v;render();}
+function setLayer(l){LAYER=l;['art','cut','both'].forEach(x=>document.getElementById('l'+x).classList.toggle('on',l===x));
+  document.body.classList.toggle('cut',l==='cut');document.body.classList.toggle('both',l==='both');}   // pure CSS — layout never changes between layers
+
+//==================================================================
+// ART — piece face generators (the scrutinized tile/card/board art)
+//==================================================================
+function caskTile(d,act){   // act = the drawn slot-action {ai,act} (v0.12); Gruit passes its pinned Source
+  let c=cost(d.g,d.h); if(d.alt)c+='<span style="opacity:.85">/</span>'+cost(d.alt[0],d.alt[1]);
+  return '<div class="tile s2" style="--c:'+d.c+'">'   /* printables2: cask → 2.5in */
+  +'<div class="q">'+LU(QI)+d.q+'</div>'
+  +'<div class="t-nm">'+d.nm+'</div>'
+  +'<div class="t-act"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div>'
+  +(d.tag?'<div class="t-perk">'+d.tag+'</div>':'')
+  +'<div class="t-cost'+(d.alt?' dual':'')+'">'+c+'</div></div>';}
+// BUILDING tile (v1.0 keystone) — an OWNED slot modifier: icon + name + verb badge (VALUE/TRANSFORM) +
+// the effect + a target glyph (what it modifies: cask/ship/line/owner) + the goods cost. Value = violet, Transform = green.
+// BUILDING CARD (printables2 v5) — buildings migrate from flat tiles to 2″ double-sided ART CARDS (same grammar
+// as the cask/ship cards). FRONT = full-bleed building art (art/building-<key>.png) behind a scrim, with the name
+// + verb badge (Value/Transform) up top and the effect + target glyph + goods cost in a colour foot. The card
+// nests in the 2.5″ player-colour owner FRAME, so the coloured edge around it marks ownership.
+const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(50,79,42,.74)';   // v2.4.1: PRIVILEGE = bright blue (owner-only) · BUILDING = green (serves everyone) — SPECIALIST = purple below
+const BLD_FOOT='rgba(58,51,66,.7)';   // legacy fallback   // building card foot/base — dark purple-grey (#3a3342) at 70% opacity so the illustration bleeds ~30% through the foot. Same on front & back.
+function buildingCard(d){const tg=BTGT[d.tgt];const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
+  // (v2.3: the wharfage chip is retired — a value building is a privilege that pays its owner only; the
+  // verb badge carries the sharing rule, no per-card payment chip needed.)
+  const wf='';
+  return '<div class="bcard" style="--c:'+foot+'">'
+  +artLayer('building-'+d.k+'.png')
+  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span><span class="bc-verb">'+(d.verb==='value'?'PRIVILEGE':'BUILDING')+'</span></div>'
+  +'<div class="bc-foot"><div class="bc-eff">'+d.eff+'</div>'
+    +'<div class="bc-row"><span class="bc-tgt" title="'+tg.lbl+'">'+LU(tg.ic)+'</span>'+wf+cost(d.g,0)+'</div></div>'
+  +'</div>';}
+// BUILDING CARD BACK (v2.9) — the flipped/displaced face: when your Building is overbuilt (the builder pays the
+// 1G ground rent) it returns to you flipped to its WILD side and parks in an improvement slot — it scores
+// +DEVELOP_PTS★ AT GAME END if still there (floor full → boxed). Shows the SAME building art + title (muted)
+// so it's identifiable, with the Wild action + the floor ★ in the foot.
+function buildingBack(d){
+  return '<div class="bcard bc-bk" style="--c:'+BLD_FOOT+'">'
+  +artLayer('building-'+d.k+'.png')
+  +'<div class="bc-top"><span class="bc-ic">'+LU(d.ic)+'</span><span class="bc-nm">'+d.nm+'</span></div>'
+  +'<div class="bc-foot">'
+    +'<div class="bc-row"><span class="bc-tgt">'+LU('sparkles')+'</span><span class="bc-wild">a <b>Wild</b> action on your Floor</span></div>'
+    +'<div class="bc-row"><span class="bc-sub">at game end,<br>on your floor</span><span class="bc-dev">+'+DEVELOP_PTS+LU('star')+'</span></div>'
+  +'</div></div>';}
+// NEUTRAL destination-bound ship tile (v0.11): hull + capacity · printed destination + quality gate · commission 2 G
+function shipTile(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
+  let berths='';for(let i=1;i<=cap;i++)berths+='<div class="bn">'+i+'</div>';   // numbered load-order berths (v0.16)
+  return '<div class="tile gen ts s2" style="--c:#6f6253">'   // NEUTRAL hull body; printables2: ship → 2.5in (matches casks & slots)
+  +artLayer('ship-'+hull+'.png')
+  +'<div class="t-cost-tr">'+cost(2,0)+'</div>'            // commission cost, top-right (no market icon)
+  +'<div class="g-head"><span class="bigic">'+LU('sailboat')+'</span><span class="g-nm">'+(hull==='cog'?'Cog':'Hulk')+'</span></div>'
+  +'<div class="g-dest-wrap"><div class="g-dest" style="background:'+d.kc+'">'+LU('landmark')+destNm+'</div></div>'
+  +'<div class="berths"><span class="sgate">'+LU(QI)+d.req+'+</span>'+berths+'</div></div>';}
+function genTile(it,fcls){return '<div class="tile gen '+(fcls||'')+'" style="--c:'+it.c+'">'
+  +'<div class="g-head"><span class="bigic">'+LU(it.ic)+'</span><span class="g-nm">'+it.nm+'</span></div>'
+  +(it.act?'<div class="g-act">'+it.act+'</div>':'')
+  +(it.sub?'<div class="g-sub">'+it.sub+'</div>':'')
+  +(it.big?'<div class="g-big">'+it.big+'</div>':'')
+  +(it.g?'<div class="g-cost">'+cost(it.g,it.h)+'</div>':'')+'</div>';}
+// SPECIALIST CARD (v10) — now a SQUARE 2in×2in card, matching the Building card's footprint (was a half-height
+// 2in×1in strip). Full-bleed OBJECT art (improve-<slug>.jpg — a single trade-tool icon on a plain beige field,
+// no scene) + scrim, name/icon on top, and a PURPLE foot bar carrying the effect + cost. Same art-card grammar
+// as the casks/ships/buildings. Card bg = the same purple as the foot, so any html2canvas foot-edge hairline
+// is purple-on-purple.
+const IMP_FOOT='#4a3a6e';   // Specialist foot/base — PURPLE (the third tile type, v2.4.1; was Cellar-green)
+function improveTile(d){const k=slug(d.nm);
+  return '<div class="icard" style="--c:'+IMP_FOOT+'">'
+  +artLayer('improve-'+k+'.jpg')   // .jpg not .png — a flat-colour-field object shot compresses ~8x smaller as JPEG at no visible quality loss
+  +'<div class="ic-top"><span class="ic-ic">'+LU(d.ic)+'</span><span class="ic-nm">'+d.nm+'</span></div>'
+  +'<div class="ic-foot"><span class="ic-act">'+d.act+'</span><span class="ic-cost">'+cost(d.g,d.h)+'</span></div>'
+  +'</div>';}
+// printables2 v3: a CASK is a double-sided CARD (2×3). FRONT = the buy/age side: Q+name on the top end, brew
+// cost under it, the AGING TRACK in the centre (the card carries its own step count — so the player-board
+// maturation track + cellar markers come off the board), and Q+action on the bottom end. BACK = the brewed
+// side: Q+name + a die/presence space on the top end, the action just above the bottom end, Q on the bottom.
+// (act = the drawn slot-action {ai,act}; Gruit passes its pinned Source — the printed mix IS the brew-draw.)
+// ---- background ART slot (printables2) ----
+// Flip ART_ON to true once the images exist in art/ (named below). Until then a faint hatch marks the slot.
+// Filenames: casks → art/cask-<beer>.png (gruit/hopped/broyhan/keut/mumme/bock/gose/zerbster/duckstein/jopenbier);
+//            ships → art/ship-<hull>.png (cog/hulk). Prompts to generate them: art/PROMPTS.md.
+const ART_ON=true, ART_DIR='../../art/';
+// art rides an <img> (object-fit:cover) rather than a CSS background — html2canvas rasterizes an <img> at its
+// NATIVE source resolution (sharp PNG export), whereas a background-image is upscaled from the element's CSS size.
+function artLayer(file){return ART_ON
+  ? '<div class="artbg scrim"><img class="artbg-img" src="'+ART_DIR+file+'" alt=""></div>'
+  : '<div class="artbg ph" data-art="'+ART_DIR+file+'"></div>';}
+function caskCardFront(d,act){
+  let c=cost(d.g,d.h);if(d.alt)c+='<span style="opacity:.85">/</span>'+cost(d.alt[0],d.alt[1]);
+  // START (place the vessel marker here at brew) → advance one step per turn → READY (ready = the step count)
+  // the maturation track on ONE line: a dashed START (place the vessel marker) → numbered steps → a green
+  // READY=FLIP endpoint (the flip glyph says "turn the card to its brewed side"). No title/rules text — the
+  // brewhouse illustration sits behind it (cc-age background).
+  let track='<div class="cc-step start">'+LU('flask-conical')+'</div>';
+  for(let i=1;i<d.ready;i++)track+='<div class="cc-step">'+i+'</div>';
+  track+='<div class="cc-step rdy">'+LU('undo-2')+'</div>';   // Ready → flip the card to its brewed side
+  return '<div class="ccard cc-front" style="--c:'+d.c+'">'
+    +'<div class="ce top"><div class="ce-row sb"><span class="cq big">'+LU(QI)+d.q+'</span>'
+      +'<span class="ctitle"><span class="cnm">'+d.nm+'</span>'+(d.tag?'<span class="clbl">'+d.tag+'</span>':'')+'<span class="ccost">'+c+'</span></span></div></div>'
+    +'<div class="cc-age"><div class="cc-agerow">'+track+'</div></div>'
+    +'<div class="ce bot"><div class="ce-row sb"><span class="cq">'+LU(QI)+d.q+'</span><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div></div>'
+  +'</div>';
+}
+function caskCardBack(d,act){
+  // both ends show Q + title; only the BOTTOM end carries the die/presence marker space
+  const q='<span class="cq">'+LU(QI)+d.q+'</span><span class="cnm">'+d.nm+'</span>';
+  // TOP end also carries the pinned-signature tag (Gose/Zerbster/Duckstein/Jopenbier) — this is the brewed/in-play
+  // face, where the passive ability actually matters (a slot cask's owner needs the reminder, not just the buy side)
+  const qTop='<span class="cq">'+LU(QI)+d.q+'</span><span class="ctitle"><span class="cnm">'+d.nm+'</span>'+(d.tag?'<span class="clbl">'+d.tag+'</span>':'')+'</span>';
+  return '<div class="ccard cc-back" style="--c:'+d.c+'">'
+    +artLayer('cask-'+d.nm.toLowerCase()+'.png')
+    +'<div class="ce top"><div class="ce-row sb">'+qTop+'</div></div>'
+    +'<div class="cc-actfloat"><div class="cact"><span class="ac">'+LU(act.ai)+'</span><span>'+act.act+'</span></div></div>'
+    +'<div class="ce bot"><div class="ce-row">'+q+'<span class="cc-mark" title="quality die / presence marker"></span></div></div>'
+  +'</div>';
+}
+// printables2 v4: a SHIP is a full-bleed 2.5″ CARD (was a small tile) — the destination's CITY is the
+// background art (wharf-<dest>.png), with the cask-card treatment: hull + commission cost over the art on
+// the top end, the quality gate + numbered load-order berths floating low over the wharf, and a gradient
+// FOOT in the destination's colour carrying the kontor name (the ship's identity). NO action — a ship is
+// just hull size · destination · quality gate · cost.
+function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm];
+  let berths='';for(let i=1;i<=cap;i++)berths+='<div class="sbn">'+i+'</div>';
+  return '<div class="ccard cc-back ship-card" style="--c:'+d.kc+'">'
+    +artLayer('wharf-'+destNm.toLowerCase()+'.png')
+    +'<div class="ce top"><div class="ce-row sb"><span class="cnm shull">'+LU('sailboat')+(hull==='cog'?'Cog':'Hulk')+'</span><span class="ccost">'+cost(2,0)+'</span></div></div>'
+    +'<div class="cc-actfloat"><div class="sberth">'+berths+'</div></div>'
+    +'<div class="ce bot"><div class="ce-row sb"><span class="sdest">'+LU('landmark')+destNm+'</span><span class="sgate">'+LU(QI)+d.req+'+</span></div></div>'
+  +'</div>';
+}
+// the SHIP card rear — one shared graphic for every ship (a Hanseatic cog at sea); ships are single-faced/neutral
+// img-based art (not a CSS background) so the PNG export bakes it sharp — a CSS background gets upscaled from the
+// element's CSS size by html2canvas (blurry). No scrim: the ship-at-sea graphic carries no text overlay.
+function shipBack(){return '<div class="ccard ship-back" style="background:#33445a">'
+  +'<div class="artbg"><img class="artbg-img" src="'+ART_DIR+'ship-back.png" alt=""></div></div>';}
+function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
+function disc(c){return '<div class="disc" style="--c:'+c+'">'+LU('circle')+'</div>';}
+// BUILDING OWNERSHIP FRAME (printables2) — a 2.5in player-colour base; a 2in Building tile sits on it, the
+// colour edge marking ownership. Drops into a 2.5in wharf slot.
+function frameTile(c,nm){return '<div class="frame" style="--c:'+c+'">'+(nm?'<span class="fl">'+nm+'</span>':'')+'</div>';}
+function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?'<span>'+d.nm+'</span>':'')+'</div>';}
+
+function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
+  +'<div class="c-reach">reaches: '+r.reach+'</div>'
+  +'<div class="c-buy">'+(r.start
+    ? '<span class="lbl">'+LU('home')+' starting recipe</span><span>printed on your brewery board — always available</span>'
+    : '<span class="lbl">'+LU('store')+' acquire at the Market</span>'
+      +'<span class="gc">'+cost(r.buy.g,r.buy.h)+'</span>'
+      +'<span>permanent — brewing never consumes it</span>')+'</div>'
+  +'<div class="c-strip">'
+    +'<div class="c-row"><span class="c-rung">'+LU(QI)+r.L+'</span><span class="c-nm">'+r.nm+'</span></div>'
+    +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(r.g,r.h)+'</span></div>'
+  +'</div>'
+  +'</div>';}
+
+// charter-contract CARD (v0.16) — icon-first: the effect (a cask → a kontor) + the fare; the card IS the contract you spend
+function contractCard(){return '<div class="card" style="--cc:#8a6408">'
+  +'<div class="c-buy" style="justify-content:center;gap:.1in">'
+    +'<div style="display:flex;align-items:center;gap:.06in;font-size:.32in;color:#8a6408">'+LU('beer')+'<span style="font-size:.17in;font-weight:bold">→</span>'+LU('sailboat')+'<span style="font-size:.17in;font-weight:bold">→</span>'+LU('landmark')+'</div>'
+    +'<span class="lbl">one cask · single voyage → a kontor</span></div>'
+  +'<div class="c-strip">'
+    +'<div class="c-row"><span class="c-rung">'+LU('ticket')+'</span><span class="c-nm">Charter</span></div>'
+    +'<div class="c-row"><span class="c-lbl">spend + fare</span><span class="c-cost">'+cost(2,0)+'</span></div>'
+  +'</div></div>';}
+
+// ---- PLAYER AID CARD (double-sided) — FRONT: a turn & structure · BACK: icon reference ----
+function aidFront(){
+  const G=LU('wheat','gi'),H=LU('sprout','hi');
+  return '<div class="aid front">'
+    +'<div class="ahd"><span class="abi">'+LU('beer')+'</span>'
+      +'<div class="at">Player Aid · A Turn</div>'
+      +'<div class="as">Brewhouses of the Hanse<br>Source → Brew → Age → Ship</div></div>'
+    +'<div class="acols">'
+      +'<div class="acol">'
+        +'<h5>'+LU('list-ordered')+'Your Turn</h5>'
+        +'<div class="step"><span class="sn">1</span><span class="sx"><b>Move</b> to an orthogonally adjacent station (mandatory).</span></div>'
+        +'<div class="step"><span class="sn">2</span><span class="sx"><b>Choose a line</b>: the <b>row</b>, the <b>column</b>, or your <span class="em">Floor</span>. A <b>public</b> line while a rival shares your station: pay '+G+'1 (the Floor is free).</span></div>'
+        +'<div class="step"><span class="sn">3</span><span class="sx"><b>Resolve</b> the line’s stops in any order — <b>all optional</b>. Both stations fire; a slot’s occupant acts <i>as modified by</i> the building under it.</span></div>'
+        +'<h5>'+LU('home')+'The Floor</h5>'
+        +'<div class="ln">The standing <b>3rd line</b>: every vessel cask’s action + a <b>Wild</b> per flipped building — any order, all optional, <b>never tolled</b>.</div>'
+        +'<h5>'+LU('beer')+'The Cask</h5>'
+        +'<div class="ln"><b>Maturing</b> (vessel) → <b>Deployed</b> (a slot: public action + cargo) → <b>Delivered</b> (scores · leaves).</div>'
+      +'</div>'
+      +'<div class="acol">'
+        +'<h5>'+LU('anchor')+'The Four Stations</h5>'
+        +'<div class="ln">'+LU('store')+' <b>Market</b> — 2 goods, <i>or</i> 1: recipe · Building (display → <b>place at once</b>) · ship '+LU('sailboat')+' ('+G+'2, + free-load a deployed cask) · contract '+LU('ticket')+' ('+G+'1).</div>'
+        +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — Brew a recipe into an open vessel; or '+LU('barrel')+' <b>Deploy</b> a Ready cask (a Q4+ may take a deployed Q1&rsquo;s berth — the stale ale is boxed).</div>'
+        +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — any order: <b>Age</b> (3 pts, once) · <b>Tap</b> casks (the modified action, repeatable) · buy <b>Specialists</b> '+LU('wrench')+'.</div>'
+        +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — Load any <b>deployed</b> cask onto a ship (<b>sails when full</b>), <b>Enshrine</b> a Q2+ deployed cask, or <b>Charter</b> a deployed cask — <b>deploy first</b>; only the Quaymaster reaches the vessels.</div>'
+        +'<h5>'+LU('timer')+'End &amp; Score</h5>'
+        +'<div class="ln"><b>Sailed-Ships</b> fills (6/10/13 for 2/3/4p) → finish the round → score:</div>'
+        +'<div class="ln">'+LU('crown','vi')+' <b>Hall</b> 3/5/7/9 · '+LU('landmark','vi')+' <b>kontor</b> starting value + the demand die (min 1'+LU('star','vi')+') · <b>majorities</b> · <span class="em">Flight</span> 3→4·4→9·5→16 (6→25 w/ Jopenbier) · <b>floor</b> +3'+LU('star','vi')+' per displaced Building kept on your floor.</div>'
+        +'<div class="ln"><span class="em">The demand die:</span> a real d6, <b>max 6</b> — <b>your</b> cask through <b>your</b> value Building sets it to the ★ <b>+ the premium</b> (Q4 +2 · Q5 +3); a ship-slot value Building bumps the same die at the sail. A rival’s cargo on your Building banks nothing (value = a privilege; transforms serve anyone). Delivery = destination starting value + the die.</div>'
+      +'</div>'
+    +'</div></div>';}
+function aidBack(){
+  const G=LU('wheat','gi');
+  const row=(ic,nm,desc,cls)=>'<div class="lr"><span class="lic">'+LU(ic,cls||'ic')+'</span><span class="lx"><b>'+nm+'</b> — '+desc+'</span></div>';
+  return '<div class="aid back">'
+    +'<div class="ahd"><span class="abi">'+LU('book-open')+'</span>'
+      +'<div class="at">Player Aid · Icons</div>'
+      +'<div class="as">Brewhouses of the Hanse<br>quick symbol reference</div></div>'
+    +'<div class="acols">'
+      +'<div class="acol"><div class="leg">'
+        +'<h5>'+LU('coins')+'Goods &amp; Stations</h5>'
+        +row('wheat','Grain','currency + brew input','gi')
+        +row('sprout','Hops','currency + brew input','hi')
+        +row('store','Market','Source — goods / acquire a tile')
+        +row('flask-conical','Brewhouse','Brew (+ Deploy)')
+        +row('hourglass','Cellar','Age / Tap / Improve (any order)')
+        +row('ship','Harbor','Ship / Enshrine / Charter')
+        +'<h5>'+LU('beer')+'Cask Slot-Actions</h5>'
+        +row('coins','Source','+2 goods')
+        +row('hourglass','Age','age a cask +2')
+        +row('package-plus','Load','load a cask onto a ship (free)')
+        +row('map-pin','Reach','+1 presence (where delivered)')
+      +'</div></div>'
+      +'<div class="acol"><div class="leg">'
+        +row('arrow-left-right','Convert','up to 2 goods G↔H')
+        +row('search','Survey','a Privilege/Building from the Wharf display, placed at once')
+        +row('wrench','Hire','a Specialist from the display, free (Q3+)')
+        +row('sparkles','Wild','any base action (Q4+)')
+        +'<h5>'+LU('building-2')+'Buildings &amp; Targets</h5>'
+        +row('star','Privilege','BLUE — pays its owner only (the die)','vi')
+        +row('hammer','Building','GREEN — serves any dock')
+        +row('wrench','Specialist','PURPLE — private, on your brewery board')
+        +row('beer','Cask','the occupant a building modifies')
+        +row('sailboat','Ship','neutral hull (Cog 2 / Hulk 3)')
+        +'<h5>'+LU('trophy')+'Shipping &amp; Score</h5>'
+        +row('ticket','Charter','a contract + '+G+'2 fare → 1 cask')
+        +row('crown','Enshrine','a Q2+ deployed cask → the Hall')
+        +row('star','★ Points','value · majority · prestige','vi')
+        +row('layers','Flight','distinct beers delivered')
+      +'</div></div>'
+    +'</div></div>';}
+
+// ---- player brewery board (v1.6 — rebuilt from scratch) ----
+// A pure TRACKING surface: header + storage zone · THE FLOOR (3 vessel squares + maturation tracks + 3
+// improvement squares) · THE FLIGHT (one space per beer) · a bottom RECIPE RACK (Gruit/Hopped printed as
+// card-edge strips + tuck slots for export recipe cards). No rules text — those live on the player-aid card.
+// maturation START spaces, by how many ages the beer needs (3 · 2 · 1 steps): place your aging marker on the
+// space bearing your beer's name, then advance RIGHT one space per age — READY is always the last space.
+const MSTART=[['Mumme','Bock'],['Keut'],['Gruit','Hopped','Broyhan']];
+function mtrackCells(){
+  let c=MSTART.map(names=>'<div class="ms">'+names.map(n=>'<span class="bn">'+n+'</span>').join('')+'</div>').join('');
+  return c+'<div class="ms fin"><span class="rdy">Ready</span><span class="rsub">ship ▸</span></div>';}
+function vcol(n,locked){
+  return '<div class="vcol'+(locked?' locked':'')+'">'
+    +'<div class="vsq"><span class="vn">Vessel '+n+'</span>'+LU('beer')+'<span>cask</span></div>'
+    +'<div class="vflow">'+LU('arrow-right')+'</div>'
+    +'<div class="mtrack">'+mtrackCells()+'</div></div>';}
+function rkPrinted(cc,L,nm,g,h){   // a clone of a recipe card's bottom "c-strip" (the edge that shows when tucked)
+  return '<div class="rk printed" style="--cc:'+cc+'">'
+    +'<div class="c-row"><span class="c-rung">'+LU(QI)+L+'</span><span class="c-nm">'+nm+'</span></div>'
+    +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(g,h)+'</span></div></div>';}
+// ---- player board v3 — a TILE-SLOT bench sized to the components (not the page), chrome-stripped.
+// Top: 4 building/improvement slots (2in) + a compact Flight tally. Bottom: ONE recipe-stack slot (cards
+// are made to stack) + 3 cask-vessel slots (2.46in). The die-cut hugs this cluster (see the call site). ----
+function pbFlight(){   // v2.2: one space PER BEER — the component IS the record (a bare count can't be maintained).
+  // Gruit + Hopped (always) · 3 blank spaces for the dealt exports · Jopenbier (capstone — counts when in play).
+  // Scoring: (beers−1)², min 3 → 3→4 · 4→9 · 5→16 · 6→25.
+  const spaces=[['Gruit',''],['Hopped',''],['export',' z'],['export',' z'],['export',' z'],['Jopenbier',' z']];
+  const boxes=spaces.map(b=>'<div class="pb2-fbox'+b[1]+'"><span class="fn">'+b[0]+'</span><span class="fp">'+LU('beer')+'</span></div>').join('');
+  return '<div class="pb2-flight"><div class="fh">'+LU('layers')+'Flight</div>'
+    +'<div class="fsub">mark each beer’s first delivery · 3→4 · 4→9 · 5→16 · 6→25</div><div class="pb2-fboxes">'+boxes+'</div></div>';}
+function pbRecipe(){   // Gruit & Hopped (the starters) printed at the TOP; acquired recipe cards slide UP under them, stacking in the zone below
+  const bar=(cc,L,nm,g,h)=>'<div class="pb2-rbar" style="background:'+cc+'"><span class="rq">'+LU(QI)+L+'</span>'
+    +'<span class="rn">'+nm+'</span><span class="rc">'+cost(g,h)+'</span></div>';
+  return '<div class="pb2-recipe"><div class="rh">'+LU('scroll-text')+'Recipes</div>'
+    +'<div class="pb2-rbase">'+bar('#6f7a82',1,'Gruit',1,0)+bar('#a67c1e',2,'Hopped',1,1)+'</div>'
+    +'<div class="pb2-rstack">'+LU('layers')+'slide cards under</div></div>';}
+function pboard(p){
+  let blds='';for(let i=0;i<4;i++)blds+='<div class="pb2-slot pb2-bld"><span class="sn">Building /<br>Improvement</span>'
+    +'<span class="si">'+LU('building-2')+LU('wrench')+'</span></div>';
+  const vlabels=[['Vessel 1',false],['Vessel 2',false],['Extra Vessel',true]];
+  const vessels=vlabels.map(v=>'<div class="pb2-slot pb2-vsl'+(v[1]?' extra':'')+'"><span class="sn">'+v[0]+'</span>'
+    +'<span class="si">'+LU('beer')+'</span></div>').join('');
+  return '<div class="pb2" style="--pc:'+p.c+'">'
+    +'<div class="pb2-id"><div class="pb2-crest">'+LU('beer')+'</div><div class="pb2-name">'+p.nm+'</div>'
+      +'<div class="pb2-goods">'+LU('wheat')+LU('sprout')+'goods max&nbsp;<b>8</b></div></div>'
+    +'<div class="pb2-top"><div class="pb2-blds">'+blds+'</div>'+pbFlight()+'</div>'
+    +'<div class="pb2-bot">'+pbRecipe()+'<div class="pb2-vessels">'+vessels+'</div></div>'
+  +'</div>';}
+
+// ---- destinations board ----
+function kpanel(d,hall){
+  const title='<div class="ktitle"><span class="kname">'+LU(hall?'crown':'landmark')+d.nm+'</span><span class="kreq">'+LU(QI)+d.req+'+</span></div>';
+  if(hall){
+    // THE HALL — a prestige ladder (Q → ★), reached by the local Enshrine (no ship)
+    const ladder='<div class="kladder">'+d.ladder.map(qv=>'<div class="lr"><span class="lq">Q'+qv[0]+'</span><span class="lv">'+LU(VP)+qv[1]+'</span></div>').join('')+'</div>';
+    const body='<div class="ksect hall"><div class="ksh">'+LU('crown')+'prestige · by Q</div>'+ladder+'</div>'
+      +'<div class="hall-note"><b>Enshrine</b> — Q2+ deployed, no ship</div>';
+    return '<div class="kpanel hall" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+title+'<div class="kbody"><div class="krole">'+d.role+'</div>'+body+'</div></div>';
+  }
+  // per-cask VALUE — flat star number, or a by-quality mini-row for Novgorod (scales with quality)
+  const valSect = d.scale
+    ? '<div class="ksect"><div class="ksh">'+LU(VP)+'value · by Q</div>'
+        +'<div class="kvscale">'+d.scale.map(qv=>'<div class="qv"><span class="qq">Q'+qv[0]+'</span><span class="qn">'+LU(VP)+qv[1]+'</span></div>').join('')+'</div></div>'
+    : '<div class="ksect"><div class="ksh">'+LU(VP)+'per-cask value</div>'
+        +'<div class="kval">'+LU(VP)+d.val+'</div></div>';
+  // ON-DELIVERY benefit — iconic + a one-line note
+  const benSect = '<div class="ksect"><div class="ksh">'+LU('gift')+'on delivery</div>'
+        +'<div class="kben"><span>'+d.ben.n+'</span>'+LU(d.ben.ic)+'</div>'
+        +'<div class="ksub">'+d.bnote+'</div></div>';
+  // MAJORITY — tiered payout + a PRESENCE ZONE (pile your delivered-cask tokens here; most leads)
+  const majSect = '<div class="ksect maj"><div class="ksh">'+LU('landmark')+'majority<span class="mt-t">1 · 2 · 3</span></div>'
+        +'<div class="kmaj">'+LU(VP)+d.maj.map((m,i)=>i?'<i>/</i>'+m:m).join('')+'</div>'
+        +'<div class="ksub">most delivered · 2p: top only</div>'
+        +'<div class="kpz">'+LU('circle')+'<span>presence</span></div></div>';
+  return '<div class="kpanel" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+title+'<div class="kbody"><div class="krole">'+d.role+'</div>'+valSect+benSect+majSect+'</div></div>';}
+function dboard(){
+  // the destinations board: the four kontore + the Hall, each a colourful card. (The brew supply lived here as
+  // 1.25″ tile stacks — wrong size for this kit's 2″ cask CARDS — so it was removed; the cask cards ARE the supply.)
+  return '<div class="dboard">'
+    +'<div class="db-head"><h2>'+LU('landmark')+'Destinations</h2>'
+      +'<span class="dsub">where you ship — the four kontore (value &amp; majorities) · the Hall (prestige)</span>'
+      +'<span class="legend"><span><b>'+LU(QI,'ql')+'</b> min cask quality</span><span><b>'+LU(VP,'vp')+'</b> per-cask value <i>(+ value-Buildings)</i></span><span><b>'+LU('landmark','vp')+' 1/2/3</b> end-game majority</span></span></div>'
+    +'<div class="kontor-row">'+DESTS.map(d=>kpanel(d,false)).join('')+kpanel(HALL,true)+'</div>'
+  +'</div>';}
+
+// ---- OVERLAND BOARD — The Trade Roads (Staple Rights) — a TECH-TREE map; prints on the BACK of Destinations ----
+// A true tree: ONE Hamburg root + ONE Bruges gateway, branching to the 3 western roads + the eastern deep haul.
+// Each town carries PHYSICAL claim-slot SQUARES (token-sized: cover one with a presence marker to claim it), each
+// printed as an icon + short label, plus the OVERFLOW bonus (paid when every slot is filled). Mirrors play.html
+// OL_NODES exactly. Slots scale n+1 with players (2p→3, 3p/4p→4), bounded by a node's printed slots; deep ◆ = high-gate terminals (Pskov scarce with 1 slot, Frankfurt the rich 4-slot Rhineland outlet). All numbers ⚙.
+const OL_SLOT={
+  recipe:{ic:'scroll-text',t:'recipe'}, brew:{ic:'flask-conical',t:'brew'}, age2:{ic:'hourglass',t:'+2 age'},
+  quality1:{ic:'chevrons-up',t:'+1 Q'}, quality2:{ic:'chevrons-up',t:'+2 Q'}, improvement:{ic:'wrench',t:'improve'},
+  enshrine:{ic:'crown',t:'enshrine'}, vessel:{ic:'flask-round',t:'vessel'}, bldghand:{ic:'building-2',t:'Building'},
+  contract:{ic:'scroll',t:'contract'}, gruitfree:{ic:'beer',t:'free Q1'}, q3free:{ic:'beer',t:'free Q3'},
+  goods2:{ic:'wheat',t:'+2 G'}, goods3:{ic:'package',t:'+3 goods'},
+  reachstep:{ic:'truck',t:'road step'} };
+const olSlotInfo=k=>k.startsWith('pts')?{ic:'star',t:'+'+k.slice(3)+'★',pts:1}:(OL_SLOT[k]||{ic:'circle',t:k});
+const OL_N={
+  hamburg  :{nm:'Hamburg',  home:1, w:.95},
+  bruges   :{nm:'Bruges',   core:1, gate:1, gw:1, w:1.45},
+  cologne  :{nm:'Cologne',  gate:2, pts:2, slots:['recipe','gruitfree','brew','brew'], over:'age2', w:2.3},
+  frankfurt:{nm:'Frankfurt',gate:3, pts:3, deep:1, slots:['q3free','enshrine','age2','pts6'], over:'pts2', w:1.7},
+  antwerp  :{nm:'Antwerp',  gate:2, pts:2, slots:['bldghand','brew','goods3','bldghand'], over:'bldghand', w:2.3},
+  london   :{nm:'London',   core:1, gate:2, pts:3, slots:['bldghand','improvement','goods3','improvement'], over:'bldghand', w:2.3},
+  tonsberg :{nm:'Tønsberg', gate:2, pts:2, slots:['contract','brew','goods2','brew'], over:'goods2', w:2.3},
+  bergen   :{nm:'Bergen',   core:1, gate:2, pts:3, slots:['contract','goods3','vessel','vessel'], over:'goods2', w:2.3},
+  visby    :{nm:'Visby',    gate:2, pts:2, slots:['goods2','reachstep','age2','pts3'], over:'pts2', w:2.05},
+  tallinn  :{nm:'Tallinn',  gate:3, pts:3, slots:['vessel','quality1','brew','pts5'], over:'pts2', w:2.05},
+  novgorod :{nm:'Novgorod', core:1, gate:3, pts:3, qpts:1, slots:['quality1','vessel','age2','pts5'], over:'pts2', w:2.05},
+  pskov    :{nm:'Pskov',    gate:5, pts:5, deep:1, slots:['pts8'], over:'pts5', w:1.35},
+};
+const OL_XY={ hamburg:[5,46], bruges:[19,33],
+  cologne:[41,11], frankfurt:[68,11], antwerp:[41,33], london:[68,33], tonsberg:[41,55], bergen:[68,55],
+  visby:[15,87], tallinn:[39,87], novgorod:[63,87], pskov:[87,87] };
+const OL_EDG=[['hamburg','bruges'],['bruges','cologne'],['cologne','frankfurt'],['bruges','antwerp'],['antwerp','london'],
+  ['bruges','tonsberg'],['tonsberg','bergen'],['hamburg','visby'],['visby','tallinn'],['tallinn','novgorod'],['novgorod','pskov']];
+function olSq(key,idx){const s=olSlotInfo(key);   // n+1 active slots: idx 0-2 = always (2p+, SOLID dark); idx 3 opens at 3p (DASHED + 3+ badge)
+  const badge=idx===3?'<span class="olsq-badge">3+</span>':'';
+  return '<div class="olsq'+(idx<3?' fix':'')+(s.pts?' pts':'')+'">'+badge+LU(s.ic)+'<span class="t">'+s.t+'</span></div>';}
+function olNode(k){const n=OL_N[k];const xy=OL_XY[k];const style='left:'+xy[0]+'%;top:'+xy[1]+'%;width:'+n.w+'in';
+  if(n.home) return '<div class="oln home" style="'+style+'">'+LU('home')+'<span class="oln-nm">Hamburg</span><span class="oln-mt">home</span></div>';
+  const head='<div class="oln-h"><span class="oln-nm">'+(n.core?LU('landmark'):'')+n.nm+(n.deep?' <span class="oln-dp">◆</span>':'')+'</span>'
+    +'<span class="oln-q">'+LU(QI)+n.gate+'+</span>'+(n.pts?'<span class="oln-pts">'+LU(VP)+(n.qpts?'=Q':n.pts)+'</span>':'')+'</div>';
+  if(n.gw) return '<div class="oln gw core" style="'+style+'">'+head
+    +'<div class="oln-gwb"><i>gateway · no slots</i><span class="oln-gwa">'+LU('scroll-text')+'recipe <b>OR</b> '+LU('wheat')+'2 goods</span></div></div>';
+  const sl='<div class="olsq-row">'+n.slots.map((key,i)=>olSq(key,i)).join('')+'</div>';
+  const over='<div class="oln-over">'+LU('layers')+'all full → <b>'+olSlotInfo(n.over).t+'</b></div>';
+  return '<div class="oln'+(n.core?' core':'')+(n.deep?' deep':'')+'" style="'+style+'">'+head+sl+over+'</div>';}
+function olboard(){
+  const line=e=>{const a=OL_XY[e[0]],b=OL_XY[e[1]];return '<line x1="'+a[0]+'" y1="'+a[1]+'" x2="'+b[0]+'" y2="'+b[1]+'"/>';};
+  const svg='<svg class="ol-roads" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">'
+    +'<rect class="ol-reg" x="9" y="1" width="76" height="66" rx="2"/>'
+    +'<rect class="ol-reg e" x="4" y="74" width="93" height="25" rx="2"/>'
+    +OL_EDG.map(line).join('')
+    +'<path class="ol-express" d="M5,46 Q4,6 41,11" fill="none"/>'   // the Rhine Charter: Hamburg→Cologne, bowed up-left to arc OVER Bruges (it skips the Bruges node)
+    +'</svg>';
+  const labels='<div class="ol-reglbl express" style="left:7%;top:16%">'+LU('zap')+'Q4+ Rhine Charter</div>'
+    +'<div class="ol-reglbl" style="left:1%;top:2.5%">THE WESTERN ROADS · the Bruges gateway</div>'
+    +'<div class="ol-reglbl" style="left:1%;top:96%">THE EASTERN ROAD · the deep haul to Novgorod</div>'
+    +'<div class="ol-reglbl r" style="left:99%;top:2.5%">'+LU('landmark')+' kontor · ◆ deep terminal · ☐ claim slot — cover to take</div>';
+  const nodes=Object.keys(OL_N).map(olNode).join('');
+  return '<div class="olboard">'
+    +'<div class="ol-head"><h2>'+LU('truck')+'The Trade Roads — Staple Rights</h2><span class="sub">Overland · replaces the kontor majorities · print on the back of the Destinations board</span></div>'
+    +'<div class="ol-legend">'
+      +'<span><b>A VOYAGE</b> to a kontor (a full sail <i>or</i> a Charter) walks your '+LU('truck')+' caravan <b>ONE node</b> along that road, gated by your best cask quality aboard.</span>'
+      +'<span>Then <b>each cask aboard CLAIMS a slot</b> at the node reached (in <b>load order</b>): bank the node’s '+LU(VP)+' + cover a ☐ for its one-shot bonus.</span>'
+      +'<span><b>'+LU(QI)+' gates depth.</b> Slots scale with players (n+1) — the <b>3+</b> square opens at 3 players; ◆ deep terminals are gated by quality (Pskov a single +8★ slot). A full node pays its <b>overflow</b> (never nothing).</span>'
+      +'<span><b>Bruges</b> is the no-slots gateway; a <b>Q4+ Rhine Charter</b> skips it to Cologne; a charter can open the eastern road at <b>Visby (Q2)</b>. <b>Novgorod</b> pays '+LU(VP)+' = the delivered quality. <b>Majorities are OFF.</b></span>'
+    +'</div>'
+    +'<div class="ol-tree">'+svg+labels+nodes+'</div>'
+  +'</div>';}
+
+// ---- MAIN BOARD — the Wharf (stations + 8 slots + both shared tracks) ----
+// Board-design principle: the board carries shapes & icons only (a 1.25" tile fits a 1.3" dashed
+// square; that's the affordance) — the verbose station reference lives in the side column.
+// the roof-tile texture, drawn as a tiled SVG <pattern> (scalloped arcs) — exports cleanly via html2canvas
+const STN_TEX='<svg class="stn-tex" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">'
+  +'<defs><pattern id="rooftex" width="57.6" height="38.4" patternUnits="userSpaceOnUse">'
+  +'<path d="M0 38.4 Q28.8 7 57.6 38.4" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="2.4"/>'
+  +'<path d="M0 34.4 Q28.8 3 57.6 34.4" fill="none" stroke="rgba(255,255,255,.13)" stroke-width="1.7"/>'
+  +'</pattern></defs><rect width="100%" height="100%" fill="url(#rooftex)"/></svg>';
+function station(L,nm,ic,yield_){return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
+  +STN_TEX
+  +'<span class="bigic">'+LU(ic)+'</span><span class="nm">'+nm+'</span>'
+  +'<span class="yield">'+yield_+'</span></div>';}
+// printables2: the WHARF is now a CROSS board on its own (the cut follows the plus). 4×4 grid:
+// empty corners · 8 perimeter slots · the 4 stations in the centre 2×2.
+// a rounded-corner PLUS outline (objectBoundingBox 0–1) — used both as the cross board's clip-path and,
+// chamfered, as its print cut. r = corner radius as a fraction of the board.
+// scale/ox/oy let the SAME plus be emitted in objectBoundingBox fractions (defaults — for the clip-path)
+// OR in absolute inch coords (for the cut overlay), so the CUT exactly matches the ART edge (the clip).
+// r may be a number (same radius everywhere) OR {conv,conc} (different convex/concave radii — needed when
+// the path is a uniform OUTWARD OFFSET of another plus, e.g. the art bleed clip vs the cut).
+function roundedPlusPath(a,b,r,scale,ox,oy){
+  scale=scale||1; ox=ox||0; oy=oy||0;
+  const rc=(r&&typeof r==='object')?r:{conv:r,conc:r};
+  const P=[[a,0],[b,0],[b,a],[1,a],[1,b],[b,b],[b,1],[a,1],[a,b],[0,b],[0,a],[a,a]];
+  const sweep=[1,1,0,1,1,0,1,1,0,1,1,0];   // outer (convex) corners sweep 1, inner (concave) 0
+  const n=P.length, V=i=>P[((i%n)+n)%n], f=x=>+x.toFixed(4);
+  const nrm=p=>{const L=Math.hypot(p[0],p[1])||1;return[p[0]/L,p[1]/L];};
+  const X=v=>f(ox+v*scale), Y=v=>f(oy+v*scale);
+  let d='',ch=[];
+  for(let i=0;i<n;i++){
+    const ri=sweep[i]===1?rc.conv:rc.conc;
+    const cur=V(i),pv=V(i-1),nx=V(i+1);
+    const inD=nrm([cur[0]-pv[0],cur[1]-pv[1]]), outD=nrm([nx[0]-cur[0],nx[1]-cur[1]]);
+    const en=[cur[0]-ri*inD[0],cur[1]-ri*inD[1]], ex=[cur[0]+ri*outD[0],cur[1]+ri*outD[1]];
+    const R=f(ri*scale);
+    d+=(i===0?'M ':'L ')+X(en[0])+' '+Y(en[1])+' A '+R+' '+R+' 0 0 '+sweep[i]+' '+X(ex[0])+' '+Y(ex[1])+' ';
+    ch.push([X(en[0]),Y(en[1])],[X(ex[0]),Y(ex[1])]);
+  }
+  return {d:d+'Z',ch};
+}
+const CROSS_A=0.2435, CROSS_B=0.7565, CROSS_R=0.04;
+const WHARF_W=11.5;          // the cross board size (in) — the CUT plus is this size; the ART bleeds past it
+const CROSS_BLEED=0.125;     // ⚙ art bleed past the cut line (1/8″) for laser-cut tolerance — the cut is unchanged; only the art extends
+// the ART clip = the cut plus DILATED outward by CROSS_BLEED, over a bleed-enlarged element (W + 2·bleed).
+// A true outward offset: arms longer & wider by the bleed, convex corner radius +bleed, concave −bleed.
+const CROSS_ART=(function(){const Wd=WHARF_W+2*CROSS_BLEED, halfArm=(CROSS_B-CROSS_A)/2*WHARF_W+CROSS_BLEED;
+  return {a:(Wd/2-halfArm)/Wd, b:(Wd/2+halfArm)/Wd,
+    r:{conv:(CROSS_R*WHARF_W+CROSS_BLEED)/Wd, conc:Math.max(.0005,(CROSS_R*WHARF_W-CROSS_BLEED)/Wd)}};})();
+function wharfCross(){
+  const slot='<div class="wslot">'+LU('barrel')+'</div>';   // empty slot's default action = Deploy (the barrel icon)
+  const clip='<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="crossclip" clipPathUnits="objectBoundingBox"><path d="'+roundedPlusPath(CROSS_ART.a,CROSS_ART.b,CROSS_ART.r).d+'"/></clipPath></defs></svg>';
+  const OR='<span class="sep">/</span>';
+  const AND='<span class="sep">+</span>';   // brew AND deploy (both happen), vs OR alternatives
+  const wharf='<div class="wharf">'
+    +'<div></div>'+slot+slot+'<div></div>'
+    +slot
+    +station('A','Market','store','<b>2</b>'+LU('coins')+OR+LU('scroll-text')+OR+LU('building-2')+OR+LU('sailboat'))
+    +station('B','Brewhouse','flask-conical',LU('beer')+AND+LU('barrel'))
+    +slot+slot
+    +station('C','Harbor','ship',LU('package-plus')+OR+LU('crown')+OR+LU('ticket'))
+    +station('D','Cellar','hourglass','<b>3</b>'+LU('hourglass')+OR+LU('wrench'))
+    +slot
+    +'<div></div>'+slot+slot+'<div></div>'
+    +'</div>';
+  // padding grows by the bleed so the inner grid stays centered/put while the element (and its clipped art) extends outward
+  return clip+'<div class="mboard cross" style="padding:'+(0.3+CROSS_BLEED).toFixed(3)+'in">'+wharf+'</div>';
+}
+// printables2: the SCORE RING — one clockwise lap of 50 cells with a FIXED, elegant walk: 15 spaces along
+// the top and bottom, 10 down each side, so every CORNER lands on a multiple of 5 — 0/50 (top-left, the
+// start), 15 (top-right), 25 (bottom-right), 40 (bottom-left) — and every 5th cell carries the alternate
+// band (count by fives). Passing 49 flips the disc's lap marker (+50 — the second lap).
+function scoreRingCells(NW,NH,T){
+  const uw=NW-2*T, uh=NH-2*T;
+  const nTop=14, nSide=9;                       // runs between the corner squares: 14+corner=15 · 9+corner=10
+  const wT=uw/nTop, hS=uh/nSide;
+  const cells=[];let i=0;
+  const C=(x,y)=>cells.push({i:i++,x,y,w:T,h:T,corner:true});
+  C(0,0);                                                                                   // 0 / 50 · START
+  for(let c=0;c<nTop;c++)cells.push({i:i++,x:T+c*wT,y:0,w:wT,h:T});                         // top: 1–14
+  C(NW-T,0);                                                                                // 15 · top-right
+  for(let c=0;c<nSide;c++)cells.push({i:i++,x:NW-T,y:T+c*hS,w:T,h:hS});                     // right: 16–24
+  C(NW-T,NH-T);                                                                             // 25 · bottom-right
+  for(let c=0;c<nTop;c++)cells.push({i:i++,x:NW-T-wT*(c+1),y:NH-T,w:wT,h:T});               // bottom: 26–39
+  C(0,NH-T);                                                                                // 40 · bottom-left
+  for(let c=0;c<nSide;c++)cells.push({i:i++,x:0,y:NH-T-hS*(c+1),w:T,h:hS});                 // left: 41–49
+  return cells;
+}
+function scoreRingHtml(NW,NH,T){
+  const cells=scoreRingCells(NW,NH,T);
+  const box=c=>{const cls=(c.i===0?' start':(c.i%5===0?' five':''));
+    return '<div class="ringcell'+cls+'" style="left:'+c.x.toFixed(3)+'in;top:'+c.y.toFixed(3)+'in;width:'+c.w.toFixed(3)+'in;height:'+c.h.toFixed(3)+'in">'
+      +(c.i===0?LU('flag')+'<span class="lap">0 / 50</span>':c.i)+'</div>';};
+  return '<div class="score-ring">'+cells.map(box).join('')+'</div>';
+}
+// printables2: the SUPPLY board — the town's MARKET HALL, designed to its components.
+//   · Three MARKET shelves (what a Market visit buys): Buildings (4 + deck) · Ships (market of 3 + deck) ·
+//     Recipes (the dealt export stacks) + the Charter-contract pile. One CELLAR shelf below (Improvements,
+//     4 + deck). Every slot is the family's native footprint, so the printed card drops exactly in.
+//   · All four DECKS align in one right-edge "stockroom" column — displays face the table, refill is a
+//     one-hand slide from the deck beside the gap.
+//   · The Sailed-Ships end clock at the foot: 15 cells with DUAL end marks per player count — base
+//     6/10/13 (flag) and The Trade Roads' +2 → 8/12/15 (truck). (The Round backstop is rules-side only,
+//     and the loose bits — goods cubes · demand dice · quality markers — live in a supply tray, not here.)
+//   · SCORE wraps the outer edge as the 50-cell ring (see scoreRingCells) — banked constantly, it belongs
+//     on the rim where every seat can reach it without leaning over the displays.
+//   · The OVERLAY bar toggle ghosts a sample component into every slot (native size, 50% opacity) to proof
+//     the fit of the printed cards against the printed spaces.
+function supplyBoard(){
+  const dslot=(fam,ic,smp)=>'<div class="dslot '+fam+'">'+LU(ic)
+    +(OVERLAY&&smp?'<div class="ovl">'+smp+'</div>':'')+'</div>';
+  // the tile supplies live in DRAW BAGS (their backs reveal the type), so the board carries NO deck
+  // spaces — each shelf label ends in the bag glyph: refill the display from the family's bag.
+  const shelf=(lbl,ic,slots)=>'<div class="shelf-lbl">'+LU(ic)+lbl+'<span class="bag">'+LU('shopping-bag')+'</span></div>'
+    +'<div class="shelf">'+slots+'</div>';
+  // overlay samples — one real render per family, varied so both tile verbs/colours get proofed
+  const smpBld=['staple','connoiss','maltkiln','cooperage'].map(k=>buildingCard(BUILDINGS.find(b=>b.k===k)));
+  const smpShip=[shipCard('cog','Bruges'),shipCard('hulk','Bergen'),shipCard('cog','Novgorod')];
+  const smpRec=RECIPES.slice(0,4).map(recipeCard), smpCon=contractCard();
+  const smpImp=[0,1,4,6].map(i=>improveTile(IMPROVE[i]));
+  const market='<div class="disp-h m">'+LU('store')+'Market<span class="sm">— a Market visit buys any ONE of these (or take 2 goods)</span></div>'
+    +shelf('Buildings — the Wharf display of 4','building-2',smpBld.map(s=>dslot('b','building-2',s)).join(''))
+    +shelf('Ships — the market of 3 · commission 2G','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''))
+    +'<div class="shelf-lbl">'+LU('scroll-text')+'Recipes — the dealt export stacks &amp; the Charter contracts (1G)</div>'
+    +'<div class="shelf">'+smpRec.map(s=>dslot('r','scroll-text',s)).join('')
+      +'<div class="dslot r ct">'+LU('ticket')+'<span class="rn">Contracts</span>'+(OVERLAY?'<div class="ovl">'+smpCon+'</div>':'')+'</div></div>';
+  const cellar='<div class="disp-h i">'+LU('wrench')+'Cellar<span class="sm">— Specialists: buy here, Hire (Q3+), or London’s benefit</span></div>'
+    +shelf('Specialists — the Cellar display of 4','wrench',smpImp.map(s=>dslot('i','wrench',s)).join(''));
+  // Sailed-Ships: 15 cells, both end-marks printed — base (flag) and The Trade Roads +2 (truck)
+  const ROADS_SAILED={2:8,3:12,4:15};
+  let clk='';for(let i=1;i<=15;i++){
+    let base='',roads='';for(const p in SAILED){if(SAILED[p]===i)base=p+'p';if(ROADS_SAILED[p]===i)roads=p+'p';}
+    clk+='<div class="cc'+(base?' end':'')+(roads?' rend':'')+'">'
+      +(base?LU('flag')+'<b>'+base+'</b>':(roads?LU('truck')+'<b>'+roads+'</b>':'<span class="n">'+i+'</span>'))+'</div>';}
+  // DESTINATIONS column — the right rim: where a voyage pays. The four kontore read as ONE family
+  // (uniform panel anatomy: gate · value · benefit · majority · a presence zone for the discs);
+  // the HALL sits apart below with its own header — the volume-vs-prestige fork, printed as layout.
+  const BNOTE_SHORT={Bruges:'any mix of goods',London:'a Building or Specialist, free',Bergen:'free Reach (+1 presence)',Novgorod:'refine a cask, +1 age'};
+  // each destination panel carries its generated scene (art/kontor-<key>.png) full-bleed; the stats print
+  // WHITE over a dark bottom gradient (an inline SVG linearGradient — CSS gradients seam in the PNG export,
+  // see the bakeArt review note). One shared <defs> id is fine: every panel uses the identical ramp.
+  const kArt=k=>ART_ON?'<img class="kp-art" src="'+ART_DIR+'kontor-'+k+'.png" alt="">'
+    +'<svg class="kp-grad" preserveAspectRatio="none" viewBox="0 0 1 1" aria-hidden="true">'
+    +'<defs><linearGradient id="kpgrad" x1="0" y1="1" x2="0" y2="0">'
+    +'<stop offset="0" stop-color="#14100b" stop-opacity=".78"/><stop offset=".38" stop-color="#14100b" stop-opacity=".52"/>'
+    +'<stop offset=".72" stop-color="#14100b" stop-opacity=".14"/><stop offset="1" stop-color="#14100b" stop-opacity="0"/>'
+    +'</linearGradient></defs><rect width="1" height="1" fill="url(#kpgrad)"/></svg>':'';
+  const kMini=d=>{
+    // by-quality scale: its own FULL-WIDTH row (not one of 3 narrow columns) — a stacked chip PER TIER
+    // (Q above, ★ below). Squeezed into a 1-of-3 cell it wrapped to a 2nd line and collided with the row
+    // below (Novgorod's v2.9 floor row made it four tiers: <3/3/4/5, too many for a narrow cell at any
+    // reasonable chip size); a full-width row gives 4 small chips plenty of room to sit on ONE line, and
+    // on-delivery/majority get a wider 2-cell row instead of 3, so nothing here is fighting for space.
+    const scaleRow=d.scale?'<div class="kp-scalerow"><span class="kp-ch">'+LU(VP)+'value · by Q</span><span class="kp-scale">'
+        +d.scale.map(qv=>'<span class="qv"><span class="qq">Q'+qv[0]+'</span><span class="qn">'+LU(VP)+qv[1]+'</span></span>').join('')
+      +'</span></div>':'';
+    const valCell=d.scale?'':'<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU(VP)+d.val+'</span></div>';
+    return '<div class="kp'+(d.scale?' scale':'')+'" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+kArt(d.nm.toLowerCase())
+      +'<div class="kp-t">'+LU('landmark')+d.nm+'<span class="kp-q">'+LU(QI)+d.req+'+</span></div>'
+      +'<div class="kp-pz"></div>'
+      +'<div class="kp-rows">'+scaleRow+'<div class="kp-cr'+(d.scale?' two':'')+'">'+valCell
+        +'<div class="kp-cell"><span class="kp-ch">'+LU('gift')+'on delivery</span><span class="kp-big">'+d.ben.n+' '+LU(d.ben.ic)+'</span></div>'
+        +'<div class="kp-cell"><span class="kp-ch">'+LU('landmark')+'majority</span><span class="kp-big">'+d.maj.join('/')+'</span></div>'
+      +'</div><div class="kp-note bnote">'+(BNOTE_SHORT[d.nm]||d.bnote)+'</div></div>'
+    +'</div>';};
+  const hallMini='<div class="kp hall" style="--kc:'+HALL.kc+';--kt:'+HALL.tint+'">'+kArt('hall')
+    +'<div class="kp-t">'+LU('crown')+HALL.nm+'<span class="kp-q">'+LU(QI)+HALL.req+'+</span></div>'
+    +'<div class="kp-pz nb"></div>'
+    +'<div class="kp-rows col"><div class="kp-lad">'+HALL.ladder.map(qv=>'<span class="lr">Q'+qv[0]+'<b>'+LU(VP)+qv[1]+'</b></span>').join('')+'</div>'
+    +'<div class="kp-note ctr"><b>Enshrine</b> — Q2+ deployed, no ship</div></div>'
+  +'</div>';
+  const dests='<div class="sup-dests">'
+    +'<div class="disp-h k">'+LU('landmark')+'Kontore<span class="sm">— ship there: value + the die · majorities at game end</span></div>'
+    +DESTS.map(kMini).join('')
+    +'<div class="disp-h hall">'+LU('crown')+'The Hall<span class="sm">— prestige, out of commerce</span></div>'
+    +hallMini
+  +'</div>';
+  const clock='<div class="sup-clock"><div class="cicon">'+LU('sailboat')+'</div><span class="clbl">Sailed<br>Ships</span><div class="vtrack">'+clk+'</div></div>';
+  const inner='<div class="mboard supply" style="position:absolute;left:'+SCORE_RING_T+'in;top:'+SCORE_RING_T+'in;'
+      +'width:'+(SUPPLY_NW-2*SCORE_RING_T).toFixed(3)+'in;height:'+(SUPPLY_NH-2*SCORE_RING_T).toFixed(3)+'in">'
+    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays · the destinations · the end clock ('+LU('flag')+' finish the round &amp; score · '+LU('truck')+' = with The Trade Roads) — score laps the rim by fives (0–49, then +50)</span></div>'
+    +'<div class="sup-cols">'
+      +'<div class="sup-main">'+market+cellar+'</div>'
+      +dests
+      +clock
+    +'</div>'
+  +'</div>';
+  return '<div class="supply-outer">'+scoreRingHtml(SUPPLY_NW,SUPPLY_NH,SCORE_RING_T)+inner+'</div>';}
+
+//==================================================================
+// PAGINATION — deterministic sheets of absolutely positioned items
+//==================================================================
+function newPage(pages,section,label,geo){const p={section,label,items:[],cuts:[],circles:[],geo:geo||PG};pages.push(p);return p;}
+function packRun(pages,section,label,kind,htmlList,famTag,famPages,geo){
+  // pack same-size items in gapless rows; rows flow page to page (one unbroken grid). geo = page geometry (default PG; tiles use TILE_GEO)
+  const G=geo||PG;
+  const [nw,nh]=SIZE[kind];const w=+(nw*SCALE).toFixed(4),h=+(nh*SCALE).toFixed(4);   // footprint = native × SCALE
+  const cols=Math.floor((G.w-0.4)/w);const x0=+( (G.w-cols*w)/2 ).toFixed(4);
+  // continue the previous run only if it's the SAME section, SAME page size (geo), AND was itself packed by packRun
+  // (_kind set) — so a run never spills onto a mirror-BACKS page or a board page that shares the section.
+  let pg=pages.length&&pages[pages.length-1].section===section&&(pages[pages.length-1].geo||PG)===G&&pages[pages.length-1]._kind?pages[pages.length-1]:newPage(pages,section,label,G);
+  let cx=pg._cx!==undefined?pg._cx:x0, cy=pg._cy!==undefined?pg._cy:G.y0, rh=pg._rh||0;
+  if(pg._kind&&pg._kind!==kind){cx=x0;cy=cy+rh;rh=0;}   // a new size always starts a fresh row
+  htmlList.forEach(html=>{
+    if(cx+w>x0+cols*w+0.001){cx=x0;cy+=h;}
+    if(cy+h>G.yMax){pg._cx=undefined;pg=newPage(pages,section,label,G);cx=x0;cy=G.y0;}
+    pg.items.push({x:cx,y:cy,w,h,nat:[nw,nh],html});   // nat = native size; the renderer scales content → footprint
+    if(kind==='tok'||kind==='disc'||kind==='wtok')pg.circles.push({cx:cx+w/2,cy:cy+h/2,r:+(CUTR[kind]*SCALE).toFixed(4)});
+    else addRectCut(pg,cx,cy,w,h);
+    if(kind==='frame'){   // owner RINGS: also cut the interior hole (sized to a building tile, so the ring frames it)
+      const hole=+(SIZE.bld[0]*SCALE).toFixed(4),ins=+((w-hole)/2).toFixed(4);
+      if(ins>0.02)addRectCut(pg,+(cx+ins).toFixed(4),+(cy+ins).toFixed(4),hole,hole);}
+    if(famTag)(famPages[famTag]=famPages[famTag]||new Set()).add(pages.indexOf(pg));
+    cx+=w;rh=h;
+  });
+  pg._cx=cx;pg._cy=cy;pg._rh=rh;pg._kind=kind;
+}
+function addRectCut(pg,x,y,w,h){  // dedupe shared edges → each grid line cuts ONCE
+  const seg=(x1,y1,x2,y2)=>{const k=[x1,y1,x2,y2].map(v=>v.toFixed(3)).join(',');
+    if(!pg._segs)pg._segs={};if(pg._segs[k])return;pg._segs[k]=1;pg.cuts.push([x1,y1,x2,y2]);};
+  seg(x,y,x+w,y);seg(x,y+h,x+w,y+h);seg(x,y,x,y+h);seg(x+w,y,x+w,y+h);
+}
+// pack same-size items (a single kind) into a sub-rectangle [x0,y0]→[x1,y1] of an EXISTING page — used to tuck the
+// small TOKENS into the empty corners of the main board sheet. Rows flow within the box; round tokens get a cut circle.
+function packRegion(pages,pg,kind,htmlList,x0,y0,x1,y1,famTag,famPages){
+  const [nw,nh]=SIZE[kind];const w=+(nw*SCALE).toFixed(4),h=+(nh*SCALE).toFixed(4);
+  const cols=Math.max(1,Math.floor((x1-x0)/w));let cx=x0,cy=y0,n=0,over=0;
+  htmlList.forEach(html=>{
+    if(n&&n%cols===0){cx=x0;cy=+(cy+h).toFixed(4);}
+    if(cy+h>y1+0.01)over++;
+    pg.items.push({x:+cx.toFixed(4),y:+cy.toFixed(4),w,h,nat:[nw,nh],html});
+    if(kind==='tok'||kind==='disc'||kind==='wtok')pg.circles.push({cx:+(cx+w/2).toFixed(4),cy:+(cy+h/2).toFixed(4),r:+(CUTR[kind]*SCALE).toFixed(4)});
+    else addRectCut(pg,cx,cy,w,h);
+    cx=+(cx+w).toFixed(4);n++;
+  });
+  if(famTag)(famPages[famTag]=famPages[famTag]||new Set()).add(pages.indexOf(pg));
+  if(over)console.warn('packRegion '+kind+': '+over+' items overflow the box bottom ('+y1+')');
+}
+function addPolyCut(pg,pts){   // a closed polygon cut (the Wharf cross) — consecutive vertices → cut segments
+  for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length];pg.cuts.push([a[0],a[1],b[0],b[1]]);}
+}
+// a LETTER (8.5×11 landscape) board: the board is designed at 9.8×7.5 (proportions tuned there) and SCALED UP
+// uniformly to fill the printable letter area — so it prints at full letter size (not shrunk by the global SCALE)
+// while keeping its tuned proportions. Used for the Destinations board + its Trade Roads back.
+function letterBoard(pages,section,label,html){
+  const pg=newPage(pages,section,label);   // default PG geo = letter landscape (10.4×7.9 printable)
+  const NW=9.8,NH=7.0, sc=Math.min((PG.w-0.34)/NW,(PG.h-0.2)/NH);   // fill the sheet width; ~.36in top/bottom margin
+  const w=+(NW*sc).toFixed(3),h=+(NH*sc).toFixed(3),x=+((PG.w-w)/2).toFixed(3),y=+((PG.h-h)/2).toFixed(3);
+  pg.items.push({x,y,w,h,nat:[NW,NH],html});   // nat = the design size → itDiv scales the whole board by sc
+}
+// printables2: the Wharf (a CROSS) on its own trimmed 22-wide sheet (the Supply board moved to its own sheet).
+function wharfBoardSheet(pages){
+  const G=WHARF_GEO;const pg=newPage(pages,'boards','Main board — the Wharf (cross)',G);
+  // WHARF cross — the 4×4 grid (2.5in cells + .3in gaps) is 10.9in; +.3in outline padding → an 11.5in board.
+  // wy sits the cross near the top so the trimmed sheet has minimal margin (tokens tuck into the open right).
+  const W=WHARF_W, wx=0.4, wy=0.7, bl=CROSS_BLEED;
+  // the board element extends OUTWARD by the bleed on every side (grid stays centered via the +bleed padding),
+  // so the clipped art bleeds past the cut. The CUT itself is the original-size plus at (wx,wy) — unchanged.
+  const Ox=+(wx-bl).toFixed(4),Oy=+(wy-bl).toFixed(4),wn=W+2*bl;
+  pg.items.push({x:Ox,y:Oy,w:+(wn*SCALE).toFixed(4),h:+(wn*SCALE).toFixed(4),nat:[wn,wn],html:wharfCross()});
+  pg.cutPath=roundedPlusPath(CROSS_A,CROSS_B,CROSS_R,W,wx,wy).d;   // native cross outline; scaled to match the content via cutXform
+  pg.cutXform='matrix('+SCALE+',0,0,'+SCALE+','+(+(Ox*(1-SCALE)).toFixed(4))+','+(+(Oy*(1-SCALE)).toFixed(4))+')';
+  return pg;
+}
+// the MARKET & STORES board (supply displays · stores bins · tracks · the score ring) → its own trimmed sheet, centred.
+function supplyBoardSheet(pages){
+  // label stays PLAIN TEXT (no &amp; entity): every consumer escapes for itself — esc() for the reg-mark
+  // SVG title (an entity here double-escaped to a literal "&amp;" on the printed sheet) and slug() for the
+  // export filename (the entity slugged to "market-amp-stores-…").
+  const G=SUPPLY_GEO;const pg=newPage(pages,'boards','Market & Stores board (supply · tracks · score ring)',G);
+  const w=+(SUPPLY_NW*SCALE).toFixed(4),h=+(SUPPLY_NH*SCALE).toFixed(4),x=+((G.w-w)/2).toFixed(3),y=+((G.h-h)/2).toFixed(3);
+  pg.items.push({x,y,w,h,nat:[SUPPLY_NW,SUPPLY_NH],html:supplyBoard()});
+  pg.rrect={x,y,w,h,r:0.14};
+}
+// double-sided player aid: N IDENTICAL cards on a centred, SYMMETRIC 2×2 grid (full) or 1 centred (proof).
+// Because the cards are identical and the grid is symmetric on both axes, the FRONT and BACK sheets register
+// under either duplex flip edge — so "front aligns with back" holds regardless of the printer's flip setting.
+function aidSheet(pages,label,faceHtml){
+  const W=4.7,H=3.4;
+  const pos=MODE==='proof'?[[(PG.w-W)/2,(PG.h-H)/2]]:[[0.35,0.4],[5.35,0.4],[0.35,4.1],[5.35,4.1]];
+  const pg=newPage(pages,'cards',label);
+  pos.forEach(([x,y])=>{pg.items.push({x,y,w:W,h:H,html:faceHtml});addRectCut(pg,x,y,W,H);});
+}
+
+function buildPages(){
+  const pages=[],famPages={};
+  // --- BOARDS ---
+  wharfBoardSheet(pages);   // the Wharf (cross) — its own 22×15 sheet (the Supply board moved to its own sheet, below)
+  // tuck the single-sided TOKENS into the open right side of the Wharf sheet (no separate token sheet needed):
+  // goods cubes upper, ownership discs below — both single-sided, so no back sheet.
+  const wpg=pages[pages.length-1];
+  const wtok=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wtok.push(tok(d));});
+  packRegion(pages,wpg,'tok',wtok,10.0,0.7,21.9,6.2,'Goods tokens',famPages);
+  const wdisc=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(OWN_DISCS);i++)wdisc.push(disc(p.c));});
+  packRegion(pages,wpg,'disc',wdisc,10.0,6.4,21.9,9.9,'Ownership discs',famPages);
+  supplyBoardSheet(pages);   // the Supply & Tracks board — its own sheet (work in progress; not finalized)
+  letterBoard(pages,'boards','Destinations board',dboard());
+  letterBoard(pages,'boards','Trade Roads — Overland (back of Destinations)',olboard());
+  // (player brewery boards are generated LAST — at the bottom of the page — see below)
+  // --- CARDS vs TILES — split by HOW they print, but BOTH are duplex (a FRONT sheet + a matching reversed BACK
+  // sheet — fronts and backs never share a sheet):
+  //   • CARDS    → LETTER (8.5×11) on a HOME duplex printer: casks & ships (2″ double-sided), recipes,
+  //                contracts, player aids. Each FRONTS sheet has a matching BACKS sheet that is its LEFT↔RIGHT
+  //                mirror, so a duplex flip on the SHORT edge lands each card's back square on its front; cut once.
+  //   • TILES    → 22-wide PLOTTER sheets, each TRIMMED to its content height (no blank media). BUILDINGS are
+  //                double-sided → a FRONT sheet + its LEFT↔RIGHT MIRRORED back sheet (the back carries the Wild/★
+  //                backs; flip/mount, then cut). IMPROVEMENTS + owner FRAMES are single-sided → their own sheet.
+  //   • TOKENS   → single-sided; tucked into the open right side of the Wharf BOARD sheet (see packRegion in BOARDS).
+  // CASKS & SHIPS are double-sided 2″ CARDS on LETTER (8.5×11) for HOME double-sided printing — a centred grid
+  // whose BACKS sheet is the LEFT↔RIGHT mirror of the fronts, so a duplex flip on the SHORT edge lands each
+  // card's back on its front; then cut. Each cask front records its data+action so the BACKS pass prints the
+  // brewed side. (Buildings/improvements/tokens are TILES → the plotter; see the TILES & TOKENS block below.)
+  // helper: append a BACKS page mirroring each FRONT page LEFT↔RIGHT about that page's width (geo.w)
+  function mirrorBackPages(frontPages,meta,geo,label,section){let i=0;frontPages.forEach(fp=>{
+    const bp=newPage(pages,section||'tiles',label,geo);
+    fp.items.forEach(it=>{const f=meta[i++];const mx=+(geo.w-it.x-it.w).toFixed(4);
+      addRectCut(bp,mx,it.y,it.w,it.h);                                            // mirrored cut grid → registers the duplex sandwich
+      if(f.cask)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:caskCardBack(f.d,f.act)});
+      else if(f.bld)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:buildingBack(f.d)});
+      else if(f.ship)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:shipBack()});});
+    (famPages['Card/tile backs']=famPages['Card/tile backs']||new Set()).add(pages.indexOf(bp));
+  });}
+  // tag each front family by pack order (item order across the pages == meta order)
+  function tagFamilies(frontPages,meta){let i=0;frontPages.forEach(fp=>fp.items.forEach(()=>{
+    if(i>=meta.length)return;   // stop after the meta items — later kinds (e.g. building backs) share the page
+    const fam=meta[i++].fam;(famPages[fam]=famPages[fam]||new Set()).add(pages.indexOf(fp));}));}
+
+  // --- CASK & SHIP CARDS → LETTER (8.5×11), double-sided (flip LEFT↔RIGHT) ---
+  // cask cards: Gruit all-Source (pinned); Q2+ cycle the draw-pool (Q4/Q5 include Wild) — the printed mix IS the brew-draw
+  const cardFronts=[];
+  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:(d.wild?CASK_POOL.concat([CASK_WILD]):CASK_POOL);
+    for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];cardFronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
+  const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
+  shipList.forEach(([hull,dest])=>cardFronts.push({fam:'Ships',kind:'ship',ship:true,html:shipCard(hull,dest)}));   // ships = full-bleed 2.5″ cards
+  const CLBL='Cask &amp; Ship CARDS — fronts · LETTER 8.5×11 · 2″, centred — print DOUBLE-SIDED, flip on the SHORT edge (LEFT↔RIGHT)';
+  const cStart=pages.length;
+  ['caskc','ship'].forEach(k=>packRun(pages,'tiles',CLBL,k,cardFronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,CARD_GEO));
+  const cardFrontPages=pages.slice(cStart);
+  tagFamilies(cardFrontPages,cardFronts);
+  mirrorBackPages(cardFrontPages,cardFronts,CARD_GEO,'Cask &amp; Ship CARD BACKS · LETTER 8.5×11 (mirror — flip LEFT↔RIGHT): cask brewed-side · a ship at sea behind ships');
+
+  // --- BUILDING TILES → a 22-wide FRONT sheet + its LEFT↔RIGHT MIRRORED back sheet. Buildings are DOUBLE-SIDED
+  // (front art / Wild + ★ back), so — exactly like the cask/ship cards above — the FRONTS go on one sheet and a
+  // separate MIRRORED back sheet carries each building's Wild/★ back; flip on the SHORT edge (or mount front-to-back
+  // around chipboard) and every back lands square on its front, then cut. (Fronts and backs must NOT share a sheet
+  // — every sheet has its matching reversed back.) Both sheets are trimmed to the building grid so no blank media.
+  const TLBL_BLD='Building tile FRONTS (22″ plotter · cut apart)';
+  const bldFrontHtml=[],bldMeta=[];
+  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++){bldFrontHtml.push(buildingCard(d));bldMeta.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',bld:true,d:d});}});
+  const tStart=pages.length;
+  packRun(pages,'bits',TLBL_BLD,'bld',bldFrontHtml,null,famPages,TILE_GEO);
+  const bldFrontPages=pages.slice(tStart);
+  tagFamilies(bldFrontPages,bldMeta);
+  mirrorBackPages(bldFrontPages,bldMeta,TILE_GEO,'Building tile BACKS (mirror — flip LEFT↔RIGHT): each building’s Wild + '+DEVELOP_PTS+'★','bits');
+  // IMPROVEMENTS + owner FRAMES are SINGLE-SIDED → their own trimmed sheet (no back).
+  const TLBL_IMPF='Specialists + owner frames (22″ plotter · single-sided · cut apart)';
+  const imps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)imps.push(improveTile(d));});
+  packRun(pages,'bits',TLBL_IMPF,'imp',imps,'Improvements',famPages,IMPF_GEO);
+  const frames=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(6);i++)frames.push(frameTile(p.c,p.nm));});
+  packRun(pages,'bits',TLBL_IMPF,'frame',frames,'Building frames',famPages,IMPF_GEO);
+  // --- RECIPE CARDS (cardstock — do not mount; they tuck under the board edge) ---
+  const cards=[];const sets=MODE==='proof'?1:PLAYERS.length;
+  for(let s=0;s<sets;s++)RECIPES.forEach(r=>cards.push(recipeCard(r)));
+  packRun(pages,'cards','Export recipe cards — 1 set per player','card',cards,'Recipe cards',famPages);
+  const contractCards=[];for(let i=0;i<cnt(CONTRACTS.n);i++)contractCards.push(contractCard());   // v0.16 charter contracts = cards
+  packRun(pages,'cards','Charter contract cards','card',contractCards,'Charter contracts',famPages);
+  // PLAYER AID — a double-sided reference card (front: a turn · back: icon reference); 2 sheets, duplex
+  aidSheet(pages,'Player aid — FRONT (a turn)',aidFront());
+  aidSheet(pages,'Player aid — BACK (icon reference)',aidBack());
+  // cardstock + paper cutter: cut lines print on the ART layer as grey guides (no laser pass)
+  pages.filter(p=>p.section==='cards').forEach(p=>p.papercut=true);
+  // --- PLAYER BOARDS (moved to the BOTTOM of the page, just before the checklist) ---
+  PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>{   // tight die-cut hugging the slot cluster (not a page-filling rect)
+    const W=9.64,H=5.25,sw=+(W*SCALE).toFixed(4),sh=+(H*SCALE).toFixed(4),X=+((PG.w-sw)/2).toFixed(2),Y=0.55,pg=newPage(pages,'boards','Player board — '+p.nm);
+    pg.items.push({x:X,y:Y,w:sw,h:sh,nat:[W,H],html:pboard(p)});
+    pg.rrect={x:X,y:Y,w:sw,h:sh,r:+(0.18*SCALE).toFixed(4)};
+  });
+  // --- CHECKLIST (always last; carries no cuts, so earlier sheets stay page-aligned) ---
+  const pg=newPage(pages,'list','Component checklist');
+  pages.forEach((p,i)=>p.no=i+1);   // number sheets BEFORE building the checklist's sheet refs
+  pg.items.push({x:0,y:0,w:10.4,h:7.9,html:checklist(pages,famPages)});
+  return pages;
+}
+
+//==================================================================
+// CHECKLIST — the manufacturing manifest (full-set counts, always)
+//==================================================================
+function pgRef(pages,famPages,fam){const s=famPages[fam];if(!s)return '—';
+  return 'S'+[...s].map(i=>pages[i].no).sort((a,b)=>a-b).join(', S');}
+function checklist(pages,famPages){
+  // counts are sourced from the CANON (COMPONENTS.md / RULES.md / play.html) — not the printables' tile data.
+  const EXP_BLD=['salthouse','smokekiln','partigyle'];                       // Specialty-Beers thematic buildings
+  const baseBld=BUILDINGS.filter(b=>!EXP_BLD.includes(b.k));
+  const sumN=a=>a.reduce((s,b)=>s+b.n,0);
+  const baseVal=baseBld.filter(b=>b.verb==='value'), baseTr=baseBld.filter(b=>b.verb==='transform');
+  const designs=a=>a.map(b=>b.nm+(b.n>1?' ×'+b.n:'')).join(' · ');
+  const impTotal=IMPROVE.reduce((s,d)=>s+d.n,0);                              // 7 types × (n−1); 21 at 4p
+  const D='style="font-size:.085in;color:#5b4a37;font-weight:normal;line-height:1.26;margin-top:.005in"';
+  const R=(nm,detail,n)=>'<tr><td class="bx"></td><td><b>'+nm+'</b>'+(detail?'<div '+D+'>'+detail+'</div>':'')+'</td><td class="n">'+n+'</td></tr>';
+  const T=title=>'<table><tr><th></th><th>'+title+'</th><th>qty</th></tr>';
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v2.9 “Ground Rent”)</span></h2>'
+    +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The base game below; the three opt-in expansions are listed last. With all expansions off, the box is exactly the base set. (Counts are a working first pass.)</p>'
+    +'<div class="cols2">';
+  h+=T('Boards')
+    +R('Main board — the Wharf','The 2×2 of stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots, plus the Sailed-Ships end-clock track.','1')
+    +R('Destinations board','The four kontore (Bruges · London · Bergen · Novgorod) + the Hall — each with its quality gate, base value, on-delivery benefit, and (kontore) a majority track.','1')
+    +R('Market &amp; Stores board','The shared displays at component size (Buildings 4 · Ships 3 · recipe stacks + contracts · Specialists 4 — each display refills from its DRAW BAG, no deck spaces), the DESTINATIONS column (the four kontore — gate · value · benefit · majority · an open presence zone — with the Hall set apart), the Sailed-Ships clock (15 cells, dual END marks — base and The Trade Roads), and the 50-cell score ring wrapping the rim (0–49, +50 on the second lap). Loose bits (goods cubes · demand dice · quality markers) live in a supply tray.','1')
+    +R('Player brewery boards','One per player: vessel lanes (start 2, cap 3), the maturation track, a recipe rack, improvement slots, the Flight strip, and goods storage (cap 8).',PLAYERS.length)
+    +'</table>';
+  h+=T('Tiles (mount on chipboard, laser-cut)')
+    +R('Cask tiles — the beer supply','A shared pool, brewed not bought (min 6 per type): Gruit ×16 · Hopped ×20 · Broyhan ×6 · Keut ×6 · Mumme ×8 · Bock ×6. Each shows a quality (Q1–Q5) and one slot-action. Deal 3 of the 4 export beers each game.','62')
+    +R('Ship tiles','Neutral hulls, a kontor printed on each — Cog (holds 2) ×11 · Hulk (holds 3) ×9; five to each of the four kontore. Drawn off a shuffled deck into a face-up market of 3.','20')
+    +R('Building tiles','The owned slot modifiers, '+baseBld.length+' designs (each tile double-sided: art front / displaced Wild back, +'+DEVELOP_PTS+'★). <b>Value —</b> '+designs(baseVal)+'. <b>Transform —</b> '+designs(baseTr)+'.',sumN(baseBld))
+    +R('Specialist tiles','The private brewery-board tiles, 7 designs: '+IMPROVE.map(d=>d.nm).join(' · ')+'. A shuffled display at the Cellar — 3 copies of each type (n−1 per type), enough for 4 players.',impTotal)
+    +'</table>';
+  h+=T('Cards (cardstock — do not mount)')
+    +R('Recipe cards (export)','One set of four per player: Broyhan · Keut · Mumme · Bock. (Gruit &amp; Hopped are printed on the brewery board.)',4*PLAYERS.length)
+    +R('Charter contracts','The relief-valve certificates — start 2 per house, buy more (1 G), spend one + a 2 G fare for a single-cask voyage.',CONTRACTS.n)
+    +R('Player aid cards','Double-sided quick reference (a turn / the icon key), one per player.',PLAYERS.length)
+    +'</table>';
+  h+=T('Tokens &amp; bits')
+    +R('Grain cubes','Currency &amp; brew input (G).','60')
+    +R('Hops cubes','Currency &amp; brew input (H).','40')
+    +R('Worker pawns','One per player; moved between stations.',PLAYERS.length)
+    +R('Ownership / presence discs','Per player colour — marks a cask you own, then plants at a kontor as your presence (for majorities).',OWN_DISCS+' ea')
+    +R('Draw bags','One per hidden tile supply — Ships · Buildings/Privileges · Specialists (their backs reveal the type, so the supply hides in a bag; displays refill by blind draw).','3')
+    +R('Building-owner frames','Per player colour — a card-kit-specific overlay marking whose building card sits on a slot (printables.html marks this with the same disc instead).','6 ea')
+    +R('Demand dice (d6)','The reusable value carrier — a cask shipped through ITS OWNER’S value building rides one in its berth (ship-slot value buildings bump the same die at the sail; max 6); the pips are the ★ it banks on delivery.','8')
+    +R('Quality-boost markers','A +1-quality token a cask carries from a Malt Kiln / Hop Yard to delivery.','6')
+    +R('First-player &amp; round markers','Turn order (fixed all game) + the round track.','2')
+    +'</table>';
+  h+=T('Expansions (opt-in — added only when used)')
+    +R('Specialty Beers — cask tiles','Gose ×8 (Q2) · Zerbster ×6 (Q3) · Duckstein ×8 (Q2) — pinned-signature beers; with them in, deal 3 of 7 exports.','22')
+    +R('Specialty Beers — building tiles','Salt House · Smoke Kiln · Parti-Gyle Tun — added to the building deck. (Blending is a Cellar action, no component.)','3')
+    +R('Specialty Beers — recipe cards','Gose · Zerbster · Duckstein, one set of three per player.',3*PLAYERS.length)
+    +R('Jopenbier (capstone) — cask tiles','The Q6 vintage super-beer; always acquirable when on, scored self-contained.','6')
+    +R('Jopenbier — recipe cards','One per player.',PLAYERS.length)
+    +R('The Trade Roads — network board','The inland map (Hamburg → the Bruges gateway → London / Bergen / Rhineland, plus the eastern haul to Novgorod); towns carry claimable Staple-Right slots. Prints on the back of the Destinations board, and replaces the kontor majorities.','1')
+    +'</table>';
+  h+='</div>';
+  h+='<p style="font-size:.092in;color:#5b4a37;border-top:1px solid #c8b48a;padding-top:.05in;margin:.04in 0 0">'
+    +'<b>Print &amp; cut.</b> Boards and tiles mount on chipboard and cut on the CUT layer (laser lines + corner registration marks); cards print on cardstock, no mounting. Building tiles are double-sided (front art / Wild back). See the Boards, Tiles &amp; Cards views to print each family.</p>';
+  h+='</div>';
+  return h;}
+
+//==================================================================
+// OVERLAY SVG — registration marks (both layers) + cut lines (CUT)
+//==================================================================
+function regmarkSvg(g){g=g||PG;const m=0.15;const regs=[[m,m],[g.w-m,m],[m,g.h-m],[g.w-m,g.h-m]];let s='';regs.forEach(([x,y])=>{
+  s+='<line x1="'+(x-0.15)+'" y1="'+y+'" x2="'+(x+0.15)+'" y2="'+y+'" stroke="#000" stroke-width="0.012" fill="none"/>'
+    +'<line x1="'+x+'" y1="'+(y-0.15)+'" x2="'+x+'" y2="'+(y+0.15)+'" stroke="#000" stroke-width="0.012" fill="none"/>'
+    +'<circle cx="'+x+'" cy="'+y+'" r="0.07" stroke="#000" stroke-width="0.012" fill="none"/>';});
+  return s;}
+function marksSvg(pg){  // ONE fragment shared by the on-page overlay and BOTH SVG exports → guaranteed alignment
+  const g=pg.geo||PG;
+  const bx2=+(g.w-0.5).toFixed(2), bx1=+(bx2-3).toFixed(2), bxm=+((bx1+bx2)/2-0.32).toFixed(2);  // a 3.00in scale-check bar at the top-right of any page size
+  return regmarkSvg(g)
+    +'<text x="0.45" y="0.22" font-size="0.11" font-family="Georgia,serif" fill="#000">Brewhouses of the Hanse · S'+pg.no+' · '+MODE+' · '+esc(pg.label)+'</text>'
+    +'<line x1="'+bx1+'" y1="0.16" x2="'+bx2+'" y2="0.16" stroke="#000" stroke-width="0.014"/>'
+    +'<line x1="'+bx1+'" y1="0.1" x2="'+bx1+'" y2="0.22" stroke="#000" stroke-width="0.014"/>'
+    +'<line x1="'+bx2+'" y1="0.1" x2="'+bx2+'" y2="0.22" stroke="#000" stroke-width="0.014"/>'
+    +'<text x="'+bxm+'" y="0.12" font-size="0.09" font-family="Georgia,serif" fill="#000">3.00 in</text>';}
+function cutsSvg(pg){
+  const cc=pg.papercut?'#888':'#f00';   // paper-cutter guides print grey with the art; laser cuts are red
+  let s='';
+  pg.cuts.forEach(c=>{s+='<line x1="'+c[0]+'" y1="'+c[1]+'" x2="'+c[2]+'" y2="'+c[3]+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';});
+  pg.circles.forEach(c=>{s+='<circle cx="'+c.cx+'" cy="'+c.cy+'" r="'+c.r+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';});
+  if(pg.rrect){const r=pg.rrect;s+='<rect x="'+r.x+'" y="'+r.y+'" width="'+r.w+'" height="'+r.h+'" rx="'+r.r+'" stroke="'+cc+'" stroke-width="0.008" fill="none"/>';}
+  if(pg.cutPath)s+='<path d="'+pg.cutPath+'"'+(pg.cutXform?' transform="'+pg.cutXform+'"':'')+' stroke="'+cc+'" stroke-width="0.008" fill="none"/>';
+  return s;}
+function overlaySvg(pg){const g=pg.geo||PG;
+  return '<svg class="ov" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+g.w+' '+g.h+'">'
+    +'<g class="marks">'+marksSvg(pg)+'</g>'
+    +'<g class="cuts'+(pg.papercut?' always':'')+'">'+cutsSvg(pg)+'</g></svg>';}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+
+//==================================================================
+// RENDER + DOWNLOADS
+//==================================================================
+//==================================================================
+// PNG EXPORT — rasterize any component to a PNG (html2canvas) ·
+// download individually, or a whole type as a .zip (JSZip).
+// Filenames: <type>-<name>-<front|back>.png. High-res (×6) so the output meets/exceeds the 1024px source art.
+//
+// ---- REVIEW NOTE from a parallel session (2026-06-28) — findings on the export "seam line" ----
+// I was chasing the same exported-card horizontal seam this `bakeArt()` flatten apparently fixes. Notes
+// in case they're useful for review / future tweaks (no code change here — this is just a comment):
+//  • ROOT CAUSE: html2canvas leaves a 1px seam at CSS linear-gradient COLOUR-STOPS. The visible line on
+//    card backs was the coloured `var(--c) → transparent` end/foot gradients (.cc-back .ce.top/.ce.bot,
+//    .bcard .bc-foot, ship foot), seaming at their stop (cask-gose-back: ~y34% = the .ce.top 36% stop).
+//    If any seam survives bakeArt on cards whose gradient is a real DOM element (not part of the baked art
+//    layer), converting that gradient to an inline SVG linearGradient (baked colour, stop-opacity not the
+//    `transparent` keyword) renders seam-free — same trick already used for the scrim / station roof.
+//  • DO NOT swap in html2canvas-pro to "fix gradients": tested — it renders gradients cleanly BUT TAINTS
+//    the export canvas ("getImageData/toBlob … tainted by cross-origin data"), which breaks the download.
+//  • html2canvas also ignores radial-gradients (station roof → SVG pattern), CSS filter (building-back
+//    grey), and clip-path:url() (wharf board → re-clip via Path2D) — keep those SVG/Path2D workarounds.
+//  • VERIFYING the export in a headless sandbox: reading full-res card screenshots trips a 32MB media
+//    limit. Verify with a small render (scale 2) + a NUMERIC metric (2nd-difference of row brightness in
+//    the 20–48% band) POSTed back via the local http server's request log — never read a big card image.
+// ------------------------------------------------------------------------------------------------------
+//==================================================================
+const PNG_SCALE=6;   // ⚙ a 2″ card → 1152px, a 2.5″ card → 1440px — both ≥ the 1024² source art (no soft upscaling)
+const SHEET_DPI=410; // ⚙ full-sheet PNG export resolution. 410 ≈ the source art's native density (1024px ÷ 2.5in) → no
+                     // data loss; a 22×15 sheet → ~9020×6150px. Lower it (≈300) for smaller files if a browser struggles.
+let EXPORT=[];   // current export registry (index = onclick handle)
+const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+function exportItems(){
+  const it=[]; let ci=0;
+  // BOARDS — the wharf cross (its own scale: a big board upscales the 1024² art, so a modest ×2 keeps the file sane)
+  it.push({type:'board',name:'wharf',side:'',w:WHARF_W+2*CROSS_BLEED,h:WHARF_W+2*CROSS_BLEED,scale:2,clip:'cross',html:wharfCross()});
+  // CASKS — EVERY distinct tile (beer × action). The slot-action drawn at brew is the replayability: pinned beers
+  // are one variant; Q2+ beers cycle the 6-action pool (Mumme & Bock add the Q4+ Wild). We mirror exactly what the
+  // print sheets lay down (buildPages) and emit one asset per DISTINCT action — identical copies are byte-identical
+  // PNGs, so deduping by action key gives the full variety with no redundant files. Named cask-<beer>-<action>.
+  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:(d.wild?CASK_POOL.concat([CASK_WILD]):CASK_POOL);
+    const seen=new Set();
+    for(let i=0;i<cnt(d.n);i++){const act=pool[i%pool.length];if(seen.has(act.k))continue;seen.add(act.k);
+      const nm=slug(d.nm)+'-'+act.k;
+      it.push({type:'cask',name:nm,side:'front',w:2.5,h:2.5,html:caskCardFront(d,act)});
+      it.push({type:'cask',name:nm,side:'back', w:2.5,h:2.5,html:caskCardBack(d,act)});}});
+  // SHIPS — one per distinct hull+destination (front) + the shared back, duplicated per ship for consistent naming
+  const seen=new Set();
+  SHIP_DECK.forEach(([hull,dest])=>{const key=hull+'-'+slug(dest);if(seen.has(key))return;seen.add(key);
+    it.push({type:'ship',name:key,side:'front',w:2.5,h:2.5,html:shipCard(hull,dest)});
+    it.push({type:'ship',name:key,side:'back', w:2.5,h:2.5,html:shipBack()});});
+  // BUILDINGS — front + displaced back per design
+  BUILDINGS.forEach(d=>{
+    it.push({type:'building',name:d.k,side:'front',w:2,h:2,html:buildingCard(d)});
+    it.push({type:'building',name:d.k,side:'back', w:2,h:2,html:buildingBack(d)});});
+  // IMPROVEMENTS · RECIPES · CONTRACT · PLAYER AID
+  IMPROVE.forEach(d=>it.push({type:'improvement',name:slug(d.nm),side:'front',w:2,h:2,html:improveTile(d)}));
+  RECIPES.forEach(r=>it.push({type:'recipe',name:slug(r.nm),side:'front',w:1.85,h:2.55,html:recipeCard(r)}));
+  // Gruit & Hopped recipe cards — for the user's convenience in the PNG export (canon keeps them on the brewery
+  // board, so they're NOT on the printed recipe sheet; this just makes downloadable cards available).
+  [{nm:'Gruit', cc:'#8a949c', L:1, g:1,h:0, start:1, reach:'Q1 · the starting ale — every brewery begins with it'},
+   {nm:'Hopped',cc:'#c2922f', L:2, g:1,h:1, start:1, reach:'Q2 · the first export — hopped beer survives the voyage'}]
+    .forEach(r=>it.push({type:'recipe',name:slug(r.nm),side:'front',w:1.85,h:2.55,html:recipeCard(r)}));
+  it.push({type:'contract',name:'charter',side:'front',w:1.85,h:2.55,html:contractCard()});
+  it.push({type:'aid',name:'player-aid',side:'front',w:4.7,h:3.4,html:aidFront()});
+  it.push({type:'aid',name:'player-aid',side:'back', w:4.7,h:3.4,html:aidBack()});
+  return it;
+}
+const fname=it=>it.type+'-'+it.name+(it.side?'-'+it.side:'')+'.png';
+// BAKE the art layer to a flat <canvas> before html2canvas runs. Each art slot is a full-bleed <img object-fit:cover>
+// sitting over the card's coloured background, with a scrim ::after on top (and, on displaced backs, a grayscale
+// filter). html2canvas/WebKit can leave a hairline sub-pixel gap when it redraws the scaled <img>, through which the
+// card background colour peeks (the orange/grey centre seam on cask & building BACKS). It also ignores the CSS
+// grayscale filter (backs export in full colour). Compositing img + scrim (+ grayscale) into ONE opaque, slightly
+// overscanned canvas hands html2canvas a single bitmap — no object-fit, no gradient, no filter, no centre gap.
+function bakeRGB(css){                                    // resolve any CSS colour → [r,g,b]
+  const t=document.createElement('span');t.style.color=css||'#777';document.body.appendChild(t);
+  const m=getComputedStyle(t).color.match(/\d+/g);t.remove();return m?[+m[0],+m[1],+m[2]]:[119,119,119];}
+function bakeArt(root,scale){
+  root.querySelectorAll('.artbg>img.artbg-img').forEach(img=>{
+    if(!img.complete||!img.naturalWidth)return;
+    const layer=img.parentElement;                       // .artbg — inset:0, full card
+    const ow=layer.offsetWidth,oh=layer.offsetHeight;if(!ow||!oh)return;
+    const OB=2;                                           // overscan (CSS px each side) so no edge/centre gap exposes the card bg
+    const w=Math.round((ow+2*OB)*scale),h=Math.round((oh+2*OB)*scale);
+    const top=OB*scale,ch=oh*scale;                       // the card's own band inside the overscanned canvas
+    const cv=document.createElement('canvas');cv.width=w;cv.height=h;const cx=cv.getContext('2d');
+    const cover=Math.max(w/img.naturalWidth,h/img.naturalHeight),dw=img.naturalWidth*cover,dh=img.naturalHeight*cover;
+    cx.imageSmoothingQuality='high';
+    if(layer.closest('.bc-bk'))cx.filter='grayscale(.55) brightness(.78)';   // displaced building back (CSS filter html2canvas drops)
+    cx.drawImage(img,(w-dw)/2,(h-dh)/2,dw,dh);cx.filter='none';
+    if(layer.classList.contains('scrim')){                // bake the scrim gradient in card-space (not the overscanned canvas)
+      const g=cx.createLinearGradient(0,top,0,top+ch);
+      g.addColorStop(0,'rgba(0,0,0,.5)');g.addColorStop(.28,'rgba(0,0,0,.12)');
+      g.addColorStop(.72,'rgba(0,0,0,.12)');g.addColorStop(1,'rgba(0,0,0,.55)');
+      cx.fillStyle=g;cx.fillRect(0,top,w,ch);
+    }
+    // CASK BACK colour foot — the top/bottom var(--c) fades live on .ce.top/.ce.bot as element backgrounds; html2canvas
+    // leaves a hairline at each element-box edge (34%/70%) that lets the card bg show through (the orange/grey seam).
+    // Bake the SAME fade as one full-card gradient here (canvas API → no box edge, no stop seam); .baked-fg drops the CSS.
+    const cb=layer.closest('.cc-back');
+    if(cb&&!cb.classList.contains('ship-card')){
+      const [r,g2,b2]=bakeRGB(getComputedStyle(cb).getPropertyValue('--c').trim());
+      const C='rgba('+r+','+g2+','+b2+',1)',T='rgba('+r+','+g2+','+b2+',0)';
+      const gc=cx.createLinearGradient(0,top,0,top+ch);
+      gc.addColorStop(0,C);gc.addColorStop(.124,C);gc.addColorStop(.344,T);
+      gc.addColorStop(.696,T);gc.addColorStop(.884,C);gc.addColorStop(1,C);
+      cx.fillStyle=gc;cx.fillRect(0,top,w,ch);cb.classList.add('baked-fg');
+    }
+    cv.className='artbg-img';cv.style.cssText='position:absolute;inset:-'+OB+'px;width:calc(100% + '+(2*OB)+'px);height:calc(100% + '+(2*OB)+'px);display:block';
+    layer.classList.add('baked');img.replaceWith(cv);     // .baked suppresses the now-redundant CSS scrim
+  });
+}
+function saveBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);}
+async function canvasOf(it){
+  const host=document.createElement('div');host.style.cssText='position:fixed;left:-99999px;top:0';
+  const box=document.createElement('div');box.style.cssText='width:'+it.w+'in;height:'+it.h+'in;overflow:hidden';
+  box.innerHTML=it.html;host.appendChild(box);document.body.appendChild(host);
+  if(window.lucide)lucide.createIcons();           // render this component's icons
+  // wait for the art <img>(s) to fully load/decode so html2canvas captures them at native resolution
+  await Promise.all([...box.querySelectorAll('img')].map(im=>(im.complete&&im.naturalWidth)
+    ? Promise.resolve()
+    : new Promise(res=>{im.addEventListener('load',res,{once:true});im.addEventListener('error',res,{once:true});})));
+  await new Promise(r=>setTimeout(r,30));           // a tick for layout/decode
+  bakeArt(box,it.scale||PNG_SCALE);                  // flatten art+scrim(+grayscale) → one bitmap (kills the centre seam)
+  const canvas=await html2canvas(box,{scale:it.scale||PNG_SCALE,useCORS:true,backgroundColor:null,logging:false,
+    width:box.offsetWidth,height:box.offsetHeight,windowWidth:box.offsetWidth,windowHeight:box.offsetHeight});
+  document.body.removeChild(host);
+  // html2canvas ignores SVG clip-path:url(), so re-apply the cross clip on the canvas (transparent corners)
+  if(it.clip==='cross'){
+    const fin=document.createElement('canvas');fin.width=canvas.width;fin.height=canvas.height;
+    const fctx=fin.getContext('2d');
+    fctx.clip(new Path2D(roundedPlusPath(CROSS_ART.a,CROSS_ART.b,CROSS_ART.r,fin.width,0,0).d));
+    fctx.drawImage(canvas,0,0);
+    return fin;
+  }
+  return canvas;
+}
+const canvasBlob=c=>new Promise((res,rej)=>c.toBlob(b=>b?res(b):rej(new Error('toBlob failed (page must be served over http/https, not file://)')),'image/png'));
+async function dlOne(i,btn){const it=EXPORT[i];const t0=btn&&btn.textContent;if(btn){btn.textContent='…';btn.disabled=true;}
+  try{const c=await canvasOf(it);const b=await canvasBlob(c);saveBlob(b,fname(it));if(btn)btn.textContent='✓ PNG';}
+  catch(e){if(btn)btn.textContent='⬇ PNG';alert('PNG export failed:\n'+(e&&e.message||e));}
+  finally{if(btn){btn.disabled=false;setTimeout(()=>{btn.textContent=t0;},1400);}}}
+// FULL-SHEET PNG — rasterize one print sheet's ART (no cut overlay) at SHEET_DPI, so it can be placed without data
+// loss and the cut lines exported separately as vector (the Cut layer + the sheet's 🖨 print). Rebuilds the sheet
+// off-screen from its PAGES data (items only — no overlay, no buttons), bakes the art, and html2canvases it whole.
+async function sheetPNG(no,btn){
+  const pg=PAGES.find(p=>p.no===no);if(!pg)return;
+  const t0=btn&&btn.textContent;if(btn){btn.textContent='rendering…';btn.disabled=true;}
+  const geo=pg.geo||PG,scale=SHEET_DPI/96;
+  const host=document.createElement('div');host.style.cssText='position:fixed;left:-99999px;top:0';
+  const page=document.createElement('div');page.className='page'+(geo.w>11?' '+lgClass(geo.h):'');
+  page.style.cssText='width:'+geo.w+'in;height:'+geo.h+'in;margin:0;box-shadow:none;background:#fff';
+  page.innerHTML=pg.items.map(itDiv).join('');
+  host.appendChild(page);document.body.appendChild(host);
+  try{
+    if(window.lucide)lucide.createIcons();
+    await Promise.all([...page.querySelectorAll('img')].map(im=>(im.complete&&im.naturalWidth)?Promise.resolve()
+      :new Promise(res=>{im.addEventListener('load',res,{once:true});im.addEventListener('error',res,{once:true});})));
+    await new Promise(r=>setTimeout(r,40));
+    bakeArt(page,scale);
+    const W=page.offsetWidth,H=page.offsetHeight;
+    const canvas=await html2canvas(page,{scale,backgroundColor:'#fff',useCORS:true,logging:false,width:W,height:H,windowWidth:W,windowHeight:H});
+    const blob=await canvasBlob(canvas);saveBlob(blob,'sheet-S'+no+'-'+slug(pg.label).slice(0,40)+'.png');
+    if(btn)btn.textContent='✓ PNG';
+  }catch(e){if(btn)btn.textContent='⬇ art PNG';alert('Sheet PNG failed:\n'+(e&&e.message||e));}
+  finally{document.body.removeChild(host);if(btn){btn.disabled=false;setTimeout(()=>{btn.textContent=t0;},1600);}}
+}
+async function dlType(type,btn){const list=EXPORT.filter(x=>x.type===type);const t0=btn&&btn.textContent;
+  if(btn){btn.disabled=true;}
+  try{const z=new JSZip();let n=0;
+    for(const it of list){if(btn)btn.textContent='zipping '+(++n)+'/'+list.length+'…';
+      const c=await canvasOf(it);z.file(fname(it),await canvasBlob(c));}
+    const blob=await z.generateAsync({type:'blob'});saveBlob(blob,type+'-cards.zip');if(btn)btn.textContent='✓ '+type+'-cards.zip';}
+  catch(e){alert('Zip export failed:\n'+(e&&e.message||e));}
+  finally{if(btn){btn.disabled=false;setTimeout(()=>{btn.textContent=t0;},2000);}}}
+function expHtml(){
+  EXPORT=exportItems();
+  const ready=(window.html2canvas&&window.JSZip);
+  const types=[];EXPORT.forEach(it=>{if(!types.includes(it.type))types.push(it.type);});
+  let h='<div class="exp-wrap"><div class="exp-head"><h2>'+LU('image')+' PNG Export</h2>'
+    +'<p>Download any component as a PNG, or a whole type as a <b>.zip</b>. Files are named <code>type-name-front/back.png</code> at high resolution (×'+PNG_SCALE+', ≈384 dpi).'
+    +(ready?'':' <b style="color:var(--red)">⚠ export libraries not loaded.</b>')
+    +' <i>Tip: this must run on the live site (https) — a local <code>file://</code> open can’t save the images (browser security).</i></p></div>';
+  types.forEach(t=>{
+    const list=EXPORT.map((it,i)=>({it,i})).filter(x=>x.it.type===t);
+    h+='<div class="exp-group"><div class="exp-gh"><span class="exp-gt">'+t+'</span><span class="exp-gc">'+list.length+' file'+(list.length>1?'s':'')+'</span>'
+      +'<button class="exp-zip" onclick="dlType(\''+t+'\',this)">'+LU('folder-down')+' Download all (.zip)</button></div><div class="exp-grid">';
+    list.forEach(x=>{const it=x.it;const S=Math.min(1.55/it.w,1.55/it.h);
+      h+='<div class="exp-item"><div class="exp-thumb" style="width:'+(it.w*S).toFixed(3)+'in;height:'+(it.h*S).toFixed(3)+'in">'
+        +'<div style="transform:scale('+S.toFixed(3)+');transform-origin:top left;width:'+it.w+'in;height:'+it.h+'in">'+it.html+'</div></div>'
+        +'<button class="exp-dl" onclick="dlOne('+x.i+',this)">'+LU('download')+' PNG</button>'
+        +'<div class="exp-fn">'+fname(it)+'</div></div>';});
+    h+='</div></div>';});
+  return h+'</div>';
+}
+
+// render one packed item: the .it box is the (scaled) footprint; the content renders at its NATIVE size inside a
+// transform:scale wrapper so the whole piece shrinks uniformly (composes with any per-component transform). nat
+// defaults to the footprint (scale 1) for unscaled items like the full-page checklist.
+function itDiv(it){const nat=it.nat||[it.w,it.h];const sc=+(it.w/nat[0]).toFixed(5);
+  const inner=(sc===1)?it.html
+    :'<div class="sc" style="transform:scale('+sc+');transform-origin:top left;width:'+nat[0]+'in;height:'+nat[1]+'in">'+it.html+'</div>';
+  return '<div class="it" style="left:'+it.x+'in;top:'+it.y+'in;width:'+it.w+'in;height:'+it.h+'in">'+inner+'</div>';}
+// each 22-wide plotter sheet is trimmed to its own height → one .lgNN class + named @page per distinct height.
+function lgClass(h){return 'lg'+String(+h).replace('.','_');}
+function dynPageCss(pages){const seen={};let css='';
+  pages.forEach(p=>{const g=p.geo||PG;if(g.w<=11)return;const c=lgClass(g.h);if(seen[c])return;seen[c]=1;
+    css+='@page '+c+'{size:22in '+g.h+'in;margin:0}\n.page.'+c+'{width:22in;height:'+g.h+'in;page:'+c+'}\n';});
+  return css;}
+let PAGES=[];
+function render(){
+  if(VIEW==='png'){document.getElementById('out').innerHTML=expHtml();if(window.lucide)lucide.createIcons();return;}
+  PAGES=buildPages();
+  const dp=document.getElementById('dynpage');if(dp)dp.textContent=dynPageCss(PAGES);   // size each large sheet to its content
+  const show=PAGES.filter(p=>VIEW==='all'||p.section===VIEW);
+  let h='';
+  show.forEach(pg=>{
+    const G=pg.geo||PG;const cls=G.w>11?lgClass(G.h):'';   // large 22-wide sheets get their height's named @page; Letter geos stay default
+    h+='<div class="page'+(cls?' '+cls:'')+'" id="pg'+pg.no+'">';
+    pg.items.forEach(it=>{h+=itDiv(it);});
+    h+=overlaySvg(pg);
+    h+='<span class="dl no-print">'
+      +'<button onclick="sheetPNG('+pg.no+',this)" title="rasterize this sheet’s ART (no cut lines) at '+SHEET_DPI+' DPI">⬇ S'+pg.no+' art PNG</button>'
+      +'<button onclick="printOne('+pg.no+')" title="print this sheet as-is (current layer) to PDF">🖨 PDF</button>'
+      +'<button onclick="printOne('+pg.no+',\'cut\')" title="print ONLY the cut lines as vector (Save as PDF)">✂ cuts</button>'
+      +'</span>';
+    h+='</div>';
+  });
+  document.getElementById('out').innerHTML=h||'<p style="text-align:center;padding:2em">no sheets in this view</p>';
+  if(window.lucide)lucide.createIcons();
+}
+// Export = the browser's own print engine (vector-perfect PDF; "Save as PDF" in the dialog).
+// printOne solos a sheet so each sheet can be saved as its own one-page PDF for Affinity placement.
+function printOne(no,forceLayer){
+  const el=document.getElementById('pg'+no);if(!el)return;
+  const b=document.body, hadCut=b.classList.contains('cut'), hadBoth=b.classList.contains('both');
+  if(forceLayer){b.classList.toggle('cut',forceLayer==='cut');b.classList.toggle('both',forceLayer==='both');}
+  b.classList.add('solo');el.classList.add('soloed');
+  const done=()=>{b.classList.remove('solo');el.classList.remove('soloed');
+    if(forceLayer){b.classList.toggle('cut',hadCut);b.classList.toggle('both',hadBoth);}   // restore the on-screen layer
+    window.removeEventListener('afterprint',done);};
+  window.addEventListener('afterprint',done);
+  window.print();
+  setTimeout(done,500);   // fallback for browsers that don't fire afterprint
+}
+render();
+</script>
+</body>
+</html>

@@ -83,6 +83,24 @@ Vary the wood tone, contents glow, and mood per beer:
 - **cask-duckstein.png** — a smoke-cured Königslutter cask beside a glowing kiln; smoky **brown**, drifting smoke.
 - **cask-jopenbier.png** — a vintage Danzig "Jopenbier" cask aging in a candlelit cellar; dark **wine-red**, dusty, cobwebbed, precious.
 
+## Kontor panels (Market & Stores board) — subject: the DESTINATION as a place (2026-07-05)
+Wide **16:9 landscape banners** behind the destination panels' parchment stat-plates — unlike the building
+cards these ARE scenes (a port you sail to), so the single-building rule does not apply. Same shared style
+block, with the full-bleed / no-lettering gotchas, plus "calm sky and lower foreground" (the plate covers the
+middle band; the panel foot is the open presence zone, so the waterline should read there). Files:
+`kontor-bruges.png` · `kontor-london.png` · `kontor-bergen.png` · `kontor-novgorod.png` · `kontor-hall.png`.
+
+- **kontor-bruges.png** — a Flemish canal-side merchant wharf: stepped-gable brick trading houses on a stone
+  quay, ONE wooden treadwheel crane, laden flat barges, still canal water across the foreground; slate-blue over warm brick.
+- **kontor-london.png** — the walled riverside trading enclave (the Steelyard): stone river-gate + timber warehouses
+  behind a busy wharf, a small crane, one moored cog, wide calm water; warm golden-ochre afternoon light.
+- **kontor-bergen.png** — the Bryggen harbourfront: tall narrow pointed wooden gabled trading houses (ochre/rust/green),
+  jetties with dried fish and barrels, cold fjord + dark mountains behind, pale northern light.
+- **kontor-novgorod.png** — a white-stone walled river compound with helmet-domed churches over a broad slow river,
+  wooden palisade + log jetty, birches and early snow, cold pale light with red-brown accents.
+- **kontor-hall.png** — the candlelit brick-Gothic guild-hall interior: soaring dark timber roof, long oak tables,
+  ONE venerated beer cask enshrined on a stone dais between tall candles, amber glow into violet shadow.
+
 ## Ship tiles — subject: the neutral Hanseatic hull the cask is loaded onto
 - **ship-cog.png** — *a single-masted, clinker-built Hanseatic **cog** with one square sail, a small sturdy
   merchant ship, moored at a wooden wharf in calm harbor water; modest size.* Cool **blue-grey sea** tones.
@@ -115,6 +133,13 @@ buildings = the brewer's craft & harbor works.* The subjects used:
 - **building-salthouse.png** — a salt warehouse, a timber storehouse with gleaming white mounds of sea salt and salt sacks (the salt trade).
 - **building-smokekiln.png** — a smokehouse / smoke kiln, a dark timber curing hut with drifting blue woodsmoke from its roof.
 - **building-partigyle.png** — a brewing tun-house, a large wooden mash/lauter tun splitting the runnings, wort flowing into vessels.
+
+### v3.0-A — the five NEW works (queued; printables2 rides interim stand-ins until these exist)
+- **building-pilot.png** — a harbour pilot's house on a headland, a small lookout tower with a signal beacon and a pilot gig boat below. *(stand-in: ship-cog.png)*
+- **building-staithe.png** — an open riverside staithe, casks racked in the open air on a timber wharf, sun and drying breeze. *(stand-in: building-festkeller.png)*
+- **building-ropewalk.png** — a long low ropewalk shed, great coils of hemp rope and a rope-twisting frame stretching into perspective. *(stand-in: ship-back.png)*
+- **building-grainex.png** — a grain exchange hall, an open arcaded corn market with sacks, scoops and a balance scale. *(stand-in: building-gauger.png)*
+- **building-missionq.png** — a small seamen's mission chapel on the quay, a lantern over its door, nets and a moored skiff beside. *(stand-in: building-reliquary.png)*
 
 ## Notes
 - Keep all ten cask images **consistent** (same wharf, same angle/lighting) so the deck reads as one family —

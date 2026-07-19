@@ -1,0 +1,697 @@
+############ GAME 3p-gg-9 · seed 369 · 3p · KEY hanse-v3a-v2 ############
+seats: Guild [guildmaster] · Guild2 [guildmaster] · Guild3 [guildmaster]
+exports dealt: Q3 Keut · Q3 Broyhan · Q4 Mumme · sailed-ships cap 10 · warm start:
+  s1 (colL): ship Hulk->Bruges
+  s8 (rowT): [bldg Rich Berth neutral] ship Hulk->Novgorod
+  s6 (colL): [bldg Hop Yard neutral] 
+
+== R1 · turn 1 · Guild [guildmaster] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild places their worker at Brewhouse
+  Guild activates Right col · Brewhouse + Cellar
+  ↳ Guild spends −G1
+  Guild brews Gruit Ale (Q1 · matures in 1 step).
+  Guild sets a Ready Gruit on a slot.
+  ↳ s5 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R1 · turn 2 · Guild2 [guildmaster] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild2 places their worker at Harbor
+  Guild2 activates Left col · Market + Harbor
+  ↳ Guild2 gains +G1 +H1
+  Guild2 sources goods at the Market.
+  Guild2 sets a Ready Gruit on a slot (under Hop Yard).
+  Guild2 loads Gruit onto the Hulk → Bruges (1/3).
+  ↳ Guild2 gains +G1
+  ↳ Guild2 takes a loader bonus for shipping Guild’s cask (and chose the destination).
+  Guild2 loads Gruit onto the Hulk → Bruges (2/3).
+
+== R1 · turn 3 · Guild3 [guildmaster] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild3 places their worker at Brewhouse
+  Guild3 activates Right col · Brewhouse + Cellar
+  Guild3 sets a Ready Gruit on a slot.
+  ↳ s2 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ s5 — nothing to do here (no Ready cask to deploy onto the open slot).
+  Guild’s casks mature (+1) over the turn.
+
+== R2 · turn 4 · Guild [guildmaster] · G2 H2 ct2 | vessels[-,Gruit!] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild moves to Cellar
+  Guild activates Right col · Brewhouse + Cellar
+  Guild sets a Ready Gruit on a slot.
+  ↳ s2 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ s5 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R2 · turn 5 · Guild2 [guildmaster] · G5 H3 ct2 | vessels[-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild2 moves to Market
+  Guild2 activates Top row · Market + Brewhouse
+  ↳ Guild2 spends −G2
+  Guild2 buys Mission Quay at the Market — place it on a slot.
+  Guild2 authors Mission Quay on a slot — this slot’s stop (when no occupant): age one of your vessel casks +1.
+  ↳ Guild2 gains +G2
+  ↳ Guild2 spends −G1 −H1
+  Guild2 brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Guild2’s 2nd distinct beer unlocks a Floor slot — choose its row.
+  ↳ Guild2 unlocks vessel slot 3 (the Flight track).
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R2 · turn 6 · Guild3 [guildmaster] · G3 H2 ct2 | vessels[-,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Guild3 moves to Market
+  Guild3 pays −G1 occupancy toll for sharing Market.
+  Guild3 activates Top row · Market + Brewhouse
+  ↳ Guild3 spends −G1
+  Guild3 buys the Keut recipe (Q3).
+  ↳ Guild3 gains +G2
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R3 · turn 7 · Guild [guildmaster] · G2 H2 ct2 | vessels[-,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Guild moves to Brewhouse
+  Guild activates Right col · Brewhouse + Cellar
+  ↳ Guild spends −G1 −H1
+  Guild brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Guild’s 2nd distinct beer unlocks a Floor slot — choose its row.
+  ↳ Guild unlocks vessel slot 3 (the Flight track).
+  ↳ Hopped ages +1 → 1/1 READY.
+  Guild sets a Ready Hopped on a slot.
+  ↳ nothing maturing to age (Mission Quay).
+  Guild2’s casks mature (+1) over the turn.
+
+== R3 · turn 8 · Guild2 [guildmaster] · G4 H2 ct2 | vessels[Hopped!,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild2 moves to Brewhouse
+  Guild2 pays −G1 occupancy toll for sharing Brewhouse.
+  Guild2 activates Top row · Market + Brewhouse
+  ↳ Guild2 spends −G1
+  Guild2 buys the Keut recipe (Q3).
+  ↳ Guild3’s stale Gruit has soured — dumped in the harbor (a Q2 cask takes the berth).
+  Guild2 sets a Ready Hopped on a slot.
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R3 · turn 9 · Guild3 [guildmaster] · G3 H2 ct2 | vessels[-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild3 moves to Brewhouse
+  Guild3 pays −G1 occupancy toll for sharing Brewhouse.
+  Guild3 activates Top row · Market + Brewhouse
+  ↳ Guild3 spends −H1
+  Guild3 buys the Broyhan recipe (Q3).
+  ↳ Guild3 spends −G2 −H1
+  Guild3 brews Keut (Q3 · matures in 2 steps).
+  ↳ Guild3’s 2nd distinct beer unlocks a Floor slot — choose its row.
+  ↳ Guild3 unlocks vessel slot 3 (the Flight track).
+  ↳ Reach: no kontor you’ve delivered to yet.
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R4 · turn 10 · Guild [guildmaster] · G1 H1 ct2 | vessels[-,-,-] deployed:2 | score 0 (dlv 0 maj 0 flt 0)
+  Guild moves to Market
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild spends −G1
+  Guild buys the Keut recipe (Q3).
+  ↳ Reach: no kontor you’ve delivered to yet.
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R4 · turn 11 · Guild2 [guildmaster] · G2 H2 ct2 | vessels[-,-,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Guild2 moves to Market
+  Guild2 pays −G1 occupancy toll for sharing Market.
+  Guild2 activates Top row · Market + Brewhouse
+  ↳ Guild2 gains +G1 +H1
+  Guild2 sources goods at the Market.
+  ↳ Reach: no kontor you’ve delivered to yet.
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+  Guild3’s casks mature (+1) over the turn.
+
+== R4 · turn 12 · Guild3 [guildmaster] · G0 H0 ct2 | vessels[Keut 1/2,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild3 moves to Market
+  Guild3 activates Left col · Market + Harbor
+  ↳ Guild3 gains +H2
+  Guild3 sources goods at the Market.
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+
+== R5 · turn 13 · Guild [guildmaster] · G0 H1 ct2 | vessels[-,-,-] deployed:2 | score 0 (dlv 0 maj 0 flt 0)
+  Guild moves to Brewhouse
+  Guild activates Right col · Brewhouse + Cellar
+  ↳ Reach: no kontor you’ve delivered to yet.
+  ↳ nothing maturing to age (Mission Quay).
+
+== R5 · turn 14 · Guild2 [guildmaster] · G2 H3 ct2 | vessels[-,-,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Guild2 moves to Harbor
+  Guild2 activates Bottom row · Harbor + Cellar
+  ↳ Guild2 gains +G2
+  ↳ Guild2 spends −G3
+  Guild2 fits the Grain Factor Specialist at the Cellar.
+  ↳ s7 — nothing to do here (no Ready cask to deploy onto the open slot).
+  Guild3’s casks mature (+1) over the turn.
+
+== R5 · turn 15 · Guild3 [guildmaster] · G0 H2 ct2 | vessels[Keut!,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild3 moves to Harbor
+  Guild3 activates Left col · Market + Harbor
+  ↳ Guild3 gains +H2
+  Guild3 sources goods at the Market.
+  Guild3 sets a Ready Keut on a slot (under Hop Yard).
+  Guild3 loads Hopped onto the Hulk → Bruges (3/3).
+  ↳ Guild3 gains +G1
+  ↳ Guild3 takes a loader bonus for shipping Guild2’s cask (and chose the destination).
+  ★ the Hulk sails to Bruges with 3 casks! Every cask aboard is delivered. (Sailed-Ships 1/10)
+  ↳ Guild gains +G2
+  ↳ Guild takes the Bruges liquidity benefit (2 goods).
+  ↳ Guild2 gains +G3
+  ↳ Guild2 takes the Bruges liquidity benefit (2 goods).
+  ↳ Guild2 gains +G3
+  ↳ Guild2 takes the Bruges liquidity benefit (2 goods).
+
+== R6 · turn 16 · Guild [guildmaster] · G2 H1 ct2 | vessels[-,-,-] deployed:2 | score 3 (dlv 1 maj 2 flt 0)
+  Guild moves to Market
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild spends −G2
+  Guild commissions the Cog bound for Novgorod — place it on a slot.
+  ↳ Cog placed on a slot, bound for Novgorod.
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+  Guild loads Keut onto the Hulk → Novgorod (1/3).
+  ↳ Guild gains +G1
+  ↳ Guild takes a loader bonus for shipping Guild3’s cask (and chose the destination).
+
+== R6 · turn 17 · Guild2 [guildmaster] · G7 H3 ct2 | vessels[-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Guild2 moves to Cellar
+  Guild2 activates Right col · Brewhouse + Cellar
+  ↳ Guild2 spends −G3
+  Guild2 fits the Coppersmith Specialist at the Cellar.
+  ↳ Guild2 gains +1 presence at Bruges (majority help).
+  ↳ Cog (→ Novgorod) — nothing eligible to load.
+
+== R6 · turn 18 · Guild3 [guildmaster] · G1 H4 ct2 | vessels[-,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild3 moves to Market
+  Guild3 pays −G1 occupancy toll for sharing Market.
+  Guild3 activates Left col · Market + Harbor
+  ↳ Guild3 gains +G2
+  Guild3 sources goods at the Market.
+  ↳ s1 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+
+== R7 · turn 19 · Guild [guildmaster] · G1 H1 ct2 | vessels[-,-,-] deployed:2 | score 3 (dlv 1 maj 2 flt 0)
+  Guild moves to Harbor
+  Guild activates Left col · Market + Harbor
+  ↳ Guild spends −H1
+  Guild buys the Broyhan recipe (Q3).
+  ↳ s1 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+
+== R7 · turn 20 · Guild2 [guildmaster] · G4 H3 ct2 | vessels[-,-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Guild2 moves to Brewhouse
+  Guild2 activates Right col · Brewhouse + Cellar
+  ↳ Guild2 gains +1 presence at Bruges (majority help).
+  ↳ Cog (→ Novgorod) — nothing eligible to load.
+
+== R7 · turn 21 · Guild3 [guildmaster] · G2 H4 ct2 | vessels[-,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild3 moves to Brewhouse
+  Guild3 pays −G1 occupancy toll for sharing Brewhouse.
+  Guild3 activates Right col · Brewhouse + Cellar
+  ↳ Guild3 spends −G1
+  Guild3 brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gruit ages +1 → 1/1 READY.
+  ↳ Reach: no kontor you’ve delivered to yet.
+  ↳ Cog (→ Novgorod) — nothing eligible to load.
+
+== R8 · turn 22 · Guild [guildmaster] · G1 H0 ct2 | vessels[-,-,-] deployed:2 | score 3 (dlv 1 maj 2 flt 0)
+  Guild moves to Market
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +H2
+  Guild sources goods at the Market.
+  ↳ Guild spends −G1 −H1
+  Guild brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R8 · turn 23 · Guild2 [guildmaster] · G4 H3 ct2 | vessels[-,-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Guild2 moves to Market
+  Guild2 pays −G1 occupancy toll for sharing Market.
+  Guild2 activates Left col · Market + Harbor
+  ↳ Guild2 gains +H2
+  Guild2 sources goods at the Market.
+  ↳ s1 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+
+== R8 · turn 24 · Guild3 [guildmaster] · G0 H4 ct2 | vessels[Gruit!,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Guild3 moves to Market
+  Guild3 activates Top row · Market + Brewhouse
+  ↳ Guild3 spends −H2
+  Guild3 buys the Mumme recipe (Q4).
+  Guild3 sets a Ready Gruit on a slot.
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+  Guild’s casks mature (+1) over the turn.
+
+== R9 · turn 25 · Guild [guildmaster] · G0 H1 ct2 | vessels[Hopped!,-,-] deployed:2 | score 3 (dlv 1 maj 2 flt 0)
+  Guild moves to Brewhouse
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G1 +H1
+  Guild sources goods at the Market.
+  ↳ Guild spends −G1 −H1
+  Guild brews Hopped Beer (Q2 · matures in 1 step).
+  Guild sets a Ready Hopped on a slot.
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R9 · turn 26 · Guild2 [guildmaster] · G3 H5 ct2 | vessels[-,-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Guild2 moves to Harbor
+  Guild2 activates Bottom row · Harbor + Cellar
+  ↳ Guild2 gains +G3
+  ↳ Guild2 spends −G4
+  Guild2 fits the Cellarman Specialist at the Cellar.
+  ↳ s7 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R9 · turn 27 · Guild3 [guildmaster] · G0 H2 ct2 | vessels[-,-,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Guild3 moves to Harbor
+  Guild3 activates Left col · Market + Harbor
+  ↳ Guild3 gains +G2
+  Guild3 sources goods at the Market.
+  ↳ Guild3 gains +G1 +H1
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  ↳ Guild3 spends −G2
+  Guild3 dispatches Gruit → Bruges by charter (a contract + the fare; 1 left). (Sailed-Ships 2/10)
+  ↳ Guild3 gains +G2
+  ↳ Guild3 takes the Bruges liquidity benefit (2 goods).
+  Guild’s casks mature (+1) over the turn.
+
+== R10 · turn 28 · Guild [guildmaster] · G0 H1 ct2 | vessels[-,Hopped!,-] deployed:3 | score 2 (dlv 1 maj 1 flt 0)
+  Guild moves to Market
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G1 +H1
+  Guild sources goods at the Market.
+  ↳ Guild spends −G1 −H2
+  Guild brews Broyhan (Q3 · matures in 1 step).
+  ↳ Guild’s 3rd distinct beer unlocks a Floor slot — choose its row.
+  ↳ Guild unlocks vessel slot 4 (the Flight track).
+  ↳ Broyhan ages +1 → 1/1 READY.
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R10 · turn 29 · Guild2 [guildmaster] · G2 H5 ct2 | vessels[-,-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Guild2 moves to Market
+  Guild2 pays −G1 occupancy toll for sharing Market.
+  Guild2 activates Left col · Market + Harbor
+  ↳ Guild2 spends −H2
+  Guild2 buys the Mumme recipe (Q4).
+  ↳ s1 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+
+== R10 · turn 30 · Guild3 [guildmaster] · G3 H3 ct1 | vessels[-,-,-] deployed:0 | score 2 (dlv 1 maj 1 flt 0)
+  Guild3 moves to Market
+  Guild3 pays −G1 occupancy toll for sharing Market.
+  Guild3 activates Top row · Market + Brewhouse
+  ↳ Guild3 gains +G2
+  Guild3 sources goods at the Market.
+  ↳ Guild3 spends −G1 −H3
+  Guild3 brews Mumme (Q4 · matures in 3 steps).
+  ↳ Guild3’s 3rd distinct beer unlocks a Floor slot — choose its row.
+  ↳ Guild3 unlocks vessel slot 4 (the Flight track).
+  ↳ Mumme ages +2 → 2/3.
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R11 · turn 31 · Guild [guildmaster] · G0 H0 ct2 | vessels[Broyhan!,Hopped!,-,-] deployed:3 | score 2 (dlv 1 maj 1 flt 0)
+  Guild moves to Brewhouse
+  Guild activates Right col · Brewhouse + Cellar
+  Guild over-deploys — the displaced Gruit is tapped on the way out (its source action fires, then it is boxed).
+  Guild sets a Ready Broyhan on a slot.
+  ↳ Guild gains +G1 +H1
+  ↳ Guild gains +1 presence at Bruges (majority help).
+  Guild loads Broyhan onto the Cog → Novgorod (1/2).
+
+== R11 · turn 32 · Guild2 [guildmaster] · G1 H3 ct2 | vessels[-,-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Guild2 moves to Harbor
+  Guild2 activates Left col · Market + Harbor
+  ↳ Guild2 spends −H1
+  Guild2 buys the Broyhan recipe (Q3).
+  ↳ s1 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  Guild3’s casks mature (+1) over the turn.
+
+== R11 · turn 33 · Guild3 [guildmaster] · G3 H0 ct1 | vessels[Mumme!,-,-,-] deployed:0 | score 1 (dlv 1 maj 0 flt 0)
+  Guild3 moves to Harbor
+  Guild3 pays −G1 occupancy toll for sharing Harbor.
+  Guild3 activates Left col · Market + Harbor
+  ↳ Guild3 spends −G2
+  Guild3 commissions the Cog bound for Bruges — place it on a slot.
+  ↳ Cog placed on a slot, bound for Bruges.
+  ↳ s1 — nothing to do here (no Ready cask to deploy onto the open slot).
+  Guild3 sets a Ready Mumme on a slot (under Hop Yard).
+
+== R12 · turn 34 · Guild [guildmaster] · G1 H1 ct2 | vessels[-,Hopped!,-,-] deployed:2 | score 3 (dlv 1 maj 2 flt 0)
+  Guild moves to Market
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild spends −G1
+  Guild acquires a charter contract at the Market (3 in hand).
+  Guild sets a Ready Hopped on a slot.
+  ↳ nothing to age.
+
+== R12 · turn 35 · Guild2 [guildmaster] · G1 H2 ct2 | vessels[-,-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Guild2 moves to Cellar
+  Guild2 activates Right col · Brewhouse + Cellar
+  ↳ Guild2 spends −G1 −H2
+  Guild2 brews Broyhan (Q3 · matures in 1 step).
+  ↳ Guild2’s 3rd distinct beer unlocks a Floor slot — choose its row.
+  ↳ Guild2 unlocks Specialist slot 3 (the Flight track).
+  ↳ Broyhan ages +1 → 1/1 READY.
+  ↳ Guild2 gains +1 presence at Bruges (majority help).
+
+== R12 · turn 36 · Guild3 [guildmaster] · G0 H0 ct1 | vessels[-,-,-,-] deployed:1 | score 1 (dlv 1 maj 0 flt 0)
+  Guild3 moves to Market
+  Guild3 activates Top row · Market + Brewhouse
+  ↳ Guild3 gains +G1 +H1
+  Guild3 sources goods at the Market.
+  ↳ Guild3 spends −G1 −H1
+  Guild3 brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Guild3’s 4th distinct beer unlocks a Floor slot — choose its row.
+  ↳ Guild3 unlocks Specialist slot 3 (the Flight track).
+  ↳ Hopped ages +1 → 1/1 READY.
+
+== R13 · turn 37 · Guild [guildmaster] · G0 H1 ct3 | vessels[-,-,-,-] deployed:3 | score 3 (dlv 1 maj 2 flt 0)
+  Guild moves to Brewhouse
+  Guild activates Right col · Brewhouse + Cellar
+  ↳ Guild gains +1 presence at Bruges (majority help).
+
+== R13 · turn 38 · Guild2 [guildmaster] · G0 H0 ct2 | vessels[Broyhan!,-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Guild2 moves to Brewhouse
+  Guild2 activates Top row · Market + Brewhouse
+  ↳ Guild2 gains +G2 +H1
+  Guild2 sources goods at the Market.
+  ↳ Guild2 spends −G2 −H1
+  Guild2 brews Keut (Q3 · matures in 1 step).
+  ↳ Guild2’s 4th distinct beer unlocks a Floor slot — choose its row.
+  ↳ Guild2 unlocks Specialist slot 4 (the Flight track).
+  ↳ Keut ages +1 → 1/1 READY.
+
+== R13 · turn 39 · Guild3 [guildmaster] · G0 H0 ct1 | vessels[Hopped!,-,-,-] deployed:1 | score 1 (dlv 1 maj 0 flt 0)
+  Guild3 stays home and works the Floor — the worker keeps its station (1 cask + the 3-pt Age pool · no toll).
+  ↳ Floor — Hopped’s load action.
+  Guild3 loads Hopped onto the Cog → Bruges (1/2).
+  ↳ Guild3 gains +G1
+  ↳ Guild3 takes a loader bonus for shipping Guild’s cask (and chose the destination).
+
+== R14 · turn 40 · Guild [guildmaster] · G0 H1 ct3 | vessels[-,-,-,-] deployed:2 | score 3 (dlv 1 maj 2 flt 0)
+  Guild moves to Market
+  Guild activates Left col · Market + Harbor
+  ↳ Guild gains +G1 +H1
+  Guild sources goods at the Market.
+  Guild hires the Grain Factor (free, the cask action).
+  Guild enshrines Hopped Q2 on the Common Shelf (3★ · +1G +1H). (Sailed-Ships 3/10)
+  ↳ Guild gains +G2 +H1
+
+== R14 · turn 41 · Guild2 [guildmaster] · G0 H0 ct2 | vessels[Broyhan!,Keut!,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Guild2 moves to Market
+  Guild2 activates Top row · Market + Brewhouse
+  ↳ Guild2 gains +G2 +H1
+  Guild2 sources goods at the Market.
+  ↳ Guild2 spends −G2 −H1
+  Guild2 brews Keut (Q3 · matures in 1 step).
+  ↳ Keut ages +1 → 1/1 READY.
+  Guild2 loads Mumme onto the Hulk → Novgorod (2/3).
+  ↳ Guild2 gains +G2
+  ↳ Guild2 takes a loader bonus for shipping Guild3’s cask (and chose the destination).
+  ★ the Hulk sails to Novgorod with 2 casks! Every cask aboard is delivered. (Sailed-Ships 4/10)
+  ↳ Guild3 — nothing maturing to refine (Novgorod).
+  ↳ Guild3 — nothing maturing to refine (Novgorod).
+
+== R14 · turn 42 · Guild3 [guildmaster] · G1 H0 ct1 | vessels[Hopped!,-,-,-] deployed:0 | score 23 (dlv 11 maj 8 flt 4)
+  Guild3 moves to Brewhouse
+  Guild3 activates Top row · Market + Brewhouse
+  ↳ Guild3 gains +H2
+  Guild3 sources goods at the Market.
+  ↳ Guild3 spends −G1 −H1
+  Guild3 brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Hopped ages +1 → 1/1 READY.
+  Guild3 sets a Ready Hopped on a slot (under Rich Berth).
+
+== R15 · turn 43 · Guild [guildmaster] · G3 H3 ct3 | vessels[-,-,-,-] deployed:1 | score 6 (dlv 4 maj 2 flt 0)
+  Guild moves to Brewhouse
+  Guild pays −G1 occupancy toll for sharing Brewhouse.
+  Guild activates Right col · Brewhouse + Cellar
+  ↳ s2 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ Cog (→ Novgorod) — nothing eligible to load.
+
+== R15 · turn 44 · Guild2 [guildmaster] · G2 H0 ct2 | vessels[Broyhan!,Keut!,Keut!,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Guild2 moves to Brewhouse
+  Guild2 pays −G1 occupancy toll for sharing Brewhouse.
+  Guild2 activates Right col · Brewhouse + Cellar
+  ↳ Guild2 spends −G1
+  Guild2 brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gruit ages +1 → 1/1 READY.
+  Guild2 sets a Ready Keut on a slot.
+  Guild2 loads Keut onto the Cog → Novgorod (2/2).
+  ★ the Cog sails to Novgorod with 2 casks! Every cask aboard is delivered. (Sailed-Ships 5/10)
+  ↳ Guild — nothing maturing to refine (Novgorod).
+  ↳ Guild2 — nothing maturing to refine (Novgorod).
+
+== R15 · turn 45 · Guild3 [guildmaster] · G0 H1 ct1 | vessels[Hopped!,-,-,-] deployed:1 | score 23 (dlv 11 maj 8 flt 4)
+  Guild3 moves to Cellar
+  Guild3 activates Right col · Brewhouse + Cellar
+  Guild3 sets a Ready Hopped on a slot.
+  ↳ nothing maturing to age (Mission Quay).
+  Guild3 loads Hopped onto the Cog → Bruges (2/2).
+  ★ the Cog sails to Bruges with 2 casks! Every cask aboard is delivered. (Sailed-Ships 6/10)
+  ↳ Guild gains +G3
+  ↳ Guild takes the Bruges liquidity benefit (2 goods).
+  ↳ Guild3 gains +G1 +H1
+  ↳ Guild3 takes the Bruges liquidity benefit (2 goods).
+
+== R16 · turn 46 · Guild [guildmaster] · G5 H3 ct3 | vessels[-,-,-,-] deployed:1 | score 15 (dlv 7 maj 4 flt 4)
+  Guild moves to Market
+  Guild activates Left col · Market + Harbor
+  ↳ Guild spends −G2
+  Guild commissions the Hulk bound for Bergen — place it on a slot.
+  ↳ Hulk placed on a slot, bound for Bergen.
+  ↳ Guild gains +G2
+  ↳ Guild takes the loader bonus for shipping Guild3’s cask (and chose the destination).
+  Guild loads Hopped onto the new Hulk (free, on commission) — 1/3.
+  ↳ s1 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ s6 — nothing to do here (no Ready cask to deploy).
+  Guild loads Hopped onto the Hulk → Bergen (2/3).
+
+== R16 · turn 47 · Guild2 [guildmaster] · G0 H0 ct2 | vessels[Broyhan!,Keut!,-,Gruit!] deployed:0 | score 17 (dlv 4 maj 9 flt 4)
+  Guild2 moves to Market
+  Guild2 activates Left col · Market + Harbor
+  ↳ Guild2 gains +G2 +H1
+  Guild2 sources goods at the Market.
+  Guild2 sets a Ready Keut on a slot.
+  Guild2 sets a Ready Broyhan on a slot (under Hop Yard).
+  Guild2 loads Keut onto the Hulk → Bergen (3/3).
+  ★ the Hulk sails to Bergen with 3 casks! Every cask aboard is delivered. (Sailed-Ships 7/10)
+  ↳ Guild3 takes a free Reach (+1 presence at Novgorod).
+  ↳ Guild takes a free Reach (+1 presence at Bergen).
+  ↳ Guild2 takes a free Reach (+1 presence at Bergen).
+
+== R16 · turn 48 · Guild3 [guildmaster] · G1 H2 ct1 | vessels[-,-,-,-] deployed:0 | score 32 (dlv 13 maj 10 flt 9)
+  Guild3 moves to Brewhouse
+  Guild3 activates Right col · Brewhouse + Cellar
+  ↳ Guild3 spends −G1 −H2
+  Guild3 brews Broyhan (Q3 · matures in 1 step).
+  ↳ Guild3’s 5th distinct beer unlocks a Floor slot — choose its row.
+  ↳ Guild3 unlocks Specialist slot 4 (the Flight track).
+  ↳ s2 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ Broyhan ages +1 → 1/1 READY.
+
+== R17 · turn 49 · Guild [guildmaster] · G5 H3 ct3 | vessels[-,-,-,-] deployed:0 | score 21 (dlv 8 maj 9 flt 4)
+  Guild moves to Harbor
+  Guild activates Left col · Market + Harbor
+  ↳ Guild gains +G2 +H1
+  Guild sources goods at the Market.
+  ↳ Guild spends −H2
+  Guild gains the Mumme recipe (the cask action, −1G).
+  ↳ s1 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R17 · turn 50 · Guild2 [guildmaster] · G2 H1 ct2 | vessels[-,-,-,Gruit!] deployed:1 | score 27 (dlv 5 maj 18 flt 4)
+  Guild2 moves to Harbor
+  Guild2 pays −G1 occupancy toll for sharing Harbor.
+  Guild2 activates Bottom row · Harbor + Cellar
+  Guild2 sets a Ready Gruit on a slot.
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R17 · turn 51 · Guild3 [guildmaster] · G0 H0 ct1 | vessels[Broyhan!,-,-,-] deployed:0 | score 32 (dlv 13 maj 10 flt 9)
+  Guild3 stays home and works the Floor — the worker keeps its station (1 cask + the 3-pt Age pool · no toll).
+  ↳ Floor — Broyhan’s hire action.
+  Guild3 hires the Stevedore (free, the cask action).
+
+== R18 · turn 52 · Guild [guildmaster] · G7 H2 ct3 | vessels[-,-,-,-] deployed:0 | score 21 (dlv 8 maj 9 flt 4)
+  Guild moves to Cellar
+  Guild activates Right col · Brewhouse + Cellar
+  ↳ Guild spends −G1
+  Guild brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gruit ages +1 → 1/1 READY.
+  Guild sets a Ready Gruit on a slot.
+  ↳ nothing maturing to age (Mission Quay).
+
+== R18 · turn 53 · Guild2 [guildmaster] · G1 H1 ct2 | vessels[-,-,-,-] deployed:2 | score 27 (dlv 5 maj 18 flt 4)
+  Guild2 moves to Cellar
+  Guild2 pays −G1 occupancy toll for sharing Cellar.
+  Guild2 activates Right col · Brewhouse + Cellar
+  ↳ Guild2 gains +G2 +H1
+  ↳ Guild2 spends −G1 −H2
+  Guild2 brews Broyhan (Q3 · matures in 1 step).
+  ↳ Broyhan ages +1 → 1/1 READY.
+  Guild2 sets a Ready Broyhan on a slot (under Mission Quay).
+
+== R18 · turn 54 · Guild3 [guildmaster] · G0 H0 ct1 | vessels[Broyhan!,-,-,-] deployed:0 | score 32 (dlv 13 maj 10 flt 9)
+  Guild3 moves to Cellar
+  Guild3 activates Right col · Brewhouse + Cellar
+  ↳ Guild3 gains +G1 +H1
+  ↳ Gain a recipe — nothing new you can afford.
+
+== R19 · turn 55 · Guild [guildmaster] · G6 H2 ct3 | vessels[-,-,-,-] deployed:1 | score 21 (dlv 8 maj 9 flt 4)
+  Guild moves to Brewhouse
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G2 +H1
+  Guild sources goods at the Market.
+  ↳ Guild spends −G2 −H1
+  Guild brews Keut (Q3 · matures in 2 steps).
+  ↳ Guild’s 4th distinct beer unlocks a Floor slot — choose its row.
+  ↳ Guild unlocks Specialist slot 3 (the Flight track).
+  ↳ s8 — nothing to do here (no Ready cask to deploy).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R19 · turn 56 · Guild2 [guildmaster] · G1 H0 ct2 | vessels[-,-,-,-] deployed:3 | score 27 (dlv 5 maj 18 flt 4)
+  Guild2 moves to Brewhouse
+  Guild2 pays −G1 occupancy toll for sharing Brewhouse.
+  Guild2 activates Right col · Brewhouse + Cellar
+  ↳ Guild2 gains +G2 +H1
+  ↳ Guild2 spends −G1
+  Guild2 brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Gruit ages +1 → 1/1 READY.
+
+== R19 · turn 57 · Guild3 [guildmaster] · G1 H1 ct1 | vessels[Broyhan!,-,-,-] deployed:0 | score 32 (dlv 13 maj 10 flt 9)
+  Guild3 stays home and works the Floor — the worker keeps its station (1 cask + the 3-pt Age pool · no toll).
+  ↳ Floor — Broyhan’s hire action.
+  Guild3 hires the Lagerkeeper (free, the cask action).
+  Guild’s casks mature (+1) over the turn.
+
+== R20 · turn 58 · Guild [guildmaster] · G6 H2 ct3 | vessels[Keut 1/2,-,-,-] deployed:1 | score 21 (dlv 8 maj 9 flt 4)
+  Guild moves to Cellar
+  Guild pays −G1 occupancy toll for sharing Cellar.
+  Guild activates Right col · Brewhouse + Cellar
+  ↳ Guild gains +G2 +H1
+  ↳ Guild spends −G1 −H3
+  Guild brews Mumme (Q4 · matures in 3 steps).
+  ↳ Guild’s 5th distinct beer unlocks a Floor slot — choose its row.
+  ↳ Guild unlocks Specialist slot 4 (the Flight track).
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Keut ages +1 → 2/2 READY.
+  ↳ Mumme ages +1 → 1/3.
+  ↳ Mumme ages +1 → 2/3.
+
+== R20 · turn 59 · Guild2 [guildmaster] · G1 H1 ct2 | vessels[Gruit!,-,-,-] deployed:3 | score 27 (dlv 5 maj 18 flt 4)
+  Guild2 moves to Market
+  Guild2 activates Top row · Market + Brewhouse
+  ↳ Guild2 gains +H2
+  Guild2 sources goods at the Market.
+  ↳ Guild2 spends −G1 −H3
+  Guild2 brews Mumme (Q4 · matures in 2 steps).
+  ↳ Guild2’s 5th distinct beer unlocks a Floor slot — choose its row.
+  Guild2 sets a Ready Gruit on a slot (under Rich Berth).
+  ↳ s3 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R20 · turn 60 · Guild3 [guildmaster] · G1 H1 ct1 | vessels[Broyhan!,-,-,-] deployed:0 | score 32 (dlv 13 maj 10 flt 9)
+  Guild3 moves to Harbor
+  Guild3 activates Left col · Market + Harbor
+  ↳ Guild3 gains +G1 +H1
+  Guild3 sources goods at the Market.
+  ↳ Gain a recipe — nothing new you can afford.
+  Guild3 sets a Ready Broyhan on a slot.
+  Guild’s casks mature (+1) over the turn.
+
+== R21 · turn 61 · Guild [guildmaster] · G6 H0 ct3 | vessels[Keut!,Mumme!,-,-] deployed:1 | score 21 (dlv 8 maj 9 flt 4)
+  Guild moves to Harbor
+  Guild pays −G1 occupancy toll for sharing Harbor.
+  Guild activates Bottom row · Harbor + Cellar
+  ↳ Guild gains +G2 +H1
+  Guild sets a Ready Keut on a slot.
+  Guild2’s casks mature (+1) over the turn.
+
+== R21 · turn 62 · Guild2 [guildmaster] · G0 H0 ct2 | vessels[-,Mumme 1/2,-,-] deployed:4 | score 27 (dlv 5 maj 18 flt 4)
+  Guild2 stays home and works the Floor — the worker keeps its station (1 cask + the 3-pt Age pool · no toll).
+  ↳ Mumme ages +1 → 2/2 READY.
+  ↳ Floor — Mumme’s age action.
+  ↳ nothing to age.
+
+== R21 · turn 63 · Guild3 [guildmaster] · G2 H2 ct1 | vessels[-,-,-,-] deployed:1 | score 32 (dlv 13 maj 10 flt 9)
+  Guild3 moves to Cellar
+  Guild3 activates Bottom row · Harbor + Cellar
+  ↳ Guild3 gains +G1 +H1
+  ↳ Guild3 surveys the guild — takes Staple Hall from the display; place it on a slot (free).
+  Guild3 authors Staple Hall on a slot — your departing cask takes a die of 3 (any kontor).
+  ↳ Guild3 spends −G3
+  Guild3 fits the Quaymaster Specialist at the Cellar.
+
+== R22 · turn 64 · Guild [guildmaster] · G7 H1 ct3 | vessels[-,Mumme!,-,-] deployed:2 | score 21 (dlv 8 maj 9 flt 4)
+  Guild moves to Market
+  Guild pays −G1 occupancy toll for sharing Market.
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild gains +G2 (storage full)
+  Guild sources goods at the Market.
+  ↳ Guild gains +H1 (storage full)
+  Guild sets a Ready Mumme on a slot.
+
+== R22 · turn 65 · Guild2 [guildmaster] · G0 H0 ct2 | vessels[-,Mumme!,-,-] deployed:4 | score 27 (dlv 5 maj 18 flt 4)
+  Guild2 moves to Harbor
+  Guild2 activates Bottom row · Harbor + Cellar
+  ↳ Guild2 gains +G2 +H1
+  ↳ Guild2 surveys the guild — takes Brewmaster’s Workshop from the display; place it on a slot (free).
+  Guild2 authors Brewmaster’s Workshop on a slot — a cask docked here acts as Wild (while it stays).
+  ↳ Guild2 spends −G2
+  Guild2 dispatches Broyhan → Novgorod by charter (a contract + the fare; 1 left). (Sailed-Ships 8/10)
+  ↳ Guild2 — nothing maturing to refine (Novgorod).
+
+== R22 · turn 66 · Guild3 [guildmaster] · G0 H3 ct1 | vessels[-,-,-,-] deployed:1 | score 32 (dlv 13 maj 10 flt 9)
+  Guild3 moves to Brewhouse
+  Guild3 activates Top row · Market + Brewhouse
+  ↳ Guild3 gains +G2
+  Guild3 sources goods at the Market.
+  ↳ Guild3 gains +G2
+  ↳ Guild3 spends −G1
+  Guild3 brews Gruit Ale (Q1 · matures in 1 step).
+
+== R23 · turn 67 · Guild [guildmaster] · G8 H2 ct3 | vessels[-,-,-,-] deployed:3 | score 21 (dlv 8 maj 9 flt 4)
+  Guild moves to Brewhouse
+  Guild pays −G1 occupancy toll for sharing Brewhouse.
+  Guild activates Top row · Market + Brewhouse
+  ↳ Guild spends −G3
+  Guild buys Reliquary at the Market — place it on a slot.
+  Guild authors Reliquary on a slot — your cask enshrined from here takes a die of 2 (the Hall only).
+  ↳ Guild gains +G2 +H1
+  ↳ Guild spends −G2 −H1
+  Guild brews Keut (Q3 · matures in 2 steps).
+  ↳ the die is set to 2 — Reliquary pays its owner as the cask departs.
+  Guild enshrines Mumme Q4 on the Masters’ Shelf (7★ +2★ consecrated · place 2 presence). (Sailed-Ships 9/10)
+  ↳ +2 presence at Bergen (the Hall’s honor).
+
+== R23 · turn 68 · Guild2 [guildmaster] · G0 H1 ct1 | vessels[-,Mumme!,-,-] deployed:3 | score 32 (dlv 9 maj 14 flt 9)
+  Guild2 moves to Cellar
+  Guild2 activates Right col · Brewhouse + Cellar
+  Guild2 sets a Ready Mumme on a slot (under Reliquary).
+  ↳ Guild2 gains +G2 +H1
+  ↳ Gain a recipe — nothing new you can afford.
+  Guild3’s casks mature (+1) over the turn.
+
+== R23 · turn 69 · Guild3 [guildmaster] · G3 H3 ct1 | vessels[Gruit!,-,-,-] deployed:1 | score 32 (dlv 13 maj 10 flt 9)
+  Guild3 moves to Market
+  Guild3 activates Left col · Market + Harbor
+  ↳ Guild3 gains +G2
+  Guild3 sources goods at the Market.
+  Guild3 hires the Cellarman (free, the cask action).
+  Guild3 sets a Ready Gruit on a slot (under Hop Yard).
+  ↳ Guild3 spends −G2
+  ↳ the die is set to 3 — Staple Hall pays its owner as the cask departs.
+  Guild3 dispatches Broyhan → London by charter (a contract + the fare; 0 left). (Sailed-Ships 10/10)
+  Guild3 authors Staple Hall on a slot — your departing cask takes a die of 3 (any kontor).
+  ★ The Sailed-Ships track is full (10/10) — final round!
+
+================ FINAL — round 23 · sailed 10/10 · ended by CLOCK ================
+WINNER  Guild3 [guildmaster] — TOTAL 48  (deliveries 17 · majorities 15 · flight 16 · floor 0)
+        Bruges: Gruit Q1=1, Hopped Q2=1
+        London: Broyhan Q3=4
+        Bergen: Hopped Q2=1
+        Novgorod: Keut Q4=4, Mumme Q5=6
+        flight beers: Gruit, Keut, Mumme, Hopped, Broyhan (5) · specialists: Stevedore, Lagerkeeper, Quaymaster, Cellarman · flipped: 0
+   #2   Guild [guildmaster] — TOTAL 39  (deliveries 17 · majorities 13 · flight 9 · floor 0)
+        Bruges: Gruit Q1=1, Hopped Q2=1
+        Bergen: Hopped Q2=1
+        Novgorod: Broyhan Q3=2
+        The Hall: Hopped Q2=3, Mumme Q4=9
+        flight beers: Gruit, Hopped, Broyhan, Mumme (4) · specialists: Grain Factor · flipped: 0
+   #3   Guild2 [guildmaster] — TOTAL 32  (deliveries 9 · majorities 14 · flight 9 · floor 0)
+        Bruges: Gruit Q1=1, Hopped Q2=1
+        Bergen: Keut Q3=1
+        Novgorod: Keut Q3=2, Broyhan Q4=4
+        flight beers: Gruit, Hopped, Keut, Broyhan (4) · specialists: Grain Factor, Cellarman · flipped: 0
+  majorities: Bruges[Guild+2 Guild2+4 Guild3+0]  London[Guild3+5]  Bergen[Guild+9 Guild2+5 Guild3+2]  Novgorod[Guild+2 Guild2+5 Guild3+8]
+  buildings on the wharf at end: Staple Hall(Guild3) · Brewmaster’s Workshop(Guild2) · Rich Berth(ntl) · Reliquary(Guild) · Staple Hall(Guild3) · Hop Yard(ntl) · Mission Quay(Guild2)

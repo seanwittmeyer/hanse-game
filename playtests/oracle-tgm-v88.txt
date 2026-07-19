@@ -1,0 +1,10 @@
+TRADER-vs-GM RE-MEASURE — v2.4 (KEY v88) · 5 parallel shards × 10 games · NOCM=1 GMN=10 GUILD_MS=250 (the in-page budget)
+Context: the bulk-budget (GUILD_MS=120) 600-game ladder read this rung at 59.2% — 0.8 pts under the gate.
+
+trader vs guildmaster      guildmaster wins  70.0%  (trader 30.0%)  avg score trader 31.4 / guildmaster 38.5  rounds 17.2  clock 100.0%  errors 0
+trader vs guildmaster      guildmaster wins  70.0%  (trader 30.0%)  avg score trader 27.7 / guildmaster 31.2  rounds 16.1  clock 90.0%  errors 0
+trader vs guildmaster      guildmaster wins  70.0%  (trader 30.0%)  avg score trader 22.9 / guildmaster 41.7  rounds 15.7  clock 100.0%  errors 0
+trader vs guildmaster      guildmaster wins  50.0%  (trader 50.0%)  avg score trader 24.7 / guildmaster 34.2  rounds 16.7  clock 100.0%  errors 0
+trader vs guildmaster      guildmaster wins  70.0%  (trader 30.0%)  avg score trader 25.9 / guildmaster 40.4  rounds 15.1  clock 100.0%  errors 0
+
+AGGREGATE: GUILDMASTER 33/50 = 66.0% at its real think-time — ladder gate PASS (the 59.2% was the throttled-budget artifact). errors 0.

@@ -1,0 +1,13 @@
+GM-vs-CM HEAD-TO-HEAD ORACLE — v2.3 (KEY v87) · 3 parallel shards × 25 games (seats swapped)
+Run: NOGM=1 CMN=25 CELLAR_MS=220 node playtests/ai-ladder.js 40   (same budgets as the v86 oracle)
+Context: the in-ladder GM|CM smoke rung (n=10, CELLAR_MS=80) read a noise 50% — this is the real measure.
+
+shard 1:  cellarmaster wins 72.0% (18/25)   avg score GM 25.7 / CM 35.9   rounds 18.0   clock 100%   errors 0
+shard 2:  cellarmaster wins 84.0% (21/25)   avg score GM 23.8 / CM 39.4   rounds 17.0   clock 100%   errors 0
+shard 3:  cellarmaster wins 68.0% (17/25)   avg score GM 26.0 / CM 37.7   rounds 18.1   clock 100%   errors 0
+
+AGGREGATE: CELLARMASTER 56/75 = 74.7%   avg score GM 25.2 / CM 37.7   rounds ~17.7   clock 100%   errors 0
+
+Verdict: the Cellarmaster stays clearly the top rung under Privileges & Works (v86 oracle: 73.3%) —
+the deep MC prices owner-only privileges fine (it authors its own). Ladder gate: PASS at full budget.
+(Note for future runs: shard at ~10 games each for faster turnaround — designer directive 2026-07-04.)

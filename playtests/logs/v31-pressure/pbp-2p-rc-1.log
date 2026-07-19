@@ -1,0 +1,460 @@
+############ GAME 2p-rc-1 · seed 561 · 2p · KEY hanse-v31 ############
+seats: Racer [trader/racer] · Cellar [cellarmaster]
+exports dealt: Q3 Keut · Q3 Broyhan · Q5 Bock · sailed-ships cap 7 · warm start:
+  s2 (colR): ship Hulk->Bruges
+  s3 (rowT): [bldg Grain Exchange neutral] 
+  s6 (colL): ship Hulk->Novgorod
+  s5 (colR): [bldg Hop Yard neutral] 
+
+== R1 · turn 1 · Racer [trader/racer] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Racer places their worker at Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −G1
+  Racer buys the Keut recipe (Q3).
+  ↳ Racer spends −G2 −H1
+  Racer brews Keut (Q3 · matures in 2 steps).
+  ↳ Racer’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+  Racer sets a Ready Gruit on a slot.
+
+== R1 · turn 2 · Cellar [cellarmaster] · G3 H2 ct2 | vessels[Gruit!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar places their worker at Harbor
+  Cellar activates Bottom row · Harbor + Cellar
+  ↳ Cellar spends −G3
+  Cellar fits the Grain Factor Specialist at the Cellar.
+  Cellar sets a Ready Gruit on a slot.
+  ↳ s4 — nothing to do here (no Ready cask to deploy onto the open slot).
+  Racer’s casks mature (+1) over the turn.
+
+== R2 · turn 3 · Racer [trader/racer] · G0 H1 ct2 | vessels[-,Keut 1/2,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Racer moves to Harbor
+  Racer activates Bottom row · Harbor + Cellar
+  ↳ Racer gains +G2
+  ↳ Keut ages +1 → 2/2 READY.
+  Racer sets a Ready Keut on a slot.
+  Racer loads Keut onto the Hulk → Novgorod (1/3).
+
+== R2 · turn 4 · Cellar [cellarmaster] · G0 H2 ct2 | vessels[-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G3
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +G3
+  ↳ Cellar spends −G1 −H1
+  Cellar brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Cellar’s 2nd distinct beer opens Floor slot 3 (the Flight track).
+
+== R3 · turn 5 · Racer [trader/racer] · G2 H1 ct2 | vessels[-,-,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Racer moves to Market
+  Racer pays −G1 occupancy toll for sharing Market.
+  Racer activates Left col · Market + Harbor
+  ↳ Racer spends −H1
+  Racer buys the Broyhan recipe (Q3).
+  ↳ s1 — nothing to do here (no Ready cask to deploy onto the open slot).
+  Racer loads Gruit onto the Hulk → Bruges (1/3).
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+  Cellar’s casks mature (+1) over the turn.
+
+== R3 · turn 6 · Cellar [cellarmaster] · G5 H1 ct2 | vessels[Hopped!,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Cellar moves to Harbor
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar gains +G3
+  Cellar sources goods at the Market.
+  Cellar sets a Ready Hopped on a slot.
+  ↳ Cellar spends −G2
+  Cellar dispatches Hopped → London by charter (a contract + the fare; 1 left). (Sailed-Ships 1/7)
+  Cellar authors Staple Hall on a slot — Your cask departs: die 3.
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R4 · turn 7 · Racer [trader/racer] · G1 H0 ct2 | vessels[-,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Racer moves to Brewhouse
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer spends −G2 −H1
+  Racer brews Keut (Q3 · matures in 2 steps).
+  ↳ s8 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ nothing to convert.
+
+== R4 · turn 8 · Cellar [cellarmaster] · G6 H1 ct1 | vessels[-,-] deployed:1 | score 6 (dlv 1 maj 5 flt 0)
+  Cellar moves to Cellar
+  Cellar activates Right col · Brewhouse + Cellar
+  ↳ Cellar spends −G1 −H1
+  Cellar brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Cellar spends −G3
+  Cellar fits the Coppersmith Specialist at the Cellar.
+  ↳ s5 — nothing to do here (no Ready cask to deploy).
+  Racer’s casks mature (+1) over the turn.
+
+== R5 · turn 9 · Racer [trader/racer] · G0 H0 ct2 | vessels[Keut 1/2,-,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Racer stays home and works the Floor — the worker keeps its station (1 cask + the 3-pt Age pool · no toll).
+  ↳ Floor — Keut’s hire action.
+  Racer hires the Cellarman (free, the cask action).
+  ↳ Keut ages +1 → 2/2 READY.
+  Cellar’s casks mature (+1) over the turn.
+
+== R5 · turn 10 · Cellar [cellarmaster] · G2 H0 ct1 | vessels[Hopped!,-,-] deployed:1 | score 6 (dlv 1 maj 5 flt 0)
+  Cellar stays home and works the Floor — the worker keeps its station (1 cask + the 3-pt Age pool · no toll).
+  ↳ Floor — Hopped’s load action.
+  Cellar loads Gruit onto the Hulk → Bruges (2/3).
+
+== R6 · turn 11 · Racer [trader/racer] · G0 H0 ct2 | vessels[Keut!,-] deployed:0 | score 0 (dlv 0 maj 0 flt 0)
+  Racer moves to Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer spends −G1 −H1
+  Racer brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Racer’s 3rd distinct beer opens Floor slot 4 (the Flight track).
+  Racer sets a Ready Keut on a slot.
+  ↳ nothing to convert.
+
+== R6 · turn 12 · Cellar [cellarmaster] · G2 H0 ct1 | vessels[Hopped!,-,-] deployed:0 | score 6 (dlv 1 maj 5 flt 0)
+  Cellar moves to Brewhouse
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar spends −G1
+  Cellar acquires a charter contract at the Market (2 in hand).
+  ↳ Cellar spends −G1
+  Cellar brews Gruit Ale (Q1 · matures in 1 step).
+  Cellar hires the Hop Gardener (free, the cask action).
+  Cellar sets a Ready Hopped on a slot (under Grain Exchange).
+  Racer’s casks mature (+1) over the turn.
+
+== R7 · turn 13 · Racer [trader/racer] · G0 H0 ct2 | vessels[-,Hopped!,-] deployed:1 | score 0 (dlv 0 maj 0 flt 0)
+  Racer moves to Harbor
+  Racer activates Left col · Market + Harbor
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  Racer sets a Ready Hopped on a slot (under Staple Hall).
+  Racer loads Keut onto the Hulk → Bruges (3/3).
+  ★ the Hulk sails to Bruges with 3 casks! Every cask aboard is delivered. (Sailed-Ships 2/7)
+  ↳ Racer gains +G1 +H1
+  ↳ Racer takes the Bruges liquidity benefit (2 goods).
+  ↳ Cellar gains +G2 +H2
+  ↳ Cellar takes the Bruges liquidity benefit (2 goods).
+  ↳ Racer gains +G1 +H1
+  ↳ Racer takes the Bruges liquidity benefit (2 goods).
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+  Cellar’s casks mature (+1) over the turn.
+
+== R7 · turn 14 · Cellar [cellarmaster] · G2 H2 ct2 | vessels[-,Gruit!] deployed:1 | score 7 (dlv 2 maj 5 flt 0)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G3
+  Cellar sources goods at the Market.
+  Cellar sets a Ready Gruit on a slot.
+  ↳ s8 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ nothing to load.
+
+== R8 · turn 15 · Racer [trader/racer] · G3 H3 ct2 | vessels[-,-,-] deployed:1 | score 6 (dlv 2 maj 4 flt 0)
+  Racer moves to Market
+  Racer pays −G1 occupancy toll for sharing Market.
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer spends −G2
+  Racer commissions the Hulk bound for Bergen — place it on a slot.
+  ↳ the Hulk docks ON Hopped — dockside pickup: the cask boards as the commission’s free load (1/3).
+  ↳ s8 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R8 · turn 16 · Cellar [cellarmaster] · G5 H2 ct2 | vessels[-,-] deployed:2 | score 7 (dlv 2 maj 5 flt 0)
+  Cellar moves to Harbor
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar spends −G2
+  Cellar commissions the Hulk bound for Bergen — place it on a slot.
+  ↳ the Hulk docks ON Hopped — dockside pickup: the cask boards as the commission’s free load (1/3).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+
+== R9 · turn 17 · Racer [trader/racer] · G0 H3 ct2 | vessels[-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Racer moves to Brewhouse
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G2
+  Racer sources goods at the Market.
+  ↳ Racer spends −G2 −H1
+  Racer brews Keut (Q3 · matures in 1 step).
+  ↳ s8 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R9 · turn 18 · Cellar [cellarmaster] · G3 H2 ct2 | vessels[-,-] deployed:1 | score 7 (dlv 2 maj 5 flt 0)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar spends −H1
+  Cellar buys the Broyhan recipe (Q3).
+  ↳ s8 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  Racer’s casks mature (+1) over the turn.
+
+== R10 · turn 19 · Racer [trader/racer] · G0 H2 ct2 | vessels[Keut!,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Racer moves to Cellar
+  Racer activates Right col · Brewhouse + Cellar
+  Racer sets a Ready Keut on a slot.
+  ↳ Racer gains +G1 +H1
+  ↳ s5 — nothing to do here (no Ready cask to deploy).
+
+== R10 · turn 20 · Cellar [cellarmaster] · G3 H1 ct2 | vessels[-,-] deployed:1 | score 7 (dlv 2 maj 5 flt 0)
+  Cellar moves to Brewhouse
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar spends −G1 −H1
+  Cellar buys the Bock recipe (Q5).
+  ↳ Cellar spends −G1
+  Cellar brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ s8 — nothing to do here (no Ready cask to deploy onto the open slot).
+
+== R11 · turn 21 · Racer [trader/racer] · G1 H3 ct2 | vessels[-,-,-] deployed:1 | score 6 (dlv 2 maj 4 flt 0)
+  Racer moves to Harbor
+  Racer activates Left col · Market + Harbor
+  ↳ Racer spends −G1 −H1
+  Racer buys the Bock recipe (Q5).
+  Racer loads Keut onto the Hulk → Novgorod (2/3).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+  Cellar’s casks mature (+1) over the turn.
+
+== R11 · turn 22 · Cellar [cellarmaster] · G1 H0 ct2 | vessels[Gruit!,-] deployed:1 | score 7 (dlv 2 maj 5 flt 0)
+  Cellar moves to Market
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G2 +H2
+  Cellar sources goods at the Market.
+  Cellar sets a Ready Gruit on a slot.
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R12 · turn 23 · Racer [trader/racer] · G0 H2 ct2 | vessels[-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Racer moves to Cellar
+  Racer activates Right col · Brewhouse + Cellar
+  ↳ s2 — nothing to do here (no Ready cask to deploy onto the open slot).
+  ↳ s5 — nothing to do here (no Ready cask to deploy).
+
+== R12 · turn 24 · Cellar [cellarmaster] · G3 H2 ct2 | vessels[-,-] deployed:2 | score 7 (dlv 2 maj 5 flt 0)
+  Cellar moves to Brewhouse
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar spends −G2
+  Cellar commissions the Cog bound for Novgorod — place it on a slot.
+  ↳ Cog placed on a slot, bound for Novgorod.
+  ↳ Cellar gains +G2 +H2
+  ↳ Cellar spends −G2 −H3
+  Cellar brews Bock (Q5 · matures in 3 steps).
+  ↳ Cellar’s 3rd distinct beer opens Floor slot 5 (the Flight track).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R13 · turn 25 · Racer [trader/racer] · G0 H2 ct2 | vessels[-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Racer moves to Harbor
+  Racer activates Left col · Market + Harbor
+  ↳ Racer gains +G2
+  Racer sources goods at the Market.
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+  Cellar’s casks mature (+1) over the turn.
+
+== R13 · turn 26 · Cellar [cellarmaster] · G1 H1 ct2 | vessels[Bock 1/3,-,-] deployed:2 | score 7 (dlv 2 maj 5 flt 0)
+  Cellar moves to Cellar
+  Cellar activates Right col · Brewhouse + Cellar
+  ↳ Cellar spends −G1 −H1
+  Cellar brews Hopped Beer (Q2 · matures in 1 step).
+  ↳ Hopped ages +1 → 1/1 READY.
+  ↳ Bock ages +1 → 2/3.
+  ↳ Bock ages +1 → 3/3 READY.
+  Cellar sets a Ready Bock on a slot.
+  Cellar loads Bock onto the Cog → Novgorod (1/2).
+
+== R14 · turn 27 · Racer [trader/racer] · G2 H2 ct2 | vessels[-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Racer moves to Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G2
+  Racer sources goods at the Market.
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G2 −H3
+  Racer brews Bock (Q5 · matures in 2 steps).
+  ↳ Racer’s 4th distinct beer opens Floor slot 5 (the Flight track).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+
+== R14 · turn 28 · Cellar [cellarmaster] · G0 H0 ct2 | vessels[-,Hopped!,-] deployed:2 | score 7 (dlv 2 maj 5 flt 0)
+  Cellar moves to Brewhouse
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +G2 +H2
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +G2 +H2
+  ↳ Cellar spends −G2 −H3
+  Cellar brews Bock (Q5 · matures in 3 steps).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  Racer’s casks mature (+1) over the turn.
+
+== R15 · turn 29 · Racer [trader/racer] · G3 H0 ct2 | vessels[Bock 1/2,-,-,-] deployed:0 | score 6 (dlv 2 maj 4 flt 0)
+  Racer moves to Brewhouse
+  Racer pays −G1 occupancy toll for sharing Brewhouse.
+  Racer activates Right col · Brewhouse + Cellar
+  ↳ Racer spends −G1
+  Racer brews Gruit Ale (Q1 · matures in 1 step).
+  ↳ Bock ages +1 → 2/2 READY.
+  ↳ Gruit ages +1 → 1/1 READY.
+  Racer sets a Ready Bock on a slot.
+  Racer loads Bock onto the Cog → Novgorod (2/2).
+  ★ the Cog sails to Novgorod with 2 casks! Every cask aboard is delivered. (Sailed-Ships 3/7)
+  ↳ Cellar refines a cask on the long haul (Novgorod): Bock ages +1 → 1/3.
+  ↳ Racer — nothing maturing to refine (Novgorod).
+  Cellar’s casks mature (+1) over the turn.
+
+== R15 · turn 30 · Cellar [cellarmaster] · G2 H1 ct2 | vessels[Bock 2/3,Hopped!,-] deployed:2 | score 21 (dlv 8 maj 9 flt 4)
+  Cellar moves to Cellar
+  Cellar activates Right col · Brewhouse + Cellar
+  ↳ Cellar spends −G1 −H1
+  Cellar brews Hopped Beer (Q2 · matures in 1 step).
+  Cellar sets a Ready Hopped on a slot.
+  ↳ s5 — nothing to do here (no Ready cask to deploy).
+
+== R16 · turn 31 · Racer [trader/racer] · G1 H0 ct2 | vessels[-,Gruit!,-,-] deployed:0 | score 20 (dlv 8 maj 8 flt 4)
+  Racer moves to Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G2 −H1
+  Racer brews Keut (Q3 · matures in 1 step).
+  Cellar’s casks mature (+1) over the turn.
+
+== R16 · turn 32 · Cellar [cellarmaster] · G1 H0 ct2 | vessels[Bock!,-,Hopped!] deployed:3 | score 21 (dlv 8 maj 9 flt 4)
+  Cellar moves to Brewhouse
+  Cellar activates Top row · Market + Brewhouse
+  ↳ Cellar gains +H3
+  Cellar sources goods at the Market.
+  ↳ Cellar gains +G3
+  ↳ Cellar spends −G2 −H3
+  Cellar brews Bock (Q5 · matures in 3 steps).
+  Cellar loads Hopped onto the Hulk → Bergen (2/3).
+  Racer’s casks mature (+1) over the turn.
+
+== R17 · turn 33 · Racer [trader/racer] · G1 H1 ct2 | vessels[Keut!,Gruit!,-,-] deployed:0 | score 20 (dlv 8 maj 8 flt 4)
+  Racer moves to Brewhouse
+  Racer pays −G1 occupancy toll for sharing Brewhouse.
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G2 −H3
+  Racer brews Bock (Q5 · matures in 2 steps).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  Cellar’s casks mature (+1) over the turn.
+
+== R17 · turn 34 · Cellar [cellarmaster] · G2 H0 ct2 | vessels[Bock!,Bock 1/3,Hopped!] deployed:2 | score 21 (dlv 8 maj 9 flt 4)
+  Cellar moves to Cellar
+  Cellar activates Bottom row · Harbor + Cellar
+  Cellar over-deploys — the displaced Gruit is tapped on the way out (its source action fires, then it is boxed).
+  Cellar sets a Ready Hopped on a slot.
+  ↳ Cellar gains +G2 +H2
+  ↳ Cellar spends −G3
+  Cellar fits the Stevedore Specialist at the Cellar.
+  Cellar sets a Ready Bock on a slot.
+  Cellar enshrines Bock Q5 on the High Board (8★ · gain 1 Building (free, placed)). (Sailed-Ships 4/7)
+  Cellar authors Burgomaster’s Favor on a slot — Your cask departs: die = its quality (max 5).
+  Racer’s casks mature (+1) over the turn.
+
+== R18 · turn 35 · Racer [trader/racer] · G0 H0 ct2 | vessels[Keut!,Gruit!,Bock 1/2,-] deployed:0 | score 20 (dlv 8 maj 8 flt 4)
+  Racer stays home and works the Floor — the worker keeps its station (3 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Racer gains +G1 +H1
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Bock’s survey action.
+  ↳ Racer surveys the guild — takes Burgomaster’s Favor from the display; place it on a slot (free).
+  Racer authors Burgomaster’s Favor on a slot — Your cask departs: die = its quality (max 5).
+  ↳ Bock ages +1 → 2/2 READY.
+  Cellar’s casks mature (+1) over the turn.
+
+== R18 · turn 36 · Cellar [cellarmaster] · G1 H2 ct2 | vessels[-,Bock 2/3] deployed:2 | score 29 (dlv 16 maj 9 flt 4)
+  Cellar moves to Harbor
+  Cellar activates Bottom row · Harbor + Cellar
+  ↳ Bock ages +1 → 3/3 READY.
+  ↳ Cellar gains +1 presence at Novgorod (majority help).
+  Cellar sets a Ready Bock on a slot.
+  Cellar enshrines Bock Q5 on the Masters’ Shelf (6★ · place 2 presence). (Sailed-Ships 5/7)
+  ↳ +2 presence at Bruges (the Hall’s honor).
+
+== R19 · turn 37 · Racer [trader/racer] · G1 H1 ct2 | vessels[Keut!,Gruit!,Bock!,-] deployed:0 | score 14 (dlv 8 maj 2 flt 4)
+  Racer moves to Market
+  Racer activates Top row · Market + Brewhouse
+  ↳ Racer gains +G1 +H1
+  Racer sources goods at the Market.
+  ↳ Racer gains +G1 +H1
+  ↳ Racer spends −G2 −H3
+  Racer brews Bock (Q5 · matures in 2 steps).
+
+== R19 · turn 38 · Cellar [cellarmaster] · G1 H2 ct2 | vessels[-,-] deployed:2 | score 41 (dlv 22 maj 15 flt 4)
+  Cellar moves to Market
+  Cellar pays −G1 occupancy toll for sharing Market.
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar gains +G3
+  Cellar sources goods at the Market.
+  Cellar loads Hopped onto the Hulk → Bergen (3/3).
+  ★ the Hulk sails to Bergen with 3 casks! Every cask aboard is delivered. (Sailed-Ships 6/7)
+  ↳ Cellar takes a free Reach (+1 presence at Bergen).
+  ↳ Cellar takes a free Reach (+1 presence at Bergen).
+  ↳ Cellar takes a free Reach (+1 presence at Bergen).
+  ↳ Hulk (→ Bergen) — nothing eligible to load.
+  ↳ Hulk (→ Novgorod) — nothing eligible to load.
+  Racer’s casks mature (+1) over the turn.
+
+== R20 · turn 39 · Racer [trader/racer] · G1 H0 ct2 | vessels[Keut!,Gruit!,Bock!,Bock 1/2] deployed:0 | score 14 (dlv 8 maj 2 flt 4)
+  Racer stays home and works the Floor — the worker keeps its station (4 casks + the 3-pt Age pool · no toll).
+  ↳ Floor — Gruit’s source action.
+  ↳ Racer gains +G1 +H1
+  ↳ Floor — Keut’s recipe action.
+  ↳ Gain a recipe — nothing new you can afford.
+  ↳ Floor — Bock’s survey action.
+  ↳ Racer surveys the guild — takes Novgorod Peterhof from the display; place it on a slot (free).
+  Racer authors Novgorod Peterhof on a slot — Your cask departs: die 4. Novgorod only.
+  ↳ Floor — Bock’s brew action.
+  ↳ Brew: no open vessel or affordable recipe.
+  ↳ Bock ages +1 → 2/2 READY.
+
+== R20 · turn 40 · Cellar [cellarmaster] · G3 H2 ct2 | vessels[-,-] deployed:1 | score 53 (dlv 25 maj 24 flt 4)
+  Cellar moves to Brewhouse
+  Cellar activates Right col · Brewhouse + Cellar
+  ↳ Cellar spends −G1 −H2
+  Cellar brews Broyhan (Q3 · matures in 1 step).
+  ↳ Cellar’s 4th distinct beer opens Floor slot 6 (the Flight track).
+  ↳ Broyhan ages +1 → 1/1 READY.
+  Cellar sets a Ready Broyhan on a slot (under Burgomaster’s Favor).
+  ↳ s5 — nothing to do here (no Ready cask to deploy).
+
+== R21 · turn 41 · Racer [trader/racer] · G2 H1 ct2 | vessels[Keut!,Gruit!,Bock!,Bock!] deployed:0 | score 14 (dlv 8 maj 2 flt 4)
+  Racer moves to Harbor
+  Racer activates Bottom row · Harbor + Cellar
+  Racer sets a Ready Bock on a slot (under Novgorod Peterhof).
+  Racer sets a Ready Bock on a slot.
+  ↳ the die is set to 4 — Novgorod Peterhof pays its owner as the cask departs.
+  Racer loads Bock onto the Hulk → Novgorod (3/3).
+  ★ the Hulk sails to Novgorod with 3 casks! Every cask aboard is delivered. (Sailed-Ships 7/7)
+  ↳ Racer — nothing maturing to refine (Novgorod).
+  ↳ Racer — nothing maturing to refine (Novgorod).
+  ↳ Racer — nothing maturing to refine (Novgorod).
+  ★ The Sailed-Ships track is full (7/7) — final round!
+
+== R21 · turn 42 · Cellar [cellarmaster] · G2 H0 ct2 | vessels[-,-,-] deployed:2 | score 45 (dlv 25 maj 16 flt 4)
+  Cellar moves to Market
+  Cellar activates Left col · Market + Harbor
+  ↳ Cellar spends −G2
+  Cellar commissions the Cog bound for Bruges — place it on a slot.
+  ↳ the die is set to 3 — Burgomaster’s Favor pays its owner as the cask departs.
+  ↳ the Cog docks ON Broyhan — dockside pickup: the cask boards as the commission’s free load (1/2).
+  ↳ s6 — nothing to do here (no Ready cask to deploy onto the open slot).
+  Cellar loads Gruit onto the Cog → Bruges (2/2).
+  ★ the Cog sails to Bruges with 2 casks! Every cask aboard is delivered. (Sailed-Ships 8/7)
+  ↳ Cellar gains +G2 +H2
+  ↳ Cellar takes the Bruges liquidity benefit (2 goods).
+  ↳ Cellar gains +G2 +H2
+  ↳ Cellar takes the Bruges liquidity benefit (2 goods).
+  Cellar loads Bock onto the Hulk → Bergen (2/3).
+  ↳ Cellar gains +G2
+  ↳ Cellar takes a loader bonus for shipping Racer’s cask (and chose the destination).
+
+================ FINAL — round 21 · sailed 8/7 · ended by CLOCK ================
+WINNER  Cellar [cellarmaster] — TOTAL 57  (deliveries 30 · majorities 18 · flight 9 · floor 0)
+        Bruges: Gruit Q1=1, Broyhan Q3=4, Gruit Q1=1
+        London: Hopped Q2=1
+        Bergen: Hopped Q2=1, Hopped Q2=1, Hopped Q2=1
+        Novgorod: Bock Q5=6
+        The Hall: Bock Q5=8, Bock Q5=6
+        flight beers: Hopped, Gruit, Bock, Broyhan (4) · specialists: Grain Factor, Hop Gardener, Stevedore · flipped: 0
+   #2   Racer [trader/racer] — TOTAL 34  (deliveries 22 · majorities 8 · flight 4 · floor 0)
+        Bruges: Gruit Q1=1, Keut Q3=1
+        Novgorod: Bock Q5=6, Keut Q3=2, Keut Q3=2, Bock Q5=10
+        flight beers: Gruit, Keut, Bock (3) · specialists: Cellarman · flipped: 0
+  majorities: Bruges[Cellar+4]  London[Cellar+5]  Bergen[Cellar+9]  Novgorod[Racer+8]
+  buildings on the wharf at end: Staple Hall(Cellar) · Burgomaster’s Favor(Cellar) · Burgomaster’s Favor(Racer) · Grain Exchange(ntl) · Novgorod Peterhof(Racer) · Hop Yard(ntl)
