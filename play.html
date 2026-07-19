@@ -1263,12 +1263,15 @@ function rotWrap(html,W,H,ccw){return '<div style="position:relative;width:'+H+'
 function ctWithDie(tileHtml,dv,color){if(!(dv>0))return tileHtml;
   return tileHtml.replace('data-die-seat','data-die-seat data-filled').replace('</b></div>','</b><span class="seatdie">'+dieFace(dv,'dtile',color)+'</span></div>');}
 // a cask = the tile: AGING side while maturing in a vessel, WHARF side once Ready/deployed
-function pCaskFace(t,bonus,actOv,dir){const d=HC_CASK[t.style];if(!d)return '';
+function pCaskFace(t,bonus,actOv,dir,forceAging){const d=HC_CASK[t.style];if(!d)return '';
   const o=(t.owner!=null)?S.players[t.owner]:null;
-  const maturing=(t.step!=null&&t.ready!=null&&t.step<t.ready);
+  // v3.4b: the tile FLIPS AT DEPLOY — in a vessel (Ready included) and in the market piles it shows
+  // its AGING side (cost · track · action, what the Floor and the brew choice read); the wharf side
+  // (Q in the die seat) appears once it stands on a slot.
+  const aging=forceAging||(t.step!=null&&t.ready!=null);
   const act=hcAct(actOv||caskAct(t));
   const dv=Math.max((S&&S.presEnd)?1:0,bonus||0);
-  let tile=maturing?HC.caskCardFront(d,act):ctWithDie(HC.caskCardBack(d,act),(o&&!maturing)?dv:0,o?o.color:null);
+  let tile=aging?HC.caskCardFront(d,act):ctWithDie(HC.caskCardBack(d,act),o?dv:0,o?o.color:null);
   let W=2.5,H=1;
   if(dir==='left'){tile=rotWrap(tile,2.5,1,false);W=1;H=2.5;}
   else if(dir==='right'){tile=rotWrap(tile,2.5,1,true);W=1;H=2.5;}
@@ -3878,7 +3881,7 @@ function renderVoyage(){
   const brews=['gruit','hopped'].concat((S.exports||[]).slice().sort((a,b)=>STYLES[a].q-STYLES[b].q));
   if(S.jopen)brews.push('jopenbier');   // the capstone is always brewable when on (once you've bought its recipe)
   h+='<div class="note" style="margin-top:6px"><b>'+LU('flask-conical')+' Brew piles</b> <span class="note">(each brewable beer — its quality &amp; cost + the face-up action that quality takes, steerable)</span></div>'
-    +'<div class="shopgrid">'+brews.map(style=>{const st=STYLES[style];return '<div class="shopcell"><div class="mtile">'+pCaskFace({style:style,q:st.q,act:pileTopFor(st.q,style),owner:null},0)+'</div>'+(st.sig?'<span class="note" style="font-size:.64rem;line-height:1.2;display:block;margin-top:2px">'+LU('sparkles')+st.sig.split(' — ')[0]+'</span>':'')+'</div>';}).join('')+'</div>';
+    +'<div class="shopgrid">'+brews.map(style=>{const st=STYLES[style];return '<div class="shopcell"><div class="mtile">'+pCaskFace({style:style,q:st.q,act:pileTopFor(st.q,style),owner:null},0,null,null,true)+'</div>'+(st.sig?'<span class="note" style="font-size:.64rem;line-height:1.2;display:block;margin-top:2px">'+LU('sparkles')+st.sig.split(' — ')[0]+'</span>':'')+'</div>';}).join('')+'</div>';
   h+='<div class="note" style="margin-top:6px">Delivered value: '+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+scorePlayer(p).deliv+'</span>').join(' · ')+'</div>';
   document.getElementById('voyage').innerHTML=h;
 }
