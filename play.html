@@ -198,6 +198,17 @@
   .tk-right .ptkw{top:4%;right:calc(-14cqmin - var(--fan,0cqmin))} .tk-right .ptkw:hover{right:-98cqmin} .tk-right .ptkw:hover ~ .ptkw{transform:translateX(86cqmin)}
   .tk-up .ptkw{left:4%;top:calc(-14cqmin - var(--fan,0cqmin))}     .tk-up .ptkw:hover{top:-98cqmin}     .tk-up .ptkw:hover ~ .ptkw{transform:translateY(-86cqmin)}
   .tk-down .ptkw{left:4%;bottom:calc(-14cqmin - var(--fan,0cqmin))}.tk-down .ptkw:hover{bottom:-98cqmin}.tk-down .ptkw:hover ~ .ptkw{transform:translateY(86cqmin)}
+  /* on a BUILDING the cask tucks SHALLOW — the printed action band stays exposed (the card was designed for this);
+     in a hull it tucks deep, type-only. The depths mirror the physical tuck. */
+  .tk-left .ptkw.deep{left:-36cqmin} .tk-right .ptkw.deep{right:-36cqmin} .tk-up .ptkw.deep{top:-36cqmin} .tk-down .ptkw.deep{bottom:-36cqmin}
+  /* THE ONE DIGITAL CHEAT [ruled]: in the top slots (s1/s2) the tucked card hangs upside-down — flip its
+     ACTION and TITLE bands 180° in place so they read upright on screen. Nothing else is altered. */
+  .tk-up .ptk .cc-back .ce.bot{transform:rotate(180deg)}
+  .tk-up .ptk .cc-actfloat{transform:translateY(.13in) rotate(180deg)}
+  /* the OWNERSHIP (presence) disc rides the tucked cask's visible edge */
+  .tkown{position:absolute;z-index:9;width:11cqmin;height:11cqmin;border-radius:50%;border:2px solid rgba(255,255,255,.9);box-shadow:0 0 0 1.5px rgba(0,0,0,.35)}
+  .tk-left .tkown{left:2.5cqmin;top:22%} .tk-right .tkown{right:2.5cqmin;top:22%}
+  .tk-up .tkown{top:2.5cqmin;left:22%}   .tk-down .tkown{bottom:2.5cqmin;left:22%}
   .ptk{position:absolute;inset:0;outline:2.5px solid;border-radius:8px;box-shadow:0 2px 7px rgba(0,0,0,.45);background:#2b2018}
   .tk-left .ptk{transform:rotate(90deg)} .tk-right .ptk{transform:rotate(-90deg)} .tk-up .ptk{transform:rotate(180deg)} .tk-down .ptk{transform:none}
   .slot.pfilled>.pfit,.slot.pfilled>.pring,.shipside>.pfit{z-index:8}   /* the tile/hull paints ABOVE its tucked cards */
@@ -1250,10 +1261,11 @@ function pCaskFace(t,bonus,actOv){const d=HC_CASK[t.style];if(!d)return '';
     +((bonus>0)?dieFace(bonus,'dcask'):'');}
 // a TUCKED cask — the card ROTATED 90\u00b0 and slid under the tile's side; its printed bottom
 // edge (name \u00b7 Q \u00b7 the marker space) peeks out reading sideways, the demand die riding it
-function pTuck(L,act,i){const d=HC_CASK[L.style];if(!d)return '';
+function pTuck(L,act,i,onBldg){const d=HC_CASK[L.style];if(!d)return '';
   const op=(L.owner!=null)?S.players[L.owner]:null;const oc=op?op.color:'#8a8577';
-  return '<div class="ptkw" style="--fan:'+((i||0)*14)+'cqmin" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(L.die?' \u00b7 demand die +'+L.die+'\u2605':'')+' \u2014 the whole card is tucked under, rotated; hover to slide it out')+'">'
+  return '<div class="ptkw'+(onBldg?' deep':'')+'" style="--fan:'+((i||0)*14)+'cqmin" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(L.die?' \u00b7 demand die +'+L.die+'\u2605':'')+' \u2014 the whole card is tucked under'+(onBldg?' (action exposed)':' (type only)')+'; hover to slide it out')+'">'
     +'<div class="ptk" style="outline-color:'+oc+'">'+pfit(HC.caskCardBack(d,hcAct(act||'source')),2.5)+'</div>'
+    +(op?'<span class="tkown" style="background:'+oc+'"></span>':'')
     +(L.die?'<span class="tkdie">'+dieFace(L.die,'dtuck',oc)+'</span>':'')
   +'</div>';}
 // a ship = the printed hull card; its cargo tucks under it, strips + dice showing (the table look)
@@ -1273,7 +1285,7 @@ function pImpFace(key){const def=IMPROVEMENTS[key];const d=def&&HC_IMP[def.name.
 // BOTH a building and an occupant on one slot — the table stack (no tap-to-flip: everything shows at once)
 function stackHtml(b,t,id){
   let h=pBldgFace(b);
-  if(t.type==='cask')h+='<div class="tuckcol">'+pTuck({owner:t.owner,style:t.style,q:t.q,die:caskPreviewBonus(id)},slotEffAct(id)||caskAct(t))+'</div>';
+  if(t.type==='cask')h+='<div class="tuckcol">'+pTuck({owner:t.owner,style:t.style,q:t.q,die:caskPreviewBonus(id)},slotEffAct(id)||caskAct(t),0,true)+'</div>';
   else h+='<div class="shipside">'+pfit(HC.shipCard(t.ship,DEST[t.dest].name),2.5)
     +((t.load||[]).length?'<div class="tuckcol">'+(t.load||[]).map((L,i)=>pTuck(L,null,i)).join('')+'</div>':'')+'</div>';
   return h;}
