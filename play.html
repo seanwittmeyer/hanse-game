@@ -1290,12 +1290,17 @@ function pShipFace(t,dir){if(!HC)return '';
   const onBoard=!!slotIdOfTile(t);
   return pfit(wrap,W,Hh,'shipfit')
     +(onBoard?'':'<span class="pcomm2">'+pCost(COMMISSION_COST.g,COMMISSION_COST.h)+'</span>');}
-// a building = the 2×1.32 wharf side in its owner ring (neutral = weathered grey)
-function pBldgFace(b,noRing){const d=HC_BLD[b.b];if(!d)return '';
-  const card=pfit(HC.buildingCard(d),2,1.32);
-  if(noRing)return card;
+// a building = the 2×1.32 wharf side seated in its owner FRAME (an inch-true ring that scales
+// with the tile; neutral = weathered grey). Side slots rotate the whole framed tile 90°.
+function pBldgFace(b,noRing,dir){const d=HC_BLD[b.b];if(!d)return '';
+  if(noRing)return pfit(HC.buildingCard(d),2,1.32);
   const oc=(b.owner!=null&&S.players[b.owner])?S.players[b.owner].color:'#8a8577';
-  return '<div class="pring" style="--oc:'+oc+'">'+card+'</div>';}
+  let ring='<div style="position:relative;width:2.24in;height:1.56in;background:'+oc+';border-radius:.1in;box-shadow:0 2px 6px rgba(0,0,0,.35)">'
+    +'<div style="position:absolute;left:.12in;top:.12in">'+HC.buildingCard(d)+'</div></div>';
+  let W=2.24,H=1.56;
+  if(dir==='left'){ring=rotWrap(ring,2.24,1.56,false);W=1.56;H=2.24;}
+  else if(dir==='right'){ring=rotWrap(ring,2.24,1.56,true);W=1.56;H=2.24;}
+  return pfit(ring,W,H);}
 // a Specialist = the printed purple tile (unchanged, 2×2)
 function pImpFace(key){const def=IMPROVEMENTS[key];const d=def&&HC_IMP[def.name.toLowerCase()];
   return d?pfit(HC.improveTile(d),2,2):'';}
@@ -3717,7 +3722,7 @@ function renderGrid(){
     // cargo still chains/tucks under the hull, outward).
     if(b||t){cls+=' pfilled';
       const dirW={'tk-up':'up','tk-down':'down','tk-left':'left','tk-right':'right'}[TKDIR[s.id]]||null;
-      inner='<div class="bhalf">'+(b?pBldgFace(b):'<span class="halfemp" data-tip="'+attr('The building seat — a Privilege/Building placed here authors this slot')+'"><i data-lucide="building-2" class="ic"></i></span>')+'</div>'
+      inner='<div class="bhalf">'+(b?pBldgFace(b,false,dirW):'<span class="halfemp" data-tip="'+attr('The building seat — a Privilege/Building placed here authors this slot')+'"><i data-lucide="building-2" class="ic"></i></span>')+'</div>'
         +'<div class="ohalf">'+(t?(t.type==='cask'?pCaskFace(t,Math.max(S.presEnd?1:0,caskPreviewBonus(s.id)),slotEffAct(s.id),dirW):pShipFace(t,dirW))
           :'<span class="halfemp" data-tip="'+attr('Deploy a Ready cask here — an empty slot\u2019s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span>')+'</div>';}
     else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Deploy a Ready cask here — an empty slot’s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span></span>';
@@ -3847,7 +3852,7 @@ function renderShop(){
   const noslot=!buildableSlots().length;
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('building-2')+' Wharf display</b> <span class="note">(Privileges &amp; Buildings)</span> <span class="note">('+(S.buildDisplay||[]).length+' face-up · '+S.buildDeck.length+' in the deck — buy + place, or earn free at '+LU('landmark')+' London)</span></div>';
   h+='<div class="shopgrid">'+(S.buildDisplay||[]).map((key,i)=>{const def=BUILDINGS[key];const can=canPay(p,def.cost)&&(!noslot||(p.grain-(def.cost.g||0))>=(OVERBUILD_FEE.g||0));   // v2.9: a fully-built wharf still sells — if the buy leaves the ground rent payable
-    return '<div class="shopcell"><div class="mtile" data-tip="'+attr((def.verb==='value'?'PRIVILEGE — pays its owner only':'BUILDING — serves any dock')+' — '+def.desc)+'">'+pBldgFace({b:key})+'</div>'+(buying?'<button '+(can?'':'disabled')+' onclick="buyBuilding('+i+')">buy + place</button>':'')+'</div>';}).join('')+'</div>';
+    return '<div class="shopcell"><div class="mtile" data-tip="'+attr((def.verb==='value'?'PRIVILEGE — pays its owner only':'BUILDING — serves any dock')+' — '+def.desc)+'">'+pBldgFace({b:key},true)+'</div>'+(buying?'<button '+(can?'':'disabled')+' onclick="buyBuilding('+i+')">buy + place</button>':'')+'</div>';}).join('')+'</div>';
   if(!(S.buildDisplay||[]).length)h+='<div class="note">(building deck exhausted)</div>';
   if(noslot)h+='<div class="note" style="font-size:.7rem">every slot already has a building — placing means overbuilding (+'+costStr(OVERBUILD_FEE)+' ground rent)</div>';
   // v82 "Scarce Improvements": a face-up DISPLAY of IMP_DISPLAY drawn from a shuffled deck (n-1 of each type),
