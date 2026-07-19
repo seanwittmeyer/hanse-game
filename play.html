@@ -43,7 +43,7 @@
   .copybtn{float:right;font-family:inherit;font-variant:normal;font-size:.66rem;cursor:pointer;background:var(--ink);color:var(--parch);border:none;border-radius:5px;padding:2px 8px;letter-spacing:.3px}
   .copybtn:hover{background:var(--red2)}
   /* GRID */
-  .agwrap{display:flex;justify-content:center}
+  .agwrap{display:flex;justify-content:center;padding:1vmin 6vmin 2vmin}   /* v3.3: side room for the tucked cards fanning out of the slots */
   .ag{display:grid;width:100%;max-width:min(88vmin,1000px);margin:0 auto;aspect-ratio:1;   /* v3.3: the wharf IS the screen */
     gap:clamp(4px,1.4vw,7px);
     grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr)}
@@ -187,13 +187,15 @@
   .pqboost .ic,.pqboost svg{width:10cqmin;height:10cqmin}
   .pcomm2{position:absolute;top:3cqmin;right:3cqmin;z-index:4;font-weight:bold;font-size:9cqmin;display:inline-flex;align-items:center;gap:1cqmin;background:rgba(244,234,208,.94);color:#2b2018;border:1px solid rgba(0,0,0,.25);border-radius:3cqmin;padding:1cqmin 2.5cqmin}
   .pcomm2 .ic,.pcomm2 svg{width:10cqmin;height:10cqmin}
-  .tuckcol{position:absolute;left:-7cqmin;top:6%;bottom:6%;width:17cqmin;display:flex;flex-direction:column;gap:2cqmin;z-index:30;justify-content:center;align-items:center}
-  .ptkw{position:relative;flex:0 1 32cqmin;min-height:16cqmin;width:17cqmin}
+  .tuckcol{position:absolute;inset:0;z-index:30;pointer-events:none}
+  /* a tucked cask is the SAME 2.5in card as a deployed one: the strip runs (nearly) the tile's full
+     side at the slot's own scale; several fan out under a hull, each showing its printed bottom edge */
+  .ptkw{position:absolute;top:4%;bottom:4%;width:22cqmin;pointer-events:auto}
   .ptk{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-90deg);overflow:hidden;border-radius:2.5cqmin;border:2px solid;box-shadow:0 2px 5px rgba(0,0,0,.45);background:#2b2018}
   .ptk .ptkin{position:absolute;left:0;bottom:0;width:240px;height:240px;transform-origin:bottom left}
   .tkdie{position:absolute;right:1.5cqmin;top:50%;transform:translateY(-50%);z-index:2}
   .tkdie .die{width:11cqmin;height:11cqmin}
-  .shipside{position:absolute;right:-5cqmin;bottom:14cqmin;width:56cqmin;height:56cqmin;z-index:25;filter:drop-shadow(0 3px 6px rgba(0,0,0,.5))}
+  .shipside{position:absolute;right:-60cqmin;top:4%;width:92cqmin;height:92cqmin;z-index:25;filter:drop-shadow(0 3px 6px rgba(0,0,0,.5))}   /* a hull is the same 2.5in card — it parks BESIDE the tile at true scale */
   .slot .die.dcask,.mtile .die.dcask{position:absolute;bottom:5cqmin;right:5cqmin;width:24cqmin;height:24cqmin;z-index:5}
   .slot.pfilled{overflow:visible;z-index:2}   /* protruding tucks/ships paint OVER neighbouring cells */
   /* ===== demand DIE — pips show the ★ a cask banks from the value building it shipped through ===== */
@@ -1236,9 +1238,9 @@ function pCaskFace(t,bonus,actOv){const d=HC_CASK[t.style];if(!d)return '';
     +((bonus>0)?dieFace(bonus,'dcask'):'');}
 // a TUCKED cask — the card ROTATED 90\u00b0 and slid under the tile's side; its printed bottom
 // edge (name \u00b7 Q \u00b7 the marker space) peeks out reading sideways, the demand die riding it
-function pTuck(L,act){const d=HC_CASK[L.style];if(!d)return '';
+function pTuck(L,act,i){const d=HC_CASK[L.style];if(!d)return '';
   const op=(L.owner!=null)?S.players[L.owner]:null;const oc=op?op.color:'#8a8577';
-  return '<div class="ptkw" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(L.die?' \u00b7 demand die +'+L.die+'\u2605':'')+' \u2014 rotated and tucked under; the visible edge is the printed card bottom')+'">'
+  return '<div class="ptkw" style="left:'+(-13-(i||0)*14)+'cqmin" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(L.die?' \u00b7 demand die +'+L.die+'\u2605':'')+' \u2014 rotated and tucked under; the visible edge is the printed card bottom')+'">'
     +'<div class="ptk" style="border-color:'+oc+'">'
       +'<div class="ptkin">'+HC.caskCardBack(d,hcAct(act||'source'))+'</div>'
       +(L.die?'<span class="tkdie">'+dieFace(L.die,'dtuck',oc)+'</span>':'')
@@ -1247,7 +1249,7 @@ function pTuck(L,act){const d=HC_CASK[L.style];if(!d)return '';
 function pShipFace(t){const onBoard=!!slotIdOfTile(t);const load=t.load||[];
   return pfit(HC.shipCard(t.ship,DEST[t.dest].name),2.5)
     +(onBoard?'':'<span class="pcomm2">'+pCost(COMMISSION_COST.g,COMMISSION_COST.h)+'</span>')
-    +(load.length?'<div class="tuckcol">'+load.map(L=>pTuck(L)).join('')+'</div>':'');}
+    +(load.length?'<div class="tuckcol">'+load.map((L,i)=>pTuck(L,null,i)).join('')+'</div>':'');}
 // a building = the printed card seated in its OWNER FRAME (the colour ring; neutral = weathered grey)
 function pBldgFace(b,noRing){const d=HC_BLD[b.b];if(!d)return '';
   const card=pfit(HC.buildingCard(d),2);
@@ -1262,7 +1264,7 @@ function stackHtml(b,t,id){
   let h=pBldgFace(b);
   if(t.type==='cask')h+='<div class="tuckcol">'+pTuck({owner:t.owner,style:t.style,q:t.q,die:caskPreviewBonus(id)},slotEffAct(id)||caskAct(t))+'</div>';
   else h+='<div class="shipside">'+pfit(HC.shipCard(t.ship,DEST[t.dest].name),2.5)+'</div>'
-    +((t.load||[]).length?'<div class="tuckcol">'+(t.load||[]).map(L=>pTuck(L)).join('')+'</div>':'');
+    +((t.load||[]).length?'<div class="tuckcol">'+(t.load||[]).map((L,i)=>pTuck(L,null,i)).join('')+'</div>':'');
   return h;}
 // scale every imported card into its box (cards are designed in INCHES; 1in = 96px)
 function fitCards(){
