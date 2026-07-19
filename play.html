@@ -203,7 +203,8 @@
   .bhalf .pfit,.bhalf .pring{z-index:8}   /* the building owns its half */
   .ohalf .pfit{z-index:8}                 /* the hull/cask paints ABOVE its tucked cargo */
   
-  .slot .die.dcask,.mtile .die.dcask{position:absolute;bottom:4.5cqmin;right:5.5cqmin;width:15cqmin;height:15cqmin;z-index:5}   /* seated IN the card's printed marker space */
+  .slot .die.dcask,.mtile .die.dcask{position:absolute;bottom:4.5cqmin;right:5.5cqmin;width:15cqmin;height:15cqmin;z-index:5}
+  .seatdie .die{width:.44in;height:.44in}   /* the tally die on the tile's printed seat (scales with the tile) */
   .slot.pfilled{overflow:visible;z-index:2}   /* protruding tucks/ships paint OVER neighbouring cells */
   /* ===== demand DIE — pips show the ★ a cask banks from the value building it shipped through ===== */
   .die{display:inline-grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:1cqmin;position:relative;
@@ -1258,9 +1259,9 @@ function pfit(cardHtml,natW,natH,cls){return '<div class="pfit'+(cls?' '+cls:'')
 // rotate a W×H inch block 90° → an H×W block (side slots; cw = head points RIGHT, ccw = LEFT)
 function rotWrap(html,W,H,ccw){return '<div style="position:relative;width:'+H+'in;height:'+W+'in;flex:0 0 auto">'
   +'<div style="position:absolute;width:'+W+'in;height:'+H+'in;transform:'+(ccw?'rotate(-90deg) translateX(-100%)':'rotate(90deg) translateY(-100%)')+';transform-origin:top left">'+html+'</div></div>';}
-// seat the tally die INSIDE the tile's printed die seat (the wharf side's dashed square)
+// seat the tally die INSIDE the tile's printed seat square (it covers the printed Q, as on the table)
 function ctWithDie(tileHtml,dv,color){if(!(dv>0))return tileHtml;
-  return tileHtml.replace('"></div>','">'+dieFace(dv,'dtile',color)+'</div>');}   // the ct-die div is the tile's only self-closing attr div
+  return tileHtml.replace('data-die-seat','data-die-seat data-filled').replace('</b></div>','</b><span class="seatdie">'+dieFace(dv,'dtile',color)+'</span></div>');}
 // a cask = the tile: AGING side while maturing in a vessel, WHARF side once Ready/deployed
 function pCaskFace(t,bonus,actOv,dir){const d=HC_CASK[t.style];if(!d)return '';
   const o=(t.owner!=null)?S.players[t.owner]:null;
