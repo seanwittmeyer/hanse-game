@@ -1,0 +1,81 @@
+Brewhouses of the Hanse — headless sim (KEY hanse-hotseat-v84)  |  N=400 games per player count
+scenario: base — Baseline — 3G/2H, equal seats (canonical)  |  PERSONAS on  |  DICE variant ON (pool 12/player · model mods)
+
+================  2 PLAYERS  (400 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 15.4   min 8   max 25   in 12-25 band: 80.8%
+end trigger:          clock 76.5%   ceiling 10.8%   DICE 12.8%
+die use (kontor deliveries + presence) per player: avg 8.5   game-max avg 9.8   abs max 14
+die saturation:       0.1% of kontor deliveries clamped at 6   (avg pips lost/game 0.01)
+sailed/cap at end:    avg 5.9 / 6
+winner total score:   avg 39.7   min 17   max 62
+win margin (1st-2nd): avg 11.8   (ties: 9)
+winner score split:   deliv 21.0   maj 11.6   goals 0.0
+seat win-rate:        P1 59.3%   P2 40.8%   (ideal 50.0%, spread 18.5pts)
+winner lean:          prestige(Hall>kontor) 24.3%   blended(both>0) 34.5%
+UPGRADES (all plyrs): total/game 0.8   earned-via-ship 0.8 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 0.5   (max 4)
+charters/game:        avg 0.5
+winner deliveries by destination (share of winners' casks):
+   bruges 35.6%   london 16.2%   bergen 19.6%   novgorod 19.2%   hall 9.4%
+ALL deliveries by destination (every player):
+   bruges 37.4%   london 17.5%   bergen 20.1%   novgorod 16.6%   hall 8.4%
+PATHWAYS TO A WIN (per-capita win-rate; fair = 50.0%):
+   volume    win  50.5%  score  36.0  |  deliv 18.6 · maj 10.5 · goals 0.0 · flight 6.9 · master 0.0  |  Hall/g 0.1 · Q4+/g 0.7 · Q5/g 0.5 · tiers 3.6  (n=101)
+   demand    win  36.5%  score  34.3  |  deliv 17.8 · maj 10.1 · goals 0.0 · flight 6.4 · master 0.0  |  Hall/g 0.1 · Q4+/g 0.7 · Q5/g 0.5 · tiers 3.5  (n=104)
+   prestige  win  49.5%  score  28.2  |  deliv 19.0 · maj 3.5 · goals 0.0 · flight 5.7 · master 0.0  |  Hall/g 2.7 · Q4+/g 0.5 · Q5/g 0.4 · tiers 3.3  (n=99)
+   majority  win  36.5%  score  32.1  |  deliv 16.5 · maj 9.8 · goals 0.0 · flight 5.8 · master 0.0  |  Hall/g 0.0 · Q4+/g 0.7 · Q5/g 0.4 · tiers 3.3  (n=96)
+   deep      win  56.8%  score  35.0  |  deliv 18.3 · maj 10.5 · goals 0.0 · flight 6.2 · master 0.0  |  Hall/g 0.4 · Q4+/g 0.7 · Q5/g 0.5 · tiers 3.4  (n=400)
+
+================  3 PLAYERS  (400 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 14.8   min 8   max 25   in 12-25 band: 87.3%
+end trigger:          clock 62.0%   ceiling 4.5%   DICE 33.5%
+die use (kontor deliveries + presence) per player: avg 8.9   game-max avg 10.9   abs max 14
+die saturation:       0.1% of kontor deliveries clamped at 6   (avg pips lost/game 0.01)
+sailed/cap at end:    avg 9.4 / 10
+winner total score:   avg 47.7   min 21   max 80
+win margin (1st-2nd): avg 9.7   (ties: 18)
+winner score split:   deliv 25.9   maj 14.2   goals 0.0
+seat win-rate:        P1 44.0%   P2 28.5%   P3 27.5%   (ideal 33.3%, spread 16.5pts)
+winner lean:          prestige(Hall>kontor) 27.0%   blended(both>0) 39.3%
+UPGRADES (all plyrs): total/game 1.1   earned-via-ship 1.1 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 0.4   (max 4)
+charters/game:        avg 1.2
+winner deliveries by destination (share of winners' casks):
+   bruges 27.2%   london 16.4%   bergen 20.9%   novgorod 21.2%   hall 14.3%
+ALL deliveries by destination (every player):
+   bruges 30.2%   london 18.5%   bergen 21.8%   novgorod 18.3%   hall 11.2%
+PATHWAYS TO A WIN (per-capita win-rate; fair = 33.3%):
+   volume    win  29.3%  score  38.6  |  deliv 19.6 · maj 13.2 · goals 0.0 · flight 5.8 · master 0.0  |  Hall/g 0.1 · Q4+/g 0.7 · Q5/g 0.4 · tiers 3.3  (n=198)
+   demand    win  29.1%  score  37.2  |  deliv 18.7 · maj 12.9 · goals 0.0 · flight 5.6 · master 0.0  |  Hall/g 0.1 · Q4+/g 0.6 · Q5/g 0.4 · tiers 3.3  (n=199)
+   prestige  win  43.3%  score  40.3  |  deliv 25.7 · maj 8.1 · goals 0.0 · flight 6.5 · master 0.0  |  Hall/g 3.2 · Q4+/g 0.8 · Q5/g 0.5 · tiers 3.4  (n=208)
+   majority  win  28.7%  score  36.7  |  deliv 17.0 · maj 13.8 · goals 0.0 · flight 5.9 · master 0.0  |  Hall/g 0.0 · Q4+/g 0.7 · Q5/g 0.4 · tiers 3.3  (n=195)
+   deep      win  34.5%  score  38.9  |  deliv 19.8 · maj 13.0 · goals 0.0 · flight 6.1 · master 0.0  |  Hall/g 0.4 · Q4+/g 0.7 · Q5/g 0.4 · tiers 3.4  (n=400)
+
+================  4 PLAYERS  (400 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 14.1   min 8   max 25   in 12-25 band: 84.5%
+end trigger:          clock 60.0%   ceiling 1.8%   DICE 38.3%
+die use (kontor deliveries + presence) per player: avg 8.5   game-max avg 10.9   abs max 13
+die saturation:       0.0% of kontor deliveries clamped at 6   (avg pips lost/game 0.01)
+sailed/cap at end:    avg 12.3 / 13
+winner total score:   avg 45.8   min 21   max 75
+win margin (1st-2nd): avg 7.6   (ties: 10)
+winner score split:   deliv 25.8   maj 12.4   goals 0.0
+seat win-rate:        P1 38.3%   P2 28.8%   P3 23.5%   P4 9.5%   (ideal 25.0%, spread 28.8pts)
+winner lean:          prestige(Hall>kontor) 21.5%   blended(both>0) 31.8%
+UPGRADES (all plyrs): total/game 1.5   earned-via-ship 1.5 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 0.5   (max 4)
+charters/game:        avg 2.8
+winner deliveries by destination (share of winners' casks):
+   bruges 26.9%   london 15.4%   bergen 20.4%   novgorod 25.9%   hall 11.4%
+ALL deliveries by destination (every player):
+   bruges 28.7%   london 18.8%   bergen 20.6%   novgorod 21.6%   hall 10.3%
+PATHWAYS TO A WIN (per-capita win-rate; fair = 25.0%):
+   volume    win  25.3%  score  34.6  |  deliv 18.4 · maj 10.9 · goals 0.0 · flight 5.3 · master 0.0  |  Hall/g 0.0 · Q4+/g 0.7 · Q5/g 0.4 · tiers 3.2  (n=304)
+   demand    win  24.2%  score  34.4  |  deliv 18.4 · maj 10.9 · goals 0.0 · flight 5.1 · master 0.0  |  Hall/g 0.1 · Q4+/g 0.7 · Q5/g 0.4 · tiers 3.1  (n=298)
+   prestige  win  29.2%  score  36.5  |  deliv 24.5 · maj 6.2 · goals 0.0 · flight 5.7 · master 0.0  |  Hall/g 2.7 · Q4+/g 0.8 · Q5/g 0.4 · tiers 3.3  (n=298)
+   majority  win  26.3%  score  35.4  |  deliv 17.8 · maj 12.0 · goals 0.0 · flight 5.6 · master 0.0  |  Hall/g 0.0 · Q4+/g 0.6 · Q5/g 0.3 · tiers 3.3  (n=300)
+   deep      win  21.3%  score  34.8  |  deliv 18.9 · maj 10.5 · goals 0.0 · flight 5.5 · master 0.0  |  Hall/g 0.3 · Q4+/g 0.7 · Q5/g 0.3 · tiers 3.2  (n=400)
+

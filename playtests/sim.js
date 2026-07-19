@@ -324,14 +324,20 @@ function runGame(n){
   var jopenAll=S.players.reduce(function(a,p){return a+p.delivered.filter(function(d){return d.style==='jopenbier';}).length;},0);
   var jopenWin=wp.delivered.filter(function(d){return d.style==='jopenbier';}).length;
   var playerStats=S.players.map(function(p,i){var ts={};p.delivered.forEach(function(d){ts[d.style]=1;});   // distinct BEERS (the Flight metric)
+    var kontorD=p.delivered.filter(function(d){return DEST[d.dest]&&DEST[d.dest].kontor;}).length;
+    var reachN=Object.keys(p.presBonus||{}).reduce(function(a,k){return a+(p.presBonus[k]||0);},0);
     return {persona:persona(p),cellar:!!p.__cellar,startImp:p.__startImp||null,total:scores[i].total,won:(i===win),
       deliv:scores[i].deliv,maj:scores[i].maj,goals:scores[i].goals,
       q5:p.delivered.filter(function(d){return d.q===5;}).length,
       q4plus:p.delivered.filter(function(d){return d.q>=4;}).length, hall:p.delivered.filter(function(d){return d.dest==='hall';}).length,
+      kontorDeliv:kontorD, reachN:reachN, dieUse:kontorD+reachN,   // DICE sizing: dice a player permanently spends (kontor deliveries + presence)
       tiers:Object.keys(ts).length,flight:scores[i].flight,master:scores[i].master};});
   return {
     n:n, round:S.turn, sailed:S.sailed, sailedCap:S.sailedCap,
-    trigger:(S.sailed>=S.sailedCap?'clock':(S.turn>=MAX_ROUND?'ceiling':'other')),
+    trigger:(S.endReason||(S.sailed>=S.sailedCap?'clock':(S.turn>=MAX_ROUND?'ceiling':'other'))),
+    // DICE experiment telemetry: die-value saturation (kontor deliveries clamped at 6) + peak per-player die use
+    diceDeliv:(S.diceDeliv||0), diceHi:(S.diceHi||0), diceLost:(S.diceLost||0),
+    maxDieUse:Math.max.apply(null,playerStats.map(function(s){return s.dieUse;})),
     winSeat:win, winTotal:scores[win].total, secondTotal:scores[second].total,
     winDeliv:scores[win].deliv, winMaj:scores[win].maj, winGoals:scores[win].goals,
     winByDest:byDest, winValKontor:valDest.kontor, winValHall:valDest.hall,
@@ -428,6 +434,12 @@ const ctx = {
   __EXPANSION: process.env.EXPANSION==='1',
   __JOPEN: process.env.JOPEN==='1',
   __OVERLAND: process.env.OVERLAND==='1',
+  // ⚙ EXPERIMENT "DICE" — die-only ownership + value + a finite per-player dice pool as a second end trigger.
+  // DICE=1 switches the engine variant on (play.html reads __DICE at load); DICEN=n sets the pool (default 8).
+  __DICE: process.env.DICE==='1',
+  __DICEN: parseInt(process.env.DICEN||'0',10)||0,
+  __DICEV: process.env.DICEV||'',      // value model: 'quality' (A — die carries quality+mods) | 'mods' (B — die carries mods only; destination pays its printed part)
+  __DICEP: process.env.DICEP==='1',    // model-B option: keep the v1.8 Q4/Q5 premium as a die adjustment
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;
@@ -453,6 +465,7 @@ function summarize(n, arr) {
   const within = ok.filter(r => r.round >= 12 && r.round <= 25).length;
   const clock = ok.filter(r => r.trigger === 'clock').length;
   const ceiling = ok.filter(r => r.trigger === 'ceiling').length;
+  const diceTrig = ok.filter(r => r.trigger === 'dice').length;
   const winTotals = ok.map(r => r.winTotal);
   const margins = ok.map(r => r.winTotal - r.secondTotal);
   const seatWins = {}; for (let s = 0; s < n; s++) seatWins[s] = 0;
@@ -471,7 +484,13 @@ function summarize(n, arr) {
   console.log(`\n================  ${n} PLAYERS  (${arr.length} games)  ================`);
   console.log(`crashes/stuck:        ${errs.length}` + (errs.length ? '  -> ' + JSON.stringify(errs.slice(0, 3)) : '  (none)'));
   console.log(`rounds:               avg ${fmt(avg(rounds))}   min ${Math.min(...rounds)}   max ${Math.max(...rounds)}   in 12-25 band: ${pct(within, ok.length)}`);
-  console.log(`end trigger:          clock ${pct(clock, ok.length)}   ceiling ${pct(ceiling, ok.length)}`);
+  console.log(`end trigger:          clock ${pct(clock, ok.length)}   ceiling ${pct(ceiling, ok.length)}` + (diceTrig ? `   DICE ${pct(diceTrig, ok.length)}` : ``));
+  // die-use telemetry (always computed — in a baseline run it sizes what dice pool N would bind)
+  {const use = ok.flatMap(r => (r.playerStats||[]).map(s => s.dieUse||0));
+   const mx = ok.map(r => r.maxDieUse||0);
+   if (use.length) console.log(`die use (kontor deliveries + presence) per player: avg ${fmt(avg(use))}   game-max avg ${fmt(avg(mx))}   abs max ${Math.max(...mx)}`);
+   const dd = ok.reduce((a,r)=>a+(r.diceDeliv||0),0), dh = ok.reduce((a,r)=>a+(r.diceHi||0),0), dl = ok.reduce((a,r)=>a+(r.diceLost||0),0);
+   if (dd) console.log(`die saturation:       ${pct(dh, dd)} of kontor deliveries clamped at 6   (avg pips lost/game ${fmt(dl/ok.length,2)})`);}
   console.log(`sailed/cap at end:    avg ${fmt(avg(ok.map(r => r.sailed)))} / ${ok[0].sailedCap}`);
   console.log(`winner total score:   avg ${fmt(avg(winTotals))}   min ${Math.min(...winTotals)}   max ${Math.max(...winTotals)}`);
   console.log(`win margin (1st-2nd): avg ${fmt(avg(margins))}   (ties: ${margins.filter(m => m === 0).length})`);
@@ -499,7 +518,7 @@ function summarize(n, arr) {
   // Pathways: volume / prestige / majority (personas) + deep (cellarmaster). A cellar seat is reported
   // ONLY as 'deep' (its assigned persona is ignored, since it plays the deep policy).
   if (PERSONAS || CELLAR) {
-    const blank = () => ({ wins:0, n:0, total:0, deliv:0, maj:0, goals:0, flight:0, master:0, hall:0, q4:0, q5:0, tiers:0 });
+    const blank = () => ({ wins:0, n:0, total:0, deliv:0, maj:0, goals:0, flight:0, master:0, hall:0, q4:0, q5:0, tiers:0, reach:0, kontor:0 });
     const lanes = { volume:blank(), demand:blank(), prestige:blank(), majority:blank(), deep:blank(),
       ol_rhine:blank(), ol_london:blank(), ol_bergen:blank(), ol_east:blank() };
     ok.forEach(r => r.playerStats.forEach(s => {
@@ -507,17 +526,18 @@ function summarize(n, arr) {
       const g = lanes[lane];
       g.wins += s.won?1:0; g.n++; g.total += s.total; g.deliv += s.deliv; g.maj += s.maj; g.goals += s.goals;
       g.flight += s.flight||0; g.master += s.master||0; g.hall += s.hall||0; g.q4 += s.q4plus; g.q5 += s.q5; g.tiers += s.tiers;
+      g.reach += s.reachN||0; g.kontor += s.kontorDeliv||0;
     }));
     console.log(`PATHWAYS TO A WIN (per-capita win-rate; fair = ${fmt(100/n)}%):`);
     ['volume','demand','prestige','majority','deep','ol_rhine','ol_london','ol_bergen','ol_east'].forEach(k => { const g = lanes[k]; if (!g.n) return;
       const a = x => fmt(g[x]/g.n);
-      console.log(`   ${k.padEnd(9)} win ${pct(g.wins,g.n).padStart(6)}  score ${a('total').padStart(5)}  |  deliv ${a('deliv')} · maj ${a('maj')} · goals ${a('goals')} · flight ${a('flight')} · master ${a('master')}  |  Hall/g ${a('hall')} · Q4+/g ${a('q4')} · Q5/g ${a('q5')} · tiers ${a('tiers')}  (n=${g.n})`);
+      console.log(`   ${k.padEnd(9)} win ${pct(g.wins,g.n).padStart(6)}  score ${a('total').padStart(5)}  |  deliv ${a('deliv')} · maj ${a('maj')} · goals ${a('goals')} · flight ${a('flight')} · master ${a('master')}  |  Hall/g ${a('hall')} · Q4+/g ${a('q4')} · Q5/g ${a('q5')} · tiers ${a('tiers')} · kontor/g ${a('kontor')} · reach/g ${a('reach')}  (n=${g.n})`);
     });
   }
 }
 
 console.log(`Brewhouses of the Hanse — headless sim (KEY ${R.KEY})  |  N=${N} games per player count`);
-console.log(`scenario: ${SCEN} — ${SC.label}` + (PERSONAS ? `  |  PERSONAS on` : ``) + (process.env.TUNE && process.env.TUNE!=='none' ? `  |  TUNE=${process.env.TUNE} ${JSON.stringify(__TUNE.dest)}` : ``));
+console.log(`scenario: ${SCEN} — ${SC.label}` + (PERSONAS ? `  |  PERSONAS on` : ``) + (process.env.TUNE && process.env.TUNE!=='none' ? `  |  TUNE=${process.env.TUNE} ${JSON.stringify(__TUNE.dest)}` : ``) + (process.env.DICE==='1' ? `  |  DICE variant ON (pool ${process.env.DICEN||8}/player · model ${process.env.DICEV||'quality'}${process.env.DICEP==='1'?' +premium':''})` : ``));
 (R.counts || COUNTS).forEach(n => summarize(n, R[n]));
 
 // ---- FREE STARTING IMPROVEMENT report (only when FREE_IMP=1) ----

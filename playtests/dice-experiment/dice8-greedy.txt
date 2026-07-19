@@ -1,0 +1,63 @@
+Brewhouses of the Hanse — headless sim (KEY hanse-hotseat-v84)  |  N=500 games per player count
+scenario: base — Baseline — 3G/2H, equal seats (canonical)  |  DICE variant ON (pool 8/player)
+
+================  2 PLAYERS  (500 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 17.4   min 5   max 25   in 12-25 band: 66.4%
+end trigger:          clock 7.8%   ceiling 44.8%   DICE 47.4%
+die use (kontor deliveries + presence) per player: avg 6.7   game-max avg 7.6   abs max 10
+die saturation:       1.7% of kontor deliveries clamped at 6   (avg pips lost/game 0.26)
+sailed/cap at end:    avg 4.3 / 6
+winner total score:   avg 33.1   min 10   max 64
+win margin (1st-2nd): avg 9.9   (ties: 16)
+winner score split:   deliv 17.5   maj 10.3   goals 0.0
+seat win-rate:        P1 53.2%   P2 46.8%   (ideal 50.0%, spread 6.4pts)
+winner lean:          prestige(Hall>kontor) 0.2%   blended(both>0) 3.0%
+UPGRADES (all plyrs): total/game 1.7   earned-via-ship 1.7 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 0.9   (max 4)
+charters/game:        avg 0.6
+winner deliveries by destination (share of winners' casks):
+   bruges 45.9%   london 18.5%   bergen 20.9%   novgorod 14.1%   hall 0.6%
+ALL deliveries by destination (every player):
+   bruges 48.2%   london 18.5%   bergen 20.5%   novgorod 12.4%   hall 0.4%
+
+================  3 PLAYERS  (500 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 12.7   min 4   max 25   in 12-25 band: 45.8%
+end trigger:          clock 6.2%   ceiling 14.0%   DICE 79.8%
+die use (kontor deliveries + presence) per player: avg 6.7   game-max avg 8.0   abs max 10
+die saturation:       1.9% of kontor deliveries clamped at 6   (avg pips lost/game 0.39)
+sailed/cap at end:    avg 6.3 / 10
+winner total score:   avg 39.4   min 19   max 69
+win margin (1st-2nd): avg 7.9   (ties: 14)
+winner score split:   deliv 20.5   maj 13.3   goals 0.0
+seat win-rate:        P1 44.8%   P2 28.6%   P3 26.6%   (ideal 33.3%, spread 18.2pts)
+winner lean:          prestige(Hall>kontor) 0.4%   blended(both>0) 3.0%
+UPGRADES (all plyrs): total/game 1.3   earned-via-ship 1.3 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 0.5   (max 4)
+charters/game:        avg 1.2
+winner deliveries by destination (share of winners' casks):
+   bruges 37.2%   london 18.8%   bergen 22.8%   novgorod 20.6%   hall 0.6%
+ALL deliveries by destination (every player):
+   bruges 39.3%   london 18.9%   bergen 22.2%   novgorod 19.2%   hall 0.4%
+
+================  4 PLAYERS  (500 games)  ================
+crashes/stuck:        0  (none)
+rounds:               avg 10.4   min 4   max 25   in 12-25 band: 30.4%
+end trigger:          clock 8.0%   ceiling 2.8%   DICE 89.2%
+die use (kontor deliveries + presence) per player: avg 6.3   game-max avg 8.0   abs max 9
+die saturation:       1.6% of kontor deliveries clamped at 6   (avg pips lost/game 0.38)
+sailed/cap at end:    avg 8.0 / 13
+winner total score:   avg 38.6   min 13   max 69
+win margin (1st-2nd): avg 7.6   (ties: 26)
+winner score split:   deliv 21.3   maj 12.0   goals 0.0
+seat win-rate:        P1 40.8%   P2 22.0%   P3 23.0%   P4 14.2%   (ideal 25.0%, spread 26.6pts)
+winner lean:          prestige(Hall>kontor) 0.4%   blended(both>0) 2.0%
+UPGRADES (all plyrs): total/game 1.3   earned-via-ship 1.3 (100.0%)   bought 0.0 (0.0%)
+upgrades per WINNER:  avg 0.4   (max 3)
+charters/game:        avg 2.0
+winner deliveries by destination (share of winners' casks):
+   bruges 32.8%   london 19.2%   bergen 23.0%   novgorod 24.6%   hall 0.4%
+ALL deliveries by destination (every player):
+   bruges 35.6%   london 19.5%   bergen 22.4%   novgorod 22.0%   hall 0.4%
+

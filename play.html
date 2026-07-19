@@ -580,7 +580,11 @@ const JOPEN_BASE=8, JOPEN_HALL=9, JOPEN_VINTAGE_CAP=5;
 // A kontor's per-cask value is base + the value-Buildings the cask SHIPPED THROUGH (computed at delivery,
 // frozen onto the delivered record as d.val — §5a). destValue() is now just the BASE/ladder (the floor the
 // AI ranks by); the building bonuses are situational and added in deliverCask.
-function destValue(dest,q){if(dest==='hall')return HALL_PTS[q]||0;const D=DEST[dest];return D.sval?D.sval(q):D.value;}
+function destValue(dest,q){if(dest==='hall')return HALL_PTS[q]||0;
+  if(DICE_MODE)return DICE_STYLE==='mods'
+    ? diceDestBase(dest,q)+1                       // DICE model B: the kontor's printed part + the die's floor of 1 (a bare cask's true delivery value)
+    : Math.max(1,Math.min(6,q));                   // DICE model A: a kontor pays the DIE — base pips = quality (no flat base, no Novgorod scaling)
+  const D=DEST[dest];return D.sval?D.sval(q):D.value;}
 // ---- THE FLIGHT (v0.13 ⚙): an end-game bonus for your *range* — the count of DISTINCT quality tiers
 // you delivered, scored on a back-loaded ladder = (tiers-1)² with a MIN of 3 tiers to score (2 tiers =
 // the free Gruit+Hopped baseline everyone has, so it's a true climber's reward). "Full range of the
@@ -742,6 +746,37 @@ const START_STORAGE=8;
 const SEAT_COMP=0;                       // seat compensation ⚙ — v1.7: REMOVED (0). The +1G/later-seat comp was tuned to the
                                          // GREEDY bot's first-mover edge; sim showed it OVER-corrects under strong play (P2 won ~67-72% at 2p).
                                          // P1's turn-1 (choose the line, place+activate the warm Gruit, no toll) is compensation enough → equal start.
+
+// ---- ⚙ EXPERIMENT "DICE" (off by default — base byte-identical): die-only ownership + value ----
+// One component: a per-player d6 rides every cask that leaves the brewery. The die IS the ownership marker
+// (colour) AND the value carrier (pips): set to the cask's effective quality at deploy/load, ADJUSTED LIVE
+// whenever a building modifies it (min 1 / max 6 — no recalculation at delivery: read the die, bank the pips).
+// Kontor delivery = the die's pips (the flat +1 base, Novgorod's quality scaling, and the v1.8 Q4/Q5 premium
+// are all folded into/removed by the die). The Hall keeps its printed 3/5/7/9 ladder and RETURNS the die
+// (the unlimited prestige overflow — the v1.1 barrel design). A kontor delivery / a Reach SPENDS a die
+// (it stays at the kontor as presence for majorities); the pool is FINITE — a player placing their last
+// die triggers the game end (finish the round → score), a second clock beside Sailed-Ships.
+// Headless harnesses switch it on via the __DICE / __DICEN context globals (sim.js DICE=1 DICEN=8).
+let DICE_MODE=(typeof __DICE!=='undefined')&&__DICE;
+let DICE_N=((typeof __DICEN!=='undefined')&&__DICEN)||8;   // dice per player ⚙ — the personal pool / end trigger
+// Two value models under test (⚙ DICEV env):
+//   'quality' (A) — the die carries QUALITY + modifications (kontor pays the die alone; Novgorod scaling folded in).
+//   'mods'    (B) — the die carries MODIFICATIONS only, starting at its floor of 1 (which REPLACES the old flat
+//                   +1 kontor base); the DESTINATION pays its printed part separately (Novgorod keeps its printed
+//                   Q-scaling). No anti-scaling: Staple is +3 for every cask; kontor delivery = printed + die.
+let DICE_STYLE=((typeof __DICEV!=='undefined')&&__DICEV)||'quality';
+let DICE_PREMIUM=(typeof __DICEP!=='undefined')&&__DICEP;  // model-B option: keep the v1.8 Q4/Q5 premium as a die adjustment
+const DICE_MIN=1,DICE_MAX=6;
+function diceClamp(v){return Math.max(DICE_MIN,Math.min(DICE_MAX,v));}
+function diceDestBase(dest,q){const D=DEST[dest];return (D&&D.sval)?D.sval(q):0;}   // model B: the kontor's printed part (flat bases removed — the die's floor of 1 replaces them; Novgorod's printed Q-scaling stays)
+// derived accounting (no new saved state; Undo-safe): spent = kontor deliveries + presence bonuses (each left
+// a die at a kontor); in-flight = your casks on slots + aboard ships (dice that return via Tap / Enshrine).
+function diceSpent(p){return p.delivered.filter(d=>DEST[d.dest]&&DEST[d.dest].kontor).length
+  +Object.values(p.presBonus||{}).reduce((a,b)=>a+(b||0),0);}
+function diceInFlight(p){let n=0;SLOTS.forEach(s=>{const t=S.slots[s.id];if(!t)return;
+  if(t.type==='cask'&&t.owner===p.id)n++;
+  if(t.type==='ship')t.load.forEach(L=>{if(L.owner===p.id)n++;});});return n;}
+function dicePool(p){return DICE_N-diceSpent(p)-diceInFlight(p);}
 
 //==================================================================
 // STATE
@@ -908,7 +943,8 @@ function gateNeed(shipSlot,caskSlot){let g=DEST[S.slots[shipSlot].dest].gate;
   if(bKeyAt(caskSlot)==='gauger')g--;if(bKeyAt(shipSlot)==='customs')g--;return Math.max(1,g);}
 function canTake(shipSlot,caskSlot){const sh=S.slots[shipSlot];
   if(!(sh&&sh.type==='ship'&&sh.load.length<effCap(sh)))return false;
-  if(isVRef(caskSlot)){const c=cur().vessels[+caskSlot.slice(2)];if(!(c&&c.step>=c.ready))return false;}
+  if(isVRef(caskSlot)){const c=cur().vessels[+caskSlot.slice(2)];if(!(c&&c.step>=c.ready))return false;
+    if(DICE_MODE&&dicePool(cur())<=0)return false;}   // DICE: loading straight from a vessel sets a die — no die, no vessel-load (a wharf cask already carries its die)
   else{const ct=S.slots[caskSlot];if(!(ct&&ct.type==='cask'))return false;}
   return caskEffQ(caskSlot)>=gateNeed(shipSlot,caskSlot);}
 function readyInVessels(p){return p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.step>=o.c.ready);}
@@ -940,7 +976,9 @@ function caskBldgValue(bd,dest,q,ownerId){if(!bd)return 0;const def=BUILDINGS[bd
   // QUALITY PREMIUM (v1.8): a value building is no longer CAPPED at a flat number — a PREMIUM cask (Q4+) banks
   // +1★ per tier above Q2 on top, so the climb to Q4/Q5 pays. Gated at Q4 so it rewards the CLIMB, not the
   // cheap Q3 volume game (a Bock through a value building is worth its investment — e.g. Bruges 1 + Staple 6 + berth 2 = 9).
-  if(raw>0&&q>=4)raw+=q-2;
+  // (DICE experiment: model A folds quality into the die's base pips, so the premium is off — no double-count.
+  //  Model B may keep it as a die adjustment via DICE_PREMIUM.)
+  if(raw>0&&q>=4&&(!DICE_MODE||DICE_PREMIUM))raw+=q-2;
   return raw;
 }
 // a value-building under the SHIP (a rich berth) — paid per cask at delivery (kontore only).
@@ -956,7 +994,11 @@ function caskValueAt(caskSlot,dest){const ct=refCask(caskSlot);if(!ct)return 0;
   if(ct.style==='jopenbier')return (dest==='hall'?JOPEN_HALL:JOPEN_BASE)+((!isVRef(caskSlot)&&S.slots[caskSlot]&&S.slots[caskSlot].vintage)||0);   // EXPANSION CAPSTONE: self-contained value (+ dock-cellared vintage), never the Q-keyed tables
   const q=caskEffQ(caskSlot);let v=destValue(dest,q);if(isVRef(caskSlot))return v;   // vessel cask carries no slot building
   if(ct.type!=='cask')return 0;const owner=ct.owner;const bd=bAt(caskSlot);
-  if(bd){const raw=caskBldgValue(bd,dest,q,owner);v+=(bd.owner!==owner)?Math.ceil(raw/2):raw;}
+  let share=0;if(bd){const raw=caskBldgValue(bd,dest,q,owner);share=(bd.owner!==owner)?Math.ceil(raw/2):raw;}
+  if(DICE_MODE&&dest!=='hall')v=(DICE_STYLE==='mods')
+    ? diceDestBase(dest,q)+diceClamp(1+share)     // model B: printed part + the die (1 + modifications, clamped)
+    : diceClamp(v+share);                         // model A: one die carries quality + modifications — the estimator must see the saturation
+  else v+=share;
   return v;}
 // the empty-occupant slots carrying p's OWN value building (the best deploy targets — capture the bonus).
 function ownValueDeploySlots(p){return SLOTS.filter(s=>{const b=bAt(s.id);return b&&b.owner===p.id&&BUILDINGS[b.b].verb==='value'&&!S.slots[s.id];});}
@@ -1052,7 +1094,7 @@ function caskPreviewBonus(slotId){const t=S.slots[slotId];if(!t||t.type!=='cask'
   switch(bd.b){case 'staple':raw=3;break;case 'burgomstr':raw=q;break;case 'connoiss':raw=q>=4?4:0;break;
     case 'hansediet':raw=3;break;case 'reliquary':raw=2;break;
     case 'ch_bruges':case 'ch_london':case 'ch_bergen':case 'ch_novgo':raw=4;break;default:raw=0;}
-  if(raw>0&&q>=4&&bd.b!=='reliquary')raw+=q-2;   // QUALITY PREMIUM (v1.8) — premium casks (Q4+) reward the climb (the Hall's reliquary is excluded)
+  if(raw>0&&q>=4&&bd.b!=='reliquary'&&(!DICE_MODE||DICE_PREMIUM))raw+=q-2;   // QUALITY PREMIUM (v1.8) — premium casks (Q4+) reward the climb (the Hall's reliquary is excluded; DICE model A: quality is the die's base)
   return bldgShare(bd,t.owner,raw);}
 // a LOADED cask in a ship berth → the ★ it will bank when this ship delivers to its printed destination
 function loadBonus(L,dest){if(!L||!L.bld)return 0;return bldgShare(L.bld,L.owner,caskBldgValue(L.bld,dest,L.q,L.owner));}
@@ -1455,7 +1497,9 @@ function cellarDone(){const exit=(UI.cellar&&UI.cellar.returnTo)||'stops';UI.cel
 // An empty slot's line-stop IS "Deploy". Triggering it (or the Brewhouse) deploys ONE Ready cask to ANY open
 // slot — and if the target is another empty slot still PENDING on this line, that slot's Deploy stop becomes
 // the cask's ACTION stop (advanced play: deploy onto a slot you'll still resolve, then take its action this turn).
-function deployCask(vi,slot){const p=cur();const c=p.vessels[vi];if(!c)return false;p.vessels[vi]=null;
+function deployCask(vi,slot){const p=cur();const c=p.vessels[vi];if(!c)return false;
+  if(DICE_MODE&&dicePool(p)<=0)return false;   // DICE: deploying sets a die on the cask — no die, no deploy
+  p.vessels[vi]=null;
   let act=c.act||takePileTop(c.q,c.style);
   if(bKeyAt(slot)==='workshop')act='wild';   // Brewmaster's Workshop upgrades the cask's slot-action on deploy
   S.slots[slot]={type:'cask',owner:p.id,style:c.style,q:c.q,act};
@@ -1469,6 +1513,7 @@ function deployCask(vi,slot){const p=cur();const c=p.vessels[vi];if(!c)return fa
 function enterDeployAction(rt){const p=cur();
   if(!readyInVessels(p).length){log('↳ no Ready cask to deploy.');resume(rt);return;}
   if(!emptySlots().length){log('↳ no open slot to deploy onto.');resume(rt);return;}
+  if(DICE_MODE&&dicePool(p)<=0){log('↳ no die left to set on a deployed cask.');resume(rt);return;}
   UI.sub='deploy';UI.deploy={returnTo:rt,vi:(readyInVessels(p).length===1?readyInVessels(p)[0].i:null)};render();
 }
 function deployPickCask(vi){UI.deploy.vi=vi;render();}
@@ -1536,8 +1581,8 @@ function convertDo(from,amt){snapshot();const p=cur();
 }
 function convertSkip(){const rt=UI.cvt.returnTo;UI.cvt=null;resume(rt);}
 
-function enterReach(rt){const p=cur();const ks=KONTORE.filter(k=>deliveredAt(p,k)>0);
-  if(!ks.length){log('↳ Reach: no kontor you’ve delivered to yet.');resume(rt);return;}
+function enterReach(rt){const p=cur();const ks=(DICE_MODE&&dicePool(p)<=0)?[]:KONTORE.filter(k=>deliveredAt(p,k)>0);
+  if(!ks.length){log('↳ Reach: '+((DICE_MODE&&dicePool(p)<=0)?'no die left to place.':'no kontor you’ve delivered to yet.'));resume(rt);return;}
   UI.sub='reach';UI.reach={ks,returnTo:rt};render();
 }
 function reachPick(k){snapshot();const p=cur();
@@ -1594,6 +1639,7 @@ function loadSkip(){const rt=UI.load.returnTo;UI.load=null;resume(rt);}
 function sailShip(slot,creditId){const t=S.slots[slot];
   log('★ the '+LU('sailboat')+' <b>'+shipName(t)+'</b> sails to <b>'+DEST[t.dest].name+'</b> with '+t.load.length+' '+LU('beer')+' cask'+(t.load.length===1?'':'s')+'! Every cask aboard is delivered. (Sailed-Ships '+(S.sailed+1)+'/'+S.sailedCap+')');
   const full=t.load.length>=effCap(t);
+  if(DICE_MODE)S.slots[slot]=null;   // DICE: lift the hull off the board FIRST so each in-flight die converts to spent exactly as its cask delivers (the pool reads true during perk/Reach gates)
   // deliver FIRST (records the cask at the dest), THEN grant the benefit — so a Bergen free-Reach can see the
   // delivery it rode in on (presence is only allowed where you've delivered — v1.2).
   t.load.forEach(L=>{const owner=S.players[L.owner];deliverCask(owner,L,t.dest,slot,full);grantImmediate(owner,t.dest);});
@@ -1631,8 +1677,10 @@ function freeAge(p){const m=p.vessels.map((c,i)=>({c,i})).filter(o=>o.c&&o.c.ste
   log('↳ '+p.name+' refines a cask on the long haul (Novgorod): '+LU('beer')+styleShort(c.style)+' ages +1 → '+c.step+'/'+c.ready+(c.step>=c.ready?' '+LU('check')+' <b>READY</b>':'')+'.');}
 // the kontore you can plant a free Reach at — v1.2: ONLY where you've already DELIVERED a cask (presence is
 // standing earned by trade; you can't gain a foothold somewhere you've never shipped — thematic + fair).
-function reachBenKontore(p){return KONTORE.filter(k=>deliveredAt(p,k)>0);}
+function reachBenKontore(p){if(DICE_MODE&&dicePool(p)<=0)return [];   // DICE: a Reach places a die — no die, no Reach (forfeit)
+  return KONTORE.filter(k=>deliveredAt(p,k)>0);}
 function freeReach(p,k){if(fire('reach',{p,k,handled:false}).handled)return;   // Bergen's free Reach also re-homes to a road step under The Trade Roads
+  if(DICE_MODE&&dicePool(p)<=0){log('↳ '+p.name+' has no die left — the free Reach is forfeit.');return;}
   p.presBonus[k]=(p.presBonus[k]||0)+1;log('↳ '+p.name+' takes a free '+LU('map-pin')+' Reach (+1 presence at <b>'+DEST[k].name+'</b>, Bergen benefit).');}
 function autoReach(p,dest){   // rival: reinforce the kontor where +1 presence helps its majority most
   const ks=reachBenKontore(p);
@@ -1650,13 +1698,25 @@ function deliverCask(lp,L,dest,shipSlot,full){
   if(L.style==='jopenbier'){   // EXPANSION CAPSTONE — SELF-CONTAINED value (never the Q-keyed tables / value buildings) + dock-cellared vintage
     val=(dest==='hall'?JOPEN_HALL:JOPEN_BASE)+(L.vintage||0);
   }else{
-    val=destValue(dest,L.q);
-    val+=bldgValueShare(L.bld,L.owner,caskBldgValue(L.bld,dest,L.q,L.owner));
-    if(shipSlot){const sb=bAt(shipSlot);val+=bldgValueShare(sb,L.owner,shipBldgValue(sb,dest,full));}
+    const bShare=bldgValueShare(L.bld,L.owner,caskBldgValue(L.bld,dest,L.q,L.owner));
+    let sShare=0;if(shipSlot){const sb=bAt(shipSlot);sShare=bldgValueShare(sb,L.owner,shipBldgValue(sb,dest,full));}
+    val=destValue(dest,L.q)+bShare+sShare;
+    // DICE experiment — the kontor pays via the die, clamped 1–6; track saturation (pips the clamp eats).
+    //   model A ('quality'): ONE die carries quality + adjustments → val = clamp(q + shares).
+    //   model B ('mods'):    the die carries adjustments only (floor 1 replaces the old flat base) →
+    //                        val = the kontor's printed part + clamp(1 + shares).
+    if(DICE_MODE&&DEST[dest].kontor){S.diceDeliv=(S.diceDeliv||0)+1;
+      if(DICE_STYLE==='mods'){const rawDie=1+bShare+sShare;const die=diceClamp(rawDie);
+        val=diceDestBase(dest,L.q)+die;
+        if(rawDie>DICE_MAX){S.diceHi=(S.diceHi||0)+1;S.diceLost=(S.diceLost||0)+(rawDie-DICE_MAX);}}
+      else{const raw=val;val=diceClamp(val);
+        if(raw>DICE_MAX){S.diceHi=(S.diceHi||0)+1;S.diceLost=(S.diceLost||0)+(raw-DICE_MAX);}}}
   }
   lp.delivered.push({style:L.style,q:L.q,dest,val});
   // v1.1: a beer's delivery perk — Keut plants +1 presence at the kontor (the majority specialist)
-  if(DEST[dest].kontor){const bp=(STYLES[L.style]||{}).bonusPres;if(bp)lp.presBonus[dest]=(lp.presBonus[dest]||0)+bp;}
+  // (DICE: the perk PLACES A DIE as presence — forfeit if the pool is empty.)
+  if(DEST[dest].kontor){const bp=(STYLES[L.style]||{}).bonusPres;
+    if(bp&&(!DICE_MODE||dicePool(lp)>0))lp.presBonus[dest]=(lp.presBonus[dest]||0)+bp;}
   // EXPANSION — Gose's SALT TRADE: a kontor delivery throws off goods to the cask's owner (liquidity).
   // gain() is log-stubbed during MC playouts, so the search still PRICES the goods without spam.
   if(DEST[dest].kontor&&L.style==='gose')gain(lp,1,1);
@@ -1718,7 +1778,7 @@ function harborLoad(){const p=cur();enterLoad(myShips(p),harborLoadPool(p),false
 // v0.16: partial early-launch is RETIRED — a ship sails only when full (loadOnto fires sailShip when
 // load.length hits effCap). The relief valves are now Charter (a contract + fare) and Enshrine.
 // Charter — the relief valve: pay to send ONE of your Ready casks (vessel or wharf) on a single-cask voyage now.
-function charterCasks(p){const out=readyInVessels(p).map(o=>({ref:'v:'+o.i,style:o.c.style,q:o.c.q}));
+function charterCasks(p){const out=(DICE_MODE&&dicePool(p)<=0)?[]:readyInVessels(p).map(o=>({ref:'v:'+o.i,style:o.c.style,q:o.c.q}));   // DICE: a vessel charter sets a die; a wharf cask already carries its die
   wharfCaskSlots().forEach(id=>{if(S.slots[id].owner===p.id)out.push({ref:id,style:S.slots[id].style,q:S.slots[id].q});});return out;}
 function harborCharter(){if((cur().contracts||0)<=0){log('↳ no charter contract in hand — buy one at the Market.');cellDone();return;}UI.stage='charter_cask';render();}
 function charterPickCask(ref){UI.tmp.charterCask=ref;UI.stage='charter_dest';render();}
@@ -1813,8 +1873,10 @@ function jopenVintageTick(p){SLOTS.forEach(s=>{const t=S.slots[s.id];
     t.vintage=(t.vintage||0)+1;
     if(!aiSimulating)log(p.name+'’s '+LU('beer')+'Jopenbier cellars on the dock — vintage +1 (now +'+t.vintage+'★).');}});}
 function checkTriggers(){if(S.ending)return;
-  if(S.sailed>=S.sailedCap){S.ending=true;log('★ The Sailed-Ships track is full ('+S.sailed+'/'+S.sailedCap+') — final round!');return;}
-  if(S.turn>=MAX_ROUND){S.ending=true;log('★ Round '+MAX_ROUND+' reached — final round (safety).');}
+  if(S.sailed>=S.sailedCap){S.ending=true;S.endReason='clock';log('★ The Sailed-Ships track is full ('+S.sailed+'/'+S.sailedCap+') — final round!');return;}
+  if(DICE_MODE){const out=S.players.find(p=>diceSpent(p)>=DICE_N);   // DICE experiment: a second clock — a player is OUT when all N dice sit SPENT at kontore (tray empty + none working the Wharf); in-flight dice only throttle (the tray gates deploy/Reach), they don't end the game
+    if(out){S.ending=true;S.endReason='dice';log('★ '+out.name+'’s last die is spent at a kontor — final round!');return;}}
+  if(S.turn>=MAX_ROUND){S.ending=true;S.endReason='ceiling';log('★ Round '+MAX_ROUND+' reached — final round (safety).');}
 }
 
 //==================================================================
