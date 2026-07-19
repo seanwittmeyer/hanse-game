@@ -187,8 +187,9 @@
   .pqboost .ic,.pqboost svg{width:10cqmin;height:10cqmin}
   .pcomm2{position:absolute;top:3cqmin;right:3cqmin;z-index:4;font-weight:bold;font-size:9cqmin;display:inline-flex;align-items:center;gap:1cqmin;background:rgba(244,234,208,.94);color:#2b2018;border:1px solid rgba(0,0,0,.25);border-radius:3cqmin;padding:1cqmin 2.5cqmin}
   .pcomm2 .ic,.pcomm2 svg{width:10cqmin;height:10cqmin}
-  .tuckrow{position:absolute;left:5%;right:5%;bottom:-7cqmin;display:flex;gap:2cqmin;z-index:30;justify-content:center}
-  .ptk{position:relative;flex:0 1 30cqmin;min-width:16cqmin;height:17cqmin;overflow:hidden;border-radius:2.5cqmin;border:2px solid;box-shadow:0 2px 5px rgba(0,0,0,.45);background:#2b2018}
+  .tuckcol{position:absolute;left:-7cqmin;top:6%;bottom:6%;width:17cqmin;display:flex;flex-direction:column;gap:2cqmin;z-index:30;justify-content:center;align-items:center}
+  .ptkw{position:relative;flex:0 1 32cqmin;min-height:16cqmin;width:17cqmin}
+  .ptk{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-90deg);overflow:hidden;border-radius:2.5cqmin;border:2px solid;box-shadow:0 2px 5px rgba(0,0,0,.45);background:#2b2018}
   .ptk .ptkin{position:absolute;left:0;bottom:0;width:240px;height:240px;transform-origin:bottom left}
   .tkdie{position:absolute;right:1.5cqmin;top:50%;transform:translateY(-50%);z-index:2}
   .tkdie .die{width:11cqmin;height:11cqmin}
@@ -1233,18 +1234,20 @@ function pCaskFace(t,bonus,actOv){const d=HC_CASK[t.style];if(!d)return '';
     +(o?'<span class="pown" style="background:'+o.color+'"></span>':'')
     +(t.q!==d.q?'<span class="pqboost" data-tip="'+attr('Effective quality '+t.q+' (a blend / kiln marker rides the card)')+'">'+LU('beer')+t.q+'</span>':'')
     +((bonus>0)?dieFace(bonus,'dcask'):'');}
-// a TUCKED cask — slid under the tile/hull sideways, its printed bottom strip peeking out
+// a TUCKED cask — the card ROTATED 90\u00b0 and slid under the tile's side; its printed bottom
+// edge (name \u00b7 Q \u00b7 the marker space) peeks out reading sideways, the demand die riding it
 function pTuck(L,act){const d=HC_CASK[L.style];if(!d)return '';
   const op=(L.owner!=null)?S.players[L.owner]:null;const oc=op?op.color:'#8a8577';
-  return '<div class="ptk" style="border-color:'+oc+'" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(L.die?' \u00b7 demand die +'+L.die+'\u2605':'')+' \u2014 tucked under; the bottom strip is the printed card edge')+'">'
-    +'<div class="ptkin">'+HC.caskCardBack(d,hcAct(act||'source'))+'</div>'
-    +(L.die?'<span class="tkdie">'+dieFace(L.die,'dtuck',oc)+'</span>':'')
-  +'</div>';}
+  return '<div class="ptkw" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(L.die?' \u00b7 demand die +'+L.die+'\u2605':'')+' \u2014 rotated and tucked under; the visible edge is the printed card bottom')+'">'
+    +'<div class="ptk" style="border-color:'+oc+'">'
+      +'<div class="ptkin">'+HC.caskCardBack(d,hcAct(act||'source'))+'</div>'
+      +(L.die?'<span class="tkdie">'+dieFace(L.die,'dtuck',oc)+'</span>':'')
+    +'</div></div>';}
 // a ship = the printed hull card; its cargo tucks under it, strips + dice showing (the table look)
 function pShipFace(t){const onBoard=!!slotIdOfTile(t);const load=t.load||[];
   return pfit(HC.shipCard(t.ship,DEST[t.dest].name),2.5)
     +(onBoard?'':'<span class="pcomm2">'+pCost(COMMISSION_COST.g,COMMISSION_COST.h)+'</span>')
-    +(load.length?'<div class="tuckrow">'+load.map(L=>pTuck(L)).join('')+'</div>':'');}
+    +(load.length?'<div class="tuckcol">'+load.map(L=>pTuck(L)).join('')+'</div>':'');}
 // a building = the printed card seated in its OWNER FRAME (the colour ring; neutral = weathered grey)
 function pBldgFace(b,noRing){const d=HC_BLD[b.b];if(!d)return '';
   const card=pfit(HC.buildingCard(d),2);
@@ -1257,9 +1260,9 @@ function pImpFace(key){const def=IMPROVEMENTS[key];const d=def&&HC_IMP[def.name.
 // BOTH a building and an occupant on one slot — the table stack (no tap-to-flip: everything shows at once)
 function stackHtml(b,t,id){
   let h=pBldgFace(b);
-  if(t.type==='cask')h+='<div class="tuckrow">'+pTuck({owner:t.owner,style:t.style,q:t.q,die:caskPreviewBonus(id)},slotEffAct(id)||caskAct(t))+'</div>';
+  if(t.type==='cask')h+='<div class="tuckcol">'+pTuck({owner:t.owner,style:t.style,q:t.q,die:caskPreviewBonus(id)},slotEffAct(id)||caskAct(t))+'</div>';
   else h+='<div class="shipside">'+pfit(HC.shipCard(t.ship,DEST[t.dest].name),2.5)+'</div>'
-    +((t.load||[]).length?'<div class="tuckrow">'+(t.load||[]).map(L=>pTuck(L)).join('')+'</div>':'');
+    +((t.load||[]).length?'<div class="tuckcol">'+(t.load||[]).map(L=>pTuck(L)).join('')+'</div>':'');
   return h;}
 // scale every imported card into its box (cards are designed in INCHES; 1in = 96px)
 function fitCards(){
@@ -1267,9 +1270,11 @@ function fitCards(){
     const nat=parseFloat(w.getAttribute('data-nat')||'2.5')*96;
     const s=Math.min(w.clientWidth,w.clientHeight)/nat;
     if(isFinite(s)&&s>0)inn.style.transform='translate(-50%,-50%) scale('+s+')';});
-  document.querySelectorAll('.ptk .ptkin').forEach(inn=>{
-    const s=inn.parentElement.clientWidth/240;   // 2.5in card @96dpi, anchored bottom-left → the bottom strip shows
-    if(isFinite(s)&&s>0)inn.style.transform='scale('+s+')';});
+  document.querySelectorAll('.ptkw').forEach(w=>{const st=w.firstElementChild;if(!st)return;
+    st.style.width=w.clientHeight+'px';st.style.height=w.clientWidth+'px';   // the strip is built flat, then ROTATED into the wrapper
+    const inn=st.querySelector('.ptkin');
+    const sc=w.clientHeight/240;   // 2.5in card @96dpi, anchored bottom-left → the printed bottom strip shows
+    if(inn&&isFinite(sc)&&sc>0)inn.style.transform='scale('+sc+')';});
 }
 
 //==================================================================
