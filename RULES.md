@@ -331,9 +331,9 @@ When a line fires, the active player **may** use each of its stops once — the 
   sealing **on delivery** in load order. **The hull is the carrier component (v3.4b — ALL
   berths):** the tile is nothing but full-width berth wells, **filled BOTTOM → TOP**; each seats
   the loaded cask TILE itself (its tally die on the tile’s printed seat, any +1Q marker beside
-  it). The **TOP berth is the TRIGGER** — it prints the hull’s whole identity (hull · commission
-  · kontor · gate), needed only while the ship loads: **the last cask covers it, and the ship
-  SAILS at once.** The hull returns to the deck; the voyage **advances the clock**.
+  it). The **TOP berth is the TRIGGER** — it prints the hull’s whole identity (the PORT name ·
+  quality gate · commission cost; the hull speaks by its size), needed only while the ship
+  loads: **the last cask covers it, and the ship SAILS at once.** The hull returns to the deck; the voyage **advances the clock**.
 - **Dispatch — kontor route** (the old Charter): a **contract** + flat `2 G` fare → one of your
   **deployed** Ready casks (the Quaymaster also reaches your vessels) sails alone to a kontor.
   Ticks the Sailed-Ships track.

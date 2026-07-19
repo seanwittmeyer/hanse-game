@@ -1285,7 +1285,7 @@ function pShipFace(t,dir){if(!HC)return '';
     const op=(L.owner!=null)?S.players[L.owner]:null;
     const dv=Math.max((S&&S.presEnd)?1:0,L.die||0);
     const bi=Math.min(i,printedCap-1);
-    ov+='<div style="position:absolute;left:0;top:'+(H-1-bi)+'in;width:2.5in;height:1in" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(dv?' \u00b7 tally die +'+dv+'\u2605':'')+' \u2014 loaded in berth '+(bi+1))+'">'
+    ov+='<div style="position:absolute;left:0;top:'+(H-1-bi)+'in;width:2.5in;height:1in;z-index:2" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(dv?' \u00b7 tally die +'+dv+'\u2605':'')+' \u2014 loaded in berth '+(bi+1))+'">'
       +ctWithDie(HC.caskCardBack(d,hcAct(L.act||'source')),dv,op?op.color:null)+'</div>';});
   let wrap='<div style="position:relative;width:2.5in;height:'+H+'in">'+HC.shipCard(t.ship,DEST[t.dest].name)+ov+'</div>';
   let W=2.5,Hh=H;
