@@ -251,6 +251,14 @@ Staple/charter prints, NOT the die floor); the tray gates slow greedy delivery f
 rises (13→40% at 3p; the presence trigger still fires 17–51%) — a real-tier corpus on the designer's call.
 All numbers ⚙.
 
+**v3.4a "The Component Refit"** *(2026-07-19, designer-ruled)* — The table was drowning in 2.5″ squares:
+the CASK becomes a **2.5×1″ double-sided tile** (aging / wharf sides; the wharf side prints the tally-die
+seat), the BUILDING drops to **2×1.32″** (wharf side tight: name · cost · one effect line; floor side just
+WILD), and the SHIP becomes a **vertical carrier** — a 1.33″ details head + full-width 1″ berths that seat
+the cask tiles THEMSELVES (Cog 3.33″ · Hulk 4.33″; the berth cube proxy retires — board state is the
+physical stack). The app mirrors it: two-zone slots (inner building band · outer occupant), cargo ON the
+printed berths, side slots rotated 90°.
+
 **v3.3 "Three Coins" (the consolidation)** *(2026-07-14, KEY `hanse-v33`)* — The four v3.2 patches fold
 into ONE version, with one ruled simplification: **a displaced tile with no open Floor slot is SIMPLY
 DISCARDED** (the v3.2a +3★ consolation removed — flips are engine, and the 1G ground rent already prices
