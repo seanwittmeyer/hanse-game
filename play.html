@@ -266,8 +266,8 @@
   .mtile.flip::after{content:'★';position:absolute;top:3px;right:5px;color:#ffe08a;font-size:12px;z-index:6;font-weight:900;text-shadow:0 1px 2px rgba(0,0,0,.6)}
   .tag{display:inline-block;background:var(--ink);color:var(--parch);border-radius:10px;padding:1px 7px;font-size:.7rem;margin:2px 2px 0 0}
   /* cask drawn-action badge (vessels) */
-  .cact{display:inline-flex;align-items:center;gap:2px;font-size:.66rem;background:rgba(0,0,0,.07);border:1px solid var(--line);border-radius:8px;padding:0 5px;text-transform:capitalize;color:var(--ink2)}
-  .cact svg,.cact .ic{width:.95em;height:.95em}
+  .actchip{display:inline-flex;align-items:center;gap:2px;font-size:.66rem;background:rgba(0,0,0,.07);border:1px solid var(--line);border-radius:8px;padding:0 5px;text-transform:capitalize;color:var(--ink2)}
+  .actchip svg,.actchip .ic{width:.95em;height:.95em}
   /* delivered-cask quality pip (which beer went where) + flight tier pips */
   .qd{display:inline-block;min-width:13px;text-align:center;font-size:.62rem;font-weight:bold;border-radius:3px;padding:0 1px;margin-left:2px;color:#fff;background:var(--ink2)}
   .qd.q1{background:#8a949c}.qd.q2{background:#c2922f}.qd.q3{background:#b06a34}.qd.q4{background:#caa12a;color:#3a2c00}.qd.q5{background:#7c2128}
@@ -291,7 +291,7 @@
   #log .me{color:var(--red)}
   /* MODAL */
   .modal{position:fixed;inset:0;background:rgba(20,12,8,.82);z-index:80;display:flex;align-items:center;justify-content:center;padding:20px}
-  .modal .card{position:relative;background:var(--parch);border:3px solid var(--gold);border-radius:14px;padding:24px;max-width:600px;width:100%;max-height:90vh;overflow:auto}
+  .modal .mcard{position:relative;background:var(--parch);border:3px solid var(--gold);border-radius:14px;padding:24px;max-width:600px;width:100%;max-height:90vh;overflow:auto}
   .modal h2{font-variant:small-caps;color:var(--red);margin:0 0 10px;padding-right:32px}
   /* modal close (X) */
   .modal-x{position:absolute;top:10px;right:12px;width:34px;height:34px;border:none;border-radius:8px;background:rgba(0,0,0,.06);color:var(--ink2);font-size:1.3rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none;padding:0}
@@ -310,7 +310,7 @@
   .ng-switch input:focus-visible + .ng-tk{outline:2px solid var(--gold);outline-offset:2px}
   @media(max-width:560px){
     .modal{padding:0;align-items:stretch}
-    .modal .card{padding:18px;border-radius:0;max-width:100%;min-height:100%;max-height:100vh}
+    .modal .mcard{padding:18px;border-radius:0;max-width:100%;min-height:100%;max-height:100vh}
     .modal h2{font-size:1.4rem}
   }
   /* player aid */
@@ -421,7 +421,7 @@
 </main>
 
 <div id="setup" class="modal hidden" onclick="if(event.target===this)closeSetup()">
-  <div class="card">
+  <div class="mcard">
     <button class="modal-x" onclick="closeSetup()" aria-label="Close" title="Close">×</button>
     <h2>New Game</h2>
     <p class="note" style="margin:0 0 6px">Hot-seat · choose the number of brewing houses.</p>
@@ -446,11 +446,12 @@
   </div>
 </div>
 
-<div id="over" class="modal hidden"><div class="card" id="overcard"></div></div>
-<div id="aid" class="modal hidden"><div class="card" id="aidcard"></div></div>
-<div id="studio" class="modal hidden"><div class="card" id="studiocard"></div></div>
+<div id="over" class="modal hidden"><div class="mcard" id="overcard"></div></div>
+<div id="aid" class="modal hidden"><div class="mcard" id="aidcard"></div></div>
+<div id="studio" class="modal hidden"><div class="mcard" id="studiocard"></div></div>
 
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="components.js"></script><!-- the shared CARD library (v3.3): the app renders the SAME card faces the print kit cuts -->
 <script>
 //==================================================================
 // DATA
@@ -3437,7 +3438,7 @@ function renderBar(){
   else if(U==='cell'){const r=cellRender(p);prompt=r.prompt;acts=r.acts;}
   else if(U==='brew'){prompt='Brew — load a recipe into an open vessel. <span class="note">Each shows the slot-action its cask will take (the face-up top of that quality’s pile — steerable).</span>';
     acts=p.recipes.map(r=>{const act=pileTopFor(STYLES[r].q,r);
-      return '<button '+(canBrew(p,r)&&openVessel(p)>=0?'':'disabled')+' onclick="brewPick(\''+r+'\')" data-tip="'+attr(STYLES[r].name+' Q'+STYLES[r].q+' — its cask’s action: '+CASK_ACT[act])+'">'+LU('beer')+' '+STYLES[r].name+' '+costIcons(STYLES[r].in)+' <span class="cact" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:inherit">'+LU(CASK_ACT_ICON[act]||'')+' '+act+'</span></button>';}).join('')+btn('Skip','resume(\''+UI.brew.returnTo+'\')','ghost');}
+      return '<button '+(canBrew(p,r)&&openVessel(p)>=0?'':'disabled')+' onclick="brewPick(\''+r+'\')" data-tip="'+attr(STYLES[r].name+' Q'+STYLES[r].q+' — its cask’s action: '+CASK_ACT[act])+'">'+LU('beer')+' '+STYLES[r].name+' '+costIcons(STYLES[r].in)+' <span class="actchip" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:inherit">'+LU(CASK_ACT_ICON[act]||'')+' '+act+'</span></button>';}).join('')+btn('Skip','resume(\''+UI.brew.returnTo+'\')','ghost');}
   else if(U==='age'){const a=UI.age;prompt=(a.mode==='single'?'Age one cask '+a.pool+' step'+(a.pool===1?'':'s'):'Allocate '+a.pool+' age point'+(a.pool===1?'':'s')+' across your vessels')+'.';
     acts=p.vessels.map((c,i)=>(c&&c.step<c.ready)?btn(LU('beer')+styleShort(c.style)+' '+c.step+'/'+c.ready,'ageAllot('+i+')','go'):'').filter(x=>x).join('')
       +(a.mode==='pool'?btn('Done','ageDone()','primary'):'')+btn('Skip','ageSkip()','ghost');}
