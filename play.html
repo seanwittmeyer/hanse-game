@@ -1266,7 +1266,8 @@ const HC_CASK={},HC_BLD={},HC_IMP={};
 if(HC){HC.CASKS.forEach(r=>HC_CASK[r.nm.toLowerCase()]=r);
   HC.BUILDINGS.forEach(r=>HC_BLD[r.k]=r);
   HC.IMPROVE.forEach(r=>HC_IMP[r.nm.toLowerCase()]=r);}
-function hcAct(k){return HC.CASK_POOL.find(a=>a.k===k)||{ai:CASK_ACT_ICON[k]||'sparkles',act:(CASK_ACT[k]||k)};}
+function hcAct(k){if(k==='wild')return {ai:'sparkles',act:'Wild Station'};   // the printed face stays terse — the tooltip carries the reminder
+  return HC.CASK_POOL.find(a=>a.k===k)||{ai:CASK_ACT_ICON[k]||'sparkles',act:(CASK_ACT[k]||k)};}
 function pfit(cardHtml,natW,natH,cls){return '<div class="pfit'+(cls?' '+cls:'')+'" data-natw="'+natW+'" data-nath="'+(natH||natW)+'"><div class="pfin">'+cardHtml+'</div></div>';}
 // rotate a W×H inch block 90° → an H×W block (side slots; cw = head points RIGHT, ccw = LEFT)
 function rotWrap(html,W,H,ccw){return '<div style="position:relative;width:'+H+'in;height:'+W+'in;flex:0 0 auto">'
