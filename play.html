@@ -43,10 +43,10 @@
   .copybtn{float:right;font-family:inherit;font-variant:normal;font-size:.66rem;cursor:pointer;background:var(--ink);color:var(--parch);border:none;border-radius:5px;padding:2px 8px;letter-spacing:.3px}
   .copybtn:hover{background:var(--red2)}
   /* GRID */
-  .agwrap{--bdw:min(78vmin,84vw,1000px);display:flex;justify-content:center;padding:calc(var(--bdw)*0.09)}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
+  .agwrap{--bdw:min(92vmin,96vw,1150px);display:flex;justify-content:center;padding:calc(var(--bdw)*0.02)}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
   @media(max-width:700px){.agwrap{--bdw:min(92vmin,74vw)}}   /* portrait phone: height is plentiful — let the board take the width */
   .ag{display:grid;width:var(--bdw,600px);max-width:100%;margin:0 auto;aspect-ratio:1;   /* v3.3: the wharf IS the screen; sized by --bdw on .agwrap */
-    gap:clamp(4px,1.4vw,7px);
+    gap:clamp(2px,0.55vw,4px);
     grid-template-columns:2fr 1fr 1fr 2fr;grid-template-rows:2fr 1fr 1fr 2fr}   /* v3.3.1: the slot bands are DOUBLE-DEPTH — inner half buildings, outer half ships/casks */
   /* explicit square rows make every cell a guaranteed square from the GRID — not from each
      item's own aspect-ratio under size-containment (which mobile Safari collapses). */
@@ -195,10 +195,10 @@
 
   .slot .bhalf,.slot .ohalf{position:absolute}
   /* v3.4a: the building band shrinks (2\u00d71.32 tiles); the occupant zone takes the rest */
-  .tk-left .bhalf{right:0;top:0;bottom:0;width:40%}   .tk-left .ohalf{left:0;top:0;bottom:0;width:58%}
-  .tk-right .bhalf{left:0;top:0;bottom:0;width:40%}   .tk-right .ohalf{right:0;top:0;bottom:0;width:58%}
-  .tk-up .bhalf{bottom:0;left:0;right:0;height:40%}   .tk-up .ohalf{top:0;left:0;right:0;height:58%}
-  .tk-down .bhalf{top:0;left:0;right:0;height:40%}    .tk-down .ohalf{bottom:0;left:0;right:0;height:58%}
+  .tk-left .bhalf{right:0;top:0;bottom:0;width:28%}   .tk-left .ohalf{left:0;top:0;bottom:0;width:72%}   .tk-left .ohalf.full{width:100%}
+  .tk-right .bhalf{left:0;top:0;bottom:0;width:28%}   .tk-right .ohalf{right:0;top:0;bottom:0;width:72%}   .tk-right .ohalf.full{width:100%}
+  .tk-up .bhalf{bottom:0;left:0;right:0;height:28%}   .tk-up .ohalf{top:0;left:0;right:0;height:72%}   .tk-up .ohalf.full{height:100%}
+  .tk-down .bhalf{top:0;left:0;right:0;height:28%}    .tk-down .ohalf{bottom:0;left:0;right:0;height:72%}   .tk-down .ohalf.full{height:100%}
   .slot .ohalf{overflow:visible}
   .halfemp{position:absolute;inset:6%;border:1.6px dashed var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;opacity:.45}
   .halfemp .ic,.halfemp svg{width:20cqmin;height:20cqmin}
@@ -1319,9 +1319,10 @@ function fitCards(){
     const ship=w.classList.contains('shipfit');
     const dir=(function(){const sl=w.closest('.tk-up')?'up':w.closest('.tk-down')?'down':w.closest('.tk-left')?'left':w.closest('.tk-right')?'right':null;return sl;})();
     inn.style.cssText='';
-    if(ship&&dir){
-      const cross=(dir==='up'||dir==='down')?w.clientWidth:w.clientHeight;
-      const s=cross/((dir==='up'||dir==='down')?W:H);
+    if(dir){
+      let s;
+      if(ship){const cross=(dir==='up'||dir==='down')?w.clientWidth:w.clientHeight;s=cross/((dir==='up'||dir==='down')?W:H);}
+      else s=Math.min(w.clientWidth/W,w.clientHeight/H);
       if(!(isFinite(s)&&s>0))return;
       if(dir==='up')  inn.style.cssText='position:absolute;left:50%;top:auto;bottom:0;transform:translateX(-50%) scale('+s+');transform-origin:bottom center';
       if(dir==='down')inn.style.cssText='position:absolute;left:50%;top:0;bottom:auto;transform:translateX(-50%) scale('+s+');transform-origin:top center';
@@ -3729,7 +3730,7 @@ function renderGrid(){
     if(b||t){cls+=' pfilled';
       const dirW={'tk-up':'up','tk-down':'down','tk-left':'left','tk-right':'right'}[TKDIR[s.id]]||null;
       inner='<div class="bhalf">'+(b?pBldgFace(b,false,dirW):'<span class="halfemp" data-tip="'+attr('The building seat — a Privilege/Building placed here authors this slot')+'"><i data-lucide="building-2" class="ic"></i></span>')+'</div>'
-        +'<div class="ohalf">'+(t?(t.type==='cask'?pCaskFace(t,Math.max(S.presEnd?1:0,caskPreviewBonus(s.id)),slotEffAct(s.id),dirW):pShipFace(t,dirW))
+        +'<div class="ohalf'+(t&&!b?' full':'')+'">'+(t?(t.type==='cask'?pCaskFace(t,Math.max(S.presEnd?1:0,caskPreviewBonus(s.id)),slotEffAct(s.id),dirW):pShipFace(t,dirW))
           :'<span class="halfemp" data-tip="'+attr('Deploy a Ready cask here — an empty slot\u2019s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span>')+'</div>';}
     else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Deploy a Ready cask here — an empty slot’s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span></span>';
     let click=bldgPlacing?'placeBldgOn':(occPlacing?(UI.sub==='deploy'?'deployTo':'placeSlot'):null);
