@@ -440,11 +440,11 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .cc-back.baked-fg .ce.top,.cc-back.baked-fg .ce.bot{background:none}   /* PNG export: the colour foot is baked into the art <canvas> too */\n\
   /* keep the white end-icons legible over busy art */\n\
   .ccard .cq svg,.ccard .cq .ic,.ccard .ccost svg,.ccard .ccost .ic{filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}\n\
-  /* ====== goods TOKENS — laser-cut .7in circle inside a .95in bleed disc ====== */\n\
+  /* ====== goods TOKENS — laser-cut .7in circle inside a .95in bleed disc ======\n\
+     FULL-BLEED: no printed ring — the laser cuts the circle out of the bled colour; the icon reads big. */\n\
   .tok{width:.95in;height:.95in;border-radius:50%;background:var(--c);color:#fff;position:relative;\n\
     display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.1in;text-shadow:0 1px 1px rgba(0,0,0,.4)}\n\
-  .tok::after{content:"";position:absolute;inset:.125in;border:.8pt solid rgba(255,255,255,.75);border-radius:50%}\n\
-  .tok svg{width:.26in;height:.26in}\n\
+  .tok svg{width:.44in;height:.44in}\n\
   /* ownership DISCS — .5in cut circle inside a .65in bleed disc */\n\
   .disc{width:.65in;height:.65in;border-radius:50%;background:var(--c);color:#fff;position:relative;\n\
     display:flex;align-items:center;justify-content:center}\n\

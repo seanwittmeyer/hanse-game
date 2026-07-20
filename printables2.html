@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · Cask Cards · v3.3 “Three Coins”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v3.4 “Tally Dice”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -291,10 +291,12 @@
   .mb-head h2 svg,.mb-head h2 .ic{width:.2in;height:.2in}
   .mb-head .sub{font-size:.1in;font-style:italic;color:var(--ink2)}
   .mb-main{flex:1;display:flex;gap:.14in;min-height:0;align-items:center}
-  /* printables2 SCALE-UP: 8 real 2.5in tile-slots + 0.3in spacing (the cross of stations + slots). */
+  /* v3.4c.8 [ruled]: the board's arms reach only the BUILDING BAND — each slot prints the 2.5×1.32in
+     building footprint (the side arms seat it ROTATED); casks/ships stack on the tile and hang OFF the
+     board's edge, exactly as on the table (play.html's boardCross mirrors this live). */
   .wharf{flex:0 0 auto;align-self:flex-start;display:grid;gap:.3in;
-    grid-template-columns:repeat(4,2.5in);
-    grid-template-rows:repeat(4,2.5in)}
+    grid-template-columns:1.32in 2.5in 2.5in 1.32in;
+    grid-template-rows:1.32in 2.5in 2.5in 1.32in}
   .wslot{border:2.5px dashed rgba(255,255,255,.82);border-radius:.18in;background:rgba(20,14,8,.24);
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.75)}
   .wslot svg,.wslot .ic{width:.5in;height:.5in;opacity:.85;filter:drop-shadow(0 1px 3px rgba(0,0,0,.7))}
@@ -389,8 +391,8 @@
   .dslot .ovl{position:absolute;inset:0;opacity:.5;pointer-events:none;z-index:2}
   @media print{.dslot .ovl{display:none}}
   .dslot.b{border-color:var(--green);color:var(--green)}
-  .dslot.i{border-color:var(--violet);color:var(--violet)}
-  .dslot.s,.ddeck.s{width:2.5in;height:4.33in}   /* the ship display seats either hull — sized to the Hulk carrier */
+  .dslot.i{border-color:var(--violet);color:var(--violet);width:2in;height:2in}   /* Specialist cards are 2×2 (component-true) */
+  .dslot.s,.ddeck.s{width:2.5in;height:3in}   /* the ship display seats either hull — sized to the Hulk CARRIER (2.5×3; a Cog sits within) */
   .dslot.r{width:1.85in;height:2.55in;border-color:#8a6408;color:#8a6408}   /* recipe/contract cards, 1.85×2.55 */
   .dslot.r svg,.dslot.r .ic{width:.5in;height:.5in}
   .dslot.r .rn{font-variant:small-caps;font-weight:bold;font-size:.1in;opacity:.7}
@@ -630,14 +632,14 @@
 </head>
 <body>
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · Cask Cards · v3.3 “Three Coins”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v3.4 “Tally Dice”</span></h1>
   <a href="play.html">▶ Play</a>
   <a href="index.html">📖 Rules</a>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
     <option value="boards">Boards</option>
-    <option value="tiles">Cask &amp; ship cards</option>
-    <option value="bits">Tiles — plotter (building fronts/backs · improvements · frames)</option>
+    <option value="tiles">Cask &amp; ship tiles (plotter)</option>
+    <option value="bits">Building tiles &amp; tokens (plotter)</option>
     <option value="cards">Recipe / contract / aid cards</option>
     <option value="png">PNG Export</option>
     <option value="list">Checklist</option>
@@ -708,12 +710,10 @@ const MAT_MARKERS=5;                 // maturation markers per colour ⚙ (v3.1)
 // cask/ship cards 2.5″→2.0″, buildings 2″→1.6″, improvements/boards/tokens all ×SCALE, and the sheets re-pack denser.
 const SCALE=0.8;   // 2.0 / 2.5 — the cask/ship card target is 2″
 const PG={w:11,h:8.5,y0:0.75,yMax:7.92};   // FULL letter paper (landscape); content keeps the old .3in inset — physical positions unchanged
-// CARD_GEO — a LETTER (8.5×11) sheet centred for the (scaled) 2″ double-sided cards: 5 cols × 3 rows = 15/sheet.
-// 5×2.0 = 10.0 wide (x0 .2) · 3×2.0 = 6.0 tall, centred top/bottom (y0 .95). packRun derives cols from the scaled footprint.
-const CARD_GEO={w:11,h:8.5,y0:1.25,yMax:8.2};   // full paper; the 15-card grid keeps its physical placement
+// (CARD_GEO retired 2026-07-19 — casks & ships are TILES on the 22″ plotter now; see packSpaced.)
 // LARGE-FORMAT (22″-wide) plotter sheets — each TRIMMED to its own content height so we don't run blank media.
 // (render() emits a named @page + .lgNN rule per distinct height — see lgClass / the dynpage stylesheet.)
-const WHARF_GEO ={w:22,h:10.5, y0:0.45,yMax:10.22};  // the Wharf cross (9.4″) + the Specialist tiles tucked on the right
+const WHARF_GEO ={w:22,h:8.4, y0:0.45,yMax:8.12};  // the Wharf cross (8.84 native → 7.07 print — the arms hug the building band) + the Specialist tiles tucked on the right
 const TOK_GEO   ={w:22,h:6.0,  y0:0.45,yMax:5.75};   // the TOKENS sheet — goods + discs/cubes/markers, single-sided cut circles
 const SUPPLY_GEO={w:22,h:10.1, y0:0.45,yMax:9.82};   // ONE sheet, both table boards (each prints 9.36in tall at ×0.8)
 // The Supply & Tracks board — DESIGNED to its components (all native in, print ×0.8):
@@ -729,12 +729,12 @@ const DEST_NW=7.6,   DEST_NH=11.7;      // the Destinations & Hall board — nar
 const SUPPLY_MAIN_W=9.7;                 // the left (displays) column's width; the destinations column takes the rest
 const SCORE_CELLS=50;     // one lap = 0–49 (the start corner reads 0/50); a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
 const SCORE_RING_T=0.8;   // ring thickness (native) → prints 0.64″ — a comfortable seat for the 0.5″ disc
-const TILE_GEO  ={w:22,h:5.75, y0:0.45,yMax:5.47};   // building FRONTS sheet + its mirrored BACKS sheet (30 tiles incl. the 3 Specialty-Beers works, 3 rows)
-const IMPF_GEO  ={w:22,h:8.5,  y0:0.45,yMax:8.22};   // improvements + owner frames (2.5″ rings, 3 rows) — single-sided, their own sheet
+// (TILE_GEO / IMPF_GEO retired 2026-07-19 — the tile sheets size themselves in packSpaced; the unlock
+//  covers left the kit: sourced, like the tally dice.)
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
 // NATIVE component sizes (in) — the design size each piece renders at; packRun scales the FOOTPRINT by SCALE and
 // the render wrapper scales the CONTENT to match. casks/ships 2.5″ · buildings 2″ · improvement cards 2×1″ · frames 2.5″.
-const SIZE={tile:[1.25,1.25],caskc:[2.4,1],cask:[2.4,1],shipc:[2.5,3.33],shiph:[2.5,4.33],bld:[2.5,1.32],imp:[2,2],coverV:[2.4,2.4],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // v3.4a refit: cask TILES 2.5×1 · buildings 2×1.32 · carrier ships by hull
+const SIZE={tile:[1.25,1.25],caskc:[2.4,1],cask:[2.4,1],shipc:[2.5,2],shiph:[2.5,3],bld:[2.5,1.32],imp:[2,2],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // v3.4a/b refit: cask TILES 2.4×1 · buildings 2.5×1.32 · ALL-BERTH carrier ships (Cog 2.5×2 · Hulk 2.5×3 — the tile IS its berths)
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
@@ -771,10 +771,10 @@ function aidFront(){
         +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — <b>Brew</b> <i>or</i> <b>Deploy</b> a Ready cask to any open slot.</div>'
         +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — <b>Age</b> (3 pts) <i>or</i> <b>Upgrade</b> (buy 1 Specialist).</div>'
         +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — <b>Load</b> a deployed cask <i>or</i> <b>Dispatch</b> ONE deployed cask: the <b>Hall</b> (free — buy ONE coin or launch: ★ = quality; never ticks the ships track) or a <b>kontor</b> (a contract + '+G+'2 — ticks). Ships <b>sail when full</b>.</div>'
-        +'<h5>'+LU('dice-3')+'The Demand Die — one read</h5>'
-        +'<div class="ln">Your cask departs carrying its <b>tally die</b> — turn it to YOUR Privilege’s printed <b>+N★</b> (a bare slot: it stays at 1). The pips are the ★; the die then PARKS at the destination as your presence. Delivery = the die (+ Novgorod’s scale).</div>'
+        +'<h5>'+LU('dice-3')+'The Tally Die — one read</h5>'
+        +'<div class="ln">Your cask departs carrying its <b>tally die</b> — turn it to YOUR Privilege’s printed <b>+N★</b> (a bare slot: it stays at 1). The pips are the ★; the die then PARKS at the destination as your presence. Delivery = the die (+ Novgorod’s scale). <b>No die in your tray → no deploy, no vessel-direct load, no Reach.</b></div>'
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
-        +'<div class="ln"><b>DUAL clock</b> — <b>Sailed-Ships</b> fills (5/8/10 for 2/3/4p; voyages only) <i>or</i> the <b>presence clock</b> (14 public discs each — every delivered cask &amp; presence bump spends one; the last disc placed sets the final round). First trigger fires → finish the round → <b>majorities</b> + <span class="em">Flight</span> (beers delivered) 3→4 · 4→9 · 5→16 (6→25 w/ Jopenbier). Deliveries &amp; Hall ★ were banked in play; flips score 0.</div>'
+        +'<div class="ln"><b>DUAL clock</b> — <b>Sailed-Ships</b> fills (5/8/10 for 2/3/4p; voyages only) <i>or</i> the <b>presence clock</b>: the <b>tally dice</b> (14 each, public — every delivered cask &amp; presence bump parks one; the last die placed sets the final round). First trigger fires → finish the round → <b>majorities</b> + <span class="em">Flight</span> (beers BREWED — your flipped recipe cards) 3→4 · 4→9 · 5→16 (6→25 w/ Jopenbier). Deliveries &amp; Hall ★ were banked in play; flips score 0.</div>'
       +'</div>'
     +'</div></div>';}
 function aidBack(){
@@ -813,7 +813,7 @@ function aidBack(){
         +row('sailboat','Ship','neutral hull (Cog 2 / Hulk 3) — sails FULL')
         +row('navigation','Dispatch','1 deployed cask: Hall free (no tick) · kontor = '+LU('ticket')+' + '+G+'2 (ticks)')
         +row('crown','Hall coins','FAME 5/7/10/13 · CRAFT · FAVOR — one-shot, cube it · or launch: ★ = quality')
-        +row('layers','Flight','distinct beers delivered · (n−1)²')
+        +row('layers','Flight','distinct beers BREWED (flipped cards) · (n−1)²')
       +'</div></div>'
     +'</div></div>';}
 
@@ -952,8 +952,13 @@ function roundedPlusPath(a,b,r,scale,ox,oy){
   }
   return {d:d+'Z',ch};
 }
-const CROSS_A=0.2435, CROSS_B=0.7565, CROSS_R=0.04;
-const WHARF_W=11.5;          // the cross board size (in) — the CUT plus is this size; the ART bleeds past it
+// v3.4c.8 [ruled] — the arms reach only the BUILDING BAND: perimeter tracks are 1.32in deep (the building
+// tile's depth), station tracks 2.5in, .3in gaps; the cut runs CROSS_PAD outside the slot band and hugs the
+// station block by CROSS_P on the arm sides. Grid = 1.32+.3+2.5+.3+2.5+.3+1.32 = 8.54 → board 8.84in native.
+const CROSS_PAD=0.15, CROSS_GAP=0.3, CROSS_P=0.1, BAND_D=1.32, STN_T=2.5;
+const WHARF_W=+(2*(CROSS_PAD+BAND_D+CROSS_GAP)+2*STN_T+CROSS_GAP).toFixed(2);   // 8.84
+const CROSS_A=+((CROSS_PAD+BAND_D+CROSS_GAP-CROSS_P)/WHARF_W).toFixed(4), CROSS_B=+(1-(CROSS_PAD+BAND_D+CROSS_GAP-CROSS_P)/WHARF_W).toFixed(4);
+const CROSS_R=+(0.12/WHARF_W).toFixed(4);   // ≈.12in cut corner (matches the live board's die-cut radius)
 const CROSS_BLEED=0.125;     // ⚙ art bleed past the cut line (1/8″) for laser-cut tolerance — the cut is unchanged; only the art extends
 // the ART clip = the cut plus DILATED outward by CROSS_BLEED, over a bleed-enlarged element (W + 2·bleed).
 // A true outward offset: arms longer & wider by the bleed, convex corner radius +bleed, concave −bleed.
@@ -976,7 +981,7 @@ function wharfCross(){
     +'<div></div>'+slot+slot+'<div></div>'
     +'</div>';
   // padding grows by the bleed so the inner grid stays centered/put while the element (and its clipped art) extends outward
-  return clip+'<div class="mboard cross" style="padding:'+(0.3+CROSS_BLEED).toFixed(3)+'in">'+wharf+'</div>';
+  return clip+'<div class="mboard cross" style="padding:'+(CROSS_PAD+CROSS_BLEED).toFixed(3)+'in">'+wharf+'</div>';
 }
 // printables2: the SCORE RING — one clockwise lap of 50 cells with a FIXED, elegant walk: 15 spaces along
 // the top and bottom, 10 down each side, so every CORNER lands on a multiple of 5 — 0/50 (top-left, the
@@ -1190,6 +1195,40 @@ function packRegion(pages,pg,kind,htmlList,x0,y0,x1,y1,famTag,famPages){
 function addPolyCut(pg,pts){   // a closed polygon cut (the Wharf cross) — consecutive vertices → cut segments
   for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length];pg.cuts.push([a[0],a[1],b[0],b[1]]);}
 }
+// ---- SPACED tile sheets (2026-07-19) — casks · ships · buildings are laser-cut TILES on the 22″ plotter:
+// one FAMILY per call → ONE fronts sheet (22in wide, height fitted to the content) + its BACKS sheet (the
+// LEFT↔RIGHT mirror — flip / mount around chipboard, cut the sandwich once). A 3mm gap between pieces, and
+// EVERY piece cut on its OWN ROUNDED-RECT path — one joined laser line whose radius matches the tile art's
+// .09in corner (× SCALE), so the cut follows the printed edge exactly. runs = [{kind, items:[{html,back,fam}]}]
+// (a family with two footprints — the Cog/Hulk carriers — packs as consecutive runs on the same sheet).
+const TILE_GAP=0.118, TILE_CUT_R=+(0.09*SCALE).toFixed(3), TILE_MAX_H=15, TILE_W=22;
+function packSpaced(pages,section,label,runs,famPages){
+  const G=TILE_GAP,W=TILE_W;const items=[];let cy=0.45;
+  runs.forEach(run=>{
+    if(!run.items.length)return;
+    const [nw,nh]=SIZE[run.kind];const w=+(nw*SCALE).toFixed(3),h=+(nh*SCALE).toFixed(3);
+    const cols=Math.floor((W-0.8+G)/(w+G));const x0=+((W-(cols*w+(cols-1)*G))/2).toFixed(3);
+    run.items.forEach((it,i)=>{const c=i%cols;
+      if(i&&c===0)cy=+(cy+h+G).toFixed(3);
+      items.push({x:+(x0+c*(w+G)).toFixed(3),y:cy,w,h,nat:[nw,nh],html:it.html,back:it.back,fam:it.fam});
+    });
+    cy=+(cy+h+G).toFixed(3);   // close the run's last row; the next run starts fresh
+  });
+  const H=+(cy-G+0.45).toFixed(2);
+  if(H>TILE_MAX_H)console.warn('packSpaced: "'+label+'" exceeds the '+TILE_MAX_H+'in laser bed ('+H+'in)');
+  const geo={w:W,h:H,y0:0.45,yMax:+(H-0.28).toFixed(2)};
+  const fp=newPage(pages,section,label,geo);
+  items.forEach(it=>{fp.items.push({x:it.x,y:it.y,w:it.w,h:it.h,nat:it.nat,html:it.html});
+    (fp.rrects=fp.rrects||[]).push({x:it.x,y:it.y,w:it.w,h:it.h,r:TILE_CUT_R});
+    if(it.fam)(famPages[it.fam]=famPages[it.fam]||new Set()).add(pages.indexOf(fp));});
+  if(items.some(it=>it.back)){
+    const bp=newPage(pages,section,label.replace(' FRONTS','')+' — BACKS (the horizontal mirror: flip LEFT↔RIGHT / mount around chipboard, cut once)',geo);
+    items.forEach(it=>{if(!it.back)return;const mx=+(W-it.x-it.w).toFixed(3);
+      bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:it.back});
+      (bp.rrects=bp.rrects||[]).push({x:mx,y:it.y,w:it.w,h:it.h,r:TILE_CUT_R});});
+    (famPages['Card/tile backs']=famPages['Card/tile backs']||new Set()).add(pages.indexOf(bp));
+  }
+}
 // a LETTER (8.5×11 landscape) board: designed at 9.8×7.0 and printed — like EVERY component in the kit —
 // at the one global SCALE (×0.8), centred on the sheet. Consistency ruling (2026-07-13): nothing in the
 // kit prints at its own bespoke scale; the sheets keep their paper sizes, the content rides SCALE.
@@ -1201,9 +1240,9 @@ function letterBoard(pages,section,label,html){
 }
 // printables2: the Wharf (a CROSS) on its own trimmed 22-wide sheet (the Supply board moved to its own sheet).
 function wharfBoardSheet(pages){
-  const G=WHARF_GEO;const pg=newPage(pages,'boards','Main board — the Wharf (cross)',G);
-  // WHARF cross — the 4×4 grid (2.5in cells + .3in gaps) is 10.9in; +.3in outline padding → an 11.5in board.
-  // wy sits the cross near the top so the trimmed sheet has minimal margin (tokens tuck into the open right).
+  const G=WHARF_GEO;const pg=newPage(pages,'boards','Main board — the Wharf (cross · arms = the building band)',G);
+  // WHARF cross — 1.32in slot bands + 2.5in station tracks + .3in gaps → an 8.84in native board (7.07 print).
+  // wy sits the cross near the top so the trimmed sheet has minimal margin (the Specialists tuck into the open right).
   const W=WHARF_W, wx=0.4, wy=0.7, bl=CROSS_BLEED;
   // the board element extends OUTWARD by the bleed on every side (grid stays centered via the +bleed padding),
   // so the clipped art bleeds past the cut. The CUT itself is the original-size plus at (wx,wy) — unchanged.
@@ -1245,23 +1284,17 @@ function buildPages(){
   // (2026-07-14: the tokens moved to their own sheet — see the TOKENS sheet below).
   const wpg=pages[pages.length-1];
   const wimps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wimps.push(improveTile(d));});
-  packRegion(pages,wpg,'imp',wimps,10.0,0.7,21.9,9.9,'Improvements',famPages);
+  packRegion(pages,wpg,'imp',wimps,8.2,0.7,21.9,8.1,'Improvements',famPages);
   supplyBoardSheet(pages);   // the Supply & Tracks board — its own sheet (work in progress; not finalized)
   letterBoard(pages,'boards','Trade Roads — Overland (expansion board)',olboard());
   // (player brewery boards are generated LAST — at the bottom of the page — see below)
-  // --- CARDS vs TILES — split by HOW they print, but BOTH are duplex (a FRONT sheet + a matching reversed BACK
-  // sheet — fronts and backs never share a sheet):
-  //   • CARDS    → LETTER (8.5×11) on a HOME duplex printer: casks & ships (2″ double-sided), recipes,
-  //                contracts, player aids. Each FRONTS sheet has a matching BACKS sheet that is its LEFT↔RIGHT
-  //                mirror, so a duplex flip on the SHORT edge lands each card's back square on its front; cut once.
-  //   • TILES    → 22-wide PLOTTER sheets, each TRIMMED to its content height (no blank media). BUILDINGS are
-  //                double-sided → a FRONT sheet + its LEFT↔RIGHT MIRRORED back sheet (the back carries the Wild/★
-  //                backs; flip/mount, then cut). IMPROVEMENTS + owner FRAMES are single-sided → their own sheet.
-  //   • TOKENS   → single-sided, their own trimmed 22-wide sheet (the Wharf sheet's right side now holds the Specialists).
-  // CASKS & SHIPS are double-sided 2″ CARDS on LETTER (8.5×11) for HOME double-sided printing — a centred grid
-  // whose BACKS sheet is the LEFT↔RIGHT mirror of the fronts, so a duplex flip on the SHORT edge lands each
-  // card's back on its front; then cut. Each cask front records its data+action so the BACKS pass prints the
-  // brewed side. (Buildings/improvements/tokens are TILES → the plotter; see the TILES & TOKENS block below.)
+  // --- TILES vs CARDS — split by HOW they print (2026-07-19: casks & ships are TILES again):
+  //   • TILES    → 22-wide PLOTTER sheets via packSpaced: CASKS · SHIPS · BUILDINGS each on their OWN
+  //                fronts sheet + its LEFT↔RIGHT mirrored BACKS sheet, a 3mm gap between pieces, every
+  //                piece cut on its own rounded-rect path (mount around chipboard, cut the sandwich once).
+  //   • CARDS    → LETTER (8.5×11) cardstock on a HOME duplex printer: recipes, contracts, player aids
+  //                (each fronts sheet keeps its mirrored backs sheet; flip on the SHORT edge).
+  //   • TOKENS   → single-sided, their own trimmed 22-wide sheet (the Wharf sheet's right side holds the Specialists).
   // helper: append a BACKS page mirroring each FRONT page LEFT↔RIGHT about that page's width (geo.w)
   function mirrorBackPages(frontPages,meta,geo,label,section){let i=0;frontPages.forEach(fp=>{
     const bp=newPage(pages,section||'tiles',label,geo);
@@ -1278,39 +1311,25 @@ function buildPages(){
     if(i>=meta.length)return;   // stop after the meta items — later kinds (e.g. building backs) share the page
     const fam=meta[i++].fam;(famPages[fam]=famPages[fam]||new Set()).add(pages.indexOf(fp));}));}
 
-  // --- CASK & SHIP CARDS → LETTER (8.5×11), double-sided (flip LEFT↔RIGHT) ---
-  // cask cards: Gruit all-Source (pinned); Q2+ cycle their quality's GATED pool (survey/hire Q3+ · brew/enshrine Q4+) — the printed mix IS the brew-draw
-  const cardFronts=[];
+  // --- CASK TILES → their own 22″ plotter sheet pair (fronts + mirrored backs) ---
+  // Gruit all-Source (pinned); Q2+ cycle their quality's GATED pool (survey/hire Q3+ · brew/enshrine Q4+) — the printed mix IS the brew-draw
+  const caskItems=[];
   CASKS.forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);   // off = cycle offset — the tier's tiles collectively cover the whole gated pool (Bock reaches brew/enshrine)
-    for(let i=0;i<cnt(d.n);i++){const act=pool[(i+(d.off||0))%pool.length];cardFronts.push({fam:'Cask cards',kind:'caskc',cask:true,d,act,html:caskCardFront(d,act)});}});
-  const shipList=MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK;
-  shipList.forEach(([hull,dest])=>cardFronts.push({fam:'Ships',kind:(hull==='cog'?'shipc':'shiph'),ship:true,hull,html:shipCard(hull,dest)}));   // carrier ships, one run per hull size
-  const CLBL='Cask & Ship CARDS — fronts · LETTER 8.5×11 · 2″, centred — print DOUBLE-SIDED, flip on the SHORT edge (LEFT↔RIGHT)';   // PLAIN text — every consumer escapes for itself
-  const cStart=pages.length;
-  ['caskc','shipc','shiph'].forEach(k=>packRun(pages,'tiles',CLBL,k,cardFronts.filter(f=>f.kind===k).map(f=>f.html),null,famPages,CARD_GEO));
-  const cardFrontPages=pages.slice(cStart);
-  tagFamilies(cardFrontPages,cardFronts);
-  mirrorBackPages(cardFrontPages,cardFronts,CARD_GEO,'Cask & Ship CARD BACKS · LETTER 8.5×11 (mirror — flip LEFT↔RIGHT): cask brewed-side · a ship at sea behind ships');
-
-  // --- BUILDING TILES → a 22-wide FRONT sheet + its LEFT↔RIGHT MIRRORED back sheet. Buildings are DOUBLE-SIDED
-  // (front art / Wild + ★ back), so — exactly like the cask/ship cards above — the FRONTS go on one sheet and a
-  // separate MIRRORED back sheet carries each building's Wild/★ back; flip on the SHORT edge (or mount front-to-back
-  // around chipboard) and every back lands square on its front, then cut. (Fronts and backs must NOT share a sheet
-  // — every sheet has its matching reversed back.) Both sheets are trimmed to the building grid so no blank media.
-  const TLBL_BLD='Building tile FRONTS (22″ plotter · cut apart)';
-  const bldFrontHtml=[],bldMeta=[];
-  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++){bldFrontHtml.push(buildingCard(d));bldMeta.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',bld:true,d:d});}});
-  const tStart=pages.length;
-  packRun(pages,'bits',TLBL_BLD,'bld',bldFrontHtml,null,famPages,TILE_GEO);
-  const bldFrontPages=pages.slice(tStart);
-  tagFamilies(bldFrontPages,bldMeta);
-  mirrorBackPages(bldFrontPages,bldMeta,TILE_GEO,'Building tile BACKS (mirror — flip LEFT↔RIGHT): the displaced face — seat the Floor Wild (none open → discard)','bits');
-  // Unlock COVERS are SINGLE-SIDED → their own trimmed sheet (no back). (v3.4c: the owner frames
-  // are RETIRED — little house tokens mark building ownership; store-bought, nothing to cut.)
-  const TLBL_IMPF='Unlock covers (22″ plotter · single-sided · cut apart)';
-  // UNLOCK COVERS (v3.1 ONE ROW) — 5 per player, one size (they sit on Floor slots 3–7)
-  const covs=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(5);i++)covs.push(coverTile(p.c,2.4));});
-  packRun(pages,'bits',TLBL_IMPF,'coverV',covs,'Unlock covers',famPages,IMPF_GEO);
+    for(let i=0;i<cnt(d.n);i++){const act=pool[(i+(d.off||0))%pool.length];
+      caskItems.push({fam:'Cask tiles',html:caskCardFront(d,act),back:caskCardBack(d,act)});}});
+  packSpaced(pages,'tiles','Cask tile FRONTS — the aging sides (22″ plotter · 3mm gaps · rounded per-piece cuts · double-sided)',[{kind:'caskc',items:caskItems}],famPages);
+  // --- SHIP TILES → their own sheet pair; the Cog and Hulk carriers pack as two runs (different heights) ---
+  const cogs=[],hulks=[];
+  (MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK).forEach(([hull,dest])=>{
+    (hull==='cog'?cogs:hulks).push({fam:'Ships',html:shipCard(hull,dest),back:shipBack(hull)});});
+  packSpaced(pages,'tiles','Ship tile FRONTS — the carriers (22″ plotter · 3mm gaps · rounded per-piece cuts · double-sided)',[{kind:'shipc',items:cogs},{kind:'shiph',items:hulks}],famPages);
+  // --- BUILDING TILES → their own sheet pair (front art / Wild back) ---
+  const bldItems=[];
+  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)
+    bldItems.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',html:buildingCard(d),back:buildingBack(d)});});
+  packSpaced(pages,'bits','Building tile FRONTS (22″ plotter · 3mm gaps · rounded per-piece cuts · double-sided)',[{kind:'bld',items:bldItems}],famPages);
+  // (2026-07-19: the UNLOCK-COVER sheet left the kit — sourced, any opaque square, like the tally dice.
+  //  v3.4c: the owner frames are RETIRED — little house tokens mark building ownership; store-bought.)
   // --- TOKENS → their own single-sided trimmed sheet (moved off the Wharf sheet, 2026-07-14) ---
   const TLBL_TOK='Tokens (single-sided · cut circles) — goods · cask cubes & maturation markers (v3.4: the tally dice are real d6 — provide 14/colour, nothing to cut)';
   const wtok=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wtok.push(tok(d));});
@@ -1363,7 +1382,7 @@ function checklist(pages,famPages){
   const D='style="font-size:.085in;color:#5b4a37;font-weight:normal;line-height:1.26;margin-top:.005in"';
   const R=(nm,detail,n)=>'<tr><td class="bx"></td><td><b>'+nm+'</b>'+(detail?'<div '+D+'>'+detail+'</div>':'')+'</td><td class="n">'+n+'</td></tr>';
   const T=title=>'<table><tr><th></th><th>'+title+'</th><th>qty</th></tr>';
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v3.3 “Three Coins”)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v3.4 “Tally Dice”)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The base game below; the three opt-in expansions are listed last. With all expansions off, the box is exactly the base set. (Counts are a working first pass.)</p>'
     +'<div class="cols2">';
   h+=T('Boards')
@@ -1391,10 +1410,9 @@ function checklist(pages,famPages){
     +R('TALLY DICE (real d6 — provide your own)','v3.4: one component for ownership + value + the clock. Per player colour — a die rides every deployed cask (face 1), is turned to a Privilege’s printed +N at departure (the pips = the ★ banked), rides the berth well, then PARKS at the destination as presence (majorities). FINITE: the printed Reach wall AND the presence END CLOCK — the last die placed sets the final round (first trigger with Sailed-Ships fires). Nothing to cut — 14 dice per colour, 12mm d6.',PRES_DISCS+' ea')
     +R('Cask cubes','Per player colour — ride a hull’s berth well (the loaded cask’s owner) and claim Hall coins.',CASK_CUBES+' ea')
     +R('Maturation markers','Per player colour — one per brewing slot in use, advances on the cask card’s printed aging track.',MAT_MARKERS+' ea')
-    +R('Unlock covers','Per player colour — sit on Floor slots 3–7; each new distinct beer brewed (from the 2nd) or the Coppersmith removes the next one.','5 ea')
+    +R('Unlock covers','Per player colour — sit on Floor slots 3–7; each new distinct beer brewed (from the 2nd) or the Coppersmith removes the next one. <i>Sourced — not printed (any opaque square/tile that covers the slot).</i>','5 ea')
     +R('Draw bags','One per hidden tile supply — Ships · Buildings/Privileges · Specialists (their backs reveal the type, so the supply hides in a bag; displays refill by blind draw). <i>Sourced.</i>','3')
     +R('Ownership houses (store-bought)','Per player colour — a little monopoly-style HOUSE set on a building card marks its owner; no house = neutral. Nothing to cut.','6 ea')
-    +R('Demand dice (d6)','The one-read value carrier — set ONCE, at departure, to the owner’s Privilege’s printed +N★; rides beside the hull’s berth (the pips ARE the ★ banked on delivery). Never rolled, never recalculated. <i>Sourced — ordinary d6s.</i>','8')
     +R('Quality-boost markers','A +1-quality token a cask carries from a Malt Kiln / Hop Yard (gates AND points) to delivery. <i>Sourced — any 6 distinct tokens.</i>','6')
     +R('First-player, round &amp; Sailed-Ships markers','Turn order (fixed all game) · the Sailed-Ships track mover · a round counter for the 25-round backstop. <i>Sourced.</i>','3')
     +'</table>';
@@ -1408,7 +1426,7 @@ function checklist(pages,famPages){
     +'</table>';
   h+='</div>';
   h+='<p style="font-size:.092in;color:#5b4a37;border-top:1px solid #c8b48a;padding-top:.05in;margin:.04in 0 0">'
-    +'<b>Print &amp; cut.</b> Boards and tiles mount on chipboard and cut on the CUT layer (laser lines + corner registration marks); cards print on cardstock, no mounting. Building tiles are double-sided (front art / Wild back). See the Boards, Tiles &amp; Cards views to print each family.</p>';
+    +'<b>Print &amp; cut.</b> Boards and tiles mount on chipboard and cut on the CUT layer (laser lines + corner registration marks); cards print on cardstock, no mounting. <b>Casks · ships · buildings are TILES on 22″-wide plotter sheets</b> — one family per sheet pair (fronts + the LEFT↔RIGHT mirrored BACKS: mount around chipboard, cut the sandwich once), a <b>3&nbsp;mm gap</b> between pieces, and every piece cut on its <b>own rounded-rect line</b> (one joined laser path matching the tile art’s corner). Goods tokens are full-bleed — the laser just cuts the circle. See the Boards, Tiles &amp; Cards views to print each family.</p>';
   h+='</div>';
   return h;}
 
@@ -1491,8 +1509,8 @@ function exportItems(){
   // SHIPS — one per distinct hull+destination (front) + the shared back, duplicated per ship for consistent naming
   const seen=new Set();
   SHIP_DECK.forEach(([hull,dest])=>{const key=hull+'-'+slug(dest);if(seen.has(key))return;seen.add(key);
-    it.push({type:'ship',name:key,side:'front',w:2.5,h:HULL[hull].cap+1.33,html:shipCard(hull,dest)});
-    it.push({type:'ship',name:key,side:'back', w:2.5,h:HULL[hull].cap+1.33,html:shipBack(hull)});});
+    it.push({type:'ship',name:key,side:'front',w:2.5,h:HULL[hull].cap,html:shipCard(hull,dest)});   // v3.4b: the tile IS its berths — cap inches tall
+    it.push({type:'ship',name:key,side:'back', w:2.5,h:HULL[hull].cap,html:shipBack(hull)});});
   // BUILDINGS — front + displaced back per design
   BUILDINGS.forEach(d=>{
     it.push({type:'building',name:d.k,side:'front',w:2,h:1.32,html:buildingCard(d)});
