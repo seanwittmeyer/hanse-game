@@ -43,8 +43,10 @@
   .copybtn{float:right;font-family:inherit;font-variant:normal;font-size:.66rem;cursor:pointer;background:var(--ink);color:var(--parch);border:none;border-radius:5px;padding:2px 8px;letter-spacing:.3px}
   .copybtn:hover{background:var(--red2)}
   /* GRID */
-  .agwrap{--bdw:min(92vmin,96vw,1150px);display:flex;justify-content:center;padding:calc(var(--bdw)*0.008)}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
-  @media(max-width:700px){.agwrap{--bdw:min(92vmin,74vw)}}   /* portrait phone: height is plentiful — let the board take the width */
+  .agwrap{--bdw:min(92vmin,96vw,1150px);display:flex;justify-content:center;padding:calc(var(--bdw)*0.02);position:relative}
+  #boardcut{position:absolute;left:0;top:0;pointer-events:none;z-index:0}
+  .ag{position:relative;z-index:1}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
+  @media(max-width:760px){.agwrap{--bdw:740px;overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch}}   /* phone: the board stays REAL-sized and pans sideways (touch / trackpad) */
   .ag{display:grid;width:var(--bdw,600px);max-width:100%;margin:0 auto;   /* v3.4c.2: NO fixed aspect — the top/bottom rows size to their content and the board's height breathes */
     --gap:clamp(10px,1.5vw,16px);gap:var(--gap);
     --cw:calc((var(--bdw) - 3*var(--gap))/5.6);
@@ -58,14 +60,14 @@
   .cell{border-radius:12px;color:var(--parch);position:relative;box-shadow:0 3px 9px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14);overflow:hidden;container-type:size}
   .cell .stn{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:7cqmin}
   .cell .head{display:flex;flex-direction:column;align-items:flex-start;gap:3cqmin}
-  .cell .bigic .ic,.cell .bigic svg{width:30cqmin;height:30cqmin;stroke-width:1.6}
+  .cell .bigic .ic,.cell .bigic svg{width:25cqmin;height:25cqmin;stroke-width:1.6}
   .cell .head>div{min-width:0;max-width:100%}
   .cell .role{font-size:7cqmin;text-transform:uppercase;letter-spacing:1px;opacity:.82}
   .cell .nm{font-variant:small-caps;font-weight:bold;font-size:13cqmin;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
   /* v3.0-A: every station is a printed THIS-or-THAT — exactly TWO action icons, big, slash between */
-  .cell .yield{display:flex;gap:3cqmin;align-items:center;margin-top:3cqmin;flex-wrap:nowrap}
-  .cell .yield .ic,.cell .yield svg{width:22cqmin;height:22cqmin;opacity:.97;stroke-width:1.7}
-  .cell .yield .ysl{opacity:.55;font-weight:300;font-size:20cqmin;line-height:1;align-self:center;flex:0 0 auto;margin:0 1cqmin}   /* OR: the "/" between the station's two faces */
+  .cell .yield{display:flex;gap:3cqmin;align-items:center;margin-top:auto;flex-wrap:nowrap}
+  .cell .yield .ic,.cell .yield svg{width:18cqmin;height:18cqmin;opacity:.97;stroke-width:1.7}
+  .cell .yield .ysl{opacity:.55;font-weight:300;font-size:17cqmin;line-height:1;align-self:center;flex:0 0 auto;margin:0 1cqmin}   /* OR: the "/" between the station's two faces */
   /* loop colours: A Market=gold · B Brewhouse=red · C Harbor=sea · D Cellar=green */
   .cell.A{background:linear-gradient(155deg,#cda522,#9c7414);color:#2b2018}
   .cell.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
@@ -492,7 +494,7 @@
 
 <main>
   <div class="maincol">
-  <div class="panel"><h3>The Wharf</h3><div class="agwrap"><div class="ag" id="ag"></div></div>
+  <div class="panel"><h3>The Wharf</h3><div class="agwrap"><svg id="boardcut" aria-hidden="true"></svg><div class="ag" id="ag"></div></div>
     <div class="note" id="boardnote" style="text-align:center;margin-top:6px"></div>
   </div>
   <div class="panel"><h3>Destinations <span class="note">(where you ship — kontore = volume · the Hall = prestige · click the Hall to enlarge)</span></h3><div id="dests"></div></div>
@@ -1392,6 +1394,38 @@ function pImpFace(key){const def=IMPROVEMENTS[key];const d=def&&HC_IMP[def.name.
   return d?pfit(HC.improveTile(d),2,2):'';}
 // scale every fitted block into its box (components are designed in INCHES; 1in = 96px).
 // Ships lock to the slot's cross axis (uniform component scale) and GROW outward past the box.
+// v3.4c.7: the DIE-CUT BOARD under the wharf — the print kit's cross-shaped Wharf board,
+// simulated live so the table and the app stay one object. Measured off the rendered grid
+// (the breathing rows move it), drawn as one filled + cut-stroked SVG path.
+function boardCross(){
+  const svg=document.getElementById('boardcut');const wrap=svg&&svg.parentElement;const ag=document.getElementById('ag');
+  if(!svg||!wrap||!ag||!S){if(svg)svg.innerHTML='';return;}
+  const wr=wrap.getBoundingClientRect();const sx=wrap.scrollLeft,sy=wrap.scrollTop;
+  const q=sel=>{const el=ag.querySelector(sel);return el?el.getBoundingClientRect():null;};
+  const A=q('.cell.A'),B=q('.cell.B'),C=q('.cell.C'),D=q('.cell.D');
+  if(!A||!B||!C||!D){svg.innerHTML='';return;}
+  const arm=(sels)=>{let r=null;sels.forEach(sl=>{const b=q(sl);if(!b)return;r=r?{left:Math.min(r.left,b.left),right:Math.max(r.right,b.right),top:Math.min(r.top,b.top),bottom:Math.max(r.bottom,b.bottom)}:{left:b.left,right:b.right,top:b.top,bottom:b.bottom};});return r;};
+  const top=arm(['.slot.s1','.slot.s2']),bot=arm(['.slot.s5','.slot.s6']),lef=arm(['.slot.s7','.slot.s8']),rig=arm(['.slot.s3','.slot.s4']);
+  const P=10;   // the board's margin past the printed zones
+  const x1=(lef?lef.left:A.left)-P, x2=A.left-P, x3=B.right+P, x4=(rig?rig.right:B.right)+P;
+  const y1=(top?top.top:A.top)-P, y2=A.top-P, y3=C.bottom+P, y4=(bot?bot.bottom:C.bottom)+P;
+  const o=(v,axis)=>Math.round(axis==='x'?v-wr.left+sx:v-wr.top+sy)+.5;
+  const X1=o(x1,'x'),X2=o(x2,'x'),X3=o(x3,'x'),X4=o(x4,'x'),Y1=o(y1,'y'),Y2=o(y2,'y'),Y3=o(y3,'y'),Y4=o(y4,'y');
+  const r=10;   // die-cut corner radius
+  const d='M'+(X2+r)+' '+Y1
+    +'H'+(X3-r)+' Q'+X3+' '+Y1+' '+X3+' '+(Y1+r)+' V'+(Y2-r)+' Q'+X3+' '+Y2+' '+(X3+r)+' '+Y2
+    +' H'+(X4-r)+' Q'+X4+' '+Y2+' '+X4+' '+(Y2+r)+' V'+(Y3-r)+' Q'+X4+' '+Y3+' '+(X4-r)+' '+Y3
+    +' H'+(X3+r)+' Q'+X3+' '+Y3+' '+X3+' '+(Y3+r)+' V'+(Y4-r)+' Q'+X3+' '+Y4+' '+(X3-r)+' '+Y4
+    +' H'+(X2+r)+' Q'+X2+' '+Y4+' '+X2+' '+(Y4-r)+' V'+(Y3+r)+' Q'+X2+' '+Y3+' '+(X2-r)+' '+Y3
+    +' H'+(X1+r)+' Q'+X1+' '+Y3+' '+X1+' '+(Y3-r)+' V'+(Y2+r)+' Q'+X1+' '+Y2+' '+(X1+r)+' '+Y2
+    +' H'+(X2-r)+' Q'+X2+' '+Y2+' '+X2+' '+(Y2-r)+' V'+(Y1+r)+' Q'+X2+' '+Y1+' '+(X2+r)+' '+Y1+' Z';
+  const sw=wrap.scrollWidth,sh=wrap.scrollHeight;
+  svg.style.width=sw+'px';svg.style.height=sh+'px';
+  svg.setAttribute('viewBox','0 0 '+sw+' '+sh);
+  if(sw>wrap.clientWidth+8&&!boardCross._c){boardCross._c=true;wrap.scrollLeft=(sw-wrap.clientWidth)/2;}
+  svg.innerHTML='<path d="'+d+'" fill="#eee2c4" stroke="rgba(43,32,24,.5)" stroke-width="1.5"/>'
+    +'<path d="'+d+'" fill="none" stroke="rgba(0,0,0,.08)" stroke-width="5" transform="translate(0,2)" opacity=".5"/>';
+}
 function fitCards(){
   document.querySelectorAll('.pfit').forEach(w=>{const inn=w.firstElementChild;if(!inn)return;
     const W=parseFloat(w.getAttribute('data-natw')||'2.5')*96;
@@ -3552,7 +3586,7 @@ function renderAiSpeed(){
 //==================================================================
 function render(){
   if(!S)return;
-  renderBar();renderGrid();renderDests();expRender();renderBuildings();renderShop();renderVoyage();renderTableaus();renderAiSpeed();fitCards();
+  renderBar();renderGrid();renderDests();expRender();renderBuildings();renderShop();renderVoyage();renderTableaus();renderAiSpeed();fitCards();boardCross();
   document.getElementById('log').innerHTML=S.log.join('');
   document.getElementById('turnlbl').textContent='Round '+S.turn+(S.ending?' · FINAL':'');
   refreshIcons();
@@ -3904,7 +3938,7 @@ function renderGrid(){
     const yields=grps.map(grp=>grp.map(ico).join('')).join('<span class="ysl">/</span>');
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
       +'<div class="stn">'
-      +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="role">'+CELLROLE[c]+'</div><div class="nm">'+act+'</div></div></div>'
+      +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="nm">'+act+'</div></div></div>'
       +'<div class="yield">'+yields+'</div>'
       +'<div class="wk">'+pawns+'</div>'
       +'</div></div>';
@@ -4151,7 +4185,7 @@ function renderTableaus(){
     hide();
   },true);
   window.addEventListener('scroll',hide,true);
-  window.addEventListener('resize',function(){if(S)fitCards();});
+  window.addEventListener('resize',function(){if(S){fitCards();boardCross();}});
 })();
 
 //==================================================================
