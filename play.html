@@ -43,11 +43,11 @@
   .copybtn{float:right;font-family:inherit;font-variant:normal;font-size:.66rem;cursor:pointer;background:var(--ink);color:var(--parch);border:none;border-radius:5px;padding:2px 8px;letter-spacing:.3px}
   .copybtn:hover{background:var(--red2)}
   /* GRID */
-  .agwrap{--bdw:min(92vmin,96vw,1150px);display:flex;justify-content:center;padding:calc(var(--bdw)*0.03)}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
+  .agwrap{--bdw:min(92vmin,96vw,1150px);display:flex;justify-content:center;padding:calc(var(--bdw)*0.008)}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
   @media(max-width:700px){.agwrap{--bdw:min(92vmin,74vw)}}   /* portrait phone: height is plentiful — let the board take the width */
   .ag{display:grid;width:var(--bdw,600px);max-width:100%;margin:0 auto;aspect-ratio:1;   /* v3.3: the wharf IS the screen; sized by --bdw on .agwrap */
-    gap:clamp(4px,0.9vw,7px);
-    grid-template-columns:2fr 1fr 1fr 2fr;grid-template-rows:2fr 1fr 1fr 2fr}   /* v3.3.1: the slot bands are DOUBLE-DEPTH — inner half buildings, outer half ships/casks */
+    gap:clamp(10px,1.5vw,16px);
+    grid-template-columns:1.8fr 1fr 1fr 1.8fr;grid-template-rows:1.8fr 1fr 1fr 1.8fr}   /* v3.3.1: the slot bands are DOUBLE-DEPTH — inner half buildings, outer half ships/casks */
   /* explicit square rows make every cell a guaranteed square from the GRID — not from each
      item's own aspect-ratio under size-containment (which mobile Safari collapses). */
   .cell,.slot{min-width:0;min-height:0}
@@ -79,10 +79,10 @@
   .slot{background:transparent;border:none;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;text-align:center;color:var(--ink2);padding:2px;overflow:hidden}
   /* the EMPTY seat outline hugs the inner edge and matches a FILLED chain's depth (building band + a hulk) */
   .slot:not(.pfilled)::before{content:'';position:absolute;border:1px dashed var(--line);border-radius:9px;opacity:.85;pointer-events:none}
-  .slot.tk-up:not(.pfilled)::before{left:0;right:0;bottom:0;height:88%}
-  .slot.tk-down:not(.pfilled)::before{left:0;right:0;top:0;height:88%}
-  .slot.tk-left:not(.pfilled)::before{top:0;bottom:0;right:0;width:88%}
-  .slot.tk-right:not(.pfilled)::before{top:0;bottom:0;left:0;width:88%}
+  .slot.tk-up:not(.pfilled)::before{left:0;right:0;bottom:0;height:97%}
+  .slot.tk-down:not(.pfilled)::before{left:0;right:0;top:0;height:97%}
+  .slot.tk-left:not(.pfilled)::before{top:0;bottom:0;right:0;width:97%}
+  .slot.tk-right:not(.pfilled)::before{top:0;bottom:0;left:0;width:97%}
   .slot .ic,.slot svg{width:1.5em;height:1.5em}
   .slot.filled{border-style:solid;border-width:3px;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.32);padding:3px}
   .slot .tface{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:100%;height:100%;text-align:center;line-height:1.05}
@@ -133,10 +133,10 @@
   .cC{grid-area:3/2}.cD{grid-area:3/3}.s6{grid-area:4/2}.s5{grid-area:4/3}
   /* ===== the REAL printables tiles, rendered in the slots (scaled to the slot via cq units) ===== */
   .semp{position:absolute;inset:0;opacity:.45;font-variant:small-caps;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3cqmin}
-  .slot.tk-up .semp{top:auto;bottom:0;height:88%}
-  .slot.tk-down .semp{bottom:auto;top:0;height:88%}
-  .slot.tk-left .semp{left:auto;right:0;width:88%}
-  .slot.tk-right .semp{right:auto;left:0;width:88%}
+  .slot.tk-up .semp{top:auto;bottom:0;height:97%}
+  .slot.tk-down .semp{bottom:auto;top:0;height:97%}
+  .slot.tk-left .semp{left:auto;right:0;width:97%}
+  .slot.tk-right .semp{right:auto;left:0;width:97%}
   .semp .sid{font-size:15cqmin}
   .semp .sdep{opacity:.8}
   .semp .sdep .ic,.semp .sdep svg{width:22cqmin;height:22cqmin}
@@ -205,10 +205,10 @@
 
   .slot .bhalf,.slot .ohalf{position:absolute}
   /* v3.4a: the building band shrinks (2\u00d71.32 tiles); the occupant zone takes the rest */
-  .tk-left .bhalf{right:0;top:0;bottom:0;width:28%}   .tk-left .ohalf{left:0;top:0;bottom:0;width:72%}   .tk-left .ohalf.full{width:100%}
-  .tk-right .bhalf{left:0;top:0;bottom:0;width:28%}   .tk-right .ohalf{right:0;top:0;bottom:0;width:72%}   .tk-right .ohalf.full{width:100%}
-  .tk-up .bhalf{bottom:0;left:0;right:0;height:28%}   .tk-up .ohalf{top:0;left:0;right:0;height:72%}   .tk-up .ohalf.full{height:100%}
-  .tk-down .bhalf{top:0;left:0;right:0;height:28%}    .tk-down .ohalf{bottom:0;left:0;right:0;height:72%}   .tk-down .ohalf.full{height:100%}
+  .tk-left .bhalf{right:0;top:0;bottom:0;width:30%}   .tk-left .ohalf{left:0;top:0;bottom:0;width:70%}   .tk-left .ohalf.full{width:100%}
+  .tk-right .bhalf{left:0;top:0;bottom:0;width:30%}   .tk-right .ohalf{right:0;top:0;bottom:0;width:70%}   .tk-right .ohalf.full{width:100%}
+  .tk-up .bhalf{bottom:0;left:0;right:0;height:30%}   .tk-up .ohalf{top:0;left:0;right:0;height:70%}   .tk-up .ohalf.full{height:100%}
+  .tk-down .bhalf{top:0;left:0;right:0;height:30%}    .tk-down .ohalf{bottom:0;left:0;right:0;height:70%}   .tk-down .ohalf.full{height:100%}
   .slot .ohalf{overflow:visible}
   .halfemp{position:absolute;inset:6%;border:1px dashed var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;opacity:.45}
   .halfemp .ic,.halfemp svg{width:20cqmin;height:20cqmin}
