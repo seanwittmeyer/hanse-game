@@ -76,7 +76,13 @@
   @keyframes pulse{50%{outline-color:#fff}}
   @keyframes spin{to{transform:rotate(360deg)}}
   .ai-spin{display:inline-block;width:15px;height:15px;border:2px solid var(--line);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;vertical-align:-3px;margin-right:8px}
-  .slot{background:var(--parch);border:2px dashed var(--line);border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;text-align:center;color:var(--ink2);padding:2px;overflow:hidden}
+  .slot{background:transparent;border:none;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;text-align:center;color:var(--ink2);padding:2px;overflow:hidden}
+  /* the EMPTY seat outline hugs the inner edge and matches a FILLED chain's depth (building band + a hulk) */
+  .slot:not(.pfilled)::before{content:'';position:absolute;border:1px dashed var(--line);border-radius:9px;opacity:.85;pointer-events:none}
+  .slot.tk-up:not(.pfilled)::before{left:0;right:0;bottom:0;height:88%}
+  .slot.tk-down:not(.pfilled)::before{left:0;right:0;top:0;height:88%}
+  .slot.tk-left:not(.pfilled)::before{top:0;bottom:0;right:0;width:88%}
+  .slot.tk-right:not(.pfilled)::before{top:0;bottom:0;left:0;width:88%}
   .slot .ic,.slot svg{width:1.5em;height:1.5em}
   .slot.filled{border-style:solid;border-width:3px;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.32);padding:3px}
   .slot .tface{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:100%;height:100%;text-align:center;line-height:1.05}
@@ -127,6 +133,10 @@
   .cC{grid-area:3/2}.cD{grid-area:3/3}.s6{grid-area:4/2}.s5{grid-area:4/3}
   /* ===== the REAL printables tiles, rendered in the slots (scaled to the slot via cq units) ===== */
   .semp{position:absolute;inset:0;opacity:.45;font-variant:small-caps;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3cqmin}
+  .slot.tk-up .semp{top:auto;bottom:0;height:88%}
+  .slot.tk-down .semp{bottom:auto;top:0;height:88%}
+  .slot.tk-left .semp{left:auto;right:0;width:88%}
+  .slot.tk-right .semp{right:auto;left:0;width:88%}
   .semp .sid{font-size:15cqmin}
   .semp .sdep{opacity:.8}
   .semp .sdep .ic,.semp .sdep svg{width:22cqmin;height:22cqmin}
@@ -200,7 +210,7 @@
   .tk-up .bhalf{bottom:0;left:0;right:0;height:28%}   .tk-up .ohalf{top:0;left:0;right:0;height:72%}   .tk-up .ohalf.full{height:100%}
   .tk-down .bhalf{top:0;left:0;right:0;height:28%}    .tk-down .ohalf{bottom:0;left:0;right:0;height:72%}   .tk-down .ohalf.full{height:100%}
   .slot .ohalf{overflow:visible}
-  .halfemp{position:absolute;inset:6%;border:1.6px dashed var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;opacity:.45}
+  .halfemp{position:absolute;inset:6%;border:1px dashed var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;opacity:.45}
   .halfemp .ic,.halfemp svg{width:20cqmin;height:20cqmin}
   .bhalf .pfit,.bhalf .pring{z-index:8}   /* the building owns its half */
   .ohalf .pfit{z-index:8}                 /* the hull/cask paints ABOVE its tucked cargo */
