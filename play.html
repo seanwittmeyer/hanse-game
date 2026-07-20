@@ -109,6 +109,16 @@
   .slot .tpip{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.32)}
   .slot .tpip.on{background:#fff;box-shadow:0 0 2px rgba(0,0,0,.4)}
   .slot.place{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite;color:var(--gold);border-color:var(--gold)}
+  /* v3.4c.5 BOARD CONTROL — clickable affordances mirror the toolbar */
+  .stopgo{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite}
+  .lanego{cursor:pointer;outline:3px dashed rgba(184,134,11,.75);outline-offset:2px}
+  .lanego:hover{outline-style:solid;outline-color:var(--gold2)}
+  .floor.lanego{outline-offset:0}
+  .mtile.agepool{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(--green);color:#fff;border-radius:10px;font-weight:bold;width:120px;height:96px}
+  .mtile.agepool .ic,.mtile.agepool svg{width:26px;height:26px}
+  #shoppop{position:fixed;z-index:70;width:380px;background:var(--parch);border:2px solid var(--gold);border-radius:12px;box-shadow:0 10px 34px rgba(0,0,0,.45);padding:12px}
+  #shoppop .popbox{position:relative;height:280px}
+  #shoppop .poptxt{font-size:.85rem;color:var(--ink2);margin-top:10px;line-height:1.4}
   .slot{position:relative;container-type:size}
   .slot.pfilled{border:none;padding:0;background:transparent;overflow:visible}
   /* a BUILDING is the slot's FULL tile (the keystone's authored layer); the occupant is a token on it */
@@ -207,7 +217,7 @@
   .pfit{position:absolute;inset:0;overflow:visible}   /* an invisible fitting box — the TILE carries its own edge */
   /* hover a sideways tile 1.5s -> it swings upright to read; swings back on leave */
   .rw>div{transition:transform .35s ease 0s}
-  .pfit:hover .rw>div{transform:none!important;transition-delay:1.5s}
+  .pfit:hover .rw>div{transform:none!important;transition-delay:1s}
   .bhalf .pfit:hover,.ohalf .pfit:hover{z-index:90}
   .slot .ctile,.slot .btile,.slot .stile,.mtile .ctile,.mtile .btile,.mtile .stile{box-shadow:0 2px 6px rgba(0,0,0,.35)}   /* the tiles carry their own printed .09in radius */
   .pfit .pfin{position:absolute;top:50%;left:50%;transform-origin:center;transform:translate(-50%,-50%) scale(.5)}
@@ -498,6 +508,8 @@
   </div>
   <p class="note" style="text-align:center"><b>v3.3 “Three Coins” — prototype.</b> The board seats the print kit’s own cards (components.js). <span class="note">(opt-in expansions: Specialty Beers · Jopenbier · The Trade Roads. The prior v2.9 build stays playable at <a href="archive/v2.9/play.html">archive/v2.9</a>.)</span> The v3.0-A rules &amp; icon key live in the <b>📖 Player Aid</b> (top bar) and <code>RULES.md</code>; the <a href="index.html">Rulebook</a> and <a href="learn.html">Learn</a> pages still describe v2.9 and will be updated after this build is verified. All numbers are placeholders ⚙.</p>
 </main>
+
+<div id="shoppop" class="hidden"></div>
 
 <div id="hallmodal" class="modal hidden" onclick="if(event.target===this)closeHall()">
   <div class="mcard hallbig-card">
@@ -1427,6 +1439,25 @@ function openHallModal(){if(!S)return;const el=document.getElementById('hallbig'
       +'<div class="hblaunch"><span class="note" style="color:#cbbfe3">launch row (★ = quality):</span> '+(ln||'<span class="note" style="color:#8f82ad">— no launches yet</span>')+'</div></div>';}
   el.innerHTML=h;document.getElementById('hallmodal').classList.remove('hidden');refreshIcons();}
 function closeHall(){document.getElementById('hallmodal').classList.add('hidden');}
+// ---- the MARKET POPOVER (v3.4c.5): hover a display tile 0.5s -> the tile large + its support text, left of the sidebar ----
+let shopPopTimer=null;
+document.addEventListener('mouseover',e=>{const m=e.target.closest?e.target.closest('.sidecol .shopcell .mtile'):null;if(!m)return;
+  clearTimeout(shopPopTimer);shopPopTimer=setTimeout(()=>showShopPop(m),500);});
+document.addEventListener('mouseout',e=>{const m=e.target.closest?e.target.closest('.sidecol .shopcell .mtile'):null;if(!m)return;
+  clearTimeout(shopPopTimer);hideShopPop();});
+function showShopPop(m){if(!document.body.contains(m))return;const pop=document.getElementById('shoppop');
+  pop.innerHTML='<div class="popbox">'+m.innerHTML+'</div><div class="poptxt">'+(m.getAttribute('data-tip')||'')+'</div>';
+  pop.classList.remove('hidden');
+  const r=m.getBoundingClientRect();const pw=380;
+  pop.style.left=Math.max(8,r.left-pw-16)+'px';
+  pop.querySelectorAll('.pfit').forEach(w=>{const inn=w.firstElementChild;if(!inn)return;
+    const W=parseFloat(w.getAttribute('data-natw')||'2.5')*96,H=parseFloat(w.getAttribute('data-nath')||'2.5')*96;
+    const sc=Math.min((pw-44)/W,270/H);
+    inn.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale('+sc+')';});
+  const bh=pop.getBoundingClientRect().height;
+  pop.style.top=Math.max(8,Math.min(window.innerHeight-bh-8,r.top-60))+'px';
+  refreshIcons();}
+function hideShopPop(){document.getElementById('shoppop').classList.add('hidden');}
 // Dismiss the New Game modal without starting (the close button / Esc / backdrop). If a game is already
 // in progress, fall back to it; otherwise just close (the top-bar "New Game" reopens this).
 function closeSetup(){const m=document.getElementById('setup');if(m)m.classList.add('hidden');if(S)render();}
@@ -3811,6 +3842,18 @@ function renderGrid(){
     const occPlacing=!aiTurn()&&(depOK||(UI.sub==='cell'&&UI.cell==='A'&&UI.stage==='place'&&(!t||commPickupOK(s.id,UI.tmp.placeTile.dest))));
     const bldgPlacing=(!aiTurn()||humanGate())&&UI.sub==='placebldg'&&(!b||canPay(S.players[UI.tmp.placeBldg.owner],OVERBUILD_FEE));   // v2.9: occupied slots only when the ground rent is payable; the human-gate lets an off-turn owner place mid-AI-turn
     if(occPlacing||bldgPlacing)cls+=' place';
+    // v3.4c.5 BOARD CONTROL — the wharf itself takes the turn's clicks (the toolbar stays as the mirror)
+    let boardClick=null;
+    if(!aiTurn()&&!occPlacing&&!bldgPlacing){
+      if(UI.sub==='stops'&&UI.line!=='floor'){const si=(UI.stops||[]).findIndex(st=>(st.kind==='cap'||st.kind==='deploy')&&st.slot===s.id);
+        if(si>=0&&stopAvail(UI.stops[si])){cls+=' stopgo';boardClick='resolveStop('+si+')';}}
+      else if(UI.sub==='line'&&cur().placed){const lc=cellOfLine(cur().cell);
+        if(LINES[lc.row].caps.includes(s.id)){cls+=' lanego';boardClick="chooseLine('row')";}
+        else if(LINES[lc.col].caps.includes(s.id)){cls+=' lanego';boardClick="chooseLine('col')";}}
+      else if(UI.sub==='load'&&UI.load){
+        if(!UI.load.cask){if(UI.load.casks.includes(s.id)&&UI.load.ships.some(sh=>canTake(sh,s.id))){cls+=' stopgo';boardClick="loadPickCask('"+s.id+"')";}}
+        else if(UI.load.ships.includes(s.id)&&canTake(s.id,UI.load.cask)){cls+=' stopgo';boardClick="loadOnto('"+s.id+"')";}}
+    }
     let inner;let style='';
     // v3.3.1 [ruled]: the slot is DOUBLE-DEPTH along its outward axis — the INNER half seats the
     // building (its own home, never stacked under); the OUTER half seats the occupant (a ship's
@@ -3826,17 +3869,25 @@ function renderGrid(){
       inner=vert?(TKDIR[s.id]==='tk-up'?oH+bH:bH+oH):(bH+oH);}
     else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Deploy a Ready cask here — an empty slot’s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span></span>';
     let click=bldgPlacing?'placeBldgOn':(occPlacing?(UI.sub==='deploy'?'deployTo':'placeSlot'):null);
-    h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';
+    h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':(boardClick?'onclick="'+boardClick+'"':''))+'>'+inner+'</div>';
   });
   ['A','B','C','D'].forEach(c=>{const act=CELLNAME[c];
     const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+p.name+'"></span>').join('');
     let cls='cell '+c+' c'+c;
     const legal=(UI.sub==='move'&&!aiTurn()&&(!cur().placed||ADJ[cur().cell].includes(c)));
     if(legal)cls+=' legal';
+    let cellClick=legal?("doMove('"+c+"')"):null;
+    if(!cellClick&&!aiTurn()){
+      if(UI.sub==='stops'&&UI.line!=='floor'){const si=(UI.stops||[]).findIndex(st=>st.kind==='cell'&&st.cell===c);
+        if(si>=0&&stopAvail(UI.stops[si])){cls+=' stopgo';cellClick='resolveStop('+si+')';}}
+      else if(UI.sub==='line'&&cur().placed&&c!==cur().cell){const lc=cellOfLine(cur().cell);
+        if(LINES[lc.row].cells.includes(c)){cls+=' lanego';cellClick="chooseLine('row')";}
+        else if(LINES[lc.col].cells.includes(c)){cls+=' lanego';cellClick="chooseLine('col')";}}
+    }
     const grps=STATION_ACTS[act]||[(YIELD[act]||[])];   // v3.0-A: two one-icon groups — the station's THIS-or-THAT faces
     const ico=n=>'<span class="iw" data-tip="'+attr(STATION_ICON_TIP[n]||ICONTIP[n]||'')+'"><i data-lucide="'+n+'" class="ic"></i></span>';
     const yields=grps.map(grp=>grp.map(ico).join('')).join('<span class="ysl">/</span>');
-    h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(legal?'onclick="doMove(\''+c+'\')"':'')+'>'
+    h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
       +'<div class="stn">'
       +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="role">'+CELLROLE[c]+'</div><div class="nm">'+act+'</div></div></div>'
       +'<div class="yield">'+yields+'</div>'
@@ -3945,13 +3996,13 @@ function renderShop(){
   const sdisp=S.shipDisplay||[];
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('sailboat')+' Ship market</b> <span class="note">('+sdisp.length+' face-up · neutral hulls, destination printed · '+S.shipDeck.length+' in the deck)</span></div>';
   if(sdisp.length)h+='<div class="shopgrid">'+sdisp.map((sn,i)=>{const can=canPay(p,COMMISSION_COST)&&commPlaceable(sn.dest).length>0;   // dockside pickup keeps a jammed ring commissionable
-    return '<div class="shopcell"><div class="mtile" data-tip="'+attr(SHIP_NAME[sn.ship]+' → '+DEST[sn.dest].name+' (cap '+SHIP_CAP[sn.ship]+') · commission '+costStr(COMMISSION_COST)+': place on an open slot + free-load one cask — or onto a qualifying cask, which boards AS the free load. Shared hull.')+'">'+pShipFace({ship:sn.ship,dest:sn.dest})+'</div>'+(buying?'<button '+(can?'':'disabled')+' onclick="commissionShip('+i+')">commission</button>':'')+'</div>';}).join('')+'</div>';
+    return '<div class="shopcell"><div class="mtile'+(buying&&can?' stopgo':'')+'"'+(buying&&can?' onclick="commissionShip('+i+')"':'')+' data-tip="'+attr(SHIP_NAME[sn.ship]+' → '+DEST[sn.dest].name+' (cap '+SHIP_CAP[sn.ship]+') · commission '+costStr(COMMISSION_COST)+': place on an open slot + free-load one cask — or onto a qualifying cask, which boards AS the free load. Shared hull.')+'">'+pShipFace({ship:sn.ship,dest:sn.dest})+'</div>'+(buying?'<button '+(can?'':'disabled')+' onclick="commissionShip('+i+')">commission</button>':'')+'</div>';}).join('')+'</div>';
   else h+='<div class="note" style="opacity:.7">'+LU('sailboat')+' ship market empty <span class="note">(charters still sail)</span></div>';
   // the BUILDING display (v1.0 keystone): buy + place one (or earn one free at London/Novgorod)
   const noslot=!buildableSlots().length;
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('building-2')+' Wharf display</b> <span class="note">(Privileges &amp; Buildings)</span> <span class="note">('+(S.buildDisplay||[]).length+' face-up · '+S.buildDeck.length+' in the deck — buy + place, or earn free at '+LU('landmark')+' London)</span></div>';
   h+='<div class="shopgrid">'+(S.buildDisplay||[]).map((key,i)=>{const def=BUILDINGS[key];const can=canPay(p,def.cost)&&(!noslot||(p.grain-(def.cost.g||0))>=(OVERBUILD_FEE.g||0));   // v2.9: a fully-built wharf still sells — if the buy leaves the ground rent payable
-    return '<div class="shopcell"><div class="mtile" data-tip="'+attr((def.verb==='value'?'PRIVILEGE — pays its owner only':'BUILDING — serves any dock')+' — '+def.desc)+'">'+pBldgFace({b:key},true)+'</div>'+(buying?'<button '+(can?'':'disabled')+' onclick="buyBuilding('+i+')">buy + place</button>':'')+'</div>';}).join('')+'</div>';
+    return '<div class="shopcell"><div class="mtile'+(buying&&can?' stopgo':'')+'"'+(buying&&can?' onclick="buyBuilding('+i+')"':'')+' data-tip="'+attr((def.verb==='value'?'PRIVILEGE — pays its owner only':'BUILDING — serves any dock')+' — '+def.desc)+'">'+pBldgFace({b:key},true)+'</div>'+(buying?'<button '+(can?'':'disabled')+' onclick="buyBuilding('+i+')">buy + place</button>':'')+'</div>';}).join('')+'</div>';
   if(!(S.buildDisplay||[]).length)h+='<div class="note">(building deck exhausted)</div>';
   if(noslot)h+='<div class="note" style="font-size:.7rem">every slot already has a building — placing means overbuilding (+'+costStr(OVERBUILD_FEE)+' ground rent)</div>';
   // v82 "Scarce Improvements": a face-up DISPLAY of IMP_DISPLAY drawn from a shuffled deck (n-1 of each type),
@@ -3959,7 +4010,7 @@ function renderShop(){
   // at the Cellar. Duplicate tiles can appear (3p/4p have ≥2 copies of a type).
   h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Specialist display</b> <span class="note">('+(S.impDisplay||[]).length+' face-up · '+(S.impDeck||[]).length+' in the deck — bought at the '+LU('hourglass')+' <b>Cellar</b> · your Floor: '+(p.floorCap||FLOOR_START)+'/'+FLOOR_SLOTS+' open, '+floorFree(p)+' free (the Flight opens covers)'+(cellarBuy?' · buy now':'')+')</span></div>';
   h+='<div class="shopgrid">'+(S.impDisplay||[]).map((key,i)=>{const def=IMPROVEMENTS[key];const owned=!grantableBuy(p,key);const full=!specRoom(p);const can=canPay(p,def.cost)&&!owned&&!full;
-    return '<div class="shopcell"><div class="mtile" data-tip="'+attr(def.name+' — '+def.desc+' · '+costStr(def.cost)+' at the Cellar')+'">'+pImpFace(key)+'</div>'+(owned?'<span class="note">(have)</span>':(full?'<span class="note">(no seatable slot)</span>':(cellarBuy?'<button '+(can?'':'disabled')+' onclick="buyImprovement(\''+key+'\')">buy</button>':'<span class="note" style="font-size:.66rem">'+costIcons(def.cost)+' @'+LU('hourglass')+'</span>')))+'</div>';}).join('')+'</div>';
+    return '<div class="shopcell"><div class="mtile'+(cellarBuy&&can?' stopgo':'')+'"'+(cellarBuy&&can?' onclick="buyImprovement(\''+key+'\')"':'')+' data-tip="'+attr(def.name+' — '+def.desc+' · '+costStr(def.cost)+' at the Cellar')+'">'+pImpFace(key)+'</div>'+(owned?'<span class="note">(have)</span>':(full?'<span class="note">(no seatable slot)</span>':(cellarBuy?'<button '+(can?'':'disabled')+' onclick="buyImprovement(\''+key+'\')">buy</button>':'<span class="note" style="font-size:.66rem">'+costIcons(def.cost)+' @'+LU('hourglass')+'</span>')))+'</div>';}).join('')+'</div>';
   if(!(S.impDisplay||[]).length)h+='<div class="note">(Specialist deck exhausted)</div>';
   document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px">At the '+LU('store')+' <b>Market</b>: take goods, OR acquire one tile — a recipe, a '+LU('building-2')+' Building (buy from the display + place at once; London and Survey grant one free the same way), a '+LU('sailboat')+' ship, or a charter contract. Overbuilding costs the '+costStr(OVERBUILD_FEE)+' ground rent and <b>displaces</b> the building there: the tile flips into an open Floor slot of its owner’s as a '+LU('sparkles')+'Floor Wild — <b>flips score nothing</b> (none open → simply discarded).</div>';
 }
@@ -3989,19 +4040,31 @@ function renderTableaus(){
     tabs+='<div class="tab '+(i===activeTab?'active':'')+'" style="'+(i===activeTab?'background:'+p.color:'')+'" onclick="activeTab='+i+';renderTableaus();refreshIcons()"><span class="pawn" style="background:'+p.color+';display:inline-block;vertical-align:middle;width:11px;height:11px"></span> '+p.name+' <span style="opacity:.85;font-size:.74rem" data-tip="Total score so far.">★ '+sc.total+'</span>'+(p.ai?' <span style="opacity:.75;font-size:.72rem" data-tip="'+attr(aiLabel(p)+' AI seat — plays by the same rules; tiers differ only in decision quality.')+'">· AI</span>':'')+'</div>';
     // THE FLOOR (v3.1 ONE ROW) — a single line of FLOOR_SLOTS: maturing casks · empty (brewable) slots ·
     // seated Specialists · face-down flips · unlock covers. Slot 1 is printed VESSEL-ONLY.
+    const mine=!aiTurn()&&cur()&&p.id===cur().id;
+    const floorPick=mine&&UI.sub==='line'&&cur().placed&&floorLegal(p);
+    const floorStops=(mine&&UI.sub==='stops'&&UI.line==='floor')?(UI.stops||[]):null;
     const rowCells=[];
+    if(floorStops){const ai=floorStops.findIndex(st=>st.kind==='fage');
+      if(ai>=0&&stopAvail(floorStops[ai]))rowCells.push('<div class="vcell"><div class="mtile agepool stopgo" onclick="resolveStop('+ai+')" data-tip="'+attr('The Floor\u2019s Age pool — '+floorAgePool(p)+' points across your maturing vessels.')+'">'+LU('hourglass')+'<b>Age '+floorAgePool(p)+'</b></div></div>');}
     p.vessels.forEach((c,vi)=>{
       if(!c){rowCells.push('<div class="vcell"><div class="mtile empty" data-tip="'+attr('Open Floor slot — brew into it (a vessel), seat a Specialist, or a displaced tile lands here face-down.'+(vi===0?' SLOT 1 IS VESSEL-ONLY: tiles may never take your last brewing slot.':''))+'">'+LU('flask-conical')+'</div><div class="vmat note">'+(vi===0?'vessel-only':'open')+'</div></div>');return;}
       const ready=c.step>=c.ready;
-      rowCells.push('<div class="vcell"><div class="mtile" data-tip="'+attr(STYLES[c.style].name+' Q'+c.q+' · '+CASK_ACT[caskAct(c)]+' · '+(ready?'READY ▸ deploy/ship':'aging '+c.step+'/'+c.ready+' — the marker on the track is the progress'))+'">'+pCaskFace(c,0,null,null,false,p.color)+'</div>'
+      let vcls='',vclick='';
+      if(floorStops){const si=floorStops.findIndex(st=>st.kind==='fcask'&&st.vi===vi);
+        if(si>=0&&stopAvail(floorStops[si])){vcls=' stopgo';vclick=' onclick="resolveStop('+si+')"';}}
+      else if(mine&&UI.sub==='load'&&UI.load&&!UI.load.cask&&UI.load.casks.includes('v'+vi)&&UI.load.ships.some(sh=>canTake(sh,'v'+vi))){vcls=' stopgo';vclick=' onclick="loadPickCask(\'v'+vi+'\')"';}
+      rowCells.push('<div class="vcell"><div class="mtile'+vcls+'"'+vclick+' data-tip="'+attr(STYLES[c.style].name+' Q'+c.q+' · '+CASK_ACT[caskAct(c)]+' · '+(ready?'READY ▸ deploy/ship':'aging '+c.step+'/'+c.ready+' — the marker on the track is the progress'))+'">'+pCaskFace(c,0,null,null,false,p.color)+'</div>'
         +(ready?'<div class="vmat"><span class="tag good">'+LU('check')+' READY ▸ deploy</span></div>':'')+'</div>');
     });
     const specs=(p.upgrades||[]).filter(k=>k!=='vessel');
     specs.forEach(k=>rowCells.push('<div class="vcell"><div class="mtile" data-tip="'+attr(upName(k)+' — '+upDesc(k)+'. Seated in a Floor slot (permanent).')+'">'+pImpFace(k)+'</div><div class="vmat note">'+LU('wrench')+' Specialist</div></div>'));
-    (p.flipped||[]).forEach(k=>rowCells.push('<div class="vcell"><div class="mtile flip" data-tip="'+attr('Flipped '+bName(k)+' — face-down in a Floor slot: a '+'Wild stop when you work the Floor. Flips score nothing.')+'">'+pBldgFlip(k)+'</div><div class="vmat note">'+LU('sparkles')+' flip · Wild</div></div>'));
+    (p.flipped||[]).forEach((k,fi)=>{let wcls='',wclick='';
+      if(floorStops){const si=floorStops.findIndex(st=>st.kind==='fwild'&&st.fi===fi);
+        if(si>=0&&stopAvail(floorStops[si])){wcls=' stopgo';wclick=' onclick="resolveStop('+si+')"';}}
+      rowCells.push('<div class="vcell"><div class="mtile flip'+wcls+'"'+wclick+' data-tip="'+attr('Flipped '+bName(k)+' — face-down in a Floor slot: a '+'Wild stop when you work the Floor. Flips score nothing.')+'">'+pBldgFlip(k)+'</div><div class="vmat note">'+LU('sparkles')+' flip · Wild</div></div>');});
     for(let ci=(p.floorCap||FLOOR_START);ci<FLOOR_SLOTS;ci++)rowCells.push('<div class="vcell locked"><div class="mtile empty" data-tip="'+attr('Covered Floor slot — brew a NEW distinct beer (from your 2nd on) to open it; the Coppersmith and the High Board honor also open one.')+'">'+LU('lock')+'</div><div class="vmat note">'+LU('unlock')+' Flight</div></div>');
     const btrack=flightTypes().map(st=>'<span class="fpip'+(p.brewed&&p.brewed[st]?' on':'')+'" data-tip="'+attr(STYLES[st].name+(p.brewed&&p.brewed[st]?' — brewed ✓':' — not yet brewed'))+'">'+styleShort(st)+'</span>').join('');
-    const floorHTML='<div class="floor"><div class="floortop"><b class="note">'+LU('home')+' THE FLOOR — one row · '+(p.floorCap||FLOOR_START)+'/'+FLOOR_SLOTS+' open · '+floorFree(p)+' free</b><span class="note">stay home to work it (no toll) · slot 1 is vessel-only — tiles never take your last brewing slot</span></div>'
+    const floorHTML='<div class="floor'+(floorPick?' lanego':'')+'"'+(floorPick?' onclick="stayFloor()"':'')+'><div class="floortop"><b class="note">'+LU('home')+' THE FLOOR — one row · '+(p.floorCap||FLOOR_START)+'/'+FLOOR_SLOTS+' open · '+floorFree(p)+' free</b><span class="note">stay home to work it (no toll) · slot 1 is vessel-only — tiles never take your last brewing slot</span></div>'
       +'<div class="vrow">'+rowCells.join('')+'</div>'
       +'<div class="note" style="margin-top:4px">'+LU('layers')+' <b>Brewed</b> (a new distinct beer, from the 2nd on, opens a covered slot): '+btrack+'</div>'
       +'<div class="note" style="margin-top:2px">'+LU('home')+' Floor line: '+LU('hourglass')+' Age '+floorAgePool(p)+' pts · every vessel cask’s action · a '+LU('sparkles')+' Wild per flipped tile.</div>'
