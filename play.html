@@ -1406,11 +1406,13 @@ function boardCross(){
   const q=sel=>{const el=ag.querySelector(sel);return el?el.getBoundingClientRect():null;};
   const A=q('.cell.A'),B=q('.cell.B'),C=q('.cell.C'),D=q('.cell.D');
   if(!A||!B||!C||!D){svg.innerHTML='';return;}
-  const arm=(sels)=>{let r=null;sels.forEach(sl=>{const b=q(sl);if(!b)return;r=r?{left:Math.min(r.left,b.left),right:Math.max(r.right,b.right),top:Math.min(r.top,b.top),bottom:Math.max(r.bottom,b.bottom)}:{left:b.left,right:b.right,top:b.top,bottom:b.bottom};});return r;};
-  const top=arm(['.slot.s1','.slot.s2']),bot=arm(['.slot.s5','.slot.s6']),lef=arm(['.slot.s7','.slot.s8']),rig=arm(['.slot.s3','.slot.s4']);
-  const P=10;   // the board's margin past the printed zones
-  const x1=(lef?lef.left:A.left)-P, x2=A.left-P, x3=B.right+P, x4=(rig?rig.right:B.right)+P;
-  const y1=(top?top.top:A.top)-P, y2=A.top-P, y3=C.bottom+P, y4=(bot?bot.bottom:C.bottom)+P;
+  // v3.4c.8 [ruled]: the arms reach only the BUILDING band (+ a little padding) — ships and casks
+  // sit NEXT TO the board, off its edge, exactly as the components would on the table.
+  const gapPx=Math.max(4,B.left-A.right);
+  const ext=gapPx+0.528*A.width+12;   // gap + a building tile's depth (1.32in at the board's scale) + pad
+  const P=10;   // the station block's margin
+  const x1=A.left-ext, x2=A.left-P, x3=B.right+P, x4=B.right+ext;
+  const y1=A.top-ext, y2=A.top-P, y3=C.bottom+P, y4=C.bottom+ext;
   const o=(v,axis)=>Math.round(axis==='x'?v-wr.left+sx:v-wr.top+sy)+.5;
   const X1=o(x1,'x'),X2=o(x2,'x'),X3=o(x3,'x'),X4=o(x4,'x'),Y1=o(y1,'y'),Y2=o(y2,'y'),Y3=o(y3,'y'),Y4=o(y4,'y');
   const r=10;   // die-cut corner radius
