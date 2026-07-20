@@ -83,7 +83,7 @@
   .ai-spin{display:inline-block;width:15px;height:15px;border:2px solid var(--line);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;vertical-align:-3px;margin-right:8px}
   .slot{background:transparent;border:none;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.55rem;text-align:center;color:var(--ink2);padding:2px;overflow:hidden}
   /* the EMPTY seat outline hugs the inner edge and matches a FILLED chain's depth (building band + a hulk) */
-  .slot:not(.pfilled)::before{content:'';position:absolute;border:1px dashed var(--line);border-radius:9px;opacity:.85;pointer-events:none}
+  .slot:not(.pfilled)::before{content:'';position:absolute;border:1.5px dashed rgba(255,255,255,.8);border-radius:9px;pointer-events:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
   .slot.tk-up:not(.pfilled)::before{left:0;right:0;bottom:0;height:97%}
   .slot.tk-down:not(.pfilled)::before{left:0;right:0;top:0;height:97%}
   .slot.tk-left:not(.pfilled)::before{top:0;bottom:0;right:0;width:97%}
@@ -160,7 +160,7 @@
   .s8{grid-area:2/1}.s3{grid-area:2/4}.s7{grid-area:3/1}.s4{grid-area:3/4}
   .cC{grid-area:3/2}.cD{grid-area:3/3}.s6{grid-area:4/2}.s5{grid-area:4/3}
   /* ===== the REAL printables tiles, rendered in the slots (scaled to the slot via cq units) ===== */
-  .semp{position:absolute;inset:0;opacity:.45;font-variant:small-caps;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+  .semp{position:absolute;inset:0;opacity:.85;color:#f4ead0;text-shadow:0 1px 2px rgba(0,0,0,.5);font-variant:small-caps;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
   .slot.tk-up .semp{top:auto;bottom:0;height:97%}
   .slot.tk-down .semp{bottom:auto;top:0;height:97%}
   .slot.tk-left .semp{left:auto;right:0;width:97%}
@@ -243,7 +243,7 @@
   .tk-up .bhalf{bottom:0;left:0;right:0;height:30%}   .tk-up .ohalf{top:0;left:0;right:0;height:70%}   .tk-up .ohalf.full{height:100%}
   .tk-down .bhalf{top:0;left:0;right:0;height:30%}    .tk-down .ohalf{bottom:0;left:0;right:0;height:70%}   .tk-down .ohalf.full{height:100%}
   .slot .ohalf{overflow:visible}
-  .halfemp{position:absolute;inset:6%;border:1px dashed var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;opacity:.45}
+  .halfemp{position:absolute;inset:6%;border:1px dashed rgba(255,255,255,.7);color:#f4ead0;border-radius:8px;display:flex;align-items:center;justify-content:center;opacity:.45}
   .halfemp .ic,.halfemp svg{width:20cqmin;height:20cqmin}
   .bhalf .pfit,.bhalf .pring{z-index:8}   /* the building owns its half */
   .ohalf .pfit{z-index:8}                 /* the hull/cask paints ABOVE its tucked cargo */
@@ -1420,12 +1420,15 @@ function boardCross(){
     +' H'+(X2+r)+' Q'+X2+' '+Y4+' '+X2+' '+(Y4-r)+' V'+(Y3+r)+' Q'+X2+' '+Y3+' '+(X2-r)+' '+Y3
     +' H'+(X1+r)+' Q'+X1+' '+Y3+' '+X1+' '+(Y3-r)+' V'+(Y2+r)+' Q'+X1+' '+Y2+' '+(X1+r)+' '+Y2
     +' H'+(X2-r)+' Q'+X2+' '+Y2+' '+X2+' '+(Y2-r)+' V'+(Y1+r)+' Q'+X2+' '+Y1+' '+(X2+r)+' '+Y1+' Z';
-  const sw=wrap.scrollWidth,sh=wrap.scrollHeight;
+  // size from the CROSS geometry, never scrollWidth — the svg itself must not ratchet the scroll area
+  const sw=Math.max(wrap.clientWidth,Math.ceil(X4+8)), sh=Math.max(wrap.clientHeight,Math.ceil(Y4+8));
   svg.style.width=sw+'px';svg.style.height=sh+'px';
   svg.setAttribute('viewBox','0 0 '+sw+' '+sh);
   if(sw>wrap.clientWidth+8&&!boardCross._c){boardCross._c=true;wrap.scrollLeft=(sw-wrap.clientWidth)/2;}
-  svg.innerHTML='<path d="'+d+'" fill="#eee2c4" stroke="rgba(43,32,24,.5)" stroke-width="1.5"/>'
-    +'<path d="'+d+'" fill="none" stroke="rgba(0,0,0,.08)" stroke-width="5" transform="translate(0,2)" opacity=".5"/>';
+  // the PRINTED board art fills the cut (the same art as the print kit's Wharf board)
+  svg.innerHTML='<defs><clipPath id="crossclip"><path d="'+d+'"/></clipPath></defs>'
+    +'<image href="art/wharf-board.png" x="'+(X1-4)+'" y="'+(Y1-4)+'" width="'+(X4-X1+8)+'" height="'+(Y4-Y1+8)+'" preserveAspectRatio="xMidYMid slice" clip-path="url(#crossclip)"/>'
+    +'<path d="'+d+'" fill="none" stroke="rgba(43,32,24,.55)" stroke-width="1.5"/>';
 }
 function fitCards(){
   document.querySelectorAll('.pfit').forEach(w=>{const inn=w.firstElementChild;if(!inn)return;
