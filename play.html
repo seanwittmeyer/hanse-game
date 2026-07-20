@@ -230,11 +230,11 @@
   .ohalf .pfit{z-index:8}                 /* the hull/cask paints ABOVE its tucked cargo */
   
   .slot .die.dcask,.mtile .die.dcask{position:absolute;bottom:4.5cqmin;right:5.5cqmin;width:15cqmin;height:15cqmin;z-index:5}
-  .seatdie .die{width:.44in;height:.44in;gap:.02in;padding:.035in;border-radius:.07in}   /* the tally die on the tile's printed seat (scales with the tile) */
+  .seatdie .die{width:.44in;height:.44in;gap:.02in;padding:.03in;border-radius:.08in;border-width:.07in}   /* the owner's colour IS the ring — read it across the table */   /* the tally die on the tile's printed seat (scales with the tile) */
   .slot.pfilled{overflow:visible;z-index:2}   /* protruding tucks/ships paint OVER neighbouring cells */
   /* ===== demand DIE — pips show the ★ a cask banks from the value building it shipped through ===== */
   .die{display:inline-grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:1cqmin;position:relative;
-    background:#f4ead0;border:1.5px solid #8a6a2a;border-radius:3cqmin;padding:2cqmin;box-shadow:0 1px 2px rgba(0,0,0,.45);box-sizing:border-box}
+    background:#f4ead0;border:3px solid #8a6a2a;border-radius:3cqmin;padding:2cqmin;box-shadow:0 1px 2px rgba(0,0,0,.45);box-sizing:border-box}
   .die .pip{display:flex;align-items:center;justify-content:center}
   .die .pip.on::after{content:"";width:66%;height:66%;border-radius:50%;background:#2a1d08}
   .ptile .die.dcask{position:absolute;bottom:5cqmin;right:5cqmin;width:27cqmin;height:27cqmin;z-index:5}
