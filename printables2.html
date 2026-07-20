@@ -84,6 +84,18 @@
   .gen.tg .g-head .bigic{position:absolute;right:.1in;bottom:.08in}
   .gen.tg .g-head .bigic svg,.gen.tg .g-head .bigic .ic{width:.34in;height:.34in;opacity:.9}
   /* (the card-face CSS — casks · ships · buildings · specialists · recipes · contracts · tokens/discs/frames/covers — lives in components.js, the shared library) */
+  /* ====== 1.5mm BLEED on the plotter TILES (print-kit only — play.html keeps true tiles) ======
+     The packed box = the tile + 1.5mm bleed all round; adjacent bleeds TOUCH (1.5+1.5 = the 3mm cut
+     gap), so the sheet interior is solid ink and a laser misaligned by <1.5mm still lands on colour.
+     Only the tile's BACKGROUND COLOUR and ART layers extend outward — the content never moves, and the
+     cut rrect stays on the tile's true edge. (.074in = 1.5mm ÷ SCALE — these rules live in native units.) */
+  .bl{position:relative;width:100%;height:100%;overflow:hidden}
+  .bl>.ctile,.bl>.btile,.bl>.stile{position:absolute;left:.074in;top:.074in;overflow:visible;border-radius:0}
+  .bl>.ctile::before,.bl>.btile::before,.bl>.stile::before{content:"";position:absolute;inset:-.074in;background:var(--c,#33445a);z-index:-1}
+  .bl>.btile>.artbg,.bl>.stile>.artbg,.bl>.stile>.st-wash{inset:-.074in}
+  .bl>.ctile>.ct-art{left:-.074in;top:-.074in;bottom:-.074in}
+  .bl>.ctB>.ct-art{left:auto;right:-.074in}
+  .bl>.btile>.bt-foot{margin:0 -.074in -.074in;padding-left:.174in;padding-right:.174in;padding-bottom:.144in}   /* the foot colour bleeds down & sideways; its content keeps its .1in/.07in insets */
   /* ====== cask PERK strip (e.g. Keut +1 presence) — printed above the cost ====== */
   .t-perk{position:absolute;top:.06in;right:.08in;text-align:right;font-size:.082in;font-style:italic;line-height:1.08;opacity:.96}
   .t-perk b{font-size:.16in;font-weight:900;font-style:normal}
@@ -1197,35 +1209,42 @@ function addPolyCut(pg,pts){   // a closed polygon cut (the Wharf cross) — con
 }
 // ---- SPACED tile sheets (2026-07-19) — casks · ships · buildings are laser-cut TILES on the 22″ plotter:
 // one FAMILY per call → ONE fronts sheet (22in wide, height fitted to the content) + its BACKS sheet (the
-// LEFT↔RIGHT mirror — flip / mount around chipboard, cut the sandwich once). A 3mm gap between pieces, and
-// EVERY piece cut on its OWN ROUNDED-RECT path — one joined laser line whose radius matches the tile art's
-// .09in corner (× SCALE), so the cut follows the printed edge exactly. runs = [{kind, items:[{html,back,fam}]}]
-// (a family with two footprints — the Cog/Hulk carriers — packs as consecutive runs on the same sheet).
-const TILE_GAP=0.118, TILE_CUT_R=+(0.09*SCALE).toFixed(3), TILE_MAX_H=15, TILE_W=22;
+// LEFT↔RIGHT mirror — flip / mount around chipboard, cut the sandwich once). EVERY piece is cut on its OWN
+// ROUNDED-RECT path — one joined laser line whose radius matches the tile art's .09in corner (× SCALE) —
+// and carries a 1.5mm BLEED all round (the .bl wrapper extends the colours/art past the cut; the content
+// never moves). Adjacent bleed boxes TOUCH: 1.5 + 1.5mm of bleed IS the 3mm gap between cut lines, so the
+// sheet interior is solid ink and a slightly misaligned laser still lands on colour.
+// runs = [{kind, items:[{html,back,fam}]}] (two footprints — the Cog/Hulk carriers — pack as consecutive runs).
+const TILE_CUT_R=+(0.09*SCALE).toFixed(3), TILE_MAX_H=15, TILE_W=22;
+const TILE_BLEED=0.059, TILE_BLEED_N=0.074;   // 1.5mm print bleed per side · its native size (1.5mm ÷ SCALE — the .bl CSS inset)
 function packSpaced(pages,section,label,runs,famPages){
-  const G=TILE_GAP,W=TILE_W;const items=[];let cy=0.45;
+  const B=TILE_BLEED,W=TILE_W;const items=[];let cy=0.45;
   runs.forEach(run=>{
     if(!run.items.length)return;
-    const [nw,nh]=SIZE[run.kind];const w=+(nw*SCALE).toFixed(3),h=+(nh*SCALE).toFixed(3);
-    const cols=Math.floor((W-0.8+G)/(w+G));const x0=+((W-(cols*w+(cols-1)*G))/2).toFixed(3);
+    const [nw0,nh0]=SIZE[run.kind];
+    const nw=+(nw0+2*TILE_BLEED_N).toFixed(3),nh=+(nh0+2*TILE_BLEED_N).toFixed(3);   // the packed box = tile + bleed
+    const w=+(nw*SCALE).toFixed(3),h=+(nh*SCALE).toFixed(3);
+    const cols=Math.floor((W-0.8)/w);const x0=+((W-cols*w)/2).toFixed(3);   // boxes tile edge-to-edge (the bleeds touch)
     run.items.forEach((it,i)=>{const c=i%cols;
-      if(i&&c===0)cy=+(cy+h+G).toFixed(3);
-      items.push({x:+(x0+c*(w+G)).toFixed(3),y:cy,w,h,nat:[nw,nh],html:it.html,back:it.back,fam:it.fam});
+      if(i&&c===0)cy=+(cy+h).toFixed(3);
+      items.push({x:+(x0+c*w).toFixed(3),y:cy,w,h,nat:[nw,nh],
+        html:'<div class="bl">'+it.html+'</div>',back:it.back?'<div class="bl">'+it.back+'</div>':null,fam:it.fam});
     });
-    cy=+(cy+h+G).toFixed(3);   // close the run's last row; the next run starts fresh
+    cy=+(cy+h).toFixed(3);   // close the run's last row; the next run starts fresh
   });
-  const H=+(cy-G+0.45).toFixed(2);
+  const H=+(cy+0.45).toFixed(2);
   if(H>TILE_MAX_H)console.warn('packSpaced: "'+label+'" exceeds the '+TILE_MAX_H+'in laser bed ('+H+'in)');
   const geo={w:W,h:H,y0:0.45,yMax:+(H-0.28).toFixed(2)};
+  const cut=it=>({x:+(it.x+B).toFixed(3),y:+(it.y+B).toFixed(3),w:+(it.w-2*B).toFixed(3),h:+(it.h-2*B).toFixed(3),r:TILE_CUT_R});   // the cut hugs the TILE edge, inset past the bleed
   const fp=newPage(pages,section,label,geo);
   items.forEach(it=>{fp.items.push({x:it.x,y:it.y,w:it.w,h:it.h,nat:it.nat,html:it.html});
-    (fp.rrects=fp.rrects||[]).push({x:it.x,y:it.y,w:it.w,h:it.h,r:TILE_CUT_R});
+    (fp.rrects=fp.rrects||[]).push(cut(it));
     if(it.fam)(famPages[it.fam]=famPages[it.fam]||new Set()).add(pages.indexOf(fp));});
   if(items.some(it=>it.back)){
     const bp=newPage(pages,section,label.replace(' FRONTS','')+' — BACKS (the horizontal mirror: flip LEFT↔RIGHT / mount around chipboard, cut once)',geo);
     items.forEach(it=>{if(!it.back)return;const mx=+(W-it.x-it.w).toFixed(3);
       bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:it.back});
-      (bp.rrects=bp.rrects||[]).push({x:mx,y:it.y,w:it.w,h:it.h,r:TILE_CUT_R});});
+      (bp.rrects=bp.rrects||[]).push(cut({x:mx,y:it.y,w:it.w,h:it.h}));});
     (famPages['Card/tile backs']=famPages['Card/tile backs']||new Set()).add(pages.indexOf(bp));
   }
 }
@@ -1317,17 +1336,17 @@ function buildPages(){
   CASKS.forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);   // off = cycle offset — the tier's tiles collectively cover the whole gated pool (Bock reaches brew/enshrine)
     for(let i=0;i<cnt(d.n);i++){const act=pool[(i+(d.off||0))%pool.length];
       caskItems.push({fam:'Cask tiles',html:caskCardFront(d,act),back:caskCardBack(d,act)});}});
-  packSpaced(pages,'tiles','Cask tile FRONTS — the aging sides (22″ plotter · 3mm gaps · rounded per-piece cuts · double-sided)',[{kind:'caskc',items:caskItems}],famPages);
+  packSpaced(pages,'tiles','Cask tile FRONTS — the aging sides (22″ plotter · 1.5mm bleed each side, bleeds touch · cuts 3mm apart, rounded per piece · double-sided)',[{kind:'caskc',items:caskItems}],famPages);
   // --- SHIP TILES → their own sheet pair; the Cog and Hulk carriers pack as two runs (different heights) ---
   const cogs=[],hulks=[];
   (MODE==='proof'?[['cog','Bruges'],['hulk','Novgorod']]:SHIP_DECK).forEach(([hull,dest])=>{
     (hull==='cog'?cogs:hulks).push({fam:'Ships',html:shipCard(hull,dest),back:shipBack(hull)});});
-  packSpaced(pages,'tiles','Ship tile FRONTS — the carriers (22″ plotter · 3mm gaps · rounded per-piece cuts · double-sided)',[{kind:'shipc',items:cogs},{kind:'shiph',items:hulks}],famPages);
+  packSpaced(pages,'tiles','Ship tile FRONTS — the carriers (22″ plotter · 1.5mm bleed each side, bleeds touch · cuts 3mm apart, rounded per piece · double-sided)',[{kind:'shipc',items:cogs},{kind:'shiph',items:hulks}],famPages);
   // --- BUILDING TILES → their own sheet pair (front art / Wild back) ---
   const bldItems=[];
   BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)
     bldItems.push({fam:d.verb==='value'?'Value Buildings':'Transform Buildings',html:buildingCard(d),back:buildingBack(d)});});
-  packSpaced(pages,'bits','Building tile FRONTS (22″ plotter · 3mm gaps · rounded per-piece cuts · double-sided)',[{kind:'bld',items:bldItems}],famPages);
+  packSpaced(pages,'bits','Building tile FRONTS (22″ plotter · 1.5mm bleed each side, bleeds touch · cuts 3mm apart, rounded per piece · double-sided)',[{kind:'bld',items:bldItems}],famPages);
   // (2026-07-19: the UNLOCK-COVER sheet left the kit — sourced, any opaque square, like the tally dice.
   //  v3.4c: the owner frames are RETIRED — little house tokens mark building ownership; store-bought.)
   // --- TOKENS → their own single-sided trimmed sheet (moved off the Wharf sheet, 2026-07-14) ---
@@ -1426,7 +1445,7 @@ function checklist(pages,famPages){
     +'</table>';
   h+='</div>';
   h+='<p style="font-size:.092in;color:#5b4a37;border-top:1px solid #c8b48a;padding-top:.05in;margin:.04in 0 0">'
-    +'<b>Print &amp; cut.</b> Boards and tiles mount on chipboard and cut on the CUT layer (laser lines + corner registration marks); cards print on cardstock, no mounting. <b>Casks · ships · buildings are TILES on 22″-wide plotter sheets</b> — one family per sheet pair (fronts + the LEFT↔RIGHT mirrored BACKS: mount around chipboard, cut the sandwich once), a <b>3&nbsp;mm gap</b> between pieces, and every piece cut on its <b>own rounded-rect line</b> (one joined laser path matching the tile art’s corner). Goods tokens are full-bleed — the laser just cuts the circle. See the Boards, Tiles &amp; Cards views to print each family.</p>';
+    +'<b>Print &amp; cut.</b> Boards and tiles mount on chipboard and cut on the CUT layer (laser lines + corner registration marks); cards print on cardstock, no mounting. <b>Casks · ships · buildings are TILES on 22″-wide plotter sheets</b> — one family per sheet pair (fronts + the LEFT↔RIGHT mirrored BACKS: mount around chipboard, cut the sandwich once), every piece cut on its <b>own rounded-rect line</b> (one joined laser path on the tile’s true edge) with a <b>1.5&nbsp;mm BLEED</b> all round — the colours/art extend past the cut and adjacent bleeds touch (1.5+1.5&nbsp;mm = the 3&nbsp;mm between cut lines), so a slightly misaligned duplex cut still lands on ink. Goods tokens are full-bleed — the laser just cuts the circle. See the Boards, Tiles &amp; Cards views to print each family.</p>';
   h+='</div>';
   return h;}
 
