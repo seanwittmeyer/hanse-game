@@ -307,8 +307,16 @@
   .floortop{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
   .floorgrid{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start;margin-top:4px}
   .fhalf{display:flex;flex-direction:column}
-  .vrow,.irow{display:flex;gap:9px;flex-wrap:wrap;margin-top:5px}
-  .vcell{display:flex;flex-direction:column;gap:3px;width:90px}
+  .vrow,.irow{display:flex;gap:12px;flex-wrap:wrap;margin-top:5px;align-items:flex-end}
+  .vcell{display:flex;flex-direction:column;gap:4px;width:230px}
+  /* v3.4c.3: the Floor renders its tiles LARGE — the row is the player's working surface */
+  .vrow .vcell{width:auto}
+  .vrow .mtile{width:230px;height:96px}
+  .vrow .mtile:has(.btile){width:230px;height:121px}
+  .vrow .mtile:has(.icard),.vrow .mtile.imp{width:150px;height:150px}
+  .vrow .mtile.empty{width:120px;height:96px}
+  .ct-step{position:relative}
+  .agemark{position:absolute;inset:12%;border-radius:50%;background:var(--pc,#b7a77e);border:2px solid rgba(255,255,255,.95);box-shadow:0 1px 3px rgba(0,0,0,.5);z-index:2}
   .vmat{font-size:.66rem;color:var(--ink2);min-height:26px}
   .vmat .vtrack{margin-top:2px}
   .mtile.empty{border:1.6px dashed var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--ink2);opacity:.6;background:transparent;box-shadow:none}
@@ -1289,16 +1297,20 @@ function rotWrap(html,W,H,ccw){return '<div style="position:relative;width:'+H+'
 // seat the tally die INSIDE the tile's printed seat square (it covers the printed Q, as on the table)
 function ctWithDie(tileHtml,dv,color){if(!(dv>0))return tileHtml;
   return tileHtml.replace('data-die-seat','data-die-seat data-filled').replace('</b></div>','</b><span class="seatdie">'+dieFace(dv,'dtile',color)+'</span></div>');}
+// seat the AGE MARKER on the printed maturation track (step 0 = the flask chip)
+function ctWithMarker(tileHtml,step,color){let i=-1;
+  return tileHtml.replace(/<div class="ct-step[^"]*">/g,m=>{i++;return i===step?m+'<span class="agemark" style="--pc:'+color+'"></span>':m;});}
 // a cask = the tile: AGING side while maturing in a vessel, WHARF side once Ready/deployed
-function pCaskFace(t,bonus,actOv,dir,forceAging){const d=HC_CASK[t.style];if(!d)return '';
+function pCaskFace(t,bonus,actOv,dir,forceAging,mcolor){const d=HC_CASK[t.style];if(!d)return '';
   const o=(t.owner!=null)?S.players[t.owner]:null;
-  // v3.4b: the tile FLIPS AT DEPLOY — in a vessel (Ready included) and in the market piles it shows
-  // its AGING side (cost · track · action, what the Floor and the brew choice read); the wharf side
-  // (Q in the die seat) appears once it stands on a slot.
-  const aging=forceAging||(t.step!=null&&t.ready!=null);
+  // v3.4c.3: the tile shows its AGING side while it MATURES (the age marker rides the printed
+  // track); at READY the marker comes off and the tile FLIPS to its wharf side. The market piles
+  // force the aging side (cost · track · action is the acquiring read).
+  const aging=forceAging||(t.step!=null&&t.ready!=null&&t.step<t.ready);
   const act=hcAct(actOv||caskAct(t));
   const dv=Math.max((S&&S.presEnd)?1:0,bonus||0);
   let tile=aging?HC.caskCardFront(d,act):ctWithDie(HC.caskCardBack(d,act),o?dv:0,o?o.color:null);
+  if(aging&&!forceAging&&t.step!=null)tile=ctWithMarker(tile,t.step,mcolor||(o?o.color:'#b7a77e'));
   let W=2.4,H=1;
   if(dir==='left'){tile=rotWrap(tile,2.4,1,false);W=1;H=2.4;}
   else if(dir==='right'){tile=rotWrap(tile,2.4,1,true);W=1;H=2.4;}
@@ -1332,6 +1344,8 @@ function pBldgFace(b,noRing,dir){const d=HC_BLD[b.b];if(!d)return '';
   if(dir==='left'){tile=rotWrap(tile,2.5,1.32,false);W=1.32;H=2.5;}
   else if(dir==='right'){tile=rotWrap(tile,2.5,1.32,true);W=1.32;H=2.5;}
   return pfit(tile,W,H);}
+// a FLIPPED tile shows its face-down WILD back (a Floor Wild stop)
+function pBldgFlip(k){const d=HC_BLD[k];return d?pfit(HC.buildingBack(d),2.5,1.32):'';}
 // a Specialist = the printed purple tile (unchanged, 2×2)
 function pImpFace(key){const def=IMPROVEMENTS[key];const d=def&&HC_IMP[def.name.toLowerCase()];
   return d?pfit(HC.improveTile(d),2,2):'';}
@@ -3931,14 +3945,13 @@ function renderTableaus(){
     const rowCells=[];
     p.vessels.forEach((c,vi)=>{
       if(!c){rowCells.push('<div class="vcell"><div class="mtile empty" data-tip="'+attr('Open Floor slot — brew into it (a vessel), seat a Specialist, or a displaced tile lands here face-down.'+(vi===0?' SLOT 1 IS VESSEL-ONLY: tiles may never take your last brewing slot.':''))+'">'+LU('flask-conical')+'</div><div class="vmat note">'+(vi===0?'vessel-only':'open')+'</div></div>');return;}
-      let tr='';for(let st=0;st<=c.ready;st++)tr+='<div class="tstep '+(st<c.step?'on':'')+(c.step>=c.ready&&st===c.ready?'rdy':'')+'"></div>';
       const ready=c.step>=c.ready;
-      rowCells.push('<div class="vcell"><div class="mtile" data-tip="'+attr(STYLES[c.style].name+' Q'+c.q+' · '+CASK_ACT[caskAct(c)]+' · '+(ready?'READY ▸ deploy/ship':'aging '+c.step+'/'+c.ready))+'">'+pCaskFace(c)+'</div>'
-        +'<div class="vmat">'+(ready?'<span class="tag good">'+LU('check')+' READY ▸ deploy</span>':'<span class="note">aging '+c.step+'/'+c.ready+'</span>')+'<div class="vtrack">'+tr+'</div></div></div>');
+      rowCells.push('<div class="vcell"><div class="mtile" data-tip="'+attr(STYLES[c.style].name+' Q'+c.q+' · '+CASK_ACT[caskAct(c)]+' · '+(ready?'READY ▸ deploy/ship':'aging '+c.step+'/'+c.ready+' — the marker on the track is the progress'))+'">'+pCaskFace(c,0,null,null,false,p.color)+'</div>'
+        +(ready?'<div class="vmat"><span class="tag good">'+LU('check')+' READY ▸ deploy</span></div>':'')+'</div>');
     });
     const specs=(p.upgrades||[]).filter(k=>k!=='vessel');
     specs.forEach(k=>rowCells.push('<div class="vcell"><div class="mtile" data-tip="'+attr(upName(k)+' — '+upDesc(k)+'. Seated in a Floor slot (permanent).')+'">'+pImpFace(k)+'</div><div class="vmat note">'+LU('wrench')+' Specialist</div></div>'));
-    (p.flipped||[]).forEach(k=>rowCells.push('<div class="vcell"><div class="mtile flip" data-tip="'+attr('Flipped '+bName(k)+' — face-down in a Floor slot: a '+'Wild stop when you work the Floor. Flips score nothing.')+'">'+pBldgFace({b:k,owner:p.id})+'</div><div class="vmat note">'+LU('sparkles')+' flip · Wild</div></div>'));
+    (p.flipped||[]).forEach(k=>rowCells.push('<div class="vcell"><div class="mtile flip" data-tip="'+attr('Flipped '+bName(k)+' — face-down in a Floor slot: a '+'Wild stop when you work the Floor. Flips score nothing.')+'">'+pBldgFlip(k)+'</div><div class="vmat note">'+LU('sparkles')+' flip · Wild</div></div>'));
     for(let ci=(p.floorCap||FLOOR_START);ci<FLOOR_SLOTS;ci++)rowCells.push('<div class="vcell locked"><div class="mtile empty" data-tip="'+attr('Covered Floor slot — brew a NEW distinct beer (from your 2nd on) to open it; the Coppersmith and the High Board honor also open one.')+'">'+LU('lock')+'</div><div class="vmat note">'+LU('unlock')+' Flight</div></div>');
     const btrack=flightTypes().map(st=>'<span class="fpip'+(p.brewed&&p.brewed[st]?' on':'')+'" data-tip="'+attr(STYLES[st].name+(p.brewed&&p.brewed[st]?' — brewed ✓':' — not yet brewed'))+'">'+styleShort(st)+'</span>').join('');
     const floorHTML='<div class="floor"><div class="floortop"><b class="note">'+LU('home')+' THE FLOOR — one row · '+(p.floorCap||FLOOR_START)+'/'+FLOOR_SLOTS+' open · '+floorFree(p)+' free</b><span class="note">stay home to work it (no toll) · slot 1 is vessel-only — tiles never take your last brewing slot</span></div>'
