@@ -90,11 +90,12 @@
   .slot.tk-up.vslot{align-self:end}.slot.tk-down.vslot{align-self:start}
   .slot.vslot .bhalf,.slot.vslot .ohalf{position:relative;top:auto;bottom:auto;left:auto;right:auto;width:100%;height:auto}
   .slot.vslot .bhalf{aspect-ratio:2.5/1.44}
+  .slot.vslot .bhalf:has(.halfemp){aspect-ratio:2.5/0.42}
+  .slot.vslot .bhalf:has(.halfemp) .ic,.slot.vslot .bhalf:has(.halfemp) svg{width:16px;height:16px}
   .slot.vslot:not(.pfilled){aspect-ratio:2.5/1.1}
   .slot.vslot:not(.pfilled)::before{top:0;bottom:0;left:0;right:0;width:auto;height:auto}
   .slot.vslot .semp{top:0;bottom:0;left:0;right:0;width:auto;height:auto}
-  .slot.vslot .semp .sid{font-size:1.05rem}
-  .slot.vslot .semp .sdep .ic,.slot.vslot .semp .sdep svg{width:22px;height:22px}
+
   .slot.vslot .halfemp .ic,.slot.vslot .halfemp svg{width:24px;height:24px}
   .slot.vslot .pqboost{top:4px;left:4px;gap:2px;font-size:13px;border-radius:5px;padding:1px 5px}
   .slot .ic,.slot svg{width:1.5em;height:1.5em}
@@ -146,14 +147,14 @@
   .s8{grid-area:2/1}.s3{grid-area:2/4}.s7{grid-area:3/1}.s4{grid-area:3/4}
   .cC{grid-area:3/2}.cD{grid-area:3/3}.s6{grid-area:4/2}.s5{grid-area:4/3}
   /* ===== the REAL printables tiles, rendered in the slots (scaled to the slot via cq units) ===== */
-  .semp{position:absolute;inset:0;opacity:.45;font-variant:small-caps;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3cqmin}
+  .semp{position:absolute;inset:0;opacity:.45;font-variant:small-caps;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
   .slot.tk-up .semp{top:auto;bottom:0;height:97%}
   .slot.tk-down .semp{bottom:auto;top:0;height:97%}
   .slot.tk-left .semp{left:auto;right:0;width:97%}
   .slot.tk-right .semp{right:auto;left:0;width:97%}
-  .semp .sid{font-size:15cqmin}
+  .semp .sid{font-size:1.05rem}
   .semp .sdep{opacity:.8}
-  .semp .sdep .ic,.semp .sdep svg{width:22cqmin;height:22cqmin}
+  .semp .sdep .ic,.semp .sdep svg{width:22px;height:22px}
   .ptile{position:absolute;inset:0;border-radius:8px;overflow:hidden;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:7cqmin;text-shadow:0 1px 1.5px rgba(0,0,0,.5);box-shadow:0 2px 6px rgba(0,0,0,.3)}
   .ptile .ic,.ptile svg{stroke-width:2}
   .ptile .pg{color:#ffe08a}.ptile .ph{color:#c4e69c}
