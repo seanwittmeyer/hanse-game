@@ -1330,9 +1330,11 @@ function fitCards(){
     const dir=(function(){const sl=w.closest('.tk-up')?'up':w.closest('.tk-down')?'down':w.closest('.tk-left')?'left':w.closest('.tk-right')?'right':null;return sl;})();
     inn.style.cssText='';
     if(dir){
-      let s;
-      if(ship){const cross=(dir==='up'||dir==='down')?w.clientWidth:w.clientHeight;s=cross/((dir==='up'||dir==='down')?W:H);}
-      else s=Math.min(w.clientWidth/W,w.clientHeight/H);
+      // ONE px-per-inch for every component on the board: the slot's cross axis carries the WIDEST
+      // tile (2.5in), and everything else scales by the same ruler — a 2.4in cask really renders
+      // narrower than the hull it sits on, as on the table.
+      const cross=(dir==='up'||dir==='down')?w.clientWidth:w.clientHeight;
+      const s=cross/240;
       if(!(isFinite(s)&&s>0))return;
       if(dir==='up')  inn.style.cssText='position:absolute;left:50%;top:auto;bottom:4px;transform:translateX(-50%) scale('+s+');transform-origin:bottom center';
       if(dir==='down')inn.style.cssText='position:absolute;left:50%;top:4px;bottom:auto;transform:translateX(-50%) scale('+s+');transform-origin:top center';
