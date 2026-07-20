@@ -215,10 +215,11 @@
   /* ===== v3.3: the slots seat the PRINT KIT'S CARDS (components.js) — fitCards() scales inches → the box.
      Composition mirrors the table: building (owner ring) holds the slot · ship beside · casks tucked under. ===== */
   .pfit{position:absolute;inset:0;overflow:visible}   /* an invisible fitting box — the TILE carries its own edge */
-  /* hover a sideways tile 1.5s -> it swings upright to read; swings back on leave */
-  .rw>div{transition:transform .35s ease 0s}
-  .pfit:hover .rw>div{transform:none!important;transition-delay:1s}
-  .bhalf .pfit:hover,.ohalf .pfit:hover{z-index:90}
+  /* hover a sideways tile 1s -> it swings upright to read (sticky: once one tile has swung,
+     neighbours swing INSTANTLY; a beat away from all tiles re-arms the delay) */
+  .rw>div{transition:transform .3s ease 0s}
+  .pfit.rot-now .rw>div{transform:none!important}
+  .bhalf .pfit.rot-now,.ohalf .pfit.rot-now{z-index:90}
   .slot .ctile,.slot .btile,.slot .stile,.mtile .ctile,.mtile .btile,.mtile .stile{box-shadow:0 2px 6px rgba(0,0,0,.35)}   /* the tiles carry their own printed .09in radius */
   .pfit .pfin{position:absolute;top:50%;left:50%;transform-origin:center;transform:translate(-50%,-50%) scale(.5)}
   .pring{position:absolute;inset:0;border-radius:10px;background:var(--oc,#8a8577);box-shadow:0 2px 6px rgba(0,0,0,.3)}
@@ -1458,6 +1459,20 @@ function showShopPop(m){if(!document.body.contains(m))return;const pop=document.
   pop.style.top=Math.max(8,Math.min(window.innerHeight-bh-8,r.top-60))+'px';
   refreshIcons();}
 function hideShopPop(){document.getElementById('shoppop').classList.add('hidden');}
+// ---- STICKY hover-rotate (v3.4c.6): the first swing needs 1s of intent; while the mode is hot,
+// moving straight onto another sideways tile swings it instantly; ~0.9s away from all tiles re-arms.
+let rotMode=false,rotArm=null,rotArmEl=null,rotGrace=null;
+function rotTileOf(e){const w=e.target.closest?e.target.closest('.pfit'):null;return (w&&w.querySelector('.rw'))?w:null;}
+document.addEventListener('mouseover',e=>{const w=rotTileOf(e);if(!w)return;
+  clearTimeout(rotGrace);
+  if(rotMode){w.classList.add('rot-now');return;}
+  if(rotArmEl===w)return;
+  clearTimeout(rotArm);rotArmEl=w;
+  rotArm=setTimeout(()=>{rotMode=true;w.classList.add('rot-now');},1000);});
+document.addEventListener('mouseout',e=>{const w=rotTileOf(e);if(!w)return;
+  if(e.relatedTarget&&w.contains(e.relatedTarget))return;
+  clearTimeout(rotArm);rotArmEl=null;w.classList.remove('rot-now');
+  clearTimeout(rotGrace);rotGrace=setTimeout(()=>{rotMode=false;},900);});
 // Dismiss the New Game modal without starting (the close button / Esc / backdrop). If a game is already
 // in progress, fall back to it; otherwise just close (the top-bar "New Game" reopens this).
 function closeSetup(){const m=document.getElementById('setup');if(m)m.classList.add('hidden');if(S)render();}
