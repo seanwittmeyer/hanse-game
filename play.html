@@ -45,9 +45,11 @@
   /* GRID */
   .agwrap{--bdw:min(92vmin,96vw,1150px);display:flex;justify-content:center;padding:calc(var(--bdw)*0.008)}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
   @media(max-width:700px){.agwrap{--bdw:min(92vmin,74vw)}}   /* portrait phone: height is plentiful — let the board take the width */
-  .ag{display:grid;width:var(--bdw,600px);max-width:100%;margin:0 auto;aspect-ratio:1;   /* v3.3: the wharf IS the screen; sized by --bdw on .agwrap */
-    gap:clamp(10px,1.5vw,16px);
-    grid-template-columns:1.8fr 1fr 1fr 1.8fr;grid-template-rows:1.8fr 1fr 1fr 1.8fr}   /* v3.3.1: the slot bands are DOUBLE-DEPTH — inner half buildings, outer half ships/casks */
+  .ag{display:grid;width:var(--bdw,600px);max-width:100%;margin:0 auto;   /* v3.4c.2: NO fixed aspect — the top/bottom rows size to their content and the board's height breathes */
+    --gap:clamp(10px,1.5vw,16px);gap:var(--gap);
+    --cw:calc((var(--bdw) - 3*var(--gap))/5.6);
+    grid-template-columns:calc(1.8*var(--cw)) var(--cw) var(--cw) calc(1.8*var(--cw));
+    grid-template-rows:auto var(--cw) var(--cw) auto}
   /* explicit square rows make every cell a guaranteed square from the GRID — not from each
      item's own aspect-ratio under size-containment (which mobile Safari collapses). */
   .cell,.slot{min-width:0;min-height:0}
@@ -83,6 +85,18 @@
   .slot.tk-down:not(.pfilled)::before{left:0;right:0;top:0;height:97%}
   .slot.tk-left:not(.pfilled)::before{top:0;bottom:0;right:0;width:97%}
   .slot.tk-right:not(.pfilled)::before{top:0;bottom:0;left:0;width:97%}
+  /* v3.4c.2 VERTICAL slots (top/bottom rows): flex stacks sized by their tiles — empty rows collapse */
+  .slot.vslot{container-type:normal;display:flex;flex-direction:column;align-items:stretch;height:auto}
+  .slot.tk-up.vslot{align-self:end}.slot.tk-down.vslot{align-self:start}
+  .slot.vslot .bhalf,.slot.vslot .ohalf{position:relative;top:auto;bottom:auto;left:auto;right:auto;width:100%;height:auto}
+  .slot.vslot .bhalf{aspect-ratio:2.5/1.44}
+  .slot.vslot:not(.pfilled){aspect-ratio:2.5/1.1}
+  .slot.vslot:not(.pfilled)::before{top:0;bottom:0;left:0;right:0;width:auto;height:auto}
+  .slot.vslot .semp{top:0;bottom:0;left:0;right:0;width:auto;height:auto}
+  .slot.vslot .semp .sid{font-size:1.05rem}
+  .slot.vslot .semp .sdep .ic,.slot.vslot .semp .sdep svg{width:22px;height:22px}
+  .slot.vslot .halfemp .ic,.slot.vslot .halfemp svg{width:24px;height:24px}
+  .slot.vslot .pqboost{top:4px;left:4px;gap:2px;font-size:13px;border-radius:5px;padding:1px 5px}
   .slot .ic,.slot svg{width:1.5em;height:1.5em}
   .slot.filled{border-style:solid;border-width:3px;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.32);padding:3px}
   .slot .tface{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:100%;height:100%;text-align:center;line-height:1.05}
@@ -216,7 +230,7 @@
   .ohalf .pfit{z-index:8}                 /* the hull/cask paints ABOVE its tucked cargo */
   
   .slot .die.dcask,.mtile .die.dcask{position:absolute;bottom:4.5cqmin;right:5.5cqmin;width:15cqmin;height:15cqmin;z-index:5}
-  .seatdie .die{width:.44in;height:.44in}   /* the tally die on the tile's printed seat (scales with the tile) */
+  .seatdie .die{width:.44in;height:.44in;gap:.02in;padding:.035in;border-radius:.07in}   /* the tally die on the tile's printed seat (scales with the tile) */
   .slot.pfilled{overflow:visible;z-index:2}   /* protruding tucks/ships paint OVER neighbouring cells */
   /* ===== demand DIE — pips show the ★ a cask banks from the value building it shipped through ===== */
   .die{display:inline-grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:1cqmin;position:relative;
@@ -3740,11 +3754,15 @@ function renderGrid(){
     // v3.3.1 [ruled]: the slot is DOUBLE-DEPTH along its outward axis — the INNER half seats the
     // building (its own home, never stacked under); the OUTER half seats the occupant (a ship's
     // cargo still chains/tucks under the hull, outward).
+    const vert=(TKDIR[s.id]==='tk-up'||TKDIR[s.id]==='tk-down');
+    if(vert)cls+=' vslot';
     if(b||t){cls+=' pfilled';
       const dirW={'tk-up':'up','tk-down':'down','tk-left':'left','tk-right':'right'}[TKDIR[s.id]]||null;
-      inner='<div class="bhalf">'+(b?pBldgFace(b,false,dirW):'<span class="halfemp" data-tip="'+attr('The building seat — a Privilege/Building placed here authors this slot')+'"><i data-lucide="building-2" class="ic"></i></span>')+'</div>'
-        +'<div class="ohalf'+(t&&!b?' full':'')+'">'+(t?(t.type==='cask'?pCaskFace(t,Math.max(S.presEnd?1:0,caskPreviewBonus(s.id)),slotEffAct(s.id),dirW):pShipFace(t,dirW))
-          :'<span class="halfemp" data-tip="'+attr('Deploy a Ready cask here — an empty slot\u2019s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span>')+'</div>';}
+      const bH='<div class="bhalf">'+(b?pBldgFace(b,false,dirW):'<span class="halfemp" data-tip="'+attr('The building seat — a Privilege/Building placed here authors this slot')+'"><i data-lucide="building-2" class="ic"></i></span>')+'</div>';
+      const oDep=t?(t.type==='cask'?1.08:((HC?HC.SHIP_H(t.ship):2)+0.08)):1.0;   // the occupant band's true depth (in)
+      const oH='<div class="ohalf'+(t&&!b?' full':'')+'"'+(vert?' style="aspect-ratio:2.5/'+oDep+'"':'')+'>'+(t?(t.type==='cask'?pCaskFace(t,Math.max(S.presEnd?1:0,caskPreviewBonus(s.id)),slotEffAct(s.id),dirW):pShipFace(t,dirW))
+          :'<span class="halfemp" data-tip="'+attr('Deploy a Ready cask here — an empty slot\u2019s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span>')+'</div>';
+      inner=vert?(TKDIR[s.id]==='tk-up'?oH+bH:bH+oH):(bH+oH);}
     else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Deploy a Ready cask here — an empty slot’s default line-action is Deploy')+'"><i data-lucide="barrel" class="ic"></i></span></span>';
     let click=bldgPlacing?'placeBldgOn':(occPlacing?(UI.sub==='deploy'?'deployTo':'placeSlot'):null);
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':'')+'>'+inner+'</div>';

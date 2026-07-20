@@ -79,7 +79,7 @@ const BUILDINGS=[
   {k:'ch_bergen', nm:'Bergen Bryggen',       verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask to Bergen: +4★ '+DIE(4)},
   {k:'ch_novgo',  nm:'Novgorod Peterhof',    verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask to Novgorod: +4★ '+DIE(4)},
   // WORKS (green, 15 tiles) — serve any dock; three print an action on their slot's stop
-  {k:'maltkiln',  nm:'Malt Kiln',            verb:'transform', tgt:'cask', ic:'flame',            g:2, n:2, eff:'Cask ships +1 quality (max Q5)'},
+  {k:'maltkiln',  nm:'Malt Kiln',            verb:'transform', tgt:'cask', ic:'flame',            g:2, n:2, eff:'Cask ships +1 quality'},
   {k:'hopyard',   nm:'Hop Yard',             verb:'transform', tgt:'cask', ic:'sprout',           g:3, n:1, eff:'Q2+ cask ships +1 quality'},
   {k:'cooperage', nm:'Cooperage',            verb:'transform', tgt:'ship', ic:'package',          g:2, n:2, eff:'Ship here holds +1 cask'},
   {k:'customs',   nm:'Customs House',        verb:'transform', tgt:'ship', ic:'scroll-text',      g:2, n:2, eff:'Ship here boards casks 1 gate lower'},
@@ -92,7 +92,7 @@ const BUILDINGS=[
   {k:'missionq',  nm:'Mission Quay',         verb:'transform', tgt:'cask', ic:'church',           g:2, n:1, eff:'Empty stop: age a cask +1', art:'building-reliquary.png'},
   // EXPANSION "Specialty Beers" (Option A) thematic tiles — print with the kit; use only with that module
   {k:'salthouse', nm:'Salt House',          verb:'value',     tgt:'cask', ic:'gem',           g:2, n:1, eff:'Your cask: +1'+LU('wheat','g')+' +1'+LU('sprout','h')},
-  {k:'smokekiln', nm:'Smoke Kiln',          verb:'transform', tgt:'cask', ic:'cloud',         g:2, n:1, eff:'Cask ships +1 quality (max Q5)'},
+  {k:'smokekiln', nm:'Smoke Kiln',          verb:'transform', tgt:'cask', ic:'cloud',         g:2, n:1, eff:'Cask ships +1 quality'},
   {k:'partigyle', nm:'Parti-Gyle Tun',      verb:'transform', tgt:'cask', ic:'split',         g:2, n:1, eff:'Deploy here: a free Gruit to a vessel'},
 ];
 
