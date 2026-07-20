@@ -381,7 +381,7 @@
   .shelf-lbl .bag{margin-left:auto;display:inline-flex;align-items:center;opacity:.7}   /* refill from this family's DRAW BAG (tile backs reveal the type, so the supply hides in a bag) */
   .shelf-lbl .bag svg,.shelf-lbl .bag .ic{width:.16in;height:.16in}
   .disp-bd{display:flex;gap:.1in;align-items:center}
-  .dslot{width:2in;height:1.32in;border:1.7px dashed var(--sea);border-radius:.07in;background:rgba(255,255,255,.5);   /* buildings 2×1.32 (v3.4a) */
+  .dslot{width:2.5in;height:1.32in;border:1.7px dashed var(--sea);border-radius:.07in;background:rgba(255,255,255,.5);   /* buildings 2×1.32 (v3.4a) */
     display:flex;flex-direction:column;gap:.04in;align-items:center;justify-content:center;color:var(--sea);flex:0 0 auto;position:relative}
   .dslot svg,.dslot .ic{width:.6in;height:.6in;opacity:.32}
   /* OVERLAY proof: a real component render ghosted into its slot — native size, half opacity, never printed */
@@ -657,7 +657,7 @@
 //==================================================================
 // The CARD COMPONENT LIBRARY (components.js) is the single source of the printed card faces —
 // data + generators + card CSS, shared with play.html (the app mirrors the kit, v3.3).
-const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,frameTile,coverTile,wtok,recipeCard,contractCard}=window.HC;
+const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard}=window.HC;
 
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 // (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
@@ -733,7 +733,7 @@ const IMPF_GEO  ={w:22,h:8.5,  y0:0.45,yMax:8.22};   // improvements + owner fra
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
 // NATIVE component sizes (in) — the design size each piece renders at; packRun scales the FOOTPRINT by SCALE and
 // the render wrapper scales the CONTENT to match. casks/ships 2.5″ · buildings 2″ · improvement cards 2×1″ · frames 2.5″.
-const SIZE={tile:[1.25,1.25],caskc:[2.5,1],cask:[2.5,1],shipc:[2.5,3.33],shiph:[2.5,4.33],bld:[2,1.32],imp:[2,2],frame:[2.5,2.5],coverV:[2.4,2.4],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // v3.4a refit: cask TILES 2.5×1 · buildings 2×1.32 · carrier ships by hull
+const SIZE={tile:[1.25,1.25],caskc:[2.5,1],cask:[2.5,1],shipc:[2.5,3.33],shiph:[2.5,4.33],bld:[2.5,1.32],imp:[2,2],coverV:[2.4,2.4],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // v3.4a refit: cask TILES 2.5×1 · buildings 2×1.32 · carrier ships by hull
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
@@ -1304,11 +1304,9 @@ function buildPages(){
   const bldFrontPages=pages.slice(tStart);
   tagFamilies(bldFrontPages,bldMeta);
   mirrorBackPages(bldFrontPages,bldMeta,TILE_GEO,'Building tile BACKS (mirror — flip LEFT↔RIGHT): the displaced face — seat the Floor Wild (none open → discard)','bits');
-  // Owner FRAMES + unlock COVERS are SINGLE-SIDED → their own trimmed sheet (no back).
-  // (The Specialist tiles ride the Wharf sheet's open right side since 2026-07-14.)
-  const TLBL_IMPF='Owner frames + unlock covers (22″ plotter · single-sided · cut apart)';
-  const frames=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(6);i++)frames.push(frameTile(p.c,p.nm));});
-  packRun(pages,'bits',TLBL_IMPF,'frame',frames,'Building frames',famPages,IMPF_GEO);
+  // Unlock COVERS are SINGLE-SIDED → their own trimmed sheet (no back). (v3.4c: the owner frames
+  // are RETIRED — little house tokens mark building ownership; store-bought, nothing to cut.)
+  const TLBL_IMPF='Unlock covers (22″ plotter · single-sided · cut apart)';
   // UNLOCK COVERS (v3.1 ONE ROW) — 5 per player, one size (they sit on Floor slots 3–7)
   const covs=[];PLAYERS.forEach(p=>{for(let i=0;i<cnt(5);i++)covs.push(coverTile(p.c,2.4));});
   packRun(pages,'bits',TLBL_IMPF,'coverV',covs,'Unlock covers',famPages,IMPF_GEO);
@@ -1394,7 +1392,7 @@ function checklist(pages,famPages){
     +R('Maturation markers','Per player colour — one per brewing slot in use, advances on the cask card’s printed aging track.',MAT_MARKERS+' ea')
     +R('Unlock covers','Per player colour — sit on Floor slots 3–7; each new distinct beer brewed (from the 2nd) or the Coppersmith removes the next one.','5 ea')
     +R('Draw bags','One per hidden tile supply — Ships · Buildings/Privileges · Specialists (their backs reveal the type, so the supply hides in a bag; displays refill by blind draw). <i>Sourced.</i>','3')
-    +R('Building-owner frames','Per player colour — an overlay base marking whose building card sits on a slot.','6 ea')
+    +R('Ownership houses (store-bought)','Per player colour — a little monopoly-style HOUSE set on a building card marks its owner; no house = neutral. Nothing to cut.','6 ea')
     +R('Demand dice (d6)','The one-read value carrier — set ONCE, at departure, to the owner’s Privilege’s printed +N★; rides beside the hull’s berth (the pips ARE the ★ banked on delivery). Never rolled, never recalculated. <i>Sourced — ordinary d6s.</i>','8')
     +R('Quality-boost markers','A +1-quality token a cask carries from a Malt Kiln / Hop Yard (gates AND points) to delivery. <i>Sourced — any 6 distinct tokens.</i>','6')
     +R('First-player, round &amp; Sailed-Ships markers','Turn order (fixed all game) · the Sailed-Ships track mover · a round counter for the 25-round backstop. <i>Sourced.</i>','3')

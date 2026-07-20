@@ -184,6 +184,8 @@
   .pfit .pfin{position:absolute;top:50%;left:50%;transform-origin:center;transform:translate(-50%,-50%) scale(.5)}
   .pring{position:absolute;inset:0;border-radius:10px;background:var(--oc,#8a8577);box-shadow:0 2px 6px rgba(0,0,0,.3)}
   .pring .pfit{inset:8%;border-radius:4px;box-shadow:none}
+  .phouse{position:absolute;right:.08in;top:.08in;z-index:3}
+  .phouse svg,.phouse .ic{width:.26in;height:.26in;fill:var(--pc);stroke:#fff;stroke-width:1.7;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
   .pqboost{position:absolute;top:4cqmin;left:4cqmin;z-index:4;display:inline-flex;align-items:center;gap:1cqmin;font-weight:900;font-size:12cqmin;color:#fff;background:rgba(20,14,8,.72);border-radius:3cqmin;padding:1cqmin 3cqmin}
   .pqboost .ic,.pqboost svg{width:10cqmin;height:10cqmin}
   .pcomm2{position:absolute;top:3cqmin;right:3cqmin;z-index:4;font-weight:bold;font-size:9cqmin;display:inline-flex;align-items:center;gap:1cqmin;background:rgba(244,234,208,.94);color:#2b2018;border:1px solid rgba(0,0,0,.25);border-radius:3cqmin;padding:1cqmin 2.5cqmin}
@@ -217,10 +219,10 @@
   .mtile{position:relative;width:90px;height:90px;flex:0 0 auto;container-type:size}
   /* v3.4a: display boxes take the REFIT tiles' own aspects (no letterboxing) */
   .mtile:has(.ctile){height:36px}
-  .mtile:has(.btile){height:60px}
+  .mtile:has(.btile){height:48px}
   .mtile:has(.stile){height:110px}
   .shopgrid .mtile:has(.ctile){height:auto;aspect-ratio:2.5/1}
-  .shopgrid .mtile:has(.btile){height:auto;aspect-ratio:2/1.32}
+  .shopgrid .mtile:has(.btile){height:auto;aspect-ratio:2.5/1.32}
   .shopgrid .mtile:has(.stile){height:auto;aspect-ratio:2.5/3.6}
   .mtile.sm{width:78px;height:78px}
   .shopgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;margin:6px 0}
@@ -1296,14 +1298,15 @@ function pShipFace(t,dir){if(!HC)return '';
 // a building = the 2×1.32 wharf side seated in its owner FRAME (an inch-true ring that scales
 // with the tile; neutral = weathered grey). Side slots rotate the whole framed tile 90°.
 function pBldgFace(b,noRing,dir){const d=HC_BLD[b.b];if(!d)return '';
-  if(noRing)return pfit(HC.buildingCard(d),2,1.32);
-  const oc=(b.owner!=null&&S.players[b.owner])?S.players[b.owner].color:'#8a8577';
-  let ring='<div style="position:relative;width:2.24in;height:1.56in;background:'+oc+';border-radius:.1in;box-shadow:0 2px 6px rgba(0,0,0,.35)">'
-    +'<div style="position:absolute;left:.12in;top:.12in">'+HC.buildingCard(d)+'</div></div>';
-  let W=2.24,H=1.56;
-  if(dir==='left'){ring=rotWrap(ring,2.24,1.56,false);W=1.56;H=2.24;}
-  else if(dir==='right'){ring=rotWrap(ring,2.24,1.56,true);W=1.56;H=2.24;}
-  return pfit(ring,W,H);}
+  // v3.4c: the owner ring retires — a little player-colour HOUSE token on the card marks ownership
+  const op=(b.owner!=null&&S.players[b.owner])?S.players[b.owner]:null;
+  let tile='<div style="position:relative;width:2.5in;height:1.32in">'+HC.buildingCard(d)
+    +(op?'<span class="phouse" style="--pc:'+op.color+'" data-tip="'+attr(op.name+'\u2019s building — the house token marks the owner')+'">'+LU('home')+'</span>':'')
+  +'</div>';
+  let W=2.5,H=1.32;
+  if(dir==='left'){tile=rotWrap(tile,2.5,1.32,false);W=1.32;H=2.5;}
+  else if(dir==='right'){tile=rotWrap(tile,2.5,1.32,true);W=1.32;H=2.5;}
+  return pfit(tile,W,H);}
 // a Specialist = the printed purple tile (unchanged, 2×2)
 function pImpFace(key){const def=IMPROVEMENTS[key];const d=def&&HC_IMP[def.name.toLowerCase()];
   return d?pfit(HC.improveTile(d),2,2):'';}

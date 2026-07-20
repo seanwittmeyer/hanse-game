@@ -56,7 +56,7 @@
 | Worker pawn | 1 | Moves between stations — or **stays home** on a Floor turn. |
 | **TALLY DICE (player-colour d6)** *(v3.4 — replaces the presence discs + the shared demand dice)* | **14** ⚙ | One die rides every cask the house deploys (face **1** — ownership in plain sight), is **turned to a Privilege’s printed N at departure** (the one-read carrier, unchanged), rides the hull’s berth well, and **parks at the destination on delivery** — it IS the house’s presence there (majorities) **and the CLOCK:** placing the **last** die sets the final round. Never rolled; never returns from a destination. **No die in the tray → no deploy, no vessel-direct load, no Reach.** |
 | **Cask cubes** (player colour) | 8 | **Claim Hall coins** (one cube per coin) and **mark the Hall’s launch rows** (v3.2b — a cube per launch). *(v3.4a: the berth-well job is retired — the cask TILE itself rides the hull’s berth.)* |
-| Owner frames | 6 | Mark whose Privilege/Building sits on a slot (confirmed direction, 2026-07-04). |
+| **Ownership houses** *(v3.4c — the frames retire)* | 6 | A little monopoly-style house set ON the building card marks its owner; no house = neutral. Store-bought, nothing to cut. |
 | **Unlock covers** *(new)* | 5 | Sit on Floor slots 3–7 (v3.1 “One Row”); a Flight unlock (each new distinct beer brewed, from the 2nd), the Coppersmith, or the High Board honor removes the next one. |
 | Maturation markers | 5 ⚙ | One per brewing slot in use — sits on the cask card’s printed aging track. |
 
@@ -64,7 +64,7 @@
 
 ## 5. Cask tiles · family A (~62, shared supply)
 
-> **v3.4a COMPONENT REFIT [ruled 2026-07-19]:** the cask is a **2.5×1″ double-sided TILE** — AGING side (Q·name·special · maturation track · brew cost + action preview) / WHARF side (Q·name · THE ACTION · the printed **die seat**). Buildings are **2×1.32″** (wharf side: art · name · cost · one effect line / floor side: **WILD** only). Ships are vertical **carrier tiles** (above). The player-board Floor slots and wharf slots seat these footprints.
+> **v3.4a COMPONENT REFIT [ruled 2026-07-19]:** the cask is a **2.5×1″ double-sided TILE** — AGING side (Q·name·special · maturation track · brew cost + action preview) / WHARF side (Q·name · THE ACTION · the printed **die seat**). Buildings are **2.5×1.32″** (v3.4c — the common tile width; wharf side: art · name · cost · one effect line / floor side: **WILD** only; ownership = a little HOUSE token on the card, the owner frames retired). Ships are vertical **carrier tiles** (above). The player-board Floor slots and wharf slots seat these footprints.
 
 A brewed beer in one of three states: **maturing** (vessel) → **deployed** (slot — cargo + a public action) → **delivered** (scores, gone). Each cask carries a printed quality and, on brewing, an action drawn from the top of its quality pile (Gruit pinned). **Brewing a new distinct beer FLIPS its recipe card to the BREWED face — from the 2nd on, each flip grants a Floor-slot unlock, and the flipped cards score the Flight ladder (v3.2d).**
 
@@ -284,7 +284,7 @@ Shared setup: 2 hulls dealt onto slots (incl. a guaranteed Hulk→Bruges); **2 n
 | +1Q markers | 6 | 1 |
 | Worker pawns | 4 | 4 colours |
 | Cask cubes | 32 (8 / colour) | 4 colours |
-| Owner frames | 24 (6 / colour) | 4 colours |
+| Ownership houses (store-bought) | 24 (6 / colour) | 4 colours |
 | Unlock covers | 20 (5 / colour) | 1 design |
 | Maturation markers | 20 (5 / colour) ⚙ | 1 design |
 | Sailed-Ships track | **5 / 8 / 10** cells for 2 / 3 / 4 p (v3.2 retune — enshrines no longer tick; printed 15 with END marks) | — |
@@ -353,6 +353,6 @@ Majorities turn OFF (the contest moves inland). Movement per voyage (one node pe
 | 5 | **Unlock-cover fit** — the covers must sit stably on the printed row slots | locked/open slots | punchboard squares sized to the slot ⚙ |
 | 6 | **Hall cube supply** — 8 cask cubes per colour serve berths AND coin claims (12 coins max on the board); worst-case check at 4p | coin claims + loaded berths | count check at the table; +2 cubes if tight |
 | 7 | **Recipe-card model** — 16 export cards + printed starters (adopted from the kits) | — | done; keep in sync |
-| 8 | **Owner frames** — confirmed direction; 6/colour in §4 | slot-tile ownership | shipped in printables2 |
+| 8 | ~~Owner frames~~ **RETIRED (v3.4c)** — little house tokens mark building ownership | slot-tile ownership | store-bought houses, 6/colour |
 | 9 | **Blend’s +1 quality** (Specialty Beers) — carrier for a blended cask’s raised quality; the 6 markers are claimed by the kilns | a blended cask’s quality | more +1Q markers ⚙, or print-side rule |
 | 10 | ~~Demand dice supply~~ **RESOLVED (v3.4)** — each cask rides its owner’s own tally die; supply = the 14/house pool by construction | — | — |
