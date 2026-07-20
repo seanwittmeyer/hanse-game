@@ -1567,7 +1567,8 @@ function bakeArt(root,scale){
     cx.imageSmoothingQuality='high';
     if(layer.closest('.bc-bk'))cx.filter='grayscale(.55) brightness(.78)';   // displaced building back (CSS filter html2canvas drops)
     cx.drawImage(img,(w-dw)/2,(h-dh)/2,dw,dh);cx.filter='none';
-    if(layer.classList.contains('scrim')){                // bake the scrim gradient in card-space (not the overscanned canvas)
+    // ship tiles suppress the scrim on screen (.stile>.artbg.scrim::after{content:none}) — don't bake it in
+    if(layer.classList.contains('scrim')&&!layer.closest('.stile')){   // bake the scrim gradient in card-space (not the overscanned canvas)
       const g=cx.createLinearGradient(0,top,0,top+ch);
       g.addColorStop(0,'rgba(0,0,0,.5)');g.addColorStop(.28,'rgba(0,0,0,.12)');
       g.addColorStop(.72,'rgba(0,0,0,.12)');g.addColorStop(1,'rgba(0,0,0,.55)');
@@ -1587,6 +1588,43 @@ function bakeArt(root,scale){
     }
     cv.className='artbg-img';cv.style.cssText='position:absolute;inset:-'+OB+'px;width:calc(100% + '+(2*OB)+'px);height:calc(100% + '+(2*OB)+'px);display:block';
     layer.classList.add('baked');img.replaceWith(cv);     // .baked suppresses the now-redundant CSS scrim
+  });
+  // CASK TILE art fade — .ct-art masks its <img> with a linear-gradient (mask-image), which html2canvas
+  // IGNORES → the export shows a hard-edged art rectangle instead of the fade into the beer colour.
+  // Bake img + fade into one canvas (alpha via destination-in); the container's ignored mask stays inert.
+  root.querySelectorAll('.ct-art>img').forEach(img=>{
+    if(!img.complete||!img.naturalWidth)return;
+    const box=img.parentElement;const ow=box.offsetWidth,oh=box.offsetHeight;if(!ow||!oh)return;
+    const w=Math.round(ow*scale),h=Math.round(oh*scale);
+    const cv=document.createElement('canvas');cv.width=w;cv.height=h;const cx=cv.getContext('2d');
+    const bw=w*1.12,bh=h*1.52,bx=-.06*w,by=-.26*h;      // the img's CSS layout box (112%×152% at −6%/−26%)
+    const cover=Math.max(bw/img.naturalWidth,bh/img.naturalHeight),dw=img.naturalWidth*cover,dh=img.naturalHeight*cover;
+    cx.imageSmoothingQuality='high';
+    cx.drawImage(img,bx+(bw-dw)/2,by+(bh-dh)/2,dw,dh);
+    const rtl=!!box.closest('.ctB');                     // wharf side: art on the RIGHT, fading leftward (270deg)
+    const g=cx.createLinearGradient(rtl?w:0,0,rtl?0:w,0);
+    g.addColorStop(0,'rgba(0,0,0,1)');g.addColorStop(.24,'rgba(0,0,0,1)');
+    g.addColorStop(.94,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,0)');
+    cx.globalCompositeOperation='destination-in';cx.fillStyle=g;cx.fillRect(0,0,w,h);
+    cv.style.cssText='position:absolute;inset:0;width:100%;height:100%;display:block';
+    img.replaceWith(cv);
+  });
+  // SHIP TILE colour wash — .st-wash is solid kontor colour under a mask-image alpha ramp (solid over the
+  // identity band, thinning to 30% over the berths). html2canvas ignores the mask → the export floods the
+  // whole tile solid and hides the port art. Bake the same ramp into a canvas inside the (kept) element.
+  root.querySelectorAll('.st-wash').forEach(el=>{
+    const ow=el.offsetWidth,oh=el.offsetHeight;if(!ow||!oh)return;
+    const w=Math.round(ow*scale),h=Math.round(oh*scale);
+    const cv=document.createElement('canvas');cv.width=w;cv.height=h;const cx=cv.getContext('2d');
+    const [r,g2,b2]=bakeRGB(getComputedStyle(el).backgroundColor);
+    const A=a=>'rgba('+r+','+g2+','+b2+','+a+')';
+    const y1=Math.min(1,28.8/oh),y2=Math.min(1,91.2/oh); // the mask's .3in / .95in stops in this element's own box
+    const g=cx.createLinearGradient(0,0,0,h);
+    g.addColorStop(0,A(1));g.addColorStop(y1,A(1));g.addColorStop(y2,A(.3));g.addColorStop(1,A(.3));
+    cx.fillStyle=g;cx.fillRect(0,0,w,h);
+    el.style.background='none';el.style.webkitMaskImage='none';el.style.maskImage='none';   // the canvas carries wash + fade now
+    cv.style.cssText='position:absolute;inset:0;width:100%;height:100%;display:block';
+    el.appendChild(cv);
   });
 }
 function saveBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;
