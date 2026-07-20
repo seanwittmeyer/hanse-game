@@ -64,7 +64,7 @@
 
 ## 5. Cask tiles · family A (~62, shared supply)
 
-> **v3.4a COMPONENT REFIT [ruled 2026-07-19]:** the cask is a **2.5×1″ double-sided TILE** — AGING side (Q·name·special · maturation track · brew cost + action preview) / WHARF side (Q·name · THE ACTION · the printed **die seat**). Buildings are **2.5×1.32″** (v3.4c — the common tile width; wharf side: art · name · cost · one effect line / floor side: **WILD** only; ownership = a little HOUSE token on the card, the owner frames retired). Ships are vertical **carrier tiles** (above). The player-board Floor slots and wharf slots seat these footprints.
+> **v3.4a COMPONENT REFIT [ruled 2026-07-19]:** the cask is a **2.4×1″ double-sided TILE** (v3.4c: a whisker narrower than the 2.5″ wells it seats in) — AGING side (Q·name·special · maturation track · brew cost + action preview) / WHARF side (Q·name · THE ACTION · the printed **die seat**). Buildings are **2.5×1.32″** (v3.4c — the common tile width; wharf side: art · name · cost · one effect line / floor side: **WILD** only; ownership = a little HOUSE token on the card, the owner frames retired). Ships are vertical **carrier tiles** (above). The player-board Floor slots and wharf slots seat these footprints.
 
 A brewed beer in one of three states: **maturing** (vessel) → **deployed** (slot — cargo + a public action) → **delivered** (scores, gone). Each cask carries a printed quality and, on brewing, an action drawn from the top of its quality pile (Gruit pinned). **Brewing a new distinct beer FLIPS its recipe card to the BREWED face — from the 2nd on, each flip grants a Floor-slot unlock, and the flipped cards score the Flight ladder (v3.2d).**
 

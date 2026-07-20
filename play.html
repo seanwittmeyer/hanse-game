@@ -43,10 +43,10 @@
   .copybtn{float:right;font-family:inherit;font-variant:normal;font-size:.66rem;cursor:pointer;background:var(--ink);color:var(--parch);border:none;border-radius:5px;padding:2px 8px;letter-spacing:.3px}
   .copybtn:hover{background:var(--red2)}
   /* GRID */
-  .agwrap{--bdw:min(92vmin,96vw,1150px);display:flex;justify-content:center;padding:calc(var(--bdw)*0.02)}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
+  .agwrap{--bdw:min(92vmin,96vw,1150px);display:flex;justify-content:center;padding:calc(var(--bdw)*0.03)}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
   @media(max-width:700px){.agwrap{--bdw:min(92vmin,74vw)}}   /* portrait phone: height is plentiful — let the board take the width */
   .ag{display:grid;width:var(--bdw,600px);max-width:100%;margin:0 auto;aspect-ratio:1;   /* v3.3: the wharf IS the screen; sized by --bdw on .agwrap */
-    gap:clamp(2px,0.55vw,4px);
+    gap:clamp(4px,0.9vw,7px);
     grid-template-columns:2fr 1fr 1fr 2fr;grid-template-rows:2fr 1fr 1fr 2fr}   /* v3.3.1: the slot bands are DOUBLE-DEPTH — inner half buildings, outer half ships/casks */
   /* explicit square rows make every cell a guaranteed square from the GRID — not from each
      item's own aspect-ratio under size-containment (which mobile Safari collapses). */
@@ -221,7 +221,7 @@
   .mtile:has(.ctile){height:36px}
   .mtile:has(.btile){height:48px}
   .mtile:has(.stile){height:110px}
-  .shopgrid .mtile:has(.ctile){height:auto;aspect-ratio:2.5/1}
+  .shopgrid .mtile:has(.ctile){height:auto;aspect-ratio:2.4/1}
   .shopgrid .mtile:has(.btile){height:auto;aspect-ratio:2.5/1.32}
   .shopgrid .mtile:has(.stile){height:auto;aspect-ratio:2.5/3.6}
   .mtile.sm{width:78px;height:78px}
@@ -1274,9 +1274,9 @@ function pCaskFace(t,bonus,actOv,dir,forceAging){const d=HC_CASK[t.style];if(!d)
   const act=hcAct(actOv||caskAct(t));
   const dv=Math.max((S&&S.presEnd)?1:0,bonus||0);
   let tile=aging?HC.caskCardFront(d,act):ctWithDie(HC.caskCardBack(d,act),o?dv:0,o?o.color:null);
-  let W=2.5,H=1;
-  if(dir==='left'){tile=rotWrap(tile,2.5,1,false);W=1;H=2.5;}
-  else if(dir==='right'){tile=rotWrap(tile,2.5,1,true);W=1;H=2.5;}
+  let W=2.4,H=1;
+  if(dir==='left'){tile=rotWrap(tile,2.4,1,false);W=1;H=2.4;}
+  else if(dir==='right'){tile=rotWrap(tile,2.4,1,true);W=1;H=2.4;}
   return pfit(tile,W,H)
     +(t.q!==d.q?'<span class="pqboost" data-tip="'+attr('Effective quality '+t.q+' (a blend / kiln marker rides the tile)')+'">'+LU('beer')+t.q+'</span>':'');}
 // a ship = the carrier tile; its cargo tiles sit ON the printed berths, dice on their seats.
@@ -1287,7 +1287,7 @@ function pShipFace(t,dir){if(!HC)return '';
     const op=(L.owner!=null)?S.players[L.owner]:null;
     const dv=Math.max((S&&S.presEnd)?1:0,L.die||0);
     const bi=Math.min(i,printedCap-1);
-    ov+='<div style="position:absolute;left:0;top:'+(H-1-bi)+'in;width:2.5in;height:1in;z-index:2" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(dv?' \u00b7 tally die +'+dv+'\u2605':'')+' \u2014 loaded in berth '+(bi+1))+'">'
+    ov+='<div style="position:absolute;left:.05in;top:'+(H-1-bi)+'in;width:2.4in;height:1in;z-index:2" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(dv?' \u00b7 tally die +'+dv+'\u2605':'')+' \u2014 loaded in berth '+(bi+1))+'">'
       +ctWithDie(HC.caskCardBack(d,hcAct(L.act||'source')),dv,op?op.color:null)+'</div>';});
   let wrap='<div style="position:relative;width:2.5in;height:'+H+'in">'+HC.shipCard(t.ship,DEST[t.dest].name)+ov+'</div>';
   let W=2.5,Hh=H;
@@ -1324,10 +1324,10 @@ function fitCards(){
       if(ship){const cross=(dir==='up'||dir==='down')?w.clientWidth:w.clientHeight;s=cross/((dir==='up'||dir==='down')?W:H);}
       else s=Math.min(w.clientWidth/W,w.clientHeight/H);
       if(!(isFinite(s)&&s>0))return;
-      if(dir==='up')  inn.style.cssText='position:absolute;left:50%;top:auto;bottom:0;transform:translateX(-50%) scale('+s+');transform-origin:bottom center';
-      if(dir==='down')inn.style.cssText='position:absolute;left:50%;top:0;bottom:auto;transform:translateX(-50%) scale('+s+');transform-origin:top center';
-      if(dir==='left')inn.style.cssText='position:absolute;left:auto;right:0;top:50%;transform:translateY(-50%) scale('+s+');transform-origin:center right';
-      if(dir==='right')inn.style.cssText='position:absolute;left:0;right:auto;top:50%;transform:translateY(-50%) scale('+s+');transform-origin:center left';
+      if(dir==='up')  inn.style.cssText='position:absolute;left:50%;top:auto;bottom:4px;transform:translateX(-50%) scale('+s+');transform-origin:bottom center';
+      if(dir==='down')inn.style.cssText='position:absolute;left:50%;top:4px;bottom:auto;transform:translateX(-50%) scale('+s+');transform-origin:top center';
+      if(dir==='left')inn.style.cssText='position:absolute;left:auto;right:4px;top:50%;transform:translateY(-50%) scale('+s+');transform-origin:center right';
+      if(dir==='right')inn.style.cssText='position:absolute;left:4px;right:auto;top:50%;transform:translateY(-50%) scale('+s+');transform-origin:center left';
       return;}
     const s=Math.min(w.clientWidth/W,w.clientHeight/H);
     if(isFinite(s)&&s>0)inn.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale('+s+')';});

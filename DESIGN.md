@@ -252,7 +252,7 @@ rises (13→40% at 3p; the presence trigger still fires 17–51%) — a real-tie
 All numbers ⚙.
 
 **v3.4a "The Component Refit"** *(2026-07-19, designer-ruled)* — The table was drowning in 2.5″ squares:
-the CASK becomes a **2.5×1″ double-sided tile** (aging / wharf sides; the wharf side prints the tally-die
+the CASK becomes a **2.4×1″ double-sided tile** (aging / wharf sides; the wharf side prints the tally-die
 seat), the BUILDING drops to **2.5×1.32″** (v3.4c width; wharf side tight: name · cost · one effect line; floor side just
 WILD; ownership = a little house token — the owner frames/rings retire), and the SHIP becomes a **vertical carrier** — ALL berths (v3.4b): full-width 1″ wells filled bottom→top,
 the TOP berth the TRIGGER printing the hull's identity (the last cask covers it = the sail; Cog 2.5×2″ ·
