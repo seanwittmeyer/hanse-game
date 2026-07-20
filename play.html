@@ -4109,6 +4109,8 @@ function renderTableaus(){
       if(floorStops){const si=floorStops.findIndex(st=>st.kind==='fcask'&&st.vi===vi);
         if(si>=0&&stopAvail(floorStops[si])){vcls=' stopgo';vclick=' onclick="resolveStop('+si+')"';}}
       else if(mine&&UI.sub==='load'&&UI.load&&!UI.load.cask&&UI.load.casks.includes('v'+vi)&&UI.load.ships.some(sh=>canTake(sh,'v'+vi))){vcls=' stopgo';vclick=' onclick="loadPickCask(\'v'+vi+'\')"';}
+      else if(mine&&UI.sub==='deploy'&&UI.deploy&&UI.deploy.vi==null&&ready){vcls=' stopgo';vclick=' onclick="deployPickCask('+vi+')"';}
+      else if(mine&&UI.sub==='ldeploy'&&UI.ldep&&localDeployCasks(p,UI.ldep.slot).some(o=>o.i===vi)){vcls=' stopgo';vclick=' onclick="localDeployPick('+vi+')"';}
       rowCells.push('<div class="vcell"><div class="mtile'+vcls+'"'+vclick+' data-tip="'+attr(STYLES[c.style].name+' Q'+c.q+' · '+CASK_ACT[caskAct(c)]+' · '+(ready?'READY ▸ deploy/ship':'aging '+c.step+'/'+c.ready+' — the marker on the track is the progress'))+'">'+pCaskFace(c,0,null,null,false,p.color)+'</div>'
         +(ready?'<div class="vmat"><span class="tag good">'+LU('check')+' READY ▸ deploy</span></div>':'')+'</div>');
     });
