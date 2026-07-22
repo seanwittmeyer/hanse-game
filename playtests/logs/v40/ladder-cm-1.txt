@@ -1,0 +1,4 @@
+=== v4.0 AI ladder — 8 games/pair · 2p, seats alternate ===
+  cellarmaster > guildmaster: 50.0%  (4/8)  avg 64.6 vs 59.3
+
+*** LADDER GATE FAILED (1 rung(s) <60% or errored) ***

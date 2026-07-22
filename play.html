@@ -1169,6 +1169,8 @@ function pickCount(n){setupN=n;for(let i=2;i<=4;i++)document.getElementById('pc'
     +'<option value="apprentice">AI · Apprentice (easy)</option>'
     +'<option value="journeyman">AI · Journeyman (standard)</option>'
     +'<option value="trader"'+((i===1||i===2)?' selected':'')+'>AI · Trader (hard)</option>'
+    +'<option value="guildmaster">AI · Guildmaster (expert — thinks via playouts; slower turns)</option>'
+    +'<option value="cellarmaster">AI · Cellarmaster (the arch-nemesis — deep playouts; SLOW turns)</option>'
     +'</select></div>';
   document.getElementById('names').innerHTML=h;
 }
@@ -1177,7 +1179,7 @@ function startGame(){
   for(let i=0;i<setupN;i++){
     const v=document.getElementById('nm'+i).value.trim();names.push(v||CNAMES[i]);
     const el=document.getElementById('ai'+i);const av=(el&&el.value)||'human';
-    ais.push(av==='human'?null:{tier:av});
+    ais.push(av==='human'?null:(function(){const parts=av.split('-');return {tier:parts[0],persona:parts[1]||null};})());
   }
   S=freshState(setupN,names);UI={sub:'move'};activeTab=0;undoStack=[];
   S.players.forEach((p,i)=>{p.ai=ais[i];});
@@ -1761,8 +1763,13 @@ const AI_TIERS={
   apprentice:{label:'Apprentice', noise:0.6},
   journeyman:{label:'Journeyman', noise:0},
   trader    :{label:'Trader',     noise:0},
+  guildmaster:{label:'Guildmaster',noise:0},    // P5: flat Monte Carlo — clone (S,UI), journeyman rollouts to game end, margin objective
+  cellarmaster:{label:'Cellarmaster',noise:0},  // P5: deep MC — trader rollouts + sequential halving on a bigger budget
 };
-const AI_PERSONAS=[];   // v4.0: persona leans ride the P5 oracle rebuild
+// v4 PERSONAS (the pathway oracle's lanes): a committed lean the Trader tilts toward —
+// majority (stack parked dice) · lifter (kiln-fed high dice) · builder (raise tiles, London) ·
+// breadth (the Flight; brew every beer). sim.js PERSONAS=1 seats them round-robin.
+const AI_PERSONAS=['majority','lifter','builder','breadth'];
 const AI_DELAYS={slow:900,normal:450,instant:0};
 const AI_SPEED_KEY='hanse-ai-speed';
 let aiTimer=null,aiActing=false,aiLoopActive=false,aiSimulating=false;
@@ -1773,7 +1780,9 @@ function aiSpeed(){try{const v=localStorage.getItem(AI_SPEED_KEY);return AI_DELA
 function aiSetSpeed(v){try{localStorage.setItem(AI_SPEED_KEY,v);}catch(e){}render();maybeRunAI();}
 function aiRandOf(a){return a[Math.floor(Math.random()*a.length)];}
 function aiNoisy(p){return Math.random()<((AI_TIERS[p.ai.tier]||{}).noise||0);}
-function aiIsTrader(p){return p.ai&&p.ai.tier==='trader';}
+function aiIsTrader(p){return p.ai&&(p.ai.tier==='trader'||p.ai.tier==='guildmaster'||p.ai.tier==='cellarmaster');}   // the MC tiers inherit the trader policy at un-sampled prompts
+function aiPersona(p){return (p.ai&&p.ai.persona)||null;}
+function aiPW(p,lane){return aiPersona(p)===lane?2.2:1;}   // the committed lean's tilt ⚙
 function aiPickBuilding(p,list){
   const pref=['maltkiln','cooperage','granary','scriveners','missionq','customs','hiringpost','annex','almoner','richberth'];
   for(const k of pref)if(list.includes(k))return k;return list[0];}
@@ -1790,26 +1799,31 @@ function aiVerbValue(p,act){
   if(act==='load'){const any=wharfShips().some(sid=>readyInVessels(p).some(o=>canTake(sid,o.i)));return any?3:0;}
   if(act==='reach'){if(!reachBenKontore(p).length||(S.presEnd&&trayDice(p)<=0))return 0;
     let best=0;reachBenKontore(p).forEach(k=>best=Math.max(best,aiMajSwing(p,k)));return 1+best*0.4;}
-  if(act==='recipe')return recipeGainable(p).length?2.6:0;
-  if(act==='survey')return ((S.buildDisplay||[]).length&&bldgTargets(p).length)?3.4:0;
+  if(act==='recipe')return recipeGainable(p).length?(aiIsTrader(p)?3.4:2.2)*aiPW(p,'breadth'):0;
+  if(act==='survey')return ((S.buildDisplay||[]).length&&bldgTargets(p).length)?3.4*aiPW(p,'builder'):0;
   if(act==='hire')return hireable(p).length?3:0;
   if(act==='brew')return (openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r))&&(!S.presEnd||trayDice(p)>0))?3:0;
   return 0.2;}
 function aiLoadValue(p,sid){const t=S.slots[sid];if(!t||t.type!=='ship')return 0;let best=0;
   readyInVessels(p).forEach(o=>{if(canTake(sid,o.i)){const d=boardDie(p.vessels[o.i],sid);
-    let v=1.5+d*0.8+(t.load.length+1>=sailCap(t)?0.8:0);
-    if(aiIsTrader(p))v+=aiMajSwing(p,t.dest)*0.35;
+    let v=1.5+d*0.8*aiPW(p,'lifter')+(t.load.length+1>=sailCap(t)?0.8:0);
+    if(aiIsTrader(p)){v+=Math.max(0,aiMajSwing(p,t.dest))*0.25*aiPW(p,'majority');if(S.ending)v*=1.5;}
     if(v>best)best=v;}});return best;}
 function aiCellValue(p,c){
+  const trader=aiIsTrader(p);
   if(c==='A')return Math.max(0.4,(5-(p.grain+p.hops))*0.7);
-  if(c==='B')return aiVerbValue(p,'brew')+((openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)&&!(p.brewed||{})[r]))?1.2:0);
-  if(c==='D'){const m=maturingInVessels(p);return m.length?(1.2+m.length*0.8):0;}
+  if(c==='B'){let v=aiVerbValue(p,'brew')+((openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)&&!(p.brewed||{})[r]))?(trader?2.4:0.5)*aiPW(p,'breadth'):0);
+    if(trader&&S.ending&&!p.recipes.some(r=>canBrew(p,r)&&startDieFor(p,r)>=STYLES[r].q))v*=0.25;   // the trader doesn't start what can't finish
+    return v;}
+  if(c==='D'){const m=maturingInVessels(p);let v=m.length?(1.2+m.length*0.8):0;
+    if(trader&&S.ending)v*=0.5;return v;}
   if(c==='C'){const disp=S.shipDisplay||[];
     if(!disp.length||!canPay(p,COMMISSION_COST)||!shipFreeSlots().length)return 0;
     const best=readyInVessels(p).sort((a,b)=>b.c.die-a.c.die)[0];
     const stranded=best&&!wharfShips().some(sid=>canTake(sid,best.i));
     let v=1+Math.max.apply(null,disp.map(sn=>SHIP_CAP[sn.ship]))*0.5;
     if(stranded&&disp.some(sn=>best.c.die>=DEST[sn.dest].gate))v+=3;
+    if(trader&&S.ending)v*=1.5;   // the endgame is banked points: commissions + loads
     return v;}
   return 0;}
 function aiLineScore(p,lk){const L=LINES[lk];let v=0;
@@ -1825,6 +1839,7 @@ function aiStopValue(p,st){
 // one decision per tick — the same functions the buttons call
 function aiStep(){
   const p=cur();if(!p||!p.ai)return;
+  if(!aiSimulating&&(p.ai.tier==='guildmaster'||p.ai.tier==='cellarmaster')&&AI_MC_SUBS[UI.sub])return aiMCDecide(p);
   aiActing=true;
   try{
     switch(UI.sub){
@@ -1852,7 +1867,7 @@ function aiStep(){
       case 'brew':{const aff=p.recipes.filter(r=>canBrew(p,r));
         if(!aff.length)return resume(UI.brew?UI.brew.returnTo:'stops');
         if(aiNoisy(p))return brewPick(aiRandOf(aff));
-        aff.sort((a,b)=>(((p.brewed||{})[b]?0:2)+STYLES[b].q)-(((p.brewed||{})[a]?0:2)+STYLES[a].q));
+        {const nb=aiIsTrader(p)?3.4:0.8;aff.sort((a,b)=>(((p.brewed||{})[b]?0:nb*aiPW(p,'breadth'))+STYLES[b].q)-(((p.brewed||{})[a]?0:nb*aiPW(p,'breadth'))+STYLES[a].q));}
         return brewPick(aff[0]);}
       case 'age':{const m=maturingInVessels(p).sort((a,b)=>((b.c.q-b.c.die)===1?9:b.c.q)-((a.c.q-a.c.die)===1?9:a.c.q));
         if(!m.length)return ageDone();
@@ -1877,7 +1892,7 @@ function aiStep(){
         const best=readyInVessels(p).sort((a,b)=>b.c.die-a.c.die)[0];
         let bi=-1,bv=-1e9;
         disp.forEach((sn,i)=>{let v=SHIP_CAP[sn.ship]*0.8;
-          if(best&&best.c.die>=DEST[sn.dest].gate)v+=2+best.c.die*0.3+(aiIsTrader(p)?aiMajSwing(p,sn.dest)*0.3:0);
+          if(best&&best.c.die>=DEST[sn.dest].gate)v+=2+best.c.die*0.3+(aiIsTrader(p)?Math.max(0,aiMajSwing(p,sn.dest))*0.25:0);
           if(v>bv){bv=v;bi=i;}});
         if(bi<0)return commSkip();
         return commPick(bi);}
@@ -1915,6 +1930,88 @@ function aiStep(){
     log('⚠ AI error — '+p.name+' ends its turn ('+(e&&e.message||e)+').');
     try{UI={sub:'end'};endTurn();}catch(e2){}
   }finally{aiActing=false;}
+}
+//==================================================================
+// P5 — the MONTE-CARLO tiers (v4 rebuild). Flat MC over the canonical engine: enumerate the
+// prompt's options, clone (S,UI), determinize the hidden decks, roll the game out with the
+// greedy tiers, keep the option with the best final MARGIN. The Guildmaster rolls out with the
+// journeyman policy on a small budget; the Cellarmaster with the trader policy on a big budget
+// + one round of sequential halving. Playouts run with render/save/snapshot stubbed and
+// aiSimulating set — they can never touch the DOM, the save, or the undo stack.
+//==================================================================
+let GUILD_MS=250;    // ⚙ ms per Guildmaster decision ('instant' speed caps at 120; harnesses lower it)
+let CELLAR_MS=1200;  // ⚙ ms per Cellarmaster decision
+let GM_MIN=2;        // minimum playouts per option
+const AI_MC_SUBS={move:1,line:1,stops:1,brew:1,load:1,commission:1,placebldg:1,benefit:1,survey:1,hire:1,reach:1};
+function aiMCOptions(p){
+  const out=[];const push=(label,fn)=>out.push({label,fn});
+  switch(UI.sub){
+    case 'move':{const cells=(!p.placed)?['A','B','C','D']:ADJ[p.cell];
+      cells.forEach(c=>push('move:'+c,()=>doMove(c)));break;}
+    case 'line':push('row',()=>chooseLine('row'));push('col',()=>chooseLine('col'));break;
+    case 'stops':{(UI.stops||[]).forEach((st,i)=>{if(stopAvail(st))push('stop:'+(st.kind==='cell'?st.cell:st.kind+st.slot),()=>resolveStop(i));});
+      push('end',()=>endTurn());break;}
+    case 'brew':{p.recipes.filter(r=>canBrew(p,r)).forEach(r=>push('brew:'+r,()=>brewPick(r)));
+      push('skip',()=>resume(UI.brew?UI.brew.returnTo:'stops'));break;}
+    case 'load':{const L=UI.load;if(!L)break;
+      if(L.cask==null){readyInVessels(p).forEach(o=>{L.ships.forEach(sid=>{if(canTake(sid,o.i))push('load:'+o.c.style+'@'+sid,()=>{UI.load.cask=o.i;loadOnto(sid);});});});
+        push('skip',()=>loadSkip());}
+      else{L.ships.forEach(sid=>{if(canTake(sid,L.cask))push('onto:'+sid,()=>loadOnto(sid));});push('skip',()=>loadSkip());}
+      break;}
+    case 'commission':{const disp=S.shipDisplay||[];
+      if(UI.stage==='place'){shipFreeSlots().forEach(sx=>push('place:'+sx.id,()=>commPlace(sx.id)));push('skip',()=>commSkip());}
+      else{disp.forEach((sn,i)=>push('hull:'+sn.ship+'>'+sn.dest,()=>commPick(i)));push('skip',()=>commSkip());}
+      break;}
+    case 'placebldg':{const b=UI.tmp&&UI.tmp.placeBldg;if(!b)break;
+      bldgTargets(S.players[b.owner]).forEach(sx=>push('on:'+sx.id,()=>placeBldgOn(sx.id)));break;}
+    case 'benefit':{(S.buildDisplay||[]).forEach(k=>push('take:'+k,()=>benefitPick(k)));push('skip',()=>benefitPick(null));break;}
+    case 'survey':{(S.buildDisplay||[]).forEach(k=>push('take:'+k,()=>surveyPick(k)));push('skip',()=>surveyPick(null));break;}
+    case 'hire':{hireable(p).forEach(k=>push('hire:'+k,()=>hirePick(k)));push('skip',()=>hirePick(null));break;}
+    case 'reach':{((UI.reach&&UI.reach.ks)||[]).forEach(k=>push('reach:'+k,()=>reachPick(k)));push('skip',()=>reachSkip());break;}
+  }
+  return out;
+}
+function aiMCDecide(p){
+  const opts=aiMCOptions(p);
+  if(!opts.length){aiActing=true;try{resume('end');}finally{aiActing=false;}return;}
+  if(opts.length===1){aiActing=true;try{opts[0].fn();}finally{aiActing=false;}return;}
+  const me=p.id;
+  const deep=p.ai.tier==='cellarmaster';
+  const budget=(deep?CELLAR_MS:GUILD_MS)*((aiSpeed()==='instant')?0.5:1);
+  const rollTier=deep?'trader':'journeyman';
+  const persona=p.ai.persona||null;
+  const base={S:JSON.stringify(S),UI:JSON.stringify(UI)};
+  const realRender=render,realSave=save,realSnap=snapshot;
+  render=function(){};save=function(){};snapshot=function(){};
+  aiSimulating=true;aiActing=true;
+  const t0=Date.now();
+  const stat=opts.map(o=>({o,n:0,sum:0}));
+  try{
+    const playout=(st)=>{
+      S=JSON.parse(base.S);UI=JSON.parse(base.UI);
+      shuffle(S.shipDeck);shuffle(S.buildDeck);shuffle(S.impDeck);   // determinized hidden decks
+      S.players.forEach(q=>{q.ai={tier:rollTier,persona:q.id===me?persona:null};});
+      try{st.o.fn();}catch(e){st.sum-=99;st.n++;return;}
+      let g=0;while(!S.over&&g++<12000)aiStep();
+      let mine=0,best=-1e9;
+      S.players.forEach(q=>{const t=scorePlayer(q).total;if(q.id===me)mine=t;else best=Math.max(best,t);});
+      st.sum+=mine-best;st.n++;
+    };
+    let live=stat.slice();
+    for(let r=0;r<GM_MIN;r++)live.forEach(playout);   // the floor: every option sampled
+    let halved=false;
+    while(Date.now()-t0<budget){
+      if(deep&&!halved&&Date.now()-t0>budget*0.5&&live.length>2){   // sequential halving (CM)
+        live.sort((a,b)=>(b.sum/b.n)-(a.sum/a.n));live=live.slice(0,Math.ceil(live.length/2));halved=true;}
+      live.forEach(st=>{if(Date.now()-t0<budget)playout(st);});
+    }
+  }finally{
+    S=JSON.parse(base.S);UI=JSON.parse(base.UI);
+    render=realRender;save=realSave;snapshot=realSnap;
+    aiSimulating=false;aiActing=false;
+  }
+  let bi=0,bv=-1e9;stat.forEach((st,i)=>{const v=st.n?st.sum/st.n:-1e9;if(v>bv){bv=v;bi=i;}});
+  aiActing=true;try{stat[bi].o.fn();}finally{aiActing=false;}
 }
 // THE HUMAN-GATE: prizes resolve when gained, so an AI's sail can hand a HUMAN owner a choice —
 // the AI pauses; the human's pick calls maybeRunAI() to resume.

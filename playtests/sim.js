@@ -3,9 +3,10 @@
 // stubs the DOM, and runs the engine's OWN AI (aiStep) for every seat. The robustness/pace gate:
 // 0 crashes / 0 deadlocks across 2–4p, rounds in the 12–25 band, trigger split reported.
 // Usage: node playtests/sim.js [N]      (N games per player count; default 100)
-// Env:   TIER=apprentice|journeyman|trader (default journeyman) · CAPS=8,10,12 sweeps SAILED_CAP
-//        POOL=n sweeps the tally-dice pool
-// (The v3-era PERSONAS/CELLAR pathway oracle and the MC tiers are TABLED with the v4 rebuild — P5.)
+// Env:   TIER=apprentice|journeyman|trader|guildmaster|cellarmaster (default journeyman)
+//        PERSONAS=1 — the v4 PATHWAYS oracle: trader seats committed round-robin to the four lanes
+//                     (majority · lifter · builder · breadth); per-lane win rates reported
+//        CAPS=7,10,13 sweeps SAILED_CAP · POOL=n sweeps the dice pool · GUILD_MS/CELLAR_MS lower the MC budgets
 'use strict';
 const fs = require('fs');
 const vm = require('vm');
@@ -13,6 +14,7 @@ const path = require('path');
 
 const N = parseInt(process.argv[2] || '100', 10);
 const TIER = process.env.TIER || 'journeyman';
+const PERSONAS = process.env.PERSONAS === '1';
 const html = fs.readFileSync(path.join(__dirname, '..', 'play.html'), 'utf8');
 const engine = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).join('\n');
 
@@ -21,10 +23,12 @@ const driver = `
 render=function(){};save=function(){};log=function(){};snapshot=function(){};
 if(__POOL>0)PRES_POOL=__POOL;
 if(__CAPS)SAILED_CAP=__CAPS;
+if(__GMS>0)GUILD_MS=__GMS;
+if(__CMS>0)CELLAR_MS=__CMS;
 function __runGame(n){
   EXPANSION=false;JOPEN=false;OVERLAND=false;
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
-  S.players.forEach(function(p){p.ai={tier:__TIER};p.presPool=PRES_POOL;});
+  S.players.forEach(function(p,i){p.ai=__PERSONAS?{tier:'trader',persona:AI_PERSONAS[i%AI_PERSONAS.length]}:{tier:__TIER};p.presPool=PRES_POOL;});
   var guard=0;
   while(!S.over){
     aiStep();
@@ -34,7 +38,8 @@ function __runGame(n){
   var byDest={bruges:0,london:0,bergen:0,novgorod:0};
   S.players.forEach(function(p){p.delivered.forEach(function(d){byDest[d.dest]=(byDest[d.dest]||0)+1;});});
   return {round:S.turn,trigger:S.endReason||'?',sailed:S.sailed,
-    winSeat:rows[0].p.id,winTotal:rows[0].sc.total,secondTotal:rows[1]?rows[1].sc.total:0,
+    winSeat:rows[0].p.id,winPersona:(rows[0].p.ai&&rows[0].p.ai.persona)||null,personas:S.players.map(function(q){return (q.ai&&q.ai.persona)||null;}),
+    winTotal:rows[0].sc.total,secondTotal:rows[1]?rows[1].sc.total:0,
     byDest:byDest,
     brews:S.players.reduce(function(a,p){return a+(p._brews||0);},0)/S.players.length,
     delivs:S.players.reduce(function(a,p){return a+p.delivered.length;},0)/S.players.length,
@@ -72,6 +77,9 @@ const ctx = {
   lucide:{ createIcons:noop },
   __N:N, __TIER:TIER,
   __POOL:parseInt(process.env.POOL||'0',10),
+  __PERSONAS:PERSONAS,
+  __GMS:parseInt(process.env.GUILD_MS||'0',10),
+  __CMS:parseInt(process.env.CELLAR_MS||'0',10),
   __CAPS:process.env.CAPS?(a=>({2:+a[0],3:+a[1],4:+a[2]}))(process.env.CAPS.split(',')):null,
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
@@ -87,7 +95,7 @@ try {
 const R = ctx.__RESULTS;
 const fmt=(x,d=1)=>Number(x).toFixed(d);
 const pct=(a,b)=>fmt(100*a/Math.max(1,b),1)+'%';
-console.log('=== hanse v4.0 sim — '+N+' games/count · tier '+TIER+' ===');
+console.log('=== hanse v4.0 sim — '+N+' games/count · '+(PERSONAS?'PATHWAYS (trader personas)':('tier '+TIER))+' ===');
 let anyErr=0;
 [2,3,4].forEach(n=>{
   const arr=R[n]; const errs=arr.filter(r=>r.error); const ok=arr.filter(r=>!r.error);
@@ -107,6 +115,9 @@ let anyErr=0;
   console.log(`winner total avg ${fmt(avg(ok.map(r=>r.winTotal)))} · margin avg ${fmt(avg(ok.map(r=>r.winTotal-r.secondTotal)))} · seat wins ${Object.keys(seat).map(s=>'P'+(+s+1)+' '+pct(seat[s],ok.length)).join(' ')}`);
   console.log(`per-player: brews ${fmt(avg(ok.map(r=>r.brews)))} · deliveries ${fmt(avg(ok.map(r=>r.delivs)))} · bank★ ${fmt(avg(ok.map(r=>r.builds)))}`);
   console.log(`delivery split: ${Object.keys(dd).map(k=>k+' '+pct(dd[k],dsum)).join(' · ')}`);
+  if(PERSONAS){const pw={},pn={};
+    ok.forEach(r=>{(r.personas||[]).forEach(ps=>{if(ps)pn[ps]=(pn[ps]||0)+1;});if(r.winPersona)pw[r.winPersona]=(pw[r.winPersona]||0)+1;});
+    console.log('PATHWAYS win-rate by lane: '+Object.keys(pn).map(k=>k+' '+pct(pw[k]||0,pn[k])).join(' · ')+'  (seats: '+Object.keys(pn).map(k=>pn[k]).join('/')+')');}
 });
 console.log(anyErr? `\n*** ${anyErr} ERRORS — GATE FAILED ***` : '\nGATE: 0 crashes / 0 deadlocks.');
 process.exit(anyErr?1:0);

@@ -1,0 +1,8 @@
+=== v4.0 AI ladder (KEY hanse-v40, P5 rebuild) — 2p, seats alternate ===
+fast rungs n=120 · GM rung 4 shards ×12 @GUILD_MS=120 · CM rung 4 shards ×8 @GUILD_MS=120/CELLAR_MS=400 (bulk budgets; in-page 250/1200)
+  journeyman > apprentice: 75.0%  (90/120)  avg 73.2 vs 55.7
+  trader > journeyman: 69.2%  (83/120)  avg 72.4 vs 62.2
+  guildmaster > trader: 95.8%  (46/48, sharded — avg 88.5 vs 49.4)
+  cellarmaster > guildmaster: 62.5%  (20/32, sharded at bulk budgets)
+
+LADDER GATE: every rung ≥60%, 0 errors.

@@ -11,7 +11,7 @@
 >
 > - Operational rules: `RULES.md` (v4.0). Design rationale & history: `DESIGN.md` §9; the ruled plan `V4-STREAMLINE.md`.
 > - The live build is `play.html` — **v4.0 “Bright Beer”** (`KEY hanse-v40`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `printables2.html` — the only kit in use.** ⚠ The kit is **mid-refresh to v4.0** (`components.js` already carries the v4 building/ship/specialist data; the sheet layouts still show v3.4 extras — the banner on the page flags it).
+> - **The print kit is `printables2.html` — the only kit in use** (v4.0 sheets as of the P4 refresh, 2026-07-21).
 
 ---
 
@@ -141,5 +141,7 @@ Beers / Jopenbier materials (tabled with their toggles).
 2. **Pile mixes** (which load bonuses print at which quality depth) are engine-random top-cards
    today; the physical pile composition wants a printed distribution pass before the next kit.
 3. Cask counts (6/type floor) unchanged — re-read after human pace data (brews/game rose ~1).
-4. `printables2.html` still lays out v3.4 sheets for the removed families — the kit refresh is
-   the next pass (`components.js` data is already v4).
+4. ~~printables2 lays out v3.4 sheets~~ — **RESOLVED (P4, 2026-07-21):** the kit prints the v4
+   set (single-faced casks with printed start dice · Skute/Cog/Hulk sheets · the one green
+   building family · 3+2 player boards · the score ring on Market &amp; Stores; the Hall,
+   contracts, privilege and cube sheets are out).

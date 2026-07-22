@@ -1,13 +1,22 @@
 # Automa / AI Opponent — Plan & Status
 
-> **v4.0 “Bright Beer” (2026-07-21): the AI was REBUILT COMPACT with the streamline.** The game
-> lost deploy/dispatch/the Hall/the Floor turn, so the old tier code (and this doc’s v3 record
-> below) describes a machine that no longer exists. LIVE: **Apprentice / Journeyman / Trader** —
-> a value-heuristic ladder inside `play.html` (aiStep drives the same functions the buttons
-> call; `playtests/sim.js` runs it headlessly). **TABLED to the P5 oracle rebuild:** the
-> Guildmaster/Cellarmaster MC tiers, personas, the ladder/render-smoke/tuner harnesses and the
-> pathway oracle — the search space is far smaller now, so the rebuild is cheaper than the v3
-> versions were. Everything below this line is the v3 record, kept for the method.
+> **v4.0 “Bright Beer” (2026-07-21): the AI was REBUILT with the streamline — and P5 is SHIPPED
+> same-day.** All five tiers are LIVE in `play.html`: **Apprentice / Journeyman / Trader** (the
+> compact value-heuristic ladder; journeyman is the solid operator, the trader adds the scoring
+> systems — Flight push, tempered majority swing, endgame sense) and the rebuilt Monte-Carlo
+> pair — the **Guildmaster** (flat MC: enumerate the prompt's options, clone (S,UI), determinize
+> the decks, journeyman rollouts to game end, margin objective; `GUILD_MS` 250) and the
+> **Cellarmaster** (trader rollouts + one round of sequential halving; `CELLAR_MS` 1200). The v4
+> search space is far smaller, so the whole MC block is ~100 lines (`aiMCDecide`/`aiMCOptions`).
+> **Personas** (the pathway oracle's lanes) ride the Trader: majority · lifter · builder ·
+> breadth — `PERSONAS=1 node playtests/sim.js` prints the per-lane PATHWAYS report (v40 read at
+> 4p: 25.0 / 24.5 / 29.5 / 21.0% — fair 25). **Gates (KEY v40):** ladder — journeyman>apprentice
+> 75.0% · trader>journeyman 69.2% (n=120 each) · **GM>trader 95.8%** (46/48, 4 shards @120ms) ·
+> **CM>GM 62.5%** (20/32, 4 shards @ bulk 400ms; the historic pattern — bulk budgets read low) —
+> every rung ≥60%, 0 errors (`playtests/ai-ladder-vhanse-v40.txt`); render-smoke ALL PASS incl.
+> full GM & CM games through the REAL render layer. The `ai-tune.js` CEM tuner stays retired —
+> the v4 heuristics carry no weight table. Everything below this line is the v3 record, kept
+> for the method.
 
 
 > **v3.1 addendum (2026-07-12):** the Trader gained a fourth persona — **racer**, the charter-pump

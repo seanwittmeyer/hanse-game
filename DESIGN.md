@@ -233,9 +233,22 @@ verify-v4 **71/71** · sim 150×2–4p **0 crashes / 0 deadlocks**, rounds 2p 19
 (91–95% in the 12–25 band after the cap sweep 8/10/12 → **7/10/13** ⚙), triggers split clock 74–82% /
 presence 11–18% / ceiling ≤15%, delivery spread Bruges 32–36 / London 23–24 / Bergen 26–28 / Novgorod
 15–18%, seat spreads flat; a full in-browser game through the real render layer, 0 console errors.
-*Watch (⚙):* the P4 kit refresh (printables2 still lays out v3.4 sheets; components.js data is v4) ·
-the R1–R6 risks in `V4-STREAMLINE.md` §2 (2p texture, recipe faucet, London/Bergen heat, the +3★
-build rate, clock feel, the tabled prestige lane).
+*P4 + P5 (same day, designer-called "finish p4/p5"):* **the kit refreshed to v4** — printables2 prints
+single-faced casks (die seat · printed START value · load bonus), the Skute/Cog/Hulk ship sheets, the
+one green building family (17, single-faced — no owner rings, no WILD backs), 3+2 player boards, the
+kontore-only Destinations board (the Hall panel out; parked-dice primer in), the 7/10/13 clock and the
+score ring; contracts/cubes/markers left the sheets; index.html and learn.html rewritten to v4 (banners
+off). **The P5 oracle rebuild:** GM/CM return as a compact flat-MC block (clone (S,UI) · determinized
+decks · journeyman/trader rollouts · margin objective; CM adds sequential halving), personas return as
+the four v4 lanes (majority · lifter · builder · breadth) on the Trader, and the ladder/render-smoke
+harnesses are rebuilt (`ai-tune` stays retired — no weight table). *Full battery (KEY v40):* sim 500×3
+— **1500 games, 0 crashes/0 deadlocks**, band 91–95%, presence trigger 11–15%; **PATHWAYS 4p
+25.0/24.5/29.5/21.0%** (fair 25 — builder warm, breadth low; pole test: no negation, recorded not
+dialed); **ladder** jour>app 75.0 · trader>jour 69.2 (n=120) · **GM>trader 95.8** (46/48 sharded) ·
+**CM>GM 62.5** (20/32 at bulk budgets) — all rungs ≥60%, 0 errors; **render-smoke ALL PASS** incl. GM/CM
+through the real render layer. *Watch (⚙):* the R1–R6 risks in `V4-STREAMLINE.md` §2 (2p texture, recipe
+faucet, London/Bergen heat, the +3★ build rate, clock feel, the tabled prestige lane) — now with the
+oracle live to read them.
 
 **v3.4 "Tally Dice" — the disc/die unification** *(2026-07-19, KEY `hanse-v34`, designer-ruled "all in")* —
 **The presence disc and the demand die become ONE component: 14 player-colour d6 per house.** A die from the

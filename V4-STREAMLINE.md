@@ -4,9 +4,13 @@
 > resolved: **D1** Gruit ages 0 steps (Ready at brew) · **D2** gates read the die, **Novgorod's
 > gate RAISED to 4**, scale cut · **D3** cut · **D4** overbuild OPEN to all at 1 G ("more
 > variable" — restraint is a dial) · **D5–D12** defaults adopted. Built as `KEY hanse-v40`
-> (P1–P3 + the app; gates: verify-v4 71/71, sim 450 clean, caps swept to 7/10/13). P4 (the
-> printables2 sheet refresh) and P5 (the oracle/MC rebuild + full battery) remain. Drafted off the
-> designer's six post-playtest directives. This is a **keystone-scale rebuild** (larger than
+> — **ALL PHASES COMPLETE (P1–P5, 2026-07-21):** the spec + app + docs; the P4 kit refresh
+> (printables2 v4: single-faced casks w/ printed start dice · Skute tiles · one green building
+> family · 3+2 player boards · the Hall/contract/privilege sheets out; index + learn rewritten);
+> the P5 oracle rebuild (GM/CM flat-MC tiers, personas, ladder/render-smoke). Gates: verify-v4
+> 71/71 · sim 1500 games 0 crashes (caps swept to 7/10/13) · ladder all rungs ≥60% (GM 95.8 ·
+> CM 62.5 sharded) · render-smoke ALL PASS · PATHWAYS 4p 25/24.5/29.5/21% (fair 25). Drafted off
+> the designer's six post-playtest directives. This is a **keystone-scale rebuild** (larger than
 > v3.0-A): it cuts the deploy state, the Floor turn, the Hall, and all owner-pays tiles, and
 > unifies maturation + value + presence onto the one tally die. Working title *"Bright Beer"*
 > (beer clarified in conditioning — the clarity pass). Proposed `KEY hanse-v40`. All numbers ⚙.
