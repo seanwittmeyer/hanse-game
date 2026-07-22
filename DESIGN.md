@@ -1,7 +1,9 @@
-# Brewhouses of the Hanse — Design (v3.0 in design — the table pass · live build v2.9.1)
+# Brewhouses of the Hanse — Design (live build v4.0 “Bright Beer”)
 
-> **v3.0 status (2026-07-08):** the root is the v3.0 working directory; the exploration is
-> `TABLE-PASS.md`. The stable **v2.9.1** build is frozen playable at `archive/v2.9/play.html`.
+> **v4.0 status (2026-07-21):** the streamline keystone is LIVE (`play.html`, KEY `hanse-v40`;
+> ruled off `V4-STREAMLINE.md` from human playtesting). The v3 line’s plan docs
+> (`V3-PATH-A.md` · `HALL-STUDY.md`) remain as records; v2.9.1 stays frozen playable at
+> `archive/v2.9/play.html`.
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
@@ -26,7 +28,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v3.3 “Three Coins”** — live (`play.html`, KEY `hanse-v33`; consolidates the v3.2a–d patches — launch rows · free gains · the Flight on the recipe cards (ladder = beers BREWED) · displacement = plain discard): the Hall becomes **the Guild’s Three Coins** (each shelf prints FAME/CRAFT/FAVOR one-shot coins — an enshrine buys exactly ONE, or launches for ★ = quality; FAME 5/7/10/13; ruled off `HALL-STUDY.md` §4E) + the **presence clock** (14 public discs each; every delivered cask and presence bump spends one; the last disc placed sets the final round, ALONGSIDE the retuned Sailed-Ships track 5/8/10 — ships + charters only, enshrines never tick; first trigger fires). Beneath it, **v3.1 “One Row”** — the v3.0-A keystone + the first human-playtest pass (2026-07-12): **the player board is ONE Floor row** (7 printed slots — vessels, Specialists and flips compete for the same spaces; slot 1 vessel-only; the Flight auto-opens covers) + four dials (Bruges Hanzehuis die 3 · Connoisseur die 4 · Hall rows 3/5/6/8 · 2p clock 7). Beneath it, the **keystone rebuild** ruled in `V3-PATH-A.md` off the FRESH-EYES exploration + the 2026-07-11 playtest. The eight moves: **stations ≤2 printed actions** (Source/Acquire · Brew/Deploy · Age/Upgrade · Load/DISPATCH) · **slot locality** (a slot’s stop acts on that slot) · **over-deploy** (own lower Ready cask taps out · anyone’s Q1 sours) · **one-read dice** (a Privilege prints ONE number, set at departure; premium/cap/sail-bump arithmetic deleted) · **the Hall shelf board** (superseded by the v3.2 Three Coins) · **the stay-home Floor** (Age-3 pool + vessel-cask actions + ≤2 flip Wilds; flips score 0) · **Flight unlocks** (distinct beers BREWED open Floor slots; delivered still score) · **nine specific-gain cask actions**. v3.0-A.1: the dockside pickup consumes the commission’s free load. Prior live build archived, playable, at `archive/v2.9/`. **Three opt-in toggles** unchanged on the expansion spine: *Specialty Beers* · *Jopenbier* · *The Trade Roads* (replaces the majorities). Strong-play corpus (162 games): clock-dominant, pace 17–19 rounds, every new mechanism live (`playtests/logs/v3-corpus/`). |
+|**Status**     |**v4.0 “Bright Beer”** — live (`play.html`, KEY `hanse-v40`; designer-ruled 2026-07-21 off `V4-STREAMLINE.md`, from human playtesting). The streamline keystone: **THE DIE IS THE CASK** — set at brew to the printed start value (quality − aging steps; Gruit 0 steps = Ready at brew), turned up by age points (stops at quality = READY), lifted past quality only by buildings at load (Malt Kiln +1, cap 6), parked at the kontor on delivery (pips = the banked ★ 1–6, body = presence, majorities and the second clock). **NO DEPLOY** — slots hold a building and/or a ship; casks go vessel → hull → kontor; over-deploy/souring/rival-loading/the Staithe are gone with the state. **Stations print ONE action each** (Source 2 · Brew · Age 3 · Commission `1 G`, bank ★ = berth count). **ONE green building family** — every building serves whoever activates it, the builder banks +3★; the 12 Privileges, ownership and rent-to-owner are cut. **The Hall, Dispatch/charters, the Floor turn and all three expansion toggles are TABLED.** Ships come in three sizes (Skute 1 · Cog 2 · Hulk 3, display of 4) — a Skute sails on its first load (the relief valve as a component). Prizes: Bruges recipe · London building(+3★) · Bergen specialist · Novgorod refine (+2), gate raised to die 4. Clocks: sailed 7/10/13 ⚙ + the 14th die parked. Gates at KEY v40: `verify-v4` 71/71 · sim 450 (150×2–4p) **0 crashes/0 deadlocks**, band 91–95%, both clocks live (presence 11–18%), all four ports trafficked (Novgorod 15–18% at gate 4). |
 
 ---
 
@@ -81,64 +83,40 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v3.2 “Three Coins” on the v3.1 “One Row” + v3.0-A “Path A” keystone)
+## 6. The current architecture (v4.0 “Bright Beer”)
 
-Canonical detail is in `RULES.md` / `COMPONENTS.md` / `V3-PATH-A.md`; the shape:
+Canonical detail in `RULES.md` / `COMPONENTS.md` / `V4-STREAMLINE.md`; the shape:
 
-- **The Wharf** — four stations (A Market·Source → B Brewhouse·Brew → D Cellar·Age →
-  C Harbor·Ship) ringed by **8 slots**. Move orthogonally and choose the **row or column** —
-  **or STAY HOME and work your Floor** (the whole turn on your player board; never tolled; a
-  null Floor is not legal). The occupancy toll (1 G ⚙) applies only while sharing a station.
-- **Stations are printed THIS-or-THATs (≤2 actions, one choice per visit):** Market
-  **SOURCE / ACQUIRE** · Brewhouse **BREW / DEPLOY-anywhere** · Cellar **AGE / UPGRADE**
-  (+Blend with Specialty Beers) · Harbor **LOAD / DISPATCH** (one deployed cask → the Hall
-  free, or a kontor for a contract + fare — the old Enshrine and Charter as one gesture).
-- **Slot locality** — a slot’s line-stop acts **on that slot**: empty/tile-only → deploy HERE
-  (or the tile’s printed action — Rope Walk · Grain Exchange · Mission Quay); a ship → load
-  THIS hull; a cask → its printed action, or **over-deploy onto it** (your own lower READY
-  cask is **tapped on the way out** — its action fires once, then boxed; **anyone’s Q1
-  sours** — boxed, no action; a maturing Staithe cask is safe except the Q1 rule). The
-  Brewhouse’s Deploy and the Harbor’s Load stay the two wharf-wide valves.
-- **The dual-role cask** — quality Q1–Q5 + a **specific-gain** action (nine verbs, printed);
-  three states: maturing (private, powers the Floor) → deployed (public, contestable) →
-  delivered (scored, gone).
-- **The keystone — living, composable slots, ONE-READ dice.** A slot holds a **slot tile**
-  (owned) and an **occupant**. A blue **PRIVILEGE prints ONE die number** — the owner’s cask
-  departing that slot carries its demand die set to exactly that number (set once, at
-  departure; no premium, no sail bump, no cap arithmetic; conditions printed on the tile). A
-  green **BUILDING/work serves whoever docks** (quality lifts ride +1Q markers; some works
-  print an action on their slot’s stop — the wharf grows action spaces as it is authored). The
-  quality climb pays where quality is *read*: Novgorod’s printed scale, the Hall’s shelf
-  gates, the quality-keyed tiles (Connoisseur · Burgomaster).
-- **The Hall is the Guild’s Three Coins (v3.2 — the Hamlet-award read).** Each quality-gated
-  shelf prints **three one-shot coins — FAME ★ (5/7/10/13) · CRAFT (a power, now) · FAVOR (a
-  thing, free)** — claimed once each, cube-marked; an enshrined cask buys **exactly one** (the
-  points and the powers are unbundled), or **launches** for ★ = quality (the always-open volume
-  floor). Enshrines never tick the ships clock. The Hall is the table’s hot early race — 12
-  coins, gone when they’re gone — while the kontore stay the buildings-boosted delivery lane.
-- **The player board** — the vessel row (2 open of 4 printed) and Specialist row (2 of 4)
-  under **unlock covers**, the **flip shelf** (2 — displaced tiles land face-down as Floor
-  Wilds; **flips score nothing**), and the **Flight/unlock strip**: distinct beers **BREWED**
-  (from the 2nd) each remove a cover — your choice of row; distinct beers **DELIVERED** still
-  score the Flight ladder. Breadth pays twice: engine and score.
-- **Legible scoring.** *In-game:* the Hall’s FAME coins / launches · kontor value + the one die
-  (never less than 1★). *End-game:* majorities (delivered-cask count; presence discs finite,
-  **14 ⚙ — and they are the second clock:** every delivered cask and presence bump spends one,
-  in public; the last disc placed sets the final round) + the Flight ((beers−1)², min 3). The
-  floor-points lane is **gone**.
-- **One grammar — deploy first** — Load and Dispatch take a DEPLOYED cask; the **Quaymaster**
-  is the one invested exception; **Commission** is the one universal vessel-direct door — and
-  (v3.0-A.1) a commission placed **onto a qualifying cask** consumes its free load (the pickup
-  IS the reward). Every gate check uses effective quality; benefits resolve when gained;
-  tiles always display → placed at once; **overbuild = the 1 G ground rent** (can’t pay → not
-  a legal target).
-- **Kept from v0.16:** ships sail-when-full; the scarce-contract relief valve (now the kontor
-  Dispatch); the Sailed-Ships end clock (v3.2: 5/8/10, voyages only — the presence clock runs
-  beside it); no dice-as-randomizers / no hand / no money.
-- **The expansion spine (v2.0):** unchanged — `registerExpansion` + hook seams; **The Trade
-  Roads** (replaces the majorities; Staple-Right slots per cask, per-voyage movement,
-  quality-gated depth), *Specialty Beers* (3-of-7 draft + Blending + 3 tiles), the *Jopenbier*
-  capstone (self-contained scoring; counts for the Flight and its unlocks).
+- **The Wharf** — four stations ringed by 8 slots; move orthogonally, activate the **row or
+  column**; the 1 G toll while sharing. **Stations print ONE action each:** Market *Source 2* ·
+  Brewhouse *Brew* · Cellar *Age 3* · Harbor *Commission* (`1 G`, place a display hull on a
+  shipless slot, **bank ★ = its berth count**).
+- **THE DIE IS THE CASK** — the whole lifecycle on one component: printed start value at brew
+  (= quality − aging steps; Gruit starts Ready), age points turn it up, **Ready at the
+  quality**, building lifts push past it (cap 6), **gates read the die as it boards**, delivery
+  parks it at the kontor — pips = the banked ★, body = presence, majorities and the clock.
+- **Slots hold a building and/or a ship — never casks.** A slot stop = the building’s printed
+  action and/or a **load of the ship** docked there (one Ready cask from YOUR vessels; its
+  printed **load bonus** fires as it boards). Casks are private until aboard — the interaction
+  is the **berth race**: topping off a hull sails everyone’s cargo on your clock.
+- **ONE green building family** — no owner: every building serves whoever activates it; the
+  placer banks **+3★**. Action buildings print the cask-action verbs (Granary/Scrivener’s/
+  Mission Quay/Hiring Post/Almoner’s/Annex); load-lift buildings shape the hull (Malt Kiln
+  die +1 · Cooperage +1 berth · Customs −1 gate · Rich Berth sails short). Faucets: London’s
+  prize + the *Gain 1 building* bonus — never bought. Overbuild anytime for 1 G; displaced
+  tile boxed.
+- **Everything is earned, not bought** — recipes (Bruges · bonuses · Scrivener’s), buildings
+  (London · bonuses), specialists (Bergen · Hiring Post · bonuses; 4 designs, 2 seats). The
+  Market sells nothing; goods buy brews, commissions, tolls and rent.
+- **The player board** — 3 vessel slots (3rd behind the Flight’s 2nd distinct brew) + 2
+  specialist seats (2nd behind the 3rd); the recipe cards carry the Flight (flipped = brewed).
+- **Legible scoring** — deliveries (the parked dice, 1–6★ each) + the bank (+3★ builds ·
+  ★ = berths on commissions · 1★ bumps) + majorities (parked dice; 4/2/0 · 5/3/1 · 9/5/2 ·
+  8/5/2) + the Flight ((brewed−1)², min 3). Tiebreak: vessel dice, then goods.
+- **The dual clock** — Sailed-Ships 7/10/13 ⚙ (every sail ticks, Skutes included) + the tally
+  dice (the 14th parked die sets the final round); MAX_ROUND 25 backstop.
+- **TABLED (seams kept):** the Hall (prestige lane), Dispatch/charters, the Floor turn, the
+  three expansion toggles (`registerExpansion` spine intact), the MC AI tiers (P5).
 
 ## 7. The tooling (how we verify — unchanged through v1.0)
 
@@ -228,6 +206,36 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v4.0 "Bright Beer" — the streamline keystone** *(2026-07-21, KEY `hanse-v40`, designer-ruled off
+`V4-STREAMLINE.md` from human playtesting: "streamline, simplify, make the resources and actions more
+intentional")* — Six directives, one build. **(1) The Floor turn is CUT** (AP without payoff — often
+ignored at the table). **(2) THE DIE IS THE CASK:** start value printed on the tile (= quality − aging
+steps; designer's example: Broyhan Q3/1 step starts at 2; ruled: Gruit ages 0 steps — Ready at brew),
+age points turn it up, Ready at the quality, buildings lift it past (cap 6) — so the humble beer has
+the most headroom; gates read the die as boarded (ruled), Novgorod's gate RAISED to 4 with its printed
+scale cut. **(3) ALL buildings serve everyone; +3★ to the builder;** the 12 Privileges/ownership/rent-
+to-owner cut; building actions drawn from the cask-action verbs; overbuild open at 1 G (ruled "more
+variable" — the restraint is a dial). **(4) The Hall TABLED** (the prestige lane returns later — seam
+kept). **(5) NO DEPLOY:** slots = building + ship only; a ship's slot stop loads 1 Ready cask from
+YOUR vessels and fires its printed action — cask actions are LOAD BONUSES now; over-deploy/souring/
+rival-loading/Staithe/Quaymaster die with the state. **(6) Board = one action per station** (Source 2 ·
+Brew · Age 3 · Commission 1G + ★ = berth count); the Skute (1-berth, sails on its first load) replaces
+the whole Dispatch/charter/contract subsystem as a COMPONENT; ship display 4, deck 6/10/8 sk/c/h.
+Prizes: Bruges recipe · London building(+3★) · Bergen specialist · Novgorod refine +2. Specialists
+trimmed to 4 (Cellarman = start +1 · Grain Factor · Hop Gardener · Stevedore), 2 seats, EARNED free.
+Flight unlocks: 2nd distinct brew → vessel 3, 3rd → seat 2. NEW COMPONENT: the score track (build/
+commission/bump ★ need a home — the hard line). Presence bumps park a tray die at face 1 = 1★ (ruled).
+*Engine:* play.html 4545 → ~2700 lines; the MC tiers (GM/CM), personas and the pathway oracle are
+TABLED to the P5 rebuild — setup offers Apprentice/Journeyman/Trader; sim.js rewritten to drive the
+engine's own aiStep; `verify-v4.js` replaces verify-v3 (71 targeted checks). *Gates (KEY v40):*
+verify-v4 **71/71** · sim 150×2–4p **0 crashes / 0 deadlocks**, rounds 2p 19.0 / 3p 15.2 / 4p 14.0
+(91–95% in the 12–25 band after the cap sweep 8/10/12 → **7/10/13** ⚙), triggers split clock 74–82% /
+presence 11–18% / ceiling ≤15%, delivery spread Bruges 32–36 / London 23–24 / Bergen 26–28 / Novgorod
+15–18%, seat spreads flat; a full in-browser game through the real render layer, 0 console errors.
+*Watch (⚙):* the P4 kit refresh (printables2 still lays out v3.4 sheets; components.js data is v4) ·
+the R1–R6 risks in `V4-STREAMLINE.md` §2 (2p texture, recipe faucet, London/Bergen heat, the +3★
+build rate, clock feel, the tabled prestige lane).
 
 **v3.4 "Tally Dice" — the disc/die unification** *(2026-07-19, KEY `hanse-v34`, designer-ruled "all in")* —
 **The presence disc and the demand die become ONE component: 14 player-colour d6 per house.** A die from the

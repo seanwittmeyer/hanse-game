@@ -1,5 +1,15 @@
 # Automa / AI Opponent — Plan & Status
 
+> **v4.0 “Bright Beer” (2026-07-21): the AI was REBUILT COMPACT with the streamline.** The game
+> lost deploy/dispatch/the Hall/the Floor turn, so the old tier code (and this doc’s v3 record
+> below) describes a machine that no longer exists. LIVE: **Apprentice / Journeyman / Trader** —
+> a value-heuristic ladder inside `play.html` (aiStep drives the same functions the buttons
+> call; `playtests/sim.js` runs it headlessly). **TABLED to the P5 oracle rebuild:** the
+> Guildmaster/Cellarmaster MC tiers, personas, the ladder/render-smoke/tuner harnesses and the
+> pathway oracle — the search space is far smaller now, so the rebuild is cheaper than the v3
+> versions were. Everything below this line is the v3 record, kept for the method.
+
+
 > **v3.1 addendum (2026-07-12):** the Trader gained a fourth persona — **racer**, the charter-pump
 > clock-racer modeled on the first human playtest's winning line (author a kontor-charter Privilege
 > early · pump cheap fast casks through it · dispatch to close the clock once ahead). Built as the

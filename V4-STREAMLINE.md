@@ -1,6 +1,11 @@
 # V4 "Bright Beer" — the streamline keystone (plan of attack)
 
-> **Status: PLAN — awaiting designer ruling on the DECIDE list (§8).** Drafted 2026-07-21 off the
+> **Status: RULED & BUILT (2026-07-21).** All six directives ruled same-day; the DECIDE list
+> resolved: **D1** Gruit ages 0 steps (Ready at brew) · **D2** gates read the die, **Novgorod's
+> gate RAISED to 4**, scale cut · **D3** cut · **D4** overbuild OPEN to all at 1 G ("more
+> variable" — restraint is a dial) · **D5–D12** defaults adopted. Built as `KEY hanse-v40`
+> (P1–P3 + the app; gates: verify-v4 71/71, sim 450 clean, caps swept to 7/10/13). P4 (the
+> printables2 sheet refresh) and P5 (the oracle/MC rebuild + full battery) remain. Drafted off the
 > designer's six post-playtest directives. This is a **keystone-scale rebuild** (larger than
 > v3.0-A): it cuts the deploy state, the Floor turn, the Hall, and all owner-pays tiles, and
 > unifies maturation + value + presence onto the one tally die. Working title *"Bright Beer"*

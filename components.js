@@ -14,16 +14,15 @@ const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · vic
 // survey/hire join at Q3+, brew/enshrine at Q4+. Convert and the pool Wild are CUT (Convert -> the Grain
 // Exchange work; Wild survives only as the Workshop dock effect + the flipped-tile Floor stops).
 // Gruit is PINNED to Source. Icons/texts mirror play.html CASK_ACT.
-const CASK_POOL=[
+const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the cask boards a hull
   {k:'source',  ai:'coins',         act:'Gain 2 goods',             q:2},
-  {k:'age',     ai:'hourglass',     act:'Age a cask +2',            q:2},
-  {k:'load',    ai:'package-plus',  act:'Load 1 cask, free',        q:2},
+  {k:'age',     ai:'hourglass',     act:'Age +2',                   q:2},
+  {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},
   {k:'reach',   ai:'map-pin',       act:'+1 presence',              q:2},
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe',            q:2},
-  {k:'survey',  ai:'search',        act:'Gain 1 building',          q:3},
+  {k:'survey',  ai:'search',        act:'Gain 1 building (+3★)',    q:3},
   {k:'hire',    ai:'wrench',        act:'Gain 1 specialist',        q:3},
   {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:4},
-  {k:'enshrine',ai:'crown',         act:'Enshrine 1 cask',          q:4},
 ];
 const poolFor=q=>CASK_POOL.filter(a=>q>=a.q);   // the printed mix per quality tier
 // cask supply — fixed global counts (COMPONENTS §5; the scarce high-Q exports are intentional). Gruit PINNED to Source; Q2+ draw at brew (steerable).
@@ -42,16 +41,17 @@ const CASKS=[
   // ---- EXPANSION CAPSTONE "Jopenbier" (v1.9, its OWN toggle) — the Q6 vintage super-beer (self-contained scoring) ----
   {nm:'Jopenbier',c:'#5e2433', q:6, g:2,h:4, n:6, ready:4, pin:CASK_POOL[0], tag:'vintage:<br>+★/turn deployed (max 5)'},
 ];
-// v0.11 — NEUTRAL, destination-bound hulls (the destination is PRINTED on the tile). The 20-tile deck,
-// KONTORE ONLY: Bruges 5 · London 5 · Bergen 5 · Novgorod 5 (11 Cog / 9 Hulk); the Hall is reached by the local Enshrine, not a boat.
-const HULL={cog:{cap:2},hulk:{cap:3}};
-const SHIP_DISPLAY=3;   // face-up ship market at the Market ⚙ (refills from the shuffled ship deck)
-const SHIP_DEST={Bruges:{kc:'#274b5c',req:1},London:{kc:'#b8860b',req:2},Bergen:{kc:'#4a6b3a',req:2},Novgorod:{kc:'#7c2128',req:3}};
-const SHIP_DECK=[
-  ['cog','Bruges'],['cog','Bruges'],['cog','Bruges'],['hulk','Bruges'],['hulk','Bruges'],
-  ['cog','London'],['cog','London'],['cog','London'],['hulk','London'],['hulk','London'],
-  ['cog','Bergen'],['cog','Bergen'],['hulk','Bergen'],['hulk','Bergen'],['hulk','Bergen'],
-  ['cog','Novgorod'],['cog','Novgorod'],['cog','Novgorod'],['hulk','Novgorod'],['hulk','Novgorod'],
+// v4.0 — NEUTRAL, destination-bound hulls (the destination is PRINTED on the tile). The 24-tile deck,
+// KONTORE ONLY, now in THREE sizes: Skute 1 · Cog 2 · Hulk 3 berths — a Skute sails on its first load
+// (the deadlock relief valve is a COMPONENT now; the charter/contract subsystem is retired).
+const HULL={skute:{cap:1},cog:{cap:2},hulk:{cap:3}};
+const SHIP_DISPLAY=4;   // face-up ship market ⚙ (v4.0: 4 — refills from the shuffled ship deck)
+const SHIP_DEST={Bruges:{kc:'#274b5c',req:1},London:{kc:'#b8860b',req:2},Bergen:{kc:'#4a6b3a',req:2},Novgorod:{kc:'#7c2128',req:4}};
+const SHIP_DECK=[   // ⚙ 24 hulls — 6 Skute / 10 Cog / 8 Hulk, 6 per port
+  ['skute','Bruges'],['cog','Bruges'],['cog','Bruges'],['cog','Bruges'],['hulk','Bruges'],['hulk','Bruges'],
+  ['skute','London'],['skute','London'],['cog','London'],['cog','London'],['hulk','London'],['hulk','London'],
+  ['skute','Bergen'],['cog','Bergen'],['cog','Bergen'],['cog','Bergen'],['hulk','Bergen'],['hulk','Bergen'],
+  ['skute','Novgorod'],['skute','Novgorod'],['cog','Novgorod'],['cog','Novgorod'],['hulk','Novgorod'],['hulk','Novgorod'],
 ];
 // ---- SLOT TILES (v3.0-A): PRIVILEGES & BUILDINGS — the one owned family on the living slots (mirrors
 // play.html BUILDINGS). One grammar: "a tile modifies the OCCUPANT docked on it", in two verbs —
@@ -67,33 +67,20 @@ const SHIP_DECK=[
 const DIE=n=>'<span class="diech">'+LU('dice-'+n)+'</span>';
 const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a SHIP docked here'}};
 const BUILDINGS=[
-  // PRIVILEGES (blue, 12 tiles) — each prints a +N★ bonus, owner-only; the cask's tally die (turned to N at departure, floor 1) carries it
-  {k:'staple',    nm:'Staple Hall',          verb:'value', tgt:'cask', ic:'warehouse',   g:3, n:2, eff:'Your cask: +3★ '+DIE(3)},
-  {k:'burgomstr', nm:'Burgomaster’s Favor',  verb:'value', tgt:'cask', ic:'crown',       g:3, n:2, eff:'Your cask: +★ = its quality'},
-  {k:'connoiss',  nm:'Connoisseur’s Cellar', verb:'value', tgt:'cask', ic:'wine',        g:3, n:1, eff:'Your Q4+ cask: +4★ '+DIE(4)},
-  {k:'hansediet', nm:'The Hanse Diet',       verb:'value', tgt:'cask', ic:'gavel',       g:3, n:1, eff:'Your cask: +2★ '+DIE(2)+', and place 1 presence there'},
-  {k:'almoner',   nm:'Almoner’s Stall',      verb:'value', tgt:'cask', ic:'heart',       g:3, n:1, eff:'Your cask: +3★ '+DIE(3)+' if no presence there'},
-  {k:'reliquary', nm:'Reliquary',            verb:'value', tgt:'cask', ic:'church',      g:3, n:1, eff:'Enshrined: +2★ '+DIE(2)},
-  {k:'ch_bruges', nm:'Bruges Hanzehuis',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask to Bruges: +3★ '+DIE(3)},   // v3.1 ⚙ 4→3
-  {k:'ch_london', nm:'London Steelyard',     verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask to London: +4★ '+DIE(4)},
-  {k:'ch_bergen', nm:'Bergen Bryggen',       verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask to Bergen: +4★ '+DIE(4)},
-  {k:'ch_novgo',  nm:'Novgorod Peterhof',    verb:'value', tgt:'cask', ic:'landmark',    g:2, n:1, eff:'Your cask to Novgorod: +4★ '+DIE(4)},
-  // WORKS (green, 15 tiles) — serve any dock; three print an action on their slot's stop
-  {k:'maltkiln',  nm:'Malt Kiln',            verb:'transform', tgt:'cask', ic:'flame',            g:2, n:2, eff:'Cask ships +1 quality'},
-  {k:'hopyard',   nm:'Hop Yard',             verb:'transform', tgt:'cask', ic:'sprout',           g:3, n:1, eff:'Q2+ cask ships +1 quality'},
-  {k:'cooperage', nm:'Cooperage',            verb:'transform', tgt:'ship', ic:'package',          g:2, n:2, eff:'Ship here holds +1 cask'},
-  {k:'customs',   nm:'Customs House',        verb:'transform', tgt:'ship', ic:'scroll-text',      g:2, n:2, eff:'Ship here boards casks 1 gate lower'},
-  {k:'workshop',  nm:'Brewmaster’s Workshop',verb:'transform', tgt:'cask', ic:'hammer',          g:3, n:1, eff:'Cask here acts as Wild'},
-  {k:'richberth', nm:'Rich Berth',           verb:'transform', tgt:'ship', ic:'anchor',           g:2, n:2, eff:'Ship here may sail 1 berth short'},
-  {k:'pilot',     nm:'Pilot’s House',        verb:'transform', tgt:'ship', ic:'compass',          g:3, n:1, eff:'On sail: reroute to a kontor ±1 gate', art:'ship-cog.png'},
-  {k:'staithe',   nm:'Open Staithe',         verb:'transform', tgt:'cask', ic:'sun',              g:2, n:1, eff:'Un-Ready casks may deploy here; age +1 per turn', art:'building-festkeller.png'},
-  {k:'ropewalk',  nm:'Rope Walk',            verb:'transform', tgt:'cask', ic:'cable',            g:2, n:1, eff:'Empty stop: gain 1 contract', art:'ship-back.png'},
-  {k:'grainex',   nm:'Grain Exchange',       verb:'transform', tgt:'cask', ic:'arrow-left-right', g:2, n:1, eff:'Empty stop: convert 2 goods', art:'building-gauger.png'},
-  {k:'missionq',  nm:'Mission Quay',         verb:'transform', tgt:'cask', ic:'church',           g:2, n:1, eff:'Empty stop: age a cask +1', art:'building-reliquary.png'},
-  // EXPANSION "Specialty Beers" (Option A) thematic tiles — print with the kit; use only with that module
-  {k:'salthouse', nm:'Salt House',          verb:'value',     tgt:'cask', ic:'gem',           g:2, n:1, eff:'Your cask: +1'+LU('wheat','g')+' +1'+LU('sprout','h')},
-  {k:'smokekiln', nm:'Smoke Kiln',          verb:'transform', tgt:'cask', ic:'cloud',         g:2, n:1, eff:'Cask ships +1 quality'},
-  {k:'partigyle', nm:'Parti-Gyle Tun',      verb:'transform', tgt:'cask', ic:'split',         g:2, n:1, eff:'Deploy here: a free Gruit to a vessel'},
+  // ---- v4.0 "Bright Beer": ONE green family — every building serves whoever activates it; the
+  // builder banks +3★ at placement (no owner, no frames, no Privileges). ACTION buildings print a
+  // cask-action verb, fired on their slot's stop; LOAD-LIFT buildings passively modify the ship /
+  // the load at their slot. 17 tiles ⚙. (art: interim stand-ins from the retired tiles' files.)
+  {k:'granary',   nm:'Granary',           verb:'transform', tgt:'act',  ic:'coins',        n:2, act:'source', eff:'Slot stop: gain 2 goods (any mix)', art:'building-staple.png'},
+  {k:'scriveners',nm:'Scrivener’s Hall',  verb:'transform', tgt:'act',  ic:'scroll-text',  n:2, act:'recipe', eff:'Slot stop: gain 1 recipe (free)', art:'building-gauger.png'},
+  {k:'missionq',  nm:'Mission Quay',      verb:'transform', tgt:'act',  ic:'church',       n:2, act:'age',    eff:'Slot stop: age +2 (your vessels)', art:'building-reliquary.png'},
+  {k:'hiringpost',nm:'Hiring Post',       verb:'transform', tgt:'act',  ic:'wrench',       n:1, act:'hire',   eff:'Slot stop: gain 1 specialist (free)', art:'building-workshop.png'},
+  {k:'almoner',   nm:'Almoner’s Stall',   verb:'transform', tgt:'act',  ic:'heart',        n:1, act:'reach',  eff:'Slot stop: place 1 presence (a tray die)'},
+  {k:'annex',     nm:'Brewhouse Annex',   verb:'transform', tgt:'act',  ic:'flask-conical',n:1, act:'brew',   eff:'Slot stop: brew 1 cask (pay its cost)', art:'building-partigyle.png'},
+  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:3, eff:'A cask loading here: die +1 (cap 6)'},
+  {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:2, eff:'Ship here carries +1 berth'},
+  {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:2, eff:'Ship here boards one gate lower'},
+  {k:'richberth', nm:'Rich Berth',        verb:'transform', tgt:'ship', ic:'anchor',       n:1, eff:'Hull here may sail 1 berth short (min 1)'},
 ];
 
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
@@ -126,14 +113,11 @@ const BUILDINGS=[
 //   lagerkeeper    → stacked casks dusted with frost and icicles
 //   quaymaster     → a private wooden jetty with a rope-wound mooring bollard
 // ============================================================================
-const IMPROVE=[   // SPECIALISTS = PURPLE · bought at the CELLAR (Upgrade), hired free via the Q3+ 'Gain 1 specialist' cask action, or London's benefit · deck of n−1/type (3 each = the 4p deck) · they SEAT IN THE ONE FLOOR ROW (v3.1 — competing with vessels and flips; slot 1 vessel-only)
-  {ic:'wrench',     nm:'Coppersmith', art:'a gleaming copper brew kettle',   act:'+1 Floor slot (opens a cover)', g:3, c:'#5b3a8e', n:3},
-  {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Brews mature 1 step sooner', g:4, c:'#5b3a8e', n:3},
-  {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:3, c:'#5b3a8e', n:3},
-  {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:4, c:'#5b3a8e', n:3},
-  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Your Load: 2 casks', g:3, c:'#5b3a8e', n:3},
-  {ic:'snowflake',  nm:'Lagerkeeper', art:'stacked casks dusted with frost and icicles',act:'Floor Age pool +2', g:2, c:'#5b3a8e', n:3},
-  {ic:'anchor',     nm:'Quaymaster', art:'a private wooden jetty with a rope-wound mooring bollard',   act:LU('package-plus')+' Load / '+LU('navigation')+' Dispatch from your vessels', g:3, c:'#5b3a8e', n:3},
+const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize · the Hiring Post · the 'Gain 1 specialist' load bonus) — never bought · deck of n−1/type · 2 SEATS per house (the 2nd behind the Flight's 3rd distinct brew)
+  {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Your dice START one higher (never above quality)', g:0, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:0, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:0, c:'#5b3a8e', n:3},
+  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Your ship-slot stop loads 2 casks', g:0, c:'#5b3a8e', n:3},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
@@ -254,7 +238,7 @@ function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm
   // (cover it = the ship goes; no sentence needed) — and chevrons rise toward it.
   let rows='<div class="st-trig">'
     +'<div class="st-toprow"><span class="st-k">'+LU('sailboat')+destNm+'</span>'
-      +'<span class="st-meta"><span class="st-gate">'+LU(QI)+d.req+'+</span><span class="st-cost">'+cost(2,0)+'</span></span></div>'
+      +'<span class="st-meta"><span class="st-gate">'+LU(QI)+d.req+'+</span><span class="st-cost">'+cost(1,0)+'</span></span></div>'
     +'<div class="st-seat st-tseat" title="the trigger berth — the last cask loads here and the ship sails at once"><span class="st-num">'+cap+'</span><span class="st-go">'+LU(QI)+'<b class="amp">&amp;</b>'+LU('sailboat')+'</span></div>'
   +'</div>';
   for(let i=cap-1;i>=1;i--)rows+='<div class="st-berth"><div class="st-seat"><span class="st-num">'+i+'</span><span class="st-ghost">'+LU(QI)+'</span></div></div>';

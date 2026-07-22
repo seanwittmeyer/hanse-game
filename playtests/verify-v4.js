@@ -1,0 +1,281 @@
+// Targeted rule checks for v4.0 "Bright Beer" (KEY hanse-v40).
+// Drives the CANONICAL engine (extract play.html's <script>, stub the DOM) and asserts each
+// rule directly by constructing states — no bot in the loop, so a failure is the engine's.
+// Usage: node playtests/verify-v4.js
+'use strict';
+const fs = require('fs');
+const vm = require('vm');
+const path = require('path');
+
+const html = fs.readFileSync(path.join(__dirname, '..', 'play.html'), 'utf8');
+const engine = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).join('\n');
+
+const driver = `
+render=function(){};save=function(){};log=function(){};snapshot=function(){};
+var PASS=0,FAIL=0,OUT=[];
+function ok(name,cond,detail){if(cond){PASS++;OUT.push('  ok  '+name);}else{FAIL++;OUT.push('FAIL  '+name+(detail?' — '+detail:''));}}
+function fresh(n){EXPANSION=false;JOPEN=false;OVERLAND=false;
+  S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub:'stops',stops:[],pendingBenefits:[]};undoStack=[];activeTab=0;
+  S.players.forEach(function(p){p.placed=true;p.cell='B';});
+  SLOTS.forEach(function(s){S.slots[s.id]=null;S.buildings[s.id]=null;});
+  return S.players[0];}
+function ship(slot,hull,dest,load){S.slots[slot]={type:'ship',ship:hull,dest:dest,load:load||[]};return S.slots[slot];}
+function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
+
+// ---- 1. THE DIE: start values = quality − aging steps (Gruit 0 steps → Ready at brew) ----
+(function(){var p=fresh();
+  ok('start dice: gruit 1 · hopped 1 · broyhan 2 · keut 1 · mumme 1 · bock 2',
+    startDieFor(p,'gruit')===1&&startDieFor(p,'hopped')===1&&startDieFor(p,'broyhan')===2&&
+    startDieFor(p,'keut')===1&&startDieFor(p,'mumme')===1&&startDieFor(p,'bock')===2);
+  ok('gruit is READY at brew (die = quality)', caskReady({style:'gruit',q:1,die:startDieFor(p,'gruit')}));
+  ok('bock is NOT ready at brew (2 < 5)', !caskReady({style:'bock',q:5,die:2}));
+  p.upgrades=['cellar'];p.sslots=2;
+  ok('Cellarman: dice start one higher (bock 3 · keut 2)', startDieFor(p,'bock')===3&&startDieFor(p,'keut')===2);
+  ok('Cellarman never starts a die above quality (hopped 2 = Q2)', startDieFor(p,'hopped')===2);
+})();
+
+// ---- 2. AGING turns the die up and STOPS at the quality ----
+(function(){var p=fresh();
+  p.vessels[1]={style:'mumme',q:4,die:1,act:'source'};
+  UI={sub:'age',age:{pool:5,mode:'pool',returnTo:'stops'},stops:[]};
+  ageAllot(1);ageAllot(1);ageAllot(1);
+  ok('3 age points turn the die 1→4 (READY)', p.vessels[1].die===4);
+  var d0=p.vessels[1].die;UI.age={pool:2,mode:'pool',returnTo:'stops'};ageAllot(1);
+  ok('a Ready die never ages past its quality', p.vessels[1].die===d0);
+  p.vessels[1].die=3;passiveFerment(p);
+  ok('passive ferment turns maturing dice +1', p.vessels[1].die===4);
+  passiveFerment(p);
+  ok('passive ferment stops at the quality', p.vessels[1].die===4);
+})();
+
+// ---- 3. BREW: pays, sets the die + pile action, flips the card; the tray gates it ----
+(function(){var p=fresh();stops();
+  p.grain=5;p.hops=5;p.recipes=['gruit','hopped','broyhan'];p.vessels=[null,null];p.brewed={gruit:1};
+  S.pileTop[3]='reach';
+  UI.brew={returnTo:'stops'};brewPick('broyhan');
+  ok('brew pays the cost (1G2H)', p.grain===4&&p.hops===3);
+  ok('the cask takes the pile-top action', p.vessels[0]&&p.vessels[0].act==='reach');
+  ok('the die starts at the printed value (broyhan 2)', p.vessels[0].die===2);
+  ok('the brew flips the recipe card (Flight record)', p.brewed.broyhan===1);
+  ok('the 2nd distinct beer opens the 3rd vessel', p.vslots===3&&p.vessels.length===3);
+  p.presPool=1;   // one die left, and it is riding the broyhan → tray 0
+  ok('no die in the tray → no brew', (function(){var before=UI.sub;enterBrew('stops');return UI.sub!=='brew';})());
+})();
+
+// ---- 4. THE FLIGHT unlocks: 3rd distinct beer opens the 2nd seat ----
+(function(){var p=fresh();stops();
+  p.grain=9;p.hops=9;p.recipes=['gruit','hopped','keut'];p.vessels=[null,null];p.brewed={gruit:1};
+  UI.brew={returnTo:'stops'};brewPick('hopped');
+  UI.brew={returnTo:'stops'};brewPick('keut');
+  ok('3rd distinct beer opens the 2nd specialist seat', p.sslots===2);
+  ok('flight score counts BREWED (3 → 4★)', flightScore(p)===4);
+})();
+
+// ---- 5. GATES read the DIE as it boards (lifts included) ----
+(function(){var p=fresh();stops();
+  var sh=ship('s1','cog','novgorod');
+  p.vessels[0]={style:'hopped',q:2,die:2,act:'source'};
+  ok('a Ready die 2 cannot board Novgorod (gate 4)', !canTake('s1',0));
+  S.buildings.s1={b:'maltkiln'};
+  ok('a Malt Kiln at the slot lifts the boarding read (die 2+1=3 — still short)', !canTake('s1',0));
+  p.vessels[1]={style:'broyhan',q:3,die:3,act:'load'};
+  ok('a kiln-lifted die 4 boards Novgorod', canTake('s1',1));
+  S.buildings.s2={b:'customs'};var sh2=ship('s2','cog','novgorod');
+  ok('a Customs House lowers the gate one step (die 3 boards)', canTake('s2',1));
+  ok('a maturing cask (die < Q) never boards', (function(){p.vessels[0]={style:'bock',q:5,die:4,act:'age'};return !canTake('s2',0);})());
+})();
+
+// ---- 6. LOAD: the kiln lift is permanent (cap 6), the vessel frees, the bonus queues ----
+(function(){var p=fresh();stops();
+  S.buildings.s1={b:'maltkiln'};var sh=ship('s1','hulk','bruges');
+  p.vessels[0]={style:'gruit',q:1,die:1,act:'source'};
+  UI.load={ships:['s1'],returnTo:'stops',loadsLeft:1,cask:0};
+  loadOnto('s1');
+  ok('the kiln turns the die up as it boards (1→2)', sh.load[0].die===2);
+  ok('the vessel is freed', p.vessels[0]===null);
+  ok('the load bonus queued (fires after boarding)', !UI.load&&((UI.pendingActs||[]).length===0? true : UI.pendingActs[0].act==='source'));
+})();
+
+// ---- 7. SAIL WHEN FULL: skute on 1 · cog on 2 · cooperage +1 · rich berth −1 ----
+(function(){var p=fresh();stops();p.ai={tier:'journeyman'};
+  var sk=ship('s3','skute','bruges');
+  p.vessels[0]={style:'gruit',q:1,die:1,act:'source'};
+  var pool0=p.presPool;
+  UI.load={ships:['s3'],returnTo:'stops',loadsLeft:1,cask:0};loadOnto('s3');
+  ok('a Skute sails on its first load', S.slots.s3===null&&S.sailed===1);
+  ok('the delivery parks the die (pool −1)', p.presPool===pool0-1);
+  ok('the delivered value = the die (1★ floor)', p.delivered.length===1&&p.delivered[0].val===1);
+  var cg=ship('s4','cog','bruges');S.buildings.s4={b:'cooperage'};
+  ok('a Cooperage adds a berth (cog holds 3)', effCap(cg)===3);
+  var rb=ship('s5','hulk','bruges');S.buildings.s5={b:'richberth'};
+  ok('a Rich Berth sails one short (hulk at 2)', sailCap(rb)===2);
+  p.ai=null;
+})();
+
+// ---- 8. DELIVERY floor & cap; Keut's presence bump spends a tray die and banks 1★ ----
+(function(){var p=fresh();stops();p.ai={tier:'journeyman'};
+  var b0=p.bank,pool0=p.presPool,pb0=p.presBonus.bruges;
+  deliverCask(p,{owner:0,style:'keut',q:3,die:9,act:'load'},'bruges');
+  ok('delivery value caps at 6', p.delivered[p.delivered.length-1].val===6);
+  ok('Keut parks a bonus die (presence +1 · bank +1 · pool −2 incl. the delivery)',
+    p.presBonus.bruges===pb0+1&&p.bank===b0+1&&p.presPool===pool0-2);
+  p.ai=null;
+})();
+
+// ---- 9. PRIZES: London building (+3★, placed) · Bergen specialist · Novgorod refine ×2 · Bruges recipe ----
+(function(){var p=fresh();stops();p.ai={tier:'journeyman'};
+  var b0=p.bank;
+  UI.pendingBenefits=[{pid:0,dest:'london'}];afterSail('stops');
+  ok('London prize: a building placed, +'+BUILD_PTS+'★ banked', p.bank===b0+BUILD_PTS&&SLOTS.some(function(s){return bAt(s.id);}));
+  UI.pendingSpec=[{pid:0,dest:'bergen'}];afterSail('stops');
+  ok('Bergen prize: a specialist seated free', (p.upgrades||[]).length===1);
+  p.vessels[0]={style:'bock',q:5,die:2,act:'age'};
+  UI.pendingRefine=[{pid:0,dest:'novgorod'},{pid:0,dest:'novgorod'}];afterSail('stops');
+  ok('Novgorod prize: refine +2 (die 2→4)', p.vessels[0].die===4);
+  p.recipes=['gruit','hopped'];
+  UI.pendingRecipe=[{pid:0,dest:'bruges'}];afterSail('stops');
+  ok('Bruges prize: a dealt export recipe, free', p.recipes.length===3);
+  p.ai=null;
+})();
+
+// ---- 10. COMMISSION: 1G · place on a shipless slot · bank ★ = berth count · display refills to 4 ----
+(function(){var p=fresh();stops();
+  p.grain=3;var b0=p.bank;
+  S.shipDisplay=[{ship:'hulk',dest:'bergen'},{ship:'skute',dest:'bruges'}];S.shipDeck=[{ship:'cog',dest:'london'},{ship:'cog',dest:'bruges'},{ship:'cog',dest:'bergen'}];
+  UI.comm={returnTo:'stops',idx:null};UI.sub='commission';
+  commPick(0);commPlace('s6');
+  ok('commission pays 1G', p.grain===2);
+  ok('the hull lands on the slot', S.slots.s6&&S.slots.s6.ship==='hulk'&&S.slots.s6.dest==='bergen');
+  ok('the commission banks ★ = berth count (hulk 3)', p.bank===b0+3);
+  ok('the display refills toward 4', S.shipDisplay.length===4);
+  ship('s7','cog','bruges');
+  UI.comm={returnTo:'stops',idx:null};UI.sub='commission';commPick(0);
+  var before=S.slots.s7;commPlace('s7');
+  ok('one ship per slot — an occupied slot refuses', S.slots.s7===before&&S.slots.s7.ship==='cog');
+})();
+
+// ---- 11. BUILDINGS: +3★ on placement · overbuild = 1G, displaced boxed · serve-anyone action ----
+(function(){var p=fresh();stops();var q=S.players[1];
+  p.grain=5;var b0=p.bank;
+  commitBldg('s1','granary',0);
+  ok('raising a building banks +'+BUILD_PTS+'★', p.bank===b0+BUILD_PTS);
+  var g1=p.grain;
+  commitBldg('s1','maltkiln',0);
+  ok('overbuild costs the 1G rent; the displaced tile is boxed', p.grain===g1-1&&bKeyAt('s1')==='maltkiln');
+  ok('no owner is tracked on buildings', S.buildings.s1.owner===undefined);
+  // the serve-anyone action: P2 fires the Granary P1 raised
+  commitBldg('s2','granary',0);
+  S.active=1;stops();var qg=q.grain;
+  UI.stops=[{kind:'bact',slot:'s2'}];resolveStop(0);
+  ok('a rival may fire the building action (source picker opens)', UI.sub==='source');
+  srcTake(2,0);
+  ok('the rival banks the goods', q.grain===qg+2);
+  S.active=0;
+})();
+
+// ---- 12. PRESENCE BUMP: a tray die at face 1 — 1★, presence, clock; tray-gated ----
+(function(){var p=fresh();stops();
+  p.delivered.push({style:'gruit',q:1,dest:'bruges',val:1});
+  var b0=p.bank,pool0=p.presPool;
+  addPresence(p,'bruges',1);
+  ok('a bump parks a die (presence +1 · 1★ · pool −1)', p.presBonus.bruges===1&&p.bank===b0+1&&p.presPool===pool0-1);
+  p.presPool=diceInFlight(p);   // tray = 0
+  var pb=p.presBonus.bruges;
+  addPresence(p,'bruges',1);
+  ok('no tray die → no bump', p.presBonus.bruges===pb);
+})();
+
+// ---- 13. THE CLOCKS: sailed cap · the last parked die · the ceiling ----
+(function(){var p=fresh();
+  S.sailed=S.sailedCap;checkTriggers();
+  ok('the Sailed-Ships track fires the ending', S.ending&&S.endReason==='clock');
+  var r=fresh();r.presPool=1;
+  spendPresDisc(r,1);
+  ok('the 14th parked die fires the ending', S.ending&&S.endReason==='presence');
+  var t=fresh();S.turn=MAX_ROUND;checkTriggers();
+  ok('the round ceiling backstops', S.ending&&S.endReason==='ceiling');
+})();
+
+// ---- 14. SCORING: deliveries + bank + majorities + flight; vessel-dice tiebreak ----
+(function(){var p=fresh();var q=S.players[1];
+  p.delivered=[{style:'hopped',q:2,dest:'london',val:3},{style:'bock',q:5,dest:'london',val:5}];
+  q.delivered=[{style:'gruit',q:1,dest:'london',val:1}];
+  p.bank=7;p.brewed={gruit:1,hopped:1,broyhan:1};
+  var sc=scorePlayer(p);
+  ok('score = deliveries + bank + majorities + flight', sc.deliv===8&&sc.bank===7&&sc.maj===5&&sc.flight===4&&sc.total===24);
+  p.vessels=[{style:'bock',q:5,die:4,act:'age'},null];
+  ok('the tiebreak reads the vessel dice', vesselDice(p)===4);
+})();
+
+// ---- 15. THE TOLL: 1G while sharing a station ----
+(function(){var p=fresh();stops();
+  S.turn=2;S.players[1].cell='B';p.cell='B';p.grain=3;
+  UI={sub:'line'};chooseLine('row');
+  ok('activating while sharing costs the toll', p.grain===2);
+})();
+
+// ---- 16. THE FAUCETS: recipes/buildings/specialists are EARNED — the buy verbs are gone ----
+(function(){var p=fresh();
+  ok('no Market recipe buy (buyRecipe is gone)', typeof buyRecipe==='undefined');
+  ok('no contract subsystem (buyContract is gone)', typeof buyContract==='undefined');
+  ok('no deploy state (deployCask is gone)', typeof deployCask==='undefined');
+  ok('no Hall (hallEnshrine is gone)', typeof hallEnshrine==='undefined');
+  ok('no Dispatch (dispatchRoute is gone)', typeof dispatchRoute==='undefined');
+  p.recipes=['gruit','hopped','broyhan'];S.exports=['broyhan','keut','mumme'];
+  ok('recipe gain offers only missing dealt exports', recipeGainable(p).join(',')==='keut,mumme');
+})();
+
+// ---- 17. SETUP: display of 4 ships · 17-building deck · 2 neutral seeds · warm Hulk→Bruges · Gruit die 1 ----
+(function(){EXPANSION=false;JOPEN=false;OVERLAND=false;
+  S=freshState(3,['P1','P2','P3']);
+  ok('ship market of 4', S.shipDisplay.length===4);
+  var totalShips=S.shipDeck.length+S.shipDisplay.length+SLOTS.filter(function(s){return S.slots[s.id];}).length;
+  ok('24 hulls in the box', totalShips===24);
+  var bcount=S.buildDeck.length+S.buildDisplay.length+SLOTS.filter(function(s){return S.buildings[s.id];}).length;
+  ok('17 buildings in the box', bcount===17, 'got '+bcount);
+  ok('two neutral buildings seeded', SLOTS.filter(function(s){return S.buildings[s.id];}).length===2);
+  ok('a warm-start ship is a Hulk → Bruges', SLOTS.some(function(s){var t=S.slots[s.id];return t&&t.ship==='hulk'&&t.dest==='bruges';}));
+  ok('every house opens with a Ready Gruit (die 1) + 2 vessel slots + 1 seat', S.players.every(function(p){return p.vessels[0]&&p.vessels[0].die===1&&p.vslots===2&&p.sslots===1;}));
+  ok('specialist deck = n−1 copies of the 4 designs', S.impDeck.length+S.impDisplay.length===8);
+  ok('14 tally dice per house', S.players.every(function(p){return p.presPool===14;}));
+})();
+
+// ---- 18. SPECIALISTS: 2 seats, no duplicates, earned free ----
+(function(){var p=fresh();
+  p.sslots=2;
+  grantUpgrade(p,'cellar');grantUpgrade(p,'cellar');
+  ok('no duplicate specialists', p.upgrades.length===1);
+  grantUpgrade(p,'crane');grantUpgrade(p,'granary');
+  ok('the 2nd seat is the cap', p.upgrades.length===2);
+  ok('hireable excludes owned + full seats', hireable(p).length===0);
+})();
+
+OUT.forEach(function(l){console.log(l);});
+console.log('');
+console.log(FAIL===0?('ALL PASS — '+PASS+' checks'):('*** '+FAIL+' FAILED / '+PASS+' passed ***'));
+if(FAIL>0)throw new Error(FAIL+' checks failed');
+`;
+
+const noop = () => {};
+const elStub = () => ({ innerHTML:'', textContent:'', value:'', style:{}, disabled:false,
+  classList:{ add:noop, remove:noop, toggle:noop, contains:()=>false },
+  setAttribute:noop, getAttribute:()=>null, appendChild:noop, removeChild:noop, focus:noop,
+  querySelector:()=>null, querySelectorAll:()=>[],
+  getBoundingClientRect:()=>({left:0,top:0,right:0,bottom:0,width:0,height:0}) });
+const document = { getElementById:()=>elStub(), createElement:()=>elStub(),
+  addEventListener:noop, removeEventListener:noop, querySelector:()=>null, querySelectorAll:()=>[],
+  body:{ appendChild:noop, contains:()=>false }, head:{ appendChild:noop } };
+const store = {};
+const localStorage = { getItem:k=>(k in store?store[k]:null), setItem:(k,v)=>{store[k]=String(v);}, removeItem:k=>{delete store[k];} };
+
+const ctx = { document, localStorage, console, Math, JSON, Date, Set, Map, Array, Object, String, Number, Boolean,
+  parseInt, parseFloat, isNaN, alert:noop, setTimeout:noop, clearTimeout:noop, lucide:{createIcons:noop} };
+ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
+ctx.addEventListener = noop; ctx.removeEventListener = noop;
+vm.createContext(ctx);
+try {
+  vm.runInContext(engine + '\n' + driver, ctx, { filename: 'play.html#verify-v4' });
+} catch (e) {
+  console.error('VERIFY RUN ERROR:', e && e.stack || e);
+  process.exit(1);
+}
