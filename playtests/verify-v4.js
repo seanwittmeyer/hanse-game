@@ -1,4 +1,4 @@
-// Targeted rule checks for v4.x — v4.1 "Counting House" (KEY hanse-v41).
+// Targeted rule checks for v4.x — v4.2 "Tariff" (KEY hanse-v42).
 // Drives the CANONICAL engine (extract play.html's <script>, stub the DOM) and asserts each
 // rule directly by constructing states — no bot in the loop, so a failure is the engine's.
 // Usage: node playtests/verify-v4.js
@@ -129,9 +129,11 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('London prize: a building placed, +'+BUILD_PTS+'★ banked', p.bank===b0+BUILD_PTS&&SLOTS.some(function(s){return bAt(s.id);}));
   UI.pendingSpec=[{pid:0,dest:'bergen'}];afterSail('stops');
   ok('Bergen prize: a specialist seated free', (p.upgrades||[]).length===1);
-  p.vessels[0]={style:'bock',q:5,die:2,act:'age'};
-  UI.pendingRefine=[{pid:0,dest:'novgorod'},{pid:0,dest:'novgorod'}];afterSail('stops');
-  ok('Novgorod prize: refine +2 (die 2→4)', p.vessels[0].die===4);
+  deliverCask(p,{owner:0,style:'mumme',q:4,die:4,act:'age'},'novgorod');
+  ok('Novgorod banks the die +2 (die 4 → 6★)', p.delivered[p.delivered.length-1].val===6);
+  deliverCask(p,{owner:0,style:'bock',q:5,die:6,act:'age'},'novgorod');
+  ok('the Novgorod premium rides above the die cap (die 6 → 8★)', p.delivered[p.delivered.length-1].val===8);
+  ok('no refine machinery survives', typeof freeAge==='undefined'&&typeof brefinePick==='undefined');
   p.recipes=['gruit','hopped'];
   UI.pendingRecipe=[{pid:0,dest:'bruges'}];afterSail('stops');
   ok('Bruges prize: a dealt export recipe, free', p.recipes.length===3);
@@ -251,23 +253,29 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('hireable excludes owned + full seats', hireable(p).length===0);
 })();
 
-// ---- 19. v4.1 WHARF FEES: paid at the wharf, free at the kontor ----
+// ---- 19. v4.2 PER-ITEM WHARF FEES: the fee rides the item; free at the kontor ----
 (function(){var p=fresh();stops();
   S.exports=['broyhan','keut','mumme'];p.recipes=['gruit','hopped'];
   p.grain=3;p.hops=2;
   UI.sub='recipegain';UI.rgain={returnTo:'stops'};recipeGainPick('broyhan');
-  ok('gain-recipe (wharf) pays the 1G fee', p.grain===2&&p.recipes.indexOf('broyhan')>=0);
-  p.grain=0;var r0=p.recipes.length;
+  ok('gain-recipe pays the RECIPE’s fee (Broyhan 1H)', p.hops===1&&p.grain===3&&p.recipes.indexOf('broyhan')>=0);
+  UI.sub='recipegain';UI.rgain={returnTo:'stops'};recipeGainPick('keut');
+  ok('a different recipe, a different fee (Keut 1G)', p.grain===2&&p.hops===1&&p.recipes.indexOf('keut')>=0);
+  p.grain=0;p.hops=1;var r0=p.recipes.length;   // only mumme (2H) missing — unaffordable
   enterRecipeGain('stops');
-  ok('no goods → the recipe channel refuses', UI.sub!=='recipegain'&&p.recipes.length===r0);
-  p.grain=3;S.impDisplay=['cellar','crane','granary','hopgarden'];
+  ok('no affordable fee → the recipe channel refuses', UI.sub!=='recipegain'&&p.recipes.length===r0);
+  p.grain=5;p.hops=2;S.impDisplay=['cellar','crane','granary','hopgarden'];
   UI.sub='hire';UI.hire={returnTo:'stops'};hirePick('cellar');
-  ok('hire (wharf) pays the 1G fee', p.grain===2&&p.upgrades.indexOf('cellar')>=0);
+  ok('hire pays the SPECIALIST’s fee (Cellarman 3G)', p.grain===2&&p.upgrades.indexOf('cellar')>=0);
   S.buildDisplay=['granary','maltkiln','cooperage','customs'];
   var g1=p.grain,b1=p.bank;
   UI.sub='survey';UI.survey={returnTo:'stops'};surveyPick('granary');
   placeBldgOn('s1');
-  ok('gain-building (wharf) pays the 1G fee and still banks +'+BUILD_PTS, p.grain===g1-1&&p.bank===b1+BUILD_PTS);
+  ok('a chipless building is FREE to gain (+'+BUILD_PTS+' banks)', p.grain===g1&&p.bank===b1+BUILD_PTS);
+  var g2=p.grain,b2=p.bank;
+  UI.sub='survey';UI.survey={returnTo:'stops'};surveyPick('maltkiln');
+  placeBldgOn('s2');
+  ok('a premium building pays its fee (Malt Kiln 2G)', p.grain===g2-2&&p.bank===b2+BUILD_PTS);
   // the kontor prizes stay FREE
   var q=S.players[1];q.ai={tier:'journeyman'};var qg=q.grain,qb=q.bank;
   UI.pendingBenefits=[{pid:1,dest:'london'}];afterSail('stops');

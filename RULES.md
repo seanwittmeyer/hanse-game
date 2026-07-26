@@ -1,4 +1,15 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.1 “Counting House”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.2 “Tariff”)
+
+> **v4.2 “Tariff” (designer-ruled 2026-07-26 — the second ruling off playtest #23).** Two
+> changes on v4.1. **(1) The fee rides the ITEM, not the channel:** every acquirable recipe /
+> specialist / building carries its **own printed wharf fee** ⚙ — recipes Broyhan `1H` · Keut
+> `1G` · Mumme `2H` · Bock `2G2H`; specialists Cellarman `3G` · Grain Factor `2G` · Hop
+> Gardener `2H` · Stevedore `2G`; buildings free (chipless) / `1G` / `2G` by tile — paid at
+> ANY wharf channel (Scrivener’s Hall · the Hiring Post · the gain load-bonuses). Kontor
+> prizes stay free, and there is **never a fee-on-fee**: using a building charges nothing of
+> its own. **(2) Novgorod pays the die +2★** — the refine prize is cut; every die parked there
+> banks **pips +2** (6–8★ at gate 4), printed on the kontor mat. The live build is `play.html`
+> (**KEY `hanse-v42`**).
 
 > **v4.1 “Counting House” (designer-ruled 2026-07-26, off human playtest #23 — the first v4
 > table).** Two changes on the v4.0 spine. **(1) Paid at the wharf, free at the kontor:**
@@ -7,8 +18,7 @@
 > wharf fee** ⚙; the kontor prizes stay free. **(2) The dice are the ONE clock:** the
 > Sailed-Ships track is **cut** (trigger and component) — the **14th tally die a house parks**
 > sets the final round; dice never return, so the pool is the whole runway (`MAX_ROUND` 25
-> stays the rules-side backstop; sails end nothing). The live build is `play.html`
-> (**KEY `hanse-v41`**).
+> stays the rules-side backstop; sails end nothing).
 
 > **v4.0 “Bright Beer” (designer-ruled 2026-07-21, off `V4-STREAMLINE.md`).** The streamline
 > keystone. **The tally die is the whole cask:** set to the printed **start value at brew**
@@ -114,14 +124,14 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 - **Delivery:** the die **parks at the kontor showing its face** — the pips ARE the banked ★
   (never less than 1), the body is your presence there and a beat of the end clock (§10).
 
-| Beer | Q | Aging steps | Die starts | Brew cost | Buyless — earned only |
+| Beer | Q | Aging steps | Die starts | Brew cost | Earned (wharf fee ⚙ · free at Bruges) |
 |---|---|---|---|---|---|
 | Gruit | Q1 | 0 (Ready at brew) | 1 | `G` | starter |
 | Hopped | Q2 | 1 | 1 | `G H` | starter |
-| Broyhan | Q3 | 1 | 2 | `G H H` | dealt export |
-| Keut | Q3 | 2 | 1 | `G G H` | dealt export |
-| Mumme | Q4 | 3 | 1 | `G H H H` | dealt export |
-| Bock | Q5 | 3 | 2 | `G G H H H` | dealt export |
+| Broyhan | Q3 | 1 | 2 | `G H H` | dealt export · fee `H` |
+| Keut | Q3 | 2 | 1 | `G G H` | dealt export · fee `G` |
+| Mumme | Q4 | 3 | 1 | `G H H H` | dealt export · fee `H H` |
+| Bock | Q5 | 3 | 2 | `G G H H H` | dealt export · fee `G G H H` (the premium climb) |
 
 *(The Cellarman starts your dice one higher — a Bock at 3. Cap: a start value never exceeds the
 quality. Keut’s printed perk: its delivery also **places 1 presence** — a tray die parks at face 1
@@ -154,26 +164,29 @@ at that kontor.)*
 ## 5. The slots & the buildings — one green family
 
 The 8 slots each hold up to **one building** (bottom) and **one ship** (top). **Every building
-serves whoever activates it; none has an owner.** Placing one — London’s prize or a *Gain 1
-building* action, always **from the Wharf display of 4, placed at once** — pays the builder
-**+3★** on the score track. **Overbuild:** you may place onto a slot that already has a building
-for **1 `G` ⚙** (paid to the stores); the displaced tile is **returned to the box**. ⚙ *watch:
+serves whoever activates it; none has an owner.** Placing one — London’s prize (free) or a *Gain 1
+building* action (pay the **tile’s printed wharf fee** ⚙, v4.2 — a chipless tile is free),
+always **from the Wharf display of 4, placed at once** — pays the builder **+3★** on the score
+track. **Using a building never costs a fee of its own** — at Scrivener’s Hall / the Hiring
+Post you pay only the recipe’s / specialist’s printed fee. **Overbuild:** you may place onto a
+slot that already has a building for **1 `G` ⚙** (paid to the stores, on top of any fee); the
+displaced tile is **returned to the box**. ⚙ *watch:
 if churn mints +3★, the dials are restricting overbuild to a full board or raising the fee.*
 
 **The deck (17 ⚙, all green):**
 
-| Building | Fires | Effect ⚙ | Qty ⚙ |
-|---|---|---|---|
-| Granary | slot stop | **Gain 2 goods** (any mix) | 2 |
-| Scrivener’s Hall | slot stop | pay 1 `G` ⚙ — **gain 1 recipe** (dealt exports) | 2 |
-| Mission Quay | slot stop | **Age +2** (your vessels) | 2 |
-| Hiring Post | slot stop | pay 1 `G` ⚙ — **gain 1 specialist** (display) | 1 |
-| Almoner’s Stall | slot stop | **Place 1 presence** (§7) | 1 |
-| Brewhouse Annex | slot stop | **Brew 1** (pay its cost; tray die) | 1 |
-| **Malt Kiln** | on load here | the boarding cask’s **die +1** (cap 6) | 3 |
-| **Cooperage** | passive | the ship here carries **+1 berth** | 2 |
-| **Customs House** | passive | the ship here **boards one gate lower** (sells at the die) | 2 |
-| **Rich Berth** | passive | the hull here may **sail one berth short** (min 1) | 1 |
+| Building | Fires | Effect ⚙ | Qty ⚙ | Wharf fee ⚙ |
+|---|---|---|---|---|
+| Granary | slot stop | **Gain 2 goods** (any mix) | 2 | free |
+| Scrivener’s Hall | slot stop | **gain 1 recipe** (at the recipe’s fee) | 2 | 1 `G` |
+| Mission Quay | slot stop | **Age +2** (your vessels) | 2 | free |
+| Hiring Post | slot stop | **gain 1 specialist** (at its fee) | 1 | 1 `G` |
+| Almoner’s Stall | slot stop | **Place 1 presence** (§7) | 1 | free |
+| Brewhouse Annex | slot stop | **Brew 1** (pay its cost; tray die) | 1 | 1 `G` |
+| **Malt Kiln** | on load here | the boarding cask’s **die +1** (cap 6) | 3 | 2 `G` |
+| **Cooperage** | passive | the ship here carries **+1 berth** | 2 | 2 `G` |
+| **Customs House** | passive | the ship here **boards one gate lower** (sells at the die) | 2 | 2 `G` |
+| **Rich Berth** | passive | the hull here may **sail one berth short** (min 1) | 1 | 2 `G` |
 
 *(Action buildings print the same verbs as the cask piles — the wharf and the cargo speak one
 language. The Kiln is the “improve the humble beer” engine: a Gruit can climb to 6; a Bock only
@@ -208,14 +221,15 @@ load each slot’s ship once — all optional, any order, resolved on the active
 | **Age +2** | 2 age points across your vessels | Q2+ |
 | **Load 1 more cask** | onto **any** eligible hull on the wharf (its bonus fires too) | Q2+ |
 | **Place 1 presence** | a tray die → a kontor you’ve delivered to (§7) | Q2+ |
-| **Gain 1 recipe** | pay 1 `G` ⚙ — a dealt export | Q2+ |
-| **Gain 1 building** | pay 1 `G` ⚙ — display → any legal slot, **+3★** | Q3+ |
-| **Gain 1 specialist** | pay 1 `G` ⚙ — from the display (open seat required) | Q3+ |
+| **Gain 1 recipe** | pay the **card’s printed fee** ⚙ — a dealt export | Q2+ |
+| **Gain 1 building** | pay the **tile’s printed fee** ⚙ (no chip = free) — display → any legal slot, **+3★** | Q3+ |
+| **Gain 1 specialist** | pay the **tile’s printed fee** ⚙ — from the display (open seat required) | Q3+ |
 | **Brew 1** | pay its cost into an open vessel (tray die) | Q4+ |
 
 *(Enshrine left with the Hall. Every pile top is face-up — brew toward the bonus you want.
-**Paid at the wharf, free at the kontor** (v4.1): the three acquisition gains cost the 1 `G`
-wharf fee here and at Scrivener’s Hall / the Hiring Post — the kontor prizes never do.)*
+**Paid at the wharf, free at the kontor** (v4.2 — the fee rides the ITEM): the three
+acquisition gains cost the chosen item’s **own printed fee**, here and at Scrivener’s Hall /
+the Hiring Post — the kontor prizes never do, and no building ever adds a fee of its own.)*
 
 ---
 
@@ -226,12 +240,15 @@ wharf fee here and at Scrivener’s Hall / the Hiring Post — the kontor prizes
 | **Bruges** (Hub) | 1 | the die | **Gain 1 recipe** (dealt exports) | 4 / 2 / 0 |
 | **London** (Steelyard) | 2 | the die | **A building** (display → placed, **+3★**) | 5 / 3 / 1 |
 | **Bergen** (Bryggen) | 2 | the die | **A specialist** (display, free) | 9 / 5 / 2 (anchor) |
-| **Novgorod** (Peterhof) | **4** (raised ⚙) | the die | **Refine** — +2 age points ⚙ | 8 / 5 / 2 |
+| **Novgorod** (Peterhof) | **4** (raised ⚙) | **the die +2★** ⚙ (6–8) | — (the value premium IS the prize) | 8 / 5 / 2 |
 
 - **Gates read the DIE as it boards** (post-lift) — a Kiln’d Hopped (die 3) still misses
   Novgorod; a Kiln’d Broyhan (die 4) makes it. One number rules gates and value alike.
 - **Prizes resolve WHEN GAINED, owner’s choice** (a rival tops off a hull carrying your cask →
   you pick your prize right then). No queues.
+- **Novgorod’s premium is printed on the mat** (v4.2): every *delivered* die there counts
+  **pips +2** — for the score AND the end-game audit. (Gate 4 means delivered dice show 4–6,
+  so a face-1 die at Novgorod is always a presence bump, worth its flat 1★.)
 - **Presence** = your parked dice there. A **presence bump** (the cask/building action) takes a
   **tray die**, parks it at a kontor you’ve **already delivered to** at **face 1** (it scores
   1★ and counts for the majority and the clock). No tray die → no bump.
@@ -248,11 +265,12 @@ wharf fee here and at Scrivener’s Hall / the Hiring Post — the kontor prizes
 - **Recipe cards** sit beside the board; **flipped (BREWED) faces are the Flight record** — the
   unlock currency AND the end-game ladder (§11).
 
-**The SPECIALISTS (4 designs ⚙ · deck of n−1 copies each · display of 4):**
-- **Cellarman** — your dice **start one higher** (never above quality; a Bock starts at 3).
-- **Grain Factor** — whenever you gain grain (any faucet): **+1 `G`**.
-- **Hop Gardener** — whenever you gain hops (any faucet): **+1 `H`**.
-- **Stevedore** — your ship-slot stop loads **2 casks** (each fires its bonus).
+**The SPECIALISTS (4 designs ⚙ · deck of n−1 copies each · display of 4 · each prints its
+wharf fee ⚙ — free as Bergen’s prize):**
+- **Cellarman** (fee `3G`) — your dice **start one higher** (never above quality; a Bock starts at 3).
+- **Grain Factor** (fee `2G`) — whenever you gain grain (any faucet): **+1 `G`**.
+- **Hop Gardener** (fee `2H`) — whenever you gain hops (any faucet): **+1 `H`**.
+- **Stevedore** (fee `2G`) — your ship-slot stop loads **2 casks** (each fires its bonus).
 
 ---
 
@@ -313,8 +331,9 @@ the engine; the modules return after the core settles.
    never a second clock.
 2. **The recipe faucet** — Bruges + the priced verbs only (v4.1 fee). If the Flight stalls, the
    dials are prize generosity, verb frequency (piles/deck), and the fee — not a Market buy.
-3. **Novgorod at gate 4** — is die-4 boarding reachable enough (Mumme+, or Kiln’d Q3)? The
-   refine prize + 8/5/2 majority are its pull.
+3. **Novgorod at gate 4** — is die-4 boarding reachable enough (Mumme+, or Kiln’d Q3)? Its
+   pull is now the **+2★ die premium** (6–8★ deliveries, v4.2) + the 8/5/2 majority — watch
+   whether +2 overshoots (the dial is the printed premium).
 4. **The +3★ build rate** — London deliveries + verbs; watch total build ★ share and overbuild
    churn (dials: fee, display width, restrict-to-full-board).
 5. **Bergen heat** — specialist prize + the 9/5/2 anchor (dial: tiers or the prize).
@@ -324,5 +343,6 @@ the engine; the modules return after the core settles.
    deadlock relief; too few = the strand risk returns (too many is now merely inefficient).
 8. **2p texture** — the thinned interaction set (berths, toll, majorities, the draft): does it
    hold at two?
-9. **The wharf fee** — flat 1 `G` ⚙ (v4.1). Parked dials (designer, 2026-07-26): a premium fee
-   on the richer kontor-gained buildings/specialists, and a Bock/Jopenbier surcharge.
+9. **The fee schedule** ⚙ (v4.2 — per item): recipes `1H`/`1G`/`2H`/`2G2H` · specialists
+   `3G`/`2G`/`2H`/`2G` · buildings free/`1G`/`2G`. First-pass numbers awaiting the designer’s
+   markup and a table read. Parked: a surcharge when a kontor PRIZE hands over a premium tile.

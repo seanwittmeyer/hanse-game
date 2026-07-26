@@ -1,5 +1,10 @@
-# Brewhouses of the Hanse — Components (v4.1 “Counting House”)
+# Brewhouses of the Hanse — Components (v4.2 “Tariff”)
 
+> **v4.2 (designer-ruled 2026-07-26 — the second ruling off playtest #23):** the **fee rides
+> the ITEM** — every acquirable recipe card, specialist tile and building tile prints its own
+> **wharf fee** ⚙ (a chipless building is free; kontor prizes always free; never a fee to USE
+> a building), and **Novgorod’s mat prints value = the die +2★** (the refine prize is out).
+>
 > **v4.1 (designer-ruled 2026-07-26, off human playtest #23):** **out of the box — the
 > Sailed-Ships track** (the tally dice are the ONE end clock); Scrivener’s Hall, the Hiring
 > Post and the three acquisition load-bonuses now **print the 1 `G` wharf fee** (paid at the
@@ -14,9 +19,9 @@
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
-> - Operational rules: `RULES.md` (v4.0). Design rationale & history: `DESIGN.md` §9; the ruled plan `V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v4.0 “Bright Beer”** (`KEY hanse-v40`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `printables2.html` — the only kit in use** (v4.0 sheets as of the P4 refresh, 2026-07-21).
+> - Operational rules: `RULES.md` (v4.2). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `V4-STREAMLINE.md`.
+> - The live build is `play.html` — **v4.2 “Tariff”** (`KEY hanse-v42`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `printables2.html` — the only kit in use** (components.js data is v4.2; the sheet layouts are the P4 refresh).
 
 ---
 
@@ -39,7 +44,7 @@
 | Board | Qty | Holds |
 |---|---|---|
 | Main board — **the Wharf** | 1 | 2×2 stations, each printing **ONE action** (Market *Source 2* · Brewhouse *Brew* · Cellar *Age 3* · Harbor *Commission 1G, ★ = berths*), ringed by 8 slots (a building seat + a ship seat each). |
-| **Destinations board** | 1 | The four kontor panels — Bruges · London · Bergen · Novgorod — each printing its **gate (die N+)**, its **prize** (recipe / building / specialist / refine), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the banked ★ audit). *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
+| **Destinations board** | 1 | The four kontor panels — Bruges · London · Bergen · Novgorod — each printing its **gate (die N+)**, its **prize** (recipe / building / specialist — Novgorod instead prints **value = the die +2★**), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the banked ★ audit). *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
 | Player boards | 4 | **3 vessel slots** (1–2 open; the 3rd under a printed cover “2nd beer”) + **2 specialist seats** (1st open; the 2nd under “3rd beer”). Recipe cards sit beside it. Goods cap 8 printed. |
 | **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per house — the bank (+3★ builds · ★ = berths on commissions · 1★ bumps) and delivery ★ as they land. *(New in v4.0 — the hard line demands a home for banked points.)* |
 | Supply board *(kit)* | 1 | The displays: ships 4 · buildings 4 · specialists 4 · the export recipe row — ringed by the score track. *(The Sailed-Ships clock left with v4.1.)* |
@@ -59,9 +64,9 @@
 
 Each prints: the beer’s name/art · **quality Q1–Q5** · the **START-DIE value** (a printed die
 face inside the die seat) · one **load-bonus action** (assigned at brew from the pile tops —
-the printed mix per quality is the pile; the three *acquisition* bonuses — recipe · building ·
-specialist — print the **1 `G` wharf fee** ⚙, v4.1). Shared pool, brewed never bought; **min 6
-tiles/type** (staples deeper: Gruit 16 · Hopped 12 ⚙).
+the printed mix per quality is the pile; the three *acquisition* bonuses read **“· its fee”**
+— each item’s price is printed on its own card/tile ⚙, v4.2). Shared pool, brewed never
+bought; **min 6 tiles/type** (staples deeper: Gruit 16 · Hopped 12 ⚙).
 
 | Beer | Q | Steps | Start die | Brew | Tiles ⚙ |
 |---|---|---|---|---|---|
@@ -91,39 +96,41 @@ Per port: 6 each (Bruges sk1/c3/h2 · London sk2/c2/h2 · Bergen sk1/c3/h2 · No
 
 **No owner, ever** — every building serves whoever activates it; the placer banks **+3★** ⚙
 (setup’s two neutral seeds score nobody). Placement is always display → slot, at once; overbuild
-anytime for `1 G` ⚙ (displaced tile boxed). Display of 4; earned at **London** or via the
-*Gain 1 building* bonus — never bought.
+anytime for `1 G` ⚙ (displaced tile boxed, the rent on top of any fee). Display of 4; free at
+**London**, or via the *Gain 1 building* bonus at the **tile’s printed fee** ⚙ (a chipless
+tile is free — the tier reads straight off the component). Using a building never costs a fee.
 
-| Building | Qty ⚙ | Effect |
-|---|---|---|
-| Granary | 2 | slot stop: **gain 2 goods** |
-| Scrivener’s Hall | 2 | slot stop: pay 1 `G` ⚙ — **gain 1 recipe** |
-| Mission Quay | 2 | slot stop: **age +2** |
-| Hiring Post | 1 | slot stop: pay 1 `G` ⚙ — **gain 1 specialist** |
-| Almoner’s Stall | 1 | slot stop: **place 1 presence** (a tray die) |
-| Brewhouse Annex | 1 | slot stop: **brew 1** (pay its cost) |
-| **Malt Kiln** | 3 | a cask loading here: **die +1** (cap 6) |
-| Cooperage | 2 | ship here: **+1 berth** |
-| Customs House | 2 | ship here **boards one gate lower** |
-| Rich Berth | 1 | hull here may **sail one berth short** (min 1) |
+| Building | Qty ⚙ | Effect | Wharf fee ⚙ (chip; — = free) |
+|---|---|---|---|
+| Granary | 2 | slot stop: **gain 2 goods** | — |
+| Scrivener’s Hall | 2 | slot stop: **gain 1 recipe** (at the recipe’s fee) | 1 `G` |
+| Mission Quay | 2 | slot stop: **age +2** | — |
+| Hiring Post | 1 | slot stop: **gain 1 specialist** (at its fee) | 1 `G` |
+| Almoner’s Stall | 1 | slot stop: **place 1 presence** (a tray die) | — |
+| Brewhouse Annex | 1 | slot stop: **brew 1** (pay its cost) | 1 `G` |
+| **Malt Kiln** | 3 | a cask loading here: **die +1** (cap 6) | 2 `G` |
+| Cooperage | 2 | ship here: **+1 berth** | 2 `G` |
+| Customs House | 2 | ship here **boards one gate lower** | 2 `G` |
+| Rich Berth | 1 | hull here may **sail one berth short** (min 1) | 2 `G` |
 
 ## 7. Specialist tiles (4 designs · n−1 copies each · 2×2″ purple)
 
-Earned **free** (Bergen’s prize · the Hiring Post · the *Gain 1 specialist* bonus) — never
-bought. **Two seats** per house; never two of a kind.
+Free as **Bergen’s prize**; the Hiring Post / *Gain 1 specialist* bonus pay each tile’s
+**printed wharf fee** ⚙. **Two seats** per house; never two of a kind.
 
-| Specialist | Effect |
-|---|---|
-| Cellarman | your dice **start one higher** (never above quality) |
-| Grain Factor | gain grain: **+1 extra** (any faucet) |
-| Hop Gardener | gain hops: **+1 extra** (any faucet) |
-| Stevedore | your ship-slot stop loads **2 casks** |
+| Specialist | Effect | Wharf fee ⚙ |
+|---|---|---|
+| Cellarman | your dice **start one higher** (never above quality) | 3 `G` |
+| Grain Factor | gain grain: **+1 extra** (any faucet) | 2 `G` |
+| Hop Gardener | gain hops: **+1 extra** (any faucet) | 2 `H` |
+| Stevedore | your ship-slot stop loads **2 casks** | 2 `G` |
 
 ## 8. Recipe cards (double-sided — the Flight record)
 
 Starters **Gruit + Hopped** (1 each/house; Gruit dealt flipped = the warm start). Exports
-**Broyhan · Keut · Mumme · Bock** — deal 3 of 4 each game; gained **free** (Bruges’ prize · the
-*Gain 1 recipe* bonus · Scrivener’s Hall). Flip to the BREWED face on the first brew — the
+**Broyhan · Keut · Mumme · Bock** — deal 3 of 4 each game; free as **Bruges’ prize**, or gained
+at the card’s **printed wharf fee** ⚙ (Broyhan `1H` · Keut `1G` · Mumme `2H` · Bock `2G2H`) via
+the *Gain 1 recipe* bonus / Scrivener’s Hall. Flip to the BREWED face on the first brew — the
 flipped cards are the Flight ladder **and** the cover-openers (2nd beer → vessel 3 · 3rd →
 seat 2).
 
@@ -140,9 +147,10 @@ house tokens · 32 cask cubes · the aging faces of every cask tile · the Trade
 Beers / Jopenbier materials (tabled with their toggles).
 **Added:** 6 Skute tiles · the score track + 4 discs · printed start-die faces and covers
 (“2nd beer” / “3rd beer”) on the player boards.
-**v4.1 delta:** removed — the **Sailed-Ships track** (the dice are the one clock); reprinted —
-Scrivener’s Hall & the Hiring Post (the 1 `G` fee chip) and the cask tiles whose load bonus is
-an acquisition verb (the printed fee).
+**v4.1 delta:** removed — the **Sailed-Ships track** (the dice are the one clock).
+**v4.2 delta:** reprinted — recipe cards (the cost panel = the **wharf fee**), specialist tiles
+(fee chips), building tiles (per-tile fee chips; free tiles chipless), the acquisition
+load-bonus verbs (“· its fee”), and the Novgorod mat (**value = die +2★**; refine out).
 
 ## 11. Known gaps ⚙ (the watch list)
 

@@ -15,15 +15,16 @@ const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · vic
 // Exchange work; Wild survives only as the Workshop dock effect + the flipped-tile Floor stops).
 // Gruit is PINNED to Source. Icons/texts mirror play.html CASK_ACT.
 const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the cask boards a hull.
-  // v4.1 "paid at the wharf, free at the kontor": the three ACQUISITION bonuses print the 1 G
-  // wharf fee (the kontor prizes stay free) — the fee is part of the printed verb.
+  // v4.2 "the fee rides the ITEM": the three ACQUISITION bonuses read "· fee" — you pay the
+  // chosen item's OWN printed price (recipe card / specialist tile / building tile; chipless
+  // buildings are free). The kontor prizes stay free; using a building never adds a fee.
   {k:'source',  ai:'coins',         act:'Gain 2 goods',             q:2},
   {k:'age',     ai:'hourglass',     act:'Age +2',                   q:2},
   {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},
   {k:'reach',   ai:'map-pin',       act:'+1 presence',              q:2},
-  {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe · '+cost(1,0),          q:2},
-  {k:'survey',  ai:'search',        act:'Gain 1 building (+3★) · '+cost(1,0),  q:3},
-  {k:'hire',    ai:'wrench',        act:'Gain 1 specialist · '+cost(1,0),      q:3},
+  {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe · its fee',          q:2},
+  {k:'survey',  ai:'search',        act:'Gain 1 building (+3★) · its fee',  q:3},
+  {k:'hire',    ai:'wrench',        act:'Gain 1 specialist · its fee',      q:3},
   {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:4},
 ];
 const poolFor=q=>CASK_POOL.filter(a=>q>=a.q);   // the printed mix per quality tier
@@ -74,15 +75,15 @@ const BUILDINGS=[
   // cask-action verb, fired on their slot's stop; LOAD-LIFT buildings passively modify the ship /
   // the load at their slot. 17 tiles ⚙. (art: interim stand-ins from the retired tiles' files.)
   {k:'granary',   nm:'Granary',           verb:'transform', tgt:'act',  ic:'coins',        n:2, act:'source', eff:'Slot stop: gain 2 goods (any mix)', art:'building-staple.png'},
-  {k:'scriveners',nm:'Scrivener’s Hall',  verb:'transform', tgt:'act',  ic:'scroll-text',  n:2, g:1, act:'recipe', eff:'Slot stop: gain 1 recipe', art:'building-gauger.png'},
+  {k:'scriveners',nm:'Scrivener’s Hall',  verb:'transform', tgt:'act',  ic:'scroll-text',  n:2, g:1, act:'recipe', eff:'Slot stop: gain 1 recipe (at its fee)', art:'building-gauger.png'},
   {k:'missionq',  nm:'Mission Quay',      verb:'transform', tgt:'act',  ic:'church',       n:2, act:'age',    eff:'Slot stop: age +2 (your vessels)', art:'building-reliquary.png'},
-  {k:'hiringpost',nm:'Hiring Post',       verb:'transform', tgt:'act',  ic:'wrench',       n:1, g:1, act:'hire',   eff:'Slot stop: gain 1 specialist', art:'building-workshop.png'},
+  {k:'hiringpost',nm:'Hiring Post',       verb:'transform', tgt:'act',  ic:'wrench',       n:1, g:1, act:'hire',   eff:'Slot stop: gain 1 specialist (at its fee)', art:'building-workshop.png'},
   {k:'almoner',   nm:'Almoner’s Stall',   verb:'transform', tgt:'act',  ic:'heart',        n:1, act:'reach',  eff:'Slot stop: place 1 presence (a tray die)'},
-  {k:'annex',     nm:'Brewhouse Annex',   verb:'transform', tgt:'act',  ic:'flask-conical',n:1, act:'brew',   eff:'Slot stop: brew 1 cask (pay its cost)', art:'building-partigyle.png'},
-  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:3, eff:'A cask loading here: die +1 (cap 6)'},
-  {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:2, eff:'Ship here carries +1 berth'},
-  {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:2, eff:'Ship here boards one gate lower'},
-  {k:'richberth', nm:'Rich Berth',        verb:'transform', tgt:'ship', ic:'anchor',       n:1, eff:'Hull here may sail 1 berth short (min 1)'},
+  {k:'annex',     nm:'Brewhouse Annex',   verb:'transform', tgt:'act',  ic:'flask-conical',n:1, g:1, act:'brew',   eff:'Slot stop: brew 1 cask (pay its cost)', art:'building-partigyle.png'},
+  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:3, g:2, eff:'A cask loading here: die +1 (cap 6)'},
+  {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:2, g:2, eff:'Ship here carries +1 berth'},
+  {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:2, g:2, eff:'Ship here boards one gate lower'},
+  {k:'richberth', nm:'Rich Berth',        verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'Hull here may sail 1 berth short (min 1)'},
 ];
 
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
@@ -116,10 +117,10 @@ const BUILDINGS=[
 //   quaymaster     → a private wooden jetty with a rope-wound mooring bollard
 // ============================================================================
 const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize · the Hiring Post · the 'Gain 1 specialist' load bonus) — never bought · deck of n−1/type · 2 SEATS per house (the 2nd behind the Flight's 3rd distinct brew)
-  {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Your dice START one higher (never above quality)', g:0, c:'#5b3a8e', n:3},
-  {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:0, c:'#5b3a8e', n:3},
-  {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:0, c:'#5b3a8e', n:3},
-  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Your ship-slot stop loads 2 casks', g:0, c:'#5b3a8e', n:3},
+  {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Your dice START one higher (never above quality)', g:3, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:2, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:0, h:2, c:'#5b3a8e', n:3},
+  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Your ship-slot stop loads 2 casks', g:2, c:'#5b3a8e', n:3},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
@@ -132,16 +133,17 @@ const STARTERS=[   // the starting recipes are CARDS since v3.2d — one each pe
   {nm:'Gruit', cc:'#8a949c', L:1, g:1,h:0, start:1},
   {nm:'Hopped',cc:'#c2922f', L:2, g:1,h:1, start:1}];
 const RECIPES=[  // EXPORT recipe cards — print in the same double-sided run as the STARTERS above.
-  // buy = Market acquire cost (RECIPE_BUY in play.html) · g/h = the BREW cost on the tucked edge.
+  // buy = the WHARF FEE (v4.2 — paid to gain the recipe via a wharf channel; FREE as Bruges' prize)
+  // · g/h = the BREW cost on the tucked edge.
   {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{h:1},     reach:'Q3 · all kontore (the Hall via Dispatch) · FAST: ready 1'},
   {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'Q3 · all kontore (+ the Hall) · +1 presence on a kontor delivery'},
   {nm:'Mumme',   cc:'#9a5526', L:4, g:1,h:3, buy:{h:2},     reach:'Q4 · all kontore (the Hall via Dispatch)'},
-  {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{g:1,h:1}, reach:'Q5 · all kontore (+ the Hall) · ungated'},
+  {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{g:2,h:2}, reach:'Q5 · all kontore · the premium climb (its fee is priced up — v4.2)'},
   // EXPANSION "Specialty Beers" (v1.9, opt-in) — the 3 specialty export recipe cards
   {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, buy:{g:1}, reach:'Q2 · grain-path (no hops) · SALT TRADE: a kontor delivery → +1G +1H'},
   {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, buy:{h:1}, reach:'Q3 · PARTI-GYLE: brewing also yields a free small Gruit (open vessel)'},
-  {nm:'Duckstein',cc:'#7a5236', L:2, g:1,h:1, buy:{g:1}, reach:'Q2 · ready 2 · SMOKE-HARDY: ships &amp; scores as +1 quality (reaches Novgorod)'},
-  {nm:'Jopenbier',cc:'#5e2433', L:6, g:2,h:4, buy:{g:1,h:1}, reach:'Q6 CAPSTONE (own toggle) · self-contained 8★+ · cellars +1★/turn deployed (max +5) · counts for the Flight (6→25)'},
+  {nm:'Duckstein',cc:'#7a5236', L:2, g:1,h:1, buy:{g:1,h:1}, reach:'Q2 · ready 2 · SMOKE-HARDY: ships &amp; scores as +1 quality (reaches Novgorod)'},
+  {nm:'Jopenbier',cc:'#5e2433', L:6, g:2,h:4, buy:{g:2,h:2}, reach:'Q6 CAPSTONE (own toggle) · self-contained 8★+ · cellars +1★/turn deployed (max +5) · counts for the Flight (6→25)'},
 ];
 
 //==================================================================
@@ -268,7 +270,7 @@ function recipeCard(r,brewed){return '<div class="card" style="--cc:'+r.cc+'">'
   +(brewed?'<div class="c-brewed">'+LU('check')+'</div>':'')
   +'<div class="c-costpanel">'+(r.start
     ? '<span class="clab">starting recipe</span>'
-    : '<span class="clab">cost</span><span class="cbig">'+cost(r.buy.g,r.buy.h)+'</span>')+'</div>'
+    : '<span class="clab">wharf fee</span><span class="cbig">'+cost(r.buy.g,r.buy.h)+'</span>')+'</div>'
   +'<div class="c-strip">'
     +'<div class="c-row"><span class="c-rung">'+LU(QI)+r.L+'</span><span class="c-nm">'+r.nm+'</span></div>'
     +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(r.g,r.h)+'</span></div>'
