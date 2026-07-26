@@ -1,4 +1,8 @@
-# Brewhouses of the Hanse — Components (v4.2 “Tariff”)
+# Brewhouses of the Hanse — Components (v4.3 “Open Quay”)
+
+> **v4.3 (designer-ruled 2026-07-26 — the third ruling off playtest #23):** the **occupancy
+> toll is CUT** — no component change beyond the reprint of the **player aid** (the toll step
+> is gone; sharing a station costs nothing).
 
 > **v4.2 (designer-ruled 2026-07-26 — the second ruling off playtest #23):** the **fee rides
 > the ITEM** — every acquirable recipe card, specialist tile and building tile prints its own
@@ -20,8 +24,8 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (v4.2). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v4.2 “Tariff”** (`KEY hanse-v42c`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `printables2.html` — the only kit in use** (components.js data is v4.2; the sheet layouts are the P4 refresh).
+> - The live build is `play.html` — **v4.3 “Open Quay”** (`KEY hanse-v43`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `printables2.html` — the only kit in use** (components.js data is v4.3; the sheet layouts are the P4 refresh).
 
 ---
 
@@ -151,6 +155,7 @@ Beers / Jopenbier materials (tabled with their toggles).
 **v4.2 delta:** reprinted — recipe cards (the cost panel = the **wharf fee**), specialist tiles
 (fee chips), building tiles (per-tile fee chips; free tiles chipless), the acquisition
 load-bonus verbs (“· its fee”), and the Novgorod mat (**value = die +2★**; refine out).
+**v4.3 delta:** reprinted — the **player aid** (the occupancy-toll step is gone).
 
 ## 11. Known gaps ⚙ (the watch list)
 

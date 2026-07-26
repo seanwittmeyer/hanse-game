@@ -153,7 +153,7 @@ catch (e) { console.error('RUN ERROR:', e && e.stack || e); process.exit(1); }
 const R = ctx.__RESULTS;
 const f=(x,d=1)=>Number(x).toFixed(d);
 const pct=(a,b)=>f(100*a/Math.max(1,b),1)+'%';
-console.log('=== hanse v4.2b FLOW PROBE — '+N+' games/count/config · tier '+TIER+' · LIVE (fees + Novgorod+2) vs NOFEE baseline ===');
+console.log('=== hanse v4.3 FLOW PROBE — '+N+' games/count/config · tier '+TIER+' · LIVE (fees + Novgorod+2) vs NOFEE baseline ===');
 for (const cfg of ['live','nofee']) {
   console.log('\n########## CONFIG: '+cfg.toUpperCase()+' ##########');
   [2,3,4].forEach(n=>{

@@ -83,12 +83,12 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ---
 
-## 6. The current architecture (v4.0 “Bright Beer”)
+## 6. The current architecture (v4.0 “Bright Beer” spine · v4.3 “Open Quay” live)
 
 Canonical detail in `RULES.md` / `COMPONENTS.md` / `V4-STREAMLINE.md`; the shape:
 
 - **The Wharf** — four stations ringed by 8 slots; move orthogonally, activate the **row or
-  column**; the 1 G toll while sharing. **Stations print ONE action each:** Market *Source 2* ·
+  column**; sharing a station costs nothing (v4.3 — the toll is cut). **Stations print ONE action each:** Market *Source 2* ·
   Brewhouse *Brew* · Cellar *Age 3* · Harbor *Commission* (`1 G`, place a display hull on a
   shipless slot, **bank ★ = its berth count**).
 - **THE DIE IS THE CASK** — the whole lifecycle on one component: printed start value at brew
@@ -107,7 +107,7 @@ Canonical detail in `RULES.md` / `COMPONENTS.md` / `V4-STREAMLINE.md`; the shape
   tile boxed.
 - **Everything is earned, not bought** — recipes (Bruges · bonuses · Scrivener’s), buildings
   (London · bonuses), specialists (Bergen · Hiring Post · bonuses; 4 designs, 2 seats). The
-  Market sells nothing; goods buy brews, commissions, tolls and rent — **and (v4.2) every
+  Market sells nothing; goods buy brews, commissions and rent — **and (v4.2) every
   acquirable item prints its own wharf fee**, paid via the wharf channels, waived as a kontor
   prize (never a fee to USE a building).
 - **The player board** — 3 vessel slots (3rd behind the Flight’s 2nd distinct brew) + 2
@@ -217,17 +217,31 @@ Hard-won across v0.9→v0.16; they constrain every future change:
   destination whose gate is LOW but whose pay curve rewards count over pips, so it pressures
   the clock rather than the score ceiling. Design it with the pole test in mind (volume may run
   hot; the failure is negation).
-- **The greedy-tier refresh (recorded 2026-07-26).** The non-MC tiers (Apprentice/Journeyman/
-  Trader heuristics) were written for pre-fee economies and now compress (trader>jour 52% at
-  v4.2b). Designer: *“It might make sense to revisit the non-MCTS AI players… I worry we
-  over-index on those AI players.”* Queued: a v4 re-teach (fee-aware verb values, H-vs-G
-  awareness, pool-racing) — AI-only, no rules change; until then the greedy tiers gate
-  robustness/pace ONLY.
+- **The greedy-tier refresh — DONE at v4.3 (2026-07-26).** Re-taught to the v4 economy:
+  fee-netted acquisition values, true Flight marginals, cheapest-net picks, no station dodge,
+  dice-clock racing when ahead, horizon sense (options fade at runway ≤4). Trader>journeyman
+  lands ~55% pooled (n=700) — under the historic 60% lint because journeyman inherits the
+  shared fee sense; iterations that widened the gap by *weakening* the skeleton were rejected.
+  Standing rule stands: the greedy tiers gate robustness/pace; strategy reads = MC tiers +
+  flow probe + humans.
 - **Starting building — RESOLVED (2026-07-04): there is no starting building.** The "1 random Building in
   hand" setup is cut (with the whole buildings-in-hand concept — buildings are always chosen from the display
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v4.3 "Open Quay" — the toll falls** *(2026-07-26, KEY `hanse-v43`, the designer's third
+ruling off playtest #23)* — **The occupancy toll is CUT** *("Yea, we ditched the occupancy
+toll.")* — sharing a station costs nothing; the friction the toll priced is carried by the
+components instead (the berth race, the shared building family, the displays/draft, the
+majorities). Lesson honoured (v0.15: structure over value): the toll was a *value* lever on a
+*structural* problem the v4 board no longer has — with ONE action per station and 8 shared
+slots, company at a station is already self-limiting. Same ruling, AI-only: the **greedy tiers
+re-taught** to the v4 economy (fee-netted values via `aiFeeCost`, Flight marginals via
+`aiFlightMarg`, horizon sense via `aiLateGame`/`aiClockPush`, no shared-station dodge); the
+double-cost list stays ZERO (recipe fee is one-time, brew cost per-brew — confirmed fine).
+Gates: verify 87/87 · sim 500 + PATHWAYS 200 + flow probe all 0 crashes · render-smoke ALL
+PASS · trader>jour ~55% pooled (watch, see parking lot).
 
 **v4.2 "Tariff" — per-item fees & the Novgorod premium** *(2026-07-26, KEY `hanse-v42`, the
 designer's second ruling off playtest #23)* — Two changes on v4.1, same day. **(1) THE FEE

@@ -1,4 +1,11 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.2 “Tariff”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.3 “Open Quay”)
+
+> **v4.3 “Open Quay” (designer-ruled 2026-07-26 — the third ruling off playtest #23).** **The
+> occupancy toll is CUT:** sharing a station costs nothing — move where the board is best,
+> full stop. The interaction lives where the components put it: the **berth race**, the shared
+> buildings, the displays/draft and the majorities. *(AI-only, same ruling: the greedy tiers
+> are re-taught to the v4 economy — fee-netted values, Flight marginals, horizon sense; the MC
+> tiers stay the strategy oracle.)* The live build is `play.html` (**KEY `hanse-v43`**).
 
 > **v4.2 “Tariff” (designer-ruled 2026-07-26 — the second ruling off playtest #23).** Two
 > changes on v4.1. **(1) The fee rides the ITEM, not the channel:** every acquirable recipe /
@@ -8,8 +15,7 @@
 > ANY wharf channel (Scrivener’s Hall · the Hiring Post · the gain load-bonuses). Kontor
 > prizes stay free, and there is **never a fee-on-fee**: using a building charges nothing of
 > its own. **(2) Novgorod pays the die +2★** — the refine prize is cut; every die parked there
-> banks **pips +2** (6–8★ at gate 4), printed on the kontor mat. The live build is `play.html`
-> (**KEY `hanse-v42c`**).
+> banks **pips +2** (6–8★ at gate 4), printed on the kontor mat.
 
 > **v4.1 “Counting House” (designer-ruled 2026-07-26, off human playtest #23 — the first v4
 > table).** Two changes on the v4.0 spine. **(1) Paid at the wharf, free at the kontor:**
@@ -38,8 +44,8 @@
 
 ## 0. What v4.0 keeps and cuts (read first)
 
-**Keeps:** the 2×2-stations + 8-slot Wharf and move-then-activate; row-or-column lines; the
-occupancy toll; ships that **sail when full**, benefits sealing **on delivery** in load order;
+**Keeps:** the 2×2-stations + 8-slot Wharf and move-then-activate; row-or-column lines;
+ships that **sail when full**, benefits sealing **on delivery** in load order;
 the four kontore and tiered majorities; the steerable brew piles; the Flight on the recipe
 cards (distinct beers **BREWED**, (n−1)² min 3); goods as the only currency; the warm start;
 the **dice end clock** (v4.1 — the one clock); no dice-as-randomizers (the tally die is a
@@ -98,8 +104,8 @@ placement free.** First player fixed all game.
 
 The turn:
 1. **Move** your worker to an orthogonally adjacent station (from turn 2) and **choose the
-   station’s row or its column.** The **1 `G` occupancy toll** ⚙ (capped at what you hold;
-   opening placement free) is paid when you activate a line while a rival shares your station.
+   station’s row or its column.** Sharing a station costs **nothing** (v4.3 — the occupancy
+   toll is cut; move where the board is best).
 2. **Resolve the line’s stops in any order, every stop optional.** A line offers:
    - its **two stations** — each fires its ONE printed verb (§4);
    - its **two slots** — each offers **the building’s printed action** (if a building stands
@@ -144,7 +150,7 @@ at that kontor.)*
 >   berths are shared and race away.
 > - **You can’t hold everything** — a Ready cask clogs a vessel until a hull appears; goods cap
 >   at 8.
-> - **You can’t be everywhere** — one worker, one line, and the toll prices company.
+> - **You can’t be everywhere** — one worker, one line a turn; the rest of the board works on your rivals’ clocks.
 
 ---
 
@@ -341,15 +347,16 @@ the engine; the modules return after the core settles.
    every count?
 7. **The Skute rate** — deck blend 6/10/8. With the sailed clock cut the Skute is pure
    deadlock relief; too few = the strand risk returns (too many is now merely inefficient).
-8. **2p texture** — the thinned interaction set (berths, toll, majorities, the draft): does it
+8. **2p texture** — the thinned interaction set (berths, majorities, the draft): does it
    hold at two?
 9. **The fee schedule** ⚙ (v4.2c — per item): recipes `1H`/`1G`/`2H`/`1G2H` · specialists
    `2H`/`1G`/`2H`/`1G` (the −1G markup; Cellarman → `2H`) · buildings free/`1G`/`2G`. Probe
    reads still open: the **2G lift tier prices the wharf channel out** (candidate `1G1H`);
    **grain binding, hops slack** — lean premium fees toward `H`. Parked: a kontor-prize
    surcharge on premium tiles.
-10. **The greedy (non-MC) tiers predate the v4 economy** — designer (2026-07-26): *“I worry we
-   over-index on those AI players.”* Trader>journeyman read 52% at v4.2b. Standing rule
-   sharpened: strategy/balance conclusions lean on the MC tiers, the flow probe and humans;
-   the greedy tiers are robustness/pace oracles only. A v4 re-teach of the greedy tiers is
-   queued (AI-only).
+10. **The greedy (non-MC) tiers** — re-taught at v4.3 (fee-netted values, Flight marginals,
+   horizon sense; both tiers share the new skeleton). Trader>journeyman reads ~55% pooled
+   (n=700) — real but under the historic 60% lint, because journeyman inherits the shared
+   fee sense. Standing rule stands (designer 2026-07-26: *“I worry we over-index on those AI
+   players”*): strategy/balance conclusions lean on the MC tiers, the flow probe and humans;
+   the greedy tiers are robustness/pace oracles.

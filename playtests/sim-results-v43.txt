@@ -1,0 +1,24 @@
+=== hanse v4.1 sim — 500 games/count · tier journeyman ===
+
+== 2p · 500 ok / 0 err ==
+rounds avg 22.0 (min 10 max 25) · in 12–25 band 98.2%
+triggers: ceiling 61.6% · presence 38.4% · sailed avg 7.7
+winner total avg 87.3 · margin avg 16.5 · seat wins P1 53.4% P2 46.6%
+per-player: brews 9.4 · deliveries 9.0 · bank★ 23.5
+delivery split: bruges 34.7% · london 20.4% · bergen 24.7% · novgorod 20.2%
+
+== 3p · 500 ok / 0 err ==
+rounds avg 18.8 (min 8 max 25) · in 12–25 band 96.0%
+triggers: presence 72.6% · ceiling 27.4% · sailed avg 11.6
+winner total avg 90.3 · margin avg 10.4 · seat wins P1 35.8% P2 36.6% P3 27.6%
+per-player: brews 9.0 · deliveries 8.9 · bank★ 21.1
+delivery split: bruges 30.9% · london 22.4% · bergen 25.6% · novgorod 21.0%
+
+== 4p · 500 ok / 0 err ==
+rounds avg 17.4 (min 9 max 25) · in 12–25 band 95.8%
+triggers: presence 85.4% · ceiling 14.6% · sailed avg 15.8
+winner total avg 89.2 · margin avg 9.0 · seat wins P1 24.0% P2 28.4% P3 28.4% P4 19.2%
+per-player: brews 9.0 · deliveries 9.0 · bank★ 20.1
+delivery split: bruges 30.0% · london 22.7% · bergen 25.4% · novgorod 21.9%
+
+GATE: 0 crashes / 0 deadlocks.

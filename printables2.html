@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v4.2 “Tariff”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v4.3 “Open Quay”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -646,7 +646,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.2 “Tariff”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.3 “Open Quay”</span></h1>
   <a href="play.html">▶ Play</a>
   <a href="index.html">📖 Rules</a>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
@@ -750,12 +750,12 @@ function aidFront(){
       +'<div class="acol">'
         +'<h5>'+LU('list-ordered')+'Your Turn</h5>'
         +'<div class="step"><span class="sn">1</span><span class="sx"><b>Move</b> to an adjacent station.</span></div>'
-        +'<div class="step"><span class="sn">2</span><span class="sx"><b>Choose a line</b> — the row or the column. A rival on your station: pay '+G+'1.</span></div>'
+        +'<div class="step"><span class="sn">2</span><span class="sx"><b>Choose a line</b> — the row or the column. Sharing a station costs nothing.</span></div>'
         +'<div class="step"><span class="sn">3</span><span class="sx"><b>Resolve the stops</b> in any order, all optional: the two stations (ONE action each) + each slot’s <b>building action</b> and/or a <b>LOAD of the ship</b> docked there.</span></div>'
         +'<h5>'+LU('dice-3')+'The Die IS the Cask</h5>'
         +'<div class="ln">At <b>brew</b>, set a tray die to the tile’s printed <b>START</b> value. Age points turn it up — it <b>stops at the quality: READY</b>. Only buildings lift it past (Malt Kiln +1 as it boards, cap <b>6</b>). <b>Gates read the die as it boards.</b> At delivery the die <b>parks at the kontor</b>: pips = the banked ★ · body = presence, majority weight &amp; the clock. <b>No die in your tray → no brew, no presence bump.</b></div>'
         +'<h5>'+LU('building-2')+'Buildings — one green family</h5>'
-        +'<div class="ln">Every building serves <b>whoever activates it</b>. Raising one (London’s prize · a <i>Gain 1 building</i> bonus — always from the display) banks <b>+3★</b>. Overbuild anytime for '+G+'1 (the displaced tile is boxed). <b>Paid at the wharf, free at the kontor:</b> recipe/building/specialist gains via the wharf channels cost <b>the item’s printed fee</b> (chipless buildings free; never a fee to USE a building) — the kontor prizes never do.</div>'
+        +'<div class="ln">Every building serves <b>whoever activates it</b>. Raising one (London’s prize · a <i>Gain 1 building</i> bonus — always from the display) banks <b>+3★</b>. Overbuild anytime — ONE payment: the new tile’s fee if it prints one, else '+G+'1 ground rent (the displaced tile is boxed). <b>Paid at the wharf, free at the kontor:</b> recipe/building/specialist gains via the wharf channels cost <b>the item’s printed fee</b> (chipless buildings free; never a fee to USE a building) — the kontor prizes never do.</div>'
       +'</div>'
       +'<div class="acol">'
         +'<h5>'+LU('anchor')+'The Four Stations (one action each)</h5>'
@@ -1321,8 +1321,8 @@ function checklist(pages,famPages){
   const D='style="font-size:.085in;color:#5b4a37;font-weight:normal;line-height:1.26;margin-top:.005in"';
   const R=(nm,detail,n)=>'<tr><td class="bx"></td><td><b>'+nm+'</b>'+(detail?'<div '+D+'>'+detail+'</div>':'')+'</td><td class="n">'+n+'</td></tr>';
   const T=title=>'<table><tr><th></th><th>'+title+'</th><th>qty</th></tr>';
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.2 “Tariff”)</span></h2>'
-    +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The v4.2 build: the die is the cask — maturation, gate, value, presence and THE clock in one number (the dice alone end the game). Every acquirable recipe/specialist/building carries a PRINTED wharf fee (chipless buildings free; kontor prizes always free), and Novgorod pays every delivered die +2★. The Hall, charter contracts, Privileges, ownership tokens, cask cubes and the three expansions stay OUT of the box (tabled). Counts ⚙.</p>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.3 “Open Quay”)</span></h2>'
+    +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The v4.3 build: the die is the cask — maturation, gate, value, presence and THE clock in one number (the dice alone end the game). Every acquirable recipe/specialist/building carries a PRINTED wharf fee (chipless buildings free; kontor prizes always free), Novgorod pays every delivered die +2★, and sharing a station costs nothing (the occupancy toll is cut — v4.3). The Hall, charter contracts, Privileges, ownership tokens, cask cubes and the three expansions stay OUT of the box (tabled). Counts ⚙.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
     +R('Main board — the Wharf','The 2×2 of stations, each printing ONE action (Market: 2 goods · Brewhouse: brew · Cellar: 3 age points · Harbor: commission 1G → ★ = berths), ringed by 8 slots — each seats a BUILDING and/or a SHIP (never casks).','1')

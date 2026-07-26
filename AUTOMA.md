@@ -15,7 +15,16 @@
 > **CM>GM 62.5%** (20/32, 4 shards @ bulk 400ms; the historic pattern — bulk budgets read low) —
 > every rung ≥60%, 0 errors (`playtests/ai-ladder-vhanse-v40.txt`); render-smoke ALL PASS incl.
 > full GM & CM games through the REAL render layer. The `ai-tune.js` CEM tuner stays retired —
-> the v4 heuristics carry no weight table. Everything below this line is the v3 record, kept
+> the v4 heuristics carry no weight table.
+>
+> **v4.3 “Open Quay” (2026-07-26): the greedy tiers were RE-TAUGHT to the v4 economy** —
+> fee-netted acquisition values (`aiFeeCost`), true Flight marginals (`aiFlightMarg`),
+> cheapest-net recipe/specialist picks, the shared-station dodge cut with the toll, a
+> dice-clock race push when ahead (`aiClockPush`) and horizon sense (`aiLateGame`: options
+> fade, banking accelerates at runway ≤4). **Rung read: trader>journeyman ~55% pooled (n=700)**
+> — under the 60% lint because journeyman inherits the shared fee sense (the skeleton got
+> smarter for every tier); widening the gap by weakening journeyman was rejected. The MC pair
+> sits on the improved trader policy. Everything below this line is the v3 record, kept
 > for the method.
 
 
@@ -168,4 +177,4 @@ Ladder at the end: **Apprentice → Journeyman → Trader → Guildmaster → Ce
 - **The (S, UI) de-globalization** touches every mutator — mechanical but wide; it must land with a full sim re-run and `KEY` bump (it's exactly the kind of engine change `CLAUDE.md`'s checklist exists for).
 - **Does flat MC suffice, or is the tree needed?** Decide empirically: if Guildmaster-flat beats Trader <65%, build UCT.
 - **Blind-AI default?** (mask rival goals or not) — designer call; cosmetic either way in the digital client.
-- ⚙ Open: pacing delays, tier names, whether Apprentice should also misplay the toll (flavor of "new player" mistakes).
+- ⚙ Open: pacing delays, tier names, what "new player" mistakes the Apprentice should flavor-misplay (the toll left with v4.3).

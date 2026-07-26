@@ -1,0 +1,4 @@
+=== v4.0 AI ladder — 150 games/pair · 2p, seats alternate ===
+  journeyman > apprentice: 74.0%  (111/150)  avg 83.5 vs 64.6
+
+LADDER GATE: every rung ≥60%, 0 errors.

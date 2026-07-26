@@ -12,7 +12,10 @@
 > CM 62.5 sharded) · render-smoke ALL PASS · PATHWAYS 4p 25/24.5/29.5/21% (fair 25). Drafted off
 > the designer's six post-playtest directives. This is a **keystone-scale rebuild** (larger than
 > v3.0-A): it cuts the deploy state, the Floor turn, the Hall, and all owner-pays tiles, and
-> unifies maturation + value + presence onto the one tally die. Working title *"Bright Beer"*
+> *(Post-rulings on this spine — off human playtest #23, 2026-07-26: **v4.1** the dice-only clock ·
+> **v4.2** per-item wharf fees + Novgorod +2★/die · **v4.3** the toll cut + the greedy-AI re-teach —
+> `DESIGN.md` §9 / `RULES.md` headers.)*
+> It unifies maturation + value + presence onto the one tally die. Working title *"Bright Beer"*
 > (beer clarified in conditioning — the clarity pass). Proposed `KEY hanse-v40`. All numbers ⚙.
 
 ---
@@ -208,6 +211,7 @@ mats.
 - **D8 · Loading rivals' casks.** Default: **gone by construction** (casks are private until
   aboard). Confirm no replacement is wanted.
 - **D9 · The toll.** Default: **keep** `1 G` while sharing a station (the last body-contact rule).
+  *(Overturned at **v4.3 “Open Quay”**, 2026-07-26 — the toll is CUT; `DESIGN.md` §9.)*
 - **D10 · Version.** Default: **v4.0, KEY `hanse-v40`** — this supersedes the v3 line's spine.
 - **D11 · Expansions.** Default: **all three toggles tabled** with the Hall (Jopenbier's
   dock-vintage and the Trade Roads' majority-replacement both lean on cut systems); re-derive
