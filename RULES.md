@@ -1,4 +1,14 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.0 “Bright Beer”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.1 “Counting House”)
+
+> **v4.1 “Counting House” (designer-ruled 2026-07-26, off human playtest #23 — the first v4
+> table).** Two changes on the v4.0 spine. **(1) Paid at the wharf, free at the kontor:**
+> gaining a **recipe / building / specialist** through a wharf channel — Scrivener’s Hall, the
+> Hiring Post, or the *Gain 1 recipe/building/specialist* load bonuses — costs the **1 `G`
+> wharf fee** ⚙; the kontor prizes stay free. **(2) The dice are the ONE clock:** the
+> Sailed-Ships track is **cut** (trigger and component) — the **14th tally die a house parks**
+> sets the final round; dice never return, so the pool is the whole runway (`MAX_ROUND` 25
+> stays the rules-side backstop; sails end nothing). The live build is `play.html`
+> (**KEY `hanse-v41`**).
 
 > **v4.0 “Bright Beer” (designer-ruled 2026-07-21, off `V4-STREAMLINE.md`).** The streamline
 > keystone. **The tally die is the whole cask:** set to the printed **start value at brew**
@@ -8,7 +18,7 @@
 > deploy:** slots hold **a building and/or a ship (≤1 of each)**, never casks; casks go straight
 > from your vessels onto hulls. **All buildings serve everyone** and pay their builder **+3★**;
 > the owner-pays Privileges are gone. **Stations print ONE action each.** **The Hall is tabled.**
-> The live, playable build is `play.html` (**KEY `hanse-v40`**). All numbers ⚙.
+> All numbers ⚙.
 
 > **Status: live.** Supersedes v3.4 “Tally Dice” (`RULES.md` history in git; the v3 line’s plan
 > docs — `V3-PATH-A.md`, `HALL-STUDY.md` — remain as records). Prior playable archives:
@@ -22,8 +32,8 @@
 occupancy toll; ships that **sail when full**, benefits sealing **on delivery** in load order;
 the four kontore and tiered majorities; the steerable brew piles; the Flight on the recipe
 cards (distinct beers **BREWED**, (n−1)² min 3); goods as the only currency; the warm start;
-the dual end clock; no dice-as-randomizers (the tally die is a **marker**, never rolled) ·
-no cards-as-hand · no money.
+the **dice end clock** (v4.1 — the one clock); no dice-as-randomizers (the tally die is a
+**marker**, never rolled) · no cards-as-hand · no money.
 
 **Cuts (whole systems):** the **deploy state** and everything on it (over-deploy, tap-out,
 souring, the Open Staithe, slot locality for casks, rival loading, deploy-first + both its
@@ -32,7 +42,8 @@ Wilds) · the **Hall** (Three Coins, launches, enshrine — tabled, seam kept) �
 (kontor charters, contracts, fares) · all 12 **Privileges** and tile **ownership** (frames,
 rent-to-owner) · the Market’s Acquire (recipes/tiles are **earned, not bought**) · the Cellar’s
 Specialist buy · the commission free-load and dockside pickup · the Quaymaster, Lagerkeeper and
-Coppersmith · Wilds and face-down flips · the three expansion toggles (**tabled** with the Hall).
+Coppersmith · Wilds and face-down flips · the three expansion toggles (**tabled** with the Hall)
+· **the Sailed-Ships track** (v4.1 — sails end nothing; the dice are the clock).
 
 ---
 
@@ -57,7 +68,7 @@ Novgorod) open — **the Hall is off the table**; **deal 3 of the 4 export beers
 ladder); shuffle the **Ship deck** (Skute 1 · Cog 2 · Hulk 3 berths, destination-bound) and deal
 a face-up **market of 4** ⚙; shuffle the **Building deck** (all neutral, §5) and deal a Wharf
 **display of 4** ⚙; shuffle the **Specialist deck** (n−1 copies of each of the 4) and deal a
-**display of 4**; set the **Sailed-Ships track** (§10). **Warm start on the slots:** a
+**display of 4**. **Warm start on the slots:** a
 guaranteed **Hulk → Bruges** + one more dealt ship, and **two neutral Buildings** dealt from the
 deck (setup deals score nobody). Each player places a worker on any station — **opening
 placement free.** First player fixed all game.
@@ -154,9 +165,9 @@ if churn mints +3★, the dials are restricting overbuild to a full board or rai
 | Building | Fires | Effect ⚙ | Qty ⚙ |
 |---|---|---|---|
 | Granary | slot stop | **Gain 2 goods** (any mix) | 2 |
-| Scrivener’s Hall | slot stop | **Gain 1 recipe** (dealt exports, free) | 2 |
+| Scrivener’s Hall | slot stop | pay 1 `G` ⚙ — **gain 1 recipe** (dealt exports) | 2 |
 | Mission Quay | slot stop | **Age +2** (your vessels) | 2 |
-| Hiring Post | slot stop | **Gain 1 specialist** (display, free) | 1 |
+| Hiring Post | slot stop | pay 1 `G` ⚙ — **gain 1 specialist** (display) | 1 |
 | Almoner’s Stall | slot stop | **Place 1 presence** (§7) | 1 |
 | Brewhouse Annex | slot stop | **Brew 1** (pay its cost; tray die) | 1 |
 | **Malt Kiln** | on load here | the boarding cask’s **die +1** (cap 6) | 3 |
@@ -184,8 +195,7 @@ load each slot’s ship once — all optional, any order, resolved on the active
   *(The Stevedore sets out **2** casks on your ship-slot stop.)*
 - **A ship SAILS the moment it is full** — a **Skute sails on its first load.** Each cask aboard
   **delivers in load order**: bank ★ = its die, park the die at the kontor, resolve the port’s
-  prize (owner’s choice, **when gained**). The hull returns to the deck; the voyage **advances
-  the Sailed-Ships track** (every sail, any size).
+  prize (owner’s choice, **when gained**). The hull returns to the deck.
 - Casks are **private until aboard** — there is no loading of rival casks, and nothing on the
   wharf to hijack. The race is for **berths**: topping off a hull sails *everyone’s* cargo, on
   your clock.
@@ -198,12 +208,14 @@ load each slot’s ship once — all optional, any order, resolved on the active
 | **Age +2** | 2 age points across your vessels | Q2+ |
 | **Load 1 more cask** | onto **any** eligible hull on the wharf (its bonus fires too) | Q2+ |
 | **Place 1 presence** | a tray die → a kontor you’ve delivered to (§7) | Q2+ |
-| **Gain 1 recipe** | from the dealt exports, free | Q2+ |
-| **Gain 1 building** | Wharf display → any legal slot, **+3★** | Q3+ |
-| **Gain 1 specialist** | from the display, free (open seat required) | Q3+ |
+| **Gain 1 recipe** | pay 1 `G` ⚙ — a dealt export | Q2+ |
+| **Gain 1 building** | pay 1 `G` ⚙ — display → any legal slot, **+3★** | Q3+ |
+| **Gain 1 specialist** | pay 1 `G` ⚙ — from the display (open seat required) | Q3+ |
 | **Brew 1** | pay its cost into an open vessel (tray die) | Q4+ |
 
-*(Enshrine left with the Hall. Every pile top is face-up — brew toward the bonus you want.)*
+*(Enshrine left with the Hall. Every pile top is face-up — brew toward the bonus you want.
+**Paid at the wharf, free at the kontor** (v4.1): the three acquisition gains cost the 1 `G`
+wharf fee here and at Scrivener’s Hall / the Hiring Post — the kontor prizes never do.)*
 
 ---
 
@@ -251,17 +263,15 @@ prestige. The faucets: the Market (2 + specialists), Granaries, *Gain 2 goods* l
 
 ---
 
-## 10. End of the game (the dual clock)
+## 10. End of the game (the dice clock)
 
-Two public clocks; **the first to fire ends the game** (finish the round → score):
+**ONE clock (v4.1): the tally dice.** The player who **parks their 14th die** (delivery or
+presence bump) sets the final round (finish the round → score). Dice never return — the pool
+is the house’s whole runway, and it is always countable: tray + in play + parked = 14. Sails
+end nothing; ships are pure logistics.
 
-1. **The Sailed-Ships track** — +1 on **every sail** (Skute included). Length **7 / 10 / 13**
-   for 2/3/4p ⚙ (retuned from v3.2’s 5/8/10 — every delivery is a voyage now, and Skutes tick).
-2. **The tally dice** — the player who **parks their 14th die** (delivery or presence bump)
-   sets the final round. Dice in vessels and aboard hulls are not yet parked — tray + in play +
-   parked is always countable.
-
-A **MAX_ROUND ceiling** (~25 ⚙) backstops a slow table. Pace target **~12–25 rounds.**
+A **MAX_ROUND ceiling** (~25 ⚙) backstops a slow table. Pace target **~12–25 rounds.** ⚙ *The
+pool size (14) is THE pace dial now.*
 
 ---
 
@@ -297,10 +307,12 @@ the engine; the modules return after the core settles.
 
 ## Open / to-tune (the ⚙ shortlist)
 
-1. **The clocks** — SAILED 7/10/13 (first sweep adopted); the 14-die pool now also budgets brews. Watch
-   which trigger the table races, and the ceiling share.
-2. **The recipe faucet** — Bruges + verbs only. If the Flight stalls, the dials are prize
-   generosity and verb frequency (piles/deck), not a Market buy.
+1. **The clock** — the dice alone (v4.1). The pool (14 ⚙) is THE pace dial; first light sims
+   read longer games (avg ~20–24) with a real ceiling share — but the greedy bots don’t race
+   the pool (a documented blind spot). Re-read with humans racing it; then dial `PRES_POOL`,
+   never a second clock.
+2. **The recipe faucet** — Bruges + the priced verbs only (v4.1 fee). If the Flight stalls, the
+   dials are prize generosity, verb frequency (piles/deck), and the fee — not a Market buy.
 3. **Novgorod at gate 4** — is die-4 boarding reachable enough (Mumme+, or Kiln’d Q3)? The
    refine prize + 8/5/2 majority are its pull.
 4. **The +3★ build rate** — London deliveries + verbs; watch total build ★ share and overbuild
@@ -308,7 +320,9 @@ the engine; the modules return after the core settles.
 5. **Bergen heat** — specialist prize + the 9/5/2 anchor (dial: tiers or the prize).
 6. **Commission ★ = capacity** — does the Hulk’s 3★ make commissioning self-serving enough at
    every count?
-7. **The Skute rate** — deck blend 6/10/8; too many Skutes = a charter spam lane, too few =
-   deadlock risk returns.
+7. **The Skute rate** — deck blend 6/10/8. With the sailed clock cut the Skute is pure
+   deadlock relief; too few = the strand risk returns (too many is now merely inefficient).
 8. **2p texture** — the thinned interaction set (berths, toll, majorities, the draft): does it
    hold at two?
+9. **The wharf fee** — flat 1 `G` ⚙ (v4.1). Parked dials (designer, 2026-07-26): a premium fee
+   on the richer kontor-gained buildings/specialists, and a Bock/Jopenbier surcharge.

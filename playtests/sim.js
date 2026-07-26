@@ -1,4 +1,4 @@
-// Headless simulation harness for play.html — v4.0 "Bright Beer" (KEY hanse-v40).
+// Headless simulation harness for play.html — v4.1 "Counting House" (KEY hanse-v41).
 // Drives the CANONICAL engine (never a reimplementation): extracts play.html's <script> blocks,
 // stubs the DOM, and runs the engine's OWN AI (aiStep) for every seat. The robustness/pace gate:
 // 0 crashes / 0 deadlocks across 2–4p, rounds in the 12–25 band, trigger split reported.
@@ -6,7 +6,7 @@
 // Env:   TIER=apprentice|journeyman|trader|guildmaster|cellarmaster (default journeyman)
 //        PERSONAS=1 — the v4 PATHWAYS oracle: trader seats committed round-robin to the four lanes
 //                     (majority · lifter · builder · breadth); per-lane win rates reported
-//        CAPS=7,10,13 sweeps SAILED_CAP · POOL=n sweeps the dice pool · GUILD_MS/CELLAR_MS lower the MC budgets
+//        POOL=n sweeps the dice pool (THE pace dial — v4.1 cut the Sailed-Ships clock) · GUILD_MS/CELLAR_MS lower the MC budgets
 'use strict';
 const fs = require('fs');
 const vm = require('vm');
@@ -22,7 +22,6 @@ const driver = `
 //================= HEADLESS RUNNER (appended in-scope) =================
 render=function(){};save=function(){};log=function(){};snapshot=function(){};
 if(__POOL>0)PRES_POOL=__POOL;
-if(__CAPS)SAILED_CAP=__CAPS;
 if(__GMS>0)GUILD_MS=__GMS;
 if(__CMS>0)CELLAR_MS=__CMS;
 function __runGame(n){
@@ -80,7 +79,6 @@ const ctx = {
   __PERSONAS:PERSONAS,
   __GMS:parseInt(process.env.GUILD_MS||'0',10),
   __CMS:parseInt(process.env.CELLAR_MS||'0',10),
-  __CAPS:process.env.CAPS?(a=>({2:+a[0],3:+a[1],4:+a[2]}))(process.env.CAPS.split(',')):null,
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;
@@ -95,7 +93,7 @@ try {
 const R = ctx.__RESULTS;
 const fmt=(x,d=1)=>Number(x).toFixed(d);
 const pct=(a,b)=>fmt(100*a/Math.max(1,b),1)+'%';
-console.log('=== hanse v4.0 sim — '+N+' games/count · '+(PERSONAS?'PATHWAYS (trader personas)':('tier '+TIER))+' ===');
+console.log('=== hanse v4.1 sim — '+N+' games/count · '+(PERSONAS?'PATHWAYS (trader personas)':('tier '+TIER))+' ===');
 let anyErr=0;
 [2,3,4].forEach(n=>{
   const arr=R[n]; const errs=arr.filter(r=>r.error); const ok=arr.filter(r=>!r.error);

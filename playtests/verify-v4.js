@@ -1,4 +1,4 @@
-// Targeted rule checks for v4.0 "Bright Beer" (KEY hanse-v40).
+// Targeted rule checks for v4.x — v4.1 "Counting House" (KEY hanse-v41).
 // Drives the CANONICAL engine (extract play.html's <script>, stub the DOM) and asserts each
 // rule directly by constructing states — no bot in the loop, so a failure is the engine's.
 // Usage: node playtests/verify-v4.js
@@ -185,10 +185,11 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('no tray die → no bump', p.presBonus.bruges===pb);
 })();
 
-// ---- 13. THE CLOCKS: sailed cap · the last parked die · the ceiling ----
+// ---- 13. THE CLOCK (v4.1): the dice alone — sails never end the game; the ceiling backstops ----
 (function(){var p=fresh();
-  S.sailed=S.sailedCap;checkTriggers();
-  ok('the Sailed-Ships track fires the ending', S.ending&&S.endReason==='clock');
+  S.sailed=99;checkTriggers();
+  ok('sails never end the game (the Sailed-Ships track is cut)', !S.ending);
+  ok('no sailed-cap dial survives', typeof SAILED_CAP==='undefined');
   var r=fresh();r.presPool=1;
   spendPresDisc(r,1);
   ok('the 14th parked die fires the ending', S.ending&&S.endReason==='presence');
@@ -248,6 +249,36 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   grantUpgrade(p,'crane');grantUpgrade(p,'granary');
   ok('the 2nd seat is the cap', p.upgrades.length===2);
   ok('hireable excludes owned + full seats', hireable(p).length===0);
+})();
+
+// ---- 19. v4.1 WHARF FEES: paid at the wharf, free at the kontor ----
+(function(){var p=fresh();stops();
+  S.exports=['broyhan','keut','mumme'];p.recipes=['gruit','hopped'];
+  p.grain=3;p.hops=2;
+  UI.sub='recipegain';UI.rgain={returnTo:'stops'};recipeGainPick('broyhan');
+  ok('gain-recipe (wharf) pays the 1G fee', p.grain===2&&p.recipes.indexOf('broyhan')>=0);
+  p.grain=0;var r0=p.recipes.length;
+  enterRecipeGain('stops');
+  ok('no goods → the recipe channel refuses', UI.sub!=='recipegain'&&p.recipes.length===r0);
+  p.grain=3;S.impDisplay=['cellar','crane','granary','hopgarden'];
+  UI.sub='hire';UI.hire={returnTo:'stops'};hirePick('cellar');
+  ok('hire (wharf) pays the 1G fee', p.grain===2&&p.upgrades.indexOf('cellar')>=0);
+  S.buildDisplay=['granary','maltkiln','cooperage','customs'];
+  var g1=p.grain,b1=p.bank;
+  UI.sub='survey';UI.survey={returnTo:'stops'};surveyPick('granary');
+  placeBldgOn('s1');
+  ok('gain-building (wharf) pays the 1G fee and still banks +'+BUILD_PTS, p.grain===g1-1&&p.bank===b1+BUILD_PTS);
+  // the kontor prizes stay FREE
+  var q=S.players[1];q.ai={tier:'journeyman'};var qg=q.grain,qb=q.bank;
+  UI.pendingBenefits=[{pid:1,dest:'london'}];afterSail('stops');
+  ok('London prize stays free (+'+BUILD_PTS+' banked, no fee)', q.grain===qg&&q.bank===qb+BUILD_PTS);
+  q.recipes=['gruit','hopped'];var qg2=q.grain;
+  UI.pendingRecipe=[{pid:1,dest:'bruges'}];afterSail('stops');
+  ok('Bruges prize stays free', q.grain===qg2&&q.recipes.length===3);
+  var qg3=q.grain;S.impDisplay=['cellar','crane','granary','hopgarden'];
+  UI.pendingSpec=[{pid:1,dest:'bergen'}];afterSail('stops');
+  ok('Bergen prize stays free', q.grain===qg3&&(q.upgrades||[]).length===1);
+  q.ai=null;
 })();
 
 OUT.forEach(function(l){console.log(l);});

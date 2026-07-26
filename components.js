@@ -14,14 +14,16 @@ const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · vic
 // survey/hire join at Q3+, brew/enshrine at Q4+. Convert and the pool Wild are CUT (Convert -> the Grain
 // Exchange work; Wild survives only as the Workshop dock effect + the flipped-tile Floor stops).
 // Gruit is PINNED to Source. Icons/texts mirror play.html CASK_ACT.
-const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the cask boards a hull
+const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the cask boards a hull.
+  // v4.1 "paid at the wharf, free at the kontor": the three ACQUISITION bonuses print the 1 G
+  // wharf fee (the kontor prizes stay free) — the fee is part of the printed verb.
   {k:'source',  ai:'coins',         act:'Gain 2 goods',             q:2},
   {k:'age',     ai:'hourglass',     act:'Age +2',                   q:2},
   {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},
   {k:'reach',   ai:'map-pin',       act:'+1 presence',              q:2},
-  {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe',            q:2},
-  {k:'survey',  ai:'search',        act:'Gain 1 building (+3★)',    q:3},
-  {k:'hire',    ai:'wrench',        act:'Gain 1 specialist',        q:3},
+  {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe · '+cost(1,0),          q:2},
+  {k:'survey',  ai:'search',        act:'Gain 1 building (+3★) · '+cost(1,0),  q:3},
+  {k:'hire',    ai:'wrench',        act:'Gain 1 specialist · '+cost(1,0),      q:3},
   {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:4},
 ];
 const poolFor=q=>CASK_POOL.filter(a=>q>=a.q);   // the printed mix per quality tier
@@ -72,9 +74,9 @@ const BUILDINGS=[
   // cask-action verb, fired on their slot's stop; LOAD-LIFT buildings passively modify the ship /
   // the load at their slot. 17 tiles ⚙. (art: interim stand-ins from the retired tiles' files.)
   {k:'granary',   nm:'Granary',           verb:'transform', tgt:'act',  ic:'coins',        n:2, act:'source', eff:'Slot stop: gain 2 goods (any mix)', art:'building-staple.png'},
-  {k:'scriveners',nm:'Scrivener’s Hall',  verb:'transform', tgt:'act',  ic:'scroll-text',  n:2, act:'recipe', eff:'Slot stop: gain 1 recipe (free)', art:'building-gauger.png'},
+  {k:'scriveners',nm:'Scrivener’s Hall',  verb:'transform', tgt:'act',  ic:'scroll-text',  n:2, g:1, act:'recipe', eff:'Slot stop: gain 1 recipe', art:'building-gauger.png'},
   {k:'missionq',  nm:'Mission Quay',      verb:'transform', tgt:'act',  ic:'church',       n:2, act:'age',    eff:'Slot stop: age +2 (your vessels)', art:'building-reliquary.png'},
-  {k:'hiringpost',nm:'Hiring Post',       verb:'transform', tgt:'act',  ic:'wrench',       n:1, act:'hire',   eff:'Slot stop: gain 1 specialist (free)', art:'building-workshop.png'},
+  {k:'hiringpost',nm:'Hiring Post',       verb:'transform', tgt:'act',  ic:'wrench',       n:1, g:1, act:'hire',   eff:'Slot stop: gain 1 specialist', art:'building-workshop.png'},
   {k:'almoner',   nm:'Almoner’s Stall',   verb:'transform', tgt:'act',  ic:'heart',        n:1, act:'reach',  eff:'Slot stop: place 1 presence (a tray die)'},
   {k:'annex',     nm:'Brewhouse Annex',   verb:'transform', tgt:'act',  ic:'flask-conical',n:1, act:'brew',   eff:'Slot stop: brew 1 cask (pay its cost)', art:'building-partigyle.png'},
   {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:3, eff:'A cask loading here: die +1 (cap 6)'},

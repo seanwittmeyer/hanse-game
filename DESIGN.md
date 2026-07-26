@@ -28,7 +28,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v4.0 “Bright Beer”** — live (`play.html`, KEY `hanse-v40`; designer-ruled 2026-07-21 off `V4-STREAMLINE.md`, from human playtesting). The streamline keystone: **THE DIE IS THE CASK** — set at brew to the printed start value (quality − aging steps; Gruit 0 steps = Ready at brew), turned up by age points (stops at quality = READY), lifted past quality only by buildings at load (Malt Kiln +1, cap 6), parked at the kontor on delivery (pips = the banked ★ 1–6, body = presence, majorities and the second clock). **NO DEPLOY** — slots hold a building and/or a ship; casks go vessel → hull → kontor; over-deploy/souring/rival-loading/the Staithe are gone with the state. **Stations print ONE action each** (Source 2 · Brew · Age 3 · Commission `1 G`, bank ★ = berth count). **ONE green building family** — every building serves whoever activates it, the builder banks +3★; the 12 Privileges, ownership and rent-to-owner are cut. **The Hall, Dispatch/charters, the Floor turn and all three expansion toggles are TABLED.** Ships come in three sizes (Skute 1 · Cog 2 · Hulk 3, display of 4) — a Skute sails on its first load (the relief valve as a component). Prizes: Bruges recipe · London building(+3★) · Bergen specialist · Novgorod refine (+2), gate raised to die 4. Clocks: sailed 7/10/13 ⚙ + the 14th die parked. Gates at KEY v40: `verify-v4` 71/71 · sim 450 (150×2–4p) **0 crashes/0 deadlocks**, band 91–95%, both clocks live (presence 11–18%), all four ports trafficked (Novgorod 15–18% at gate 4). |
+|**Status**     |**v4.1 “Counting House”** — live (`play.html`, KEY `hanse-v41`; designer-ruled 2026-07-26 off human playtest #23, the first v4 table: *“more intentional — keep the earned spread, price the shortcuts”*). Two changes on the v4.0 spine: **paid at the wharf, free at the kontor** (recipe/building/specialist gains via Scrivener’s Hall, the Hiring Post or the gain load-bonuses cost the 1 `G` wharf fee ⚙; kontor prizes stay free) and **the dice are the ONE clock** (the Sailed-Ships track cut — trigger and component; the 14th die parked sets the final round; `PRES_POOL` is THE pace dial; MAX_ROUND 25 backstop). Gates at KEY v41: verify-v4 **79/79** · light sim 9 games **0 crashes/0 deadlocks**, 100% in band, rounds up ~+4 with a real ceiling share ⚙ (the greedy bots don’t race the pool — human re-read before dialing). The v4.0 base: **v4.0 “Bright Beer”** (designer-ruled 2026-07-21 off `V4-STREAMLINE.md`, from human playtesting). The streamline keystone: **THE DIE IS THE CASK** — set at brew to the printed start value (quality − aging steps; Gruit 0 steps = Ready at brew), turned up by age points (stops at quality = READY), lifted past quality only by buildings at load (Malt Kiln +1, cap 6), parked at the kontor on delivery (pips = the banked ★ 1–6, body = presence, majorities and the second clock). **NO DEPLOY** — slots hold a building and/or a ship; casks go vessel → hull → kontor; over-deploy/souring/rival-loading/the Staithe are gone with the state. **Stations print ONE action each** (Source 2 · Brew · Age 3 · Commission `1 G`, bank ★ = berth count). **ONE green building family** — every building serves whoever activates it, the builder banks +3★; the 12 Privileges, ownership and rent-to-owner are cut. **The Hall, Dispatch/charters, the Floor turn and all three expansion toggles are TABLED.** Ships come in three sizes (Skute 1 · Cog 2 · Hulk 3, display of 4) — a Skute sails on its first load (the relief valve as a component). Prizes: Bruges recipe · London building(+3★) · Bergen specialist · Novgorod refine (+2), gate raised to die 4. Clocks: sailed 7/10/13 ⚙ + the 14th die parked. Gates at KEY v40: `verify-v4` 71/71 · sim 450 (150×2–4p) **0 crashes/0 deadlocks**, band 91–95%, both clocks live (presence 11–18%), all four ports trafficked (Novgorod 15–18% at gate 4). |
 
 ---
 
@@ -107,14 +107,17 @@ Canonical detail in `RULES.md` / `COMPONENTS.md` / `V4-STREAMLINE.md`; the shape
   tile boxed.
 - **Everything is earned, not bought** — recipes (Bruges · bonuses · Scrivener’s), buildings
   (London · bonuses), specialists (Bergen · Hiring Post · bonuses; 4 designs, 2 seats). The
-  Market sells nothing; goods buy brews, commissions, tolls and rent.
+  Market sells nothing; goods buy brews, commissions, tolls and rent — **and (v4.1) the wharf
+  channels charge a 1 `G` fee for what the kontore give free** (paid at the wharf, free at the
+  kontor).
 - **The player board** — 3 vessel slots (3rd behind the Flight’s 2nd distinct brew) + 2
   specialist seats (2nd behind the 3rd); the recipe cards carry the Flight (flipped = brewed).
 - **Legible scoring** — deliveries (the parked dice, 1–6★ each) + the bank (+3★ builds ·
   ★ = berths on commissions · 1★ bumps) + majorities (parked dice; 4/2/0 · 5/3/1 · 9/5/2 ·
   8/5/2) + the Flight ((brewed−1)², min 3). Tiebreak: vessel dice, then goods.
-- **The dual clock** — Sailed-Ships 7/10/13 ⚙ (every sail ticks, Skutes included) + the tally
-  dice (the 14th parked die sets the final round); MAX_ROUND 25 backstop.
+- **The clock (v4.1) — the tally dice alone:** the 14th parked die sets the final round; dice
+  never return, so the runway is public and countable (`PRES_POOL` = THE pace dial); MAX_ROUND
+  25 backstop. Sails end nothing.
 - **TABLED (seams kept):** the Hall (prestige lane), Dispatch/charters, the Floor turn, the
   three expansion toggles (`registerExpansion` spine intact), the MC AI tiers (P5).
 
@@ -201,11 +204,50 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 - **Asymmetric starting improvements (variable powers).** Deal each player **two** improvements; they keep
   **one** as a starting private power. Turns the (now symmetric) improvement set into an opening-asymmetry /
   replay lever. Needs: a power set balanced enough that any pair is fair, and a draft/keep-one rule. Open.
+- **The premium fee dial (recorded 2026-07-26, NOT built).** Designer: *“We may add a small fee
+  for the better or more premium Kontor gained buildings and specialists. Maybe the bock and
+  jopenbier as well.”* Two parked dials on top of the v4.1 flat 1 G wharf fee: (a) a surcharge
+  when a kontor PRIZE hands over a premium tile (which tiles count is the open question — e.g.
+  Malt Kiln/Cooperage among buildings, the Cellarman among specialists); (b) a brew surcharge on
+  the top beers (Bock now, Jopenbier when its toggle returns). Revisit after the fee economy
+  reads at a human table.
+- **The Hall as a DICE SINK (recorded 2026-07-26, NOT built — the Hall’s return shape).**
+  Designer: with the dice as the one clock, the Hall could be *“a place for dice to go”* —
+  opening a **volume** path (park many cheap low casks, race the 14-die clock) against the
+  **value** path (fewer, lifted, high-pip deliveries — and the risk of dice left in the tray
+  when the end fires). The Hall seam (`DEST.hall`, D12) is exactly where this docks: a fifth
+  destination whose gate is LOW but whose pay curve rewards count over pips, so it pressures
+  the clock rather than the score ceiling. Design it with the pole test in mind (volume may run
+  hot; the failure is negation).
 - **Starting building — RESOLVED (2026-07-04): there is no starting building.** The "1 random Building in
   hand" setup is cut (with the whole buildings-in-hand concept — buildings are always chosen from the display
   and placed on acquisition). The opening-asymmetry idea it served may return later as a **more diversified /
   expanded improvements set** — fold into the asymmetric-starting-improvements discussion above.
 
+
+**v4.1 "Counting House" — the fee & the one clock** *(2026-07-26, KEY `hanse-v41`, designer-ruled
+off human playtest #23 — the FIRST v4 table: "I like how the game is playing as it is more
+intentional… better to have the various items needed spread throughout instead of easy access
+markets")* — Two rulings. **(1) PAID AT THE WHARF, FREE AT THE KONTOR:** if a wharf channel
+offers what a kontor prize gives free, the channel charges — gaining a **recipe / building /
+specialist** via Scrivener's Hall, the Hiring Post, or the *Gain 1 recipe/building/specialist*
+load bonuses costs the **1 `G` WHARF_FEE** ⚙ (one dial, the 1G grammar: toll · commission ·
+rent · fee); Bruges/London/Bergen prizes stay free, so the voyage stays the premium faucet. The
+fee PRINTS on the two building tiles (cost chip) and on the three acquisition verbs (piles/tiles).
+**(2) THE DICE ARE THE ONE CLOCK:** the Sailed-Ships track is CUT — trigger and component
+("you never get them back so it's a finite resource with choosing their uses"); the **14th
+tally die a house parks** sets the final round, MAX_ROUND 25 stays the rules-side backstop,
+and sails end nothing (the Skute's job reduces to deadlock relief). `PRES_POOL` (14) is now
+THE pace dial. *Also recorded, not built (parking lot):* the premium-prize fee dial (better
+kontor-gained buildings/specialists; a Bock/Jopenbier surcharge) and **the Hall as a DICE
+SINK** — the volume-vs-value fork on the one clock. *Engine:* WHARF_FEE + gates on the three
+channels (prize paths untouched); SAILED_CAP/`sailedCap`/the 'clock' endReason removed; the
+in-page ICONTIP tooltips (stale v3 text since the v4.0 rebuild) rewritten to v4. *Gates (KEY
+v41, light per the standing rule):* `verify-v4` **79/79** (new: fees charged on all three wharf
+channels · every prize path provably free · sails never end the game) · sim 9 games (3×2–4p)
+**0 crashes/0 deadlocks**, 100% in the 12–25 band — pace reads longer (avg ~20–24, ceiling
+share 33–67% ⚙) but the greedy tiers are documented non-racers of the pool; human races decide
+the POOL dial. All numbers ⚙.
 
 **v4.0 "Bright Beer" — the streamline keystone** *(2026-07-21, KEY `hanse-v40`, designer-ruled off
 `V4-STREAMLINE.md` from human playtesting: "streamline, simplify, make the resources and actions more
