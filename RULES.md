@@ -325,10 +325,10 @@ the engine; the modules return after the core settles.
 
 ## Open / to-tune (the ⚙ shortlist)
 
-1. **The clock** — the dice alone (v4.1). The pool (14 ⚙) is THE pace dial; first light sims
-   read longer games (avg ~20–24) with a real ceiling share — but the greedy bots don’t race
-   the pool (a documented blind spot). Re-read with humans racing it; then dial `PRES_POOL`,
-   never a second clock.
+1. **The clock** — the dice alone (v4.1). The pool (14 ⚙) is THE pace dial. The v4.2b battery:
+   3p/4p healthy (dice trigger 60–82%, ~19–18 rounds) but **2p is ceiling-heavy (60–70% of
+   games reach round 25)** — the candidate is a **2p-specific pool (12 ⚙)**, re-read with
+   humans first (the greedy bots don’t race the pool).
 2. **The recipe faucet** — Bruges + the priced verbs only (v4.1 fee). If the Flight stalls, the
    dials are prize generosity, verb frequency (piles/deck), and the fee — not a Market buy.
 3. **Novgorod at gate 4** — is die-4 boarding reachable enough (Mumme+, or Kiln’d Q3)? Its
@@ -344,5 +344,9 @@ the engine; the modules return after the core settles.
 8. **2p texture** — the thinned interaction set (berths, toll, majorities, the draft): does it
    hold at two?
 9. **The fee schedule** ⚙ (v4.2 — per item): recipes `1H`/`1G`/`2H`/`1G2H` · specialists
-   `3G`/`2G`/`2H`/`2G` · buildings free/`1G`/`2G`. First-pass numbers awaiting the designer’s
-   markup and a table read. Parked: a surcharge when a kontor PRIZE hands over a premium tile.
+   `3G`/`2G`/`2H`/`2G` · buildings free/`1G`/`2G`. The flow-probe reads (v4.2b): recipes flow
+   right; the **2G lift tier prices the wharf channel out** (candidate `1G1H`); **hire is the
+   most-blocked want** (Cellarman candidate `2G1H`); **grain is the binding currency, hops
+   slack** — lean premium fees toward `H`. Parked: a kontor-prize surcharge on premium tiles.
+10. **The greedy Trader wants a fee-economy retune** (AI-only): trader>journeyman read 52%
+   (n=150) at v4.2b — its weights predate the fees; the MC tiers hold (GM>trader 91.7%).
