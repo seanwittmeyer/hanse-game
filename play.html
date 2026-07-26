@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v4.2 “Tariff”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v4.3 “Open Quay”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -511,7 +511,7 @@
     <div class="panel"><h3>Log <button class="copybtn" onclick="copyDiag(this)" data-tip="Copy the game log + full diagnostic state (turn, UI, AI runtime, board, raw JSON) to the clipboard.">⧉ Copy log + diagnostics</button></h3><div id="log"></div></div>
     <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
   </div>
-  <p class="note" style="text-align:center"><b>v4.2 “Tariff” — prototype.</b> The die is the cask — and the dice are the ONE clock (the 14th die a house parks sets the final round). The wharf charges for what the ports give away: every acquirable recipe/building/specialist carries its <b>printed fee</b>, paid via the wharf channels (never a fee to use a building); the kontor prizes stay free, and Novgorod pays every delivered die <b>+2★</b>. Rules in <code>RULES.md</code> and the <b>📖 Player Aid</b>; the <a href="index.html">Rulebook</a>, <a href="learn.html">Learn</a> and <a href="printables2.html">print kit</a> pages track this build. All numbers ⚙.</p>
+  <p class="note" style="text-align:center"><b>v4.3 “Open Quay” — prototype.</b> The die is the cask — and the dice are the ONE clock (the 14th die a house parks sets the final round). The wharf charges for what the ports give away: every acquirable recipe/building/specialist carries its <b>printed fee</b>, paid via the wharf channels (never a fee to use a building); the kontor prizes stay free, and Novgorod pays every delivered die <b>+2★</b>. Rules in <code>RULES.md</code> and the <b>📖 Player Aid</b>; the <a href="index.html">Rulebook</a>, <a href="learn.html">Learn</a> and <a href="printables2.html">print kit</a> pages track this build. All numbers ⚙.</p>
 </main>
 
 <div id="shoppop" class="hidden"></div>
@@ -712,7 +712,6 @@ const ADJ={A:['B','C'],B:['A','D'],C:['A','D'],D:['B','C']};
 const CELLNAME={A:'Market',B:'Brewhouse',C:'Harbor',D:'Cellar'};
 const CELLROLE={A:'Source',B:'Brew',C:'Ship',D:'Age'};
 const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C:{row:'rowB',col:'colL'},D:{row:'rowB',col:'colR'}})[cell];
-const OCCUPANCY_TOLL=1;
 
 // ---- the player board (v4.0): 3 printed vessel slots + 2 specialist seats ----
 const VSLOTS=3, VSLOTS_START=2;   // the 3rd vessel opens with your 2nd distinct beer brewed
@@ -757,7 +756,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v42c'; // v4.2 "Tariff" [designer-ruled 2026-07-26, the second ruling off playtest #23] - two changes on v4.1 "Counting House". (1) THE FEE RIDES THE ITEM, not the channel: every acquirable recipe / specialist / building carries its own printed wharf fee (RECIPE_FEE / SPEC_FEE / BUILDINGS[k].fee - several buildings FREE, chipless), paid at ANY wharf channel (Scrivener's Hall, the Hiring Post, the gain load-bonuses); kontor prizes stay free, and there is NEVER a fee-on-fee - using a building charges nothing of its own. (2) NOVGOROD PAYS THE DIE +2 STARS (vbonus - the refine prize is cut): every delivered die there banks pips+2 (6-8 stars at gate 4); the premium path's pull beyond the 8/5/2 majority. v4.1 stands beneath: the dice are the ONE clock (14th die parked = final round; MAX_ROUND 25 backstop). v4.2c markup [designer 2026-07-26]: specialist fees cut (Cellarman 2H / Grain Factor 1G / Hop Gardener 2H / Stevedore 1G) and ONE PAYMENT PER PLACEMENT (a paid building fee covers the ground rent; rent only on otherwise-free overbuilds) - the double-cost audit reads ZERO. Bump discards stale v42b state.
+const KEY='hanse-v43'; // v4.3 "Open Quay" [designer-ruled 2026-07-26, the third ruling off playtest #23] - the OCCUPANCY TOLL IS CUT: sharing a station costs nothing (the berth race, the shared buildings, the displays and the majorities carry the interaction), and the greedy AI tiers are RE-TAUGHT to the v4 economy (fee-netted acquisition values, cheapest-fee recipe/specialist picks, no shared-station dodge, a dice-clock race push when ahead). Beneath it v4.2 "Tariff" stands - two changes on v4.1 "Counting House". (1) THE FEE RIDES THE ITEM, not the channel: every acquirable recipe / specialist / building carries its own printed wharf fee (RECIPE_FEE / SPEC_FEE / BUILDINGS[k].fee - several buildings FREE, chipless), paid at ANY wharf channel (Scrivener's Hall, the Hiring Post, the gain load-bonuses); kontor prizes stay free, and there is NEVER a fee-on-fee - using a building charges nothing of its own. (2) NOVGOROD PAYS THE DIE +2 STARS (vbonus - the refine prize is cut): every delivered die there banks pips+2 (6-8 stars at gate 4); the premium path's pull beyond the 8/5/2 majority. v4.1 stands beneath: the dice are the ONE clock (14th die parked = final round; MAX_ROUND 25 backstop). v4.2c markup [designer 2026-07-26]: specialist fees cut (Cellarman 2H / Grain Factor 1G / Hop Gardener 2H / Stevedore 1G) and ONE PAYMENT PER PLACEMENT (a paid building fee covers the ground rent; rent only on otherwise-free overbuilds) - the double-cost audit reads ZERO. Bump discards stale v42b state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -765,7 +764,7 @@ const KEY='hanse-v42c'; // v4.2 "Tariff" [designer-ruled 2026-07-26, the second 
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v4.2 “Tariff” · '+KEY;
+const APP_VERSION='v4.3 “Open Quay” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -934,7 +933,7 @@ function lineGlyph(lk){const lit=LINES[lk].cells;return '<span class="lg" data-t
 
 // ---- tooltips for stations & slots ----
 const CELLTIP={
-  Market:'Market · SOURCE — take 2 goods (any mix). (1G toll while sharing the station.)',
+  Market:'Market · SOURCE — take 2 goods (any mix).',
   Brewhouse:'Brewhouse · BREW — pay a recipe into an open vessel; a tray die becomes the cask, set to its printed start value. The cask takes the face-up load bonus of its quality pile (steerable).',
   Cellar:'Cellar · AGE — '+CELLAR_POOL+' age points across your vessels (turn the dice up; a die stops at its quality = READY).',
   Harbor:'Harbor · COMMISSION — pay 1G, place one of the 4 display hulls on a shipless slot, and score ★ = its berth count (Skute 1 · Cog 2 · Hulk 3).',
@@ -1208,12 +1207,7 @@ function chooseLine(which){
   snapshot();
   const p=cur();
   const lk=cellOfLine(p.cell)[which];
-  const shared=S.turn>1 && S.players.some(q=>q.id!==p.id&&q.cell===p.cell);
-  if(shared){
-    const toll=Math.min(OCCUPANCY_TOLL,p.grain);
-    if(toll>0){p.grain-=toll;log(p.name+' pays −'+Gi(toll)+' occupancy toll for sharing <b>'+CELLNAME[p.cell]+'</b>.',true);}
-  }
-  activateLine(lk);
+  activateLine(lk);   // v4.3: the occupancy toll is CUT — sharing a station costs nothing
 }
 // a line = its two stations (ONE printed verb each) + its two slots (the building's action and/or a
 // LOAD of the ship docked there). Empty featureless slots contribute nothing — author them.
@@ -1790,6 +1784,15 @@ function aiNoisy(p){return Math.random()<((AI_TIERS[p.ai.tier]||{}).noise||0);}
 function aiIsTrader(p){return p.ai&&(p.ai.tier==='trader'||p.ai.tier==='guildmaster'||p.ai.tier==='cellarmaster');}   // the MC tiers inherit the trader policy at un-sampled prompts
 function aiPersona(p){return (p.ai&&p.ai.persona)||null;}
 function aiPW(p,lane){return aiPersona(p)===lane?2.2:1;}   // the committed lean's tilt ⚙
+// v4.3 fee sense: the fee rides the ITEM — net every acquisition value by its printed fee ⚙
+function aiFeeCost(f){return ((f&&f.g)||0)*0.55+((f&&f.h)||0)*0.3;}
+function aiParked(p){return Math.max(0,PRES_POOL-(p.presPool!=null?p.presPool:PRES_POOL));}
+function aiLeading(p){const t=scorePlayer(p).total;return S.players.every(q=>q.id===p.id||scorePlayer(q).total<=t);}
+function aiClockPush(p){const k=aiParked(p);return (k>=6&&aiLeading(p))?0.9+0.15*(k-6):0;}   // race the dice clock when ahead ⚙
+function aiFlightMarg(p){const t=flightBeers(p);const m=(FLIGHT_PTS[t+1]||0)-(t>=FLIGHT_MIN?(FLIGHT_PTS[t]||0):0);
+  return m+(t===1?1.5:0)+(t===2?1.2:0);}   // + the 2nd/3rd-brew unlocks (vessel 3 · seat 2) ⚙
+function aiRunway(){let r=1e9;S.players.forEach(q=>{const v=(q.presPool!=null?q.presPool:PRES_POOL);if(v<r)r=v;});return r;}
+function aiLateGame(p){return aiIsTrader(p)&&(S.ending||aiRunway()<=4);}   // the public clock says: bank, don't invest ⚙
 function aiPickBuilding(p,list){
   const pref=['maltkiln','cooperage','granary','scriveners','missionq','customs','hiringpost','annex','almoner','richberth'];
   for(const k of pref)if(list.includes(k))return k;return list[0];}
@@ -1803,24 +1806,31 @@ function aiMajSwing(p,k){const a0=majorityAwards(k);
 function aiVerbValue(p,act){
   if(act==='source')return Math.max(0.4,(5-(p.grain+p.hops))*0.6);
   if(act==='age')return maturingInVessels(p).length?2:0;
-  if(act==='load'){const any=wharfShips().some(sid=>readyInVessels(p).some(o=>canTake(sid,o.i)));return any?3:0;}
+  if(act==='load'){const any=wharfShips().some(sid=>readyInVessels(p).some(o=>canTake(sid,o.i)));return any?3+aiClockPush(p)+(aiLateGame(p)?1.5:0):0;}
   if(act==='reach'){if(!reachBenKontore(p).length||(S.presEnd&&trayDice(p)<=0))return 0;
-    let best=0;reachBenKontore(p).forEach(k=>best=Math.max(best,aiMajSwing(p,k)));return 1+best*0.4;}
-  if(act==='recipe')return recipeAffordable(p).length?(aiIsTrader(p)?3.4:2.2)*aiPW(p,'breadth'):0;
-  if(act==='survey')return surveyAffordable(p).length?3.4*aiPW(p,'builder'):0;
-  if(act==='hire')return hireAffordable(p).length?3:0;
+    let best=0;reachBenKontore(p).forEach(k=>best=Math.max(best,aiMajSwing(p,k)));return 1+best*0.4+aiClockPush(p)*0.5;}
+  if(act==='recipe'){const o=recipeAffordable(p);if(!o.length)return 0;
+    const c=Math.min.apply(null,o.map(st=>aiFeeCost(RECIPE_FEE[st]||{})));
+    const base=aiIsTrader(p)?(1.2+0.35*aiFlightMarg(p)):2.2;
+    return Math.max(0.4,base*aiPW(p,'breadth')-c)*(aiLateGame(p)?0.3:1);}
+  if(act==='survey'){const o=surveyAffordable(p);if(!o.length)return 0;
+    const c=Math.min.apply(null,o.map(k=>aiFeeCost(surveyNeed(k))));
+    return Math.max(0.4,3.4*aiPW(p,'builder')-c)*(aiLateGame(p)?0.5:1);}
+  if(act==='hire'){const o=hireAffordable(p);if(!o.length)return 0;
+    const R={cellar:4,crane:3,granary:2.4,hopgarden:2.2};
+    return Math.max(0.4,Math.max.apply(null,o.map(k=>(R[k]||2)-aiFeeCost(SPEC_FEE[k]||{}))))*(aiLateGame(p)?0.3:1);}
   if(act==='brew')return (openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r))&&(!S.presEnd||trayDice(p)>0))?3:0;
   return 0.2;}
 function aiLoadValue(p,sid){const t=S.slots[sid];if(!t||t.type!=='ship')return 0;let best=0;
   readyInVessels(p).forEach(o=>{if(canTake(sid,o.i)){const d=boardDie(p.vessels[o.i],sid)+((DEST[t.dest].vbonus)||0);
     let v=1.5+d*0.8*aiPW(p,'lifter')+(t.load.length+1>=sailCap(t)?0.8:0);
-    if(aiIsTrader(p)){v+=Math.max(0,aiMajSwing(p,t.dest))*0.25*aiPW(p,'majority');if(S.ending)v*=1.5;}
+    if(aiIsTrader(p)){v+=Math.max(0,aiMajSwing(p,t.dest))*0.4*aiPW(p,'majority');if(S.ending)v*=1.5;}
     if(v>best)best=v;}});return best;}
 function aiCellValue(p,c){
   const trader=aiIsTrader(p);
   if(c==='A')return Math.max(0.4,(5-(p.grain+p.hops))*0.7);
-  if(c==='B'){let v=aiVerbValue(p,'brew')+((openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)&&!(p.brewed||{})[r]))?(trader?2.4:0.5)*aiPW(p,'breadth'):0);
-    if(trader&&S.ending&&!p.recipes.some(r=>canBrew(p,r)&&startDieFor(p,r)>=STYLES[r].q))v*=0.25;   // the trader doesn't start what can't finish
+  if(c==='B'){let v=aiVerbValue(p,'brew')+((openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)&&!(p.brewed||{})[r]))?(trader?0.5*aiFlightMarg(p):0.5)*aiPW(p,'breadth'):0);
+    if(aiLateGame(p)&&!p.recipes.some(r=>canBrew(p,r)&&startDieFor(p,r)>=STYLES[r].q))v*=0.4;   // the trader doesn't start what can't finish
     return v;}
   if(c==='D'){const m=maturingInVessels(p);let v=m.length?(1.2+m.length*0.8):0;
     if(trader&&S.ending)v*=0.5;return v;}
@@ -1830,7 +1840,7 @@ function aiCellValue(p,c){
     const stranded=best&&!wharfShips().some(sid=>canTake(sid,best.i));
     let v=1+Math.max.apply(null,disp.map(sn=>SHIP_CAP[sn.ship]))*0.5;
     if(stranded&&disp.some(sn=>best.c.die>=DEST[sn.dest].gate))v+=3;
-    if(trader&&S.ending)v*=1.5;   // the endgame is banked points: commissions + loads
+    if(aiLateGame(p))v*=1.5;   // the endgame is banked points: commissions + loads
     return v;}
   return 0;}
 function aiLineScore(p,lk){const L=LINES[lk];let v=0;
@@ -1853,7 +1863,7 @@ function aiStep(){
       case 'move':{const cells=(!p.placed)?['A','B','C','D']:ADJ[p.cell];
         if(aiNoisy(p))return doMove(aiRandOf(cells));
         let bc=cells[0],bv=-1e9;cells.forEach(c=>{const o=cellOfLine(c);
-          const v=Math.max(aiLineScore(p,o.row),aiLineScore(p,o.col))-(S.turn>1&&S.players.some(q=>q.id!==p.id&&q.cell===c)?0.6:0)+Math.random()*0.01;
+          const v=Math.max(aiLineScore(p,o.row),aiLineScore(p,o.col))+Math.random()*0.01;
           if(v>bv){bv=v;bc=c;}});
         return doMove(bc);}
       case 'line':{const o=cellOfLine(p.cell);
@@ -1874,7 +1884,9 @@ function aiStep(){
       case 'brew':{const aff=p.recipes.filter(r=>canBrew(p,r));
         if(!aff.length)return resume(UI.brew?UI.brew.returnTo:'stops');
         if(aiNoisy(p))return brewPick(aiRandOf(aff));
-        {const nb=aiIsTrader(p)?3.4:0.8;aff.sort((a,b)=>(((p.brewed||{})[b]?0:nb*aiPW(p,'breadth'))+STYLES[b].q)-(((p.brewed||{})[a]?0:nb*aiPW(p,'breadth'))+STYLES[a].q));}
+        {const nb=aiIsTrader(p)?0.7*aiFlightMarg(p):0.8;const late=aiLateGame(p);
+         const key=r=>((p.brewed||{})[r]?0:nb*aiPW(p,'breadth'))+STYLES[r].q-(late?(STYLES[r].q-startDieFor(p,r))*1.2:0);
+         aff.sort((a,b)=>key(b)-key(a));}
         return brewPick(aff[0]);}
       case 'age':{const m=maturingInVessels(p).sort((a,b)=>((b.c.q-b.c.die)===1?9:b.c.q)-((a.c.q-a.c.die)===1?9:a.c.q));
         if(!m.length)return ageDone();
@@ -1906,7 +1918,9 @@ function aiStep(){
       case 'reach':{const ks=(UI.reach&&UI.reach.ks)||[];if(!ks.length)return reachSkip();
         let bk=ks[0],bv=-1e9;ks.forEach(k=>{const v=aiMajSwing(p,k);if(v>bv){bv=v;bk=k;}});
         return reachPick(bk);}
-      case 'recipegain':{const o=recipeAffordable(p).sort((a,b)=>STYLES[b].q-STYLES[a].q);
+      case 'recipegain':{const nb=aiIsTrader(p)?0.4*aiFlightMarg(p):0.4;
+        const net=st=>STYLES[st].q+((p.brewed||{})[st]?0:nb*aiPW(p,'breadth'))-aiFeeCost(RECIPE_FEE[st]||{});
+        const o=recipeAffordable(p).sort((a,b)=>net(b)-net(a));
         return recipeGainPick(o.length?o[0]:null);}
       case 'survey':{const aff=surveyAffordable(p);
         return surveyPick(aff.length?aiPickBuilding(p,aff.slice()):null);}
@@ -1915,7 +1929,9 @@ function aiStep(){
         const slot=(free.length?free[0]:(b.feePaid?SLOTS[0]:bldgTargets(S.players[b.owner])[0]));
         if(!slot){return resume('stops');}
         return placeBldgOn(slot.id);}
-      case 'hire':{const el=hireAffordable(p);return hirePick(el.length?el[0]:null);}
+      case 'hire':{const R={cellar:4,crane:3,granary:2.4,hopgarden:2.2};
+        const el=hireAffordable(p).sort((a,b)=>((R[b]||2)-aiFeeCost(SPEC_FEE[b]||{}))-((R[a]||2)-aiFeeCost(SPEC_FEE[a]||{})));
+        return hirePick(el.length?el[0]:null);}
       case 'benefit':{const disp=S.buildDisplay||[];
         return benefitPick(disp.length?aiPickBuilding(p,disp.slice()):null);}
       case 'precipe':{const b=(UI.pendingRecipe||[])[0];if(!b)return resume('stops');
@@ -2085,8 +2101,8 @@ function renderAid(){
   const ab=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].act).map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   const lb=Object.keys(BUILDINGS).filter(k=>!BUILDINGS[k].act).map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   document.getElementById('aidcard').innerHTML=
-    '<h2>'+ic('scroll-text')+' Player Aid — v4.2 “Tariff”</h2>'
-    +'<div class="asec"><b>Your turn</b><div class="note"><b>Move</b> to an adjacent station and activate its <b>row</b> or <b>column</b>. Resolve the line’s stops <b>in any order, all optional</b>: the two stations (one printed action each) + each slot’s <b>building action</b> and/or a <b>load of the ship</b> docked there. The 1 '+ic('wheat')+' <b>occupancy toll</b> applies while a rival shares your station.</div></div>'
+    '<h2>'+ic('scroll-text')+' Player Aid — v4.3 “Open Quay”</h2>'
+    +'<div class="asec"><b>Your turn</b><div class="note"><b>Move</b> to an adjacent station and activate its <b>row</b> or <b>column</b>. Resolve the line’s stops <b>in any order, all optional</b>: the two stations (one printed action each) + each slot’s <b>building action</b> and/or a <b>load of the ship</b> docked there. Sharing a station costs nothing — move where the board is best.</div></div>'
     +'<div class="asec"><b>The die IS the cask</b><div class="note">At <b>brew</b> a tray die is set to the printed <b>start value</b> (= quality − aging steps; Gruit starts Ready at 1). <b>Age points turn it up — it stops at the quality: READY.</b> Only buildings lift it past quality (Malt Kiln +1 as it boards, cap 6). <b>Gates read the die as it boards</b>; at delivery the die <b>parks at the kontor showing its face</b> — pips = the banked ★ (never &lt;1), the body = presence, majorities and the clock. <b>No die in the tray → no brew, no presence bump.</b></div></div>'
     +'<div class="asec"><b>The four stations — ONE action each</b><div class="note">'
       +ic('store')+' <b>Market</b> — take 2 goods (any mix).<br>'
@@ -2135,9 +2151,7 @@ function renderBar(){
     const cells=placing?['A','B','C','D']:ADJ[p.cell];
     acts=cells.map(c=>btn((placing?'⚑ ':'→ ')+CELLNAME[c],'doMove(\''+c+'\')','primary')).join('');}
   else if(U==='line'){const o=cellOfLine(p.cell);
-    const shared=S.turn>1&&S.players.some(q=>q.id!==p.id&&q.cell===p.cell);
-    const tollNote=shared?' <span class="note">(a rival is here — activating costs the '+Gi(Math.min(OCCUPANCY_TOLL,p.grain))+' toll)</span>':'';
-    prompt='Choose your line — the <b>row</b> or the <b>column</b>.'+tollNote;
+    prompt='Choose your line — the <b>row</b> or the <b>column</b>.';
     acts=btn(LINES[o.row].label,'chooseLine(\'row\')','go')+btn(LINES[o.col].label,'chooseLine(\'col\')','go');}
   else if(U==='stops'){
     prompt='Resolve this line’s stops <b>in any order</b> — pick the next ('+UI.stops.length+' left). All optional.';

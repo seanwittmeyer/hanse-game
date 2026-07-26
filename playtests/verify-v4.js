@@ -210,11 +210,12 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('the tiebreak reads the vessel dice', vesselDice(p)===4);
 })();
 
-// ---- 15. THE TOLL: 1G while sharing a station ----
+// ---- 15. NO TOLL (v4.3): sharing a station costs nothing ----
 (function(){var p=fresh();stops();
   S.turn=2;S.players[1].cell='B';p.cell='B';p.grain=3;
   UI={sub:'line'};chooseLine('row');
-  ok('activating while sharing costs the toll', p.grain===2);
+  ok('activating while sharing costs nothing (the toll is cut)', p.grain===3);
+  ok('OCCUPANCY_TOLL is gone', typeof OCCUPANCY_TOLL==='undefined');
 })();
 
 // ---- 16. THE FAUCETS: recipes/buildings/specialists are EARNED — the buy verbs are gone ----

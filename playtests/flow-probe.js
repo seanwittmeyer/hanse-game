@@ -45,16 +45,7 @@ var _surveyPick=surveyPick; surveyPick=function(k){ __tag=k?('fee:bldg:'+k):null
 var _enterHire=enterHire; enterHire=function(rt){ __tag='fee:spec:ai'; var r=_enterHire(rt); __tag=null; return r; };
 var _commPlace=commPlace; commPlace=function(slot){ __tag='commission'; var r=_commPlace(slot); __tag=null; return r; };
 var _commitBldg=commitBldg; commitBldg=function(slot,key,pid){ __tag='rent'; var r=_commitBldg(slot,key,pid); __tag=null; return r; };
-var _chooseLine=chooseLine; chooseLine=function(w){ var p=cur(); var g0=p.grain;
-  var r=_chooseLine(w); return r; };
-// toll: measured directly inside a wrapped doMove->chooseLine window is messy; instead wrap the
-// toll site by diffing in chooseLine BEFORE activateLine runs is impossible from outside — so
-// approximate: count tolls by wrapping the log? log is stubbed. Track via S: re-wrap below.
-// Simplest exact hook: re-implement the shared-check here (same expression the engine uses).
-var _chooseLine2=chooseLine; chooseLine=function(w){ var p=cur();
-  var shared=S.turn>1 && S.players.some(function(q){return q.id!==p.id&&q.cell===p.cell;});
-  if(shared&&__rec){var t=Math.min(OCCUPANCY_TOLL,p.grain); if(t>0){var b=__rec.spend.toll=__rec.spend.toll||{g:0,h:0,n:0}; b.g+=t; b.n++;}}
-  return _chooseLine2(w); };
+// v4.3: the occupancy toll is CUT — no toll hook (spend.toll stays absent from the report).
 
 function classify(vals){ if(vals.length<=1)return 'forced';
   var s=vals.slice().sort(function(a,b){return b-a;}); var v1=s[0],v2=s[1];
