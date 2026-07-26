@@ -1,0 +1,4 @@
+=== v4.0 AI ladder — 12 games/pair · 2p, seats alternate ===
+  cellarmaster > guildmaster: 75.0%  (9/12)  avg 71.7 vs 59.6
+
+LADDER GATE: every rung ≥60%, 0 errors.
