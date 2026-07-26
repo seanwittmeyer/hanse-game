@@ -241,7 +241,9 @@ re-taught** to the v4 economy (fee-netted values via `aiFeeCost`, Flight margina
 `aiFlightMarg`, horizon sense via `aiLateGame`/`aiClockPush`, no shared-station dodge); the
 double-cost list stays ZERO (recipe fee is one-time, brew cost per-brew — confirmed fine).
 Gates: verify 87/87 · sim 500 + PATHWAYS 200 + flow probe all 0 crashes · render-smoke ALL
-PASS · trader>jour ~55% pooled (watch, see parking lot).
+PASS · GM>trader 85.4% (41/48) · CM>GM 54.2% pooled (13/24 at bulk budgets — statistically
+indistinguishable from v4.2b's 66.7%; the bulk-budget rung reads low by pattern) ·
+trader>jour ~55% pooled (watch, see parking lot).
 
 **v4.2 "Tariff" — per-item fees & the Novgorod premium** *(2026-07-26, KEY `hanse-v42`, the
 designer's second ruling off playtest #23)* — Two changes on v4.1, same day. **(1) THE FEE
