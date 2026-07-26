@@ -20,7 +20,7 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (v4.2). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v4.2 “Tariff”** (`KEY hanse-v42b`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v4.2 “Tariff”** (`KEY hanse-v42c`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - **The print kit is `printables2.html` — the only kit in use** (components.js data is v4.2; the sheet layouts are the P4 refresh).
 
 ---
@@ -96,7 +96,7 @@ Per port: 6 each (Bruges sk1/c3/h2 · London sk2/c2/h2 · Bergen sk1/c3/h2 · No
 
 **No owner, ever** — every building serves whoever activates it; the placer banks **+3★** ⚙
 (setup’s two neutral seeds score nobody). Placement is always display → slot, at once; overbuild
-anytime for `1 G` ⚙ (displaced tile boxed, the rent on top of any fee). Display of 4; free at
+for ONE payment ⚙ (v4.2c: a paid fee covers the ground — the `1 G` rent only when an otherwise-free placement overbuilds; displaced tile boxed). Display of 4; free at
 **London**, or via the *Gain 1 building* bonus at the **tile’s printed fee** ⚙ (a chipless
 tile is free — the tier reads straight off the component). Using a building never costs a fee.
 
@@ -118,12 +118,12 @@ tile is free — the tier reads straight off the component). Using a building ne
 Free as **Bergen’s prize**; the Hiring Post / *Gain 1 specialist* bonus pay each tile’s
 **printed wharf fee** ⚙. **Two seats** per house; never two of a kind.
 
-| Specialist | Effect | Wharf fee ⚙ |
+| Specialist | Effect | Wharf fee ⚙ (v4.2c) |
 |---|---|---|
-| Cellarman | your dice **start one higher** (never above quality) | 3 `G` |
-| Grain Factor | gain grain: **+1 extra** (any faucet) | 2 `G` |
+| Cellarman | your dice **start one higher** (never above quality) | 2 `H` |
+| Grain Factor | gain grain: **+1 extra** (any faucet) | 1 `G` |
 | Hop Gardener | gain hops: **+1 extra** (any faucet) | 2 `H` |
-| Stevedore | your ship-slot stop loads **2 casks** | 2 `G` |
+| Stevedore | your ship-slot stop loads **2 casks** | 1 `G` |
 
 ## 8. Recipe cards (double-sided — the Flight record)
 

@@ -3,13 +3,13 @@
 > **v4.2 “Tariff” (designer-ruled 2026-07-26 — the second ruling off playtest #23).** Two
 > changes on v4.1. **(1) The fee rides the ITEM, not the channel:** every acquirable recipe /
 > specialist / building carries its **own printed wharf fee** ⚙ — recipes Broyhan `1H` · Keut
-> `1G` · Mumme `2H` · Bock `1G2H`; specialists Cellarman `3G` · Grain Factor `2G` · Hop
-> Gardener `2H` · Stevedore `2G`; buildings free (chipless) / `1G` / `2G` by tile — paid at
+> `1G` · Mumme `2H` · Bock `1G2H`; specialists Cellarman `2H` · Grain Factor `1G` · Hop
+> Gardener `2H` · Stevedore `1G` (v4.2c markup); buildings free (chipless) / `1G` / `2G` by tile — paid at
 > ANY wharf channel (Scrivener’s Hall · the Hiring Post · the gain load-bonuses). Kontor
 > prizes stay free, and there is **never a fee-on-fee**: using a building charges nothing of
 > its own. **(2) Novgorod pays the die +2★** — the refine prize is cut; every die parked there
 > banks **pips +2** (6–8★ at gate 4), printed on the kontor mat. The live build is `play.html`
-> (**KEY `hanse-v42b`**).
+> (**KEY `hanse-v42c`**).
 
 > **v4.1 “Counting House” (designer-ruled 2026-07-26, off human playtest #23 — the first v4
 > table).** Two changes on the v4.0 spine. **(1) Paid at the wharf, free at the kontor:**
@@ -168,9 +168,10 @@ serves whoever activates it; none has an owner.** Placing one — London’s pri
 building* action (pay the **tile’s printed wharf fee** ⚙, v4.2 — a chipless tile is free),
 always **from the Wharf display of 4, placed at once** — pays the builder **+3★** on the score
 track. **Using a building never costs a fee of its own** — at Scrivener’s Hall / the Hiring
-Post you pay only the recipe’s / specialist’s printed fee. **Overbuild:** you may place onto a
-slot that already has a building for **1 `G` ⚙** (paid to the stores, on top of any fee); the
-displaced tile is **returned to the box**. ⚙ *watch:
+Post you pay only the recipe’s / specialist’s printed fee. **Overbuild — ONE payment per
+placement (v4.2c):** a fee-paid gain **covers the ground** (no rent); the **1 `G` ⚙ ground
+rent** applies only when an otherwise-free placement (London’s prize, or a chipless tile)
+lands on a built slot. The displaced tile is **returned to the box**. ⚙ *watch:
 if churn mints +3★, the dials are restricting overbuild to a full board or raising the fee.*
 
 **The deck (17 ⚙, all green):**
@@ -267,10 +268,10 @@ the Hiring Post — the kontor prizes never do, and no building ever adds a fee 
 
 **The SPECIALISTS (4 designs ⚙ · deck of n−1 copies each · display of 4 · each prints its
 wharf fee ⚙ — free as Bergen’s prize):**
-- **Cellarman** (fee `3G`) — your dice **start one higher** (never above quality; a Bock starts at 3).
-- **Grain Factor** (fee `2G`) — whenever you gain grain (any faucet): **+1 `G`**.
+- **Cellarman** (fee `2H`) — your dice **start one higher** (never above quality; a Bock starts at 3).
+- **Grain Factor** (fee `1G`) — whenever you gain grain (any faucet): **+1 `G`**.
 - **Hop Gardener** (fee `2H`) — whenever you gain hops (any faucet): **+1 `H`**.
-- **Stevedore** (fee `2G`) — your ship-slot stop loads **2 casks** (each fires its bonus).
+- **Stevedore** (fee `1G`) — your ship-slot stop loads **2 casks** (each fires its bonus).
 
 ---
 
@@ -326,9 +327,8 @@ the engine; the modules return after the core settles.
 ## Open / to-tune (the ⚙ shortlist)
 
 1. **The clock** — the dice alone (v4.1). The pool (14 ⚙) is THE pace dial. The v4.2b battery:
-   3p/4p healthy (dice trigger 60–82%, ~19–18 rounds) but **2p is ceiling-heavy (60–70% of
-   games reach round 25)** — the candidate is a **2p-specific pool (12 ⚙)**, re-read with
-   humans first (the greedy bots don’t race the pool).
+   3p/4p healthy (dice trigger 60–82%, ~19–18 rounds); 2p runs longer (60–70% reach round 25)
+   — **designer-accepted (2026-07-26): longer 2p games are not a concern.** No dial queued.
 2. **The recipe faucet** — Bruges + the priced verbs only (v4.1 fee). If the Flight stalls, the
    dials are prize generosity, verb frequency (piles/deck), and the fee — not a Market buy.
 3. **Novgorod at gate 4** — is die-4 boarding reachable enough (Mumme+, or Kiln’d Q3)? Its
@@ -343,10 +343,13 @@ the engine; the modules return after the core settles.
    deadlock relief; too few = the strand risk returns (too many is now merely inefficient).
 8. **2p texture** — the thinned interaction set (berths, toll, majorities, the draft): does it
    hold at two?
-9. **The fee schedule** ⚙ (v4.2 — per item): recipes `1H`/`1G`/`2H`/`1G2H` · specialists
-   `3G`/`2G`/`2H`/`2G` · buildings free/`1G`/`2G`. The flow-probe reads (v4.2b): recipes flow
-   right; the **2G lift tier prices the wharf channel out** (candidate `1G1H`); **hire is the
-   most-blocked want** (Cellarman candidate `2G1H`); **grain is the binding currency, hops
-   slack** — lean premium fees toward `H`. Parked: a kontor-prize surcharge on premium tiles.
-10. **The greedy Trader wants a fee-economy retune** (AI-only): trader>journeyman read 52%
-   (n=150) at v4.2b — its weights predate the fees; the MC tiers hold (GM>trader 91.7%).
+9. **The fee schedule** ⚙ (v4.2c — per item): recipes `1H`/`1G`/`2H`/`1G2H` · specialists
+   `2H`/`1G`/`2H`/`1G` (the −1G markup; Cellarman → `2H`) · buildings free/`1G`/`2G`. Probe
+   reads still open: the **2G lift tier prices the wharf channel out** (candidate `1G1H`);
+   **grain binding, hops slack** — lean premium fees toward `H`. Parked: a kontor-prize
+   surcharge on premium tiles.
+10. **The greedy (non-MC) tiers predate the v4 economy** — designer (2026-07-26): *“I worry we
+   over-index on those AI players.”* Trader>journeyman read 52% at v4.2b. Standing rule
+   sharpened: strategy/balance conclusions lean on the MC tiers, the flow probe and humans;
+   the greedy tiers are robustness/pace oracles only. A v4 re-teach of the greedy tiers is
+   queued (AI-only).

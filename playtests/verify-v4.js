@@ -266,7 +266,9 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('no affordable fee → the recipe channel refuses', UI.sub!=='recipegain'&&p.recipes.length===r0);
   p.grain=5;p.hops=2;S.impDisplay=['cellar','crane','granary','hopgarden'];
   UI.sub='hire';UI.hire={returnTo:'stops'};hirePick('cellar');
-  ok('hire pays the SPECIALIST’s fee (Cellarman 3G)', p.grain===2&&p.upgrades.indexOf('cellar')>=0);
+  ok('hire pays the SPECIALIST’s fee (Cellarman 2H)', p.hops===0&&p.grain===5&&p.upgrades.indexOf('cellar')>=0);
+  p.sslots=2;UI.sub='hire';UI.hire={returnTo:'stops'};hirePick('crane');
+  ok('Stevedore fee is 1G (v4.2c)', p.grain===4&&p.upgrades.indexOf('crane')>=0);
   S.buildDisplay=['granary','maltkiln','cooperage','customs'];
   var g1=p.grain,b1=p.bank;
   UI.sub='survey';UI.survey={returnTo:'stops'};surveyPick('granary');
@@ -276,6 +278,15 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   UI.sub='survey';UI.survey={returnTo:'stops'};surveyPick('maltkiln');
   placeBldgOn('s2');
   ok('a premium building pays its fee (Malt Kiln 2G)', p.grain===g2-2&&p.bank===b2+BUILD_PTS);
+  // v4.2c ONE PAYMENT PER PLACEMENT: a paid fee covers the ground rent
+  S.buildDisplay=['cooperage','granary','missionq','almoner'];
+  var g3=p.grain,b3=p.bank;
+  UI.sub='survey';UI.survey={returnTo:'stops'};surveyPick('cooperage');
+  placeBldgOn('s1');   // s1 is BUILT (granary) — overbuild
+  ok('ONE payment: a fee-paid gain overbuilds with NO rent (2G total)', p.grain===g3-2&&p.bank===b3+BUILD_PTS&&bKeyAt('s1')==='cooperage');
+  p.grain=3;var g4=p.grain,b4=p.bank;
+  commitBldg('s2','granary',0);
+  ok('an otherwise-FREE placement still pays the 1G rent on overbuild', p.grain===g4-1&&p.bank===b4+BUILD_PTS&&bKeyAt('s2')==='granary');
   // the kontor prizes stay FREE
   var q=S.players[1];q.ai={tier:'journeyman'};var qg=q.grain,qb=q.bank;
   UI.pendingBenefits=[{pid:1,dest:'london'}];afterSail('stops');

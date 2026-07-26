@@ -117,10 +117,10 @@ const BUILDINGS=[
 //   quaymaster     → a private wooden jetty with a rope-wound mooring bollard
 // ============================================================================
 const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize · the Hiring Post · the 'Gain 1 specialist' load bonus) — never bought · deck of n−1/type · 2 SEATS per house (the 2nd behind the Flight's 3rd distinct brew)
-  {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Your dice START one higher (never above quality)', g:3, c:'#5b3a8e', n:3},
-  {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:2, c:'#5b3a8e', n:3},
+  {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Your dice START one higher (never above quality)', g:0, h:2, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:1, c:'#5b3a8e', n:3},
   {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:0, h:2, c:'#5b3a8e', n:3},
-  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Your ship-slot stop loads 2 casks', g:2, c:'#5b3a8e', n:3},
+  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Your ship-slot stop loads 2 casks', g:1, c:'#5b3a8e', n:3},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a

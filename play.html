@@ -681,7 +681,7 @@ const OVERBUILD_FEE={g:1};      // overbuild anytime for 1 G (to the stores); th
 // NEVER fee-on-fee: using a building is free — you pay only the item's own price. A tile
 // with no printed chip is FREE to gain (the tier reads off the component).
 const RECIPE_FEE={broyhan:{h:1},keut:{g:1},mumme:{h:2},bock:{g:1,h:2},gose:{g:1},zerbster:{h:1},duckstein:{g:1,h:1},jopenbier:{g:2,h:2}};   // ⚙ Bock 1G2H — designer markup 2026-07-26   // ⚙ (expansions recorded for their return)
-const SPEC_FEE={cellar:{g:3},granary:{g:2},hopgarden:{h:2},crane:{g:2}};   // ⚙ Cellarman the proven premium
+const SPEC_FEE={cellar:{h:2},granary:{g:1},hopgarden:{h:2},crane:{g:1}};   // ⚙ v4.2c markup: −1G each, Cellarman → 2H (fees lean into the slack currency)
 function bldgFee(k){return (BUILDINGS[k]&&BUILDINGS[k].fee)||{};}
 
 // ---- SPECIALISTS (v4.0): 4 designs, EARNED free (Bergen's prize / the Hiring Post / the hire verb) -
@@ -757,7 +757,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v42b'; // v4.2 "Tariff" [designer-ruled 2026-07-26, the second ruling off playtest #23] - two changes on v4.1 "Counting House". (1) THE FEE RIDES THE ITEM, not the channel: every acquirable recipe / specialist / building carries its own printed wharf fee (RECIPE_FEE / SPEC_FEE / BUILDINGS[k].fee - several buildings FREE, chipless), paid at ANY wharf channel (Scrivener's Hall, the Hiring Post, the gain load-bonuses); kontor prizes stay free, and there is NEVER a fee-on-fee - using a building charges nothing of its own. (2) NOVGOROD PAYS THE DIE +2 STARS (vbonus - the refine prize is cut): every delivered die there banks pips+2 (6-8 stars at gate 4); the premium path's pull beyond the 8/5/2 majority. v4.1 stands beneath: the dice are the ONE clock (14th die parked = final round; MAX_ROUND 25 backstop). Bump discards stale v41 state.
+const KEY='hanse-v42c'; // v4.2 "Tariff" [designer-ruled 2026-07-26, the second ruling off playtest #23] - two changes on v4.1 "Counting House". (1) THE FEE RIDES THE ITEM, not the channel: every acquirable recipe / specialist / building carries its own printed wharf fee (RECIPE_FEE / SPEC_FEE / BUILDINGS[k].fee - several buildings FREE, chipless), paid at ANY wharf channel (Scrivener's Hall, the Hiring Post, the gain load-bonuses); kontor prizes stay free, and there is NEVER a fee-on-fee - using a building charges nothing of its own. (2) NOVGOROD PAYS THE DIE +2 STARS (vbonus - the refine prize is cut): every delivered die there banks pips+2 (6-8 stars at gate 4); the premium path's pull beyond the 8/5/2 majority. v4.1 stands beneath: the dice are the ONE clock (14th die parked = final round; MAX_ROUND 25 backstop). v4.2c markup [designer 2026-07-26]: specialist fees cut (Cellarman 2H / Grain Factor 1G / Hop Gardener 2H / Stevedore 1G) and ONE PAYMENT PER PLACEMENT (a paid building fee covers the ground rent; rent only on otherwise-free overbuilds) - the double-cost audit reads ZERO. Bump discards stale v42b state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1364,25 +1364,29 @@ function recipeGainPick(style){const p=cur();const rt=UI.rgain?UI.rgain.returnTo
 // prize stays free via the benefit path). Chipless tiles are FREE. The gate pre-checks
 // fee + rent when only overbuild targets remain, so paying can never strand the placement. ----------
 function surveyNeed(key){const f=bldgFee(key);
-  return {g:(f.g||0)+(buildableSlots().length?0:(OVERBUILD_FEE.g||0)),h:f.h||0};}
+  if(f.g||f.h)return {g:f.g||0,h:f.h||0};   // v4.2c ONE PAYMENT: a paid fee covers the ground — no rent on top
+  return {g:(buildableSlots().length?0:(OVERBUILD_FEE.g||0))};}
 function surveyAffordable(p){return (S.buildDisplay||[]).filter(k=>canPay(p,surveyNeed(k)));}
 function enterSurvey(rt){const p=cur();
   if(!(S.buildDisplay||[]).length){log('↳ Gain a building: the display is empty.');resume(rt);return;}
-  if(!bldgTargets(p).length||!surveyAffordable(p).length){log('↳ Gain a building — no display tile’s fee'+(buildableSlots().length?'':' + the '+costStr(OVERBUILD_FEE)+' rent')+' is affordable (or no legal slot).');resume(rt);return;}
+  if(!surveyAffordable(p).length){log('↳ Gain a building — no display tile is affordable right now.');resume(rt);return;}
   UI.survey={returnTo:rt};UI.sub='survey';render();}
 function surveyPick(key){const p=cur();const rt=UI.survey?UI.survey.returnTo:null;UI.survey=null;
   if(!key||!(S.buildDisplay||[]).includes(key)){resume(rt);return;}
-  if(!bldgTargets(p).length||!canPay(p,surveyNeed(key))){resume(rt);return;}
+  if(!canPay(p,surveyNeed(key))){resume(rt);return;}
+  const feePaid=!!(bldgFee(key).g||bldgFee(key).h);
   snapshot();pay(p,bldgFee(key));takeBuildFromDisplay(key);
-  log('↳ '+p.name+' takes '+LU('building-2')+' <b>'+bName(key)+'</b> from the display'+((bldgFee(key).g||bldgFee(key).h)?' (its fee is paid)':' (free)')+' — place it on a slot.');
-  beginPlaceBldg(key,p.id,rt);}
+  log('↳ '+p.name+' takes '+LU('building-2')+' <b>'+bName(key)+'</b> from the display'+(feePaid?' (its fee is paid — it covers the ground)':' (free)')+' — place it on a slot.');
+  beginPlaceBldg(key,p.id,rt,feePaid);}
 // commit a building: neutral by construction; the placer banks +3★ (setup deals pass pid=null).
 // Overbuild anytime for the 1 G ground rent — the displaced tile is boxed (no owner to pay).
-function commitBldg(slot,key,pid){
+function commitBldg(slot,key,pid,feePaid){
   const old=bAt(slot);const np=pid!=null?S.players[pid]:null;
-  if(old){if(!np||!canPay(np,OVERBUILD_FEE))return false;
+  if(old){if(feePaid){
+      log('↳ the old '+LU('building-2')+bName(old.b)+' is torn down (boxed) — the paid fee covers the ground (no rent).');}
+    else{if(!np||!canPay(np,OVERBUILD_FEE))return false;
     pay(np,OVERBUILD_FEE);
-    log('↳ the old '+LU('building-2')+bName(old.b)+' is torn down (boxed) — the ground rent is paid.');}
+    log('↳ the old '+LU('building-2')+bName(old.b)+' is torn down (boxed) — the ground rent is paid.');}}
   S.buildings[slot]={b:key};
   if(np){np.bank+=BUILD_PTS;
     log(np.name+' raises '+LU('building-2')+' <b>'+bName(key)+'</b> — <b>+'+BUILD_PTS+'★</b> banked. It serves everyone: '+BUILDINGS[key].desc+'.',true);}
@@ -1390,12 +1394,12 @@ function commitBldg(slot,key,pid){
   if(occ&&occ.type==='ship'&&occ.load.length>=sailCap(occ)){sailShip(slot,pid!=null?pid:S.active);return true;}
   return false;
 }
-function beginPlaceBldg(key,owner,rt){
-  UI.tmp=UI.tmp||{};UI.tmp.placeBldg={b:key,owner};UI.placeRt=rt;UI.sub='placebldg';render();}
+function beginPlaceBldg(key,owner,rt,feePaid){
+  UI.tmp=UI.tmp||{};UI.tmp.placeBldg={b:key,owner,feePaid:!!feePaid};UI.placeRt=rt;UI.sub='placebldg';render();}
 function placeBldgOn(slot){const b=UI.tmp&&UI.tmp.placeBldg;if(!b)return;
-  if(bAt(slot)&&!canPay(S.players[b.owner],OVERBUILD_FEE))return;
+  if(bAt(slot)&&!b.feePaid&&!canPay(S.players[b.owner],OVERBUILD_FEE))return;
   snapshot();
-  const sailed=commitBldg(slot,b.b,b.owner);
+  const sailed=commitBldg(slot,b.b,b.owner,b.feePaid);
   const rt=UI.placeRt;UI.placeRt=null;if(UI.tmp)UI.tmp.placeBldg=null;
   if(sailed&&rt!=='benefitcont'){afterSail(rt);maybeRunAI();return;}
   resume(rt);
@@ -1803,7 +1807,7 @@ function aiVerbValue(p,act){
   if(act==='reach'){if(!reachBenKontore(p).length||(S.presEnd&&trayDice(p)<=0))return 0;
     let best=0;reachBenKontore(p).forEach(k=>best=Math.max(best,aiMajSwing(p,k)));return 1+best*0.4;}
   if(act==='recipe')return recipeAffordable(p).length?(aiIsTrader(p)?3.4:2.2)*aiPW(p,'breadth'):0;
-  if(act==='survey')return (bldgTargets(p).length&&surveyAffordable(p).length)?3.4*aiPW(p,'builder'):0;
+  if(act==='survey')return surveyAffordable(p).length?3.4*aiPW(p,'builder'):0;
   if(act==='hire')return hireAffordable(p).length?3:0;
   if(act==='brew')return (openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r))&&(!S.presEnd||trayDice(p)>0))?3:0;
   return 0.2;}
@@ -1908,7 +1912,7 @@ function aiStep(){
         return surveyPick(aff.length?aiPickBuilding(p,aff.slice()):null);}
       case 'placebldg':{const b=UI.tmp&&UI.tmp.placeBldg;if(!b){return resume('stops');}
         const free=buildableSlots();
-        const slot=(free.length?free[0]:bldgTargets(S.players[b.owner])[0]);
+        const slot=(free.length?free[0]:(b.feePaid?SLOTS[0]:bldgTargets(S.players[b.owner])[0]));
         if(!slot){return resume('stops');}
         return placeBldgOn(slot.id);}
       case 'hire':{const el=hireAffordable(p);return hirePick(el.length?el[0]:null);}
@@ -1963,7 +1967,7 @@ function aiMCOptions(p){
       else{disp.forEach((sn,i)=>push('hull:'+sn.ship+'>'+sn.dest,()=>commPick(i)));push('skip',()=>commSkip());}
       break;}
     case 'placebldg':{const b=UI.tmp&&UI.tmp.placeBldg;if(!b)break;
-      bldgTargets(S.players[b.owner]).forEach(sx=>push('on:'+sx.id,()=>placeBldgOn(sx.id)));break;}
+      (b.feePaid?SLOTS:bldgTargets(S.players[b.owner])).forEach(sx=>push('on:'+sx.id,()=>placeBldgOn(sx.id)));break;}
     case 'benefit':{(S.buildDisplay||[]).forEach(k=>push('take:'+k,()=>benefitPick(k)));push('skip',()=>benefitPick(null));break;}
     case 'survey':{surveyAffordable(p).forEach(k=>push('take:'+k,()=>surveyPick(k)));push('skip',()=>surveyPick(null));break;}
     case 'hire':{hireAffordable(p).forEach(k=>push('hire:'+k,()=>hirePick(k)));push('skip',()=>hirePick(null));break;}
@@ -2090,7 +2094,7 @@ function renderAid(){
       +ic('hourglass')+' <b>Cellar</b> — '+CELLAR_POOL+' age points across your vessels (dice also turn +1 automatically on your turn).<br>'
       +ic('anchor')+' <b>Harbor</b> — commission: pay '+costStr(COMMISSION_COST)+', place a display hull on a shipless slot, <b>score ★ = its berth count</b> (Skute 1 · Cog 2 · Hulk 3).</div></div>'
     +'<div class="asec"><b>Loading & sailing</b><div class="note">A ship’s slot stop loads <b>one READY cask from YOUR vessels</b> whose die meets the gate (after the slot’s lifts) — the die rides the tile, and the cask’s printed <b>load bonus fires</b> (after any sail it completes). The Stevedore loads 2. A hull <b>sails the moment it is full</b> — a Skute on its first load — and every cask aboard delivers in load order; prizes resolve <b>when gained, owner’s choice</b>. Casks are private until aboard: the race is for <b>berths</b>, and topping off a hull sails everyone’s cargo on your clock.</div></div>'
-    +'<div class="asec"><b>Buildings — one green family</b><div class="note">Every building serves <b>whoever activates it</b>; placing one (London’s prize, or a <i>Gain 1 building</i> bonus — always from the display) banks the builder <b>+'+BUILD_PTS+'★</b>. Overbuild anytime for the '+costStr(OVERBUILD_FEE)+' ground rent (the displaced tile is boxed). <b>Paid at the wharf, free at the kontor:</b> gaining a recipe / building / specialist via a wharf channel (Scrivener’s Hall · Hiring Post · the gain bonuses) costs <b>the item’s printed fee</b> (a chipless building is free) — the kontor prizes never do, and using a building never adds a fee of its own.</div>'
+    +'<div class="asec"><b>Buildings — one green family</b><div class="note">Every building serves <b>whoever activates it</b>; placing one (London’s prize, or a <i>Gain 1 building</i> bonus — always from the display) banks the builder <b>+'+BUILD_PTS+'★</b>. Overbuild: <b>one payment per placement</b> — a fee-paid gain covers the ground (no rent); the '+costStr(OVERBUILD_FEE)+' rent applies only when an otherwise-free placement overbuilds (the displaced tile is boxed). <b>Paid at the wharf, free at the kontor:</b> gaining a recipe / building / specialist via a wharf channel (Scrivener’s Hall · Hiring Post · the gain bonuses) costs <b>the item’s printed fee</b> (a chipless building is free) — the kontor prizes never do, and using a building never adds a fee of its own.</div>'
       +'<div class="atags" style="margin-top:5px">'+ab+'</div><div class="atags" style="margin-top:4px">'+lb+'</div></div>'
     +'<div class="asec"><b>Destinations</b> <span class="note">gate (the die, as boarded) · value = the die · majority 1/2/3 · prize</span>'
       +'<table class="atable"><tr><th>Kontor</th><th>Gate</th><th>Value</th><th>Majority</th><th>Prize</th></tr>'+dests+'</table>'
@@ -2161,7 +2165,7 @@ function renderBar(){
       acts=btn('◂ Pick a different hull','commBack()','ghost')+btn('Skip','commSkip()','ghost');}
     else{prompt=LU('anchor')+' <b>Harbor — Commission</b>: pay '+costStr(COMMISSION_COST)+', place a hull, bank ★ = its berths. Pick one of the '+disp.length+':';
       acts=disp.map((sn,i)=>btn(LU('sailboat')+' '+SHIP_NAME[sn.ship]+' → '+DEST[sn.dest].name+' · +'+SHIP_CAP[sn.ship]+'★','commPick('+i+')','go')).join('')+btn('Skip','commSkip()','ghost');}}
-  else if(U==='placebldg'){const b=UI.tmp.placeBldg;prompt=S.players[b.owner].name+' — place '+LU('building-2')+' <b>'+bName(b.b)+'</b>: click a glowing slot (+'+BUILD_PTS+'★). <span class="note">('+BUILDINGS[b.b].desc+'. Overbuilding costs the '+costStr(OVERBUILD_FEE)+' rent; the displaced tile is boxed.)</span>';
+  else if(U==='placebldg'){const b=UI.tmp.placeBldg;prompt=S.players[b.owner].name+' — place '+LU('building-2')+' <b>'+bName(b.b)+'</b>: click a glowing slot (+'+BUILD_PTS+'★). <span class="note">('+BUILDINGS[b.b].desc+'. '+(b.feePaid?'The paid fee covers the ground — overbuild free; the displaced tile is boxed.':'Overbuilding costs the '+costStr(OVERBUILD_FEE)+' rent; the displaced tile is boxed.')+')</span>';
     acts='';}
   else if(U==='reach'){prompt='Place 1 presence — a tray die parks at face 1 (1★ · presence · clock) at a kontor you’ve delivered to.';
     acts=UI.reach.ks.map(k=>btn(LU('map-pin')+DEST[k].name,'reachPick(\''+k+'\')','go')).join('')+btn('Skip','reachSkip()','ghost');}
@@ -2206,7 +2210,7 @@ function actAvail(p,act){
   if(act==='load')return wharfShips().some(sid=>readyInVessels(p).some(o=>canTake(sid,o.i)));
   if(act==='reach')return reachBenKontore(p).length>0&&(!S.presEnd||trayDice(p)>0);
   if(act==='recipe')return recipeAffordable(p).length>0;
-  if(act==='survey')return bldgTargets(p).length>0&&surveyAffordable(p).length>0;
+  if(act==='survey')return surveyAffordable(p).length>0;
   if(act==='hire')return hireAffordable(p).length>0;
   if(act==='brew')return openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r))&&(!S.presEnd||trayDice(p)>0);
   return true;}
@@ -2232,7 +2236,7 @@ function renderGrid(){
   const TKDIR={s1:'tk-up',s2:'tk-up',s3:'tk-right',s4:'tk-right',s5:'tk-down',s6:'tk-down',s7:'tk-left',s8:'tk-left'};
   SLOTS.forEach(s=>{const t=S.slots[s.id];const b=bAt(s.id);let cls='slot '+s.id+' '+(TKDIR[s.id]||'tk-left');
     const commPlacing=!aiTurn()&&UI.sub==='commission'&&UI.stage==='place'&&!t;
-    const bldgPlacing=(!aiTurn()||humanGate())&&UI.sub==='placebldg'&&(!b||canPay(S.players[UI.tmp.placeBldg.owner],OVERBUILD_FEE));
+    const bldgPlacing=(!aiTurn()||humanGate())&&UI.sub==='placebldg'&&(!b||UI.tmp.placeBldg.feePaid||canPay(S.players[UI.tmp.placeBldg.owner],OVERBUILD_FEE));
     if(commPlacing||bldgPlacing)cls+=' place';
     let boardClick=null;
     if(!aiTurn()&&!commPlacing&&!bldgPlacing){
