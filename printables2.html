@@ -998,16 +998,14 @@ function scoreRingHtml(NW,NH,T){
   return '<div class="score-ring">'+cells.map(box).join('')+'</div>';
 }
 // printables2: the SUPPLY board — the town's MARKET HALL, designed to its components.
-//   · Three MARKET shelves (what a Market visit buys): Buildings (4 + deck) · Ships (market of 3 + deck) ·
-//     Recipes (the dealt export stacks) + the Charter-contract pile. One CELLAR shelf below (Improvements,
-//     4 + deck). Every slot is the family's native footprint, so the printed card drops exactly in.
-//   · All four DECKS align in one right-edge "stockroom" column — displays face the table, refill is a
-//     one-hand slide from the deck beside the gap.
-//   · The Sailed-Ships end clock at the foot: 15 cells with DUAL end marks per player count — base
-//     5/8/10 (flag) and The Trade Roads' +2 → 7/10/12 (truck). Voyages only — the Hall never ticks it;
-//     the SECOND end clock is the tally dice (14 each — the last die placed sets the final round).
-//     (The Round backstop is rules-side only, and the loose bits — goods cubes · tally dice · quality
-//     markers — live in a supply tray, not here.)
+//   · Three DISPLAY shelves (nothing is bought — v4.0): Buildings (display of 4) · Ships (market of 4) ·
+//     Recipes (the dealt export stacks); a SPECIALIST shelf beside them (display of 4). Every slot is the
+//     family's native footprint, so the printed card drops exactly in; each refills from its draw bag.
+//   · The Sailed-Ships end clock: 15 cells, END marks 7/10/13 ⚙ per player count (flag) — EVERY sail
+//     ticks it, Skutes included; the SECOND end clock is the tally dice (14 each — the 14th die a house
+//     parks sets the final round; the FIRST trigger fires).
+//     (The Round backstop is rules-side only, and the loose bits — goods cubes · tally dice — live in a
+//     supply tray, not here.)
 //   · SCORE wraps the outer edge as the 50-cell ring (see scoreRingCells) — banked constantly, it belongs
 //     on the rim where every seat can reach it without leaning over the displays.
 //   · The OVERLAY bar toggle ghosts a sample component into every slot (native size, 50% opacity) to proof

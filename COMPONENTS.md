@@ -33,9 +33,9 @@
 | Board | Qty | Holds |
 |---|---|---|
 | Main board — **the Wharf** | 1 | 2×2 stations, each printing **ONE action** (Market *Source 2* · Brewhouse *Brew* · Cellar *Age 3* · Harbor *Commission 1G, ★ = berths*), ringed by 8 slots (a building seat + a ship seat each). |
-| **Kontor mats** | 4 | Bruges · London · Bergen · Novgorod — each prints its **gate (die N+)**, its **prize** (recipe / building / specialist / refine), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the banked ★ audit). |
+| **Destinations board** | 1 | The four kontor panels — Bruges · London · Bergen · Novgorod — each printing its **gate (die N+)**, its **prize** (recipe / building / specialist / refine), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the banked ★ audit). *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
 | Player boards | 4 | **3 vessel slots** (1–2 open; the 3rd under a printed cover “2nd beer”) + **2 specialist seats** (1st open; the 2nd under “3rd beer”). Recipe cards sit beside it. Goods cap 8 printed. |
-| **Score track** strip | 1 | A 0–99 ring + 1 cube per house — the bank (+3★ builds · ★ = berths on commissions · 1★ bumps) and delivery ★ as they land. *(New in v4.0 — the hard line demands a home for banked points.)* |
+| **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per house — the bank (+3★ builds · ★ = berths on commissions · 1★ bumps) and delivery ★ as they land. *(New in v4.0 — the hard line demands a home for banked points.)* |
 | Supply board *(kit)* | 1 | The displays: ships 4 · buildings 4 · specialists 4 · the export recipe row · the Sailed-Ships track (END marks 7/10/13 ⚙). |
 
 ## 3. Common supply
@@ -45,7 +45,7 @@
 | Grain tokens | 60 | currency |
 | Hops tokens | 40 | currency |
 | **Tally dice** | **56** (14 × 4 colours) | the cask/presence/clock component — see §1 |
-| Score cubes | 4 (1/colour) | the score track |
+| Score discs (movers) | 4 (1/colour) | the score ring (flip/mark at +50) |
 | Worker pawns | 4 (1/colour) | the stations |
 | +1-berth / gate markers | — | none: the Kiln turns the die itself; Cooperage/Customs read from the tile |
 
@@ -136,8 +136,9 @@ Beers / Jopenbier materials (tabled with their toggles).
 
 ## 11. Known gaps ⚙ (the watch list)
 
-1. The **score track** is the one new non-tile component — confirm the strip fits the supply
-   board footprint.
+1. ~~The **score track** is the one new non-tile component — confirm the strip fits the supply
+   board footprint~~ — **RESOLVED (P4):** the kit prints it as the 50-cell ring wrapping the
+   Market &amp; Stores rim (movers: 1 sourced disc/colour, lap marker at +50).
 2. **Pile mixes** (which load bonuses print at which quality depth) are engine-random top-cards
    today; the physical pile composition wants a printed distribution pass before the next kit.
 3. Cask counts (6/type floor) unchanged — re-read after human pace data (brews/game rose ~1).

@@ -113,7 +113,8 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 | Bock | Q5 | 3 | 2 | `G G H H H` | dealt export |
 
 *(The Cellarman starts your dice one higher — a Bock at 3. Cap: a start value never exceeds the
-quality.)*
+quality. Keut’s printed perk: its delivery also **places 1 presence** — a tray die parks at face 1
+at that kontor.)*
 
 > **The squeeze (state it to players):**
 > - **You can’t brew everything** — 2 vessels (a 3rd behind the Flight), the recipe faucets,
@@ -175,7 +176,7 @@ load each slot’s ship once — all optional, any order, resolved on the active
 ## 6. Ships & loading (the cash-out)
 
 - **Ships** are neutral, destination-bound hulls off a shuffled deck; a face-up **market of 4**
-  ⚙. **Skute 1 · Cog 2 · Hulk 3** berths ⚙ (deck blend ~6/10/6 ⚙). **Commission** (§4C) places
+  ⚙. **Skute 1 · Cog 2 · Hulk 3** berths ⚙ (deck blend **6/10/8** ⚙ — 24 hulls, 6 per port). **Commission** (§4C) places
   one on any shipless slot and scores its capacity.
 - **LOAD (a slot stop):** take **one READY cask from YOUR vessels** whose **die meets the
   hull’s gate** (after this slot’s Kiln/Customs), seat it in the lowest berth (the die rides the
@@ -307,7 +308,7 @@ the engine; the modules return after the core settles.
 5. **Bergen heat** — specialist prize + the 9/5/2 anchor (dial: tiers or the prize).
 6. **Commission ★ = capacity** — does the Hulk’s 3★ make commissioning self-serving enough at
    every count?
-7. **The Skute rate** — deck blend 6/10/6; too many Skutes = a charter spam lane, too few =
+7. **The Skute rate** — deck blend 6/10/8; too many Skutes = a charter spam lane, too few =
    deadlock risk returns.
 8. **2p texture** — the thinned interaction set (berths, toll, majorities, the draft): does it
    hold at two?

@@ -1164,26 +1164,36 @@ automatically.
 
 ---
 
-## 10. Glossary
+## 10. Glossary (v4.0)
 
 - **The Wharf** — the whole core area: the four stations + the 8 slots.
-- **Station** — one of the four action spaces (Market · Brewhouse · Cellar · Harbor).
-- **Slot** — one of the 8 perimeter spaces; holds a building and/or an occupant (cask/ship).
+- **Station** — one of the four action spaces (Market · Brewhouse · Cellar · Harbor), each
+  printing **ONE action**.
+- **Slot** — one of the 8 perimeter spaces; seats **a building and/or a ship** (≤1 of each) —
+  never casks.
 - **Line** — a row or column: its two stations + their two slots (the 4-stop activation).
-- **Cask** — the dual-role tile: quality + a slot-action; maturing → deployed → delivered.
-- **Building** — an owned slot tile that modifies the occupant docked on it (value or transform).
-- **Privileges & Works** — the v2.3 sharing rule: a **value** building pays its **owner only** (a
-  privilege); a **transform** building serves **whoever docks** (a work). No delivery payments
-  between players.
-- **Specialist** — the purple private-brewery tile type (v2.4.1, formerly "improvement"); bought at
-  the Cellar, hired via the Q3+ Hire action, or London's benefit. Powers the Floor.
-- **Building** — since v2.4.1, ONLY the green serves-any-dock slot tiles (the old umbrella use is
-  retired; slot tiles together = Privileges & Buildings).
-- **Wharfage** — *(retired, v2.3)* the old points cut a building's owner took when a rival routed through it; see **Privileges & Works**.
-- **The Floor** — your private line: run your built-up brewery instead of a grid line.
-- **Kontor** — a foreign trading post (Bruges/London/Bergen/Novgorod); ship there for value +
-  majority.
-- **The Hall** — the local guild hall; **Enshrine** a cask there for fixed prestige (no ship).
-- **The Flight** — the end-game range bonus for distinct **beers** delivered ((beers−1)², min 3).
-- **The lanes** — the five complete paths to victory: Prestige/Hall · Demand/value ·
-  Volume/majority · Range/Flight · Authorship/engine.
+- **The tally die** — THE component: set at brew to the cask's printed **start value**, turned up
+  by age points (**READY at the quality**), lifted past it only by buildings at load (cap 6),
+  read by **gates** as it boards, **parked at the kontor** on delivery — pips = the banked ★,
+  body = presence, majorities and the clock. 14 per house, public.
+- **Cask** — a brewed beer in two states: **maturing** (private vessel) → **delivered** (boarded,
+  sailed, parked). Its printed action is a **load bonus**, fired as it boards a hull.
+- **Building** — the ONE green family: **no owner** — serves whoever activates it; the placer
+  banks **+3★**. Action buildings print the cask-action verbs; load-lift buildings shape the hull
+  (Kiln +1 die · Cooperage +1 berth · Customs −1 gate · Rich Berth sails short).
+- **Specialist** — the purple private tile (4 designs, 2 seats), **earned free** (Bergen · the
+  Hiring Post · the hire bonus) — never bought.
+- **Ship (Skute · Cog · Hulk)** — neutral destination-bound hulls (1/2/3 berths); **commission**
+  at the Harbor (1 G, bank ★ = berths); a hull **sails the moment it is full** — a Skute on its
+  first load (the relief valve as a component).
+- **Kontor** — a delivery port (Bruges/London/Bergen/Novgorod): a gate (a die read) · value = the
+  parked die · a prize · a majority.
+- **Presence / bump** — your parked dice at a kontor; a **bump** parks a tray die at face 1
+  (1★ · presence · clock), only where you've delivered.
+- **The Flight** — distinct beers **BREWED** (the flipped recipe cards): (beers−1)², min 3; the
+  2nd/3rd distinct brews open vessel 3 and seat 2.
+- **The dual clock** — Sailed-Ships 7/10/13 ⚙ (every sail ticks) + the 14th die parked; the first
+  trigger fires.
+- **TABLED (v4.0, seams kept)** — the Hall (prestige lane) · Dispatch/charters · the Floor turn ·
+  the Privileges/ownership/wharfage line · the three expansion toggles · the old five-lane
+  framing. They return re-derived on the v4 spine (the terms live on in §9's history).
