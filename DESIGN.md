@@ -15,7 +15,7 @@
 > verbatim in **`archive/v0.16/DESIGN.md`** and the **`archive/main-v0.16.1`** branch. Nothing
 > is lost; this is the slim, current version.
 >
-> **Authorship:** all commits to this repo are authored as **Sean Wittmeyer** (`sean@wittmeyer.io`).
+> **Authorship:** all commits to this repo are authored as **Sean Wittmeyer**.
 
 ---
 

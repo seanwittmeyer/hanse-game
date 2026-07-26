@@ -11,7 +11,7 @@
 - Don't put text, data, or code inline unless necessary — reference files/locations instead of pasting their contents.
 
 ## Commit authorship
-- **All edits/commits to this repo are made as Sean Wittmeyer** `<sean@wittmeyer.io>` — author *every* commit under that identity, e.g. `git -c user.name='Sean Wittmeyer' -c user.email='sean@wittmeyer.io' commit …` (or `git commit --author='Sean Wittmeyer <sean@wittmeyer.io>'`). No other author/co-author.
+- **All edits/commits to this repo are made as Sean Wittmeyer** — author *every* commit under the exact identity the repo's history already uses: read it with `git log -1 --format='%an <%ae>'` and pass it via `git -c user.name=… -c user.email=… commit …`. No other author/co-author, and don't print the address in any doc or page.
 
 ## Deploy — READ THIS: the user can only see work that is on `main`
 - **The user plays/reviews the LIVE GitHub Pages site, which is served from the `main` branch only.** Anything that is merely committed to the feature branch — or just edited in the working tree — is **invisible to the user.** "Pushed" is not enough; it must be on `main`.
