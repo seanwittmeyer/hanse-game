@@ -1,6 +1,6 @@
 // Brewhouses of the Hanse — the shared CARD COMPONENT LIBRARY (v3.3).
 // Single source of the printed card faces: data + generators + card CSS, used by BOTH
-// printables2.html (the print kit) and play.html (the app mirrors the kit). Faces are the
+// print.html (the print kit) and play.html (the app mirrors the kit). Faces are the
 // canon — edit a card HERE, never per-page. Everything lives in one IIFE and is exposed as
 // window.HC; the card CSS injects itself at load (scoped so it cannot restyle a host page).
 (function(){
@@ -291,7 +291,7 @@ function contractCard(){return '<div class="card" style="--cc:#8a6408">'
 const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
 // ---- the card CSS, injected once ----
 var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (injected by components.js).\n\
-   Verbatim from printables2.html (the vetted print kit); generic helpers are SCOPED to the\n\
+   Verbatim from print.html (the vetted print kit); generic helpers are SCOPED to the\n\
    component roots so the library never restyles a host page\'s own UI (play.html). */\n\
 .ccard,.bcard,.icard,.card,.tok,.disc,.frame,.cover,.wtok{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--green:#4a6b3a;--gold:#b8860b;--red:#7c2128;--sea:#274b5c}\n\
 .ccard .ic,.bcard .ic,.icard .ic,.card .ic,.tok .ic,.disc .ic,.frame .ic,.cover .ic,.wtok .ic{width:1em;height:1em;vertical-align:-.13em}\n\

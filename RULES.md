@@ -26,7 +26,7 @@
 > sets the final round; dice never return, so the pool is the whole runway (`MAX_ROUND` 25
 > stays the rules-side backstop; sails end nothing).
 
-> **v4.0 “Bright Beer” (designer-ruled 2026-07-21, off `V4-STREAMLINE.md`).** The streamline
+> **v4.0 “Bright Beer” (designer-ruled 2026-07-21, off `archive/records/V4-STREAMLINE.md`).** The streamline
 > keystone. **The tally die is the whole cask:** set to the printed **start value at brew**
 > (start = quality − aging steps), turned up as the beer ages, **Ready when it reaches the
 > quality**, lifted past quality only by buildings (**hard cap 6**), and **parked at the kontor
@@ -37,7 +37,7 @@
 > All numbers ⚙.
 
 > **Status: live.** Supersedes v3.4 “Tally Dice” (`RULES.md` history in git; the v3 line’s plan
-> docs — `V3-PATH-A.md`, `HALL-STUDY.md` — remain as records). Prior playable archives:
+> docs — `archive/records/V3-PATH-A.md`, `archive/records/HALL-STUDY.md` — remain as records). Prior playable archives:
 > `archive/v2.9/` (v2.9.1) · `archive/play.html` (v0.16.1).
 
 ---

@@ -1,13 +1,13 @@
 # Brewhouses of the Hanse — Design (live build v4.0 “Bright Beer”)
 
 > **v4.0 status (2026-07-21):** the streamline keystone is LIVE (`play.html`, KEY `hanse-v40`;
-> ruled off `V4-STREAMLINE.md` from human playtesting). The v3 line’s plan docs
-> (`V3-PATH-A.md` · `HALL-STUDY.md`) remain as records; v2.9.1 stays frozen playable at
+> ruled off `archive/records/V4-STREAMLINE.md` from human playtesting). The v3 line’s plan docs
+> (`archive/records/V3-PATH-A.md` · `archive/records/HALL-STUDY.md`) remain as records; v2.9.1 stays frozen playable at
 > `archive/v2.9/play.html`.
 
 > The working design doc: **why the game is the way it is**, the **current architecture**, the
 > **change log**, and the **balance lessons** carried forward. Operational rules live in
-> `RULES.md`; the manifest in `COMPONENTS.md`; the active plan in `PLAN.md`.
+> `RULES.md`; the manifest in `COMPONENTS.md`; the active plan in `archive/records/PLAN.md`.
 >
 > **This file was compacted (2026-06-16).** The full pre-v1.0 design record — every dated
 > session log, the v0.5/v0.6 reach-vs-standing architecture, the blow-by-blow v0.7→v0.16
@@ -28,7 +28,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v4.2 “Tariff”** — live (`play.html`, KEY `hanse-v42c`; designer-ruled 2026-07-26 — the second ruling off playtest #23; same-day markups: Bock 1G2H · specialists −1G with Cellarman → 2H · ONE payment per placement): **the fee rides the ITEM** (every acquirable recipe/specialist/building prints its own wharf fee ⚙ — recipes 1H/1G/2H/**1G2H**, specialists 2H/1G/2H/1G, buildings free/1G/**2G**; never fee-on-fee — using a building charges nothing, and a paid fee COVERS the ground rent (one payment per placement); kontor prizes free) and **Novgorod pays the die +2★** (refine cut; 6–8★ deliveries — the premium path’s pull beyond the majority). Beneath it: **v4.1 “Counting House”** (designer-ruled 2026-07-26 off human playtest #23, the first v4 table: *“more intentional — keep the earned spread, price the shortcuts”*). Two changes on the v4.0 spine: **paid at the wharf, free at the kontor** (recipe/building/specialist gains via Scrivener’s Hall, the Hiring Post or the gain load-bonuses cost the 1 `G` wharf fee ⚙; kontor prizes stay free) and **the dice are the ONE clock** (the Sailed-Ships track cut — trigger and component; the 14th die parked sets the final round; `PRES_POOL` is THE pace dial; MAX_ROUND 25 backstop). Full v4.2b battery (designer-called, 2026-07-26): verify **83/83** · sim 1500 + PATHWAYS 600 + flow-probe 1500 — **0 crashes/0 deadlocks** · ladder GM>trader **91.7%** (44/48 sharded) · CM>GM **66.7%** pooled · render-smoke ALL PASS · **jt rung 52% — the greedy trader needs a fee-economy retune (AI-only, flagged)**; the flow probe’s reads live in §9/v4.2 and `playtests/flow-v42b.txt`. The v4.0 base: **v4.0 “Bright Beer”** (designer-ruled 2026-07-21 off `V4-STREAMLINE.md`, from human playtesting). The streamline keystone: **THE DIE IS THE CASK** — set at brew to the printed start value (quality − aging steps; Gruit 0 steps = Ready at brew), turned up by age points (stops at quality = READY), lifted past quality only by buildings at load (Malt Kiln +1, cap 6), parked at the kontor on delivery (pips = the banked ★ 1–6, body = presence, majorities and the second clock). **NO DEPLOY** — slots hold a building and/or a ship; casks go vessel → hull → kontor; over-deploy/souring/rival-loading/the Staithe are gone with the state. **Stations print ONE action each** (Source 2 · Brew · Age 3 · Commission `1 G`, bank ★ = berth count). **ONE green building family** — every building serves whoever activates it, the builder banks +3★; the 12 Privileges, ownership and rent-to-owner are cut. **The Hall, Dispatch/charters, the Floor turn and all three expansion toggles are TABLED.** Ships come in three sizes (Skute 1 · Cog 2 · Hulk 3, display of 4) — a Skute sails on its first load (the relief valve as a component). Prizes: Bruges recipe · London building(+3★) · Bergen specialist · Novgorod refine (+2), gate raised to die 4. Clocks: sailed 7/10/13 ⚙ + the 14th die parked. Gates at KEY v40: `verify-v4` 71/71 · sim 450 (150×2–4p) **0 crashes/0 deadlocks**, band 91–95%, both clocks live (presence 11–18%), all four ports trafficked (Novgorod 15–18% at gate 4). |
+|**Status**     |**v4.3 “Open Quay”** — live (`play.html`, KEY `hanse-v43`; designer-ruled 2026-07-26 — the third ruling off playtest #23): **the occupancy toll is CUT** (sharing a station costs nothing) and the greedy AI tiers are re-taught to the v4 economy. Gates at v4.3: verify 87/87 · sim/PATHWAYS/flow-probe 0 crashes · render-smoke ALL PASS · GM>trader 85.4% · CM>GM 54.2% pooled @ bulk budgets · trader>jour ~55% (watch). Beneath it: **v4.2 “Tariff”** (designer-ruled 2026-07-26 — the second ruling off playtest #23; same-day markups: Bock 1G2H · specialists −1G with Cellarman → 2H · ONE payment per placement): **the fee rides the ITEM** (every acquirable recipe/specialist/building prints its own wharf fee ⚙ — recipes 1H/1G/2H/**1G2H**, specialists 2H/1G/2H/1G, buildings free/1G/**2G**; never fee-on-fee — using a building charges nothing, and a paid fee COVERS the ground rent (one payment per placement); kontor prizes free) and **Novgorod pays the die +2★** (refine cut; 6–8★ deliveries — the premium path’s pull beyond the majority). Beneath it: **v4.1 “Counting House”** (designer-ruled 2026-07-26 off human playtest #23, the first v4 table: *“more intentional — keep the earned spread, price the shortcuts”*). Two changes on the v4.0 spine: **paid at the wharf, free at the kontor** (recipe/building/specialist gains via Scrivener’s Hall, the Hiring Post or the gain load-bonuses cost the 1 `G` wharf fee ⚙; kontor prizes stay free) and **the dice are the ONE clock** (the Sailed-Ships track cut — trigger and component; the 14th die parked sets the final round; `PRES_POOL` is THE pace dial; MAX_ROUND 25 backstop). Full v4.2b battery (designer-called, 2026-07-26): verify **83/83** · sim 1500 + PATHWAYS 600 + flow-probe 1500 — **0 crashes/0 deadlocks** · ladder GM>trader **91.7%** (44/48 sharded) · CM>GM **66.7%** pooled · render-smoke ALL PASS · **jt rung 52% — the greedy trader needs a fee-economy retune (AI-only, flagged)**; the flow probe’s reads live in §9/v4.2 and `playtests/flow-v42b.txt`. The v4.0 base: **v4.0 “Bright Beer”** (designer-ruled 2026-07-21 off `archive/records/V4-STREAMLINE.md`, from human playtesting). The streamline keystone: **THE DIE IS THE CASK** — set at brew to the printed start value (quality − aging steps; Gruit 0 steps = Ready at brew), turned up by age points (stops at quality = READY), lifted past quality only by buildings at load (Malt Kiln +1, cap 6), parked at the kontor on delivery (pips = the banked ★ 1–6, body = presence, majorities and the second clock). **NO DEPLOY** — slots hold a building and/or a ship; casks go vessel → hull → kontor; over-deploy/souring/rival-loading/the Staithe are gone with the state. **Stations print ONE action each** (Source 2 · Brew · Age 3 · Commission `1 G`, bank ★ = berth count). **ONE green building family** — every building serves whoever activates it, the builder banks +3★; the 12 Privileges, ownership and rent-to-owner are cut. **The Hall, Dispatch/charters, the Floor turn and all three expansion toggles are TABLED.** Ships come in three sizes (Skute 1 · Cog 2 · Hulk 3, display of 4) — a Skute sails on its first load (the relief valve as a component). Prizes: Bruges recipe · London building(+3★) · Bergen specialist · Novgorod refine (+2), gate raised to die 4. Clocks: sailed 7/10/13 ⚙ + the 14th die parked. Gates at KEY v40: `verify-v4` 71/71 · sim 450 (150×2–4p) **0 crashes/0 deadlocks**, band 91–95%, both clocks live (presence 11–18%), all four ports trafficked (Novgorod 15–18% at gate 4). |
 
 ---
 
@@ -85,7 +85,7 @@ expressed through the **dual-role cask** and the **player-authored living slots*
 
 ## 6. The current architecture (v4.0 “Bright Beer” spine · v4.3 “Open Quay” live)
 
-Canonical detail in `RULES.md` / `COMPONENTS.md` / `V4-STREAMLINE.md`; the shape:
+Canonical detail in `RULES.md` / `COMPONENTS.md` / `archive/records/V4-STREAMLINE.md`; the shape:
 
 - **The Wharf** — four stations ringed by 8 slots; move orthogonally, activate the **row or
   column**; sharing a station costs nothing (v4.3 — the toll is cut). **Stations print ONE action each:** Market *Source 2* ·
@@ -318,7 +318,7 @@ share 33–67% ⚙) but the greedy tiers are documented non-racers of the pool; 
 the POOL dial. All numbers ⚙.
 
 **v4.0 "Bright Beer" — the streamline keystone** *(2026-07-21, KEY `hanse-v40`, designer-ruled off
-`V4-STREAMLINE.md` from human playtesting: "streamline, simplify, make the resources and actions more
+`archive/records/V4-STREAMLINE.md` from human playtesting: "streamline, simplify, make the resources and actions more
 intentional")* — Six directives, one build. **(1) The Floor turn is CUT** (AP without payoff — often
 ignored at the table). **(2) THE DIE IS THE CASK:** start value printed on the tile (= quality − aging
 steps; designer's example: Broyhan Q3/1 step starts at 2; ruled: Gruit ages 0 steps — Ready at brew),
@@ -356,7 +356,7 @@ harnesses are rebuilt (`ai-tune` stays retired — no weight table). *Full batte
 25.0/24.5/29.5/21.0%** (fair 25 — builder warm, breadth low; pole test: no negation, recorded not
 dialed); **ladder** jour>app 75.0 · trader>jour 69.2 (n=120) · **GM>trader 95.8** (46/48 sharded) ·
 **CM>GM 62.5** (20/32 at bulk budgets) — all rungs ≥60%, 0 errors; **render-smoke ALL PASS** incl. GM/CM
-through the real render layer. *Watch (⚙):* the R1–R6 risks in `V4-STREAMLINE.md` §2 (2p texture, recipe
+through the real render layer. *Watch (⚙):* the R1–R6 risks in `archive/records/V4-STREAMLINE.md` §2 (2p texture, recipe
 faucet, London/Bergen heat, the +3★ build rate, clock feel, the tabled prestige lane) — now with the
 oracle live to read them.
 
@@ -395,7 +395,7 @@ printed berths, side slots rotated 90°.
 into ONE version, with one ruled simplification: **a displaced tile with no open Floor slot is SIMPLY
 DISCARDED** (the v3.2a +3★ consolation removed — flips are engine, and the 1G ground rent already prices
 the eviction). From v3.3 the app **mirrors the print kit**: the card faces come from a shared component
-library (`components.js`) used by both `printables2.html` and `play.html`.
+library (`components.js`) used by both `print.html` and `play.html`.
 
 **v3.2d "The Flight on the cards"** *(2026-07-14, superseded into v3.3)* — Recipe cards go **double-sided**
 (cost face / **BREWED** face — a big check): flip on the first brew of that beer. The flipped cards ARE the
@@ -405,7 +405,7 @@ strip, recipe rack and rules box (pure slots); **Gruit + Hopped become starter c
 Gruit dealt flipped — the warm start). With v3.2a (displaced tiles pay +3★), v3.2b (launch rows cube-marked),
 v3.2c (Gain-recipe/specialist cask actions free).
 
-**v3.2 "Three Coins"** *(2026-07-13, `play.html` KEY `hanse-v32`)* — The Hall study (`HALL-STUDY.md` — Orléans/
+**v3.2 "Three Coins"** *(2026-07-13, `play.html` KEY `hanse-v32`)* — The Hall study (`archive/records/HALL-STUDY.md` — Orléans/
 Altiplano/Hamlet research + the internal bonus catalog + the pairings miner) diagnosed the v3.1 Hall as
 transactional: 11 of its 13 honors duplicated rewards purchasable in 3–7 other systems. The designer ruled
 Direction E v2 canon: **each shelf prints THREE one-shot COINS — FAME (pure ★: 5/7/10/13) · CRAFT (a novel
@@ -444,7 +444,7 @@ beer (the Q1s sour) while the Gruit source-lines keep the table flush. *Gates: s
 in band; verify-v3 51/51; render-smoke + fast ladder PASS.*
 
 **v3.0-A "Path A" — the keystone rebuild** *(2026-07-11, `play.html` KEY `hanse-v3a-v1`)* — The full build of
-`V3-PATH-A.md`: the designer-ruled synthesis of the clean-context FRESH-EYES exploration (two independent passes)
+`archive/records/V3-PATH-A.md`: the designer-ruled synthesis of the clean-context FRESH-EYES exploration (two independent passes)
 and the 2026-07-11 physical playtest ("too much at each station; too much in the slots; the Floor should be the
 engine you build"). The prior live build (v2.9.1, KEY v94) is archived, playable, at `archive/v2.9/`. Eight moves,
 one build: **(1) stations compress to printed THIS-or-THATs** — Market SOURCE/ACQUIRE · Brewhouse
@@ -467,7 +467,7 @@ beer BREWED (from the 2nd) removes a cover from the vessel row (to 4) or Special
 still score the ladder. **(8) Nine specific-gain cask actions** ("what do I get" is printed); Convert → the Grain
 Exchange, the pool Wild cut. Component consequences: the Hall shelf board, player boards with unlock covers + a
 2-space flip shelf + the Flight/unlock strip, the hull as a carrier (numbered berth wells holding cask cube +
-demand die + 1Q marker), cask cubes. As-built deviations + the ⚙ shortlist: `V3-PATH-A.md` §11/§14. *Gates: sim
+demand die + 1Q marker), cask cubes. As-built deviations + the ⚙ shortlist: `archive/records/V3-PATH-A.md` §11/§14. *Gates: sim
 500/count 0-crash/0-deadlock, pace 95–100% in band; ai-ladder 600 all rungs ≥60%, 0 errors; render-smoke ALL PASS
 incl. expansions; verify-v3 46 targeted rule checks; an independent plan-vs-build audit (16 findings, all fixed
 or recorded). First strong-play corpus (162 games, GM/CM/mixed — `playtests/logs/v3-corpus/REVIEW-v3-corpus.md`):
@@ -497,7 +497,7 @@ a measurement artifact, now documented in the ladder header (re-measure at GUILD
 the GM rung reads 55–60%; MC tiers are time-budgeted, so concurrent load weakens them).*
 
 **v2.9 "Ground Rent" — the churn priced (the gatekeeper pass, part 1)** *(2026-07-06, `play.html` KEY v93)* —
-Designer-ruled off the first standing gatekeeper review (`GATEKEEPER.md`, built on 15 narrated sim games + 3
+Designer-ruled off the first standing gatekeeper review (`archive/records/GATEKEEPER.md`, built on 15 narrated sim games + 3
 human logs — the overbuild carousel, the enshrine treadmill, and the zero-point delivery were its must-fixes).
 Four changes. **(1) Overbuild costs a `1 G` GROUND RENT** — paid by the builder to the stores (self, rival or
 neutral alike); can't pay → occupied slots aren't legal targets, and every placement path (Market buy · Survey
@@ -1228,7 +1228,7 @@ modify the casks/ships docked to them (one grammar; value-boost *or* transform; 
 wharfage), folding goals + neutral buildings + most upgrades into one family. **Legible scoring:**
 Hall fixed / kontor variable (building-driven) / majorities + Flight. **Five lanes as complete
 paths** + the **Floor** (private line). v0.16 fully archived; top-level files version-stamped
-v1.0. See `PLAN.md`.
+v1.0. See `archive/records/PLAN.md`.
 
 **v0.16.1** — Bruges/Bergen liquidity = 2 goods of the owner's *choice*; brewing vessel cap 4→3.
 **v0.16 “Full Ships”** — Ships **sail only when full** (partial early-launch retired); destination

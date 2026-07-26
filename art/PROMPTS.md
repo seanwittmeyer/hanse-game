@@ -1,12 +1,12 @@
-# Background art for the cards & tiles (printables2.html)
+# Background art for the cards & tiles (print.html)
 
 These images sit **behind** the cask cards (2.5″ square) and ship tiles (2.5″ square) in
-`printables2.html`. A card's own text/icons are drawn on top, with a dark scrim for legibility.
+`print.html`. A card's own text/icons are drawn on top, with a dark scrim for legibility.
 
 ## How to use
 1. Generate each image (prompts below) with **gemini-3.1-flash-image**.
 2. Save it into this `art/` folder with the **exact filename** listed.
-3. In `printables2.html` set `const ART_ON=false` → **`true`** (search "ART slot").
+3. In `print.html` set `const ART_ON=false` → **`true`** (search "ART slot").
    Until then the slot shows a faint diagonal-hatch placeholder.
 
 ## Filenames (the code maps to these)
@@ -15,7 +15,7 @@ These images sit **behind** the cask cards (2.5″ square) and ship tiles (2.5�
   `cask-duckstein.png` · `cask-jopenbier.png`
 - Ships: `ship-cog.png` · `ship-hulk.png`
 - Buildings (v5 — 2″ building CARDS, full-bleed art behind the name/effect/cost): `building-<key>.png`,
-  one per `BUILDINGS` key in `printables2.html` — `building-richberth.png` · `building-staple.png` ·
+  one per `BUILDINGS` key in `print.html` — `building-richberth.png` · `building-staple.png` ·
   `building-burgomstr.png` · `building-connoiss.png` · `building-hansediet.png` · `building-festkeller.png` ·
   `building-reliquary.png` · `building-almoner.png` · `building-ch_bruges.png` · `building-ch_london.png` ·
   `building-ch_bergen.png` · `building-ch_novgo.png` · `building-maltkiln.png` · `building-hopyard.png` ·
@@ -26,7 +26,7 @@ These images sit **behind** the cask cards (2.5″ square) and ship tiles (2.5�
 > **Model note (current):** generated with Google's **`gemini-3.1-flash-image`** (nano-banana class) via the
 > Generative Language API — `:generateContent` with `responseModalities:["IMAGE"]` + `imageConfig.aspectRatio:"1:1"`.
 > The reusable generator (`gen.py`) lives in the session scratchpad; **the API key is never committed.**
-> `ART_ON` is already `true` in `printables2.html`. Output is JPEG-in-`.png` at 1024² — the same as the
+> `ART_ON` is already `true` in `print.html`. Output is JPEG-in-`.png` at 1024² — the same as the
 > existing cask/ship art (browsers decode by content, not extension).
 
 ## Shared style block — paste at the top of EVERY prompt

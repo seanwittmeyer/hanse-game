@@ -41,9 +41,9 @@ Read the complete canon, **in full — no skimming, no sampling**:
 | `RULES.md` | **source of truth** — operational rules |
 | `COMPONENTS.md` | **source of truth** — the physical manifest |
 | `index.html` | **source of truth** — the published rulebook + component reference |
-| `printables2.html` | **source of truth** — the print-and-play component kit |
+| `print.html` | **source of truth** — the print-and-play component kit |
 | `play.html` | the **mirror** — the playable reference implementation of the above |
-| `learn.html`, `printables.html` | the remaining published surfaces; keep current |
+| `learn.html` | the remaining published surface; keep current |
 
 `CLAUDE.md` and `DESIGN.md` carry the progress and context so each session can
 move forward from the last — read them first, then the rest. When surfaces

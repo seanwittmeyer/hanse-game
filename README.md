@@ -10,15 +10,14 @@ Published from `main` via GitHub Pages.
 - **`learn.html`** — learn-to-play primer in one page.
 - **`index.html`** — the **Rulebook & Components** page: the complete rules + the visual component reference.
 - **`play.html`** — the playable hot-seat client & the reference implementation. Any seat can be an AI opponent (tiers in rising strength, from greedy heuristics to Monte-Carlo search) — same rules, same information, no cheating.
-- **`printables2.html`** — the **print-&-play kit** (the only kit in use): every board, card, and token on deterministic Letter sheets with cut guides and native print-to-PDF.
-- **`printables.html`** — the old tile kit, **retired** (kept only as a banner pointing at `printables2.html`).
+- **`print.html`** — the **print-&-play kit** (the only kit in use): every board, card, and token on deterministic Letter sheets with cut guides and native print-to-PDF.
 
 ## Design docs (the canonical picture)
 - **`RULES.md`** — the operational turn/economy spec. Its header states the current version and the latest rulings.
-- **`COMPONENTS.md`** — the single physical manifest: boards, tokens, the tile families, the player board, destinations. `printables2.html` cuts from it.
+- **`COMPONENTS.md`** — the single physical manifest: boards, tokens, the tile families, the player board, destinations. `print.html` cuts from it.
 - **`DESIGN.md`** — pillars, lineage/comps, the current architecture (§6), the **full change log (§9)**, and the balance lessons (the *why*). The version history lives here, not in this README.
 - **`AUTOMA.md`** — the AI-opponent plan & status, plus the test harnesses in `playtests/` (rule verification, bulk simulation, the AI ladder, the flow probe).
 - **`CLAUDE.md`** — how to work in this repo (the interlocks; a change is never local).
-- Plan/record docs (`V4-STREAMLINE.md`, `V3-PATH-A.md`, `HALL-STUDY.md`, `PLAN.md`, …) are dated rulings kept for the record; prior playable builds are frozen under `archive/`.
+- Plan/record docs and past analyses live under **`archive/records/`**; prior playable builds are frozen under `archive/`.
 
 > This is a tightly-coupled system: theme, mechanics, components, and the published pages all reinforce each other. Before changing anything, build the whole picture — see `CLAUDE.md`.

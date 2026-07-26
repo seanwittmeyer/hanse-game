@@ -14,7 +14,7 @@
 > Post and the three acquisition load-bonuses now **print the 1 `G` wharf fee** (paid at the
 > wharf, free at the kontor).
 >
-> **v4.0 (designer-ruled 2026-07-21, off `V4-STREAMLINE.md`):** the streamline keystone. **The
+> **v4.0 (designer-ruled 2026-07-21, off `archive/records/V4-STREAMLINE.md`):** the streamline keystone. **The
 > tally die is the whole cask** — maturation marker, gate, value, presence and clock in one
 > number. **Out of the box:** the Hall board · all 12 Privileges · charter contracts · owner
 > house tokens · cask cubes · the cask tile’s aging face. **Into the box:** the **Skute**
@@ -23,9 +23,9 @@
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
-> - Operational rules: `RULES.md` (v4.2). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `V4-STREAMLINE.md`.
+> - Operational rules: `RULES.md` (its header states the current version). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `archive/records/V4-STREAMLINE.md`.
 > - The live build is `play.html` — **v4.3 “Open Quay”** (`KEY hanse-v43`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `printables2.html` — the only kit in use** (components.js data is v4.3; the sheet layouts are the P4 refresh).
+> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.3; the sheet layouts are the P4 refresh).
 
 ---
 
