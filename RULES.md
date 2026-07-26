@@ -3,13 +3,13 @@
 > **v4.2 “Tariff” (designer-ruled 2026-07-26 — the second ruling off playtest #23).** Two
 > changes on v4.1. **(1) The fee rides the ITEM, not the channel:** every acquirable recipe /
 > specialist / building carries its **own printed wharf fee** ⚙ — recipes Broyhan `1H` · Keut
-> `1G` · Mumme `2H` · Bock `2G2H`; specialists Cellarman `3G` · Grain Factor `2G` · Hop
+> `1G` · Mumme `2H` · Bock `1G2H`; specialists Cellarman `3G` · Grain Factor `2G` · Hop
 > Gardener `2H` · Stevedore `2G`; buildings free (chipless) / `1G` / `2G` by tile — paid at
 > ANY wharf channel (Scrivener’s Hall · the Hiring Post · the gain load-bonuses). Kontor
 > prizes stay free, and there is **never a fee-on-fee**: using a building charges nothing of
 > its own. **(2) Novgorod pays the die +2★** — the refine prize is cut; every die parked there
 > banks **pips +2** (6–8★ at gate 4), printed on the kontor mat. The live build is `play.html`
-> (**KEY `hanse-v42`**).
+> (**KEY `hanse-v42b`**).
 
 > **v4.1 “Counting House” (designer-ruled 2026-07-26, off human playtest #23 — the first v4
 > table).** Two changes on the v4.0 spine. **(1) Paid at the wharf, free at the kontor:**
@@ -131,7 +131,7 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 | Broyhan | Q3 | 1 | 2 | `G H H` | dealt export · fee `H` |
 | Keut | Q3 | 2 | 1 | `G G H` | dealt export · fee `G` |
 | Mumme | Q4 | 3 | 1 | `G H H H` | dealt export · fee `H H` |
-| Bock | Q5 | 3 | 2 | `G G H H H` | dealt export · fee `G G H H` (the premium climb) |
+| Bock | Q5 | 3 | 2 | `G G H H H` | dealt export · fee `G H H` (the premium climb) |
 
 *(The Cellarman starts your dice one higher — a Bock at 3. Cap: a start value never exceeds the
 quality. Keut’s printed perk: its delivery also **places 1 presence** — a tray die parks at face 1
@@ -343,6 +343,6 @@ the engine; the modules return after the core settles.
    deadlock relief; too few = the strand risk returns (too many is now merely inefficient).
 8. **2p texture** — the thinned interaction set (berths, toll, majorities, the draft): does it
    hold at two?
-9. **The fee schedule** ⚙ (v4.2 — per item): recipes `1H`/`1G`/`2H`/`2G2H` · specialists
+9. **The fee schedule** ⚙ (v4.2 — per item): recipes `1H`/`1G`/`2H`/`1G2H` · specialists
    `3G`/`2G`/`2H`/`2G` · buildings free/`1G`/`2G`. First-pass numbers awaiting the designer’s
    markup and a table read. Parked: a surcharge when a kontor PRIZE hands over a premium tile.

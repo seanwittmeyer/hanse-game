@@ -20,7 +20,7 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (v4.2). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v4.2 “Tariff”** (`KEY hanse-v42`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v4.2 “Tariff”** (`KEY hanse-v42b`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - **The print kit is `printables2.html` — the only kit in use** (components.js data is v4.2; the sheet layouts are the P4 refresh).
 
 ---
@@ -129,7 +129,7 @@ Free as **Bergen’s prize**; the Hiring Post / *Gain 1 specialist* bonus pay ea
 
 Starters **Gruit + Hopped** (1 each/house; Gruit dealt flipped = the warm start). Exports
 **Broyhan · Keut · Mumme · Bock** — deal 3 of 4 each game; free as **Bruges’ prize**, or gained
-at the card’s **printed wharf fee** ⚙ (Broyhan `1H` · Keut `1G` · Mumme `2H` · Bock `2G2H`) via
+at the card’s **printed wharf fee** ⚙ (Broyhan `1H` · Keut `1G` · Mumme `2H` · Bock `1G2H`) via
 the *Gain 1 recipe* bonus / Scrivener’s Hall. Flip to the BREWED face on the first brew — the
 flipped cards are the Flight ladder **and** the cover-openers (2nd beer → vessel 3 · 3rd →
 seat 2).

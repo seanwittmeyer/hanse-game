@@ -680,7 +680,7 @@ const OVERBUILD_FEE={g:1};      // overbuild anytime for 1 G (to the stores); th
 // (Scrivener's Hall · the Hiring Post · the gain load-bonuses); kontor prizes stay free.
 // NEVER fee-on-fee: using a building is free — you pay only the item's own price. A tile
 // with no printed chip is FREE to gain (the tier reads off the component).
-const RECIPE_FEE={broyhan:{h:1},keut:{g:1},mumme:{h:2},bock:{g:2,h:2},gose:{g:1},zerbster:{h:1},duckstein:{g:1,h:1},jopenbier:{g:2,h:2}};   // ⚙ (expansions recorded for their return)
+const RECIPE_FEE={broyhan:{h:1},keut:{g:1},mumme:{h:2},bock:{g:1,h:2},gose:{g:1},zerbster:{h:1},duckstein:{g:1,h:1},jopenbier:{g:2,h:2}};   // ⚙ Bock 1G2H — designer markup 2026-07-26   // ⚙ (expansions recorded for their return)
 const SPEC_FEE={cellar:{g:3},granary:{g:2},hopgarden:{h:2},crane:{g:2}};   // ⚙ Cellarman the proven premium
 function bldgFee(k){return (BUILDINGS[k]&&BUILDINGS[k].fee)||{};}
 
@@ -757,7 +757,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v42'; // v4.2 "Tariff" [designer-ruled 2026-07-26, the second ruling off playtest #23] - two changes on v4.1 "Counting House". (1) THE FEE RIDES THE ITEM, not the channel: every acquirable recipe / specialist / building carries its own printed wharf fee (RECIPE_FEE / SPEC_FEE / BUILDINGS[k].fee - several buildings FREE, chipless), paid at ANY wharf channel (Scrivener's Hall, the Hiring Post, the gain load-bonuses); kontor prizes stay free, and there is NEVER a fee-on-fee - using a building charges nothing of its own. (2) NOVGOROD PAYS THE DIE +2 STARS (vbonus - the refine prize is cut): every delivered die there banks pips+2 (6-8 stars at gate 4); the premium path's pull beyond the 8/5/2 majority. v4.1 stands beneath: the dice are the ONE clock (14th die parked = final round; MAX_ROUND 25 backstop). Bump discards stale v41 state.
+const KEY='hanse-v42b'; // v4.2 "Tariff" [designer-ruled 2026-07-26, the second ruling off playtest #23] - two changes on v4.1 "Counting House". (1) THE FEE RIDES THE ITEM, not the channel: every acquirable recipe / specialist / building carries its own printed wharf fee (RECIPE_FEE / SPEC_FEE / BUILDINGS[k].fee - several buildings FREE, chipless), paid at ANY wharf channel (Scrivener's Hall, the Hiring Post, the gain load-bonuses); kontor prizes stay free, and there is NEVER a fee-on-fee - using a building charges nothing of its own. (2) NOVGOROD PAYS THE DIE +2 STARS (vbonus - the refine prize is cut): every delivered die there banks pips+2 (6-8 stars at gate 4); the premium path's pull beyond the 8/5/2 majority. v4.1 stands beneath: the dice are the ONE clock (14th die parked = final round; MAX_ROUND 25 backstop). Bump discards stale v41 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in

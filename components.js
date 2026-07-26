@@ -138,7 +138,7 @@ const RECIPES=[  // EXPORT recipe cards — print in the same double-sided run a
   {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{h:1},     reach:'Q3 · all kontore (the Hall via Dispatch) · FAST: ready 1'},
   {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'Q3 · all kontore (+ the Hall) · +1 presence on a kontor delivery'},
   {nm:'Mumme',   cc:'#9a5526', L:4, g:1,h:3, buy:{h:2},     reach:'Q4 · all kontore (the Hall via Dispatch)'},
-  {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{g:2,h:2}, reach:'Q5 · all kontore · the premium climb (its fee is priced up — v4.2)'},
+  {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{g:1,h:2}, reach:'Q5 · all kontore · the premium climb (its fee is priced up — v4.2)'},
   // EXPANSION "Specialty Beers" (v1.9, opt-in) — the 3 specialty export recipe cards
   {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, buy:{g:1}, reach:'Q2 · grain-path (no hops) · SALT TRADE: a kontor delivery → +1G +1H'},
   {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, buy:{h:1}, reach:'Q3 · PARTI-GYLE: brewing also yields a free small Gruit (open vessel)'},
