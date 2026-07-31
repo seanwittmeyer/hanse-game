@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v4.4 “Maiden Load”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v4.5 “Empty Tray”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -646,7 +646,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.4 “Maiden Load”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.5 “Empty Tray”</span></h1>
   <a href="play.html">▶ Play</a>
   <a href="index.html">📖 Rules</a>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
@@ -691,7 +691,7 @@ const DESTS=[
   {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:4, maj:[8,5,2], vb:2, role:'The Long Haul — the climb',    ben:{n:'+2',ic:'star'},   bnote:'no prize — every parked die banks +2★'},
 ];
 const MAX_ROUND=25;                  // round ceiling ⚙ — top of the 12–25-round target band (v4.1: the DICE are the one clock; the Sailed-Ships track left the kit)
-const PRES_DISCS=14;                 // TALLY DICE per colour ⚙ — THE component: maturation marker (start value → quality), gate & value (1–6★), presence at the kontor, and the END CLOCK (the 14th die parked sets the final round). Store-bought d6.
+const PRES_DISCS=12;                 // TALLY DICE per colour ⚙ (v4.5: 14 → 12) — THE component: maturation marker (start value → quality), gate & value (1–6★), presence at the kontor, and the END CLOCK (the first EMPTY tray — every die committed — sets the final round). Store-bought d6.
 
 //==================================================================
 // GEOMETRY — one coordinate system (inches) drives the HTML layout,
@@ -766,7 +766,7 @@ function aidFront(){
         +'<h5>'+LU('package-plus')+'Load &amp; Sail</h5>'
         +'<div class="ln">A ship’s slot stop loads <b>one READY cask from YOUR vessels</b> (die ≥ the gate, after lifts); its printed <b>load bonus fires</b>. A hull <b>sails the moment it is full</b> — a Skute on its first load — and every cask delivers in load order; prizes resolve when gained.</div>'
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
-        +'<div class="ln"><b>ONE clock</b> — the <b>14th tally die a house parks</b> sets the final round (dice never return; round 25 backstops) → finish the round → <b>majorities</b> (parked dice: 4/2/0 · 5/3/1 · 9/5/2 · 8/5/2) + the <b>Flight</b> (beers BREWED — flipped cards): 3→4 · 4→9 · 5→16. Deliveries, builds (+3★), commissions (★=berths) and bumps (1★) were banked in play.</div>'
+        +'<div class="ln"><b>ONE clock</b> — the first <b>EMPTY TRAY</b> (your last of 12 dice committed — parked or riding) sets the final round (dice never return; round 25 backstops) → finish the round → <b>majorities</b> (parked dice: 4/2/0 · 5/3/1 · 9/5/2 · 8/5/2) + the <b>Flight</b> (beers BREWED — flipped cards): 3→4 · 4→9 · 5→16. Deliveries, builds (+3★), commissions (★=berths) and bumps (1★) were banked in play.</div>'
       +'</div>'
     +'</div></div>';}
 function aidBack(){
@@ -820,7 +820,7 @@ function pboard(p){
   return '<div class="pb2" style="--pc:'+p.c+'">'
     +'<div class="pb2-id"><div class="pb2-crest">'+LU('beer')+'</div><div class="pb2-name">'+p.nm+'</div>'
       +'<div class="pb2-goods">'+LU('scroll-text')+'start&nbsp;<b>Gruit&nbsp;+&nbsp;Hopped</b>&nbsp;cards (Gruit flipped)</div>'
-      +'<div class="pb2-goods">'+LU('dices')+'<b>14</b>&nbsp;tally&nbsp;dice&nbsp;—&nbsp;the&nbsp;runway</div>'
+      +'<div class="pb2-goods">'+LU('dices')+'<b>12</b>&nbsp;tally&nbsp;dice&nbsp;—&nbsp;the&nbsp;runway</div>'
       +'<div class="pb2-goods nomargin">'+LU('wheat')+LU('sprout')+'goods max&nbsp;<b>8</b></div></div>'
     +'<div class="pb2-row"><div class="pb2-vessels">'+vsl(1)+vsl(2)+vsl(3)+'</div></div>'
     +'<div class="pb2-row"><div class="pb2-vessels">'+ssl(1)+ssl(2)+'</div></div>'
@@ -1000,7 +1000,7 @@ function scoreRingHtml(NW,NH,T){
 //   · Three DISPLAY shelves (nothing is bought — v4.0): Buildings (display of 4) · Ships (market of 4) ·
 //     Recipes (the dealt export stacks); a SPECIALIST shelf beside them (display of 4). Every slot is the
 //     family's native footprint, so the printed card drops exactly in; each refills from its draw bag.
-//   · THE clock is the tally dice (v4.1): 14 per house — the 14th die a house parks sets the final
+//   · THE clock is the tally dice (v4.5): 12 per house — the first EMPTY tray sets the final
 //     round; the Sailed-Ships clock left the kit (sails end nothing). The Round backstop is rules-side
 //     only, and the loose bits — goods cubes · tally dice — live in a supply tray, not here.
 //   · SCORE wraps the outer edge as the 50-cell ring (see scoreRingCells) — banked constantly, it belongs
@@ -1061,7 +1061,7 @@ function supplyBoard(){
 
   const inner='<div class="mboard supply" style="position:absolute;left:'+SCORE_RING_T+'in;top:'+SCORE_RING_T+'in;'
       +'width:'+(SUPPLY_NW-2*SCORE_RING_T).toFixed(3)+'in;height:'+(SUPPLY_NH-2*SCORE_RING_T).toFixed(3)+'in">'
-    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays — THE clock is the '+LU('dices')+' <b>tally dice</b> (v4.1): the 14th die a house parks sets the final round (dice never return; sails end nothing) — score laps the rim by fives (0–49, then +50): deliveries as they land, +3★ builds, ★ = berths on commissions, 1★ bumps</span></div>'
+    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays — THE clock is the '+LU('dices')+' <b>tally dice</b> (v4.5): the first EMPTY tray — every die committed — sets the final round (dice never return; sails end nothing) — score laps the rim by fives (0–49, then +50): deliveries as they land, +3★ builds, ★ = berths on commissions, 1★ bumps</span></div>'
     +'<div class="sup-cols">'
       +'<div class="sup-main">'+market+'</div>'
       +'<div class="sup-cellar">'+cellar+'</div>'
@@ -1321,8 +1321,8 @@ function checklist(pages,famPages){
   const D='style="font-size:.085in;color:#5b4a37;font-weight:normal;line-height:1.26;margin-top:.005in"';
   const R=(nm,detail,n)=>'<tr><td class="bx"></td><td><b>'+nm+'</b>'+(detail?'<div '+D+'>'+detail+'</div>':'')+'</td><td class="n">'+n+'</td></tr>';
   const T=title=>'<table><tr><th></th><th>'+title+'</th><th>qty</th></tr>';
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.4 “Maiden Load”)</span></h2>'
-    +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The v4.4 build: the die is the cask — maturation, gate, value, presence and THE clock in one number (the dice alone end the game). A commission places the hull, banks ★ = its berths, and may LOAD 1 Ready cask at once (v4.4). Every acquirable recipe/specialist/building carries a PRINTED wharf fee (chipless buildings free; kontor prizes always free), Novgorod pays every delivered die +2★, and sharing a station costs nothing (the occupancy toll is cut — v4.3). The Hall, charter contracts, Privileges, ownership tokens, cask cubes and the three expansions stay OUT of the box (tabled). Counts ⚙.</p>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.5 “Empty Tray”)</span></h2>'
+    +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The v4.5 build: the die is the cask — maturation, gate, value, presence and THE clock in one number (the dice alone end the game). A commission places the hull, banks ★ = its berths, and may LOAD 1 Ready cask at once (v4.4). Every acquirable recipe/specialist/building carries a PRINTED wharf fee (chipless buildings free; kontor prizes always free), Novgorod pays every delivered die +2★, and sharing a station costs nothing (the occupancy toll is cut — v4.3). The Hall, charter contracts, Privileges, ownership tokens, cask cubes and the three expansions stay OUT of the box (tabled). Counts ⚙.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
     +R('Main board — the Wharf','The 2×2 of stations, each printing ONE action (Market: 2 goods · Brewhouse: brew · Cellar: 3 age points · Harbor: commission 1G → ★ = berths), ringed by 8 slots — each seats a BUILDING and/or a SHIP (never casks).','1')
@@ -1344,7 +1344,7 @@ function checklist(pages,famPages){
     +R('Grain cubes','Currency &amp; brew input (G). <i>Sourced — not printed.</i>','60')
     +R('Hops cubes','Currency &amp; brew input (H). <i>Sourced — not printed.</i>','40')
     +R('Worker pawns','One per player. <i>Sourced.</i>',PLAYERS.length)
-    +R('TALLY DICE (real d6 — provide your own)','THE component: at brew a tray die is set to the cask’s printed START value and IS its maturation marker (age points turn it up; READY at the quality); buildings lift it as it boards (cap 6); gates read it; at delivery it PARKS at the kontor — pips = the banked ★, body = presence &amp; majorities. FINITE — and THE clock (v4.1): the 14th die a house parks sets the final round; dice never return. 12mm d6.',PRES_DISCS+' ea')
+    +R('TALLY DICE (real d6 — provide your own)','THE component: at brew a tray die is set to the cask’s printed START value and IS its maturation marker (age points turn it up; READY at the quality); buildings lift it as it boards (cap 6); gates read it; at delivery it PARKS at the kontor — pips = the banked ★, body = presence &amp; majorities. FINITE — and THE clock (v4.5): the first EMPTY tray (every die committed) sets the final round; dice never return. 12mm d6.',PRES_DISCS+' ea')
     +R('Score movers','One disc per colour on the 50-cell score ring (flip/mark at +50). <i>Sourced.</i>','1 ea')
     +R('Draw bags','One per hidden tile supply — Ships · Buildings · Specialists. <i>Sourced.</i>','3')
     +R('First-player &amp; round markers','Turn order (fixed) · a round counter for the 25-round backstop. <i>Sourced.</i>','2')

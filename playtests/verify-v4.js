@@ -235,9 +235,20 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('no sailed-cap dial survives', typeof SAILED_CAP==='undefined');
   var r=fresh();r.presPool=1;
   spendPresDisc(r,1);
-  ok('the 14th parked die fires the ending', S.ending&&S.endReason==='presence');
+  ok('parking the last die fires the ending (the tray is empty)', S.ending&&S.endReason==='dice');
   var t=fresh();S.turn=MAX_ROUND;checkTriggers();
   ok('the round ceiling backstops', S.ending&&S.endReason==='ceiling');
+})();
+
+// ---- 13b. v4.5 "Empty Tray": the END fires the moment a TRAY empties — dice stuck aboard
+// unfilled hulls or in vessels count as committed; parked-out is no longer required ----
+(function(){var p=fresh();stops();
+  p.grain=9;p.hops=9;
+  p.presPool=2;p.vessels=[{style:'gruit',q:1,die:1,act:'source'},null];   // 1 committed → tray 1
+  ok('setup: tray 1 with a die riding a vessel', trayDice(p)===1&&!S.ending);
+  UI.brew={returnTo:'stops'};brewPick('gruit');   // the LAST tray die boards a vessel
+  ok('brewing the last tray die EMPTIES the tray and sets the final round',
+    S.ending&&S.endReason==='dice'&&trayDice(p)===0&&p.presPool===2);
 })();
 
 // ---- 14. SCORING: deliveries + bank + majorities + flight; vessel-dice tiebreak ----
@@ -282,7 +293,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('a warm-start ship is a Hulk → Bruges', SLOTS.some(function(s){var t=S.slots[s.id];return t&&t.ship==='hulk'&&t.dest==='bruges';}));
   ok('every house opens with a Ready Gruit (die 1) + 2 vessel slots + 1 seat', S.players.every(function(p){return p.vessels[0]&&p.vessels[0].die===1&&p.vslots===2&&p.sslots===1;}));
   ok('specialist deck = n−1 copies of the 4 designs', S.impDeck.length+S.impDisplay.length===8);
-  ok('14 tally dice per house', S.players.every(function(p){return p.presPool===14;}));
+  ok('12 tally dice per house (v4.5)', S.players.every(function(p){return p.presPool===12;}));
 })();
 
 // ---- 18. SPECIALISTS: 2 seats, no duplicates, earned free ----

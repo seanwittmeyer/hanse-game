@@ -1,12 +1,18 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.4 “Maiden Load”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.5 “Empty Tray”)
+
+> **v4.5 “Empty Tray” (designer-ruled 2026-07-31 — off human playtest #24).** Two changes.
+> **(1) The end trigger is the EMPTY TRAY:** the first house to **commit its last tally die**
+> — parked, riding a vessel, or aboard an unfilled hull; the tray reads **0** — sets the final
+> round. Parked-out is no longer required (the #24 stall: a player’s last dice sat aboard
+> hulls that never filled, and the end could not be triggered at all). **(2) The pool is 12**
+> ⚙ (was 14) — the game runs shorter. The live build is `play.html` (**KEY `hanse-v45`**).
 
 > **v4.4 “Maiden Load” (designer-ruled 2026-07-31).** **The commission regains its free
 > load:** after paying the 1 `G` and placing the hull (★ = berths banked), the commissioner
 > may **at once load ONE Ready cask from their own vessels** onto the new hull — a **normal
 > load** (the gate reads the die as it boards, after the slot’s lifts; the cask’s load bonus
 > fires; a full hull sails — a Skute immediately). Optional, never forced. Commission +
-> Skute = the old charter as pure components (1 `G`, one cask, sails now). The live build is
-> `play.html` (**KEY `hanse-v44`**).
+> Skute = the old charter as pure components (1 `G`, one cask, sails now).
 
 > **v4.3 “Open Quay” (designer-ruled 2026-07-26 — the third ruling off playtest #23).** **The
 > occupancy toll is CUT:** sharing a station costs nothing — move where the board is best,
@@ -82,10 +88,11 @@ Each house starts with (⚙):
 - A **player board** (§8): **3 vessel slots** (1–2 open, the 3rd under a cover) and **2
   specialist seats** (the 1st open, the 2nd under a cover). Covers open from the **Flight**:
   your **2nd** distinct beer brewed opens the 3rd vessel; your **3rd** opens the 2nd seat.
-- **14 TALLY DICE ⚙ (player-colour d6) — the house’s whole runway, in public view.** A die
+- **12 TALLY DICE ⚙ (player-colour d6) — the house’s whole runway, in public view.** A die
   leaves your tray at **brew** (it IS the cask’s maturation marker and value), rides the hull’s
   berth, and **parks at the kontor on delivery** — presence, banked ★ (the pips), and the clock,
-  all one component. **No die in the tray → no brew, no presence bump.**
+  all one component. **No die in the tray → no brew, no presence bump — and an EMPTY tray sets
+  the final round (§10).**
 - A **warm-start Ready Gruit** in vessel 1 (die at 1).
 
 Shared board: the **Wharf** (4 stations + 8 slots); the four kontore (Bruges/London/Bergen/
@@ -154,7 +161,7 @@ at that kontor.)*
 
 > **The squeeze (state it to players):**
 > - **You can’t brew everything** — 2 vessels (a 3rd behind the Flight), the recipe faucets,
->   and 14 dice for the whole game.
+>   and 12 dice for the whole game.
 > - **You can’t deliver everywhere** — the hulls in the market decide which ports are open;
 >   berths are shared and race away.
 > - **You can’t hold everything** — a Ready cask clogs a vessel until a hull appears; goods cap
@@ -304,13 +311,15 @@ prestige. The faucets: the Market (2 + specialists), Granaries, *Gain 2 goods* l
 
 ## 10. End of the game (the dice clock)
 
-**ONE clock (v4.1): the tally dice.** The player who **parks their 14th die** (delivery or
-presence bump) sets the final round (finish the round → score). Dice never return — the pool
-is the house’s whole runway, and it is always countable: tray + in play + parked = 14. Sails
-end nothing; ships are pure logistics.
+**ONE clock (v4.5): the first EMPTY TRAY.** The moment a house **commits its last tally die**
+— to a brew, a presence bump, or with every remaining die already riding vessels/hulls — its
+**tray reads 0** and the final round is set (finish the round → score). Parked-out is NOT
+required: dice aboard unfilled hulls count as committed. Dice never return — the pool is the
+house’s whole runway, always countable: tray + in play + parked = **12** ⚙.
+Sails end nothing; ships are pure logistics.
 
 A **MAX_ROUND ceiling** (~25 ⚙) backstops a slow table. Pace target **~12–25 rounds.** ⚙ *The
-pool size (14) is THE pace dial now.*
+pool size (12) is THE pace dial now.*
 
 ---
 
@@ -346,9 +355,9 @@ the engine; the modules return after the core settles.
 
 ## Open / to-tune (the ⚙ shortlist)
 
-1. **The clock** — the dice alone (v4.1). The pool (14 ⚙) is THE pace dial. The v4.2b battery:
-   3p/4p healthy (dice trigger 60–82%, ~19–18 rounds); 2p runs longer (60–70% reach round 25)
-   — **designer-accepted (2026-07-26): longer 2p games are not a concern.** No dial queued.
+1. **The clock** — the dice alone; **v4.5: the first EMPTY TRAY triggers** (commitment, not
+   parked-out) and the pool is **12** ⚙ — THE pace dial. Re-read pace at the next table (the
+   v4.2-era 2p-runs-long acceptance predates both changes).
 2. **The recipe faucet** — Bruges + the priced verbs only (v4.1 fee). If the Flight stalls, the
    dials are prize generosity, verb frequency (piles/deck), and the fee — not a Market buy.
 3. **Novgorod at gate 4** — is die-4 boarding reachable enough (Mumme+, or Kiln’d Q3)? Its

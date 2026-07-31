@@ -1,4 +1,8 @@
-# Brewhouses of the Hanse — Components (v4.4 “Maiden Load”)
+# Brewhouses of the Hanse — Components (v4.5 “Empty Tray”)
+
+> **v4.5 (designer-ruled 2026-07-31 — off human playtest #24):** **12 tally dice** per house
+> (was 14 — the box sheds 8 dice), and the end clock reads the **TRAY**: the first house whose
+> tray empties (every die committed — parked or riding) sets the final round.
 
 > **v4.4 (designer-ruled 2026-07-31):** the **commission’s free load returns** — no component
 > change beyond the reprint of the **player aid** and the Wharf board’s Harbor caption (pay
@@ -41,9 +45,10 @@
 - **The die is the cask:** set at brew to the printed start value (= quality − aging steps),
   turned up by age points, **Ready at the quality**, lifted past it only by buildings at load
   (cap 6), **parked at the kontor on delivery** — pips = banked ★, body = presence + the clock.
-- **End clock (v4.1 — the dice alone):** the **14th tally die a house parks** sets the final
-  round; dice never return, so the runway is public and countable. `MAX_ROUND` 25 ⚙ is the
-  rules-side backstop; sails end nothing.
+- **End clock (v4.5 — the dice alone):** the first house whose **tray EMPTIES** (its last die
+  committed — parked, in a vessel, or aboard a hull) sets the final round; dice never return,
+  so the runway is public and countable. `MAX_ROUND` 25 ⚙ is the rules-side backstop; sails
+  end nothing.
 
 ---
 
@@ -63,7 +68,7 @@
 |---|---|---|
 | Grain tokens | 60 | currency |
 | Hops tokens | 40 | currency |
-| **Tally dice** | **56** (14 × 4 colours) | the cask/presence/clock component — see §1 |
+| **Tally dice** | **48** (12 × 4 colours ⚙ — v4.5) | the cask/presence/clock component — see §1 |
 | Score discs (movers) | 4 (1/colour) | the score ring (flip/mark at +50) |
 | Worker pawns | 4 (1/colour) | the stations |
 | +1-berth / gate markers | — | none: the Kiln turns the die itself; Cooperage/Customs read from the tile |
@@ -146,7 +151,7 @@ seat 2).
 
 ## 9. Setup (summary — RULES.md §1)
 
-3G 2H each · warm Ready Gruit (die 1) in vessel 1 · 14 dice · displays: ships 4 / buildings 4 /
+3G 2H each · warm Ready Gruit (die 1) in vessel 1 · 12 dice · displays: ships 4 / buildings 4 /
 specialists 4 · wharf seeds: Hulk→Bruges + 1 ship + 2 neutral buildings · worker placed free ·
 first player fixed.
 
@@ -165,6 +170,8 @@ load-bonus verbs (“· its fee”), and the Novgorod mat (**value = die +2★**
 **v4.4 delta:** reprinted — the **player aid** + the Wharf board’s Harbor caption (the
 commission’s free load returns).
 **v4.4c delta:** rules-only — the **specialist display refills at end of turn** (no reprint).
+**v4.5 delta:** −8 tally dice (**12/house**); the end clock reads the **empty tray** (rules +
+player-aid reprint).
 
 ## 11. Known gaps ⚙ (the watch list)
 
@@ -174,9 +181,9 @@ commission’s free load returns).
 2. **Pile mixes** (which load bonuses print at which quality depth) are engine-random top-cards
    today; the physical pile composition wants a printed distribution pass before the next kit.
 3. Cask counts (6/type floor) unchanged — re-read after human pace data (brews/game rose ~1).
-5. **The dice pool (14) is THE pace dial** (v4.1 — the one clock): first light sims read longer
-   games with a real round-25 ceiling share (the greedy bots don’t race the pool); re-read
-   after human races before dialing `PRES_POOL`.
+5. **The dice pool (12 ⚙, v4.5) is THE pace dial** — cut from 14 off playtest #24, with the
+   trigger moved to the **empty tray** (commitment, not parked-out); re-read pace at the next
+   human table before dialing `PRES_POOL` again.
 4. ~~printables2 lays out v3.4 sheets~~ — **RESOLVED (P4, 2026-07-21):** the kit prints the v4
    set (single-faced casks with printed start dice · Skute/Cog/Hulk sheets · the one green
    building family · 3+2 player boards · the score ring on Market &amp; Stores; the Hall,

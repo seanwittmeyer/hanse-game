@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v4.4 “Maiden Load”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v4.5 “Empty Tray”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -535,7 +535,7 @@
     <div class="panel"><h3>Log <button class="copybtn" onclick="copyDiag(this)" data-tip="Copy the game log + full diagnostic state (turn, UI, AI runtime, board, raw JSON) to the clipboard.">⧉ Copy log + diagnostics</button></h3><div id="log"></div></div>
     <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
   </div>
-  <p class="note" style="text-align:center"><b>v4.4 “Maiden Load” — prototype.</b> The die is the cask — and the dice are the ONE clock (the 14th die a house parks sets the final round). A commission places the hull, banks ★ = its berths, and may <b>load 1 Ready cask at once</b>. Every acquirable recipe/building/specialist carries its <b>printed fee</b> (kontor prizes free; Novgorod pays every delivered die <b>+2★</b>). Rules in <code>RULES.md</code> and the <b>📖 Player Aid</b>; the <a href="index.html">Rulebook</a>, <a href="learn.html">Learn</a> and <a href="print.html">print kit</a> pages track this build. All numbers ⚙.</p>
+  <p class="note" style="text-align:center"><b>v4.5 “Empty Tray” — prototype.</b> The die is the cask — and the dice are the ONE clock (the first <b>empty tray</b> sets the final round; 12 dice per house). A commission places the hull, banks ★ = its berths, and may <b>load 1 Ready cask at once</b>. Every acquirable recipe/building/specialist carries its <b>printed fee</b> (kontor prizes free; Novgorod pays every delivered die <b>+2★</b>). Rules in <code>RULES.md</code> and the <b>📖 Player Aid</b>; the <a href="index.html">Rulebook</a>, <a href="learn.html">Learn</a> and <a href="print.html">print kit</a> pages track this build. All numbers ⚙.</p>
 </main>
 
 <div id="shoppop" class="hidden"></div>
@@ -590,7 +590,7 @@ const ICONTIP={
   check:'Ready — the die has reached the quality; the cask may board a hull.',
   'user-round':'Worker — move it between the four stations; its station picks your legal lines.',
   unlock:'Flight unlock — your 2nd distinct beer brewed opens the 3rd vessel; your 3rd opens the 2nd seat.',
-  dices:'The tally die — maturation, gate, value, presence and the clock in one number. The 14th die a house parks sets the final round.',
+  dices:'The tally die — maturation, gate, value, presence and the clock in one number. 12 per house; the first EMPTY tray (every die committed) sets the final round.',
 };
 const LU=(n,cls)=>{const i='<i data-lucide="'+n+'"'+(cls?' class="ic '+cls+'"':' class="ic"')+'></i>';
   return ICONTIP[n]?'<span class="iw" data-tip="'+attr(ICONTIP[n])+'">'+i+'</span>':i;};
@@ -763,7 +763,7 @@ let activeTab=0;
 let EXPANSION=false;   // EXPANSION "Specialty Beers" toggle — set by startGame (the New Game checkbox) BEFORE freshState, read by dealExports. Default OFF → the base game is byte-for-byte unchanged. Saved on S.expansion; synced on boot. The sim sets it via env (EXPANSION=1).
 let EXP_HALLV2=false;  // v4.0: the Hall is TABLED (the flag survives only for the dormant Trade Roads block).
 let EXP_PRESEND=true;  // v3.2 CANON: the PRESENCE CLOCK — every delivered cask (kontor OR Hall) spends one of your PRES_POOL discs, publicly; placing your LAST disc sets the final round. Runs ALONGSIDE the ships clock (ships + charters tick; enshrines never do) — first trigger to fire ends the game.
-let PRES_POOL=14;      // ⚙ presence discs per player (ruled 14) — your whole delivery runway + majority bumps, in public view (sim hook POOL=n)
+let PRES_POOL=12;      // ⚙ tally dice per player — v4.5 "Empty Tray" [designer-ruled off playtest #24]: 14 → 12 to speed the game; the pool is the whole runway, in public view (sim hook POOL=n)
 let JOPEN=false;       // EXPANSION CAPSTONE "Jopenbier" toggle — INDEPENDENT of EXPANSION; set by startGame, read where jopenbier is offered (Market/brew) & scored. Default OFF. Saved on S.jopen; synced on boot. Sim hook: JOPEN=1.
 // ============================================================
 // EXPANSION SPINE — a tiny registry so each opt-in module lives in ONE self-contained
@@ -782,7 +782,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v44c'; // v44c [designer-ruled 2026-07-31]: the SPECIALIST display refills at the END of the turn (a take leaves a gap for the rest of the turn; ships/buildings keep instant refills). v44b: + bankB/bankC counters (the score-breakdown modal splits the bank) — state shape, so the KEY letters up. v4.4 "Maiden Load" [designer-ruled 2026-07-31] - THE COMMISSION REGAINS ITS FREE LOAD: pay 1 G, place the hull (bank stars = its berth count), then OPTIONALLY load ONE Ready cask from YOUR OWN vessels onto the new hull at once - a NORMAL load (the gate reads the die as it boards, after the slot's lifts; the cask's load bonus fires; a full hull sails - a Skute immediately). Commission + Skute = the old charter as pure components (1 G, one cask, sails now). Beneath it v4.3 "Open Quay" [designer-ruled 2026-07-26, the third ruling off playtest #23] - the OCCUPANCY TOLL IS CUT: sharing a station costs nothing (the berth race, the shared buildings, the displays and the majorities carry the interaction), and the greedy AI tiers are RE-TAUGHT to the v4 economy (fee-netted acquisition values, cheapest-fee recipe/specialist picks, no shared-station dodge, a dice-clock race push when ahead). Beneath it v4.2 "Tariff" stands - two changes on v4.1 "Counting House". (1) THE FEE RIDES THE ITEM, not the channel: every acquirable recipe / specialist / building carries its own printed wharf fee (RECIPE_FEE / SPEC_FEE / BUILDINGS[k].fee - several buildings FREE, chipless), paid at ANY wharf channel (Scrivener's Hall, the Hiring Post, the gain load-bonuses); kontor prizes stay free, and there is NEVER a fee-on-fee - using a building charges nothing of its own. (2) NOVGOROD PAYS THE DIE +2 STARS (vbonus - the refine prize is cut): every delivered die there banks pips+2 (6-8 stars at gate 4); the premium path's pull beyond the 8/5/2 majority. v4.1 stands beneath: the dice are the ONE clock (14th die parked = final round; MAX_ROUND 25 backstop). v4.2c markup [designer 2026-07-26]: specialist fees cut (Cellarman 2H / Grain Factor 1G / Hop Gardener 2H / Stevedore 1G) and ONE PAYMENT PER PLACEMENT (a paid building fee covers the ground rent; rent only on otherwise-free overbuilds) - the double-cost audit reads ZERO. Bump discards stale v42b state.
+const KEY='hanse-v45'; // v4.5 "Empty Tray" [designer-ruled 2026-07-31 off playtest #24]: (1) THE END TRIGGER IS THE EMPTY TRAY - the first house to COMMIT its last tally die (parked, in a vessel, or aboard an unfilled hull - tray 0) sets the final round; parked-out no longer required (the #24 stall: 2 dice stuck on hulls that never filled left the runout player unable to end). (2) THE POOL IS 12 (was 14) - speed. v44c [designer-ruled 2026-07-31]: the SPECIALIST display refills at the END of the turn (a take leaves a gap for the rest of the turn; ships/buildings keep instant refills). v44b: + bankB/bankC counters (the score-breakdown modal splits the bank) — state shape, so the KEY letters up. v4.4 "Maiden Load" [designer-ruled 2026-07-31] - THE COMMISSION REGAINS ITS FREE LOAD: pay 1 G, place the hull (bank stars = its berth count), then OPTIONALLY load ONE Ready cask from YOUR OWN vessels onto the new hull at once - a NORMAL load (the gate reads the die as it boards, after the slot's lifts; the cask's load bonus fires; a full hull sails - a Skute immediately). Commission + Skute = the old charter as pure components (1 G, one cask, sails now). Beneath it v4.3 "Open Quay" [designer-ruled 2026-07-26, the third ruling off playtest #23] - the OCCUPANCY TOLL IS CUT: sharing a station costs nothing (the berth race, the shared buildings, the displays and the majorities carry the interaction), and the greedy AI tiers are RE-TAUGHT to the v4 economy (fee-netted acquisition values, cheapest-fee recipe/specialist picks, no shared-station dodge, a dice-clock race push when ahead). Beneath it v4.2 "Tariff" stands - two changes on v4.1 "Counting House". (1) THE FEE RIDES THE ITEM, not the channel: every acquirable recipe / specialist / building carries its own printed wharf fee (RECIPE_FEE / SPEC_FEE / BUILDINGS[k].fee - several buildings FREE, chipless), paid at ANY wharf channel (Scrivener's Hall, the Hiring Post, the gain load-bonuses); kontor prizes stay free, and there is NEVER a fee-on-fee - using a building charges nothing of its own. (2) NOVGOROD PAYS THE DIE +2 STARS (vbonus - the refine prize is cut): every delivered die there banks pips+2 (6-8 stars at gate 4); the premium path's pull beyond the 8/5/2 majority. v4.1 stands beneath: the dice are the ONE clock (14th die parked = final round; MAX_ROUND 25 backstop). v4.2c markup [designer 2026-07-26]: specialist fees cut (Cellarman 2H / Grain Factor 1G / Hop Gardener 2H / Stevedore 1G) and ONE PAYMENT PER PLACEMENT (a paid building fee covers the ground rent; rent only on otherwise-free overbuilds) - the double-cost audit reads ZERO. Bump discards stale v42b state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -790,7 +790,7 @@ const KEY='hanse-v44c'; // v44c [designer-ruled 2026-07-31]: the SPECIALIST disp
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v4.4 “Maiden Load” · '+KEY;
+const APP_VERSION='v4.5 “Empty Tray” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -1337,7 +1337,7 @@ function brewPick(style){const p=cur();if(!canBrew(p,style))return;const vi=open
   const die=startDieFor(p,style);
   p.vessels[vi]={style,q:STYLES[style].q,die,act:takePileTop(STYLES[style].q,style)};p._brews=(p._brews||0)+1;
   log(p.name+' '+LU('flask-conical')+' brews '+LU('beer')+' <b>'+STYLES[style].name+'</b> — a tray die starts at <b>'+die+'</b>'+(die>=STYLES[style].q?' ('+LU('check')+' <b>READY at brew</b>)':' (Ready at '+STYLES[style].q+')')+'.',true);
-  markBrewed(p,style);
+  markBrewed(p,style);checkDiceEnd();
   const rt=UI.brew.returnTo;UI.brew=null;resume(rt);
 }
 
@@ -1534,9 +1534,14 @@ function addPresence(lp,k,n){
     if(!aiSimulating)log('↳ '+lp.name+' parks '+add+' tally '+(add>1?'dice':'die')+' at <b>'+DEST[k].name+'</b> (face 1 — +'+add+'★, presence, clock).');}
   if(add<(n||0)&&!aiSimulating)log('↳ '+lp.name+'’s tray is empty — no die for '+DEST[k].name+'.');
   return add;}
-function spendPresDisc(lp,n){lp.presPool=Math.max(0,(lp.presPool||0)-n);
-  if(lp.presPool===0&&!S.ending){S.ending=true;S.endReason='presence';
-    log('★ '+lp.name+' parks their <b>last tally die</b> — the final round!');}}
+function spendPresDisc(lp,n){lp.presPool=Math.max(0,(lp.presPool||0)-n);checkDiceEnd();}
+// v4.5 "Empty Tray" [designer-ruled off playtest #24]: the end is set the moment a house's
+// TRAY empties — every die COMMITTED (parked, riding a vessel, or aboard an unfilled hull) —
+// not only when the last die PARKS. The stall this cures: a player's final dice stuck aboard
+// hulls that never fill left them unable to trigger the end at all.
+function checkDiceEnd(){if(!S||S.ending||!S.presEnd)return;
+  S.players.forEach(p=>{if(!S.ending&&trayDice(p)<=0){S.ending=true;S.endReason='dice';
+    log('★ '+p.name+'’s tray is <b>EMPTY</b> — every tally die committed: the final round!');}});}
 // AI auto-resolver for the London prize
 function aiBenefitAuto(lp,dest){const disp=S.buildDisplay||[];
   if(!disp.length||!bldgTargets(lp).length){log('↳ '+lp.name+' — no building to take ('+DEST[dest].name+' prize forfeit; 2 goods instead).');gain(lp,2,0);return;}
@@ -1600,8 +1605,9 @@ function endTurn(){
 }
 function passiveFerment(p){let any=false;p.vessels.forEach(c=>{if(c&&c.die<c.q){c.die++;any=true;}});if(any)log(p.name+'’s maturing dice '+LU('hourglass')+' turn up (+1) over the turn.');}
 function checkTriggers(){if(S.ending)return;
-  // v4.1: the dice are the ONE clock (the presence trigger fires in spendPresDisc); the round
-  // ceiling is the rules-side backstop. Sails no longer end anything.
+  // v4.5: the dice are the ONE clock — the first EMPTY TRAY sets the final round (fires
+  // immediately in checkDiceEnd; re-checked here as a safety net). MAX_ROUND backstops.
+  checkDiceEnd();if(S.ending)return;
   if(S.turn>=MAX_ROUND){S.ending=true;S.endReason='ceiling';log('★ Round '+MAX_ROUND+' reached — final round (safety).');}
 }
 
@@ -2184,7 +2190,7 @@ function renderAid(){
   const ab=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].act).map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   const lb=Object.keys(BUILDINGS).filter(k=>!BUILDINGS[k].act).map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   document.getElementById('aidcard').innerHTML=
-    '<h2>'+ic('scroll-text')+' Player Aid — v4.4 “Maiden Load”</h2>'
+    '<h2>'+ic('scroll-text')+' Player Aid — v4.5 “Empty Tray”</h2>'
     +'<div class="asec"><b>Your turn</b><div class="note"><b>Move</b> to an adjacent station and activate its <b>row</b> or <b>column</b>. Resolve the line’s stops <b>in any order, all optional</b>: the two stations (one printed action each) + each slot’s <b>building action</b> and/or a <b>load of the ship</b> docked there. Sharing a station costs nothing — move where the board is best.</div></div>'
     +'<div class="asec"><b>The die IS the cask</b><div class="note">At <b>brew</b> a tray die is set to the printed <b>start value</b> (= quality − aging steps; Gruit starts Ready at 1). <b>Age points turn it up — it stops at the quality: READY.</b> Only buildings lift it past quality (Malt Kiln +1 as it boards, cap 6). <b>Gates read the die as it boards</b>; at delivery the die <b>parks at the kontor showing its face</b> — pips = the banked ★ (never &lt;1), the body = presence, majorities and the clock. <b>No die in the tray → no brew, no presence bump.</b></div></div>'
     +'<div class="asec"><b>The four stations — ONE action each</b><div class="note">'
@@ -2203,7 +2209,7 @@ function renderAid(){
       +'<li><b>Banked as you play:</b> deliveries (the parked die, 1–6★) · builds (+'+BUILD_PTS+'★) · commissions (★ = berth count) · presence bumps (1★).</li>'
       +'<li><b>Majorities (end-game)</b> — parked dice at each kontor (Bruges 4/2/0 · London 5/3/1 · Bergen 9/5/2 · Novgorod 8/5/2).</li>'
       +'<li><b>The Flight (end-game)</b> '+ic('layers')+' — distinct beers <b>BREWED</b>: 3 → '+FLIGHT_PTS[3]+' · 4 → '+FLIGHT_PTS[4]+' · 5 → '+FLIGHT_PTS[5]+' (min '+FLIGHT_MIN+'). Your 2nd/3rd distinct brews also open the 3rd vessel and 2nd seat.</li>'
-      +'<li><b>The clock</b> — the tally dice alone: the <b>14th die a house parks</b> sets the final round (dice never come back — the pool is your whole runway). Round '+MAX_ROUND+' is the safety backstop.</li>'
+      +'<li><b>The clock</b> — the tally dice alone: the first house whose <b>tray EMPTIES</b> (every one of its '+PRES_POOL+' dice committed — parked or riding) sets the final round. Dice never come back. Round '+MAX_ROUND+' is the safety backstop.</li>'
       +'</ol></div>'
     +'<div class="asec"><b>Icon key</b><div class="akey">'+keys.map(k=>'<div class="akrow">'+ic(k[0])+'<span>'+k[1]+'</span></div>').join('')+'</div></div>'
     +'<div style="text-align:center;margin-top:10px"><button class="primary" onclick="toggleAid()">Close</button></div>';
@@ -2443,7 +2449,7 @@ function renderShop(){
 
 function renderVoyage(){
   let h='<div class="voybox">'+LU('dices')+' <b>The Dice Clock</b>'+(S.ending?' · <b style="color:var(--red)">FINAL ROUND</b>':'')
-    +'<div class="note" style="margin-top:3px">the 14th die a house parks sets the final round — tray / pool:</div>'
+    +'<div class="note" style="margin-top:3px">the first EMPTY tray (every die committed) sets the final round — tray / pool:</div>'
     +'<div style="margin-top:4px">'+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+trayDice(p)+'<span class="note">/'+(p.presPool||0)+'</span></span>').join(' · ')+'</div>'
     +'<div class="note" style="font-size:.66rem;margin-top:4px">'+LU('sailboat')+' voyages sailed: '+S.sailed+' · round ceiling '+MAX_ROUND+' (backstop)</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game (3 of 4):</b> '+exportLabel()+'.</div>';
@@ -2496,7 +2502,7 @@ function renderTableaus(){
     body+='<div class="tableau '+(i===activeTab?'show':'')+'">'
       +'<div style="margin-bottom:6px"><span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
       +'<span class="chip" data-tip="Storage cap.">'+LU('package')+'<b>'+p.storage+'</b></span>'
-      +'<span class="chip" data-tip="Tally dice: tray / pool. A die rides every brew, then parks at the kontor — the 14th parked sets the final round.">'+LU('dices')+'<b>'+trayDice(p)+'</b><span class="note">/'+(p.presPool||0)+'</span></span>'
+      +'<span class="chip" data-tip="Tally dice: tray / pool. A die rides every brew, then parks at the kontor — the first EMPTY tray sets the final round.">'+LU('dices')+'<b>'+trayDice(p)+'</b><span class="note">/'+(p.presPool||0)+'</span></span>'
       +'<span class="chip" style="cursor:pointer" onclick="openScore('+p.id+')" data-tip="Total score — click for the full breakdown.">★ <b>'+sc.total+'</b></span> <span class="note">deliveries '+sc.deliv+' · bank '+sc.bank+' · maj '+sc.maj+(sc.flight?' · flight '+sc.flight:'')+'</span>'+(p.ai?' <span class="tag">'+aiLabel(p)+' AI</span>':'')+'</div>'
       +floorHTML
       +'<div class="tsec"><b class="note">'+LU('scroll-text')+' Recipes (flipped = brewed):</b><div class="trow">'+recipes+'</div></div>'
