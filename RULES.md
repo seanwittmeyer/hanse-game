@@ -1,11 +1,19 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.3 “Open Quay”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.4 “Maiden Load”)
+
+> **v4.4 “Maiden Load” (designer-ruled 2026-07-31).** **The commission regains its free
+> load:** after paying the 1 `G` and placing the hull (★ = berths banked), the commissioner
+> may **at once load ONE Ready cask from their own vessels** onto the new hull — a **normal
+> load** (the gate reads the die as it boards, after the slot’s lifts; the cask’s load bonus
+> fires; a full hull sails — a Skute immediately). Optional, never forced. Commission +
+> Skute = the old charter as pure components (1 `G`, one cask, sails now). The live build is
+> `play.html` (**KEY `hanse-v44`**).
 
 > **v4.3 “Open Quay” (designer-ruled 2026-07-26 — the third ruling off playtest #23).** **The
 > occupancy toll is CUT:** sharing a station costs nothing — move where the board is best,
 > full stop. The interaction lives where the components put it: the **berth race**, the shared
 > buildings, the displays/draft and the majorities. *(AI-only, same ruling: the greedy tiers
 > are re-taught to the v4 economy — fee-netted values, Flight marginals, horizon sense; the MC
-> tiers stay the strategy oracle.)* The live build is `play.html` (**KEY `hanse-v43`**).
+> tiers stay the strategy oracle.)*
 
 > **v4.2 “Tariff” (designer-ruled 2026-07-26 — the second ruling off playtest #23).** Two
 > changes on v4.1. **(1) The fee rides the ITEM, not the channel:** every acquirable recipe /
@@ -57,7 +65,8 @@ exception doors) · the **stay-home Floor turn** (Age pool, vessel-cask Floor ac
 Wilds) · the **Hall** (Three Coins, launches, enshrine — tabled, seam kept) · **Dispatch**
 (kontor charters, contracts, fares) · all 12 **Privileges** and tile **ownership** (frames,
 rent-to-owner) · the Market’s Acquire (recipes/tiles are **earned, not bought**) · the Cellar’s
-Specialist buy · the commission free-load and dockside pickup · the Quaymaster, Lagerkeeper and
+Specialist buy · the dockside pickup of deployed casks *(the commission’s own free load —
+vessel-direct — RETURNED at v4.4)* · the Quaymaster, Lagerkeeper and
 Coppersmith · Wilds and face-down flips · the three expansion toggles (**tabled** with the Hall)
 · **the Sailed-Ships track** (v4.1 — sails end nothing; the dice are the clock).
 
@@ -163,7 +172,9 @@ at that kontor.)*
 - **D · Cellar — AGE:** gain **3 age points** ⚙, split freely across your maturing casks.
 - **C · Harbor — COMMISSION:** pay **1 `G`** ⚙, place any one of the **4 display hulls** on a
   slot **without a ship** (a building is fine), and **score ★ = its berth count** (Skute 1 ·
-  Cog 2 · Hulk 3). The display refills. *(No free load — loading is the wharf’s job, §6.)*
+  Cog 2 · Hulk 3). The display refills. Then **one free load** (v4.4): you may at once load
+  **1 Ready cask from your vessels** onto the new hull — a normal load (§6; its bonus fires;
+  a Skute sails on it). Optional.
 
 ---
 
@@ -212,7 +223,8 @@ load each slot’s ship once — all optional, any order, resolved on the active
 - **LOAD (a slot stop):** take **one READY cask from YOUR vessels** whose **die meets the
   hull’s gate** (after this slot’s Kiln/Customs), seat it in the lowest berth (the die rides the
   tile), and **fire the cask’s printed load bonus** (§6b). The freed vessel is open again.
-  *(The Stevedore sets out **2** casks on your ship-slot stop.)*
+  *(The Stevedore sets out **2** casks on your ship-slot stop. The **commission** includes one
+  such load onto its new hull — §4C.)*
 - **A ship SAILS the moment it is full** — a **Skute sails on its first load.** Each cask aboard
   **delivers in load order**: bank ★ = its die, park the die at the kontor, resolve the port’s
   prize (owner’s choice, **when gained**). The hull returns to the deck.

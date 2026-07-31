@@ -1,5 +1,9 @@
-# Brewhouses of the Hanse — Components (v4.3 “Open Quay”)
+# Brewhouses of the Hanse — Components (v4.4 “Maiden Load”)
 
+> **v4.4 (designer-ruled 2026-07-31):** the **commission’s free load returns** — no component
+> change beyond the reprint of the **player aid** and the Wharf board’s Harbor caption (pay
+> 1 `G` · place the hull · bank ★ = berths · **load 1 Ready cask at once**, optional).
+>
 > **v4.3 (designer-ruled 2026-07-26 — the third ruling off playtest #23):** the **occupancy
 > toll is CUT** — no component change beyond the reprint of the **player aid** (the toll step
 > is gone; sharing a station costs nothing).
@@ -47,7 +51,7 @@
 
 | Board | Qty | Holds |
 |---|---|---|
-| Main board — **the Wharf** | 1 | 2×2 stations, each printing **ONE action** (Market *Source 2* · Brewhouse *Brew* · Cellar *Age 3* · Harbor *Commission 1G, ★ = berths*), ringed by 8 slots (a building seat + a ship seat each). |
+| Main board — **the Wharf** | 1 | 2×2 stations, each printing **ONE action** (Market *Source 2* · Brewhouse *Brew* · Cellar *Age 3* · Harbor *Commission 1G, ★ = berths, load 1* — v4.4), ringed by 8 slots (a building seat + a ship seat each). |
 | **Destinations board** | 1 | The four kontor panels — Bruges · London · Bergen · Novgorod — each printing its **gate (die N+)**, its **prize** (recipe / building / specialist — Novgorod instead prints **value = the die +2★**), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the banked ★ audit). *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
 | Player boards | 4 | **3 vessel slots** (1–2 open; the 3rd under a printed cover “2nd beer”) + **2 specialist seats** (1st open; the 2nd under “3rd beer”). Recipe cards sit beside it. Goods cap 8 printed. |
 | **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per house — the bank (+3★ builds · ★ = berths on commissions · 1★ bumps) and delivery ★ as they land. *(New in v4.0 — the hard line demands a home for banked points.)* |
@@ -86,7 +90,8 @@ bought; **min 6 tiles/type** (staples deeper: Gruit 16 · Hopped 12 ⚙).
 Neutral, destination-bound, deck-fed **display of 4**. The tile is a stack of full-width 1″
 berth wells, filled bottom→top; the **top berth prints the identity** (port · gate · the 1 G
 commission) and the last cask covers it — **the ship sails at once**. Commission at the Harbor:
-pay `1 G`, place on a shipless slot, **bank ★ = the berth count**.
+pay `1 G`, place on a shipless slot, **bank ★ = the berth count**, and (v4.4) you may **load 1
+Ready cask onto it at once**.
 
 | Hull | Berths | Size | Count ⚙ |
 |---|---|---|---|
@@ -156,6 +161,8 @@ Beers / Jopenbier materials (tabled with their toggles).
 (fee chips), building tiles (per-tile fee chips; free tiles chipless), the acquisition
 load-bonus verbs (“· its fee”), and the Novgorod mat (**value = die +2★**; refine out).
 **v4.3 delta:** reprinted — the **player aid** (the occupancy-toll step is gone).
+**v4.4 delta:** reprinted — the **player aid** + the Wharf board’s Harbor caption (the
+commission’s free load returns).
 
 ## 11. Known gaps ⚙ (the watch list)
 

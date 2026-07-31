@@ -1,4 +1,4 @@
-// Targeted rule checks for v4.x — v4.2 "Tariff" (KEY hanse-v42).
+// Targeted rule checks for v4.x — v4.4 "Maiden Load" (KEY hanse-v44).
 // Drives the CANONICAL engine (extract play.html's <script>, stub the DOM) and asserts each
 // rule directly by constructing states — no bot in the loop, so a failure is the engine's.
 // Usage: node playtests/verify-v4.js
@@ -154,6 +154,37 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   UI.comm={returnTo:'stops',idx:null};UI.sub='commission';commPick(0);
   var before=S.slots.s7;commPlace('s7');
   ok('one ship per slot — an occupied slot refuses', S.slots.s7===before&&S.slots.s7.ship==='cog');
+})();
+
+// ---- 10b. v4.4 "Maiden Load": the commission includes ONE free load from YOUR vessels ----
+(function(){var p=fresh();stops();
+  p.grain=3;p.vessels=[{style:'broyhan',q:3,die:3,act:'source'},null];
+  S.shipDisplay=[{ship:'cog',dest:'london'}];S.shipDeck=[];
+  UI.comm={returnTo:'stops',idx:null};UI.sub='commission';
+  commPick(0);commPlace('s6');
+  ok('the commission offers its free load (the load prompt opens on the new hull)',
+    UI.sub==='load'&&UI.load&&UI.load.ships.length===1&&UI.load.ships[0]==='s6');
+  loadPickCask(0);   // one eligible hull → boards immediately
+  ok('the free load boards the cask (die 3 ≥ London gate 2) and frees the vessel',
+    S.slots.s6&&S.slots.s6.load.length===1&&p.vessels[0]===null);
+})();
+(function(){var p=fresh();stops();
+  p.grain=3;p.vessels=[{style:'gruit',q:1,die:1,act:'source'},null];
+  S.shipDisplay=[{ship:'cog',dest:'novgorod'}];S.shipDeck=[];
+  UI.comm={returnTo:'stops',idx:null};UI.sub='commission';
+  commPick(0);commPlace('s6');
+  ok('no eligible cask → the commission resolves with no load prompt (gate 4 > die 1)',
+    UI.sub!=='load'&&S.slots.s6&&S.slots.s6.load.length===0);
+})();
+(function(){var p=fresh();stops();
+  p.grain=3;p.vessels=[{style:'broyhan',q:3,die:3,act:'source'},null];
+  S.shipDisplay=[{ship:'skute',dest:'bruges'}];S.shipDeck=[];
+  UI.comm={returnTo:'stops',idx:null};UI.sub='commission';
+  commPick(0);commPlace('s6');
+  var d0=p.delivered.length;
+  loadPickCask(0);
+  ok('commission + Skute: the free load sails and delivers at once (the old charter as components)',
+    p.delivered.length===d0+1&&!S.slots.s6);
 })();
 
 // ---- 11. BUILDINGS: +3★ on placement · overbuild = 1G, displaced boxed · serve-anyone action ----

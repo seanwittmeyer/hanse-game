@@ -166,7 +166,7 @@
 <header>
   <h1>Brewhouses of the Hanse</h1>
   <div class="sub">Rulebook &amp; Components · A merchant brewing house in the Hanseatic League. At <b>the Wharf</b> you <b>Source → Brew → Age → Ship</b> — and <b>the tally die IS the cask</b>: maturation, gate, value, presence and the clock in one number.</div>
-  <div class="tag">v4.3 “Open Quay” prototype draft · all numbers placeholders ⚙ · the prior v2.9 build stays playable at <a href="archive/v2.9/play.html" style="color:inherit">archive/v2.9</a></div>
+  <div class="tag">v4.4 “Maiden Load” prototype draft · all numbers placeholders ⚙ · the prior v2.9 build stays playable at <a href="archive/v2.9/play.html" style="color:inherit">archive/v2.9</a></div>
 </header>
 
 <nav>
@@ -227,7 +227,7 @@
       <div class="cell B" data-row="row-t" data-col="col-r"><div class="corner">B</div><div class="lbl">② Brew</div><div class="nm">Brewhouse</div><div class="do">Pay a recipe into an open vessel — a tray die becomes the cask</div></div>
       <div class="slot s3" data-line="row-t">slot</div>
       <div class="slot s7" data-line="row-b">slot</div>
-      <div class="cell C" data-row="row-b" data-col="col-l"><div class="corner">C</div><div class="lbl">④ Commission</div><div class="nm">Harbor</div><div class="do">Pay 1 G, place a display hull on a shipless slot, bank ★ = its berth count</div></div>
+      <div class="cell C" data-row="row-b" data-col="col-l"><div class="corner">C</div><div class="lbl">④ Commission</div><div class="nm">Harbor</div><div class="do">Pay 1 G, place a display hull on a shipless slot, bank ★ = its berths · load 1 Ready cask at once</div></div>
       <div class="cell D" data-row="row-b" data-col="col-r"><div class="corner">D</div><div class="lbl">③ Age</div><div class="nm">Cellar</div><div class="do">3 age points — turn maturing dice up</div></div>
       <div class="slot s4" data-line="row-b">slot</div>
       <div class="slot s6" data-line="col-l">slot</div>
@@ -308,7 +308,7 @@
     <tr><td><b>A · Market</b> <span class="pill">Source</span></td><td>Take <b>2 goods</b> (any mix). <em>(The Grain Factor / Hop Gardener add +1 of their good whenever you gain it.)</em></td></tr>
     <tr><td><b>B · Brewhouse</b> <span class="pill">Brew</span></td><td>Pay a recipe you hold into an <b>open vessel</b> + a <b>tray die</b> set to the printed <b>start value</b>. The cask takes the <b>face-up top action</b> of its quality’s pile (steerable — every pile top is visible). <b>The first brew of a beer flips its recipe card</b> — the Flight record; your <b>2nd distinct beer opens the 3rd vessel, your 3rd opens the 2nd seat</b>.</td></tr>
     <tr><td><b>D · Cellar</b> <span class="pill">Age</span></td><td>Gain <b>3 age points</b> ⚙, split freely — each point turns one maturing die +1 (a die stops at its quality: <b>READY</b>). Dice also turn <b>+1 automatically</b> at the start of your turn.</td></tr>
-    <tr><td><b>C · Harbor</b> <span class="pill">Commission</span></td><td>Pay <b>1 <span class="cube g"></span></b> ⚙, place any one of the <b>4 display hulls</b> on a slot <b>without a ship</b>, and <b>bank ★ = its berth count</b> (Skute 1 · Cog 2 · Hulk 3). The display refills. <em>(No free load — loading is the wharf’s job.)</em></td></tr>
+    <tr><td><b>C · Harbor</b> <span class="pill">Commission</span></td><td>Pay <b>1 <span class="cube g"></span></b> ⚙, place any one of the <b>4 display hulls</b> on a slot <b>without a ship</b>, and <b>bank ★ = its berth count</b> (Skute 1 · Cog 2 · Hulk 3). The display refills. Then <b>one free load</b> (v4.4): you may at once load <b>1 Ready cask from your vessels</b> onto the new hull — a normal load (its bonus fires; a Skute sails on it). Optional.</td></tr>
   </table>
 </section>
 
@@ -336,7 +336,7 @@
 
 <section id="shipping">
   <h2><span class="nm">10</span>Ships, Loading &amp; Prizes</h2>
-  <p><b>Ships</b> are neutral, destination-bound hulls in three sizes — <b>Skute 1 · Cog 2 · Hulk 3</b> berths — off a shuffled deck feeding a <b>market of 4</b>. <b>Commission</b> (the Harbor action) pays 1 <span class="cube g"></span>, places a hull on any shipless slot, and banks <b>★ = its berth count</b>.</p>
+  <p><b>Ships</b> are neutral, destination-bound hulls in three sizes — <b>Skute 1 · Cog 2 · Hulk 3</b> berths — off a shuffled deck feeding a <b>market of 4</b>. <b>Commission</b> (the Harbor action) pays 1 <span class="cube g"></span>, places a hull on any shipless slot, banks <b>★ = its berth count</b> — and may at once <b>load 1 Ready cask</b> from the commissioner’s vessels onto it (v4.4).</p>
   <div class="gallery" id="shipGallery"></div>
   <p><b>LOAD (a slot stop):</b> take <b>one READY cask from YOUR vessels</b> whose <b>die meets the hull’s gate</b> — read <em>as it boards</em>, after the slot’s lifts (a <b>Malt Kiln</b> here turns the die +1, cap 6; a <b>Customs House</b> lowers the hull’s gate by one). Seat the cask tile on the lowest berth (its die rides), and <b>fire its printed load bonus</b> (after any sail it completes). The <b>Stevedore</b> loads 2.</p>
   <p><b>A ship SAILS the moment it is full</b> — a Skute on its first load. Every cask aboard <b>delivers in load order</b>: bank ★ = its die, park the die at the kontor, and resolve the port’s <b>prize</b> (owner’s choice, when gained): <b>Bruges</b> a recipe · <b>London</b> a building (placed, +3★) · <b>Bergen</b> a specialist — and at <b>Novgorod</b> every die banks <b>+2★</b> on top (no other prize). The hull returns to the deck.</p>
@@ -393,7 +393,7 @@
     <div class="gloscard"><div class="gh"><i data-lucide="layout-grid"></i><span class="gt">Station · Slot · Line</span></div><div class="gd">A <b>station</b> is one of the four action spaces (ONE printed action each); a <b>slot</b> is one of the 8 spaces ringing them — it seats <b>a building and/or a ship</b>, never casks; a <b>line</b> is a row or column = its two stations + its two slots.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="dices"></i><span class="gt">The Tally Die</span></div><div class="gd">THE component: set to the cask’s printed <b>start value</b> at brew, turned up by age points (<b>READY at the quality</b>), lifted past it only by buildings at load (cap 6), read by <b>gates</b> as it boards, and <b>parked at the kontor</b> on delivery — pips = the banked ★, body = presence, majorities and the clock. 14 per house, public. <b>No die in the tray → no brew, no presence bump.</b></div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="beer"></i><span class="gt">Cask · Ready · Load bonus</span></div><div class="gd">A brewed beer in two states: <b>maturing</b> (private vessel, die below quality) → <b>delivered</b> (boarded, sailed, parked). <b>Ready</b> = die at the quality. Its printed action is a <b>LOAD BONUS</b> — it fires as the cask boards a hull.</div></div>
-    <div class="gloscard"><div class="gh"><i data-lucide="sailboat"></i><span class="gt">Ship · Skute · Commission</span></div><div class="gd">Neutral destination-bound hulls: <b>Skute 1 · Cog 2 · Hulk 3</b> berths; anyone loads their own Ready casks; a hull <b>sails the moment it is full</b> — a Skute on its first load (the relief valve as a component). <b>Commission</b> (Harbor): 1 G · place on a shipless slot · bank ★ = berths.</div></div>
+    <div class="gloscard"><div class="gh"><i data-lucide="sailboat"></i><span class="gt">Ship · Skute · Commission</span></div><div class="gd">Neutral destination-bound hulls: <b>Skute 1 · Cog 2 · Hulk 3</b> berths; anyone loads their own Ready casks; a hull <b>sails the moment it is full</b> — a Skute on its first load (the relief valve as a component). <b>Commission</b> (Harbor): 1 G · place on a shipless slot · bank ★ = berths · load 1 Ready cask at once.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="landmark"></i><span class="gt">Kontor · Gate · Prize</span></div><div class="gd">The four delivery ports. A <b>gate</b> is the die value required to board (read as boarded, after lifts): Bruges 1+ · London 2+ · Bergen 2+ · Novgorod 4+. The <b>prize</b> pays the cask’s owner on delivery: a recipe / a building (+3★) / a specialist — Novgorod instead pays every parked die <b>+2★</b>.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="trophy"></i><span class="gt">Majority</span></div><div class="gd">End-game, per kontor, ranked by <b>parked dice</b> (1st/2nd/3rd take the tiers; 2p skips 2nd). Concentrated at <b>Bergen</b> (9/5/2).</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="building-2"></i><span class="gt">Building</span></div><div class="gd">ONE green family, <b>no owner</b>: every building serves whoever activates it; the placer banks <b>+3★</b>. Action buildings fire a printed verb on their slot’s stop; load-lift buildings shape the hull (Kiln +1 die · Cooperage +1 berth · Customs −1 gate · Rich Berth sails short). Overbuild = ONE payment: a paid fee covers the ground, else the 1 G rent; the displaced tile is boxed.</div></div>
@@ -419,7 +419,7 @@
     <tr><td><span class="act-ic"><i data-lucide="store"></i></span></td><td><b>Market — Source</b></td><td>Take <b>2 goods</b>, any mix.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brewhouse — Brew</b></td><td>Pay a recipe into an open vessel; a <b>tray die</b> is set to the printed start value; the cask takes the face-up pile-top <b>load bonus</b>. First brew of a beer flips its card (the Flight; unlocks at the 2nd/3rd).</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Cellar — Age</b></td><td><b>3 age points</b> across your vessels; a die stops at its quality (READY). +1 automatic on your turn.</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="sailboat"></i></span></td><td><b>Harbor — Commission</b></td><td>Pay <b><i data-lucide="wheat" class="gi"></i>1</b>, place a display hull on a shipless slot, <b>bank ★ = its berth count</b> (Skute 1 · Cog 2 · Hulk 3).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="sailboat"></i></span></td><td><b>Harbor — Commission</b></td><td>Pay <b><i data-lucide="wheat" class="gi"></i>1</b>, place a display hull on a shipless slot, <b>bank ★ = its berth count</b> (Skute 1 · Cog 2 · Hulk 3). Then <b>one free load</b> onto it (a Ready cask from your vessels; optional).</td></tr>
   </table>
 
   <div class="acat">Slot stops (on an activated line)</div>
@@ -451,7 +451,7 @@
       <li><b>Resolve</b> the stops, any order, all optional: both stations (ONE action each) + each slot's <b>building action</b> and/or a <b>load of its ship</b>.</li>
     </ol>
     <h4>At the Wharf</h4>
-    <p>Market (<b>2 goods</b>) → Brewhouse (<b>brew</b> — tray die at the printed start) → Cellar (<b>3 age points</b>) → Harbor (<b>commission</b> — 1 G, ★ = berths). Slots: building verbs + ship loads.</p>
+    <p>Market (<b>2 goods</b>) → Brewhouse (<b>brew</b> — tray die at the printed start) → Cellar (<b>3 age points</b>) → Harbor (<b>commission</b> — 1 G, ★ = berths, + 1 free load). Slots: building verbs + ship loads.</p>
     <h4>The die</h4>
     <p><b>Start</b> (printed) → <b>age up</b> (stops at quality: READY) → <b>board</b> (die ≥ gate, after lifts; Kiln +1, cap 6) → <b>sail when full</b> → <b>park</b> at the kontor (pips = ★, body = presence + clock). Prizes: Bruges recipe · London building (+3★) · Bergen specialist · Novgorod pays the die <b>+2★</b> (gate die 4+).</p>
     <h4>Game ends</h4>
@@ -462,7 +462,7 @@
 </div>
 
 <footer>
-  Brewhouses of the Hanse · rulebook &amp; components · <b>v4.3 “Open Quay”</b> · generated from <code>RULES.md</code> / <code>COMPONENTS.md</code> · all numbers are placeholders ⚙<br>
+  Brewhouses of the Hanse · rulebook &amp; components · <b>v4.4 “Maiden Load”</b> · generated from <code>RULES.md</code> / <code>COMPONENTS.md</code> · all numbers are placeholders ⚙<br>
   <span class="small">The Play client (<code>play.html</code>) is the de-facto reference implementation.</span>
 </footer>
 

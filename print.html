@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v4.3 “Open Quay”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v4.4 “Maiden Load”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -646,7 +646,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.3 “Open Quay”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.4 “Maiden Load”</span></h1>
   <a href="play.html">▶ Play</a>
   <a href="index.html">📖 Rules</a>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
@@ -762,7 +762,7 @@ function aidFront(){
         +'<div class="ln">'+LU('store')+' <b>Market</b> — take <b>2 goods</b> (any mix).</div>'
         +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — <b>brew</b>: pay a recipe → an open vessel; the cask takes the face-up <b>load bonus</b> of its quality pile (steerable).</div>'
         +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — <b>3 age points</b> across your vessels (dice also turn +1 on your turn).</div>'
-        +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — <b>commission</b>: pay '+G+'1, place a display hull on a shipless slot, <b>bank ★ = its berth count</b> (Skute 1 · Cog 2 · Hulk 3).</div>'
+        +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — <b>commission</b>: pay '+G+'1, place a display hull on a shipless slot, <b>bank ★ = its berth count</b> (Skute 1 · Cog 2 · Hulk 3) — then <b>one free load</b>: a Ready cask from your vessels may board it at once (a Skute sails).</div>'
         +'<h5>'+LU('package-plus')+'Load &amp; Sail</h5>'
         +'<div class="ln">A ship’s slot stop loads <b>one READY cask from YOUR vessels</b> (die ≥ the gate, after lifts); its printed <b>load bonus fires</b>. A hull <b>sails the moment it is full</b> — a Skute on its first load — and every cask delivers in load order; prizes resolve when gained.</div>'
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
@@ -1044,7 +1044,7 @@ function supplyBoard(){
   const smpImp=[0,1,2,3].map(i=>improveTile(IMPROVE[i]));
   const market='<div class="disp-h m">'+LU('store')+'The Displays<span class="sm">— nothing here is bought: buildings are earned at London, specialists at Bergen, recipes at Bruges (and via the printed bonuses); hulls are commissioned at the Harbor (1G · bank ★ = berths)</span></div>'
     +shelf('Buildings — the display of 4 · placing one banks +3★, it serves everyone','building-2',smpBld.map(s=>dslot('b','building-2',s)).join(''))
-    +shelf('Ships — the market of 4 · commission at the Harbor (1G)','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''))
+    +shelf('Ships — the market of 4 · commission at the Harbor (1G · 1 free load)','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''))
     +'<div class="shelf-lbl">'+LU('scroll-text')+'Recipes — the dealt export stacks (earned, never bought)</div>'
     +'<div class="shelf">'+smpRec.map(s=>dslot('r','scroll-text',s)).join('')+'</div>';
   const cellar='<div class="disp-h i">'+LU('wrench')+'Specialists</div>'
@@ -1321,8 +1321,8 @@ function checklist(pages,famPages){
   const D='style="font-size:.085in;color:#5b4a37;font-weight:normal;line-height:1.26;margin-top:.005in"';
   const R=(nm,detail,n)=>'<tr><td class="bx"></td><td><b>'+nm+'</b>'+(detail?'<div '+D+'>'+detail+'</div>':'')+'</td><td class="n">'+n+'</td></tr>';
   const T=title=>'<table><tr><th></th><th>'+title+'</th><th>qty</th></tr>';
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.3 “Open Quay”)</span></h2>'
-    +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The v4.3 build: the die is the cask — maturation, gate, value, presence and THE clock in one number (the dice alone end the game). Every acquirable recipe/specialist/building carries a PRINTED wharf fee (chipless buildings free; kontor prizes always free), Novgorod pays every delivered die +2★, and sharing a station costs nothing (the occupancy toll is cut — v4.3). The Hall, charter contracts, Privileges, ownership tokens, cask cubes and the three expansions stay OUT of the box (tabled). Counts ⚙.</p>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.4 “Maiden Load”)</span></h2>'
+    +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">The v4.4 build: the die is the cask — maturation, gate, value, presence and THE clock in one number (the dice alone end the game). A commission places the hull, banks ★ = its berths, and may LOAD 1 Ready cask at once (v4.4). Every acquirable recipe/specialist/building carries a PRINTED wharf fee (chipless buildings free; kontor prizes always free), Novgorod pays every delivered die +2★, and sharing a station costs nothing (the occupancy toll is cut — v4.3). The Hall, charter contracts, Privileges, ownership tokens, cask cubes and the three expansions stay OUT of the box (tabled). Counts ⚙.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
     +R('Main board — the Wharf','The 2×2 of stations, each printing ONE action (Market: 2 goods · Brewhouse: brew · Cellar: 3 age points · Harbor: commission 1G → ★ = berths), ringed by 8 slots — each seats a BUILDING and/or a SHIP (never casks).','1')
@@ -1332,7 +1332,7 @@ function checklist(pages,famPages){
     +'</table>';
   h+=T('Tiles (mount on chipboard, laser-cut)')
     +R('Cask tiles — the beer supply','2.4×1″ SINGLE-FACED tiles: quality · the printed START-DIE value (set your tally die to it at brew; age points turn it up — READY at the quality) · the load-bonus action (the three acquisition bonuses read “· its fee” — each item’s price is printed on its own card/tile ⚙) · the die seat. A shared pool, brewed never bought: '+caskBase.map(d=>d.nm+' ×'+d.n).join(' · ')+'.',sumN(caskBase))
-    +R('Ship tiles','ALL-BERTH carriers in THREE sizes — the tile is its berths, filled bottom→top; the TOP berth prints the identity (port · gate as a DIE read · the 1G commission) and the last cask covers it: the ship SAILS at once. Skute (1 berth, 2.5×1″) ×6 — sails on its first load, the relief valve as a component · Cog (2, 2.5×2″) ×10 · Hulk (3, 2.5×3″) ×8; six per port, drawn into a market of 4.','24')
+    +R('Ship tiles','ALL-BERTH carriers in THREE sizes — the tile is its berths, filled bottom→top; the TOP berth prints the identity (port · gate as a DIE read · the 1G commission) and the last cask covers it: the ship SAILS at once. Commissioning banks ★ = berths and may load 1 Ready cask at once (v4.4). Skute (1 berth, 2.5×1″) ×6 — sails on its first load, the relief valve as a component · Cog (2, 2.5×2″) ×10 · Hulk (3, 2.5×3″) ×8; six per port, drawn into a market of 4.','24')
     +R('Building tiles','2.5×1.32″ SINGLE-FACED, ONE green family — no owner, ever: every building serves whoever activates it, and the placer banks +3★. <b>Action buildings</b> (fire on their slot’s stop) — '+designs(actBld)+'. <b>Load-lift buildings</b> (passive at their slot) — '+designs(liftBld)+'. Earned (London’s prize free · the gain-building bonus at the tile’s printed fee — chipless tiles free, the load-lifts 2G ⚙); overbuild = ONE payment (a paid fee covers the ground; the 1G rent only on otherwise-free placements; displaced tile → the box).',sumN(BUILDINGS))
     +R('Specialist tiles','2×2″ purple, 4 designs — Cellarman (dice start one higher) · Grain Factor · Hop Gardener · Stevedore (ship-slot stop loads 2). Free at Bergen; the Hiring Post / gain-specialist bonus pay each tile’s printed fee (Cellarman 2H · Grain Factor 1G · Hop Gardener 2H · Stevedore 1G ⚙); 2 seats per house; n−1 copies per type.',impTotal)
     +'</table>';

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v4.3 “Open Quay”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v4.4 “Maiden Load”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -535,7 +535,7 @@
     <div class="panel"><h3>Log <button class="copybtn" onclick="copyDiag(this)" data-tip="Copy the game log + full diagnostic state (turn, UI, AI runtime, board, raw JSON) to the clipboard.">⧉ Copy log + diagnostics</button></h3><div id="log"></div></div>
     <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
   </div>
-  <p class="note" style="text-align:center"><b>v4.3 “Open Quay” — prototype.</b> The die is the cask — and the dice are the ONE clock (the 14th die a house parks sets the final round). The wharf charges for what the ports give away: every acquirable recipe/building/specialist carries its <b>printed fee</b>, paid via the wharf channels (never a fee to use a building); the kontor prizes stay free, and Novgorod pays every delivered die <b>+2★</b>. Rules in <code>RULES.md</code> and the <b>📖 Player Aid</b>; the <a href="index.html">Rulebook</a>, <a href="learn.html">Learn</a> and <a href="print.html">print kit</a> pages track this build. All numbers ⚙.</p>
+  <p class="note" style="text-align:center"><b>v4.4 “Maiden Load” — prototype.</b> The die is the cask — and the dice are the ONE clock (the 14th die a house parks sets the final round). A commission places the hull, banks ★ = its berths, and may <b>load 1 Ready cask at once</b>. Every acquirable recipe/building/specialist carries its <b>printed fee</b> (kontor prizes free; Novgorod pays every delivered die <b>+2★</b>). Rules in <code>RULES.md</code> and the <b>📖 Player Aid</b>; the <a href="index.html">Rulebook</a>, <a href="learn.html">Learn</a> and <a href="print.html">print kit</a> pages track this build. All numbers ⚙.</p>
 </main>
 
 <div id="shoppop" class="hidden"></div>
@@ -574,7 +574,7 @@ const ICONTIP={
   store:'Market — SOURCE: take 2 goods (any mix).',
   'flask-conical':'Brewhouse — BREW: pay a recipe into an open vessel; a tray die becomes the cask, set to its printed start value.',
   hourglass:'Cellar — AGE: 3 age points across your vessels (a die stops at its quality: READY).',
-  ship:'Harbor — COMMISSION: pay 1 G, place a display hull on a shipless slot, bank ★ = its berth count.',
+  ship:'Harbor — COMMISSION: pay 1 G, place a display hull on a shipless slot, bank ★ = its berth count, and you may load 1 Ready cask onto it at once.',
   anchor:'Slot — one of the 8 shared perimeter spaces; seats a building and/or a ship (never casks). Its line-stop fires the building action and/or a load of the ship.',
   sailboat:'Ship — a neutral, destination-bound hull (Skute 1 · Cog 2 · Hulk 3 berths); load your own Ready casks; it sails the moment it is full.',
   landmark:'Kontor — a delivery port: gate (a die read) · value = the parked die (Novgorod: +2★ on top) · a prize · a majority.',
@@ -643,7 +643,7 @@ const STATION_ACTS={
 const STATION_ICON_TIP={coins:'Source - take 2 goods (any mix)',
   beer:'Brew - pay a recipe into an open vessel (a tray die becomes the cask)',
   hourglass:'Age - 3 age points across your vessels (turn the dice up; a die stops at its quality)',
-  sailboat:'Commission - pay 1 G, place a display hull on a shipless slot, and score stars = its berth count'};
+  sailboat:'Commission - pay 1 G, place a display hull on a shipless slot, score stars = its berth count, and you may load 1 Ready cask onto it at once'};
 
 // ---- DESTINATIONS (v4.0): the four kontore. Value = THE DIE, everywhere (Novgorod's printed scale is
 // cut; its identity = the raised gate + the 8/5/2 majority + the refine prize). Gates read the DIE as it
@@ -665,8 +665,9 @@ function flightScore(p){const t=flightBeers(p);return (t>=FLIGHT_MIN)?(FLIGHT_PT
 
 // ---- SHIPS (v4.0): neutral, destination-bound hulls in THREE sizes - Skute 1 / Cog 2 / Hulk 3 berths.
 // COMMISSION at the Harbor: pay 1 G, place a display hull on any shipless slot, SCORE stars = its berth
-// count. No free load - loading is the wharf's job (a slot stop). A Skute sails on its first load: the
-// single-berth hull IS the old charter, as a component.
+// count, and (v4.4) the commission includes ONE free load - a Ready cask from the commissioner's
+// vessels may board the new hull at once. A Skute sails on its first load: the single-berth hull
+// + the free load IS the old charter, as pure components (1 G, one cask, sails now).
 const SHIP_CAP={skute:1,cog:2,hulk:3};
 const SHIP_NAME={skute:'Skute',cog:'Cog',hulk:'Hulk'};
 const COMMISSION_COST={g:1};   // v4.0: 1 G; the commission's reward is the printed berth count in stars
@@ -780,7 +781,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v43'; // v4.3 "Open Quay" [designer-ruled 2026-07-26, the third ruling off playtest #23] - the OCCUPANCY TOLL IS CUT: sharing a station costs nothing (the berth race, the shared buildings, the displays and the majorities carry the interaction), and the greedy AI tiers are RE-TAUGHT to the v4 economy (fee-netted acquisition values, cheapest-fee recipe/specialist picks, no shared-station dodge, a dice-clock race push when ahead). Beneath it v4.2 "Tariff" stands - two changes on v4.1 "Counting House". (1) THE FEE RIDES THE ITEM, not the channel: every acquirable recipe / specialist / building carries its own printed wharf fee (RECIPE_FEE / SPEC_FEE / BUILDINGS[k].fee - several buildings FREE, chipless), paid at ANY wharf channel (Scrivener's Hall, the Hiring Post, the gain load-bonuses); kontor prizes stay free, and there is NEVER a fee-on-fee - using a building charges nothing of its own. (2) NOVGOROD PAYS THE DIE +2 STARS (vbonus - the refine prize is cut): every delivered die there banks pips+2 (6-8 stars at gate 4); the premium path's pull beyond the 8/5/2 majority. v4.1 stands beneath: the dice are the ONE clock (14th die parked = final round; MAX_ROUND 25 backstop). v4.2c markup [designer 2026-07-26]: specialist fees cut (Cellarman 2H / Grain Factor 1G / Hop Gardener 2H / Stevedore 1G) and ONE PAYMENT PER PLACEMENT (a paid building fee covers the ground rent; rent only on otherwise-free overbuilds) - the double-cost audit reads ZERO. Bump discards stale v42b state.
+const KEY='hanse-v44'; // v4.4 "Maiden Load" [designer-ruled 2026-07-31] - THE COMMISSION REGAINS ITS FREE LOAD: pay 1 G, place the hull (bank stars = its berth count), then OPTIONALLY load ONE Ready cask from YOUR OWN vessels onto the new hull at once - a NORMAL load (the gate reads the die as it boards, after the slot's lifts; the cask's load bonus fires; a full hull sails - a Skute immediately). Commission + Skute = the old charter as pure components (1 G, one cask, sails now). Beneath it v4.3 "Open Quay" [designer-ruled 2026-07-26, the third ruling off playtest #23] - the OCCUPANCY TOLL IS CUT: sharing a station costs nothing (the berth race, the shared buildings, the displays and the majorities carry the interaction), and the greedy AI tiers are RE-TAUGHT to the v4 economy (fee-netted acquisition values, cheapest-fee recipe/specialist picks, no shared-station dodge, a dice-clock race push when ahead). Beneath it v4.2 "Tariff" stands - two changes on v4.1 "Counting House". (1) THE FEE RIDES THE ITEM, not the channel: every acquirable recipe / specialist / building carries its own printed wharf fee (RECIPE_FEE / SPEC_FEE / BUILDINGS[k].fee - several buildings FREE, chipless), paid at ANY wharf channel (Scrivener's Hall, the Hiring Post, the gain load-bonuses); kontor prizes stay free, and there is NEVER a fee-on-fee - using a building charges nothing of its own. (2) NOVGOROD PAYS THE DIE +2 STARS (vbonus - the refine prize is cut): every delivered die there banks pips+2 (6-8 stars at gate 4); the premium path's pull beyond the 8/5/2 majority. v4.1 stands beneath: the dice are the ONE clock (14th die parked = final round; MAX_ROUND 25 backstop). v4.2c markup [designer 2026-07-26]: specialist fees cut (Cellarman 2H / Grain Factor 1G / Hop Gardener 2H / Stevedore 1G) and ONE PAYMENT PER PLACEMENT (a paid building fee covers the ground rent; rent only on otherwise-free overbuilds) - the double-cost audit reads ZERO. Bump discards stale v42b state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -788,7 +789,7 @@ const KEY='hanse-v43'; // v4.3 "Open Quay" [designer-ruled 2026-07-26, the third
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v4.3 “Open Quay” · '+KEY;
+const APP_VERSION='v4.4 “Maiden Load” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -960,7 +961,7 @@ const CELLTIP={
   Market:'Market · SOURCE — take 2 goods (any mix).',
   Brewhouse:'Brewhouse · BREW — pay a recipe into an open vessel; a tray die becomes the cask, set to its printed start value. The cask takes the face-up load bonus of its quality pile (steerable).',
   Cellar:'Cellar · AGE — '+CELLAR_POOL+' age points across your vessels (turn the dice up; a die stops at its quality = READY).',
-  Harbor:'Harbor · COMMISSION — pay 1G, place one of the 4 display hulls on a shipless slot, and score ★ = its berth count (Skute 1 · Cog 2 · Hulk 3).',
+  Harbor:'Harbor · COMMISSION — pay 1G, place one of the 4 display hulls on a shipless slot, and score ★ = its berth count (Skute 1 · Cog 2 · Hulk 3). Then ONE free load: a Ready cask from your vessels may board the new hull at once.',
 };
 function bldgTip(b){if(!b)return '';const def=BUILDINGS[b.b];return def.name+' · BUILDING — serves whoever activates it — '+def.desc;}
 function tileTip(t,slot){
@@ -1310,7 +1311,15 @@ function commPlace(slot){const d=UI.comm;if(!d||d.idx==null)return;const p=cur()
   S.slots[slot]={type:'ship',ship:sn.ship,dest:sn.dest,load:[]};
   const pts=SHIP_CAP[sn.ship];p.bank+=pts;
   log(p.name+' commissions the '+LU('sailboat')+' <b>'+SHIP_NAME[sn.ship]+'</b> → <b>'+DEST[sn.dest].name+'</b> — <b>+'+pts+'★</b> banked (its berth count).'+(sn.ship==='skute'?' <span class="note">(a Skute sails on its first load)</span>':''),true);
-  const rt=d.returnTo;UI.comm=null;UI.stage=null;resume(rt);
+  const rt=d.returnTo;UI.comm=null;UI.stage=null;
+  // v4.4 "Maiden Load": the commission includes ONE free load — a Ready cask from YOUR
+  // vessels may board the new hull at once (a NORMAL load: the gate reads the die as it
+  // boards after this slot's lifts, the cask's load bonus fires, a full hull sails — a
+  // Skute immediately). Optional — the standard load flow's Skip keeps the hull empty.
+  if(readyInVessels(p).some(o=>canTake(slot,o.i))){
+    log('↳ the commission includes <b>one free load</b> — a Ready cask from your vessels may board now.');
+    enterLoad([slot],rt,1);return;}
+  resume(rt);
 }
 function commBack(){if(UI.comm){UI.comm.idx=null;UI.stage=null;render();}}
 function commSkip(){const rt=UI.comm?UI.comm.returnTo:'stops';UI.comm=null;UI.stage=null;resume(rt);}
@@ -1868,6 +1877,7 @@ function aiCellValue(p,c){
     const best=readyInVessels(p).sort((a,b)=>b.c.die-a.c.die)[0];
     const stranded=best&&!wharfShips().some(sid=>canTake(sid,best.i));
     let v=1+Math.max.apply(null,disp.map(sn=>SHIP_CAP[sn.ship]))*0.5;
+    if(best&&disp.some(sn=>best.c.die>=DEST[sn.dest].gate))v+=1.2;   // v4.4: the free load makes a loadable commission tempo
     if(stranded&&disp.some(sn=>best.c.die>=DEST[sn.dest].gate))v+=3;
     if(aiLateGame(p))v*=1.5;   // the endgame is banked points: commissions + loads
     return v;}
@@ -2130,14 +2140,14 @@ function renderAid(){
   const ab=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].act).map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   const lb=Object.keys(BUILDINGS).filter(k=>!BUILDINGS[k].act).map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   document.getElementById('aidcard').innerHTML=
-    '<h2>'+ic('scroll-text')+' Player Aid — v4.3 “Open Quay”</h2>'
+    '<h2>'+ic('scroll-text')+' Player Aid — v4.4 “Maiden Load”</h2>'
     +'<div class="asec"><b>Your turn</b><div class="note"><b>Move</b> to an adjacent station and activate its <b>row</b> or <b>column</b>. Resolve the line’s stops <b>in any order, all optional</b>: the two stations (one printed action each) + each slot’s <b>building action</b> and/or a <b>load of the ship</b> docked there. Sharing a station costs nothing — move where the board is best.</div></div>'
     +'<div class="asec"><b>The die IS the cask</b><div class="note">At <b>brew</b> a tray die is set to the printed <b>start value</b> (= quality − aging steps; Gruit starts Ready at 1). <b>Age points turn it up — it stops at the quality: READY.</b> Only buildings lift it past quality (Malt Kiln +1 as it boards, cap 6). <b>Gates read the die as it boards</b>; at delivery the die <b>parks at the kontor showing its face</b> — pips = the banked ★ (never &lt;1), the body = presence, majorities and the clock. <b>No die in the tray → no brew, no presence bump.</b></div></div>'
     +'<div class="asec"><b>The four stations — ONE action each</b><div class="note">'
       +ic('store')+' <b>Market</b> — take 2 goods (any mix).<br>'
       +ic('flask-conical')+' <b>Brewhouse</b> — brew (pay a recipe → an open vessel; the cask takes the face-up load bonus of its quality pile — steerable).<br>'
       +ic('hourglass')+' <b>Cellar</b> — '+CELLAR_POOL+' age points across your vessels (dice also turn +1 automatically on your turn).<br>'
-      +ic('anchor')+' <b>Harbor</b> — commission: pay '+costStr(COMMISSION_COST)+', place a display hull on a shipless slot, <b>score ★ = its berth count</b> (Skute 1 · Cog 2 · Hulk 3).</div></div>'
+      +ic('anchor')+' <b>Harbor</b> — commission: pay '+costStr(COMMISSION_COST)+', place a display hull on a shipless slot, <b>score ★ = its berth count</b> (Skute 1 · Cog 2 · Hulk 3) — then <b>one free load</b>: a Ready cask from your vessels may board the new hull at once (a normal load; a Skute sails on it).</div></div>'
     +'<div class="asec"><b>Loading & sailing</b><div class="note">A ship’s slot stop loads <b>one READY cask from YOUR vessels</b> whose die meets the gate (after the slot’s lifts) — the die rides the tile, and the cask’s printed <b>load bonus fires</b> (after any sail it completes). The Stevedore loads 2. A hull <b>sails the moment it is full</b> — a Skute on its first load — and every cask aboard delivers in load order; prizes resolve <b>when gained, owner’s choice</b>. Casks are private until aboard: the race is for <b>berths</b>, and topping off a hull sails everyone’s cargo on your clock.</div></div>'
     +'<div class="asec"><b>Buildings — one green family</b><div class="note">Every building serves <b>whoever activates it</b>; placing one (London’s prize, or a <i>Gain 1 building</i> bonus — always from the display) banks the builder <b>+'+BUILD_PTS+'★</b>. Overbuild: <b>one payment per placement</b> — a fee-paid gain covers the ground (no rent); the '+costStr(OVERBUILD_FEE)+' rent applies only when an otherwise-free placement overbuilds (the displaced tile is boxed). <b>Paid at the wharf, free at the kontor:</b> gaining a recipe / building / specialist via a wharf channel (Scrivener’s Hall · Hiring Post · the gain bonuses) costs <b>the item’s printed fee</b> (a chipless building is free) — the kontor prizes never do, and using a building never adds a fee of its own.</div>'
       +'<div class="atags" style="margin-top:5px">'+ab+'</div><div class="atags" style="margin-top:4px">'+lb+'</div></div>'
@@ -2204,9 +2214,9 @@ function renderBar(){
       acts=ships.map(sid=>{const sh=S.slots[sid];return btn(LU('sailboat')+' '+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+')'+(bKeyAt(sid)==='maltkiln'?' · '+LU('flame')+'+1':''),'loadOnto(\''+sid+'\')','go');}).join('')+btn('Back','loadBack()','ghost')+btn('Skip','loadSkip()','ghost');}}
   else if(U==='commission'){const d=UI.comm;const disp=S.shipDisplay||[];
     if(UI.stage==='place'){const sn=disp[d.idx];
-      prompt='Place the '+LU('sailboat')+' <b>'+(sn?SHIP_NAME[sn.ship]:'hull')+'</b> → <b>'+(sn?DEST[sn.dest].name:'')+'</b> — click a glowing (shipless) slot. <span class="note">You bank ★ = its berth count.</span>';
+      prompt='Place the '+LU('sailboat')+' <b>'+(sn?SHIP_NAME[sn.ship]:'hull')+'</b> → <b>'+(sn?DEST[sn.dest].name:'')+'</b> — click a glowing (shipless) slot. <span class="note">★ = its berths · then one free load.</span>';
       acts=btn('◂ Pick a different hull','commBack()','ghost')+btn('Skip','commSkip()','ghost');}
-    else{prompt=LU('anchor')+' <b>Harbor — Commission</b>: pay '+costStr(COMMISSION_COST)+', place a hull, bank ★ = its berths. Pick one of the '+disp.length+':';
+    else{prompt=LU('anchor')+' <b>Harbor — Commission</b>: pay '+costStr(COMMISSION_COST)+', place a hull, bank ★ = its berths, then <b>one free load</b>. Pick one of the '+disp.length+':';
       acts=disp.map((sn,i)=>btn(LU('sailboat')+' '+SHIP_NAME[sn.ship]+' → '+DEST[sn.dest].name+' · +'+SHIP_CAP[sn.ship]+'★','commPick('+i+')','go')).join('')+btn('Skip','commSkip()','ghost');}}
   else if(U==='placebldg'){const b=UI.tmp.placeBldg;prompt=S.players[b.owner].name+' — place '+LU('building-2')+' <b>'+bName(b.b)+'</b>: click a glowing slot (+'+BUILD_PTS+'★). <span class="note">('+BUILDINGS[b.b].desc+'. '+(b.feePaid?'The paid fee covers the ground — overbuild free; the displaced tile is boxed.':'Overbuilding costs the '+costStr(OVERBUILD_FEE)+' rent; the displaced tile is boxed.')+')</span>';
     acts='';}
