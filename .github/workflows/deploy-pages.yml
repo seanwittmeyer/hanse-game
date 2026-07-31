@@ -10,6 +10,14 @@
 #
 # configure-pages flips the repo's Pages source to "GitHub Actions" on first run (needs pages:write),
 # which retires the implicit branch pipeline — no settings change required.
+#
+# UPDATE (2026-07-31): that flip never happened — configure-pages ENABLES Pages when missing but
+# does NOT switch an already-enabled site off legacy branch builds. So the implicit
+# "pages build and deployment" pipeline kept running alongside this workflow on every push,
+# racing it for the repo's single deployment slot: the recurring 400 "due to in progress
+# deployment / please cancel … first" failures (e.g. run #586) are the legacy pipeline losing
+# that race, sometimes while holding an OLDER commit. The explicit "Force the Pages source"
+# step below PUTs build_type=workflow (idempotent), which retires the legacy pipeline for good.
 name: Deploy site to Pages
 
 on:
@@ -39,6 +47,15 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Force the Pages source to "GitHub Actions" (retires the implicit branch pipeline)
+        # Idempotent — a no-op once build_type is already "workflow". Never fails the deploy.
+        run: |
+          curl -sS -X PUT \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "${{ github.api_url }}/repos/${{ github.repository }}/pages" \
+            -d '{"build_type":"workflow"}' \
+            -w 'pages build_type PUT -> HTTP %{http_code}\n' || true
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
