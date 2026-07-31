@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v4.5 “Empty Tray”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v4.5b “Open Orders”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -646,7 +646,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.5 “Empty Tray”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.5b “Open Orders”</span></h1>
   <a href="play.html">▶ Play</a>
   <a href="index.html">📖 Rules</a>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
@@ -674,7 +674,7 @@
 //==================================================================
 // The CARD COMPONENT LIBRARY (components.js) is the single source of the printed card faces —
 // data + generators + card CSS, shared with play.html (the app mirrors the kit, v3.3).
-const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard}=window.HC;
+const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard}=window.HC;
 
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 // (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
@@ -726,7 +726,7 @@ const SCORE_RING_T=0.8;   // ring thickness (native) → prints 0.64″ — a co
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
 // NATIVE component sizes (in) — the design size each piece renders at; packRun scales the FOOTPRINT by SCALE and
 // the render wrapper scales the CONTENT to match. casks/ships 2.5″ · buildings 2″ · improvement cards 2×1″ · frames 2.5″.
-const SIZE={tile:[1.25,1.25],caskc:[2.4,1],cask:[2.4,1],shipk:[2.5,1],shipc:[2.5,2],shiph:[2.5,3],bld:[2.5,1.32],imp:[2,2],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // v4.0: + the 1-berth Skute   // v3.4a/b refit: cask TILES 2.4×1 · buildings 2.5×1.32 · ALL-BERTH carrier ships (Cog 2.5×2 · Hulk 2.5×3 — the tile IS its berths)
+const SIZE={tile:[1.25,1.25],caskc:[2.4,1],cask:[2.4,1],shipk:[2.5,1],shipc:[2.5,2],shiph:[2.5,3],bld:[2.5,1.32],ld:[2,0.9],imp:[2,2],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // v4.0: + the 1-berth Skute   // v3.4a/b refit: cask TILES 2.4×1 · buildings 2.5×1.32 · ALL-BERTH carrier ships (Cog 2.5×2 · Hulk 2.5×3 — the tile IS its berths)
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
@@ -1042,11 +1042,13 @@ function supplyBoard(){
   const smpShip=[shipCard('skute','Bruges'),shipCard('cog','London'),shipCard('hulk','Bergen'),shipCard('cog','Novgorod')];
   const smpRec=RECIPES.slice(0,4).map(recipeCard);
   const smpImp=[0,1,2,3].map(i=>improveTile(IMPROVE[i]));
-  const market='<div class="disp-h m">'+LU('store')+'The Displays<span class="sm">— nothing here is bought: buildings are earned at London, specialists at Bergen, recipes at Bruges (and via the printed bonuses); hulls are commissioned at the Harbor (1G · bank ★ = berths)</span></div>'
+  const market='<div class="disp-h m">'+LU('store')+'The Displays<span class="sm">— nothing here is bought: buildings are earned at London, specialists at Bergen, recipes at Bruges (and via the printed bonuses); hulls are commissioned at the Harbor (1G + 1 free load · no ★, v4.5b); open LADINGS are claimed by qualifying deliveries</span></div>'
     +shelf('Buildings — the display of 4 · placing one banks +3★, it serves everyone','building-2',smpBld.map(s=>dslot('b','building-2',s)).join(''))
     +shelf('Ships — the market of 4 · commission at the Harbor (1G · 1 free load)','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''))
     +'<div class="shelf-lbl">'+LU('scroll-text')+'Recipes — the dealt export stacks (earned, never bought)</div>'
-    +'<div class="shelf">'+smpRec.map(s=>dslot('r','scroll-text',s)).join('')+'</div>';
+    +'<div class="shelf">'+smpRec.map(s=>dslot('r','scroll-text',s)).join('')+'</div>'
+    +shelf('Ladings — the order row of 3 (v4.5b) · claim on a qualifying delivery · refill at end of turn','scroll-text',
+      LADINGS.slice(0,3).map(d=>dslot('l','scroll-text',ladingTile(d))).join(''));
   const cellar='<div class="disp-h i">'+LU('wrench')+'Specialists</div>'
     +'<div class="shelf-lbl">'+LU('wrench')+'Display of 4 — earned free<span class="bag">'+LU('shopping-bag')+'</span></div>'
     +'<div class="shelf-v">'+smpImp.map(s=>dslot('i','wrench',s)).join('')+'</div>';
@@ -1061,7 +1063,7 @@ function supplyBoard(){
 
   const inner='<div class="mboard supply" style="position:absolute;left:'+SCORE_RING_T+'in;top:'+SCORE_RING_T+'in;'
       +'width:'+(SUPPLY_NW-2*SCORE_RING_T).toFixed(3)+'in;height:'+(SUPPLY_NH-2*SCORE_RING_T).toFixed(3)+'in">'
-    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays — THE clock is the '+LU('dices')+' <b>tally dice</b> (v4.5): the first EMPTY tray — every die committed — sets the final round (dice never return; sails end nothing) — score laps the rim by fives (0–49, then +50): deliveries as they land, +3★ builds, ★ = berths on commissions, 1★ bumps</span></div>'
+    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays — THE clock is the '+LU('dices')+' <b>tally dice</b> (v4.5): the first EMPTY tray — every die committed — sets the final round (dice never return; sails end nothing) — score laps the rim by fives (0–49, then +50): deliveries as they land, +3★ builds, lading claims, Tollhouse stamps, 1★ bumps — commissions bank nothing (v4.5b)</span></div>'
     +'<div class="sup-cols">'
       +'<div class="sup-main">'+market+'</div>'
       +'<div class="sup-cellar">'+cellar+'</div>'
@@ -1273,11 +1275,14 @@ function buildPages(){
   const bldItems=[];
   BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)
     bldItems.push({fam:'Buildings',html:buildingCard(d)});});   // v4.0 SINGLE-FACED: no owner, no WILD flip — displaced tiles are boxed
-  packSpaced(pages,'bits','Building tiles — SINGLE-FACED, one green family (17 · 22″ plotter · 1.5mm bleed · cuts 3mm apart)',[{kind:'bld',items:bldItems}],famPages);
+  packSpaced(pages,'bits','Building tiles — SINGLE-FACED, one green family (17 · 22″ plotter · 1.5mm bleed · cuts 3mm apart · v4.5b: 8 of 17 touch a die)',[{kind:'bld',items:bldItems}],famPages);
+  // --- LADING TILES (v4.5b) → single-sided order strips: the kontor ORDER row ---
+  const ldItems=(MODE==='proof'?LADINGS.slice(0,3):LADINGS).map(d=>({fam:'Ladings',html:ladingTile(d)}));
+  packSpaced(pages,'bits','Lading tiles — the ORDER row (15 · single-sided · v4.5b): deliver a qualifying cask at the named kontor, claim the tile — its ★ bank at once; the row of 3 refills at end of turn',[{kind:'ld',items:ldItems}],famPages);
   // (2026-07-19: the UNLOCK-COVER sheet left the kit — sourced, any opaque square, like the tally dice.
   //  v3.4c: the owner frames are RETIRED — little house tokens mark building ownership; store-bought.)
   // --- TOKENS → their own single-sided trimmed sheet (moved off the Wharf sheet, 2026-07-14) ---
-  const TLBL_TOK='Tokens (single-sided · cut circles) — goods. (v4.0: the tally dice are real d6 — provide 14/colour; the die IS the aging marker, so the cask cubes and maturation markers left the kit. Score movers: 1 disc/colour, sourced.)';
+  const TLBL_TOK='Tokens (single-sided · cut circles) — goods. (v4.0: the tally dice are real d6 — provide 12/colour (v4.5); the die IS the aging marker, so the cask cubes and maturation markers left the kit. Score movers: 1 disc/colour, sourced.)';
   const wtok=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wtok.push(tok(d));});
   packRun(pages,'bits',TLBL_TOK,'tok',wtok,'Goods tokens',famPages,TOK_GEO);
   // --- RECIPE CARDS (cardstock — do not mount) — DOUBLE-SIDED since v3.2d: cost face / BREWED face.

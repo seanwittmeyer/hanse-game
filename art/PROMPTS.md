@@ -141,6 +141,14 @@ buildings = the brewer's craft & harbor works.* The subjects used:
 - **building-grainex.png** — a grain exchange hall, an open arcaded corn market with sacks, scoops and a balance scale. *(stand-in: building-gauger.png)*
 - **building-missionq.png** — a small seamen's mission chapel on the quay, a lantern over its door, nets and a moored skiff beside. *(stand-in: building-reliquary.png)*
 
+### v4.5b — the five DICE-PASS buildings + the Braumeister (queued; the kit rides interim stand-ins until these exist)
+- **building-racking.png** — a racking hall: two casks side-by-side on a stillage with a siphon hose running between them, beer mid-transfer. *(stand-in: building-partigyle.png)*
+- **building-assay.png** — an assay house: a clerk's bench with a balance scale, a gauging rod and a sample tankard of beer under a wax seal. *(stand-in: building-connoiss.png)*
+- **building-hopex.png** — a hop exchange: an arcaded market stall heaped with sacks of green hop cones, a hanging steelyard scale. *(stand-in: building-hopyard.png)*
+- **building-tollhouse.png** — a tollhouse on the quay: a striped toll bar over the cartway, a stamped ledger and a strongbox at the window. *(stand-in: building-burgomstr.png)*
+- **building-bonded.png** — a bonded store: a stone-vaulted warehouse with casks behind an iron grille, a great padlock and a customs seal on the door. *(stand-in: building-salthouse.png)*
+- **improve-braumeister.jpg** — a long wooden mash paddle over a gleaming copper kettle (the specialist object-shot grammar: one tool, beige field). *(stand-in: a copy of improve-coppersmith.jpg, shipped as improve-braumeister.jpg)*
+
 ## Notes
 - Keep all ten cask images **consistent** (same wharf, same angle/lighting) so the deck reads as one family —
   only the wood/contents/mood change per beer. Same for the two ships, and for the 21 building structures.

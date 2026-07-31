@@ -1,4 +1,13 @@
-# Brewhouses of the Hanse — Components (v4.5 “Empty Tray”)
+# Brewhouses of the Hanse — Components (v4.5b “Open Orders”)
+
+> **v4.5b (designer-ruled 2026-07-31 — off gatekeeper review #2 + playtest #24):** the #24
+> program. **Out of the box:** the commission ★ mint (rules-side) · automatic aging
+> (rules-side) · the **Brewhouse Annex** · 1 each of Granary / Scrivener’s Hall / Malt Kiln /
+> Cooperage / Customs House. **Into the box:** the **LADING deck (15 order tiles ⚙, row of
+> 3)** · 5 new building designs — **Racking Hall · Assay House ×2 · Hop Exchange · Tollhouse ·
+> Bonded Store** (the ephemeral trial — it sails away with its hull) · the **Braumeister**
+> specialist (5th design) · specialist decks at **max(2, n−1) copies** per design (2p adds a
+> copy). Bergen’s mat gains the line **“≤1 specialist per ship.”**
 
 > **v4.5 (designer-ruled 2026-07-31 — off human playtest #24):** **12 tally dice** per house
 > (was 14 — the box sheds 8 dice), and the end clock reads the **TRAY**: the first house whose
@@ -56,11 +65,11 @@
 
 | Board | Qty | Holds |
 |---|---|---|
-| Main board — **the Wharf** | 1 | 2×2 stations, each printing **ONE action** (Market *Source 2* · Brewhouse *Brew* · Cellar *Age 3* · Harbor *Commission 1G, ★ = berths, load 1* — v4.4), ringed by 8 slots (a building seat + a ship seat each). |
+| Main board — **the Wharf** | 1 | 2×2 stations, each printing **ONE action** (Market *Source 2* · Brewhouse *Brew* · Cellar *Age 3* · Harbor *Commission 1G + load 1 — no ★* — v4.5b), ringed by 8 slots (a building seat + a ship seat each). |
 | **Destinations board** | 1 | The four kontor panels — Bruges · London · Bergen · Novgorod — each printing its **gate (die N+)**, its **prize** (recipe / building / specialist — Novgorod instead prints **value = the die +2★**), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the banked ★ audit). *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
 | Player boards | 4 | **3 vessel slots** (1–2 open; the 3rd under a printed cover “2nd beer”) + **2 specialist seats** (1st open; the 2nd under “3rd beer”). Recipe cards sit beside it. Goods cap 8 printed. |
-| **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per house — the bank (+3★ builds · ★ = berths on commissions · 1★ bumps) and delivery ★ as they land. *(New in v4.0 — the hard line demands a home for banked points.)* |
-| Supply board *(kit)* | 1 | The displays: ships 4 · buildings 4 · specialists 4 · the export recipe row — ringed by the score track. *(The Sailed-Ships clock left with v4.1.)* |
+| **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per house — the bank (+3★ builds · lading ★ · Tollhouse stamps · 1★ bumps) and delivery ★ as they land. *(New in v4.0 — the hard line demands a home for banked points.)* |
+| Supply board *(kit)* | 1 | The displays: ships 4 · buildings 4 · specialists 4 · **the lading row of 3** (v4.5b) · the export recipe row — ringed by the score track. *(The Sailed-Ships clock left with v4.1.)* |
 
 ## 3. Common supply
 
@@ -95,8 +104,8 @@ bought; **min 6 tiles/type** (staples deeper: Gruit 16 · Hopped 12 ⚙).
 Neutral, destination-bound, deck-fed **display of 4**. The tile is a stack of full-width 1″
 berth wells, filled bottom→top; the **top berth prints the identity** (port · gate · the 1 G
 commission) and the last cask covers it — **the ship sails at once**. Commission at the Harbor:
-pay `1 G`, place on a shipless slot, **bank ★ = the berth count**, and (v4.4) you may **load 1
-Ready cask onto it at once**.
+pay `1 G`, place on a shipless slot, and (v4.4) you may **load 1 Ready cask onto it at
+once** — **no ★ (v4.5b)**: the hull + the instant load are the whole reward.
 
 | Hull | Berths | Size | Count ⚙ |
 |---|---|---|---|
@@ -114,24 +123,31 @@ for ONE payment ⚙ (v4.2c: a paid fee covers the ground — the `1 G` rent only
 **London**, or via the *Gain 1 building* bonus at the **tile’s printed fee** ⚙ (a chipless
 tile is free — the tier reads straight off the component). Using a building never costs a fee.
 
+The v4.5b **dice pass**: 8 of the 17 tiles touch a die (was 3).
+
 | Building | Qty ⚙ | Effect | Wharf fee ⚙ (chip; — = free) |
 |---|---|---|---|
-| Granary | 2 | slot stop: **gain 2 goods** | — |
-| Scrivener’s Hall | 2 | slot stop: **gain 1 recipe** (at the recipe’s fee) | 1 `G` |
+| Granary | 1 | slot stop: **gain 2 goods** | — |
+| Scrivener’s Hall | 1 | slot stop: **gain 1 recipe** (at the recipe’s fee) | 1 `G` |
 | Mission Quay | 2 | slot stop: **age +2** | — |
 | Hiring Post | 1 | slot stop: **gain 1 specialist** (at its fee) | 1 `G` |
 | Almoner’s Stall | 1 | slot stop: **place 1 presence** (a tray die) | — |
-| Brewhouse Annex | 1 | slot stop: **brew 1** (pay its cost) | 1 `G` |
-| **Malt Kiln** | 3 | a cask loading here: **die +1** (cap 6) | 2 `G` |
-| Cooperage | 2 | ship here: **+1 berth** | 2 `G` |
-| Customs House | 2 | ship here **boards one gate lower** | 2 `G` |
+| **Racking Hall** | 1 | slot stop: **swap the dice of two of your maturing casks** (each stops at its quality) | 1 `G` |
+| **Assay House** | 2 | slot stop: **turn one of your maturing dice +1** (stops at its quality) | 1 `H` |
+| **Malt Kiln** | 2 | a cask loading here: **die +1** (cap 6) | 2 `G` |
+| **Hop Exchange** | 1 | a cask loading here **may pay 1 `H`: die +1** (cap 6) | 1 `G` 1 `H` |
+| **Tollhouse** | 1 | a cask loading here **may turn its die −1** (never below the gate): **bank +2★** | 1 `G` |
+| **Bonded Store** | 1 | a cask loading here: **die +1** (cap 6); **when this hull sails the Store sails with it** (boxed) — every house with a cask aboard gains 2 goods | 1 `G` 1 `H` |
+| Cooperage | 1 | ship here: **+1 berth** | 2 `G` |
+| Customs House | 1 | ship here **boards one gate lower** | 2 `G` |
 | Rich Berth | 1 | hull here may **sail one berth short** (min 1) | 2 `G` |
 
-## 7. Specialist tiles (4 designs · n−1 copies each · 2×2″ purple)
+## 7. Specialist tiles (5 designs · max(2, n−1) copies each (v4.5b) · 2×2″ purple)
 
-Free as **Bergen’s prize**; the Hiring Post / *Gain 1 specialist* bonus pay each tile’s
-**printed wharf fee** ⚙. **Two seats** per house; never two of a kind. A taken tile’s gap
-refills from the deck at the **end of the turn** (v4.4c — ships/buildings refill at once).
+Free as **Bergen’s prize** — v4.5b: **at most ONE per ship sailed** (load order decides); the
+Hiring Post / *Gain 1 specialist* bonus pay each tile’s **printed wharf fee** ⚙. **Two seats**
+per house; never two of a kind. A taken tile’s gap refills from the deck at the **end of the
+turn** (v4.4c — ships/buildings refill at once). Print 3 copies per design (covers 4p).
 
 | Specialist | Effect | Wharf fee ⚙ (v4.2c) |
 |---|---|---|
@@ -139,6 +155,18 @@ refills from the deck at the **end of the turn** (v4.4c — ships/buildings refi
 | Grain Factor | gain grain: **+1 extra** (any faucet) | 1 `G` |
 | Hop Gardener | gain hops: **+1 extra** (any faucet) | 2 `H` |
 | Stevedore | your ship-slot stop loads **2 casks** | 1 `G` |
+| **Braumeister** *(v4.5b)* | start of your turn: **your ripest maturing cask ages +1** | 1 `G` 1 `H` |
+
+## 7b. Lading tiles (15 ⚙ · row of 3 · 2×0.9″ — v4.5b, the order layer)
+
+Each prints a **kontor** (or *any*), a **condition** — a die minimum (*die 4+*) or a named
+beer — and a reward (**2–5★** ⚙). Deliver a qualifying cask at that kontor → **claim the
+tile**: it comes to your seat (the audit), the ★ bank at once. **One per delivered cask.**
+The row refills from the deck at the **end of the turn**; claimed tiles never return.
+
+Schedule ⚙: Bruges — die 3+→2★ · die 4+→3★ · Keut→3★ · die 5+→4★ · London — die 4+→3★ ·
+die 5+→4★ · Broyhan→3★ · die 6→5★ · Bergen — die 4+→3★ · die 5+→4★ · Mumme→4★ · Novgorod —
+die 5+→3★ · Bock→4★ · die 6→4★ · any kontor — die 6→3★.
 
 ## 8. Recipe cards (double-sided — the Flight record)
 
@@ -152,8 +180,8 @@ seat 2).
 ## 9. Setup (summary — RULES.md §1)
 
 3G 2H each · warm Ready Gruit (die 1) in vessel 1 · 12 dice · displays: ships 4 / buildings 4 /
-specialists 4 · wharf seeds: Hulk→Bruges + 1 ship + 2 neutral buildings · worker placed free ·
-first player fixed.
+specialists 4 / **ladings 3** · wharf seeds: Hulk→Bruges + 1 ship + 2 neutral buildings ·
+worker placed free · first player fixed.
 
 ## 10. Box delta vs v3.4
 
@@ -172,6 +200,10 @@ commission’s free load returns).
 **v4.4c delta:** rules-only — the **specialist display refills at end of turn** (no reprint).
 **v4.5 delta:** −8 tally dice (**12/house**); the end clock reads the **empty tray** (rules +
 player-aid reprint).
+**v4.5b delta:** **+15 lading tiles** (the order row) · building deck reprint (5 new designs
+in, the Annex + 5 duplicate tiles out — still 17) · **+Braumeister** tiles (5th specialist
+design; decks now max(2, n−1) copies) · Harbor caption reprint (no ★) · Bergen mat line
+(“≤1 specialist per ship”) · player-aid reprint (no auto-age; ladings).
 
 ## 11. Known gaps ⚙ (the watch list)
 

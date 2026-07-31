@@ -1,4 +1,4 @@
-// Targeted rule checks for v4.x — v4.4 "Maiden Load" (KEY hanse-v44).
+// Targeted rule checks for v4.x — v4.5b "Open Orders" (KEY hanse-v45b).
 // Drives the CANONICAL engine (extract play.html's <script>, stub the DOM) and asserts each
 // rule directly by constructing states — no bot in the loop, so a failure is the engine's.
 // Usage: node playtests/verify-v4.js
@@ -42,10 +42,16 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('3 age points turn the die 1→4 (READY)', p.vessels[1].die===4);
   var d0=p.vessels[1].die;UI.age={pool:2,mode:'pool',returnTo:'stops'};ageAllot(1);
   ok('a Ready die never ages past its quality', p.vessels[1].die===d0);
-  p.vessels[1].die=3;passiveFerment(p);
-  ok('passive ferment turns maturing dice +1', p.vessels[1].die===4);
-  passiveFerment(p);
-  ok('passive ferment stops at the quality', p.vessels[1].die===4);
+  // v4.5b: AUTO-AGING IS CUT — dice turn only when something turns them
+  ok('no auto-age survives (passiveFerment is gone)', typeof passiveFerment==='undefined'&&typeof AUTO_AGE==='undefined');
+  p.vessels[1].die=3;var d1=p.vessels[1].die;
+  braumeisterTick(p);
+  ok('no Braumeister seated → nothing ages at turn start', p.vessels[1].die===d1);
+  p.upgrades=['braumeister'];p.sslots=2;
+  braumeisterTick(p);
+  ok('the Braumeister ages the ripest maturing cask +1 at turn start', p.vessels[1].die===d1+1);
+  braumeisterTick(p);
+  ok('the Braumeister never lifts past quality (no maturing cask → no tick)', p.vessels[1].die===4);
 })();
 
 // ---- 3. BREW: pays, sets the die + pile action, flips the card; the tray gates it ----
@@ -140,7 +146,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   p.ai=null;
 })();
 
-// ---- 10. COMMISSION: 1G · place on a shipless slot · bank ★ = berth count · display refills to 4 ----
+// ---- 10. COMMISSION: 1G · place on a shipless slot · banks NOTHING (v4.5b de-mint) · display refills to 4 ----
 (function(){var p=fresh();stops();
   p.grain=3;var b0=p.bank;
   S.shipDisplay=[{ship:'hulk',dest:'bergen'},{ship:'skute',dest:'bruges'}];S.shipDeck=[{ship:'cog',dest:'london'},{ship:'cog',dest:'bruges'},{ship:'cog',dest:'bergen'}];
@@ -148,7 +154,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   commPick(0);commPlace('s6');
   ok('commission pays 1G', p.grain===2);
   ok('the hull lands on the slot', S.slots.s6&&S.slots.s6.ship==='hulk'&&S.slots.s6.dest==='bergen');
-  ok('the commission banks ★ = berth count (hulk 3)', p.bank===b0+3);
+  ok('the commission banks NOTHING (v4.5b — the hull + the free load are the reward)', p.bank===b0);
   ok('the display refills toward 4', S.shipDisplay.length===4);
   ship('s7','cog','bruges');
   UI.comm={returnTo:'stops',idx:null};UI.sub='commission';commPick(0);
@@ -292,8 +298,13 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('two neutral buildings seeded', SLOTS.filter(function(s){return S.buildings[s.id];}).length===2);
   ok('a warm-start ship is a Hulk → Bruges', SLOTS.some(function(s){var t=S.slots[s.id];return t&&t.ship==='hulk'&&t.dest==='bruges';}));
   ok('every house opens with a Ready Gruit (die 1) + 2 vessel slots + 1 seat', S.players.every(function(p){return p.vessels[0]&&p.vessels[0].die===1&&p.vslots===2&&p.sslots===1;}));
-  ok('specialist deck = n−1 copies of the 4 designs', S.impDeck.length+S.impDisplay.length===8);
+  ok('specialist deck = max(2,n−1) copies of the 5 designs (3p → 10)', S.impDeck.length+S.impDisplay.length===10);
   ok('12 tally dice per house (v4.5)', S.players.every(function(p){return p.presPool===12;}));
+  ok('the lading row opens at 3 (deck 12 behind it)', S.ladingRow.length===3&&S.ladingDeck.length===12);
+  S=freshState(2,['P1','P2']);
+  ok('2p specialist deck holds 2 copies of each design (10)', S.impDeck.length+S.impDisplay.length===10);
+  S=freshState(4,['P1','P2','P3','P4']);
+  ok('4p specialist deck holds 3 copies of each design (15)', S.impDeck.length+S.impDisplay.length===15);
 })();
 
 // ---- 18. SPECIALISTS: 2 seats, no duplicates, earned free ----
@@ -351,6 +362,79 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   UI.pendingSpec=[{pid:1,dest:'bergen'}];afterSail('stops');
   ok('Bergen prize stays free', q.grain===qg3&&(q.upgrades||[]).length===1);
   q.ai=null;
+})();
+
+// ---- 20. v4.5b THE DICE PASS: Racking Hall · Assay House · Hop Exchange · Tollhouse · Bonded Store ----
+(function(){var p=fresh();stops();
+  p.vessels=[{style:'bock',q:5,die:4,act:'age'},{style:'hopped',q:2,die:1,act:'source'},null];p.vslots=3;
+  enterRack('stops');
+  ok('the Racking Hall opens on two maturing casks', UI.sub==='rack');
+  rackPick(0);rackPick(1);
+  ok('the swap trades the dice, each capped at its quality (bock 4↔hopped 1 → 1 / 2-READY)',
+    p.vessels[0].die===1&&p.vessels[1].die===2&&caskReady(p.vessels[1]));
+  p.vessels=[{style:'bock',q:5,die:4,act:'age'},null,null];
+  enterRack('stops');
+  ok('one maturing cask → the Racking Hall refuses', UI.sub!=='rack');
+  p.vessels=[{style:'mumme',q:4,die:3,act:'age'},null,null];
+  enterAssay('stops');assayPick(0);
+  ok('the Assay House turns one maturing die +1 (3→4 READY)', p.vessels[0].die===4&&caskReady(p.vessels[0]));
+  enterAssay('stops');
+  ok('nothing maturing → the Assay House refuses', UI.sub!=='assay');
+})();
+(function(){var p=fresh();stops();p.ai={tier:'journeyman'};
+  S.buildings.s1={b:'hopex'};var sh=ship('s1','cog','novgorod');
+  p.vessels[0]={style:'broyhan',q:3,die:3,act:'source'};p.hops=2;
+  ok('the Hop Exchange makes the gate with its paid lift (die 3+1 ≥ Novgorod 4)', canTake('s1',0));
+  UI.load={ships:['s1'],returnTo:'stops',loadsLeft:1,cask:0};loadOnto('s1');
+  ok('the paid lift boards the die at 4 and costs 1H', sh.load[0].die===4&&p.hops===1);
+  S.buildings.s2={b:'tollhouse'};var t2=ship('s2','hulk','bruges');
+  p.vessels[0]={style:'hopped',q:2,die:2,act:'source'};
+  var b0=p.bank,o0=p.bankO||0;
+  UI.load={ships:['s2'],returnTo:'stops',loadsLeft:1,cask:0};loadOnto('s2');
+  ok('the Tollhouse stamp: die −1 (min the gate) and +2★ banked', t2.load[0].die===1&&p.bank===b0+2&&(p.bankO||0)===o0+2);
+  p.ai=null;
+})();
+(function(){var p=fresh();stops();p.ai={tier:'journeyman'};
+  S.buildings.s3={b:'bonded'};var b3=ship('s3','cog','bruges');
+  p.vessels=[{style:'gruit',q:1,die:1,act:'source'},{style:'gruit',q:1,die:1,act:'source'},null];p.vslots=3;
+  var g0=p.grain,h0=p.hops;
+  UI.load={ships:['s3'],returnTo:'stops',loadsLeft:2,cask:0};loadOnto('s3');
+  UI.load={ships:['s3'],returnTo:'stops',loadsLeft:1,cask:1};loadOnto('s3');
+  ok('the Bonded Store lifts each boarding die +1 (gruit 1→2 = 2★ each)',
+    p.delivered.slice(-2).every(function(d){return d.val===2;}));
+  ok('the Store SAILS with the hull — the slot building is gone (boxed)', S.buildings.s3===null);
+  ok('every contributing house gains 2 goods, once (not per cask)', p.grain===g0+1&&p.hops===h0+1);
+  p.ai=null;
+})();
+
+// ---- 21. v4.5b LADINGS: the order row — claim on a qualifying delivery · one per cask · end-of-turn refill ----
+(function(){var p=fresh();stops();p.ai={tier:'journeyman'};
+  S.ladingRow=[{dest:'bruges',min:3,pts:2},{dest:'london',min:4,pts:3},{dest:null,min:6,pts:3}];
+  S.ladingDeck=[{dest:'bergen',min:5,pts:4}];
+  var b0=p.bank,l0=(p.bankL||0);
+  deliverCask(p,{owner:0,style:'hopped',q:2,die:3,act:'load'},'bruges');
+  ok('a qualifying delivery queues the claim (bruges die 3+)', (UI.pendingLading||[]).length===1);
+  afterSail('stops');
+  ok('the claim banks the printed ★ at once and takes the tile',
+    p.bank===b0+2&&(p.bankL||0)===l0+2&&(p.ladings||[]).length===1&&S.ladingRow.length===2);
+  ok('the row does NOT refill mid-turn', S.ladingRow.length===2&&S.ladingDeck.length===1);
+  var b1=p.bank;
+  deliverCask(p,{owner:0,style:'gruit',q:1,die:1,act:'source'},'bruges');
+  ok('a non-qualifying delivery claims nothing (die 1 < every open order)', (UI.pendingLading||[]).length===0&&p.bank===b1);
+  UI={sub:'end'};endTurn();
+  ok('the lading row refills at the END of the turn', S.ladingRow.length===3&&S.ladingDeck.length===0);
+  S.players.forEach(function(q){q.ai=null;});
+})();
+
+// ---- 22. v4.5b BERGEN: at most ONE specialist per ship sailed ----
+(function(){var p=fresh();stops();p.ai=null;
+  var sh=ship('s4','cog','bergen',[{owner:0,style:'keut',q:3,die:3,act:'load'},{owner:0,style:'hopped',q:2,die:2,act:'source'}]);
+  UI.pendingSpec=[];sailShip('s4',0);
+  ok('two casks, one Bergen prize (≤1 specialist per ship)', (UI.pendingSpec||[]).length===1);
+  var q=S.players[1];
+  var sh2=ship('s5','cog','bergen',[{owner:0,style:'keut',q:3,die:3,act:'load'},{owner:1,style:'hopped',q:2,die:2,act:'source'}]);
+  UI.pendingSpec=[];sailShip('s5',0);
+  ok('…and load order decides who gets it (the first cask’s owner)', (UI.pendingSpec||[]).length===1&&UI.pendingSpec[0].pid===0);
 })();
 
 OUT.forEach(function(l){console.log(l);});
