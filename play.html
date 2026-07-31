@@ -57,11 +57,12 @@
     --cw:calc((min(96cqw,1100px) - 3*var(--gap))/5.6);
     grid-template-columns:calc(1.8*var(--cw)) var(--cw) var(--cw) calc(1.8*var(--cw));
     grid-template-rows:auto var(--cw) var(--cw) auto}
-  /* phone: the board renders BIG (1480px — 2×, so the side-slot ships read) and overflows to the right;
-     the wrap scrolls, so the player drags the wharf left/right (boardCross centers the first view on the
-     stations). This override must sit AFTER the base .ag rule — same specificity, source order decides. */
-  @media(max-width:760px){.agwrap{overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch}
-    .ag{--cw:calc((1480px - 3*var(--gap))/5.6)}}
+  /* phone: the board renders at 2× the fitted size (192cqw = twice the container; capped so the whole
+     board HEIGHT still fits one screen — the wharf never scrolls vertically, only pans left/right;
+     boardCross centers the first view on the stations). This override must sit AFTER the base .ag
+     rule — same specificity, source order decides. */
+  @media(max-width:760px){.agwrap{overflow-x:auto;overflow-y:hidden;justify-content:flex-start;-webkit-overflow-scrolling:touch}
+    .ag{--cw:calc((min(192cqw,700px) - 3*var(--gap))/5.6)}}
   /* explicit square rows make every cell a guaranteed square from the GRID — not from each
      item's own aspect-ratio under size-containment (which mobile Safari collapses). */
   .cell,.slot{min-width:0;min-height:0}
