@@ -1,0 +1,27 @@
+=== hanse v4.1 sim — 200 games/count · PATHWAYS (trader personas) ===
+
+== 2p · 200 ok / 0 err ==
+rounds avg 14.2 (min 7 max 23) · in 12–25 band 85.5%
+triggers: dice 100.0% · sailed avg 5.8
+winner total avg 60.3 · margin avg 17.5 · seat wins P1 50.5% P2 49.5%
+per-player: brews 7.6 · deliveries 6.8 · bank★ 9.1
+delivery split: bruges 36.1% · london 22.5% · bergen 28.5% · novgorod 12.8%
+PATHWAYS win-rate by lane: majority 50.5% · lifter 49.5%  (seats: 200/200)
+
+== 3p · 200 ok / 0 err ==
+rounds avg 13.5 (min 7 max 25) · in 12–25 band 77.5%
+triggers: dice 99.5% · ceiling 0.5% · sailed avg 8.7
+winner total avg 66.8 · margin avg 10.3 · seat wins P1 30.5% P2 29.0% P3 40.5%
+per-player: brews 7.1 · deliveries 6.7 · bank★ 9.6
+delivery split: bruges 33.1% · london 22.7% · bergen 27.3% · novgorod 16.8%
+PATHWAYS win-rate by lane: majority 30.5% · lifter 29.0% · builder 40.5%  (seats: 200/200/200)
+
+== 4p · 200 ok / 0 err ==
+rounds avg 12.7 (min 7 max 18) · in 12–25 band 71.0%
+triggers: dice 100.0% · sailed avg 11.4
+winner total avg 63.7 · margin avg 8.5 · seat wins P1 32.5% P2 19.5% P3 25.5% P4 22.5%
+per-player: brews 6.8 · deliveries 6.6 · bank★ 9.1
+delivery split: bruges 30.5% · london 24.0% · bergen 29.0% · novgorod 16.5%
+PATHWAYS win-rate by lane: majority 32.5% · lifter 19.5% · builder 25.5% · breadth 22.5%  (seats: 200/200/200/200)
+
+GATE: 0 crashes / 0 deadlocks.
