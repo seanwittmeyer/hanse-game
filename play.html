@@ -18,12 +18,17 @@
   a{color:var(--red)}
   /* ACTION BAR */
   #bar{position:sticky;top:0;z-index:40;background:var(--ink);color:var(--parch);
-    border-bottom:4px solid var(--gold);box-shadow:0 3px 12px rgba(0,0,0,.35);padding:8px 14px}
-  #bar .top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-  #bar .turn{font-variant:small-caps;letter-spacing:.5px;font-size:.95rem;opacity:.85}
-  #bar .who{font-variant:small-caps;font-weight:bold;font-size:1.25rem;padding:2px 12px;border-radius:6px}
-  #bar .prompt{font-style:italic;opacity:.95;flex:1;min-width:160px}
-  #bar .acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+    border-bottom:4px solid var(--gold);box-shadow:0 3px 12px rgba(0,0,0,.35);padding:6px 12px}
+  /* TWO fixed rows, no wrapping: row 1 = player · stats · menu (right) · row 2 = round · prompt */
+  #bar .top{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;min-width:0}
+  #bar .row2{display:flex;align-items:baseline;gap:10px;margin-top:4px;min-width:0}
+  #bar .turn{flex:none;font-variant:small-caps;letter-spacing:.5px;font-size:.95rem;opacity:.85}
+  #bar .who{flex:none;font-variant:small-caps;font-weight:bold;font-size:1.15rem;padding:2px 10px;border-radius:6px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:34vw}
+  #barres{display:inline-flex;align-items:center;white-space:nowrap;min-width:0}
+  #barres .chip{margin-right:3px;padding:1px 6px}
+  #bar .prompt{font-style:italic;opacity:.95;flex:1;min-width:0}
+  #bar .acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px}
   /* the top-right HAMBURGER — Player Aid / Learn / Rulebook / New Game live in a dropdown */
   #bar .menuwrap{margin-left:auto;position:relative}
   #bar .hamb{background:transparent;border:1px solid rgba(255,255,255,.35);color:var(--parch);font-size:1.05rem;line-height:1;padding:5px 11px;border-radius:6px}
@@ -493,10 +498,8 @@
 
 <div id="bar">
   <div class="top">
-    <span class="turn" id="turnlbl">Round 1</span>
     <span class="who" id="wholbl">—</span>
     <span id="barres"></span>
-    <span class="prompt" id="prompt">Loading…</span>
     <div class="menuwrap">
       <button class="hamb" onclick="toggleMenu()" aria-label="Menu" title="Menu">☰</button>
       <div id="topmenu" class="hidden">
@@ -506,6 +509,10 @@
         <a href="#" onclick="toggleMenu();newGame();return false">↻ New Game</a>
       </div>
     </div>
+  </div>
+  <div class="row2">
+    <span class="turn" id="turnlbl">Round 1</span>
+    <span class="prompt" id="prompt">Loading…</span>
   </div>
   <div class="acts" id="acts"></div>
 </div>
