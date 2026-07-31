@@ -17,9 +17,11 @@
 > gap v4.3 had squeezed) · pace 2p 14.6 / 3p 13.8 / 4p 12.6 avg rounds, dice trigger ~100% ·
 > POOL=10 probe reads too fast (35% band at 2p) — **12 stands** · PATHWAYS 4p: majority 32.5 /
 > lifter 25 / builder 30 / **breadth 12.5%** (cold — the Flight lane wants a human-table read
-> before any dial; n=40/lane is ±8) · GM>trader **79.2%** (19/24 @ bulk 120ms, pre-extension
-> baseline; a 4-game post-extension smoke ran clean at 75%) — the full sharded MC battery
-> re-runs both rungs on the revised build (`playtests/oracle-v45b/`).
+> before any dial; n=40/lane is ±8) · GM>trader **79.2%** (19/24 @ bulk 120ms) · CM>GM
+> **81.3%** (13/16 @ bulk 400ms — up from v4.3's noisy 54.2: the richer v4.5b decision space
+> rewards the deeper search) — pre-extension baselines; a 4-game post-extension smoke ran
+> clean, and the full sharded MC battery re-runs both rungs on the revised build
+> (`playtests/oracle-v45b/`). **Every rung ≥60%, 0 errors, on the v4.5b economy.**
 
 > **v4.0 “Bright Beer” (2026-07-21): the AI was REBUILT with the streamline — and P5 is SHIPPED
 > same-day.** All five tiers are LIVE in `play.html`: **Apprentice / Journeyman / Trader** (the
