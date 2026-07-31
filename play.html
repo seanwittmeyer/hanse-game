@@ -554,6 +554,7 @@
 </div>
 
 <div id="over" class="modal hidden"><div class="mcard" id="overcard"></div></div>
+<div id="score" class="modal hidden" onclick="if(event.target===this)closeScore()"><div class="mcard" id="scorecard"></div></div>
 <div id="aid" class="modal hidden"><div class="mcard" id="aidcard"></div></div>
 <div id="studio" class="modal hidden"><div class="mcard" id="studiocard"></div></div>
 
@@ -781,7 +782,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v44'; // v4.4 "Maiden Load" [designer-ruled 2026-07-31] - THE COMMISSION REGAINS ITS FREE LOAD: pay 1 G, place the hull (bank stars = its berth count), then OPTIONALLY load ONE Ready cask from YOUR OWN vessels onto the new hull at once - a NORMAL load (the gate reads the die as it boards, after the slot's lifts; the cask's load bonus fires; a full hull sails - a Skute immediately). Commission + Skute = the old charter as pure components (1 G, one cask, sails now). Beneath it v4.3 "Open Quay" [designer-ruled 2026-07-26, the third ruling off playtest #23] - the OCCUPANCY TOLL IS CUT: sharing a station costs nothing (the berth race, the shared buildings, the displays and the majorities carry the interaction), and the greedy AI tiers are RE-TAUGHT to the v4 economy (fee-netted acquisition values, cheapest-fee recipe/specialist picks, no shared-station dodge, a dice-clock race push when ahead). Beneath it v4.2 "Tariff" stands - two changes on v4.1 "Counting House". (1) THE FEE RIDES THE ITEM, not the channel: every acquirable recipe / specialist / building carries its own printed wharf fee (RECIPE_FEE / SPEC_FEE / BUILDINGS[k].fee - several buildings FREE, chipless), paid at ANY wharf channel (Scrivener's Hall, the Hiring Post, the gain load-bonuses); kontor prizes stay free, and there is NEVER a fee-on-fee - using a building charges nothing of its own. (2) NOVGOROD PAYS THE DIE +2 STARS (vbonus - the refine prize is cut): every delivered die there banks pips+2 (6-8 stars at gate 4); the premium path's pull beyond the 8/5/2 majority. v4.1 stands beneath: the dice are the ONE clock (14th die parked = final round; MAX_ROUND 25 backstop). v4.2c markup [designer 2026-07-26]: specialist fees cut (Cellarman 2H / Grain Factor 1G / Hop Gardener 2H / Stevedore 1G) and ONE PAYMENT PER PLACEMENT (a paid building fee covers the ground rent; rent only on otherwise-free overbuilds) - the double-cost audit reads ZERO. Bump discards stale v42b state.
+const KEY='hanse-v44b'; // v44b: + bankB/bankC counters (the score-breakdown modal splits the bank) — state shape, so the KEY letters up. v4.4 "Maiden Load" [designer-ruled 2026-07-31] - THE COMMISSION REGAINS ITS FREE LOAD: pay 1 G, place the hull (bank stars = its berth count), then OPTIONALLY load ONE Ready cask from YOUR OWN vessels onto the new hull at once - a NORMAL load (the gate reads the die as it boards, after the slot's lifts; the cask's load bonus fires; a full hull sails - a Skute immediately). Commission + Skute = the old charter as pure components (1 G, one cask, sails now). Beneath it v4.3 "Open Quay" [designer-ruled 2026-07-26, the third ruling off playtest #23] - the OCCUPANCY TOLL IS CUT: sharing a station costs nothing (the berth race, the shared buildings, the displays and the majorities carry the interaction), and the greedy AI tiers are RE-TAUGHT to the v4 economy (fee-netted acquisition values, cheapest-fee recipe/specialist picks, no shared-station dodge, a dice-clock race push when ahead). Beneath it v4.2 "Tariff" stands - two changes on v4.1 "Counting House". (1) THE FEE RIDES THE ITEM, not the channel: every acquirable recipe / specialist / building carries its own printed wharf fee (RECIPE_FEE / SPEC_FEE / BUILDINGS[k].fee - several buildings FREE, chipless), paid at ANY wharf channel (Scrivener's Hall, the Hiring Post, the gain load-bonuses); kontor prizes stay free, and there is NEVER a fee-on-fee - using a building charges nothing of its own. (2) NOVGOROD PAYS THE DIE +2 STARS (vbonus - the refine prize is cut): every delivered die there banks pips+2 (6-8 stars at gate 4); the premium path's pull beyond the 8/5/2 majority. v4.1 stands beneath: the dice are the ONE clock (14th die parked = final round; MAX_ROUND 25 backstop). v4.2c markup [designer 2026-07-26]: specialist fees cut (Cellarman 2H / Grain Factor 1G / Hop Gardener 2H / Stevedore 1G) and ONE PAYMENT PER PLACEMENT (a paid building fee covers the ground rent; rent only on otherwise-free overbuilds) - the double-cost audit reads ZERO. Bump discards stale v42b state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -819,7 +820,7 @@ function newPlayer(i,name){
     // 2 specialist seats (the 2nd behind the 3rd). The warm-start Gruit is Ready at brew (die 1).
     vessels:[{style:'gruit',q:1,die:1,act:'source'},null], vslots:VSLOTS_START, sslots:SSLOTS_START,
     brewed:{gruit:1},
-    recipes:['gruit','hopped'], upgrades:[], delivered:[], bank:0,
+    recipes:['gruit','hopped'], upgrades:[], delivered:[], bank:0, bankB:0, bankC:0,   // bankB/bankC: the build/commission shares of the bank (the score-breakdown modal); bumps = bank − bankB − bankC
     presBonus:{bruges:0,london:0,bergen:0,novgorod:0},
     presPool:PRES_POOL};
 }
@@ -1309,7 +1310,7 @@ function commPlace(slot){const d=UI.comm;if(!d||d.idx==null)return;const p=cur()
   snapshot();pay(p,COMMISSION_COST);
   S.shipDisplay.splice(d.idx,1);refillShipDisplay();
   S.slots[slot]={type:'ship',ship:sn.ship,dest:sn.dest,load:[]};
-  const pts=SHIP_CAP[sn.ship];p.bank+=pts;
+  const pts=SHIP_CAP[sn.ship];p.bank+=pts;p.bankC=(p.bankC||0)+pts;
   log(p.name+' commissions the '+LU('sailboat')+' <b>'+SHIP_NAME[sn.ship]+'</b> → <b>'+DEST[sn.dest].name+'</b> — <b>+'+pts+'★</b> banked (its berth count).'+(sn.ship==='skute'?' <span class="note">(a Skute sails on its first load)</span>':''),true);
   const rt=d.returnTo;UI.comm=null;UI.stage=null;
   // v4.4 "Maiden Load": the commission includes ONE free load — a Ready cask from YOUR
@@ -1420,7 +1421,7 @@ function commitBldg(slot,key,pid,feePaid){
     pay(np,OVERBUILD_FEE);
     log('↳ the old '+LU('building-2')+bName(old.b)+' is torn down (boxed) — the ground rent is paid.');}}
   S.buildings[slot]={b:key};
-  if(np){np.bank+=BUILD_PTS;
+  if(np){np.bank+=BUILD_PTS;np.bankB=(np.bankB||0)+BUILD_PTS;
     log(np.name+' raises '+LU('building-2')+' <b>'+bName(key)+'</b> — <b>+'+BUILD_PTS+'★</b> banked. It serves everyone: '+BUILDINGS[key].desc+'.',true);}
   const occ=S.slots[slot];
   if(occ&&occ.type==='ship'&&occ.load.length>=sailCap(occ)){sailShip(slot,pid!=null?pid:S.active);return true;}
@@ -1625,6 +1626,48 @@ function finalRows(){
   const tb=r=>[r.sc.total,vesselDice(r.p),r.p.grain+r.p.hops];
   const cmp=(a,b)=>{const A=tb(a),B=tb(b);for(let i=0;i<3;i++)if(B[i]!==A[i])return B[i]-A[i];return 0;};
   rows.sort(cmp);return {rows,cmp};
+}
+// ---- SCORE BREAKDOWN (a playtest/balance aid): click any ★ chip — a modal, one tab per
+// player, every source and modifier itemized. Reads the same state the score track banks;
+// no game rule lives here.
+let scoreTab=0;
+function openScore(i){if(!S)return;scoreTab=(i!=null&&S.players[i])?i:S.active;renderScore();
+  document.getElementById('score').classList.remove('hidden');refreshIcons();}
+function closeScore(){document.getElementById('score').classList.add('hidden');}
+function renderScore(){
+  const host=document.getElementById('scorecard');if(!host||!S)return;
+  let tabs='<div class="tabs" style="margin-bottom:8px">';
+  S.players.forEach((q,i)=>{tabs+='<div class="tab '+(i===scoreTab?'active':'')+'" style="'+(i===scoreTab?'background:'+q.color+';color:#fff':'')+'" onclick="scoreTab='+i+';renderScore();refreshIcons()"><span class="pawn" style="background:'+q.color+';display:inline-block;vertical-align:middle;width:10px;height:10px"></span> '+q.name+' ★'+scorePlayer(q).total+'</div>';});
+  tabs+='</div>';
+  const p=S.players[scoreTab];const sc=scorePlayer(p);
+  const R='style="text-align:right;white-space:nowrap"';
+  // 1 · deliveries — every parked die, with the Novgorod premium shown as a modifier
+  let dr='';p.delivered.forEach(d=>{const vb=(DEST[d.dest].vbonus||0);const die=Math.max(1,(d.val||1)-vb);
+    dr+='<tr><td>'+LU('beer')+' '+styleShort(d.style)+'</td><td>'+LU('landmark')+' '+DEST[d.dest].name+'</td><td>'+LU('dices')+' '+die+(vb?' <b>+'+vb+'</b> <span class="note">Novgorod premium</span>':'')+'</td><td '+R+'><b>'+(d.val||0)+'★</b></td></tr>';});
+  if(!dr)dr='<tr><td colspan="4" class="note">no deliveries yet</td></tr>';
+  dr+='<tr><td colspan="3"><b>Deliveries</b></td><td '+R+'><b>'+sc.deliv+'★</b></td></tr>';
+  // 2 · the bank — builds / commissions / bumps (the tracked split)
+  const bb=p.bankB||0,bc=p.bankC||0,bp=Math.max(0,(p.bank||0)-bb-bc);
+  const br='<tr><td>'+LU('building-2')+' Buildings raised</td><td>'+(bb/BUILD_PTS)+' × +'+BUILD_PTS+'★</td><td '+R+'><b>'+bb+'★</b></td></tr>'
+    +'<tr><td>'+LU('sailboat')+' Commissions</td><td>★ = the hull’s berths</td><td '+R+'><b>'+bc+'★</b></td></tr>'
+    +'<tr><td>'+LU('map-pin')+' Presence bumps</td><td>1★ per face-1 die</td><td '+R+'><b>'+bp+'★</b></td></tr>'
+    +'<tr><td colspan="2"><b>Bank</b></td><td '+R+'><b>'+sc.bank+'★</b></td></tr>';
+  // 3 · majorities — standing per kontor, valued as if scored now
+  let mr='';KONTORE.forEach(k=>{const a=majorityAwards(k);const mine=a[p.id]||0;const pr=presenceAt(p,k);
+    const lead=pr>0&&leadersAt(k).some(x=>x.id===p.id);
+    mr+='<tr><td>'+LU('landmark')+' '+DEST[k].name+'</td><td>'+pr+' parked '+(pr===1?'die':'dice')+(lead?' · <b>leading</b>':'')+'</td><td>'+DEST[k].maj.join('/')+'</td><td '+R+'><b>'+mine+'★</b></td></tr>';});
+  mr+='<tr><td colspan="3"><b>Majorities</b> <span class="note">(end-game; 2p skips 2nd; ties split)</span></td><td '+R+'><b>'+sc.maj+'★</b></td></tr>';
+  // 4 · the Flight
+  const beers=Object.keys(p.brewed||{}).filter(st=>STYLES[st]);
+  const fr='<tr><td>'+(beers.map(st=>styleShort(st)).join(' · ')||'<span class="note">none</span>')+'</td><td>'+beers.length+' distinct — (n−1)², min '+FLIGHT_MIN+' beers</td><td '+R+'><b>'+sc.flight+'★</b></td></tr>';
+  const T=(title,rows)=>'<div class="asec"><b>'+title+'</b><table class="atable">'+rows+'</table></div>';
+  host.innerHTML='<button class="modal-x" onclick="closeScore()" aria-label="Close" title="Close">×</button>'
+    +'<h2>★ Score breakdown</h2>'+tabs
+    +T('Deliveries — the parked dice',dr)
+    +T('The bank — as it happened',br)
+    +T('Majorities — by parked dice',mr)
+    +T('The Flight — distinct beers brewed',fr)
+    +'<div class="asec" style="font-size:1.15rem"><b>TOTAL '+sc.total+'★</b>'+(p.ai?' <span class="note">('+aiLabel(p)+' AI)</span>':'')+'</div>';
 }
 // the final-standing panel can be dismissed to review the end-game board; the bar brings it back
 function hideOver(){document.getElementById('over').classList.add('hidden');render();}
@@ -2170,7 +2213,7 @@ function renderBar(){
   document.getElementById('wholbl').textContent=p.name+(p.ai?' · AI':'');
   document.getElementById('wholbl').style.background=p.color;
   document.getElementById('wholbl').style.color='#fff';
-  document.getElementById('barres').innerHTML='<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span><span class="chip" data-tip="Tally dice: tray / pool. A die rides every brew, then parks at the kontor.">'+LU('dices')+' <b>'+trayDice(p)+'</b><span class="note">/'+(p.presPool||0)+'</span></span><span class="chip" data-tip="Total score so far (deliveries + bank + majorities + the Flight).">★ <b>'+scorePlayer(p).total+'</b></span>';
+  document.getElementById('barres').innerHTML='<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span><span class="chip" data-tip="Tally dice: tray / pool. A die rides every brew, then parks at the kontor.">'+LU('dices')+' <b>'+trayDice(p)+'</b><span class="note">/'+(p.presPool||0)+'</span></span><span class="chip" style="cursor:pointer" onclick="openScore('+S.active+')" data-tip="Total score so far — click for the full breakdown.">★ <b>'+scorePlayer(p).total+'</b></span>';
   if(S.over){
     document.getElementById('prompt').innerHTML='<b>Game over</b> — the final board stands for review.';
     document.getElementById('acts').innerHTML=btn('★ Final Standing','showOver()','primary')+btn('⇪ Send to Studio'+(S.studioSent?' ✓':''),'openStudio()','ghost')+btn('New Game','newGame()','ghost');
@@ -2453,7 +2496,7 @@ function renderTableaus(){
       +'<div style="margin-bottom:6px"><span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
       +'<span class="chip" data-tip="Storage cap.">'+LU('package')+'<b>'+p.storage+'</b></span>'
       +'<span class="chip" data-tip="Tally dice: tray / pool. A die rides every brew, then parks at the kontor — the 14th parked sets the final round.">'+LU('dices')+'<b>'+trayDice(p)+'</b><span class="note">/'+(p.presPool||0)+'</span></span>'
-      +'<span class="chip" data-tip="Total score.">★ <b>'+sc.total+'</b></span> <span class="note">deliveries '+sc.deliv+' · bank '+sc.bank+' · maj '+sc.maj+(sc.flight?' · flight '+sc.flight:'')+'</span>'+(p.ai?' <span class="tag">'+aiLabel(p)+' AI</span>':'')+'</div>'
+      +'<span class="chip" style="cursor:pointer" onclick="openScore('+p.id+')" data-tip="Total score — click for the full breakdown.">★ <b>'+sc.total+'</b></span> <span class="note">deliveries '+sc.deliv+' · bank '+sc.bank+' · maj '+sc.maj+(sc.flight?' · flight '+sc.flight:'')+'</span>'+(p.ai?' <span class="tag">'+aiLabel(p)+' AI</span>':'')+'</div>'
       +floorHTML
       +'<div class="tsec"><b class="note">'+LU('scroll-text')+' Recipes (flipped = brewed):</b><div class="trow">'+recipes+'</div></div>'
       +'<b class="note">'+LU('landmark')+' Delivered (parked dice):</b> '+delivered+'<br>'
