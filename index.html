@@ -447,7 +447,7 @@
     <h4>Your turn</h4>
     <ol>
       <li><b>Move</b> to an orthogonally adjacent station.</li>
-      <li><b>Choose the row or the column.</b> Sharing the station costs <b>1 G</b> to the supply.</li>
+      <li><b>Choose the row or the column.</b> Sharing a station costs <b>nothing</b> (v4.3 — the toll is cut).</li>
       <li><b>Resolve</b> the stops, any order, all optional: both stations (ONE action each) + each slot's <b>building action</b> and/or a <b>load of its ship</b>.</li>
     </ol>
     <h4>At the Wharf</h4>
@@ -535,7 +535,7 @@ const buildings=[
 document.getElementById('buildingGallery').innerHTML=buildings.map(b=>`
   <div class="card"><div class="head h-room"><div class="kind" style="color:#b9dfa9">BUILDING (green) · ${b[0]==='a'?'an action on its slot stop':'a passive load-lift'} · serves everyone</div><div class="ttl">${b[1]}</div></div>
   <div class="body">${b[2]}<div class="badge">${b[3]}</div></div></div>`).join('')
-  +`<p class="small" style="grid-column:1/-1"><b>One family (v4.0):</b> no owner, ever — the placer banks <b>+3★</b> and everyone may use the tile. Deck = <b>17</b> ⚙; display of 4; 2 neutral seeds at setup (score nobody); earned at London or via the gain-building bonus; overbuild anytime for 1 G (the displaced tile is boxed). The 12 Privileges, ownership and rent-to-owner left with v3.</p>`;
+  +`<p class="small" style="grid-column:1/-1"><b>One family (v4.0):</b> no owner, ever — the placer banks <b>+3★</b> and everyone may use the tile. Deck = <b>17</b> ⚙; display of 4; 2 neutral seeds at setup (score nobody); earned at London or via the gain-building bonus; overbuild = ONE payment (a paid fee covers the ground — the 1 G rent only on otherwise-free placements; the displaced tile is boxed). The 12 Privileges, ownership and rent-to-owner left with v3.</p>`;
 
 // ---- (goals cut in v1.0 — dissolved into the Building family above) ----
 

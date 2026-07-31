@@ -1274,7 +1274,7 @@ automatically.
 
 ---
 
-## 10. Glossary (v4.0)
+## 10. Glossary (v4.3)
 
 - **The Wharf** — the whole core area: the four stations + the 8 slots.
 - **Station** — one of the four action spaces (Market · Brewhouse · Cellar · Harbor), each
@@ -1291,8 +1291,8 @@ automatically.
 - **Building** — the ONE green family: **no owner** — serves whoever activates it; the placer
   banks **+3★**. Action buildings print the cask-action verbs; load-lift buildings shape the hull
   (Kiln +1 die · Cooperage +1 berth · Customs −1 gate · Rich Berth sails short).
-- **Specialist** — the purple private tile (4 designs, 2 seats), **earned free** (Bergen · the
-  Hiring Post · the hire bonus) — never bought.
+- **Specialist** — the purple private tile (4 designs, 2 seats), **earned, never bought**: free
+  as Bergen's prize; the Hiring Post / hire bonus pay the tile's **printed wharf fee** (v4.2).
 - **Ship (Skute · Cog · Hulk)** — neutral destination-bound hulls (1/2/3 berths); **commission**
   at the Harbor (1 G, bank ★ = berths); a hull **sails the moment it is full** — a Skute on its
   first load (the relief valve as a component).
@@ -1302,8 +1302,8 @@ automatically.
   (1★ · presence · clock), only where you've delivered.
 - **The Flight** — distinct beers **BREWED** (the flipped recipe cards): (beers−1)², min 3; the
   2nd/3rd distinct brews open vessel 3 and seat 2.
-- **The dual clock** — Sailed-Ships 7/10/13 ⚙ (every sail ticks) + the 14th die parked; the first
-  trigger fires.
+- **The clock (v4.1 — the dice alone)** — the **14th tally die a house parks** sets the final
+  round; sails end nothing (`MAX_ROUND` 25 ⚙ the backstop; the 14-die pool is THE pace dial).
 - **TABLED (v4.0, seams kept)** — the Hall (prestige lane) · Dispatch/charters · the Floor turn ·
   the Privileges/ownership/wharfage line · the three expansion toggles · the old five-lane
   framing. They return re-derived on the v4 spine (the terms live on in §9's history).
