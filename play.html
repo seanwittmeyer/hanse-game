@@ -47,13 +47,16 @@
   .agwrap{container-type:inline-size;display:flex;justify-content:center;padding:12px 8px;position:relative}   /* the board sizes from ITS COLUMN (cq units), never the viewport — no bleed under the sidebar */
   #boardcut{position:absolute;left:0;top:0;pointer-events:none;z-index:0}
   .ag{position:relative;z-index:1}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
-  @media(max-width:760px){.agwrap{overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch}
-    .ag{--cw:calc((740px - 3*var(--gap))/5.6)}}   /* phone: the board stays REAL-sized (740px) and pans sideways (touch / trackpad) */
   .ag{display:grid;margin:0 auto;   /* v3.4c.2: NO fixed aspect — the top/bottom rows size to their content and the board's height breathes */
     --gap:clamp(10px,1.5vw,16px);gap:var(--gap);
     --cw:calc((min(96cqw,1100px) - 3*var(--gap))/5.6);
     grid-template-columns:calc(1.8*var(--cw)) var(--cw) var(--cw) calc(1.8*var(--cw));
     grid-template-rows:auto var(--cw) var(--cw) auto}
+  /* phone: the board renders BIG (1480px — 2×, so the side-slot ships read) and overflows to the right;
+     the wrap scrolls, so the player drags the wharf left/right (boardCross centers the first view on the
+     stations). This override must sit AFTER the base .ag rule — same specificity, source order decides. */
+  @media(max-width:760px){.agwrap{overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch}
+    .ag{--cw:calc((1480px - 3*var(--gap))/5.6)}}
   /* explicit square rows make every cell a guaranteed square from the GRID — not from each
      item's own aspect-ratio under size-containment (which mobile Safari collapses). */
   .cell,.slot{min-width:0;min-height:0}
