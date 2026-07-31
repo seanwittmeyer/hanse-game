@@ -24,8 +24,13 @@
   #bar .who{font-variant:small-caps;font-weight:bold;font-size:1.25rem;padding:2px 12px;border-radius:6px}
   #bar .prompt{font-style:italic;opacity:.95;flex:1;min-width:160px}
   #bar .acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
-  #bar .links{margin-left:auto;font-size:.8rem;display:flex;gap:10px;align-items:center}
-  #bar .links a{color:var(--gold2);text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+  /* the top-right HAMBURGER — Player Aid / Learn / Rulebook / New Game live in a dropdown */
+  #bar .menuwrap{margin-left:auto;position:relative}
+  #bar .hamb{background:transparent;border:1px solid rgba(255,255,255,.35);color:var(--parch);font-size:1.05rem;line-height:1;padding:5px 11px;border-radius:6px}
+  #bar .hamb:hover{background:rgba(255,255,255,.15)}
+  #topmenu{position:absolute;right:0;top:calc(100% + 8px);background:var(--ink);border:1px solid var(--gold);border-radius:8px;min-width:168px;z-index:90;box-shadow:0 8px 22px rgba(0,0,0,.45);padding:5px 0}
+  #topmenu a{display:block;color:var(--gold2);text-decoration:none;padding:8px 15px;font-size:.9rem;white-space:nowrap}
+  #topmenu a:hover{background:var(--red2);color:var(--parch)}
   button{font-family:inherit;cursor:pointer;border:1px solid rgba(0,0,0,.25);border-radius:6px;
     padding:6px 12px;font-size:.9rem;background:var(--parch2);color:var(--ink);transition:.12s}
   button:hover{background:var(--gold2)}
@@ -272,7 +277,10 @@
   .shopgrid .mtile:has(.btile){height:auto;aspect-ratio:2.5/1.32}
   .shopgrid .mtile:has(.stile){height:auto;aspect-ratio:2.5/3.6}
   .mtile.sm{width:78px;height:78px}
-  .shopgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;margin:6px 0}
+  .shopgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:6px 0}   /* 2/row = big, legible tiles; .wide (the header toggle) = 4/row compact */
+  .shopgrid.wide{grid-template-columns:repeat(4,1fr)}
+  .shophead{display:flex;align-items:center;gap:6px}
+  .gridtoggle{margin-left:auto;flex:none;font-size:.72rem;line-height:1;padding:2px 8px;background:var(--parch);border:1px solid var(--line);border-radius:5px}
   .shopgrid .mtile{width:100%;height:auto;aspect-ratio:1}
   .shopcell{display:flex;flex-direction:column;align-items:stretch;gap:3px}
   .shopcell button{font-size:.72rem;padding:2px 5px}
@@ -488,11 +496,15 @@
     <span class="who" id="wholbl">—</span>
     <span id="barres"></span>
     <span class="prompt" id="prompt">Loading…</span>
-    <span class="links">
-      <a href="#" onclick="toggleAid();return false">📖 Player Aid</a>
-      <a href="learn.html">Learn</a><a href="index.html">Rulebook</a>
-      <a href="#" onclick="newGame();return false">New Game</a>
-    </span>
+    <div class="menuwrap">
+      <button class="hamb" onclick="toggleMenu()" aria-label="Menu" title="Menu">☰</button>
+      <div id="topmenu" class="hidden">
+        <a href="#" onclick="toggleMenu();toggleAid();return false">📖 Player Aid</a>
+        <a href="learn.html">🎓 Learn</a>
+        <a href="index.html">📚 Rulebook</a>
+        <a href="#" onclick="toggleMenu();newGame();return false">↻ New Game</a>
+      </div>
+    </div>
   </div>
   <div class="acts" id="acts"></div>
 </div>
@@ -502,7 +514,7 @@
   <div class="panel"><h3>The Wharf</h3><div class="agwrap"><svg id="boardcut" aria-hidden="true"></svg><div class="ag" id="ag"></div></div>
     <div class="note" id="boardnote" style="text-align:center;margin-top:6px"></div>
   </div>
-  <div class="panel"><h3>Destinations <span class="note">(the four kontore — the die is the value; parked dice are presence, majority and the clock)</span></h3><div id="dests"></div></div>
+  <div class="panel"><h3>Destinations</h3><div id="dests"></div></div>
   <div class="panel">
     <div class="pbhead"><h3>Player Breweries</h3><div class="tabs" id="tabs"></div></div>
     <div id="tableaus"></div>
@@ -1120,6 +1132,11 @@ function fitCards(){
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function load(){try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):null;}catch(e){return null;}}
 function newGame(){document.getElementById('over').classList.add('hidden');openSetup();}
+// ---- the top-right hamburger menu ----
+function toggleMenu(){const m=document.getElementById('topmenu');if(m)m.classList.toggle('hidden');}
+document.addEventListener('click',e=>{const m=document.getElementById('topmenu');
+  if(!m||m.classList.contains('hidden'))return;
+  if(!(e.target.closest&&e.target.closest('.menuwrap')))m.classList.add('hidden');},true);
 // ---- the MARKET POPOVER (v3.4c.5): hover a display tile 0.5s -> the tile large + its support text, left of the sidebar ----
 let shopPopTimer=null;
 document.addEventListener('mouseover',e=>{const m=e.target.closest?e.target.closest('.sidecol .shopcell .mtile'):null;if(!m)return;
@@ -2216,9 +2233,7 @@ function renderBar(){
   document.getElementById('prompt').innerHTML=prompt;
   document.getElementById('acts').innerHTML=acts;
   document.getElementById('boardnote').innerHTML =
-      U==='stops'? 'A line fires <b>both stations</b> (one printed action each) + each slot’s <b>building action</b> and/or a <b>load</b> of the ship docked there — any order, all optional.'
-    : U==='placebldg'||(U==='commission'&&UI.stage==='place')? 'Click a glowing slot.'
-    : 'The Wharf: '+LU('store')+' <b>Source</b> → '+LU('flask-conical')+' <b>Brew</b> → '+LU('hourglass')+' <b>Age</b> → '+LU('ship')+' <b>Ship</b>. The die is the cask: it starts low, ages to its quality, boards a hull, and parks at the kontor as your ★ and presence.';
+      (U==='placebldg'||(U==='commission'&&UI.stage==='place'))?'Click a glowing slot.':'';
 }
 // can this stop DO anything right now? (the list re-renders after every stop)
 function actAvail(p,act){
@@ -2337,26 +2352,31 @@ function renderDests(){
   document.getElementById('dests').innerHTML=h;
 }
 
+// per-section grid width (2/row big · 4/row compact); a session preference, not game state
+let GRIDWIDE={};
+function toggleGrid(k){GRIDWIDE[k]=!GRIDWIDE[k];render();}
+function gridToggleBtn(k){return '<button class="gridtoggle" data-tip="'+(GRIDWIDE[k]?'Larger tiles (2 per row)':'Compact (4 per row)')+'" onclick="toggleGrid(\''+k+'\')">'+(GRIDWIDE[k]?'⊟':'⊞')+'</button>';}
+function shopGridCls(k){return 'shopgrid'+(GRIDWIDE[k]?' wide':'');}
 function renderShop(){
   const p=cur();const comm=!aiTurn()&&UI.sub==='commission'&&UI.stage!=='place';
   let h='';
-  // THE SHIP MARKET — commission at the Harbor (1G · ★ = berth count)
+  // THE SHIP MARKET — commission at the Harbor (1G · ★ = berth count); detail lives on each tile's popover
   const sdisp=S.shipDisplay||[];
-  h+='<div class="note"><b>'+LU('sailboat')+' Ship market</b> <span class="note">('+sdisp.length+' face-up · Skute 1 · Cog 2 · Hulk 3 berths · commission at the '+LU('anchor')+' Harbor: '+costStr(COMMISSION_COST)+' + bank ★ = berths · '+S.shipDeck.length+' in the deck)</span></div>';
-  if(sdisp.length)h+='<div class="shopgrid">'+sdisp.map((sn,i)=>{const can=canPay(p,COMMISSION_COST)&&shipFreeSlots().length>0;
-    return '<div class="shopcell"><div class="mtile'+(comm&&can?' stopgo':'')+'"'+(comm&&can?' onclick="commPick('+i+')"':'')+' data-tip="'+attr(SHIP_NAME[sn.ship]+' → '+DEST[sn.dest].name+' ('+SHIP_CAP[sn.ship]+' berth'+(SHIP_CAP[sn.ship]===1?'':'s')+') · commission '+costStr(COMMISSION_COST)+' → +'+SHIP_CAP[sn.ship]+'★ banked · boards die '+DEST[sn.dest].gate+'+')+'">'+pShipFace({ship:sn.ship,dest:sn.dest,load:[]})+'</div>'+(comm?'<button '+(can?'':'disabled')+' onclick="commPick('+i+')">commission +'+SHIP_CAP[sn.ship]+'★</button>':'')+'</div>';}).join('')+'</div>';
+  h+='<div class="note shophead"><b>'+LU('sailboat')+' Ship market</b>'+gridToggleBtn('ships')+'</div>';
+  if(sdisp.length)h+='<div class="'+shopGridCls('ships')+'">'+sdisp.map((sn,i)=>{const can=canPay(p,COMMISSION_COST)&&shipFreeSlots().length>0;
+    return '<div class="shopcell"><div class="mtile'+(comm&&can?' stopgo':'')+'" style="aspect-ratio:2.5/'+((HC?HC.SHIP_H(sn.ship):3)+0.1)+'"'+(comm&&can?' onclick="commPick('+i+')"':'')+' data-tip="'+attr(SHIP_NAME[sn.ship]+' → '+DEST[sn.dest].name+' ('+SHIP_CAP[sn.ship]+' berth'+(SHIP_CAP[sn.ship]===1?'':'s')+') · commission '+costStr(COMMISSION_COST)+' → +'+SHIP_CAP[sn.ship]+'★ banked · boards die '+DEST[sn.dest].gate+'+')+'">'+pShipFace({ship:sn.ship,dest:sn.dest,load:[]})+'</div>'+(comm?'<button '+(can?'':'disabled')+' onclick="commPick('+i+')">commission +'+SHIP_CAP[sn.ship]+'★</button>':'')+'</div>';}).join('')+'</div>';
   else h+='<div class="note" style="opacity:.7">'+LU('sailboat')+' ship market empty</div>';
   // THE WHARF DISPLAY — buildings are EARNED (London’s prize · the gain-building bonus), never bought
-  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('building-2')+' Building display</b> <span class="note">('+(S.buildDisplay||[]).length+' face-up · '+S.buildDeck.length+' in the deck — free at '+LU('landmark')+' London, or via a <i>Gain 1 building</i> bonus at the tile’s printed fee (chipless = free); placing one banks +'+BUILD_PTS+'★ and serves everyone)</span></div>';
-  h+='<div class="shopgrid">'+(S.buildDisplay||[]).map(key=>{const def=BUILDINGS[key];
+  h+='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('building-2')+' Building display</b>'+gridToggleBtn('bldgs')+'</div>';
+  h+='<div class="'+shopGridCls('bldgs')+'">'+(S.buildDisplay||[]).map(key=>{const def=BUILDINGS[key];
     return '<div class="shopcell"><div class="mtile" data-tip="'+attr(def.name+' — '+def.desc)+'">'+pBldgFace({b:key},true)+'</div></div>';}).join('')+'</div>';
   if(!(S.buildDisplay||[]).length)h+='<div class="note">(building deck exhausted)</div>';
   // THE SPECIALIST DISPLAY — earned free (Bergen’s prize · the Hiring Post · the hire bonus)
-  h+='<div class="note" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Specialist display</b> <span class="note">('+(S.impDisplay||[]).length+' face-up · '+(S.impDeck||[]).length+' in the deck — free at '+LU('landmark')+' Bergen, or via the Hiring Post / <i>Gain 1 specialist</i> bonus at each tile’s printed fee · your seats: '+(p.upgrades||[]).length+'/'+(p.sslots||SSLOTS_START)+')</span></div>';
-  h+='<div class="shopgrid">'+(S.impDisplay||[]).map(key=>{const def=IMPROVEMENTS[key];const owned=hasUpgrade(p,key);
+  h+='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Specialist display</b>'+gridToggleBtn('specs')+'</div>';
+  h+='<div class="'+shopGridCls('specs')+'">'+(S.impDisplay||[]).map(key=>{const def=IMPROVEMENTS[key];const owned=hasUpgrade(p,key);
     return '<div class="shopcell"><div class="mtile" data-tip="'+attr(def.name+' — '+def.desc+' · wharf fee '+costStr(SPEC_FEE[key]||{})+' (free at Bergen)')+'">'+pImpFace(key)+'</div>'+(owned?'<span class="note">(have)</span>':'')+'</div>';}).join('')+'</div>';
   if(!(S.impDisplay||[]).length)h+='<div class="note">(Specialist deck exhausted)</div>';
-  document.getElementById('shop').innerHTML=h+'<div class="note" style="margin-top:6px"><b>Paid at the wharf, free at the kontor:</b> recipes come free from '+LU('landmark')+' Bruges · buildings from '+LU('landmark')+' London · specialists from '+LU('landmark')+' Bergen — the wharf channels ('+LU('scroll-text')+LU('search')+LU('wrench')+' bonuses · Scrivener’s Hall · the Hiring Post) pay <b>each item’s printed fee</b> (never a fee to use a building). '+LU('landmark')+' Novgorod pays every delivered die <b>+2★</b>. The Harbor commissions hulls for '+costStr(COMMISSION_COST)+'.</div>';
+  document.getElementById('shop').innerHTML=h;
 }
 
 function renderVoyage(){
@@ -2366,8 +2386,8 @@ function renderVoyage(){
     +'<div class="note" style="font-size:.66rem;margin-top:4px">'+LU('sailboat')+' voyages sailed: '+S.sailed+' · round ceiling '+MAX_ROUND+' (backstop)</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game (3 of 4):</b> '+exportLabel()+'.</div>';
   const brews=['gruit','hopped'].concat((S.exports||[]).slice().sort((a,b)=>STYLES[a].q-STYLES[b].q));
-  h+='<div class="note" style="margin-top:6px"><b>'+LU('flask-conical')+' Brew piles</b> <span class="note">(cost · start die · the face-up load bonus each quality takes — steerable)</span></div>'
-    +'<div class="shopgrid">'+brews.map(style=>{const st=STYLES[style];return '<div class="shopcell"><div class="mtile" data-tip="'+attr(st.name+' Q'+st.q+' · brew '+costStr(st.in)+' · die starts at '+Math.max(1,st.q-st.ready)+' · load bonus now: '+(CASK_ACT[pileTopFor(st.q,style)]||''))+'">'+pCaskFace({style:style,q:st.q,die:Math.max(1,st.q-st.ready),act:pileTopFor(st.q,style)},null,true)+'</div></div>';}).join('')+'</div>';
+  h+='<div class="note shophead" style="margin-top:6px"><b>'+LU('flask-conical')+' Brew piles</b>'+gridToggleBtn('piles')+'</div>'
+    +'<div class="'+shopGridCls('piles')+'">'+brews.map(style=>{const st=STYLES[style];return '<div class="shopcell"><div class="mtile" data-tip="'+attr(st.name+' Q'+st.q+' · brew '+costStr(st.in)+' · die starts at '+Math.max(1,st.q-st.ready)+' · load bonus now: '+(CASK_ACT[pileTopFor(st.q,style)]||''))+'">'+pCaskFace({style:style,q:st.q,die:Math.max(1,st.q-st.ready),act:pileTopFor(st.q,style)},null,true)+'</div></div>';}).join('')+'</div>';
   h+='<div class="note" style="margin-top:6px">Banked ★: '+S.players.map(p=>{const sc=scorePlayer(p);return '<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+(sc.deliv+sc.bank)+'</span>';}).join(' · ')+'</div>';
   document.getElementById('voyage').innerHTML=h;
 }
@@ -2393,7 +2413,7 @@ function renderTableaus(){
     (p.upgrades||[]).forEach(k=>seatCells.push('<div class="vcell"><div class="mtile" data-tip="'+attr(upName(k)+' — '+upDesc(k))+'">'+pImpFace(k)+'</div><div class="vmat note">'+LU('wrench')+' Specialist</div></div>'));
     for(let si=(p.upgrades||[]).length;si<(p.sslots||SSLOTS_START);si++)seatCells.push('<div class="vcell"><div class="mtile empty" data-tip="'+attr('Open specialist seat — earned free at Bergen, the Hiring Post, or the hire bonus.')+'">'+LU('wrench')+'</div><div class="vmat note">open seat</div></div>');
     for(let si=(p.sslots||SSLOTS_START);si<SSLOTS;si++)seatCells.push('<div class="vcell locked"><div class="mtile empty" data-tip="'+attr('Covered seat — your 3rd distinct beer brewed opens it (the Flight).')+'">'+LU('lock')+'</div><div class="vmat note">'+LU('unlock')+' 3rd beer</div></div>');
-    const floorHTML='<div class="floor"><div class="floortop"><b class="note">'+LU('flask-conical')+' VESSELS — '+(p.vslots||VSLOTS_START)+'/'+VSLOTS+' open</b><span class="note">the die on the tile is the cask: it ages up to its quality (READY), and only buildings lift it past</span></div>'
+    const floorHTML='<div class="floor"><div class="floortop"><b class="note">'+LU('flask-conical')+' VESSELS — '+(p.vslots||VSLOTS_START)+'/'+VSLOTS+' open</b></div>'
       +'<div class="vrow">'+rowCells.join('')+'</div>'
       +'<div class="floortop" style="margin-top:6px"><b class="note">'+LU('wrench')+' SPECIALIST SEATS — '+(p.upgrades||[]).length+'/'+(p.sslots||SSLOTS_START)+' seated</b></div>'
       +'<div class="vrow">'+seatCells.join('')+'</div>'
