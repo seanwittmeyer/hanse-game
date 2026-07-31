@@ -2198,7 +2198,7 @@ function aiStep(){
 let GUILD_MS=250;    // ⚙ ms per Guildmaster decision ('instant' speed caps at 120; harnesses lower it)
 let CELLAR_MS=1200;  // ⚙ ms per Cellarmaster decision
 let GM_MIN=2;        // minimum playouts per option
-const AI_MC_SUBS={move:1,line:1,stops:1,brew:1,load:1,commission:1,placebldg:1,benefit:1,survey:1,hire:1,reach:1};
+const AI_MC_SUBS={move:1,line:1,stops:1,brew:1,load:1,commission:1,placebldg:1,benefit:1,survey:1,hire:1,reach:1,rack:1,assay:1,loadopt:1};   // v4.5b: the new die verbs + the load options are sampled too
 function aiMCOptions(p){
   const out=[];const push=(label,fn)=>out.push({label,fn});
   switch(UI.sub){
@@ -2224,6 +2224,12 @@ function aiMCOptions(p){
     case 'survey':{surveyAffordable(p).forEach(k=>push('take:'+k,()=>surveyPick(k)));push('skip',()=>surveyPick(null));break;}
     case 'hire':{hireAffordable(p).forEach(k=>push('hire:'+k,()=>hirePick(k)));push('skip',()=>hirePick(null));break;}
     case 'reach':{((UI.reach&&UI.reach.ks)||[]).forEach(k=>push('reach:'+k,()=>reachPick(k)));push('skip',()=>reachSkip());break;}
+    case 'rack':{const R=UI.rack;if(!R)break;const m=maturingInVessels(p);   // v4.5b: sample every swap pair
+      if(R.a==null)m.forEach(o1=>m.forEach(o2=>{if(o1.i>=o2.i)return;push('rack:'+o1.i+'x'+o2.i,()=>{rackPick(o1.i);rackPick(o2.i);});}));
+      else m.forEach(o=>{if(o.i!==R.a)push('rack2:'+o.i,()=>rackPick(o.i));});
+      push('skip',()=>rackSkip());break;}
+    case 'assay':{maturingInVessels(p).forEach(o=>push('assay:'+o.i,()=>assayPick(o.i)));push('skip',()=>assaySkip());break;}
+    case 'loadopt':{push('opt:use',()=>loadOptGo(true));push('opt:pass',()=>loadOptGo(false));break;}
   }
   return out;
 }
@@ -2245,7 +2251,7 @@ function aiMCDecide(p){
   try{
     const playout=(st)=>{
       S=JSON.parse(base.S);UI=JSON.parse(base.UI);
-      shuffle(S.shipDeck);shuffle(S.buildDeck);shuffle(S.impDeck);   // determinized hidden decks
+      shuffle(S.shipDeck);shuffle(S.buildDeck);shuffle(S.impDeck);shuffle(S.ladingDeck);   // determinized hidden decks (v4.5b: + the lading draw)
       S.players.forEach(q=>{q.ai={tier:rollTier,persona:q.id===me?persona:null};});
       try{st.o.fn();}catch(e){st.sum-=99;st.n++;return;}
       let g=0;while(!S.over&&g++<12000)aiStep();

@@ -1,0 +1,24 @@
+=== hanse v4.1 sim — 30 games/count · tier trader ===
+
+== 2p · 30 ok / 0 err ==
+rounds avg 13.7 (min 9 max 20) · in 12–25 band 80.0%
+triggers: dice 100.0% · sailed avg 5.9
+winner total avg 58.9 · margin avg 13.8 · seat wins P1 53.3% P2 46.7%
+per-player: brews 7.6 · deliveries 6.8 · bank★ 9.9
+delivery split: bruges 39.5% · london 22.2% · bergen 25.9% · novgorod 12.4%
+
+== 3p · 30 ok / 0 err ==
+rounds avg 14.2 (min 8 max 23) · in 12–25 band 76.7%
+triggers: dice 100.0% · sailed avg 8.8
+winner total avg 64.7 · margin avg 8.2 · seat wins P1 46.7% P2 33.3% P3 20.0%
+per-player: brews 7.3 · deliveries 6.9 · bank★ 9.4
+delivery split: bruges 33.0% · london 21.5% · bergen 31.6% · novgorod 13.9%
+
+== 4p · 30 ok / 0 err ==
+rounds avg 13.3 (min 8 max 19) · in 12–25 band 80.0%
+triggers: dice 100.0% · sailed avg 11.8
+winner total avg 65.8 · margin avg 7.4 · seat wins P1 10.0% P2 33.3% P3 40.0% P4 16.7%
+per-player: brews 7.0 · deliveries 6.7 · bank★ 8.9
+delivery split: bruges 29.8% · london 21.5% · bergen 30.9% · novgorod 17.9%
+
+GATE: 0 crashes / 0 deadlocks.

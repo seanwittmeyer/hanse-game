@@ -1,5 +1,26 @@
 # Automa / AI Opponent — Plan & Status
 
+> **v4.5b “Open Orders” (2026-07-31): all five tiers were RE-TAUGHT to the #24 program.**
+> Greedy skeleton (every tier inherits): the commission **de-mint** (hull value = berth tempo +
+> the free load + any lading the load could claim — never ★), **`aiLadingBonus`** (the open row
+> prices every load/commission/ship pick at 0.5–0.6 weight — one claim per cask, contested),
+> values for the new verbs (**rack** = READY-tempo minus overflow loss, pair-scanned ·
+> **assay** = finish-first, 2.2 when a die sits one short · **hopex/tollhouse** load options via
+> `aiLoadOpt`: pay when it opens the gate or hops are slack; stamp whenever legal — −1 pip for
+> +2★ is net +1), the **Braumeister at 3.6** in the hire table (second only to the Cellarman),
+> and new-tile placement prefs (Kiln → Assay → Bonded → Cooperage → Racking → Hop Exchange
+> first). MC pair (GM/CM): the rollouts inherit all of the above; **`aiMCOptions` now samples
+> the new branches** (every rack swap pair · every assay target · the hopex/tollhouse
+> use-or-pass), and the playout determinizer **shuffles the hidden lading deck** (it was a
+> perfect-information leak for one build). **Oracle reads (short, n=30-40/count):**
+> trader>journeyman **65%** (the 60% lint passes again — the lading/de-mint sense widened the
+> gap v4.3 had squeezed) · pace 2p 14.6 / 3p 13.8 / 4p 12.6 avg rounds, dice trigger ~100% ·
+> POOL=10 probe reads too fast (35% band at 2p) — **12 stands** · PATHWAYS 4p: majority 32.5 /
+> lifter 25 / builder 30 / **breadth 12.5%** (cold — the Flight lane wants a human-table read
+> before any dial; n=40/lane is ±8) · GM>trader **79.2%** (19/24 @ bulk 120ms, pre-extension
+> baseline; a 4-game post-extension smoke ran clean at 75%) — the full sharded MC battery
+> re-runs both rungs on the revised build (`playtests/oracle-v45b/`).
+
 > **v4.0 “Bright Beer” (2026-07-21): the AI was REBUILT with the streamline — and P5 is SHIPPED
 > same-day.** All five tiers are LIVE in `play.html`: **Apprentice / Journeyman / Trader** (the
 > compact value-heuristic ladder; journeyman is the solid operator, the trader adds the scoring
