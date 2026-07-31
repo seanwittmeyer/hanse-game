@@ -125,7 +125,8 @@ tile is free — the tier reads straight off the component). Using a building ne
 ## 7. Specialist tiles (4 designs · n−1 copies each · 2×2″ purple)
 
 Free as **Bergen’s prize**; the Hiring Post / *Gain 1 specialist* bonus pay each tile’s
-**printed wharf fee** ⚙. **Two seats** per house; never two of a kind.
+**printed wharf fee** ⚙. **Two seats** per house; never two of a kind. A taken tile’s gap
+refills from the deck at the **end of the turn** (v4.4c — ships/buildings refill at once).
 
 | Specialist | Effect | Wharf fee ⚙ (v4.2c) |
 |---|---|---|
@@ -163,6 +164,7 @@ load-bonus verbs (“· its fee”), and the Novgorod mat (**value = die +2★**
 **v4.3 delta:** reprinted — the **player aid** (the occupancy-toll step is gone).
 **v4.4 delta:** reprinted — the **player aid** + the Wharf board’s Harbor caption (the
 commission’s free load returns).
+**v4.4c delta:** rules-only — the **specialist display refills at end of turn** (no reprint).
 
 ## 11. Known gaps ⚙ (the watch list)
 

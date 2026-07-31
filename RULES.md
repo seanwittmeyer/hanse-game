@@ -285,7 +285,9 @@ the Hiring Post — the kontor prizes never do, and no building ever adds a fee 
   unlock currency AND the end-game ladder (§11).
 
 **The SPECIALISTS (4 designs ⚙ · deck of n−1 copies each · display of 4 · each prints its
-wharf fee ⚙ — free as Bergen’s prize):**
+wharf fee ⚙ — free as Bergen’s prize). A taken tile’s gap stands for the rest of the turn —
+the display refills from the deck at the END of the turn (v4.4c; ships and buildings refill
+at once):**
 - **Cellarman** (fee `2H`) — your dice **start one higher** (never above quality; a Bock starts at 3).
 - **Grain Factor** (fee `1G`) — whenever you gain grain (any faucet): **+1 `G`**.
 - **Hop Gardener** (fee `2H`) — whenever you gain hops (any faucet): **+1 `H`**.

@@ -187,6 +187,16 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
     p.delivered.length===d0+1&&!S.slots.s6);
 })();
 
+// ---- 10c. v4.4c: the SPECIALIST display refills at the END of the turn, not on the take ----
+(function(){var p=fresh(3);stops();   // 3p → n−1 = 2 copies/type: the deck holds spares past the display of 4
+  p.grain=9;p.hops=9;p.upgrades=[];p.sslots=2;
+  var k=S.impDisplay[0];var n0=S.impDisplay.length;var deck0=S.impDeck.length;
+  UI.hire={returnTo:'stops'};UI.sub='hire';hirePick(k);
+  ok('a taken specialist leaves a GAP — no mid-turn refill', S.impDisplay.length===n0-1&&S.impDeck.length===deck0);
+  UI={sub:'end'};endTurn();
+  ok('the specialist display refills at the END of the turn', S.impDisplay.length===n0&&S.impDeck.length===deck0-1);
+})();
+
 // ---- 11. BUILDINGS: +3★ on placement · overbuild = 1G, displaced boxed · serve-anyone action ----
 (function(){var p=fresh();stops();var q=S.players[1];
   p.grain=5;var b0=p.bank;
