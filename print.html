@@ -1275,7 +1275,7 @@ function buildPages(){
   const bldItems=[];
   BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)
     bldItems.push({fam:'Buildings',html:buildingCard(d)});});   // v4.0 SINGLE-FACED: no owner, no WILD flip — displaced tiles are boxed
-  packSpaced(pages,'bits','Building tiles — SINGLE-FACED, one green family (17 · 22″ plotter · 1.5mm bleed · cuts 3mm apart · v4.5b: 8 of 17 touch a die)',[{kind:'bld',items:bldItems}],famPages);
+  packSpaced(pages,'bits','Building tiles — SINGLE-FACED, one green family (17 · 22″ plotter · 1.5mm bleed · cuts 3mm apart · v45d power ladder: 9 of 17 touch a die, fees in grain only)',[{kind:'bld',items:bldItems}],famPages);
   // --- LADING TILES (v4.5b) → single-sided order strips: the kontor ORDER row ---
   const ldItems=(MODE==='proof'?LADINGS.slice(0,3):LADINGS).map(d=>({fam:'Ladings',html:ladingTile(d)}));
   packSpaced(pages,'bits','Lading tiles — the ORDER row (15 · single-sided · v4.5b): deliver a qualifying cask at the named kontor, claim the tile — its ★ bank at once; the row of 3 refills at end of turn',[{kind:'ld',items:ldItems}],famPages);

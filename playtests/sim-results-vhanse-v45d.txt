@@ -1,0 +1,27 @@
+=== hanse v4.1 sim — 20 games/count · tier journeyman ===
+
+== 2p · 20 ok / 0 err ==
+rounds avg 15.8 (min 9 max 25) · in 12–25 band 90.0%
+triggers: dice 95.0% · ceiling 5.0% · sailed avg 5.9
+winner total avg 62.0 · margin avg 12.7 · seat wins P1 30.0% P2 70.0%
+per-player: brews 7.5 · deliveries 7.0 · bank★ 11.1
+delivery split: bruges 33.8% · london 23.8% · bergen 23.5% · novgorod 18.9%
+v4.5b usage/game: ladings 1.9 · rack 0.1 · assay 0.8▲/0.0▼ · toll 0.0 · hopex-pay 0.8 · abbey 0.1 · kiln/bonded lift 5.8 · bonded sail-away 0.3 · braumeister 0.8 seat / 1.8 ticks
+
+== 3p · 20 ok / 0 err ==
+rounds avg 13.5 (min 8 max 22) · in 12–25 band 75.0%
+triggers: dice 100.0% · sailed avg 8.4
+winner total avg 62.0 · margin avg 8.6 · seat wins P1 35.0% P2 30.0% P3 35.0%
+per-player: brews 7.0 · deliveries 6.3 · bank★ 11.0
+delivery split: bruges 32.4% · london 26.8% · bergen 26.8% · novgorod 13.9%
+v4.5b usage/game: ladings 2.6 · rack 0.3 · assay 2.1▲/0.0▼ · toll 0.2 · hopex-pay 1.6 · abbey 0.1 · kiln/bonded lift 8.0 · bonded sail-away 0.0 · braumeister 1.0 seat / 2.9 ticks
+
+== 4p · 20 ok / 0 err ==
+rounds avg 13.7 (min 8 max 20) · in 12–25 band 75.0%
+triggers: dice 100.0% · sailed avg 11.3
+winner total avg 57.3 · margin avg 6.6 · seat wins P1 20.0% P2 35.0% P3 20.0% P4 25.0%
+per-player: brews 6.8 · deliveries 6.5 · bank★ 8.7
+delivery split: bruges 29.6% · london 21.7% · bergen 29.2% · novgorod 19.5%
+v4.5b usage/game: ladings 1.9 · rack 0.5 · assay 3.5▲/0.0▼ · toll 0.0 · hopex-pay 2.8 · abbey 0.7 · kiln/bonded lift 10.3 · bonded sail-away 0.3 · braumeister 1.2 seat / 3.2 ticks
+
+GATE: 0 crashes / 0 deadlocks.

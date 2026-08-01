@@ -41,8 +41,8 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (its header states the current version). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `archive/records/V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v4.5b “Open Orders”**, the v45c letter (`KEY hanse-v45c`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.5b/v45c; the sheet layouts are the P4 refresh).
+> - The live build is `play.html` — **v4.5b “Open Orders”**, the v45d letter (`KEY hanse-v45d`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.5b/v45d; the sheet layouts are the P4 refresh).
 
 ---
 
@@ -123,7 +123,7 @@ for ONE payment ⚙ (v4.2c: a paid fee covers the ground — the `1 G` rent only
 **London**, or via the *Gain 1 building* bonus at the **tile’s printed fee** ⚙ (a chipless
 tile is free — the tier reads straight off the component). Using a building never costs a fee.
 
-The v4.5b **dice pass**: 8 of the 17 tiles touch a die (was 3).
+The v4.5b **dice pass** + the v45d **power ladder** (designer-ruled 2026-08-01): 9 of the 17 tiles touch a die; **fees print in grain only** — hops are spent USING the power tiles (Hop Exchange ≤2 `H`/use · Abbey Cellar 3 `H`/use), never buying them.
 
 | Building | Qty ⚙ | Effect | Wharf fee ⚙ (chip; — = free) |
 |---|---|---|---|
@@ -132,12 +132,13 @@ The v4.5b **dice pass**: 8 of the 17 tiles touch a die (was 3).
 | Mission Quay | 2 | slot stop: **age +2** | — |
 | Hiring Post | 1 | slot stop: **gain 1 specialist** (at its fee) | 1 `G` |
 | Almoner’s Stall | 1 | slot stop: **place 1 presence** (a tray die) | — |
-| **Racking Hall** | 1 | slot stop: **swap the dice of two of your maturing casks** (each stops at its quality) | 1 `G` |
-| **Assay House** | 2 | slot stop: **turn one of your maturing dice ±1** (never above its quality, never below 1 — v45c) | 1 `H` |
+| **Racking Hall** *(power)* | 1 | slot stop: **swap the dice of ANY two of your vessel casks — no quality cap** (the beer transfers; cap 6) | 3 `G` |
+| **Assay House** | 1 | slot stop: **turn one of your maturing dice ±1** (never above its quality, never below 1 — v45c) | 1 `G` |
+| **Abbey Cellar** *(power, v45d)* | 1 | slot stop: **pay 3 `H` — ALL your maturing casks age to READY** | 2 `G` |
+| **Hop Exchange** *(power, v45d)* | 1 | slot stop: **pay up to 2 `H` — vessel dice +1 per hop** (past quality fine; cap 6) | 2 `G` |
 | **Malt Kiln** | 2 | a cask loading here: **die +1** (cap 6) | 2 `G` |
-| **Hop Exchange** | 1 | a cask loading here **may pay 1 `H`: die +1** (cap 6) | 1 `G` 1 `H` |
-| **Tollhouse** | 1 | a cask loading here **may turn its die −1** (never below the gate): **bank +2★** | 1 `G` |
-| **Bonded Store** | 1 | a cask loading here: **die +1** (cap 6); **when this hull sails the Store sails with it** (boxed) — every house with a cask aboard gains 2 goods | 1 `G` 1 `H` |
+| **Tollhouse** | 1 | a cask loading here **may turn its die −1** (never below the gate): **bank +3★ at once** | 1 `G` |
+| **Bonded Store** | 1 | a cask loading here: **die +1** (cap 6); **when this hull sails the Store sails with it** (boxed) — every house with a cask aboard gains 2 goods | 2 `G` |
 | Cooperage | 1 | ship here: **+1 berth** | 2 `G` |
 | Customs House | 1 | ship here **boards one gate lower** | 2 `G` |
 | Rich Berth | 1 | hull here may **sail one berth short** (min 1) | 2 `G` |

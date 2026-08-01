@@ -18,7 +18,7 @@
 > tiles (a kontor + a die minimum or a named beer → printed **2–5★**); delivering a
 > qualifying cask **claims one** (one per cask; the ★ bank at once); the row refills at the
 > **end of the turn**. The row makes every kontor’s delivery value a **variable economy** —
-> read it before you sail. The live build is `play.html` (**KEY `hanse-v45c`** — the v45c letter, designer-ruled 2026-08-01: the Assay House is **±1**, as the plan record ruled).
+> read it before you sail. The live build is `play.html` (**KEY `hanse-v45d`** — the letters, designer-ruled 2026-08-01: v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
 
 > **v4.5 “Empty Tray” (designer-ruled 2026-07-31 — off human playtest #24).** Two changes.
 > **(1) The end trigger is the EMPTY TRAY:** the first house to **commit its last tally die**
@@ -163,8 +163,10 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 - **Aging:** each age point turns the die **+1**, **never past the quality** — the cask is
   **READY when die = quality.** **Dice never turn on their own (v4.5b — automatic aging is
   cut):** the hands on a maturing die are the **Cellar** (3 points ⚙), **Mission Quay** (+2),
-  the **Age +2** load bonuses, the **Assay House** (±1), the **Racking Hall** (a swap), the
-  **Cellarman** (a higher start) and the **Braumeister** (+1 to your ripest at turn start).
+  the **Age +2** load bonuses, the **Assay House** (±1), the **Racking Hall** (an uncapped
+  swap, v45d), the **Hop Exchange** (pay `H` — past quality is fine, v45d), the **Abbey
+  Cellar** (pay 3 `H` — everything maturing to Ready, v45d), the **Cellarman** (a higher
+  start) and the **Braumeister** (+1 to your ripest at turn start).
 - **Loading:** a Ready cask boards a hull whose **gate its die meets, read as it boards** —
   after the slot’s lifts (a Malt Kiln or Bonded Store here turns the die **+1, cap 6**; a Hop
   Exchange may for 1 `H`; a Customs House lowers the hull’s gate by 1 — the cask sells at its
@@ -226,7 +228,10 @@ rent** applies only when an otherwise-free placement (London’s prize, or a chi
 lands on a built slot. The displaced tile is **returned to the box**. ⚙ *watch:
 if churn mints +3★, the dials are restricting overbuild to a full board or raising the fee.*
 
-**The deck (17 ⚙, all green — v4.5b “the dice pass”: 8 of 17 touch a die):**
+**The deck (17 ⚙, all green — v4.5b “the dice pass”: 9 of 17 touch a die; v45d “the power
+ladder”, GWT-style): fees print in GRAIN ONLY — grain buys infrastructure, hops power the
+beer (the Hop Exchange and Abbey Cellar are paid in `H` to USE, never to gain). The cheap
+tiles are honest utilities; the 3 `G`/2 `G` power tier swings.**
 
 | Building | Fires | Effect ⚙ | Qty ⚙ | Wharf fee ⚙ |
 |---|---|---|---|---|
@@ -235,19 +240,20 @@ if churn mints +3★, the dials are restricting overbuild to a full board or rai
 | Mission Quay | slot stop | **Age +2** (your vessels) | 2 | free |
 | Hiring Post | slot stop | **gain 1 specialist** (at its fee) | 1 | 1 `G` |
 | Almoner’s Stall | slot stop | **Place 1 presence** (§7) | 1 | free |
-| **Racking Hall** | slot stop | **swap the dice of two of your maturing casks** (each stops at its quality; overflow is lost) | 1 | 1 `G` |
-| **Assay House** | slot stop | **turn one of your maturing dice ±1** (never above its quality, never below 1) | 2 | 1 `H` |
+| **Racking Hall** *(power)* | slot stop | **swap the dice of ANY two of your vessel casks — no quality cap** (the beer transfers whole; global cap 6). *The launder engine: rack an aged Bock’s 5 onto a Ready Gruit — the 5-pip Gruit ships, the Bock re-matures from 1.* | 1 | 3 `G` |
+| **Assay House** | slot stop | **turn one of your maturing dice ±1** (never above its quality, never below 1) | 1 | 1 `G` |
+| **Abbey Cellar** *(power)* | slot stop | **pay 3 `H`: ALL your maturing casks age to READY** (each die to its quality) | 1 | 2 `G` |
+| **Hop Exchange** *(power)* | slot stop | **pay up to 2 `H` ⚙ — turn your vessel dice +1 per hop** (any split; **past quality is fine**; cap 6) | 1 | 2 `G` |
 | **Malt Kiln** | on load here | the boarding cask’s **die +1** (cap 6) | 2 | 2 `G` |
-| **Hop Exchange** | on load here | the boarding cask **may pay 1 `H`: die +1** (cap 6) | 1 | 1 `G` 1 `H` |
-| **Tollhouse** | on load here | the boarding cask **may turn its die −1** (never below the gate): **bank +2★** | 1 | 1 `G` |
-| **Bonded Store** | on load here / at sail | the boarding die **+1** (cap 6); **when this hull sails, the Store sails with it** (returned to the box) and **every house with a cask aboard gains 2 goods** | 1 | 1 `G` 1 `H` |
+| **Tollhouse** | on load here | the boarding cask **may turn its die −1** (never below the gate): **bank +3★ at once** (net +2, any quality) | 1 | 1 `G` |
+| **Bonded Store** | on load here / at sail | the boarding die **+1** (cap 6); **when this hull sails, the Store sails with it** (returned to the box) and **every house with a cask aboard gains 2 goods** | 1 | 2 `G` |
 | **Cooperage** | passive | the ship here carries **+1 berth** | 1 | 2 `G` |
 | **Customs House** | passive | the ship here **boards one gate lower** (sells at the die) | 1 | 2 `G` |
 | **Rich Berth** | passive | the hull here may **sail one berth short** (min 1) | 1 | 2 `G` |
 
 *(Action buildings print the same verbs as the cask piles — the wharf and the cargo speak one
-language. The Kiln/Hop Exchange are the “improve the humble beer” engine: a Gruit can climb to
-6. The **Bonded Store is the ephemeral trial** — an Orléans-style event as a component: place
+language. The Kiln, Hop Exchange and Racking Hall are the “improve the humble beer” engines: a
+Gruit can carry a 6. The **Bonded Store is the ephemeral trial** — an Orléans-style event as a component: place
 it on the slot whose ship serves YOUR plan; it pays its lift while it stands, pays everyone
 aboard when it goes, and its slot opens again.)*
 

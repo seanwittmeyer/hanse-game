@@ -368,13 +368,18 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 (function(){var p=fresh();stops();
   p.vessels=[{style:'bock',q:5,die:4,act:'age'},{style:'hopped',q:2,die:1,act:'source'},null];p.vslots=3;
   enterRack('stops');
-  ok('the Racking Hall opens on two maturing casks', UI.sub==='rack');
+  ok('the Racking Hall opens on two vessel casks', UI.sub==='rack');
   rackPick(0);rackPick(1);
-  ok('the swap trades the dice, each capped at its quality (bock 4↔hopped 1 → 1 / 2-READY)',
-    p.vessels[0].die===1&&p.vessels[1].die===2&&caskReady(p.vessels[1]));
+  ok('the swap transfers the WHOLE die — no quality cap (bock 4↔hopped 1 → 1 / 4 PAST quality, v45d)',
+    p.vessels[0].die===1&&p.vessels[1].die===4&&caskReady(p.vessels[1]));
+  // the designer's launder engine: a Ready Bock racks its die onto a Ready Gruit
+  p.vessels=[{style:'bock',q:5,die:5,act:'age'},{style:'gruit',q:1,die:1,act:'source'},null];
+  enterRack('stops');rackPick(0);rackPick(1);
+  ok('the launder play: a die-5 Gruit ships while the Bock re-matures from 1 (v45d)',
+    p.vessels[1].die===5&&caskReady(p.vessels[1])&&p.vessels[0].die===1&&!caskReady(p.vessels[0]));
   p.vessels=[{style:'bock',q:5,die:4,act:'age'},null,null];
   enterRack('stops');
-  ok('one maturing cask → the Racking Hall refuses', UI.sub!=='rack');
+  ok('one cask → the Racking Hall refuses', UI.sub!=='rack');
   p.vessels=[{style:'mumme',q:4,die:3,act:'age'},null,null];
   enterAssay('stops');assayPick(0);
   ok('the Assay House turns one maturing die +1 (3→4 READY)', p.vessels[0].die===4&&caskReady(p.vessels[0]));
@@ -389,21 +394,30 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('…but never below 1 (the floor holds)', p.vessels[0].die===1&&UI.sub==='assay');
   assaySkip();
 })();
-(function(){var p=fresh();stops();p.ai={tier:'journeyman'};
-  S.buildings.s1={b:'hopex'};var sh=ship('s1','cog','novgorod');
-  p.vessels[0]={style:'broyhan',q:3,die:3,act:'source'};p.hops=2;
-  ok('the Hop Exchange makes the gate with its paid lift (die 3+1 ≥ Novgorod 4)', canTake('s1',0));
-  UI.load={ships:['s1'],returnTo:'stops',loadsLeft:1,cask:0};loadOnto('s1');
-  ok('the paid lift boards the die at 4 and costs 1H', sh.load[0].die===4&&p.hops===1);
+(function(){var p=fresh();stops();
+  // v45d: the HOP EXCHANGE is a slot-stop ACTION — pay ≤2H, +1 per hop on VESSEL dice, past quality fine
+  p.vessels=[{style:'broyhan',q:3,die:3,act:'source'},null];p.hops=3;
+  enterHopex('stops');
+  ok('the Hop Exchange opens as an action (hops + a die below 6)', UI.sub==='hopex');
+  hopexAllot(0);
+  ok('1H turns the vessel die past quality (3→4 on a Q3)', p.vessels[0].die===4&&p.hops===2);
+  ok('the second hop may follow (≤2 per activation)', UI.sub==='hopex'&&UI.hopex.left===1);
+  hopexAllot(0);
+  ok('2H total: die 5, the activation closes itself', p.vessels[0].die===5&&p.hops===1&&UI.sub!=='hopex');
+  var sh=ship('s1','cog','novgorod');
+  ok('the pumped die boards Novgorod on the normal gate read (no on-load special case)', canTake('s1',0));
+  p.hops=0;enterHopex('stops');
+  ok('no hops → the Hop Exchange refuses', UI.sub!=='hopex');
+  p.ai={tier:'journeyman'};
   S.buildings.s2={b:'tollhouse'};var t2=ship('s2','hulk','bruges');
   p.vessels[0]={style:'hopped',q:2,die:2,act:'source'};
   var b0=p.bank,o0=p.bankO||0;
-  S.ladingRow=[];   // no open orders — the stamp is a clean +1 net
+  S.ladingRow=[];   // no open orders — the stamp is a clean +2 net (v45d: +3★ − 1 pip)
   UI.load={ships:['s2'],returnTo:'stops',loadsLeft:1,cask:0};loadOnto('s2');
-  ok('the Tollhouse stamp: die −1 (min the gate) and +2★ banked', t2.load[0].die===1&&p.bank===b0+2&&(p.bankO||0)===o0+2);
+  ok('the Tollhouse stamp: die −1 (min the gate) and +3★ banked at once (v45d)', t2.load[0].die===1&&p.bank===b0+3&&(p.bankO||0)===o0+3);
   // v45c: the AI declines a stamp that forfeits a BIGGER open lading
   S.ladingRow=[{dest:'bruges',min:3,pts:4}];
-  p.vessels[0]={style:'hopped',q:2,die:3,act:'source'};   // die 3 claims the 4★ order; stamped to 2 it would not
+  p.vessels[0]={style:'hopped',q:2,die:3,act:'source'};   // die 3 claims the 4★ order; stamped to 2 it would not (net 2−4)
   var b1=p.bank;
   UI.load={ships:['s2'],returnTo:'stops',loadsLeft:1,cask:0};loadOnto('s2');
   ok('the AI declines a stamp that forfeits a bigger lading (die stays 3, order claimable)',
@@ -411,6 +425,20 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   S.ladingRow=[];
   ok('aiLoadOpt still stamps when no order is at stake', aiLoadOpt(p,'tollhouse',3,'s2','hopped')===true);
   p.ai=null;
+})();
+
+// ---- 20b. v45d ABBEY CELLAR: pay 3H — every maturing cask ages to READY ----
+(function(){var p=fresh();stops();
+  p.vessels=[{style:'bock',q:5,die:2,act:'age'},{style:'mumme',q:4,die:1,act:'source'},null];p.vslots=3;p.hops=4;
+  enterAbbey('stops');
+  ok('the Abbey Cellar opens (3H + something maturing)', UI.sub==='abbey');
+  abbeyGo(true);
+  ok('3H ages EVERY maturing cask to Ready (bock 2→5 · mumme 1→4)',
+    p.hops===1&&p.vessels[0].die===5&&p.vessels[1].die===4&&caskReady(p.vessels[0])&&caskReady(p.vessels[1]));
+  enterAbbey('stops');
+  ok('under 3H → the Abbey refuses', UI.sub!=='abbey');
+  ok('every building fee prints in GRAIN only (v45d)', Object.keys(BUILDINGS).every(function(k){var f=BUILDINGS[k].fee;return !f||!f.h;}));
+  ok('the deck still boxes 17 tiles', Object.keys(BUILDINGS).reduce(function(s,k){return s+BUILDINGS[k].qty;},0)===17);
 })();
 (function(){var p=fresh();stops();p.ai={tier:'journeyman'};
   S.buildings.s3={b:'bonded'};var b3=ship('s3','cog','bruges');

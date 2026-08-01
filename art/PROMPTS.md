@@ -148,6 +148,7 @@ buildings = the brewer's craft & harbor works.* The subjects used:
 - **building-tollhouse.png** — a tollhouse on the quay: a striped toll bar over the cartway, a stamped ledger and a strongbox at the window. *(stand-in: building-burgomstr.png)*
 - **building-bonded.png** — a bonded store: a stone-vaulted warehouse with casks behind an iron grille, a great padlock and a customs seal on the door. *(stand-in: building-salthouse.png)*
 - **improve-braumeister.jpg** — a long wooden mash paddle over a gleaming copper kettle (the specialist object-shot grammar: one tool, beige field). *(stand-in: a copy of improve-coppersmith.jpg, shipped as improve-braumeister.jpg)*
+- **building-abbey.png** — an abbey cellar (v45d): a candle-lit stone undercroft beneath a monastery, great tuns racked in the vaults, a monk with a lantern. *(stand-in: building-festkeller.png)*
 
 ## Notes
 - Keep all ten cask images **consistent** (same wharf, same angle/lighting) so the deck reads as one family —

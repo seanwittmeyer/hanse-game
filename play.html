@@ -722,15 +722,18 @@ const BUILDINGS={
   missionq  :{name:'Mission Quay',     icon:'church',       qty:2, act:'age',    desc:'Slot stop: age +2 (your vessels)'},
   hiringpost:{name:'Hiring Post',      icon:'wrench',       qty:1, fee:{g:1}, act:'hire',   desc:'Slot stop: gain 1 specialist (at its printed fee)'},
   almoner   :{name:'Almoner’s Stall',  icon:'heart',        qty:1, act:'reach',  desc:'Slot stop: place 1 presence (a tray die)'},
-  racking   :{name:'Racking Hall',     icon:'repeat',       qty:1, fee:{g:1}, act:'rack',  desc:'Slot stop: swap the dice of two of your maturing casks (each capped at its quality)'},
-  assay     :{name:'Assay House',      icon:'scale',        qty:2, fee:{h:1}, act:'assay', desc:'Slot stop: turn one of your maturing dice ±1 (never above its quality, never below 1)'},
+  // v45d [designer-ruled 2026-08-01]: the GWT-style POWER LADDER — fees print in GRAIN ONLY
+  // (hops are spent USING buildings, never buying them); the power tier swings.
+  racking   :{name:'Racking Hall',     icon:'repeat',       qty:1, fee:{g:3}, act:'rack',  desc:'Slot stop: swap the dice of ANY two of your vessel casks (no quality cap — racking transfers the beer; cap 6)'},
+  assay     :{name:'Assay House',      icon:'scale',        qty:1, fee:{g:1}, act:'assay', desc:'Slot stop: turn one of your maturing dice ±1 (never above its quality, never below 1)'},
+  abbey     :{name:'Abbey Cellar',     icon:'hourglass',    qty:1, fee:{g:2}, act:'abbey', desc:'Slot stop: pay 3H — ALL your maturing casks age to READY (each die to its quality)'},
   maltkiln  :{name:'Malt Kiln',        icon:'flame',        qty:2, fee:{g:2}, desc:'A cask loading here: die +1 (cap 6)'},
-  hopex     :{name:'Hop Exchange',     icon:'sprout',       qty:1, fee:{g:1,h:1}, desc:'A cask loading here MAY pay 1H: die +1 (cap 6)'},
-  tollhouse :{name:'Tollhouse',        icon:'ticket',       qty:1, fee:{g:1}, desc:'A cask loading here MAY turn its die −1 (min 1): bank +2★'},
+  hopex     :{name:'Hop Exchange',     icon:'sprout',       qty:1, fee:{g:2}, act:'hopex', desc:'Slot stop: pay up to 2H — turn your vessel dice +1 per hop (any split; past quality is fine, cap 6)'},
+  tollhouse :{name:'Tollhouse',        icon:'ticket',       qty:1, fee:{g:1}, desc:'A cask loading here MAY turn its die −1 (min 1): bank +3★ at once'},
   cooperage :{name:'Cooperage',        icon:'package',      qty:1, fee:{g:2}, desc:'Ship here carries +1 berth'},
   customs   :{name:'Customs House',    icon:'scroll-text',  qty:1, fee:{g:2}, desc:'Ship here boards one gate lower (sells at the die)'},
   richberth :{name:'Rich Berth',       icon:'anchor',       qty:1, fee:{g:2}, desc:'Hull here may sail one berth short (min 1)'},
-  bonded    :{name:'Bonded Store',     icon:'warehouse',    qty:1, fee:{g:1,h:1}, desc:'A cask loading here: die +1 (cap 6). When the hull here sails, the Store sails with it (boxed) — every player with a cask aboard gains 2 goods'},
+  bonded    :{name:'Bonded Store',     icon:'warehouse',    qty:1, fee:{g:2}, desc:'A cask loading here: die +1 (cap 6). When the hull here sails, the Store sails with it (boxed) — every player with a cask aboard gains 2 goods'},
 };
 const BUILDING_KEYS=Object.keys(BUILDINGS);
 function bName(k){return (BUILDINGS[k]||{name:k}).name;}
@@ -820,7 +823,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v45c'; // v45c letter [designer-ruled 2026-08-01]: the ASSAY HOUSE IS ±1 (turn one maturing die up toward Ready OR down, floor 1 — as the v4.5b plan record ruled; +1-only was an implementation shortfall), and the AI load options net against the open lading row (a Tollhouse stamp that forfeits a bigger order is declined). Beneath it v4.5b "Open Orders" [designer-ruled 2026-07-31 off gatekeeper review #2 + playtest #24] — the #24 program, five moves: (1) COMMISSION DE-MINT - a commission banks NOTHING (1 G buys the hull + the v4.4 free load; the mint out-earning beer was the #24 headline). (2) AUTO-AGING IS CUT - dice turn only when something turns them (Cellar 3 stands, designer-ruled; Mission Quay/Age+2/Cellarman remain the looseners; the BRAUMEISTER specialist - ripest maturing cask +1 at the start of your turn - is the earned heir). (3) THE DICE PASS - the building deck's center of mass moves to die-manipulation: Racking Hall (swap two maturing dice), Assay House x2 (one maturing die +1), Hop Exchange (pay 1H - boarding die +1), Tollhouse (boarding die -1 for +2 stars), Bonded Store (boarding die +1; EPHEMERAL - sails away with its hull, paying every contributing house 2 goods - the Orleans-events trial); the echo-verb Annex and one each of Granary/Scrivener's/Cooperage/Customs/Kiln are cut (17 tiles, 8 touch a die). (4) SPECIALISTS - max(2,n-1) copies per design (2p stops being thin), the Braumeister joins (5 designs), and Bergen grants AT MOST ONE specialist per ship sailed (designer-ruled; the per-die expansion is a recorded dial). (5) LADINGS - the new ORDER layer (the Hall's spiritual heir): a face-up row of 3 kontor orders (die-min or named-beer, printed 2-5 stars); delivering a qualifying cask claims one (one per cask, the stars bank at once); the row refills at END of turn - the row makes every kontor's delivery value a VARIABLE economy. Beneath it v4.5 "Empty Tray" [designer-ruled 2026-07-31 off playtest #24]: (1) THE END TRIGGER IS THE EMPTY TRAY - the first house to COMMIT its last tally die (parked, in a vessel, or aboard an unfilled hull - tray 0) sets the final round; parked-out no longer required (the #24 stall: 2 dice stuck on hulls that never filled left the runout player unable to end). (2) THE POOL IS 12 (was 14) - speed. v44c [designer-ruled 2026-07-31]: the SPECIALIST display refills at the END of the turn (a take leaves a gap for the rest of the turn; ships/buildings keep instant refills). v4.4 "Maiden Load" [designer-ruled 2026-07-31] - THE COMMISSION REGAINS ITS FREE LOAD: place the hull, then OPTIONALLY load ONE Ready cask from YOUR OWN vessels onto it at once - a NORMAL load (the gate reads the die as it boards, after the slot's lifts; the cask's load bonus fires; a full hull sails - a Skute immediately). Commission + Skute = the old charter as pure components. Beneath it v4.3 "Open Quay" [designer-ruled 2026-07-26]: the OCCUPANCY TOLL IS CUT - sharing a station costs nothing - and the greedy AI tiers are re-taught to the v4 economy. Beneath it v4.2 "Tariff": THE FEE RIDES THE ITEM (every acquirable recipe/specialist/building prints its own wharf fee, paid at any wharf channel; kontor prizes free; never fee-on-fee) and NOVGOROD PAYS THE DIE +2 STARS. v4.1: the dice are the ONE clock (MAX_ROUND 25 backstop). v4.2c markup: specialist fees lean H; ONE PAYMENT PER PLACEMENT (a paid fee covers the ground rent). Bump discards stale v45 state.
+const KEY='hanse-v45d'; // v45d letter [designer-ruled 2026-08-01] — the GWT-STYLE POWER LADDER: (1) RACKING HALL UNCAPPED (fee 3G, the deck's power tile) — swap the dice of ANY two of your vessel casks, the whole die transfers (racking moves the BEER: a die-5 Bock racked onto a Ready Gruit ships a 5-pip Gruit while the Bock re-matures from 1; cap 6 global); (2) FEES PRINT IN GRAIN ONLY (grain buys infrastructure, HOPS power quality: Assay 1G, Hop Exchange 2G, Bonded 2G, Racking 3G, Abbey 2G); (3) the HOP EXCHANGE becomes a slot-stop ACTION — pay up to 2H, each hop turns a vessel die +1 (any split, PAST quality fine, cap 6; the on-load path is cut); (4) TOLLHOUSE pays +3 stars instant (net +2 — any quality, the stamped die must still make the gate); (5) NEW ABBEY CELLAR (2G, replaces one Assay — deck stays 17): slot stop, pay 3H — ALL your maturing casks age to READY (the premium aging well; with the Hop Exchange, the box's hops sinks). Beneath it v45c [designer-ruled 2026-08-01]: the ASSAY HOUSE IS ±1 (turn one maturing die up toward Ready OR down, floor 1 — as the v4.5b plan record ruled; +1-only was an implementation shortfall), and the AI load options net against the open lading row (a Tollhouse stamp that forfeits a bigger order is declined). Beneath it v4.5b "Open Orders" [designer-ruled 2026-07-31 off gatekeeper review #2 + playtest #24] — the #24 program, five moves: (1) COMMISSION DE-MINT - a commission banks NOTHING (1 G buys the hull + the v4.4 free load; the mint out-earning beer was the #24 headline). (2) AUTO-AGING IS CUT - dice turn only when something turns them (Cellar 3 stands, designer-ruled; Mission Quay/Age+2/Cellarman remain the looseners; the BRAUMEISTER specialist - ripest maturing cask +1 at the start of your turn - is the earned heir). (3) THE DICE PASS - the building deck's center of mass moves to die-manipulation: Racking Hall (swap two maturing dice), Assay House x2 (one maturing die +1), Hop Exchange (pay 1H - boarding die +1), Tollhouse (boarding die -1 for +2 stars), Bonded Store (boarding die +1; EPHEMERAL - sails away with its hull, paying every contributing house 2 goods - the Orleans-events trial); the echo-verb Annex and one each of Granary/Scrivener's/Cooperage/Customs/Kiln are cut (17 tiles, 8 touch a die). (4) SPECIALISTS - max(2,n-1) copies per design (2p stops being thin), the Braumeister joins (5 designs), and Bergen grants AT MOST ONE specialist per ship sailed (designer-ruled; the per-die expansion is a recorded dial). (5) LADINGS - the new ORDER layer (the Hall's spiritual heir): a face-up row of 3 kontor orders (die-min or named-beer, printed 2-5 stars); delivering a qualifying cask claims one (one per cask, the stars bank at once); the row refills at END of turn - the row makes every kontor's delivery value a VARIABLE economy. Beneath it v4.5 "Empty Tray" [designer-ruled 2026-07-31 off playtest #24]: (1) THE END TRIGGER IS THE EMPTY TRAY - the first house to COMMIT its last tally die (parked, in a vessel, or aboard an unfilled hull - tray 0) sets the final round; parked-out no longer required (the #24 stall: 2 dice stuck on hulls that never filled left the runout player unable to end). (2) THE POOL IS 12 (was 14) - speed. v44c [designer-ruled 2026-07-31]: the SPECIALIST display refills at the END of the turn (a take leaves a gap for the rest of the turn; ships/buildings keep instant refills). v4.4 "Maiden Load" [designer-ruled 2026-07-31] - THE COMMISSION REGAINS ITS FREE LOAD: place the hull, then OPTIONALLY load ONE Ready cask from YOUR OWN vessels onto it at once - a NORMAL load (the gate reads the die as it boards, after the slot's lifts; the cask's load bonus fires; a full hull sails - a Skute immediately). Commission + Skute = the old charter as pure components. Beneath it v4.3 "Open Quay" [designer-ruled 2026-07-26]: the OCCUPANCY TOLL IS CUT - sharing a station costs nothing - and the greedy AI tiers are re-taught to the v4 economy. Beneath it v4.2 "Tariff": THE FEE RIDES THE ITEM (every acquirable recipe/specialist/building prints its own wharf fee, paid at any wharf channel; kontor prizes free; never fee-on-fee) and NOVGOROD PAYS THE DIE +2 STARS. v4.1: the dice are the ONE clock (MAX_ROUND 25 backstop). v4.2c markup: specialist fees lean H; ONE PAYMENT PER PLACEMENT (a paid fee covers the ground rent). Bump discards stale v45 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -960,9 +963,7 @@ function gateNeed(shipSlot){let g=DEST[S.slots[shipSlot].dest].gate;if(bKeyAt(sh
 function canTake(shipSlot,vi){const sh=S.slots[shipSlot];const c=cur().vessels[vi];
   if(!(sh&&sh.type==='ship'&&sh.load.length<effCap(sh)))return false;
   if(!caskReady(c))return false;
-  const d=boardDie(c,shipSlot);
-  if(d>=gateNeed(shipSlot))return true;
-  return bKeyAt(shipSlot)==='hopex'&&cur().hops>=1&&Math.min(6,d+1)>=gateNeed(shipSlot);}   // the paid lift can open the gate
+  return boardDie(c,shipSlot)>=gateNeed(shipSlot);}   // (v45d: the Hop Exchange lift moved to the vessels — no on-load special case)
 function grantableBuy(p,key){return !hasUpgrade(p,key)&&specRoom(p);}
 // ---- the displays ----
 function refillBuildDisplay(){while(S.buildDisplay.length<BUILD_DISPLAY&&S.buildDeck.length)S.buildDisplay.push(S.buildDeck.shift());}
@@ -1048,7 +1049,7 @@ function occToken(t){
 // destination chip + numbered load-order berths; buildings are the value/transform tile. Mirrors printables.html.
 const STYLE_COLOR={gruit:'#8a949c',hopped:'#c2922f',broyhan:'#b06a34',keut:'#9c5f2e',mumme:'#caa12a',bock:'#7c2128',gose:'#6e8b74',zerbster:'#5f7a3c',duckstein:'#7a5236',jopenbier:'#5e2433'};
 const DEST_COLOR={bruges:'#274b5c',london:'#b8860b',bergen:'#4a6b3a',novgorod:'#7c2128'};
-const P_ACT_TXT={source:'+2 goods',age:'Age +2',load:'Load 1 more',reach:'+1 presence',recipe:'gain 1 recipe (its fee)',survey:'gain 1 building (+3★ · its fee)',hire:'gain 1 specialist (its fee)',brew:'Brew 1',rack:'swap 2 maturing dice',assay:'one maturing die ±1'};
+const P_ACT_TXT={source:'+2 goods',age:'Age +2',load:'Load 1 more',reach:'+1 presence',recipe:'gain 1 recipe (its fee)',survey:'gain 1 building (+3★ · its fee)',hire:'gain 1 specialist (its fee)',brew:'Brew 1',rack:'swap 2 casks’ dice (no cap)',assay:'one maturing die ±1',hopex:'pay ≤2H: die +1 each',abbey:'pay 3H: ALL maturing → Ready'};
 function pCost(g,h){let a='';if(g)a+='<span class="pgc">'+LU('wheat','pg')+g+'</span>';if(h)a+='<span class="pgc">'+LU('sprout','ph')+h+'</span>';return a;}
 // ---- the DEMAND DIE: pips = the ★ a cask banks from a value building (a d6, max 5; returns to the pool) ----
 const DIE_PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};   // 3×3 grid, 0-indexed
@@ -1314,7 +1315,7 @@ function resolveStop(i){
 // resume / return helpers — clear the sub-flow fields, then route to the right phase
 function resume(rt){
   UI.cell=null;UI.stage=null;UI.tmp=null;
-  UI.age=UI.brew=UI.src=UI.load=UI.reach=UI.survey=UI.hire=UI.benefit=UI.comm=UI.rgain=UI.rack=UI.assay=UI.loadopt=null;
+  UI.age=UI.brew=UI.src=UI.load=UI.reach=UI.survey=UI.hire=UI.benefit=UI.comm=UI.rgain=UI.rack=UI.assay=UI.loadopt=UI.hopex=UI.abbey=null;
   if(rt==='benefitcont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}
   if(rt==='actscont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}
   if(rt==='line')UI.sub='line';
@@ -1413,23 +1414,56 @@ function fireCaskAct(act,rt){const p=cur();
   else if(act==='brew')enterBrew(rt);
   else if(act==='rack')enterRack(rt);
   else if(act==='assay')enterAssay(rt);
+  else if(act==='hopex')enterHopex(rt);
+  else if(act==='abbey')enterAbbey(rt);
   else resume(rt);
 }
 
-// ---------- RACKING HALL (v4.5b): swap the dice of two of your maturing casks ----------
+// ---------- RACKING HALL (v45d, designer-ruled): swap the dice of ANY two of your vessel
+// casks — NO quality cap (racking transfers the BEER: a die-5 Bock racked onto a Ready Gruit
+// makes a 5-pip Gruit while the Bock drops to 1 and re-matures; the global cap 6 stands).
+// The deck's power tile (fee 3G) — pips only MOVE, but where they sit changes everything.
+function vesselCasks(p){return p.vessels.map((c,i)=>({c,i})).filter(o=>o.c);}
 function enterRack(rt){const p=cur();
-  if(maturingInVessels(p).length<2){log('↳ Racking Hall — it takes two maturing casks to swap.');resume(rt);return;}
+  if(vesselCasks(p).length<2){log('↳ Racking Hall — it takes two casks in your vessels to swap.');resume(rt);return;}
   UI.sub='rack';UI.rack={returnTo:rt,a:null};render();}
 function rackPick(vi){const R=UI.rack;const p=cur();const c=p.vessels[vi];
-  if(!R||!c||!(c.die<c.q))return;
+  if(!R||!c)return;
   if(R.a==null){R.a=vi;render();return;}
   if(R.a===vi)return;
   snapshot();
-  const a=p.vessels[R.a],b=c;const da=a.die,db=b.die;
-  a.die=Math.min(a.q,db);b.die=Math.min(b.q,da);   // swap; each die caps at its cask's quality (overflow is lost)
-  log('↳ '+LU('repeat')+' <b>Racking Hall</b> — '+p.name+' swaps the dice: '+styleShort(a.style)+' → '+a.die+'/'+a.q+(caskReady(a)?' '+LU('check')+'<b>READY</b>':'')+' · '+styleShort(b.style)+' → '+b.die+'/'+b.q+(caskReady(b)?' '+LU('check')+'<b>READY</b>':'')+'.');
+  const a=p.vessels[R.a],b=c;const da=a.die;
+  a.die=Math.min(6,b.die);b.die=Math.min(6,da);   // the whole die transfers — no quality cap (v45d)
+  log('↳ '+LU('repeat')+' <b>Racking Hall</b> — '+p.name+' racks the beer across: '+styleShort(a.style)+' → '+a.die+'/'+a.q+(caskReady(a)?' '+LU('check')+'<b>READY</b>':'')+' · '+styleShort(b.style)+' → '+b.die+'/'+b.q+(caskReady(b)?' '+LU('check')+'<b>READY</b>':'')+'.');
   const rt=R.returnTo;UI.rack=null;resume(rt);}
 function rackSkip(){const rt=UI.rack?UI.rack.returnTo:'stops';UI.rack=null;resume(rt);}
+
+// ---------- HOP EXCHANGE (v45d, designer-ruled): a slot-stop ACTION — pay up to 2H ⚙, each
+// hop turns one of your vessel dice +1 (any split; PAST quality is fine — a building lift;
+// cap 6). Hops are the quality currency: grain buys buildings, hops power the beer.
+const HOPEX_MAX=2;   // ⚙ hops per activation
+function enterHopex(rt){const p=cur();
+  if(p.hops<1||!p.vessels.some(c=>c&&c.die<6)){log('↳ Hop Exchange — no hops to spend, or no die below 6.');resume(rt);return;}
+  UI.sub='hopex';UI.hopex={returnTo:rt,left:Math.min(HOPEX_MAX,p.hops)};render();}
+function hopexAllot(vi){const H=UI.hopex;const p=cur();const c=p.vessels[vi];
+  if(!H||!c||c.die>=6||p.hops<1||H.left<1)return;
+  snapshot();pay(p,{h:1});c.die++;H.left--;
+  log('↳ '+LU('sprout')+' <b>Hop Exchange</b> — 1H turns '+styleShort(c.style)+' to <b>'+c.die+'</b>/'+c.q+(c.die>=c.q?' '+LU('check')+(c.die>c.q?' <b>past quality</b>':' <b>READY</b>'):'')+'.');
+  if(H.left<1||p.hops<1||!p.vessels.some(x=>x&&x.die<6)){hopexDone();return;}
+  render();}
+function hopexDone(){const rt=UI.hopex?UI.hopex.returnTo:'stops';UI.hopex=null;resume(rt);}
+
+// ---------- ABBEY CELLAR (v45d, designer-ruled): pay 3H — ALL your maturing casks age to
+// READY (each die to its quality). The premium aging well; the biggest hops sink in the box.
+const ABBEY_COST={h:3};   // ⚙
+function enterAbbey(rt){const p=cur();
+  if(!canPay(p,ABBEY_COST)||!maturingInVessels(p).length){log('↳ Abbey Cellar — it takes 3H and something maturing.');resume(rt);return;}
+  UI.sub='abbey';UI.abbey={returnTo:rt};render();}
+function abbeyGo(pay3){const A=UI.abbey;const p=cur();if(!A)return;
+  if(pay3&&canPay(p,ABBEY_COST)&&maturingInVessels(p).length){snapshot();pay(p,ABBEY_COST);
+    const done=[];maturingInVessels(p).forEach(o=>{o.c.die=o.c.q;done.push(styleShort(o.c.style)+' '+o.c.die+'/'+o.c.q);});
+    log('↳ '+LU('hourglass')+' <b>Abbey Cellar</b> — '+p.name+' pays 3H: <b>every maturing cask ages to READY</b> ('+done.join(' · ')+').',true);}
+  const rt=A.returnTo;UI.abbey=null;resume(rt);}
 
 /// ---------- ASSAY HOUSE (v4.5b): turn one of your maturing dice +1 (never above quality) ----------
 function enterAssay(rt){const p=cur();
@@ -1562,24 +1596,19 @@ function loadPickCask(vi){const L=UI.load;if(!L)return;
 function loadOnto(shipSlot){const p=cur();const L=UI.load;if(!L||L.cask==null)return;
   const vi=L.cask;const c=p.vessels[vi];
   if(!canTake(shipSlot,vi))return;
-  // v4.5b: the Hop Exchange / Tollhouse offer an OPTIONAL choice as the cask boards
+  // v45d: only the Tollhouse offers an on-load choice now (the Hop Exchange lift moved to the vessels)
   const bk=bKeyAt(shipSlot);const base=boardDie(c,shipSlot);
-  const mustHop=bk==='hopex'&&p.hops>=1&&base<gateNeed(shipSlot);           // only the paid lift makes the gate
-  const canHop=bk==='hopex'&&p.hops>=1&&base<6&&!mustHop;
   const canToll=bk==='tollhouse'&&base>1&&(base-1)>=gateNeed(shipSlot);
-  if(!p.ai&&(canHop||canToll)){UI.loadopt={shipSlot,vi,kind:bk};UI.sub='loadopt';render();return;}
-  loadCommit(shipSlot,vi,p.ai?aiLoadOpt(p,bk,base,shipSlot,c.style):mustHop);
+  if(!p.ai&&canToll){UI.loadopt={shipSlot,vi,kind:bk};UI.sub='loadopt';render();return;}
+  loadCommit(shipSlot,vi,p.ai?aiLoadOpt(p,bk,base,shipSlot,c.style):false);
 }
 function loadOptGo(use){const o=UI.loadopt;if(!o)return;UI.loadopt=null;UI.sub='load';loadCommit(o.shipSlot,o.vi,use);}
 function aiLoadOpt(p,bk,base,slot,style){
   // v45c: the load options net against the OPEN LADING ROW — a stamp that forfeits a 4★ order is a loss
   const t=S.slots[slot];const dest=t?t.dest:null;
-  if(bk==='hopex'){if(!(p.hops>=1&&base<6))return false;
-    const dL=aiLadingBonus(dest,style,Math.min(6,base+1))-aiLadingBonus(dest,style,base);
-    return base<gateNeed(slot)||dL>0||p.hops>=2;}   // pay when it opens the gate, reaches an order, or hops are slack
   if(bk==='tollhouse'){if(!(base>1&&(base-1)>=gateNeed(slot)))return false;
     const dL=aiLadingBonus(dest,style,base-1)-aiLadingBonus(dest,style,base);
-    return 1+dL>0;}   // stamp = −1 pip +2★ = net +1, minus any order the lower face forfeits
+    return 2+dL>0;}   // stamp = −1 pip +3★ (v45d) = net +2, minus any order the lower face forfeits
   return false;}
 function loadCommit(shipSlot,vi,useOpt){const p=cur();const L=UI.load;const c=p.vessels[vi];const sh=S.slots[shipSlot];
   if(!c||!sh||!L)return;
@@ -1587,10 +1616,8 @@ function loadCommit(shipSlot,vi,useOpt){const p=cur();const L=UI.load;const c=p.
   const bk=bKeyAt(shipSlot);
   if((bk==='maltkiln'||bk==='bonded')&&c.die<6){c.die=Math.min(6,c.die+1);
     log('↳ the '+LU(bk==='maltkiln'?'flame':'warehouse')+' <b>'+bName(bk)+'</b> lifts the boarding die to <b>'+c.die+'</b>.');}
-  if(bk==='hopex'&&useOpt&&p.hops>=1&&c.die<6){pay(p,{h:1});c.die=Math.min(6,c.die+1);
-    log('↳ the '+LU('sprout')+' <b>Hop Exchange</b> lifts the boarding die to <b>'+c.die+'</b>.');}
-  if(bk==='tollhouse'&&useOpt&&c.die>1&&(c.die-1)>=gateNeed(shipSlot)){c.die--;p.bank+=2;p.bankO=(p.bankO||0)+2;
-    log('↳ the '+LU('ticket')+' <b>Tollhouse</b> takes its toll — the die drops to <b>'+c.die+'</b>, '+p.name+' banks <b>+2★</b>.');}
+  if(bk==='tollhouse'&&useOpt&&c.die>1&&(c.die-1)>=gateNeed(shipSlot)){c.die--;p.bank+=3;p.bankO=(p.bankO||0)+3;   // v45d: +3★ ⚙
+    log('↳ the '+LU('ticket')+' <b>Tollhouse</b> takes its toll — the die drops to <b>'+c.die+'</b>, '+p.name+' banks <b>+3★</b>.');}
   sh.load.push({owner:p.id,style:c.style,q:c.q,die:c.die,act:c.act});
   p.vessels[vi]=null;
   log(p.name+' '+LU('ship')+' loads '+LU('beer')+'<b>'+styleShort(c.style)+'</b> (die '+c.die+') onto the '+LU('sailboat')+shipName(sh)+' → <b>'+DEST[sh.dest].name+'</b> ('+sh.load.length+'/'+effCap(sh)+').',true);
@@ -1783,7 +1810,7 @@ function renderScore(){
   const bb=p.bankB||0,bl=p.bankL||0,bo=p.bankO||0,bp=Math.max(0,(p.bank||0)-bb-bl-bo);
   const br='<tr><td>'+LU('building-2')+' Buildings raised</td><td>'+(bb/BUILD_PTS)+' × +'+BUILD_PTS+'★</td><td '+R+'><b>'+bb+'★</b></td></tr>'
     +'<tr><td>'+LU('scroll-text')+' Ladings fulfilled</td><td>'+((p.ladings||[]).length)+' order'+((p.ladings||[]).length===1?'':'s')+'</td><td '+R+'><b>'+bl+'★</b></td></tr>'
-    +(bo?'<tr><td>'+LU('ticket')+' Tollhouse</td><td>+2★ per stamped cask</td><td '+R+'><b>'+bo+'★</b></td></tr>':'')
+    +(bo?'<tr><td>'+LU('ticket')+' Tollhouse</td><td>+3★ per stamped cask</td><td '+R+'><b>'+bo+'★</b></td></tr>':'')
     +'<tr><td>'+LU('map-pin')+' Presence bumps</td><td>1★ per face-1 die</td><td '+R+'><b>'+bp+'★</b></td></tr>'
     +'<tr><td colspan="2"><b>Bank</b></td><td '+R+'><b>'+sc.bank+'★</b></td></tr>';
   // 3 · majorities — standing per kontor, valued as if scored now
@@ -2010,7 +2037,7 @@ function aiFlightMarg(p){const t=flightBeers(p);const m=(FLIGHT_PTS[t+1]||0)-(t>
 function aiRunway(){let r=1e9;S.players.forEach(q=>{const v=(q.presPool!=null?q.presPool:PRES_POOL);if(v<r)r=v;});return r;}
 function aiLateGame(p){return aiIsTrader(p)&&(S.ending||aiRunway()<=4);}   // the public clock says: bank, don't invest ⚙
 function aiPickBuilding(p,list){
-  const pref=['maltkiln','assay','bonded','cooperage','racking','hopex','granary','scriveners','missionq','tollhouse','customs','hiringpost','almoner','richberth'];
+  const pref=['maltkiln','abbey','racking','assay','bonded','cooperage','hopex','granary','scriveners','missionq','tollhouse','customs','hiringpost','almoner','richberth'];
   for(const k of pref)if(list.includes(k))return k;return list[0];}
 // v4.5b: the best OPEN lading this delivery could claim (0 if none) — the row prices the delivery
 function aiLadingBonus(dest,style,die){let b=0;(S.ladingRow||[]).forEach(l=>{
@@ -2039,14 +2066,26 @@ function aiVerbValue(p,act){
     const R={cellar:4,braumeister:3.6,crane:3,granary:2.4,hopgarden:2.2};
     return Math.max(0.4,Math.max.apply(null,o.map(k=>(R[k]||2)-aiFeeCost(SPEC_FEE[k]||{}))))*(aiLateGame(p)?0.3:1);}
   if(act==='brew')return (openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r))&&(!S.presEnd||trayDice(p)>0))?3:0;
-  if(act==='rack'){const m=maturingInVessels(p);if(m.length<2)return 0;   // v4.5b: swap two maturing dice
+  if(act==='rack'){const m=vesselCasks(p);if(m.length<2)return 0;   // v45d: any two, uncapped — the launder engine
     let best=0;m.forEach(o1=>m.forEach(o2=>{if(o1.i===o2.i)return;
-      const a=o1.c,b=o2.c;const na=Math.min(a.q,b.die),nb=Math.min(b.q,a.die);
-      const v=(na>=a.q?2:0)+(nb>=b.q?2:0)-((a.die+b.die)-(na+nb))*0.6;
-      if(v>best)best=v;}));return best;}
-  if(act==='assay'){const m=maturingInVessels(p);if(!m.length)return 0;   // v4.5b: one maturing die +1
+      const v=aiRackVal(o1.c,o2.c);if(v>best)best=v;}));return best;}
+  if(act==='assay'){const m=maturingInVessels(p);if(!m.length)return 0;   // v4.5b: one maturing die ±1
     return m.some(o=>o.c.q-o.c.die===1)?2.2:1.2;}
+  if(act==='hopex'){if(p.hops<1)return 0;   // v45d: pay ≤2H, vessel dice +1 each
+    const fin=maturingInVessels(p).filter(o=>o.c.q-o.c.die===1).length;
+    let lad=0;vesselCasks(p).forEach(o=>{if(o.c.die>=6||!caskReady(o.c))return;
+      KONTORE.forEach(k=>{lad=Math.max(lad,aiLadingBonus(k,o.c.style,o.c.die+1)-aiLadingBonus(k,o.c.style,o.c.die));});});
+    return Math.min(2,fin)*1.8+lad*0.6;}
+  if(act==='abbey'){if(!canPay(p,ABBEY_COST))return 0;   // v45d: 3H — all maturing to Ready
+    const gap=maturingInVessels(p).reduce((s,o)=>s+(o.c.q-o.c.die),0);
+    return gap>=3?2.2+0.5*(gap-3):0;}
   return 0.2;}
+// v45d rack value: newly-READY casks + the LAUNDER gain — surplus pips (die past quality) ship
+// as-is, so moving a big die onto a low-quality cask converts held value into sellable value.
+function aiRackVal(a,b){const na=Math.min(6,b.die),nb=Math.min(6,a.die);
+  const rdy=((na>=a.q?1:0)+(nb>=b.q?1:0))-((a.die>=a.q?1:0)+(b.die>=b.q?1:0));
+  const surplus=(Math.max(0,na-a.q)+Math.max(0,nb-b.q))-(Math.max(0,a.die-a.q)+Math.max(0,b.die-b.q));
+  return rdy*2+surplus*0.9;}
 function aiLoadValue(p,sid){const t=S.slots[sid];if(!t||t.type!=='ship')return 0;let best=0;
   readyInVessels(p).forEach(o=>{if(canTake(sid,o.i)){const bd=boardDie(p.vessels[o.i],sid);const d=bd+((DEST[t.dest].vbonus)||0);
     let v=1.5+d*0.8*aiPW(p,'lifter')+(t.load.length+1>=sailCap(t)?0.8:0)
@@ -2174,15 +2213,22 @@ function aiStep(){
         const m=ladingMatches(b.dest,b.style,b.die).sort((a,b2)=>b2.l.pts-a.l.pts);
         return ladingPick(m.length?m[0].i:-1);}
       case 'rack':{const R=UI.rack;if(!R)return rackSkip();
-        const m=maturingInVessels(p);
-        // swap value: READY-now tempo minus overflow loss (pips clipped at a cask's quality)
-        const val=(a,b)=>{const na=Math.min(a.q,b.die),nb=Math.min(b.q,a.die);
-          return (na>=a.q?2.2:0)+(nb>=b.q?2.2:0)-((a.die+b.die)-(na+nb))*0.7
-            +(Math.max(na-a.die,0)+Math.max(nb-b.die,0))*0.15;};
-        if(R.a!=null){let bi=-1,bv=0.5;m.forEach(o=>{if(o.i===R.a)return;const v=val(p.vessels[R.a],o.c);if(v>bv){bv=v;bi=o.i;}});
+        const m=vesselCasks(p);
+        if(R.a!=null){let bi=-1,bv=0.5;m.forEach(o=>{if(o.i===R.a)return;const v=aiRackVal(p.vessels[R.a],o.c);if(v>bv){bv=v;bi=o.i;}});
           if(bi<0)return rackSkip();return rackPick(bi);}
-        let bp=null,bv=0.5;m.forEach(o1=>m.forEach(o2=>{if(o1.i===o2.i)return;const v=val(o1.c,o2.c);if(v>bv){bv=v;bp=o1.i;}}));
+        let bp=null,bv=0.5;m.forEach(o1=>m.forEach(o2=>{if(o1.i===o2.i)return;const v=aiRackVal(o1.c,o2.c);if(v>bv){bv=v;bp=o1.i;}}));
         if(bp==null)return rackSkip();return rackPick(bp);}
+      case 'hopex':{const H=UI.hopex;if(!H)return resume('stops');
+        if(H.left>0&&p.hops>=1){
+          const fin=maturingInVessels(p).filter(o=>o.c.q-o.c.die===1)[0];   // finish a cask first
+          if(fin)return hopexAllot(fin.i);
+          let bi=-1,bv=0;vesselCasks(p).forEach(o=>{if(o.c.die>=6||!caskReady(o.c))return;   // then lift a Ready cask toward an open order
+            let g=0;KONTORE.forEach(k=>{g=Math.max(g,aiLadingBonus(k,o.c.style,o.c.die+1)-aiLadingBonus(k,o.c.style,o.c.die));});
+            if(g>bv){bv=g;bi=o.i;}});
+          if(bi>=0&&bv>0)return hopexAllot(bi);}
+        return hopexDone();}
+      case 'abbey':{const gap=maturingInVessels(p).reduce((s,o)=>s+(o.c.q-o.c.die),0);
+        return abbeyGo(canPay(p,ABBEY_COST)&&gap>=3);}   // 3H for 3+ age points is Cellar-or-better
       case 'assay':{const m=maturingInVessels(p).sort((a,b)=>((b.c.q-b.c.die)===1?9:b.c.q)-((a.c.q-a.c.die)===1?9:a.c.q));
         if(!m.length)return assaySkip();return assayPick(m[0].i);}
       case 'loadopt':{const o=UI.loadopt;if(!o)return resume('stops');
@@ -2209,7 +2255,7 @@ function aiStep(){
 let GUILD_MS=250;    // ⚙ ms per Guildmaster decision ('instant' speed caps at 120; harnesses lower it)
 let CELLAR_MS=1200;  // ⚙ ms per Cellarmaster decision
 let GM_MIN=2;        // minimum playouts per option
-const AI_MC_SUBS={move:1,line:1,stops:1,brew:1,load:1,commission:1,placebldg:1,benefit:1,survey:1,hire:1,reach:1,rack:1,assay:1,loadopt:1};   // v4.5b: the new die verbs + the load options are sampled too
+const AI_MC_SUBS={move:1,line:1,stops:1,brew:1,load:1,commission:1,placebldg:1,benefit:1,survey:1,hire:1,reach:1,rack:1,assay:1,loadopt:1,abbey:1};   // v4.5b/v45d: the die verbs + load options are sampled (hopex allots greedily, like age)
 function aiMCOptions(p){
   const out=[];const push=(label,fn)=>out.push({label,fn});
   switch(UI.sub){
@@ -2235,13 +2281,14 @@ function aiMCOptions(p){
     case 'survey':{surveyAffordable(p).forEach(k=>push('take:'+k,()=>surveyPick(k)));push('skip',()=>surveyPick(null));break;}
     case 'hire':{hireAffordable(p).forEach(k=>push('hire:'+k,()=>hirePick(k)));push('skip',()=>hirePick(null));break;}
     case 'reach':{((UI.reach&&UI.reach.ks)||[]).forEach(k=>push('reach:'+k,()=>reachPick(k)));push('skip',()=>reachSkip());break;}
-    case 'rack':{const R=UI.rack;if(!R)break;const m=maturingInVessels(p);   // v4.5b: sample every swap pair
+    case 'rack':{const R=UI.rack;if(!R)break;const m=vesselCasks(p);   // v45d: any two casks, uncapped — sample every pair
       if(R.a==null)m.forEach(o1=>m.forEach(o2=>{if(o1.i>=o2.i)return;push('rack:'+o1.i+'x'+o2.i,()=>{rackPick(o1.i);rackPick(o2.i);});}));
       else m.forEach(o=>{if(o.i!==R.a)push('rack2:'+o.i,()=>rackPick(o.i));});
       push('skip',()=>rackSkip());break;}
     case 'assay':{maturingInVessels(p).forEach(o=>{push('assay+:'+o.i,()=>assayPick(o.i,1));
       if(o.c.die>1)push('assay-:'+o.i,()=>assayPick(o.i,-1));});push('skip',()=>assaySkip());break;}
     case 'loadopt':{push('opt:use',()=>loadOptGo(true));push('opt:pass',()=>loadOptGo(false));break;}
+    case 'abbey':{push('abbey:pay',()=>abbeyGo(true));push('abbey:skip',()=>abbeyGo(false));break;}
   }
   return out;
 }
@@ -2466,19 +2513,24 @@ function renderBar(){
     prompt=lp.name+'’s '+LU('beer')+styleShort(b.style)+' (die '+b.die+') at '+DEST[b.dest].name+' fulfils a '+LU('scroll-text')+' <b>lading</b> — claim one (the ★ bank at once):';
     acts=m.map(o=>btn(LU('scroll-text')+ladingLabel(o.l),'ladingPick('+o.i+')','go')).join('')+btn('Decline','ladingPick(-1)','ghost');}
   else if(U==='rack'){const R=UI.rack;
-    prompt=LU('repeat')+' <b>Racking Hall</b> — '+(R.a==null?'pick the <b>first</b> maturing cask; its die will trade places with a second.':'now the <b>second</b> cask — the two dice swap (each stops at its quality).');
-    acts=p.vessels.map((c,i)=>(c&&c.die<c.q&&i!==R.a)?btn(LU('beer')+styleShort(c.style)+' '+c.die+'/'+c.q,'rackPick('+i+')','go'):'').filter(x=>x).join('')+btn('Skip','rackSkip()','ghost');}
+    prompt=LU('repeat')+' <b>Racking Hall</b> — '+(R.a==null?'pick the <b>first</b> cask; its die will trade places with a second (<b>no quality cap</b> — the beer transfers).':'now the <b>second</b> cask — the two dice trade places whole.');
+    acts=p.vessels.map((c,i)=>(c&&i!==R.a)?btn(LU('beer')+styleShort(c.style)+' '+c.die+'/'+c.q,'rackPick('+i+')','go'):'').filter(x=>x).join('')+btn('Skip','rackSkip()','ghost');}
   else if(U==='assay'){
     prompt=LU('scale')+' <b>Assay House</b> — turn <b>one</b> maturing die ±1 (never above its quality, never below 1).';
     acts=p.vessels.map((c,i)=>(c&&c.die<c.q)?(btn(LU('beer')+styleShort(c.style)+' '+c.die+'/'+c.q+' ▲ '+(c.die+1),'assayPick('+i+',1)','go')
       +(c.die>1?btn(LU('beer')+styleShort(c.style)+' ▼ '+(c.die-1),'assayPick('+i+',-1)','ghost'):'')):'').filter(x=>x).join('')+btn('Skip','assaySkip()','ghost');}
   else if(U==='loadopt'){const o=UI.loadopt;const c=p.vessels[o.vi];const base=boardDie(c,o.shipSlot);
-    if(o.kind==='hopex'){prompt=LU('sprout')+' <b>Hop Exchange</b> — pay 1 hops? The boarding die lifts <b>'+base+' → '+Math.min(6,base+1)+'</b>.';
-      acts=btn('Pay '+Hi(1)+' · die +1','loadOptGo(true)','go')+btn('Board as is','loadOptGo(false)','ghost');}
-    else{prompt=LU('ticket')+' <b>Tollhouse</b> — stamp the cask? The die drops <b>'+base+' → '+(base-1)+'</b> and you bank <b>+2★</b>.';
-      acts=btn('Stamp · die −1, +2★','loadOptGo(true)','go')+btn('Board untaxed','loadOptGo(false)','ghost');}}
+    prompt=LU('ticket')+' <b>Tollhouse</b> — stamp the cask? The die drops <b>'+base+' → '+(base-1)+'</b> and you bank <b>+3★</b> at once.';
+    acts=btn('Stamp · die −1, +3★','loadOptGo(true)','go')+btn('Board untaxed','loadOptGo(false)','ghost');}
+  else if(U==='hopex'){const H=UI.hopex;
+    prompt=LU('sprout')+' <b>Hop Exchange</b> — pay '+Hi(1)+' per lift, '+H.left+' left: turn a vessel die +1 (past quality is fine, cap 6).';
+    acts=p.vessels.map((c,i)=>(c&&c.die<6)?btn(LU('beer')+styleShort(c.style)+' '+c.die+' ▲ '+(c.die+1),'hopexAllot('+i+')','go'):'').filter(x=>x).join('')+btn('Done','hopexDone()','primary');}
+  else if(U==='abbey'){
+    const m=maturingInVessels(p);
+    prompt=LU('hourglass')+' <b>Abbey Cellar</b> — pay '+Hi(3)+'? <b>Every maturing cask ages to READY</b> ('+m.map(o=>styleShort(o.c.style)+' '+o.c.die+'→'+o.c.q).join(' · ')+').';
+    acts=btn('Pay '+Hi(3)+' · all to Ready','abbeyGo(true)','go')+btn('Skip','abbeyGo(false)','ghost');}
   else if(U==='end'){prompt='Line resolved.';acts=btn('End Turn ▸','endTurn()','primary');}
-  const hideEnd=(U==='move'&&!p.placed)||['end','benefit','precipe','bspec','placebldg','survey','hire','lading','loadopt'].includes(U);
+  const hideEnd=(U==='move'&&!p.placed)||['end','benefit','precipe','bspec','placebldg','survey','hire','lading','loadopt','abbey'].includes(U);
   if(!hideEnd)acts+=btn('End Turn ▸','endTurn()','ghost');
   if(undoStack.length)acts+=btn('↶ Undo','doUndo()','ghost');
   document.getElementById('prompt').innerHTML=prompt;
@@ -2496,8 +2548,10 @@ function actAvail(p,act){
   if(act==='survey')return surveyAffordable(p).length>0;
   if(act==='hire')return hireAffordable(p).length>0;
   if(act==='brew')return openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r))&&(!S.presEnd||trayDice(p)>0);
-  if(act==='rack')return maturingInVessels(p).length>=2;
+  if(act==='rack')return vesselCasks(p).length>=2;
   if(act==='assay')return maturingInVessels(p).length>=1;
+  if(act==='hopex')return p.hops>=1&&p.vessels.some(c=>c&&c.die<6);
+  if(act==='abbey')return canPay(p,ABBEY_COST)&&maturingInVessels(p).length>=1;
   return true;}
 function stopAvail(st){const p=cur();
   if(st.kind==='cell'){
@@ -2666,8 +2720,9 @@ function renderTableaus(){
       let vcls='',vclick='';
       if(mine&&UI.sub==='load'&&UI.load&&UI.load.cask==null&&UI.load.ships.some(sid=>canTake(sid,vi))){vcls=' stopgo';vclick=' onclick="loadPickCask('+vi+')"';}
       else if(mine&&UI.sub==='age'&&UI.age&&c.die<c.q){vcls=' stopgo';vclick=' onclick="ageAllot('+vi+')"';}
-      else if(mine&&UI.sub==='rack'&&UI.rack&&c.die<c.q&&vi!==UI.rack.a){vcls=' stopgo';vclick=' onclick="rackPick('+vi+')"';}
+      else if(mine&&UI.sub==='rack'&&UI.rack&&vi!==UI.rack.a){vcls=' stopgo';vclick=' onclick="rackPick('+vi+')"';}
       else if(mine&&UI.sub==='assay'&&UI.assay&&c.die<c.q){vcls=' stopgo';vclick=' onclick="assayPick('+vi+')"';}
+      else if(mine&&UI.sub==='hopex'&&UI.hopex&&c.die<6){vcls=' stopgo';vclick=' onclick="hopexAllot('+vi+')"';}
       rowCells.push('<div class="vcell"><div class="mtile'+vcls+'"'+vclick+' data-tip="'+attr(STYLES[c.style].name+' Q'+c.q+' · die '+c.die+'/'+c.q+' · load bonus: '+(CASK_ACT[caskAct(c)]||'')+' · '+(ready?'READY — load it onto a hull':'maturing (age points turn the die up)'))+'">'+pCaskFace(c,null,false,p.color)+'</div>'
         +(ready?'<div class="vmat"><span class="tag good">'+LU('check')+' READY ▸ load</span></div>':'<div class="vmat note">'+LU('hourglass')+' '+c.die+'/'+c.q+'</div>')+'</div>');
     });
