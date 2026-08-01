@@ -290,6 +290,23 @@ crash-free — an early 3-game read suggested 2p slowed to ~20+ rounds, but the 
 (n=500/count) corrected it: 2p 14.6 avg (82% band) · 3p 14.0 · 4p 13.3. *(components.js: buildings/ladings/Braumeister card data + the
 ladingTile face; print.html prints the new set.)*
 
+**v45e "the recipe tariff" — H = Q−2, and Bruges pays too** *(2026-08-01, KEY `hanse-v45e`,
+designer-ruled: "Instead of being free, the cost (in hops) should be q-2… early bock recipe
+and only brewing it (and one of each of the others for the flight) might be the only true
+power strategy")* — The recipe fee becomes a printed FORMULA — **`H` = Q−2** (Broyhan/Keut 1H
+· Mumme 2H · Bock 3H) — and it applies at **every** channel: the Bruges prize grants the PICK,
+never the waiver (no affordable pick → the 2-goods consolation). The Bock rush is taxed
+twice-over: 3H to hold the recipe, 2G3H per brew — the 3G2H opening can't touch it on turn
+one. The formula also finishes the v45d currency grammar: grain buys infrastructure, hops buy
+recipes and quality. *Keut note:* its old 1G fee is gone — at 1H it now prices level with
+Broyhan (it was the least-brewed export at ~7%; a small tailwind). *Watch ⚙:* hops carry
+THREE sinks added in two letters (recipes · Hop Exchange ≤2H · Abbey 3H) — the flow probe's
+"hops slack" read needs re-running; if hops flip to binding, the dials are the formula offset
+and the Market mix. And the designer's standing worry — a viable LOW-quality path — now leans
+on the launder engine, the Kiln/Tollhouse, low-die ladings and the majorities; the PATHWAYS
+lifter/majority lanes are the gauge. *Gates:* verify **134/134** · sim 60 crash-free (winner
+totals dip ~58–66 → ~51–55 — the tariff bites; pace holds).*
+
 **v45d "the power ladder" — the deck gets its GWT curve** *(2026-08-01, KEY `hanse-v45d`,
 designer-ruled off the v45c utilization read — the Racking Hall at 0.0 and the Tollhouse at
 ~0.1 uses/game — and the comp: "consider buildings in Great Western Trail; some are cheap and

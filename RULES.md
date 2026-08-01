@@ -174,7 +174,7 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 - **Delivery:** the die **parks at the kontor showing its face** — the pips ARE the banked ★
   (never less than 1), the body is your presence there and a beat of the end clock (§10).
 
-| Beer | Q | Aging steps | Die starts | Brew cost | Earned (wharf fee ⚙ · free at Bruges) |
+| Beer | Q | Aging steps | Die starts | Brew cost | Earned (wharf fee `H` = Q−2 ⚙ — every channel, Bruges too · v45e) |
 |---|---|---|---|---|---|
 | Gruit | Q1 | 0 (Ready at brew) | 1 | `G` | starter |
 | Hopped | Q2 | 1 | 1 | `G H` | starter |
