@@ -1,0 +1,36 @@
+=== persona duels v45h — GM vs GM, same MC budget (GUILD_MS=120 bulk, 2p, seats alternate) ===
+=== challenger persona vs the quality GM · 20 games/pairing (2 shards of 10) · 4 cores oversubscribed 10 shards (uniform) ===
+
+breadth vs quality: challenger wins 60.0%  (6/10) · rounds avg 23.2
+  breadth  total 44.2 = deliv 14.2 + maj 13.9 + bank 7.2 + flight 8.9
+  quality  total 34.6 = deliv 13.6 + maj 7.0 + bank 7.7 + flight 6.3
+breadth vs quality: challenger wins 60.0%  (6/10) · rounds avg 23.6
+  breadth  total 47.3 = deliv 15.5 + maj 11.6 + bank 10.3 + flight 9.9
+  quality  total 36.7 = deliv 13.2 + maj 10.3 + bank 5.9 + flight 7.3
+builder vs quality: challenger wins 70.0%  (7/10) · rounds avg 24.1
+  builder  total 43.6 = deliv 14.7 + maj 12.1 + bank 7.9 + flight 8.9
+  quality  total 37.9 = deliv 14.2 + maj 9.4 + bank 5.3 + flight 9.0
+builder vs quality: challenger wins 60.0%  (6/10) · rounds avg 22.4
+  builder  total 48.1 = deliv 16.6 + maj 11.1 + bank 11.3 + flight 9.1
+  quality  total 37.2 = deliv 13.0 + maj 8.1 + bank 7.2 + flight 8.9
+lifter vs quality: challenger wins 70.0%  (7/10) · rounds avg 23.1
+  lifter   total 44.8 = deliv 16.7 + maj 12.2 + bank 7.2 + flight 8.7
+  quality  total 38.9 = deliv 15.3 + maj 8.5 + bank 7.3 + flight 7.8
+lifter vs quality: challenger wins 60.0%  (6/10) · rounds avg 23.6
+  lifter   total 39.8 = deliv 13.5 + maj 11.2 + bank 6.6 + flight 8.5
+  quality  total 34.2 = deliv 12.3 + maj 7.6 + bank 6.9 + flight 7.4
+majority vs quality: challenger wins 30.0%  (3/10) · rounds avg 24.1
+  majority total 24.3 = deliv 8.4 + maj 8.2 + bank 3.1 + flight 4.6
+  quality  total 41.4 = deliv 13.1 + maj 12.1 + bank 6.3 + flight 9.9
+majority vs quality: challenger wins 30.0%  (3/10) · rounds avg 22.6
+  majority total 43.6 = deliv 15.7 + maj 8.8 + bank 9.7 + flight 9.4
+  quality  total 47.5 = deliv 16.9 + maj 10.1 + bank 11.1 + flight 9.4
+search vs quality: challenger wins 50.0%  (5/10) · rounds avg 23.5
+  search   total 43.3 = deliv 15.6 + maj 9.5 + bank 8.3 + flight 9.9
+  quality  total 40.9 = deliv 13.9 + maj 11.5 + bank 8.5 + flight 7.0
+search vs quality: challenger wins 50.0%  (5/10) · rounds avg 22.3
+  search   total 43.1 = deliv 16.4 + maj 11.8 + bank 5.2 + flight 9.7
+  quality  total 38.5 = deliv 13.6 + maj 9.6 + bank 5.6 + flight 9.7
+
+POOLED: breadth 12/20 (60%) · builder 13/20 (65%) · lifter 13/20 (65%) · majority 6/20 (30%) · pure-search 10/20 (50%)
+NOTE: the bulk budget under-reads quality — the most search-hungry line (at GUILD_MS=40 the quality seat collapses outright). Directional, not final.
