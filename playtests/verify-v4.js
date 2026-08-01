@@ -1,4 +1,4 @@
-// Targeted rule checks for v4.x — v4.5b "Open Orders" + the v45c letter (KEY hanse-v45c).
+// Targeted rule checks for v4.x — v4.5b "Open Orders" + the v45c/d/e letters (KEY hanse-v45e).
 // Drives the CANONICAL engine (extract play.html's <script>, stub the DOM) and asserts each
 // rule directly by constructing states — no bot in the loop, so a failure is the engine's.
 // Usage: node playtests/verify-v4.js
@@ -140,9 +140,9 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   deliverCask(p,{owner:0,style:'bock',q:5,die:6,act:'age'},'novgorod');
   ok('the Novgorod premium rides above the die cap (die 6 → 8★)', p.delivered[p.delivered.length-1].val===8);
   ok('no refine machinery survives', typeof freeAge==='undefined'&&typeof brefinePick==='undefined');
-  p.recipes=['gruit','hopped'];
+  p.recipes=['gruit','hopped'];p.hops=5;var h9=p.hops;
   UI.pendingRecipe=[{pid:0,dest:'bruges'}];afterSail('stops');
-  ok('Bruges prize: a dealt export recipe, free', p.recipes.length===3);
+  ok('Bruges prize: a dealt export recipe — AT its H = Q−2 fee (v45e)', p.recipes.length===3&&p.hops<h9);
   p.ai=null;
 })();
 
@@ -317,15 +317,16 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('hireable excludes owned + full seats', hireable(p).length===0);
 })();
 
-// ---- 19. v4.2 PER-ITEM WHARF FEES: the fee rides the item; free at the kontor ----
+// ---- 19. PER-ITEM WHARF FEES (v4.2 · v45e): the fee rides the item; recipes H = Q−2 at EVERY channel ----
 (function(){var p=fresh();stops();
   S.exports=['broyhan','keut','mumme'];p.recipes=['gruit','hopped'];
   p.grain=3;p.hops=2;
   UI.sub='recipegain';UI.rgain={returnTo:'stops'};recipeGainPick('broyhan');
   ok('gain-recipe pays the RECIPE’s fee (Broyhan 1H)', p.hops===1&&p.grain===3&&p.recipes.indexOf('broyhan')>=0);
   UI.sub='recipegain';UI.rgain={returnTo:'stops'};recipeGainPick('keut');
-  ok('a different recipe, a different fee (Keut 1G)', p.grain===2&&p.hops===1&&p.recipes.indexOf('keut')>=0);
-  p.grain=0;p.hops=1;var r0=p.recipes.length;   // only mumme (2H) missing — unaffordable
+  ok('the formula holds — Keut (Q3) also 1H, grain untouched (v45e)', p.grain===3&&p.hops===0&&p.recipes.indexOf('keut')>=0);
+  ok('the Bock recipe prints 3H (Q5 − 2) — the rush taxed', (RECIPE_FEE.bock||{}).h===3&&!(RECIPE_FEE.bock||{}).g);
+  p.grain=9;p.hops=1;var r0=p.recipes.length;   // only mumme (2H) missing — unaffordable in HOPS (grain can't help, v45e)
   enterRecipeGain('stops');
   ok('no affordable fee → the recipe channel refuses', UI.sub!=='recipegain'&&p.recipes.length===r0);
   p.grain=5;p.hops=2;S.impDisplay=['cellar','crane','granary','hopgarden'];
@@ -355,9 +356,12 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   var q=S.players[1];q.ai={tier:'journeyman'};var qg=q.grain,qb=q.bank;
   UI.pendingBenefits=[{pid:1,dest:'london'}];afterSail('stops');
   ok('London prize stays free (+'+BUILD_PTS+' banked, no fee)', q.grain===qg&&q.bank===qb+BUILD_PTS);
-  q.recipes=['gruit','hopped'];var qg2=q.grain;
+  q.recipes=['gruit','hopped'];q.hops=5;var qg2=q.grain,qh2=q.hops;
   UI.pendingRecipe=[{pid:1,dest:'bruges'}];afterSail('stops');
-  ok('Bruges prize stays free', q.grain===qg2&&q.recipes.length===3);
+  ok('the Bruges prize PAYS the recipe fee — hops only (v45e)', q.grain===qg2&&q.hops<qh2&&q.recipes.length===3);
+  q.recipes=['gruit','hopped'];q.hops=0;var qr=q.recipes.length,qg2b=q.grain;
+  UI.pendingRecipe=[{pid:1,dest:'bruges'}];afterSail('stops');
+  ok('no affordable recipe at Bruges → the 2-goods consolation', q.recipes.length===qr&&q.grain===qg2b+1&&q.hops===1);
   var qg3=q.grain;S.impDisplay=['cellar','crane','granary','hopgarden'];
   UI.pendingSpec=[{pid:1,dest:'bergen'}];afterSail('stops');
   ok('Bergen prize stays free', q.grain===qg3&&(q.upgrades||[]).length===1);
@@ -441,7 +445,9 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('the deck still boxes 17 tiles', Object.keys(BUILDINGS).reduce(function(s,k){return s+BUILDINGS[k].qty;},0)===17);
 })();
 (function(){var p=fresh();stops();p.ai={tier:'journeyman'};
-  S.buildings.s3={b:'bonded'};var b3=ship('s3','cog','bruges');
+  // v45e note: Bergen dest — its specialist prize is goods-neutral, isolating the Store's payout
+  // (a Bruges run would now also BUY recipes at the H fee and muddy the goods read)
+  S.buildings.s3={b:'bonded'};var b3=ship('s3','cog','bergen');
   p.vessels=[{style:'gruit',q:1,die:1,act:'source'},{style:'gruit',q:1,die:1,act:'source'},null];p.vslots=3;
   var g0=p.grain,h0=p.hops;
   UI.load={ships:['s3'],returnTo:'stops',loadsLeft:2,cask:0};loadOnto('s3');

@@ -18,7 +18,7 @@
 > tiles (a kontor + a die minimum or a named beer → printed **2–5★**); delivering a
 > qualifying cask **claims one** (one per cask; the ★ bank at once); the row refills at the
 > **end of the turn**. The row makes every kontor’s delivery value a **variable economy** —
-> read it before you sail. The live build is `play.html` (**KEY `hanse-v45d`** — the letters, designer-ruled 2026-08-01: v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
+> read it before you sail. The live build is `play.html` (**KEY `hanse-v45e`** — the letters, designer-ruled 2026-08-01: **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
 
 > **v4.5 “Empty Tray” (designer-ruled 2026-07-31 — off human playtest #24).** Two changes.
 > **(1) The end trigger is the EMPTY TRAY:** the first house to **commit its last tally die**
@@ -179,9 +179,9 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 | Gruit | Q1 | 0 (Ready at brew) | 1 | `G` | starter |
 | Hopped | Q2 | 1 | 1 | `G H` | starter |
 | Broyhan | Q3 | 1 | 2 | `G H H` | dealt export · fee `H` |
-| Keut | Q3 | 2 | 1 | `G G H` | dealt export · fee `G` |
+| Keut | Q3 | 2 | 1 | `G G H` | dealt export · fee `H` |
 | Mumme | Q4 | 3 | 1 | `G H H H` | dealt export · fee `H H` |
-| Bock | Q5 | 3 | 2 | `G G H H H` | dealt export · fee `G H H` (the premium climb) |
+| Bock | Q5 | 3 | 2 | `G G H H H` | dealt export · fee `H H H` (the taxed climb — v45e) |
 
 *(The Cellarman starts your dice one higher — a Bock at 3. Cap: a start value never exceeds the
 quality. Keut’s printed perk: its delivery also **places 1 presence** — a tray die parks at face 1
@@ -298,7 +298,8 @@ load each slot’s ship once — all optional, any order, resolved on the active
 *(Enshrine left with the Hall. Every pile top is face-up — brew toward the bonus you want.
 **Paid at the wharf, free at the kontor** (v4.2 — the fee rides the ITEM): the three
 acquisition gains cost the chosen item’s **own printed fee**, here and at Scrivener’s Hall /
-the Hiring Post — the kontor prizes never do, and no building ever adds a fee of its own.)*
+the Hiring Post. London’s and Bergen’s prizes waive it — **a recipe’s fee (`H` = Q−2) is paid
+everywhere, the Bruges prize included (v45e)**. No building ever adds a fee of its own.)*
 
 ---
 
@@ -306,7 +307,7 @@ the Hiring Post — the kontor prizes never do, and no building ever adds a fee 
 
 | Destination | Gate ⚙ | Value | Prize on delivery ⚙ | Majority (1/2/3) ⚙ |
 |---|---|---|---|---|
-| **Bruges** (Hub) | 1 | the die | **Gain 1 recipe** (dealt exports) | 4 / 2 / 0 |
+| **Bruges** (Hub) | 1 | the die | **Gain 1 recipe** — dealt exports, **at its `H` = Q−2 fee** (v45e: the prize is the pick, never the waiver; no affordable pick → 2 goods) | 4 / 2 / 0 |
 | **London** (Steelyard) | 2 | the die | **A building** (display → placed, **+3★**) | 5 / 3 / 1 |
 | **Bergen** (Bryggen) | 2 | the die | **A specialist** (display, free — **≤1 per ship sailed**, v4.5b; load order decides) | 9 / 5 / 2 (anchor) |
 | **Novgorod** (Peterhof) | **4** (raised ⚙) | **the die +2★** ⚙ (6–8) | — (the value premium IS the prize) | 8 / 5 / 2 |
@@ -433,8 +434,10 @@ the engine; the modules return after the core settles.
    was 3-game noise. The pool sweep says **12 is on the fast edge under greedy play; 13 holds
    the 12–25 band best at every count** — greedy racers under-read human pace, so the dial
    call waits for a human table.
-2. **The recipe faucet** — Bruges + the priced verbs only (v4.1 fee). If the Flight stalls, the
-   dials are prize generosity, verb frequency (piles/deck), and the fee — not a Market buy.
+2. **The recipe faucet** — Bruges + the priced verbs, all at **`H` = Q−2 (v45e — Bruges pays
+   too)**. Watch: does the 3 `H` Bock tariff kill the rush or the style? And hops now carry
+   three sinks (recipes · Hop Exchange · Abbey) — re-read whether slack flips to binding. If
+   the Flight stalls, the dials are the formula's offset (Q−2 → Q−3) and verb frequency.
 3. **Novgorod at gate 4** — is die-4 boarding reachable enough (Mumme+, or Kiln’d Q3)? Its
    pull is now the **+2★ die premium** (6–8★ deliveries, v4.2) + the 8/5/2 majority — watch
    whether +2 overshoots (the dial is the printed premium).

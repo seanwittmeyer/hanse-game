@@ -152,17 +152,17 @@ const STARTERS=[   // the starting recipes are CARDS since v3.2d — one each pe
   {nm:'Gruit', cc:'#8a949c', L:1, g:1,h:0, start:1},
   {nm:'Hopped',cc:'#c2922f', L:2, g:1,h:1, start:1}];
 const RECIPES=[  // EXPORT recipe cards — print in the same double-sided run as the STARTERS above.
-  // buy = the WHARF FEE (v4.2 — paid to gain the recipe via a wharf channel; FREE as Bruges' prize)
+  // buy = the WHARF FEE — v45e: the FORMULA H = Q−2, hops only, paid at EVERY channel (Bruges included; Q2 = free)
   // · g/h = the BREW cost on the tucked edge.
   {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{h:1},     reach:'Q3 · all kontore (the Hall via Dispatch) · FAST: ready 1'},
-  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'Q3 · all kontore (+ the Hall) · +1 presence on a kontor delivery'},
+  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{h:1},     reach:'Q3 · all kontore (+ the Hall) · +1 presence on a kontor delivery'},
   {nm:'Mumme',   cc:'#9a5526', L:4, g:1,h:3, buy:{h:2},     reach:'Q4 · all kontore (the Hall via Dispatch)'},
-  {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{g:1,h:2}, reach:'Q5 · all kontore · the premium climb (its fee is priced up — v4.2)'},
+  {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{h:3}, reach:'Q5 · all kontore · the premium climb (fee H = Q−2 — v45e)'},
   // EXPANSION "Specialty Beers" (v1.9, opt-in) — the 3 specialty export recipe cards
-  {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, buy:{g:1}, reach:'Q2 · grain-path (no hops) · SALT TRADE: a kontor delivery → +1G +1H'},
+  {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, reach:'Q2 · grain-path (no hops) · SALT TRADE: a kontor delivery → +1G +1H'},
   {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, buy:{h:1}, reach:'Q3 · PARTI-GYLE: brewing also yields a free small Gruit (open vessel)'},
-  {nm:'Duckstein',cc:'#7a5236', L:2, g:1,h:1, buy:{g:1,h:1}, reach:'Q2 · ready 2 · SMOKE-HARDY: ships &amp; scores as +1 quality (reaches Novgorod)'},
-  {nm:'Jopenbier',cc:'#5e2433', L:6, g:2,h:4, buy:{g:2,h:2}, reach:'Q6 CAPSTONE (own toggle) · self-contained 8★+ · cellars +1★/turn deployed (max +5) · counts for the Flight (6→25)'},
+  {nm:'Duckstein',cc:'#7a5236', L:2, g:1,h:1, reach:'Q2 · ready 2 · SMOKE-HARDY: ships &amp; scores as +1 quality (reaches Novgorod)'},
+  {nm:'Jopenbier',cc:'#5e2433', L:6, g:2,h:4, buy:{h:4}, reach:'Q6 CAPSTONE (own toggle) · self-contained 8★+ · cellars +1★/turn deployed (max +5) · counts for the Flight (6→25)'},
 ];
 
 //==================================================================
