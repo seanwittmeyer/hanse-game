@@ -1,0 +1,65 @@
+=== STRATEGY PROFILES v45g — jitter 0.15 · persona-mixed trader tables · 560 seats · errs 0 ===
+
+-- win rate by lane (chaos-jittered) --
+  free      28.7%  (n=94 · avg total 45.9)
+  quality   22.3%  (n=94 · avg total 42.0)
+  majority  28.0%  (n=93 · avg total 47.0)
+  lifter    28.0%  (n=93 · avg total 44.6)
+  builder   33.3%  (n=93 · avg total 43.4)
+  breadth   31.2%  (n=93 · avg total 45.2)
+
+-- the winner profile (winners vs the field) --
+  total             W 56.59  vs F 39.90  (x1.42)
+  delivery ★        W 21.38  vs F 15.52  (x1.38)
+  majority ★        W 14.91  vs F 9.27  (x1.61)
+  flight ★          W 9.88  vs F 8.38  (x1.18)
+  build ★           W 6.53  vs F 4.20  (x1.55)
+  lading ★          W 1.62  vs F 1.01  (x1.59)
+  toll ★            W 0.23  vs F 0.08  (x2.73)
+  casks delivered   W 7.34  vs F 5.75  (x1.28)
+  5★+ deliveries    W 1.31  vs F 0.85  (x1.54)
+  6★+ deliveries    W 0.99  vs F 0.61  (x1.61)
+  novgorod casks    W 0.97  vs F 0.58  (x1.66)
+  Q3+ brews         W 3.58  vs F 2.88  (x1.24)
+  Q1-2 brews        W 4.04  vs F 3.58  (x1.13)
+  ladings claimed   W 0.50  vs F 0.32  (x1.57)
+  racks             W 0.08  vs F 0.08  (x1.02)
+  abbeys            W 0.03  vs F 0.06  (x0.52)
+  hopex pays        W 0.37  vs F 0.27  (x1.39)
+  toll stamps       W 0.07  vs F 0.03  (x2.73)
+  commissions       W 3.04  vs F 3.31  (x0.92)
+  specialists       W 1.20  vs F 1.08  (x1.11)
+
+-- power-move win rates (with vs without) --
+  rack>=1     with 31.4% (n=35)  without 28.4%
+  abbey>=1    with 18.5% (n=27)  without 29.1%
+  toll>=1     with 47.6% (n=21)  without 27.8%
+  hopex>=2    with 31.0% (n=42)  without 28.4%
+  ladPts>=6   with 48.1% (n=27)  without 27.6%
+  d6>=1       with 37.5% (n=280)  without 19.6%
+  nov>=3      with 37.5% (n=16)  without 28.3%
+  flight>=9   with 31.8% (n=359)  without 22.9%
+  specs>=2    with 30.4% (n=214)  without 27.5%
+  q3>=4       with 37.9% (n=203)  without 23.2%
+  comm>=3     with 26.4% (n=402)  without 34.2%
+
+-- capstone events (per game avg · 160 games) --
+  a 7-8★ Novgorod delivery   0.99/game · in 46% of games
+  a 6★+ delivery             2.52/game · in 74% of games
+  a 5★ lading claim          0.01/game · in 1% of games
+  a Racking play             0.28/game · in 17% of games
+  an Abbey firing            0.18/game · in 13% of games
+  a Bonded send-off          0.35/game · in 35% of games
+  a 5-beer flight            0.88/game · in 54% of games
+
+-- openings (first 3 stations) · winners vs field --
+  BDC   win 42.4%  (n=33)   [A=Market B=Brewhouse C=Harbor D=Cellar]
+  BAB   win 38.2%  (n=34)   [A=Market B=Brewhouse C=Harbor D=Cellar]
+  DBA   win 36.4%  (n=44)   [A=Market B=Brewhouse C=Harbor D=Cellar]
+  DBD   win 35.0%  (n=40)   [A=Market B=Brewhouse C=Harbor D=Cellar]
+  CDC   win 33.3%  (n=12)   [A=Market B=Brewhouse C=Harbor D=Cellar]
+  ABD   win 30.2%  (n=53)   [A=Market B=Brewhouse C=Harbor D=Cellar]
+  BDB   win 29.4%  (n=51)   [A=Market B=Brewhouse C=Harbor D=Cellar]
+  BAC   win 29.4%  (n=17)   [A=Market B=Brewhouse C=Harbor D=Cellar]
+
+rows dumped: playtests/profile-v45g-rows.json
