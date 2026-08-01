@@ -803,20 +803,16 @@ function aidBack(){
         +row('scroll-text','Gain 1 recipe','its printed fee — a dealt export (free at Bruges)')
         +row('search','Gain 1 building','its printed fee (chipless = free) — display → any slot, +3★ (free at London)')
         +row('wrench','Gain 1 specialist','its printed fee — display → a seat (free at Bergen)')
-        +row('layers','The Flight','distinct beers BREWED: (n−1)², min 3 — the 2nd/3rd open vessel 3 &amp; seat 2')
+        +row('layers','The Flight','distinct beers BREWED: (n−1)², min 3')
       +'</div></div>'
     +'</div></div>';}
 function pboard(p){
-  const vsl=i=>{const cov=i===3;
-    return '<div class="pb2-slot pb2-vsl'+(cov?' cov':'')+'">'
-      +(cov?'<span class="cvt">'+LU('lock')+'cover — your 2nd distinct brew opens</span>':'')
+  const vsl=i=>'<div class="pb2-slot pb2-vsl">'   // v45h: the covers are off — every slot prints open
       +'<span class="sn">Vessel '+i+'</span>'
-      +'<span class="si">'+LU('beer')+LU('dices')+'</span></div>';};
-  const ssl=i=>{const cov=i===2;
-    return '<div class="pb2-slot pb2-vsl'+(cov?' cov':'')+'">'
-      +(cov?'<span class="cvt">'+LU('lock')+'cover — your 3rd distinct brew opens</span>':'')
+      +'<span class="si">'+LU('beer')+LU('dices')+'</span></div>';
+  const ssl=i=>'<div class="pb2-slot pb2-vsl">'
       +'<span class="sn">Specialist seat '+i+'</span>'
-      +'<span class="si">'+LU('wrench')+'</span></div>';};
+      +'<span class="si">'+LU('wrench')+'</span></div>';
   return '<div class="pb2" style="--pc:'+p.c+'">'
     +'<div class="pb2-id"><div class="pb2-crest">'+LU('beer')+'</div><div class="pb2-name">'+p.nm+'</div>'
       +'<div class="pb2-goods">'+LU('scroll-text')+'start&nbsp;<b>Gruit&nbsp;+&nbsp;Hopped</b>&nbsp;cards (Gruit flipped)</div>'

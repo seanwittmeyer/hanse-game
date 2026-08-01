@@ -41,8 +41,8 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (its header states the current version). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `archive/records/V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v4.5b “Open Orders”**, the v45g letter (`KEY hanse-v45g`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.5b/v45g; the sheet layouts are the P4 refresh).
+> - The live build is `play.html` — **v4.5b “Open Orders”**, the v45h letter (`KEY hanse-v45h`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.5b/v45h; the sheet layouts are the P4 refresh).
 
 ---
 
@@ -67,7 +67,7 @@
 |---|---|---|
 | Main board — **the Wharf** | 1 | 2×2 stations, each printing **ONE action** (Market *Source 2* · Brewhouse *Brew* · Cellar *Age 3* · Harbor *Commission 1G + load 1 — no ★* — v4.5b), ringed by 8 slots (a building seat + a ship seat each). |
 | **Destinations board** | 1 | The four kontor panels — Bruges · London · Bergen · Novgorod — each printing its **gate (die N+)**, its **prize** (recipe / building / specialist — Novgorod instead prints **value = the die +2★**), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the banked ★ audit). *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
-| Player boards | 4 | **3 vessel slots** (1–2 open; the 3rd under a printed cover “2nd beer”) + **2 specialist seats** (1st open; the 2nd under “3rd beer”). Recipe cards sit beside it. Goods cap 8 printed. |
+| Player boards | 4 | **3 vessel slots + 2 specialist seats — all open from the start** (v45h: the printed covers are off for now). Recipe cards sit beside it. Goods cap 8 printed. |
 | **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per house — the bank (+3★ builds · lading ★ · Tollhouse stamps · 1★ bumps) and delivery ★ as they land. *(New in v4.0 — the hard line demands a home for banked points.)* |
 | Supply board *(kit)* | 1 | The displays: ships 4 · buildings 4 · specialists 4 · **the lading row of 3** (v4.5b) · the export recipe row — ringed by the score track. *(The Sailed-Ships clock left with v4.1.)* |
 
@@ -176,13 +176,12 @@ Starters **Gruit + Hopped** (1 each/house; Gruit dealt flipped = the warm start)
 wharf fee**, now the formula **`H` = Q−2** ⚙ (Broyhan/Keut `1H` · Mumme `2H` · Bock `3H`) —
 **paid at EVERY channel, the Bruges prize included** (v45e: Bruges grants the pick, never the
 waiver), via Bruges / the *Gain 1 recipe* bonus / Scrivener’s Hall. Flip to the BREWED face on the first brew — the
-flipped cards are the Flight ladder **and** the cover-openers (2nd beer → vessel 3 · 3rd →
-seat 2).
+flipped cards are the Flight ladder (v45h: the covers are off — no unlock duty).
 
 ## 9. Setup (summary — RULES.md §1)
 
-3G 2H each · warm Ready Gruit (die 1) in vessel 1 · 12 dice · displays: ships 4 / buildings 4 /
-specialists 4 / **ladings 3** · wharf seeds: Hulk→Bruges + 1 ship + 2 neutral buildings ·
+3G 2H each · warm Ready Gruit (die 1) in vessel 1 (all 3 vessels + 2 seats open — v45h) · 12
+dice · displays: ships 4 / buildings 4 / specialists 4 / **ladings 3** · wharf seeds: Hulk→Bruges + 1 ship + 2 neutral buildings ·
 worker placed free · first player fixed.
 
 ## 10. Box delta vs v3.4

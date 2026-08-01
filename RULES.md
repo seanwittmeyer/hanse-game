@@ -18,7 +18,7 @@
 > tiles (a kontor + a die minimum or a named beer → printed **2–5★**); delivering a
 > qualifying cask **claims one** (one per cask; the ★ bank at once); the row refills at the
 > **end of the turn**. The row makes every kontor’s delivery value a **variable economy** —
-> read it before you sail. The live build is `play.html` (**KEY `hanse-v45g`** — the letters, designer-ruled 2026-08-01: **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
+> read it before you sail. The live build is `play.html` (**KEY `hanse-v45h`** — the letters, designer-ruled 2026-08-01: **v45h** — the floor covers are OFF for now: all 3 vessels + both seats open from the start (the Flight keeps its ladder, loses its unlock duty) · **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
 
 > **v4.5 “Empty Tray” (designer-ruled 2026-07-31 — off human playtest #24).** Two changes.
 > **(1) The end trigger is the EMPTY TRAY:** the first house to **commit its last tally die**
@@ -106,9 +106,8 @@ Each house starts with (⚙):
 - The **Gruit** and **Hopped** recipe **cards** (Gruit dealt flipped to its BREWED face — the
   warm start counts for the Flight). More recipes are **earned** (§7): Bruges’ prize, cask load
   bonuses, building actions.
-- A **player board** (§8): **3 vessel slots** (1–2 open, the 3rd under a cover) and **2
-  specialist seats** (the 1st open, the 2nd under a cover). Covers open from the **Flight**:
-  your **2nd** distinct beer brewed opens the 3rd vessel; your **3rd** opens the 2nd seat.
+- A **player board** (§8): **3 vessel slots** and **2 specialist seats — all open from the
+  start (v45h: the covers are off for now)**. The Flight keeps its scoring ladder.
 - **12 TALLY DICE ⚙ (player-colour d6) — the house’s whole runway, in public view.** A die
   leaves your tray at **brew** (it IS the cask’s maturation marker and value), rides the hull’s
   berth, and **parks at the kontor on delivery** — presence, banked ★ (the pips), and the clock,
@@ -204,7 +203,7 @@ at that kontor.)*
 - **A · Market — SOURCE:** take **2 goods** (any mix).
 - **B · Brewhouse — BREW:** pay a recipe you hold into an **open vessel** + a **tray die** set
   to the start value; the cask takes the **face-up top action** of its quality pile (steerable).
-  **First brew of a beer flips its recipe card** — the Flight record and the cover-opener (§8).
+  **First brew of a beer flips its recipe card** — the Flight record (§8).
 - **D · Cellar — AGE:** gain **3 age points** ⚙, split freely across your maturing casks —
   with auto-aging cut (v4.5b) this is the deepest well.
 - **C · Harbor — COMMISSION:** pay **1 `G`** ⚙, place any one of the **4 display hulls** on a
@@ -349,9 +348,9 @@ Novgorod — die 5+→3★ · Bock→4★ · die 6→4★ · any kontor — die 
 
 ## 8. The player board (private) — 3 vessels · 2 seats
 
-- **3 vessel slots** — each holds one maturing/Ready cask (its die on the tile). Slots 1–2 open;
-  the 3rd opens with your **2nd distinct beer brewed**.
-- **2 specialist seats** — the 1st open; the 2nd opens with your **3rd distinct beer brewed**.
+- **3 vessel slots** — each holds one maturing/Ready cask (its die on the tile). **All open
+  from the start (v45h).**
+- **2 specialist seats** — **both open from the start (v45h).**
   A house never owns two of a type; specialists are **earned free** (Bergen, Hiring Post, the
   cask verb) — never bought.
 - **Recipe cards** sit beside the board; **flipped (BREWED) faces are the Flight record** — the

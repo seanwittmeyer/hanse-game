@@ -66,7 +66,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('the cask takes the pile-top action', p.vessels[0]&&p.vessels[0].act==='reach');
   ok('the die starts at the printed value (broyhan 2)', p.vessels[0].die===2);
   ok('the brew flips the recipe card (Flight record)', p.brewed.broyhan===1);
-  ok('the 2nd distinct beer opens the 3rd vessel', p.vslots===3&&p.vessels.length===3);
+  ok('all 3 vessels are open from the START (v45h — the covers are off)', p.vslots===3&&newPlayer(0,'X').vslots===3&&newPlayer(0,'X').vessels.length===3);
   p.presPool=1;   // one die left, and it is riding the broyhan → tray 0
   ok('no die in the tray → no brew', (function(){var before=UI.sub;enterBrew('stops');return UI.sub!=='brew';})());
 })();
@@ -76,7 +76,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   p.grain=9;p.hops=9;p.recipes=['gruit','hopped','keut'];p.vessels=[null,null];p.brewed={gruit:1};
   UI.brew={returnTo:'stops'};brewPick('hopped');
   UI.brew={returnTo:'stops'};brewPick('keut');
-  ok('3rd distinct beer opens the 2nd specialist seat', p.sslots===2);
+  ok('both specialist seats are open from the START (v45h)', p.sslots===2&&newPlayer(0,'X').sslots===2);
   ok('flight score counts BREWED (3 → 4★)', flightScore(p)===4);
 })();
 
@@ -300,7 +300,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('17 buildings in the box', bcount===17, 'got '+bcount);
   ok('two neutral buildings seeded', SLOTS.filter(function(s){return S.buildings[s.id];}).length===2);
   ok('a warm-start ship is a Hulk → Bruges', SLOTS.some(function(s){var t=S.slots[s.id];return t&&t.ship==='hulk'&&t.dest==='bruges';}));
-  ok('every house opens with a Ready Gruit (die 1) + 2 vessel slots + 1 seat', S.players.every(function(p){return p.vessels[0]&&p.vessels[0].die===1&&p.vslots===2&&p.sslots===1;}));
+  ok('every house opens with a Ready Gruit (die 1) + ALL 3 vessels + 2 seats (v45h)', S.players.every(function(p){return p.vessels[0]&&p.vessels[0].die===1&&p.vslots===3&&p.vessels.length===3&&p.sslots===2;}));
   ok('specialist deck = max(2,n−1) copies of the 5 designs (3p → 10)', S.impDeck.length+S.impDisplay.length===10);
   ok('12 tally dice per house (v4.5)', S.players.every(function(p){return p.presPool===12;}));
   ok('the lading row opens at 3 (deck 12 behind it)', S.ladingRow.length===3&&S.ladingDeck.length===12);
