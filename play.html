@@ -525,7 +525,7 @@
   <div class="panel"><h3>The Wharf</h3><div class="agwrap"><svg id="boardcut" aria-hidden="true"></svg><div class="ag" id="ag"></div></div>
     <div class="note" id="boardnote" style="text-align:center;margin-top:6px"></div>
   </div>
-  <div class="panel"><h3>Destinations</h3><div id="dests"></div></div>
+  <div class="panel"><h3>Destinations</h3><div id="dests"></div><div id="ladings"></div></div>
   <div class="panel">
     <div class="pbhead"><h3>Player Breweries</h3><div class="tabs" id="tabs"></div></div>
     <div id="tableaus"></div>
@@ -2694,6 +2694,16 @@ function renderDests(){
       +'<div class="pres">'+pres+'</div></div>';
   });
   document.getElementById('dests').innerHTML=h;
+  // THE LADING ROW (v4.5b) — the kontors' open orders live WITH the kontors: deliver a qualifying cask, claim the tile (its ★ bank at once); refills at end of turn
+  let lh='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('scroll-text')+' Open ladings</b> <span class="note">— claim on a matching delivery</span></div>';
+  const lrow=S.ladingRow||[];
+  if(lrow.length){const pend=(UI.sub==='lading')?(UI.pendingLading||[])[0]:null;
+    const claimable=pend?ladingMatches(pend.dest,pend.style,pend.die).map(o=>o.i):[];
+    lh+='<div class="ladingrow">'+lrow.map((l,i)=>{const claim=claimable.includes(i);
+      return '<span class="ladingtile'+(claim?' stopgo':'')+'"'+(claim?' onclick="ladingPick('+i+')"':'')+' data-tip="'+attr('Lading — deliver '+(l.beer?('a cask of '+STYLES[l.beer].name):('a cask at die '+l.min+(l.min<6?'+':'')))+' to '+(l.dest?DEST[l.dest].name:'any kontor')+' and claim it: +'+l.pts+'★ banked at once. One lading per delivered cask; the row refills at end of turn.')+'">'
+        +LU('landmark')+'<b>'+(l.dest?DEST[l.dest].name:'Any')+'</b> · '+(l.beer?LU('beer')+styleShort(l.beer):LU('dices')+' '+l.min+(l.min<6?'+':''))+' → <b>'+l.pts+'★</b></span>';}).join('')+'</div>';}
+  else lh+='<div class="note">(lading deck exhausted)</div>';
+  document.getElementById('ladings').innerHTML=lh;
 }
 
 // per-section grid width (2/row big · 4/row compact); a session preference, not game state
@@ -2710,15 +2720,7 @@ function renderShop(){
   if(sdisp.length)h+='<div class="'+shopGridCls('ships')+'">'+sdisp.map((sn,i)=>{const can=canPay(p,COMMISSION_COST)&&shipFreeSlots().length>0;
     return '<div class="shopcell"><div class="mtile'+(comm&&can?' stopgo':'')+'" style="aspect-ratio:2.5/'+((HC?HC.SHIP_H(sn.ship):3)+0.1)+'"'+(comm&&can?' onclick="commPick('+i+')"':'')+' data-tip="'+attr(SHIP_NAME[sn.ship]+' → '+DEST[sn.dest].name+' ('+SHIP_CAP[sn.ship]+' berth'+(SHIP_CAP[sn.ship]===1?'':'s')+') · commission '+costStr(COMMISSION_COST)+' + one free load · boards die '+DEST[sn.dest].gate+'+')+'">'+pShipFace({ship:sn.ship,dest:sn.dest,load:[]})+'</div>'+(comm?'<button '+(can?'':'disabled')+' onclick="commPick('+i+')">commission</button>':'')+'</div>';}).join('')+'</div>';
   else h+='<div class="note" style="opacity:.7">'+LU('sailboat')+' ship market empty</div>';
-  // THE LADING ROW (v4.5b) — open kontor orders: deliver a qualifying cask, claim the tile (its ★ bank at once); refills at end of turn
-  h+='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('scroll-text')+' Open ladings</b></div>';
-  const lrow=S.ladingRow||[];
-  if(lrow.length){const pend=(UI.sub==='lading')?(UI.pendingLading||[])[0]:null;
-    const claimable=pend?ladingMatches(pend.dest,pend.style,pend.die).map(o=>o.i):[];
-    h+='<div class="ladingrow">'+lrow.map((l,i)=>{const claim=claimable.includes(i);
-      return '<span class="ladingtile'+(claim?' stopgo':'')+'"'+(claim?' onclick="ladingPick('+i+')"':'')+' data-tip="'+attr('Lading — deliver '+(l.beer?('a cask of '+STYLES[l.beer].name):('a cask at die '+l.min+(l.min<6?'+':'')))+' to '+(l.dest?DEST[l.dest].name:'any kontor')+' and claim it: +'+l.pts+'★ banked at once. One lading per delivered cask; the row refills at end of turn.')+'">'
-        +LU('landmark')+'<b>'+(l.dest?DEST[l.dest].name:'Any')+'</b> · '+(l.beer?LU('beer')+styleShort(l.beer):LU('dices')+' '+l.min+(l.min<6?'+':''))+' → <b>'+l.pts+'★</b></span>';}).join('')+'</div>';}
-  else h+='<div class="note">(lading deck exhausted)</div>';
+  // (the lading row moved to the Destinations panel — the orders live with the kontors)
   // THE WHARF DISPLAY — buildings are EARNED (London’s prize · the gain-building bonus), never bought
   h+='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('building-2')+' Building display</b>'+gridToggleBtn('bldgs')+'</div>';
   h+='<div class="'+shopGridCls('bldgs')+'">'+(S.buildDisplay||[]).map(key=>{const def=BUILDINGS[key];
