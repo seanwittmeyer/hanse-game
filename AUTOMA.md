@@ -6,8 +6,9 @@
 > prices every load/commission/ship pick at 0.5–0.6 weight — one claim per cask, contested),
 > values for the new verbs (**rack** = READY-tempo minus overflow loss, pair-scanned ·
 > **assay** = finish-first, 2.2 when a die sits one short · **hopex/tollhouse** load options via
-> `aiLoadOpt`: pay when it opens the gate or hops are slack; stamp whenever legal — −1 pip for
-> +2★ is net +1), the **Braumeister at 3.6** in the hire table (second only to the Cellarman),
+> `aiLoadOpt` — v45c: both decisions **net against the open lading row** (pay the hop when it
+> opens the gate, reaches an order, or hops are slack; stamp only when +2★ −1 pip beats any
+> order the lower face forfeits), the **Braumeister at 3.6** in the hire table (second only to the Cellarman),
 > and new-tile placement prefs (Kiln → Assay → Bonded → Cooperage → Racking → Hop Exchange
 > first). MC pair (GM/CM): the rollouts inherit all of the above; **`aiMCOptions` now samples
 > the new branches** (every rack swap pair · every assay target · the hopex/tollhouse
