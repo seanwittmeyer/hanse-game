@@ -489,6 +489,14 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('…and load order decides who gets it (the first cask’s owner)', (UI.pendingSpec||[]).length===1&&UI.pendingSpec[0].pid===0);
 })();
 
+// ---- 23. v45f: the Guildmaster's standing 'quality' persona (the designer's line) ----
+(function(){
+  ok('the GM defaults to the quality persona', aiPersona({ai:{tier:'guildmaster'}})==='quality');
+  ok('an explicit persona (PATHWAYS) overrides it', aiPersona({ai:{tier:'guildmaster',persona:'majority'}})==='majority');
+  ok('the Cellarmaster stays pure search (no default persona)', aiPersona({ai:{tier:'cellarmaster'}})===null);
+  ok('greedy tiers carry no persona by default', aiPersona({ai:{tier:'trader'}})===null&&aiPersona({ai:{tier:'journeyman'}})===null);
+})();
+
 OUT.forEach(function(l){console.log(l);});
 console.log('');
 console.log(FAIL===0?('ALL PASS — '+PASS+' checks'):('*** '+FAIL+' FAILED / '+PASS+' passed ***'));

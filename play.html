@@ -826,7 +826,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v45e'; // v45e letter [designer-ruled 2026-08-01] — THE RECIPE TARIFF: the recipe fee is a FORMULA, H = Q−2 (Broyhan/Keut 1H · Mumme 2H · Bock 3H), and it applies at EVERY channel — THE BRUGES PRIZE INCLUDED (the prize is the pick, never the waiver; no affordable pick = the 2-goods consolation). The Bock rush taxed: 3H to hold the recipe before its 2G3H brews (the designer's read: 'early bock recipe and only brewing it might be the only true power strategy'). Completes the currency grammar: GRAIN buys infrastructure (v45d), HOPS buy recipes and quality. Beneath it v45d [designer-ruled 2026-08-01] — the GWT-STYLE POWER LADDER: (1) RACKING HALL UNCAPPED (fee 3G, the deck's power tile) — swap the dice of ANY two of your vessel casks, the whole die transfers (racking moves the BEER: a die-5 Bock racked onto a Ready Gruit ships a 5-pip Gruit while the Bock re-matures from 1; cap 6 global); (2) FEES PRINT IN GRAIN ONLY (grain buys infrastructure, HOPS power quality: Assay 1G, Hop Exchange 2G, Bonded 2G, Racking 3G, Abbey 2G); (3) the HOP EXCHANGE becomes a slot-stop ACTION — pay up to 2H, each hop turns a vessel die +1 (any split, PAST quality fine, cap 6; the on-load path is cut); (4) TOLLHOUSE pays +3 stars instant (net +2 — any quality, the stamped die must still make the gate); (5) NEW ABBEY CELLAR (2G, replaces one Assay — deck stays 17): slot stop, pay 3H — ALL your maturing casks age to READY (the premium aging well; with the Hop Exchange, the box's hops sinks). Beneath it v45c [designer-ruled 2026-08-01]: the ASSAY HOUSE IS ±1 (turn one maturing die up toward Ready OR down, floor 1 — as the v4.5b plan record ruled; +1-only was an implementation shortfall), and the AI load options net against the open lading row (a Tollhouse stamp that forfeits a bigger order is declined). Beneath it v4.5b "Open Orders" [designer-ruled 2026-07-31 off gatekeeper review #2 + playtest #24] — the #24 program, five moves: (1) COMMISSION DE-MINT - a commission banks NOTHING (1 G buys the hull + the v4.4 free load; the mint out-earning beer was the #24 headline). (2) AUTO-AGING IS CUT - dice turn only when something turns them (Cellar 3 stands, designer-ruled; Mission Quay/Age+2/Cellarman remain the looseners; the BRAUMEISTER specialist - ripest maturing cask +1 at the start of your turn - is the earned heir). (3) THE DICE PASS - the building deck's center of mass moves to die-manipulation: Racking Hall (swap two maturing dice), Assay House x2 (one maturing die +1), Hop Exchange (pay 1H - boarding die +1), Tollhouse (boarding die -1 for +2 stars), Bonded Store (boarding die +1; EPHEMERAL - sails away with its hull, paying every contributing house 2 goods - the Orleans-events trial); the echo-verb Annex and one each of Granary/Scrivener's/Cooperage/Customs/Kiln are cut (17 tiles, 8 touch a die). (4) SPECIALISTS - max(2,n-1) copies per design (2p stops being thin), the Braumeister joins (5 designs), and Bergen grants AT MOST ONE specialist per ship sailed (designer-ruled; the per-die expansion is a recorded dial). (5) LADINGS - the new ORDER layer (the Hall's spiritual heir): a face-up row of 3 kontor orders (die-min or named-beer, printed 2-5 stars); delivering a qualifying cask claims one (one per cask, the stars bank at once); the row refills at END of turn - the row makes every kontor's delivery value a VARIABLE economy. Beneath it v4.5 "Empty Tray" [designer-ruled 2026-07-31 off playtest #24]: (1) THE END TRIGGER IS THE EMPTY TRAY - the first house to COMMIT its last tally die (parked, in a vessel, or aboard an unfilled hull - tray 0) sets the final round; parked-out no longer required (the #24 stall: 2 dice stuck on hulls that never filled left the runout player unable to end). (2) THE POOL IS 12 (was 14) - speed. v44c [designer-ruled 2026-07-31]: the SPECIALIST display refills at the END of the turn (a take leaves a gap for the rest of the turn; ships/buildings keep instant refills). v4.4 "Maiden Load" [designer-ruled 2026-07-31] - THE COMMISSION REGAINS ITS FREE LOAD: place the hull, then OPTIONALLY load ONE Ready cask from YOUR OWN vessels onto it at once - a NORMAL load (the gate reads the die as it boards, after the slot's lifts; the cask's load bonus fires; a full hull sails - a Skute immediately). Commission + Skute = the old charter as pure components. Beneath it v4.3 "Open Quay" [designer-ruled 2026-07-26]: the OCCUPANCY TOLL IS CUT - sharing a station costs nothing - and the greedy AI tiers are re-taught to the v4 economy. Beneath it v4.2 "Tariff": THE FEE RIDES THE ITEM (every acquirable recipe/specialist/building prints its own wharf fee, paid at any wharf channel; kontor prizes free; never fee-on-fee) and NOVGOROD PAYS THE DIE +2 STARS. v4.1: the dice are the ONE clock (MAX_ROUND 25 backstop). v4.2c markup: specialist fees lean H; ONE PAYMENT PER PLACEMENT (a paid fee covers the ground rent). Bump discards stale v45 state.
+const KEY='hanse-v45f'; // v45f letter [designer-ruled 2026-08-01] — THE GUILDMASTER PLAYS THE DESIGNER'S LINE: a standing 'quality' persona ("quality early and often; maximize points per cask, but Hopped when needed") — rides its greedy fallbacks AND its own seat in the MC rollouts, plus a small STYLE PRIOR on the sampled option margins (quality brews up, face-1 bumps down — breaks near-ties toward the line, never overrides a clear margin). The lane: Q-weighted brew picks with a Hopped/Gruit tempo valve (a low-gate hull one cask from sailing, or the endgame) · hops banked toward the next missing high recipe (its Q−2 fee + its brew) · die-weight on loads at lifter strength · bumps at 0.55 value · recipe acquisition Q-pulled. An explicit persona (PATHWAYS) still overrides; the Cellarmaster stays pure search. Probe (12g, 2p vs journeyman @60ms): Mumme+Bock share 18→24%, Q3+ 55%, pips/delivered cask 2.93 vs 2.63, Hopped 33% (the valve), 92% wins. Beneath it v45e letter [designer-ruled 2026-08-01] — THE RECIPE TARIFF: the recipe fee is a FORMULA, H = Q−2 (Broyhan/Keut 1H · Mumme 2H · Bock 3H), and it applies at EVERY channel — THE BRUGES PRIZE INCLUDED (the prize is the pick, never the waiver; no affordable pick = the 2-goods consolation). The Bock rush taxed: 3H to hold the recipe before its 2G3H brews (the designer's read: 'early bock recipe and only brewing it might be the only true power strategy'). Completes the currency grammar: GRAIN buys infrastructure (v45d), HOPS buy recipes and quality. Beneath it v45d [designer-ruled 2026-08-01] — the GWT-STYLE POWER LADDER: (1) RACKING HALL UNCAPPED (fee 3G, the deck's power tile) — swap the dice of ANY two of your vessel casks, the whole die transfers (racking moves the BEER: a die-5 Bock racked onto a Ready Gruit ships a 5-pip Gruit while the Bock re-matures from 1; cap 6 global); (2) FEES PRINT IN GRAIN ONLY (grain buys infrastructure, HOPS power quality: Assay 1G, Hop Exchange 2G, Bonded 2G, Racking 3G, Abbey 2G); (3) the HOP EXCHANGE becomes a slot-stop ACTION — pay up to 2H, each hop turns a vessel die +1 (any split, PAST quality fine, cap 6; the on-load path is cut); (4) TOLLHOUSE pays +3 stars instant (net +2 — any quality, the stamped die must still make the gate); (5) NEW ABBEY CELLAR (2G, replaces one Assay — deck stays 17): slot stop, pay 3H — ALL your maturing casks age to READY (the premium aging well; with the Hop Exchange, the box's hops sinks). Beneath it v45c [designer-ruled 2026-08-01]: the ASSAY HOUSE IS ±1 (turn one maturing die up toward Ready OR down, floor 1 — as the v4.5b plan record ruled; +1-only was an implementation shortfall), and the AI load options net against the open lading row (a Tollhouse stamp that forfeits a bigger order is declined). Beneath it v4.5b "Open Orders" [designer-ruled 2026-07-31 off gatekeeper review #2 + playtest #24] — the #24 program, five moves: (1) COMMISSION DE-MINT - a commission banks NOTHING (1 G buys the hull + the v4.4 free load; the mint out-earning beer was the #24 headline). (2) AUTO-AGING IS CUT - dice turn only when something turns them (Cellar 3 stands, designer-ruled; Mission Quay/Age+2/Cellarman remain the looseners; the BRAUMEISTER specialist - ripest maturing cask +1 at the start of your turn - is the earned heir). (3) THE DICE PASS - the building deck's center of mass moves to die-manipulation: Racking Hall (swap two maturing dice), Assay House x2 (one maturing die +1), Hop Exchange (pay 1H - boarding die +1), Tollhouse (boarding die -1 for +2 stars), Bonded Store (boarding die +1; EPHEMERAL - sails away with its hull, paying every contributing house 2 goods - the Orleans-events trial); the echo-verb Annex and one each of Granary/Scrivener's/Cooperage/Customs/Kiln are cut (17 tiles, 8 touch a die). (4) SPECIALISTS - max(2,n-1) copies per design (2p stops being thin), the Braumeister joins (5 designs), and Bergen grants AT MOST ONE specialist per ship sailed (designer-ruled; the per-die expansion is a recorded dial). (5) LADINGS - the new ORDER layer (the Hall's spiritual heir): a face-up row of 3 kontor orders (die-min or named-beer, printed 2-5 stars); delivering a qualifying cask claims one (one per cask, the stars bank at once); the row refills at END of turn - the row makes every kontor's delivery value a VARIABLE economy. Beneath it v4.5 "Empty Tray" [designer-ruled 2026-07-31 off playtest #24]: (1) THE END TRIGGER IS THE EMPTY TRAY - the first house to COMMIT its last tally die (parked, in a vessel, or aboard an unfilled hull - tray 0) sets the final round; parked-out no longer required (the #24 stall: 2 dice stuck on hulls that never filled left the runout player unable to end). (2) THE POOL IS 12 (was 14) - speed. v44c [designer-ruled 2026-07-31]: the SPECIALIST display refills at the END of the turn (a take leaves a gap for the rest of the turn; ships/buildings keep instant refills). v4.4 "Maiden Load" [designer-ruled 2026-07-31] - THE COMMISSION REGAINS ITS FREE LOAD: place the hull, then OPTIONALLY load ONE Ready cask from YOUR OWN vessels onto it at once - a NORMAL load (the gate reads the die as it boards, after the slot's lifts; the cask's load bonus fires; a full hull sails - a Skute immediately). Commission + Skute = the old charter as pure components. Beneath it v4.3 "Open Quay" [designer-ruled 2026-07-26]: the OCCUPANCY TOLL IS CUT - sharing a station costs nothing - and the greedy AI tiers are re-taught to the v4 economy. Beneath it v4.2 "Tariff": THE FEE RIDES THE ITEM (every acquirable recipe/specialist/building prints its own wharf fee, paid at any wharf channel; kontor prizes free; never fee-on-fee) and NOVGOROD PAYS THE DIE +2 STARS. v4.1: the dice are the ONE clock (MAX_ROUND 25 backstop). v4.2c markup: specialist fees lean H; ONE PAYMENT PER PLACEMENT (a paid fee covers the ground rent). Bump discards stale v45 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -2030,8 +2030,13 @@ function aiSetSpeed(v){try{localStorage.setItem(AI_SPEED_KEY,v);}catch(e){}rende
 function aiRandOf(a){return a[Math.floor(Math.random()*a.length)];}
 function aiNoisy(p){return Math.random()<((AI_TIERS[p.ai.tier]||{}).noise||0);}
 function aiIsTrader(p){return p.ai&&(p.ai.tier==='trader'||p.ai.tier==='guildmaster'||p.ai.tier==='cellarmaster');}   // the MC tiers inherit the trader policy at un-sampled prompts
-function aiPersona(p){return (p.ai&&p.ai.persona)||null;}
+// v45f [designer-ruled 2026-08-01]: the GUILDMASTER plays the DESIGNER'S line by default —
+// the 'quality' persona ("quality early and often; maximize points per cask, but Hopped when
+// needed"). It rides both the GM's greedy fallbacks and its own seat inside the MC rollouts;
+// an explicit p.ai.persona (the PATHWAYS oracle) still overrides. The CM stays pure search.
+function aiPersona(p){return (p.ai&&p.ai.persona)||((p.ai&&p.ai.tier==='guildmaster')?'quality':null);}
 function aiPW(p,lane){return aiPersona(p)===lane?2.2:1;}   // the committed lean's tilt ⚙
+function aiQual(p){return aiPersona(p)==='quality';}       // the designer lane's checks
 // v4.3 fee sense: the fee rides the ITEM — net every acquisition value by its printed fee ⚙
 function aiFeeCost(f){return ((f&&f.g)||0)*0.55+((f&&f.h)||0)*0.3;}
 function aiParked(p){return Math.max(0,PRES_POOL-(p.presPool!=null?p.presPool:PRES_POOL));}
@@ -2059,11 +2064,13 @@ function aiVerbValue(p,act){
   if(act==='age')return maturingInVessels(p).length?2:0;
   if(act==='load'){const any=wharfShips().some(sid=>readyInVessels(p).some(o=>canTake(sid,o.i)));return any?3+aiClockPush(p)+(aiLateGame(p)?1.5:0):0;}
   if(act==='reach'){if(!reachBenKontore(p).length||(S.presEnd&&trayDice(p)<=0))return 0;
-    let best=0;reachBenKontore(p).forEach(k=>best=Math.max(best,aiMajSwing(p,k)));return 1+best*0.4+aiClockPush(p)*0.5;}
+    let best=0;reachBenKontore(p).forEach(k=>best=Math.max(best,aiMajSwing(p,k)));
+    return (1+best*0.4+aiClockPush(p)*0.5)*(aiQual(p)?0.55:1);}   // v45f: a die parked at face 1 dilutes points-per-cask
   if(act==='recipe'){const o=recipeAffordable(p);if(!o.length)return 0;
     const c=Math.min.apply(null,o.map(st=>aiFeeCost(RECIPE_FEE[st]||{})));
     const base=aiIsTrader(p)?(1.2+0.35*aiFlightMarg(p)):2.2;
-    return Math.max(0.4,base*aiPW(p,'breadth')-c)*(aiLateGame(p)?0.3:1);}
+    const qpull=aiQual(p)?Math.max.apply(null,o.map(st=>STYLES[st].q))*0.35:0;   // v45f: quality EARLY — the high recipe is worth the trip
+    return Math.max(0.4,base*aiPW(p,'breadth')+qpull-c)*(aiLateGame(p)?0.3:1);}
   if(act==='survey'){const o=surveyAffordable(p);if(!o.length)return 0;
     const c=Math.min.apply(null,o.map(k=>aiFeeCost(surveyNeed(k))));
     return Math.max(0.4,3.4*aiPW(p,'builder')-c)*(aiLateGame(p)?0.5:1);}
@@ -2093,7 +2100,7 @@ function aiRackVal(a,b){const na=Math.min(6,b.die),nb=Math.min(6,a.die);
   return rdy*2+surplus*0.9;}
 function aiLoadValue(p,sid){const t=S.slots[sid];if(!t||t.type!=='ship')return 0;let best=0;
   readyInVessels(p).forEach(o=>{if(canTake(sid,o.i)){const bd=boardDie(p.vessels[o.i],sid);const d=bd+((DEST[t.dest].vbonus)||0);
-    let v=1.5+d*0.8*aiPW(p,'lifter')+(t.load.length+1>=sailCap(t)?0.8:0)
+    let v=1.5+d*0.8*Math.max(aiPW(p,'lifter'),aiQual(p)?1.7:1)+(t.load.length+1>=sailCap(t)?0.8:0)
       +aiLadingBonus(t.dest,o.c.style,bd)*0.6;   // v4.5b: an open lading rides the same delivery
     if(aiIsTrader(p)){v+=Math.max(0,aiMajSwing(p,t.dest))*0.4*aiPW(p,'majority');if(S.ending)v*=1.5;}
     if(v>best)best=v;}});return best;}
@@ -2154,12 +2161,21 @@ function aiStep(){
         if(want){const need=STYLES[want].in;const dg=Math.max(0,(need.g||0)-p.grain),dh=Math.max(0,(need.h||0)-p.hops);
           if(dh>=dg&&dh>0)return srcTake(Math.max(0,n-Math.min(n,dh)),Math.min(n,dh));
           if(dg>0)return srcTake(Math.min(n,dg),Math.max(0,n-Math.min(n,dg)));}
+        // v45f 'quality' lane: bank HOPS toward the next missing high recipe (its Q−2 fee + its brew)
+        if(aiQual(p)){const tgt=(S.exports||[]).filter(x=>!p.recipes.includes(x)).sort((a,b)=>STYLES[b].q-STYLES[a].q)[0];
+          if(tgt){const needH=(((RECIPE_FEE[tgt]||{}).h||0)+((STYLES[tgt].in||{}).h||0))-p.hops;
+            if(needH>0)return srcTake(Math.max(0,n-Math.min(n,needH)),Math.min(n,needH));}}
         return (p.hops<=p.grain)?srcTake(n-1,1):srcTake(1,n-1);}
       case 'brew':{const aff=p.recipes.filter(r=>canBrew(p,r));
         if(!aff.length)return resume(UI.brew?UI.brew.returnTo:'stops');
         if(aiNoisy(p))return brewPick(aiRandOf(aff));
         {const nb=aiIsTrader(p)?0.7*aiFlightMarg(p):0.8;const late=aiLateGame(p);
-         const key=r=>((p.brewed||{})[r]?0:nb*aiPW(p,'breadth'))+STYLES[r].q-(late?(STYLES[r].q-startDieFor(p,r))*1.2:0);
+         // v45f 'quality' lane: quality early and often (the Q term nearly doubles) — but HOPPED
+         // WHEN NEEDED: a low-gate hull one cask from sailing, or the endgame, wants the fast cask.
+         const qw=aiQual(p)?0.9:0;
+         const closer=qw&&wharfShips().some(sid=>{const t=S.slots[sid];return t&&t.load.length+1>=sailCap(t)&&gateNeed(sid)<=2;});
+         const key=r=>((p.brewed||{})[r]?0:nb*aiPW(p,'breadth'))+STYLES[r].q*(1+qw)-(late?(STYLES[r].q-startDieFor(p,r))*(1.2+qw):0)
+           +((closer||qw&&late)&&(r==='hopped'||r==='gruit')?2.2:0);
          aff.sort((a,b)=>key(b)-key(a));}
         return brewPick(aff[0]);}
       case 'age':{const m=maturingInVessels(p).sort((a,b)=>((b.c.q-b.c.die)===1?9:b.c.q)-((a.c.q-a.c.die)===1?9:a.c.q));
@@ -2193,7 +2209,7 @@ function aiStep(){
         let bk=ks[0],bv=-1e9;ks.forEach(k=>{const v=aiMajSwing(p,k);if(v>bv){bv=v;bk=k;}});
         return reachPick(bk);}
       case 'recipegain':{const nb=aiIsTrader(p)?0.4*aiFlightMarg(p):0.4;
-        const net=st=>STYLES[st].q+((p.brewed||{})[st]?0:nb*aiPW(p,'breadth'))-aiFeeCost(RECIPE_FEE[st]||{});
+        const net=st=>STYLES[st].q*(aiQual(p)?1.4:1)+((p.brewed||{})[st]?0:nb*aiPW(p,'breadth'))-aiFeeCost(RECIPE_FEE[st]||{});
         const o=recipeAffordable(p).sort((a,b)=>net(b)-net(a));
         return recipeGainPick(o.length?o[0]:null);}
       case 'survey':{const aff=surveyAffordable(p);
@@ -2305,7 +2321,7 @@ function aiMCDecide(p){
   const deep=p.ai.tier==='cellarmaster';
   const budget=(deep?CELLAR_MS:GUILD_MS)*((aiSpeed()==='instant')?0.5:1);
   const rollTier=deep?'trader':'journeyman';
-  const persona=p.ai.persona||null;
+  const persona=aiPersona(p);   // v45f: the GM's default 'quality' lane flows into its rollout seat
   const base={S:JSON.stringify(S),UI:JSON.stringify(UI)};
   const realRender=render,realSave=save,realSnap=snapshot;
   render=function(){};save=function(){};snapshot=function(){};
@@ -2336,7 +2352,14 @@ function aiMCDecide(p){
     render=realRender;save=realSave;snapshot=realSnap;
     aiSimulating=false;aiActing=false;
   }
-  let bi=0,bv=-1e9;stat.forEach((st,i)=>{const v=st.n?st.sum/st.n:-1e9;if(v>bv){bv=v;bi=i;}});
+  // v45f: the 'quality' GM adds a small STYLE PRIOR to the sampled margins — enough to break
+  // near-ties toward the designer's line (quality brews up, face-1 bumps down), never enough
+  // to override a clear margin read. ⚙ scaled in final-★ units.
+  const prior=(o)=>{if(!aiQual(p))return 0;
+    const mB=o.label.match(/^brew:(\w+)/);if(mB&&STYLES[mB[1]])return (STYLES[mB[1]].q-2)*0.7;
+    if(/^reach:/.test(o.label))return -0.8;
+    return 0;};
+  let bi=0,bv=-1e9;stat.forEach((st,i)=>{const v=st.n?st.sum/st.n+prior(st.o):-1e9;if(v>bv){bv=v;bi=i;}});
   aiActing=true;try{stat[bi].o.fn();}finally{aiActing=false;}
 }
 // THE HUMAN-GATE: prizes resolve when gained, so an AI's sail can hand a HUMAN owner a choice —

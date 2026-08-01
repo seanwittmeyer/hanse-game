@@ -1,5 +1,21 @@
 # Automa / AI Opponent — Plan & Status
 
+> **v45f (2026-08-01, designer-ruled): the GUILDMASTER plays the designer's line.** A standing
+> **'quality' persona** ("quality early and often; maximize points per cask, but Hopped when
+> needed") rides the GM's greedy fallbacks AND its own seat inside the MC rollouts, plus a
+> small **style prior** on the sampled option margins ((Q−2)·0.7 on brew labels, −0.8 on
+> face-1 bumps ⚙ — breaks near-ties toward the line, never overrides a clear margin; the
+> pure-margin pick alone did NOT move the mix, because the bottleneck was upstream: post-v45e
+> the lane must BANK HOPS toward its next high recipe, which the source case now does). The
+> lane's teaches: Q-weighted brews with a Hopped/Gruit **tempo valve** (a low-gate hull one
+> cask from sailing, or the endgame) · hops banked to the next missing export's fee+brew ·
+> lifter-strength die weight on loads · bumps at 0.55 · Q-pulled recipe acquisition. An
+> explicit persona (PATHWAYS) overrides; **the Cellarmaster stays pure search** — the contrast
+> pair is deliberate (the designer's line vs the unbiased optimum). **Probe** (12g 2p vs
+> journeyman @60ms): Mumme+Bock brew share 18→24%, Q3+ 55%, **pips/delivered cask 2.93 vs
+> 2.63**, Hopped 33% (the valve working), 92% wins, +22 avg margin. Rung re-check in
+> `playtests/ladder-v45f-tg.txt`.
+
 > **v4.5b “Open Orders” (2026-07-31): all five tiers were RE-TAUGHT to the #24 program.**
 > Greedy skeleton (every tier inherits): the commission **de-mint** (hull value = berth tempo +
 > the free load + any lading the load could claim — never ★), **`aiLadingBonus`** (the open row
