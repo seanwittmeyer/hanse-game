@@ -18,7 +18,7 @@
 > tiles (a kontor + a die minimum or a named beer → printed **2–5★**); delivering a
 > qualifying cask **claims one** (one per cask; the ★ bank at once); the row refills at the
 > **end of the turn**. The row makes every kontor’s delivery value a **variable economy** —
-> read it before you sail. The live build is `play.html` (**KEY `hanse-v45e`** — the letters, designer-ruled 2026-08-01: **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
+> read it before you sail. The live build is `play.html` (**KEY `hanse-v45g`** — the letters, designer-ruled 2026-08-01: **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
 
 > **v4.5 “Empty Tray” (designer-ruled 2026-07-31 — off human playtest #24).** Two changes.
 > **(1) The end trigger is the EMPTY TRAY:** the first house to **commit its last tally die**
@@ -183,8 +183,9 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 | Mumme | Q4 | 3 | 1 | `G H H H` | dealt export · fee `H H` |
 | Bock | Q5 | 3 | 2 | `G G H H H` | dealt export · fee `H H H` (the taxed climb — v45e) |
 
-*(The Cellarman starts your dice one higher — a Bock at 3. Cap: a start value never exceeds the
-quality. Keut’s printed perk: its delivery also **places 1 presence** — a tray die parks at face 1
+*(The Cellarman starts your dice one higher — a Bock at 3. Caps (v45g): a start value never
+exceeds the quality, and **a Q3+ export never STARTS Ready** — aging is required for every
+export (the Cellarman's lift on Broyhan stops at 2). Keut’s printed perk: its delivery also **places 1 presence** — a tray die parks at face 1
 at that kontor.)*
 
 > **The squeeze (state it to players):**
@@ -360,7 +361,8 @@ Novgorod — die 5+→3★ · Bock→4★ · die 6→4★ · any kontor — die 
 thin) · display of 4 · each prints its wharf fee ⚙ — free as Bergen’s prize, at most ONE per
 ship sailed). A taken tile’s gap stands for the rest of the turn — the display refills from
 the deck at the END of the turn (v4.4c; ships and buildings refill at once):**
-- **Cellarman** (fee `2H`) — your dice **start one higher** (never above quality; a Bock starts at 3).
+- **Cellarman** (fee `2H`) — your dice **start one higher** (never above quality — and a Q3+
+  export never starts Ready, v45g; a Bock starts at 3, a Broyhan at 2).
 - **Grain Factor** (fee `1G`) — whenever you gain grain (any faucet): **+1 `G`**.
 - **Hop Gardener** (fee `2H`) — whenever you gain hops (any faucet): **+1 `H`**.
 - **Stevedore** (fee `1G`) — your ship-slot stop loads **2 casks** (each fires its bonus).

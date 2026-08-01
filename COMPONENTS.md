@@ -41,8 +41,8 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (its header states the current version). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `archive/records/V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v4.5b “Open Orders”**, the v45e letter (`KEY hanse-v45e`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.5b/v45e; the sheet layouts are the P4 refresh).
+> - The live build is `play.html` — **v4.5b “Open Orders”**, the v45g letter (`KEY hanse-v45g`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.5b/v45g; the sheet layouts are the P4 refresh).
 
 ---
 
@@ -152,7 +152,7 @@ turn** (v4.4c — ships/buildings refill at once). Print 3 copies per design (co
 
 | Specialist | Effect | Wharf fee ⚙ (v4.2c) |
 |---|---|---|
-| Cellarman | your dice **start one higher** (never above quality) | 2 `H` |
+| Cellarman | your dice **start one higher** (a Q3+ export never starts Ready — v45g) | 2 `H` |
 | Grain Factor | gain grain: **+1 extra** (any faucet) | 1 `G` |
 | Hop Gardener | gain hops: **+1 extra** (any faucet) | 2 `H` |
 | Stevedore | your ship-slot stop loads **2 casks** | 1 `G` |

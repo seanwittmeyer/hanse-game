@@ -32,6 +32,9 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   p.upgrades=['cellar'];p.sslots=2;
   ok('Cellarman: dice start one higher (bock 3 · keut 2)', startDieFor(p,'bock')===3&&startDieFor(p,'keut')===2);
   ok('Cellarman never starts a die above quality (hopped 2 = Q2)', startDieFor(p,'hopped')===2);
+  // v45g [designer-ruled]: aging is REQUIRED for every Q3+ beer — an export never STARTS Ready
+  ok('a Q3+ export never starts Ready (Cellarman Broyhan caps at 2, not 3 — v45g)', startDieFor(p,'broyhan')===2);
+  ok('below Q3 the old cap stands (Hopped ready-at-brew with the Cellarman is fine)', startDieFor(p,'hopped')===2&&caskReady({style:'hopped',q:2,die:2}));
 })();
 
 // ---- 2. AGING turns the die up and STOPS at the quality ----
