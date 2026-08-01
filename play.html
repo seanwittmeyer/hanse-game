@@ -723,7 +723,7 @@ const BUILDINGS={
   hiringpost:{name:'Hiring Post',      icon:'wrench',       qty:1, fee:{g:1}, act:'hire',   desc:'Slot stop: gain 1 specialist (at its printed fee)'},
   almoner   :{name:'Almoner’s Stall',  icon:'heart',        qty:1, act:'reach',  desc:'Slot stop: place 1 presence (a tray die)'},
   racking   :{name:'Racking Hall',     icon:'repeat',       qty:1, fee:{g:1}, act:'rack',  desc:'Slot stop: swap the dice of two of your maturing casks (each capped at its quality)'},
-  assay     :{name:'Assay House',      icon:'scale',        qty:2, fee:{h:1}, act:'assay', desc:'Slot stop: turn one of your maturing dice +1 (never above its quality)'},
+  assay     :{name:'Assay House',      icon:'scale',        qty:2, fee:{h:1}, act:'assay', desc:'Slot stop: turn one of your maturing dice ±1 (never above its quality, never below 1)'},
   maltkiln  :{name:'Malt Kiln',        icon:'flame',        qty:2, fee:{g:2}, desc:'A cask loading here: die +1 (cap 6)'},
   hopex     :{name:'Hop Exchange',     icon:'sprout',       qty:1, fee:{g:1,h:1}, desc:'A cask loading here MAY pay 1H: die +1 (cap 6)'},
   tollhouse :{name:'Tollhouse',        icon:'ticket',       qty:1, fee:{g:1}, desc:'A cask loading here MAY turn its die −1 (min 1): bank +2★'},
@@ -820,7 +820,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v45b'; // v4.5b "Open Orders" [designer-ruled 2026-07-31 off gatekeeper review #2 + playtest #24] — the #24 program, five moves: (1) COMMISSION DE-MINT - a commission banks NOTHING (1 G buys the hull + the v4.4 free load; the mint out-earning beer was the #24 headline). (2) AUTO-AGING IS CUT - dice turn only when something turns them (Cellar 3 stands, designer-ruled; Mission Quay/Age+2/Cellarman remain the looseners; the BRAUMEISTER specialist - ripest maturing cask +1 at the start of your turn - is the earned heir). (3) THE DICE PASS - the building deck's center of mass moves to die-manipulation: Racking Hall (swap two maturing dice), Assay House x2 (one maturing die +1), Hop Exchange (pay 1H - boarding die +1), Tollhouse (boarding die -1 for +2 stars), Bonded Store (boarding die +1; EPHEMERAL - sails away with its hull, paying every contributing house 2 goods - the Orleans-events trial); the echo-verb Annex and one each of Granary/Scrivener's/Cooperage/Customs/Kiln are cut (17 tiles, 8 touch a die). (4) SPECIALISTS - max(2,n-1) copies per design (2p stops being thin), the Braumeister joins (5 designs), and Bergen grants AT MOST ONE specialist per ship sailed (designer-ruled; the per-die expansion is a recorded dial). (5) LADINGS - the new ORDER layer (the Hall's spiritual heir): a face-up row of 3 kontor orders (die-min or named-beer, printed 2-5 stars); delivering a qualifying cask claims one (one per cask, the stars bank at once); the row refills at END of turn - the row makes every kontor's delivery value a VARIABLE economy. Beneath it v4.5 "Empty Tray" [designer-ruled 2026-07-31 off playtest #24]: (1) THE END TRIGGER IS THE EMPTY TRAY - the first house to COMMIT its last tally die (parked, in a vessel, or aboard an unfilled hull - tray 0) sets the final round; parked-out no longer required (the #24 stall: 2 dice stuck on hulls that never filled left the runout player unable to end). (2) THE POOL IS 12 (was 14) - speed. v44c [designer-ruled 2026-07-31]: the SPECIALIST display refills at the END of the turn (a take leaves a gap for the rest of the turn; ships/buildings keep instant refills). v4.4 "Maiden Load" [designer-ruled 2026-07-31] - THE COMMISSION REGAINS ITS FREE LOAD: place the hull, then OPTIONALLY load ONE Ready cask from YOUR OWN vessels onto it at once - a NORMAL load (the gate reads the die as it boards, after the slot's lifts; the cask's load bonus fires; a full hull sails - a Skute immediately). Commission + Skute = the old charter as pure components. Beneath it v4.3 "Open Quay" [designer-ruled 2026-07-26]: the OCCUPANCY TOLL IS CUT - sharing a station costs nothing - and the greedy AI tiers are re-taught to the v4 economy. Beneath it v4.2 "Tariff": THE FEE RIDES THE ITEM (every acquirable recipe/specialist/building prints its own wharf fee, paid at any wharf channel; kontor prizes free; never fee-on-fee) and NOVGOROD PAYS THE DIE +2 STARS. v4.1: the dice are the ONE clock (MAX_ROUND 25 backstop). v4.2c markup: specialist fees lean H; ONE PAYMENT PER PLACEMENT (a paid fee covers the ground rent). Bump discards stale v45 state.
+const KEY='hanse-v45c'; // v45c letter [designer-ruled 2026-08-01]: the ASSAY HOUSE IS ±1 (turn one maturing die up toward Ready OR down, floor 1 — as the v4.5b plan record ruled; +1-only was an implementation shortfall), and the AI load options net against the open lading row (a Tollhouse stamp that forfeits a bigger order is declined). Beneath it v4.5b "Open Orders" [designer-ruled 2026-07-31 off gatekeeper review #2 + playtest #24] — the #24 program, five moves: (1) COMMISSION DE-MINT - a commission banks NOTHING (1 G buys the hull + the v4.4 free load; the mint out-earning beer was the #24 headline). (2) AUTO-AGING IS CUT - dice turn only when something turns them (Cellar 3 stands, designer-ruled; Mission Quay/Age+2/Cellarman remain the looseners; the BRAUMEISTER specialist - ripest maturing cask +1 at the start of your turn - is the earned heir). (3) THE DICE PASS - the building deck's center of mass moves to die-manipulation: Racking Hall (swap two maturing dice), Assay House x2 (one maturing die +1), Hop Exchange (pay 1H - boarding die +1), Tollhouse (boarding die -1 for +2 stars), Bonded Store (boarding die +1; EPHEMERAL - sails away with its hull, paying every contributing house 2 goods - the Orleans-events trial); the echo-verb Annex and one each of Granary/Scrivener's/Cooperage/Customs/Kiln are cut (17 tiles, 8 touch a die). (4) SPECIALISTS - max(2,n-1) copies per design (2p stops being thin), the Braumeister joins (5 designs), and Bergen grants AT MOST ONE specialist per ship sailed (designer-ruled; the per-die expansion is a recorded dial). (5) LADINGS - the new ORDER layer (the Hall's spiritual heir): a face-up row of 3 kontor orders (die-min or named-beer, printed 2-5 stars); delivering a qualifying cask claims one (one per cask, the stars bank at once); the row refills at END of turn - the row makes every kontor's delivery value a VARIABLE economy. Beneath it v4.5 "Empty Tray" [designer-ruled 2026-07-31 off playtest #24]: (1) THE END TRIGGER IS THE EMPTY TRAY - the first house to COMMIT its last tally die (parked, in a vessel, or aboard an unfilled hull - tray 0) sets the final round; parked-out no longer required (the #24 stall: 2 dice stuck on hulls that never filled left the runout player unable to end). (2) THE POOL IS 12 (was 14) - speed. v44c [designer-ruled 2026-07-31]: the SPECIALIST display refills at the END of the turn (a take leaves a gap for the rest of the turn; ships/buildings keep instant refills). v4.4 "Maiden Load" [designer-ruled 2026-07-31] - THE COMMISSION REGAINS ITS FREE LOAD: place the hull, then OPTIONALLY load ONE Ready cask from YOUR OWN vessels onto it at once - a NORMAL load (the gate reads the die as it boards, after the slot's lifts; the cask's load bonus fires; a full hull sails - a Skute immediately). Commission + Skute = the old charter as pure components. Beneath it v4.3 "Open Quay" [designer-ruled 2026-07-26]: the OCCUPANCY TOLL IS CUT - sharing a station costs nothing - and the greedy AI tiers are re-taught to the v4 economy. Beneath it v4.2 "Tariff": THE FEE RIDES THE ITEM (every acquirable recipe/specialist/building prints its own wharf fee, paid at any wharf channel; kontor prizes free; never fee-on-fee) and NOVGOROD PAYS THE DIE +2 STARS. v4.1: the dice are the ONE clock (MAX_ROUND 25 backstop). v4.2c markup: specialist fees lean H; ONE PAYMENT PER PLACEMENT (a paid fee covers the ground rent). Bump discards stale v45 state.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1048,7 +1048,7 @@ function occToken(t){
 // destination chip + numbered load-order berths; buildings are the value/transform tile. Mirrors printables.html.
 const STYLE_COLOR={gruit:'#8a949c',hopped:'#c2922f',broyhan:'#b06a34',keut:'#9c5f2e',mumme:'#caa12a',bock:'#7c2128',gose:'#6e8b74',zerbster:'#5f7a3c',duckstein:'#7a5236',jopenbier:'#5e2433'};
 const DEST_COLOR={bruges:'#274b5c',london:'#b8860b',bergen:'#4a6b3a',novgorod:'#7c2128'};
-const P_ACT_TXT={source:'+2 goods',age:'Age +2',load:'Load 1 more',reach:'+1 presence',recipe:'gain 1 recipe (its fee)',survey:'gain 1 building (+3★ · its fee)',hire:'gain 1 specialist (its fee)',brew:'Brew 1',rack:'swap 2 maturing dice',assay:'one maturing die +1'};
+const P_ACT_TXT={source:'+2 goods',age:'Age +2',load:'Load 1 more',reach:'+1 presence',recipe:'gain 1 recipe (its fee)',survey:'gain 1 building (+3★ · its fee)',hire:'gain 1 specialist (its fee)',brew:'Brew 1',rack:'swap 2 maturing dice',assay:'one maturing die ±1'};
 function pCost(g,h){let a='';if(g)a+='<span class="pgc">'+LU('wheat','pg')+g+'</span>';if(h)a+='<span class="pgc">'+LU('sprout','ph')+h+'</span>';return a;}
 // ---- the DEMAND DIE: pips = the ★ a cask banks from a value building (a d6, max 5; returns to the pool) ----
 const DIE_PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};   // 3×3 grid, 0-indexed
@@ -1435,7 +1435,12 @@ function rackSkip(){const rt=UI.rack?UI.rack.returnTo:'stops';UI.rack=null;resum
 function enterAssay(rt){const p=cur();
   if(!maturingInVessels(p).length){log('↳ Assay House — nothing maturing to certify.');resume(rt);return;}
   UI.sub='assay';UI.assay={returnTo:rt};render();}
-function assayPick(vi){const A=UI.assay;const p=cur();const c=p.vessels[vi];
+function assayPick(vi,dir){const A=UI.assay;const p=cur();const c=p.vessels[vi];
+  dir=(dir===-1)?-1:1;   // v45c [designer-ruled 2026-08-01]: ±1 as the plan record ruled — up toward Ready, or down (floor 1)
+  if(dir===-1){if(!A||!c||!(c.die<c.q)||c.die<=1)return;
+    snapshot();c.die--;
+    log('↳ '+LU('scale')+' <b>Assay House</b> — '+styleShort(c.style)+'’s die turns DOWN to '+c.die+'/'+c.q+'.');
+    const rt=A.returnTo;UI.assay=null;resume(rt);return;}
   if(!A||!c||!(c.die<c.q))return;
   snapshot();c.die++;
   log('↳ '+LU('scale')+' <b>Assay House</b> — '+styleShort(c.style)+'’s die turns to '+c.die+'/'+c.q+(caskReady(c)?' '+LU('check')+' <b>READY</b>':'')+'.');
@@ -1563,12 +1568,18 @@ function loadOnto(shipSlot){const p=cur();const L=UI.load;if(!L||L.cask==null)re
   const canHop=bk==='hopex'&&p.hops>=1&&base<6&&!mustHop;
   const canToll=bk==='tollhouse'&&base>1&&(base-1)>=gateNeed(shipSlot);
   if(!p.ai&&(canHop||canToll)){UI.loadopt={shipSlot,vi,kind:bk};UI.sub='loadopt';render();return;}
-  loadCommit(shipSlot,vi,p.ai?aiLoadOpt(p,bk,base,shipSlot):mustHop);
+  loadCommit(shipSlot,vi,p.ai?aiLoadOpt(p,bk,base,shipSlot,c.style):mustHop);
 }
 function loadOptGo(use){const o=UI.loadopt;if(!o)return;UI.loadopt=null;UI.sub='load';loadCommit(o.shipSlot,o.vi,use);}
-function aiLoadOpt(p,bk,base,slot){
-  if(bk==='hopex')return p.hops>=1&&base<6&&(base<gateNeed(slot)||p.hops>=2);   // pay when it opens the gate or hops are slack
-  if(bk==='tollhouse')return base>1&&(base-1)>=gateNeed(slot);                  // −1 pip for +2★ is net +1 whenever legal
+function aiLoadOpt(p,bk,base,slot,style){
+  // v45c: the load options net against the OPEN LADING ROW — a stamp that forfeits a 4★ order is a loss
+  const t=S.slots[slot];const dest=t?t.dest:null;
+  if(bk==='hopex'){if(!(p.hops>=1&&base<6))return false;
+    const dL=aiLadingBonus(dest,style,Math.min(6,base+1))-aiLadingBonus(dest,style,base);
+    return base<gateNeed(slot)||dL>0||p.hops>=2;}   // pay when it opens the gate, reaches an order, or hops are slack
+  if(bk==='tollhouse'){if(!(base>1&&(base-1)>=gateNeed(slot)))return false;
+    const dL=aiLadingBonus(dest,style,base-1)-aiLadingBonus(dest,style,base);
+    return 1+dL>0;}   // stamp = −1 pip +2★ = net +1, minus any order the lower face forfeits
   return false;}
 function loadCommit(shipSlot,vi,useOpt){const p=cur();const L=UI.load;const c=p.vessels[vi];const sh=S.slots[shipSlot];
   if(!c||!sh||!L)return;
@@ -2175,7 +2186,7 @@ function aiStep(){
       case 'assay':{const m=maturingInVessels(p).sort((a,b)=>((b.c.q-b.c.die)===1?9:b.c.q)-((a.c.q-a.c.die)===1?9:a.c.q));
         if(!m.length)return assaySkip();return assayPick(m[0].i);}
       case 'loadopt':{const o=UI.loadopt;if(!o)return resume('stops');
-        return loadOptGo(aiLoadOpt(p,o.kind,boardDie(p.vessels[o.vi],o.shipSlot),o.shipSlot));}
+        return loadOptGo(aiLoadOpt(p,o.kind,boardDie(p.vessels[o.vi],o.shipSlot),o.shipSlot,p.vessels[o.vi].style));}
       case 'end':return endTurn();
       default:
         log('⚠ '+p.name+' (AI) hit an unknown prompt ('+UI.sub+') — ending its turn.');
@@ -2228,7 +2239,8 @@ function aiMCOptions(p){
       if(R.a==null)m.forEach(o1=>m.forEach(o2=>{if(o1.i>=o2.i)return;push('rack:'+o1.i+'x'+o2.i,()=>{rackPick(o1.i);rackPick(o2.i);});}));
       else m.forEach(o=>{if(o.i!==R.a)push('rack2:'+o.i,()=>rackPick(o.i));});
       push('skip',()=>rackSkip());break;}
-    case 'assay':{maturingInVessels(p).forEach(o=>push('assay:'+o.i,()=>assayPick(o.i)));push('skip',()=>assaySkip());break;}
+    case 'assay':{maturingInVessels(p).forEach(o=>{push('assay+:'+o.i,()=>assayPick(o.i,1));
+      if(o.c.die>1)push('assay-:'+o.i,()=>assayPick(o.i,-1));});push('skip',()=>assaySkip());break;}
     case 'loadopt':{push('opt:use',()=>loadOptGo(true));push('opt:pass',()=>loadOptGo(false));break;}
   }
   return out;
@@ -2457,8 +2469,9 @@ function renderBar(){
     prompt=LU('repeat')+' <b>Racking Hall</b> — '+(R.a==null?'pick the <b>first</b> maturing cask; its die will trade places with a second.':'now the <b>second</b> cask — the two dice swap (each stops at its quality).');
     acts=p.vessels.map((c,i)=>(c&&c.die<c.q&&i!==R.a)?btn(LU('beer')+styleShort(c.style)+' '+c.die+'/'+c.q,'rackPick('+i+')','go'):'').filter(x=>x).join('')+btn('Skip','rackSkip()','ghost');}
   else if(U==='assay'){
-    prompt=LU('scale')+' <b>Assay House</b> — turn <b>one</b> maturing die +1 (it stops at its quality).';
-    acts=p.vessels.map((c,i)=>(c&&c.die<c.q)?btn(LU('beer')+styleShort(c.style)+' '+c.die+'/'+c.q+' → '+(c.die+1),'assayPick('+i+')','go'):'').filter(x=>x).join('')+btn('Skip','assaySkip()','ghost');}
+    prompt=LU('scale')+' <b>Assay House</b> — turn <b>one</b> maturing die ±1 (never above its quality, never below 1).';
+    acts=p.vessels.map((c,i)=>(c&&c.die<c.q)?(btn(LU('beer')+styleShort(c.style)+' '+c.die+'/'+c.q+' ▲ '+(c.die+1),'assayPick('+i+',1)','go')
+      +(c.die>1?btn(LU('beer')+styleShort(c.style)+' ▼ '+(c.die-1),'assayPick('+i+',-1)','ghost'):'')):'').filter(x=>x).join('')+btn('Skip','assaySkip()','ghost');}
   else if(U==='loadopt'){const o=UI.loadopt;const c=p.vessels[o.vi];const base=boardDie(c,o.shipSlot);
     if(o.kind==='hopex'){prompt=LU('sprout')+' <b>Hop Exchange</b> — pay 1 hops? The boarding die lifts <b>'+base+' → '+Math.min(6,base+1)+'</b>.';
       acts=btn('Pay '+Hi(1)+' · die +1','loadOptGo(true)','go')+btn('Board as is','loadOptGo(false)','ghost');}

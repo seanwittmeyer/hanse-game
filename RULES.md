@@ -7,7 +7,7 @@
 > only when something turns them (the Cellar stays at 3 ⚙; Mission Quay, the Age bonuses,
 > the Cellarman — and the new **Braumeister** — are the hands). **(3) The DICE PASS** — the
 > building deck’s center of mass moves to die-manipulation: **Racking Hall** (swap two
-> maturing dice) · **Assay House ×2** (one maturing die +1) · **Hop Exchange** (pay 1 `H` →
+> maturing dice) · **Assay House ×2** (one maturing die ±1, v45c) · **Hop Exchange** (pay 1 `H` →
 > boarding die +1) · **Tollhouse** (boarding die −1 → **+2★**) · **Bonded Store** (boarding
 > die +1; **ephemeral** — it sails away with its hull, paying every contributing house 2
 > goods); the echo-verb Annex and one each of Granary/Scrivener’s/Cooperage/Customs/Kiln are
@@ -18,7 +18,7 @@
 > tiles (a kontor + a die minimum or a named beer → printed **2–5★**); delivering a
 > qualifying cask **claims one** (one per cask; the ★ bank at once); the row refills at the
 > **end of the turn**. The row makes every kontor’s delivery value a **variable economy** —
-> read it before you sail. The live build is `play.html` (**KEY `hanse-v45b`**).
+> read it before you sail. The live build is `play.html` (**KEY `hanse-v45c`** — the v45c letter, designer-ruled 2026-08-01: the Assay House is **±1**, as the plan record ruled).
 
 > **v4.5 “Empty Tray” (designer-ruled 2026-07-31 — off human playtest #24).** Two changes.
 > **(1) The end trigger is the EMPTY TRAY:** the first house to **commit its last tally die**
@@ -163,7 +163,7 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 - **Aging:** each age point turns the die **+1**, **never past the quality** — the cask is
   **READY when die = quality.** **Dice never turn on their own (v4.5b — automatic aging is
   cut):** the hands on a maturing die are the **Cellar** (3 points ⚙), **Mission Quay** (+2),
-  the **Age +2** load bonuses, the **Assay House** (+1), the **Racking Hall** (a swap), the
+  the **Age +2** load bonuses, the **Assay House** (±1), the **Racking Hall** (a swap), the
   **Cellarman** (a higher start) and the **Braumeister** (+1 to your ripest at turn start).
 - **Loading:** a Ready cask boards a hull whose **gate its die meets, read as it boards** —
   after the slot’s lifts (a Malt Kiln or Bonded Store here turns the die **+1, cap 6**; a Hop
@@ -236,7 +236,7 @@ if churn mints +3★, the dials are restricting overbuild to a full board or rai
 | Hiring Post | slot stop | **gain 1 specialist** (at its fee) | 1 | 1 `G` |
 | Almoner’s Stall | slot stop | **Place 1 presence** (§7) | 1 | free |
 | **Racking Hall** | slot stop | **swap the dice of two of your maturing casks** (each stops at its quality; overflow is lost) | 1 | 1 `G` |
-| **Assay House** | slot stop | **turn one of your maturing dice +1** (stops at its quality) | 2 | 1 `H` |
+| **Assay House** | slot stop | **turn one of your maturing dice ±1** (never above its quality, never below 1) | 2 | 1 `H` |
 | **Malt Kiln** | on load here | the boarding cask’s **die +1** (cap 6) | 2 | 2 `G` |
 | **Hop Exchange** | on load here | the boarding cask **may pay 1 `H`: die +1** (cap 6) | 1 | 1 `G` 1 `H` |
 | **Tollhouse** | on load here | the boarding cask **may turn its die −1** (never below the gate): **bank +2★** | 1 | 1 `G` |
@@ -422,10 +422,11 @@ the engine; the modules return after the core settles.
 ## Open / to-tune (the ⚙ shortlist)
 
 1. **The clock** — the dice alone; **v4.5: the first EMPTY TRAY triggers** (commitment, not
-   parked-out) and the pool is **12** ⚙ — THE pace dial. Re-read pace at the next table (the
-   v4.2-era 2p-runs-long acceptance predates both changes). **v4.5b watch: with auto-age cut,
-   2p greedy pace reads slow (~20+ rounds)** — if the human table drags, the dials are the
-   pool (12→11), the Cellar (3, designer-held), and the aging-building density.
+   parked-out) and the pool is **12** ⚙ — THE pace dial. The full v4.5b battery (n=500/count):
+   2p 14.6 avg (82% band) · 3p 14.0 (81%) · 4p 13.3 (74%) — the early "2p ~20+ rounds" watch
+   was 3-game noise. The pool sweep says **12 is on the fast edge under greedy play; 13 holds
+   the 12–25 band best at every count** — greedy racers under-read human pace, so the dial
+   call waits for a human table.
 2. **The recipe faucet** — Bruges + the priced verbs only (v4.1 fee). If the Flight stalls, the
    dials are prize generosity, verb frequency (piles/deck), and the fee — not a Market buy.
 3. **Novgorod at gate 4** — is die-4 boarding reachable enough (Mumme+, or Kiln’d Q3)? Its

@@ -427,7 +427,7 @@
 
   <div class="acat">Slot stops (on an activated line)</div>
   <table class="atbl">
-    <tr><td><span class="act-ic"><i data-lucide="building-2"></i></span></td><td><b>Building action</b></td><td>Fire the building's printed verb (Granary +2 goods · Scrivener's a recipe at its fee · Mission Quay age +2 · Hiring Post a specialist at its fee · Almoner's a presence bump · Racking Hall swap 2 maturing dice · Assay House one maturing die +1) — <b>whoever activates it</b>, never a fee for the building itself.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="building-2"></i></span></td><td><b>Building action</b></td><td>Fire the building's printed verb (Granary +2 goods · Scrivener's a recipe at its fee · Mission Quay age +2 · Hiring Post a specialist at its fee · Almoner's a presence bump · Racking Hall swap 2 maturing dice · Assay House one maturing die ±1) — <b>whoever activates it</b>, never a fee for the building itself.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="package-plus"></i></span></td><td><b>Load this hull</b></td><td>One READY cask from YOUR vessels, die ≥ the gate <b>as it boards</b> (Kiln +1 · Customs −1 gate). Its <b>load bonus fires</b>. Full → <b>sails at once</b>; every cask delivers in load order (★ = the die; the die parks; the prize resolves).</td></tr>
   </table>
 
@@ -530,7 +530,7 @@ const buildings=[
   ['a','Hiring Post','Slot stop: gain 1 specialist at its printed fee · tile fee 1 G','action'],
   ['a',"Almoner's Stall",'Slot stop: place 1 presence (a tray die, face 1 — 1★) · tile FREE','action'],
   ['a','Racking Hall','Slot stop: swap the dice of two of your maturing casks (each stops at its quality) · tile fee 1 G · v4.5b','action'],
-  ['a','Assay House ×2','Slot stop: turn one of your maturing dice +1 (stops at its quality) · tile fee 1 H · v4.5b','action'],
+  ['a','Assay House ×2','Slot stop: turn one of your maturing dice ±1 (never above its quality, never below 1) · tile fee 1 H · v4.5b','action'],
   ['t','Malt Kiln ×2','A cask loading here: die +1 (cap 6) — the lift past quality · tile fee 2 G','load-lift'],
   ['t','Hop Exchange','A cask loading here may pay 1 H: die +1 (cap 6) · tile fee 1 G 1 H · v4.5b','load-lift'],
   ['t','Tollhouse','A cask loading here may turn its die −1 (never below the gate): bank +2★ · tile fee 1 G · v4.5b','load-lift'],

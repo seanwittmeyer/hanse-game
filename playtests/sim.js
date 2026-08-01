@@ -24,7 +24,27 @@ render=function(){};save=function(){};log=function(){};snapshot=function(){};
 if(__POOL>0)PRES_POOL=__POOL;
 if(__GMS>0)GUILD_MS=__GMS;
 if(__CMS>0)CELLAR_MS=__CMS;
+// ---- v45c VERB-USAGE COUNTERS — the "underutilized systems" dashboard. Wraps the engine's
+// own functions (function declarations are reassignable) so the counts are ground truth,
+// not policy inference. Reset per game; averaged in the summary.
+var __U=null;
+function __uReset(){__U={ladings:0,rack:0,assayUp:0,assayDown:0,toll:0,hopex:0,kilnLift:0,bondedSail:0,bmSeat:0,bmTick:0,mq:0};}
+var __uOn=function(){return __U&&!aiSimulating;};   // never count MC-playout echoes
+var __claimLading=claimLading;claimLading=function(lp,idx){if(__uOn())__U.ladings++;return __claimLading(lp,idx);};
+var __rackPick=rackPick;rackPick=function(vi){var had=!!UI.rack;var r=__rackPick(vi);if(__uOn()&&had&&!UI.rack)__U.rack++;return r;};
+var __assayPick=assayPick;assayPick=function(vi,dir){var had=!!UI.assay;var r=__assayPick(vi,dir);if(__uOn()&&had&&!UI.assay)__U[(dir===-1)?'assayDown':'assayUp']++;return r;};
+var __loadCommit=loadCommit;loadCommit=function(shipSlot,vi,useOpt){var p=cur();var bk=bKeyAt(shipSlot);
+  var h0=p?p.hops:0,o0=p?(p.bankO||0):0;var c=p&&p.vessels[vi];var lift=(bk==='maltkiln'||bk==='bonded')&&c&&c.die<6&&caskReady(c);
+  var r=__loadCommit(shipSlot,vi,useOpt);
+  if(__uOn()&&p&&c&&!p.vessels[vi]){if(lift)__U.kilnLift++;if(p.hops<h0)__U.hopex++;if((p.bankO||0)>o0)__U.toll++;}return r;};
+var __sailShip=sailShip;sailShip=function(slot,creditId){var bonded=bKeyAt(slot)==='bonded';
+  var r=__sailShip(slot,creditId);if(__uOn()&&bonded)__U.bondedSail++;return r;};
+var __grantUpgrade=grantUpgrade;grantUpgrade=function(p,k){var had=hasUpgrade(p,k);var r=__grantUpgrade(p,k);
+  if(__uOn()&&k==='braumeister'&&!had&&hasUpgrade(p,k))__U.bmSeat++;return r;};
+var __bmTick=braumeisterTick;braumeisterTick=function(p){var d0=vesselDice(p);var r=__bmTick(p);
+  if(__uOn()&&vesselDice(p)>d0)__U.bmTick++;return r;};
 function __runGame(n){
+  __uReset();
   EXPANSION=false;JOPEN=false;OVERLAND=false;
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
   S.players.forEach(function(p,i){p.ai=__PERSONAS?{tier:'trader',persona:AI_PERSONAS[i%AI_PERSONAS.length]}:{tier:__TIER};p.presPool=PRES_POOL;});
@@ -43,6 +63,7 @@ function __runGame(n){
     brews:S.players.reduce(function(a,p){return a+(p._brews||0);},0)/S.players.length,
     delivs:S.players.reduce(function(a,p){return a+p.delivered.length;},0)/S.players.length,
     builds:S.players.reduce(function(a,p){return a+(p.bank||0);},0)/S.players.length,
+    use:__U,
     parts:rows.map(function(r){return {deliv:r.sc.deliv,bank:r.sc.bank,maj:r.sc.maj,flight:r.sc.flight,total:r.sc.total};})};
 }
 var __RESULTS={};
@@ -113,6 +134,11 @@ let anyErr=0;
   console.log(`winner total avg ${fmt(avg(ok.map(r=>r.winTotal)))} · margin avg ${fmt(avg(ok.map(r=>r.winTotal-r.secondTotal)))} · seat wins ${Object.keys(seat).map(s=>'P'+(+s+1)+' '+pct(seat[s],ok.length)).join(' ')}`);
   console.log(`per-player: brews ${fmt(avg(ok.map(r=>r.brews)))} · deliveries ${fmt(avg(ok.map(r=>r.delivs)))} · bank★ ${fmt(avg(ok.map(r=>r.builds)))}`);
   console.log(`delivery split: ${Object.keys(dd).map(k=>k+' '+pct(dd[k],dsum)).join(' · ')}`);
+  { // v45c: the new-systems utilization dashboard (per-game averages)
+    const uk=['ladings','rack','assayUp','assayDown','toll','hopex','kilnLift','bondedSail','bmSeat','bmTick'];
+    const us={};uk.forEach(k=>us[k]=avg(ok.map(r=>(r.use&&r.use[k])||0)));
+    console.log(`v4.5b usage/game: ladings ${fmt(us.ladings)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)}▲/${fmt(us.assayDown)}▼ · toll ${fmt(us.toll)} · hopex-pay ${fmt(us.hopex)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);
+  }
   if(PERSONAS){const pw={},pn={};
     ok.forEach(r=>{(r.personas||[]).forEach(ps=>{if(ps)pn[ps]=(pn[ps]||0)+1;});if(r.winPersona)pw[r.winPersona]=(pw[r.winPersona]||0)+1;});
     console.log('PATHWAYS win-rate by lane: '+Object.keys(pn).map(k=>k+' '+pct(pw[k]||0,pn[k])).join(' · ')+'  (seats: '+Object.keys(pn).map(k=>pn[k]).join('/')+')');}

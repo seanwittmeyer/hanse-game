@@ -1,4 +1,4 @@
-// Targeted rule checks for v4.x — v4.5b "Open Orders" (KEY hanse-v45b).
+// Targeted rule checks for v4.x — v4.5b "Open Orders" + the v45c letter (KEY hanse-v45c).
 // Drives the CANONICAL engine (extract play.html's <script>, stub the DOM) and asserts each
 // rule directly by constructing states — no bot in the loop, so a failure is the engine's.
 // Usage: node playtests/verify-v4.js
@@ -380,6 +380,14 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('the Assay House turns one maturing die +1 (3→4 READY)', p.vessels[0].die===4&&caskReady(p.vessels[0]));
   enterAssay('stops');
   ok('nothing maturing → the Assay House refuses', UI.sub!=='assay');
+  // v45c [designer-ruled]: the Assay House is ±1 — down as well as up, floor 1
+  p.vessels=[{style:'bock',q:5,die:3,act:'age'},null,null];
+  enterAssay('stops');assayPick(0,-1);
+  ok('the Assay House may turn a maturing die DOWN (3→2, v45c)', p.vessels[0].die===2);
+  p.vessels=[{style:'bock',q:5,die:1,act:'age'},null,null];
+  enterAssay('stops');assayPick(0,-1);
+  ok('…but never below 1 (the floor holds)', p.vessels[0].die===1&&UI.sub==='assay');
+  assaySkip();
 })();
 (function(){var p=fresh();stops();p.ai={tier:'journeyman'};
   S.buildings.s1={b:'hopex'};var sh=ship('s1','cog','novgorod');
@@ -390,8 +398,18 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   S.buildings.s2={b:'tollhouse'};var t2=ship('s2','hulk','bruges');
   p.vessels[0]={style:'hopped',q:2,die:2,act:'source'};
   var b0=p.bank,o0=p.bankO||0;
+  S.ladingRow=[];   // no open orders — the stamp is a clean +1 net
   UI.load={ships:['s2'],returnTo:'stops',loadsLeft:1,cask:0};loadOnto('s2');
   ok('the Tollhouse stamp: die −1 (min the gate) and +2★ banked', t2.load[0].die===1&&p.bank===b0+2&&(p.bankO||0)===o0+2);
+  // v45c: the AI declines a stamp that forfeits a BIGGER open lading
+  S.ladingRow=[{dest:'bruges',min:3,pts:4}];
+  p.vessels[0]={style:'hopped',q:2,die:3,act:'source'};   // die 3 claims the 4★ order; stamped to 2 it would not
+  var b1=p.bank;
+  UI.load={ships:['s2'],returnTo:'stops',loadsLeft:1,cask:0};loadOnto('s2');
+  ok('the AI declines a stamp that forfeits a bigger lading (die stays 3, order claimable)',
+    t2.load[1].die===3&&p.bank===b1);
+  S.ladingRow=[];
+  ok('aiLoadOpt still stamps when no order is at stake', aiLoadOpt(p,'tollhouse',3,'s2','hopped')===true);
   p.ai=null;
 })();
 (function(){var p=fresh();stops();p.ai={tier:'journeyman'};
