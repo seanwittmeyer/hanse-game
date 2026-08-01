@@ -1,0 +1,4 @@
+=== v4.0 AI ladder — 24 games/pair · 2p, seats alternate ===
+  guildmaster > trader: 91.7%  (22/24)  avg 61.8 vs 38.5
+
+LADDER GATE: every rung ≥60%, 0 errors.

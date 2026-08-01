@@ -24,6 +24,7 @@ render=function(){};save=function(){};log=function(){};snapshot=function(){};
 if(__POOL>0)PRES_POOL=__POOL;
 if(__GMS>0)GUILD_MS=__GMS;
 if(__CMS>0)CELLAR_MS=__CMS;
+if(__JIT>0){['journeyman','trader'].forEach(function(t){AI_TIERS[t].noise=__JIT;});}   // JITTER=0.15 — chaos: greedy tiers take a random legal action that often (strategy-variance probe)
 // ---- v45c VERB-USAGE COUNTERS — the "underutilized systems" dashboard. Wraps the engine's
 // own functions (function declarations are reassignable) so the counts are ground truth,
 // not policy inference. Reset per game; averaged in the summary.
@@ -103,6 +104,7 @@ const ctx = {
   __POOL:parseInt(process.env.POOL||'0',10),
   __PERSONAS:PERSONAS,
   __GMS:parseInt(process.env.GUILD_MS||'0',10),
+  __JIT:parseFloat(process.env.JITTER||'0'),
   __CMS:parseInt(process.env.CELLAR_MS||'0',10),
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;

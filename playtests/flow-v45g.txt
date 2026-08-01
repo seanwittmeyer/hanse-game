@@ -1,0 +1,101 @@
+=== hanse v4.3 FLOW PROBE — 600 games/count/config · tier trader · LIVE (fees + Novgorod+2) vs NOFEE baseline ===
+
+########## CONFIG: LIVE ##########
+
+== 2p · 600 ok ==
+rounds avg 13.3 (min 6 max 25) · band 65.2% · triggers dice 99.0% · ceiling 1.0% · sails 5.6
+per game: brews 14.3 · deliveries 13.1 · delivered★ 35.4 · winner 52.1
+delivery split: bruges 38.9% · london 23.1% · bergen 29.0% · novgorod 9.0%
+income/game: +19.5G +30.5H · goods@turn-start avg 1.47G 1.96H · starved turns 15.8%
+spend/game: brew 16.2G+20.6H (×14.3) · commission 6.3G (×6.3) · fee:bldg:abbey 0.0G (×0.0) · fee:bldg:almoner 0.0G (×0.1) · fee:bldg:assay 0.0G (×0.0) · fee:bldg:bonded 0.0G (×0.0) · fee:bldg:cooperage 0.0G (×0.0) · fee:bldg:granary 0.0G (×0.1) · fee:bldg:hiringpost 0.0G (×0.0) · fee:bldg:hopex 0.0G (×0.0) · fee:bldg:maltkiln 0.1G (×0.0) · fee:bldg:missionq 0.0G (×0.2) · fee:bldg:racking 0.0G (×0.0) · fee:bldg:scriveners 0.0G (×0.0) · fee:bldg:tollhouse 0.0G (×0.0) · fee:recipe:bock 0.0G+0.9H (×0.3) · fee:recipe:broyhan 0.0G+0.5H (×0.5) · fee:recipe:keut 0.0G+0.5H (×0.5) · fee:recipe:mumme 0.0G+0.8H (×0.4) · fee:spec:ai 0.4G+0.8H (×0.8) · other 0.0G+5.6H (×3.6) · rent 0.1G (×0.1)
+fee events/game: bldg:abbey ×0.0 · bldg:almoner ×0.1 · bldg:assay ×0.0 · bldg:bonded ×0.0 · bldg:cooperage ×0.0 · bldg:granary ×0.1 · bldg:hiringpost ×0.0 · bldg:hopex ×0.0 · bldg:maltkiln ×0.0 · bldg:missionq ×0.2 · bldg:racking ×0.0 · bldg:scriveners ×0.0 · bldg:tollhouse ×0.0 · recipe:bock ×0.3 · recipe:broyhan ×0.5 · recipe:keut ×0.5 · recipe:mumme ×0.4 · spec:ai ×0.8
+blocked-channel turns/game (wanted, unaffordable): recipe 9.8 · hire 8.0 · survey 4.3
+brew mix: hopped 41.6% · broyhan 17.0% · mumme 15.6% · gruit 13.0% · keut 8.5% · bock 4.3%
+decisions[move]: n=27/game · forced 0.0% · TWO+ good 49.2% · one good 43.6% · weak 7.2% · avg options 2.15 · avg v1−v2 gap 2.37
+decisions[line]: n=27/game · forced 0.0% · TWO+ good 35.6% · one good 57.2% · weak 7.2% · avg options 2.00 · avg v1−v2 gap 3.08
+decisions[stops]: n=65/game · forced 49.1% · TWO+ good 14.7% · one good 29.9% · weak 6.3% · avg options 1.66 · avg v1−v2 gap 2.09
+phase[early]: TWO+ good 31.4% · one good 40.7% · weak 3.7% · forced 24.2%
+phase[mid]: TWO+ good 25.2% · one good 39.0% · weak 6.8% · forced 29.1%
+phase[late]: TWO+ good 21.5% · one good 35.0% · weak 15.0% · forced 28.4%
+
+== 3p · 600 ok ==
+rounds avg 13.3 (min 7 max 25) · band 68.5% · triggers dice 99.3% · ceiling 0.7% · sails 8.3
+per game: brews 20.5 · deliveries 19.1 · delivered★ 56.4 · winner 58.3
+delivery split: bruges 35.9% · london 22.7% · bergen 27.7% · novgorod 13.8%
+income/game: +27.7G +48.2H · goods@turn-start avg 1.23G 1.91H · starved turns 17.9%
+spend/game: brew 23.5G+31.2H (×20.5) · commission 8.9G (×8.9) · fee:bldg:abbey 0.0G (×0.0) · fee:bldg:almoner 0.0G (×0.1) · fee:bldg:assay 0.0G (×0.0) · fee:bldg:bonded 0.0G (×0.0) · fee:bldg:cooperage 0.0G (×0.0) · fee:bldg:customs 0.0G (×0.0) · fee:bldg:granary 0.0G (×0.2) · fee:bldg:hiringpost 0.0G (×0.0) · fee:bldg:hopex 0.0G (×0.0) · fee:bldg:maltkiln 0.1G (×0.0) · fee:bldg:missionq 0.0G (×0.3) · fee:bldg:scriveners 0.1G (×0.1) · fee:bldg:tollhouse 0.1G (×0.1) · fee:recipe:bock 0.0G+1.3H (×0.4) · fee:recipe:broyhan 0.0G+0.8H (×0.8) · fee:recipe:keut 0.0G+0.9H (×0.9) · fee:recipe:mumme 0.0G+0.6H (×0.3) · fee:spec:ai 0.6G+1.3H (×1.2) · other 0.0G+10.3H (×6.0) · rent 0.3G (×0.3)
+fee events/game: bldg:abbey ×0.0 · bldg:almoner ×0.1 · bldg:assay ×0.0 · bldg:bonded ×0.0 · bldg:cooperage ×0.0 · bldg:customs ×0.0 · bldg:granary ×0.2 · bldg:hiringpost ×0.0 · bldg:hopex ×0.0 · bldg:maltkiln ×0.0 · bldg:missionq ×0.3 · bldg:scriveners ×0.1 · bldg:tollhouse ×0.1 · recipe:bock ×0.4 · recipe:broyhan ×0.8 · recipe:keut ×0.9 · recipe:mumme ×0.3 · spec:ai ×1.2
+blocked-channel turns/game (wanted, unaffordable): recipe 14.6 · hire 13.8 · survey 6.9
+brew mix: hopped 33.9% · mumme 19.0% · broyhan 16.4% · gruit 16.0% · keut 7.8% · bock 6.9%
+decisions[move]: n=40/game · forced 0.0% · TWO+ good 48.7% · one good 43.5% · weak 7.9% · avg options 2.15 · avg v1−v2 gap 2.35
+decisions[line]: n=40/game · forced 0.0% · TWO+ good 34.0% · one good 58.2% · weak 7.9% · avg options 2.00 · avg v1−v2 gap 3.08
+decisions[stops]: n=97/game · forced 50.2% · TWO+ good 14.2% · one good 29.5% · weak 6.1% · avg options 1.65 · avg v1−v2 gap 2.07
+phase[early]: TWO+ good 29.9% · one good 41.4% · weak 3.5% · forced 25.2%
+phase[mid]: TWO+ good 25.1% · one good 37.9% · weak 7.7% · forced 29.3%
+phase[late]: TWO+ good 21.3% · one good 37.1% · weak 13.6% · forced 28.0%
+
+== 4p · 600 ok ==
+rounds avg 12.7 (min 6 max 23) · band 64.7% · triggers dice 100.0% · sails 11.2
+per game: brews 26.8 · deliveries 25.3 · delivered★ 75.4 · winner 57.8
+delivery split: bruges 33.5% · london 23.7% · bergen 28.4% · novgorod 14.4%
+income/game: +37.5G +63.1H · goods@turn-start avg 1.31G 1.89H · starved turns 17.3%
+spend/game: brew 30.8G+39.9H (×26.8) · commission 11.9G (×11.9) · fee:bldg:abbey 0.0G (×0.0) · fee:bldg:almoner 0.0G (×0.1) · fee:bldg:assay 0.1G (×0.1) · fee:bldg:bonded 0.0G (×0.0) · fee:bldg:cooperage 0.0G (×0.0) · fee:bldg:customs 0.0G (×0.0) · fee:bldg:granary 0.0G (×0.2) · fee:bldg:hiringpost 0.0G (×0.0) · fee:bldg:hopex 0.0G (×0.0) · fee:bldg:maltkiln 0.1G (×0.0) · fee:bldg:missionq 0.0G (×0.4) · fee:bldg:racking 0.0G (×0.0) · fee:bldg:scriveners 0.1G (×0.1) · fee:bldg:tollhouse 0.1G (×0.1) · fee:recipe:bock 0.0G+2.2H (×0.7) · fee:recipe:broyhan 0.0G+1.2H (×1.2) · fee:recipe:keut 0.0G+1.3H (×1.3) · fee:recipe:mumme 0.0G+1.1H (×0.5) · fee:spec:ai 0.8G+1.6H (×1.5) · other 0.0G+13.7H (×7.8) · rent 0.8G (×0.8)
+fee events/game: bldg:abbey ×0.0 · bldg:almoner ×0.1 · bldg:assay ×0.1 · bldg:bonded ×0.0 · bldg:cooperage ×0.0 · bldg:customs ×0.0 · bldg:granary ×0.2 · bldg:hiringpost ×0.0 · bldg:hopex ×0.0 · bldg:maltkiln ×0.0 · bldg:missionq ×0.4 · bldg:racking ×0.0 · bldg:scriveners ×0.1 · bldg:tollhouse ×0.1 · recipe:bock ×0.7 · recipe:broyhan ×1.2 · recipe:keut ×1.3 · recipe:mumme ×0.5 · spec:ai ×1.5
+blocked-channel turns/game (wanted, unaffordable): recipe 18.7 · hire 18.1 · survey 6.3
+brew mix: hopped 34.2% · mumme 18.1% · gruit 17.4% · broyhan 15.6% · keut 7.6% · bock 7.2%
+decisions[move]: n=51/game · forced 0.0% · TWO+ good 49.5% · one good 44.9% · weak 5.6% · avg options 2.16 · avg v1−v2 gap 2.40
+decisions[line]: n=51/game · forced 0.0% · TWO+ good 35.3% · one good 59.1% · weak 5.6% · avg options 2.00 · avg v1−v2 gap 3.16
+decisions[stops]: n=127/game · forced 48.1% · TWO+ good 14.5% · one good 31.4% · weak 6.1% · avg options 1.68 · avg v1−v2 gap 2.11
+phase[early]: TWO+ good 30.5% · one good 41.5% · weak 3.2% · forced 24.8%
+phase[mid]: TWO+ good 25.1% · one good 39.6% · weak 7.0% · forced 28.3%
+phase[late]: TWO+ good 21.4% · one good 41.3% · weak 10.5% · forced 26.9%
+
+########## CONFIG: NOFEE ##########
+
+== 2p · 600 ok ==
+rounds avg 13.5 (min 7 max 25) · band 74.7% · triggers dice 98.8% · ceiling 1.2% · sails 5.7
+per game: brews 14.9 · deliveries 13.4 · delivered★ 36.8 · winner 57.0
+delivery split: bruges 36.7% · london 22.2% · bergen 30.5% · novgorod 10.5%
+income/game: +20.6G +26.5H · goods@turn-start avg 1.30G 2.19H · starved turns 14.6%
+spend/game: brew 17.9G+24.4H (×14.9) · commission 6.3G (×6.3) · fee:bldg:abbey 0.0G (×0.1) · fee:bldg:assay 0.0G (×0.1) · fee:bldg:bonded 0.0G (×0.1) · fee:bldg:cooperage 0.0G (×0.1) · fee:bldg:customs 0.0G (×0.0) · fee:bldg:granary 0.0G (×0.1) · fee:bldg:hopex 0.0G (×0.1) · fee:bldg:maltkiln 0.0G (×0.2) · fee:bldg:missionq 0.0G (×0.1) · fee:bldg:racking 0.0G (×0.1) · fee:bldg:scriveners 0.0G (×0.0) · fee:bldg:tollhouse 0.0G (×0.0) · fee:recipe:bock 0.0G (×0.4) · fee:recipe:broyhan 0.0G (×0.6) · fee:recipe:keut 0.0G (×0.6) · fee:recipe:mumme 0.0G (×0.5) · fee:spec:ai 0.0G (×1.0) · other 0.0G+1.0H (×4.3) · rent 0.1G (×0.1)
+fee events/game: bldg:abbey ×0.1 · bldg:assay ×0.1 · bldg:bonded ×0.1 · bldg:cooperage ×0.1 · bldg:customs ×0.0 · bldg:granary ×0.1 · bldg:hopex ×0.1 · bldg:maltkiln ×0.2 · bldg:missionq ×0.1 · bldg:racking ×0.1 · bldg:scriveners ×0.0 · bldg:tollhouse ×0.0 · recipe:bock ×0.4 · recipe:broyhan ×0.6 · recipe:keut ×0.6 · recipe:mumme ×0.5 · spec:ai ×1.0
+blocked-channel turns/game (wanted, unaffordable): none
+brew mix: hopped 44.5% · mumme 14.7% · broyhan 14.1% · bock 13.4% · keut 7.2% · gruit 6.0%
+decisions[move]: n=27/game · forced 0.0% · TWO+ good 49.5% · one good 43.0% · weak 7.5% · avg options 2.15 · avg v1−v2 gap 2.43
+decisions[line]: n=27/game · forced 0.0% · TWO+ good 35.3% · one good 57.2% · weak 7.5% · avg options 2.00 · avg v1−v2 gap 3.19
+decisions[stops]: n=66/game · forced 49.8% · TWO+ good 14.0% · one good 30.5% · weak 5.7% · avg options 1.65 · avg v1−v2 gap 2.21
+phase[early]: TWO+ good 30.4% · one good 41.2% · weak 3.6% · forced 24.8%
+phase[mid]: TWO+ good 25.3% · one good 38.5% · weak 6.6% · forced 29.6%
+phase[late]: TWO+ good 21.6% · one good 36.3% · weak 14.1% · forced 28.0%
+
+== 3p · 600 ok ==
+rounds avg 13.2 (min 7 max 25) · band 76.0% · triggers dice 99.5% · ceiling 0.5% · sails 8.8
+per game: brews 21.6 · deliveries 20.4 · delivered★ 61.4 · winner 65.2
+delivery split: bruges 33.5% · london 23.5% · bergen 28.7% · novgorod 14.3%
+income/game: +31.1G +41.3H · goods@turn-start avg 1.18G 2.14H · starved turns 16.1%
+spend/game: brew 26.9G+37.6H (×21.6) · commission 9.0G (×9.0) · fee:bldg:abbey 0.0G (×0.1) · fee:bldg:assay 0.0G (×0.1) · fee:bldg:bonded 0.0G (×0.1) · fee:bldg:cooperage 0.0G (×0.1) · fee:bldg:customs 0.0G (×0.0) · fee:bldg:granary 0.0G (×0.1) · fee:bldg:hopex 0.0G (×0.1) · fee:bldg:maltkiln 0.0G (×0.2) · fee:bldg:missionq 0.0G (×0.1) · fee:bldg:racking 0.0G (×0.1) · fee:bldg:scriveners 0.0G (×0.1) · fee:bldg:tollhouse 0.0G (×0.0) · fee:recipe:bock 0.0G (×0.2) · fee:recipe:broyhan 0.0G (×1.0) · fee:recipe:keut 0.0G (×1.1) · fee:recipe:mumme 0.0G (×0.8) · fee:spec:ai 0.0G (×1.7) · other 0.0G+2.1H (×6.8) · rent 0.6G (×0.6)
+fee events/game: bldg:abbey ×0.1 · bldg:assay ×0.1 · bldg:bonded ×0.1 · bldg:cooperage ×0.1 · bldg:customs ×0.0 · bldg:granary ×0.1 · bldg:hopex ×0.1 · bldg:maltkiln ×0.2 · bldg:missionq ×0.1 · bldg:racking ×0.1 · bldg:scriveners ×0.1 · bldg:tollhouse ×0.0 · recipe:bock ×0.2 · recipe:broyhan ×1.0 · recipe:keut ×1.1 · recipe:mumme ×0.8 · spec:ai ×1.7
+blocked-channel turns/game (wanted, unaffordable): none
+brew mix: hopped 37.9% · bock 17.5% · mumme 15.5% · broyhan 14.9% · keut 7.2% · gruit 7.0%
+decisions[move]: n=39/game · forced 0.0% · TWO+ good 49.2% · one good 44.0% · weak 6.8% · avg options 2.15 · avg v1−v2 gap 2.47
+decisions[line]: n=39/game · forced 0.0% · TWO+ good 34.8% · one good 58.4% · weak 6.8% · avg options 2.00 · avg v1−v2 gap 3.26
+decisions[stops]: n=99/game · forced 48.4% · TWO+ good 13.9% · one good 31.7% · weak 5.9% · avg options 1.68 · avg v1−v2 gap 2.19
+phase[early]: TWO+ good 29.6% · one good 41.4% · weak 3.6% · forced 25.3%
+phase[mid]: TWO+ good 24.8% · one good 39.5% · weak 7.1% · forced 28.6%
+phase[late]: TWO+ good 22.1% · one good 40.4% · weak 11.9% · forced 25.6%
+
+== 4p · 600 ok ==
+rounds avg 12.8 (min 7 max 22) · band 73.8% · triggers dice 100.0% · sails 12.1
+per game: brews 28.7 · deliveries 27.5 · delivered★ 83.5 · winner 64.9
+delivery split: bruges 30.9% · london 24.7% · bergen 28.8% · novgorod 15.6%
+income/game: +42.5G +54.8H · goods@turn-start avg 1.28G 2.18H · starved turns 15.0%
+spend/game: brew 35.7G+49.3H (×28.7) · commission 12.1G (×12.1) · fee:bldg:abbey 0.0G (×0.1) · fee:bldg:almoner 0.0G (×0.0) · fee:bldg:assay 0.0G (×0.1) · fee:bldg:bonded 0.0G (×0.1) · fee:bldg:cooperage 0.0G (×0.1) · fee:bldg:customs 0.0G (×0.0) · fee:bldg:granary 0.0G (×0.1) · fee:bldg:hiringpost 0.0G (×0.0) · fee:bldg:hopex 0.0G (×0.1) · fee:bldg:maltkiln 0.0G (×0.2) · fee:bldg:missionq 0.0G (×0.2) · fee:bldg:racking 0.0G (×0.1) · fee:bldg:scriveners 0.0G (×0.1) · fee:bldg:tollhouse 0.0G (×0.1) · fee:recipe:bock 0.0G (×0.4) · fee:recipe:broyhan 0.0G (×1.4) · fee:recipe:keut 0.0G (×1.6) · fee:recipe:mumme 0.0G (×1.1) · fee:spec:ai 0.0G (×2.1) · other 0.0G+3.0H (×8.7) · rent 1.4G (×1.4)
+fee events/game: bldg:abbey ×0.1 · bldg:almoner ×0.0 · bldg:assay ×0.1 · bldg:bonded ×0.1 · bldg:cooperage ×0.1 · bldg:customs ×0.0 · bldg:granary ×0.1 · bldg:hiringpost ×0.0 · bldg:hopex ×0.1 · bldg:maltkiln ×0.2 · bldg:missionq ×0.2 · bldg:racking ×0.1 · bldg:scriveners ×0.1 · bldg:tollhouse ×0.1 · recipe:bock ×0.4 · recipe:broyhan ×1.4 · recipe:keut ×1.6 · recipe:mumme ×1.1 · spec:ai ×2.1
+blocked-channel turns/game (wanted, unaffordable): none
+brew mix: hopped 36.8% · bock 17.4% · broyhan 15.4% · mumme 15.0% · gruit 8.2% · keut 7.1%
+decisions[move]: n=51/game · forced 0.0% · TWO+ good 50.3% · one good 43.8% · weak 5.9% · avg options 2.16 · avg v1−v2 gap 2.53
+decisions[line]: n=51/game · forced 0.0% · TWO+ good 36.1% · one good 58.0% · weak 5.9% · avg options 2.00 · avg v1−v2 gap 3.33
+decisions[stops]: n=132/game · forced 46.6% · TWO+ good 13.8% · one good 33.3% · weak 6.3% · avg options 1.71 · avg v1−v2 gap 2.23
+phase[early]: TWO+ good 29.8% · one good 41.5% · weak 3.6% · forced 25.1%
+phase[mid]: TWO+ good 25.1% · one good 40.3% · weak 7.2% · forced 27.4%
+phase[late]: TWO+ good 21.3% · one good 42.4% · weak 11.0% · forced 25.2%
