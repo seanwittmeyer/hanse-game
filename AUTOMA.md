@@ -15,13 +15,25 @@
 > perfect-information leak for one build). **Oracle reads (short, n=30-40/count):**
 > trader>journeyman **65%** (the 60% lint passes again — the lading/de-mint sense widened the
 > gap v4.3 had squeezed) · pace 2p 14.6 / 3p 13.8 / 4p 12.6 avg rounds, dice trigger ~100% ·
-> POOL=10 probe reads too fast (35% band at 2p) — **12 stands** · PATHWAYS 4p: majority 32.5 /
-> lifter 25 / builder 30 / **breadth 12.5%** (cold — the Flight lane wants a human-table read
-> before any dial; n=40/lane is ±8) · GM>trader **79.2%** (19/24 @ bulk 120ms) · CM>GM
-> **81.3%** (13/16 @ bulk 400ms — up from v4.3's noisy 54.2: the richer v4.5b decision space
-> rewards the deeper search) — pre-extension baselines; a 4-game post-extension smoke ran
-> clean, and the full sharded MC battery re-runs both rungs on the revised build
-> (`playtests/oracle-v45b/`). **Every rung ≥60%, 0 errors, on the v4.5b economy.**
+> **FULL battery (2026-07-31, on the revised build):** sim 500/count — 0 crashes/0 deadlocks
+> across 1500 games, pace 2p 14.6 (82% band) / 3p 14.0 (80.6%) / 4p 13.3 (73.6%), dice
+> trigger 98.6–99.8% · render-smoke **ALL PASS** incl. GM/CM through the real render layer ·
+> ladder: jour>app **89.2%** · trader>jour **55.8%** n=120 (pooled with the oracle's 65%
+> n=40 → **~58%** — the known lint hover persists at scale; the short oracle's 65% was the
+> small-n flatter; standing rule: greedy tiers gate robustness, not strategy) · GM>trader
+> **87.5%** pooled (42/48 @ bulk 120ms) · CM>GM **66.7%** pooled (16/24 @ bulk 400ms; a
+> 16-game pre-extension baseline read 81.3) — **every rung ≥60%, 0 errors.** PATHWAYS at
+> n=200/lane (supersedes the n=40 oracle — the "breadth cold 12.5%" was noise): 2p 50.5/49.5
+> fair · 3p majority 30.5 / lifter 29.0 / **builder 40.5 (hot, +7 over fair)** · 4p majority
+> 32.5 / **lifter 19.5 (mildly cold, −5.5)** / builder 25.5 / breadth 22.5 (fine). Pool
+> sweep (n=40/count): 11 too fast · **12 (live) is on the fast edge under greedy play** (4p
+> band 73.6%) · **13 holds the band best everywhere** (82.5/92.5/82.5) · 14 slows to 16–17
+> rds (92% bands) — a designer dial call; greedy racers under-read human pace. Flow probe
+> (600 games) ran clean on v4.5b: no blocked channels (the economy is slack — hops surplus),
+> building gains via the fee channel are rare (~0.1–0.3×/game each; London's prize is the
+> real faucet), Keut is the least-brewed export (~7% of brews), late-phase weak-decision
+> share rises to ~13% at 2–3p. NOTE the probe counts fee GAINS, not verb USAGE — rack/assay/
+> tollhouse/lading utilization is still uninstrumented (the standing gap).
 
 > **v4.0 “Bright Beer” (2026-07-21): the AI was REBUILT with the streamline — and P5 is SHIPPED
 > same-day.** All five tiers are LIVE in `play.html`: **Apprentice / Journeyman / Trader** (the
