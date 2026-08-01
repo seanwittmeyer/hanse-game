@@ -717,23 +717,23 @@ const SHIP_DECK_MIX=[          // 24 hulls - 6 Skute / 10 Cog / 8 Hulk, 6 per po
 // the Assay scalpel), and ONE EPHEMERAL trial (Bonded Store — sails away with its ship, paying
 // the players who contributed; the designer's Orléans-events seed).
 const BUILDINGS={
-  granary   :{name:'Granary',          icon:'coins',        qty:1, act:'source', desc:'Slot stop: gain 2 goods (any mix)'},
-  scriveners:{name:'Scrivener’s Hall', icon:'scroll-text',  qty:1, fee:{g:1}, act:'recipe', desc:'Slot stop: gain 1 recipe (at the recipe’s printed fee)'},
-  missionq  :{name:'Mission Quay',     icon:'church',       qty:2, act:'age',    desc:'Slot stop: age +2 (your vessels)'},
-  hiringpost:{name:'Hiring Post',      icon:'wrench',       qty:1, fee:{g:1}, act:'hire',   desc:'Slot stop: gain 1 specialist (at its printed fee)'},
-  almoner   :{name:'Almoner’s Stall',  icon:'heart',        qty:1, act:'reach',  desc:'Slot stop: place 1 presence (a tray die)'},
+  granary   :{name:'Granary',          icon:'coins',        qty:1, act:'source', desc:'Gain 2 goods'},
+  scriveners:{name:'Scrivener’s Hall', icon:'scroll-text',  qty:1, fee:{g:1}, act:'recipe', desc:'Gain 1 recipe'},
+  missionq  :{name:'Mission Quay',     icon:'church',       qty:2, act:'age',    desc:'Age +2'},
+  hiringpost:{name:'Hiring Post',      icon:'wrench',       qty:1, fee:{g:1}, act:'hire',   desc:'Gain 1 specialist'},
+  almoner   :{name:'Almoner’s Stall',  icon:'heart',        qty:1, act:'reach',  desc:'+1 presence'},
   // v45d [designer-ruled 2026-08-01]: the GWT-style POWER LADDER — fees print in GRAIN ONLY
   // (hops are spent USING buildings, never buying them); the power tier swings.
-  racking   :{name:'Racking Hall',     icon:'repeat',       qty:1, fee:{g:3}, act:'rack',  desc:'Slot stop: swap the dice of ANY two of your vessel casks (no quality cap — racking transfers the beer; cap 6)'},
-  assay     :{name:'Assay House',      icon:'scale',        qty:1, fee:{g:1}, act:'assay', desc:'Slot stop: turn one of your maturing dice ±1 (never above its quality, never below 1)'},
-  abbey     :{name:'Abbey Cellar',     icon:'hourglass',    qty:1, fee:{g:2}, act:'abbey', desc:'Slot stop: pay 3H — ALL your maturing casks age to READY (each die to its quality)'},
-  maltkiln  :{name:'Malt Kiln',        icon:'flame',        qty:2, fee:{g:2}, desc:'A cask loading here: die +1 (cap 6)'},
-  hopex     :{name:'Hop Exchange',     icon:'sprout',       qty:1, fee:{g:2}, act:'hopex', desc:'Slot stop: pay up to 2H — turn your vessel dice +1 per hop (any split; past quality is fine, cap 6)'},
-  tollhouse :{name:'Tollhouse',        icon:'ticket',       qty:1, fee:{g:1}, desc:'A cask loading here MAY turn its die −1 (min 1): bank +3★ at once'},
-  cooperage :{name:'Cooperage',        icon:'package',      qty:1, fee:{g:2}, desc:'Ship here carries +1 berth'},
-  customs   :{name:'Customs House',    icon:'scroll-text',  qty:1, fee:{g:2}, desc:'Ship here boards one gate lower (sells at the die)'},
-  richberth :{name:'Rich Berth',       icon:'anchor',       qty:1, fee:{g:2}, desc:'Hull here may sail one berth short (min 1)'},
-  bonded    :{name:'Bonded Store',     icon:'warehouse',    qty:1, fee:{g:2}, desc:'A cask loading here: die +1 (cap 6). When the hull here sails, the Store sails with it (boxed) — every player with a cask aboard gains 2 goods'},
+  racking   :{name:'Racking Hall',     icon:'repeat',       qty:1, fee:{g:3}, act:'rack',  desc:'Swap 2 dice'},
+  assay     :{name:'Assay House',      icon:'scale',        qty:1, fee:{g:1}, act:'assay', desc:'One maturing die ±1'},
+  abbey     :{name:'Abbey Cellar',     icon:'hourglass',    qty:1, fee:{g:2}, act:'abbey', desc:'Pay 3H: all maturing → Ready'},
+  maltkiln  :{name:'Malt Kiln',        icon:'flame',        qty:2, fee:{g:2}, desc:'Loading: die +1'},
+  hopex     :{name:'Hop Exchange',     icon:'sprout',       qty:1, fee:{g:2}, act:'hopex', desc:'Pay up to 2H: die +1 each'},
+  tollhouse :{name:'Tollhouse',        icon:'ticket',       qty:1, fee:{g:1}, desc:'Loading: die −1 → +3★'},
+  cooperage :{name:'Cooperage',        icon:'package',      qty:1, fee:{g:2}, desc:'+1 berth'},
+  customs   :{name:'Customs House',    icon:'scroll-text',  qty:1, fee:{g:2}, desc:'Gate −1'},
+  richberth :{name:'Rich Berth',       icon:'anchor',       qty:1, fee:{g:2}, desc:'May sail 1 short'},
+  bonded    :{name:'Bonded Store',     icon:'warehouse',    qty:1, fee:{g:2}, desc:'Loading: die +1 · sails with its hull — shippers +2 goods'},
 };
 const BUILDING_KEYS=Object.keys(BUILDINGS);
 function bName(k){return (BUILDINGS[k]||{name:k}).name;}
@@ -1052,7 +1052,7 @@ function occToken(t){
 // destination chip + numbered load-order berths; buildings are the value/transform tile. Mirrors printables.html.
 const STYLE_COLOR={gruit:'#8a949c',hopped:'#c2922f',broyhan:'#b06a34',keut:'#9c5f2e',mumme:'#caa12a',bock:'#7c2128',gose:'#6e8b74',zerbster:'#5f7a3c',duckstein:'#7a5236',jopenbier:'#5e2433'};
 const DEST_COLOR={bruges:'#274b5c',london:'#b8860b',bergen:'#4a6b3a',novgorod:'#7c2128'};
-const P_ACT_TXT={source:'+2 goods',age:'Age +2',load:'Load 1 more',reach:'+1 presence',recipe:'gain 1 recipe (its fee)',survey:'gain 1 building (+3★ · its fee)',hire:'gain 1 specialist (its fee)',brew:'Brew 1',rack:'swap 2 casks’ dice (no cap)',assay:'one maturing die ±1',hopex:'pay ≤2H: die +1 each',abbey:'pay 3H: ALL maturing → Ready'};
+const P_ACT_TXT={source:'+2 goods',age:'Age +2',load:'Load 1 more',reach:'+1 presence',recipe:'gain 1 recipe',survey:'gain 1 building +3★',hire:'gain 1 specialist',brew:'Brew 1',rack:'swap 2 casks’ dice (no cap)',assay:'one maturing die ±1',hopex:'pay ≤2H: die +1 each',abbey:'pay 3H: ALL maturing → Ready'};
 function pCost(g,h){let a='';if(g)a+='<span class="pgc">'+LU('wheat','pg')+g+'</span>';if(h)a+='<span class="pgc">'+LU('sprout','ph')+h+'</span>';return a;}
 // ---- the DEMAND DIE: pips = the ★ a cask banks from a value building (a d6, max 5; returns to the pool) ----
 const DIE_PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};   // 3×3 grid, 0-indexed
@@ -1242,23 +1242,28 @@ function openSetup(){
   aiCancel();
   const m=document.getElementById('setup');m.classList.remove('hidden');
   let pc='';for(let n=2;n<=4;n++)pc+='<button onclick="pickCount('+n+')" id="pc'+n+'">'+n+' players</button>';
-  document.getElementById('pcount').innerHTML=pc;pickCount(2);
+  document.getElementById('pcount').innerHTML=pc;pickCount(3);   // v45f UX: the house table — you · the Guildmaster · the Cellarmaster
 }
-let setupN=2;
-function pickCount(n){setupN=n;for(let i=2;i<=4;i++)document.getElementById('pc'+i).classList.toggle('primary',i===n);
+let setupN=3;
+const SETUP_DEF=['human','guildmaster','cellarmaster','trader'];   // seat defaults (added seats default to the Trader)
+const SETUP_OPTS=[['human','Human'],['apprentice','AI · Apprentice (easy)'],['journeyman','AI · Journeyman (standard)'],
+  ['trader','AI · Trader (hard)'],['guildmaster','AI · Guildmaster (expert — plays the designer’s quality line; slower turns)'],
+  ['cellarmaster','AI · Cellarmaster (the arch-nemesis — deep playouts; SLOW turns)']];
+function pickCount(n){
+  // a count change PRESERVES every seat already set — only the tail is added/removed
+  const keep=[];for(let i=0;i<5;i++){const nm=document.getElementById('nm'+i),ai=document.getElementById('ai'+i);
+    keep[i]={nm:nm?nm.value:null,ai:ai?ai.value:null};}
+  setupN=n;for(let i=2;i<=4;i++)document.getElementById('pc'+i).classList.toggle('primary',i===n);
   let h='<p class="note">Each seat: a name (optional) and who plays it. AI seats never cheat — the tiers differ only in decision quality.</p>';
-  for(let i=0;i<n;i++)h+='<div style="margin:4px 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap">'
+  for(let i=0;i<n;i++){const sel=(keep[i]&&keep[i].ai!=null)?keep[i].ai:(SETUP_DEF[i]||'trader');
+    h+='<div style="margin:4px 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap">'
     +'<span class="pawn" style="background:'+COLORS[i]+';display:inline-block;flex:none"></span>'
     +'<input id="nm'+i+'" placeholder="'+CNAMES[i]+'" style="padding:4px;border:1px solid var(--line);border-radius:5px;width:120px">'
     +'<select id="ai'+i+'" style="padding:4px;border:1px solid var(--line);border-radius:5px;font-family:inherit;background:var(--parch)">'
-    +'<option value="human"'+((i===1||i===2)?'':' selected')+'>Human</option>'
-    +'<option value="apprentice">AI · Apprentice (easy)</option>'
-    +'<option value="journeyman">AI · Journeyman (standard)</option>'
-    +'<option value="trader"'+((i===1||i===2)?' selected':'')+'>AI · Trader (hard)</option>'
-    +'<option value="guildmaster">AI · Guildmaster (expert — thinks via playouts; slower turns)</option>'
-    +'<option value="cellarmaster">AI · Cellarmaster (the arch-nemesis — deep playouts; SLOW turns)</option>'
-    +'</select></div>';
+    +SETUP_OPTS.map(o=>'<option value="'+o[0]+'"'+(o[0]===sel?' selected':'')+'>'+o[1]+'</option>').join('')
+    +'</select></div>';}
   document.getElementById('names').innerHTML=h;
+  for(let i=0;i<n;i++)if(keep[i]&&keep[i].nm)document.getElementById('nm'+i).value=keep[i].nm;
 }
 function startGame(){
   const names=[],ais=[];
