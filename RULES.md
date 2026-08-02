@@ -169,7 +169,7 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 - **Loading:** a Ready cask boards a hull whose **gate its die meets, read as it boards** —
   after the slot’s lifts (a Malt Kiln or Bonded Store here turns the die **+1, cap 6**; a Hop
   Exchange may for 1 `H`; a Customs House lowers the hull’s gate by 1 — the cask sells at its
-  die; a Tollhouse may drop the die 1 for **+2★**).
+  die; a Tollhouse may drop the die 1 for **+3★**, v45d).
 - **Delivery:** the die **parks at the kontor showing its face** — the pips ARE the banked ★
   (never less than 1), the body is your presence there and a beat of the end clock (§10).
 
@@ -269,7 +269,7 @@ load each slot’s ship once — all optional, any order, resolved on the active
   one on any shipless slot and scores its capacity.
 - **LOAD (a slot stop):** take **one READY cask from YOUR vessels** whose **die meets the
   hull’s gate** (after this slot’s lifts — Kiln/Hop Exchange/Bonded Store; Customs lowers the
-  gate; the Tollhouse may stamp the die down for +2★), seat it in the lowest berth (the die
+  gate; the Tollhouse may stamp the die down for +3★, v45d), seat it in the lowest berth (the die
   rides the tile), and **fire the cask’s printed load bonus** (§6b). The freed vessel is open
   again. *(The Stevedore sets out **2** casks on your ship-slot stop. The **commission**
   includes one such load onto its new hull — §4C.)*
@@ -399,7 +399,7 @@ pool size (12) is THE pace dial now.*
    +2★ on top).
 2. **Builds** — **+3★** per building you place (London’s prize included).
 3. **Ladings** — the claimed tile’s printed ★ (v4.5b; the tiles at your seat are the audit).
-4. **Tollhouse stamps** — **+2★** per stamped cask (v4.5b).
+4. **Tollhouse stamps** — **+3★** per stamped cask (v45d; the die drops 1, so net +2).
 5. **Presence bumps** — 1★ each (the face-1 die).
 
 *(Commissions bank **nothing** — v4.5b. The score track + your parked dice + your claimed
