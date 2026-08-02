@@ -1,4 +1,11 @@
-# Brewhouses of the Hanse — Components (v4.6 “Guildbook”)
+# Brewhouses of the Hanse — Components (v4.7 “Every Cask”)
+
+> **v4.7 (designer-ruled 2026-08-02):** **REPRINTS, no count changes** — the **Bergen mat**
+> drops its cap line (the prize is **per cask**, the grammar of all four ports) · the
+> **Grain Factor** chips 2 `G` (was 1) · the **Supercargo** chips 2 `H` (was 1) · the
+> **Town Crier** drops his printed gate · the **Innkeeper** reprints: *“its cask ages +1 at
+> the start of your turn”* · the **lading setup step** gains: *a lading naming an undealt
+> beer returns to the box* (the deck in play is always 14 of the printed 15).
 
 > **v4.6b (designer-ruled 2026-08-02):** the **Bergen mat line is REPRINTED** — the v4.5b
 > “≤1 specialist per ship” was a misread. The mat now reads: **“every house with a cask
@@ -162,8 +169,8 @@ The v4.5b **dice pass** + the v45d **power ladder** (designer-ruled 2026-08-01):
 
 ## 7. Specialist tiles (13 designs — v4.6 · the core 5 × max(2, n−1) + the guild 8 × 1 · 2×2″ purple)
 
-Free as **Bergen’s prize** — v4.6b: **every house with a cask aboard seats ONE** (max 1 per
-house per ship; pick order = load order); the
+Free as **Bergen’s prize** — v4.7: **per cask** (every cask seats its house one; pick order
+= load order); the
 Hiring Post / *Gain 1 specialist* bonus pay each tile’s **printed wharf fee** ⚙. **Two seats**
 per house; never two of a kind. **Three guild tiles print a SEAT-GATE** ⚙ — the condition
 must read true off your components before the tile may be seated (any channel). A taken
@@ -173,16 +180,16 @@ at once). Print: core five ×3 (covers 4p) · guild eight ×1.
 | Specialist | Effect | Wharf fee ⚙ | Seat-gate ⚙ |
 |---|---|---|---|
 | Cellarman | your dice **start one higher** (a Q3+ export never starts Ready — v45g) | 2 `H` | — |
-| Grain Factor | gain grain: **+1 extra** (any faucet) | 1 `G` | — |
+| Grain Factor | gain grain: **+1 extra** (any faucet) | 2 `G` *(v4.7)* | — |
 | Hop Gardener | gain hops: **+1 extra** (any faucet) | 2 `H` | — |
 | Stevedore | **whenever you load, load up to 2 casks** (slot stop · maiden load · Load bonus — v4.6d) | 1 `G` | — |
 | **Braumeister** *(v4.5b)* | start of your turn: **your ripest maturing cask ages +1** | 1 `G` 1 `H` | — |
 | **Guild Scholar** *(v4.6)* | **your recipes are FREE** — the `H` = Q−2 fee waived at every channel, Bruges included | 2 `G` | — |
-| **Innkeeper** *(v4.6)* | **this tile is a 4th VESSEL** — one cask matures on the card | 2 `G` | 3 distinct beers brewed |
-| **Supercargo** *(v4.6)* | a hull sails **your** cask on a **rival’s** turn: gain **1 `G` 1 `H`** | 1 `H` | — |
+| **Innkeeper** *(v4.7 rework)* | **this tile is a 4th VESSEL — its cask ages +1 at your turn start** | 2 `G` | 3 distinct beers brewed |
+| **Supercargo** *(v4.6)* | a hull sails **your** cask on a **rival’s** turn: gain **1 `G` 1 `H`** | 2 `H` *(v4.7)* | — |
 | **Chronicler** *(v4.6)* | game end: **+1★ per claimed lading (max +5)** | 1 `G` 1 `H` | a lading claimed |
 | **Alderman** *(v4.6)* | game end: **+2★ per kontor with 3+ parked dice** | 2 `G` | — |
-| **Town Crier** *(v4.6)* | your presence bumps park at **FACE 2** (2★ each) | 1 `G` | delivered to 2 kontore |
+| **Town Crier** *(v4.6)* | your presence bumps park at **FACE 2** (2★ each) | 1 `G` | — *(gate cut, v4.7)* |
 | **Chandler** *(v4.6)* | once per turn: **swap 1 `G` ↔ 1 `H`** with the stores | 1 `G` | — |
 | **Shipwright** *(v4.6)* | **your commissions are free** (the 1 `G` waived) | 1 `H` | — |
 
@@ -251,6 +258,11 @@ misread) · player-aid reprint (the Bergen prize row). No counts change.
 hull or building landing on a line slot mid-turn opens its stop.” No components change.
 **v4.6d delta:** the **Stevedore tile reprints** — “Whenever you load, load up to 2 casks”
 (was slot-stop only). No counts change.
+**v4.7 delta:** reprints only — **Bergen mat** (per-cask prize, cap line cut) · **Grain
+Factor** 2 `G` · **Supercargo** 2 `H` · **Town Crier** (gate cut) · **Innkeeper** (the
+tile’s cask ages +1 at turn start) · **player aid** (the per-cask prize line · the lading
+strip setup step). No counts change; the lading deck still prints 15 (setup returns the
+one undealt-beer order to the box).
 
 ## 11. Known gaps ⚙ (the watch list)
 

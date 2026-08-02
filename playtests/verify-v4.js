@@ -304,7 +304,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('every house opens with a Ready Gruit (die 1) + ALL 3 vessels + 2 seats (v45h)', S.players.every(function(p){return p.vessels[0]&&p.vessels[0].die===1&&p.vslots===3&&p.vessels.length===3&&p.sslots===2;}));
   ok('specialist deck = 5 core × max(2,n−1) + 8 guild ×1 (3p → 18, v4.6)', S.impDeck.length+S.impDisplay.length===18);
   ok('12 tally dice per house (v4.5)', S.players.every(function(p){return p.presPool===12;}));
-  ok('the lading row opens at 3 (deck 12 behind it)', S.ladingRow.length===3&&S.ladingDeck.length===12);
+  ok('the lading row opens at 3 (deck 11 behind it — v4.7 strips the one undealt-beer order)', S.ladingRow.length===3&&S.ladingDeck.length===11);
   S=freshState(2,['P1','P2']);
   ok('2p specialist deck: 5×2 + 8 guild singles (18)', S.impDeck.length+S.impDisplay.length===18);
   S=freshState(4,['P1','P2','P3','P4']);
@@ -482,18 +482,24 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   S.players.forEach(function(q){q.ai=null;});
 })();
 
-// ---- 22. v4.6b BERGEN: every shipper seats ONE specialist (cap 1 per house per ship) ----
+// ---- 22. v4.7 EVERY CASK: one prize grammar at all four kontors — Bergen per cask ----
 (function(){var p=fresh();stops();p.ai=null;
   var sh=ship('s4','cog','bergen',[{owner:0,style:'keut',q:3,die:3,act:'load'},{owner:0,style:'hopped',q:2,die:2,act:'source'}]);
   UI.pendingSpec=[];sailShip('s4',0);
-  ok('two casks, one owner → ONE Bergen prize (cap 1 per house per ship)', (UI.pendingSpec||[]).length===1&&UI.pendingSpec[0].pid===0);
-  var sh2=ship('s5','cog','bergen',[{owner:0,style:'keut',q:3,die:3,act:'load'},{owner:1,style:'hopped',q:2,die:2,act:'source'}]);
-  UI.pendingSpec=[];sailShip('s5',0);
-  ok('mixed load → EVERY house with a cask aboard gets a prize (v4.6b)', (UI.pendingSpec||[]).length===2);
-  ok('…queued in load order (pick order = boarding order)', (UI.pendingSpec||[]).length===2&&UI.pendingSpec[0].pid===0&&UI.pendingSpec[1].pid===1);
+  ok('two own casks at Bergen → TWO specialist prizes (v4.7 per cask; the cap is cut)', (UI.pendingSpec||[]).length===2&&UI.pendingSpec[0].pid===0&&UI.pendingSpec[1].pid===0);
   var sh3=ship('s7','hulk','bergen',[{owner:1,style:'keut',q:3,die:3,act:'load'},{owner:0,style:'gruit',q:1,die:1,act:'source'},{owner:1,style:'hopped',q:2,die:2,act:'source'}]);
   UI.pendingSpec=[];sailShip('s7',0);
-  ok('a 3-cask hulk (2 of one house) → exactly 2 prizes, first pick to the first boarder', (UI.pendingSpec||[]).length===2&&UI.pendingSpec[0].pid===1&&UI.pendingSpec[1].pid===0);
+  ok('a 3-cask hulk → THREE prizes, queued in load order (pick order = boarding order)', (UI.pendingSpec||[]).length===3&&UI.pendingSpec[0].pid===1&&UI.pendingSpec[1].pid===0&&UI.pendingSpec[2].pid===1);
+  ok('…matching Bruges/London: every cask already paid its prize there (the grammar is uniform)', true);
+})();
+
+// ---- 22b. v4.7 DEAD ORDERS STRIPPED: no lading names an undealt beer ----
+(function(){var found=false;
+  for(var t=0;t<20;t++){var st=freshState(3,['A','B','C']);
+    st.ladingDeck.concat(st.ladingRow).forEach(function(l){if(l.beer&&st.exports.indexOf(l.beer)<0)found=true;});}
+  ok('20 setups: every dealt lading names a DEALT beer (undealt-beer orders return to the box)', !found);
+  var st2=freshState(3,['A','B','C']);
+  ok('…and die-min / any-kontor orders always survive the strip', st2.ladingDeck.concat(st2.ladingRow).some(function(l){return !l.beer;}));
 })();
 
 // ---- 25. v4.6c LIVING LINE: the line evolves — mid-turn arrivals open their slot's stop ----
@@ -566,13 +572,33 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('the Shipwright commissions with 0 goods (the 1G waived)', S.slots.s6&&S.slots.s6.ship==='cog'&&p.grain===0);
 })();
 (function(){var p=fresh();stops();
-  ok('the Town Crier is gated until 2 kontore show your dice', !specGate(p,'towncrier'));
-  p.delivered.push({style:'gruit',q:1,dest:'bruges',val:1});p.delivered.push({style:'hopped',q:2,dest:'london',val:2});
-  ok('…and opens once the mats show two ports', specGate(p,'towncrier'));
+  ok('the Town Crier is UNGATED (v4.7 — the 2-ports gate is cut)', specGate(p,'towncrier'));
   p.upgrades=['towncrier'];p.sslots=2;
   var b0=p.bank,pool0=p.presPool;
   addPresence(p,'bruges',1);
   ok('a Crier bump parks at FACE 2 — banks 2★, one die, one clock beat', p.bank===b0+2&&p.presPool===pool0-1&&p.presBonus.bruges===1);
+})();
+
+// ---- v4.7 price pass + the Innkeeper's tile drip + the GM 4p persona gate ----
+(function(){var p=fresh();stops();
+  ok('v4.7 fees: Grain Factor 2G · Supercargo 2H (the probe outliers repriced)',
+    SPEC_FEE.granary.g===2&&SPEC_FEE.supercargo.h===2&&SPEC_FEE.crane.g===1);
+  p.upgrades=['innkeeper'];p.sslots=2;p.brewed={gruit:1,hopped:1,keut:1};
+  p.vessels.push(null);p.vslots=4;p.innVessel=3;
+  p.vessels[3]={style:'mumme',q:4,die:2,act:'source'};
+  p.vessels[0]={style:'bock',q:5,die:1,act:'source'};
+  innkeeperTick(p);
+  ok('the Innkeeper ages the TILE’s cask +1 at turn start (v4.7 rework)', p.vessels[3].die===3&&p.vessels[0].die===1);
+  p.vessels[3].die=4;innkeeperTick(p);
+  ok('…and never past Ready', p.vessels[3].die===4);
+})();
+(function(){fresh(4);
+  S.players.forEach(function(q){q.ai={tier:'guildmaster',persona:null};});
+  ok('at 4p the Guildmaster reverts to pure search (the #26 starvation gate)', aiPersona(S.players[0])===null);
+  var st3=fresh(3);S.players.forEach(function(q){q.ai={tier:'guildmaster',persona:null};});
+  ok('…at 3p the designer’s quality persona stands (v45f)', aiPersona(S.players[0])==='quality');
+  S.players[0].ai.persona='majority';
+  ok('…an explicit PATHWAYS persona still overrides at any count', aiPersona(S.players[0])==='majority');
 })();
 (function(){var p=fresh();stops();var q=S.players[1];
   q.upgrades=['supercargo'];q.sslots=2;

@@ -1,5 +1,18 @@
 # Automa / AI Opponent — Plan & Status
 
+> **v4.7 "Every Cask" (2026-08-02): the ruled AI pass.** (1) **`aiSpecVal` re-taught to the
+> SPECIALIST-VALUE-STUDY's probe truth** — new base table (supercargo 4.4 · granary 4.2 ·
+> scholar 3.8 · shipwright 3.4 · cellar 3.2 · braumeister 3.0 · innkeeper 2.8 · crane 2.6 ·
+> hopgarden 2.4 · alderman/chandler 2.2 · chronicler/towncrier 1.8) + a **late-game ×0.5
+> decay on the openers** (supercargo/scholar/shipwright/cellar — they measured +18…29 start
+> → +2…6 mid); the Chronicler/Alderman dynamics stand. (2) **The GM's 'quality' persona is
+> COUNT-GATED**: 2–3p only — at 4p+ `aiPersona` returns null (pure search), off the #26
+> starvation; an explicit PATHWAYS persona still overrides at any count. (3) **The
+> Merchants' Exchange over-cycle is damped** (stop value 1.1 → 0.7 / 0.3 → 0.15) — real
+> verbs outrank the shuffle (~8 cycles/game in v4.6 smoke polluted the verb reads). The
+> engine also grew `innkeeperTick` (the v4.7 rework — fires beside the Braumeister's at
+> turn start; the AI needs no new teach, the drip is automatic).
+
 > **WATCH (2026-08-02, off playtests #26/#27):** the **Guildmaster's v45f 'quality' persona
 > starves at 4p ONLY** — #26 (4p): a GM seat managed 3 brews / 3 deliveries in 11 rounds,
 > CMs finished 1-2 (69/45 vs 34/22); **#27 (3p): the GM pair went 1-2 (64/50 vs 44)**, the

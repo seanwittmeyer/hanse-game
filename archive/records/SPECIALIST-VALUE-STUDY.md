@@ -1,8 +1,17 @@
 # The specialist value study — all 13 designs, throughout the game (v4.6d)
 
-**Status: MEASURED 2026-08-02 (designer-called: "I think we need to conduct a thorough
-analysis of how valuable each specialist is throughout the game"). Dials proposed, NOT
-ruled.** Harness: `playtests/spec-value-probe.js` (the `probe-imps-v87` lineage). Outputs:
+**Status: MEASURED 2026-08-02 → the recommended pass RULED at v4.7 "Every Cask" (same
+day):** Grain Factor 1G→2G · Supercargo 1H→2H · Town Crier's gate cut · Innkeeper reworked
+(his 4th vessel ages its own cask +1 at turn start). **Re-probe on the v4.7 build**
+(400/arm vs a fresh 800-game control at 37.5%): **Town Crier's mid-game NEGATIVE is gone**
+(−5.0 → +0.3; start +3.8 → +5.3) · **Innkeeper is out of the red** (−1.2/−1.7 → +1.8/+0.3)
+· the outliers **cooled in the richer per-cask meta** — Supercargo +29.0 → +23.0 start
+(+6.5 → +10.8 mid) · Grain Factor +23.3 → +13.5 (+10.5 → +7.3). *Caveat: the free-grant
+probe reads POWER — the new fees bite only the PAID channels (Hiring Post / hire bonus);
+Bergen's per-cask prize hands tiles free, so the human-table share is the residual watch.*
+
+*(Original status: designer-called — "I think we need to conduct a thorough analysis of
+how valuable each specialist is throughout the game.")* Harness: `playtests/spec-value-probe.js` (the `probe-imps-v87` lineage). Outputs:
 `playtests/specval-*.txt`.
 
 ## Instruments

@@ -100,6 +100,7 @@ const BUILDINGS=[
 // ---- LADINGS (v4.5b) — the kontor ORDER row: 15 tiles ⚙, a face-up row of 3. Deliver a cask
 // that matches the tile (its kontor + the die minimum, or the named beer) and CLAIM it — the
 // printed ★ bank at once; one lading per delivered cask; the row refills at end of turn.
+// v4.7 SETUP: a lading naming a beer NOT dealt this game returns to the box (no dead orders).
 const LADINGS=[
   {dest:'Bruges',  min:3, pts:2},{dest:'Bruges',  min:4, pts:3},{dest:'Bruges',  beer:'Keut',    pts:3},{dest:'Bruges', min:5, pts:4},
   {dest:'London',  min:4, pts:3},{dest:'London',  min:5, pts:4},{dest:'London',  beer:'Broyhan', pts:3},{dest:'London', min:6, pts:5},
@@ -148,9 +149,9 @@ const LADINGS=[
 //   chandler       → a hand balance — barley on one pan, hop cones on the other
 //   shipwright     → a shipwright's adze across a curved oak ship rib
 // ============================================================================
-const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize — v4.6b: every house with a cask aboard seats one, max 1 per house per ship · the Hiring Post · the 'Gain 1 specialist' load bonus) — never bought · deck of max(2,n−1)/type (v4.5b) · 2 SEATS per house (both open from the start — v45h)
+const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize — v4.7: EVERY CASK seats its house one, the per-cask grammar of all four ports · the Hiring Post · the 'Gain 1 specialist' load bonus) — never bought · deck of max(2,n−1)/type (v4.5b) · 2 SEATS per house (both open from the start — v45h)
   {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Dice start +1 (Q3+ never starts Ready)', g:0, h:2, c:'#5b3a8e', n:3},
-  {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:1, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:2, c:'#5b3a8e', n:3},   // v4.7: 1G→2G (the probe's auto-pick core)
   {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:0, h:2, c:'#5b3a8e', n:3},
   {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Whenever you load, load up to 2 casks', g:1, c:'#5b3a8e', n:3},
   {ic:'wrench',     nm:'Braumeister', art:'a long wooden mash paddle over a copper kettle', act:'Start of your turn: your ripest maturing cask ages +1', g:1, h:1, c:'#5b3a8e', n:3},   // v4.5b — the earned heir of the cut auto-age
@@ -158,11 +159,11 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   // (the Agricola prerequisite, read off components: flipped cards · claimed tiles · parked dice).
   // art: all eight own their object-shot files (the 2026-08-02 art pass; briefs in art/PROMPTS.md).
   {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:'Your recipes are FREE (every channel, Bruges too)', g:2, c:'#5b3a8e', n:1},
-  {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'This tile is a 4th VESSEL — a cask matures on it · gate: 3 beers brewed', g:2, c:'#5b3a8e', n:1},
-  {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'A hull sails your cask on a rival’s turn: +1'+LU('wheat','g ic')+'+1'+LU('sprout','h ic'), h:1, c:'#5b3a8e', n:1},
+  {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'This tile is a 4th VESSEL — its cask ages +1 at your turn start · gate: 3 beers brewed', g:2, c:'#5b3a8e', n:1},   // v4.7 rework: the tile matures its own cask
+  {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'A hull sails your cask on a rival’s turn: +1'+LU('wheat','g ic')+'+1'+LU('sprout','h ic'), h:2, c:'#5b3a8e', n:1},   // v4.7: 1H→2H (the probe's +29 outlier)
   {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'End: +1★ per claimed lading (max +5) · gate: a lading claimed', g:1, h:1, c:'#5b3a8e', n:1},
   {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'End: +2★ per kontor with 3+ parked dice', g:2, c:'#5b3a8e', n:1},
-  {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:'Your presence bumps park at FACE 2 (2★) · gate: delivered to 2 kontore', g:1, c:'#5b3a8e', n:1},
+  {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:'Your presence bumps park at FACE 2 (2★)', g:1, c:'#5b3a8e', n:1},   // v4.7: the 2-ports gate is CUT
   {ic:'arrow-right-left', nm:'Chandler', art:'a hand balance — grain on one pan, hop cones on the other', act:'Once per turn: swap 1'+LU('wheat','g ic')+' ↔ 1'+LU('sprout','h ic'), g:1, c:'#5b3a8e', n:1},
   {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:'Your commissions are FREE (the 1'+LU('wheat','g ic')+' is waived)', h:1, c:'#5b3a8e', n:1},
 ];

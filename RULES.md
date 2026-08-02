@@ -1,4 +1,21 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.6 “Guildbook”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.7 “Every Cask”)
+
+> **v4.7 “Every Cask” (designer-ruled 2026-08-02 — five rulings, one version).**
+> **(1) EVERY CASK PAYS ITS PORT’S PRIZE** — one grammar at all four kontors: Bruges a
+> recipe · London a building · **Bergen a specialist — per cask** (the v4.6b per-house cap
+> is cut; the `PRIZE-CAP-STUDY` measured per-die safe) · Novgorod’s **+2★ premium** is its
+> prize. The throttles are the components: 2 seats · never two of a kind · the display’s
+> end-of-turn gap · seat-gates · the 2-goods consolation per unresolvable prize.
+> **(2) THE SPECIALIST PRICE PASS** (off the `SPECIALIST-VALUE-STUDY`): **Grain Factor
+> 1G → 2G** · **Supercargo 1H → 2H** (the +23/+29 probe outliers) · the **Town Crier’s
+> 2-ports gate is CUT** (−5 mid — it gated the tile into a dry window) · the **INNKEEPER
+> REWORKED** — his 4th vessel now **ages its own cask +1 at the start of your turn** (the
+> tile was negative even granted free). **(3) THE POOL STAYS 12** — designer: *“the game
+> feels like as long as it wants to be… any more may drag it out.”* **(4) DEAD ORDERS
+> STRIPPED** — at setup, a lading naming a beer **not dealt this game returns to the box**
+> (the deck is always 14: the one undealt export takes its order with it). **(5) The AI
+> pass** — `aiSpecVal` re-taught to the probe truth · the Guildmaster’s ‘quality’ persona
+> holds at 2–3p, pure search at 4p+ (#26) · the Exchange over-cycle damped (`AUTOMA.md`).
 
 > **v4.6d “Longshore” (designer-ruled 2026-08-02).** The **Stevedore loads 2 in EVERY load
 > flow** — the ship-slot stop (as before), the **commission’s maiden load**, and the *Load*
@@ -61,7 +78,7 @@
 > tiles (a kontor + a die minimum or a named beer → printed **2–5★**); delivering a
 > qualifying cask **claims one** (one per cask; the ★ bank at once); the row refills at the
 > **end of the turn**. The row makes every kontor’s delivery value a **variable economy** —
-> read it before you sail. The live build is `play.html` (**KEY `hanse-v46d`**; beneath the v4.6d/c/b letters and v4.6 sit the 2026-08-01 letters, designer-ruled: **v45h** — the floor covers are OFF for now: all 3 vessels + both seats open from the start (the Flight keeps its ladder, loses its unlock duty) · **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
+> read it before you sail. The live build is `play.html` (**KEY `hanse-v47`**; beneath v4.7, the v4.6d/c/b letters and v4.6 sit the 2026-08-01 letters, designer-ruled: **v45h** — the floor covers are OFF for now: all 3 vessels + both seats open from the start (the Flight keeps its ladder, loses its unlock duty) · **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
 
 > **v4.5 “Empty Tray” (designer-ruled 2026-07-31 — off human playtest #24).** Two changes.
 > **(1) The end trigger is the EMPTY TRAY:** the first house to **commit its last tally die**
@@ -328,8 +345,8 @@ and read LIVE (v4.6c): a hull or building landing on a line slot mid-turn opens 
   includes one such load onto its new hull — §4C.)*
 - **A ship SAILS the moment it is full** — a **Skute sails on its first load.** Each cask aboard
   **delivers in load order**: bank ★ = its die, park the die at the kontor, resolve the port’s
-  prize (owner’s choice, **when gained** — Bergen: **every house with a cask aboard** seats a
-  specialist, at most **one per house** per ship, v4.6b),
+  prize (owner’s choice, **when gained** — **every cask pays its port’s prize, v4.7**: one
+  grammar at all four kontors; load order = pick order),
   and the cask **may claim one open LADING it qualifies for** (§7b). The hull returns to the
   deck; a Bonded Store on the slot sails away with it (§5). 
 - Casks are **private until aboard** — there is no loading of rival casks, and nothing on the
@@ -363,7 +380,7 @@ everywhere, the Bruges prize included (v45e)**. No building ever adds a fee of i
 |---|---|---|---|---|
 | **Bruges** (Hub) | 1 | the die | **Gain 1 recipe** — dealt exports, **at its `H` = Q−2 fee** (v45e: the prize is the pick, never the waiver; no affordable pick → 2 goods) | 4 / 2 / 0 |
 | **London** (Steelyard) | 2 | the die | **A building** (display → placed, **+3★**) | 5 / 3 / 1 |
-| **Bergen** (Bryggen) | 2 | the die | **A specialist** (display, free) for **EVERY house with a cask aboard** — max **1 per house** per ship (v4.6b; load order = pick order) | 9 / 5 / 2 (anchor) |
+| **Bergen** (Bryggen) | 2 | the die | **A specialist** (display, free) — **per cask** (v4.7, the uniform grammar; load order = pick order) | 9 / 5 / 2 (anchor) |
 | **Novgorod** (Peterhof) | **4** (raised ⚙) | **the die +2★** ⚙ (6–8) | — (the value premium IS the prize) | 8 / 5 / 2 |
 
 - **Gates read the DIE as it boards** (post-lift) — a Kiln’d Hopped (die 3) still misses
@@ -390,6 +407,8 @@ beer (*Mumme*) — and a printed reward (**2–5★** ⚙).
   claim (load order — earlier casks pick first).
 - **The row refills at the END of the turn** (the v4.4c rhythm) — a claimed order leaves a gap
   the rest of the turn; the deck never reshuffles claimed tiles.
+- **Setup strips the dead orders (v4.7):** a lading naming a beer **not dealt this game**
+  returns to the box — every order in the deck is claimable.
 - **The row is the variable economy:** the same die-5 Bock is worth more the turn a *Novgorod
   die 5+ → 3★* order lies open — read the row before you brew, lift and sail. *(The schedule
   leans low on Novgorod — its printed **+2★ premium** already pays the climb.)*
@@ -412,8 +431,8 @@ Novgorod — die 5+→3★ · Bock→4★ · die 6→4★ · any kontor — die 
   unlock currency AND the end-game ladder (§11).
 
 **The SPECIALISTS (13 designs ⚙, v4.6 — the 5 CORE at max(2, n−1) copies + the 8 GUILD at 1
-copy each · display of 4 · each prints its wharf fee ⚙ — free as Bergen’s prize: EVERY house
-with a cask aboard seats one, max 1 per house per ship, v4.6b). Three guild tiles print a SEAT-GATE ⚙: the condition must read TRUE off
+copy each · display of 4 · each prints its wharf fee ⚙ — free as Bergen’s prize, **per
+cask** (v4.7). Two guild tiles print a SEAT-GATE ⚙: the condition must read TRUE off
 your components before the tile may be seated (any channel — Bergen included). A taken
 tile’s gap stands for the rest of the turn — the display refills from the deck at the END of
 the turn (v4.4c; ships and buildings refill at once):**
@@ -421,7 +440,8 @@ the turn (v4.4c; ships and buildings refill at once):**
 *The core five (the drip floor):*
 - **Cellarman** (fee `2H`) — your dice **start one higher** (never above quality — and a Q3+
   export never starts Ready, v45g; a Bock starts at 3, a Broyhan at 2).
-- **Grain Factor** (fee `1G`) — whenever you gain grain (any faucet): **+1 `G`**.
+- **Grain Factor** (fee `2G`, v4.7 — was 1G, the probe’s auto-pick) — whenever you gain
+  grain (any faucet): **+1 `G`**.
 - **Hop Gardener** (fee `2H`) — whenever you gain hops (any faucet): **+1 `H`**.
 - **Stevedore** (fee `1G`) — **whenever you load, you may load 2 casks** (the slot stop, the
   commission’s maiden load, and the *Load* bonus alike — v4.6d; each cask fires its bonus).
@@ -432,15 +452,17 @@ the turn (v4.4c; ships and buildings refill at once):**
 *The guild eight (v4.6 — one copy each):*
 - **Guild Scholar** (fee `2G`) — **your recipes are FREE**: the `H` = Q−2 fee is waived at
   every channel, the Bruges prize included (the pick is never blocked by hops).
-- **Innkeeper** (fee `2G` · *gate: 3 distinct beers brewed*) — **this tile is a 4th vessel**:
-  one cask matures ON the card (its die on the tile, as in any vessel).
-- **Supercargo** (fee `1H`) — whenever a hull carrying **your** cask sails on a **rival’s**
-  turn: gain **1 `G` 1 `H`** (the freight on their clock).
+- **Innkeeper** (fee `2G` · *gate: 3 distinct beers brewed*) — **this tile is a 4th vessel,
+  and its cask ages +1 at the start of your turn** (v4.7 rework — the tile matures its own
+  cask; the Braumeister’s tick may stack on it).
+- **Supercargo** (fee `2H`, v4.7 — was 1H, the probe’s +29 outlier) — whenever a hull
+  carrying **your** cask sails on a **rival’s** turn: gain **1 `G` 1 `H`**.
 - **Chronicler** (fee `1G` `1H` · *gate: a lading claimed*) — **game end: +1★ per lading tile
   at your seat (max +5)** ⚙.
 - **Alderman** (fee `2G`) — **game end: +2★ per kontor where you have 3+ parked dice** ⚙.
-- **Town Crier** (fee `1G` · *gate: delivered to 2 kontore*) — **your presence bumps park at
-  face 2** (2★ each; still one die, one clock beat; a bump remains delivery-gated).
+- **Town Crier** (fee `1G` — **ungated, v4.7**: the 2-ports gate delayed him past the bump
+  window) — **your presence bumps park at face 2** (2★ each; still one die, one clock beat;
+  a bump remains delivery-gated).
 - **Chandler** (fee `1G`) — **once per turn** you may swap **1 `G` ↔ 1 `H`** with the stores
   (a free action; the Grain Factor / Hop Gardener drips apply — that is the combo).
 - **Shipwright** (fee `1H`) — **your commissions are free** (the Harbor’s 1 `G` is waived).
@@ -525,7 +547,11 @@ the engine; the modules return after the core settles.
    the clock and won** while the Cellarmaster died holding 11 goods and 2 immature casks.
    Three tables read 12 / 11 / 15: the clock is fast **when someone races it** — trigger
    control is a strategy, tier- and count-agnostic, and the engine-vs-conversion tension
-   is real. Pool 13 addresses the fast tail only (still the designer's call).
+   is real. **RULED at v4.7: THE POOL STAYS 12** — the designer: *"right now the game feels
+   like as long as it wants to be. Any more may drag it out. Without legible goals or
+   strategic arcs in the game, it can feel repetitive."* The pool question is CLOSED; the
+   open thread it leaves is **legibility** — goals/arcs a player can see and chase (the
+   ladings are that layer; recorded in DESIGN §9's parking lot).
 2. **The recipe faucet** — Bruges + the priced verbs, all at **`H` = Q−2 (v45e — Bruges pays
    too)**. Watch: does the 3 `H` Bock tariff kill the rush or the style? And hops now carry
    three sinks (recipes · Hop Exchange · Abbey) — re-read whether slack flips to binding. If
@@ -541,13 +567,11 @@ the engine; the modules return after the core settles.
    evergreen +3★ mint + modest majority) — the swap would double-magnetize Bergen and kill
    London late, and the A/B read (`playtests/swap-test-v45h.txt`) showed the spec faucet
    thinning ~10–15% besides. If heat needs a dial it is the tiers or the throttle, never the
-   mint's address.* **v4.6b widens the faucet** (every shipper seats one, not one per ship) —
-   re-read Bergen's delivery share and the specialist flow rate; the throttle dial is now
-   the per-house cap. **The per-die A/B ran (2026-08-02, designer-called; the dial recorded
-   at v4.5b):** per-die ≈ cap-1 on every macro metric (pace/share/lanes flat; the double
-   seat lands ~1 per 3–5 games; +~1 consolation good/game) — the study and the ledger:
-   `archive/records/PRIZE-CAP-STUDY.md`, harness `playtests/prize-cap-test.js`. **Designer
-   to rule**; note Bruges/London are already per-cask — Bergen is the only capped prize.
+   mint's address.* **The per-die A/B ran and WAS ADOPTED at v4.7** (the dial recorded at
+   v4.5b → measured (`archive/records/PRIZE-CAP-STUDY.md`: per-die ≈ cap on every macro
+   metric) → designer-ruled: **every cask pays its prize, all four ports, one grammar**).
+   The residual watch: the consolation faucet (2 goods per unresolvable prize) at a human
+   table, and Bergen's share as humans stack same-house casks.
 6. **The commission de-mint (v4.5b)** — with the ★ cut, is 1 `G` + the free load pull enough
    to keep hulls flowing at every count? (The #24 failure was the opposite — a hull flood off
    free ★.) Watch commissions/game; the dial is the cost (1 `G`) before any ★ returns.
@@ -555,11 +579,11 @@ the engine; the modules return after the core settles.
    deadlock relief; too few = the strand risk returns (too many is now merely inefficient).
 8. **2p texture** — the thinned interaction set (berths, majorities, the draft): does it
    hold at two?
-9. **The fee schedule** ⚙ (v4.2c — per item): recipes `1H`/`1G`/`2H`/`1G2H` · specialists
-   `2H`/`1G`/`2H`/`1G` (the −1G markup; Cellarman → `2H`) · buildings free/`1G`/`2G`. Probe
-   reads still open: the **2G lift tier prices the wharf channel out** (candidate `1G1H`);
-   **grain binding, hops slack** — lean premium fees toward `H`. Parked: a kontor-prize
-   surcharge on premium tiles.
+9. **The fee schedule** ⚙ (v4.7 pass): recipes the `H` = Q−2 formula (v45e) · specialists
+   Cellarman `2H` · Grain Factor `2G` · Hop Gardener `2H` · Stevedore `1G` · Braumeister
+   `1G1H` · guild `2G`/`2G`/`2H`/`1G1H`/`2G`/`1G`/`1G`/`1H` (the v4.7 price pass repriced
+   the two probe outliers — re-probe reads in `SPECIALIST-VALUE-STUDY.md`) · buildings
+   free/`1G`–`3G` in grain only (v45d).
 10. **The greedy (non-MC) tiers** — re-taught at v4.3 (fee-netted values, Flight marginals,
    horizon sense; both tiers share the new skeleton) and at v4.5b (de-mint values, lading
    sense, the new verbs). Trader>journeyman reads ~55% pooled (n=700, v4.3) — real but under
@@ -578,10 +602,10 @@ the engine; the modules return after the core settles.
    (gatekeeper #5 — a free commission must not paper over a structural trap); **hops relief**
    (Chandler + Scholar land before the flow-probe re-read — re-baseline it); the greedy AI
    **over-cycles the Merchants’ Exchange** (~8/game in early smoke — a robustness tic, not a
-   rule problem; damp the verb value if it pollutes reads); the **specialist value study
-   ran at v4.6d** (`archive/records/SPECIALIST-VALUE-STUDY.md` — Supercargo +29 and Grain
-   Factor +23 are the pricing outliers; Innkeeper negative even free; Town Crier −5 mid;
-   dials proposed, designer to rule); the **deal-17-of-20** and the
+   rule problem; the v4.7 AI pass damped the verb); the **specialist value study
+   ran at v4.6d and its dials were RULED at v4.7** (`SPECIALIST-VALUE-STUDY.md` —
+   Supercargo → 2H · Grain Factor → 2G · Town Crier ungated · Innkeeper reworked; the
+   re-probe of the four is the v4.7 gate); the **deal-17-of-20** and the
    guild singles want a PATHWAYS + persona-duel re-read before any human table. **PATHWAYS
    re-ran at v4.6b (200/lane):** 3p builder **cooled 40.5 → 32.0** (near-flat 34.5/33.5/32.0)
    · 4p lifter **recovered 19.5 → 26.0** (24/26/29.5/20.5 — breadth's mild cold is the
