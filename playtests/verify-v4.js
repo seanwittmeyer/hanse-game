@@ -496,6 +496,35 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('a 3-cask hulk (2 of one house) → exactly 2 prizes, first pick to the first boarder', (UI.pendingSpec||[]).length===2&&UI.pendingSpec[0].pid===1&&UI.pendingSpec[1].pid===0);
 })();
 
+// ---- 25. v4.6c LIVING LINE: the line evolves — mid-turn arrivals open their slot's stop ----
+(function(){var p=fresh();p.ai=null;
+  S.buildings.s1={b:'maltkiln'};                     // a load-lift building: no standalone act
+  p.cell='A';activateLine('colL');                   // Left col: caps s1 + s6, cells A + C
+  ok('at activation a Kiln-only shipless slot contributes no stop',
+    UI.stops.length===2&&!UI.stops.some(function(st){return st.kind!=='cell';}));
+  p.grain=2;p.vessels=[null,null,null];              // no Ready cask → the maiden load skips
+  S.shipDisplay=[{ship:'cog',dest:'bruges'}];S.shipDeck=[];
+  UI.comm={returnTo:'stops',idx:0};commPlace('s1');
+  ok('a hull commissioned onto the ACTIVE line opens that slot’s load stop (v4.6c)',
+    UI.stops.some(function(st){return st.kind==='load'&&st.slot==='s1';}));
+  var i=UI.stops.findIndex(function(st){return st.kind==='load'&&st.slot==='s1';});
+  resolveStop(i);refreshStops();   // (no Ready cask → enterLoad resumed at once; the stop is spent)
+  ok('…a USED load stop never returns (each stop once per activation)',
+    !UI.stops.some(function(st){return st.kind==='load'&&st.slot==='s1';}));
+  commitBldg('s6','granary',null,true);
+  ok('a building raised on the line opens its action stop',
+    UI.stops.some(function(st){return st.kind==='bact'&&st.slot==='s6';}));
+  ship('s4','cog','bruges');refreshStops();
+  ok('an arrival OFF the line adds nothing (s4 is not on colL)',
+    !UI.stops.some(function(st){return st.slot==='s4';}));
+})();
+(function(){var p=fresh();p.ai=null;p.cell='A';activateLine('colL');
+  ship('s4','hulk','bergen');
+  UI.cap={returnTo:'stops',sid:'s4'};capPlace('s6');
+  ok('a hull WARPED onto the line (Capstan) opens that slot’s load stop',
+    UI.stops.some(function(st){return st.kind==='load'&&st.slot==='s6';}));
+})();
+
 // ---- 24. v4.6 "Guildbook": the guild specialists — waivers · gates · collectors ----
 (function(){var p=fresh();stops();
   p.upgrades=['scholar'];p.sslots=2;S.exports=['broyhan','keut','mumme'];p.recipes=['gruit','hopped'];

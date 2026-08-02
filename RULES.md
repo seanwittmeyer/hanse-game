@@ -1,5 +1,13 @@
 # Brewhouses of the Hanse — Turn & Round Rules (v4.6 “Guildbook”)
 
+> **v4.6c “Living Line” (designer-ruled 2026-08-02, off live play turn 8).** **The line is
+> read LIVE — “the line can evolve as you take your turn.”** A hull **commissioned** or
+> **warped** onto a slot of your ACTIVE line mid-turn — or a **building raised** there —
+> **opens that slot’s stop this same activation** (each stop still fires at most once; a
+> used stop never returns; a ship sailing off closes its stop, as always). The reported
+> case: commission a Cog onto your line’s Kiln slot, maiden-load it at the Harbor, then
+> **top it off at the slot stop** — it sails.
+
 > **v4.6b “Every Shipper” (designer-ruled 2026-08-02).** The **Bergen prize read is
 > CORRECTED**: the ship grants a specialist to **EVERY house with a cask aboard — at most ONE
 > per house per ship** (three of your own casks still seat one). The v4.5b “≤1 per SHIP, load
@@ -48,7 +56,7 @@
 > tiles (a kontor + a die minimum or a named beer → printed **2–5★**); delivering a
 > qualifying cask **claims one** (one per cask; the ★ bank at once); the row refills at the
 > **end of the turn**. The row makes every kontor’s delivery value a **variable economy** —
-> read it before you sail. The live build is `play.html` (**KEY `hanse-v46b`**; beneath v4.6b/v4.6 sit the 2026-08-01 letters, designer-ruled: **v45h** — the floor covers are OFF for now: all 3 vessels + both seats open from the start (the Flight keeps its ladder, loses its unlock duty) · **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
+> read it before you sail. The live build is `play.html` (**KEY `hanse-v46c`**; beneath the v4.6c/b letters and v4.6 sit the 2026-08-01 letters, designer-ruled: **v45h** — the floor covers are OFF for now: all 3 vessels + both seats open from the start (the Flight keeps its ladder, loses its unlock duty) · **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
 
 > **v4.5 “Empty Tray” (designer-ruled 2026-07-31 — off human playtest #24).** Two changes.
 > **(1) The end trigger is the EMPTY TRAY:** the first house to **commit its last tally die**
@@ -180,6 +188,9 @@ The turn:
    - its **two slots** — each offers **the building’s printed action** (if a building stands
      there) **and/or a LOAD of the ship docked there** (if a ship stands there) — each once
      (§5–6). An empty slot does nothing — **author it.**
+   **The line is read LIVE (v4.6c):** a hull commissioned or warped onto a line slot
+   mid-turn — or a building raised there — opens that slot’s stop this same activation
+   (each stop still at most once; a ship sailing off closes its stop).
 
 ---
 
@@ -294,7 +305,8 @@ it on the slot whose ship serves YOUR plan; it pays its lift while it stands, pa
 aboard when it goes, and its slot opens again.)*
 
 **One-fire rule:** on a line, the active player may use each slot’s building action once and
-load each slot’s ship once — all optional, any order, resolved on the active player’s turn.
+load each slot’s ship once — all optional, any order, resolved on the active player’s turn,
+and read LIVE (v4.6c): a hull or building landing on a line slot mid-turn opens its stop.
 
 ---
 

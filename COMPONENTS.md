@@ -247,6 +247,8 @@ end-score line · the deal-17 setup step).
 **v4.6b delta:** **Bergen mat reprint** — the prize line corrected to “every house with a
 cask aboard seats a specialist — max 1 per house per ship” (the v4.5b “≤1 per ship” was a
 misread) · player-aid reprint (the Bergen prize row). No counts change.
+**v4.6c delta:** player-aid reprint only — the turn step gains “the line is read LIVE: a
+hull or building landing on a line slot mid-turn opens its stop.” No components change.
 
 ## 11. Known gaps ⚙ (the watch list)
 
