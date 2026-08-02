@@ -90,8 +90,9 @@
      Only the tile's BACKGROUND COLOUR and ART layers extend outward — the content never moves, and the
      cut rrect stays on the tile's true edge. (.074in = 1.5mm ÷ SCALE — these rules live in native units.) */
   .bl{position:relative;width:100%;height:100%;overflow:hidden}
-  .bl>.ctile,.bl>.btile,.bl>.stile{position:absolute;left:.074in;top:.074in;overflow:visible;border-radius:0}
-  .bl>.ctile::before,.bl>.btile::before,.bl>.stile::before{content:"";position:absolute;inset:-.074in;background:var(--c,#33445a);z-index:-1}
+  .bl>.ctile,.bl>.btile,.bl>.stile,.bl>.ldtile{position:absolute;left:.074in;top:.074in;overflow:visible;border-radius:0}
+  .bl>.ctile::before,.bl>.btile::before,.bl>.stile::before,.bl>.ldtile::before{content:"";position:absolute;inset:-.074in;background:var(--c,#33445a);z-index:-1}
+  /* the lading strip is flat kontor colour — its ::before IS the whole bleed (no art layer to extend) */
   .bl>.btile>.artbg,.bl>.stile>.artbg,.bl>.stile>.st-wash{inset:-.074in}
   .bl>.ctile>.ct-art{left:-.074in;top:-.074in;bottom:-.074in}
   .bl>.ctB>.ct-art{left:auto;right:-.074in}
