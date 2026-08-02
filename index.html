@@ -227,7 +227,7 @@
       <div class="cell B" data-row="row-t" data-col="col-r"><div class="corner">B</div><div class="lbl">② Brew</div><div class="nm">Brewhouse</div><div class="do">Pay a recipe into an open vessel — a tray die becomes the cask</div></div>
       <div class="slot s3" data-line="row-t">slot</div>
       <div class="slot s7" data-line="row-b">slot</div>
-      <div class="cell C" data-row="row-b" data-col="col-l"><div class="corner">C</div><div class="lbl">④ Commission</div><div class="nm">Harbor</div><div class="do">Pay 1 G, place a display hull on a shipless slot, bank ★ = its berths · load 1 Ready cask at once</div></div>
+      <div class="cell C" data-row="row-b" data-col="col-l"><div class="corner">C</div><div class="lbl">④ Commission</div><div class="nm">Harbor</div><div class="do">Pay 1 G, place a display hull on a shipless slot · load 1 Ready cask at once (no ★)</div></div>
       <div class="cell D" data-row="row-b" data-col="col-r"><div class="corner">D</div><div class="lbl">③ Age</div><div class="nm">Cellar</div><div class="do">3 age points — turn maturing dice up</div></div>
       <div class="slot s4" data-line="row-b">slot</div>
       <div class="slot s6" data-line="col-l">slot</div>
@@ -372,7 +372,7 @@
 <section id="scoring">
   <h2><span class="nm">14</span>Scoring</h2>
   <ol>
-    <li><b>Banked as you play</b> (the score ring): <b>deliveries</b> — each cask’s parked die, 1–6★ · <b>builds</b> — +3★ per building raised · <b>ladings</b> — the claimed order’s printed ★ (v4.5b) · <b>Tollhouse stamps</b> — +3★ (v45d; net +2) · <b>presence bumps</b> — 1★ each (a tray die parked at face 1). Commissions bank nothing (v4.5b).</li>
+    <li><b>Banked as you play</b> (the score ring): <b>deliveries</b> — each cask’s parked die, 1–6★ · <b>builds</b> — +3★ per building raised · <b>ladings</b> — the claimed order’s printed ★ (v4.5b) · <b>Tollhouse stamps</b> — +3★ (the die drops 1) · <b>presence bumps</b> — 1★ each (a tray die parked at face 1). Commissions bank nothing (v4.5b).</li>
     <li><b>Majorities (end-game)</b> — parked dice at each kontor: Bruges 4/2/0 · London 5/3/1 · Bergen 9/5/2 · Novgorod 8/5/2 ⚙; 2p skips 2nd; ties split.</li>
     <li><b>The Flight (end-game)</b> — distinct beers <b>BREWED</b> (your flipped cards): <b>(beers−1)², min 3</b> — 3→4 · 4→9 · 5→16.</li>
     <li><b>Tiebreak:</b> the summed dice in your vessels, then most goods.</li>
@@ -396,7 +396,7 @@
     <div class="gloscard"><div class="gh"><i data-lucide="layout-grid"></i><span class="gt">Station · Slot · Line</span></div><div class="gd">A <b>station</b> is one of the four action spaces (ONE printed action each); a <b>slot</b> is one of the 8 spaces ringing them — it seats <b>a building and/or a ship</b>, never casks; a <b>line</b> is a row or column = its two stations + its two slots.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="dices"></i><span class="gt">The Tally Die</span></div><div class="gd">THE component: set to the cask’s printed <b>start value</b> at brew, turned up by age points (<b>READY at the quality</b>), lifted past it only by buildings at load (cap 6), read by <b>gates</b> as it boards, and <b>parked at the kontor</b> on delivery — pips = the banked ★, body = presence, majorities and the clock. 12 per house ⚙, public. <b>No die in the tray → no brew, no presence bump.</b></div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="beer"></i><span class="gt">Cask · Ready · Load bonus</span></div><div class="gd">A brewed beer in two states: <b>maturing</b> (private vessel, die below quality) → <b>delivered</b> (boarded, sailed, parked). <b>Ready</b> = die at the quality. Its printed action is a <b>LOAD BONUS</b> — it fires as the cask boards a hull.</div></div>
-    <div class="gloscard"><div class="gh"><i data-lucide="sailboat"></i><span class="gt">Ship · Skute · Commission</span></div><div class="gd">Neutral destination-bound hulls: <b>Skute 1 · Cog 2 · Hulk 3</b> berths; anyone loads their own Ready casks; a hull <b>sails the moment it is full</b> — a Skute on its first load (the relief valve as a component). <b>Commission</b> (Harbor): 1 G · place on a shipless slot · bank ★ = berths · load 1 Ready cask at once.</div></div>
+    <div class="gloscard"><div class="gh"><i data-lucide="sailboat"></i><span class="gt">Ship · Skute · Commission</span></div><div class="gd">Neutral destination-bound hulls: <b>Skute 1 · Cog 2 · Hulk 3</b> berths; anyone loads their own Ready casks; a hull <b>sails the moment it is full</b> — a Skute on its first load (the relief valve as a component). <b>Commission</b> (Harbor): 1 G · place on a shipless slot · load 1 Ready cask at once (no ★ — v4.5b).</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="landmark"></i><span class="gt">Kontor · Gate · Prize</span></div><div class="gd">The four delivery ports. A <b>gate</b> is the die value required to board (read as boarded, after lifts): Bruges 1+ · London 2+ · Bergen 2+ · Novgorod 4+. The <b>prize</b> pays the cask’s owner on delivery: a recipe / a building (+3★) / a specialist — Novgorod instead pays every parked die <b>+2★</b>.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="trophy"></i><span class="gt">Majority</span></div><div class="gd">End-game, per kontor, ranked by <b>parked dice</b> (1st/2nd/3rd take the tiers; 2p skips 2nd). Concentrated at <b>Bergen</b> (9/5/2).</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="building-2"></i><span class="gt">Building</span></div><div class="gd">ONE green family, <b>no owner</b>: every building serves whoever activates it; the placer banks <b>+3★</b>. Action buildings fire a printed verb on their slot’s stop; load-lift buildings shape the hull (Kiln +1 die · Cooperage +1 berth · Customs −1 gate · Rich Berth sails short). Overbuild = ONE payment: a paid fee covers the ground, else the 1 G rent; the displaced tile is boxed.</div></div>
@@ -420,7 +420,7 @@
   <div class="acat">The stations (ONE action each)</div>
   <table class="atbl">
     <tr><td><span class="act-ic"><i data-lucide="store"></i></span></td><td><b>Market — Source</b></td><td>Take <b>2 goods</b>, any mix.</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brewhouse — Brew</b></td><td>Pay a recipe into an open vessel; a <b>tray die</b> is set to the printed start value; the cask takes the face-up pile-top <b>load bonus</b>. First brew of a beer flips its card (the Flight; unlocks at the 2nd/3rd).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brewhouse — Brew</b></td><td>Pay a recipe into an open vessel; a <b>tray die</b> is set to the printed start value; the cask takes the face-up pile-top <b>load bonus</b>. First brew of a beer flips its card (the Flight).</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Cellar — Age</b></td><td><b>3 age points</b> across your vessels; a die stops at its quality (READY). Dice never turn on their own (v4.5b).</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="sailboat"></i></span></td><td><b>Harbor — Commission</b></td><td>Pay <b><i data-lucide="wheat" class="gi"></i>1</b>, place a display hull on a shipless slot (Skute 1 · Cog 2 · Hulk 3 berths — no ★, v4.5b). Then <b>one free load</b> onto it (a Ready cask from your vessels; optional).</td></tr>
   </table>
@@ -437,7 +437,7 @@
     <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Age +2</b> <span class="small">[Q2+]</span></td><td>2 age points across your vessels.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="package-plus"></i></span></td><td><b>Load 1 more</b> <span class="small">[Q2+]</span></td><td>Another cask onto any eligible hull (its bonus fires too).</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="map-pin"></i></span></td><td><b>Place 1 presence</b> <span class="small">[Q2+]</span></td><td>A tray die parks at face 1 at a kontor you've delivered to (1★ · presence · clock).</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="scroll-text"></i></span></td><td><b>Gain 1 recipe</b> <span class="small">[Q2+]</span></td><td>Pay the card’s printed fee — a dealt export. (Free as Bruges’ prize.)</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="scroll-text"></i></span></td><td><b>Gain 1 recipe</b> <span class="small">[Q2+]</span></td><td>Pay the card’s printed fee (H = Q−2) — a dealt export. (Paid at Bruges too — v45e.)</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="search"></i></span></td><td><b>Gain 1 building</b> <span class="small">[Q3+]</span></td><td>Pay the tile’s printed fee (no chip = free) — display → any legal slot, <b>+3★</b>. (Free as London’s prize.)</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="wrench"></i></span></td><td><b>Gain 1 specialist</b> <span class="small">[Q3+]</span></td><td>Pay its printed fee — display → an open seat. (Free as Bergen’s prize.)</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brew 1</b> <span class="small">[Q4+]</span></td><td>Pay its cost into an open vessel (tray die required).</td></tr>
@@ -477,9 +477,9 @@ function cubes(str){return str.replace(/G/g,G).replace(/H/g,H);}
 
 // ---- DESTINATIONS (v1.0: small flat base + variable value from the buildings a cask ships through · majorities the floor · Hall = fixed ladder via Enshrine) ----
 const destinations=[
-  {cls:'bruges',  name:'Bruges',   role:'The Hub — the on-ramp',              gate:'die 1+', value:'the parked die (1–6★)', benefit:'a recipe, free', maj:'<b>4 / 2 / 0</b>'},
+  {cls:'bruges',  name:'Bruges',   role:'The Hub — the on-ramp',              gate:'die 1+', value:'the parked die (1–6★)', benefit:'a recipe — at its H = Q−2 fee (v45e)', maj:'<b>4 / 2 / 0</b>'},
   {cls:'london',  name:'London',   role:'The Steelyard — the engine',         gate:'die 2+', value:'the parked die (1–6★)', benefit:'a building, placed at once (+3★)', maj:'<b>5 / 3 / 1</b>'},
-  {cls:'bergen',  name:'Bergen',   role:'Bryggen — the crews & the anchor',   gate:'die 2+', value:'the parked die (1–6★)', benefit:'a specialist, free', maj:'<b>9 / 5 / 2</b>'},
+  {cls:'bergen',  name:'Bergen',   role:'Bryggen — the crews & the anchor',   gate:'die 2+', value:'the parked die (1–6★)', benefit:'a specialist, free (≤1 per ship)', maj:'<b>9 / 5 / 2</b>'},
   {cls:'novgorod',name:'Novgorod', role:'The Long Haul — the climb',          gate:'die 4+', value:'the parked die <b>+2★</b> (6–8★)', benefit:'— (the +2★ premium is the prize)', maj:'<b>8 / 5 / 2</b>'},
 ];
 document.getElementById('destBoard').innerHTML=destinations.map(d=>`
@@ -518,7 +518,7 @@ document.getElementById('shipGallery').innerHTML=ships.map(t=>`
     <div class="row"><span class="k">Capacity</span><span class="v">${t.cap}</span></div>
     <div class="row"><span class="k">Commission</span><span class="v">${cubes(t.cost)}</span></div>
     ${t.d}
-    <div class="row"><span class="k">Full → sails</span><span class="v">casks deliver in load order · +1 on the track</span></div>
+    <div class="row"><span class="k">Full → sails</span><span class="v">casks deliver in load order — the die parks (pips = ★)</span></div>
     <div class="badge">×${t.qty}</div>
   </div></div>`).join('');
 
