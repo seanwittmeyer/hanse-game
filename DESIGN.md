@@ -1472,9 +1472,10 @@ automatically.
 - **Cask** — a brewed beer in two states: **maturing** (private vessel) → **delivered** (boarded,
   sailed, parked). Its printed action is a **load bonus**, fired as it boards a hull.
 - **Building** — the ONE green family: **no owner** — serves whoever activates it; the placer
-  banks **+3★**. Action buildings print verbs (incl. Racking Hall swap · Assay +1, v4.5b);
-  load-lift buildings shape the boarding die / the hull (Kiln/Hop Exchange/Bonded +1 die ·
-  Tollhouse −1 for +2★ · Cooperage +1 berth · Customs −1 gate · Rich Berth sails short). The
+  banks **+3★**. Action buildings print verbs (incl. Racking Hall swap · Assay ±1, v45c ·
+  the Hop Exchange pay-hops lift · the Abbey Cellar, v45d);
+  load-lift buildings shape the boarding die / the hull (Kiln/Bonded +1 die ·
+  Tollhouse −1 for +3★, v45d · Cooperage +1 berth · Customs −1 gate · Rich Berth sails short). The
   **Bonded Store** is ephemeral — it sails away with its hull (v4.5b).
 - **Specialist** — the purple private tile (5 designs incl. the Braumeister, 2 seats; max(2,
   n−1) copies — v4.5b), **earned, never bought**: free as Bergen's prize (**≤1 per ship

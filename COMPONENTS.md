@@ -205,6 +205,12 @@ player-aid reprint).
 in, the Annex + 5 duplicate tiles out — still 17) · **+Braumeister** tiles (5th specialist
 design; decks now max(2, n−1) copies) · Harbor caption reprint (no ★) · Bergen mat line
 (“≤1 specialist per ship”) · player-aid reprint (no auto-age; ladings).
+**2026-08-01 letters delta (v45d/e/g/h):** reprinted — **building tiles** (the v45d power
+ladder: fees in GRAIN only · Racking Hall uncapped 3 `G` · Tollhouse **+3★** · Abbey Cellar
+in, one Assay out · Hop Exchange the pay-hops slot action) · **recipe cards** (the fee is the
+formula **`H` = Q−2**, paid at every channel — the Bruges mat drops “free”, v45e) · the
+**Cellarman** tile (a Q3+ export never starts Ready — v45g) · **player boards** (all 3
+vessels + both seats print OPEN — the covers leave the board, v45h) · the **player aid**.
 
 ## 11. Known gaps ⚙ (the watch list)
 
