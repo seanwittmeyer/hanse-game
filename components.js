@@ -74,20 +74,21 @@ const BUILDINGS=[
   // family — every building serves whoever activates it; the builder banks +3★ at placement.
   // ACTION buildings print a verb, fired on their slot's stop; LOAD-LIFT buildings modify the
   // boarding die / the ship at their slot. The Annex (echo verb) is CUT; the goods faucets thinned.
-  // 17 tiles ⚙. (art: interim stand-ins from the retired tiles' files until briefs land.)
-  {k:'granary',   nm:'Granary',           verb:'transform', tgt:'act',  ic:'coins',        n:1, act:'source', eff:'Gain 2 goods', art:'building-staple.png'},
-  {k:'scriveners',nm:'Scrivener’s Hall',  verb:'transform', tgt:'act',  ic:'scroll-text',  n:1, g:1, act:'recipe', eff:'Gain 1 recipe', art:'building-gauger.png'},
-  {k:'missionq',  nm:'Mission Quay',      verb:'transform', tgt:'act',  ic:'church',       n:2, act:'age',    eff:'Age +2', art:'building-reliquary.png'},
-  {k:'hiringpost',nm:'Hiring Post',       verb:'transform', tgt:'act',  ic:'wrench',       n:1, g:1, act:'hire',   eff:'Gain 1 specialist', art:'building-workshop.png'},
+  // 17 tiles ⚙. (art: every design owns its file — building-<k>.png; the 2026-08-02 art pass
+  // retired the last interim stand-ins. Briefs: art/PROMPTS.md.)
+  {k:'granary',   nm:'Granary',           verb:'transform', tgt:'act',  ic:'coins',        n:1, act:'source', eff:'Gain 2 goods'},
+  {k:'scriveners',nm:'Scrivener’s Hall',  verb:'transform', tgt:'act',  ic:'scroll-text',  n:1, g:1, act:'recipe', eff:'Gain 1 recipe'},
+  {k:'missionq',  nm:'Mission Quay',      verb:'transform', tgt:'act',  ic:'church',       n:2, act:'age',    eff:'Age +2'},
+  {k:'hiringpost',nm:'Hiring Post',       verb:'transform', tgt:'act',  ic:'wrench',       n:1, g:1, act:'hire',   eff:'Gain 1 specialist'},
   {k:'almoner',   nm:'Almoner’s Stall',   verb:'transform', tgt:'act',  ic:'heart',        n:1, act:'reach',  eff:'+1 presence'},
   // v45d power ladder — fees print in GRAIN only (hops are spent USING buildings, never buying them)
-  {k:'racking',   nm:'Racking Hall',      verb:'transform', tgt:'act',  ic:'repeat',       n:1, g:3, act:'rack',   eff:'Swap 2 dice', art:'building-partigyle.png'},
-  {k:'assay',     nm:'Assay House',       verb:'transform', tgt:'act',  ic:'scale',        n:1, g:1, act:'assay',  eff:'1 maturing die ±1', art:'building-connoiss.png'},
-  {k:'abbey',     nm:'Abbey Cellar',      verb:'transform', tgt:'act',  ic:'hourglass',    n:1, g:2, act:'abbey',  eff:'3'+LU('sprout','h')+' → all maturing Ready', art:'building-festkeller.png'},
-  {k:'hopex',     nm:'Hop Exchange',      verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, act:'hopex',  eff:'1'+LU('sprout','h')+' → die +1 · max 2', art:'building-hopyard.png'},
+  {k:'racking',   nm:'Racking Hall',      verb:'transform', tgt:'act',  ic:'repeat',       n:1, g:3, act:'rack',   eff:'Swap 2 dice'},
+  {k:'assay',     nm:'Assay House',       verb:'transform', tgt:'act',  ic:'scale',        n:1, g:1, act:'assay',  eff:'1 maturing die ±1'},
+  {k:'abbey',     nm:'Abbey Cellar',      verb:'transform', tgt:'act',  ic:'hourglass',    n:1, g:2, act:'abbey',  eff:'3'+LU('sprout','h')+' → all maturing Ready'},
+  {k:'hopex',     nm:'Hop Exchange',      verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, act:'hopex',  eff:'1'+LU('sprout','h')+' → die +1 · max 2'},
   {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, eff:'Loading: die +1'},
-  {k:'tollhouse', nm:'Tollhouse',         verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, eff:'Loading: die −1 → +3★', art:'building-burgomstr.png'},
-  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, art:'building-salthouse.png', eff:'Loading: die +1 · sails with its hull — shippers +2 goods'},
+  {k:'tollhouse', nm:'Tollhouse',         verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, eff:'Loading: die −1 → +3★'},
+  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, eff:'Loading: die +1 · sails with its hull — shippers +2 goods'},
   {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 berth'},
   {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'Gate −1'},
   {k:'richberth', nm:'Rich Berth',        verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'May sail 1 short'},
@@ -128,15 +129,24 @@ const LADINGS=[
 //   • no text, no people, no player-colour hues (the purple foot bar is added by the kit)
 // The card is now SQUARE (2in×2in, matching the Building card): this art sits full-bleed behind a
 // scrim; name on top, effect+cost in the purple foot — so keep the object in the middle 60% of the frame.
-// The seven briefs (also carried per-row as art:'…'):
-//   coppersmith    → a gleaming copper brew kettle
+// The briefs (also carried per-row as art:'…'):
+//   coppersmith    → a gleaming copper brew kettle                     (legacy file)
 //   cellarman      → an oak cask racked on a wooden stillage
 //   grain-factor   → a tied burlap sack overflowing with barley
 //   hop-gardener   → a climbing hop bine with cones on a tall pole
 //   stevedore      → a medieval wooden treadwheel harbor crane
 //   braumeister    → a long wooden mash paddle over a copper kettle (v4.5b)
-//   lagerkeeper    → stacked casks dusted with frost and icicles
-//   quaymaster     → a private wooden jetty with a rope-wound mooring bollard
+//   lagerkeeper    → stacked casks dusted with frost and icicles        (legacy file)
+//   quaymaster     → a private wooden jetty with a rope-wound mooring bollard (legacy file)
+// The guild eight (v4.6 — all landed 2026-08-02):
+//   guild-scholar  → a bundle of sealed recipe scrolls (red wax seals)
+//   innkeeper      → a foaming glazed stoneware ale jug with a pewter lid
+//   supercargo     → a sealed ship's manifest across a rope-bound sea chest
+//   chronicler     → an open chronicle with a goose-quill pen (blank pages)
+//   alderman       → a gilded chain of office on a crimson velvet cushion
+//   town-crier     → a polished brass handbell, dark-wood handle
+//   chandler       → a hand balance — barley on one pan, hop cones on the other
+//   shipwright     → a shipwright's adze across a curved oak ship rib
 // ============================================================================
 const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize — v4.6b: every house with a cask aboard seats one, max 1 per house per ship · the Hiring Post · the 'Gain 1 specialist' load bonus) — never bought · deck of max(2,n−1)/type (v4.5b) · 2 SEATS per house (both open from the start — v45h)
   {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Dice start +1 (Q3+ never starts Ready)', g:0, h:2, c:'#5b3a8e', n:3},
@@ -146,15 +156,15 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'wrench',     nm:'Braumeister', art:'a long wooden mash paddle over a copper kettle', act:'Start of your turn: your ripest maturing cask ages +1', g:1, h:1, c:'#5b3a8e', n:3},   // v4.5b — the earned heir of the cut auto-age
   // ---- v4.6 "Guildbook": the 8 GUILD designs — 1 copy each (scarce); three print SEAT GATES
   // (the Agricola prerequisite, read off components: flipped cards · claimed tiles · parked dice).
-  // art: three ride the spare improve-*.jpg files (slug override); the rest are queued briefs.
+  // art: all eight own their object-shot files (the 2026-08-02 art pass; briefs in art/PROMPTS.md).
   {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:'Your recipes are FREE (every channel, Bruges too)', g:2, c:'#5b3a8e', n:1},
-  {ic:'bed',        nm:'Innkeeper', slug:'lagerkeeper', art:'stacked casks dusted with frost and icicles (stand-in)', act:'This tile is a 4th VESSEL — a cask matures on it · gate: 3 beers brewed', g:2, c:'#5b3a8e', n:1},
+  {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'This tile is a 4th VESSEL — a cask matures on it · gate: 3 beers brewed', g:2, c:'#5b3a8e', n:1},
   {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'A hull sails your cask on a rival’s turn: +1'+LU('wheat','g ic')+'+1'+LU('sprout','h ic'), h:1, c:'#5b3a8e', n:1},
   {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'End: +1★ per claimed lading (max +5) · gate: a lading claimed', g:1, h:1, c:'#5b3a8e', n:1},
-  {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet board', act:'End: +2★ per kontor with 3+ parked dice', g:2, c:'#5b3a8e', n:1},
+  {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'End: +2★ per kontor with 3+ parked dice', g:2, c:'#5b3a8e', n:1},
   {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:'Your presence bumps park at FACE 2 (2★) · gate: delivered to 2 kontore', g:1, c:'#5b3a8e', n:1},
-  {ic:'arrow-right-left', nm:'Chandler', slug:'coppersmith', art:'a gleaming copper brew kettle (stand-in)', act:'Once per turn: swap 1'+LU('wheat','g ic')+' ↔ 1'+LU('sprout','h ic'), g:1, c:'#5b3a8e', n:1},
-  {ic:'hammer',     nm:'Shipwright', slug:'quaymaster', art:'a private wooden jetty with a mooring bollard (stand-in)', act:'Your commissions are FREE (the 1'+LU('wheat','g ic')+' is waived)', h:1, c:'#5b3a8e', n:1},
+  {ic:'arrow-right-left', nm:'Chandler', art:'a hand balance — grain on one pan, hop cones on the other', act:'Once per turn: swap 1'+LU('wheat','g ic')+' ↔ 1'+LU('sprout','h ic'), g:1, c:'#5b3a8e', n:1},
+  {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:'Your commissions are FREE (the 1'+LU('wheat','g ic')+' is waived)', h:1, c:'#5b3a8e', n:1},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a

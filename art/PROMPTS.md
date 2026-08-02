@@ -14,14 +14,21 @@ These images sit **behind** the cask cards (2.5″ square) and ship tiles (2.5�
   `cask-mumme.png` · `cask-bock.png` · `cask-gose.png` · `cask-zerbster.png` ·
   `cask-duckstein.png` · `cask-jopenbier.png`
 - Ships: `ship-cog.png` · `ship-hulk.png`
-- Buildings (v5 — 2″ building CARDS, full-bleed art behind the name/effect/cost): `building-<key>.png`,
-  one per `BUILDINGS` key in `print.html` — `building-richberth.png` · `building-staple.png` ·
-  `building-burgomstr.png` · `building-connoiss.png` · `building-hansediet.png` · `building-festkeller.png` ·
-  `building-reliquary.png` · `building-almoner.png` · `building-ch_bruges.png` · `building-ch_london.png` ·
-  `building-ch_bergen.png` · `building-ch_novgo.png` · `building-maltkiln.png` · `building-hopyard.png` ·
-  `building-cooperage.png` · `building-customs.png` · `building-gauger.png` · `building-workshop.png` ·
-  `building-salthouse.png` · `building-smokekiln.png` · `building-partigyle.png`.
-  (The building card BACK is the generic Wild + ★ "displaced" face — no art.)
+- Buildings (2″ building CARDS, full-bleed art behind the name/effect/cost): `building-<key>.png`,
+  one per `BUILDINGS` key in `components.js` — the live v4.6 set (every design owns its file since
+  the 2026-08-02 art pass): `building-granary.png` · `building-scriveners.png` · `building-missionq.png` ·
+  `building-hiringpost.png` · `building-almoner.png` · `building-racking.png` · `building-assay.png` ·
+  `building-abbey.png` · `building-hopex.png` · `building-maltkiln.png` · `building-tollhouse.png` ·
+  `building-bonded.png` · `building-cooperage.png` · `building-customs.png` · `building-richberth.png` ·
+  `building-victual.png` · `building-exchange.png` · `building-capstan.png`.
+  (Legacy files from retired tiles — staple/burgomstr/connoiss/hansediet/festkeller/reliquary/ch_*/
+  gauger/workshop/salthouse/smokekiln/partigyle/hopyard — stay in `art/` as an archive; nothing
+  references them. The building card BACK is the generic Wild + ★ "displaced" face — no art.)
+- Specialists (2″ SQUARE cards, object-shot art): `improve-<slug>.jpg` — the canonical spec + the
+  per-tile briefs live in `components.js` (the IMAGE-GENERATION SPEC comment + each row's `art:`).
+  Live v4.6 set: cellarman · grain-factor · hop-gardener · stevedore · braumeister · guild-scholar ·
+  innkeeper · supercargo · chronicler · alderman · town-crier · chandler · shipwright (all own files
+  since 2026-08-02; coppersmith/lagerkeeper/quaymaster stay as legacy).
 
 > **Model note (current):** generated with Google's **`gemini-3.1-flash-image`** (nano-banana class) via the
 > Generative Language API — `:generateContent` with `responseModalities:["IMAGE"]` + `imageConfig.aspectRatio:"1:1"`.
@@ -134,24 +141,53 @@ buildings = the brewer's craft & harbor works.* The subjects used:
 - **building-smokekiln.png** — a smokehouse / smoke kiln, a dark timber curing hut with drifting blue woodsmoke from its roof.
 - **building-partigyle.png** — a brewing tun-house, a large wooden mash/lauter tun splitting the runnings, wort flowing into vessels.
 
-### v3.0-A — the five NEW works (queued; printables2 rides interim stand-ins until these exist)
-- **building-pilot.png** — a harbour pilot's house on a headland, a small lookout tower with a signal beacon and a pilot gig boat below. *(stand-in: ship-cog.png)*
-- **building-staithe.png** — an open riverside staithe, casks racked in the open air on a timber wharf, sun and drying breeze. *(stand-in: building-festkeller.png)*
-- **building-ropewalk.png** — a long low ropewalk shed, great coils of hemp rope and a rope-twisting frame stretching into perspective. *(stand-in: ship-back.png)*
-- **building-grainex.png** — a grain exchange hall, an open arcaded corn market with sacks, scoops and a balance scale. *(stand-in: building-gauger.png)*
-- **building-missionq.png** — a small seamen's mission chapel on the quay, a lantern over its door, nets and a moored skiff beside. *(stand-in: building-reliquary.png)*
+### v3.0-A — the five works (historical): only Mission Quay survived into the v4 deck
+Pilot's House / Open Staithe / Rope Walk / Grain Exchange were cut with the v4.0 streamline —
+their briefs are retired with them. **building-missionq.png LANDED 2026-08-02:** a small seamen's
+mission chapel on the quay, a lantern over its door, nets and a moored skiff beside.
 
-### v4.5b — the five DICE-PASS buildings + the Braumeister (queued; the kit rides interim stand-ins until these exist)
-- **building-racking.png** — a racking hall: two casks side-by-side on a stillage with a siphon hose running between them, beer mid-transfer. *(stand-in: building-partigyle.png)*
-- **building-assay.png** — an assay house: a clerk's bench with a balance scale, a gauging rod and a sample tankard of beer under a wax seal. *(stand-in: building-connoiss.png)*
-- **building-hopex.png** — a hop exchange: an arcaded market stall heaped with sacks of green hop cones, a hanging steelyard scale. *(stand-in: building-hopyard.png)*
-- **building-tollhouse.png** — a tollhouse on the quay: a striped toll bar over the cartway, a stamped ledger and a strongbox at the window. *(stand-in: building-burgomstr.png)*
-- **building-bonded.png** — a bonded store: a stone-vaulted warehouse with casks behind an iron grille, a great padlock and a customs seal on the door. *(stand-in: building-salthouse.png)*
-- **improve-braumeister.jpg** — a long wooden mash paddle over a gleaming copper kettle (the specialist object-shot grammar: one tool, beige field). *(stand-in: a copy of improve-coppersmith.jpg, shipped as improve-braumeister.jpg)*
-- **building-abbey.png** — an abbey cellar (v45d): a candle-lit stone undercroft beneath a monastery, great tuns racked in the vaults, a monk with a lantern. *(stand-in: building-festkeller.png)*
+### v4.5b — the dice-pass buildings + the Braumeister — ALL LANDED 2026-08-02 (stand-ins retired)
+- **building-racking.png** — a racking hall (interior): two casks side-by-side on a stillage with a siphon hose running between them, beer mid-transfer.
+- **building-assay.png** — an assay office (interior): a clerk's bench with a balance scale, a gauging rod and a sample tankard of beer by candlelight.
+- **building-hopex.png** — a hop exchange: an arcaded market stall heaped with sacks of green hop cones, a hanging steelyard scale.
+- **building-tollhouse.png** — a tollhouse on the quay: a striped toll bar over the cartway, a strongbox at the window.
+- **building-bonded.png** — a bonded store: a stone-vaulted warehouse with casks behind an iron grille, a great padlock and a customs seal on the door.
+- **building-abbey.png** — an abbey cellar (interior, v45d): a candle-lit stone undercroft, great tuns racked in the vaults, a lantern glowing on a barrel.
+- **improve-braumeister.jpg** — a long wooden mash paddle over a gleaming copper kettle (the specialist object-shot grammar: one tool, beige field).
+
+### v4.6 "Guildbook" — the art pass of 2026-08-02 (all landed; generated with gen.py, this doc's model note)
+*The v4.0 core actions (their stand-ins retired):*
+- **building-granary.png** — a tall timber-framed granary barn, a raised loading door with a hoist beam, grain sacks stacked before it. *(shipped with a `trimframe` mat crop)*
+- **building-scriveners.png** — a narrow stepped-gable brick scrivener's hall, one tall leaded window glowing, an arched oak door.
+- **building-hiringpost.png** — a small open-sided timber muster hall on the wharf, rope coils and tool racks under its deep eaves.
+
+*The v4.6 deck additions:*
+- **building-victual.png** — a victualling yard: a wide-doored timber provisioning store by the quay, stacked crates, netted sacks and water casks.
+- **building-exchange.png** — a merchants' exchange: an arcaded stone hall, open ground-floor loggia, a small bell turret. *(band-cropped — see the letterbox gotcha)*
+- **building-capstan.png** — a great wooden warping capstan alone on a stone quay, hawser wound on its drum, push-bars fitted, bollards and harbor water behind. *(band-cropped)*
+
+*The guild-eight specialists (object shots — the components.js spec; one tool on the flat beige field):*
+- **improve-guild-scholar.jpg** — a bundle of sealed recipe scrolls tied with cord, red wax seals.
+- **improve-innkeeper.jpg** — a foaming glazed stoneware ale jug with a pewter lid.
+- **improve-supercargo.jpg** — a rolled ship's manifest with a hanging wax seal across a rope-bound sea chest.
+- **improve-chronicler.jpg** — an open leather-bound chronicle with a goose-quill pen (pages blank — the no-text rule).
+- **improve-alderman.jpg** — a gilded chain of office with a medallion on a crimson velvet cushion.
+- **improve-town-crier.jpg** — a polished brass handbell with a turned dark-wood handle.
+- **improve-chandler.jpg** — a hand-held balance: a sack of barley on one pan, green hop cones on the other (the G↔H swap in one read).
+- **improve-shipwright.jpg** — a shipwright's adze resting across a curved oak ship-rib timber.
+
+> **The LETTERBOX gotcha (learned this pass — add it to the mat gotchas above):** wide-scene and
+> interior subjects intermittently come back as a 16:9 painting inside flat dark bars (top/bottom) —
+> a failure the cream-mat classifier cannot see. Append *"the painting fills the WHOLE square — no
+> letterbox, no flat solid bands at the top or bottom edge; paint the sky (or ceiling) to the very
+> top edge and the ground (or floor) to the very bottom edge"*, and compose interiors vertically.
+> If bands persist, the deterministic fix: detect flat rows (per-row stddev &lt; ~6 on grayscale),
+> crop the bands, center square-crop, upscale to 1024².
 
 ## Notes
 - Keep all ten cask images **consistent** (same wharf, same angle/lighting) so the deck reads as one family —
-  only the wood/contents/mood change per beer. Same for the two ships, and for the 21 building structures.
+  only the wood/contents/mood change per beer. Same for the two ships, and for the 18 live building designs
+  (painterly single-structure portraits; the specialists are the second family — woodcut object-shots on the
+  flat beige field, spec in `components.js`).
 - If a beer's color clashes with its card tint, lean the art toward the card's color (the card's `--c`
   shows through the scrim at the edges).
