@@ -513,7 +513,12 @@ the engine; the modules return after the core settles.
    2p 14.6 avg (82% band) · 3p 14.0 (81%) · 4p 13.3 (74%) — the early "2p ~20+ rounds" watch
    was 3-game noise. The pool sweep says **12 is on the fast edge under greedy play; 13 holds
    the 12–25 band best at every count** — greedy racers under-read human pace, so the dial
-   call waits for a human table.
+   call waits for a human table. **The human table arrived (playtest #25, 2026-08-02,
+   `archive/records/PLAYTEST-25.md`): 12 rounds at exactly the sim's 3p pace** — a racing
+   seat (the Cellarmaster) nulls the "humans run longer" assumption. The felt problem is
+   **trigger CONTROL, not length**: the leader dumped pool dice via cheap bumps and slammed
+   the door 12 up while the human's engine peaked. Pool 13 buys the non-racer ~1 round
+   (~half the felt gap in #25); the deeper watch is bump-commit speed as the racer's lever.
 2. **The recipe faucet** — Bruges + the priced verbs, all at **`H` = Q−2 (v45e — Bruges pays
    too)**. Watch: does the 3 `H` Bock tariff kill the rush or the style? And hops now carry
    three sinks (recipes · Hop Exchange · Abbey) — re-read whether slack flips to binding. If
