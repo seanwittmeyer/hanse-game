@@ -520,8 +520,12 @@ the engine; the modules return after the core settles.
    the door 12 up while the human's engine peaked. Pool 13 buys the non-racer ~1 round
    (~half the felt gap in #25); the deeper watch is bump-commit speed as the racer's lever.
    **#26 (4p all-AI, `PLAYTEST-26.md`) repeats the signature:** 11 rounds — UNDER the band
-   floor — with the Cellarmaster again choosing the horn. Two tables, one pattern; pool 13
-   is now two-for-two supported (still the designer's call).
+   floor — with the Cellarmaster again choosing the horn. **#27 (3p all-AI,
+   `PLAYTEST-27.md`) completes the picture: 15 rounds, in-band, and a GUILDMASTER raced
+   the clock and won** while the Cellarmaster died holding 11 goods and 2 immature casks.
+   Three tables read 12 / 11 / 15: the clock is fast **when someone races it** — trigger
+   control is a strategy, tier- and count-agnostic, and the engine-vs-conversion tension
+   is real. Pool 13 addresses the fast tail only (still the designer's call).
 2. **The recipe faucet** — Bruges + the priced verbs, all at **`H` = Q−2 (v45e — Bruges pays
    too)**. Watch: does the 3 `H` Bock tariff kill the rush or the style? And hops now carry
    three sinks (recipes · Hop Exchange · Abbey) — re-read whether slack flips to binding. If

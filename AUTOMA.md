@@ -1,12 +1,15 @@
 # Automa / AI Opponent — Plan & Status
 
-> **WATCH (2026-08-02, off playtest #26 — 4p all-AI):** the **Guildmaster's v45f 'quality'
-> persona STARVES at 4p** — a GM seat managed 3 brews / 3 deliveries in 11 rounds while the
-> Cellarmasters ran 6–8 brews and finished 1-2 (69/45 vs 34/22; the pooled CM>GM 66.7% reads
-> far wider at this count). Also: `aiSpecVal` needs a probe re-teach — the
-> SPECIALIST-VALUE-STUDY (same day) shows it over-seats the Cellarman and badly under-seats
-> Supercargo/Grain Factor/Shipwright vs their measured lifts. Both AI-only; neither gates a
-> rules read.
+> **WATCH (2026-08-02, off playtests #26/#27):** the **Guildmaster's v45f 'quality' persona
+> starves at 4p ONLY** — #26 (4p): a GM seat managed 3 brews / 3 deliveries in 11 rounds,
+> CMs finished 1-2 (69/45 vs 34/22); **#27 (3p): the GM pair went 1-2 (64/50 vs 44)**, the
+> quality line (Braumeister drip → Mumme → Novgorod premium → a 2-die Bergen majority)
+> winning exactly as the persona intends — and the GM, not the CM, raced the clock. So the
+> watch narrows: re-read the persona/budgets **at 4p** before trusting GM seats there.
+> Also: `aiSpecVal` needs a probe re-teach — the SPECIALIST-VALUE-STUDY shows it over-seats
+> the Cellarman and badly under-seats Supercargo/Grain Factor/Shipwright vs their measured
+> lifts. And the CM's #27 loss shape (9 brews, 6 conversions, 11 goods hoarded at the horn)
+> is a low-priority tuning glance. All AI-only; none gates a rules read.
 
 > **v4.6 "Guildbook" (2026-08-02): every tier re-taught to the roster program.** The greedy
 > skeleton gains `aiSpecVal` (one specialist-value table for the hire verb, the Hiring Post
