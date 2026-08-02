@@ -91,6 +91,10 @@ const BUILDINGS=[
   {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 berth'},
   {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'Gate −1'},
   {k:'richberth', nm:'Rich Berth',        verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'May sail 1 short'},
+  // v4.6 "Guildbook" — the box prints 20 tiles; SETUP DEALS 17 (≥1 Kiln + ≥1 Mission Quay guaranteed)
+  {k:'victual',   nm:'Victualling Yard',  verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, eff:'Loading: the bonus fires TWICE · sails with its hull'},
+  {k:'exchange',  nm:'Merchants’ Exchange',verb:'transform',tgt:'act',  ic:'arrow-right-left', n:1, g:2, act:'exchange', eff:'Cycle 1 open lading'},
+  {k:'capstan',   nm:'Warping Capstan',   verb:'transform', tgt:'act',  ic:'ship-wheel',   n:1, g:2, act:'capstan', eff:'Move 1 empty hull'},
 ];
 // ---- LADINGS (v4.5b) — the kontor ORDER row: 15 tiles ⚙, a face-up row of 3. Deliver a cask
 // that matches the tile (its kontor + the die minimum, or the named beer) and CLAIM it — the
@@ -140,6 +144,17 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:0, h:2, c:'#5b3a8e', n:3},
   {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Your ship-slot stop loads 2 casks', g:1, c:'#5b3a8e', n:3},
   {ic:'wrench',     nm:'Braumeister', art:'a long wooden mash paddle over a copper kettle', act:'Start of your turn: your ripest maturing cask ages +1', g:1, h:1, c:'#5b3a8e', n:3},   // v4.5b — the earned heir of the cut auto-age
+  // ---- v4.6 "Guildbook": the 8 GUILD designs — 1 copy each (scarce); three print SEAT GATES
+  // (the Agricola prerequisite, read off components: flipped cards · claimed tiles · parked dice).
+  // art: three ride the spare improve-*.jpg files (slug override); the rest are queued briefs.
+  {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:'Your recipes are FREE (every channel, Bruges too)', g:2, c:'#5b3a8e', n:1},
+  {ic:'bed',        nm:'Innkeeper', slug:'lagerkeeper', art:'stacked casks dusted with frost and icicles (stand-in)', act:'This tile is a 4th VESSEL — a cask matures on it · gate: 3 beers brewed', g:2, c:'#5b3a8e', n:1},
+  {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'A hull sails your cask on a rival’s turn: +1'+LU('wheat','g ic')+'+1'+LU('sprout','h ic'), h:1, c:'#5b3a8e', n:1},
+  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'End: +1★ per claimed lading (max +5) · gate: a lading claimed', g:1, h:1, c:'#5b3a8e', n:1},
+  {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet board', act:'End: +2★ per kontor with 3+ parked dice', g:2, c:'#5b3a8e', n:1},
+  {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:'Your presence bumps park at FACE 2 (2★) · gate: delivered to 2 kontore', g:1, c:'#5b3a8e', n:1},
+  {ic:'arrow-right-left', nm:'Chandler', slug:'coppersmith', art:'a gleaming copper brew kettle (stand-in)', act:'Once per turn: swap 1'+LU('wheat','g ic')+' ↔ 1'+LU('sprout','h ic'), g:1, c:'#5b3a8e', n:1},
+  {ic:'hammer',     nm:'Shipwright', slug:'quaymaster', art:'a private wooden jetty with a mooring bollard (stand-in)', act:'Your commissions are FREE (the 1'+LU('wheat','g ic')+' is waived)', h:1, c:'#5b3a8e', n:1},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
@@ -214,7 +229,7 @@ function buildingBack(d){   // the FLOOR side: it only says WILD
 // as the casks/ships/buildings. Card bg = the same purple as the foot, so any html2canvas foot-edge hairline
 // is purple-on-purple.
 const IMP_FOOT='#4a3a6e';   // Specialist foot/base — PURPLE (the third tile type, v2.4.1; was Cellar-green)
-function improveTile(d){const k=slug(d.nm);
+function improveTile(d){const k=d.slug||slug(d.nm);   // v4.6: slug override — three guild tiles ride spare art as stand-ins
   return '<div class="icard" style="--c:'+IMP_FOOT+'">'
   +artLayer('improve-'+k+'.jpg')   // .jpg not .png — a flat-colour-field object shot compresses ~8x smaller as JPEG at no visible quality loss
   +'<div class="ic-top"><span class="ic-ic">'+LU(d.ic)+'</span><span class="ic-nm">'+d.nm+'</span></div>'

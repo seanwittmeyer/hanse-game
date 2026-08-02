@@ -1,6 +1,17 @@
 # The Agricola Card Study — occupations & improvements as the lens on Brewhouses' specialists & buildings
 
-> **Status: RESEARCH + PROPOSAL ONLY** (designer-commissioned 2026-08-02). Nothing in this doc
+> **Status: ADOPTED as v4.6 "Guildbook"** (designer-ruled 2026-08-02, same day — the cost
+> markup: *"Guild scholar… should [cost] 2G and make recipes free (my preference)"*). The
+> build's deltas from §5's draft numbers, all cost-pass driven: Guild Scholar 2G/recipes-FREE
+> (the ruling) · Innkeeper's gate 2→**3 distinct brewed** (the warm-start Gruit made 2 a
+> formality) · Supercargo per-cask → **flat 1G1H per qualifying sail** (off-turn resolution
+> must be choice-free) · Shipwright "+1 good" → **"commissions are free"** (same net, one
+> sentence, no prompt). Chronicler kept capped +5 (the ladPts leash). Deck dials as proposed:
+> core five × max(2,n−1) + guild eight ×1; buildings print 20, deal 17. The record entry:
+> `DESIGN.md` §9 v4.6.
+
+> *(The original commission below — kept as written.)* **Status: RESEARCH + PROPOSAL ONLY**
+> (designer-commissioned 2026-08-02). Nothing in this doc
 > is adopted; no rules, engine, component or page change rides it. The ask, verbatim: *"we have
 > an interesting system right now where specialists and buildings are playing the same role of
 > adding the variety the game shines with. It reminds me of how the cards in agricola work in a

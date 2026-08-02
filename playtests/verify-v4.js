@@ -199,6 +199,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 // ---- 10c. v4.4c: the SPECIALIST display refills at the END of the turn, not on the take ----
 (function(){var p=fresh(3);stops();   // 3p → n−1 = 2 copies/type: the deck holds spares past the display of 4
   p.grain=9;p.hops=9;p.upgrades=[];p.sslots=2;
+  S.impDisplay=['cellar','crane','granary','hopgarden'];   // v4.6: force an ungated display (guild tiles may print seat gates)
   var k=S.impDisplay[0];var n0=S.impDisplay.length;var deck0=S.impDeck.length;
   UI.hire={returnTo:'stops'};UI.sub='hire';hirePick(k);
   ok('a taken specialist leaves a GAP — no mid-turn refill', S.impDisplay.length===n0-1&&S.impDeck.length===deck0);
@@ -297,17 +298,17 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   var totalShips=S.shipDeck.length+S.shipDisplay.length+SLOTS.filter(function(s){return S.slots[s.id];}).length;
   ok('24 hulls in the box', totalShips===24);
   var bcount=S.buildDeck.length+S.buildDisplay.length+SLOTS.filter(function(s){return S.buildings[s.id];}).length;
-  ok('17 buildings in the box', bcount===17, 'got '+bcount);
+  ok('17 buildings DEALT into the game (of the 20 printed — v4.6)', bcount===17, 'got '+bcount);
   ok('two neutral buildings seeded', SLOTS.filter(function(s){return S.buildings[s.id];}).length===2);
   ok('a warm-start ship is a Hulk → Bruges', SLOTS.some(function(s){var t=S.slots[s.id];return t&&t.ship==='hulk'&&t.dest==='bruges';}));
   ok('every house opens with a Ready Gruit (die 1) + ALL 3 vessels + 2 seats (v45h)', S.players.every(function(p){return p.vessels[0]&&p.vessels[0].die===1&&p.vslots===3&&p.vessels.length===3&&p.sslots===2;}));
-  ok('specialist deck = max(2,n−1) copies of the 5 designs (3p → 10)', S.impDeck.length+S.impDisplay.length===10);
+  ok('specialist deck = 5 core × max(2,n−1) + 8 guild ×1 (3p → 18, v4.6)', S.impDeck.length+S.impDisplay.length===18);
   ok('12 tally dice per house (v4.5)', S.players.every(function(p){return p.presPool===12;}));
   ok('the lading row opens at 3 (deck 12 behind it)', S.ladingRow.length===3&&S.ladingDeck.length===12);
   S=freshState(2,['P1','P2']);
-  ok('2p specialist deck holds 2 copies of each design (10)', S.impDeck.length+S.impDisplay.length===10);
+  ok('2p specialist deck: 5×2 + 8 guild singles (18)', S.impDeck.length+S.impDisplay.length===18);
   S=freshState(4,['P1','P2','P3','P4']);
-  ok('4p specialist deck holds 3 copies of each design (15)', S.impDeck.length+S.impDisplay.length===15);
+  ok('4p specialist deck: 5×3 + 8 guild singles (23)', S.impDeck.length+S.impDisplay.length===23);
 })();
 
 // ---- 18. SPECIALISTS: 2 seats, no duplicates, earned free ----
@@ -445,7 +446,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   enterAbbey('stops');
   ok('under 3H → the Abbey refuses', UI.sub!=='abbey');
   ok('every building fee prints in GRAIN only (v45d)', Object.keys(BUILDINGS).every(function(k){var f=BUILDINGS[k].fee;return !f||!f.h;}));
-  ok('the deck still boxes 17 tiles', Object.keys(BUILDINGS).reduce(function(s,k){return s+BUILDINGS[k].qty;},0)===17);
+  ok('the box prints 20 building tiles (v4.6 — setup deals 17)', Object.keys(BUILDINGS).reduce(function(s,k){return s+BUILDINGS[k].qty;},0)===20);
 })();
 (function(){var p=fresh();stops();p.ai={tier:'journeyman'};
   // v45e note: Bergen dest — its specialist prize is goods-neutral, isolating the Store's payout
@@ -490,6 +491,116 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   var sh2=ship('s5','cog','bergen',[{owner:0,style:'keut',q:3,die:3,act:'load'},{owner:1,style:'hopped',q:2,die:2,act:'source'}]);
   UI.pendingSpec=[];sailShip('s5',0);
   ok('…and load order decides who gets it (the first cask’s owner)', (UI.pendingSpec||[]).length===1&&UI.pendingSpec[0].pid===0);
+})();
+
+// ---- 24. v4.6 "Guildbook": the guild specialists — waivers · gates · collectors ----
+(function(){var p=fresh();stops();
+  p.upgrades=['scholar'];p.sslots=2;S.exports=['broyhan','keut','mumme'];p.recipes=['gruit','hopped'];
+  p.grain=0;p.hops=0;
+  UI.sub='recipegain';UI.rgain={returnTo:'stops'};recipeGainPick('mumme');
+  ok('the Guild Scholar takes a recipe with NO fee at a wharf channel', p.recipes.indexOf('mumme')>=0&&p.hops===0&&p.grain===0);
+  p.ai={tier:'journeyman'};
+  UI.pendingRecipe=[{pid:0,dest:'bruges'}];afterSail('stops');
+  ok('…and his Bruges prize is free too (the waiver rides every channel)', p.recipes.length===4&&p.hops===0&&p.grain===0);
+  p.ai=null;
+})();
+(function(){var p=fresh();stops();
+  p.upgrades=['shipwright'];p.sslots=2;p.grain=0;
+  S.shipDisplay=[{ship:'cog',dest:'bruges'}];S.shipDeck=[];
+  UI.comm={returnTo:'stops',idx:null};UI.sub='commission';commPick(0);commPlace('s6');
+  ok('the Shipwright commissions with 0 goods (the 1G waived)', S.slots.s6&&S.slots.s6.ship==='cog'&&p.grain===0);
+})();
+(function(){var p=fresh();stops();
+  ok('the Town Crier is gated until 2 kontore show your dice', !specGate(p,'towncrier'));
+  p.delivered.push({style:'gruit',q:1,dest:'bruges',val:1});p.delivered.push({style:'hopped',q:2,dest:'london',val:2});
+  ok('…and opens once the mats show two ports', specGate(p,'towncrier'));
+  p.upgrades=['towncrier'];p.sslots=2;
+  var b0=p.bank,pool0=p.presPool;
+  addPresence(p,'bruges',1);
+  ok('a Crier bump parks at FACE 2 — banks 2★, one die, one clock beat', p.bank===b0+2&&p.presPool===pool0-1&&p.presBonus.bruges===1);
+})();
+(function(){var p=fresh();stops();var q=S.players[1];
+  q.upgrades=['supercargo'];q.sslots=2;
+  var g0=q.grain,h0=q.hops;
+  S.active=0;
+  ship('s1','skute','bruges',[]);S.slots.s1.load.push({owner:1,style:'gruit',q:1,die:1,act:'source'});
+  sailShip('s1',0);
+  ok('the Supercargo collects 1G1H when a RIVAL sails his cask', q.grain===g0+1&&q.hops===h0+1);
+  var g1=q.grain,h1=q.hops;S.active=1;
+  ship('s2','skute','bruges',[]);S.slots.s2.load.push({owner:1,style:'gruit',q:1,die:1,act:'source'});
+  sailShip('s2',1);
+  ok('…but never on his own turn', q.grain===g1&&q.hops===h1);
+  S.active=0;UI.pendingRecipe=[];UI.pendingActs=[];
+})();
+(function(){var p=fresh();stops();
+  ok('the Innkeeper is gated until 3 distinct beers are brewed', !specGate(p,'innkeeper'));
+  p.brewed={gruit:1,hopped:1,keut:1};
+  ok('…and opens at the 3rd flip (the old seat-2 rhythm)', specGate(p,'innkeeper'));
+  grantUpgrade(p,'innkeeper');
+  ok('seating him opens a 4th cellar (vessels 4 · a cask may mature on the tile)', p.vessels.length===4&&p.vslots===4&&openVessel(p)>=0);
+})();
+(function(){var p=fresh();stops();
+  p.upgrades=['chronicler','alderman'];p.sslots=2;
+  p.ladings=[{dest:'bruges',min:3,pts:2},{dest:null,min:6,pts:3}];
+  p.presBonus.bruges=3;p.presBonus.bergen=2;
+  var sc=scorePlayer(p);
+  ok('the Chronicler (+1★/lading) and Alderman (+2★/kontor≥3) score the guild line', sc.guild===4&&sc.total===sc.deliv+sc.bank+sc.maj+sc.flight+sc.guild);
+  p.ladings=[1,2,3,4,5,6,7].map(function(){return {dest:null,min:6,pts:3};});
+  ok('the Chronicler caps at +5', scorePlayer(p).guild===7);
+  ok('the Chronicler is gated behind a first claim', !specGate({ladings:[]},'chronicler')&&specGate({ladings:[{}]},'chronicler'));
+})();
+(function(){var p=fresh();stops();
+  p.upgrades=['chandler'];p.sslots=2;p.grain=3;p.hops=2;p.chUsed=false;
+  chandlerSwap('gh');
+  ok('the Chandler swaps 1G → 1H', p.grain===2&&p.hops===3&&p.chUsed===true);
+  chandlerSwap('hg');
+  ok('…once per turn only (the stamp holds)', p.grain===2&&p.hops===3);
+})();
+// ---- 25. v4.6 the new tiles: Victualling Yard · Merchants' Exchange · Warping Capstan ----
+(function(){var p=fresh();stops();
+  S.buildings.s1={b:'victual'};var sh=ship('s1','cog','bruges');
+  p.vessels[0]={style:'gruit',q:1,die:1,act:'source'};
+  UI.pendingActs=[];
+  UI.load={ships:['s1'],returnTo:'stops',loadsLeft:1,cask:0};loadOnto('s1');
+  ok('the Victualling Yard doubles the load bonus (one fires, its twin queued)', UI.sub==='source'&&(UI.pendingActs||[]).length===1);
+  ok('no die lift from the Yard (bonus doubling, not a kiln)', sh.load[0].die===1);
+  srcTake(2,0);
+  ok('the second firing follows', UI.sub==='source'&&(UI.pendingActs||[]).length===0);
+  srcTake(2,0);
+  p.vessels[0]={style:'gruit',q:1,die:1,act:'source'};
+  UI.pendingActs=[];
+  UI.load={ships:['s1'],returnTo:'stops',loadsLeft:1,cask:0};loadOnto('s1');
+  ok('the full hull sails and the Yard sails with it (boxed)', !S.slots.s1&&S.buildings.s1===null);
+  stops();
+})();
+(function(){var p=fresh();stops();
+  S.ladingRow=[{dest:'bruges',min:3,pts:2},{dest:'london',min:4,pts:3}];
+  S.ladingDeck=[{dest:'bergen',min:5,pts:4}];
+  enterExchange('stops');
+  ok('the Merchants’ Exchange opens on a live row + deck', UI.sub==='exchange');
+  exchangePick(0);
+  ok('the cycled order goes UNDER the deck; its replacement posts at once',
+    S.ladingRow.length===2&&S.ladingRow[1].dest==='bergen'&&S.ladingDeck.length===1&&S.ladingDeck[0].dest==='bruges');
+  S.ladingDeck=[];
+  enterExchange('stops');
+  ok('a spent deck → the Exchange refuses', UI.sub!=='exchange');
+})();
+(function(){var p=fresh();stops();
+  ship('s3','cog','london');ship('s4','skute','bruges',[{owner:0,style:'gruit',q:1,die:1,act:'source'}]);
+  enterCapstan('stops');
+  ok('the Warping Capstan opens (an empty hull + open slots)', UI.sub==='capstan');
+  capPick('s4');
+  ok('a LOADED hull cannot be picked', UI.cap.sid==null);
+  capPick('s3');capPlace('s7');
+  ok('the empty hull warps s3 → s7 (the geometry is authorable)', !S.slots.s3&&S.slots.s7&&S.slots.s7.dest==='london');
+})();
+(function(){
+  for(var t=0;t<20;t++){S=freshState(2,['P1','P2']);
+    var inGame=S.buildDeck.concat(S.buildDisplay);SLOTS.forEach(function(s){if(S.buildings[s.id])inGame.push(S.buildings[s.id].b);});
+    if(inGame.length!==17){ok('setup deals 17 of the 20 (run '+t+')',false,'got '+inGame.length);return;}
+    if(inGame.indexOf('maltkiln')<0||inGame.indexOf('missionq')<0){ok('the Kiln + Mission Quay deal guarantee (run '+t+')',false,inGame.join(','));return;}}
+  ok('setup deals 17 of the 20 — ≥1 Kiln + ≥1 Mission Quay in every deal (20 runs)', true);
+  ok('the guild-tile fees stay grain-only (the v45d audit holds)', ['victual','exchange','capstan'].every(function(k){var f=BUILDINGS[k].fee;return f&&f.g&&!f.h;}));
 })();
 
 // ---- 23. v45f: the Guildmaster's standing 'quality' persona (the designer's line) ----

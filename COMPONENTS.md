@@ -1,4 +1,13 @@
-# Brewhouses of the Hanse — Components (v4.5b “Open Orders”)
+# Brewhouses of the Hanse — Components (v4.6 “Guildbook”)
+
+> **v4.6 (designer-ruled 2026-08-02 — off the `archive/records/AGRICOLA-STUDY.md` markup):**
+> the Agricola program. **Into the box:** 8 **GUILD specialist** designs at 1 tile each
+> (Guild Scholar · Innkeeper · Supercargo · Chronicler · Alderman · Town Crier · Chandler ·
+> Shipwright — three print **SEAT-GATES**; two print **end-game ★** lines) · 3 building
+> designs (**Victualling Yard** — the second EPHEMERAL · **Merchants’ Exchange** · **Warping
+> Capstan**). The building box now prints **20 tiles — SETUP DEALS 17** ⚙ (≥1 Kiln + ≥1
+> Mission Quay guaranteed; 3 sit out each game). Specialist decks: the core 5 keep
+> max(2, n−1) copies; the guild 8 are singles.
 
 > **v4.5b (designer-ruled 2026-07-31 — off gatekeeper review #2 + playtest #24):** the #24
 > program. **Out of the box:** the commission ★ mint (rules-side) · automatic aging
@@ -115,7 +124,7 @@ once** — **no ★ (v4.5b)**: the hull + the instant load are the whole reward.
 
 Per port: 6 each (Bruges sk1/c3/h2 · London sk2/c2/h2 · Bergen sk1/c3/h2 · Novgorod sk2/c2/h2 ⚙).
 
-## 6. Building tiles (17 ⚙ — ONE green family, 2.5×1.32″)
+## 6. Building tiles (print 20 ⚙ · DEAL 17 each game — v4.6 · ONE green family, 2.5×1.32″)
 
 **No owner, ever** — every building serves whoever activates it; the placer banks **+3★** ⚙
 (setup’s two neutral seeds score nobody). Placement is always display → slot, at once; overbuild
@@ -123,7 +132,7 @@ for ONE payment ⚙ (v4.2c: a paid fee covers the ground — the `1 G` rent only
 **London**, or via the *Gain 1 building* bonus at the **tile’s printed fee** ⚙ (a chipless
 tile is free — the tier reads straight off the component). Using a building never costs a fee.
 
-The v4.5b **dice pass** + the v45d **power ladder** (designer-ruled 2026-08-01): 9 of the 17 tiles touch a die; **fees print in grain only** — hops are spent USING the power tiles (Hop Exchange ≤2 `H`/use · Abbey Cellar 3 `H`/use), never buying them.
+The v4.5b **dice pass** + the v45d **power ladder** (designer-ruled 2026-08-01): 9 die-touching designs; **fees print in grain only** — hops are spent USING the power tiles (Hop Exchange ≤2 `H`/use · Abbey Cellar 3 `H`/use), never buying them. **v4.6: shuffle all 20, deal 17 into the game** (≥1 Malt Kiln + ≥1 Mission Quay guaranteed; the other 3 stay boxed) — every wharf a different economy.
 
 | Building | Qty ⚙ | Effect | Wharf fee ⚙ (chip; — = free) |
 |---|---|---|---|
@@ -142,21 +151,34 @@ The v4.5b **dice pass** + the v45d **power ladder** (designer-ruled 2026-08-01):
 | Cooperage | 1 | ship here: **+1 berth** | 2 `G` |
 | Customs House | 1 | ship here **boards one gate lower** | 2 `G` |
 | Rich Berth | 1 | hull here may **sail one berth short** (min 1) | 2 `G` |
+| **Victualling Yard** *(v4.6 · ephemeral)* | 1 | a cask loading here: **its load bonus fires TWICE**; when this hull sails the Yard **sails with it** (boxed) | 2 `G` |
+| **Merchants’ Exchange** *(v4.6)* | 1 | slot stop: **cycle 1 open lading** to its deck’s bottom — the replacement posts at once | 2 `G` |
+| **Warping Capstan** *(v4.6)* | 1 | slot stop: **move one EMPTY hull** to any shipless slot | 2 `G` |
 
-## 7. Specialist tiles (5 designs · max(2, n−1) copies each (v4.5b) · 2×2″ purple)
+## 7. Specialist tiles (13 designs — v4.6 · the core 5 × max(2, n−1) + the guild 8 × 1 · 2×2″ purple)
 
 Free as **Bergen’s prize** — v4.5b: **at most ONE per ship sailed** (load order decides); the
 Hiring Post / *Gain 1 specialist* bonus pay each tile’s **printed wharf fee** ⚙. **Two seats**
-per house; never two of a kind. A taken tile’s gap refills from the deck at the **end of the
-turn** (v4.4c — ships/buildings refill at once). Print 3 copies per design (covers 4p).
+per house; never two of a kind. **Three guild tiles print a SEAT-GATE** ⚙ — the condition
+must read true off your components before the tile may be seated (any channel). A taken
+tile’s gap refills from the deck at the **end of the turn** (v4.4c — ships/buildings refill
+at once). Print: core five ×3 (covers 4p) · guild eight ×1.
 
-| Specialist | Effect | Wharf fee ⚙ (v4.2c) |
-|---|---|---|
-| Cellarman | your dice **start one higher** (a Q3+ export never starts Ready — v45g) | 2 `H` |
-| Grain Factor | gain grain: **+1 extra** (any faucet) | 1 `G` |
-| Hop Gardener | gain hops: **+1 extra** (any faucet) | 2 `H` |
-| Stevedore | your ship-slot stop loads **2 casks** | 1 `G` |
-| **Braumeister** *(v4.5b)* | start of your turn: **your ripest maturing cask ages +1** | 1 `G` 1 `H` |
+| Specialist | Effect | Wharf fee ⚙ | Seat-gate ⚙ |
+|---|---|---|---|
+| Cellarman | your dice **start one higher** (a Q3+ export never starts Ready — v45g) | 2 `H` | — |
+| Grain Factor | gain grain: **+1 extra** (any faucet) | 1 `G` | — |
+| Hop Gardener | gain hops: **+1 extra** (any faucet) | 2 `H` | — |
+| Stevedore | your ship-slot stop loads **2 casks** | 1 `G` | — |
+| **Braumeister** *(v4.5b)* | start of your turn: **your ripest maturing cask ages +1** | 1 `G` 1 `H` | — |
+| **Guild Scholar** *(v4.6)* | **your recipes are FREE** — the `H` = Q−2 fee waived at every channel, Bruges included | 2 `G` | — |
+| **Innkeeper** *(v4.6)* | **this tile is a 4th VESSEL** — one cask matures on the card | 2 `G` | 3 distinct beers brewed |
+| **Supercargo** *(v4.6)* | a hull sails **your** cask on a **rival’s** turn: gain **1 `G` 1 `H`** | 1 `H` | — |
+| **Chronicler** *(v4.6)* | game end: **+1★ per claimed lading (max +5)** | 1 `G` 1 `H` | a lading claimed |
+| **Alderman** *(v4.6)* | game end: **+2★ per kontor with 3+ parked dice** | 2 `G` | — |
+| **Town Crier** *(v4.6)* | your presence bumps park at **FACE 2** (2★ each) | 1 `G` | delivered to 2 kontore |
+| **Chandler** *(v4.6)* | once per turn: **swap 1 `G` ↔ 1 `H`** with the stores | 1 `G` | — |
+| **Shipwright** *(v4.6)* | **your commissions are free** (the 1 `G` waived) | 1 `H` | — |
 
 ## 7b. Lading tiles (15 ⚙ · row of 3 · 2×0.9″ — v4.5b, the order layer)
 
@@ -181,7 +203,8 @@ flipped cards are the Flight ladder (v45h: the covers are off — no unlock duty
 ## 9. Setup (summary — RULES.md §1)
 
 3G 2H each · warm Ready Gruit (die 1) in vessel 1 (all 3 vessels + 2 seats open — v45h) · 12
-dice · displays: ships 4 / buildings 4 / specialists 4 / **ladings 3** · wharf seeds: Hulk→Bruges + 1 ship + 2 neutral buildings ·
+dice · **building deck: deal 17 of the 20 printed** (≥1 Kiln + ≥1 Mission Quay — v4.6) ·
+displays: ships 4 / buildings 4 / specialists 4 / **ladings 3** · wharf seeds: Hulk→Bruges + 1 ship + 2 neutral buildings ·
 worker placed free · first player fixed.
 
 ## 10. Box delta vs v3.4
@@ -211,6 +234,10 @@ in, one Assay out · Hop Exchange the pay-hops slot action) · **recipe cards** 
 formula **`H` = Q−2**, paid at every channel — the Bruges mat drops “free”, v45e) · the
 **Cellarman** tile (a Q3+ export never starts Ready — v45g) · **player boards** (all 3
 vessels + both seats print OPEN — the covers leave the board, v45h) · the **player aid**.
+**v4.6 delta:** **+8 guild specialist tiles** (1 each; three print seat-gates, two print
+end-game ★ lines) · **+3 building tiles** (Victualling Yard · Merchants’ Exchange · Warping
+Capstan — the building box prints 20, **setup deals 17** ⚙) · player-aid reprint (the Guild
+end-score line · the deal-17 setup step).
 
 ## 11. Known gaps ⚙ (the watch list)
 

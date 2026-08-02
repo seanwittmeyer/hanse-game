@@ -29,21 +29,35 @@ if(__JIT>0){['journeyman','trader'].forEach(function(t){AI_TIERS[t].noise=__JIT;
 // own functions (function declarations are reassignable) so the counts are ground truth,
 // not policy inference. Reset per game; averaged in the summary.
 var __U=null;
-function __uReset(){__U={ladings:0,rack:0,assayUp:0,assayDown:0,toll:0,hopex:0,abbey:0,kilnLift:0,bondedSail:0,bmSeat:0,bmTick:0,mq:0};}
+function __uReset(){__U={ladings:0,rack:0,assayUp:0,assayDown:0,toll:0,hopex:0,abbey:0,kilnLift:0,bondedSail:0,bmSeat:0,bmTick:0,mq:0,
+  exch:0,cap:0,victual:0,chandler:0,scargo:0,coopSail:0,customsBoard:0,rbShort:0};}   // v4.6 + the ship-shapers, instrumented at last (the AGRICOLA-STUDY B4 item)
 var __uOn=function(){return __U&&!aiSimulating;};   // never count MC-playout echoes
 var __claimLading=claimLading;claimLading=function(lp,idx){if(__uOn())__U.ladings++;return __claimLading(lp,idx);};
 var __rackPick=rackPick;rackPick=function(vi){var had=!!UI.rack;var r=__rackPick(vi);if(__uOn()&&had&&!UI.rack)__U.rack++;return r;};
 var __assayPick=assayPick;assayPick=function(vi,dir){var had=!!UI.assay;var r=__assayPick(vi,dir);if(__uOn()&&had&&!UI.assay)__U[(dir===-1)?'assayDown':'assayUp']++;return r;};
 var __loadCommit=loadCommit;loadCommit=function(shipSlot,vi,useOpt){var p=cur();var bk=bKeyAt(shipSlot);
   var o0=p?(p.bankO||0):0;var c=p&&p.vessels[vi];var lift=(bk==='maltkiln'||bk==='bonded')&&c&&c.die<6&&caskReady(c);
+  var sh0=S.slots[shipSlot];var below=sh0&&c&&bk==='customs'&&boardDie(c,shipSlot)<DEST[sh0.dest].gate;   // boarded only through the Customs relief
   var r=__loadCommit(shipSlot,vi,useOpt);
-  if(__uOn()&&p&&c&&!p.vessels[vi]){if(lift)__U.kilnLift++;if((p.bankO||0)>o0)__U.toll++;}return r;};
+  if(__uOn()&&p&&c&&!p.vessels[vi]){if(lift)__U.kilnLift++;if((p.bankO||0)>o0)__U.toll++;
+    if(bk==='victual')__U.victual++;if(below)__U.customsBoard++;}return r;};
 var __hopexAllot=hopexAllot;hopexAllot=function(vi){var p=cur();var h0=p?p.hops:0;var r=__hopexAllot(vi);
   if(__uOn()&&p&&p.hops<h0)__U.hopex++;return r;};   // v45d: each paid hop at the Exchange
 var __abbeyGo=abbeyGo;abbeyGo=function(pay3){var p=cur();var h0=p?p.hops:0;var r=__abbeyGo(pay3);
   if(__uOn()&&p&&p.hops<h0)__U.abbey++;return r;};   // v45d: a paid Abbey firing
 var __sailShip=sailShip;sailShip=function(slot,creditId){var bonded=bKeyAt(slot)==='bonded';
-  var r=__sailShip(slot,creditId);if(__uOn()&&bonded)__U.bondedSail++;return r;};
+  var t0=S.slots[slot];var over=t0&&(t0.load||[]).length>SHIP_CAP[t0.ship];   // a Cooperage berth actually used
+  var short=t0&&bKeyAt(slot)==='richberth'&&(t0.load||[]).length<SHIP_CAP[t0.ship];   // a Rich Berth short sail
+  var sc=0;if(t0){var seen={};(t0.load||[]).forEach(function(L){var o=S.players[L.owner];
+    if(o&&o.id!==S.active&&hasUpgrade(o,'supercargo')&&!seen[o.id]){seen[o.id]=1;sc++;}});}
+  var r=__sailShip(slot,creditId);
+  if(__uOn()){if(bonded)__U.bondedSail++;if(over)__U.coopSail++;if(short)__U.rbShort++;__U.scargo+=sc;}return r;};
+var __exchangePick=exchangePick;exchangePick=function(i){var had=!!UI.exch;var r=__exchangePick(i);
+  if(__uOn()&&had&&!UI.exch)__U.exch++;return r;};
+var __capPlace=capPlace;capPlace=function(slot){var had=UI.cap&&UI.cap.sid!=null;var r=__capPlace(slot);
+  if(__uOn()&&had&&!UI.cap)__U.cap++;return r;};
+var __chandlerSwap=chandlerSwap;chandlerSwap=function(dir){var p=cur();var u0=p&&p.chUsed;var r=__chandlerSwap(dir);
+  if(__uOn()&&p&&!u0&&p.chUsed)__U.chandler++;return r;};
 var __grantUpgrade=grantUpgrade;grantUpgrade=function(p,k){var had=hasUpgrade(p,k);var r=__grantUpgrade(p,k);
   if(__uOn()&&k==='braumeister'&&!had&&hasUpgrade(p,k))__U.bmSeat++;return r;};
 var __bmTick=braumeisterTick;braumeisterTick=function(p){var d0=vesselDice(p);var r=__bmTick(p);
@@ -141,9 +155,11 @@ let anyErr=0;
   console.log(`per-player: brews ${fmt(avg(ok.map(r=>r.brews)))} · deliveries ${fmt(avg(ok.map(r=>r.delivs)))} · bank★ ${fmt(avg(ok.map(r=>r.builds)))}`);
   console.log(`delivery split: ${Object.keys(dd).map(k=>k+' '+pct(dd[k],dsum)).join(' · ')}`);
   { // v45c: the new-systems utilization dashboard (per-game averages)
-    const uk=['ladings','rack','assayUp','assayDown','toll','hopex','abbey','kilnLift','bondedSail','bmSeat','bmTick'];
+    const uk=['ladings','rack','assayUp','assayDown','toll','hopex','abbey','kilnLift','bondedSail','bmSeat','bmTick',
+      'exch','cap','victual','chandler','scargo','coopSail','customsBoard','rbShort'];
     const us={};uk.forEach(k=>us[k]=avg(ok.map(r=>(r.use&&r.use[k])||0)));
     console.log(`v4.5b usage/game: ladings ${fmt(us.ladings)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)}▲/${fmt(us.assayDown)}▼ · toll ${fmt(us.toll)} · hopex-pay ${fmt(us.hopex)} · abbey ${fmt(us.abbey)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);
+    console.log(`v4.6 usage/game: exchange ${fmt(us.exch)} · capstan ${fmt(us.cap)} · victual loads ${fmt(us.victual)} · chandler ${fmt(us.chandler)} · supercargo ${fmt(us.scargo)} · coop-berth sails ${fmt(us.coopSail)} · customs boards ${fmt(us.customsBoard)} · richberth short ${fmt(us.rbShort)}`);
   }
   if(PERSONAS){const pw={},pn={};
     ok.forEach(r=>{(r.personas||[]).forEach(ps=>{if(ps)pn[ps]=(pn[ps]||0)+1;});if(r.winPersona)pw[r.winPersona]=(pw[r.winPersona]||0)+1;});

@@ -1,5 +1,19 @@
 # Automa / AI Opponent — Plan & Status
 
+> **v4.6 "Guildbook" (2026-08-02): every tier re-taught to the roster program.** The greedy
+> skeleton gains `aiSpecVal` (one specialist-value table for the hire verb, the Hiring Post
+> and the Bergen prize — Innkeeper 3.4 · Scholar 2.8 + a missing-recipes kicker · Chandler
+> 2.6 · the collectors dynamic off ladings/presence ⚙), the **Scholar/Shipwright waivers**
+> flow through `recipeFeeFor`/`commCostFor` (every AI valuation and affordability check reads
+> them), `aiChandler` swaps toward the bound currency at turn start, the **Exchange** cycles
+> the lowest-value order none of its Ready casks can claim (watch: greedy tiers over-cycle —
+> ~8/game in early smoke; a robustness tic, damp the verb value if it pollutes reads), and the
+> **Capstan** warps via `aiCapPair` (empty hull my casks can serve → a lift/shaper slot). The
+> MC pair samples the new branches (`AI_MC_SUBS` + aiMCOptions: every cycle target · every
+> warp pair). Seat-gates ride `hireable` → every channel respects them for free. Gates at
+> v4.6 (light): verify 168/168 · sim 12 crash-free; the ladder/PATHWAYS re-read is queued
+> with the next full battery.
+
 > **v45f (2026-08-01, designer-ruled): the GUILDMASTER plays the designer's line.** A standing
 > **'quality' persona** ("quality early and often; maximize points per cask, but Hopped when
 > needed") rides the GM's greedy fallbacks AND its own seat inside the MC rollouts, plus a
