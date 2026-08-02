@@ -1,0 +1,18 @@
+A(cap-1)  · 2p · 300 ok · rounds 13.3 (67% band) · margin 14.3
+  bergen: sails 1.67/g · 2+same-house 0.94/g (max-house 1:0.72 2:0.87 3:0.07)
+  spec prizes: takes 2.25/g · fizzles 0.62/g (→1.2 consolation goods/g) · 2-in-one-sail 0.00/g
+  recipe prizes: takes 3.13/g · fizzles 2.25/g · 2+same-house Bruges sails 1.38/g · 2-in-one-sail 0.22/g
+  per seat: specs 1.48 · both-seats-filled 60% · total 43.6
+  delivery split: brug 41.0% · lond 21.3% · berg 29.7% · novg 8.0%
+A(cap-1)  · 3p · 300 ok · rounds 13.0 (73% band) · margin 9.9
+  bergen: sails 2.36/g · 2+same-house 0.68/g (max-house 1:1.68 2:0.66 3:0.03)
+  spec prizes: takes 3.78/g · fizzles 0.91/g (→1.8 consolation goods/g) · 2-in-one-sail 0.00/g
+  recipe prizes: takes 4.93/g · fizzles 1.77/g · 2+same-house Bruges sails 0.49/g · 2-in-one-sail 0.07/g
+  per seat: specs 1.49 · both-seats-filled 61% · total 48.6
+  delivery split: brug 35.1% · lond 23.6% · berg 28.4% · novg 12.9%
+A(cap-1)  · 4p · 300 ok · rounds 12.4 (64% band) · margin 8.4
+  bergen: sails 3.17/g · 2+same-house 0.61/g (max-house 1:2.56 2:0.60 3:0.01)
+  spec prizes: takes 4.97/g · fizzles 1.64/g (→3.3 consolation goods/g) · 2-in-one-sail 0.00/g
+  recipe prizes: takes 6.21/g · fizzles 2.44/g · 2+same-house Bruges sails 0.39/g · 2-in-one-sail 0.08/g
+  per seat: specs 1.57 · both-seats-filled 65% · total 45.5
+  delivery split: brug 34.3% · lond 23.9% · berg 28.6% · novg 13.1%

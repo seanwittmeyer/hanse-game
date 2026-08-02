@@ -513,7 +513,11 @@ the engine; the modules return after the core settles.
    thinning ~10–15% besides. If heat needs a dial it is the tiers or the throttle, never the
    mint's address.* **v4.6b widens the faucet** (every shipper seats one, not one per ship) —
    re-read Bergen's delivery share and the specialist flow rate; the throttle dial is now
-   the per-house cap.
+   the per-house cap. **The per-die A/B ran (2026-08-02, designer-called; the dial recorded
+   at v4.5b):** per-die ≈ cap-1 on every macro metric (pace/share/lanes flat; the double
+   seat lands ~1 per 3–5 games; +~1 consolation good/game) — the study and the ledger:
+   `archive/records/PRIZE-CAP-STUDY.md`, harness `playtests/prize-cap-test.js`. **Designer
+   to rule**; note Bruges/London are already per-cask — Bergen is the only capped prize.
 6. **The commission de-mint (v4.5b)** — with the ★ cut, is 1 `G` + the free load pull enough
    to keep hulls flowing at every count? (The #24 failure was the opposite — a hull flood off
    free ★.) Watch commissions/game; the dial is the cost (1 `G`) before any ★ returns.

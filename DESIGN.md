@@ -200,6 +200,12 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
 ### Parking lot — recorded for future discussion (NOT yet decided)
+- **The Bergen per-die prize (2026-08-02, designer-called A/B — NOT yet ruled):** should every
+  CASK (not every house) seat a specialist, matching Bruges/London's per-cask grammar? The
+  A/B says per-die is safe at every count (pace/share/lanes flat; the double-seat "big turn"
+  lands ~1 per 3–5 games; +~1 consolation good/game; the 2-seat ceiling contains it) — the
+  call is taste: uniform mat grammar + the fun spike vs guild-single contestation + no new
+  faucet. Study + ledger: `archive/records/PRIZE-CAP-STUDY.md`.
 - **Delivery arithmetic + rival effect + wharfage: RESOLVED (2026-07-04) → v2.3 "Privileges & Works"** (§9).
   Path C of the options exercise: value = a privilege (owner-only), transform = a work (anyone), wharfage and
   the rival-½ retired, ship-slot value buildings folded into the one demand die (max 6 on the sum). The
