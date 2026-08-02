@@ -1,3 +1,4 @@
+=== RULED OUT (designer, 2026-08-02): no swap — the decay-symmetry read (see RULES.md §Open #5). The experiment stands as the record. ===
 === benefit-swap experiment v45h — WHAT IF London and Bergen traded prizes? (majorities unchanged) ===
 === harness: playtests/swap-test.js · trader seats (no prize term — engine effects only) · 150 g/count + 200-game 4p lane oracle ===
 

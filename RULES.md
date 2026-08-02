@@ -444,7 +444,13 @@ the engine; the modules return after the core settles.
    whether +2 overshoots (the dial is the printed premium).
 4. **The +3★ build rate** — London deliveries + verbs; watch total build ★ share and overbuild
    churn (dials: fee, display width, restrict-to-full-board).
-5. **Bergen heat** — specialist prize + the 9/5/2 anchor (dial: tiers or the prize).
+5. **Bergen heat** — specialist prize + the 9/5/2 anchor (dial: tiers or the prize). *The
+   London/Bergen benefit SWAP is ruled OUT (designer, 2026-08-02): each port pairs a durable
+   pull with a decaying one (Bergen: enduring majority + self-exhausting prize · London:
+   evergreen +3★ mint + modest majority) — the swap would double-magnetize Bergen and kill
+   London late, and the A/B read (`playtests/swap-test-v45h.txt`) showed the spec faucet
+   thinning ~10–15% besides. If heat needs a dial it is the tiers or the throttle, never the
+   mint's address.*
 6. **The commission de-mint (v4.5b)** — with the ★ cut, is 1 `G` + the free load pull enough
    to keep hulls flowing at every count? (The #24 failure was the opposite — a hull flood off
    free ★.) Watch commissions/game; the dial is the cost (1 `G`) before any ★ returns.
