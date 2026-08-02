@@ -1,0 +1,34 @@
+=== RULED OUT (designer, 2026-08-02): no swap — the decay-symmetry read (see RULES.md §Open #5). The experiment stands as the record. ===
+=== benefit-swap experiment v45h — WHAT IF London and Bergen traded prizes? (majorities unchanged) ===
+=== harness: playtests/swap-test.js · trader seats (no prize term — engine effects only) · 150 g/count + 200-game 4p lane oracle ===
+
+BASE · 2p · 150 ok · rounds 13.7 (64% band) · margin 14.7
+  delivery split: brug 40.6% · lond 23.8% · berg 28.5% · novg 7.1%
+  winner split:   brug 39.0% · lond 25.2% · berg 28.1% · novg 7.7%
+  per seat: total 43.0 · maj 9.4 · build★ 5.4 · lading★ 1.1 · specs 1.14
+BASE · 3p · 150 ok · rounds 13.1 (69% band) · margin 8.8
+  delivery split: brug 35.1% · lond 22.7% · berg 29.4% · novg 12.8%
+  winner split:   brug 34.1% · lond 23.3% · berg 27.9% · novg 14.8%
+  per seat: total 48.6 · maj 12.3 · build★ 5.0 · lading★ 1.5 · specs 1.11
+BASE · 4p · 150 ok · rounds 12.7 (64% band) · margin 8.4
+  delivery split: brug 34.3% · lond 23.2% · berg 29.0% · novg 13.5%
+  winner split:   brug 32.9% · lond 25.6% · berg 26.2% · novg 15.3%
+  per seat: total 45.0 · maj 9.9 · build★ 4.5 · lading★ 1.5 · specs 1.04
+
+SWAP · 2p · 150 ok · rounds 13.8 (73% band) · margin 14.5
+  delivery split: brug 39.4% · lond 22.3% · berg 27.2% · novg 11.0%
+  winner split:   brug 37.9% · lond 21.9% · berg 28.5% · novg 11.8%
+  per seat: total 47.3 · maj 10.0 · build★ 6.3 · lading★ 1.4 · specs 1.02
+SWAP · 3p · 150 ok · rounds 13.1 (67% band) · margin 10.2
+  delivery split: brug 36.4% · lond 21.1% · berg 28.4% · novg 14.1%
+  winner split:   brug 33.7% · lond 21.1% · berg 30.0% · novg 15.3%
+  per seat: total 50.3 · maj 12.5 · build★ 5.7 · lading★ 1.6 · specs 0.97
+SWAP · 4p · 150 ok · rounds 12.3 (61% band) · margin 9.2
+  delivery split: brug 33.3% · lond 22.4% · berg 30.0% · novg 14.2%
+  winner split:   brug 29.3% · lond 22.5% · berg 32.3% · novg 15.9%
+  per seat: total 47.3 · maj 10.1 · build★ 5.6 · lading★ 1.5 · specs 1.00
+
+BASE · 4p lane oracle · 200 games
+  lanes: majority 20.0% · lifter 24.0% · builder 30.0% · breadth 26.0%
+SWAP · 4p lane oracle · 200 games
+  lanes: majority 33.0% · lifter 21.5% · builder 21.0% · breadth 24.5%
