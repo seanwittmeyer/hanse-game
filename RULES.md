@@ -519,6 +519,9 @@ the engine; the modules return after the core settles.
    **trigger CONTROL, not length**: the leader dumped pool dice via cheap bumps and slammed
    the door 12 up while the human's engine peaked. Pool 13 buys the non-racer ~1 round
    (~half the felt gap in #25); the deeper watch is bump-commit speed as the racer's lever.
+   **#26 (4p all-AI, `PLAYTEST-26.md`) repeats the signature:** 11 rounds — UNDER the band
+   floor — with the Cellarmaster again choosing the horn. Two tables, one pattern; pool 13
+   is now two-for-two supported (still the designer's call).
 2. **The recipe faucet** — Bruges + the priced verbs, all at **`H` = Q−2 (v45e — Bruges pays
    too)**. Watch: does the 3 `H` Bock tariff kill the rush or the style? And hops now carry
    three sinks (recipes · Hop Exchange · Abbey) — re-read whether slack flips to binding. If

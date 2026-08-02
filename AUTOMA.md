@@ -1,5 +1,13 @@
 # Automa / AI Opponent — Plan & Status
 
+> **WATCH (2026-08-02, off playtest #26 — 4p all-AI):** the **Guildmaster's v45f 'quality'
+> persona STARVES at 4p** — a GM seat managed 3 brews / 3 deliveries in 11 rounds while the
+> Cellarmasters ran 6–8 brews and finished 1-2 (69/45 vs 34/22; the pooled CM>GM 66.7% reads
+> far wider at this count). Also: `aiSpecVal` needs a probe re-teach — the
+> SPECIALIST-VALUE-STUDY (same day) shows it over-seats the Cellarman and badly under-seats
+> Supercargo/Grain Factor/Shipwright vs their measured lifts. Both AI-only; neither gates a
+> rules read.
+
 > **v4.6 "Guildbook" (2026-08-02): every tier re-taught to the roster program.** The greedy
 > skeleton gains `aiSpecVal` (one specialist-value table for the hire verb, the Hiring Post
 > and the Bergen prize — Innkeeper 3.4 · Scholar 2.8 + a missing-recipes kicker · Chandler

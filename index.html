@@ -158,6 +158,21 @@
   .gloscard .gt{font-variant:small-caps; font-weight:bold; color:var(--red); font-size:1.02rem; line-height:1.1;}
   .gloscard .gd{font-size:.85rem; color:var(--ink2); line-height:1.4;}
   @media(max-width:620px){.glosgrid{grid-template-columns:1fr}}
+  /* ---- §19 the tile reference ---- */
+  .tref-h{font-variant:small-caps; letter-spacing:.5px; color:var(--red); margin:26px 0 4px; font-size:1.18rem;}
+  .tscroll{overflow-x:auto; -webkit-overflow-scrolling:touch; margin:10px 0 4px;}
+  table.tref{border-collapse:collapse; width:100%; font-size:.86rem; min-width:660px;}
+  .tref th{background:var(--ink); color:var(--parch); text-align:left; padding:6px 9px; font-size:.74rem; letter-spacing:.5px; text-transform:uppercase; white-space:nowrap;}
+  .tref td{border-bottom:1px solid var(--line); padding:6px 9px; vertical-align:middle; background:#fdf6e6;}
+  .tref tr:nth-child(odd) td{background:#f6ecd6;}
+  .tref td.cnt{font-weight:bold; white-space:nowrap;}
+  .tref td.tcell{white-space:nowrap;}
+  .tprev{display:inline-block; overflow:hidden; border-radius:4px; box-shadow:0 1px 4px rgba(0,0,0,.35); cursor:zoom-in; line-height:0; touch-action:manipulation; vertical-align:middle; margin:1px 3px 1px 0;}
+  .tprev-in{transform-origin:top left; pointer-events:none;}
+  .tlb{position:fixed; inset:0; z-index:99; display:none; background:rgba(24,16,8,.85); cursor:zoom-out; align-items:center; justify-content:center; flex-direction:column; gap:14px; padding:16px;}
+  .tlb.open{display:flex;}
+  .tlb-in{line-height:0; filter:drop-shadow(0 8px 30px rgba(0,0,0,.6)); overflow:hidden;}
+  .tlb-hint{color:var(--parch); font-size:.8rem; opacity:.75; letter-spacing:1px;}
 </style>
 </head>
 <body>
@@ -179,6 +194,7 @@
   <a href="#shipping">Destinations</a>
   <a href="#scoring">Scoring</a>
   <a href="#actionref">Action Ref</a>
+  <a href="#tiles">Tiles</a>
   <div class="navdrop" id="navdrop">
     <button class="navdrop-btn" id="tocbtn" onclick="document.getElementById('navdrop').classList.toggle('open')">📖 <span class="cur" id="curSec">Contents</span> ▾</button>
     <div class="navdrop-menu" id="tocmenu">
@@ -200,6 +216,7 @@
       <a href="#glossary"><span class="nm">16</span>Glossary</a>
       <a href="#actionref"><span class="nm">17</span>Action Reference</a>
       <a href="#quickref"><span class="nm">18</span>Quick Reference</a>
+      <a href="#tiles"><span class="nm">19</span>The Tile Reference</a>
     </div>
   </div>
 </nav>
@@ -472,7 +489,26 @@
   </div>
 </section>
 
+<section id="tiles">
+  <h2><span class="nm">19</span>The Tile Reference</h2>
+  <p>Every unique design in the box — the printed faces themselves, rendered live from the shared card kit (<code>components.js</code>, the same file the print kit and the app draw from). Powers, costs, counts, and the setup knobs that drive game-to-game variability, in one place. <b>Click or tap any tile to enlarge it</b>; tap anywhere to dismiss. Duplicates aren’t repeated — the <b>×&thinsp;count</b> is what the box prints.</p>
+
+  <h3 class="tref-h">Casks — the six beers</h3>
+  <p class="small">Setup deals <b>3 of the 4 exports</b> each game (Gruit + Hopped are the starters, always in) — the quality ceiling and the recipe economy shift with the deal. A cask’s <b>load bonus</b> is drawn at brew from its quality pile’s face-up top (steerable); Gruit is pinned to <i>Gain&nbsp;2&nbsp;goods</i>. The recipe fee is the formula <b>H&nbsp;=&nbsp;Q−2</b> (v45e), paid at every channel — Bruges included. Both faces shown: the <b>aging side</b> (brew cost · maturation track) and the <b>wharf side</b> (die seat · start value).</p>
+  <div class="tscroll"><table class="tref" id="trefCasks"></table></div>
+
+  <h3 class="tref-h">Specialists — 13 designs</h3>
+  <p class="small">Private purple tiles, <b>2 seats</b> per house, never two of a kind. The core five print ×3 (the deck deals <b>max(2,&nbsp;n−1)</b> copies of each); the guild eight are <b>singles</b> — scarce, first-come. Display of 4; a take’s gap refills at <b>end of turn</b> (v4.4c). Free at <b>Bergen</b> — every house with a cask aboard seats one, max 1 per house per ship (v4.6b); the Hiring Post / <i>hire</i> bonus pay the tile’s printed fee. Three guild tiles carry <b>seat-gates</b> read off your components.</p>
+  <div class="tscroll"><table class="tref" id="trefSpecs"></table></div>
+
+  <h3 class="tref-h">Buildings — 18 designs · 20 tiles</h3>
+  <p class="small">ONE green family, no owner — every building serves whoever activates it; the placer banks <b>+3★</b>. The box prints <b>20 tiles — setup deals 17</b> (≥1 Malt Kiln + ≥1 Mission Quay guaranteed; 3 sit out each game, another variability knob). Fees print in <b>grain only</b> (v45d; chipless = free); London’s prize waives the fee; <b>using</b> a building is always free. Overbuild = ONE payment (a paid fee covers the ground, else the 1&nbsp;G rent); the displaced tile is boxed. The two <b>EPHEMERAL</b> designs (Bonded Store · Victualling Yard) sail away with their hull.</p>
+  <div class="tscroll"><table class="tref" id="trefBldgs"></table></div>
+</section>
+
 </div>
+
+<div class="tlb" id="tlb"><div class="tlb-in" id="tlbIn"></div><div class="tlb-hint">tap anywhere to close</div></div>
 
 <footer>
   Brewhouses of the Hanse · rulebook &amp; components · <b>v4.6 “Guildbook”</b> · generated from <code>RULES.md</code> / <code>COMPONENTS.md</code> · all numbers are placeholders ⚙<br>
@@ -480,6 +516,7 @@
 </footer>
 
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="components.js"></script>
 <script>
 const G = '<span class="gcube" style="background:var(--grain)"></span>';
 const H = '<span class="gcube" style="background:var(--hops)"></span>';
@@ -596,6 +633,68 @@ function clearHl(){document.querySelectorAll('.hl').forEach(e=>e.classList.remov
   // click outside closes it
   document.addEventListener('click',e=>{const d=document.getElementById('navdrop'); if(d&&!d.contains(e.target))d.classList.remove('open');});
   onScroll();
+})();
+
+// ---- §19 THE TILE REFERENCE — rendered from the shared card kit (components.js = the canon faces) ----
+(function(){
+  if(!window.HC){const n=document.getElementById('tiles');if(n)n.insertAdjacentHTML('beforeend','<p class="small"><i>components.js failed to load — the tile reference needs it.</i></p>');return;}
+  const px=v=>Math.round(v*96);   // the kit sizes tiles in physical inches
+  const prev=(html,wIn,hIn,s)=>{const w=px(wIn),h=px(hIn);
+    return '<span class="tprev" data-w="'+w+'" data-h="'+h+'" style="width:'+Math.round(w*s)+'px;height:'+Math.round(h*s)+'px">'
+      +'<span class="tprev-in" style="display:inline-block;transform:scale('+s+')">'+html+'</span></span>';};
+  // ---- casks: both faces (aging side · wharf side), each enlargeable ----
+  const feeFor=nm=>{const r=HC.RECIPES.find(r=>r.nm===nm);return r&&r.buy?('fee '+(r.buy.h||0)+' H'):'starter — free';};
+  document.getElementById('trefCasks').innerHTML=
+    '<tr><th>Tile (both faces)</th><th>Beer</th><th>Q</th><th>Brew</th><th>Recipe fee</th><th>Die: start → ready</th><th>Load bonus</th><th>In box</th></tr>'
+    +HC.CASKS.filter(c=>!c.exp).map(c=>{const act=c.pin||HC.poolFor(c.q)[0];
+      const start=Math.max(1,c.q-(c.ready||0)),pool=HC.poolFor(c.q).length;
+      return '<tr>'
+      +'<td class="tcell">'+prev(HC.caskCardFront(c,act),2.5,1,.55)+prev(HC.caskCardBack(c,act),2.5,1,.55)+'</td>'
+      +'<td><b>'+c.nm+'</b></td>'
+      +'<td>'+c.q+'</td>'
+      +'<td>'+(c.g?c.g+' G':'')+(c.g&&c.h?' ':'')+(c.h?c.h+' H':'')+'</td>'
+      +'<td>'+feeFor(c.nm)+'</td>'
+      +'<td><b>'+start+'</b> → '+c.q+' ('+(c.ready||0)+' step'+((c.ready||0)===1?'':'s')+')</td>'
+      +'<td>'+(c.pin?'pinned: <b>Gain 2 goods</b>':'drawn at brew — pool of '+pool+' (Q-gated)')
+        +(c.tag?' · '+c.tag.split('<br>').join(' '):'')+'</td>'
+      +'<td class="cnt">×'+c.n+'</td></tr>';}).join('');
+  // ---- specialists ----
+  const gateOf=a=>{const m=a.match(/·\s*gate:\s*(.+)$/i);return m?m[1]:'—';};
+  const powerOf=a=>a.replace(/\s*·\s*gate:.+$/i,'');
+  document.getElementById('trefSpecs').innerHTML=
+    '<tr><th>Tile</th><th>Specialist</th><th>Fee</th><th>Copies</th><th>Seat-gate</th><th>Power</th></tr>'
+    +HC.IMPROVE.map(d=>'<tr>'
+      +'<td class="tcell">'+prev(HC.improveTile(d),2,2,.5)+'</td>'
+      +'<td><b>'+d.nm+'</b></td>'
+      +'<td>'+(((d.g?d.g+' G':'')+(d.g&&d.h?' ':'')+(d.h?d.h+' H':''))||'—')+'</td>'
+      +'<td class="cnt">'+(d.n>1?'×'+d.n+' <span class="small">core — deal max(2, n−1)</span>':'×1 <span class="small">guild single</span>')+'</td>'
+      +'<td>'+gateOf(d.act)+'</td>'
+      +'<td>'+powerOf(d.act)+'</td></tr>').join('');
+  // ---- buildings ----
+  const KIND={act:'slot-stop action',cask:'load-lift (the boarding cask)',ship:'ship-shaper'};
+  const STD={source:'Gain 2 goods',age:'Age +2',reach:'+1 presence',recipe:'Gain 1 recipe',hire:'Gain 1 specialist'};
+  document.getElementById('trefBldgs').innerHTML=
+    '<tr><th>Tile</th><th>Building</th><th>Kind</th><th>Fee</th><th>Tiles</th><th>Power</th></tr>'
+    +HC.BUILDINGS.map(d=>'<tr>'
+      +'<td class="tcell">'+prev(HC.buildingCard(d),2,2,.5)+'</td>'
+      +'<td><b>'+d.nm+'</b></td>'
+      +'<td>'+(KIND[d.tgt]||d.tgt)+'</td>'
+      +'<td>'+(d.g?d.g+' G':'free')+'</td>'
+      +'<td class="cnt">×'+d.n+'</td>'
+      +'<td>'+((d.act&&STD[d.act])||d.eff)+'</td></tr>').join('');
+  // ---- the lightbox: tap a preview to enlarge (clones the already-iconified node); tap anywhere / Esc closes ----
+  const lb=document.getElementById('tlb'),lbIn=document.getElementById('tlbIn');
+  document.querySelectorAll('#tiles .tprev').forEach(p=>{
+    p.addEventListener('click',()=>{
+      const w=+p.dataset.w,h=+p.dataset.h;
+      const s=Math.min(2.4,(window.innerWidth-48)/w,(window.innerHeight-120)/h);
+      lbIn.innerHTML='';const clone=p.firstElementChild.cloneNode(true);
+      clone.style.transform='scale('+s+')';
+      lbIn.style.width=Math.round(w*s)+'px';lbIn.style.height=Math.round(h*s)+'px';
+      lbIn.appendChild(clone);lb.classList.add('open');});
+  });
+  lb.addEventListener('click',()=>lb.classList.remove('open'));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open');});
 })();
 
 if(window.lucide)lucide.createIcons();
