@@ -1,0 +1,33 @@
+=== hanse v4.1 sim — 200 games/count · PATHWAYS (trader personas) ===
+
+== 2p · 200 ok / 0 err ==
+rounds avg 13.5 (min 7 max 25) · in 12–25 band 70.5%
+triggers: dice 97.5% · ceiling 2.5% · sailed avg 5.8
+winner total avg 52.3 · margin avg 14.4 · seat wins P1 55.0% P2 45.0%
+per-player: brews 7.5 · deliveries 6.7 · bank★ 8.3
+delivery split: bruges 39.6% · london 22.9% · bergen 28.3% · novgorod 9.3%
+v4.5b usage/game: ladings 0.8 · rack 0.1 · assay 1.2▲/0.0▼ · toll 0.1 · hopex-pay 0.6 · abbey 0.1 · kiln/bonded lift 2.4 · bonded sail-away 0.1 · braumeister 0.6 seat / 1.4 ticks
+v4.6 usage/game: exchange 1.9 · capstan 0.0 · victual loads 0.2 · chandler 0.4 · supercargo 0.0 · coop-berth sails 0.2 · customs boards 0.0 · richberth short 0.0
+PATHWAYS win-rate by lane: majority 55.0% · lifter 45.0%  (seats: 200/200)
+
+== 3p · 200 ok / 0 err ==
+rounds avg 13.2 (min 7 max 22) · in 12–25 band 72.0%
+triggers: dice 100.0% · sailed avg 8.3
+winner total avg 59.0 · margin avg 10.6 · seat wins P1 34.5% P2 33.5% P3 32.0%
+per-player: brews 6.9 · deliveries 6.3 · bank★ 8.4
+delivery split: bruges 36.8% · london 23.1% · bergen 27.7% · novgorod 12.4%
+v4.5b usage/game: ladings 1.2 · rack 0.2 · assay 1.5▲/0.0▼ · toll 0.2 · hopex-pay 1.1 · abbey 0.2 · kiln/bonded lift 5.1 · bonded sail-away 0.2 · braumeister 0.7 seat / 1.8 ticks
+v4.6 usage/game: exchange 3.1 · capstan 0.0 · victual loads 0.4 · chandler 0.6 · supercargo 0.2 · coop-berth sails 0.3 · customs boards 0.1 · richberth short 0.1
+PATHWAYS win-rate by lane: majority 34.5% · lifter 33.5% · builder 32.0%  (seats: 200/200/200)
+
+== 4p · 200 ok / 0 err ==
+rounds avg 12.7 (min 5 max 25) · in 12–25 band 67.0%
+triggers: dice 99.0% · ceiling 1.0% · sailed avg 11.0
+winner total avg 58.2 · margin avg 8.5 · seat wins P1 24.0% P2 26.0% P3 29.5% P4 20.5%
+per-player: brews 6.8 · deliveries 6.3 · bank★ 8.1
+delivery split: bruges 33.5% · london 23.5% · bergen 28.0% · novgorod 14.9%
+v4.5b usage/game: ladings 1.7 · rack 0.4 · assay 2.5▲/0.0▼ · toll 0.1 · hopex-pay 1.4 · abbey 0.3 · kiln/bonded lift 7.9 · bonded sail-away 0.2 · braumeister 0.9 seat / 2.2 ticks
+v4.6 usage/game: exchange 4.5 · capstan 0.1 · victual loads 0.4 · chandler 0.6 · supercargo 0.3 · coop-berth sails 0.4 · customs boards 0.1 · richberth short 0.1
+PATHWAYS win-rate by lane: majority 24.0% · lifter 26.0% · builder 29.5% · breadth 20.5%  (seats: 200/200/200/200)
+
+GATE: 0 crashes / 0 deadlocks.

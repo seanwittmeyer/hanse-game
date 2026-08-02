@@ -482,15 +482,18 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   S.players.forEach(function(q){q.ai=null;});
 })();
 
-// ---- 22. v4.5b BERGEN: at most ONE specialist per ship sailed ----
+// ---- 22. v4.6b BERGEN: every shipper seats ONE specialist (cap 1 per house per ship) ----
 (function(){var p=fresh();stops();p.ai=null;
   var sh=ship('s4','cog','bergen',[{owner:0,style:'keut',q:3,die:3,act:'load'},{owner:0,style:'hopped',q:2,die:2,act:'source'}]);
   UI.pendingSpec=[];sailShip('s4',0);
-  ok('two casks, one Bergen prize (≤1 specialist per ship)', (UI.pendingSpec||[]).length===1);
-  var q=S.players[1];
+  ok('two casks, one owner → ONE Bergen prize (cap 1 per house per ship)', (UI.pendingSpec||[]).length===1&&UI.pendingSpec[0].pid===0);
   var sh2=ship('s5','cog','bergen',[{owner:0,style:'keut',q:3,die:3,act:'load'},{owner:1,style:'hopped',q:2,die:2,act:'source'}]);
   UI.pendingSpec=[];sailShip('s5',0);
-  ok('…and load order decides who gets it (the first cask’s owner)', (UI.pendingSpec||[]).length===1&&UI.pendingSpec[0].pid===0);
+  ok('mixed load → EVERY house with a cask aboard gets a prize (v4.6b)', (UI.pendingSpec||[]).length===2);
+  ok('…queued in load order (pick order = boarding order)', (UI.pendingSpec||[]).length===2&&UI.pendingSpec[0].pid===0&&UI.pendingSpec[1].pid===1);
+  var sh3=ship('s7','hulk','bergen',[{owner:1,style:'keut',q:3,die:3,act:'load'},{owner:0,style:'gruit',q:1,die:1,act:'source'},{owner:1,style:'hopped',q:2,die:2,act:'source'}]);
+  UI.pendingSpec=[];sailShip('s7',0);
+  ok('a 3-cask hulk (2 of one house) → exactly 2 prizes, first pick to the first boarder', (UI.pendingSpec||[]).length===2&&UI.pendingSpec[0].pid===1&&UI.pendingSpec[1].pid===0);
 })();
 
 // ---- 24. v4.6 "Guildbook": the guild specialists — waivers · gates · collectors ----

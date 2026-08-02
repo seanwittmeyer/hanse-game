@@ -138,7 +138,7 @@ const LADINGS=[
 //   lagerkeeper    → stacked casks dusted with frost and icicles
 //   quaymaster     → a private wooden jetty with a rope-wound mooring bollard
 // ============================================================================
-const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize — v4.5b: at most ONE per ship sailed · the Hiring Post · the 'Gain 1 specialist' load bonus) — never bought · deck of max(2,n−1)/type (v4.5b) · 2 SEATS per house (both open from the start — v45h)
+const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize — v4.6b: every house with a cask aboard seats one, max 1 per house per ship · the Hiring Post · the 'Gain 1 specialist' load bonus) — never bought · deck of max(2,n−1)/type (v4.5b) · 2 SEATS per house (both open from the start — v45h)
   {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Dice start +1 (Q3+ never starts Ready)', g:0, h:2, c:'#5b3a8e', n:3},
   {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:1, c:'#5b3a8e', n:3},
   {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:0, h:2, c:'#5b3a8e', n:3},

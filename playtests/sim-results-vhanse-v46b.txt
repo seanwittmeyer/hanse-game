@@ -1,0 +1,30 @@
+=== hanse v4.1 sim — 500 games/count · tier journeyman ===
+
+== 2p · 500 ok / 0 err ==
+rounds avg 13.6 (min 6 max 25) · in 12–25 band 66.6%
+triggers: dice 98.8% · ceiling 1.2% · sailed avg 5.5
+winner total avg 51.3 · margin avg 14.5 · seat wins P1 49.2% P2 50.8%
+per-player: brews 7.2 · deliveries 6.4 · bank★ 8.9
+delivery split: bruges 42.1% · london 21.9% · bergen 25.1% · novgorod 10.9%
+v4.5b usage/game: ladings 0.9 · rack 0.1 · assay 1.1▲/0.0▼ · toll 0.1 · hopex-pay 0.6 · abbey 0.1 · kiln/bonded lift 3.0 · bonded sail-away 0.1 · braumeister 0.5 seat / 1.3 ticks
+v4.6 usage/game: exchange 1.5 · capstan 0.0 · victual loads 0.2 · chandler 0.2 · supercargo 0.1 · coop-berth sails 0.1 · customs boards 0.1 · richberth short 0.1
+
+== 3p · 500 ok / 0 err ==
+rounds avg 12.5 (min 6 max 25) · in 12–25 band 58.4%
+triggers: dice 99.2% · ceiling 0.8% · sailed avg 8.0
+winner total avg 56.0 · margin avg 10.3 · seat wins P1 28.0% P2 30.8% P3 41.2%
+per-player: brews 6.8 · deliveries 6.2 · bank★ 8.4
+delivery split: bruges 37.6% · london 23.5% · bergen 25.9% · novgorod 13.0%
+v4.5b usage/game: ladings 1.3 · rack 0.2 · assay 1.9▲/0.0▼ · toll 0.1 · hopex-pay 1.3 · abbey 0.2 · kiln/bonded lift 4.8 · bonded sail-away 0.2 · braumeister 0.7 seat / 1.7 ticks
+v4.6 usage/game: exchange 3.2 · capstan 0.0 · victual loads 0.3 · chandler 0.5 · supercargo 0.2 · coop-berth sails 0.3 · customs boards 0.1 · richberth short 0.1
+
+== 4p · 500 ok / 0 err ==
+rounds avg 11.9 (min 6 max 25) · in 12–25 band 55.8%
+triggers: dice 99.8% · ceiling 0.2% · sailed avg 10.9
+winner total avg 56.7 · margin avg 9.9 · seat wins P1 17.0% P2 27.4% P3 31.4% P4 24.2%
+per-player: brews 6.6 · deliveries 6.1 · bank★ 8.4
+delivery split: bruges 33.8% · london 24.9% · bergen 27.4% · novgorod 14.0%
+v4.5b usage/game: ladings 1.8 · rack 0.3 · assay 3.2▲/0.0▼ · toll 0.1 · hopex-pay 1.3 · abbey 0.2 · kiln/bonded lift 7.9 · bonded sail-away 0.2 · braumeister 1.0 seat / 2.2 ticks
+v4.6 usage/game: exchange 4.1 · capstan 0.0 · victual loads 0.5 · chandler 0.5 · supercargo 0.2 · coop-berth sails 0.4 · customs boards 0.1 · richberth short 0.1
+
+GATE: 0 crashes / 0 deadlocks.

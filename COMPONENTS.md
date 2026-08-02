@@ -1,5 +1,10 @@
 # Brewhouses of the Hanse — Components (v4.6 “Guildbook”)
 
+> **v4.6b (designer-ruled 2026-08-02):** the **Bergen mat line is REPRINTED** — the v4.5b
+> “≤1 specialist per ship” was a misread. The mat now reads: **“every house with a cask
+> aboard seats a specialist — max 1 per house per ship”** (pick order = load order). No
+> counts change.
+
 > **v4.6 (designer-ruled 2026-08-02 — off the `archive/records/AGRICOLA-STUDY.md` markup):**
 > the Agricola program. **Into the box:** 8 **GUILD specialist** designs at 1 tile each
 > (Guild Scholar · Innkeeper · Supercargo · Chronicler · Alderman · Town Crier · Chandler ·
@@ -157,7 +162,8 @@ The v4.5b **dice pass** + the v45d **power ladder** (designer-ruled 2026-08-01):
 
 ## 7. Specialist tiles (13 designs — v4.6 · the core 5 × max(2, n−1) + the guild 8 × 1 · 2×2″ purple)
 
-Free as **Bergen’s prize** — v4.5b: **at most ONE per ship sailed** (load order decides); the
+Free as **Bergen’s prize** — v4.6b: **every house with a cask aboard seats ONE** (max 1 per
+house per ship; pick order = load order); the
 Hiring Post / *Gain 1 specialist* bonus pay each tile’s **printed wharf fee** ⚙. **Two seats**
 per house; never two of a kind. **Three guild tiles print a SEAT-GATE** ⚙ — the condition
 must read true off your components before the tile may be seated (any channel). A taken
@@ -238,6 +244,9 @@ vessels + both seats print OPEN — the covers leave the board, v45h) · the **p
 end-game ★ lines) · **+3 building tiles** (Victualling Yard · Merchants’ Exchange · Warping
 Capstan — the building box prints 20, **setup deals 17** ⚙) · player-aid reprint (the Guild
 end-score line · the deal-17 setup step).
+**v4.6b delta:** **Bergen mat reprint** — the prize line corrected to “every house with a
+cask aboard seats a specialist — max 1 per house per ship” (the v4.5b “≤1 per ship” was a
+misread) · player-aid reprint (the Bergen prize row). No counts change.
 
 ## 11. Known gaps ⚙ (the watch list)
 
