@@ -1,5 +1,10 @@
 # Brewhouses of the Hanse — Turn & Round Rules (v4.6 “Guildbook”)
 
+> **v4.6d “Longshore” (designer-ruled 2026-08-02).** The **Stevedore loads 2 in EVERY load
+> flow** — the ship-slot stop (as before), the **commission’s maiden load**, and the *Load*
+> bonus alike (“more powerful the other way” — it was slot-only). A Stevedore commission can
+> fill a Cog outright and put 2 of 3 on a Hulk.
+
 > **v4.6c “Living Line” (designer-ruled 2026-08-02, off live play turn 8).** **The line is
 > read LIVE — “the line can evolve as you take your turn.”** A hull **commissioned** or
 > **warped** onto a slot of your ACTIVE line mid-turn — or a **building raised** there —
@@ -56,7 +61,7 @@
 > tiles (a kontor + a die minimum or a named beer → printed **2–5★**); delivering a
 > qualifying cask **claims one** (one per cask; the ★ bank at once); the row refills at the
 > **end of the turn**. The row makes every kontor’s delivery value a **variable economy** —
-> read it before you sail. The live build is `play.html` (**KEY `hanse-v46c`**; beneath the v4.6c/b letters and v4.6 sit the 2026-08-01 letters, designer-ruled: **v45h** — the floor covers are OFF for now: all 3 vessels + both seats open from the start (the Flight keeps its ladder, loses its unlock duty) · **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
+> read it before you sail. The live build is `play.html` (**KEY `hanse-v46d`**; beneath the v4.6d/c/b letters and v4.6 sit the 2026-08-01 letters, designer-ruled: **v45h** — the floor covers are OFF for now: all 3 vessels + both seats open from the start (the Flight keeps its ladder, loses its unlock duty) · **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
 
 > **v4.5 “Empty Tray” (designer-ruled 2026-07-31 — off human playtest #24).** Two changes.
 > **(1) The end trigger is the EMPTY TRAY:** the first house to **commit its last tally die**
@@ -319,7 +324,7 @@ and read LIVE (v4.6c): a hull or building landing on a line slot mid-turn opens 
   hull’s gate** (after this slot’s lifts — Kiln/Bonded Store; Customs lowers the
   gate; the Tollhouse may stamp the die down for **+3★**, v45d), seat it in the lowest berth (the die
   rides the tile), and **fire the cask’s printed load bonus** (§6b). The freed vessel is open
-  again. *(The Stevedore sets out **2** casks on your ship-slot stop. The **commission**
+  again. *(The Stevedore loads **2** in EVERY load flow — v4.6d. The **commission**
   includes one such load onto its new hull — §4C.)*
 - **A ship SAILS the moment it is full** — a **Skute sails on its first load.** Each cask aboard
   **delivers in load order**: bank ★ = its die, park the die at the kontor, resolve the port’s
@@ -418,7 +423,8 @@ the turn (v4.4c; ships and buildings refill at once):**
   export never starts Ready, v45g; a Bock starts at 3, a Broyhan at 2).
 - **Grain Factor** (fee `1G`) — whenever you gain grain (any faucet): **+1 `G`**.
 - **Hop Gardener** (fee `2H`) — whenever you gain hops (any faucet): **+1 `H`**.
-- **Stevedore** (fee `1G`) — your ship-slot stop loads **2 casks** (each fires its bonus).
+- **Stevedore** (fee `1G`) — **whenever you load, you may load 2 casks** (the slot stop, the
+  commission’s maiden load, and the *Load* bonus alike — v4.6d; each cask fires its bonus).
 - **Braumeister** (fee `1G` `1H`, v4.5b) — **at the start of your turn, your ripest maturing
   cask ages +1** (the die closest to Ready; ties go to the lowest vessel). The earned heir of
   the cut auto-age.
@@ -560,7 +566,10 @@ the engine; the modules return after the core settles.
    (gatekeeper #5 — a free commission must not paper over a structural trap); **hops relief**
    (Chandler + Scholar land before the flow-probe re-read — re-baseline it); the greedy AI
    **over-cycles the Merchants’ Exchange** (~8/game in early smoke — a robustness tic, not a
-   rule problem; damp the verb value if it pollutes reads); the **deal-17-of-20** and the
+   rule problem; damp the verb value if it pollutes reads); the **specialist value study
+   ran at v4.6d** (`archive/records/SPECIALIST-VALUE-STUDY.md` — Supercargo +29 and Grain
+   Factor +23 are the pricing outliers; Innkeeper negative even free; Town Crier −5 mid;
+   dials proposed, designer to rule); the **deal-17-of-20** and the
    guild singles want a PATHWAYS + persona-duel re-read before any human table. **PATHWAYS
    re-ran at v4.6b (200/lane):** 3p builder **cooled 40.5 → 32.0** (near-flat 34.5/33.5/32.0)
    · 4p lifter **recovered 19.5 → 26.0** (24/26/29.5/20.5 — breadth's mild cold is the

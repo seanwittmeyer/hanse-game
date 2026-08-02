@@ -175,7 +175,7 @@ at once). Print: core five ×3 (covers 4p) · guild eight ×1.
 | Cellarman | your dice **start one higher** (a Q3+ export never starts Ready — v45g) | 2 `H` | — |
 | Grain Factor | gain grain: **+1 extra** (any faucet) | 1 `G` | — |
 | Hop Gardener | gain hops: **+1 extra** (any faucet) | 2 `H` | — |
-| Stevedore | your ship-slot stop loads **2 casks** | 1 `G` | — |
+| Stevedore | **whenever you load, load up to 2 casks** (slot stop · maiden load · Load bonus — v4.6d) | 1 `G` | — |
 | **Braumeister** *(v4.5b)* | start of your turn: **your ripest maturing cask ages +1** | 1 `G` 1 `H` | — |
 | **Guild Scholar** *(v4.6)* | **your recipes are FREE** — the `H` = Q−2 fee waived at every channel, Bruges included | 2 `G` | — |
 | **Innkeeper** *(v4.6)* | **this tile is a 4th VESSEL** — one cask matures on the card | 2 `G` | 3 distinct beers brewed |
@@ -249,6 +249,8 @@ cask aboard seats a specialist — max 1 per house per ship” (the v4.5b “≤
 misread) · player-aid reprint (the Bergen prize row). No counts change.
 **v4.6c delta:** player-aid reprint only — the turn step gains “the line is read LIVE: a
 hull or building landing on a line slot mid-turn opens its stop.” No components change.
+**v4.6d delta:** the **Stevedore tile reprints** — “Whenever you load, load up to 2 casks”
+(was slot-stop only). No counts change.
 
 ## 11. Known gaps ⚙ (the watch list)
 

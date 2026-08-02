@@ -152,7 +152,7 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Dice start +1 (Q3+ never starts Ready)', g:0, h:2, c:'#5b3a8e', n:3},
   {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:1, c:'#5b3a8e', n:3},
   {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:0, h:2, c:'#5b3a8e', n:3},
-  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Your ship-slot stop loads 2 casks', g:1, c:'#5b3a8e', n:3},
+  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Whenever you load, load up to 2 casks', g:1, c:'#5b3a8e', n:3},
   {ic:'wrench',     nm:'Braumeister', art:'a long wooden mash paddle over a copper kettle', act:'Start of your turn: your ripest maturing cask ages +1', g:1, h:1, c:'#5b3a8e', n:3},   // v4.5b — the earned heir of the cut auto-age
   // ---- v4.6 "Guildbook": the 8 GUILD designs — 1 copy each (scarce); three print SEAT GATES
   // (the Agricola prerequisite, read off components: flipped cards · claimed tiles · parked dice).

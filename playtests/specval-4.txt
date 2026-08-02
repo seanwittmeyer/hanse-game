@@ -1,0 +1,6 @@
+PROBE alderman · start · n=400 · P0 win 45.3% · granted 100% · P0 total 52.0 · rounds 12.8
+PROBE alderman · mid · n=400 · P0 win 42.0% · granted 86% · P0 total 52.0 · rounds 13.1
+PROBE towncrier · start · n=400 · P0 win 40.8% · granted 100% · P0 total 51.1 · rounds 13.1
+PROBE towncrier · mid · n=400 · P0 win 32.0% · granted 84% · P0 total 51.2 · rounds 13.3
+PROBE chandler · start · n=400 · P0 win 41.3% · granted 100% · P0 total 49.5 · rounds 12.7
+PROBE chandler · mid · n=400 · P0 win 43.5% · granted 86% · P0 total 51.9 · rounds 12.9

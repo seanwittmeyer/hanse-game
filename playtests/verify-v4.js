@@ -525,6 +525,29 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
     UI.stops.some(function(st){return st.kind==='load'&&st.slot==='s6';}));
 })();
 
+// ---- 26. v4.6d STEVEDORE: every load flow loads 2 (maiden load + Load bonus, not just the slot stop) ----
+(function(){var p=fresh();stops();p.ai=null;
+  p.upgrades=['crane'];p.grain=3;
+  p.vessels=[{style:'gruit',q:1,die:1,act:'source'},{style:'hopped',q:2,die:2,act:'source'},null];
+  S.shipDisplay=[{ship:'hulk','dest':'bruges'}];S.shipDeck=[];
+  UI.comm={returnTo:'stops',idx:0};commPlace('s5');
+  ok('the Stevedore’s COMMISSION maiden load offers 2 (was 1)',
+    UI.sub==='load'&&UI.load&&UI.load.loadsLeft===2);
+  loadPickCask(0);loadOnto('s5');
+  ok('…first cask boards, a second load stays open',
+    S.slots.s5.load.length===1&&UI.sub==='load'&&UI.load.loadsLeft===1);
+  loadPickCask(1);loadOnto('s5');
+  ok('…the Stevedore fills 2 of the hulk’s 3 berths at commission',
+    S.slots.s5.load.length===2);
+  var q=fresh();stops();q.ai=null;
+  q.upgrades=['crane'];
+  q.vessels=[{style:'gruit',q:1,die:1,act:'source'},null,null];
+  ship('s3','cog','bruges');
+  fireCaskAct('load','stops');
+  ok('…and the LOAD bonus offers 2 with the Stevedore',
+    UI.sub==='load'&&UI.load&&UI.load.loadsLeft===2);
+})();
+
 // ---- 24. v4.6 "Guildbook": the guild specialists — waivers · gates · collectors ----
 (function(){var p=fresh();stops();
   p.upgrades=['scholar'];p.sslots=2;S.exports=['broyhan','keut','mumme'];p.recipes=['gruit','hopped'];

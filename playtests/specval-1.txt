@@ -1,0 +1,6 @@
+PROBE cellar · start · n=400 · P0 win 50.0% · granted 100% · P0 total 52.5 · rounds 12.9
+PROBE cellar · mid · n=400 · P0 win 41.3% · granted 91% · P0 total 50.5 · rounds 12.9
+PROBE granary · start · n=400 · P0 win 60.3% · granted 100% · P0 total 54.4 · rounds 12.2
+PROBE granary · mid · n=400 · P0 win 47.5% · granted 80% · P0 total 52.6 · rounds 12.5
+PROBE hopgarden · start · n=400 · P0 win 43.0% · granted 100% · P0 total 51.9 · rounds 13.2
+PROBE hopgarden · mid · n=400 · P0 win 43.3% · granted 87% · P0 total 50.1 · rounds 13.3

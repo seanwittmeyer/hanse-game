@@ -1,0 +1,6 @@
+PROBE crane · start · n=400 · P0 win 44.0% · granted 100% · P0 total 51.1 · rounds 12.9
+PROBE crane · mid · n=400 · P0 win 36.5% · granted 88% · P0 total 51.0 · rounds 13.1
+PROBE braumeister · start · n=400 · P0 win 46.8% · granted 100% · P0 total 52.3 · rounds 12.8
+PROBE braumeister · mid · n=400 · P0 win 38.5% · granted 88% · P0 total 49.9 · rounds 12.9
+PROBE scholar · start · n=400 · P0 win 55.8% · granted 100% · P0 total 55.4 · rounds 12.9
+PROBE scholar · mid · n=400 · P0 win 39.5% · granted 85% · P0 total 51.3 · rounds 12.9
