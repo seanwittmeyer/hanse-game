@@ -106,8 +106,9 @@
 ## 4. Cask tiles (single-faced, 2.4×1″ ⚙)
 
 Each prints: the beer’s name/art · **quality Q1–Q5** · the **START-DIE value** (a printed die
-face inside the die seat) · one **load-bonus action** (assigned at brew from the pile tops —
-the printed mix per quality is the pile; the three *acquisition* bonuses read **“· its fee”**
+face inside the die seat) · one **load-bonus action** printed on the tile (the tiles stack in **six
+face-up piles, one per beer** — a brew takes your beer’s top tile, its bonus rides; every
+pile top is public — v4.7a; the printed mix per quality bounds which bonuses appear; the three *acquisition* bonuses read **“· its fee”**
 — each item’s price is printed on its own card/tile ⚙, v4.2). Shared pool, brewed never
 bought; **min 6 tiles/type** (staples deeper: Gruit 16 · Hopped 12 ⚙).
 

@@ -60,7 +60,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 // ---- 3. BREW: pays, sets the die + pile action, flips the card; the tray gates it ----
 (function(){var p=fresh();stops();
   p.grain=5;p.hops=5;p.recipes=['gruit','hopped','broyhan'];p.vessels=[null,null];p.brewed={gruit:1};
-  S.pileTop[3]='reach';
+  S.pileTop.broyhan='reach';   // v4.7a: pile tops key by BEER
   UI.brew={returnTo:'stops'};brewPick('broyhan');
   ok('brew pays the cost (1G2H)', p.grain===4&&p.hops===3);
   ok('the cask takes the pile-top action', p.vessels[0]&&p.vessels[0].act==='reach');

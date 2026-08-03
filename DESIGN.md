@@ -199,6 +199,19 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
+### v4.7a “Six Piles” (2026-08-03 — off the rulebook editorial review)
+The editor’s rubric pass (graded 76/100) surfaced one real rules hole: the cask-pile
+procedure was never written, and the engine’s one-face-up-bonus-per-QUALITY-tier could not
+be performed at a table for the two Q3 beers. Ruled: **the cask supply is six face-up
+piles, one per beer** — a brew takes that beer’s top tile, the printed bonus rides, every
+top is public (`pileTop` keys by beer; KEY `hanse-v47a`; verify 186/186). The same pass
+made the rulebook explicit where it was silent — the **bonus-after-sail** timing line (and
+Example 2 now shows the deferred beat), the **deck-guarantee swap procedure**, goods
+**overflow is lost**, dry decks **shrink their displays**, Ships return to the deck
+**bottom** — plus a first-game variant (guild singles out), a live-line example, the
+em-dash/jargon prose pass over §§4–8, and the last three term residues (market→display,
+placed→built, the Cellarman “lift”→“higher start”).
+
 ### 2026-08-03 — the Term Registry pass (language, not rules)
 The fifteen-item terminology review, designer-ruled: **player** (~~house~~) · **Kontor /
 Kontore** locked (~~port~~, ~~destination~~ banned — "destination" reserved for a future
