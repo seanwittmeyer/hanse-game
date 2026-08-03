@@ -1251,6 +1251,11 @@ function buildPages(){
   const wpg=pages[pages.length-1];
   const wimps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wimps.push(improveTile(d));});
   packRegion(pages,wpg,'imp',wimps,8.2,0.7,21.9,8.1,'Improvements',famPages);
+  // the CONTRACT strips ride S1 too (designer, 2026-08-03) — the open band under the Specialists
+  const wlds=(MODE==='proof'?LADINGS.slice(0,3):LADINGS).map(d=>ladingTile(d));
+  const impCols=Math.max(1,Math.floor((21.9-8.2)/(SIZE.imp[0]*SCALE)));
+  const ldY=+(0.7+Math.ceil(wimps.length/impCols)*(SIZE.imp[1]*SCALE)+0.18).toFixed(3);
+  packRegion(pages,wpg,'ld',wlds,8.2,ldY,21.9,8.1,'Ladings',famPages);
   supplyBoardSheet(pages);   // the Supply & Tracks board — its own sheet
   // (v4.0: the Trade Roads board is TABLED with the expansions — olboard() stays for its return)
   // (player brewery boards are generated LAST — at the bottom of the page — see below)
@@ -1294,9 +1299,7 @@ function buildPages(){
   BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)
     bldItems.push({fam:'Buildings',html:buildingCard(d)});});   // v4.0 SINGLE-FACED: no owner, no WILD flip — displaced tiles are boxed
   packSpaced(pages,'bits','Building tiles — SINGLE-FACED, one green family (print 20 · SETUP DEALS 17/game, v4.6 · 22″ plotter · 1.5mm bleed · cuts 3mm apart · v45d power ladder: fees in grain only)',[{kind:'bld',items:bldItems}],famPages);
-  // --- CONTRACT TILES → single-sided strips: the Kontor bonus row ---
-  const ldItems=(MODE==='proof'?LADINGS.slice(0,3):LADINGS).map(d=>({fam:'Ladings',html:ladingTile(d)}));
-  packSpaced(pages,'bits','Contract tiles — the Kontor bonuses (15 · single-sided): deliver a qualifying cask at the named Kontor, claim the tile — its ★ score at once; the row of 3 refills at end of turn',[{kind:'ld',items:ldItems}],famPages);
+  // (the CONTRACT strips print on S1 — the Wharf sheet's open right band, above)
   // (2026-07-19: the UNLOCK-COVER sheet left the kit — sourced, any opaque square, like the tally dice.
   //  v3.4c: the owner frames are RETIRED — little house tokens mark building ownership; store-bought.)
   // --- TOKENS → their own single-sided trimmed sheet (moved off the Wharf sheet, 2026-07-14) ---
