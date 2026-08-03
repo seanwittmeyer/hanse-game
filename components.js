@@ -23,7 +23,7 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   // stays the verb via search) · the numbered QUALITY casks (side-lying, wax-sealed, numeral overlaid)
   // · die-q = the parked-die value (die + ?) · sail = the ship with its forward arrow
   'quality-1':'quality-1','quality-2':'quality-2','quality-3':'quality-3','quality-4':'quality-4',
-  'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail',
+  'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail','age-plus2':'age-plus2',
   // die MODIFIER marks (round 4): the die with its lift/drop printed on it — drops in red
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
 const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
@@ -41,7 +41,7 @@ const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the
   // chosen item's OWN printed price (recipe card / specialist tile / building tile; chipless
   // buildings are free). The kontor prizes stay free; using a building never adds a fee.
   {k:'source',  ai:'coins',         act:'Gain 2 goods',             q:2},
-  {k:'age',     ai:'hourglass',     act:'Age +2',                   q:2},
+  {k:'age',     ai:'age-plus2',     act:'Age +2',                   q:2},
   {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},
   {k:'reach',   ai:'map-pin',       act:'+1 presence',              q:2},
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe',          q:2},
@@ -111,8 +111,8 @@ const BUILDINGS=[
   {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, effIc:'die-plus1',  eff:'on load'},
   {k:'tollhouse', nm:'Tollhouse',         verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, effIc:'die-minus1', eff:'on load → +3★'},
   {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, effIc:'die-plus1',  eff:'on load · sails with the Ship · players aboard gain 2 goods'},
-  {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 berth'},
-  {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'Gate −1'},
+  {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 ship capacity'},
+  {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'−1 quality required'},
   {k:'richberth', nm:'Rich Berth',        verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'May sail 1 short'},
   // v4.6 "Guildbook" — the box prints 20 tiles; SETUP DEALS 17 (≥1 Kiln + ≥1 Mission Quay guaranteed)
   {k:'victual',   nm:'Victualling Yard',  verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, eff:'Loading: the bonus fires TWICE · sails with the Ship'},
@@ -226,7 +226,7 @@ const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(50,79,42,.74)';   //
 const BLD_FOOT='rgba(58,51,66,.7)';   // legacy fallback   // building card foot/base — dark purple-grey (#3a3342) at 70% opacity so the illustration bleeds ~30% through the foot. Same on front & back.
 // v3.4a at 66% height — the SAME anatomy the 2in card earned (icon+name header · art window ·
 // the colour foot: the effect big, then the target chip + cost row), compressed, never flattened.
-const STD_ACT={source:{ai:'coins',t:'Gain 2 goods'},age:{ai:'hourglass',t:'Age +2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};
+const STD_ACT={source:{ai:'coins',t:'Gain 2 goods'},age:{ai:'age-plus2',t:'Age +2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};
 function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   // a STANDARD verb prints the same icon chip the casks print — one action grammar across the kit;
   // only the non-standard powers carry text (terse: the rulebook holds the full language)
@@ -237,8 +237,9 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   const eff=lead?'<span class="ac">'+lead+'</span><span class="bt-etext">'+(sa?sa.t:d.eff)+'</span>':d.eff;
   return '<div class="btile btW" style="--c:'+foot+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
-  +'<div class="bt-top"><span class="bt-ic">'+LUX(d.ic)+'</span><span class="bt-nm'+(d.nm.length>18?' xlong':d.nm.length>15?' long':'')+'">'+d.nm+'</span></div>'
-  +'<div class="bt-foot"><span class="bt-eff'+(lead?' bt-act':'')+'">'+eff+'</span><span class="bt-cost">'+cost(d.g,d.h)+'</span></div>'
+  +'<div class="bt-top"><span class="bt-ic">'+LUX(d.ic)+'</span><span class="bt-nm'+(d.nm.length>18?' xlong':d.nm.length>15?' long':'')+'">'+d.nm+'</span>'
+    +((d.g||d.h)?'<span class="bt-cost">'+cost(d.g,d.h)+'</span>':'')+'</div>'   // the fee rides the TOP-RIGHT corner (round 6) — the effect gets the whole foot
+  +'<div class="bt-foot"><span class="bt-eff'+(lead?' bt-act':'')+'">'+eff+'</span></div>'
   +'</div>';}
 // LADING TILE (v4.5b) — a 2×0.9in order strip in the kontor's colour: WHERE (the kontor) ·
 // WHAT (the die minimum, or the named beer) · the ★ reward. Any-kontor rides parchment-grey.
@@ -628,7 +629,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
    the text + cost BOTTOM-ALIGN beside it and long text wraps UPWARD (flex-end) */
 +'.btile .bt-foot{align-items:flex-end}'
 +'.btile .bt-eff.bt-act{align-items:flex-end}'
-+'.btile .ac{width:.5in;height:.5in;margin:0 -.03in -.02in -.04in}'
++'.btile .ac{width:.5in;height:.5in;margin:0 .02in -.02in -.04in}'
 +'.btile .ac svg,.btile .ac .ic{width:.5in;height:.5in}'
 +'.btile .bt-etext{padding-bottom:.035in;min-width:0}'
 +'.btile .bt-cost{margin-bottom:.02in}'

@@ -327,8 +327,8 @@ swings; the dealt subset makes every wharf a different economy.**
 | **Malt Kiln** | on load here | the boarding cask’s **die +1** (cap 6) | 2 | 2 `G` |
 | **Tollhouse** | on load here | the boarding cask **may turn its die −1** (never below the Kontor’s minimum): **score +3★ at once** (net +2, any quality) | 1 | 1 `G` |
 | **Bonded Store** | on load here / at sail | the boarding die **+1** (cap 6); **when this Ship sails, the Store sails with it** (returned to the box) and **every player with a cask aboard gains 2 goods** | 1 | 2 `G` |
-| **Cooperage** | passive | the Ship here carries **+1 berth** | 1 | 2 `G` |
-| **Customs House** | passive | the Ship here **boards at minimum −1** (sells at the die) | 1 | 2 `G` |
+| **Cooperage** | passive | the Ship here: **+1 ship capacity** | 1 | 2 `G` |
+| **Customs House** | passive | the Ship here: **−1 quality required** to board (sells at the die) | 1 | 2 `G` |
 | **Rich Berth** | passive | the Ship here may **sail one berth short** (min 1) | 1 | 2 `G` |
 | **Victualling Yard** *(v4.6 · ephemeral)* | on load here / at sail | the boarding cask’s **load bonus fires TWICE**; **when this Ship sails, the Yard sails with it** (boxed) | 1 | 2 `G` |
 | **Merchants’ Exchange** *(v4.6)* | resolve its slot | **cycle ONE open Contract** to the bottom of its deck — the replacement is revealed **at once** (the end-of-turn refill is untouched) | 1 | 2 `G` |

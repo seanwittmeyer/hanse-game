@@ -161,8 +161,8 @@ The v4.5b **dice pass** + the v45d **power ladder** (designer-ruled 2026-08-01):
 | **Malt Kiln** | 2 | a cask loading here: **die +1** (cap 6) | 2 `G` |
 | **Tollhouse** | 1 | a cask loading here **may turn its die −1** (never below the Kontor’s minimum): **score +3★ at once** | 1 `G` |
 | **Bonded Store** | 1 | a cask loading here: **die +1** (cap 6); **when this Ship sails the Store sails with it** (boxed) — every player with a cask aboard gains 2 goods | 2 `G` |
-| Cooperage | 1 | the Ship here: **+1 berth** | 2 `G` |
-| Customs House | 1 | the Ship here **boards at minimum −1** | 2 `G` |
+| Cooperage | 1 | the Ship here: **+1 ship capacity** | 2 `G` |
+| Customs House | 1 | the Ship here: **−1 quality required** to board | 2 `G` |
 | Rich Berth | 1 | the Ship here may **sail one berth short** (min 1) | 2 `G` |
 | **Victualling Yard** *(v4.6 · ephemeral)* | 1 | a cask loading here: **its load bonus fires TWICE**; when this Ship sails the Yard **sails with it** (boxed) | 2 `G` |
 | **Merchants’ Exchange** *(v4.6)* | 1 | resolve its slot: **cycle 1 open Contract** to its deck’s bottom — the replacement posts at once | 2 `G` |
