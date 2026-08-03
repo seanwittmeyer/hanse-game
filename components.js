@@ -23,7 +23,7 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   // stays the verb via search) · the numbered QUALITY casks (side-lying, wax-sealed, numeral overlaid)
   // · die-q = the parked-die value (die + ?) · sail = the ship with its forward arrow
   'quality-1':'quality-1','quality-2':'quality-2','quality-3':'quality-3','quality-4':'quality-4',
-  'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail','age-plus2':'age-plus2',
+  'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail','age-1':'station-age-1','age-2':'station-age-2',
   // die MODIFIER marks (round 4): the die with its lift/drop printed on it — drops in red
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
 const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
@@ -41,7 +41,7 @@ const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the
   // chosen item's OWN printed price (recipe card / specialist tile / building tile; chipless
   // buildings are free). The kontor prizes stay free; using a building never adds a fee.
   {k:'source',  ai:'coins',         act:'Gain 2 goods',             q:2},
-  {k:'age',     ai:'age-plus2',     act:'Age +2',                   q:2},
+  {k:'age',     ai:'age-2',     act:'Age +2',                   q:2},
   {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},
   {k:'reach',   ai:'map-pin',       act:'+1 presence',              q:2},
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe',          q:2},
@@ -226,7 +226,7 @@ const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(50,79,42,.74)';   //
 const BLD_FOOT='rgba(58,51,66,.7)';   // legacy fallback   // building card foot/base — dark purple-grey (#3a3342) at 70% opacity so the illustration bleeds ~30% through the foot. Same on front & back.
 // v3.4a at 66% height — the SAME anatomy the 2in card earned (icon+name header · art window ·
 // the colour foot: the effect big, then the target chip + cost row), compressed, never flattened.
-const STD_ACT={source:{ai:'coins',t:'Gain 2 goods'},age:{ai:'age-plus2',t:'Age +2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};
+const STD_ACT={source:{ai:'coins',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age +2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};
 function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   // a STANDARD verb prints the same icon chip the casks print — one action grammar across the kit;
   // only the non-standard powers carry text (terse: the rulebook holds the full language)
