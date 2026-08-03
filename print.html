@@ -317,7 +317,7 @@
   /* the station cell (2026-08-03, designer-ruled): a painted SCENE fills the cell; over it only the
      station TITLE (top — the scenes keep a calm top band) and the ACTION's illustrated icon (low-centre).
      The verbose action reference lives in the side column + the player aid. */
-  .stn{border-radius:.2in;color:#fff;padding:.12in;display:flex;flex-direction:column;align-items:center;justify-content:space-between;position:relative;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.55);box-shadow:0 3px 10px rgba(0,0,0,.35)}
+  .stn{border-radius:.2in;color:#fff;padding:.12in;display:flex;flex-direction:column;align-items:center;justify-content:space-between;position:relative;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.55);box-shadow:0 3px 10px rgba(0,0,0,.35);border:.035in solid #e5dcc3}   /* the light-tan frame pops the stations off the deck (designer, round 2) */
   .stn>*{position:relative;z-index:1}
   .stn>.stn-scene{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:center}
   .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.34in;line-height:1;letter-spacing:.5px;text-shadow:0 1px 3px rgba(0,0,0,.8),0 0 .14in rgba(0,0,0,.55)}
@@ -444,6 +444,10 @@
   .kp-t{background:var(--kc);color:#fff;display:flex;align-items:center;gap:.07in;padding:.05in .11in;
     font-variant:small-caps;font-weight:bold;font-size:.22in;text-shadow:0 1px 1.5px rgba(0,0,0,.35)}
   .kp-t svg,.kp-t .ic{width:.21in;height:.21in}
+  /* round 2: the city CREST doubles and hangs down over the scene — the bar keeps its height and the
+     name only shifts right by the crest's width */
+  .kp-t img.ai{width:.42in;height:.42in;margin:-.06in 0 -.22in;position:relative;z-index:3;
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,.45))}
   .kp-q{margin-left:auto;display:inline-flex;align-items:center;gap:.03in;background:rgba(255,255,255,.3);border-radius:.06in;
     padding:.02in .08in;font-size:.2in;font-weight:900}
   .kp-q svg,.kp-q .ic{width:.19in;height:.19in}
@@ -460,8 +464,8 @@
   .kp-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.04in;text-align:center;min-width:0}
   .kp-ch{display:inline-flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.03in;font-variant:small-caps;font-weight:bold;font-size:.108in;color:rgba(255,255,255,.88);text-shadow:0 1px 2px rgba(0,0,0,.75)}
   .kp-ch svg,.kp-ch .ic{width:.12in;height:.12in;flex:0 0 auto}
-  .kp-big{display:inline-flex;align-items:center;gap:.04in;font-weight:900;font-size:.3in;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 1.5px 3px rgba(0,0,0,.8)}
-  .kp-big svg,.kp-big .ic{width:.27in;height:.27in}
+  .kp-big{display:inline-flex;align-items:center;gap:0;font-weight:900;font-size:.3in;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 1.5px 3px rgba(0,0,0,.8)}   /* round 2: icon hugs its number */
+  .kp-big svg,.kp-big .ic{width:.34in;height:.34in}
   /* the by-quality scale — a STACKED chip per tier (Q above, ★ value below), not one long joined line, laid
      out on its OWN full-width row (kp-scalerow) instead of a 1-of-3 cell, so it scales to however many tiers
      a kontor prints (Novgorod's v2.9 floor row made it four) without wrapping to a 2nd line and colliding
@@ -756,15 +760,15 @@ function aidFront(){
         +'<h5>'+LU('dice-3')+'The Die IS the Cask</h5>'
         +'<div class="ln">At <b>brew</b>, set a tray die to the tile’s printed <b>START</b> value. Aging turns it up — it <b>stops at the quality: READY</b>. Only buildings lift it past (Malt Kiln +1 as it boards, cap <b>6</b>). <b>The minimum reads the die as it boards.</b> At delivery the die <b>parks at the Kontor</b>: pips = the ★ scored · body = presence, majority weight &amp; the clock. <b>No die in your tray → no brew, no placing presence.</b></div>'
         +'<h5>'+LU('building-2')+'Buildings — one green family</h5>'
-        +'<div class="ln">Every building serves <b>whoever activates it</b>. Building one (London’s prize · a <i>Build 1 building</i> bonus — always from the display) scores <b>+3★</b>. Overbuild anytime — ONE payment: the new tile’s fee if it prints one, else '+G+'1 ground rent (the displaced tile is boxed). <b>Paid at the wharf, free at the Kontor:</b> recipe/building/specialist gains via the wharf channels cost <b>the item’s printed fee</b> (chipless buildings free; never a fee to USE a building) — the building/specialist prizes never do; a RECIPE’s fee (H = Q−2) is paid everywhere, Bruges included.</div>'
+        +'<div class="ln">Every building serves <b>whoever activates it</b>. Building one (London’s prize · a <i>Build 1 building</i> bonus — always from the display) scores <b>+3★</b>. Overbuild anytime — ONE payment: the new tile’s fee if it prints one, else <span class="gi">'+G+'1</span> ground rent (the displaced tile is boxed). <b>Paid at the wharf, free at the Kontor:</b> recipe/building/specialist gains via the wharf channels cost <b>the item’s printed fee</b> (chipless buildings free; never a fee to USE a building) — the building/specialist prizes never do; a RECIPE’s fee (H = Q−2) is paid everywhere, Bruges included.</div>'
       +'</div>'
       +'<div class="acol">'
         +'<h5>'+LU('anchor')+'The Four Stations (one action each)</h5>'
         +'<div class="ln">'+LU('store')+' <b>Market</b> — take <b>2 goods</b> (any mix).</div>'
         +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b> — <b>brew</b>: pay a recipe → an open vessel; take the <b>top tile of that beer’s pile</b> — its printed <b>load bonus</b> rides (every pile top is public).</div>'
         +'<div class="ln">'+LU('hourglass')+' <b>Cellar</b> — <b>Age 3</b>: three steps across your vessels. <b>Dice never turn on their own</b> — the Cellar and its kin are the only hands.</div>'
-        +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — <b>commission</b>: pay '+G+'1, place a display Ship on a slot without a Ship (Skute 1 · Cog 2 · Hulk 3 berths — <b>no ★</b>) — then <b>one free load</b>: a Ready cask from your vessels may board it at once (a Skute sails).</div>'
-        +'<h5>'+LU('package-plus')+'Load &amp; Sail</h5>'
+        +'<div class="ln">'+LU('ship')+' <b>Harbor</b> — <b>commission</b>: pay <span class="gi">'+G+'1</span>, place a display Ship on a slot without a Ship (Skute 1 · Cog 2 · Hulk 3 berths — <b>no ★</b>) — then <b>one free load</b>: a Ready cask from your vessels may board it at once (a Skute sails).</div>'
+        +'<h5>'+LU('sail')+'Load &amp; Sail</h5>'
         +'<div class="ln">Resolve a Ship’s slot to load <b>one READY cask from YOUR vessels</b> (die ≥ the Kontor’s minimum, after lifts); its printed <b>load bonus fires — after any sail the load completes</b>. A Ship <b>sails the moment it is full</b> — a Skute on its first load — and every cask delivers in load order; prizes resolve when gained. A delivered cask may <b>claim one open CONTRACT</b> it matches — its ★ score at once (the row of 3 refills at end of turn).</div>'
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
         +'<div class="ln"><b>ONE clock</b> — the first <b>EMPTY TRAY</b> (your last of 12 dice committed — parked or riding) sets the final round (dice never return; round 25 backstops) → finish the round → <b>majorities</b> (parked dice: 4/2/0 · 5/3/1 · 9/5/2 · 8/5/2) + the <b>Flight</b> (beers BREWED — flipped cards): 3→4 · 4→9 · 5→16 + any <b>★ printed on seated specialists</b> (Chronicler · Alderman). Deliveries, builds (+3★), Contract claims, Tollhouse stamps and placed presence (1★) were scored in play — commissions score nothing.</div>'
@@ -1014,12 +1018,12 @@ const kMini=d=>{
   // below (Novgorod's v2.9 floor row made it four tiers: <3/3/4/5, too many for a narrow cell at any
   // reasonable chip size); a full-width row gives 4 small chips plenty of room to sit on ONE line, and
   // on-delivery/majority get a wider 2-cell row instead of 3, so nothing here is fighting for space.
-  const valCell='<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU('dices')+(d.vb?'+'+d.vb:'')+'</span></div>';   // the parked die IS the value (Novgorod prints +2 on top — 6–8★ at minimum 4)
+  const valCell='<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU('die-q')+(d.vb?'+'+d.vb:'')+'</span></div>';   // the parked die IS the value — the ?-die (Novgorod prints +2 on top — 6–8★ at minimum 4)
+  const benCell=d.vb?'':'<div class="kp-cell"><span class="kp-ch">'+LU('gift')+'on delivery</span><span class="kp-big">'+d.ben.n+LU(d.ben.ic)+'</span></div>';   // Novgorod's on-delivery cell is CUT — redundant to its +2 value (designer, round 2)
   return '<div class="kp" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+kArt(d.nm.toLowerCase())
     +'<div class="kp-t">'+LU('kontor-'+d.nm.toLowerCase())+d.nm+'<span class="kp-q">'+LU('dices')+d.req+'+</span></div>'
     +'<div class="kp-pz"></div>'
-    +'<div class="kp-rows"><div class="kp-cr">'+valCell
-      +'<div class="kp-cell"><span class="kp-ch">'+LU('gift')+'on delivery</span><span class="kp-big">'+d.ben.n+' '+LU(d.ben.ic)+'</span></div>'
+    +'<div class="kp-rows"><div class="kp-cr'+(d.vb?' two':'')+'">'+valCell+benCell
       +'<div class="kp-cell"><span class="kp-ch">'+LU('landmark')+'majority</span><span class="kp-big">'+d.maj.join('/')+'</span></div>'
     +'</div><div class="kp-note bnote">'+(BNOTE_SHORT[d.nm]||d.bnote)+'</div></div>'
   +'</div>';};

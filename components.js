@@ -12,14 +12,19 @@
 // (building-tile + specialist-tile crests keep their glyphs — the tiles already carry full art).
 const ICON_ART={wheat:'grain',sprout:'hops',coins:'goods',dices:'quality-die',
   'dice-1':'die-1','dice-2':'die-2','dice-3':'die-3','dice-4':'die-4','dice-5':'die-5','dice-6':'die-6',
-  star:'star',check:'ready',beer:'cask',sailboat:'ship',landmark:'kontor','building-2':'build',
+  star:'star',check:'ready',beer:'cask',sailboat:'ship',landmark:'kontor','building-2':'building',
   wrench:'specialist','scroll-text':'recipe','map-pin':'presence',search:'build','package-plus':'bonus-load',
   'flask-conical':'station-brew',hourglass:'station-age',store:'station-market',ship:'station-harbor',
   anchor:'wharf',contract:'contract','age-3':'station-age-3','kontor-bruges':'kontor-bruges',
-  'kontor-london':'kontor-london','kontor-bergen':'kontor-bergen','kontor-novgorod':'kontor-novgorod'};
+  'kontor-london':'kontor-london','kontor-bergen':'kontor-bergen','kontor-novgorod':'kontor-novgorod',
+  // round 2 (2026-08-03): building-2 = the HOUSE (you PLACE a building — the noun; the trowel 'build'
+  // stays the verb via search) · the numbered QUALITY casks (side-lying, wax-sealed, numeral overlaid)
+  // · die-q = the parked-die value (die + ?) · sail = the ship with its forward arrow
+  'quality-1':'quality-1','quality-2':'quality-2','quality-3':'quality-3','quality-4':'quality-4',
+  'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail'};
 const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const LU=(n,cls)=>ICON_ART[n]?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/icons/'+ICON_ART[n]+'.png" alt="">':LUX(n,cls);
-const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc">'+LU('sprout','h')+h+'</span>');return a.join('');};
+const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc g">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc h">'+LU('sprout','h')+h+'</span>');return a.join('');};   // the NUMBER rides the goods colour too (designer, round 2)
 const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · victory-point icon
 
 // v3.0-A "SPECIFIC GAINS" — a cask's slot-action is one of NINE concrete acquisitions, printed on the
@@ -97,8 +102,8 @@ const BUILDINGS=[
   // v45d power ladder — fees print in GRAIN only (hops are spent USING buildings, never buying them)
   {k:'racking',   nm:'Racking Hall',      verb:'transform', tgt:'act',  ic:'repeat',       n:1, g:3, act:'rack',   eff:'Swap 2 dice'},
   {k:'assay',     nm:'Assay House',       verb:'transform', tgt:'act',  ic:'scale',        n:1, g:1, act:'assay',  eff:'1 aging die ±1'},
-  {k:'abbey',     nm:'Abbey Cellar',      verb:'transform', tgt:'act',  ic:'hourglass',    n:1, g:2, act:'abbey',  eff:'3'+LU('sprout','h')+' → all aging Ready'},
-  {k:'hopex',     nm:'Hop Exchange',      verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, act:'hopex',  eff:'1'+LU('sprout','h')+' → die +1 · max 2'},
+  {k:'abbey',     nm:'Abbey Cellar',      verb:'transform', tgt:'act',  ic:'hourglass',    n:1, g:2, act:'abbey',  eff:'<span class="h">3'+LU('sprout','h')+'</span> → all aging Ready'},
+  {k:'hopex',     nm:'Hop Exchange',      verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, act:'hopex',  eff:'<span class="h">1'+LU('sprout','h')+'</span> → die +1 · max 2'},
   {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, eff:'Loading: die +1'},
   {k:'tollhouse', nm:'Tollhouse',         verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, eff:'Loading: die −1 → +3★'},
   {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, eff:'Loading: die +1 · sails with the Ship · players aboard gain 2 goods'},
@@ -164,8 +169,8 @@ const LADINGS=[
 // ============================================================================
 const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize — v4.7: EVERY CASK seats its house one, the per-cask grammar of all four ports · the Hiring Post · the 'Gain 1 specialist' load bonus) — never bought · deck of max(2,n−1)/type (v4.5b) · 2 SEATS per house (both open from the start — v45h)
   {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Dice start +1 (Q3+ never starts Ready)', g:0, h:2, c:'#5b3a8e', n:3},
-  {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:2, c:'#5b3a8e', n:3},   // v4.7: 1G→2G (the probe's auto-pick core)
-  {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:0, h:2, c:'#5b3a8e', n:3},
+  {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → <span class="g">+1'+LU('wheat','g ic')+'</span>', g:2, c:'#5b3a8e', n:3},   // v4.7: 1G→2G (the probe's auto-pick core)
+  {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → <span class="h">+1'+LU('sprout','h ic')+'</span>', g:0, h:2, c:'#5b3a8e', n:3},
   {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Each time you load: up to 2 casks', g:1, c:'#5b3a8e', n:3},
   {ic:'wrench',     nm:'Braumeister', art:'a long wooden mash paddle over a copper kettle', act:'Start of your turn: your ripest maturing cask ages +1', g:1, h:1, c:'#5b3a8e', n:3},   // v4.5b — the earned heir of the cut auto-age
   // ---- v4.6 "Guildbook": the 8 GUILD designs — 1 copy each (scarce); three print SEAT GATES
@@ -173,12 +178,12 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   // art: all eight own their object-shot files (the 2026-08-02 art pass; briefs in art/PROMPTS.md).
   {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:'Your recipes are FREE (every channel, Bruges too)', g:2, c:'#5b3a8e', n:1},
   {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'This tile is a 4th vessel: its cask ages +1 at your turn start · requires 3 beers brewed', g:2, c:'#5b3a8e', n:1},   // v4.7 rework: the tile matures its own cask
-  {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'A Ship sails your cask on a rival’s turn: +1'+LU('wheat','g ic')+'+1'+LU('sprout','h ic'), h:2, c:'#5b3a8e', n:1},   // v4.7: 1H→2H (the probe's +29 outlier)
+  {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'A Ship sails your cask on a rival’s turn: <span class="g">+1'+LU('wheat','g ic')+'</span><span class="h">+1'+LU('sprout','h ic')+'</span>', h:2, c:'#5b3a8e', n:1},   // v4.7: 1H→2H (the probe's +29 outlier)
   {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'End: +1★ per claimed Contract (max +5) · requires a claimed Contract', g:1, h:1, c:'#5b3a8e', n:1},
   {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'End: +2★ per kontor with 3+ parked dice', g:2, c:'#5b3a8e', n:1},
   {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:'Place presence: the die parks at face 2 (2★)', g:1, c:'#5b3a8e', n:1},   // v4.7: the 2-ports gate is CUT
-  {ic:'arrow-right-left', nm:'Chandler', art:'a hand balance — grain on one pan, hop cones on the other', act:'Once per turn: swap 1'+LU('wheat','g ic')+' ↔ 1'+LU('sprout','h ic'), g:1, c:'#5b3a8e', n:1},
-  {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:'Your commissions are FREE (the 1'+LU('wheat','g ic')+' is waived)', h:1, c:'#5b3a8e', n:1},
+  {ic:'arrow-right-left', nm:'Chandler', art:'a hand balance — grain on one pan, hop cones on the other', act:'Once per turn: swap <span class="g">1'+LU('wheat','g ic')+'</span> ↔ <span class="h">1'+LU('sprout','h ic')+'</span>', g:1, c:'#5b3a8e', n:1},
+  {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:'Your commissions are FREE (the <span class="g">1'+LU('wheat','g ic')+'</span> is waived)', h:1, c:'#5b3a8e', n:1},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
@@ -284,7 +289,7 @@ function caskCardFront(d,act){   // the AGING side: Q·name (+special) · the ma
   track+='<div class="ct-step rdy">'+LU('undo-2')+'</div>';   // Ready → flip the tile to its wharf side
   return '<div class="ctile ctA" style="--c:'+d.c+'">'
     +'<div class="ct-art"><img src="'+ART_DIR+'cask-'+d.nm.toLowerCase()+'.png" alt=""></div>'
-    +'<div class="ct-hd"><span class="ct-q">'+LU(QI)+d.q+'</span><span class="ct-nm">'+d.nm+'</span>'
+    +'<div class="ct-hd"><span class="ct-q">'+LU('quality-'+d.q)+'</span><span class="ct-nm">'+d.nm+'</span>'
       +'<span class="ct-cost">'+c+'</span></div>'
     +(d.tag?'<span class="ct-perk">'+d.tag.split('<br>').join(' ')+'</span>':'')
     +'<div class="ct-bot">'+track+'</div>'
@@ -294,7 +299,7 @@ function caskCardBack(d,act){   // the WHARF side: the Q prints IN the die seat 
   // name over action beside it; the beer art on the left fades into the beer's colour
   return '<div class="ctile ctB" style="--c:'+d.c+'">'
     +'<div class="ct-art"><img src="'+ART_DIR+'cask-'+d.nm.toLowerCase()+'.png" alt=""></div>'
-    +'<div class="ct-seat" data-die-seat title="the quality die rides here — set at brew, parked at the Kontor on delivery">'+LU(QI)+'<b>'+d.q+'</b></div>'
+    +'<div class="ct-seat" data-die-seat title="the quality die rides here — set at brew, parked at the Kontor on delivery">'+LU('quality-'+d.q)+'</div>'
     +'<div class="ct-main"><span class="ct-nm2">'+d.nm+'</span>'
       +'<span class="ct-act2"><span class="ac">'+LU(act.ai)+'</span><span class="t">'+act.act+'</span></span>'
       +'<span class="ct-start" title="at brew: set your quality die to the START value; aging turns it up — READY at '+d.q+'">'+LU('dices')+'start <b>'+Math.max(1,d.q-(d.ready||0))+'</b> · ready '+d.q+'</span></div>'
@@ -317,7 +322,7 @@ function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm
   let rows='<div class="st-trig">'
     +'<div class="st-toprow"><span class="st-k">'+LU('sailboat')+destNm+'</span>'
       +'<span class="st-meta"><span class="st-gate" title="boards when the cask&#39;s DIE (as boarded) shows this or more">'+LU('dices')+d.req+'+</span><span class="st-cost">'+cost(1,0)+'</span></span></div>'
-    +'<div class="st-seat st-tseat" title="the trigger berth — the last cask loads here and the ship sails at once"><span class="st-num">'+cap+'</span><span class="st-go">'+LU(QI)+'<b class="amp">&amp;</b>'+LU('sailboat')+'</span></div>'
+    +'<div class="st-seat st-tseat" title="the trigger berth — the last cask loads here and the ship sails at once"><span class="st-num">'+cap+'</span><span class="st-go">'+LU(QI)+'<b class="amp">&amp;</b>'+LU('sail')+'</span></div>'
   +'</div>';
   for(let i=cap-1;i>=1;i--)rows+='<div class="st-berth"><div class="st-seat"><span class="st-num">'+i+'</span><span class="st-ghost">'+LU(QI)+'</span></div></div>';
   return '<div class="stile" style="--c:'+d.kc+';height:'+SHIP_H(hull)+'in">'
@@ -345,7 +350,7 @@ function recipeCard(r,brewed){return '<div class="card" style="--cc:'+r.cc+'">'
     ? '<span class="clab">starting recipe</span>'
     : '<span class="clab">wharf fee</span><span class="cbig">'+cost(r.buy.g,r.buy.h)+'</span>')+'</div>'
   +'<div class="c-strip">'
-    +'<div class="c-row"><span class="c-rung">'+LU(QI)+r.L+'</span><span class="c-nm">'+r.nm+'</span></div>'
+    +'<div class="c-row"><span class="c-rung">'+LU('quality-'+r.L)+'</span><span class="c-nm">'+r.nm+'</span></div>'
     +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(r.g,r.h)+'</span></div>'
   +'</div>'
   +'</div>';}
@@ -594,7 +599,18 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 /* ILLUSTRATED ICONS — the art <img> tracks the .ic sizing everywhere the CSS pairs "svg,.ic";
    these cover the few svg-only spots + give any unsized site a 1em fallback */
 +'img.ai{width:1em;height:1em;object-fit:contain;vertical-align:-.13em}'
-+'.tok img.ai{width:.5in;height:.5in}.disc img.ai{width:.22in;height:.22in}.wtok img.ai{width:.32in;height:.32in}';
++'.tok img.ai{width:.5in;height:.5in}.disc img.ai{width:.22in;height:.22in}.wtok img.ai{width:.32in;height:.32in}'
+/* round 2 (designer, 2026-08-03): the white action circles RETIRE — a cask tile shows the bare
+   action icon at the full height the circle had; a building shows it at TWICE that (unmissable) */
++'.ctile .ct-act2 .ac{background:transparent;border-radius:0;width:.3in;height:.3in}'
++'.ctile .ct-act2 .ac svg,.ctile .ct-act2 .ac .ic{width:.3in;height:.3in}'
++'.ctA .ct-act2 .ac{width:.3in;height:.3in}'
++'.btile .ac{background:transparent;border-radius:0;width:.56in;height:.56in}'
++'.btile .ac svg,.btile .ac .ic{width:.56in;height:.56in}'
+/* the numbered QUALITY-cask marks (the number rides the icon, age-3 style) */
++'.ctA .ct-q img.ai{width:.36in;height:.36in}'
++'.ctB .ct-seat img.ai{width:.44in;height:.44in}'
++'.card .c-strip .c-rung{background:none;padding:0}.card .c-strip .c-rung img.ai{width:.3in;height:.3in}';
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
 window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard};

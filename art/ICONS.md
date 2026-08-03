@@ -22,6 +22,18 @@
 > numeral 3 (sepia fill, cream sticker stroke) onto the age icon. Scenes: painterly full-bleed
 > manuscript panels, calm top ~20% for the title, no text/people.
 
+> **Round 2 (designer review, 2026-08-03):** goods NUMBERS ride the goods colours (gold grain /
+> green hops) wherever a cost or gain prints; the white action circles RETIRE — cask tiles show
+> the bare action icon at the circle's old height, buildings at TWICE it; **the numbered
+> QUALITY-cask set joins** (`quality-1…6` — a side-lying wax-sealed cask, numeral overlaid
+> age-3 style) and replaces cask-icon+number at quality call sites; **`die-q`** (the ?-die,
+> same numeral style) is the parked-die VALUE mark on Kontor panels; **`sail.png`** = the ship
+> over a forward arrow (the trigger berth + the Load & Sail aid); **`building.png` returns as
+> the batch-3 HOUSE** — the noun for PLACE-a-building contexts (slots, London's prize, the
+> displays) while the trowel `build.png` stays the verb; the Wharf stations gain a light-tan
+> frame; Kontor panel crests double and hang over the scene, big-row icons grow and hug their
+> numbers, and Novgorod's on-delivery cell is cut (redundant to its +2 value).
+
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
 > (the tiles already carry full-bleed art). **ADDED: one icon per Kontor** — a city crest
