@@ -305,7 +305,7 @@
   .mb-head h2{margin:0;font-variant:small-caps;color:var(--sea);font-size:.26in;letter-spacing:.5px;display:flex;align-items:center;gap:.08in;white-space:nowrap}
   .mb-head h2 svg,.mb-head h2 .ic{width:.2in;height:.2in}
   .mb-head h2 img.ai{width:.55in;height:.55in;margin:-.14in 0}   /* the big illustrated header icons keep the row slim */
-  .mb-head h2.spec-h{margin-left:auto;margin-right:.2in}   /* the Specialists title sits over its column */
+  .mb-head h2.spec-h{margin-left:auto;width:2.4in;justify-content:center}   /* centred over the Specialists column (2.4in, flush right) */
   .mb-head .sub{font-size:.1in;font-style:italic;color:var(--ink2)}
   .mb-main{flex:1;display:flex;gap:.14in;min-height:0;align-items:center}
   /* v3.4c.8 [ruled]: the board's arms reach only the BUILDING BAND — each slot prints the 2.5×1.32in
@@ -424,7 +424,7 @@
      backstop is rules-side only, untracked on the table) */
   /* ---- Market & Stores interior: the market column · the cellar (Specialists) column · the clock ---- */
   .sup-cols{display:flex;gap:.2in;flex:1;min-height:0}
-  .sup-main{flex:0 0 auto;width:10.4in;display:flex;flex-direction:column;gap:.08in}   /* wide enough for the 4-slot ship shelf — the Specialists column sits clear right */
+  .sup-main{flex:0 0 auto;width:10.4in;display:flex;flex-direction:column;gap:.16in}   /* wide enough for the 4-slot ship shelf — the Specialists column sits clear right */
   .sup-main .tracks{margin-top:auto}
   .sup-cellar{flex:0 0 auto;width:2.4in;display:flex;flex-direction:column;gap:.09in;min-width:0}
   .sup-cellar .disp-h{font-size:.14in}
@@ -499,7 +499,7 @@
      boards, sized to their contents, no rules text (designer, 2026-08-03) */
   .destb.kboard,.destb.cboard{flex-direction:column;gap:.12in}
   .kgrid{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:.14in;min-height:0}
-  .crow{flex:1;display:flex;gap:.16in;justify-content:center;align-items:center}
+  .crow{flex:0 0 auto;display:flex;gap:.16in;justify-content:center;align-items:center}
   .db-ccol .dslot{width:2.2in;height:1in}
   .db-hcol{flex:1;display:flex;flex-direction:column;gap:.09in;min-height:0}
   /* the Hall header — a kontor-style art panel, so the Hall reads as the fifth destination */
@@ -737,7 +737,7 @@ const SUPPLY_GEO={w:22,h:10.1, y0:0.45,yMax:9.82};   // ONE sheet, both table bo
 //   · the SCORE track wraps the outer edge as a 50-cell ring (0–49 + a 50/100 lap, Carcassonne-style):
 //     50 cells — not 100 — because the mover is the 0.5″ ownership disc, and a disc needs a ≥0.6″ printed
 //     cell to sit in legibly (COMPONENTS.md §17 #7 offers exactly this "50/100 lap marker" resolution).
-const SUPPLY_NW=15.6, SUPPLY_NH=11.7;   // Market & Stores native size — market col + cellar col + the clock inside the score ring; 15.6 (was 15.0) buys the clock breathing room off the ring
+const SUPPLY_NW=15.6, SUPPLY_NH=10.8;   // height trimmed to the content (designer, 2026-08-03)   // Market & Stores native size — market col + cellar col + the clock inside the score ring; 15.6 (was 15.0) buys the clock breathing room off the ring
 const DEST_NW=7.6,   DEST_NH=11.7;      // the Destinations & Hall board — narrow, the SAME height (the pair sits flush on the table)
 const SUPPLY_MAIN_W=9.7;                 // the left (displays) column's width; the destinations column takes the rest
 const SCORE_CELLS=50;     // one lap = 0–49 (the start corner reads 0/50); a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
@@ -1090,12 +1090,11 @@ function supplyBoard(){
 // The Hall column speaks component, not paragraph: a kontor-style art header, four SHELVES (each coin
 // space = ONE icon + a ≤3-word label + the claim-cube outline), and the launch strip. The rules live on
 // the player aid; the board only has to be readable across a table.
-function kontoreBoard(){return '<div class="destb kboard">'
-  +'<div class="disp-h k">'+LU('landmark')+'Kontore</div>'
-  +'<div class="kgrid">'+DESTS.map(kMini).join('')+'</div></div>';}
-function contractsBoard(){
+function destBoard(){   // ONE board (designer, 2026-08-03): the Kontore 2×2 over the Contracts row
   const cslot=d=>'<div class="dslot l">'+LU('contract')+(OVERLAY?'<div class="ovl">'+ladingTile(d)+'</div>':'')+'</div>';
-  return '<div class="destb cboard">'
+  return '<div class="destb kboard">'
+  +'<div class="disp-h k">'+LU('landmark')+'Kontore</div>'
+  +'<div class="kgrid">'+DESTS.map(kMini).join('')+'</div>'
   +'<div class="disp-h k">'+LU('contract')+'Contracts</div>'
   +'<div class="crow">'+LADINGS.slice(0,3).map(cslot).join('')+'</div></div>';}
 
@@ -1223,20 +1222,16 @@ function wharfBoardSheet(pages){
 // the MARKET & STORES board + the DESTINATIONS & HALL board — the table pair, on ONE trimmed 22in sheet.
 // (labels stay PLAIN TEXT — every consumer escapes for itself.)
 function supplyBoardSheet(pages){
-  const G=SUPPLY_GEO;const pg=newPage(pages,'boards','Market & Stores + Kontore + Contracts boards (cut all three)',G);
+  const G=SUPPLY_GEO;const pg=newPage(pages,'boards','Market & Stores + Destinations board (cut both)',G);
   const w1=+(SUPPLY_NW*SCALE).toFixed(4),h1=+(SUPPLY_NH*SCALE).toFixed(4);
-  // the right column: the KONTORE board (2×2 panels) over the CONTRACTS board (row of 3) —
-  // each sized to its contents (designer, 2026-08-03; the tall destinations column retires)
-  const KON_NW=7.6,KON_NH=7.1, CON_NW=7.6,CON_NH=1.8, colGap=0.3;
-  const w2=+(KON_NW*SCALE).toFixed(4),h2=+(KON_NH*SCALE).toFixed(4);
-  const w3=+(CON_NW*SCALE).toFixed(4),h3=+(CON_NH*SCALE).toFixed(4);
+  // ONE destinations board: the Kontore 2×2 grid + the Contracts row, sized to its contents
+  const DEST2_NW=7.6,DEST2_NH=9.0;
+  const w2=+(DEST2_NW*SCALE).toFixed(4),h2=+(DEST2_NH*SCALE).toFixed(4);
   const gap=0.35, x1=+((G.w-w1-w2-gap)/2).toFixed(3), y1=+((G.h-h1)/2).toFixed(3);
-  const colH=+(h2+colGap+h3).toFixed(3);
-  const x2=+(x1+w1+gap).toFixed(3), y2=+((G.h-colH)/2).toFixed(3), y3=+(y2+h2+colGap).toFixed(3);
+  const x2=+(x1+w1+gap).toFixed(3), y2=+((G.h-h2)/2).toFixed(3);
   pg.items.push({x:x1,y:y1,w:w1,h:h1,nat:[SUPPLY_NW,SUPPLY_NH],html:supplyBoard()});
-  pg.items.push({x:x2,y:y2,w:w2,h:h2,nat:[KON_NW,KON_NH],html:kontoreBoard()});
-  pg.items.push({x:x2,y:y3,w:w3,h:h3,nat:[CON_NW,CON_NH],html:contractsBoard()});
-  pg.rrects=[{x:x1,y:y1,w:w1,h:h1,r:0.14},{x:x2,y:y2,w:w2,h:h2,r:0.14},{x:x2,y:y3,w:w3,h:h3,r:0.14}];
+  pg.items.push({x:x2,y:y2,w:w2,h:h2,nat:[DEST2_NW,DEST2_NH],html:destBoard()});
+  pg.rrects=[{x:x1,y:y1,w:w1,h:h1,r:0.14},{x:x2,y:y2,w:w2,h:h2,r:0.14}];
 }
 // double-sided player aid: N IDENTICAL cards on a centred, SYMMETRIC 2×2 grid (full) or 1 centred (proof).
 // Because the cards are identical and the grid is symmetric on both axes, the FRONT and BACK sheets register
