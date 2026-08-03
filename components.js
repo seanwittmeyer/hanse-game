@@ -303,14 +303,15 @@ function caskCardFront(d,act){   // the AGING side: Q·name (+special) · the ma
     +'<div class="ct-bot">'+track+'</div>'
     +'<div class="ct-act2" title="the load bonus — fires as the cask boards a Ship"><span class="ac">'+LU(act.ai)+'</span><span class="t">'+act.act+'</span></div>'
   +'</div>';}
-function caskCardBack(d,act){   // the WHARF side: the Q prints IN the die seat (the die parks on it);
-  // name over action beside it; the beer art on the left fades into the beer's colour
+function caskCardBack(d,act){const start=Math.max(1,d.q-(d.ready||0));
+  // the WHARF side (round 7, designer-ruled — and COMPONENTS §4 as written): the START die FACE
+  // prints IN the seat (set your die to it at brew), the numbered quality mark rides beside the
+  // name (READY), and the load bonus sits at the FOOT. The start/ready text line is cut.
   return '<div class="ctile ctB" style="--c:'+d.c+'">'
     +'<div class="ct-art"><img src="'+ART_DIR+'cask-'+d.nm.toLowerCase()+'.png" alt=""></div>'
-    +'<div class="ct-seat" data-die-seat title="the quality die rides here — set at brew, parked at the Kontor on delivery">'+LU('quality-'+d.q)+'</div>'
-    +'<div class="ct-main"><span class="ct-nm2">'+d.nm+'</span>'
-      +'<span class="ct-act2"><span class="ac">'+LU(act.ai)+'</span><span class="t">'+act.act+'</span></span>'
-      +'<span class="ct-start" title="at brew: set your quality die to the START value; aging turns it up — READY at '+d.q+'">'+LU('dices')+'start on <b>'+Math.max(1,d.q-(d.ready||0))+'</b> · '+LU('check')+'ready on <b>'+d.q+'</b></span></div>'
+    +'<div class="ct-seat" data-die-seat title="set your quality die to THIS face at brew — aging turns it up to '+d.q+' (READY); at delivery it parks at the Kontor">'+LU('dice-'+start)+'</div>'
+    +'<div class="ct-main"><div class="ct-hd2"><span class="ct-q2" title="READY at quality '+d.q+'">'+LU('quality-'+d.q)+'</span><span class="ct-nm2">'+d.nm+'</span></div>'
+      +'<span class="ct-act2"><span class="ac">'+LU(act.ai)+'</span><span class="t">'+act.act+'</span></span></div>'
   +'</div>';}
 // printables2 v4: a SHIP is a full-bleed 2.5″ CARD (was a small tile) — the destination's CITY is the
 // background art (wharf-<dest>.png), with the cask-card treatment: hull + commission cost over the art on
@@ -639,10 +640,11 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.ctile .ct-act2 .ac{width:.44in;height:.44in;margin:-.07in -.02in -.07in -.05in}'
 +'.ctile .ct-act2 .ac svg,.ctile .ct-act2 .ac .ic{width:.44in;height:.44in}'
 +'.ctA .ct-act2 .ac{width:.44in;height:.44in}'
-/* the start/ready line: BOTH numbers large, the check art beside ready — one line, never wrapped */
-+'.ctB .ct-start{white-space:nowrap;font-size:.1in;gap:.02in}'
-+'.ctB .ct-start b{font-size:.17in}'
-+'.ctB .ct-start .ic,.ctB .ct-start svg,.ctB .ct-start img.ai{width:.14in;height:.14in;margin:0 .01in 0 .02in;flex:0 0 auto}'
+/* round 7: the seat holds the START die face; the quality mark heads the title row; the
+   action sits at the foot of the main column */
++'.ctB .ct-main{justify-content:space-between;padding:.03in 0}'
++'.ctB .ct-hd2{display:flex;align-items:center;gap:.045in;min-width:0}'
++'.ctB .ct-hd2 img.ai{width:.3in;height:.3in;flex:0 0 auto}'
 /* ship tiles (round 4): the berth imagery reads at arm\'s length — bigger cask-&-sail on the
    trigger, and the waiting berths\' cask ghost prints FULL-STRENGTH (the grey-out was invisible) */
 +'.stile .st-go svg,.stile .st-go .ic{width:.42in;height:.42in}'
