@@ -1,39 +1,46 @@
-# Brewhouses of the Hanse — Term Registry & Style (v1.0 · 2026-08-02)
+# Brewhouses of the Hanse — Term Registry & Style (v1.1 · 2026-08-03)
 
 **This file is rank 1.** Every word printed on a component comes from this registry; the
 general style guide (the designer's house standard) sits in §G below and governs sentence
-shape. Rulebook = `RULES.md`. Code identifiers (`p.bank`, `specGate`, `DEST[..].gate`) are
-NOT player-facing and keep their names — only printed/rendered copy is governed here.
+shape. Rulebook = `RULES.md`. Code identifiers (`p.bank`, `specGate`, `DEST[..].gate`,
+`S.ladingRow`) are NOT player-facing and keep their names — only printed/rendered copy is
+governed here.
 
 ## §1. Term Registry — nouns
 
 | Canonical | POS | Definition | Icon | Plural | Caps | Banned variants | Locked |
 |---|---|---|---|---|---|---|---|
-| Kontor | n | One of the four delivery ports (Bruges · London · Bergen · Novgorod) | landmark | kontore | Yes | ~~port~~, ~~destination~~, ~~trading post~~ (flavor only) | ○ |
+| player | n | You; the person at a seat ("brewing house" survives as Overview flavor only) | — | players | No | ~~house~~ | ● |
+| Kontor | n | One of the four trading posts of the League (Bruges · London · Bergen · Novgorod) | landmark | Kontore | Yes | ~~port~~, ~~destination~~ (reserved for a future category of delivery sites) | ● |
+| Destinations board | n | The board holding the four Kontor panels + the Contract row | — | — | Yes | ~~Kontor board~~, ~~kontor mats~~ | ● |
+| Market & Stores board | n | The shared displays (Ships · buildings · Specialists · recipes) ringed by the score track | — | — | Yes | ~~Supply board~~ | ● |
 | the Wharf | n | The shared core: 4 stations ringed by 8 slots | anchor | — | Yes | ~~the board~~ | ● |
 | station | n | One of the 4 action spaces (Market · Brewhouse · Cellar · Harbor) | — | stations | No | ~~space~~, ~~cell~~ | ● |
-| slot | n | One of the 8 perimeter spaces; seats a building and/or a ship | — | slots | No | — | ● |
+| slot | n | One of the 8 perimeter spaces; seats a building and/or a Ship | — | slots | No | — | ● |
 | line | n | A row or column: 2 stations + their 2 slots | layout-grid | lines | No | — | ● |
-| tally die | n | The one component: cask maturation, value, presence, clock | dices | tally dice | No | ~~demand die~~ | ● |
-| tray | n | Your unspent tally dice (empty tray = the end trigger) | — | trays | No | ~~pool~~ (dev term) | ● |
-| cask | n | A brewed beer on a tile, die riding it | beer | casks | No | — | ● |
-| vessel | n | A maturation slot on your player board | — | vessels | No | — | ● |
-| Ship | n | A neutral hull bound for a printed Kontor: Skute 1 · Cog 2 · Hulk 3 | sailboat | Ships | Yes | ~~hull~~ (allowed for the empty tile in Capstan copy only) | ● |
+| quality die | n | THE component (full name at first mention: **cask quality die**): the die shows the cask's current quality — maturation, value, presence, clock | dices | quality dice | No | ~~tally die~~, ~~demand die~~ | ● |
+| tray | n | Your unspent quality dice (empty tray = the end trigger) | — | trays | No | ~~pool~~ (dev term) | ● |
+| cask | n | A brewed beer on a tile, its quality die riding it | beer | casks | No | — | ● |
+| vessel | n | An aging slot on your player board | — | vessels | No | — | ● |
+| Ship | n | A neutral tile bound for a printed Kontor: Skute 1 · Cog 2 · Hulk 3 | sailboat | Ships | Yes | ~~hull~~ (allowed for the empty tile in Capstan copy only) | ● |
 | berth | n | One cask space on a Ship | — | berths | No | — | ● |
-| minimum | n | A Kontor's printed die floor, read as the cask boards (die N+) | dice-N | minimums | No | ~~gate~~ | ○ |
-| requirement | n | A printed condition that must read true off your components before a Specialist may be seated | — | requirements | No | ~~seat-gate~~, ~~gate~~, ~~prerequisite~~ | ○ |
-| Specialist | n | A private purple tile; 2 seats per house | wrench | Specialists | Yes | ~~improvement~~, ~~upgrade~~ | ● |
+| minimum | n | A Kontor's printed die floor, read as the cask boards (die N+) | dice-N | minimums | No | ~~gate~~ | ● |
+| requirement | n | A printed condition that must read true off your components before a Specialist may be seated | — | requirements | No | ~~seat-gate~~, ~~gate~~, ~~prerequisite~~ | ● |
+| Specialist | n | A private purple tile; 2 seats per player | wrench | Specialists | Yes | ~~improvement~~, ~~upgrade~~ | ● |
 | seat | n | A Specialist space on your player board | — | seats | No | — | ● |
 | building | n | A green tile on a slot; serves whoever activates it | building-2 | buildings | No | ~~work~~, ~~privilege~~ (retired families) | ● |
 | recipe | n | A card granting permission to brew a beer | scroll-text | recipes | No | — | ● |
+| exports | n | The four dealt-3-of-4 beers (Broyhan · Keut · Mumme · Bock) | — | — | No | — | ● |
 | the Flight | n | Your flipped (brewed) recipe cards; scores (n−1)² | unlock | — | Yes | — | ● |
-| lading | n | An order tile: a Kontor + a condition → printed ★ | scroll-text | ladings | No | ~~order~~ (ok as gloss), ~~goal~~, ~~contract~~ | ○ |
-| presence | n | Your parked dice at a Kontor | map-pin | — | No | ~~bump~~ (the act is "place presence") | ○ |
+| Contract | n | A Kontor bonus tile on the Destinations board: a Kontor + a condition → printed ★, claimed on a qualifying delivery | scroll-text | Contracts | Yes | ~~lading~~, ~~order~~, ~~goal~~ | ● |
+| presence | n | Your parked dice at a Kontor | map-pin | — | No | ~~bump~~ (the act is "place presence") | ● |
 | prize | n | What a Kontor pays the cask's owner on delivery | — | prizes | No | ~~benefit~~, ~~reward~~ | ● |
 | fee | n | The wharf price printed on an acquirable item | — | fees | No | ~~cost~~ (generic ok), ~~price~~ | ● |
 | goods | n | Grain + hops, collectively | coins | — | No | ~~resources~~ | ● |
-| score track | n | The 50-cell ring; your disc records ★ scored in play | star | — | No | ~~the bank~~ | ○ |
-| ★ | n | The scoring unit (spoken "stars") | star | — | — | ~~VP~~, ~~points~~ (prose ok, never mixed on one surface) | ● |
+| display | n | A face-up row components are taken from (Ships 4 · buildings 4 · Specialists 4 · Contracts 3) | — | displays | No | ~~pool~~ (face-down decks and general stock = "supply") | ● |
+| score track | n | The 50-cell ring; your disc records ★ scored in play | star | — | No | ~~the bank~~ | ● |
+| step | n | +1 on an aging die ("Age 3" = 3 steps, split freely) | — | steps | No | ~~age point~~ | ● |
+| ★ | n | The scoring unit — the glyph, on every surface | star | — | — | ~~VP~~, ~~points~~ (text), ~~stars~~ (text) | ● |
 
 ## §2. Verb lexicon (locked — no synonyms in printed copy)
 
@@ -42,23 +49,25 @@ NOT player-facing and keep their names — only printed/rendered copy is governe
 | **score** | Add ★ to your score-track disc at once | ~~bank~~ |
 | **deliver** | A cask resolves at its Kontor: score the die, park it, take the prize | ~~ship (v)~~, ~~sell~~ |
 | **sail** | A full Ship departs; its casks then deliver in load order | ~~ship (v)~~, ~~depart~~ |
-| **park** | Set a tally die on a Kontor mat (pips up) | ~~place~~ (for dice) |
+| **park** | Set a quality die on the Destinations board (pips up) | ~~place~~ (for dice) |
 | **place presence** | Park 1 tray die (face 1) at a Kontor you have delivered to | ~~bump~~ |
 | **board** | A cask moves from your vessel onto a berth (the minimum reads the die here) | ~~embark~~ |
 | **load** | Put 1 Ready cask from your vessels onto a docked Ship | — |
 | **brew** | Pay a recipe; a tray die becomes the cask at its start value | — |
-| **age** | Turn a maturing die up (stops at the quality: Ready) | ~~mature (v)~~ |
+| **age** | Turn an aging die up (stops at the quality: Ready); the Cellar prints **Age 3** | ~~mature (v)~~ |
 | **lift** | A building turns the boarding die past its quality (cap 6) | ~~boost~~ |
-| **commission** | Harbor: pay 1 G, place a display Ship on a shipless slot | ~~buy a ship~~, ~~charter~~ |
-| **raise** | Place a building tile on a slot (score +3★) | ~~build~~, ~~construct~~ |
+| **commission** | Harbor: pay 1 G, place a display Ship on a slot without a Ship | ~~buy a ship~~, ~~charter~~ |
+| **build** | Place a building tile from the display on a slot; the builder scores +3★ | ~~raise~~, ~~place~~ (for buildings), ~~construct~~ |
 | **seat** | Place a Specialist into an open seat | ~~hire~~ (allowed as the load-bonus label only) |
-| **claim** | Take a matching lading on delivery; score its ★ at once | ~~fulfil~~ |
+| **claim** | Take a matching Contract on delivery; score its ★ at once | ~~fulfil~~ |
+| **resolve** | Work through your line: its 2 stations + 2 slots — any order, each once, all optional | ~~resolve the stops~~ |
 | **gain / spend / pay** | Per the house guide §4.5 | — |
 | **warp** | Move an empty hull to another shipless slot (Capstan) | ~~move~~ (for ships) |
-| **overbuild** | Raise on an occupied slot (one payment; the old tile is boxed) | — |
+| **overbuild** | Build on an occupied slot (one payment; the old tile is boxed) | — |
 
 Trigger words per guide §4.4 — **"whenever" is banned**: use *when* (single moment) or
-*each time* (repeats).
+*each time* (repeats). **"stop" (n) is banned in player copy** — a building fires *when you
+resolve its slot*; a load-lift fires *when a cask loads here*.
 
 ## §3. Canonical orders (every surface, no exceptions)
 
@@ -70,8 +79,11 @@ Trigger words per guide §4.4 — **"whenever" is banned**: use *when* (single m
 | Beers | Gruit · Hopped · Broyhan · Keut · Mumme · Bock (by quality, Broyhan before Keut) |
 | Scoring | Delivered dice · Scored in play · Majorities · the Flight · Guild ★ |
 | Ships | Skute · Cog · Hulk |
+| A turn | Move · Choose a line · Resolve the line |
 
-## §4. Applied decisions (2026-08-02, designer-called)
+## §4. Applied decisions
+
+*2026-08-02, designer-called:*
 
 1. **~~bank~~ → score.** "Banks 5★" → "scores 5★"; "banks at once" → "score at once"; the
    scoring category "the bank" → **"scored in play"** (column label: *scored*).
@@ -80,14 +92,40 @@ Trigger words per guide §4.4 — **"whenever" is banned**: use *when* (single m
 3. **Deliver / Sail / ~~ship (v)~~.** One verb per beat: a full Ship **sails**; each cask
    **delivers**. "Ship" is a noun only. ("Voyage" = the counter noun for a completed sail.)
 4. **~~bump~~ → place presence** (the die **parks** at face 1; Town Crier: at face 2).
-5. **~~port / destination~~ → Kontor** in rules copy ("trading posts" allowed once, in
-   flavor). A Ship is "bound for its printed Kontor."
-6. **~~whenever~~ → when / each time** (Grain Factor, Hop Gardener, Supercargo, Stevedore
+5. **~~whenever~~ → when / each time** (Grain Factor, Hop Gardener, Supercargo, Stevedore
    cards re-templated).
 
-Dev shorthand (bank, gate, bump, pool, GM/CM…) stays legal in `CLAUDE.md`, `DESIGN.md`
-history, `AUTOMA.md`, `archive/`, code identifiers, and playtest harnesses — the registry
-governs what a PLAYER reads.
+*2026-08-03, designer-called (the fifteen-item review):*
+
+6. **~~house~~ → player** in all rules copy; "a merchant brewing house" survives only as
+   Overview flavor (the fiction, not the seat).
+7. **Kontor locked** — ~~port~~ and ~~destination~~ banned for the four; plural **Kontore**;
+   "destination" is reserved for a future *category* of delivery sites (the Hall, a trade
+   map). "Trading post" allowed once as the flavor gloss.
+8. **The Destinations board** = the board with the four Kontor panels AND the Contract row
+   (the row lives there, not on Market & Stores).
+9. **~~lading~~ → Contract** (designer delegated the pick; chosen for table familiarity and
+   because "Order" collides with *load order*).
+10. **~~tally die~~ → quality die** (full name **cask quality die** at first mention — the
+    die shows the cask's current quality).
+11. **The building verb is build** (~~raise~~, ~~place~~ banned); the builder scores +3★;
+    the load bonus reads **Build 1 building**.
+12. **★ is written as the glyph everywhere** — "points" and "stars" as text are banned on
+    every surface, learn-page prose included. ~~Age points~~ → **Age N** (N steps, split
+    freely).
+13. **~~printed verb~~ → printed action.**
+14. **The turn step is "resolve the line"** (~~resolve the stops~~); "stop" leaves player
+    copy entirely.
+15. **~~maturing~~ → aging** (the state adjective; *age* stays the verb; Ready unchanged).
+16. **~~pool~~ → supply / display** (supply = face-down decks + general stock; display =
+    a face-up row).
+17. **The index.html rulebook is a snapshot** — no version tags, no change history, no dev
+    pointers; it reads as the only rulebook a new player will ever see. Versions and
+    rationale live in `RULES.md` / `DESIGN.md`.
+
+Dev shorthand (bank, gate, bump, pool, lading, tally, GM/CM…) stays legal in `CLAUDE.md`,
+`DESIGN.md` history, `AUTOMA.md`, `archive/`, code identifiers, and playtest harnesses —
+the registry governs what a PLAYER reads.
 
 ## §5. Deferred to the next copy pass (logged, not yet applied)
 
@@ -95,6 +133,8 @@ governs what a PLAYER reads.
   reads well but predates the guide; a full §13 scan is a dedicated pass.
 - Title-case audit of card titles and type lines (§3).
 - The localization fill targets (§11) — English currently runs past 75% in the aid backs.
+- "pips" vs "face" kept as registered (two concepts: the number showing vs the side up);
+  revisit on the §14 pass-6 cold read.
 
 ---
 

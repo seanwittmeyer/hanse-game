@@ -23,7 +23,7 @@ const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the
   {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},
   {k:'reach',   ai:'map-pin',       act:'+1 presence',              q:2},
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe',          q:2},
-  {k:'survey',  ai:'search',        act:'Gain 1 building +3★',  q:3},
+  {k:'survey',  ai:'search',        act:'Build 1 building +3★',  q:3},
   {k:'hire',    ai:'wrench',        act:'Gain 1 specialist',      q:3},
   {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:4},
 ];
@@ -83,18 +83,18 @@ const BUILDINGS=[
   {k:'almoner',   nm:'Almoner’s Stall',   verb:'transform', tgt:'act',  ic:'heart',        n:1, act:'reach',  eff:'+1 presence'},
   // v45d power ladder — fees print in GRAIN only (hops are spent USING buildings, never buying them)
   {k:'racking',   nm:'Racking Hall',      verb:'transform', tgt:'act',  ic:'repeat',       n:1, g:3, act:'rack',   eff:'Swap 2 dice'},
-  {k:'assay',     nm:'Assay House',       verb:'transform', tgt:'act',  ic:'scale',        n:1, g:1, act:'assay',  eff:'1 maturing die ±1'},
-  {k:'abbey',     nm:'Abbey Cellar',      verb:'transform', tgt:'act',  ic:'hourglass',    n:1, g:2, act:'abbey',  eff:'3'+LU('sprout','h')+' → all maturing Ready'},
+  {k:'assay',     nm:'Assay House',       verb:'transform', tgt:'act',  ic:'scale',        n:1, g:1, act:'assay',  eff:'1 aging die ±1'},
+  {k:'abbey',     nm:'Abbey Cellar',      verb:'transform', tgt:'act',  ic:'hourglass',    n:1, g:2, act:'abbey',  eff:'3'+LU('sprout','h')+' → all aging Ready'},
   {k:'hopex',     nm:'Hop Exchange',      verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, act:'hopex',  eff:'1'+LU('sprout','h')+' → die +1 · max 2'},
   {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, eff:'Loading: die +1'},
   {k:'tollhouse', nm:'Tollhouse',         verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, eff:'Loading: die −1 → +3★'},
-  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, eff:'Loading: die +1 · sails with the Ship · houses aboard gain 2 goods'},
+  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, eff:'Loading: die +1 · sails with the Ship · players aboard gain 2 goods'},
   {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 berth'},
   {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'Gate −1'},
   {k:'richberth', nm:'Rich Berth',        verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'May sail 1 short'},
   // v4.6 "Guildbook" — the box prints 20 tiles; SETUP DEALS 17 (≥1 Kiln + ≥1 Mission Quay guaranteed)
   {k:'victual',   nm:'Victualling Yard',  verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, eff:'Loading: the bonus fires TWICE · sails with the Ship'},
-  {k:'exchange',  nm:'Merchants’ Exchange',verb:'transform',tgt:'act',  ic:'arrow-right-left', n:1, g:2, act:'exchange', eff:'Cycle 1 open lading'},
+  {k:'exchange',  nm:'Merchants’ Exchange',verb:'transform',tgt:'act',  ic:'arrow-right-left', n:1, g:2, act:'exchange', eff:'Cycle 1 open Contract'},
   {k:'capstan',   nm:'Warping Capstan',   verb:'transform', tgt:'act',  ic:'ship-wheel',   n:1, g:2, act:'capstan', eff:'Move 1 empty hull'},
 ];
 // ---- LADINGS (v4.5b) — the kontor ORDER row: 15 tiles ⚙, a face-up row of 3. Deliver a cask
@@ -161,7 +161,7 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:'Your recipes are FREE (every channel, Bruges too)', g:2, c:'#5b3a8e', n:1},
   {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'This tile is a 4th vessel: its cask ages +1 at your turn start · requires 3 beers brewed', g:2, c:'#5b3a8e', n:1},   // v4.7 rework: the tile matures its own cask
   {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'A Ship sails your cask on a rival’s turn: +1'+LU('wheat','g ic')+'+1'+LU('sprout','h ic'), h:2, c:'#5b3a8e', n:1},   // v4.7: 1H→2H (the probe's +29 outlier)
-  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'End: +1★ per claimed lading (max +5) · requires a claimed lading', g:1, h:1, c:'#5b3a8e', n:1},
+  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'End: +1★ per claimed Contract (max +5) · requires a claimed Contract', g:1, h:1, c:'#5b3a8e', n:1},
   {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'End: +2★ per kontor with 3+ parked dice', g:2, c:'#5b3a8e', n:1},
   {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:'Place presence: the die parks at face 2 (2★)', g:1, c:'#5b3a8e', n:1},   // v4.7: the 2-ports gate is CUT
   {ic:'arrow-right-left', nm:'Chandler', art:'a hand balance — grain on one pan, hop cones on the other', act:'Once per turn: swap 1'+LU('wheat','g ic')+' ↔ 1'+LU('sprout','h ic'), g:1, c:'#5b3a8e', n:1},
@@ -221,7 +221,7 @@ function ladingTile(d){const kc=d.dest?(SHIP_DEST[d.dest]||{}).kc||'#555':'#6b62
   const what=d.beer?('<span class="ld-beer">'+LU(QI)+' '+d.beer+'</span>')
                    :('<span class="ld-die">'+LU('dice-'+d.min)+' '+d.min+(d.min<6?'+':'')+'</span>');
   return '<div class="ldtile" style="--c:'+kc+'">'
-  +'<div class="ld-hd">'+LU('landmark')+'<span class="ld-k">'+(d.dest||'Any kontor')+'</span></div>'
+  +'<div class="ld-hd">'+LU('landmark')+'<span class="ld-k">'+(d.dest||'Any Kontor')+'</span></div>'
   +'<div class="ld-bd">'+what+'<span class="ld-arr">→</span><span class="ld-pts">'+d.pts+' '+LU(VP)+'</span></div>'
   +'<div class="ld-sub">deliver &amp; claim · score at once</div>'
   +'</div>';}
@@ -275,16 +275,16 @@ function caskCardFront(d,act){   // the AGING side: Q·name (+special) · the ma
       +'<span class="ct-cost">'+c+'</span></div>'
     +(d.tag?'<span class="ct-perk">'+d.tag.split('<br>').join(' ')+'</span>':'')
     +'<div class="ct-bot">'+track+'</div>'
-    +'<div class="ct-act2" title="the cask\'s action — fires from your Floor while it matures, and from its slot once deployed"><span class="ac">'+LU(act.ai)+'</span><span class="t">'+act.act+'</span></div>'
+    +'<div class="ct-act2" title="the load bonus — fires as the cask boards a Ship"><span class="ac">'+LU(act.ai)+'</span><span class="t">'+act.act+'</span></div>'
   +'</div>';}
 function caskCardBack(d,act){   // the WHARF side: the Q prints IN the die seat (the die parks on it);
   // name over action beside it; the beer art on the left fades into the beer's colour
   return '<div class="ctile ctB" style="--c:'+d.c+'">'
     +'<div class="ct-art"><img src="'+ART_DIR+'cask-'+d.nm.toLowerCase()+'.png" alt=""></div>'
-    +'<div class="ct-seat" data-die-seat title="the tally die parks here (face 1 on deploy; a Privilege turns it at departure)">'+LU(QI)+'<b>'+d.q+'</b></div>'
+    +'<div class="ct-seat" data-die-seat title="the quality die rides here — set at brew, parked at the Kontor on delivery">'+LU(QI)+'<b>'+d.q+'</b></div>'
     +'<div class="ct-main"><span class="ct-nm2">'+d.nm+'</span>'
       +'<span class="ct-act2"><span class="ac">'+LU(act.ai)+'</span><span class="t">'+act.act+'</span></span>'
-      +'<span class="ct-start" title="at brew: set your tally die to the START value; age points turn it up — READY at '+d.q+'">'+LU('dices')+'start <b>'+Math.max(1,d.q-(d.ready||0))+'</b> · ready '+d.q+'</span></div>'
+      +'<span class="ct-start" title="at brew: set your quality die to the START value; aging turns it up — READY at '+d.q+'">'+LU('dices')+'start <b>'+Math.max(1,d.q-(d.ready||0))+'</b> · ready '+d.q+'</span></div>'
   +'</div>';}
 // printables2 v4: a SHIP is a full-bleed 2.5″ CARD (was a small tile) — the destination's CITY is the
 // background art (wharf-<dest>.png), with the cask-card treatment: hull + commission cost over the art on

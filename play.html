@@ -537,7 +537,7 @@
     <div class="panel"><h3>Log <button class="copybtn" onclick="copyDiag(this)" data-tip="Copy the game log + full diagnostic state (turn, UI, AI runtime, board, raw JSON) to the clipboard.">⧉ Copy log + diagnostics</button></h3><div id="log"></div></div>
     <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
   </div>
-  <p class="note" style="text-align:center"><b>v4.7 “Every Cask” — prototype.</b> The building deck deals <b>17 of 20</b> each game; the specialist guild holds <b>13 designs</b> (the strongest print seat-gates, two score printed end-game ★). The die is the cask — it turns only when something turns it — and the dice are the ONE clock (the first <b>empty tray</b> sets the final round; 12 dice per house). A commission buys the hull + <b>one free load</b> (no ★). Deliver a qualifying cask to claim an open <b>lading</b> (the order row of 3). Every acquirable recipe/building/specialist carries its <b>printed fee</b> — recipes <b>H = Q−2, paid at Bruges too</b> (v45e); building/specialist kontor prizes stay free; Novgorod pays every delivered die <b>+2★</b>; Every cask pays its port’s prize (v4.7 — one grammar at all four kontors). Rules in <code>RULES.md</code> and the <b>📖 Player Aid</b>; the <a href="index.html">Rulebook</a>, <a href="learn.html">Learn</a> and <a href="print.html">print kit</a> pages track this build. All numbers ⚙.</p>
+  <p class="note" style="text-align:center"><b>v4.7 “Every Cask” — prototype.</b> The building deck deals <b>17 of 20</b> each game; the Specialist guild holds <b>13 designs</b> (the strongest print requirements, two score printed end-game ★). The die is the cask — it turns only when something turns it — and the dice are the ONE clock (the first <b>empty tray</b> sets the final round; 12 dice per player). A commission buys the Ship + <b>one free load</b> (no ★). Deliver a qualifying cask to claim an open <b>Contract</b> (the row of 3 on the Destinations board). Every acquirable recipe/building/Specialist carries its <b>printed fee</b> — recipes <b>H = Q−2, paid at Bruges too</b>; building/Specialist Kontor prizes stay free; Novgorod pays every delivered die <b>+2★</b>; every cask pays its Kontor’s prize. Rules in the <a href="index.html">Rulebook</a> and the <b>📖 Player Aid</b>; the <a href="learn.html">Learn</a> and <a href="print.html">print kit</a> pages track this build. All numbers ⚙.</p>
 </main>
 
 <div id="shoppop" class="hidden"></div>
@@ -573,26 +573,26 @@ const CNAMES=['Sean','Olli','Adaline','Jillian','Guest'];
 const ICONTIP={
   wheat:'Grain (G) — a brewing input and the medium of exchange.',
   sprout:'Hops (H) — a brewing input; the beer that travels.',
-  beer:'Cask — a brewed beer (matures in your vessel → boards a hull → its die parks at the kontor).',
+  beer:'Cask — a brewed beer (ages in your vessel → boards a Ship → its die parks at the Kontor).',
   store:'Market — SOURCE: take 2 goods (any mix).',
   'flask-conical':'Brewhouse — BREW: pay a recipe into an open vessel; a tray die becomes the cask, set to its printed start value.',
-  hourglass:'Cellar — AGE: 3 age points across your vessels (a die stops at its quality: READY).',
-  ship:'Harbor — COMMISSION: pay 1 G, place a display hull on a shipless slot, and you may load 1 Ready cask onto it at once (no ★ — the load is the reward).',
+  hourglass:'Cellar — AGE 3: turn your aging dice up three steps (a die stops at its quality: READY).',
+  ship:'Harbor — COMMISSION: pay 1 G, place a display Ship on a slot without a Ship, and you may load 1 Ready cask onto it at once (no ★ — the load is the reward).',
   anchor:'Slot — one of the 8 shared perimeter spaces; seats a building and/or a ship (never casks). Its line-stop fires the building action and/or a load of the ship.',
-  sailboat:'Ship — a neutral, destination-bound hull (Skute 1 · Cog 2 · Hulk 3 berths); load your own Ready casks; it sails the moment it is full.',
+  sailboat:'Ship — a neutral tile bound for its printed Kontor (Skute 1 · Cog 2 · Hulk 3 berths); load your own Ready casks; it sails the moment it is full.',
   landmark:'Kontor — a delivery port: a minimum (die N+, read as the cask boards) · value = the parked die (Novgorod: +2★ on top) · a prize · a majority.',
   'building-2':'Building — ONE green family, no owner: serves whoever activates it; the placer scores +3★. Gaining one at the wharf costs the TILE’s printed fee (chipless = free); London’s prize is free.',
   'scroll-text':'Recipe — permission to brew a beer. Flip the card (BREWED face) on your first brew — the flipped cards ARE the Flight. The printed fee (H = Q−2, v45e) applies at EVERY channel — Bruges grants the pick, never the waiver.',
   wrench:'Specialist — a private tile (2 seats): free at Bergen; its printed fee via the Hiring Post / hire bonus. Never two of a kind. The display refills at the END of the turn.',
   search:'Gain 1 building — pay the tile’s printed fee (chipless = free), choose from the display, place it at once (+3★). Free as London’s prize.',
-  'map-pin':'Presence — your parked dice at a kontor (majority weight + the clock).',
+  'map-pin':'Presence — your parked dice at a Kontor (majority weight + the clock).',
   coins:'Goods.',
   package:'Storage — how many goods you can hold.',
   layers:'The Flight — distinct beers BREWED (your flipped recipe cards): scores (n−1)², min 3 beers (v45h: pure scoring — every slot starts open).',
-  check:'Ready — the die has reached the quality; the cask may board a hull.',
+  check:'Ready — the die has reached the quality; the cask may board a Ship.',
   'user-round':'Worker — move it between the four stations; its station picks your legal lines.',
   unlock:'The Flight — distinct beers BREWED, (n−1)² min 3 (v45h: all floor slots start open).',
-  dices:'The tally die — maturation, boarding, value, presence and the clock in one number. 12 per house; the first EMPTY tray (every die committed) sets the final round.',
+  dices:'The cask quality die — aging, boarding, value, presence and the clock in one number. 12 per player; the first EMPTY tray (every die committed) sets the final round.',
 };
 const LU=(n,cls)=>{const i='<i data-lucide="'+n+'"'+(cls?' class="ic '+cls+'"':' class="ic"')+'></i>';
   return ICONTIP[n]?'<span class="iw" data-tip="'+attr(ICONTIP[n])+'">'+i+'</span>':i;};
@@ -622,11 +622,11 @@ const EXPORT_ROSTER=['broyhan','keut','mumme','bock'];   // 3 of 4 dealt each ga
 // return after the streamline settles. RECIPE_BUY is retired with the Market's Acquire: recipes are
 // EARNED - Bruges' prize, the 'Gain 1 recipe' load bonus, the Scrivener's Hall - never bought.)
 // v4.0 LOAD BONUSES: the cask's printed action fires AS IT BOARDS a hull (after any sail it completes).
-const CASK_ACT={source:'Gain 2 goods (any mix)',age:'Age +2 (2 age points across your vessels)',
-  load:'Load 1 more cask onto any eligible hull (its bonus fires too)',
-  reach:'Place 1 presence - a tray die to a kontor you have delivered to (1 star)',
+const CASK_ACT={source:'Gain 2 goods (any mix)',age:'Age +2 (2 steps across your vessels)',
+  load:'Load 1 more cask onto any eligible Ship (its bonus fires too)',
+  reach:'Place 1 presence - a tray die to a Kontor you have delivered to (1★)',
   recipe:'Gain 1 recipe - a dealt export card at its printed fee (H = Q−2 — paid at Bruges too, v45e)',
-  survey:'Gain 1 building - from the Wharf display, placed at once, +3 stars, at the tile\'s printed fee - chipless tiles free (free at London)',
+  survey:'Build 1 building - from the display, built at once, +3★, at the tile\'s printed fee - chipless tiles free (free at London)',
   hire:'Gain 1 specialist - from the display at its printed fee, open seat required (free at Bergen)',
   brew:'Brew 1 cask - pay its cost into an open vessel (tray die required)'};
 const CASK_ACT_POOL=['source','age','load','reach','recipe','survey','hire','brew'];   // v4.0: eight load bonuses; survey/hire Q3+, brew Q4+
@@ -645,17 +645,17 @@ const STATION_ACTS={
 };
 const STATION_ICON_TIP={coins:'Source - take 2 goods (any mix)',
   beer:'Brew - pay a recipe into an open vessel (a tray die becomes the cask)',
-  hourglass:'Age - 3 age points across your vessels (turn the dice up; a die stops at its quality)',
-  sailboat:'Commission - pay 1 G, place a display hull on a shipless slot, and you may load 1 Ready cask onto it at once (no stars - tempo, not points)'};
+  hourglass:'Age 3 - turn your aging dice up 3 steps (a die stops at its quality)',
+  sailboat:'Commission - pay 1 G, place a display Ship on a slot without a Ship, and you may load 1 Ready cask onto it at once (no ★ - tempo is the reward)'};
 
 // ---- DESTINATIONS (v4.0): the four kontore. Value = THE DIE, everywhere (Novgorod's printed scale is
 // cut; its identity = the raised gate + the 8/5/2 majority + the refine prize). Gates read the DIE as it
 // boards (after the slot's lifts). The Hall is TABLED.
 const DEST={
-  bruges  :{name:'Bruges',  gate:1, maj:[4,2,0], benefit:'recipe',   kontor:true, role:'Hub - the on-ramp: recipe ACCESS with every delivery (pay its H fee - v45e)'},
-  london  :{name:'London',  gate:2, maj:[5,3,1], benefit:'building', kontor:true, role:'Steelyard - the engine: a free building, placed at once (+3 stars)'},
-  bergen  :{name:'Bergen',  gate:2, maj:[9,5,2], benefit:'spec',     kontor:true, role:'Bryggen - the crews: a free specialist + THE rich majority'},
-  novgorod:{name:'Novgorod',gate:4, maj:[8,5,2], vbonus:2,           kontor:true, role:'Long Haul - the climb: die 4+ boards; every delivered die scores +2 stars on top (6-8)'},
+  bruges  :{name:'Bruges',  gate:1, maj:[4,2,0], benefit:'recipe',   kontor:true, role:'Hub - the on-ramp: recipe ACCESS with every delivery (pay its H fee)'},
+  london  :{name:'London',  gate:2, maj:[5,3,1], benefit:'building', kontor:true, role:'Steelyard - the engine: a free building, built at once (+3★)'},
+  bergen  :{name:'Bergen',  gate:2, maj:[9,5,2], benefit:'spec',     kontor:true, role:'Bryggen - the crews: a free Specialist + THE rich majority'},
+  novgorod:{name:'Novgorod',gate:4, maj:[8,5,2], vbonus:2,           kontor:true, role:'Long Haul - the climb: die 4+ boards; every delivered die scores +2★ on top (6-8)'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
 const DESTS=KONTORE.slice();
@@ -674,14 +674,14 @@ const LADINGS=[
  {dest:null,min:6,pts:3},
 ];
 const LADING_DISPLAY=3;
-function ladingLabel(l){return (l.dest?DEST[l.dest].name:'Any kontor')+' · '+(l.beer?STYLES[l.beer].name:('die '+l.min+(l.min<6?'+':'')))+' → '+l.pts+'★';}
+function ladingLabel(l){return (l.dest?DEST[l.dest].name:'Any Kontor')+' · '+(l.beer?STYLES[l.beer].name:('die '+l.min+(l.min<6?'+':'')))+' → '+l.pts+'★';}
 function refillLadings(){if(!S.ladingRow)return;while(S.ladingRow.length<LADING_DISPLAY&&(S.ladingDeck||[]).length)S.ladingRow.push(S.ladingDeck.shift());}
 function ladingMatches(dest,style,die){return (S.ladingRow||[]).map((l,i)=>({l,i}))
   .filter(o=>(!o.l.dest||o.l.dest===dest)&&(o.l.beer?o.l.beer===style:die>=o.l.min));}
 function claimLading(lp,idx){const l=(S.ladingRow||[])[idx];if(!l)return;
   S.ladingRow.splice(idx,1);(lp.ladings=lp.ladings||[]).push(l);
   lp.bank=(lp.bank||0)+l.pts;lp.bankL=(lp.bankL||0)+l.pts;
-  log('↳ '+lp.name+' claims a <b>lading</b> — '+ladingLabel(l)+' — <b>+'+l.pts+'★</b> scored.',true);}
+  log('↳ '+lp.name+' claims a <b>Contract</b> — '+ladingLabel(l)+' — <b>+'+l.pts+'★</b> scored.',true);}
 function ladingPick(i){const b=(UI.pendingLading||[])[0];if(!b)return;const lp=S.players[b.pid];
   if(i>=0){snapshot();claimLading(lp,i);}
   UI.pendingLading.shift();const rt=UI.goodsRt||'stops';UI.goodsRt=null;afterSail(rt);maybeRunAI();}
@@ -726,19 +726,19 @@ const BUILDINGS={
   // v45d [designer-ruled 2026-08-01]: the GWT-style POWER LADDER — fees print in GRAIN ONLY
   // (hops are spent USING buildings, never buying them); the power tier swings.
   racking   :{name:'Racking Hall',     icon:'repeat',       qty:1, fee:{g:3}, act:'rack',  desc:'Swap 2 dice'},
-  assay     :{name:'Assay House',      icon:'scale',        qty:1, fee:{g:1}, act:'assay', desc:'One maturing die ±1'},
-  abbey     :{name:'Abbey Cellar',     icon:'hourglass',    qty:1, fee:{g:2}, act:'abbey', desc:'Pay 3H: all maturing → Ready'},
+  assay     :{name:'Assay House',      icon:'scale',        qty:1, fee:{g:1}, act:'assay', desc:'One aging die ±1'},
+  abbey     :{name:'Abbey Cellar',     icon:'hourglass',    qty:1, fee:{g:2}, act:'abbey', desc:'Pay 3H: all aging → Ready'},
   maltkiln  :{name:'Malt Kiln',        icon:'flame',        qty:2, fee:{g:2}, desc:'Loading: die +1'},
   hopex     :{name:'Hop Exchange',     icon:'sprout',       qty:1, fee:{g:2}, act:'hopex', desc:'Pay up to 2H: die +1 each'},
   tollhouse :{name:'Tollhouse',        icon:'ticket',       qty:1, fee:{g:1}, desc:'Loading: die −1 → +3★'},
   cooperage :{name:'Cooperage',        icon:'package',      qty:1, fee:{g:2}, desc:'+1 berth'},
   customs   :{name:'Customs House',    icon:'scroll-text',  qty:1, fee:{g:2}, desc:'Minimum −1'},
   richberth :{name:'Rich Berth',       icon:'anchor',       qty:1, fee:{g:2}, desc:'May sail 1 short'},
-  bonded    :{name:'Bonded Store',     icon:'warehouse',    qty:1, fee:{g:2}, eph:true, desc:'Loading: die +1 · sails with its hull — shippers +2 goods'},
+  bonded    :{name:'Bonded Store',     icon:'warehouse',    qty:1, fee:{g:2}, eph:true, desc:'Loading: die +1 · sails with the Ship — shippers +2 goods'},
   // v4.6 "Guildbook" [designer-ruled 2026-08-02]: +3 designs — the event family grows (the
   // Bonded Store's sibling), the lading row gets its first hand, the wharf geometry opens.
-  victual   :{name:'Victualling Yard', icon:'boxes',        qty:1, fee:{g:2}, eph:true, desc:'Loading: the bonus fires TWICE · sails with its hull'},
-  exchange  :{name:'Merchants’ Exchange',icon:'arrow-right-left',qty:1, fee:{g:2}, act:'exchange', desc:'Cycle 1 open lading (its replacement shows now)'},
+  victual   :{name:'Victualling Yard', icon:'boxes',        qty:1, fee:{g:2}, eph:true, desc:'Loading: the bonus fires TWICE · sails with the Ship'},
+  exchange  :{name:'Merchants’ Exchange',icon:'arrow-right-left',qty:1, fee:{g:2}, act:'exchange', desc:'Cycle 1 open Contract (its replacement shows now)'},
   capstan   :{name:'Warping Capstan',  icon:'ship-wheel',   qty:1, fee:{g:2}, act:'capstan', desc:'Move 1 EMPTY hull to any shipless slot'},
 };
 const BUILD_DECK_DEAL=17;   // ⚙ v4.6: the box prints 20 tiles — SETUP DEALS 17 (the exports' deal-3-of-4 grammar on the wharf)
@@ -767,7 +767,7 @@ const SPEC_FEE={cellar:{h:2},granary:{g:2},hopgarden:{h:2},crane:{g:1},braumeist
 const SPEC_GATE={
   flight3:{txt:'3 distinct beers brewed',ok:function(p){return flightBeers(p)>=3;}},
   lading1:{txt:'a lading claimed',ok:function(p){return (p.ladings||[]).length>=1;}},
-  ports2:{txt:'delivered to 2 kontore',ok:function(p){return KONTORE.filter(function(k){return deliveredAt(p,k)>0;}).length>=2;}},
+  ports2:{txt:'delivered to 2 Kontore',ok:function(p){return KONTORE.filter(function(k){return deliveredAt(p,k)>0;}).length>=2;}},
 };
 function specGate(p,key){const g=(IMPROVEMENTS[key]||{}).gate;return !g||!SPEC_GATE[g]||SPEC_GATE[g].ok(p);}
 function specGateTxt(key){const g=(IMPROVEMENTS[key]||{}).gate;return (g&&SPEC_GATE[g])?SPEC_GATE[g].txt:null;}
@@ -779,14 +779,14 @@ const IMPROVEMENTS={
   cellar   :{name:'Cellarman', art:'an oak cask racked on a wooden stillage', desc:'Your dice start one higher (a Q3+ export never starts Ready)', cost:{}},
   granary  :{name:'Grain Factor', art:'a tied burlap sack overflowing with barley',desc:'Gain grain: +1 extra', cost:{}},
   hopgarden:{name:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole', desc:'Gain hops: +1 extra', cost:{}},
-  crane    :{name:'Stevedore', art:'a medieval wooden treadwheel harbor crane', desc:'Whenever you load, load up to 2 casks', cost:{}},
+  crane    :{name:'Stevedore', art:'a medieval wooden treadwheel harbor crane', desc:'Each time you load: up to 2 casks', cost:{}},
   braumeister:{name:'Braumeister', art:'a long wooden mash paddle over a copper', desc:'At the start of your turn, your ripest maturing cask ages +1', cost:{}},   // v4.5b: the EARNED heir of the cut auto-age
   // ---- v4.6 "Guildbook": the 8 GUILD designs (1 copy each — scarce; three print EARN-GATES) ----
   scholar  :{name:'Guild Scholar', art:'a bundle of sealed recipe scrolls', desc:'Your recipes are FREE (every channel, Bruges included)', cost:{}},
   innkeeper:{name:'Innkeeper', art:'a hanging tavern sign over a cellar door', desc:'This tile is a 4th vessel — its cask ages +1 at the start of your turn', cost:{}, gate:'flight3'},   // v4.7 rework [probe: negative even free] — the tile now matures its own cask
-  supercargo:{name:'Supercargo', art:'a sealed manifest over a rope-bound chest', desc:'A hull sails your cask on a rival’s turn: gain 1G 1H', cost:{}},
-  chronicler:{name:'Chronicler', art:'an open chronicle with a quill', desc:'Game end: +1★ per claimed lading (max +5)', cost:{}, gate:'lading1'},
-  alderman :{name:'Alderman', art:'a chain of office on a velvet board', desc:'Game end: +2★ per kontor with 3+ of your parked dice', cost:{}},
+  supercargo:{name:'Supercargo', art:'a sealed manifest over a rope-bound chest', desc:'A Ship sails your cask on a rival’s turn: gain 1G 1H', cost:{}},
+  chronicler:{name:'Chronicler', art:'an open chronicle with a quill', desc:'Game end: +1★ per claimed Contract (max +5)', cost:{}, gate:'lading1'},
+  alderman :{name:'Alderman', art:'a chain of office on a velvet board', desc:'Game end: +2★ per Kontor with 3+ of your parked dice', cost:{}},
   towncrier:{name:'Town Crier', art:'a brass handbell', desc:'Place presence: the die parks at face 2 (2★ each)', cost:{}},   // v4.7: the 2-ports gate is CUT (probe: −5 mid — the gate delayed it into a dry window)
   chandler :{name:'Chandler', art:'a balance scale weighing grain against hops', desc:'Once per turn: swap 1 grain ↔ 1 hops', cost:{}},
   shipwright:{name:'Shipwright', art:'an adze over a hull rib', desc:'Your commissions are free (the 1G is waived)', cost:{}},
@@ -1052,13 +1052,13 @@ function lineGlyph(lk){const lit=LINES[lk].cells;return '<span class="lg" data-t
 const CELLTIP={
   Market:'Market · SOURCE — take 2 goods (any mix).',
   Brewhouse:'Brewhouse · BREW — pay a recipe into an open vessel; a tray die becomes the cask, set to its printed start value. The cask takes the face-up load bonus of its quality pile (steerable).',
-  Cellar:'Cellar · AGE — '+CELLAR_POOL+' age points across your vessels (turn the dice up; a die stops at its quality = READY).',
-  Harbor:'Harbor · COMMISSION — pay 1G, place one of the 4 display hulls on a shipless slot (Skute 1 · Cog 2 · Hulk 3 berths). Then ONE free load: a Ready cask from your vessels may board the new hull at once (no ★ — tempo, not points).',
+  Cellar:'Cellar · AGE '+CELLAR_POOL+' — turn your aging dice up '+CELLAR_POOL+' steps (a die stops at its quality = READY).',
+  Harbor:'Harbor · COMMISSION — pay 1G, place one of the 4 display Ships on a slot without a Ship (Skute 1 · Cog 2 · Hulk 3 berths). Then ONE free load: a Ready cask from your vessels may board the new Ship at once (no ★ — tempo is the reward).',
 };
 function bldgTip(b){if(!b)return '';const def=BUILDINGS[b.b];return def.name+' · BUILDING — serves whoever activates it — '+def.desc;}
 function tileTip(t,slot){
   const b=slot?bAt(slot):null;const btip=b?(' · '+bldgTip(b)):'';
-  if(!t)return (b?bldgTip(b)+' · ':'')+'Open slot — commission a hull here'+(b?'':'; a building placed here authors the line (+3★)');
+  if(!t)return (b?bldgTip(b)+' · ':'')+'Open slot — commission a Ship here'+(b?'':'; a building built here authors the line (+3★)');
   if(t.type==='ship'){
     const cargo=t.load.length?(' · aboard '+t.load.map(L=>S.players[L.owner].name+'’s '+styleShort(L.style)+' (die '+L.die+')').join(', ')):'';
     return shipName(t)+' → '+DEST[t.dest].name+' · '+t.load.length+'/'+effCap(t)+' berths · boards die '+DEST[t.dest].gate+'+ · full → sails & delivers'+cargo+btip;}
@@ -1093,14 +1093,14 @@ function occToken(t){
 // destination chip + numbered load-order berths; buildings are the value/transform tile. Mirrors printables.html.
 const STYLE_COLOR={gruit:'#8a949c',hopped:'#c2922f',broyhan:'#b06a34',keut:'#9c5f2e',mumme:'#caa12a',bock:'#7c2128',gose:'#6e8b74',zerbster:'#5f7a3c',duckstein:'#7a5236',jopenbier:'#5e2433'};
 const DEST_COLOR={bruges:'#274b5c',london:'#b8860b',bergen:'#4a6b3a',novgorod:'#7c2128'};
-const P_ACT_TXT={source:'+2 goods',age:'Age +2',load:'Load 1 more',reach:'+1 presence',recipe:'gain 1 recipe',survey:'gain 1 building +3★',hire:'gain 1 specialist',brew:'Brew 1',rack:'swap 2 casks’ dice (no cap)',assay:'one maturing die ±1',hopex:'pay ≤2H: die +1 each',abbey:'pay 3H: ALL maturing → Ready',exchange:'cycle 1 open lading',capstan:'move 1 empty hull'};
+const P_ACT_TXT={source:'+2 goods',age:'Age +2',load:'Load 1 more',reach:'+1 presence',recipe:'gain 1 recipe',survey:'build 1 building +3★',hire:'gain 1 specialist',brew:'Brew 1',rack:'swap 2 casks’ dice (no cap)',assay:'one aging die ±1',hopex:'pay ≤2H: die +1 each',abbey:'pay 3H: ALL aging → Ready',exchange:'cycle 1 open Contract',capstan:'move 1 empty hull'};
 function pCost(g,h){let a='';if(g)a+='<span class="pgc">'+LU('wheat','pg')+g+'</span>';if(h)a+='<span class="pgc">'+LU('sprout','ph')+h+'</span>';return a;}
 // ---- the DEMAND DIE: pips = the ★ a cask banks from a value building (a d6, max 5; returns to the pool) ----
 const DIE_PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};   // 3×3 grid, 0-indexed
 // v2.2: the die IS the record — a real d6, hard max 6 (building bonus + Q4/Q5 premium, SET not accumulated;
 // the most recent modification wins; only buildings modify dice — a destination is the cask's STARTING value).
 function dieFace(n,cls,border){n=Math.min(6,n|0);const show=Math.max(1,n);let c='';for(let i=0;i<9;i++)c+='<span class="pip'+(DIE_PIPS[show].includes(i)?' on':'')+'"></span>';
-  return '<span class="die'+(cls?' '+cls:'')+'"'+(border?' style="border-color:'+border+'"':'')+' data-tip="'+attr('Demand die — +'+n+'★ this cask scores on delivery: the ONE number its Privilege printed, set when the cask departed its slot (one read, nothing recalculates). Delivery = the destination’s value + this die. A Privilege pays its owner only.')+'">'+c+'</span>';}
+  return '<span class="die'+(cls?' '+cls:'')+'"'+(border?' style="border-color:'+border+'"':'')+' data-tip="'+attr('Cask quality die — the die IS the cask: set to the printed START value at brew, aged up to the quality (READY), lifted past it only by buildings (cap 6), and parked at the Kontor on delivery — the pips are the ★ it scores.')+'">'+c+'</span>';}
 // v3.0-A: the die preview on a DEPLOYED cask is simply the tile's printed number (its conditions — the
 // destination match, Q gate, no-presence — are printed on the tile and read at departure; the preview
 // shows the tile's face, exactly what the table sees). Owner-only as ever.
@@ -1140,7 +1140,7 @@ function pShipFace(t,dir){if(!HC)return '';
     const op=(L.owner!=null)?S.players[L.owner]:null;
     const dv=Math.max(1,L.die||1);
     const bi=Math.min(i,printedCap-1);
-    ov+='<div style="position:absolute;left:.05in;top:'+(H-1-bi)+'in;width:2.4in;height:1in;z-index:2" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(dv?' \u00b7 tally die +'+dv+'\u2605':'')+' \u2014 loaded in berth '+(bi+1))+'">'
+    ov+='<div style="position:absolute;left:.05in;top:'+(H-1-bi)+'in;width:2.4in;height:1in;z-index:2" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(dv?' \u00b7 quality die +'+dv+'\u2605':'')+' \u2014 loaded in berth '+(bi+1))+'">'
       +'<div style="position:absolute;inset:0;transform:scale(.95);transform-origin:center">'+ctWithDie(HC.caskCardBack(d,hcAct(L.act||'source')),dv,op?op.color:'#b7a77e')+'</div></div>';});
   let wrap='<div style="position:relative;width:2.5in;height:'+H+'in">'+HC.shipCard(t.ship,DEST[t.dest].name)+ov+'</div>';
   let W=2.5,Hh=H;
@@ -1317,7 +1317,7 @@ function startGame(){
   S.players.forEach((p,i)=>{p.ai=ais[i];});
   document.getElementById('setup').classList.add('hidden');
   log('Game begins — '+setupN+' brewing houses'+(ais.some(a=>a)?' · AI seats: '+S.players.filter(p=>p.ai).map(p=>p.name+' ('+aiLabel(p)+')').join(', '):'')+'. The export beers this game (3 of 4): '+exportLabel()+'.');
-  log('v4.0 warm start: a Hulk → Bruges + one more hull and two neutral buildings sit on the slots; a ship market of 4 and displays of buildings & specialists are face-up; every house holds a Ready Gruit (die 1) in vessel 1 — load it when a hull suits.');
+  log('Warm start: a Hulk → Bruges + one more Ship and two neutral buildings sit on the slots; a Ship display of 4 and displays of buildings & Specialists are face-up; every player holds a Ready Gruit (die 1) in vessel 1 — load it when a Ship suits.');
   save();render();maybeRunAI();
 }
 
@@ -1410,7 +1410,7 @@ function enterCommission(rt){const p=cur();
   const disp=S.shipDisplay||[];
   if(!disp.length){log('↳ the ship market is empty.');resume(rt);return;}
   if(!canPay(p,commCostFor(p))){log('↳ a commission costs '+costStr(COMMISSION_COST)+'.');resume(rt);return;}
-  if(!shipFreeSlots().length){log('↳ every slot already holds a hull.');resume(rt);return;}
+  if(!shipFreeSlots().length){log('↳ every slot already holds a Ship.');resume(rt);return;}
   UI.sub='commission';UI.comm={returnTo:rt,idx:null};render();
 }
 function commPick(i){const d=UI.comm;if(!d)return;if(!(S.shipDisplay||[])[i])return;
@@ -1440,7 +1440,7 @@ function commSkip(){const rt=UI.comm?UI.comm.returnTo:'stops';UI.comm=null;UI.st
 
 // ---------- BREW ----------
 function enterBrew(rt){const p=cur();
-  if(S.presEnd&&trayDice(p)<=0){log('↳ no tally die left in the tray — a brew sets one on the cask.');resume(rt);return;}
+  if(S.presEnd&&trayDice(p)<=0){log('↳ no quality die left in the tray — a brew sets one on the cask.');resume(rt);return;}
   if(openVessel(p)<0||!p.recipes.some(r=>canBrew(p,r))){log('↳ Brew: no open vessel or affordable recipe.');resume(rt);return;}
   UI.sub='brew';UI.brew={returnTo:rt};render();
 }
@@ -1560,7 +1560,7 @@ function enterAbbey(rt){const p=cur();
 function abbeyGo(pay3){const A=UI.abbey;const p=cur();if(!A)return;
   if(pay3&&canPay(p,ABBEY_COST)&&maturingInVessels(p).length){snapshot();pay(p,ABBEY_COST);
     const done=[];maturingInVessels(p).forEach(o=>{o.c.die=o.c.q;done.push(styleShort(o.c.style)+' '+o.c.die+'/'+o.c.q);});
-    log('↳ '+LU('hourglass')+' <b>Abbey Cellar</b> — '+p.name+' pays 3H: <b>every maturing cask ages to READY</b> ('+done.join(' · ')+').',true);}
+    log('↳ '+LU('hourglass')+' <b>Abbey Cellar</b> — '+p.name+' pays 3H: <b>every aging cask ages to READY</b> ('+done.join(' · ')+').',true);}
   const rt=A.returnTo;UI.abbey=null;resume(rt);}
 
 /// ---------- ASSAY HOUSE (v4.5b): turn one of your maturing dice +1 (never above quality) ----------
@@ -1582,8 +1582,8 @@ function assaySkip(){const rt=UI.assay?UI.assay.returnTo:'stops';UI.assay=null;r
 // ---------- REACH (a tray die → a kontor you have delivered to; parks at face 1 = 1★) ----------
 function reachBenKontore(p){return KONTORE.filter(k=>deliveredAt(p,k)>0);}
 function enterReach(rt){const p=cur();const ks=reachBenKontore(p);
-  if(!ks.length){log('↳ Reach: no kontor you’ve delivered to yet.');resume(rt);return;}
-  if(S.presEnd&&trayDice(p)<=0){log('↳ Reach: no tally die left in the tray.');resume(rt);return;}
+  if(!ks.length){log('↳ Reach: no Kontor you’ve delivered to yet.');resume(rt);return;}
+  if(S.presEnd&&trayDice(p)<=0){log('↳ Reach: no quality die left in the tray.');resume(rt);return;}
   UI.sub='reach';UI.reach={ks,returnTo:rt};render();
 }
 function reachPick(k){snapshot();const p=cur();
@@ -1634,7 +1634,7 @@ function commitBldg(slot,key,pid,feePaid){
   S.buildings[slot]={b:key};
   refreshStops();   // v4.6c: a building raised on an active line slot opens that slot's action stop
   if(np){np.bank+=BUILD_PTS;np.bankB=(np.bankB||0)+BUILD_PTS;
-    log(np.name+' raises '+LU('building-2')+' <b>'+bName(key)+'</b> — <b>+'+BUILD_PTS+'★</b> scored. It serves everyone: '+BUILDINGS[key].desc+'.',true);}
+    log(np.name+' builds '+LU('building-2')+' <b>'+bName(key)+'</b> — <b>+'+BUILD_PTS+'★</b> scored. It serves everyone: '+BUILDINGS[key].desc+'.',true);}
   const occ=S.slots[slot];
   if(occ&&occ.type==='ship'&&occ.load.length>=sailCap(occ)){sailShip(slot,pid!=null?pid:S.active);return true;}
   return false;
@@ -1668,7 +1668,7 @@ function hirePick(key){const p=cur();const rt=UI.hire?UI.hire.returnTo:null;
   UI.hire=null;resume(rt);}
 function grantUpgrade(p,key){if(!p.upgrades.includes(key)&&specRoom(p)){p.upgrades.push(key);
   if(key==='innkeeper'){p.vessels.push(null);p.vslots=(p.vslots||VSLOTS_START)+1;p.innVessel=p.vessels.length-1;   // v4.6: the tile IS a 4th vessel · v4.7: remember WHICH vessel is the tile (its private drip)
-    if(!aiSimulating)log('↳ the '+LU('wrench')+' <b>Innkeeper</b> opens a 4th cellar — a cask may mature on the tile.');}}}
+    if(!aiSimulating)log('↳ the '+LU('wrench')+' <b>Innkeeper</b> opens a 4th cellar — a cask may age on the tile.');}}}
 // ---- THE FLIGHT UNLOCKS — INERT at v45h (all slots start open; the seam stays for the covers' return) ----
 function markBrewed(p,style){if(!STYLES[style])return;p.brewed=p.brewed||{};
   if(p.brewed[style])return;p.brewed[style]=1;
@@ -1683,7 +1683,7 @@ function markBrewed(p,style){if(!STYLES[style])return;p.brewed=p.brewed||{};
 function enterLoad(ships,rt,loadsLeft){const p=cur();
   ships=(ships||[]).filter(sid=>{const t=S.slots[sid];return t&&t.type==='ship';});
   const elig=readyInVessels(p).filter(o=>ships.some(sid=>canTake(sid,o.i)));
-  if(!ships.length||!elig.length){log('↳ nothing to load (no Ready cask meets a kontor’s minimum here).');resume(rt);return;}
+  if(!ships.length||!elig.length){log('↳ nothing to load (no Ready cask meets a Kontor’s minimum here).');resume(rt);return;}
   // v4.6d [designer-ruled 2026-08-02]: the STEVEDORE lifts EVERY load flow to 2 — the slot
   // stop, the commission's maiden load, and the "Load 1 more" bonus alike (was slot-only).
   loadsLeft=Math.max(loadsLeft||1,hasUpgrade(p,'crane')?2:1);
@@ -1746,13 +1746,13 @@ function sailShip(slot,creditId){const t=S.slots[slot];
   t.load.forEach(L=>{const owner=S.players[L.owner];deliverCask(owner,L,t.dest);grantPrize(owner,t.dest);});
   const paidSC={};t.load.forEach(L=>{const o=S.players[L.owner];   // v4.6 Supercargo: a hull sailing YOUR cask on a RIVAL's turn pays freight
     if(o&&o.id!==S.active&&hasUpgrade(o,'supercargo')&&!paidSC[o.id]){paidSC[o.id]=1;
-      log('↳ '+o.name+'’s '+LU('wrench')+' <b>Supercargo</b> collects the freight — the hull sailed on a rival’s clock.');gain(o,1,1);}});
+      log('↳ '+o.name+'’s '+LU('wrench')+' <b>Supercargo</b> collects the freight — the Ship sailed on a rival’s clock.');gain(o,1,1);}});
   if(bKeyAt(slot)==='bonded'){   // v4.5b EPHEMERAL trial: the Bonded Store sails with its ship
     const paid={};t.load.forEach(L=>{if(!paid[L.owner]){paid[L.owner]=1;gain(S.players[L.owner],1,1);}});
     S.buildings[slot]=null;
-    log('↳ the '+LU('warehouse')+' <b>Bonded Store</b> sails with the hull (boxed) — every contributing house gains 2 goods.');}
+    log('↳ the '+LU('warehouse')+' <b>Bonded Store</b> sails with the Ship (boxed) — every player with a cask aboard gains 2 goods.');}
   else if(bKeyAt(slot)==='victual'){S.buildings[slot]=null;   // v4.6: the Yard is EPHEMERAL too — consumed by the voyage it fed
-    log('↳ the '+LU('boxes')+' <b>Victualling Yard</b> sails with the hull (boxed) — its stores are spent.');}
+    log('↳ the '+LU('boxes')+' <b>Victualling Yard</b> sails with the Ship (boxed) — its stores are spent.');}
   fire('voyage',{ship:t,slot});
   S.slots[slot]=null;S.sailed++;
   S.shipDeck.push({ship:t.ship,dest:t.dest});
@@ -1784,7 +1784,7 @@ function addPresence(lp,k,n){
   const face=hasUpgrade(lp,'towncrier')?2:1;   // v4.6: the Town Crier's bumps park at FACE 2 — pips = ★, same die, same clock
   if(add>0){lp.presBonus[k]=(lp.presBonus[k]||0)+add;lp.bank+=add*face;
     if(S.presEnd)spendPresDisc(lp,add);
-    if(!aiSimulating)log('↳ '+lp.name+' parks '+add+' tally '+(add>1?'dice':'die')+' at <b>'+DEST[k].name+'</b> (face '+face+' — +'+(add*face)+'★, presence, clock'+(face===2?' · the Town Crier':'')+').');}
+    if(!aiSimulating)log('↳ '+lp.name+' parks '+add+' quality '+(add>1?'dice':'die')+' at <b>'+DEST[k].name+'</b> (face '+face+' — +'+(add*face)+'★, presence, clock'+(face===2?' · the Town Crier':'')+').');}
   if(add<(n||0)&&!aiSimulating)log('↳ '+lp.name+'’s tray is empty — no die for '+DEST[k].name+'.');
   return add;}
 function spendPresDisc(lp,n){lp.presPool=Math.max(0,(lp.presPool||0)-n);checkDiceEnd();}
@@ -1794,7 +1794,7 @@ function spendPresDisc(lp,n){lp.presPool=Math.max(0,(lp.presPool||0)-n);checkDic
 // hulls that never fill left them unable to trigger the end at all.
 function checkDiceEnd(){if(!S||S.ending||!S.presEnd)return;
   S.players.forEach(p=>{if(!S.ending&&trayDice(p)<=0){S.ending=true;S.endReason='dice';
-    log('★ '+p.name+'’s tray is <b>EMPTY</b> — every tally die committed: the final round!');}});}
+    log('★ '+p.name+'’s tray is <b>EMPTY</b> — every quality die committed: the final round!');}});}
 // AI auto-resolver for the London prize
 function aiBenefitAuto(lp,dest){const disp=S.buildDisplay||[];
   if(!disp.length||!bldgTargets(lp).length){log('↳ '+lp.name+' — no building to take ('+DEST[dest].name+' prize forfeit; 2 goods instead).');gain(lp,2,0);return;}
@@ -1944,7 +1944,7 @@ function renderScore(){
   dr+='<tr><td colspan="3"><b>Deliveries</b></td><td '+R+'><b>'+sc.deliv+'★</b></td></tr>';
   // 2 · the bank — builds / commissions / bumps (the tracked split)
   const bb=p.bankB||0,bl=p.bankL||0,bo=p.bankO||0,bp=Math.max(0,(p.bank||0)-bb-bl-bo);
-  const br='<tr><td>'+LU('building-2')+' Buildings raised</td><td>'+(bb/BUILD_PTS)+' × +'+BUILD_PTS+'★</td><td '+R+'><b>'+bb+'★</b></td></tr>'
+  const br='<tr><td>'+LU('building-2')+' Buildings built</td><td>'+(bb/BUILD_PTS)+' × +'+BUILD_PTS+'★</td><td '+R+'><b>'+bb+'★</b></td></tr>'
     +'<tr><td>'+LU('scroll-text')+' Ladings fulfilled</td><td>'+((p.ladings||[]).length)+' order'+((p.ladings||[]).length===1?'':'s')+'</td><td '+R+'><b>'+bl+'★</b></td></tr>'
     +(bo?'<tr><td>'+LU('ticket')+' Tollhouse</td><td>+3★ per stamped cask</td><td '+R+'><b>'+bo+'★</b></td></tr>':'')
     +'<tr><td>'+LU('map-pin')+' Placed presence</td><td>1★ per face-1 die</td><td '+R+'><b>'+bp+'★</b></td></tr>'
@@ -1960,7 +1960,7 @@ function renderScore(){
   // 5 · the GUILD collectors (v4.6) — endgame ★ printed on seated specialists
   let gr='';
   if(hasUpgrade(p,'chronicler'))gr+='<tr><td>'+LU('wrench')+' Chronicler</td><td>+1★ per claimed lading (max +5) — '+((p.ladings||[]).length)+' claimed</td><td '+R+'><b>'+Math.min(5,(p.ladings||[]).length)+'★</b></td></tr>';
-  if(hasUpgrade(p,'alderman'))gr+='<tr><td>'+LU('wrench')+' Alderman</td><td>+2★ per kontor with 3+ parked dice — '+KONTORE.filter(k=>presenceAt(p,k)>=3).length+' qualify</td><td '+R+'><b>'+(2*KONTORE.filter(k=>presenceAt(p,k)>=3).length)+'★</b></td></tr>';
+  if(hasUpgrade(p,'alderman'))gr+='<tr><td>'+LU('wrench')+' Alderman</td><td>+2★ per Kontor with 3+ parked dice — '+KONTORE.filter(k=>presenceAt(p,k)>=3).length+' qualify</td><td '+R+'><b>'+(2*KONTORE.filter(k=>presenceAt(p,k)>=3).length)+'★</b></td></tr>';
   const T=(title,rows)=>'<div class="asec"><b>'+title+'</b><table class="atable">'+rows+'</table></div>';
   host.innerHTML='<button class="modal-x" onclick="closeScore()" aria-label="Close" title="Close">×</button>'
     +'<h2>★ Score breakdown</h2>'+tabs
@@ -1980,9 +1980,9 @@ function gameOver(){
   aiCancel();
   if(!S.endedAt)S.endedAt=new Date().toISOString();
   const {rows,cmp}=finalRows();const win=rows[0];
-  let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>House</th><th>Deliveries<br><span class="note">(parked dice)</span></th><th>Scored in play<br><span class="note">(raises · ladings · stamps · presence)</span></th><th>Majorities</th><th>Flight</th><th>Guild<br><span class="note">(specialist ★)</span></th><th>Total</th></tr>';
+  let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>Player</th><th>Deliveries<br><span class="note">(parked dice)</span></th><th>Scored in play<br><span class="note">(builds · Contracts · stamps · presence)</span></th><th>Majorities</th><th>Flight</th><th>Guild<br><span class="note">(specialist ★)</span></th><th>Total</th></tr>';
   rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+'</td><td>'+r.sc.bank+'</td><td>'+r.sc.maj+'</td><td>'+(r.sc.flight||'·')+'</td><td>'+(r.sc.guild||'·')+'</td><td><b>'+r.sc.total+'</b></td></tr>';});
-  h+='</table><p class="note">Score = <b>deliveries</b> (each cask’s parked die, 1–6★) + <b>scored in play</b> (+'+BUILD_PTS+'★ per raise · claimed ladings · Tollhouse stamps · 1★ per placed presence) + kontor <b>majorities</b> (by parked dice) + the <b>Flight</b> (distinct beers BREWED, '+FLIGHT_MIN+'+ to score) + any <b>Guild</b> ★ printed on seated specialists (Chronicler · Alderman — v4.6). Tiebreak: the dice in your vessels, then goods.</p>'
+  h+='</table><p class="note">Score = <b>deliveries</b> (each cask’s parked die, 1–6★) + <b>scored in play</b> (+'+BUILD_PTS+'★ per build · claimed Contracts · Tollhouse stamps · 1★ per placed presence) + Kontor <b>majorities</b> (by parked dice) + the <b>Flight</b> (distinct beers BREWED, '+FLIGHT_MIN+'+ to score) + any <b>Guild</b> ★ printed on seated Specialists (Chronicler · Alderman). Tiebreak: the dice in your vessels, then goods.</p>'
     +'<button onclick="hideOver()">⚓ View the final board</button> <button onclick="openStudio()">⇪ Send to Studio'+(S.studioSent?' ✓':'')+'</button> <button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
 }
@@ -2602,12 +2602,12 @@ function toggleAid(){const el=document.getElementById('aid');if(el.classList.con
 function renderAid(){
   const ic=n=>LU(n);
   const keys=[['wheat','<b>Grain</b> (a currency)'],['sprout','<b>Hops</b> (a currency)'],['beer','<b>Cask</b> / beer quality'],
-    ['dices','<b>Tally die</b> — maturation · boarding · value · presence · clock, one number'],
+    ['dices','<b>Quality die</b> — aging · boarding · value · presence · clock, one number'],
     ['landmark','<b>Kontor</b> (Bruges/London/Bergen/Novgorod)'],
     ['building-2','<b>Building</b> (green — serves everyone; +'+BUILD_PTS+'★ to raise one)'],['wrench','<b>Specialist</b> (2 seats, earned free)'],
     ['layers','<b>The Flight</b> (distinct beers brewed)'],['anchor','<b>Slot</b> (a building and/or a ship)'],['sailboat','<b>Ship</b> (Skute 1 · Cog 2 · Hulk 3 berths)'],['hourglass','<b>Age</b> — turn a die up'],
     ['map-pin','<b>Presence</b> — your parked dice'],['store','<b>Market</b> station'],['flask-conical','<b>Brew</b> / vessel'],['scroll-text','<b>Recipe</b> (earned, never bought)'],
-    ['package-plus','<b>Load</b> — a Ready cask boards; its bonus fires'],['coins','<b>Source</b> (take goods)'],['scroll-text','<b>Lading</b> — an open order: claim on a matching delivery']];
+    ['package-plus','<b>Load</b> — a Ready cask boards; its bonus fires'],['coins','<b>Source</b> (take goods)'],['scroll-text','<b>Contract</b> — claim on a matching delivery']];
   const dRow=d=>{const D=DEST[d];
     const ben=D.benefit==='building'?'a building (placed, +'+BUILD_PTS+'★)':D.benefit==='spec'?'a specialist (free — per cask, like every prize)':D.benefit==='recipe'?'a recipe (at its H = Q−2 fee)':'— (the +'+(D.vbonus||0)+'★ premium is the prize)';
     return '<tr><td>'+ic('landmark')+' '+D.name+'</td><td>die '+D.gate+'+</td><td>the die'+(D.vbonus?' <b>+'+D.vbonus+'★</b>':'')+'</td><td>'+D.maj.join(' / ')+'</td><td>'+ben+'</td></tr>';};
@@ -2617,27 +2617,27 @@ function renderAid(){
   const lb=Object.keys(BUILDINGS).filter(k=>!BUILDINGS[k].act).map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
   document.getElementById('aidcard').innerHTML=
     '<h2>'+ic('scroll-text')+' Player Aid — v4.7 “Every Cask”</h2>'
-    +'<div class="asec"><b>Your turn</b><div class="note"><b>Move</b> to an adjacent station and activate its <b>row</b> or <b>column</b>. Resolve the line’s stops <b>in any order, all optional</b>: the two stations (one printed action each) + each slot’s <b>building action</b> and/or a <b>load of the ship</b> docked there. <b>The line is read LIVE</b> — a hull or building landing on a line slot mid-turn opens that stop (each fires once). Sharing a station costs nothing — move where the board is best.</div></div>'
-    +'<div class="asec"><b>The die IS the cask</b><div class="note">At <b>brew</b> a tray die is set to the printed <b>start value</b> (= quality − aging steps; Gruit starts Ready at 1). <b>Age points turn it up — it stops at the quality: READY.</b> Only buildings lift it past quality (Malt Kiln +1 as it boards, cap 6). <b>The kontor’s minimum reads the die as it boards</b>; at delivery the die <b>parks at the kontor showing its face</b> — pips = the ★ scored (never &lt;1), the body = presence, majorities and the clock. <b>No die in the tray → no brew, no placing presence.</b></div></div>'
+    +'<div class="asec"><b>Your turn</b><div class="note"><b>Move</b> to an adjacent station and activate its <b>row</b> or <b>column</b>. Resolve the line <b>in any order, all optional</b>: the two stations (one printed action each) + each slot’s <b>building action</b> and/or a <b>load of the Ship</b> docked there. <b>The line is read LIVE</b> — a Ship or building landing on a line slot mid-turn opens that slot (each part fires once). Sharing a station costs nothing — move where the board is best.</div></div>'
+    +'<div class="asec"><b>The die IS the cask</b><div class="note">At <b>brew</b> a tray die is set to the printed <b>start value</b> (= quality − aging steps; Gruit starts Ready at 1). <b>Aging turns it up — it stops at the quality: READY.</b> Only buildings lift it past quality (Malt Kiln +1 as it boards, cap 6). <b>The Kontor’s minimum reads the die as it boards</b>; at delivery the die <b>parks at the Kontor showing its face</b> — pips = the ★ scored (never &lt;1), the body = presence, majorities and the clock. <b>No die in the tray → no brew, no placing presence.</b></div></div>'
     +'<div class="asec"><b>The four stations — ONE action each</b><div class="note">'
       +ic('store')+' <b>Market</b> — take 2 goods (any mix).<br>'
       +ic('flask-conical')+' <b>Brewhouse</b> — brew (pay a recipe → an open vessel; the cask takes the face-up load bonus of its quality pile — steerable).<br>'
-      +ic('hourglass')+' <b>Cellar</b> — '+CELLAR_POOL+' age points across your vessels. <b>Dice never turn on their own</b> — the Cellar, Mission Quay, Age bonuses, the Cellarman and the Braumeister are the only hands on them.<br>'
+      +ic('hourglass')+' <b>Cellar</b> — Age '+CELLAR_POOL+': turn your aging dice up '+CELLAR_POOL+' steps. <b>Dice never turn on their own</b> — the Cellar, Mission Quay, Age bonuses, the Cellarman and the Braumeister are the only hands on them.<br>'
       +ic('anchor')+' <b>Harbor</b> — commission: pay '+costStr(COMMISSION_COST)+', place a display hull on a shipless slot (Skute 1 · Cog 2 · Hulk 3 berths) — then <b>one free load</b>: a Ready cask from your vessels may board the new hull at once (a normal load; a Skute sails on it). <b>No ★ — the hull and the tempo are the reward.</b></div></div>'
-    +'<div class="asec"><b>Loading & sailing</b><div class="note">A ship’s slot stop loads <b>one READY cask from YOUR vessels</b> whose die meets the kontor’s minimum (after the slot’s lifts) — the die rides the tile, and the cask’s printed <b>load bonus fires</b> (after any sail it completes). The Stevedore loads 2. A hull <b>sails the moment it is full</b> — a Skute on its first load — and every cask aboard delivers in load order; prizes resolve <b>when gained, owner’s choice</b>. Casks are private until aboard: the race is for <b>berths</b>, and topping off a hull sails everyone’s cargo on your clock.</div></div>'
-    +'<div class="asec"><b>Ladings — the order row</b><div class="note">Three '+ic('scroll-text')+' kontor orders lie face-up by the board. A delivered cask that <b>matches</b> one (its kontor + the die minimum, or the named beer) may <b>claim it</b>: the tile comes to you and its printed ★ bank at once — <b>one lading per delivered cask</b>. The row refills at the end of the turn. The open row is what prices a delivery — read it before you sail.</div></div>'
+    +'<div class="asec"><b>Loading & sailing</b><div class="note">Resolving a Ship’s slot loads <b>one READY cask from YOUR vessels</b> whose die meets the Kontor’s minimum (after the slot’s lifts) — the die rides the tile, and the cask’s printed <b>load bonus fires</b> (after any sail it completes). The Stevedore loads 2. A Ship <b>sails the moment it is full</b> — a Skute on its first load — and every cask aboard delivers in load order; prizes resolve <b>when gained, owner’s choice</b>. Casks are private until aboard: the race is for <b>berths</b>, and topping off a Ship sails everyone’s cargo on your clock.</div></div>'
+    +'<div class="asec"><b>Contracts — the Kontor bonuses</b><div class="note">Three '+ic('scroll-text')+' Contract tiles lie face-up on the Destinations board. A delivered cask that <b>matches</b> one (its Kontor + the die minimum, or the named beer) may <b>claim it</b>: the tile comes to you and its printed ★ score at once — <b>one Contract per delivered cask</b>. The row refills at the end of the turn. The open row is what prices a delivery — read it before you sail.</div></div>'
     +'<div class="asec"><b>Buildings — one green family</b><div class="note">Every building serves <b>whoever activates it</b>; placing one (London’s prize, or a <i>Gain 1 building</i> bonus — always from the display) scores the builder <b>+'+BUILD_PTS+'★</b>. Overbuild: <b>one payment per placement</b> — a fee-paid gain covers the ground (no rent); the '+costStr(OVERBUILD_FEE)+' rent applies only when an otherwise-free placement overbuilds (the displaced tile is boxed). <b>The fee rides the item:</b> gaining a recipe / building / specialist via a wharf channel (Scrivener’s Hall · Hiring Post · the gain bonuses) costs <b>the item’s printed fee</b> (a chipless building is free). London’s and Bergen’s prizes waive it — <b>a RECIPE’s fee (H = Q−2) is paid everywhere, Bruges included</b> (v45e). Using a building never adds a fee of its own.</div>'
       +'<div class="atags" style="margin-top:5px">'+ab+'</div><div class="atags" style="margin-top:4px">'+lb+'</div></div>'
-    +'<div class="asec"><b>Destinations</b> <span class="note">gate (the die, as boarded) · value = the die · majority 1/2/3 · prize</span>'
+    +'<div class="asec"><b>Destinations</b> <span class="note">minimum (the die, as boarded) · value = the die · majority 1/2/3 · prize</span>'
       +'<table class="atable"><tr><th>Kontor</th><th>Minimum</th><th>Value</th><th>Majority</th><th>Prize</th></tr>'+dests+'</table>'
       +'<div class="note"><b>2-player skips 2nd place.</b> Placing presence (the '+ic('map-pin')+' verb) parks a tray die at face 1 — 1★, presence and clock — only where you’ve delivered.</div></div>'
     +'<div class="asec"><b>Load bonuses</b> <span class="note">(drawn at brew from the face-up pile tops; Gruit is always <i>Gain 2 goods</i>)</span><div class="atags">'+acts+'</div></div>'
     +'<div class="asec"><b>Scoring</b><ol class="ascore">'
-      +'<li><b>Scored as you play:</b> deliveries (the parked die, 1–6★) · raises (+'+BUILD_PTS+'★) · claimed <b>ladings</b> (printed ★) · Tollhouse stamps (+3★, the die drops 1) · placed presence (1★). Commissions score nothing.</li>'
+      +'<li><b>Scored as you play:</b> deliveries (the parked die, 1–6★) · builds (+'+BUILD_PTS+'★) · claimed <b>Contracts</b> (printed ★) · Tollhouse stamps (+3★, the die drops 1) · placed presence (1★). Commissions score nothing.</li>'
       +'<li><b>Majorities (end-game)</b> — parked dice at each kontor (Bruges 4/2/0 · London 5/3/1 · Bergen 9/5/2 · Novgorod 8/5/2).</li>'
       +'<li><b>The Flight (end-game)</b> '+ic('layers')+' — distinct beers <b>BREWED</b>: 3 → '+FLIGHT_PTS[3]+' · 4 → '+FLIGHT_PTS[4]+' · 5 → '+FLIGHT_PTS[5]+' (min '+FLIGHT_MIN+').</li>'
-      +'<li><b>Guild ★ (end-game, v4.6)</b> '+ic('wrench')+' — a seated <b>Chronicler</b> (+1★/claimed lading, max +5) or <b>Alderman</b> (+2★ per kontor with 3+ parked dice) scores its printed line.</li>'
-      +'<li><b>The clock</b> — the tally dice alone: the first house whose <b>tray EMPTIES</b> (every one of its '+PRES_POOL+' dice committed — parked or riding) sets the final round. Dice never come back. Round '+MAX_ROUND+' is the safety backstop.</li>'
+      +'<li><b>Guild ★ (end-game)</b> '+ic('wrench')+' — a seated <b>Chronicler</b> (+1★/claimed Contract, max +5) or <b>Alderman</b> (+2★ per Kontor with 3+ parked dice) scores its printed line.</li>'
+      +'<li><b>The clock</b> — the quality dice alone: the first player whose <b>tray EMPTIES</b> (every one of its '+PRES_POOL+' dice committed — parked or riding) sets the final round. Dice never come back. Round '+MAX_ROUND+' is the safety backstop.</li>'
       +'</ol></div>'
     +'<div class="asec"><b>Icon key</b><div class="akey">'+keys.map(k=>'<div class="akrow">'+ic(k[0])+'<span>'+k[1]+'</span></div>').join('')+'</div></div>'
     +'<div style="text-align:center;margin-top:10px"><button class="primary" onclick="toggleAid()">Close</button></div>';
@@ -2648,7 +2648,7 @@ function renderBar(){
   document.getElementById('wholbl').textContent=p.name+(p.ai?' · AI':'');
   document.getElementById('wholbl').style.background=p.color;
   document.getElementById('wholbl').style.color='#fff';
-  document.getElementById('barres').innerHTML='<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span><span class="chip" data-tip="Tally dice: tray / pool. A die rides every brew, then parks at the kontor.">'+LU('dices')+' <b>'+trayDice(p)+'</b><span class="note">/'+(p.presPool||0)+'</span></span><span class="chip" style="cursor:pointer" onclick="openScore('+S.active+')" data-tip="Total score so far — click for the full breakdown.">★ <b>'+scorePlayer(p).total+'</b></span>';
+  document.getElementById('barres').innerHTML='<span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span><span class="chip" data-tip="Quality dice: tray / total. A die rides every brew, then parks at the Kontor.">'+LU('dices')+' <b>'+trayDice(p)+'</b><span class="note">/'+(p.presPool||0)+'</span></span><span class="chip" style="cursor:pointer" onclick="openScore('+S.active+')" data-tip="Total score so far — click for the full breakdown.">★ <b>'+scorePlayer(p).total+'</b></span>';
   if(S.over){
     document.getElementById('prompt').innerHTML='<b>Game over</b> — the final board stands for review.';
     document.getElementById('acts').innerHTML=btn('★ Final Standing','showOver()','primary')+btn('⇪ Send to Studio'+(S.studioSent?' ✓':''),'openStudio()','ghost')+btn('New Game','newGame()','ghost');
@@ -2671,7 +2671,7 @@ function renderBar(){
     prompt='Choose your line — the <b>row</b> or the <b>column</b>.';
     acts=btn(LINES[o.row].label,'chooseLine(\'row\')','go')+btn(LINES[o.col].label,'chooseLine(\'col\')','go');}
   else if(U==='stops'){
-    prompt='Resolve this line’s stops <b>in any order</b> — pick the next ('+UI.stops.length+' left). All optional.';
+    prompt='Resolve the line <b>in any order</b> — pick the next part ('+UI.stops.length+' left). All optional.';
     acts=UI.stops.map((s,i)=>stopAvail(s)?btn(stopLabel(s),'resolveStop('+i+')','go'):btnOff(stopLabel(s))).join('');
     if(!UI.stops.length)acts='<span class="note">nothing left on this line</span>';}
   else if(U==='source'){const n=UI.src.n;prompt='Take '+n+' good'+(n===1?'':'s')+' (any mix).';
@@ -2680,7 +2680,7 @@ function renderBar(){
   else if(U==='brew'){prompt='Brew — pay a recipe into an open vessel. <span class="note">Each shows its START die and the load bonus it will carry (the face-up pile top — steerable).</span>';
     acts=p.recipes.map(r=>{const act=pileTopFor(STYLES[r].q,r);const sd=startDieFor(p,r);
       return '<button '+(canBrew(p,r)&&openVessel(p)>=0?'':'disabled')+' onclick="brewPick(\''+r+'\')" data-tip="'+attr(STYLES[r].name+' Q'+STYLES[r].q+' — die starts at '+sd+'; its load bonus: '+CASK_ACT[act])+'">'+LU('beer')+' '+STYLES[r].name+' '+costIcons(STYLES[r].in)+' <span class="actchip" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:inherit">'+LU('dice-'+Math.min(6,sd))+' '+sd+'→'+STYLES[r].q+' · '+LU(CASK_ACT_ICON[act]||'')+act+'</span></button>';}).join('')+btn('Skip','resume(\''+(UI.brew?UI.brew.returnTo:'stops')+'\')','ghost');}
-  else if(U==='age'){const a=UI.age;prompt='Allocate '+a.pool+' age point'+(a.pool===1?'':'s')+' — turn a maturing die up (it stops at its quality).';
+  else if(U==='age'){const a=UI.age;prompt='Allocate '+a.pool+' step'+(a.pool===1?'':'s')+' — turn an aging die up (it stops at its quality).';
     acts=p.vessels.map((c,i)=>(c&&c.die<c.q)?btn(LU('beer')+styleShort(c.style)+' '+c.die+'/'+c.q,'ageAllot('+i+')','go'):'').filter(x=>x).join('')
       +btn('Done','ageDone()','primary')+btn('Skip','ageSkip()','ghost');}
   else if(U==='load'){const L=UI.load;
@@ -2692,9 +2692,9 @@ function renderBar(){
       acts=ships.map(sid=>{const sh=S.slots[sid];return btn(LU('sailboat')+' '+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+')'+(bKeyAt(sid)==='maltkiln'?' · '+LU('flame')+'+1':''),'loadOnto(\''+sid+'\')','go');}).join('')+btn('Back','loadBack()','ghost')+btn('Skip','loadSkip()','ghost');}}
   else if(U==='commission'){const d=UI.comm;const disp=S.shipDisplay||[];
     if(UI.stage==='place'){const sn=disp[d.idx];
-      prompt='Place the '+LU('sailboat')+' <b>'+(sn?SHIP_NAME[sn.ship]:'hull')+'</b> → <b>'+(sn?DEST[sn.dest].name:'')+'</b> — click a glowing (shipless) slot. <span class="note">then one free load.</span>';
-      acts=btn('◂ Pick a different hull','commBack()','ghost')+btn('Skip','commSkip()','ghost');}
-    else{prompt=LU('anchor')+' <b>Harbor — Commission</b>: pay '+costStr(commCostFor(p))+(hasUpgrade(p,'shipwright')?' <span class="note">(the Shipwright’s yard)</span>':'')+', place a hull, then <b>one free load</b> from your vessels. Pick one of the '+disp.length+':';
+      prompt='Place the '+LU('sailboat')+' <b>'+(sn?SHIP_NAME[sn.ship]:'Ship')+'</b> → <b>'+(sn?DEST[sn.dest].name:'')+'</b> — click a glowing (shipless) slot. <span class="note">then one free load.</span>';
+      acts=btn('◂ Pick a different Ship','commBack()','ghost')+btn('Skip','commSkip()','ghost');}
+    else{prompt=LU('anchor')+' <b>Harbor — Commission</b>: pay '+costStr(commCostFor(p))+(hasUpgrade(p,'shipwright')?' <span class="note">(the Shipwright’s yard)</span>':'')+', place the Ship, then <b>one free load</b> from your vessels. Pick one of the '+disp.length+':';
       acts=disp.map((sn,i)=>btn(LU('sailboat')+' '+SHIP_NAME[sn.ship]+' → '+DEST[sn.dest].name+' · '+SHIP_CAP[sn.ship]+' berth'+(SHIP_CAP[sn.ship]===1?'':'s'),'commPick('+i+')','go')).join('')+btn('Skip','commSkip()','ghost');}}
   else if(U==='placebldg'){const b=UI.tmp.placeBldg;prompt=S.players[b.owner].name+' — place '+LU('building-2')+' <b>'+bName(b.b)+'</b>: click a glowing slot (+'+BUILD_PTS+'★). <span class="note">('+BUILDINGS[b.b].desc+'. '+(b.feePaid?'The paid fee covers the ground — overbuild free; the displaced tile is boxed.':'Overbuilding costs the '+costStr(OVERBUILD_FEE)+' rent; the displaced tile is boxed.')+')</span>';
     acts='';}
@@ -2726,13 +2726,13 @@ function renderBar(){
     acts=hireable(lp).map(k=>btn(LU('wrench')+upName(k),'bspecPick(\''+k+'\')','go')).join('')+btn('Skip','bspecPick(null)','ghost');}
   else if(U==='lading'){const b=UI.pendingLading[0];const lp=S.players[b.pid];
     const m=ladingMatches(b.dest,b.style,b.die);
-    prompt=lp.name+'’s '+LU('beer')+styleShort(b.style)+' (die '+b.die+') at '+DEST[b.dest].name+' matches a '+LU('scroll-text')+' <b>lading</b> — claim one (score its ★ at once):';
+    prompt=lp.name+'’s '+LU('beer')+styleShort(b.style)+' (die '+b.die+') at '+DEST[b.dest].name+' matches a '+LU('scroll-text')+' <b>Contract</b> — claim one (score its ★ at once):';
     acts=m.map(o=>btn(LU('scroll-text')+ladingLabel(o.l),'ladingPick('+o.i+')','go')).join('')+btn('Decline','ladingPick(-1)','ghost');}
   else if(U==='rack'){const R=UI.rack;
     prompt=LU('repeat')+' <b>Racking Hall</b> — '+(R.a==null?'pick the <b>first</b> cask; its die will trade places with a second (<b>no quality cap</b> — the beer transfers).':'now the <b>second</b> cask — the two dice trade places whole.');
     acts=p.vessels.map((c,i)=>(c&&i!==R.a)?btn(LU('beer')+styleShort(c.style)+' '+c.die+'/'+c.q,'rackPick('+i+')','go'):'').filter(x=>x).join('')+btn('Skip','rackSkip()','ghost');}
   else if(U==='assay'){
-    prompt=LU('scale')+' <b>Assay House</b> — turn <b>one</b> maturing die ±1 (never above its quality, never below 1).';
+    prompt=LU('scale')+' <b>Assay House</b> — turn <b>one</b> aging die ±1 (never above its quality, never below 1).';
     acts=p.vessels.map((c,i)=>(c&&c.die<c.q)?(btn(LU('beer')+styleShort(c.style)+' '+c.die+'/'+c.q+' ▲ '+(c.die+1),'assayPick('+i+',1)','go')
       +(c.die>1?btn(LU('beer')+styleShort(c.style)+' ▼ '+(c.die-1),'assayPick('+i+',-1)','ghost'):'')):'').filter(x=>x).join('')+btn('Skip','assaySkip()','ghost');}
   else if(U==='loadopt'){const o=UI.loadopt;const c=p.vessels[o.vi];const base=boardDie(c,o.shipSlot);
@@ -2743,10 +2743,10 @@ function renderBar(){
     acts=p.vessels.map((c,i)=>(c&&c.die<6)?btn(LU('beer')+styleShort(c.style)+' '+c.die+' ▲ '+(c.die+1),'hopexAllot('+i+')','go'):'').filter(x=>x).join('')+btn('Done','hopexDone()','primary');}
   else if(U==='abbey'){
     const m=maturingInVessels(p);
-    prompt=LU('hourglass')+' <b>Abbey Cellar</b> — pay '+Hi(3)+'? <b>Every maturing cask ages to READY</b> ('+m.map(o=>styleShort(o.c.style)+' '+o.c.die+'→'+o.c.q).join(' · ')+').';
+    prompt=LU('hourglass')+' <b>Abbey Cellar</b> — pay '+Hi(3)+'? <b>Every aging cask ages to READY</b> ('+m.map(o=>styleShort(o.c.style)+' '+o.c.die+'→'+o.c.q).join(' · ')+').';
     acts=btn('Pay '+Hi(3)+' · all to Ready','abbeyGo(true)','go')+btn('Skip','abbeyGo(false)','ghost');}
   else if(U==='exchange'){
-    prompt=LU('arrow-right-left')+' <b>Merchants’ Exchange</b> — cycle <b>one open lading</b> under the deck; its replacement is posted at once.';
+    prompt=LU('arrow-right-left')+' <b>Merchants’ Exchange</b> — cycle <b>one open Contract</b> under the deck; its replacement is posted at once.';
     acts=(S.ladingRow||[]).map((l,i)=>btn(LU('scroll-text')+ladingLabel(l),'exchangePick('+i+')','go')).join('')+btn('Skip','exchangeSkip()','ghost');}
   else if(U==='capstan'){const C=UI.cap;
     if(C.sid==null){prompt=LU('ship-wheel')+' <b>Warping Capstan</b> — pick an <b>empty hull</b> to warp along the quay.';
@@ -2827,9 +2827,9 @@ function renderGrid(){
       const bH='<div class="bhalf">'+(b?pBldgFace(b,false,dirW):'<span class="halfemp" data-tip="'+attr('The building seat — a building placed here authors this slot (+'+BUILD_PTS+'★ to the builder; it serves everyone)')+'"><i data-lucide="building-2" class="ic"></i></span>')+'</div>';
       const oDep=t?((HC?HC.SHIP_H(t.ship):2)+0.08):1.0;
       const oH='<div class="ohalf'+(t&&!b?' full':'')+'"'+(vert?' style="aspect-ratio:2.5/'+oDep+'"':'')+'>'+(t?pShipFace(t,dirW)
-          :'<span class="halfemp" data-tip="'+attr('The ship seat — commission a hull here (the Harbor action)')+'"><i data-lucide="sailboat" class="ic"></i></span>')+'</div>';
+          :'<span class="halfemp" data-tip="'+attr('The Ship seat — commission a Ship here (the Harbor action)')+'"><i data-lucide="sailboat" class="ic"></i></span>')+'</div>';
       inner=vert?(TKDIR[s.id]==='tk-up'?oH+bH:bH+oH):(bH+oH);}
-    else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Open slot — commission a hull here, or place a building to author the line')+'"><i data-lucide="sailboat" class="ic"></i></span></span>';
+    else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Open slot — commission a Ship here, or build here to author the line')+'"><i data-lucide="sailboat" class="ic"></i></span></span>';
     let click=bldgPlacing?'placeBldgOn':(commPlacing?'commPlace':null);
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':(boardClick?'onclick="'+boardClick+'"':''))+'>'+inner+'</div>';
   });
@@ -2884,12 +2884,12 @@ function renderDests(){
       +'<span class="rmaj" data-tip="'+attr('End-game majority '+D.maj.join('/')+' — by parked dice (2p skips 2nd).')+'">'+D.maj.join('/')+'</span></div>'
       +'<div class="rh rline"><span class="rn">'+D.name+'</span>'
       +'<span class="rgate" data-tip="'+attr('A cask boards when its DIE (as boarded, after lifts) shows '+D.gate+'+.')+'"><b>'+LU('dices')+D.gate+'+</b></span></div>'
-      +'<div class="rh rline"><span data-tip="'+attr('Delivery value = the parked die'+(D.vbonus?' PLUS '+D.vbonus+'★ (printed on the mat — 6–8★ at gate 4)':' (1–6★)')+'. It parks here as presence.')+'"><b><span class="vstar">★</span> = die'+(D.vbonus?'+'+D.vbonus:'')+'</b></span>'+ben+'</div>'
+      +'<div class="rh rline"><span data-tip="'+attr('Delivery value = the parked die'+(D.vbonus?' PLUS '+D.vbonus+'★ (printed on the mat — 6–8★ at minimum 4)':' (1–6★)')+'. It parks here as presence.')+'"><b><span class="vstar">★</span> = die'+(D.vbonus?'+'+D.vbonus:'')+'</b></span>'+ben+'</div>'
       +'<div class="pres">'+pres+'</div></div>';
   });
   document.getElementById('dests').innerHTML=h;
   // THE LADING ROW (v4.5b) — the kontors' open orders live WITH the kontors: deliver a qualifying cask, claim the tile (its ★ bank at once); refills at end of turn
-  let lh='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('scroll-text')+' Open ladings</b> <span class="note">— claim on a matching delivery</span></div>';
+  let lh='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('scroll-text')+' Open Contracts</b> <span class="note">— claim on a matching delivery</span></div>';
   const lrow=S.ladingRow||[];
   if(lrow.length){const pend=(UI.sub==='lading')?(UI.pendingLading||[])[0]:null;
     const claimable=pend?ladingMatches(pend.dest,pend.style,pend.die).map(o=>o.i):[];
@@ -2897,7 +2897,7 @@ function renderDests(){
     lh+='<div class="ladingrow">'+lrow.map((l,i)=>{const claim=claimable.includes(i)||exch;
       return '<span class="ladingtile'+(claim?' stopgo':'')+'"'+(claim?' onclick="'+(exch?'exchangePick':'ladingPick')+'('+i+')"':'')+' data-tip="'+attr(exch?('Merchants’ Exchange — cycle this order under the deck (its replacement is posted at once).'):('Lading — deliver '+(l.beer?('a cask of '+STYLES[l.beer].name):('a cask at die '+l.min+(l.min<6?'+':'')))+' to '+(l.dest?DEST[l.dest].name:'any kontor')+' and claim it: +'+l.pts+'★ scored at once. One lading per delivered cask; the row refills at end of turn.'))+'">'
         +LU('landmark')+'<b>'+(l.dest?DEST[l.dest].name:'Any')+'</b> · '+(l.beer?LU('beer')+styleShort(l.beer):LU('dices')+' '+l.min+(l.min<6?'+':''))+' → <b>'+l.pts+'★</b></span>';}).join('')+'</div>';}
-  else lh+='<div class="note">(lading deck exhausted)</div>';
+  else lh+='<div class="note">(Contract deck exhausted)</div>';
   document.getElementById('ladings').innerHTML=lh;
 }
 

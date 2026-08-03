@@ -199,6 +199,23 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
+### 2026-08-03 — the Term Registry pass (language, not rules)
+The fifteen-item terminology review, designer-ruled: **player** (~~house~~) · **Kontor /
+Kontore** locked (~~port~~, ~~destination~~ banned — "destination" reserved for a future
+category of delivery sites) · the board is the **Destinations board** and it carries the
+**Contract row** (~~lading~~ → **Contract**; the pick was delegated — chosen for table
+familiarity and no collision with *load order*) · the die is the **cask quality die**
+(~~tally die~~) · the building verb is **build** (~~raise~~/~~place~~; the load bonus reads
+*Build 1 building*) · **★ as the glyph everywhere** (no "points"/"stars" text; **Age N**
+replaces ~~age points~~) · **printed action** (~~verb~~) · the turn step is **resolve the
+line** ("stop" leaves player copy) · **aging** (~~maturing~~) · **supply / display**
+(~~pool~~). Registry frozen in `STYLE.md` §1–§4. Applied across `index.html` ·
+`learn.html` · `play.html` · `print.html` · `components.js` and the normative text of
+`RULES.md` / `COMPONENTS.md` (version-letter quotes keep their period wording). The
+`index.html` rulebook is re-cut as a pure SNAPSHOT — no version tags, no change history,
+the "Tabled" section dropped (18 sections; the Tile Reference is §18). The print kit moves
+the Contract row onto the Destinations board. Language only — no rules change, no KEY bump.
+
 ### Parking lot — recorded for future discussion (NOT yet decided)
 - **LEGIBLE GOALS & STRATEGIC ARCS (2026-08-02, the designer's own words at the pool
   ruling):** *"Without legible goals or strategic arcs in the game, it can feel
