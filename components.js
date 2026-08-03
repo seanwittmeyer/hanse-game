@@ -637,7 +637,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 /* the cask tile action chip grows the same way — negative margins absorb the growth so the
    title and the start/ready line never move */
 +'.ctile .ct-act2{gap:0}'
-+'.ctile .ct-act2 .ac{width:.44in;height:.44in;margin:-.07in -.02in -.07in -.05in}'
++'.ctile .ct-act2 .ac{width:.44in;height:.44in;margin:-.07in .025in -.07in 0}'
 +'.ctile .ct-act2 .ac svg,.ctile .ct-act2 .ac .ic{width:.44in;height:.44in}'
 +'.ctA .ct-act2 .ac{width:.44in;height:.44in}'
 /* round 7: the seat holds the START die face; the quality mark heads the title row; the
