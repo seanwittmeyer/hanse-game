@@ -1,5 +1,27 @@
 # Icon Manifest — every icon in the game (for PNG illustration)
 
+> **LANDED & WIRED (2026-08-03):** the full in-scope set is generated and live in the kit —
+> **29 icons** in `art/icons/` (grain · hops · goods · quality-die · die-1…6 · star · ready ·
+> cask · ship · kontor + the 4 city crests · build · specialist · recipe · contract · presence ·
+> station-market/brew/age/harbor · station-age-3 · wharf · bonus-load) + the **4 station
+> SCENES** (`art/scene-market/brewhouse/cellar/harbor.png`). Wiring: `components.js` `LU()`
+> is art-aware via `ICON_ART` (a mapped name emits the `<img class="ai ic">`; `LUX` keeps raw
+> Lucide for the skipped crest contexts); lading headers print their kontor's crest; the
+> Wharf's station cells are the scene + title + the action's icon only (the Cellar's = the age
+> mark with the printed 3 — designer-ruled). `print.html` + the shared card faces are swapped;
+> `play.html` app chrome and `index/learn.html` still ride Lucide (next surface, on review).
+>
+> **Production record (regenerable):** master prompt = the c.1350 sticker adaptation, bold-contour
+> revision 2 (watercolor/gouache over sepia ink, shallow isometric base, die-cut sticker border,
+> upper-left light; goods = no base · architecture = lavender diamond tile · ships = sea patch);
+> generated 1024² on white via gemini-3.1-flash-image, alpha-keyed (edge flood-fill, soft shadow
+> kept, orphan-shadow components dropped), shipped at 512². Crests share ONE heater-shield
+> template — only field colour + charge vary — over the cog-in-profile base band; `kontor.png`
+> is the 2×2 composite (Bruges·London / Bergen·Novgorod). Die faces 1–6 are derived from one
+> blank die with programmatic pips (standard d6 layout); `station-age-3.png` composites a serif
+> numeral 3 (sepia fill, cream sticker stroke) onto the age icon. Scenes: painterly full-bleed
+> manuscript panels, calm top ~20% for the title, no text/people.
+
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
 > (the tiles already carry full-bleed art). **ADDED: one icon per Kontor** — a city crest
@@ -122,8 +144,20 @@ Sources of truth: `components.js` (card faces) · `play.html` (app UI) · `print
 | The Hall *(tabled)* | `crown` | `hall` | tabled seams only | Not in the current box — art optional. |
 | Trade Roads *(tabled)* | `truck` | `traderoads` | expansion sheet only | Tabled expansion — art optional; a wagon if drawn. |
 
-## 7. Count summary
+## 7. Count summary & what remains
 
-- **Distinct PNGs recommended:** 15 core + 5 station/wharf + 2 new bonus arts (build, plus splits riding core) + 18 building crests + 13 specialist crests + 11 reference = **~64 illustrations** (die faces 1–6 count as 6 of the core 15).
-- **Priority order for the illustrator:** §1 core alphabet → §3 load bonuses (they print smallest) → §4/§5 tile crests (they can lean on the tiles' full-bleed art already generated) → §2 stations → §6 reference.
-- **Hard requirements:** legible at ~4 mm print size (the bonus chips), one silhouette per concept, and the four splits that currently cause real table ambiguity: **recipe vs Contract**, **build-a-building (drop the magnifier)**, **Granary vs Goods**, **Exchange vs Chandler**.
+- **Landed (2026-08-03): all 29 in-scope icons + the 4 station scenes** — §1 core (incl. die
+  faces), §2 stations/wharf, §3's two new arts (build · bonus-load; the other six bonuses share
+  core art by design), and the added Kontor crest family. **Nothing is left to generate under
+  the current scope ruling.**
+- **Remaining (all designer-SKIPPED, riding Lucide until re-ruled):** §4 building crests (18) ·
+  §5 specialist crests (13) · §6 reference glyphs (majority · flight · clock · move · line ·
+  resolve · prize · bag · aid · the tabled hall/traderoads) — plus the two tabled-expansion
+  icon sets. Re-open any of these as its own wave if wanted.
+- **Wiring remaining:** `play.html` app-chrome Lucide → art (the card faces already swapped via
+  the shared library) · `index.html` §14 Icon Key + inline glyphs · `learn.html` — pending the
+  designer's print-kit review.
+- **Hard requirements (met):** legible at ~4 mm (QC'd on parchment/dark/sea + 4 mm strips), one
+  silhouette per concept, and the four ambiguity splits: **recipe vs Contract** (book vs
+  pictogram scroll) · **build drops the magnifier** (trowel-on-bricks) · Granary/Exchange
+  crest collisions dissolved by the §4 skip (crests stay glyphs; the shared verbs ride art).
