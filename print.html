@@ -91,10 +91,10 @@
      Only the tile's BACKGROUND COLOUR and ART layers extend outward — the content never moves, and the
      cut rrect stays on the tile's true edge. (.074in = 1.5mm ÷ SCALE — these rules live in native units.) */
   .bl{position:relative;width:100%;height:100%;overflow:hidden}
-  .bl>.ctile,.bl>.btile,.bl>.stile,.bl>.ldtile{position:absolute;left:.074in;top:.074in;overflow:visible;border-radius:0}
-  .bl>.ctile::before,.bl>.btile::before,.bl>.stile::before,.bl>.ldtile::before{content:"";position:absolute;inset:-.074in;background:var(--c,#33445a);z-index:-1}
+  .bl>.ctile,.bl>.btile,.bl>.stile,.bl>.ldtile,.bl>.icard{position:absolute;left:.074in;top:.074in;overflow:visible;border-radius:0}
+  .bl>.ctile::before,.bl>.btile::before,.bl>.stile::before,.bl>.ldtile::before,.bl>.icard::before{content:"";position:absolute;inset:-.074in;background:var(--c,#33445a);z-index:-1}
   /* the lading strip is flat kontor colour — its ::before IS the whole bleed (no art layer to extend) */
-  .bl>.btile>.artbg,.bl>.stile>.artbg,.bl>.stile>.st-wash{inset:-.074in}
+  .bl>.btile>.artbg,.bl>.stile>.artbg,.bl>.stile>.st-wash,.bl>.icard>.artbg{inset:-.074in}
   .bl>.ctile>.ct-art{left:-.074in;top:-.074in;bottom:-.074in}
   .bl>.ctB>.ct-art{left:auto;right:-.074in}
   .bl>.btile>.bt-foot{margin:0 -.074in -.074in;padding-left:.174in;padding-right:.174in;padding-bottom:.144in}   /* the foot colour bleeds down & sideways; its content keeps its .1in/.07in insets */
@@ -300,9 +300,11 @@
   /* ====================== MAIN BOARD — THE WHARF ====================== */
   .mboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--sea);border-radius:.12in;padding:.14in .16in;display:flex;flex-direction:column;gap:.04in;color:var(--ink)}
   .mboard svg,.mboard .ic{stroke-width:1.8}
-  .mb-head{display:flex;align-items:baseline;gap:.14in;margin-bottom:.02in}
-  .mb-head h2{margin:0;font-variant:small-caps;color:var(--sea);font-size:.26in;letter-spacing:.5px;display:flex;align-items:center;gap:.08in}
+  .mb-head{display:flex;align-items:center;gap:.14in;margin-bottom:.02in}
+  .mb-head h2{margin:0;font-variant:small-caps;color:var(--sea);font-size:.26in;letter-spacing:.5px;display:flex;align-items:center;gap:.08in;white-space:nowrap}
   .mb-head h2 svg,.mb-head h2 .ic{width:.2in;height:.2in}
+  .mb-head h2 img.ai{width:.55in;height:.55in;margin:-.14in 0}   /* the big illustrated header icons keep the row slim */
+  .mb-head h2.spec-h{margin-left:auto;margin-right:.2in}   /* the Specialists title sits over its column */
   .mb-head .sub{font-size:.1in;font-style:italic;color:var(--ink2)}
   .mb-main{flex:1;display:flex;gap:.14in;min-height:0;align-items:center}
   /* v3.4c.8 [ruled]: the board's arms reach only the BUILDING BAND — each slot prints the 2.5×1.32in
@@ -421,7 +423,7 @@
      backstop is rules-side only, untracked on the table) */
   /* ---- Market & Stores interior: the market column · the cellar (Specialists) column · the clock ---- */
   .sup-cols{display:flex;gap:.2in;flex:1;min-height:0}
-  .sup-main{flex:0 0 auto;width:9.7in;display:flex;flex-direction:column;gap:.08in}
+  .sup-main{flex:0 0 auto;width:10.4in;display:flex;flex-direction:column;gap:.08in}   /* wide enough for the 4-slot ship shelf — the Specialists column sits clear right */
   .sup-main .tracks{margin-top:auto}
   .sup-cellar{flex:0 0 auto;width:2.4in;display:flex;flex-direction:column;gap:.09in;min-width:0}
   .sup-cellar .disp-h{font-size:.14in}
@@ -460,7 +462,7 @@
   /* the minimum chip: bare (no pill), the die pulled up to centre on the text */
   .kp-q{margin-left:auto;display:inline-flex;align-items:center;gap:.03in;font-size:.2in;font-weight:900}
   .kp-q svg,.kp-q .ic{width:.19in;height:.19in}
-  .kp-q img.ai{width:.28in;height:.28in;margin-top:-.045in}
+  .kp-q img.ai{width:.28in;height:.28in;margin-top:-.23in}   /* the die rides high on the bar (designer values) */
   .kp-rows{flex:0 0 auto;display:flex;flex-direction:column;gap:.04in;padding:.04in .12in .11in;min-height:0}   /* anchored at the FOOT, over the gradient */
   .kp-cr{display:flex;gap:.1in;align-items:flex-end}
   .kp-cr.two{gap:.22in}   /* Novgorod: only 2 cells here (value moved to its own full-width row above), so give each more breathing room */
@@ -474,7 +476,7 @@
   .kp-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.04in;text-align:center;min-width:0}
   .kp-ch{display:inline-flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.03in;font-variant:small-caps;font-weight:bold;font-size:.108in;color:rgba(255,255,255,.88);text-shadow:0 1px 2px rgba(0,0,0,.75)}
   .kp-ch svg,.kp-ch .ic{width:.12in;height:.12in;flex:0 0 auto}
-  .kp-big{display:inline-flex;align-items:center;gap:0;font-weight:900;font-size:.3in;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 1.5px 3px rgba(0,0,0,.8)}   /* round 2: icon hugs its number */
+  .kp-big{display:inline-flex;align-items:center;gap:0;font-weight:900;font-size:.3in;color:#fff;line-height:1;white-space:nowrap;text-shadow:0 1.5px 3px rgba(0,0,0,.8);position:relative;left:.05in}   /* round 2: icon hugs its number · the value row nudges right to visually centre (designer) */
   .kp-big svg,.kp-big .ic{width:.34in;height:.34in}
   /* the by-quality scale — a STACKED chip per tier (Q above, ★ value below), not one long joined line, laid
      out on its OWN full-width row (kp-scalerow) instead of a 1-of-3 cell, so it scales to however many tiers
@@ -492,8 +494,11 @@
   /* ====================== the DESTINATIONS & HALL board (narrow · pairs with Market & Stores) ====================== */
   .destb{width:100%;height:100%;background:var(--parch);border:2.5px solid #5b3a8e;border-radius:.12in;padding:.16in .18in;display:flex;gap:.16in;color:var(--ink)}
   .destb svg,.destb .ic{stroke-width:1.8}
-  .db-kcol{flex:0 0 auto;width:3.1in;display:flex;flex-direction:column;gap:.09in;min-height:0}
-  .db-ccol{flex:1 1 auto;display:flex;flex-direction:column;gap:.12in;min-height:0;align-items:flex-start}
+  /* the KONTORE board is a 2×2 grid of panels; the CONTRACTS board a single row of 3 — separate
+     boards, sized to their contents, no rules text (designer, 2026-08-03) */
+  .destb.kboard,.destb.cboard{flex-direction:column;gap:.12in}
+  .kgrid{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:.14in;min-height:0}
+  .crow{flex:1;display:flex;gap:.16in;justify-content:center;align-items:center}
   .db-ccol .dslot{width:2.2in;height:1in}
   .db-hcol{flex:1;display:flex;flex-direction:column;gap:.09in;min-height:0}
   /* the Hall header — a kontor-style art panel, so the Hall reads as the fifth destination */
@@ -1055,13 +1060,11 @@ function supplyBoard(){
   const smpShip=[shipCard('skute','Bruges'),shipCard('cog','London'),shipCard('hulk','Bergen'),shipCard('cog','Novgorod')];
   const smpRec=RECIPES.slice(0,4).map(recipeCard);
   const smpImp=[0,1,2,3].map(i=>improveTile(IMPROVE[i]));
-  const market='<div class="disp-h m">'+LU('store')+'The Displays<span class="sm">— nothing here is bought: buildings are earned at London, specialists at Bergen, recipes at Bruges (and via the printed bonuses); Ships are commissioned at the Harbor (1G + 1 free load · no ★); open CONTRACTS on the Destinations board are claimed by qualifying deliveries</span></div>'
-    +shelf('Buildings — the display of 4 · building one scores +3★, it serves everyone','building-2',smpBld.map(s=>dslot('b','building-2',s)).join(''))
+  const market=shelf('Buildings — the display of 4 · building one scores +3★, it serves everyone','building-2',smpBld.map(s=>dslot('b','building-2',s)).join(''))
     +shelf('Ships — the display of 4 · commission at the Harbor (1G · 1 free load)','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''))
     +'<div class="shelf-lbl">'+LU('scroll-text')+'Recipes — the dealt export stacks (earned, never bought)</div>'
     +'<div class="shelf">'+smpRec.map(s=>dslot('r','scroll-text',s)).join('')+'</div>';
-  const cellar='<div class="disp-h i">'+LU('wrench')+'Specialists</div>'
-    +'<div class="shelf-lbl">'+LU('wrench')+'Display of 4 — earned free<span class="bag">'+LU('shopping-bag')+'</span></div>'
+  const cellar='<div class="shelf-lbl">'+LU('wrench')+'Display of 4 — earned free<span class="bag">'+LU('shopping-bag')+'</span></div>'
     +'<div class="shelf-v">'+smpImp.map(s=>dslot('i','wrench',s)).join('')+'</div>';
   // DESTINATIONS column — the right rim: where a voyage pays. The four kontore read as ONE family
   // (uniform panel anatomy: gate · value · benefit · majority · a presence zone for the discs);
@@ -1074,7 +1077,7 @@ function supplyBoard(){
 
   const inner='<div class="mboard supply" style="position:absolute;left:'+SCORE_RING_T+'in;top:'+SCORE_RING_T+'in;'
       +'width:'+(SUPPLY_NW-2*SCORE_RING_T).toFixed(3)+'in;height:'+(SUPPLY_NH-2*SCORE_RING_T).toFixed(3)+'in">'
-    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><span class="sub">the shared displays — THE clock is the '+LU('dices')+' <b>quality dice</b>: the first EMPTY tray — every die committed — sets the final round (dice never return; sails end nothing) — score laps the rim by fives (0–49, then +50): deliveries as they land, +3★ builds, Contract claims, Tollhouse stamps, 1★ placed presence — commissions score nothing</span></div>'
+    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><h2 class="spec-h">'+LU('wrench')+'Specialists</h2></div>'
     +'<div class="sup-cols">'
       +'<div class="sup-main">'+market+'</div>'
       +'<div class="sup-cellar">'+cellar+'</div>'
@@ -1086,21 +1089,14 @@ function supplyBoard(){
 // The Hall column speaks component, not paragraph: a kontor-style art header, four SHELVES (each coin
 // space = ONE icon + a ≤3-word label + the claim-cube outline), and the launch strip. The rules live on
 // the player aid; the board only has to be readable across a table.
-function destBoard(){
-  const kcol='<div class="db-kcol">'
-    +'<div class="disp-h k">'+LU('landmark')+'Kontore — the die parks here</div>'
-    +DESTS.map(kMini).join('')
-    +'<div class="kp-note" style="font-size:.1in;padding:.06in .08in;background:#f4ecd9;border:1.5px solid #c8b48a;border-radius:.08in;color:#4a3b28">'
-      +LU('dices')+' <b>Delivered dice PARK on their Kontor panel, face up</b> — the pips are the ★ scored (the audit), the bodies are presence: majorities count them (2p skips 2nd place). Placing presence parks a tray die at face 1 (1★).</div>'
-  +'</div>';
+function kontoreBoard(){return '<div class="destb kboard">'
+  +'<div class="disp-h k">'+LU('landmark')+'Kontore</div>'
+  +'<div class="kgrid">'+DESTS.map(kMini).join('')+'</div></div>';}
+function contractsBoard(){
   const cslot=d=>'<div class="dslot l">'+LU('contract')+(OVERLAY?'<div class="ovl">'+ladingTile(d)+'</div>':'')+'</div>';
-  const ccol='<div class="db-ccol">'
-    +'<div class="disp-h k">'+LU('contract')+'Contracts — the row of 3</div>'
-    +LADINGS.slice(0,3).map(cslot).join('')
-    +'<div class="kp-note" style="font-size:.1in;padding:.06in .08in;background:#f4ecd9;border:1.5px solid #c8b48a;border-radius:.08in;color:#4a3b28">'
-      +LU('contract')+' <b>A qualifying delivery may claim ONE matching Contract</b> — the tile comes to your seat, its ★ score at once (one per delivered cask; load order = pick order). The row refills from the deck at the <b>end of the turn</b>; claimed tiles never return.</div>'
-  +'</div>';
-  return '<div class="destb">'+kcol+ccol+'</div>';}
+  return '<div class="destb cboard">'
+  +'<div class="disp-h k">'+LU('contract')+'Contracts</div>'
+  +'<div class="crow">'+LADINGS.slice(0,3).map(cslot).join('')+'</div></div>';}
 
 //==================================================================
 // PAGINATION — deterministic sheets of absolutely positioned items
@@ -1137,14 +1133,19 @@ function addRectCut(pg,x,y,w,h){  // dedupe shared edges → each grid line cuts
 }
 // pack same-size items (a single kind) into a sub-rectangle [x0,y0]→[x1,y1] of an EXISTING page — used to tuck the
 // small TOKENS into the empty corners of the main board sheet. Rows flow within the box; round tokens get a cut circle.
-function packRegion(pages,pg,kind,htmlList,x0,y0,x1,y1,famTag,famPages){
-  const [nw,nh]=SIZE[kind];const w=+(nw*SCALE).toFixed(4),h=+(nh*SCALE).toFixed(4);
+function packRegion(pages,pg,kind,htmlList,x0,y0,x1,y1,famTag,famPages,bleed){
+  // bleed=true packs like packSpaced: box = tile + 1.5mm bleed/side (.bl wrapper extends the
+  // colours), boxes touch (bleeds = the 3mm cut gap), each piece cut on its own rounded rect
+  const [nw0,nh0]=SIZE[kind];
+  const nw=bleed?+(nw0+2*TILE_BLEED_N).toFixed(3):nw0, nh=bleed?+(nh0+2*TILE_BLEED_N).toFixed(3):nh0;
+  const w=+(nw*SCALE).toFixed(4),h=+(nh*SCALE).toFixed(4);
   const cols=Math.max(1,Math.floor((x1-x0)/w));let cx=x0,cy=y0,n=0,over=0;
   htmlList.forEach(html=>{
     if(n&&n%cols===0){cx=x0;cy=+(cy+h).toFixed(4);}
     if(cy+h>y1+0.01)over++;
-    pg.items.push({x:+cx.toFixed(4),y:+cy.toFixed(4),w,h,nat:[nw,nh],html});
+    pg.items.push({x:+cx.toFixed(4),y:+cy.toFixed(4),w,h,nat:[nw,nh],html:bleed?'<div class="bl">'+html+'</div>':html});
     if(kind==='tok'||kind==='disc'||kind==='wtok')pg.circles.push({cx:+(cx+w/2).toFixed(4),cy:+(cy+h/2).toFixed(4),r:+(CUTR[kind]*SCALE).toFixed(4)});
+    else if(bleed)(pg.rrects=pg.rrects||[]).push({x:+(cx+TILE_BLEED).toFixed(3),y:+(cy+TILE_BLEED).toFixed(3),w:+(w-2*TILE_BLEED).toFixed(3),h:+(h-2*TILE_BLEED).toFixed(3),r:TILE_CUT_R});
     else addRectCut(pg,cx,cy,w,h);
     cx=+(cx+w).toFixed(4);n++;
   });
@@ -1221,14 +1222,20 @@ function wharfBoardSheet(pages){
 // the MARKET & STORES board + the DESTINATIONS & HALL board — the table pair, on ONE trimmed 22in sheet.
 // (labels stay PLAIN TEXT — every consumer escapes for itself.)
 function supplyBoardSheet(pages){
-  const G=SUPPLY_GEO;const pg=newPage(pages,'boards','Market & Stores + Destinations boards (cut both)',G);
+  const G=SUPPLY_GEO;const pg=newPage(pages,'boards','Market & Stores + Kontore + Contracts boards (cut all three)',G);
   const w1=+(SUPPLY_NW*SCALE).toFixed(4),h1=+(SUPPLY_NH*SCALE).toFixed(4);
-  const w2=+(DEST_NW*SCALE).toFixed(4),  h2=+(DEST_NH*SCALE).toFixed(4);
+  // the right column: the KONTORE board (2×2 panels) over the CONTRACTS board (row of 3) —
+  // each sized to its contents (designer, 2026-08-03; the tall destinations column retires)
+  const KON_NW=7.6,KON_NH=7.1, CON_NW=7.6,CON_NH=1.8, colGap=0.3;
+  const w2=+(KON_NW*SCALE).toFixed(4),h2=+(KON_NH*SCALE).toFixed(4);
+  const w3=+(CON_NW*SCALE).toFixed(4),h3=+(CON_NH*SCALE).toFixed(4);
   const gap=0.35, x1=+((G.w-w1-w2-gap)/2).toFixed(3), y1=+((G.h-h1)/2).toFixed(3);
-  const x2=+(x1+w1+gap).toFixed(3), y2=+((G.h-h2)/2).toFixed(3);
+  const colH=+(h2+colGap+h3).toFixed(3);
+  const x2=+(x1+w1+gap).toFixed(3), y2=+((G.h-colH)/2).toFixed(3), y3=+(y2+h2+colGap).toFixed(3);
   pg.items.push({x:x1,y:y1,w:w1,h:h1,nat:[SUPPLY_NW,SUPPLY_NH],html:supplyBoard()});
-  pg.items.push({x:x2,y:y2,w:w2,h:h2,nat:[DEST_NW,DEST_NH],html:destBoard()});
-  pg.rrects=[{x:x1,y:y1,w:w1,h:h1,r:0.14},{x:x2,y:y2,w:w2,h:h2,r:0.14}];
+  pg.items.push({x:x2,y:y2,w:w2,h:h2,nat:[KON_NW,KON_NH],html:kontoreBoard()});
+  pg.items.push({x:x2,y:y3,w:w3,h:h3,nat:[CON_NW,CON_NH],html:contractsBoard()});
+  pg.rrects=[{x:x1,y:y1,w:w1,h:h1,r:0.14},{x:x2,y:y2,w:w2,h:h2,r:0.14},{x:x2,y:y3,w:w3,h:h3,r:0.14}];
 }
 // double-sided player aid: N IDENTICAL cards on a centred, SYMMETRIC 2×2 grid (full) or 1 centred (proof).
 // Because the cards are identical and the grid is symmetric on both axes, the FRONT and BACK sheets register
@@ -1250,12 +1257,15 @@ function buildPages(){
   // (2026-07-14: the tokens moved to their own sheet — see the TOKENS sheet below).
   const wpg=pages[pages.length-1];
   const wimps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wimps.push(improveTile(d));});
-  packRegion(pages,wpg,'imp',wimps,8.2,0.7,21.9,8.1,'Improvements',famPages);
-  // the CONTRACT strips ride S1 too (designer, 2026-08-03) — the open band under the Specialists
+  // both S1 tile families pack WITH the 1.5mm bleed (the .bl wrap — content extends past the cut)
+  const IMPX0=7.75, IMPX1=21.95, IMPY0=0.55;
+  packRegion(pages,wpg,'imp',wimps,IMPX0,IMPY0,21.95,8.12,'Improvements',famPages,true);
+  // the CONTRACT strips ride S1 too (designer, 2026-08-03) — the band under the Specialists
   const wlds=(MODE==='proof'?LADINGS.slice(0,3):LADINGS).map(d=>ladingTile(d));
-  const impCols=Math.max(1,Math.floor((21.9-8.2)/(SIZE.imp[0]*SCALE)));
-  const ldY=+(0.7+Math.ceil(wimps.length/impCols)*(SIZE.imp[1]*SCALE)+0.18).toFixed(3);
-  packRegion(pages,wpg,'ld',wlds,8.2,ldY,21.9,8.1,'Ladings',famPages);
+  const impBW=(SIZE.imp[0]+2*TILE_BLEED_N)*SCALE, impBH=(SIZE.imp[1]+2*TILE_BLEED_N)*SCALE;
+  const impCols=Math.max(1,Math.floor((IMPX1-IMPX0)/impBW));
+  const ldY=+(IMPY0+Math.ceil(wimps.length/impCols)*impBH+0.1).toFixed(3);
+  packRegion(pages,wpg,'ld',wlds,IMPX0,ldY,IMPX1,8.12,'Ladings',famPages,true);
   supplyBoardSheet(pages);   // the Supply & Tracks board — its own sheet
   // (v4.0: the Trade Roads board is TABLED with the expansions — olboard() stays for its return)
   // (player brewery boards are generated LAST — at the bottom of the page — see below)
