@@ -7,6 +7,12 @@
 > `kontor-london` · `kontor-bergen` · `kontor-novgorod` — and the generic `kontor` icon
 > composes all four. Style: the c.1350 sticker adaptation (bold-contour revision 2);
 > icons are TRANSPARENT PNGs keyed from white; the working set lives in `art/icons/`.
+>
+> **Merges/redesigns (designer, 2026-08-03):** *building* + *Build 1 building* are ONE icon
+> — **`build.png`**, the mason's trowel on bricks (the workshop-house building icon is
+> superseded; the noun and the verb share the build mark). **`contract.png`** is the tall
+> pictogram scroll (the sealed-packet direction was cut). **recipe** is being redesigned as
+> a BOOK (not a scroll); **presence** as a die-with-arrow-toward-a-Kontor-crest.
 
 **Purpose:** the complete inventory of Lucide placeholder icons to be replaced by
 illustrated PNG icons. One PNG per **concept** — where one Lucide glyph currently serves
