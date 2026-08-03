@@ -88,12 +88,12 @@ const BUILDINGS=[
   {k:'hopex',     nm:'Hop Exchange',      verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, act:'hopex',  eff:'1'+LU('sprout','h')+' → die +1 · max 2'},
   {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, eff:'Loading: die +1'},
   {k:'tollhouse', nm:'Tollhouse',         verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, eff:'Loading: die −1 → +3★'},
-  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, eff:'Loading: die +1 · sails with its hull — shippers +2 goods'},
+  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, eff:'Loading: die +1 · sails with the Ship · houses aboard gain 2 goods'},
   {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 berth'},
   {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'Gate −1'},
   {k:'richberth', nm:'Rich Berth',        verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'May sail 1 short'},
   // v4.6 "Guildbook" — the box prints 20 tiles; SETUP DEALS 17 (≥1 Kiln + ≥1 Mission Quay guaranteed)
-  {k:'victual',   nm:'Victualling Yard',  verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, eff:'Loading: the bonus fires TWICE · sails with its hull'},
+  {k:'victual',   nm:'Victualling Yard',  verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, eff:'Loading: the bonus fires TWICE · sails with the Ship'},
   {k:'exchange',  nm:'Merchants’ Exchange',verb:'transform',tgt:'act',  ic:'arrow-right-left', n:1, g:2, act:'exchange', eff:'Cycle 1 open lading'},
   {k:'capstan',   nm:'Warping Capstan',   verb:'transform', tgt:'act',  ic:'ship-wheel',   n:1, g:2, act:'capstan', eff:'Move 1 empty hull'},
 ];
@@ -153,17 +153,17 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Dice start +1 (Q3+ never starts Ready)', g:0, h:2, c:'#5b3a8e', n:3},
   {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → +1 '+LU('wheat','g ic'), g:2, c:'#5b3a8e', n:3},   // v4.7: 1G→2G (the probe's auto-pick core)
   {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → +1 '+LU('sprout','h ic'), g:0, h:2, c:'#5b3a8e', n:3},
-  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Whenever you load, load up to 2 casks', g:1, c:'#5b3a8e', n:3},
+  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Each time you load: up to 2 casks', g:1, c:'#5b3a8e', n:3},
   {ic:'wrench',     nm:'Braumeister', art:'a long wooden mash paddle over a copper kettle', act:'Start of your turn: your ripest maturing cask ages +1', g:1, h:1, c:'#5b3a8e', n:3},   // v4.5b — the earned heir of the cut auto-age
   // ---- v4.6 "Guildbook": the 8 GUILD designs — 1 copy each (scarce); three print SEAT GATES
   // (the Agricola prerequisite, read off components: flipped cards · claimed tiles · parked dice).
   // art: all eight own their object-shot files (the 2026-08-02 art pass; briefs in art/PROMPTS.md).
   {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:'Your recipes are FREE (every channel, Bruges too)', g:2, c:'#5b3a8e', n:1},
-  {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'This tile is a 4th VESSEL — its cask ages +1 at your turn start · gate: 3 beers brewed', g:2, c:'#5b3a8e', n:1},   // v4.7 rework: the tile matures its own cask
-  {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'A hull sails your cask on a rival’s turn: +1'+LU('wheat','g ic')+'+1'+LU('sprout','h ic'), h:2, c:'#5b3a8e', n:1},   // v4.7: 1H→2H (the probe's +29 outlier)
-  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'End: +1★ per claimed lading (max +5) · gate: a lading claimed', g:1, h:1, c:'#5b3a8e', n:1},
+  {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'This tile is a 4th vessel: its cask ages +1 at your turn start · requires 3 beers brewed', g:2, c:'#5b3a8e', n:1},   // v4.7 rework: the tile matures its own cask
+  {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'A Ship sails your cask on a rival’s turn: +1'+LU('wheat','g ic')+'+1'+LU('sprout','h ic'), h:2, c:'#5b3a8e', n:1},   // v4.7: 1H→2H (the probe's +29 outlier)
+  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'End: +1★ per claimed lading (max +5) · requires a claimed lading', g:1, h:1, c:'#5b3a8e', n:1},
   {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'End: +2★ per kontor with 3+ parked dice', g:2, c:'#5b3a8e', n:1},
-  {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:'Your presence bumps park at FACE 2 (2★)', g:1, c:'#5b3a8e', n:1},   // v4.7: the 2-ports gate is CUT
+  {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:'Place presence: the die parks at face 2 (2★)', g:1, c:'#5b3a8e', n:1},   // v4.7: the 2-ports gate is CUT
   {ic:'arrow-right-left', nm:'Chandler', art:'a hand balance — grain on one pan, hop cones on the other', act:'Once per turn: swap 1'+LU('wheat','g ic')+' ↔ 1'+LU('sprout','h ic'), g:1, c:'#5b3a8e', n:1},
   {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:'Your commissions are FREE (the 1'+LU('wheat','g ic')+' is waived)', h:1, c:'#5b3a8e', n:1},
 ];
@@ -223,7 +223,7 @@ function ladingTile(d){const kc=d.dest?(SHIP_DEST[d.dest]||{}).kc||'#555':'#6b62
   return '<div class="ldtile" style="--c:'+kc+'">'
   +'<div class="ld-hd">'+LU('landmark')+'<span class="ld-k">'+(d.dest||'Any kontor')+'</span></div>'
   +'<div class="ld-bd">'+what+'<span class="ld-arr">→</span><span class="ld-pts">'+d.pts+' '+LU(VP)+'</span></div>'
-  +'<div class="ld-sub">deliver &amp; claim · banks at once</div>'
+  +'<div class="ld-sub">deliver &amp; claim · score at once</div>'
   +'</div>';}
 // BUILDING CARD BACK — the flipped/displaced face: when your tile is overbuilt (the builder pays the 1G
 // ground rent) it returns to you FACE-DOWN into an OPEN Floor slot of your one row (none open → boxed) —

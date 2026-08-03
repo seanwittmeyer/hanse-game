@@ -2,7 +2,7 @@
 
 ## Get fully up to speed before any revision (do this first, every session)
 - **Before making revisions to values/actions — or any game change — be 100% up to date on the entire game system.** Don't start from a partial picture, and don't ask whether to do this: it is standing. Do it at the top of every session.
-- **Completely read the canonical set:** `CLAUDE.md`, `DESIGN.md`, and the full base catalog — `COMPONENTS.md`, `RULES.md`, and the HTML pages: `index.html`, `print.html`, `play.html`, `learn.html`. (The `/hanse-start` skill packages this session-start read + the table-first designer lens.)
+- **Completely read the canonical set:** `CLAUDE.md`, `DESIGN.md`, and the full base catalog — `COMPONENTS.md`, `RULES.md`, `STYLE.md` (the Term Registry — every word printed on a component comes from it), and the HTML pages: `index.html`, `print.html`, `play.html`, `learn.html`. (The `/hanse-start` skill packages this session-start read + the table-first designer lens.)
 - **Source of truth: `RULES.md` · `COMPONENTS.md` · `index.html` · `print.html`** (the specs + the published component kit). **`play.html` is the mirror** — the playable reference implementation; its `KEY` constant marks the **live version**. Reconcile every surface and flag any drift; when the mirror and the specs disagree, fix the disagreement itself (decide which is right, then align ALL surfaces), never just one side.
 - Only then map a change through the interlocks below before touching anything.
 
