@@ -37,6 +37,7 @@
   body.cut .it{visibility:hidden}
   /* baseline inline-icon size — body-text icons track the local font; component CSS overrides with explicit sizes */
   .ic{width:1em;height:1em;vertical-align:-.13em}
+  img.ai{width:1em;height:1em;object-fit:contain;vertical-align:-.13em}   /* the illustrated icons track the same box wherever the CSS pairs "svg,.ic" */
   /* goods-icon colours: the pale palette is for dark tile faces; use the token colours on light text panels */
   .mbox .g,.pb-sub .g,.card .c-buy .g{color:#9c7414}
   .mbox .h,.pb-sub .h,.card .c-buy .h{color:#5d7d34}
@@ -313,18 +314,15 @@
   .wslot{border:2.5px dashed rgba(255,255,255,.82);border-radius:.18in;background:rgba(20,14,8,.24);
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.75)}
   .wslot svg,.wslot .ic{width:.5in;height:.5in;opacity:.85;filter:drop-shadow(0 1px 3px rgba(0,0,0,.7))}
-  .stn{border-radius:.2in;color:#fff;padding:.14in;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1in;position:relative;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.55);box-shadow:0 3px 10px rgba(0,0,0,.35)}
+  /* the station cell (2026-08-03, designer-ruled): a painted SCENE fills the cell; over it only the
+     station TITLE (top — the scenes keep a calm top band) and the ACTION's illustrated icon (low-centre).
+     The verbose action reference lives in the side column + the player aid. */
+  .stn{border-radius:.2in;color:#fff;padding:.12in;display:flex;flex-direction:column;align-items:center;justify-content:space-between;position:relative;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.55);box-shadow:0 3px 10px rgba(0,0,0,.35)}
   .stn>*{position:relative;z-index:1}
-  /* roof-tile (fish-scale) texture over the station colour — an inline SVG <pattern> (not a CSS radial-gradient)
-     so it survives the PNG export: html2canvas can't rasterize tiled radial-gradients, but it renders inline SVG. */
-  .stn>.stn-tex{position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none}
-  .stn .bigic svg,.stn .bigic .ic{width:.8in;height:.8in;stroke-width:1.6}
-  .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.32in;line-height:1}
-  /* the action line, in the board's icon grammar: "/" = or · juxtaposed = both · ":" = per-each */
-  .stn .yield{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:.06in;margin-top:.06in;opacity:.95}
-  .stn .yield svg,.stn .yield .ic{width:.36in;height:.36in}
-  .stn .yield b{font-size:.3in;font-weight:900;line-height:1}
-  .stn .yield .sep{font-weight:bold;font-size:.15in;opacity:.85;line-height:1}
+  .stn>.stn-scene{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:center}
+  .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.34in;line-height:1;letter-spacing:.5px;text-shadow:0 1px 3px rgba(0,0,0,.8),0 0 .14in rgba(0,0,0,.55)}
+  .stn .stn-act{display:flex;align-items:center;justify-content:center;margin-bottom:.02in}
+  .stn .stn-act img.ai{width:.95in;height:.95in;filter:drop-shadow(0 2px 5px rgba(0,0,0,.55))}
   .stn.A{background:linear-gradient(155deg,#cda522,#9c7414)} .stn.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .stn.C{background:linear-gradient(155deg,#3d6b7e,#244554)} .stn.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
   .mb-side{flex:1;display:flex;flex-direction:column;gap:.055in;min-width:0}
@@ -801,8 +799,8 @@ function aidBack(){
         +row('building-2','London prize','a building from the display, built at once (+3★)')
         +row('wrench','Bergen prize','a specialist from the display, free')
         +row('star','Novgorod premium','every delivered die scores +2★ (minimum: die 4+ — no other prize)')
-        +row('scroll-text','Contract','deliver a matching cask → claim it: score its ★ at once (row of 3)')
-        +'<h5>'+LU('search')+'Load bonuses (printed on the cask)</h5>'
+        +row('contract','Contract','deliver a matching cask → claim it: score its ★ at once (row of 3)')
+        +'<h5>'+LU('package-plus')+'Load bonuses (printed on the cask)</h5>'
         +row('coins','Gain 2 goods','any mix')
         +row('package-plus','Load 1 more','another cask onto any eligible Ship')
         +row('scroll-text','Gain 1 recipe','its printed fee (H = Q−2) — paid at every channel, Bruges too')
@@ -901,16 +899,12 @@ function olboard(){
 // Board-design principle: the board carries shapes & icons only — every slot prints at the SAME
 // native size as the component it seats (2.5in cask/ship cards in 2.5in grid cells; both ride the
 // one global SCALE) — the verbose station reference lives in the side column.
-// the roof-tile texture, drawn as a tiled SVG <pattern> (scalloped arcs) — exports cleanly via html2canvas
-const STN_TEX='<svg class="stn-tex" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">'
-  +'<defs><pattern id="rooftex" width="57.6" height="38.4" patternUnits="userSpaceOnUse">'
-  +'<path d="M0 38.4 Q28.8 7 57.6 38.4" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="2.4"/>'
-  +'<path d="M0 34.4 Q28.8 3 57.6 34.4" fill="none" stroke="rgba(255,255,255,.13)" stroke-width="1.7"/>'
-  +'</pattern></defs><rect width="100%" height="100%" fill="url(#rooftex)"/></svg>';
-function station(L,nm,ic,yield_){return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
-  +STN_TEX
-  +'<span class="bigic">'+LU(ic)+'</span><span class="nm">'+nm+'</span>'
-  +'<span class="yield">'+yield_+'</span></div>';}
+// the station cell (2026-08-03): its painted scene (art/scene-<key>.png) + the title + the action's
+// illustrated icon — nothing else (the Cellar's action icon is the age mark with the printed 3).
+function station(L,nm,scene,actIc){return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
+  +'<img class="stn-scene" src="art/scene-'+scene+'.png" alt="">'
+  +'<span class="nm">'+nm+'</span>'
+  +'<span class="stn-act">'+LU(actIc)+'</span></div>';}
 // printables2: the WHARF is now a CROSS board on its own (the cut follows the plus). 4×4 grid:
 // empty corners · 8 perimeter slots · the 4 stations in the centre 2×2.
 // a rounded-corner PLUS outline (objectBoundingBox 0–1) — used both as the cross board's clip-path and,
@@ -955,15 +949,14 @@ const CROSS_ART=(function(){const Wd=WHARF_W+2*CROSS_BLEED, halfArm=(CROSS_B-CRO
 function wharfCross(){
   const slot='<div class="wslot">'+LU('building-2')+LU('sailboat')+'</div>';   // v4.0: a slot seats a BUILDING and/or a SHIP — never casks
   const clip='<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="crossclip" clipPathUnits="objectBoundingBox"><path d="'+roundedPlusPath(CROSS_ART.a,CROSS_ART.b,CROSS_ART.r).d+'"/></clipPath></defs></svg>';
-  const OR='<span class="sep">/</span>';   // v3.0-A: every station is a printed THIS-OR-THAT — two actions, big
   const wharf='<div class="wharf">'
     +'<div></div>'+slot+slot+'<div></div>'
     +slot
-    +station('A','Market','store','<b>2</b>'+LU('coins'))
-    +station('B','Brewhouse','flask-conical',LU('beer'))
+    +station('A','Market','market','store')
+    +station('B','Brewhouse','brewhouse','flask-conical')
     +slot+slot
-    +station('C','Harbor','ship',LU('sailboat')+'<b>1</b>'+LU('wheat')+'<b>→</b>'+LU('star'))
-    +station('D','Cellar','hourglass','<b>3</b>'+LU('hourglass'))
+    +station('C','Harbor','harbor','ship')
+    +station('D','Cellar','cellar','age-3')
     +slot
     +'<div></div>'+slot+slot+'<div></div>'
     +'</div>';
@@ -1023,7 +1016,7 @@ const kMini=d=>{
   // on-delivery/majority get a wider 2-cell row instead of 3, so nothing here is fighting for space.
   const valCell='<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU('dices')+(d.vb?'+'+d.vb:'')+'</span></div>';   // the parked die IS the value (Novgorod prints +2 on top — 6–8★ at minimum 4)
   return '<div class="kp" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+kArt(d.nm.toLowerCase())
-    +'<div class="kp-t">'+LU('landmark')+d.nm+'<span class="kp-q">'+LU('dices')+d.req+'+</span></div>'
+    +'<div class="kp-t">'+LU('kontor-'+d.nm.toLowerCase())+d.nm+'<span class="kp-q">'+LU('dices')+d.req+'+</span></div>'
     +'<div class="kp-pz"></div>'
     +'<div class="kp-rows"><div class="kp-cr">'+valCell
       +'<div class="kp-cell"><span class="kp-ch">'+LU('gift')+'on delivery</span><span class="kp-big">'+d.ben.n+' '+LU(d.ben.ic)+'</span></div>'
@@ -1081,12 +1074,12 @@ function destBoard(){
     +'<div class="kp-note" style="font-size:.1in;padding:.06in .08in;background:#f4ecd9;border:1.5px solid #c8b48a;border-radius:.08in;color:#4a3b28">'
       +LU('dices')+' <b>Delivered dice PARK on their Kontor panel, face up</b> — the pips are the ★ scored (the audit), the bodies are presence: majorities count them (2p skips 2nd place). Placing presence parks a tray die at face 1 (1★).</div>'
   +'</div>';
-  const cslot=d=>'<div class="dslot l">'+LU('scroll-text')+(OVERLAY?'<div class="ovl">'+ladingTile(d)+'</div>':'')+'</div>';
+  const cslot=d=>'<div class="dslot l">'+LU('contract')+(OVERLAY?'<div class="ovl">'+ladingTile(d)+'</div>':'')+'</div>';
   const ccol='<div class="db-ccol">'
-    +'<div class="disp-h k">'+LU('scroll-text')+'Contracts — the row of 3</div>'
+    +'<div class="disp-h k">'+LU('contract')+'Contracts — the row of 3</div>'
     +LADINGS.slice(0,3).map(cslot).join('')
     +'<div class="kp-note" style="font-size:.1in;padding:.06in .08in;background:#f4ecd9;border:1.5px solid #c8b48a;border-radius:.08in;color:#4a3b28">'
-      +LU('scroll-text')+' <b>A qualifying delivery may claim ONE matching Contract</b> — the tile comes to your seat, its ★ score at once (one per delivered cask; load order = pick order). The row refills from the deck at the <b>end of the turn</b>; claimed tiles never return.</div>'
+      +LU('contract')+' <b>A qualifying delivery may claim ONE matching Contract</b> — the tile comes to your seat, its ★ score at once (one per delivered cask; load order = pick order). The row refills from the deck at the <b>end of the turn</b>; claimed tiles never return.</div>'
   +'</div>';
   return '<div class="destb">'+kcol+ccol+'</div>';}
 

@@ -5,7 +5,20 @@
 // window.HC; the card CSS injects itself at load (scoped so it cannot restyle a host page).
 (function(){
 'use strict';
-const LU=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
+// ---- ILLUSTRATED ICONS (2026-08-03) — the c.1350 sticker set replaces the Lucide glyphs at the
+// one swap point. ICON_ART maps a lucide name (or a VIRTUAL name — contract · age-3 · kontor-<city>)
+// to its art/icons/<file>.png; LU emits the art <img> when mapped, else the lucide <i> as before.
+// LUX is the raw-lucide escape hatch for the crest contexts the designer ruled OUT of the program
+// (building-tile + specialist-tile crests keep their glyphs — the tiles already carry full art).
+const ICON_ART={wheat:'grain',sprout:'hops',coins:'goods',dices:'quality-die',
+  'dice-1':'die-1','dice-2':'die-2','dice-3':'die-3','dice-4':'die-4','dice-5':'die-5','dice-6':'die-6',
+  star:'star',check:'ready',beer:'cask',sailboat:'ship',landmark:'kontor','building-2':'build',
+  wrench:'specialist','scroll-text':'recipe','map-pin':'presence',search:'build','package-plus':'bonus-load',
+  'flask-conical':'station-brew',hourglass:'station-age',store:'station-market',ship:'station-harbor',
+  anchor:'wharf',contract:'contract','age-3':'station-age-3','kontor-bruges':'kontor-bruges',
+  'kontor-london':'kontor-london','kontor-bergen':'kontor-bergen','kontor-novgorod':'kontor-novgorod'};
+const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
+const LU=(n,cls)=>ICON_ART[n]?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/icons/'+ICON_ART[n]+'.png" alt="">':LUX(n,cls);
 const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc">'+LU('sprout','h')+h+'</span>');return a.join('');};
 const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · victory-point icon
 
@@ -212,7 +225,7 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   const eff=sa?'<span class="ac">'+LU(sa.ai)+'</span><span>'+sa.t+'</span>':d.eff;
   return '<div class="btile btW" style="--c:'+foot+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
-  +'<div class="bt-top"><span class="bt-ic">'+LU(d.ic)+'</span><span class="bt-nm'+(d.nm.length>18?' xlong':d.nm.length>15?' long':'')+'">'+d.nm+'</span></div>'
+  +'<div class="bt-top"><span class="bt-ic">'+LUX(d.ic)+'</span><span class="bt-nm'+(d.nm.length>18?' xlong':d.nm.length>15?' long':'')+'">'+d.nm+'</span></div>'
   +'<div class="bt-foot"><span class="bt-eff'+(sa?' bt-act':'')+'">'+eff+'</span><span class="bt-cost">'+cost(d.g,d.h)+'</span></div>'
   +'</div>';}
 // LADING TILE (v4.5b) — a 2×0.9in order strip in the kontor's colour: WHERE (the kontor) ·
@@ -221,7 +234,7 @@ function ladingTile(d){const kc=d.dest?(SHIP_DEST[d.dest]||{}).kc||'#555':'#6b62
   const what=d.beer?('<span class="ld-beer">'+LU(QI)+' '+d.beer+'</span>')
                    :('<span class="ld-die">'+LU('dice-'+d.min)+' '+d.min+(d.min<6?'+':'')+'</span>');
   return '<div class="ldtile" style="--c:'+kc+'">'
-  +'<div class="ld-hd">'+LU('landmark')+'<span class="ld-k">'+(d.dest||'Any Kontor')+'</span></div>'
+  +'<div class="ld-hd">'+LU(d.dest?'kontor-'+d.dest.toLowerCase():'landmark')+'<span class="ld-k">'+(d.dest||'Any Kontor')+'</span></div>'
   +'<div class="ld-bd">'+what+'<span class="ld-arr">→</span><span class="ld-pts">'+d.pts+' '+LU(VP)+'</span></div>'
   +'<div class="ld-sub">deliver &amp; claim · score at once</div>'
   +'</div>';}
@@ -243,7 +256,7 @@ const IMP_FOOT='#4a3a6e';   // Specialist foot/base — PURPLE (the third tile t
 function improveTile(d){const k=d.slug||slug(d.nm);   // v4.6: slug override — three guild tiles ride spare art as stand-ins
   return '<div class="icard" style="--c:'+IMP_FOOT+'">'
   +artLayer('improve-'+k+'.jpg')   // .jpg not .png — a flat-colour-field object shot compresses ~8x smaller as JPEG at no visible quality loss
-  +'<div class="ic-top"><span class="ic-ic">'+LU(d.ic)+'</span><span class="ic-nm">'+d.nm+'</span></div>'
+  +'<div class="ic-top"><span class="ic-ic">'+LUX(d.ic)+'</span><span class="ic-nm">'+d.nm+'</span></div>'
   +'<div class="ic-foot"><span class="ic-act">'+d.act+'</span><span class="ic-cost">'+cost(d.g,d.h)+'</span></div>'
   +'</div>';}
 // printables2 v3: a CASK is a double-sided CARD (2×3). FRONT = the buy/age side: Q+name on the top end, brew
@@ -577,8 +590,12 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.ldtile .ld-die{display:inline-flex;align-items:center;gap:.03in}'
 +'.ldtile .ld-arr{opacity:.85;font-size:.17in}'
 +'.ldtile .ld-pts{display:inline-flex;align-items:center;gap:.03in;background:rgba(0,0,0,.32);border-radius:.12in;padding:.02in .07in}'
-+'.ldtile .ld-sub{text-align:center;font-size:.085in;font-variant:small-caps;opacity:.85;line-height:1}';
++'.ldtile .ld-sub{text-align:center;font-size:.085in;font-variant:small-caps;opacity:.85;line-height:1}'
+/* ILLUSTRATED ICONS — the art <img> tracks the .ic sizing everywhere the CSS pairs "svg,.ic";
+   these cover the few svg-only spots + give any unsized site a 1em fallback */
++'img.ai{width:1em;height:1em;object-fit:contain;vertical-align:-.13em}'
++'.tok img.ai{width:.5in;height:.5in}.disc img.ai{width:.22in;height:.22in}.wtok img.ai{width:.32in;height:.32in}';
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard};
+window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard};
 })();
