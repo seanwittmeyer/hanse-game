@@ -961,7 +961,7 @@ const CROSS_ART=(function(){const Wd=WHARF_W+2*CROSS_BLEED, halfArm=(CROSS_B-CRO
   return {a:(Wd/2-halfArm)/Wd, b:(Wd/2+halfArm)/Wd,
     r:{conv:(CROSS_R*WHARF_W+CROSS_BLEED)/Wd, conc:Math.max(.0005,(CROSS_R*WHARF_W-CROSS_BLEED)/Wd)}};})();
 function wharfCross(){
-  const slot='<div class="wslot">'+LU('building-2')+LU('sailboat')+'</div>';   // v4.0: a slot seats a BUILDING and/or a SHIP — never casks
+  const slot='<div class="wslot">'+LU('building-2')+'</div>';   // the printed slot is the BUILDING footprint only — a docked Ship sits BESIDE the slot, hanging off the board's edge (never casks)
   const clip='<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><clipPath id="crossclip" clipPathUnits="objectBoundingBox"><path d="'+roundedPlusPath(CROSS_ART.a,CROSS_ART.b,CROSS_ART.r).d+'"/></clipPath></defs></svg>';
   const wharf='<div class="wharf">'
     +'<div></div>'+slot+slot+'<div></div>'
