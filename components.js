@@ -108,9 +108,9 @@ const BUILDINGS=[
   {k:'assay',     nm:'Assay House',       verb:'transform', tgt:'act',  ic:'scale',        n:1, g:1, act:'assay',  eff:'1 aging die ±1'},
   {k:'abbey',     nm:'Abbey Cellar',      verb:'transform', tgt:'act',  ic:'hourglass',    n:1, g:2, act:'abbey',  eff:'<span class="h">3'+LU('sprout','h')+'</span> → all aging Ready'},
   {k:'hopex',     nm:'Hop Exchange',      verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, act:'hopex',  eff:'<span class="h">1'+LU('sprout','h')+'</span> → '+LU('die-plus1','dlift')+' · max 2'},
-  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, eff:LU('die-plus1','dlift')+' on load'},
-  {k:'tollhouse', nm:'Tollhouse',         verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, eff:LU('die-minus1','dlift')+' on load → +3★'},
-  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, eff:LU('die-plus1','dlift')+' on load · sails with the Ship · players aboard gain 2 goods'},
+  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, effIc:'die-plus1',  eff:'on load'},
+  {k:'tollhouse', nm:'Tollhouse',         verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, effIc:'die-minus1', eff:'on load → +3★'},
+  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, effIc:'die-plus1',  eff:'on load · sails with the Ship · players aboard gain 2 goods'},
   {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 berth'},
   {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'Gate −1'},
   {k:'richberth', nm:'Rich Berth',        verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'May sail 1 short'},
@@ -231,11 +231,14 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   // a STANDARD verb prints the same icon chip the casks print — one action grammar across the kit;
   // only the non-standard powers carry text (terse: the rulebook holds the full language)
   const sa=d.act&&STD_ACT[d.act];
-  const eff=sa?'<span class="ac">'+LU(sa.ai)+'</span><span>'+sa.t+'</span>':d.eff;
+  // round 5: ANY leading icon (a standard verb's chip OR a die-mark via effIc) rides the same
+  // .ac slot at ONE size; the text bottom-aligns beside it and wraps upward when long
+  const lead=sa?LU(sa.ai):(d.effIc?LU(d.effIc):null);
+  const eff=lead?'<span class="ac">'+lead+'</span><span class="bt-etext">'+(sa?sa.t:d.eff)+'</span>':d.eff;
   return '<div class="btile btW" style="--c:'+foot+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
   +'<div class="bt-top"><span class="bt-ic">'+LUX(d.ic)+'</span><span class="bt-nm'+(d.nm.length>18?' xlong':d.nm.length>15?' long':'')+'">'+d.nm+'</span></div>'
-  +'<div class="bt-foot"><span class="bt-eff'+(sa?' bt-act':'')+'">'+eff+'</span><span class="bt-cost">'+cost(d.g,d.h)+'</span></div>'
+  +'<div class="bt-foot"><span class="bt-eff'+(lead?' bt-act':'')+'">'+eff+'</span><span class="bt-cost">'+cost(d.g,d.h)+'</span></div>'
   +'</div>';}
 // LADING TILE (v4.5b) — a 2×0.9in order strip in the kontor's colour: WHERE (the kontor) ·
 // WHAT (the die minimum, or the named beer) · the ★ reward. Any-kontor rides parchment-grey.
@@ -306,7 +309,7 @@ function caskCardBack(d,act){   // the WHARF side: the Q prints IN the die seat 
     +'<div class="ct-seat" data-die-seat title="the quality die rides here — set at brew, parked at the Kontor on delivery">'+LU('quality-'+d.q)+'</div>'
     +'<div class="ct-main"><span class="ct-nm2">'+d.nm+'</span>'
       +'<span class="ct-act2"><span class="ac">'+LU(act.ai)+'</span><span class="t">'+act.act+'</span></span>'
-      +'<span class="ct-start" title="at brew: set your quality die to the START value; aging turns it up — READY at '+d.q+'">'+LU('dices')+'start <b>'+Math.max(1,d.q-(d.ready||0))+'</b> · ready '+d.q+'</span></div>'
+      +'<span class="ct-start" title="at brew: set your quality die to the START value; aging turns it up — READY at '+d.q+'">'+LU('dices')+'start on <b>'+Math.max(1,d.q-(d.ready||0))+'</b> · '+LU('check')+'ready on <b>'+d.q+'</b></span></div>'
   +'</div>';}
 // printables2 v4: a SHIP is a full-bleed 2.5″ CARD (was a small tile) — the destination's CITY is the
 // background art (wharf-<dest>.png), with the cask-card treatment: hull + commission cost over the art on
@@ -619,9 +622,26 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 /* round 4 (designer): building action rows — icon hugs the text (the sticker art carries its own
    transparent margin), and the description prints sentence case, never small-caps */
 +'.btile .bt-eff.bt-act{gap:0;font-variant:normal}'
-+'.btile .ac{margin-right:-.05in}'
 /* the die MODIFIER marks print big inline in building effects (class dlift — print.html owns .dl) */
-+'.btile .bt-eff img.ai.dlift{width:.36in;height:.36in;vertical-align:-.13in;margin-right:.01in}'
++'.btile .bt-eff img.ai.dlift{width:.34in;height:.34in;vertical-align:-.12in;margin-right:.01in}'
+/* round 5 (designer): ONE consistent big icon size on building feet; the icon pulls ~1mm left,
+   the text + cost BOTTOM-ALIGN beside it and long text wraps UPWARD (flex-end) */
++'.btile .bt-foot{align-items:flex-end}'
++'.btile .bt-eff.bt-act{align-items:flex-end}'
++'.btile .ac{width:.5in;height:.5in;margin:0 -.03in -.02in -.04in}'
++'.btile .ac svg,.btile .ac .ic{width:.5in;height:.5in}'
++'.btile .bt-etext{padding-bottom:.035in;min-width:0}'
++'.btile .bt-cost{margin-bottom:.02in}'
+/* the cask tile action chip grows the same way — negative margins absorb the growth so the
+   title and the start/ready line never move */
++'.ctile .ct-act2{gap:0}'
++'.ctile .ct-act2 .ac{width:.44in;height:.44in;margin:-.07in -.02in -.07in -.05in}'
++'.ctile .ct-act2 .ac svg,.ctile .ct-act2 .ac .ic{width:.44in;height:.44in}'
++'.ctA .ct-act2 .ac{width:.44in;height:.44in}'
+/* the start/ready line: BOTH numbers large, the check art beside ready — one line, never wrapped */
++'.ctB .ct-start{white-space:nowrap;font-size:.1in;gap:.02in}'
++'.ctB .ct-start b{font-size:.17in}'
++'.ctB .ct-start .ic,.ctB .ct-start svg,.ctB .ct-start img.ai{width:.14in;height:.14in;margin:0 .01in 0 .02in;flex:0 0 auto}'
 /* ship tiles (round 4): the berth imagery reads at arm\'s length — bigger cask-&-sail on the
    trigger, and the waiting berths\' cask ghost prints FULL-STRENGTH (the grey-out was invisible) */
 +'.stile .st-go svg,.stile .st-go .ic{width:.42in;height:.42in}'

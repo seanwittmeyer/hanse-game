@@ -51,6 +51,12 @@
 > the grey-out read as empty); the four station scenes are the round-2 picks (Market A ·
 > Brewhouse B · Cellar A · Harbor A — wider, airier framing).
 >
+> **Round 5 (designer, 2026-08-03):** tile anatomy — the cask start line reads **"[die] start
+> on N · [check] ready on N"** with BOTH numbers large (one line, never wrapped) and the cask
+> action chip grows to .44in with negative margins so nothing else on the tile moves; building
+> feet BOTTOM-ALIGN (one .5in icon size via the shared `.ac` slot — load-lifts pass `effIc` —
+> the icon pulls ~1mm left, long text wraps UPWARD, the cost sits on the same baseline).
+>
 > **Round 4b (designer, same session): grain & hops LEFT the icon map** — at cost-chip size the
 > art muddies, so wheat/sprout print as the coloured Lucide glyphs (numbers keep their goods
 > colours) on every cost and inline effect; the art survives only where it prints big: the .7in
