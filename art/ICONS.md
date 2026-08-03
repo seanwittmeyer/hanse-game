@@ -1,5 +1,13 @@
 # Icon Manifest — every icon in the game (for PNG illustration)
 
+> **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
+> crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
+> (the tiles already carry full-bleed art). **ADDED: one icon per Kontor** — a city crest
+> with the cog-in-profile across its base (the shared "destination" band): `kontor-bruges` ·
+> `kontor-london` · `kontor-bergen` · `kontor-novgorod` — and the generic `kontor` icon
+> composes all four. Style: the c.1350 sticker adaptation (bold-contour revision 2);
+> icons are TRANSPARENT PNGs keyed from white; the working set lives in `art/icons/`.
+
 **Purpose:** the complete inventory of Lucide placeholder icons to be replaced by
 illustrated PNG icons. One PNG per **concept** — where one Lucide glyph currently serves
 several concepts, the *Split?* column says whether the concepts should share the new art
