@@ -450,16 +450,17 @@
   .kp-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
   .kp-grad{position:absolute;inset:0;width:100%;height:100%;z-index:1}
   .kp-t,.kp-rows,.kp-pz{position:relative;z-index:2}
-  .kp-t{background:var(--kc);color:#fff;display:flex;align-items:center;gap:.07in;padding:.05in .11in;
+  .kp-t{background:var(--kc);color:#fff;display:flex;align-items:center;gap:0;padding:.05in .11in;
     font-variant:small-caps;font-weight:bold;font-size:.22in;text-shadow:0 1px 1.5px rgba(0,0,0,.35)}
   .kp-t svg,.kp-t .ic{width:.21in;height:.21in}
-  /* round 2: the city CREST doubles and hangs down over the scene — the bar keeps its height and the
-     name only shifts right by the crest's width */
-  .kp-t img.ai{width:.42in;height:.42in;margin:-.06in 0 -.22in;position:relative;z-index:3;
+  /* the city CREST rides LARGE and tight to the name, hanging down over the scene — the bar keeps
+     its height (round 2, grown again on review) */
+  .kp-t img.ai{width:.54in;height:.54in;margin:-.09in .005in -.28in -.02in;position:relative;z-index:3;
     filter:drop-shadow(0 2px 4px rgba(0,0,0,.45))}
-  .kp-q{margin-left:auto;display:inline-flex;align-items:center;gap:.03in;background:rgba(255,255,255,.3);border-radius:.06in;
-    padding:.02in .08in;font-size:.2in;font-weight:900}
+  /* the minimum chip: bare (no pill), the die pulled up to centre on the text */
+  .kp-q{margin-left:auto;display:inline-flex;align-items:center;gap:.03in;font-size:.2in;font-weight:900}
   .kp-q svg,.kp-q .ic{width:.19in;height:.19in}
+  .kp-q img.ai{width:.28in;height:.28in;margin-top:-.045in}
   .kp-rows{flex:0 0 auto;display:flex;flex-direction:column;gap:.04in;padding:.04in .12in .11in;min-height:0}   /* anchored at the FOOT, over the gradient */
   .kp-cr{display:flex;gap:.1in;align-items:flex-end}
   .kp-cr.two{gap:.22in}   /* Novgorod: only 2 cells here (value moved to its own full-width row above), so give each more breathing room */
