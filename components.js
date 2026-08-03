@@ -644,7 +644,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
    action sits at the foot of the main column */
 +'.ctB .ct-main{justify-content:space-between;padding:.03in 0}'
 +'.ctB .ct-hd2{display:flex;align-items:center;gap:.045in;min-width:0}'
-+'.ctB .ct-hd2 img.ai{width:.3in;height:.3in;flex:0 0 auto}'
++'.ctB .ct-hd2 img.ai{width:.4in;height:.4in;flex:0 0 auto;margin:-.03in 0}'
 /* ship tiles (round 4): the berth imagery reads at arm\'s length — bigger cask-&-sail on the
    trigger, and the waiting berths\' cask ghost prints FULL-STRENGTH (the grey-out was invisible) */
 +'.stile .st-go svg,.stile .st-go .ic{width:.42in;height:.42in}'
