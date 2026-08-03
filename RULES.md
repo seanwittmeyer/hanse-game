@@ -231,9 +231,9 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
   swap, v45d), the **Hop Exchange** (pay `H` — past quality is fine, v45d), the **Abbey
   Cellar** (pay 3 `H` — everything maturing to Ready, v45d), the **Cellarman** (a higher
   start) and the **Braumeister** (+1 to your ripest at turn start).
-- **Loading:** a Ready cask boards a hull whose **gate its die meets, read as it boards** —
+- **Loading:** a Ready cask boards a Ship whose **minimum its die meets, read as it boards** —
   after the slot’s lifts (a Malt Kiln or Bonded Store here turns the die **+1, cap 6**; a
-  Customs House lowers the hull’s gate by 1 — the cask sells at its die; a Tollhouse may drop
+  Customs House lowers the Ship’s minimum by 1 — the cask sells at its die; a Tollhouse may drop
   the die 1 for **+3★**, v45d).
 - **Delivery:** the die **parks at the kontor showing its face** — the pips ARE the ★ scored
   (never less than 1), the body is your presence there and a beat of the end clock (§10).
@@ -338,13 +338,13 @@ and read LIVE (v4.6c): a hull or building landing on a line slot mid-turn opens 
   ⚙. **Skute 1 · Cog 2 · Hulk 3** berths ⚙ (deck blend **6/10/8** ⚙ — 24 hulls, 6 per port). **Commission** (§4C) places
   one on any shipless slot and scores its capacity.
 - **LOAD (a slot stop):** take **one READY cask from YOUR vessels** whose **die meets the
-  hull’s gate** (after this slot’s lifts — Kiln/Bonded Store; Customs lowers the
-  gate; the Tollhouse may stamp the die down for **+3★**, v45d), seat it in the lowest berth (the die
+  Ship’s minimum** (after this slot’s lifts — Kiln/Bonded Store; Customs lowers the
+  minimum; the Tollhouse may stamp the die down for **+3★**, v45d), seat it in the lowest berth (the die
   rides the tile), and **fire the cask’s printed load bonus** (§6b). The freed vessel is open
   again. *(The Stevedore loads **2** in EVERY load flow — v4.6d. The **commission**
   includes one such load onto its new hull — §4C.)*
 - **A ship SAILS the moment it is full** — a **Skute sails on its first load.** Each cask aboard
-  **delivers in load order**: bank ★ = its die, park the die at the kontor, resolve the port’s
+  **delivers in load order**: score ★ = its die, park the die at the kontor, resolve the port’s
   prize (owner’s choice, **when gained** — **every cask pays its port’s prize, v4.7**: one
   grammar at all four kontors; load order = pick order),
   and the cask **may claim one open LADING it qualifies for** (§7b). The hull returns to the
@@ -383,12 +383,12 @@ everywhere, the Bruges prize included (v45e)**. No building ever adds a fee of i
 | **Bergen** (Bryggen) | 2 | the die | **A specialist** (display, free) — **per cask** (v4.7, the uniform grammar; load order = pick order) | 9 / 5 / 2 (anchor) |
 | **Novgorod** (Peterhof) | **4** (raised ⚙) | **the die +2★** ⚙ (6–8) | — (the value premium IS the prize) | 8 / 5 / 2 |
 
-- **Gates read the DIE as it boards** (post-lift) — a Kiln’d Hopped (die 3) still misses
-  Novgorod; a Kiln’d Broyhan (die 4) makes it. One number rules gates and value alike.
+- **The minimum reads the DIE as it boards** (post-lift) — a Kiln’d Hopped (die 3) still misses
+  Novgorod; a Kiln’d Broyhan (die 4) makes it. One number rules boarding and value alike.
 - **Prizes resolve WHEN GAINED, owner’s choice** (a rival tops off a hull carrying your cask →
   you pick your prize right then). No queues.
 - **Novgorod’s premium is printed on the mat** (v4.2): every *delivered* die there counts
-  **pips +2** — for the score AND the end-game audit. (Gate 4 means delivered dice show 4–6,
+  **pips +2** — for the score AND the end-game audit. (Minimum 4 means delivered dice show 4–6,
   so a face-1 die at Novgorod is always placed presence, worth its flat 1★.)
 - **Presence** = your parked dice there. **Placing presence** (the cask/building action) takes a
   **tray die**, parks it at a kontor you’ve **already delivered to** at **face 1** (it scores
@@ -403,7 +403,7 @@ beer (*Mumme*) — and a printed reward (**2–5★** ⚙).
 - **Claim = a qualifying delivery.** When your cask delivers at the named kontor and its
   **parked face** meets the condition (the face after all lifts/stamps — exactly what the die
   shows as it parks), you **may take one matching tile**: it comes to you (the record), its ★
-  **bank at once**. **One lading per delivered cask;** several casks on one ship may each
+  **score at once**. **One lading per delivered cask;** several casks on one ship may each
   claim (load order — earlier casks pick first).
 - **The row refills at the END of the turn** (the v4.4c rhythm) — a claimed order leaves a gap
   the rest of the turn; the deck never reshuffles claimed tiles.
@@ -452,12 +452,12 @@ the turn (v4.4c; ships and buildings refill at once):**
 *The guild eight (v4.6 — one copy each):*
 - **Guild Scholar** (fee `2G`) — **your recipes are FREE**: the `H` = Q−2 fee is waived at
   every channel, the Bruges prize included (the pick is never blocked by hops).
-- **Innkeeper** (fee `2G` · *gate: 3 distinct beers brewed*) — **this tile is a 4th vessel,
+- **Innkeeper** (fee `2G` · *requires 3 distinct beers brewed*) — **this tile is a 4th vessel,
   and its cask ages +1 at the start of your turn** (v4.7 rework — the tile matures its own
   cask; the Braumeister’s tick may stack on it).
 - **Supercargo** (fee `2H`, v4.7 — was 1H, the probe’s +29 outlier) — each time a Ship
   carrying **your** cask sails on a **rival’s** turn: gain **1 `G` 1 `H`**.
-- **Chronicler** (fee `1G` `1H` · *gate: a lading claimed*) — **game end: +1★ per lading tile
+- **Chronicler** (fee `1G` `1H` · *requires a claimed lading*) — **game end: +1★ per lading tile
   at your seat (max +5)** ⚙.
 - **Alderman** (fee `2G`) — **game end: +2★ per kontor where you have 3+ parked dice** ⚙.
 - **Town Crier** (fee `1G` — **ungated, v4.7**: the 2-ports requirement delayed him past the window) — **your placed presence parks at face 2** (2★ each; still one die, one clock beat;
@@ -499,7 +499,7 @@ pool size (12) is THE pace dial now.*
 4. **Tollhouse stamps** — **+3★** per stamped cask (v45d; the die drops 1 — net +2).
 5. **Placed presence** — 1★ each (the face-1 die).
 
-*(Commissions bank **nothing** — v4.5b. The score track + your parked dice + your claimed
+*(Commissions score **nothing** — v4.5b. The score track + your parked dice + your claimed
 tiles remain the whole audit trail; no memory required.)*
 
 **End-game:**
