@@ -34,6 +34,13 @@
 > frame; Kontor panel crests double and hang over the scene, big-row icons grow and hug their
 > numbers, and Novgorod's on-delivery cell is cut (redundant to its +2 value).
 
+> **Round 3 (designer picks, 2026-08-03):** crest set finalized — **Bruges A · London A
+> (regenerated) · Bergen C · Novgorod B**, joint mark recomposed. **station-harbor REDESIGNED**
+> per the designer's mockup: the Harbor is where a ship is COMMISSIONED, not loaded — the icon
+> is now a fresh-planked hull on launch stocks with a prominent stack of GOLD coins (bold
+> outlines) composited lower-right, so the purchase reads at a glance. (The retired crane art
+> stays in the candidates folder.)
+
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
 > (the tiles already carry full-bleed art). **ADDED: one icon per Kontor** — a city crest
