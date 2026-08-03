@@ -41,6 +41,21 @@
 > outlines) composited lower-right, so the purchase reads at a glance. (The retired crane art
 > stays in the candidates folder.)
 
+> **Round 4 (designer review, 2026-08-03):** building action rows tighten (icon hugs the text;
+> descriptions print SENTENCE CASE, never small-caps); the load-lift grammar is **[die-mark] on
+> load** — a new **die MODIFIER set** joins (`die-plus1/2/3` sepia · `die-minus1` RED, numeral
+> overlaid die-q style; class `dlift` — NOT `dl`, which print.html's sheet chrome owns) wired
+> to Malt Kiln, Tollhouse, Bonded Store and the Hop Exchange; **sail.png remade** with a white
+> black-outlined arrow (the sticker-sepia arrow vanished at berth size) and the ship-tile
+> imagery enlarged (trigger cask-&-sail .42in; the waiting berths' cask ghost full-strength —
+> the grey-out read as empty); the four station scenes are the round-2 picks (Market A ·
+> Brewhouse B · Cellar A · Harbor A — wider, airier framing).
+>
+> **Round 4b (designer, same session): grain & hops LEFT the icon map** — at cost-chip size the
+> art muddies, so wheat/sprout print as the coloured Lucide glyphs (numbers keep their goods
+> colours) on every cost and inline effect; the art survives only where it prints big: the .7in
+> goods TOKENS (special-cased in `tok()`) and the standalone `grain.png`/`hops.png` files.
+
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
 > (the tiles already carry full-bleed art). **ADDED: one icon per Kontor** — a city crest

@@ -10,7 +10,9 @@
 // to its art/icons/<file>.png; LU emits the art <img> when mapped, else the lucide <i> as before.
 // LUX is the raw-lucide escape hatch for the crest contexts the designer ruled OUT of the program
 // (building-tile + specialist-tile crests keep their glyphs — the tiles already carry full art).
-const ICON_ART={wheat:'grain',sprout:'hops',coins:'goods',dices:'quality-die',
+// (round 4b, designer: wheat/sprout are NOT mapped — at cost-chip size the art muddies, so
+// grain & hops ride the coloured Lucide glyphs everywhere; the big goods TOKENS keep art via tok())
+const ICON_ART={coins:'goods',dices:'quality-die',
   'dice-1':'die-1','dice-2':'die-2','dice-3':'die-3','dice-4':'die-4','dice-5':'die-5','dice-6':'die-6',
   star:'star',check:'ready',beer:'cask',sailboat:'ship',landmark:'kontor','building-2':'building',
   wrench:'specialist','scroll-text':'recipe','map-pin':'presence',search:'build','package-plus':'bonus-load',
@@ -21,7 +23,9 @@ const ICON_ART={wheat:'grain',sprout:'hops',coins:'goods',dices:'quality-die',
   // stays the verb via search) · the numbered QUALITY casks (side-lying, wax-sealed, numeral overlaid)
   // · die-q = the parked-die value (die + ?) · sail = the ship with its forward arrow
   'quality-1':'quality-1','quality-2':'quality-2','quality-3':'quality-3','quality-4':'quality-4',
-  'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail'};
+  'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail',
+  // die MODIFIER marks (round 4): the die with its lift/drop printed on it — drops in red
+  'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
 const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const LU=(n,cls)=>ICON_ART[n]?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/icons/'+ICON_ART[n]+'.png" alt="">':LUX(n,cls);
 const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc g">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc h">'+LU('sprout','h')+h+'</span>');return a.join('');};   // the NUMBER rides the goods colour too (designer, round 2)
@@ -103,10 +107,10 @@ const BUILDINGS=[
   {k:'racking',   nm:'Racking Hall',      verb:'transform', tgt:'act',  ic:'repeat',       n:1, g:3, act:'rack',   eff:'Swap 2 dice'},
   {k:'assay',     nm:'Assay House',       verb:'transform', tgt:'act',  ic:'scale',        n:1, g:1, act:'assay',  eff:'1 aging die ±1'},
   {k:'abbey',     nm:'Abbey Cellar',      verb:'transform', tgt:'act',  ic:'hourglass',    n:1, g:2, act:'abbey',  eff:'<span class="h">3'+LU('sprout','h')+'</span> → all aging Ready'},
-  {k:'hopex',     nm:'Hop Exchange',      verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, act:'hopex',  eff:'<span class="h">1'+LU('sprout','h')+'</span> → die +1 · max 2'},
-  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, eff:'Loading: die +1'},
-  {k:'tollhouse', nm:'Tollhouse',         verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, eff:'Loading: die −1 → +3★'},
-  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, eff:'Loading: die +1 · sails with the Ship · players aboard gain 2 goods'},
+  {k:'hopex',     nm:'Hop Exchange',      verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, act:'hopex',  eff:'<span class="h">1'+LU('sprout','h')+'</span> → '+LU('die-plus1','dlift')+' · max 2'},
+  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, eff:LU('die-plus1','dlift')+' on load'},
+  {k:'tollhouse', nm:'Tollhouse',         verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, eff:LU('die-minus1','dlift')+' on load → +3★'},
+  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, eff:LU('die-plus1','dlift')+' on load · sails with the Ship · players aboard gain 2 goods'},
   {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 berth'},
   {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'Gate −1'},
   {k:'richberth', nm:'Rich Berth',        verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'May sail 1 short'},
@@ -334,7 +338,8 @@ function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm
 // element's CSS size by html2canvas (blurry). No scrim: the ship-at-sea graphic carries no text overlay.
 function shipBack(hull){return '<div class="stile ship-back" style="background:#33445a;height:'+SHIP_H(hull||'cog')+'in">'
   +'<div class="artbg"><img class="artbg-img" src="'+ART_DIR+'ship-back.png" alt=""></div></div>';}
-function tok(d){return '<div class="tok" style="--c:'+d.c+'">'+LU(d.ic)+'</div>';}
+function tok(d){const art={wheat:'grain',sprout:'hops'}[d.ic];   // the big .7in goods tokens KEEP the art (round 4b: wheat/sprout left the map for small-size legibility)
+  return '<div class="tok" style="--c:'+d.c+'">'+(art?'<img class="ai" src="art/icons/'+art+'.png" alt="">':LU(d.ic))+'</div>';}
 function disc(c,ic){return '<div class="disc" style="--c:'+c+'">'+LU(ic||'circle')+'</div>';}
 // (v3.4c: the owner FRAME is retired — a little player-colour HOUSE token, set on the building
 // card, marks ownership; no token = neutral. Store-bought monopoly-style houses, nothing to cut.)
@@ -610,7 +615,18 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 /* the numbered QUALITY-cask marks (the number rides the icon, age-3 style) */
 +'.ctA .ct-q img.ai{width:.36in;height:.36in}'
 +'.ctB .ct-seat img.ai{width:.44in;height:.44in}'
-+'.card .c-strip .c-rung{background:none;padding:0}.card .c-strip .c-rung img.ai{width:.3in;height:.3in}';
++'.card .c-strip .c-rung{background:none;padding:0}.card .c-strip .c-rung img.ai{width:.3in;height:.3in}'
+/* round 4 (designer): building action rows — icon hugs the text (the sticker art carries its own
+   transparent margin), and the description prints sentence case, never small-caps */
++'.btile .bt-eff.bt-act{gap:0;font-variant:normal}'
++'.btile .ac{margin-right:-.05in}'
+/* the die MODIFIER marks print big inline in building effects (class dlift — print.html owns .dl) */
++'.btile .bt-eff img.ai.dlift{width:.36in;height:.36in;vertical-align:-.13in;margin-right:.01in}'
+/* ship tiles (round 4): the berth imagery reads at arm\'s length — bigger cask-&-sail on the
+   trigger, and the waiting berths\' cask ghost prints FULL-STRENGTH (the grey-out was invisible) */
++'.stile .st-go svg,.stile .st-go .ic{width:.42in;height:.42in}'
++'.stile .st-ghost{opacity:1}'
++'.stile .st-ghost svg,.stile .st-ghost .ic{width:.48in;height:.48in}';
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
 window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard};
