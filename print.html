@@ -328,8 +328,12 @@
   .stn .stn-act{display:flex;align-items:center;justify-content:center}
   .stn .stn-act img.ai{width:.95in;height:.95in;filter:drop-shadow(0 2px 5px rgba(0,0,0,.55))}
   .stn .stn-sub{font-style:italic;font-weight:bold;font-size:.17in;line-height:1;text-shadow:0 1px 3px rgba(0,0,0,.9)}
-  .stn.A{background:linear-gradient(155deg,#cda522,#9c7414)} .stn.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
-  .stn.C{background:linear-gradient(155deg,#3d6b7e,#244554)} .stn.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
+  /* per-station frame colours match the action icons' bases (designer): Market RED · Brewhouse
+     YELLOW · Harbor BLUE · Cellar GREEN (the gradient is the fallback under the opaque scene) */
+  .stn.A{border-color:#b4423a;background:linear-gradient(155deg,#9c3b2e,#7c2128)}
+  .stn.B{border-color:#c9a227;background:linear-gradient(155deg,#cda522,#9c7414)}
+  .stn.C{border-color:#3d6b7e;background:linear-gradient(155deg,#3d6b7e,#244554)}
+  .stn.D{border-color:#4a6b3a;background:linear-gradient(155deg,#5a7e46,#34492a)}
   .mb-side{flex:1;display:flex;flex-direction:column;gap:.055in;min-width:0}
   .mbox{border:1.5px solid var(--sea);border-radius:.07in;background:#fff;padding:.045in .07in}
   .mbox h4{margin:0 0 .025in;font-variant:small-caps;font-size:.115in;color:var(--sea);display:flex;align-items:center;gap:.04in;border-bottom:1px solid rgba(0,0,0,.15);padding-bottom:.015in}
