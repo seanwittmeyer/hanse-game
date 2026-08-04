@@ -232,9 +232,14 @@
   .pb2-slot .sn{position:absolute;top:.05in;left:0;right:0;font-variant:small-caps;font-weight:bold;font-size:.08in;opacity:.62;line-height:1.05}
   .pb2-slot .si{display:flex;gap:.06in;opacity:.4} .pb2-slot .si svg,.pb2-slot .si .ic{width:.32in;height:.32in}
   .pb2-bld{width:2in;height:2in}
-  .pb2-vsl{width:2.5in;height:2.5in;border-style:solid}
+  /* slots at the COMPONENT footprints (designer, 2026-08-03): vessels seat the 2.4×1 cask tile,
+     the seats hold the 2×2 Specialist card; the seats row centres in the board */
+  .pb2-vsl{width:2.4in;height:1in;border-style:solid}
   .pb2-vsl.extra{border-style:dashed}
-  .pb2-vsl .si svg,.pb2-vsl .si .ic{width:.46in;height:.46in}
+  .pb2-vsl .si svg,.pb2-vsl .si .ic{width:.3in;height:.3in}
+  .pb2-seat{width:2in;height:2in;border-style:solid}
+  .pb2-seat .si svg,.pb2-seat .si .ic{width:.46in;height:.46in}
+  .pb2-vessels.seats{margin:0 auto}
   /* ====================== DESTINATIONS BOARD ====================== */
   .dboard{width:100%;height:100%;background:var(--parch);border:2.5px solid var(--gold);border-radius:.14in;padding:.16in;display:flex;flex-direction:column;gap:.12in;color:var(--ink);box-sizing:border-box}
   .dboard svg,.dboard .ic{stroke-width:1.9}
@@ -833,7 +838,7 @@ function pboard(p){
   const vsl=i=>'<div class="pb2-slot pb2-vsl">'   // v45h: the covers are off — every slot prints open
       +'<span class="sn">Vessel '+i+'</span>'
       +'<span class="si">'+LU('beer')+LU('dices')+'</span></div>';
-  const ssl=i=>'<div class="pb2-slot pb2-vsl">'
+  const ssl=i=>'<div class="pb2-slot pb2-seat">'
       +'<span class="sn">Specialist seat '+i+'</span>'
       +'<span class="si">'+LU('wrench')+'</span></div>';
   return '<div class="pb2" style="--pc:'+p.c+'">'
@@ -842,7 +847,7 @@ function pboard(p){
       +'<div class="pb2-goods">'+LU('dices')+'<b>12</b>&nbsp;quality&nbsp;dice&nbsp;—&nbsp;the&nbsp;runway</div>'
       +'<div class="pb2-goods nomargin">'+LU('wheat')+LU('sprout')+'goods max&nbsp;<b>8</b></div></div>'
     +'<div class="pb2-row"><div class="pb2-vessels">'+vsl(1)+vsl(2)+vsl(3)+'</div></div>'
-    +'<div class="pb2-row"><div class="pb2-vessels">'+ssl(1)+ssl(2)+'</div></div>'
+    +'<div class="pb2-row"><div class="pb2-vessels seats">'+ssl(1)+ssl(2)+'</div></div>'
   +'</div>';}
 
 // (the standalone Hall board + Destinations letter boards are RETIRED — the Destinations & Hall
@@ -1328,7 +1333,7 @@ function buildPages(){
   pages.filter(p=>p.section==='cards').forEach(p=>p.papercut=true);
   // --- PLAYER BOARDS (moved to the BOTTOM of the page, just before the checklist) ---
   PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>{   // tight die-cut hugging the slot cluster (v3.2d: two rows, no strip/rack)
-    const W=10.55,H=5.95,sw=+(W*SCALE).toFixed(4),sh=+(H*SCALE).toFixed(4),X=+((PG.w-sw)/2).toFixed(2),Y=0.8,pg=newPage(pages,'boards','Player board — '+p.nm);
+    const W=7.65,H=3.85,sw=+(W*SCALE).toFixed(4),sh=+(H*SCALE).toFixed(4),X=+((PG.w-sw)/2).toFixed(2),Y=0.8,pg=newPage(pages,'boards','Player board — '+p.nm);   // sized to the slot cluster (vessels 2.4×1 · seats 2×2)
     pg.items.push({x:X,y:Y,w:sw,h:sh,nat:[W,H],html:pboard(p)});
     pg.rrect={x:X,y:Y,w:sw,h:sh,r:+(0.18*SCALE).toFixed(4)};
   });
