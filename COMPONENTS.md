@@ -1,4 +1,13 @@
-# Brewhouses of the Hanse — Components (v4.8 “Harbor Rates”)
+# Brewhouses of the Hanse — Components (v4.9 “Mason’s Mark”)
+
+> **v4.9 (designer-ruled 2026-08-04 — A TRIAL):** **rules-side, no count changes** — **a
+> build stands one of the builder’s 12 quality dice on the tile at face 1** (the mason’s
+> mark): every use by any player turns it up (cap 6); **the pips score at game end**; the
+> die is committed toward the empty-tray clock and returns (pips scored at once) only if
+> the building leaves play. The +3★ builder’s mint is CUT. Reprints: the **player aid**,
+> the **London panel** on the Destinations board (*“a building — your die stands on it”*),
+> the **survey-bonus cask tiles** (the “+3★” chip comes off *Build 1 building*), and the
+> **score-track caption**. The quality dice gain a third duty — cask · presence · mark.
 
 > **v4.8 (designer-ruled 2026-08-04):** **REPRINTS, no count changes** — the **Ship tiles’
 > trigger berths print a PER-HULL commission fee**: Skute **2 `G`** · Cog **1 `G`** · Hulk
@@ -95,7 +104,7 @@
 | Main board — **the Wharf** | 1 | 2×2 stations, each printing **ONE action** (Market *Source 2* · Brewhouse *Brew* · Cellar *Age 3* · Harbor *Commission at the Ship’s printed fee + load 1 — no ★* — v4.8/v4.5b), ringed by 8 slots (a building seat + a ship seat each). |
 | **Destinations board** | 1 | The four Kontor panels — Bruges · London · Bergen · Novgorod — each printing its **minimum (die N+)**, its **prize** (recipe / building / specialist — Novgorod instead prints **value = the die +2★**), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the scored-★ audit) — plus the **Contract row of 3** (ruled 2026-08-03). *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
 | Player boards | 4 | **3 vessel slots + 2 specialist seats — all open from the start** (v45h: the printed covers are off for now). Recipe cards sit beside it. Goods cap 8 printed. |
-| **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per player — the ★ scored in play (+3★ builds · Contract ★ · Tollhouse stamps · 1★ placed presence) and delivery ★ as they land. *(New in v4.0 — the hard line demands a home for scored ★.)* |
+| **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per player — the ★ scored in play (Contract ★ · Tollhouse stamps · 1★ placed presence · departing buildings’ dice) and delivery ★ as they land. *(New in v4.0 — the hard line demands a home for scored ★.)* |
 | Market & Stores board *(kit)* | 1 | The displays: Ships 4 · buildings 4 · Specialists 4 · the export recipe row — ringed by the score track. *(The Contract row of 3 lives on the Destinations board — ruled 2026-08-03; the Sailed-Ships clock left with v4.1.)* |
 
 ## 3. Common supply
@@ -104,7 +113,7 @@
 |---|---|---|
 | Grain tokens | 60 | currency |
 | Hops tokens | 40 | currency |
-| **Quality dice** | **48** (12 × 4 colours ⚙ — v4.5) | the cask/presence/clock component — see §1 |
+| **Quality dice** | **48** (12 × 4 colours ⚙ — v4.5) | the cask/presence/**building-mark (v4.9)**/clock component — see §1 |
 | Score discs (movers) | 4 (1/colour) | the score ring (flip/mark at +50) |
 | Worker pawns | 4 (1/colour) | the stations |
 | +1-berth / minimum markers | — | none: the Kiln turns the die itself; Cooperage/Customs read from the tile |
@@ -146,8 +155,9 @@ Per Kontor: 6 each (Bruges sk1/c3/h2 · London sk2/c2/h2 · Bergen sk1/c3/h2 · 
 
 ## 6. Building tiles (print 20 ⚙ · DEAL 17 each game — v4.6 · ONE green family, 2.5×1.32″)
 
-**No owner, ever** — every building serves whoever activates it; the placer scores **+3★** ⚙
-(setup’s two neutral seeds score nobody). Placement is always display → slot, at once; overbuild
+**Nobody owns the use** — every building serves whoever activates it; the builder **stands a
+quality die on the tile at face 1** ⚙ (v4.9 — every use turns it up, cap 6; the pips score at
+game end; setup’s two neutral seeds carry no die). Placement is always display → slot, at once; overbuild
 for ONE payment ⚙ (v4.2c: a paid fee covers the ground — the `1 G` rent only when an otherwise-free placement overbuilds; displaced tile boxed). Display of 4; free at
 **London**, or via the *Gain 1 building* bonus at the **tile’s printed fee** ⚙ (a chipless
 tile is free — the tier reads straight off the component). Using a building never costs a fee.
@@ -274,6 +284,10 @@ one undealt-beer order to the box).
 **v4.8 delta:** reprints only — all 24 **Ship tiles** (the trigger berth prints the per-hull
 fee: Skute 2 `G` · Cog 1 `G` · Hulk chipless) · the **Wharf board’s Harbor caption** · the
 **Shipwright tile** · the **player aid**. No counts change.
+**v4.9 delta:** rules + reprints only — the builder’s **+3★ mint is cut**; a build stands a
+**quality die on the tile** (face 1 → grows with use → pips at end). Reprints: player aid ·
+the London panel · the *Build 1 building* cask bonus (chip off) · the score-ring caption.
+No counts change (the 12 dice absorb the new duty).
 
 ## 11. Known gaps ⚙ (the watch list)
 

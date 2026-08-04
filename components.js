@@ -45,7 +45,7 @@ const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the
   {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},
   {k:'reach',   ai:'map-pin',       act:'+1 presence',              q:2},
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe',          q:2},
-  {k:'survey',  ai:'search',        act:'Build 1 building +3★',  q:3},
+  {k:'survey',  ai:'search',        act:'Build 1 building',  q:3},   // v4.9: the builder's die stands on it — no printed ★
   {k:'hire',    ai:'wrench',        act:'Gain 1 specialist',      q:3},
   {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:4},
 ];
