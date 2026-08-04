@@ -1,8 +1,32 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.9b “Cornerstones”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.9d “Loaded Flight”)
 
 *(Language: the 2026-08-03 **Term Registry pass** governs all printed copy — player ·
 Kontor · Contract · cask quality die · build · Age N · aging · resolve the line · the ★
 glyph; see `STYLE.md` §4. The version letters below keep their period wording.)*
+
+> **v4.9d “Loaded Flight” (designer-ruled 2026-08-04 — off the #30 board talk).** **The
+> Flight qualifies on LOAD, not on brew** — the old read was a bug: *"the recipe cards sit
+> on the left side until they are loaded on a ship, then moved to the right side showing
+> they are completed."* A recipe card lives ON the player board: **COLLECTED (left)** until
+> that beer's **first cask loads onto a Ship**, then moved to the **COMPLETED side (right)**
+> — the completed cards ARE the Flight record, and the **Innkeeper's gate reads the same
+> record** (its printed line becomes *3 distinct beers shipped*). The warm-start Gruit
+> counts when it ships. The play app now renders the print board's anatomy live — collected
+> left · vessels + seats as printed wells · completed right · stats in the bottom corners —
+> and the brew piles show the current single-faced tile. *(The Flight was the largest
+> invisible mass in the #29/#30 legibility read — now it is a column of cards on the board.)*
+
+> **v4.9c “Light Tariff” (designer-ruled 2026-08-04 — off playtests #29/#30 + the same-day
+> port/flow probes).** **The recipe tariff EASES — the formula drops to `H` = Q−3: Keut and
+> Broyhan FREE · Mumme 1 `H` · Bock 2 `H`** ⚙ (expansions on the same line). The designer's
+> read: Novgorod is not structurally dead — *"it is tough to justify the cost of brewing
+> there if bock isn't in the game."* The measured backdrop: the recipe channel blocked
+> (wanted-but-unaffordable) 11–19 turns/game · hops BINDING (8–23% of players end at 0 `H`;
+> the Abbey ~never fires) · Novgorod undelivered in 71/33/23% of games by count · #30's
+> table bought Mumme at 2 `H` only on its final round. The **v45e grammar STANDS**: a
+> formula, hops only, paid at EVERY channel — the Bruges prize included; the Guild Scholar
+> still waives. Watches ⚙: the Bock rush (its tax halves) · the Scholar's 2 `G` seat (his
+> waiver now saves at most 2 `H`) · the hops economy + Novgorod share re-read (the A/B).
 
 > **v4.9b “Cornerstones” (designer-ruled 2026-08-04 — the table talk on the unplayed
 > v4.9).** Three balance moves on the mark. **(1) The mark starts at the tile’s PRINTED
@@ -130,7 +154,7 @@ glyph; see `STYLE.md` §4. The version letters below keep their period wording.)
 > tiles (a kontor + a die minimum or a named beer → printed **2–5★**); delivering a
 > qualifying cask **claims one** (one per cask; the ★ bank at once); the row refills at the
 > **end of the turn**. The row makes every kontor’s delivery value a **variable economy** —
-> read it before you sail. The live build is `play.html` (**KEY `hanse-v49b`**; beneath v4.7, the v4.6d/c/b letters and v4.6 sit the 2026-08-01 letters, designer-ruled: **v45h** — the floor covers are OFF for now: all 3 vessels + both seats open from the start (the Flight keeps its ladder, loses its unlock duty) · **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
+> read it before you sail. The live build is `play.html` (**KEY `hanse-v49d`**; beneath v4.7, the v4.6d/c/b letters and v4.6 sit the 2026-08-01 letters, designer-ruled: **v45h** — the floor covers are OFF for now: all 3 vessels + both seats open from the start (the Flight keeps its ladder, loses its unlock duty) · **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
 
 > **v4.5 “Empty Tray” (designer-ruled 2026-07-31 — off human playtest #24).** Two changes.
 > **(1) The end trigger is the EMPTY TRAY:** the first house to **commit its last tally die**
@@ -194,7 +218,7 @@ glyph; see `STYLE.md` §4. The version letters below keep their period wording.)
 **Keeps:** the 2×2-stations + 8-slot Wharf and move-then-activate; row-or-column lines;
 ships that **sail when full**, benefits sealing **on delivery** in load order;
 the four Kontore and tiered majorities; the steerable brew piles; the Flight on the recipe
-cards (distinct beers **BREWED**, (n−1)² min 3); goods as the only currency; the warm start;
+cards (distinct beers **SHIPPED** — v4.9d, (n−1)² min 3); goods as the only currency; the warm start;
 the **dice end clock** (v4.1 — the one clock); no dice-as-randomizers (the quality die is a
 **marker**, never rolled) · no cards-as-hand · no money.
 
@@ -215,8 +239,9 @@ Coppersmith · Wilds and face-down flips · the three expansion toggles (**table
 
 Each player starts with (⚙):
 - **3 `G` (grain), 2 `H` (hops)** — storage cap 8 ⚙; goods gained above the cap are lost (the cube supply itself is not a limit).
-- The **Gruit** and **Hopped** recipe **cards** (Gruit dealt flipped to its BREWED face — the
-  warm start counts for the Flight). More recipes are **earned** (§7): Bruges’ prize, cask load
+- The **Gruit** and **Hopped** recipe **cards**, on the board's **COLLECTED side** (v4.9d — a
+  card completes, moving RIGHT, when that beer's first cask LOADS; the warm Gruit is brewed
+  but counts for the Flight only once it ships). More recipes are **earned** (§7): Bruges’ prize, cask load
   bonuses, building actions.
 - A **player board** (§8): **3 vessel slots** and **2 specialist seats — all open from the
   start (v45h: the covers are off for now)**. The Flight keeps its scoring ladder.
@@ -292,14 +317,14 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 - **Delivery:** the die **parks at the Kontor showing its face** — the pips ARE the ★ scored
   (never less than 1), the body is your presence there and a beat of the end clock (§10).
 
-| Beer | Q | Aging steps | Die starts | Brew cost | Earned (wharf fee `H` = Q−2 ⚙ — every channel, Bruges too · v45e) |
+| Beer | Q | Aging steps | Die starts | Brew cost | Earned (wharf fee `H` = Q−3 ⚙ — every channel, Bruges too · v4.9c) |
 |---|---|---|---|---|---|
 | Gruit | Q1 | 0 (Ready at brew) | 1 | `G` | starter |
 | Hopped | Q2 | 1 | 1 | `G H` | starter |
-| Broyhan | Q3 | 1 | 2 | `G H H` | dealt export · fee `H` |
-| Keut | Q3 | 2 | 1 | `G G H` | dealt export · fee `H` |
-| Mumme | Q4 | 3 | 1 | `G H H H` | dealt export · fee `H H` |
-| Bock | Q5 | 3 | 2 | `G G H H H` | dealt export · fee `H H H` (the taxed climb — v45e) |
+| Broyhan | Q3 | 1 | 2 | `G H H` | dealt export · **free** (v4.9c) |
+| Keut | Q3 | 2 | 1 | `G G H` | dealt export · **free** (v4.9c) |
+| Mumme | Q4 | 3 | 1 | `G H H H` | dealt export · fee `H` |
+| Bock | Q5 | 3 | 2 | `G G H H H` | dealt export · fee `H H` (the taxed climb — v4.9c) |
 
 *(The Cellarman starts your dice one higher — a Bock at 3. Caps (v45g): a start value never
 exceeds the quality, and **a Q3+ export never STARTS Ready** — aging is required for every
@@ -322,7 +347,8 @@ at that Kontor.)*
 - **A · Market — SOURCE:** take **2 goods** (any mix).
 - **B · Brewhouse — BREW:** pay a recipe you hold into an **open vessel** + a **tray die** set
   to the start value; the cask IS the **top tile of that beer’s pile** — its printed bonus rides (every pile top is public; v4.7a).
-  **First brew of a beer flips its recipe card** — the Flight record (§8).
+  *(A beer's recipe card completes — moves to the board's right side, the Flight record —
+  when its **first cask LOADS onto a Ship**, not at brew — v4.9d, §6/§8.)*
 - **D · Cellar — AGE:** **AGE 3** ⚙ — turn your aging dice up three steps, split freely —
   with auto-aging cut (v4.5b) this is the deepest well.
 - **C · Harbor — COMMISSION:** pay the Ship’s **printed fee** — **Skute 2 `G` · Cog 1 `G` ·
@@ -399,7 +425,8 @@ and read LIVE (v4.6c): a Ship or building landing on a line slot mid-turn opens 
   Ship’s minimum** (after this slot’s lifts — Kiln/Bonded Store; Customs lowers the
   minimum; the Tollhouse may stamp the die down for **+3★**, v45d), seat it in the lowest berth (the die
   rides the tile), and **fire the cask’s printed load bonus** (§6b) — **after any sail the
-  load completes** (deliveries and prizes resolve first, then the bonus). The freed vessel is open
+  load completes** (deliveries and prizes resolve first, then the bonus). **A beer's FIRST
+  load moves its recipe card to the board's COMPLETED side — the Flight record (v4.9d).** The freed vessel is open
   again. *(The Stevedore loads **2** in EVERY load flow — v4.6d. The **commission**
   includes one such load onto its new Ship — §4C.)*
 - **A ship SAILS the moment it is full** — a **Skute sails on its first load.** Each cask aboard
@@ -428,8 +455,8 @@ and read LIVE (v4.6c): a Ship or building landing on a line slot mid-turn opens 
 *(Enshrine left with the Hall. Every pile top is face-up — brew toward the bonus you want (v4.7a: one pile per beer).
 **Paid at the wharf, free at the Kontor** (v4.2 — the fee rides the ITEM): the three
 acquisition gains cost the chosen item’s **own printed fee**, here and at Scrivener’s Hall /
-the Hiring Post. London’s and Bergen’s prizes waive it — **a recipe’s fee (`H` = Q−2) is paid
-everywhere, the Bruges prize included (v45e)**. No building ever adds a fee of its own.)*
+the Hiring Post. London’s and Bergen’s prizes waive it — **a recipe’s fee (`H` = Q−3, v4.9c — the Q3s free) is paid
+everywhere, the Bruges prize included (the v45e grammar)**. No building ever adds a fee of its own.)*
 
 ---
 
@@ -437,7 +464,7 @@ everywhere, the Bruges prize included (v45e)**. No building ever adds a fee of i
 
 | Kontor | Minimum ⚙ | Value | Prize on delivery ⚙ | Majority (1/2/3) ⚙ |
 |---|---|---|---|---|
-| **Bruges** (Hub) | 1 | the die | **Gain 1 recipe** — dealt exports, **at its `H` = Q−2 fee** (v45e: the prize is the pick, never the waiver; no affordable pick → 2 goods) | 4 / 2 / 0 |
+| **Bruges** (Hub) | 1 | the die | **Gain 1 recipe** — dealt exports, **at its `H` = Q−3 fee — the Q3s free** (v4.9c; the prize is the pick, never the waiver; no affordable pick → 2 goods) | 4 / 2 / 0 |
 | **London** (Steelyard) | 2 | the die | **A building** (display → placed; **your die stands on it** — v4.9) | 5 / 3 / 1 |
 | **Bergen** (Bryggen) | 2 | the die | **A specialist** (display, free) — **per cask** (v4.7, the uniform grammar; load order = pick order) | 9 / 5 / 2 (anchor) |
 | **Novgorod** (Peterhof) | **4** (raised ⚙) | **the die +2★** ⚙ (6–8) | — (the value premium IS the prize) | 8 / 5 / 2 |
@@ -487,8 +514,9 @@ Novgorod — die 5+→3★ · Bock→4★ · die 6→4★ · any Kontor — die 
 - **2 specialist seats** — **both open from the start (v45h).**
   A player never owns two of a type; specialists are **earned free** (Bergen, Hiring Post, the
   cask verb) — never bought.
-- **Recipe cards** sit beside the board; **flipped (BREWED) faces are the Flight record** — the
-  unlock currency AND the end-game ladder (§11).
+- **Recipe cards** live ON the board (v4.9d): **COLLECTED on the LEFT** until that beer's first
+  cask **loads onto a Ship**, then moved to the **COMPLETED RIGHT side** — **the completed
+  cards ARE the Flight record**, the end-game ladder (§11), read straight off the board.
 
 **The SPECIALISTS (13 designs ⚙, v4.6 — the 5 CORE at max(2, n−1) copies + the 8 GUILD at 1
 copy each · display of 4 · each prints its wharf fee ⚙ — free as Bergen’s prize, **per
@@ -510,9 +538,10 @@ the turn (v4.4c; ships and buildings refill at once):**
   the cut auto-age.
 
 *The guild eight (v4.6 — one copy each):*
-- **Guild Scholar** (fee `2G`) — **your recipes are FREE**: the `H` = Q−2 fee is waived at
-  every channel, the Bruges prize included (the pick is never blocked by hops).
-- **Innkeeper** (fee `2G` · *requires 3 distinct beers brewed*) — **this tile is a 4th vessel,
+- **Guild Scholar** (fee `2G`) — **your recipes are FREE**: the `H` = Q−3 fee is waived at
+  every channel, the Bruges prize included (the pick is never blocked by hops; v4.9c watch ⚙ —
+  his waiver now saves at most 2 `H`).
+- **Innkeeper** (fee `2G` · *requires 3 distinct beers shipped — v4.9d*) — **this tile is a 4th vessel,
   and its cask ages +1 at the start of your turn** (v4.7 rework — the tile ages its own
   cask; the Braumeister’s tick may stack on it).
 - **Supercargo** (fee `2H`, v4.7 — was 1H, the probe’s +29 outlier) — each time a Ship
@@ -567,7 +596,7 @@ tiles remain the whole audit trail; no memory required.)*
 **End-game:**
 6. **Majorities** — at each Kontor, by **parked dice** (Bruges 4/2/0 · London 5/3/1 · Bergen
    9/5/2 · Novgorod 8/5/2 ⚙; 2p skips 2nd; ties split).
-7. **The Flight** — distinct beers **BREWED** (your flipped cards): **(beers−1)², min 3**
+7. **The Flight** — distinct beers **SHIPPED** (the completed cards on your board — v4.9d): **(beers−1)², min 3**
    (3→4 · 4→9 · 5→16 · 6→25 ⚙).
 8. **Buildings — the Mason’s Marks (v4.9)** — each die standing on one of your buildings
    scores **its pips** (1–6★). The dice on the tiles are the audit.
@@ -631,7 +660,10 @@ the engine; the modules return after the core settles.
    hops, and the **Abbey ~never fires** (0.07–0.37/game despite being dealt in 40–52% of
    games — its 3 `H` price sits above the table's standing float). The tariff is doing its
    ruled job (taxing the climb); the question left for the designer is whether the Abbey's
-   price point and the Bock style are acceptable casualties.
+   price point and the Bock style are acceptable casualties. **RULED at v4.9c (2026-08-04):
+   the offset dial is PULLED — the formula drops to `H` = Q−3** (Keut/Broyhan free · Mumme
+   1 `H` · Bock 2 `H`). The residual watches move to the new letter: the Bock rush at its
+   halved tax, the Scholar's price, and whether freed hops revive the Abbey/Hop Exchange.
 3. **Novgorod at minimum 4** — is die-4 boarding reachable enough (Mumme+, or Kiln’d Q3)? Its
    pull is now the **+2★ die premium** (6–8★ deliveries, v4.2) + the 8/5/2 majority — watch
    whether +2 overshoots (the dial is the printed premium).
@@ -675,7 +707,7 @@ the engine; the modules return after the core settles.
    returns (too many is now merely inefficient). Watch with Open #6.
 8. **2p texture** — the thinned interaction set (berths, majorities, the draft): does it
    hold at two?
-9. **The fee schedule** ⚙ (v4.7 pass): recipes the `H` = Q−2 formula (v45e) · specialists
+9. **The fee schedule** ⚙ (v4.7 pass · v4.9c recipes): recipes the `H` = Q−3 formula (free/free/1 `H`/2 `H` — v4.9c) · specialists
    Cellarman `2H` · Grain Factor `2G` · Hop Gardener `2H` · Stevedore `1G` · Braumeister
    `1G1H` · guild `2G`/`2G`/`2H`/`1G1H`/`2G`/`1G`/`1G`/`1H` (the v4.7 price pass repriced
    the two probe outliers — re-probe reads in `SPECIALIST-VALUE-STUDY.md`) · buildings

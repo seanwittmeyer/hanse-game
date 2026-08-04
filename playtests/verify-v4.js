@@ -65,7 +65,8 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('brew pays the cost (1G2H)', p.grain===4&&p.hops===3);
   ok('the cask takes the pile-top action', p.vessels[0]&&p.vessels[0].act==='reach');
   ok('the die starts at the printed value (broyhan 2)', p.vessels[0].die===2);
-  ok('the brew flips the recipe card (Flight record)', p.brewed.broyhan===1);
+  ok('the brew flips the recipe card (the BREWED record)', p.brewed.broyhan===1);
+  ok('a brew alone does NOT advance the Flight (v4.9d — it qualifies on LOAD)', !(p.shipped||{}).broyhan&&flightScore(p)===0);
   ok('all 3 vessels are open from the START (v45h — the covers are off)', p.vslots===3&&newPlayer(0,'X').vslots===3&&newPlayer(0,'X').vessels.length===3);
   p.presPool=1;   // one die left, and it is riding the broyhan → tray 0
   ok('no die in the tray → no brew', (function(){var before=UI.sub;enterBrew('stops');return UI.sub!=='brew';})());
@@ -73,11 +74,13 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 
 // ---- 4. THE FLIGHT unlocks: 3rd distinct beer opens the 2nd seat ----
 (function(){var p=fresh();stops();
-  p.grain=9;p.hops=9;p.recipes=['gruit','hopped','keut'];p.vessels=[null,null];p.brewed={gruit:1};
+  p.grain=9;p.hops=9;p.recipes=['gruit','hopped','keut'];p.vessels=[null,null];p.brewed={gruit:1};p.shipped={gruit:1};
   UI.brew={returnTo:'stops'};brewPick('hopped');
   UI.brew={returnTo:'stops'};brewPick('keut');
   ok('both specialist seats are open from the START (v45h)', p.sslots===2&&newPlayer(0,'X').sslots===2);
-  ok('flight score counts BREWED (3 → 4★)', flightScore(p)===4);
+  ok('brews alone leave the Flight at the shipped count (v4.9d)', flightScore(p)===0);
+  p.shipped={gruit:1,hopped:1,keut:1};
+  ok('flight score counts SHIPPED beers (3 → 4★, v4.9d)', flightScore(p)===4);
 })();
 
 // ---- 5. GATES read the DIE as it boards (lifts included) ----
@@ -144,9 +147,9 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   deliverCask(p,{owner:0,style:'bock',q:5,die:6,act:'age'},'novgorod');
   ok('the Novgorod premium rides above the die cap (die 6 → 8★)', p.delivered[p.delivered.length-1].val===8);
   ok('no refine machinery survives', typeof freeAge==='undefined'&&typeof brefinePick==='undefined');
-  p.recipes=['gruit','hopped'];p.hops=5;var h9=p.hops;
+  p.recipes=['gruit','hopped'];p.hops=5;var g9=p.grain;
   UI.pendingRecipe=[{pid:0,dest:'bruges'}];afterSail('stops');
-  ok('Bruges prize: a dealt export recipe — AT its H = Q−2 fee (v45e; the Scholar’s waiver tolerated)', p.recipes.length===3&&(p.hops<h9||hasUpgrade(p,'scholar')));
+  ok('Bruges prize: a dealt export recipe — at its H = Q−3 fee (v4.9c; the Q3s free, grain never touched)', p.recipes.length===3&&p.grain===g9);
   p.ai=null;
 })();
 
@@ -291,7 +294,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 (function(){var p=fresh();var q=S.players[1];
   p.delivered=[{style:'hopped',q:2,dest:'london',val:3},{style:'bock',q:5,dest:'london',val:5}];
   q.delivered=[{style:'gruit',q:1,dest:'london',val:1}];
-  p.bank=7;p.brewed={gruit:1,hopped:1,broyhan:1};
+  p.bank=7;p.shipped={gruit:1,hopped:1,broyhan:1};
   var sc=scorePlayer(p);
   ok('score = deliveries + bank + majorities + flight', sc.deliv===8&&sc.bank===7&&sc.maj===5&&sc.flight===4&&sc.total===24);
   p.vessels=[{style:'bock',q:5,die:4,act:'age'},null];
@@ -347,16 +350,18 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('hireable excludes owned + full seats', hireable(p).length===0);
 })();
 
-// ---- 19. PER-ITEM WHARF FEES (v4.2 · v45e): the fee rides the item; recipes H = Q−2 at EVERY channel ----
+// ---- 19. PER-ITEM WHARF FEES (v4.2 · v4.9c): the fee rides the item; recipes H = Q−3 at EVERY channel ----
 (function(){var p=fresh();stops();
   S.exports=['broyhan','keut','mumme'];p.recipes=['gruit','hopped'];
   p.grain=3;p.hops=2;
   UI.sub='recipegain';UI.rgain={returnTo:'stops'};recipeGainPick('broyhan');
-  ok('gain-recipe pays the RECIPE’s fee (Broyhan 1H)', p.hops===1&&p.grain===3&&p.recipes.indexOf('broyhan')>=0);
+  ok('a Q3 recipe is FREE to gain (Broyhan — v4.9c)', p.hops===2&&p.grain===3&&p.recipes.indexOf('broyhan')>=0);
   UI.sub='recipegain';UI.rgain={returnTo:'stops'};recipeGainPick('keut');
-  ok('the formula holds — Keut (Q3) also 1H, grain untouched (v45e)', p.grain===3&&p.hops===0&&p.recipes.indexOf('keut')>=0);
-  ok('the Bock recipe prints 3H (Q5 − 2) — the rush taxed', (RECIPE_FEE.bock||{}).h===3&&!(RECIPE_FEE.bock||{}).g);
-  p.grain=9;p.hops=1;var r0=p.recipes.length;   // only mumme (2H) missing — unaffordable in HOPS (grain can't help, v45e)
+  ok('the formula holds — Keut (Q3) free too, goods untouched (v4.9c)', p.grain===3&&p.hops===2&&p.recipes.indexOf('keut')>=0);
+  UI.sub='recipegain';UI.rgain={returnTo:'stops'};recipeGainPick('mumme');
+  ok('Mumme (Q4) pays 1H — hops only', p.grain===3&&p.hops===1&&p.recipes.indexOf('mumme')>=0);
+  ok('the Bock recipe prints 2H (Q5 − 3) — the climb still taxed', (RECIPE_FEE.bock||{}).h===2&&!(RECIPE_FEE.bock||{}).g);
+  p.recipes=['gruit','hopped','broyhan','keut'];p.grain=9;p.hops=0;var r0=p.recipes.length;   // only mumme (1H) missing — unaffordable in HOPS (grain can't help)
   enterRecipeGain('stops');
   ok('no affordable fee → the recipe channel refuses', UI.sub!=='recipegain'&&p.recipes.length===r0);
   p.grain=5;p.hops=2;S.impDisplay=['cellar','crane','granary','hopgarden'];
@@ -386,12 +391,12 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   var q=S.players[1];q.ai={tier:'journeyman'};var qg=q.grain,qb=q.bank;
   UI.pendingBenefits=[{pid:1,dest:'london'}];afterSail('stops');
   ok('London prize stays free (no fee — a die stands on the build at its printed face, v4.9b)', q.grain===qg&&q.bank===qb&&SLOTS.some(function(s){var b=bAt(s.id);return b&&b.owner===1&&b.die===bldgMs(b.b);}));
-  q.recipes=['gruit','hopped'];q.hops=5;var qg2=q.grain,qh2=q.hops;
+  S.exports=['keut','broyhan','mumme'];q.recipes=['gruit','hopped','broyhan','keut'];q.hops=5;var qg2=q.grain,qh2=q.hops;
   UI.pendingRecipe=[{pid:1,dest:'bruges'}];afterSail('stops');
-  ok('the Bruges prize PAYS the recipe fee — hops only (v45e)', q.grain===qg2&&q.hops<qh2&&q.recipes.length===3);
-  q.recipes=['gruit','hopped'];q.hops=0;var qr=q.recipes.length,qg2b=q.grain;
+  ok('the Bruges prize PAYS a fee’d recipe — hops only (Mumme 1H, v4.9c)', q.grain===qg2&&q.hops===qh2-1&&q.recipes.length===5);
+  q.recipes=['gruit','hopped','broyhan','keut'];q.hops=0;var qr=q.recipes.length,qg2b=q.grain;
   UI.pendingRecipe=[{pid:1,dest:'bruges'}];afterSail('stops');
-  ok('no affordable recipe at Bruges → the 2-goods consolation', q.recipes.length===qr&&q.grain===qg2b+1&&q.hops===1);
+  ok('no affordable recipe at Bruges → the 2-goods consolation (only the 1H Mumme out of reach)', q.recipes.length===qr&&q.grain===qg2b+1&&q.hops===1);
   var qg3=q.grain;S.impDisplay=['cellar','crane','granary','hopgarden'];
   UI.pendingSpec=[{pid:1,dest:'bergen'}];afterSail('stops');
   ok('Bergen prize stays free', q.grain===qg3&&(q.upgrades||[]).length===1);
@@ -609,7 +614,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 (function(){var p=fresh();stops();
   ok('v4.7 fees: Grain Factor 2G · Supercargo 2H (the probe outliers repriced)',
     SPEC_FEE.granary.g===2&&SPEC_FEE.supercargo.h===2&&SPEC_FEE.crane.g===1);
-  p.upgrades=['innkeeper'];p.sslots=2;p.brewed={gruit:1,hopped:1,keut:1};
+  p.upgrades=['innkeeper'];p.sslots=2;p.shipped={gruit:1,hopped:1,keut:1};
   p.vessels.push(null);p.vslots=4;p.innVessel=3;
   p.vessels[3]={style:'mumme',q:4,die:2,act:'source'};
   p.vessels[0]={style:'bock',q:5,die:1,act:'source'};
@@ -640,8 +645,8 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   S.active=0;UI.pendingRecipe=[];UI.pendingActs=[];
 })();
 (function(){var p=fresh();stops();
-  ok('the Innkeeper is gated until 3 distinct beers are brewed', !specGate(p,'innkeeper'));
-  p.brewed={gruit:1,hopped:1,keut:1};
+  ok('the Innkeeper is gated until 3 distinct beers are SHIPPED (v4.9d)', !specGate(p,'innkeeper'));
+  p.shipped={gruit:1,hopped:1,keut:1};
   ok('…and opens at the 3rd flip (the old seat-2 rhythm)', specGate(p,'innkeeper'));
   grantUpgrade(p,'innkeeper');
   ok('seating him opens a 4th cellar (vessels 4 · a cask may mature on the tile)', p.vessels.length===4&&p.vslots===4&&openVessel(p)>=0);

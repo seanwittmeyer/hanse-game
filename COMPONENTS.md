@@ -1,4 +1,18 @@
-# Brewhouses of the Hanse — Components (v4.9b “Cornerstones”)
+# Brewhouses of the Hanse — Components (v4.9d “Loaded Flight”)
+
+> **v4.9d (designer-ruled 2026-08-04 — the #30 board talk):** **REPRINTS, no count
+> changes** — the **player board** gains its two printed **recipe columns**: cards sit
+> **COLLECTED (left)** until that beer's **first cask loads onto a Ship**, then move to the
+> **COMPLETED side (right)** — the completed cards ARE the Flight record (qualifying on brew
+> was a bug). The **Innkeeper tile** reprints its gate line (*3 distinct beers shipped*);
+> the rulebook/aid Flight lines reprint with it.
+
+> **v4.9c (designer-ruled 2026-08-04 — off playtests #29/#30 + the port/flow probes):**
+> **REPRINTS, no count changes** — the four **export recipe cards** reprint their wharf fee
+> on the eased formula **`H` = Q−3 ⚙: Keut/Broyhan chip-less (FREE) · Mumme 1 `H` · Bock
+> 2 `H`** (was 1/1/2/3). The measured cause: the recipe channel blocked 11–19 turns/game,
+> hops binding, Novgorod undelivered in a third of 3p games (*"tough to justify the cost of
+> brewing there if bock isn't in the game"*).
 
 > **v4.9b (designer-ruled 2026-08-04 — the table talk):** the mark’s **START FACE prints
 > on every building tile** ⚙ (a die glyph beside the fee chip — utilities 1 · workhorses 2 ·
@@ -84,8 +98,8 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (its header states the current version). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `archive/records/V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v4.9b “Cornerstones”** (`KEY hanse-v49b`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.9b; the sheet layouts are the P4 refresh). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - The live build is `play.html` — **v4.9d “Loaded Flight”** (`KEY hanse-v49d`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.9d; the sheet layouts are the P4 refresh). Printed copy follows the **Term Registry (`STYLE.md`)**.
 
 ---
 

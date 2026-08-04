@@ -737,7 +737,7 @@ const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',
 // the DIE as it boards. Prizes: Bruges a recipe · London a building (+3★) · Bergen a specialist ·
 // Novgorod refine (+2 age points; its gate raised to 4 — the scale is cut).
 const DESTS=[
-  {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, maj:[4,2,0], role:'The Hub — the on-ramp',        ben:{n:'+1',ic:'scroll-text'}, bnote:'a recipe — pay its fee (H = Q−2)'},
+  {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, maj:[4,2,0], role:'The Hub — the on-ramp',        ben:{n:'+1',ic:'scroll-text'}, bnote:'a recipe — pay its fee (H = Q−3)'},
   {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, maj:[5,3,1], role:'The Steelyard — the engine',   ben:{n:'+1',ic:'building-2'},  bnote:'a building, placed — your die on it'},
   {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, maj:[9,5,2], role:'Bryggen — the crews',          ben:{n:'+1',ic:'wrench'},      bnote:'a specialist, free'},
   {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:4, maj:[8,5,2], vb:2, role:'The Long Haul — the climb',    ben:{n:'+2',ic:'star'},   bnote:'no prize — every parked die scores +2★'},
@@ -1110,7 +1110,7 @@ const kMini=d=>{
       +'<div class="kp-cell"><span class="kp-ch">'+LU('landmark')+'majority</span><span class="kp-big">'+d.maj.join('/')+'</span></div>'
     +'</div><div class="kp-note bnote">'+(BNOTE_SHORT[d.nm]||d.bnote)+'</div></div>'
   +'</div>';};
-const BNOTE_SHORT={Bruges:'a recipe — pay its fee (H = Q−2)',London:'a building, built at once — your die on it',Bergen:'a Specialist, free',Novgorod:'no prize — every parked die scores +2★'};
+const BNOTE_SHORT={Bruges:'a recipe — pay its fee (H = Q−3)',London:'a building, built at once — your die on it',Bergen:'a Specialist, free',Novgorod:'no prize — every parked die scores +2★'};
 function supplyBoard(){
   const dslot=(fam,ic,smp)=>'<div class="dslot '+fam+'">'+LU(ic)
     +(OVERLAY&&smp?'<div class="ovl">'+smp+'</div>':'')+'</div>';
@@ -1421,7 +1421,7 @@ function checklist(pages,famPages){
   const R=(nm,detail,n)=>'<tr><td class="bx"></td><td><b>'+nm+'</b>'+(detail?'<div '+D+'>'+detail+'</div>':'')+'</td><td class="n">'+n+'</td></tr>';
   const T=title=>'<table><tr><th></th><th>'+title+'</th><th>qty</th></tr>';
   let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.9 “Mason’s Mark”)</span></h2>'
-    +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">This build: the building deck prints 20 and SETUP DEALS 17 ⚙; the Specialist guild holds 13 designs (the core five + eight singles — three with printed requirements, two with end-game ★ lines). The die is the cask — aging, boarding, value, presence and THE clock in one number (the dice alone end the game; dice never turn on their own). A commission pays the Ship’s PRINTED fee — Skute 2G · Cog 1G · Hulk free ⚙ (2/1/0 by berth) — places it, and may LOAD 1 Ready cask at once; it scores NO ★. A face-up row of 3 CONTRACTS prices deliveries. Every acquirable recipe/Specialist/building carries a PRINTED wharf fee (chipless buildings free; building/Specialist Kontor prizes free — a recipe’s H = Q−2 fee is paid even at Bruges), Novgorod pays every delivered die +2★, and sharing a station costs nothing. The Hall, charters, Privileges, ownership tokens, cask cubes and the three expansions stay OUT of the box (tabled). Counts ⚙.</p>'
+    +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">This build: the building deck prints 20 and SETUP DEALS 17 ⚙; the Specialist guild holds 13 designs (the core five + eight singles — three with printed requirements, two with end-game ★ lines). The die is the cask — aging, boarding, value, presence and THE clock in one number (the dice alone end the game; dice never turn on their own). A commission pays the Ship’s PRINTED fee — Skute 2G · Cog 1G · Hulk free ⚙ (2/1/0 by berth) — places it, and may LOAD 1 Ready cask at once; it scores NO ★. A face-up row of 3 CONTRACTS prices deliveries. Every acquirable recipe/Specialist/building carries a PRINTED wharf fee (chipless buildings free; building/Specialist Kontor prizes free — a recipe’s H = Q−3 fee is paid even at Bruges (v4.9c — the Q3s free)), Novgorod pays every delivered die +2★, and sharing a station costs nothing. The Hall, charters, Privileges, ownership tokens, cask cubes and the three expansions stay OUT of the box (tabled). Counts ⚙.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
     +R('Main board — the Wharf','The 2×2 of stations, each printing ONE action (Market: 2 goods · Brewhouse: brew · Cellar: Age 3 · Harbor: commission 1G + 1 free load, no ★), ringed by 8 slots — each seats a BUILDING and/or a SHIP (never casks).','1')
@@ -1437,7 +1437,7 @@ function checklist(pages,famPages){
     +R('Contract tiles','2×0.9″ single-sided strips — a Kontor (or any) + a die minimum / named beer → printed 2–5★. A face-up row of 3 on the Destinations board; a QUALIFYING delivery claims one (one per cask; the ★ score at once); the row refills at end of turn; claimed tiles never return. SETUP: a Contract naming an UNDEALT beer returns to the box — every dealt Contract is claimable.','15')
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')
-    +R('Recipe cards','DOUBLE-SIDED (the cost face / the BREWED face): flip on your first brew of that beer — the flipped cards ARE the Flight ((brewed−1)², min 3). One set of six per player: Gruit · Hopped (starters; Gruit dealt flipped) + Broyhan · Keut · Mumme · Bock (deal 3 of 4 each game). Gained at the card’s printed fee — the formula H = Q−2 (Broyhan/Keut 1H · Mumme 2H · Bock 3H ⚙) — paid at EVERY channel, the Bruges prize included.',6*PLAYERS.length)
+    +R('Recipe cards','DOUBLE-SIDED (the cost face / the COMPLETED face): the card moves to your board’s COMPLETED side — flip it — when that beer’s FIRST cask loads onto a Ship (v4.9d); the completed cards ARE the Flight ((shipped−1)², min 3). One set of six per player: Gruit · Hopped (starters; Gruit dealt flipped) + Broyhan · Keut · Mumme · Bock (deal 3 of 4 each game). Gained at the card’s printed fee — the formula H = Q−3 (Broyhan/Keut FREE · Mumme 1H · Bock 2H ⚙ — v4.9c) — paid at EVERY channel, the Bruges prize included.',6*PLAYERS.length)
     +R('Player aid cards','Double-sided quick reference (a turn / the icon key), one per player.',PLAYERS.length)
     +'</table>';
   h+=T('Tokens &amp; bits')

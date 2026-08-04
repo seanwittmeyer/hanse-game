@@ -200,17 +200,17 @@ const STARTERS=[   // the starting recipes are CARDS since v3.2d — one each pe
   {nm:'Gruit', cc:'#8a949c', L:1, g:1,h:0, start:1},
   {nm:'Hopped',cc:'#c2922f', L:2, g:1,h:1, start:1}];
 const RECIPES=[  // EXPORT recipe cards — print in the same double-sided run as the STARTERS above.
-  // buy = the WHARF FEE — v45e: the FORMULA H = Q−2, hops only, paid at EVERY channel (Bruges included; Q2 = free)
+  // buy = the WHARF FEE — the FORMULA H = Q−3 (v4.9c; was Q−2 at v45e), hops only, paid at EVERY channel (Bruges included; Q3 and below = free)
   // · g/h = the BREW cost on the tucked edge.
-  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{h:1},     reach:'Q3 · all kontore (the Hall via Dispatch) · FAST: ready 1'},
-  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{h:1},     reach:'Q3 · all kontore (+ the Hall) · +1 presence on a kontor delivery'},
-  {nm:'Mumme',   cc:'#9a5526', L:4, g:1,h:3, buy:{h:2},     reach:'Q4 · all kontore (the Hall via Dispatch)'},
-  {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{h:3}, reach:'Q5 · all kontore · the premium climb (fee H = Q−2 — v45e)'},
+  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{},     reach:'Q3 · all kontore (the Hall via Dispatch) · FAST: ready 1'},
+  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{},     reach:'Q3 · all kontore (+ the Hall) · +1 presence on a kontor delivery'},
+  {nm:'Mumme',   cc:'#9a5526', L:4, g:1,h:3, buy:{h:1},     reach:'Q4 · all kontore (the Hall via Dispatch)'},
+  {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{h:2}, reach:'Q5 · all kontore · the premium climb (fee H = Q−3 — v4.9c)'},
   // EXPANSION "Specialty Beers" (v1.9, opt-in) — the 3 specialty export recipe cards
   {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, reach:'Q2 · grain-path (no hops) · SALT TRADE: a kontor delivery → +1G +1H'},
-  {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, buy:{h:1}, reach:'Q3 · PARTI-GYLE: brewing also yields a free small Gruit (open vessel)'},
+  {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, buy:{}, reach:'Q3 · PARTI-GYLE: brewing also yields a free small Gruit (open vessel)'},
   {nm:'Duckstein',cc:'#7a5236', L:2, g:1,h:1, reach:'Q2 · ready 2 · SMOKE-HARDY: ships &amp; scores as +1 quality (reaches Novgorod)'},
-  {nm:'Jopenbier',cc:'#5e2433', L:6, g:2,h:4, buy:{h:4}, reach:'Q6 CAPSTONE (own toggle) · self-contained 8★+ · cellars +1★/turn deployed (max +5) · counts for the Flight (6→25)'},
+  {nm:'Jopenbier',cc:'#5e2433', L:6, g:2,h:4, buy:{h:3}, reach:'Q6 CAPSTONE (own toggle) · self-contained 8★+ · cellars +1★/turn deployed (max +5) · counts for the Flight (6→25)'},
 ];
 
 //==================================================================
@@ -362,7 +362,7 @@ function recipeCard(r,brewed){return '<div class="card" style="--cc:'+r.cc+'">'
   +(brewed?'<div class="c-brewed">'+LU('check')+'</div>':'')
   +'<div class="c-costpanel">'+(r.start
     ? '<span class="clab">starting recipe</span>'
-    : '<span class="clab">wharf fee</span><span class="cbig">'+cost(r.buy.g,r.buy.h)+'</span>')+'</div>'
+    : '<span class="clab">wharf fee</span><span class="cbig">'+(((r.buy||{}).g||(r.buy||{}).h)?cost(r.buy.g,r.buy.h):'free')+'</span>')+'</div>'
   +'<div class="c-strip">'
     +'<div class="c-row"><span class="c-rung">'+LU('quality-'+r.L)+'</span><span class="c-nm">'+r.nm+'</span></div>'
     +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(r.g,r.h)+'</span></div>'

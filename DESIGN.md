@@ -203,6 +203,36 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
+### v4.9d “Loaded Flight” (2026-08-04 — designer-ruled off the #30 board talk)
+**The Flight qualifies on LOAD, not brew** — the designer: *“the recipe cards sit on the
+left side until they are loaded on a ship, then moved to the right side of the board showing
+they are completed. This is a bug in our current implementation.”* The record is now
+`p.shipped` (set on a beer’s first `loadCommit`); the Innkeeper’s `flight3` gate reads the
+same record (printed line → *3 distinct beers shipped*); the warm Gruit counts when it
+ships; the AI’s new-style margins re-point at unshipped styles and the first load of a
+style learns the Flight step. **The player board enters the app** — the print anatomy,
+live: recipe cards COLLECTED (left column) → COMPLETED (right column, the Flight read off
+the board), vessels + specialist seats as printed wells seating the real tiles, stats in
+the bottom corners. This is the legibility fix the #29/#30 read priced (~55% of a winner’s
+total was off-track; the Flight’s 16★ the largest invisible mass — now a visible column of
+checked cards). The brew piles render the current single-faced tile (the old aging-side
+display retired). *Watch ⚙: the Flight tightens (ship, not brew — strand a beer in a vessel
+and it scores nothing); pace/totals re-read in the next battery.*
+
+### v4.9c “Light Tariff” (2026-08-04 — designer-ruled off playtests #29/#30 + the probes)
+The designer: *“I don’t think novogrod is structurally dead, but i think it is tough if
+bock isn’t in the game to justify the cost of brewing there. Maybe we adjust costs for
+recipes — keut/broyhan free, mumme 1H and bock 2H.”* **The formula drops to `H` = Q−3**
+(the v45e grammar — hops only, every channel, Bruges included — stands; the Scholar still
+waives). The measured backdrop: recipe channel blocked 11–19 turns/game · hops binding
+(8–23% of players end at 0 `H`; the Abbey ~never fires) · Novgorod undelivered 71/33/23%
+by count · #30 bought Mumme at 2 `H` only on its final round. *A/B (port probe 300/count,
+v4.9b → v4.9c):* recipe-channel blockage **11.0/14.1/18.8 → 2.8/1.4/2.2** turns/game ·
+Bock’s brew share **3.6/7.0/8.4% → 8.2/13.8/13.0%** (≈ its untaxed rate) · Novgorod
+dead-port **2p 73→54% · 3p 38/19 → 23/17 · 4p 23/25 → 20/5%** (Bock-dealt/no-Bock) · end
+hops rise, H0-players fall (22.6→15.8% at 2p). The 2p port stays the cold spot ⚙; the Bock
+rush and the Scholar’s 2 `G` price are the standing watches.
+
 ### v4.9b “Cornerstones” (2026-08-04 — designer-ruled off the table talk on the unplayed v4.9)
 The table’s read affirmed the mark’s direction — *“capturing that benefit incentivizes
 placing better buildings AND the table benefits; you want the best building to get the most
