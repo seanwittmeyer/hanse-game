@@ -1,0 +1,50 @@
+=== strategy probe — buildings & specialists · mode=obs · tier=guildmaster · 12 games/count ===
+
+--- 3p · 12 games · rounds 17.9 · dice-trigger 91.7% ---
+BUILDINGS: 6.00 owned builds/game · channels: prize 90.3% · fee-paid 5.6% · free-take 4.2% · overbuilds: on-setup 6 / on-owned 0
+  build-count buckets (baseline win 33.3%):
+    1 build     33.3% of seats · win  25.0% · avg total 40.7 · avg mark★ (end+cashed) 4.3
+    2+ builds   66.7% of seats · win  37.5% · avg total 51.9 · avg mark★ (end+cashed) 9.0
+  tile               blt/g   ms  tk/bld self%  sail%  over%  end◆  cash◆  life(rd)
+  abbey               0.75  3.0   0.78  71.4%   0.0%  11.1%   3.5    6.0      8.1
+  maltkiln            0.67  2.0   1.63  38.5%   0.0%  12.5%   3.6    4.0      4.6
+  bonded              0.58  3.0   0.71  20.0%  14.3%   0.0%   3.3    6.0      4.0
+  hopex               0.50  2.0   1.67  40.0%   0.0%   0.0%   3.7      —      2.8
+  missionq            0.50  1.0   0.83  20.0%   0.0%   0.0%   1.8      —      2.3
+  victual             0.42  3.0   0.40  50.0%  40.0%   0.0%   3.0    4.0      4.2
+  assay               0.42  1.0   2.60  30.8%   0.0%   0.0%   3.6      —      7.0
+  exchange            0.33  2.0   3.00  41.7%   0.0%   0.0%   5.0      —      3.8
+  scriveners          0.33  2.0   2.50  30.0%   0.0%  25.0%   4.3    5.0      4.0
+  cooperage           0.33  3.0   0.25   0.0%   0.0%  25.0%   3.3    3.0      6.0
+  racking             0.25  3.0   3.00  66.7%   0.0%   0.0%   6.0      —     12.0
+  granary             0.25  1.0   3.00  22.2%   0.0%   0.0%   4.0      —      4.7
+  tollhouse           0.17  3.0   0.00      —   0.0%  50.0%   3.0    3.0      0.0
+  richberth           0.17  3.5   0.00      —   0.0%   0.0%   3.5      —      4.0
+  capstan             0.08  3.0   0.00      —   0.0%   0.0%   3.0      —      1.0
+  customs             0.08  3.0   0.00      —   0.0%   0.0%   3.0      —      0.0
+  almoner             0.08  1.0   5.00  40.0%   0.0%   0.0%   6.0      —      4.0
+  hiringpost          0.08  2.0   3.00  33.3%   0.0%   0.0%   5.0      —      1.0
+  build timing (game quarters): 9.7% / 11.1% / 30.6% / 48.6%
+SPECIALISTS: 4.75 seats/game · channels: prize (Bergen) 63.2% · fee (Hiring/bonus) 36.8%
+    0 seats      8.3% of seats · win  33.3% · avg total 45.0
+    1 seat      25.0% of seats · win  33.3% · avg total 47.3
+    2 seats     66.7% of seats · win  33.3% · avg total 48.9
+  spec           seats/g  seat-rd  hold-win  Δtotal  design stat            (corpus avg total 48.2)
+  granary          0.92      9.2     45.5%     0.7  grain gained/g 8.91
+  braumeister      0.67     11.0     25.0%    -2.5  bm ticks/g 1.50
+  cellar           0.67     10.3     12.5%    -1.2  brews/g 5.63
+  hopgarden        0.50     15.0     16.7%    -0.8  hops gained/g 14.50
+  scholar          0.42      9.4     40.0%    -2.6  recipes end 4.40
+  crane            0.42     11.2     20.0%    -6.0  loads/g 6.00
+  alderman         0.33     15.0     75.0%     9.1  maj★ 11.8
+  shipwright       0.33      9.5     50.0%     2.8  grain saved/g 2.50 · comms/g 3.75
+  innkeeper        0.25     14.3     33.3%    12.2  inn ticks/g 0.00
+  chandler         0.17     15.5      0.0%    -1.2  swaps/g 0.00
+  supercargo       0.08      2.0    100.0%    13.8  rival-sail pays/g 1.00
+  Δ Grain Factor gG 8.9 vs 8.6 · delivs 6.0 vs 5.9
+  Δ Hop Gardener gH 14.5 vs 14.5 · delivs 6.0 vs 5.9
+  Δ Stevedore    loads 6.0 vs 6.4 · delivs 5.4 vs 6.0
+  Δ Braumeister  ages 8.1 vs 8.0 · delivs 5.3 vs 6.1
+  [saved /home/user/hanse-game/playtests/strategy-obs-guildmaster-3p-s3.jsonl]
+
+(466.9s)
