@@ -624,9 +624,26 @@ the engine; the modules return after the core settles.
    too)**. Watch: does the 3 `H` Bock tariff kill the rush or the style? And hops now carry
    three sinks (recipes · Hop Exchange · Abbey) — re-read whether slack flips to binding. If
    the Flight stalls, the dials are the formula's offset (Q−2 → Q−3) and verb frequency.
+   **MEASURED at v4.9b (flow re-baseline + the port probe, 2026-08-04 — off playtest #29's
+   H-0/0/1 table): hops are BINDING, not slack.** The recipe channel reads
+   wanted-but-unaffordable **11–19 turns/game** (2p→4p; the no-fee arm reads ~0), Bock's brew
+   share runs at ~half its no-fee rate (3.6–8.4% vs 13.9–18.1%), 8–23% of players END at 0
+   hops, and the **Abbey ~never fires** (0.07–0.37/game despite being dealt in 40–52% of
+   games — its 3 `H` price sits above the table's standing float). The tariff is doing its
+   ruled job (taxing the climb); the question left for the designer is whether the Abbey's
+   price point and the Bock style are acceptable casualties.
 3. **Novgorod at minimum 4** — is die-4 boarding reachable enough (Mumme+, or Kiln’d Q3)? Its
    pull is now the **+2★ die premium** (6–8★ deliveries, v4.2) + the 8/5/2 majority — watch
    whether +2 overshoots (the dial is the printed premium).
+   **MEASURED at v4.9b (the port probe, 2026-08-04 — off playtest #29's dead table): the port
+   goes UNDELIVERED in ~71% of 2p · ~33% of 3p · ~23% of 4p games — tier-agnostic** (the GM
+   oracle reads 67%/31% at 2p/3p) — and its 8/5/2 majority evaporates with it. It is NOT a
+   no-Bock artifact: a no-Bock deal guarantees Mumme and roughly HALVES the 3p dead rate
+   (38% → 19%) — the reach problem is the climb ECONOMY vs gate-2 traffic, not the deal, so
+   the "export-aware ship deck" dial targets the wrong cause. Candidate dials for the
+   designer (not ruled): the premium (+2 → +3), a pinnacle-aware gate, or embracing the
+   boom-market identity — but the 2p rate says the fourth Kontor barely exists at two (feeds
+   Open #8). The end-state clog is mild (~1.4–1.9 of 4 market hulls).
 4. **The mason’s-mark economy (v4.9 trial)** — a build now spends a CLOCK die for 1–6
    deferred ★ keyed to traffic. Watches: does building collapse under the value drop (the
    greedy read) or become the sleeper line (author the busy corner, let rivals pump your
