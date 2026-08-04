@@ -124,12 +124,12 @@
     border-bottom:1px solid var(--line);padding-bottom:.006in;display:flex;align-items:center;gap:.04in}
   .aid h5:first-child{margin-top:0}
   .aid h5 svg,.aid h5 .ic{width:.12in;height:.12in}
-  .aid .step{display:flex;gap:.05in;margin-bottom:.014in}
+  .aid .step{display:flex;gap:.05in;margin-bottom:.011in}
   .aid .step .sn{flex:0 0 auto;width:.17in;height:.17in;border-radius:50%;background:var(--sea);color:#fff;font-size:.09in;font-weight:bold;display:flex;align-items:center;justify-content:center}
   .aid .step .sx,.aid .ln{min-width:0}
   .aid .ln{margin-bottom:.016in}
   /* the die lifecycle strip: 5 stacked chips with arrows */
-  .aid .dstrip{display:flex;align-items:flex-start;gap:.015in;margin-bottom:.02in}
+  .aid .dstrip{display:flex;align-items:flex-start;gap:.015in;margin-bottom:.014in}
   .aid .dch{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.006in;min-width:0}
   .aid .dch img.ai,.aid .dch svg{width:.13in;height:.13in}
   .aid .dch b{font-size:.105in;line-height:1}
@@ -150,6 +150,16 @@
   .aid .lr .lic{flex:0 0 .2in;height:.15in;display:flex;align-items:center;justify-content:center;color:var(--sea)}
   .aid .lr .lic svg,.aid .lr .lic .ic{width:.15in;height:.15in}
   .aid .lr .lx{min-width:0} .aid .lr .lx b{font-variant:small-caps}
+  /* the illustrated icons render as BIG as their detail allows (designer, final pass): the art
+     carries ~15%/side transparent sticker margin, so the img boxes oversize past the glyph slots
+     with negative margins — the visible sticker fills the slot and line metrics never grow */
+  .aid img.ai{width:.19in;height:.19in;margin:-.05in -.008in;vertical-align:-.05in}
+  .aid h5 img.ai{width:.21in;height:.21in;margin:-.05in 0;vertical-align:-.055in}
+  .aid .lr .lic{flex:0 0 .26in;height:.15in}
+  .aid .lr .lic img.ai{width:.27in;height:.27in;margin:-.055in -.02in}
+  .aid .dch img.ai{width:.21in;height:.21in;margin:-.045in 0 -.04in}
+  .aid .kt img.ai{width:.2in;height:.2in;margin:-.055in .008in -.055in 0;vertical-align:middle}
+  .aid .ahd .abi img.ai{width:.24in;height:.24in;margin:-.02in}
   /* ====================== PLAYER BOARD (v1.6 — rebuilt from scratch) ======================
      A pure TRACKING surface — vessels & maturation (THE FLOOR row) · improvements · THE FLIGHT ·
      a goods zone · a bottom RECIPE RACK. No rules text (those live on the separate player-aid card).
