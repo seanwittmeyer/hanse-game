@@ -630,7 +630,7 @@ const CASK_ACT={source:'Gain 2 goods (any mix)',age:'Age +2 (2 steps across your
   hire:'Gain 1 specialist - from the display at its printed fee, open seat required (free at Bergen)',
   brew:'Brew 1 cask - pay its cost into an open vessel (tray die required)'};
 const CASK_ACT_POOL=['source','age','load','reach','recipe','survey','hire','brew'];   // v4.0: eight load bonuses; survey/hire Q3+, brew Q4+
-const CASK_ACT_ICON={source:'coins',age:'hourglass',load:'package-plus',reach:'map-pin',recipe:'scroll-text',survey:'search',hire:'wrench',brew:'flask-conical'};
+const CASK_ACT_ICON={source:'coins',age:'hourglass',load:'package-plus',reach:'map-pin',recipe:'scroll-text',survey:'hammer',hire:'wrench',brew:'flask-conical'};
 function pileDraw(q){const pool=CASK_ACT_POOL.filter(a=>(a!=='brew'||q>=4)&&((a!=='survey'&&a!=='hire')||q>=3));return pool[Math.floor(Math.random()*pool.length)];}
 function refillPiles(){if(!S.pileTop)S.pileTop={};for(const st in STYLES){if(STYLES[st].pin)continue;if(!S.pileTop[st])S.pileTop[st]=pileDraw(STYLES[st].q);}}   // v4.7a: one face-up pile PER BEER (Broyhan/Keut steer independently)
 function pileTopFor(q,style){if(style&&STYLES[style]&&STYLES[style].pin)return STYLES[style].act;return (S.pileTop&&S.pileTop[style])||pileDraw(q);}
@@ -1945,7 +1945,7 @@ function renderScore(){
   // 2 · the bank — builds / commissions / bumps (the tracked split)
   const bb=p.bankB||0,bl=p.bankL||0,bo=p.bankO||0,bp=Math.max(0,(p.bank||0)-bb-bl-bo);
   const br='<tr><td>'+LU('building-2')+' Buildings built</td><td>'+(bb/BUILD_PTS)+' × +'+BUILD_PTS+'★</td><td '+R+'><b>'+bb+'★</b></td></tr>'
-    +'<tr><td>'+LU('scroll-text')+' Ladings fulfilled</td><td>'+((p.ladings||[]).length)+' order'+((p.ladings||[]).length===1?'':'s')+'</td><td '+R+'><b>'+bl+'★</b></td></tr>'
+    +'<tr><td>'+LU('stamp')+' Ladings fulfilled</td><td>'+((p.ladings||[]).length)+' order'+((p.ladings||[]).length===1?'':'s')+'</td><td '+R+'><b>'+bl+'★</b></td></tr>'
     +(bo?'<tr><td>'+LU('ticket')+' Tollhouse</td><td>+3★ per stamped cask</td><td '+R+'><b>'+bo+'★</b></td></tr>':'')
     +'<tr><td>'+LU('map-pin')+' Placed presence</td><td>1★ per face-1 die</td><td '+R+'><b>'+bp+'★</b></td></tr>'
     +'<tr><td colspan="2"><b>Bank</b></td><td '+R+'><b>'+sc.bank+'★</b></td></tr>';
@@ -2705,7 +2705,7 @@ function renderBar(){
     acts=opts.map(st=>{const lbl=LU('scroll-text')+STYLES[st].name+' Q'+STYLES[st].q+' · '+costIcons(RECIPE_FEE[st]||{});
       return canPay(p,RECIPE_FEE[st]||{})?btn(lbl,'recipeGainPick(\''+st+'\')','go'):btnOff(lbl,'The printed fee exceeds your goods.');}).join('')+btn('Skip','recipeGainPick(null)','ghost');}
   else if(U==='survey'){
-    prompt=LU('search')+' <b>Gain a building</b> — pay the tile’s printed fee (chipless = free), choose from the display and <b>place it now</b> (+'+BUILD_PTS+'★). <span class="note">(Free as London’s prize.)</span>';
+    prompt=LU('hammer')+' <b>Gain a building</b> — pay the tile’s printed fee (chipless = free), choose from the display and <b>place it now</b> (+'+BUILD_PTS+'★). <span class="note">(Free as London’s prize.)</span>';
     acts=(S.buildDisplay||[]).map(k=>{const f=bldgFee(k);const lbl=LU(BUILDINGS[k].icon)+bName(k)+((f.g||f.h)?' · '+costIcons(f):'');
       return canPay(p,surveyNeed(k))?btn(lbl,'surveyPick(\''+k+'\')','go'):btnOff(lbl,'The fee'+(buildableSlots().length?'':' + the ground rent')+' exceeds your goods.');}).join('')+btn('Skip','surveyPick(null)','ghost');}
   else if(U==='hire'){const el=hireable(p);
