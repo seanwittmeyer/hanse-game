@@ -2671,47 +2671,38 @@ function btnOff(label,why){return '<button disabled style="opacity:.42;cursor:no
 // ---- PLAYER AID ----
 function toggleAid(){const el=document.getElementById('aid');if(el.classList.contains('hidden')){renderAid();el.classList.remove('hidden');if(window.lucide)lucide.createIcons();}else el.classList.add('hidden');}
 function renderAid(){
+  // rebuilt 2026-08-04 (designer): the app aid mirrors the print aid — only what a seated
+  // player needs, illustrated icons throughout (LU is art-aware); the deep teaching lives
+  // in the rulebook and the tooltips.
   const ic=n=>LU(n);
-  const keys=[['wheat','<b>Grain</b> (a currency)'],['sprout','<b>Hops</b> (a currency)'],['beer','<b>Cask</b> / beer quality'],
-    ['dices','<b>Quality die</b> — aging · boarding · value · presence · clock, one number'],
-    ['landmark','<b>Kontor</b> (Bruges/London/Bergen/Novgorod)'],
-    ['building-2','<b>Building</b> (green — serves everyone; your die stands on it and grows with use)'],['wrench','<b>Specialist</b> (2 seats, earned free)'],
-    ['layers','<b>The Flight</b> (distinct beers brewed)'],['anchor','<b>Slot</b> (a building and/or a ship)'],['sailboat','<b>Ship</b> (Skute 1 · Cog 2 · Hulk 3 berths)'],['hourglass','<b>Age</b> — turn a die up'],
-    ['map-pin','<b>Presence</b> — your parked dice'],['store','<b>Market</b> station'],['flask-conical','<b>Brew</b> / vessel'],['scroll-text','<b>Recipe</b> (earned, never bought)'],
-    ['package-plus','<b>Load</b> — a Ready cask boards; its bonus fires'],['coins','<b>Source</b> (take goods)'],['scroll-text','<b>Contract</b> — claim on a matching delivery']];
-  const dRow=d=>{const D=DEST[d];
-    const ben=D.benefit==='building'?'a building (placed — a die stands on it)':D.benefit==='spec'?'a specialist (free — per cask, like every prize)':D.benefit==='recipe'?'a recipe (at its H = Q−2 fee)':'— (the +'+(D.vbonus||0)+'★ premium is the prize)';
-    return '<tr><td>'+ic('landmark')+' '+D.name+'</td><td>die '+D.gate+'+</td><td>the die'+(D.vbonus?' <b>+'+D.vbonus+'★</b>':'')+'</td><td>'+D.maj.join(' / ')+'</td><td>'+ben+'</td></tr>';};
-  const dests=KONTORE.map(dRow).join('');
-  const acts=CASK_ACT_POOL.map(k=>'<span class="atag">'+ic(CASK_ACT_ICON[k])+' <b style="text-transform:capitalize">'+k+'</b> — '+CASK_ACT[k]+'</span>').join('');
-  const ab=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].act).map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
-  const lb=Object.keys(BUILDINGS).filter(k=>!BUILDINGS[k].act).map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
+  const PRIZE={recipe:'a recipe, at its fee',building:'a building \u2014 your die on it',spec:'a Specialist, free'};
+  const dests=KONTORE.map(d=>{const D=DEST[d];
+    return '<tr><td>'+ic('kontor-'+d)+' <b>'+D.name+'</b></td><td>'+D.gate+'+</td><td>'+(PRIZE[D.benefit]||'die scores +'+(D.vbonus||0)+'\u2605')+'</td><td><b>'+D.maj.join('/')+'</b></td></tr>';}).join('');
   document.getElementById('aidcard').innerHTML=
-    '<h2>'+ic('scroll-text')+' Player Aid — v4.9 “Mason’s Mark”</h2>'
-    +'<div class="asec"><b>Your turn</b><div class="note"><b>Move</b> to an adjacent station and activate its <b>row</b> or <b>column</b>. Resolve the line <b>in any order, all optional</b>: the two stations (one printed action each) + each slot’s <b>building action</b> and/or a <b>load of the Ship</b> docked there. <b>The line is read LIVE</b> — a Ship or building landing on a line slot mid-turn opens that slot (each part fires once). Sharing a station costs nothing — move where the board is best.</div></div>'
-    +'<div class="asec"><b>The die IS the cask</b><div class="note">At <b>brew</b> a tray die is set to the printed <b>start value</b> (= quality − aging steps; Gruit starts Ready at 1). <b>Aging turns it up — it stops at the quality: READY.</b> Only buildings lift it past quality (Malt Kiln +1 as it boards, cap 6). <b>The Kontor’s minimum reads the die as it boards</b>; at delivery the die <b>parks at the Kontor showing its face</b> — pips = the ★ scored (never &lt;1), the body = presence, majorities and the clock. <b>No die in the tray → no brew, no placing presence.</b></div></div>'
-    +'<div class="asec"><b>The four stations — ONE action each</b><div class="note">'
-      +ic('store')+' <b>Market</b> — take 2 goods (any mix).<br>'
-      +ic('flask-conical')+' <b>Brewhouse</b> — brew (pay a recipe → an open vessel; the cask takes the face-up load bonus of its quality pile — steerable).<br>'
-      +ic('hourglass')+' <b>Cellar</b> — Age '+CELLAR_POOL+': turn your aging dice up '+CELLAR_POOL+' steps. <b>Dice never turn on their own</b> — the Cellar, Mission Quay, Age bonuses, the Cellarman and the Braumeister are the only hands on them.<br>'
-      +ic('anchor')+' <b>Harbor</b> — commission: pay the Ship’s printed fee — <b>Skute 2G · Cog 1G · Hulk free</b> ⚙ (v4.8: 2/1/0 for 1/2/3 berths — you pay for dispatch speed, not tonnage) — and place it on a shipless slot; then <b>one free load</b>: a Ready cask from your vessels may board the new Ship at once (a normal load; a Skute sails on it). <b>No ★ — the Ship and the tempo are the reward.</b></div></div>'
-    +'<div class="asec"><b>Loading & sailing</b><div class="note">Resolving a Ship’s slot loads <b>one READY cask from YOUR vessels</b> whose die meets the Kontor’s minimum (after the slot’s lifts) — the die rides the tile, and the cask’s printed <b>load bonus fires</b> (after any sail it completes). The Stevedore loads 2. A Ship <b>sails the moment it is full</b> — a Skute on its first load — and every cask aboard delivers in load order; prizes resolve <b>when gained, owner’s choice</b>. Casks are private until aboard: the race is for <b>berths</b>, and topping off a Ship sails everyone’s cargo on your clock.</div></div>'
-    +'<div class="asec"><b>Contracts — the Kontor bonuses</b><div class="note">Three '+ic('scroll-text')+' Contract tiles lie face-up on the Destinations board. A delivered cask that <b>matches</b> one (its Kontor + the die minimum, or the named beer) may <b>claim it</b>: the tile comes to you and its printed ★ score at once — <b>one Contract per delivered cask</b>. The row refills at the end of the turn. The open row is what prices a delivery — read it before you sail.</div></div>'
-    +'<div class="asec"><b>Buildings — one green family</b><div class="note">Every building serves <b>whoever activates it</b>. Building one (London’s prize, or a <i>Gain 1 building</i> bonus — always from the display) <b>stands one of your quality dice on the tile at its printed start face</b> ⚙ (busy free utilities 1 · paid workhorses 2 · ship-riders, ephemerals and rare powers 3 — the fee and the tick rate both price the deal): every use of that building — by any player — turns the die up (cap 6), and <b>its pips score at game end</b>. The die is committed (it counts toward your empty-tray clock; no tray die → no build) and returns — its pips scored at once — only if the building leaves play (overbuilt, or an ephemeral sails away). Overbuild: <b>one payment per placement</b> — a fee-paid gain covers the ground (no rent); the '+costStr(OVERBUILD_FEE)+' rent applies only when an otherwise-free placement overbuilds (the displaced tile is boxed). <b>The fee rides the item:</b> gaining a recipe / building / specialist via a wharf channel (Scrivener’s Hall · Hiring Post · the gain bonuses) costs <b>the item’s printed fee</b> (a chipless building is free). London’s and Bergen’s prizes waive it — <b>a RECIPE’s fee (H = Q−2) is paid everywhere, Bruges included</b> (v45e). Using a building never adds a fee of its own.</div>'
-      +'<div class="atags" style="margin-top:5px">'+ab+'</div><div class="atags" style="margin-top:4px">'+lb+'</div></div>'
-    +'<div class="asec"><b>Destinations</b> <span class="note">minimum (the die, as boarded) · value = the die · majority 1/2/3 · prize</span>'
-      +'<table class="atable"><tr><th>Kontor</th><th>Minimum</th><th>Value</th><th>Majority</th><th>Prize</th></tr>'+dests+'</table>'
-      +'<div class="note"><b>2-player skips 2nd place.</b> Placing presence (the '+ic('map-pin')+' verb) parks a tray die at face 1 — 1★, presence and clock — only where you’ve delivered.</div></div>'
-    +'<div class="asec"><b>Load bonuses</b> <span class="note">(drawn at brew from the face-up pile tops; Gruit is always <i>Gain 2 goods</i>)</span><div class="atags">'+acts+'</div></div>'
-    +'<div class="asec"><b>Scoring</b><ol class="ascore">'
-      +'<li><b>Scored as you play:</b> deliveries (the parked die, 1–6★) · claimed <b>Contracts</b> (printed ★) · Tollhouse stamps (+3★, the die drops 1) · placed presence (1★) · a departing building’s die (pips at once). Commissions score nothing; builds pay at the END.</li>'
-      +'<li><b>Majorities (end-game)</b> — parked dice at each kontor (Bruges 4/2/0 · London 5/3/1 · Bergen 9/5/2 · Novgorod 8/5/2).</li>'
-      +'<li><b>The Flight (end-game)</b> '+ic('layers')+' — distinct beers <b>BREWED</b>: 3 → '+FLIGHT_PTS[3]+' · 4 → '+FLIGHT_PTS[4]+' · 5 → '+FLIGHT_PTS[5]+' (min '+FLIGHT_MIN+').</li>'
-      +'<li><b>The Mason’s Marks (end-game)</b> '+ic('building-2')+' — each die standing on one of your buildings scores its <b>pips</b> (1–6★).</li>'
-      +'<li><b>Guild ★ (end-game)</b> '+ic('wrench')+' — a seated <b>Chronicler</b> (+1★/claimed Contract, max +5) or <b>Alderman</b> (+2★ per Kontor with 3+ parked dice) scores its printed line.</li>'
-      +'<li><b>The clock</b> — the quality dice alone: the first player whose <b>tray EMPTIES</b> (every one of its '+PRES_POOL+' dice committed — parked, riding, or standing on a building) sets the final round. Dice never come back. Round '+MAX_ROUND+' is the safety backstop.</li>'
-      +'</ol></div>'
-    +'<div class="asec"><b>Icon key</b><div class="akey">'+keys.map(k=>'<div class="akrow">'+ic(k[0])+'<span>'+k[1]+'</span></div>').join('')+'</div></div>'
+    '<h2>'+ic('beer')+' Player Aid \u2014 v4.9b \u201cCornerstones\u201d</h2>'
+    +'<div class="asec"><b>Your turn</b><div class="note"><b>1 Move</b> to an adjacent station (turn 1: start where you stand) \u00b7 <b>2 Choose a line</b>: the row or the column \u00b7 <b>3 Resolve its stops</b>: any order, all optional; arrivals open their stop.</div></div>'
+    +'<div class="asec"><b>The die</b><div class="note">'
+      +ic('flask-conical')+' <b>Brew</b> start \u2192 '+ic('hourglass')+' <b>Age</b> +1/step \u2192 '+ic('check')+' <b>READY</b> \u2192 '+ic('dices')+' <b>Board</b> \u2265 min, cap 6 \u2192 '+ic('map-pin')+' <b>Park</b> pips = \u2605'
+      +'<br><b>No die in the tray</b>: no brew, no build, no presence.</div></div>'
+    +'<div class="asec"><b>Load &amp; sail</b><div class="note">'
+      +'\u00b7 <b>Load</b> (a Ship\u2019s slot stop): 1 Ready cask from YOUR vessels, die \u2265 the minimum<br>'
+      +'\u00b7 The load bonus fires <b>after</b> any sail it completes<br>'
+      +'\u00b7 <b>Full = sails at once</b> (a Skute on its first load)<br>'
+      +'\u00b7 Deliver in load order: score the die, park, prize per cask (else 2 goods \u00b7 a build prize forfeits), claim 1 Contract</div></div>'
+    +'<div class="asec"><b>The Kontore</b>'
+      +'<table class="atable"><tr><th>Kontor</th><th>Min</th><th>Prize</th><th>Majority</th></tr>'+dests+'</table>'
+      +'<div class="note">2-player skips 2nd place \u00b7 placing presence parks a tray die at face 1 (1\u2605), only where you\u2019ve delivered.</div></div>'
+    +'<div class="asec"><b>End &amp; score</b><div class="note"><b>First EMPTY tray</b> (your last of '+PRES_POOL+' dice committed): finish the round. Round '+MAX_ROUND+' backstop.<br>'
+      +'\u00b7 Delivered dice: the parked pips \u00b7 Contracts, stamps, presence as they land<br>'
+      +'\u00b7 Majorities by parked dice \u00b7 Building dice (the mason\u2019s marks): the pips<br>'
+      +'\u00b7 The Flight: distinct beers \u2014 3 \u2192 '+FLIGHT_PTS[3]+' \u00b7 4 \u2192 '+FLIGHT_PTS[4]+' \u00b7 5 \u2192 '+FLIGHT_PTS[5]+' \u00b7 Guild \u2605: printed end-lines<br>'
+      +'Tiebreak: summed vessel dice, then most goods.</div></div>'
+    +'<div class="asec"><b>Don\u2019t forget</b><div class="note">\u2460 The minimum reads the die AS IT BOARDS (after lifts) \u2461 Specialist &amp; Contract displays refill at turn END (Ships &amp; buildings: at once).</div></div>'
+    +'<div class="asec"><b>Stations &amp; buildings</b><div class="note">'
+      +ic('store')+' <b>Market</b>: take 2 goods \u00b7 '+ic('age-3')+' <b>Cellar</b>: Age '+CELLAR_POOL+'<br>'
+      +ic('flask-conical')+' <b>Brewhouse</b>: brew the top pile tile<br>'
+      +ic('ship')+' <b>Harbor</b>: place a Ship \u2014 its printed fee (Skute 2G \u00b7 Cog 1G \u00b7 Hulk free) \u2014 + 1 free load, no \u2605<br>'
+      +ic('building-2')+' <b>Buildings</b>: a build stands your die at the tile\u2019s printed face \u2014 every use (anyone) +1, pips score at end \u00b7 use free \u00b7 overbuild = one payment</div></div>'
     +'<div style="text-align:center;margin-top:10px"><button class="primary" onclick="toggleAid()">Close</button></div>';
 }
 
