@@ -253,7 +253,14 @@ holders make ~1.5 fewer Age visits — the drip substitutes; Grain Factor/Hop Ga
 compress sourcing rather than inflate stock; Stevedore lifts loads/deliveries; Alderman is
 the sleeper at +5.6Δ/3p; Chandler reads weak; Innkeeper still needs human hands).
 Overbuild-as-die-denial: **unobserved in 1,200 bot games** — a live-table watch, not a
-cleared one.
+cleared one. *The Guildmaster oracle* (2p×24 + 3p×48 @ 120ms — directional) separates
+search play from the racers: it runs **18.5–21.9 rounds** (the pace-under-read confirmed —
+the 12–25 band holds both), builds **more and late** (44–53% of builds in the final
+quarter: the mark as endgame annuity), **pays** the Hiring-Post channel for 24–33% of its
+seats, and **revives Racking** (1.3 ticks/build, self-worked) — narrowing the true dead
+shelf to **Tollhouse · Cooperage · Customs · Rich Berth** at every strength; Alderman
+confirms at all tiers, Supercargo turns +11.9 at 3p, Braumeister inverts negative in long
+games.
 
 ### v4.9 “Mason’s Mark” (2026-08-04 — designer-ruled mid-playtest · A TRIAL)
 The designer’s ask, verbatim in spirit: *when I build a building, I don’t gain 3 points —

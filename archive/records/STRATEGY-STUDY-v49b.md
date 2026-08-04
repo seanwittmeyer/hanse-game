@@ -64,12 +64,18 @@ Build-count and seat-count correlate with each other (both ride deliveries — L
 
 ## 5. The Guildmaster oracle (search-based play, GUILD_MS=120)
 
-<!-- GM-SLOT -->
+Pooled 2p×24 + 3p×48 (`strategy-gm-pooled-v49b.txt`; small-N — directional, not gate-grade). Five signatures that separate search-based play from the greedy tiers:
+
+1. **The GM stretches the runway**: 21.9 rounds at 2p / 18.5 at 3p (greedy: 11.8/12.0; dice-trigger falls to 67/81%). The strongest oracle we have plays ~6–10 rounds longer than the racers — direct evidence for the standing "greedy under-reads human pace" line. The live band (12–25) comfortably holds both.
+2. **It builds MORE and LATER**: 5.8 builds/game at 3p (greedy 5.0), with 44–53% of builds in the final quarter (greedy spreads evenly). Under search play the mark is an **endgame annuity purchase** — buy the die's floor when the runway is known — not an early engine. The build-count win gradient steepens (2p: 0-builds 16.7% vs 2+ builds **69.6%**).
+3. **It partially revives the dead shelf**: Racking **1.32 ticks/build** at 3p (greedy 0.39) with 59% self-tick — the GM builds the Racking Hall *for itself* and works it; Exchange 2.4 · Hopex 1.6 · Abbey 0.6 also lift. Still dead even for the GM: **Tollhouse (0.23) · Cooperage (0.09) · Customs (0.33) · Rich Berth (0.0)** — the roster-rethink shortlist narrows to those four.
+4. **It pays for specialists it wants**: the fee channel carries 24–33% of GM seats (greedy 16–20%) and seats land later; at 2p it often correctly *skips* the system (0-seat GM players win 53.3% — selective engagement, not neglect). The Bergen prize is a draft; the Hiring Post is a plan.
+5. **Design reads under search play**: **Alderman confirms** as the sleeper at every strength (85.7% hold-win/+16.0Δ at 2p; 46.7%/+5.0 at 3p — the majority pillar converts); **Supercargo turns strongly positive** at 3p (+11.9, 64.3% — the GM positions cargo for rival hulls); **Braumeister inverts negative** (−4.9 at 2p) — in long games the passive drip underperforms the seat it occupies (observational; Bergen-timing confound).
 
 ## 6. Verdicts & watches (for the parking-lot roster rethink)
 
 1. **The mark schedule works as priced** — utility tiles tick 1.5–3×/build and grow past their faces; the start-3 tier converts to static ~3★ annuities. If the roster rethink wants the power tiles to *live* rather than *sit*, the lever is traffic (verbs players repeat), not the start face.
-2. **Racking/Tollhouse/Capstan/Customs remain the dead shelf** (0.0–0.7 ticks; Capstan ~0.05 uses/game in the 500-sim) — the same four the utilization read flagged at v45d. Roster-rethink candidates #1.
+2. **The dead shelf narrows under search play**: the GM revives Racking (1.3 ticks/build, self-worked) and lifts Hopex/Exchange/Abbey — but **Tollhouse · Cooperage · Customs · Rich Berth stay dead at every strength** (≤0.3 ticks/build; Capstan ~0.05 uses/game in the 500-sim). THAT four-tile shelf is roster-rethink candidate #1; Racking's flatline is a greedy-AI artifact, not a design one.
 3. **The ephemerals already ARE the tycoon seed**: Bonded/Victualling post the best cash-outs (~5 pips inside ~4 rounds) at 28–35%/11–24% sail-away rates. A "real-estate" lane wants more of this churn shape.
 4. **Overbuild-as-denial**: zero bot evidence — needs a live table read before any rule reaction.
 5. **2p tick drought confirmed structurally** (self-share ~50%): if 2p marks feel dead at the table, consider a 2p-only dial (e.g. marks tick on setup-tile use too, or a 2p start-face +1) — NOT a global change.
