@@ -1,0 +1,36 @@
+=== hanse v4.1 sim — 500 games/count · tier journeyman ===
+
+== 2p · 500 ok / 0 err ==
+rounds avg 11.8 (min 6 max 25) · in 12–25 band 50.0%
+triggers: dice 99.8% · ceiling 0.2% · sailed avg 5.2
+winner total avg 47.6 · margin avg 13.4 · seat wins P1 49.0% P2 51.0%
+per-player: brews 7.0 · deliveries 6.1 · bank★ 3.6
+delivery split: bruges 44.7% · london 22.3% · bergen 24.7% · novgorod 8.3%
+commissions/game: 5.1 — skute 0.4 · cog 2.4 · hulk 2.3 · grain paid 2.6
+mason's marks (v4.9): builds/game 3.3 · die ticks 3.2 · end pips/player 4.9
+v4.5b usage/game: ladings 0.8 · rack 0.1 · assay 1.0▲/0.0▼ · toll 0.1 · hopex-pay 0.5 · abbey 0.1 · kiln/bonded lift 2.8 · bonded sail-away 0.1 · braumeister 0.4 seat / 0.8 ticks
+v4.6 usage/game: exchange 1.1 · capstan 0.0 · victual loads 0.2 · chandler 0.1 · supercargo 0.2 · coop-berth sails 0.2 · customs boards 0.0 · richberth short 0.1
+
+== 3p · 500 ok / 0 err ==
+rounds avg 11.4 (min 6 max 25) · in 12–25 band 47.4%
+triggers: dice 99.6% · ceiling 0.4% · sailed avg 7.7
+winner total avg 54.6 · margin avg 9.2 · seat wins P1 29.0% P2 33.6% P3 37.4%
+per-player: brews 6.6 · deliveries 6.0 · bank★ 3.8
+delivery split: bruges 36.7% · london 25.3% · bergen 27.1% · novgorod 10.9%
+commissions/game: 7.2 — skute 0.7 · cog 3.5 · hulk 3.0 · grain paid 4.0
+mason's marks (v4.9): builds/game 5.2 · die ticks 7.0 · end pips/player 5.5
+v4.5b usage/game: ladings 1.3 · rack 0.2 · assay 1.9▲/0.0▼ · toll 0.1 · hopex-pay 1.0 · abbey 0.1 · kiln/bonded lift 5.4 · bonded sail-away 0.1 · braumeister 0.6 seat / 1.3 ticks
+v4.6 usage/game: exchange 2.2 · capstan 0.1 · victual loads 0.3 · chandler 0.2 · supercargo 0.5 · coop-berth sails 0.3 · customs boards 0.1 · richberth short 0.1
+
+== 4p · 500 ok / 0 err ==
+rounds avg 11.3 (min 6 max 25) · in 12–25 band 45.6%
+triggers: dice 99.8% · ceiling 0.2% · sailed avg 10.2
+winner total avg 54.7 · margin avg 8.6 · seat wins P1 24.8% P2 26.4% P3 30.0% P4 18.8%
+per-player: brews 6.4 · deliveries 5.9 · bank★ 4.2
+delivery split: bruges 34.1% · london 24.6% · bergen 28.6% · novgorod 12.8%
+commissions/game: 9.8 — skute 1.2 · cog 4.7 · hulk 3.9 · grain paid 6.1
+mason's marks (v4.9): builds/game 6.2 · die ticks 9.9 · end pips/player 4.9
+v4.5b usage/game: ladings 1.7 · rack 0.4 · assay 2.4▲/0.0▼ · toll 0.1 · hopex-pay 1.6 · abbey 0.3 · kiln/bonded lift 8.2 · bonded sail-away 0.2 · braumeister 1.0 seat / 1.8 ticks
+v4.6 usage/game: exchange 2.9 · capstan 0.1 · victual loads 0.4 · chandler 0.3 · supercargo 0.5 · coop-berth sails 0.5 · customs boards 0.1 · richberth short 0.1
+
+GATE: 0 crashes / 0 deadlocks.

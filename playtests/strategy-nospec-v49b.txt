@@ -1,0 +1,152 @@
+=== strategy probe — buildings & specialists · mode=nospec · tier=trader · 300 games/count ===
+
+--- 2p · 300 games · rounds 11.6 · dice-trigger 100.0% ---
+BUILDINGS: 3.72 owned builds/game · channels: prize 81.9% · fee-paid 9.5% · free-take 8.6% · overbuilds: on-setup 14 / on-owned 0
+  build-count buckets (baseline win 50.0%):
+    0 builds    12.0% of seats · win  44.4% · avg total 34.8 · avg mark★ (end+cashed) 0.0
+    1 build     26.8% of seats · win  38.5% · avg total 39.2 · avg mark★ (end+cashed) 3.3
+    2+ builds   61.2% of seats · win  56.1% · avg total 45.4 · avg mark★ (end+cashed) 8.2
+  tile               blt/g   ms  tk/bld self%  sail%  over%  end◆  cash◆  life(rd)
+  maltkiln            0.64  2.0   2.06  52.2%   0.0%   1.6%   4.1    4.0      4.1
+  missionq            0.33  1.0   1.22  53.7%   0.0%   0.0%   2.2      —      3.1
+  racking             0.32  3.0   0.22  61.9%   0.0%   1.0%   3.2    3.0      3.9
+  assay               0.30  1.0   1.44  53.4%   0.0%   1.1%   2.4    3.0      4.0
+  bonded              0.30  3.0   0.26  47.8%  13.3%   0.0%   3.0    4.7      3.5
+  abbey               0.29  3.0   0.08  57.1%   0.0%   2.3%   3.1    3.0      4.5
+  victual             0.28  3.0   0.36  45.2%  14.1%   0.0%   3.1    4.8      3.3
+  cooperage           0.27  3.0   0.28  45.5%   0.0%   0.0%   3.3      —      3.5
+  hopex               0.23  2.0   0.65  43.2%   0.0%   1.5%   2.7    2.0      2.7
+  granary             0.22  1.0   1.30  60.9%   0.0%   1.5%   2.3    2.0      2.9
+  exchange            0.19  2.0   2.02  48.7%   0.0%   0.0%   4.0      —      3.3
+  scriveners          0.17  2.0   0.90  55.3%   0.0%   1.9%   2.9    2.0      2.9
+  tollhouse           0.07  3.0   0.00      —   0.0%   0.0%   3.0      —      2.0
+  almoner             0.05  1.0   3.13  48.9%   0.0%   0.0%   4.1      —      2.7
+  hiringpost          0.02  2.0   0.83  40.0%   0.0%  16.7%   2.6    4.0      4.2
+  customs             0.02  3.0   0.00      —   0.0%   0.0%   3.0      —      2.0
+  capstan             0.01  3.0   0.00      —   0.0%   0.0%   3.0      —      3.3
+  build timing (game quarters): 7.0% / 24.0% / 35.2% / 33.7%
+SPECIALISTS: 1.59 seats/game · channels: prize (Bergen) 77.8% · fee (Hiring/bonus) 22.2%
+    0 seats     54.8% of seats · win  46.2% · avg total 41.4
+    1 seat      10.8% of seats · win  44.6% · avg total 39.6
+    2 seats     34.3% of seats · win  57.8% · avg total 45.1
+  spec           seats/g  seat-rd  hold-win  Δtotal  design stat            (corpus avg total 42.5)
+  granary          0.37      5.6     60.0%     0.2  grain gained/g 7.65
+  supercargo       0.21      4.7     50.0%     2.5  rival-sail pays/g 1.30
+  cellar           0.20      5.9     44.1%     1.1  brews/g 7.00
+  shipwright       0.17      5.6     58.0%    -0.0  grain saved/g 2.24 · comms/g 3.58
+  scholar          0.16      4.7     69.4%     4.3  recipes end 4.33
+  braumeister      0.16      5.9     46.8%    -0.3  bm ticks/g 1.79
+  alderman         0.12      7.8     73.0%     8.2  maj★ 11.2
+  crane            0.07      6.1     42.9%     1.1  loads/g 6.48
+  hopgarden        0.06      7.6     36.8%     1.2  hops gained/g 14.37
+  innkeeper        0.03      9.5     80.0%     7.5  inn ticks/g 0.10
+  chandler         0.03      5.3     50.0%    -0.4  swaps/g 1.38
+  towncrier        0.01      4.0    100.0%     0.0  bumps/g 3.00
+  chronicler       0.00     11.0    100.0%    18.5  contracts claimed/g 1.00
+  Δ Grain Factor gG 7.6 vs 9.1 · delivs 6.5 vs 6.4
+  Δ Hop Gardener gH 14.4 vs 12.3 · delivs 6.1 vs 6.4
+  Δ Stevedore    loads 6.5 vs 7.1 · delivs 6.2 vs 6.4
+  Δ Braumeister  ages 6.2 vs 7.7 · delivs 6.4 vs 6.4
+ABLATION (nospec): abstainer win 46.7% (baseline 50.0%) · avg total 41.4 vs field 43.6 · Δ -2.2
+  abstainer profile: builds 1.75 vs 1.97 · specs 0.00 vs 1.59 · delivs 6.5 vs 6.4 · brews 7.3 vs 7.0 · mark★ 5.5 vs 6.2 · prize-forfeits/g 0.00 · Bergen-consolations/g 1.81
+
+--- 3p · 300 games · rounds 11.8 · dice-trigger 99.7% ---
+BUILDINGS: 4.96 owned builds/game · channels: prize 80.6% · fee-paid 9.9% · free-take 9.5% · overbuilds: on-setup 83 / on-owned 0
+  build-count buckets (baseline win 33.3%):
+    0 builds    13.4% of seats · win  16.5% · avg total 36.5 · avg mark★ (end+cashed) 0.0
+    1 build     31.2% of seats · win  23.5% · avg total 46.0 · avg mark★ (end+cashed) 3.7
+    2+ builds   55.3% of seats · win  43.0% · avg total 53.7 · avg mark★ (end+cashed) 8.5
+  tile               blt/g   ms  tk/bld self%  sail%  over%  end◆  cash◆  life(rd)
+  maltkiln            0.87  2.0   2.40  29.0%   0.0%   9.2%   4.3    5.0      4.6
+  missionq            0.55  1.0   1.39  31.6%   0.0%   3.7%   2.4    2.0      3.5
+  cooperage           0.38  3.0   0.54  37.7%   0.0%   3.5%   3.6    3.0      4.2
+  bonded              0.36  3.0   0.61  29.2%  21.5%   0.0%   3.1    5.3      3.8
+  victual             0.35  3.0   0.41  37.2%  19.0%   1.0%   3.1    4.8      4.2
+  abbey               0.34  3.0   0.36  30.6%   0.0%   5.9%   3.3    3.8      5.0
+  racking             0.32  3.0   0.56  31.5%   0.0%   8.2%   3.6    3.3      4.7
+  granary             0.31  1.0   2.30  31.0%   0.0%   6.4%   3.4    1.2      4.1
+  exchange            0.31  2.0   2.35  30.6%   0.0%   2.2%   4.4    4.0      3.8
+  assay               0.30  1.0   2.09  31.6%   0.0%   2.2%   3.1    1.5      4.8
+  hopex               0.29  2.0   1.38  36.4%   0.0%   4.5%   3.4    3.3      4.1
+  scriveners          0.24  2.0   1.79  31.5%   0.0%   5.6%   3.9    2.0      3.8
+  tollhouse           0.14  3.0   0.21  55.6%   0.0%   2.3%   3.2    3.0      3.5
+  almoner             0.07  1.0   3.05  34.3%   0.0%   9.1%   3.9    5.5      2.5
+  capstan             0.07  3.0   0.10  50.0%   0.0%  10.0%   3.1    3.0      3.0
+  customs             0.03  3.0   0.22  50.0%   0.0%   0.0%   3.2      —      3.4
+  hiringpost          0.03  2.0   0.75  33.3%   0.0%  12.5%   2.7    3.0      2.5
+  build timing (game quarters): 12.8% / 27.2% / 30.2% / 29.8%
+SPECIALISTS: 3.09 seats/game · channels: prize (Bergen) 83.3% · fee (Hiring/bonus) 16.7%
+    0 seats     39.9% of seats · win  34.8% · avg total 47.6
+    1 seat      17.2% of seats · win  27.1% · avg total 46.5
+    2 seats     42.9% of seats · win  34.5% · avg total 51.2
+  spec           seats/g  seat-rd  hold-win  Δtotal  design stat            (corpus avg total 49.0)
+  granary          0.55      5.4     37.2%     0.9  grain gained/g 7.07
+  cellar           0.43      5.8     31.3%     1.6  brews/g 6.90
+  braumeister      0.39      6.3     30.2%     1.0  bm ticks/g 2.10
+  shipwright       0.29      5.1     40.9%     2.1  grain saved/g 2.91 · comms/g 3.99
+  supercargo       0.29      5.3     33.3%     1.7  rival-sail pays/g 1.55
+  crane            0.29      6.1     37.2%     2.4  loads/g 6.90
+  alderman         0.27      7.1     31.3%     3.1  maj★ 13.0
+  scholar          0.25      5.6     25.0%     1.2  recipes end 4.33
+  hopgarden        0.15      7.6     44.4%     3.5  hops gained/g 14.49
+  innkeeper        0.12      8.3      8.3%    -2.6  inn ticks/g 0.00
+  chandler         0.05      5.0     21.4%    -3.4  swaps/g 1.86
+  towncrier        0.02      4.7     71.4%    -1.0  bumps/g 1.14
+  Δ Grain Factor gG 7.1 vs 8.2 · delivs 6.3 vs 6.1
+  Δ Hop Gardener gH 14.5 vs 14.5 · delivs 6.4 vs 6.2
+  Δ Stevedore    loads 6.9 vs 6.6 · delivs 6.5 vs 6.1
+  Δ Braumeister  ages 6.2 vs 7.9 · delivs 6.4 vs 6.1
+ABLATION (nospec): abstainer win 35.7% (baseline 33.3%) · avg total 49.2 vs field 48.9 · Δ 0.3
+  abstainer profile: builds 1.74 vs 1.61 · specs 0.00 vs 1.54 · delivs 6.3 vs 6.1 · brews 7.0 vs 6.7 · mark★ 6.1 vs 5.8 · prize-forfeits/g 0.00 · Bergen-consolations/g 1.77
+
+--- 4p · 300 games · rounds 11.6 · dice-trigger 99.3% ---
+BUILDINGS: 6.48 owned builds/game · channels: prize 83.7% · fee-paid 7.7% · free-take 8.5% · overbuilds: on-setup 237 / on-owned 0
+  build-count buckets (baseline win 25.0%):
+    0 builds    14.3% of seats · win  13.4% · avg total 35.7 · avg mark★ (end+cashed) 0.0
+    1 build     31.5% of seats · win  22.5% · avg total 43.8 · avg mark★ (end+cashed) 4.0
+    2+ builds   54.2% of seats · win  29.5% · avg total 49.2 · avg mark★ (end+cashed) 8.8
+  tile               blt/g   ms  tk/bld self%  sail%  over%  end◆  cash◆  life(rd)
+  maltkiln            0.91  2.0   2.83  23.5%   0.0%  14.7%   4.8    5.1      4.7
+  missionq            0.75  1.0   1.50  24.7%   0.0%  10.2%   2.6    2.0      3.7
+  abbey               0.49  3.0   0.39  24.1%   0.0%  15.0%   3.4    3.1      5.0
+  racking             0.48  3.0   0.56  16.0%   0.0%  13.8%   3.6    3.3      5.2
+  assay               0.47  1.0   2.52  24.4%   0.0%  12.8%   3.8    1.8      5.0
+  victual             0.44  3.0   0.62  14.6%  27.3%   6.1%   3.1    4.6      4.4
+  granary             0.44  1.0   2.66  22.3%   0.0%   9.2%   3.8    2.0      4.1
+  hopex               0.43  2.0   1.27  19.0%   0.0%   7.8%   3.3    2.7      4.2
+  cooperage           0.42  3.0   0.56  26.8%   0.0%   7.1%   3.6    3.4      4.5
+  bonded              0.40  3.0   0.86  20.4%  32.5%   5.0%   3.1    5.1      3.8
+  exchange            0.37  2.0   2.54  28.9%   0.0%  10.7%   4.5    4.8      4.6
+  scriveners          0.35  2.0   2.33  24.9%   0.0%  11.4%   4.4    3.5      3.8
+  tollhouse           0.22  3.0   0.17  27.3%   0.0%  12.1%   3.2    3.0      3.5
+  almoner             0.12  1.0   4.31  28.4%   0.0%   0.0%   5.3      —      3.0
+  capstan             0.11  3.0   0.03 100.0%   0.0%  12.5%   3.0    3.0      3.3
+  hiringpost          0.04  2.0   1.00  33.3%   0.0%  41.7%   2.7    3.4      2.6
+  customs             0.04  3.0   0.18   0.0%   0.0%   0.0%   3.2      —      1.8
+  build timing (game quarters): 15.9% / 28.4% / 30.9% / 24.9%
+SPECIALISTS: 4.59 seats/game · channels: prize (Bergen) 81.0% · fee (Hiring/bonus) 19.0%
+    0 seats     33.0% of seats · win  24.0% · avg total 44.4
+    1 seat      19.3% of seats · win  22.5% · avg total 42.5
+    2 seats     47.8% of seats · win  26.7% · avg total 47.6
+  spec           seats/g  seat-rd  hold-win  Δtotal  design stat            (corpus avg total 45.6)
+  granary          0.88      5.5     24.2%     0.5  grain gained/g 6.88
+  cellar           0.81      5.7     21.8%     1.4  brews/g 6.60
+  braumeister      0.69      6.0     25.7%     0.3  bm ticks/g 1.80
+  crane            0.56      6.0     28.0%     0.8  loads/g 6.49
+  hopgarden        0.33      6.7     17.0%     0.5  hops gained/g 13.38
+  supercargo       0.30      5.3     41.1%     4.1  rival-sail pays/g 1.44
+  scholar          0.29      4.4     31.4%     0.5  recipes end 4.44
+  shipwright       0.24      4.9     32.4%     3.0  grain saved/g 3.01 · comms/g 3.76
+  alderman         0.21      7.0     30.2%     3.6  maj★ 10.3
+  innkeeper        0.18      7.5     27.3%     2.8  inn ticks/g 0.04
+  chandler         0.06      6.9     11.1%    -0.6  swaps/g 2.22
+  towncrier        0.04      6.3      8.3%    -3.6  bumps/g 0.83
+  chronicler       0.00     11.0      0.0%    -0.6  contracts claimed/g 1.00
+  Δ Grain Factor gG 6.9 vs 7.8 · delivs 6.2 vs 5.9
+  Δ Hop Gardener gH 13.4 vs 14.1 · delivs 5.9 vs 6.0
+  Δ Stevedore    loads 6.5 vs 6.2 · delivs 6.2 vs 5.9
+  Δ Braumeister  ages 5.6 vs 7.2 · delivs 6.1 vs 5.9
+ABLATION (nospec): abstainer win 28.3% (baseline 25.0%) · avg total 46.0 vs field 45.4 · Δ 0.6
+  abstainer profile: builds 1.65 vs 1.61 · specs 0.00 vs 1.53 · delivs 6.1 vs 5.9 · brews 6.7 vs 6.4 · mark★ 6.0 vs 6.0 · prize-forfeits/g 0.00 · Bergen-consolations/g 1.84
+
+(23.4s)

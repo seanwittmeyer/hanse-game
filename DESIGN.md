@@ -237,6 +237,23 @@ is the candidate expansion of that lane. *Watches ⚙:* the 2p tick drought stan
 ticks/game) · greedy racers under-read human pace (the band read is their floor, not the
 table’s) · the Racking/Capstan marks start 3 but tick ~0.1–0.3/game — if a tile’s mark is
 its whole pull, it may want a start-4 tier or a roster cut (the rethink).
+*Strategy study (same day — the full oracle battery + the two-systems read the designer
+asked for; `archive/records/STRATEGY-STUDY-v49b.md`, instrument `playtests/strategy-probe.js`):*
+sim 500/count + PATHWAYS 200/lane + ladder + smoke ALL CLEAN — builder lane healthy-not-hot
+(3p 32.5 · 4p 27.5). **Buildings are load-bearing**: a NOBUILD ablation seat wins ≈half
+baseline (the ~6★ mark hole; deliveries identical) — 83–85% of builds arrive as the London
+prize; winners build ~2.0 vs the field’s ~1.5; the Kiln is the tick king (2.5–2.9/build);
+the start-3 power tier sits as static ~3★ annuities (traffic, not face, is the
+roster-rethink lever); the self-tick share falls 50%→24% from 2p→4p (the table funds the
+mark, as intended — and the 2p drought is structural). **Specialists are texture + skill
+headroom**: a NOSPEC ablation seat loses ≈nothing under greedy play (the Bergen 2-goods
+consolation covers the channel) while the free-grant ceilings (SPECIALIST-VALUE-STUDY) stay
+strongly positive — the gap is the human game; behaviour shifts are real (Braumeister
+holders make ~1.5 fewer Age visits — the drip substitutes; Grain Factor/Hop Gardener
+compress sourcing rather than inflate stock; Stevedore lifts loads/deliveries; Alderman is
+the sleeper at +5.6Δ/3p; Chandler reads weak; Innkeeper still needs human hands).
+Overbuild-as-die-denial: **unobserved in 1,200 bot games** — a live-table watch, not a
+cleared one.
 
 ### v4.9 “Mason’s Mark” (2026-08-04 — designer-ruled mid-playtest · A TRIAL)
 The designer’s ask, verbatim in spirit: *when I build a building, I don’t gain 3 points —
