@@ -1332,11 +1332,16 @@ function buildPages(){
   // cardstock + paper cutter: cut lines print on the ART layer as grey guides (no laser pass)
   pages.filter(p=>p.section==='cards').forEach(p=>p.papercut=true);
   // --- PLAYER BOARDS (moved to the BOTTOM of the page, just before the checklist) ---
-  PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(p=>{   // tight die-cut hugging the slot cluster (v3.2d: two rows, no strip/rack)
-    const W=7.65,H=3.85,sw=+(W*SCALE).toFixed(4),sh=+(H*SCALE).toFixed(4),X=+((PG.w-sw)/2).toFixed(2),Y=0.8,pg=newPage(pages,'boards','Player board — '+p.nm);   // sized to the slot cluster (vessels 2.4×1 · seats 2×2)
-    pg.items.push({x:X,y:Y,w:sw,h:sh,nat:[W,H],html:pboard(p)});
-    pg.rrect={x:X,y:Y,w:sw,h:sh,r:+(0.18*SCALE).toFixed(4)};
-  });
+  {  // tight die-cut hugging the slot cluster — TWO boards per sheet (designer, 2026-08-03)
+    const W=7.65,H=3.85,sw=+(W*SCALE).toFixed(4),sh=+(H*SCALE).toFixed(4),X=+((PG.w-sw)/2).toFixed(2);
+    const ps=PLAYERS.slice(0,cnt(PLAYERS.length));let bpg=null;
+    ps.forEach((p,i)=>{
+      if(i%2===0)bpg=newPage(pages,'boards','Player boards — '+p.nm+(ps[i+1]?' + '+ps[i+1].nm:''));
+      const Y=+(0.75+(i%2)*(sh+0.4)).toFixed(3);
+      bpg.items.push({x:X,y:Y,w:sw,h:sh,nat:[W,H],html:pboard(p)});
+      (bpg.rrects=bpg.rrects||[]).push({x:X,y:Y,w:sw,h:sh,r:+(0.18*SCALE).toFixed(4)});
+    });
+  }
   // --- CHECKLIST (always last; carries no cuts, so earlier sheets stay page-aligned) ---
   const pg=newPage(pages,'list','Component checklist');
   pages.forEach((p,i)=>p.no=i+1);   // number sheets BEFORE building the checklist's sheet refs
