@@ -1,8 +1,21 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.9 “Mason’s Mark”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.9b “Cornerstones”)
 
 *(Language: the 2026-08-03 **Term Registry pass** governs all printed copy — player ·
 Kontor · Contract · cask quality die · build · Age N · aging · resolve the line · the ★
 glyph; see `STYLE.md` §4. The version letters below keep their period wording.)*
+
+> **v4.9b “Cornerstones” (designer-ruled 2026-08-04 — the table talk on the unplayed
+> v4.9).** Three balance moves on the mark. **(1) The mark starts at the tile’s PRINTED
+> face** ⚙ — busy free utilities **1** (Granary · Mission Quay · Almoner’s · Assay) · paid
+> workhorses **2** (Scrivener’s · Hiring Post · Malt Kiln · Hop Exchange · Merchants’
+> Exchange) · ship-riders, ephemerals and rare powers **3** (Cooperage · Customs · Rich
+> Berth · Tollhouse · Racking · Abbey · Bonded · Victualling · Capstan) — *“ones that
+> require ships to sail start higher; the cost to place still factors in.”* **(2) The pool
+> is 13** ⚙ (was 12) — the 13th die funds the mark economy (the v4.9 A/B ran ~2 rounds
+> under the band). **(3) An untakeable BUILD prize is FORFEIT** — the 2-goods fallback is
+> CUT on the London/build path (*“gaining goods is a game action itself”*; the Bruges/
+> Bergen consolations stand — scope flagged in §Open). Parking lot: the building-roster
+> rethink and the ephemeral “real-estate tycoon” lane (DESIGN §9).
 
 > **v4.9 “Mason’s Mark” (designer-ruled 2026-08-04, mid-playtest — A TRIAL).** **A build
 > scores no ★. Instead the builder stands ONE OF THEIR QUALITY DICE on the tile at face 1**
@@ -117,7 +130,7 @@ glyph; see `STYLE.md` §4. The version letters below keep their period wording.)
 > tiles (a kontor + a die minimum or a named beer → printed **2–5★**); delivering a
 > qualifying cask **claims one** (one per cask; the ★ bank at once); the row refills at the
 > **end of the turn**. The row makes every kontor’s delivery value a **variable economy** —
-> read it before you sail. The live build is `play.html` (**KEY `hanse-v48`**; beneath v4.7, the v4.6d/c/b letters and v4.6 sit the 2026-08-01 letters, designer-ruled: **v45h** — the floor covers are OFF for now: all 3 vessels + both seats open from the start (the Flight keeps its ladder, loses its unlock duty) · **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
+> read it before you sail. The live build is `play.html` (**KEY `hanse-v49b`**; beneath v4.7, the v4.6d/c/b letters and v4.6 sit the 2026-08-01 letters, designer-ruled: **v45h** — the floor covers are OFF for now: all 3 vessels + both seats open from the start (the Flight keeps its ladder, loses its unlock duty) · **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
 
 > **v4.5 “Empty Tray” (designer-ruled 2026-07-31 — off human playtest #24).** Two changes.
 > **(1) The end trigger is the EMPTY TRAY:** the first house to **commit its last tally die**
@@ -207,7 +220,8 @@ Each player starts with (⚙):
   bonuses, building actions.
 - A **player board** (§8): **3 vessel slots** and **2 specialist seats — all open from the
   start (v45h: the covers are off for now)**. The Flight keeps its scoring ladder.
-- **12 QUALITY DICE ⚙ (player-colour d6) — the player’s whole runway, in public view.** A die
+- **13 QUALITY DICE ⚙ (player-colour d6 — v4.9b; the 13th funds the mason’s marks) — the
+  player’s whole runway, in public view.** A die
   leaves your tray at **brew** (it IS the cask’s aging marker and value), rides the Ship’s
   berth, and **parks at the Kontor on delivery** — presence, the ★ scored (the pips), and the clock,
   all one component. A die also leaves the tray at **build** (v4.9 — it stands on the tile as
@@ -294,7 +308,7 @@ at that Kontor.)*
 
 > **The squeeze (state it to players):**
 > - **You can’t brew everything** — 2 vessels (a 3rd behind the Flight), the recipe faucets,
->   and 12 dice for the whole game.
+>   and 13 dice for the whole game.
 > - **You can’t deliver everywhere** — the hulls in the market decide which ports are open;
 >   berths are shared and race away.
 > - **You can’t hold everything** — a Ready cask clogs a vessel until a hull appears; goods cap
@@ -327,8 +341,9 @@ The 8 slots each hold up to **one building** (bottom) and **one ship** (top). **
 serves whoever activates it; nobody owns the use.** Building one — London’s prize (free) or a *Gain 1
 building* action (pay the **tile’s printed wharf fee** ⚙, v4.2 — a chipless tile is free),
 always **from the Wharf display of 4, placed at once** — **stands one of the builder’s quality
-dice on the tile at face 1 (v4.9)**: each use by any player turns it up 1 (cap 6), and the
-pips score to the builder at game end. No tray die → no build. **Using a building never costs a fee of its own** — at Scrivener’s Hall / the Hiring
+dice on the tile at its PRINTED START FACE (v4.9b ⚙ — 1/2/3 by tier)**: each use by any
+player turns it up 1 (cap 6), and the pips score to the builder at game end. No tray die →
+no build; **a build prize that can’t be taken is forfeit** (no goods fallback — v4.9b). **Using a building never costs a fee of its own** — at Scrivener’s Hall / the Hiring
 Post you pay only the recipe’s / specialist’s printed fee. **Overbuild — ONE payment per
 placement (v4.2c):** a fee-paid gain **covers the ground** (no rent); the **1 `G` ⚙ ground
 rent** applies only when an otherwise-free placement (London’s prize, or a chipless tile)
@@ -342,26 +357,26 @@ grain buys infrastructure, hops power the beer (the Hop Exchange and Abbey Cella
 `H` to USE, never to gain). The cheap tiles are honest utilities; the 3 `G`/2 `G` power tier
 swings; the dealt subset makes every wharf a different economy.**
 
-| Building | Fires | Effect ⚙ | Qty ⚙ | Wharf fee ⚙ |
-|---|---|---|---|---|
-| Granary | resolve its slot | **Gain 2 goods** (any mix) | 1 | free |
-| Scrivener’s Hall | resolve its slot | **gain 1 recipe** (at the recipe’s fee) | 1 | 1 `G` |
-| Mission Quay | resolve its slot | **Age +2** (your vessels) | 2 | free |
-| Hiring Post | resolve its slot | **gain 1 specialist** (at its fee) | 1 | 1 `G` |
-| Almoner’s Stall | resolve its slot | **Place 1 presence** (§7) | 1 | free |
-| **Racking Hall** *(power)* | resolve its slot | **swap the dice of ANY two of your vessel casks — no quality cap** (the beer transfers whole; global cap 6). *The launder engine: rack an aged Bock’s 5 onto a Ready Gruit — the 5-pip Gruit ships, the Bock re-ages from 1.* | 1 | 3 `G` |
-| **Assay House** | resolve its slot | **turn one of your aging dice ±1** (never above its quality, never below 1) | 1 | 1 `G` |
-| **Abbey Cellar** *(power)* | resolve its slot | **pay 3 `H`: ALL your aging casks age to READY** (each die to its quality) | 1 | 2 `G` |
-| **Hop Exchange** *(power)* | resolve its slot | **pay up to 2 `H` ⚙ — turn your vessel dice +1 per hop** (any split; **past quality is fine**; cap 6) | 1 | 2 `G` |
-| **Malt Kiln** | on load here | the boarding cask’s **die +1** (cap 6) | 2 | 2 `G` |
-| **Tollhouse** | on load here | the boarding cask **may turn its die −1** (never below the Kontor’s minimum): **score +3★ at once** (net +2, any quality) | 1 | 1 `G` |
-| **Bonded Store** | on load here / at sail | the boarding die **+1** (cap 6); **when this Ship sails, the Store sails with it** (returned to the box) and **every player with a cask aboard gains 2 goods** | 1 | 2 `G` |
-| **Cooperage** | passive | the Ship here: **+1 ship capacity** | 1 | 2 `G` |
-| **Customs House** | passive | the Ship here: **−1 quality required** to board (sells at the die) | 1 | 2 `G` |
-| **Rich Berth** | passive | the Ship here may **sail one berth short** (min 1) | 1 | 2 `G` |
-| **Victualling Yard** *(v4.6 · ephemeral)* | on load here / at sail | the boarding cask’s **load bonus fires TWICE**; **when this Ship sails, the Yard sails with it** (boxed) | 1 | 2 `G` |
-| **Merchants’ Exchange** *(v4.6)* | resolve its slot | **cycle ONE open Contract** to the bottom of its deck — the replacement is revealed **at once** (the end-of-turn refill is untouched) | 1 | 2 `G` |
-| **Warping Capstan** *(v4.6)* | resolve its slot | **move one EMPTY hull** on the wharf to any shipless slot | 1 | 2 `G` |
+| Building | Fires | Effect ⚙ | Qty ⚙ | Wharf fee ⚙ | Mark starts ⚙ |
+|---|---|---|---|---|---|
+| Granary | resolve its slot | **Gain 2 goods** (any mix) | 1 | free | 1 |
+| Scrivener’s Hall | resolve its slot | **gain 1 recipe** (at the recipe’s fee) | 1 | 1 `G` | 2 |
+| Mission Quay | resolve its slot | **Age +2** (your vessels) | 2 | free | 1 |
+| Hiring Post | resolve its slot | **gain 1 specialist** (at its fee) | 1 | 1 `G` | 2 |
+| Almoner’s Stall | resolve its slot | **Place 1 presence** (§7) | 1 | free | 1 |
+| **Racking Hall** *(power)* | resolve its slot | **swap the dice of ANY two of your vessel casks — no quality cap** (the beer transfers whole; global cap 6). *The launder engine: rack an aged Bock’s 5 onto a Ready Gruit — the 5-pip Gruit ships, the Bock re-ages from 1.* | 1 | 3 `G` | 3 |
+| **Assay House** | resolve its slot | **turn one of your aging dice ±1** (never above its quality, never below 1) | 1 | 1 `G` | 1 |
+| **Abbey Cellar** *(power)* | resolve its slot | **pay 3 `H`: ALL your aging casks age to READY** (each die to its quality) | 1 | 2 `G` | 3 |
+| **Hop Exchange** *(power)* | resolve its slot | **pay up to 2 `H` ⚙ — turn your vessel dice +1 per hop** (any split; **past quality is fine**; cap 6) | 1 | 2 `G` | 2 |
+| **Malt Kiln** | on load here | the boarding cask’s **die +1** (cap 6) | 2 | 2 `G` | 2 |
+| **Tollhouse** | on load here | the boarding cask **may turn its die −1** (never below the Kontor’s minimum): **score +3★ at once** (net +2, any quality) | 1 | 1 `G` | 3 |
+| **Bonded Store** | on load here / at sail | the boarding die **+1** (cap 6); **when this Ship sails, the Store sails with it** (returned to the box) and **every player with a cask aboard gains 2 goods** | 1 | 2 `G` | 3 |
+| **Cooperage** | passive | the Ship here: **+1 ship capacity** | 1 | 2 `G` | 3 |
+| **Customs House** | passive | the Ship here: **−1 quality required** to board (sells at the die) | 1 | 2 `G` | 3 |
+| **Rich Berth** | passive | the Ship here may **sail one berth short** (min 1) | 1 | 2 `G` | 3 |
+| **Victualling Yard** *(v4.6 · ephemeral)* | on load here / at sail | the boarding cask’s **load bonus fires TWICE**; **when this Ship sails, the Yard sails with it** (boxed) | 1 | 2 `G` | 3 |
+| **Merchants’ Exchange** *(v4.6)* | resolve its slot | **cycle ONE open Contract** to the bottom of its deck — the replacement is revealed **at once** (the end-of-turn refill is untouched) | 1 | 2 `G` | 2 |
+| **Warping Capstan** *(v4.6)* | resolve its slot | **move one EMPTY hull** on the wharf to any shipless slot | 1 | 2 `G` | 3 |
 
 *(Action buildings print the same verbs as the cask piles — the wharf and the cargo speak one
 language. The Kiln, Hop Exchange and Racking Hall are the “improve the humble beer” engines: a
@@ -527,11 +542,11 @@ prestige. The faucets: the Market (2 + specialists), Granaries, *Gain 2 goods* l
 — to a brew, a placed presence, or with every remaining die already riding vessels/Ships — its
 **tray reads 0** and the final round is set (finish the round → score). Parked-out is NOT
 required: dice aboard unfilled Ships count as committed. Dice never return — the 12 dice are the
-player’s whole runway, always countable: tray + in play + parked = **12** ⚙.
+player’s whole runway, always countable: tray + in play + parked (dice on your buildings included) = **13** ⚙ (v4.9b).
 Sails end nothing; ships are pure logistics.
 
 A **MAX_ROUND ceiling** (~25 ⚙) backstops a slow table. Pace target **~12–25 rounds.** ⚙ *The
-tray size (12 dice) is THE pace dial now.*
+tray size (13 dice — v4.9b) is THE pace dial now.*
 
 ---
 

@@ -1,4 +1,11 @@
-# Brewhouses of the Hanse — Components (v4.9 “Mason’s Mark”)
+# Brewhouses of the Hanse — Components (v4.9b “Cornerstones”)
+
+> **v4.9b (designer-ruled 2026-08-04 — the table talk):** the mark’s **START FACE prints
+> on every building tile** ⚙ (a die glyph beside the fee chip — utilities 1 · workhorses 2 ·
+> ship-riders/ephemerals/rare powers 3), the **pool grows to 13 dice/player** (+4 dice to
+> the box ⚙ — the 13th funds the marks), and an **untakeable build prize is forfeit** (the
+> 2-goods fallback leaves the London panel; Bruges/Bergen consolations stand). Reprints:
+> all 20 building tiles (the start-face chip) · the player aid · the London panel.
 
 > **v4.9 (designer-ruled 2026-08-04 — A TRIAL):** **rules-side, no count changes** — **a
 > build stands one of the builder’s 12 quality dice on the tile at face 1** (the mason’s
@@ -77,8 +84,8 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (its header states the current version). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `archive/records/V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v4.8 “Harbor Rates”** (`KEY hanse-v48`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.8; the sheet layouts are the P4 refresh). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - The live build is `play.html` — **v4.9b “Cornerstones”** (`KEY hanse-v49b`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.9b; the sheet layouts are the P4 refresh). Printed copy follows the **Term Registry (`STYLE.md`)**.
 
 ---
 
@@ -113,7 +120,7 @@
 |---|---|---|
 | Grain tokens | 60 | currency |
 | Hops tokens | 40 | currency |
-| **Quality dice** | **48** (12 × 4 colours ⚙ — v4.5) | the cask/presence/**building-mark (v4.9)**/clock component — see §1 |
+| **Quality dice** | **52** (13 × 4 colours ⚙ — v4.9b; 12 at v4.5) | the cask/presence/**building-mark (v4.9)**/clock component — see §1 |
 | Score discs (movers) | 4 (1/colour) | the score ring (flip/mark at +50) |
 | Worker pawns | 4 (1/colour) | the stations |
 | +1-berth / minimum markers | — | none: the Kiln turns the die itself; Cooperage/Customs read from the tile |
@@ -164,26 +171,26 @@ tile is free — the tier reads straight off the component). Using a building ne
 
 The v4.5b **dice pass** + the v45d **power ladder** (designer-ruled 2026-08-01): 9 die-touching designs; **fees print in grain only** — hops are spent USING the power tiles (Hop Exchange ≤2 `H`/use · Abbey Cellar 3 `H`/use), never buying them. **v4.6: shuffle all 20, deal 17 into the game** (≥1 Malt Kiln + ≥1 Mission Quay guaranteed; the other 3 stay boxed) — every wharf a different economy.
 
-| Building | Qty ⚙ | Effect | Wharf fee ⚙ (chip; — = free) |
-|---|---|---|---|
-| Granary | 1 | resolve its slot: **gain 2 goods** | — |
-| Scrivener’s Hall | 1 | resolve its slot: **gain 1 recipe** (at the recipe’s fee) | 1 `G` |
-| Mission Quay | 2 | resolve its slot: **age +2** | — |
-| Hiring Post | 1 | resolve its slot: **gain 1 specialist** (at its fee) | 1 `G` |
-| Almoner’s Stall | 1 | resolve its slot: **place 1 presence** (a tray die) | — |
-| **Racking Hall** *(power)* | 1 | resolve its slot: **swap the dice of ANY two of your vessel casks — no quality cap** (the beer transfers; cap 6) | 3 `G` |
-| **Assay House** | 1 | resolve its slot: **turn one of your aging dice ±1** (never above its quality, never below 1 — v45c) | 1 `G` |
-| **Abbey Cellar** *(power, v45d)* | 1 | resolve its slot: **pay 3 `H` — ALL your aging casks age to READY** | 2 `G` |
-| **Hop Exchange** *(power, v45d)* | 1 | resolve its slot: **pay up to 2 `H` — vessel dice +1 per hop** (past quality fine; cap 6) | 2 `G` |
-| **Malt Kiln** | 2 | a cask loading here: **die +1** (cap 6) | 2 `G` |
-| **Tollhouse** | 1 | a cask loading here **may turn its die −1** (never below the Kontor’s minimum): **score +3★ at once** | 1 `G` |
-| **Bonded Store** | 1 | a cask loading here: **die +1** (cap 6); **when this Ship sails the Store sails with it** (boxed) — every player with a cask aboard gains 2 goods | 2 `G` |
-| Cooperage | 1 | the Ship here: **+1 ship capacity** | 2 `G` |
-| Customs House | 1 | the Ship here: **−1 quality required** to board | 2 `G` |
-| Rich Berth | 1 | the Ship here may **sail one berth short** (min 1) | 2 `G` |
-| **Victualling Yard** *(v4.6 · ephemeral)* | 1 | a cask loading here: **its load bonus fires TWICE**; when this Ship sails the Yard **sails with it** (boxed) | 2 `G` |
-| **Merchants’ Exchange** *(v4.6)* | 1 | resolve its slot: **cycle 1 open Contract** to its deck’s bottom — the replacement posts at once | 2 `G` |
-| **Warping Capstan** *(v4.6)* | 1 | resolve its slot: **move one EMPTY hull** to any shipless slot | 2 `G` |
+| Building | Qty ⚙ | Effect | Wharf fee ⚙ (chip; — = free) | Mark starts ⚙ |
+|---|---|---|---|---|
+| Granary | 1 | resolve its slot: **gain 2 goods** | — | 1 |
+| Scrivener’s Hall | 1 | resolve its slot: **gain 1 recipe** (at the recipe’s fee) | 1 `G` | 2 |
+| Mission Quay | 2 | resolve its slot: **age +2** | — | 1 |
+| Hiring Post | 1 | resolve its slot: **gain 1 specialist** (at its fee) | 1 `G` | 2 |
+| Almoner’s Stall | 1 | resolve its slot: **place 1 presence** (a tray die) | — | 1 |
+| **Racking Hall** *(power)* | 1 | resolve its slot: **swap the dice of ANY two of your vessel casks — no quality cap** (the beer transfers; cap 6) | 3 `G` | 3 |
+| **Assay House** | 1 | resolve its slot: **turn one of your aging dice ±1** (never above its quality, never below 1 — v45c) | 1 `G` | 1 |
+| **Abbey Cellar** *(power, v45d)* | 1 | resolve its slot: **pay 3 `H` — ALL your aging casks age to READY** | 2 `G` | 3 |
+| **Hop Exchange** *(power, v45d)* | 1 | resolve its slot: **pay up to 2 `H` — vessel dice +1 per hop** (past quality fine; cap 6) | 2 `G` | 2 |
+| **Malt Kiln** | 2 | a cask loading here: **die +1** (cap 6) | 2 `G` | 2 |
+| **Tollhouse** | 1 | a cask loading here **may turn its die −1** (never below the Kontor’s minimum): **score +3★ at once** | 1 `G` | 3 |
+| **Bonded Store** | 1 | a cask loading here: **die +1** (cap 6); **when this Ship sails the Store sails with it** (boxed) — every player with a cask aboard gains 2 goods | 2 `G` | 3 |
+| Cooperage | 1 | the Ship here: **+1 ship capacity** | 2 `G` | 3 |
+| Customs House | 1 | the Ship here: **−1 quality required** to board | 2 `G` | 3 |
+| Rich Berth | 1 | the Ship here may **sail one berth short** (min 1) | 2 `G` | 3 |
+| **Victualling Yard** *(v4.6 · ephemeral)* | 1 | a cask loading here: **its load bonus fires TWICE**; when this Ship sails the Yard **sails with it** (boxed) | 2 `G` | 3 |
+| **Merchants’ Exchange** *(v4.6)* | 1 | resolve its slot: **cycle 1 open Contract** to its deck’s bottom — the replacement posts at once | 2 `G` | 2 |
+| **Warping Capstan** *(v4.6)* | 1 | resolve its slot: **move one EMPTY hull** to any shipless slot | 2 `G` | 3 |
 
 ## 7. Specialist tiles (13 designs — v4.6 · the core 5 × max(2, n−1) + the guild 8 × 1 · 2×2″ purple)
 
@@ -233,8 +240,8 @@ flipped cards are the Flight ladder (v45h: the covers are off — no unlock duty
 
 ## 9. Setup (summary — RULES.md §1)
 
-3G 2H each · warm Ready Gruit (die 1) in vessel 1 (all 3 vessels + 2 seats open — v45h) · 12
-dice · **building deck: deal 17 of the 20 printed** (≥1 Kiln + ≥1 Mission Quay — v4.6) ·
+3G 2H each · warm Ready Gruit (die 1) in vessel 1 (all 3 vessels + 2 seats open — v45h) · 13
+dice (v4.9b) · **building deck: deal 17 of the 20 printed** (≥1 Kiln + ≥1 Mission Quay — v4.6) ·
 displays: Ships 4 / buildings 4 / Specialists 4 / **Contracts 3** · wharf seeds: Hulk→Bruges + 1 Ship + 2 neutral buildings ·
 worker placed free · first player fixed.
 
