@@ -98,26 +98,26 @@ const BUILDINGS=[
   // boarding die / the ship at their slot. The Annex (echo verb) is CUT; the goods faucets thinned.
   // 17 tiles ⚙. (art: every design owns its file — building-<k>.png; the 2026-08-02 art pass
   // retired the last interim stand-ins. Briefs: art/PROMPTS.md.)
-  {k:'granary',   nm:'Granary',           verb:'transform', tgt:'act',  ic:'coins',        n:1, act:'source', eff:'Gain 2 goods'},
-  {k:'scriveners',nm:'Scrivener’s Hall',  verb:'transform', tgt:'act',  ic:'scroll-text',  n:1, g:1, act:'recipe', eff:'Gain 1 recipe'},
-  {k:'missionq',  nm:'Mission Quay',      verb:'transform', tgt:'act',  ic:'church',       n:2, act:'age',    eff:'Age +2'},
-  {k:'hiringpost',nm:'Hiring Post',       verb:'transform', tgt:'act',  ic:'wrench',       n:1, g:1, act:'hire',   eff:'Gain 1 specialist'},
-  {k:'almoner',   nm:'Almoner’s Stall',   verb:'transform', tgt:'act',  ic:'heart',        n:1, act:'reach',  eff:'+1 presence'},
+  {k:'granary',   nm:'Granary',           ms:1, verb:'transform', tgt:'act',  ic:'coins',        n:1, act:'source', eff:'Gain 2 goods'},
+  {k:'scriveners',nm:'Scrivener’s Hall',  ms:2, verb:'transform', tgt:'act',  ic:'scroll-text',  n:1, g:1, act:'recipe', eff:'Gain 1 recipe'},
+  {k:'missionq',  nm:'Mission Quay',      ms:1, verb:'transform', tgt:'act',  ic:'church',       n:2, act:'age',    eff:'Age +2'},
+  {k:'hiringpost',nm:'Hiring Post',       ms:2, verb:'transform', tgt:'act',  ic:'wrench',       n:1, g:1, act:'hire',   eff:'Gain 1 specialist'},
+  {k:'almoner',   nm:'Almoner’s Stall',   ms:1, verb:'transform', tgt:'act',  ic:'heart',        n:1, act:'reach',  eff:'+1 presence'},
   // v45d power ladder — fees print in GRAIN only (hops are spent USING buildings, never buying them)
-  {k:'racking',   nm:'Racking Hall',      verb:'transform', tgt:'act',  ic:'repeat',       n:1, g:3, act:'rack',   eff:'Swap 2 dice'},
-  {k:'assay',     nm:'Assay House',       verb:'transform', tgt:'act',  ic:'scale',        n:1, g:1, act:'assay',  eff:'1 aging die ±1'},
-  {k:'abbey',     nm:'Abbey Cellar',      verb:'transform', tgt:'act',  ic:'hourglass',    n:1, g:2, act:'abbey',  eff:'<span class="h">3'+LU('sprout','h')+'</span> → all aging Ready'},
-  {k:'hopex',     nm:'Hop Exchange',      verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, act:'hopex',  eff:'<span class="h">1'+LU('sprout','h')+'</span> → '+LU('die-plus1','dlift')+' · max 2'},
-  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, effIc:'die-plus1',  eff:'on load'},
-  {k:'tollhouse', nm:'Tollhouse',         verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, effIc:'die-minus1', eff:'on load → +3★'},
-  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, effIc:'die-plus1',  eff:'on load · sails with the Ship · players aboard gain 2 goods'},
-  {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 ship capacity'},
-  {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'−1 quality required'},
-  {k:'richberth', nm:'Rich Berth',        verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'May sail 1 short'},
+  {k:'racking',   nm:'Racking Hall',      ms:3, verb:'transform', tgt:'act',  ic:'repeat',       n:1, g:3, act:'rack',   eff:'Swap 2 dice'},
+  {k:'assay',     nm:'Assay House',       ms:1, verb:'transform', tgt:'act',  ic:'scale',        n:1, g:1, act:'assay',  eff:'1 aging die ±1'},
+  {k:'abbey',     nm:'Abbey Cellar',      ms:3, verb:'transform', tgt:'act',  ic:'hourglass',    n:1, g:2, act:'abbey',  eff:'<span class="h">3'+LU('sprout','h')+'</span> → all aging Ready'},
+  {k:'hopex',     nm:'Hop Exchange',      ms:2, verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, act:'hopex',  eff:'<span class="h">1'+LU('sprout','h')+'</span> → '+LU('die-plus1','dlift')+' · max 2'},
+  {k:'maltkiln',  nm:'Malt Kiln',         ms:2, verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, effIc:'die-plus1',  eff:'on load'},
+  {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, effIc:'die-minus1', eff:'on load → +3★'},
+  {k:'bonded',    nm:'Bonded Store',      ms:3, verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, effIc:'die-plus1',  eff:'on load · sails with the Ship · players aboard gain 2 goods'},
+  {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 ship capacity'},
+  {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'−1 quality required'},
+  {k:'richberth', nm:'Rich Berth',        ms:3, verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'May sail 1 short'},
   // v4.6 "Guildbook" — the box prints 20 tiles; SETUP DEALS 17 (≥1 Kiln + ≥1 Mission Quay guaranteed)
-  {k:'victual',   nm:'Victualling Yard',  verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, eff:'Loading: the bonus fires TWICE · sails with the Ship'},
-  {k:'exchange',  nm:'Merchants’ Exchange',verb:'transform',tgt:'act',  ic:'arrow-right-left', n:1, g:2, act:'exchange', eff:'Cycle 1 open Contract'},
-  {k:'capstan',   nm:'Warping Capstan',   verb:'transform', tgt:'act',  ic:'ship-wheel',   n:1, g:2, act:'capstan', eff:'Move 1 empty hull'},
+  {k:'victual',   nm:'Victualling Yard',  ms:3, verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, eff:'Loading: the bonus fires TWICE · sails with the Ship'},
+  {k:'exchange',  nm:'Merchants’ Exchange',ms:2, verb:'transform',tgt:'act',  ic:'arrow-right-left', n:1, g:2, act:'exchange', eff:'Cycle 1 open Contract'},
+  {k:'capstan',   nm:'Warping Capstan',   ms:3, verb:'transform', tgt:'act',  ic:'ship-wheel',   n:1, g:2, act:'capstan', eff:'Move 1 empty hull'},
 ];
 // ---- LADINGS (v4.5b) — the kontor ORDER row: 15 tiles ⚙, a face-up row of 3. Deliver a cask
 // that matches the tile (its kontor + the die minimum, or the named beer) and CLAIM it — the
@@ -228,6 +228,8 @@ const BLD_FOOT='rgba(58,51,66,.7)';   // legacy fallback   // building card foot
 // the colour foot: the effect big, then the target chip + cost row), compressed, never flattened.
 const STD_ACT={source:{ai:'coins',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age +2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};
 function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
+  // v4.9b "Cornerstones": the tile prints the mason's mark's START FACE — set your die to it at build
+  const msChip=d.ms?'<span class="bt-ms" title="the mason\u2019s mark starts here \u2014 set your die to this face at build; every use turns it up (pips score at game end)">'+LU('dice-'+d.ms)+'</span>':'';
   // a STANDARD verb prints the same icon chip the casks print — one action grammar across the kit;
   // only the non-standard powers carry text (terse: the rulebook holds the full language)
   const sa=d.act&&STD_ACT[d.act];
@@ -238,7 +240,7 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   return '<div class="btile btW" style="--c:'+foot+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
   +'<div class="bt-top"><span class="bt-ic">'+LUX(d.ic)+'</span><span class="bt-nm'+(d.nm.length>18?' xlong':d.nm.length>15?' long':'')+'">'+d.nm+'</span>'
-    +((d.g||d.h)?'<span class="bt-cost">'+cost(d.g,d.h)+'</span>':'')+'</div>'   // the fee rides the TOP-RIGHT corner (round 6) — the effect gets the whole foot
+    +msChip+((d.g||d.h)?'<span class="bt-cost">'+cost(d.g,d.h)+'</span>':'')+'</div>'   // the fee rides the TOP-RIGHT corner (round 6); the mark's start face sits beside it (v4.9b)
   +'<div class="bt-foot"><span class="bt-eff'+(lead?' bt-act':'')+'">'+eff+'</span></div>'
   +'</div>';}
 // LADING TILE (v4.5b) — a 2×0.9in order strip in the kontor's colour: WHERE (the kontor) ·
@@ -650,7 +652,10 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
    trigger, and the waiting berths\' cask ghost prints FULL-STRENGTH (the grey-out was invisible) */
 +'.stile .st-go svg,.stile .st-go .ic{width:.42in;height:.42in}'
 +'.stile .st-ghost{opacity:1}'
-+'.stile .st-ghost svg,.stile .st-ghost .ic{width:.48in;height:.48in}';
++'.stile .st-ghost svg,.stile .st-ghost .ic{width:.48in;height:.48in}'
+/* v4.9b: the mark's start-face chip on the building top row */
++'.btile .bt-ms{flex:0 0 auto;display:inline-flex;align-items:center;margin-right:.02in}'
++'.btile .bt-ms img.ai,.btile .bt-ms svg{width:.24in;height:.24in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}';
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
 window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard};

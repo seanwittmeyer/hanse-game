@@ -135,8 +135,8 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 (function(){var p=fresh();stops();p.ai={tier:'journeyman'};
   var b0=p.bank,t0=trayDice(p);
   UI.pendingBenefits=[{pid:0,dest:'london'}];afterSail('stops');
-  ok('London prize: a building placed — NO ★ banked, a die stands on it at 1 (v4.9)',
-    p.bank===b0&&trayDice(p)===t0-1&&SLOTS.some(function(s){var b=bAt(s.id);return b&&b.owner===0&&b.die===1;}));
+  ok('London prize: a building placed — NO ★ banked, a die stands on it at its printed start face (v4.9b)',
+    p.bank===b0&&trayDice(p)===t0-1&&SLOTS.some(function(s){var b=bAt(s.id);return b&&b.owner===0&&b.die===bldgMs(b.b);}));
   UI.pendingSpec=[{pid:0,dest:'bergen'}];afterSail('stops');
   ok('Bergen prize: a specialist seated free', (p.upgrades||[]).length===1);
   deliverCask(p,{owner:0,style:'mumme',q:4,die:4,act:'age'},'novgorod');
@@ -146,7 +146,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('no refine machinery survives', typeof freeAge==='undefined'&&typeof brefinePick==='undefined');
   p.recipes=['gruit','hopped'];p.hops=5;var h9=p.hops;
   UI.pendingRecipe=[{pid:0,dest:'bruges'}];afterSail('stops');
-  ok('Bruges prize: a dealt export recipe — AT its H = Q−2 fee (v45e)', p.recipes.length===3&&p.hops<h9);
+  ok('Bruges prize: a dealt export recipe — AT its H = Q−2 fee (v45e; the Scholar’s waiver tolerated)', p.recipes.length===3&&(p.hops<h9||hasUpgrade(p,'scholar')));
   p.ai=null;
 })();
 
@@ -241,7 +241,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   commitBldg('s1','maltkiln',0);
   ok('overbuild costs the 1G rent; the displaced tile is boxed', p.grain===g1-1&&bKeyAt('s1')==='maltkiln');
   ok('the displaced building\u2019s die scores its pips NOW and returns to the tray (v4.9)',
-    p.bank===b1+4&&(p.bankM||0)===4&&trayDice(p)===t1&&S.buildings.s1.die===1);
+    p.bank===b1+4&&(p.bankM||0)===4&&trayDice(p)===t1&&S.buildings.s1.die===bldgMs('maltkiln'));
   // the serve-anyone action: P2 fires the Granary P1 raised
   commitBldg('s2','granary',0);
   S.active=1;stops();var qg=q.grain;
@@ -329,7 +329,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('a warm-start ship is a Hulk → Bruges', SLOTS.some(function(s){var t=S.slots[s.id];return t&&t.ship==='hulk'&&t.dest==='bruges';}));
   ok('every house opens with a Ready Gruit (die 1) + ALL 3 vessels + 2 seats (v45h)', S.players.every(function(p){return p.vessels[0]&&p.vessels[0].die===1&&p.vslots===3&&p.vessels.length===3&&p.sslots===2;}));
   ok('specialist deck = 5 core × max(2,n−1) + 8 guild ×1 (3p → 18, v4.6)', S.impDeck.length+S.impDisplay.length===18);
-  ok('12 tally dice per house (v4.5)', S.players.every(function(p){return p.presPool===12;}));
+  ok('13 quality dice per house (v4.9b — the 13th funds the marks; was 12 at v4.5)', S.players.every(function(p){return p.presPool===13;}));
   ok('the lading row opens at 3 (deck 11 behind it — v4.7 strips the one undealt-beer order)', S.ladingRow.length===3&&S.ladingDeck.length===11);
   S=freshState(2,['P1','P2']);
   ok('2p specialist deck: 5×2 + 8 guild singles (18)', S.impDeck.length+S.impDisplay.length===18);
@@ -372,7 +372,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   var g2=p.grain,b2=p.bank;
   UI.sub='survey';UI.survey={returnTo:'stops'};surveyPick('maltkiln');
   placeBldgOn('s2');
-  ok('a premium building pays its fee (Malt Kiln 2G)', p.grain===g2-2&&p.bank===b2&&S.buildings.s2.die===1);
+  ok('a premium building pays its fee (Malt Kiln 2G — its mark starts at its printed 2, v4.9b)', p.grain===g2-2&&p.bank===b2&&S.buildings.s2.die===2);
   // v4.2c ONE PAYMENT PER PLACEMENT: a paid fee covers the ground rent
   S.buildDisplay=['cooperage','granary','missionq','almoner'];
   var g3=p.grain,b3=p.bank;
@@ -381,11 +381,11 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('ONE payment: a fee-paid gain overbuilds with NO rent (2G total; the displaced die cashes out +1)', p.grain===g3-2&&p.bank===b3+1&&bKeyAt('s1')==='cooperage');
   p.grain=3;var g4=p.grain,b4=p.bank;
   commitBldg('s2','granary',0);
-  ok('an otherwise-FREE placement still pays the 1G rent on overbuild (the displaced die cashes +1)', p.grain===g4-1&&p.bank===b4+1&&bKeyAt('s2')==='granary');
+  ok('an otherwise-FREE placement still pays the 1G rent on overbuild (the displaced Kiln’s die cashes its printed 2)', p.grain===g4-1&&p.bank===b4+2&&bKeyAt('s2')==='granary');
   // the kontor prizes stay FREE
   var q=S.players[1];q.ai={tier:'journeyman'};var qg=q.grain,qb=q.bank;
   UI.pendingBenefits=[{pid:1,dest:'london'}];afterSail('stops');
-  ok('London prize stays free (no fee \u2014 a die stands on the build, v4.9)', q.grain===qg&&q.bank===qb&&SLOTS.some(function(s){var b=bAt(s.id);return b&&b.owner===1&&b.die===1;}));
+  ok('London prize stays free (no fee — a die stands on the build at its printed face, v4.9b)', q.grain===qg&&q.bank===qb&&SLOTS.some(function(s){var b=bAt(s.id);return b&&b.owner===1&&b.die===bldgMs(b.b);}));
   q.recipes=['gruit','hopped'];q.hops=5;var qg2=q.grain,qh2=q.hops;
   UI.pendingRecipe=[{pid:1,dest:'bruges'}];afterSail('stops');
   ok('the Bruges prize PAYS the recipe fee — hops only (v45e)', q.grain===qg2&&q.hops<qh2&&q.recipes.length===3);
@@ -732,7 +732,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ship('s1','cog','bruges');
   UI.load={ships:['s1'],returnTo:'stops',loadsLeft:1,cask:null};UI.sub='load';
   loadPickCask(0);
-  ok('a KILN lift used at load turns the Kiln\u2019s die (1 \u2192 2)', S.buildings.s1.die===2);
+  ok('a KILN lift used at load turns the Kiln\u2019s die (its printed 2 \u2192 3)', S.buildings.s1.die===3);
 })();
 (function(){var p=fresh();stops();
   p.grain=9;
@@ -748,9 +748,16 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 (function(){var p=fresh();stops();
   p.presPool=diceInFlight(p);   // tray = 0
   ok('no tray die \u2192 the build channels close (surveyAffordable empty)', surveyAffordable(p).length===0);
-  var g0=p.grain;
+  var g0=p.grain,h0=p.hops;
   UI.pendingBenefits=[{pid:0,dest:'london'}];afterSail('stops');
-  ok('\u2026and an untakeable London prize pays the 2-goods consolation', p.grain===g0+2&&(UI.pendingBenefits||[]).length===0);
+  ok('\u2026and an untakeable London prize is FORFEIT \u2014 no goods fallback (v4.9b, designer-ruled)', p.grain===g0&&p.hops===h0&&(UI.pendingBenefits||[]).length===0);
+})();
+(function(){var p=fresh();stops();
+  ok('start faces print by tier \u2014 Granary 1 \u00b7 Kiln 2 \u00b7 Cooperage 3 \u00b7 Bonded 3 (v4.9b \u2699)',
+    bldgMs('granary')===1&&bldgMs('maltkiln')===2&&bldgMs('cooperage')===3&&bldgMs('bonded')===3);
+  commitBldg('s5','cooperage',0);
+  ok('a ship-rider\u2019s mark STARTS at its printed 3', S.buildings.s5.die===3);
+  ok('the pool is 13 (v4.9b \u2014 the 13th die funds the marks)', PRES_POOL===13&&newPlayer(0,'X').presPool===13);
 })();
 (function(){var p=fresh();stops();
   commitBldg('s1','granary',0);
