@@ -75,19 +75,15 @@
      so it scales in cqmin and never collapses under size containment */
   .cell{border-radius:12px;color:var(--parch);position:relative;box-shadow:0 3px 9px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14);overflow:hidden;container-type:size}
   .cell .scn{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
-  .cell .scngrad{position:absolute;inset:0;z-index:0;background:linear-gradient(to top,rgba(18,14,10,.72),rgba(18,14,10,.16) 55%,rgba(18,14,10,.34))}
+  .cell .scngrad{position:absolute;inset:0;z-index:0;background:linear-gradient(to bottom,rgba(18,14,10,.72),rgba(18,14,10,.3) 34%,rgba(18,14,10,0) 58%)}   /* top-down scrim — the action icon reads over the scene */
   .cell .stn{color:#f4ead0;text-shadow:0 1px 3px rgba(0,0,0,.8)}
   .cell .bigic img.ai{filter:drop-shadow(0 2px 4px rgba(0,0,0,.55))}
   .cell .stn{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:7cqmin}
   .cell .head{display:flex;flex-direction:column;align-items:flex-start;gap:3cqmin}
-  .cell .bigic .ic,.cell .bigic svg{width:25cqmin;height:25cqmin;stroke-width:1.6}
+  .cell .bigic .ic,.cell .bigic svg{width:34cqmin;height:34cqmin;stroke-width:1.6}
   .cell .head>div{min-width:0;max-width:100%}
   .cell .role{font-size:7cqmin;text-transform:uppercase;letter-spacing:1px;opacity:.82}
   .cell .nm{font-variant:small-caps;font-weight:bold;font-size:13cqmin;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-  /* v3.0-A: every station is a printed THIS-or-THAT — exactly TWO action icons, big, slash between */
-  .cell .yield{display:flex;gap:3cqmin;align-items:center;margin-top:auto;flex-wrap:nowrap}
-  .cell .yield .ic,.cell .yield svg{width:18cqmin;height:18cqmin;opacity:.97;stroke-width:1.7}
-  .cell .yield .ysl{opacity:.55;font-weight:300;font-size:17cqmin;line-height:1;align-self:center;flex:0 0 auto;margin:0 1cqmin}   /* OR: the "/" between the station's two faces */
   /* loop colours: A Market=gold · B Brewhouse=red · C Harbor=sea · D Cellar=green */
   .cell.A{background:linear-gradient(155deg,#cda522,#9c7414);color:#2b2018}
   .cell.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
@@ -652,16 +648,9 @@ function pileTopFor(q,style){if(style&&STYLES[style]&&STYLES[style].pin)return S
 function takePileTop(q,style){if(style&&STYLES[style]&&STYLES[style].pin)return STYLES[style].act;const a=pileTopFor(q,style);if(S.pileTop)S.pileTop[style]=pileDraw(q);return a;}
 function caskAct(t){return t.act||STYLES[t.style].act;}
 // v4.0: ONE printed action per station
-const STATION_ACTS={
-  Market:[['coins']],        // SOURCE - take 2 goods
-  Brewhouse:[['beer']],      // BREW
-  Cellar:[['hourglass']],    // AGE 3 points
-  Harbor:[['sailboat']],     // COMMISSION a hull (1G + one free load; no ★ — v4.5b)
-};
-const STATION_ICON_TIP={coins:'Source - take 2 goods (any mix)',
-  beer:'Brew - pay a recipe into an open vessel (a tray die becomes the cask)',
-  hourglass:'Age 3 - turn your aging dice up 3 steps (a die stops at its quality)',
-  sailboat:'Commission - pay the Ship\u2019s printed fee (Skute 2G \u00b7 Cog 1G \u00b7 Hulk free), place it on a slot without a Ship, and you may load 1 Ready cask onto it at once (no \u2605 - tempo is the reward)'};
+// the station face (2026-08-04, designer): ONE big ACTION icon over a top-down scrim —
+// the same four faces as the print board (gain goods · brew · age 3 · commission)
+const STATION_ICON={Market:'coins',Brewhouse:'flask-conical',Cellar:'age-3',Harbor:'ship'};
 
 // ---- DESTINATIONS (v4.0): the four kontore. Value = THE DIE, everywhere (Novgorod's printed scale is
 // cut; its identity = the raised gate + the 8/5/2 majority + the refine prize). Gates read the DIE as it
@@ -2912,15 +2901,11 @@ function renderGrid(){
         if(LINES[lc.row].cells.includes(c)){cls+=' lanego';cellClick="chooseLine('row')";}
         else if(LINES[lc.col].cells.includes(c)){cls+=' lanego';cellClick="chooseLine('col')";}}
     }
-    const grps=STATION_ACTS[act]||[];
-    const ico=n=>'<span class="iw" data-tip="'+attr(STATION_ICON_TIP[n]||'')+'">'+LU(n)+'</span>';
-    const yields=grps.map(grp=>grp.map(ico).join('')).join('');
     const SCN={Market:'market',Brewhouse:'brewhouse',Cellar:'cellar',Harbor:'harbor'}[act];
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
       +'<img class="scn" src="art/scene-'+SCN+'.png" alt=""><div class="scngrad"></div>'
       +'<div class="stn">'
-      +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="nm">'+act+'</div></div></div>'
-      +'<div class="yield">'+yields+'</div>'
+      +'<div class="head"><span class="bigic">'+LU(STATION_ICON[act])+'</span><div><div class="nm">'+act+'</div></div></div>'
       +'<div class="wk">'+pawns+'</div>'
       +'</div></div>';
   });
