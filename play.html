@@ -56,7 +56,7 @@
   /* GRID */
   .agwrap{container-type:inline-size;display:flex;justify-content:center;padding:12px 8px;position:relative}   /* the board sizes from ITS COLUMN (cq units), never the viewport — no bleed under the sidebar */
   #boardcut{position:absolute;left:0;top:0;pointer-events:none;z-index:0}
-  .ag{position:relative;z-index:1;background:url('art/wharf-board.png') center/cover;border-radius:12px}   /* the dock-island backdrop — the ONE board change beside the cell art (designer) */
+  .ag{position:relative;z-index:1}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
   .ag{display:grid;margin:0 auto;   /* v3.4c.2: NO fixed aspect — the top/bottom rows size to their content and the board's height breathes */
     --gap:clamp(10px,1.5vw,16px);gap:var(--gap);
     --cw:calc((min(96cqw,1100px) - 3*var(--gap))/5.6);
