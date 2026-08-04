@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v4.9 “Mason’s Mark”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v4.9b “Cornerstones”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -269,7 +269,8 @@
   
   .slot .die.dcask,.mtile .die.dcask{position:absolute;bottom:4.5cqmin;right:5.5cqmin;width:15cqmin;height:15cqmin;z-index:5}
   .seatdie .die{width:.44in;height:.44in;gap:.02in;padding:.03in;border-radius:.08in;border-width:.07in}
-  .bmdie{position:absolute;left:.07in;bottom:.07in;z-index:3;display:flex}
+  .bmdie{position:absolute;right:.07in;bottom:.07in;z-index:3;display:flex}   /* v4.9b UI: bottom-RIGHT — clear of the action line's icon at bottom-left */
+  .bmk .bt-foot{padding-right:.5in}   /* reserve the die's corner so the action text never hides under it */
   .bmdie .die{width:.4in;height:.4in;gap:.02in;padding:.03in;border-radius:.07in;border-width:.06in}   /* v4.9: the mason's die stands on the tile — owner colour on the ring */   /* the owner's colour IS the ring — read it across the table */   /* the tally die on the tile's printed seat (scales with the tile) */
   .slot.pfilled{overflow:visible;z-index:2}   /* protruding tucks/ships paint OVER neighbouring cells */
   /* ===== demand DIE — pips show the ★ a cask banks from the value building it shipped through ===== */
@@ -277,6 +278,8 @@
     background:#f4ead0;border:3px solid #8a6a2a;border-radius:3cqmin;padding:2cqmin;box-shadow:0 1px 2px rgba(0,0,0,.45);box-sizing:border-box}
   .die .pip{display:flex;align-items:center;justify-content:center}
   .die .pip.on::after{content:"";width:66%;height:66%;border-radius:50%;background:#2a1d08}
+  .die.pdie{border-color:rgba(0,0,0,.4)}   /* v4.9b UI: the PLAYER'S die — solid colour body, white pips (matches the physical component) */
+  .die.pdie .pip.on::after{background:#fff;box-shadow:0 0 1px rgba(0,0,0,.5)}
   .ptile .die.dcask{position:absolute;bottom:5cqmin;right:5cqmin;width:27cqmin;height:27cqmin;z-index:5}
   .pship .die.dberth{width:18cqmin;height:18cqmin}
   /* ===== tiles shown in the Market & the brew-pile display (a sized container = the cq context) ===== */
@@ -549,7 +552,7 @@
     <div class="panel"><h3>Log <button class="copybtn" onclick="copyDiag(this)" data-tip="Copy the game log + full diagnostic state (turn, UI, AI runtime, board, raw JSON) to the clipboard.">⧉ Copy log + diagnostics</button></h3><div id="log"></div></div>
     <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
   </div>
-  <p class="note" style="text-align:center"><b>v4.9 “Mason’s Mark” — prototype.</b> <b>A build scores no ★ now</b> — the builder stands a quality die on the tile at its <b>printed start face</b> (busy utilities 1 · paid workhorses 2 · ship-riders and rare powers 3 ⚙); every use by any player turns it up (cap 6) and <b>the pips score at game end</b> (the die is committed: it counts toward the empty-tray clock, and no tray die = no build). The building deck deals <b>17 of 20</b> each game; the Specialist guild holds <b>13 designs</b> (the strongest print requirements, two score printed end-game ★). The die is the cask — it turns only when something turns it — and the dice are the ONE clock (the first <b>empty tray</b> sets the final round; '+PRES_POOL+' dice per player — v4.9b adds the 13th to fund the marks). A commission pays the Ship’s <b>printed fee — Skute 2G · Cog 1G · Hulk free</b> ⚙ — and buys the Ship + <b>one free load</b> (no ★). Deliver a qualifying cask to claim an open <b>Contract</b> (the row of 3 on the Destinations board). Every acquirable recipe/building/Specialist carries its <b>printed fee</b> — recipes <b>H = Q−2, paid at Bruges too</b>; building/Specialist Kontor prizes stay free; Novgorod pays every delivered die <b>+2★</b>; every cask pays its Kontor’s prize. Rules in the <a href="index.html">Rulebook</a> and the <b>📖 Player Aid</b>; the <a href="learn.html">Learn</a> and <a href="print.html">print kit</a> pages track this build. All numbers ⚙.</p>
+  <p class="note" style="text-align:center"><b>v4.9b “Cornerstones” — prototype.</b> <b>A build scores no ★ now</b> — the builder stands a quality die on the tile at its <b>printed start face</b> (busy utilities 1 · paid workhorses 2 · ship-riders and rare powers 3 ⚙); every use by any player turns it up (cap 6) and <b>the pips score at game end</b> (the die is committed: it counts toward the empty-tray clock, and no tray die = no build). The building deck deals <b>17 of 20</b> each game; the Specialist guild holds <b>13 designs</b> (the strongest print requirements, two score printed end-game ★). The die is the cask — it turns only when something turns it — and the dice are the ONE clock (the first <b>empty tray</b> sets the final round; '+PRES_POOL+' dice per player — v4.9b adds the 13th to fund the marks). A commission pays the Ship’s <b>printed fee — Skute 2G · Cog 1G · Hulk free</b> ⚙ — and buys the Ship + <b>one free load</b> (no ★). Deliver a qualifying cask to claim an open <b>Contract</b> (the row of 3 on the Destinations board). Every acquirable recipe/building/Specialist carries its <b>printed fee</b> — recipes <b>H = Q−2, paid at Bruges too</b>; building/Specialist Kontor prizes stay free; Novgorod pays every delivered die <b>+2★</b>; every cask pays its Kontor’s prize. Rules in the <a href="index.html">Rulebook</a> and the <b>📖 Player Aid</b>; the <a href="learn.html">Learn</a> and <a href="print.html">print kit</a> pages track this build. All numbers ⚙.</p>
 </main>
 
 <div id="shoppop" class="hidden"></div>
@@ -593,7 +596,7 @@ const ICONTIP={
   anchor:'Slot — one of the 8 shared perimeter spaces; seats a building and/or a ship (never casks). Its line-stop fires the building action and/or a load of the ship.',
   sailboat:'Ship — a neutral tile bound for its printed Kontor (Skute 1 · Cog 2 · Hulk 3 berths); load your own Ready casks; it sails the moment it is full.',
   landmark:'Kontor — a delivery port: a minimum (die N+, read as the cask boards) · value = the parked die (Novgorod: +2★ on top) · a prize · a majority.',
-  'building-2':'Building — ONE green family: serves whoever activates it. The builder stands a quality die on it (face 1); every use — any player — turns it up (cap 6), and the pips score at game end (v4.9). Gaining one at the wharf costs the TILE’s printed fee (chipless = free); London’s prize is free.',
+  'building-2':'Building — ONE green family: serves whoever activates it. The builder stands a quality die on it at its printed start face (v4.9b); every use — any player — turns it up (cap 6), and the pips score at game end. Gaining one at the wharf costs the TILE’s printed fee (chipless = free); London’s prize is free.',
   'scroll-text':'Recipe — permission to brew a beer. Flip the card (BREWED face) on your first brew — the flipped cards ARE the Flight. The printed fee (H = Q−2, v45e) applies at EVERY channel — Bruges grants the pick, never the waiver.',
   wrench:'Specialist — a private tile (2 seats): free at Bergen; its printed fee via the Hiring Post / hire bonus. Never two of a kind. The display refills at the END of the turn.',
   search:'Gain 1 building — pay the tile’s printed fee (chipless = free), choose from the display, place it at once; your quality die stands on it (v4.9). Free as London’s prize.',
@@ -641,7 +644,7 @@ const CASK_ACT={source:'Gain 2 goods (any mix)',age:'Age +2 (2 steps across your
   load:'Load 1 more cask onto any eligible Ship (its bonus fires too)',
   reach:'Place 1 presence - a tray die to a Kontor you have delivered to (1★)',
   recipe:'Gain 1 recipe - a dealt export card at its printed fee (H = Q−2 — paid at Bruges too, v45e)',
-  survey:'Build 1 building - from the display, built at once, at the tile\'s printed fee - chipless tiles free (free at London). Your quality die stands on it at 1: every use by anyone turns it up; the pips score at game end (v4.9)',
+  survey:'Build 1 building - from the display, built at once, at the tile\'s printed fee - chipless tiles free (free at London). Your quality die stands on it at its printed start face (v4.9b): every use by anyone turns it up; the pips score at game end',
   hire:'Gain 1 specialist - from the display at its printed fee, open seat required (free at Bergen)',
   brew:'Brew 1 cask - pay its cost into an open vessel (tray die required)'};
 const CASK_ACT_POOL=['source','age','load','reach','recipe','survey','hire','brew'];   // v4.0: eight load bonuses; survey/hire Q3+, brew Q4+
@@ -898,7 +901,7 @@ const KEY='hanse-v49b'; // v4.9b "Cornerstones" letter [designer-ruled 2026-08-0
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v4.9 “Mason’s Mark” · '+KEY;
+const APP_VERSION='v4.9b “Cornerstones” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -1135,8 +1138,10 @@ function pCost(g,h){let a='';if(g)a+='<span class="pgc">'+LU('wheat','pg')+g+'</
 const DIE_PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};   // 3×3 grid, 0-indexed
 // v2.2: the die IS the record — a real d6, hard max 6 (building bonus + Q4/Q5 premium, SET not accumulated;
 // the most recent modification wins; only buildings modify dice — a destination is the cask's STARTING value).
-function dieFace(n,cls,border){n=Math.min(6,n|0);const show=Math.max(1,n);let c='';for(let i=0;i<9;i++)c+='<span class="pip'+(DIE_PIPS[show].includes(i)?' on':'')+'"></span>';
-  return '<span class="die'+(cls?' '+cls:'')+'"'+(border?' style="border-color:'+border+'"':'')+' data-tip="'+attr('Cask quality die — the die IS the cask: set to the printed START value at brew, aged up to the quality (READY), lifted past it only by buildings (cap 6), and parked at the Kontor on delivery — the pips are the ★ it scores.')+'">'+c+'</span>';}
+function dieFace(n,cls,color){n=Math.min(6,n|0);const show=Math.max(1,n);let c='';for(let i=0;i<9;i++)c+='<span class="pip'+(DIE_PIPS[show].includes(i)?' on':'')+'"></span>';
+  // v4.9b UI pass [designer-ruled]: a coloured die renders as THE PLAYER'S DIE — solid colour body,
+  // white pips (the physical component) — wherever a cask ages, rides a hull, or stands on a building.
+  return '<span class="die'+(cls?' '+cls:'')+(color?' pdie':'')+'"'+(color?' style="background:'+color+'"':'')+' data-tip="'+attr('Cask quality die — the die IS the cask: set to the printed START value at brew, aged up to the quality (READY), lifted past it only by buildings (cap 6), and parked at the Kontor on delivery — the pips are the ★ it scores.')+'">'+c+'</span>';}
 // v3.0-A: the die preview on a DEPLOYED cask is simply the tile's printed number (its conditions — the
 // destination match, Q gate, no-presence — are printed on the tile and read at departure; the preview
 // shows the tile's face, exactly what the table sees). Owner-only as ever.
@@ -1154,9 +1159,12 @@ function pfit(cardHtml,natW,natH,cls){return '<div class="pfit'+(cls?' '+cls:'')
 // rotate a W×H inch block 90° → an H×W block (side slots; cw = head points RIGHT, ccw = LEFT)
 function rotWrap(html,W,H,ccw){return '<div class="rw" style="position:relative;width:'+H+'in;height:'+W+'in;flex:0 0 auto">'
   +'<div style="position:absolute;width:'+W+'in;height:'+H+'in;transform:'+(ccw?'rotate(-90deg) translateX(-100%)':'rotate(90deg) translateY(-100%)')+';transform-origin:top left">'+html+'</div></div>';}
-// seat the tally die INSIDE the tile's printed seat square (it covers the printed Q, as on the table)
+// seat the tally die INSIDE the tile's printed seat square (it covers the printed start face, as on
+// the table). v4.9b UI pass: anchored on the seat element itself — the old '</b></div>' anchor rotted
+// when the card face was rebuilt (2026-08-04 art pass) and the die silently stopped rendering.
 function ctWithDie(tileHtml,dv,color){if(!(dv>0))return tileHtml;
-  return tileHtml.replace('data-die-seat','data-die-seat data-filled').replace('</b></div>','</b><span class="seatdie">'+dieFace(dv,'dtile',color)+'</span></div>');}
+  return tileHtml.replace(/(<div class="ct-seat" data-die-seat[^>]*>)/,'$1<span class="seatdie">'+dieFace(dv,'dtile',color)+'</span>')
+    .replace('data-die-seat','data-die-seat data-filled');}
 // seat the AGE MARKER on the printed maturation track (step 0 = the flask chip)
 function ctWithMarker(tileHtml,step,color){let i=-1;
   return tileHtml.replace(/<div class="ct-step[^"]*">/g,m=>{i++;return i===step?m+'<span class="agemark" style="--pc:'+color+'"></span>':m;});}
@@ -1176,7 +1184,7 @@ function pShipFace(t,dir){if(!HC)return '';
     const op=(L.owner!=null)?S.players[L.owner]:null;
     const dv=Math.max(1,L.die||1);
     const bi=Math.min(i,printedCap-1);
-    ov+='<div style="position:absolute;left:.05in;top:'+(H-1-bi)+'in;width:2.4in;height:1in;z-index:2" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(dv?' \u00b7 quality die +'+dv+'\u2605':'')+' \u2014 loaded in berth '+(bi+1))+'">'
+    ov+='<div style="position:absolute;left:.05in;top:'+(printedCap-1-bi)+'in;width:2.4in;height:1in;z-index:2" data-tip="'+attr((op?op.name+'\u2019s ':'')+STYLES[L.style].name+' Q'+L.q+(dv?' \u00b7 quality die +'+dv+'\u2605':'')+' \u2014 loaded in berth '+(bi+1))+'">'
       +'<div style="position:absolute;inset:0;transform:scale(.95);transform-origin:center">'+ctWithDie(HC.caskCardBack(d,hcAct(L.act||'source')),dv,op?op.color:'#b7a77e')+'</div></div>';});
   let wrap='<div style="position:relative;width:2.5in;height:'+H+'in">'+HC.shipCard(t.ship,DEST[t.dest].name)+ov+'</div>';
   let W=2.5,Hh=H;
@@ -1187,10 +1195,9 @@ function pShipFace(t,dir){if(!HC)return '';
 // a building = the 2×1.32 wharf side seated in its owner FRAME (an inch-true ring that scales
 // with the tile; neutral = weathered grey). Side slots rotate the whole framed tile 90°.
 function pBldgFace(b,noRing,dir){const d=HC_BLD[b.b];if(!d)return '';
-  // v3.4c: the owner ring retires — a little player-colour HOUSE token on the card marks ownership
+  // v3.4c: the owner ring retires · v4.9b UI pass: the house token retires too — the mason's DIE (owner colour, bottom-right) IS the ownership mark, and the token was covering the printed start-face chip
   const op=(b.owner!=null&&S.players[b.owner])?S.players[b.owner]:null;
-  let tile='<div style="position:relative;width:2.5in;height:1.32in">'+HC.buildingCard(d)
-    +(op?'<span class="phouse" style="--pc:'+op.color+'" data-tip="'+attr(op.name+'\u2019s building — the house token marks the owner')+'">'+LU('home')+'</span>':'')
+  let tile='<div'+((op&&b.die>0)?' class="bmk"':'')+' style="position:relative;width:2.5in;height:1.32in">'+HC.buildingCard(d)
     +(op&&b.die>0?'<span class="bmdie" data-tip="'+attr(op.name+'\u2019s mason\u2019s die — every use of this building (any player) turns it up (cap 6); the pips score at game end. Now: '+b.die+'\u2605.')+'">'+dieFace(b.die,'dtile',op.color)+'</span>':'')
   +'</div>';
   let W=2.5,H=1.32;

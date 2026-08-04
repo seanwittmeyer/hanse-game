@@ -145,8 +145,10 @@ bought; **min 6 tiles/type** (staples deeper: Gruit 16 · Hopped 12 ⚙).
 
 ## 5. Ship tiles (24 ⚙ — the Ship is all berths)
 
-Neutral, each bound for a printed Kontor, deck-fed **display of 4**. The tile is a stack of full-width 1″
-berth wells, filled bottom→top; the **top berth prints the identity** (Kontor · minimum · the
+Neutral, each bound for a printed Kontor, deck-fed **display of 4**. **Every hull cuts the same
+2.5×3″ tile (v4.9b)** — a stack of full-width 1″ berth wells from the top; the space below a
+Skute's or Cog's berths simply shows the port art (no seats). Berths fill bottom→top; the
+**top berth prints the identity** (Kontor · minimum · the
 **commission fee**) and the last cask covers it — **the ship sails at once**. Commission at the
 Harbor: pay the tile’s **printed fee — 2/1/0 `G` by size ⚙ (v4.8; chipless Hulk = free)**,
 place on a shipless slot, and (v4.4) you may **load 1 Ready cask onto it at
@@ -154,8 +156,8 @@ once** — **no ★ (v4.5b)**: the Ship + the instant load are the whole reward.
 
 | Ship | Berths | Fee ⚙ (v4.8) | Size | Count ⚙ |
 |---|---|---|---|---|
-| **Skute** *(new)* | 1 | 2 `G` | 2.5×1″ | 6 — the relief valve as a component (sails on its first load) |
-| Cog | 2 | 1 `G` | 2.5×2″ | 10 |
+| **Skute** *(new)* | 1 | 2 `G` | 2.5×3″ | 6 — the relief valve as a component (sails on its first load) |
+| Cog | 2 | 1 `G` | 2.5×3″ | 10 |
 | Hulk | 3 | — (chipless) | 2.5×3″ | 8 |
 
 Per Kontor: 6 each (Bruges sk1/c3/h2 · London sk2/c2/h2 · Bergen sk1/c3/h2 · Novgorod sk2/c2/h2 ⚙).

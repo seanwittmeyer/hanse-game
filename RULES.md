@@ -541,7 +541,7 @@ prestige. The faucets: the Market (2 + specialists), Granaries, *Gain 2 goods* l
 **ONE clock (v4.5): the first EMPTY TRAY.** The moment a player **commits its last quality die**
 — to a brew, a placed presence, or with every remaining die already riding vessels/Ships — its
 **tray reads 0** and the final round is set (finish the round → score). Parked-out is NOT
-required: dice aboard unfilled Ships count as committed. Dice never return — the 12 dice are the
+required: dice aboard unfilled Ships count as committed. Dice never return — the 13 dice are the
 player’s whole runway, always countable: tray + in play + parked (dice on your buildings included) = **13** ⚙ (v4.9b).
 Sails end nothing; ships are pure logistics.
 
@@ -614,7 +614,12 @@ the engine; the modules return after the core settles.
    like as long as it wants to be. Any more may drag it out. Without legible goals or
    strategic arcs in the game, it can feel repetitive."* The pool question is CLOSED; the
    open thread it leaves is **legibility** — goals/arcs a player can see and chase (the
-   Contracts are that layer; recorded in DESIGN §9's parking lot).
+   Contracts are that layer; recorded in DESIGN §9's parking lot). **RE-OPENED AND RE-RULED
+   at v4.9b:** the mason's mark spends the same runway as brews (the v4.9 A/B ran ~2 rounds
+   under the band), so the designer added the 13th die — *"maybe it allows us to add one die
+   to each player's supply"* — to fund the marks, not to lengthen the game (the POOL=12
+   isolation run proves the die, not the start faces, is the pace lever; the 500/count
+   battery reads 11.8/11.4/11.3).
 2. **The recipe faucet** — Bruges + the priced verbs, all at **`H` = Q−2 (v45e — Bruges pays
    too)**. Watch: does the 3 `H` Bock tariff kill the rush or the style? And hops now carry
    three sinks (recipes · Hop Exchange · Abbey) — re-read whether slack flips to binding. If

@@ -261,6 +261,14 @@ seats, and **revives Racking** (1.3 ticks/build, self-worked) — narrowing the 
 shelf to **Tollhouse · Cooperage · Customs · Rich Berth** at every strength; Alderman
 confirms at all tiers, Supercargo turns +11.9 at 3p, Braumeister inverts negative in long
 games.
+*UI/component pass (same day, designer-ruled off live play):* **(1)** the cask die renders
+as **the player’s die** — solid colour body, white pips — wherever it lives (aging in a
+vessel · loaded aboard a hull · the mason’s die on a building); the thin colour ring read
+as a neutral die at table scale. **(2)** **Every Ship tile cuts the same 2.5×3″ blank**
+(the Hulk footprint; berth counts unchanged — a Skute prints 1 well, a Cog 2, the space
+below is port art) on `print.html` AND `play.html` — one die-cut, and hull size reads from
+the berth wells, not the tile edge. **(3)** the mason’s die moves to the tile’s
+**bottom-right** corner (it sat on the action line’s icon at bottom-left).
 
 ### v4.9 “Mason’s Mark” (2026-08-04 — designer-ruled mid-playtest · A TRIAL)
 The designer’s ask, verbatim in spirit: *when I build a building, I don’t gain 3 points —
