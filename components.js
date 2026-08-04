@@ -17,7 +17,7 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   star:'star',check:'ready',beer:'cask',sailboat:'ship',landmark:'kontor','building-2':'building',
   wrench:'specialist','scroll-text':'recipe','map-pin':'presence',search:'build','package-plus':'bonus-load',
   'flask-conical':'station-brew',hourglass:'station-age',store:'station-market',ship:'station-harbor',
-  anchor:'wharf',contract:'contract','age-3':'station-age-3','kontor-bruges':'kontor-bruges',
+  anchor:'wharf',hammer:'build',contract:'contract','age-3':'station-age-3','kontor-bruges':'kontor-bruges',
   'kontor-london':'kontor-london','kontor-bergen':'kontor-bergen','kontor-novgorod':'kontor-novgorod',
   // round 2 (2026-08-03): building-2 = the HOUSE (you PLACE a building — the noun; the trowel 'build'
   // stays the verb via search) · the numbered QUALITY casks (side-lying, wax-sealed, numeral overlaid)

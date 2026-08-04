@@ -9,7 +9,7 @@
 > Lucide for the skipped crest contexts); lading headers print their kontor's crest; the
 > Wharf's station cells are the scene + title + the action's icon only (the Cellar's = the age
 > mark with the printed 3 — designer-ruled). `print.html` + the shared card faces are swapped;
-> `play.html` app chrome and `index/learn.html` still ride Lucide (next surface, on review).
+> `play.html`'s app chrome went art-aware 2026-08-03 (its `LU` reads the shared `ICON_ART`; the board wears the dock-island backdrop + the scene station cells); `index/learn.html` still ride Lucide.
 >
 > **Production record (regenerable):** master prompt = the c.1350 sticker adaptation, bold-contour
 > revision 2 (watercolor/gouache over sepia ink, shallow isometric base, die-cut sticker border,

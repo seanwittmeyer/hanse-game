@@ -56,7 +56,7 @@
   /* GRID */
   .agwrap{container-type:inline-size;display:flex;justify-content:center;padding:12px 8px;position:relative}   /* the board sizes from ITS COLUMN (cq units), never the viewport — no bleed under the sidebar */
   #boardcut{position:absolute;left:0;top:0;pointer-events:none;z-index:0}
-  .ag{position:relative;z-index:1}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
+  .ag{position:relative;z-index:1;background:#204a41 url('art/wharf-board.png') center/cover;border-radius:16px;padding:12px;box-shadow:0 4px 14px rgba(0,0,0,.3)}   /* the dock-island backdrop (the print board's art) */
   .ag{display:grid;margin:0 auto;   /* v3.4c.2: NO fixed aspect — the top/bottom rows size to their content and the board's height breathes */
     --gap:clamp(10px,1.5vw,16px);gap:var(--gap);
     --cw:calc((min(96cqw,1100px) - 3*var(--gap))/5.6);
@@ -73,7 +73,14 @@
   .cell,.slot{min-width:0;min-height:0}
   /* stations are containers; their content sits in an absolute full-bleed .stn layer (like a slot's .ptile),
      so it scales in cqmin and never collapses under size containment */
-  .cell{border-radius:12px;color:var(--parch);position:relative;box-shadow:0 3px 9px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14);overflow:hidden;container-type:size}
+  .cell{border-radius:12px;color:var(--parch);position:relative;box-shadow:0 3px 9px rgba(0,0,0,.28);border:3px solid rgba(255,255,255,.14);overflow:hidden;container-type:size}
+  .cell .scn{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+  .cell .scngrad{position:absolute;left:0;right:0;bottom:0;height:56%;z-index:0;background:linear-gradient(to top,rgba(18,14,10,.78),rgba(18,14,10,.4) 52%,rgba(18,14,10,0))}
+  .cell .stn{color:#f4ead0}
+  .cell .stn .nm{margin:0 auto;text-shadow:0 1px 3px rgba(0,0,0,.85),0 0 10px rgba(0,0,0,.5)}
+  .cell .stnfoot{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:1cqmin}
+  .cell .stnact img.ai{width:27cqmin;height:27cqmin;filter:drop-shadow(0 2px 4px rgba(0,0,0,.55))}
+  .cell .stncap{font-style:italic;font-weight:bold;font-size:7.6cqmin;line-height:1;text-shadow:0 1px 3px rgba(0,0,0,.9)}
   .cell .stn{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:7cqmin}
   .cell .head{display:flex;flex-direction:column;align-items:flex-start;gap:3cqmin}
   .cell .bigic .ic,.cell .bigic svg{width:25cqmin;height:25cqmin;stroke-width:1.6}
@@ -376,6 +383,7 @@
   .cube{width:13px;height:13px;border-radius:3px;display:inline-block;border:1px solid rgba(0,0,0,.3)}
   /* ICONS */
   .ic{width:1.05em;height:1.05em;vertical-align:-0.18em;stroke-width:2}
+  img.ai{width:1.05em;height:1.05em;object-fit:contain;vertical-align:-0.18em}
   svg.lucide{width:1.05em;height:1.05em;vertical-align:-0.18em}
   .i-grain{color:#9c7414} .i-hops{color:#5d7d34}
   .chip{display:inline-flex;align-items:center;gap:3px;background:var(--parch);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:1px 8px;font-weight:bold;margin-right:5px}
@@ -594,7 +602,10 @@ const ICONTIP={
   unlock:'The Flight — distinct beers BREWED, (n−1)² min 3 (v45h: all floor slots start open).',
   dices:'The cask quality die — aging, boarding, value, presence and the clock in one number. 12 per player; the first EMPTY tray (every die committed) sets the final round.',
 };
-const LU=(n,cls)=>{const i='<i data-lucide="'+n+'"'+(cls?' class="ic '+cls+'"':' class="ic"')+'></i>';
+const LU=(n,cls)=>{   // art-aware since the icon program (2026-08-03): the shared ICON_ART map wins, lucide is the fallback
+  const m=(typeof HC!=='undefined'&&HC&&HC.ICON_ART)?HC.ICON_ART[n]:null;
+  const i=m?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/icons/'+m+'.png" alt="">'
+          :'<i data-lucide="'+n+'"'+(cls?' class="ic '+cls+'"':' class="ic"')+'></i>';
   return ICONTIP[n]?'<span class="iw" data-tip="'+attr(ICONTIP[n])+'">'+i+'</span>':i;};
 const ICON={grain:'wheat',hops:'sprout',cask:'beer',presence:'map-pin',coin:'coins',
   Market:'store',Brewhouse:'flask-conical',Cellar:'hourglass',Harbor:'ship',
@@ -2827,9 +2838,9 @@ function renderGrid(){
       const bH='<div class="bhalf">'+(b?pBldgFace(b,false,dirW):'<span class="halfemp" data-tip="'+attr('The building seat — a building placed here authors this slot (+'+BUILD_PTS+'★ to the builder; it serves everyone)')+'"><i data-lucide="building-2" class="ic"></i></span>')+'</div>';
       const oDep=t?((HC?HC.SHIP_H(t.ship):2)+0.08):1.0;
       const oH='<div class="ohalf'+(t&&!b?' full':'')+'"'+(vert?' style="aspect-ratio:2.5/'+oDep+'"':'')+'>'+(t?pShipFace(t,dirW)
-          :'<span class="halfemp" data-tip="'+attr('The Ship seat — commission a Ship here (the Harbor action)')+'"><i data-lucide="sailboat" class="ic"></i></span>')+'</div>';
+          :'<span class="halfemp" data-tip="'+attr('The Ship seat — commission a Ship here (the Harbor action)')+'">'+LU('sailboat')+'</span>')+'</div>';
       inner=vert?(TKDIR[s.id]==='tk-up'?oH+bH:bH+oH):(bH+oH);}
-    else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Open slot — commission a Ship here, or build here to author the line')+'"><i data-lucide="sailboat" class="ic"></i></span></span>';
+    else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Open slot — commission a Ship here, or build here to author the line')+'">'+LU('building-2')+LU('sailboat')+'</span></span>';
     let click=bldgPlacing?'placeBldgOn':(commPlacing?'commPlace':null);
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':(boardClick?'onclick="'+boardClick+'"':''))+'>'+inner+'</div>';
   });
@@ -2849,10 +2860,15 @@ function renderGrid(){
     const grps=STATION_ACTS[act]||[];
     const ico=n=>'<span class="iw" data-tip="'+attr(STATION_ICON_TIP[n]||'')+'"><i data-lucide="'+n+'" class="ic"></i></span>';
     const yields=grps.map(grp=>grp.map(ico).join('')).join('');
-    h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
+    const SCN={Market:'market',Brewhouse:'brewhouse',Cellar:'cellar',Harbor:'harbor'}[act];
+    const FRAME={Market:'#b4423a',Brewhouse:'#c9a227',Harbor:'#3d6b7e',Cellar:'#4a6b3a'}[act];
+    const ACTIC={Market:'coins',Brewhouse:'flask-conical',Cellar:'age-3',Harbor:'ship'}[act];
+    const CAP={Market:'Gain 2 goods',Brewhouse:'Brew a beer',Cellar:'Age 3',Harbor:'Commission a ship'}[act];
+    h+='<div class="'+cls+'" style="border-color:'+FRAME+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
+      +'<img class="scn" src="art/scene-'+SCN+'.png" alt=""><div class="scngrad"></div>'
       +'<div class="stn">'
-      +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="nm">'+act+'</div></div></div>'
-      +'<div class="yield">'+yields+'</div>'
+      +'<div class="nm">'+act+'</div>'
+      +'<div class="stnfoot"><span class="stnact" data-tip="'+attr((STATION_ACTS[act]||[]).flat().map(n=>STATION_ICON_TIP[n]||'').filter(x=>x).join(' \u00b7 '))+'">'+LU(ACTIC)+'</span><div class="stncap">'+CAP+'</div></div>'
       +'<div class="wk">'+pawns+'</div>'
       +'</div></div>';
   });
