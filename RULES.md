@@ -514,9 +514,12 @@ Novgorod — die 5+→3★ · Bock→4★ · die 6→4★ · any Kontor — die 
 - **2 specialist seats** — **both open from the start (v45h).**
   A player never owns two of a type; specialists are **earned free** (Bergen, Hiring Post, the
   cask verb) — never bought.
-- **Recipe cards** live ON the board (v4.9d): **COLLECTED on the LEFT** until that beer's first
-  cask **loads onto a Ship**, then moved to the **COMPLETED RIGHT side** — **the completed
-  cards ARE the Flight record**, the end-game ladder (§11), read straight off the board.
+- **Recipe cards** sit BESIDE the board (v4.9d): **COLLECTED to its LEFT** until that beer's
+  first cask **loads onto a Ship**, then moved to the **COMPLETED pile on its RIGHT** — **the
+  completed cards ARE the Flight record.** The board itself **prints the Flight ladder**
+  (beers shipped 1–5 → 0/0/4/9/16★ ⚙) and a **Contracts zone** (claimed tiles pile there),
+  plus the ★ score seat and the dice/grain/hops supply ledge — §11 read straight off the
+  table.
 
 **The SPECIALISTS (13 designs ⚙, v4.6 — the 5 CORE at max(2, n−1) copies + the 8 GUILD at 1
 copy each · display of 4 · each prints its wharf fee ⚙ — free as Bergen’s prize, **per

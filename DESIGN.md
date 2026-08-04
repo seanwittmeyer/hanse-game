@@ -213,10 +213,16 @@ ships; the AI’s new-style margins re-point at unshipped styles and the first l
 style learns the Flight step. **The player board enters the app** — the print anatomy,
 live: recipe cards COLLECTED (left column) → COMPLETED (right column, the Flight read off
 the board), vessels + specialist seats as printed wells seating the real tiles, stats in
-the bottom corners. This is the legibility fix the #29/#30 read priced (~55% of a winner’s
-total was off-track; the Flight’s 16★ the largest invisible mass — now a visible column of
-checked cards). The brew piles render the current single-faced tile (the old aging-side
-display retired). *Watch ⚙: the Flight tightens (ship, not brew — strand a beer in a vessel
+the bottom corners. *Refined same-day to the designer's sketch — the LITERAL board:* the
+print component itself (7.65×3.85″, one shared `components.js playerBoard` generator for
+the print sheet AND the app) now prints the ★ score seat, the dice/grain/hops supply
+ledge, the **Flight ladder** (beers shipped 1–5 → 0/0/4/9/16★) and a **Contracts pile
+zone**; the app seats the real tiles in its wells at true size (a 2.4×1″ cask tile in a
+2.4×1″ well) and the recipe cards splay BESIDE the board — collected left, completed right,
+bottom bars only, placeholders printed on both sides. This is the legibility fix the
+#29/#30 read priced (~55% of a winner’s total was off-track; the Flight’s 16★ the largest
+invisible mass — now a printed ladder and a pile of checked cards). The brew piles render
+the current single-faced tile (the old aging-side display retired). *Watch ⚙: the Flight tightens (ship, not brew — strand a beer in a vessel
 and it scores nothing); pace/totals re-read in the next battery.*
 
 ### v4.9c “Light Tariff” (2026-08-04 — designer-ruled off playtests #29/#30 + the probes)

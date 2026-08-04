@@ -1,11 +1,15 @@
 # Brewhouses of the Hanse — Components (v4.9d “Loaded Flight”)
 
-> **v4.9d (designer-ruled 2026-08-04 — the #30 board talk):** **REPRINTS, no count
-> changes** — the **player board** gains its two printed **recipe columns**: cards sit
-> **COLLECTED (left)** until that beer's **first cask loads onto a Ship**, then move to the
-> **COMPLETED side (right)** — the completed cards ARE the Flight record (qualifying on brew
-> was a bug). The **Innkeeper tile** reprints its gate line (*3 distinct beers shipped*);
-> the rulebook/aid Flight lines reprint with it.
+> **v4.9d (designer-ruled 2026-08-04 — the #30 board talk + the board sketch):** **the
+> player board REPRINTS (7.65×3.85″, same cut)** — it now prints the **★ score seat**, the
+> **supply ledge** (dice · grain · hops tally seats), the **FLIGHT ladder** (beers
+> **shipped** 1–5 → 0/0/4/9/16★ ⚙) and a **Contracts pile zone** beside the seats. Recipe
+> cards sit **beside the board**: COLLECTED on its left until that beer's **first cask loads
+> onto a Ship**, then moved to the COMPLETED pile on its right — the completed cards ARE the
+> Flight record (qualifying on brew was a bug). The **Innkeeper tile** reprints its gate
+> line (*3 distinct beers shipped*); the rulebook/aid Flight lines reprint with it. The
+> board is now a SHARED generator (`components.js playerBoard`) — the app renders the same
+> component with the live tiles seated in its wells.
 
 > **v4.9c (designer-ruled 2026-08-04 — off playtests #29/#30 + the port/flow probes):**
 > **REPRINTS, no count changes** — the four **export recipe cards** reprint their wharf fee

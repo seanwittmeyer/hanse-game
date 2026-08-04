@@ -726,7 +726,7 @@
 //==================================================================
 // The CARD COMPONENT LIBRARY (components.js) is the single source of the printed card faces —
 // data + generators + card CSS, shared with play.html (the app mirrors the kit, v3.3).
-const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard}=window.HC;
+const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard}=window.HC;
 
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 // (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
@@ -891,21 +891,7 @@ function aidBack(){
         +row('timer','The Clock','the first empty tray')
       +'</div></div>'
     +'</div></div>';}
-function pboard(p){
-  const vsl=i=>'<div class="pb2-slot pb2-vsl">'   // v45h: the covers are off — every slot prints open
-      +'<span class="sn">Vessel '+i+'</span>'
-      +'<span class="si">'+LU('beer')+LU('dices')+'</span></div>';
-  const ssl=i=>'<div class="pb2-slot pb2-seat">'
-      +'<span class="sn">Specialist seat '+i+'</span>'
-      +'<span class="si">'+LU('wrench')+'</span></div>';
-  return '<div class="pb2" style="--pc:'+p.c+'">'
-    +'<div class="pb2-id"><div class="pb2-crest">'+LU('beer')+'</div><div class="pb2-name">'+p.nm+'</div>'
-      +'<div class="pb2-goods">'+LU('scroll-text')+'start&nbsp;<b>Gruit&nbsp;+&nbsp;Hopped</b>&nbsp;cards (Gruit flipped)</div>'
-      +'<div class="pb2-goods">'+LU('dices')+'<b>13</b>&nbsp;quality&nbsp;dice&nbsp;—&nbsp;the&nbsp;runway</div>'
-      +'<div class="pb2-goods nomargin">'+LU('wheat')+LU('sprout')+'goods max&nbsp;<b>8</b></div></div>'
-    +'<div class="pb2-row"><div class="pb2-vessels">'+vsl(1)+vsl(2)+vsl(3)+'</div></div>'
-    +'<div class="pb2-row"><div class="pb2-vessels seats">'+ssl(1)+ssl(2)+'</div></div>'
-  +'</div>';}
+function pboard(p){return playerBoard({nm:p.nm,c:p.c});}   // v4.9d: the board is a SHARED component (components.js playerBoard) — score seat · supply ledge · the Flight ladder (beers SHIPPED) · the Contracts zone printed on the board; the app seats live pieces in the same wells
 
 // (the standalone Hall board + Destinations letter boards are RETIRED — the Destinations & Hall
 //  board above carries both; their generators removed 2026-07-14.)

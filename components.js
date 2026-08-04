@@ -357,6 +357,42 @@ function disc(c,ic){return '<div class="disc" style="--c:'+c+'">'+LU(ic||'circle
 function coverTile(c,w){return '<div class="cover" style="--c:'+c+';width:'+w+'in;height:'+w+'in">'+LU('lock')+'<span>locked —<br>a NEW distinct brew<br>(or the Coppersmith)<br>opens this slot</span></div>';}
 function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?'<span>'+d.nm+'</span>':'')+'</div>';}
 
+
+// ---- PLAYER BOARD (v4.9d — the designer's sketch): the physical 7.65×3.85in board, ONE
+// generator for the print sheet AND the live app. Zones: crest+name · the ★ SCORE seat ·
+// the SUPPLY ledge (dice/grain/hops tally seats) · VESSEL 1-3 wells (2.4×1in — the cask
+// tile sits IN the well at true size) · SPECIALIST seats 1-2 (2×2in) · the printed FLIGHT
+// ladder (beers SHIPPED: 1..5 → 0/0/4/9/16★) · the CONTRACTS pile zone. `live` (app only):
+// {score,dice,grain,hops,v:[html×3],seats:[html×2],flight,contracts,vknote}.
+function playerBoard(d,live){const L=live||{};
+  const seatBox=(v)=>'<span class="pbrd-box">'+(v!=null?('<b>'+v+'</b>'):'')+'</span>';
+  const vsl=(i)=>'<div class="pbrd-slot pbrd-vsl">'
+    +'<span class="sn">Vessel '+i+'</span>'
+    +((L.v&&L.v[i-1])||'<span class="si">'+LU('beer')+LU('dices')+'</span>')+'</div>';
+  const ssl=(i)=>'<div class="pbrd-slot pbrd-seat">'
+    +'<span class="sn">Specialist seat '+i+'</span>'
+    +((L.seats&&L.seats[i-1])||'<span class="si">'+LU('wrench')+'</span>')+'</div>';
+  const FL=[1,2,3,4,5],FP={1:0,2:0,3:4,4:9,5:16};
+  const flight='<div class="pbrd-flight"><div class="fl-t">'+LU('layers')+' The Flight — beers <b>shipped</b></div>'
+    +'<div class="fl-row">'+FL.map(n=>'<span class="fl-cell'+(L.flight!=null&&L.flight>=n?' on':'')+'"><b>'+n+'</b><span>'+FP[n]+'★</span></span>').join('')+'</div></div>';
+  const contracts='<div class="pbrd-lads"><span class="sn">Contracts — claimed ★</span>'
+    +(L.contracts||'<span class="si">'+LU('scroll-text')+'</span>')+'</div>';
+  return '<div class="pbrd" style="--pc:'+(d.c||'#7c2128')+'">'
+    +'<div class="pbrd-id">'
+      +'<span class="pbrd-crest">'+LU('beer')+'</span>'
+      +'<span class="pbrd-name">'+d.nm+'</span>'
+      +'<span class="pbrd-score" title="the house\u2019s score">'+LU('star')+seatBox(L.score)+'</span>'
+      +'<span class="pbrd-supply"><span class="pbrd-sup" title="quality dice \u2014 tray/pool">'+LU('dices')+seatBox(L.dice)+'</span>'
+        +'<span class="pbrd-sup" title="grain">'+LU('wheat')+seatBox(L.grain)+'</span>'
+        +'<span class="pbrd-sup" title="hops">'+LU('sprout')+seatBox(L.hops)+'</span>'
+        +'<span class="pbrd-note">start Gruit+Hopped \u00b7 13 dice \u00b7 goods max 8</span></span>'
+    +'</div>'
+    +'<div class="pbrd-row">'+vsl(1)+vsl(2)+vsl(3)+'</div>'
+    +'<div class="pbrd-row">'+ssl(1)+ssl(2)
+      +'<div class="pbrd-right">'+flight+contracts+'</div>'
+    +'</div>'
+  +'</div>';}
+
 function recipeCard(r,brewed){return '<div class="card" style="--cc:'+r.cc+'">'
   +artLayer('cask-'+r.nm.toLowerCase()+'.png')
   +(brewed?'<div class="c-brewed">'+LU('check')+'</div>':'')
@@ -656,8 +692,40 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.stile .st-ghost svg,.stile .st-ghost .ic{width:.48in;height:.48in}'
 /* v4.9b: the mark's start-face chip on the building top row */
 +'.btile .bt-ms{flex:0 0 auto;display:inline-flex;align-items:center;margin-right:.02in}'
-+'.btile .bt-ms img.ai,.btile .bt-ms svg{width:.24in;height:.24in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}';
++'.btile .bt-ms img.ai,.btile .bt-ms svg{width:.24in;height:.24in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}'
++'\n/* ===== v4.9d PLAYER BOARD (7.65x3.85in) \u2014 print + live app, one component ===== */'
++'.pbrd{--pc:#7c2128;width:7.65in;height:3.85in;background:var(--parch,#f3e9d2);color:var(--ink,#2b2018);position:relative;border-radius:.14in;display:flex;flex-direction:column;gap:.07in;padding:.12in .15in;box-sizing:border-box;border:2.5px solid var(--pc);overflow:hidden}'
++'.pbrd .sn{font-variant:small-caps;font-weight:bold;font-size:.085in;opacity:.62;line-height:1.05}'
++'.pbrd-id{display:flex;align-items:center;gap:.09in;flex:0 0 .38in}'
++'.pbrd-crest{width:.32in;height:.32in;border-radius:.05in;background:var(--pc);color:#fff;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}'
++'.pbrd-crest svg,.pbrd-crest .ic{width:.2in;height:.2in}'
++'.pbrd-name{font-variant:small-caps;font-weight:bold;font-size:.2in;color:var(--pc);line-height:1;white-space:nowrap;overflow:hidden;max-width:1.9in}'
++'.pbrd-score{display:inline-flex;align-items:center;gap:.03in;margin-left:.12in;font-size:.16in;color:var(--pc)}'
++'.pbrd-box{display:inline-flex;align-items:center;justify-content:center;min-width:.42in;height:.3in;border:1.6px solid var(--pc);border-radius:.05in;background:rgba(255,255,255,.5);font-size:.17in;padding:0 .04in}'
++'.pbrd-box b{color:var(--ink)}'
++'.pbrd-supply{margin-left:auto;display:inline-flex;align-items:center;gap:.1in}'
++'.pbrd-sup{display:inline-flex;align-items:center;gap:.03in;font-size:.14in}'
++'.pbrd-sup svg,.pbrd-sup .ic,.pbrd-sup img.ai{width:.17in;height:.17in}'
++'.pbrd-note{font-size:.075in;color:var(--ink2,#5b4a37);font-variant:small-caps;max-width:1in;line-height:1.15;text-align:right}'
++'.pbrd-row{display:flex;gap:.08in;flex:0 0 auto;align-items:stretch}'
++'.pbrd-slot{position:relative;border:1.7px solid var(--pc);border-radius:.07in;background:rgba(255,255,255,.38);display:flex;align-items:center;justify-content:center}'
++'.pbrd-slot .sn{position:absolute;top:.045in;left:0;right:0;text-align:center;z-index:0}'
++'.pbrd-slot .si{display:flex;gap:.06in;opacity:.35}.pbrd-slot .si svg,.pbrd-slot .si .ic,.pbrd-slot .si img.ai{width:.3in;height:.3in}'
++'.pbrd-vsl{width:2.42in;height:1.06in;flex:0 0 auto}'
++'.pbrd-seat{width:2.06in;height:2.06in;flex:0 0 auto;border-style:dashed}'
++'.pbrd-right{flex:1;display:flex;flex-direction:column;gap:.07in;min-width:0}'
++'.pbrd-flight{border:1.6px solid var(--pc);border-radius:.07in;background:rgba(255,255,255,.45);padding:.05in .07in}'
++'.pbrd-flight .fl-t{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--pc);display:flex;align-items:center;gap:.04in;margin-bottom:.04in}'
++'.pbrd-flight .fl-t svg,.pbrd-flight .fl-t .ic,.pbrd-flight .fl-t img.ai{width:.13in;height:.13in}'
++'.fl-row{display:flex;gap:.05in}'
++'.fl-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1.4px dashed var(--pc);border-radius:.05in;padding:.025in 0;line-height:1.05}'
++'.fl-cell b{font-size:.13in}.fl-cell span{font-size:.09in;color:var(--ink2,#5b4a37)}'
++'.fl-cell.on{border-style:solid;background:var(--pc);color:#fff}.fl-cell.on span{color:rgba(255,255,255,.85)}'
++'.pbrd-lads{position:relative;flex:1;min-height:.75in;border:1.7px dashed var(--pc);border-radius:.07in;background:rgba(255,255,255,.3);display:flex;flex-wrap:wrap;gap:.04in;align-items:flex-start;align-content:flex-start;padding:.17in .06in .05in}'
++'.pbrd-lads .sn{position:absolute;top:.045in;left:0;right:0;text-align:center}'
++'.pbrd-lads .si{opacity:.3;margin:auto}.pbrd-lads .si svg,.pbrd-lads .si .ic,.pbrd-lads .si img.ai{width:.26in;height:.26in}'
++'.pbrd-lad{display:inline-flex;align-items:center;gap:.02in;font-size:.1in;font-weight:bold;background:var(--pc);color:#fff;border-radius:.09in;padding:.02in .06in;z-index:1}';
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard};
+window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
 })();

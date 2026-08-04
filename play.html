@@ -300,29 +300,28 @@
   .pbld.imp{background:#5b3a8e}   /* SPECIALISTS = PURPLE (private brewery tiles) — the v2.4.1 three-type palette: blue PRIVILEGE (owner-only) / green BUILDING (serves everyone) / purple SPECIALIST (private) */
   .ppile{justify-content:flex-end;background:var(--tc,#777)}
   .ppbeers{font-size:7cqmin;font-weight:normal;font-variant:small-caps;opacity:.95;line-height:1.05;white-space:normal}
-  /* ===== v4.9d THE PLAYER BOARD — the print board's anatomy, live: recipes COLLECTED left ·
-     COMPLETED (shipped — the Flight record) right · vessels + seats as printed wells · stats
-     in the bottom corners. The board IS the legibility fix (the Flight read off components). */
-  .pboard{position:relative;border:3px solid var(--pc,#8a8577);border-radius:14px;padding:10px 12px 9px;
-    background:linear-gradient(158deg,#f4ead0,#e6d3a6);box-shadow:0 2px 8px rgba(0,0,0,.18)}
-  .pb-main{display:grid;grid-template-columns:minmax(118px,15%) minmax(0,1fr) minmax(118px,15%);gap:12px;align-items:start}
-  @media(max-width:860px){.pb-main{grid-template-columns:1fr 1fr}.pb-mid{grid-column:1/-1;order:-1}}
-  .pb-col{border:1.6px dashed rgba(0,0,0,.35);border-radius:10px;padding:6px 7px;background:rgba(255,255,255,.28);min-height:120px}
-  .pb-col.done{border-style:solid;border-color:var(--pc,#8a8577);background:rgba(255,255,255,.42)}
-  .pb-coltitle{font-variant:small-caps;font-weight:bold;font-size:.72rem;letter-spacing:.4px;color:var(--ink2);
-    display:flex;align-items:center;gap:4px;margin-bottom:5px;border-bottom:1px solid rgba(0,0,0,.15);padding-bottom:3px}
-  .pb-coltitle .ic,.pb-coltitle svg{width:1em;height:1em}
-  .pb-rcards{display:flex;flex-direction:column;gap:6px}
-  .pb-rc{position:relative;width:100%;aspect-ratio:1.85/2.55;container-type:size;border-radius:6px}
-  .pb-flight{margin-top:6px;font-size:.74rem;font-weight:bold;color:var(--ink)}
-  .pb-flight .note{font-weight:normal}
-  .pb-colnote{font-size:.68rem;color:var(--ink2);font-style:italic;opacity:.8}
-  .pb-zonehead{font-variant:small-caps;font-weight:bold;font-size:.72rem;color:var(--ink2);margin:2px 0 2px}
-  .pb-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-top:9px;
-    border-top:1px solid rgba(0,0,0,.16);padding-top:7px}
-  .pb-bl,.pb-br{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-  .pb-br{justify-content:flex-end;margin-left:auto;text-align:right}
-  .pb-br .note{font-size:.72rem}
+  /* ===== v4.9d THE PLAYER BOARD, LITERAL — the print component (7.65×3.85in) rendered live,
+     card splays beside it as on the table: collected LEFT · completed RIGHT (bottom bars only). */
+  .pbscene{display:grid;grid-template-columns:minmax(92px,12.5%) minmax(0,1fr) minmax(92px,12.5%);gap:8px;align-items:start}
+  @media(max-width:760px){.pbscene{grid-template-columns:1fr 1fr}.pbmid{grid-column:1/-1;order:-1}}
+  .pbmid{position:relative;width:100%;aspect-ratio:7.65/3.85;container-type:size}
+  .pbmid .pbrd{box-shadow:0 2px 8px rgba(0,0,0,.22)}
+  .pbrd-piece{position:absolute;inset:.015in;z-index:1}
+  .pbrd-piece .ctile,.pbrd-piece .icard{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+  .pbrd-rdy{position:absolute;right:.03in;bottom:.03in;z-index:2;font-size:.09in;font-weight:bold;font-variant:small-caps;
+    background:var(--gold);color:#3a2c00;border-radius:.08in;padding:.01in .05in;box-shadow:0 1px 2px rgba(0,0,0,.4)}
+  .pbrd-rdy svg,.pbrd-rdy .ic,.pbrd-rdy img.ai{width:.1in;height:.1in}
+  .pbsplay{border:1.6px dashed var(--line);border-radius:10px;padding:6px;background:rgba(255,255,255,.28)}
+  .pbsplay.done{border-style:solid;border-color:var(--gold);background:rgba(255,255,255,.4)}
+  .pbsp-t{font-variant:small-caps;font-weight:bold;font-size:.68rem;color:var(--ink2);display:flex;align-items:center;gap:3px;
+    border-bottom:1px solid rgba(0,0,0,.12);padding-bottom:3px;margin-bottom:5px}
+  .pbsp-t .ic,.pbsp-t svg,.pbsp-t img.ai{width:.95em;height:.95em}
+  .pbsp-card{position:relative;width:100%;aspect-ratio:1.85/0.52;overflow:hidden;border-radius:5px;box-shadow:0 1px 3px rgba(0,0,0,.3);margin-bottom:4px}
+  .pbsp-card .pbsp-in{position:absolute;left:0;bottom:0}
+  .pbsp-ghost{position:relative;width:100%;aspect-ratio:1.85/2.55;border:1.5px dashed var(--line);border-radius:6px;
+    display:flex;align-items:center;justify-content:center;opacity:.5;color:var(--ink2)}
+  .pbsp-ghost .ic,.pbsp-ghost svg,.pbsp-ghost img.ai{width:22px;height:22px}
+  .pbsp-fl{font-size:.72rem;margin-top:3px;line-height:1.25}
   /* brewery tableau: tiles on their own line under each title */
   .trow{display:flex;flex-wrap:wrap;gap:7px;margin:4px 0 8px;align-items:flex-start}
   .tsec{margin-bottom:2px}
@@ -1297,6 +1296,11 @@ function fitCards(){
       return;}
     const s=Math.min(w.clientWidth/W,w.clientHeight/H);
     if(isFinite(s)&&s>0)inn.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale('+s+')';});
+  // v4.9d: the recipe SPLAYS — the card anchors bottom-left, scaled to the column, the window
+  // shows only its bottom bar (the physical stacked-cards read)
+  document.querySelectorAll('.pbsp-card').forEach(w=>{const inn=w.firstElementChild;if(!inn)return;
+    const s=w.clientWidth/(1.85*96);
+    if(isFinite(s)&&s>0)inn.style.cssText='position:absolute;left:0;bottom:0;transform-origin:bottom left;transform:scale('+s+')';});
 }
 
 //==================================================================
@@ -3046,12 +3050,13 @@ function renderTableaus(){
   let tabs='',body='';
   S.players.forEach((p,i)=>{
     const sc=scorePlayer(p);
-    tabs+='<div class="tab '+(i===activeTab?'active':'')+'" style="'+(i===activeTab?'background:'+p.color:'')+'" onclick="activeTab='+i+';renderTableaus();refreshIcons()"><span class="pawn" style="background:'+p.color+';display:inline-block;vertical-align:middle;width:11px;height:11px"></span> '+p.name+' <span style="opacity:.85;font-size:.74rem" data-tip="Total score so far.">★ '+sc.total+'</span>'+(p.ai?' <span style="opacity:.75;font-size:.72rem">· AI</span>':'')+'</div>';
+    tabs+='<div class="tab '+(i===activeTab?'active':'')+'" style="'+(i===activeTab?'background:'+p.color+';color:#fff':'')+'" onclick="activeTab='+i+';renderTableaus();refreshIcons()"><span class="pawn" style="background:'+p.color+';display:inline-block;vertical-align:middle;width:11px;height:11px"></span> '+p.name+' <span style="opacity:.85;font-size:.74rem" data-tip="Total score so far — click the board’s ★ seat for the breakdown.">★ '+sc.total+'</span>'+(p.ai?' <span style="opacity:.75;font-size:.72rem">· AI</span>':'')+'</div>';
     const mine=!aiTurn()&&cur()&&p.id===cur().id;
-    // ---- the VESSEL wells (cask tiles seat the player's dice) ----
-    const rowCells=[];
-    p.vessels.forEach((c,vi)=>{
-      if(!c){rowCells.push('<div class="vcell"><div class="mtile empty" data-tip="'+attr('Open vessel — brew into it (a tray die becomes the cask).')+'">'+LU('flask-conical')+'</div><div class="vmat note">open</div></div>');return;}
+    // ---- the VESSEL wells: the cask TILE sits IN the printed well at true 2.4×1in ----
+    const vwells=[];
+    for(let vi=0;vi<3;vi++){const c=p.vessels[vi];
+      if(vi>=(p.vslots||VSLOTS_START)){vwells.push(null);continue;}
+      if(!c||!HC_CASK[c.style]){vwells.push(null);continue;}   // (no kit in the headless harnesses — the printed well stands)
       const ready=caskReady(c);
       let vcls='',vclick='';
       if(mine&&UI.sub==='load'&&UI.load&&UI.load.cask==null&&UI.load.ships.some(sid=>canTake(sid,vi))){vcls=' stopgo';vclick=' onclick="loadPickCask('+vi+')"';}
@@ -3059,47 +3064,44 @@ function renderTableaus(){
       else if(mine&&UI.sub==='rack'&&UI.rack&&vi!==UI.rack.a){vcls=' stopgo';vclick=' onclick="rackPick('+vi+')"';}
       else if(mine&&UI.sub==='assay'&&UI.assay&&c.die<c.q){vcls=' stopgo';vclick=' onclick="assayPick('+vi+')"';}
       else if(mine&&UI.sub==='hopex'&&UI.hopex&&c.die<6){vcls=' stopgo';vclick=' onclick="hopexAllot('+vi+')"';}
-      rowCells.push('<div class="vcell"><div class="mtile'+vcls+'"'+vclick+' data-tip="'+attr(STYLES[c.style].name+' Q'+c.q+' · die '+c.die+'/'+c.q+' · load bonus: '+(CASK_ACT[caskAct(c)]||'')+' · '+(ready?'READY — load it onto a hull':'maturing (age points turn the die up)'))+'">'+pCaskFace(c,null,false,p.color)+'</div>'
-        +(ready?'<div class="vmat"><span class="tag good">'+LU('check')+' READY ▸ load</span></div>':'<div class="vmat note">'+LU('hourglass')+' '+c.die+'/'+c.q+'</div>')+'</div>');
-    });
-    for(let ci=(p.vslots||VSLOTS_START);ci<VSLOTS;ci++)rowCells.push('<div class="vcell locked"><div class="mtile empty" data-tip="'+attr('Covered vessel slot — your 2nd distinct beer brewed opens it (the Flight).')+'">'+LU('lock')+'</div><div class="vmat note">'+LU('unlock')+' 2nd beer</div></div>');
-    // ---- the SPECIALIST seats ----
-    const seatCells=[];
-    (p.upgrades||[]).forEach(k=>seatCells.push('<div class="vcell"><div class="mtile" data-tip="'+attr(upName(k)+' — '+upDesc(k))+'">'+pImpFace(k)+'</div><div class="vmat note">'+LU('wrench')+' Specialist</div></div>'));
-    for(let si=(p.upgrades||[]).length;si<(p.sslots||SSLOTS_START);si++)seatCells.push('<div class="vcell"><div class="mtile empty" data-tip="'+attr('Open specialist seat — earned free at Bergen, the Hiring Post, or the hire bonus.')+'">'+LU('wrench')+'</div><div class="vmat note">open seat</div></div>');
-    for(let si=(p.sslots||SSLOTS_START);si<SSLOTS;si++)seatCells.push('<div class="vcell locked"><div class="mtile empty" data-tip="'+attr('Covered seat — your 3rd distinct beer brewed opens it (the Flight).')+'">'+LU('lock')+'</div><div class="vmat note">'+LU('unlock')+' 3rd beer</div></div>');
-    // ---- v4.9d THE BOARD: recipe cards COLLECTED (left) → COMPLETED on first load (right) ----
-    const rcFace=(st,done)=>{const d=HC_RCP[STYLES[st].name.toLowerCase()]||HC_RCP[styleShort(st).toLowerCase()];
-      if(!d)return '<span class="rcard">'+LU('beer')+' '+STYLES[st].name+'</span>';
-      return '<div class="pb-rc" data-tip="'+attr(STYLES[st].name+' — Q'+STYLES[st].q+' · brew '+costStr(STYLES[st].in)+' · die starts at '+startDieFor(p,st)+(done?' · SHIPPED — completed (the Flight).':((p.brewed||{})[st]?' · brewed — ships to complete.':' · collected — brew it, then load it to complete.')))+'">'+pfit(HC.recipeCard(d,done),1.85,2.55)+'</div>';};
+      vwells.push('<div class="pbrd-piece'+vcls+'"'+vclick+' data-tip="'+attr(STYLES[c.style].name+' Q'+c.q+' · die '+c.die+'/'+c.q+' · load bonus: '+(CASK_ACT[caskAct(c)]||'')+' · '+(ready?'READY — load it onto a hull':'maturing (age points turn the die up)'))+'">'
+        +ctWithDie(HC.caskCardBack(HC_CASK[c.style],hcAct(caskAct(c))),Math.max(1,c.die||1),p.color)
+        +(ready?'<span class="pbrd-rdy">'+LU('check')+' READY</span>':'')+'</div>');
+    }
+    // the Innkeeper's 4th vessel rides his card (no printed well) — flag it on the seat tip
+    // ---- the SPECIALIST seats: the 2×2in card sits IN the printed seat ----
+    const seats=[];
+    for(let si=0;si<2;si++){const k=(p.upgrades||[])[si];
+      if(k&&!HC_IMP[upName(k).toLowerCase()]){seats.push(null);continue;}
+      seats.push(k?('<div class="pbrd-piece" data-tip="'+attr(upName(k)+' — '+upDesc(k)+(k==='innkeeper'&&p.vessels[p.innVessel]?' · on the tile: '+styleShort(p.vessels[p.innVessel].style)+' die '+p.vessels[p.innVessel].die:''))+'">'+HC.improveTile(HC_IMP[upName(k).toLowerCase()])+'</div>'):null);
+    }
+    // ---- the CONTRACTS pile ----
+    const lads=(p.ladings||[]).map(l=>'<span class="pbrd-lad" data-tip="'+attr(ladingLabel(l)+' — scored at claim')+'">'+(l.dest?DEST[l.dest].name.slice(0,4):'Any')+' '+l.pts+'★</span>').join('');
+    // ---- the board, live ----
+    const boardHTML=HC?HC.playerBoard({nm:p.name,c:p.color},{
+      score:sc.total,dice:trayDice(p)+'/'+(p.presPool||0),grain:p.grain,hops:p.hops,
+      v:vwells,seats:seats,flight:flightBeers(p),contracts:lads||null}):'';
+    // ---- the CARD SPLAYS beside the board (physical table space): bottom bars only ----
     const held=p.recipes.filter(st=>STYLES[st]);
     const doneSt=held.filter(st=>(p.shipped||{})[st]);
     const openSt=held.filter(st=>!(p.shipped||{})[st]);
-    const fbeers=flightBeers(p);const fcur=flightScore(p);
-    const fnext=(FLIGHT_PTS[fbeers+1]||0);
-    const leftCol='<div class="pb-col"><div class="pb-coltitle">'+LU('scroll-text')+' Collected</div>'
-      +(openSt.length?'<div class="pb-rcards">'+openSt.map(st=>rcFace(st,false)).join('')+'</div>':'<div class="pb-colnote">every recipe shipped!</div>')+'</div>';
-    const rightCol='<div class="pb-col done"><div class="pb-coltitle">'+LU('layers')+' Completed — the Flight</div>'
-      +(doneSt.length?'<div class="pb-rcards">'+doneSt.map(st=>rcFace(st,true)).join('')+'</div>':'<div class="pb-colnote">a beer completes when its first cask LOADS onto a Ship (v4.9d)</div>')
-      +'<div class="pb-flight">'+fbeers+' shipped → <b>'+fcur+'★</b>'+(fnext>fcur?' <span class="note">· next '+(fbeers+1)+' → '+fnext+'★</span>':(fbeers>=flightTypes().length?' <span class="note">· full flight!</span>':''))+(fbeers<FLIGHT_MIN?' <span class="note">· scores at '+FLIGHT_MIN+'+</span>':'')+'</div></div>';
-    const midCol='<div class="pb-mid">'
-      +'<div class="pb-zonehead">'+LU('flask-conical')+' Vessels — '+(p.vslots||VSLOTS_START)+' open'+(hasUpgrade(p,'innkeeper')?' (the 4th on the Innkeeper’s tile)':'')+'</div><div class="vrow">'+rowCells.join('')+'</div>'
-      +'<div class="pb-zonehead" style="margin-top:6px">'+LU('wrench')+' Specialist seats — '+(p.upgrades||[]).length+'/'+(p.sslots||SSLOTS_START)+' seated</div><div class="vrow">'+seatCells.join('')+'</div></div>';
-    const footBL='<div class="pb-bl"><span class="chip">'+Gi(p.grain)+'</span><span class="chip">'+Hi(p.hops)+'</span>'
-      +'<span class="chip" data-tip="Storage cap.">'+LU('package')+'<b>'+p.storage+'</b></span>'
-      +'<span class="chip" data-tip="Quality dice: tray / pool. A die rides every brew and every build, then parks at the Kontor — the first EMPTY tray sets the final round.">'+LU('dices')+'<b>'+trayDice(p)+'</b><span class="note">/'+(p.presPool||0)+'</span></span></div>';
-    const footBR='<div class="pb-br"><span class="chip" style="cursor:pointer" onclick="openScore('+p.id+')" data-tip="Total score — click for the full breakdown.">★ <b>'+sc.total+'</b></span>'
-      +'<span class="note">deliveries '+sc.deliv+' · scored '+sc.bank+' · maj '+sc.maj+(sc.bldg?' · bldg '+sc.bldg:'')+(sc.flight?' · flight '+sc.flight:'')+(sc.guild?' · guild '+sc.guild:'')+'</span>'+(p.ai?' <span class="tag">'+aiLabel(p)+' AI</span>':'')+'</div>';
-    const boardHTML='<div class="pboard" style="--pc:'+p.color+'">'
-      +'<div class="pb-main">'+leftCol+midCol+rightCol+'</div>'
-      +'<div class="pb-foot">'+footBL+footBR+'</div></div>';
+    const rcCard=(st,done)=>{const d=HC_RCP[styleShort(st).toLowerCase()];if(!d)return '';
+      return '<div class="pbsp-card" data-tip="'+attr(STYLES[st].name+' — Q'+STYLES[st].q+' · brew '+costStr(STYLES[st].in)+' · die starts at '+startDieFor(p,st)+(done?' · SHIPPED — completed (the Flight).':((p.brewed||{})[st]?' · brewed — its first LOAD completes it.':' · collected — brew it, then load it to complete.')))+'"><div class="pbsp-in">'+HC.recipeCard(d,done)+'</div></div>';};
+    const splay=(label,ic,sts,done,note)=>'<div class="pbsplay'+(done?' done':'')+'"><div class="pbsp-t">'+LU(ic)+' '+label+'</div>'
+      +(sts.length?sts.map(st=>rcCard(st,done)).join(''):'<div class="pbsp-ghost" data-tip="'+attr(note)+'"><span>'+LU('scroll-text')+'</span></div>')
+      +(done?'<div class="pbsp-fl"><b>'+flightBeers(p)+' shipped → '+flightScore(p)+'★</b>'+(flightBeers(p)<FLIGHT_MIN?' <span class="note">(scores at '+FLIGHT_MIN+'+)</span>':'')+'</div>':'')+'</div>';
+    const scene='<div class="pbscene">'
+      +'<div class="pbside L">'+splay('Collected','scroll-text',openSt,false,'Recipe cards you hold, not yet shipped — they wait here until that beer’s first cask loads onto a Ship.')+'</div>'
+      +'<div class="pbmid">'+pfit(boardHTML,7.65,3.85)+'</div>'
+      +'<div class="pbside R">'+splay('Completed','layers',doneSt,true,'A recipe card moves here — completed — when that beer’s FIRST cask loads onto a Ship (v4.9d). The completed cards ARE the Flight.')+'</div>'
+      +'</div>';
     const delivered=KONTORE.map(d=>{const ds=p.delivered.filter(x=>x.dest===d);if(!ds.length)return '';
       const pips=ds.map(x=>'<span class="qd q'+Math.min(5,x.val)+'" data-tip="'+attr(STYLES[x.style].name+' — the die parks showing '+x.val+'★')+'">'+x.val+'</span>').join('');
       return '<span class="tag good">'+LU('landmark')+DEST[d].name.slice(0,4)+' '+pips+'</span>';}).filter(x=>x).join('')||'<span class="note">none</span>';
     body+='<div class="tableau '+(i===activeTab?'show':'')+'">'
-      +boardHTML
-      +'<div style="margin-top:8px"><b class="note">'+LU('landmark')+' Delivered (parked dice):</b> '+delivered
-      +((p.ladings||[]).length?'<br><b class="note">'+LU('scroll-text')+' Contracts claimed:</b> '+(p.ladings||[]).map(l=>'<span class="tag good" data-tip="'+attr(ladingLabel(l)+' — scored at claim')+'">'+(l.dest?DEST[l.dest].name.slice(0,4):'Any')+' '+l.pts+'★</span>').join(''):'')
+      +scene
+      +'<div style="margin-top:6px"><b class="note">'+LU('landmark')+' Delivered (parked dice):</b> '+delivered
+      +' <span class="note" style="margin-left:8px">deliveries '+sc.deliv+' · scored '+sc.bank+' · maj '+sc.maj+(sc.bldg?' · bldg '+sc.bldg:'')+(sc.flight?' · flight '+sc.flight:'')+(sc.guild?' · guild '+sc.guild:'')+'</span>'
       +'</div></div>';
   });
   document.getElementById('tabs').innerHTML=tabs;
