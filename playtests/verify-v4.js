@@ -133,9 +133,10 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 
 // ---- 9. PRIZES: London building (+3★, placed) · Bergen specialist · Novgorod refine ×2 · Bruges recipe ----
 (function(){var p=fresh();stops();p.ai={tier:'journeyman'};
-  var b0=p.bank;
+  var b0=p.bank,t0=trayDice(p);
   UI.pendingBenefits=[{pid:0,dest:'london'}];afterSail('stops');
-  ok('London prize: a building placed, +'+BUILD_PTS+'★ banked', p.bank===b0+BUILD_PTS&&SLOTS.some(function(s){return bAt(s.id);}));
+  ok('London prize: a building placed — NO ★ banked, a die stands on it at 1 (v4.9)',
+    p.bank===b0&&trayDice(p)===t0-1&&SLOTS.some(function(s){var b=bAt(s.id);return b&&b.owner===0&&b.die===1;}));
   UI.pendingSpec=[{pid:0,dest:'bergen'}];afterSail('stops');
   ok('Bergen prize: a specialist seated free', (p.upgrades||[]).length===1);
   deliverCask(p,{owner:0,style:'mumme',q:4,die:4,act:'age'},'novgorod');
@@ -149,20 +150,42 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   p.ai=null;
 })();
 
-// ---- 10. COMMISSION: 1G · place on a shipless slot · banks NOTHING (v4.5b de-mint) · display refills to 4 ----
+// ---- 10. COMMISSION (v4.8 "Harbor Rates"): the fee is PER HULL — Skute 2G · Cog 1G · Hulk FREE ·
+// place on a shipless slot · banks NOTHING (v4.5b de-mint) · display refills to 4 ----
 (function(){var p=fresh();stops();
   p.grain=3;var b0=p.bank;
-  S.shipDisplay=[{ship:'hulk',dest:'bergen'},{ship:'skute',dest:'bruges'}];S.shipDeck=[{ship:'cog',dest:'london'},{ship:'cog',dest:'bruges'},{ship:'cog',dest:'bergen'}];
+  S.shipDisplay=[{ship:'hulk',dest:'bergen'},{ship:'skute',dest:'bruges'},{ship:'cog',dest:'london'}];S.shipDeck=[{ship:'cog',dest:'bruges'},{ship:'cog',dest:'bergen'}];
   UI.comm={returnTo:'stops',idx:null};UI.sub='commission';
   commPick(0);commPlace('s6');
-  ok('commission pays 1G', p.grain===2);
+  ok('a HULK commissions FREE (v4.8 — 0G for 3 berths)', p.grain===3);
   ok('the hull lands on the slot', S.slots.s6&&S.slots.s6.ship==='hulk'&&S.slots.s6.dest==='bergen');
   ok('the commission banks NOTHING (v4.5b — the hull + the free load are the reward)', p.bank===b0);
-  ok('the display refills toward 4', S.shipDisplay.length===4);
-  ship('s7','cog','bruges');
+  UI.comm={returnTo:'stops',idx:null};UI.sub='commission';
+  commPick(0);commPlace('s7');   // display head is now the skute
+  ok('a SKUTE commissions at 2G (v4.8 — the instant charter is dear)', p.grain===1&&S.slots.s7&&S.slots.s7.ship==='skute');
+  UI.comm={returnTo:'stops',idx:null};UI.sub='commission';
+  commPick(0);commPlace('s8');   // display head is now the cog
+  ok('a COG commissions at 1G (v4.8)', p.grain===0&&S.slots.s8&&S.slots.s8.ship==='cog');
+  ok('the display refills toward 4', S.shipDisplay.length>=2);
+  ship('s4','cog','bruges');
   UI.comm={returnTo:'stops',idx:null};UI.sub='commission';commPick(0);
-  var before=S.slots.s7;commPlace('s7');
-  ok('one ship per slot — an occupied slot refuses', S.slots.s7===before&&S.slots.s7.ship==='cog');
+  var before=S.slots.s4;commPlace('s4');
+  ok('one ship per slot — an occupied slot refuses', S.slots.s4===before&&S.slots.s4.ship==='cog');
+})();
+(function(){var p=fresh();stops();
+  p.grain=1;p.hops=0;
+  S.shipDisplay=[{ship:'skute',dest:'bruges'},{ship:'hulk',dest:'bergen'}];S.shipDeck=[];
+  UI.comm={returnTo:'stops',idx:null};UI.sub='commission';
+  commPick(0);
+  ok('an UNAFFORDABLE hull can’t be picked (skute 2G > 1G held)', UI.comm.idx==null&&UI.stage!=='place');
+  commPick(1);commPlace('s6');
+  ok('…but the free Hulk beside it commissions fine', S.slots.s6&&S.slots.s6.ship==='hulk'&&p.grain===1);
+  var q=fresh();stops();
+  q.grain=0;q.hops=0;
+  S.shipDisplay=[{ship:'hulk',dest:'bruges'}];S.shipDeck=[];
+  ok('the Harbor stays OPEN at 0 goods while a free Hulk shows (commAffordable)', commAffordable(q));
+  S.shipDisplay=[{ship:'skute',dest:'bruges'},{ship:'cog',dest:'london'}];
+  ok('…and reads CLOSED at 0 goods when only priced hulls show', !commAffordable(q));
 })();
 
 // ---- 10b. v4.4 "Maiden Load": the commission includes ONE free load from YOUR vessels ----
@@ -207,15 +230,18 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('the specialist display refills at the END of the turn', S.impDisplay.length===n0&&S.impDeck.length===deck0-1);
 })();
 
-// ---- 11. BUILDINGS: +3★ on placement · overbuild = 1G, displaced boxed · serve-anyone action ----
+// ---- 11. BUILDINGS (v4.9 "Mason's Mark"): a build stands a tray die at 1 · overbuild = 1G, the displaced die scores + returns · serve-anyone action ----
 (function(){var p=fresh();stops();var q=S.players[1];
-  p.grain=5;var b0=p.bank;
+  p.grain=5;var b0=p.bank,t0=trayDice(p);
   commitBldg('s1','granary',0);
-  ok('raising a building banks +'+BUILD_PTS+'★', p.bank===b0+BUILD_PTS);
-  var g1=p.grain;
+  ok('a build banks NOTHING — a die stands on the tile at face 1 (v4.9)', p.bank===b0&&S.buildings.s1.die===1&&S.buildings.s1.owner===0);
+  ok('the mason\u2019s die is COMMITTED (tray \u22121)', trayDice(p)===t0-1);
+  S.buildings.s1.die=4;   // let it have grown
+  var g1=p.grain,b1=p.bank,t1=trayDice(p);
   commitBldg('s1','maltkiln',0);
   ok('overbuild costs the 1G rent; the displaced tile is boxed', p.grain===g1-1&&bKeyAt('s1')==='maltkiln');
-  ok('no owner is tracked on buildings', S.buildings.s1.owner===undefined);
+  ok('the displaced building\u2019s die scores its pips NOW and returns to the tray (v4.9)',
+    p.bank===b1+4&&(p.bankM||0)===4&&trayDice(p)===t1&&S.buildings.s1.die===1);
   // the serve-anyone action: P2 fires the Granary P1 raised
   commitBldg('s2','granary',0);
   S.active=1;stops();var qg=q.grain;
@@ -342,24 +368,24 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   var g1=p.grain,b1=p.bank;
   UI.sub='survey';UI.survey={returnTo:'stops'};surveyPick('granary');
   placeBldgOn('s1');
-  ok('a chipless building is FREE to gain (+'+BUILD_PTS+' banks)', p.grain===g1&&p.bank===b1+BUILD_PTS);
+  ok('a chipless building is FREE to gain (no \u2605 \u2014 the die stands on it, v4.9)', p.grain===g1&&p.bank===b1&&S.buildings.s1.die===1);
   var g2=p.grain,b2=p.bank;
   UI.sub='survey';UI.survey={returnTo:'stops'};surveyPick('maltkiln');
   placeBldgOn('s2');
-  ok('a premium building pays its fee (Malt Kiln 2G)', p.grain===g2-2&&p.bank===b2+BUILD_PTS);
+  ok('a premium building pays its fee (Malt Kiln 2G)', p.grain===g2-2&&p.bank===b2&&S.buildings.s2.die===1);
   // v4.2c ONE PAYMENT PER PLACEMENT: a paid fee covers the ground rent
   S.buildDisplay=['cooperage','granary','missionq','almoner'];
   var g3=p.grain,b3=p.bank;
   UI.sub='survey';UI.survey={returnTo:'stops'};surveyPick('cooperage');
   placeBldgOn('s1');   // s1 is BUILT (granary) — overbuild
-  ok('ONE payment: a fee-paid gain overbuilds with NO rent (2G total)', p.grain===g3-2&&p.bank===b3+BUILD_PTS&&bKeyAt('s1')==='cooperage');
+  ok('ONE payment: a fee-paid gain overbuilds with NO rent (2G total; the displaced die cashes out +1)', p.grain===g3-2&&p.bank===b3+1&&bKeyAt('s1')==='cooperage');
   p.grain=3;var g4=p.grain,b4=p.bank;
   commitBldg('s2','granary',0);
-  ok('an otherwise-FREE placement still pays the 1G rent on overbuild', p.grain===g4-1&&p.bank===b4+BUILD_PTS&&bKeyAt('s2')==='granary');
+  ok('an otherwise-FREE placement still pays the 1G rent on overbuild (the displaced die cashes +1)', p.grain===g4-1&&p.bank===b4+1&&bKeyAt('s2')==='granary');
   // the kontor prizes stay FREE
   var q=S.players[1];q.ai={tier:'journeyman'};var qg=q.grain,qb=q.bank;
   UI.pendingBenefits=[{pid:1,dest:'london'}];afterSail('stops');
-  ok('London prize stays free (+'+BUILD_PTS+' banked, no fee)', q.grain===qg&&q.bank===qb+BUILD_PTS);
+  ok('London prize stays free (no fee \u2014 a die stands on the build, v4.9)', q.grain===qg&&q.bank===qb&&SLOTS.some(function(s){var b=bAt(s.id);return b&&b.owner===1&&b.die===1;}));
   q.recipes=['gruit','hopped'];q.hops=5;var qg2=q.grain,qh2=q.hops;
   UI.pendingRecipe=[{pid:1,dest:'bruges'}];afterSail('stops');
   ok('the Bruges prize PAYS the recipe fee — hops only (v45e)', q.grain===qg2&&q.hops<qh2&&q.recipes.length===3);
@@ -567,9 +593,9 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 })();
 (function(){var p=fresh();stops();
   p.upgrades=['shipwright'];p.sslots=2;p.grain=0;
-  S.shipDisplay=[{ship:'cog',dest:'bruges'}];S.shipDeck=[];
+  S.shipDisplay=[{ship:'skute',dest:'bruges'}];S.shipDeck=[];
   UI.comm={returnTo:'stops',idx:null};UI.sub='commission';commPick(0);commPlace('s6');
-  ok('the Shipwright commissions with 0 goods (the 1G waived)', S.slots.s6&&S.slots.s6.ship==='cog'&&p.grain===0);
+  ok('the Shipwright commissions a SKUTE with 0 goods (the printed 2G waived — v4.8)', S.slots.s6&&S.slots.s6.ship==='skute'&&p.grain===0);
 })();
 (function(){var p=fresh();stops();
   ok('the Town Crier is UNGATED (v4.7 — the 2-ports gate is cut)', specGate(p,'towncrier'));
@@ -682,6 +708,59 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
     if(inGame.indexOf('maltkiln')<0||inGame.indexOf('missionq')<0){ok('the Kiln + Mission Quay deal guarantee (run '+t+')',false,inGame.join(','));return;}}
   ok('setup deals 17 of the 20 — ≥1 Kiln + ≥1 Mission Quay in every deal (20 runs)', true);
   ok('the guild-tile fees stay grain-only (the v45d audit holds)', ['victual','exchange','capstan'].every(function(k){var f=BUILDINGS[k].fee;return f&&f.g&&!f.h;}));
+})();
+
+// ---- 28. v4.9 "MASON'S MARK": ticks on use (any player) · cap 6 · end scoring · ephemeral departure · tray gates ----
+(function(){var p=fresh();stops();var q=S.players[1];
+  commitBldg('s2','granary',0);
+  ok('the mark starts at 1', S.buildings.s2.die===1);
+  S.active=1;stops();
+  UI.stops=[{kind:'bact',slot:'s2'}];resolveStop(0);srcTake(2,0);
+  ok('a RIVAL\u2019s activation turns the builder\u2019s die (1 \u2192 2)', S.buildings.s2.die===2);
+  S.active=0;stops();
+  UI.stops=[{kind:'bact',slot:'s2'}];resolveStop(0);srcTake(2,0);
+  ok('the owner\u2019s own activation turns it too (2 \u2192 3)', S.buildings.s2.die===3);
+  S.buildings.s2.die=6;
+  S.active=1;stops();UI.stops=[{kind:'bact',slot:'s2'}];resolveStop(0);srcTake(2,0);
+  ok('the die caps at 6', S.buildings.s2.die===6);
+  ok('end scoring: the standing die scores its pips to its OWNER', scorePlayer(p).bldg===6&&scorePlayer(q).bldg===0);
+  S.active=0;
+})();
+(function(){var p=fresh();stops();
+  commitBldg('s1','maltkiln',0);   // p's Kiln, die 1
+  p.vessels=[{style:'hopped',q:2,die:2,act:'source'},null,null];
+  ship('s1','cog','bruges');
+  UI.load={ships:['s1'],returnTo:'stops',loadsLeft:1,cask:null};UI.sub='load';
+  loadPickCask(0);
+  ok('a KILN lift used at load turns the Kiln\u2019s die (1 \u2192 2)', S.buildings.s1.die===2);
+})();
+(function(){var p=fresh();stops();
+  p.grain=9;
+  commitBldg('s3','bonded',0);S.buildings.s3.die=3;
+  p.vessels=[{style:'gruit',q:1,die:1,act:'source'},null,null];
+  ship('s3','skute','bruges');
+  var b0=p.bank;
+  UI.load={ships:['s3'],returnTo:'stops',loadsLeft:1,cask:null};UI.sub='load';
+  loadPickCask(0);   // boards (bonded lifts 1\u21922, its die 3\u21924), the Skute sails, the Store departs
+  ok('an EPHEMERAL sails away: its die scores at once and returns to the tray (v4.9)',
+    !bAt('s3')&&p.bank>=b0+4&&(p.bankM||0)>=4);
+})();
+(function(){var p=fresh();stops();
+  p.presPool=diceInFlight(p);   // tray = 0
+  ok('no tray die \u2192 the build channels close (surveyAffordable empty)', surveyAffordable(p).length===0);
+  var g0=p.grain;
+  UI.pendingBenefits=[{pid:0,dest:'london'}];afterSail('stops');
+  ok('\u2026and an untakeable London prize pays the 2-goods consolation', p.grain===g0+2&&(UI.pendingBenefits||[]).length===0);
+})();
+(function(){var p=fresh();stops();
+  commitBldg('s1','granary',0);
+  ok('setup\u2019s neutral deals carry NO die (only player builds do)',
+    SLOTS.every(function(s){var b=bAt(s.id);return !b||b.owner===0||!(b.die>0);}));
+  var q2=fresh();stops();
+  q2.presPool=diceInFlight(q2)+1;   // exactly ONE tray die left
+  S.ending=false;
+  commitBldg('s4','almoner',0);
+  ok('committing the LAST die to a build triggers the empty-tray end', S.ending===true&&trayDice(q2)===0);
 })();
 
 // ---- 23. v45f: the Guildmaster's standing 'quality' persona (the designer's line) ----

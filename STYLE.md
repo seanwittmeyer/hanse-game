@@ -56,8 +56,8 @@ governed here.
 | **brew** | Pay a recipe; a tray die becomes the cask at its start value | — |
 | **age** | Turn an aging die up (stops at the quality: Ready); the Cellar prints **Age 3** | ~~mature (v)~~ |
 | **lift** | A building turns the boarding die past its quality (cap 6) | ~~boost~~ |
-| **commission** | Harbor: pay 1 G, place a display Ship on a slot without a Ship | ~~buy a ship~~, ~~charter~~ |
-| **build** | Place a building tile from the display on a slot; the builder scores +3★ | ~~raise~~, ~~place~~ (for buildings), ~~construct~~ |
+| **commission** | Harbor: pay the Ship's printed fee (Skute 2 G · Cog 1 G · Hulk free — v4.8), place it on a slot without a Ship | ~~buy a ship~~, ~~charter~~ |
+| **build** | Place a building tile from the display on a slot; the builder stands a tray die on it at face 1 (v4.9 — every use turns it up; pips score at game end) | ~~raise~~, ~~place~~ (for buildings), ~~construct~~ |
 | **seat** | Place a Specialist into an open seat | ~~hire~~ (allowed as the load-bonus label only) |
 | **claim** | Take a matching Contract on delivery; score its ★ at once | ~~fulfil~~ |
 | **resolve** | Work through your line: its 2 stations + 2 slots — any order, each once, all optional | ~~resolve the stops~~ |
@@ -77,7 +77,7 @@ resolve its slot*; a load-lift fires *when a cask loads here*.
 | Stations | Market · Brewhouse · Cellar · Harbor (Source → Brew → Age → Ship… spoken: the work order) |
 | Kontore | Bruges · London · Bergen · Novgorod |
 | Beers | Gruit · Hopped · Broyhan · Keut · Mumme · Bock (by quality, Broyhan before Keut) |
-| Scoring | Delivered dice · Scored in play · Majorities · the Flight · Guild ★ |
+| Scoring | Delivered dice · Scored in play · Majorities · Buildings (the standing dice) · the Flight · Guild ★ |
 | Ships | Skute · Cog · Hulk |
 | A turn | Move · Choose a line · Resolve the line |
 
@@ -108,8 +108,8 @@ resolve its slot*; a load-lift fires *when a cask loads here*.
    because "Order" collides with *load order*).
 10. **~~tally die~~ → quality die** (full name **cask quality die** at first mention — the
     die shows the cask's current quality).
-11. **The building verb is build** (~~raise~~, ~~place~~ banned); the builder scores +3★;
-    the load bonus reads **Build 1 building**.
+11. **The building verb is build** (~~raise~~, ~~place~~ banned); the builder stands a die on
+    the tile (v4.9); the load bonus reads **Build 1 building**.
 12. **★ is written as the glyph everywhere** — "points" and "stars" as text are banned on
     every surface, learn-page prose included. ~~Age points~~ → **Age N** (N steps, split
     freely).

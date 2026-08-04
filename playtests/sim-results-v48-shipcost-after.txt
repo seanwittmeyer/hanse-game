@@ -1,0 +1,33 @@
+=== hanse v4.1 sim — 300 games/count · tier journeyman ===
+
+== 2p · 300 ok / 0 err ==
+rounds avg 12.8 (min 7 max 25) · in 12–25 band 66.7%
+triggers: dice 99.3% · ceiling 0.7% · sailed avg 5.5
+winner total avg 52.2 · margin avg 14.6 · seat wins P1 47.7% P2 52.3%
+per-player: brews 7.5 · deliveries 6.5 · bank★ 9.1
+delivery split: bruges 42.4% · london 22.4% · bergen 25.3% · novgorod 9.9%
+commissions/game: 5.5 — skute 0.4 · cog 2.6 · hulk 2.6 · grain paid 2.6
+v4.5b usage/game: ladings 1.0 · rack 0.1 · assay 1.1▲/0.0▼ · toll 0.1 · hopex-pay 0.7 · abbey 0.1 · kiln/bonded lift 3.7 · bonded sail-away 0.1 · braumeister 0.4 seat / 0.9 ticks
+v4.6 usage/game: exchange 1.3 · capstan 0.0 · victual loads 0.2 · chandler 0.1 · supercargo 0.3 · coop-berth sails 0.2 · customs boards 0.0 · richberth short 0.1
+
+== 3p · 300 ok / 0 err ==
+rounds avg 12.1 (min 6 max 20) · in 12–25 band 57.0%
+triggers: dice 100.0% · sailed avg 8.2
+winner total avg 57.8 · margin avg 10.1 · seat wins P1 25.0% P2 34.3% P3 40.7%
+per-player: brews 7.1 · deliveries 6.4 · bank★ 9.1
+delivery split: bruges 37.8% · london 23.5% · bergen 27.4% · novgorod 11.3%
+commissions/game: 7.9 — skute 0.8 · cog 3.8 · hulk 3.3 · grain paid 4.2
+v4.5b usage/game: ladings 1.6 · rack 0.3 · assay 1.8▲/0.0▼ · toll 0.1 · hopex-pay 1.1 · abbey 0.1 · kiln/bonded lift 6.2 · bonded sail-away 0.2 · braumeister 0.6 seat / 1.4 ticks
+v4.6 usage/game: exchange 2.1 · capstan 0.1 · victual loads 0.3 · chandler 0.3 · supercargo 0.6 · coop-berth sails 0.3 · customs boards 0.0 · richberth short 0.1
+
+== 4p · 300 ok / 0 err ==
+rounds avg 11.6 (min 5 max 25) · in 12–25 band 46.3%
+triggers: dice 99.7% · ceiling 0.3% · sailed avg 10.8
+winner total avg 56.6 · margin avg 9.4 · seat wins P1 20.7% P2 26.0% P3 36.3% P4 17.0%
+per-player: brews 6.7 · deliveries 6.1 · bank★ 8.7
+delivery split: bruges 34.3% · london 25.2% · bergen 28.0% · novgorod 12.5%
+commissions/game: 10.5 — skute 1.4 · cog 5.0 · hulk 4.1 · grain paid 6.6
+v4.5b usage/game: ladings 1.9 · rack 0.4 · assay 2.5▲/0.0▼ · toll 0.1 · hopex-pay 1.5 · abbey 0.3 · kiln/bonded lift 9.5 · bonded sail-away 0.2 · braumeister 1.0 seat / 1.9 ticks
+v4.6 usage/game: exchange 3.3 · capstan 0.0 · victual loads 0.4 · chandler 0.2 · supercargo 0.5 · coop-berth sails 0.5 · customs boards 0.0 · richberth short 0.1
+
+GATE: 0 crashes / 0 deadlocks.
