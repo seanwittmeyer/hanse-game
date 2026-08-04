@@ -817,7 +817,7 @@ function aidFront(){
           +chip('dices','Board','\u2265 min')+arr
           +chip('map-pin','Park','pips = \u2605')
         +'</div>'
-        +'<div class="ln"><span class="em">No die in the tray</span>: no brew, no presence.</div>'
+        +'<div class="ln"><span class="em">No die in the tray</span>: no brew, no build, no presence.</div>'
         +'<h5>'+LU('sail')+'Load &amp; Sail</h5>'
         +'<div class="ln">\u00b7 <b>Load</b> (a Ship\u2019s slot stop): 1 Ready cask from YOUR vessels, die \u2265 the minimum</div>'
         +'<div class="ln">\u00b7 The load bonus fires <b>after</b> any sail it completes</div>'
@@ -881,7 +881,7 @@ function aidBack(){
         +row('package-plus','Load 1 more','another cask, any eligible Ship')
         +row('map-pin','Place 1 presence','a tray die parks at 1')
         +row('scroll-text','Gain 1 recipe','at its fee')
-        +row('search','Build 1 building','+3\u2605, at its fee')
+        +row('search','Build 1 building','at its fee, your die on it')
         +row('wrench','Gain 1 Specialist','at its fee')
         +row('flask-conical','Brew 1','a normal brew')
         +'<h5>'+LU('star')+'Scoring Marks</h5>'
