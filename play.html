@@ -56,7 +56,7 @@
   /* GRID */
   .agwrap{container-type:inline-size;display:flex;justify-content:center;padding:12px 8px;position:relative}   /* the board sizes from ITS COLUMN (cq units), never the viewport — no bleed under the sidebar */
   #boardcut{position:absolute;left:0;top:0;pointer-events:none;z-index:0}
-  .ag{position:relative;z-index:1}   /* v3.3: the protrusion room scales WITH the board — the whole envelope always fits, down to a phone */
+  .ag{position:relative;z-index:1;background:url('art/wharf-board.png') center/cover;border-radius:12px}   /* the dock-island backdrop — the ONE board change beside the cell art (designer) */
   .ag{display:grid;margin:0 auto;   /* v3.4c.2: NO fixed aspect — the top/bottom rows size to their content and the board's height breathes */
     --gap:clamp(10px,1.5vw,16px);gap:var(--gap);
     --cw:calc((min(96cqw,1100px) - 3*var(--gap))/5.6);
@@ -74,6 +74,10 @@
   /* stations are containers; their content sits in an absolute full-bleed .stn layer (like a slot's .ptile),
      so it scales in cqmin and never collapses under size containment */
   .cell{border-radius:12px;color:var(--parch);position:relative;box-shadow:0 3px 9px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14);overflow:hidden;container-type:size}
+  .cell .scn{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+  .cell .scngrad{position:absolute;inset:0;z-index:0;background:linear-gradient(to top,rgba(18,14,10,.72),rgba(18,14,10,.16) 55%,rgba(18,14,10,.34))}
+  .cell .stn{color:#f4ead0;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+  .cell .bigic img.ai{filter:drop-shadow(0 2px 4px rgba(0,0,0,.55))}
   .cell .stn{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:7cqmin}
   .cell .head{display:flex;flex-direction:column;align-items:flex-start;gap:3cqmin}
   .cell .bigic .ic,.cell .bigic svg{width:25cqmin;height:25cqmin;stroke-width:1.6}
@@ -378,6 +382,7 @@
   .cube{width:13px;height:13px;border-radius:3px;display:inline-block;border:1px solid rgba(0,0,0,.3)}
   /* ICONS */
   .ic{width:1.05em;height:1.05em;vertical-align:-0.18em;stroke-width:2}
+  img.ai{width:1.05em;height:1.05em;object-fit:contain;vertical-align:-0.18em}
   svg.lucide{width:1.05em;height:1.05em;vertical-align:-0.18em}
   .i-grain{color:#9c7414} .i-hops{color:#5d7d34}
   .chip{display:inline-flex;align-items:center;gap:3px;background:var(--parch);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:1px 8px;font-weight:bold;margin-right:5px}
@@ -428,22 +433,27 @@
     .modal .mcard{padding:18px;border-radius:0;max-width:100%;min-height:100%;max-height:100vh}
     .modal h2{font-size:1.4rem}
   }
-  /* player aid */
-  .asec{margin:0 0 11px;border-top:1px solid var(--line);padding-top:8px}
+  /* player aid — curated big-icon quick reference (designer 2026-08-04: icons ~2 lines tall) */
+  .asec{margin:0 0 12px;border-top:1px solid var(--line);padding-top:8px}
   .asec>b{font-variant:small-caps;color:var(--red);font-size:1.02rem}
-  .asec .note{font-size:.84rem;line-height:1.5;color:var(--ink);font-style:normal}
   .asec svg,.asec .ic{width:1.05em;height:1.05em;vertical-align:-.16em}
-  .atable{width:100%;border-collapse:collapse;font-size:.82rem;margin:5px 0}
-  .atable th{text-align:left;color:var(--ink2);font-weight:normal;border-bottom:1px solid var(--line);padding:2px 4px}
-  .atable td{padding:2px 4px;border-bottom:1px solid rgba(0,0,0,.06)}
-  .atags{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
-  .atag{font-size:.76rem;background:rgba(0,0,0,.05);border:1px solid var(--line);border-radius:7px;padding:1px 7px}
-  .ascore{margin:5px 0 0;padding-left:20px;font-size:.84rem;line-height:1.55}
-  .ascore li{margin-bottom:2px}
-  .akey{display:grid;grid-template-columns:1fr 1fr;gap:3px 12px;margin-top:6px;font-size:.8rem}
-  @media(max-width:520px){.akey{grid-template-columns:1fr}}
-  .akrow{display:flex;align-items:center;gap:6px}
-  .akrow svg,.akrow .ic{width:1.1em;height:1.1em;flex:0 0 auto}
+  .arow{display:flex;align-items:center;gap:11px;margin:7px 0 0}
+  .arow .ic,.arow svg{width:2.35rem;height:2.35rem;flex:0 0 auto;vertical-align:middle}
+  .arow .atx{font-size:.88rem;line-height:1.35;min-width:0}
+  .arow .atx .sub{display:block;font-size:.78rem;color:var(--ink2)}
+  .arr{color:var(--gold2);font-weight:bold;flex:0 0 auto}
+  .alife{display:flex;align-items:center;gap:4px;margin:9px 0 0;text-align:center}
+  .alife .stp{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;min-width:0;font-size:.72rem;line-height:1.25}
+  .alife .stp .ic,.alife .stp svg{width:2.35rem;height:2.35rem}
+  .astgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+  @media(max-width:520px){.astgrid{grid-template-columns:1fr}}
+  .atable{width:100%;border-collapse:collapse;font-size:.84rem;margin:6px 0 0}
+  .atable th{text-align:left;color:var(--ink2);font-weight:normal;border-bottom:1px solid var(--line);padding:2px 5px}
+  .atable td{padding:3px 5px;border-bottom:1px solid rgba(0,0,0,.06)}
+  .atable td .sub{display:block;font-size:.74rem;color:var(--ink2)}
+  .atable .kcell{width:2.6rem}
+  .asec .ic.kc{width:2.3rem;height:2.3rem;vertical-align:middle}
+  .subnote{font-size:.76rem;color:var(--ink2);margin-top:5px}
   .scoretable{width:100%;border-collapse:collapse;margin:10px 0}
   .scoretable th,.scoretable td{border:1px solid var(--line);padding:6px 9px;text-align:center}
   .scoretable th{background:var(--red);color:var(--parch)}
@@ -596,7 +606,10 @@ const ICONTIP={
   unlock:'The Flight — distinct beers BREWED, (n−1)² min 3 (v45h: all floor slots start open).',
   dices:'The cask quality die — aging, boarding, value, presence, the mason’s mark and the clock in one number. 13 per player (v4.9b); the first EMPTY tray (every die committed) sets the final round.',
 };
-const LU=(n,cls)=>{const i='<i data-lucide="'+n+'"'+(cls?' class="ic '+cls+'"':' class="ic"')+'></i>';
+const LU=(n,cls)=>{   // art-aware since the icon program (2026-08-03): the shared ICON_ART map wins, lucide is the fallback
+  const m=(typeof HC!=='undefined'&&HC&&HC.ICON_ART)?HC.ICON_ART[n]:null;
+  const i=m?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/icons/'+m+'.png" alt="">'
+          :'<i data-lucide="'+n+'"'+(cls?' class="ic '+cls+'"':' class="ic"')+'></i>';
   return ICONTIP[n]?'<span class="iw" data-tip="'+attr(ICONTIP[n])+'">'+i+'</span>':i;};
 const ICON={grain:'wheat',hops:'sprout',cask:'beer',presence:'map-pin',coin:'coins',
   Market:'store',Brewhouse:'flask-conical',Cellar:'hourglass',Harbor:'ship',
@@ -2660,48 +2673,38 @@ function btnOff(label,why){return '<button disabled style="opacity:.42;cursor:no
 // ---- PLAYER AID ----
 function toggleAid(){const el=document.getElementById('aid');if(el.classList.contains('hidden')){renderAid();el.classList.remove('hidden');if(window.lucide)lucide.createIcons();}else el.classList.add('hidden');}
 function renderAid(){
+  // rebuilt 2026-08-04 (designer, round 2): a CURATED quick reference — big icons, few words.
+  // The rulebook is one click away and the engine enforces legality; this card carries only the
+  // planning facts a seated player looks up (lifecycle · kontor table · fees · scoring).
   const ic=n=>LU(n);
-  const keys=[['wheat','<b>Grain</b> (a currency)'],['sprout','<b>Hops</b> (a currency)'],['beer','<b>Cask</b> / beer quality'],
-    ['dices','<b>Quality die</b> — aging · boarding · value · presence · clock, one number'],
-    ['landmark','<b>Kontor</b> (Bruges/London/Bergen/Novgorod)'],
-    ['building-2','<b>Building</b> (green — serves everyone; your die stands on it and grows with use)'],['wrench','<b>Specialist</b> (2 seats, earned free)'],
-    ['layers','<b>The Flight</b> (distinct beers brewed)'],['anchor','<b>Slot</b> (a building and/or a ship)'],['sailboat','<b>Ship</b> (Skute 1 · Cog 2 · Hulk 3 berths)'],['hourglass','<b>Age</b> — turn a die up'],
-    ['map-pin','<b>Presence</b> — your parked dice'],['store','<b>Market</b> station'],['flask-conical','<b>Brew</b> / vessel'],['scroll-text','<b>Recipe</b> (earned, never bought)'],
-    ['package-plus','<b>Load</b> — a Ready cask boards; its bonus fires'],['coins','<b>Source</b> (take goods)'],['scroll-text','<b>Contract</b> — claim on a matching delivery']];
-  const dRow=d=>{const D=DEST[d];
-    const ben=D.benefit==='building'?'a building (placed — a die stands on it)':D.benefit==='spec'?'a specialist (free — per cask, like every prize)':D.benefit==='recipe'?'a recipe (at its H = Q−2 fee)':'— (the +'+(D.vbonus||0)+'★ premium is the prize)';
-    return '<tr><td>'+ic('landmark')+' '+D.name+'</td><td>die '+D.gate+'+</td><td>the die'+(D.vbonus?' <b>+'+D.vbonus+'★</b>':'')+'</td><td>'+D.maj.join(' / ')+'</td><td>'+ben+'</td></tr>';};
-  const dests=KONTORE.map(dRow).join('');
-  const acts=CASK_ACT_POOL.map(k=>'<span class="atag">'+ic(CASK_ACT_ICON[k])+' <b style="text-transform:capitalize">'+k+'</b> — '+CASK_ACT[k]+'</span>').join('');
-  const ab=Object.keys(BUILDINGS).filter(k=>BUILDINGS[k].act).map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
-  const lb=Object.keys(BUILDINGS).filter(k=>!BUILDINGS[k].act).map(k=>'<span class="atag">'+ic(BUILDINGS[k].icon)+' <b>'+BUILDINGS[k].name+'</b> — '+BUILDINGS[k].desc+'</span>').join('');
+  const row=(icon,lead,sub)=>'<div class="arow">'+ic(icon)+'<div class="atx"><b>'+lead+'</b>'+(sub?'<span class="sub">'+sub+'</span>':'')+'</div></div>';
+  const stp=(icon,cap)=>'<div class="stp">'+ic(icon)+'<span>'+cap+'</span></div>';
+  const ARR='<span class="arr">→</span>';
+  const PRIZE={recipe:'recipe · at fee',building:'building · your die',spec:'Specialist · free'};
+  const dests=KONTORE.map(d=>{const D=DEST[d];
+    return '<tr><td class="kcell">'+LU('kontor-'+d,'kc')+'</td><td><b>'+D.name+'</b><span class="sub">min '+D.gate+'+</span></td><td>'+(PRIZE[D.benefit]||('+'+(D.vbonus||0)+'★ per die'))+'</td><td><b>'+D.maj.join('/')+'</b></td></tr>';}).join('');
   document.getElementById('aidcard').innerHTML=
-    '<h2>'+ic('scroll-text')+' Player Aid — v4.9 “Mason’s Mark”</h2>'
-    +'<div class="asec"><b>Your turn</b><div class="note"><b>Move</b> to an adjacent station and activate its <b>row</b> or <b>column</b>. Resolve the line <b>in any order, all optional</b>: the two stations (one printed action each) + each slot’s <b>building action</b> and/or a <b>load of the Ship</b> docked there. <b>The line is read LIVE</b> — a Ship or building landing on a line slot mid-turn opens that slot (each part fires once). Sharing a station costs nothing — move where the board is best.</div></div>'
-    +'<div class="asec"><b>The die IS the cask</b><div class="note">At <b>brew</b> a tray die is set to the printed <b>start value</b> (= quality − aging steps; Gruit starts Ready at 1). <b>Aging turns it up — it stops at the quality: READY.</b> Only buildings lift it past quality (Malt Kiln +1 as it boards, cap 6). <b>The Kontor’s minimum reads the die as it boards</b>; at delivery the die <b>parks at the Kontor showing its face</b> — pips = the ★ scored (never &lt;1), the body = presence, majorities and the clock. <b>No die in the tray → no brew, no placing presence.</b></div></div>'
-    +'<div class="asec"><b>The four stations — ONE action each</b><div class="note">'
-      +ic('store')+' <b>Market</b> — take 2 goods (any mix).<br>'
-      +ic('flask-conical')+' <b>Brewhouse</b> — brew (pay a recipe → an open vessel; the cask takes the face-up load bonus of its quality pile — steerable).<br>'
-      +ic('hourglass')+' <b>Cellar</b> — Age '+CELLAR_POOL+': turn your aging dice up '+CELLAR_POOL+' steps. <b>Dice never turn on their own</b> — the Cellar, Mission Quay, Age bonuses, the Cellarman and the Braumeister are the only hands on them.<br>'
-      +ic('anchor')+' <b>Harbor</b> — commission: pay the Ship’s printed fee — <b>Skute 2G · Cog 1G · Hulk free</b> ⚙ (v4.8: 2/1/0 for 1/2/3 berths — you pay for dispatch speed, not tonnage) — and place it on a shipless slot; then <b>one free load</b>: a Ready cask from your vessels may board the new Ship at once (a normal load; a Skute sails on it). <b>No ★ — the Ship and the tempo are the reward.</b></div></div>'
-    +'<div class="asec"><b>Loading & sailing</b><div class="note">Resolving a Ship’s slot loads <b>one READY cask from YOUR vessels</b> whose die meets the Kontor’s minimum (after the slot’s lifts) — the die rides the tile, and the cask’s printed <b>load bonus fires</b> (after any sail it completes). The Stevedore loads 2. A Ship <b>sails the moment it is full</b> — a Skute on its first load — and every cask aboard delivers in load order; prizes resolve <b>when gained, owner’s choice</b>. Casks are private until aboard: the race is for <b>berths</b>, and topping off a Ship sails everyone’s cargo on your clock.</div></div>'
-    +'<div class="asec"><b>Contracts — the Kontor bonuses</b><div class="note">Three '+ic('scroll-text')+' Contract tiles lie face-up on the Destinations board. A delivered cask that <b>matches</b> one (its Kontor + the die minimum, or the named beer) may <b>claim it</b>: the tile comes to you and its printed ★ score at once — <b>one Contract per delivered cask</b>. The row refills at the end of the turn. The open row is what prices a delivery — read it before you sail.</div></div>'
-    +'<div class="asec"><b>Buildings — one green family</b><div class="note">Every building serves <b>whoever activates it</b>. Building one (London’s prize, or a <i>Gain 1 building</i> bonus — always from the display) <b>stands one of your quality dice on the tile at its printed start face</b> ⚙ (busy free utilities 1 · paid workhorses 2 · ship-riders, ephemerals and rare powers 3 — the fee and the tick rate both price the deal): every use of that building — by any player — turns the die up (cap 6), and <b>its pips score at game end</b>. The die is committed (it counts toward your empty-tray clock; no tray die → no build) and returns — its pips scored at once — only if the building leaves play (overbuilt, or an ephemeral sails away). Overbuild: <b>one payment per placement</b> — a fee-paid gain covers the ground (no rent); the '+costStr(OVERBUILD_FEE)+' rent applies only when an otherwise-free placement overbuilds (the displaced tile is boxed). <b>The fee rides the item:</b> gaining a recipe / building / specialist via a wharf channel (Scrivener’s Hall · Hiring Post · the gain bonuses) costs <b>the item’s printed fee</b> (a chipless building is free). London’s and Bergen’s prizes waive it — <b>a RECIPE’s fee (H = Q−2) is paid everywhere, Bruges included</b> (v45e). Using a building never adds a fee of its own.</div>'
-      +'<div class="atags" style="margin-top:5px">'+ab+'</div><div class="atags" style="margin-top:4px">'+lb+'</div></div>'
-    +'<div class="asec"><b>Destinations</b> <span class="note">minimum (the die, as boarded) · value = the die · majority 1/2/3 · prize</span>'
-      +'<table class="atable"><tr><th>Kontor</th><th>Minimum</th><th>Value</th><th>Majority</th><th>Prize</th></tr>'+dests+'</table>'
-      +'<div class="note"><b>2-player skips 2nd place.</b> Placing presence (the '+ic('map-pin')+' verb) parks a tray die at face 1 — 1★, presence and clock — only where you’ve delivered.</div></div>'
-    +'<div class="asec"><b>Load bonuses</b> <span class="note">(drawn at brew from the face-up pile tops; Gruit is always <i>Gain 2 goods</i>)</span><div class="atags">'+acts+'</div></div>'
-    +'<div class="asec"><b>Scoring</b><ol class="ascore">'
-      +'<li><b>Scored as you play:</b> deliveries (the parked die, 1–6★) · claimed <b>Contracts</b> (printed ★) · Tollhouse stamps (+3★, the die drops 1) · placed presence (1★) · a departing building’s die (pips at once). Commissions score nothing; builds pay at the END.</li>'
-      +'<li><b>Majorities (end-game)</b> — parked dice at each kontor (Bruges 4/2/0 · London 5/3/1 · Bergen 9/5/2 · Novgorod 8/5/2).</li>'
-      +'<li><b>The Flight (end-game)</b> '+ic('layers')+' — distinct beers <b>BREWED</b>: 3 → '+FLIGHT_PTS[3]+' · 4 → '+FLIGHT_PTS[4]+' · 5 → '+FLIGHT_PTS[5]+' (min '+FLIGHT_MIN+').</li>'
-      +'<li><b>The Mason’s Marks (end-game)</b> '+ic('building-2')+' — each die standing on one of your buildings scores its <b>pips</b> (1–6★).</li>'
-      +'<li><b>Guild ★ (end-game)</b> '+ic('wrench')+' — a seated <b>Chronicler</b> (+1★/claimed Contract, max +5) or <b>Alderman</b> (+2★ per Kontor with 3+ parked dice) scores its printed line.</li>'
-      +'<li><b>The clock</b> — the quality dice alone: the first player whose <b>tray EMPTIES</b> (every one of its '+PRES_POOL+' dice committed — parked, riding, or standing on a building) sets the final round. Dice never come back. Round '+MAX_ROUND+' is the safety backstop.</li>'
-      +'</ol></div>'
-    +'<div class="asec"><b>Icon key</b><div class="akey">'+keys.map(k=>'<div class="akrow">'+ic(k[0])+'<span>'+k[1]+'</span></div>').join('')+'</div></div>'
-    +'<div style="text-align:center;margin-top:10px"><button class="primary" onclick="toggleAid()">Close</button></div>';
+    '<h2>'+ic('beer')+' Player Aid</h2>'
+    +'<div class="asec"><b>Your turn</b>'
+      +row('anchor','Move → pick the row or the column → resolve its stops','any order · all optional')+'</div>'
+    +'<div class="asec"><b>The cask</b><div class="alife">'
+      +stp('flask-conical','Brew')+ARR+stp('hourglass','Age +1')+ARR+stp('check','Ready')+ARR+stp('sail','Board ≥ min')+ARR+stp('map-pin','Park = ★')+'</div></div>'
+    +'<div class="asec"><b>Load &amp; sail</b>'
+      +row('package-plus','Load 1 Ready cask from your vessels','die ≥ the kontor’s min · its printed bonus fires')
+      +row('sailboat','Full → it sails at once','deliver in load order · prize per cask · claim a Contract')+'</div>'
+    +'<div class="asec"><b>The Kontore</b>'
+      +'<table class="atable"><tr><th></th><th>Kontor</th><th>Prize per cask</th><th>Majority</th></tr>'+dests+'</table>'
+      +'<div class="subnote">majorities by parked dice · 2-player: no 2nd place</div></div>'
+    +'<div class="asec"><b>Stations &amp; buildings</b><div class="astgrid">'
+      +row('store','Market','take 2 goods')
+      +row('flask-conical','Brewhouse','brew · the pile top')
+      +row('age-3','Cellar','Age '+CELLAR_POOL)
+      +row('ship','Harbor','a Ship + 1 free load<br>Skute 2G · Cog 1G · Hulk free')+'</div>'
+      +row('hammer','A build stands your die at its printed face','each use turns it +1 · its pips score at the end')+'</div>'
+    +'<div class="asec"><b>End &amp; score</b>'
+      +row('dices','The first EMPTY tray ends it','your '+PRES_POOL+' dice · round '+MAX_ROUND+' backstop')
+      +row('star','Parked pips + the bank + majorities','+ building dice + the Flight: 3/4/5 beers → '+FLIGHT_PTS[3]+'/'+FLIGHT_PTS[4]+'/'+FLIGHT_PTS[5]+'★')+'</div>'
+    +'<div style="text-align:center;margin-top:12px"><button class="primary" onclick="toggleAid()">Close</button></div>';
 }
 
 function renderBar(){
@@ -2890,9 +2893,9 @@ function renderGrid(){
       const bH='<div class="bhalf">'+(b?pBldgFace(b,false,dirW):'<span class="halfemp" data-tip="'+attr('The building seat — a building built here authors this slot (the builder’s die stands on it, growing with use; it serves everyone)')+'"><i data-lucide="building-2" class="ic"></i></span>')+'</div>';
       const oDep=t?((HC?HC.SHIP_H(t.ship):2)+0.08):1.0;
       const oH='<div class="ohalf'+(t&&!b?' full':'')+'"'+(vert?' style="aspect-ratio:2.5/'+oDep+'"':'')+'>'+(t?pShipFace(t,dirW)
-          :'<span class="halfemp" data-tip="'+attr('The Ship seat — commission a Ship here (the Harbor action)')+'"><i data-lucide="sailboat" class="ic"></i></span>')+'</div>';
+          :'<span class="halfemp" data-tip="'+attr('The Ship seat — commission a Ship here (the Harbor action)')+'">'+LU('sailboat')+'</span>')+'</div>';
       inner=vert?(TKDIR[s.id]==='tk-up'?oH+bH:bH+oH):(bH+oH);}
-    else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Open slot — commission a Ship here, or build here to author the line')+'"><i data-lucide="sailboat" class="ic"></i></span></span>';
+    else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Open slot — commission a Ship here, or build here to author the line')+'">'+LU('sailboat')+'</span></span>';
     let click=bldgPlacing?'placeBldgOn':(commPlacing?'commPlace':null);
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':(boardClick?'onclick="'+boardClick+'"':''))+'>'+inner+'</div>';
   });
@@ -2910,9 +2913,11 @@ function renderGrid(){
         else if(LINES[lc.col].cells.includes(c)){cls+=' lanego';cellClick="chooseLine('col')";}}
     }
     const grps=STATION_ACTS[act]||[];
-    const ico=n=>'<span class="iw" data-tip="'+attr(STATION_ICON_TIP[n]||'')+'"><i data-lucide="'+n+'" class="ic"></i></span>';
+    const ico=n=>'<span class="iw" data-tip="'+attr(STATION_ICON_TIP[n]||'')+'">'+LU(n)+'</span>';
     const yields=grps.map(grp=>grp.map(ico).join('')).join('');
+    const SCN={Market:'market',Brewhouse:'brewhouse',Cellar:'cellar',Harbor:'harbor'}[act];
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
+      +'<img class="scn" src="art/scene-'+SCN+'.png" alt=""><div class="scngrad"></div>'
       +'<div class="stn">'
       +'<div class="head"><span class="bigic">'+LU(ICON[act])+'</span><div><div class="nm">'+act+'</div></div></div>'
       +'<div class="yield">'+yields+'</div>'
