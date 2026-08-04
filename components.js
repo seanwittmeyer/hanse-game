@@ -69,7 +69,7 @@ const CASKS=[
 // v4.0 — NEUTRAL, destination-bound hulls (the destination is PRINTED on the tile). The 24-tile deck,
 // KONTORE ONLY, now in THREE sizes: Skute 1 · Cog 2 · Hulk 3 berths — a Skute sails on its first load
 // (the deadlock relief valve is a COMPONENT now; the charter/contract subsystem is retired).
-const HULL={skute:{cap:1},cog:{cap:2},hulk:{cap:3}};
+const HULL={skute:{cap:1,fee:2},cog:{cap:2,fee:1},hulk:{cap:3,fee:0}};   // v4.8 "Harbor Rates" ⚙: the commission fee is PER HULL — 2/1/0 G for 1/2/3 berths (dispatch speed is dear, tonnage free); fee 0 prints NO chip (chipless = free, the buildings' grammar)
 const SHIP_DISPLAY=4;   // face-up ship market ⚙ (v4.0: 4 — refills from the shuffled ship deck)
 const SHIP_DEST={Bruges:{kc:'#274b5c',req:1},London:{kc:'#b8860b',req:2},Bergen:{kc:'#4a6b3a',req:2},Novgorod:{kc:'#7c2128',req:4}};
 const SHIP_DECK=[   // ⚙ 24 hulls — 6 Skute / 10 Cog / 8 Hulk, 6 per port
@@ -187,7 +187,7 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'End: +2★ per kontor with 3+ parked dice', g:2, c:'#5b3a8e', n:1},
   {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:'Place presence: the die parks at face 2 (2★)', g:1, c:'#5b3a8e', n:1},   // v4.7: the 2-ports gate is CUT
   {ic:'arrow-right-left', nm:'Chandler', art:'a hand balance — grain on one pan, hop cones on the other', act:'Once per turn: swap <span class="g">1'+LU('wheat','g ic')+'</span> ↔ <span class="h">1'+LU('sprout','h ic')+'</span>', g:1, c:'#5b3a8e', n:1},
-  {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:'Your commissions are FREE (the <span class="g">1'+LU('wheat','g ic')+'</span> is waived)', h:1, c:'#5b3a8e', n:1},
+  {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:'Your commissions are FREE (the printed <span class="g">'+LU('wheat','g ic')+'</span> fee is waived)', h:1, c:'#5b3a8e', n:1},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
@@ -328,9 +328,10 @@ function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm
   // DASHED SEAT (the same "a component parks on this footprint" grammar as the die seat), its
   // number a small corner tag; the TOP berth is the trigger — its seat is marked with the sail
   // (cover it = the ship goes; no sentence needed) — and chevrons rise toward it.
+  const fee=HULL[hull].fee;   // v4.8: the per-hull commission fee prints on the trigger berth; a free Hulk prints no chip
   let rows='<div class="st-trig">'
     +'<div class="st-toprow"><span class="st-k">'+LU('sailboat')+destNm+'</span>'
-      +'<span class="st-meta"><span class="st-gate" title="boards when the cask&#39;s DIE (as boarded) shows this or more">'+LU('dices')+d.req+'+</span><span class="st-cost">'+cost(1,0)+'</span></span></div>'
+      +'<span class="st-meta"><span class="st-gate" title="boards when the cask&#39;s DIE (as boarded) shows this or more">'+LU('dices')+d.req+'+</span>'+(fee?'<span class="st-cost">'+cost(fee,0)+'</span>':'')+'</span></div>'
     +'<div class="st-seat st-tseat" title="the trigger berth — the last cask loads here and the ship sails at once"><span class="st-num">'+cap+'</span><span class="st-go">'+LU(QI)+'<b class="amp">&amp;</b>'+LU('sail')+'</span></div>'
   +'</div>';
   for(let i=cap-1;i>=1;i--)rows+='<div class="st-berth"><div class="st-seat"><span class="st-num">'+i+'</span><span class="st-ghost">'+LU(QI)+'</span></div></div>';

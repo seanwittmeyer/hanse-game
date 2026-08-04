@@ -30,7 +30,8 @@ if(__JIT>0){['journeyman','trader'].forEach(function(t){AI_TIERS[t].noise=__JIT;
 // not policy inference. Reset per game; averaged in the summary.
 var __U=null;
 function __uReset(){__U={ladings:0,rack:0,assayUp:0,assayDown:0,toll:0,hopex:0,abbey:0,kilnLift:0,bondedSail:0,bmSeat:0,bmTick:0,mq:0,
-  exch:0,cap:0,victual:0,chandler:0,scargo:0,coopSail:0,customsBoard:0,rbShort:0};}   // v4.6 + the ship-shapers, instrumented at last (the AGRICOLA-STUDY B4 item)
+  exch:0,cap:0,victual:0,chandler:0,scargo:0,coopSail:0,customsBoard:0,rbShort:0,
+  comm_skute:0,comm_cog:0,comm_hulk:0,commG:0};}   // v4.6 + the ship-shapers, instrumented at last (the AGRICOLA-STUDY B4 item) · v4.8: commissions by hull + grain paid (the 2/1/0 A/B)
 var __uOn=function(){return __U&&!aiSimulating;};   // never count MC-playout echoes
 var __claimLading=claimLading;claimLading=function(lp,idx){if(__uOn())__U.ladings++;return __claimLading(lp,idx);};
 var __rackPick=rackPick;rackPick=function(vi){var had=!!UI.rack;var r=__rackPick(vi);if(__uOn()&&had&&!UI.rack)__U.rack++;return r;};
@@ -62,6 +63,12 @@ var __grantUpgrade=grantUpgrade;grantUpgrade=function(p,k){var had=hasUpgrade(p,
   if(__uOn()&&k==='braumeister'&&!had&&hasUpgrade(p,k))__U.bmSeat++;return r;};
 var __bmTick=braumeisterTick;braumeisterTick=function(p){var d0=vesselDice(p);var r=__bmTick(p);
   if(__uOn()&&vesselDice(p)>d0)__U.bmTick++;return r;};
+var __commPlace=commPlace;commPlace=function(slot){var d=UI.comm;var sn=(d&&d.idx!=null)?(S.shipDisplay||[])[d.idx]:null;
+  var p=cur();var g0=p?p.grain:0;var had=!!S.slots[slot];
+  var r=__commPlace(slot);
+  if(__uOn()&&sn&&!had&&S.slots[slot]&&S.slots[slot].type==='ship'){
+    __U['comm_'+sn.ship]=(__U['comm_'+sn.ship]||0)+1;__U.commG+=(g0-(p?p.grain:0));}   // grain delta inside commPlace = the fee actually paid (Shipwright waivers read 0)
+  return r;};
 function __runGame(n){
   __uReset();
   EXPANSION=false;JOPEN=false;OVERLAND=false;
@@ -156,8 +163,10 @@ let anyErr=0;
   console.log(`delivery split: ${Object.keys(dd).map(k=>k+' '+pct(dd[k],dsum)).join(' · ')}`);
   { // v45c: the new-systems utilization dashboard (per-game averages)
     const uk=['ladings','rack','assayUp','assayDown','toll','hopex','abbey','kilnLift','bondedSail','bmSeat','bmTick',
-      'exch','cap','victual','chandler','scargo','coopSail','customsBoard','rbShort'];
+      'exch','cap','victual','chandler','scargo','coopSail','customsBoard','rbShort',
+      'comm_skute','comm_cog','comm_hulk','commG'];
     const us={};uk.forEach(k=>us[k]=avg(ok.map(r=>(r.use&&r.use[k])||0)));
+    console.log(`commissions/game: ${fmt(us.comm_skute+us.comm_cog+us.comm_hulk)} — skute ${fmt(us.comm_skute)} · cog ${fmt(us.comm_cog)} · hulk ${fmt(us.comm_hulk)} · grain paid ${fmt(us.commG)}`);
     console.log(`v4.5b usage/game: ladings ${fmt(us.ladings)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)}▲/${fmt(us.assayDown)}▼ · toll ${fmt(us.toll)} · hopex-pay ${fmt(us.hopex)} · abbey ${fmt(us.abbey)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);
     console.log(`v4.6 usage/game: exchange ${fmt(us.exch)} · capstan ${fmt(us.cap)} · victual loads ${fmt(us.victual)} · chandler ${fmt(us.chandler)} · supercargo ${fmt(us.scargo)} · coop-berth sails ${fmt(us.coopSail)} · customs boards ${fmt(us.customsBoard)} · richberth short ${fmt(us.rbShort)}`);
   }

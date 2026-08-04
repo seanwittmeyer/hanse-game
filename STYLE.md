@@ -56,7 +56,7 @@ governed here.
 | **brew** | Pay a recipe; a tray die becomes the cask at its start value | — |
 | **age** | Turn an aging die up (stops at the quality: Ready); the Cellar prints **Age 3** | ~~mature (v)~~ |
 | **lift** | A building turns the boarding die past its quality (cap 6) | ~~boost~~ |
-| **commission** | Harbor: pay 1 G, place a display Ship on a slot without a Ship | ~~buy a ship~~, ~~charter~~ |
+| **commission** | Harbor: pay the Ship's printed fee (Skute 2 G · Cog 1 G · Hulk free — v4.8), place it on a slot without a Ship | ~~buy a ship~~, ~~charter~~ |
 | **build** | Place a building tile from the display on a slot; the builder scores +3★ | ~~raise~~, ~~place~~ (for buildings), ~~construct~~ |
 | **seat** | Place a Specialist into an open seat | ~~hire~~ (allowed as the load-bonus label only) |
 | **claim** | Take a matching Contract on delivery; score its ★ at once | ~~fulfil~~ |

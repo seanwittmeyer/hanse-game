@@ -149,20 +149,42 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   p.ai=null;
 })();
 
-// ---- 10. COMMISSION: 1G · place on a shipless slot · banks NOTHING (v4.5b de-mint) · display refills to 4 ----
+// ---- 10. COMMISSION (v4.8 "Harbor Rates"): the fee is PER HULL — Skute 2G · Cog 1G · Hulk FREE ·
+// place on a shipless slot · banks NOTHING (v4.5b de-mint) · display refills to 4 ----
 (function(){var p=fresh();stops();
   p.grain=3;var b0=p.bank;
-  S.shipDisplay=[{ship:'hulk',dest:'bergen'},{ship:'skute',dest:'bruges'}];S.shipDeck=[{ship:'cog',dest:'london'},{ship:'cog',dest:'bruges'},{ship:'cog',dest:'bergen'}];
+  S.shipDisplay=[{ship:'hulk',dest:'bergen'},{ship:'skute',dest:'bruges'},{ship:'cog',dest:'london'}];S.shipDeck=[{ship:'cog',dest:'bruges'},{ship:'cog',dest:'bergen'}];
   UI.comm={returnTo:'stops',idx:null};UI.sub='commission';
   commPick(0);commPlace('s6');
-  ok('commission pays 1G', p.grain===2);
+  ok('a HULK commissions FREE (v4.8 — 0G for 3 berths)', p.grain===3);
   ok('the hull lands on the slot', S.slots.s6&&S.slots.s6.ship==='hulk'&&S.slots.s6.dest==='bergen');
   ok('the commission banks NOTHING (v4.5b — the hull + the free load are the reward)', p.bank===b0);
-  ok('the display refills toward 4', S.shipDisplay.length===4);
-  ship('s7','cog','bruges');
+  UI.comm={returnTo:'stops',idx:null};UI.sub='commission';
+  commPick(0);commPlace('s7');   // display head is now the skute
+  ok('a SKUTE commissions at 2G (v4.8 — the instant charter is dear)', p.grain===1&&S.slots.s7&&S.slots.s7.ship==='skute');
+  UI.comm={returnTo:'stops',idx:null};UI.sub='commission';
+  commPick(0);commPlace('s8');   // display head is now the cog
+  ok('a COG commissions at 1G (v4.8)', p.grain===0&&S.slots.s8&&S.slots.s8.ship==='cog');
+  ok('the display refills toward 4', S.shipDisplay.length>=2);
+  ship('s4','cog','bruges');
   UI.comm={returnTo:'stops',idx:null};UI.sub='commission';commPick(0);
-  var before=S.slots.s7;commPlace('s7');
-  ok('one ship per slot — an occupied slot refuses', S.slots.s7===before&&S.slots.s7.ship==='cog');
+  var before=S.slots.s4;commPlace('s4');
+  ok('one ship per slot — an occupied slot refuses', S.slots.s4===before&&S.slots.s4.ship==='cog');
+})();
+(function(){var p=fresh();stops();
+  p.grain=1;p.hops=0;
+  S.shipDisplay=[{ship:'skute',dest:'bruges'},{ship:'hulk',dest:'bergen'}];S.shipDeck=[];
+  UI.comm={returnTo:'stops',idx:null};UI.sub='commission';
+  commPick(0);
+  ok('an UNAFFORDABLE hull can’t be picked (skute 2G > 1G held)', UI.comm.idx==null&&UI.stage!=='place');
+  commPick(1);commPlace('s6');
+  ok('…but the free Hulk beside it commissions fine', S.slots.s6&&S.slots.s6.ship==='hulk'&&p.grain===1);
+  var q=fresh();stops();
+  q.grain=0;q.hops=0;
+  S.shipDisplay=[{ship:'hulk',dest:'bruges'}];S.shipDeck=[];
+  ok('the Harbor stays OPEN at 0 goods while a free Hulk shows (commAffordable)', commAffordable(q));
+  S.shipDisplay=[{ship:'skute',dest:'bruges'},{ship:'cog',dest:'london'}];
+  ok('…and reads CLOSED at 0 goods when only priced hulls show', !commAffordable(q));
 })();
 
 // ---- 10b. v4.4 "Maiden Load": the commission includes ONE free load from YOUR vessels ----
@@ -567,9 +589,9 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 })();
 (function(){var p=fresh();stops();
   p.upgrades=['shipwright'];p.sslots=2;p.grain=0;
-  S.shipDisplay=[{ship:'cog',dest:'bruges'}];S.shipDeck=[];
+  S.shipDisplay=[{ship:'skute',dest:'bruges'}];S.shipDeck=[];
   UI.comm={returnTo:'stops',idx:null};UI.sub='commission';commPick(0);commPlace('s6');
-  ok('the Shipwright commissions with 0 goods (the 1G waived)', S.slots.s6&&S.slots.s6.ship==='cog'&&p.grain===0);
+  ok('the Shipwright commissions a SKUTE with 0 goods (the printed 2G waived — v4.8)', S.slots.s6&&S.slots.s6.ship==='skute'&&p.grain===0);
 })();
 (function(){var p=fresh();stops();
   ok('the Town Crier is UNGATED (v4.7 — the 2-ports gate is cut)', specGate(p,'towncrier'));

@@ -1,8 +1,19 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.7 “Every Cask”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.8 “Harbor Rates”)
 
 *(Language: the 2026-08-03 **Term Registry pass** governs all printed copy — player ·
 Kontor · Contract · cask quality die · build · Age N · aging · resolve the line · the ★
 glyph; see `STYLE.md` §4. The version letters below keep their period wording.)*
+
+> **v4.8 “Harbor Rates” (designer-ruled 2026-08-04, mid-playtest).** **The commission fee
+> is PER HULL — Skute 2 `G` · Cog 1 `G` · Hulk FREE** ⚙ (2/1/0 for 1/2/3 berths; was a flat
+> 1 `G`). The price is **dispatch speed, not tonnage**: the Skute sails on its first load —
+> the instant charter turns dear — while the free Hulk demands three casks (the berth race)
+> before anything moves. The fee **prints on the Ship’s trigger berth** (chipless = free —
+> the buildings’ grammar); the **Shipwright waives whatever is printed** (2 `G` on a Skute,
+> nothing on a Hulk). A/B at n=300/count: commissions thin ~15–20% (the hull flood eases),
+> voyages and pace hold, ~half the table’s commission grain returns to brews and Kiln fees;
+> watch ⚙: the 4p builder lane warms in a 100/lane PATHWAYS spot-read (free Hulks feed the
+> line-author) — full-oracle re-read before the next tune.
 
 > **v4.7a “Six Piles” (2026-08-03 — off the rulebook editorial review).** The cask supply
 > is **SIX face-up piles, one per beer** — a brew takes the **top tile of that beer’s
@@ -92,7 +103,7 @@ glyph; see `STYLE.md` §4. The version letters below keep their period wording.)
 > tiles (a kontor + a die minimum or a named beer → printed **2–5★**); delivering a
 > qualifying cask **claims one** (one per cask; the ★ bank at once); the row refills at the
 > **end of the turn**. The row makes every kontor’s delivery value a **variable economy** —
-> read it before you sail. The live build is `play.html` (**KEY `hanse-v47`**; beneath v4.7, the v4.6d/c/b letters and v4.6 sit the 2026-08-01 letters, designer-ruled: **v45h** — the floor covers are OFF for now: all 3 vessels + both seats open from the start (the Flight keeps its ladder, loses its unlock duty) · **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
+> read it before you sail. The live build is `play.html` (**KEY `hanse-v48`**; beneath v4.7, the v4.6d/c/b letters and v4.6 sit the 2026-08-01 letters, designer-ruled: **v45h** — the floor covers are OFF for now: all 3 vessels + both seats open from the start (the Flight keeps its ladder, loses its unlock duty) · **v45g** — **aging is required for every Q3+ beer**: an export never STARTS Ready (start caps at Q−1; the Cellarman-Broyhan ready-at-brew leak closed) · **v45f** — the Guildmaster plays the designer's quality line (`AUTOMA.md`) · **v45e the RECIPE TARIFF** — the recipe fee is the formula **H = Q−2** (Broyhan/Keut 1 `H` · Mumme 2 `H` · Bock 3 `H`), paid at **every** channel, the Bruges prize included (the prize is the pick, never the waiver; the Bock rush taxed) · v45c Assay **±1** · **v45d the POWER LADDER**: the Racking Hall swaps ANY two vessel dice **uncapped** (3 `G`), fees print in **grain only**, the Hop Exchange becomes a pay-hops vessel-lift action, the Tollhouse pays **+3★**, and the **Abbey Cellar** joins — pay 3 `H`, ALL maturing casks age to Ready).
 
 > **v4.5 “Empty Tray” (designer-ruled 2026-07-31 — off human playtest #24).** Two changes.
 > **(1) The end trigger is the EMPTY TRAY:** the first house to **commit its last tally die**
@@ -285,9 +296,10 @@ at that Kontor.)*
   **First brew of a beer flips its recipe card** — the Flight record (§8).
 - **D · Cellar — AGE:** **AGE 3** ⚙ — turn your aging dice up three steps, split freely —
   with auto-aging cut (v4.5b) this is the deepest well.
-- **C · Harbor — COMMISSION:** pay **1 `G`** ⚙, place any one of the **4 display Ships** on a
-  slot **without a ship** (a building is fine) — Skute 1 · Cog 2 · Hulk 3 berths. The display
-  refills. Then **one free load** (v4.4): you may at once load **1 Ready cask from your
+- **C · Harbor — COMMISSION:** pay the Ship’s **printed fee** — **Skute 2 `G` · Cog 1 `G` ·
+  Hulk free** ⚙ (v4.8: 2/1/0 for 1/2/3 berths — dispatch speed is dear, tonnage is free) —
+  and place it on a slot **without a Ship** (a building is fine); the display of 4 refills.
+  Then **one free load** (v4.4): you may at once load **1 Ready cask from your
   vessels** onto the new Ship — a normal load (§6; its bonus fires; a Skute sails on it).
   Optional. **A commission scores NO ★ (v4.5b)** — the Ship and the instant load are the whole
   reward; commissions pay in tempo, not points.
@@ -348,9 +360,9 @@ and read LIVE (v4.6c): a Ship or building landing on a line slot mid-turn opens 
 
 ## 6. Ships & loading (the cash-out)
 
-- **Ships** are neutral, Ships each bound for a printed Kontor, off a shuffled deck; a face-up **display of 4**
-  ⚙. **Skute 1 · Cog 2 · Hulk 3** berths ⚙ (deck blend **6/10/8** ⚙ — 24 Ships, 6 per Kontor). **Commission** (§4C) places
-  one on any shipless slot and scores its capacity.
+- **Ships** are neutral, each bound for a printed Kontor, off a shuffled deck; a face-up **display of 4**
+  ⚙. **Skute 1 · Cog 2 · Hulk 3** berths ⚙ (deck blend **6/10/8** ⚙ — 24 Ships, 6 per Kontor). **Commission** (§4C) pays
+  the Ship’s **printed fee (2/1/0 `G` by size — v4.8)** and places it on any shipless slot; it scores nothing (v4.5b).
 - **LOAD (resolve a slot with a docked Ship):** take **one READY cask from YOUR vessels** whose **die meets the
   Ship’s minimum** (after this slot’s lifts — Kiln/Bonded Store; Customs lowers the
   minimum; the Tollhouse may stamp the die down for **+3★**, v45d), seat it in the lowest berth (the die
@@ -480,7 +492,8 @@ the turn (v4.4c; ships and buildings refill at once):**
   placing presence remains delivery-bound).
 - **Chandler** (fee `1G`) — **once per turn** you may swap **1 `G` ↔ 1 `H`** with the stores
   (a free action; the Grain Factor / Hop Gardener drips apply — that is the combo).
-- **Shipwright** (fee `1H`) — **your commissions are free** (the Harbor’s 1 `G` is waived).
+- **Shipwright** (fee `1H`) — **your commissions are free** (the Ship’s printed `G` fee is
+  waived — 2 `G` on a Skute, nothing on a Hulk; v4.8).
 
 ---
 
@@ -587,11 +600,18 @@ the engine; the modules return after the core settles.
    metric) → designer-ruled: **every cask pays its prize, all four Kontore, one grammar**).
    The residual watch: the consolation faucet (2 goods per unresolvable prize) at a human
    table, and Bergen's share as humans stack same-player casks.
-6. **The commission de-mint (v4.5b)** — with the ★ cut, is 1 `G` + the free load pull enough
-   to keep Ships flowing at every count? (The #24 failure was the opposite — a Ship flood off
-   free ★.) Watch commissions/game; the dial is the cost (1 `G`) before any ★ returns.
+6. **The commission fee schedule (v4.8)** — **Skute 2 `G` · Cog 1 `G` · Hulk free** ⚙
+   (2/1/0 by berth). The A/B (n=300/count): commissions thin ~15–20%, voyages/pace hold,
+   ~half the commission grain returns to the economy — the hull flood eases without choking
+   throughput. Watches: the **Skute at 2 `G` as the HUMAN panic valve** (greedy bots barely
+   used it; a goods-poor clogged player now pays a full Source action for relief — the free
+   Hulk keeps the Harbor open, but needs help filling) · **free Hulk + maiden load = a 0-cost
+   vessel outlet** (self-limiting — the die aboard commits toward YOUR clock — but a table
+   read is wanted) · the **4p builder-lane warm read** (43% at 100/lane; full oracle before
+   any dial). The dials: the Skute/Cog prices, never the Hulk’s berth count.
 7. **The Skute rate** — deck blend 6/10/8. With the sailed clock cut the Skute is pure
-   deadlock relief; too few = the strand risk returns (too many is now merely inefficient).
+   deadlock relief — and at 2 `G` (v4.8) it is PRICED relief; too few = the strand risk
+   returns (too many is now merely inefficient). Watch with Open #6.
 8. **2p texture** — the thinned interaction set (berths, majorities, the draft): does it
    hold at two?
 9. **The fee schedule** ⚙ (v4.7 pass): recipes the `H` = Q−2 formula (v45e) · specialists
