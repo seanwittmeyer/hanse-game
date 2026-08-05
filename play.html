@@ -49,6 +49,12 @@
   main{margin:0 auto;padding:14px;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;align-items:start}
   main>.maincol{min-width:0}
   @media(max-width:1100px){main{grid-template-columns:1fr}}
+  /* wide monitors: the sidebar splits in two — the supply (Market) beside the wharf at full height, the rest outboard; the extra column comes out of the main column's flex width */
+  @media(min-width:1600px){
+    main{grid-template-columns:minmax(0,1fr) auto}
+    .sidewrap{display:grid;grid-template-columns:330px 330px;gap:16px;align-items:start}
+    .sidewrap .shop{max-height:none}
+  }
   .panel{background:var(--parch2);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:14px}
   .panel h3{margin:0 0 8px;font-variant:small-caps;color:var(--red);font-size:1.1rem;border-bottom:1px solid var(--line);padding-bottom:4px}
   .copybtn{float:right;font-family:inherit;font-variant:normal;font-size:.66rem;cursor:pointer;background:var(--ink);color:var(--parch);border:none;border-radius:5px;padding:2px 8px;letter-spacing:.3px}
@@ -564,11 +570,15 @@
     <div id="tableaus"></div>
   </div>
   </div>
-  <div class="sidecol">
+  <div class="sidewrap">
+  <div class="supplycol">
     <div class="panel"><h3>Market</h3><div class="shop" id="shop"></div></div>
+  </div>
+  <div class="sidecol">
     <div class="panel"><h3>The Clock <span class="note">(the dice are the runway)</span></h3><div id="voyage"></div></div>
     <div class="panel"><h3>Log <button class="copybtn" onclick="copyDiag(this)" data-tip="Copy the game log + full diagnostic state (turn, UI, AI runtime, board, raw JSON) to the clipboard.">⧉ Copy log + diagnostics</button></h3><div id="log"></div></div>
     <div class="panel" id="aispeedpanel" style="display:none"><h3>AI Speed <span class="note">(applies to every AI seat)</span></h3><div id="aispeed" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div></div>
+  </div>
   </div>
   <p class="note" style="text-align:center"><b>v4.9d “Loaded Flight” — prototype.</b> <b>A build scores no ★ now</b> — the builder stands a quality die on the tile at its <b>printed start face</b> (busy utilities 1 · paid workhorses 2 · ship-riders and rare powers 3 ⚙); every use by any player turns it up (cap 6) and <b>the pips score at game end</b> (the die is committed: it counts toward the empty-tray clock, and no tray die = no build). The building deck deals <b>17 of 20</b> each game; the Specialist guild holds <b>13 designs</b> (the strongest print requirements, two score printed end-game ★). The die is the cask — it turns only when something turns it — and the dice are the ONE clock (the first <b>empty tray</b> sets the final round; '+PRES_POOL+' dice per player — v4.9b adds the 13th to fund the marks). A commission pays the Ship’s <b>printed fee — Skute 2G · Cog 1G · Hulk free</b> ⚙ — and buys the Ship + <b>one free load</b> (no ★). Deliver a qualifying cask to claim an open <b>Contract</b> (the row of 3 on the Destinations board). Every acquirable recipe/building/Specialist carries its <b>printed fee</b> — recipes <b>H = Q−3, paid at Bruges too</b> (Keut/Broyhan free · Mumme 1H · Bock 2H — v4.9c); building/Specialist Kontor prizes stay free; Novgorod pays every delivered die <b>+2★</b>; every cask pays its Kontor’s prize. Rules in the <a href="index.html">Rulebook</a> and the <b>📖 Player Aid</b>; the <a href="learn.html">Learn</a> and <a href="print.html">print kit</a> pages track this build. All numbers ⚙.</p>
 </main>
@@ -1316,9 +1326,9 @@ document.addEventListener('click',e=>{const m=document.getElementById('topmenu')
   if(!(e.target.closest&&e.target.closest('.menuwrap')))m.classList.add('hidden');},true);
 // ---- the MARKET POPOVER (v3.4c.5): hover a display tile 0.5s -> the tile large + its support text, left of the sidebar ----
 let shopPopTimer=null;
-document.addEventListener('mouseover',e=>{const m=e.target.closest?e.target.closest('.sidecol .shopcell .mtile'):null;if(!m)return;
+document.addEventListener('mouseover',e=>{const m=e.target.closest?e.target.closest('.shop .shopcell .mtile'):null;if(!m)return;
   clearTimeout(shopPopTimer);shopPopTimer=setTimeout(()=>showShopPop(m),500);});
-document.addEventListener('mouseout',e=>{const m=e.target.closest?e.target.closest('.sidecol .shopcell .mtile'):null;if(!m)return;
+document.addEventListener('mouseout',e=>{const m=e.target.closest?e.target.closest('.shop .shopcell .mtile'):null;if(!m)return;
   clearTimeout(shopPopTimer);hideShopPop();});
 function showShopPop(m){if(!document.body.contains(m))return;const pop=document.getElementById('shoppop');
   pop.innerHTML='<div class="popbox">'+m.innerHTML+'</div><div class="poptxt">'+(m.getAttribute('data-tip')||'')+'</div>';
