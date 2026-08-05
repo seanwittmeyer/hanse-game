@@ -81,15 +81,14 @@
      so it scales in cqmin and never collapses under size containment */
   .cell{border-radius:12px;color:var(--parch);position:relative;box-shadow:0 3px 9px rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.14);overflow:hidden;container-type:size}
   .cell .scn{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
-  .cell .scngrad{position:absolute;inset:0;z-index:0;background:linear-gradient(to bottom,rgba(18,14,10,.72),rgba(18,14,10,.3) 34%,rgba(18,14,10,0) 58%)}   /* top-down scrim — the action icon reads over the scene */
+  .cell .scngrad{position:absolute;inset:0;z-index:0;background:linear-gradient(to bottom,rgba(18,14,10,.72),rgba(18,14,10,.3) 34%,rgba(18,14,10,0) 55%,rgba(18,14,10,0) 68%,rgba(18,14,10,.62) 100%)}   /* top scrim for the action icon + a foot scrim for the title */
   .cell .stn{color:#f4ead0;text-shadow:0 1px 3px rgba(0,0,0,.8)}
   .cell .bigic img.ai{filter:drop-shadow(0 2px 4px rgba(0,0,0,.55))}
   .cell .stn{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:7cqmin}
   .cell .head{display:flex;flex-direction:column;align-items:flex-start;gap:3cqmin}
   .cell .bigic .ic,.cell .bigic svg{width:34cqmin;height:34cqmin;stroke-width:1.6}
-  .cell .head>div{min-width:0;max-width:100%}
   .cell .role{font-size:7cqmin;text-transform:uppercase;letter-spacing:1px;opacity:.82}
-  .cell .nm{font-variant:small-caps;font-weight:bold;font-size:13cqmin;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .cell .nm{font-variant:small-caps;font-weight:bold;font-size:13cqmin;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;align-self:center;text-align:center}   /* the title sits at the FOOT of the cell (flex space-between), centred like the print board's */
   /* loop colours: A Market=gold · B Brewhouse=red · C Harbor=sea · D Cellar=green */
   .cell.A{background:linear-gradient(155deg,#cda522,#9c7414);color:#2b2018}
   .cell.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
@@ -2966,7 +2965,8 @@ function renderGrid(){
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
       +'<img class="scn" src="art/scene-'+SCN+'.png" alt=""><div class="scngrad"></div>'
       +'<div class="stn">'
-      +'<div class="head"><span class="bigic">'+LU(STATION_ICON[act])+'</span><div><div class="nm">'+act+'</div></div></div>'
+      +'<div class="head"><span class="bigic">'+LU(STATION_ICON[act])+'</span></div>'
+      +'<div class="nm">'+act+'</div>'
       +'<div class="wk">'+pawns+'</div>'
       +'</div></div>';
   });

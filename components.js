@@ -365,7 +365,7 @@ function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?
 // ladder (beers SHIPPED: 1..5 → 0/0/4/9/16★) · the CONTRACTS pile zone. `live` (app only):
 // {score,dice,grain,hops,v:[html×3],seats:[html×2],flight,contracts,vknote}.
 function playerBoard(d,live){const L=live||{};
-  const seatBox=(v)=>'<span class="pbrd-box">'+(v!=null?('<b>'+v+'</b>'):'')+'</span>';
+  const seatBox=(v)=>v!=null?'<b class="pbrd-num">'+v+'</b>':'<span class="pbrd-box"></span>';   // live: a bare number · print: the empty well stays
   const vsl=(i)=>'<div class="pbrd-slot pbrd-vsl">'
     +'<span class="sn">Vessel '+i+'</span>'
     +((L.v&&L.v[i-1])||'<span class="si">'+LU('beer')+LU('dices')+'</span>')+'</div>';
@@ -383,8 +383,8 @@ function playerBoard(d,live){const L=live||{};
       +'<span class="pbrd-name">'+d.nm+'</span>'
       +'<span class="pbrd-score" title="the house\u2019s score">'+LU('star')+seatBox(L.score)+'</span>'
       +'<span class="pbrd-supply"><span class="pbrd-sup" title="quality dice \u2014 tray/pool">'+LU('dices')+seatBox(L.dice)+'</span>'
-        +'<span class="pbrd-sup" title="grain">'+LU('wheat')+seatBox(L.grain)+'</span>'
-        +'<span class="pbrd-sup" title="hops">'+LU('sprout')+seatBox(L.hops)+'</span>'
+        +'<span class="pbrd-sup pbg" title="grain">'+LU('wheat')+seatBox(L.grain)+'</span>'
+        +'<span class="pbrd-sup pbh" title="hops">'+LU('sprout')+seatBox(L.hops)+'</span>'
         +'<span class="pbrd-note">start Gruit+Hopped \u00b7 13 dice \u00b7 goods max 8</span></span>'
     +'</div>'
     +'<div class="pbrd-row">'+vsl(1)+vsl(2)+vsl(3)+'</div>'
@@ -700,12 +700,15 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.pbrd-crest{width:.32in;height:.32in;border-radius:.05in;background:var(--pc);color:#fff;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}'
 +'.pbrd-crest svg,.pbrd-crest .ic{width:.2in;height:.2in}'
 +'.pbrd-name{font-variant:small-caps;font-weight:bold;font-size:.2in;color:var(--pc);line-height:1;white-space:nowrap;overflow:hidden;max-width:1.9in}'
-+'.pbrd-score{display:inline-flex;align-items:center;gap:.03in;margin-left:.12in;font-size:.16in;color:var(--pc)}'
++'.pbrd-score{display:inline-flex;align-items:center;gap:.04in;margin-left:.12in;font-size:.16in;color:var(--pc)}'
++'.pbrd-score svg,.pbrd-score .ic,.pbrd-score img.ai{width:.26in;height:.26in}'
 +'.pbrd-box{display:inline-flex;align-items:center;justify-content:center;min-width:.42in;height:.3in;border:1.6px solid var(--pc);border-radius:.05in;background:rgba(255,255,255,.5);font-size:.17in;padding:0 .04in}'
-+'.pbrd-box b{color:var(--ink)}'
-+'.pbrd-supply{margin-left:auto;display:inline-flex;align-items:center;gap:.1in}'
-+'.pbrd-sup{display:inline-flex;align-items:center;gap:.03in;font-size:.14in}'
-+'.pbrd-sup svg,.pbrd-sup .ic,.pbrd-sup img.ai{width:.17in;height:.17in}'
++'.pbrd-num{font-size:.21in;line-height:1;color:var(--ink,#2b2018)}'   // the live readout — no printed well around a number
++'.pbrd-supply{margin-left:auto;display:inline-flex;align-items:center;gap:.12in}'
++'.pbrd-sup{display:inline-flex;align-items:center;gap:.04in;font-size:.14in}'
++'.pbrd-sup svg,.pbrd-sup .ic,.pbrd-sup img.ai{width:.26in;height:.26in}'
++'.pbrd-sup.pbg,.pbrd-sup.pbg .pbrd-num{color:#9c7414}'   // grain rides the grain gold
++'.pbrd-sup.pbh,.pbrd-sup.pbh .pbrd-num{color:#5d7d34}'   // hops ride the hops green
 +'.pbrd-note{font-size:.075in;color:var(--ink2,#5b4a37);font-variant:small-caps;max-width:1in;line-height:1.15;text-align:right}'
 +'.pbrd-row{display:flex;gap:.08in;flex:0 0 auto;align-items:stretch}'
 +'.pbrd-slot{position:relative;border:1.7px solid var(--pc);border-radius:.07in;background:rgba(255,255,255,.38);display:flex;align-items:center;justify-content:center}'
