@@ -203,6 +203,20 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
+### v4.9e “Eastern Gate” (2026-08-06 — designer-ruled off playtest #32 + the three-way probe)
+**The Novgorod gate returns to die 3+ (the export band); the +2★ premium holds (5–8★).**
+Playtest #32 re-framed the port: not dead but a STRAND port — the 4+ gate was where the
+clock race bit (one delivery, one abandoned half-Cog, ~14★ of the table's quality cargo
+stranded). The deciding A/B/C (port-probe, 300/count: base · gate-3 · premium-+3): **the
+gate halves the dead-port at every count** (2p 61.9→33.2 · 3p 30.3→11.9 · 4p 11.6→5.5%
+Bock-dealt), lifts delivery share to 16.5–20.8% (healthy — 25% would be even-split) and
+cuts slot-stranded hulls ~40%; **the +3★ arm was a null** — share and dead-rate flat. The
+v0.15 lesson re-confirmed: the bottleneck was reachability under the clock — a structure
+problem — not reward size. The gate now coincides with the band the grammar already draws
+(v45g: every Q3+ beer ages before it ships): *Novgorod takes export-grade beer.* New
+interplay: a Kiln’d Hopped (die 3) makes the run; a Kiln’d Gruit (die 2) still cannot.
+Residual: the 2p dead rate (~33%) — the fourth-Kontor-at-two thread (RULES Open #8).
+
 ### v4.9d “Loaded Flight” (2026-08-04 — designer-ruled off the #30 board talk)
 **The Flight qualifies on LOAD, not brew** — the designer: *“the recipe cards sit on the
 left side until they are loaded on a ship, then moved to the right side of the board showing

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v4.9 “Mason’s Mark”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v4.9e “Eastern Gate”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -698,7 +698,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.9 “Mason’s Mark”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.9e “Eastern Gate”</span></h1>
   <a href="play.html">▶ Play</a>
   <a href="index.html">📖 Rules</a>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
@@ -833,7 +833,7 @@ function aidFront(){
         +K('kontor-bruges','Bruges','1+','a recipe, at its fee','4/2/0')
         +K('kontor-london','London','2+','a building \u2014 your die on it','5/3/1')
         +K('kontor-bergen','Bergen','2+','a Specialist, free','9/5/2')
-        +K('kontor-novgorod','Novgorod','4+','die scores +2\u2605','8/5/2')
+        +K('kontor-novgorod','Novgorod','3+','die scores +2\u2605','8/5/2')
         +'</table>'
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
         +'<div class="ln"><b>First EMPTY tray</b> (your last of 13 dice committed): finish the round. Round 25 backstop.</div>'
@@ -1087,7 +1087,7 @@ const kMini=d=>{
   // below (Novgorod's v2.9 floor row made it four tiers: <3/3/4/5, too many for a narrow cell at any
   // reasonable chip size); a full-width row gives 4 small chips plenty of room to sit on ONE line, and
   // on-delivery/majority get a wider 2-cell row instead of 3, so nothing here is fighting for space.
-  const valCell='<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU('die-q')+(d.vb?'+'+d.vb:'')+'</span></div>';   // the parked die IS the value — the ?-die (Novgorod prints +2 on top — 6–8★ at minimum 4)
+  const valCell='<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU('die-q')+(d.vb?'+'+d.vb:'')+'</span></div>';   // the parked die IS the value — the ?-die (Novgorod prints +2 on top — 5–8★ at minimum 3)
   const benCell=d.vb?'':'<div class="kp-cell"><span class="kp-ch">'+LU('gift')+'on delivery</span><span class="kp-big">'+d.ben.n+LU(d.ben.ic)+'</span></div>';   // Novgorod's on-delivery cell is CUT — redundant to its +2 value (designer, round 2)
   return '<div class="kp" style="--kc:'+d.kc+';--kt:'+d.tint+'">'+kArt(d.nm.toLowerCase())
     +'<div class="kp-t">'+LU('kontor-'+d.nm.toLowerCase())+d.nm+'<span class="kp-q">'+LU('dices')+d.req+'+</span></div>'
@@ -1411,7 +1411,7 @@ function checklist(pages,famPages){
     +'<div class="cols2">';
   h+=T('Boards')
     +R('Main board — the Wharf','The 2×2 of stations, each printing ONE action (Market: 2 goods · Brewhouse: brew · Cellar: Age 3 · Harbor: commission 1G + 1 free load, no ★), ringed by 8 slots — each seats a BUILDING and/or a SHIP (never casks).','1')
-    +R('Destinations board','Narrow, the table pair of Market &amp; Stores. The four Kontor panels — minimum (the DIE as boarded: Bruges 1+ · London 2+ · Bergen 2+ · Novgorod 4+) · value = the parked die · the prize · the majority tiers — each with the open PARKING field where delivered dice stand face-up (pips = the ★ audit; bodies = presence) — plus the CONTRACT row of 3.','1')
+    +R('Destinations board','Narrow, the table pair of Market &amp; Stores. The four Kontor panels — minimum (the DIE as boarded: Bruges 1+ · London 2+ · Bergen 2+ · Novgorod 3+) · value = the parked die · the prize · the majority tiers — each with the open PARKING field where delivered dice stand face-up (pips = the ★ audit; bodies = presence) — plus the CONTRACT row of 3.','1')
     +R('Market &amp; Stores board','The shared displays at component size — Buildings 4 · Ships 4 · the dealt recipe stacks · Specialists 4, each refilled from its draw bag/deck — ringed by the 50-cell SCORE ring (0–49, +50 on the lap): deliveries, Contract claims, Tollhouse stamps, 1★ placed presence and departing buildings’ dice score here — commissions and builds score nothing in play (a build stands a die on the tile; its pips score at game end).','1')
     +R('Player brewery boards','One per player: 3 VESSEL slots + 2 SPECIALIST seats — all printed OPEN from the start. Recipe cards sit beside it; goods cap 8.',PLAYERS.length)
     +'</table>';

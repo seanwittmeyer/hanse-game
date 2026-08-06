@@ -87,13 +87,13 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 (function(){var p=fresh();stops();
   var sh=ship('s1','cog','novgorod');
   p.vessels[0]={style:'hopped',q:2,die:2,act:'source'};
-  ok('a Ready die 2 cannot board Novgorod (gate 4)', !canTake('s1',0));
+  ok('a Ready die 2 cannot board Novgorod (gate 3 — v4.9e)', !canTake('s1',0));
   S.buildings.s1={b:'maltkiln'};
-  ok('a Malt Kiln at the slot lifts the boarding read (die 2+1=3 — still short)', !canTake('s1',0));
+  ok('a Malt Kiln at the slot lifts the boarding read (die 2+1=3 — makes the export band, v4.9e)', canTake('s1',0));
   p.vessels[1]={style:'broyhan',q:3,die:3,act:'load'};
-  ok('a kiln-lifted die 4 boards Novgorod', canTake('s1',1));
+  ok('a die-3 export boards Novgorod at quality (kiln-lifted to 4 rides above)', canTake('s1',1));
   S.buildings.s2={b:'customs'};var sh2=ship('s2','cog','novgorod');
-  ok('a Customs House lowers the gate one step (die 3 boards)', canTake('s2',1));
+  ok('a Customs House lowers the gate one step (a die-2 boards at 3−1 — v4.9e)', canTake('s2',0));
   ok('a maturing cask (die < Q) never boards', (function(){p.vessels[0]={style:'bock',q:5,die:4,act:'age'};return !canTake('s2',0);})());
 })();
 
@@ -146,6 +146,8 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('Novgorod banks the die +2 (die 4 → 6★)', p.delivered[p.delivered.length-1].val===6);
   deliverCask(p,{owner:0,style:'bock',q:5,die:6,act:'age'},'novgorod');
   ok('the Novgorod premium rides above the die cap (die 6 → 8★)', p.delivered[p.delivered.length-1].val===8);
+  deliverCask(p,{owner:0,style:'broyhan',q:3,die:3,act:'age'},'novgorod');
+  ok('the export-band floor pays 5★ (die 3 +2 — v4.9e)', p.delivered[p.delivered.length-1].val===5);
   ok('no refine machinery survives', typeof freeAge==='undefined'&&typeof brefinePick==='undefined');
   p.recipes=['gruit','hopped'];p.hops=5;var g9=p.grain;
   UI.pendingRecipe=[{pid:0,dest:'bruges'}];afterSail('stops');
