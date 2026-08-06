@@ -203,7 +203,7 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
-### v4.9e “Eastern Gate” (2026-08-06 — designer-ruled off playtest #32 + the three-way probe)
+### v4.10 “Eastern Gate” (2026-08-06 — designer-ruled off playtest #32 + the three-way probe)
 **The Novgorod gate returns to die 3+ (the export band); the +2★ premium holds (5–8★).**
 Playtest #32 re-framed the port: not dead but a STRAND port — the 4+ gate was where the
 clock race bit (one delivery, one abandoned half-Cog, ~14★ of the table's quality cargo

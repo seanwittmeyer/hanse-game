@@ -1,10 +1,10 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.9e “Eastern Gate”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.10 “Eastern Gate”)
 
 *(Language: the 2026-08-03 **Term Registry pass** governs all printed copy — player ·
 Kontor · Contract · cask quality die · build · Age N · aging · resolve the line · the ★
 glyph; see `STYLE.md` §4. The version letters below keep their period wording.)*
 
-> **v4.9e “Eastern Gate” (designer-ruled 2026-08-06 — off playtest #32 + the three-way port
+> **v4.10 “Eastern Gate” (designer-ruled 2026-08-06 — off playtest #32 + the three-way port
 > probe).** **The Novgorod minimum returns to die 3+** — the export band (every Q3+ beer ages
 > before it ships, v45g) — and the **+2★ premium holds** (5–8★ per die). The deciding A/B/C
 > (300/count: base · gate-3 · premium-+3): the gate HALVES the dead-port at every count
@@ -477,10 +477,10 @@ everywhere, the Bruges prize included (the v45e grammar)**. No building ever add
 | **Bruges** (Hub) | 1 | the die | **Gain 1 recipe** — dealt exports, **at its `H` = Q−3 fee — the Q3s free** (v4.9c; the prize is the pick, never the waiver; no affordable pick → 2 goods) | 4 / 2 / 0 |
 | **London** (Steelyard) | 2 | the die | **A building** (display → placed; **your die stands on it** — v4.9) | 5 / 3 / 1 |
 | **Bergen** (Bryggen) | 2 | the die | **A specialist** (display, free) — **per cask** (v4.7, the uniform grammar; load order = pick order) | 9 / 5 / 2 (anchor) |
-| **Novgorod** (Peterhof) | **3** (the export band ⚙ — v4.9e) | **the die +2★** ⚙ (5–8) | — (the value premium IS the prize) | 8 / 5 / 2 |
+| **Novgorod** (Peterhof) | **3** (the export band ⚙ — v4.10) | **the die +2★** ⚙ (5–8) | — (the value premium IS the prize) | 8 / 5 / 2 |
 
 - **The minimum reads the DIE as it boards** (post-lift) — a Kiln’d Hopped (die 3) makes
-  Novgorod now (v4.9e); a Kiln’d Gruit (die 2) still cannot. One number rules boarding and
+  Novgorod now (v4.10); a Kiln’d Gruit (die 2) still cannot. One number rules boarding and
   value alike.
 - **Prizes resolve WHEN GAINED, owner’s choice** (a rival tops off a Ship carrying your cask →
   you pick your prize right then). No queues.
@@ -678,7 +678,7 @@ the engine; the modules return after the core settles.
    the offset dial is PULLED — the formula drops to `H` = Q−3** (Keut/Broyhan free · Mumme
    1 `H` · Bock 2 `H`). The residual watches move to the new letter: the Bock rush at its
    halved tax, the Scholar's price, and whether freed hops revive the Abbey/Hop Exchange.
-3. **Novgorod at minimum 4 → 3 (RULED v4.9e)** — is die-4 boarding reachable enough (Mumme+, or Kiln’d Q3)? Its
+3. **Novgorod at minimum 4 → 3 (RULED v4.10)** — is die-4 boarding reachable enough (Mumme+, or Kiln’d Q3)? Its
    pull is now the **+2★ die premium** (6–8★ deliveries, v4.2) + the 8/5/2 majority — watch
    whether +2 overshoots (the dial is the printed premium).
    **MEASURED at v4.9b (the port probe, 2026-08-04 — off playtest #29's dead table): the port
@@ -690,7 +690,7 @@ the engine; the modules return after the core settles.
    designer (not ruled): the premium (+2 → +3), a pinnacle-aware gate, or embracing the
    boom-market identity — but the 2p rate says the fourth Kontor barely exists at two (feeds
    Open #8). The end-state clog is mild (~1.4–1.9 of 4 market hulls).
-   **RULED at v4.9e (2026-08-06): the GATE returns to 3 — the export band — and the premium
+   **RULED at v4.10 (2026-08-06): the GATE returns to 3 — the export band — and the premium
    holds at +2★.** The deciding A/B/C (base / gate-3 / premium-+3, 300/count): the gate
    halves the dead rate at every count (2p 61.9→33.2 · 3p 30.3→11.9 · 4p 11.6→5.5%) and
    lifts share to 16.5–20.8% without magnetizing; the +3★ arm was a NULL — reward was never
