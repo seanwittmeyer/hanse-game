@@ -9,6 +9,7 @@
 ## Response style
 - Be concise. Keep feedback efficient.
 - Don't put text, data, or code inline unless necessary — reference files/locations instead of pasting their contents.
+- **Playtest analyses live in chat, not the repo** (ruled 2026-08-06): do NOT add `PLAYTEST-*.md` files to `archive/records/` — the app auto-records every playtest to Waterworks Studio. Studies/battery records still go to `archive/records/` as before.
 
 ## Commit authorship
 - **All edits/commits to this repo are made as Sean Wittmeyer** — author *every* commit under the exact identity the repo's history already uses: read it with `git log -1 --format='%an <%ae>'` and pass it via `git -c user.name=… -c user.email=… commit …`. No other author/co-author, and don't print the address in any doc or page.
