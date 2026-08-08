@@ -43,7 +43,7 @@ const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the
   {k:'source',  ai:'coins',         act:'Gain 2 goods',             q:2},
   {k:'age',     ai:'age-2',     act:'Age +2',                   q:2},
   {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},
-  {k:'reach',   ai:'map-pin',       act:'+1 presence',              q:2},
+  {k:'reach',   ai:'map-pin',       act:'2G → +1 presence',         q:2},
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe',          q:2},
   {k:'survey',  ai:'search',        act:'Build 1 building',  q:3},   // v4.9: the builder's die stands on it — no printed ★
   {k:'hire',    ai:'wrench',        act:'Gain 1 specialist',      q:3},
@@ -102,7 +102,7 @@ const BUILDINGS=[
   {k:'scriveners',nm:'Scrivener’s Hall',  ms:2, verb:'transform', tgt:'act',  ic:'scroll-text',  n:1, g:1, act:'recipe', eff:'Gain 1 recipe'},
   {k:'missionq',  nm:'Mission Quay',      ms:1, verb:'transform', tgt:'act',  ic:'church',       n:2, act:'age',    eff:'Age +2'},
   {k:'hiringpost',nm:'Hiring Post',       ms:2, verb:'transform', tgt:'act',  ic:'wrench',       n:1, g:1, act:'hire',   eff:'Gain 1 specialist'},
-  {k:'almoner',   nm:'Almoner’s Stall',   ms:1, verb:'transform', tgt:'act',  ic:'heart',        n:1, act:'reach',  eff:'+1 presence'},
+  {k:'almoner',   nm:'Almoner’s Stall',   ms:1, verb:'transform', tgt:'act',  ic:'heart',        n:1, act:'reach',  eff:'<span class="g">2'+LU('wheat','g')+'</span> → +1 presence'},
   // v45d power ladder — fees print in GRAIN only (hops are spent USING buildings, never buying them)
   {k:'racking',   nm:'Racking Hall',      ms:3, verb:'transform', tgt:'act',  ic:'repeat',       n:1, g:3, act:'rack',   eff:'Swap 2 dice'},
   {k:'assay',     nm:'Assay House',       ms:1, verb:'transform', tgt:'act',  ic:'scale',        n:1, g:1, act:'assay',  eff:'1 aging die ±1'},
@@ -203,7 +203,7 @@ const RECIPES=[  // EXPORT recipe cards — print in the same double-sided run a
   // buy = the WHARF FEE — the FORMULA H = Q−3 (v4.9c; was Q−2 at v45e), hops only, paid at EVERY channel (Bruges included; Q3 and below = free)
   // · g/h = the BREW cost on the tucked edge.
   {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{},     reach:'Q3 · all kontore (the Hall via Dispatch) · FAST: ready 1'},
-  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{},     reach:'Q3 · all kontore (+ the Hall) · +1 presence on a kontor delivery'},
+  {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{},     reach:'Q3 · all kontore (+ the Hall) · 2G → +1 presence on a kontor delivery'},
   {nm:'Mumme',   cc:'#9a5526', L:4, g:1,h:3, buy:{h:1},     reach:'Q4 · all kontore (the Hall via Dispatch)'},
   {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{h:2}, reach:'Q5 · all kontore · the premium climb (fee H = Q−3 — v4.9c)'},
   // EXPANSION "Specialty Beers" (v1.9, opt-in) — the 3 specialty export recipe cards
@@ -226,7 +226,7 @@ const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(50,79,42,.74)';   //
 const BLD_FOOT='rgba(58,51,66,.7)';   // legacy fallback   // building card foot/base — dark purple-grey (#3a3342) at 70% opacity so the illustration bleeds ~30% through the foot. Same on front & back.
 // v3.4a at 66% height — the SAME anatomy the 2in card earned (icon+name header · art window ·
 // the colour foot: the effect big, then the target chip + cost row), compressed, never flattened.
-const STD_ACT={source:{ai:'coins',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age +2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};
+const STD_ACT={source:{ai:'coins',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age +2'},reach:{ai:'map-pin',t:'2G → +1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};
 function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   // v4.9b "Cornerstones": the tile prints the mason's mark's START FACE — set your die to it at build
   const msChip=d.ms?'<span class="bt-ms" title="the mason\u2019s mark starts here \u2014 set your die to this face at build; every use turns it up (pips score at game end)">'+LU('dice-'+d.ms)+'</span>':'';

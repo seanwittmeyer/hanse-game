@@ -1,8 +1,18 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.10 “Eastern Gate”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.11 “Factor’s Fee”)
 
 *(Language: the 2026-08-03 **Term Registry pass** governs all printed copy — player ·
 Kontor · Contract · cask quality die · build · Age N · aging · resolve the line · the ★
 glyph; see `STYLE.md` §4. The version letters below keep their period wording.)*
+
+> **v4.11 “Factor’s Fee” (designer-ruled 2026-08-08 — off the three-playtest set: #34’s 16
+> rounds · the 8-round Almoner race · the 10-round Flight win).** **Placing presence costs
+> 2 G per die** — every channel: the *place 1 presence* load bonus, the Almoner’s Stall,
+> and Keut’s on-delivery bump (the Town Crier’s face-2 parks pay the same fee). The free
+> bump was the racer’s unpriced clock lever — live bumps and rounds moved almost 1:1
+> (3 bumps → 16 rds · 7 → 10 · 8 → 8). The pace probe (300/count): the fee lifts rounds
+> 12.9/12.1/11.9 → **14.8/14.3/13.8** (band 53–66% → 82–88%) with voyages UP — the added
+> length is play, not drag. **The pool stays 13** — the 14th die was measured (+1.1 rounds)
+> and declined (“far too long” risk). No tray die — or no 2 G — no placed presence.
 
 > **v4.10 “Eastern Gate” (designer-ruled 2026-08-06 — off playtest #32 + the three-way port
 > probe).** **The Novgorod minimum returns to die 3+** — the export band (every Q3+ beer ages
@@ -338,7 +348,7 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 
 *(The Cellarman starts your dice one higher — a Bock at 3. Caps (v45g): a start value never
 exceeds the quality, and **a Q3+ export never STARTS Ready** — aging is required for every
-export (the Cellarman's lift on Broyhan stops at 2). Keut’s printed perk: its delivery also **places 1 presence** — a tray die parks at face 1
+export (the Cellarman's lift on Broyhan stops at 2). Keut’s printed perk: its delivery also **places 1 presence** — pay the 2 G fee (v4.11); a tray die parks at face 1
 at that Kontor.)*
 
 > **The squeeze (state it to players):**
@@ -399,7 +409,7 @@ swings; the dealt subset makes every wharf a different economy.**
 | Scrivener’s Hall | resolve its slot | **gain 1 recipe** (at the recipe’s fee) | 1 | 1 `G` | 2 |
 | Mission Quay | resolve its slot | **Age +2** (your vessels) | 2 | free | 1 |
 | Hiring Post | resolve its slot | **gain 1 specialist** (at its fee) | 1 | 1 `G` | 2 |
-| Almoner’s Stall | resolve its slot | **Place 1 presence** (§7) | 1 | free | 1 |
+| Almoner’s Stall | resolve its slot | **Pay 2 G: place 1 presence** (§7) | 1 | free | 1 |
 | **Racking Hall** *(power)* | resolve its slot | **swap the dice of ANY two of your vessel casks — no quality cap** (the beer transfers whole; global cap 6). *The launder engine: rack an aged Bock’s 5 onto a Ready Gruit — the 5-pip Gruit ships, the Bock re-ages from 1.* | 1 | 3 `G` | 3 |
 | **Assay House** | resolve its slot | **turn one of your aging dice ±1** (never above its quality, never below 1) | 1 | 1 `G` | 1 |
 | **Abbey Cellar** *(power)* | resolve its slot | **pay 3 `H`: ALL your aging casks age to READY** (each die to its quality) | 1 | 2 `G` | 3 |
@@ -456,7 +466,7 @@ and read LIVE (v4.6c): a Ship or building landing on a line slot mid-turn opens 
 | **Gain 2 goods** | any mix | Q1 (Gruit pin) · Q2+ |
 | **Age +2** | 2 steps across your vessels | Q2+ |
 | **Load 1 more cask** | onto **any** eligible Ship on the wharf (its bonus fires too) | Q2+ |
-| **Place 1 presence** | a tray die → a Kontor you’ve delivered to (§7) | Q2+ |
+| **Place 1 presence** | pay 2 G · a tray die → a Kontor you’ve delivered to (§7) | Q2+ |
 | **Gain 1 recipe** | pay the **card’s printed fee** ⚙ — a dealt export | Q2+ |
 | **Gain 1 building** | pay the **tile’s printed fee** ⚙ (no chip = free) — display → any legal slot; **your die stands on it** (v4.9) | Q3+ |
 | **Gain 1 specialist** | pay the **tile’s printed fee** ⚙ — from the display (open seat required) | Q3+ |
@@ -487,9 +497,10 @@ everywhere, the Bruges prize included (the v45e grammar)**. No building ever add
 - **Novgorod’s premium is printed on the mat** (v4.2): every *delivered* die there counts
   **pips +2** — for the score AND the end-game audit. (Minimum 4 means delivered dice show 4–6,
   so a face-1 die at Novgorod is always placed presence, worth its flat 1★.)
-- **Presence** = your parked dice there. **Placing presence** (the cask/building action) takes a
+- **Presence** = your parked dice there. **Placing presence** (the cask/building action) costs
+  **2 G — the factor’s fee (v4.11)** — and takes a
   **tray die**, parks it at a Kontor you’ve **already delivered to** at **face 1** (it scores
-  1★ and counts for the majority and the clock). No tray die → no placing presence.
+  1★ and counts for the majority and the clock). No tray die — or no 2 G — no placing presence.
 
 ### 7b. Contracts — the order row (v4.5b)
 
@@ -646,7 +657,7 @@ the engine; the modules return after the core settles.
    seat (the Cellarmaster) nulls the "humans run longer" assumption. The felt problem is
    **trigger CONTROL, not length**: the leader dumped tray dice via cheap placed presence and slammed
    the door 12 up while the human's engine peaked. Pool 13 buys the non-racer ~1 round
-   (~half the felt gap in #25); the deeper watch is presence-commit speed as the racer's lever.
+   (~half the felt gap in #25); the deeper watch is presence-commit speed as the racer's lever. **RULED at v4.11: the lever is PRICED — 2 G per placed presence** (the 8-round Almoner race decided it); the pool stays 13, the 14th die declined.
    **#26 (4p all-AI, `PLAYTEST-26.md`) repeats the signature:** 11 rounds — UNDER the band
    floor — with the Cellarmaster again choosing the horn. **#27 (3p all-AI,
    `PLAYTEST-27.md`) completes the picture: 15 rounds, in-band, and a GUILDMASTER raced

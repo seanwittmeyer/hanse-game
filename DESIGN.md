@@ -203,6 +203,21 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
+### v4.11 “Factor’s Fee” (2026-08-08 — designer-ruled off the three-playtest set)
+**Placing presence costs 2 G per die; the pool stays 13.** Three live 3p games (16 · 8 ·
+10 rounds) exposed the free bump as the racer’s unpriced clock lever — bumps and rounds
+moved almost 1:1 (3 bumps → 16 rds · 7 → 10 · 8 → 8; the 8-round game was the Almoner’s
+Stall converting every right-column activation into a free die-commit). The four-way probe
+(300/count: base · pool-14 · bump-2G · both): the fee alone lifts pace 12.9/12.1/11.9 →
+**14.8/14.3/13.8** (band 53–66% → 82–88%) and voyages RISE — the length is real play; the
+14th die measured +1.1 rounds and was **declined** (“far too long” risk). The fee prices
+the exploit instead of widening everyone’s runway — the racer can still race, but pays
+tempo. One grammar at every channel (reach bonus · Almoner · Keut’s perk · Crier’d parks),
+printed as the pay-verb: *2G → +1 presence*. Watches: the Town Crier (2★ per 2G park,
+relatively stronger) · the Almoner’s start-1 mark ticks slower · Chandler’s G↔H swap
+gains a job · the first human win of the series (10-rd, the full 5-beer Flight + zero
+buildings) says the breadth lane is live.
+
 ### v4.10 “Eastern Gate” (2026-08-06 — designer-ruled off playtest #32 + the three-way probe)
 **The Novgorod gate returns to die 3+ (the export band); the +2★ premium holds (5–8★).**
 Playtest #32 re-framed the port: not dead but a STRAND port — the 4+ gate was where the

@@ -126,11 +126,12 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 
 // ---- 8. DELIVERY floor & cap; Keut's presence bump spends a tray die and banks 1★ ----
 (function(){var p=fresh();stops();p.ai={tier:'journeyman'};
+  p.grain=2;
   var b0=p.bank,pool0=p.presPool,pb0=p.presBonus.bruges;
   deliverCask(p,{owner:0,style:'keut',q:3,die:9,act:'load'},'bruges');
   ok('delivery value caps at 6', p.delivered[p.delivered.length-1].val===6);
-  ok('Keut parks a bonus die (presence +1 · bank +1 · pool −2 incl. the delivery)',
-    p.presBonus.bruges===pb0+1&&p.bank===b0+1&&p.presPool===pool0-2);
+  ok('Keut parks a bonus die (presence +1 · bank +1 · pool −2 incl. the delivery · −2G the fee, v4.11)',
+    p.presBonus.bruges===pb0+1&&p.bank===b0+1&&p.presPool===pool0-2&&p.grain===0);
   p.ai=null;
 })();
 
@@ -260,13 +261,17 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 // ---- 12. PRESENCE BUMP: a tray die at face 1 — 1★, presence, clock; tray-gated ----
 (function(){var p=fresh();stops();
   p.delivered.push({style:'gruit',q:1,dest:'bruges',val:1});
+  p.grain=3;
   var b0=p.bank,pool0=p.presPool;
   addPresence(p,'bruges',1);
-  ok('a bump parks a die (presence +1 · 1★ · pool −1)', p.presBonus.bruges===1&&p.bank===b0+1&&p.presPool===pool0-1);
-  p.presPool=diceInFlight(p);   // tray = 0
+  ok('a bump parks a die for 2G (presence +1 · 1★ · pool −1 · grain −2 — v4.11)', p.presBonus.bruges===1&&p.bank===b0+1&&p.presPool===pool0-1&&p.grain===1);
+  var pb1=p.presBonus.bruges,b1=p.bank;
+  addPresence(p,'bruges',1);
+  ok('grain short (1G) → no bump, nothing spent (v4.11)', p.presBonus.bruges===pb1&&p.bank===b1&&p.grain===1);
+  p.grain=6;p.presPool=diceInFlight(p);   // tray = 0
   var pb=p.presBonus.bruges;
   addPresence(p,'bruges',1);
-  ok('no tray die → no bump', p.presBonus.bruges===pb);
+  ok('no tray die → no bump (grain alone won’t do)', p.presBonus.bruges===pb&&p.grain===6);
 })();
 
 // ---- 13. THE CLOCK (v4.1): the dice alone — sails never end the game; the ceiling backstops ----

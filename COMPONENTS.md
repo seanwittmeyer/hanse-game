@@ -157,7 +157,7 @@ bought; **min 6 tiles/type** (staples deeper: Gruit 16 · Hopped 12 ⚙).
 | Gruit | 1 | 0 (Ready at brew) | 1 | `G` | 16 |
 | Hopped | 2 | 1 | 1 | `G H` | 12 |
 | Broyhan | 3 | 1 | 2 | `G H H` | 6 |
-| Keut *(+1 presence on delivery)* | 3 | 2 | 1 | `G G H` | 6 |
+| Keut *(2G → +1 presence on delivery)* | 3 | 2 | 1 | `G G H` | 6 |
 | Mumme | 4 | 3 | 1 | `G H H H` | 6 |
 | Bock | 5 | 3 | 2 | `G G H H H` | 6 |
 
@@ -197,7 +197,7 @@ The v4.5b **dice pass** + the v45d **power ladder** (designer-ruled 2026-08-01):
 | Scrivener’s Hall | 1 | resolve its slot: **gain 1 recipe** (at the recipe’s fee) | 1 `G` | 2 |
 | Mission Quay | 2 | resolve its slot: **age +2** | — | 1 |
 | Hiring Post | 1 | resolve its slot: **gain 1 specialist** (at its fee) | 1 `G` | 2 |
-| Almoner’s Stall | 1 | resolve its slot: **place 1 presence** (a tray die) | — | 1 |
+| Almoner’s Stall | 1 | resolve its slot: **pay 2G — place 1 presence** (a tray die) | — | 1 |
 | **Racking Hall** *(power)* | 1 | resolve its slot: **swap the dice of ANY two of your vessel casks — no quality cap** (the beer transfers; cap 6) | 3 `G` | 3 |
 | **Assay House** | 1 | resolve its slot: **turn one of your aging dice ±1** (never above its quality, never below 1 — v45c) | 1 `G` | 1 |
 | **Abbey Cellar** *(power, v45d)* | 1 | resolve its slot: **pay 3 `H` — ALL your aging casks age to READY** | 2 `G` | 3 |
