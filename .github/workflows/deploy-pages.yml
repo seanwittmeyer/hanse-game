@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deploy.outputs.page_url || steps.deploy_retry.outputs.page_url }}
+      url: ${{ steps.deploy.outputs.page_url || steps.deploy_retry.outputs.page_url || steps.deploy_retry2.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - name: Configure Pages (switches the source to workflow on first run)
@@ -69,4 +69,12 @@ jobs:
       - name: Deploy to Pages (retry after transient failure)
         id: deploy_retry
         if: steps.deploy.outcome == 'failure'
+        uses: actions/deploy-pages@v5
+        continue-on-error: true   # 2026-08-08: the 08-06 "try again later" flake outlived ONE retry (runs on 3b27a4e + f3b410a both red, site stale ~36h) — a second, longer-paused attempt closes it
+      - name: Pause before the second retry
+        if: steps.deploy.outcome == 'failure' && steps.deploy_retry.outcome == 'failure'
+        run: sleep 120
+      - name: Deploy to Pages (second retry)
+        id: deploy_retry2
+        if: steps.deploy.outcome == 'failure' && steps.deploy_retry.outcome == 'failure'
         uses: actions/deploy-pages@v5
