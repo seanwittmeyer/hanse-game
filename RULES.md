@@ -737,6 +737,19 @@ the engine; the modules return after the core settles.
    die); the die-vs-runway tension (builders spend the same dice that brew); overbuild as
    die-denial; early-vs-late build decay (a round-12 build barely ticks). Dials: the start
    face, the cap, ticks-per-use, or scoring pips ×2.
+   **MEASURED at v4.12 (`archive/records/BUILDING-POWER-STUDY-v412.md` + the kept
+   `playtests/bldg-power-probe.js` — 3,236 games: OBS 500×2/3/4p + 5 ablations + a GM arm):
+   NO design is macro-warping — removing any single tile moves winner totals ≤1.6★. The
+   flags are per-builder: the COOPERAGE (v4.12's +2★/load) stacks a direct mint
+   (2.0/2.7/**5.0**★ per game by count — 16× the Tollhouse at 4p) on a 4.2–4.7-pip mark and
+   a +5/+3/+8pp builder-win lift; the MERCHANTS' EXCHANGE carries the corpus's most
+   consistent lift (+6.5/+7.1/+5.1 — POSITIONAL power: its ablation is a null); the cheap
+   utilities' marks outgrow their tier at 4p (Granary lift +10.2 · Scrivener's +8.0); the
+   KILN stays the intended shared engine (~¼ of all traffic · the best mark at 4.7–5.0 pips
+   · rival ticks ~78% · lift only +1–3 · the biggest ablation drop). The ASSAY at 1H→Ready
+   reads clean (heavy traffic, below-bar lift, null ablation). The dead shelf re-confirms
+   (Rich Berth 0 builds in 1,500 trader games · Customs/Capstan/Hiring Post ≤0.11
+   builds/game). Dial candidates live in the study §7 — NOT ruled.**
 5. **Bergen heat** — specialist prize + the 9/5/2 anchor (dial: tiers or the prize). *The
    London/Bergen benefit SWAP is ruled OUT (designer, 2026-08-02): each Kontor pairs a durable
    pull with a decaying one (Bergen: enduring majority + self-exhausting prize · London:

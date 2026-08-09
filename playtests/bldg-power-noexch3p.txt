@@ -1,0 +1,25 @@
+=== BUILDING-POWER PROBE — 300 games/count · tier trader · ABLATION: no exchange ===
+
+== 3p · 300 games · rounds 12.7 · winner 66.3 · margin 10.3 ==
+builder baseline: P(win)=33.3% · P(win|built any)=35.5% (n=780) — the generic builder lift is the bar a design must beat
+design        dealt%  builds/g  uses/g  ticks/g  rival%  pips/build  builderWin%   direct★/g
+granary       82.7%     0.41     2.10     1.04   63.3%       3.54  42.2% (102)          —
+scriveners    86.0%     0.32     1.36     0.67   64.9%       4.10   42.2% (83)          —
+missionq     100.0%     0.61     2.63     0.96   67.8%       2.59  36.3% (182)          —
+hiringpost    87.3%     0.03     0.51     0.04   50.0%       3.11    55.6% (9)          —
+almoner       85.0%     0.09     0.43     0.05   71.4%       1.61   30.4% (23)          —
+racking       83.7%     0.43     0.37     0.22   64.8%       3.50  37.6% (109)          —
+assay         85.0%     0.47     1.75     1.04   68.9%       3.22  39.5% (119)          —
+abbey         88.3%     0.40     0.16     0.10   88.5%       3.25  31.1% (106)          —
+maltkiln     100.0%     0.86     6.38     2.29   68.0%       4.66  40.3% (258)          —
+hopex         84.3%     0.36     1.11     0.48   73.6%       3.34   44.4% (90)          —
+tollhouse     85.0%     0.19     0.13     0.03  100.0%       3.14   40.8% (49)       0.40
+cooperage     84.3%     0.39     1.48     0.47   70.0%       4.21   36.4% (99)       2.96
+customs       83.0%     0.02     0.06     0.00       —       3.00    50.0% (6)          —
+richberth     85.7%     0.00     0.07     0.00       —          —            —          —
+bonded        85.3%     0.37     0.44     0.20   70.6%       3.54   38.3% (94)          —
+victual       88.0%     0.41     0.38     0.19   70.6%       3.47  42.2% (109)          —
+exchange       0.0%     0.00     0.00     0.00       —          —            —          —
+capstan       82.0%     0.06     0.13     0.02   75.0%       3.29   42.9% (14)          —
+
+GATE: 0 crashes / 0 deadlocks.
