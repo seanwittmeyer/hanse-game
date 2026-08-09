@@ -30,12 +30,22 @@
   #bar .prompt{font-style:italic;opacity:.95;flex:1;min-width:0}
   #bar .acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px}
   /* the top-right HAMBURGER — Player Aid / Learn / Rulebook / New Game live in a dropdown */
-  #bar .menuwrap{margin-left:auto;position:relative}
+  #bar .menuwrap{margin-left:auto;position:relative;display:flex;align-items:center;gap:7px}
+  /* 2026-08-09 [designer]: the Player Aid and the Rules ride the bar itself on non-mobile —
+     they are what a seated player actually reaches for; the menu keeps the full site nav. */
+  #bar .barnav{display:inline-flex;gap:6px}
+  #bar .barbtn{display:inline-flex;align-items:center;gap:5px;font-family:inherit;font-size:.84rem;font-weight:bold;
+    text-decoration:none;padding:5px 11px;border-radius:6px;white-space:nowrap;line-height:1.2;
+    background:transparent;color:var(--gold2);border:1px solid rgba(255,255,255,.35);cursor:pointer}
+  #bar .barbtn:hover{background:rgba(255,255,255,.15);color:var(--parch)}
+  @media(max-width:860px){#bar .barnav{display:none}}
   #bar .hamb{background:transparent;border:1px solid rgba(255,255,255,.35);color:var(--parch);font-size:1.05rem;line-height:1;padding:5px 11px;border-radius:6px}
   #bar .hamb:hover{background:rgba(255,255,255,.15)}
   #topmenu{position:absolute;right:0;top:calc(100% + 8px);background:var(--ink);border:1px solid var(--gold);border-radius:8px;min-width:168px;z-index:90;box-shadow:0 8px 22px rgba(0,0,0,.45);padding:5px 0}
-  #topmenu a{display:block;color:var(--gold2);text-decoration:none;padding:8px 15px;font-size:.9rem;white-space:nowrap}
-  #topmenu a:hover{background:var(--red2);color:var(--parch)}
+  #topmenu a,#topmenu .hnav-m{display:block;color:var(--gold2);text-decoration:none;padding:8px 15px;font-size:.9rem;white-space:nowrap}
+  #topmenu a:hover,#topmenu .hnav-m:hover:not(.on){background:var(--red2);color:var(--parch)}
+  #topmenu .hnav-m.on{opacity:.5;cursor:default}
+  #topmenu .mdiv{height:1px;background:rgba(255,255,255,.18);margin:4px 0}
   button{font-family:inherit;cursor:pointer;border:1px solid rgba(0,0,0,.25);border-radius:6px;
     padding:6px 12px;font-size:.9rem;background:var(--parch2);color:var(--ink);transition:.12s}
   button:hover{background:var(--gold2)}
@@ -550,11 +560,17 @@
     <span class="who" id="wholbl">—</span>
     <span id="barres"></span>
     <div class="menuwrap">
+      <!-- non-mobile: the two references a seated player reaches for stay OUT of the menu -->
+      <span class="barnav">
+        <button class="barbtn" onclick="toggleAid()" title="The player aid — the turn, the cask, the Kontore, scoring">📖 Player Aid</button>
+        <a class="barbtn" href="index.html" title="The complete rulebook &amp; component reference">📚 Rules</a>
+      </span>
       <button class="hamb" onclick="toggleMenu()" aria-label="Menu" title="Menu">☰</button>
       <div id="topmenu" class="hidden">
         <a href="#" onclick="toggleMenu();toggleAid();return false">📖 Player Aid</a>
-        <a href="learn.html">🎓 Learn</a>
-        <a href="index.html">📚 Rulebook</a>
+        <div class="mdiv"></div>
+        <span id="hnavmenu"><!-- the shared site nav (nav.js) --></span>
+        <div class="mdiv"></div>
         <a href="#" onclick="toggleMenu();newGame();return false">↻ New Game</a>
       </div>
     </div>
@@ -609,6 +625,7 @@
 <div id="studio" class="modal hidden"><div class="mcard" id="studiocard"></div></div>
 
 <script src="vendor/lucide.min.js"></script>
+<script src="nav.js"></script><!-- the shared SITE NAV: one roster of pages for all four surfaces -->
 <script src="components.js"></script><!-- the shared CARD library (v3.3): the app renders the SAME card faces the print kit cuts -->
 <script>
 //==================================================================
@@ -3564,6 +3581,8 @@ if(typeof window!=='undefined'){window.HANSE={
     if(S.over)gameOver();else maybeRunAI();
   } else {openSetup();}
 })();
+// the hamburger's site links come from the shared roster (nav.js) — never a per-page list
+if(window.HNAV){const hm=document.getElementById('hnavmenu');if(hm)hm.innerHTML=HNAV.menuLinks('play');}
 </script>
 <script src="net.js"></script><!-- the ONLINE-TABLE bridge — fully inert without ?net=1 (see the NET const in the engine) -->
 </body>

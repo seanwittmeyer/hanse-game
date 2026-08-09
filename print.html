@@ -20,7 +20,7 @@
   .bar .seg button.on{background:var(--gold);color:var(--ink)}
   .bar .bsub{font-weight:normal;font-size:.66rem;opacity:.55;font-variant:small-caps;letter-spacing:1.5px;margin-left:10px}
   .bar .bsel{font-family:inherit;font-size:.85rem;border-radius:6px;padding:5px 10px;border:1px solid var(--gold);background:var(--ink);color:var(--parch);cursor:pointer}
-  .bar h1+.bsel{margin-left:auto}   /* push the controls to the right of the title */
+  .bar #vsel{margin-left:auto}   /* title · the site nav · then the tool controls, pushed right */
   .note{font-size:.78rem;opacity:.85}
   /* ====== PAGE = US Letter LANDSCAPE, FULL PAPER (11×8.5in; content inset .3in) ======
      The sheet div IS the paper: an exported sheet PNG scaled to exactly 11×8.5 is at true size and
@@ -699,8 +699,7 @@
 
 <div class="bar no-print" id="bar">
   <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.12b “Light Wharfage”</span></h1>
-  <a href="play.html">▶ Play</a>
-  <a href="index.html">📖 Rules</a>
+  <span id="hnav"><!-- the shared site nav (nav.js) — one roster for all four pages --></span>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
     <option value="boards">Boards</option>
@@ -717,6 +716,7 @@
 <div id="out"></div>
 
 <script src="vendor/lucide.min.js"></script>
+<script src="nav.js"></script>
 <script src="components.js"></script>
 <script src="vendor/html2canvas.min.js"></script>
 <script src="vendor/jszip.min.js"></script>
@@ -1748,6 +1748,7 @@ function printOne(no,forceLayer){
   window.print();
   setTimeout(done,500);   // fallback for browsers that don't fire afterprint
 }
+if(window.HNAV)HNAV.mount('#hnav','print');
 render();
 </script>
 </body>

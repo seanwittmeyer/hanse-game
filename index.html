@@ -260,9 +260,7 @@
 </header>
 
 <nav>
-  <a href="learn.html" style="background:var(--sea2);color:var(--parch);font-weight:bold">🎓 Learn</a>
-  <a href="play.html" style="background:var(--green);color:var(--parch);font-weight:bold">▶ Play</a>
-  <a href="print.html" style="background:var(--red2);color:var(--parch);font-weight:bold">🖨 Print &amp; Play</a>
+  <span id="hnav"><!-- the shared site nav (nav.js) — one roster for all four pages --></span>
   <span class="navsep"></span>
   <a href="#intro">Overview</a>
   <a href="#turn">A Turn</a>
@@ -714,8 +712,10 @@
 </footer>
 
 <script src="vendor/lucide.min.js"></script>
+<script src="nav.js"></script>
 <script src="components.js"></script>
 <script>
+if(window.HNAV)HNAV.mount('#hnav','rules');
 // ---- THE KONTOR PANELS (rendered into §8) ----
 const destinations=[
   {cls:'bruges',  name:'Bruges',   role:'The Hub — the on-ramp',            gate:'die 1+', value:'the parked die (1–6★)', benefit:'a recipe — at its H = Q−3 fee (Q3s free)', maj:'<b>4 / 2 / 0</b>'},
