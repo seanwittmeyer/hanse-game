@@ -1,0 +1,58 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Hanse — net harness (two seats, one page)</title>
+<style>
+  body{margin:0;font:13px/1.4 system-ui,sans-serif;background:#1c1c1f;color:#eee}
+  #bar{padding:8px 12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  #bar b{margin-right:6px}
+  #frames{display:flex;gap:4px;height:calc(100vh - 46px)}
+  iframe{flex:1;border:2px solid #444;background:#fff;min-width:0}
+  button{padding:4px 10px;cursor:pointer}
+  #stat{margin-left:auto;font-weight:600}
+</style></head><body>
+<div id="bar"><b>Net harness</b>
+  <button onclick="start('hh')">2p: Human vs Human</button>
+  <button onclick="start('ha')">2p: Human vs AI (seat 0 runs the bot)</button>
+  <button onclick="start('aa')">2p: AI vs AI · instant (full-game soak)</button>
+  <button onclick="resync()">resync</button>
+  <span id="stat">idle — waiting for HELLOs</span>
+</div>
+<div id="frames">
+  <iframe id="f0" name="seat0" src="../play.html?net=1"></iframe>
+  <iframe id="f1" name="seat1" src="../play.html?net=1"></iframe>
+</div>
+<script>
+// The parent shell in miniature: seat assignment, the state store, fan-out. The platform (P2)
+// replaces this file's store with the Supabase row — the child protocol is identical.
+var frames=[document.getElementById('f0'),document.getElementById('f1')];
+var hello=[null,null], ver=0, latest=null, started=false;
+window.__hs={ver:0,over:false,actor:null,commits:0,errors:[]};   // read by the playwright smoke
+function post(i,msg){msg.hanse=1;frames[i].contentWindow.postMessage(msg,'*');}
+function stat(t){document.getElementById('stat').textContent=t;}
+window.addEventListener('message',function(ev){
+  var d=ev.data;if(!d||d.hanse!==1)return;
+  var from=frames.findIndex(function(f){return f.contentWindow===ev.source;});
+  if(from<0)return;
+  if(d.type==='HELLO'){hello[from]=d.key;if(!started)stat('HELLO from seat'+from+' · build '+d.key);return;}
+  if(d.type==='COMMIT'){
+    ver++;latest={S:d.S,UI:d.UI};
+    window.__hs={ver:ver,over:!!d.over,actor:d.actor,commits:(window.__hs.commits||0)+1,errors:window.__hs.errors,
+                 standings:d.standings||window.__hs.standings||null};
+    stat('v'+ver+' · actor seat '+d.actor+(d.over?' · GAME OVER '+JSON.stringify(d.standings):''));
+    for(var i=0;i<frames.length;i++)if(i!==from)post(i,{type:'STATE',S:d.S,UI:d.UI});
+    return;
+  }
+  if(d.type==='ERROR'){window.__hs.errors.push(d.code+': '+d.detail);stat('ERROR '+d.code+' — '+d.detail);}
+});
+function start(mode){
+  started=true;ver=0;latest=null;window.__hs={ver:0,over:false,actor:null,commits:0,errors:[]};
+  var ai1=(mode==='ha'||mode==='aa')?{tier:'journeyman'}:null;
+  var ai0=(mode==='aa')?{tier:'journeyman'}:null;
+  var speed=(mode==='aa')?'instant':'normal';
+  post(1,{type:'INIT',seat:1,botRunner:false,aiSpeed:speed});                    // guest first: waits for STATE
+  post(0,{type:'INIT',seat:0,botRunner:true,aiSpeed:speed,
+          setup:{n:2,names:['Alice','Bob'],aiSeats:[ai0,ai1]}});                 // host: builds the table, commits state 0
+  stat('started '+mode);
+}
+function resync(){post(0,{type:'RESYNC_REQ'});}
+</script>
+</body></html>
