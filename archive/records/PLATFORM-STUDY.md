@@ -133,7 +133,19 @@ Every load-bearing claim was re-checked against source before this plan was decl
 
 **Revisit topology when any of these fires:** Hanse's design freezes (a v1.0/print-settled build), a third game arrives, or cross-repo protocol churn becomes a felt annoyance. The P3 `PLATFORM-CONTRACT.md` is what makes that later move cheap — the postMessage/envelope contract is exactly the seam a monorepo would cut along, so nothing done now is thrown away.
 
-## 8. Open dials for the designer
+## 8. SHIPPED — P0 + P1 (2026-08-09, designer-approved "go all in")
+
+The engine moved v4.9d → **v4.11 "Factor's Fee"** under this study (the 08-06/08-08 letters); every architecture fact the plan rests on held (the `(S,UI)` pair, `endTurn`, the prize queues, `humanGate`), and the shim was cut against v4.11.
+
+**P1 — the hanse net shim (hanse `8eb7861`, `KEY hanse-v411n1`, published to main).** ~30 engine lines behind `?net=1` (the `NET` const · save/load bypass · `actorSeat()` — humanGate's oracle as a seat id · `syncFlagsFromS()` · `S.schema` stamp · `aiSpeedOverride` · the `window.HANSE` accessor · net boot) + `net.js` (the postMessage bridge: HELLO/INIT/STATE/COMMIT/RESYNC · gating wrappers over the whole ~44-function action surface · botRunner-only AI · undo cleared at every commit/apply · names escaped at ingest · the status banner) + `playtests/net-harness.html` (a two-seat table on one page — the parent-shell protocol in miniature) + two standing gates: `net-probe.js` (two REAL engine+net.js clients in vm with a router — full-game convergence byte-identical, single-writer held, two-way play, and the S3 handoff round-trip) and `net-smoke.mjs` (Playwright: real iframes/postMessage — a full AI game converges byte-identical; human mirroring, gating and the banner verified). **Gates: verify 212/212 (unchanged) · sim 3/count clean · net-probe ALL PASS · net-smoke ALL PASS · solo boot byte-equivalent (no netbar, NET=false, shim inert).** The harness runs on the live Pages site (`playtests/net-harness.html`) — a playable two-seat online-table demo with zero backend, which also settles §6's embed question for the same-origin case.
+
+**P0 — platform prep (PDX `9e12bb3`, feature branch ONLY — PDX main untouched).** `scripts/add-game-type-column.sql` (**apply in Supabase BEFORE deploying this branch** — the new queries reference the column) · `lib/platform/core.ts` (the game-agnostic mechanism + `PlatformGameRow<TState>`; imports only the supabase client) · `multiplayer.ts` re-exports/wraps it PDX-typed (all 51 existing imports resolve; export parity 43/43 audited) · `game_type='pdx'` stamped on create and filtered into the three list queries + `/live` · foreign-code guards on `joinMultiplayerGame` **and two further write paths the completion audit found** (`joinOpenSeat` via `?joinseat=`, `transferPlayerSlot` via the transfer route) · `/game/[code]` + the transfer route hand non-pdx rooms to `/<game_type>/<code>`. **Gates: vitest 86 passed (baseline-identical) · next build clean with zero Supabase env · tsc --noEmit 0 errors.**
+
+**Carried watches:** the shared active-games ledger will surface game-2 entries in PDX's list once game 2 writes it (P2 filters by fetched game_type) · `endAbandonedGames` sweeps cross-game BY DESIGN (the hanse envelope must carry top-level `turnNumber` — P2 contract item; conscious sign-off recorded) · the wrong-game handoff link 404s until `/hanse` exists (P2) · realtime channels are code-keyed, not type-guarded (safe: reachable only after a guarded join/create).
+
+**Next: P2** — `lib/hanse/multiplayer.ts` on `core.ts` (envelope create/join/start), `/hanse` lobby-lite + `/hanse/[code]` room page whose bridge is the harness router with the Supabase row as the store, `/live` game_type column.
+
+## 9. Open dials for the designer
 
 1. **Player counts online:** cap at 2–4 for v1 (5p runs but isn't tuned; PDX platform assumes ≤4 — `PLAYER_COLORS` etc.)?
 2. **Iframe source:** live Pages URL (always the latest mirror; KEY bumps strand in-flight rooms — matches current culture) vs a vendored per-deploy snapshot (stable rooms, extra publish step)? Study assumes live Pages.
