@@ -508,8 +508,10 @@
   .rcard{display:inline-flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:7px;padding:4px 9px;background:var(--parch);margin:3px 5px 0 0;font-size:.74rem;box-shadow:0 1px 3px rgba(0,0,0,.12);vertical-align:top}
   /* the open CONTRACT row seats the print kit's own 2×0.9in tile (components.js ladingTile),
      scaled into its box by fitCards — the same grammar as the Ship/building/Specialist displays */
-  .ladingrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:6px;margin-top:5px}
-  .ladingtile{position:relative;width:100%;aspect-ratio:2/0.9;border-radius:7px}
+  /* the tile never renders LARGER than the cardboard it is: 2×0.9in = 192px is the hard cap,
+     so a wide column can't blow the row up and shove the breweries down the page (2026-08-09) */
+  .ladingrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+  .ladingtile{position:relative;flex:1 1 148px;max-width:192px;aspect-ratio:2/0.9;border-radius:7px}
   .ladingtile.stopgo{cursor:pointer}
   .ladingtile .ldfb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:4px;border:1px solid var(--line);border-radius:7px;background:var(--parch);font-size:.73rem}
   .rcard .rcn{font-weight:bold;font-variant:small-caps;white-space:nowrap}
