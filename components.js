@@ -71,7 +71,7 @@ const CASKS=[
 // (the deadlock relief valve is a COMPONENT now; the charter/contract subsystem is retired).
 const HULL={skute:{cap:1,fee:2},cog:{cap:2,fee:1},hulk:{cap:3,fee:0}};   // v4.8 "Harbor Rates" ⚙: the commission fee is PER HULL — 2/1/0 G for 1/2/3 berths (dispatch speed is dear, tonnage free); fee 0 prints NO chip (chipless = free, the buildings' grammar)
 const SHIP_DISPLAY=4;   // face-up ship market ⚙ (v4.0: 4 — refills from the shuffled ship deck)
-const SHIP_DEST={Bruges:{kc:'#274b5c',req:1},London:{kc:'#b8860b',req:2},Bergen:{kc:'#4a6b3a',req:2},Novgorod:{kc:'#7c2128',req:4}};
+const SHIP_DEST={Bruges:{kc:'#274b5c',req:1},London:{kc:'#b8860b',req:2},Bergen:{kc:'#4a6b3a',req:2},Novgorod:{kc:'#7c2128',req:3}};   // v4.10: Novgorod's printed minimum is 3+ (the export band) — the tile had kept the pre-v4.10 4+
 const SHIP_DECK=[   // ⚙ 24 hulls — 6 Skute / 10 Cog / 8 Hulk, 6 per port
   ['skute','Bruges'],['cog','Bruges'],['cog','Bruges'],['cog','Bruges'],['hulk','Bruges'],['hulk','Bruges'],
   ['skute','London'],['skute','London'],['cog','London'],['cog','London'],['hulk','London'],['hulk','London'],
@@ -93,7 +93,8 @@ const DIE=n=>'<span class="diech">'+LU('dice-'+n)+'</span>';
 const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a SHIP docked here'}};
 const BUILDINGS=[
   // ---- v4.5b "Open Orders" — THE DICE PASS: 8 of the 17 tiles touch a die (was 3). ONE green
-  // family — every building serves whoever activates it; the builder banks +3★ at placement.
+  // family — every building serves whoever activates it; the builder STANDS A DIE on the tile at
+  // its printed start face (v4.9/v4.9b — the +3★ mint is cut; ms below is that printed face).
   // ACTION buildings print a verb, fired on their slot's stop; LOAD-LIFT buildings modify the
   // boarding die / the ship at their slot. The Annex (echo verb) is CUT; the goods faucets thinned.
   // 17 tiles ⚙. (art: every design owns its file — building-<k>.png; the 2026-08-02 art pass

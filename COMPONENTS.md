@@ -15,6 +15,13 @@
 > claimed Contract, uncapped, ungated** · Town Crier **+2★ per placed presence die** ·
 > Supercargo reworded). **No specialist prints a requirement.**
 
+> **v4.10 (designer-ruled 2026-08-06 — the Eastern Gate):** **REPRINTS, no count changes** —
+> **Novgorod’s printed minimum returns to `die 3+`** (the export band): the **Destinations
+> board’s Novgorod panel** and every **Novgorod Ship tile’s trigger berth** print **3+**
+> (they had kept the pre-v4.10 `4+`). The **+2★ premium is unchanged** (5–8★ per parked die).
+> *(v4.11’s presence fee left no component of its own; v4.12 scoped it to the Almoner’s
+> Stall — see the v4.12 note above.)*
+
 > **v4.9d (designer-ruled 2026-08-04 — the #30 board talk + the board sketch):** **the
 > player board REPRINTS (7.65×3.85″, same cut)** — it now prints the **★ score seat**, the
 > **supply ledge** (dice · grain · hops tally seats), the **FLIGHT ladder** (beers
@@ -117,8 +124,8 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (its header states the current version). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `archive/records/V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v4.9d “Loaded Flight”** (`KEY hanse-v49d`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.9d; the sheet layouts are the P4 refresh). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - The live build is `play.html` — **v4.12b “Light Wharfage”** (`KEY hanse-v412b`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.12b; the sheet layouts are the P4 refresh). Printed copy follows the **Term Registry (`STYLE.md`)**.
 
 ---
 
@@ -268,10 +275,11 @@ die 5+→3★ · Bock→4★ · die 6→4★ · any Kontor — die 6→3★.
 
 Starters **Gruit + Hopped** (1 each/player; Gruit dealt flipped = the warm start). Exports
 **Broyhan · Keut · Mumme · Bock** — deal 3 of 4 each game; gained at the card’s **printed
-wharf fee**, now the formula **`H` = Q−2** ⚙ (Broyhan/Keut `1H` · Mumme `2H` · Bock `3H`) —
-**paid at EVERY channel, the Bruges prize included** (v45e: Bruges grants the pick, never the
-waiver), via Bruges / the *Gain 1 recipe* bonus / Scrivener’s Hall. Flip to the BREWED face on the first brew — the
-flipped cards are the Flight ladder (v45h: the covers are off — no unlock duty).
+wharf fee**, the formula **`H` = Q−3** ⚙ (v4.9c — Broyhan/Keut **chip-less/free** · Mumme `1H` ·
+Bock `2H`) — **paid at EVERY channel, the Bruges prize included** (v45e: Bruges grants the pick,
+never the waiver), via Bruges / the *Gain 1 recipe* bonus / Scrivener’s Hall. The card moves to the
+board’s **COMPLETED side on that beer’s first LOAD** (v4.9d) — the completed cards are the Flight
+ladder (v45h: the covers are off — no unlock duty).
 
 ## 9. Setup (summary — RULES.md §1)
 
