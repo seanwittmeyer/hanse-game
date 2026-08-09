@@ -220,6 +220,19 @@ tile never got reprinted; **every ruling that touches a printed face wants its C
 note, or the kit silently drifts**). Print-face and doc only: the engine is untouched, so no
 `KEY` bump (an in-progress game survives). Gates: verify **228/228** · sim 3 clean.
 
+*Same day, designer-ruled — **the rulebook's icons print BIG**:* on `index.html`, wherever the
+kit's **art** exists the icon **drops its chip entirely** (the circle in the §5/§8/§14/§16
+tables, the dark plate in the §6 die lifecycle) and renders at **40–42px** (30px in the §15
+glossary cards) — *“right now they are nothing more than a blob of coloured pixels.”* Only the
+**lucide line-glyph fallbacks** keep a chip, because a 1.9px stroke needs one to read: the six
+with no art (Move · Choose a line · Resolve · Majority · the Flight · the clock) and the
+**grain/hops colour glyphs the components themselves print** (unmapped by the 2026-08-03 art
+ruling — at cost-chip size the art muddies, so the Icon Key showing the glyph is *correct*).
+The chip is sized to the art's footprint so the icon column still lines up. Inline icons stay at
+1 em (they are words in a sentence) and the **§18 tile previews are untouched** — those are the
+real printed faces at preview scale. `:has()` carries the branch, so it follows the art map
+automatically as icons land.
+
 ### v4.12b “Light Wharfage” (2026-08-09, same day — designer-ruled off the BUILDING-POWER-STUDY)
 The Cooperage wharfage eases **+2★ → +1★** per cask loaded at its slot. The study’s top
 flag (the only design stacking a direct mint + a top-tier mark + an above-bar builder win,

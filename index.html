@@ -73,11 +73,20 @@
   .g:not(.cube){color:#9c7414;} .h:not(.cube){color:#5d7d34;}
   .atbl .act-ic .gi,.atbl .act-ic .hi{color:inherit}
   .atbl .act-ic .gi{color:#9c7414} .atbl .act-ic .hi{color:#5d7d34}
-  /* illustrated icons (the kit's c.1350 sticker set) track the lucide boxes */
+  /* ---- ILLUSTRATED ICONS (the kit's c.1350 sticker set) — 2026-08-09, designer-ruled:
+     where the ART exists it IS the icon. It drops its chip (the circle / the dark box)
+     entirely and prints BIG, so the picture reads instead of sitting in a swatch as a
+     blob. Only the lucide LINE-GLYPH fallbacks — the ones with no art (Move · Choose a
+     line · Resolve · Majority · the Flight · the clock) and the grain/hops colour glyphs
+     the components themselves print — keep the chip a 1.9px stroke needs to read; the
+     chip is sized to the art's footprint so the icon column still lines up. */
   img.ai{width:1em;height:1em;object-fit:contain;vertical-align:-.13em}
-  .atbl .act-ic img.ai{width:17px;height:17px}
-  .gloscard .gh img.ai{width:19px;height:19px;flex:0 0 auto}
-  .dielife .dld img.ai{width:19px;height:19px}
+  .atbl .act-ic:has(img.ai){width:auto;height:auto;background:none;border:0;border-radius:0}
+  .atbl .act-ic img.ai{width:40px;height:40px}
+  .gloscard .gh img.ai{width:30px;height:30px;flex:0 0 auto}
+  .dielife .dld:has(img.ai){width:auto;height:auto;background:none;border-radius:0}
+  .dielife .dld img.ai{width:42px;height:42px}
+  /* (an icon set inline in prose keeps the 1em base above — it is a word in a sentence, not a plate) */
   .pill{display:inline-block; background:var(--green); color:var(--parch); border-radius:18px; padding:1px 9px; font-size:.78rem;}
   .pill.r{background:var(--gold); color:var(--ink);}
   code{background:var(--parch2); padding:1px 5px; border-radius:4px; font-size:.9em;}
@@ -85,9 +94,9 @@
   .note{background:#fff7e6; border-left:4px solid var(--gold); padding:10px 14px; font-size:.88rem; border-radius:0 6px 6px 0; margin-top:14px; color:var(--ink2);}
   .small{font-size:.72rem; color:var(--ink2);}
   .acat{font-variant:small-caps; color:var(--red); font-weight:bold; letter-spacing:.5px; margin:20px 0 2px; font-size:1.05rem;}
-  .atbl td:first-child{text-align:center; width:48px;}
-  .atbl .act-ic{display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:var(--parch2); border:1px solid var(--line);}
-  .atbl .act-ic svg, .atbl .act-ic i{width:15px; height:15px; stroke-width:1.9; color:var(--red); vertical-align:0;}
+  .atbl td:first-child{text-align:center; width:60px;}
+  .atbl .act-ic{display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; background:var(--parch2); border:1px solid var(--line);}
+  .atbl .act-ic svg, .atbl .act-ic i{width:20px; height:20px; stroke-width:1.9; color:var(--red); vertical-align:0;}
   .atbl .gi{color:#9c7414;} .atbl .hi{color:#5d7d34;}
   .atbl .gi, .atbl .hi{width:1em; height:1em; stroke-width:2.1; vertical-align:-2px;}
 
@@ -131,7 +140,7 @@
   .glosgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(238px,1fr)); gap:12px; margin:16px 0;}
   .gloscard{background:var(--parch2); border:1px solid var(--line); border-left:4px solid var(--gold); border-radius:8px; padding:10px 13px;}
   .gloscard .gh{display:flex; align-items:center; gap:8px; margin-bottom:3px;}
-  .gloscard .gh svg,.gloscard .gh i{width:19px; height:19px; color:var(--red); stroke-width:1.9; flex:0 0 auto;}
+  .gloscard .gh svg,.gloscard .gh i{width:26px; height:26px; color:var(--red); stroke-width:1.9; flex:0 0 auto;}
   .gloscard .gt{font-variant:small-caps; font-weight:bold; color:var(--red); font-size:1.02rem; line-height:1.1;}
   .gloscard .gd{font-size:.85rem; color:var(--ink2); line-height:1.4;}
   @media(max-width:620px){.glosgrid{grid-template-columns:1fr}}
@@ -155,10 +164,12 @@
   .dielife .dl .small{display:block; margin-top:3px; line-height:1.35;}
   .dielife .dld{display:flex; align-items:center; justify-content:center; width:34px; height:34px; margin:0 auto 6px; border-radius:8px; background:var(--ink); color:var(--parch);}
   .dielife .dld svg,.dielife .dld i{width:17px; height:17px; stroke-width:1.9;}
+  /* the Ready/Park states tint the CARD; the plate behind the glyph is the lucide
+     fallback's only — an art icon carries no plate at all (2026-08-09) */
   .dielife .dl.rdy{background:#eaf3df; border-color:var(--green);}
-  .dielife .dl.rdy .dld{background:var(--green);}
+  .dielife .dl.rdy .dld:not(:has(img.ai)){background:var(--green);}
   .dielife .dl.prk{background:#fbeae8; border-color:var(--red);}
-  .dielife .dl.prk .dld{background:var(--red);}
+  .dielife .dl.prk .dld:not(:has(img.ai)){background:var(--red);}
   .dielife .dla{align-self:center; color:var(--red); font-weight:bold; font-size:1.2rem; flex:0 0 auto;}
   @media(max-width:600px){.dielife .dla{display:none}}
   /* ---- CLARIFICATION & EXAMPLE BOXES ---- */
