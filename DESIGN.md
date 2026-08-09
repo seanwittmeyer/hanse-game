@@ -203,6 +203,13 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
+### New Game goes online-first (2026-08-09, closing the platform loop; presentation only — no rules change, no KEY bump)
+The app's New Game modal now leads with **“⚓ New Online Table — play.pdx”** — a hand-off to
+the platform lobby's table setup (`play.pdx.waterworks.studio/hanse?create=1`, which opens
+its create view directly). The hot-seat form stays below as the local path (the lobby's
+Solo/Hotseat footer link points back here, so neither entry is a dead end). The trigger
+itself (menu · game-over screen · end action bar) is unchanged — one entry, online-first.
+
 ### v4.13 “Plain Sight” (2026-08-09 — designer-ruled: a PRESENTATION release)
 **No rule changes.** A whole version spent on how the game READS, because a table-first game
 that a player cannot parse is not finished. Five moves, detailed in the entries below:
