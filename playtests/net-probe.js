@@ -77,25 +77,26 @@ function nullTurn(c){ const H=c.HANSE; const p=H.S.players[H.S.active];
   const cell=!p.placed?(H.S.active===0?'A':'D'):ADJ[p.cell][0];
   c.doMove(cell); c.chooseLine('row'); c.endTurn(); }
 
-// ================= S1 — CONVERGENCE (AI vs AI, instant, runner=A) =================
-console.log('S1 convergence — 2p AI vs AI (runner drives, mirror applies):');
-for(let run=0;run<2;run++){
+// ================= S1 — CONVERGENCE (AI vs AI, instant, runner=A · 2p/3p/4p) =================
+console.log('S1 convergence — AI-vs-AI full games at every player count (runner drives, mirror applies):');
+const NAMES=['Alice','Bob','Cora','Dagny'];
+for(const n of [2,3,4]){
   outbox=[];record.commits=[];record.errors=[];
   const A=makeClient('A'),B=makeClient('B');
   deliver(B,{type:'INIT',seat:1,botRunner:false,aiSpeed:'instant'});
   deliver(A,{type:'INIT',seat:0,botRunner:true,aiSpeed:'instant',
-    setup:{n:2,names:['Alice','Bob'],aiSeats:[{tier:'journeyman'},{tier:'journeyman'}]}});
+    setup:{n:n,names:NAMES.slice(0,n),aiSeats:NAMES.slice(0,n).map(()=>({tier:'journeyman'}))}});
   pump({A,B});
-  ok(A.HANSE.S&&A.HANSE.S.over===true,'run'+run+' runner finished a full game (round '+(A.HANSE.S&&A.HANSE.S.turn)+')');
-  ok(B.HANSE.S&&B.HANSE.S.over===true,'run'+run+' mirror reached game over');
-  ok(sig(A)===sig(B),'run'+run+' final S byte-identical on both clients');
-  ok(record.commits.length>=10&&record.commits.every(c=>c.from==='A'),'run'+run+' single-writer held ('+record.commits.length+' commits, all from the runner)');
-  ok(record.commits.every(c=>c.schema===A.HANSE.KEY),'run'+run+' every commit stamped schema '+A.HANSE.KEY);
-  ok(record.errors.length===0,'run'+run+' zero protocol errors');
+  ok(A.HANSE.S&&A.HANSE.S.over===true,n+'p runner finished a full game (round '+(A.HANSE.S&&A.HANSE.S.turn)+')');
+  ok(B.HANSE.S&&B.HANSE.S.over===true,n+'p mirror reached game over');
+  ok(sig(A)===sig(B),n+'p final S byte-identical on both clients');
+  ok(record.commits.length>=10&&record.commits.every(c=>c.from==='A'),n+'p single-writer held ('+record.commits.length+' commits, all from the runner)');
+  ok(record.commits.every(c=>c.schema===A.HANSE.KEY),n+'p every commit stamped schema '+A.HANSE.KEY);
+  ok(record.errors.length===0,n+'p zero protocol errors');
   const last=record.commits[record.commits.length-1];
-  ok(!!(last&&last.over&&last.standings&&last.standings.length===2),'run'+run+' final commit carries standings');
+  ok(!!(last&&last.over&&last.standings&&last.standings.length===n),n+'p final commit carries '+n+' standings');
   const s0=sig(B); B.doMove('A');
-  ok(sig(B)===s0,'run'+run+' mirror client action-blocked after game over');
+  ok(sig(B)===s0,n+'p mirror client action-blocked after game over');
 }
 
 // ================= S2 — TWO-WAY PLAY (human vs human null turns) =================
@@ -145,6 +146,80 @@ ok(sig(A2)===sig(B2),'states converged across the handoff');
 ok(A2.HANSE.UI.sub==='stops','the interrupted turn resumed at its stops');
 A2.endTurn(); pump({A2,B2});
 ok(A2.HANSE.actorSeat()===1&&sig(A2)===sig(B2),'the turn then completed and passed normally');
+
+// ================= S4 — UNDO: in-segment works, never crosses a commit =================
+console.log('S4 undo — a takeback reaches only the actor\'s uncommitted segment:');
+ok(A2.HANSE.actorSeat()===1,'setup: seat 1 is the actor');
+{
+  const s0=sig(B2);
+  const p=B2.HANSE.S.players[1];
+  B2.doMove(!p.placed?'D':ADJ[p.cell][0]);
+  const s1=sig(B2);
+  ok(s1!==s0,'the actor\'s move changed local state');
+  const pre=record.commits.length;
+  B2.doUndo();
+  ok(sig(B2)===s0,'in-segment undo restored the pre-move state');
+  ok(record.commits.length===pre,'the undo published nothing (actor unchanged)');
+  nullTurn(B2); pump({A2,B2});
+  ok(sig(A2)===sig(B2)&&A2.HANSE.actorSeat()===0,'the turn then completed normally');
+  const sB=sig(B2); B2.doUndo();
+  ok(sig(B2)===sB,'the previous actor cannot undo after committing (blocked)');
+  const sA=sig(A2); A2.doUndo();
+  ok(sig(A2)===sA,'the new actor cannot undo across the commit (stack cleared)');
+}
+
+// ================= S5 — SPECTATOR (seat -1): sees everything, drives nothing =================
+console.log('S5 spectator — a seat:-1 client mirrors and is fully blocked:');
+{
+  const W=makeClient('W');
+  deliver(W,{type:'INIT',seat:-1,botRunner:false,state:{S:clone(A2.HANSE.S),UI:clone(A2.HANSE.UI)}});
+  ok(W.HANSE_NET.inited===true&&W.HANSE_NET.seat===-1,'spectator INIT accepted');
+  ok(sig(W)===sig(A2),'spectator converged to the table state');
+  ok(W.HANSE_NET.canDrive()===false,'spectator is never authorized');
+  const sW=sig(W); W.doMove('A'); W.endTurn();
+  ok(sig(W)===sW,'spectator actions are inert');
+}
+
+// ================= S6 — MID-TURN JOIN / DEVICE TRANSFER during a handoff =================
+console.log('S6 mid-turn join — a fresh client takes seat 1 mid-handoff and completes the pick:');
+{
+  ok(A2.HANSE.actorSeat()===0,'setup: seat 0 is the actor');
+  const p0=A2.HANSE.S.players[0];
+  A2.doMove(!p0.placed?'A':ADJ[p0.cell][0]); A2.chooseLine('row');
+  A2.HANSE.UI.sub='bspec';
+  A2.HANSE.UI.pendingSpec=[{pid:1,dest:'bergen',style:'gruit',die:1}];
+  A2.HANSE.UI.goodsRt='stops';
+  const J=makeClient('J');   // seat 1's NEW device, joining mid-handoff
+  deliver(J,{type:'INIT',seat:1,botRunner:false,state:{S:clone(A2.HANSE.S),UI:clone(A2.HANSE.UI)}});
+  ok(J.HANSE.actorSeat()===1&&J.HANSE_NET.canDrive()===true,'the joining device is immediately the authorized actor');
+  const pre=record.commits.length;
+  J.bspecPick(null); pump({A2,B2,J});
+  ok(record.commits.length>pre&&record.commits[record.commits.length-1].from==='J','the pick committed from the new device');
+  ok(sig(A2)===sig(J)&&sig(B2)===sig(J),'all three clients converged (old device included)');
+  ok(A2.HANSE.actorSeat()===0&&A2.HANSE.UI.sub==='stops','control returned to the interrupted turn');
+  A2.endTurn(); pump({A2,B2,J});
+  ok(sig(A2)===sig(J)&&A2.HANSE.actorSeat()===1,'the turn completed across all clients');
+}
+
+// ================= S8 — RESYNC_REQ re-publishes the current state =================
+console.log('S8 resync — RESYNC_REQ makes the client re-commit:');
+{
+  const pre=record.commits.length;
+  deliver(A2,{type:'RESYNC_REQ'}); pump({A2,B2});
+  ok(record.commits.length===pre+1&&record.commits[record.commits.length-1].from==='A2','one fresh commit from the asked client');
+  ok(sig(A2)===sig(B2),'states remain converged after the resync');
+}
+
+// ================= S7 — KEY MISMATCH: a foreign build's state is refused =================
+console.log('S7 key mismatch — a STATE from another build errors and is not applied:');
+{
+  const bad={S:clone(A2.HANSE.S),UI:clone(A2.HANSE.UI)};
+  bad.S.schema='hanse-v000';
+  const sB=sig(B2), preErr=record.errors.length;
+  deliver(B2,{type:'STATE',S:bad.S,UI:bad.UI}); pump({A2,B2});
+  ok(record.errors.length>preErr&&/key-mismatch/.test(record.errors.join(' ')),'the client posted a key-mismatch ERROR');
+  ok(sig(B2)===sB,'the mismatched state was NOT applied');
+}
 
 console.log(failures? ('\n*** '+failures+' FAILURES ***') : '\nNET-PROBE: ALL PASS');
 process.exit(failures?1:0);

@@ -32,7 +32,11 @@ window.addEventListener('message',function(ev){
   var d=ev.data;if(!d||d.hanse!==1)return;
   var from=frames.findIndex(function(f){return f.contentWindow===ev.source;});
   if(from<0)return;
-  if(d.type==='HELLO'){hello[from]=d.key;if(!started)stat('HELLO from seat'+from+' · build '+d.key);return;}
+  if(d.type==='HELLO'){hello[from]=d.key;
+    // a HELLO after the table started = a reloaded/rejoining client — re-seat it with the
+    // latest state (exactly what the platform room page does on rejoin)
+    if(started&&latest){post(from,{type:'INIT',seat:from,botRunner:from===0,state:latest});return;}
+    stat('HELLO from seat'+from+' · build '+d.key);return;}
   if(d.type==='COMMIT'){
     ver++;latest={S:d.S,UI:d.UI};
     window.__hs={ver:ver,over:!!d.over,actor:d.actor,commits:(window.__hs.commits||0)+1,errors:window.__hs.errors,
