@@ -47,7 +47,9 @@ function makeClient(id){
   ctx.addEventListener=(t,f)=>{ if(t==='message')ctx.__listeners.push(f); };
   ctx.removeEventListener=noop;
   vm.createContext(ctx);
-  vm.runInContext(engine+'\n;\n'+netjs,ctx,{filename:'engine+net.js#'+id});
+  // GUILD_MS/CELLAR_MS are let-declared in the engine's scope — lower them in-scope (the
+  // sim.js pattern) so the S9 MC-fence scenario runs GM decisions in probe time.
+  vm.runInContext(engine+'\n;\n'+netjs+'\n;try{GUILD_MS=40;CELLAR_MS=80;}catch(e){}',ctx,{filename:'engine+net.js#'+id});
   if(!ctx.HANSE) throw new Error(id+': window.HANSE missing');
   if(!ctx.HANSE_NET) throw new Error(id+': HANSE_NET missing (net.js inert?)');
   return ctx;
@@ -64,7 +66,8 @@ function pump(clients){   // the parent shell: route until the wire is quiet
     if(msg.type==='HELLO'){record.helloKeys[from]=msg.key;continue;}
     if(msg.type==='ERROR'){record.errors.push(from+':'+msg.code+':'+(msg.detail||''));continue;}
     if(msg.type==='COMMIT'){
-      record.commits.push({from,actor:msg.actor,over:msg.over,schema:msg.S&&msg.S.schema,standings:msg.standings});
+      record.commits.push({from,actor:msg.actor,over:msg.over,schema:msg.S&&msg.S.schema,standings:msg.standings,
+        diag:msg.diag,ais:msg.S&&msg.S.players?msg.S.players.map(p=>p.ai?p.ai.tier:null):null});
       for(const [cid,c] of Object.entries(clients)) if(cid!==from) deliver(c,{type:'STATE',S:msg.S,UI:msg.UI});
     }
   }
@@ -219,6 +222,40 @@ console.log('S7 key mismatch — a STATE from another build errors and is not ap
   deliver(B2,{type:'STATE',S:bad.S,UI:bad.UI}); pump({A2,B2});
   ok(record.errors.length>preErr&&/key-mismatch/.test(record.errors.join(' ')),'the client posted a key-mismatch ERROR');
   ok(sig(B2)===sB,'the mismatched state was NOT applied');
+}
+
+// ================= S9 — THE MC SIM FENCE (the UKZ3SA regression) =================
+// A guildmaster seat's aiMCDecide swaps the global S for playout clones (every clone seat a
+// rollout bot) and drives the same wrapped action functions. Pre-n2, every playout step fired
+// afterAction→COMMIT: thousands of imagined states published, all seats ai:trader, humans
+// locked out. The fence: net.js is inert while HANSE.aiSimulating is up, and every published
+// state re-stamps p.ai from the platform's seat map.
+console.log('S9 MC sim fence — a guildmaster turn publishes real states only, seat truth held:');
+{
+  outbox=[];record.commits=[];record.errors=[];
+  const G=makeClient('G'),M=makeClient('M');
+  deliver(M,{type:'INIT',seat:-1,botRunner:false,aiSpeed:'instant',aiSeats:[null,{tier:'guildmaster'}]});
+  deliver(G,{type:'INIT',seat:0,botRunner:true,aiSpeed:'instant',aiSeats:[null,{tier:'guildmaster'}],
+    setup:{n:2,names:['Alice','Guildmaster (AI)'],aiSeats:[null,{tier:'guildmaster'}]}});
+  pump({G,M});
+  ok(G.HANSE.S&&G.HANSE.S.players[1].ai&&G.HANSE.S.players[1].ai.tier==='guildmaster','setup seats a guildmaster at seat 1');
+  ok(G.HANSE.actorSeat()===0,'setup: the human holds the first turn');
+  const c0=record.commits.length;
+  nullTurn(G); pump({G,M});   // Alice's null turn ends → the GM's WHOLE turn runs (MC decisions included)
+  const turnCommits=record.commits.length-c0;
+  ok(G.HANSE.actorSeat()===0&&G.HANSE.S.turn>=2,'the guildmaster turn completed and control returned (round '+G.HANSE.S.turn+')');
+  ok(turnCommits>=2&&turnCommits<=20,'the exchange published TURN-level commits only ('+turnCommits+' — a playout leak would be hundreds)');
+  ok(record.commits.every(c=>c.ais&&c.ais[0]===null),'the human seat is ai:null in EVERY published state');
+  ok(record.commits.every(c=>c.ais&&c.ais[1]==='guildmaster'),'the AI seat keeps its TRUE tier in every published state (never a rollout tier)');
+  ok(record.commits.every(c=>c.diag&&typeof c.diag.runner==='boolean'),'every commit carries diag{seat,runner}');
+  ok(sig(G)===sig(M),'runner and spectator converged after the MC turn');
+  ok(record.errors.length===0,'zero protocol errors');
+  // the healing stamp: a leaked ai flag on a human seat cannot survive into a published state
+  G.HANSE.S.players[0].ai={tier:'trader',persona:null};
+  G.HANSE_NET.resync(); pump({G,M});
+  const last=record.commits[record.commits.length-1];
+  ok(last&&last.ais&&last.ais[0]===null,'a contaminated human seat is re-stamped ai:null on the next publish');
+  ok(M.HANSE.S.players[0].ai===null,'the mirror never sees the contamination');
 }
 
 console.log(failures? ('\n*** '+failures+' FAILURES ***') : '\nNET-PROBE: ALL PASS');

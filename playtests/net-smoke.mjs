@@ -104,7 +104,10 @@ try{
 }catch(e){
   const d=await f1b.evaluate(()=>({sub:window.HANSE.UI&&window.HANSE.UI.sub,active:window.HANSE.S&&window.HANSE.S.active,
     turn:window.HANSE.S&&window.HANSE.S.turn,seat:window.HANSE_NET.seat,inited:window.HANSE_NET.inited,
-    canDrive:window.HANSE_NET.canDrive(),banner:document.getElementById('netbar')&&document.getElementById('netbar').textContent}));
+    canDrive:window.HANSE_NET.canDrive(),banner:document.getElementById('netbar')&&document.getElementById('netbar').textContent,
+    ais:window.HANSE.S&&window.HANSE.S.players.map(p=>p.ai?p.ai.tier||true:null),
+    truth:window.HANSE_NET.seatTruth,sim:window.HANSE.aiSimulating,acting:window.HANSE.aiActing,
+    probe:(()=>{try{const s0=window.HANSE.UI.sub;window.doMove('D');const s1=window.HANSE.UI.sub;return s0+'>'+s1;}catch(e){return 'THREW:'+e.message;}})()}));
   const hs=await page.evaluate(()=>window.__hs);
   console.log('  DIAG reloaded-guest:',JSON.stringify(d));
   console.log('  DIAG harness:',JSON.stringify(hs));
