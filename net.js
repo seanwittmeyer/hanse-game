@@ -32,6 +32,19 @@ if(!H||!H.NET)return;   // solo page (or a harness that concatenated this file w
 
 var mySeat=null, botRunner=false, parentOrigin=null, inited=false;
 var seq=0, lastSentSig='', lastActor=null, helloTimer=null;
+var seatTruth=null;   // n2: the platform's seat map ({tier}|null per seat) — AUTHORITATIVE over p.ai
+
+// n2: the MC pair (aiMCDecide) swaps the global S for playout clones and drives the same
+// wrapped action functions — the shim must be INERT while a simulation is up, or every
+// playout step becomes a COMMIT (the UKZ3SA incident: imagined futures streamed as real states).
+function simming(){return !!H.aiSimulating;}
+
+// n2: re-stamp who is AI from the platform's seat map — on every apply and before every
+// commit — so no engine-internal mutation of p.ai can ever survive into a published state.
+function stampSeats(){
+  if(!seatTruth||!H.S||!H.S.players)return;
+  H.S.players.forEach(function(p,i){p.ai=seatTruth[i]||null;});
+}
 
 // the whole UI-entry action surface (the buttons' onclick functions + endTurn + undo)
 var GATED=['doMove','chooseLine','resolveStop','backToStops','srcTake','srcSkip','commPick','commPlace','commBack','commSkip',
@@ -58,6 +71,7 @@ GATED.forEach(function(fn){
   var orig=window[fn];
   if(typeof orig!=='function'){try{console.warn('[net] missing action fn:',fn);}catch(e){}return;}
   window[fn]=function(){
+    if(simming())return orig.apply(this,arguments);   // n2: MC playouts see the raw engine — no gate, no commit
     if(!canDrive()){pulse();return;}
     var r=orig.apply(this,arguments);
     afterAction();
@@ -68,9 +82,21 @@ BLOCKED.forEach(function(fn){
   if(typeof window[fn]!=='function')return;
   window[fn]=function(){pulse();};
 });
-// bots run ONLY on the botRunner client (the engine calls maybeRunAI internally after commits)
+// bots run ONLY on the botRunner client (the engine calls maybeRunAI internally after commits);
+// n2: a HIDDEN tab does not INITIATE bot turns — a throttled/backgrounded runner stops racing
+// the watchdog takeover; on return to visibility it resumes if still current.
 var origMaybe=window.maybeRunAI;
-window.maybeRunAI=function(){ if(!botRunner)return; return origMaybe.apply(this,arguments); };
+window.maybeRunAI=function(){
+  if(simming())return origMaybe.apply(this,arguments);
+  if(!botRunner)return;
+  if(typeof document!=='undefined'&&document.hidden)return;
+  return origMaybe.apply(this,arguments);
+};
+if(typeof document!=='undefined'&&document.addEventListener){
+  document.addEventListener('visibilitychange',function(){
+    if(!document.hidden&&inited&&botRunner&&H.S&&!H.S.over)window.maybeRunAI();
+  });
+}
 
 function afterAction(){
   if(!H.S)return;
@@ -82,12 +108,15 @@ function afterAction(){
 
 function commit(){
   if(!inited||!H.S)return;
+  if(simming())return;   // n2: NEVER publish a playout clone — the hard fence behind the wrapper fence
+  stampSeats();          // n2: the platform's seat map is authoritative in every published state
   var sig;
   try{sig=JSON.stringify(H.S)+'|'+JSON.stringify(H.UI);}catch(e){return;}
   if(sig===lastSentSig)return;
   lastSentSig=sig;
   post({type:'COMMIT',seq:++seq,S:H.S,UI:H.UI,actor:H.actorSeat(),over:!!H.S.over,
-        standings:H.S.over?H.standings():null});
+        standings:H.S.over?H.standings():null,
+        diag:{seat:mySeat,runner:botRunner}});   // n2: for the platform's table log
   H.clearUndo();   // published — a takeback may no longer cross this point
 }
 
@@ -106,6 +135,7 @@ function applyState(st){
   H.S=st.S;
   H.UI=(st.UI&&st.UI.sub)?st.UI:{sub:'move'};
   try{H.S.players.forEach(function(p){p.name=esc(p.name);});}catch(e){}
+  stampSeats();   // n2: an applied state can never re-teach this table who is AI
   H.syncFlagsFromS();
   H.clearUndo();
   lastActor=H.actorSeat();
@@ -121,6 +151,10 @@ function init(d){
   mySeat=(d.seat|0);
   botRunner=!!d.botRunner;
   H.setAiSpeed((d.aiSpeed==='slow'||d.aiSpeed==='normal'||d.aiSpeed==='instant')?d.aiSpeed:'normal');
+  // n2: any INIT may carry the seat map (the platform sends it on every INIT); setup's own
+  // aiSeats remains the fallback so older parents keep working.
+  if(Array.isArray(d.aiSeats))seatTruth=d.aiSeats;
+  else if(d.setup&&Array.isArray(d.setup.aiSeats))seatTruth=d.setup.aiSeats;
   inited=true;
   if(helloTimer){clearInterval(helloTimer);helloTimer=null;}
   if(d.state&&d.state.S){applyState(d.state);return;}
@@ -189,10 +223,11 @@ function fatal(msg){fatalMsg=msg;banner();}
 
 // exposed for the parent bridge, the harness and the probes
 window.HANSE_NET={
-  version:1,
+  version:2,   // n2: sim fence + authoritative seat map + hidden-runner fence + commit diag
   get seat(){return mySeat;},
   get botRunner(){return botRunner;},
   get inited(){return inited;},
+  get seatTruth(){return seatTruth;},
   canDrive:canDrive,
   resync:function(){lastSentSig='';commit();}
 };

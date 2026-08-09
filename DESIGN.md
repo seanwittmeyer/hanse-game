@@ -203,6 +203,18 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
+### n2 net-shim — the MC sim fence (2026-08-09, off the first live 3p platform table; KEY `hanse-v412bn2`, NO game change)
+The GM/CM's `aiMCDecide` swaps the global `S` for playout clones (every clone seat a rollout
+bot) and drives the same action functions net.js wraps — so under `?net=1` every playout step
+fired the shim's commit: table UKZ3SA published **8,153** imagined states, every seat became
+`ai:trader`, and the humans were locked out of their own game. Fix: net.js is **inert while
+`HANSE.aiSimulating` is up** (wrappers pass through, `commit()` refuses); every INIT carries
+the platform's `aiSeats` and **`p.ai` is re-stamped from that seat map** on every apply and
+before every publish (contamination self-heals); a hidden tab stops *initiating* bot turns
+(the watchdog takeover stops racing a throttled host); COMMIT carries `diag{seat,runner}`.
+`net-probe` gains **S9** (the fence regression — pre-fix one GM turn = 464 commits, post-fix 2).
+Gates: verify 228/228 · sim 3 clean · net-probe S1–S9 + browser smoke ALL PASS.
+
 ### 2026-08-09 — the surface-reconciliation pass (no rules change, no KEY bump)
 A session-start read of the full canon caught the components lagging three ruled letters.
 **The real one: the printed Novgorod minimum was still `4+`.** v4.10 returned the gate to
