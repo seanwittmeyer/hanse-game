@@ -506,8 +506,12 @@
   .qpd b,.rgate b{margin-left:3px}
   /* brewery recipe cards */
   .rcard{display:inline-flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:7px;padding:4px 9px;background:var(--parch);margin:3px 5px 0 0;font-size:.74rem;box-shadow:0 1px 3px rgba(0,0,0,.12);vertical-align:top}
-  .ladingrow{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
-  .ladingtile{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:7px;padding:3px 8px;background:var(--parch);font-size:.73rem;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+  /* the open CONTRACT row seats the print kit's own 2×0.9in tile (components.js ladingTile),
+     scaled into its box by fitCards — the same grammar as the Ship/building/Specialist displays */
+  .ladingrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:6px;margin-top:5px}
+  .ladingtile{position:relative;width:100%;aspect-ratio:2/0.9;border-radius:7px}
+  .ladingtile.stopgo{cursor:pointer}
+  .ladingtile .ldfb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:4px;border:1px solid var(--line);border-radius:7px;background:var(--parch);font-size:.73rem}
   .rcard .rcn{font-weight:bold;font-variant:small-caps;white-space:nowrap}
   /* destinations: data row + delivery squares */
   /* v3.0-A the Hall SHELF BOARD — four quality-gated shelves; a space = an icon (open) or a claim cube */
@@ -522,6 +526,8 @@
   .rmaj{font-weight:bold;font-size:.95rem;letter-spacing:.5px}
   .rmaj.off{text-decoration:line-through;opacity:.4;font-weight:normal}   /* The Trade Roads replaces majorities — show the printed number struck-through */
   .route .ric .ic,.route .ric svg{width:1.25em;height:1.25em}
+  .route .ric img.ai{width:1.7em;height:1.7em}   /* the Kontor's OWN crest — the art earns the room (2026-08-09) */
+  .tag img.ai{width:1.15em;height:1.15em;vertical-align:-.2em;margin-right:2px}
   /* kontor rows: name · gate (right), then ★ = die · + prize (right) */
   .route .rline{margin-top:2px;font-size:.9rem}
   .route .rline>span{display:inline-flex;align-items:center;gap:2px;white-space:nowrap}
@@ -695,6 +701,9 @@ const DEST={
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
 const DESTS=KONTORE.slice();
+// 2026-08-09 [designer]: a NAMED Kontor always wears ITS OWN crest — the generic landmark
+// glyph is reserved for "a Kontor" in the abstract (the tooltip vocabulary, the Park step).
+const kIcon=k=>LU(DEST[k]?('kontor-'+k):'landmark');
 // ---- LADINGS (v4.5b "Open Orders") — the kontor ORDER layer, the designer's pick off
 // gatekeeper #2 (and the Hall's spiritual replacement). A face-up ROW of 3 order tiles;
 // each names a kontor (or any), a condition (min die face / a named beer) and a printed ★
@@ -711,6 +720,9 @@ const LADINGS=[
 ];
 const LADING_DISPLAY=3;
 function ladingLabel(l){return (l.dest?DEST[l.dest].name:'Any Kontor')+' · '+(l.beer?STYLES[l.beer].name:('die '+l.min+(l.min<6?'+':'')))+' → '+l.pts+'★';}
+// 2026-08-09 [designer]: the open row renders the PRINT KIT'S OWN Contract tile — the engine
+// keys Kontore/beers in lower case, components.js keys its printed face by DISPLAY name.
+function ldCard(l){return {dest:l.dest?DEST[l.dest].name:null,beer:l.beer?styleShort(l.beer):null,min:l.min,pts:l.pts};}
 function refillLadings(){if(!S.ladingRow)return;while(S.ladingRow.length<LADING_DISPLAY&&(S.ladingDeck||[]).length)S.ladingRow.push(S.ladingDeck.shift());}
 function ladingMatches(dest,style,die){return (S.ladingRow||[]).map((l,i)=>({l,i}))
   .filter(o=>(!o.l.dest||o.l.dest===dest)&&(o.l.beer?o.l.beer===style:die>=o.l.min));}
@@ -2062,13 +2074,13 @@ function renderScore(){
   const R='style="text-align:right;white-space:nowrap"';
   // 1 · deliveries — every parked die, with the Novgorod premium shown as a modifier
   let dr='';p.delivered.forEach(d=>{const vb=(DEST[d.dest].vbonus||0);const die=Math.max(1,(d.val||1)-vb);
-    dr+='<tr><td>'+LU('beer')+' '+styleShort(d.style)+'</td><td>'+LU('landmark')+' '+DEST[d.dest].name+'</td><td>'+LU('dices')+' '+die+(vb?' <b>+'+vb+'</b> <span class="note">Novgorod premium</span>':'')+'</td><td '+R+'><b>'+(d.val||0)+'★</b></td></tr>';});
+    dr+='<tr><td>'+LU('beer')+' '+styleShort(d.style)+'</td><td>'+kIcon(d.dest)+' '+DEST[d.dest].name+'</td><td>'+LU('dices')+' '+die+(vb?' <b>+'+vb+'</b> <span class="note">Novgorod premium</span>':'')+'</td><td '+R+'><b>'+(d.val||0)+'★</b></td></tr>';});
   if(!dr)dr='<tr><td colspan="4" class="note">no deliveries yet</td></tr>';
   dr+='<tr><td colspan="3"><b>Deliveries</b></td><td '+R+'><b>'+sc.deliv+'★</b></td></tr>';
   // 2 · the bank — builds / commissions / bumps (the tracked split)
   const bm=p.bankM||0,bl=p.bankL||0,bo=p.bankO||0,bw=p.bankW||0,bp=Math.max(0,(p.bank||0)-bm-bl-bo-bw);
   const br=(bm?'<tr><td>'+LU('building-2')+' Departed buildings</td><td>the die’s pips, scored as it left play (v4.9)</td><td '+R+'><b>'+bm+'★</b></td></tr>':'')
-    +'<tr><td>'+LU('stamp')+' Contracts claimed</td><td>'+((p.ladings||[]).length)+' tile'+((p.ladings||[]).length===1?'':'s')+'</td><td '+R+'><b>'+bl+'★</b></td></tr>'
+    +'<tr><td>'+LU('contract')+' Contracts claimed</td><td>'+((p.ladings||[]).length)+' tile'+((p.ladings||[]).length===1?'':'s')+'</td><td '+R+'><b>'+bl+'★</b></td></tr>'
     +(bo?'<tr><td>'+LU('ticket')+' Tollhouse</td><td>+3★ per stamped cask</td><td '+R+'><b>'+bo+'★</b></td></tr>':'')
     +(bw?'<tr><td>'+LU('package')+' Cooperage wharfage</td><td>+1★ per cask loaded there (v4.12b)</td><td '+R+'><b>'+bw+'★</b></td></tr>':'')
     +'<tr><td>'+LU('map-pin')+' Placed presence</td><td>1★ per face-1 die (a Town Crier adds +2★ each)</td><td '+R+'><b>'+bp+'★</b></td></tr>'
@@ -2076,7 +2088,7 @@ function renderScore(){
   // 3 · majorities — standing per kontor, valued as if scored now
   let mr='';KONTORE.forEach(k=>{const a=majorityAwards(k);const mine=a[p.id]||0;const pr=presenceAt(p,k);
     const lead=pr>0&&leadersAt(k).some(x=>x.id===p.id);
-    mr+='<tr><td>'+LU('landmark')+' '+DEST[k].name+'</td><td>'+pr+' parked '+(pr===1?'die':'dice')+(lead?' · <b>leading</b>':'')+'</td><td>'+DEST[k].maj.join('/')+'</td><td '+R+'><b>'+mine+'★</b></td></tr>';});
+    mr+='<tr><td>'+kIcon(k)+' '+DEST[k].name+'</td><td>'+pr+' parked '+(pr===1?'die':'dice')+(lead?' · <b>leading</b>':'')+'</td><td>'+DEST[k].maj.join('/')+'</td><td '+R+'><b>'+mine+'★</b></td></tr>';});
   mr+='<tr><td colspan="3"><b>Majorities</b> <span class="note">(end-game; 2p skips 2nd; ties split)</span></td><td '+R+'><b>'+sc.maj+'★</b></td></tr>';
   // 3b · the Mason's Marks — dice standing on owned buildings (v4.9)
   let br2='';SLOTS.forEach(sx=>{const bb2=S.buildings[sx.id];if(bb2&&bb2.owner===p.id&&bb2.die>0)
@@ -2871,8 +2883,8 @@ function renderBar(){
     acts=hireable(lp).map(k=>btn(LU('wrench')+upName(k),'bspecPick(\''+k+'\')','go')).join('')+btn('Skip','bspecPick(null)','ghost');}
   else if(U==='lading'){const b=UI.pendingLading[0];const lp=S.players[b.pid];
     const m=ladingMatches(b.dest,b.style,b.die);
-    prompt=lp.name+'’s '+LU('beer')+styleShort(b.style)+' (die '+b.die+') at '+DEST[b.dest].name+' matches a '+LU('scroll-text')+' <b>Contract</b> — claim one (score its ★ at once):';
-    acts=m.map(o=>btn(LU('scroll-text')+ladingLabel(o.l),'ladingPick('+o.i+')','go')).join('')+btn('Decline','ladingPick(-1)','ghost');}
+    prompt=lp.name+'’s '+LU('beer')+styleShort(b.style)+' (die '+b.die+') at '+kIcon(b.dest)+DEST[b.dest].name+' matches a '+LU('contract')+' <b>Contract</b> — claim one (score its ★ at once):';
+    acts=m.map(o=>btn(kIcon(o.l.dest)+ladingLabel(o.l),'ladingPick('+o.i+')','go')).join('')+btn('Decline','ladingPick(-1)','ghost');}
   else if(U==='rack'){const R=UI.rack;
     prompt=LU('repeat')+' <b>Racking Hall</b> — '+(R.a==null?'pick the <b>first</b> cask; its die will trade places with a second (<b>no quality cap</b> — the beer transfers).':'now the <b>second</b> cask — the two dice trade places whole.');
     acts=p.vessels.map((c,i)=>(c&&i!==R.a)?btn(LU('beer')+styleShort(c.style)+' '+c.die+'/'+c.q,'rackPick('+i+')','go'):'').filter(x=>x).join('')+btn('Skip','rackSkip()','ghost');}
@@ -2891,7 +2903,7 @@ function renderBar(){
     acts=btn('Pay '+Hi(3)+' · all to Ready','abbeyGo(true)','go')+btn('Skip','abbeyGo(false)','ghost');}
   else if(U==='exchange'){
     prompt=LU('arrow-right-left')+' <b>Merchants’ Exchange</b> — replace up to <b>'+UI.exch.left+'</b> more open Contract'+(UI.exch.left===1?'':'s')+': each is cycled under the deck, its replacement posted at once.';
-    acts=(S.ladingRow||[]).map((l,i)=>btn(LU('scroll-text')+ladingLabel(l),'exchangePick('+i+')','go')).join('')+btn('Done','exchangeSkip()','ghost');}
+    acts=(S.ladingRow||[]).map((l,i)=>btn(kIcon(l.dest)+ladingLabel(l),'exchangePick('+i+')','go')).join('')+btn('Done','exchangeSkip()','ghost');}
   else if(U==='capstan'){const C=UI.cap;
     if(C.sid==null){prompt=LU('ship-wheel')+' <b>Warping Capstan</b> — pick a <b>docked Ship</b> to warp along the quay (its cargo rides; full where it lands, it sails).';
       acts=wharfShips().map(sid=>{const t=S.slots[sid];return btn(LU('sailboat')+shipName(t)+' → '+DEST[t.dest].name+' ('+t.load.length+'/'+effCap(t)+' · '+sid+')','capPick(\''+sid+'\')','go');}).join('')+btn('Skip','capSkip()','ghost');}
@@ -3024,7 +3036,7 @@ function renderDests(){
       :D.benefit==='spec'?'<span class="rben" data-tip="'+attr('Prize: EVERY CASK seats its house a specialist from the display, free (open seat required; v4.7 — one per-cask grammar at all four ports; load order = pick order).')+'">+'+LU('wrench')+' specialist</span>'
       :'';
     h+='<div class="route '+d+'" data-tip="'+attr(D.name+' · '+D.role)+'">'
-      +'<div class="rh"><span class="ric">'+LU('landmark')+'</span>'
+      +'<div class="rh"><span class="ric">'+kIcon(d)+'</span>'
       +'<span class="rmaj" data-tip="'+attr('End-game majority '+D.maj.join('/')+' — by parked dice (2p skips 2nd).')+'">'+D.maj.join('/')+'</span></div>'
       +'<div class="rh rline"><span class="rn">'+D.name+'</span>'
       +'<span class="rgate" data-tip="'+attr('A cask boards when its DIE (as boarded, after lifts) shows '+D.gate+'+.')+'"><b>'+LU('dices')+D.gate+'+</b></span></div>'
@@ -3032,15 +3044,24 @@ function renderDests(){
       +'<div class="pres">'+pres+'</div></div>';
   });
   document.getElementById('dests').innerHTML=h;
-  // THE LADING ROW (v4.5b) — the kontors' open orders live WITH the kontors: deliver a qualifying cask, claim the tile (its ★ bank at once); refills at end of turn
-  let lh='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('scroll-text')+' Open Contracts</b> <span class="note">— claim on a matching delivery</span></div>';
+  // THE CONTRACT ROW (v4.5b) — the Kontore's open orders live WITH the Kontore: deliver a
+  // qualifying cask, claim the tile (its ★ bank at once); refills at end of turn.
+  // 2026-08-09 [designer]: the row now renders the PRINT KIT'S OWN Contract tile
+  // (components.js ladingTile — its Kontor CREST, the die/beer condition and the ★, exactly as
+  // cut), like every other display on this page. The text chip survives only as the headless
+  // fallback (the harnesses run without the card library).
+  let lh='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('contract')+' Open Contracts</b> <span class="note">— claim on a matching delivery</span></div>';
   const lrow=S.ladingRow||[];
   if(lrow.length){const pend=(UI.sub==='lading')?(UI.pendingLading||[])[0]:null;
     const claimable=pend?ladingMatches(pend.dest,pend.style,pend.die).map(o=>o.i):[];
     const exch=(!aiTurn()&&UI.sub==='exchange');   // v4.6: the Exchange cycles a row tile
     lh+='<div class="ladingrow">'+lrow.map((l,i)=>{const claim=claimable.includes(i)||exch;
-      return '<span class="ladingtile'+(claim?' stopgo':'')+'"'+(claim?' onclick="'+(exch?'exchangePick':'ladingPick')+'('+i+')"':'')+' data-tip="'+attr(exch?('Merchants’ Exchange — cycle this order under the deck (its replacement is posted at once).'):('Lading — deliver '+(l.beer?('a cask of '+STYLES[l.beer].name):('a cask at die '+l.min+(l.min<6?'+':'')))+' to '+(l.dest?DEST[l.dest].name:'any kontor')+' and claim it: +'+l.pts+'★ scored at once. One lading per delivered cask; the row refills at end of turn.'))+'">'
-        +LU('landmark')+'<b>'+(l.dest?DEST[l.dest].name:'Any')+'</b> · '+(l.beer?LU('beer')+styleShort(l.beer):LU('dices')+' '+l.min+(l.min<6?'+':''))+' → <b>'+l.pts+'★</b></span>';}).join('')+'</div>';}
+      const tip=exch?'Merchants’ Exchange — cycle this Contract under the deck (its replacement is posted at once).'
+        :('Contract — deliver '+(l.beer?('a cask of '+STYLES[l.beer].name):('a cask at die '+l.min+(l.min<6?'+':'')))+' to '+(l.dest?DEST[l.dest].name:'any Kontor')+' and claim it: +'+l.pts+'★ scored at once. One Contract per delivered cask; the row refills at end of turn.');
+      return '<div class="ladingtile'+(claim?' stopgo':'')+'"'+(claim?' onclick="'+(exch?'exchangePick':'ladingPick')+'('+i+')"':'')+' data-tip="'+attr(tip)+'">'
+        +(HC?pfit(HC.ladingTile(ldCard(l)),2,0.9)
+            :'<span class="ldfb">'+kIcon(l.dest)+'<b>'+(l.dest?DEST[l.dest].name:'Any')+'</b> · '+(l.beer?LU('beer')+styleShort(l.beer):LU('dices')+' '+l.min+(l.min<6?'+':''))+' → <b>'+l.pts+'★</b></span>')
+        +'</div>';}).join('')+'</div>';}
   else lh+='<div class="note">(Contract deck exhausted)</div>';
   document.getElementById('ladings').innerHTML=lh;
 }
@@ -3115,7 +3136,7 @@ function renderTableaus(){
       seats.push(k?('<div class="pbrd-piece" data-tip="'+attr(upName(k)+' — '+upDesc(k))+'">'+HC.improveTile(HC_IMP[upName(k).toLowerCase()])+'</div>'):null);
     }
     // ---- the CONTRACTS pile ----
-    const lads=(p.ladings||[]).map(l=>'<span class="pbrd-lad" data-tip="'+attr(ladingLabel(l)+' — scored at claim')+'">'+(l.dest?DEST[l.dest].name.slice(0,4):'Any')+' '+l.pts+'★</span>').join('');
+    const lads=(p.ladings||[]).map(l=>'<span class="pbrd-lad" data-tip="'+attr(ladingLabel(l)+' — scored at claim')+'">'+kIcon(l.dest)+(l.dest?DEST[l.dest].name.slice(0,4):'Any')+' '+l.pts+'★</span>').join('');
     // ---- the board, live ----
     const boardHTML=HC?HC.playerBoard({nm:p.name,c:p.color},{
       score:sc.total,dice:trayDice(p)+'/'+(p.presPool||0),grain:p.grain,hops:p.hops,
@@ -3136,7 +3157,7 @@ function renderTableaus(){
       +'</div>';
     const delivered=KONTORE.map(d=>{const ds=p.delivered.filter(x=>x.dest===d);if(!ds.length)return '';
       const pips=ds.map(x=>'<span class="qd q'+Math.min(5,x.val)+'" data-tip="'+attr(STYLES[x.style].name+' — the die parks showing '+x.val+'★')+'">'+x.val+'</span>').join('');
-      return '<span class="tag good">'+LU('landmark')+DEST[d].name.slice(0,4)+' '+pips+'</span>';}).filter(x=>x).join('')||'<span class="note">none</span>';
+      return '<span class="tag good">'+kIcon(d)+DEST[d].name.slice(0,4)+' '+pips+'</span>';}).filter(x=>x).join('')||'<span class="note">none</span>';
     body+='<div class="tableau '+(i===activeTab?'show':'')+'">'
       +scene
       +'<div style="margin-top:6px"><b class="note">'+LU('landmark')+' Delivered (parked dice):</b> '+delivered

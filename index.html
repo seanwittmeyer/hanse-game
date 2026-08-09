@@ -126,7 +126,10 @@
   @media(max-width:760px){.routeboard{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:480px){.routeboard{grid-template-columns:1fr}}
   .route{border-radius:12px; padding:14px; color:var(--parch); box-shadow:0 3px 9px rgba(0,0,0,.2); position:relative; overflow:hidden}
-  .route h3{margin:0 0 2px; font-variant:small-caps; font-size:1.3rem; color:var(--parch)}
+  .route h3{margin:0 0 2px; font-variant:small-caps; font-size:1.3rem; color:var(--parch); display:flex; align-items:center; gap:7px}
+  /* a NAMED Kontor wears its OWN crest — the generic landmark glyph is for "a Kontor" (2026-08-09) */
+  .route h3 img.ai{width:30px; height:30px; flex:0 0 auto}
+  td .kcrest{width:22px; height:22px; vertical-align:-.32em; margin-right:5px}
   .route .role{font-size:.78rem; font-style:italic; opacity:.9; margin-bottom:10px}
   .route .meta{font-size:.82rem; border-top:1px solid rgba(255,255,255,.35); padding-top:8px}
   .route .meta b{color:var(--gold2)}
@@ -457,10 +460,10 @@
   <div class="routeboard" id="destBoard"></div>
   <table>
     <tr><th>Kontor</th><th>Minimum ⚙</th><th>Value</th><th>Prize — per cask ⚙</th><th>Majority ⚙ (1st/2nd/3rd)</th></tr>
-    <tr><td><b>Bruges</b> (the Hub)</td><td>die 1+</td><td>the die</td><td><b>Gain 1 recipe</b>, at its <span class="cube h"></span> = Q−3 fee — the Q3s free (the prize is the pick, never the fee waiver)</td><td>4 / 2 / 0</td></tr>
-    <tr><td><b>London</b> (the Steelyard)</td><td>die 2+</td><td>the die</td><td><b>A building</b> — build one from the display at once; <b>your die stands on it</b></td><td>5 / 3 / 1</td></tr>
-    <tr><td><b>Bergen</b> (Bryggen)</td><td>die 2+</td><td>the die</td><td><b>A Specialist</b> — display → an open seat, free</td><td><b>9 / 5 / 2</b></td></tr>
-    <tr><td><b>Novgorod</b> (Peterhof)</td><td><b>die 3+</b></td><td><b>the die +2★</b></td><td>— the premium IS the prize</td><td>8 / 5 / 2</td></tr>
+    <tr><td><i data-lucide="kontor-bruges" class="kcrest"></i><b>Bruges</b> (the Hub)</td><td>die 1+</td><td>the die</td><td><b>Gain 1 recipe</b>, at its <span class="cube h"></span> = Q−3 fee — the Q3s free (the prize is the pick, never the fee waiver)</td><td>4 / 2 / 0</td></tr>
+    <tr><td><i data-lucide="kontor-london" class="kcrest"></i><b>London</b> (the Steelyard)</td><td>die 2+</td><td>the die</td><td><b>A building</b> — build one from the display at once; <b>your die stands on it</b></td><td>5 / 3 / 1</td></tr>
+    <tr><td><i data-lucide="kontor-bergen" class="kcrest"></i><b>Bergen</b> (Bryggen)</td><td>die 2+</td><td>the die</td><td><b>A Specialist</b> — display → an open seat, free</td><td><b>9 / 5 / 2</b></td></tr>
+    <tr><td><i data-lucide="kontor-novgorod" class="kcrest"></i><b>Novgorod</b> (Peterhof)</td><td><b>die 3+</b></td><td><b>the die +2★</b></td><td>— the premium IS the prize</td><td>8 / 5 / 2</td></tr>
   </table>
   <div class="clar"><h4>Presence &amp; placing presence</h4><b>Presence</b> = your parked dice at a Kontor. <b>Placing presence</b> (the <i data-lucide="map-pin"></i> load bonus, Almoner’s Stall, Keut’s perk) takes a <b>tray die</b> and parks it at <b>face 1</b> at a Kontor you have <b>already delivered to</b> — it scores 1★ and counts for the majority and the clock. It is <b>free</b> everywhere except the <b>Almoner’s Stall</b>, which charges its printed 2 <span class="cube g"></span>. A seated Town Crier adds <b>+2★</b> per placed die. No tray die → no placing presence.</div>
   <h3>Contracts — the Kontor bonuses</h3>
@@ -673,7 +676,7 @@ const destinations=[
 ];
 document.getElementById('destBoard').innerHTML=destinations.map(d=>`
   <div class="route ${d.cls}">
-    <h3>${d.name}</h3><div class="role">${d.role}</div>
+    <h3><i data-lucide="kontor-${d.cls}"></i>${d.name}</h3><div class="role">${d.role}</div>
     <div class="meta">Minimum (as it boards): <b>${d.gate}</b><br>Value: <b>${d.value}</b><br>Prize — per cask: <b>${d.benefit}</b><br>Majority (1st/2nd/3rd): <b>${d.maj}</b></div>
   </div>`).join('');
 
