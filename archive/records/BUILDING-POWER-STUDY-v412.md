@@ -159,3 +159,60 @@ under-races the clock, the standing read) and its builder bar sits at 34.4%.
 on MC tiers, probes and humans); builder-win lifts are correlational even after netting the
 built-any bar; ablation decks run 1–2 tiles thin; overbuild-as-die-denial remains unobserved
 in bot play.
+
+---
+
+## 8. Rulings & the tail-buff proposals (2026-08-09, same day)
+
+**RULED — v4.12b "Light Wharfage": the Cooperage wharfage eases +2★ → +1★ ⚙ per load.**
+A/B re-read (200/count, trader): the mint 2.69 → **1.65**★/g at 3p and 4.99 → **2.29** at
+4p (it now tracks load traffic exactly); builder-win settles to ≈bar at 3p (−0.5, was
++3.0) and **+3.0** at 4p (was +8.1). Capacity, the tick-per-load and the mark stand.
+verify 228/228 · sim clean.
+
+**PROPOSED — buffs for the under-powered long tail (NOT ruled).** Each pairs the measured
+diagnosis with a primary move and an alternate. The through-line is the v0.15 lesson: these
+tiles' problems are REACH problems (nobody has a reason to route play through them), so the
+primary moves are structure dials, not bigger numbers.
+
+1. **Rich Berth** (0 builds in 1,500 trader games · 2G · start 3) — *diagnosis:* its tempo
+   is purchasable elsewhere (a 2G Skute is "sail now" without a build, a die, or a slot),
+   and the short sail pays nobody. *Primary:* **"The Ship here may sail one berth short —
+   the player who sails it gains 2 goods"** (the harbor buys the empty berth). Uses the
+   Bonded Store's existing pay-goods grammar, gives an ACTIVE reason to route hulls here,
+   stays a ship-shaper. *Alternate:* drop the fee to free (chipless) — the minimum move.
+   *Fallback:* cut the design for a new one (the roster-rethink parking lot).
+2. **Customs House** (≤0.05 builds · 2G · start 3) — *diagnosis:* below-gate Ready casks
+   are rare, low-pip deliveries are poor value, and the free presence bump (v4.12) does the
+   cheap-body job without a voyage. *Primary:* **−1 → −2 quality required (min 1) — the
+   smuggler's door:** a die-1 Gruit already boards London/Bergen; at −2 it boards a
+   NOVGOROD hull and delivers at 1+2 = 3★ — cheap-beer fleets gain a real port, and the
+   cold 2p Novgorod (Open #3/#8) gains a feeder. *Watch if adopted:* Novgorod majority
+   (8/5/2) via gruit spam — the berth race and the 13-die clock are the natural caps.
+   *Alternate:* keep −1, fee 2G → free.
+3. **Warping Capstan** (≤0.11 builds · 2G · start 3; the v4.12 any-ship widening did not
+   revive it) — *diagnosis:* a warp pays nothing immediate, and the commission already
+   places hulls at will; geometry authorship is invisible to greedy play and merely thin
+   under search. *Primary:* **the warp includes ONE load of the warped Ship** (the
+   commission's maiden-load grammar: after the warp you may load 1 Ready cask from your
+   vessels onto it — its bonus fires; full → it sails). Warp-and-load makes the Capstan a
+   second Harbor: fetch the hull to your cargo. *Alternate:* fee 2G → 1G alongside.
+4. **Hiring Post** (≤0.04 builds · 1G · start 2) — *diagnosis:* Bergen oversupplies
+   specialists free per cask; the Post's only offer is paying a fee Bergen waives, and the
+   paid channel runs ~0.1/game. *Primary:* **hires at the Post are FREE (the tile waives
+   the specialist's printed fee).** The Scrivener's stays the honest fee channel because
+   recipe fees are real (hops); specialist fees are 1–2 goods, so the waiver costs the
+   economy nothing measurable and gives the wharf a Bergen-alternative that needs no
+   voyage. *Alternate:* the specialist display refills AT ONCE on a hire here (beat the
+   end-of-turn gap).
+5. **Tollhouse** (~0.1 stamps/game · 1G · start 3) — *diagnosis:* net +2★ for a pip loses
+   to simply loading elsewhere, and the sharp decline case is measured: the lower face
+   forfeits Contracts (the v45c AI nets exactly this). *Primary:* **the stamped cask may
+   claim a Contract at EITHER face — pre- or post-stamp.** No numbers change; the measured
+   decline reason disappears; the stamp becomes a clean "bank 3★, keep your order."
+   *Alternate (blunt):* +3★ → +4★ (net +3).
+
+*Held deliberately:* the Merchants' Exchange stays on WATCH (the GM arm tempered its flag —
+a human table decides before any dial); Granary/Scrivener's 4p heat is a watch, not a
+change; the Kiln is untouched infrastructure. If several tail buffs land at once, re-read
+pace — more live tiles = more committed dice = a faster clock.

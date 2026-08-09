@@ -203,6 +203,14 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
+### v4.12b “Light Wharfage” (2026-08-09, same day — designer-ruled off the BUILDING-POWER-STUDY)
+The Cooperage wharfage eases **+2★ → +1★** per cask loaded at its slot. The study’s top
+flag (the only design stacking a direct mint + a top-tier mark + an above-bar builder win,
+GM-sharpened to +11.8pp); capacity, the tick and the mark stand — only the mint halves.
+The long-tail buff proposals (Rich Berth · Customs · Capstan · Hiring Post · Tollhouse)
+are recorded in the study §8 — proposed, not ruled. Lesson applied again: the value dial
+turns on the reward channel players already race; the tail’s cures are structure dials.
+
 ### v4.12 “Open Brewhouse” (2026-08-09 — designer-ruled: the buildings & specialists review)
 One batch, four moves, off the designer’s tile-by-tile letter. **(1) Brew joins the Q3+
 load-bonus pool** (*“brew is a true throttle”*) — survey/hire/brew all gate at Q3+; the

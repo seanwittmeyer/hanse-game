@@ -111,7 +111,7 @@ const BUILDINGS=[
   {k:'maltkiln',  nm:'Malt Kiln',         ms:2, verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, effIc:'die-plus1',  eff:'on load'},
   {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, effIc:'die-minus1', eff:'on load → +3★'},
   {k:'bonded',    nm:'Bonded Store',      ms:3, verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, effIc:'die-plus1',  eff:'on load · sails with the Ship · players aboard gain 2 goods'},
-  {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 ship capacity · on load +2★'},   // v4.12: the wharfage bonus
+  {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 ship capacity · on load +1★'},   // v4.12b: the wharfage eases 2→1 ⚙
   {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'−1 quality required'},
   {k:'richberth', nm:'Rich Berth',        ms:3, verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'May sail 1 short'},
   // v4.6 "Guildbook" — the box prints 20 tiles; SETUP DEALS 17 (≥1 Kiln + ≥1 Mission Quay guaranteed)

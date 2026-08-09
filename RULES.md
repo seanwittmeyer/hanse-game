@@ -1,4 +1,12 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.12 “Open Brewhouse”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.12b “Light Wharfage”)
+
+> **v4.12b “Light Wharfage” (designer-ruled 2026-08-09, same day — off the
+> BUILDING-POWER-STUDY).** The **Cooperage wharfage eases to +1★** ⚙ per cask loaded at its
+> slot (was +2★). The study’s top flag: the only design stacking a direct mint (≈5★/game at
+> 4p — 16× the Tollhouse) on a top-tier mark and an above-bar builder win, sharpened to
+> +11.8pp under the GM oracle. Capacity, the tick-per-load and the mark stand — only the
+> mint halves. The **long-tail buff proposals** (Rich Berth · Customs · Capstan · Hiring
+> Post · Tollhouse) are **recorded in the study §8 — proposed, NOT ruled.**
 
 *(Language: the 2026-08-03 **Term Registry pass** governs all printed copy — player ·
 Kontor · Contract · cask quality die · build · Age N · aging · resolve the line · the ★
@@ -439,7 +447,7 @@ swings; the dealt subset makes every wharf a different economy.**
 | **Malt Kiln** | on load here | the boarding cask’s **die +1** (cap 6) | 2 | 2 `G` | 2 |
 | **Tollhouse** | on load here | the boarding cask **may turn its die −1** (never below the Kontor’s minimum): **score +3★ at once** (net +2, any quality) | 1 | 1 `G` | 3 |
 | **Bonded Store** | on load here / at sail | the boarding die **+1** (cap 6); **when this Ship sails, the Store sails with it** (returned to the box) and **every player with a cask aboard gains 2 goods** | 1 | 2 `G` | 3 |
-| **Cooperage** | passive · on load | the Ship here: **+1 ship capacity** — and **each cask loaded here scores its loader +2★** (v4.12) | 1 | 2 `G` | 3 |
+| **Cooperage** | passive · on load | the Ship here: **+1 ship capacity** — and **each cask loaded here scores its loader +1★** ⚙ (v4.12b — was +2, eased off the power study) | 1 | 2 `G` | 3 |
 | **Customs House** | passive | the Ship here: **−1 quality required** to board (sells at the die) | 1 | 2 `G` | 3 |
 | **Rich Berth** | passive | the Ship here may **sail one berth short** (min 1) | 1 | 2 `G` | 3 |
 | **Victualling Yard** *(v4.6 · ephemeral)* | on load here / at sail | the boarding cask’s **load bonus fires TWICE**; **when this Ship sails, the Yard sails with it** (boxed) | 1 | 2 `G` | 3 |
@@ -634,7 +642,7 @@ tray size (13 dice — v4.9b) is THE pace dial now.*
    +2★ on top).
 2. **Contracts** — the claimed tile’s printed ★ (v4.5b; the tiles at your seat are the audit).
 3. **Tollhouse stamps** — **+3★** per stamped cask (v45d; the die drops 1 — net +2).
-4. **Cooperage wharfage** — **+2★** per cask loaded at its slot (v4.12).
+4. **Cooperage wharfage** — **+1★** per cask loaded at its slot (v4.12b ⚙).
 5. **Placed presence** — 1★ each (the face-1 die; a seated Town Crier adds +2★ per die).
 6. **A departing building’s die** — its pips, scored as the tile leaves play (v4.9; the die
    returns to its owner’s tray).
@@ -749,7 +757,7 @@ the engine; the modules return after the core settles.
    · rival ticks ~78% · lift only +1–3 · the biggest ablation drop). The ASSAY at 1H→Ready
    reads clean (heavy traffic, below-bar lift, null ablation). The dead shelf re-confirms
    (Rich Berth 0 builds in 1,500 trader games · Customs/Capstan/Hiring Post ≤0.11
-   builds/game). Dial candidates live in the study §7 — NOT ruled.**
+   builds/game). Dial candidates live in the study §7. **RULED at v4.12b (same day): the wharfage eases +2★ → +1★** — the rest of the dials (and the §8 tail-buff proposals) stay open.**
 5. **Bergen heat** — specialist prize + the 9/5/2 anchor (dial: tiers or the prize). *The
    London/Bergen benefit SWAP is ruled OUT (designer, 2026-08-02): each Kontor pairs a durable
    pull with a decaying one (Bergen: enduring majority + self-exhausting prize · London:

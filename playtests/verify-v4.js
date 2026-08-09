@@ -719,7 +719,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   var b0=p.bank;
   UI.sub='load';UI.load={ships:['s1'],returnTo:'stops',loadsLeft:1,cask:null};
   loadPickCask(0);
-  ok('the Cooperage pays its wharfage — the loader scores +2★ on a load here (v4.12)', p.bank===b0+2&&(p.bankW||0)===2);
+  ok('the Cooperage pays its wharfage — the loader scores +1★ on a load here (v4.12b)', p.bank===b0+1&&(p.bankW||0)===1);
   ok('…and the load ticks the mason’s die (a use)', S.buildings.s1.die===4);
   UI.pendingActs=[];UI.src=null;
 })();
