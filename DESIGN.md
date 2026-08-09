@@ -233,6 +233,26 @@ The chip is sized to the art's footprint so the icon column still lines up. Inli
 real printed faces at preview scale. `:has()` carries the branch, so it follows the art map
 automatically as icons land.
 
+### 2026-08-09 — the rulebook goes VISUAL (presentation, no rules change)
+Designer: *“make the rules a little more visual — diagrams where it makes sense, using the
+icon images, components, and visuals like lines, arrows… loading is a block of text.”*
+Three of `index.html`’s heaviest paragraphs become **pictures built from the real printed
+components** — `components.js` is the same library `print.html` cuts from, so the rulebook
+shows a player the exact pieces on their table, not an illustration of them:
+**(1) LOADING** (§8) — the Ready cask tile, the player’s die **sitting on its printed seat**
+→ a bold arrow carrying the rule (*the die is read as it boards*) → the Cog tile with its
+berths; the slot’s modifiers (Kiln/Bonded +1 · Customs −1 · Tollhouse −1 for +3★) ride as
+chips beneath. **(2) SAILING & DELIVERY** (§8) — a loaded Cog (cask tiles seated on its real
+berths, dice up) → *it sails* → the Kontor plate with the parked die; the three delivery
+outcomes become numbered steps. **(3) THE MASON’S MARK** (§7) — the Kiln tile printed → *you
+build it* → the die standing on it at the printed face → *every use, any player* → the die at
+5, scoring its pips. **The visual language is fixed** so it can be extended cheaply: piece →
+arrow → piece, the rule ON the arrow, modifiers as chips, outcomes numbered — a `.dgm` block
+and a six-function builder (`cmp` · `seat` · `arr` · `piece` · `chip` · `step`). Section
+headings that carry a diagram take their icon at 34px. *Not yet done:* `learn.html` still
+teaches in prose — the same kit would serve it, and the Wharf/turn and the die lifecycle are
+the obvious next two.
+
 ### v4.12b “Light Wharfage” (2026-08-09, same day — designer-ruled off the BUILDING-POWER-STUDY)
 The Cooperage wharfage eases **+2★ → +1★** per cask loaded at its slot. The study’s top
 flag (the only design stacking a direct mint + a top-tier mark + an above-bar builder win,

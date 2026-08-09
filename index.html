@@ -182,6 +182,57 @@
   .example{background:#f2edda; border:1px solid var(--line); border-left:4px solid var(--green); padding:12px 18px; border-radius:0 8px 8px 0; margin:18px 0; font-size:.95rem;}
   .example h4{margin:0 0 6px; font-variant:small-caps; color:var(--green); font-size:1.05rem;}
   .example svg{width:1em; height:1em; stroke-width:2.2; vertical-align:-2px; color:var(--green);}
+  /* ---- DIAGRAMS (2026-08-09, designer) — a rule is easier SHOWN than read, so the heavy
+     paragraphs become pictures built from the REAL printed components (components.js is the
+     same library the kit cuts from). One visual language everywhere: piece → arrow → piece,
+     the rule written ON the arrow, the modifiers as chips beneath, the outcomes numbered. */
+  h3.ic-h{display:flex; align-items:center; gap:10px;}
+  h3.ic-h img.ai,h3.ic-h svg{width:34px; height:34px;}
+  .dgm{background:#fdf8ec; border:1px solid var(--line); border-radius:12px;
+    padding:15px 18px 13px; margin:16px 0; box-shadow:0 2px 8px rgba(0,0,0,.07);}
+  .dgm-t{font-variant:small-caps; font-weight:bold; color:var(--red); font-size:1.02rem;
+    letter-spacing:.5px; margin-bottom:11px; display:flex; align-items:center; gap:8px;}
+  .dgm-t img.ai{width:26px; height:26px;}
+  .dgm-row{display:flex; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap;}
+  .dgm-piece{display:flex; flex-direction:column; align-items:center; gap:6px; flex:0 0 auto;}
+  .dgm-lbl{font-size:.78rem; color:var(--ink2); text-align:center; line-height:1.25; max-width:170px;}
+  .dgm-lbl b{color:var(--ink);}
+  .dcmp{display:inline-block; overflow:hidden; border-radius:5px; line-height:0; position:relative;
+    box-shadow:0 2px 8px rgba(0,0,0,.32);}
+  .dcmp-in{display:inline-block; transform-origin:top left;}
+  /* the ARROW — a bold shaft with a solid head; the rule rides above it */
+  .dgm-arr{display:flex; flex-direction:column; align-items:center; gap:4px; flex:0 0 auto;
+    padding:0 3px; min-width:118px; align-self:center;}
+  .dgm-arr .cap{font-size:.76rem; color:var(--red); font-weight:bold; text-align:center; line-height:1.2;}
+  .dgm-arr .shaft{width:100%; height:3px; background:var(--red); position:relative; border-radius:2px;}
+  .dgm-arr .shaft::after{content:''; position:absolute; right:-2px; top:-6px;
+    border-left:14px solid var(--red); border-top:7.5px solid transparent; border-bottom:7.5px solid transparent;}
+  .dgm-arr .sub{font-size:.7rem; color:var(--ink2); text-align:center; line-height:1.2;}
+  .dgm-chips{display:flex; flex-wrap:wrap; gap:7px; justify-content:center; align-items:center; margin-top:12px;}
+  .dgm-chips .lead{font-size:.78rem; color:var(--ink2); font-variant:small-caps; letter-spacing:.4px;}
+  .dgm-chip{display:inline-flex; align-items:center; gap:6px; background:var(--parch2);
+    border:1px solid var(--line); border-radius:16px; padding:3px 11px; font-size:.79rem;}
+  .dgm-chip img.ai{width:21px; height:21px; flex:0 0 auto;}
+  .dgm-steps{display:flex; flex-direction:column; gap:7px; margin-top:12px; padding-top:10px;
+    border-top:1px dashed var(--line);}
+  .dgm-step{display:flex; align-items:flex-start; gap:9px; font-size:.9rem; line-height:1.4;}
+  .dgm-step .n{flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center;
+    width:22px; height:22px; margin-top:1px; border-radius:50%; background:var(--red);
+    color:var(--parch); font-size:.78rem; font-weight:bold;}
+  .dgm-step img.ai{width:21px; height:21px; vertical-align:-.34em;}
+  /* a Kontor plate — the mat as the diagram sees it */
+  .dgm-kp{display:flex; flex-direction:column; align-items:center; gap:5px; border-radius:11px;
+    padding:11px 15px; color:var(--parch); min-width:132px; box-shadow:0 2px 8px rgba(0,0,0,.28);}
+  .dgm-kp img.ai{width:32px; height:32px;}
+  .dgm-kp .knm{font-variant:small-caps; font-weight:bold; font-size:1.08rem; line-height:1;}
+  .dgm-kp .kdie{display:inline-flex; align-items:center; gap:6px; background:rgba(0,0,0,.3);
+    border-radius:15px; padding:3px 11px; font-weight:bold; font-size:.9rem;}
+  .dgm-kp .kdie img.ai{width:25px; height:25px;}
+  /* the mason's die standing on a building tile (the builder's colour is the plate) */
+  .dgm-mark{position:absolute; right:.07in; bottom:.07in; z-index:3; display:inline-flex;
+    background:var(--red); border-radius:.07in; padding:.035in; box-shadow:0 1px 3px rgba(0,0,0,.5);}
+  .dgm-mark img.ai{width:.34in; height:.34in;}
+  @media(max-width:640px){.dgm-arr{min-width:90px} .dgm{padding:12px 11px 11px}}
   /* ---- §18 the tile reference ---- */
   .tref-h{font-variant:small-caps; letter-spacing:.5px; color:var(--red); margin:26px 0 4px; font-size:1.18rem;}
   .tscroll{overflow-x:auto; -webkit-overflow-scrolling:touch; margin:10px 0 4px;}
@@ -408,7 +459,9 @@
 
 <section id="buildings">
   <h2><span class="nm">7</span>Buildings &amp; the Slots</h2>
-  <p><b>ONE green family — no owner of the USE, ever.</b> Every building serves <b>whoever activates it</b>. You build through <b>London’s prize</b> (free) or the <i>Build 1 building</i> bonus (pay the <b>tile’s printed fee</b>; a tile with no fee chip is free). Either way: take a tile <b>from the display of 4</b>, build it at once on any legal slot, and <b>stand one of your quality dice on it at its printed start face</b> ⚙ — the mason’s mark (busy free utilities start 1 · paid workhorses 2 · ship-riders, ephemerals and rare powers 3: the tiles that wait on ships start higher, and the fee is part of the deal). <b>Each time the building is used — by any player — its die turns up 1</b> (max 6), and at game end <b>the die scores its pips to you</b>. The die is committed like any die (it counts toward your empty-tray clock — <b>no tray die, no build</b>); it returns to your tray, its pips scored at once, only if the building leaves play. <b>Using</b> a building never costs anything.</p>
+  <p><b>ONE green family — no owner of the USE, ever.</b> Every building serves <b>whoever activates it</b>. You build through <b>London’s prize</b> (free) or the <i>Build 1 building</i> bonus (pay the <b>tile’s printed fee</b>; a tile with no fee chip is free): take a tile <b>from the display of 4</b> and build it at once on any legal slot. <b>Using</b> a building never costs anything.</p>
+  <div class="dgm" id="dgmMark"></div>
+  <p>The mark’s <b>printed start face</b> ⚙ reads off the tile — busy free utilities <b>1</b> · paid workhorses <b>2</b> · ship-riders, ephemerals and rare powers <b>3</b>: the tiles that wait on ships start higher, and the fee is part of the deal. The die is committed like any other (it counts toward your empty-tray clock — <b>no tray die, no build</b>); it returns to your tray, its pips scored at once, only if the building leaves play.</p>
   <ul>
     <li><b>Overbuild — one payment per build:</b> a fee-paid gain covers the ground; the <b>1 <span class="cube g"></span> ground rent</b> ⚙ applies only when an otherwise-free build lands on a built slot. The displaced tile is <b>returned to the box</b>.</li>
     <li><b>Each part fires once:</b> on your line, each slot’s building action once and each slot’s Ship load once — all optional, any order, read live (§4).</li>
@@ -440,22 +493,18 @@
 
 <section id="shipping">
   <h2><span class="nm">8</span>Ships, Kontore &amp; Delivery</h2>
-  <h3>Ships</h3>
+  <h3 class="ic-h"><i data-lucide="sailboat"></i>Ships</h3>
   <p>Ships are neutral: no player owns one. They come off a shuffled deck into a face-up <b>display of 4</b>, and each is <b>bound for the Kontor printed on it</b>. Sizes: <b>Skute 1 · Cog 2 · Hulk 3</b> berths (deck 6/10/8 ⚙, 6 per Kontor). Each tile prints its <b>commission fee</b> on the trigger berth — <b>Skute 2 <span class="cube g"></span> · Cog 1 <span class="cube g"></span> · Hulk free</b> ⚙ (no chip = free). A commission (§5) pays it and places the Ship on any slot without a Ship.</p>
-  <h3>Loading</h3>
+  <h3 class="ic-h"><i data-lucide="package-plus"></i>Loading</h3>
+  <div class="dgm" id="dgmLoad"></div>
   <ul>
-    <li><b>Load (resolve a slot with a docked Ship):</b> take <b>one Ready cask from YOUR vessels</b> whose <b>die meets the Ship’s minimum — read as it boards</b>, after this slot’s lifts (Kiln/Bonded +1; a Customs House lowers the minimum by 1; a Tollhouse may stamp the die −1 for +3★). Seat it in the lowest berth; the die rides the tile.</li>
     <li><b>The cask’s load bonus fires after any sail it completes.</b> If the load fills the Ship, the Ship sails and every cask delivers first; then the bonus fires.</li>
     <li>The <b>Stevedore</b> loads up to <b>2 casks</b> in every load flow — the slot load, the commission’s load, and the <i>Load</i> bonus alike.</li>
     <li>Casks are <b>private until aboard</b> — no one loads your casks, nothing on the wharf can be stolen. The race is for <b>berths</b>.</li>
   </ul>
-  <h3>Sailing &amp; delivery</h3>
-  <p><b>A Ship sails the moment it is full</b> — a Skute on its first load. Each cask aboard then <b>delivers, in load order</b>:</p>
-  <ol>
-    <li><b>Score ★ = its die</b> and <b>park the die</b> at the Kontor, pips up (never worth less than 1★; at Novgorod it scores <b>die +2★</b>).</li>
-    <li><b>Take the Kontor’s prize</b> — <b>every cask pays its owner the prize</b>. Resolve it at once, before the next cask delivers; the owner makes every choice. If a recipe or Specialist prize can’t be taken (nothing eligible, no open seat, a fee you can’t pay), <b>gain 2 goods instead</b>; an untakeable <b>building</b> prize is simply <b>forfeit</b> (goods are the Market’s job).</li>
-    <li>The cask <b>may claim one open Contract it matches</b> (below) — score its ★ at once.</li>
-  </ol>
+  <h3 class="ic-h"><i data-lucide="sail"></i>Sailing &amp; delivery</h3>
+  <div class="dgm" id="dgmSail"></div>
+  <p class="small">Resolve each cask fully before the next one delivers; the owner makes every choice. If a recipe or Specialist prize can’t be taken (nothing eligible, no open seat, a fee you can’t pay), <b>gain 2 goods instead</b>; an untakeable <b>building</b> prize is simply <b>forfeit</b> (goods are the Market’s job).</p>
   <p>The emptied Ship tile returns to the <b>bottom of the Ship deck</b>; an ephemeral building on its slot sails away with it. The freed vessels are open again.</p>
   <div class="routeboard" id="destBoard"></div>
   <table>
@@ -466,10 +515,10 @@
     <tr><td><i data-lucide="kontor-novgorod" class="kcrest"></i><b>Novgorod</b> (Peterhof)</td><td><b>die 3+</b></td><td><b>the die +2★</b></td><td>— the premium IS the prize</td><td>8 / 5 / 2</td></tr>
   </table>
   <div class="clar"><h4>Presence &amp; placing presence</h4><b>Presence</b> = your parked dice at a Kontor. <b>Placing presence</b> (the <i data-lucide="map-pin"></i> load bonus, Almoner’s Stall, Keut’s perk) takes a <b>tray die</b> and parks it at <b>face 1</b> at a Kontor you have <b>already delivered to</b> — it scores 1★ and counts for the majority and the clock. It is <b>free</b> everywhere except the <b>Almoner’s Stall</b>, which charges its printed 2 <span class="cube g"></span>. A seated Town Crier adds <b>+2★</b> per placed die. No tray die → no placing presence.</div>
-  <h3>Contracts — the Kontor bonuses</h3>
+  <h3 class="ic-h"><i data-lucide="contract"></i>Contracts — the Kontor bonuses</h3>
   <p>Three Contract tiles lie face-up on the Destinations board. Each names a <b>Kontor</b> (or <i>any</i>), a <b>condition</b> — a die minimum (<i>die 4+</i>) or a named beer — and a printed <b>2–5★</b> ⚙.</p>
   <p>When your cask delivers at that Kontor and its <b>parked face</b> qualifies, you <b>may claim one matching Contract</b>: the tile comes to your seat and its ★ score at once. <b>One Contract per delivered cask</b>; several casks on one Ship claim in load order. The row refills at the <b>end of the turn</b>. Claimed tiles never return, and when the deck runs dry the row simply shrinks. <span class="small">Setup already stripped any Contract naming an undealt beer — every Contract in the deck is claimable.</span></p>
-  <h3>The eight load bonuses</h3>
+  <h3 class="ic-h"><i data-lucide="package-plus"></i>The eight load bonuses</h3>
   <p>Every cask tile prints one — it came with the tile you took at brew (a Gruit’s is always <i>Gain 2 goods</i>). It fires as the cask boards, <b>after any sail the load completes</b>:</p>
   <table class="atbl">
     <tr><td><span class="act-ic"><i data-lucide="coins"></i></span></td><td><b>Gain 2 goods</b> <span class="small">[Q1 pin · Q2+]</span></td><td>any mix</td></tr>
@@ -775,6 +824,91 @@ function clearHl(){document.querySelectorAll('.hl').forEach(e=>e.classList.remov
   });
   lb.addEventListener('click',()=>lb.classList.remove('open'));
   document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open');});
+})();
+
+// ---- THE DIAGRAMS (2026-08-09, designer: "make the rules a little more visual") ----
+// Every picture is built from the REAL printed components — components.js is the same library
+// print.html cuts from — so the rulebook shows the player exactly the pieces on their table.
+// The visual language is fixed: PIECE → ARROW → PIECE, the rule written on the arrow, the
+// situational modifiers as chips beneath, the outcomes as numbered steps.
+(function(){
+  if(!window.HC)return;
+  const px=v=>Math.round(v*96);
+  // a component at true design size, scaled into its own footprint
+  const cmp=(html,wIn,hIn,s)=>'<span class="dcmp" style="width:'+Math.round(px(wIn)*s)+'px;height:'+Math.round(px(hIn)*s)+'px">'
+    +'<span class="dcmp-in" style="transform:scale('+s+')">'+html+'</span></span>';
+  const cask=nm=>HC.CASKS.find(c=>c.nm===nm);
+  const actOf=k=>HC.CASK_POOL.find(a=>a.k===k);
+  // the player's die SITS ON the tile's printed seat, covering the start face — as at the table
+  const seat=(tile,n)=>tile.replace(/(<div class="ct-seat"[^>]*>)[\s\S]*?(<\/div>)/,'$1'+HC.LU('dice-'+n)+'$2');
+  const caskAt=(nm,die,act)=>seat(HC.caskCardBack(cask(nm),actOf(act||'source')),die);
+  const arr=(cap,sub)=>'<span class="dgm-arr"><span class="cap">'+cap+'</span><span class="shaft"></span>'
+    +(sub?'<span class="sub">'+sub+'</span>':'')+'</span>';
+  const piece=(html,lbl)=>'<span class="dgm-piece">'+html+(lbl?'<span class="dgm-lbl">'+lbl+'</span>':'')+'</span>';
+  const chip=(ic,txt)=>'<span class="dgm-chip">'+HC.LU(ic)+'<span>'+txt+'</span></span>';
+  const step=(n,html)=>'<span class="dgm-step"><b class="n">'+n+'</b><span>'+html+'</span></span>';
+  const title=(ic,txt)=>'<div class="dgm-t">'+HC.LU(ic)+txt+'</div>';
+  const KBG={bruges:'linear-gradient(160deg,#274b5c,#1d3845)',london:'linear-gradient(160deg,#b8860b,#8a6408)',
+    bergen:'linear-gradient(160deg,#4a6b3a,#37502c)',novgorod:'linear-gradient(160deg,#7c2128,#5a161c)'};
+  const kplate=(k,nm,die,val)=>'<span class="dgm-kp" style="background:'+KBG[k]+'">'+HC.LU('kontor-'+k)
+    +'<span class="knm">'+nm+'</span><span class="kdie">'+HC.LU('dice-'+die)+'= '+val+'★</span></span>';
+  // a hull with cask tiles seated on its printed berths (the app seats them the same way)
+  const shipLoaded=(hull,dest,casks)=>{const cap=HC.HULL[hull].cap,H=HC.SHIP_H(hull);
+    let ov='';(casks||[]).forEach((c,i)=>{const bi=Math.min(i,cap-1);
+      ov+='<div style="position:absolute;left:.05in;top:'+(cap-1-bi)+'in;width:2.4in;height:1in;z-index:2">'
+        +'<div style="position:absolute;inset:0;transform:scale(.95);transform-origin:center">'+caskAt(c.nm,c.die,c.act)+'</div></div>';});
+    return '<div style="position:relative;width:2.5in;height:'+H+'in">'+HC.shipCard(hull,dest)+ov+'</div>';};
+  const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
+
+  // ---- §8 LOADING: one Ready cask out of a vessel, onto the lowest open berth ----
+  set('dgmLoad',
+    title('package-plus','Loading — one Ready cask, one berth')
+    +'<div class="dgm-row">'
+      +piece(cmp(caskAt('Broyhan',3,'source'),2.4,1,.82),
+        '<b>from YOUR vessels</b><br>a <b>READY</b> cask — its quality die shows <b>3</b>')
+      +arr('load','the die is read <b>as it boards</b> — after this slot’s lifts')
+      +piece(cmp(shipLoaded('cog','London',[]),2.5,3,.52),
+        '<b>the Ship docked at this slot</b><br>Cog → London · minimum <b>2+</b><br>seat it in the <b>lowest berth</b>')
+    +'</div>'
+    +'<div class="dgm-chips"><span class="lead">the slot can change the read:</span>'
+      +chip('die-plus1','<b>Malt Kiln · Bonded Store</b> — the boarding die +1 (cap 6)')
+      +chip('dices','<b>Customs House</b> — the minimum −1')
+      +chip('die-minus1','<b>Tollhouse</b> — the die −1, score <b>+3★</b>')
+    +'</div>');
+
+  // ---- §8 SAILING & DELIVERY: the last cask covers the trigger berth; every cask resolves ----
+  set('dgmSail',
+    title('sail','A full Ship sails at once — then every cask delivers, in load order')
+    +'<div class="dgm-row">'
+      +piece(cmp(shipLoaded('cog','London',[{nm:'Broyhan',die:3},{nm:'Bock',die:5}]),2.5,3,.52),
+        '<b>the last cask covers the top berth</b><br>the Cog is full — a Skute sails on its first load')
+      +arr('it sails','no one waits — the voyage resolves now')
+      +piece(kplate('london','London',5,5),
+        '<b>each die parks at the Kontor</b><br>pips = the ★ it scores<br>(Novgorod: the die <b>+2★</b>)')
+    +'</div>'
+    +'<div class="dgm-steps">'
+      +step(1,HC.LU('star')+' <b>Score ★ = the die</b>, then park it on the Kontor mat — it is your presence there, and a beat of the clock.')
+      +step(2,HC.LU('kontor-london')+' <b>Take the Kontor’s prize — every cask pays it</b>: a recipe '+HC.LU('scroll-text')+' at its fee · a building '+HC.LU('building-2')+' with your die on it · a Specialist '+HC.LU('wrench')+' free. Novgorod pays the +2★ premium instead.')
+      +step(3,HC.LU('contract')+' <b>Claim one open Contract the cask matches</b> — its ★ score at once. One per delivered cask.')
+    +'</div>');
+
+  // ---- §7 THE MASON'S MARK: the die goes ON the tile and grows with the table's traffic ----
+  const kiln=HC.BUILDINGS.find(b=>b.k==='maltkiln');
+  const mark=face=>'<div style="position:relative;width:2.5in;height:1.32in">'+HC.buildingCard(kiln)
+    +(face?'<span class="dgm-mark">'+HC.LU('dice-'+face)+'</span>':'')+'</div>';
+  set('dgmMark',
+    title('hammer','The mason’s mark — a build spends a die, not ★')
+    +'<div class="dgm-row">'
+      +piece(cmp(mark(0),2.5,1.32,.62),'<b>the tile as printed</b><br>its start face reads <b>2</b>')
+      +arr('you build it','stand one of YOUR dice on the tile at that face')
+      +piece(cmp(mark(2),2.5,1.32,.62),'<b>your mark stands</b><br>the die is committed — it counts toward your empty tray')
+      +arr('every use · <i>any</i> player','turn it up <b>+1</b> (max 6)')
+      +piece(cmp(mark(5),2.5,1.32,.62),'<b>at game end it scores its pips</b><br>three uses later → <b>5★</b> to you')
+    +'</div>'
+    +'<div class="dgm-chips"><span class="lead">so:</span>'
+      +chip('building-2','author the corner the table <b>needs</b> — their traffic pays you')
+      +chip('dices','a build competes with a brew for the <b>same 13 dice</b>')
+    +'</div>');
 })();
 
 // ---- the ART ICON pass (2026-08-09): the rulebook rides the same c.1350 sticker set as the
