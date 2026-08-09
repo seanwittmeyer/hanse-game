@@ -171,8 +171,8 @@ function banner(){
   if(fatalMsg){b.textContent=fatalMsg;b.style.background='#8a1f1f';return;}
   if(!inited){b.textContent='Online table — connecting to the lobby…';b.style.background='#555';return;}
   if(!H.S){b.textContent='Online table — seat '+(mySeat+1)+' · waiting for the table state…';b.style.background='#555';return;}
-  var me=H.S.players[mySeat],a=H.actorSeat(),ap=(a!=null)?H.S.players[a]:null;
-  var who=me?me.name:('seat '+(mySeat+1));
+  var me=(mySeat!=null&&mySeat>=0)?H.S.players[mySeat]:null,a=H.actorSeat(),ap=(a!=null)?H.S.players[a]:null;
+  var who=me?me.name:((mySeat==null||mySeat<0)?'watching':('seat '+(mySeat+1)));   // seat -1 = a spectator
   if(H.S.over){b.textContent='You are '+who+' — GAME OVER (see the Final Standing).';b.style.background='#3b3b6e';return;}
   if(!ap){b.textContent='You are '+who;b.style.background='#555';return;}
   if(ap.ai){b.textContent='You are '+who+' — '+ap.name+' (AI) is playing…';b.style.background='#7a4a1f';}

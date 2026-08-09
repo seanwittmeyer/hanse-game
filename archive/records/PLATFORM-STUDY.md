@@ -145,6 +145,14 @@ The engine moved v4.9d → **v4.11 "Factor's Fee"** under this study (the 08-06/
 
 **Next: P2** — `lib/hanse/multiplayer.ts` on `core.ts` (envelope create/join/start), `/hanse` lobby-lite + `/hanse/[code]` room page whose bridge is the harness router with the Supabase row as the store, `/live` game_type column.
 
+### P2 + P3 SHIPPED (2026-08-09, same session — PDX `1dccf66` on the feature branch · hanse `9ea696d` on main)
+
+**P2 (PDX):** `lib/hanse/` — `config` (iframe → the live Pages `play.html`, `NEXT_PUBLIC_HANSE_URL` + `?src=` overrides) · `envelope` (the row contract, pure + 6 unit tests) · `multiplayer` (create/join/AI-seats/start-early/resize/claim-by-name/leave on core with CAS retries; LWW gameplay writes; a hanse-own `hanse_active_games` ledger — the shared-ledger watch from §8 is closed, each game lists only its own tables). `app/hanse` lobby-lite + `app/hanse/[code]` room: waiting room (seats/QR/host controls, auto-start on full) + the bridge (HELLO pins `engineKey`, host INITs setup, COMMIT→`wrapCommit`→row, remote→STATE, never echo the sender). `/live` gains a read-only "Other platform games" section. **P3:** staggered automa watchdog (12s+seat·3s takeover, demoted when another writer resumes) · spectator = seat −1 (net.js banner says "watching") · rejoin via ledger + `?as=` name claim · lucide 1.31.0 vendored (play/index/print off the unpkg `@latest` CDN — zero external requests) · `context/PLATFORM-CONTRACT.md` (the row/envelope/adapter contract + PDX's native conformance — the unified-platform deliverable). Deck redaction DECLINED (trusted-lobby posture, recorded dial).
+
+**Gates:** PDX vitest 92 (6 new) · `tsc --noEmit` 0 · build clean (`/hanse` static, `/hanse/[code]` dynamic) · production-server render smoke of both routes — which caught a REAL crash pre-commit (core's `subscribeToGame` on the null unconfigured client; guarded at the call site per core's contract). Hanse net-probe + net-smoke re-run ALL PASS after the part-2 letter.
+
+**Not verifiable from this sandbox:** the cross-device Supabase round-trip (no egress/env here). The 10-minute live check after deploying: (1) run `scripts/add-game-type-column.sql` in Supabase; (2) merge/deploy the PDX branch; (3) two devices → `/hanse` → create + join → play two turns each way, sail a rival's cask to Bergen (the handoff: the owner's device gets the pick), add a Guildmaster seat and watch the host drive it, close the host tab mid-bot-turn (watchdog takes over ≤ ~20s), finish a game (standings on both + in `/hanse` results). The child protocol itself is already conformance-proven by the hanse-repo gates.
+
 ## 9. Open dials for the designer
 
 1. **Player counts online:** cap at 2–4 for v1 (5p runs but isn't tuned; PDX platform assumes ≤4 — `PLAYER_COLORS` etc.)?
