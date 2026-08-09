@@ -1,4 +1,14 @@
-# Brewhouses of the Hanse — Components (v4.12b “Light Wharfage”)
+# Brewhouses of the Hanse — Components (v4.13 “Plain Sight”)
+
+> **v4.13 (designer-ruled 2026-08-09 — a PRESENTATION release):** **no component changes, no
+> count changes.** Two fixes to how the kit PROOFS, both on the **Destinations board**: the
+> **Contract row’s three slots are cut component-true (2 × 0.9″) and centred** — they had
+> inherited the building tile’s 2.5 × 1.32″ footprint, so the row measured 7.82″ on a 7.6″
+> board and ran off its edge — and the **Overlay proof now reaches the Kontor panels**, ghosting
+> three 12 mm dice into each **parking field** so the zone can be checked against the piece it
+> is cut for. The **component manifest** (the checklist sheet) is rewritten as a packing list —
+> quantity · a line of theme · **where the piece goes** — replacing the per-entry paragraphs
+> that had overrun the sheet and cut off mid-sentence.
 
 > **v4.12b (designer-ruled 2026-08-09, same day):** the **Cooperage tile reprints at +1★**
 > per cask loaded there (was +2★ — the BUILDING-POWER-STUDY’s mint flag).
@@ -124,8 +134,8 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (its header states the current version). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `archive/records/V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v4.12b “Light Wharfage”** (`KEY hanse-v412b`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.12b; the sheet layouts are the P4 refresh). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - The live build is `play.html` — **v4.13 “Plain Sight”** (`KEY hanse-v413`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.13; the sheet layouts are the P4 refresh). Printed copy follows the **Term Registry (`STYLE.md`)**.
 
 ---
 

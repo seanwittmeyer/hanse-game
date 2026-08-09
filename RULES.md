@@ -1,4 +1,21 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.12b “Light Wharfage”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.13 “Plain Sight”)
+
+> **v4.13 “Plain Sight” (designer-ruled 2026-08-09 — a PRESENTATION release).**
+> **No rule changes at all.** Everything below is unchanged from v4.12b; the version marks a
+> pass over how the game READS, on every surface. **(1)** The rulebook’s **art icons print
+> big** — wherever the kit’s art exists the icon drops its chip and renders full size (only
+> the line-glyph fallbacks keep one). **(2)** A **named Kontor wears its own crest**
+> everywhere; the generic glyph is reserved for *a* Kontor in the abstract — and the open
+> **Contract row renders the printed tile itself**, capped at its true 2 × 0.9 in. **(3)** The
+> heavy paragraphs become **diagrams built from the real components** — Loading, Sailing &
+> delivery, the Mason’s Mark (piece → arrow → piece). **(4)** **One site navigation** across
+> all four pages; the play app keeps the **Player Aid** and shows Aid + Rules in its bar on
+> non-mobile. **(5)** The print kit: the Destinations board’s **Contract slots are
+> component-true and centred** (they had inherited the building footprint and overflowed the
+> board), the **Overlay proof reaches the Kontor panels** (12 mm dice ghosted into each
+> parking field), and the **component manifest is a packing list** — quantity, a line of
+> theme, and where the piece goes — instead of a lesson that overran its sheet.
+> *(The `KEY` bump to `hanse-v413` is the version marker; it clears any in-progress game.)*
 
 > **v4.12b “Light Wharfage” (designer-ruled 2026-08-09, same day — off the
 > BUILDING-POWER-STUDY).** The **Cooperage wharfage eases to +1★** ⚙ per cask loaded at its
