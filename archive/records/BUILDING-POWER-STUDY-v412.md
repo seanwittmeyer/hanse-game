@@ -102,11 +102,23 @@ The Exchange's null ablation + consistent builder lift says its power is **posit
 wins) rather than inflationary (how much everyone scores) — the harder kind to see at a
 table, and the reason it's flagged despite the null.
 
-## 5. The GM oracle arm (36×3p, GUILD_MS=120)
+## 5. The GM oracle arm (36×3p, GUILD_MS=120 — direction only, n≈13–26 builds/design)
 
-See `playtests/bldg-power-gm3p.txt` (recorded alongside; the arm is small — direction only).
-Read against the trader corpus for: does search-play exploit the Cooperage/Exchange harder,
-and does it revive any of the dead shelf (the STRATEGY-STUDY's GM revived Racking).
+`playtests/bldg-power-gm3p.txt`. The GM plays 16.3 rounds (vs the trader's 12.8 — search
+under-races the clock, the standing read) and its builder bar sits at 34.4%.
+
+- **Cooperage: the flag SHARPENS.** Builder win 46.2% → **+11.8pp over the GM bar** (vs
+  +3.0 at trader 3p) on a 3.92-pip mark — search-play converts the tile into wins *harder*
+  than greedy play does, even while minting less (1.39★/g — deliberate, fewer spray loads).
+- **Exchange: the flag TEMPERS.** Builder win 23.1% → **−11.3pp under the GM bar** (uses
+  still 2.1/g). The trader's consistent +7 lift may partly be a greedy-policy artifact (the
+  trader self-serves the row mechanically); under search the builds don't convert. Human
+  table decides — the tile stays on watch, not on trial.
+- **Racking revives under search** (0.64 builds/g · 0.94 uses · 4.05 pips — the
+  STRATEGY-STUDY's read repeats), and the GM likes the **Victualling Yard** (0.63 builds ·
+  45.0% builder win, +10.6pp, n=20).
+- **The dead shelf does NOT revive:** Customs and Rich Berth 0 builds, Capstan 0.07 —
+  dead at both tiers.
 
 ## 6. Mechanisms (why these and not others)
 
