@@ -203,6 +203,23 @@ Hard-won across v0.9→v0.16; they constrain every future change:
 
 ## 9. Change log (compact — full rationale in `archive/v0.16/DESIGN.md`)
 
+### v4.12 “Open Brewhouse” (2026-08-09 — designer-ruled: the buildings & specialists review)
+One batch, four moves, off the designer’s tile-by-tile letter. **(1) Brew joins the Q3+
+load-bonus pool** (*“brew is a true throttle”*) — survey/hire/brew all gate at Q3+; the
+print mix gives each Q3+ beer exactly ONE brew tile of six. **(2) The presence fee scopes
+to the Almoner’s Stall alone** — the cask-action bump and Keut’s perk are free again
+(v4.11 partially unwound; the 300/count re-read holds pace at 13.3/13.0/12.3, band
+70/72/62% — the pace watch moves to the live table). **(3) The roster pass:** the v45g
+never-starts-Ready cap REPEALED (the Cellarman’s Broyhan starts Ready — *“that is what
+makes this specialist powerful”*) · Braumeister/Scholar/Shipwright rewordings · the
+Innkeeper reworked (3+ casks brewing at once → age one +1 at turn start; the 4th-vessel
+rig and the gate cut) · the Chronicler +3★/Contract uncapped+ungated · the Town Crier +2★
+per placed die (face-2 parks retire; the ⚙ dial is his bonus — 3★ floated). **(4) The
+building pass:** Assay pays 1 `H` for one-cask-to-Ready · the Cooperage adds +2★ per load
+· the Exchange replaces up to 3 Contracts · the Capstan warps any docked Ship (full where
+it lands → it sails). Lesson applied: reward channels players already want (Contracts,
+presence-as-strategy) get VALUE dials; reach problems keep STRUCTURE dials.
+
 ### v4.11 “Factor’s Fee” (2026-08-08 — designer-ruled off the three-playtest set)
 **Placing presence costs 2 G per die; the pool stays 13.** Three live 3p games (16 · 8 ·
 10 rounds) exposed the free bump as the racer’s unpriced clock lever — bumps and rounds

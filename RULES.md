@@ -1,8 +1,30 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.11 “Factor’s Fee”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.12 “Open Brewhouse”)
 
 *(Language: the 2026-08-03 **Term Registry pass** governs all printed copy — player ·
 Kontor · Contract · cask quality die · build · Age N · aging · resolve the line · the ★
 glyph; see `STYLE.md` §4. The version letters below keep their period wording.)*
+
+> **v4.12 “Open Brewhouse” (designer-ruled 2026-08-09 — the buildings & specialists review,
+> one batch).** Four moves. **(1) BREW joins the Q3+ load-bonus pool** — the pool gates read
+> *survey/hire/brew* all at Q3+ (brew was Q4+): *“brew is a true throttle.”* The print mix
+> guarantees each Q3+ beer **one** brew tile of its six, never all. **(2) The presence fee
+> SCOPES to the Almoner’s Stall alone** — the *place 1 presence* cask action and Keut’s perk
+> are **free** again; only the Almoner charges the 2 G factor’s fee (v4.11 partially
+> unwound; the 300/count re-read: pace 13.3/13.0/12.3, band 70/72/62% — between the free-bump
+> floor and the every-channel fee; live-pace watch ⚙). **(3) The roster pass:** the
+> Cellarman’s v45g never-starts-Ready cap is **REPEALED** (*“we start gruit ready — it is
+> what makes this specialist powerful”*; his Broyhan starts READY at 3) · Braumeister reads
+> **age 1 cask +1** · Scholar/Shipwright read **pay no fee** · the **INNKEEPER is reworked**
+> — the 4th-vessel tile is cut; *brewing 3+ casks at once: age one +1 at your turn start*;
+> ungated · the **CHRONICLER pays +3★ per claimed Contract, uncapped and ungated** (*“make
+> that strategy more valuable”*) · the **TOWN CRIER pays +2★ per placed presence die** ⚙
+> (the die parks at face 1 — 3★ total; face-2 retires; the dial is his bonus — 3★ floated) ·
+> the Supercargo is reworded (rules unchanged). **(4) The building pass:** the **Assay
+> House** — pay 1 `H`: ONE maturing cask ages straight to READY (was ±1) · the **Cooperage**
+> — +1 capacity AND each cask loaded there scores its loader **+2★** · the **Merchants’
+> Exchange** — replace **up to 3** open Contracts · the **Warping Capstan** — warp **any
+> docked Ship**, cargo riding (full where it lands, it sails). No specialist prints a
+> requirement any more (the earn-gate seam stays).
 
 > **v4.11 “Factor’s Fee” (designer-ruled 2026-08-08 — off the three-playtest set: #34’s 16
 > rounds · the 8-round Almoner race · the 10-round Flight win).** **Placing presence costs
@@ -346,10 +368,10 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 | Mumme | Q4 | 3 | 1 | `G H H H` | dealt export · fee `H` |
 | Bock | Q5 | 3 | 2 | `G G H H H` | dealt export · fee `H H` (the taxed climb — v4.9c) |
 
-*(The Cellarman starts your dice one higher — a Bock at 3. Caps (v45g): a start value never
-exceeds the quality, and **a Q3+ export never STARTS Ready** — aging is required for every
-export (the Cellarman's lift on Broyhan stops at 2). Keut’s printed perk: its delivery also **places 1 presence** — pay the 2 G fee (v4.11); a tray die parks at face 1
-at that Kontor.)*
+*(The Cellarman starts your dice one higher — a Bock at 3, and a Broyhan at 3: **READY at
+brew** (the v45g never-starts-Ready cap is repealed, v4.12 — that power is the point). A
+start value never exceeds the quality. Keut’s printed perk: its delivery also **places 1
+presence**, free — a tray die parks at face 1 at that Kontor.)*
 
 > **The squeeze (state it to players):**
 > - **You can’t brew everything** — 2 vessels (a 3rd behind the Flight), the recipe faucets,
@@ -399,8 +421,8 @@ the die but caps its growth) — the dials are the rent and restrict-to-full-boa
 
 **The deck (the box prints 20 ⚙ — SETUP DEALS 17 each game, v4.6; all green — v4.5b “the dice
 pass”: 9 die-touching designs; v45d “the power ladder”, GWT-style): fees print in GRAIN ONLY —
-grain buys infrastructure, hops power the beer (the Hop Exchange and Abbey Cellar are paid in
-`H` to USE, never to gain). The cheap tiles are honest utilities; the 3 `G`/2 `G` power tier
+grain buys infrastructure, hops power the beer (the Hop Exchange, Abbey Cellar and Assay House are paid
+in `H` to USE, never to gain). The cheap tiles are honest utilities; the 3 `G`/2 `G` power tier
 swings; the dealt subset makes every wharf a different economy.**
 
 | Building | Fires | Effect ⚙ | Qty ⚙ | Wharf fee ⚙ | Mark starts ⚙ |
@@ -411,18 +433,18 @@ swings; the dealt subset makes every wharf a different economy.**
 | Hiring Post | resolve its slot | **gain 1 specialist** (at its fee) | 1 | 1 `G` | 2 |
 | Almoner’s Stall | resolve its slot | **Pay 2 G: place 1 presence** (§7) | 1 | free | 1 |
 | **Racking Hall** *(power)* | resolve its slot | **swap the dice of ANY two of your vessel casks — no quality cap** (the beer transfers whole; global cap 6). *The launder engine: rack an aged Bock’s 5 onto a Ready Gruit — the 5-pip Gruit ships, the Bock re-ages from 1.* | 1 | 3 `G` | 3 |
-| **Assay House** | resolve its slot | **turn one of your aging dice ±1** (never above its quality, never below 1) | 1 | 1 `G` | 1 |
+| **Assay House** | resolve its slot | **pay 1 `H`: ONE maturing cask ages to READY** (its die straight to its quality — v4.12) | 1 | 1 `G` | 1 |
 | **Abbey Cellar** *(power)* | resolve its slot | **pay 3 `H`: ALL your aging casks age to READY** (each die to its quality) | 1 | 2 `G` | 3 |
 | **Hop Exchange** *(power)* | resolve its slot | **pay up to 2 `H` ⚙ — turn your vessel dice +1 per hop** (any split; **past quality is fine**; cap 6) | 1 | 2 `G` | 2 |
 | **Malt Kiln** | on load here | the boarding cask’s **die +1** (cap 6) | 2 | 2 `G` | 2 |
 | **Tollhouse** | on load here | the boarding cask **may turn its die −1** (never below the Kontor’s minimum): **score +3★ at once** (net +2, any quality) | 1 | 1 `G` | 3 |
 | **Bonded Store** | on load here / at sail | the boarding die **+1** (cap 6); **when this Ship sails, the Store sails with it** (returned to the box) and **every player with a cask aboard gains 2 goods** | 1 | 2 `G` | 3 |
-| **Cooperage** | passive | the Ship here: **+1 ship capacity** | 1 | 2 `G` | 3 |
+| **Cooperage** | passive · on load | the Ship here: **+1 ship capacity** — and **each cask loaded here scores its loader +2★** (v4.12) | 1 | 2 `G` | 3 |
 | **Customs House** | passive | the Ship here: **−1 quality required** to board (sells at the die) | 1 | 2 `G` | 3 |
 | **Rich Berth** | passive | the Ship here may **sail one berth short** (min 1) | 1 | 2 `G` | 3 |
 | **Victualling Yard** *(v4.6 · ephemeral)* | on load here / at sail | the boarding cask’s **load bonus fires TWICE**; **when this Ship sails, the Yard sails with it** (boxed) | 1 | 2 `G` | 3 |
-| **Merchants’ Exchange** *(v4.6)* | resolve its slot | **cycle ONE open Contract** to the bottom of its deck — the replacement is revealed **at once** (the end-of-turn refill is untouched) | 1 | 2 `G` | 2 |
-| **Warping Capstan** *(v4.6)* | resolve its slot | **move one EMPTY hull** on the wharf to any shipless slot | 1 | 2 `G` | 3 |
+| **Merchants’ Exchange** *(v4.6)* | resolve its slot | **replace UP TO 3 open Contracts** (v4.12) — each cycled to the bottom of its deck, its replacement revealed **at once, in place** (the end-of-turn refill is untouched) | 1 | 2 `G` | 2 |
+| **Warping Capstan** *(v4.6)* | resolve its slot | **move ANY docked Ship** (cargo rides) to any shipless slot — **full where it lands, it sails at once** (v4.12) | 1 | 2 `G` | 3 |
 
 *(Action buildings print the same verbs as the cask piles — the wharf and the cargo speak one
 language. The Kiln, Hop Exchange and Racking Hall are the “improve the humble beer” engines: a
@@ -466,11 +488,11 @@ and read LIVE (v4.6c): a Ship or building landing on a line slot mid-turn opens 
 | **Gain 2 goods** | any mix | Q1 (Gruit pin) · Q2+ |
 | **Age +2** | 2 steps across your vessels | Q2+ |
 | **Load 1 more cask** | onto **any** eligible Ship on the wharf (its bonus fires too) | Q2+ |
-| **Place 1 presence** | pay 2 G · a tray die → a Kontor you’ve delivered to (§7) | Q2+ |
+| **Place 1 presence** | a tray die → a Kontor you’ve delivered to (§7) — **free here** (only the Almoner’s Stall charges 2 G, v4.12) | Q2+ |
 | **Gain 1 recipe** | pay the **card’s printed fee** ⚙ — a dealt export | Q2+ |
 | **Gain 1 building** | pay the **tile’s printed fee** ⚙ (no chip = free) — display → any legal slot; **your die stands on it** (v4.9) | Q3+ |
 | **Gain 1 specialist** | pay the **tile’s printed fee** ⚙ — from the display (open seat required) | Q3+ |
-| **Brew 1** | pay its cost into an open vessel (tray die) | Q4+ |
+| **Brew 1** | pay its cost into an open vessel (tray die) | Q3+ (v4.12) |
 
 *(Enshrine left with the Hall. Every pile top is face-up — brew toward the bonus you want (v4.7a: one pile per beer).
 **Paid at the wharf, free at the Kontor** (v4.2 — the fee rides the ITEM): the three
@@ -497,10 +519,11 @@ everywhere, the Bruges prize included (the v45e grammar)**. No building ever add
 - **Novgorod’s premium is printed on the mat** (v4.2): every *delivered* die there counts
   **pips +2** — for the score AND the end-game audit. (Minimum 4 means delivered dice show 4–6,
   so a face-1 die at Novgorod is always placed presence, worth its flat 1★.)
-- **Presence** = your parked dice there. **Placing presence** (the cask/building action) costs
-  **2 G — the factor’s fee (v4.11)** — and takes a
-  **tray die**, parks it at a Kontor you’ve **already delivered to** at **face 1** (it scores
-  1★ and counts for the majority and the clock). No tray die — or no 2 G — no placing presence.
+- **Presence** = your parked dice there. **Placing presence** (the cask action, Keut’s perk)
+  is **free (v4.12 — the v4.11 fee is scoped back)**: take a **tray die**, park it at a Kontor
+  you’ve **already delivered to** at **face 1** (1★ + majority weight + the clock; a seated
+  Town Crier adds +2★ per die). **Only the Almoner’s Stall charges the 2 G factor’s fee** for
+  the same placement. No tray die → no placing presence.
 
 ### 7b. Contracts — the order row (v4.5b)
 
@@ -531,8 +554,7 @@ Novgorod — die 5+→3★ · Bock→4★ · die 6→4★ · any Kontor — die 
 ## 8. The player board (private) — 3 vessels · 2 seats
 
 - **3 vessel slots** — each holds one aging/Ready cask (its die on the tile). **All open
-  from the start (v45h).** *(A seated **Innkeeper** adds a 4th — the cask ages ON his
-  tile, v4.6.)*
+  from the start (v45h).**
 - **2 specialist seats** — **both open from the start (v45h).**
   A player never owns two of a type; specialists are **earned free** (Bergen, Hiring Post, the
   cask verb) — never bought.
@@ -545,41 +567,42 @@ Novgorod — die 5+→3★ · Bock→4★ · die 6→4★ · any Kontor — die 
 
 **The SPECIALISTS (13 designs ⚙, v4.6 — the 5 CORE at max(2, n−1) copies + the 8 GUILD at 1
 copy each · display of 4 · each prints its wharf fee ⚙ — free as Bergen’s prize, **per
-cask** (v4.7). Two guild tiles print a REQUIREMENT ⚙: the condition must read TRUE off
-your components before the tile may be seated (any channel — Bergen included). A taken
+cask** (v4.7). **No tile prints a requirement (v4.12** — the Innkeeper’s and Chronicler’s
+gates are cut; the earn-gate seam stays for future tiles**).** A taken
 tile’s gap stands for the rest of the turn — the display refills from the deck at the END of
 the turn (v4.4c; ships and buildings refill at once):**
 
 *The core five (the drip floor):*
-- **Cellarman** (fee `2H`) — your dice **start one higher** (never above quality — and a Q3+
-  export never starts Ready, v45g; a Bock starts at 3, a Broyhan at 2).
+- **Cellarman** (fee `2H`) — your dice **start one higher** (never above quality; a Bock
+  starts at 3 — and a Broyhan at 3, **Ready at brew**: the v45g cap is repealed, v4.12).
 - **Grain Factor** (fee `2G`, v4.7 — was 1G, the probe’s auto-pick) — each time you gain
   grain (any faucet): **+1 `G`**.
 - **Hop Gardener** (fee `2H`) — each time you gain hops (any faucet): **+1 `H`**.
 - **Stevedore** (fee `1G`) — **each time you load, you may load 2 casks** (the slot load, the
   commission’s maiden load, and the *Load* bonus alike — v4.6d; each cask fires its bonus).
-- **Braumeister** (fee `1G` `1H`, v4.5b) — **at the start of your turn, your ripest aging
-  cask ages +1** (the die closest to Ready; ties go to the lowest vessel). The earned heir of
+- **Braumeister** (fee `1G` `1H`, v4.5b) — **at the start of your turn, age 1 cask +1**
+  (v4.12 wording; the app ages your ripest — the die closest to Ready). The earned heir of
   the cut auto-age.
 
 *The guild eight (v4.6 — one copy each):*
-- **Guild Scholar** (fee `2G`) — **your recipes are FREE**: the `H` = Q−3 fee is waived at
-  every channel, the Bruges prize included (the pick is never blocked by hops; v4.9c watch ⚙ —
-  his waiver now saves at most 2 `H`).
-- **Innkeeper** (fee `2G` · *requires 3 distinct beers shipped — v4.9d*) — **this tile is a 4th vessel,
-  and its cask ages +1 at the start of your turn** (v4.7 rework — the tile ages its own
-  cask; the Braumeister’s tick may stack on it).
+- **Guild Scholar** (fee `2G`) — **when gaining recipes, pay no fee** (v4.12 wording): the
+  `H` = Q−3 fee is waived at every channel, the Bruges prize included.
+- **Innkeeper** (fee `2G`) — **brewing 3+ casks at once: age one +1 at the start of your
+  turn** (v4.12 rework — with 3+ casks in your vessels at turn start, the ripest maturing
+  ages +1; the 4th-vessel tile and the requirement are cut; the Braumeister’s tick may
+  stack).
 - **Supercargo** (fee `2H`, v4.7 — was 1H, the probe’s +29 outlier) — each time a Ship
   carrying **your** cask sails on a **rival’s** turn: gain **1 `G` 1 `H`**.
-- **Chronicler** (fee `1G` `1H` · *requires a claimed Contract*) — **game end: +1★ per Contract tile
-  at your seat (max +5)** ⚙.
+- **Chronicler** (fee `1G` `1H`) — **game end: +3★ per Contract tile at your seat** ⚙
+  (v4.12 — uncapped, no requirement: Contracts are hard to claim, so the strategy pays).
 - **Alderman** (fee `2G`) — **game end: +2★ per Kontor where you have 3+ parked dice** ⚙.
-- **Town Crier** (fee `1G` — **ungated, v4.7**: the 2-Kontore requirement delayed him past the window) — **your placed presence parks at face 2** (2★ each; still one die, one clock beat;
-  placing presence remains delivery-bound).
+- **Town Crier** (fee `1G`) — **each presence die you place scores +2★** ⚙ (v4.12 — the die
+  parks at face 1 as ever, so a placement banks 3★ total; still one die, one clock beat;
+  delivery-bound as ever).
 - **Chandler** (fee `1G`) — **once per turn** you may swap **1 `G` ↔ 1 `H`** with the stores
   (a free action; the Grain Factor / Hop Gardener drips apply — that is the combo).
-- **Shipwright** (fee `1H`) — **your commissions are free** (the Ship’s printed `G` fee is
-  waived — 2 `G` on a Skute, nothing on a Hulk; v4.8).
+- **Shipwright** (fee `1H`) — **when commissioning Ships, pay no fee** (v4.12 wording — the
+  Ship’s printed `G` fee is waived: 2 `G` on a Skute, nothing on a Hulk).
 
 ---
 
@@ -611,24 +634,25 @@ tray size (13 dice — v4.9b) is THE pace dial now.*
    +2★ on top).
 2. **Contracts** — the claimed tile’s printed ★ (v4.5b; the tiles at your seat are the audit).
 3. **Tollhouse stamps** — **+3★** per stamped cask (v45d; the die drops 1 — net +2).
-4. **Placed presence** — 1★ each (the face-1 die).
-5. **A departing building’s die** — its pips, scored as the tile leaves play (v4.9; the die
+4. **Cooperage wharfage** — **+2★** per cask loaded at its slot (v4.12).
+5. **Placed presence** — 1★ each (the face-1 die; a seated Town Crier adds +2★ per die).
+6. **A departing building’s die** — its pips, scored as the tile leaves play (v4.9; the die
    returns to its owner’s tray).
 
 *(Commissions score **nothing** — v4.5b. The score track + your parked dice + your claimed
 tiles remain the whole audit trail; no memory required.)*
 
 **End-game:**
-6. **Majorities** — at each Kontor, by **parked dice** (Bruges 4/2/0 · London 5/3/1 · Bergen
+7. **Majorities** — at each Kontor, by **parked dice** (Bruges 4/2/0 · London 5/3/1 · Bergen
    9/5/2 · Novgorod 8/5/2 ⚙; 2p skips 2nd; ties split).
-7. **The Flight** — distinct beers **SHIPPED** (the completed cards on your board — v4.9d): **(beers−1)², min 3**
+8. **The Flight** — distinct beers **SHIPPED** (the completed cards on your board — v4.9d): **(beers−1)², min 3**
    (3→4 · 4→9 · 5→16 · 6→25 ⚙).
-8. **Buildings — the Mason’s Marks (v4.9)** — each die standing on one of your buildings
+9. **Buildings — the Mason’s Marks (v4.9)** — each die standing on one of your buildings
    scores **its pips** (1–6★). The dice on the tiles are the audit.
-9. **The Guild (v4.6)** — a seated **Chronicler** (+1★ per claimed Contract, max +5 ⚙) or
+10. **The Guild (v4.6)** — a seated **Chronicler** (+3★ per claimed Contract ⚙ — v4.12) or
    **Alderman** (+2★ per Kontor with 3+ parked dice ⚙) scores its printed line — the audit is
    the tiles at your seat and the dice on the mats.
-10. **Tiebreak:** the summed dice in your vessels, then most goods.
+11. **Tiebreak:** the summed dice in your vessels, then most goods.
 
 > **The legible fork:** ship **wide** (majorities + prizes) or ship **lifted** (Kiln-fed dice,
 > the Novgorod bar), **build** (dice that grow on the tiles you author) or **brew broad** (the
@@ -657,7 +681,7 @@ the engine; the modules return after the core settles.
    seat (the Cellarmaster) nulls the "humans run longer" assumption. The felt problem is
    **trigger CONTROL, not length**: the leader dumped tray dice via cheap placed presence and slammed
    the door 12 up while the human's engine peaked. Pool 13 buys the non-racer ~1 round
-   (~half the felt gap in #25); the deeper watch is presence-commit speed as the racer's lever. **RULED at v4.11: the lever is PRICED — 2 G per placed presence** (the 8-round Almoner race decided it); the pool stays 13, the 14th die declined.
+   (~half the felt gap in #25); the deeper watch is presence-commit speed as the racer's lever. **RULED at v4.11: the lever is PRICED — 2 G per placed presence** (the 8-round Almoner race decided it); the pool stays 13, the 14th die declined. **AMENDED at v4.12: the fee SCOPES to the Almoner’s Stall alone** — the cask-action bump and Keut’s perk are free again. The 300/count re-read: pace 13.3/13.0/12.3 (band 70/72/62%) — between the free-bump floor (12.9/12.1/11.9) and the every-channel fee (14.8/14.3/13.8); the Crier’s richer 3★ placement partially substitutes. Watch ⚙: live pace at a human table.
    **#26 (4p all-AI, `PLAYTEST-26.md`) repeats the signature:** 11 rounds — UNDER the band
    floor — with the Cellarmaster again choosing the horn. **#27 (3p all-AI,
    `PLAYTEST-27.md`) completes the picture: 15 rounds, in-band, and a GUILDMASTER raced

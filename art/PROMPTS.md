@@ -191,3 +191,13 @@ mission chapel on the quay, a lantern over its door, nets and a moored skiff bes
   flat beige field, spec in `components.js`).
 - If a beer's color clashes with its card tint, lean the art toward the card's color (the card's `--c`
   shows through the scrim at the edges).
+
+## Queued (2026-08-09 — designer, off the v4.12 review)
+- **icons/bonus-load.png REPLACEMENT** — the *Load 1 more* load-bonus wants its **own,
+  distinct icon**: today `bonus-load.png` reads too close to the generic load/package
+  glyph, and the verb (an EXTRA cask going aboard, on top of the load you already made) has
+  no visual of its own. Brief: a small wax-sealed cask swinging from a rope-and-hook (or a
+  dockside crane arm) **above a ship's open hold** — the extra cask in mid-air, going
+  aboard. Same c.1350 sticker treatment as the rest of `art/icons/` (one object, warm
+  palette, transparent margin, readable at .3in). **Keep the filename** (`bonus-load.png`)
+  so the kit swaps it in with no code change.

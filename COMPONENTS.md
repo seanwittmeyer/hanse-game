@@ -1,4 +1,16 @@
-# Brewhouses of the Hanse — Components (v4.9d “Loaded Flight”)
+# Brewhouses of the Hanse — Components (v4.12 “Open Brewhouse”)
+
+> **v4.12 (designer-ruled 2026-08-09 — the buildings & specialists review):** reprints —
+> **cask tiles** (brew joins the Q3+ load-bonus mix: survey/hire/brew all Q3+; each Q3+
+> beer prints ONE brew tile of its six) · the **reach bonus** prints *+1 presence* (free —
+> only the Almoner’s Stall prints the 2 G fee) · **Assay House** (pay 1 `H`: one maturing
+> cask to READY) · **Cooperage** (+1 capacity · on load +2★ to the loader) · **Merchants’
+> Exchange** (replace up to 3 open Contracts) · **Warping Capstan** (move any docked Ship)
+> · the **specialist roster texts** (Cellarman uncapped — his Broyhan starts Ready ·
+> Braumeister “age 1 cask +1” · Scholar/Shipwright “pay no fee” · Innkeeper reworked:
+> *brewing 3+ casks at once, age one +1 at your turn start*, ungated · Chronicler **+3★ per
+> claimed Contract, uncapped, ungated** · Town Crier **+2★ per placed presence die** ·
+> Supercargo reworded). **No specialist prints a requirement.**
 
 > **v4.9d (designer-ruled 2026-08-04 — the #30 board talk + the board sketch):** **the
 > player board REPRINTS (7.65×3.85″, same cut)** — it now prints the **★ score seat**, the
@@ -157,7 +169,7 @@ bought; **min 6 tiles/type** (staples deeper: Gruit 16 · Hopped 12 ⚙).
 | Gruit | 1 | 0 (Ready at brew) | 1 | `G` | 16 |
 | Hopped | 2 | 1 | 1 | `G H` | 12 |
 | Broyhan | 3 | 1 | 2 | `G H H` | 6 |
-| Keut *(2G → +1 presence on delivery)* | 3 | 2 | 1 | `G G H` | 6 |
+| Keut *(+1 presence on delivery)* | 3 | 2 | 1 | `G G H` | 6 |
 | Mumme | 4 | 3 | 1 | `G H H H` | 6 |
 | Bock | 5 | 3 | 2 | `G G H H H` | 6 |
 
@@ -199,44 +211,44 @@ The v4.5b **dice pass** + the v45d **power ladder** (designer-ruled 2026-08-01):
 | Hiring Post | 1 | resolve its slot: **gain 1 specialist** (at its fee) | 1 `G` | 2 |
 | Almoner’s Stall | 1 | resolve its slot: **pay 2G — place 1 presence** (a tray die) | — | 1 |
 | **Racking Hall** *(power)* | 1 | resolve its slot: **swap the dice of ANY two of your vessel casks — no quality cap** (the beer transfers; cap 6) | 3 `G` | 3 |
-| **Assay House** | 1 | resolve its slot: **turn one of your aging dice ±1** (never above its quality, never below 1 — v45c) | 1 `G` | 1 |
+| **Assay House** | 1 | resolve its slot: **pay 1 `H` — ONE maturing cask ages to READY** (v4.12) | 1 `G` | 1 |
 | **Abbey Cellar** *(power, v45d)* | 1 | resolve its slot: **pay 3 `H` — ALL your aging casks age to READY** | 2 `G` | 3 |
 | **Hop Exchange** *(power, v45d)* | 1 | resolve its slot: **pay up to 2 `H` — vessel dice +1 per hop** (past quality fine; cap 6) | 2 `G` | 2 |
 | **Malt Kiln** | 2 | a cask loading here: **die +1** (cap 6) | 2 `G` | 2 |
 | **Tollhouse** | 1 | a cask loading here **may turn its die −1** (never below the Kontor’s minimum): **score +3★ at once** | 1 `G` | 3 |
 | **Bonded Store** | 1 | a cask loading here: **die +1** (cap 6); **when this Ship sails the Store sails with it** (boxed) — every player with a cask aboard gains 2 goods | 2 `G` | 3 |
-| Cooperage | 1 | the Ship here: **+1 ship capacity** | 2 `G` | 3 |
+| Cooperage | 1 | the Ship here: **+1 ship capacity** · **each cask loaded here: its loader scores +2★** (v4.12) | 2 `G` | 3 |
 | Customs House | 1 | the Ship here: **−1 quality required** to board | 2 `G` | 3 |
 | Rich Berth | 1 | the Ship here may **sail one berth short** (min 1) | 2 `G` | 3 |
 | **Victualling Yard** *(v4.6 · ephemeral)* | 1 | a cask loading here: **its load bonus fires TWICE**; when this Ship sails the Yard **sails with it** (boxed) | 2 `G` | 3 |
-| **Merchants’ Exchange** *(v4.6)* | 1 | resolve its slot: **cycle 1 open Contract** to its deck’s bottom — the replacement posts at once | 2 `G` | 2 |
-| **Warping Capstan** *(v4.6)* | 1 | resolve its slot: **move one EMPTY hull** to any shipless slot | 2 `G` | 3 |
+| **Merchants’ Exchange** *(v4.6)* | 1 | resolve its slot: **replace up to 3 open Contracts** — each cycled to its deck’s bottom, replacements post at once (v4.12) | 2 `G` | 2 |
+| **Warping Capstan** *(v4.6)* | 1 | resolve its slot: **move ANY docked Ship** (cargo rides) to any shipless slot — full where it lands, it sails (v4.12) | 2 `G` | 3 |
 
 ## 7. Specialist tiles (13 designs — v4.6 · the core 5 × max(2, n−1) + the guild 8 × 1 · 2×2″ purple)
 
 Free as **Bergen’s prize** — v4.7: **per cask** (every cask seats its player one; pick order
 = load order); the
 Hiring Post / *Gain 1 specialist* bonus pay each tile’s **printed wharf fee** ⚙. **Two seats**
-per player; never two of a kind. **Three guild tiles print a REQUIREMENT** ⚙ — the condition
-must read true off your components before the tile may be seated (any channel). A taken
+per player; never two of a kind. **No tile prints a requirement** (v4.12 — the gates are
+cut; the earn-gate seam stays for future tiles). A taken
 tile’s gap refills from the deck at the **end of the turn** (v4.4c — ships/buildings refill
 at once). Print: core five ×3 (covers 4p) · guild eight ×1.
 
 | Specialist | Effect | Wharf fee ⚙ | Requirement ⚙ |
 |---|---|---|---|
-| Cellarman | your dice **start one higher** (a Q3+ export never starts Ready — v45g) | 2 `H` | — |
+| Cellarman | your dice **start one higher** (his Broyhan starts READY — the v45g cap repealed, v4.12) | 2 `H` | — |
 | Grain Factor | gain grain: **+1 extra** (any faucet) | 2 `G` *(v4.7)* | — |
 | Hop Gardener | gain hops: **+1 extra** (any faucet) | 2 `H` | — |
 | Stevedore | **each time you load, load up to 2 casks** (slot load · maiden load · Load bonus — v4.6d) | 1 `G` | — |
-| **Braumeister** *(v4.5b)* | start of your turn: **your ripest aging cask ages +1** | 1 `G` 1 `H` | — |
-| **Guild Scholar** *(v4.6)* | **your recipes are FREE** — the `H` = Q−2 fee waived at every channel, Bruges included | 2 `G` | — |
-| **Innkeeper** *(v4.7 rework)* | **this tile is a 4th VESSEL — its cask ages +1 at your turn start** | 2 `G` | 3 distinct beers brewed |
+| **Braumeister** *(v4.5b)* | start of your turn: **age 1 cask +1** (v4.12 wording — the app ages your ripest) | 1 `G` 1 `H` | — |
+| **Guild Scholar** *(v4.6)* | **when gaining recipes, pay no fee** — the `H` = Q−3 fee waived at every channel, Bruges included | 2 `G` | — |
+| **Innkeeper** *(v4.12 rework)* | **brewing 3+ casks at once: age one +1 at your turn start** | 2 `G` | — |
 | **Supercargo** *(v4.6)* | a Ship sails **your** cask on a **rival’s** turn: gain **1 `G` 1 `H`** | 2 `H` *(v4.7)* | — |
-| **Chronicler** *(v4.6)* | game end: **+1★ per claimed Contract (max +5)** | 1 `G` 1 `H` | a Contract claimed |
+| **Chronicler** *(v4.6)* | game end: **+3★ per claimed Contract** (uncapped — v4.12) | 1 `G` 1 `H` | — |
 | **Alderman** *(v4.6)* | game end: **+2★ per Kontor with 3+ parked dice** | 2 `G` | — |
-| **Town Crier** *(v4.6)* | place presence: the die parks at **FACE 2** (2★ each) | 1 `G` | — *(requirement cut, v4.7)* |
+| **Town Crier** *(v4.6)* | **place a presence die: +2★** ⚙ (the die parks at face 1 — 3★ total; v4.12) | 1 `G` | — |
 | **Chandler** *(v4.6)* | once per turn: **swap 1 `G` ↔ 1 `H`** with the stores | 1 `G` | — |
-| **Shipwright** *(v4.6)* | **your commissions are free** (the printed `G` fee waived — 2 `G` on a Skute, nothing on a Hulk; v4.8) | 1 `H` | — |
+| **Shipwright** *(v4.6)* | **when commissioning Ships, pay no fee** (2 `G` on a Skute, nothing on a Hulk; v4.8/v4.12) | 1 `H` | — |
 
 ## 7b. Contract tiles (15 ⚙ · row of 3 · 2×0.9″ — v4.5b, the order layer)
 

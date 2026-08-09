@@ -67,7 +67,17 @@
   .ref b,.ref strong{color:var(--parch);}
   .ref code{background:rgba(255,255,255,.16); color:var(--parch);}
   .cube{display:inline-block; width:13px; height:13px; border-radius:3px; vertical-align:-1px; border:1px solid rgba(0,0,0,.3);}
-  .g{background:var(--grain);} .h{background:var(--hops);}
+  /* goods colours (2026-08-09): the BACKGROUND belongs to the physical cube alone — everywhere
+     else a grain/hops glyph and its value print in the goods COLOUR (never black on a chip) */
+  .cube.g{background:var(--grain);} .cube.h{background:var(--hops);}
+  .g:not(.cube){color:#9c7414;} .h:not(.cube){color:#5d7d34;}
+  .atbl .act-ic .gi,.atbl .act-ic .hi{color:inherit}
+  .atbl .act-ic .gi{color:#9c7414} .atbl .act-ic .hi{color:#5d7d34}
+  /* illustrated icons (the kit's c.1350 sticker set) track the lucide boxes */
+  img.ai{width:1em;height:1em;object-fit:contain;vertical-align:-.13em}
+  .atbl .act-ic img.ai{width:17px;height:17px}
+  .gloscard .gh img.ai{width:19px;height:19px;flex:0 0 auto}
+  .dielife .dld img.ai{width:19px;height:19px}
   .pill{display:inline-block; background:var(--green); color:var(--parch); border-radius:18px; padding:1px 9px; font-size:.78rem;}
   .pill.r{background:var(--gold); color:var(--ink);}
   code{background:var(--parch2); padding:1px 5px; border-radius:4px; font-size:.9em;}
@@ -116,7 +126,6 @@
   .route.bruges{background:linear-gradient(160deg,#274b5c,#1d3845)}
   .route.london{background:linear-gradient(160deg,#b8860b,#8a6408)}
   .route.hall{background:linear-gradient(160deg,#6e4ea0,#3f2c66)}
-  .open-badge{position:absolute; top:10px; right:10px; background:var(--parch); color:var(--green); font-size:.62rem; font-weight:bold; padding:2px 7px; border-radius:10px; text-transform:uppercase; letter-spacing:.5px}
 
   /* ---- GLOSSARY CARDS ---- */
   .glosgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(238px,1fr)); gap:12px; margin:16px 0;}
@@ -250,7 +259,7 @@
     <tr><td>Building tiles</td><td>20</td><td>18 designs, ONE green family — <b>setup deals 17</b>; 3 sit out each game</td></tr>
     <tr><td>Specialist tiles</td><td>23</td><td>13 designs: the core five ×3 (the deck deals max(2,&nbsp;n−1) of each) + eight guild singles</td></tr>
     <tr><td>Contract tiles</td><td>15</td><td>the Kontor bonuses on the Destinations board; setup returns any Contract naming an undealt beer</td></tr>
-    <tr><td>Recipe cards</td><td>6 × 4</td><td>double-sided — the card moves to your board’s COMPLETED side when that beer first LOADS onto a Ship: the completed cards ARE the Flight record (v4.9d)</td></tr>
+    <tr><td>Recipe cards</td><td>6 × 4</td><td>double-sided — the card moves to your board’s COMPLETED side when that beer first LOADS onto a Ship: the completed cards ARE the Flight record</td></tr>
     <tr><td>Goods</td><td>60 <span class="cube g"></span> + 40 <span class="cube h"></span></td><td>grain · hops — the only currency</td></tr>
     <tr><td>Score discs · worker pawns</td><td>4 + 4</td><td>one each per player</td></tr>
   </table>
@@ -265,7 +274,7 @@
     <div class="sf z3"><span class="sn">1</span>Market &amp; Stores<br><span class="small">displays + score track</span></div>
     <div class="sf z4"><span class="sn">3–6</span>Piles &amp; decks → displays<br><span class="small">Ships 4 · buildings 4 · Specialists 4 · Contracts 3</span></div>
     <div class="sf z5"><span class="sn">7</span>Warm start<br><span class="small">2 Ships + 2 buildings on slots</span></div>
-    <div class="sf z6"><span class="sn">8</span>Player boards<br><span class="small">3 <span class="cube g"></span> 2 <span class="cube h"></span> · Ready Gruit · 12 dice</span></div>
+    <div class="sf z6"><span class="sn">8</span>Player boards<br><span class="small">3 <span class="cube g"></span> 2 <span class="cube h"></span> · Ready Gruit · 13 dice</span></div>
   </div>
   <ol>
     <li>Place <b>the Wharf</b>, the <b>Destinations board</b> and the <b>Market &amp; Stores board</b>. Each player puts their score disc on <b>0</b>.</li>
@@ -311,7 +320,7 @@
       <div class="cell B" data-row="row-t" data-col="col-r"><div class="corner">B</div><div class="lbl">② Brew</div><div class="nm">Brewhouse</div><div class="do">Pay a recipe into an open vessel — a tray die becomes the cask</div></div>
       <div class="slot s3" data-line="row-t">slot</div>
       <div class="slot s7" data-line="row-b">slot</div>
-      <div class="cell C" data-row="row-b" data-col="col-l"><div class="corner">C</div><div class="lbl">④ Ship</div><div class="nm">Harbor</div><div class="do">Pay 1 <span style="color:#ffe08a">G</span> · place a display Ship · load 1 Ready cask</div></div>
+      <div class="cell C" data-row="row-b" data-col="col-l"><div class="corner">C</div><div class="lbl">④ Ship</div><div class="nm">Harbor</div><div class="do">Pay the Ship’s printed fee · place it · load 1 Ready cask</div></div>
       <div class="cell D" data-row="row-b" data-col="col-r"><div class="corner">D</div><div class="lbl">③ Age</div><div class="nm">Cellar</div><div class="do">Age 3 — turn aging dice up 3 steps</div></div>
       <div class="slot s4" data-line="row-b">slot</div>
       <div class="slot s6" data-line="col-l">slot</div>
@@ -332,7 +341,7 @@
   <div class="example"><h4>Example 1 — a full turn</h4>
     <p>Adaline’s worker stands at the Brewhouse. She moves to the <b>Cellar</b> and chooses its <b>column</b> (Brewhouse + Cellar, plus slots s2 and s5). She resolves:</p>
     <ol>
-      <li><b>Brewhouse:</b> pays 2 <span class="cube g"></span> 3 <span class="cube h"></span> to brew <b>Bock</b> — a tray die is set to its start value <b>2</b> (Ready at 5) and the cask takes the face-up bonus of the Q5 pile.</li>
+      <li><b>Brewhouse:</b> pays 2 <span class="cube g"></span> 3 <span class="cube h"></span> to brew <b>Bock</b> — a tray die is set to its start value <b>2</b> (Ready at 5) and the cask takes the face-up bonus of the Bock pile.</li>
       <li><b>Cellar:</b> Age 3, all three steps on the Bock — its die turns 3, 4, <b>5: READY</b> <i data-lucide="check"></i>.</li>
       <li><b>Slot s5:</b> a Hulk → London stands here (minimum 2). She <b>loads the Bock</b> — the die boards at 5, the cask’s load bonus fires, and the Hulk stands at 2/3.</li>
     </ol>
@@ -345,7 +354,7 @@
   <table class="atbl">
     <tr><th></th><th>Station</th><th>Action (one each)</th></tr>
     <tr><td><span class="act-ic"><i data-lucide="store"></i></span></td><td><b>A · Market</b> <span class="pill r">Source</span></td><td>Take <b>2 goods</b>, any mix. <em>(A Grain Factor / Hop Gardener adds +1 of its good each time you gain it.)</em></td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>B · Brewhouse</b> <span class="pill r">Brew</span></td><td>Pay a recipe you hold into an <b>open vessel</b>: take the <b>top tile of that beer’s pile</b> — it is your cask — and set a tray die on it at the printed <b>start value</b>. The bonus printed on the tile rides the cask (§8). The recipe card completes — moves to the board’s <b>COMPLETED side</b> — when that beer’s <b>first cask LOADS onto a Ship</b> (v4.9d): the Flight record.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>B · Brewhouse</b> <span class="pill r">Brew</span></td><td>Pay a recipe you hold into an <b>open vessel</b>: take the <b>top tile of that beer’s pile</b> — it is your cask — and set a tray die on it at the printed <b>start value</b>. The bonus printed on the tile rides the cask (§8). The recipe card completes — moves to the board’s <b>COMPLETED side</b> — when that beer’s <b>first cask LOADS onto a Ship</b>: the Flight record.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>D · Cellar</b> <span class="pill r">Age</span></td><td><b>Age 3</b> ⚙ — turn your aging dice up a total of three steps, split freely. A die stops at its quality: <b>Ready</b>. With no automatic aging, this is the deepest well.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>C · Harbor</b> <span class="pill r">Commission</span></td><td>Pay the Ship’s <b>printed fee</b> ⚙ — <b>Skute 2 <span class="cube g"></span> · Cog 1 <span class="cube g"></span> · Hulk free</b> (2/1/0 for 1/2/3 berths: you pay for dispatch speed, not tonnage; free with the Shipwright) — and place it on a slot <b>without a Ship</b> (a building beneath is fine). The display refills at once. Then you <b>may load 1 Ready cask</b> from your vessels onto the new Ship — a normal load (§8); a Skute sails on it. <b>A commission scores no ★</b> — the Ship and the instant load are the whole reward.</td></tr>
   </table>
@@ -367,16 +376,16 @@
     <div class="dl prk"><span class="dld"><i data-lucide="landmark"></i></span><b>Park</b><span class="small">pips = ★ scored ·<br>body = presence + clock</span></div>
   </div>
   <ul>
-    <li><b>Dice never turn on their own.</b> The hands on an aging die: the <b>Cellar</b> (Age 3 ⚙) · <b>Mission Quay</b> (+2) · the <b>Age +2</b> load bonus · the <b>Assay House</b> (±1) · the <b>Racking Hall</b> (swap) · the <b>Hop Exchange</b> (pay <span class="cube h"></span>) · the <b>Abbey Cellar</b> (pay 3 <span class="cube h"></span>: all to Ready) · the <b>Cellarman</b> (higher start) · the <b>Braumeister</b> and <b>Innkeeper</b> (turn-start drips).</li>
+    <li><b>Dice never turn on their own.</b> The hands on an aging die: the <b>Cellar</b> (Age 3 ⚙) · <b>Mission Quay</b> (+2) · the <b>Age +2</b> load bonus · the <b>Assay House</b> (1 <span class="cube h"></span>: one cask to Ready) · the <b>Racking Hall</b> (swap) · the <b>Hop Exchange</b> (pay <span class="cube h"></span>) · the <b>Abbey Cellar</b> (pay 3 <span class="cube h"></span>: all to Ready) · the <b>Cellarman</b> (higher start) · the <b>Braumeister</b> and <b>Innkeeper</b> (turn-start drips).</li>
     <li><b>Only buildings lift a die past its quality</b> (Malt Kiln, Bonded Store, Hop Exchange — hard cap <b>6</b>).</li>
-    <li>A start value never exceeds the quality, and <b>a Q3+ export never starts Ready</b> — every export ages at least one step (the Cellarman’s higher start respects both caps).</li>
+    <li>A start value never exceeds the quality. <em>(The Cellarman’s higher start can bring a fast export — Broyhan — Ready at brew.)</em></li>
   </ul>
   <table>
-    <tr><th>Beer</th><th>Q</th><th>Aging steps</th><th>Die starts</th><th>Brew cost</th><th>Recipe fee ⚙ (<span class="cube h"></span> = Q−3, every channel — v4.9c)</th></tr>
+    <tr><th>Beer</th><th>Q</th><th>Aging steps</th><th>Die starts</th><th>Brew cost</th><th>Recipe fee ⚙ (<span class="cube h"></span> = Q−3, every channel)</th></tr>
     <tr><td><b>Gruit</b></td><td>1</td><td>0 — Ready at brew</td><td>1</td><td>1 <span class="cube g"></span></td><td>starter</td></tr>
     <tr><td><b>Hopped</b></td><td>2</td><td>1</td><td>1</td><td>1 <span class="cube g"></span> 1 <span class="cube h"></span></td><td>starter</td></tr>
-    <tr><td><b>Broyhan</b></td><td>3</td><td>1</td><td>2</td><td>1 <span class="cube g"></span> 2 <span class="cube h"></span></td><td><b>free</b> (v4.9c)</td></tr>
-    <tr><td><b>Keut</b></td><td>3</td><td>2</td><td>1</td><td>2 <span class="cube g"></span> 1 <span class="cube h"></span></td><td><b>free</b> (v4.9c) · its delivery also places 1 presence (pay 2G — v4.11)</td></tr>
+    <tr><td><b>Broyhan</b></td><td>3</td><td>1</td><td>2</td><td>1 <span class="cube g"></span> 2 <span class="cube h"></span></td><td><b>free</b></td></tr>
+    <tr><td><b>Keut</b></td><td>3</td><td>2</td><td>1</td><td>2 <span class="cube g"></span> 1 <span class="cube h"></span></td><td><b>free</b> · its delivery also places 1 presence</td></tr>
     <tr><td><b>Mumme</b></td><td>4</td><td>3</td><td>1</td><td>1 <span class="cube g"></span> 3 <span class="cube h"></span></td><td>1 <span class="cube h"></span></td></tr>
     <tr><td><b>Bock</b></td><td>5</td><td>3</td><td>2</td><td>2 <span class="cube g"></span> 3 <span class="cube h"></span></td><td>2 <span class="cube h"></span></td></tr>
   </table>
@@ -399,16 +408,16 @@
     <tr><td>Hiring Post</td><td>resolve its slot</td><td><b>Gain 1 Specialist</b> (at its fee)</td><td>1</td><td>1 <span class="cube g"></span></td><td>2</td></tr>
     <tr><td>Almoner’s Stall</td><td>resolve its slot</td><td><b>Pay 2G: place 1 presence</b> (§8)</td><td>1</td><td>free</td><td>1</td></tr>
     <tr><td><b>Racking Hall</b></td><td>resolve its slot</td><td><b>Swap the dice of any two of your vessel casks.</b> The values trade places, even above a cask’s quality (cap 6) — in the fiction, the aged beer is racked into the other cask</td><td>1</td><td>3 <span class="cube g"></span></td><td>3</td></tr>
-    <tr><td>Assay House</td><td>resolve its slot</td><td><b>Turn one of your aging dice ±1</b> (never above its quality, never below 1)</td><td>1</td><td>1 <span class="cube g"></span></td><td>1</td></tr>
+    <tr><td>Assay House</td><td>resolve its slot</td><td><b>Pay 1 <span class="cube h"></span>: one maturing cask ages to Ready</b> (its die straight to its quality)</td><td>1</td><td>1 <span class="cube g"></span></td><td>1</td></tr>
     <tr><td><b>Abbey Cellar</b></td><td>resolve its slot</td><td><b>Pay 3 <span class="cube h"></span>: ALL your aging casks age to Ready</b></td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
     <tr><td><b>Hop Exchange</b></td><td>resolve its slot</td><td><b>Pay up to 2 <span class="cube h"></span> ⚙ — turn your vessel dice +1 per hop</b> (any split; past quality is fine; cap 6)</td><td>1</td><td>2 <span class="cube g"></span></td><td>2</td></tr>
-    <tr><td>Merchants’ Exchange</td><td>resolve its slot</td><td><b>Cycle 1 open Contract</b> under its deck — the replacement posts at once</td><td>1</td><td>2 <span class="cube g"></span></td><td>2</td></tr>
-    <tr><td>Warping Capstan</td><td>resolve its slot</td><td><b>Warp one empty hull</b> to any shipless slot</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
+    <tr><td>Merchants’ Exchange</td><td>resolve its slot</td><td><b>Replace up to 3 open Contracts</b> — each cycled under its deck; replacements post at once</td><td>1</td><td>2 <span class="cube g"></span></td><td>2</td></tr>
+    <tr><td>Warping Capstan</td><td>resolve its slot</td><td><b>Warp any docked Ship</b> (cargo rides) to any shipless slot — full where it lands, it sails</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
     <tr><td>Malt Kiln</td><td>a cask loads here</td><td>the boarding die <b>+1</b> (cap 6)</td><td>2</td><td>2 <span class="cube g"></span></td><td>2</td></tr>
     <tr><td>Tollhouse</td><td>a cask loads here</td><td>the boarding cask <b>may turn its die −1</b> (never below the minimum): <b>score +3★ at once</b></td><td>1</td><td>1 <span class="cube g"></span></td><td>3</td></tr>
     <tr><td><b>Bonded Store</b> <span class="small">(ephemeral)</span></td><td>a cask loads here · at sail</td><td>the boarding die <b>+1</b> (cap 6); <b>when the Ship sails, the Store sails with it</b> (boxed) and every player with a cask aboard gains 2 goods</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
     <tr><td><b>Victualling Yard</b> <span class="small">(ephemeral)</span></td><td>a cask loads here · at sail</td><td>the boarding cask’s <b>load bonus fires twice</b>; when the Ship sails, the Yard sails with it (boxed)</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
-    <tr><td>Cooperage</td><td>passive</td><td>the Ship here: <b>+1 ship capacity</b></td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
+    <tr><td>Cooperage</td><td>passive · on load</td><td>the Ship here: <b>+1 ship capacity</b> · each cask loaded here: <b>its loader scores +2★</b></td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
     <tr><td>Customs House</td><td>passive</td><td>the Ship here: <b>−1 quality required</b> to board (the cask still sells at its die)</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
     <tr><td>Rich Berth</td><td>passive</td><td>the Ship here may <b>sail one berth short</b> (min 1)</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
   </table>
@@ -430,7 +439,7 @@
   <p><b>A Ship sails the moment it is full</b> — a Skute on its first load. Each cask aboard then <b>delivers, in load order</b>:</p>
   <ol>
     <li><b>Score ★ = its die</b> and <b>park the die</b> at the Kontor, pips up (never worth less than 1★; at Novgorod it scores <b>die +2★</b>).</li>
-    <li><b>Take the Kontor’s prize</b> — <b>every cask pays its owner the prize</b>. Resolve it at once, before the next cask delivers; the owner makes every choice. If a recipe or Specialist prize can’t be taken (nothing eligible, no open seat, a fee you can’t pay), <b>gain 2 goods instead</b>; an untakeable <b>building</b> prize is simply <b>forfeit</b> (v4.9b — goods are the Market’s job).</li>
+    <li><b>Take the Kontor’s prize</b> — <b>every cask pays its owner the prize</b>. Resolve it at once, before the next cask delivers; the owner makes every choice. If a recipe or Specialist prize can’t be taken (nothing eligible, no open seat, a fee you can’t pay), <b>gain 2 goods instead</b>; an untakeable <b>building</b> prize is simply <b>forfeit</b> (goods are the Market’s job).</li>
     <li>The cask <b>may claim one open Contract it matches</b> (below) — score its ★ at once.</li>
   </ol>
   <p>The emptied Ship tile returns to the <b>bottom of the Ship deck</b>; an ephemeral building on its slot sails away with it. The freed vessels are open again.</p>
@@ -442,7 +451,7 @@
     <tr><td><b>Bergen</b> (Bryggen)</td><td>die 2+</td><td>the die</td><td><b>A Specialist</b> — display → an open seat, free</td><td><b>9 / 5 / 2</b></td></tr>
     <tr><td><b>Novgorod</b> (Peterhof)</td><td><b>die 3+</b></td><td><b>the die +2★</b></td><td>— the premium IS the prize</td><td>8 / 5 / 2</td></tr>
   </table>
-  <div class="clar"><h4>Presence &amp; placing presence</h4><b>Presence</b> = your parked dice at a Kontor. <b>Placing presence</b> (the <i data-lucide="map-pin"></i> load bonus, Almoner’s Stall, Keut’s perk) takes a <b>tray die</b> and parks it at <b>face 1</b> at a Kontor you have <b>already delivered to</b> — it scores 1★ and counts for the majority and the clock. The Town Crier’s placed dice park at face 2. No tray die → no placing presence.</div>
+  <div class="clar"><h4>Presence &amp; placing presence</h4><b>Presence</b> = your parked dice at a Kontor. <b>Placing presence</b> (the <i data-lucide="map-pin"></i> load bonus, Almoner’s Stall, Keut’s perk) takes a <b>tray die</b> and parks it at <b>face 1</b> at a Kontor you have <b>already delivered to</b> — it scores 1★ and counts for the majority and the clock. It is <b>free</b> everywhere except the <b>Almoner’s Stall</b>, which charges its printed 2 <span class="cube g"></span>. A seated Town Crier adds <b>+2★</b> per placed die. No tray die → no placing presence.</div>
   <h3>Contracts — the Kontor bonuses</h3>
   <p>Three Contract tiles lie face-up on the Destinations board. Each names a <b>Kontor</b> (or <i>any</i>), a <b>condition</b> — a die minimum (<i>die 4+</i>) or a named beer — and a printed <b>2–5★</b> ⚙.</p>
   <p>When your cask delivers at that Kontor and its <b>parked face</b> qualifies, you <b>may claim one matching Contract</b>: the tile comes to your seat and its ★ score at once. <b>One Contract per delivered cask</b>; several casks on one Ship claim in load order. The row refills at the <b>end of the turn</b>. Claimed tiles never return, and when the deck runs dry the row simply shrinks. <span class="small">Setup already stripped any Contract naming an undealt beer — every Contract in the deck is claimable.</span></p>
@@ -452,11 +461,11 @@
     <tr><td><span class="act-ic"><i data-lucide="coins"></i></span></td><td><b>Gain 2 goods</b> <span class="small">[Q1 pin · Q2+]</span></td><td>any mix</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Age +2</b> <span class="small">[Q2+]</span></td><td>2 steps across your vessels</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="package-plus"></i></span></td><td><b>Load 1 more</b> <span class="small">[Q2+]</span></td><td>load another eligible cask onto <b>any</b> Ship on the Wharf — its bonus fires too, so chains are legal</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="map-pin"></i></span></td><td><b>Place 1 presence</b> <span class="small">[Q2+]</span></td><td>pay 2G · a tray die → face 1 at a Kontor you’ve delivered to</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="map-pin"></i></span></td><td><b>Place 1 presence</b> <span class="small">[Q2+]</span></td><td>a tray die → face 1 at a Kontor you’ve delivered to (free — only the Almoner’s Stall charges 2 <span class="cube g"></span>)</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="scroll-text"></i></span></td><td><b>Gain 1 recipe</b> <span class="small">[Q2+]</span></td><td>a dealt export, at the card’s printed fee</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="hammer"></i></span></td><td><b>Build 1 building</b> <span class="small">[Q3+]</span></td><td>at the tile’s fee (chipless = free) — from the display; your die stands on it</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="wrench"></i></span></td><td><b>Gain 1 Specialist</b> <span class="small">[Q3+]</span></td><td>at the tile’s fee — display → an open seat</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brew 1</b> <span class="small">[Q4+]</span></td><td>pay its cost into an open vessel (a tray die)</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brew 1</b> <span class="small">[Q3+]</span></td><td>pay its cost into an open vessel (a tray die)</td></tr>
   </table>
   <div class="example"><h4>Example 2 — a Ship sails</h4>
     <p>A <b>Hulk → London</b> stands at 2/3 with Adaline’s Bock (die 6, Kiln-lifted) and Olli’s Bock (die 6). On her turn <b>Adaline loads her Gruit</b> (die 2, lifted from 1 by the Kiln) into the last berth — the Hulk is full and <b>sails</b>. In load order:</p>
@@ -475,7 +484,6 @@
   <p>Private purple tiles — <b>2 seats</b> per player, <b>never two of a kind</b>, and <b>earned, never bought</b>. 13 designs ⚙: the <b>core five</b> (Cellarman · Grain Factor · Hop Gardener · Stevedore · Braumeister — ×max(2,&nbsp;n−1) in the deck) and the <b>guild eight</b> (Guild Scholar · Innkeeper · Supercargo · Chronicler · Alderman · Town Crier · Chandler · Shipwright — one copy each: scarce, first-come). Powers and fees per tile: <a href="#tiles"><b>§18</b></a>.</p>
   <ul>
     <li><b>The channels:</b> Bergen’s prize (<b>free</b>, per delivered cask) · the Hiring Post · the <i>Gain 1 Specialist</i> load bonus — the last two pay the <b>tile’s printed fee</b> ⚙.</li>
-    <li><b>Requirements:</b> two guild tiles print one (Innkeeper — <i>3 distinct beers shipped (v4.9d)</i>; Chronicler — <i>a claimed Contract</i>). The condition must read <b>true off your components</b> before the tile may be seated, at any channel — Bergen included.</li>
     <li><b>The display of 4</b> refills at the <b>end of the turn</b> — a taken tile’s gap stands until then (Ships and buildings refill at once).</li>
   </ul>
 </section>
@@ -483,9 +491,9 @@
 <section id="board">
   <h2><span class="nm">10</span>The Player Board, Goods &amp; Storage</h2>
   <ul>
-    <li><b>3 vessels</b> — each ages one cask, its die riding the tile. A seated <b>Innkeeper</b> adds a 4th vessel on his tile (and ages its cask +1 at your turn start).</li>
+    <li><b>3 vessels</b> — each ages one cask, its die riding the tile.</li>
     <li><b>2 Specialist seats</b> — both open from the start.</li>
-    <li><b>Recipe cards</b> live ON the board: <b>COLLECTED on the left</b> until that beer’s first cask <b>loads onto a Ship</b>, then moved to the <b>COMPLETED right side</b> — <b>the completed cards ARE the Flight record</b> (§12), no track needed (v4.9d).</li>
+    <li><b>Recipe cards</b> live ON the board: <b>COLLECTED on the left</b> until that beer’s first cask <b>loads onto a Ship</b>, then moved to the <b>COMPLETED right side</b> — <b>the completed cards ARE the Flight record</b> (§12), no track needed.</li>
     <li><b>Goods:</b> <span class="cube g"></span> grain · <span class="cube h"></span> hops — the only currency, storage cap <b>8</b> ⚙. <b>Goods gained above the cap are lost.</b> The faucets: the Market, Granaries, <i>Gain 2 goods</i> bonuses, prizes’ consolations, the Bonded Store’s send-off. The cube supply is not a limit — substitute if it runs short.</li>
   </ul>
 </section>
@@ -505,11 +513,11 @@
   <p>The scorepad, the Final Standing table and this list share <b>one order</b>:</p>
   <ol>
     <li><b>Delivered dice</b> — each parked die scores its pips as it delivers (Novgorod: +2★ on top). The dice on the mats remain the audit.</li>
-    <li><b>Scored in play</b> — everything the score track collected as it happened: claimed <b>Contracts</b> (printed ★) · <b>Tollhouse stamps</b> (+3★) · <b>placed presence</b> (1★; Town Crier 2★) · a <b>departing building’s die</b> (its pips, scored as it leaves play). Commissions and builds score nothing here.</li>
+    <li><b>Scored in play</b> — everything the score track collected as it happened: claimed <b>Contracts</b> (printed ★) · <b>Tollhouse stamps</b> (+3★) · <b>Cooperage loads</b> (+2★ each) · <b>placed presence</b> (1★ each; a Town Crier adds +2★ per die) · a <b>departing building’s die</b> (its pips, scored as it leaves play). Commissions and builds score nothing here.</li>
     <li><b>Majorities</b> — at each Kontor, ranked by <b>parked dice</b>: Bruges 4/2/0 · London 5/3/1 · Bergen 9/5/2 · Novgorod 8/5/2 ⚙. Ties split the tiers (round down); 2-player skips 2nd place.</li>
     <li><b>Buildings</b> — each die standing on one of your buildings scores <b>its pips</b> (1–6★). The dice on the tiles are the audit.</li>
-    <li><b>The Flight</b> — distinct beers <b>shipped</b> (the completed cards on your board — v4.9d): <b>(beers − 1)², minimum 3 beers</b> — 3→4★ · 4→9★ · 5→16★ ⚙ (five beers exist per game: two starters + the three dealt exports).</li>
-    <li><b>Guild ★</b> — a seated <b>Chronicler</b> (+1★ per Contract at your seat, max +5) or <b>Alderman</b> (+2★ per Kontor with 3+ of your parked dice) scores its printed line.</li>
+    <li><b>The Flight</b> — distinct beers <b>shipped</b> (the completed cards on your board): <b>(beers − 1)², minimum 3 beers</b> — 3→4★ · 4→9★ · 5→16★ ⚙ (five beers exist per game: two starters + the three dealt exports).</li>
+    <li><b>Guild ★</b> — a seated <b>Chronicler</b> (+3★ per Contract at your seat) or <b>Alderman</b> (+2★ per Kontor with 3+ of your parked dice) scores its printed line.</li>
   </ol>
   <p><b>Tiebreak:</b> the summed dice in your vessels, then most goods.</p>
   <div class="example"><h4>Example 3 — a final audit</h4>
@@ -527,8 +535,8 @@
 <section id="iconkey">
   <h2><span class="nm">14</span>Icon Key</h2>
   <table class="atbl">
-    <tr><td><span class="act-ic"><i data-lucide="wheat"></i></span></td><td><b>Grain</b> (G)</td><td>a brewing input and the medium of exchange</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="sprout"></i></span></td><td><b>Hops</b> (H)</td><td>a brewing input; the beer that travels — recipes and quality run on it</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="wheat" class="gi"></i></span></td><td><b>Grain</b> (G)</td><td>a brewing input and the medium of exchange</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="sprout" class="hi"></i></span></td><td><b>Hops</b> (H)</td><td>a brewing input; the beer that travels — recipes and quality run on it</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="coins"></i></span></td><td><b>Goods</b></td><td>grain + hops collectively, any mix</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="beer"></i></span></td><td><b>Cask · Quality</b></td><td>a brewed beer on its tile; the number beside it is its quality</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="dices"></i></span></td><td><b>Quality die · Minimum</b></td><td>the die riding a cask; on a Ship or Contract, the die value required (N+)</td></tr>
@@ -537,10 +545,10 @@
     <tr><td><span class="act-ic"><i data-lucide="landmark"></i></span></td><td><b>Kontor</b></td><td>a trading post of the League: Bruges · London · Bergen · Novgorod</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="building-2"></i></span></td><td><b>Building</b></td><td>a green tile on a slot — serves whoever activates it</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="wrench"></i></span></td><td><b>Specialist</b></td><td>a private purple tile in one of your 2 seats</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="scroll-text"></i></span></td><td><b>Recipe</b></td><td>a brewing permission card</td></tr><tr><td><span class="act-ic"><i data-lucide="stamp"></i></span></td><td><b>Contract</b></td><td>a Kontor bonus tile</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="scroll-text"></i></span></td><td><b>Recipe</b></td><td>a brewing permission card</td></tr><tr><td><span class="act-ic"><i data-lucide="contract"></i></span></td><td><b>Contract</b></td><td>a Kontor bonus tile</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="map-pin"></i></span></td><td><b>Presence</b></td><td>your parked dice at a Kontor; the action parks a tray die at face 1</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="check"></i></span></td><td><b>Ready</b></td><td>die = quality — the cask may board</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="unlock"></i></span></td><td><b>The Flight</b></td><td>your completed (shipped) recipe cards — end-game ★ (v4.9d)</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="unlock"></i></span></td><td><b>The Flight</b></td><td>your completed (shipped) recipe cards — end-game ★</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="trophy"></i></span></td><td><b>Majority</b></td><td>end-game Kontor ranking by parked dice</td></tr>
   </table>
 </section>
@@ -550,16 +558,16 @@
   <div class="glosgrid">
     <div class="gloscard"><div class="gh"><i data-lucide="anchor"></i><span class="gt">The Wharf</span></div><div class="gd">The whole core area: four stations (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="layout-grid"></i><span class="gt">Station · Slot · Line</span></div><div class="gd">A <b>station</b> is one of the four action spaces (ONE printed action each); a <b>slot</b> is one of the 8 spaces ringing them — it seats <b>a building and/or a Ship</b>, never casks; a <b>line</b> is a row or column: its two stations + its two slots.</div></div>
-    <div class="gloscard"><div class="gh"><i data-lucide="dices"></i><span class="gt">The Cask Quality Die</span></div><div class="gd">THE component: set to the cask’s printed <b>start value</b> at brew, turned up step by step (<b>Ready at the quality</b>), lifted past it only by buildings (cap 6), read against the <b>minimum</b> as it boards, and <b>parked at the Kontor</b> on delivery — pips = ★, body = presence, majorities and the clock. 12 per player ⚙, public.</div></div>
+    <div class="gloscard"><div class="gh"><i data-lucide="dices"></i><span class="gt">The Cask Quality Die</span></div><div class="gd">THE component: set to the cask’s printed <b>start value</b> at brew, turned up step by step (<b>Ready at the quality</b>), lifted past it only by buildings (cap 6), read against the <b>minimum</b> as it boards, and <b>parked at the Kontor</b> on delivery — pips = ★, body = presence, majorities and the clock. 13 per player ⚙, public.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="beer"></i><span class="gt">Cask · Ready · Load bonus</span></div><div class="gd">A brewed beer in two states: <b>aging</b> (in a vessel, die below quality) → <b>Ready</b> (die = quality). Its printed action is a <b>load bonus</b> — it fires as the cask boards a Ship.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="sailboat"></i><span class="gt">Ship · Skute · Commission</span></div><div class="gd">Neutral, each bound for its printed Kontor: <b>Skute 1 · Cog 2 · Hulk 3</b> berths; you load only your own Ready casks; a Ship <b>sails the moment it is full</b> — a Skute on its first load. <b>Commission</b> (Harbor): pay the Ship’s printed fee (Skute 2 G · Cog 1 G · Hulk free) · place it on a slot without a Ship · load 1 Ready cask at once · no ★.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="landmark"></i><span class="gt">Kontor · Minimum · Prize</span></div><div class="gd">The four trading posts of the League. The <b>minimum</b> is the die value required to board, read as the cask boards (after lifts): Bruges 1+ · London 2+ · Bergen 2+ · Novgorod 3+. The <b>prize</b> pays the cask’s owner on delivery — <b>per cask</b>: a recipe (at its fee) / a building (your die stands on it) / a Specialist (free); Novgorod instead scores every die +2★.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="trophy"></i><span class="gt">Majority</span></div><div class="gd">End-game, per Kontor, ranked by <b>parked dice</b> (1st/2nd/3rd take the tiers; 2p skips 2nd). Concentrated at <b>Bergen</b> (9/5/2).</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="building-2"></i><span class="gt">Building · Overbuild</span></div><div class="gd">ONE green family: serves whoever activates it. The builder stands a <b>quality die on the tile at face 1</b>; every use — any player — turns it up (max 6), and <b>the pips score at game end</b>. Action buildings fire when you resolve their slot; load-lifts shape the boarding die or the Ship. <b>Overbuild</b> = one payment (a paid fee covers the ground, else 1 G rent); the displaced tile is boxed — <b>its die scores its pips at once and returns to its owner’s tray</b>.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="wrench"></i><span class="gt">Specialist · Requirement</span></div><div class="gd">A private purple tile — free at <b>Bergen</b> (per cask); the Hiring Post / hire bonus pay its printed fee. Two seats; never two of a kind. A <b>requirement</b> on a guild tile must read true off your components before it may be seated.</div></div>
-    <div class="gloscard"><div class="gh"><i data-lucide="map-pin"></i><span class="gt">Presence · Placing presence</span></div><div class="gd">Your parked dice at a Kontor. <b>Placing presence</b> parks a tray die at <b>face 1</b> (Town Crier: face 2) at a Kontor you’ve already delivered to — 1★, majority weight, and a beat of the clock.</div></div>
-    <div class="gloscard"><div class="gh"><i data-lucide="stamp"></i><span class="gt">Contract</span></div><div class="gd">A Kontor bonus tile on the Destinations board: a Kontor (or any) + a condition (die minimum or named beer) → printed 2–5★. Claim on a qualifying delivery — one per delivered cask; the row of 3 refills at end of turn.</div></div>
-    <div class="gloscard"><div class="gh"><i data-lucide="unlock"></i><span class="gt">The Flight</span></div><div class="gd">Your completed (SHIPPED) recipe cards — moved right on the beer’s first load (v4.9d): <b>(beers−1)², min 3 beers</b> — the private breadth arc, audited off the cards.</div></div>
+    <div class="gloscard"><div class="gh"><i data-lucide="map-pin"></i><span class="gt">Presence · Placing presence</span></div><div class="gd">Your parked dice at a Kontor. <b>Placing presence</b> parks a tray die at <b>face 1</b> at a Kontor you’ve already delivered to — 1★ (a Town Crier adds +2★), majority weight, and a beat of the clock. Free — only the Almoner’s Stall charges 2 <span class="cube g"></span>.</div></div>
+    <div class="gloscard"><div class="gh"><i data-lucide="contract"></i><span class="gt">Contract</span></div><div class="gd">A Kontor bonus tile on the Destinations board: a Kontor (or any) + a condition (die minimum or named beer) → printed 2–5★. Claim on a qualifying delivery — one per delivered cask; the row of 3 refills at end of turn.</div></div>
+    <div class="gloscard"><div class="gh"><i data-lucide="unlock"></i><span class="gt">The Flight</span></div><div class="gd">Your completed (SHIPPED) recipe cards — moved right on the beer’s first load: <b>(beers−1)², min 3 beers</b> — the private breadth arc, audited off the cards.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="timer"></i><span class="gt">The clock</span></div><div class="gd">The <b>quality dice alone</b>: the first EMPTY tray (every die committed) sets the final round — round 25 ⚙ backstops. Dice never come back.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="ship"></i><span class="gt">The Harbor terms</span></div><div class="gd"><b>Commission</b> = place a display Ship at its printed fee (2/1/0 G by size) · <b>board</b> = a cask moves onto a berth (the minimum reads its die here) · <b>sail</b> = a full Ship departs · <b>deliver</b> = a cask resolves at its Kontor · <b>warp</b> = the Capstan moves an empty hull.</div></div>
   </div>
@@ -577,7 +585,7 @@
   <div class="acat">The stations</div>
   <table class="atbl">
     <tr><td><span class="act-ic"><i data-lucide="store"></i></span></td><td><b>Market — Source</b></td><td>Take <b>2 goods</b>, any mix.</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brewhouse — Brew</b></td><td>Pay a recipe → an open vessel; a tray die at the printed start value; the pile-top bonus rides the cask (the card completes on the beer’s first LOAD — v4.9d).</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brewhouse — Brew</b></td><td>Pay a recipe → an open vessel; a tray die at the printed start value; the pile-top bonus rides the cask (the card completes on the beer’s first LOAD).</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Cellar — Age</b></td><td><b>Age 3</b> — three steps across your aging casks (a die stops at its quality: Ready).</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>Harbor — Commission</b></td><td>Pay the Ship’s <b>printed fee</b> (Skute 2 <i data-lucide="wheat" class="gi"></i> · Cog 1 <i data-lucide="wheat" class="gi"></i> · Hulk free) · place it on a slot without a Ship · <b>load 1 Ready cask at once</b> (optional; a Skute sails on it). No ★.</td></tr>
   </table>
@@ -591,11 +599,11 @@
     <tr><td><span class="act-ic"><i data-lucide="coins"></i></span></td><td><b>Gain 2 goods</b> <span class="small">[Q1 pin · Q2+]</span></td><td>any mix</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Age +2</b> <span class="small">[Q2+]</span></td><td>across your vessels</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="package-plus"></i></span></td><td><b>Load 1 more</b> <span class="small">[Q2+]</span></td><td>any eligible Ship on the wharf</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="map-pin"></i></span></td><td><b>Place 1 presence</b> <span class="small">[Q2+]</span></td><td>pay 2G · a tray die, face 1, where you’ve delivered</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="map-pin"></i></span></td><td><b>Place 1 presence</b> <span class="small">[Q2+]</span></td><td>a tray die, face 1, where you’ve delivered (free off a cask)</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="scroll-text"></i></span></td><td><b>Gain 1 recipe</b> <span class="small">[Q2+]</span></td><td>at the card’s fee</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="hammer"></i></span></td><td><b>Build 1 building</b> <span class="small">[Q3+]</span></td><td>at its fee · from the display · your die stands on it</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="wrench"></i></span></td><td><b>Gain 1 Specialist</b> <span class="small">[Q3+]</span></td><td>at its fee · open seat</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brew 1</b> <span class="small">[Q4+]</span></td><td>pay its cost, open vessel</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brew 1</b> <span class="small">[Q3+]</span></td><td>pay its cost, open vessel</td></tr>
   </table>
 </section>
 
@@ -611,7 +619,7 @@
     <h4>The die</h4>
     <p><b>Brew</b> (printed start) → <b>age up</b> (stops at quality: Ready) → <b>board</b> (die ≥ the minimum, after lifts; cap 6) → <b>sail when full</b> → <b>park</b> (pips = ★; every cask pays its Kontor’s prize; claim a matching Contract).</p>
     <h4>Game end</h4>
-    <p><b>A player’s tray EMPTIES — their last of 12 dice committed</b> → finish the round → score: delivered dice + scored in play + majorities + the Flight + Guild ★. Tiebreak: vessel dice, then goods.</p>
+    <p><b>A player’s tray EMPTIES — their last of 13 dice committed</b> → finish the round → score: delivered dice + scored in play + majorities + the Flight + Guild ★. Tiebreak: vessel dice, then goods.</p>
     <h4>The two rules people forget</h4>
     <p>① The minimum reads the die <b>as it boards</b> — after this slot’s lifts. ② Specialist and Contract displays refill at <b>end of turn</b>; Ships and buildings at once.</p>
   </div>
@@ -622,11 +630,11 @@
   <p>Every unique design in the box — the printed faces themselves, exactly as the print kit prints them. Powers, fees, counts, and the setup knobs that drive game-to-game variability, in one place. <b>Click or tap any tile to enlarge it</b>; tap anywhere to dismiss. Duplicates aren’t repeated — the <b>×&thinsp;count</b> is what the box prints.</p>
 
   <h3 class="tref-h">Casks — the six beers</h3>
-  <p class="small">Setup deals <b>3 of the 4 exports</b> each game (Gruit + Hopped are the starters, always in) — the quality ceiling and the recipe economy shift with the deal. Each cask tile prints its <b>load bonus</b>; the tiles stack in <b>six face-up piles, one per beer</b>, and a brew takes the top tile (every pile top is public — steer toward the bonus you want; a Gruit’s is always <i>Gain&nbsp;2&nbsp;goods</i>). The recipe fee is the formula <b>H&nbsp;=&nbsp;Q−3</b> (Keut/Broyhan free · Mumme 1H · Bock 2H — v4.9c), paid at every channel — Bruges included. Both faces shown: the <b>aging side</b> (brew cost · aging track) and the <b>wharf side</b> (die seat · start value).</p>
+  <p class="small">Setup deals <b>3 of the 4 exports</b> each game (Gruit + Hopped are the starters, always in) — the quality ceiling and the recipe economy shift with the deal. Each cask tile prints its <b>load bonus</b>; the tiles stack in <b>six face-up piles, one per beer</b>, and a brew takes the top tile (every pile top is public — steer toward the bonus you want; a Gruit’s is always <i>Gain&nbsp;2&nbsp;goods</i>). The recipe fee is the formula <b>H&nbsp;=&nbsp;Q−3</b> (Keut/Broyhan free · Mumme 1H · Bock 2H), paid at every channel — Bruges included. Both faces shown: the <b>aging side</b> (brew cost · aging track) and the <b>wharf side</b> (die seat · start value).</p>
   <div class="tscroll"><table class="tref" id="trefCasks"></table></div>
 
   <h3 class="tref-h">Specialists — 13 designs</h3>
-  <p class="small">Private purple tiles, <b>2 seats</b> per player, never two of a kind. The core five print ×3 (the deck deals <b>max(2,&nbsp;n−1)</b> copies of each); the guild eight are <b>singles</b> — scarce, first-come. Display of 4; a take’s gap refills at <b>end of turn</b>. Free at <b>Bergen</b> — <b>per cask</b>; the Hiring Post / <i>hire</i> bonus pay the tile’s printed fee. Three guild tiles carry printed <b>requirements</b> read off your components.</p>
+  <p class="small">Private purple tiles, <b>2 seats</b> per player, never two of a kind. The core five print ×3 (the deck deals <b>max(2,&nbsp;n−1)</b> copies of each); the guild eight are <b>singles</b> — scarce, first-come. Display of 4; a take’s gap refills at <b>end of turn</b>. Free at <b>Bergen</b> — <b>per cask</b>; the Hiring Post / <i>hire</i> bonus pay the tile’s printed fee.</p>
   <div class="tscroll"><table class="tref" id="trefSpecs"></table></div>
 
   <h3 class="tref-h">Buildings — 18 designs · 20 tiles</h3>
@@ -654,7 +662,6 @@ const destinations=[
 ];
 document.getElementById('destBoard').innerHTML=destinations.map(d=>`
   <div class="route ${d.cls}">
-    <span class="open-badge">Open at start</span>
     <h3>${d.name}</h3><div class="role">${d.role}</div>
     <div class="meta">Minimum (as it boards): <b>${d.gate}</b><br>Value: <b>${d.value}</b><br>Prize — per cask: <b>${d.benefit}</b><br>Majority (1st/2nd/3rd): <b>${d.maj}</b></div>
   </div>`).join('');
@@ -705,7 +712,7 @@ function clearHl(){document.querySelectorAll('.hl').forEach(e=>e.classList.remov
     return '<span class="tprev" data-w="'+w+'" data-h="'+h+'" style="width:'+Math.round(w*s)+'px;height:'+Math.round(h*s)+'px">'
       +'<span class="tprev-in" style="display:inline-block;transform:scale('+s+')">'+html+'</span></span>';};
   // ---- casks: both faces (aging side · wharf side), each enlargeable ----
-  const feeFor=nm=>{const r=HC.RECIPES.find(r=>r.nm===nm);return r&&r.buy?('fee '+(r.buy.h||0)+' H'):'starter — free';};
+  const feeFor=nm=>{const r=HC.RECIPES.find(r=>r.nm===nm);if(!r||!r.buy)return 'starter — free';return r.buy.h?('fee '+r.buy.h+' H'):'free';};
   document.getElementById('trefCasks').innerHTML=
     '<tr><th>Tile (both faces)</th><th>Beer</th><th>Q</th><th>Brew</th><th>Recipe fee</th><th>Die: start → ready</th><th>Load bonus</th><th>In box</th></tr>'
     +HC.CASKS.filter(c=>!c.exp).map(c=>{const act=c.pin||HC.poolFor(c.q)[0];
@@ -721,20 +728,17 @@ function clearHl(){document.querySelectorAll('.hl').forEach(e=>e.classList.remov
         +(c.tag?' · '+c.tag.split('<br>').join(' '):'')+'</td>'
       +'<td class="cnt">×'+c.n+'</td></tr>';}).join('');
   // ---- specialists ----
-  const gateOf=a=>{const m=a.match(/·\s*requires\s*(.+)$/i);return m?m[1]:'—';};
-  const powerOf=a=>a.replace(/\s*·\s*requires.+$/i,'');
   document.getElementById('trefSpecs').innerHTML=
-    '<tr><th>Tile</th><th>Specialist</th><th>Fee</th><th>Copies</th><th>Requirement</th><th>Power</th></tr>'
+    '<tr><th>Tile</th><th>Specialist</th><th>Fee</th><th>Copies</th><th>Power</th></tr>'
     +HC.IMPROVE.map(d=>'<tr>'
       +'<td class="tcell">'+prev(HC.improveTile(d),2,2,.5)+'</td>'
       +'<td><b>'+d.nm+'</b></td>'
       +'<td>'+(((d.g?d.g+' G':'')+(d.g&&d.h?' ':'')+(d.h?d.h+' H':''))||'—')+'</td>'
       +'<td class="cnt">'+(d.n>1?'×'+d.n+' <span class="small">core — deal max(2, n−1)</span>':'×1 <span class="small">guild single</span>')+'</td>'
-      +'<td>'+gateOf(d.act)+'</td>'
-      +'<td>'+powerOf(d.act)+'</td></tr>').join('');
+      +'<td>'+d.act+'</td></tr>').join('');
   // ---- buildings ----
   const KIND={act:'slot action',cask:'load-lift (the boarding cask)',ship:'ship-shaper'};
-  const STD={source:'Gain 2 goods',age:'Age +2',reach:'2G → +1 presence',recipe:'Gain 1 recipe',hire:'Gain 1 specialist'};
+  const STD={source:'Gain 2 goods',age:'Age +2',recipe:'Gain 1 recipe',hire:'Gain 1 specialist'};
   document.getElementById('trefBldgs').innerHTML=
     '<tr><th>Tile</th><th>Building</th><th>Kind</th><th>Fee</th><th>Tiles</th><th>Power</th></tr>'
     +HC.BUILDINGS.map(d=>'<tr>'
@@ -759,6 +763,17 @@ function clearHl(){document.querySelectorAll('.hl').forEach(e=>e.classList.remov
   document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open');});
 })();
 
+// ---- the ART ICON pass (2026-08-09): the rulebook rides the same c.1350 sticker set as the
+// kit — every lucide placeholder with mapped art swaps to its art/icons/*.png before
+// createIcons runs; the rest (wheat/sprout — deliberately colour-glyphs — and a few
+// UI-only glyphs) stay lucide.
+(function(){if(!window.HC||!HC.ICON_ART)return;
+  document.querySelectorAll('i[data-lucide]').forEach(function(el){
+    var f=HC.ICON_ART[el.getAttribute('data-lucide')];if(!f)return;
+    var img=document.createElement('img');img.className=('ai '+(el.className||'')).trim();
+    img.src='art/icons/'+f+'.png';img.alt='';
+    el.parentNode.replaceChild(img,el);});
+})();
 if(window.lucide)lucide.createIcons();
 </script>
 </body>

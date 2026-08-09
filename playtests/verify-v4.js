@@ -1,4 +1,4 @@
-// Targeted rule checks for v4.x — v4.5b "Open Orders" + the v45c/d/e letters (KEY hanse-v45e).
+// Targeted rule checks for v4.x — through v4.12 "Open Brewhouse" (KEY hanse-v412).
 // Drives the CANONICAL engine (extract play.html's <script>, stub the DOM) and asserts each
 // rule directly by constructing states — no bot in the loop, so a failure is the engine's.
 // Usage: node playtests/verify-v4.js
@@ -32,9 +32,9 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   p.upgrades=['cellar'];p.sslots=2;
   ok('Cellarman: dice start one higher (bock 3 · keut 2)', startDieFor(p,'bock')===3&&startDieFor(p,'keut')===2);
   ok('Cellarman never starts a die above quality (hopped 2 = Q2)', startDieFor(p,'hopped')===2);
-  // v45g [designer-ruled]: aging is REQUIRED for every Q3+ beer — an export never STARTS Ready
-  ok('a Q3+ export never starts Ready (Cellarman Broyhan caps at 2, not 3 — v45g)', startDieFor(p,'broyhan')===2);
-  ok('below Q3 the old cap stands (Hopped ready-at-brew with the Cellarman is fine)', startDieFor(p,'hopped')===2&&caskReady({style:'hopped',q:2,die:2}));
+  // v4.12 [designer-ruled]: the v45g never-starts-Ready cap is REPEALED — the Cellarman's power is the point
+  ok('v45g repealed (v4.12): the Cellarman starts Broyhan READY at brew (3 = Q3)', startDieFor(p,'broyhan')===3&&caskReady({style:'broyhan',q:3,die:startDieFor(p,'broyhan')}));
+  ok('Hopped ready-at-brew with the Cellarman stands too', startDieFor(p,'hopped')===2&&caskReady({style:'hopped',q:2,die:2}));
 })();
 
 // ---- 2. AGING turns the die up and STOPS at the quality ----
@@ -126,11 +126,11 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 
 // ---- 8. DELIVERY floor & cap; Keut's presence bump spends a tray die and banks 1★ ----
 (function(){var p=fresh();stops();p.ai={tier:'journeyman'};
-  p.grain=2;
+  p.grain=0;
   var b0=p.bank,pool0=p.presPool,pb0=p.presBonus.bruges;
   deliverCask(p,{owner:0,style:'keut',q:3,die:9,act:'load'},'bruges');
   ok('delivery value caps at 6', p.delivered[p.delivered.length-1].val===6);
-  ok('Keut parks a bonus die (presence +1 · bank +1 · pool −2 incl. the delivery · −2G the fee, v4.11)',
+  ok('Keut parks a bonus die FREE (presence +1 · bank +1 · pool −2 incl. the delivery · no fee — v4.12)',
     p.presBonus.bruges===pb0+1&&p.bank===b0+1&&p.presPool===pool0-2&&p.grain===0);
   p.ai=null;
 })();
@@ -258,20 +258,36 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   S.active=0;
 })();
 
-// ---- 12. PRESENCE BUMP: a tray die at face 1 — 1★, presence, clock; tray-gated ----
+// ---- 12. PRESENCE (v4.12): free as a cask action; the 2G fee rides ONLY the Almoner's Stall ----
 (function(){var p=fresh();stops();
   p.delivered.push({style:'gruit',q:1,dest:'bruges',val:1});
-  p.grain=3;
+  p.grain=0;
   var b0=p.bank,pool0=p.presPool;
   addPresence(p,'bruges',1);
-  ok('a bump parks a die for 2G (presence +1 · 1★ · pool −1 · grain −2 — v4.11)', p.presBonus.bruges===1&&p.bank===b0+1&&p.presPool===pool0-1&&p.grain===1);
-  var pb1=p.presBonus.bruges,b1=p.bank;
-  addPresence(p,'bruges',1);
-  ok('grain short (1G) → no bump, nothing spent (v4.11)', p.presBonus.bruges===pb1&&p.bank===b1&&p.grain===1);
+  ok('a cask-action bump is FREE — a die parks (presence +1 · 1★ · pool −1 · no grain needed — v4.12)', p.presBonus.bruges===1&&p.bank===b0+1&&p.presPool===pool0-1&&p.grain===0);
+  p.grain=3;var pb1=p.presBonus.bruges,b1=p.bank;
+  addPresence(p,'bruges',1,true);
+  ok('the Almoner’s channel pays 2G per die (fee=true — presence +1 · 1★ · −2G)', p.presBonus.bruges===pb1+1&&p.bank===b1+1&&p.grain===1);
+  var pb2=p.presBonus.bruges,b2=p.bank;
+  addPresence(p,'bruges',1,true);
+  ok('grain short (1G) at the Almoner → no bump, nothing spent', p.presBonus.bruges===pb2&&p.bank===b2&&p.grain===1);
   p.grain=6;p.presPool=diceInFlight(p);   // tray = 0
   var pb=p.presBonus.bruges;
   addPresence(p,'bruges',1);
-  ok('no tray die → no bump (grain alone won’t do)', p.presBonus.bruges===pb&&p.grain===6);
+  ok('no tray die → no bump (free or paid alike)', p.presBonus.bruges===pb&&p.grain===6);
+})();
+(function(){var p=fresh();stops();
+  p.delivered.push({style:'gruit',q:1,dest:'bruges',val:1});
+  p.grain=1;enterReach('stops',true);
+  ok('the Almoner’s Stall refuses at 1G (its 2G fee gates entry)', UI.sub!=='reach');
+  p.grain=2;enterReach('stops',true);
+  ok('…and opens at 2G with the fee flagged', UI.sub==='reach'&&UI.reach.fee===true);
+  reachPick('bruges');
+  ok('the Almoner bump spends the 2G', p.grain===0&&p.presBonus.bruges===1);
+  p.grain=0;enterReach('stops');
+  ok('the plain reach flow needs NO grain (v4.12)', UI.sub==='reach'&&!UI.reach.fee);
+  reachPick('bruges');
+  ok('…and parks free', p.presBonus.bruges===2&&p.grain===0);
 })();
 
 // ---- 13. THE CLOCK (v4.1): the dice alone — sails never end the game; the ceiling backstops ----
@@ -426,19 +442,16 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   p.vessels=[{style:'bock',q:5,die:4,act:'age'},null,null];
   enterRack('stops');
   ok('one cask → the Racking Hall refuses', UI.sub!=='rack');
-  p.vessels=[{style:'mumme',q:4,die:3,act:'age'},null,null];
+  p.vessels=[{style:'mumme',q:4,die:1,act:'age'},null,null];p.hops=2;
   enterAssay('stops');assayPick(0);
-  ok('the Assay House turns one maturing die +1 (3→4 READY)', p.vessels[0].die===4&&caskReady(p.vessels[0]));
+  ok('the Assay House certifies for 1H — ONE maturing cask straight to READY (1→4, v4.12)', p.vessels[0].die===4&&caskReady(p.vessels[0])&&p.hops===1);
   enterAssay('stops');
   ok('nothing maturing → the Assay House refuses', UI.sub!=='assay');
-  // v45c [designer-ruled]: the Assay House is ±1 — down as well as up, floor 1
-  p.vessels=[{style:'bock',q:5,die:3,act:'age'},null,null];
-  enterAssay('stops');assayPick(0,-1);
-  ok('the Assay House may turn a maturing die DOWN (3→2, v45c)', p.vessels[0].die===2);
-  p.vessels=[{style:'bock',q:5,die:1,act:'age'},null,null];
-  enterAssay('stops');assayPick(0,-1);
-  ok('…but never below 1 (the floor holds)', p.vessels[0].die===1&&UI.sub==='assay');
-  assaySkip();
+  p.vessels=[{style:'bock',q:5,die:1,act:'age'},null,null];p.hops=0;
+  enterAssay('stops');
+  ok('no hops → the Assay House refuses (its 1H price gates entry)', UI.sub!=='assay');
+  p.hops=1;enterAssay('stops');assayPick(0);
+  ok('1H buys the whole climb (bock 1→5 READY)', p.vessels[0].die===5&&caskReady(p.vessels[0])&&p.hops===0);
 })();
 (function(){var p=fresh();stops();
   // v45d: the HOP EXCHANGE is a slot-stop ACTION — pay ≤2H, +1 per hop on VESSEL dice, past quality fine
@@ -614,21 +627,22 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   p.upgrades=['towncrier'];p.sslots=2;
   var b0=p.bank,pool0=p.presPool;
   addPresence(p,'bruges',1);
-  ok('a Crier bump parks at FACE 2 — banks 2★, one die, one clock beat', p.bank===b0+2&&p.presPool===pool0-1&&p.presBonus.bruges===1);
+  ok('a Crier bump banks 1★ + his 2★ (3★ total — the die parks at face 1; one die, one clock beat — v4.12)', p.bank===b0+3&&p.presPool===pool0-1&&p.presBonus.bruges===1);
 })();
 
 // ---- v4.7 price pass + the Innkeeper's tile drip + the GM 4p persona gate ----
 (function(){var p=fresh();stops();
   ok('v4.7 fees: Grain Factor 2G · Supercargo 2H (the probe outliers repriced)',
     SPEC_FEE.granary.g===2&&SPEC_FEE.supercargo.h===2&&SPEC_FEE.crane.g===1);
-  p.upgrades=['innkeeper'];p.sslots=2;p.shipped={gruit:1,hopped:1,keut:1};
-  p.vessels.push(null);p.vslots=4;p.innVessel=3;
-  p.vessels[3]={style:'mumme',q:4,die:2,act:'source'};
-  p.vessels[0]={style:'bock',q:5,die:1,act:'source'};
+  p.upgrades=['innkeeper'];p.sslots=2;
+  p.vessels=[{style:'bock',q:5,die:2,act:'source'},{style:'gruit',q:1,die:1,act:'source'},null];
   innkeeperTick(p);
-  ok('the Innkeeper ages the TILE’s cask +1 at turn start (v4.7 rework)', p.vessels[3].die===3&&p.vessels[0].die===1);
-  p.vessels[3].die=4;innkeeperTick(p);
-  ok('…and never past Ready', p.vessels[3].die===4);
+  ok('the Innkeeper stays quiet under 3 casks brewing (v4.12 rework)', p.vessels[0].die===2);
+  p.vessels[2]={style:'mumme',q:4,die:2,act:'source'};
+  innkeeperTick(p);
+  ok('at 3+ casks in your vessels he ages the ripest +1 at turn start', p.vessels[2].die===3&&p.vessels[0].die===2);
+  p.vessels[0].die=5;p.vessels[2].die=4;innkeeperTick(p);
+  ok('…and stays quiet with nothing maturing (all Ready)', p.vessels[0].die===5&&p.vessels[2].die===4);
 })();
 (function(){fresh(4);
   S.players.forEach(function(q){q.ai={tier:'guildmaster',persona:null};});
@@ -652,21 +666,62 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   S.active=0;UI.pendingRecipe=[];UI.pendingActs=[];
 })();
 (function(){var p=fresh();stops();
-  ok('the Innkeeper is gated until 3 distinct beers are SHIPPED (v4.9d)', !specGate(p,'innkeeper'));
-  p.shipped={gruit:1,hopped:1,keut:1};
-  ok('…and opens at the 3rd flip (the old seat-2 rhythm)', specGate(p,'innkeeper'));
+  ok('the Innkeeper is UNGATED (v4.12 — the 3-beers requirement is cut)', specGate(p,'innkeeper'));
   grantUpgrade(p,'innkeeper');
-  ok('seating him opens a 4th cellar (vessels 4 · a cask may mature on the tile)', p.vessels.length===4&&p.vslots===4&&openVessel(p)>=0);
+  ok('seating him adds NO 4th vessel (v4.12 — the tile is a turn-start drip, not a rig)', p.vessels.length===3&&(p.vslots||3)===3);
 })();
 (function(){var p=fresh();stops();
   p.upgrades=['chronicler','alderman'];p.sslots=2;
   p.ladings=[{dest:'bruges',min:3,pts:2},{dest:null,min:6,pts:3}];
   p.presBonus.bruges=3;p.presBonus.bergen=2;
   var sc=scorePlayer(p);
-  ok('the Chronicler (+1★/lading) and Alderman (+2★/kontor≥3) score the guild line', sc.guild===4&&sc.total===sc.deliv+sc.bank+sc.maj+sc.flight+sc.guild);
+  ok('the Chronicler (+3★/Contract — v4.12) and Alderman (+2★/kontor≥3) score the guild line', sc.guild===8&&sc.total===sc.deliv+sc.bank+sc.maj+sc.flight+sc.guild);
   p.ladings=[1,2,3,4,5,6,7].map(function(){return {dest:null,min:6,pts:3};});
-  ok('the Chronicler caps at +5', scorePlayer(p).guild===7);
-  ok('the Chronicler is gated behind a first claim', !specGate({ladings:[]},'chronicler')&&specGate({ladings:[{}]},'chronicler'));
+  ok('the Chronicler is UNCAPPED (7 claims = 21★ + the Alderman’s 2 — v4.12)', scorePlayer(p).guild===23);
+  ok('the Chronicler is UNGATED (v4.12 — the claimed-Contract requirement is cut)', specGate({ladings:[]},'chronicler'));
+})();
+// ---- v4.12: brew joins the Q3+ pool · the Exchange replaces up to 3 · the Capstan warps ANY Ship · the Cooperage pays +2★ ----
+(function(){fresh();
+  var q3={},q2={};
+  for(var i=0;i<600;i++){q3[pileDraw(3)]=1;q2[pileDraw(2)]=1;}
+  ok('brew is drawn on the Q3 piles (v4.12 — was Q4+)', !!q3.brew);
+  ok('…and stays out of the Q2 pool (survey/hire/brew all Q3+)', !q2.brew&&!q2.survey&&!q2.hire);
+})();
+(function(){var p=fresh();stops();
+  S.ladingRow=[{dest:'bruges',min:3,pts:2},{dest:'london',min:4,pts:3},{dest:'bergen',min:4,pts:3}];
+  S.ladingDeck=[{dest:null,min:6,pts:3},{dest:'novgorod',min:5,pts:3},{dest:'bruges',min:5,pts:4},{dest:'london',min:6,pts:5}];
+  enterExchange('stops');
+  ok('the Merchants’ Exchange opens at up-to-3 replacements (v4.12)', UI.sub==='exchange'&&UI.exch.left===3);
+  exchangePick(0);
+  ok('each pick cycles one order under the deck and posts its replacement IN PLACE', S.ladingRow.length===3&&S.ladingRow[0].min===6&&S.ladingRow[0].dest===null&&UI.sub==='exchange'&&UI.exch.left===2);
+  exchangePick(1);exchangePick(2);
+  ok('the third replacement closes the flow itself', UI.sub!=='exchange');
+})();
+(function(){var p=fresh();stops();
+  ship('s4','cog','bruges',[{owner:0,style:'gruit',q:1,die:1,act:'source'}]);
+  UI.sub='capstan';UI.cap={returnTo:'stops',sid:null};
+  capPick('s4');
+  ok('the Capstan picks a LOADED Ship (v4.12 — any docked Ship warps)', UI.cap&&UI.cap.sid==='s4');
+  capPlace('s6');
+  ok('…and warps it, cargo riding', !S.slots.s4&&S.slots.s6&&S.slots.s6.load.length===1);
+  UI.pendingRecipe=[];UI.pendingActs=[];UI.pendingLading=[];
+})();
+(function(){var p=fresh();stops();p.ai={tier:'journeyman'};
+  ship('s4','cog','bruges',[{owner:0,style:'gruit',q:1,die:1,act:'source'}]);S.buildings.s6={b:'richberth'};
+  var d0=p.delivered.length;
+  UI.sub='capstan';UI.cap={returnTo:'stops',sid:'s4'};capPlace('s6');
+  ok('a warp that lands the Ship FULL (Rich Berth: a cog sails 1 short) sails it at once (v4.12)', !S.slots.s6&&p.delivered.length===d0+1);
+  UI.pendingRecipe=[];UI.pendingActs=[];UI.pendingLading=[];p.ai=null;
+})();
+(function(){var p=fresh();stops();
+  p.vessels=[{style:'gruit',q:1,die:1,act:'source'},null,null];
+  ship('s1','hulk','bruges');S.buildings.s1={b:'cooperage',owner:1,die:3};
+  var b0=p.bank;
+  UI.sub='load';UI.load={ships:['s1'],returnTo:'stops',loadsLeft:1,cask:null};
+  loadPickCask(0);
+  ok('the Cooperage pays its wharfage — the loader scores +2★ on a load here (v4.12)', p.bank===b0+2&&(p.bankW||0)===2);
+  ok('…and the load ticks the mason’s die (a use)', S.buildings.s1.die===4);
+  UI.pendingActs=[];UI.src=null;
 })();
 (function(){var p=fresh();stops();
   p.upgrades=['chandler'];p.sslots=2;p.grain=3;p.hops=2;p.chUsed=false;
@@ -698,8 +753,8 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   enterExchange('stops');
   ok('the Merchants’ Exchange opens on a live row + deck', UI.sub==='exchange');
   exchangePick(0);
-  ok('the cycled order goes UNDER the deck; its replacement posts at once',
-    S.ladingRow.length===2&&S.ladingRow[1].dest==='bergen'&&S.ladingDeck.length===1&&S.ladingDeck[0].dest==='bruges');
+  ok('the cycled order goes UNDER the deck; its replacement posts IN PLACE (v4.12)',
+    S.ladingRow.length===2&&S.ladingRow[0].dest==='bergen'&&S.ladingDeck.length===1&&S.ladingDeck[0].dest==='bruges');
   S.ladingDeck=[];
   enterExchange('stops');
   ok('a spent deck → the Exchange refuses', UI.sub!=='exchange');
@@ -707,10 +762,10 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 (function(){var p=fresh();stops();
   ship('s3','cog','london');ship('s4','skute','bruges',[{owner:0,style:'gruit',q:1,die:1,act:'source'}]);
   enterCapstan('stops');
-  ok('the Warping Capstan opens (an empty hull + open slots)', UI.sub==='capstan');
+  ok('the Warping Capstan opens (docked Ships + open slots)', UI.sub==='capstan');
   capPick('s4');
-  ok('a LOADED hull cannot be picked', UI.cap.sid==null);
-  capPick('s3');capPlace('s7');
+  ok('a LOADED hull may be picked too (v4.12 — any docked Ship warps)', UI.cap.sid==='s4');
+  UI.cap.sid=null;capPick('s3');capPlace('s7');
   ok('the empty hull warps s3 → s7 (the geometry is authorable)', !S.slots.s3&&S.slots.s7&&S.slots.s7.dest==='london');
 })();
 (function(){

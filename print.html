@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v4.11 “Factor’s Fee”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v4.12 “Open Brewhouse”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -698,7 +698,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.11 “Factor’s Fee”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.12 “Open Brewhouse”</span></h1>
   <a href="play.html">▶ Play</a>
   <a href="index.html">📖 Rules</a>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
@@ -879,7 +879,7 @@ function aidBack(){
         +row('coins','Gain 2 goods','any mix')
         +row('age-2','Age +2','two aging steps')
         +row('package-plus','Load 1 more','another cask, any eligible Ship')
-        +row('map-pin','Place 1 presence','pay 2G · a tray die parks at 1')
+        +row('map-pin','Place 1 presence','a tray die parks at face 1')
         +row('scroll-text','Gain 1 recipe','at its fee')
         +row('search','Build 1 building','at its fee, your die on it')
         +row('wrench','Gain 1 Specialist','at its fee')
@@ -887,7 +887,7 @@ function aidBack(){
         +'<h5>'+LU('star')+'Scoring Marks</h5>'
         +row('star','\u2605','the scoring unit')
         +row('trophy','Majority','Kontor ranking by parked dice')
-        +row('layers','The Flight','distinct beers brewed')
+        +row('layers','The Flight','distinct beers shipped')
         +row('timer','The Clock','the first empty tray')
       +'</div></div>'
     +'</div></div>';}
@@ -1337,7 +1337,7 @@ function buildPages(){
     const fam=meta[i++].fam;(famPages[fam]=famPages[fam]||new Set()).add(pages.indexOf(fp));}));}
 
   // --- CASK TILES → their own 22″ plotter sheet pair (fronts + mirrored backs) ---
-  // Gruit all-Source (pinned); Q2+ cycle their quality's GATED pool (survey/hire Q3+ · brew/enshrine Q4+) — the printed mix IS the brew-draw
+  // Gruit all-Source (pinned); Q2+ cycle their quality's GATED pool (survey/hire/brew Q3+ — v4.12) — the printed mix IS the brew-draw; the per-beer offsets guarantee each Q3+ beer ONE brew tile
   const caskItems=[];
   CASKS.filter(d=>!d.exp).forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);   // v4.0: base beers only (the expansions are tabled); the pool mix IS the brew-draw
     for(let i=0;i<cnt(d.n);i++){const act=pool[(i+(d.off||0))%pool.length];
@@ -1407,7 +1407,7 @@ function checklist(pages,famPages){
   const R=(nm,detail,n)=>'<tr><td class="bx"></td><td><b>'+nm+'</b>'+(detail?'<div '+D+'>'+detail+'</div>':'')+'</td><td class="n">'+n+'</td></tr>';
   const T=title=>'<table><tr><th></th><th>'+title+'</th><th>qty</th></tr>';
   let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.9 “Mason’s Mark”)</span></h2>'
-    +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">This build: the building deck prints 20 and SETUP DEALS 17 ⚙; the Specialist guild holds 13 designs (the core five + eight singles — three with printed requirements, two with end-game ★ lines). The die is the cask — aging, boarding, value, presence and THE clock in one number (the dice alone end the game; dice never turn on their own). A commission pays the Ship’s PRINTED fee — Skute 2G · Cog 1G · Hulk free ⚙ (2/1/0 by berth) — places it, and may LOAD 1 Ready cask at once; it scores NO ★. A face-up row of 3 CONTRACTS prices deliveries. Every acquirable recipe/Specialist/building carries a PRINTED wharf fee (chipless buildings free; building/Specialist Kontor prizes free — a recipe’s H = Q−3 fee is paid even at Bruges (v4.9c — the Q3s free)), Novgorod pays every delivered die +2★, and sharing a station costs nothing. The Hall, charters, Privileges, ownership tokens, cask cubes and the three expansions stay OUT of the box (tabled). Counts ⚙.</p>'
+    +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">This build: the building deck prints 20 and SETUP DEALS 17 ⚙; the Specialist guild holds 13 designs (the core five + eight singles — two with end-game ★ lines; none prints a requirement). The die is the cask — aging, boarding, value, presence and THE clock in one number (the dice alone end the game; dice never turn on their own). A commission pays the Ship’s PRINTED fee — Skute 2G · Cog 1G · Hulk free ⚙ (2/1/0 by berth) — places it, and may LOAD 1 Ready cask at once; it scores NO ★. A face-up row of 3 CONTRACTS prices deliveries. Every acquirable recipe/Specialist/building carries a PRINTED wharf fee (chipless buildings free; building/Specialist Kontor prizes free — a recipe’s H = Q−3 fee is paid even at Bruges (v4.9c — the Q3s free)), Novgorod pays every delivered die +2★, and sharing a station costs nothing. The Hall, charters, Privileges, ownership tokens, cask cubes and the three expansions stay OUT of the box (tabled). Counts ⚙.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
     +R('Main board — the Wharf','The 2×2 of stations, each printing ONE action (Market: 2 goods · Brewhouse: brew · Cellar: Age 3 · Harbor: commission 1G + 1 free load, no ★), ringed by 8 slots — each seats a BUILDING and/or a SHIP (never casks).','1')
@@ -1419,7 +1419,7 @@ function checklist(pages,famPages){
     +R('Cask tiles — the beer supply','2.4×1″ SINGLE-FACED tiles: quality · the printed START-DIE value (set your quality die to it at brew; aging turns it up — READY at the quality) · the load-bonus action (the three acquisition bonuses read “· its fee” — each item’s price is printed on its own card/tile ⚙) · the die seat. A shared supply in six face-up piles, one per beer — a brew takes the top tile (v4.7a). Brewed never bought: '+caskBase.map(d=>d.nm+' ×'+d.n).join(' · ')+'.',sumN(caskBase))
     +R('Ship tiles','ALL-BERTH carriers in THREE sizes — the tile is its berths, filled bottom→top; the TOP berth prints the identity (Kontor · minimum as a DIE read · the PER-HULL commission fee, v4.8: Skute 2G · Cog 1G · Hulk chipless/free) and the last cask covers it: the ship SAILS at once. Commissioning may load 1 Ready cask at once — no ★. every hull cuts the same 2.5×3″ tile (v4.9b — the space below the berths is art): Skute (1 berth) ×6 — sails on its first load, the relief valve as a component · Cog (2) ×10 · Hulk (3) ×8; six per Kontor, drawn into a display of 4.','24')
     +R('Building tiles','2.5×1.32″ SINGLE-FACED, ONE green family — no owner, ever: every building serves whoever activates it, and the builder STANDS A QUALITY DIE on the tile at its PRINTED START FACE (v4.9b ⚙ — utilities 1 · workhorses 2 · ship-riders/ephemerals 3; every use by any player turns it up, cap 6; the pips score at game end; the die is committed toward the empty-tray clock). <b>The box prints 20 — SETUP DEALS 17 each game</b> (≥1 Kiln + ≥1 Mission Quay guaranteed; 3 sit out). <b>Action buildings</b> (fire when you resolve their slot) — '+designs(actBld)+'. <b>Load-lift buildings</b> (passive at their slot) — '+designs(liftBld)+'. Earned (London’s prize free · the gain-building bonus at the tile’s printed fee — chipless tiles free; fees print in GRAIN only ⚙); overbuild = ONE payment (a paid fee covers the ground; the 1G rent only on otherwise-free builds; displaced tile → the box).',sumN(BUILDINGS))
-    +R('Specialist tiles','2×2″ purple, <b>13 designs</b>: the CORE five at max(2, n−1) copies — Cellarman (dice start one higher; a Q3+ export never starts Ready) · Grain Factor · Hop Gardener · Stevedore (loads 2) · Braumeister (ripest aging cask +1 at turn start) — and the GUILD eight at 1 copy each — Guild Scholar (recipes FREE, 2G) · Innkeeper (a 4th vessel — its cask ages +1 at your turn start, 2G · requires 3 beers brewed) · Supercargo (rival-sail freight 1G1H, 2H) · Chronicler (end +1★/Contract max 5, 1G1H · requires a claimed Contract) · Alderman (end +2★/Kontor with 3+ dice, 2G) · Town Crier (placed presence parks at face 2, 1G) · Chandler (1G↔1H once/turn, 1G) · Shipwright (commissions free, 1H). Free at Bergen — per cask, the grammar of every Kontor; the Hiring Post / gain-Specialist bonus pay the printed fee; requirements must read true off your components; 2 seats per player.',impTotal)
+    +R('Specialist tiles','2×2″ purple, <b>13 designs</b>: the CORE five at max(2, n−1) copies — Cellarman (dice start one higher — his Broyhan starts Ready) · Grain Factor · Hop Gardener · Stevedore (loads 2) · Braumeister (age 1 cask +1 at turn start) — and the GUILD eight at 1 copy each — Guild Scholar (recipes: pay no fee, 2G) · Innkeeper (brewing 3+ casks at once: age one +1 at your turn start, 2G) · Supercargo (a rival sails your cask: +1G+1H, 2H) · Chronicler (end +3★ per claimed Contract, 1G1H) · Alderman (end +2★/Kontor with 3+ dice, 2G) · Town Crier (+2★ per placed presence die, 1G) · Chandler (1G↔1H once/turn, 1G) · Shipwright (commissions: pay no fee, 1H). Free at Bergen — per cask, the grammar of every Kontor; the Hiring Post / gain-Specialist bonus pay the printed fee; 2 seats per player.',impTotal)
     +R('Contract tiles','2×0.9″ single-sided strips — a Kontor (or any) + a die minimum / named beer → printed 2–5★. A face-up row of 3 on the Destinations board; a QUALIFYING delivery claims one (one per cask; the ★ score at once); the row refills at end of turn; claimed tiles never return. SETUP: a Contract naming an UNDEALT beer returns to the box — every dealt Contract is claimable.','15')
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')
