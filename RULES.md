@@ -372,8 +372,8 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
   steps**. *(Gruit ages 0 steps — fresh ale, Ready at brew, die 1.)*
 - **Aging:** each step turns the die **+1**, **never past the quality** — the cask is
   **READY when die = quality.** **Dice never turn on their own (v4.5b — automatic aging is
-  cut):** the hands on a aging die are the **Cellar** (3 points ⚙), **Mission Quay** (+2),
-  the **Age +2** load bonuses, the **Assay House** (±1), the **Racking Hall** (an uncapped
+  cut):** the hands on an aging die are the **Cellar** (3 points ⚙), **Mission Quay** (+2),
+  the **Age +2** load bonuses, the **Assay House** (pay 1 `H` — one cask to Ready, v4.12), the **Racking Hall** (an uncapped
   swap, v45d), the **Hop Exchange** (pay `H` — past quality is fine, v45d), the **Abbey
   Cellar** (pay 3 `H` — everything aging to Ready, v45d), the **Cellarman** (a higher
   start) and the **Braumeister** (+1 to your ripest at turn start).
@@ -542,8 +542,8 @@ everywhere, the Bruges prize included (the v45e grammar)**. No building ever add
 - **Prizes resolve WHEN GAINED, owner’s choice** (a rival tops off a Ship carrying your cask →
   you pick your prize right then). No queues.
 - **Novgorod’s premium is printed on the mat** (v4.2): every *delivered* die there counts
-  **pips +2** — for the score AND the end-game audit. (Minimum 4 means delivered dice show 4–6,
-  so a face-1 die at Novgorod is always placed presence, worth its flat 1★.)
+  **pips +2** — for the score AND the end-game audit. (Minimum 3 — v4.10 — means delivered dice
+  show 3–6, so a face-1 die at Novgorod is always placed presence, worth its flat 1★.)
 - **Presence** = your parked dice there. **Placing presence** (the cask action, Keut’s perk)
   is **free (v4.12 — the v4.11 fee is scoped back)**: take a **tray die**, park it at a Kontor
   you’ve **already delivered to** at **face 1** (1★ + majority weight + the clock; a seated

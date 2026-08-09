@@ -111,7 +111,7 @@ Canonical detail in `RULES.md` / `COMPONENTS.md` / `archive/records/V4-STREAMLIN
   tiles. The event family is TWO (Bonded Store · Victualling Yard — both sail away); the
   Merchants’ Exchange steers the lading row; the Warping Capstan moves empty hulls.** Action buildings
   print verbs (Granary/Scrivener’s/Mission Quay/Hiring Post/Almoner’s + **Racking Hall**
-  swap-ANY-two-uncapped 3G, the launder engine (v45d) · **Assay House** die ±1 · **Abbey
+  swap-ANY-two-uncapped 3G, the launder engine (v45d) · **Assay House** pay-1H-one-cask-to-Ready (v4.12) · **Abbey
   Cellar** pay-3H-all-maturing-to-Ready (v45d) · **Hop Exchange** pay-≤2H vessel-dice +1 each,
   past quality fine (v45d)); load-lift buildings shape the boarding die / the
   hull (Malt Kiln +1 · **Tollhouse** −1 for +3★ instant · **Bonded
