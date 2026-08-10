@@ -1589,14 +1589,15 @@ function commBack(){if(UI.comm){UI.comm.idx=null;UI.stage=null;render();}}
 function commSkip(){const rt=UI.comm?UI.comm.returnTo:'stops';UI.comm=null;UI.stage=null;resume(rt);}
 
 // ---------- BREW ----------
-function enterBrew(rt){const p=cur();
+function enterBrew(rt,free){const p=cur();
   if(S.presEnd&&trayDice(p)<=0){log('↳ no quality die left in the tray — a brew sets one on the cask.');resume(rt);return;}
-  if(openVessel(p)<0||!p.recipes.some(r=>canBrew(p,r))){log('↳ Brew: no open vessel or affordable recipe.');resume(rt);return;}
-  UI.sub='brew';UI.brew={returnTo:rt};render();
+  if(openVessel(p)<0||!p.recipes.some(r=>free||canBrew(p,r))){log('↳ Brew: no open vessel or affordable recipe.');resume(rt);return;}
+  UI.sub='brew';UI.brew={returnTo:rt,free:!!free};render();   // v4.15 study: free=true — the guild pays the brew's cost (a candidate shelf benefit)
 }
-function brewPick(style){const p=cur();if(!canBrew(p,style))return;const vi=openVessel(p);if(vi<0)return;
+function brewPick(style){const p=cur();const brFree=!!(UI.brew&&UI.brew.free);
+  if(!brFree&&!canBrew(p,style))return;const vi=openVessel(p);if(vi<0)return;
   if(S.presEnd&&trayDice(p)<=0)return;
-  snapshot();pay(p,STYLES[style].in);
+  snapshot();if(!brFree)pay(p,STYLES[style].in);
   const die=startDieFor(p,style);
   p.vessels[vi]={style,q:STYLES[style].q,die,act:takePileTop(STYLES[style].q,style)};p._brews=(p._brews||0)+1;
   log(p.name+' '+LU('flask-conical')+' brews '+LU('beer')+' <b>'+STYLES[style].name+'</b> — a tray die starts at <b>'+die+'</b>'+(die>=STYLES[style].q?' ('+LU('check')+' <b>READY at brew</b>)':' (Ready at '+STYLES[style].q+')')+'.',true);
@@ -2566,7 +2567,8 @@ function aiStep(){
           if(tgt){const needH=(((RECIPE_FEE[tgt]||{}).h||0)+((STYLES[tgt].in||{}).h||0))-p.hops;
             if(needH>0)return srcTake(Math.max(0,n-Math.min(n,needH)),Math.min(n,needH));}}
         return (p.hops<=p.grain)?srcTake(n-1,1):srcTake(1,n-1);}
-      case 'brew':{const aff=p.recipes.filter(r=>canBrew(p,r));
+      case 'brew':{const brFree=!!(UI.brew&&UI.brew.free);
+        const aff=p.recipes.filter(r=>brFree||canBrew(p,r));
         if(!aff.length)return resume(UI.brew?UI.brew.returnTo:'stops');
         if(aiNoisy(p))return brewPick(aiRandOf(aff));
         {const nb=aiIsTrader(p)?0.7*aiFlightMarg(p):0.8;const late=aiLateGame(p);
@@ -2698,10 +2700,14 @@ function aiMCOptions(p){
       cells.forEach(c=>push('move:'+c,()=>doMove(c)));break;}
     case 'line':push('row',()=>chooseLine('row'));push('col',()=>chooseLine('col'));break;
     case 'stops':{(UI.stops||[]).forEach((st,i)=>{if(stopAvail(st))push('stop:'+(st.kind==='cell'?st.cell:st.kind+st.slot),()=>resolveStop(i));});
-      if(hallOn())hallEligible(p).forEach(o=>o.shelves.forEach(si=>hallMenuFor(p,si).forEach(opt=>   // v4.15: the MC samples every (cask · shelf · option) enshrine
-        push('ens:'+o.vi+'>'+si+':'+opt,()=>{enshrineDo(o.vi,si,opt);}))));
+      if(hallOn()){const rep={};   // v4.15: ONE representative cask per (shelf) — the smallest sufficient die (bigger dice keep their options); keeps the MC's option space tractable under wide study menus
+        hallEligible(p).forEach(o=>{const d=p.vessels[o.vi].die;
+          o.shelves.forEach(si=>{if(!(si in rep)||d<p.vessels[rep[si]].die)rep[si]=o.vi;});});
+        Object.keys(rep).forEach(si=>{si=+si;hallMenuFor(p,si).forEach(opt=>
+          push('ens:'+rep[si]+'>'+si+':'+opt,()=>{enshrineDo(rep[si],si,opt);}));});}
       push('end',()=>endTurn());break;}
-    case 'brew':{p.recipes.filter(r=>canBrew(p,r)).forEach(r=>push('brew:'+r,()=>brewPick(r)));
+    case 'brew':{const brFree=!!(UI.brew&&UI.brew.free);
+      p.recipes.filter(r=>brFree||canBrew(p,r)).forEach(r=>push('brew:'+r,()=>brewPick(r)));
       push('skip',()=>resume(UI.brew?UI.brew.returnTo:'stops'));break;}
     case 'load':{const L=UI.load;if(!L)break;
       if(L.cask==null){readyInVessels(p).forEach(o=>{L.ships.forEach(sid=>{if(canTake(sid,o.i))push('load:'+o.c.style+'@'+sid,()=>{UI.load.cask=o.i;loadOnto(sid);});});});
@@ -2929,9 +2935,10 @@ function renderBar(){
   else if(U==='source'){const n=UI.src.n;prompt='Take '+n+' good'+(n===1?'':'s')+' (any mix).';
     acts=(n>=2?btn('Take '+Gi(2),'srcTake(2,0)','go')+btn('Take '+Gi(1)+Hi(1),'srcTake(1,1)','go')+btn('Take '+Hi(2),'srcTake(0,2)','go')
             :btn('Take '+Gi(1),'srcTake(1,0)','go')+btn('Take '+Hi(1),'srcTake(0,1)','go'))+btn('Skip','srcSkip()','ghost');}
-  else if(U==='brew'){prompt='Brew — pay a recipe into an open vessel. <span class="note">Each shows its START die and the load bonus it will carry (the face-up pile top — steerable).</span>';
+  else if(U==='brew'){const brFree=!!(UI.brew&&UI.brew.free);
+    prompt=(brFree?'Brew — <b>the guild pays the cost</b>. ':'Brew — pay a recipe into an open vessel. ')+'<span class="note">Each shows its START die and the load bonus it will carry (the face-up pile top — steerable).</span>';
     acts=p.recipes.map(r=>{const act=pileTopFor(STYLES[r].q,r);const sd=startDieFor(p,r);
-      return '<button '+(canBrew(p,r)&&openVessel(p)>=0?'':'disabled')+' onclick="brewPick(\''+r+'\')" data-tip="'+attr(STYLES[r].name+' Q'+STYLES[r].q+' — die starts at '+sd+'; its load bonus: '+CASK_ACT[act])+'">'+LU('beer')+' '+STYLES[r].name+' '+costIcons(STYLES[r].in)+' <span class="actchip" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:inherit">'+LU('dice-'+Math.min(6,sd))+' '+sd+'→'+STYLES[r].q+' · '+LU(CASK_ACT_ICON[act]||'')+act+'</span></button>';}).join('')+btn('Skip','resume(\''+(UI.brew?UI.brew.returnTo:'stops')+'\')','ghost');}
+      return '<button '+((brFree||canBrew(p,r))&&openVessel(p)>=0?'':'disabled')+' onclick="brewPick(\''+r+'\')" data-tip="'+attr(STYLES[r].name+' Q'+STYLES[r].q+' — die starts at '+sd+'; its load bonus: '+CASK_ACT[act])+'">'+LU('beer')+' '+STYLES[r].name+' '+costIcons(STYLES[r].in)+' <span class="actchip" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:inherit">'+LU('dice-'+Math.min(6,sd))+' '+sd+'→'+STYLES[r].q+' · '+LU(CASK_ACT_ICON[act]||'')+act+'</span></button>';}).join('')+btn('Skip','resume(\''+(UI.brew?UI.brew.returnTo:'stops')+'\')','ghost');}
   else if(U==='parti'){prompt='Parti-gyle — the Zerbster’s second runnings: fill an open vessel with a free '+LU('beer')+'<b>Gruit</b>? <span class="note">No goods — but it takes a tray die (Ready at 1, its bonus <i>Gain 2 goods</i>).</span>';
     acts=btn(LU('beer')+' Fill the vessel (a tray die)','partiTake()','go')+btn('Let them run off','partiSkip()','ghost');}
   else if(U==='age'){const a=UI.age;prompt='Allocate '+a.pool+' step'+(a.pool===1?'':'s')+' — turn an aging die up (it stops at its quality).';
@@ -3325,7 +3332,17 @@ let HALL_SHELVES=[
 let HALL_CROWN=6;   // ⚙ end-game: a die on all four shelves
 const HALL_OPT={goods2:'Gain 2 goods',goods3:'Gain 3 goods',age3:'Age 3 (a free Cellar pour)',
   brew:'Brew 1 (pay its cost)',loadmore:'Load 1 more cask (any eligible Ship)',
-  seal:'The Guild’s Seal — claim 1 open Contract outright (its ★ and its Invitation pay as any claim)'};
+  seal:'The Guild’s Seal — claim 1 open Contract outright (its ★ and its Invitation pay as any claim)',
+  // ---- CANDIDATE options (the v4.15 menu STUDY space — sim-only until ruled onto a shelf ⚙).
+  // Auto-resolving candidates log their pick; a candidate that graduates to a printed menu
+  // gets its full human picker then. This is the designer's "explore benefits that don't
+  // exist" surface — every entry here is enshrineDo-resolvable, so the sweeps can measure it.
+  goods4:'Gain 4 goods',age2:'Age 2',ageall:'ALL your aging casks age to Ready (the Abbey’s pour, free)',
+  brewfree:'Brew 1 — the guild pays its cost',load2:'Load up to 2 casks',
+  presence:'Place 1 presence (a tray die, free)',lift1:'Turn 1 vessel die +1 (past quality fine, cap 6)',
+  lift2:'Turn vessel dice +2 (split freely; past quality fine, cap 6)',invite:'Gain 1 extra ⚜ Invitation',
+  recipe:'Gain 1 recipe — fee waived',spec:'Seat 1 Specialist from the display — free',
+  commission:'Commission 1 Ship from the display — fee waived (no maiden load)'};
 const LADINGS_HALL=[   // ⚙ v4.15: the EASED 20-tile Contract schedule (hall mode replaces the base 15) —
   // rewards 1–3★, conditions routine: the claim is the Hall lane's gateway, so it must fire repeatedly.
   {dest:'bruges',min:2,pts:1},{dest:'bruges',min:3,pts:2},{dest:'bruges',beer:'keut',pts:2},{dest:'bruges',min:4,pts:2},{dest:'bruges',min:5,pts:3},
@@ -3388,6 +3405,33 @@ function enshrineDo(vi,i,opt){const p=cur();const c=p.vessels[vi];const sh=HALL_
   if(opt==='brew'){enterBrew(rt);return true;}
   if(opt==='loadmore'){enterLoad(wharfShips(),rt,1);return true;}
   if(opt==='seal'){enterSeal(rt);return true;}
+  // ---- the CANDIDATE options (the menu-study space ⚙ — auto-resolving; full pickers land if ruled in) ----
+  if(opt==='goods4'){enterSource(4,rt);return true;}
+  if(opt==='age2'){enterAge(2,'pool',rt);return true;}
+  if(opt==='ageall'){const done=[];maturingInVessels(p).forEach(o=>{o.c.die=o.c.q;done.push(styleShort(o.c.style));});
+    if(done.length&&!aiSimulating)log('↳ every aging cask to READY ('+done.join(' · ')+').');resume(rt);return true;}
+  if(opt==='brewfree'){enterBrew(rt,true);return true;}
+  if(opt==='load2'){enterLoad(wharfShips(),rt,2);return true;}
+  if(opt==='presence'){enterReach(rt);return true;}
+  if(opt==='lift1'||opt==='lift2'){const n=(opt==='lift2')?2:1;
+    for(let k=0;k<n;k++){const t=vesselCasks(p).filter(o=>o.c.die<6).sort((a,b)=>b.c.die-a.c.die)[0];
+      if(t){t.c.die++;if(!aiSimulating)log('↳ '+styleShort(t.c.style)+'’s die turns to '+t.c.die+'.');}}
+    resume(rt);return true;}
+  if(opt==='invite'){p.invites=(p.invites||0)+1;
+    if(!aiSimulating)log('↳ the guild extends an extra ⚜ Invitation.');resume(rt);return true;}
+  if(opt==='recipe'){const o=recipeGainable(p).sort((a,b)=>STYLES[b].q-STYLES[a].q)[0];
+    if(o){p.recipes.push(o);if(!aiSimulating)log('↳ the '+STYLES[o].name+' recipe, fee waived.');}
+    resume(rt);return true;}
+  if(opt==='spec'){const el=hireable(p);
+    if(el.length){const k=el.slice().sort((a,b)=>aiSpecVal(p,b)-aiSpecVal(p,a))[0];
+      grantUpgrade(p,k);takeImpFromDisplay(k);if(!aiSimulating)log('↳ the '+upName(k)+' is seated, free.');}
+    resume(rt);return true;}
+  if(opt==='commission'){const disp=S.shipDisplay||[];const free=shipFreeSlots();
+    if(disp.length&&free.length){let bi2=0;disp.forEach((s2,i2)=>{if(SHIP_CAP[s2.ship]>SHIP_CAP[disp[bi2].ship])bi2=i2;});
+      const sn=disp.splice(bi2,1)[0];refillShipDisplay();
+      S.slots[free[0].id]={type:'ship',ship:sn.ship,dest:sn.dest,load:[]};refreshStops();
+      if(!aiSimulating)log('↳ a '+SHIP_NAME[sn.ship]+' → '+DEST[sn.dest].name+' is commissioned, fee waived.');}
+    resume(rt);return true;}
   resume(rt);return true;}
 // the Guild's Seal — claim 1 open Contract outright (no delivery; hall mode pays its Invitation too)
 function enterSeal(rt){if(!(S.ladingRow||[]).length){log('↳ the Seal finds no open Contract.');resume(rt);return;}
@@ -3404,11 +3448,23 @@ function aiEnshrineBest(p){let best=null;
       if(opt==='fixed')v=sh.star+1.2-alt;
       else if(opt==='star')v=sh.star-alt;
       else if(opt==='age3')v=(maturingInVessels(p).length?2.4:-9)-alt*0.5;
+      else if(opt==='age2')v=(maturingInVessels(p).length?1.7:-9)-alt*0.5;
+      else if(opt==='ageall')v=(function(){let g=0;maturingInVessels(p).forEach(m=>g+=(m.c.q-m.c.die));return g?Math.min(4.5,g*0.9):-9;})()-alt*0.5;
       else if(opt==='goods2')v=1.4-alt*0.5;
       else if(opt==='goods3')v=2.0-alt*0.5;
+      else if(opt==='goods4')v=2.5-alt*0.5;
       else if(opt==='brew')v=((openVessel(p)>=0||true)&&p.recipes.some(r=>canBrew(p,r))?2.4:-9)-alt*0.5;   // the vessel this cask leaves opens
+      else if(opt==='brewfree')v=(p.recipes.length?3.2:-9)-alt*0.5;
       else if(opt==='loadmore')v=(readyInVessels(p).length>1?2.2:-9)-alt*0.5;
+      else if(opt==='load2')v=(readyInVessels(p).length>2?2.7:(readyInVessels(p).length>1?2.2:-9))-alt*0.5;
       else if(opt==='seal')v=((S.ladingRow||[]).length?2.0+Math.max.apply(null,(S.ladingRow||[{pts:0}]).map(l=>l.pts||0)):-9)-alt*0.5;
+      else if(opt==='presence')v=((S.presEnd&&trayDice(p)<1)||!reachBenKontore(p).length?-9:1.7)-alt*0.5;
+      else if(opt==='lift1')v=(vesselCasks(p).some(vc=>vc.i!==o.vi&&vc.c.die<6)?1.3:-9)-alt*0.5;
+      else if(opt==='lift2')v=(vesselCasks(p).some(vc=>vc.i!==o.vi&&vc.c.die<6)?2.1:-9)-alt*0.5;
+      else if(opt==='invite')v=1.6-alt*0.5;
+      else if(opt==='recipe')v=(recipeGainable(p).length?2.3:-9)-alt*0.5;
+      else if(opt==='spec')v=(hireable(p).length?2.5:-9)-alt*0.5;
+      else if(opt==='commission')v=((S.shipDisplay||[]).length&&shipFreeSlots().length?2.0:-9)-alt*0.5;
       if(!hallHasDie(p,i))v+=1.6;   // the first-appearance Invitation
       if(v>((best&&best.v)||0.8))best={vi:o.vi,shelf:i,opt,v};
     });});});
