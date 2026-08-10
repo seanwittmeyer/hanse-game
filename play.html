@@ -612,7 +612,9 @@
   <div class="mcard">
     <button class="modal-x" onclick="closeSetup()" aria-label="Close" title="Close">×</button>
     <h2>New Game</h2>
-    <p class="note" style="margin:0 0 6px">Hot-seat · choose the number of brewing houses.</p>
+    <button class="primary" style="width:100%;margin:2px 0 4px" onclick="window.location.href='https://play.pdx.waterworks.studio/hanse?create=1'">⚓ New Online Table — play.pdx</button>
+    <p class="note" style="margin:0 0 10px">Multiplayer with friends and AI seats — opens the online lobby's table setup.</p>
+    <p class="note" style="margin:0 0 6px;border-top:1px solid rgba(0,0,0,.15);padding-top:10px">Or hot-seat on this device · choose the number of brewing houses.</p>
     <div id="pcount" style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0"></div>
     <div id="names"></div>
     <!-- v4.14 "Beer Atlas": the two beer expansions return as opt-in toggles (the Trade Roads stays tabled) -->
@@ -620,7 +622,7 @@
       <label class="ng-switch"><input type="checkbox" id="ngexp"><span class="ng-tk"></span></label></div>
     <div class="ng-row"><span class="ng-lbl"><b>Jopenbier</b><span class="ng-sub">the Q6 vintage capstone — always acquirable (fee 3 hops), four aging steps, 6★ anywhere · 8★ Novgorod</span></span>
       <label class="ng-switch"><input type="checkbox" id="ngjop"><span class="ng-tk"></span></label></div>
-    <button class="primary" style="margin-top:16px;width:100%" onclick="startGame()">Start Game</button>
+    <button style="margin-top:16px;width:100%" onclick="startGame()">Start Hot-seat Game</button>
   </div>
 </div>
 

@@ -234,6 +234,13 @@ toggle-off channel purity) · sim 3/count base + 3/count `EXPANSION=1 JOPEN=1` *
 *Watches ⚙ (RULES §Open #13):* the Assay’s 1H-to-Ready on the four-step climb · Gose+drips ·
 Duckstein+Cellarman · the thinned Contract deck (specialty-named orders are the dial).
 
+### New Game goes online-first (2026-08-09, closing the platform loop; presentation only — no rules change, no KEY bump)
+The app's New Game modal now leads with **“⚓ New Online Table — play.pdx”** — a hand-off to
+the platform lobby's table setup (`play.pdx.waterworks.studio/hanse?create=1`, which opens
+its create view directly). The hot-seat form stays below as the local path (the lobby's
+Solo/Hotseat footer link points back here, so neither entry is a dead end). The trigger
+itself (menu · game-over screen · end action bar) is unchanged — one entry, online-first.
+
 ### v4.13 “Plain Sight” (2026-08-09 — designer-ruled: a PRESENTATION release)
 **No rule changes.** A whole version spent on how the game READS, because a table-first game
 that a player cannot parse is not finished. Five moves, detailed in the entries below:
