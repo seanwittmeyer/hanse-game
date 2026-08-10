@@ -133,6 +133,22 @@ const LADINGS=[
   {dest:'Novgorod',min:5, pts:3},{dest:'Novgorod',beer:'Bock',  pts:4},{dest:'Novgorod',min:6, pts:4},
   {dest:null,      min:6, pts:3},
 ];
+// v4.15 "Guildhall" ⚙ — the EASED 20-tile Contract schedule (hall mode REPLACES the base 15):
+// rewards 1–3★ and routine conditions, because in hall mode every claim also pays an INVITATION
+// (the Guildhall lane's gate must fire repeatedly). Mirrors play.html LADINGS_HALL.
+const LADINGS_HALL=[
+  {dest:'Bruges',min:2,pts:1},{dest:'Bruges',min:3,pts:2},{dest:'Bruges',beer:'Keut',pts:2},{dest:'Bruges',min:4,pts:2},{dest:'Bruges',min:5,pts:3},
+  {dest:'London',min:2,pts:1},{dest:'London',min:3,pts:2},{dest:'London',beer:'Broyhan',pts:2},{dest:'London',min:5,pts:3},
+  {dest:'Bergen',min:2,pts:1},{dest:'Bergen',min:3,pts:2},{dest:'Bergen',beer:'Mumme',pts:3},{dest:'Bergen',min:4,pts:2},
+  {dest:'Novgorod',min:4,pts:2},{dest:'Novgorod',min:5,pts:3},{dest:'Novgorod',beer:'Bock',pts:3},{dest:'Novgorod',min:6,pts:3},
+  {dest:null,min:2,pts:1},{dest:null,min:4,pts:2},{dest:null,min:6,pts:3},
+];
+// the INVITATION tile (v4.15) — a 2×0.9in gold strip: spend it with a Ready cask to enshrine.
+function invitationTile(){return '<div class="ldtile" style="--c:#8a6408">'
+  +'<div class="ld-hd">⚜<span class="ld-k">Invitation</span></div>'
+  +'<div class="ld-bd"><span class="ld-beer">'+LU(QI)+' Ready</span><span class="ld-arr">+</span><span class="ld-die">'+LU('dices')+' ≥ shelf</span><span class="ld-arr">→</span><span class="ld-pts">the Hall</span></div>'
+  +'<div class="ld-sub">spend to enshrine · earned per Contract claim &amp; first showing per shelf</div>'
+  +'</div>';}
 
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
 // CELLAR (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
@@ -735,5 +751,5 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.pbrd-lad img.ai,.pbrd-lad .ic,.pbrd-lad svg{width:.13in;height:.13in;flex:0 0 auto}';   // a claimed Contract wears its Kontor's crest
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
+window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,LADINGS_HALL,invitationTile,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
 })();

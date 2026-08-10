@@ -1,5 +1,16 @@
 # Automa / AI Opponent — Plan & Status
 
+> **v4.15 "Guildhall" (2026-08-10): the enshrine teaches.** The greedy tiers gain ONE
+> compact policy — `aiEnshrineBest` scores every (cask · shelf · menu-option) triple against
+> the port alternative (~pips + 1.6 slack) with a +1.6 first-appearance kicker, and the
+> `stops` case fires it when it beats the line's best stop; the ★-pick nets shelf★ − alt,
+> the action picks net a flat engine value (age 2.4 · brew 2.4 · seal 2.0+best-row-★ …).
+> Safety-net greedy cases for the 'enshrine'/'seal'/'parti' prompts. **The MC pair samples
+> every enshrine triple** as first-class options in the 'stops' branch — playouts price the
+> lane through `scorePlayer` (the crown rides the module's ext seam). The greedy tiers are
+> the robustness read as ever; the menu-value question is the SWEEP's job (sim `HALL=1` +
+> `HALL_STARS`/`HALL_MENU` + the pick histogram), not the greedy prior's.
+
 > **v4.14 "Beer Atlas" (2026-08-09): the expansion-beer teaches (light).** The greedy tiers
 > inherit the four new STYLES for free (brew keys, load values, dest picks all read the die);
 > the specific teaches are three small guards — **Jopenbier demotion when hops-poor** (the

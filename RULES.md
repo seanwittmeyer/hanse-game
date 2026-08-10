@@ -1,4 +1,27 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.14 “Beer Atlas”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.15 “Guildhall”)
+
+> **v4.15 “Guildhall” (designer-ruled 2026-08-10 — the Hall returns through Contracts).**
+> A third opt-in setup toggle: **the Hall comes back as a Contract-fed shelf board.** In hall
+> mode the Contract deck **swaps to an eased 20-tile schedule** ⚙ (rewards 1–3★, routine
+> conditions) and **every claimed Contract also pays an ⚜ INVITATION**. **Enshrine:** spend an
+> Invitation + one **Ready** vessel cask whose **die meets a shelf’s minimum** — the die
+> **stands on any open space** of that shelf (spaces are IDENTICAL: nothing is printed on
+> them — the anti-jackpot ruling: the old Hall’s one-best-honor handed the fixed first player
+> a guaranteed early lead) and the owner picks **ONE option from the shelf’s printed menu**.
+> **The ★ option is ONCE per player per shelf** (order-independent — last pays the same as
+> first; the ★ die stands on the shelf’s left edge as the record); repeat visits pay in
+> **free actions**. The shelves ⚙: **Taproom** die 2+ — fixed 2★ + 2 goods · **Guild Table**
+> die 3+ — 4★ / Age 3 / Gain 3 goods · **Masters’ Shelf** die 4+ — 6★ / Brew 1 / Load 1
+> more · **Reliquary** die 5+ — 9★ / Brew 1 / **the Guild’s Seal** (claim 1 open Contract
+> outright — its ★ AND its Invitation). **The engine:** your **first die on each shelf earns
+> a new Invitation** (one claim can seed the whole climb; four freebies, then 1 claim per
+> visit). A die on **all four shelves** at game end: **+6★** ⚙ (the crown). The enshrined die
+> is committed and parked (a clock beat; no majority weight — the Hall pays no majority).
+> **Simulation-tunable:** the shelf table is data — the sim sweeps ★ values and menus
+> (`HALL=1 · HALL_STARS · HALL_MENU`) to measure which benefits belong. Watches ⚙: the
+> Chronicler (+3★/claim, uncapped) under the eased deck · the Seal loop’s claim rate · Age 3
+> vs the Cellar’s identity · P1 tempo (the anti-jackpot claim is exactly the thing to
+> falsify at the table).
 
 > **v4.14 “Beer Atlas” (designer-ruled 2026-08-09 — the expansion beers return).**
 > The two beer expansions come off the v4.0 shelf, **re-derived on the v4 spine** (the die is
@@ -602,6 +625,9 @@ beer (*Mumme*) — and a printed reward (**2–5★** ⚙).
 die 4+→3★ · die 5+→4★ · Broyhan→3★ · die 6→5★ · Bergen — die 4+→3★ · die 5+→4★ · Mumme→4★ ·
 Novgorod — die 5+→3★ · Bock→4★ · die 6→4★ · any Kontor — die 6→3★.
 
+*(**Hall mode — v4.15:** the Guildhall toggle REPLACES this deck with its eased 20-tile
+schedule (1–3★), and every claim also pays an ⚜ Invitation — §12.)*
+
 ---
 
 ## 8. The player board (private) — 3 vessels · 2 seats
@@ -747,6 +773,36 @@ deployed) rode the deploy state and is **cut** — its jobs re-home on the spine
 = the four priced steps · the race-to-end = the empty-tray clock (four steps of runway on one
 die, in every rival’s view) · contestability = the berth race.*
 
+### The Guildhall — Invitations (a third toggle, v4.15)
+
+**The Hall as a Contract-fed shelf board.** With the toggle on:
+
+- **The Contract deck swaps** to the eased 20-tile schedule ⚙ (rewards 1–3★; conditions
+  routine — die 2+/3+ across all four Kontore, four named staples, three *any-Kontor* tiles).
+  Every **claimed Contract also pays an ⚜ Invitation** (a small tile at your seat).
+- **Enshrine (during your turn):** spend 1 Invitation + one **Ready** cask from your vessels
+  whose **die ≥ a shelf’s minimum** (read off the vessel — no load-lifts; vessel-side lifts
+  such as the Hop Exchange’s past-quality pump count). The die **parks on any open space** of
+  that shelf — spaces are identical — and you pick **one menu option**. The die is committed:
+  a clock beat, no majority weight, never returns. The cask’s load bonus does **not** fire
+  (the Hall takes the cask whole).
+
+| Shelf | Min | The menu — choose one ⚙ | Spaces (2/3/4p) ⚙ |
+|---|---|---|---|
+| **The Reliquary** | die 5+ | **9★** *(once per player)* · **Brew 1** (pay its cost) · **the Guild’s Seal** — claim 1 open Contract outright (its ★ and its Invitation pay as any claim) | 2 / 3 / 4 |
+| **The Masters’ Shelf** | die 4+ | **6★** *(once per player)* · **Brew 1** (pay its cost) · **Load 1 more cask** (any eligible Ship; its bonus fires) | 3 / 4 / 5 |
+| **The Guild Table** | die 3+ | **4★** *(once per player)* · **Age 3** (a free Cellar pour) · **Gain 3 goods** | 3 / 4 / 5 |
+| **The Taproom** | die 2+ | fixed: **2★ + Gain 2 goods** (every visit) | 3 / 4 / 5 |
+
+- **The ★ option is once per player per shelf** — the ★ die stands on the shelf’s **left
+  edge** (the record); action dice stand right. Arriving last pays the same as arriving
+  first: first-come races **capacity only**, never a printed jackpot.
+- **The engine:** your **first die on each shelf earns a new Invitation** — one claim can
+  fund the whole climb; every repeat visit costs a fresh claim. Game end: a die on **all
+  four shelves → +6★** ⚙ (the crown).
+- The Hall pays **no majority** — its lane competes with the majority race for the same
+  ripe dice; the fork is the point.
+
 ### The Trade Roads — TABLED
 
 The Overland module (an inland map of claimable Staple-Right slots replacing the majorities)
@@ -878,7 +934,15 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
 12. **The dice pass** ⚙ — 9 die-touching designs in the printed 20. Watch: does the Tollhouse’s
    stamp (−1 die for +3★) stay a real choice; does the Bonded Store’s send-off read at the
    table (the ephemeral family is now TWO — the Victualling Yard joined it, v4.6); Assay/Racking usage rates.
-13. **The expansion beers (v4.14)** ⚙ — the re-derivation watches: the **Assay House** at
+13. **The Guildhall (v4.15)** ⚙ — the lane's first battery is owed: sim `HALL=1` +
+   `HALL_STARS`/`HALL_MENU` sweeps (which menu options get PICKED is the printed-benefit
+   read), a PATHWAYS-style hall-lane arm vs the majority lane, and the P1-tempo read (the
+   anti-jackpot design must show a flat seat spread). Standing watches: the **Chronicler**
+   (+3★/claim, uncapped) runs hot under the eased 20-deck — reprice or cap before a human
+   table; the **Seal loop** (a Reliquary regular out-claiming the row — dial: Seal
+   once-per-game); **Age 3 vs the Cellar** (the Hall must not out-cellar the station — dial
+   to Age 2); 2p majority starvation (shelves narrow at two, but the dice leave the mats).
+14. **The expansion beers (v4.14)** ⚙ — the re-derivation watches: the **Assay House** at
    1 `H`-to-Ready buys Jopenbier’s whole four-step climb (the sharpened Bock-Assay watch —
    dials: the Assay’s reach, or accept the single tile in a 17-of-20 deal) · **Gose** under
    Grain Factor/Hop Gardener (the drips ride its Salt Trade — +2/+2 per delivery with both
@@ -886,7 +950,7 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
    **Contract deck thins** when a specialty deal strips base-named orders (as low as ~12 in
    play — the dial is specialty-named Contract tiles, not yet printed) · the greedy tiers
    under-pilot the signatures (the persona/MC reads govern, as ever).
-14. **The v4.6 roster** ⚙ — the watches from the study: the **Chronicler vs the ladPts≥6 win
+15. **The v4.6 roster** ⚙ — the watches from the study: the **Chronicler vs the ladPts≥6 win
    signal** (the cap +5 is the leash); the **Shipwright vs the commission-trap read**
    (gatekeeper #5 — a free commission must not paper over a structural trap); **hops relief**
    (Chandler + Scholar land before the flow-probe re-read — re-baseline it); the greedy AI

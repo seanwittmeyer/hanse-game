@@ -127,6 +127,18 @@ Dev shorthand (bank, gate, bump, pool, lading, tally, GM/CM…) stays legal in `
 `DESIGN.md` history, `AUTOMA.md`, `archive/`, code identifiers, and playtest harnesses —
 the registry governs what a PLAYER reads.
 
+## §4b. Provisional entries (v4.15 — in play, NOT yet designer-locked)
+
+| Term | POS | Definition | Locked |
+|---|---|---|---|
+| Invitation | n | The ⚜ tile that admits a cask to the Guildhall: earned per Contract claim and per first showing on each shelf; spent to enshrine | ○ provisional |
+| the Guildhall / the Hall | n | The shelf board (Taproom · Guild Table · Masters’ Shelf · Reliquary) — the fifth place a cask can go | ○ provisional |
+| enshrine | v | Spend an Invitation + a Ready cask (die ≥ the shelf’s minimum): the die stands on a shelf space; pick one menu option | ○ provisional (revived from the v3 lexicon) |
+| shelf | n | One of the Hall’s four tiers: a minimum · a menu · identical die spaces | ○ provisional |
+| the crown | n | The end-game +6★ ⚙ for a die on all four shelves | ○ provisional |
+
+*(Designer to lock or rename on the next registry pass; printed copy uses these until then.)*
+
 ## §5. Deferred to the next copy pass (logged, not yet applied)
 
 - Em-dash purge + passive-voice pass over `RULES.md` prose (guide §7/§9) — the rulebook

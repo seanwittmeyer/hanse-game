@@ -17,8 +17,9 @@ GUILD_MS=60;CELLAR_MS=150;   // tiny MC budgets — this test is about the RENDE
 var __renders=0;
 var __origRender=render;
 render=function(){__renders++;return __origRender();};
-function __game(n,tiers){
-  EXPANSION=false;JOPEN=false;OVERLAND=false;
+function __game(n,tiers,flags){
+  flags=flags||{};
+  EXPANSION=!!flags.exp;JOPEN=!!flags.jop;HALLEXP=!!flags.hall;OVERLAND=false;   // v4.14/v4.15: the toggle scenarios
   S=freshState(n,['P1','P2','P3','P4'].slice(0,n));UI={sub:'move'};undoStack=[];
   S.players.forEach(function(p,i){p.ai={tier:tiers[i%tiers.length]};});
   render();
@@ -32,6 +33,9 @@ __RES.push(['2p jour+trader',__game(2,['journeyman','trader'])]);
 __RES.push(['3p app/jour/trader',__game(3,['apprentice','journeyman','trader'])]);
 __RES.push(['2p GM vs trader',__game(2,['guildmaster','trader'])]);
 __RES.push(['2p CM vs GM',__game(2,['cellarmaster','guildmaster'])]);
+__RES.push(['3p trader — beers+capstone ON',__game(3,['trader'],{exp:1,jop:1})]);   // v4.14
+__RES.push(['3p trader — GUILDHALL ON',__game(3,['trader'],{hall:1})]);            // v4.15
+__RES.push(['2p GM — all three toggles ON',__game(2,['guildmaster','trader'],{exp:1,jop:1,hall:1})]);
 this.__RES=__RES;
 `;
 

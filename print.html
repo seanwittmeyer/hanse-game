@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v4.14 “Beer Atlas”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v4.15 “Guildhall”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -708,7 +708,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.14 “Beer Atlas”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.15 “Guildhall”</span></h1>
   <span id="hnav"><!-- the shared site nav (nav.js) — one roster for all four pages --></span>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
@@ -736,7 +736,7 @@
 //==================================================================
 // The CARD COMPONENT LIBRARY (components.js) is the single source of the printed card faces —
 // data + generators + card CSS, shared with play.html (the app mirrors the kit, v3.3).
-const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard}=window.HC;
+const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,LADINGS_HALL,invitationTile,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard}=window.HC;
 
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 // (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
@@ -1161,6 +1161,39 @@ function destBoard(){   // ONE board (designer, 2026-08-03): the Kontore 2×2 ov
   +'<div class="disp-h k">'+LU('contract')+'Contracts</div>'
   +'<div class="crow">'+LADINGS.slice(0,3).map(cslot).join('')+'</div></div>';}
 
+// ---- THE GUILDHALL BOARD (v4.15, expansion) — mirrors play.html HALL_SHELVES ⚙.
+// Four shelf rows, top-down (climb upward): name + die minimum · the printed MENU (★ once
+// per player · free actions) · IDENTICAL die spaces (no per-space prize — the anti-jackpot
+// ruling; spaces 4/5 badge their player-count gates, the Overland olsq grammar). 9.8×7 native.
+const HALL_SHELVES_P=[   // top-down print order
+  {nm:'The Reliquary',      min:5, star:9, opts:['Brew 1 (pay its cost)','The Guild’s Seal — claim 1 open Contract outright'], spaces:[2,3,4]},
+  {nm:'The Masters’ Shelf', min:4, star:6, opts:['Brew 1 (pay its cost)','Load 1 more cask — any eligible Ship'], spaces:[3,4,5]},
+  {nm:'The Guild Table',    min:3, star:4, opts:['Age 3 — a free Cellar pour','Gain 3 goods'], spaces:[3,4,5]},
+  {nm:'The Taproom',        min:2, star:2, fixed:'2★ + Gain 2 goods — every visit', spaces:[3,4,5]},
+];
+function hallBoardHtml(){
+  const sp=(shelf)=>{const mx=shelf.spaces[shelf.spaces.length-1];let h='';
+    for(let k=0;k<mx;k++){const gate=k>=shelf.spaces[1]?'4+':(k>=shelf.spaces[0]?'3+':null);
+      h+='<div style="position:relative;width:.62in;height:.62in;border:2px dashed rgba(91,58,142,.65);border-radius:.06in;background:rgba(255,255,255,.55);flex:0 0 auto">'
+        +(gate?'<span style="position:absolute;top:-.07in;right:-.05in;background:#7c2128;color:#fff;font-size:.07in;font-weight:900;border-radius:.03in;padding:.005in .03in">'+gate+'</span>':'')+'</div>';}
+    return h;};
+  const row=(s)=>'<div style="flex:1;display:flex;align-items:center;gap:.14in;border:2.5px solid #5b3a8e;border-radius:.09in;background:rgba(255,255,255,.5);padding:.07in .12in">'
+    +'<div style="flex:0 0 1.7in"><div style="font-variant:small-caps;font-weight:900;color:#5b3a8e;font-size:.17in;line-height:1.05">'+s.nm+'</div>'
+      +'<div style="font-weight:900;font-size:.15in;margin-top:.02in">'+LU('dices')+' '+s.min+'+</div></div>'
+    +'<div style="flex:1;font-size:.115in;line-height:1.3">'
+      +(s.fixed?('<b>'+s.fixed+'</b>')
+        :('<b>'+s.star+'★</b> <i style="font-size:.095in">(once per player — your ★ die stands on the LEFT edge)</i><br>or '+s.opts.map(o=>'<b>'+o+'</b>').join(' · or ')))+'</div>'
+    +'<div style="flex:0 0 auto;display:flex;gap:.07in">'+sp(s)+'</div></div>';
+  return '<div style="width:9.8in;height:7in;background:#f3ecdd;border:3px solid #5b3a8e;border-radius:.14in;padding:.14in .18in;display:flex;flex-direction:column;gap:.08in;color:#2b2018;box-sizing:border-box">'
+    +'<div style="display:flex;align-items:baseline;gap:.14in;border-bottom:2.5px solid #b8860b;padding-bottom:.05in">'
+      +'<h2 style="margin:0;font-variant:small-caps;color:#5b3a8e;font-size:.26in">⚜ The Guildhall — Invitations</h2>'
+      +'<span style="font-size:.1in;font-style:italic;color:#5b4a37">spend an ⚜ Invitation + one READY cask (die ≥ the shelf) — the die stands on any open space; pick ONE menu option</span></div>'
+    +HALL_SHELVES_P.map(row).join('')
+    +'<div style="font-size:.1in;color:#5b4a37;border-top:1px solid #c8b48a;padding-top:.04in;line-height:1.35">'
+    +'Every claimed <b>Contract</b> pays an ⚜ <b>Invitation</b> · your <b>first die on each shelf</b> earns a new one · a die on <b>all four shelves</b> at game end: <b>+6★</b> ⚙. '
+    +'Hall mode swaps the Contract deck for the eased 20-tile set. The enshrined die is committed — it counts toward your empty tray.</div>'
+  +'</div>';}
+
 //==================================================================
 // PAGINATION — deterministic sheets of absolutely positioned items
 //==================================================================
@@ -1364,6 +1397,12 @@ function buildPages(){
   CASKS.filter(d=>d.exp).forEach(d=>{for(let i=0;i<cnt(d.n);i++)
     expCaskItems.push({fam:'Expansion casks',html:caskCardBack(d,d.pin||poolFor(d.q)[0])});});
   packSpaced(pages,'tiles','EXPANSION cask tiles — Specialty Beers (Gose · Zerbster · Duckstein) + the Jopenbier capstone · pinned bonuses · 22″ plotter · 1.5mm bleed',[{kind:'caskc',items:expCaskItems}],famPages);
+  // --- v4.15 THE GUILDHALL (expansion): the board (letter) + Invitations + the eased Contract set (plotter) ---
+  letterBoard(pages,'boards','EXPANSION — The Guildhall board (shelves · menus · identical die spaces)',hallBoardHtml());
+  const hallTiles=[];
+  for(let i=0;i<cnt(18);i++)hallTiles.push({fam:'Invitations',html:invitationTile()});   // ⚙ 18 invitation tiles
+  (MODE==='proof'?LADINGS_HALL.slice(0,3):LADINGS_HALL).forEach(d=>hallTiles.push({fam:'Hall Contracts',html:ladingTile(d)}));
+  packSpaced(pages,'bits','EXPANSION — Guildhall tiles: 18 Invitations ⚙ + the eased 20-Contract set (hall mode REPLACES the base 15) · 22″ plotter · 1.5mm bleed',[{kind:'ld',items:hallTiles}],famPages);
   // --- SHIP TILES → their own sheet pair; the Cog and Hulk carriers pack as two runs (different heights) ---
   const skutes=[],cogs=[],hulks=[];
   (MODE==='proof'?[['skute','Bruges'],['cog','London'],['hulk','Novgorod']]:SHIP_DECK).forEach(([hull,dest])=>{
@@ -1436,7 +1475,7 @@ function checklist(pages,famPages){
   // 2026-08-09 [designer]: the manifest is a PACKING LIST, not a lesson — "just some basic
   // details of quantity, any important themes to share, and where they go." Every entry is one
   // short line: what it is · WHERE IT LIVES on the table. The rules live in the rulebook.
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.14 “Beer Atlas”)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.15 “Guildhall”)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">Counts are tuning placeholders ⚙. The rules live on the <b>player aid</b> and in the rulebook — this page only says what to make, how many, and where it sits on the table.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
@@ -1465,10 +1504,13 @@ function checklist(pages,famPages){
     +R('Draw bags','<b>One per hidden supply</b> — Ships · buildings · Specialists.','3')
     +R('First-player &amp; round markers','Turn order (fixed) and the 25-round backstop.','2')
     +'</table>';
-  h+=T('Expansions <span style="font-weight:normal;text-transform:none;opacity:.7">— opt-in New Game toggles (v4.14)</span>')
+  h+=T('Expansions <span style="font-weight:normal;text-transform:none;opacity:.7">— opt-in New Game toggles (v4.14–15)</span>')
     +R('Specialty Beer casks','Gose ×8 · Zerbster ×6 · Duckstein ×8 — pinned bonuses; they join the export draft (3 of 7). <b>Three more face-up piles beside the Wharf.</b>','22')
     +R('Jopenbier casks','The Q6 vintage capstone (its own toggle) — starts 2, ages to 6. <b>A seventh pile.</b>','6')
     +R('Expansion recipe cards','Gose · Zerbster · Duckstein · Jopenbier — double-sided, one set per player. <b>Beside each player’s board with the base set.</b>',4*PLAYERS.length)
+    +R('The Guildhall board','Four shelves — menus + identical die spaces. <b>Beside the Destinations board.</b>','1')
+    +R('Invitation tiles','⚜ Earned per Contract claim and per first showing on each shelf; spent to enshrine. <b>A face-up supply by the Hall.</b>','18')
+    +R('Guildhall Contract set','The eased 20-tile schedule (1–3★) — hall mode <b>replaces</b> the base 15 in the same row of 3.','20')
     +'</table>';
   h+=T('Tabled with v4.0 <span style="font-weight:normal;text-transform:none;opacity:.7">— not in this kit</span>')
     +R('The Hall (prestige lane)','Returns as a fifth destination later; the seam is kept in the rules and the engine.','—')

@@ -914,6 +914,78 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('toggle OFF: the channels never offer the capstone', !recipeGainable(p3).includes('jopenbier'));
 })();
 
+// ---- 30. v4.15 "GUILDHALL": invitations · the enshrine · menus · the anti-jackpot rules ----
+(function(){ // toggle OFF: base purity
+  var p=fresh();
+  ok('hall OFF: the Contract deck is the base 15 schedule', (S.ladingDeck.length+S.ladingRow.length)<=15&&!S.hallInv);
+  p.vessels[0]={style:'hopped',q:2,die:2,act:'age'};p.invites=5;
+  ok('hall OFF: no enshrine offered even with (stray) invites', hallEligible(p).length===0);
+  var inv0=p.invites;S.ladingRow=[{dest:'bruges',min:2,pts:2}];claimLading(p,0);
+  ok('hall OFF: a claim pays NO invitation', p.invites===inv0);
+})();
+(function(){ // toggle ON: the eased deck + the claim → invitation
+  HALLEXP=true;var p=fresh();HALLEXP=false;
+  ok('hall ON: the deck swaps to the eased 20-tile schedule', (S.ladingDeck.length+S.ladingRow.length)>15&&S.hallInv&&S.hallInv.on);
+  ok('hall ON: rewards run 1–3★', S.ladingDeck.concat(S.ladingRow).every(function(l){return l.pts>=1&&l.pts<=3;}));
+  var inv0=p.invites||0;S.ladingRow=[{dest:'bruges',min:2,pts:1}];claimLading(p,0);
+  ok('a claimed Contract pays +1 Invitation', p.invites===inv0+1);
+})();
+(function(){ // the enshrine: gates · the die commits · the first-appearance engine
+  HALLEXP=true;var p=fresh();HALLEXP=false;
+  p.invites=1;p.vessels[0]={style:'broyhan',q:3,die:3,act:'load'};
+  ok('eligibility: die 3 reaches Taproom (2+) and Guild Table (3+), not Masters (4+)',
+    JSON.stringify(hallEligible(p)[0].shelves)==='[0,1]');
+  var tray0=trayDice(p);
+  ok('enshrine (Guild Table · the ★ pick)', enshrineDo(0,1,'star')===true);
+  ok('the die stands on the shelf · the vessel opens · the Invitation is spent',
+    hallEntries(1).length===1&&hallEntries(1)[0].die===3&&p.vessels[0]===null);
+  ok('…but the FIRST showing earns a new Invitation (net 0 spent)', p.invites===1);
+  ok('the accounting holds — vessel→shelf keeps the tray flat (committed at brew, parked now)', trayDice(p)===tray0&&p.presPool===PRES_POOL-1);
+  ok('the ★ banks the shelf value (4★)', (p.bankH||0)===4&&p.bank>=4);
+  p.vessels[0]={style:'broyhan',q:3,die:3,act:'load'};
+  ok('the ★ option is ONCE per player per shelf — the menu drops it', hallMenuFor(p,1).indexOf('star')<0);
+  ok('a second visit still offers the actions', hallMenuFor(p,1).indexOf('age3')>=0);
+  ok('a repeat ★ pick is refused by the engine', enshrineDo(0,1,'star')===false&&p.vessels[0]!==null);
+})();
+(function(){ // menus fire real actions · the Seal claims outright (+ its Invitation)
+  HALLEXP=true;var p=fresh();HALLEXP=false;
+  p.invites=3;p.grain=2;p.hops=3;
+  p.vessels[0]={style:'mumme',q:4,die:4,act:'reach'};
+  UI={sub:'stops',stops:[],pendingBenefits:[]};
+  ok('Masters’ Shelf · Brew opens the brew picker', enshrineDo(0,2,'brew')===true&&UI.sub==='brew');
+  UI={sub:'stops',stops:[],pendingBenefits:[]};
+  p.vessels[1]={style:'bock',q:5,die:5,act:'brew'};
+  S.ladingRow=[{dest:'novgorod',min:5,pts:3},{dest:'bruges',min:2,pts:1}];
+  var inv0=p.invites,b0=p.bank;
+  ok('Reliquary · the Guild’s Seal opens the claim picker', enshrineDo(1,3,'seal')===true&&UI.sub==='seal');
+  sealPick(0);
+  ok('the Seal claims outright — its ★ and its Invitation pay as any claim',
+    p.bank===b0+3&&p.invites===inv0-1+1+1);   // spend 1 · first-on-Reliquary +1 · the claim +1
+  ok('the row lost the sealed Contract', S.ladingRow.length===1);
+})();
+(function(){ // spaces cap (first-come capacity) + the crown + the clock trigger
+  HALLEXP=true;var p=fresh(2);HALLEXP=false;var q=S.players[1];
+  ok('Reliquary capacity at 2p is 2', hallSpacesFor(3)===2);
+  S.hallInv.shelves[3]=[{pid:1,die:5,star:true},{pid:1,die:6,star:false}];
+  p.invites=1;p.vessels[0]={style:'bock',q:5,die:5,act:'brew'};
+  ok('a FULL shelf refuses the enshrine (the lower shelves stay open)',
+    enshrineDo(0,3,'star')===false&&hallEligible(p)[0].shelves.indexOf(3)<0&&hallEligible(p)[0].shelves.indexOf(2)>=0);
+  S.hallInv.shelves={0:[{pid:0,die:2}],1:[{pid:0,die:3}],2:[{pid:0,die:4}],3:[{pid:0,die:5}]};
+  ok('the CROWN: a die on all four shelves scores +6 (ext)', scorePlayer(p).ext===6&&scorePlayer(q).ext===0);
+  var p2;HALLEXP=true;p2=fresh();HALLEXP=false;
+  p2.invites=1;p2.presPool=1;p2.vessels=[{style:'hopped',q:2,die:2,act:'age'},null,null];
+  enshrineDo(0,0,'fixed');
+  ok('an enshrined last die EMPTIES the tray — the final round fires', S.ending===true&&S.endReason==='dice');
+})();
+(function(){ // the simulation sweep surface: HALL_SHELVES is mutable data
+  var st0=HALL_SHELVES[1].star,op0=HALL_SHELVES[1].opts.slice();
+  HALL_SHELVES[1].star=5;HALL_SHELVES[1].opts=['brew'];
+  HALLEXP=true;var p=fresh();HALLEXP=false;
+  p.invites=1;p.vessels[0]={style:'broyhan',q:3,die:3,act:'load'};
+  ok('a swept menu governs play (star 5 · brew-only)', hallMenuFor(p,1).join(',')==='star,brew'&&(enshrineDo(0,1,'star'),p.bankH===5));
+  HALL_SHELVES[1].star=st0;HALL_SHELVES[1].opts=op0;
+})();
+
 OUT.forEach(function(l){console.log(l);});
 console.log('');
 console.log(FAIL===0?('ALL PASS — '+PASS+' checks'):('*** '+FAIL+' FAILED / '+PASS+' passed ***'));

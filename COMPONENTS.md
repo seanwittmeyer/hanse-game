@@ -1,4 +1,16 @@
-# Brewhouses of the Hanse — Components (v4.14 “Beer Atlas”)
+# Brewhouses of the Hanse — Components (v4.15 “Guildhall”)
+
+> **v4.15 (designer-ruled 2026-08-10 — the Hall returns through Contracts):** **into the box,
+> behind a third opt-in toggle** — the **Guildhall board** (1: four shelves top-down —
+> Reliquary die 5+ · Masters’ Shelf 4+ · Guild Table 3+ · Taproom 2+ — each printing its
+> **menu** (★ *once per player* / free actions ⚙) and **identical die spaces** (2–5 by shelf
+> and player count; spaces 4–5 badge their 3+/4+ count gates; NO per-space prize — the
+> anti-jackpot ruling) · **18 ⚜ Invitation tiles** ⚙ (2×0.9″ — earned per Contract claim and
+> per first showing on each shelf; spent to enshrine; returned to the supply) · the
+> **Guildhall Contract set: 20 tiles** ⚙ (the eased 1–3★ schedule — in hall mode it
+> **replaces** the base 15 in the same row of 3). **Reprint note:** the base Contract set is
+> unchanged; the player aid gains the enshrine line when the toggle is on. The enshrined
+> quality die gains a fourth duty — cask · presence · mark · **shelf**.
 
 > **v4.14 (designer-ruled 2026-08-09 — the expansion beers return):** **into the box, behind
 > two opt-in toggles** — **+28 expansion cask tiles** (Gose ×8 ⚙ · Zerbster ×6 · Duckstein ×8 ·
@@ -300,6 +312,19 @@ The row refills from the deck at the **end of the turn**; claimed tiles never re
 Schedule ⚙: Bruges — die 3+→2★ · die 4+→3★ · Keut→3★ · die 5+→4★ · London — die 4+→3★ ·
 die 5+→4★ · Broyhan→3★ · die 6→5★ · Bergen — die 4+→3★ · die 5+→4★ · Mumme→4★ · Novgorod —
 die 5+→3★ · Bock→4★ · die 6→4★ · any Kontor — die 6→3★.
+
+**Hall mode (v4.15)** replaces this set with the **Guildhall Contract set (20 ⚙, 1–3★)**:
+Bruges — 2+→1 · 3+→2 · Keut→2 · 4+→2 · 5+→3 · London — 2+→1 · 3+→2 · Broyhan→2 · 5+→3 ·
+Bergen — 2+→1 · 3+→2 · Mumme→3 · 4+→2 · Novgorod — 4+→2 · 5+→3 · Bock→3 · 6→3 · any —
+2+→1 · 4+→2 · 6→3. Every claim also pays an **⚜ Invitation** (§7c).
+
+## 7c. The Guildhall (expansion, v4.15 ⚙)
+
+**1 board** (four shelves — menus + identical die spaces; the ★ column is *once per player
+per shelf*, audited by the ★ die standing on the shelf's LEFT edge) · **18 ⚜ Invitation
+tiles** (2×0.9″; a face-up supply — spent tiles return) · the 20-tile Contract set above.
+The enshrined die parks on the shelf: committed (the clock), no majority weight; a die on
+all four shelves at game end pays the **+6★ crown** ⚙.
 
 ## 8. Recipe cards (double-sided — the Flight record)
 
