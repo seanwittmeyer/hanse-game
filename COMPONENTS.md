@@ -1,4 +1,14 @@
-# Brewhouses of the Hanse — Components (v4.15 “Guildhall”)
+# Brewhouses of the Hanse — Components (v4.15b “Second Runnings”)
+
+> **v4.15b (designer-ruled 2026-08-10, same day — the expansion pins simplified):** two
+> expansion cask piles REPRINT their pinned load bonus (the v4.13 lesson — every ruling that
+> touches a printed face gets its COMPONENTS note): the **Gose** tile prints **“Gain 3 goods
+> (any mix)”** and DROPS the Salt-Trade delivery line (the per-Kontor perk is cut — the pinned
+> bonus IS the signature; 2 `G` in → 3 goods out justifies the grain); the **Zerbster** tile
+> prints **“Parti-gyle: a free Gruit (a tray die) · Load 1 more”** as ONE compound load bonus
+> and DROPS the brew-time prompt line (the bonus fires when the cask boards, not when it
+> brews). Duckstein and Jopenbier are unchanged. The two recipe cards reprint the matching
+> bonus text; counts, costs and the draft are untouched.
 
 > **v4.15 (designer-ruled 2026-08-10 — the Hall returns through Contracts):** **into the box,
 > behind a third opt-in toggle** — the **Guildhall board** (1: four shelves top-down —
@@ -216,14 +226,15 @@ bought; **min 6 tiles/type** (staples deeper: Gruit 16 · Hopped 12 ⚙).
 | Keut *(+1 presence on delivery)* | 3 | 2 | 1 | `G G H` | 6 |
 | Mumme | 4 | 3 | 1 | `G H H H` | 6 |
 | Bock | 5 | 3 | 2 | `G G H H H` | 6 |
-| *Gose (exp.)* *(salt trade: deliver → +1 `G` +1 `H`)* | 2 | 1 | 1 | `G G` | 8 |
-| *Zerbster (exp.)* *(parti-gyle: brew → a free Gruit, a tray die)* | 3 | 1 | 2 | `H H H` | 6 |
+| *Gose (exp.)* *(gain 3 goods, any mix — v4.15b)* | 2 | 1 | 1 | `G G` | 8 |
+| *Zerbster (exp.)* *(parti-gyle: a free Gruit + Load 1 more — v4.15b)* | 3 | 1 | 2 | `H H H` | 6 |
 | *Duckstein (exp.)* *(smoke-hardy: its die +1 as it boards)* | 2 | 1 | 1 | `G H` | 8 |
 | *Jopenbier (capstone)* *(the vintage: ages to 6)* | 6 | 4 | 2 | `G G H H H H` | 6 |
 
 *(The four expansion beers ride two opt-in toggles — v4.14; each is PINNED to one printed
-load bonus: Gose/Jopenbier → Gain 2 goods · Zerbster → Load 1 more · Duckstein → Place 1
-presence.)*
+load bonus, and the pin IS the signature — v4.15b: Gose → **Gain 3 goods (any mix)** ·
+Zerbster → **Parti-gyle: a free Gruit + Load 1 more** · Duckstein → Place 1 presence (free) ·
+Jopenbier → Gain 2 goods.)*
 
 ## 5. Ship tiles (24 ⚙ — the Ship is all berths)
 

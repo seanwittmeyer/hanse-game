@@ -1,4 +1,14 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.15 “Guildhall”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.15b “Second Runnings”)
+
+> **v4.15b “Second Runnings” (designer-ruled 2026-08-10 — the specialty signatures
+> simplify).** *“Keep it simple”* — each specialty beer’s identity IS its pinned load bonus.
+> **Gose = GAIN ANY 3 GOODS** (a new pinned bonus; the Salt Trade delivery perk is **cut** —
+> *“a better gruit when you have the grain”*, the 2 `G` brew justified). **Zerbster = ONE
+> compound bonus:** as its cask boards — **a FREE Gruit into an open vessel** (optional; a
+> tray die, Ready at 1) **then Load 1 more cask** (the confusing brew-time parti-gyle prompt
+> is cut; the second runnings ride the load). **Duckstein unchanged** (*“the race cask”* —
+> free presence + smoke-hardy). **Jopenbier unchanged** — the designer’s Bock-parity worry
+> is recorded with its analysis and dial options in §Open #14; nothing ruled.
 
 > **v4.15 “Guildhall” (designer-ruled 2026-08-10 — the Hall returns through Contracts).**
 > A third opt-in setup toggle: **the Hall comes back as a Contract-fed shelf board.** In hall
@@ -439,7 +449,7 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 | Keut | Q3 | 2 | 1 | `G G H` | dealt export · **free** (v4.9c) |
 | Mumme | Q4 | 3 | 1 | `G H H H` | dealt export · fee `H` |
 | Bock | Q5 | 3 | 2 | `G G H H H` | dealt export · fee `H H` (the taxed climb — v4.9c) |
-| *Gose* ⚙ | Q2 | 1 | 1 | `G G` | *expansion* export · **free** · Salt Trade (§12) |
+| *Gose* ⚙ | Q2 | 1 | 1 | `G G` | *expansion* export · **free** · Gain 3 goods (§12 · v4.15b) |
 | *Zerbster* ⚙ | Q3 | 1 | 2 | `H H H` | *expansion* export · **free** · Parti-Gyle (§12) |
 | *Duckstein* ⚙ | Q2 | 1 | 1 | `G H` | *expansion* export · **free** · Smoke-Hardy (§12) |
 | *Jopenbier* ⚙ | Q6 | 4 | 2 | `G G H H H H` | *capstone* (own toggle) · always acquirable · fee `H H H` (§12) |
@@ -753,11 +763,11 @@ Setup deals **3 of 7** exports (the base four + these three), guaranteeing **at 
 Mumme/Bock** ⚙ so the quality climb, Novgorod’s traffic and the pinnacle stay meaningful.
 Recipe fees ride the standard formula (`H` = Q−3 — all three **free**), paid at every channel.
 
-| Beer (town) | Q · steps · brew ⚙ | Pinned bonus | Signature ⚙ |
-|---|---|---|---|
-| **Gose** (Goslar) | Q2 · 1 · `G G` (no hops) | *Gain 2 goods* | **Salt Trade** — every Kontor delivery pays its owner **+1 `G` +1 `H`** (the Keut-perk grammar; the drips apply) |
-| **Zerbster** (Zerbst) | Q3 · 1 · `H H H` (no grain) | *Load 1 more* | **Parti-Gyle** — brewing it **may** also fill an open vessel with a free **Gruit**: no goods, but a **tray die** (Ready at 1, its bonus *Gain 2 goods*; skip it freely — the clock is the price) |
-| **Duckstein** (Königslutter) | Q2 · 1 · `G H` | *Place 1 presence* | **Smoke-Hardy** — its die turns **+1 as it boards** (cap 6): read for the minimum AND parked as the value. A Q2 that makes Novgorod’s 3+ band; a Malt Kiln under the Ship stacks (boards at 4) |
+| Beer (town) | Q · steps · brew ⚙ | The pinned bonus IS the signature (v4.15b) |
+|---|---|---|
+| **Gose** (Goslar) | Q2 · 1 · `G G` (no hops) | ***Gain any 3 goods*** — the better Gruit when you have the grain (the goods drips apply) |
+| **Zerbster** (Zerbst) | Q3 · 1 · `H H H` (no grain) | ***Parti-gyle:* a free Gruit + Load 1 more** — as its cask boards, you **may** fill an open vessel with a free **Gruit** (no goods, but a **tray die**; Ready at 1), then load 1 more cask onto any eligible Ship (the fresh Gruit itself qualifies at a die-1 port) |
+| **Duckstein** (Königslutter) | Q2 · 1 · `G H` | ***Place 1 presence*** *(free)* + **Smoke-Hardy** — its die turns **+1 as it boards** (cap 6): read for the minimum AND parked as the value. The race cask — a Q2 that makes Novgorod’s 3+ band; a Malt Kiln under the Ship stacks (boards at 4) |
 
 ### Jopenbier — the capstone (a second, independent toggle)
 
@@ -942,14 +952,26 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
    table; the **Seal loop** (a Reliquary regular out-claiming the row — dial: Seal
    once-per-game); **Age 3 vs the Cellar** (the Hall must not out-cellar the station — dial
    to Age 2); 2p majority starvation (shelves narrow at two, but the dice leave the mats).
-14. **The expansion beers (v4.14)** ⚙ — the re-derivation watches: the **Assay House** at
-   1 `H`-to-Ready buys Jopenbier’s whole four-step climb (the sharpened Bock-Assay watch —
-   dials: the Assay’s reach, or accept the single tile in a 17-of-20 deal) · **Gose** under
-   Grain Factor/Hop Gardener (the drips ride its Salt Trade — +2/+2 per delivery with both
-   seats) · **Duckstein + Cellarman** (Ready at brew, boards at 3 for 1 `G` 1 `H`) · the
+14. **The expansion beers (v4.14 · pins v4.15b)** ⚙ — the re-derivation watches: the
+   **Assay House** at 1 `H`-to-Ready buys Jopenbier’s whole four-step climb (the sharpened
+   Bock-Assay watch — dials: the Assay’s reach, or accept the single tile in a 17-of-20
+   deal) · **Gose as the goods pump** (the pin is now *Gain 3 goods* per load — 2 `G` in,
+   3 out, plus the Grain Factor/Hop Gardener drips on the gains; watch the Gose-cycling
+   engine at a human table) · **Duckstein + Cellarman** (Ready at brew, boards at 3 for
+   1 `G` 1 `H`) · **Zerbster’s zgyle chain** (a free Gruit + Load 1 more fires per BOARD —
+   a Cog/Hulk topping off with Zerbsters compounds; the tray-die price is the leash) · the
    **Contract deck thins** when a specialty deal strips base-named orders (as low as ~12 in
    play — the dial is specialty-named Contract tiles, not yet printed) · the greedy tiers
-   under-pilot the signatures (the persona/MC reads govern, as ever).
+   under-pilot the signatures (the persona/MC reads govern, as ever). **The Jopenbier
+   question (designer-flagged 2026-08-10, OPEN):** once aged it can’t get better — the die
+   caps at 6 — and Bock reaches the same face in ONE turn (brew at 2 · Cellar +3 = Ready 5 ·
+   Kiln at load = 6) for 2 `G` 3 `H`, where Jopenbier pays 2 `G` 4 `H` + a 3 `H` fee + the
+   four-step climb. What the premium actually buys: the sixth Flight step (25★ vs 16★) ·
+   Kiln-independence (die 6 at ANY port, no building under the Ship) · 8★ at Novgorod.
+   Options on the table (nothing ruled): *(a)* keep as-is — a capstone prices in drama, not
+   efficiency; *(b)* cheaper brew (2 `G` 3 `H`); *(c)* a printed perk (e.g. +2★ delivered
+   at Novgorod — the Danzig trade — making the vintage line 10★); *(d)* the “jopendie”
+   (a d8/start-2 joke with real teeth — REJECTED by the component grammar, one die family).
 15. **The v4.6 roster** ⚙ — the watches from the study: the **Chronicler vs the ladPts≥6 win
    signal** (the cap +5 is the leash); the **Shipwright vs the commission-trap read**
    (gatekeeper #5 — a free commission must not paper over a structural trap); **hops relief**

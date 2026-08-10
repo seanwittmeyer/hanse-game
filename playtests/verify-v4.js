@@ -859,27 +859,38 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('EXPANSION: the specialty beers actually appear in the draft', sawSpec);
   EXPANSION=false;
 })();
-(function(){ // GOSE — the Salt Trade: every Kontor delivery pays its owner +1G +1H
-  var p=fresh();p.grain=0;p.hops=0;
+(function(){ // GOSE (v4.15b) — the identity IS the pinned bonus: Gain any 3 goods; the Salt Trade is CUT
+  var p=fresh();
+  ok('Gose pins the goods3 bonus (its every tile)', STYLES.gose.act==='goods3'&&STYLES.gose.pin===true);
+  p.grain=0;p.hops=0;
   deliverCask(p,{owner:0,style:'gose',q:2,die:2},'bruges');
-  ok('Gose salt trade: a delivery pays +1G +1H', p.grain===1&&p.hops===1);
-  p.upgrades=['granary','hopgarden'];p.sslots=2;
-  deliverCask(p,{owner:0,style:'gose',q:2,die:2},'london');
-  ok('the Grain Factor/Hop Gardener drips ride the salt trade (+2/+2)', p.grain===3&&p.hops===3);
+  ok('the Salt Trade is CUT — a Gose delivery pays no goods perk', p.grain===0&&p.hops===0);
+  UI={sub:'stops',stops:[],pendingBenefits:[]};fireCaskAct('goods3','stops');
+  ok('the goods3 bonus opens a 3-good Source pick', UI.sub==='source'&&UI.src&&UI.src.n===3);
+  srcTake(2,1);
+  ok('…and pays 3 (any mix)', p.grain===2&&p.hops===1);
 })();
-(function(){ // ZERBSTER — the parti-gyle: an optional free Gruit that costs a TRAY die
-  var p=fresh();p.recipes.push('zerbster');p.grain=0;p.hops=5;p.vessels=[null,null,null];
+(function(){ // ZERBSTER (v4.15b) — brew-time prompt CUT; ONE compound LOAD bonus: a free Gruit + Load 1 more
+  var p=fresh();p.recipes.push('zerbster');p.hops=5;p.vessels=[null,null,null];
   UI={sub:'brew',brew:{returnTo:'stops'}};brewPick('zerbster');
-  ok('Zerbster brews (3H) and the human is offered the parti-gyle', p.hops===2&&UI.sub==='parti');
-  var tray0=trayDice(p);partiTake();
-  ok('parti-gyle take: a free Ready Gruit fills a vessel and spends a tray die',
-    p.vessels.filter(function(c){return c&&c.style==='gruit'&&c.die===1;}).length===1&&trayDice(p)===tray0-1);
-  var p2=fresh();p2.recipes.push('zerbster');p2.hops=3;p2.vessels=[null,null,null];
-  UI={sub:'brew',brew:{returnTo:'stops'}};brewPick('zerbster');partiSkip();
-  ok('parti-gyle skip: no Gruit, no die spent', p2.vessels.filter(Boolean).length===1);
-  var p3=fresh();p3.recipes.push('zerbster');p3.hops=3;p3.vessels=[null,null,null];p3.presPool=1;
-  UI={sub:'brew',brew:{returnTo:'stops'}};brewPick('zerbster');
-  ok('parti-gyle never fires without a tray die (the brew took the last one)', UI.sub!=='parti');
+  ok('brewing Zerbster no longer prompts (the parti moves to the LOAD)', UI.sub!=='parti'&&p.hops===2);
+  ok('Zerbster pins the zgyle bonus', STYLES.zerbster.act==='zgyle');
+  UI={sub:'stops',stops:[],pendingBenefits:[]};
+  var tray0=trayDice(p);fireCaskAct('zgyle','stops');
+  ok('zgyle (human): the free-Gruit offer opens, then chains to the load', UI.sub==='parti'&&UI.parti.thenLoad===true);
+  partiTake();
+  ok('take: a free Ready Gruit fills a vessel (a tray die spent) and the Load-1-more follows',
+    p.vessels.filter(function(c){return c&&c.style==='gruit'&&c.die===1;}).length===1
+    &&trayDice(p)===tray0-1&&UI.sub!=='parti');
+  var p2=fresh();p2.vessels=[{style:'zerbster',q:3,die:3,act:'zgyle'},null,null];p2.presPool=2;
+  UI={sub:'stops',stops:[],pendingBenefits:[]};
+  var sh=ship('s1','cog','bruges');
+  UI.sub='load';UI.load={ships:['s1'],returnTo:'stops',loadsLeft:1,cask:0};loadCommit('s1',0,false);
+  ok('a loaded Zerbster fires its compound bonus through the pending pipeline (the parti offer opens)',
+    UI.sub==='parti'&&UI.parti&&UI.parti.thenLoad===true);
+  var p3=fresh();p3.presPool=1;p3.vessels=[{style:'hopped',q:2,die:2,act:'age'},null,null];
+  UI={sub:'stops',stops:[],pendingBenefits:[]};fireCaskAct('zgyle','stops');
+  ok('no tray die → the Gruit half never offers (straight to the load half)', UI.sub!=='parti');
 })();
 (function(){ // DUCKSTEIN — smoke-hardy: the die turns +1 AS IT BOARDS (minimum AND value; the Kiln stacks)
   var p=fresh();
