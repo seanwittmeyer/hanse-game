@@ -1,4 +1,16 @@
-# Brewhouses of the Hanse — Components (v4.13 “Plain Sight”)
+# Brewhouses of the Hanse — Components (v4.14 “Beer Atlas”)
+
+> **v4.14 (designer-ruled 2026-08-09 — the expansion beers return):** **into the box, behind
+> two opt-in toggles** — **+28 expansion cask tiles** (Gose ×8 ⚙ · Zerbster ×6 · Duckstein ×8 ·
+> Jopenbier ×6; each **pinned** — every tile of a pile prints the same load bonus) and **+4
+> expansion recipe cards per player set** (Gose · Zerbster · Duckstein chip-less/**free** on
+> the `H` = Q−3 formula · Jopenbier **3 `H`**). The kit prints them on their **own sheets** so
+> the base kit cuts clean. **Reprint note (the v4.13 lesson — every ruling that touches a
+> printed face gets its COMPONENTS note):** the Duckstein tile prints **1 aging step** (the
+> old ready-2 could never print — the die floors at 1; its **+1-as-it-boards** die mark is the
+> identity) · the Jopenbier tile prints **start 2 → Ready 6** and drops the old dock-vintage
+> line (cut with the deploy state) · Gose prints its Salt-Trade delivery line · Zerbster its
+> Parti-Gyle line (*a free Gruit — a tray die*). The Trade Roads stays tabled.
 
 > **v4.13 (designer-ruled 2026-08-09 — a PRESENTATION release):** **no component changes, no
 > count changes.** Two fixes to how the kit PROOFS, both on the **Destinations board**: the
@@ -192,6 +204,14 @@ bought; **min 6 tiles/type** (staples deeper: Gruit 16 · Hopped 12 ⚙).
 | Keut *(+1 presence on delivery)* | 3 | 2 | 1 | `G G H` | 6 |
 | Mumme | 4 | 3 | 1 | `G H H H` | 6 |
 | Bock | 5 | 3 | 2 | `G G H H H` | 6 |
+| *Gose (exp.)* *(salt trade: deliver → +1 `G` +1 `H`)* | 2 | 1 | 1 | `G G` | 8 |
+| *Zerbster (exp.)* *(parti-gyle: brew → a free Gruit, a tray die)* | 3 | 1 | 2 | `H H H` | 6 |
+| *Duckstein (exp.)* *(smoke-hardy: its die +1 as it boards)* | 2 | 1 | 1 | `G H` | 8 |
+| *Jopenbier (capstone)* *(the vintage: ages to 6)* | 6 | 4 | 2 | `G G H H H H` | 6 |
+
+*(The four expansion beers ride two opt-in toggles — v4.14; each is PINNED to one printed
+load bonus: Gose/Jopenbier → Gain 2 goods · Zerbster → Load 1 more · Duckstein → Place 1
+presence.)*
 
 ## 5. Ship tiles (24 ⚙ — the Ship is all berths)
 
@@ -284,10 +304,13 @@ die 5+→3★ · Bock→4★ · die 6→4★ · any Kontor — die 6→3★.
 ## 8. Recipe cards (double-sided — the Flight record)
 
 Starters **Gruit + Hopped** (1 each/player; Gruit dealt flipped = the warm start). Exports
-**Broyhan · Keut · Mumme · Bock** — deal 3 of 4 each game; gained at the card’s **printed
+**Broyhan · Keut · Mumme · Bock** — deal 3 of 4 each game (**3 of 7 with Specialty Beers on,
+≥1 of Mumme/Bock guaranteed** — v4.14); gained at the card’s **printed
 wharf fee**, the formula **`H` = Q−3** ⚙ (v4.9c — Broyhan/Keut **chip-less/free** · Mumme `1H` ·
-Bock `2H`) — **paid at EVERY channel, the Bruges prize included** (v45e: Bruges grants the pick,
-never the waiver), via Bruges / the *Gain 1 recipe* bonus / Scrivener’s Hall. The card moves to the
+Bock `2H` · the specialty three **free** · Jopenbier `3H`) — **paid at EVERY channel, the Bruges
+prize included** (v45e: Bruges grants the pick,
+never the waiver), via Bruges / the *Gain 1 recipe* bonus / Scrivener’s Hall. **Jopenbier is
+never drafted** — its toggle makes it always acquirable (v4.14). The card moves to the
 board’s **COMPLETED side on that beer’s first LOAD** (v4.9d) — the completed cards are the Flight
 ladder (v45h: the covers are off — no unlock duty).
 

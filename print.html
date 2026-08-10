@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v4.13 “Plain Sight”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v4.14 “Beer Atlas”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -708,7 +708,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.13 “Plain Sight”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.14 “Beer Atlas”</span></h1>
   <span id="hnav"><!-- the shared site nav (nav.js) — one roster for all four pages --></span>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
@@ -1354,10 +1354,16 @@ function buildPages(){
   // --- CASK TILES → their own 22″ plotter sheet pair (fronts + mirrored backs) ---
   // Gruit all-Source (pinned); Q2+ cycle their quality's GATED pool (survey/hire/brew Q3+ — v4.12) — the printed mix IS the brew-draw; the per-beer offsets guarantee each Q3+ beer ONE brew tile
   const caskItems=[];
-  CASKS.filter(d=>!d.exp).forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);   // v4.0: base beers only (the expansions are tabled); the pool mix IS the brew-draw
+  CASKS.filter(d=>!d.exp).forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);   // the base beers; the pool mix IS the brew-draw
     for(let i=0;i<cnt(d.n);i++){const act=pool[(i+(d.off||0))%pool.length];
       caskItems.push({fam:'Cask tiles',html:caskCardBack(d,act)});}});   // v4.0 SINGLE-FACED: the wharf/die side is the whole tile (the die is the aging marker — no aging face)
   packSpaced(pages,'tiles','Cask tiles — SINGLE-FACED (the die seat · printed START value · quality · load bonus) · 22″ plotter · 1.5mm bleed · cuts 3mm apart',[{kind:'caskc',items:caskItems}],famPages);
+  // v4.14 "Beer Atlas": the EXPANSION cask tiles — their own sheet, so the base kit cuts clean without them.
+  // Every specialty beer is PINNED (one printed load bonus on every tile of its pile).
+  const expCaskItems=[];
+  CASKS.filter(d=>d.exp).forEach(d=>{for(let i=0;i<cnt(d.n);i++)
+    expCaskItems.push({fam:'Expansion casks',html:caskCardBack(d,d.pin||poolFor(d.q)[0])});});
+  packSpaced(pages,'tiles','EXPANSION cask tiles — Specialty Beers (Gose · Zerbster · Duckstein) + the Jopenbier capstone · pinned bonuses · 22″ plotter · 1.5mm bleed',[{kind:'caskc',items:expCaskItems}],famPages);
   // --- SHIP TILES → their own sheet pair; the Cog and Hulk carriers pack as two runs (different heights) ---
   const skutes=[],cogs=[],hulks=[];
   (MODE==='proof'?[['skute','Bruges'],['cog','London'],['hulk','Novgorod']]:SHIP_DECK).forEach(([hull,dest])=>{
@@ -1378,11 +1384,17 @@ function buildPages(){
   // --- RECIPE CARDS (cardstock — do not mount) — DOUBLE-SIDED since v3.2d: cost face / BREWED face.
   // One set per player of STARTERS (Gruit · Hopped) + every export; flip a card on your first brew of it.
   const recMeta=[];const sets=MODE==='proof'?1:PLAYERS.length;
-  for(let s=0;s<sets;s++)STARTERS.concat(RECIPES.filter(r=>!/Gose|Zerbster|Duckstein|Jopenbier/.test(r.nm))).forEach(r=>recMeta.push({fam:'Recipe cards',rec:true,d:r}));   // v4.0: base exports only (the specialty/capstone recipes are tabled with their toggles)
+  for(let s=0;s<sets;s++)STARTERS.concat(RECIPES.filter(r=>!r.exp)).forEach(r=>recMeta.push({fam:'Recipe cards',rec:true,d:r}));   // the base set (v4.14: the expansions print on their own run below)
   const rStart=pages.length;
   packRun(pages,'cards','Recipe cards — fronts (starters + exports, 1 set per player) — print DOUBLE-SIDED, flip LEFT↔RIGHT','card',recMeta.map(f=>recipeCard(f.d)),'Recipe cards',famPages);
   const recFrontPages=pages.slice(rStart);
   mirrorBackPages(recFrontPages,recMeta,PG,'Recipe card BACKS (mirror — flip LEFT↔RIGHT): the BREWED face — flip on your first brew; your flipped cards ARE the Flight','cards');
+  // v4.14 "Beer Atlas": the EXPANSION recipe cards (Gose · Zerbster · Duckstein · Jopenbier), 1 set/player
+  const expRecMeta=[];
+  for(let s=0;s<sets;s++)RECIPES.filter(r=>r.exp).forEach(r=>expRecMeta.push({fam:'Expansion recipes',rec:true,d:r}));
+  const erStart=pages.length;
+  packRun(pages,'cards','EXPANSION recipe cards — fronts (Specialty Beers + the Jopenbier capstone, 1 set per player) — DOUBLE-SIDED, flip LEFT↔RIGHT','card',expRecMeta.map(f=>recipeCard(f.d)),'Expansion recipes',famPages);
+  mirrorBackPages(pages.slice(erStart),expRecMeta,PG,'EXPANSION recipe card BACKS (mirror): the BREWED face','cards');
   // (v4.0: the charter contracts LEFT the box — the 1-berth Skute is the relief valve, as a component)
   // PLAYER AID — a double-sided reference card (front: a turn · back: icon reference); 2 sheets, duplex
   aidSheet(pages,'Player aid — FRONT (a turn)',aidFront());
@@ -1424,7 +1436,7 @@ function checklist(pages,famPages){
   // 2026-08-09 [designer]: the manifest is a PACKING LIST, not a lesson — "just some basic
   // details of quantity, any important themes to share, and where they go." Every entry is one
   // short line: what it is · WHERE IT LIVES on the table. The rules live in the rulebook.
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.13 “Plain Sight”)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.14 “Beer Atlas”)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">Counts are tuning placeholders ⚙. The rules live on the <b>player aid</b> and in the rulebook — this page only says what to make, how many, and where it sits on the table.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
@@ -1453,9 +1465,14 @@ function checklist(pages,famPages){
     +R('Draw bags','<b>One per hidden supply</b> — Ships · buildings · Specialists.','3')
     +R('First-player &amp; round markers','Turn order (fixed) and the 25-round backstop.','2')
     +'</table>';
+  h+=T('Expansions <span style="font-weight:normal;text-transform:none;opacity:.7">— opt-in New Game toggles (v4.14)</span>')
+    +R('Specialty Beer casks','Gose ×8 · Zerbster ×6 · Duckstein ×8 — pinned bonuses; they join the export draft (3 of 7). <b>Three more face-up piles beside the Wharf.</b>','22')
+    +R('Jopenbier casks','The Q6 vintage capstone (its own toggle) — starts 2, ages to 6. <b>A seventh pile.</b>','6')
+    +R('Expansion recipe cards','Gose · Zerbster · Duckstein · Jopenbier — double-sided, one set per player. <b>Beside each player’s board with the base set.</b>',4*PLAYERS.length)
+    +'</table>';
   h+=T('Tabled with v4.0 <span style="font-weight:normal;text-transform:none;opacity:.7">— not in this kit</span>')
     +R('The Hall (prestige lane)','Returns as a fifth destination later; the seam is kept in the rules and the engine.','—')
-    +R('The three expansions','Specialty Beers · Jopenbier · The Trade Roads.','—')
+    +R('The Trade Roads','The Overland expansion awaits its v4 re-derivation.','—')
     +'</table>';
   h+='</div>';
   h+='<p style="font-size:.092in;color:#5b4a37;border-top:1px solid #c8b48a;padding-top:.05in;margin:.04in 0 0">'
@@ -1529,7 +1546,8 @@ function exportItems(){
   const it=[];
   it.push({type:'board',name:'wharf',side:'',w:WHARF_W+2*CROSS_BLEED,h:WHARF_W+2*CROSS_BLEED,scale:2,clip:'cross',html:wharfCross()});
   // CASKS — v4.0 single-faced (the wharf/die side); one asset per DISTINCT beer × load-bonus
-  CASKS.filter(d=>!d.exp).forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);
+  // (v4.14: the expansion beers export too — each is pinned, so one asset per beer)
+  CASKS.forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);
     const seen=new Set();
     for(let i=0;i<d.n;i++){const act=pool[(i+(d.off||0))%pool.length];if(seen.has(act.k))continue;seen.add(act.k);
       it.push({type:'cask',name:slug(d.nm)+'-'+act.k,side:'front',w:2.5,h:1,html:caskCardBack(d,act)});}});
@@ -1541,7 +1559,7 @@ function exportItems(){
   // BUILDINGS — v4.0 single-faced, one green family
   BUILDINGS.forEach(d=>it.push({type:'building',name:d.k,side:'front',w:2.5,h:1.32,html:buildingCard(d)}));
   IMPROVE.forEach(d=>it.push({type:'improvement',name:slug(d.nm),side:'front',w:2,h:2,html:improveTile(d)}));
-  STARTERS.concat(RECIPES.filter(r=>!/Gose|Zerbster|Duckstein|Jopenbier/.test(r.nm))).forEach(r=>{
+  STARTERS.concat(RECIPES).forEach(r=>{   // v4.14: the expansion recipe cards export too
     it.push({type:'recipe',name:slug(r.nm),side:'front',w:1.85,h:2.55,html:recipeCard(r)});
     it.push({type:'recipe',name:slug(r.nm),side:'back', w:1.85,h:2.55,html:recipeCard(r,true)});});
   it.push({type:'aid',name:'player-aid',side:'front',w:4.7,h:3.4,html:aidFront()});

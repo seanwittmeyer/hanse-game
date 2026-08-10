@@ -59,12 +59,14 @@ const CASKS=[
   {nm:'Keut',    c:'#9c5f2e', q:3, g:2,h:1, n:6,  ready:2, off:6, tag:'<b>+1</b> '+LU('map-pin')+'<br>presence'},
   {nm:'Mumme',   c:'#caa12a', q:4, g:1,h:3, n:6,  ready:3, off:4},
   {nm:'Bock',    c:'#7c2128', q:5, g:2,h:3, n:6,  ready:3, off:3},
-  // ---- EXPANSION "Specialty Beers" (v1.9, opt-in) — PINNED-signature casks; drafted 3-of-7 only with the toggle ----
-  {nm:'Gose', exp:1,     c:'#6e8b74', q:2, g:2,h:0, n:8, ready:1, pin:CASK_POOL[0], tag:'salt trade:<br>+'+LU('wheat')+LU('sprout')},
-  {nm:'Zerbster', exp:1, c:'#5f7a3c', q:3, g:0,h:3, n:6, ready:1, pin:CASK_POOL[2], tag:'parti-gyle:<br>+free Gruit'},
-  {nm:'Duckstein', exp:1,c:'#7a5236', q:2, g:1,h:1, n:8, ready:2, pin:CASK_POOL[3], tag:'smoke-hardy:<br>ships +1Q'},
-  // ---- EXPANSION CAPSTONE "Jopenbier" (v1.9, its OWN toggle) — the Q6 vintage super-beer (self-contained scoring) ----
-  {nm:'Jopenbier', exp:1,c:'#5e2433', q:6, g:2,h:4, n:6, ready:4, pin:CASK_POOL[0], tag:'vintage:<br>+★/turn deployed (max 5)'},
+  // ---- EXPANSION "Specialty Beers" (v4.14 "Beer Atlas" — re-derived on the v4 spine; opt-in) —
+  // PINNED-signature casks, drafted 3-of-7 with the toggle (>=1 base Q4+ guaranteed) ----
+  {nm:'Gose', exp:1,     c:'#6e8b74', q:2, g:2,h:0, n:8, ready:1, pin:CASK_POOL[0], tag:'salt trade: deliver →<br>+1'+LU('wheat')+' +1'+LU('sprout')},
+  {nm:'Zerbster', exp:1, c:'#5f7a3c', q:3, g:0,h:3, n:6, ready:1, pin:CASK_POOL[2], tag:'parti-gyle: brew →<br>a free Gruit (a tray die)'},
+  {nm:'Duckstein', exp:1,c:'#7a5236', q:2, g:1,h:1, n:8, ready:1, pin:CASK_POOL[3], tag:'smoke-hardy:<br>'+LU('die-plus1')+' as it boards'},   // v4.14: the old ready-2 collapses to 1 (the die floors at 1); the board-lift IS the identity
+  // ---- EXPANSION CAPSTONE "Jopenbier" (its OWN toggle) — v4.14: a PLAIN Q6 (the dock-vintage is cut —
+  // it rode the deploy state); start 2, FOUR aging steps, the die parks at 6 (8★ at Novgorod) ----
+  {nm:'Jopenbier', exp:1,c:'#5e2433', q:6, g:2,h:4, n:6, ready:4, pin:CASK_POOL[0], tag:'the vintage:<br>ages to '+LU('dice-6')},
 ];
 // v4.0 — NEUTRAL, destination-bound hulls (the destination is PRINTED on the tile). The 24-tile deck,
 // KONTORE ONLY, now in THREE sizes: Skute 1 · Cog 2 · Hulk 3 berths — a Skute sails on its first load
@@ -207,11 +209,12 @@ const RECIPES=[  // EXPORT recipe cards — print in the same double-sided run a
   {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{},     reach:'Q3 · all kontore (+ the Hall) · +1 presence on a kontor delivery'},
   {nm:'Mumme',   cc:'#9a5526', L:4, g:1,h:3, buy:{h:1},     reach:'Q4 · all kontore (the Hall via Dispatch)'},
   {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{h:2}, reach:'Q5 · all kontore · the premium climb (fee H = Q−3 — v4.9c)'},
-  // EXPANSION "Specialty Beers" (v1.9, opt-in) — the 3 specialty export recipe cards
-  {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, reach:'Q2 · grain-path (no hops) · SALT TRADE: a kontor delivery → +1G +1H'},
-  {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, buy:{}, reach:'Q3 · PARTI-GYLE: brewing also yields a free small Gruit (open vessel)'},
-  {nm:'Duckstein',cc:'#7a5236', L:2, g:1,h:1, reach:'Q2 · ready 2 · SMOKE-HARDY: ships &amp; scores as +1 quality (reaches Novgorod)'},
-  {nm:'Jopenbier',cc:'#5e2433', L:6, g:2,h:4, buy:{h:3}, reach:'Q6 CAPSTONE (own toggle) · self-contained 8★+ · cellars +1★/turn deployed (max +5) · counts for the Flight (6→25)'},
+  // EXPANSION "Specialty Beers" (v4.14 "Beer Atlas", opt-in) — the 3 specialty export recipe cards
+  // (fees ride the ruled formula H = Q−3: the Q3-and-below are chip-less/FREE; Jopenbier pays 3H)
+  {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, exp:1, buy:{}, reach:'Q2 · grain-path (no hops) · SALT TRADE: every Kontor delivery → +1G +1H'},
+  {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, exp:1, buy:{}, reach:'Q3 · PARTI-GYLE: brewing it may also fill an open vessel with a free Gruit (a tray die)'},
+  {nm:'Duckstein',cc:'#7a5236', L:2, g:1,h:1, exp:1, buy:{}, reach:'Q2 · SMOKE-HARDY: its die +1 as it boards (cap 6) — a Q2 that makes the Novgorod band'},
+  {nm:'Jopenbier',cc:'#5e2433', L:6, g:2,h:4, exp:1, buy:{h:3}, reach:'Q6 CAPSTONE (own toggle) · always acquirable, never drafted · start 2, four steps · 6★ anywhere, 8★ Novgorod · the Flight’s 6th type (6→25)'},
 ];
 
 //==================================================================

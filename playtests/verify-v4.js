@@ -845,6 +845,75 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('greedy tiers carry no persona by default', aiPersona({ai:{tier:'trader'}})===null&&aiPersona({ai:{tier:'journeyman'}})===null);
 })();
 
+// ---- 29. v4.14 "BEER ATLAS": the expansion beers, re-derived on the v4 spine ----
+(function(){
+  // the base deal is byte-pure with the toggles off
+  var pure=true;for(var i=0;i<30;i++){var p0=fresh();if(S.exports.some(function(s){return STYLES[s].exp;}))pure=false;}
+  ok('toggles OFF: the deal never contains an expansion beer (30 deals)', pure);
+  // the 3-of-7 draft guarantees >=1 of Mumme/Bock
+  EXPANSION=true;var okDraft=true,sawSpec=false;
+  for(var j=0;j<40;j++){var st=freshState(2,['P1','P2']);
+    if(!st.exports.includes('mumme')&&!st.exports.includes('bock'))okDraft=false;
+    if(st.exports.some(function(s){return STYLES[s].exp;}))sawSpec=true;}
+  ok('EXPANSION: 40 deals all hold >=1 of Mumme/Bock', okDraft);
+  ok('EXPANSION: the specialty beers actually appear in the draft', sawSpec);
+  EXPANSION=false;
+})();
+(function(){ // GOSE — the Salt Trade: every Kontor delivery pays its owner +1G +1H
+  var p=fresh();p.grain=0;p.hops=0;
+  deliverCask(p,{owner:0,style:'gose',q:2,die:2},'bruges');
+  ok('Gose salt trade: a delivery pays +1G +1H', p.grain===1&&p.hops===1);
+  p.upgrades=['granary','hopgarden'];p.sslots=2;
+  deliverCask(p,{owner:0,style:'gose',q:2,die:2},'london');
+  ok('the Grain Factor/Hop Gardener drips ride the salt trade (+2/+2)', p.grain===3&&p.hops===3);
+})();
+(function(){ // ZERBSTER — the parti-gyle: an optional free Gruit that costs a TRAY die
+  var p=fresh();p.recipes.push('zerbster');p.grain=0;p.hops=5;p.vessels=[null,null,null];
+  UI={sub:'brew',brew:{returnTo:'stops'}};brewPick('zerbster');
+  ok('Zerbster brews (3H) and the human is offered the parti-gyle', p.hops===2&&UI.sub==='parti');
+  var tray0=trayDice(p);partiTake();
+  ok('parti-gyle take: a free Ready Gruit fills a vessel and spends a tray die',
+    p.vessels.filter(function(c){return c&&c.style==='gruit'&&c.die===1;}).length===1&&trayDice(p)===tray0-1);
+  var p2=fresh();p2.recipes.push('zerbster');p2.hops=3;p2.vessels=[null,null,null];
+  UI={sub:'brew',brew:{returnTo:'stops'}};brewPick('zerbster');partiSkip();
+  ok('parti-gyle skip: no Gruit, no die spent', p2.vessels.filter(Boolean).length===1);
+  var p3=fresh();p3.recipes.push('zerbster');p3.hops=3;p3.vessels=[null,null,null];p3.presPool=1;
+  UI={sub:'brew',brew:{returnTo:'stops'}};brewPick('zerbster');
+  ok('parti-gyle never fires without a tray die (the brew took the last one)', UI.sub!=='parti');
+})();
+(function(){ // DUCKSTEIN — smoke-hardy: the die turns +1 AS IT BOARDS (minimum AND value; the Kiln stacks)
+  var p=fresh();
+  ok('Duckstein starts at 1, Ready at 2 (one step)', startDieFor(p,'duckstein')===1&&STYLES.duckstein.ready===1);
+  p.vessels[0]={style:'duckstein',q:2,die:2,act:'reach'};
+  var sh=ship('s1','cog','novgorod');
+  ok('a Ready Duckstein (die 2) makes the Novgorod 3+ band — its lift is read as it boards', canTake('s1',0));
+  UI={sub:'load',load:{ships:['s1'],returnTo:'stops',loadsLeft:1,cask:0}};loadCommit('s1',0,false);
+  ok('it boards AND parks at 3 (gates and value alike)', sh.load.length===1&&sh.load[0].die===3);
+  var p2=fresh();p2.vessels[0]={style:'duckstein',q:2,die:2,act:'reach'};
+  ship('s2','cog','london');S.buildings.s2={b:'maltkiln'};
+  UI={sub:'load',load:{ships:['s2'],returnTo:'stops',loadsLeft:1,cask:0}};loadCommit('s2',0,false);
+  ok('the Malt Kiln stacks on the smoke-hardy lift (boards at 4)', S.slots.s2.load[0].die===4);
+})();
+(function(){ // JOPENBIER — the plain-Q6 capstone: start 2, four steps, 6/8★, always acquirable at 3H, the sixth Flight type
+  var p=fresh();JOPEN=true;S.jopen=true;
+  ok('Jopenbier starts at 2 (Q6, four steps); the Cellarman starts it at 3',
+    startDieFor(p,'jopenbier')===2&&(function(){p.upgrades=['cellar'];var d=startDieFor(p,'jopenbier');p.upgrades=[];return d===3;})());
+  ok('always acquirable: the recipe channels offer it when the toggle is on', recipeGainable(p).includes('jopenbier'));
+  ok('its fee is the formula 3H (the Scholar waives)',
+    (recipeFeeFor(p,'jopenbier').h===3)&&(function(){p.upgrades=['scholar'];var f=recipeFeeFor(p,'jopenbier');p.upgrades=[];return !f.h;})());
+  p.vessels[0]={style:'jopenbier',q:6,die:6,act:'source'};
+  var sh=ship('s3','skute','novgorod');
+  UI={sub:'load',load:{ships:['s3'],returnTo:'stops',loadsLeft:1,cask:0}};loadCommit('s3',0,false);
+  ok('a Ready Jopenbier sails and delivers 8★ at Novgorod (6 + the printed premium)',
+    p.delivered.length===1&&p.delivered[0].val===8);
+  var p2=fresh();JOPEN=true;S.jopen=true;
+  p2.shipped={gruit:1,hopped:1,broyhan:1,keut:1,mumme:1,jopenbier:1};
+  ok('the sixth Flight type: 6 distinct beers shipped → 25★', flightScore(p2)===25&&flightTypes().includes('jopenbier'));
+  JOPEN=false;S.jopen=false;
+  var p3=fresh();
+  ok('toggle OFF: the channels never offer the capstone', !recipeGainable(p3).includes('jopenbier'));
+})();
+
 OUT.forEach(function(l){console.log(l);});
 console.log('');
 console.log(FAIL===0?('ALL PASS — '+PASS+' checks'):('*** '+FAIL+' FAILED / '+PASS+' passed ***'));

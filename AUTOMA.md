@@ -1,5 +1,15 @@
 # Automa / AI Opponent — Plan & Status
 
+> **v4.14 "Beer Atlas" (2026-08-09): the expansion-beer teaches (light).** The greedy tiers
+> inherit the four new STYLES for free (brew keys, load values, dest picks all read the die);
+> the specific teaches are three small guards — **Jopenbier demotion when hops-poor** (the
+> recipe channels subtract ~2.5–3 from its rank at `hops<6` so racers don't strand 3H on a
+> 2G4H beer they can't fund), the **parti-gyle heuristic** (an AI takes the free Gruit at
+> `trayDice>2` ⚙ — the runway prices the runnings), and the greedy `case 'parti'` safety net.
+> The MC pair prices all four signatures through `scorePlayer` unaided (a delivered Duckstein
+> IS its lifted die; a Jopenbier climb is a rollout's 6/8★). The greedy tiers under-pilot the
+> signatures as ever — persona/MC/human reads govern the expansion balance.
+
 > **v4.7 "Every Cask" (2026-08-02): the ruled AI pass.** (1) **`aiSpecVal` re-taught to the
 > SPECIALIST-VALUE-STUDY's probe truth** — new base table (supercargo 4.4 · granary 4.2 ·
 > scholar 3.8 · shipwright 3.4 · cellar 3.2 · braumeister 3.0 · innkeeper 2.8 · crane 2.6 ·

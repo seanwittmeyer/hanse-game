@@ -1,4 +1,28 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.13 “Plain Sight”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.14 “Beer Atlas”)
+
+> **v4.14 “Beer Atlas” (designer-ruled 2026-08-09 — the expansion beers return).**
+> The two beer expansions come off the v4.0 shelf, **re-derived on the v4 spine** (the die is
+> the cask · no deploy · load bonuses · the empty-tray clock · the `H` = Q−3 fee formula); the
+> Trade Roads stays tabled. Both are **opt-in New Game toggles**; the base game is unchanged
+> with them off. **(1) SPECIALTY BEERS** — Gose · Zerbster · Duckstein join the export deal:
+> **draft 3 of 7, always including at least one of Mumme/Bock** ⚙ (the climb stays in every
+> game). Each is **pinned** (every tile of its pile prints the same load bonus) and carries a
+> printed signature: **Gose** (Q2 · 2 `G`, no hops · bonus *Gain 2 goods*) — **Salt Trade:**
+> every Kontor delivery pays its owner **+1 `G` +1 `H`** · **Zerbster** (Q3 · 3 `H`, no grain ·
+> bonus *Load 1 more*) — **Parti-Gyle:** brewing it **may** also fill an open vessel with a
+> free **Gruit** (no goods — but a **tray die**; the second runnings are priced by the clock) ·
+> **Duckstein** (Q2 · 1 `G` 1 `H` · bonus *Place 1 presence*) — **Smoke-Hardy:** its die turns
+> **+1 as it boards** (cap 6; minimum AND value — a Q2 that makes the Novgorod band; the old
+> ready-2 print collapses to **ready 1**: the die floors at 1, so a second step never printed).
+> All three recipes are **free** on the formula (Q3 and below). **(2) JOPENBIER** (its own
+> toggle) — the vintage capstone re-derives as a **plain Q6**: the old dock-vintage rode the
+> deploy state and is **cut**; the four-step climb IS the vintage now. Brew 2 `G` 4 `H` · die
+> starts **2**, Ready at **6** · delivers **6★ anywhere, 8★ at Novgorod** (the old 8★ falls
+> out of the printed premium) · the die-6 Contract magnet · a **sixth Flight type** (6 shipped
+> → 25★ ⚙). **Never drafted — always acquirable** when on, at every recipe channel, fee
+> **3 `H`** (the formula; the Scholar waives). Watches ⚙: the Assay’s 1 `H`-to-Ready on a
+> four-step climb · Gose under the goods drips · Duckstein+Cellarman (Ready at brew, boards
+> at 3) · the Contract deck thins when a specialty deal strips base-named orders (§7b).
 
 > **v4.13 “Plain Sight” (designer-ruled 2026-08-09 — a PRESENTATION release).**
 > **No rule changes at all.** Everything below is unchanged from v4.12b; the version marks a
@@ -392,6 +416,10 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
 | Keut | Q3 | 2 | 1 | `G G H` | dealt export · **free** (v4.9c) |
 | Mumme | Q4 | 3 | 1 | `G H H H` | dealt export · fee `H` |
 | Bock | Q5 | 3 | 2 | `G G H H H` | dealt export · fee `H H` (the taxed climb — v4.9c) |
+| *Gose* ⚙ | Q2 | 1 | 1 | `G G` | *expansion* export · **free** · Salt Trade (§12) |
+| *Zerbster* ⚙ | Q3 | 1 | 2 | `H H H` | *expansion* export · **free** · Parti-Gyle (§12) |
+| *Duckstein* ⚙ | Q2 | 1 | 1 | `G H` | *expansion* export · **free** · Smoke-Hardy (§12) |
+| *Jopenbier* ⚙ | Q6 | 4 | 2 | `G G H H H H` | *capstone* (own toggle) · always acquirable · fee `H H H` (§12) |
 
 *(The Cellarman starts your dice one higher — a Bock at 3, and a Broyhan at 3: **READY at
 brew** (the v45g never-starts-Ready cap is repealed, v4.12 — that power is the point). A
@@ -685,12 +713,44 @@ tiles remain the whole audit trail; no memory required.)*
 
 ---
 
-## 12. Expansions — TABLED (v4.0)
+## 12. Expansions (v4.14 “Beer Atlas” — two live opt-in toggles)
 
-The three toggles (*Specialty Beers* · *Jopenbier* · *The Trade Roads*) are **off the table**
-with the Hall: Jopenbier’s dock-vintage rode the deploy state, the Trade Roads replace the
-majorities, and both need re-derivation on the v4 spine. The `registerExpansion` seam stays in
-the engine; the modules return after the core settles.
+*Two independent **New Game toggles**, freely mixable. With both off the base game is
+unchanged. Everything else — Kontore, majorities, Contracts, the Flight, the clock, scoring —
+runs as written: the expansions are roster content under the existing grammar. Every
+expansion beer is **pinned**: all its cask tiles print the same load bonus (drafting a pinned
+beer IS the agency — the Gruit rule, generalized).*
+
+### Specialty Beers
+
+Setup deals **3 of 7** exports (the base four + these three), guaranteeing **at least one of
+Mumme/Bock** ⚙ so the quality climb, Novgorod’s traffic and the pinnacle stay meaningful.
+Recipe fees ride the standard formula (`H` = Q−3 — all three **free**), paid at every channel.
+
+| Beer (town) | Q · steps · brew ⚙ | Pinned bonus | Signature ⚙ |
+|---|---|---|---|
+| **Gose** (Goslar) | Q2 · 1 · `G G` (no hops) | *Gain 2 goods* | **Salt Trade** — every Kontor delivery pays its owner **+1 `G` +1 `H`** (the Keut-perk grammar; the drips apply) |
+| **Zerbster** (Zerbst) | Q3 · 1 · `H H H` (no grain) | *Load 1 more* | **Parti-Gyle** — brewing it **may** also fill an open vessel with a free **Gruit**: no goods, but a **tray die** (Ready at 1, its bonus *Gain 2 goods*; skip it freely — the clock is the price) |
+| **Duckstein** (Königslutter) | Q2 · 1 · `G H` | *Place 1 presence* | **Smoke-Hardy** — its die turns **+1 as it boards** (cap 6): read for the minimum AND parked as the value. A Q2 that makes Novgorod’s 3+ band; a Malt Kiln under the Ship stacks (boards at 4) |
+
+### Jopenbier — the capstone (a second, independent toggle)
+
+The **Q6 vintage** of Danzig — the all-in deep plan. **Never drafted:** with the toggle on it
+is **always acquirable** at every recipe channel (Bruges’ prize · the *Gain 1 recipe* bonus ·
+Scrivener’s Hall) at its printed fee **3 `H`** ⚙ (the formula; the Guild Scholar waives).
+Brew **2 `G` 4 `H`** ⚙; the die starts at **2** and wants **four aging steps** — the longest
+climb in the game (the Cellarman starts it at 3). Ready at **6**: it delivers **6★ anywhere,
+8★ at Novgorod**, qualifies for every die-6 Contract, and counts for the Flight as a **sixth
+beer** (6 shipped → **25★** ⚙). Building lifts are void on it (the cap is 6); the Tollhouse
+may still stamp it (5 + 3★). *The re-derivation (v4.14): the old dock-vintage (+1★ per turn
+deployed) rode the deploy state and is **cut** — its jobs re-home on the spine: aging-as-value
+= the four priced steps · the race-to-end = the empty-tray clock (four steps of runway on one
+die, in every rival’s view) · contestability = the berth race.*
+
+### The Trade Roads — TABLED
+
+The Overland module (an inland map of claimable Staple-Right slots replacing the majorities)
+still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dormant.
 
 ---
 
@@ -818,7 +878,15 @@ the engine; the modules return after the core settles.
 12. **The dice pass** ⚙ — 9 die-touching designs in the printed 20. Watch: does the Tollhouse’s
    stamp (−1 die for +3★) stay a real choice; does the Bonded Store’s send-off read at the
    table (the ephemeral family is now TWO — the Victualling Yard joined it, v4.6); Assay/Racking usage rates.
-13. **The v4.6 roster** ⚙ — the watches from the study: the **Chronicler vs the ladPts≥6 win
+13. **The expansion beers (v4.14)** ⚙ — the re-derivation watches: the **Assay House** at
+   1 `H`-to-Ready buys Jopenbier’s whole four-step climb (the sharpened Bock-Assay watch —
+   dials: the Assay’s reach, or accept the single tile in a 17-of-20 deal) · **Gose** under
+   Grain Factor/Hop Gardener (the drips ride its Salt Trade — +2/+2 per delivery with both
+   seats) · **Duckstein + Cellarman** (Ready at brew, boards at 3 for 1 `G` 1 `H`) · the
+   **Contract deck thins** when a specialty deal strips base-named orders (as low as ~12 in
+   play — the dial is specialty-named Contract tiles, not yet printed) · the greedy tiers
+   under-pilot the signatures (the persona/MC reads govern, as ever).
+14. **The v4.6 roster** ⚙ — the watches from the study: the **Chronicler vs the ladPts≥6 win
    signal** (the cap +5 is the leash); the **Shipwright vs the commission-trap read**
    (gatekeeper #5 — a free commission must not paper over a structural trap); **hops relief**
    (Chandler + Scholar land before the flow-probe re-read — re-baseline it); the greedy AI

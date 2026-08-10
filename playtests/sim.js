@@ -75,7 +75,7 @@ var __commPlace=commPlace;commPlace=function(slot){var d=UI.comm;var sn=(d&&d.id
   return r;};
 function __runGame(n){
   __uReset();
-  EXPANSION=false;JOPEN=false;OVERLAND=false;
+  EXPANSION=__EXP;JOPEN=__JOP;OVERLAND=false;   // v4.14: the beer toggles ride env (default off — the base gate is unchanged)
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
   S.players.forEach(function(p,i){p.ai=__PERSONAS?{tier:'trader',persona:AI_PERSONAS[i%AI_PERSONAS.length]}:{tier:__TIER};p.presPool=PRES_POOL;});
   var guard=0;
@@ -127,6 +127,7 @@ const ctx = {
   setTimeout:noop, clearTimeout:noop,
   lucide:{ createIcons:noop },
   __N:N, __TIER:TIER,
+  __EXP:process.env.EXPANSION==='1', __JOP:process.env.JOPEN==='1',   // v4.14: the beer-toggle arms (EXPANSION=1 · JOPEN=1)
   __POOL:parseInt(process.env.POOL||'0',10),
   __PERSONAS:PERSONAS,
   __GMS:parseInt(process.env.GUILD_MS||'0',10),
