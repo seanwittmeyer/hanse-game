@@ -81,6 +81,49 @@ print (the cask ⚜ needs replacement tiles; the Chancery is one tile).
 | `bldgonly` | PIPS=1 · ICW=0 · IBLDG=1 | the cheapest print — does the Chancery alone renew access? |
 | `caskonly` | PIPS=1 · ICW=0.12 · IBLDG=0 | the faucet isolation — does the ⚜ tile alone carry? |
 
+**Results (500 games · 0 errors · pace 17.6–18.0):**
+
+| Arm | CM win | GM win | GM-hall win | lane Δ | hall★/pl (committed) | non-Order faucet inv/pl | Novgorod dead | crowns |
+|---|---|---|---|---|---|---|---|---|
+| anchor | 61% | 16% | 23% | +7 | 13.6 | 0.93 | **12%** | 6.7% |
+| lite | 65% | 17% | 18% | +1 | 12.8 | 0.68 | 17% | 4.7% |
+| stars | 55% | 25% | 20% | −5 | 10.3 | 0.77 | 19% | 5.0% |
+| bldgonly | 57% | 25% | 18% | −7 | 9.7 | 0.48 | 18% | 5.0% |
+| caskonly | 57% | 19% | 24% | +5 | 10.8 | 0.41 | 20% | 4.7% |
+
+**Findings:**
+1. **The lane Δ is noise-dominated at n=100** — the flagship config read −2 in Pass 1 and
+   +7 in Pass 2 (the anchor was the same dials). Pooled across ALL seven pips-bearing arms
+   (n=700/seat): GM 20.1% · GM-hall 21.3% — **the committed lane plays at parity with
+   equal-strength uncommitted play**. That satisfies criterion 1 (viable, not dominant);
+   single-arm Δs should not be over-read. Pass 3 is therefore a REPLICATION pass.
+2. **Loudness tracks the faucet total**: both-faucets configs land committed hall★ ~13
+   (breaching the ≤10 criterion — a quarter of a winning score); single-faucet and
+   trimmed-★ configs land ~10.
+3. **Access splits cleanly**: the Chancery contributes ~0.5/player, the ⚜ cask ~0.4;
+   Orders stay the largest earned source. Either faucet alone roughly meets the ≥0.5 bar;
+   both together overshoot into the loudness problem.
+4. **Novgorod is the standing cost**: 12–20% dead across every dialed arm vs 8% base
+   (CI ±~7 pp — the arms are not distinguishable from each other, but all sit above base).
+   The mechanism is structural: the Reliquary (die 5+) and the eastern run bid for the same
+   ripe dice. Dial options for the designer, none tested here: an eased Reliquary minimum
+   is anti-thematic; a **Novgorod-side pull** (e.g. a hall-mode Order naming Novgorod at
+   higher ★) or simply accepting ~15% at strong-play tables (the 2p historical residual
+   was 33%) are the live candidates.
+
+## §2b · Pass 3 — replication (5 arms × 100 games; pooled n = 200–300 per config)
+
+Same protocol, same budgets, same contention. Every arm is a RE-RUN — the verdict reads
+pooled numbers only (per-seat CI at n=200 ≈ ±5.7 pp, n=300 ≈ ±4.6 pp):
+
+| Arm | Re-runs | Pooled n after Pass 3 |
+|---|---|---|
+| `base2` | base | 200 |
+| `confirmA` | full/anchor (PIPS+ICW 0.12+IBLDG) | 300 |
+| `confirmB` | stars (+HSTARS 1,3,5,7) | 200 |
+| `confirmC` | caskonly | 200 |
+| `confirmD` | bldgonly | 200 |
+
 *(results pending)*
 
 **Pre-registered decision criteria for the recommended print (set before Pass-2 results):**
