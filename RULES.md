@@ -83,7 +83,7 @@
 > Post · Tollhouse) are **recorded in the study §8 — proposed, NOT ruled.**
 
 *(Language: the 2026-08-03 **Term Registry pass** governs all printed copy — player ·
-Kontor · Contract · cask quality die · build · Age N · aging · resolve the line · the ★
+Kontor · Order · cask quality die · build · Age N · aging · resolve the line · the ★
 glyph; see `STYLE.md` §4. The version letters below keep their period wording.)*
 
 > **v4.12 “Open Brewhouse” (designer-ruled 2026-08-09 — the buildings & specialists review,
@@ -340,7 +340,7 @@ glyph; see `STYLE.md` §4. The version letters below keep their period wording.)
 ## 0. What v4.0 keeps and cuts (read first)
 
 **Keeps:** the 2×2-stations + 8-slot Wharf and move-then-activate; row-or-column lines;
-ships that **sail when full**, benefits sealing **on delivery** in load order;
+ships that **sail when full**, benefits sealing **on delivery** in boarding order;
 the four Kontore and tiered majorities; the steerable brew piles; the Flight on the recipe
 cards (distinct beers **SHIPPED** — v4.9d, (n−1)² min 3); goods as the only currency; the warm start;
 the **dice end clock** (v4.1 — the one clock); no dice-as-randomizers (the quality die is a
@@ -385,7 +385,7 @@ a face-up **display of 4** ⚙; shuffle the **Building deck** — **deal 17 of t
 tiles** ⚙ (≥1 Malt Kiln + ≥1 Mission Quay: if the deal lacks one, swap it in from the set-aside tiles for a random dealt tile and reshuffle; the undealt 3 stay in the box — v4.6;
 all neutral, §5) — and deal a Wharf
 **display of 4** ⚙; shuffle the **Specialist deck** (**5 core designs × max(2, n−1) + the 8
-guild singles** — v4.6) and deal a **display of 4**; shuffle the **Contract deck** (15 ⚙, §7b) and deal a face-up
+guild singles** — v4.6) and deal a **display of 4**; shuffle the **Order deck** (15 ⚙, §7b) and deal a face-up
 **row of 3** ⚙. **Warm start on the slots:** a
 guaranteed **Hulk → Bruges** + one more dealt ship, and **two neutral Buildings** dealt from the
 deck (setup deals score nobody). Each player places a worker on any station — **opening
@@ -529,7 +529,7 @@ swings; the dealt subset makes every wharf a different economy.**
 | **Customs House** | passive | the Ship here: **−1 quality required** to board (sells at the die) | 1 | 2 `G` | 3 |
 | **Rich Berth** | passive | the Ship here may **sail one berth short** (min 1) | 1 | 2 `G` | 3 |
 | **Victualling Yard** *(v4.6 · ephemeral)* | on load here / at sail | the boarding cask’s **load bonus fires TWICE**; **when this Ship sails, the Yard sails with it** (boxed) | 1 | 2 `G` | 3 |
-| **Merchants’ Exchange** *(v4.6)* | resolve its slot | **replace UP TO 3 open Contracts** (v4.12) — each cycled to the bottom of its deck, its replacement revealed **at once, in place** (the end-of-turn refill is untouched) | 1 | 2 `G` | 2 |
+| **Merchants’ Exchange** *(v4.6)* | resolve its slot | **replace UP TO 3 open Orders** (v4.12) — each cycled to the bottom of its deck, its replacement revealed **at once, in place** (the end-of-turn refill is untouched) | 1 | 2 `G` | 2 |
 | **Warping Capstan** *(v4.6)* | resolve its slot | **move ANY docked Ship** (cargo rides) to any shipless slot — **full where it lands, it sails at once** (v4.12) | 1 | 2 `G` | 3 |
 
 *(Action buildings print the same verbs as the cask piles — the wharf and the cargo speak one
@@ -558,9 +558,9 @@ and read LIVE (v4.6c): a Ship or building landing on a line slot mid-turn opens 
   again. *(The Stevedore loads **2** in EVERY load flow — v4.6d. The **commission**
   includes one such load onto its new Ship — §4C.)*
 - **A ship SAILS the moment it is full** — a **Skute sails on its first load.** Each cask aboard
-  **delivers in load order**: score ★ = its die, park the die at the Kontor, resolve the Kontor’s
+  **delivers in boarding order**: score ★ = its die, park the die at the Kontor, resolve the Kontor’s
   prize (owner’s choice, **when gained** — **every cask pays its Kontor’s prize, v4.7**: one
-  grammar at all four Kontors; load order = pick order),
+  grammar at all four Kontors; boarding order = pick order),
   and the cask **may claim one open CONTRACT it qualifies for** (§7b). The Ship returns to the
   bottom of the deck; a Bonded Store on the slot sails away with it (§5). 
 - Casks are **private until aboard** — there is no loading of rival casks, and nothing on the
@@ -611,21 +611,21 @@ everywhere, the Bruges prize included (the v45e grammar)**. No building ever add
   Town Crier adds +2★ per die). **Only the Almoner’s Stall charges the 2 G factor’s fee** for
   the same placement. No tray die → no placing presence.
 
-### 7b. Contracts — the order row (v4.5b)
+### 7b. Orders — the order row (v4.5b)
 
-A shuffled **Contract deck (15 ⚙)** feeds a face-up **row of 3** beside the Kontor mats. Each
+A shuffled **Order deck (15 ⚙)** feeds a face-up **row of 3** beside the Kontor mats. Each
 tile names a **Kontor** (or *any*), a **condition** — a minimum die face (*die 4+*) or a named
 beer (*Mumme*) — and a printed reward (**2–5★** ⚙).
 
 - **Claim = a qualifying delivery.** When your cask delivers at the named Kontor and its
   **parked face** meets the condition (the face after all lifts/stamps — exactly what the die
   shows as it parks), you **may take one matching tile**: it comes to you (the record), its ★
-  **score at once**. **One Contract per delivered cask;** several casks on one ship may each
-  claim (load order — earlier casks pick first).
+  **score at once**. **One Order per delivered cask;** several casks on one ship may each
+  claim (boarding order — earlier casks pick first).
 - **The row refills at the END of the turn** (the v4.4c rhythm) — a claimed order leaves a gap
   the rest of the turn; the deck never reshuffles claimed tiles, and a dry deck leaves the
   row short. (Every display refills only while its deck lasts.)
-- **Setup strips the dead orders (v4.7):** a Contract naming a beer **not dealt this game**
+- **Setup strips the dead orders (v4.7):** an Order naming a beer **not dealt this game**
   returns to the box — every order in the deck is claimable.
 - **The row is the variable economy:** the same die-5 Bock is worth more the turn a *Novgorod
   die 5+ → 3★* order lies open — read the row before you brew, lift and sail. *(The schedule
@@ -650,7 +650,7 @@ schedule (1–3★), and every claim also pays an ⚜ Invitation — §12.)*
 - **Recipe cards** sit BESIDE the board (v4.9d): **COLLECTED to its LEFT** until that beer's
   first cask **loads onto a Ship**, then moved to the **COMPLETED pile on its RIGHT** — **the
   completed cards ARE the Flight record.** The board itself **prints the Flight ladder**
-  (beers shipped 1–5 → 0/0/4/9/16★ ⚙) and a **Contracts zone** (claimed tiles pile there),
+  (beers shipped 1–5 → 0/0/4/9/16★ ⚙) and a **Orders zone** (claimed tiles pile there),
   plus the ★ score seat and the dice/grain/hops supply ledge — §11 read straight off the
   table.
 
@@ -682,8 +682,8 @@ the turn (v4.4c; ships and buildings refill at once):**
   stack).
 - **Supercargo** (fee `2H`, v4.7 — was 1H, the probe’s +29 outlier) — each time a Ship
   carrying **your** cask sails on a **rival’s** turn: gain **1 `G` 1 `H`**.
-- **Chronicler** (fee `1G` `1H`) — **game end: +3★ per Contract tile at your seat** ⚙
-  (v4.12 — uncapped, no requirement: Contracts are hard to claim, so the strategy pays).
+- **Chronicler** (fee `1G` `1H`) — **game end: +3★ per Order tile at your seat** ⚙
+  (v4.12 — uncapped, no requirement: Orders are hard to claim, so the strategy pays).
 - **Alderman** (fee `2G`) — **game end: +2★ per Kontor where you have 3+ parked dice** ⚙.
 - **Town Crier** (fee `1G`) — **each presence die you place scores +2★** ⚙ (v4.12 — the die
   parks at face 1 as ever, so a placement banks 3★ total; still one die, one clock beat;
@@ -721,7 +721,7 @@ tray size (13 dice — v4.9b) is THE pace dial now.*
 **Scored in play (onto the score track as it happens):**
 1. **Deliveries** — ★ = the die, parked at the Kontor (the pips remain the audit; Novgorod
    +2★ on top).
-2. **Contracts** — the claimed tile’s printed ★ (v4.5b; the tiles at your seat are the audit).
+2. **Orders** — the claimed tile’s printed ★ (v4.5b; the tiles at your seat are the audit).
 3. **Tollhouse stamps** — **+3★** per stamped cask (v45d; the die drops 1 — net +2).
 4. **Cooperage wharfage** — **+1★** per cask loaded at its slot (v4.12b ⚙).
 5. **Placed presence** — 1★ each (the face-1 die; a seated Town Crier adds +2★ per die).
@@ -738,7 +738,7 @@ tiles remain the whole audit trail; no memory required.)*
    (3→4 · 4→9 · 5→16 · 6→25 ⚙).
 9. **Buildings — the Mason’s Marks (v4.9)** — each die standing on one of your buildings
    scores **its pips** (1–6★). The dice on the tiles are the audit.
-10. **The Guild (v4.6)** — a seated **Chronicler** (+3★ per claimed Contract ⚙ — v4.12) or
+10. **The Guild (v4.6)** — a seated **Chronicler** (+3★ per claimed Order ⚙ — v4.12) or
    **Alderman** (+2★ per Kontor with 3+ parked dice ⚙) scores its printed line — the audit is
    the tiles at your seat and the dice on the mats.
 11. **Tiebreak:** the summed dice in your vessels, then most goods.
@@ -752,7 +752,7 @@ tiles remain the whole audit trail; no memory required.)*
 ## 12. Expansions (v4.14 “Beer Atlas” — two live opt-in toggles)
 
 *Two independent **New Game toggles**, freely mixable. With both off the base game is
-unchanged. Everything else — Kontore, majorities, Contracts, the Flight, the clock, scoring —
+unchanged. Everything else — Kontore, majorities, Orders, the Flight, the clock, scoring —
 runs as written: the expansions are roster content under the existing grammar. Every
 expansion beer is **pinned**: all its cask tiles print the same load bonus (drafting a pinned
 beer IS the agency — the Gruit rule, generalized).*
@@ -776,7 +776,7 @@ is **always acquirable** at every recipe channel (Bruges’ prize · the *Gain 1
 Scrivener’s Hall) at its printed fee **3 `H`** ⚙ (the formula; the Guild Scholar waives).
 Brew **2 `G` 4 `H`** ⚙; the die starts at **2** and wants **four aging steps** — the longest
 climb in the game (the Cellarman starts it at 3). Ready at **6**: it delivers **6★ anywhere,
-8★ at Novgorod**, qualifies for every die-6 Contract, and counts for the Flight as a **sixth
+8★ at Novgorod**, qualifies for every die-6 Order, and counts for the Flight as a **sixth
 beer** (6 shipped → **25★** ⚙). Building lifts are void on it (the cap is 6); the Tollhouse
 may still stamp it (5 + 3★). *The re-derivation (v4.14): the old dock-vintage (+1★ per turn
 deployed) rode the deploy state and is **cut** — its jobs re-home on the spine: aging-as-value
@@ -785,11 +785,11 @@ die, in every rival’s view) · contestability = the berth race.*
 
 ### The Guildhall — Invitations (a third toggle, v4.15)
 
-**The Hall as a Contract-fed shelf board.** With the toggle on:
+**The Hall as an Order-fed shelf board.** With the toggle on:
 
-- **The Contract deck swaps** to the eased 20-tile schedule ⚙ (rewards 1–3★; conditions
+- **The Order deck swaps** to the eased 20-tile schedule ⚙ (rewards 1–3★; conditions
   routine — die 2+/3+ across all four Kontore, four named staples, three *any-Kontor* tiles).
-  Every **claimed Contract also pays an ⚜ Invitation** (a small tile at your seat).
+  Every **claimed Order also pays an ⚜ Invitation** (a small tile at your seat).
 - **Enshrine (during your turn):** spend 1 Invitation + one **Ready** cask from your vessels
   whose **die ≥ a shelf’s minimum** (read off the vessel — no load-lifts; vessel-side lifts
   such as the Hop Exchange’s past-quality pump count). The die **parks on any open space** of
@@ -799,7 +799,7 @@ die, in every rival’s view) · contestability = the berth race.*
 
 | Shelf | Min | The menu — choose one ⚙ | Spaces (2/3/4p) ⚙ |
 |---|---|---|---|
-| **The Reliquary** | die 5+ | **9★** *(once per player)* · **Brew 1** (pay its cost) · **the Guild’s Seal** — claim 1 open Contract outright (its ★ and its Invitation pay as any claim) | 2 / 3 / 4 |
+| **The Reliquary** | die 5+ | **9★** *(once per player)* · **Brew 1** (pay its cost) · **the Guild’s Seal** — claim 1 open Order outright (its ★ and its Invitation pay as any claim) | 2 / 3 / 4 |
 | **The Masters’ Shelf** | die 4+ | **6★** *(once per player)* · **Brew 1** (pay its cost) · **Load 1 more cask** (any eligible Ship; its bonus fires) | 3 / 4 / 5 |
 | **The Guild Table** | die 3+ | **4★** *(once per player)* · **Age 3** (a free Cellar pour) · **Gain 3 goods** | 3 / 4 / 5 |
 | **The Taproom** | die 2+ | fixed: **2★ + Gain 2 goods** (every visit) | 3 / 4 / 5 |
@@ -843,7 +843,7 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
    like as long as it wants to be. Any more may drag it out. Without legible goals or
    strategic arcs in the game, it can feel repetitive."* The pool question is CLOSED; the
    open thread it leaves is **legibility** — goals/arcs a player can see and chase (the
-   Contracts are that layer; recorded in DESIGN §9's parking lot). **RE-OPENED AND RE-RULED
+   Orders are that layer; recorded in DESIGN §9's parking lot). **RE-OPENED AND RE-RULED
    at v4.9b:** the mason's mark spends the same runway as brews (the v4.9 A/B ran ~2 rounds
    under the band), so the designer added the 13th die — *"maybe it allows us to add one die
    to each player's supply"* — to fund the marks, not to lengthen the game (the POOL=12
@@ -932,7 +932,7 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
    the two probe outliers — re-probe reads in `SPECIALIST-VALUE-STUDY.md`) · buildings
    free/`1G`–`3G` in grain only (v45d).
 10. **The greedy (non-MC) tiers** — re-taught at v4.3 (fee-netted values, Flight marginals,
-   horizon sense; both tiers share the new skeleton) and at v4.5b (de-mint values, Contract
+   horizon sense; both tiers share the new skeleton) and at v4.5b (de-mint values, Order
    sense, the new verbs). Trader>journeyman reads ~55% pooled (n=700, v4.3) — real but under
    the historic 60% lint, because journeyman inherits the shared fee sense. Standing rule
    stands (designer 2026-07-26: *“I worry we over-index on those AI players”*): strategy/
@@ -960,8 +960,8 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
    engine at a human table) · **Duckstein + Cellarman** (Ready at brew, boards at 3 for
    1 `G` 1 `H`) · **Zerbster’s zgyle chain** (a free Gruit + Load 1 more fires per BOARD —
    a Cog/Hulk topping off with Zerbsters compounds; the tray-die price is the leash) · the
-   **Contract deck thins** when a specialty deal strips base-named orders (as low as ~12 in
-   play — the dial is specialty-named Contract tiles, not yet printed) · the greedy tiers
+   **Order deck thins** when a specialty deal strips base-named orders (as low as ~12 in
+   play — the dial is specialty-named Order tiles, not yet printed) · the greedy tiers
    under-pilot the signatures (the persona/MC reads govern, as ever). **The Jopenbier
    question (designer-flagged 2026-08-10, OPEN):** once aged it can’t get better — the die
    caps at 6 — and Bock reaches the same face in ONE turn (brew at 2 · Cellar +3 = Ready 5 ·

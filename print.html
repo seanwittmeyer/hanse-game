@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v4.15b “Second Runnings”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v4.16 “Standing Orders”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -708,7 +708,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.15b “Second Runnings”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.16 “Standing Orders”</span></h1>
   <span id="hnav"><!-- the shared site nav (nav.js) — one roster for all four pages --></span>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
@@ -833,7 +833,7 @@ function aidFront(){
         +'<div class="ln">\u00b7 <b>Load</b> (a Ship\u2019s slot stop): 1 Ready cask from YOUR vessels, die \u2265 the minimum</div>'
         +'<div class="ln">\u00b7 The load bonus fires <b>after</b> any sail it completes</div>'
         +'<div class="ln">\u00b7 <b>Full = sails at once</b> (a Skute on its first load)</div>'
-        +'<div class="ln">\u00b7 Deliver in load order: score the die, park, prize per cask (else 2 goods \u00b7 a build prize forfeits), claim 1 Contract</div>'
+        +'<div class="ln">\u00b7 Deliver in boarding order: score the die, park, prize per cask (else 2 goods \u00b7 a build prize forfeits), claim 1 Order</div>'
         +'<div class="ln">'+LU('store')+' <b>Market</b>: take 2 goods \u00b7 '+LU('age-3')+' <b>Cellar</b>: Age 3</div>'
         +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b>: brew the top pile tile</div>'
         +'<div class="ln">'+LU('ship')+' <b>Harbor</b>: place a Ship \u2014 fee 2/1/0'+G+' by size (Hulk free) \u2014 + 1 free load, no \u2605</div>'
@@ -849,12 +849,12 @@ function aidFront(){
         +'<h5>'+LU('timer')+'End &amp; Score</h5>'
         +'<div class="ln"><b>First EMPTY tray</b> (your last of 13 dice committed): finish the round. Round 25 backstop.</div>'
         +'<div class="ln">\u00b7 Delivered dice: the parked pips</div>'
-        +'<div class="ln">\u00b7 Scored in play: Contracts, stamps, departed builds</div>'
+        +'<div class="ln">\u00b7 Scored in play: Orders, stamps, departed builds</div>'
         +'<div class="ln">\u00b7 Majorities by parked dice \u00b7 Building dice: the pips</div>'
         +'<div class="ln">\u00b7 The Flight: distinct beers, (n\u22121)\u00b2, min 3</div>'
         +'<div class="ln">\u00b7 Guild \u2605: printed end-lines</div>'
         +'<div class="ln">Tiebreak: summed vessel dice, then most goods.</div>'
-        +'<div class="dontf"><b>Don\u2019t forget:</b> \u2460 the minimum reads the die AS IT BOARDS (after lifts) \u2461 Specialist &amp; Contract displays refill at turn END (Ships &amp; buildings: at once)</div>'
+        +'<div class="dontf"><b>Don\u2019t forget:</b> \u2460 the minimum reads the die AS IT BOARDS (after lifts) \u2461 Specialist &amp; Order displays refill at turn END (Ships &amp; buildings: at once)</div>'
         +'<div class="ln">'+LU('building-2')+' <b>Buildings</b>: a build stands your die at the tile\u2019s printed face \u2014 every use (anyone) +1, pips score at end \u00b7 use free \u00b7 overbuild = one payment</div>'
       +'</div>'
     +'</div></div>';}
@@ -883,7 +883,7 @@ function aidBack(){
         +row('building-2','Building','shared, by whoever activates it')
         +row('wrench','Specialist','private, seats at your board')
         +row('scroll-text','Recipe','permission to brew a beer')
-        +row('contract','Contract','a Kontor bonus tile')
+        +row('contract','Order','a Kontor bonus tile')
       +'</div></div>'
       +'<div class="acol"><div class="leg">'
         +'<h5>'+LU('package-plus')+'The 8 Load Bonuses</h5>'
@@ -902,7 +902,7 @@ function aidBack(){
         +row('timer','The Clock','the first empty tray')
       +'</div></div>'
     +'</div></div>';}
-function pboard(p){return playerBoard({nm:p.nm,c:p.c});}   // v4.9d: the board is a SHARED component (components.js playerBoard) — score seat · supply ledge · the Flight ladder (beers SHIPPED) · the Contracts zone printed on the board; the app seats live pieces in the same wells
+function pboard(p){return playerBoard({nm:p.nm,c:p.c});}   // v4.9d: the board is a SHARED component (components.js playerBoard) — score seat · supply ledge · the Flight ladder (beers SHIPPED) · the Orders zone printed on the board; the app seats live pieces in the same wells
 
 // (the standalone Hall board + Destinations letter boards are RETIRED — the Destinations & Hall
 //  board above carries both; their generators removed 2026-07-14.)
@@ -1153,12 +1153,12 @@ function supplyBoard(){
 // The Hall column speaks component, not paragraph: a kontor-style art header, four SHELVES (each coin
 // space = ONE icon + a ≤3-word label + the claim-cube outline), and the launch strip. The rules live on
 // the player aid; the board only has to be readable across a table.
-function destBoard(){   // ONE board (designer, 2026-08-03): the Kontore 2×2 over the Contracts row
+function destBoard(){   // ONE board (designer, 2026-08-03): the Kontore 2×2 over the Orders row
   const cslot=d=>'<div class="dslot l">'+LU('contract')+(OVERLAY?'<div class="ovl">'+ladingTile(d)+'</div>':'')+'</div>';
   return '<div class="destb kboard">'
   +'<div class="disp-h k">'+LU('landmark')+'Kontore</div>'
   +'<div class="kgrid">'+DESTS.map(kMini).join('')+'</div>'
-  +'<div class="disp-h k">'+LU('contract')+'Contracts</div>'
+  +'<div class="disp-h k">'+LU('contract')+'Orders</div>'
   +'<div class="crow">'+LADINGS.slice(0,3).map(cslot).join('')+'</div></div>';}
 
 // ---- THE GUILDHALL BOARD (v4.15, expansion) — mirrors play.html HALL_SHELVES ⚙.
@@ -1166,7 +1166,7 @@ function destBoard(){   // ONE board (designer, 2026-08-03): the Kontore 2×2 ov
 // per player · free actions) · IDENTICAL die spaces (no per-space prize — the anti-jackpot
 // ruling; spaces 4/5 badge their player-count gates, the Overland olsq grammar). 9.8×7 native.
 const HALL_SHELVES_P=[   // top-down print order
-  {nm:'The Reliquary',      min:5, star:9, opts:['Brew 1 (pay its cost)','The Guild’s Seal — claim 1 open Contract outright'], spaces:[2,3,4]},
+  {nm:'The Reliquary',      min:5, star:9, opts:['Brew 1 (pay its cost)','The Guild’s Seal — claim 1 open Order outright'], spaces:[2,3,4]},
   {nm:'The Masters’ Shelf', min:4, star:6, opts:['Brew 1 (pay its cost)','Load 1 more cask — any eligible Ship'], spaces:[3,4,5]},
   {nm:'The Guild Table',    min:3, star:4, opts:['Age 3 — a free Cellar pour','Gain 3 goods'], spaces:[3,4,5]},
   {nm:'The Taproom',        min:2, star:2, fixed:'2★ + Gain 2 goods — every visit', spaces:[3,4,5]},
@@ -1190,8 +1190,8 @@ function hallBoardHtml(){
       +'<span style="font-size:.1in;font-style:italic;color:#5b4a37">spend an ⚜ Invitation + one READY cask (die ≥ the shelf) — the die stands on any open space; pick ONE menu option</span></div>'
     +HALL_SHELVES_P.map(row).join('')
     +'<div style="font-size:.1in;color:#5b4a37;border-top:1px solid #c8b48a;padding-top:.04in;line-height:1.35">'
-    +'Every claimed <b>Contract</b> pays an ⚜ <b>Invitation</b> · your <b>first die on each shelf</b> earns a new one · a die on <b>all four shelves</b> at game end: <b>+6★</b> ⚙. '
-    +'Hall mode swaps the Contract deck for the eased 20-tile set. The enshrined die is committed — it counts toward your empty tray.</div>'
+    +'Every claimed <b>Order</b> pays an ⚜ <b>Invitation</b> · your <b>first die on each shelf</b> earns a new one · a die on <b>all four shelves</b> at game end: <b>+6★</b> ⚙. '
+    +'Hall mode swaps the Order deck for the eased 20-tile set. The enshrined die is committed — it counts toward your empty tray.</div>'
   +'</div>';}
 
 //==================================================================
@@ -1320,7 +1320,7 @@ function wharfBoardSheet(pages){
 function supplyBoardSheet(pages){
   const G=SUPPLY_GEO;const pg=newPage(pages,'boards','Market & Stores + Destinations board (cut both)',G);
   const w1=+(SUPPLY_NW*SCALE).toFixed(4),h1=+(SUPPLY_NH*SCALE).toFixed(4);
-  // ONE destinations board: the Kontore 2×2 grid + the Contracts row, sized to its contents
+  // ONE destinations board: the Kontore 2×2 grid + the Orders row, sized to its contents
   const DEST2_NW=7.6,DEST2_NH=9.0;
   const w2=+(DEST2_NW*SCALE).toFixed(4),h2=+(DEST2_NH*SCALE).toFixed(4);
   const gap=0.35, x1=+((G.w-w1-w2-gap)/2).toFixed(3), y1=+((G.h-h1)/2).toFixed(3);
@@ -1397,12 +1397,12 @@ function buildPages(){
   CASKS.filter(d=>d.exp).forEach(d=>{for(let i=0;i<cnt(d.n);i++)
     expCaskItems.push({fam:'Expansion casks',html:caskCardBack(d,d.pin||poolFor(d.q)[0])});});
   packSpaced(pages,'tiles','EXPANSION cask tiles — Specialty Beers (Gose · Zerbster · Duckstein) + the Jopenbier capstone · pinned bonuses · 22″ plotter · 1.5mm bleed',[{kind:'caskc',items:expCaskItems}],famPages);
-  // --- v4.15 THE GUILDHALL (expansion): the board (letter) + Invitations + the eased Contract set (plotter) ---
+  // --- v4.15 THE GUILDHALL (expansion): the board (letter) + Invitations + the eased Order set (plotter) ---
   letterBoard(pages,'boards','EXPANSION — The Guildhall board (shelves · menus · identical die spaces)',hallBoardHtml());
   const hallTiles=[];
   for(let i=0;i<cnt(18);i++)hallTiles.push({fam:'Invitations',html:invitationTile()});   // ⚙ 18 invitation tiles
-  (MODE==='proof'?LADINGS_HALL.slice(0,3):LADINGS_HALL).forEach(d=>hallTiles.push({fam:'Hall Contracts',html:ladingTile(d)}));
-  packSpaced(pages,'bits','EXPANSION — Guildhall tiles: 18 Invitations ⚙ + the eased 20-Contract set (hall mode REPLACES the base 15) · 22″ plotter · 1.5mm bleed',[{kind:'ld',items:hallTiles}],famPages);
+  (MODE==='proof'?LADINGS_HALL.slice(0,3):LADINGS_HALL).forEach(d=>hallTiles.push({fam:'Hall Orders',html:ladingTile(d)}));
+  packSpaced(pages,'bits','EXPANSION — Guildhall tiles: 18 Invitations ⚙ + the eased 20-Order set (hall mode REPLACES the base 15) · 22″ plotter · 1.5mm bleed',[{kind:'ld',items:hallTiles}],famPages);
   // --- SHIP TILES → their own sheet pair; the Cog and Hulk carriers pack as two runs (different heights) ---
   const skutes=[],cogs=[],hulks=[];
   (MODE==='proof'?[['skute','Bruges'],['cog','London'],['hulk','Novgorod']]:SHIP_DECK).forEach(([hull,dest])=>{
@@ -1475,12 +1475,12 @@ function checklist(pages,famPages){
   // 2026-08-09 [designer]: the manifest is a PACKING LIST, not a lesson — "just some basic
   // details of quantity, any important themes to share, and where they go." Every entry is one
   // short line: what it is · WHERE IT LIVES on the table. The rules live in the rulebook.
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.15b “Second Runnings”)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.16 “Standing Orders”)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">Counts are tuning placeholders ⚙. The rules live on the <b>player aid</b> and in the rulebook — this page only says what to make, how many, and where it sits on the table.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
     +R('Main board — the Wharf','The shared action area: 4 stations in a 2×2, ringed by 8 slots. <b>Centre of the table.</b>','1')
-    +R('Destinations board','The 4 Kontor panels + the Contract row. <b>Beside the Wharf, in everyone’s reach</b> — delivered dice park on it all game.','1')
+    +R('Destinations board','The 4 Kontor panels + the Order row. <b>Beside the Wharf, in everyone’s reach</b> — delivered dice park on it all game.','1')
     +R('Market &amp; Stores board','The face-up displays, ringed by the 50-cell score ring. <b>The Destinations board’s table pair.</b>','1')
     +R('Player brewery boards','3 vessel slots + 2 Specialist seats. <b>One in front of each player</b>; their recipe cards splay beside it.',PLAYERS.length)
     +'</table>';
@@ -1489,7 +1489,7 @@ function checklist(pages,famPages){
     +R('Ship tiles','Neutral hulls, each bound for a printed Kontor; the tile IS its berths. <b>A draw bag → a display of 4.</b> Skute ×6 · Cog ×10 · Hulk ×8 — six per Kontor.','24')
     +R('Building tiles','One green family — nobody owns them. <b>A draw bag → a display of 4</b>; built onto the Wharf’s slots. Shuffle all 20, <b>deal 17</b> into the game (3 sit out).',sumN(BUILDINGS))
     +R('Specialist tiles','The private purple hires, 13 designs (core five ×3 · guild eight ×1). <b>A draw bag → a display of 4</b>; seated on a player board.',impTotal)
-    +R('Contract tiles','Kontor orders — a condition → printed ★. <b>A face-up row of 3 on the Destinations board</b>, the deck beside it.','15')
+    +R('Order tiles','Kontor orders — a condition → printed ★. <b>A face-up row of 3 on the Destinations board</b>, the deck beside it.','15')
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')
     +R('Recipe cards','Double-sided — permission to brew, and the Flight record when flipped. <b>One set of six beside each player’s board.</b>',6*PLAYERS.length)
@@ -1509,8 +1509,8 @@ function checklist(pages,famPages){
     +R('Jopenbier casks','The Q6 vintage capstone (its own toggle) — starts 2, ages to 6. <b>A seventh pile.</b>','6')
     +R('Expansion recipe cards','Gose · Zerbster · Duckstein · Jopenbier — double-sided, one set per player. <b>Beside each player’s board with the base set.</b>',4*PLAYERS.length)
     +R('The Guildhall board','Four shelves — menus + identical die spaces. <b>Beside the Destinations board.</b>','1')
-    +R('Invitation tiles','⚜ Earned per Contract claim and per first showing on each shelf; spent to enshrine. <b>A face-up supply by the Hall.</b>','18')
-    +R('Guildhall Contract set','The eased 20-tile schedule (1–3★) — hall mode <b>replaces</b> the base 15 in the same row of 3.','20')
+    +R('Invitation tiles','⚜ Earned per Order claim and per first showing on each shelf; spent to enshrine. <b>A face-up supply by the Hall.</b>','18')
+    +R('Guildhall Order set','The eased 20-tile schedule (1–3★) — hall mode <b>replaces</b> the base 15 in the same row of 3.','20')
     +'</table>';
   h+=T('Tabled with v4.0 <span style="font-weight:normal;text-transform:none;opacity:.7">— not in this kit</span>')
     +R('The Hall (prestige lane)','Returns as a fifth destination later; the seam is kept in the rules and the engine.','—')

@@ -12,7 +12,7 @@ governed here.
 |---|---|---|---|---|---|---|---|
 | player | n | You; the person at a seat ("brewing house" survives as Overview flavor only) | — | players | No | ~~house~~ | ● |
 | Kontor | n | One of the four trading posts of the League (Bruges · London · Bergen · Novgorod) | landmark | Kontore | Yes | ~~port~~, ~~destination~~ (reserved for a future category of delivery sites) | ● |
-| Destinations board | n | The board holding the four Kontor panels + the Contract row | — | — | Yes | ~~Kontor board~~, ~~kontor mats~~ | ● |
+| Destinations board | n | The board holding the four Kontor panels + the Order row | — | — | Yes | ~~Kontor board~~, ~~kontor mats~~ | ● |
 | Market & Stores board | n | The shared displays (Ships · buildings · Specialists · recipes) ringed by the score track | — | — | Yes | ~~Supply board~~ | ● |
 | the Wharf | n | The shared core: 4 stations ringed by 8 slots | anchor | — | Yes | ~~the board~~ | ● |
 | station | n | One of the 4 action spaces (Market · Brewhouse · Cellar · Harbor) | — | stations | No | ~~space~~, ~~cell~~ | ● |
@@ -32,12 +32,12 @@ governed here.
 | recipe | n | A card granting permission to brew a beer | scroll-text | recipes | No | — | ● |
 | exports | n | The four dealt-3-of-4 beers (Broyhan · Keut · Mumme · Bock) | — | — | No | — | ● |
 | the Flight | n | Your flipped (brewed) recipe cards; scores (n−1)² | unlock | — | Yes | — | ● |
-| Contract | n | A Kontor bonus tile on the Destinations board: a Kontor + a condition → printed ★, claimed on a qualifying delivery | scroll-text | Contracts | Yes | ~~lading~~, ~~order~~, ~~goal~~ | ● |
+| Order | n | A Kontor bonus tile on the Destinations board: a Kontor + a condition → printed ★, claimed on a qualifying delivery (hall mode: the claim also pays an ⚜ Invitation) | scroll-text | Orders | Yes | ~~lading~~, ~~Contract~~ (renamed, designer-ruled 2026-08-12), ~~goal~~ | ● |
 | presence | n | Your parked dice at a Kontor | map-pin | — | No | ~~bump~~ (the act is "place presence") | ● |
 | prize | n | What a Kontor pays the cask's owner on delivery | — | prizes | No | ~~benefit~~, ~~reward~~ | ● |
 | fee | n | The wharf price printed on an acquirable item | — | fees | No | ~~cost~~ (generic ok), ~~price~~ | ● |
 | goods | n | Grain + hops, collectively | coins | — | No | ~~resources~~ | ● |
-| display | n | A face-up row components are taken from (Ships 4 · buildings 4 · Specialists 4 · Contracts 3) | — | displays | No | ~~pool~~ (face-down decks and general stock = "supply") | ● |
+| display | n | A face-up row components are taken from (Ships 4 · buildings 4 · Specialists 4 · Orders 3) | — | displays | No | ~~pool~~ (face-down decks and general stock = "supply") | ● |
 | score track | n | The 50-cell ring; your disc records ★ scored in play | star | — | No | ~~the bank~~ | ● |
 | step | n | +1 on an aging die ("Age 3" = 3 steps, split freely) | — | steps | No | ~~age point~~ | ● |
 | ★ | n | The scoring unit — the glyph, on every surface | star | — | — | ~~VP~~, ~~points~~ (text), ~~stars~~ (text) | ● |
@@ -48,7 +48,7 @@ governed here.
 |---|---|---|
 | **score** | Add ★ to your score-track disc at once | ~~bank~~ |
 | **deliver** | A cask resolves at its Kontor: score the die, park it, take the prize | ~~ship (v)~~, ~~sell~~ |
-| **sail** | A full Ship departs; its casks then deliver in load order | ~~ship (v)~~, ~~depart~~ |
+| **sail** | A full Ship departs; its casks then deliver in boarding order | ~~ship (v)~~, ~~depart~~ |
 | **park** | Set a quality die on the Destinations board (pips up) | ~~place~~ (for dice) |
 | **place presence** | Park 1 tray die (face 1) at a Kontor you have delivered to | ~~bump~~ |
 | **board** | A cask moves from your vessel onto a berth (the minimum reads the die here) | ~~embark~~ |
@@ -59,7 +59,7 @@ governed here.
 | **commission** | Harbor: pay the Ship's printed fee (Skute 2 G · Cog 1 G · Hulk free — v4.8), place it on a slot without a Ship | ~~buy a ship~~, ~~charter~~ |
 | **build** | Place a building tile from the display on a slot; the builder stands a tray die on it at the tile's printed start face (v4.9b — every use turns it up; pips score at game end) | ~~raise~~, ~~place~~ (for buildings), ~~construct~~ |
 | **seat** | Place a Specialist into an open seat | ~~hire~~ (allowed as the load-bonus label only) |
-| **claim** | Take a matching Contract on delivery; score its ★ at once | ~~fulfil~~ |
+| **claim** | Take a matching Order on delivery; score its ★ at once | ~~fulfil~~ |
 | **resolve** | Work through your line: its 2 stations + 2 slots — any order, each once, all optional | ~~resolve the stops~~ |
 | **gain / spend / pay** | Per the house guide §4.5 | — |
 | **warp** | Move an empty hull to another shipless slot (Capstan) | ~~move~~ (for ships) |
@@ -102,10 +102,13 @@ resolve its slot*; a load-lift fires *when a cask loads here*.
 7. **Kontor locked** — ~~port~~ and ~~destination~~ banned for the four; plural **Kontore**;
    "destination" is reserved for a future *category* of delivery sites (the Hall, a trade
    map). "Trading post" allowed once as the flavor gloss.
-8. **The Destinations board** = the board with the four Kontor panels AND the Contract row
+8. **The Destinations board** = the board with the four Kontor panels AND the Order row
    (the row lives there, not on Market & Stores).
-9. **~~lading~~ → Contract** (designer delegated the pick; chosen for table familiarity and
-   because "Order" collides with *load order*).
+9. **~~lading~~ → ~~Contract~~ → Order** (designer-ruled 2026-08-12; the earlier delegated
+   pick had avoided "Order" for its collision with *load order*). **The collision rule:** the
+   tile is always the capitalized **Order**; the boarding sequence stays the lowercase phrase —
+   and where the two could meet in one sentence, printed copy prefers **boarding order** for
+   the sequence ("deliver in boarding order").
 10. **~~tally die~~ → quality die** (full name **cask quality die** at first mention — the
     die shows the cask's current quality).
 11. **The building verb is build** (~~raise~~, ~~place~~ banned); the builder stands a die on
@@ -131,7 +134,7 @@ the registry governs what a PLAYER reads.
 
 | Term | POS | Definition | Locked |
 |---|---|---|---|
-| Invitation | n | The ⚜ tile that admits a cask to the Guildhall: earned per Contract claim and per first showing on each shelf; spent to enshrine | ○ provisional |
+| Invitation | n | The ⚜ tile that admits a cask to the Guildhall: earned per Order claim and per first showing on each shelf; spent to enshrine | ○ provisional |
 | the Guildhall / the Hall | n | The shelf board (Taproom · Guild Table · Masters’ Shelf · Reliquary) — the fifth place a cask can go | ○ provisional |
 | enshrine | v | Spend an Invitation + a Ready cask (die ≥ the shelf’s minimum): the die stands on a shelf space; pick one menu option | ○ provisional (revived from the v3 lexicon) |
 | shelf | n | One of the Hall’s four tiers: a minimum · a menu · identical die spaces | ○ provisional |

@@ -120,7 +120,7 @@ const BUILDINGS=[
   {k:'richberth', nm:'Rich Berth',        ms:3, verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'May sail 1 short'},
   // v4.6 "Guildbook" — the box prints 20 tiles; SETUP DEALS 17 (≥1 Kiln + ≥1 Mission Quay guaranteed)
   {k:'victual',   nm:'Victualling Yard',  ms:3, verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, eff:'Loading: the bonus fires TWICE · sails with the Ship'},
-  {k:'exchange',  nm:'Merchants’ Exchange',ms:2, verb:'transform',tgt:'act',  ic:'arrow-right-left', n:1, g:2, act:'exchange', eff:'Replace up to 3 open Contracts'},   // v4.12
+  {k:'exchange',  nm:'Merchants’ Exchange',ms:2, verb:'transform',tgt:'act',  ic:'arrow-right-left', n:1, g:2, act:'exchange', eff:'Replace up to 3 open Orders'},   // v4.12
   {k:'capstan',   nm:'Warping Capstan',   ms:3, verb:'transform', tgt:'act',  ic:'ship-wheel',   n:1, g:2, act:'capstan', eff:'Move any docked Ship'},   // v4.12: cargo rides; full where it lands → it sails
 ];
 // ---- LADINGS (v4.5b) — the kontor ORDER row: 15 tiles ⚙, a face-up row of 3. Deliver a cask
@@ -134,7 +134,7 @@ const LADINGS=[
   {dest:'Novgorod',min:5, pts:3},{dest:'Novgorod',beer:'Bock',  pts:4},{dest:'Novgorod',min:6, pts:4},
   {dest:null,      min:6, pts:3},
 ];
-// v4.15 "Guildhall" ⚙ — the EASED 20-tile Contract schedule (hall mode REPLACES the base 15):
+// v4.15 "Guildhall" ⚙ — the EASED 20-tile Order schedule (hall mode REPLACES the base 15):
 // rewards 1–3★ and routine conditions, because in hall mode every claim also pays an INVITATION
 // (the Guildhall lane's gate must fire repeatedly). Mirrors play.html LADINGS_HALL.
 const LADINGS_HALL=[
@@ -148,7 +148,7 @@ const LADINGS_HALL=[
 function invitationTile(){return '<div class="ldtile" style="--c:#8a6408">'
   +'<div class="ld-hd">⚜<span class="ld-k">Invitation</span></div>'
   +'<div class="ld-bd"><span class="ld-beer">'+LU(QI)+' Ready</span><span class="ld-arr">+</span><span class="ld-die">'+LU('dices')+' ≥ shelf</span><span class="ld-arr">→</span><span class="ld-pts">the Hall</span></div>'
-  +'<div class="ld-sub">spend to enshrine · earned per Contract claim &amp; first showing per shelf</div>'
+  +'<div class="ld-sub">spend to enshrine · earned per Order claim &amp; first showing per shelf</div>'
   +'</div>';}
 
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
@@ -203,7 +203,7 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:'When gaining recipes, pay no fee', g:2, c:'#5b3a8e', n:1},   // v4.12 wording (every channel, Bruges included)
   {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'Brewing 3+ casks at once: age one +1 at your turn start', g:2, c:'#5b3a8e', n:1},   // v4.12 rework: the 4th-vessel rig and the gate are CUT — a full house earns the drip
   {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'A rival sails your cask: <span class="g">+1'+LU('wheat','g ic')+'</span><span class="h">+1'+LU('sprout','h ic')+'</span>', h:2, c:'#5b3a8e', n:1},   // v4.7: 1H→2H · v4.12 wording pass
-  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'End: +3★ per claimed Contract', g:1, h:1, c:'#5b3a8e', n:1},   // v4.12: uncapped, ungated, 3★ ⚙
+  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'End: +3★ per claimed Order', g:1, h:1, c:'#5b3a8e', n:1},   // v4.12: uncapped, ungated, 3★ ⚙
   {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'End: +2★ per kontor with 3+ parked dice', g:2, c:'#5b3a8e', n:1},
   {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:'Place a presence die: +2★', g:1, c:'#5b3a8e', n:1},   // v4.12: +2★ ⚙ per placed die (the die parks at 1 — 3★ total; face-2 retires)
   {ic:'arrow-right-left', nm:'Chandler', art:'a hand balance — grain on one pan, hop cones on the other', act:'Once per turn: swap <span class="g">1'+LU('wheat','g ic')+'</span> ↔ <span class="h">1'+LU('sprout','h ic')+'</span>', g:1, c:'#5b3a8e', n:1},
@@ -212,7 +212,7 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
 // flat 2 G fare to charter a single cask. ~20 supply covers starts + the Market buy pile. Art = contractCard().
-const CONTRACTS={nm:'Charter Contract', n:20};
+const CONTRACTS={nm:'Merchant’s Order', n:20};
 // v3.2d — recipe cards are DOUBLE-SIDED: the cost face / the BREWED face (a big check, bottom-right).
 // Flip a card the first time you brew that beer — your flipped recipe cards ARE the Flight: the unlock
 // currency AND the scoring record (the ladder counts distinct beers BREWED). The board strip is gone.
@@ -396,7 +396,7 @@ function playerBoard(d,live){const L=live||{};
   const FL=[1,2,3,4,5],FP={1:0,2:0,3:4,4:9,5:16};
   const flight='<div class="pbrd-flight"><div class="fl-t">'+LU('layers')+' The Flight — beers <b>shipped</b></div>'
     +'<div class="fl-row">'+FL.map(n=>'<span class="fl-cell'+(L.flight!=null&&L.flight>=n?' on':'')+'"><b>'+n+'</b><span>'+FP[n]+'★</span></span>').join('')+'</div></div>';
-  const contracts='<div class="pbrd-lads"><span class="sn">Contracts — claimed ★</span>'
+  const contracts='<div class="pbrd-lads"><span class="sn">Orders — claimed ★</span>'
     +(L.contracts||'<span class="si">'+LU('scroll-text')+'</span>')+'</div>';
   return '<div class="pbrd" style="--pc:'+(d.c||'#7c2128')+'">'
     +'<div class="pbrd-id">'
@@ -749,7 +749,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.pbrd-lads .sn{position:absolute;top:.045in;left:0;right:0;text-align:center}'
 +'.pbrd-lads .si{opacity:.3;margin:auto}.pbrd-lads .si svg,.pbrd-lads .si .ic,.pbrd-lads .si img.ai{width:.26in;height:.26in}'
 +'.pbrd-lad{display:inline-flex;align-items:center;gap:.03in;font-size:.1in;font-weight:bold;background:var(--pc);color:#fff;border-radius:.09in;padding:.02in .06in;z-index:1}'
-+'.pbrd-lad img.ai,.pbrd-lad .ic,.pbrd-lad svg{width:.13in;height:.13in;flex:0 0 auto}';   // a claimed Contract wears its Kontor's crest
++'.pbrd-lad img.ai,.pbrd-lad .ic,.pbrd-lad svg{width:.13in;height:.13in;flex:0 0 auto}';   // a claimed Order wears its Kontor's crest
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
 window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,LADINGS_HALL,invitationTile,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};

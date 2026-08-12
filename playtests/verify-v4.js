@@ -497,7 +497,8 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   enterAbbey('stops');
   ok('under 3H → the Abbey refuses', UI.sub!=='abbey');
   ok('every building fee prints in GRAIN only (v45d)', Object.keys(BUILDINGS).every(function(k){var f=BUILDINGS[k].fee;return !f||!f.h;}));
-  ok('the box prints 20 building tiles (v4.6 — setup deals 17)', Object.keys(BUILDINGS).reduce(function(s,k){return s+BUILDINGS[k].qty;},0)===20);
+  ok('the base box prints 20 building tiles (v4.6 — setup deals 17; the Chancery prints on the Guildhall sheet, v4.16)',
+    Object.keys(BUILDINGS).filter(function(k){return !BUILDINGS[k].hall;}).reduce(function(s,k){return s+BUILDINGS[k].qty;},0)===20);
 })();
 (function(){var p=fresh();stops();p.ai={tier:'journeyman'};
   // v45e note: Bergen dest — its specialist prize is goods-neutral, isolating the Store's payout
@@ -995,6 +996,69 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   p.invites=1;p.vessels[0]={style:'broyhan',q:3,die:3,act:'load'};
   ok('a swept menu governs play (star 5 · brew-only)', hallMenuFor(p,1).join(',')==='star,brew'&&(enshrineDo(0,1,'star'),p.bankH===5));
   HALL_SHELVES[1].star=st0;HALL_SHELVES[1].opts=op0;
+})();
+
+// ===== §31 · v4.16 "Standing Orders" — the rename, the volume-lane dials, the ⚜ faucets =====
+(function(){ // the rename reaches the printed strings (Orders, never Contracts)
+  ok('v4.16 rename: the Seal menu line says Order', HALL_OPT.seal.indexOf('Order')>=0&&HALL_OPT.seal.indexOf('Contract')<0);
+  ok('v4.16 rename: the Exchange bonus text says Orders', P_ACT_TXT.exchange.indexOf('Orders')>=0);
+})();
+(function(){ // HALL_PIPS — enshrined dice score their pips at end (the fifth port)
+  HALLEXP=true;var p=fresh(2);HALLEXP=false;var q=S.players[1];
+  S.hallInv.shelves={0:[],1:[{pid:0,die:4}],2:[{pid:0,die:5}],3:[]};
+  ok('dials off: standing shelf dice score nothing (the v4.15 behavior)', scorePlayer(p).ext===0);
+  HALL_PIPS=1;
+  ok('HALL_PIPS: the standing dice score their pips (4+5=9)', scorePlayer(p).ext===9&&scorePlayer(q).ext===0);
+  HALL_LADDER=[0,2,5,9,14];
+  ok('HALL_LADDER stacks: 2 dice → rung 5 (9+5=14)', scorePlayer(p).ext===14);
+  HALL_PIPS=0;
+  ok('the ladder alone: 2 dice → 5', scorePlayer(p).ext===5);
+  HALL_LADDER=null;
+})();
+(function(){ // INV_CASK_W — the ⚜ load bonus joins hall-mode pile draws; the faucet pays with its source tally
+  HALLEXP=true;var p=fresh();HALLEXP=false;
+  INV_CASK_W=1;
+  ok('INV_CASK_W=1: every hall-mode pile draw is the ⚜ bonus', pileDraw(3)==='invgain'&&pileDraw(1)==='invgain');
+  var inv0=p.invites||0;UI={sub:'stops',stops:[],pendingBenefits:[]};
+  fireCaskAct('invgain','actscont');
+  ok('the ⚜ cask bonus pays +1 Invitation (source: cask)', (p.invites||0)===inv0+1&&p.invSrc.cask===1);
+  fireCaskAct('invgain','stops');
+  ok('the Chancery act pays +1 Invitation (source: bldg)', (p.invites||0)===inv0+2&&p.invSrc.bldg===1);
+  INV_CASK_W=0;
+  var base=fresh();   // base mode: hallOn false — the ⚜ never draws even at weight 1
+  INV_CASK_W=1;var okDraw=true;for(var i=0;i<40;i++)if(pileDraw(3)==='invgain')okDraw=false;
+  ok('base mode never draws the ⚜ bonus (hall-gated)', okDraw);
+  INV_CASK_W=0;
+})();
+(function(){ // INV_BLDG — the Guild Chancery joins the deal only under its dial, guaranteed
+  var has=function(){return buildBuildingDeck().indexOf('chancery')>=0;};
+  HALLEXP=true;INV_BLDG=1;
+  var always=true;for(var i=0;i<10;i++)if(!has())always=false;
+  ok('hall mode + INV_BLDG: the Chancery is in every deal (guaranteed like the Kiln)', always);
+  INV_BLDG=0;
+  ok('hall mode without the dial: no Chancery', !has());
+  HALLEXP=false;INV_BLDG=1;
+  ok('base mode: no Chancery even with the dial', !has());
+  INV_BLDG=0;
+})();
+(function(){ // the invSrc split — Orders and first-showings tally their sources
+  HALLEXP=true;var p=fresh();HALLEXP=false;
+  S.ladingRow=[{dest:'bruges',min:2,pts:1}];
+  claimLading(p,0);
+  ok('an Order claim tallies source "order"', p.invSrc.order===1&&(p.invites||0)===1);
+  p.vessels[0]={style:'hopped',q:2,die:2,act:'age'};UI={sub:'stops',stops:[],pendingBenefits:[]};
+  enshrineDo(0,0,'fixed');
+  ok('the first showing tallies source "first"', p.invSrc.first===1);
+})();
+(function(){ // the 'hall' persona — the committed-lane oracle seat leans in where the default declines
+  HALLEXP=true;var p=fresh();HALLEXP=false;
+  p.invites=1;p.vessels[0]={style:'hopped',q:2,die:2,act:'age'};
+  S.hallInv.shelves[0]=[{pid:0,die:2}];   // a REPEAT visit — no first-appearance kicker
+  p.ai={tier:'trader'};
+  var d0=aiEnshrineBest(p);
+  p.ai={tier:'trader',persona:'hall'};
+  var d1=aiEnshrineBest(p);
+  ok('the hall persona commits (a repeat Taproom die-2) where the default declines', d0===null&&!!d1&&d1.shelf===0);
 })();
 
 OUT.forEach(function(l){console.log(l);});
