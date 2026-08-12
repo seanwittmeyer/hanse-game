@@ -38,9 +38,50 @@ the access question is answered by the split, not just the total.
 | `faucets` | INV_CASK_W=0.12 · INV_BLDG=1 (access only, no scoring change) |
 | `full` | HALL_PIPS=1 + the faucets |
 
-*(results pending — the pass is running)*
+**Results (500 games · 0 crashes/0 errors · pace 17.2–18.7 under 2.5× contention — read
+deltas, not absolutes; win-rate CI at n=100/seat ≈ ±8 pp):**
 
-## §2 · Pass 2 — (to be designed off the Pass-1 read)
+| Arm | CM win | GM win | **GM-hall win** | lane Δ | hall★/pl (committed) | maj (committed) | ens/pl | Novgorod dead | crowns |
+|---|---|---|---|---|---|---|---|---|---|
+| base | 63% | 17% | 20% | +3 | 2.6 | 11.4 | 0.64–0.79 | 8% | 0.7% |
+| pips | 59% | 16% | **25%** | **+9** | 8.3 | 11.7 | 1.15–1.31 | 16% | 4.0% |
+| ladder | 65% | 17% | 18% | +1 | 6.5 | 11.2 | 1.10–1.18 | 14% | 1.3% |
+| faucets | **47%** | 25% | **28%** | +3 | 3.6 | 11.6 | 0.93–1.14 | 14% | 1.3% |
+| full | 56% | 23% | 21% | −2 | 13.1 | 11.6 | 1.73–1.90 | 14% | 5.3% |
+
+**Findings:**
+1. **Pips is the lane-maker.** The fifth-port term gives the committed seat its only real
+   edge (+9 pp over the same-budget GM) — and it is component-true: the die standing on the
+   shelf shows its score. The count **ladder is a null** (+1 pp): it pays cheap dice like
+   ripe ones and duplicates the Flight's grammar without its identity.
+2. **The faucets lift the whole lane, not just the committed seat** — both GM seats close on
+   the CM (63→47%), engagement rises ~40%, and the invite flow becomes renewable
+   (per player: order ~1.0 · first ~0.9 · bldg 0.40 · cask 0.40). Access, not value, was
+   the binding constraint at v4.15 — the menu study's low enshrine counts are explained.
+3. **Full overshoots**: with pips AND both faucets at study weights, every seat hall-plays
+   (~13 hall★/player, a quarter of a winning total), pace stretches to 18.7, and the
+   committed seat's edge vanishes (−2 pp) — commitment stops differentiating when the lane
+   is that loud. The Hall should be A lane, not the game.
+4. **Majority compensation works**: the committed seat's majority deficit (~3.5★ vs the CM)
+   is covered by the pips swing (+6★ over base) with room to spare.
+5. **The cost**: Novgorod dead-port worsens 8% → 14–16% every dialed arm (the Reliquary and
+   the eastern run want the same die-5s) — the standing watch for Pass 2/3. London
+   *improves* (13% → 3–8%; brew-menu picks feed it). Crowns start breathing (0.7% → 4–5.3%).
+
+## §2 · Pass 2 — magnitude & print cost (5 arms × 100 games)
+
+The question shifts from *which mechanism* to *how much of it* — and which faucet earns its
+print (the cask ⚜ needs replacement tiles; the Chancery is one tile).
+
+| Arm | Dials | The question |
+|---|---|---|
+| `anchor` | PIPS=1 · ICW=0.12 · IBLDG=1 | the Pass-1 `full` re-run — the cross-pass bridge + n=200 on the flagship |
+| `lite` | PIPS=1 · ICW=0.06 · IBLDG=1 | temper the invite flood — does the committed edge return? |
+| `stars` | PIPS=1 · ICW=0.12 · IBLDG=1 · HSTARS=1,3,5,7 | trim the once-each ★ — re-center value on the DICE (volume per se) |
+| `bldgonly` | PIPS=1 · ICW=0 · IBLDG=1 | the cheapest print — does the Chancery alone renew access? |
+| `caskonly` | PIPS=1 · ICW=0.12 · IBLDG=0 | the faucet isolation — does the ⚜ tile alone carry? |
+
+*(results pending)*
 
 ## §3 · Pass 3 — confirmation
 

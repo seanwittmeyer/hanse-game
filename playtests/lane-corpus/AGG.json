@@ -1,0 +1,227 @@
+{
+ "base": {
+  "games": 100,
+  "errors": 0,
+  "pace": "17.4",
+  "seats": {
+   "cm": {
+    "n": 100,
+    "win": "63.0",
+    "total": "59.4",
+    "ens": "0.79",
+    "hallStars": "2.4",
+    "maj": "15.9",
+    "deliv": "6.81",
+    "claims": "1.03",
+    "inv": "1.70"
+   },
+   "gm": {
+    "n": 100,
+    "win": "17.0",
+    "total": "44.5",
+    "ens": "0.75",
+    "hallStars": "3.0",
+    "maj": "11.0",
+    "deliv": "5.40",
+    "claims": "0.93",
+    "inv": "1.61"
+   },
+   "hall": {
+    "n": 100,
+    "win": "20.0",
+    "total": "42.6",
+    "ens": "0.64",
+    "hallStars": "2.6",
+    "maj": "11.4",
+    "deliv": "5.46",
+    "claims": "0.82",
+    "inv": "1.38"
+   }
+  },
+  "invPerPlayer": "order 0.93 · first 0.64",
+  "deadPort": "bru 0.0% · lon 13.0% · ber 3.0% · nov 8.0%",
+  "shelfFill": "0.99/0.49/0.35/0.35 of 4/4/4/3",
+  "crowns": "0.7%",
+  "picks": "0:fixed 99 · 1:star 33 · 3:star 33 · 2:star 28 · 1:goods3 10 · 1:age3 6 · 2:brew 4 · 2:loadmore 3 · 3:brew 1 · 3:seal 1"
+ },
+ "faucets": {
+  "games": 100,
+  "errors": 0,
+  "pace": "17.6",
+  "seats": {
+   "cm": {
+    "n": 100,
+    "win": "47.0",
+    "total": "55.9",
+    "ens": "1.14",
+    "hallStars": "3.5",
+    "maj": "14.0",
+    "deliv": "6.31",
+    "claims": "1.28",
+    "inv": "3.10"
+   },
+   "gm": {
+    "n": 100,
+    "win": "25.0",
+    "total": "46.1",
+    "ens": "0.93",
+    "hallStars": "3.2",
+    "maj": "12.1",
+    "deliv": "5.38",
+    "claims": "0.90",
+    "inv": "2.43"
+   },
+   "hall": {
+    "n": 100,
+    "win": "28.0",
+    "total": "46.4",
+    "ens": "1.06",
+    "hallStars": "3.6",
+    "maj": "11.6",
+    "deliv": "5.56",
+    "claims": "0.97",
+    "inv": "2.67"
+   }
+  },
+  "invPerPlayer": "order 1.05 · first 0.88 · bldg 0.40 · cask 0.40",
+  "deadPort": "bru 0.0% · lon 4.0% · ber 3.0% · nov 14.0%",
+  "shelfFill": "1.66/0.56/0.40/0.51 of 4/4/4/3",
+  "crowns": "1.3%",
+  "picks": "0:fixed 166 · 3:star 45 · 2:star 31 · 1:goods3 23 · 1:star 22 · 1:age3 11 · 2:brew 6 · 3:seal 5 · 2:loadmore 3 · 3:brew 1"
+ },
+ "full": {
+  "games": 100,
+  "errors": 0,
+  "pace": "18.7",
+  "seats": {
+   "cm": {
+    "n": 100,
+    "win": "56.0",
+    "total": "64.4",
+    "ens": "1.88",
+    "hallStars": "13.4",
+    "maj": "14.7",
+    "deliv": "6.30",
+    "claims": "1.09",
+    "inv": "3.56"
+   },
+   "gm": {
+    "n": 100,
+    "win": "23.0",
+    "total": "53.6",
+    "ens": "1.73",
+    "hallStars": "12.8",
+    "maj": "11.1",
+    "deliv": "5.36",
+    "claims": "1.07",
+    "inv": "3.43"
+   },
+   "hall": {
+    "n": 100,
+    "win": "21.0",
+    "total": "55.0",
+    "ens": "1.90",
+    "hallStars": "13.1",
+    "maj": "11.6",
+    "deliv": "5.48",
+    "claims": "0.99",
+    "inv": "3.36"
+   }
+  },
+  "invPerPlayer": "first 1.50 · order 1.05 · bldg 0.47 · cask 0.43",
+  "deadPort": "bru 0.0% · lon 3.0% · ber 6.0% · nov 14.0%",
+  "shelfFill": "2.32/1.21/0.90/1.08 of 4/4/4/3",
+  "crowns": "5.3%",
+  "picks": "0:fixed 232 · 3:star 92 · 2:star 64 · 1:star 60 · 1:goods3 43 · 2:brew 20 · 1:age3 18 · 3:seal 10 · 2:loadmore 6 · 3:brew 6"
+ },
+ "ladder": {
+  "games": 100,
+  "errors": 0,
+  "pace": "17.2",
+  "seats": {
+   "cm": {
+    "n": 100,
+    "win": "65.0",
+    "total": "61.6",
+    "ens": "1.12",
+    "hallStars": "6.5",
+    "maj": "14.7",
+    "deliv": "6.63",
+    "claims": "1.20",
+    "inv": "2.03"
+   },
+   "gm": {
+    "n": 100,
+    "win": "17.0",
+    "total": "47.1",
+    "ens": "1.18",
+    "hallStars": "7.7",
+    "maj": "11.1",
+    "deliv": "5.15",
+    "claims": "0.91",
+    "inv": "1.90"
+   },
+   "hall": {
+    "n": 100,
+    "win": "18.0",
+    "total": "48.4",
+    "ens": "1.10",
+    "hallStars": "6.5",
+    "maj": "11.2",
+    "deliv": "5.39",
+    "claims": "0.93",
+    "inv": "1.82"
+   }
+  },
+  "invPerPlayer": "order 1.01 · first 0.90",
+  "deadPort": "bru 0.0% · lon 7.0% · ber 9.0% · nov 14.0%",
+  "shelfFill": "1.77/0.62/0.54/0.47 of 4/4/4/3",
+  "crowns": "1.3%",
+  "picks": "0:fixed 177 · 2:star 42 · 3:star 42 · 1:star 28 · 1:age3 17 · 1:goods3 17 · 2:brew 7 · 2:loadmore 5 · 3:seal 4 · 3:brew 1"
+ },
+ "pips": {
+  "games": 100,
+  "errors": 0,
+  "pace": "17.6",
+  "seats": {
+   "cm": {
+    "n": 100,
+    "win": "59.0",
+    "total": "61.4",
+    "ens": "1.31",
+    "hallStars": "9.2",
+    "maj": "14.3",
+    "deliv": "6.56",
+    "claims": "1.06",
+    "inv": "2.16"
+   },
+   "gm": {
+    "n": 100,
+    "win": "16.0",
+    "total": "49.9",
+    "ens": "1.24",
+    "hallStars": "9.8",
+    "maj": "11.2",
+    "deliv": "5.34",
+    "claims": "0.94",
+    "inv": "2.07"
+   },
+   "hall": {
+    "n": 100,
+    "win": "25.0",
+    "total": "49.5",
+    "ens": "1.15",
+    "hallStars": "8.3",
+    "maj": "11.7",
+    "deliv": "5.31",
+    "claims": "0.85",
+    "inv": "1.87"
+   }
+  },
+  "invPerPlayer": "first 1.08 · order 0.95",
+  "deadPort": "bru 0.0% · lon 8.0% · ber 7.0% · nov 16.0%",
+  "shelfFill": "1.34/0.96/0.70/0.70 of 4/4/4/3",
+  "crowns": "4.0%",
+  "picks": "0:fixed 134 · 3:star 59 · 2:star 59 · 1:star 46 · 1:goods3 28 · 1:age3 22 · 2:brew 10 · 3:seal 9 · 3:brew 2 · 2:loadmore 1"
+ }
+}
