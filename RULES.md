@@ -960,14 +960,21 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
 12. **The dice pass** ⚙ — 9 die-touching designs in the printed 20. Watch: does the Tollhouse’s
    stamp (−1 die for +3★) stay a real choice; does the Bonded Store’s send-off read at the
    table (the ephemeral family is now TWO — the Victualling Yard joined it, v4.6); Assay/Racking usage rates.
-13. **The Guildhall (v4.15)** ⚙ — the lane's first battery is owed: sim `HALL=1` +
-   `HALL_STARS`/`HALL_MENU` sweeps (which menu options get PICKED is the printed-benefit
-   read), a PATHWAYS-style hall-lane arm vs the majority lane, and the P1-tempo read (the
-   anti-jackpot design must show a flat seat spread). Standing watches: the **Chronicler**
-   (+3★/claim, uncapped) runs hot under the eased 20-deck — reprice or cap before a human
-   table; the **Seal loop** (a Reliquary regular out-claiming the row — dial: Seal
-   once-per-game); **Age 3 vs the Cellar** (the Hall must not out-cellar the station — dial
-   to Age 2); 2p majority starvation (shelves narrow at two, but the dice leave the mats).
+13. **The Guildhall (v4.15 · lane study v4.16)** ⚙ — **the volume-lane battery RAN**
+   (2026-08-12, `HALL-LANE-STUDY-v416.md`: 1,500 CM/GM games, three passes, committed-lane
+   persona seats). Confirmed: the lane plays at **parity** in every pips config (viable,
+   never a magnet); the **recommended print — `HALL_PIPS` + the Guild Chancery — awaits the
+   ruling** (enshrined dice score their pips at end · the Chancery pays an ⚜ per
+   activation); the count LADDER is cut (two nulls); the ⚜ cask tiles are the optional
+   richness dial (+~3 hall★, +2.5 pp Novgorod). NEW measured watch: the **Novgorod bid** —
+   the Reliquary and the eastern run want the same die-5s (+3 pp dead-port under the
+   recommended print; dial if it bites live: a hall-mode Order naming Novgorod at premium
+   ★). Standing watches: the **Chronicler** (+3★/claim, uncapped) runs hot under the eased
+   20-deck — reprice or cap before a human table (hall mode adds ~1 claim/player of flow);
+   the **Seal loop** (a Reliquary regular out-claiming the row — dial: Seal once-per-game);
+   **Age 3 vs the Cellar** (the Hall must not out-cellar the station — dial to Age 2); 2p
+   majority starvation (shelves narrow at two, but the dice leave the mats). P1 tempo read
+   FLAT across the 1,500-game corpus (the anti-jackpot structure held).
 14. **The expansion beers (v4.14 · pins v4.15b)** ⚙ — the re-derivation watches: the
    **Assay House** at 1 `H`-to-Ready buys Jopenbier’s whole four-step climb (the sharpened
    Bock-Assay watch — dials: the Assay’s reach, or accept the single tile in a 17-of-20

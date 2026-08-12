@@ -124,7 +124,7 @@ pooled numbers only (per-seat CI at n=200 ≈ ±5.7 pp, n=300 ≈ ±4.6 pp):
 | `confirmC` | caskonly | 200 |
 | `confirmD` | bldgonly | 200 |
 
-*(results pending)*
+*(all five arms ran 100/100 clean; the pooled verdict is §3)*
 
 **Pre-registered decision criteria for the recommended print (set before Pass-2 results):**
 1. **Lane**: the committed seat ≥ the same-budget GM (Δ ≥ 0; ideally +5 pp or better).
@@ -139,8 +139,74 @@ pooled numbers only (per-seat CI at n=200 ≈ ±5.7 pp, n=300 ≈ ±4.6 pp):
 6. **Print cost** breaks ties: fewer new components wins (the Chancery = 1 tile; the cask ⚜
    = a replacement-tile set).
 
-## §3 · Pass 3 — confirmation
+## §3 · The pooled verdict table (1,500 games · `playtests/lane-pool.js`)
 
-## §4 · Verdict & the recommended print ⚙
+Every Pass-3 arm ran 100/100 games, 0 errors. Pooled BY CONFIG across all three passes
+(CI = ±1.96·se):
 
-*(nothing here is ruled — the recommendation awaits the designer)*
+| Config | n | GM win | GM-hall win | committed total | committed hall★ | Novgorod dead | pace |
+|---|---|---|---|---|---|---|---|
+| off (base) | 200 | 19.0±5.4 | 21.0±5.6 | 43.8 | 2.4 | 11.5% | 17.3 |
+| pips+both (ICW .12+bldg) | 300 | 21.7±4.7 | 22.0±4.7 | 52.3 | **13.0** | 14.0% | 18.1 |
+| **pips+bldg** | 200 | 20.0±5.5 | 19.5±5.5 | 51.5 | **9.7** | **14.5%** | **17.5** |
+| pips+cask | 200 | 21.0±5.6 | 23.0±5.8 | 51.9 | 11.7 | 17.0% | 18.1 |
+| pips+both+trimmed★ | 200 | 21.0±5.6 | 20.0±5.5 | 47.3 | 9.1 | 16.0% | 17.8 |
+
+**The confirmed findings:**
+1. **The lane is at PARITY in every pips config** — the committed seat wins neither more nor
+   less than the same-budget GM (all Δs within CI). What the dials change is the lane's
+   *economy*, not its win rate: the committed seat's TOTAL rises from 43.8 (base — hall play
+   was a scoring hole patched by other channels) to ~52, with hall★ 9.7–13.0 where base paid
+   2.4. Volume at the Hall becomes a real way to score — not a trap, not a magnet.
+2. **The pooled base rate corrects the Novgorod scare**: base itself runs 11.5% dead at
+   these budgets (Pass 1's 8% was the optimistic tail). The dialed cost is therefore
+   **+3 pp (pips+bldg) to +5.5 pp (pips+cask)** — real but mild; the Reliquary-vs-eastern-run
+   bid for die-5s is the mechanism. Confirm-D alone read 11% — indistinguishable from base.
+3. **Loudness confirms Pass 2**: both-faucets ≈ 13 hall★ (breaches the ≤10 criterion);
+   single-faucet ≈ 9.7–11.7; trimmed-★ ≈ 9.1.
+4. **The count LADDER is dead** (two nulls) — cut from the design space. Pips is the volume
+   term: component-true (the die shows its score) and quality-responsive.
+5. Crowns breathe at 4.3–6.7% in every dialed config (base ~0–0.7%). Pace holds within
+   +0.2–0.8 rounds of base. Shelf capacity never binds (worst fill 2.3 of 4). Seat-win
+   spreads stay flat under rotation — the anti-jackpot structure held across 1,500 games.
+
+## §4 · Verdict & the recommended print ⚙ (NOT ruled — the designer decides)
+
+**Recommended: `HALL_PIPS = 1` + `INV_BLDG = 1` (the Guild Chancery) — and nothing else.**
+
+| Criterion (pre-registered, §2b) | pips+bldg reads |
+|---|---|
+| 1 · lane viable, not dominant | 19.5% vs GM 20.0% — parity ✔ |
+| 2 · compensates majorities, ≤10 hall★ | committed hall★ 9.7 ≥ the ~3.5★ majority deficit; under the loudness bar ✔ |
+| 3 · renewable access, Orders still the gate | Chancery ~0.4–0.5/player · Orders ~0.94 (the largest earned source) ✔ (borderline on the 0.5 bar — the first-showing engine covers the start) |
+| 4 · Kontor health | Novgorod 14.5% vs base 11.5% (+3 pp — the mildest faucet config); London/Bergen improve ✔ |
+| 5 · pace | 17.5 vs 17.3 ✔ |
+| 6 · print cost | ONE new tile + one board line — the cheapest print ✔ |
+
+**What it prints:** the Hall board gains one line — *"at game end, every die on a shelf
+scores its pips"* — and the Guildhall sheet gains the **Guild Chancery** tile (building,
+qty 1, fee 1 `G`, mark start 2: *Gain 1 ⚜ Invitation*), guaranteed into the deal in hall
+mode (deal 18 of 21 ⚙).
+
+**The optional richness dial** (designer's taste, not sim-forced): the **⚜ cask tiles**
+(`INV_CASK_W` ≈ 0.12 — a *Gain 1 Invitation* load bonus in the printed mix) lift access
+further and push committed hall★ to ~13 — a quarter of a winning total — at +2.5 pp more
+Novgorod cost and a replacement-tile print. The sims say it works; they also say it makes
+the Hall loud. If the table wants the Hall louder, this is the knob — and `HSTARS 1,3,5,7`
+(trim the once-each ★) is the counter-knob that pulls ~4★ back out.
+
+**Cut:** `HALL_LADDER` (two nulls — pips does volume better, on the component itself).
+
+**Standing watches for the human table:** the Novgorod bid (structural, ~+3 pp; dials if it
+bites live: a hall-mode Order naming Novgorod at premium ★, or acceptance — the 2p
+historical residual was 33%) · the Chronicler under the eased 20-deck (unrepriced — the
+v4.15 watch stands, now sharpened: hall mode adds ~1 claim/player of flow) · the ★-dominant
+menu picks (menus matter mostly on repeat visits; the menu study's recommended print still
+applies) · the committed-lane persona is an instrument, not a rule — human commitment may
+run hotter than the MC's.
+
+*Corpora: `playtests/lane-corpus/` (Pass 1) · `lane-corpus2/` (Pass 2) · `lane-corpus3/`
+(Pass 3), AGG.json in each; the pooled table: `node playtests/lane-pool.js`. All 150 shards
+ran ~2.5× oversubscribed on 4 cores, uniform across arms and passes (the standing bulk
+rule); tier win rates are within-corpus reads, not absolute strengths. Nothing here is
+ruled — the recommendation awaits the designer.*
