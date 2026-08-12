@@ -83,6 +83,19 @@ print (the cask ⚜ needs replacement tiles; the Chancery is one tile).
 
 *(results pending)*
 
+**Pre-registered decision criteria for the recommended print (set before Pass-2 results):**
+1. **Lane**: the committed seat ≥ the same-budget GM (Δ ≥ 0; ideally +5 pp or better).
+2. **Compensation**: committed hall★ ≥ the committed seat's majority deficit vs the field
+   (≈ 3–4★) — but total hall★/player ≤ ~10 (the Hall is A lane, not the game; Pass-1 `full`'s
+   13★ read as too loud).
+3. **Access**: invite flow renewable — the non-Order faucets together ≥ ~0.5/player, with
+   Order claims still the largest single source (the Contract row stays the lane's gate).
+4. **Kontor health**: Novgorod dead-port ≤ ~12% (base read 8%; Pass-1 dialed arms 14–16%
+   is the ceiling of acceptable) and no other port regressing past base.
+5. **Pace**: within ~1 round of the in-corpus base (17.4).
+6. **Print cost** breaks ties: fewer new components wins (the Chancery = 1 tile; the cask ⚜
+   = a replacement-tile set).
+
 ## §3 · Pass 3 — confirmation
 
 ## §4 · Verdict & the recommended print ⚙
