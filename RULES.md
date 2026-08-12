@@ -1,4 +1,20 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.15b “Second Runnings”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.16 “Standing Orders”)
+
+> **v4.16 “Standing Orders” (designer-called 2026-08-12 — Contracts become ORDERS; the Hall
+> must be a lane).** Two things, one letter. **(1) The rename is RULED:** the Kontor bonus
+> tiles are **Orders** on every player surface (the lineage: *lading* → *Contract* → **Order**;
+> the registry’s old collision worry is resolved by copy — the tile is always the capitalized
+> **Order**, and the boarding sequence now prints as ***boarding order***). **(2) The
+> volume-lane program is IN STUDY:** the designer’s brief — *going volume at the Hall should
+> compensate for the forgone majority points, with renewable access via Invitations* — enters
+> the engine as four sim-tunable dials ⚙, ALL OFF until the lane study rules: **HALL_PIPS**
+> (every enshrined die also scores its **pips** at game end — the fifth port) ·
+> **HALL_LADDER** (end ★ by your enshrine **count**, the Flight’s grammar) · **INV_CASK_W**
+> (a ⚜ *Gain 1 Invitation* load bonus joins hall-mode pile draws) · **INV_BLDG** (the **Guild
+> Chancery** — a hall-mode building: activate → +1 ⚜ Invitation; fee 1 `G`, mark starts at 2).
+> The lane oracle is `playtests/hall-lane-probe.js` (3p Cellarmaster · Guildmaster · a
+> committed hall-persona Guildmaster); the study record is
+> `archive/records/HALL-LANE-STUDY-v416.md`. The recommended print lands in §12 when ruled.
 
 > **v4.15b “Second Runnings” (designer-ruled 2026-08-10 — the specialty signatures
 > simplify).** *“Keep it simple”* — each specialty beer’s identity IS its pinned load bonus.

@@ -1,5 +1,16 @@
 # Automa / AI Opponent — Plan & Status
 
+> **v4.16 "Standing Orders" (2026-08-12): the 'hall' persona + the dial-aware enshrine.**
+> The persona vocabulary gains **'hall'** — the committed-lane seat for the volume-lane
+> oracle (`hall-lane-probe.js`): `aiEnshrineBest` under the persona takes +1.8 on every
+> viable triple and drops its accept threshold 0.8 → 0.2; `aiLadingBonus` +1.2 in hall mode
+> (each Order claim is also an ⚜ Invitation); `aiVerbValue` prices the new `invgain` act
+> (the ⚜ cask bonus / the Guild Chancery) by invitation scarcity × a Ready-cask factor ×
+> `aiPW(p,'hall')`. The enshrine value also learns the study dials: +0.55/pip under
+> `HALL_PIPS`, + half the next rung's marginal under `HALL_LADDER`. As with 'quality', the
+> persona rides the greedy fallbacks AND the MC seat's own rollouts; the CM stays pure
+> search. Assigned only by instruments (never a default).
+
 > **v4.15 "Guildhall" (2026-08-10): the enshrine teaches.** The greedy tiers gain ONE
 > compact policy — `aiEnshrineBest` scores every (cask · shelf · menu-option) triple against
 > the port alternative (~pips + 1.6 slack) with a +1.6 first-appearance kicker, and the

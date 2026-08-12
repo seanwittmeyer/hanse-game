@@ -1,4 +1,16 @@
-# Brewhouses of the Hanse — Components (v4.15b “Second Runnings”)
+# Brewhouses of the Hanse — Components (v4.16 “Standing Orders”)
+
+> **v4.16 (designer-called 2026-08-12 — Contracts become Orders; the lane study opens):**
+> **the RENAME reprints every face that says “Contract”** (the v4.13 lesson): the
+> **Destinations board’s row label** (*Open Orders*) · the **player board’s pile zone**
+> (*Orders — claimed ★*) · the **Merchants’ Exchange tile** (*Replace up to 3 open Orders*) ·
+> the **Chronicler tile** (*End: +3★ per claimed Order*) · the **player aid** — and the aid’s
+> delivery line now says ***boarding order*** (the registry’s collision rule). The Order
+> tiles themselves print no word — no change. **In study, not yet printed ⚙:** the Guildhall
+> sheet may gain **⚜ replacement cask tiles** (a *Gain 1 Invitation* load bonus at a printed-mix
+> weight) and the **Guild Chancery** building tile (hall mode, qty 1, fee 1 `G`, mark start 2:
+> *Gain 1 ⚜ Invitation*); the Hall board may add a pips/ladder end-scoring line. Counts land
+> with the lane-study ruling (`HALL-LANE-STUDY-v416.md`).
 
 > **v4.15b (designer-ruled 2026-08-10, same day — the expansion pins simplified):** two
 > expansion cask piles REPRINT their pinned load bonus (the v4.13 lesson — every ruling that
