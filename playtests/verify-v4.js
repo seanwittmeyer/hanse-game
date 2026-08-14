@@ -983,7 +983,10 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('a FULL shelf refuses the enshrine (the lower shelves stay open)',
     enshrineDo(0,3,'star')===false&&hallEligible(p)[0].shelves.indexOf(3)<0&&hallEligible(p)[0].shelves.indexOf(2)>=0);
   S.hallInv.shelves={0:[{pid:0,die:2}],1:[{pid:0,die:3}],2:[{pid:0,die:4}],3:[{pid:0,die:5}]};
+  HALL_PIPS=0;   // isolate the crown (the pips term is v4.16b's default — its own §31 checks)
   ok('the CROWN: a die on all four shelves scores +6 (ext)', scorePlayer(p).ext===6&&scorePlayer(q).ext===0);
+  HALL_PIPS=1;
+  ok('v4.16b: the ruled default stacks the pips on the crown (2+3+4+5+6=20)', scorePlayer(p).ext===20);
   var p2;HALLEXP=true;p2=fresh();HALLEXP=false;
   p2.invites=1;p2.presPool=1;p2.vessels=[{style:'hopped',q:2,die:2,act:'age'},null,null];
   enshrineDo(0,0,'fixed');
@@ -1003,17 +1006,18 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('v4.16 rename: the Seal menu line says Order', HALL_OPT.seal.indexOf('Order')>=0&&HALL_OPT.seal.indexOf('Contract')<0);
   ok('v4.16 rename: the Exchange bonus text says Orders', P_ACT_TXT.exchange.indexOf('Orders')>=0);
 })();
-(function(){ // HALL_PIPS — enshrined dice score their pips at end (the fifth port)
+(function(){ // HALL_PIPS — enshrined dice score their pips at end (the fifth port; RULED ON v4.16b)
   HALLEXP=true;var p=fresh(2);HALLEXP=false;var q=S.players[1];
   S.hallInv.shelves={0:[],1:[{pid:0,die:4}],2:[{pid:0,die:5}],3:[]};
-  ok('dials off: standing shelf dice score nothing (the v4.15 behavior)', scorePlayer(p).ext===0);
+  HALL_PIPS=0;
+  ok('dials off: standing shelf dice score nothing (the v4.15 behavior — sims can still reach it)', scorePlayer(p).ext===0);
   HALL_PIPS=1;
   ok('HALL_PIPS: the standing dice score their pips (4+5=9)', scorePlayer(p).ext===9&&scorePlayer(q).ext===0);
   HALL_LADDER=[0,2,5,9,14];
   ok('HALL_LADDER stacks: 2 dice → rung 5 (9+5=14)', scorePlayer(p).ext===14);
   HALL_PIPS=0;
   ok('the ladder alone: 2 dice → 5', scorePlayer(p).ext===5);
-  HALL_LADDER=null;
+  HALL_LADDER=null;HALL_PIPS=1;   // restore the ruled defaults
 })();
 (function(){ // INV_CASK_W — the ⚜ load bonus joins hall-mode pile draws; the faucet pays with its source tally
   HALLEXP=true;var p=fresh();HALLEXP=false;
@@ -1036,10 +1040,15 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   var always=true;for(var i=0;i<10;i++)if(!has())always=false;
   ok('hall mode + INV_BLDG: the Chancery is in every deal (guaranteed like the Kiln)', always);
   INV_BLDG=0;
-  ok('hall mode without the dial: no Chancery', !has());
+  ok('hall mode without the dial: no Chancery (the sweep can still reach v4.15)', !has());
   HALLEXP=false;INV_BLDG=1;
-  ok('base mode: no Chancery even with the dial', !has());
-  INV_BLDG=0;
+  ok('base mode: no Chancery even with the dial (base purity)', !has());
+})();
+// ===== §32 · v4.16b "Guild Ledger" — the RULED defaults =====
+(function(){
+  ok('v4.16b defaults: HALL_PIPS=1 · INV_BLDG=1 · INV_CASK_W=0 · HALL_LADDER cut',
+    HALL_PIPS===1&&INV_BLDG===1&&INV_CASK_W===0&&HALL_LADDER===null);
+  ok('the Chancery prints on the Guildhall sheet, not the base box (hall flag)', BUILDINGS.chancery.hall===true&&!!BUILDINGS.chancery.fee&&BUILDINGS.chancery.fee.g===1&&BUILDINGS.chancery.ms===2);
 })();
 (function(){ // the invSrc split — Orders and first-showings tally their sources
   HALLEXP=true;var p=fresh();HALLEXP=false;

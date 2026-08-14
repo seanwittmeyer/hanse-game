@@ -1,4 +1,13 @@
-# Brewhouses of the Hanse — Components (v4.16 “Standing Orders”)
+# Brewhouses of the Hanse — Components (v4.16b “Guild Ledger”)
+
+> **v4.16b (designer-ruled 2026-08-14 — the lane study’s print lands):** two Guildhall
+> reprints. **(1) The Guildhall board** adds its end-scoring line — *“at game end, every die
+> on a shelf scores its pips”* (the fifth port; the board’s footer line). **(2) The GUILD
+> CHANCERY tile joins the Guildhall sheet** (a green building, 2.5×1.32″: *Gain 1 ⚜
+> Invitation* · fee 1 `G` · mark start 2 · qty 1) — in hall mode it shuffles into the
+> building deck and is **always dealt** (17 of 21 ⚙; the base box still prints 20, the
+> Chancery rides the expansion sheet). The manifest gains its row. The ⚜ replacement cask
+> tiles from the study stay UNPRINTED (the optional richness dial); no other faces change.
 
 > **v4.16 (designer-called 2026-08-12 — Contracts become Orders; the lane study opens):**
 > **the RENAME reprints every face that says “Contract”** (the v4.13 lesson): the

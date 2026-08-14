@@ -1,4 +1,17 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.16 “Standing Orders”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.16b “Guild Ledger”)
+
+> **v4.16b “Guild Ledger” (designer-ruled 2026-08-14 — the lane study’s print is RULED).**
+> The two recommended dials flip ON as hall mode’s printed rules: **(1) every die standing
+> on a shelf scores its PIPS at game end** — the Hall becomes the fifth place a die parks
+> for value, and volume there is a true lane (the Hall board prints the line; the Final
+> Standing gains a Hall column); **(2) the GUILD CHANCERY joins the box** — the Hall’s own
+> building (Guildhall sheet, qty 1, fee 1 `G`, mark start 2): activate → **gain 1 ⚜
+> Invitation**; in hall mode it shuffles into the building deck and is **always dealt**
+> (17 of 21 ⚙). The evidence: 1,500 CM/GM games over three passes
+> (`HALL-LANE-STUDY-v416.md`) — the committed lane plays at parity while its economy rises
+> (hall ★ 2.4 → ~10/committed player), at +3 pp Novgorod dead-port and +0.2 rounds. The ⚜
+> cask bonus stays an unprinted richness dial ⚙; the enshrine-count ladder is CUT (two
+> nulls). §12 carries the rules; §Open #13 keeps the watches.
 
 > **v4.16 “Standing Orders” (designer-called 2026-08-12 — Contracts become ORDERS; the Hall
 > must be a lane).** Two things, one letter. **(1) The rename is RULED:** the Kontor bonus
@@ -799,13 +812,18 @@ deployed) rode the deploy state and is **cut** — its jobs re-home on the spine
 = the four priced steps · the race-to-end = the empty-tray clock (four steps of runway on one
 die, in every rival’s view) · contestability = the berth race.*
 
-### The Guildhall — Invitations (a third toggle, v4.15)
+### The Guildhall — Invitations (a third toggle, v4.15 · the volume lane v4.16b)
 
 **The Hall as an Order-fed shelf board.** With the toggle on:
 
 - **The Order deck swaps** to the eased 20-tile schedule ⚙ (rewards 1–3★; conditions
   routine — die 2+/3+ across all four Kontore, four named staples, three *any-Kontor* tiles).
   Every **claimed Order also pays an ⚜ Invitation** (a small tile at your seat).
+- **The Guild Chancery joins the building deck** (v4.16b — the Hall’s own tile, printed on
+  the Guildhall sheet): shuffled in at setup and **always dealt** (17 of 21 ⚙, guaranteed
+  like the Kiln). Its printed action — *Gain 1 ⚜ Invitation* — serves whoever resolves its
+  slot; fee 1 `G` to gain via the wharf channels, mark starts at 2. The renewable-access
+  faucet: Orders gate the lane, the Chancery keeps it open.
 - **Enshrine (during your turn):** spend 1 Invitation + one **Ready** cask from your vessels
   whose **die ≥ a shelf’s minimum** (read off the vessel — no load-lifts; vessel-side lifts
   such as the Hop Exchange’s past-quality pump count). The die **parks on any open space** of
@@ -824,8 +842,11 @@ die, in every rival’s view) · contestability = the berth race.*
   edge** (the record); action dice stand right. Arriving last pays the same as arriving
   first: first-come races **capacity only**, never a printed jackpot.
 - **The engine:** your **first die on each shelf earns a new Invitation** — one claim can
-  fund the whole climb; every repeat visit costs a fresh claim. Game end: a die on **all
-  four shelves → +6★** ⚙ (the crown).
+  fund the whole climb; every repeat visit costs a fresh claim (or a Chancery stop).
+- **End-scoring (v4.16b — the volume lane):** **every die standing on a shelf scores its
+  pips** — the Hall is the fifth place a die parks for value, and repeat visits are worth
+  the trip (the lane-study print: it compensates the forgone majorities). Plus the crown:
+  a die on **all four shelves → +6★** ⚙.
 - The Hall pays **no majority** — its lane competes with the majority race for the same
   ripe dice; the fork is the point.
 
@@ -960,13 +981,14 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
 12. **The dice pass** ⚙ — 9 die-touching designs in the printed 20. Watch: does the Tollhouse’s
    stamp (−1 die for +3★) stay a real choice; does the Bonded Store’s send-off read at the
    table (the ephemeral family is now TWO — the Victualling Yard joined it, v4.6); Assay/Racking usage rates.
-13. **The Guildhall (v4.15 · lane study v4.16)** ⚙ — **the volume-lane battery RAN**
-   (2026-08-12, `HALL-LANE-STUDY-v416.md`: 1,500 CM/GM games, three passes, committed-lane
-   persona seats). Confirmed: the lane plays at **parity** in every pips config (viable,
-   never a magnet); the **recommended print — `HALL_PIPS` + the Guild Chancery — awaits the
-   ruling** (enshrined dice score their pips at end · the Chancery pays an ⚜ per
-   activation); the count LADDER is cut (two nulls); the ⚜ cask tiles are the optional
-   richness dial (+~3 hall★, +2.5 pp Novgorod). NEW measured watch: the **Novgorod bid** —
+13. **The Guildhall (v4.15 · lane study v4.16 · print RULED v4.16b)** ⚙ — **the volume-lane
+   battery RAN** (2026-08-12, `HALL-LANE-STUDY-v416.md`: 1,500 CM/GM games, three passes,
+   committed-lane persona seats) and its **recommended print was RULED 2026-08-14**:
+   `HALL_PIPS` + the Guild Chancery are LIVE (enshrined dice score their pips at end · the
+   Chancery pays an ⚜ per activation). Confirmed: the lane plays at **parity** in every
+   pips config (viable, never a magnet); the count LADDER is cut (two nulls); the ⚜ cask
+   tiles stay the optional unprinted richness dial (+~3 hall★, +2.5 pp Novgorod — INV_CASK
+   in sims). NEW measured watch: the **Novgorod bid** —
    the Reliquary and the eastern run want the same die-5s (+3 pp dead-port under the
    recommended print; dial if it bites live: a hall-mode Order naming Novgorod at premium
    ★). Standing watches: the **Chronicler** (+3★/claim, uncapped) runs hot under the eased

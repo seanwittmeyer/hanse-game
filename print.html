@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v4.16 “Standing Orders”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v4.16b “Guild Ledger”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -708,7 +708,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.16 “Standing Orders”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.16b “Guild Ledger”</span></h1>
   <span id="hnav"><!-- the shared site nav (nav.js) — one roster for all four pages --></span>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
@@ -1190,8 +1190,8 @@ function hallBoardHtml(){
       +'<span style="font-size:.1in;font-style:italic;color:#5b4a37">spend an ⚜ Invitation + one READY cask (die ≥ the shelf) — the die stands on any open space; pick ONE menu option</span></div>'
     +HALL_SHELVES_P.map(row).join('')
     +'<div style="font-size:.1in;color:#5b4a37;border-top:1px solid #c8b48a;padding-top:.04in;line-height:1.35">'
-    +'Every claimed <b>Order</b> pays an ⚜ <b>Invitation</b> · your <b>first die on each shelf</b> earns a new one · a die on <b>all four shelves</b> at game end: <b>+6★</b> ⚙. '
-    +'Hall mode swaps the Order deck for the eased 20-tile set. The enshrined die is committed — it counts toward your empty tray.</div>'
+    +'<b>At game end, every die on a shelf scores its pips</b> (v4.16b) · Every claimed <b>Order</b> pays an ⚜ <b>Invitation</b> · your <b>first die on each shelf</b> earns a new one · a die on <b>all four shelves</b>: <b>+6★</b> ⚙. '
+    +'Hall mode swaps the Order deck for the eased 20-tile set and deals the <b>Guild Chancery</b> into the Wharf’s building deck. The enshrined die is committed — it counts toward your empty tray.</div>'
   +'</div>';}
 
 //==================================================================
@@ -1402,7 +1402,9 @@ function buildPages(){
   const hallTiles=[];
   for(let i=0;i<cnt(18);i++)hallTiles.push({fam:'Invitations',html:invitationTile()});   // ⚙ 18 invitation tiles
   (MODE==='proof'?LADINGS_HALL.slice(0,3):LADINGS_HALL).forEach(d=>hallTiles.push({fam:'Hall Orders',html:ladingTile(d)}));
-  packSpaced(pages,'bits','EXPANSION — Guildhall tiles: 18 Invitations ⚙ + the eased 20-Order set (hall mode REPLACES the base 15) · 22″ plotter · 1.5mm bleed',[{kind:'ld',items:hallTiles}],famPages);
+  // v4.16b: the GUILD CHANCERY building prints here, not on the base sheet — hall mode deals it guaranteed (17 of 21)
+  const hallBld=BUILDINGS.filter(b=>b.hall).map(d=>({fam:'Hall building',html:buildingCard(d)}));
+  packSpaced(pages,'bits','EXPANSION — Guildhall tiles: 18 Invitations ⚙ + the eased 20-Order set (hall mode REPLACES the base 15) + the Guild Chancery building (v4.16b) · 22″ plotter · 1.5mm bleed',[{kind:'ld',items:hallTiles},{kind:'bld',items:hallBld}],famPages);
   // --- SHIP TILES → their own sheet pair; the Cog and Hulk carriers pack as two runs (different heights) ---
   const skutes=[],cogs=[],hulks=[];
   (MODE==='proof'?[['skute','Bruges'],['cog','London'],['hulk','Novgorod']]:SHIP_DECK).forEach(([hull,dest])=>{
@@ -1410,8 +1412,8 @@ function buildPages(){
   packSpaced(pages,'tiles','Ship tile FRONTS — the carriers (Skute 1 · Cog 2 · Hulk 3 berths · 22″ plotter · 1.5mm bleed · cuts 3mm apart · double-sided)',[{kind:'shipk',items:skutes},{kind:'shipc',items:cogs},{kind:'shiph',items:hulks}],famPages);
   // --- BUILDING TILES → their own sheet pair (front art / Wild back) ---
   const bldItems=[];
-  BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)
-    bldItems.push({fam:'Buildings',html:buildingCard(d)});});   // v4.0 SINGLE-FACED: no owner, no WILD flip — displaced tiles are boxed
+  BUILDINGS.forEach(d=>{if(d.hall)return;for(let i=0;i<cnt(d.n);i++)
+    bldItems.push({fam:'Buildings',html:buildingCard(d)});});   // v4.0 SINGLE-FACED: no owner, no WILD flip — displaced tiles are boxed · v4.16b: the Chancery prints on the GUILDHALL sheet
   packSpaced(pages,'bits','Building tiles — SINGLE-FACED, one green family (print 20 · SETUP DEALS 17/game, v4.6 · 22″ plotter · 1.5mm bleed · cuts 3mm apart · v45d power ladder: fees in grain only)',[{kind:'bld',items:bldItems}],famPages);
   // (the CONTRACT strips print on S1 — the Wharf sheet's open right band, above)
   // (2026-07-19: the UNLOCK-COVER sheet left the kit — sourced, any opaque square, like the tally dice.
@@ -1475,7 +1477,7 @@ function checklist(pages,famPages){
   // 2026-08-09 [designer]: the manifest is a PACKING LIST, not a lesson — "just some basic
   // details of quantity, any important themes to share, and where they go." Every entry is one
   // short line: what it is · WHERE IT LIVES on the table. The rules live in the rulebook.
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.16 “Standing Orders”)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.16b “Guild Ledger”)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">Counts are tuning placeholders ⚙. The rules live on the <b>player aid</b> and in the rulebook — this page only says what to make, how many, and where it sits on the table.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
@@ -1511,6 +1513,7 @@ function checklist(pages,famPages){
     +R('The Guildhall board','Four shelves — menus + identical die spaces. <b>Beside the Destinations board.</b>','1')
     +R('Invitation tiles','⚜ Earned per Order claim and per first showing on each shelf; spent to enshrine. <b>A face-up supply by the Hall.</b>','18')
     +R('Guildhall Order set','The eased 20-tile schedule (1–3★) — hall mode <b>replaces</b> the base 15 in the same row of 3.','20')
+    +R('Guild Chancery','The Hall’s building (v4.16b): activate → gain 1 ⚜ Invitation. <b>Shuffled into the building deck in hall mode — always dealt.</b>','1')
     +'</table>';
   h+=T('Tabled with v4.0 <span style="font-weight:normal;text-transform:none;opacity:.7">— not in this kit</span>')
     +R('The Hall (prestige lane)','Returns as a fifth destination later; the seam is kept in the rules and the engine.','—')

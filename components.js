@@ -122,6 +122,11 @@ const BUILDINGS=[
   {k:'victual',   nm:'Victualling Yard',  ms:3, verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, eff:'Loading: the bonus fires TWICE · sails with the Ship'},
   {k:'exchange',  nm:'Merchants’ Exchange',ms:2, verb:'transform',tgt:'act',  ic:'arrow-right-left', n:1, g:2, act:'exchange', eff:'Replace up to 3 open Orders'},   // v4.12
   {k:'capstan',   nm:'Warping Capstan',   ms:3, verb:'transform', tgt:'act',  ic:'ship-wheel',   n:1, g:2, act:'capstan', eff:'Move any docked Ship'},   // v4.12: cargo rides; full where it lands → it sails
+  // v4.16b "Guild Ledger" (designer-ruled 2026-08-14, off the lane study): the Guildhall's own
+  // building — prints on the GUILDHALL SHEET (hall:1 keeps it off the base 20-tile sheet);
+  // in hall mode it is guaranteed into the deal (17 of 21). Anyone who activates it gains an
+  // ⚜ Invitation; the traffic turns the builder's mark like any workhorse.
+  {k:'chancery',  nm:'Guild Chancery',    ms:2, verb:'transform', tgt:'act',  ic:'mail',         n:1, g:1, act:'invgain', eff:'Gain 1 ⚜ Invitation', hall:1},
 ];
 // ---- LADINGS (v4.5b) — the kontor ORDER row: 15 tiles ⚙, a face-up row of 3. Deliver a cask
 // that matches the tile (its kontor + the die minimum, or the named beer) and CLAIM it — the

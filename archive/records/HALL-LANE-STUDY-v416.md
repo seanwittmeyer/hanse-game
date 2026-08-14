@@ -186,7 +186,13 @@ Every Pass-3 arm ran 100/100 games, 0 errors. Pooled BY CONFIG across all three 
 **What it prints:** the Hall board gains one line — *"at game end, every die on a shelf
 scores its pips"* — and the Guildhall sheet gains the **Guild Chancery** tile (building,
 qty 1, fee 1 `G`, mark start 2: *Gain 1 ⚜ Invitation*), guaranteed into the deal in hall
-mode (deal 18 of 21 ⚙).
+mode (**deal 17 of 21** ⚙ — the deal size holds; the Chancery displaces a random single,
+exactly as tested).
+
+> **RULED 2026-08-14** — the designer: *“Make the change flipping the dials if you think
+> that is the right solution.”* Shipped as **v4.16b “Guild Ledger”** (`KEY hanse-v416b`):
+> `HALL_PIPS=1` + `INV_BLDG=1` are hall mode’s printed defaults; the ⚜ cask bonus stays an
+> unprinted dial; the ladder is cut. The watches in §4 stand for the first human table.
 
 **The optional richness dial** (designer's taste, not sim-forced): the **⚜ cask tiles**
 (`INV_CASK_W` ≈ 0.12 — a *Gain 1 Invitation* load bonus in the printed mix) lift access

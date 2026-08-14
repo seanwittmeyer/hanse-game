@@ -90,9 +90,12 @@ function __runGame(n){
   if(__HSTARS){__HSTARS.split(',').forEach(function(v,i){if(HALL_SHELVES[i]&&+v>0)HALL_SHELVES[i].star=parseInt(v,10);});}   // v4.15 sweep: star values by shelf
   if(__HMENU){__HMENU.split(';').forEach(function(seg){var m=seg.split(':');var si=parseInt(m[0],10);
     if(HALL_SHELVES[si]&&!HALL_SHELVES[si].fixed&&m[1])HALL_SHELVES[si].opts=m[1].split(',').filter(Boolean);});}   // v4.15 sweep: menus by shelf index (1-3)
-  HALL_PIPS=__HPIPS?1:0;                                             // v4.16 lane dials: HALL_PIPS=1 · HALL_LADDER="0,2,5,9,14" · INV_CASK=0.12 · INV_BLDG=1
-  HALL_LADDER=__HLAD?__HLAD.split(',').map(function(v){return parseInt(v,10)||0;}):null;
-  INV_CASK_W=__ICW||0;INV_BLDG=__IBLDG?1:0;
+  // v4.16b: the lane dials override ONLY when the env var is set — the RULED defaults
+  // (HALL_PIPS=1 · INV_BLDG=1) must not be silently forced off by an unset hook.
+  if(__HPIPS!=='')HALL_PIPS=(__HPIPS==='1')?1:0;                     // HALL_PIPS=0|1 · HALL_LADDER="0,2,5,9,14" · INV_CASK=0.12 · INV_BLDG=0|1
+  if(__HLAD!=='')HALL_LADDER=__HLAD==='null'?null:__HLAD.split(',').map(function(v){return parseInt(v,10)||0;});
+  if(__ICW!=='')INV_CASK_W=parseFloat(__ICW)||0;
+  if(__IBLDG!=='')INV_BLDG=(__IBLDG==='1')?1:0;
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
   S.players.forEach(function(p,i){p.ai=__PERSONAS?{tier:'trader',persona:AI_PERSONAS[i%AI_PERSONAS.length]}:{tier:__TIER};p.presPool=PRES_POOL;});
   var guard=0;
@@ -147,8 +150,8 @@ const ctx = {
   __EXP:process.env.EXPANSION==='1', __JOP:process.env.JOPEN==='1',   // v4.14: the beer-toggle arms (EXPANSION=1 · JOPEN=1)
   __HALL:process.env.HALL==='1',                                      // v4.15: the Guildhall arm (HALL=1)
   __HSTARS:process.env.HALL_STARS||'', __HMENU:process.env.HALL_MENU||'',   // v4.15: menu sweeps — HALL_STARS="2,4,6,9" · HALL_MENU="1:age3,goods3;2:brew,loadmore;3:brew,seal"
-  __HPIPS:process.env.HALL_PIPS==='1', __HLAD:process.env.HALL_LADDER||'',   // v4.16: the lane dials
-  __ICW:parseFloat(process.env.INV_CASK||'0'), __IBLDG:process.env.INV_BLDG==='1',
+  __HPIPS:process.env.HALL_PIPS!=null?process.env.HALL_PIPS:'', __HLAD:process.env.HALL_LADDER!=null?process.env.HALL_LADDER:'',   // v4.16b: raw strings — empty = keep the ruled default
+  __ICW:process.env.INV_CASK!=null?process.env.INV_CASK:'', __IBLDG:process.env.INV_BLDG!=null?process.env.INV_BLDG:'',
   __POOL:parseInt(process.env.POOL||'0',10),
   __PERSONAS:PERSONAS,
   __GMS:parseInt(process.env.GUILD_MS||'0',10),
