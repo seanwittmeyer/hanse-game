@@ -144,23 +144,24 @@ const LADINGS=[
 // The bench filling IS the judging: highest die 1st, ties → the earlier pour. Mirrors play.html CONTESTS.
 // (The v4.15 eased 20-Order set is CUT — hall mode plays the base 15.)
 const CONTESTS_P=[
-  {k:'free1', cat:'the Free Pour',    flt:'any beer',              s1:5, c:'#5b3a8e'},
-  {k:'free2', cat:'the Free Pour',    flt:'any beer',              s1:5, c:'#5b3a8e'},
-  {k:'free3', cat:'the Free Pour',    flt:'any beer',              s1:5, c:'#5b3a8e'},
-  {k:'fresh1',cat:'the Fresh Pour',   flt:'quality 3 or under',    s1:5, c:'#4a6b3a'},
-  {k:'fresh2',cat:'the Fresh Pour',   flt:'quality 3 or under',    s1:5, c:'#4a6b3a'},
-  {k:'fresh3',cat:'the Fresh Pour',   flt:'quality 3 or under',    s1:5, c:'#4a6b3a'},
-  {k:'dark1', cat:'the Dark Pour',    flt:'quality 4 or higher',   s1:7, c:'#5e2433'},
-  {k:'dark2', cat:'the Dark Pour',    flt:'quality 4 or higher',   s1:7, c:'#5e2433'},
-  {k:'exp1',  cat:'the Export Pour',  flt:'poured at die 4+',      s1:6, c:'#274b5c'},
-  {k:'exp2',  cat:'the Export Pour',  flt:'poured at die 4+',      s1:6, c:'#274b5c'},
-  {k:'old1',  cat:'the Old Pour',     flt:'poured at die 5+',      s1:7, c:'#8a6408'},
-  {k:'mast1', cat:'the Master’s Pour',flt:'poured at die 6',       s1:9, c:'#7c2128'},
+  {k:'free1', cat:'the Free Pour',    flt:'any beer',              s1:5, b:3, c:'#5b3a8e'},
+  {k:'free2', cat:'the Free Pour',    flt:'any beer',              s1:5, b:3, c:'#5b3a8e'},
+  {k:'free3', cat:'the Free Pour',    flt:'any beer',              s1:5, b:3, c:'#5b3a8e'},
+  {k:'fresh1',cat:'the Fresh Pour',   flt:'quality 3 or under',    s1:5, b:3, c:'#4a6b3a'},
+  {k:'fresh2',cat:'the Fresh Pour',   flt:'quality 3 or under',    s1:5, b:3, c:'#4a6b3a'},
+  {k:'fresh3',cat:'the Fresh Pour',   flt:'quality 3 or under',    s1:5, b:3, c:'#4a6b3a'},
+  {k:'dark1', cat:'the Dark Pour',    flt:'quality 4 or higher',   s1:7, b:2, c:'#5e2433'},
+  {k:'dark2', cat:'the Dark Pour',    flt:'quality 4 or higher',   s1:7, b:2, c:'#5e2433'},
+  {k:'exp1',  cat:'the Export Pour',  flt:'poured at die 4+',      s1:6, b:2, c:'#274b5c'},
+  {k:'exp2',  cat:'the Export Pour',  flt:'poured at die 4+',      s1:6, b:2, c:'#274b5c'},
+  {k:'old1',  cat:'the Old Pour',     flt:'poured at die 5+',      s1:7, b:2, c:'#8a6408'},
+  {k:'mast1', cat:'the Master’s Pour',flt:'poured at die 6',       s1:9, b:2, c:'#7c2128'},
 ];
 // a TASTING tile (v4.17) — building-cut 2.5×1.32in: the category + filter + ladder left, the
 // bench of three 0.42in die squares right (2p uses the left two; the row runs left→right).
-function contestTile(t){let sq='';for(let k=0;k<3;k++)sq+='<div style="width:.42in;height:.42in;border:2px dashed rgba(0,0,0,.35);border-radius:.05in;background:rgba(255,255,255,.5)'+(k===2?';position:relative':'')+'">'
+function contestTile(t){const nb=t.b||3;let sq='';for(let k=0;k<nb;k++)sq+='<div style="width:.42in;height:.42in;border:2px dashed rgba(0,0,0,.35);border-radius:.05in;background:rgba(255,255,255,.5)'+(k===2?';position:relative':'')+'">'
     +(k===2?'<span style="position:absolute;top:-.09in;right:-.04in;background:#7c2128;color:#fff;font-size:.07in;font-weight:900;border-radius:.03in;padding:.005in .03in">3-4p</span>':'')+'</div>';
+  // a DUEL tile (b=2, the hard pours — R1 of the study): two squares; at 2p every bench caps at 2
   return '<div style="width:2.5in;height:1.32in;box-sizing:border-box;border:2.5px solid '+t.c+';border-radius:.08in;background:#f3ecdd;color:#2b2018;display:flex;align-items:stretch;padding:.06in .08in;gap:.08in">'
     +'<div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;min-width:0">'
       +'<div><div style="font-variant:small-caps;font-weight:900;color:'+t.c+';font-size:.15in;line-height:1.05">⚜ '+t.cat+'</div>'

@@ -29,10 +29,41 @@ cores — uniform contention; within-corpus reads only).
    (chaos wins > 10%).
 5. **No degeneracy:** unconvened ≤ ~1.5/game (few stranded dice); the set rate > 0.
 
-*(results pending — Round 1 running)*
+**Round-1 results (600 games · 0 errors):**
 
-## §2 · Round 2 — the tuned print
+| Arm | pace | judged/g | slams/g | unconv/g | hall★ (CM/GM/chaos) | Novgorod dead | category wins |
+|---|---|---|---|---|---|---|---|
+| base | 14.3 | — | — | — | — | 10.0% | — |
+| tast | 14.6 | 0.67 | 0.17 | 0.73 | 2.0 / 2.1 / 2.2 | 14.5% | free 68 · fresh 63 · **others 0** |
+| hot | 15.0 | 1.32 | 0.61 | 0.56 | 3.8 / 4.6 / 5.8 | **23.5%** | free 137 · fresh 119 · **dark 1** |
 
-*(designed off the Round-1 read)*
+**Findings:**
+1. **The category drought is structural, not economic.** Across 400 hall games the
+   dark/export/old/master pours essentially never convened (dark won ONCE) — a bench of
+   THREE matching Q4+/die-4+ casks never assembles at 3p. The `hot` bracket proves value
+   wasn't the lever: doubling the float and the prizes doubled judging but the hard
+   categories stayed dead.
+2. **`hot` fails two criteria on its own**: Novgorod dead-port 23.5% vs base 10 (the 9/11★
+   old/master prizes bid the die-5/6s away from the eastern run — criterion 3 breached) and
+   door-slams at 46% of judgings (criterion 2's ceiling is ~25%).
+3. Defaults hold pace (+0.3), ports (+4.5 pp — inside the bar) and the slam band (~25%),
+   but judged 0.67 < the 1.5 bar and sets never fire — the cycle runs but starves.
+4. The chaos seat neither pays nor collapses in either arm (its win share tracks its base
+   rate; the GM's low share everywhere is the known budget-under-contention artifact —
+   within-corpus deltas only).
+
+**The Round-2 change (implemented): THE HARD POURS BECOME DUELS.** The
+dark/export/old/master tiles print a **bench of 2** (free/fresh keep 3; every bench still
+caps at 2 at 2p). Two matching ripe casks is a reachable stand-off; three was fantasy. The
+tile prints its own bench — no new rules text. Sweepable via `CATB="dark:2,…"`.
+
+## §2 · Round 2 — the duel benches × the invitation float (2 arms × 200)
+
+| Arm | Config | The question |
+|---|---|---|
+| `duel1` | duel benches (printed) · START_INV 1 | does the duel fix convene the hard pours at the printed float? |
+| `duel2` | duel benches · START_INV 2 | is the extra seed ⚜ needed — and what does it cost the ports? |
+
+*(the printed stars stay 5/5/7/6/7/9 — `hot`'s schedule is rejected on the Novgorod read)*
 
 ## §3 · Verdict — the game-night print ⚙

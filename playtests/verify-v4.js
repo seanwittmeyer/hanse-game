@@ -989,6 +989,18 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
     pourDo(1,0)===true&&S.tastings.open.length===0&&p.bank===b0+5+2&&(p.tastings||[]).length===1);
   ok('the slam is recorded on the entry (the probe reads it)', S.tastings.floor.length===2);
 })();
+(function(){ // the DUEL benches (R1 of the study): the hard categories print bench 2
+  HALLEXP=true;var p=fresh(3);HALLEXP=false;var q=S.players[1];
+  S.tastings.open=[{t:{k:'dark1',cat:'dark',s1:7,b:2},bench:[]}];
+  q.invites=1;p.invites=1;
+  S.active=1;q.vessels[0]={style:'mumme',q:4,die:4,act:'age'};pourDo(0,0);
+  S.active=0;p.vessels[0]={style:'bock',q:5,die:5,act:'brew'};
+  var b0=p.bank;
+  ok('a DARK duel judges on the SECOND pour at 3p (the tile prints bench 2)',
+    pourDo(0,0)===true&&S.tastings.open.length===0&&p.bank===b0+7&&(p.tastings||[]).length===1);
+  ok('the printed deck: free/fresh bench 3 · dark/export/old/master bench 2',
+    CONTESTS.every(function(t){return (t.cat==='free'||t.cat==='fresh')?t.b===3:t.b===2;}));
+})();
 (function(){ // capacity + the full bench
   HALLEXP=true;var p=fresh(2);HALLEXP=false;
   S.tastings.open=[{t:{k:'free1',cat:'free',s1:5},bench:[{pid:1,die:3,style:'broyhan'},{pid:1,die:2,style:'hopped'}]}];

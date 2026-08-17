@@ -85,6 +85,7 @@ const HALL=process.env.HALL!=='0';
 const SINV=(process.env.STARTINV||'').trim();
 const TSTARS=(process.env.TSTARS||'').trim();
 const TBENCH=(process.env.BENCH||'').trim();
+const TCATB=(process.env.CATB||'').trim();
 const EJ=(process.env.EJUDGE||'').trim();
 
 const html=fs.readFileSync(path.join(__dirname,'..','play.html'),'utf8');
@@ -98,13 +99,15 @@ if(__SINV!=='')START_INV=parseInt(__SINV,10)||0;
 if(__TSTARS!=='')__TSTARS.split(',').forEach(function(seg){var m=seg.split(':');
   CONTESTS.forEach(function(t){if(t.cat===m[0]&&+m[1]>0)t.s1=parseInt(m[1],10);});});
 if(__TBENCH!=='')CONTEST_BENCH=__TBENCH.split(',').map(function(v){return parseInt(v,10)||3;});
+if(__TCATB!=='')__TCATB.split(',').forEach(function(seg){var m=seg.split(':');
+  CONTESTS.forEach(function(t){if(t.cat===m[0]&&+m[1]>0)t.b=parseInt(m[1],10);});});
 if(__EJ!=='')END_JUDGE=__EJ;
 var __POURS=[],__SLAMS=0,__JUDGED=0;
 var __pourDo=pourDo;pourDo=function(vi,ci){var ct=S&&S.tastings&&(S.tastings.open||[])[ci];
   var pre=ct?ct.bench.length:0;var lead=ct?benchLeader(ct):null;var p=cur();
   var r=__pourDo(vi,ci);
   if(r&&!aiSimulating){__POURS.push({pid:p.id,round:S.turn});
-    if(pre===benchSize()-1){__JUDGED++;if(lead&&lead.pid===p.id)__SLAMS++;}}
+    if(pre===benchSize(ct)-1){__JUDGED++;if(lead&&lead.pid===p.id)__SLAMS++;}}
   return r;};
 var CHAOS_PERSONAS=['majority','lifter','builder','breadth','hall'];
 function __game(gi){
@@ -151,7 +154,7 @@ const localStorageStub={getItem:k=>(k in store?store[k]:null),setItem:(k,v)=>{st
 const ctx={document:documentStub,localStorage:localStorageStub,console,Math,JSON,Date,Set,Map,Array,Object,String,Number,Boolean,
   parseInt,parseFloat,isNaN,alert:noop,setTimeout:noop,clearTimeout:noop,lucide:{createIcons:noop},
   __N:N,__GMS:GMS,__CMS:CMS,__JIT:JIT,__SEAT0:SEAT0,__HALL:HALL,
-  __SINV:SINV,__TSTARS:TSTARS,__TBENCH:TBENCH,__EJ:EJ};
+  __SINV:SINV,__TSTARS:TSTARS,__TBENCH:TBENCH,__TCATB:TCATB,__EJ:EJ};
 ctx.window=ctx;ctx.globalThis=ctx;ctx.self=ctx;
 ctx.addEventListener=noop;ctx.removeEventListener=noop;
 vm.createContext(ctx);

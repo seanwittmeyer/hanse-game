@@ -41,7 +41,7 @@ var __pourDo=pourDo;pourDo=function(vi,ci){var ct=S&&S.tastings&&(S.tastings.ope
   var pre=ct?ct.bench.length:0;var lead=ct?benchLeader(ct):null;var p=cur();
   var r=__pourDo(vi,ci);
   if(__uOn()&&r){__U.pours++;__U.invS++;
-    if(pre===benchSize()-1){__U.judged++;if(lead&&p&&lead.pid===p.id)__U.slams++;}}
+    if(pre===benchSize(ct)-1){__U.judged++;if(lead&&p&&lead.pid===p.id)__U.slams++;}}
   return r;};
 var __judgeT=judgeTasting;judgeTasting=function(ci){var r=__judgeT(ci);if(__uOn())__U.tilesWon++;return r;};
 var __rackPick=rackPick;rackPick=function(vi){var had=!!UI.rack;var r=__rackPick(vi);if(__uOn()&&had&&!UI.rack)__U.rack++;return r;};
@@ -93,6 +93,8 @@ function __runGame(n){
   if(__TSTARS!=='')__TSTARS.split(',').forEach(function(seg){var m=seg.split(':');
     CONTESTS.forEach(function(t){if(t.cat===m[0]&&+m[1]>0)t.s1=parseInt(m[1],10);});});
   if(__TBENCH!=='')CONTEST_BENCH=__TBENCH.split(',').map(function(v){return parseInt(v,10)||3;});
+  if(__TCATB!=='')__TCATB.split(',').forEach(function(seg){var m=seg.split(':');
+    CONTESTS.forEach(function(t){if(t.cat===m[0]&&+m[1]>0)t.b=parseInt(m[1],10);});});
   if(__EJ!=='')END_JUDGE=__EJ;
   if(__ICW!=='')INV_CASK_W=parseFloat(__ICW)||0;
   if(__IBLDG!=='')INV_BLDG=(__IBLDG==='1')?1:0;
@@ -150,7 +152,7 @@ const ctx = {
   __EXP:process.env.EXPANSION==='1', __JOP:process.env.JOPEN==='1',   // v4.14: the beer-toggle arms (EXPANSION=1 · JOPEN=1)
   __HALL:process.env.HALL==='1',                                      // v4.15: the Guildhall arm (HALL=1)
   __SINV:process.env.STARTINV!=null?process.env.STARTINV:'', __TSTARS:process.env.TSTARS!=null?process.env.TSTARS:'',   // v4.17: the Tasting dials
-  __TBENCH:process.env.BENCH!=null?process.env.BENCH:'', __EJ:process.env.EJUDGE!=null?process.env.EJUDGE:'',
+  __TBENCH:process.env.BENCH!=null?process.env.BENCH:'', __TCATB:process.env.CATB!=null?process.env.CATB:'', __EJ:process.env.EJUDGE!=null?process.env.EJUDGE:'',
   __ICW:process.env.INV_CASK!=null?process.env.INV_CASK:'', __IBLDG:process.env.INV_BLDG!=null?process.env.INV_BLDG:'',
   __POOL:parseInt(process.env.POOL||'0',10),
   __PERSONAS:PERSONAS,

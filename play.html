@@ -2971,7 +2971,7 @@ function renderBar(){
       acts=pourable(p).map(o=>{const c=p.vessels[o.vi];return btn(LU('beer')+styleShort(c.style)+' · die '+c.die,'pourPickCask('+o.vi+')','go');}).join('')+btn('Back','pourSkip()','ghost');}
     else{const el=pourable(p).find(o=>o.vi===P.vi)||{cis:[]};
       prompt='⚜ Pour '+LU('beer')+styleShort((p.vessels[P.vi]||{}).style||'')+' (die '+((p.vessels[P.vi]||{}).die||'?')+') — into which Tasting? <span class="note">(filling the last space judges it at once)</span>';
-      acts=el.cis.map(ci=>{const ct=S.tastings.open[ci];return btn(CONTEST_CAT[ct.t.cat].nm+' · 1st '+ct.t.s1+'★ · '+ct.bench.length+'/'+benchSize(),'pourPickContest('+ci+')','go');}).join('')+btn('Back','pourSkip()','ghost');}}
+      acts=el.cis.map(ci=>{const ct=S.tastings.open[ci];return btn(CONTEST_CAT[ct.t.cat].nm+' · 1st '+ct.t.s1+'★ · '+ct.bench.length+'/'+benchSize(ct),'pourPickContest('+ci+')','go');}).join('')+btn('Back','pourSkip()','ghost');}}
   else if(U==='source'){const n=UI.src.n;prompt='Take '+n+' good'+(n===1?'':'s')+' (any mix).';
     acts=(n>=2?btn('Take '+Gi(2),'srcTake(2,0)','go')+btn('Take '+Gi(1)+Hi(1),'srcTake(1,1)','go')+btn('Take '+Hi(2),'srcTake(0,2)','go')
             :btn('Take '+Gi(1),'srcTake(1,0)','go')+btn('Take '+Hi(1),'srcTake(0,1)','go'))+btn('Skip','srcSkip()','ghost');}
@@ -3375,13 +3375,15 @@ function renderTableaus(){
 //    claim still pays an ⚜ Invitation, the GUILD CHANCERY still deals guaranteed (INV_BLDG),
 //    and every player STARTS with 1 ⚜ (START_INV ⚙ — a printed setup line, no new component).
 // ALL STATE = tiles + dice positions. Nothing is remembered.
-let CONTESTS=[   // ⚙ the Tasting deck — 12 tiles (k = print id · cat = the filter · s1 = 1st's ★)
-  {k:'free1', cat:'free',  s1:5},{k:'free2', cat:'free',  s1:5},{k:'free3', cat:'free',  s1:5},
-  {k:'fresh1',cat:'fresh', s1:5},{k:'fresh2',cat:'fresh', s1:5},{k:'fresh3',cat:'fresh', s1:5},
-  {k:'dark1', cat:'dark',  s1:7},{k:'dark2', cat:'dark',  s1:7},
-  {k:'exp1',  cat:'export',s1:6},{k:'exp2',  cat:'export',s1:6},
-  {k:'old1',  cat:'old',   s1:7},
-  {k:'mast1', cat:'master',s1:9},
+let CONTESTS=[   // ⚙ the Tasting deck — 12 tiles (k = print id · cat = the filter · s1 = 1st's ★ ·
+  // b = the tile's PRINTED bench — R1 of the study: a bench of three matching Q4+/die-4+ casks
+  // never assembles at 3p (dark convened ONCE in 400 games), so the HARD categories are DUELS).
+  {k:'free1', cat:'free',  s1:5, b:3},{k:'free2', cat:'free',  s1:5, b:3},{k:'free3', cat:'free',  s1:5, b:3},
+  {k:'fresh1',cat:'fresh', s1:5, b:3},{k:'fresh2',cat:'fresh', s1:5, b:3},{k:'fresh3',cat:'fresh', s1:5, b:3},
+  {k:'dark1', cat:'dark',  s1:7, b:2},{k:'dark2', cat:'dark',  s1:7, b:2},
+  {k:'exp1',  cat:'export',s1:6, b:2},{k:'exp2',  cat:'export',s1:6, b:2},
+  {k:'old1',  cat:'old',   s1:7, b:2},
+  {k:'mast1', cat:'master',s1:9, b:2},
 ];
 const CONTEST_CAT={   // the printed filters — read off the CASK (its quality) or the DIE (as poured)
   free:  {nm:'the Free Pour',    test:c=>true,      d:'any beer'},
@@ -3402,8 +3404,10 @@ let INV_BLDG=1;              // ⚙ RULED (v4.16b): the Guild Chancery deals gua
 function invGrant(p,src){p.invites=(p.invites||0)+1;   // every ⚜ faucet routes here — the probes read the split
   const s=(p.invSrc=p.invSrc||{});s[src]=(s[src]||0)+1;}
 function hallOn(){return !!(S&&S.tastings&&S.tastings.on);}
-function benchSize(){const n=(S.players||[]).length||2;
-  return CONTEST_BENCH[Math.max(0,Math.min(CONTEST_BENCH.length-1,n-2))];}
+function benchSize(ct){const n=(S.players||[]).length||2;
+  const cap=CONTEST_BENCH[Math.max(0,Math.min(CONTEST_BENCH.length-1,n-2))];
+  const tb=(ct&&ct.t&&ct.t.b)||3;   // the tile's PRINTED bench (duels for the hard pours — R1)
+  return Math.min(tb,cap);}
 function contestsOpenN(){const n=(S.players||[]).length||2;
   return CONTEST_OPEN[Math.max(0,Math.min(CONTEST_OPEN.length-1,n-2))];}
 function refillContests(){if(!hallOn())return;const T=S.tastings;
@@ -3414,7 +3418,7 @@ function benchLeader(ct){if(!ct.bench.length)return null;
 // pourable: [{vi, cis:[indexes of open Tastings this cask may enter]}]
 function pourable(p){if(!hallOn()||!((p.invites||0)>0))return [];
   return readyInVessels(p).map(o=>({vi:o.i,cis:(S.tastings.open||[]).map((ct,ci)=>ci)
-    .filter(ci=>{const ct=S.tastings.open[ci];return ct.bench.length<benchSize()&&catOK(ct.t.cat,o.c);})}))
+    .filter(ci=>{const ct=S.tastings.open[ci];return ct.bench.length<benchSize(ct)&&catOK(ct.t.cat,o.c);})}))
     .filter(o=>o.cis.length);}
 // ---- the POUR (human picker: cask → Tasting; AI calls pourDo directly) ----
 function enterPour(){const p=cur();if(!pourable(p).length)return;
@@ -3426,15 +3430,15 @@ function pourPickContest(ci){const P=UI.pour;if(!P||P.vi==null)return;pourDo(P.v
 function pourSkip(){UI.pour=null;resume('stops');}
 function pourDo(vi,ci){const p=cur();const T=S.tastings;const ct=T&&(T.open||[])[ci];const c=p.vessels[vi];
   if(!hallOn()||!((p.invites||0)>0)||!c||!caskReady(c)||!ct)return false;
-  if(ct.bench.length>=benchSize()||!catOK(ct.t.cat,c))return false;
+  if(ct.bench.length>=benchSize(ct)||!catOK(ct.t.cat,c))return false;
   snapshot();
-  const slam=ct.bench.length===benchSize()-1&&(benchLeader(ct)||{}).pid===p.id;   // the door-slam (probe-read)
+  const slam=ct.bench.length===benchSize(ct)-1&&(benchLeader(ct)||{}).pid===p.id;   // the door-slam (probe-read)
   p.invites--;p.vessels[vi]=null;
   ct.bench.push({pid:p.id,die:c.die,style:c.style,slam:slam?1:0});
   spendPresDisc(p,1);   // the die moves vessel → bench: committed, a clock beat (the audit = the die standing there)
-  if(!aiSimulating)log(p.name+' spends an ⚜ <b>Invitation</b> and pours '+LU('beer')+'<b>'+styleShort(c.style)+'</b> (die '+c.die+') into <b>'+CONTEST_CAT[ct.t.cat].nm+'</b> ('+ct.bench.length+'/'+benchSize()+')'+(slam?' — <b>the door slams</b>':'')+'.',true);
+  if(!aiSimulating)log(p.name+' spends an ⚜ <b>Invitation</b> and pours '+LU('beer')+'<b>'+styleShort(c.style)+'</b> (die '+c.die+') into <b>'+CONTEST_CAT[ct.t.cat].nm+'</b> ('+ct.bench.length+'/'+benchSize(ct)+')'+(slam?' — <b>the door slams</b>':'')+'.',true);
   UI.pour=null;UI.sub='stops';
-  if(ct.bench.length>=benchSize())judgeTasting(ci);
+  if(ct.bench.length>=benchSize(ct))judgeTasting(ci);
   render();
   return true;}
 function judgeTasting(ci){const T=S.tastings;const ct=(T.open||[])[ci];if(!ct)return;
@@ -3452,7 +3456,7 @@ function judgeTasting(ci){const T=S.tastings;const ct=(T.open||[])[ci];if(!ct)re
 // ---- greedy AI: a compact pour policy (the MC pair prices the real trade-offs) ----
 function aiPourBest(p){if(!hallOn())return null;let best=null;
   pourable(p).forEach(o=>{const c=p.vessels[o.vi];
-    o.cis.forEach(ci=>{const ct=S.tastings.open[ci];const b=ct.bench;const sz=benchSize();
+    o.cis.forEach(ci=>{const ct=S.tastings.open[ci];const b=ct.bench;const sz=benchSize(ct);
       const lead=benchLeader(ct);const left=sz-b.length;
       const alt=c.die+1.6;   // the port alternative: pips + prize/majority slack (the enshrine grammar)
       let v;
@@ -3495,7 +3499,7 @@ registerExpansion({
     if(pan)pan.style.display='';
     const body=document.getElementById('hall-body'); if(!body)return;
     let h='';
-    (S.tastings.open||[]).forEach(ct=>{const C=CONTEST_CAT[ct.t.cat];const sz=benchSize();
+    (S.tastings.open||[]).forEach(ct=>{const C=CONTEST_CAT[ct.t.cat];const sz=benchSize(ct);
       let sp='';for(let k=0;k<sz;k++){const e=ct.bench[k];
         sp+=e?'<span class="dsq" title="'+attr(S.players[e.pid].name+' — die '+e.die+' ('+styleShort(e.style)+')')+'" style="background:'+S.players[e.pid].color+';color:#fff;width:20px;height:20px;line-height:20px;text-align:center;font-size:.68rem;font-weight:bold">'+e.die+'</span>'
           :'<span class="dsq bon" style="width:20px;height:20px"></span>';}
