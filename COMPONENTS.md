@@ -10,6 +10,16 @@
 > gains the board’s die-cut line. Two missed v4.17b reprints land with it: the **Invitation
 > tile’s** reverse line and the manifest row now read ***start with 2*** (the setup line
 > already did). Counts unchanged.
+>
+> **Print-proof reprints (same pass, off the live table’s first physical print):** **(1)**
+> the **Invitation tile’s body row recut to the Order-tile grammar** — *Ready → pour* (the
+> long three-chunk row overflowed the 2″ strip and clipped at both ends; the match
+> requirement moves to the sub line); **(2)** the **recipe cards’ brew band grows .56→.72″
+> with the brew cost at .17″**, held ~1/8″ off the cut edge — a duplex-misalignment safe
+> margin (the table’s print clipped the old edge-hugging row); **(3)** the **Ship tiles’
+> wharf art rides 125% tall, shifted up** — the paintings’ flat cream mats (top + bottom)
+> crop off and the dock scene reaches the tile foot (the shared ship back unchanged; the
+> PNG export bakes the same window).
 
 > **v4.17b (study-ruled 2026-08-15 — three prints off the 1,400-game oracle):** **(1)** the
 > **dark/export/old/master Tasting tiles reprint with a bench of TWO die squares** (the
