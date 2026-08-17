@@ -1001,6 +1001,27 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('the printed deck: free/fresh bench 3 · dark/export/old/master bench 2',
     CONTESTS.every(function(t){return (t.cat==='free'||t.cat==='fresh')?t.b===3:t.b===2;}));
 })();
+(function(){ // v4.17b THE CHAMPION'S TOUR (R3): 1st's die parks as presence; 2nd/3rd stay on the floor
+  HALLEXP=true;var p=fresh(2);HALLEXP=false;var q=S.players[1];
+  p.delivered.push({style:'gruit',q:1,dest:'bruges',val:1});   // the tour needs a delivered-to Kontor
+  S.tastings.open=[{t:{k:'dark1',cat:'dark',s1:7,b:2},bench:[]}];
+  q.invites=1;p.invites=1;
+  S.active=1;q.vessels[0]={style:'mumme',q:4,die:4,act:'age'};pourDo(0,0);
+  S.active=0;p.vessels[0]={style:'bock',q:5,die:5,act:'brew'};
+  var pb0=p.presBonus.bruges||0;
+  pourDo(0,0);   // judged — p wins; p is AI-less: the pending tour prompts
+  ok('the tour queues for the human winner', UI.sub==='tour'&&(UI.pendingTour||[]).length===1);
+  tourPick('bruges');
+  ok('the champion’s die parks as presence (face 1) at the chosen Kontor', (p.presBonus.bruges||0)===pb0+1);
+  ok('the loser’s die stays on the Taproom floor', S.tastings.floor.length===1&&S.tastings.floor[0].pid===q.id);
+  var p2;HALLEXP=true;p2=fresh(2);HALLEXP=false;
+  S.tastings.open=[{t:{k:'free1',cat:'free',s1:5,b:2},bench:[{pid:1,die:1,style:'gruit'}]}];
+  p2.invites=1;p2.vessels[0]={style:'hopped',q:2,die:2,act:'age'};
+  pourDo(0,0);
+  ok('never delivered anywhere → the tour lapses (the die stays on the floor)',
+    (UI.pendingTour||[]).length===0&&S.tastings.floor.length===2);
+  ok('the tour default is ON (v4.17b) with START_INV 2 (R2)', TOUR_ON===1&&START_INV===2);
+})();
 (function(){ // capacity + the full bench
   HALLEXP=true;var p=fresh(2);HALLEXP=false;
   S.tastings.open=[{t:{k:'free1',cat:'free',s1:5},bench:[{pid:1,die:3,style:'broyhan'},{pid:1,die:2,style:'hopped'}]}];
@@ -1055,8 +1076,8 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   var mix={};CONTESTS.forEach(function(t){mix[t.cat]=(mix[t.cat]||0)+1;});
   ok('the Tasting deck prints 12: free 3 · fresh 3 · dark 2 · export 2 · old 1 · master 1',
     CONTESTS.length===12&&mix.free===3&&mix.fresh===3&&mix.dark===2&&mix.export===2&&mix.old===1&&mix.master===1);
-  ok('v4.17 defaults: START_INV=1 · END_JUDGE void · 2nd/3rd = 2/1 · sets 3/7 · INV_BLDG on',
-    START_INV===1&&END_JUDGE==='void'&&TASTE_2ND===2&&TASTE_3RD===1&&TASTE_SETS[2]===3&&TASTE_SETS[3]===7&&INV_BLDG===1);
+  ok('v4.17b defaults: START_INV=2 (R2) · TOUR on (R3) · END_JUDGE void · 2nd/3rd = 2/1 · sets 3/7 · INV_BLDG on',
+    START_INV===2&&TOUR_ON===1&&END_JUDGE==='void'&&TASTE_2ND===2&&TASTE_3RD===1&&TASTE_SETS[2]===3&&TASTE_SETS[3]===7&&INV_BLDG===1);
   ok('the Chancery prints on the Guildhall sheet (hall flag · fee 1G · ms 2)',
     BUILDINGS.chancery.hall===true&&BUILDINGS.chancery.fee.g===1&&BUILDINGS.chancery.ms===2);
 })();

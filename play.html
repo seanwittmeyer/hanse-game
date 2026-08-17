@@ -2064,6 +2064,13 @@ function afterSail(rt){
     if(lp.ai){UI.pendingLading.shift();const best=m.sort((a,b2)=>b2.l.pts-a.l.pts)[0];
       claimLading(lp,best.i);afterSail(rt);return;}
     UI.sub='lading';UI.goodsRt=rt;render();return;}
+  if((UI.pendingTour||[]).length){const b=UI.pendingTour[0];const lp=S.players[b.pid];
+    const ks=reachBenKontore(lp);
+    if(!ks.length){UI.pendingTour.shift();
+      log('↳ '+lp.name+'’s champion has nowhere to tour (no Kontor delivered to) — the die stays on the floor.');afterSail(rt);return;}
+    if(lp.ai){UI.pendingTour.shift();let bk=ks[0],bv=-1e9;ks.forEach(k=>{const v=aiMajSwing(lp,k);if(v>bv){bv=v;bk=k;}});
+      tourPark(lp,bk);afterSail(rt);return;}
+    UI.sub='tour';UI.goodsRt=rt;render();return;}
   if((UI.pendingActs||[]).length){const a=UI.pendingActs.shift();
     if(a.pid===S.active){UI.afterRt=rt;
       log('↳ the load bonus — '+LU('beer')+styleShort(a.style)+'’s '+LU(CASK_ACT_ICON[a.act]||'')+' <b>'+(P_ACT_TXT[a.act]||a.act)+'</b>.');
@@ -2713,6 +2720,10 @@ function aiStep(){
         return loadOptGo(aiLoadOpt(p,o.kind,boardDie(p.vessels[o.vi],o.shipSlot),o.shipSlot,p.vessels[o.vi].style));}
       case 'parti':return (trayDice(p)>2&&openVessel(p)>=0)?partiTake():partiSkip();   // v4.14: the safety net (brewPick auto-decides for AI seats)
       case 'pour':{const pb=aiPourBest(p);if(!pb)return pourSkip();return aiPourGo(p,pb);}   // v4.17
+      case 'tour':{const b=(UI.pendingTour||[])[0];if(!b)return tourPick(null);
+        const lp=S.players[b.pid];const ks=reachBenKontore(lp);if(!ks.length)return tourPick(null);
+        let bk=ks[0],bv=-1e9;ks.forEach(k=>{const v=aiMajSwing(lp,k);if(v>bv){bv=v;bk=k;}});
+        return tourPick(bk);}   // v4.17b: the champion's tour (the head may be any seat)
       case 'end':return endTurn();
       default:
         log('⚠ '+p.name+' (AI) hit an unknown prompt ('+UI.sub+') — ending its turn.');
@@ -2966,6 +2977,9 @@ function renderBar(){
     acts=UI.stops.map((s,i)=>stopAvail(s)?btn(stopLabel(s),'resolveStop('+i+')','go'):btnOff(stopLabel(s))).join('');
     if(hallOn()&&pourable(p).length)acts+=btn('⚜ Pour — enter a Tasting','enterPour()','primary');   // v4.17
     if(!UI.stops.length&&!(hallOn()&&pourable(p).length))acts='<span class="note">nothing left on this line</span>';}
+  else if(U==='tour'){const b=(UI.pendingTour||[])[0];const lp=b?S.players[b.pid]:null;
+    prompt='⚜ <b>The champion’s tour</b> — '+(lp?lp.name+'’s':'the')+' winning cask travels: park its die (face 1) at which Kontor?';
+    acts=(lp?reachBenKontore(lp):[]).map(k=>btn(kIcon(k)+' '+DEST[k].name,'tourPick(\''+k+'\')','go')).join('')+btn('Decline (the die stays on the floor)','tourPick(null)','ghost');}
   else if(U==='pour'){const P=UI.pour||{};
     if(P.vi==null){prompt='⚜ <b>Pour</b> — pick a <b>Ready</b> cask that matches an open Tasting’s category.';
       acts=pourable(p).map(o=>{const c=p.vessels[o.vi];return btn(LU('beer')+styleShort(c.style)+' · die '+c.die,'pourPickCask('+o.vi+')','go');}).join('')+btn('Back','pourSkip()','ghost');}
@@ -3397,7 +3411,7 @@ let CONTEST_OPEN=[2,3,3];    // ⚙ open Tastings by player count (2/3/4p)
 let CONTEST_BENCH=[2,3,3];   // ⚙ bench spaces by player count
 let TASTE_2ND=2,TASTE_3RD=1; // ⚙ the ladder below 1st
 let TASTE_SETS=[0,0,3,7];    // ⚙ end ★ by distinct categories won (index = count; the last rung caps)
-let START_INV=1;             // ⚙ every player starts with 1 ⚜ (the printed seed)
+let START_INV=2;             // ⚙ every player starts with 2 ⚜ (R2 of the study: 2 doubles engagement at no port cost; was 1)
 let END_JUDGE='void';        // ⚙ 'void' = an unconvened bench pays 1★/die · 'judge' = rank it as-is (a sweep arm)
 let INV_CASK_W=0;            // ⚙ the unprinted richness dial (v4.16): the ⚜ load bonus in hall-mode pile draws
 let INV_BLDG=1;              // ⚙ RULED (v4.16b): the Guild Chancery deals guaranteed in hall mode
@@ -3438,7 +3452,8 @@ function pourDo(vi,ci){const p=cur();const T=S.tastings;const ct=T&&(T.open||[])
   spendPresDisc(p,1);   // the die moves vessel → bench: committed, a clock beat (the audit = the die standing there)
   if(!aiSimulating)log(p.name+' spends an ⚜ <b>Invitation</b> and pours '+LU('beer')+'<b>'+styleShort(c.style)+'</b> (die '+c.die+') into <b>'+CONTEST_CAT[ct.t.cat].nm+'</b> ('+ct.bench.length+'/'+benchSize(ct)+')'+(slam?' — <b>the door slams</b>':'')+'.',true);
   UI.pour=null;UI.sub='stops';
-  if(ct.bench.length>=benchSize(ct))judgeTasting(ci);
+  if(ct.bench.length>=benchSize(ct)){judgeTasting(ci);
+    if((UI.pendingTour||[]).length){afterSail('stops');return true;}}
   render();
   return true;}
 function judgeTasting(ci){const T=S.tastings;const ct=(T.open||[])[ci];if(!ct)return;
@@ -3451,8 +3466,25 @@ function judgeTasting(ci){const T=S.tastings;const ct=(T.open||[])[ci];if(!ct)re
     if(pos===0)(lp.tastings=lp.tastings||[]).push({k:ct.t.k,cat:ct.t.cat,s1:ct.t.s1});
     if(!aiSimulating)log('↳ '+(pos===0?'1st':pos===1?'2nd':'3rd')+' — '+lp.name+'’s '+styleShort(r.e.style)+' (die '+r.e.die+'): <b>+'+star+'★</b>'+(pos===0?' and the tile (the record)':'')+'.');});
   ct.bench.forEach(e=>T.floor.push({pid:e.pid,die:e.die}));
+  // v4.17b THE CHAMPION'S TOUR (R3 of the study): the WINNING cask goes on tour — its die
+  // leaves the floor and PARKS as presence (face 1) at a Kontor its owner has delivered to
+  // (owner's choice; majority weight, no ★, no Crier — the pour stops forfeiting the
+  // majority race, the brief's compensation term). Never delivered anywhere → the tour
+  // lapses (the die stays on the floor).
+  if(TOUR_ON){const w=rank[0].e;
+    (UI.pendingTour=UI.pendingTour||[]).push({pid:w.pid,die:w.die});}
   T.open.splice(ci,1);   // the row refills at END of turn (the Orders rhythm)
 }
+let TOUR_ON=1;   // ⚙ v4.17b (R3): the champion's tour — sim hook TOUR=0|1
+function tourPark(lp,k){const T=S.tastings;
+  // the die moves floor → the Kontor parking field (face 1): presence weight, already committed
+  const fi=(T.floor||[]).map((e,i)=>i).filter(i=>T.floor[i].pid===lp.id).pop();
+  if(fi!=null)T.floor.splice(fi,1);
+  lp.presBonus[k]=(lp.presBonus[k]||0)+1;
+  if(!aiSimulating)log('↳ the champion’s tour — '+lp.name+'’s winning cask travels: its die parks at <b>'+DEST[k].name+'</b> (face 1 — presence).');}
+function tourPick(k){const b=(UI.pendingTour||[])[0];if(!b)return;const lp=S.players[b.pid];
+  if(k&&reachBenKontore(lp).includes(k)){snapshot();tourPark(lp,k);}
+  UI.pendingTour.shift();const rt=UI.goodsRt||'stops';UI.goodsRt=null;afterSail(rt);maybeRunAI();}
 // ---- greedy AI: a compact pour policy (the MC pair prices the real trade-offs) ----
 function aiPourBest(p){if(!hallOn())return null;let best=null;
   pourable(p).forEach(o=>{const c=p.vessels[o.vi];
@@ -3462,7 +3494,9 @@ function aiPourBest(p){if(!hallOn())return null;let best=null;
       let v;
       if(!lead||c.die>lead.die){
         const winP=Math.max(0.35,1-0.28*(left-1));   // every space left after mine is a sniper's window
-        v=ct.t.s1*winP+(left===1?1.2:0)+1.0-alt;}
+        v=ct.t.s1*winP+(left===1?1.2:0)+1.0-alt;
+        if(TOUR_ON&&reachBenKontore(p).length){let mj=0;reachBenKontore(p).forEach(k=>mj=Math.max(mj,aiMajSwing(p,k)));
+          v+=winP*(0.8+0.4*Math.max(0,mj));}}   // v4.17b: 1st's die tours — the majority weight returns to the pour
       else if(lead.pid===p.id&&left===1)
         v=ct.t.s1*0.95+TASTE_3RD-alt+1.2;             // THE DOOR-SLAM: lock my own 1st with this pour
       else v=(left===1?TASTE_2ND:1)-alt*0.8;          // filling for 2nd/3rd — poor unless the die is cheap

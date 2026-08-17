@@ -96,6 +96,7 @@ function __runGame(n){
   if(__TCATB!=='')__TCATB.split(',').forEach(function(seg){var m=seg.split(':');
     CONTESTS.forEach(function(t){if(t.cat===m[0]&&+m[1]>0)t.b=parseInt(m[1],10);});});
   if(__EJ!=='')END_JUDGE=__EJ;
+  if(__TOUR!=='')TOUR_ON=(__TOUR==='1')?1:0;
   if(__ICW!=='')INV_CASK_W=parseFloat(__ICW)||0;
   if(__IBLDG!=='')INV_BLDG=(__IBLDG==='1')?1:0;
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
@@ -152,7 +153,7 @@ const ctx = {
   __EXP:process.env.EXPANSION==='1', __JOP:process.env.JOPEN==='1',   // v4.14: the beer-toggle arms (EXPANSION=1 · JOPEN=1)
   __HALL:process.env.HALL==='1',                                      // v4.15: the Guildhall arm (HALL=1)
   __SINV:process.env.STARTINV!=null?process.env.STARTINV:'', __TSTARS:process.env.TSTARS!=null?process.env.TSTARS:'',   // v4.17: the Tasting dials
-  __TBENCH:process.env.BENCH!=null?process.env.BENCH:'', __TCATB:process.env.CATB!=null?process.env.CATB:'', __EJ:process.env.EJUDGE!=null?process.env.EJUDGE:'',
+  __TBENCH:process.env.BENCH!=null?process.env.BENCH:'', __TCATB:process.env.CATB!=null?process.env.CATB:'', __EJ:process.env.EJUDGE!=null?process.env.EJUDGE:'', __TOUR:process.env.TOUR!=null?process.env.TOUR:'',
   __ICW:process.env.INV_CASK!=null?process.env.INV_CASK:'', __IBLDG:process.env.INV_BLDG!=null?process.env.INV_BLDG:'',
   __POOL:parseInt(process.env.POOL||'0',10),
   __PERSONAS:PERSONAS,

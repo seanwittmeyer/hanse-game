@@ -87,6 +87,7 @@ const TSTARS=(process.env.TSTARS||'').trim();
 const TBENCH=(process.env.BENCH||'').trim();
 const TCATB=(process.env.CATB||'').trim();
 const EJ=(process.env.EJUDGE||'').trim();
+const TOUR=(process.env.TOUR||'').trim();
 
 const html=fs.readFileSync(path.join(__dirname,'..','play.html'),'utf8');
 const engine=[...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m=>m[1]).join('\n');
@@ -102,6 +103,7 @@ if(__TBENCH!=='')CONTEST_BENCH=__TBENCH.split(',').map(function(v){return parseI
 if(__TCATB!=='')__TCATB.split(',').forEach(function(seg){var m=seg.split(':');
   CONTESTS.forEach(function(t){if(t.cat===m[0]&&+m[1]>0)t.b=parseInt(m[1],10);});});
 if(__EJ!=='')END_JUDGE=__EJ;
+if(__TOUR!=='')TOUR_ON=(__TOUR==='1')?1:0;
 var __POURS=[],__SLAMS=0,__JUDGED=0;
 var __pourDo=pourDo;pourDo=function(vi,ci){var ct=S&&S.tastings&&(S.tastings.open||[])[ci];
   var pre=ct?ct.bench.length:0;var lead=ct?benchLeader(ct):null;var p=cur();
@@ -154,7 +156,7 @@ const localStorageStub={getItem:k=>(k in store?store[k]:null),setItem:(k,v)=>{st
 const ctx={document:documentStub,localStorage:localStorageStub,console,Math,JSON,Date,Set,Map,Array,Object,String,Number,Boolean,
   parseInt,parseFloat,isNaN,alert:noop,setTimeout:noop,clearTimeout:noop,lucide:{createIcons:noop},
   __N:N,__GMS:GMS,__CMS:CMS,__JIT:JIT,__SEAT0:SEAT0,__HALL:HALL,
-  __SINV:SINV,__TSTARS:TSTARS,__TBENCH:TBENCH,__TCATB:TCATB,__EJ:EJ};
+  __SINV:SINV,__TSTARS:TSTARS,__TBENCH:TBENCH,__TCATB:TCATB,__EJ:EJ,__TOUR:TOUR};
 ctx.window=ctx;ctx.globalThis=ctx;ctx.self=ctx;
 ctx.addEventListener=noop;ctx.removeEventListener=noop;
 vm.createContext(ctx);
