@@ -233,5 +233,52 @@
   "slamsPerGame": "0.17",
   "setRate": "0.3%",
   "catWins": "free 68 · fresh 63"
+ },
+ "tour": {
+  "games": 200,
+  "errors": 0,
+  "pace": "14.2",
+  "seats": {
+   "cm": {
+    "n": 200,
+    "win": "62.0",
+    "total": "53.7",
+    "pours": "1.85",
+    "won": "0.41",
+    "hallStars": "4.2",
+    "maj": "14.5",
+    "claims": "0.55",
+    "inv": "1.07"
+   },
+   "gm": {
+    "n": 200,
+    "win": "16.5",
+    "total": "41.0",
+    "pours": "1.71",
+    "won": "0.32",
+    "hallStars": "3.6",
+    "maj": "10.6",
+    "claims": "0.48",
+    "inv": "0.94"
+   },
+   "chaos": {
+    "n": 200,
+    "win": "21.5",
+    "total": "45.0",
+    "pours": "1.33",
+    "won": "0.58",
+    "hallStars": "4.2",
+    "maj": "11.6",
+    "claims": "0.24",
+    "inv": "0.73"
+   }
+  },
+  "invPerPlayer": "bldg 0.49 · order 0.42",
+  "deadPort": "bru 0.0% · lon 3.0% · ber 5.5% · nov 20.0%",
+  "judgedPerGame": "1.31",
+  "unconvenedPerGame": "0.82",
+  "slamsPerGame": "0.56",
+  "setRate": "2.8%",
+  "catWins": "fresh 126 · free 107 · dark 15 · export 9"
  }
 }

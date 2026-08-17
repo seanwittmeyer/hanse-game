@@ -1,4 +1,12 @@
-# Brewhouses of the Hanse — Components (v4.17 “The Tastings”)
+# Brewhouses of the Hanse — Components (v4.17b “Champion’s Tour”)
+
+> **v4.17b (study-ruled 2026-08-15 — three prints off the 1,400-game oracle):** **(1)** the
+> **dark/export/old/master Tasting tiles reprint with a bench of TWO die squares** (the
+> duels — R1: three matching ripe casks never assemble; free/fresh keep three); **(2)** the
+> setup line reads *each player takes **2** ⚜ Invitations* (was 1 — R2); **(3)** the
+> **Tastings board’s footer gains the champion’s-tour line** — *the winning cask’s die
+> parks as presence (face 1) at a Kontor its owner has delivered to* (R3 — the pour stops
+> forfeiting the majority race). No counts change; the six duel tiles and the board reprint.
 
 > **v4.17 (designer-ruled 2026-08-15 — the hall rethink, Plan B):** the Guildhall sheet is
 > **REBUILT**. **CUT:** the shelf board face (menus · identical spaces · the pips line) and
@@ -366,10 +374,11 @@ die 5+→3★ · Bock→4★ · die 6→4★ · any Kontor — die 6→3★.
 **1 board** (the contest row — three tile parkings, the third badged 3–4p — over the
 **Taproom floor** strip and the rules footer) · the **Tasting contest deck: 12 tiles**
 (building-cut 2.5×1.32″ — category + filter, the prize ladder *1st printed★+tile · 2nd 2★ ·
-3rd 1★*, and a printed bench of three die squares, the third badged 3–4p; the mix: free ×3 ·
-fresh ×3 · dark ×2 · export ×2 · old ×1 · master ×1 — 1st ★ 5/5/7/6/7/9 ⚙) · **18 ⚜
+3rd 1★*, and a printed bench of die squares — free/fresh three (the third badged 3–4p), the
+dark/export/old/master pours **two: duels** (v4.17b); the mix: free ×3 · fresh ×3 · dark ×2 ·
+export ×2 · old ×1 · master ×1 — 1st ★ 5/5/7/6/7/9 ⚙) · **18 ⚜
 Invitation tiles** (2×0.9″; a face-up supply — spent tiles return; *each player starts with
-1*) · the **Guild Chancery** building (v4.16b — always dealt in hall mode). The poured die
+2* (v4.17b)) · the **Guild Chancery** building (v4.16b — always dealt in hall mode). The poured die
 stands on the tile’s bench in pour order; judged dice stand on the floor (committed, the
 clock); the won tiles at the seat are the set record (2 distinct +3★ · 3+ +7★ ⚙). All
 contest state is tiles + dice — nothing is remembered.

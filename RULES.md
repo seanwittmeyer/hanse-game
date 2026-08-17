@@ -1,4 +1,19 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.17 “The Tastings”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.17b “Champion’s Tour”)
+
+> **v4.17b “Champion’s Tour” (study-ruled 2026-08-15 — R1–R3 of `TASTING-STUDY-v417.md`,
+> 1,400 CM/GM+chaos games).** Three prints land on the Tastings. **(1) THE DUEL BENCHES** —
+> the dark/export/old/master tiles print a **bench of 2** (R1: a bench of three matching
+> Q4+/die-4+ casks never assembles — dark convened once in 400 games; free/fresh keep 3;
+> every bench caps at 2 at 2p). **(2) START_INV = 2** (R2: the second seed ⚜ doubles
+> engagement at no port cost). **(3) THE CHAMPION’S TOUR** — the winning cask’s die leaves
+> the floor and **parks as presence (face 1) at a Kontor its owner has delivered to**
+> (owner’s choice; majority weight, no ★, no Crier; never delivered anywhere → the tour
+> lapses). The pour stops forfeiting the majority race — R3: judging 1.31/game, the hard
+> categories wake (2.4× the no-tour control), hall ★ ~4, pace on base, and the strongest
+> seat *likes* the lane (CM 62%). Open watches (§Open #13): the slam share (43% — bench-2
+> self-fills are priced plays; the dial is one-die-per-player benches) and **Novgorod dead
+> 20% vs base 10** — the Hall now truly bids for ripe dice (the designed tension; dials
+> recorded, the human table decides).
 
 > **v4.17 “The Tastings” (designer-ruled 2026-08-15 — the hall rethink: “Build B”).** The
 > shelf Hall is **CUT WHOLE** — the menus, the once-per-player ★ (the bookkeeping violation),
@@ -835,7 +850,7 @@ die, in every rival’s view) · contestability = the berth race.*
 **The Hall as a cycle of public contests.** With the toggle on:
 
 - **Setup:** shuffle the **Tasting deck (12 ⚙)** and lay out the open row — **2 Tastings at
-  2p · 3 at 3–4p** ⚙. Each player takes **1 ⚜ Invitation** ⚙. The Order deck is the **base
+  2p · 3 at 3–4p** ⚙. Each player takes **2 ⚜ Invitations** ⚙ (v4.17b — R2 of the study). The Order deck is the **base
   15** (one Order economy, hall or not); **every claimed Order also pays an ⚜ Invitation**,
   and the **Guild Chancery** shuffles into the building deck, always dealt (17 of 21 ⚙ —
   resolve its slot: gain 1 ⚜).
@@ -850,6 +865,11 @@ die, in every rival’s view) · contestability = the berth race.*
   score at once; the judged dice slide to the **Taproom floor** strip (committed, standing —
   the audit). The judged Tasting is **replaced from the deck at end of turn** (the Orders
   rhythm).
+- **The champion’s tour (v4.17b):** the **winning** cask’s die does not stay on the floor —
+  it **parks as presence (face 1) at a Kontor its owner has delivered to** (owner’s choice;
+  majority weight, no ★, no Town Crier — this is not *placing presence*). Never delivered
+  anywhere → the tour lapses and the die stays on the floor. *The pour no longer forfeits
+  the majority race — the study’s compensation term.*
 - **The door-slam:** filling the last space forces the judging — a leader locks the vote
   with any qualifying second die; a rival forces the count before your Bock is Ready. Every
   open bench is a stand-off; read *who can still brew what* before you pour.
@@ -861,18 +881,19 @@ die, in every rival’s view) · contestability = the berth race.*
 
 **The Tasting deck (12 ⚙):**
 
-| Tasting | Enter with | Tiles | 1st ⚙ |
-|---|---|---|---|
-| **the Free Pour** | any Ready cask | 3 | 5★ + the tile |
-| **the Fresh Pour** | quality 3 or under | 3 | 5★ + the tile |
-| **the Dark Pour** | quality 4 or higher | 2 | 7★ + the tile |
-| **the Export Pour** | poured at die 4+ | 2 | 6★ + the tile |
-| **the Old Pour** | poured at die 5+ | 1 | 7★ + the tile |
-| **the Master’s Pour** | poured at die 6 | 1 | 9★ + the tile |
+| Tasting | Enter with | Tiles | Bench ⚙ | 1st ⚙ |
+|---|---|---|---|---|
+| **the Free Pour** | any Ready cask | 3 | 3 | 5★ + the tile |
+| **the Fresh Pour** | quality 3 or under | 3 | 3 | 5★ + the tile |
+| **the Dark Pour** | quality 4 or higher | 2 | **2 (a duel)** | 7★ + the tile |
+| **the Export Pour** | poured at die 4+ | 2 | **2 (a duel)** | 6★ + the tile |
+| **the Old Pour** | poured at die 5+ | 1 | **2 (a duel)** | 7★ + the tile |
+| **the Master’s Pour** | poured at die 6 | 1 | **2 (a duel)** | 9★ + the tile |
 
-*(2nd 2★ · 3rd 1★ everywhere ⚙. The dark pour always has a lane — the export deal
-guarantees a Q4+ beer. The die is read as it POURS — vessel-side lifts such as the Hop
-Exchange’s past-quality pump count; there are no load lifts here.)*
+*(2nd 2★ · 3rd 1★ ⚙; every bench caps at 2 at 2p. The tile prints its own bench — v4.17b,
+R1’s duel ruling. The dark pour always has a lane — the export deal guarantees a Q4+ beer.
+The die is read as it POURS — vessel-side lifts such as the Hop Exchange’s past-quality
+pump count; there are no load lifts here.)*
 
 ### The Trade Roads — TABLED
 
@@ -1018,8 +1039,16 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
    **category droughts** (a dealt roster that starves dark/old/master pours — the deck mix
    is the dial); the **Novgorod bid** returns (old/master pours want the same die-5/6s as
    the eastern run); 2p (bench 2 = duels — the tie-to-earlier edge is sharpest there).
-   The oracle: `playtests/tasting-probe.js` — 200 CM/GM games per arm with a jittered
-   chaos seat (the designer’s variable-humans brief), two rounds before the printer.
+   The oracle RAN — `TASTING-STUDY-v417.md`, three rounds, 1,400 games: R1 found the
+   hard-category drought structural (→ the duel benches) and rejected the rich-prize arm on
+   a 23.5% Novgorod read; R2 ruled START_INV 2; R3 confirmed the champion’s tour (judging
+   1.31/g · hard categories 2.4× · pace on base · CM 62%). STANDING watches for the human
+   table: the **slam share** (43% of judgings are self-fills — priced, but if the table
+   finds them flat the dial is *one die per player per bench*, which kills the door-slam
+   with it) · **Novgorod dead 20% vs base 10** (the Hall bids for the same ripe dice — the
+   designed tension; dials: the export/old/master prizes, or a Novgorod-naming Order at
+   premium ★) · the old/master pours as aspirational capstones (they convene rarely — the
+   crown’s old role) · 2p duels (the tie-to-earlier edge is sharpest at two).
 14. **The expansion beers (v4.14 · pins v4.15b)** ⚙ — the re-derivation watches: the
    **Assay House** at 1 `H`-to-Ready buys Jopenbier’s whole four-step climb (the sharpened
    Bock-Assay watch — dials: the Assay’s reach, or accept the single tile in a 17-of-20

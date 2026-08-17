@@ -143,6 +143,7 @@ the registry governs what a PLAYER reads.
 | bench | n | A Tasting’s printed die spaces; the bench filling IS the judging | ○ provisional |
 | the Taproom floor | n | The board strip where judged dice stand (committed — the audit) | ○ provisional |
 | convene | v | A bench fills and is judged; an unconvened bench at game end pays 1★/die | ○ provisional |
+| the champion’s tour | n | The winning cask’s die parks as presence (face 1) at a Kontor its owner has delivered to (v4.17b) | ○ provisional |
 | parti-gyle | n/adj | Zerbster’s printed signature (v4.15b): as the cask boards, an optional free Gruit into an open vessel (a tray die), then Load 1 more | ○ provisional (period brewing term — the second runnings) |
 | smoke-hardy | adj | Duckstein’s printed signature: its die turns +1 as it boards (cap 6) | ○ provisional |
 

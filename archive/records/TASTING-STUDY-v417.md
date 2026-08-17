@@ -66,4 +66,47 @@ tile prints its own bench — no new rules text. Sweepable via `CATB="dark:2,…
 
 *(the printed stars stay 5/5/7/6/7/9 — `hot`'s schedule is rejected on the Novgorod read)*
 
-## §3 · Verdict — the game-night print ⚙
+**Round-2 results (400 games · 0 errors):** duel1 (STARTINV 1): judged 0.61 · hard-cat wins
+1 · Novgorod 20% — the duels alone did NOT wake the hard pours. duel2 (STARTINV 2): judged
+1.10 · hard-cat wins 10 · Novgorod 19% · hall★ ~3.5. **The deeper diagnosis:** strong seats
+price a ripe die's port alternative (pips + presence + majority weight + prize) above a
+contested 7★ because **the pour forfeits the majority race**. START_INV 2 dominates at no
+port cost → **ruled**. **→ R3: THE CHAMPION'S TOUR** — the winning die parks as presence
+(face 1) at a delivered-to Kontor (owner's choice; no ★, no Crier; never-delivered → lapses).
+
+## §2b · Round 3 — the tour confirm (1 arm × 200 · vs duel2 as the control)
+
+| metric | duel2 (no tour) | **tour** | base |
+|---|---|---|---|
+| judged/game | 1.10 | **1.31** | — |
+| hard-category wins | 10 | **24** (dark 15 · export 9) | — |
+| hall★ (CM/GM/chaos) | 3.5/3.5/2.9 | **4.2/3.6/4.2** | — |
+| pace | 14.7 | **14.2** | 14.3 |
+| Novgorod dead | 19.0% | 20.0% | 10.0% |
+| door-slams / judgings | 31% | 43% | — |
+| CM · GM · chaos wins | 40/20.5/39.5 | **62/16.5/21.5** | 53.5/13/33.5 |
+
+## §3 · Verdict — the game-night print (SHIPPED as v4.17b "Champion's Tour")
+
+**The print:** the duel benches (dark/export/old/master at bench 2) · START_INV 2 · the
+champion's tour. Against the pre-registered criteria: engagement 1.31 judged/game (2× the
+printed defaults; just under the aspirational 1.5 — human tables historically out-engage
+the greedy read) ✔~ · the chaos seat neither pays nor collapses ✔ · hall★ ~4 at pace
++0.0 ✔ · unconvened 0.82 ✔ · sets 2.8% (rare — the capstone role) ✔ · **the strongest seat
+likes the lane** (CM 62% — the tour rewards skill, not noise) ✔.
+
+**The two watches carried to game night, eyes open:**
+1. **The slam share (43%)** — at bench 2 a "slam" includes buying 1st+2nd solo for 2 ⚜ +
+   2 dice: a priced play, not a free one. If the table finds self-fills flat, the printed
+   dial is *one die per player per bench* — which also kills the door-slam, so rule it only
+   on a felt read.
+2. **Novgorod dead 20% (base 10%)** — the Hall now genuinely competes for ripe dice. That
+   IS the designed tension (the brief: compete with the majorities), but it breaches the
+   pre-registered +5 pp bar. Dials if the table feels it: trim the export/old 1st ★, or a
+   Novgorod-naming Order at premium ★. The 80% of games that still deliver east say it is
+   a bid, not a blockade.
+
+*Corpus: `playtests/tasting-corpus/` (base/tast/hot/duel1/duel2/tour — 1,400 games,
+AGG.json). All shards CM 220 ms · GM 100 ms · chaos-trader noise 0.15, seats rotated,
+uniform contention. Everything above ships in KEY `hanse-v417b`; the tile/board reprints
+are in the kit. Nothing here needs memory — the audit is tiles and dice.*
