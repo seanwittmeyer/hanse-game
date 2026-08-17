@@ -542,36 +542,8 @@
   .kgrid{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:.14in;min-height:0}
   .crow{flex:0 0 auto;display:flex;gap:.16in;justify-content:center;align-items:center}
   .db-ccol .dslot{width:2.2in;height:1in}
-  .db-hcol{flex:1;display:flex;flex-direction:column;gap:.09in;min-height:0}
-  /* the Hall header — a kontor-style art panel, so the Hall reads as the fifth destination */
-  .db-hhead{flex:0 0 auto;height:1.5in;border:3px solid #5b3a8e;border-radius:.1in;background:#efeaf6;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}   /* the title bar rides the TOP, like the kontor panels; the dispatch note sits at the foot */
-  .db-hhead .kp-t{font-size:.26in}
-  .db-hhead .hnote{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:.06in;font-variant:small-caps;font-weight:bold;font-size:.15in;color:#fff;text-shadow:0 1px 2.5px rgba(0,0,0,.85);padding:.03in 0 .07in}
-  /* a SHELF: the name/gate end-cap (full height) + [ the three coin SPACES / the LAUNCH row ] on a plank */
-  .hshelf2{flex:1;display:flex;border:2.5px solid #5b3a8e;border-radius:.08in;background:rgba(255,255,255,.55);overflow:hidden;position:relative}
-  .hshelf2::after{content:"";position:absolute;left:0;right:0;bottom:0;height:.09in;background:#7a5236;border-top:1.5px solid #4d3524}  /* the plank */
-  .hs-main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
-  /* the COIN row is COMPACT (icon · label · cube, no dead band); the LAUNCH row takes the freed height */
-  .hs-coins{flex:0 0 auto;display:flex;min-width:0}
-  .hs-launch{flex:1;display:flex;align-items:center;justify-content:center;gap:.1in;border-top:1.5px dashed #9c7bbd;padding:.06in .06in .15in;min-width:0}
-  .hs-launch .lq{display:inline-flex;align-items:center;gap:.02in;color:#5b3a8e;font-weight:900;font-size:.3in;line-height:1;flex:0 0 auto}
-  .hs-launch .lq svg,.hs-launch .lq .ic{width:.28in;height:.28in;color:#9c7414;fill:none}
-  .hs-launch .llbl{font-variant:small-caps;font-weight:bold;font-size:.11in;color:var(--ink2);margin-right:.04in;flex:0 0 auto}
-  .hs-launch .lcubes{display:flex;gap:.05in;flex:0 1 auto;min-width:0}
-  .hs-launch .lcube{width:.4in;height:.4in;border:2px dashed #9c7bbd;border-radius:.04in;background:rgba(255,255,255,.7);flex:0 0 auto}
-  .hs-side{flex:0 0 auto;width:1.05in;background:#5b3a8e;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;text-align:center;padding:.04in}
-  .hs-side .nm{font-variant:small-caps;font-weight:bold;font-size:.125in;line-height:1.08}
-  .hs-side .gate{font-weight:900;font-size:.3in;line-height:1}
-  .hs-sp{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.025in;padding:.05in .03in .08in;text-align:center;border-left:1.5px dashed #9c7bbd}
-  .hs-sp .bic{display:flex;align-items:center;justify-content:center;gap:.02in;color:#5b3a8e;font-weight:900;font-size:.3in;line-height:1}
-  .hs-sp .bic svg,.hs-sp .bic .ic{width:.3in;height:.3in}
-  .hs-sp.fame .bic{font-size:.36in}
-  .hs-sp.fame .bic svg,.hs-sp.fame .bic .ic{width:.3in;height:.3in;color:#9c7414}
-  .hs-sp .lbl{font-variant:small-caps;font-weight:bold;font-size:.115in;line-height:1.05;color:var(--ink)}
-  .hs-sp .cube{margin-top:.05in;width:.42in;height:.42in;border:2px dashed #9c7bbd;border-radius:.04in;background:rgba(255,255,255,.7);flex:0 0 auto}   /* right under the label — no dead band; the launch row owns the slack */
-  /* the LAUNCH strip — the always-open floor of the column */
-  .hlaunch{flex:0 0 auto;height:.52in;border:2.5px solid #5b3a8e;border-radius:.08in;background:#5b3a8e;color:#fff;display:flex;align-items:center;justify-content:center;gap:.08in;font-variant:small-caps;font-weight:bold;font-size:.17in}
-  .hlaunch svg,.hlaunch .ic{width:.2in;height:.2in}
+  /* (the shelf-Hall column CSS — .db-hcol/.db-hhead/.hshelf2/.hs-*/.hlaunch — left with the
+     v4.17 rethink; the Tastings board carries its own .tastb block below.) */
   .ddeck{width:2in;height:2in;border-radius:.07in;background:var(--sea);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.04in;
     text-shadow:0 1px 1px rgba(0,0,0,.3);box-shadow:.05in -.05in 0 rgba(0,0,0,.18),inset 0 0 0 1.5px rgba(255,255,255,.22)}
   .ddeck.b{background:var(--green)}
@@ -645,34 +617,59 @@
   .pb2-flipsh .fnote{grid-column:1/3;font-size:.072in;font-style:italic;color:var(--ink2);line-height:1.15}
   .pb2-floor{flex:0 0 auto;display:flex;align-items:center;gap:.06in;border-radius:.06in;background:var(--pc);color:#fff;padding:.045in .09in;font-size:.098in;line-height:1.25}
   .pb2-floor svg,.pb2-floor .ic{width:.15in;height:.15in;flex:0 0 auto}
-  /* ====================== THE HALL SHELF BOARD (v3.0-A) ====================== */
-  .hallb{position:absolute;inset:0;background:linear-gradient(160deg,#f3ecdd,#e9dcc0);border:2.5px solid #5b3a8e;border-radius:.14in;padding:.12in .2in;display:flex;flex-direction:column;gap:.06in}
-  .hallb .hb-head{display:flex;align-items:flex-start;gap:.14in;border-bottom:2px solid #b8860b;padding-bottom:.05in}
-  .hallb h2{margin:0;font-variant:small-caps;color:#5b3a8e;font-size:.24in;display:flex;align-items:center;gap:.06in;white-space:nowrap}
-  .hallb h2 svg,.hallb h2 .ic{width:.24in;height:.24in}
-  .hallb .hb-sub{font-size:.098in;color:#5b4a37;font-style:italic;line-height:1.25;flex:1}
-  .hb-shelves{flex:1;display:flex;flex-direction:column;gap:.055in}
-  .hb-shelf{flex:1;display:flex;gap:.1in;align-items:stretch;background:rgba(255,255,255,.5);border:1.8px solid #5b3a8e;border-radius:.08in;padding:.04in .08in}
-  .hb-side{width:1.6in;flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:.02in;border-right:1.5px dotted #b39ddb;padding-right:.08in}
-  .hb-side .hb-nm{font-variant:small-caps;font-weight:900;color:#5b3a8e;font-size:.15in;line-height:1.05}
-  .hb-side .hb-gate{display:inline-flex;align-items:center;gap:.03in;font-weight:bold;font-size:.1in;color:#5b4a37}
-  .hb-side .hb-gate svg,.hb-side .hb-gate .ic{width:.12in;height:.12in}
-  .hb-side .hb-star{display:inline-flex;align-items:center;gap:.02in;font-weight:900;font-size:.24in;color:#8a6408}
-  .hb-side .hb-star i{font-size:.095in;font-style:normal;color:#5b4a37;font-weight:normal}
-  .hb-side .hb-star svg,.hb-side .hb-star .ic{width:.2in;height:.2in;color:#8a6408}
-  .hb-spaces{flex:1;display:flex;gap:.08in}
-  .hb-sp{position:relative;flex:1;border:2px dashed #5b3a8e;border-radius:.06in;background:rgba(91,58,142,.06);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.018in;text-align:center;padding:.035in .04in}
-  .hb-sp svg,.hb-sp .ic{width:.14in;height:.14in;color:#5b3a8e;vertical-align:-.025in}
-  .hb-sp .t{font-size:.09in;font-weight:bold;color:#3a3342;line-height:1.2}
-  .hb-sp .t .fbig{font-size:.2in;font-weight:900;color:#8a6408;vertical-align:middle}
-  .hb-sp.fame .t svg,.hb-sp.fame .t .ic{width:.17in;height:.17in;color:#8a6408;vertical-align:middle}
-  .hb-sp .cn{font-variant:small-caps;font-weight:900;font-size:.095in;color:#5b3a8e;line-height:1.05}
-  .hb-sp .csub{font-size:.07in;font-style:italic;color:#5b4a37}
-  .hb-sp .ctag{align-self:stretch;font-variant:small-caps;font-weight:900;font-size:.078in;letter-spacing:.02em;color:#fff;background:#5b3a8e;border-radius:.03in;padding:.004in 0}
-  .hb-sp.fame .ctag{background:#8a6408}
-  .hb-sp.favor .ctag{background:#4a6b3a}
-  .hb-sp .cube{width:.47in;height:.47in;border:1.5px dotted #9c7bbd;border-radius:.04in;background:rgba(255,255,255,.6)}
-  .hb-foot{font-size:.09in;color:#5b4a37;border-top:1px solid #c8b48a;padding-top:.035in;line-height:1.3}
+  /* ====================== THE GUILD TASTINGS BOARD (v4.17b) ====================== */
+  /* Kit grammar throughout: a kontor-style ART header (art/kontor-hall.png + the shared inline-SVG
+     foot ramp — the Hall reads as the fifth destination; CSS gradients seam in html2canvas), the
+     open row as COMPONENT-TRUE 2.5×1.32 parkings (the Tasting tile drops exactly in; Overlay
+     proofs it), the judging diagram built from the real pieces, and the TAPROOM FLOOR as an open
+     parking field on a plank (no printed capacity — dice stand free; Overlay ghosts 12mm d6). */
+  .tastb{width:100%;height:100%;box-sizing:border-box;background:var(--parch);border:3px solid #5b3a8e;border-radius:.14in;padding:.12in .16in;display:flex;flex-direction:column;gap:.07in;color:var(--ink)}
+  .tastb svg,.tastb .ic{stroke-width:1.8}
+  .tb-head{flex:0 0 auto;height:1in;border:2.5px solid #5b3a8e;border-radius:.1in;background:#efeaf6;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}
+  .tb-head .kp-t{font-size:.24in;padding:.04in .12in}
+  .tb-pour{margin-left:auto;display:inline-flex;align-items:center;gap:.04in;font-size:.13in;font-weight:bold}
+  .tb-hnote{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:.06in;font-variant:small-caps;font-weight:bold;font-size:.13in;color:#fff;text-shadow:0 1px 2.5px rgba(0,0,0,.85);padding:0 0 .06in}
+  .tb-row{flex:0 0 auto;display:flex;flex-direction:column;gap:.05in}
+  .tb-slots{display:flex;gap:.18in;justify-content:center}
+  .tslot{position:relative;width:2.5in;height:1.32in;box-sizing:border-box;border:2px dashed #5b3a8e;border-radius:.08in;background:rgba(255,255,255,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.015in;color:#5b3a8e}
+  .tslot .fdl{font-size:.32in;line-height:1;opacity:.6}
+  .tslot .t{font-variant:small-caps;font-weight:bold;font-size:.11in;opacity:.75}
+  .tslot .ovl,.twell .ovl{position:absolute;inset:0;opacity:.5;pointer-events:none;z-index:2;display:flex;align-items:center;justify-content:center}
+  .tb-badge{position:absolute;top:-.07in;right:-.05in;background:#7c2128;color:#fff;font-size:.08in;font-weight:900;border-radius:.03in;padding:.006in .035in;z-index:3}
+  /* the judging diagram — three panels of real pieces (the v4.13 diagram grammar) */
+  .tb-diag{flex:0 0 auto;display:flex;align-items:stretch;gap:.1in;border:2px solid #5b3a8e;border-radius:.09in;background:rgba(255,255,255,.55);padding:.05in .1in}
+  .tb-dg{flex:1;display:flex;flex-direction:column;gap:.02in;min-width:0}
+  .tb-dg .h{font-variant:small-caps;font-weight:900;font-size:.108in;color:#5b3a8e}
+  .tb-dg .pieces{flex:1;display:flex;align-items:center;justify-content:center;gap:.045in;min-height:.5in}
+  .tb-dg .x{font-size:.09in;line-height:1.2;color:var(--ink2)}
+  .tb-dsep{flex:0 0 auto;border-left:1.5px dotted #9c7bbd}
+  .tb-fl{font-size:.28in;font-weight:900;color:#8a6408;line-height:1}
+  .tb-plus,.tb-arr{font-weight:900;color:#8a6408;font-size:.17in;flex:0 0 auto}
+  .tb-chip{display:inline-flex;align-items:center;gap:.025in;font-variant:small-caps;font-weight:bold;font-size:.1in;background:rgba(91,58,142,.1);border-radius:.04in;padding:.015in .04in}
+  .tb-chip svg,.tb-chip .ic,.tb-chip img.ai{width:.14in;height:.14in}
+  .tb-die{display:inline-flex;flex:0 0 auto}
+  .tb-die svg,.tb-die .ic,.tb-die img.ai{width:.36in;height:.36in}
+  .tb-bsq{width:.36in;height:.36in;border:2px dashed rgba(0,0,0,.35);border-radius:.05in;background:rgba(255,255,255,.5);flex:0 0 auto}   /* the tile's own bench-square print, echoed */
+  .tb-rank{display:inline-flex;flex-direction:column;align-items:center;gap:.008in}
+  .tb-rank i{font-style:normal;font-size:.09in;font-weight:900;color:#5b3a8e;white-space:nowrap}
+  .tb-crest{display:inline-flex;gap:.02in}
+  .tb-crest img.ai,.tb-crest svg,.tb-crest .ic{width:.24in;height:.24in}
+  /* the Taproom floor + the deck/⚜ wells */
+  .tb-bot{flex:1;display:flex;gap:.12in;min-height:0}
+  .tb-floor{flex:1;position:relative;border:2.5px solid #8a6408;border-radius:.1in;background:rgba(255,255,255,.42);padding:.06in .1in .14in;display:flex;flex-direction:column;overflow:hidden}
+  .tb-floor::after{content:"";position:absolute;left:0;right:0;bottom:0;height:.1in;background:#7a5236;border-top:1.5px solid #4d3524}   /* the plank */
+  .tb-floor .fh{font-variant:small-caps;font-weight:900;color:#8a6408;font-size:.16in}
+  .tb-floor .fs{font-size:.09in;font-style:italic;color:var(--ink2);line-height:1.25}
+  .tb-floor .fz{flex:1;position:relative}
+  .tb-floor .ovl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:.12in;opacity:.5;pointer-events:none;z-index:2}
+  .tb-wells{flex:0 0 auto;width:2.5in;display:flex;flex-direction:column;gap:.08in;align-items:center;justify-content:center}
+  .twell{position:relative;box-sizing:border-box;border:2px dashed #5b3a8e;border-radius:.08in;background:rgba(255,255,255,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.015in;color:#5b3a8e;text-align:center}
+  .twell.deck{width:2.5in;height:1.32in}
+  .twell.inv{width:2in;height:.9in;border-color:#8a6408;color:#8a6408}
+  .twell .nm{font-variant:small-caps;font-weight:900;font-size:.125in;display:inline-flex;align-items:center;gap:.03in}
+  .twell .nm svg,.twell .nm .ic{width:.14in;height:.14in}
+  .twell .sub{font-size:.08in;font-style:italic;color:var(--ink2);line-height:1.2;max-width:92%}
+  .tb-rules{flex:0 0 auto;font-size:.094in;color:#5b4a37;border-top:1.5px solid #c8b48a;padding-top:.04in;line-height:1.32}
   /* ====================== CHECKLIST ====================== */
   .check{position:absolute;left:.35in;top:.38in;width:9.7in;height:7.42in;font-size:.094in;display:flex;flex-direction:column;gap:.05in}
   .check h2{margin:0;font-variant:small-caps;color:var(--red);font-size:.2in;border-bottom:2px solid var(--gold);padding-bottom:.03in}
@@ -1161,32 +1158,59 @@ function destBoard(){   // ONE board (designer, 2026-08-03): the Kontore 2×2 ov
   +'<div class="disp-h k">'+LU('contract')+'Orders</div>'
   +'<div class="crow">'+LADINGS.slice(0,3).map(cslot).join('')+'</div></div>';}
 
-// ---- THE GUILDHALL BOARD (v4.15, expansion) — mirrors play.html HALL_SHELVES ⚙.
-// Four shelf rows, top-down (climb upward): name + die minimum · the printed MENU (★ once
-// per player · free actions) · IDENTICAL die spaces (no per-space prize — the anti-jackpot
-// ruling; spaces 4/5 badge their player-count gates, the Overland olsq grammar). 9.8×7 native.
-// ---- THE GUILD TASTINGS BOARD (v4.17, expansion) — the contest row + the Taproom floor.
-// Three tile parkings seat the open TASTING tiles (2.5×1.32 — the building cut); the poured
-// dice stand on the tiles' own printed bench squares. Below: the TAPROOM FLOOR strip (judged
-// dice stand here, committed — the audit) and the rules footer. 9.8×7 native.
+// ---- THE GUILD TASTINGS BOARD (v4.17b, expansion) — redesigned to the kit grammar (2026-08-17).
+// A kontor-style ART header (art/kontor-hall.png + the shared foot ramp — the Hall reads as the
+// fifth destination) · the open row as three COMPONENT-TRUE 2.5×1.32 parkings (the Tasting tile
+// drops exactly in; the third badged 3–4p; the Overlay proofs a free 3-bench + two duels, so
+// both bench prints get checked) · the JUDGING DIAGRAM built from the real pieces (pour → the
+// bench-fills count → the champion's tour to the Kontor crests) · the TAPROOM FLOOR as an open
+// parking field on a plank (no printed capacity — the Overlay ghosts 12mm d6) beside the
+// Tasting-deck + ⚜ Invitation supply wells. The board carries the ONE rule no tile prints —
+// the champion's tour; everything else the Tasting tile says for itself. 9.8×7 native.
 function hallBoardHtml(){
-  const park=i=>'<div style="position:relative;flex:0 0 auto;width:2.6in;height:1.42in;border:2px dashed rgba(91,58,142,.6);border-radius:.09in;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center">'
-    +'<span style="font-size:.11in;color:#8a8577;font-style:italic">an open Tasting'+(i===2?' <b style="color:#7c2128">(3-4p)</b>':'')+'</span>'
-    +(OVERLAY&&CONTESTS_P[i]?'<div class="ovl" style="position:absolute;inset:.04in">'+contestTile(CONTESTS_P[i*4])+'</div>':'')+'</div>';
-  let floor='';for(let k=0;k<14;k++)floor+='<div style="width:.5in;height:.5in;border:1.5px dashed rgba(43,32,24,.3);border-radius:.05in"></div>';
-  return '<div style="width:9.8in;height:7in;background:#f3ecdd;border:3px solid #5b3a8e;border-radius:.14in;padding:.14in .18in;display:flex;flex-direction:column;gap:.1in;color:#2b2018;box-sizing:border-box">'
-    +'<div style="display:flex;align-items:baseline;gap:.14in;border-bottom:2.5px solid #b8860b;padding-bottom:.05in">'
-      +'<h2 style="margin:0;font-variant:small-caps;color:#5b3a8e;font-size:.26in">⚜ The Guild Tastings</h2>'
-      +'<span style="font-size:.1in;font-style:italic;color:#5b4a37">pour: 1 ⚜ Invitation + one READY cask matching the category — its die stands on the tile’s bench, in pour order</span></div>'
-    +'<div style="display:flex;gap:.18in;justify-content:center;align-items:center;flex:0 0 auto">'+[0,1,2].map(park).join('')+'</div>'
-    +'<div style="border:2px solid #8a6408;border-radius:.09in;background:rgba(255,255,255,.4);padding:.06in .1in;flex:1;display:flex;flex-direction:column;gap:.04in">'
-      +'<div style="font-variant:small-caps;font-weight:900;color:#8a6408;font-size:.15in">the Taproom floor <span style="font-weight:400;font-size:.1in;font-style:italic">— judged dice stand here (committed; the audit)</span></div>'
-      +'<div style="display:flex;flex-wrap:wrap;gap:.06in">'+floor+'</div></div>'
-    +'<div style="font-size:.1in;color:#5b4a37;border-top:1px solid #c8b48a;padding-top:.04in;line-height:1.35">'
-    +'<b>The bench filling IS the judging</b> — highest die 1st (ties → the earlier pour): 1st takes the tile’s printed ★ <b>and the tile</b> · 2nd 2★ · 3rd 1★ ⚙. <b>The champion’s tour:</b> the winning die parks as presence (face 1) at a Kontor its owner has delivered to. '
-    +'A judged Tasting is replaced from the deck at end of turn. <b>Sets</b> (the won tiles at your seat): 2 distinct pours <b>+3★</b> · 3+ <b>+7★</b> ⚙. '
-    +'An <b>unconvened</b> bench at game end pays 1★ per standing die — the tasting never convened. '
-    +'Every Order claim pays an ⚜ Invitation · the Guild Chancery grants one on its slot · each player starts with 2 ⚜ (v4.17b).</div>'
+  const smp=[CONTESTS_P[0],CONTESTS_P[6],CONTESTS_P[8]];   // free (bench 3) · dark + export (duels)
+  const slot=i=>'<div class="tslot">'+(i===2?'<span class="tb-badge">3–4p</span>':'')
+    +'<span class="fdl">⚜</span><span class="t">an open Tasting</span>'
+    +(OVERLAY?'<div class="ovl">'+contestTile(smp[i])+'</div>':'')+'</div>';
+  const die=n=>'<span class="tb-die">'+LU('dice-'+n)+'</span>';
+  const rank=(n,lbl)=>'<span class="tb-rank">'+die(n)+'<i>'+lbl+'</i></span>';
+  const dg=(h,pieces,x)=>'<div class="tb-dg"><div class="h">'+h+'</div><div class="pieces">'+pieces+'</div><div class="x">'+x+'</div></div>';
+  const sep='<div class="tb-dsep"></div>';
+  const diag='<div class="tb-diag">'
+    +dg('The pour',
+      '<span class="tb-fl">⚜</span><span class="tb-plus">+</span><span class="tb-chip">'+LU('check')+'Ready · matches</span><span class="tb-arr">→</span>'+die(4)+'<span class="tb-bsq"></span><span class="tb-bsq"></span>',
+      '1 ⚜ + a matching Ready cask from your vessels — its die stands on the next bench space, in pour order')
+    +sep
+    +dg('The bench fills — the judging',
+      rank(6,'1st ★ + the tile')+rank(4,'2nd 2★')+rank(2,'3rd 1★'),
+      'the last space filling forces the count: highest die takes 1st · ties → the earlier pour · ★ score at once')
+    +sep
+    +dg('The champion’s tour',
+      die(6)+'<span class="tb-arr">→</span><span class="tb-crest">'+LU('kontor-bruges')+LU('kontor-london')+LU('kontor-bergen')+LU('kontor-novgorod')+'</span>',
+      'the winning die parks, face 1, at a Kontor its owner has delivered to — presence, no ★; the rest slide to the floor')
+    +'</div>';
+  const floor='<div class="tb-floor"><span class="fh">The Taproom floor</span>'
+    +'<span class="fs">judged dice stand here — committed, standing (the audit). The champion’s die tours out instead; never delivered anywhere → it stays.</span>'
+    +'<div class="fz">'+(OVERLAY?'<div class="ovl kpovl">'+[5,3,2,6,1].map(n=>'<span class="gdie">'+LU('dice-'+n)+'</span>').join('')+'</div>':'')+'</div></div>';
+  const wells='<div class="tb-wells">'
+    +'<div class="twell deck"><span class="nm">'+LU('layers')+'The Tasting deck · 12</span><span class="sub">a judged Tasting is replaced from here at end of turn</span>'
+      +(OVERLAY?'<div class="ovl">'+contestTile(CONTESTS_P[10])+'</div>':'')+'</div>'
+    +'<div class="twell inv"><span class="nm">⚜ Invitations · 18</span><span class="sub">spent tiles return here · each player starts with 2</span>'
+      +(OVERLAY?'<div class="ovl">'+invitationTile()+'</div>':'')+'</div>'
+    +'</div>';
+  return '<div class="tastb" style="--kc:#5b3a8e">'
+    +'<div class="tb-head">'+kArt('hall')
+      +'<div class="kp-t">⚜ The Guild Tastings<span class="tb-pour">pour: 1 ⚜ + a matching Ready cask</span></div>'
+      +'<div class="tb-hnote">the Hall pays no majority — every open bench is a stand-off for the same ripe dice</div></div>'
+    +'<div class="tb-row">'
+      +'<div><span class="disp-h hall">'+LU('beer')+'Open Tastings<span class="sm">2 at 2 players · 3 at 3–4 — the tile prints its category, bench &amp; prize ladder</span></span></div>'
+      +'<div class="tb-slots">'+[0,1,2].map(slot).join('')+'</div></div>'
+    +diag
+    +'<div class="tb-bot">'+floor+wells+'</div>'
+    +'<div class="tb-rules"><b>Sets</b> — the won tiles at your seat: 2 distinct categories <b>+3★</b> · 3 or more <b>+7★</b> ⚙. '
+    +'An <b>unconvened</b> bench at game end pays <b>1★ per standing die</b> — the tasting never convened. '
+    +'<b>The ⚜ economy:</b> every Order claim pays an ⚜ Invitation · the <b>Guild Chancery</b> grants one on its slot · each player starts with <b>2 ⚜</b>. '
+    +'<b>2 players:</b> every bench caps at 2.</div>'
   +'</div>';}
 
 //==================================================================
@@ -1295,6 +1319,7 @@ function letterBoard(pages,section,label,html){
   const NW=9.8,NH=7.0, sc=SCALE;
   const w=+(NW*sc).toFixed(3),h=+(NH*sc).toFixed(3),x=+((PG.w-w)/2).toFixed(3),y=+((PG.h-h)/2).toFixed(3);
   pg.items.push({x,y,w,h,nat:[NW,NH],html});   // nat = the design size → itDiv scales the whole board by sc
+  (pg.rrects=pg.rrects||[]).push({x,y,w,h,r:0.14});   // the board's die-cut, like its table-board siblings
 }
 // printables2: the Wharf (a CROSS) on its own trimmed 22-wide sheet (the Supply board moved to its own sheet).
 function wharfBoardSheet(pages){
@@ -1393,7 +1418,7 @@ function buildPages(){
     expCaskItems.push({fam:'Expansion casks',html:caskCardBack(d,d.pin||poolFor(d.q)[0])});});
   packSpaced(pages,'tiles','EXPANSION cask tiles — Specialty Beers (Gose · Zerbster · Duckstein) + the Jopenbier capstone · pinned bonuses · 22″ plotter · 1.5mm bleed',[{kind:'caskc',items:expCaskItems}],famPages);
   // --- v4.15 THE GUILDHALL (expansion): the board (letter) + Invitations + the eased Order set (plotter) ---
-  letterBoard(pages,'boards','EXPANSION — The Guild Tastings board (the contest row + the Taproom floor)',hallBoardHtml());
+  letterBoard(pages,'boards','EXPANSION — The Guild Tastings board (the open row · the judging diagram · the Taproom floor · the deck & ⚜ wells)',hallBoardHtml());
   const hallTiles=[];
   for(let i=0;i<cnt(18);i++)hallTiles.push({fam:'Invitations',html:invitationTile()});   // ⚙ 18 invitation tiles
   // v4.17: the eased 20-Order set is CUT (hall mode plays the base 15) — the TASTING tiles print instead
@@ -1506,8 +1531,8 @@ function checklist(pages,famPages){
     +R('Specialty Beer casks','Gose ×8 · Zerbster ×6 · Duckstein ×8 — pinned bonuses; they join the export draft (3 of 7). <b>Three more face-up piles beside the Wharf.</b>','22')
     +R('Jopenbier casks','The Q6 vintage capstone (its own toggle) — starts 2, ages to 6. <b>A seventh pile.</b>','6')
     +R('Expansion recipe cards','Gose · Zerbster · Duckstein · Jopenbier — double-sided, one set per player. <b>Beside each player’s board with the base set.</b>',4*PLAYERS.length)
-    +R('The Guild Tastings board','The contest row + the Taproom floor. <b>Beside the Destinations board.</b>','1')
-    +R('Invitation tiles','⚜ Earned per Order claim and at the Guild Chancery; spent to pour. Each player starts with 1. <b>A face-up supply by the board.</b>','18')
+    +R('The Guild Tastings board','The open Tasting row + the judging diagram + the Taproom floor + the deck &amp; ⚜ wells. <b>Beside the Destinations board.</b>','1')
+    +R('Invitation tiles','⚜ Earned per Order claim and at the Guild Chancery; spent to pour. Each player starts with 2. <b>A face-up supply by the board.</b>','18')
     +R('Tasting tiles','The contest deck — a category, a bench of die spaces, the prize ladder. The bench filling IS the judging.','12')
     +R('Guild Chancery','The Hall’s building (v4.16b): activate → gain 1 ⚜ Invitation. <b>Shuffled into the building deck in hall mode — always dealt.</b>','1')
     +'</table>';

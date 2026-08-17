@@ -1,5 +1,16 @@
 # Brewhouses of the Hanse — Components (v4.17b “Champion’s Tour”)
 
+> **Kit pass 2026-08-17 (presentation, no rules change):** the **Guild Tastings board is
+> REDRAWN to the kit grammar** — a kontor-style art header (`art/kontor-hall.png`; the Hall
+> reads as the fifth destination), the open row as three **component-true 2.5×1.32″
+> parkings** (the Tasting tile drops exactly in; the third badged 3–4p), a **judging diagram
+> built from the real pieces** (the pour → the bench-fills count → the champion’s tour to
+> the four Kontor crests), the **Taproom floor as an open parking field on a plank** (no
+> printed capacity — dice stand free) and the **Tasting-deck + ⚜ supply wells**; the sheet
+> gains the board’s die-cut line. Two missed v4.17b reprints land with it: the **Invitation
+> tile’s** reverse line and the manifest row now read ***start with 2*** (the setup line
+> already did). Counts unchanged.
+
 > **v4.17b (study-ruled 2026-08-15 — three prints off the 1,400-game oracle):** **(1)** the
 > **dark/export/old/master Tasting tiles reprint with a bench of TWO die squares** (the
 > duels — R1: three matching ripe casks never assemble; free/fresh keep three); **(2)** the
@@ -371,8 +382,10 @@ die 5+→3★ · Bock→4★ · die 6→4★ · any Kontor — die 6→3★.
 
 ## 7c. The Guild Tastings (expansion, v4.17 ⚙)
 
-**1 board** (the contest row — three tile parkings, the third badged 3–4p — over the
-**Taproom floor** strip and the rules footer) · the **Tasting contest deck: 12 tiles**
+**1 board** (9.8×7″ letter-cut: a kontor-style art header · the open row — three
+component-true tile parkings, the third badged 3–4p · the judging + champion’s-tour diagram ·
+the **Taproom floor** parking field · the Tasting-deck and ⚜ supply wells · the rules
+footer) · the **Tasting contest deck: 12 tiles**
 (building-cut 2.5×1.32″ — category + filter, the prize ladder *1st printed★+tile · 2nd 2★ ·
 3rd 1★*, and a printed bench of die squares — free/fresh three (the third badged 3–4p), the
 dark/export/old/master pours **two: duels** (v4.17b); the mix: free ×3 · fresh ×3 · dark ×2 ·

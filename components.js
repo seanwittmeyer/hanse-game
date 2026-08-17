@@ -171,10 +171,11 @@ function contestTile(t){const nb=t.b||3;let sq='';for(let k=0;k<nb;k++)sq+='<div
     +'<div style="flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:.045in">'+sq+'</div>'
     +'</div>';}
 // the INVITATION tile (v4.15 · reworded v4.17) — a 2×0.9in gold strip: spend it to pour.
+// v4.17b: the start line reads 2 (START_INV — R2 of the study; the setup line already did).
 function invitationTile(){return '<div class="ldtile" style="--c:#8a6408">'
   +'<div class="ld-hd">⚜<span class="ld-k">Invitation</span></div>'
   +'<div class="ld-bd"><span class="ld-beer">'+LU(QI)+' Ready</span><span class="ld-arr">+</span><span class="ld-die">'+LU('dices')+' matches</span><span class="ld-arr">→</span><span class="ld-pts">a Tasting</span></div>'
-  +'<div class="ld-sub">spend to pour · earned per Order claim &amp; at the Guild Chancery · start with 1</div>'
+  +'<div class="ld-sub">spend to pour · earned per Order claim &amp; at the Guild Chancery · start with 2</div>'
   +'</div>';}
 
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the

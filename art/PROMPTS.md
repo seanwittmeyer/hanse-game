@@ -201,3 +201,11 @@ mission chapel on the quay, a lantern over its door, nets and a moored skiff bes
   aboard. Same c.1350 sticker treatment as the rest of `art/icons/` (one object, warm
   palette, transparent margin, readable at .3in). **Keep the filename** (`bonus-load.png`)
   so the kit swaps it in with no code change.
+
+## Queued (2026-08-17 — the Tastings-board kit pass)
+- **building-chancery.png** — the GUILD CHANCERY tile (v4.16b, the Guildhall sheet) has no
+  art yet; the building card renders art-less and the page logs a 404. Brief: a clerk's
+  writing office off the guildhall — a standing desk, ledger and seal wax, a rack of
+  folded letters (the ⚜ Invitations going out). Same painterly single-structure treatment
+  as the other 18 building portraits (one building, warm palette, consistent angle/light)
+  so the family reads as one.
