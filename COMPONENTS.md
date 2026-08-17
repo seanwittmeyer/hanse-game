@@ -1,4 +1,17 @@
-# Brewhouses of the Hanse — Components (v4.16b “Guild Ledger”)
+# Brewhouses of the Hanse — Components (v4.17 “The Tastings”)
+
+> **v4.17 (designer-ruled 2026-08-15 — the hall rethink, Plan B):** the Guildhall sheet is
+> **REBUILT**. **CUT:** the shelf board face (menus · identical spaces · the pips line) and
+> the **eased 20-Order set** (hall mode plays the base 15 — one Order economy). **IN:** the
+> **Guild Tastings board** (the contest row — three tile parkings, the third badged 3–4p —
+> over the **Taproom floor** strip and the rules footer) and the **Tasting contest deck: 12
+> tiles** ⚙ (building-cut 2.5×1.32″ — a category + filter line, the prize ladder, and a
+> printed **bench of three 0.42″ die squares**, the third badged 3–4p: free ×3 · fresh ×3 ·
+> dark ×2 · export ×2 · old ×1 · master ×1; 1st ★ = 5/5/7/6/7/9 ⚙). The **18 ⚜ Invitation
+> tiles** reprint their reverse line (*spend to pour · start with 1*); the **Guild Chancery**
+> stands (v4.16b). The setup line adds: *each player takes 1 ⚜ Invitation.* All contest
+> state lives on the tiles and the dice — the once-per-player rule and its bookkeeping are
+> gone with the shelves.
 
 > **v4.16b (designer-ruled 2026-08-14 — the lane study’s print lands):** two Guildhall
 > reprints. **(1) The Guildhall board** adds its end-scoring line — *“at game end, every die
@@ -345,18 +358,21 @@ Schedule ⚙: Bruges — die 3+→2★ · die 4+→3★ · Keut→3★ · die 5+
 die 5+→4★ · Broyhan→3★ · die 6→5★ · Bergen — die 4+→3★ · die 5+→4★ · Mumme→4★ · Novgorod —
 die 5+→3★ · Bock→4★ · die 6→4★ · any Kontor — die 6→3★.
 
-**Hall mode (v4.15)** replaces this set with the **Guildhall Order set (20 ⚙, 1–3★)**:
-Bruges — 2+→1 · 3+→2 · Keut→2 · 4+→2 · 5+→3 · London — 2+→1 · 3+→2 · Broyhan→2 · 5+→3 ·
-Bergen — 2+→1 · 3+→2 · Mumme→3 · 4+→2 · Novgorod — 4+→2 · 5+→3 · Bock→3 · 6→3 · any —
-2+→1 · 4+→2 · 6→3. Every claim also pays an **⚜ Invitation** (§7c).
+**Hall mode (v4.17)** keeps THIS set — one Order economy everywhere (the v4.15 eased
+20-tile set is cut from the kit). Every claim also pays an **⚜ Invitation** (§7c).
 
-## 7c. The Guildhall (expansion, v4.15 ⚙)
+## 7c. The Guild Tastings (expansion, v4.17 ⚙)
 
-**1 board** (four shelves — menus + identical die spaces; the ★ column is *once per player
-per shelf*, audited by the ★ die standing on the shelf's LEFT edge) · **18 ⚜ Invitation
-tiles** (2×0.9″; a face-up supply — spent tiles return) · the 20-tile Order set above.
-The enshrined die parks on the shelf: committed (the clock), no majority weight; a die on
-all four shelves at game end pays the **+6★ crown** ⚙.
+**1 board** (the contest row — three tile parkings, the third badged 3–4p — over the
+**Taproom floor** strip and the rules footer) · the **Tasting contest deck: 12 tiles**
+(building-cut 2.5×1.32″ — category + filter, the prize ladder *1st printed★+tile · 2nd 2★ ·
+3rd 1★*, and a printed bench of three die squares, the third badged 3–4p; the mix: free ×3 ·
+fresh ×3 · dark ×2 · export ×2 · old ×1 · master ×1 — 1st ★ 5/5/7/6/7/9 ⚙) · **18 ⚜
+Invitation tiles** (2×0.9″; a face-up supply — spent tiles return; *each player starts with
+1*) · the **Guild Chancery** building (v4.16b — always dealt in hall mode). The poured die
+stands on the tile’s bench in pour order; judged dice stand on the floor (committed, the
+clock); the won tiles at the seat are the set record (2 distinct +3★ · 3+ +7★ ⚙). All
+contest state is tiles + dice — nothing is remembered.
 
 ## 8. Recipe cards (double-sided — the Flight record)
 

@@ -926,148 +926,127 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('toggle OFF: the channels never offer the capstone', !recipeGainable(p3).includes('jopenbier'));
 })();
 
-// ---- 30. v4.15 "GUILDHALL": invitations · the enshrine · menus · the anti-jackpot rules ----
+// ---- 30. v4.17 "THE TASTINGS": the contest cycle · pours · judging · the ⚜ economy ----
 (function(){ // toggle OFF: base purity
   var p=fresh();
-  ok('hall OFF: the Contract deck is the base 15 schedule', (S.ladingDeck.length+S.ladingRow.length)<=15&&!S.hallInv);
+  ok('hall OFF: no Tastings state; the Order deck is the base 15', !S.tastings&&(S.ladingDeck.length+S.ladingRow.length)<=15);
   p.vessels[0]={style:'hopped',q:2,die:2,act:'age'};p.invites=5;
-  ok('hall OFF: no enshrine offered even with (stray) invites', hallEligible(p).length===0);
+  ok('hall OFF: nothing is pourable even with (stray) invites', pourable(p).length===0);
   var inv0=p.invites;S.ladingRow=[{dest:'bruges',min:2,pts:2}];claimLading(p,0);
   ok('hall OFF: a claim pays NO invitation', p.invites===inv0);
 })();
-(function(){ // toggle ON: the eased deck + the claim → invitation
+(function(){ // hall mode setup: the deck · the open row · the seed · ONE Order deck
+  HALLEXP=true;var p2=fresh();HALLEXP=false;
+  ok('2p: open row 2 · deck 10 (12 printed)', S.tastings.open.length===2&&S.tastings.deck.length===10&&CONTESTS.length===12);
+  HALLEXP=true;var p=fresh(3);HALLEXP=false;
+  ok('3p: open row 3 · deck 9', S.tastings.open.length===3&&S.tastings.deck.length===9);
+  ok('every player starts with START_INV ⚜ (the printed seed)', S.players.every(function(q){return (q.invites||0)===START_INV;}));
+  ok('hall mode plays the BASE Order deck (the eased set is CUT)', (S.ladingDeck.length+S.ladingRow.length)<=15);
+  var inv0=p.invites;S.ladingRow=[{dest:'bruges',min:2,pts:2}];claimLading(p,0);
+  ok('a claim still pays +1 ⚜ (source: order)', p.invites===inv0+1&&p.invSrc.order===1);
+})();
+(function(){ // the POUR: cost · category law · the committed die
   HALLEXP=true;var p=fresh();HALLEXP=false;
-  ok('hall ON: the deck swaps to the eased 20-tile schedule', (S.ladingDeck.length+S.ladingRow.length)>15&&S.hallInv&&S.hallInv.on);
-  ok('hall ON: rewards run 1–3★', S.ladingDeck.concat(S.ladingRow).every(function(l){return l.pts>=1&&l.pts<=3;}));
-  var inv0=p.invites||0;S.ladingRow=[{dest:'bruges',min:2,pts:1}];claimLading(p,0);
-  ok('a claimed Contract pays +1 Invitation', p.invites===inv0+1);
+  S.tastings.open=[{t:{k:'fresh1',cat:'fresh',s1:5},bench:[]},{t:{k:'dark1',cat:'dark',s1:7},bench:[]},{t:{k:'exp1',cat:'export',s1:6},bench:[]}];
+  p.invites=2;p.vessels[0]={style:'broyhan',q:3,die:3,act:'load'};p.vessels[1]={style:'mumme',q:4,die:4,act:'age'};
+  var po=pourable(p);
+  ok('category law: the Broyhan (Q3 die 3) may pour fresh only; the Mumme (Q4 die 4) dark or export',
+    JSON.stringify(po.find(function(o){return o.vi===0;}).cis)==='[0]'&&JSON.stringify(po.find(function(o){return o.vi===1;}).cis)==='[1,2]');
+  var tray0=trayDice(p),pp0=p.presPool;
+  ok('the pour: spends the ⚜, empties the vessel, stands the die on the bench',
+    pourDo(0,0)===true&&p.invites===1&&p.vessels[0]===null&&S.tastings.open[0].bench.length===1&&S.tastings.open[0].bench[0].die===3);
+  ok('the poured die is COMMITTED — a clock beat, the tray unchanged', p.presPool===pp0-1&&trayDice(p)===tray0);
+  p.invites=0;p.vessels[0]={style:'keut',q:3,die:3,act:'load'};
+  ok('no ⚜ → no pour', pourable(p).length===0&&pourDo(0,0)===false);
+  p.invites=1;
+  ok('a wrong category is refused (Keut Q3 into the Dark Pour)', pourDo(0,1)===false);
+  ok('an unready cask is refused', (p.vessels[2]={style:'bock',q:5,die:3,act:'brew'},pourDo(2,2)===false));
 })();
-(function(){ // the enshrine: gates · the die commits · the first-appearance engine
+(function(){ // the JUDGING: bench fills → ranked at once · ties → the earlier pour · the floor
+  HALLEXP=true;var p=fresh(3);HALLEXP=false;var q=S.players[1],r=S.players[2];
+  S.tastings.open=[{t:{k:'free1',cat:'free',s1:5},bench:[]}];
+  q.invites=1;r.invites=1;p.invites=1;
+  // q pours die 4 first · r pours die 4 second (the tie) · p fills with die 2 (3p bench = 3)
+  S.active=1;q.vessels[0]={style:'mumme',q:4,die:4,act:'age'};pourDo(0,0);
+  S.active=2;r.vessels[0]={style:'mumme',q:4,die:4,act:'age'};pourDo(0,0);
+  S.active=0;p.vessels[0]={style:'gruit',q:1,die:2,act:'source'};p.vessels[0].die=2;p.vessels[0].q=2;p.vessels[0].style='hopped';
+  var b0=q.bank,b1=r.bank,b2=p.bank;
+  ok('the third pour fills the bench — judged at once', pourDo(0,0)===true&&S.tastings.open.length===0);
+  ok('1st by die, TIES → the earlier pour: q takes 5★ + the tile; r 2nd (+2); p 3rd (+1)',
+    q.bank===b0+5&&(q.tastings||[]).length===1&&q.tastings[0].cat==='free'&&r.bank===b1+2&&(r.tastings||[]).length===0&&p.bank===b2+1);
+  ok('the judged dice slide to the Taproom floor (committed, standing)', S.tastings.floor.length===3);
+  ok('the row refills at END of turn — back to the 3p row of 3', (refillContests(),S.tastings.open.length===3));
+})();
+(function(){ // the DOOR-SLAM: a second pour by the leader is legal and locks the vote
+  HALLEXP=true;var p=fresh(2);HALLEXP=false;
+  S.tastings.open=[{t:{k:'free1',cat:'free',s1:5},bench:[]}];
+  p.invites=2;
+  p.vessels[0]={style:'mumme',q:4,die:4,act:'age'};
+  p.vessels[1]={style:'gruit',q:1,die:1,act:'source'};
+  pourDo(0,0);   // the leader's bid (2p bench = 2)
+  var b0=p.bank;
+  ok('the door-slam: the leader fills the last space with a cheap die — judged, 1st AND 2nd are his',
+    pourDo(1,0)===true&&S.tastings.open.length===0&&p.bank===b0+5+2&&(p.tastings||[]).length===1);
+  ok('the slam is recorded on the entry (the probe reads it)', S.tastings.floor.length===2);
+})();
+(function(){ // capacity + the full bench
+  HALLEXP=true;var p=fresh(2);HALLEXP=false;
+  S.tastings.open=[{t:{k:'free1',cat:'free',s1:5},bench:[{pid:1,die:3,style:'broyhan'},{pid:1,die:2,style:'hopped'}]}];
+  p.invites=1;p.vessels[0]={style:'keut',q:3,die:3,act:'load'};
+  ok('a FULL bench (2p = 2 spaces) admits no pour', pourable(p).length===0);
+})();
+(function(){ // SETS + the unconvened benches (END_JUDGE void) — the module's end ★
   HALLEXP=true;var p=fresh();HALLEXP=false;
-  p.invites=1;p.vessels[0]={style:'broyhan',q:3,die:3,act:'load'};
-  ok('eligibility: die 3 reaches Taproom (2+) and Guild Table (3+), not Masters (4+)',
-    JSON.stringify(hallEligible(p)[0].shelves)==='[0,1]');
-  var tray0=trayDice(p);
-  ok('enshrine (Guild Table · the ★ pick)', enshrineDo(0,1,'star')===true);
-  ok('the die stands on the shelf · the vessel opens · the Invitation is spent',
-    hallEntries(1).length===1&&hallEntries(1)[0].die===3&&p.vessels[0]===null);
-  ok('…but the FIRST showing earns a new Invitation (net 0 spent)', p.invites===1);
-  ok('the accounting holds — vessel→shelf keeps the tray flat (committed at brew, parked now)', trayDice(p)===tray0&&p.presPool===PRES_POOL-1);
-  ok('the ★ banks the shelf value (4★)', (p.bankH||0)===4&&p.bank>=4);
-  p.vessels[0]={style:'broyhan',q:3,die:3,act:'load'};
-  ok('the ★ option is ONCE per player per shelf — the menu drops it', hallMenuFor(p,1).indexOf('star')<0);
-  ok('a second visit still offers the actions', hallMenuFor(p,1).indexOf('age3')>=0);
-  ok('a repeat ★ pick is refused by the engine', enshrineDo(0,1,'star')===false&&p.vessels[0]!==null);
+  p.tastings=[{k:'free1',cat:'free',s1:5},{k:'free2',cat:'free',s1:5}];
+  ok('one distinct category → no set ★ yet', scorePlayer(p).ext===0);
+  p.tastings.push({k:'dark1',cat:'dark',s1:7});
+  ok('2 distinct categories → +'+TASTE_SETS[2]+'★', scorePlayer(p).ext===TASTE_SETS[2]);
+  p.tastings.push({k:'old1',cat:'old',s1:7});
+  ok('3 distinct categories → +'+TASTE_SETS[3]+'★', scorePlayer(p).ext===TASTE_SETS[3]);
+  S.tastings.open=[{t:{k:'exp1',cat:'export',s1:6},bench:[{pid:p.id,die:5,style:'bock'},{pid:1,die:4,style:'mumme'}]}];
+  ok('an unconvened bench pays 1★ per standing die (END_JUDGE void)', scorePlayer(p).ext===TASTE_SETS[3]+1);
+  END_JUDGE='judge';
+  ok('the EJUDGE sweep arm ranks the bench as-is (my die 5 leads → +6)', scorePlayer(p).ext===TASTE_SETS[3]+6);
+  END_JUDGE='void';
 })();
-(function(){ // menus fire real actions · the Seal claims outright (+ its Invitation)
+(function(){ // the clock: the last die poured EMPTIES the tray — the final round fires
   HALLEXP=true;var p=fresh();HALLEXP=false;
-  p.invites=3;p.grain=2;p.hops=3;
-  p.vessels[0]={style:'mumme',q:4,die:4,act:'reach'};
-  UI={sub:'stops',stops:[],pendingBenefits:[]};
-  ok('Masters’ Shelf · Brew opens the brew picker', enshrineDo(0,2,'brew')===true&&UI.sub==='brew');
-  UI={sub:'stops',stops:[],pendingBenefits:[]};
-  p.vessels[1]={style:'bock',q:5,die:5,act:'brew'};
-  S.ladingRow=[{dest:'novgorod',min:5,pts:3},{dest:'bruges',min:2,pts:1}];
-  var inv0=p.invites,b0=p.bank;
-  ok('Reliquary · the Guild’s Seal opens the claim picker', enshrineDo(1,3,'seal')===true&&UI.sub==='seal');
-  sealPick(0);
-  ok('the Seal claims outright — its ★ and its Invitation pay as any claim',
-    p.bank===b0+3&&p.invites===inv0-1+1+1);   // spend 1 · first-on-Reliquary +1 · the claim +1
-  ok('the row lost the sealed Contract', S.ladingRow.length===1);
+  S.tastings.open=[{t:{k:'free1',cat:'free',s1:5},bench:[]}];
+  p.invites=1;p.presPool=1;p.vessels=[{style:'hopped',q:2,die:2,act:'age'},null,null];
+  pourDo(0,0);
+  ok('the poured last die EMPTIES the tray — the final round fires', S.ending===true&&S.endReason==='dice');
 })();
-(function(){ // spaces cap (first-come capacity) + the crown + the clock trigger
-  HALLEXP=true;var p=fresh(2);HALLEXP=false;var q=S.players[1];
-  ok('Reliquary capacity at 2p is 2', hallSpacesFor(3)===2);
-  S.hallInv.shelves[3]=[{pid:1,die:5,star:true},{pid:1,die:6,star:false}];
-  p.invites=1;p.vessels[0]={style:'bock',q:5,die:5,act:'brew'};
-  ok('a FULL shelf refuses the enshrine (the lower shelves stay open)',
-    enshrineDo(0,3,'star')===false&&hallEligible(p)[0].shelves.indexOf(3)<0&&hallEligible(p)[0].shelves.indexOf(2)>=0);
-  S.hallInv.shelves={0:[{pid:0,die:2}],1:[{pid:0,die:3}],2:[{pid:0,die:4}],3:[{pid:0,die:5}]};
-  HALL_PIPS=0;   // isolate the crown (the pips term is v4.16b's default — its own §31 checks)
-  ok('the CROWN: a die on all four shelves scores +6 (ext)', scorePlayer(p).ext===6&&scorePlayer(q).ext===0);
-  HALL_PIPS=1;
-  ok('v4.16b: the ruled default stacks the pips on the crown (2+3+4+5+6=20)', scorePlayer(p).ext===20);
-  var p2;HALLEXP=true;p2=fresh();HALLEXP=false;
-  p2.invites=1;p2.presPool=1;p2.vessels=[{style:'hopped',q:2,die:2,act:'age'},null,null];
-  enshrineDo(0,0,'fixed');
-  ok('an enshrined last die EMPTIES the tray — the final round fires', S.ending===true&&S.endReason==='dice');
-})();
-(function(){ // the simulation sweep surface: HALL_SHELVES is mutable data
-  var st0=HALL_SHELVES[1].star,op0=HALL_SHELVES[1].opts.slice();
-  HALL_SHELVES[1].star=5;HALL_SHELVES[1].opts=['brew'];
+(function(){ // the ⚜ faucets: the Chancery (INV_BLDG) + the sources
   HALLEXP=true;var p=fresh();HALLEXP=false;
-  p.invites=1;p.vessels[0]={style:'broyhan',q:3,die:3,act:'load'};
-  ok('a swept menu governs play (star 5 · brew-only)', hallMenuFor(p,1).join(',')==='star,brew'&&(enshrineDo(0,1,'star'),p.bankH===5));
-  HALL_SHELVES[1].star=st0;HALL_SHELVES[1].opts=op0;
-})();
-
-// ===== §31 · v4.16 "Standing Orders" — the rename, the volume-lane dials, the ⚜ faucets =====
-(function(){ // the rename reaches the printed strings (Orders, never Contracts)
-  ok('v4.16 rename: the Seal menu line says Order', HALL_OPT.seal.indexOf('Order')>=0&&HALL_OPT.seal.indexOf('Contract')<0);
-  ok('v4.16 rename: the Exchange bonus text says Orders', P_ACT_TXT.exchange.indexOf('Orders')>=0);
-})();
-(function(){ // HALL_PIPS — enshrined dice score their pips at end (the fifth port; RULED ON v4.16b)
-  HALLEXP=true;var p=fresh(2);HALLEXP=false;var q=S.players[1];
-  S.hallInv.shelves={0:[],1:[{pid:0,die:4}],2:[{pid:0,die:5}],3:[]};
-  HALL_PIPS=0;
-  ok('dials off: standing shelf dice score nothing (the v4.15 behavior — sims can still reach it)', scorePlayer(p).ext===0);
-  HALL_PIPS=1;
-  ok('HALL_PIPS: the standing dice score their pips (4+5=9)', scorePlayer(p).ext===9&&scorePlayer(q).ext===0);
-  HALL_LADDER=[0,2,5,9,14];
-  ok('HALL_LADDER stacks: 2 dice → rung 5 (9+5=14)', scorePlayer(p).ext===14);
-  HALL_PIPS=0;
-  ok('the ladder alone: 2 dice → 5', scorePlayer(p).ext===5);
-  HALL_LADDER=null;HALL_PIPS=1;   // restore the ruled defaults
-})();
-(function(){ // INV_CASK_W — the ⚜ load bonus joins hall-mode pile draws; the faucet pays with its source tally
-  HALLEXP=true;var p=fresh();HALLEXP=false;
-  INV_CASK_W=1;
-  ok('INV_CASK_W=1: every hall-mode pile draw is the ⚜ bonus', pileDraw(3)==='invgain'&&pileDraw(1)==='invgain');
   var inv0=p.invites||0;UI={sub:'stops',stops:[],pendingBenefits:[]};
-  fireCaskAct('invgain','actscont');
-  ok('the ⚜ cask bonus pays +1 Invitation (source: cask)', (p.invites||0)===inv0+1&&p.invSrc.cask===1);
   fireCaskAct('invgain','stops');
-  ok('the Chancery act pays +1 Invitation (source: bldg)', (p.invites||0)===inv0+2&&p.invSrc.bldg===1);
-  INV_CASK_W=0;
-  var base=fresh();   // base mode: hallOn false — the ⚜ never draws even at weight 1
-  INV_CASK_W=1;var okDraw=true;for(var i=0;i<40;i++)if(pileDraw(3)==='invgain')okDraw=false;
-  ok('base mode never draws the ⚜ bonus (hall-gated)', okDraw);
-  INV_CASK_W=0;
-})();
-(function(){ // INV_BLDG — the Guild Chancery joins the deal only under its dial, guaranteed
+  ok('the Chancery act pays +1 ⚜ (source: bldg)', (p.invites||0)===inv0+1&&p.invSrc.bldg===1);
   var has=function(){return buildBuildingDeck().indexOf('chancery')>=0;};
   HALLEXP=true;INV_BLDG=1;
   var always=true;for(var i=0;i<10;i++)if(!has())always=false;
-  ok('hall mode + INV_BLDG: the Chancery is in every deal (guaranteed like the Kiln)', always);
-  INV_BLDG=0;
-  ok('hall mode without the dial: no Chancery (the sweep can still reach v4.15)', !has());
-  HALLEXP=false;INV_BLDG=1;
-  ok('base mode: no Chancery even with the dial (base purity)', !has());
+  ok('hall mode: the Chancery is in every deal (guaranteed)', always);
+  HALLEXP=false;
+  ok('base mode: no Chancery', !has());
 })();
-// ===== §32 · v4.16b "Guild Ledger" — the RULED defaults =====
-(function(){
-  ok('v4.16b defaults: HALL_PIPS=1 · INV_BLDG=1 · INV_CASK_W=0 · HALL_LADDER cut',
-    HALL_PIPS===1&&INV_BLDG===1&&INV_CASK_W===0&&HALL_LADDER===null);
-  ok('the Chancery prints on the Guildhall sheet, not the base box (hall flag)', BUILDINGS.chancery.hall===true&&!!BUILDINGS.chancery.fee&&BUILDINGS.chancery.fee.g===1&&BUILDINGS.chancery.ms===2);
-})();
-(function(){ // the invSrc split — Orders and first-showings tally their sources
-  HALLEXP=true;var p=fresh();HALLEXP=false;
-  S.ladingRow=[{dest:'bruges',min:2,pts:1}];
-  claimLading(p,0);
-  ok('an Order claim tallies source "order"', p.invSrc.order===1&&(p.invites||0)===1);
-  p.vessels[0]={style:'hopped',q:2,die:2,act:'age'};UI={sub:'stops',stops:[],pendingBenefits:[]};
-  enshrineDo(0,0,'fixed');
-  ok('the first showing tallies source "first"', p.invSrc.first===1);
-})();
-(function(){ // the 'hall' persona — the committed-lane oracle seat leans in where the default declines
-  HALLEXP=true;var p=fresh();HALLEXP=false;
+(function(){ // the AI seam: the greedy pour policy + the committed-lane persona
+  HALLEXP=true;var p=fresh(3);HALLEXP=false;
+  S.tastings.open=[{t:{k:'free1',cat:'free',s1:5},bench:[{pid:1,die:6,style:'bock'},{pid:1,die:5,style:'bock'}]}];
   p.invites=1;p.vessels[0]={style:'hopped',q:2,die:2,act:'age'};
-  S.hallInv.shelves[0]=[{pid:0,die:2}];   // a REPEAT visit — no first-appearance kicker
   p.ai={tier:'trader'};
-  var d0=aiEnshrineBest(p);
+  var d0=aiPourBest(p);   // filling a bench a RIVAL leads, with a losing die — the default declines
   p.ai={tier:'trader',persona:'hall'};
-  var d1=aiEnshrineBest(p);
-  ok('the hall persona commits (a repeat Taproom die-2) where the default declines', d0===null&&!!d1&&d1.shelf===0);
+  var d1=aiPourBest(p);
+  ok('the hall persona leans in where the default declines (a losing fill)', d0===null&&!!d1);
+  p.ai=null;
+})();
+(function(){ // the printed deck composition + the defaults
+  var mix={};CONTESTS.forEach(function(t){mix[t.cat]=(mix[t.cat]||0)+1;});
+  ok('the Tasting deck prints 12: free 3 · fresh 3 · dark 2 · export 2 · old 1 · master 1',
+    CONTESTS.length===12&&mix.free===3&&mix.fresh===3&&mix.dark===2&&mix.export===2&&mix.old===1&&mix.master===1);
+  ok('v4.17 defaults: START_INV=1 · END_JUDGE void · 2nd/3rd = 2/1 · sets 3/7 · INV_BLDG on',
+    START_INV===1&&END_JUDGE==='void'&&TASTE_2ND===2&&TASTE_3RD===1&&TASTE_SETS[2]===3&&TASTE_SETS[3]===7&&INV_BLDG===1);
+  ok('the Chancery prints on the Guildhall sheet (hall flag · fee 1G · ms 2)',
+    BUILDINGS.chancery.hall===true&&BUILDINGS.chancery.fee.g===1&&BUILDINGS.chancery.ms===2);
 })();
 
 OUT.forEach(function(l){console.log(l);});

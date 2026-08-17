@@ -134,12 +134,15 @@ the registry governs what a PLAYER reads.
 
 | Term | POS | Definition | Locked |
 |---|---|---|---|
-| Invitation | n | The ⚜ tile that admits a cask to the Guildhall: earned per Order claim and per first showing on each shelf; spent to enshrine | ○ provisional |
-| the Guildhall / the Hall | n | The shelf board (Taproom · Guild Table · Masters’ Shelf · Reliquary) — the fifth place a cask can go | ○ provisional |
-| enshrine | v | Spend an Invitation + a Ready cask (die ≥ the shelf’s minimum): the die stands on a shelf space; pick one menu option | ○ provisional (revived from the v3 lexicon) |
-| shelf | n | One of the Hall’s four tiers: a minimum · a menu · identical die spaces | ○ provisional |
-| the crown | n | The end-game +6★ ⚙ for a die on all four shelves | ○ provisional |
+| Invitation | n | The ⚜ tile that admits a cask to a Tasting: earned per Order claim and at the Guild Chancery; each player starts with 1; spent to pour (v4.17) | ○ provisional |
+| the Guild Tastings / the Hall | n | The contest board (v4.17): the open Tasting row + the Taproom floor | ○ provisional |
+| ~~enshrine~~ · ~~shelf~~ · ~~the crown~~ | — | RETIRED with the shelf Hall (v4.17 — the tastings replace the lexicon) | — |
 | Guild Chancery | n | The Hall’s building (v4.16b): resolve its slot → gain 1 ⚜ Invitation; always dealt in hall mode | ○ provisional |
+| Tasting | n | A contest tile (v4.17): a category + a bench of die spaces + the prize ladder; capitalized like Order | ○ provisional |
+| pour | v | Enter a Tasting: spend 1 ⚜ + a matching Ready cask — its die stands on the bench (v4.17) | ○ provisional |
+| bench | n | A Tasting’s printed die spaces; the bench filling IS the judging | ○ provisional |
+| the Taproom floor | n | The board strip where judged dice stand (committed — the audit) | ○ provisional |
+| convene | v | A bench fills and is judged; an unconvened bench at game end pays 1★/die | ○ provisional |
 | parti-gyle | n/adj | Zerbster’s printed signature (v4.15b): as the cask boards, an optional free Gruit into an open vessel (a tray die), then Load 1 more | ○ provisional (period brewing term — the second runnings) |
 | smoke-hardy | adj | Duckstein’s printed signature: its die turns +1 as it boards (cap 6) | ○ provisional |
 

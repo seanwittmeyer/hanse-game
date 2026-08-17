@@ -1,5 +1,18 @@
 # Automa / AI Opponent — Plan & Status
 
+> **v4.17 "The Tastings" (2026-08-15): the pour policy.** The shelf-Hall teach (aiEnshrineBest,
+> the menu values, the 'hall' persona's enshrine tilt) is CUT with the module. The greedy tiers
+> gain **aiPourBest** — three arms per (cask · open Tasting) pair: the **win bid** (my die beats
+> the bench leader — 1st's ★ discounted by the sniper windows left after my pour, +1.2 when my
+> pour closes the bench), the **DOOR-SLAM** (my earlier pour leads and one space remains — any
+> qualifying die locks 1st at ~95% of its value), and the **fill** (pouring under a rival's
+> lead for 2nd/3rd — priced low). All net the port alternative (die + 1.6, the enshrine
+> grammar). The 'hall' persona keeps its +1.8 lean and its 0.9→0.2 threshold drop; the Orders
+> tilt (aiLadingBonus +1.2 in hall mode) stands — claims are still the ⚜ faucet. **The MC pair
+> samples TWO representative pours per open Tasting** — the largest eligible die (the win bid)
+> and the smallest (the fill/slam) — so playouts price the stand-offs, not the greedy prior.
+> aiVerbValue('invgain') stands (the Chancery's worth scales with invitation scarcity).
+
 > **v4.16 "Standing Orders" (2026-08-12): the 'hall' persona + the dial-aware enshrine.**
 > The persona vocabulary gains **'hall'** — the committed-lane seat for the volume-lane
 > oracle (`hall-lane-probe.js`): `aiEnshrineBest` under the persona takes +1.8 on every

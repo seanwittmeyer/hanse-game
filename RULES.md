@@ -1,4 +1,22 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v4.16b “Guild Ledger”)
+# Brewhouses of the Hanse — Turn & Round Rules (v4.17 “The Tastings”)
+
+> **v4.17 “The Tastings” (designer-ruled 2026-08-15 — the hall rethink: “Build B”).** The
+> shelf Hall is **CUT WHOLE** — the menus, the once-per-player ★ (the bookkeeping violation),
+> the pips end-scoring, the crown, the first-die engine and the **eased Order deck** all
+> leave. The designer’s verdict on v4.15/16: *a dumping ground with better benefits — no
+> reason to engage; majorities are fun because they keep you on your toes.* **The Hall
+> returns as THE GUILD TASTINGS — public contests judged on the berth race’s own trigger.**
+> **Tasting tiles** (deck of 12 ⚙; categories *free · fresh · dark · export · old · master*)
+> lie open (2/3/3 by count ⚙), each printing a **category filter**, a **bench** of die spaces
+> (2 at 2p · 3 at 3–4p ⚙) and the ladder — **1st: the printed ★ + THE TILE · 2nd 2★ · 3rd
+> 1★** ⚙. **Pour** = 1 ⚜ Invitation + one matching **Ready** vessel cask — its die stands on
+> the bench in pour order. **The bench filling IS the judging**: highest die 1st, **ties →
+> the earlier pour** (out-brewed, never out-waited). **The door-slam is a move** — filling
+> the last space judges the count NOW. An **unconvened** bench at game end pays 1★ per die
+> (the unfilled-hull grammar). **Sets**: 2 distinct categories won +3★ · 3+ +7★ ⚙. Hall mode
+> now plays the **base 15-Order deck** (claims still pay ⚜); the **Guild Chancery** stays
+> guaranteed; every player **starts with 1 ⚜** (the printed setup line). All state = tiles +
+> dice positions — nothing is remembered. §12 carries the rules; §Open #13 the watches.
 
 > **v4.16b “Guild Ledger” (designer-ruled 2026-08-14 — the lane study’s print is RULED).**
 > The two recommended dials flip ON as hall mode’s printed rules: **(1) every die standing
@@ -664,8 +682,8 @@ beer (*Mumme*) — and a printed reward (**2–5★** ⚙).
 die 4+→3★ · die 5+→4★ · Broyhan→3★ · die 6→5★ · Bergen — die 4+→3★ · die 5+→4★ · Mumme→4★ ·
 Novgorod — die 5+→3★ · Bock→4★ · die 6→4★ · any Kontor — die 6→3★.
 
-*(**Hall mode — v4.15:** the Guildhall toggle REPLACES this deck with its eased 20-tile
-schedule (1–3★), and every claim also pays an ⚜ Invitation — §12.)*
+*(**Hall mode — v4.17:** the Tastings toggle keeps THIS deck — one Order economy everywhere —
+and every claim also pays an ⚜ Invitation — §12.)*
 
 ---
 
@@ -812,43 +830,49 @@ deployed) rode the deploy state and is **cut** — its jobs re-home on the spine
 = the four priced steps · the race-to-end = the empty-tray clock (four steps of runway on one
 die, in every rival’s view) · contestability = the berth race.*
 
-### The Guildhall — Invitations (a third toggle, v4.15 · the volume lane v4.16b)
+### The Guild Tastings (a third toggle, v4.17)
 
-**The Hall as an Order-fed shelf board.** With the toggle on:
+**The Hall as a cycle of public contests.** With the toggle on:
 
-- **The Order deck swaps** to the eased 20-tile schedule ⚙ (rewards 1–3★; conditions
-  routine — die 2+/3+ across all four Kontore, four named staples, three *any-Kontor* tiles).
-  Every **claimed Order also pays an ⚜ Invitation** (a small tile at your seat).
-- **The Guild Chancery joins the building deck** (v4.16b — the Hall’s own tile, printed on
-  the Guildhall sheet): shuffled in at setup and **always dealt** (17 of 21 ⚙, guaranteed
-  like the Kiln). Its printed action — *Gain 1 ⚜ Invitation* — serves whoever resolves its
-  slot; fee 1 `G` to gain via the wharf channels, mark starts at 2. The renewable-access
-  faucet: Orders gate the lane, the Chancery keeps it open.
-- **Enshrine (during your turn):** spend 1 Invitation + one **Ready** cask from your vessels
-  whose **die ≥ a shelf’s minimum** (read off the vessel — no load-lifts; vessel-side lifts
-  such as the Hop Exchange’s past-quality pump count). The die **parks on any open space** of
-  that shelf — spaces are identical — and you pick **one menu option**. The die is committed:
-  a clock beat, no majority weight, never returns. The cask’s load bonus does **not** fire
-  (the Hall takes the cask whole).
+- **Setup:** shuffle the **Tasting deck (12 ⚙)** and lay out the open row — **2 Tastings at
+  2p · 3 at 3–4p** ⚙. Each player takes **1 ⚜ Invitation** ⚙. The Order deck is the **base
+  15** (one Order economy, hall or not); **every claimed Order also pays an ⚜ Invitation**,
+  and the **Guild Chancery** shuffles into the building deck, always dealt (17 of 21 ⚙ —
+  resolve its slot: gain 1 ⚜).
+- **Pour (during your turn, any number):** spend **1 ⚜ + one Ready cask from your vessels
+  that matches the Tasting’s printed category**. Its die stands on the tile’s **next empty
+  bench space** — pour order runs left→right, visible. The die is committed (a clock beat);
+  the cask’s load bonus does **not** fire (the tasting takes the cask whole). Pouring twice
+  into one Tasting is legal — each pour costs ⚜ + a die.
+- **The bench filling IS the judging** — the moment the last space fills, rank the bench:
+  **highest die takes 1st** — the tile’s printed ★ **and the tile itself** (keep it at your
+  seat, the record); **2nd scores 2★ · 3rd 1★** ⚙. **Ties go to the earlier pour.** All ★
+  score at once; the judged dice slide to the **Taproom floor** strip (committed, standing —
+  the audit). The judged Tasting is **replaced from the deck at end of turn** (the Orders
+  rhythm).
+- **The door-slam:** filling the last space forces the judging — a leader locks the vote
+  with any qualifying second die; a rival forces the count before your Bock is Ready. Every
+  open bench is a stand-off; read *who can still brew what* before you pour.
+- **Unconvened at game end** — a bench that never filled: **each die on it scores 1★ flat**
+  (the tasting never convened; the unfilled-hull grammar — no free solo wins). ⚙
+- **Sets (game end):** the won tiles at your seat — **2 distinct categories +3★ · 3 or more
+  +7★** ⚙. The Hall pays **no majority**; the Tastings compete with the Kontor race for the
+  same ripe dice — the fork is the point.
 
-| Shelf | Min | The menu — choose one ⚙ | Spaces (2/3/4p) ⚙ |
+**The Tasting deck (12 ⚙):**
+
+| Tasting | Enter with | Tiles | 1st ⚙ |
 |---|---|---|---|
-| **The Reliquary** | die 5+ | **9★** *(once per player)* · **Brew 1** (pay its cost) · **the Guild’s Seal** — claim 1 open Order outright (its ★ and its Invitation pay as any claim) | 2 / 3 / 4 |
-| **The Masters’ Shelf** | die 4+ | **6★** *(once per player)* · **Brew 1** (pay its cost) · **Load 1 more cask** (any eligible Ship; its bonus fires) | 3 / 4 / 5 |
-| **The Guild Table** | die 3+ | **4★** *(once per player)* · **Age 3** (a free Cellar pour) · **Gain 3 goods** | 3 / 4 / 5 |
-| **The Taproom** | die 2+ | fixed: **2★ + Gain 2 goods** (every visit) | 3 / 4 / 5 |
+| **the Free Pour** | any Ready cask | 3 | 5★ + the tile |
+| **the Fresh Pour** | quality 3 or under | 3 | 5★ + the tile |
+| **the Dark Pour** | quality 4 or higher | 2 | 7★ + the tile |
+| **the Export Pour** | poured at die 4+ | 2 | 6★ + the tile |
+| **the Old Pour** | poured at die 5+ | 1 | 7★ + the tile |
+| **the Master’s Pour** | poured at die 6 | 1 | 9★ + the tile |
 
-- **The ★ option is once per player per shelf** — the ★ die stands on the shelf’s **left
-  edge** (the record); action dice stand right. Arriving last pays the same as arriving
-  first: first-come races **capacity only**, never a printed jackpot.
-- **The engine:** your **first die on each shelf earns a new Invitation** — one claim can
-  fund the whole climb; every repeat visit costs a fresh claim (or a Chancery stop).
-- **End-scoring (v4.16b — the volume lane):** **every die standing on a shelf scores its
-  pips** — the Hall is the fifth place a die parks for value, and repeat visits are worth
-  the trip (the lane-study print: it compensates the forgone majorities). Plus the crown:
-  a die on **all four shelves → +6★** ⚙.
-- The Hall pays **no majority** — its lane competes with the majority race for the same
-  ripe dice; the fork is the point.
+*(2nd 2★ · 3rd 1★ everywhere ⚙. The dark pour always has a lane — the export deal
+guarantees a Q4+ beer. The die is read as it POURS — vessel-side lifts such as the Hop
+Exchange’s past-quality pump count; there are no load lifts here.)*
 
 ### The Trade Roads — TABLED
 
@@ -981,22 +1005,21 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
 12. **The dice pass** ⚙ — 9 die-touching designs in the printed 20. Watch: does the Tollhouse’s
    stamp (−1 die for +3★) stay a real choice; does the Bonded Store’s send-off read at the
    table (the ephemeral family is now TWO — the Victualling Yard joined it, v4.6); Assay/Racking usage rates.
-13. **The Guildhall (v4.15 · lane study v4.16 · print RULED v4.16b)** ⚙ — **the volume-lane
-   battery RAN** (2026-08-12, `HALL-LANE-STUDY-v416.md`: 1,500 CM/GM games, three passes,
-   committed-lane persona seats) and its **recommended print was RULED 2026-08-14**:
-   `HALL_PIPS` + the Guild Chancery are LIVE (enshrined dice score their pips at end · the
-   Chancery pays an ⚜ per activation). Confirmed: the lane plays at **parity** in every
-   pips config (viable, never a magnet); the count LADDER is cut (two nulls); the ⚜ cask
-   tiles stay the optional unprinted richness dial (+~3 hall★, +2.5 pp Novgorod — INV_CASK
-   in sims). NEW measured watch: the **Novgorod bid** —
-   the Reliquary and the eastern run want the same die-5s (+3 pp dead-port under the
-   recommended print; dial if it bites live: a hall-mode Order naming Novgorod at premium
-   ★). Standing watches: the **Chronicler** (+3★/claim, uncapped) runs hot under the eased
-   20-deck — reprice or cap before a human table (hall mode adds ~1 claim/player of flow);
-   the **Seal loop** (a Reliquary regular out-claiming the row — dial: Seal once-per-game);
-   **Age 3 vs the Cellar** (the Hall must not out-cellar the station — dial to Age 2); 2p
-   majority starvation (shelves narrow at two, but the dice leave the mats). P1 tempo read
-   FLAT across the 1,500-game corpus (the anti-jackpot structure held).
+13. **The Guild Tastings (v4.17)** ⚙ — the shelf Hall is CUT (the designer, 2026-08-15:
+   the once-per-★ bookkeeping violated the component-state line, and identical-space menus
+   were a dumping ground — *“no reason to engage”*); its v4.15/16 studies stay as records
+   (`HALL-MENU-STUDY-v415.md` · `HALL-LANE-STUDY-v416.md` — the lane-parity result and the
+   Novgorod-bid watch carry forward in spirit). The Tastings’ own watches, pre-oracle: the
+   **door-slam rate** (the move must be a spice, not the only sane line — dial: the slam
+   die also scores its ladder place, already true); **judge starvation** (benches that
+   never fill — the END_JUDGE void rule prices it, but a table that never pours kills the
+   module; the ⚜ float is the dial: START_INV · the Chancery · claims); the **1st-★
+   schedule** vs an Order claim (a Tasting should out-pay an Order it out-costs);
+   **category droughts** (a dealt roster that starves dark/old/master pours — the deck mix
+   is the dial); the **Novgorod bid** returns (old/master pours want the same die-5/6s as
+   the eastern run); 2p (bench 2 = duels — the tie-to-earlier edge is sharpest there).
+   The oracle: `playtests/tasting-probe.js` — 200 CM/GM games per arm with a jittered
+   chaos seat (the designer’s variable-humans brief), two rounds before the printer.
 14. **The expansion beers (v4.14 · pins v4.15b)** ⚙ — the re-derivation watches: the
    **Assay House** at 1 `H`-to-Ready buys Jopenbier’s whole four-step climb (the sharpened
    Bock-Assay watch — dials: the Assay’s reach, or accept the single tile in a 17-of-20

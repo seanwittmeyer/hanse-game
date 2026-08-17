@@ -32,19 +32,18 @@ var __U=null;
 function __uReset(){__U={ladings:0,rack:0,assayUp:0,assayDown:0,toll:0,hopex:0,abbey:0,kilnLift:0,bondedSail:0,bmSeat:0,bmTick:0,mq:0,
   exch:0,cap:0,victual:0,chandler:0,scargo:0,coopSail:0,customsBoard:0,rbShort:0,
   comm_skute:0,comm_cog:0,comm_hulk:0,commG:0,built:0,bldgTicks:0,
-  ens0:0,ens1:0,ens2:0,ens3:0,ensStar:0,ensAct:0,seal:0,invE:0,invS:0,crown:0,   // v4.15 Guildhall
-  opt_goods2:0,opt_goods3:0,opt_age3:0,opt_brew:0,opt_loadmore:0,opt_seal:0};}   // menu-pick histogram (the sweep target)   // v4.9: builds + mason-die ticks   // v4.6 + the ship-shapers, instrumented at last (the AGRICOLA-STUDY B4 item) · v4.8: commissions by hull + grain paid (the 2/1/0 A/B)
+  pours:0,judged:0,slams:0,invE:0,invS:0,tilesWon:0};}   // v4.17 Tastings — pours · benches convened · door-slams · the ⚜ economy   // v4.9: builds + mason-die ticks   // v4.6 + the ship-shapers, instrumented at last (the AGRICOLA-STUDY B4 item) · v4.8: commissions by hull + grain paid (the 2/1/0 A/B)
 var __uOn=function(){return __U&&!aiSimulating;};   // never count MC-playout echoes
-var __claimLading=claimLading;claimLading=function(lp,idx){if(__uOn()){__U.ladings++;if(typeof hallOn==='function'&&hallOn())__U.invE++;}return __claimLading(lp,idx);};
-// v4.15 GUILDHALL counters — enshrines by shelf · star-vs-action · the menu-pick histogram (the sweep read)
-var __enshrineDo=enshrineDo;enshrineDo=function(vi,i,opt){var p=cur();var inv0=p?(p.invites||0):0;
-  var r=__enshrineDo(vi,i,opt);
-  if(__uOn()&&r){__U['ens'+i]=(__U['ens'+i]||0)+1;__U.invS++;
-    if(p&&(p.invites||0)>inv0-1)__U.invE++;   // the first-appearance grant refunded one
-    if(opt==='star'||opt==='fixed')__U.ensStar++;else{__U.ensAct++;__U['opt_'+opt]=(__U['opt_'+opt]||0)+1;}
-    if(opt==='fixed')__U.opt_goods2++;}
+var __claimLading=claimLading;claimLading=function(lp,idx){if(__uOn())__U.ladings++;return __claimLading(lp,idx);};
+var __invGrant=invGrant;invGrant=function(p,src){if(__uOn())__U.invE++;return __invGrant(p,src);};   // v4.17: every ⚜ faucet (orders · the Chancery · dials)
+// v4.17 TASTINGS counters — pours · benches convened · door-slams · the ⚜ economy
+var __pourDo=pourDo;pourDo=function(vi,ci){var ct=S&&S.tastings&&(S.tastings.open||[])[ci];
+  var pre=ct?ct.bench.length:0;var lead=ct?benchLeader(ct):null;var p=cur();
+  var r=__pourDo(vi,ci);
+  if(__uOn()&&r){__U.pours++;__U.invS++;
+    if(pre===benchSize()-1){__U.judged++;if(lead&&p&&lead.pid===p.id)__U.slams++;}}
   return r;};
-var __sealPick=sealPick;sealPick=function(i){var had=!!UI.seal;var r=__sealPick(i);if(__uOn()&&had&&i>=0)__U.seal++;return r;};
+var __judgeT=judgeTasting;judgeTasting=function(ci){var r=__judgeT(ci);if(__uOn())__U.tilesWon++;return r;};
 var __rackPick=rackPick;rackPick=function(vi){var had=!!UI.rack;var r=__rackPick(vi);if(__uOn()&&had&&!UI.rack)__U.rack++;return r;};
 var __assayPick=assayPick;assayPick=function(vi,dir){var had=!!UI.assay;var r=__assayPick(vi,dir);if(__uOn()&&had&&!UI.assay)__U[(dir===-1)?'assayDown':'assayUp']++;return r;};
 var __loadCommit=loadCommit;loadCommit=function(shipSlot,vi,useOpt){var p=cur();var bk=bKeyAt(shipSlot);
@@ -87,13 +86,14 @@ var __commPlace=commPlace;commPlace=function(slot){var d=UI.comm;var sn=(d&&d.id
 function __runGame(n){
   __uReset();
   EXPANSION=__EXP;JOPEN=__JOP;HALLEXP=__HALL;OVERLAND=false;   // v4.14/v4.15: the toggles ride env (default off — the base gate is unchanged)
-  if(__HSTARS){__HSTARS.split(',').forEach(function(v,i){if(HALL_SHELVES[i]&&+v>0)HALL_SHELVES[i].star=parseInt(v,10);});}   // v4.15 sweep: star values by shelf
-  if(__HMENU){__HMENU.split(';').forEach(function(seg){var m=seg.split(':');var si=parseInt(m[0],10);
-    if(HALL_SHELVES[si]&&!HALL_SHELVES[si].fixed&&m[1])HALL_SHELVES[si].opts=m[1].split(',').filter(Boolean);});}   // v4.15 sweep: menus by shelf index (1-3)
-  // v4.16b: the lane dials override ONLY when the env var is set — the RULED defaults
-  // (HALL_PIPS=1 · INV_BLDG=1) must not be silently forced off by an unset hook.
-  if(__HPIPS!=='')HALL_PIPS=(__HPIPS==='1')?1:0;                     // HALL_PIPS=0|1 · HALL_LADDER="0,2,5,9,14" · INV_CASK=0.12 · INV_BLDG=0|1
-  if(__HLAD!=='')HALL_LADDER=__HLAD==='null'?null:__HLAD.split(',').map(function(v){return parseInt(v,10)||0;});
+  // v4.17 Tasting dials — override ONLY when the env var is set (a ruled default is never
+  // silently forced off): STARTINV=n · TSTARS="free:5,dark:7,..." (1st ★ by category) ·
+  // BENCH="2,3,3" · EJUDGE=void|judge · INV_CASK=w · INV_BLDG=0|1
+  if(__SINV!=='')START_INV=parseInt(__SINV,10)||0;
+  if(__TSTARS!=='')__TSTARS.split(',').forEach(function(seg){var m=seg.split(':');
+    CONTESTS.forEach(function(t){if(t.cat===m[0]&&+m[1]>0)t.s1=parseInt(m[1],10);});});
+  if(__TBENCH!=='')CONTEST_BENCH=__TBENCH.split(',').map(function(v){return parseInt(v,10)||3;});
+  if(__EJ!=='')END_JUDGE=__EJ;
   if(__ICW!=='')INV_CASK_W=parseFloat(__ICW)||0;
   if(__IBLDG!=='')INV_BLDG=(__IBLDG==='1')?1:0;
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
@@ -149,8 +149,8 @@ const ctx = {
   __N:N, __TIER:TIER,
   __EXP:process.env.EXPANSION==='1', __JOP:process.env.JOPEN==='1',   // v4.14: the beer-toggle arms (EXPANSION=1 · JOPEN=1)
   __HALL:process.env.HALL==='1',                                      // v4.15: the Guildhall arm (HALL=1)
-  __HSTARS:process.env.HALL_STARS||'', __HMENU:process.env.HALL_MENU||'',   // v4.15: menu sweeps — HALL_STARS="2,4,6,9" · HALL_MENU="1:age3,goods3;2:brew,loadmore;3:brew,seal"
-  __HPIPS:process.env.HALL_PIPS!=null?process.env.HALL_PIPS:'', __HLAD:process.env.HALL_LADDER!=null?process.env.HALL_LADDER:'',   // v4.16b: raw strings — empty = keep the ruled default
+  __SINV:process.env.STARTINV!=null?process.env.STARTINV:'', __TSTARS:process.env.TSTARS!=null?process.env.TSTARS:'',   // v4.17: the Tasting dials
+  __TBENCH:process.env.BENCH!=null?process.env.BENCH:'', __EJ:process.env.EJUDGE!=null?process.env.EJUDGE:'',
   __ICW:process.env.INV_CASK!=null?process.env.INV_CASK:'', __IBLDG:process.env.INV_BLDG!=null?process.env.INV_BLDG:'',
   __POOL:parseInt(process.env.POOL||'0',10),
   __PERSONAS:PERSONAS,
@@ -195,15 +195,14 @@ let anyErr=0;
     const uk=['ladings','rack','assayUp','assayDown','toll','hopex','abbey','kilnLift','bondedSail','bmSeat','bmTick',
       'exch','cap','victual','chandler','scargo','coopSail','customsBoard','rbShort',
       'comm_skute','comm_cog','comm_hulk','commG','built','bldgTicks',
-      'ens0','ens1','ens2','ens3','ensStar','ensAct','seal','invE','invS',
-      'opt_goods2','opt_goods3','opt_age3','opt_brew','opt_loadmore','opt_seal'];
+      'pours','judged','slams','invE','invS','tilesWon'];
     const us={};uk.forEach(k=>us[k]=avg(ok.map(r=>(r.use&&r.use[k])||0)));
     console.log(`commissions/game: ${fmt(us.comm_skute+us.comm_cog+us.comm_hulk)} — skute ${fmt(us.comm_skute)} · cog ${fmt(us.comm_cog)} · hulk ${fmt(us.comm_hulk)} · grain paid ${fmt(us.commG)}`);
     console.log(`mason's marks (v4.9): builds/game ${fmt(us.built)} · die ticks ${fmt(us.bldgTicks)} · end pips/player ${fmt(avg(ok.map(r=>r.bldgPips||0)))}`);
     console.log(`v4.5b usage/game: ladings ${fmt(us.ladings)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)}▲/${fmt(us.assayDown)}▼ · toll ${fmt(us.toll)} · hopex-pay ${fmt(us.hopex)} · abbey ${fmt(us.abbey)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);
     console.log(`v4.6 usage/game: exchange ${fmt(us.exch)} · capstan ${fmt(us.cap)} · victual loads ${fmt(us.victual)} · chandler ${fmt(us.chandler)} · supercargo ${fmt(us.scargo)} · coop-berth sails ${fmt(us.coopSail)} · customs boards ${fmt(us.customsBoard)} · richberth short ${fmt(us.rbShort)}`);
-    if(us.ens0+us.ens1+us.ens2+us.ens3>0)   // v4.15 GUILDHALL dashboard — the menu-sweep read
-      console.log(`v4.15 guildhall/game: enshrines Tap ${fmt(us.ens0)} · Table ${fmt(us.ens1)} · Masters ${fmt(us.ens2)} · Reliquary ${fmt(us.ens3)} — ★picks ${fmt(us.ensStar)} vs actions ${fmt(us.ensAct)} · invites earned ${fmt(us.invE)} / spent ${fmt(us.invS)} · seals ${fmt(us.seal)} · picks: g2 ${fmt(us.opt_goods2)} g3 ${fmt(us.opt_goods3)} age3 ${fmt(us.opt_age3)} brew ${fmt(us.opt_brew)} load ${fmt(us.opt_loadmore)} seal ${fmt(us.opt_seal)}`);
+    if(us.pours>0)   // v4.17 TASTINGS dashboard
+      console.log(`v4.17 tastings/game: pours ${fmt(us.pours)} · benches convened ${fmt(us.judged)} · door-slams ${fmt(us.slams)} · invites earned ${fmt(us.invE)} / spent ${fmt(us.invS)}`);
   }
   if(PERSONAS){const pw={},pn={};
     ok.forEach(r=>{(r.personas||[]).forEach(ps=>{if(ps)pn[ps]=(pn[ps]||0)+1;});if(r.winPersona)pw[r.winPersona]=(pw[r.winPersona]||0)+1;});

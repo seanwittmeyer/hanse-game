@@ -139,21 +139,41 @@ const LADINGS=[
   {dest:'Novgorod',min:5, pts:3},{dest:'Novgorod',beer:'Bock',  pts:4},{dest:'Novgorod',min:6, pts:4},
   {dest:null,      min:6, pts:3},
 ];
-// v4.15 "Guildhall" ⚙ — the EASED 20-tile Order schedule (hall mode REPLACES the base 15):
-// rewards 1–3★ and routine conditions, because in hall mode every claim also pays an INVITATION
-// (the Guildhall lane's gate must fire repeatedly). Mirrors play.html LADINGS_HALL.
-const LADINGS_HALL=[
-  {dest:'Bruges',min:2,pts:1},{dest:'Bruges',min:3,pts:2},{dest:'Bruges',beer:'Keut',pts:2},{dest:'Bruges',min:4,pts:2},{dest:'Bruges',min:5,pts:3},
-  {dest:'London',min:2,pts:1},{dest:'London',min:3,pts:2},{dest:'London',beer:'Broyhan',pts:2},{dest:'London',min:5,pts:3},
-  {dest:'Bergen',min:2,pts:1},{dest:'Bergen',min:3,pts:2},{dest:'Bergen',beer:'Mumme',pts:3},{dest:'Bergen',min:4,pts:2},
-  {dest:'Novgorod',min:4,pts:2},{dest:'Novgorod',min:5,pts:3},{dest:'Novgorod',beer:'Bock',pts:3},{dest:'Novgorod',min:6,pts:3},
-  {dest:null,min:2,pts:1},{dest:null,min:4,pts:2},{dest:null,min:6,pts:3},
+// v4.17 "The Tastings" ⚙ — the CONTEST deck (12 tiles): a category filter · a bench of die
+// spaces (2 at 2p · 3 at 3-4p) · the ladder (1st = the printed ★ + THE TILE · 2nd 2★ · 3rd 1★).
+// The bench filling IS the judging: highest die 1st, ties → the earlier pour. Mirrors play.html CONTESTS.
+// (The v4.15 eased 20-Order set is CUT — hall mode plays the base 15.)
+const CONTESTS_P=[
+  {k:'free1', cat:'the Free Pour',    flt:'any beer',              s1:5, c:'#5b3a8e'},
+  {k:'free2', cat:'the Free Pour',    flt:'any beer',              s1:5, c:'#5b3a8e'},
+  {k:'free3', cat:'the Free Pour',    flt:'any beer',              s1:5, c:'#5b3a8e'},
+  {k:'fresh1',cat:'the Fresh Pour',   flt:'quality 3 or under',    s1:5, c:'#4a6b3a'},
+  {k:'fresh2',cat:'the Fresh Pour',   flt:'quality 3 or under',    s1:5, c:'#4a6b3a'},
+  {k:'fresh3',cat:'the Fresh Pour',   flt:'quality 3 or under',    s1:5, c:'#4a6b3a'},
+  {k:'dark1', cat:'the Dark Pour',    flt:'quality 4 or higher',   s1:7, c:'#5e2433'},
+  {k:'dark2', cat:'the Dark Pour',    flt:'quality 4 or higher',   s1:7, c:'#5e2433'},
+  {k:'exp1',  cat:'the Export Pour',  flt:'poured at die 4+',      s1:6, c:'#274b5c'},
+  {k:'exp2',  cat:'the Export Pour',  flt:'poured at die 4+',      s1:6, c:'#274b5c'},
+  {k:'old1',  cat:'the Old Pour',     flt:'poured at die 5+',      s1:7, c:'#8a6408'},
+  {k:'mast1', cat:'the Master’s Pour',flt:'poured at die 6',       s1:9, c:'#7c2128'},
 ];
-// the INVITATION tile (v4.15) — a 2×0.9in gold strip: spend it with a Ready cask to enshrine.
+// a TASTING tile (v4.17) — building-cut 2.5×1.32in: the category + filter + ladder left, the
+// bench of three 0.42in die squares right (2p uses the left two; the row runs left→right).
+function contestTile(t){let sq='';for(let k=0;k<3;k++)sq+='<div style="width:.42in;height:.42in;border:2px dashed rgba(0,0,0,.35);border-radius:.05in;background:rgba(255,255,255,.5)'+(k===2?';position:relative':'')+'">'
+    +(k===2?'<span style="position:absolute;top:-.09in;right:-.04in;background:#7c2128;color:#fff;font-size:.07in;font-weight:900;border-radius:.03in;padding:.005in .03in">3-4p</span>':'')+'</div>';
+  return '<div style="width:2.5in;height:1.32in;box-sizing:border-box;border:2.5px solid '+t.c+';border-radius:.08in;background:#f3ecdd;color:#2b2018;display:flex;align-items:stretch;padding:.06in .08in;gap:.08in">'
+    +'<div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;min-width:0">'
+      +'<div><div style="font-variant:small-caps;font-weight:900;color:'+t.c+';font-size:.15in;line-height:1.05">⚜ '+t.cat+'</div>'
+      +'<div style="font-size:.095in;font-style:italic">'+t.flt+'</div></div>'
+      +'<div style="font-size:.095in;line-height:1.25">pour: 1 ⚜ + a Ready cask · <b>full bench = judged</b><br>'
+      +'<b>1st '+t.s1+'★ + the tile</b> · 2nd 2★ · 3rd 1★ · ties → the earlier pour</div></div>'
+    +'<div style="flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:.045in">'+sq+'</div>'
+    +'</div>';}
+// the INVITATION tile (v4.15 · reworded v4.17) — a 2×0.9in gold strip: spend it to pour.
 function invitationTile(){return '<div class="ldtile" style="--c:#8a6408">'
   +'<div class="ld-hd">⚜<span class="ld-k">Invitation</span></div>'
-  +'<div class="ld-bd"><span class="ld-beer">'+LU(QI)+' Ready</span><span class="ld-arr">+</span><span class="ld-die">'+LU('dices')+' ≥ shelf</span><span class="ld-arr">→</span><span class="ld-pts">the Hall</span></div>'
-  +'<div class="ld-sub">spend to enshrine · earned per Order claim &amp; first showing per shelf</div>'
+  +'<div class="ld-bd"><span class="ld-beer">'+LU(QI)+' Ready</span><span class="ld-arr">+</span><span class="ld-die">'+LU('dices')+' matches</span><span class="ld-arr">→</span><span class="ld-pts">a Tasting</span></div>'
+  +'<div class="ld-sub">spend to pour · earned per Order claim &amp; at the Guild Chancery · start with 1</div>'
   +'</div>';}
 
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
@@ -757,5 +777,5 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.pbrd-lad img.ai,.pbrd-lad .ic,.pbrd-lad svg{width:.13in;height:.13in;flex:0 0 auto}';   // a claimed Order wears its Kontor's crest
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,LADINGS_HALL,invitationTile,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
+window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,CONTESTS_P,contestTile,invitationTile,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
 })();
