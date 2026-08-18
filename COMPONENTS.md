@@ -29,7 +29,14 @@
 > Order / Tasting interiors gain ~25% more safe margin** between the cut line and their
 > content (the laser-alignment allowance). The **Zerbster pin rewords** — ***Brew a free
 > Gruit + Load any Cask*** (the tray-die parenthetical leaves the face and its recipe card;
-> the free Gruit still takes a tray die — the rule lives in the rulebook).
+> the free Gruit still takes a tray die — the rule lives in the rulebook). The **Market & Stores
+> board reorganizes** (designer): the **Specialists' display of 4 takes the old recipe
+> shelf** in the main column, and the right column becomes **CASKS & RECIPES** — five tight
+> paired rows seating **every beer's face-up pile ON the board** (Gruit + Hopped · the dealt
+> Q3 + Q4 beers · the Q5 beer + Jopenbier; the mid tiers print by TIER, the deal varies) and
+> the **four export recipe stacks** beside their tiers (Q3 · Q4 · Q5 · Jopenbier). Cask
+> slots cut 2.4×1″, recipe slots 1.85×2.55″ — component-true; the board grows to
+> **17.45×10.8″**.
 
 > **Kit pass 2026-08-17 (presentation, no rules change):** the **Guild Tastings board is
 > REDRAWN to the kit grammar** — a kontor-style art header (`art/kontor-hall.png`; the Hall
