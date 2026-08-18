@@ -89,16 +89,19 @@
      The packed box = the tile + 1.5mm bleed all round; adjacent bleeds TOUCH (1.5+1.5 = the 3mm cut
      gap), so the sheet interior is solid ink and a laser misaligned by <1.5mm still lands on colour.
      Only the tile's BACKGROUND COLOUR and ART layers extend outward — the content never moves, and the
-     cut rrect stays on the tile's true edge. (.074in = 1.5mm ÷ SCALE — these rules live in native units.) */
+     cut rrect stays on the tile's true edge. (.059in = 1.5mm ÷ SCALE at the native SCALE 1.0 — these
+     rules live in native units and MUST retune with TILE_BLEED_N if SCALE ever changes; the 2026-08-18
+     scale-up left them at the old ×0.8 value .074 and the bleed band printed empty — the table caught it.) */
   .bl{position:relative;width:100%;height:100%;overflow:hidden}
-  .bl>.ctile,.bl>.btile,.bl>.stile,.bl>.ldtile,.bl>.icard{position:absolute;left:.074in;top:.074in;overflow:visible;border-radius:0}
-  .bl>.ctile::before,.bl>.btile::before,.bl>.stile::before,.bl>.ldtile::before,.bl>.icard::before{content:"";position:absolute;inset:-.074in;background:var(--c,#33445a);z-index:-1}
-  /* the lading strip is flat kontor colour — its ::before IS the whole bleed (no art layer to extend) */
-  .bl>.btile>.artbg,.bl>.stile>.artbg,.bl>.stile>.st-wash,.bl>.icard>.artbg{inset:-.074in}
-  .bl>.ctile>.ct-art{left:-.074in;top:-.074in;bottom:-.074in}
-  .bl>.ctB>.ct-art{left:auto;right:-.074in}
-  .bl>.btile>.bt-foot{margin:0 -.074in -.074in;padding-left:.174in;padding-right:.174in;padding-bottom:.144in}   /* the foot colour bleeds down & sideways; its content keeps its .1in/.07in insets */
-  .bl>.icard>.ic-foot{margin:0 -.074in -.074in;padding-left:.244in;padding-right:.244in;padding-bottom:.224in}   /* the Specialist foot gradient rides OVER its art — it must bleed too (the art alone bleeds beige) */
+  .bl>.ctile,.bl>.btile,.bl>.stile,.bl>.ldtile,.bl>.icard,.bl>.chtile{position:absolute;left:.059in;top:.059in;overflow:visible;border-radius:0}
+  .bl>.ctile::before,.bl>.btile::before,.bl>.stile::before,.bl>.ldtile::before,.bl>.icard::before,.bl>.chtile::before{content:"";position:absolute;inset:-.059in;background:var(--c,#33445a);z-index:-1}
+  /* the lading strip is flat kontor colour — its ::before IS the whole bleed (no art layer to extend);
+     the Tasting tile likewise bleeds its CATEGORY colour (the border's own hue — 2026-08-18) */
+  .bl>.btile>.artbg,.bl>.stile>.artbg,.bl>.stile>.st-wash,.bl>.icard>.artbg{inset:-.059in}
+  .bl>.ctile>.ct-art{left:-.059in;top:-.059in;bottom:-.059in}
+  .bl>.ctB>.ct-art{left:auto;right:-.059in}
+  .bl>.btile>.bt-foot{margin:0 -.059in -.059in;padding-left:.159in;padding-right:.159in;padding-bottom:.129in}   /* the foot colour bleeds down & sideways; its content keeps its .1in/.07in insets */
+  .bl>.icard>.ic-foot{margin:0 -.059in -.059in;padding-left:.229in;padding-right:.229in;padding-bottom:.209in}   /* the Specialist foot gradient rides OVER its art — it must bleed too (the art alone bleeds beige) */
   /* ====== cask PERK strip (e.g. Keut +1 presence) — printed above the cost ====== */
   .t-perk{position:absolute;top:.06in;right:.08in;text-align:right;font-size:.082in;font-style:italic;line-height:1.08;opacity:.96}
   .t-perk b{font-size:.16in;font-weight:900;font-style:normal}

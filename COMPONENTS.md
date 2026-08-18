@@ -21,7 +21,12 @@
 > dimension in this manifest now reads at print size; the Destinations board moves to the
 > Wharf sheet (the Market pair broke 22″), the Specialists + Order strips take their own
 > plotter sheet, and the **Kontor panels’ on-delivery prize prints at its own much larger
-> tier**. Counts unchanged.
+> tier**. Counts unchanged. *Print-proof follow-ups (same day, off the table’s second
+> print):* the tile **bleed retunes to the native scale** (the .bl rules still carried the
+> ×0.8-era .074″ — the 1.5mm bleed band printed empty; now .059″ = a true 1.5mm, the
+> Tasting tile joins the bleed families, its category colour as the band) and the **cask /
+> Order / Tasting interiors gain ~25% more safe margin** between the cut line and their
+> content (the laser-alignment allowance).
 
 > **Kit pass 2026-08-17 (presentation, no rules change):** the **Guild Tastings board is
 > REDRAWN to the kit grammar** — a kontor-style art header (`art/kontor-hall.png`; the Hall
