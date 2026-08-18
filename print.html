@@ -93,7 +93,11 @@
      rules live in native units and MUST retune with TILE_BLEED_N if SCALE ever changes; the 2026-08-18
      scale-up left them at the old ×0.8 value .074 and the bleed band printed empty — the table caught it.) */
   .bl{position:relative;width:100%;height:100%;overflow:hidden}
-  .bl>.ctile,.bl>.btile,.bl>.stile,.bl>.ldtile,.bl>.icard,.bl>.chtile{position:absolute;left:.059in;top:.059in;overflow:visible;border-radius:0}
+  /* z-index:0 makes each tile its OWN stacking context — without it the ::before bleed band
+     (z-index:-1) paints BEHIND the .page's white background and never shows (2026-08-18: the
+     table's print had white channels between tiles; the art-layer extensions are real elements
+     and always painted, which is why the ships looked right while the flat bands vanished). */
+  .bl>.ctile,.bl>.btile,.bl>.stile,.bl>.ldtile,.bl>.icard,.bl>.chtile{position:absolute;left:.059in;top:.059in;overflow:visible;border-radius:0;z-index:0}
   .bl>.ctile::before,.bl>.btile::before,.bl>.stile::before,.bl>.ldtile::before,.bl>.icard::before,.bl>.chtile::before{content:"";position:absolute;inset:-.059in;background:var(--c,#33445a);z-index:-1}
   /* the lading strip is flat kontor colour — its ::before IS the whole bleed (no art layer to extend);
      the Tasting tile likewise bleeds its CATEGORY colour (the border's own hue — 2026-08-18) */
