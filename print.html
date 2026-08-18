@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v4.17b “Champion’s Tour”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v5.0 “Open Wharf”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -97,9 +97,9 @@
      (z-index:-1) paints BEHIND the .page's white background and never shows (2026-08-18: the
      table's print had white channels between tiles; the art-layer extensions are real elements
      and always painted, which is why the ships looked right while the flat bands vanished). */
-  .bl>.ctile,.bl>.btile,.bl>.stile,.bl>.ldtile,.bl>.icard,.bl>.chtile{position:absolute;left:.059in;top:.059in;overflow:visible;border-radius:0;z-index:0}
-  .bl>.ctile::before,.bl>.btile::before,.bl>.stile::before,.bl>.ldtile::before,.bl>.icard::before,.bl>.chtile::before{content:"";position:absolute;inset:-.059in;background:var(--c,#33445a);z-index:-1}
-  /* the lading strip is flat kontor colour — its ::before IS the whole bleed (no art layer to extend);
+  .bl>.ctile,.bl>.btile,.bl>.stile,.bl>.mftile,.bl>.icard,.bl>.chtile{position:absolute;left:.059in;top:.059in;overflow:visible;border-radius:0;z-index:0}
+  .bl>.ctile::before,.bl>.btile::before,.bl>.stile::before,.bl>.mftile::before,.bl>.icard::before,.bl>.chtile::before{content:"";position:absolute;inset:-.059in;background:var(--c,#33445a);z-index:-1}
+  /* the Manifest card is flat sea-blue — its ::before IS the whole bleed (no art layer to extend);
      the Tasting tile likewise bleeds its CATEGORY colour (the border's own hue — 2026-08-18) */
   .bl>.btile>.artbg,.bl>.stile>.artbg,.bl>.stile>.st-wash,.bl>.icard>.artbg{inset:-.059in}
   .bl>.ctile>.ct-art{left:-.059in;top:-.059in;bottom:-.059in}
@@ -497,7 +497,8 @@
   .dslot.r.ct{border-color:var(--sea);color:var(--sea)}
   /* the CONTRACT slot is component-true (2×0.9in): it had been inheriting the 2.5×1.32in
      building footprint, so the row of 3 ran 7.82in wide and overflowed the 7.6in board */
-  .dslot.l{width:2in;height:.9in;border-color:var(--sea);color:var(--sea)}
+  .dslot.l{width:2in;height:1.32in;border-color:var(--sea);color:var(--sea)}   /* v5.0: the Manifest deck well (2×1.32 — component-true) */
+  .dslot.l .rn{font-variant:small-caps;font-weight:bold;font-size:.1in;opacity:.7}
   .dslot.l svg,.dslot.l .ic{width:.38in;height:.38in}
   /* (the goods/dice/marker bins moved OFF the board — the loose bits live in a supply tray; the Round
      backstop is rules-side only, untracked on the table) */
@@ -737,7 +738,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v4.17b “Champion’s Tour”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v5.0 “Open Wharf”</span></h1>
   <span id="hnav"><!-- the shared site nav (nav.js) — one roster for all four pages --></span>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
@@ -765,7 +766,7 @@
 //==================================================================
 // The CARD COMPONENT LIBRARY (components.js) is the single source of the printed card faces —
 // data + generators + card CSS, shared with play.html (the app mirrors the kit, v3.3).
-const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard}=window.HC;
+const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,MANIFESTS_P,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,manifestTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard}=window.HC;
 
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 // (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
@@ -818,7 +819,7 @@ const SCORE_RING_T=0.8;   // ring thickness (native) → prints 0.64″ — a co
 const REGS=[[0.15,0.15],[10.25,0.15],[0.15,7.75],[10.25,7.75]];  // registration-mark centres (letter; large sheets compute from geo)
 // NATIVE component sizes (in) — the design size each piece renders at; packRun scales the FOOTPRINT by SCALE and
 // the render wrapper scales the CONTENT to match. casks/ships 2.5″ · buildings 2″ · improvement cards 2×1″ · frames 2.5″.
-const SIZE={tile:[1.25,1.25],caskc:[2.4,1],cask:[2.4,1],shipk:[2.5,3],shipc:[2.5,3],shiph:[2.5,3],bld:[2.5,1.32],ld:[2,0.9],imp:[2,2],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // v4.9b UI pass: EVERY hull cuts the SAME 2.5×3 tile (berth count unchanged; the hold below the berths is art)   // v3.4a/b refit: cask TILES 2.4×1 · buildings 2.5×1.32 · ALL-BERTH carrier ships
+const SIZE={tile:[1.25,1.25],caskc:[2.4,1],cask:[2.4,1],shipk:[2.5,3],shipc:[2.5,3],shiph:[2.5,3],bld:[2.5,1.32],mf:[2,1.32],imp:[2,2],tok:[0.95,0.95],disc:[0.65,0.65],wtok:[1,1],card:[1.85,2.55]};   // v4.9b UI pass: EVERY hull cuts the SAME 2.5×3 tile (berth count unchanged; the hold below the berths is art)   // v3.4a/b refit: cask TILES 2.4×1 · buildings 2.5×1.32 · ALL-BERTH carrier ships
 const CUTR={tok:0.35,disc:0.25,wtok:0.4};   // cut-circle radius (inside the bleed disc)
 
 let MODE='full', VIEW='all', LAYER='art';
@@ -855,7 +856,7 @@ function aid3Panels(){
      '<h5>'+LU('list-ordered')+'Your Turn</h5>'
     +'<div class="step"><span class="sn">1</span><span class="sx"><b>Move</b> to an adjacent station (turn 1: start where you stand)</span></div>'
     +'<div class="step"><span class="sn">2</span><span class="sx"><b>Choose a line</b>: the row or the column</span></div>'
-    +'<div class="step"><span class="sn">3</span><span class="sx"><b>Resolve its stops</b>: any order, all optional; arrivals open their stop</span></div>'
+    +'<div class="step"><span class="sn">3</span><span class="sx"><b>Resolve its stops</b>: any order, all optional \u2014 <b>your station = its PRIMARY</b>, the line\u2019s other station = its <b>ALTERNATE</b>; arrivals open their stop</span></div>'
     +'<h5>'+LU('dices')+'The Die</h5>'
     +'<div class="dstrip">'
       +AID_CHIP('flask-conical','Brew','start')+AID_ARR
@@ -866,13 +867,13 @@ function aid3Panels(){
     +'</div>'
     +'<div class="ln"><span class="em">No die in the tray</span>: no brew, no build, no presence.</div>'
     +'<h5>'+LU('sail')+'Load &amp; Sail</h5>'
-    +'<div class="ln">\u00b7 <b>Load</b> (a Ship\u2019s slot stop): 1 Ready cask from YOUR vessels, die \u2265 the minimum</div>'
+    +'<div class="ln">\u00b7 <b>Load</b> (a Ship\u2019s slot stop): 1 <b>READY</b> cask from YOUR vessels, die \u2265 the minimum \u2014 both gates, always</div>'
     +'<div class="ln">\u00b7 The load bonus fires <b>after</b> any sail it completes \u00b7 <b>Full = sails at once</b> (a Skute on its first load)</div>'
-    +'<div class="ln">\u00b7 Deliver in boarding order: score the die, park, prize per cask (else 2 goods \u00b7 a build prize forfeits), claim 1 Order</div>'
+    +'<div class="ln">\u00b7 Deliver in boarding order: score the die, park, prize per cask (else 2 goods \u00b7 a build prize forfeits), claim 1 <b>Manifest</b> demand</div>'
     +'<h5>'+LU('store')+'The Stations</h5>'
-    +'<div class="ln">'+LU('store')+' <b>Market</b>: take 2 goods \u00b7 '+LU('age-3')+' <b>Cellar</b>: Age 3</div>'
-    +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b>: brew the top pile tile</div>'
-    +'<div class="ln">'+LU('ship')+' <b>Harbor</b>: place a Ship \u2014 fee 2/1/0'+G+' by size (Hulk free) \u2014 + 1 free load, no \u2605</div>'
+    +'<div class="ln">'+LU('store')+' <b>Market</b>: take 2 \u00b7 alt 1 \u2003 '+LU('age-3')+' <b>Cellar</b>: Age 3 \u00b7 alt 1</div>'
+    +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b>: SEARCH the beer\u2019s stack, choose the tile \u00b7 alt: the top tile</div>'
+    +'<div class="ln">'+LU('ship')+' <b>Harbor</b>: place a Ship \u2014 fee 2/1/0'+G+' by size \u2014 + 1 free load \u00b7 alt: Load 1, any Ship</div>'
     +'<h5>'+LU('landmark')+'The Kontore</h5>'
     +'<table class="kt"><tr><th>Kontor</th><th>Min</th><th>Prize</th><th>Maj.</th></tr>'
     +AID_K('kontor-bruges','Bruges','1+','a recipe, at its fee','4/2/0')
@@ -880,13 +881,13 @@ function aid3Panels(){
     +AID_K('kontor-bergen','Bergen','2+','a Specialist, free','9/5/2')
     +AID_K('kontor-novgorod','Novgorod','3+','die scores +2\u2605','8/5/2')
     +'</table>'
-    +'<div class="dontf"><b>Don\u2019t forget:</b> \u2460 the minimum reads the die AS IT BOARDS (after lifts) \u2461 Specialist &amp; Order displays refill at turn END (Ships &amp; buildings: at once)</div>'
+    +'<div class="dontf"><b>Don\u2019t forget:</b> \u2460 the minimum reads the die AS IT BOARDS (after lifts) \u2461 the Specialist display refills at turn END (Ships &amp; buildings: at once; a Manifest rides every non-Bruges hull \u2014 claim ONE line per delivered cask, each line once per voyage)</div>'
     +'<div class="ln">'+LU('building-2')+' <b>Buildings</b>: a build stands your die at the tile\u2019s printed face \u2014 every use (anyone) +1, pips score at end \u00b7 use free \u00b7 overbuild = one payment</div>');
   const back=aid3('back','book-open','End, Score &amp; Icons',
      '<h5>'+LU('timer')+'End &amp; Score</h5>'
     +'<div class="ln"><b>First EMPTY tray</b> (your last of 13 dice committed): finish the round. Round 25 backstop.</div>'
     +'<div class="ln">\u00b7 Delivered dice: the parked pips \u00b7 Majorities by parked dice</div>'
-    +'<div class="ln">\u00b7 Scored in play: Orders, stamps, departed builds \u00b7 Building dice: the pips</div>'
+    +'<div class="ln">\u00b7 Scored in play: Manifest demands, stamps, departed builds \u00b7 Building dice: the pips</div>'
     +'<div class="ln">\u00b7 The Flight: distinct beers, (n\u22121)\u00b2, min 3 \u00b7 Guild \u2605: printed end-lines</div>'
     +'<div class="ln">Tiebreak: summed vessel dice, then most goods.</div>'
     +'<div class="leg leg2">'
@@ -907,7 +908,7 @@ function aid3Panels(){
     +AID_ROW('building-2','Building','shared, by whoever activates it')
     +AID_ROW('wrench','Specialist','private, seats at your board')
     +AID_ROW('scroll-text','Recipe','permission to brew a beer')
-    +AID_ROW('contract','Order','a Kontor bonus tile')
+    +AID_ROW('contract','Manifest','a demand card on a non-Bruges Ship')
     +'<h5>'+LU('package-plus')+'The 8 Load Bonuses</h5>'
     +AID_ROW('coins','Gain 2 goods','any mix')
     +AID_ROW('age-2','Age +2','two aging steps')
@@ -1059,11 +1060,11 @@ function wharfCross(){
   const wharf='<div class="wharf">'
     +'<div></div>'+slot+slot+'<div></div>'
     +slot
-    +station('A','Market','market','coins','Gain 2 goods')
-    +station('B','Brewhouse','brewhouse','flask-conical','Brew a beer')
+    +station('A','Market','market','coins','Gain 2 goods \u00b7 alt 1')
+    +station('B','Brewhouse','brewhouse','flask-conical','Brew \u2014 search the stack \u00b7 alt: top tile')
     +slot+slot
-    +station('C','Harbor','harbor','ship','Commission a ship')
-    +station('D','Cellar','cellar','age-3','Age 3')
+    +station('C','Harbor','harbor','ship','Commission \u00b7 alt: Load 1, any Ship')
+    +station('D','Cellar','cellar','age-3','Age 3 \u00b7 alt 1')
     +slot
     +'<div></div>'+slot+slot+'<div></div>'
     +'</div>';
@@ -1178,13 +1179,16 @@ function supplyBoard(){
 // The Hall column speaks component, not paragraph: a kontor-style art header, four SHELVES (each coin
 // space = ONE icon + a ≤3-word label + the claim-cube outline), and the launch strip. The rules live on
 // the player aid; the board only has to be readable across a table.
-function destBoard(){   // ONE board (designer, 2026-08-03): the Kontore 2×2 over the Orders row
-  const cslot=d=>'<div class="dslot l">'+LU('contract')+(OVERLAY?'<div class="ovl">'+ladingTile(d)+'</div>':'')+'</div>';
+function destBoard(){   // ONE board (v5.0): the Kontore 2×2 over the MANIFEST DECK WELL — the Order
+  // row RETIRED; the demand cards ride the Ships (dealt as a non-Bruges hull enters the display,
+  // returned UNDER the deck at sail). The well is component-true (2×1.32).
+  const mfslot='<div class="dslot l">'+LU('contract')+'<span class="rn">the Manifest deck \u00b7 12</span>'
+    +(OVERLAY?'<div class="ovl">'+manifestTile(MANIFESTS_P[0])+'</div>':'')+'</div>';
   return '<div class="destb kboard">'
   +'<div class="disp-h k">'+LU('landmark')+'Kontore</div>'
   +'<div class="kgrid">'+DESTS.map(kMini).join('')+'</div>'
-  +'<div class="disp-h k">'+LU('contract')+'Orders</div>'
-  +'<div class="crow">'+LADINGS.slice(0,3).map(cslot).join('')+'</div></div>';}
+  +'<div class="disp-h k">'+LU('contract')+'Manifests<span class="sm"> \u2014 a card rides every non-Bruges Ship</span></div>'
+  +'<div class="crow">'+mfslot+'</div></div>';}
 
 // ---- THE GUILD TASTINGS BOARD (v4.17b · recut 2026-08-18, designer-ruled: "rules go in
 // the rules page, not in the boards or components") — the board is DATA + SLOTS only: a
@@ -1356,7 +1360,7 @@ function wharfBoardSheet(pages){
   (pg.rrects=pg.rrects||[]).push({x:dx,y:dy,w:DW,h:DH,r:0.14});
   return pg;
 }
-const DEST2_NW=7.6,DEST2_NH=9.0;   // the Destinations board: the Kontore 2×2 + the Orders row
+const DEST2_NW=7.6,DEST2_NH=9.0;   // the Destinations board: the Kontore 2×2 + the Manifest deck well (v5.0)
 // the MARKET & STORES board + the DESTINATIONS & HALL board — the table pair, on ONE trimmed 22in sheet.
 // (labels stay PLAIN TEXT — every consumer escapes for itself.)
 function supplyBoardSheet(pages){
@@ -1383,11 +1387,11 @@ function buildPages(){
   const pages=[],famPages={};
   // --- BOARDS ---
   wharfBoardSheet(pages);   // the Wharf (cross) — its own trimmed 22-wide sheet
-  // (kit pass 2026-08-18, SCALE 1.0: the Specialists + Order strips LEFT the Wharf sheet's
+  // (kit pass 2026-08-18, SCALE 1.0: the Specialists + the demand cards LEFT the Wharf sheet's
   // right band — the Destinations board rides there now; they pack their own trimmed sheet)
   const wimps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wimps.push({fam:'Improvements',html:improveTile(d)});});
-  const wlds=(MODE==='proof'?LADINGS.slice(0,3):LADINGS).map(d=>({fam:'Ladings',html:ladingTile(d)}));
-  packSpaced(pages,'bits','Specialist tiles + Order strips (single-sided) · 22″ plotter · 1.5mm bleed · cuts 3mm apart',[{kind:'imp',items:wimps},{kind:'ld',items:wlds}],famPages);
+  const wmfs=(MODE==='proof'?MANIFESTS_P.slice(0,3):MANIFESTS_P).map(d=>({fam:'Manifests',html:manifestTile(d)}));   // v5.0: the 12-card Manifest deck (the Order strips retired)
+  packSpaced(pages,'bits','Specialist tiles + Manifest cards (single-sided) · 22″ plotter · 1.5mm bleed · cuts 3mm apart',[{kind:'imp',items:wimps},{kind:'mf',items:wmfs}],famPages);
   supplyBoardSheet(pages);   // the Supply & Tracks board — its own sheet
   // (v4.0: the Trade Roads board is TABLED with the expansions — olboard() stays for its return)
   // (player brewery boards are generated LAST — at the bottom of the page — see below)
@@ -1509,21 +1513,21 @@ function checklist(pages,famPages){
   // 2026-08-09 [designer]: the manifest is a PACKING LIST, not a lesson — "just some basic
   // details of quantity, any important themes to share, and where they go." Every entry is one
   // short line: what it is · WHERE IT LIVES on the table. The rules live in the rulebook.
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v4.17b “Champion’s Tour”)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v5.0 “Open Wharf”)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">Counts are tuning placeholders ⚙. The rules live on the <b>player aid</b> and in the rulebook — this page only says what to make, how many, and where it sits on the table.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
     +R('Main board — the Wharf','The shared action area: 4 stations in a 2×2, ringed by 8 slots. <b>Centre of the table.</b>','1')
-    +R('Destinations board','The 4 Kontor panels + the Order row. <b>Beside the Wharf, in everyone’s reach</b> — delivered dice park on it all game.','1')
+    +R('Destinations board','The 4 Kontor panels + the Manifest deck well. <b>Beside the Wharf, in everyone’s reach</b> — delivered dice park on it all game.','1')
     +R('Market &amp; Stores board','The face-up displays, ringed by the 50-cell score ring. <b>The Destinations board’s table pair.</b>','1')
     +R('Player brewery boards','3 vessel slots + 2 Specialist seats. <b>One in front of each player</b>; their recipe cards splay beside it.',PLAYERS.length)
     +'</table>';
   h+=T('Tiles (mount on chipboard, laser-cut)')
-    +R('Cask tiles — the beer supply','The beer itself, brewed never bought. <b>Six face-up piles on the Market &amp; Stores board\u2019s Casks &amp; Recipes column</b> (the mid tiers vary with the deal). '+caskBase.map(d=>d.nm+' ×'+d.n).join(' · ')+'.',sumN(caskBase))
+    +R('Cask tiles — the beer supply','The beer itself, brewed never bought. <b>Six face-up stacks on the Market &amp; Stores board\u2019s Casks &amp; Recipes column</b> (the mid tiers vary with the deal) — a full Brew SEARCHES the stack; the alternate takes the top tile; a delivered cask\u2019s tile returns to the bottom (v5.0). '+caskBase.map(d=>d.nm+' ×'+d.n).join(' · ')+'.',sumN(caskBase))
     +R('Ship tiles','Neutral hulls, each bound for a printed Kontor; the tile IS its berths. <b>A draw bag → a display of 4.</b> Skute ×6 · Cog ×10 · Hulk ×8 — six per Kontor.','24')
     +R('Building tiles','One green family — nobody owns them. <b>A draw bag → a display of 4</b>; built onto the Wharf’s slots. Shuffle all 20, <b>deal 17</b> into the game (3 sit out).',sumN(BUILDINGS))
     +R('Specialist tiles','The private purple hires, 13 designs (core five ×3 · guild eight ×1). <b>A draw bag → a display of 4</b>; seated on a player board.',impTotal)
-    +R('Order tiles','Kontor orders — a condition → printed ★. <b>A face-up row of 3 on the Destinations board</b>, the deck beside it.','15')
+    +R('Manifest cards','Three demand lines (beer/tier · die · combo → ★). <b>One rides every non-Bruges Ship</b> — dealt as the hull enters the display, claimed on delivery (each line once per voyage), returned under the deck at sail.','12')
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')
     +R('Recipe cards','Double-sided — permission to brew, and the Flight record when flipped. <b>One set of six beside each player’s board.</b>',6*PLAYERS.length)

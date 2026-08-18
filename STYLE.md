@@ -12,7 +12,7 @@ governed here.
 |---|---|---|---|---|---|---|---|
 | player | n | You; the person at a seat ("brewing house" survives as Overview flavor only) | — | players | No | ~~house~~ | ● |
 | Kontor | n | One of the four trading posts of the League (Bruges · London · Bergen · Novgorod) | landmark | Kontore | Yes | ~~port~~, ~~destination~~ (reserved for a future category of delivery sites) | ● |
-| Destinations board | n | The board holding the four Kontor panels + the Order row | — | — | Yes | ~~Kontor board~~, ~~kontor mats~~ | ● |
+| Destinations board | n | The board holding the four Kontor panels + the Manifest deck well (v5.0) | — | — | Yes | ~~Kontor board~~, ~~kontor mats~~ | ● |
 | Market & Stores board | n | The shared displays (Ships · buildings · Specialists · recipes) ringed by the score track | — | — | Yes | ~~Supply board~~ | ● |
 | the Wharf | n | The shared core: 4 stations ringed by 8 slots | anchor | — | Yes | ~~the board~~ | ● |
 | station | n | One of the 4 action spaces (Market · Brewhouse · Cellar · Harbor) | — | stations | No | ~~space~~, ~~cell~~ | ● |
@@ -32,12 +32,15 @@ governed here.
 | recipe | n | A card granting permission to brew a beer | scroll-text | recipes | No | — | ● |
 | exports | n | The four dealt-3-of-4 beers (Broyhan · Keut · Mumme · Bock) | — | — | No | — | ● |
 | the Flight | n | Your flipped (brewed) recipe cards; scores (n−1)² | unlock | — | Yes | — | ● |
-| Order | n | A Kontor bonus tile on the Destinations board: a Kontor + a condition → printed ★, claimed on a qualifying delivery (hall mode: the claim also pays an ⚜ Invitation) | scroll-text | Orders | Yes | ~~lading~~, ~~Contract~~ (renamed, designer-ruled 2026-08-12), ~~goal~~ | ● |
+| stack | n | A beer's face-up cask-tile supply (v5.0): a full Brew searches it and chooses the tile; the alternate takes the top tile; a delivered cask's tile returns to the bottom | — | stacks | No | ~~pile~~ (the pre-v5.0 term) | ● |
+| primary action | n | The action a station fires when YOUR worker stands on it (v5.0) | — | — | No | — | ● |
+| alternate action | n | The lesser action a station fires as the line's OTHER station (v5.0) | — | — | No | ~~alt~~ (allowed as the chip label only) | ● |
+| Manifest | n | The demand card riding a non-Bruges Ship (v5.0): three **demand lines** (a beer/tier · a die-as-parked · a combo → ★); a delivered cask may claim ONE line it satisfies — each line once per voyage; the card returns under the deck at sail (hall mode: the claim also pays an ⚜ Invitation) | contract | Manifests | Yes | ~~Order~~ (the tile retired at v5.0; lineage ~~lading~~ → ~~Contract~~ → ~~Order~~ → Manifest), ~~goal~~ | ● |
 | presence | n | Your parked dice at a Kontor | map-pin | — | No | ~~bump~~ (the act is "place presence") | ● |
 | prize | n | What a Kontor pays the cask's owner on delivery | — | prizes | No | ~~benefit~~, ~~reward~~ | ● |
 | fee | n | The wharf price printed on an acquirable item | — | fees | No | ~~cost~~ (generic ok), ~~price~~ | ● |
 | goods | n | Grain + hops, collectively | coins | — | No | ~~resources~~ | ● |
-| display | n | A face-up row components are taken from (Ships 4 · buildings 4 · Specialists 4 · Orders 3) | — | displays | No | ~~pool~~ (face-down decks and general stock = "supply") | ● |
+| display | n | A face-up row components are taken from (Ships 4 · buildings 4 · Specialists 4) | — | displays | No | ~~pool~~ (face-down decks and general stock = "supply") | ● |
 | score track | n | The 50-cell ring; your disc records ★ scored in play | star | — | No | ~~the bank~~ | ● |
 | step | n | +1 on an aging die ("Age 3" = 3 steps, split freely) | — | steps | No | ~~age point~~ | ● |
 | ★ | n | The scoring unit — the glyph, on every surface | star | — | — | ~~VP~~, ~~points~~ (text), ~~stars~~ (text) | ● |
@@ -59,7 +62,7 @@ governed here.
 | **commission** | Harbor: pay the Ship's printed fee (Skute 2 G · Cog 1 G · Hulk free — v4.8), place it on a slot without a Ship | ~~buy a ship~~, ~~charter~~ |
 | **build** | Place a building tile from the display on a slot; the builder stands a tray die on it at the tile's printed start face (v4.9b — every use turns it up; pips score at game end) | ~~raise~~, ~~place~~ (for buildings), ~~construct~~ |
 | **seat** | Place a Specialist into an open seat | ~~hire~~ (allowed as the load-bonus label only) |
-| **claim** | Take a matching Order on delivery; score its ★ at once | ~~fulfil~~ |
+| **claim** | Take a Manifest demand line your delivered cask satisfies; score its ★ at once (each line once per voyage) | ~~fulfil~~ |
 | **resolve** | Work through your line: its 2 stations + 2 slots — any order, each once, all optional | ~~resolve the stops~~ |
 | **gain / spend / pay** | Per the house guide §4.5 | — |
 | **warp** | Move an empty hull to another shipless slot (Capstan) | ~~move~~ (for ships) |
@@ -102,13 +105,13 @@ resolve its slot*; a load-lift fires *when a cask loads here*.
 7. **Kontor locked** — ~~port~~ and ~~destination~~ banned for the four; plural **Kontore**;
    "destination" is reserved for a future *category* of delivery sites (the Hall, a trade
    map). "Trading post" allowed once as the flavor gloss.
-8. **The Destinations board** = the board with the four Kontor panels AND the Order row
-   (the row lives there, not on Market & Stores).
-9. **~~lading~~ → ~~Contract~~ → Order** (designer-ruled 2026-08-12; the earlier delegated
-   pick had avoided "Order" for its collision with *load order*). **The collision rule:** the
-   tile is always the capitalized **Order**; the boarding sequence stays the lowercase phrase —
-   and where the two could meet in one sentence, printed copy prefers **boarding order** for
-   the sequence ("deliver in boarding order").
+8. **The Destinations board** = the board with the four Kontor panels AND the Manifest
+   deck well (v5.0 — the Order row retired; the cards ride the Ships).
+9. **~~lading~~ → ~~Contract~~ → ~~Order~~ → Manifest** (v5.0, designer-ruled 2026-08-18 —
+   "item 2B with the manifest"; the Order tile leaves the kit whole). The old Order/order
+   collision dissolves with it; printed copy still prefers **boarding order** for the
+   sequence ("deliver in boarding order"). A card's three conditions are its **demand
+   lines** ("claim ONE demand"); the deck is **the Manifest deck**.
 10. **~~tally die~~ → quality die** (full name **cask quality die** at first mention — the
     die shows the cask's current quality).
 11. **The building verb is build** (~~raise~~, ~~place~~ banned); the builder stands a die on
@@ -134,11 +137,11 @@ the registry governs what a PLAYER reads.
 
 | Term | POS | Definition | Locked |
 |---|---|---|---|
-| Invitation | n | The ⚜ letter-CARD that admits a cask to a Tasting: earned per Order claim and at the Guild Chancery; each player starts with 2 (v4.17b); spent to pour (v4.17; a card since 2026-08-18) | ○ provisional |
+| Invitation | n | The ⚜ letter-CARD that admits a cask to a Tasting: earned per Manifest claim (v5.0) and at the Guild Chancery; each player starts with 2 (v4.17b); spent to pour (v4.17; a card since 2026-08-18) | ○ provisional |
 | the Guild Tastings / the Hall | n | The contest board (v4.17): the open Tasting row + the Taproom floor | ○ provisional |
 | ~~enshrine~~ · ~~shelf~~ · ~~the crown~~ | — | RETIRED with the shelf Hall (v4.17 — the tastings replace the lexicon) | — |
 | Guild Chancery | n | The Hall’s building (v4.16b): resolve its slot → gain 1 ⚜ Invitation; always dealt in hall mode | ○ provisional |
-| Tasting | n | A contest tile (v4.17): a category + a bench of die spaces + the prize ladder; capitalized like Order | ○ provisional |
+| Tasting | n | A contest tile (v4.17): a category + a bench of die spaces + the prize ladder; capitalized like Manifest | ○ provisional |
 | pour | v | Enter a Tasting: spend 1 ⚜ + a matching Ready cask — its die stands on the bench (v4.17) | ○ provisional |
 | bench | n | A Tasting’s printed die spaces; the bench filling IS the judging | ○ provisional |
 | the Taproom floor | n | The board strip where judged dice stand (committed — the audit) | ○ provisional |

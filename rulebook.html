@@ -353,15 +353,17 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
           <li>Lay out <b>the Wharf</b> and the <b>Destinations board</b> with all four Kontore open.</li>
           <li><b>Deal 3 of the 4 export beers</b> for this game. Return the recipe cards and cask
           tiles of the undealt export to the box.</li>
-          <li>Stack the cask tiles in <b>6 face-up piles, one per beer</b>. Shuffle each pile
-          first. Every pile top stays visible all game.</li>
+          <li>Stack the cask tiles in <b>6 face-up stacks, one per beer</b>. Shuffle each stack
+          first. The stacks are <b>searchable</b>: a full Brew looks through the stack and picks
+          its tile. A delivered cask&rsquo;s tile returns to the <b>bottom</b> of its stack.</li>
           <li>Shuffle the <b>Ship deck</b> and deal a face-up <b>display of 4</b>.</li>
           <li>Shuffle the <b>building deck</b> and <b>deal 17 of the 20 tiles</b>, making sure at
           least 1 Malt Kiln and at least 1 Mission Quay are among them. Return the other 3 to the
           box. Deal a <b>display of 4</b>.</li>
           <li>Shuffle the <b>Specialist deck</b> and deal a <b>display of 4</b>.</li>
-          <li>Shuffle the <b>Order deck</b> and deal a face-up <b>row of 3</b> on the Destinations
-          board. First remove any Order naming a beer that was not dealt.</li>
+          <li>Shuffle the <b>12 Manifest cards</b> into a face-down deck on the Destinations board.
+          Deal the top card face-up to <b>every Ship not bound for Bruges</b> as it enters play,
+          the display and the warm slots alike. Bruges Ships sail plain.</li>
           <li><b>Warm the slots</b>: place 1 Hulk bound for Bruges, 1 more Ship from the deck, and
           2 buildings from the deck onto free slots. These setup pieces belong to nobody and
           score nobody.</li>
@@ -379,26 +381,29 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
         <div class="block" style="margin-top:5pt">
         <h2 class="sec"><span class="num">5</span>The Four Stations</h2>
         <table>
-          <tr><th style="width:1.15in">Station</th><th>Its one printed action</th></tr>
+          <tr><th style="width:1.15in">Station</th><th>PRIMARY &mdash; when your worker stands here &middot; ALTERNATE &mdash; when it is the line&rsquo;s other station</th></tr>
           <tr><td><img class="ic" src="art/icons/station-market.png" alt=""> <b>Market</b></td>
-            <td><b>Source 2.</b> Take 2 goods in any mix.</td></tr>
+            <td><b>Source 2.</b> Take 2 goods in any mix. <b>Alternate: Source 1</b> &mdash; take 1 good.</td></tr>
           <tr><td><img class="ic" src="art/icons/station-brew.png" alt=""> <b>Brewhouse</b></td>
-            <td><b>Brew.</b> Pay the brew cost of a recipe you hold. Take the <b>top tile of that
-              beer&rsquo;s pile</b> into an open vessel, and set a die from your tray on it at the
-              tile&rsquo;s printed start value.</td></tr>
+            <td><b>Brew.</b> Pay the brew cost of a recipe you hold. <b>Search that beer&rsquo;s
+              stack and choose a tile</b> into an open vessel, and set a die from your tray on it
+              at the tile&rsquo;s printed start value. <b>Alternate:</b> the same brew, but take
+              the <b>top tile of the stack blind</b>.</td></tr>
           <tr><td><img class="ic" src="art/icons/station-age.png" alt=""> <b>Cellar</b></td>
             <td><b>Age 3.</b> Turn your aging dice up 3 steps in total, split freely across your
-              vessels. This is the deepest source of aging in the game.</td></tr>
+              vessels. This is the deepest source of aging in the game. <b>Alternate: Age 1</b>
+              &mdash; one step.</td></tr>
           <tr><td><img class="ic" src="art/icons/station-harbor.png" alt=""> <b>Harbor</b></td>
             <td><b>Commission.</b> Pay a Ship&rsquo;s printed fee, <b>Skute 2<span class="cube g"></span>,
               Cog 1<span class="cube g"></span>, Hulk free</b>, and place it from the display onto any
               slot that has no Ship. A building already there is fine. You may then <b>load 1 Ready
-              cask onto it at once</b>. A commission scores no ★.</td></tr>
+              cask onto it at once</b>. A commission scores no ★. <b>Alternate: Load 1</b> Ready
+              cask onto <b>any docked Ship</b>, anywhere on the Wharf &mdash; a normal load.</td></tr>
         </table>
         <div class="note">
-          <span class="nl">At the table</span>Brewing takes the pile&rsquo;s <b>top tile</b>, and that
-          tile carries the load bonus you will fire when the cask ships. The pile tops are face up, so
-          brew toward the bonus you want.
+          <span class="nl">At the table</span>Every cask tile carries a <b>load bonus</b> that fires
+          when the cask ships. A full Brew <b>searches the stack</b>, so the bonus is your pick;
+          only the alternate Brew takes what the top of the stack offers.
         </div>
       </div>
   </div>
@@ -429,8 +434,8 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
               <b>any order</b>. Every part is <b>optional</b>, and each may be used <b>once</b>.</span></li>
           </ol>
           <div class="note">
-            <span class="nl">A line offers</span>Each of its 2 stations fires its one printed
-            action. Each of its 2 slots offers the <b>building&rsquo;s action</b> if a building
+            <span class="nl">A line offers</span>The station your worker <b>stands on</b> fires its
+            <b>PRIMARY</b> action; the line&rsquo;s other station fires its <b>ALTERNATE</b>. Each of its 2 slots offers the <b>building&rsquo;s action</b> if a building
             stands there, and a <b>load</b> of the Ship if a Ship is docked there. An empty slot
             does nothing, so build one worth visiting.
           </div>
@@ -471,7 +476,7 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
               <div class="kr"><span class="kc on"></span><span>Standing at the Market and choosing
                 the <b>row</b> gives you this line: 2 slots, Market and Brewhouse. Choosing the
                 <b>column</b> instead would give you the Market, the Harbor, and their 2 slots.</span></div>
-              <div class="kr"><span class="kc st"></span><span><b>Stations</b> print one action each.</span></div>
+              <div class="kr"><span class="kc st"></span><span><b>Stations</b> print a PRIMARY and an ALTERNATE &mdash; your worker&rsquo;s station fires at full strength, the other as its echo.</span></div>
               <div class="kr"><span class="kc sl"></span><span><b>Slots</b> hold up to 1 building
                 and 1 Ship. There are 8 of them.</span></div>
             </div>
@@ -533,26 +538,29 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
       <div class="example">
         <div class="exl"><img class="ic b" src="art/icons/wharf.png" alt="">One turn, played out</div>
         <div class="exg">
-          <div class="exs"><b>The line.</b> Your worker stands at the <b>Brewhouse</b>. You take its
-            <b>column</b>, which gives you the Brewhouse, the Cellar, and their 2 slots.</div>
+          <div class="exs"><b>The line.</b> Your worker stands at the <b>Cellar</b>. You take its
+            <b>column</b>: the Cellar (your <b>PRIMARY</b>), the Brewhouse (the <b>ALTERNATE</b>),
+            and their 2 slots.</div>
           <div class="exs"><b>Slot 1.</b> A Malt Kiln stands there with no Ship docked. Nothing to
             load and no lift you need, so you skip it.</div>
-          <div class="exs"><b>Brewhouse.</b> You brew a <b>Bock</b> for 2<span class="cube g"></span>3<span class="cube h"></span>,
-            take the top Bock tile into vessel 2, and set a die to its printed start of <b>2</b>.</div>
-          <div class="exs"><b>Cellar.</b> Age 3. You put all 3 steps on the Bock, so its die runs
-            2 to <b>5</b>. It is <b>Ready</b>.</div>
+          <div class="exs"><b>Brewhouse (alternate).</b> You brew a <b>Bock</b> for 2<span class="cube g"></span>3<span class="cube h"></span>
+            into vessel 2 &mdash; at the alternate you take the <b>top Bock tile blind</b> &mdash;
+            and set a die to its printed start of <b>2</b>.</div>
+          <div class="exs"><b>Cellar (primary).</b> Age 3. You put all 3 steps on the Bock, so its
+            die runs 2 to <b>5</b>. It is <b>Ready</b>.</div>
           <div class="exs"><b>Slot 2.</b> A <b>Cog</b> bound for Novgorod sits here with 1 berth
             filled. You load the Bock. Its die shows 5, clearing Novgorod&rsquo;s minimum of 3. That
             fills the Cog, so it <b>sails at once</b>.</div>
           <div class="exs done"><b>Delivery.</b> Score <b>5★</b>, plus Novgorod&rsquo;s <b>+2★</b>.
-            The die parks at Novgorod. An open Order reads <i>Novgorod, die 5+, 3★</i>, so you claim
-            it. <b>10★ this turn</b>, and the Bock&rsquo;s load bonus fires now, after the sail.</div>
+            The die parks at Novgorod. The Cog&rsquo;s <b>Manifest</b> prints a <i>die 5+</i> line
+            worth <b>3★</b>, so you claim it. <b>10★ this turn</b>, and the Bock&rsquo;s load bonus
+            fires now, after the sail. The Bock tile returns to the <b>bottom of its stack</b>.</div>
         </div>
       </div>
     </div>
 
   </div>
-  <div class="pfoot"><span>A Turn</span><span>Stations print one action. Slots print the rest.</span><span>2</span></div>
+  <div class="pfoot"><span>A Turn</span><span>Your station at full strength, the other as its echo. Slots print the rest.</span><span>2</span></div>
 </section>
 
 
@@ -614,7 +622,8 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
       <div class="cols2" style="gap:0 .28in">
         <div>
           <p>Ships are <b>neutral</b>. Each is bound for a printed Kontor and prints its minimum.
-          They come from a display of 4.</p>
+          They come from a display of 4, and every Ship <b>not bound for Bruges</b> carries a
+          face-up <b>Manifest card</b> from the moment it enters the display.</p>
           <table style="margin-bottom:5pt">
             <tr><th>Hull</th><th class="n">Berths</th><th class="n">Fee to commission</th></tr>
             <tr><td><b>Skute</b></td><td class="n">1</td><td class="n">2<span class="cube g"></span></td></tr>
@@ -639,9 +648,9 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
             <li><span><b>Score ★ equal to its die.</b></span></li>
             <li><span><b>Park the die</b> at the Kontor, pips showing. It is now your presence there.</span></li>
             <li><span><b>Take the Kontor&rsquo;s prize.</b> Every cask pays its Kontor&rsquo;s prize.</span></li>
-            <li><span>You <b>may claim 1 open Order</b> the cask qualifies for.</span></li>
+            <li><span>You <b>may claim 1 line of the Ship&rsquo;s Manifest</b> the cask satisfies. Each line pays <b>once per voyage</b>.</span></li>
           </ol>
-          <p>The Ship then returns to the bottom of its deck.</p>
+          <p>The Ship returns to the bottom of its deck, its Manifest slides <b>under the Manifest deck</b>, and every delivered cask&rsquo;s tile returns to the <b>bottom of its beer&rsquo;s stack</b>.</p>
           <div class="note">
             <span class="nl">The berth race</span>Casks are private until they board, so nobody can
             touch your beer. What rivals take is the <b>berth</b>: topping off a Ship sails
@@ -702,16 +711,17 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
           is free, except at the Almoner&rsquo;s Stall, which charges 2<span class="cube g"></span>.</p>
         </div>
         <div>
-          <h3 class="sub">Orders</h3>
-          <p>A face-up <b>row of 3 Orders</b> sits on the Destinations board. Each names a Kontor, or
-          any Kontor, plus a condition, either a minimum die face or a named beer, and prints
-          <b>2★ to 5★</b>.</p>
-          <p>When your cask delivers and its <b>parked face</b> meets the condition, you may claim
-          one matching Order. Its ★ score at once and the tile comes to you as the record.</p>
+          <h3 class="sub">Manifests</h3>
+          <p>Every <b>non-Bruges</b> Ship carries a <b>Manifest card</b>: three generic demand
+          lines &mdash; a named starter, a quality tier, a die face, or a combo &mdash; each worth
+          <b>1★ to 4★</b>.</p>
+          <p>As the Ship sails, each delivered cask <b>may claim one line it satisfies</b>; the ★
+          score at once. A die line reads the <b>parked face</b>, after lifts and before
+          Novgorod&rsquo;s premium. The card then returns <b>under the deck</b>, pristine.</p>
           <div class="note">
-            <span class="nl">At the table</span><b>One Order per delivered cask.</b> Several casks
-            on one Ship may each claim, in boarding order, so earlier casks pick first. The row
-            <b>refills at the end of the turn</b>, so a claimed Order leaves a gap until then.
+            <span class="nl">At the table</span><b>One line per delivered cask, and each line pays
+            once per voyage.</b> Several casks on one Ship claim in boarding order, so earlier
+            casks pick first. Claiming is always optional.
           </div>
         </div>
       </div>
@@ -745,7 +755,7 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
             <li>Each tile prints exactly what it does. Most work quietly, every turn, forever.</li>
           </ul>
           <div class="note">
-            <span class="nl">Refill timing</span>The <b>Specialist and Order displays refill at the
+            <span class="nl">Refill timing</span>The <b>Specialist display refills at the
             end of the turn</b>, so a taken tile leaves a gap for the rest of that turn. <b>Ship and
             building displays refill at once.</b>
           </div>
@@ -787,7 +797,7 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
             <div><b>Deliveries.</b> ★ equal to the die parked, plus 2★ more at Novgorod.</div>
             <div class="lv">die</div>
             <img class="li" src="art/icons/contract.png" alt="">
-            <div><b>Orders</b> you claim.</div><div class="lv">2&ndash;5★</div>
+            <div><b>Manifest lines</b> you claim (a seated Chronicler adds +2★ each).</div><div class="lv">1&ndash;4★</div>
             <img class="li" src="art/icons/presence.png" alt="">
             <div><b>Placed presence</b>, each die.</div><div class="lv">1★</div>
             <img class="li" src="art/icons/building.png" alt="">
