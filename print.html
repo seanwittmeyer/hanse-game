@@ -1449,7 +1449,7 @@ function buildPages(){
   // (2026-07-19: the UNLOCK-COVER sheet left the kit — sourced, any opaque square, like the tally dice.
   //  v3.4c: the owner frames are RETIRED — little house tokens mark building ownership; store-bought.)
   // --- TOKENS → their own single-sided trimmed sheet (moved off the Wharf sheet, 2026-07-14) ---
-  const TLBL_TOK='Tokens (single-sided · cut circles) — goods. (The quality dice are real d6 — provide 12/colour; the die IS the aging marker, so the cask cubes and aging markers left the kit. Score movers: 1 disc/colour, sourced.)';
+  const TLBL_TOK='Tokens (single-sided · cut circles) — goods. (The quality dice are real d6 — provide '+PRES_DISCS+'/colour; the die IS the aging marker, so the cask cubes and aging markers left the kit. Score movers: 1 disc/colour, sourced.)';
   const wtok=[];GOODS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wtok.push(tok(d));});
   packRun(pages,'bits',TLBL_TOK,'tok',wtok,'Goods tokens',famPages,TOK_GEO);
   // --- RECIPE CARDS (cardstock — do not mount) — DOUBLE-SIDED since v3.2d: cost face / BREWED face.

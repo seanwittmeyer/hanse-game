@@ -269,8 +269,8 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (its header states the current version). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `archive/records/V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v4.13 “Plain Sight”** (`KEY hanse-v413`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.13; the sheet layouts are the P4 refresh). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - The live build is `play.html` — **v4.17b “Champion’s Tour”** (`KEY hanse-v417b`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.17b; the sheet layouts are the P4 refresh + the 2026-08-18 native-scale pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
 
 ---
 
@@ -528,9 +528,10 @@ No counts change (the 12 dice absorb the new duty).
 2. **Pile mixes** (which load bonuses print at which quality depth) are engine-random top-cards
    today; the physical pile composition wants a printed distribution pass before the next kit.
 3. Cask counts (6/type floor) unchanged — re-read after human pace data (brews/game rose ~1).
-5. **The dice pool (12 ⚙, v4.5) is THE pace dial** — cut from 14 off playtest #24, with the
-   trigger moved to the **empty tray** (commitment, not parked-out); re-read pace at the next
-   human table before dialing `PRES_POOL` again.
+5. **The dice pool (13 ⚙, v4.9b) is THE pace dial** — cut from 14 to 12 off playtest #24
+   (the trigger moved to the **empty tray**: commitment, not parked-out), then raised to 13
+   at v4.9b to fund the mason’s marks; re-read pace at the next human table before dialing
+   `PRES_POOL` again.
 4. ~~printables2 lays out v3.4 sheets~~ — **RESOLVED (P4, 2026-07-21):** the kit prints the v4
    set (single-faced casks with printed start dice · Skute/Cog/Hulk sheets · the one green
    building family · 3+2 player boards · the score ring on Market &amp; Stores; the Hall,
