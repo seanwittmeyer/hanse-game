@@ -726,6 +726,7 @@
     <li><b>Unconvened benches</b> (never filled by game end): each die on them scores 1★ flat — the tasting never convened. No free solo wins; like casks on a Ship that never sailed.</li>
     <li><b>Sets:</b> at game end, the won tiles at your seat pay <b>+3★ for 2 distinct categories, +7★ for 3 or more</b>.</li>
   </ul>
+  <div class="dgm" id="dgmTaste"></div>
   <h3 class="tref-h">The expansion tiles</h3>
   <div class="tscroll"><table class="tref" id="trefExpCasks"></table></div>
 </section>
@@ -950,6 +951,30 @@ function clearHl(){document.querySelectorAll('.hl').forEach(e=>e.classList.remov
     +'<div class="dgm-chips"><span class="lead">so:</span>'
       +chip('building-2','author the corner the table <b>needs</b> — their traffic pays you')
       +chip('dices','a build competes with a brew for the <b>same 13 dice</b>')
+    +'</div>');
+
+  // ---- §19 THE GUILD TASTINGS: pour → the count → the champion's tour (the rules live HERE —
+  // the board and the tiles print data + slots only, per the 2026-08-18 ruling) ----
+  const dk=HC.CONTESTS_P.find(t=>t.k==='dark1');
+  const rankDie=(n,lbl)=>'<span style="display:inline-flex;flex-direction:column;align-items:center;gap:2px;font-weight:bold">'
+    +'<span style="font-size:.42in;line-height:1">'+HC.LU('dice-'+n)+'</span><span style="font-size:.55em">'+lbl+'</span></span>';
+  set('dgmTaste',
+    title('beer','A Tasting — the pour, the count, the champion\u2019s tour')
+    +'<div class="dgm-row">'
+      +piece(cmp('<div style="width:2.5in;height:1.32in">'+HC.contestTile(dk)+'</div>',2.5,1.32,.62),
+        '<b>an open Tasting</b> — its gate chip + its 1st \u2605<br>pour: <b>1 \u269c + a matching Ready cask</b> \u2014 the die to the next bench space, left to right')
+      +arr('the bench fills','the LAST space forces the count \u2014 the door-slam')
+      +piece('<span style="display:inline-flex;gap:.16in;align-items:flex-end">'+rankDie(6,'1st \u2014 7\u2605 + the tile')+rankDie(4,'2nd \u2014 2\u2605')+'</span>',
+        '<b>highest die takes 1st</b> \u00b7 ties \u2192 the earlier pour<br>the judged dice slide to the Taproom floor')
+      +arr('the champion','face 1 \u00b7 a Kontor you\u2019ve delivered to')
+      +piece(kplate('novgorod','Novgorod',1,0).replace('= 0\u2605','presence'),
+        '<b>the winning die tours</b> \u2014 no \u2605, but it joins the majority race')
+    +'</div>'
+    +'<div class="dgm-chips"><span class="lead">and:</span>'
+      +chip('layers','a judged Tasting is <b>replaced from the deck</b> at end of turn')
+      +chip('star','<b>sets</b>: 2 distinct categories +3\u2605 \u00b7 3+ +7\u2605')
+      +chip('star','<b>unconvened</b> at game end: 1\u2605 per standing die')
+      +chip('landmark','the Hall pays <b>no majority</b> \u2014 the Tastings bid for the same ripe dice')
     +'</div>');
 })();
 

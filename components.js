@@ -143,42 +143,49 @@ const LADINGS=[
 // spaces (2 at 2p · 3 at 3-4p) · the ladder (1st = the printed ★ + THE TILE · 2nd 2★ · 3rd 1★).
 // The bench filling IS the judging: highest die 1st, ties → the earlier pour. Mirrors play.html CONTESTS.
 // (The v4.15 eased 20-Order set is CUT — hall mode plays the base 15.)
+// gi/gq = the entry GATE as an icon chip: the quality families ride the beer glyph (QI),
+// the die-as-poured families ride the die — the two gate kinds read apart at a glance.
 const CONTESTS_P=[
-  {k:'free1', cat:'the Free Pour',    flt:'any beer',              s1:5, b:3, c:'#5b3a8e'},
-  {k:'free2', cat:'the Free Pour',    flt:'any beer',              s1:5, b:3, c:'#5b3a8e'},
-  {k:'free3', cat:'the Free Pour',    flt:'any beer',              s1:5, b:3, c:'#5b3a8e'},
-  {k:'fresh1',cat:'the Fresh Pour',   flt:'quality 3 or under',    s1:5, b:3, c:'#4a6b3a'},
-  {k:'fresh2',cat:'the Fresh Pour',   flt:'quality 3 or under',    s1:5, b:3, c:'#4a6b3a'},
-  {k:'fresh3',cat:'the Fresh Pour',   flt:'quality 3 or under',    s1:5, b:3, c:'#4a6b3a'},
-  {k:'dark1', cat:'the Dark Pour',    flt:'quality 4 or higher',   s1:7, b:2, c:'#5e2433'},
-  {k:'dark2', cat:'the Dark Pour',    flt:'quality 4 or higher',   s1:7, b:2, c:'#5e2433'},
-  {k:'exp1',  cat:'the Export Pour',  flt:'poured at die 4+',      s1:6, b:2, c:'#274b5c'},
-  {k:'exp2',  cat:'the Export Pour',  flt:'poured at die 4+',      s1:6, b:2, c:'#274b5c'},
-  {k:'old1',  cat:'the Old Pour',     flt:'poured at die 5+',      s1:7, b:2, c:'#8a6408'},
-  {k:'mast1', cat:'the Master’s Pour',flt:'poured at die 6',       s1:9, b:2, c:'#7c2128'},
+  {k:'free1', cat:'the Free Pour',    gi:QI,     gq:'any', s1:5, b:3, c:'#5b3a8e'},
+  {k:'free2', cat:'the Free Pour',    gi:QI,     gq:'any', s1:5, b:3, c:'#5b3a8e'},
+  {k:'free3', cat:'the Free Pour',    gi:QI,     gq:'any', s1:5, b:3, c:'#5b3a8e'},
+  {k:'fresh1',cat:'the Fresh Pour',   gi:QI,     gq:'1\u20133', s1:5, b:3, c:'#4a6b3a'},
+  {k:'fresh2',cat:'the Fresh Pour',   gi:QI,     gq:'1\u20133', s1:5, b:3, c:'#4a6b3a'},
+  {k:'fresh3',cat:'the Fresh Pour',   gi:QI,     gq:'1\u20133', s1:5, b:3, c:'#4a6b3a'},
+  {k:'dark1', cat:'the Dark Pour',    gi:QI,     gq:'4+',  s1:7, b:2, c:'#5e2433'},
+  {k:'dark2', cat:'the Dark Pour',    gi:QI,     gq:'4+',  s1:7, b:2, c:'#5e2433'},
+  {k:'exp1',  cat:'the Export Pour',  gi:'dices',gq:'4+',  s1:6, b:2, c:'#274b5c'},
+  {k:'exp2',  cat:'the Export Pour',  gi:'dices',gq:'4+',  s1:6, b:2, c:'#274b5c'},
+  {k:'old1',  cat:'the Old Pour',     gi:'dices',gq:'5+',  s1:7, b:2, c:'#8a6408'},
+  {k:'mast1', cat:'the Master\u2019s Pour',gi:'dices',gq:'6',   s1:9, b:2, c:'#7c2128'},
 ];
-// a TASTING tile (v4.17) — building-cut 2.5×1.32in: the category + filter + ladder left, the
-// bench of three 0.42in die squares right (2p uses the left two; the row runs left→right).
-function contestTile(t){const nb=t.b||3;let sq='';for(let k=0;k<nb;k++)sq+='<div style="width:.42in;height:.42in;border:2px dashed rgba(0,0,0,.35);border-radius:.05in;background:rgba(255,255,255,.5)'+(k===2?';position:relative':'')+'">'
-    +(k===2?'<span style="position:absolute;top:-.09in;right:-.04in;background:#7c2128;color:#fff;font-size:.07in;font-weight:900;border-radius:.03in;padding:.005in .03in">3-4p</span>':'')+'</div>';
-  // a DUEL tile (b=2, the hard pours — R1 of the study): two squares; at 2p every bench caps at 2
-  return '<div style="width:2.5in;height:1.32in;box-sizing:border-box;border:2.5px solid '+t.c+';border-radius:.08in;background:#f3ecdd;color:#2b2018;display:flex;align-items:stretch;padding:.06in .08in;gap:.08in">'
-    +'<div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;min-width:0">'
-      +'<div><div style="font-variant:small-caps;font-weight:900;color:'+t.c+';font-size:.15in;line-height:1.05">⚜ '+t.cat+'</div>'
-      +'<div style="font-size:.095in;font-style:italic">'+t.flt+'</div></div>'
-      +'<div style="font-size:.095in;line-height:1.25">pour: 1 ⚜ + a Ready cask · <b>full bench = judged</b><br>'
-      +'<b>1st '+t.s1+'★ + the tile</b> · 2nd 2★ · 3rd 1★ · ties → the earlier pour</div></div>'
-    +'<div style="flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:.045in">'+sq+'</div>'
-    +'</div>';}
-// the INVITATION tile (v4.15 · reworded v4.17) — a 2×0.9in gold strip: spend it to pour.
-// v4.17b: the start line reads 2 (START_INV — R2 of the study; the setup line already did).
-// Kit pass 2026-08-17: the body row recut to the Order-tile grammar — the long three-chunk
-// row ("Ready + matches → a Tasting") overflowed the 2in strip and clipped at both ends
-// (.ld-bd centers, .ldtile clips); the match requirement moves to the sub line.
-function invitationTile(){return '<div class="ldtile" style="--c:#8a6408">'
-  +'<div class="ld-hd">⚜<span class="ld-k">Invitation</span></div>'
-  +'<div class="ld-bd"><span class="ld-beer">'+LU(QI)+' Ready</span><span class="ld-arr">→</span><span class="ld-pts">pour</span></div>'
-  +'<div class="ld-sub">must match the Tasting · earned per Order claim &amp; the Guild Chancery · start with 2</div>'
+// a TASTING tile (v4.17 · RECUT 2026-08-17, designer-ruled: "minimal words, slots where
+// things go, icons do the work" — rules ride the rules page, never a component): the
+// category name · the entry gate as an icon chip · the 1st prize (the tile's ONE variable:
+// its ★ + the tile itself, drawn as a mini self-tile) · the printed bench, HORIZONTAL —
+// pour order runs left→right. The shared ladder (2nd 2★ · 3rd 1★ · ties), the pour cost
+// and the judging live on the Tastings board's data chips + the rulebook.
+function contestTile(t){const nb=t.b||3;let sq='';for(let k=0;k<nb;k++)
+    sq+='<div class="ch-sq">'+(k===2?'<span class="ch-badge">3-4p</span>':'')+'</div>';
+  return '<div class="chtile" style="--c:'+t.c+'">'
+    +'<div class="ch-hd">\u269c<span class="ch-nm">'+t.cat+'</span><span class="ch-gate">'+LU(t.gi)+'<b>'+t.gq+'</b></span></div>'
+    +'<div class="ch-bot">'
+      +'<div class="ch-prize"><i>1st</i><b>'+t.s1+'\u2605</b><span class="ch-self"></span></div>'
+      +'<div class="ch-bench">'+sq+'</div>'
+    +'</div>'
+  +'</div>';}
+// the ⚜ INVITATION (v4.15 · a CARD since 2026-08-17, designer-ruled: "the invitations
+// should be cards and look like letters") — 1.85×2.55in cardstock, single-sided: a
+// tri-folded letter under the Guild's wax seal. Identity + the one verb chip only — the
+// ⚜ economy and the pour rule live on the rules page; rules never ride a component.
+function invitationCard(){return '<div class="invcard">'
+  +'<div class="iv-frame"></div>'
+  +'<div class="iv-crease c1"></div><div class="iv-crease c2"></div>'
+  +'<div class="iv-from">'+LU('landmark')+'the Guild Tastings</div>'
+  +'<div class="iv-lines"><i></i><i></i><i></i></div>'
+  +'<div class="iv-sealw"><div class="iv-seal">\u269c</div></div>'
+  +'<div class="iv-nm">Invitation</div>'
+  +'<div class="iv-verb">'+LU('beer')+'pour</div>'
   +'</div>';}
 
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
@@ -783,7 +790,36 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.pbrd-lads .si{opacity:.3;margin:auto}.pbrd-lads .si svg,.pbrd-lads .si .ic,.pbrd-lads .si img.ai{width:.26in;height:.26in}'
 +'.pbrd-lad{display:inline-flex;align-items:center;gap:.03in;font-size:.1in;font-weight:bold;background:var(--pc);color:#fff;border-radius:.09in;padding:.02in .06in;z-index:1}'
 +'.pbrd-lad img.ai,.pbrd-lad .ic,.pbrd-lad svg{width:.13in;height:.13in;flex:0 0 auto}';   // a claimed Order wears its Kontor's crest
-if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3;
+var HC_CSS4=''
+/* the TASTING tile (recut 2026-08-17 — minimal component grammar: name · gate chip · 1st prize · the bench) */
++'.chtile{width:2.5in;height:1.32in;box-sizing:border-box;position:relative;border:2.5px solid var(--c,#5b3a8e);border-radius:.08in;background:#f3ecdd;color:#2b2018;display:flex;flex-direction:column;justify-content:space-between;padding:.07in .09in .08in}'
++'.chtile .ch-hd{display:flex;align-items:center;gap:.05in;font-variant:small-caps;font-weight:900;color:var(--c);font-size:.16in;line-height:1}'
++'.chtile .ch-nm{flex:0 1 auto;white-space:nowrap;overflow:hidden}'
++'.chtile .ch-gate{margin-left:auto;display:inline-flex;align-items:center;gap:.03in;color:#2b2018;font-size:.15in;font-weight:900;background:rgba(0,0,0,.07);border-radius:.05in;padding:.02in .05in;flex:0 0 auto}'
++'.chtile .ch-gate svg,.chtile .ch-gate .ic,.chtile .ch-gate img.ai{width:.19in;height:.19in}'
++'.chtile .ch-bot{display:flex;align-items:flex-end;justify-content:space-between;gap:.08in}'
++'.chtile .ch-prize{display:inline-flex;align-items:center;gap:.035in;font-weight:900;font-size:.27in;line-height:1;color:var(--c)}'
++'.chtile .ch-prize i{font-style:normal;font-size:.09in;font-weight:900;color:#5b4a37;align-self:flex-start;margin-top:.015in}'
++'.chtile .ch-prize .ch-self{width:.24in;height:.135in;border:2px solid var(--c);border-radius:.03in;background:#fff;margin-left:.02in}'
++'.chtile .ch-bench{display:flex;gap:.06in}'
++'.chtile .ch-sq{position:relative;width:.42in;height:.42in;border:2px dashed rgba(0,0,0,.35);border-radius:.05in;background:rgba(255,255,255,.5);flex:0 0 auto}'
++'.chtile .ch-badge{position:absolute;top:-.09in;right:-.04in;background:#7c2128;color:#fff;font-size:.07in;font-weight:900;border-radius:.03in;padding:.005in .03in}'
+/* the ⚜ INVITATION card — a tri-folded letter under the Guild's wax seal (2026-08-17) */
++'.invcard{width:1.85in;height:2.55in;box-sizing:border-box;position:relative;background:#f7efdc;color:#5b4a37;border:1px solid #b8a87f;display:flex;flex-direction:column;align-items:center;overflow:hidden}'
++'.invcard .iv-frame{position:absolute;inset:.08in;border:1.5px solid rgba(138,100,8,.45)}'
++'.invcard .iv-crease{position:absolute;left:.03in;right:.03in;height:0;border-top:1.5px solid rgba(91,74,55,.15)}'
++'.invcard .c1{top:.85in}.invcard .c2{top:1.7in}'
++'.invcard .iv-from{margin-top:.19in;display:inline-flex;align-items:center;gap:.045in;font-variant:small-caps;font-weight:bold;font-size:.115in;color:#8a6408}'
++'.invcard .iv-from svg,.invcard .iv-from .ic,.invcard .iv-from img.ai{width:.13in;height:.13in}'
++'.invcard .iv-lines{align-self:flex-start;margin:.08in 0 0 .3in;display:flex;flex-direction:column;gap:.085in;width:1.05in}'
++'.invcard .iv-lines i{display:block;height:0;border-top:1.5px solid rgba(91,74,55,.3)}'
++'.invcard .iv-lines i:nth-child(2){width:82%}.invcard .iv-lines i:nth-child(3){width:64%}'
++'.invcard .iv-sealw{margin-top:.15in;width:.88in;height:.88in;border-radius:50%;background:#571a20;display:flex;align-items:center;justify-content:center;transform:rotate(-7deg);flex:0 0 auto}'
++'.invcard .iv-seal{width:.76in;height:.76in;border-radius:50%;background:#7c2128;color:#e8c87a;display:flex;align-items:center;justify-content:center;font-size:.46in;line-height:1;text-shadow:0 1px 2px rgba(0,0,0,.5)}'
++'.invcard .iv-nm{margin-top:.13in;font-variant:small-caps;font-weight:900;font-size:.235in;color:#2b2018;line-height:1}'
++'.invcard .iv-verb{margin-top:.05in;display:inline-flex;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.12in;color:#8a6408}'
++'.invcard .iv-verb svg,.invcard .iv-verb .ic,.invcard .iv-verb img.ai{width:.15in;height:.15in}';
+if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3+HC_CSS4;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,CONTESTS_P,contestTile,invitationTile,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
+window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
 })();

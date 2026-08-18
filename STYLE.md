@@ -134,7 +134,7 @@ the registry governs what a PLAYER reads.
 
 | Term | POS | Definition | Locked |
 |---|---|---|---|
-| Invitation | n | The ⚜ tile that admits a cask to a Tasting: earned per Order claim and at the Guild Chancery; each player starts with 1; spent to pour (v4.17) | ○ provisional |
+| Invitation | n | The ⚜ letter-CARD that admits a cask to a Tasting: earned per Order claim and at the Guild Chancery; each player starts with 2 (v4.17b); spent to pour (v4.17; a card since 2026-08-18) | ○ provisional |
 | the Guild Tastings / the Hall | n | The contest board (v4.17): the open Tasting row + the Taproom floor | ○ provisional |
 | ~~enshrine~~ · ~~shelf~~ · ~~the crown~~ | — | RETIRED with the shelf Hall (v4.17 — the tastings replace the lexicon) | — |
 | Guild Chancery | n | The Hall’s building (v4.16b): resolve its slot → gain 1 ⚜ Invitation; always dealt in hall mode | ○ provisional |

@@ -1,5 +1,28 @@
 # Brewhouses of the Hanse — Components (v4.17b “Champion’s Tour”)
 
+> **Kit pass 2026-08-18 (presentation, no rules change — three designer rulings):** **(1)
+> “Rules go in the rules page, not in the boards or components”** — the **Tasting tile
+> recuts** to the component grammar (the category name · an entry **gate chip** — the beer
+> glyph for the quality pours, the die for the die-as-poured pours · the tile’s one
+> variable, **1st ★ + a mini self-tile glyph** · the printed bench, now **horizontal** —
+> pour order runs left→right); the **Tastings board strips to data + slots** (the
+> kontor-style header’s foot cells print the shared numbers — pour cost · 2nd 2★ · 3rd 1★ ·
+> majority “—”; the floor’s champion chip is die→crest, icons only; no sentences anywhere)
+> and the judging procedure moves to the **rulebook §19 as a component diagram**. **(2)
+> “The invitations should be cards and look like letters”** — the ⚜ **Invitation is now a
+> CARD** (1.85×2.55″ cardstock, single-sided): a tri-folded letter under the Guild’s red
+> wax seal — *the Guild Tastings* sender line, script rules, ***Invitation***, and the one
+> verb chip (*pour*); it leaves the Guildhall plotter sheet for the cards section. **(3)
+> the **player aid is a LETTER TRI-FOLD** — one 8.5×11 sheet per player in three tall
+> panels, ~1.5× the type and icons; two straight cuts at the printed lines yield three
+> double-sided panels (the back sheet mirrors its panel order, so a short-edge duplex flip
+> registers). Same day: **the whole kit prints at NATIVE scale** (the global SCALE 0.8 →
+> **1.0**, designer: “scale up all of the components by 25%, evenly”) — every printed
+> dimension in this manifest now reads at print size; the Destinations board moves to the
+> Wharf sheet (the Market pair broke 22″), the Specialists + Order strips take their own
+> plotter sheet, and the **Kontor panels’ on-delivery prize prints at its own much larger
+> tier**. Counts unchanged.
+
 > **Kit pass 2026-08-17 (presentation, no rules change):** the **Guild Tastings board is
 > REDRAWN to the kit grammar** — a kontor-style art header (`art/kontor-hall.png`; the Hall
 > reads as the fifth destination), the open row as three **component-true 2.5×1.32″
@@ -392,16 +415,21 @@ die 5+→3★ · Bock→4★ · die 6→4★ · any Kontor — die 6→3★.
 
 ## 7c. The Guild Tastings (expansion, v4.17 ⚙)
 
-**1 board** (9.8×7″ letter-cut: a kontor-style art header · the open row — three
-component-true tile parkings, the third badged 3–4p · the judging + champion’s-tour diagram ·
-the **Taproom floor** parking field · the Tasting-deck and ⚜ supply wells · the rules
-footer) · the **Tasting contest deck: 12 tiles**
-(building-cut 2.5×1.32″ — category + filter, the prize ladder *1st printed★+tile · 2nd 2★ ·
-3rd 1★*, and a printed bench of die squares — free/fresh three (the third badged 3–4p), the
+**1 board** (9.8×7″ letter-cut, **data + slots only** — 2026-08-18: a kontor-style art
+header whose foot cells print the shared numbers (pour 1 ⚜ + a cask · 1st ★+the tile ·
+2nd 2★ · 3rd 1★ · majority —) · the open row — three component-true tile parkings, the
+third badged 3–4p · the **Taproom floor** parking field on a plank, its champion chip
+die→crest · the Tasting-deck and ⚜ Invitation-card wells; the judging procedure lives in
+the rulebook §19) · the **Tasting contest deck: 12 tiles**
+(building-cut 2.5×1.32″, the minimal face — 2026-08-18: the category name · the entry
+**gate chip** (quality pours the beer glyph — *any*/*1–3*/*4+*; die pours the die glyph —
+*4+*/*5+*/*6*) · the tile’s one variable, **1st ★ + the self-tile glyph** · the printed
+**horizontal bench** of die squares — free/fresh three (the third badged 3–4p), the
 dark/export/old/master pours **two: duels** (v4.17b); the mix: free ×3 · fresh ×3 · dark ×2 ·
-export ×2 · old ×1 · master ×1 — 1st ★ 5/5/7/6/7/9 ⚙) · **18 ⚜
-Invitation tiles** (2×0.9″; a face-up supply — spent tiles return; *each player starts with
-2* (v4.17b)) · the **Guild Chancery** building (v4.16b — always dealt in hall mode). The poured die
+export ×2 · old ×1 · master ×1 — 1st ★ 5/5/7/6/7/9 ⚙; the shared ladder prints on the
+board, the procedure in the rulebook) · **18 ⚜ Invitation CARDS** (1.85×2.55″ cardstock,
+single-sided — a sealed letter, 2026-08-18; a face-up supply — spent cards return; *each
+player starts with 2* (v4.17b)) · the **Guild Chancery** building (v4.16b — always dealt in hall mode). The poured die
 stands on the tile’s bench in pour order; judged dice stand on the floor (committed, the
 clock); the won tiles at the seat are the set record (2 distinct +3★ · 3+ +7★ ⚙). All
 contest state is tiles + dice — nothing is remembered.
