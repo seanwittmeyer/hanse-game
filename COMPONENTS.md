@@ -13,10 +13,11 @@
 > CARD** (1.85×2.55″ cardstock, single-sided): a tri-folded letter under the Guild’s red
 > wax seal — *the Guild Tastings* sender line, script rules, ***Invitation***, and the one
 > verb chip (*pour*); it leaves the Guildhall plotter sheet for the cards section. **(3)
-> the **player aid is a LETTER TRI-FOLD** — one 8.5×11 sheet per player in three tall
-> panels, ~1.5× the type and icons; two straight cuts at the printed lines yield three
-> double-sided panels (the back sheet mirrors its panel order, so a short-edge duplex flip
-> registers). Same day: **the whole kit prints at NATIVE scale** (the global SCALE 0.8 →
+> the **player aid is a LETTER TRI-FOLD of THREE IDENTICAL AIDS** — one 8.5×11 sheet in
+> three tall panels, each panel a COMPLETE double-sided aid (front: the play face; back:
+> End & Score + the two-column icon legend, at the ruled .105″ floor — now the print size);
+> two straight cuts yield three aids, and identical panels register under any duplex flip
+> (4p: print two sheets). Same day: **the whole kit prints at NATIVE scale** (the global SCALE 0.8 →
 > **1.0**, designer: “scale up all of the components by 25%, evenly”) — every printed
 > dimension in this manifest now reads at print size; the Destinations board moves to the
 > Wharf sheet (the Market pair broke 22″), the Specialists + Order strips take their own
