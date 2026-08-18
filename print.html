@@ -1278,20 +1278,26 @@ function addPolyCut(pg,pts){   // a closed polygon cut (the Wharf cross) — con
 const TILE_CUT_R=+(0.09*SCALE).toFixed(3), TILE_MAX_H=15, TILE_W=22;
 const TILE_BLEED=0.059, TILE_BLEED_N=+(0.059/SCALE).toFixed(3);   // 1.5mm print bleed per side · its native size (1.5mm ÷ SCALE)
 function packSpaced(pages,section,label,runs,famPages){
-  const B=TILE_BLEED,W=TILE_W;const items=[];let cy=0.45;
+  // 2026-08-18 (designer: "wrap the tiles — less wasted white space"): the runs FLOW as one
+  // continuous stream — a new run continues the current row while width remains, and each
+  // row advances by its TALLEST tile. Mixed heights in a row cut fine (every tile carries
+  // its own rounded-rect path; side bleeds still touch along the shared edges). The backs
+  // sheet mirrors per item, so duplex registration is unaffected.
+  const B=TILE_BLEED,W=TILE_W;const items=[];
+  let cx=0.4, cy=0.45, rh=0;
   runs.forEach(run=>{
     if(!run.items.length)return;
     const [nw0,nh0]=SIZE[run.kind];
     const nw=+(nw0+2*TILE_BLEED_N).toFixed(3),nh=+(nh0+2*TILE_BLEED_N).toFixed(3);   // the packed box = tile + bleed
     const w=+(nw*SCALE).toFixed(3),h=+(nh*SCALE).toFixed(3);
-    const cols=Math.floor((W-0.8)/w);const x0=+((W-cols*w)/2).toFixed(3);   // boxes tile edge-to-edge (the bleeds touch)
-    run.items.forEach((it,i)=>{const c=i%cols;
-      if(i&&c===0)cy=+(cy+h).toFixed(3);
-      items.push({x:+(x0+c*w).toFixed(3),y:cy,w,h,nat:[nw,nh],
+    run.items.forEach(it=>{
+      if(cx+w>W-0.4+0.001){cx=0.4;cy=+(cy+rh).toFixed(3);rh=0;}   // wrap: the row closes at its tallest tile
+      items.push({x:+cx.toFixed(3),y:cy,w,h,nat:[nw,nh],
         html:'<div class="bl">'+it.html+'</div>',back:it.back?'<div class="bl">'+it.back+'</div>':null,fam:it.fam});
+      cx=+(cx+w).toFixed(3);rh=Math.max(rh,h);
     });
-    cy=+(cy+h).toFixed(3);   // close the run's last row; the next run starts fresh
   });
+  cy=+(cy+rh).toFixed(3);
   const H=+(cy+0.45).toFixed(2);
   if(H>TILE_MAX_H)console.warn('packSpaced: "'+label+'" exceeds the '+TILE_MAX_H+'in laser bed ('+H+'in)');
   const geo={w:W,h:H,y0:0.45,yMax:+(H-0.28).toFixed(2)};
