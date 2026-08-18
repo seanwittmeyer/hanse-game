@@ -378,7 +378,7 @@
   .mb-head h2{margin:0;font-variant:small-caps;color:var(--sea);font-size:.26in;letter-spacing:.5px;display:flex;align-items:center;gap:.08in;white-space:nowrap}
   .mb-head h2 svg,.mb-head h2 .ic{width:.2in;height:.2in}
   .mb-head h2 img.ai{width:.55in;height:.55in;margin:-.14in 0}   /* the big illustrated header icons keep the row slim */
-  .mb-head h2.spec-h{margin-left:auto;width:2.4in;justify-content:center}   /* centred over the Specialists column (2.4in, flush right) */
+  .mb-head h2.spec-h{margin-left:auto;width:4.92in;justify-content:center}   /* centred over the CASKS & RECIPES column (4.92in, flush right — 2026-08-18) */
   .mb-head .sub{font-size:.1in;font-style:italic;color:var(--ink2)}
   .mb-main{flex:1;display:flex;gap:.14in;min-height:0;align-items:center}
   /* v3.4c.8 [ruled]: the board's arms reach only the BUILDING BAND — each slot prints the 2.5×1.32in
@@ -503,6 +503,12 @@
      backstop is rules-side only, untracked on the table) */
   /* ---- Market & Stores interior: the market column · the cellar (Specialists) column · the clock ---- */
   .sup-cols{display:flex;gap:.2in;flex:1;min-height:0}
+  .sup-cellar{flex:0 0 auto;width:4.92in;display:flex;flex-direction:column;gap:.08in;justify-content:flex-start}
+  .brew-row{display:flex;gap:.12in;flex:0 0 auto}
+  .dslot.c{width:2.4in;height:1in;border-color:#8a6408;color:#8a6408}   /* a beer PILE — the cask tile's true 2.4×1 cut */
+  .dslot.c svg,.dslot.c .ic{width:.3in;height:.3in}
+  .dslot.c img.ai{width:.34in;height:.34in}
+  .dslot.c .rn,.dslot.r .rn{font-variant:small-caps;font-weight:bold;font-size:.1in;opacity:.7}
   .sup-main{flex:0 0 auto;width:10.4in;display:flex;flex-direction:column;gap:.16in}   /* wide enough for the 4-slot ship shelf — the Specialists column sits clear right */
   .sup-main .tracks{margin-top:auto}
   .sup-cellar{flex:0 0 auto;width:2.4in;display:flex;flex-direction:column;gap:.09in;min-width:0}
@@ -802,7 +808,7 @@ const SUPPLY_GEO={w:22,h:11.4, y0:0.45,yMax:11.1};   // the Market & Stores boar
 //   · the SCORE track wraps the outer edge as a 50-cell ring (0–49 + a 50/100 lap, Carcassonne-style):
 //     50 cells — not 100 — because the mover is the 0.5″ ownership disc, and a disc needs a ≥0.6″ printed
 //     cell to sit in legibly (COMPONENTS.md §17 #7 offers exactly this "50/100 lap marker" resolution).
-const SUPPLY_NW=15.6, SUPPLY_NH=10.8;   // height trimmed to the content (designer, 2026-08-03)   // Market & Stores native size — market col + cellar col + the clock inside the score ring; 15.6 (was 15.0) buys the clock breathing room off the ring
+const SUPPLY_NW=17.45, SUPPLY_NH=10.8;   // Market & Stores native size — the displays column + the CASKS & RECIPES column (2026-08-18: the six beer piles + the four export recipe stacks moved ONTO the board; two 2.4in piles abreast set the right column at 4.92in)
 const DEST_NW=7.6,   DEST_NH=11.7;      // the Destinations & Hall board — narrow, the SAME height (the pair sits flush on the table)
 const SUPPLY_MAIN_W=9.7;                 // the left (displays) column's width; the destinations column takes the rest
 const SCORE_CELLS=50;     // one lap = 0–49 (the start corner reads 0/50); a lap marker flips to 50–99 (winner ceilings ~90 in strong play)
@@ -1130,7 +1136,7 @@ const kMini=d=>{
   +'</div>';};
 const BNOTE_SHORT={Bruges:'a recipe — pay its fee (H = Q−3)',London:'a building, built at once — your die on it',Bergen:'a Specialist, free',Novgorod:'no prize — every parked die scores +2★'};
 function supplyBoard(){
-  const dslot=(fam,ic,smp)=>'<div class="dslot '+fam+'">'+LU(ic)
+  const dslot=(fam,ic,smp,lbl)=>'<div class="dslot '+fam+'">'+LU(ic)+(lbl?'<span class="rn">'+lbl+'</span>':'')
     +(OVERLAY&&smp?'<div class="ovl">'+smp+'</div>':'')+'</div>';
   // the tile supplies live in DRAW BAGS (their backs reveal the type), so the board carries NO deck
   // spaces — each shelf label ends in the bag glyph: refill the display from the family's bag.
@@ -1139,29 +1145,31 @@ function supplyBoard(){
   // overlay samples — one real render per family, varied so both tile verbs/colours get proofed
   const smpBld=['granary','scriveners','maltkiln','cooperage'].map(k=>buildingCard(BUILDINGS.find(b=>b.k===k)));
   const smpShip=[shipCard('skute','Bruges'),shipCard('cog','London'),shipCard('hulk','Bergen'),shipCard('cog','Novgorod')];
-  const smpRec=RECIPES.slice(0,4).map(recipeCard);
   const smpImp=[0,1,2,3].map(i=>improveTile(IMPROVE[i]));
+  // 2026-08-18 (designer): the SPECIALISTS take the old recipe shelf — the display of 4 rides
+  // the main column; the right column becomes CASKS & RECIPES (see brew below).
   const market=shelf('Buildings — the display of 4 · building one stands your die on it, it serves everyone','building-2',smpBld.map(s=>dslot('b','building-2',s)).join(''))
     +shelf('Ships — the display of 4 · commission at the Harbor (the printed fee: Skute 2G · Cog 1G · Hulk free · 1 free load)','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''))
-    +'<div class="shelf-lbl">'+LU('scroll-text')+'Recipes — the dealt export stacks (earned, never bought)</div>'
-    +'<div class="shelf">'+smpRec.map(s=>dslot('r','scroll-text',s)).join('')+'</div>';
-  const cellar='<div class="shelf-lbl">'+LU('wrench')+'Display of 4 — earned free<span class="bag">'+LU('shopping-bag')+'</span></div>'
-    +'<div class="shelf-v">'+smpImp.map(s=>dslot('i','wrench',s)).join('')+'</div>';
-  // DESTINATIONS column — the right rim: where a voyage pays. The four kontore read as ONE family
-  // (uniform panel anatomy: gate · value · benefit · majority · a presence zone for the discs);
-  // the HALL sits apart below with its own header — the volume-vs-prestige fork, printed as layout.
-  // (BNOTE_SHORT / kArt / kMini hoisted to module scope — shared with destBoard)
-  // each destination panel carries its generated scene (art/kontor-<key>.png) full-bleed; the stats print
-  // WHITE over a dark bottom gradient (an inline SVG linearGradient — CSS gradients seam in the PNG export,
-  // see the bakeArt review note). One shared <defs> id is fine: every panel uses the identical ramp.
-  // (kArt/kMini hoisted to module scope)
-
+    +shelf('Specialists — the display of 4 · earned free','wrench',smpImp.map(s=>dslot('i','wrench',s)).join(''));
+  // THE CASKS & RECIPES column (designer, 2026-08-18): every beer's pile ON the board, paired
+  // by tier with the export recipe stacks — five tight rows: Gruit+Hopped piles · the dealt
+  // Q3+Q4 beers' piles · their recipe stacks · the Q5 beer + Jopenbier piles · their stacks.
+  // The mid-tier beers vary per game (the 3-of-4 deal / 3-of-7 with Specialty Beers), so the
+  // slots print the TIER, not a name. Cask slots cut 2.4×1 · recipe slots 1.85×2.55 — true.
+  const ck=nm=>{const d=CASKS.find(c=>c.nm===nm);return caskCardBack(d,d.pin||poolFor(d.q)[0]);};
+  const rc=nm=>recipeCard(RECIPES.find(r=>r.nm===nm)||STARTERS.find(r=>r.nm===nm));
+  const brow=slots=>'<div class="brew-row">'+slots+'</div>';
+  const brew=brow(dslot('c','beer',ck('Gruit'),'Gruit')+dslot('c','beer',ck('Hopped'),'Hopped'))
+    +brow(dslot('c','quality-3',ck('Broyhan'),'the Q3 beer')+dslot('c','quality-4',ck('Mumme'),'the Q4 beer'))
+    +brow(dslot('r','scroll-text',rc('Broyhan'),'recipes \u00b7 Q3')+dslot('r','scroll-text',rc('Mumme'),'recipes \u00b7 Q4'))
+    +brow(dslot('c','quality-5',ck('Bock'),'the Q5 beer')+dslot('c','quality-6',ck('Jopenbier'),'Jopenbier'))
+    +brow(dslot('r','scroll-text',rc('Bock'),'recipes \u00b7 Q5')+dslot('r','scroll-text',rc('Jopenbier'),'recipes \u00b7 Jopenbier'));
   const inner='<div class="mboard supply" style="position:absolute;left:'+SCORE_RING_T+'in;top:'+SCORE_RING_T+'in;'
       +'width:'+(SUPPLY_NW-2*SCORE_RING_T).toFixed(3)+'in;height:'+(SUPPLY_NH-2*SCORE_RING_T).toFixed(3)+'in">'
-    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><h2 class="spec-h">'+LU('wrench')+'Specialists</h2></div>'
+    +'<div class="mb-head"><h2>'+LU('store')+'Market &amp; Stores</h2><h2 class="spec-h">'+LU('beer')+'Casks &amp; Recipes</h2></div>'
     +'<div class="sup-cols">'
       +'<div class="sup-main">'+market+'</div>'
-      +'<div class="sup-cellar">'+cellar+'</div>'
+      +'<div class="sup-cellar">'+brew+'</div>'
     +'</div>'
   +'</div>';
   return '<div class="supply-outer">'+scoreRingHtml(SUPPLY_NW,SUPPLY_NH,SCORE_RING_T)+inner+'</div>';}
@@ -1511,7 +1519,7 @@ function checklist(pages,famPages){
     +R('Player brewery boards','3 vessel slots + 2 Specialist seats. <b>One in front of each player</b>; their recipe cards splay beside it.',PLAYERS.length)
     +'</table>';
   h+=T('Tiles (mount on chipboard, laser-cut)')
-    +R('Cask tiles — the beer supply','The beer itself, brewed never bought. <b>Six face-up piles, one per beer, beside the Wharf.</b> '+caskBase.map(d=>d.nm+' ×'+d.n).join(' · ')+'.',sumN(caskBase))
+    +R('Cask tiles — the beer supply','The beer itself, brewed never bought. <b>Six face-up piles on the Market &amp; Stores board\u2019s Casks &amp; Recipes column</b> (the mid tiers vary with the deal). '+caskBase.map(d=>d.nm+' ×'+d.n).join(' · ')+'.',sumN(caskBase))
     +R('Ship tiles','Neutral hulls, each bound for a printed Kontor; the tile IS its berths. <b>A draw bag → a display of 4.</b> Skute ×6 · Cog ×10 · Hulk ×8 — six per Kontor.','24')
     +R('Building tiles','One green family — nobody owns them. <b>A draw bag → a display of 4</b>; built onto the Wharf’s slots. Shuffle all 20, <b>deal 17</b> into the game (3 sit out).',sumN(BUILDINGS))
     +R('Specialist tiles','The private purple hires, 13 designs (core five ×3 · guild eight ×1). <b>A draw bag → a display of 4</b>; seated on a player board.',impTotal)
