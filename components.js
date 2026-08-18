@@ -120,7 +120,7 @@ const BUILDINGS=[
   {k:'richberth', nm:'Rich Berth',        ms:3, verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'May sail 1 short'},
   // v4.6 "Guildbook" — the box prints 20 tiles; SETUP DEALS 17 (≥1 Kiln + ≥1 Mission Quay guaranteed)
   {k:'victual',   nm:'Victualling Yard',  ms:3, verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, eff:'Loading: the bonus fires TWICE · sails with the Ship'},
-  {k:'exchange',  nm:'Merchants’ Exchange',ms:2, verb:'transform',tgt:'act',  ic:'arrow-right-left', n:1, g:2, act:'exchange', eff:'Replace up to 3 open Orders'},   // v4.12
+  {k:'exchange',  nm:'Merchants’ Exchange',ms:2, verb:'transform',tgt:'act',  ic:'arrow-right-left', n:1, g:2, act:'exchange', eff:'Re-manifest up to 2 non-Bruges Ships'},   // v5.0 rework (was 3 Orders at v4.12)
   {k:'capstan',   nm:'Warping Capstan',   ms:3, verb:'transform', tgt:'act',  ic:'ship-wheel',   n:1, g:2, act:'capstan', eff:'Move any docked Ship'},   // v4.12: cargo rides; full where it lands → it sails
   // v4.16b "Guild Ledger" (designer-ruled 2026-08-14, off the lane study): the Guildhall's own
   // building — prints on the GUILDHALL SHEET (hall:1 keeps it off the base 20-tile sheet);
@@ -128,16 +128,25 @@ const BUILDINGS=[
   // ⚜ Invitation; the traffic turns the builder's mark like any workhorse.
   {k:'chancery',  nm:'Guild Chancery',    ms:2, verb:'transform', tgt:'act',  ic:'mail',         n:1, g:1, act:'invgain', eff:'Gain 1 ⚜ Invitation', hall:1},
 ];
-// ---- LADINGS (v4.5b) — the kontor ORDER row: 15 tiles ⚙, a face-up row of 3. Deliver a cask
-// that matches the tile (its kontor + the die minimum, or the named beer) and CLAIM it — the
-// printed ★ bank at once; one lading per delivered cask; the row refills at end of turn.
-// v4.7 SETUP: a lading naming a beer NOT dealt this game returns to the box (no dead orders).
-const LADINGS=[
-  {dest:'Bruges',  min:3, pts:2},{dest:'Bruges',  min:4, pts:3},{dest:'Bruges',  beer:'Keut',    pts:3},{dest:'Bruges', min:5, pts:4},
-  {dest:'London',  min:4, pts:3},{dest:'London',  min:5, pts:4},{dest:'London',  beer:'Broyhan', pts:3},{dest:'London', min:6, pts:5},
-  {dest:'Bergen',  min:4, pts:3},{dest:'Bergen',  min:5, pts:4},{dest:'Bergen',  beer:'Mumme',   pts:4},
-  {dest:'Novgorod',min:5, pts:3},{dest:'Novgorod',beer:'Bock',  pts:4},{dest:'Novgorod',min:6, pts:4},
-  {dest:null,      min:6, pts:3},
+// ---- MANIFESTS (v5.0 "Open Wharf" [designer-ruled 2026-08-18] — the Order tiles RETIRE) ----
+// A Manifest is the demand CARD riding every NON-BRUGES hull: three printed demand lines
+// (beer/tier · die-as-parked · combo → ★). When the Ship sails, each delivered cask may claim
+// ONE line it satisfies (each line once per voyage; the ★ score at once); the card then
+// returns UNDER the deck. 12 cards ⚙ (covers the maximum hull float), 2×1.32in — the building
+// footprint; the card tucks under the hull's foot on its slot. Mirrors play.html MANIFESTS.
+const MANIFESTS_P=[
+  {k:'m1', lines:[{beer:'Hopped',pts:2},{die:4,pts:2},{qmin:4,die:5,pts:4}]},
+  {k:'m2', lines:[{beer:'Gruit',pts:1},{qmin:3,pts:2},{die:6,pts:3}]},
+  {k:'m3', lines:[{qmax:2,pts:1},{die:5,pts:3},{qmin:3,die:5,pts:4}]},
+  {k:'m4', lines:[{die:3,pts:1},{qmin:4,pts:3},{qmax:2,die:3,pts:3}]},
+  {k:'m5', lines:[{beer:'Hopped',pts:2},{die:4,pts:2},{qmin:3,die:5,pts:4}]},
+  {k:'m6', lines:[{beer:'Gruit',pts:1},{qmin:4,pts:3},{die:6,pts:3}]},
+  {k:'m7', lines:[{qmax:2,pts:1},{qmin:3,pts:2},{qmin:4,die:5,pts:4}]},
+  {k:'m8', lines:[{die:3,pts:1},{die:5,pts:3},{qmin:4,die:6,pts:4}]},
+  {k:'m9', lines:[{beer:'Gruit',pts:1},{die:4,pts:2},{qmin:4,pts:3}]},
+  {k:'m10',lines:[{beer:'Hopped',pts:2},{qmin:3,pts:2},{die:5,pts:3}]},
+  {k:'m11',lines:[{qmax:2,pts:1},{die:3,pts:1},{qmin:4,die:5,pts:4}]},
+  {k:'m12',lines:[{qmin:3,pts:2},{die:4,pts:2},{qmin:4,die:6,pts:4}]},
 ];
 // v4.17 "The Tastings" ⚙ — the CONTEST deck (12 tiles): a category filter · a bench of die
 // spaces (2 at 2p · 3 at 3-4p) · the ladder (1st = the printed ★ + THE TILE · 2nd 2★ · 3rd 1★).
@@ -240,7 +249,7 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:'When gaining recipes, pay no fee', g:2, c:'#5b3a8e', n:1},   // v4.12 wording (every channel, Bruges included)
   {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'Brewing 3+ casks at once: age one +1 at your turn start', g:2, c:'#5b3a8e', n:1},   // v4.12 rework: the 4th-vessel rig and the gate are CUT — a full house earns the drip
   {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'A rival sails your cask: <span class="g">+1'+LU('wheat','g ic')+'</span><span class="h">+1'+LU('sprout','h ic')+'</span>', h:2, c:'#5b3a8e', n:1},   // v4.7: 1H→2H · v4.12 wording pass
-  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'End: +3★ per claimed Order', g:1, h:1, c:'#5b3a8e', n:1},   // v4.12: uncapped, ungated, 3★ ⚙
+  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'Claim a Manifest demand: <b>+2★</b> at once', g:1, h:1, c:'#5b3a8e', n:1},   // v5.0 rework ⚙ — no end-record; the ★ bank with the claim
   {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'End: +2★ per kontor with 3+ parked dice', g:2, c:'#5b3a8e', n:1},
   {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:'Place a presence die: +2★', g:1, c:'#5b3a8e', n:1},   // v4.12: +2★ ⚙ per placed die (the die parks at 1 — 3★ total; face-2 retires)
   {ic:'arrow-right-left', nm:'Chandler', art:'a hand balance — grain on one pan, hop cones on the other', act:'Once per turn: swap <span class="g">1'+LU('wheat','g ic')+'</span> ↔ <span class="h">1'+LU('sprout','h ic')+'</span>', g:1, c:'#5b3a8e', n:1},
@@ -301,15 +310,20 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
     +msChip+((d.g||d.h)?'<span class="bt-cost">'+cost(d.g,d.h)+'</span>':'')+'</div>'   // the fee rides the TOP-RIGHT corner (round 6); the mark's start face sits beside it (v4.9b)
   +'<div class="bt-foot"><span class="bt-eff'+(lead?' bt-act':'')+'">'+eff+'</span></div>'
   +'</div>';}
-// LADING TILE (v4.5b) — a 2×0.9in order strip in the kontor's colour: WHERE (the kontor) ·
-// WHAT (the die minimum, or the named beer) · the ★ reward. Any-kontor rides parchment-grey.
-function ladingTile(d){const kc=d.dest?(SHIP_DEST[d.dest]||{}).kc||'#555':'#6b6257';
-  const what=d.beer?('<span class="ld-beer">'+LU(QI)+' '+d.beer+'</span>')
-                   :('<span class="ld-die">'+LU('dice-'+d.min)+' '+d.min+(d.min<6?'+':'')+'</span>');
-  return '<div class="ldtile" style="--c:'+kc+'">'
-  +'<div class="ld-hd">'+LU(d.dest?'kontor-'+d.dest.toLowerCase():'landmark')+'<span class="ld-k">'+(d.dest||'Any Kontor')+'</span></div>'
-  +'<div class="ld-bd">'+what+'<span class="ld-arr">→</span><span class="ld-pts">'+d.pts+' '+LU(VP)+'</span></div>'
-  +'<div class="ld-sub">deliver &amp; claim · score at once</div>'
+// MANIFEST CARD (v5.0) — the demand card riding a non-Bruges hull: THREE demand lines, each
+// a beer/tier chip (the beer glyph) and/or a die chip (the die-as-parked glyph) → the ★. The
+// claim rule (one line per delivered cask · each line once per voyage · ★ at once) lives on
+// the rules page — the card is pure data, the tile grammar of the whole kit.
+function manLineFace(l){const what=[];
+  if(l.beer)what.push('<span class="mf-b">'+LU(QI)+' '+l.beer+'</span>');
+  if(l.qmax)what.push('<span class="mf-b">'+LU(QI)+' Q≤'+l.qmax+'</span>');
+  if(l.qmin)what.push('<span class="mf-b">'+LU(QI)+' Q'+l.qmin+'+</span>');
+  if(l.die)what.push('<span class="mf-d">'+LU('dice-'+l.die)+' '+l.die+(l.die<6?'+':'')+'</span>');
+  return '<div class="mf-line">'+what.join('<span class="mf-and">&amp;</span>')
+    +'<span class="mf-arr">→</span><span class="mf-pts">'+l.pts+' '+LU(VP)+'</span></div>';}
+function manifestTile(d){return '<div class="mftile">'
+  +'<div class="mf-hd">'+LU('contract')+'<span class="mf-nm">Manifest</span><span class="mf-sub">each line once per voyage</span></div>'
+  +'<div class="mf-body">'+d.lines.map(manLineFace).join('')+'</div>'
   +'</div>';}
 // BUILDING CARD BACK — the flipped/displaced face: when your tile is overbuilt (the builder pays the 1G
 // ground rent) it returns to you FACE-DOWN into an OPEN Floor slot of your one row (none open → boxed) —
@@ -391,7 +405,7 @@ function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm
   const fee=HULL[hull].fee;   // v4.8: the per-hull commission fee prints on the trigger berth; a free Hulk prints no chip
   let rows='<div class="st-trig">'
     +'<div class="st-toprow"><span class="st-k">'+LU('sailboat')+destNm+'</span>'
-      +'<span class="st-meta"><span class="st-gate" title="boards when the cask&#39;s DIE (as boarded) shows this or more">'+LU('dices')+d.req+'+</span>'+(fee?'<span class="st-cost">'+cost(fee,0)+'</span>':'')+'</span></div>'
+      +'<span class="st-meta"><span class="st-gate" title="boards READY (die at its quality) AND with its die (as boarded, after lifts) at this or more — both gates, always">'+LU('check')+LU('dices')+d.req+'+</span>'+(fee?'<span class="st-cost">'+cost(fee,0)+'</span>':'')+'</span></div>'
     +'<div class="st-seat st-tseat" title="the trigger berth — the last cask loads here and the ship sails at once"><span class="st-num">'+cap+'</span><span class="st-go">'+LU(QI)+'<b class="amp">&amp;</b>'+LU('sail')+'</span></div>'
   +'</div>';
   for(let i=cap-1;i>=1;i--)rows+='<div class="st-berth"><div class="st-seat"><span class="st-num">'+i+'</span><span class="st-ghost">'+LU(QI)+'</span></div></div>';
@@ -433,8 +447,10 @@ function playerBoard(d,live){const L=live||{};
   const FL=[1,2,3,4,5],FP={1:0,2:0,3:4,4:9,5:16};
   const flight='<div class="pbrd-flight"><div class="fl-t">'+LU('layers')+' The Flight — beers <b>shipped</b></div>'
     +'<div class="fl-row">'+FL.map(n=>'<span class="fl-cell'+(L.flight!=null&&L.flight>=n?' on':'')+'"><b>'+n+'</b><span>'+FP[n]+'★</span></span>').join('')+'</div></div>';
-  const contracts='<div class="pbrd-lads"><span class="sn">Orders — claimed ★</span>'
-    +(L.contracts||'<span class="si">'+LU('scroll-text')+'</span>')+'</div>';
+  // v5.0: the Orders pile zone RETIRES (Manifest ★ score at once — nothing rests here);
+  // the zone prints the reminder, and the live app shows the claimed-line tally.
+  const contracts='<div class="pbrd-lads"><span class="sn">Manifests — claimed ★ score at once</span>'
+    +(L.man!=null?'<b class="pbrd-num">'+L.man+'</b><span class="si" style="font-size:.1in">lines claimed</span>':'<span class="si">'+LU('contract')+'</span>')+'</div>';
   return '<div class="pbrd" style="--pc:'+(d.c||'#7c2128')+'">'
     +'<div class="pbrd-id">'
       +'<span class="pbrd-crest">'+LU('beer')+'</span>'
@@ -697,16 +713,17 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .ac{display:inline-flex;align-items:center;justify-content:center;width:.28in;height:.28in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}'
 +'.btile .ac svg,.btile .ac .ic{width:.16in;height:.16in;color:#23201c;stroke-width:2.1}'
 /* LADING order strip (v4.5b): kontor colour, three rows — where · what→★ · the claim reminder */
-+'.ldtile{width:2in;height:.9in;position:relative;overflow:hidden;color:#fff;background:var(--c,#555);border-radius:.09in;display:flex;flex-direction:column;justify-content:space-between;padding:.08in .11in;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}'
-+'.ldtile .ld-hd{display:flex;align-items:center;gap:.05in;font-variant:small-caps;font-weight:bold;font-size:.16in;line-height:1}'
-+'.ldtile .ld-hd svg,.ldtile .ld-hd .ic{width:.17in;height:.17in;flex:0 0 auto}'
-+'.ldtile .ld-bd{display:flex;align-items:center;justify-content:center;gap:.08in;font-weight:900;font-size:.2in;line-height:1}'
-+'.ldtile .ld-bd svg,.ldtile .ld-bd .ic{width:.22in;height:.22in;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.5))}'
-+'.ldtile .ld-beer{display:inline-flex;align-items:center;gap:.04in;font-variant:small-caps;font-size:.18in}'
-+'.ldtile .ld-die{display:inline-flex;align-items:center;gap:.03in}'
-+'.ldtile .ld-arr{opacity:.85;font-size:.17in}'
-+'.ldtile .ld-pts{display:inline-flex;align-items:center;gap:.03in;background:rgba(0,0,0,.32);border-radius:.12in;padding:.02in .07in}'
-+'.ldtile .ld-sub{text-align:center;font-size:.085in;font-variant:small-caps;opacity:.85;line-height:1}'
++'.mftile{width:2in;height:1.32in;position:relative;overflow:hidden;color:#f3e9d2;background:#33445a;border:.02in solid #1f2c3c;border-radius:.09in;display:flex;flex-direction:column;padding:.06in .1in;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}'
++'.mftile .mf-hd{display:flex;align-items:center;gap:.05in;font-variant:small-caps;font-weight:bold;font-size:.15in;line-height:1;border-bottom:.012in solid rgba(243,233,210,.4);padding-bottom:.04in}'
++'.mftile .mf-hd svg,.mftile .mf-hd .ic{width:.16in;height:.16in;flex:0 0 auto}'
++'.mftile .mf-sub{margin-left:auto;font-size:.078in;font-weight:normal;opacity:.85}'
++'.mftile .mf-body{flex:1;display:flex;flex-direction:column;justify-content:space-evenly}'
++'.mftile .mf-line{display:flex;align-items:center;gap:.06in;font-weight:900;font-size:.14in;line-height:1}'
++'.mftile .mf-line svg,.mftile .mf-line .ic{width:.15in;height:.15in;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.5))}'
++'.mftile .mf-b,.mftile .mf-d{display:inline-flex;align-items:center;gap:.03in;font-variant:small-caps}'
++'.mftile .mf-and{opacity:.85;font-size:.12in}'
++'.mftile .mf-arr{margin-left:auto;opacity:.85;font-size:.13in}'
++'.mftile .mf-pts{display:inline-flex;align-items:center;gap:.03in;background:rgba(0,0,0,.32);border-radius:.12in;padding:.02in .07in}'
 /* ILLUSTRATED ICONS — the art <img> tracks the .ic sizing everywhere the CSS pairs "svg,.ic";
    these cover the few svg-only spots + give any unsized site a 1em fallback */
 +'img.ai{width:1em;height:1em;object-fit:contain;vertical-align:-.13em}'
@@ -821,5 +838,5 @@ var HC_CSS4=''
 +'.invcard .iv-verb svg,.invcard .iv-verb .ic,.invcard .iv-verb img.ai{width:.15in;height:.15in}';
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3+HC_CSS4;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,LADINGS,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,ladingTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
+window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,MANIFESTS_P,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,manifestTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
 })();

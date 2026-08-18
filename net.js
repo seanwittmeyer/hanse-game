@@ -20,7 +20,7 @@
 // AUTHORITY: exactly ONE client may write at any moment — the ACTOR's client. actorSeat() is
 // the engine's humanGate() oracle returned as a seat id: a pending prize queue's head names its
 // owner (the out-of-turn picks: Bruges recipe · London building+placement · Bergen specialist ·
-// lading), otherwise the active seat. AI seats are driven only by the botRunner client (the
+// Manifest claim — v5.0), otherwise the active seat. AI seats are driven only by the botRunner client (the
 // host). Every action function is gated on this; the parent applies last-write-wins on top.
 // UNDO never crosses a commit — the stack clears on every commit/apply, so a takeback reaches
 // only your own uncommitted segment (the friendly-table rule).
@@ -48,10 +48,10 @@ function stampSeats(){
 
 // the whole UI-entry action surface (the buttons' onclick functions + endTurn + undo)
 var GATED=['doMove','chooseLine','resolveStop','backToStops','srcTake','srcSkip','commPick','commPlace','commBack','commSkip',
-  'brewPick','ageAllot','ageDone','ageSkip','exchangePick','exchangeSkip','capPick','capPlace','capSkip','rackPick','rackSkip',
+  'brewPick','brewVerbPick','brewVerbBack','ageAllot','ageDone','ageSkip','exchangePick','exchangeSkip','capPick','capPlace','capSkip','rackPick','rackSkip',
   'hopexAllot','hopexDone','abbeyGo','assayPick','assaySkip','reachPick','reachSkip','recipeGainPick','surveyPick','placeBldgOn',
-  'hirePick','loadPickCask','loadOnto','loadOptGo','loadBack','loadSkip','precipePick','bspecPick','benefitPick','ladingPick',
-  'chandlerSwap','doUndo','endTurn'];
+  'hirePick','loadPickCask','loadOnto','loadOptGo','loadBack','loadSkip','precipePick','bspecPick','benefitPick','manPick',
+  'chandlerSwap','doUndo','endTurn'];   // v5.0: ladingPick → manPick · + the brew-search picker (brewVerbPick/Back)
 // local-table controls that must never run under a platform shell
 var BLOCKED=['newGame','openSetup','startGame'];
 

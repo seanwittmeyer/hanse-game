@@ -6,7 +6,8 @@
 // Env:   TIER=apprentice|journeyman|trader|guildmaster|cellarmaster (default journeyman)
 //        PERSONAS=1 — the v4 PATHWAYS oracle: trader seats committed round-robin to the four lanes
 //                     (majority · lifter · builder · breadth); per-lane win rates reported
-//        POOL=n sweeps the dice pool (THE pace dial — v4.1 cut the Sailed-Ships clock) · GUILD_MS/CELLAR_MS lower the MC budgets
+//        POOL=n sweeps the dice pool (THE pace dial) · GUILD_MS/CELLAR_MS lower the MC budgets
+//        ALTSRC=n / ALTAGE=n sweep the v5.0 alternate-station dials (override only when set)
 'use strict';
 const fs = require('fs');
 const vm = require('vm');
@@ -29,13 +30,13 @@ if(__JIT>0){['journeyman','trader'].forEach(function(t){AI_TIERS[t].noise=__JIT;
 // own functions (function declarations are reassignable) so the counts are ground truth,
 // not policy inference. Reset per game; averaged in the summary.
 var __U=null;
-function __uReset(){__U={ladings:0,rack:0,assayUp:0,assayDown:0,toll:0,hopex:0,abbey:0,kilnLift:0,bondedSail:0,bmSeat:0,bmTick:0,mq:0,
+function __uReset(){__U={manifests:0,rack:0,assayUp:0,assayDown:0,toll:0,hopex:0,abbey:0,kilnLift:0,bondedSail:0,bmSeat:0,bmTick:0,mq:0,
   exch:0,cap:0,victual:0,chandler:0,scargo:0,coopSail:0,customsBoard:0,rbShort:0,
   comm_skute:0,comm_cog:0,comm_hulk:0,commG:0,built:0,bldgTicks:0,
   pours:0,judged:0,slams:0,invE:0,invS:0,tilesWon:0};}   // v4.17 Tastings — pours · benches convened · door-slams · the ⚜ economy   // v4.9: builds + mason-die ticks   // v4.6 + the ship-shapers, instrumented at last (the AGRICOLA-STUDY B4 item) · v4.8: commissions by hull + grain paid (the 2/1/0 A/B)
 var __uOn=function(){return __U&&!aiSimulating;};   // never count MC-playout echoes
-var __claimLading=claimLading;claimLading=function(lp,idx){if(__uOn())__U.ladings++;return __claimLading(lp,idx);};
-var __invGrant=invGrant;invGrant=function(p,src){if(__uOn())__U.invE++;return __invGrant(p,src);};   // v4.17: every ⚜ faucet (orders · the Chancery · dials)
+var __manClaim=manClaim;manClaim=function(lp,gi,li){if(__uOn())__U.manifests++;return __manClaim(lp,gi,li);};   // v5.0: Manifest lines claimed
+var __invGrant=invGrant;invGrant=function(p,src){if(__uOn())__U.invE++;return __invGrant(p,src);};   // v5.0: every ⚜ faucet (Manifest claims · the Chancery · dials)
 // v4.17 TASTINGS counters — pours · benches convened · door-slams · the ⚜ economy
 var __pourDo=pourDo;pourDo=function(vi,ci){var ct=S&&S.tastings&&(S.tastings.open||[])[ci];
   var pre=ct?ct.bench.length:0;var lead=ct?benchLeader(ct):null;var p=cur();
@@ -63,8 +64,8 @@ var __sailShip=sailShip;sailShip=function(slot,creditId){var bonded=bKeyAt(slot)
     if(o&&o.id!==S.active&&hasUpgrade(o,'supercargo')&&!seen[o.id]){seen[o.id]=1;sc++;}});}
   var r=__sailShip(slot,creditId);
   if(__uOn()){if(bonded)__U.bondedSail++;if(over)__U.coopSail++;if(short)__U.rbShort++;__U.scargo+=sc;}return r;};
-var __exchangePick=exchangePick;exchangePick=function(i){var had=!!UI.exch;var r=__exchangePick(i);
-  if(__uOn()&&had&&!UI.exch)__U.exch++;return r;};
+var __exchangePick=exchangePick;exchangePick=function(kind,id){var had=!!UI.exch;var r=__exchangePick(kind,id);
+  if(__uOn()&&had&&!UI.exch)__U.exch++;return r;};   // v5.0: (kind,id) — the re-manifest signature
 var __capPlace=capPlace;capPlace=function(slot){var had=UI.cap&&UI.cap.sid!=null;var r=__capPlace(slot);
   if(__uOn()&&had&&!UI.cap)__U.cap++;return r;};
 var __chandlerSwap=chandlerSwap;chandlerSwap=function(dir){var p=cur();var u0=p&&p.chUsed;var r=__chandlerSwap(dir);
@@ -99,6 +100,8 @@ function __runGame(n){
   if(__TOUR!=='')TOUR_ON=(__TOUR==='1')?1:0;
   if(__ICW!=='')INV_CASK_W=parseFloat(__ICW)||0;
   if(__IBLDG!=='')INV_BLDG=(__IBLDG==='1')?1:0;
+  if(__ASRC!=='')ALT_SOURCE=parseInt(__ASRC,10)||1;   // v5.0 primary/alt dials — override ONLY when set
+  if(__AAGE!=='')ALT_AGE=parseInt(__AAGE,10)||1;
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
   S.players.forEach(function(p,i){p.ai=__PERSONAS?{tier:'trader',persona:AI_PERSONAS[i%AI_PERSONAS.length]}:{tier:__TIER};p.presPool=PRES_POOL;});
   var guard=0;
@@ -155,6 +158,7 @@ const ctx = {
   __SINV:process.env.STARTINV!=null?process.env.STARTINV:'', __TSTARS:process.env.TSTARS!=null?process.env.TSTARS:'',   // v4.17: the Tasting dials
   __TBENCH:process.env.BENCH!=null?process.env.BENCH:'', __TCATB:process.env.CATB!=null?process.env.CATB:'', __EJ:process.env.EJUDGE!=null?process.env.EJUDGE:'', __TOUR:process.env.TOUR!=null?process.env.TOUR:'',
   __ICW:process.env.INV_CASK!=null?process.env.INV_CASK:'', __IBLDG:process.env.INV_BLDG!=null?process.env.INV_BLDG:'',
+  __ASRC:process.env.ALTSRC!=null?process.env.ALTSRC:'', __AAGE:process.env.ALTAGE!=null?process.env.ALTAGE:'',   // v5.0: the primary/alt dials
   __POOL:parseInt(process.env.POOL||'0',10),
   __PERSONAS:PERSONAS,
   __GMS:parseInt(process.env.GUILD_MS||'0',10),
@@ -195,14 +199,14 @@ let anyErr=0;
   console.log(`per-player: brews ${fmt(avg(ok.map(r=>r.brews)))} · deliveries ${fmt(avg(ok.map(r=>r.delivs)))} · bank★ ${fmt(avg(ok.map(r=>r.builds)))}`);
   console.log(`delivery split: ${Object.keys(dd).map(k=>k+' '+pct(dd[k],dsum)).join(' · ')}`);
   { // v45c: the new-systems utilization dashboard (per-game averages)
-    const uk=['ladings','rack','assayUp','assayDown','toll','hopex','abbey','kilnLift','bondedSail','bmSeat','bmTick',
+    const uk=['manifests','rack','assayUp','assayDown','toll','hopex','abbey','kilnLift','bondedSail','bmSeat','bmTick',
       'exch','cap','victual','chandler','scargo','coopSail','customsBoard','rbShort',
       'comm_skute','comm_cog','comm_hulk','commG','built','bldgTicks',
       'pours','judged','slams','invE','invS','tilesWon'];
     const us={};uk.forEach(k=>us[k]=avg(ok.map(r=>(r.use&&r.use[k])||0)));
     console.log(`commissions/game: ${fmt(us.comm_skute+us.comm_cog+us.comm_hulk)} — skute ${fmt(us.comm_skute)} · cog ${fmt(us.comm_cog)} · hulk ${fmt(us.comm_hulk)} · grain paid ${fmt(us.commG)}`);
     console.log(`mason's marks (v4.9): builds/game ${fmt(us.built)} · die ticks ${fmt(us.bldgTicks)} · end pips/player ${fmt(avg(ok.map(r=>r.bldgPips||0)))}`);
-    console.log(`v4.5b usage/game: ladings ${fmt(us.ladings)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)}▲/${fmt(us.assayDown)}▼ · toll ${fmt(us.toll)} · hopex-pay ${fmt(us.hopex)} · abbey ${fmt(us.abbey)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);
+    console.log(`v5.0/v4.5b usage/game: manifest lines ${fmt(us.manifests)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)}▲/${fmt(us.assayDown)}▼ · toll ${fmt(us.toll)} · hopex-pay ${fmt(us.hopex)} · abbey ${fmt(us.abbey)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);
     console.log(`v4.6 usage/game: exchange ${fmt(us.exch)} · capstan ${fmt(us.cap)} · victual loads ${fmt(us.victual)} · chandler ${fmt(us.chandler)} · supercargo ${fmt(us.scargo)} · coop-berth sails ${fmt(us.coopSail)} · customs boards ${fmt(us.customsBoard)} · richberth short ${fmt(us.rbShort)}`);
     if(us.pours>0)   // v4.17 TASTINGS dashboard
       console.log(`v4.17 tastings/game: pours ${fmt(us.pours)} · benches convened ${fmt(us.judged)} · door-slams ${fmt(us.slams)} · invites earned ${fmt(us.invE)} / spent ${fmt(us.invS)}`);
