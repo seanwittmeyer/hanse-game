@@ -26,7 +26,9 @@
 > ×0.8-era .074″ — the 1.5mm bleed band printed empty; now .059″ = a true 1.5mm, the
 > Tasting tile joins the bleed families, its category colour as the band) and the **cask /
 > Order / Tasting interiors gain ~25% more safe margin** between the cut line and their
-> content (the laser-alignment allowance).
+> content (the laser-alignment allowance). The **Zerbster pin rewords** — *A free Gruit and
+> Load 1 more* (the tray-die parenthetical leaves the face and its recipe card; the free
+> Gruit still takes a tray die — the rule lives in the rulebook).
 
 > **Kit pass 2026-08-17 (presentation, no rules change):** the **Guild Tastings board is
 > REDRAWN to the kit grammar** — a kontor-style art header (`art/kontor-hall.png`; the Hall
