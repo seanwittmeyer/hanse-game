@@ -24,6 +24,7 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   // · die-q = the parked-die value (die + ?) · sail = the ship with its forward arrow
   'quality-1':'quality-1','quality-2':'quality-2','quality-3':'quality-3','quality-4':'quality-4',
   'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail','age-1':'station-age-1','age-2':'station-age-2',
+  'goods-2':'goods-2',   // round 5 (2026-08-19): the numbered Source face — the basket + a "2" in the landed numeral treatment
   // die MODIFIER marks (round 4): the die with its lift/drop printed on it — drops in red
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
 const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
