@@ -59,11 +59,11 @@ var __abbeyGo=abbeyGo;abbeyGo=function(pay3){var p=cur();var h0=p?p.hops:0;var r
   if(__uOn()&&p&&p.hops<h0)__U.abbey++;return r;};   // v45d: a paid Abbey firing
 var __sailShip=sailShip;sailShip=function(slot,creditId){var bonded=bKeyAt(slot)==='bonded';
   var t0=S.slots[slot];var over=t0&&(t0.load||[]).length>SHIP_CAP[t0.ship];   // a Cooperage berth actually used
-  var short=t0&&bKeyAt(slot)==='richberth'&&(t0.load||[]).length<SHIP_CAP[t0.ship];   // a Rich Berth short sail
   var sc=0;if(t0){var seen={};(t0.load||[]).forEach(function(L){var o=S.players[L.owner];
     if(o&&o.id!==S.active&&hasUpgrade(o,'supercargo')&&!seen[o.id]){seen[o.id]=1;sc++;}});}
   var r=__sailShip(slot,creditId);
-  if(__uOn()){if(bonded)__U.bondedSail++;if(over)__U.coopSail++;if(short)__U.rbShort++;__U.scargo+=sc;}return r;};
+  if(__uOn()){if(bonded)__U.bondedSail++;if(over)__U.coopSail++;__U.scargo+=sc;}return r;};
+var __richBuyDo=richBuyDo;richBuyDo=function(slot,p){if(__uOn())__U.rbShort++;return __richBuyDo(slot,p);};   // v5.1: the bought empty berth (the auto sail-short retired)
 var __exchangePick=exchangePick;exchangePick=function(kind,id){var had=!!UI.exch;var r=__exchangePick(kind,id);
   if(__uOn()&&had&&!UI.exch)__U.exch++;return r;};   // v5.0: (kind,id) — the re-manifest signature
 var __capPlace=capPlace;capPlace=function(slot){var had=UI.cap&&UI.cap.sid!=null;var r=__capPlace(slot);
@@ -207,7 +207,7 @@ let anyErr=0;
     console.log(`commissions/game: ${fmt(us.comm_skute+us.comm_cog+us.comm_hulk)} — skute ${fmt(us.comm_skute)} · cog ${fmt(us.comm_cog)} · hulk ${fmt(us.comm_hulk)} · grain paid ${fmt(us.commG)}`);
     console.log(`mason's marks (v4.9): builds/game ${fmt(us.built)} · die ticks ${fmt(us.bldgTicks)} · end pips/player ${fmt(avg(ok.map(r=>r.bldgPips||0)))}`);
     console.log(`v5.0/v4.5b usage/game: manifest lines ${fmt(us.manifests)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)}▲/${fmt(us.assayDown)}▼ · toll ${fmt(us.toll)} · hopex-pay ${fmt(us.hopex)} · abbey ${fmt(us.abbey)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);
-    console.log(`v4.6 usage/game: exchange ${fmt(us.exch)} · capstan ${fmt(us.cap)} · victual loads ${fmt(us.victual)} · chandler ${fmt(us.chandler)} · supercargo ${fmt(us.scargo)} · coop-berth sails ${fmt(us.coopSail)} · customs boards ${fmt(us.customsBoard)} · richberth short ${fmt(us.rbShort)}`);
+    console.log(`v4.6 usage/game: exchange ${fmt(us.exch)} · capstan ${fmt(us.cap)} · victual loads ${fmt(us.victual)} · chandler ${fmt(us.chandler)} · supercargo ${fmt(us.scargo)} · coop-berth sails ${fmt(us.coopSail)} · customs boards ${fmt(us.customsBoard)} · richberth buys ${fmt(us.rbShort)}`);
     if(us.pours>0)   // v4.17 TASTINGS dashboard
       console.log(`v4.17 tastings/game: pours ${fmt(us.pours)} · benches convened ${fmt(us.judged)} · door-slams ${fmt(us.slams)} · invites earned ${fmt(us.invE)} / spent ${fmt(us.invS)}`);
   }

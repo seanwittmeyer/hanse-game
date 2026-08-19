@@ -209,3 +209,16 @@ mission chapel on the quay, a lantern over its door, nets and a moored skiff bes
   folded letters (the ⚜ Invitations going out). Same painterly single-structure treatment
   as the other 18 building portraits (one building, warm palette, consistent angle/light)
   so the family reads as one.
+
+## v5.1 "Wharf Hands" — new building tiles (2026-08-19)
+- **building-ropewalk.png** — a long medieval ropewalk shed on the quay: twisted hemp
+  strands stretched down a narrow timber gallery, coils of finished rope by the door;
+  the c.1350 sticker-set style (chunky, warm parchment palette, no text).
+- **building-weighhouse.png** — a stone Hanseatic weigh house (Waag): a great iron beam
+  balance hanging over the door, sacks and a barrel on the scale pans; same sticker style.
+
+## v5.1 — new specialist tiles
+- **improve-broker.jpg** — a wax-sealed ledger and a small coin scale on a market cloth
+  (the Broker); object-shot on parchment, purple-tile framing as the other specialists.
+- **improve-brewer-s-mate.jpg** — a young brewer hefting a long mash rake beside an open tun
+  (the Brewer's Mate); same object-shot framing.

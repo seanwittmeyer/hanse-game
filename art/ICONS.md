@@ -99,10 +99,10 @@ Sources of truth: `components.js` (card faces) · `play.html` (app UI) · `print
 | Ship | `sailboat` | `ship` | Ship tiles, displays, aid | A neutral tile bound for its printed Kontor (Skute/Cog/Hulk). Distinct from the Harbor *station* icon below. |
 | Kontor | `landmark` | `kontor` | Destinations board, delivery UI, Contract headers | A trading post of the League (Bruges · London · Bergen · Novgorod). A gabled Hanse counting-house works. |
 | Building | `building-2` | `building` | building tiles, London prize, §14 | The green shared-family tile. |
-| Specialist | `wrench` | `specialist` | Specialist tiles, Bergen prize, seats, Hiring Post | A private purple tile. **Also currently the Cellarman & Braumeister tile crests and the *Gain 1 Specialist* bonus — see splits below.** |
+| Specialist | `wrench` | `specialist` | Specialist tiles, Bergen prize, seats, the hire bonus | A private purple tile. **Also currently the Cellarman & Braumeister tile crests and the *Gain 1 Specialist* bonus — see splits below.** |
 | Recipe | `scroll-text` | `recipe` | recipe cards/fees, Bruges prize, *Gain 1 recipe* bonus | **SPLIT.** Today `scroll-text` also serves Contract, Scrivener's Hall and Customs House. The recipe icon should be its own art (a brewing scroll/formula). |
 | Contract | `scroll-text` | `contract` | Contract tiles, the row, claims, Chronicler | **SPLIT from recipe.** A Kontor bonus tile — suggest a sealed document (wax seal) so recipe vs Contract never blur. |
-| Presence | `map-pin` | `presence` | *Place 1 presence* bonus, Almoner's Stall, Kontor mats | Your parked dice at a Kontor; the action parks a tray die at face 1. A die-on-a-pin or a banner-stake. |
+| Presence | `map-pin` | `presence` | *Place 1 presence* bonus, Keut's perk, Kontor mats | Your parked dice at a Kontor; the action parks a tray die at face 1. A die-on-a-pin or a banner-stake. |
 
 ## 2. Stations & the Wharf
 
@@ -132,10 +132,10 @@ Sources of truth: `components.js` (card faces) · `play.html` (app UI) · `print
 | Building | Lucide today | Suggested slug | Collision / note |
 |---|---|---|---|
 | Granary | `coins` | `bldg-granary` | **Split from Goods** — a grain store deserves its own crest (silo/sacks). |
-| Scrivener's Hall | `scroll-text` | `bldg-scriveners` | **Split** — quill over a desk; must not read as Recipe/Contract. |
+| ~~Scrivener's Hall~~ | `scroll-text` | `bldg-scriveners` | **RETIRED (v5.1)** — art kept in `art/` for the archive. |
 | Mission Quay | `church` | `bldg-missionquay` | Age +2. Chapel-on-the-quay. |
-| Hiring Post | `wrench` | `bldg-hiringpost` | **Split from Specialist** — a posting board / handshake. |
-| Almoner's Stall | `heart` | `bldg-almoner` | Place 1 presence. Alms bowl. |
+| ~~Hiring Post~~ | `wrench` | `bldg-hiringpost` | **RETIRED (v5.1)** — art kept in `art/` for the archive. |
+| ~~Almoner's Stall~~ | `heart` | `bldg-almoner` | **RETIRED (v5.1, ruled)** — art kept in `art/` for the archive. |
 | Racking Hall | `repeat` | `bldg-racking` | Swap two dice. Two casks with transfer hose. |
 | Assay House | `scale` | `bldg-assay` | ±1 one aging die. Balance scale is right. |
 | Abbey Cellar | `hourglass` | `bldg-abbey` | **Split from Age** — an abbey arch over casks. |
@@ -145,7 +145,9 @@ Sources of truth: `components.js` (card faces) · `play.html` (app UI) · `print
 | Bonded Store | `warehouse` | `bldg-bonded` | Ephemeral; sails with the Ship. |
 | Cooperage | `package` | `bldg-cooperage` | +1 berth. Barrel hoops/cooper's tools. |
 | Customs House | `scroll-text` | `bldg-customs` | **Split** — minimum −1: a customs ledger/stamp, not a scroll. |
-| Rich Berth | `anchor` | `bldg-richberth` | **Split from Wharf** — sails one berth short: a cushioned mooring/gilded bollard. |
+| Rich Berth | `anchor` | `bldg-richberth` | **Split from Wharf** — pay 2G, the last berth fills and it sails (v5.1): a cushioned mooring/gilded bollard. |
+| Ropewalk | `cable` | `bldg-ropewalk` | NEW (v5.1) — loads here +1: a long rope-twisting shed, coiled hawsers. |
+| Weigh House | `weight` | `bldg-weighhouse` | NEW (v5.1) — two Manifest lines per delivered cask: the public crane-scale house. |
 | Victualling Yard | `boxes` | `bldg-victual` | Ephemeral; bonus fires twice. Provision crates. |
 | Merchants' Exchange | `arrow-right-left` | `bldg-exchange` | Cycles a Contract. **Also the Chandler's crest — split.** |
 | Warping Capstan | `ship-wheel` | `bldg-capstan` | Moves an empty hull. A capstan drum (not a ship's wheel). |

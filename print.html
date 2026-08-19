@@ -905,7 +905,7 @@ function aid3Panels(){
     +'<h5>'+LU('beer')+'Tiles</h5>'
     +AID_ROW('quality-3','Cask \u00b7 quality','a brewed beer + its grade')
     +AID_ROW('sailboat','Ship','Skute \u00b7 Cog \u00b7 Hulk: 1 \u00b7 2 \u00b7 3 berths')
-    +AID_ROW('building-2','Building','shared, by whoever activates it')
+    +AID_ROW('building-2','Building','shared — most RIDE the station action on their line (v5.1)')
     +AID_ROW('wrench','Specialist','private, seats at your board')
     +AID_ROW('scroll-text','Recipe','permission to brew a beer')
     +AID_ROW('contract','Manifest','a demand card on a non-Bruges Ship')
@@ -1144,7 +1144,7 @@ function supplyBoard(){
   const shelf=(lbl,ic,slots)=>'<div class="shelf-lbl">'+LU(ic)+lbl+'<span class="bag">'+LU('shopping-bag')+'</span></div>'
     +'<div class="shelf">'+slots+'</div>';
   // overlay samples — one real render per family, varied so both tile verbs/colours get proofed
-  const smpBld=['granary','scriveners','maltkiln','cooperage'].map(k=>buildingCard(BUILDINGS.find(b=>b.k===k)));
+  const smpBld=['granary','racking','maltkiln','cooperage'].map(k=>buildingCard(BUILDINGS.find(b=>b.k===k)));   // v5.1: the Scrivener's retired — a rider proofs in its place
   const smpShip=[shipCard('skute','Bruges'),shipCard('cog','London'),shipCard('hulk','Bergen'),shipCard('cog','Novgorod')];
   const smpImp=[0,1,2,3].map(i=>improveTile(IMPROVE[i]));
   // 2026-08-18 (designer): the SPECIALISTS take the old recipe shelf — the display of 4 rides
@@ -1525,8 +1525,8 @@ function checklist(pages,famPages){
   h+=T('Tiles (mount on chipboard, laser-cut)')
     +R('Cask tiles — the beer supply','The beer itself, brewed never bought. <b>Six face-up stacks on the Market &amp; Stores board\u2019s Casks &amp; Recipes column</b> (the mid tiers vary with the deal) — a full Brew SEARCHES the stack; the alternate takes the top tile; a delivered cask\u2019s tile returns to the bottom (v5.0). '+caskBase.map(d=>d.nm+' ×'+d.n).join(' · ')+'.',sumN(caskBase))
     +R('Ship tiles','Neutral hulls, each bound for a printed Kontor; the tile IS its berths. <b>A draw bag → a display of 4.</b> Skute ×6 · Cog ×10 · Hulk ×8 — six per Kontor.','24')
-    +R('Building tiles','One green family — nobody owns them. <b>A draw bag → a display of 4</b>; built onto the Wharf’s slots. Shuffle all 20, <b>deal 17</b> into the game (3 sit out).',sumN(BUILDINGS))
-    +R('Specialist tiles','The private purple hires, 13 designs (core five ×3 · guild eight ×1). <b>A draw bag → a display of 4</b>; seated on a player board.',impTotal)
+    +R('Building tiles','One green family — nobody owns them; most now print a <b>RIDER</b> (it boosts the matching station action on its line — v5.1). <b>A draw bag → a display of 4</b>; built onto the Wharf’s slots. Shuffle all 19, <b>deal 17</b> into the game (2 sit out).',sumN(BUILDINGS.filter(b=>!b.hall)))
+    +R('Specialist tiles','The private purple hires, 15 designs (core five ×3 · guild ten ×1 — v5.1). <b>A draw bag → a display of 4</b>; seated on a player board.',impTotal)
     +R('Manifest cards','Three demand lines (beer/tier · die · combo → ★). <b>One rides every non-Bruges Ship</b> — dealt as the hull enters the display, claimed on delivery (each line once per voyage), returned under the deck at sail.','12')
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')

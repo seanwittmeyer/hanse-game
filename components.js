@@ -43,7 +43,7 @@ const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the
   {k:'source',  ai:'coins',         act:'Gain 2 goods',             q:2},
   {k:'age',     ai:'age-2',     act:'Age +2',                   q:2},
   {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},   // TODO(art 2026-08-09, designer): 'Load 1 more' wants its OWN icon — bonus-load reads too generic; brief queued in art/PROMPTS.md
-  {k:'reach',   ai:'map-pin',       act:'+1 presence',         q:2},   // v4.12: free as a cask action — ONLY the Almoner's Stall charges 2G
+  {k:'reach',   ai:'map-pin',       act:'+1 presence',         q:2},   // always FREE (v5.1 — the priced channel retired with the Almoner's Stall)
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe',          q:2},
   {k:'survey',  ai:'search',        act:'Build 1 building',  q:3},   // v4.9: the builder's die stands on it — no printed ★
   {k:'hire',    ai:'wrench',        act:'Gain 1 specialist',      q:3},
@@ -102,26 +102,29 @@ const BUILDINGS=[
   // boarding die / the ship at their slot. The Annex (echo verb) is CUT; the goods faucets thinned.
   // 17 tiles ⚙. (art: every design owns its file — building-<k>.png; the 2026-08-02 art pass
   // retired the last interim stand-ins. Briefs: art/PROMPTS.md.)
-  {k:'granary',   nm:'Granary',           ms:1, verb:'transform', tgt:'act',  ic:'coins',        n:1, act:'source', eff:'Gain 2 goods'},
-  {k:'scriveners',nm:'Scrivener’s Hall',  ms:2, verb:'transform', tgt:'act',  ic:'scroll-text',  n:1, g:1, act:'recipe', eff:'Gain 1 recipe'},
-  {k:'missionq',  nm:'Mission Quay',      ms:1, verb:'transform', tgt:'act',  ic:'church',       n:2, act:'age',    eff:'Age +2'},
-  {k:'hiringpost',nm:'Hiring Post',       ms:2, verb:'transform', tgt:'act',  ic:'wrench',       n:1, g:1, act:'hire',   eff:'Gain 1 specialist'},
-  {k:'almoner',   nm:'Almoner’s Stall',   ms:1, verb:'transform', tgt:'act',  ic:'heart',        n:1, act:'alms',  eff:'<span class="g">2'+LU('wheat','g')+'</span> → +1 presence'},   // v4.12: the ONE priced presence channel
+  // v5.1 "Wharf Hands" [designer-ruled 2026-08-19]: converted tiles print a RIDER — the HOST
+  // icon leads (the station action it rides, ON ITS LINE), the effect is icons + the fewest
+  // words (the minimal-text constraint). Retired here: Scrivener's Hall · Hiring Post ·
+  // the Almoner's Stall (ruled). New: Ropewalk · Weigh House. 19 tiles ⚙ — setup deals 17.
+  {k:'granary',   nm:'Granary',           ms:1, verb:'transform', tgt:'act',  ic:'coins',        n:1, effIc:'store',     eff:'here: +1 '+LU('coins')},
+  {k:'missionq',  nm:'Mission Quay',      ms:1, verb:'transform', tgt:'act',  ic:'church',       n:2, effIc:'hourglass', eff:'here: +1 step'},
   // v45d power ladder — fees print in GRAIN only (hops are spent USING buildings, never buying them)
-  {k:'racking',   nm:'Racking Hall',      ms:3, verb:'transform', tgt:'act',  ic:'repeat',       n:1, g:3, act:'rack',   eff:'Swap 2 dice'},
-  {k:'assay',     nm:'Assay House',       ms:1, verb:'transform', tgt:'act',  ic:'scale',        n:1, g:1, act:'assay',  eff:'<span class="h">1'+LU('sprout','h')+'</span> → 1 cask Ready'},   // v4.12 (was ±1)
-  {k:'abbey',     nm:'Abbey Cellar',      ms:3, verb:'transform', tgt:'act',  ic:'hourglass',    n:1, g:2, act:'abbey',  eff:'<span class="h">3'+LU('sprout','h')+'</span> → all aging Ready'},
-  {k:'hopex',     nm:'Hop Exchange',      ms:2, verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, act:'hopex',  eff:'<span class="h">1'+LU('sprout','h')+'</span> → '+LU('die-plus1','dlift')+' · max 2'},
+  {k:'racking',   nm:'Racking Hall',      ms:3, verb:'transform', tgt:'act',  ic:'repeat',       n:1, g:3, effIc:'hourglass', eff:'here: swap 2 '+LU('dices')},
+  {k:'assay',     nm:'Assay House',       ms:1, verb:'transform', tgt:'act',  ic:'scale',        n:1, g:1, effIc:'hourglass', eff:'here: <span class="h">1'+LU('sprout','h')+'</span> → 1 '+LU('check')},
+  {k:'abbey',     nm:'Abbey Cellar',      ms:3, verb:'transform', tgt:'act',  ic:'hourglass',    n:1, g:2, effIc:'hourglass', eff:'here: <span class="h">3'+LU('sprout','h')+'</span> → all '+LU('check')},
+  {k:'hopex',     nm:'Hop Exchange',      ms:2, verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, effIc:'die-plus1', eff:LU('hourglass')+'/'+LU('package-plus')+' here: <span class="h">1'+LU('sprout','h')+'</span> each · max 2'},
   {k:'maltkiln',  nm:'Malt Kiln',         ms:2, verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, effIc:'die-plus1',  eff:'on load'},
   {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, effIc:'die-minus1', eff:'on load → +3★'},
   {k:'bonded',    nm:'Bonded Store',      ms:3, verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, effIc:'die-plus1',  eff:'on load · sails with the Ship · players aboard gain 2 goods'},
   {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 ship capacity · on load +1★'},   // v4.12b: the wharfage eases 2→1 ⚙
-  {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'−1 quality required'},
-  {k:'richberth', nm:'Rich Berth',        ms:3, verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, eff:'May sail 1 short'},
+  {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'−2 '+LU('dices')+' minimum here'},   // v5.1 ⚙: the smuggler's door
+  {k:'richberth', nm:'Rich Berth',        ms:3, verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, effIc:'package-plus', eff:'here: <span class="g">2'+LU('wheat','g')+'</span> → last berth fills · sails'},   // v5.1 ⚙: buy the empty berth
   // v4.6 "Guildbook" — the box prints 20 tiles; SETUP DEALS 17 (≥1 Kiln + ≥1 Mission Quay guaranteed)
   {k:'victual',   nm:'Victualling Yard',  ms:3, verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, eff:'Loading: the bonus fires TWICE · sails with the Ship'},
   {k:'exchange',  nm:'Merchants’ Exchange',ms:2, verb:'transform',tgt:'act',  ic:'arrow-right-left', n:1, g:2, act:'exchange', eff:'Re-manifest up to 2 non-Bruges Ships'},   // v5.0 rework (was 3 Orders at v4.12)
-  {k:'capstan',   nm:'Warping Capstan',   ms:3, verb:'transform', tgt:'act',  ic:'ship-wheel',   n:1, g:2, act:'capstan', eff:'Move any docked Ship'},   // v4.12: cargo rides; full where it lands → it sails
+  {k:'capstan',   nm:'Warping Capstan',   ms:3, verb:'transform', tgt:'act',  ic:'ship-wheel',   n:1, g:2, effIc:'package-plus', eff:'here: first warp any '+LU('sailboat')},   // v5.1 rider — cargo rides; full where it lands → it sails
+  {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, effIc:'package-plus', eff:'here: +1 '+LU('beer')},   // v5.1 NEW ⚙ — the slot-local Stevedore
+  {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, effIc:'contract',     eff:'delivered here: claim 2 lines'},   // v5.1 NEW ⚙ — the demand layer's building
   // v4.16b "Guild Ledger" (designer-ruled 2026-08-14, off the lane study): the Guildhall's own
   // building — prints on the GUILDHALL SHEET (hall:1 keeps it off the base 20-tile sheet);
   // in hall mode it is guaranteed into the deal (17 of 21). Anyone who activates it gains an
@@ -237,23 +240,26 @@ function invitationCard(){return '<div class="invcard">'
 //   chandler       → a hand balance — barley on one pan, hop cones on the other
 //   shipwright     → a shipwright's adze across a curved oak ship rib
 // ============================================================================
-const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize — v4.7: EVERY CASK seats its house one, the per-cask grammar of all four ports · the Hiring Post · the 'Gain 1 specialist' load bonus) — never bought · deck of max(2,n−1)/type (v4.5b) · 2 SEATS per house (both open from the start — v45h)
-  {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:'Your dice start +1', g:0, h:2, c:'#5b3a8e', n:3},   // v4.12: the v45g cap repealed — his Broyhan starts READY
+const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize — v4.7: EVERY CASK seats its house one, the per-cask grammar of all four ports · the 'Gain 1 specialist' load bonus; the Hiring Post retired v5.1) — never bought · deck of max(2,n−1)/type (v4.5b) · 2 SEATS per house (both open from the start — v45h)
+  {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:LU('flask-conical')+' Brew: your '+LU('dices')+' start +1', g:0, h:2, c:'#5b3a8e', n:3},   // v4.12: the v45g cap repealed — his Broyhan starts READY
   {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → <span class="g">+1'+LU('wheat','g ic')+'</span>', g:2, c:'#5b3a8e', n:3},   // v4.7: 1G→2G (the probe's auto-pick core)
   {ic:'badge-plus', nm:'Hop Gardener', art:'a climbing hop bine with cones on a tall pole',     act:'Gain '+LU('sprout','h ic')+' → <span class="h">+1'+LU('sprout','h ic')+'</span>', g:0, h:2, c:'#5b3a8e', n:3},
-  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:'Each time you load: up to 2 casks', g:1, c:'#5b3a8e', n:3},
-  {ic:'wrench',     nm:'Braumeister', art:'a long wooden mash paddle over a copper kettle', act:'Start of your turn: age 1 cask +1', g:1, h:1, c:'#5b3a8e', n:3},   // v4.5b heir of the cut auto-age · v4.12 wording
+  {ic:'package-plus',nm:'Stevedore', art:'a medieval wooden treadwheel harbor crane',  act:LU('package-plus')+' Load: up to 2 '+LU('beer'), g:1, c:'#5b3a8e', n:3},
+  {ic:'wrench',     nm:'Braumeister', art:'a long wooden mash paddle over a copper kettle', act:'Turn start: age 1 '+LU('beer')+' +1', g:1, h:1, c:'#5b3a8e', n:3},   // v4.5b heir of the cut auto-age
   // ---- v4.6 "Guildbook": the 8 GUILD designs — 1 copy each (scarce); three print SEAT GATES
   // (the Agricola prerequisite, read off components: flipped cards · claimed tiles · parked dice).
   // art: all eight own their object-shot files (the 2026-08-02 art pass; briefs in art/PROMPTS.md).
-  {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:'When gaining recipes, pay no fee', g:2, c:'#5b3a8e', n:1},   // v4.12 wording (every channel, Bruges included)
-  {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'Brewing 3+ casks at once: age one +1 at your turn start', g:2, c:'#5b3a8e', n:1},   // v4.12 rework: the 4th-vessel rig and the gate are CUT — a full house earns the drip
+  {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:LU('scroll-text')+' Recipes: pay no fee', g:2, c:'#5b3a8e', n:1},   // every channel, Bruges included
+  {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'3+ '+LU('beer')+' brewing: age one +1 at turn start', g:2, c:'#5b3a8e', n:1},   // v4.12 rework — a full house earns the drip
   {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'A rival sails your cask: <span class="g">+1'+LU('wheat','g ic')+'</span><span class="h">+1'+LU('sprout','h ic')+'</span>', h:2, c:'#5b3a8e', n:1},   // v4.7: 1H→2H · v4.12 wording pass
-  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'Claim a Manifest demand: <b>+2★</b> at once', g:1, h:1, c:'#5b3a8e', n:1},   // v5.0 rework ⚙ — no end-record; the ★ bank with the claim
-  {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'End: +2★ per kontor with 3+ parked dice', g:2, c:'#5b3a8e', n:1},
-  {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:'Place a presence die: +2★', g:1, c:'#5b3a8e', n:1},   // v4.12: +2★ ⚙ per placed die (the die parks at 1 — 3★ total; face-2 retires)
-  {ic:'arrow-right-left', nm:'Chandler', art:'a hand balance — grain on one pan, hop cones on the other', act:'Once per turn: swap <span class="g">1'+LU('wheat','g ic')+'</span> ↔ <span class="h">1'+LU('sprout','h ic')+'</span>', g:1, c:'#5b3a8e', n:1},
-  {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:'When commissioning Ships, pay no fee', h:1, c:'#5b3a8e', n:1},   // v4.12 wording (the Scholar's grammar)
+  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:LU('contract')+' Claim a line: <b>+2★</b>', g:1, h:1, c:'#5b3a8e', n:1},   // v5.0 rework ⚙ — no end-record; the ★ bank with the claim
+  {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'End: +2★ per '+LU('landmark')+' with 3+ '+LU('dices'), g:2, c:'#5b3a8e', n:1},
+  {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:LU('map-pin')+' Place presence: +2★', g:1, c:'#5b3a8e', n:1},   // v4.12: +2★ ⚙ per placed die
+  {ic:'arrow-right-left', nm:'Chandler', art:'a hand balance — grain on one pan, hop cones on the other', act:LU('store')+' Source: may swap <span class="g">1'+LU('wheat','g ic')+'</span> ↔ <span class="h">1'+LU('sprout','h ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v5.1 rework — the swap rides the Market flow
+  {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:LU('ship')+' Commission: pay no fee', h:1, c:'#5b3a8e', n:1},
+  // ---- v5.1 "Wharf Hands": the ALT-UPGRADE singles ⚙ — a station superpower each ----
+  {ic:'store',      nm:'Broker', art:'a wax-sealed ledger and a coin scale on a market cloth', act:LU('store')+' Your Market ALT: Source 2', g:1, c:'#5b3a8e', n:1},   // v5.1 NEW ⚙
+  {ic:'flask-conical', nm:'Brewer’s Mate', art:'a young brewer hefting a mash rake beside the tun', act:LU('flask-conical')+' Your Brewhouse ALT: search', h:1, c:'#5b3a8e', n:1},   // v5.1 NEW ⚙
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
@@ -293,7 +299,7 @@ const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(50,79,42,.74)';   //
 const BLD_FOOT='rgba(58,51,66,.7)';   // legacy fallback   // building card foot/base — dark purple-grey (#3a3342) at 70% opacity so the illustration bleeds ~30% through the foot. Same on front & back.
 // v3.4a at 66% height — the SAME anatomy the 2in card earned (icon+name header · art window ·
 // the colour foot: the effect big, then the target chip + cost row), compressed, never flattened.
-const STD_ACT={source:{ai:'coins',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age +2'},reach:{ai:'map-pin',t:'+1 presence'},alms:{ai:'map-pin',t:'2G → +1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};   // v4.12: 'alms' = the Almoner's priced presence
+const STD_ACT={source:{ai:'coins',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age +2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};   // v5.1: the 'alms' entry left with the Almoner's Stall
 function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   // v4.9b "Cornerstones": the tile prints the mason's mark's START FACE — set your die to it at build
   const msChip=d.ms?'<span class="bt-ms" title="the mason\u2019s mark starts here \u2014 set your die to this face at build; every use turns it up (pips score at game end)">'+LU('dice-'+d.ms)+'</span>':'';

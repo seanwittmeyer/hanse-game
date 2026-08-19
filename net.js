@@ -51,7 +51,7 @@ var GATED=['doMove','chooseLine','resolveStop','backToStops','srcTake','srcSkip'
   'brewPick','brewVerbPick','brewVerbBack','ageAllot','ageDone','ageSkip','exchangePick','exchangeSkip','capPick','capPlace','capSkip','rackPick','rackSkip',
   'hopexAllot','hopexDone','abbeyGo','assayPick','assaySkip','reachPick','reachSkip','recipeGainPick','surveyPick','placeBldgOn',
   'hirePick','loadPickCask','loadOnto','loadOptGo','loadBack','loadSkip','precipePick','bspecPick','benefitPick','manPick',
-  'chandlerSwap','doUndo','endTurn'];   // v5.0: ladingPick → manPick · + the brew-search picker (brewVerbPick/Back)
+  'chandlerSwap','ageRiderGo','chSwapGo','richBuyGo','doUndo','endTurn'];   // v5.1: the rider prompts (age riders · the Chandler-on-Source swap · the Rich Berth buy) join the gate
 // local-table controls that must never run under a platform shell
 var BLOCKED=['newGame','openSetup','startGame'];
 

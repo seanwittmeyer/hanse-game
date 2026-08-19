@@ -28,7 +28,7 @@ governed here.
 | requirement | n | A printed condition that must read true off your components before a Specialist may be seated | — | requirements | No | ~~seat-gate~~, ~~gate~~, ~~prerequisite~~ | ● |
 | Specialist | n | A private purple tile; 2 seats per player | wrench | Specialists | Yes | ~~improvement~~, ~~upgrade~~ | ● |
 | seat | n | A Specialist space on your player board | — | seats | No | — | ● |
-| building | n | A green tile on a slot; serves whoever activates it | building-2 | buildings | No | ~~work~~, ~~privilege~~ (retired families) | ● |
+| building | n | A green tile on a slot; serves whoever activates it (most print riders — v5.1) | building-2 | buildings | No | ~~work~~, ~~privilege~~ (retired families) | ● |
 | recipe | n | A card granting permission to brew a beer | scroll-text | recipes | No | — | ● |
 | exports | n | The four dealt-3-of-4 beers (Broyhan · Keut · Mumme · Bock) | — | — | No | — | ● |
 | the Flight | n | Your flipped (brewed) recipe cards; scores (n−1)² | unlock | — | Yes | — | ● |
@@ -69,8 +69,10 @@ governed here.
 | **overbuild** | Build on an occupied slot (one payment; the old tile is boxed) | — |
 
 Trigger words per guide §4.4 — **"whenever" is banned**: use *when* (single moment) or
-*each time* (repeats). **"stop" (n) is banned in player copy** — a building fires *when you
-resolve its slot*; a load-lift fires *when a cask loads here*.
+*each time* (repeats). **"stop" (n) is banned in player copy** — a rider building fires
+*with the station action on its line* (the tile prints `[host icon] here:` — v5.1); an
+action building fires *when you resolve its slot*; a load-lift fires *when a cask loads
+here*.
 
 ## §3. Canonical orders (every surface, no exceptions)
 
@@ -147,6 +149,10 @@ the registry governs what a PLAYER reads.
 | the Taproom floor | n | The board strip where judged dice stand (committed — the audit) | ○ provisional |
 | convene | v | A bench fills and is judged; an unconvened bench at game end pays 1★/die | ○ provisional |
 | the champion’s tour | n | The winning cask’s die parks as presence (face 1) at a Kontor its owner has delivered to (v4.17b) | ○ provisional |
+| rider | n | The design term for a building's printed `[host icon] here:` line (v5.1): it boosts the matching STATION action fired on its line — primary and alternate alike, once per activation; the tile prints only the host-icon line + effect icons, never the word "rider" | ○ provisional |
+| ~~Scrivener's Hall~~ · ~~Hiring Post~~ · ~~Almoner's Stall~~ | — | RETIRED tiles (v5.1 — the shelf turn; acquisition = Kontor prizes + load bonuses; presence placement is FREE and flows only through casks) | — |
+| Ropewalk · Weigh House | n | The v5.1 building names (loads-here +1 · two Manifest lines per cask delivered off the Ship here) | ○ provisional |
+| Broker · Brewer's Mate | n | The v5.1 Specialist names (your Market alternate is Source 2 · your Brewhouse alternate searches the stack) | ○ provisional |
 | parti-gyle | n/adj | Zerbster’s printed signature (v4.15b): as the cask boards, an optional free Gruit into an open vessel (a tray die), then Load 1 more | ○ provisional (period brewing term — the second runnings) |
 | smoke-hardy | adj | Duckstein’s printed signature: its die turns +1 as it boards (cap 6) | ○ provisional |
 
