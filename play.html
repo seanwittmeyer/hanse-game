@@ -97,6 +97,12 @@
   .cell .stn{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:7cqmin}
   .cell .head{display:flex;flex-direction:column;align-items:flex-start;gap:3cqmin}
   .cell .bigic .ic,.cell .bigic svg{width:34cqmin;height:34cqmin;stroke-width:1.6}
+  /* v5.1x: the alt chip — [primary] / [smaller alt] on one row */
+  .cell .actrow{display:flex;align-items:center;gap:2.5cqmin}
+  .cell .altsep{font-size:15cqmin;font-weight:bold;opacity:.7;line-height:1}
+  .cell .altic{display:inline-flex;opacity:.92}
+  .cell .altic .ic,.cell .altic svg{width:19cqmin;height:19cqmin;stroke-width:1.8}
+  .cell .altic img.ai{filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
   .cell .role{font-size:7cqmin;text-transform:uppercase;letter-spacing:1px;opacity:.82}
   .cell .nm{font-variant:small-caps;font-weight:bold;font-size:13cqmin;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;align-self:center;text-align:center}   /* the title sits at the FOOT of the cell (flex space-between), centred like the print board's */
   /* loop colours: A Market=gold · B Brewhouse=red · C Harbor=sea · D Cellar=green */
@@ -755,6 +761,17 @@ function caskAct(t){return t.act||STYLES[t.style].act;}
 // the station face (2026-08-04, designer): ONE big ACTION icon over a top-down scrim —
 // the same four faces as the print board (gain goods · brew · age 3 · commission)
 const STATION_ICON={Market:'coins',Brewhouse:'flask-conical',Cellar:'age-3',Harbor:'ship'};
+// v5.1x [designer request 2026-08-19]: the station face gains the ALT CHIP — the primary icon,
+// a slash, then the line-mate's lesser action at ~55% size ([primary] / [alt]). TWO alts have
+// no icon of their own yet (NOTED in art/ICONS.md for the next icon pass): Market's Source-1
+// reuses the goods icon ('coins' — closest we have) · the Brewhouse's top-tile blind brew
+// reuses lucide 'layers' (the stack — closest we have). The Cellar's Age-1 (station-age-1.png)
+// and the Harbor's any-Ship load ('package-plus') are real icons.
+const STATION_ALT_ICON={Market:'coins',Brewhouse:'layers',Cellar:'age-1',Harbor:'package-plus'};
+const STATION_ALT_TIP={Market:'Alternate — as the line\u2019s other station: Source 1',
+  Brewhouse:'Alternate — as the line\u2019s other station: brew the TOP tile of the stack (blind)',
+  Cellar:'Alternate — as the line\u2019s other station: Age 1',
+  Harbor:'Alternate — as the line\u2019s other station: Load 1 Ready cask onto ANY docked Ship'};
 
 // ---- DESTINATIONS (v4.0): the four kontore. Value = THE DIE, everywhere (Novgorod's printed scale is
 // cut; its identity = the raised gate + the 8/5/2 majority + the refine prize). Gates read the DIE as it
@@ -3432,7 +3449,7 @@ function renderGrid(){
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
       +'<img class="scn" src="art/scene-'+SCN+'.png" alt=""><div class="scngrad"></div>'
       +'<div class="stn">'
-      +'<div class="head"><span class="bigic">'+LU(STATION_ICON[act])+'</span></div>'
+      +'<div class="head"><span class="actrow"><span class="bigic">'+LU(STATION_ICON[act])+'</span><span class="altsep">/</span><span class="altic" data-tip="'+attr(STATION_ALT_TIP[act])+'">'+LU(STATION_ALT_ICON[act])+'</span></span></div>'
       +'<div class="nm">'+act+'</div>'
       +'<div class="wk">'+pawns+'</div>'
       +'</div></div>';

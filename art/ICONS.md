@@ -112,6 +112,10 @@ Sources of truth: `components.js` (card faces) · `play.html` (app UI) · `print
 | Brewhouse — Brew | `flask-conical` | `station-brew` | station cell, aids, *Brew 1* bonus | Pay a recipe into an open vessel. A copper kettle beats the chemistry flask, thematically. **Shared with the *Brew 1* load bonus — sharing is fine (same verb).** |
 | Cellar — Age | `hourglass` | `station-age` | station cell, aids, *Age +2* bonus, Abbey Cellar | Turn aging dice up. **Shared with the Age bonus (fine) and the Abbey Cellar tile crest (give the Abbey its own crest — see §4).** |
 | Harbor — Commission | `ship` | `station-harbor` | station cell, aids | Pay 1 G, place a display Ship, load 1 Ready cask. Distinct from the Ship-tile icon: suggest a crane/quay scene. |
+| **Market ALT — Source 1** | `coins` (stand-in) | `station-market-alt` | the station face's alt chip (v5.1x: `[primary] / [alt]`) | **WANTED — no icon of its own yet.** The lesser Source: one sack/coin where the primary shows the pair. Until then the alt chip reuses the goods icon at ~55% size. |
+| **Brewhouse ALT — top tile (blind)** | `layers` (stand-in) | `station-brew-alt` | the station face's alt chip; the alt-brew UI | **WANTED — no icon of its own yet.** The blind draw: the TOP tile of the beer's stack. `layers` (the stack) is the closest we have; a face-down tile sliding off a stack would say it exactly. |
+| Cellar ALT — Age 1 | — (real: `age-1`) | `station-age-1` | the station face's alt chip | Exists (`art/icons/station-age-1.png`) — the one-pip age chip. |
+| Harbor ALT — Load 1, any Ship | `package-plus` | — | the station face's alt chip | The load icon covers it (same verb, any docked Ship). |
 | The Wharf | `anchor` | `wharf` | glossary, aid headers | The whole core area. **Also currently the Rich Berth crest — split (see §4).** |
 
 ## 3. The eight load bonuses (printed on cask tiles — need the tightest, most legible set)
