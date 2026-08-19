@@ -839,27 +839,66 @@ function clearHl(){document.querySelectorAll('.hl').forEach(e=>e.classList.remov
       +'<td><b>'+start+'</b> → '+c.q+' ('+(c.ready||0)+' step'+((c.ready||0)===1?'':'s')+')</td>'
       +'<td>pinned: <b>'+(act.act||'')+'</b>'+(c.tag?' · '+c.tag.split('<br>').join(' '):'')+'</td>'
       +'<td class="cnt">×'+c.n+'</td></tr>';}).join('');
-  // ---- specialists ----
+  // ---- specialists: the printed line + the full wording, side by side for review ----
+  const SPEC_FULL={
+    'Cellarman':'your brewed casks’ dice start +1 (his Broyhan starts Ready)',
+    'Grain Factor':'each time you gain grain: gain 1 more',
+    'Hop Gardener':'each time you gain hops: gain 1 more',
+    'Stevedore':'when you load: load up to 2 casks — every load flow',
+    'Braumeister':'at your turn start: your ripest aging cask ages +1',
+    'Guild Scholar':'recipes cost no fee — every channel, Bruges included',
+    'Innkeeper':'at your turn start, with 3+ casks brewing: age one of them +1',
+    'Supercargo':'when a rival sails your cask: gain 1 grain + 1 hop',
+    'Chronicler':'when you claim a Manifest demand line: +2★ at once',
+    'Alderman':'at game end: +2★ per Kontor holding 3+ of your dice',
+    'Town Crier':'when you place presence: +2★ (3★ with the parked die)',
+    'Chandler':'when you take the station Source: you may also swap 1 grain ↔ 1 hop',
+    'Shipwright':'commissions cost no fee',
+    'Broker':'your Market ALTERNATE is a full Source 2',
+    'Brewer’s Mate':'your Brewhouse ALTERNATE searches the stack'};
   document.getElementById('trefSpecs').innerHTML=
-    '<tr><th>Tile</th><th>Specialist</th><th>Fee</th><th>Copies</th><th>Power</th></tr>'
+    '<tr><th>Tile</th><th>Specialist</th><th>Fee</th><th>Copies</th><th>Power — printed · in full</th></tr>'
     +HC.IMPROVE.map(d=>'<tr>'
       +'<td class="tcell">'+prev(HC.improveTile(d),2,2,.5)+'</td>'
       +'<td><b>'+d.nm+'</b></td>'
       +'<td>'+(((d.g?d.g+' G':'')+(d.g&&d.h?' ':'')+(d.h?d.h+' H':''))||'—')+'</td>'
       +'<td class="cnt">'+(d.n>1?'×'+d.n+' <span class="small">core — deal max(2, n−1)</span>':'×1 <span class="small">guild single</span>')+'</td>'
-      +'<td>'+d.act+'</td></tr>').join('');
-  // ---- buildings ----
-  const KIND={act:'slot action',cask:'load-lift (the boarding cask)',ship:'ship-shaper'};
-  const STD={source:'Gain 2 goods',age:'Age +2',recipe:'Gain 1 recipe',hire:'Gain 1 specialist'};
+      +'<td>'+d.act+(SPEC_FULL[d.nm]?'<div class="small">'+SPEC_FULL[d.nm]+'</div>':'')+'</td></tr>').join('');
+  // ---- buildings: most tiles are RIDERS on their line's station actions — the Kind and
+  // Power columns spell out what the icon-first faces compress ----
+  const RIDES={granary:'Source',missionq:'Age',racking:'Age',assay:'Age',abbey:'Age',hopex:'Age · Load',capstan:'Load'};
+  const BKIND=d=>RIDES[d.k]?('<b>rider</b> — '+RIDES[d.k]+' on its line')
+    :(d.k==='exchange'||d.k==='chancery')?'slot action'
+    :d.tgt==='cask'?'load-lift (at its slot)':'ship-shaper';
+  const BPOWER={
+    granary:'<b>Source here:</b> +1 good',
+    missionq:'<b>Age here:</b> +1 step',
+    racking:'<b>Age here:</b> may first swap the dice of any two of your vessel casks (even above a cask’s quality, cap 6)',
+    assay:'<b>Age here:</b> may pay 1 H — one aging cask ages to Ready',
+    abbey:'<b>Age here:</b> may pay 3 H — ALL your aging casks age to Ready',
+    hopex:'<b>Age or Load here:</b> pay up to 2 H — your vessel dice +1 per hop (past quality is fine, cap 6)',
+    maltkiln:'the boarding die +1 (cap 6)',
+    tollhouse:'the boarding cask may turn its die −1 (never below the minimum): score +3★ at once',
+    bonded:'the boarding die +1 (cap 6); sails away with the Ship — every player with a cask aboard gains 2 goods',
+    cooperage:'the Ship here: +1 capacity · each cask loaded here: its loader scores +1★',
+    customs:'the Ship here: −2 to the Kontor’s minimum (floor 1; the cask still sells at its die)',
+    richberth:'a load leaving ONE empty berth: the loader may pay 2 G — the berth fills, the Ship sails at once',
+    victual:'the boarding cask’s load bonus fires TWICE; sails away with the Ship',
+    exchange:'re-manifest up to 2 non-Bruges Ships — each card returns under the deck, a fresh card dealt at once',
+    capstan:'<b>Load here:</b> may first warp any docked Ship (cargo rides) to any shipless slot — full where it lands, it sails',
+    ropewalk:'loads at this slot: +1 cask (stacks with the Stevedore)',
+    weighhouse:'each cask delivered off the Ship here may claim TWO Manifest lines (each line still once per voyage)',
+    chancery:'gain 1 ⚜ Invitation (the Guild Tastings — always dealt in hall mode)'};
   document.getElementById('trefBldgs').innerHTML=
-    '<tr><th>Tile</th><th>Building</th><th>Kind</th><th>Fee</th><th>Tiles</th><th>Power</th></tr>'
+    '<tr><th>Tile</th><th>Building</th><th>Kind</th><th>Fee</th><th>Mark starts</th><th>Tiles</th><th>Power</th></tr>'
     +HC.BUILDINGS.map(d=>'<tr>'
-      +'<td class="tcell">'+prev(HC.buildingCard(d),2,2,.5)+'</td>'
-      +'<td><b>'+d.nm+'</b></td>'
-      +'<td>'+(KIND[d.tgt]||d.tgt)+'</td>'
+      +'<td class="tcell">'+prev(HC.buildingCard(d),2.5,1.32,.5)+'</td>'
+      +'<td><b>'+d.nm+'</b>'+(d.hall?' <span class="small">(the Guild Tastings)</span>':'')+'</td>'
+      +'<td>'+BKIND(d)+'</td>'
       +'<td>'+(d.g?d.g+' G':'free')+'</td>'
-      +'<td class="cnt">×'+d.n+'</td>'
-      +'<td>'+((d.act&&STD[d.act])||d.eff)+'</td></tr>').join('');
+      +'<td class="cnt">'+(d.ms||1)+'</td>'
+      +'<td class="cnt">×'+d.n+(d.hall?' <span class="small">own sheet</span>':'')+'</td>'
+      +'<td>'+(BPOWER[d.k]||d.eff)+'</td></tr>').join('');
   // ---- manifests (v5.0) — the demand cards, off the same kit ----
   const manEl=document.getElementById('trefMans');
   const mlt=l=>l.beer?('<b>'+l.beer+'</b>')
