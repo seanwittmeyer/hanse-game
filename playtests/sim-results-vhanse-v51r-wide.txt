@@ -1,0 +1,39 @@
+=== hanse v4.1 sim — 300 games/count · tier journeyman ===
+
+== 2p · 300 ok / 0 err ==
+rounds avg 16.6 (min 9 max 25) · in 12–25 band 91.7%
+triggers: dice 96.3% · ceiling 3.7% · sailed avg 5.5
+winner total avg 57.5 · margin avg 16.9 · seat wins P1 47.7% P2 52.3%
+per-player: brews 7.6 · deliveries 6.7 · bank★ 6.5
+delivery split: bruges 36.5% · london 21.1% · bergen 22.9% · novgorod 19.5%
+commissions/game: 4.8 — skute 0.3 · cog 2.1 · hulk 2.3 · grain paid 2.0
+mason's marks (v4.9): builds/game 3.2 (chosen 0.5 · prize 2.7) · die ticks 2.6 · end pips/player 4.8
+v5.1r rider scope: bonus Source/Age fires/game 5.9 · wide-window collections 0.2
+v5.0/v4.5b usage/game: manifest lines 4.1 · rack 0.1 · assay 0.6▲/0.0▼ · toll 0.1 · hopex-pay 0.4 · abbey 0.1 · kiln/bonded lift 3.5 · bonded sail-away 0.1 · braumeister 0.3 seat / 1.1 ticks
+v4.6 usage/game: exchange 1.2 · capstan 0.1 · victual loads 0.2 · chandler 0.0 · supercargo 0.2 · coop-berth sails 0.2 · customs boards 0.0 · richberth buys 0.0
+
+== 3p · 300 ok / 0 err ==
+rounds avg 15.1 (min 9 max 25) · in 12–25 band 84.7%
+triggers: dice 99.7% · ceiling 0.3% · sailed avg 7.9
+winner total avg 61.6 · margin avg 11.2 · seat wins P1 32.0% P2 38.0% P3 30.0%
+per-player: brews 7.1 · deliveries 6.4 · bank★ 6.9
+delivery split: bruges 32.1% · london 22.0% · bergen 26.4% · novgorod 19.6%
+commissions/game: 6.8 — skute 0.6 · cog 3.1 · hulk 3.1 · grain paid 3.5
+mason's marks (v4.9): builds/game 4.4 (chosen 0.5 · prize 4.0) · die ticks 5.1 · end pips/player 4.8
+v5.1r rider scope: bonus Source/Age fires/game 8.9 · wide-window collections 0.3
+v5.0/v4.5b usage/game: manifest lines 6.3 · rack 0.2 · assay 1.1▲/0.0▼ · toll 0.1 · hopex-pay 1.0 · abbey 0.1 · kiln/bonded lift 6.8 · bonded sail-away 0.1 · braumeister 0.6 seat / 1.9 ticks
+v4.6 usage/game: exchange 1.3 · capstan 0.1 · victual loads 0.3 · chandler 0.0 · supercargo 0.4 · coop-berth sails 0.3 · customs boards 0.0 · richberth buys 0.0
+
+== 4p · 300 ok / 0 err ==
+rounds avg 15.0 (min 7 max 25) · in 12–25 band 86.7%
+triggers: dice 99.3% · ceiling 0.7% · sailed avg 10.4
+winner total avg 60.3 · margin avg 10.0 · seat wins P1 26.0% P2 30.0% P3 21.3% P4 22.7%
+per-player: brews 6.8 · deliveries 6.2 · bank★ 6.9
+delivery split: bruges 29.3% · london 24.4% · bergen 25.8% · novgorod 20.6%
+commissions/game: 9.0 — skute 0.9 · cog 4.3 · hulk 3.7 · grain paid 5.2
+mason's marks (v4.9): builds/game 5.9 (chosen 0.5 · prize 5.4) · die ticks 7.4 · end pips/player 4.8
+v5.1r rider scope: bonus Source/Age fires/game 11.8 · wide-window collections 0.4
+v5.0/v4.5b usage/game: manifest lines 8.3 · rack 0.4 · assay 1.9▲/0.0▼ · toll 0.1 · hopex-pay 1.3 · abbey 0.3 · kiln/bonded lift 9.8 · bonded sail-away 0.1 · braumeister 0.8 seat / 2.9 ticks
+v4.6 usage/game: exchange 2.6 · capstan 0.1 · victual loads 0.3 · chandler 0.0 · supercargo 0.3 · coop-berth sails 0.7 · customs boards 0.0 · richberth buys 0.0
+
+GATE: 0 crashes / 0 deadlocks.

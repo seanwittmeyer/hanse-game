@@ -1,4 +1,4 @@
-// Targeted rule checks for v4.x/v5.x — through v5.1 "Wharf Hands" (KEY hanse-v51).
+// Targeted rule checks for v4.x/v5.x — through v5.1r (KEY hanse-v51r; the rider-scope dial).
 // Drives the CANONICAL engine (extract play.html's <script>, stub the DOM) and asserts each
 // rule directly by constructing states — no bot in the loop, so a failure is the engine's.
 // Usage: node playtests/verify-v4.js
@@ -1310,6 +1310,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('the new tiles: grain fees · ship-tier start faces (Ropewalk 2G/ms 3 · Weigh House 2G/ms 3 ⚙)',
     BUILDINGS.ropewalk.fee.g===2&&BUILDINGS.ropewalk.ms===3&&BUILDINGS.weighhouse.fee.g===2&&BUILDINGS.weighhouse.ms===3);
   ok('the alt-upgrade fees ⚙ — Broker 1G · Brewer’s Mate 1H', SPEC_FEE.broker.g===1&&SPEC_FEE.brewmate.h===1);
+  ok('the rider-scope dial defaults to the v5.1 print (RIDER_SCOPE 0 — v5.1r ⚙)', RIDER_SCOPE===0);
   var KIT=window.HC;
   if(KIT&&KIT.BUILDINGS){var det='';
     KIT.BUILDINGS.forEach(function(b){var e=BUILDINGS[b.k];
@@ -1318,6 +1319,54 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
     ok('building-roster drift gate: engine ↔ kit agree (v5.1)', det==='', det);
     ok('the kit specialist roster prints 15 designs / 25 tiles', KIT.IMPROVE.length===15&&KIT.IMPROVE.reduce(function(a,d){return a+d.n;},0)===25);
   } else ok('components.js loaded for the roster drift gate', false);
+})();
+
+// ---- 33. v5.1r RIDER SCOPE ⚙ (the GATEKEEPER-v51 item-2 study dial): 0 = the print ·
+// 1 = WIDE — a load-bonus Source/Age fired while the rider's (verb-hosting) line is
+// active collects that line's riders too; still once per activation; authorship holds ----
+(function(){var p=fresh();p.ai=null;   // scope 0: a bonus Source ignores the line's Granary
+  S.buildings.s3={b:'granary',owner:1,die:1};   // rowT cap — the Market's row
+  p.cell='A';activateLine('rowT');
+  fireCaskAct('source','stops');
+  ok('scope 0 (the print): a bonus Source on a Granary line fires PLAIN (2)', UI.sub==='source'&&UI.src.n===2&&(UI.src.riders||[]).length===0);
+  srcTake(2,0);
+  ok('…and the Granary never ticks', S.buildings.s3.die===1);
+  stops();
+})();
+(function(){var p=fresh();p.ai=null;RIDER_SCOPE=1;   // WIDE: the bonus Source collects the Granary
+  S.buildings.s3={b:'granary',owner:1,die:1};
+  p.cell='A';activateLine('rowT');
+  fireCaskAct('source','stops');
+  ok('WIDE: the bonus Source collects the line’s Granary (2+1)', UI.sub==='source'&&UI.src.n===3&&(UI.src.riders||[]).indexOf('s3')>=0);
+  srcTake(3,0);
+  ok('…the gain ticks the Granary and marks the rider', S.buildings.s3.die===2&&riderUsed('s3'));
+  fireCaskAct('source','stops');
+  ok('…a SECOND bonus in the same activation fires plain (once per activation)', UI.sub==='source'&&UI.src.n===2);
+  srcTake(2,0);
+  ok('…and the die holds at 2', S.buildings.s3.die===2);
+  stops();
+})();
+(function(){var p=fresh();p.ai=null;   // WIDE (still on): the bonus Age pools the Quay + offers the die-riders
+  S.buildings.s2={b:'missionq',owner:1,die:1};S.buildings.s5={b:'assay',owner:1,die:1};   // both colR caps
+  p.hops=2;p.vessels=[{style:'bock',q:5,die:2,act:'age'},null,null];
+  p.cell='D';activateLine('colR');
+  fireCaskAct('age','stops');
+  ok('WIDE: the bonus Age pools 2+1 on the Quay’s line', UI.sub==='age'&&UI.age.pool===3&&(UI.age.mq||[]).indexOf('s2')>=0);
+  ok('…and the die-riders offer INSIDE the bonus flow too (the Assay)', (UI.age.riders||[]).some(function(r){return r.rkind==='assay';}));
+  ageAllot(0);
+  ok('…the first step ticks the Quay (marked)', S.buildings.s2.die===2&&riderUsed('s2'));
+  ageAllot(0);ageAllot(0);
+  ok('…the Bock ages 2→5 READY', p.vessels[0].die===5);
+  stops();UI.pendingActs=[];
+})();
+(function(){var p=fresh();p.ai=null;   // WIDE keeps authorship: the verb must live on the line
+  S.buildings.s7={b:'granary',owner:1,die:1};   // rowB cap — the Brewhouse–Cellar row: NO Market
+  p.cell='C';activateLine('rowB');
+  fireCaskAct('source','stops');
+  ok('WIDE keeps authorship — a Granary off the Market’s lines NEVER fires', UI.sub==='source'&&UI.src.n===2&&(UI.src.riders||[]).length===0);
+  srcTake(2,0);
+  ok('…no tick off-line', S.buildings.s7.die===1);
+  RIDER_SCOPE=0;stops();
 })();
 
 OUT.forEach(function(l){console.log(l);});
