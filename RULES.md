@@ -1210,3 +1210,12 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
    value-probe grammar applies) · **the Chandler-on-Source** rework’s use rate · the
    **once-per-activation rider rule** at a human table (is the limit felt?) · the deal at
    **17-of-19** (the third new design — a Brew rider — restores 20/17 if variety thins).
+   **The mark re-fund A/B ran (v5.1r, 2026-08-21 — `archive/records/RIDER-SCOPE-AB-v51.md`;
+   the `RIDER_SCOPE` dial ⚙ enters, default 0 = the print): NO ARM PASSES.** The wide scope
+   is a measured null — bonus Source/Age fire 5.9–11.8×/game but the wide window collects a
+   rider only **0.2–0.5×/game (~3%)**, a structural coincidence, not a policy floor; utility
+   faces +1 moves pips ~+0.1–0.2 (noise); the combined arm peaks at 5.4/5.4/4.9 — under the
+   ≥5.5 bar, builder lane never ≥25% at 4p. The finding that reframes the watch: **ticks fell
+   ~40% but END PIPS only ~5–10%** (start faces + cap-6 saturation absorb it) — the deficit
+   is ~0.5 pips/player. Recommendation on record: keep scope 0, print nothing, ask the human
+   table whether the mark economy *feels* thin before any further lever.

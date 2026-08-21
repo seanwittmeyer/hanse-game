@@ -1,9 +1,13 @@
-// Strategy probe for the two EARNED systems — BUILDINGS (the v4.9 mason's mark) and
-// SPECIALISTS — on the v4.9b "Cornerstones" engine. Drives the CANONICAL play.html engine
-// (sim.js scaffolding: extract <script>, stub DOM, run the in-page AI), wraps the engine's
-// own functions in-scope so every count is ground truth, and prints per-count strategy
-// aggregates: who builds/seats, when, through which channel, what the mark economy pays,
-// and how holders' behaviour differs from non-holders'.
+// Strategy probe — the full ORACLE instrument since the v5.1r refit (2026-08-21; born at
+// v4.9b for buildings & specialists). Drives the CANONICAL play.html engine (sim.js
+// scaffolding: extract <script>, stub DOM, run the in-page AI), wraps the engine's own
+// functions in-scope so every count is ground truth, and prints per-count aggregates:
+//   BUILDINGS/SPECIALISTS — who builds/seats, when, channel, the mark economy, holder deltas
+//   ACTION ARCS — every core verb by game quarter + first-X timing, winners vs field
+//   LANES — relative score-bucket leans, winner composition, port leans, the Flight ladder
+//   BALANCE — seat fairness, margins, dead-port rates, the Manifest economy
+// v5.1 refit: claimLading → manClaim (the Order row retired at v5.0); deliverCask/brewCommit
+// hooked; CELLAR_MS budget hook for cellarmaster arms.
 //
 // Usage: node playtests/strategy-probe.js [N]     (N games per player count; default 200)
 // Env:   TIER=trader|journeyman|guildmaster|...   seat tier for ALL seats (default trader)
@@ -35,6 +39,7 @@ const driver = `
 //================= STRATEGY PROBE DRIVER (appended in-scope) =================
 render=function(){};save=function(){};log=function(){};snapshot=function(){};
 if(__GMS>0)GUILD_MS=__GMS;
+if(__CMS>0)CELLAR_MS=__CMS;
 var __G=null;      // per-game record (null outside games)
 var __ABST=-1;     // abstainer pid for the ablation arms (-1 = none)
 var __inHire=0,__inBenefit=0,__inCommit=0;
@@ -43,8 +48,11 @@ function __on(){return __G&&!aiSimulating;}
 // ---- per-player accumulator ----
 function __pp(pid){return __G.pp[pid];}
 function __ppInit(n){var a=[];for(var i=0;i<n;i++)a.push({loads:0,ages:0,bumps:0,gG:0,gH:0,comm:0,commG:0,sails:0,
-  ladings:0,scargo:0,bmTicks:0,innTicks:0,chSwaps:0,crierBumps:0,shipwSaved:0,prizeForfeit:0,specConsol:0,
-  firstBuildR:0,firstSeatR:0});return a;}
+  mans:0,delivs:0,scargo:0,bmTicks:0,innTicks:0,chSwaps:0,crierBumps:0,shipwSaved:0,prizeForfeit:0,specConsol:0,
+  firstBuildR:0,firstSeatR:0,firstBrewR:0,firstDelivR:0,firstCommR:0,rc:{}});return a;}
+// the ARC recorder: every core verb round-stamped per player; bucketed to quarters at game end
+function __arc(pid,verb){if(!__on()||pid==null)return;var q=__pp(pid);
+  var m=q.rc[verb]=q.rc[verb]||{};m[S.turn]=(m[S.turn]||0)+1;}
 
 // ---- ABLATION ARMS: the abstainer never engages the system (choice layer, rules untouched) ----
 var __surveyAffordable=surveyAffordable;surveyAffordable=function(p){
@@ -65,7 +73,7 @@ var __commitBldg=commitBldg;commitBldg=function(slot,key,pid,feePaid){
     __G.bldgs.push({k:key,pid:pid,r:S.turn,ms:S.buildings[slot].die,ch:ch,slot:slot,
       over:old?(old.owner!=null?'owned':'setup'):null,ticks:0,self:0,other:0,gone:0,pips:0,endPips:0,goneR:0,cause:null});
     __G.slotInst[slot]=__G.bldgs.length-1;
-    var q=__pp(pid);if(!q.firstBuildR)q.firstBuildR=S.turn;}
+    var q=__pp(pid);if(!q.firstBuildR)q.firstBuildR=S.turn;__arc(pid,'build');}
   return r;};
 var __bldgTick=bldgTick;bldgTick=function(slot){var b=S.buildings[slot];var d0=b&&b.die;
   var r=__bldgTick(slot);
@@ -86,7 +94,7 @@ var __hirePick=hirePick;hirePick=function(key){__inHire++;var r=__hirePick(key);
 var __grantUpgrade=grantUpgrade;grantUpgrade=function(p,k){var had=hasUpgrade(p,k);
   var r=__grantUpgrade(p,k);
   if(__on()&&!had&&hasUpgrade(p,k)){__G.seats.push({k:k,pid:p.id,r:S.turn,ch:__inHire?'fee':'prize'});
-    var q=__pp(p.id);if(!q.firstSeatR)q.firstSeatR=S.turn;}
+    var q=__pp(p.id);if(!q.firstSeatR)q.firstSeatR=S.turn;__arc(p.id,'seat');}
   return r;};
 
 // ---- BEHAVIOUR VERBS (per player) ----
@@ -94,24 +102,31 @@ var __gain=gain;gain=function(p,g,h){if(__on()&&p&&p.id!=null){var q=__pp(p.id);
   return __gain(p,g||0,h||0);};
 var __loadCommit=loadCommit;loadCommit=function(shipSlot,vi,useOpt){var p=cur();var c=p&&p.vessels[vi];
   var r=__loadCommit(shipSlot,vi,useOpt);
-  if(__on()&&p&&c&&!p.vessels[vi])__pp(p.id).loads++;
+  if(__on()&&p&&c&&!p.vessels[vi]){__pp(p.id).loads++;__arc(p.id,'load');}
   return r;};
 var __ageAllot=ageAllot;ageAllot=function(vi){var p=cur();var c=p&&p.vessels[vi];var d0=c&&c.die;
   var r=__ageAllot(vi);
-  if(__on()&&c&&c.die>d0)__pp(S.active).ages++;
+  if(__on()&&c&&c.die>d0){__pp(S.active).ages++;__arc(S.active,'age');}
   return r;};
-var __addPresence=addPresence;addPresence=function(lp,k,n){var r=__addPresence(lp,k,n);
-  if(__on()&&r>0){var q=__pp(lp.id);q.bumps+=r;if(hasUpgrade(lp,'towncrier'))q.crierBumps+=r;}
+var __addPresence=addPresence;addPresence=function(lp,k,n,fee){var r=__addPresence(lp,k,n,fee);
+  if(__on()&&r>0){var q=__pp(lp.id);q.bumps+=r;if(hasUpgrade(lp,'towncrier'))q.crierBumps+=r;__arc(lp.id,'bump');}
   return r;};
-var __claimLading=claimLading;claimLading=function(lp,idx){var n0=(lp.ladings||[]).length;
-  var r=__claimLading(lp,idx);
-  if(__on()&&(lp.ladings||[]).length>n0)__pp(lp.id).ladings++;
+var __manClaim=manClaim;manClaim=function(lp,gi,li){var n0=lp.manLines||0;   // v5.0: the Manifest line claim (claimLading retired with the Order row)
+  var r=__manClaim(lp,gi,li);
+  if(__on()&&(lp.manLines||0)>n0){__pp(lp.id).mans++;__arc(lp.id,'man');}
+  return r;};
+var __deliverCask=deliverCask;deliverCask=function(lp,L,dest){var r=__deliverCask(lp,L,dest);
+  if(__on()){var q=__pp(lp.id);q.delivs++;__arc(lp.id,'deliv');if(!q.firstDelivR)q.firstDelivR=S.turn;}
+  return r;};
+var __brewCommit=brewCommit;brewCommit=function(style,verb){var p=cur();var b0=p?(p._brews||0):0;
+  var r=__brewCommit(style,verb);
+  if(__on()&&p&&(p._brews||0)>b0){var q=__pp(p.id);__arc(p.id,'brew');if(!q.firstBrewR)q.firstBrewR=S.turn;}
   return r;};
 var __commPlace=commPlace;commPlace=function(slot){var d=UI.comm;var sn=(d&&d.idx!=null)?(S.shipDisplay||[])[d.idx]:null;
   var p=cur();var g0=p?p.grain:0;var had=!!S.slots[slot];
   var r=__commPlace(slot);
   if(__on()&&sn&&!had&&S.slots[slot]&&S.slots[slot].type==='ship'){var q=__pp(p.id);
-    q.comm++;q.commG+=(g0-p.grain);
+    q.comm++;q.commG+=(g0-p.grain);__arc(p.id,'comm');if(!q.firstCommR)q.firstCommR=S.turn;
     var printed=(COMMISSION_COST[sn.ship]||{}).g||0;
     if(hasUpgrade(p,'shipwright')&&printed>0)q.shipwSaved+=printed;}
   return r;};
@@ -119,7 +134,8 @@ var __sailShip=sailShip;sailShip=function(slot,creditId){var t0=S.slots[slot];va
   if(__on()&&t0){var seen={};(t0.load||[]).forEach(function(L){var o=S.players[L.owner];
     if(o&&o.id!==S.active&&hasUpgrade(o,'supercargo')&&!seen[o.id]){seen[o.id]=1;sc.push(o.id);}});}
   var r=__sailShip(slot,creditId);
-  if(__on()){__pp(creditId!=null?creditId:S.active).sails++;sc.forEach(function(id){__pp(id).scargo++;});}
+  if(__on()){var cid=creditId!=null?creditId:S.active;__pp(cid).sails++;__arc(cid,'sail');
+    sc.forEach(function(id){__pp(id).scargo++;});}
   return r;};
 var __bmTick=braumeisterTick;braumeisterTick=function(p){var d0=vesselDice(p);var r=__bmTick(p);
   if(__on()&&vesselDice(p)>d0)__pp(p.id).bmTicks++;return r;};
@@ -151,13 +167,21 @@ function __runGame(n,gi){
   __G.bldgs.forEach(function(inst){if(!inst.gone){var b=S.buildings[inst.slot];
     if(b&&b.owner===inst.pid)inst.endPips=b.die||0;}});
   var fr=finalRows();var rows=fr.rows;
+  var RND=Math.max(1,S.turn);
+  function __quarters(rc){var o={};Object.keys(rc).forEach(function(v){var qq=[0,0,0,0];
+    Object.keys(rc[v]).forEach(function(r){var qi=Math.min(3,Math.floor(4*(parseInt(r,10)-1)/RND));qq[qi]+=rc[v][r];});
+    o[v]=qq;});return o;}
   var g={n:n,rounds:S.turn,trigger:S.endReason||'?',abst:__ABST,
-    win:rows[0].p.id,winTotal:rows[0].sc.total,
+    win:rows[0].p.id,winTotal:rows[0].sc.total,secondTotal:rows[1]?rows[1].sc.total:0,
     players:S.players.map(function(p){var sc=scorePlayer(p);var q=__pp(p.id);
       var byDest={};p.delivered.forEach(function(d){byDest[d.dest]=(byDest[d.dest]||0)+1;});
+      var arcQ=__quarters(q.rc);delete q.rc;
       return {pid:p.id,win:rows[0].p.id===p.id?1:0,total:sc.total,deliv:sc.deliv,bank:sc.bank,
         maj:sc.maj,flight:sc.flight,guild:sc.guild,bldg:sc.bldg,bankM:p.bankM||0,
         brews:p._brews||0,ndeliv:p.delivered.length,byDest:byDest,recipes:p.recipes.length,
+        manLines:p.manLines||0,manPts:p.bankL||0,
+        flightN:Object.keys(p.shipped||{}).filter(function(st){return STYLES[st];}).length,
+        arcQ:arcQ,firsts:{brew:q.firstBrewR,deliv:q.firstDelivR,comm:q.firstCommR,build:q.firstBuildR,seat:q.firstSeatR},
         specs:p.upgrades.slice(),nBuilds:0,verbs:q};}),
     bldgs:__G.bldgs,seats:__G.seats};
   g.bldgs.forEach(function(b){g.players[b.pid].nBuilds++;});
@@ -189,6 +213,7 @@ const ctx = {
   lucide:{ createIcons:noop },
   __N:N, __TIER:TIER, __MODE:MODE, __COUNTS:COUNTS,
   __GMS:parseInt(process.env.GUILD_MS||'0',10),
+  __CMS:parseInt(process.env.CELLAR_MS||'0',10),
 };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;
 ctx.addEventListener = noop; ctx.removeEventListener = noop;
@@ -276,7 +301,7 @@ for (const n of COUNTS) {
       case 'towncrier':  return 'bumps/g '+V('crierBumps');
       case 'shipwright': return 'grain saved/g '+V('shipwSaved')+' · comms/g '+V('comm');
       case 'scholar':    return 'recipes end '+fmt(avg(hs.map(p=>p.recipes)),2);
-      case 'chronicler': return 'contracts claimed/g '+V('ladings');
+      case 'chronicler': return 'man-lines claimed/g '+fmt(avg(hs.map(p=>p.manLines||0)),2);
       case 'crane':      return 'loads/g '+V('loads');
       case 'granary':    return 'grain gained/g '+V('gG');
       case 'hopgarden':  return 'hops gained/g '+V('gH');
@@ -300,6 +325,48 @@ for (const n of COUNTS) {
   behav('Hop Gardener','hopgarden',['gH']);
   behav('Stevedore','crane',['loads']);
   behav('Braumeister','braumeister',['ages']);
+
+  // ---------- ACTION ARCS ----------
+  const AV=['brew','age','load','sail','deliv','comm','build','seat','man','bump'];
+  console.log('ACTION ARCS (avg per player, by game quarter        Q1     Q2     Q3     Q4):');
+  for (const v of AV) {
+    const qs=[0,1,2,3].map(qi=>avg(players.map(p=>((p.arcQ||{})[v]||[0,0,0,0])[qi])));
+    if (qs.every(x=>!x)) continue;
+    console.log('  '+v.padEnd(6)+' '+qs.map(x=>fmt(x,2).padStart(6)).join(' '));
+  }
+  const fstKeys=['brew','deliv','comm','build','seat'];
+  console.log('  first-X round — winners vs field: '+fstKeys.map(k=>{
+    const w=players.filter(p=>p.win&&p.firsts&&p.firsts[k]>0), f=players.filter(p=>!p.win&&p.firsts&&p.firsts[k]>0);
+    return k+' '+(w.length?fmt(avg(w.map(p=>p.firsts[k])),1):'—')+'/'+(f.length?fmt(avg(f.map(p=>p.firsts[k])),1):'—');
+  }).join(' · '));
+
+  // ---------- LANES / DOMINANT STRATEGIES ----------
+  const buckKeys=['deliv','bank','maj','flight','bldg','guild'];
+  const bMean={};buckKeys.forEach(k=>bMean[k]=avg(players.map(p=>p[k]||0))||0.0001);
+  const leanOf=p=>{let bk=null,bv=-1;buckKeys.forEach(k=>{const v=(p[k]||0)/bMean[k];if(v>bv){bv=v;bk=k;}});return bk;};
+  const byLean={};players.forEach(p=>{const k=leanOf(p);(byLean[k]=byLean[k]||[]).push(p);});
+  console.log('LANES — relative lean (score bucket ÷ corpus mean; baseline win '+pct(1,n)+'):');
+  Object.keys(byLean).sort((a,b)=>byLean[b].length-byLean[a].length).forEach(k=>{
+    const L=byLean[k];
+    console.log('  '+k.padEnd(7)+' '+pct(L.length,P).padStart(6)+' of seats · win '+pct(L.filter(p=>p.win).length,L.length).padStart(6)+' · avg total '+fmt(avg(L.map(p=>p.total))));});
+  const compo=set=>buckKeys.map(k=>k+' '+pct(set.reduce((s,p)=>s+(p[k]||0),0),Math.max(1,set.reduce((s,p)=>s+p.total,0)))).join(' · ');
+  console.log('  score composition — winners: '+compo(players.filter(p=>p.win)));
+  console.log('  score composition — field:   '+compo(players.filter(p=>!p.win)));
+  const modal=p=>{let bk='none',bv=0;Object.keys(p.byDest||{}).forEach(k=>{if(p.byDest[k]>bv){bv=p.byDest[k];bk=k;}});return bk;};
+  const byPort={};players.forEach(p=>{const k=modal(p);(byPort[k]=byPort[k]||[]).push(p);});
+  console.log('  modal delivery port: '+Object.keys(byPort).sort((a,b)=>byPort[b].length-byPort[a].length).map(k=>k+' '+pct(byPort[k].length,P)+' (win '+pct(byPort[k].filter(p=>p.win).length,byPort[k].length)+')').join(' · '));
+  const byF={};players.forEach(p=>{const f=Math.min(6,p.flightN||0);(byF[f]=byF[f]||[]).push(p);});
+  console.log('  beers shipped (Flight): '+Object.keys(byF).sort().map(k=>k+' beers '+pct(byF[k].length,P)+' (win '+pct(byF[k].filter(p=>p.win).length,byF[k].length)+')').join(' · '));
+
+  // ---------- BALANCE ----------
+  const seatW={};games.forEach(g=>{seatW[g.win]=(seatW[g.win]||0)+1;});
+  console.log('BALANCE: seat wins '+Object.keys(seatW).sort().map(s=>'P'+(+s+1)+' '+pct(seatW[s],G)).join(' · ')+' · winner total '+fmt(avg(games.map(g=>g.winTotal)))+' · margin '+fmt(avg(games.map(g=>g.winTotal-(g.secondTotal||0)))));
+  const deadCt={bruges:0,london:0,bergen:0,novgorod:0};
+  games.forEach(g=>{const tot={};g.players.forEach(p=>Object.keys(p.byDest||{}).forEach(k=>tot[k]=(tot[k]||0)+p.byDest[k]));
+    Object.keys(deadCt).forEach(k=>{if(!tot[k])deadCt[k]++;});});
+  console.log('  dead-port rate (0 deliveries all game): '+Object.keys(deadCt).map(k=>k+' '+pct(deadCt[k],G)).join(' · '));
+  const mc=players.filter(p=>p.manLines>0);
+  console.log('  manifest economy: lines/player '+fmt(avg(players.map(p=>p.manLines||0)),2)+' · ★/player '+fmt(avg(players.map(p=>p.manPts||0)),1)+' · ★/line '+(mc.length?fmt(avg(mc.map(p=>p.manPts/p.manLines)),2):'—'));
 
   // ---------- ABLATION ARM ----------
   if (MODE !== 'obs') {

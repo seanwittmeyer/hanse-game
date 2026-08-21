@@ -31,7 +31,7 @@ governed here.
 | building | n | A green tile on a slot; serves whoever activates it (most print riders — v5.1) | building-2 | buildings | No | ~~work~~, ~~privilege~~ (retired families) | ● |
 | recipe | n | A card granting permission to brew a beer | scroll-text | recipes | No | — | ● |
 | exports | n | The four dealt-3-of-4 beers (Broyhan · Keut · Mumme · Bock) | — | — | No | — | ● |
-| the Flight | n | Your flipped (brewed) recipe cards; scores (n−1)² | unlock | — | Yes | — | ● |
+| the Flight | n | Your completed (shipped) recipe cards — moved to the board’s COMPLETED side on that beer’s first load (v4.9d); scores (n−1)² | unlock | — | Yes | — | ● |
 | stack | n | A beer's face-up cask-tile supply (v5.0): a full Brew searches it and chooses the tile; the alternate takes the top tile; a delivered cask's tile returns to the bottom | — | stacks | No | ~~pile~~ (the pre-v5.0 term) | ● |
 | primary action | n | The action a station fires when YOUR worker stands on it (v5.0) | — | — | No | — | ● |
 | alternate action | n | The lesser action a station fires as the line's OTHER station (v5.0) | — | — | No | ~~alt~~ (allowed as the chip label only) | ● |

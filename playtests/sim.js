@@ -8,6 +8,8 @@
 //                     (majority · lifter · builder · breadth); per-lane win rates reported
 //        POOL=n sweeps the dice pool (THE pace dial) · GUILD_MS/CELLAR_MS lower the MC budgets
 //        ALTSRC=n / ALTAGE=n sweep the v5.0 alternate-station dials (override only when set)
+//        RSCOPE=1 — the v5.1r rider-scope arm (wide: load-bonus Source/Age fire the line's riders)
+//        MSPLUS=n — the utility riders (Granary·Mission Quay·Assay) start faces +n (arm C; sim-side)
 'use strict';
 const fs = require('fs');
 const vm = require('vm');
@@ -32,8 +34,8 @@ if(__JIT>0){['journeyman','trader'].forEach(function(t){AI_TIERS[t].noise=__JIT;
 var __U=null;
 function __uReset(){__U={manifests:0,rack:0,assayUp:0,assayDown:0,toll:0,hopex:0,abbey:0,kilnLift:0,bondedSail:0,bmSeat:0,bmTick:0,mq:0,
   exch:0,cap:0,victual:0,chandler:0,scargo:0,coopSail:0,customsBoard:0,rbShort:0,
-  comm_skute:0,comm_cog:0,comm_hulk:0,commG:0,built:0,bldgTicks:0,
-  pours:0,judged:0,slams:0,invE:0,invS:0,tilesWon:0};}   // v4.17 Tastings — pours · benches convened · door-slams · the ⚜ economy   // v4.9: builds + mason-die ticks   // v4.6 + the ship-shapers, instrumented at last (the AGRICOLA-STUDY B4 item) · v4.8: commissions by hull + grain paid (the 2/1/0 A/B)
+  comm_skute:0,comm_cog:0,comm_hulk:0,commG:0,built:0,bldgTicks:0,built_survey:0,built_prize:0,
+  pours:0,judged:0,slams:0,invE:0,invS:0,tilesWon:0,bonusSA:0,wideHits:0};}   // v5.1r: bonus Source/Age fires · those that collected ≥1 wide rider (exposure)   // v4.17 Tastings — pours · benches convened · door-slams · the ⚜ economy   // v4.9: builds + mason-die ticks   // v4.6 + the ship-shapers, instrumented at last (the AGRICOLA-STUDY B4 item) · v4.8: commissions by hull + grain paid (the 2/1/0 A/B)
 var __uOn=function(){return __U&&!aiSimulating;};   // never count MC-playout echoes
 var __manClaim=manClaim;manClaim=function(lp,gi,li){if(__uOn())__U.manifests++;return __manClaim(lp,gi,li);};   // v5.0: Manifest lines claimed
 var __invGrant=invGrant;invGrant=function(p,src){if(__uOn())__U.invE++;return __invGrant(p,src);};   // v5.0: every ⚜ faucet (Manifest claims · the Chancery · dials)
@@ -74,8 +76,22 @@ var __grantUpgrade=grantUpgrade;grantUpgrade=function(p,k){var had=hasUpgrade(p,
   if(__uOn()&&k==='braumeister'&&!had&&hasUpgrade(p,k))__U.bmSeat++;return r;};
 var __bmTick=braumeisterTick;braumeisterTick=function(p){var d0=vesselDice(p);var r=__bmTick(p);
   if(__uOn()&&vesselDice(p)>d0)__U.bmTick++;return r;};
+// v5.1r: the wide-scope EXPOSURE — how often a bonus Source/Age fires at all, and how often
+// the wide window actually collects a rider (RIDER_SCOPE=1 only). Explains a null.
+var __fireCaskAct=fireCaskAct;fireCaskAct=function(act,rt){
+  if(__uOn()&&(act==='source'||act==='goods3'||act==='age')){__U.bonusSA++;
+    if(RIDER_SCOPE===1&&wideRiders(act==='age'?'age':'source').length)__U.wideHits++;}
+  return __fireCaskAct(act,rt);};
+// v5.1r: builds by CHANNEL — chosen (the survey load-bonus) vs prize (London/Bergen benefit).
+// beginPlaceBldg carries the channel in rt ('benefitcont' = the prize continuation); aiBenefitAuto
+// is the AI's direct prize path (commitBldg without a beginPlaceBldg head).
+var __bldChan=null;
+var __beginPlaceBldg=beginPlaceBldg;beginPlaceBldg=function(key,owner,rt,feePaid){
+  __bldChan=(rt==='benefitcont')?'prize':'survey';return __beginPlaceBldg(key,owner,rt,feePaid);};
+var __aiBenefitAuto=aiBenefitAuto;aiBenefitAuto=function(lp,dest){__bldChan='prize';var r=__aiBenefitAuto(lp,dest);__bldChan=null;return r;};
 var __commitBldg=commitBldg;commitBldg=function(slot,key,pid,feePaid){var r=__commitBldg(slot,key,pid,feePaid);
-  if(__uOn()&&pid!=null&&S.buildings[slot]&&S.buildings[slot].owner===pid)__U.built++;return r;};
+  if(__uOn()&&pid!=null&&S.buildings[slot]&&S.buildings[slot].owner===pid){__U.built++;
+    __U[(__bldChan==='prize')?'built_prize':'built_survey']++;__bldChan=null;}return r;};
 var __bldgTick=bldgTick;bldgTick=function(slot){var b=S.buildings[slot];var d0=b&&b.die;var r=__bldgTick(slot);
   if(__uOn()&&b&&b.die>d0)__U.bldgTicks++;return r;};
 var __commPlace=commPlace;commPlace=function(slot){var d=UI.comm;var sn=(d&&d.idx!=null)?(S.shipDisplay||[])[d.idx]:null;
@@ -102,6 +118,10 @@ function __runGame(n){
   if(__IBLDG!=='')INV_BLDG=(__IBLDG==='1')?1:0;
   if(__ASRC!=='')ALT_SOURCE=parseInt(__ASRC,10)||1;   // v5.0 primary/alt dials — override ONLY when set
   if(__AAGE!=='')ALT_AGE=parseInt(__AAGE,10)||1;
+  if(__RSCOPE!=='')RIDER_SCOPE=parseInt(__RSCOPE,10)||0;   // v5.1r: the rider-scope arm (1 = wide)
+  if(__MSPLUS!==''){var __mp=parseInt(__MSPLUS,10)||0;     // v5.1r arm C: utility start faces +n (sim-side)
+    ['granary','missionq','assay'].forEach(function(k){var B=BUILDINGS[k];if(!B)return;
+      if(B.__ms0==null)B.__ms0=B.ms;B.ms=Math.min(6,B.__ms0+__mp);});}
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
   S.players.forEach(function(p,i){p.ai=__PERSONAS?{tier:'trader',persona:AI_PERSONAS[i%AI_PERSONAS.length]}:{tier:__TIER};p.presPool=PRES_POOL;});
   var guard=0;
@@ -159,6 +179,7 @@ const ctx = {
   __TBENCH:process.env.BENCH!=null?process.env.BENCH:'', __TCATB:process.env.CATB!=null?process.env.CATB:'', __EJ:process.env.EJUDGE!=null?process.env.EJUDGE:'', __TOUR:process.env.TOUR!=null?process.env.TOUR:'',
   __ICW:process.env.INV_CASK!=null?process.env.INV_CASK:'', __IBLDG:process.env.INV_BLDG!=null?process.env.INV_BLDG:'',
   __ASRC:process.env.ALTSRC!=null?process.env.ALTSRC:'', __AAGE:process.env.ALTAGE!=null?process.env.ALTAGE:'',   // v5.0: the primary/alt dials
+  __RSCOPE:process.env.RSCOPE!=null?process.env.RSCOPE:'', __MSPLUS:process.env.MSPLUS!=null?process.env.MSPLUS:'',   // v5.1r: the rider-scope A/B arms
   __POOL:parseInt(process.env.POOL||'0',10),
   __PERSONAS:PERSONAS,
   __GMS:parseInt(process.env.GUILD_MS||'0',10),
@@ -201,11 +222,12 @@ let anyErr=0;
   { // v45c: the new-systems utilization dashboard (per-game averages)
     const uk=['manifests','rack','assayUp','assayDown','toll','hopex','abbey','kilnLift','bondedSail','bmSeat','bmTick',
       'exch','cap','victual','chandler','scargo','coopSail','customsBoard','rbShort',
-      'comm_skute','comm_cog','comm_hulk','commG','built','bldgTicks',
-      'pours','judged','slams','invE','invS','tilesWon'];
+      'comm_skute','comm_cog','comm_hulk','commG','built','bldgTicks','built_survey','built_prize',
+      'pours','judged','slams','invE','invS','tilesWon','bonusSA','wideHits'];
     const us={};uk.forEach(k=>us[k]=avg(ok.map(r=>(r.use&&r.use[k])||0)));
     console.log(`commissions/game: ${fmt(us.comm_skute+us.comm_cog+us.comm_hulk)} — skute ${fmt(us.comm_skute)} · cog ${fmt(us.comm_cog)} · hulk ${fmt(us.comm_hulk)} · grain paid ${fmt(us.commG)}`);
-    console.log(`mason's marks (v4.9): builds/game ${fmt(us.built)} · die ticks ${fmt(us.bldgTicks)} · end pips/player ${fmt(avg(ok.map(r=>r.bldgPips||0)))}`);
+    console.log(`mason's marks (v4.9): builds/game ${fmt(us.built)} (chosen ${fmt(us.built_survey)} · prize ${fmt(us.built_prize)}) · die ticks ${fmt(us.bldgTicks)} · end pips/player ${fmt(avg(ok.map(r=>r.bldgPips||0)))}`);
+    console.log(`v5.1r rider scope: bonus Source/Age fires/game ${fmt(us.bonusSA)} · wide-window collections ${fmt(us.wideHits)}`);
     console.log(`v5.0/v4.5b usage/game: manifest lines ${fmt(us.manifests)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)}▲/${fmt(us.assayDown)}▼ · toll ${fmt(us.toll)} · hopex-pay ${fmt(us.hopex)} · abbey ${fmt(us.abbey)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);
     console.log(`v4.6 usage/game: exchange ${fmt(us.exch)} · capstan ${fmt(us.cap)} · victual loads ${fmt(us.victual)} · chandler ${fmt(us.chandler)} · supercargo ${fmt(us.scargo)} · coop-berth sails ${fmt(us.coopSail)} · customs boards ${fmt(us.customsBoard)} · richberth buys ${fmt(us.rbShort)}`);
     if(us.pours>0)   // v4.17 TASTINGS dashboard

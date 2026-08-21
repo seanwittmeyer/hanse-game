@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Components (v5.0 “Open Wharf”)
+# Brewhouses of the Hanse — Components (v5.1 “Wharf Hands”)
 
 > **v5.0 “Open Wharf” (designer-ruled 2026-08-18 — three rulings; the record:
 > `archive/records/V5-OPEN-WHARF.md`):** **(1)** the cask supply reads as **searchable
@@ -288,8 +288,8 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (its header states the current version). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `archive/records/V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v4.17b “Champion’s Tour”** (`KEY hanse-v417b`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `print.html` — the only kit in use** (components.js data is v4.17b; the sheet layouts are the P4 refresh + the 2026-08-18 native-scale pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - The live build is `play.html` — **v5.1 “Wharf Hands”** (`KEY hanse-v51r` — the r is the 2026-08-21 rider-scope study letter: an engine dial ⚙, no component change) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `print.html` — the only kit in use** (components.js data is v5.1; the sheet layouts are the P4 refresh + the 2026-08-18 native-scale pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
 
 ---
 
