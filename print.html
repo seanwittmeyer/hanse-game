@@ -403,6 +403,8 @@
   .stn .stn-foot{display:flex;flex-direction:column;align-items:center;gap:.035in;margin-bottom:.01in}
   .stn .stn-act{display:flex;align-items:center;justify-content:center}
   .stn .stn-act img.ai{width:.95in;height:.95in;filter:drop-shadow(0 2px 5px rgba(0,0,0,.55))}
+  .stn .stn-act img.ai.stn-alt-i{width:.55in;height:.55in}   /* the alt chip at ~55%, as on the app face */
+  .stn .stn-slash{color:#f2ecdd;font-weight:bold;font-size:.3in;margin:0 .05in;text-shadow:0 1px 3px rgba(0,0,0,.8);align-self:center}
   .stn .stn-sub{font-style:italic;font-weight:bold;font-size:.17in;line-height:1;text-shadow:0 1px 3px rgba(0,0,0,.9)}
   /* per-station frame colours match the action icons' bases (designer): Market RED · Brewhouse
      YELLOW · Harbor BLUE · Cellar GREEN (the gradient is the fallback under the opaque scene) */
@@ -1012,10 +1014,12 @@ const STN_GRAD='<svg class="stn-grad" preserveAspectRatio="none" viewBox="0 0 1 
   +'<stop offset="0" stop-color="#14100b" stop-opacity=".74"/><stop offset=".5" stop-color="#14100b" stop-opacity=".4"/>'
   +'<stop offset="1" stop-color="#14100b" stop-opacity="0"/></linearGradient></defs>'
   +'<rect width="1" height="1" fill="url(#stngrad)"/></svg>';   // one shared id — every cell uses the identical ramp
-function station(L,nm,scene,actIc,sub){return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
+function station(L,nm,scene,actIc,sub,altIc){return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
   +'<img class="stn-scene" src="art/scene-'+scene+'.png" alt="">'+STN_GRAD
   +'<span class="nm">'+nm+'</span>'
-  +'<span class="stn-foot"><span class="stn-act">'+LU(actIc)+'</span><span class="stn-sub">'+sub+'</span></span></div>';}
+  +'<span class="stn-foot"><span class="stn-act">'+LU(actIc)
+  +(altIc?'<span class="stn-slash">/</span>'+LU(altIc,'stn-alt-i'):'')   // v5.1x parity with the app face: [primary] / [smaller alt]
+  +'</span><span class="stn-sub">'+sub+'</span></span></div>';}
 // printables2: the WHARF is now a CROSS board on its own (the cut follows the plus). 4×4 grid:
 // empty corners · 8 perimeter slots · the 4 stations in the centre 2×2.
 // a rounded-corner PLUS outline (objectBoundingBox 0–1) — used both as the cross board's clip-path and,
@@ -1063,11 +1067,11 @@ function wharfCross(){
   const wharf='<div class="wharf">'
     +'<div></div>'+slot+slot+'<div></div>'
     +slot
-    +station('A','Market','market','goods-2','Gain 2 goods \u00b7 alt 1')
-    +station('B','Brewhouse','brewhouse','brew-choose','Brew \u2014 search the stack \u00b7 alt: top tile')
+    +station('A','Market','market','goods-2','Gain 2 goods \u00b7 alt 1','coins')
+    +station('B','Brewhouse','brewhouse','flask-conical','Brew \u2014 search the stack \u00b7 alt: top tile','brew-top')
     +slot+slot
-    +station('C','Harbor','harbor','ship','Commission \u00b7 alt: Load 1, any Ship')
-    +station('D','Cellar','cellar','age-3','Age 3 \u00b7 alt 1')
+    +station('C','Harbor','harbor','ship','Commission \u00b7 alt: Load 1, any Ship','package-plus')
+    +station('D','Cellar','cellar','age-3','Age 3 \u00b7 alt 1','age-1')
     +slot
     +'<div></div>'+slot+slot+'<div></div>'
     +'</div>';

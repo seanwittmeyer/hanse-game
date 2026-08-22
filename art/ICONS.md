@@ -82,6 +82,14 @@
 > chip takes the plain pot** (`flask-conical` → `station-brew`) — the `layers` stand-in
 > retires. The plain pot = the plain top-of-stack brew, per the round-6 ruling.
 
+> **Round 8 (designer, 2026-08-19): the brew faces SWAP — the arrow means TOP TILE.** The
+> arrow-on-the-stack art reads "take the top of the stack", so it is the **ALT** icon; the
+> **plain pot is the PRIMARY** brew-and-SEARCH. The file renames to **`station-brew-top.png`**
+> (key `brew-top`); play swaps its chips, and the **print station faces gain the same
+> `[primary] / [smaller alt]` pair** as the app (all four stations — Market `goods-2`/`coins` ·
+> Brewhouse pot/`brew-top` · Harbor `ship`/`package-plus` · Cellar `age-3`/`age-1`), so the
+> arrow art still prints.
+
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
 > (the tiles already carry full-bleed art). **ADDED: one icon per Kontor** — a city crest
@@ -129,11 +137,11 @@ Sources of truth: `components.js` (card faces) · `play.html` (app UI) · `print
 | Concept | Lucide today | Suggested slug | Where it appears | Meaning / notes |
 |---|---|---|---|---|
 | Market — Source | — (real: `goods-2`) | `station-market` | station cell, aids | Take 2 goods, any mix. **Round 6: the primary face prints `goods-2.png`** (the numbered basket); the stall art `station-market.png` stays for scene/reference use. |
-| Brewhouse — Brew (choose) | — (real: `brew-choose`) | `station-brew-choose` | station cell (the PRIMARY face), aids | **Round 7: LANDED** — the pot + the tile deck + the white down-arrow (search the stack and CHOOSE). The plain pot (`station-brew`) stays the *Brew 1* bonus art and the ALT chip. |
+| Brewhouse — Brew (search) | `flask-conical` | `station-brew` | station cell (the PRIMARY face), aids, *Brew 1* bonus | **Round 8 swap:** the plain pot = the primary brew-and-SEARCH (pay a recipe, search the beer's stack and choose the tile). |
 | Cellar — Age | `hourglass` | `station-age` | station cell, aids, *Age +2* bonus, Abbey Cellar | Turn aging dice up. **Shared with the Age bonus (fine) and the Abbey Cellar tile crest (give the Abbey its own crest — see §4).** |
 | Harbor — Commission | `ship` | `station-harbor` | station cell, aids | Pay 1 G, place a display Ship, load 1 Ready cask. Distinct from the Ship-tile icon: suggest a crane/quay scene. |
 | **Market ALT — Source 1** | `coins` (stand-in) | `station-market-alt` | the station face's alt chip (v5.1x: `[primary] / [alt]`) | **WANTED — no icon of its own yet.** The lesser Source: one sack/coin where the primary shows the pair. Until then the alt chip reuses the goods icon at ~55% size. |
-| Brewhouse ALT — top tile (blind) | — (real: `flask-conical` → `station-brew`) | — | the station face's alt chip; the alt-brew UI | **DONE (round 7):** the alt chip wears the plain pot — the plain brew takes the top tile. The `layers` stand-in is retired; the face-down-stack concept is superseded. |
+| Brewhouse ALT — top tile (blind) | — (real: `brew-top`) | `station-brew-top` | the station face's alt chip; the alt-brew UI | **DONE (rounds 7-8):** the pot + tile deck + white down-arrow — the arrow points at the TOP of the stack: take the top tile. The `layers` stand-in is retired. |
 | Cellar ALT — Age 1 | — (real: `age-1`) | `station-age-1` | the station face's alt chip | Exists (`art/icons/station-age-1.png`) — the one-pip age chip. |
 | Harbor ALT — Load 1, any Ship | `package-plus` | — | the station face's alt chip | The load icon covers it (same verb, any docked Ship). |
 | The Wharf | `anchor` | `wharf` | glossary, aid headers | The whole core area. **Also currently the Rich Berth crest — split (see §4).** |
