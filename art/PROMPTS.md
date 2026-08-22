@@ -222,3 +222,9 @@ mission chapel on the quay, a lantern over its door, nets and a moored skiff bes
   (the Broker); object-shot on parchment, purple-tile framing as the other specialists.
 - **improve-brewer-s-mate.jpg** — a young brewer hefting a long mash rake beside an open tun
   (the Brewer's Mate); same object-shot framing.
+
+## v5.2b — the Source-3 station face (2026-08-22)
+- **goods-3.png** — the Market PRIMARY face rose to Source 3 (v5.2b): the round-5
+  numbered-Source treatment exactly (the goods basket + the landed numeral), a "3"
+  in place of the "2". Until it lands, the board prints the plain basket (`goods.png`)
+  as the stand-in — swap the ICON_ART 'goods-3' entry to 'goods-3' when the file exists.

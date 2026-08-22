@@ -109,3 +109,36 @@ churn) · ventures commit no die (the runway discount vs the ladder's ante) · m
 pacing by start face · STAPLE +2 vs +4 ⚙ · the greedy venture mix (the bots over-favour
 the Warehouse L1 — a prior, not a verdict) · the Cooperage's shared-Ship berth (the one
 non-loader-only face) · every new number ⚙ unplayed.
+
+## 6 · The v5.2b letter (same day — the designer's first hands-on read)
+
+**Status: RULED · built · `KEY hanse-v52b`.** Four rulings, one message:
+
+1. **THE LADDER IS THE GROUND ITSELF.** The morning build read the ruling loosely — an L1
+   could open on any empty slot while a die stood anywhere. The designer: *"the play page
+   has some logic that is off… It allowed me to build an L1 in another open slot, it
+   should have required me to replace a shared building I invested in."* Now: an **L1
+   REPLACES a Public Work carrying YOUR die** — the pips bank at once, the die comes home,
+   the worn public tile is boxed (the overbuild grammar); an L1 **never takes an open
+   slot**; a rival's work and a die-less setup seed are not ground. Build the commons →
+   let the wharf wear it → redevelop the ground you funded. The timing agony is real:
+   L1-over-a-die-at-5 banks 5★ and forfeits the +6 maturity.
+2. **The *Brew 1* load bonus takes the TOP tile.** *"The brew bonus on the cask should be
+   the top tile variant of the action, not the search variant."* The search stays the
+   station primary's (and the Brewery Venture's) edge; the Brewer's Mate lifts only the
+   station alternate.
+3. **Market primary = Source 3 ⚙** (`SRC_PRIMARY`, sim hook `SRCN`). *"The game is slower
+   because of the lack of resources… boost the main station action on market to 3 goods.
+   Worth a try because you are spending goods on other things than brewing beer."* The
+   alternate holds at 1, the Broker at 2. The v5.2 stage-1 corpus is the A arm.
+4. **The Bergen fallback confirmed & printed.** The designer asked whether full seats
+   make the prize useless — the v4.7 consolation already covered it (engine-only, 2 G).
+   Ruled forward: **no seat to fill → 2 goods (1 G + 1 H)**, now printed on the mat and
+   the aid. *"It's already the most valuable Kontor for majorities so a competition is
+   good"* — the seat race stays the point.
+
+Gates at the letter: verify **349/349** (the ladder battery rewritten to ground-succession
++ §32b: Source 3 · the top-tile bonus · the Bergen fallback) · sim smokes clean 2–4p
+(cross-quay loads now fire — 0.4/g in a smoke count) · ai-render-smoke ALL PASS. Watches →
+RULES §Open #19 (Source-3 pace both ways · the ladder eating your own Kiln · the
+consolation faucet · the cooled *Brew 1* tiles). The full oracle runs on THIS build.

@@ -1080,12 +1080,12 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   p.cell='A';activateLine('rowT');   // A (Market — the worker) + B (Brewhouse)
   var cells=UI.stops.filter(function(st){return st.kind==='cell';});
   ok('the line marks the worker’s station PRIMARY, the other ALTERNATE', cells.length===2&&cells.every(function(st){return st.alt===(st.cell!=='A');}));
-  ok('the dials print 2/1 · search/top · 3/1 · commission/load-1 (ALT_SOURCE 1 · ALT_AGE 1 · ALT_LOADS 1)', ALT_SOURCE===1&&ALT_AGE===1&&ALT_LOADS===1);
+  ok('the dials print 3/1 \u00b7 search/top \u00b7 3/1 \u00b7 commission/load-1 (SRC_PRIMARY 3 \u00b7 ALT_SOURCE 1 \u00b7 ALT_AGE 1 \u00b7 ALT_LOADS 1)', SRC_PRIMARY===3&&ALT_SOURCE===1&&ALT_AGE===1&&ALT_LOADS===1);
   enterCell('A',true);
   ok('the Market alternate is Source '+ALT_SOURCE, UI.sub==='source'&&UI.src.n===ALT_SOURCE);
   UI.src=null;stops();
   enterCell('A',false);
-  ok('the Market primary stays Source 2', UI.sub==='source'&&UI.src.n===2);
+  ok('the Market primary is Source '+SRC_PRIMARY+' (v5.2b)', UI.sub==='source'&&UI.src.n===SRC_PRIMARY);
   UI.src=null;stops();
   p.vessels[0]={style:'bock',q:5,die:2,act:'age'};
   enterCell('D',true);
@@ -1114,32 +1114,76 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 })();
 
 // ---- 32. v5.2 "GROUNDWORK": the two families \u00b7 the ladder \u00b7 the dual-use hand \u00b7 the powers ----
-(function(){var p=fresh();stops();p.ai=null;   // THE LADDER + THE CLIMB
-  ok('no public die standing \u2192 the L1 rung is CLOSED (the ladder, ruled)', !canVentureL1(p));
+(function(){var p=fresh();stops();p.ai=null;   // THE LADDER + THE CLIMB (v5.2b: the ground itself)
+  ok('no invested Public Work \u2192 the L1 rung is CLOSED (the ladder, ruled)', !canVentureL1(p));
   commitBldg('s1','maltkiln',0);
-  ok('a standing mason\u2019s die OPENS the rung (checked at placement \u2014 the physical, no-memory form)', canVentureL1(p));
-  p.grain=5;var h0=p.hand.length;
+  ok('YOUR invested work OPENS the rung \u2014 and is itself the only ground (v5.2b)',
+    canVentureL1(p)&&ventureL1Slots(p).length===1&&ventureL1Slots(p)[0].id==='s1');
+  S.buildings.s2={b:'tollhouse',owner:1,die:3};   // a RIVAL's investment
+  S.buildings.s3={b:'weighhouse'};                // a NEUTRAL setup seed (no die)
+  ok('a rival\u2019s work and a neutral seed are NOT rungs (your die is the permit)',
+    ventureL1Slots(p).length===1);
+  p.grain=5;var h0=p.hand.length;var bank0=p.bank;
   UI.survey={returnTo:'stops'};UI.sub='survey';venturePick('counting',1,false);
   ok('the L1 pick pays its 1G \u2699 fee and asks for ground', UI.sub==='placevent'&&p.grain===4);
   placeVentOn('s6');
-  ok('the L1 lands on open ground \u2014 the tile leaves the hand (its L2 face forfeit)',
-    vAt('s6')&&vAt('s6').lvl===1&&vAt('s6').owner===0&&p.hand.length===h0-1&&p.hand.indexOf('counting')<0);
-  ok('a Venture carries NO mason\u2019s die \u2014 and never reads as a public key', S.buildings.s6.die===undefined&&bKeyAt('s6')===null);
-  S.buildings.s1.die=5;bldgTick('s1');
-  ok('the public die MATURING walks the permit \u2014 the rung closes until the next public build', !canVentureL1(p));
+  ok('OPEN ground refuses the L1 (v5.2b \u2014 the open-slot door is closed)', UI.sub==='placevent'&&!vAt('s6'));
+  placeVentOn('s2');placeVentOn('s3');
+  ok('\u2026so do the rival\u2019s work and the neutral seed', UI.sub==='placevent'&&!vAt('s2')&&!vAt('s3'));
+  placeVentOn('s1');
+  ok('the L1 REPLACES your invested work \u2014 the tile leaves the hand (its L2 face forfeit)',
+    vAt('s1')&&vAt('s1').lvl===1&&vAt('s1').owner===0&&p.hand.length===h0-1&&p.hand.indexOf('counting')<0);
+  ok('\u2026the pips bank at once and the public tile is boxed (bldgDepart \u2014 overbuild grammar)',
+    p.bank===bank0+2&&bKeyAt('s1')===null);
+  ok('a Venture carries NO mason\u2019s die \u2014 and never reads as a public key', S.buildings.s1.die===undefined&&bKeyAt('s1')===null);
+  ok('the ground consumed \u2014 the rung closes until the next public build', !canVentureL1(p));
+  commitBldg('s4','cooperage',0);S.buildings.s4.die=5;bldgTick('s4');
+  ok('a work that MATURES walks the permit too (the slot opens \u2014 no rung)', !canVentureL1(p)&&!S.buildings.s4);
   S.active=1;var q2=S.players[1];q2.grain=5;
   ok('a rival can NEVER overbuild a Venture (no target \u00b7 commitBldg refuses)',
-    !bldgTargets(q2).some(function(s){return s.id==='s6';})&&commitBldg('s6','tollhouse',1)===false&&vAt('s6').owner===0);
+    !bldgTargets(q2).some(function(sx){return sx.id==='s1';})&&commitBldg('s1','tollhouse',1)===false&&vAt('s1').owner===0);
   S.active=0;
   p.grain=5;var h1=p.hand.length;
   UI.survey={returnTo:'stops'};UI.sub='survey';venturePick('warehouse',2,false);
   ok('the L2 pick pays its 2G \u2699 fee and targets ONLY your own L1', UI.sub==='placevent'&&p.grain===3);
-  placeVentOn('s2');
-  ok('open ground refuses an L2 (the climb keeps its ground)', UI.sub==='placevent'&&!vAt('s2'));
   placeVentOn('s6');
+  ok('open ground refuses an L2 (the climb keeps its ground)', UI.sub==='placevent'&&!vAt('s6'));
+  placeVentOn('s1');
   ok('THE CLIMB lands: the L2 face stands on the L1\u2019s ground; the spent L1 tile is boxed',
-    vAt('s6')&&vAt('s6').lvl===2&&vAt('s6').v==='warehouse'&&p.hand.length===h1-1);
+    vAt('s1')&&vAt('s1').lvl===2&&vAt('s1').v==='warehouse'&&p.hand.length===h1-1);
   ok('the Guild Residence scores '+VRES_PTS+'\u2605 \u2699 per Venture in play', scorePlayer(p).guild===VRES_PTS*1);
+})();
+// ---- 32b. the v5.2b letter: Source 3 \u00b7 the top-tile Brew bonus \u00b7 the Bergen fallback ----
+(function(){var p=fresh();stops();p.ai=null;
+  enterCell('A',false);
+  ok('v5.2b: the Market PRIMARY is Source '+SRC_PRIMARY+' \u2699 (was 2 \u2014 \u201cthe game is slower\u2026\u201d)',
+    UI.sub==='source'&&UI.src.n===SRC_PRIMARY&&SRC_PRIMARY===3);
+  UI.src=null;stops();
+  enterCell('A',true);
+  ok('\u2026the alternate holds at Source '+ALT_SOURCE, UI.sub==='source'&&UI.src.n===ALT_SOURCE);
+  UI.src=null;stops();
+  p.recipes=['gruit'];p.grain=5;p.hops=5;p.vessels=[null,null,null];
+  var top=pileTop('gruit');
+  fireCaskAct('brew','stops');
+  ok('the cask\u2019s Brew bonus opens the brew picker\u2026', UI.sub==='brew'&&UI.brew.alt==='top');
+  brewPick('gruit');
+  ok('\u2026and takes the TOP tile \u2014 no search, no verb menu (v5.2b ruled)',
+    UI.sub!=='brewverb'&&p.vessels[0]&&p.vessels[0].act===top);
+  stops();UI.pendingActs=[];
+  enterBrew('stops',false,false);
+  var multi=Object.keys(pileVerbs('gruit')).length>1;
+  brewPick('gruit');
+  ok('the STATION\u2019s full Brew still searches (the verb menu for a human)',
+    multi?UI.sub==='brewverb':UI.sub!=='brewverb');
+  if(UI.sub==='brewverb')brewVerbPick(Object.keys(pileVerbs('gruit'))[0]);
+  stops();UI.pendingActs=[];UI.brew=null;UI.bverb=null;
+})();
+(function(){var p=fresh();stops();p.ai=null;   // the Bergen fallback (v5.2b: confirmed + evened)
+  p.upgrades=['cellar','crane'];   // both seats FULL (no goods-faucet specialists — the Grain Factor would inflate the read)
+  var g0=p.grain,h0=p.hops;
+  UI.pendingSpec=[{pid:0,dest:'bergen'}];afterSail('stops');
+  ok('seats FULL \u2192 the Bergen prize pays 2 goods (1 grain + 1 hop \u2014 the fallback, ruled)',
+    p.grain===g0+1&&p.hops===h0+1&&(UI.pendingSpec||[]).length===0);
 })();
 (function(){var p=fresh();stops();p.ai=null;   // COUNTING HOUSE + WAREHOUSE on the load path
   S.buildings.s4={v:'counting',lvl:1,owner:0};var sh=ship('s4','cog','bruges');

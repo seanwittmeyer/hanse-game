@@ -302,7 +302,7 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (its header states the current version). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `archive/records/V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v5.2 “Groundwork”** (`KEY hanse-v52`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v5.2 “Groundwork” + the v5.2b letter** (`KEY hanse-v52b`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - **The print kit is `print.html` — the only kit in use** (components.js data is v5.1; the sheet layouts are the P4 refresh + the 2026-08-18 native-scale pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
 
 ---
@@ -326,7 +326,7 @@
 
 | Board | Qty | Holds |
 |---|---|---|
-| Main board — **the Wharf** | 1 | 2×2 stations, each printing a **PRIMARY and an ALTERNATE action** (v5.0 — Market *Source 2 / 1* · Brewhouse *Brew: search the stack / the top tile* · Cellar *Age 3 / 1* · Harbor *Commission at the Ship’s printed fee + load 1, no ★ / Load 1 onto any docked Ship*), ringed by 8 slots (a building seat + a ship seat each). |
+| Main board — **the Wharf** | 1 | 2×2 stations, each printing a **PRIMARY and an ALTERNATE action** (v5.0 · v5.2b — Market *Source 3 / 1* · Brewhouse *Brew: search the stack / the top tile* · Cellar *Age 3 / 1* · Harbor *Commission at the Ship’s printed fee + load 1, no ★ / Load 1 onto any docked Ship*), ringed by 8 slots (a building seat + a ship seat each). |
 | **Destinations board** | 1 | The four Kontor panels — Bruges · London · Bergen · Novgorod — each printing its **minimum (die N+)**, its **prize** (recipe / building / specialist — Novgorod instead prints **value = the die +2★**), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the scored-★ audit) — plus the **Manifest deck well** (v5.0 — the Order row retired; the demand cards ride the Ships). *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
 | Player boards | 4 | **3 vessel slots + 2 specialist seats — all open from the start** (v45h). The Flight ladder + a printed **Manifest reminder** (v5.0 — claimed demands score at once; the old Orders pile zone is gone). Recipe cards sit beside it. Goods cap 8 printed. |
 | **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per player — the ★ scored in play (Manifest demands · Tollhouse stamps · 1★ placed presence · departing buildings’ dice) and delivery ★ as they land. *(New in v4.0 — the hard line demands a home for scored ★.)* |
@@ -427,8 +427,9 @@ faces as stand-ins; briefs queued in `art/PROMPTS.md`.)*
 
 **Private** — a Venture serves its owner alone and wears the **owner’s colour ring** (the
 printed ring IS the ownership mark; no die ever stands on one). Each house starts with the
-same **hand of 4**; a tile plays **L1-side up from hand** (THE LADDER, ruled: only while one
-of your mason’s dice **stands on a Public Work**) or lands **L2-side up over your own L1**
+same **hand of 4**; a tile plays **L1-side up onto a Public Work YOU invested in** (THE
+LADDER, ruled · v5.2b: your standing die banks its pips and comes home; the worn public tile
+is boxed — an L1 never takes an open slot) or lands **L2-side up over your own L1**
 (the spent L1 tile is boxed; the ground is kept). One piece of cardboard, one face per life:
 playing a side forfeits the other. **A rival can never overbuild a Venture; an L2 can never
 be displaced.** Fees ⚙ **L1 1 `G` · L2 2 `G`** (grain only; waived as the London prize).
@@ -444,7 +445,8 @@ Ventures commit **no die** — the clock is untouched.
 ## 7. Specialist tiles (15 designs — v5.1 · the core 5 × max(2, n−1) + the guild 10 × 1 · 2×2″ purple)
 
 Free as **Bergen’s prize** — v4.7: **per cask** (every cask seats its player one; pick order
-= load order); the
+= load order; **no seat to fill → the prize pays 2 goods**, 1 `G`+1 `H` — v5.2b, printed on
+the mat); the
 *Gain 1 specialist* bonus pays each tile’s **printed wharf fee** ⚙ (v5.1: the Hiring Post
 retired). **Two seats**
 per player; never two of a kind. **No tile prints a requirement** (v4.12 — the gates are
@@ -533,6 +535,13 @@ displays: Ships 4 / buildings 4 / Specialists 4 · **a Manifest on every non-Bru
 worker placed free · first player fixed.
 
 ## 10. Box delta vs v3.4
+
+**v5.2b delta (2026-08-22, ruled — the second letter):** REPRINTS, no counts — the **Wharf
+board** (Market primary **Source 3** ⚙ — the numbered `goods-3` face is briefed, the plain
+basket stands in) · the **Venture sheet + rulebook ladder line** (an L1 REPLACES a Public
+Work you invested in — never an open slot) · the **cask-tile grammar note** (*Brew 1* = the
+top tile; only the station searches) · the **Bergen mat + player aid** (the 2-goods
+fallback line printed: no seat → 1 `G`+1 `H`).
 
 **v5.2 delta (2026-08-22, ruled):** the building family SPLITS — **Public Works** print 13
 (brown; Granary · Mission Quay · Racking · Assay · Abbey · Hop Exchange · Merchants'

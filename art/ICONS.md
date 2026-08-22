@@ -136,7 +136,7 @@ Sources of truth: `components.js` (card faces) · `play.html` (app UI) · `print
 
 | Concept | Lucide today | Suggested slug | Where it appears | Meaning / notes |
 |---|---|---|---|---|
-| Market — Source | — (real: `goods-2`) | `station-market` | station cell, aids | Take 2 goods, any mix. **Round 6: the primary face prints `goods-2.png`** (the numbered basket); the stall art `station-market.png` stays for scene/reference use. |
+| Market — Source | — (real: `goods-3` briefed) | `station-market` | station cell, aids | Take 3 goods, any mix (v5.2b ⚙). **The numbered `goods-3.png` is briefed (PROMPTS.md)** — the plain `goods.png` basket stands in; `goods-2.png` retires with the Source-2 face; the stall art `station-market.png` stays for scene/reference use. |
 | Brewhouse — Brew (search) | `flask-conical` | `station-brew` | station cell (the PRIMARY face), aids, *Brew 1* bonus | **Round 8 swap:** the plain pot = the primary brew-and-SEARCH (pay a recipe, search the beer's stack and choose the tile). |
 | Cellar — Age | `hourglass` | `station-age` | station cell, aids, *Age +2* bonus, Abbey Cellar | Turn aging dice up. **Shared with the Age bonus (fine) and the Abbey Cellar tile crest (give the Abbey its own crest — see §4).** |
 | Harbor — Commission | `ship` | `station-harbor` | station cell, aids | Pay 1 G, place a display Ship, load 1 Ready cask. Distinct from the Ship-tile icon: suggest a crane/quay scene. |

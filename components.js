@@ -25,6 +25,7 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   'quality-1':'quality-1','quality-2':'quality-2','quality-3':'quality-3','quality-4':'quality-4',
   'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail','age-1':'station-age-1','age-2':'station-age-2',
   'goods-2':'goods-2',   // round 5 (2026-08-19): the numbered Source face — the basket + a "2" in the landed numeral treatment
+  'goods-3':'goods',     // v5.2b: Source 3 — STAND-IN (the plain basket) until the numbered '3' lands; brief queued in art/PROMPTS.md
   'brew-top':'station-brew-top',   // rounds 7-8 (2026-08-19): the ALT Brewhouse — the pot + tile deck + down-arrow = take the TOP tile of the stack (blind); the plain pot stays the primary brew-and-SEARCH
   // die MODIFIER marks (round 4): the die with its lift/drop printed on it — drops in red
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
@@ -321,7 +322,8 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 // hand of 4 DUAL-USE tiles (one piece of cardboard = an L1 face OR an L2 face, never both:
 // played from hand it lands L1-up; played onto your own L1 it lands L2-up and the spent L1 is
 // boxed). NO mason's die — owner-only (the tile wears the OWNER'S COLOUR RING, printed per
-// house). THE LADDER: an L1 places only while one of your dice stands on a Public Work.
+// house). THE LADDER (v5.2b): an L1 REPLACES a Public Work YOU invested in — the pips bank,
+// your die comes home, the public tile is boxed. An L2 climbs only your own L1.
 // The kit prints 4 designs × 4 house-ringed copies = 16 tiles, 2.5×1.32in, blue foot (the
 // owner-only colour). (art: stand-ins from the retired tiles' freed files; briefs queued.)
 const VENTURES=[

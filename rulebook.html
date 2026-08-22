@@ -301,7 +301,7 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
         <h2 class="sec"><span class="num">2</span>The Work, in Order</h2>
         <div class="spine">
           <div class="sn"><img class="si" src="art/icons/station-market.png" alt="">
-            <span class="sl">Source</span><span class="sv">take 2 goods</span></div>
+            <span class="sl">Source</span><span class="sv">take 3 goods</span></div>
           <div class="ar">&rsaquo;</div>
           <div class="sn"><img class="si" src="art/icons/station-brew.png" alt="">
             <span class="sl">Brew</span><span class="sv">a recipe becomes a cask</span></div>
@@ -320,8 +320,12 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
         <h2 class="sec"><span class="num">3</span>What You Own</h2>
         <ul class="tight">
           <li><b>13 quality dice</b> in your colour. This is your whole runway for the game, and
-          it is public. A die leaves your tray to become a cask, to stand on a building you
-          build, or to place presence. Dice never come back.</li>
+          it is public. A die leaves your tray to become a cask, to stand on a Public Work you
+          build, or to place presence. Casks and presence never come back; an invested die
+          returns &mdash; scoring its pips &mdash; when its building matures, is overbuilt, or
+          you redevelop its ground.</li>
+          <li>A hand of <b>4 dual-use Venture tiles</b> in your colour ring &mdash; your private
+          buildings, waiting for ground (&sect;8).</li>
           <li>A <b>player board</b>: 3 vessels for aging casks, and 2 seats for Specialists.</li>
           <li><b>Recipe cards</b>, which are permission to brew a beer. They sit beside your board.</li>
           <li><b>Goods</b>: grain <span class="cube g"></span> and hops <span class="cube h"></span>.
@@ -345,6 +349,7 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
           <li>The <b>Gruit</b> and <b>Hopped</b> recipe cards, placed on the collected side, to
           the left of your board.</li>
           <li><b>13 quality dice</b> in your colour, and 1 score disc on space 0 of the score track.</li>
+          <li>The <b>4 Venture tiles</b> ringed in your colour, as a hand beside your board.</li>
           <li>A <b>warm start</b>: 1 Ready Gruit cask in your first vessel, its die set to 1.</li>
         </ul>
 
@@ -357,9 +362,9 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
           first. The stacks are <b>searchable</b>: a full Brew looks through the stack and picks
           its tile. A delivered cask&rsquo;s tile returns to the <b>bottom</b> of its stack.</li>
           <li>Shuffle the <b>Ship deck</b> and deal a face-up <b>display of 4</b>.</li>
-          <li>Shuffle the <b>building deck</b> and <b>deal 17 of the 19 tiles</b>, making sure at
-          least 1 Malt Kiln and at least 1 Mission Quay are among them. Return the other 2 to the
-          box. Deal a <b>display of 4</b>.</li>
+          <li>Shuffle the <b>Public Works deck</b> and deal <b>11 of the 13 tiles</b>: every
+          non-Staple tile plus <b>2 of the 4 Staple Houses</b>, making sure at least 1 Malt Kiln
+          is among them. Return the other 2 Staples to the box. Deal a <b>display of 4</b>.</li>
           <li>Shuffle the <b>Specialist deck</b> and deal a <b>display of 4</b>.</li>
           <li>Shuffle the <b>12 Manifest cards</b> into a face-down deck on the Destinations board.
           Deal the top card face-up to <b>every Ship not bound for Bruges</b> as it enters play,
@@ -371,8 +376,9 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
           be shared. Choose a first player, who stays first all game.</li>
         </ul>
         <div class="note">
-          <span class="nl">Why deal</span>Only 17 of 20 buildings and 3 of 4 exports come out each
-          game, so no two wharves run the same economy. Read what was dealt before you plan.
+          <span class="nl">Why deal</span>Only 11 of 13 Public Works (2 of the 4 Staple Houses) and
+          3 of 4 exports come out each game, so no two wharves run the same economy. Read what
+          was dealt before you plan.
         </div>
       </div>
 
@@ -383,7 +389,7 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
         <table>
           <tr><th style="width:1.15in">Station</th><th>PRIMARY &mdash; when your worker stands here &middot; ALTERNATE &mdash; when it is the line&rsquo;s other station</th></tr>
           <tr><td><img class="ic" src="art/icons/station-market.png" alt=""> <b>Market</b></td>
-            <td><b>Source 2.</b> Take 2 goods in any mix. <b>Alternate: Source 1</b> &mdash; take 1 good.</td></tr>
+            <td><b>Source 3.</b> Take 3 goods in any mix. <b>Alternate: Source 1</b> &mdash; take 1 good.</td></tr>
           <tr><td><img class="ic" src="art/icons/station-brew.png" alt=""> <b>Brewhouse</b></td>
             <td><b>Brew.</b> Pay the brew cost of a recipe you hold. <b>Search that beer&rsquo;s
               stack and choose a tile</b> into an open vessel, and set a die from your tray on it
@@ -402,8 +408,9 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
         </table>
         <div class="note">
           <span class="nl">At the table</span>Every cask tile carries a <b>load bonus</b> that fires
-          when the cask ships. A full Brew <b>searches the stack</b>, so the bonus is your pick;
-          only the alternate Brew takes what the top of the stack offers.
+          when the cask ships. Only the <b>station&rsquo;s full Brew searches the stack</b>, making
+          the bonus your pick; the alternate Brew <b>and the <i>Brew 1</i> load bonus</b> take what
+          the top of the stack offers.
         </div>
       </div>
   </div>
@@ -435,9 +442,10 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
           </ol>
           <div class="note">
             <span class="nl">A line offers</span>The station your worker <b>stands on</b> fires its
-            <b>PRIMARY</b> action; the line&rsquo;s other station fires its <b>ALTERNATE</b>. Each of its 2 slots offers the <b>building&rsquo;s action</b> if a building
-            stands there, and a <b>load</b> of the Ship if a Ship is docked there. An empty slot
-            does nothing, so build one worth visiting.
+            <b>PRIMARY</b> action; the line&rsquo;s other station fires its <b>ALTERNATE</b>. Each of its 2 slots offers a <b>load</b> of the
+            Ship if one is docked there &mdash; and the buildings work on their own: a Public Work
+            fires passively on its slot&rsquo;s traffic, and your own Ventures may add an
+            owner-only stop. An empty slot does nothing, so build one worth visiting.
           </div>
           <div class="note">
             <span class="nl">Read it live</span>If a Ship is commissioned or warped onto a slot on
@@ -507,8 +515,8 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
         <div>
           <div class="note warn">
             <span class="nl">Dice never turn on their own</span>Aging only happens when something
-            ages it: the <b>Cellar</b>, a <b>Mission Quay</b>, an <b>Age +2</b> load bonus, or a
-            building or Specialist that says so. A forgotten cask sits at its start value forever.
+            ages it: the <b>Cellar</b>, an <b>Age +2</b> load bonus, or a Venture or Specialist that
+            says so. A forgotten cask sits at its start value forever.
           </div>
           <div class="note">
             <span class="nl">Lifts</span>Some buildings turn a boarding die <b>past its quality</b>,
@@ -573,51 +581,63 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
   <div class="pbody stack">
 
     <div class="block">
-      <h2 class="sec"><span class="num">8</span>The Slots and the Buildings</h2>
+      <h2 class="sec"><span class="num">8</span>The Slots and the Two Building Families</h2>
       <div class="cols2" style="gap:0 .28in">
         <div>
           <p>The 8 slots ring the stations. Each holds up to <b>1 building</b> underneath and
-          <b>1 Ship</b> on top. <b>Every building serves whoever activates it</b>, and
-          <b>using one is always free</b>.</p>
-          <h3 class="sub">Building one</h3>
-          <p>You build as London&rsquo;s prize, or with a <b>Build 1 building</b> load bonus. Take a
-          tile from the display of 4 and place it at once on any slot. Then <b>stand one of your
-          tray dice on it at the tile&rsquo;s printed start face</b>.</p>
+          <b>1 Ship</b> on top. Buildings come in <b>two families</b> &mdash; and neither ever
+          charges for use.</p>
+          <h3 class="sub">Public Works &mdash; brown, shared</h3>
+          <p>Every Public Work is a <b>passive modifier of its own slot&rsquo;s traffic</b> &mdash;
+          it fires by itself, for <b>whoever&rsquo;s</b> cask or Ship is there, and never adds an
+          action. Build one as London&rsquo;s prize or with a <b>Build 1 building</b> load bonus
+          (fees print in <b>grain</b>; no fee chip means free). Place it from the display onto any
+          slot, then <b>stand one of your tray dice on it</b> at the tile&rsquo;s printed start face.</p>
           <div class="panel plain" style="margin-bottom:4pt">
-            <div class="pl"><img class="ic" src="art/icons/build.png" alt="">The mason&rsquo;s mark</div>
-            <div style="font-size:7.9pt; line-height:1.34">Your die stands on the tile at its printed
-            face. <b>Each time any player uses that building, turn the die up 1</b>, to a cap of 6.
-            At the end of the game the die scores <b>its pips to you</b>, so a building everybody
-            wants to visit is a building that pays its builder.</div>
+            <div class="pl"><img class="ic" src="art/icons/build.png" alt="">The investor&rsquo;s die</div>
+            <div style="font-size:7.9pt; line-height:1.34">You funded the building; the wharf pays
+            you back. <b>Each time any player uses it, turn your die up 1.</b> The moment it reaches
+            <b>6</b> the investment <b>matures</b>: bank <b>6&starf;</b> at once, take the die home,
+            and demolish the worn-out tile &mdash; the slot opens again. Overbuilt or redeveloped
+            early? The die still <b>scores its pips</b> as it goes.</div>
           </div>
           <div class="note warn">
-            <span class="nl">At the table</span>No tray die means <b>no build</b>. If you win a build
-            prize you cannot take, the prize is <b>forfeit</b>. There is no consolation for it.
+            <span class="nl">At the table</span>No tray die means <b>no Public Work</b>. If you win
+            a build prize you cannot take in either family, the prize is <b>forfeit</b>.
           </div>
+          <h3 class="sub">Overbuilding</h3>
+          <p>You may build a Public Work on a slot that already has one. <b>One payment covers the
+          placement</b> &mdash; a paid tile fee covers the ground; an otherwise-free placement pays
+          <b>1 grain <span class="cube g"></span></b> in rent. The old tile returns to the box, and
+          its die scores its pips at once and goes home. <b>A Venture can never be overbuilt by a
+          rival, and an L2 never by anyone.</b></p>
         </div>
         <div>
-          <h3 class="sub">What buildings do</h3>
+          <h3 class="sub">Ventures &mdash; your colour ring, private</h3>
+          <p>Your hand of <b>4 dual-use tiles</b> are your private buildings: each serves
+          <b>you alone</b>, wears your colour ring, and carries <b>no die</b> &mdash; the printed
+          power is the return on the investment. Each tile has an everyday <b>L1</b> face and a
+          stronger <b>L2</b> face; playing one side <b>forfeits the other</b>.</p>
+          <div class="panel plain" style="margin-bottom:4pt">
+            <div class="pl"><img class="ic" src="art/icons/building.png" alt="">The Ladder</div>
+            <div style="font-size:7.9pt; line-height:1.34"><b>An L1 plays from your hand onto a
+            Public Work YOU invested in</b> &mdash; your standing die banks its pips and comes home,
+            the worn public tile is boxed, and your private house rises on its ground. An L1
+            <b>never takes an open slot</b>; a rival&rsquo;s work or a die-less setup building is
+            not your ground. Fund the commons, let the wharf wear it, then redevelop.</div>
+          </div>
           <ul class="tight">
-            <li>Most are <b>riders</b>. The tile prints a station icon and <b>&ldquo;here:&rdquo;</b> &mdash;
-            it boosts that station&rsquo;s action <b>each time the action fires on the
-            building&rsquo;s line</b>, the primary and the alternate alike, whoever&rsquo;s action
-            it is, <b>once per activation</b>. The die-working riders offer their choice inside
-            the Age itself.</li>
-            <li>A <b>slot action</b> fires when you resolve its slot (the Merchants&rsquo;
-            Exchange deals fresh Manifests to up to 2 Ships).</li>
-            <li><b>Load lifts</b> fire when a cask loads at their slot. They turn the boarding die
-            up or down, change what the Ship needs, or sweeten the load itself.</li>
-            <li>Two are <b>ephemeral</b>. They sail away with the Ship at their slot, paying out
-            as they go.</li>
+            <li><b>The Climb:</b> an <b>L2</b> lands only by overbuilding <b>your own L1</b> with a
+            second hand tile &mdash; the spent L1 is boxed, the ground is kept.</li>
+            <li><b>Fees &#9881;:</b> L1 <b>1 grain</b> &middot; L2 <b>2 grain</b> &mdash; waived when
+            the London prize builds it. The prize and the survey bonus offer <b>both families</b>.</li>
+            <li>The stop-like faces (Rack House &middot; Brewery &middot; Assay Loft) fire only on
+            <b>your</b> activation of a line through them; the rest ride your loads and sails
+            there.</li>
           </ul>
-          <p style="font-size:7.7pt; color:var(--ink2)">Each tile prints what it does and what it costs.
-          Building fees are always in <b>grain</b>, and a tile with no fee chip is free to build.</p>
-          <h3 class="sub">Overbuilding</h3>
-          <p>You may build on a slot that already has a building. <b>One payment covers the
-          placement.</b> If you paid the tile&rsquo;s fee, that also covers the ground. If the
-          placement was otherwise free, pay <b>1 grain <span class="cube g"></span></b> in ground
-          rent instead. The old tile returns to the box, and its die <b>scores its pips at once</b>
-          and goes back to its owner&rsquo;s tray.</p>
+          <p style="font-size:7.7pt; color:var(--ink2)">Your hand supports four wide L1s, two full
+          climbs, or anything between &mdash; and each L1 costs you a working Public Work, so the
+          timing is the decision.</p>
         </div>
       </div>
     </div>
@@ -691,8 +711,9 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
           <div class="kh"><img class="ki" src="art/icons/kontor-bergen.png" alt="">Bergen</div>
           <div class="kb">
             <div class="kmin"><img class="ic" src="art/icons/quality-die.png" alt="">2+</div>
-            <div class="kpr"><b>Seat a Specialist</b> from the display, free, if you have an open
-              seat.</div>
+            <div class="kpr"><b>Seat a Specialist</b> from the display, free. No seat to fill?
+              Take <b>2 goods</b> (1<span class="cube g"></span>+1<span class="cube h"></span>)
+              instead.</div>
             <div class="kmaj">Majority <b>9 / 5 / 2</b></div>
           </div>
         </div>
@@ -806,11 +827,12 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
             <img class="li" src="art/icons/presence.png" alt="">
             <div><b>Placed presence</b>, each die.</div><div class="lv">1★</div>
             <img class="li" src="art/icons/building.png" alt="">
-            <div><b>Building effects</b> that print ★, such as a Tollhouse stamp or the Cooperage.</div>
+            <div><b>Building effects</b> that print ★ — a Tollhouse stamp, the Cooperage, a Staple House’s premium, your Staple Rights.</div>
             <div class="lv">printed</div>
             <img class="li" src="art/icons/build.png" alt="">
-            <div><b>A building leaving play.</b> Its die scores its pips as it goes.</div>
-            <div class="lv">pips</div>
+            <div><b>A Public Work maturing at 6</b> (banked as the die comes home), or its die&rsquo;s
+            pips as it is overbuilt or redeveloped.</div>
+            <div class="lv">6&starf; / pips</div>
 
             <div class="lg">At the end of the game</div>
             <img class="li" src="art/icons/kontor.png" alt="">
@@ -822,7 +844,8 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
             <div><b>Your buildings.</b> Each die standing on one scores its pips.</div>
             <div class="lv">pips</div>
             <img class="li" src="art/icons/specialist.png" alt="">
-            <div><b>Specialists</b> printing an end of game line.</div><div class="lv">printed</div>
+            <div><b>Specialists and Ventures</b> printing an end of game line (the Guild Residence:
+            2&starf; per Venture in play).</div><div class="lv">printed</div>
           </div>
           <h3 class="sub">The Flight ladder</h3>
           <div class="flight">

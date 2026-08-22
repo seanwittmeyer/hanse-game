@@ -110,6 +110,7 @@ function __runGame(n){
   if(__ASRC!=='')ALT_SOURCE=parseInt(__ASRC,10)||1;   // v5.0 primary/alt dials — override ONLY when set
   if(__AAGE!=='')ALT_AGE=parseInt(__AAGE,10)||1;
   if(__STPL!=='')STAPLE_PTS=parseInt(__STPL,10)||2;   // v5.2 ⚙: the Staple premium (the +2/+4 A/B) — override ONLY when set
+  if(__SRCN!=='')SRC_PRIMARY=parseInt(__SRCN,10)||3;   // v5.2b ⚙: the Market primary (the 2/3 A/B) — override ONLY when set
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
   S.players.forEach(function(p,i){p.ai=__PERSONAS?{tier:'trader',persona:AI_PERSONAS[i%AI_PERSONAS.length]}:{tier:__TIER};p.presPool=PRES_POOL;});
   var guard=0;
@@ -170,6 +171,7 @@ const ctx = {
   __ICW:process.env.INV_CASK!=null?process.env.INV_CASK:'', __IBLDG:process.env.INV_BLDG!=null?process.env.INV_BLDG:'',
   __ASRC:process.env.ALTSRC!=null?process.env.ALTSRC:'', __AAGE:process.env.ALTAGE!=null?process.env.ALTAGE:'',   // v5.0: the primary/alt dials
   __STPL:process.env.STAPLE!=null?process.env.STAPLE:'',   // v5.2: the Staple premium dial
+  __SRCN:process.env.SRCN!=null?process.env.SRCN:'',   // v5.2b: the Market primary dial
   __POOL:parseInt(process.env.POOL||'0',10),
   __PERSONAS:PERSONAS,
   __GMS:parseInt(process.env.GUILD_MS||'0',10),

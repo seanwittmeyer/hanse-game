@@ -784,7 +784,7 @@ const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',
 const DESTS=[
   {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, maj:[4,2,0], role:'The Hub — the on-ramp',        ben:{n:'+1',ic:'scroll-text'}, bnote:'a recipe — pay its fee (H = Q−3)'},
   {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, maj:[5,3,1], role:'The Steelyard — the engine',   ben:{n:'+1',ic:'building-2'},  bnote:'a building, placed — your die on it'},
-  {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, maj:[9,5,2], role:'Bryggen — the crews',          ben:{n:'+1',ic:'wrench'},      bnote:'a specialist, free'},
+  {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, maj:[9,5,2], role:'Bryggen — the crews',          ben:{n:'+1',ic:'wrench'},      bnote:'a specialist, free \u00b7 no seat? 2 goods'},
   {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, maj:[8,5,2], vb:2, role:'The Long Haul — the climb',    ben:{n:'+2',ic:'star'},   bnote:'no prize — every parked die scores +2★'},   // v4.10: the minimum returned to 3+ (the export band); the panel had kept 4+
 ];
 const MAX_ROUND=25;                  // round ceiling ⚙ — top of the 12–25-round target band (v4.1: the DICE are the one clock; the Sailed-Ships track left the kit)
@@ -910,7 +910,7 @@ function aid3Panels(){
     +AID_ROW('quality-3','Cask \u00b7 quality','a brewed beer + its grade')
     +AID_ROW('sailboat','Ship','Skute \u00b7 Cog \u00b7 Hulk: 1 \u00b7 2 \u00b7 3 berths')
     +AID_ROW('building-2','Public Work','shared, brown, passive — the investor’s die matures at 6 (v5.2)')
-    +AID_ROW('home','Venture','private, your colour ring — L1 from hand (a public die standing), L2 over your own L1 (v5.2)')
+    +AID_ROW('home','Venture','private, your colour ring — an L1 replaces a Public Work you invested in; an L2 climbs your own L1 (v5.2b)')
     +AID_ROW('wrench','Specialist','private, seats at your board')
     +AID_ROW('scroll-text','Recipe','permission to brew a beer')
     +AID_ROW('contract','Manifest','a demand card on a non-Bruges Ship')
@@ -922,7 +922,7 @@ function aid3Panels(){
     +AID_ROW('scroll-text','Gain 1 recipe','at its fee')
     +AID_ROW('search','Build 1 building','at its fee, your die on it')
     +AID_ROW('wrench','Gain 1 Specialist','at its fee')
-    +AID_ROW('flask-conical','Brew 1','a normal brew')
+    +AID_ROW('flask-conical','Brew 1','a normal brew \u2014 the TOP tile (v5.2b)')
     +'<h5>'+LU('star')+'Scoring Marks</h5>'
     +AID_ROW('star','\u2605','the scoring unit')
     +AID_ROW('trophy','Majority','Kontor ranking by parked dice')
@@ -1067,7 +1067,7 @@ function wharfCross(){
   const wharf='<div class="wharf">'
     +'<div></div>'+slot+slot+'<div></div>'
     +slot
-    +station('A','Market','market','goods-2','Gain 2 goods \u00b7 alt 1','coins')
+    +station('A','Market','market','goods-3','Gain 3 goods \u00b7 alt 1','coins')
     +station('B','Brewhouse','brewhouse','flask-conical','Brew \u2014 search the stack \u00b7 alt: top tile','brew-top')
     +slot+slot
     +station('C','Harbor','harbor','ship','Commission \u00b7 alt: Load 1, any Ship','package-plus')
@@ -1142,7 +1142,7 @@ const kMini=d=>{
       +'<div class="kp-cell"><span class="kp-ch">'+LU('landmark')+'majority</span><span class="kp-big">'+d.maj.join('/')+'</span></div>'
     +'</div><div class="kp-note bnote">'+(BNOTE_SHORT[d.nm]||d.bnote)+'</div></div>'
   +'</div>';};
-const BNOTE_SHORT={Bruges:'a recipe — pay its fee (H = Q−3)',London:'a building, built at once — your die on it',Bergen:'a Specialist, free',Novgorod:'no prize — every parked die scores +2★'};
+const BNOTE_SHORT={Bruges:'a recipe — pay its fee (H = Q−3)',London:'a building, built at once — your die on it',Bergen:'a Specialist, free \u2014 no seat? 2 goods (v5.2b)',Novgorod:'no prize — every parked die scores +2★'};
 function supplyBoard(){
   const dslot=(fam,ic,smp,lbl)=>'<div class="dslot '+fam+'">'+LU(ic)+(lbl?'<span class="rn">'+lbl+'</span>':'')
     +(OVERLAY&&smp?'<div class="ovl">'+smp+'</div>':'')+'</div>';
@@ -1540,7 +1540,7 @@ function checklist(pages,famPages){
     +R('Cask tiles — the beer supply','The beer itself, brewed never bought. <b>Six face-up stacks on the Market &amp; Stores board\u2019s Casks &amp; Recipes column</b> (the mid tiers vary with the deal) — a full Brew SEARCHES the stack; the alternate takes the top tile; a delivered cask\u2019s tile returns to the bottom (v5.0). '+caskBase.map(d=>d.nm+' ×'+d.n).join(' · ')+'.',sumN(caskBase))
     +R('Ship tiles','Neutral hulls, each bound for a printed Kontor; the tile IS its berths. <b>A draw bag → a display of 4.</b> Skute ×6 · Cog ×10 · Hulk ×8 — six per Kontor.','24')
     +R('Public Works','The shared BROWN family — nobody owns the use; every face is a PASSIVE modifier of its slot’s traffic (v5.2). The investor’s die stands at the printed face, turns on every use, and <b>MATURES at 6</b> (+6★, the die home, the tile demolished). <b>A draw bag → a display of 4</b>. Deal every non-Staple tile + 2 of the 4 Staple Houses — <b>11 of the 13</b>.',sumN(BUILDINGS.filter(b=>!b.hall)))
-    +R('Venture tiles','The PRIVATE dual-use tiles (v5.2) — 4 designs, one ringed set per house: play a tile as its <b>L1</b> (from hand — needs your die standing on a Public Work) or spend it as its <b>L2</b> onto your own L1 (the spent L1 is boxed). No die — the power is the return; a rival can never overbuild one.',VENTURES.length*4)
+    +R('Venture tiles','The PRIVATE dual-use tiles (v5.2) — 4 designs, one ringed set per house: play a tile as its <b>L1</b> — it REPLACES a Public Work you invested in (the pips bank, your die comes home, the public tile is boxed — v5.2b) — or spend it as its <b>L2</b> onto your own L1 (the spent L1 is boxed). No die — the power is the return; a rival can never overbuild one.',VENTURES.length*4)
     +R('Specialist tiles','The private purple hires, 15 designs (core five ×3 · guild ten ×1 — v5.1). <b>A draw bag → a display of 4</b>; seated on a player board.',impTotal)
     +R('Manifest cards','Three demand lines (beer/tier · die · combo → ★). <b>One rides every non-Bruges Ship</b> — dealt as the hull enters the display, claimed on delivery (each line once per voyage), returned under the deck at sail.','12')
     +'</table>';

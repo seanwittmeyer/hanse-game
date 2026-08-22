@@ -381,7 +381,7 @@
       <div class="slot s1" data-line="col-l">slot</div>
       <div class="slot s2" data-line="col-r">slot</div>
       <div class="slot s8" data-line="row-t">slot</div>
-      <div class="cell A" data-row="row-t" data-col="col-l"><div class="corner">A</div><div class="lbl">① Source</div><div class="nm">Market</div><div class="do">Take 2 goods (any mix) · <i>alt: 1 good</i></div></div>
+      <div class="cell A" data-row="row-t" data-col="col-l"><div class="corner">A</div><div class="lbl">① Source</div><div class="nm">Market</div><div class="do">Take 3 goods (any mix) · <i>alt: 1 good</i></div></div>
       <div class="cell B" data-row="row-t" data-col="col-r"><div class="corner">B</div><div class="lbl">② Brew</div><div class="nm">Brewhouse</div><div class="do">Pay a recipe — <b>search the stack</b> for your cask tile · <i>alt: take the top tile blind</i></div></div>
       <div class="slot s3" data-line="row-t">slot</div>
       <div class="slot s7" data-line="row-b">slot</div>
@@ -428,7 +428,7 @@
 
 <section id="cask">
   <h2><span class="nm">6</span>The Cask &amp; the Die</h2>
-  <p><b>The cask supply is six searchable stacks, one per beer.</b> A cask tile prints its beer, its <b>quality (Q1–Q5)</b>, its <b>start-die value</b>, and <b>one load bonus</b>. A <b>full Brew</b> (your worker’s station, the <i>Brew 1</i> bonus, the brew buildings) <b>searches the stack and chooses the tile</b> — the bonus you want is a pick, not a gamble; only the <b>alternate Brewhouse</b> takes the top tile blind. On delivery the cask’s tile <b>returns to the bottom of its stack</b> — supply circulates, and an <b>empty stack</b> means that beer can’t brew until a cask comes home.</p>
+  <p><b>The cask supply is six searchable stacks, one per beer.</b> A cask tile prints its beer, its <b>quality (Q1–Q5)</b>, its <b>start-die value</b>, and <b>one load bonus</b>. A <b>full Brew</b> (your worker’s Brewhouse, or the Brewery Venture) <b>searches the stack and chooses the tile</b> — the bonus you want is a pick, not a gamble; the <b>alternate Brewhouse</b> and the <i>Brew 1</i> <b>load bonus</b> take the top tile blind (v5.2b). On delivery the cask’s tile <b>returns to the bottom of its stack</b> — supply circulates, and an <b>empty stack</b> means that beer can’t brew until a cask comes home.</p>
   <p>The quality die riding the cask is aging, boarding, value, presence and the clock in one number:</p>
   <div class="dielife">
     <div class="dl"><span class="dld"><i data-lucide="dices"></i></span><b>Brew</b><span class="small">a tray die, set to<br><b>quality − aging steps</b></span></div>
@@ -484,7 +484,7 @@
   <h3 class="ic-h"><i data-lucide="home"></i>Ventures — your private buildings</h3>
   <p>Each house starts with an <b>identical hand of 4 dual-use Venture tiles</b>. A Venture is <b>private</b> — it serves its owner alone, wears the <b>owner’s colour ring</b>, and carries <b>no die</b>: the printed power is the return on the investment. <b>A rival can never overbuild a Venture.</b></p>
   <ul>
-    <li><b>The Ladder:</b> you may place a tile from your hand <b>L1-side up</b> on any open slot <b>only while one of your mason’s dice stands on a Public Work</b> — fund the commons, earn private ground. Its L2 face is forfeit.</li>
+    <li><b>The Ladder (v5.2b):</b> an L1 plays from your hand <b>onto a Public Work you invested in</b> — your standing mason’s die banks its pips and comes home, and the public tile is boxed. Fund the commons, then redevelop the ground you funded; an L1 never takes an open slot. Its L2 face is forfeit.</li>
     <li><b>The Climb:</b> an <b>L2</b> lands only by overbuilding <b>your own L1</b> — spend a second hand tile L2-side up (pay its fee); the old L1 tile is boxed, the ground is kept. That tile’s L1 face is forfeit. <b>An L2 can never be displaced.</b></li>
     <li><b>Fees ⚙:</b> L1 <b>1 <span class="cube g"></span></b> · L2 <b>2 <span class="cube g"></span></b> — waived when the London prize builds it. Your hand of 4 supports four wide L1s, or two full climbs, or anything between.</li>
     <li>The <b>owner-only stops</b> (Rack House · Brewery · Assay Loft) appear only on <i>your</i> activation of a line through them — for everyone else the wharf stays two actions plus two loads.</li>
@@ -520,7 +520,7 @@
     <tr><th>Kontor</th><th>Minimum ⚙</th><th>Value</th><th>Prize — per cask ⚙</th><th>Majority ⚙ (1st/2nd/3rd)</th></tr>
     <tr><td><i data-lucide="kontor-bruges" class="kcrest"></i><b>Bruges</b> (the Hub)</td><td>die 1+</td><td>the die</td><td><b>Gain 1 recipe</b>, at its <span class="cube h"></span> = Q−3 fee — the Q3s free (the prize is the pick, never the fee waiver)</td><td>4 / 2 / 0</td></tr>
     <tr><td><i data-lucide="kontor-london" class="kcrest"></i><b>London</b> (the Steelyard)</td><td>die 2+</td><td>the die</td><td><b>A building</b> — build one from the display at once; <b>your die stands on it</b></td><td>5 / 3 / 1</td></tr>
-    <tr><td><i data-lucide="kontor-bergen" class="kcrest"></i><b>Bergen</b> (Bryggen)</td><td>die 2+</td><td>the die</td><td><b>A Specialist</b> — display → an open seat, free</td><td><b>9 / 5 / 2</b></td></tr>
+    <tr><td><i data-lucide="kontor-bergen" class="kcrest"></i><b>Bergen</b> (Bryggen)</td><td>die 2+</td><td>the die</td><td><b>A Specialist</b> — display → an open seat, free · <b>no seat? 2 goods</b> (v5.2b)</td><td><b>9 / 5 / 2</b></td></tr>
     <tr><td><i data-lucide="kontor-novgorod" class="kcrest"></i><b>Novgorod</b> (Peterhof)</td><td><b>die 3+</b></td><td><b>the die +2★</b></td><td>— the premium IS the prize</td><td>8 / 5 / 2</td></tr>
   </table>
   <div class="clar"><h4>Presence &amp; placing presence</h4><b>Presence</b> = your parked dice at a Kontor. <b>Placing presence</b> (the <i data-lucide="map-pin"></i> load bonus, Keut’s perk) takes a <b>tray die</b> and parks it at <b>face 1</b> at a Kontor you have <b>already delivered to</b> — it scores 1★ and counts for the majority and the clock. It is <b>always free</b> — and it flows only through casks: the load bonus and Keut’s perk are the two doors. A seated Town Crier adds <b>+2★</b> per placed die. No tray die → no placing presence.</div>
@@ -537,7 +537,7 @@
     <tr><td><span class="act-ic"><i data-lucide="scroll-text"></i></span></td><td><b>Gain 1 recipe</b> <span class="small">[Q2+]</span></td><td>a dealt export, at the card’s printed fee</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="hammer"></i></span></td><td><b>Build 1 building</b> <span class="small">[Q3+]</span></td><td>at the tile’s fee (chipless = free) — from the display; your die stands on it</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="wrench"></i></span></td><td><b>Gain 1 Specialist</b> <span class="small">[Q3+]</span></td><td>at the tile’s fee — display → an open seat</td></tr>
-    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brew 1</b> <span class="small">[Q3+]</span></td><td>pay its cost into an open vessel (a tray die)</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brew 1</b> <span class="small">[Q3+]</span></td><td>pay its cost into an open vessel (a tray die) — <b>the top tile</b> of the stack (v5.2b)</td></tr>
   </table>
   <div class="example"><h4>Example 2 — a Ship sails</h4>
     <p>A <b>Hulk → London</b> stands at 2/3 with Adaline’s Bock (die 6, Kiln-lifted) and Olli’s Bock (die 6). Its Manifest reads <i>Gruit → 1★ · Q3+ → 2★ · die 6 → 3★</i>. On her turn <b>Adaline loads her Gruit</b> (die 2, lifted from 1 by the Kiln) into the last berth — the Hulk is full and <b>sails</b>. In boarding order:</p>
@@ -656,7 +656,7 @@
   </table>
   <div class="acat">The stations — PRIMARY under your worker · ALTERNATE across the line</div>
   <table class="atbl">
-    <tr><td><span class="act-ic"><i data-lucide="store"></i></span></td><td><b>Market — Source</b></td><td>Take <b>2 goods</b>, any mix. <b>Alt:</b> 1 good.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="store"></i></span></td><td><b>Market — Source</b></td><td>Take <b>3 goods</b>, any mix (v5.2b ⚙). <b>Alt:</b> 1 good.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="flask-conical"></i></span></td><td><b>Brewhouse — Brew</b></td><td>Pay a recipe → an open vessel; <b>search the stack, choose your tile</b> — its bonus rides the cask; a tray die at the printed start (the card completes on the beer’s first LOAD). <b>Alt:</b> the same brew off the <b>top tile blind</b>.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="hourglass"></i></span></td><td><b>Cellar — Age</b></td><td><b>Age 3</b> — three steps across your aging casks (a die stops at its quality: Ready). <b>Alt:</b> Age 1.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="ship"></i></span></td><td><b>Harbor — Commission</b></td><td>Pay the Ship’s <b>printed fee</b> (Skute 2 <i data-lucide="wheat" class="gi"></i> · Cog 1 <i data-lucide="wheat" class="gi"></i> · Hulk free) · place it on a slot without a Ship · <b>load 1 Ready cask at once</b> (optional; a Skute sails on it). No ★. <b>Alt:</b> <b>Load 1</b> onto ANY docked Ship, anywhere on the Wharf.</td></tr>

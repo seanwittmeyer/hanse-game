@@ -1,5 +1,19 @@
 # Brewhouses of the Hanse — Turn & Round Rules (v5.2 “Groundwork”)
 
+> **v5.2b — the second letter (designer-ruled 2026-08-22, same day; save `KEY hanse-v52b`).**
+> Four rulings off the designer’s first hands-on read of Groundwork. **(1) THE LADDER IS
+> THE GROUND ITSELF** — the morning build let an L1 open on any empty slot while a die
+> stood anywhere; *“it should have required me to replace a shared building I invested
+> in.”* An **L1 now REPLACES a Public Work carrying YOUR die** — the pips bank, the die
+> comes home, the worn public tile is boxed (the overbuild grammar); an L1 **never takes
+> an open slot** (§5b). **(2) the cask’s *Brew 1* load bonus takes the TOP tile** — only
+> the station’s full Brew (and the Brewery Venture) searches (§4/§6). **(3) Market
+> PRIMARY = Source 3 ⚙** (*“the game is slower because of the lack of resources… worth a
+> try”* — the alternate holds at 1, the Broker at 2; sim hook `SRCN`). **(4) the BERGEN
+> FALLBACK confirmed & printed** — a prize with no seat to fill (seats full, or none
+> eligible) pays **2 goods** (1`G`+1`H`, was 2`G` unprinted); *“it’s already the most
+> valuable Kontor for majorities so a competition is good.”* Watches fold into §Open #19.
+
 > **v5.2 “Groundwork” (designer-ruled 2026-08-22, in-session — the TWO BUILDING FAMILIES;
 > the record: `archive/records/V52-GROUNDWORK.md`).** The intent, in the designer’s words:
 > *buildings are modifiers to the items in that slot — a docked ship, a loading cask, maybe
@@ -17,9 +31,10 @@
 > GWT family: each house holds an **identical hand of 4 DUAL-USE tiles** (L1 face from
 > hand / L2 face over your own L1 — one piece of cardboard, never both faces); **no
 > mason’s die** (the power is the return); owner-only, the **owner’s colour ring**, never
-> overbuilt by a rival. **THE LADDER (ruled): public → L1 → L2** — an L1 places only while
-> one of your dice STANDS on a Public Work; an L2 only by overbuilding your own L1 (the
-> spent L1 is boxed). Rack House/BREWERY · Counting House/ASSAY LOFT · Factor’s Desk/
+> overbuilt by a rival. **THE LADDER (ruled · v5.2b — the ground itself): public → L1 → L2** — an L1
+> REPLACES a Public Work YOU invested in (your standing die banks its pips and comes
+> home; the public tile is boxed — an L1 never takes an open slot); an L2 only by
+> overbuilding your own L1 (the spent L1 is boxed). Rack House/BREWERY · Counting House/ASSAY LOFT · Factor’s Desk/
 > STAPLE RIGHTS · Warehouse/GUILD RESIDENCE. The retired v5.1 riders’ ideas live on in
 > these faces; the **Merchants’ Exchange’s re-deal becomes the Factor’s Desk**. The survey
 > verb and the **London prize offer BOTH families** (the prize waives the fee). Gates:
@@ -572,7 +587,7 @@ The turn:
 ## 3. The cask & the die (the soul)
 
 A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one load-bonus action**
-(printed on the tile taken at brew — a full Brew **searches the beer’s stack and chooses the tile**; the alternate Brewhouse takes the top tile — v5.0; Gruit pinned to *Gain 2 goods*). The
+(printed on the tile taken at brew — the station’s full Brew **searches the beer’s stack and chooses the tile**; the alternate Brewhouse and the *Brew 1* load bonus take the top tile — v5.2b; Gruit pinned to *Gain 2 goods*). The
 **quality die on the tile is aging, boarding, value, presence and clock in one number:**
 
 - **At brew:** take a die from your tray, set it to the printed **start value = quality − aging
@@ -629,15 +644,15 @@ actions and Ship loads resolve at full strength on either line; all numbers ⚙)
 
 | Station | PRIMARY (your worker here) | ALTERNATE (the line’s other station) |
 |---|---|---|
-| **A · Market — SOURCE** | take **2 goods** (any mix) | take **1 good** ⚙ |
+| **A · Market — SOURCE** | take **3 goods** (any mix — v5.2b ⚙) | take **1 good** ⚙ |
 | **B · Brewhouse — BREW** | pay a recipe you hold into an **open vessel** + a **tray die** set to the start value, and **SEARCH that beer’s stack — choose the tile** (its printed bonus rides the cask) | the same brew, but the cask takes **the stack’s TOP tile** |
 | **D · Cellar — AGE** | **Age 3** ⚙ — turn your aging dice up three steps, split freely (with auto-aging cut, v4.5b, this is the deepest well) | **Age 1** ⚙ |
 | **C · Harbor — COMMISSION** | pay the Ship’s **printed fee** — **Skute 2 `G` · Cog 1 `G` · Hulk free** ⚙ (v4.8) — place it on a slot **without a Ship** (the display refills), then **one free load** (v4.4: 1 Ready cask from your vessels; its bonus fires; a Skute sails on it). **No ★** (v4.5b) — tempo, not points | **Load 1 Ready cask onto ANY docked Ship** ⚙ — a normal load (§6: both gates read as it boards; the bonus fires; the Stevedore lifts every load flow to 2) |
 
 *(An **empty stack** = that beer cannot brew right now — every tile is out riding a cask;
-tiles come home on delivery. The **full-brew search applies at every brew channel** — the
-station’s primary, the *Brew 1* load bonus, and any building printing the brew verb; ONLY
-the alternate Brewhouse is top-tile. The alternate Harbor load is the wharf-wide relief
+tiles come home on delivery. The **search belongs to the station** (v5.2b) — the
+Brewhouse primary and the Brewery Venture search the stack; the alternate Brewhouse AND
+the *Brew 1* load bonus take the **top tile** blind. The alternate Harbor load is the wharf-wide relief
 valve — the demand is still the docked hulls’ minimums and Manifests.)*
 
 ---
@@ -698,10 +713,12 @@ mason’s die** — the printed power IS the return. **A rival can never overbui
 Ventures do not commit a die (the clock is untouched); their fees print in grain ⚙ and are
 **waived when the London prize builds one**.
 
-- **THE LADDER (ruled):** you may place a hand tile **L1-side up** on any open slot **only
-  while one of your mason’s dice STANDS on a Public Work** — fund the commons, earn private
-  ground. The check is at the moment of placement (the dice on the table are the permit; no
-  memory). Playing a tile as its L1 **forfeits its L2 face**.
+- **THE LADDER (ruled · v5.2b):** a hand tile plays **L1-side up onto a Public Work YOU
+  invested in** — your standing mason’s die **banks its pips and comes home**, and the worn
+  public tile is **boxed** (the overbuild grammar). An L1 **never takes an open slot**; a
+  rival’s work and a die-less setup seed are not ground. The check is at the moment of
+  placement (your die standing there IS the permit; no memory). Playing a tile as its L1
+  **forfeits its L2 face**. *Fund the commons, then redevelop the ground you funded.*
 - **THE CLIMB:** an **L2** lands only by overbuilding **your own L1** — spend a second hand
   tile L2-side up (pay the L2 fee); the spent L1 tile is **boxed**, the ground is kept. That
   tile’s L1 face is forfeit. **An L2 can never be displaced by anyone.**
@@ -759,7 +776,7 @@ a line slot mid-turn opens its stop.
 | **Gain 1 recipe** | pay the **card’s printed fee** ⚙ — a dealt export | Q2+ |
 | **Gain 1 building** | EITHER a **Public Work** (its printed fee; your die stands on it) OR a **Venture** from your hand (L1 1 `G` / L2 2 `G` ⚙; the ladder holds) — v5.2 | Q3+ |
 | **Gain 1 specialist** | pay the **tile’s printed fee** ⚙ — from the display (open seat required) | Q3+ |
-| **Brew 1** | pay its cost into an open vessel (tray die) — a FULL brew: search the stack (v5.0) | Q3+ (v4.12) |
+| **Brew 1** | pay its cost into an open vessel (tray die) — the **TOP tile** of the stack (v5.2b; only the station’s full Brew searches) | Q3+ (v4.12) |
 
 *(Enshrine left with the Hall. Every stack is face-up and searchable — a full brew picks its bonus outright (v5.0).
 **Paid at the wharf, free at the Kontor** (v4.2 — the fee rides the ITEM): the three
@@ -775,7 +792,7 @@ everywhere, the Bruges prize included (the v45e grammar)**. No building ever add
 |---|---|---|---|---|
 | **Bruges** (Hub) | 1 | the die | **Gain 1 recipe** — dealt exports, **at its `H` = Q−3 fee — the Q3s free** (v4.9c; the prize is the pick, never the waiver; no affordable pick → 2 goods) | 4 / 2 / 0 |
 | **London** (Steelyard) | 2 | the die | **A building** (display → placed; **your die stands on it** — v4.9) | 5 / 3 / 1 |
-| **Bergen** (Bryggen) | 2 | the die | **A specialist** (display, free) — **per cask** (v4.7, the uniform grammar; load order = pick order) | 9 / 5 / 2 (anchor) |
+| **Bergen** (Bryggen) | 2 | the die | **A specialist** (display, free) — **per cask** (v4.7, the uniform grammar; load order = pick order); **no seat to fill (full, or none eligible) → 2 goods** (1`G`+1`H` — v5.2b, the printed fallback) | 9 / 5 / 2 (anchor) |
 | **Novgorod** (Peterhof) | **3** (the export band ⚙ — v4.10) | **the die +2★** ⚙ (5–8) | — (the value premium IS the prize) | 8 / 5 / 2 |
 
 - **The minimum reads the DIE as it boards** (post-lift) — a Kiln’d Hopped (die 3) makes
@@ -899,7 +916,8 @@ deck at the END of the turn (v4.4c; ships and buildings refill at once):**
 ## 9. Goods & storage
 
 `G` grain · `H` hops — the **only** currency. Storage cap **8** ⚙. No money; no spendable
-prestige. The faucets: the Market (2 + specialists), Granaries, *Gain 2 goods* load bonuses.
+prestige. The faucets: the Market (3 — v5.2b — + specialists), *Gain 2/3 goods* load bonuses,
+the Counting House, the consolation prizes.
 
 ---
 
@@ -1301,4 +1319,13 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
    `STAPLE=`) · **the greedy venture mix** (the bots favour the Warehouse L1 — a policy
    prior, not a verdict; the GM/human read decides) · **Cooperage semantics** (+1 berth
    still touches the shared Ship — the one face that isn’t loader-only; flag if it
-   confuses) · the L1/L2 fees ⚙ and the Residence’s 2★/Venture ⚙ are unplayed numbers.
+   confuses) · the L1/L2 fees ⚙ and the Residence’s 2★/Venture ⚙ are unplayed numbers. **The v5.2b
+   letter adds:** **Source 3** ⚙ (the goods faucet widened ~50% — watch pace both ways,
+   brew-rate, and whether hops stay the binding tariff; sim hook `SRCN`, the v5.2 corpus
+   is the A arm) · **the ladder consumes your own engine** (an L1 now eats YOUR invested
+   work — watch whether anyone L1s over a hot Kiln, whether ventures collapse at seats
+   that never build, and the L1 timing vs maturity: over-at-5 banks 5 and forfeits the
+   +6) · **the Bergen consolation faucet** (2 goods per seatless prize — a slam-load of
+   3 casks with full seats now pays 6 goods; watch the deliberate-fallback line) · **the
+   top-tile Brew bonus** (the bonus brew is a gamble again — watch whether the *Brew 1*
+   tiles cool).
