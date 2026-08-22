@@ -1328,4 +1328,11 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
    +6) · **the Bergen consolation faucet** (2 goods per seatless prize — a slam-load of
    3 casks with full seats now pays 6 goods; watch the deliberate-fallback line) · **the
    top-tile Brew bonus** (the bonus brew is a gamble again — watch whether the *Brew 1*
-   tiles cool).
+   tiles cool). **The full v5.2b oracle landed same-day**
+   (`archive/records/ORACLE-STUDY-v52.md` + `BALANCE-PROPOSAL-v52.md`): Ventures dead at
+   EVERY tier (GM 0.13–0.33/g, placed r17–23 — the ladder's door is priced shut; the
+   designer's public/private split is the queued fix) · Weigh House/Ropewalk/Tollhouse/
+   Staple effects ~never fire (the bourse-carrier reworks proposed) · Kiln/Cooperage/
+   ephemerals healthy · pool sweep: 14 = +1.6 rds & the best band on record (RECOMMENDED),
+   15 = +2.7 but presses the 2p GM ceiling · the London multi-prize door-slam flagged for
+   a ruling · Novgorod 2p dead 26.7% under GM persists (#18).

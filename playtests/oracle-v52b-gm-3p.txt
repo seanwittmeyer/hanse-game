@@ -1,0 +1,86 @@
+=== strategy probe — buildings & specialists · mode=obs · tier=guildmaster · 60 games/count ===
+
+--- 3p · 60 games · rounds 18.7 · dice-trigger 91.7% ---
+BUILDINGS: 5.62 owned builds/game · channels: prize 92.3% · fee-paid 7.7% · free-take 0.0% · overbuilds: on-setup 30 / on-owned 0
+  build-count buckets (baseline win 33.3%):
+    0 builds    15.6% of seats · win  17.9% · avg total 42.1 · avg mark★ (end+cashed) 0.0
+    1 build     26.7% of seats · win  25.0% · avg total 51.2 · avg mark★ (end+cashed) 3.6
+    2+ builds   57.8% of seats · win  41.3% · avg total 61.4 · avg mark★ (end+cashed) 9.4
+  tile               blt/g   ms  tk/bld self%  sail%  over%   mat%  end◆  cash◆  life(rd)
+  maltkiln            1.45  2.0   1.97  34.5%   4.6%   3.4%  27.6%   3.1    5.5      6.0
+  bonded              0.70  3.0   0.93  30.8%  26.2%   9.5%  14.3%   3.1    4.7      3.2
+  victual             0.68  3.0   0.46  31.6%  29.3%   4.9%   0.0%   3.1    4.1      5.3
+  weighhouse          0.65  3.0   0.10  75.0%  10.3%  12.8%   0.0%   3.1    3.2      5.7
+  cooperage           0.62  3.0   0.92  20.6%   2.7%   5.4%  18.9%   3.5    5.1      4.6
+  ropewalk            0.47  3.0   0.00      —   0.0%   0.0%   0.0%   3.0      —      3.5
+  staple_bergen       0.25  2.0   0.00      —   6.7%  13.3%   0.0%   2.0    2.0      1.7
+  tollhouse           0.23  3.0   0.00      —  14.3%   0.0%   0.0%   3.0    3.0      1.8
+  customs             0.17  3.0   0.10 100.0%  10.0%   0.0%   0.0%   3.1    3.0      1.6
+  staple_london       0.17  2.0   0.20 100.0%   0.0%  10.0%   0.0%   2.2    2.0      2.8
+  staple_novgorod     0.12  2.0   0.00      —   0.0%  28.6%   0.0%   2.0    2.0      1.4
+  staple_bruges       0.12  2.0   0.00      —   0.0%  14.3%   0.0%   2.0    2.0      3.0
+  build timing (game quarters): 5.9% / 16.3% / 35.9% / 41.8%
+VENTURES: 0.33 placements/game · L1 0.27 · L2 climbs 0.07 · channels: prize 55.0% · fee 45.0%
+  face                 plc/g   round
+  warehouse:L1          0.12    18.1
+  rack:L1               0.10    18.5
+  warehouse:L2          0.05    20.7
+  counting:L1           0.03    17.5
+  rack:L2               0.02    21.0
+  factor:L1             0.02    23.0
+    0 vents    91.1% of seats · win  32.3% · avg total 55.0
+    1 vent      6.7% of seats · win  50.0% · avg total 65.3
+    2+ vents    2.2% of seats · win  25.0% · avg total 54.3
+  staple★/player 0.1 · hand left at end 3.89/4
+SPECIALISTS: 4.27 seats/game · channels: prize (Bergen) 83.2% · fee (Hiring/bonus) 16.8%
+    0 seats     15.0% of seats · win  22.2% · avg total 41.6
+    1 seat      27.8% of seats · win  30.0% · avg total 53.6
+    2 seats     57.2% of seats · win  37.9% · avg total 60.4
+  spec           seats/g  seat-rd  hold-win  Δtotal  design stat            (corpus avg total 55.7)
+  granary          0.70      9.0     40.5%     2.0  grain gained/g 9.55
+  cellar           0.55     10.7     51.5%     9.2  brews/g 7.61
+  braumeister      0.42     10.9     28.0%     0.5  bm ticks/g 2.72
+  crane            0.42     11.7     36.0%     2.4  loads/g 7.28
+  shipwright       0.37      9.9     40.9%     6.8  grain saved/g 2.36 · comms/g 3.14
+  supercargo       0.30     11.3     27.8%     5.6  rival-sail pays/g 1.50
+  chronicler       0.28     12.2     35.3%     2.8  man-lines claimed/g 3.00
+  scholar          0.27     11.6     25.0%    -3.9  recipes end 4.38
+  hopgarden        0.25     11.7     33.3%     5.1  hops gained/g 13.07
+  alderman         0.23     12.9     57.1%     6.0  maj★ 14.5
+  brewmate         0.17     14.3     10.0%     3.8  
+  broker           0.15     10.3     33.3%    -2.0  
+  innkeeper        0.08     11.8     40.0%    -4.7  inn ticks/g 0.80
+  towncrier        0.07     16.5      0.0%     0.3  bumps/g 1.00
+  chandler         0.02     11.0      0.0%    12.3  swaps/g 1.00
+  Δ Grain Factor gG 9.5 vs 9.9 · delivs 6.7 vs 6.4
+  Δ Hop Gardener gH 13.1 vs 14.1 · delivs 7.1 vs 6.5
+  Δ Stevedore    loads 7.3 vs 6.7 · delivs 7.1 vs 6.4
+  Δ Braumeister  ages 6.1 vs 8.2 · delivs 6.8 vs 6.5
+ACTION ARCS (avg per player, by game quarter        Q1     Q2     Q3     Q4):
+  brew     1.98   1.67   1.77   1.73
+  age      1.20   1.91   2.44   2.40
+  load     1.58   1.27   1.79   2.17
+  sail     0.48   0.54   0.83   1.08
+  deliv    1.09   1.28   1.77   2.37
+  comm     0.46   0.49   0.78   0.82
+  build    0.11   0.31   0.68   0.88
+  seat     0.21   0.45   0.39   0.37
+  man      0.10   0.44   0.74   1.29
+  bump     0.02   0.11   0.22   0.47
+  first-X round — winners vs field: brew 2.2/2.4 · deliv 4.1/4.2 · comm 7.7/7.5 · build 11.8/11.4 · seat 10.0/9.4
+LANES — relative lean (score bucket ÷ corpus mean; baseline win 33.3%):
+  bldg     31.1% of seats · win  30.4% · avg total 52.7
+  flight   20.6% of seats · win  40.5% · avg total 60.3
+  bank     17.8% of seats · win  28.1% · avg total 59.4
+  maj      12.8% of seats · win  34.8% · avg total 44.9
+  guild     9.4% of seats · win  47.1% · avg total 61.2
+  deliv     8.3% of seats · win  20.0% · avg total 57.9
+  score composition — winners: deliv 33.9% · bank 18.1% · maj 23.7% · flight 16.1% · bldg 7.5% · guild 0.6%
+  score composition — field:   deliv 36.2% · bank 18.7% · maj 23.3% · flight 14.3% · bldg 7.1% · guild 0.4%
+  modal delivery port: bruges 45.0% (win 30.9%) · london 25.0% (win 40.0%) · bergen 21.7% (win 33.3%) · novgorod 8.3% (win 26.7%)
+  beers shipped (Flight): 1 beers 0.6% (win 0.0%) · 2 beers 5.6% (win 0.0%) · 3 beers 35.6% (win 18.8%) · 4 beers 33.9% (win 34.4%) · 5 beers 24.4% (win 61.4%)
+BALANCE: seat wins P1 30.0% · P2 43.3% · P3 26.7% · winner total 69.1 · margin 13.9
+  dead-port rate (0 deliveries all game): bruges 0.0% · london 5.0% · bergen 3.3% · novgorod 13.3%
+  manifest economy: lines/player 2.57 · ★/player 6.2 · ★/line 2.42
+
+(2044.3s)
