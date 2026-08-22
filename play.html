@@ -760,14 +760,14 @@ function caskAct(t){return t.act||STYLES[t.style].act;}
 // v4.0: ONE printed action per station
 // the station face (2026-08-04, designer): ONE big ACTION icon over a top-down scrim —
 // the same four faces as the print board (gain goods · brew · age 3 · commission)
-const STATION_ICON={Market:'goods-2',Brewhouse:'flask-conical',Cellar:'age-3',Harbor:'ship'};   // round 5: Market wears the numbered Source face (goods-2 A — the age-3 grammar)
+const STATION_ICON={Market:'goods-2',Brewhouse:'brew-choose',Cellar:'age-3',Harbor:'ship'};   // round 5: Market wears the numbered Source face (goods-2 A) · round 9: the Brewhouse wears brew-CHOOSE (the pot + tile deck + down-arrow, pick A)
 // v5.1x [designer request 2026-08-19]: the station face gains the ALT CHIP — the primary icon,
-// a slash, then the line-mate's lesser action at ~55% size ([primary] / [alt]). TWO alts have
-// no icon of their own yet (NOTED in art/ICONS.md for the next icon pass): Market's Source-1
-// reuses the goods icon ('coins' — closest we have) · the Brewhouse's top-tile blind brew
-// reuses lucide 'layers' (the stack — closest we have). The Cellar's Age-1 (station-age-1.png)
-// and the Harbor's any-Ship load ('package-plus') are real icons.
-const STATION_ALT_ICON={Market:'coins',Brewhouse:'layers',Cellar:'age-1',Harbor:'package-plus'};
+// a slash, then the line-mate's lesser action at ~55% size ([primary] / [alt]). Round 9 ruling:
+// the ALT brew (take the TOP tile, blind) wears the plain pot ('flask-conical' → station-brew) —
+// the 'layers' stand-in retires. Market's Source-1 still reuses the goods icon ('coins' —
+// noted in art/ICONS.md for a future pass); the Cellar's Age-1 (station-age-1.png) and the
+// Harbor's any-Ship load ('package-plus') are real icons.
+const STATION_ALT_ICON={Market:'coins',Brewhouse:'flask-conical',Cellar:'age-1',Harbor:'package-plus'};
 const STATION_ALT_TIP={Market:'Alternate — as the line\u2019s other station: Source 1',
   Brewhouse:'Alternate — as the line\u2019s other station: brew the TOP tile of the stack (blind)',
   Cellar:'Alternate — as the line\u2019s other station: Age 1',
