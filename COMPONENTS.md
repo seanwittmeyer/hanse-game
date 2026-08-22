@@ -408,7 +408,7 @@ lets an L1 Venture **redevelop** one (§6b). The colour is **BROWN** (v5.2, rule
 | Public Work | Qty ⚙ | Printed face (icons; prose here) | Fee ⚙ | Die starts ⚙ |
 |---|---|---|---|---|
 | **Malt Kiln** | 2 | a cask loading here: **die +1** (past quality fine; cap 6) | 2 `G` | 2 |
-| **Tollhouse** | 1 | a cask loading here **may turn its die −1** (never below the minimum): **+3★ at once** | 1 `G` | 3 |
+| **Tollhouse** | 1 | **the toll bench (v5.3b):** a cask loading here — the loader **may shift any Bourse marker ±1** | 1 `G` | 3 |
 | **Customs House** | 1 | **−1 to the Kontor minimum** at this slot ⚙ (floor 1 — v5.2, ruled: was −2, “almost broken”) | 2 `G` | 3 |
 | **Ropewalk** *(v5.2 rework, ruled)* | 1 | a load here: **also load 1 Ready cask onto a DIFFERENT docked Ship** ⚙ (once per load flow) | 2 `G` | 3 |
 | Cooperage | 1 | the Ship here: **+1 capacity** (sails only when that berth is also full) · **each cask loaded here: its loader +1★** ⚙ | 2 `G` | 3 |
@@ -538,6 +538,9 @@ wharf seeds: Hulk→Bruges + 1 Ship ·
 worker placed free · first player fixed.
 
 ## 10. Box delta vs v3.4
+
+**v5.3b delta (2026-08-22, ruled):** the **Tollhouse reprints as the toll bench** — a load
+at its slot lets the loader shift any Bourse marker ±1 (the stamp face retired). One tile.
 
 **v5.3 delta (2026-08-22, ruled — the third letter):** **+1 board strip** (the Bourse) ·
 **+8 beer price markers** · the **building deck/display leave the table** (setup stands 3–4

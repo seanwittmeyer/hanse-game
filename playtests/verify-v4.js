@@ -482,23 +482,17 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 })();
 (function(){var p=fresh();stops();
   // (the Hop Exchange left with v5.2 \u2014 its pay-to-lift lives on in the Hop Store expansion lot)
+  // v5.3b [ruled: 'one of the public buildings should have a +/-1 bourse'] — THE TOLL BENCH
   p.ai={tier:'journeyman'};
   S.buildings.s2={b:'tollhouse'};var t2=ship('s2','hulk','bruges');
   p.vessels[0]={style:'hopped',q:2,die:2,act:'source'};
-  var b0=p.bank,o0=p.bankO||0;
-  t2.man=null;   // a Bruges hull sails plain — the stamp is a clean +2 net (v45d: +3★ − 1 pip)
+  S.bourse.hopped=0;
   UI.load={ships:['s2'],returnTo:'stops',loadsLeft:1,cask:0};loadOnto('s2');
-  ok('the Tollhouse stamp: die −1 (min the gate) and +3★ banked at once (v45d)', t2.load[0].die===1&&p.bank===b0+3&&(p.bankO||0)===o0+3);
-  // v5.0: the AI nets the stamp against THIS hull's MANIFEST demands
-  t2.man={k:'tst',lines:[{die:3,pts:4}]};   // die 3 claims the 4★ demand; stamped to 2 it would not (net 2−4)
-  p.vessels[0]={style:'hopped',q:2,die:3,act:'source'};
-  var b1=p.bank;
-  UI.load={ships:['s2'],returnTo:'stops',loadsLeft:1,cask:0};loadOnto('s2');
-  ok('the AI declines a stamp that forfeits a bigger Manifest demand (die stays 3, the line claimable)',
-    t2.load[1].die===3&&p.bank===b1);
-  t2.man=null;
-  ok('aiLoadOpt still stamps when no demand is at stake', aiLoadOpt(p,'tollhouse',3,'s2',{style:'hopped',q:2})===true);
-  p.ai=null;
+  loadSkip();
+  ok('the TOLLHOUSE is the toll bench: a load here lets the LOADER shift a Bourse marker \u00b11 (the die untouched)',
+    t2.load[0].die===2&&Object.keys(S.bourse).some(function(bk2){return S.bourse[bk2]!==0;}));
+  ok('\u2026the old stamp is gone \u2014 no \u22121-for-+3\u2605, no bankO', (p.bankO||0)===0);
+  p.ai=null;stops();UI.pendingActs=[];UI.pendingShift=[];
 })();
 
 // ---- 20b. v5.2 ROSTER AUDIT: grain-only fees \u00b7 the box census \u00b7 the portfolio ----

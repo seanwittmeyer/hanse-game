@@ -20,6 +20,11 @@
 > presence alone (the runway loosens — the designer’s maneuvering-space ask). Watches →
 > §Open #20.
 
+> **v5.3b (same day, ruled):** *“one of the public buildings should have a ±1 bourse”* —
+> **the Tollhouse becomes the toll bench**: a cask loading at its slot lets the **loader
+> shift any Bourse marker ±1**. The dead stamp face (−1 die for +3★ — unused through
+> three versions) retires with it. `KEY hanse-v53b`.
+
 # (the v5.2 line below stands as history)
 
 > **v5.2b — the second letter (designer-ruled 2026-08-22, same day; save `KEY hanse-v52b`).**
@@ -707,7 +712,7 @@ traffic — whoever’s cask, Ship or sail it is — and using one is always fre
 | Public Work | Fires | Effect ⚙ (the tile prints icons — this column is the prose) | Qty ⚙ |
 |---|---|---|---|
 | **Malt Kiln** | on load here | the boarding cask’s **die +1** (past quality is fine; cap 6) | 2 |
-| **Tollhouse** | on load here | the boarding cask **may turn its die −1** (never below the minimum): **+3★ at once** | 1 |
+| **Tollhouse** | on load here | **the toll bench (v5.3b, ruled):** the loader **may shift any Bourse marker ±1** (resolves as the load flow closes) | 1 |
 | **Customs House** | passive | **−1 to the Kontor minimum** at this slot ⚙ (floor 1; READY is still required) | 1 |
 | **Ropewalk** | on load here | a load here: **you may also load 1 Ready cask onto a DIFFERENT docked Ship** ⚙ (once per load flow here) | 1 |
 | **Cooperage** | passive · on load | the Ship here: **+1 capacity** (it sails only when that berth is also full) — and each cask loaded here scores its loader **+1★** ⚙ | 1 |
@@ -762,7 +767,8 @@ markers start at **0**.
 - **The brew crash:** every **brew** of a tracked beer slips its marker **−1** (floor −1) —
   new supply softens the price. The wharf’s own volume moves the market.
 - **Shifts (never a new action):** **Bergen’s prize** moves any marker **±1** per delivered
-  cask (§7); the Ventures’ **public lines** print **±1** and **+2▲** shifts.
+  cask (§7); the Ventures’ **public lines** print **±1** and **+2▲**; the **Tollhouse**
+  pays its loader a **±1** (v5.3b — the toll bench).
 
 **One-fire rule:** on a line, the active player may load each slot’s ship once, fire each
 slot action once (the hall Chancery is the only one), collect each Venture’s public line
@@ -975,7 +981,7 @@ tray size (13 dice — v4.9b) is THE pace dial now.*
    markers on the strip are the audit — the Bourse pays at the moment of sale, no memory.
 2. **Manifest demands** — the claimed line’s printed ★ (v5.0; a seated Chronicler adds
    +2★ per claim; the card recycles — the score track is the record).
-3. **Tollhouse stamps** — **+3★** per stamped cask (v45d; the die drops 1 — net +2).
+3. *(the Tollhouse stamp retired at v5.3b — its ±1 Bourse shift pays through the deliveries line)*
 4. **Cooperage wharfage** — **+1★** per cask loaded at its slot (v4.12b ⚙).
 5. **Placed presence** — 1★ each (the face-1 die; a seated Town Crier adds +2★ per die).
 6. **Staple premiums (v5.2)** — the Staple House pays **+2★** ⚙ per cask off a

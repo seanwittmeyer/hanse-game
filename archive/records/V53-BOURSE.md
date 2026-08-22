@@ -95,3 +95,13 @@ pump-and-sell (a single cask still rises before it scores) · the public-line go
 market 3) · the furniture draw's feel-bad deals (no-Kiln games · double-ephemeral games)
 · 16 venture tiles vs 8 slots at 4p (rival L1s never displace — ground may lock) · the
 runway loosening vs the pool-14 question · the retired investor lane's ~4–8★ redistributes.
+
+## 7 · The v5.3b rider (same day, ruled)
+
+*"One of the public buildings should have a +/-1 bourse."* — **the Tollhouse is the toll
+bench**: a cask loading at its slot lets the **loader shift any Bourse marker ±1** (queued
+via the pendingShift grammar, resolving as the load flow closes). The stamp face (−1 die
+for +3★) retires — it measured dead through v4.12b, v5.1 and v5.2 at every tier — along
+with its loadopt choice point (a dormant seam). Carrier choice per BALANCE-PROPOSAL-v52
+§3b (the deadest tile takes the market job); easily moved to another tile if the designer
+prefers. `KEY hanse-v53b` · verify 351/351.

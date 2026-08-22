@@ -115,7 +115,7 @@ const BUILDINGS=[
   // the 4 Staples sit out). Retired: Granary · Mission Quay · Racking · Assay · Abbey ·
   // Hop Exchange · Merchants' Exchange (→ the VENTURES) · Rich Berth · Capstan.
   {k:'maltkiln',  nm:'Malt Kiln',         ms:2, verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, effIc:'die-plus1',  eff:'on load'},
-  {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, effIc:'die-minus1', eff:'on load → +3★'},
+  {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, effIc:'trending-up', eff:'a load here: bourse ±1'},   // v5.3b (ruled): the toll bench — the stamp face retired
   {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'−1 '+LU('dices')+' minimum here'},   // v5.2 ⚙ ruled: −1 (was −2 — almost broken)
   {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, effIc:'package-plus', eff:'a load here: +1 '+LU('beer')+' to a DIFFERENT '+LU('sailboat')},   // v5.2 ⚙ ruled rework
   {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 ship capacity · on load +1★'},   // v4.12b: the wharfage eases 2→1 ⚙
