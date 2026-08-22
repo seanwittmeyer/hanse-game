@@ -1,0 +1,42 @@
+=== hanse v4.1 sim — 300 games/count · tier journeyman ===
+
+== 2p · 300 ok / 0 err ==
+rounds avg 17.1 (min 10 max 25) · in 12–25 band 95.3%
+triggers: dice 97.0% · ceiling 3.0% · sailed avg 6.1
+winner total avg 73.5 · margin avg 21.3 · seat wins P1 47.3% P2 52.7%
+per-player: brews 9.0 · deliveries 7.4 · bank★ 9.0
+delivery split: bruges 34.5% · london 21.2% · bergen 22.0% · novgorod 22.3%
+commissions/game: 5.3 — skute 0.4 · cog 2.4 · hulk 2.4 · grain paid 2.6
+the bourse (v5.3): manipulation shifts/game 4.2 (▲3.2 ▼1.0) · brew crashes 9.4 · public-line freebies 7.4 (goods 7.4 · steps 0.0) · end track avg 1.0
+public works (v5.3 furniture): seeded/game 2.8 · (builds 0.0 + maturities 0.0 — both 0 by design) · end pips/player 0.0
+ventures (v5.2): L1 placed/game 2.4 · L2 climbs 1.4 · standing at end/player 1.2 · staple★/player 0.2 · factor re-deals 0.0 · ropewalk cross-loads 0.0
+usage/game: manifest lines 5.5 · rack 0.0 · assay 0.0 · toll 0.2 · kiln/bonded lift 5.3 · bonded sail-away 0.1 · victual loads 0.3 · braumeister 0.4 seat / 1.7 ticks
+shapers/game: chandler 0.0 · supercargo 0.4 · coop-berth sails 0.3 · customs boards 0.1
+
+== 3p · 300 ok / 0 err ==
+rounds avg 15.3 (min 9 max 25) · in 12–25 band 95.3%
+triggers: dice 99.7% · ceiling 0.3% · sailed avg 8.9
+winner total avg 79.6 · margin avg 14.4 · seat wins P1 34.7% P2 36.7% P3 28.7%
+per-player: brews 8.4 · deliveries 7.1 · bank★ 9.6
+delivery split: bruges 29.5% · london 22.0% · bergen 25.8% · novgorod 22.8%
+commissions/game: 7.8 — skute 0.9 · cog 3.6 · hulk 3.4 · grain paid 4.4
+the bourse (v5.3): manipulation shifts/game 6.7 (▲4.0 ▼2.8) · brew crashes 13.6 · public-line freebies 15.7 (goods 15.7 · steps 0.0) · end track avg 0.9
+public works (v5.3 furniture): seeded/game 3.3 · (builds 0.0 + maturities 0.0 — both 0 by design) · end pips/player 0.0
+ventures (v5.2): L1 placed/game 3.7 · L2 climbs 2.0 · standing at end/player 1.2 · staple★/player 0.2 · factor re-deals 0.0 · ropewalk cross-loads 0.0
+usage/game: manifest lines 8.5 · rack 0.1 · assay 0.0 · toll 0.2 · kiln/bonded lift 9.1 · bonded sail-away 0.2 · victual loads 0.6 · braumeister 0.6 seat / 2.8 ticks
+shapers/game: chandler 0.0 · supercargo 0.5 · coop-berth sails 0.7 · customs boards 0.1
+
+== 4p · 300 ok / 0 err ==
+rounds avg 14.3 (min 9 max 23) · in 12–25 band 89.7%
+triggers: dice 100.0% · sailed avg 11.6
+winner total avg 76.6 · margin avg 12.4 · seat wins P1 25.0% P2 24.7% P3 24.3% P4 26.0%
+per-player: brews 8.2 · deliveries 6.9 · bank★ 9.3
+delivery split: bruges 28.3% · london 23.2% · bergen 25.1% · novgorod 23.5%
+commissions/game: 10.3 — skute 1.3 · cog 5.0 · hulk 4.1 · grain paid 6.7
+the bourse (v5.3): manipulation shifts/game 8.8 (▲4.2 ▼4.6) · brew crashes 17.1 · public-line freebies 25.4 (goods 25.4 · steps 0.0) · end track avg 0.9
+public works (v5.3 furniture): seeded/game 2.6 · (builds 0.0 + maturities 0.0 — both 0 by design) · end pips/player 0.0
+ventures (v5.2): L1 placed/game 4.9 · L2 climbs 2.9 · standing at end/player 1.2 · staple★/player 0.2 · factor re-deals 0.0 · ropewalk cross-loads 0.0
+usage/game: manifest lines 11.0 · rack 0.1 · assay 0.0 · toll 0.3 · kiln/bonded lift 11.3 · bonded sail-away 0.3 · victual loads 0.6 · braumeister 0.8 seat / 3.5 ticks
+shapers/game: chandler 0.0 · supercargo 0.5 · coop-berth sails 0.9 · customs boards 0.2
+
+GATE: 0 crashes / 0 deadlocks.
