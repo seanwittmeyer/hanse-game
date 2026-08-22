@@ -303,8 +303,9 @@ const BLD_FOOT='rgba(58,51,66,.7)';   // legacy fallback   // building card foot
 // the colour foot: the effect big, then the target chip + cost row), compressed, never flattened.
 const STD_ACT={source:{ai:'coins',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age +2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};   // v5.1: the 'alms' entry left with the Almoner's Stall
 function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
-  // v4.9b "Cornerstones": the tile prints the mason's mark's START FACE — set your die to it at build
-  const msChip=d.ms?'<span class="bt-ms" title="the mason\u2019s mark starts here \u2014 set your die to this face at build; every use turns it up (pips score at game end)">'+LU('dice-'+d.ms)+'</span>':'';
+  // v5.3 (ruled): the Public Works are die-less SETUP FURNITURE — no start face, no fee chip
+  // (nobody builds or buys them; the fee data survives only as a dial seam). msChip retired.
+  const msChip='';const _msOld=d.ms?'<span class="bt-ms" title="the mason\u2019s mark starts here \u2014 set your die to this face at build; every use turns it up (pips score at game end)">'+LU('dice-'+d.ms)+'</span>':'';
   // a STANDARD verb prints the same icon chip the casks print — one action grammar across the kit;
   // only the non-standard powers carry text (terse: the rulebook holds the full language)
   const sa=d.act&&STD_ACT[d.act];
@@ -315,35 +316,38 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   return '<div class="btile btW" style="--c:'+foot+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
   +'<div class="bt-top"><span class="bt-ic">'+LUX(d.ic)+'</span><span class="bt-nm'+(d.nm.length>18?' xlong':d.nm.length>15?' long':'')+'">'+d.nm+'</span>'
-    +msChip+((d.g||d.h)?'<span class="bt-cost">'+cost(d.g,d.h)+'</span>':'')+'</div>'   // the fee rides the TOP-RIGHT corner (round 6); the mark's start face sits beside it (v4.9b)
+    +msChip+'</div>'   // v5.3: no fee, no start face — furniture prints its name + effect alone
   +'<div class="bt-foot"><span class="bt-eff'+(lead?' bt-act':'')+'">'+eff+'</span></div>'
   +'</div>';}
 // ---- v5.2 PRIVATE VENTURES (ruled 2026-08-22): the GWT family — each house holds an IDENTICAL
 // hand of 4 DUAL-USE tiles (one piece of cardboard = an L1 face OR an L2 face, never both:
 // played from hand it lands L1-up; played onto your own L1 it lands L2-up and the spent L1 is
 // boxed). NO mason's die — owner-only (the tile wears the OWNER'S COLOUR RING, printed per
-// house). THE LADDER (v5.2b): an L1 REPLACES a Public Work YOU invested in — the pips bank,
-// your die comes home, the public tile is boxed. An L2 climbs only your own L1.
+// house). v5.3 THE OPEN GROUND: an L1 plays onto any open slot — only with the wharf FULL
+// may it replace a Public Work (the die-less setup furniture); an L2 climbs only your own L1.
+// v5.3 (ruled): every face prints TWO lines — a PUBLIC line (simple: 1 good · Age +1 · a
+// bourse shift; fires for WHOEVER activates a line through the slot) above the ringed OWNER
+// line (the private power; the owner gets both).
 // The kit prints 4 designs × 4 house-ringed copies = 16 tiles, 2.5×1.32in, blue foot (the
 // owner-only colour). (art: stand-ins from the retired tiles' freed files; briefs queued.)
 const VENTURES=[
-  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  eff:'this line: swap 2 of your '+LU('dices'), art:'building-racking.png'},
-                 l2:{nm:'Brewery',        ic:'flask-conical', eff:'this line: you may BREW (search)', art:'building-abbey.png'}},
-  {k:'counting', l1:{nm:'Counting House', ic:'coins',   eff:'your loads here: +1 good', art:'building-granary.png'},
-                 l2:{nm:'Assay Loft',     ic:'scale',   eff:'this line: <span class="h">1'+LU('sprout','h')+'</span> → 1 cask '+LU('check'), art:'building-assay.png'}},
-  {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', eff:'before loading here: re-deal the Manifest', art:'building-exchange.png'},
-                 l2:{nm:'Staple Rights',  ic:'landmark',eff:'your '+LU('beer')+' sailed from here: +1★ each', art:'building-richberth.png'}},
-  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   eff:'your loads here: +1 '+LU('beer'), art:'building-hopex.png'},
-                 l2:{nm:'Guild Residence',ic:'home',    eff:'end: 2★ per Venture in play', art:'building-missionq.png'}},
+  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:'ALL: age +1', eff:'this line: swap 2 of your '+LU('dices'), art:'building-racking.png'},
+                 l2:{nm:'Brewery',        ic:'flask-conical', pub:'ALL: age +1', eff:'this line: you may BREW (search)', art:'building-abbey.png'}},
+  {k:'counting', l1:{nm:'Counting House', ic:'coins',   pub:'ALL: +1 good', eff:'your loads here: +1 good', art:'building-granary.png'},
+                 l2:{nm:'Assay Loft',     ic:'scale',   pub:'ALL: +1 good', eff:'this line: <span class="h">1'+LU('sprout','h')+'</span> → 1 cask '+LU('check'), art:'building-assay.png'}},
+  {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', pub:'ALL: bourse ±1', eff:'before loading here: re-deal the Manifest', art:'building-exchange.png'},
+                 l2:{nm:'Staple Rights',  ic:'landmark',pub:'ALL: bourse +2▲', eff:'your '+LU('beer')+' sailed from here: +1★ each', art:'building-richberth.png'}},
+  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   pub:'ALL: +1 good', eff:'your loads here: +1 '+LU('beer'), art:'building-hopex.png'},
+                 l2:{nm:'Guild Residence',ic:'home',    pub:'ALL: bourse ±1', eff:'end: 2★ per Venture in play', art:'building-missionq.png'}},
 ];
 const VENT_FOOT='rgba(31,86,122,.78)';   // the owner-only blue (the v2.4.1 privilege colour returns)
 function ventureTile(d,lvl){const f=lvl===2?d.l2:d.l1;
   return '<div class="btile btW" style="--c:'+VENT_FOOT+'">'
   +artLayer(f.art||('venture-'+d.k+'-l'+lvl+'.png'))
   +'<div class="bt-top"><span class="bt-ic">'+LUX(f.ic)+'</span><span class="bt-nm'+(f.nm.length>18?' xlong':f.nm.length>15?' long':'')+'">'+f.nm+'</span>'
-    +'<span class="bt-ms" title="the level — an L1 plays from hand (a public die standing); an L2 overbuilds your own L1">'+(lvl===2?'L2':'L1')+'</span>'
+    +'<span class="bt-ms" title="the level — an L1 takes any open slot (wharf full: replaces a Public Work); an L2 overbuilds your own L1">'+(lvl===2?'L2':'L1')+'</span>'
     +'<span class="bt-cost">'+cost(lvl===2?2:1,0)+'</span></div>'
-  +'<div class="bt-foot"><span class="bt-eff">'+f.eff+'</span></div>'
+  +'<div class="bt-foot"><span class="bt-eff">'+(f.pub?'<b>'+f.pub+'</b> · ':'')+f.eff+'</span></div>'
   +'</div>';}
 // MANIFEST CARD (v5.0) — the demand card riding a non-Bruges hull: THREE demand lines, each
 // a beer/tier chip (the beer glyph) and/or a die chip (the die-as-parked glyph) → the ★. The

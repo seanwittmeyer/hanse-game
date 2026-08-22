@@ -34,7 +34,8 @@ var __U=null;
 function __uReset(){__U={manifests:0,rack:0,assayUp:0,assayDown:0,toll:0,kilnLift:0,bondedSail:0,bmSeat:0,bmTick:0,
   victual:0,chandler:0,scargo:0,coopSail:0,customsBoard:0,
   comm_skute:0,comm_cog:0,comm_hulk:0,commG:0,built:0,bldgTicks:0,built_survey:0,built_prize:0,
-  matured:0,ropeX:0,ventL1:0,ventL2:0,vre:0,   // v5.2: maturities · Ropewalk cross-quay loads · Venture placements/climbs · Factor re-deals
+  matured:0,ropeX:0,ventL1:0,ventL2:0,vre:0,   // v5.2: (matured now always 0 — v5.3 furniture) · Ropewalk cross-quay loads · Venture placements/climbs · Factor re-deals
+  bshiftUp:0,bshiftDown:0,vpubGold:0,vpubStep:0,brewCrash:0,   // v5.3: the bourse — manipulation shifts · public-line freebies · brew crashes
   pours:0,judged:0,slams:0,invE:0,invS:0,tilesWon:0};}   // v4.17 Tastings — pours · benches convened · door-slams · the ⚜ economy   // v4.9: builds + mason-die ticks   // v4.6 + the ship-shapers, instrumented at last (the AGRICOLA-STUDY B4 item) · v4.8: commissions by hull + grain paid (the 2/1/0 A/B)
 var __uOn=function(){return __U&&!aiSimulating;};   // never count MC-playout echoes
 var __manClaim=manClaim;manClaim=function(lp,gi,li){if(__uOn())__U.manifests++;return __manClaim(lp,gi,li);};   // v5.0: Manifest lines claimed
@@ -63,6 +64,16 @@ var __sailShip=sailShip;sailShip=function(slot,creditId){var bonded=bKeyAt(slot)
   var r=__sailShip(slot,creditId);
   if(__uOn()){if(bonded)__U.bondedSail++;if(over)__U.coopSail++;__U.scargo+=sc;}return r;};
 var __vreDeal=vreDeal;vreDeal=function(slot){if(__uOn())__U.vre++;return __vreDeal(slot);};   // v5.2: the Factor's Desk re-deal
+var __bourseShift=bourseShift;bourseShift=function(beer,d){var r=__bourseShift(beer,d);   // v5.3: brew crashes vs manipulation shifts (arrival rises stay uncounted — the tide, not a hand)
+  if(__uOn()&&r){if(__bsBrew&&r<0)__U.brewCrash++;else if(__bsMan){if(r>0)__U.bshiftUp++;else __U.bshiftDown++;}}return r;};
+var __bsMan=false,__bsBrew=false;
+var __bshiftPick=bshiftPick;bshiftPick=function(sel){__bsMan=true;var r=__bshiftPick(sel);__bsMan=false;return r;};
+var __afterSail=afterSail;afterSail=function(rt){__bsMan=true;var r=__afterSail(rt);__bsMan=false;return r;};   // the Bergen AI rider shifts directly inside afterSail
+var __brewCommit=brewCommit;brewCommit=function(style,verb){var m0=__bsMan;__bsMan=false;__bsBrew=true;var r=__brewCommit(style,verb);__bsBrew=false;__bsMan=m0;return r;};
+var __resolveStop=resolveStop;resolveStop=function(i){var st=UI.stops&&UI.stops[i];var pk=null;
+  if(st&&st.kind==='vpub'){var b=vAt(st.slot);pk=b&&vFace(b).pub;}
+  var r=__resolveStop(i);
+  if(__uOn()&&pk){if(pk==='vgold')__U.vpubGold++;else if(pk==='vstep')__U.vpubStep++;}return r;};
 var __commitVenture=commitVenture;commitVenture=function(slot,key,lvl,pid){var r=__commitVenture(slot,key,lvl,pid);
   if(__uOn())__U[lvl===2?'ventL2':'ventL1']++;return r;};   // v5.2: Venture placements / climbs
 var __chandlerSwap=chandlerSwap;chandlerSwap=function(dir){var p=cur();var u0=p&&p.chUsed;var r=__chandlerSwap(dir);
@@ -127,6 +138,8 @@ function __runGame(n){
     bldgPips:S.players.reduce(function(a,p){return a+(scorePlayer(p).bldg||0);},0)/S.players.length,
     stapleStars:S.players.reduce(function(a,p){return a+(p.bankSt||0);},0)/S.players.length,   // v5.2: Staple House + Staple Rights ★
     vents:S.players.reduce(function(a,p){return a+venturesInPlay(p);},0)/S.players.length,     // v5.2: Ventures standing at end
+    bourseAvg:(function(){var ks=Object.keys(S.bourse||{});return ks.length?ks.reduce(function(a,b){return a+S.bourse[b];},0)/ks.length:0;})(),   // v5.3
+    furn:SLOTS.filter(function(sx){var b=S.buildings[sx.id];return b&&!b.v;}).length,
     byDest:byDest,
     brews:S.players.reduce(function(a,p){return a+(p._brews||0);},0)/S.players.length,
     delivs:S.players.reduce(function(a,p){return a+p.delivered.length;},0)/S.players.length,
@@ -216,10 +229,12 @@ let anyErr=0;
       'victual','chandler','scargo','coopSail','customsBoard',
       'comm_skute','comm_cog','comm_hulk','commG','built','bldgTicks','built_survey','built_prize',
       'matured','ropeX','ventL1','ventL2','vre',
+      'bshiftUp','bshiftDown','vpubGold','vpubStep','brewCrash',
       'pours','judged','slams','invE','invS','tilesWon'];
     const us={};uk.forEach(k=>us[k]=avg(ok.map(r=>(r.use&&r.use[k])||0)));
     console.log(`commissions/game: ${fmt(us.comm_skute+us.comm_cog+us.comm_hulk)} — skute ${fmt(us.comm_skute)} · cog ${fmt(us.comm_cog)} · hulk ${fmt(us.comm_hulk)} · grain paid ${fmt(us.commG)}`);
-    console.log(`public works (v5.2): builds/game ${fmt(us.built)} (chosen ${fmt(us.built_survey)} · prize ${fmt(us.built_prize)}) · die ticks ${fmt(us.bldgTicks)} · MATURITIES ${fmt(us.matured)} · end pips/player ${fmt(avg(ok.map(r=>r.bldgPips||0)))}`);
+    console.log(`the bourse (v5.3): manipulation shifts/game ${fmt(us.bshiftUp+us.bshiftDown)} (▲${fmt(us.bshiftUp)} ▼${fmt(us.bshiftDown)}) · brew crashes ${fmt(us.brewCrash)} · public-line freebies ${fmt(us.vpubGold+us.vpubStep)} (goods ${fmt(us.vpubGold)} · steps ${fmt(us.vpubStep)}) · end track avg ${fmt(avg(ok.map(r=>r.bourseAvg||0)))}`);
+    console.log(`public works (v5.3 furniture): seeded/game ${fmt(avg(ok.map(r=>r.furn||0)))} · (builds ${fmt(us.built)} + maturities ${fmt(us.matured)} — both 0 by design) · end pips/player ${fmt(avg(ok.map(r=>r.bldgPips||0)))}`);
     console.log(`ventures (v5.2): L1 placed/game ${fmt(us.ventL1)} · L2 climbs ${fmt(us.ventL2)} · standing at end/player ${fmt(avg(ok.map(r=>r.vents||0)))} · staple★/player ${fmt(avg(ok.map(r=>r.stapleStars||0)))} · factor re-deals ${fmt(us.vre)} · ropewalk cross-loads ${fmt(us.ropeX)}`);
     console.log(`usage/game: manifest lines ${fmt(us.manifests)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)} · toll ${fmt(us.toll)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · victual loads ${fmt(us.victual)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);
     console.log(`shapers/game: chandler ${fmt(us.chandler)} · supercargo ${fmt(us.scargo)} · coop-berth sails ${fmt(us.coopSail)} · customs boards ${fmt(us.customsBoard)}`);

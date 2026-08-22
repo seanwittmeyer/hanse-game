@@ -29,12 +29,18 @@ governed here.
 | Specialist | n | A private purple tile; 2 seats per player | wrench | Specialists | Yes | ~~improvement~~, ~~upgrade~~ | ● |
 | seat | n | A Specialist space on your player board | — | seats | No | — | ● |
 | building | n | The umbrella noun for both slot families (v5.2): a Public Work or a Venture | building-2 | buildings | No | ~~privilege~~ (retired family) | ● |
-| Public Work | n | A shared BROWN tile on a slot (v5.2): a passive modifier of its slot's traffic; the investor's die rides it and MATURES at 6 | building-2 | Public Works | Yes | ~~work~~ alone, ~~green building~~, ~~rider~~ (the v5.1 grammar, retired) | ○ v5.2 |
-| investor | n | The player whose mason's die stands on a Public Work (they built it) | — | investors | No | ~~builder~~ (generic ok in rules prose) | ○ v5.2 |
-| matures | v | A Public Work's die turning to 6: +6★ banked, the die home, the tile demolished, the slot opens (v5.2) | — | — | No | ~~cashes out~~, ~~completes~~ | ○ v5.2 |
+| Public Work | n | The shared brown family (v5.3): die-less setup furniture — 3–4 stand at random from setup; passive on its slot's traffic; never built in play | building-2 | Public Works | Yes | ~~public building~~ | ○ v5.3 |
+| investor | n | RETIRED at v5.3 (the Public Works are die-less setup furniture) — historical: the v5.2 builder whose die ticked on use | — | — | — | — | ✕ v5.3 |
+| matures | v | RETIRED at v5.3 with the investor's die — historical: the v5.2 die-reaches-6 payout | — | — | — | — | ✕ v5.3 |
 | Venture | n | A private dual-use tile (v5.2): owner-only, the owner's colour ring, no die; an L1 face and an L2 face on one tile | home | Ventures | Yes | ~~private building~~ (prose ok, never printed) | ○ v5.2 |
 | L1 / L2 | n | A Venture tile's two faces: L1 plays from hand (the Ladder); L2 lands only over your own L1 (the Climb) | — | — | Yes | ~~level one~~ spelled out | ○ v5.2 |
-| the Ladder | n | The build order rule (ruled · v5.2b): an L1 REPLACES a Public Work you invested in — the pips bank, your die comes home, the public tile is boxed; never an open slot | — | — | Yes | — | ○ v5.2b |
+| the Ladder | n | RETIRED at v5.3 (the open ground replaced it) — historical: the v5.2/v5.2b build-order rule | — | — | — | — | ✕ v5.3 |
+| the open ground | n | The v5.3 placement rule: an L1 takes any open slot; wharf full → it may replace a Public Work; never another player's L1/L2 | — | — | Yes | — | ○ v5.3 |
+| the Bourse | n | The beer-value market (v5.3): one track (−1…+3 ⚙), a price marker per in-play beer except Gruit & Jopenbier; a delivered cask scores die + marker | trending-up | — | Yes | ~~market~~ (the Market is the station) · ~~beer market~~ in component text | ○ v5.3 |
+| price marker | n | A beer's marker on the Bourse strip | — | price markers | Yes | ~~value marker~~ | ○ v5.3 |
+| shift | v | Move a price marker (±1, or +2▲ up-only) — Bergen's prize + the Ventures' public lines | trending-up | shifts | Yes | ~~manipulate~~ on components (rules prose may say the market is manipulated) | ○ v5.3 |
+| public line | n | The top line of a Venture face — fires for whoever activates a line through the slot | — | public lines | Yes | — | ○ v5.3 |
+| owner line | n | The ringed private line of a Venture face — the owner alone (the owner collects both lines) | — | — | Yes | ~~private action~~ | ○ v5.3 |
 | Staple House | n | The destination-premium Public Work (×4, one Kontor crest each): a matching sail from its slot pays every cask +2★ ⚙ | landmark | Staple Houses | Yes | ~~Staple~~ alone in rules copy | ○ v5.2 |
 | recipe | n | A card granting permission to brew a beer | scroll-text | recipes | No | — | ● |
 | exports | n | The four dealt-3-of-4 beers (Broyhan · Keut · Mumme · Bock) | — | — | No | — | ● |
