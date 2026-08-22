@@ -77,8 +77,15 @@ var __commitBldg=commitBldg;commitBldg=function(slot,key,pid,feePaid){
   return r;};
 var __bldgTick=bldgTick;bldgTick=function(slot){var b=S.buildings[slot];var d0=b&&b.die;
   var r=__bldgTick(slot);
-  if(__on()&&b&&b.owner!=null&&b.die>d0){var inst=__openInst(slot);
-    if(inst&&!inst.gone){inst.ticks++;if(b.owner===S.active)inst.self++;else inst.other++;}}
+  if(__on()&&b&&!b.v&&b.owner!=null&&b.die>d0){var inst=__openInst(slot);
+    if(inst&&!inst.gone){inst.ticks++;if(b.owner===S.active)inst.self++;else inst.other++;
+      if(!S.buildings[slot]){inst.gone=1;inst.pips=6;inst.goneR=S.turn;inst.cause='mature';__G.slotInst[slot]=null;}}}   // v5.2: the tick reached 6 — MATURITY
+  return r;};
+// v5.2 VENTURE LEDGER — placements/climbs per design, per player, per channel
+var __commitVenture=commitVenture;commitVenture=function(slot,key,lvl,pid){
+  var r=__commitVenture(slot,key,lvl,pid);
+  if(__on()){__G.vents.push({k:key,lvl:lvl,pid:pid,r:S.turn,ch:__inBenefit?'prize':'fee'});
+    var q=__pp(pid);q.nVent=(q.nVent||0)+1;__arc(pid,'build');}
   return r;};
 var __bldgDepart=bldgDepart;bldgDepart=function(slot){var b=S.buildings[slot];
   var had=b&&b.owner!=null&&b.die>0;var pips=had?b.die:0;
@@ -160,7 +167,7 @@ function __runGame(n,gi){
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
   S.players.forEach(function(p,i){p.ai={tier:__TIER};p.presPool=PRES_POOL;});
   __ABST=(__MODE==='obs')?-1:(gi%n);
-  __G={pp:__ppInit(n),bldgs:[],seats:[],slotInst:{}};
+  __G={pp:__ppInit(n),bldgs:[],seats:[],vents:[],slotInst:{}};
   var guard=0;
   while(!S.over){aiStep();if(++guard>200000)return {error:'runaway',round:S.turn,sub:UI.sub};}
   // close standing instances
@@ -179,11 +186,12 @@ function __runGame(n,gi){
       return {pid:p.id,win:rows[0].p.id===p.id?1:0,total:sc.total,deliv:sc.deliv,bank:sc.bank,
         maj:sc.maj,flight:sc.flight,guild:sc.guild,bldg:sc.bldg,bankM:p.bankM||0,
         brews:p._brews||0,ndeliv:p.delivered.length,byDest:byDest,recipes:p.recipes.length,
-        manLines:p.manLines||0,manPts:p.bankL||0,
+        manLines:p.manLines||0,manPts:p.bankL||0,stapleSt:p.bankSt||0,
+        nVents:q.nVent||0,ventsEnd:venturesInPlay(p),hand:(p.hand||[]).length,
         flightN:Object.keys(p.shipped||{}).filter(function(st){return STYLES[st];}).length,
         arcQ:arcQ,firsts:{brew:q.firstBrewR,deliv:q.firstDelivR,comm:q.firstCommR,build:q.firstBuildR,seat:q.firstSeatR},
         specs:p.upgrades.slice(),nBuilds:0,verbs:q};}),
-    bldgs:__G.bldgs,seats:__G.seats};
+    bldgs:__G.bldgs,seats:__G.seats,vents:__G.vents};
   g.bldgs.forEach(function(b){g.players[b.pid].nBuilds++;});
   __G=null;
   return g;}
@@ -264,20 +272,35 @@ for (const n of COUNTS) {
   }
   const byKey = {};
   for (const b of allB) { (byKey[b.k]=byKey[b.k]||[]).push(b); }
-  console.log('  tile               blt/g   ms  tk/bld self%  sail%  over%  end◆  cash◆  life(rd)');
+  console.log('  tile               blt/g   ms  tk/bld self%  sail%  over%   mat%  end◆  cash◆  life(rd)');
   Object.keys(byKey).sort((a,b)=>byKey[b].length-byKey[a].length).forEach(k=>{
     const L = byKey[k];
     const ticks = avg(L.map(b=>b.ticks));
     const selfShare = L.reduce((s,b)=>s+b.self,0), othShare = L.reduce((s,b)=>s+b.other,0);
     const gone = L.filter(b=>b.gone);
     const standing = L.filter(b=>!b.gone);
-    console.log('  '+k.padEnd(18)+' '+fmt(L.length/G,2).padStart(5)+' '+fmt(avg(L.map(b=>b.ms)),1).padStart(4)+' '+fmt(ticks,2).padStart(6)+' '+pct(selfShare,selfShare+othShare).padStart(6)+' '+pct(gone.filter(b=>b.cause==='sail').length,L.length).padStart(6)+' '+pct(gone.filter(b=>b.cause==='overbuild').length,L.length).padStart(6)+' '+fmt(standing.length?avg(standing.map(b=>b.endPips)):NaN,1).padStart(5)+' '+fmt(gone.length?avg(gone.map(b=>b.pips)):NaN,1).padStart(6)+' '+fmt(avg(L.map(b=>(b.gone?b.goneR:b.rounds)-b.r)),1).padStart(8));
+    console.log('  '+k.padEnd(18)+' '+fmt(L.length/G,2).padStart(5)+' '+fmt(avg(L.map(b=>b.ms)),1).padStart(4)+' '+fmt(ticks,2).padStart(6)+' '+pct(selfShare,selfShare+othShare).padStart(6)+' '+pct(gone.filter(b=>b.cause==='sail').length,L.length).padStart(6)+' '+pct(gone.filter(b=>b.cause==='overbuild').length,L.length).padStart(6)+' '+pct(gone.filter(b=>b.cause==='mature').length,L.length).padStart(6)+' '+fmt(standing.length?avg(standing.map(b=>b.endPips)):NaN,1).padStart(5)+' '+fmt(gone.length?avg(gone.map(b=>b.pips)):NaN,1).padStart(6)+' '+fmt(avg(L.map(b=>(b.gone?b.goneR:b.rounds)-b.r)),1).padStart(8));
   });
   const bTimed = allB.filter(b=>b.r>0);
   if (bTimed.length) {
     const rHist = [0,0,0,0];
     bTimed.forEach(b=>{const q=Math.min(3,Math.floor(4*(b.r-1)/Math.max(1,b.rounds)));rHist[q]++;});
     console.log('  build timing (game quarters): '+rHist.map(x=>pct(x,bTimed.length)).join(' / '));
+  }
+
+  // ---------- VENTURES (v5.2) ----------
+  const allV = games.flatMap(g=>(g.vents||[]).map(v=>({...v, rounds:g.rounds})));
+  if (allV.length||players.some(p=>p.nVents)) {
+    console.log('VENTURES: '+fmt(allV.length/G,2)+' placements/game · L1 '+fmt(allV.filter(v=>v.lvl===1).length/G,2)+' · L2 climbs '+fmt(allV.filter(v=>v.lvl===2).length/G,2)+' · channels: prize '+pct(allV.filter(v=>v.ch==='prize').length,allV.length)+' · fee '+pct(allV.filter(v=>v.ch==='fee').length,allV.length));
+    const vByK={};allV.forEach(v=>{const key=v.k+':L'+v.lvl;(vByK[key]=vByK[key]||[]).push(v);});
+    console.log('  face                 plc/g   round');
+    Object.keys(vByK).sort((a,b)=>vByK[b].length-vByK[a].length).forEach(k=>{
+      const L=vByK[k];
+      console.log('  '+k.padEnd(20)+' '+fmt(L.length/G,2).padStart(5)+' '+fmt(avg(L.map(v=>v.r)),1).padStart(7));});
+    const vBuckets=[['0 vents',v=>v===0],['1 vent',v=>v===1],['2+ vents',v=>v>=2]];
+    for (const [label,f] of vBuckets){const b=players.filter(p=>f(p.nVents||0));if(!b.length)continue;
+      console.log('    '+label.padEnd(9)+' '+pct(b.length,P).padStart(6)+' of seats · win '+pct(b.filter(p=>p.win).length,b.length).padStart(6)+' · avg total '+fmt(avg(b.map(p=>p.total))));}
+    console.log('  staple★/player '+fmt(avg(players.map(p=>p.stapleSt||0)),1)+' · hand left at end '+fmt(avg(players.map(p=>p.hand!=null?p.hand:4)),2)+'/4');
   }
 
   // ---------- SPECIALISTS ----------

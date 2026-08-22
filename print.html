@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v5.1 “Wharf Hands”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v5.2 “Groundwork”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -738,7 +738,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v5.1 “Wharf Hands”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v5.2 “Groundwork”</span></h1>
   <span id="hnav"><!-- the shared site nav (nav.js) — one roster for all four pages --></span>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
@@ -766,7 +766,9 @@
 //==================================================================
 // The CARD COMPONENT LIBRARY (components.js) is the single source of the printed card faces —
 // data + generators + card CSS, shared with play.html (the app mirrors the kit, v3.3).
-const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,MANIFESTS_P,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,manifestTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard}=window.HC;
+const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,VENTURES,ventureTile,MANIFESTS_P,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,manifestTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard}=window.HC;
+// v5.2: a Venture tile wears its OWNER'S COLOUR RING (ruled) — the ring wraps the blue-foot face
+const ventRing=(d,lvl,col)=>'<div style="position:relative;width:2.5in;height:1.32in;border-radius:.1in;box-shadow:0 0 0 .05in '+col+' inset;overflow:hidden">'+ventureTile(d,lvl)+'</div>';
 
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 // (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
@@ -905,7 +907,8 @@ function aid3Panels(){
     +'<h5>'+LU('beer')+'Tiles</h5>'
     +AID_ROW('quality-3','Cask \u00b7 quality','a brewed beer + its grade')
     +AID_ROW('sailboat','Ship','Skute \u00b7 Cog \u00b7 Hulk: 1 \u00b7 2 \u00b7 3 berths')
-    +AID_ROW('building-2','Building','shared — most RIDE the station action on their line (v5.1)')
+    +AID_ROW('building-2','Public Work','shared, brown, passive — the investor’s die matures at 6 (v5.2)')
+    +AID_ROW('home','Venture','private, your colour ring — L1 from hand (a public die standing), L2 over your own L1 (v5.2)')
     +AID_ROW('wrench','Specialist','private, seats at your board')
     +AID_ROW('scroll-text','Recipe','permission to brew a beer')
     +AID_ROW('contract','Manifest','a demand card on a non-Bruges Ship')
@@ -1144,7 +1147,7 @@ function supplyBoard(){
   const shelf=(lbl,ic,slots)=>'<div class="shelf-lbl">'+LU(ic)+lbl+'<span class="bag">'+LU('shopping-bag')+'</span></div>'
     +'<div class="shelf">'+slots+'</div>';
   // overlay samples — one real render per family, varied so both tile verbs/colours get proofed
-  const smpBld=['granary','racking','maltkiln','cooperage'].map(k=>buildingCard(BUILDINGS.find(b=>b.k===k)));   // v5.1: the Scrivener's retired — a rider proofs in its place
+  const smpBld=['tollhouse','staple_bruges','maltkiln','cooperage'].map(k=>buildingCard(BUILDINGS.find(b=>b.k===k)));   // v5.2: live Public Works proof the display
   const smpShip=[shipCard('skute','Bruges'),shipCard('cog','London'),shipCard('hulk','Bergen'),shipCard('cog','Novgorod')];
   const smpImp=[0,1,2,3].map(i=>improveTile(IMPROVE[i]));
   // 2026-08-18 (designer): the SPECIALISTS take the old recipe shelf — the display of 4 rides
@@ -1410,7 +1413,8 @@ function buildPages(){
       if(f.cask)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:caskCardBack(f.d,f.act)});
       else if(f.bld)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:buildingBack(f.d)});
       else if(f.ship)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:shipBack(f.hull)});
-      else if(f.rec)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:recipeCard(f.d,true)});});
+      else if(f.rec)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:recipeCard(f.d,true)});
+      else if(f.vent)bp.items.push({x:mx,y:it.y,w:it.w,h:it.h,nat:it.nat,html:ventRing(f.d,2,f.col)});});   // v5.2: the L2 face rides the back
     (famPages['Card/tile backs']=famPages['Card/tile backs']||new Set()).add(pages.indexOf(bp));
   });}
   // tag each front family by pack order (item order across the pages == meta order)
@@ -1448,7 +1452,13 @@ function buildPages(){
   const bldItems=[];
   BUILDINGS.forEach(d=>{if(d.hall)return;for(let i=0;i<cnt(d.n);i++)
     bldItems.push({fam:'Buildings',html:buildingCard(d)});});   // v4.0 SINGLE-FACED: no owner, no WILD flip — displaced tiles are boxed · v4.16b: the Chancery prints on the GUILDHALL sheet
-  packSpaced(pages,'bits','Building tiles — SINGLE-FACED, one green family (print 19 · SETUP DEALS 17/game, v5.1 · 22″ plotter · 1.5mm bleed · cuts 3mm apart · v45d power ladder: fees in grain only)',[{kind:'bld',items:bldItems}],famPages);
+  packSpaced(pages,'bits','PUBLIC WORKS — SINGLE-FACED, the shared brown family (print 13 · SETUP DEALS 11/game — 2 of the 4 Staple Houses sit out, v5.2 · 22″ plotter · 1.5mm bleed · cuts 3mm apart · fees in grain only · the investor’s die MATURES at 6)',[{kind:'bld',items:bldItems}],famPages);
+  // --- v5.2 VENTURE TILES → double-sided (L1 front / L2 back), one set per house, the OWNER'S RING ---
+  const ventMeta=[];const vsets=MODE==='proof'?1:PLAYERS.length;
+  for(let s=0;s<vsets;s++)VENTURES.forEach(d=>ventMeta.push({fam:'Ventures',vent:true,d,col:PLAYERS[s].c}));
+  const vStart=pages.length;
+  packSpaced(pages,'bits','VENTURE tiles — PRIVATE, dual-use (L1 front / L2 back · 4 designs × 1 set per house · the colour ring = the owner) — print DOUBLE-SIDED, flip LEFT↔RIGHT (v5.2: an L1 needs your die standing on a Public Work; the L2 lands only on your own L1)',[{kind:'bld',items:ventMeta.map(f=>({fam:'Ventures',html:ventRing(f.d,1,f.col)}))}],famPages);
+  mirrorBackPages(pages.slice(vStart),ventMeta,PG,'Venture tile BACKS (mirror — flip LEFT↔RIGHT): the L2 faces — reached only by overbuilding your OWN L1 (the spent L1 is boxed)','bits');
   // (the CONTRACT strips print on S1 — the Wharf sheet's open right band, above)
   // (2026-07-19: the UNLOCK-COVER sheet left the kit — sourced, any opaque square, like the tally dice.
   //  v3.4c: the owner frames are RETIRED — little house tokens mark building ownership; store-bought.)
@@ -1513,7 +1523,7 @@ function checklist(pages,famPages){
   // 2026-08-09 [designer]: the manifest is a PACKING LIST, not a lesson — "just some basic
   // details of quantity, any important themes to share, and where they go." Every entry is one
   // short line: what it is · WHERE IT LIVES on the table. The rules live in the rulebook.
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v5.1 “Wharf Hands”)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v5.2 “Groundwork”)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">Counts are tuning placeholders ⚙. The rules live on the <b>player aid</b> and in the rulebook — this page only says what to make, how many, and where it sits on the table.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
@@ -1525,7 +1535,8 @@ function checklist(pages,famPages){
   h+=T('Tiles (mount on chipboard, laser-cut)')
     +R('Cask tiles — the beer supply','The beer itself, brewed never bought. <b>Six face-up stacks on the Market &amp; Stores board\u2019s Casks &amp; Recipes column</b> (the mid tiers vary with the deal) — a full Brew SEARCHES the stack; the alternate takes the top tile; a delivered cask\u2019s tile returns to the bottom (v5.0). '+caskBase.map(d=>d.nm+' ×'+d.n).join(' · ')+'.',sumN(caskBase))
     +R('Ship tiles','Neutral hulls, each bound for a printed Kontor; the tile IS its berths. <b>A draw bag → a display of 4.</b> Skute ×6 · Cog ×10 · Hulk ×8 — six per Kontor.','24')
-    +R('Building tiles','One green family — nobody owns them; most now print a <b>RIDER</b> (it boosts the matching station action on its line — v5.1). <b>A draw bag → a display of 4</b>; built onto the Wharf’s slots. Shuffle all 19, <b>deal 17</b> into the game (2 sit out).',sumN(BUILDINGS.filter(b=>!b.hall)))
+    +R('Public Works','The shared BROWN family — nobody owns the use; every face is a PASSIVE modifier of its slot’s traffic (v5.2). The investor’s die stands at the printed face, turns on every use, and <b>MATURES at 6</b> (+6★, the die home, the tile demolished). <b>A draw bag → a display of 4</b>. Deal every non-Staple tile + 2 of the 4 Staple Houses — <b>11 of the 13</b>.',sumN(BUILDINGS.filter(b=>!b.hall)))
+    +R('Venture tiles','The PRIVATE dual-use tiles (v5.2) — 4 designs, one ringed set per house: play a tile as its <b>L1</b> (from hand — needs your die standing on a Public Work) or spend it as its <b>L2</b> onto your own L1 (the spent L1 is boxed). No die — the power is the return; a rival can never overbuild one.',VENTURES.length*4)
     +R('Specialist tiles','The private purple hires, 15 designs (core five ×3 · guild ten ×1 — v5.1). <b>A draw bag → a display of 4</b>; seated on a player board.',impTotal)
     +R('Manifest cards','Three demand lines (beer/tier · die · combo → ★). <b>One rides every non-Bruges Ship</b> — dealt as the hull enters the display, claimed on delivery (each line once per voyage), returned under the deck at sail.','12')
     +'</table>';
@@ -1639,6 +1650,8 @@ function exportItems(){
     it.push({type:'ship',name:key,side:'back', w:2.5,h:HULL[hull].cap,html:shipBack(hull)});});
   // BUILDINGS — v4.0 single-faced, one green family
   BUILDINGS.forEach(d=>it.push({type:'building',name:d.k,side:'front',w:2.5,h:1.32,html:buildingCard(d)}));
+  VENTURES.forEach(d=>PLAYERS.forEach((pl,pi)=>{it.push({type:'venture',name:d.k+'-'+pi,side:'front',w:2.5,h:1.32,html:ventRing(d,1,pl.c)});
+    it.push({type:'venture',name:d.k+'-'+pi,side:'back',w:2.5,h:1.32,html:ventRing(d,2,pl.c)});}));
   IMPROVE.forEach(d=>it.push({type:'improvement',name:slug(d.nm),side:'front',w:2,h:2,html:improveTile(d)}));
   STARTERS.concat(RECIPES).forEach(r=>{   // v4.14: the expansion recipe cards export too
     it.push({type:'recipe',name:slug(r.nm),side:'front',w:1.85,h:2.55,html:recipeCard(r)});

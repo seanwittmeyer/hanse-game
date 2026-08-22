@@ -1,4 +1,18 @@
-# Brewhouses of the Hanse — Components (v5.1 “Wharf Hands”)
+# Brewhouses of the Hanse — Components (v5.2 “Groundwork”)
+
+> **v5.2 “Groundwork” (designer-ruled 2026-08-22 — the two building families; the record:
+> `archive/records/V52-GROUNDWORK.md`):** the building family **SPLITS** on the printed
+> faces. **(1) PUBLIC WORKS (§6a)** print **BROWN** (ruled — green is a player colour):
+> 13 tiles / 9 designs, every face a passive modifier of its own slot; **the investor’s die
+> MATURES at 6** (+6★ · die home · tile demolished — the face’s start value is also its
+> lifespan); the **Staple Houses ×4** enter (one Kontor crest each — a matching sail from
+> this slot pays every cask +2★ ⚙; deal 2 of 4); the **Customs reprints at −1** ⚙ (ruled);
+> the **Ropewalk reprints** as the cross-quay load (ruled). OUT of the box: Granary ·
+> Mission Quay · Racking Hall · Assay House · Abbey Cellar · Hop Exchange · Merchants’
+> Exchange · Rich Berth · Warping Capstan. **(2) VENTURE tiles (§6b) — NEW, 16:** 4
+> dual-use designs × one set per house, **double-sided L1/L2**, the **owner’s colour ring**
+> printed on (the ring IS the ownership mark; no die). The rulebook, print kit, player aid
+> and this manifest reprint together (the v4.13 law).
 
 > **v5.0 “Open Wharf” (designer-ruled 2026-08-18 — three rulings; the record:
 > `archive/records/V5-OPEN-WHARF.md`):** **(1)** the cask supply reads as **searchable
@@ -288,7 +302,7 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (its header states the current version). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `archive/records/V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v5.1 “Wharf Hands”** (`KEY hanse-v51r` — the r is the 2026-08-21 rider-scope study letter: an engine dial ⚙, no component change) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v5.2 “Groundwork”** (`KEY hanse-v52`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - **The print kit is `print.html` — the only kit in use** (components.js data is v5.1; the sheet layouts are the P4 refresh + the 2026-08-18 native-scale pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
 
 ---
@@ -376,43 +390,56 @@ once** — **no ★ (v4.5b)**: the Ship + the instant load are the whole reward.
 
 Per Kontor: 6 each (Bruges sk1/c3/h2 · London sk2/c2/h2 · Bergen sk1/c3/h2 · Novgorod sk2/c2/h2 ⚙).
 
-## 6. Building tiles (print 19 ⚙ · DEAL 17 each game — v5.1 · ONE green family of RIDERS, 2.5×1.32″)
+## 6. Building tiles — TWO FAMILIES (v5.2 “Groundwork”)
 
-**Nobody owns the use** — every building serves whoever activates it; the builder **stands a
-quality die on the tile at its printed start face** ⚙ (v4.9/v4.9b — every use turns it up, cap 6; the pips score at
-game end; setup’s two neutral seeds carry no die). Placement is always display → slot, at once; overbuild
-for ONE payment ⚙ (v4.2c: a paid fee covers the ground — the `1 G` rent only when an otherwise-free placement overbuilds; displaced tile boxed). Display of 4; free at
-**London**, or via the *Gain 1 building* bonus at the **tile’s printed fee** ⚙ (a chipless
-tile is free — the tier reads straight off the component). Using a building never costs a fee.
+### 6a. PUBLIC WORKS (print 13 ⚙ / 9 designs · DEAL 11 each game · BROWN, shared, 2.5×1.32″)
 
-**v5.1 “Wharf Hands” — the RIDER print:** most tiles are **modifiers, not actions**. A rider
-tile prints its **HOST station icon** + a minimal icon-effect line (the ruled constraint: the
-fewest words; icons carry resources and actions). It boosts the matching **station action
-fired on its line** — primary and alternate alike — and the mason’s die ticks when the
-rider’s effect is used (each rider once per activation). Retired here: **Scrivener’s Hall ·
-Hiring Post · Almoner’s Stall** (ruled). New: **Ropewalk · Weigh House**. Shuffle all **19,
-deal 17** (≥1 Malt Kiln + ≥1 Mission Quay guaranteed; 2 stay boxed). Fees in **grain only**;
-hops are spent USING the power tiles.
+**Nobody owns the use** — every face is a **passive modifier of its own slot’s traffic** (a
+cask loading here · the Ship docked here · a sail from here); no tile adds an action for
+anyone. The builder — the **INVESTOR** — **stands a quality die on the tile at its printed
+start face** ⚙; every use by any player turns it up, and **AT 6 THE INVESTMENT MATURES**
+(v5.2, ruled: **+6★** banked, the die home, the tile demolished — the slot opens; the
+printed face is also the lifespan). Placement is display → slot, at once; overbuild for ONE
+payment ⚙ (v4.2c: a paid fee covers the ground, else the `1 G` rent; the displaced tile is
+boxed and **its investor still banks the pips** — ruled). Display of 4; free at **London**,
+or via the *Gain 1 building* bonus at the **tile’s printed fee** ⚙ (grain only). Using a
+building never costs a fee. **Deal: every non-Staple tile + 2 of the 4 Staple Houses**
+(random; 2 stay boxed). The colour is **BROWN** (v5.2, ruled — green is a player colour).
 
-| Building | Qty ⚙ | Printed face (host icon + icons; prose here) | Wharf fee ⚙ | Mark starts ⚙ |
+| Public Work | Qty ⚙ | Printed face (icons; prose here) | Fee ⚙ | Die starts ⚙ |
 |---|---|---|---|---|
-| Granary | 1 | rider · **Source here: +1 good** | — | 1 |
-| Mission Quay | 2 | rider · **Age here: +1 step** | — | 1 |
-| **Racking Hall** *(power)* | 1 | rider · **Age here: may first swap 2 vessel dice** (no quality cap; the beer transfers) | 3 `G` | 3 |
-| **Assay House** | 1 | rider · **Age here: may pay 1 `H` — 1 cask READY** | 1 `G` | 1 |
-| **Abbey Cellar** *(power)* | 1 | rider · **Age here: may pay 3 `H` — ALL aging READY** | 2 `G` | 3 |
-| **Hop Exchange** *(power)* | 1 | rider · **Age/Load here: pay ≤2 `H` — vessel dice +1 each** (past quality fine; cap 6) | 2 `G` | 2 |
-| **Malt Kiln** | 2 | a cask loading here: **die +1** (cap 6) | 2 `G` | 2 |
+| **Malt Kiln** | 2 | a cask loading here: **die +1** (past quality fine; cap 6) | 2 `G` | 2 |
 | **Tollhouse** | 1 | a cask loading here **may turn its die −1** (never below the minimum): **+3★ at once** | 1 `G` | 3 |
+| **Customs House** | 1 | **−1 to the Kontor minimum** at this slot ⚙ (floor 1 — v5.2, ruled: was −2, “almost broken”) | 2 `G` | 3 |
+| **Ropewalk** *(v5.2 rework, ruled)* | 1 | a load here: **also load 1 Ready cask onto a DIFFERENT docked Ship** ⚙ (once per load flow) | 2 `G` | 3 |
+| Cooperage | 1 | the Ship here: **+1 capacity** (sails only when that berth is also full) · **each cask loaded here: its loader +1★** ⚙ | 2 `G` | 3 |
+| **Weigh House** | 1 | **each cask delivered off the Ship here may claim 2 Manifest lines** | 2 `G` | 3 |
+| **Staple House ×4** *(v5.2 NEW — one crest per Kontor)* | 4 | a Ship sailing from here **to the printed Kontor**: **every delivered cask +2★** ⚙ (each a use of the investor’s die — *Stapelrecht*) | 2 `G` | 2 |
 | **Bonded Store** *(ephemeral)* | 1 | a cask loading here: **die +1** (cap 6); **sails with the Ship** (boxed) — every player with a cask aboard gains 2 goods | 2 `G` | 3 |
 | **Victualling Yard** *(ephemeral)* | 1 | a cask loading here: **its load bonus fires TWICE**; **sails with the Ship** (boxed) | 2 `G` | 3 |
-| Cooperage | 1 | the Ship here: **+1 capacity** · **each cask loaded here: its loader +1★** ⚙ | 2 `G` | 3 |
-| Customs House | 1 | **−2 to the Kontor minimum** at this slot ⚙ (floor 1 — the smuggler’s door, v5.1) | 2 `G` | 3 |
-| Rich Berth *(v5.1 rework)* | 1 | a load leaving **one empty berth**: the loader **may pay 2 `G` — the berth fills, the Ship SAILS** (the auto sail-short retired) | 2 `G` | 3 |
-| **Ropewalk** *(v5.1 NEW)* | 1 | **loads at this slot: +1 cask** ⚙ (stacks with the Stevedore) | 2 `G` | 3 |
-| **Weigh House** *(v5.1 NEW)* | 1 | **each cask delivered off the Ship here may claim 2 Manifest lines** | 2 `G` | 3 |
-| **Merchants’ Exchange** *(the held ACTION)* | 1 | resolve its slot: **re-manifest up to 2 non-Bruges Ships** — the old card cycles under the Manifest deck, a new one deals at once (v5.0 ⚙) | 2 `G` | 2 |
-| **Warping Capstan** *(v5.1 rider)* | 1 | rider · **a load stop on this line: may FIRST warp any docked Ship** (cargo rides; full where it lands → sails) | 2 `G` | 3 |
+
+*(Retired at v5.2, ruled: Granary · Mission Quay · Racking Hall · Assay House · Abbey Cellar ·
+Hop Exchange · Merchants’ Exchange — their ideas move into the Ventures below — plus the
+Rich Berth (cut) and the Warping Capstan (expansion lot). The freed art files ride the new
+faces as stand-ins; briefs queued in `art/PROMPTS.md`.)*
+
+### 6b. VENTURE tiles (print 16 ⚙ — 4 dual-use designs × 1 ringed set per house · 2.5×1.32″ · DOUBLE-SIDED)
+
+**Private** — a Venture serves its owner alone and wears the **owner’s colour ring** (the
+printed ring IS the ownership mark; no die ever stands on one). Each house starts with the
+same **hand of 4**; a tile plays **L1-side up from hand** (THE LADDER, ruled: only while one
+of your mason’s dice **stands on a Public Work**) or lands **L2-side up over your own L1**
+(the spent L1 tile is boxed; the ground is kept). One piece of cardboard, one face per life:
+playing a side forfeits the other. **A rival can never overbuild a Venture; an L2 can never
+be displaced.** Fees ⚙ **L1 1 `G` · L2 2 `G`** (grain only; waived as the London prize).
+Ventures commit **no die** — the clock is untouched.
+
+| Tile (front = L1 · back = L2) | L1 face ⚙ | L2 face ⚙ |
+|---|---|---|
+| **Rack House / Brewery** | *this line:* swap the dice of 2 of your vessel casks (no quality cap) | *this line:* **you may BREW** (full search; normal costs) |
+| **Counting House / Assay Loft** | *your loads here:* **+1 good** | *this line:* **pay 1 `H` — 1 cask straight to READY** |
+| **Factor’s Desk / Staple Rights** | *before loading the Ship here:* **re-deal its Manifest** | *your casks sailed from here:* **+1★ each** ⚙ |
+| **Warehouse / Guild Residence** | *your loads here:* **+1 cask may board** | *game end:* **2★ per Venture in play** ⚙ |
 
 ## 7. Specialist tiles (15 designs — v5.1 · the core 5 × max(2, n−1) + the guild 10 × 1 · 2×2″ purple)
 
@@ -506,6 +533,13 @@ displays: Ships 4 / buildings 4 / Specialists 4 · **a Manifest on every non-Bru
 worker placed free · first player fixed.
 
 ## 10. Box delta vs v3.4
+
+**v5.2 delta (2026-08-22, ruled):** the building family SPLITS — **Public Works** print 13
+(brown; Granary · Mission Quay · Racking · Assay · Abbey · Hop Exchange · Merchants'
+Exchange · Rich Berth · Capstan leave the box; **+4 Staple Houses**; deal 11) and the
+**16 Venture tiles** enter (4 dual-use designs × 4 house-ringed sets, double-sided L1/L2);
+the investor's die MATURES at 6; Customs reprints at −1; the Ropewalk reprints as the
+cross-quay load. Header/checklist reprint v5.2.
 
 **v5.1 delta (2026-08-19):** **−3 building tiles** (Scrivener's Hall · Hiring Post ·
 Almoner's Stall — retired) · **+2 building tiles** (Ropewalk · Weigh House) — the box prints

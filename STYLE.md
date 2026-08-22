@@ -28,7 +28,14 @@ governed here.
 | requirement | n | A printed condition that must read true off your components before a Specialist may be seated | — | requirements | No | ~~seat-gate~~, ~~gate~~, ~~prerequisite~~ | ● |
 | Specialist | n | A private purple tile; 2 seats per player | wrench | Specialists | Yes | ~~improvement~~, ~~upgrade~~ | ● |
 | seat | n | A Specialist space on your player board | — | seats | No | — | ● |
-| building | n | A green tile on a slot; serves whoever activates it (most print riders — v5.1) | building-2 | buildings | No | ~~work~~, ~~privilege~~ (retired families) | ● |
+| building | n | The umbrella noun for both slot families (v5.2): a Public Work or a Venture | building-2 | buildings | No | ~~privilege~~ (retired family) | ● |
+| Public Work | n | A shared BROWN tile on a slot (v5.2): a passive modifier of its slot's traffic; the investor's die rides it and MATURES at 6 | building-2 | Public Works | Yes | ~~work~~ alone, ~~green building~~, ~~rider~~ (the v5.1 grammar, retired) | ○ v5.2 |
+| investor | n | The player whose mason's die stands on a Public Work (they built it) | — | investors | No | ~~builder~~ (generic ok in rules prose) | ○ v5.2 |
+| matures | v | A Public Work's die turning to 6: +6★ banked, the die home, the tile demolished, the slot opens (v5.2) | — | — | No | ~~cashes out~~, ~~completes~~ | ○ v5.2 |
+| Venture | n | A private dual-use tile (v5.2): owner-only, the owner's colour ring, no die; an L1 face and an L2 face on one tile | home | Ventures | Yes | ~~private building~~ (prose ok, never printed) | ○ v5.2 |
+| L1 / L2 | n | A Venture tile's two faces: L1 plays from hand (the Ladder); L2 lands only over your own L1 (the Climb) | — | — | Yes | ~~level one~~ spelled out | ○ v5.2 |
+| the Ladder | n | The build order rule (v5.2, ruled): an L1 places only while one of your dice stands on a Public Work | — | — | Yes | — | ○ v5.2 |
+| Staple House | n | The destination-premium Public Work (×4, one Kontor crest each): a matching sail from its slot pays every cask +2★ ⚙ | landmark | Staple Houses | Yes | ~~Staple~~ alone in rules copy | ○ v5.2 |
 | recipe | n | A card granting permission to brew a beer | scroll-text | recipes | No | — | ● |
 | exports | n | The four dealt-3-of-4 beers (Broyhan · Keut · Mumme · Bock) | — | — | No | — | ● |
 | the Flight | n | Your completed (shipped) recipe cards — moved to the board’s COMPLETED side on that beer’s first load (v4.9d); scores (n−1)² | unlock | — | Yes | — | ● |

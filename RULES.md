@@ -1,4 +1,29 @@
-# Brewhouses of the Hanse — Turn & Round Rules (v5.1 “Wharf Hands”)
+# Brewhouses of the Hanse — Turn & Round Rules (v5.2 “Groundwork”)
+
+> **v5.2 “Groundwork” (designer-ruled 2026-08-22, in-session — the TWO BUILDING FAMILIES;
+> the record: `archive/records/V52-GROUNDWORK.md`).** The intent, in the designer’s words:
+> *buildings are modifiers to the items in that slot — a docked ship, a loading cask, maybe
+> the empty slot itself… the line is clear and clean: a primary action, an alternate action,
+> and two slots.* **(1) PUBLIC WORKS (§5a)** — the shared family turns **BROWN** (green is a
+> player colour) and fully **PASSIVE**: every face fires on its own slot’s traffic, for
+> whoever’s cask or Ship it is; the investor’s die ticks on any use and **AT 6 THE
+> INVESTMENT MATURES** (+6★ banked, the die home, the tile demolished, the slot opens);
+> an **overbuild still pays the pips** (ruled). Roster 13 tiles / 9 designs — the
+> **Staple Houses ×4** enter (*Stapelrecht*: casks off a matching-Kontor sail from this
+> slot **+2★** each ⚙; 2 of 4 deal), the **Customs eases to −1** (ruled — −2 was “almost
+> broken”), the **Ropewalk reworks** (ruled: a load here also loads 1 Ready cask onto a
+> **DIFFERENT** docked Ship), and the **Rich Berth is CUT** (*“meh”* — dead through two
+> buffs) with the **Capstan** parked in the expansion lot. **(2) VENTURES (§5b)** — the
+> GWT family: each house holds an **identical hand of 4 DUAL-USE tiles** (L1 face from
+> hand / L2 face over your own L1 — one piece of cardboard, never both faces); **no
+> mason’s die** (the power is the return); owner-only, the **owner’s colour ring**, never
+> overbuilt by a rival. **THE LADDER (ruled): public → L1 → L2** — an L1 places only while
+> one of your dice STANDS on a Public Work; an L2 only by overbuilding your own L1 (the
+> spent L1 is boxed). Rack House/BREWERY · Counting House/ASSAY LOFT · Factor’s Desk/
+> STAPLE RIGHTS · Warehouse/GUILD RESIDENCE. The retired v5.1 riders’ ideas live on in
+> these faces; the **Merchants’ Exchange’s re-deal becomes the Factor’s Desk**. The survey
+> verb and the **London prize offer BOTH families** (the prize waives the fee). Gates:
+> §Open #19.
 
 > **v5.1 “Wharf Hands” (designer-ruled 2026-08-19 — the buildings & specialists pass
 > deferred at v5.0; the record: `archive/records/V51-WHARF-HANDS.md`).** The manifesto:
@@ -534,10 +559,10 @@ The turn:
    - its **two stations** — **the station under your worker fires its PRIMARY action; the
      line’s other station fires its ALTERNATE** (the lesser print — v5.0, §4);
    - its **two slots** — each offers **a LOAD of the ship docked there** (if a ship stands
-     there), each once (§6). **Most buildings are RIDERS (v5.1)** — they don’t add a stop:
-     they boost the matching station action fired on this line, or ride its load flow (§5);
-     only an ACTION tile (the Merchants’ Exchange · the hall Chancery) still offers a stop
-     of its own. An empty slot does nothing — **author it.**
+     there), each once (§6). **Buildings add no step (v5.2)**: a PUBLIC WORK fires on the
+     slot’s own traffic by itself; your own **VENTURE stops** (Rack House · Brewery · Assay
+     Loft) appear here on YOUR activations only; the hall Chancery is the one slot action.
+     An empty slot does nothing — **author it.**
    **The line is read LIVE (v4.6c):** a Ship commissioned or warped onto a line slot
    mid-turn — or a building built there — opens that slot this same activation
    (each stop still at most once; a ship sailing off closes its stop).
@@ -617,79 +642,99 @@ valve — the demand is still the docked hulls’ minimums and Manifests.)*
 
 ---
 
-## 5. The slots & the buildings — one green family of RIDERS (v5.1)
+## 5. The slots & the buildings — PUBLIC WORKS & VENTURES (v5.2 “Groundwork”)
 
-The 8 slots each hold up to **one building** (bottom) and **one ship** (top). **Every building
-serves whoever activates it; nobody owns the use.** Building one — London’s prize (free) or a *Gain 1
-building* action (pay the **tile’s printed wharf fee** ⚙, v4.2 — a chipless tile is free),
-always **from the Wharf display of 4, placed at once** — **stands one of the builder’s quality
-dice on the tile at its PRINTED START FACE (v4.9b ⚙ — 1/2/3 by tier)**: each use by any
-player turns it up 1 (cap 6), and the pips score to the builder at game end. No tray die →
-no build; **a build prize that can’t be taken is forfeit** (no goods fallback — v4.9b).
-**Overbuild — ONE payment per placement (v4.2c):** a fee-paid gain **covers the ground** (no
-rent); the **1 `G` ⚙ ground rent** applies only when an otherwise-free placement lands on a
-built slot. The displaced tile is **boxed — its die scores its pips at once and returns
-(v4.9)**.
+The 8 slots each hold up to **one building** (bottom) and **one ship** (top). Buildings come
+in **two families**, and every face is a **modifier of its own slot** — a cask loading here,
+the Ship docked here, a sail from here. **A building never adds an action or a step for
+anyone**: the line always reads *two station actions + two slots* (the one exception is your
+own Venture’s private stop, visible on nobody else’s turn).
 
-**THE RIDER GRAMMAR (v5.1 — the manifesto: buildings are modifiers, not actions to take).**
-Most tiles print a **rider**: the **host station icon** + a minimal effect. A rider fires
-**with the matching STATION action taken on its line — the primary and the alternate alike**
-(a building on a line upgrades that line’s echo), serving whoever’s action it is. Each rider
-fires **at most once per activation**; the mason’s die **ticks when the rider’s effect is
-actually used**. The die-riders (Racking · Assay · Abbey · Hop Exchange) **offer inside the
-Age flow** — use them at any point around the steps; the load-riders (Hop Exchange · Warping
-Capstan) **offer as a load stop on their line begins**. A rider pays only on a line whose
-stations host it — **a Granary on the Brewhouse–Cellar column never fires: placement is
-authorship.** Only an **ACTION tile** still offers a slot stop of its own — the base game has
-exactly one (the Merchants’ Exchange; the hall-mode Chancery is the other).
+### 5a. Public Works — the shared brown family
 
-**The deck (the box prints 19 ⚙ — SETUP DEALS 17 each game, 2 sit out, v5.1; all green;
-fees in GRAIN ONLY — grain buys infrastructure, hops power the beer):**
+**Nobody owns the use** — a Public Work serves whoever’s traffic touches its slot. Build one
+through London’s prize (free) or a *Gain 1 building* action (pay the **tile’s printed fee** ⚙,
+grain only), always **from the Wharf display of 4, placed at once**. The builder is the
+**INVESTOR**: stand one of your quality dice on the tile at its **PRINTED START FACE** (⚙ —
+2/3 by tier); **each use, by any player, turns it up 1**.
 
-| Building | Kind | Effect ⚙ (the tile prints icons — this column is the prose) | Qty ⚙ | Wharf fee ⚙ | Mark starts ⚙ |
+- **THE INVESTMENT MATURES AT 6 (ruled 2026-08-22):** the moment the die turns to 6, the
+  investor banks **+6★**, the die **returns to their tray**, and the tile is **demolished**
+  (boxed) — the slot opens. The printed face is also the lifespan (a face-3 tile matures on
+  its third use).
+- **Overbuild — ONE payment per placement (v4.2c):** anyone may build over a standing Public
+  Work; a fee-paid gain covers the ground, else the **1 `G` ⚙ ground rent**. The displaced
+  tile is boxed — **its investor still banks the pips (ruled), and the die returns**.
+- No tray die → no public build; **a build prize that can’t be taken at all is forfeit**
+  (v4.9b — but the London prize may take a Venture instead, below). Setup’s two neutral
+  seeds carry no die: pure commons that never mature.
+
+**The deck (the box prints 13 tiles / 9 designs ⚙ — SETUP DEALS 11: every non-Staple tile +
+2 of the 4 Staple Houses at random; fees in GRAIN ONLY):**
+
+| Public Work | Fires | Effect ⚙ (the tile prints icons — this column is the prose) | Qty ⚙ | Fee ⚙ | Die starts ⚙ |
 |---|---|---|---|---|---|
-| Granary | rider · Source | **Source on this line: +1 good** | 1 | free | 1 |
-| Mission Quay | rider · Age | **Age on this line: +1 step** | 2 | free | 1 |
-| **Racking Hall** *(power)* | rider · Age | **Aging on this line: you may first swap the dice of ANY two of your vessel casks — no quality cap** (the beer transfers whole; cap 6). *The launder engine.* | 1 | 3 `G` | 3 |
-| **Assay House** | rider · Age | **Aging on this line: you may pay 1 `H` — ONE maturing cask straight to READY** | 1 | 1 `G` | 1 |
-| **Abbey Cellar** *(power)* | rider · Age | **Aging on this line: you may pay 3 `H` — ALL your aging casks to READY** | 1 | 2 `G` | 3 |
-| **Hop Exchange** *(power)* | rider · Age/Load | **Aging or loading on this line: pay up to 2 `H` ⚙ — your vessel dice +1 per hop** (any split; past quality is fine; cap 6) | 1 | 2 `G` | 2 |
-| **Malt Kiln** | on load here | the boarding cask’s **die +1** (cap 6) | 2 | 2 `G` | 2 |
+| **Malt Kiln** | on load here | the boarding cask’s **die +1** (past quality is fine; cap 6) | 2 | 2 `G` | 2 |
 | **Tollhouse** | on load here | the boarding cask **may turn its die −1** (never below the minimum): **+3★ at once** | 1 | 1 `G` | 3 |
+| **Customs House** | passive | **−1 to the Kontor minimum** at this slot ⚙ (floor 1 — v5.2, ruled: −2 opened London/Bergen outright; READY is still required) | 1 | 2 `G` | 3 |
+| **Ropewalk** | on load here | a load here: **you may also load 1 Ready cask onto a DIFFERENT docked Ship** ⚙ (once per load flow here — v5.2, ruled rework) | 1 | 2 `G` | 3 |
+| **Cooperage** | passive · on load | the Ship here: **+1 capacity** (it sails only when that berth is also full) — and each cask loaded here scores its loader **+1★** ⚙ | 1 | 2 `G` | 3 |
+| **Weigh House** | at sail | **each cask delivered off the Ship here may claim TWO Manifest lines** (each line still once per voyage) | 1 | 2 `G` | 3 |
+| **Staple House ×4** *(v5.2 NEW — one crest per Kontor; 2 join each game)* | at sail | a Ship sailing from this slot **to the printed Kontor**: **every delivered cask banks +2★** ⚙ — and each cask is a use of the investor’s die (*Stapelrecht* — the destination premium) | 4 | 2 `G` | 2 |
 | **Bonded Store** *(ephemeral)* | on load · at sail | the boarding die **+1** (cap 6); **sails with the Ship** (boxed) — every player with a cask aboard gains 2 goods | 1 | 2 `G` | 3 |
 | **Victualling Yard** *(ephemeral)* | on load · at sail | the boarding cask’s **load bonus fires TWICE**; **sails with the Ship** (boxed) | 1 | 2 `G` | 3 |
-| **Cooperage** | passive · on load | the Ship here: **+1 capacity** — and each cask loaded here scores its loader **+1★** ⚙ | 1 | 2 `G` | 3 |
-| **Customs House** | passive | **−2 to the Kontor minimum** at this slot ⚙ (floor 1 — the smuggler’s door, v5.1; READY is still required) | 1 | 2 `G` | 3 |
-| **Rich Berth** | on load here | a load leaving **ONE empty berth**: the loader **may pay 2 `G` ⚙ — the berth fills and the Ship SAILS** (v5.1; the automatic sail-short retires) | 1 | 2 `G` | 3 |
-| **Ropewalk** *(v5.1 NEW)* | on load here | **loads at this slot: +1 cask** ⚙ (stacks with the Stevedore) | 1 | 2 `G` | 3 |
-| **Weigh House** *(v5.1 NEW)* | at sail | **each cask delivered off the Ship here may claim TWO Manifest lines** (each line still once per voyage) | 1 | 2 `G` | 3 |
-| **Merchants’ Exchange** *(the held ACTION)* | resolve its slot | **re-manifest UP TO 2 non-Bruges Ships** ⚙ (v5.0 — docked or in the display): the old card cycles under the deck, a new one deals at once | 1 | 2 `G` | 2 |
-| **Warping Capstan** | rider · Load | **a load stop on this line: you may FIRST warp any docked Ship** (cargo rides) to any shipless slot — full where it lands, it sails | 1 | 2 `G` | 3 |
 
-*(Retired at v5.1: **Scrivener’s Hall** and the **Hiring Post** — acquisition belongs to the
-Kontore and the load bonuses — and the **Almoner’s Stall**, ruled: presence placement flows
-only through casks, always free. The Kiln, Hop Exchange and Racking Hall remain the
-“improve the humble beer” engines; the ephemeral pair remains the event family.)*
+*(Retired at v5.2, ruled: **Granary · Mission Quay · Racking Hall · Assay House · Abbey
+Cellar · Hop Exchange · Merchants’ Exchange** — their living ideas move into the Ventures —
+plus the **Rich Berth** (cut: dead through two buffs) and the **Warping Capstan** (parked in
+the expansion lot). The v5.1 rider grammar leaves with them: no building rides a station
+action any more.)*
+
+### 5b. Ventures — your private buildings (the GWT family)
+
+Each house starts with an **identical hand of 4 DUAL-USE Venture tiles**. A Venture is
+**private**: it serves its owner alone, wears the **owner’s colour ring**, and carries **no
+mason’s die** — the printed power IS the return. **A rival can never overbuild a Venture.**
+Ventures do not commit a die (the clock is untouched); their fees print in grain ⚙ and are
+**waived when the London prize builds one**.
+
+- **THE LADDER (ruled):** you may place a hand tile **L1-side up** on any open slot **only
+  while one of your mason’s dice STANDS on a Public Work** — fund the commons, earn private
+  ground. The check is at the moment of placement (the dice on the table are the permit; no
+  memory). Playing a tile as its L1 **forfeits its L2 face**.
+- **THE CLIMB:** an **L2** lands only by overbuilding **your own L1** — spend a second hand
+  tile L2-side up (pay the L2 fee); the spent L1 tile is **boxed**, the ground is kept. That
+  tile’s L1 face is forfeit. **An L2 can never be displaced by anyone.**
+- The **owner-only stops** (Rack House · Brewery · Assay Loft) open only when the OWNER
+  activates a line through them — once per activation, like any stop.
+
+| Tile (one piece of cardboard) | L1 face ⚙ (fee 1 `G`) | L2 face ⚙ (fee 2 `G`) |
+|---|---|---|
+| **Rack House / Brewery** | *Activating this line:* you may **swap the dice of two of your vessel casks** — no quality cap (the beer racks over; cap 6) | *Activating this line:* **you may BREW** (a full search of the stack; normal costs) |
+| **Counting House / Assay Loft** | *Your loads at this slot:* **also gain 1 good** | *Activating this line:* **pay 1 `H` — one vessel cask straight to READY** |
+| **Factor’s Desk / Staple Rights** | *Before loading the Ship at this slot:* **you may re-deal its Manifest** (the old card cycles under the deck) | *Your casks delivered off Ships sailing from this slot:* **+1★ each** ⚙ |
+| **Warehouse / Guild Residence** | *Your loads at this slot:* **+1 cask may board** | *Game end:* **2★ per Venture you have in play** ⚙ |
 
 **One-fire rule:** on a line, the active player may load each slot’s ship once, fire each
-ACTION tile once, and use each RIDER once — all optional, any order, read LIVE (v4.6c): a
-Ship or building landing on a line slot mid-turn opens its stop or rider.
+slot action once (the hall Chancery is the only one) and each of their own Venture stops
+once — all optional, any order, read LIVE (v4.6c): a Ship, Public Work or Venture landing on
+a line slot mid-turn opens its stop.
 
 ## 6. Ships & loading (the cash-out)
 
 - **Ships** are neutral, each bound for a printed Kontor, off a shuffled deck; a face-up **display of 4**
   ⚙. **Skute 1 · Cog 2 · Hulk 3** berths ⚙ (deck blend **6/10/8** ⚙ — 24 Ships, 6 per Kontor). **Commission** (§4C) pays
   the Ship’s **printed fee (2/1/0 `G` by size — v4.8)** and places it on any shipless slot; it scores nothing (v4.5b).
-- **LOAD (resolve a slot with a docked Ship):** the line’s **load-riders offer first**
-  (v5.1 — the Hop Exchange’s paid pump · the Capstan’s warp; each once per activation);
-  then take **one READY cask from YOUR vessels** whose **die meets the
+- **LOAD (resolve a slot with a docked Ship):** if the slot holds YOUR **Factor’s Desk**,
+  you may first re-deal the Ship’s Manifest (v5.2); then take **one READY cask from YOUR
+  vessels** whose **die meets the
   Ship’s minimum** (after this slot’s lifts — Kiln/Bonded Store; the Customs House lowers the
-  minimum by 2, floor 1 — v5.1; the Tollhouse may stamp the die down for **+3★**, v45d), seat it in the lowest berth (the die
+  minimum by 1, floor 1 — v5.2; the Tollhouse may stamp the die down for **+3★**, v45d), seat it in the lowest berth (the die
   rides the tile), and **fire the cask’s printed load bonus** (§6b) — **after any sail the
-  load completes** (deliveries and prizes resolve first, then the bonus). A load leaving the
-  **Rich Berth’s** Ship one short may **buy the empty berth** (2 `G` ⚙ — it sails, v5.1); the
-  **Ropewalk** loads **+1** at its slot; a cask delivered off the **Weigh House’s** Ship may
-  claim **two** Manifest lines (§5). **A beer's FIRST
+  load completes** (deliveries and prizes resolve first, then the bonus). A load at the
+  **Ropewalk** also loads **1 Ready cask onto a DIFFERENT docked Ship** (v5.2, once per
+  flow); your **Warehouse** loads **+1** at its slot; a cask delivered off the **Weigh
+  House’s** Ship may claim **two** Manifest lines (§5). **A beer's FIRST
   load moves its recipe card to the board's COMPLETED side — the Flight record (v4.9d).** The freed vessel is open
   again. *(The Stevedore loads **2** in EVERY load flow — v4.6d. The **commission**
   includes one such load onto its new Ship — §4C.)*
@@ -712,7 +757,7 @@ Ship or building landing on a line slot mid-turn opens its stop or rider.
 | **Load 1 more cask** | onto **any** eligible Ship on the wharf (its bonus fires too) | Q2+ |
 | **Place 1 presence** | a tray die → a Kontor you’ve delivered to (§7) — **free** (v5.1: presence flows only through casks) | Q2+ |
 | **Gain 1 recipe** | pay the **card’s printed fee** ⚙ — a dealt export | Q2+ |
-| **Gain 1 building** | pay the **tile’s printed fee** ⚙ (no chip = free) — display → any legal slot; **your die stands on it** (v4.9) | Q3+ |
+| **Gain 1 building** | EITHER a **Public Work** (its printed fee; your die stands on it) OR a **Venture** from your hand (L1 1 `G` / L2 2 `G` ⚙; the ladder holds) — v5.2 | Q3+ |
 | **Gain 1 specialist** | pay the **tile’s printed fee** ⚙ — from the display (open seat required) | Q3+ |
 | **Brew 1** | pay its cost into an open vessel (tray die) — a FULL brew: search the stack (v5.0) | Q3+ (v4.12) |
 
@@ -882,23 +927,28 @@ tray size (13 dice — v4.9b) is THE pace dial now.*
 3. **Tollhouse stamps** — **+3★** per stamped cask (v45d; the die drops 1 — net +2).
 4. **Cooperage wharfage** — **+1★** per cask loaded at its slot (v4.12b ⚙).
 5. **Placed presence** — 1★ each (the face-1 die; a seated Town Crier adds +2★ per die).
-6. **A departing building’s die** — its pips, scored as the tile leaves play (v4.9; the die
-   returns to its owner’s tray).
+6. **A departing Public Work’s die** — its pips as the tile leaves play (v4.9; the die
+   returns to the investor’s tray), and **+6★ when the investment MATURES at 6** (v5.2 —
+   the tile demolished, the slot opened).
+7. **Staple premiums (v5.2)** — the Staple House pays **+2★** ⚙ per cask off a
+   matching-Kontor sail (any house’s casks); **Staple Rights** pays its owner **+1★** ⚙
+   per own cask off its slot.
 
 *(Commissions score **nothing** — v4.5b. The score track + your parked dice remain the
 whole audit trail; no memory required.)*
 
 **End-game:**
-7. **Majorities** — at each Kontor, by **parked dice** (Bruges 4/2/0 · London 5/3/1 · Bergen
+8. **Majorities** — at each Kontor, by **parked dice** (Bruges 4/2/0 · London 5/3/1 · Bergen
    9/5/2 · Novgorod 8/5/2 ⚙; 2p skips 2nd; ties split).
-8. **The Flight** — distinct beers **SHIPPED** (the completed cards on your board — v4.9d): **(beers−1)², min 3**
+9. **The Flight** — distinct beers **SHIPPED** (the completed cards on your board — v4.9d): **(beers−1)², min 3**
    (3→4 · 4→9 · 5→16 · 6→25 ⚙).
-9. **Buildings — the Mason’s Marks (v4.9)** — each die standing on one of your buildings
-   scores **its pips** (1–6★). The dice on the tiles are the audit.
-10. **The Guild (v4.6)** — a seated **Alderman** (+2★ per Kontor with 3+ parked dice ⚙)
-   scores its printed line — the audit is the dice on the mats. *(The Chronicler moved to
-   scored-in-play at v5.0 — +2★ with each Manifest claim.)*
-11. **Tiebreak:** the summed dice in your vessels, then most goods.
+10. **Public Works — the standing Marks (v4.9)** — each die still standing on one of your
+   Public Works scores **its pips** (1–5★ — a 6 would have matured). The dice on the tiles
+   are the audit.
+11. **The Guild & the Residence** — a seated **Alderman** (+2★ per Kontor with 3+ parked
+   dice ⚙) scores its printed line; a standing **Guild Residence** (Venture L2) scores
+   **2★ per Venture you have in play** ⚙ (v5.2). The audit is the tiles and dice on the table.
+12. **Tiebreak:** the summed dice in your vessels, then most goods.
 
 > **The legible fork:** ship **wide** (majorities + prizes) or ship **lifted** (Kiln-fed dice,
 > the Novgorod bar), **build** (dice that grow on the tiles you author) or **brew broad** (the
@@ -1237,3 +1287,18 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
    pair stays a human read. Healthy: the Manifest economy (2.0–2.3 lines · ~2.2★/line,
    ramping Q4) · no runaway leader · the majority/lifter/flight ecology plural at 3–4p ·
    winners harvest majorities + the Flight while Bruges-volume is the (intended) trap lane.
+
+19. **v5.2 “Groundwork”** ⚙ — the two-family build’s standing watches (the battery at the
+   ruling: verify 338 · sim clean; the full oracle + the balance proposal follow in
+   `archive/records/`): **the have/have-not gap** (0-build seats now get no building
+   utility at all — watch their win rate) · **the London prize’s pull** (builds ran 86–94%
+   prize-channel; the prize now offers both families) · **4p ground pressure** (ventures
+   never leave; maturity + overbuild are the only churn — watch the lock rate; “recall
+   your own Venture to hand” is the shelved relief valve) · **ventures commit no die**
+   (building gained a runway discount — the ladder’s public ante claws some back; watch
+   pace) · **maturity pacing** (face 2 = 4 uses · face 3 = 3 — do hot Kilns churn too
+   fast?) · **the Staple number** (+2★ ⚙ vs the designer’s +4 — the A/B arm; sim hook
+   `STAPLE=`) · **the greedy venture mix** (the bots favour the Warehouse L1 — a policy
+   prior, not a verdict; the GM/human read decides) · **Cooperage semantics** (+1 berth
+   still touches the shared Ship — the one face that isn’t loader-only; flag if it
+   confuses) · the L1/L2 fees ⚙ and the Residence’s 2★/Venture ⚙ are unplayed numbers.

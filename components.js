@@ -108,25 +108,24 @@ const BUILDINGS=[
   // icon leads (the station action it rides, ON ITS LINE), the effect is icons + the fewest
   // words (the minimal-text constraint). Retired here: Scrivener's Hall · Hiring Post ·
   // the Almoner's Stall (ruled). New: Ropewalk · Weigh House. 19 tiles ⚙ — setup deals 17.
-  {k:'granary',   nm:'Granary',           ms:1, verb:'transform', tgt:'act',  ic:'coins',        n:1, effIc:'store',     eff:'here: +1 '+LU('coins')},
-  {k:'missionq',  nm:'Mission Quay',      ms:1, verb:'transform', tgt:'act',  ic:'church',       n:2, effIc:'hourglass', eff:'here: +1 step'},
-  // v45d power ladder — fees print in GRAIN only (hops are spent USING buildings, never buying them)
-  {k:'racking',   nm:'Racking Hall',      ms:3, verb:'transform', tgt:'act',  ic:'repeat',       n:1, g:3, effIc:'hourglass', eff:'here: swap 2 '+LU('dices')},
-  {k:'assay',     nm:'Assay House',       ms:1, verb:'transform', tgt:'act',  ic:'scale',        n:1, g:1, effIc:'hourglass', eff:'here: <span class="h">1'+LU('sprout','h')+'</span> → 1 '+LU('check')},
-  {k:'abbey',     nm:'Abbey Cellar',      ms:3, verb:'transform', tgt:'act',  ic:'hourglass',    n:1, g:2, effIc:'hourglass', eff:'here: <span class="h">3'+LU('sprout','h')+'</span> → all '+LU('check')},
-  {k:'hopex',     nm:'Hop Exchange',      ms:2, verb:'transform', tgt:'act',  ic:'sprout',       n:1, g:2, effIc:'die-plus1', eff:LU('hourglass')+'/'+LU('package-plus')+' here: <span class="h">1'+LU('sprout','h')+'</span> each · max 2'},
+  // v5.2 "GROUNDWORK" [designer-ruled 2026-08-22]: the PUBLIC WORKS — brown (green is a player
+  // colour), shared, PASSIVE slot modifiers; the investor's die at the printed face; AT 6 THE
+  // INVESTMENT MATURES (+6★, die home, tile demolished). 13 tiles / 9 designs; deal 11 (2 of
+  // the 4 Staples sit out). Retired: Granary · Mission Quay · Racking · Assay · Abbey ·
+  // Hop Exchange · Merchants' Exchange (→ the VENTURES) · Rich Berth · Capstan.
   {k:'maltkiln',  nm:'Malt Kiln',         ms:2, verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, effIc:'die-plus1',  eff:'on load'},
   {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, effIc:'die-minus1', eff:'on load → +3★'},
-  {k:'bonded',    nm:'Bonded Store',      ms:3, verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, effIc:'die-plus1',  eff:'on load · sails with the Ship · players aboard gain 2 goods'},
+  {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'−1 '+LU('dices')+' minimum here'},   // v5.2 ⚙ ruled: −1 (was −2 — almost broken)
+  {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, effIc:'package-plus', eff:'a load here: +1 '+LU('beer')+' to a DIFFERENT '+LU('sailboat')},   // v5.2 ⚙ ruled rework
   {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 ship capacity · on load +1★'},   // v4.12b: the wharfage eases 2→1 ⚙
-  {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'−2 '+LU('dices')+' minimum here'},   // v5.1 ⚙: the smuggler's door
-  {k:'richberth', nm:'Rich Berth',        ms:3, verb:'transform', tgt:'ship', ic:'anchor',       n:1, g:2, effIc:'package-plus', eff:'here: <span class="g">2'+LU('wheat','g')+'</span> → last berth fills · sails'},   // v5.1 ⚙: buy the empty berth
-  // v4.6 "Guildbook" — the box prints 20 tiles; SETUP DEALS 17 (≥1 Kiln + ≥1 Mission Quay guaranteed)
+  {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, effIc:'contract',     eff:'delivered here: claim 2 lines'},
+  // v5.2 NEW ⚙ — the STAPLE HOUSES (Stapelrecht): the destination premium, one crest each
+  {k:'staple_bruges',   nm:'Staple House · Bruges',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bruges',   eff:'sails → BRUGES: every '+LU('beer')+' +2★'},
+  {k:'staple_london',   nm:'Staple House · London',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'london',   eff:'sails → LONDON: every '+LU('beer')+' +2★'},
+  {k:'staple_bergen',   nm:'Staple House · Bergen',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bergen',   eff:'sails → BERGEN: every '+LU('beer')+' +2★'},
+  {k:'staple_novgorod', nm:'Staple House · Novgorod', ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'novgorod', eff:'sails → NOVGOROD: every '+LU('beer')+' +2★'},
+  {k:'bonded',    nm:'Bonded Store',      ms:3, verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, effIc:'die-plus1',  eff:'on load · sails with the Ship · players aboard gain 2 goods'},
   {k:'victual',   nm:'Victualling Yard',  ms:3, verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, eff:'Loading: the bonus fires TWICE · sails with the Ship'},
-  {k:'exchange',  nm:'Merchants’ Exchange',ms:2, verb:'transform',tgt:'act',  ic:'arrow-right-left', n:1, g:2, act:'exchange', eff:'Re-manifest up to 2 non-Bruges Ships'},   // v5.0 rework (was 3 Orders at v4.12)
-  {k:'capstan',   nm:'Warping Capstan',   ms:3, verb:'transform', tgt:'act',  ic:'ship-wheel',   n:1, g:2, effIc:'package-plus', eff:'here: first warp any '+LU('sailboat')},   // v5.1 rider — cargo rides; full where it lands → it sails
-  {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, effIc:'package-plus', eff:'here: +1 '+LU('beer')},   // v5.1 NEW ⚙ — the slot-local Stevedore
-  {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, effIc:'contract',     eff:'delivered here: claim 2 lines'},   // v5.1 NEW ⚙ — the demand layer's building
   // v4.16b "Guild Ledger" (designer-ruled 2026-08-14, off the lane study): the Guildhall's own
   // building — prints on the GUILDHALL SHEET (hall:1 keeps it off the base 20-tile sheet);
   // in hall mode it is guaranteed into the deal (17 of 21). Anyone who activates it gains an
@@ -297,7 +296,7 @@ const RECIPES=[  // EXPORT recipe cards — print in the same double-sided run a
 // as the cask/ship cards). FRONT = full-bleed building art (art/building-<key>.png) behind a scrim, with the name
 // + verb badge (Value/Transform) up top and the effect + target glyph + goods cost in a colour foot. The card
 // nests in the 2.5″ player-colour owner FRAME, so the coloured edge around it marks ownership.
-const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(50,79,42,.74)';   // v2.4.1: PRIVILEGE = bright blue (owner-only) · BUILDING = green (serves everyone) — SPECIALIST = purple below
+const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(97,63,32,.78)';   // v5.2 (ruled): PUBLIC WORKS turn BROWN — green is a player colour; VENTURE = the owner-only blue below — SPECIALIST = purple below
 const BLD_FOOT='rgba(58,51,66,.7)';   // legacy fallback   // building card foot/base — dark purple-grey (#3a3342) at 70% opacity so the illustration bleeds ~30% through the foot. Same on front & back.
 // v3.4a at 66% height — the SAME anatomy the 2in card earned (icon+name header · art window ·
 // the colour foot: the effect big, then the target chip + cost row), compressed, never flattened.
@@ -317,6 +316,32 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   +'<div class="bt-top"><span class="bt-ic">'+LUX(d.ic)+'</span><span class="bt-nm'+(d.nm.length>18?' xlong':d.nm.length>15?' long':'')+'">'+d.nm+'</span>'
     +msChip+((d.g||d.h)?'<span class="bt-cost">'+cost(d.g,d.h)+'</span>':'')+'</div>'   // the fee rides the TOP-RIGHT corner (round 6); the mark's start face sits beside it (v4.9b)
   +'<div class="bt-foot"><span class="bt-eff'+(lead?' bt-act':'')+'">'+eff+'</span></div>'
+  +'</div>';}
+// ---- v5.2 PRIVATE VENTURES (ruled 2026-08-22): the GWT family — each house holds an IDENTICAL
+// hand of 4 DUAL-USE tiles (one piece of cardboard = an L1 face OR an L2 face, never both:
+// played from hand it lands L1-up; played onto your own L1 it lands L2-up and the spent L1 is
+// boxed). NO mason's die — owner-only (the tile wears the OWNER'S COLOUR RING, printed per
+// house). THE LADDER: an L1 places only while one of your dice stands on a Public Work.
+// The kit prints 4 designs × 4 house-ringed copies = 16 tiles, 2.5×1.32in, blue foot (the
+// owner-only colour). (art: stand-ins from the retired tiles' freed files; briefs queued.)
+const VENTURES=[
+  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  eff:'this line: swap 2 of your '+LU('dices'), art:'building-racking.png'},
+                 l2:{nm:'Brewery',        ic:'flask-conical', eff:'this line: you may BREW (search)', art:'building-abbey.png'}},
+  {k:'counting', l1:{nm:'Counting House', ic:'coins',   eff:'your loads here: +1 good', art:'building-granary.png'},
+                 l2:{nm:'Assay Loft',     ic:'scale',   eff:'this line: <span class="h">1'+LU('sprout','h')+'</span> → 1 cask '+LU('check'), art:'building-assay.png'}},
+  {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', eff:'before loading here: re-deal the Manifest', art:'building-exchange.png'},
+                 l2:{nm:'Staple Rights',  ic:'landmark',eff:'your '+LU('beer')+' sailed from here: +1★ each', art:'building-richberth.png'}},
+  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   eff:'your loads here: +1 '+LU('beer'), art:'building-hopex.png'},
+                 l2:{nm:'Guild Residence',ic:'home',    eff:'end: 2★ per Venture in play', art:'building-missionq.png'}},
+];
+const VENT_FOOT='rgba(31,86,122,.78)';   // the owner-only blue (the v2.4.1 privilege colour returns)
+function ventureTile(d,lvl){const f=lvl===2?d.l2:d.l1;
+  return '<div class="btile btW" style="--c:'+VENT_FOOT+'">'
+  +artLayer(f.art||('venture-'+d.k+'-l'+lvl+'.png'))
+  +'<div class="bt-top"><span class="bt-ic">'+LUX(f.ic)+'</span><span class="bt-nm'+(f.nm.length>18?' xlong':f.nm.length>15?' long':'')+'">'+f.nm+'</span>'
+    +'<span class="bt-ms" title="the level — an L1 plays from hand (a public die standing); an L2 overbuilds your own L1">'+(lvl===2?'L2':'L1')+'</span>'
+    +'<span class="bt-cost">'+cost(lvl===2?2:1,0)+'</span></div>'
+  +'<div class="bt-foot"><span class="bt-eff">'+f.eff+'</span></div>'
   +'</div>';}
 // MANIFEST CARD (v5.0) — the demand card riding a non-Bruges hull: THREE demand lines, each
 // a beer/tier chip (the beer glyph) and/or a die chip (the die-as-parked glyph) → the ★. The
@@ -846,5 +871,5 @@ var HC_CSS4=''
 +'.invcard .iv-verb svg,.invcard .iv-verb .ic,.invcard .iv-verb img.ai{width:.15in;height:.15in}';
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3+HC_CSS4;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,MANIFESTS_P,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,manifestTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
+window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,VENTURES,ventureTile,MANIFESTS_P,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,manifestTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
 })();

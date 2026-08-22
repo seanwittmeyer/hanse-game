@@ -320,7 +320,8 @@
     <tr><td><b>Quality dice</b></td><td>13 × 4 colours</td><td>the cask / presence / building-mark / clock component — a player’s whole runway, always public</td></tr>
     <tr><td>Cask tiles</td><td>52</td><td>Gruit 16 · Hopped 12 · Broyhan 6 · Keut 6 · Mumme 6 · Bock 6 — quality, start die, one load bonus each; they stack in <b>six searchable stacks</b>, one per beer (§6)</td></tr>
     <tr><td>Ship tiles</td><td>24</td><td>Skute 6 (1 berth · fee 2 <span class="cube g"></span>) · Cog 10 (2 · 1 <span class="cube g"></span>) · Hulk 8 (3 · free); 6 per Kontor — Kontor and fee printed on the tile</td></tr>
-    <tr><td>Building tiles</td><td>19</td><td>17 designs, ONE green family — most are <b>riders</b> on the station actions (§7); <b>setup deals 17</b>, 2 sit out each game</td></tr>
+    <tr><td>Public Work tiles</td><td>13</td><td>9 designs, the shared BROWN family — every face a passive modifier of its slot (§7); <b>setup deals 11</b> (2 of the 4 Staple Houses sit out)</td></tr>
+    <tr><td>Venture tiles</td><td>16</td><td>4 dual-use designs × 1 ringed set per house — your PRIVATE buildings (§7): L1 from hand, L2 over your own L1</td></tr>
     <tr><td>Specialist tiles</td><td>25</td><td>15 designs: the core five ×3 (the deck deals max(2,&nbsp;n−1) of each) + ten guild singles</td></tr>
     <tr><td><b>Manifest cards</b></td><td>12</td><td>3 generic demand lines each (1–4★) — one card rides every <b>non-Bruges</b> Ship; claimed lines pay at the sail, the card recycles under the deck</td></tr>
     <tr><td>Recipe cards</td><td>6 × 4</td><td>double-sided — the card moves to your board’s COMPLETED side when that beer first LOADS onto a Ship: the completed cards ARE the Flight record</td></tr>
@@ -458,37 +459,44 @@
 </section>
 
 <section id="buildings">
-  <h2><span class="nm">7</span>Buildings &amp; the Slots</h2>
-  <p><b>ONE green family — no owner of the USE, ever.</b> Every building serves <b>whoever activates it</b>. You build through <b>London’s prize</b> (free) or the <i>Build 1 building</i> bonus (pay the <b>tile’s printed fee</b>; a tile with no fee chip is free): take a tile <b>from the display of 4</b> and build it at once on any legal slot. <b>Using</b> a building never costs anything.</p>
-  <p><b>Most buildings are RIDERS.</b> The tile prints a station icon and <b>“here:”</b> — it boosts that station’s action <b>each time the action fires on the building’s line</b>, the PRIMARY and the ALTERNATE alike, whoever’s action it is, <b>once per activation</b>. A rider adds no step of its own: you take the station action, the building makes it bigger — a Granary on a Market line turns every <i>Source</i> there into +1; the die-touching riders (Racking · Assay · Abbey · Hop Exchange) offer their manipulation <b>inside the Age flow</b>. Placement is authorship: a rider pays only on lines whose stations host it. One tile keeps a slot <b>action</b> of its own — the Merchants’ Exchange fires when you resolve its slot.</p>
+  <h2><span class="nm">7</span>Buildings &amp; the Slots — Public Works &amp; Ventures</h2>
+  <p>Buildings come in <b>two families</b>, and every face is a <b>modifier of its own slot</b> — a cask loading here, the Ship docked here, a sail from here. A building never adds an action or a step for anyone: the line always reads <i>two station actions plus two slots</i>.</p>
+  <h3 class="ic-h"><i data-lucide="building-2"></i>Public Works — the shared brown tiles</h3>
+  <p><b>No owner of the USE, ever</b> — a Public Work serves whoever’s cask, Ship or sail touches its slot. You build through <b>London’s prize</b> (free) or the <i>Build 1 building</i> bonus (pay the <b>tile’s printed fee</b>, grain only): take a tile from <b>the display of 4</b> and place it at once. The builder is the <b>INVESTOR</b>: stand one of your quality dice on the tile at its <b>printed start face</b> ⚙ — <b>every use, by any player, turns it up</b>.</p>
   <div class="dgm" id="dgmMark"></div>
-  <p>The mark’s <b>printed start face</b> ⚙ reads off the tile — busy free utilities <b>1</b> · paid workhorses <b>2</b> · ship-riders, ephemerals and rare powers <b>3</b>: the tiles that wait on ships start higher, and the fee is part of the deal. The die is committed like any other (it counts toward your empty-tray clock — <b>no tray die, no build</b>); it returns to your tray, its pips scored at once, only if the building leaves play.</p>
   <ul>
-    <li><b>Overbuild — one payment per build:</b> a fee-paid gain covers the ground; the <b>1 <span class="cube g"></span> ground rent</b> ⚙ applies only when an otherwise-free build lands on a built slot. The displaced tile is <b>returned to the box</b>.</li>
-    <li><b>Each part fires once:</b> on your line, each rider once per activation, each slot action once and each slot’s Ship load once — all optional, any order, read live (§4).</li>
-    <li>Fees print in <b>grain only</b> — grain buys infrastructure; hops are spent <b>using</b> the Hop Exchange and Abbey Cellar, never to gain them.</li>
+    <li><b>The investment MATURES at 6:</b> the moment the die turns to 6, bank <b>+6★</b>, take the die home to your tray, and <b>demolish the tile</b> (boxed) — the slot opens again. The printed face is also the lifespan: a face-3 tile matures after three uses.</li>
+    <li><b>Overbuild — one payment per build:</b> anyone may build over a standing Public Work (a fee-paid gain covers the ground; otherwise the <b>1 <span class="cube g"></span> ground rent</b> ⚙). The displaced tile is boxed and <b>its investor still banks the pips</b> — the die comes home.</li>
+    <li>The die is committed like any other (it counts toward your empty-tray clock — <b>no tray die, no public build</b>). Setup’s two neutral seeds carry no die: pure commons.</li>
   </ul>
   <table>
-    <tr><th>Building</th><th>Fires</th><th>Effect ⚙</th><th>Qty</th><th>Fee ⚙</th><th>Mark starts ⚙</th></tr>
-    <tr><td>Granary</td><td>Source on its line</td><td><b>Source here: +1 good</b></td><td>1</td><td>free</td><td>1</td></tr>
-    <tr><td>Mission Quay</td><td>Age on its line</td><td><b>Age here: +1 step</b></td><td>2</td><td>free</td><td>1</td></tr>
-    <tr><td><b>Racking Hall</b></td><td>Age on its line</td><td><b>may first swap the dice of any two of your vessel casks</b> — the values trade places, even above a cask’s quality (cap 6): the aged beer is racked over</td><td>1</td><td>3 <span class="cube g"></span></td><td>3</td></tr>
-    <tr><td>Assay House</td><td>Age on its line</td><td><b>may pay 1 <span class="cube h"></span>: one aging cask ages to Ready</b> (its die straight to its quality)</td><td>1</td><td>1 <span class="cube g"></span></td><td>1</td></tr>
-    <tr><td><b>Abbey Cellar</b></td><td>Age on its line</td><td><b>may pay 3 <span class="cube h"></span>: ALL your aging casks age to Ready</b></td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
-    <tr><td><b>Hop Exchange</b></td><td>Age <i>or</i> a load on its line</td><td><b>may pay up to 2 <span class="cube h"></span> ⚙ — turn your vessel dice +1 per hop</b> (any split; past quality is fine; cap 6)</td><td>1</td><td>2 <span class="cube g"></span></td><td>2</td></tr>
-    <tr><td>Merchants’ Exchange</td><td>resolve its slot</td><td><b>Re-manifest up to 2 non-Bruges Ships</b> — each card returns under the deck, a new card is dealt at once</td><td>1</td><td>2 <span class="cube g"></span></td><td>2</td></tr>
-    <tr><td>Warping Capstan</td><td>a load on its line</td><td><b>may first warp any docked Ship</b> (cargo rides) to any shipless slot — full where it lands, it sails</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
-    <tr><td>Malt Kiln</td><td>a cask loads here</td><td>the boarding die <b>+1</b> (cap 6)</td><td>2</td><td>2 <span class="cube g"></span></td><td>2</td></tr>
+    <tr><th>Public Work</th><th>Fires</th><th>Effect ⚙</th><th>Qty</th><th>Fee ⚙</th><th>Die starts ⚙</th></tr>
+    <tr><td>Malt Kiln</td><td>a cask loads here</td><td>the boarding die <b>+1</b> (past quality is fine; cap 6)</td><td>2</td><td>2 <span class="cube g"></span></td><td>2</td></tr>
     <tr><td>Tollhouse</td><td>a cask loads here</td><td>the boarding cask <b>may turn its die −1</b> (never below the minimum): <b>score +3★ at once</b></td><td>1</td><td>1 <span class="cube g"></span></td><td>3</td></tr>
+    <tr><td>Customs House</td><td>passive</td><td>a cask boarding here needs <b>1 less than the Kontor’s minimum</b> ⚙ (floor 1; it still sells at its die)</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
+    <tr><td><b>Ropewalk</b></td><td>a load here</td><td>you may <b>also load 1 Ready cask onto a DIFFERENT docked Ship</b> (once per load flow here)</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
+    <tr><td>Cooperage</td><td>passive · on load</td><td>the Ship here: <b>+1 ship capacity</b> (it sails only when that berth is also full) · each cask loaded here: <b>its loader scores +1★</b></td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
+    <tr><td><b>Weigh House</b></td><td>at the sail here</td><td><b>each cask delivered off the Ship here may claim TWO Manifest lines</b> (each line still once per voyage)</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
+    <tr><td><b>Staple House</b> <span class="small">(×4 — one crest per Kontor; 2 join each game)</span></td><td>at the sail here</td><td>a Ship sailing from this slot <b>to the printed Kontor</b>: <b>every delivered cask banks +2★</b> ⚙ — each cask a use of the investor’s die</td><td>4</td><td>2 <span class="cube g"></span></td><td>2</td></tr>
     <tr><td><b>Bonded Store</b> <span class="small">(ephemeral)</span></td><td>a cask loads here · at sail</td><td>the boarding die <b>+1</b> (cap 6); <b>when the Ship sails, the Store sails with it</b> (boxed) and every player with a cask aboard gains 2 goods</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
     <tr><td><b>Victualling Yard</b> <span class="small">(ephemeral)</span></td><td>a cask loads here · at sail</td><td>the boarding cask’s <b>load bonus fires twice</b>; when the Ship sails, the Yard sails with it (boxed)</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
-    <tr><td>Cooperage</td><td>passive · on load</td><td>the Ship here: <b>+1 ship capacity</b> · each cask loaded here: <b>its loader scores +1★</b></td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
-    <tr><td>Customs House</td><td>passive</td><td>the Ship here: <b>−2 to the Kontor’s minimum</b> ⚙ (floor 1; the cask still sells at its die)</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
-    <tr><td>Rich Berth</td><td>a load here</td><td>a load leaving <b>ONE empty berth</b>: the loader <b>may pay 2 <span class="cube g"></span> ⚙ — the berth fills, the Ship sails at once</b></td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
-    <tr><td><b>Ropewalk</b></td><td>a load here</td><td><b>loads at this slot: +1 cask</b> (stacks with the Stevedore ⚙)</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
-    <tr><td><b>Weigh House</b></td><td>at the sail here</td><td><b>each cask delivered off the Ship here may claim TWO Manifest lines</b> (each line still once per voyage)</td><td>1</td><td>2 <span class="cube g"></span></td><td>3</td></tr>
   </table>
-  <p class="small">Faces in <a href="#tiles">§18</a>. The box prints <b>19 tiles — setup deals 17</b>; 2 sit out each game. The Kiln, Hop Exchange and Racking Hall are the “improve the humble beer” engines — a Gruit can carry a 6. The two <b>ephemeral</b> tiles are events-as-components: they pay while they stand and pay everyone aboard when they go.</p>
+  <h3 class="ic-h"><i data-lucide="home"></i>Ventures — your private buildings</h3>
+  <p>Each house starts with an <b>identical hand of 4 dual-use Venture tiles</b>. A Venture is <b>private</b> — it serves its owner alone, wears the <b>owner’s colour ring</b>, and carries <b>no die</b>: the printed power is the return on the investment. <b>A rival can never overbuild a Venture.</b></p>
+  <ul>
+    <li><b>The Ladder:</b> you may place a tile from your hand <b>L1-side up</b> on any open slot <b>only while one of your mason’s dice stands on a Public Work</b> — fund the commons, earn private ground. Its L2 face is forfeit.</li>
+    <li><b>The Climb:</b> an <b>L2</b> lands only by overbuilding <b>your own L1</b> — spend a second hand tile L2-side up (pay its fee); the old L1 tile is boxed, the ground is kept. That tile’s L1 face is forfeit. <b>An L2 can never be displaced.</b></li>
+    <li><b>Fees ⚙:</b> L1 <b>1 <span class="cube g"></span></b> · L2 <b>2 <span class="cube g"></span></b> — waived when the London prize builds it. Your hand of 4 supports four wide L1s, or two full climbs, or anything between.</li>
+    <li>The <b>owner-only stops</b> (Rack House · Brewery · Assay Loft) appear only on <i>your</i> activation of a line through them — for everyone else the wharf stays two actions plus two loads.</li>
+  </ul>
+  <table>
+    <tr><th>Tile (one piece of cardboard)</th><th>L1 face (from hand)</th><th>L2 face (the climb)</th></tr>
+    <tr><td><b>Rack House / Brewery</b></td><td>Activating this line: <b>swap the dice of two of your vessel casks</b> (no quality cap — the beer racks over)</td><td>Activating this line: <b>you may BREW</b> (a full search of the stack)</td></tr>
+    <tr><td><b>Counting House / Assay Loft</b></td><td>Your loads at this slot: <b>also gain 1 good</b></td><td>Activating this line: <b>pay 1 <span class="cube h"></span> — one vessel cask straight to READY</b></td></tr>
+    <tr><td><b>Factor’s Desk / Staple Rights</b></td><td>Before loading the Ship at this slot: <b>you may re-deal its Manifest</b></td><td>Your casks delivered off Ships sailing from this slot: <b>+1★ each</b> ⚙</td></tr>
+    <tr><td><b>Warehouse / Guild Residence</b></td><td>Your loads at this slot: <b>+1 cask may board</b></td><td>Game end: <b>2★ per Venture you have in play</b> ⚙</td></tr>
+  </table>
+  <p class="small">Faces in <a href="#tiles">§18</a>. The box prints <b>13 Public Works — setup deals 11</b> (2 of the 4 Staple Houses sit out) and <b>16 Venture tiles</b> (4 designs × 1 ringed set per house). The Kiln is the “improve the humble beer” engine — a Gruit can carry a 6; the two <b>ephemeral</b> tiles are events-as-components; the Staple Houses are the <i>Stapelrecht</i> — the destination premiums that make one slot the right pier for one port.</p>
 </section>
 
 <section id="shipping">
@@ -627,7 +635,7 @@
     <div class="gloscard"><div class="gh"><i data-lucide="sailboat"></i><span class="gt">Ship · Skute · Commission</span></div><div class="gd">Neutral, each bound for its printed Kontor: <b>Skute 1 · Cog 2 · Hulk 3</b> berths; you load only your own Ready casks; a Ship <b>sails the moment it is full</b> — a Skute on its first load. <b>Commission</b> (Harbor): pay the Ship’s printed fee (Skute 2 G · Cog 1 G · Hulk free) · place it on a slot without a Ship · load 1 Ready cask at once · no ★.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="landmark"></i><span class="gt">Kontor · Minimum · Prize</span></div><div class="gd">The four trading posts of the League. The <b>minimum</b> is the die value required to board, read as the cask boards (after lifts): Bruges 1+ · London 2+ · Bergen 2+ · Novgorod 3+. The <b>prize</b> pays the cask’s owner on delivery — <b>per cask</b>: a recipe (at its fee) / a building (your die stands on it) / a Specialist (free); Novgorod instead scores every die +2★.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="trophy"></i><span class="gt">Majority</span></div><div class="gd">End-game, per Kontor, ranked by <b>parked dice</b> (1st/2nd/3rd take the tiers; 2p skips 2nd). Concentrated at <b>Bergen</b> (9/5/2).</div></div>
-    <div class="gloscard"><div class="gh"><i data-lucide="building-2"></i><span class="gt">Building · Overbuild</span></div><div class="gd">ONE green family: serves whoever activates it. The builder stands a <b>quality die on the tile at face 1</b>; every use — any player — turns it up (max 6), and <b>the pips score at game end</b>. Most buildings are <b>riders</b> — the printed station-icon line boosts that action each time it fires on the building’s line; load-lifts shape the boarding die or the Ship; the Merchants’ Exchange fires when you resolve its slot. <b>Overbuild</b> = one payment (a paid fee covers the ground, else 1 G rent); the displaced tile is boxed — <b>its die scores its pips at once and returns to its owner’s tray</b>.</div></div>
+    <div class="gloscard"><div class="gh"><i data-lucide="building-2"></i><span class="gt">Public Work · Venture · Overbuild</span></div><div class="gd">Buildings come in two families. A <b>PUBLIC WORK</b> (brown) serves whoever’s traffic touches its slot; the builder — the <b>investor</b> — stands a quality die on it at its printed face, every use turns it up, and <b>at 6 the investment MATURES</b>: +6★, the die home, the tile demolished. <b>Overbuild</b> = one payment (a paid fee covers the ground, else 1 G rent); the displaced tile is boxed and its investor still banks the pips. A <b>VENTURE</b> (your colour ring) is private, carries no die, and can never be overbuilt by a rival: an <b>L1</b> plays from your hand of 4 while one of your dice stands on a Public Work; an <b>L2</b> lands only over your own L1 (the spent L1 is boxed).</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="wrench"></i><span class="gt">Specialist · Requirement</span></div><div class="gd">A private purple tile — free at <b>Bergen</b> (per cask); the <i>hire</i> bonus pays its printed fee. Two seats; never two of a kind. A <b>requirement</b> on a guild tile must read true off your components before it may be seated.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="map-pin"></i><span class="gt">Presence · Placing presence</span></div><div class="gd">Your parked dice at a Kontor. <b>Placing presence</b> parks a tray die at <b>face 1</b> at a Kontor you’ve already delivered to — 1★ (a Town Crier adds +2★), majority weight, and a beat of the clock. Always free.</div></div>
     <div class="gloscard"><div class="gh"><i data-lucide="contract"></i><span class="gt">Manifest</span></div><div class="gd">The demand card riding every <b>non-Bruges</b> Ship: 3 generic lines (named starter · quality tier · die face · combo → 1–4★). At the sail each delivered cask <b>may claim ONE line it satisfies</b> — each line once per voyage, boarding order; the card then returns under the deck pristine.</div></div>
@@ -655,7 +663,7 @@
   </table>
   <div class="acat">The slots (on your line)</div>
   <table class="atbl">
-    <tr><td><span class="act-ic"><i data-lucide="building-2"></i></span></td><td><b>Building</b></td><td>Most are <b>riders</b>: the printed station-icon line boosts that station’s action when it fires on this line — once per activation, free, whoever built it. An action tile (Merchants’ Exchange) fires when you resolve its slot.</td></tr>
+    <tr><td><span class="act-ic"><i data-lucide="building-2"></i></span></td><td><b>Buildings</b></td><td><b>Public Works</b> fire on their slot’s own traffic — passive, free, whoever’s cask or Ship it is (each use turns the investor’s die; at 6 it matures). <b>Ventures</b> serve their owner alone: the stop faces (Rack House · Brewery · Assay Loft) appear only on the owner’s activation of the line.</td></tr>
     <tr><td><span class="act-ic"><i data-lucide="package-plus"></i></span></td><td><b>Load the Ship</b></td><td>One Ready cask from YOUR vessels, die ≥ the Kontor’s minimum <b>as it boards</b> (after lifts). Full → sails. The bonus fires <b>after any sail it completes</b>.</td></tr>
   </table>
   <div class="acat">The load bonuses (fire as the cask boards)</div>
@@ -678,7 +686,7 @@
     <ol>
       <li><b>Move</b> to an orthogonally adjacent station (skip on turn 1).</li>
       <li><b>Choose the row or the column.</b> Sharing a station costs nothing.</li>
-      <li><b>Resolve the line</b> — any order, all optional, each once, read live: your station’s <b>PRIMARY</b> + the other station’s <b>ALTERNATE</b> (riders on the line boost both) + each slot’s <b>building</b> and/or a <b>load of its Ship</b>.</li>
+      <li><b>Resolve the line</b> — any order, all optional, each once, read live: your station’s <b>PRIMARY</b> + the other station’s <b>ALTERNATE</b> + each slot’s <b>load of its Ship</b> (its buildings fire on that traffic by themselves) + your own <b>Venture stops</b>, if any.</li>
     </ol>
     <h4>The die</h4>
     <p><b>Brew</b> (search the stack · printed start) → <b>age up</b> (stops at quality: Ready) → <b>board</b> (die ≥ the minimum, after lifts; cap 6) → <b>sail when full</b> → <b>park</b> (pips = ★; every cask pays its Kontor’s prize; claim ONE Manifest line it satisfies; the tile returns to the bottom of its stack).</p>
@@ -701,9 +709,12 @@
   <p class="small">Private purple tiles, <b>2 seats</b> per player, never two of a kind. The core five print ×3 (the deck deals <b>max(2,&nbsp;n−1)</b> copies of each); the guild ten are <b>singles</b> — scarce, first-come. Display of 4; a take’s gap refills at <b>end of turn</b>. Free at <b>Bergen</b> — <b>per cask</b>; the <i>hire</i> bonus pays the tile’s printed fee.</p>
   <div class="tscroll"><table class="tref" id="trefSpecs"></table></div>
 
-  <h3 class="tref-h">Buildings — 17 designs · 19 tiles</h3>
-  <p class="small">ONE green family — every building serves whoever activates it; most print a station-icon <b>rider</b> line that boosts that action on their line; the builder’s <b>quality die stands on the tile</b>, turning up with every use (pips score at game end). The box prints <b>19 tiles — setup deals 17</b> (≥1 Malt Kiln + ≥1 Mission Quay guaranteed; 2 sit out each game, another variability knob). Fees print in <b>grain only</b> (chipless = free); London’s prize waives the fee; <b>using</b> a building is always free. Overbuild = ONE payment (a paid fee covers the ground, else the 1&nbsp;G rent); the displaced tile is boxed. The two <b>EPHEMERAL</b> designs (Bonded Store · Victualling Yard) sail away with their Ship.</p>
+  <h3 class="tref-h">Public Works — 9 designs · 13 tiles (brown, shared)</h3>
+  <p class="small">The shared BROWN family — every face fires on its own slot’s traffic, passively, for whoever’s cask or Ship it is. The investor’s <b>quality die stands on the tile</b> at its printed face, turns up with every use, and <b>MATURES at 6</b> (+6★, the die home, the tile demolished — the slot opens). The box prints <b>13 tiles — setup deals 11</b> (2 of the 4 Staple Houses sit out). Fees print in <b>grain only</b>; London’s prize builds free; <b>using</b> a building is always free. Overbuild = ONE payment (a paid fee covers the ground, else the 1&nbsp;G rent); the displaced tile is boxed and its investor banks the pips. The two <b>EPHEMERAL</b> designs (Bonded Store · Victualling Yard) sail away with their Ship.</p>
   <div class="tscroll"><table class="tref" id="trefBldgs"></table></div>
+  <h3 class="tref-h">Ventures — 4 dual-use designs · 16 tiles (private, the owner’s ring)</h3>
+  <p class="small">Each house holds an identical hand of 4. One piece of cardboard, two faces — played from hand it is its <b>L1</b> (needs your die standing on a Public Work); spent onto your own L1 it is its <b>L2</b>. No die rides a Venture; a rival can never overbuild one. Fees ⚙: L1 1&nbsp;G · L2 2&nbsp;G (waived as the London prize).</p>
+  <div class="tscroll"><table class="tref" id="trefVents"></table></div>
 
   <h3 class="tref-h">Manifest cards — 12</h3>
   <p class="small">One rides every <b>non-Bruges</b> Ship, dealt face-up as the Ship enters the display (Bruges sails plain). Three <b>generic demand lines</b> each — at the sail a delivered cask may claim <b>one line it satisfies</b> (each line once per voyage, boarding order), then the card returns <b>under the deck pristine</b>.</p>
@@ -864,33 +875,27 @@ function clearHl(){document.querySelectorAll('.hl').forEach(e=>e.classList.remov
       +'<td>'+(((d.g?d.g+' G':'')+(d.g&&d.h?' ':'')+(d.h?d.h+' H':''))||'—')+'</td>'
       +'<td class="cnt">'+(d.n>1?'×'+d.n+' <span class="small">core — deal max(2, n−1)</span>':'×1 <span class="small">guild single</span>')+'</td>'
       +'<td>'+d.act+(SPEC_FULL[d.nm]?'<div class="small">'+SPEC_FULL[d.nm]+'</div>':'')+'</td></tr>').join('');
-  // ---- buildings: most tiles are RIDERS on their line's station actions — the Kind and
+  // ---- v5.2 Public Works: every face is a PASSIVE modifier of its own slot — the Kind and
   // Power columns spell out what the icon-first faces compress ----
-  const RIDES={granary:'Source',missionq:'Age',racking:'Age',assay:'Age',abbey:'Age',hopex:'Age · Load',capstan:'Load'};
-  const BKIND=d=>RIDES[d.k]?('<b>rider</b> — '+RIDES[d.k]+' on its line')
-    :(d.k==='exchange'||d.k==='chancery')?'slot action'
+  const BKIND=d=>d.k==='chancery'?'slot action (hall)'
+    :d.staple?'sail premium (at its slot)'
     :d.tgt==='cask'?'load-lift (at its slot)':'ship-shaper';
   const BPOWER={
-    granary:'<b>Source here:</b> +1 good',
-    missionq:'<b>Age here:</b> +1 step',
-    racking:'<b>Age here:</b> may first swap the dice of any two of your vessel casks (even above a cask’s quality, cap 6)',
-    assay:'<b>Age here:</b> may pay 1 H — one aging cask ages to Ready',
-    abbey:'<b>Age here:</b> may pay 3 H — ALL your aging casks age to Ready',
-    hopex:'<b>Age or Load here:</b> pay up to 2 H — your vessel dice +1 per hop (past quality is fine, cap 6)',
-    maltkiln:'the boarding die +1 (cap 6)',
+    maltkiln:'the boarding die +1 (past quality is fine, cap 6)',
     tollhouse:'the boarding cask may turn its die −1 (never below the minimum): score +3★ at once',
     bonded:'the boarding die +1 (cap 6); sails away with the Ship — every player with a cask aboard gains 2 goods',
-    cooperage:'the Ship here: +1 capacity · each cask loaded here: its loader scores +1★',
-    customs:'the Ship here: −2 to the Kontor’s minimum (floor 1; the cask still sells at its die)',
-    richberth:'a load leaving ONE empty berth: the loader may pay 2 G — the berth fills, the Ship sails at once',
+    cooperage:'the Ship here: +1 capacity (it sails only when that berth is also full) · each cask loaded here: its loader scores +1★',
+    customs:'a cask boarding here needs 1 less than the Kontor’s minimum (floor 1; it still sells at its die)',
     victual:'the boarding cask’s load bonus fires TWICE; sails away with the Ship',
-    exchange:'re-manifest up to 2 non-Bruges Ships — each card returns under the deck, a fresh card dealt at once',
-    capstan:'<b>Load here:</b> may first warp any docked Ship (cargo rides) to any shipless slot — full where it lands, it sails',
-    ropewalk:'loads at this slot: +1 cask (stacks with the Stevedore)',
+    ropewalk:'a load here: you may also load 1 Ready cask onto a DIFFERENT docked Ship (once per load flow)',
     weighhouse:'each cask delivered off the Ship here may claim TWO Manifest lines (each line still once per voyage)',
+    staple_bruges:'a Ship sailing from here to BRUGES: every delivered cask banks +2★ (each a use of the investor’s die)',
+    staple_london:'a Ship sailing from here to LONDON: every delivered cask banks +2★ (each a use of the investor’s die)',
+    staple_bergen:'a Ship sailing from here to BERGEN: every delivered cask banks +2★ (each a use of the investor’s die)',
+    staple_novgorod:'a Ship sailing from here to NOVGOROD: every delivered cask banks +2★ (each a use of the investor’s die)',
     chancery:'gain 1 ⚜ Invitation (the Guild Tastings — always dealt in hall mode)'};
   document.getElementById('trefBldgs').innerHTML=
-    '<tr><th>Tile</th><th>Building</th><th>Kind</th><th>Fee</th><th>Mark starts</th><th>Tiles</th><th>Power</th></tr>'
+    '<tr><th>Tile</th><th>Public Work</th><th>Kind</th><th>Fee</th><th>Die starts</th><th>Tiles</th><th>Power</th></tr>'
     +HC.BUILDINGS.map(d=>'<tr>'
       +'<td class="tcell">'+prev(HC.buildingCard(d),2.5,1.32,.5)+'</td>'
       +'<td><b>'+d.nm+'</b>'+(d.hall?' <span class="small">(the Guild Tastings)</span>':'')+'</td>'
@@ -899,6 +904,15 @@ function clearHl(){document.querySelectorAll('.hl').forEach(e=>e.classList.remov
       +'<td class="cnt">'+(d.ms||1)+'</td>'
       +'<td class="cnt">×'+d.n+(d.hall?' <span class="small">own sheet</span>':'')+'</td>'
       +'<td>'+(BPOWER[d.k]||d.eff)+'</td></tr>').join('');
+  // ---- v5.2 Ventures — the private dual-use tiles, off the same kit ----
+  const ventEl=document.getElementById('trefVents');
+  if(ventEl&&HC.VENTURES)ventEl.innerHTML=
+    '<tr><th>L1 face</th><th>L2 face</th><th>L1 (from hand — a public die standing)</th><th>L2 (overbuilds your own L1)</th></tr>'
+    +HC.VENTURES.map(d=>'<tr>'
+      +'<td class="tcell">'+prev(HC.ventureTile(d,1),2.5,1.32,.5)+'</td>'
+      +'<td class="tcell">'+prev(HC.ventureTile(d,2),2.5,1.32,.5)+'</td>'
+      +'<td><b>'+d.l1.nm+'</b><div class="small">'+d.l1.eff+'</div></td>'
+      +'<td><b>'+d.l2.nm+'</b><div class="small">'+d.l2.eff+'</div></td></tr>').join('');
   // ---- manifests (v5.0) — the demand cards, off the same kit ----
   const manEl=document.getElementById('trefMans');
   const mlt=l=>l.beer?('<b>'+l.beer+'</b>')
