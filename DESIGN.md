@@ -219,6 +219,17 @@ v5.1 but **end pips only ~5–10%** — saturation and the printed start faces a
 Recommendation on record: scope stays 0, nothing prints; the human table decides whether the
 mark economy *feels* thin. The dial and the instrumentation are KEPT as seams.
 
+**The 2026-08-22 ORACLE study rides the same letter** (designer-called — arcs · lanes ·
+balance; `archive/records/ORACLE-STUDY-v51r.md`; `strategy-probe.js` refit to v5.1 as the
+oracle instrument): the skilled game is an **engine-then-harvest crescendo** (GM Q4 peaks
+everything; ~+4–5 rounds over greedy — 30% of GM 2p games hit the 25-round ceiling);
+**majorities + the Flight finish winners** at every tier while raw Bruges-volume and
+pip-leaning lose (PATHWAYS 200: builder cold 20/17.5 at 3–4p); balance flags — the 2p
+majority lane (79–82% win), the 3–4p greedy seat gradient, **Novgorod dead 25–27% at 2–3p
+under skill**, and **the dead shelf dead at every tier** (the v5.1 buffs revived nothing;
+Ropewalk/Weigh House build as annuities). Healthy: the Manifest economy, no runaway leader,
+a plural 3–4p lane ecology. Watches live in RULES §Open #18.
+
 ### v5.1 “Wharf Hands” (2026-08-19 — designer-ruled; the deferred buildings & specialists pass)
 The manifesto (the 2026-08-18 letter, verbatim): *“the core actions come from the wharf
 stations, and the major resources come from Kontore and cask load bonuses. Specialists should

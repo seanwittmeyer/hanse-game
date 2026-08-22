@@ -1219,3 +1219,21 @@ still awaits its v4 re-derivation. The `registerExpansion` seam carries it, dorm
    ~40% but END PIPS only ~5–10%** (start faces + cap-6 saturation absorb it) — the deficit
    is ~0.5 pips/player. Recommendation on record: keep scope 0, print nothing, ask the human
    table whether the mark economy *feels* thin before any further lever.
+
+18. **The v5.1r ORACLE study (2026-08-22 — `archive/records/ORACLE-STUDY-v51r.md`;
+   designer-called: arcs · lanes · balance; trader 900g + GM 60/count + CM 3p + PATHWAYS
+   200/lane, all clean)** ⚙ — the standing watches it sets: **the 2p ceiling** (skilled play
+   crescendos and runs ~+4–5 rounds — GM 20.9/20.2/19.4; 30% of GM 2p games hit MAX_ROUND
+   25) · **the 2p majority lane** (maj-lean wins 79–82% at 2p, the sharpest lane in the
+   game) · **the 3–4p seat gradient under greedy play** (trader 3p 39/39/22 · 4p
+   36/28/18/18; PATHWAYS agrees; the GM n=60 can't confirm — human table decides) ·
+   **Novgorod dead at 2–3p UNDER SKILL** (GM 2p 26.7% · CM 3p 25% — pure search declines
+   the port; Open #8 oracle-confirmed) · **the dead shelf stays dead at every tier**
+   (Customs/Rich Berth/Capstan/Tollhouse ≤0.10 builds/g under GM AND CM — two buff rounds
+   didn't revive them; Ropewalk/Weigh House build as 3-pip annuities, effects ~never fire —
+   the redesign conversation, not a third buff) · builds flow 86–94% through prizes (the
+   display is a prize menu, not a market) · risers/duds: Chronicler/Alderman/Supercargo are
+   skill-gated risers; the Innkeeper is the next rework candidate; the Broker/Brewer's Mate
+   pair stays a human read. Healthy: the Manifest economy (2.0–2.3 lines · ~2.2★/line,
+   ramping Q4) · no runaway leader · the majority/lifter/flight ecology plural at 3–4p ·
+   winners harvest majorities + the Flight while Bruges-volume is the (intended) trap lane.
