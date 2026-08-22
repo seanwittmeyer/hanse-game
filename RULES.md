@@ -561,21 +561,23 @@ Each player starts with (⚙):
   berth, and **parks at the Kontor on delivery** — presence, the ★ scored (the pips), and the clock,
   all one component. **No die ever stands on a building (v5.3).** No die in the tray → no
   brew, no placing presence — and an **EMPTY tray sets the final round (§10).**
+- The **hand of 4 dual-use VENTURE tiles** in your colour ring (§5b) — the only buildings
+  you will ever build.
 - A **warm-start Ready Gruit** in vessel 1 (die at 1).
 
 Shared board: the **Wharf** (4 stations + 8 slots); the four Kontore (Bruges/London/Bergen/
 Novgorod) open — **the Hall is off the table**; **deal 3 of the 4 export beers** (the variable
 ladder); stack the **cask tiles in six face-up stacks, one per beer** (each shuffled — a full Brew SEARCHES its stack, the alternate takes the top tile, and a delivered cask’s tile returns to the bottom, v5.0); shuffle the **Ship deck** (Skute 1 · Cog 2 · Hulk 3 berths, each bound for a printed Kontor) and deal
-a face-up **display of 4** ⚙; shuffle the **Building deck** — **deal 17 of the 19 printed
-tiles** ⚙ (v5.1; ≥1 Malt Kiln + ≥1 Mission Quay: if the deal lacks one, swap it in from the set-aside tiles for a random dealt tile and reshuffle; the undealt 2 stay in the box;
-all neutral, §5) — and deal a Wharf
-**display of 4** ⚙; shuffle the **Specialist deck** (**5 core designs × max(2, n−1) + the 10
+a face-up **display of 4** ⚙; **Public Works (v5.3): shuffle all 13
+tiles, draw 3 (2p) / 4 (3–4p) ⚙ and stand them on RANDOM slots — the rest go back to the
+box** (die-less, neutral, §5a; no deck, no display; in hall mode the Guild Chancery is
+guaranteed among them while its dial is on); **the Bourse (v5.3): lay the strip and set one
+price marker per in-play beer except Gruit & Jopenbier on 0** (§5c); shuffle the **Specialist deck** (**5 core designs × max(2, n−1) + the 10
 guild singles** — v5.1) and deal a **display of 4**; shuffle the **Manifest deck** (12 ⚙, §7b) —
 a card is dealt face-up to **every non-Bruges Ship as it enters the display**, and it rides
 the hull to its slot. **Warm start on the slots:** a
 guaranteed **Hulk → Bruges** + one more dealt ship (a non-Bruges warm hull carries its
-Manifest), and **two neutral Buildings** dealt from the
-deck (setup deals score nobody). Each player places a worker on any station — **opening
+Manifest) — the Public Works furniture already stands. Each player places a worker on any station — **opening
 placement free.** First player fixed all game.
 
 ---
@@ -605,7 +607,7 @@ The turn:
      Brewery · Assay Loft) on the OWNER’s activations only; the hall Chancery is the one
      slot action. An empty slot does nothing — **author it.**
    **The line is read LIVE (v4.6c):** a Ship commissioned or warped onto a line slot
-   mid-turn — or a building built there — opens that slot this same activation
+   mid-turn — or a Venture raised there — opens that slot this same activation
    (each stop still at most once; a ship sailing off closes its stop).
 
 ---
@@ -620,17 +622,18 @@ A cask tile prints its **quality Q1–Q5**, its **START DIE value**, and **one l
   steps**. *(Gruit ages 0 steps — fresh ale, Ready at brew, die 1.)*
 - **Aging:** each step turns the die **+1**, **never past the quality** — the cask is
   **READY when die = quality.** **Dice never turn on their own (v4.5b — automatic aging is
-  cut):** the hands on an aging die are the **Cellar** (3 points ⚙), **Mission Quay** (+2),
-  the **Age +2** load bonuses, the **Assay House** (pay 1 `H` — one cask to Ready, v4.12), the **Racking Hall** (an uncapped
-  swap, v45d), the **Hop Exchange** (pay `H` — past quality is fine, v45d), the **Abbey
-  Cellar** (pay 3 `H` — everything aging to Ready, v45d), the **Cellarman** (a higher
-  start) and the **Braumeister** (+1 to your ripest at turn start).
+  cut):** the hands on an aging die are the **Cellar** (primary 3 · alternate 1 ⚙), the
+  **Age +2** load bonuses, the Venture faces — the **Rack House** (an uncapped swap), the
+  **Assay Loft** (pay 1 `H` — one cask straight to Ready) and every **age +1 public line**
+  (Rack House/Brewery — for whoever activates the line, v5.3) — the **Cellarman** (a higher
+  start), and the **Braumeister/Innkeeper** drips (+1 at turn start).
 - **Loading:** a Ready cask boards a Ship whose **minimum its die meets, read as it boards** —
   after the slot’s lifts (a Malt Kiln or Bonded Store here turns the die **+1, cap 6**; a
-  Customs House lowers the Ship’s minimum by 1 — the cask sells at its die; a Tollhouse may drop
-  the die 1 for **+3★**, v45d).
-- **Delivery:** the die **parks at the Kontor showing its face** — the pips ARE the ★ scored
-  (never less than 1), the body is your presence there and a beat of the end clock (§10) —
+  Customs House lowers the Ship’s minimum by 1 — the cask sells at its die; a Tollhouse lets
+  the loader **shift any Bourse marker ±1**, v5.3b).
+- **Delivery:** the die **parks at the Kontor showing its face** — the ★ scored are **the
+  pips + the beer’s Bourse marker** (v5.3, never below 0; the bulk rise lands first, §5c),
+  the body is your presence there and a beat of the end clock (§10) —
   and **the cask’s tile returns to the bottom of its stack** (v5.0: the supply breathes).
 
 | Beer | Q | Aging steps | Die starts | Brew cost | Earned (wharf fee `H` = Q−3 ⚙ — every channel, Bruges too · v4.9c) |
@@ -652,8 +655,8 @@ start value never exceeds the quality. Keut’s printed perk: its delivery also 
 presence**, free — a tray die parks at face 1 at that Kontor.)*
 
 > **The squeeze (state it to players):**
-> - **You can’t brew everything** — 2 vessels (a 3rd behind the Flight), the recipe faucets,
->   and 13 dice for the whole game.
+> - **You can’t brew everything** — 3 vessels, the recipe fees, 13 dice for the whole game —
+>   and every brew crashes its own beer’s price (v5.3).
 > - **You can’t deliver everywhere** — the hulls in the market decide which ports are open;
 >   berths are shared and race away.
 > - **You can’t hold everything** — a Ready cask clogs a vessel until a hull appears; goods cap
@@ -909,7 +912,7 @@ copy each · display of 4 · each prints its wharf fee ⚙ — free as Bergen’
 cask** (v4.7). **Every tile is a STATION SUPERPOWER (v5.1 — the manifesto): its print names
 the flow it upgrades**, icon-first. No tile prints a requirement (v4.12; the earn-gate seam
 stays). A taken tile’s gap stands for the rest of the turn — the display refills from the
-deck at the END of the turn (v4.4c; ships and buildings refill at once):**
+deck at the END of the turn (v4.4c; the ship display refills at once):**
 
 *The core five (the drip floor):*
 - **Cellarman** (fee `2H`) — your dice **start one higher** (never above quality; a Bock
@@ -965,7 +968,8 @@ the Counting House, the consolation prizes.
 — to a brew, a placed presence, or with every remaining die already riding vessels/Ships — its
 **tray reads 0** and the final round is set (finish the round → score). Parked-out is NOT
 required: dice aboard unfilled Ships count as committed. Dice never return — the 13 dice are the
-player’s whole runway, always countable: tray + in play + parked (dice on your buildings included) = **13** ⚙ (v4.9b).
+player’s whole runway, always countable: tray + in play + parked = **13** ⚙ (v5.3: no die
+ever stands on a building).
 Sails end nothing; ships are pure logistics.
 
 A **MAX_ROUND ceiling** (~25 ⚙) backstops a slow table. Pace target **~12–25 rounds.** ⚙ *The
@@ -1048,8 +1052,8 @@ die, in every rival’s view) · contestability = the berth race.*
 - **Setup:** shuffle the **Tasting deck (12 ⚙)** and lay out the open row — **2 Tastings at
   2p · 3 at 3–4p** ⚙. Each player takes **2 ⚜ Invitations** ⚙ (v4.17b — R2 of the study).
   **Every claimed Manifest demand also pays an ⚜ Invitation** (v5.0 — the per-Order ⚜ moved
-  to the Manifest claim), and the **Guild Chancery** shuffles into the building deck, always
-  dealt (17 of 21 ⚙ — resolve its slot: gain 1 ⚜).
+  to the Manifest claim), and the **Guild Chancery** is guaranteed among the setup Public
+  Works while its dial is on (v5.3 — resolve its slot: gain 1 ⚜).
 - **Pour (during your turn, any number):** spend **1 ⚜ + one Ready cask from your vessels
   that matches the Tasting’s printed category**. Its die stands on the tile’s **next empty
   bench space** — pour order runs left→right, visible. The die is committed (a clock beat);

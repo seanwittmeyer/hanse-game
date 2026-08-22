@@ -122,6 +122,8 @@ function __runGame(n){
   if(__AAGE!=='')ALT_AGE=parseInt(__AAGE,10)||1;
   if(__STPL!=='')STAPLE_PTS=parseInt(__STPL,10)||2;   // v5.2 ⚙: the Staple premium (the +2/+4 A/B) — override ONLY when set
   if(__SRCN!=='')SRC_PRIMARY=parseInt(__SRCN,10)||3;   // v5.2b ⚙: the Market primary (the 2/3 A/B) — override ONLY when set
+  if(__BMIN!=='')BOURSE_MIN=parseInt(__BMIN,10);   // v5.3 ⚙: the Bourse track ends — override ONLY when set
+  if(__BMAX!=='')BOURSE_MAX=parseInt(__BMAX,10);
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
   S.players.forEach(function(p,i){p.ai=__PERSONAS?{tier:'trader',persona:AI_PERSONAS[i%AI_PERSONAS.length]}:{tier:__TIER};p.presPool=PRES_POOL;});
   var guard=0;
@@ -185,6 +187,8 @@ const ctx = {
   __ASRC:process.env.ALTSRC!=null?process.env.ALTSRC:'', __AAGE:process.env.ALTAGE!=null?process.env.ALTAGE:'',   // v5.0: the primary/alt dials
   __STPL:process.env.STAPLE!=null?process.env.STAPLE:'',   // v5.2: the Staple premium dial
   __SRCN:process.env.SRCN!=null?process.env.SRCN:'',   // v5.2b: the Market primary dial
+  __BMIN:process.env.BMIN!=null?process.env.BMIN:'',   // v5.3: the Bourse track ends
+  __BMAX:process.env.BMAX!=null?process.env.BMAX:'',
   __POOL:parseInt(process.env.POOL||'0',10),
   __PERSONAS:PERSONAS,
   __GMS:parseInt(process.env.GUILD_MS||'0',10),
