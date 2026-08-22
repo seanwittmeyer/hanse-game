@@ -1494,11 +1494,11 @@ function pBldgFace(b,noRing,dir){
 // the OWNER RING (the ruled ownership mark — private buildings wear their house colour).
 function pVentFace(b,dir){const f=vFace(b);const op=(b.owner!=null&&S.players[b.owner])?S.players[b.owner]:null;
   const d=(typeof HC_VENT!=='undefined')&&HC_VENT[b.v+':'+b.lvl];
-  const body=d?HC.ventureTile(d,b.lvl):('<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f3ead8;border-radius:.05in;color:#3a2f22">'
+  const body=d?HC.ventureTile(d,b.lvl,op?op.color:null):('<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f3ead8;border-radius:.05in;color:#3a2f22">'
     +'<div style="font-weight:800;font-size:.14in">'+LU(f.icon)+' '+f.name+'</div>'
     +'<div style="font-size:.095in;opacity:.75;padding:0 .08in;text-align:center"><b>ALL: '+(f.pub?VPUB[f.pub].txt:'—')+'</b> · '+f.desc+'</div>'
     +'<div style="position:absolute;top:.03in;right:.05in;font-weight:800;font-size:.11in">L'+b.lvl+'</div></div>');
-  let tile='<div style="position:relative;width:2.5in;height:1.32in;border-radius:.06in;box-shadow:0 0 0 .05in '+(op?op.color:'#888')+' inset" data-tip="'+attr(f.name+' (L'+b.lvl+') — '+f.desc+' · PRIVATE: it serves '+(op?op.name:'its owner')+' alone (no mason’s die; a rival can never overbuild it)')+'">'+body+'</div>';
+  let tile='<div style="position:relative;width:2.5in;height:1.32in;border-radius:.06in;box-shadow:'+(d?'none':('0 0 0 .05in '+(op?op.color:'#888')+' inset'))+'" data-tip="'+attr(f.name+' (L'+b.lvl+') — '+f.desc+' · PRIVATE: it serves '+(op?op.name:'its owner')+' alone (no mason’s die; a rival can never overbuild it)')+'">'+body+'</div>';
   let W=2.5,H=1.32;
   if(dir==='left'){tile=rotWrap(tile,2.5,1.32,false);W=1.32;H=2.5;}
   else if(dir==='right'){tile=rotWrap(tile,2.5,1.32,true);W=1.32;H=2.5;}

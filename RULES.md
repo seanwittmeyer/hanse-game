@@ -1013,17 +1013,22 @@ whole audit trail; no memory required.)*
 
 ## 12. Expansions (v4.14 “Beer Atlas” — two live opt-in toggles)
 
-*Two independent **New Game toggles**, freely mixable. With both off the base game is
-unchanged. Everything else — Kontore, majorities, Orders, the Flight, the clock, scoring —
+*Independent **New Game toggles**, freely mixable. With all off the base game is
+unchanged. Everything else — Kontore, majorities, Manifests, the Flight, the clock, scoring —
 runs as written: the expansions are roster content under the existing grammar. Every
 expansion beer is **pinned**: all its cask tiles print the same load bonus (drafting a pinned
-beer IS the agency — the Gruit rule, generalized).*
+beer IS the agency — the Gruit rule, generalized). **The Bourse (v5.3) follows the standard
+rule:** a dealt specialty beer gets its **price marker at 0** like any export — its brews
+crash it, its landings lift it, its casks sell at **die + marker**; **Jopenbier alone (with
+Gruit) trades off-book** — no marker, ever: the plain die is the price.*
 
 ### Specialty Beers
 
 Setup deals **3 of 7** exports (the base four + these three), guaranteeing **at least one of
 Mumme/Bock** ⚙ so the quality climb, Novgorod’s traffic and the pinnacle stay meaningful.
 Recipe fees ride the standard formula (`H` = Q−3 — all three **free**), paid at every channel.
+A dealt specialty beer **joins the Bourse at 0** (v5.3 — the in-play rule; its marker is in
+the box when it isn't dealt).
 
 | Beer (town) | Q · steps · brew ⚙ | The pinned bonus IS the signature (v4.15b) |
 |---|---|---|
@@ -1039,8 +1044,9 @@ bonus — v5.1: the Scrivener’s Hall retired) at its printed fee **3 `H`** ⚙
 Brew **2 `G` 4 `H`** ⚙; the die starts at **2** and wants **four aging steps** — the longest
 climb in the game (the Cellarman starts it at 3). Ready at **6**: it delivers **6★ anywhere,
 8★ at Novgorod**, qualifies for every die-6 Manifest line, and counts for the Flight as a **sixth
-beer** (6 shipped → **25★** ⚙). Building lifts are void on it (the cap is 6); the Tollhouse
-may still stamp it (5 + 3★). *The re-derivation (v4.14): the old dock-vintage (+1★ per turn
+beer** (6 shipped → **25★** ⚙). Building lifts are void on it (the cap is 6). **It trades
+OFF the Bourse (v5.3, ruled):** no marker — its brews crash nothing, its landings lift
+nothing, and its price never moves; the capstone's 6 is contract-solid. *The re-derivation (v4.14): the old dock-vintage (+1★ per turn
 deployed) rode the deploy state and is **cut** — its jobs re-home on the spine: aging-as-value
 = the four priced steps · the race-to-end = the empty-tray clock (four steps of runway on one
 die, in every rival’s view) · contestability = the berth race.*

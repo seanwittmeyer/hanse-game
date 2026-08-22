@@ -769,8 +769,9 @@
 // The CARD COMPONENT LIBRARY (components.js) is the single source of the printed card faces —
 // data + generators + card CSS, shared with play.html (the app mirrors the kit, v3.3).
 const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,VENTURES,ventureTile,MANIFESTS_P,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,manifestTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard}=window.HC;
-// v5.2: a Venture tile wears its OWNER'S COLOUR RING (ruled) — the ring wraps the blue-foot face
-const ventRing=(d,lvl,col)=>'<div style="position:relative;width:2.5in;height:1.32in;border-radius:.1in;box-shadow:0 0 0 .05in '+col+' inset;overflow:hidden">'+ventureTile(d,lvl)+'</div>';
+// v5.3 restyle: the ring is BAKED into ventureTile (the tile shares the building anatomy);
+// ventRing survives as a thin pass-through so the pack/mirror call sites stay unchanged.
+const ventRing=(d,lvl,col)=>ventureTile(d,lvl,col);
 
 const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 // (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
@@ -869,29 +870,29 @@ function aid3Panels(){
       +AID_CHIP('dices','Board','\u2265 min')+AID_ARR
       +AID_CHIP('map-pin','Park','pips = \u2605')
     +'</div>'
-    +'<div class="ln"><span class="em">No die in the tray</span>: no brew, no build, no presence.</div>'
+    +'<div class="ln"><span class="em">No die in the tray</span>: no brew, no presence.</div>'
     +'<h5>'+LU('sail')+'Load &amp; Sail</h5>'
     +'<div class="ln">\u00b7 <b>Load</b> (a Ship\u2019s slot stop): 1 <b>READY</b> cask from YOUR vessels, die \u2265 the minimum \u2014 both gates, always</div>'
     +'<div class="ln">\u00b7 The load bonus fires <b>after</b> any sail it completes \u00b7 <b>Full = sails at once</b> (a Skute on its first load)</div>'
-    +'<div class="ln">\u00b7 Deliver in boarding order: score the die, park, prize per cask (else 2 goods \u00b7 a build prize forfeits), claim 1 <b>Manifest</b> demand</div>'
+    +'<div class="ln">\u00b7 Deliver in boarding order: <b>lift the Bourse first</b> (+1/cask per beer), score <b>die + marker</b>, park, prize per cask (else 2 goods \u00b7 an unplayable Venture forfeits), claim 1 <b>Manifest</b> demand</div>'
     +'<h5>'+LU('store')+'The Stations</h5>'
-    +'<div class="ln">'+LU('store')+' <b>Market</b>: take 2 \u00b7 alt 1 \u2003 '+LU('age-3')+' <b>Cellar</b>: Age 3 \u00b7 alt 1</div>'
-    +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b>: SEARCH the beer\u2019s stack, choose the tile \u00b7 alt: the top tile</div>'
+    +'<div class="ln">'+LU('store')+' <b>Market</b>: take 3 \u00b7 alt 1 \u2003 '+LU('age-3')+' <b>Cellar</b>: Age 3 \u00b7 alt 1</div>'
+    +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b>: SEARCH the beer\u2019s stack, choose the tile (price \u22121) \u00b7 alt: the top tile</div>'
     +'<div class="ln">'+LU('ship')+' <b>Harbor</b>: place a Ship \u2014 fee 2/1/0'+G+' by size \u2014 + 1 free load \u00b7 alt: Load 1, any Ship</div>'
     +'<h5>'+LU('landmark')+'The Kontore</h5>'
     +'<table class="kt"><tr><th>Kontor</th><th>Min</th><th>Prize</th><th>Maj.</th></tr>'
     +AID_K('kontor-bruges','Bruges','1+','a recipe, at its fee','4/2/0')
-    +AID_K('kontor-london','London','2+','a building \u2014 your die on it','5/3/1')
-    +AID_K('kontor-bergen','Bergen','2+','a Specialist, free','9/5/2')
+    +AID_K('kontor-london','London','2+','a Venture, fee waived','5/3/1')
+    +AID_K('kontor-bergen','Bergen','2+','a Specialist + shift \u00b11 (no seat: 2 goods)','9/5/2')
     +AID_K('kontor-novgorod','Novgorod','3+','die scores +2\u2605','8/5/2')
     +'</table>'
-    +'<div class="dontf"><b>Don\u2019t forget:</b> \u2460 the minimum reads the die AS IT BOARDS (after lifts) \u2461 the Specialist display refills at turn END (Ships &amp; buildings: at once; a Manifest rides every non-Bruges hull \u2014 claim ONE line per delivered cask, each line once per voyage)</div>'
-    +'<div class="ln">'+LU('building-2')+' <b>Buildings</b>: a build stands your die at the tile\u2019s printed face \u2014 every use (anyone) +1, pips score at end \u00b7 use free \u00b7 overbuild = one payment</div>');
+    +'<div class="dontf"><b>Don\u2019t forget:</b> \u2460 the minimum reads the die AS IT BOARDS (after lifts) \u2461 the Specialist display refills at turn END (Ships: at once; a Manifest rides every non-Bruges hull \u2014 claim ONE line per delivered cask, each line once per voyage)</div>'
+    +'<div class="ln">'+LU('building-2')+' <b>Public Works</b> serve anyone, free \u00b7 '+LU('home')+' <b>Ventures</b>: L1 1'+G+' on open ground (wharf full: replace a Public Work \u2014 never a rival\u2019s) \u00b7 L2 2'+G+' over your own L1 \u00b7 the public line pays whoever activates the line</div>');
   const back=aid3('back','book-open','End, Score &amp; Icons',
      '<h5>'+LU('timer')+'End &amp; Score</h5>'
     +'<div class="ln"><b>First EMPTY tray</b> (your last of 13 dice committed): finish the round. Round 25 backstop.</div>'
     +'<div class="ln">\u00b7 Delivered dice: the parked pips \u00b7 Majorities by parked dice</div>'
-    +'<div class="ln">\u00b7 Scored in play: Manifest demands, stamps, departed builds \u00b7 Building dice: the pips</div>'
+    +'<div class="ln">\u00b7 Scored in play: Manifest demands \u00b7 printed building \u2605 (Cooperage \u00b7 Staples) \u00b7 the Bourse rides every delivery</div>'
     +'<div class="ln">\u00b7 The Flight: distinct beers, (n\u22121)\u00b2, min 3 \u00b7 Guild \u2605: printed end-lines</div>'
     +'<div class="ln">Tiebreak: summed vessel dice, then most goods.</div>'
     +'<div class="leg leg2">'
@@ -921,7 +922,7 @@ function aid3Panels(){
     +AID_ROW('package-plus','Load 1 more','another cask, any eligible Ship')
     +AID_ROW('map-pin','Place 1 presence','a tray die parks at face 1')
     +AID_ROW('scroll-text','Gain 1 recipe','at its fee')
-    +AID_ROW('search','Build 1 building','at its fee, your die on it')
+    +AID_ROW('search','Open 1 Venture','at its fee — the normal grounds')
     +AID_ROW('wrench','Gain 1 Specialist','at its fee')
     +AID_ROW('flask-conical','Brew 1','a normal brew \u2014 the TOP tile (v5.2b)')
     +'<h5>'+LU('star')+'Scoring Marks</h5>'

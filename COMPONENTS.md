@@ -371,7 +371,10 @@ bought; **min 6 tiles/type** (staples deeper: Gruit 16 · Hopped 12 ⚙).
 *(The four expansion beers ride two opt-in toggles — v4.14; each is PINNED to one printed
 load bonus, and the pin IS the signature — v4.15b: Gose → **Gain 3 goods (any mix)** ·
 Zerbster → **Parti-gyle: a free Gruit + Load 1 more** · Duckstein → Place 1 presence (free) ·
-Jopenbier → Gain 2 goods.)*
+Jopenbier → Gain 2 goods. **On the Bourse — v5.3:** a dealt specialty beer takes a price
+marker at 0 like any export — its brews crash, its arrivals rise, it scores die + marker;
+**Jopenbier alone trades OFF the Bourse** — no marker, no crash, no rise: the 6 is
+contract-solid, and its tile prints the off-book line.)*
 
 ## 5. Ship tiles (24 ⚙ — the Ship is all berths)
 
@@ -522,7 +525,9 @@ wharf fee**, the formula **`H` = Q−3** ⚙ (v4.9c — Broyhan/Keut **chip-less
 Bock `2H` · the specialty three **free** · Jopenbier `3H`) — **paid at EVERY channel, the Bruges
 prize included** (v45e: Bruges grants the pick,
 never the waiver), via Bruges / the *Gain 1 recipe* bonus (v5.1: the Scrivener’s Hall retired). **Jopenbier is
-never drafted** — its toggle makes it always acquirable (v4.14). The card moves to the
+never drafted** — its toggle makes it always acquirable (v4.14), and its card carries the
+**off-the-Bourse line** (v5.3: no price marker — the plain Q6 die is the whole value; every
+other in-play beer’s card trades at die + marker). The card moves to the
 board’s **COMPLETED side on that beer’s first LOAD** (v4.9d) — the completed cards are the Flight
 ladder (v45h: the covers are off — no unlock duty).
 
@@ -538,6 +543,16 @@ wharf seeds: Hulk→Bruges + 1 Ship ·
 worker placed free · first player fixed.
 
 ## 10. Box delta vs v3.4
+
+**v5.3b kit pass (2026-08-22 — wording/visual REPRINT, no counts, no rules):** the whole
+tile set rewords **icon-first** (icons carry resources/actions; words only where an icon
+can’t; never sentences — the v5.1 minimal-text ruling re-enforced after drift) · the
+**Venture tiles restyle onto the building-card anatomy** with the **owner’s colour ring
+printed as the tile’s inner border** (the family finally shares the buildings’ visual
+language) · the **expansion casks/recipes reprint their Bourse lines** (specialty = a
+marker at 0; Jopenbier = off the Bourse) · art stand-ins noted in `art/PROMPTS.md`
+(Ropewalk/Weigh House briefed but not yet generated; the four Staple crests share one
+generic face; the 8 Venture faces borrow retired-tile portraits — generation list filed).
 
 **v5.3b delta (2026-08-22, ruled):** the **Tollhouse reprints as the toll bench** — a load
 at its slot lets the loader shift any Bourse marker ±1 (the stamp face retired). One tile.

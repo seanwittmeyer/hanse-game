@@ -162,9 +162,11 @@ the registry governs what a PLAYER reads.
 | the Taproom floor | n | The board strip where judged dice stand (committed — the audit) | ○ provisional |
 | convene | v | A bench fills and is judged; an unconvened bench at game end pays 1★/die | ○ provisional |
 | the champion’s tour | n | The winning cask’s die parks as presence (face 1) at a Kontor its owner has delivered to (v4.17b) | ○ provisional |
-| rider | n | The design term for a building's printed `[host icon] here:` line (v5.1): it boosts the matching STATION action fired on its line — primary and alternate alike, once per activation; the tile prints only the host-icon line + effect icons, never the word "rider" | ○ provisional |
+| ~~rider~~ | — | RETIRED grammar (v5.2 — the rider scope A/B read NULL and the two-family split replaced it; a building modifies its OWN slot's traffic, never a station action) | — |
 | ~~Scrivener's Hall~~ · ~~Hiring Post~~ · ~~Almoner's Stall~~ | — | RETIRED tiles (v5.1 — the shelf turn; acquisition = Kontor prizes + load bonuses; presence placement is FREE and flows only through casks) | — |
-| Ropewalk · Weigh House | n | The v5.1 building names (loads-here +1 · two Manifest lines per cask delivered off the Ship here) | ○ provisional |
+| Ropewalk · Weigh House | n | Public Works: the Ropewalk's cross-quay load (v5.2 — a load here also loads 1 Ready cask onto a DIFFERENT Ship) · the Weigh House's two Manifest lines per cask delivered off the Ship here | ○ provisional |
+| the toll bench | n | The Tollhouse's v5.3b face (prose nickname — the tile still titles *Tollhouse*): a cask loading at its slot lets the LOADER shift any price marker ±1; the stamp (−1 die for +3★) is RETIRED | ○ provisional |
+| trigger shorthands | — | The kit-pass component grammar (2026-08-22, the §4 templating compressed for tiles): `load:` (a cask loads at this slot) · `sail:` (a Ship sails from this slot) · `line:` (fires when a line through this slot is activated) · `end:` (game end) · `turn start:` — icon-first after the colon, never a sentence | ○ provisional |
 | Broker · Brewer's Mate | n | The v5.1 Specialist names (your Market alternate is Source 2 · your Brewhouse alternate searches the stack) | ○ provisional |
 | parti-gyle | n/adj | Zerbster’s printed signature (v4.15b): as the cask boards, an optional free Gruit into an open vessel (a tray die), then Load 1 more | ○ provisional (period brewing term — the second runnings) |
 | smoke-hardy | adj | Duckstein’s printed signature: its die turns +1 as it boards (cap 6) | ○ provisional |

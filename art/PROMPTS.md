@@ -228,3 +228,66 @@ mission chapel on the quay, a lantern over its door, nets and a moored skiff bes
   numbered-Source treatment exactly (the goods basket + the landed numeral), a "3"
   in place of the "2". Until it lands, the board prints the plain basket (`goods.png`)
   as the stand-in — swap the ICON_ART 'goods-3' entry to 'goods-3' when the file exists.
+
+## v5.3b — THE GENERATION LIST (2026-08-22, the kit wording/restyle pass — the open queue in one place)
+
+*Everything the kit currently fakes with a stand-in, ranked. Icons take the c.1350
+sticker treatment (`art/icons/` — one object, warm palette, transparent margin, readable
+at .3in); tiles take the painterly single-structure portrait treatment (same wharf
+angle/light as the other building faces).*
+
+### Icons
+1. **bourse.png — NEW, the highest-value icon on the list.** The Bourse has no period
+   glyph: every price-shift face (the Tollhouse toll bench · the Factor's Desk / Guild
+   Residence ±1 chips · the Staple Rights +2▲ chip · the Bourse strip header · the aid
+   legend) currently falls back to the lucide `trending-up` arrow — the one modern glyph
+   left on the table. Brief: a merchant's **tally board with a peg moved up a notch** —
+   a small dark-wood board with a column of drilled holes, a bone peg sitting one hole
+   higher, a subtle upward arrowhead worn into the wood. One object; the ±1/+2▲ numerals
+   print BESIDE the icon, so the icon carries no number.
+2. **goods-3.png** — the Market's Source-3 primary face (briefed above, v5.2b section;
+   the plain basket still stands in).
+3. **bonus-load.png replacement** — the *Load 1 more* verb (briefed above, 2026-08-09
+   section; still the too-generic package glyph).
+4. *(Optional)* **trigger chips** — `load:` / `sail:` / `line:` print as words today
+   (the kit-pass shorthand). Three tiny glyphs (a cask on a hook · a departing sail · a
+   two-station bracket) would finish the icon-first grammar; words are acceptable until
+   then.
+
+### Building tiles (Public Works)
+1. **building-ropewalk.png** — briefed above (v5.1 section), never generated; the
+   Capstan portrait stands in and reads WRONG (a different tile in play).
+2. **building-weighhouse.png** — briefed above (v5.1 section), never generated; the
+   gauger portrait stands in.
+3. *(Optional)* **Staple House crest variants ×4** (`building-staple-bruges/london/
+   bergen/novgorod.png`) — all four share the generic `building-staple.png` today; each
+   tile already prints its Kontor crest chip, so one shared portrait is playable. A
+   variant set (the same warehouse, the port's banner over the door) would let the four
+   read apart at arm's length.
+
+### Venture tiles ×8 — the family has NO art of its own
+Every Venture face borrows a retired tile's portrait. Save as `venture-<k>-l<1|2>.png`;
+the eight `art:` fields in `components.js` VENTURES swap over when they land. Portraits
+want a **smaller, private-workshop scale** than the civic Public Works — these are the
+player's own yard:
+- **venture-rack-l1.png** *Rack House* (now: Racking Hall art) — a low timber rack shed,
+  two cask cradles, a cellarman's ladder.
+- **venture-rack-l2.png** *Brewery* (now: Abbey art) — a private brewhouse: copper
+  kettle through the door, steam at the louvre, the owner's pennant.
+- **venture-counting-l1.png** *Counting House* (now: Granary art) — a narrow gabled
+  counting room, a lit window, coin chest and ledger visible.
+- **venture-counting-l2.png** *Assay Loft* (now: Assay art) — an upper-floor loft with
+  a fine balance at the window, hop samples in dishes.
+- **venture-factor-l1.png** *Factor's Desk* (now: Exchange art) — a factor's writing
+  desk under a quayside awning, manifests on a spike.
+- **venture-factor-l2.png** *Staple Rights* (now: Rich Berth art) — a charter with a
+  great seal nailed to a warehouse door, casks queued beneath.
+- **venture-warehouse-l1.png** *Warehouse* (now: Hop Exchange art) — a half-timbered
+  private store, crane beam over the loading door.
+- **venture-warehouse-l2.png** *Guild Residence* (now: Mission Quay art) — a stepped-
+  gable townhouse with the guild chain over the lintel — the VP face, the richest
+  portrait of the eight.
+
+### Specialists (v5.1, briefed above, never generated)
+- **improve-broker.jpg** · **improve-brewer-s-mate.jpg** — the two v5.1 guild singles
+  still render art-less (briefs in the v5.1 section above).
