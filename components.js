@@ -411,8 +411,8 @@ function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm
   // (cover it = the ship goes; no sentence needed) — and chevrons rise toward it.
   const fee=HULL[hull].fee;   // v4.8: the per-hull commission fee prints on the trigger berth; a free Hulk prints no chip
   let rows='<div class="st-trig">'
-    +'<div class="st-toprow"><span class="st-k">'+LU('sailboat')+destNm+'</span>'
-      +'<span class="st-meta"><span class="st-gate" title="boards READY (die at its quality) AND with its die (as boarded, after lifts) at this or more — both gates, always">'+LU('check')+LU('dices')+d.req+'+</span>'+(fee?'<span class="st-cost">'+cost(fee,0)+'</span>':'')+'</span></div>'
+    +'<div class="st-toprow"><span class="st-k">'+destNm+'</span>'
+      +'<span class="st-meta"><span class="st-gate" title="boards READY (die at its quality) AND with its die (as boarded, after lifts) at this or more — both gates, always">'+LU('dices')+d.req+'+</span>'+(fee?'<span class="st-cost">'+cost(fee,0)+'</span>':'')+'</span></div>'
     +'<div class="st-seat st-tseat" title="the trigger berth — the last cask loads here and the ship sails at once"><span class="st-num">'+cap+'</span><span class="st-go">'+LU(QI)+'<b class="amp">&amp;</b>'+LU('sail')+'</span></div>'
   +'</div>';
   for(let i=cap-1;i>=1;i--)rows+='<div class="st-berth"><div class="st-seat"><span class="st-num">'+i+'</span><span class="st-ghost">'+LU(QI)+'</span></div></div>';
