@@ -306,26 +306,27 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 // v5.3 wording pass (designer 2026-08-22: icons where possible, words where necessary, never
 // sentences): the PUBLIC line = an icon chip (whoever activates the line); the OWNER line =
 // trigger word + icons. pub is pre-built icon HTML.
-const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('goods-1'),VPUB_SH1=LU('bourse-pm1'),VPUB_SH2=LU('bourse-pm2');   // ruled 2026-08-23: the public chip is icon-only (no '+1' text, no '▲')
+const VPUB_STEP=LU('age-1'),VPUB_STEP2=LU('age-2'),VPUB_GOLD=LU('goods-1'),VPUB_SH1=LU('bourse-pm1'),VPUB_SH2=LU('bourse-pm2');   // ruled 2026-08-23: the public chip is icon-only (no '+1' text, no '▲')
 // the OWNER block speaks the Public Works grammar (ruled 2026-08-23): BIG icons + the fewest
 // words; a face whose trigger is the whole story prints it under the TITLE (trig) and the
 // foot carries icons alone. VBIG = one big-icon cell (the .ac size the works print).
 const VBIG=h=>'<span class="ac">'+h+'</span>';
 const VSEP=s=>'<span class="vsep">'+s+'</span>';
-// swap-dice · redeal · venture-build · goods-1 all landed 2026-08-23 — no stand-ins left
-// on the Venture faces. (The Counting House wore the plain basket under a text "+1" badge
-// until the numbered icon existed; a printed face never carries text an icon can say.)
-const VGOOD1=VBIG(LU('goods-1'));
+// v5.5 FOUR HANDS (designer-ruled 2026-08-23): the family re-derives as FOUR THEMED tiles —
+// brew · age · die · points — each pairing an L1 and an L2 of the SAME theme. One cardboard
+// per theme means "one side facing per theme" needs no rule: the tile is either its L1 or its
+// L2. A standing L1 may be FLIPPED in place to its own L2 (no second tile spent), which is
+// what lets four tiles become four buildings instead of two.
+// (art: six faces keep their own images; the die-L2 and brew-L1 ride stand-ins — briefed.)
 const VENTURES=[
-  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, own:VBIG(LU('swap-dice')), txt:'Swap 2 dice', art:'venture-rack-l1.png'},
-                 l2:{nm:'Brewery',        ic:'flask-conical', pub:VPUB_STEP, own:VBIG(LU('flask-conical')), txt:'Brew', art:'venture-rack-l2.png'}},
-  {k:'counting', l1:{nm:'Counting House', ic:'goods-1', pub:VPUB_GOLD, own:VGOOD1, txt:'On load', art:'venture-counting-l1.png'},
-                 l2:{nm:'Assay Loft',     ic:'scale',   pub:VPUB_GOLD, own:VBIG('<b class="vnum">1</b>'+LU('sprout','h'))+VSEP('→')+VBIG(LU('check')), art:'venture-counting-l2.png'}},
-  {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', pub:VPUB_SH1, own:VBIG(LU('redeal')), txt:'On load', art:'venture-factor-l1.png'},
-                 l2:{nm:'Staple Rights',  ic:'landmark',pub:VPUB_SH2, trig:'On sail', own:VBIG(LU('beer'))+VSEP(':')+VBIG(LU('star-plus1','starmark')), art:'venture-factor-l2.png'}},
-  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   pub:VPUB_GOLD, own:VBIG(LU('package-plus')), txt:'On load,<br>load another', art:'venture-warehouse-l1.png'},
-                 l2:{nm:'Guild Residence',ic:'home',    pub:VPUB_SH1, trig:'At end', own:VBIG(LU('star-plus2','starmark'))+VSEP('×')+VBIG(LU('venture-build')), art:'venture-warehouse-l2.png'}},
-
+  {k:'brew',   l1:{nm:'Mash Tun',        ic:'flask-conical', pub:VPUB_GOLD,  own:VBIG(LU('brew-top')), txt:'On line', art:'venture-factor-l1.png'},
+               l2:{nm:'Great Copper',    ic:'flask-conical', pub:VPUB_STEP2, trig:'On line', own:VBIG(LU('goods-2'))+VSEP('+')+VBIG(LU('flask-conical')), art:'venture-rack-l2.png'}},
+  {k:'age',    l1:{nm:'Warehouse',       ic:'boxes',   pub:VPUB_GOLD, trig:'On line', own:VBIG(LU('age-2'))+VSEP('+')+VBIG(LU('package-plus')), art:'venture-warehouse-l1.png'},
+               l2:{nm:'Assay Loft',      ic:'scale',   pub:VPUB_STEP, trig:'On line', own:VBIG('<b class="vnum">2</b>'+LU('sprout','h'))+VSEP('→')+VBIG(LU('check')), art:'venture-counting-l2.png'}},
+  {k:'die',    l1:{nm:'Rack House',      ic:'repeat',  pub:VPUB_STEP, own:VBIG(LU('swap-dice')), txt:'Swap 2 dice', art:'venture-rack-l1.png'},
+               l2:{nm:'Lagering Cellar', ic:'snowflake', pub:VPUB_SH1, trig:'On line', own:VBIG(LU('die-plus1')), art:'venture-warehouse-l2.png'}},
+  {k:'points', l1:{nm:'Counting House',  ic:'goods-1', pub:VPUB_SH1, trig:'On load', own:VBIG(LU('star-plus1','starmark')), art:'venture-counting-l1.png'},
+               l2:{nm:'Staple Rights',   ic:'landmark',pub:VPUB_SH2, trig:'On sail', own:VBIG(LU('beer'))+VSEP(':')+VBIG(LU('star-plus2','starmark')), art:'venture-factor-l2.png'}},
 ];
 const VENT_FOOT='rgba(31,86,122,.78)';   // the owner-only blue (the v2.4.1 privilege colour returns)
 // v5.3 restyle (designer 2026-08-22): a Venture SHARES the building tile's anatomy — the same

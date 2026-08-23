@@ -260,31 +260,51 @@ angle/light as the other building faces).*
    variant set (the same warehouse, the port's banner over the door) would let the four
    read apart at arm's length.
 
-### Venture tiles ×8 — ALL EIGHT LANDED 2026-08-22 (the options round's picks)
-Rack House C · Brewery A · Counting House C · Assay Loft A · Factor's Desk C · Staple
-Rights A · Warehouse C · Guild Residence B — saved as `venture-<k>-l<1|2>.png`, the eight
-`art:` fields in `components.js` VENTURES swapped over (mats/letterbox bands cropped at
-landing). The borrowed-portrait era ends. Original briefs kept below for regeneration: Save as `venture-<k>-l<1|2>.png`;
-the eight `art:` fields in `components.js` VENTURES swap over when they land. Portraits
-want a **smaller, private-workshop scale** than the civic Public Works — these are the
-player's own yard:
-- **venture-rack-l1.png** *Rack House* (now: Racking Hall art) — a low timber rack shed,
-  two cask cradles, a cellarman's ladder.
-- **venture-rack-l2.png** *Brewery* (now: Abbey art) — a private brewhouse: copper
+### Venture tiles ×8 — RE-DERIVED 2026-08-23 (v5.5 “Four Hands”): 6 KEEP · 2 WANTED
+The family re-themed (brew · age · die · points) and four faces changed identity. The
+**filenames stay put** — they are keyed to the tile slot, not the name — so six existing
+portraits carry straight over and **two need new art**. `components.js` VENTURES names each
+face's `art:` explicitly, so a new file can land under any slug without a rename.
+
+**KEEP as-is (the portrait still fits the new name):**
+- `venture-rack-l1.png` → **Rack House** *(die L1)* — unchanged name and art.
+- `venture-counting-l1.png` → **Counting House** *(points L1)* — unchanged; the counting
+  room now banks ★ rather than goods, which the portrait already reads as.
+- `venture-counting-l2.png` → **Assay Loft** *(age L2)* — unchanged name and art.
+- `venture-factor-l2.png` → **Staple Rights** *(points L2)* — unchanged name and art.
+- `venture-warehouse-l1.png` → **Warehouse** *(age L1)* — unchanged name; the private
+  store now ages and loads, the crane beam still says it.
+- `venture-rack-l2.png` → **Great Copper** *(brew L2)* — was *Brewery*; the copper kettle
+  through the door **is** the Great Copper. Name change only, no reshoot.
+
+**WANTED — two new portraits (stand-ins in place, both reading the wrong subject):**
+- **venture-factor-l1.png** *Mash Tun* *(brew L1)* — currently the retired **Factor's
+  Desk** (a writing desk under a quayside awning). Brief: a single **oak mash tun** in a
+  small private brewhouse, the mash paddle upright in the grain bed, steam off the surface,
+  a sack of malt tipped at the foot — the *first* vessel of the process, plainly humbler
+  than the Great Copper's kettle. Same private-workshop scale as the rest of the family.
+- **venture-warehouse-l2.png** *Lagering Cellar* *(die L2)* — currently the retired
+  **Guild Residence** (a stepped-gable townhouse). Brief: a **cold vaulted cellar**, casks
+  racked deep into the dark on stone cradles, frost or condensation on the vault, a single
+  lantern — the room where a beer is held to gain a point of quality. Colder palette than
+  the family's warm yard portraits; that contrast is the point.
+
+*Original briefs kept below for regeneration: save as `venture-<k>-l<1|2>.png`; the eight
+`art:` fields in `components.js` VENTURES swap over when they land. Portraits want a
+**smaller, private-workshop scale** than the civic Public Works — these are the player's
+own yard.*
+- **venture-rack-l1.png** *Rack House* — a low timber rack shed, two cask cradles, a
+  cellarman's ladder.
+- **venture-rack-l2.png** *Great Copper* (the Abbey art) — a private brewhouse: copper
   kettle through the door, steam at the louvre, the owner's pennant.
-- **venture-counting-l1.png** *Counting House* (now: Granary art) — a narrow gabled
+- **venture-counting-l1.png** *Counting House* (the Granary art) — a narrow gabled
   counting room, a lit window, coin chest and ledger visible.
-- **venture-counting-l2.png** *Assay Loft* (now: Assay art) — an upper-floor loft with
-  a fine balance at the window, hop samples in dishes.
-- **venture-factor-l1.png** *Factor's Desk* (now: Exchange art) — a factor's writing
-  desk under a quayside awning, manifests on a spike.
-- **venture-factor-l2.png** *Staple Rights* (now: Rich Berth art) — a charter with a
+- **venture-counting-l2.png** *Assay Loft* — an upper-floor loft with a fine balance at
+  the window, hop samples in dishes.
+- **venture-factor-l2.png** *Staple Rights* (the Rich Berth art) — a charter with a
   great seal nailed to a warehouse door, casks queued beneath.
-- **venture-warehouse-l1.png** *Warehouse* (now: Hop Exchange art) — a half-timbered
+- **venture-warehouse-l1.png** *Warehouse* (the Hop Exchange art) — a half-timbered
   private store, crane beam over the loading door.
-- **venture-warehouse-l2.png** *Guild Residence* (now: Mission Quay art) — a stepped-
-  gable townhouse with the guild chain over the lintel — the VP face, the richest
-  portrait of the eight.
 
 ### Specialists — LANDED 2026-08-22
 - **improve-broker.jpg** (pick A — ledger + coin scale on the cloth) · **improve-brewer-s-mate.jpg** (pick E — the young brewer at the tun, the one figure-shot in the object family, designer-ruled).

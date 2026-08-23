@@ -104,8 +104,9 @@ aging, boarding, value, presence and clock in one number:**
 - **Aging:** each step turns the die **+1**, **never past the quality** — the cask is
   **READY when die = quality.** **Dice never turn on their own:** the hands on an aging
   die are the **Cellar** (primary 3 · alternate 1 ⚙), the **Age +2** load bonuses, the
-  Venture faces — the **Rack House** (an uncapped swap), the **Assay Loft** (pay 1 `H` —
-  one cask straight to Ready) and every **age +1 public line** (for whoever activates the
+  Venture faces — the **Rack House** (an uncapped swap), the **Lagering Cellar** (die
+  +1, cap 6), the **Warehouse** (Age 2), the **Assay Loft** (pay 2 `H` — every maturing
+  cask straight to Ready) and every **age +1 / +2 public line** (for whoever activates the
   line) — the **Cellarman** (a higher start), and the **Braumeister / Innkeeper** drips
   (+1 at turn start).
 - **Loading:** a Ready cask boards a Ship whose **minimum its die meets, read as it
@@ -161,8 +162,8 @@ resolve at full strength on either line; all numbers ⚙).
 
 *(An **empty stack** = that beer cannot brew right now — every tile is out riding a cask;
 tiles come home on delivery. **The search belongs to the station:** the Brewhouse primary
-and the Brewery Venture search the stack; the alternate Brewhouse AND the *Brew 1* load
-bonus take the **top tile** blind. The alternate Harbor load is the wharf-wide relief
+and the **Great Copper** Venture search the stack; the alternate Brewhouse, the **Mash
+Tun** Venture AND the *Brew 1* load bonus take the **top tile** blind. The alternate Harbor load is the wharf-wide relief
 valve — the demand is still the docked hulls' minimums and Manifests.)*
 
 ---
@@ -215,32 +216,39 @@ traffic — whoever's cask, Ship or sail it is — and using one is always free.
 ### 5b. Ventures — your private buildings: the only family you build
 
 Each house starts with an **identical hand of 4 DUAL-USE Venture tiles**, ringed in the
-owner's colour, **no die**. **Every face prints TWO lines:**
+owner's colour, **no die**. The four are **THEMED — brew · age · die · points** — and each
+tile pairs an **L1** and an **L2 of its own theme**: one piece of cardboard, one face up at
+a time, so "one side facing per theme" needs no rule. **Every face prints TWO lines:**
 
-- **The PUBLIC line** (top — simple ⚙: *gain 1 good* · *age +1* · *shift the Bourse ±1 /
-  ±2*): a **free stop for WHOEVER activates a line through the slot**, once per
+- **The PUBLIC line** (top — simple ⚙: *gain 1 good* · *age +1 / +2* · *shift the Bourse
+  ±1 / ±2*): a **free stop for WHOEVER activates a line through the slot**, once per
   activation. Your private house greases the whole wharf.
-- **The OWNER line** (ringed): the private power below — loads, stops and premiums that
+- **The OWNER line** (ringed): the private power below — stops, loads and premiums that
   serve the owner alone. **The owner's activation collects both lines.**
 
-Placement (fees in grain ⚙, **waived as the London prize**):
+Placement — **THREE WAYS** (fees in grain ⚙, **waived as the London prize**):
 
-- **THE OPEN GROUND:** an **L1** plays from your hand onto **any open slot**. Only when
-  **every slot is full** may it instead **replace a Public Work** (the worn furniture is
-  boxed; one payment, no rent). **Never another player's L1/L2.** Playing a tile as its
-  L1 forfeits its L2 face.
-- **THE CLIMB:** an **L2** lands only by overbuilding **your own L1** — spend a second
-  hand tile L2-side up (pay the L2 fee); the spent L1 tile is **boxed**, the ground is
-  kept. That tile's L1 face is forfeit. **An L2 can never be displaced by anyone.**
-- The **owner-only stops** (Rack House · Brewery · Assay Loft) open only when the OWNER
-  activates a line through them — once per activation, like any stop.
+- **THE OPEN GROUND — play an L1.** A tile plays from your hand **L1-side up onto any open
+  slot** (fee **1 `G`**). Only when **every slot is full** may it instead **replace a
+  Public Work** (the worn furniture is boxed; one payment, no rent). **Never another
+  player's L1/L2.**
+- **THE FLIP — turn your own L1 over, in place.** Pay the **L2 fee (2 `G`)** and a
+  **standing L1 of yours turns over to its own L2 face** on the same slot. **No hand tile
+  is spent.** This is what gets buildings out: each of your four tiles can reach its own
+  L2, instead of four tiles collapsing into two buildings.
+- **THE OVERBUILD — a different theme's L2 onto ground you hold.** Spend a **second hand
+  tile L2-side up** onto **one of your own L1s** (fee 2 `G`); the spent L1 tile is
+  **boxed**, the ground is kept. That tile's L1 face is forfeit.
 
-| Tile (one piece of cardboard) | Public line ⚙ (L1 · L2) | L1 owner line ⚙ (fee 1 `G`) | L2 owner line ⚙ (fee 2 `G`) |
+**An L2 can never be displaced by anyone.** The **owner-only stops** open only when the
+OWNER activates a line through them — once per activation, like any stop.
+
+| Theme — one tile | Public line ⚙ (L1 · L2) | **L1** owner line ⚙ (fee 1 `G`) | **L2** owner line ⚙ (fee 2 `G`) |
 |---|---|---|---|
-| **Rack House / Brewery** | age +1 · age +1 | *Activating this line:* **swap the dice of two of your vessel casks** — no quality cap | *Activating this line:* **you may BREW** (a full search of the stack; normal costs) |
-| **Counting House / Assay Loft** | +1 good · +1 good | *Your loads at this slot:* **also gain 1 good** | *Activating this line:* **pay 1 `H` — one vessel cask straight to READY** |
-| **Factor's Desk / Staple Rights** | Bourse ±1 · Bourse ±2 | *Before loading the Ship at this slot:* **you may re-deal its Manifest** | *Your casks delivered off Ships sailing from this slot:* **+1★ each** ⚙ |
-| **Warehouse / Guild Residence** | +1 good · Bourse ±1 | *Your loads at this slot:* **+1 cask may board** | *Game end:* **2★ per Venture you have in play** ⚙ |
+| **BREW** — Mash Tun / Great Copper | +1 good · **age +2** | *Activating this line:* **you may BREW — the stack's TOP tile** | *Activating this line:* **gain 2 goods AND you may BREW** (a full search of the stack; normal costs) |
+| **AGE** — Warehouse / Assay Loft | +1 good · age +1 | *Activating this line:* **Age 2**, then **you may load 1 Ready cask onto ANY docked Ship** | *Activating this line:* **pay 2 `H` — EVERY maturing cask of yours goes straight to READY** |
+| **DIE** — Rack House / Lagering Cellar | age +1 · Bourse ±1 | *Activating this line:* **swap the dice of two of your vessel casks** — no quality cap | *Activating this line:* **one of your vessel casks: die +1** (cap 6 — it may pass its quality) |
+| **POINTS** — Counting House / Staple Rights | Bourse ±1 · Bourse ±2 | *Your loads at this slot:* **+1★ each** | *Ships sailing from this slot:* **your casks bank +2★ each** ⚙ |
 
 ### 5c. THE BOURSE — the beer-value market
 
@@ -273,15 +281,14 @@ once, and fire each of their own Venture stops once — all optional, any order,
   **display of 4** ⚙. **Skute 1 · Cog 2 · Hulk 3** berths ⚙ (deck blend **6/10/8** ⚙ —
   24 Ships, 6 per Kontor). **Commission** (§4C) pays the Ship's **printed fee (2/1/0 `G`
   by size)** and places it on any shipless slot; it scores nothing.
-- **LOAD (resolve a slot with a docked Ship):** if the slot holds YOUR **Factor's Desk**,
-  you may first re-deal the Ship's Manifest; then take **one READY cask from YOUR
+- **LOAD (resolve a slot with a docked Ship):** take **one READY cask from YOUR
   vessels** whose **die meets the Ship's minimum** (after this slot's lifts — Kiln /
   Bonded Store; the Customs House lowers the minimum by 1, floor 1; the Tollhouse offers
   its Bourse shift), seat it in the lowest berth (the die rides the tile), and **fire the
   cask's printed load bonus** (§6b) — **after any sail the load completes** (deliveries
   and prizes resolve first, then the bonus). A load at the **Ropewalk** also loads **1
-  Ready cask onto a DIFFERENT docked Ship** (once per flow); your **Warehouse** loads
-  **+1** at its slot; a cask delivered off the **Weigh House's** Ship may claim **two**
+  Ready cask onto a DIFFERENT docked Ship** (once per flow); your **Counting House** banks
+  **+1★** per load at its slot; a cask delivered off the **Weigh House's** Ship may claim **two**
   Manifest lines (§5a). **A beer's FIRST load moves its recipe card to the board's
   COMPLETED side — the Flight record.** The freed vessel is open again. *(The Stevedore
   loads **2** in EVERY load flow. The **commission** includes one such load onto its new
@@ -368,8 +375,8 @@ printed ★ value:
   8 slots + a display of 4 — so a non-Bruges hull is never dealt dry.)*
 - **The Manifest is the variable economy** — the demand rides the very hull you race to
   fill: the same die-5 Bock is worth more on a Ship whose card prints *Q4+ & die 5+ → 4★*.
-  Read the hulls before you brew, lift and load; your **Factor's Desk re-deals** the
-  Manifest at its slot (§5b).
+  Read the hulls before you brew, lift and load — the Manifest you can satisfy is worth
+  more than the one you cannot.
 
 **The line vocabulary ⚙:** named starters *Gruit → 1★ · Hopped → 2★* · quality tiers
 *Q2-or-under → 1★ · Q3+ → 2★ · Q4+ → 3★* · die *3+ → 1★ · 4+ → 2★ · 5+ → 3★ · 6 → 3★* ·
@@ -440,7 +447,7 @@ at once):**
 
 `G` grain · `H` hops — the **only** currency. Storage cap **8** ⚙. No money; no spendable
 prestige. The faucets: the Market (Source 3 ⚙, + specialists), the *Gain 2/3 goods* load
-bonuses, the Counting House, the Ventures' *+1 good* public lines, the consolation prizes.
+bonuses, the **Great Copper**, the Ventures' *+1 good* public lines, the consolation prizes.
 
 ---
 
@@ -471,8 +478,8 @@ A **MAX_ROUND ceiling** (~25 ⚙) backstops a slow table. Pace target **~12–25
 3. **Cooperage wharfage** — **+1★** per cask loaded at its slot ⚙.
 4. **Placed presence** — 1★ each (the face-1 die; a seated Town Crier adds +2★ per die).
 5. **Staple premiums** — the Staple House pays **+2★** ⚙ per cask off a matching-Kontor
-   sail (any house's casks); **Staple Rights** pays its owner **+1★** ⚙ per own cask off
-   its slot.
+   sail (any house's casks); **Staple Rights** pays its owner **+2★** ⚙ per own cask off
+   its slot. The **Counting House** banks **+1★** ⚙ per cask the owner loads at its slot.
 
 *(Commissions score **nothing**. The score track + your parked dice remain the whole
 audit trail; no memory required.)*
@@ -483,9 +490,8 @@ audit trail; no memory required.)*
    Bergen 9/5/2 · Novgorod 8/5/2 ⚙; 2p skips 2nd; ties split).
 7. **The Flight** — distinct beers **SHIPPED** (the completed cards on your board):
    **(beers−1)², min 3** (3→4 · 4→9 · 5→16 · 6→25 ⚙).
-8. **The Guild & the Residence** — a seated **Alderman** (+2★ per Kontor with 3+ parked
-   dice ⚙) scores its printed line; a standing **Guild Residence** (Venture L2) scores
-   **2★ per Venture you have in play** ⚙. The audit is the tiles and dice on the table.
+8. **The Guild** — a seated **Alderman** (+2★ per Kontor with 3+ parked dice ⚙) scores
+   its printed line. The audit is the tiles and dice on the table.
 9. **Tiebreak:** the summed dice in your vessels, then most goods.
 
 > **The legible fork:** ship **wide** (majorities + prizes) or ship **lifted** (Kiln-fed

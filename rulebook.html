@@ -150,6 +150,9 @@ td.n,th.n{text-align:center; font-variant-numeric:tabular-nums; white-space:nowr
 tr.exp td{background:#faf6ec; font-style:italic}
 tr.exp td b{font-style:normal}
 table.beers td:first-child{font-weight:bold; white-space:nowrap}
+table.vt2{font-size:7.5pt; margin-top:1pt}
+table.vt2 td:first-child{white-space:nowrap}
+.vn{font-size:6.9pt; color:var(--ink2); font-style:italic}
 
 /* ---- the die filmstrip ------------------------------------------------- */
 .film{display:grid; grid-template-columns:repeat(5,1fr); gap:0; align-items:stretch; margin:2pt 0 5pt}
@@ -408,7 +411,7 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
         </table>
         <div class="note">
           <span class="nl">At the table</span>Every cask tile carries a <b>load bonus</b> that fires
-          when the cask ships. A full Brew &mdash; the station&rsquo;s primary, or the Brewery Venture &mdash; <b>searches the
+          when the cask ships. A full Brew &mdash; the station&rsquo;s primary, or the <b>Great Copper</b> Venture &mdash; <b>searches the
           stack</b>, making the bonus your pick; the alternate Brew <b>and the <i>Brew 1</i> load bonus</b> take what
           the top of the stack offers.
         </div>
@@ -604,21 +607,42 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
           tide. Read what came out at setup, but do not marry it: a tile that runs hot burns
           out on the very voyage it fuels.</p>
           <h3 class="sub">Ventures &mdash; your colour ring, the family you build</h3>
-          <p>Your hand of <b>4 dual-use tiles</b>. Each face prints <b>two lines</b>: a simple
-          <b>public line</b> on top &mdash; <i>gain 1 good &middot; age +1 &middot; shift the
-          Bourse</i> &mdash; that fires as a free stop for <b>whoever</b> activates a line
-          through the slot, and the <b>ringed owner line</b> below, for you alone. <b>You
-          collect both.</b> Playing one side of a tile forfeits the other.</p>
+          <p>Your hand of <b>4 dual-use tiles</b>, one per <b>theme &mdash; brew, age, die,
+          points</b>. Each tile carries an <b>L1</b> on one side and its own theme&rsquo;s
+          <b>L2</b> on the other, so only one side of a theme is ever facing. Each face prints
+          <b>two lines</b>: a simple <b>public line</b> on top &mdash; <i>gain 1 good &middot;
+          age +1 or +2 &middot; shift the Bourse</i> &mdash; that fires as a free stop for
+          <b>whoever</b> activates a line through the slot, and the <b>ringed owner line</b>
+          below, for you alone. <b>You collect both.</b></p>
           <ul class="tight">
-            <li><b>L1</b> (fee 1 grain): from your hand onto <b>any open slot</b>. Wharf
+            <li><b>Play an L1</b> (fee 1 grain): from your hand onto <b>any open slot</b>. Wharf
             full? It may <b>replace a Public Work</b> (the worn tile is boxed). <b>Never another
             player&rsquo;s L1/L2.</b></li>
-            <li><b>L2</b> (fee 2 grain): only by overbuilding <b>your own L1</b> with a
-            second hand tile &mdash; the spent L1 is boxed, the ground is kept. An L2 is never
+            <li><b>Flip your own L1</b> (fee 2 grain): a standing L1 of yours <b>turns over in
+            place</b> to its own L2 face. <b>No hand tile is spent</b> &mdash; this is how all
+            four of your tiles can reach L2.</li>
+            <li><b>Overbuild</b> (fee 2 grain): spend a <b>second hand tile L2-side up</b> onto
+            one of your own L1s &mdash; the spent L1 is boxed, the ground is kept. That way a
+            different theme&rsquo;s L2 lands on ground you already hold. An L2 is never
             displaced.</li>
             <li>The <b>London prize</b> opens either level <b>free</b>; the fee otherwise rides
             the <i>Open 1 Venture</i> load bonus.</li>
           </ul>
+          <table class="vt2">
+            <tr><th>Theme</th><th>L1 &mdash; owner line</th><th>L2 &mdash; owner line</th></tr>
+            <tr><td><b>Brew</b><br><span class="vn">Mash Tun / Great Copper</span></td>
+              <td>on the line: <b>BREW</b> the stack&rsquo;s <b>top tile</b></td>
+              <td>on the line: <b>gain 2 goods AND BREW</b> (full search)</td></tr>
+            <tr><td><b>Age</b><br><span class="vn">Warehouse / Assay Loft</span></td>
+              <td>on the line: <b>Age 2</b>, then load 1 Ready cask onto <b>any</b> docked Ship</td>
+              <td>on the line: pay <b>2 hops</b> &mdash; <b>every</b> maturing cask goes READY</td></tr>
+            <tr><td><b>Die</b><br><span class="vn">Rack House / Lagering Cellar</span></td>
+              <td>on the line: <b>swap</b> the dice of two of your vessel casks</td>
+              <td>on the line: one vessel cask&rsquo;s <b>die +1</b> (cap 6, may pass its quality)</td></tr>
+            <tr><td><b>Points</b><br><span class="vn">Counting House / Staple Rights</span></td>
+              <td>your loads at this slot: <b>+1&starf;</b> each</td>
+              <td>Ships sailing from this slot: your casks bank <b>+2&starf;</b> each</td></tr>
+          </table>
         </div>
         <div>
           <h3 class="sub">The Bourse &mdash; the price of beer moves</h3>
@@ -849,8 +873,8 @@ table.beers td:first-child{font-weight:bold; white-space:nowrap}
             <div><b>The Flight.</b> Distinct beers you have shipped.</div><div class="lv">ladder</div>
             
             <img class="li" src="art/icons/specialist.png" alt="">
-            <div><b>Specialists and Ventures</b> printing an end of game line (the Guild Residence:
-            2&starf; per Venture in play).</div><div class="lv">printed</div>
+            <div><b>Specialists</b> printing an end of game line (the Alderman: 2&starf; per
+            Kontor where you have 3+ parked dice).</div><div class="lv">printed</div>
           </div>
           <h3 class="sub">The Flight ladder</h3>
           <div class="flight">

@@ -32,8 +32,11 @@ governed here.
 | Public Work | n | The shared brown family: die-less furniture — 3–4 stand at random from setup, the rest are the bag; passive on its slot's traffic; never built in play; **every one sails away with the Ship at its slot** (v5.4, the tide) | building-2 | Public Works | Yes | ~~public building~~ | ○ v5.4 |
 | investor | n | RETIRED at v5.3 (the Public Works are die-less setup furniture) — historical: the v5.2 builder whose die ticked on use | — | — | — | — | ✕ v5.3 |
 | matures | v | RETIRED at v5.3 with the investor's die — historical: the v5.2 die-reaches-6 payout | — | — | — | — | ✕ v5.3 |
-| Venture | n | A private dual-use tile (v5.2): owner-only, the owner's colour ring, no die; an L1 face and an L2 face on one tile | home | Ventures | Yes | ~~private building~~ (prose ok, never printed) | ○ v5.2 |
-| L1 / L2 | n | A Venture tile's two faces: L1 plays from hand (the Ladder); L2 lands only over your own L1 (the Climb) | — | — | Yes | ~~level one~~ spelled out | ○ v5.2 |
+| Venture | n | A private dual-use tile (v5.2): owner-only, the owner's colour ring, no die; **one THEME per tile (v5.5)** — its L1 on one face, its own theme's L2 on the other | home | Ventures | Yes | ~~private building~~ (prose ok, never printed) | ○ v5.2 |
+| L1 / L2 | n | A Venture tile's two faces: L1 plays from hand onto open ground; L2 is reached by the FLIP or the OVERBUILD (v5.5) | — | — | Yes | ~~level one~~ spelled out | ○ v5.2 |
+| the FLIP | n | Turning your own standing L1 over in place to its own theme's L2 — no hand tile spent, the L2 fee paid (v5.5) | repeat | flips | Yes | ~~upgrade~~ · ~~flip up~~ | ○ v5.5 |
+| overbuild | v | Spending a SECOND hand tile L2-side up onto one of your own L1s (that L1 boxed) — the way a different theme's L2 reaches ground you hold (v5.5) | — | overbuilds | Yes | ~~build over~~ · ~~replace~~ (that is the Public Work rule) | ○ v5.5 |
+| theme | n | One of the Venture hand's four: **brew · age · die · points** — one tile each, so only one side of a theme is ever facing (v5.5) | — | themes | Yes | ~~suit~~ · ~~track~~ | ○ v5.5 |
 | the Ladder | n | RETIRED at v5.3 (the open ground replaced it) — historical: the v5.2/v5.2b build-order rule | — | — | — | — | ✕ v5.3 |
 | the open ground | n | The v5.3 placement rule: an L1 takes any open slot; wharf full → it may replace a Public Work; never another player's L1/L2 | — | — | Yes | — | ○ v5.3 |
 | the Bourse | n | The beer-value market (v5.3): one track (−1…+3 ⚙), a price marker per in-play beer except Gruit & Jopenbier; a delivered cask scores die + marker | trending-up | — | Yes | ~~market~~ (the Market is the station) · ~~beer market~~ in component text | ○ v5.3 |

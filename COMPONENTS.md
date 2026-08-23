@@ -133,23 +133,35 @@ faces as stand-ins; briefs queued in `art/PROMPTS.md`.)*
 ### 6b. VENTURE tiles (print 16 ⚙ — 4 dual-use designs × 1 ringed set per house · 2.5×1.32″ · DOUBLE-SIDED)
 
 **The only family players build (v5.3).** A Venture wears the **owner’s colour ring** and
-carries no die. **Every face prints TWO lines (v5.3, ruled):** a **PUBLIC line** on top —
-*gain 1 good · age +1 · Bourse ±1 / ±2* — a free stop for **whoever** activates a line
-through the slot, and the **ringed OWNER line** below (the private power; **the owner
-collects both**). Each house starts with the same **hand of 4**; a tile plays **L1-side up
-onto ANY OPEN SLOT** (THE OPEN GROUND, ruled — only with the wharf FULL may it instead
-replace a Public Work, the worn tile boxed; never another player’s L1/L2) or lands
-**L2-side up over your own L1** (the spent L1 tile is boxed; the ground is kept). One piece of cardboard, one face per life:
-playing a side forfeits the other. **A rival can never overbuild a Venture; an L2 can never
-be displaced.** Fees ⚙ **L1 1 `G` · L2 2 `G`** (grain only; waived as the London prize).
-Ventures commit **no die** — the clock is untouched.
+carries no die. **The four designs are THEMED (v5.5): brew · age · die · points** — one
+piece of cardboard per theme, its **L1 on one face and its own theme’s L2 on the other**,
+so “one side facing per theme” is a property of the component, not a rule. **Every face
+prints TWO lines (v5.3, ruled):** a **PUBLIC line** on top — *gain 1 good · age +1 / +2 ·
+Bourse ±1 / ±2* — a free stop for **whoever** activates a line through the slot, and the
+**ringed OWNER line** below (the private power; **the owner collects both**).
 
-| Tile (front = L1 · back = L2) | Public line ⚙ (L1 · L2) | L1 owner line ⚙ | L2 owner line ⚙ |
+Each house starts with the same **hand of 4**. **THREE WAYS ONTO THE WHARF (v5.5, ruled):**
+
+1. **PLAY AN L1** — a hand tile lands **L1-side up on ANY OPEN SLOT** (THE OPEN GROUND —
+   only with the wharf FULL may it instead replace a Public Work, the worn tile boxed;
+   never another player’s L1/L2). Fee **1 `G`**.
+2. **FLIP** — a **standing L1 of yours turns over IN PLACE to its own L2 face**; **no hand
+   tile is spent**, the cardboard is the same piece. Fee **2 `G`**. *This is the v5.5
+   change: four tiles can become four buildings that each reach L2, instead of collapsing
+   into two.*
+3. **OVERBUILD** — a **second hand tile lands L2-side up over one of your own L1s** (the
+   spent L1 tile is boxed; the ground is kept), which is how a **different** theme’s L2
+   reaches ground you already hold. Fee **2 `G`**.
+
+**A rival can never overbuild a Venture; an L2 can never be displaced.** Fees are **grain
+only** (waived as the London prize). Ventures commit **no die** — the clock is untouched.
+
+| Theme — one tile (front = L1 · back = L2) | Public line ⚙ (L1 · L2) | L1 owner line ⚙ | L2 owner line ⚙ |
 |---|---|---|---|
-| **Rack House / Brewery** | age +1 · age +1 | *this line:* swap the dice of 2 of your vessel casks (no quality cap) | *this line:* **you may BREW** (full search; normal costs) |
-| **Counting House / Assay Loft** | +1 good · +1 good | *your loads here:* **+1 good** | *this line:* **pay 1 `H` — 1 cask straight to READY** |
-| **Factor’s Desk / Staple Rights** | Bourse ±1 · Bourse ±2 | *before loading the Ship here:* **re-deal its Manifest** | *your casks sailed from here:* **+1★ each** ⚙ |
-| **Warehouse / Guild Residence** | +1 good · Bourse ±1 | *your loads here:* **+1 cask may board** | *game end:* **2★ per Venture in play** ⚙ |
+| **BREW** — Mash Tun / Great Copper | +1 good · **age +2** | *this line:* **you may BREW — the stack’s TOP tile** | *this line:* **gain 2 goods AND you may BREW** (full search; normal costs) |
+| **AGE** — Warehouse / Assay Loft | +1 good · age +1 | *this line:* **Age 2**, then load 1 Ready cask onto **ANY** docked Ship | *this line:* **pay 2 `H` — EVERY maturing cask straight to READY** |
+| **DIE** — Rack House / Lagering Cellar | age +1 · Bourse ±1 | *this line:* swap the dice of 2 of your vessel casks (no quality cap) | *this line:* one vessel cask’s **die +1** (cap 6 — it may pass its quality) |
+| **POINTS** — Counting House / Staple Rights | Bourse ±1 · Bourse ±2 | *your loads here:* **+1★ each** | *your casks sailed from here:* **+2★ each** ⚙ |
 
 ## 7. Specialist tiles (15 designs — v5.1 · the core 5 × max(2, n−1) + the guild 10 × 1 · 2×2″ purple)
 
@@ -250,6 +262,28 @@ wharf seeds: Hulk→Bruges + 1 Ship ·
 worker placed free · first player fixed.
 
 ## 10. Kit deltas (v5-era — every ruling that touches a printed face lands a note here; older deltas live in git history)
+
+**v5.5 “Four Hands” delta (2026-08-23, ruled — VENTURE SHEET REPRINT, counts unchanged):**
+the 16 Venture tiles reprint entirely. The four designs **re-derive as themes — brew · age ·
+die · points** — and each tile now pairs an **L1 and an L2 of its own theme** on one piece of
+cardboard, so the “one side facing per theme” property is carried by the component itself.
+Placement gains a **third way, the FLIP**: a standing L1 turns over in place to its own L2
+face for the L2 fee, **spending no hand tile** — the tile grammar already supported it (the
+back was always its L2), only the rule had forbidden it. **Retired faces:** `Factor's Desk`
+(the Manifest re-deal — the Manifest itself is under review), `Guild Residence` (an end-of-
+game count, not an engine), `Brewery` (a duplicate of the Brewhouse), and the old
+`Warehouse` L1 (+1 cask may board). **New / rebuilt faces:** `Mash Tun` L1 (BREW the top
+tile), `Great Copper` L2 (2 goods + a full BREW), `Warehouse` L1 (Age 2 + load onto ANY
+docked Ship), `Lagering Cellar` L2 (die +1, cap 6), `Staple Rights` **+2★** per own cask
+(was +1★ — an L2 must pay L2 value), `Assay Loft` **2 `H` → EVERY maturing cask READY** (was
+1 `H` → one cask), `Counting House` **+1★ per load** (was +1 good). **Public lines reshuffle
+to match:** Great Copper prints **age +2** (the existing `station-age-2` glyph — the two-pip
+age chip already in the kit), Lagering Cellar and Counting House print **Bourse ±1**, Staple
+Rights keeps **±2** (still on the `bourse-pm1` stand-in — `bourse-pm2` remains WANTED). **Art:** six faces keep their existing images; `venture-factor-l1`
+(now Mash Tun) and `venture-warehouse-l2` (now Lagering Cellar) ride stand-ins — new briefs
+queued in `art/PROMPTS.md`. The **rulebook reprints** (the three ways + a per-theme table);
+the **player aid** is unchanged (it never named the faces). No count, size, or foot-colour
+change: still **4 designs × 4 ringed houses = 16 tiles, 2.5×1.32″, blue foot**.
 
 **v5.4 “The Tide” delta (2026-08-23, ruled — REPRINT + one new bit):** the Public Works
 become a **BAG**, not a setup deal — add a **draw bag** for them (the kit now needs 3 bags:

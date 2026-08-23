@@ -112,7 +112,7 @@
 > **Round 11 (designer, 2026-08-23): the numbered STAR family + the house palette.** Seven
 > point-shift marks composite off `star.png` in the standing numeral recipe — `star-plus1..4`
 > white, `star-minus1..3` RED — and replace the +N★ text chips on the tile faces (Cooperage ·
-> the four Staple Houses · Staple Rights · Guild Residence [★+2]×[home] · Chronicler ·
+> the four Staple Houses · Staple Rights · the Counting House · Chronicler ·
 > Alderman · Town Crier) at a .26in `starmark` size (the .1in-icon lesson applies). Same
 > round: the four house colours (red·blue·green·yellow) are named `--house-*` vars in
 > play.html's styles; the Venture feet wear them.
@@ -125,6 +125,19 @@
 > + the gemini-drawn white/black refresh cycle at the lower right (pick C), the mark then
 > color-keyed out and re-composited at 1.5× on the clean scroll — the Factor's Desk cell.
 > All three fill the stand-ins named by the v5.3c venture-grammar pass.
+
+> **v5.5 “Four Hands” (designer-ruled 2026-08-23) — what moved on the Venture faces.**
+> `swap-dice.png` keeps its cell (the Rack House survives the re-theme unchanged).
+> `redeal.png` **loses its only home** — the Factor's Desk retired with the Manifest
+> re-deal; the file stays in the kit for the Manifest system's own review, unreferenced.
+> `venture-build.png` keeps the **Open-1-Venture bonus** cell but loses the Guild Residence
+> ×-cell (that face retired). The new faces draw on glyphs the kit already owns — no new
+> art is wanted by this letter: **Mash Tun** `brew-top` · **Great Copper** `goods-2` +
+> `flask-conical` · **Warehouse** `station-age-2` + `package-plus` · **Assay Loft**
+> `sprout` + `check` · **Lagering Cellar** `die-plus1` (crest: `snowflake`) ·
+> **Counting House** `star-plus1` · **Staple Rights** `beer` + `star-plus2`. The public
+> chips reshuffle across existing art too: `goods-1` · `station-age-1` · `station-age-2` ·
+> `bourse-pm1` · `bourse-pm2` (still standing in on the ±1 glyph — see the table below).
 
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
@@ -176,8 +189,8 @@ Sources of truth: `components.js` (card faces) · `play.html` (app UI) · `print
 | Brewhouse — Brew (search) | `flask-conical` | `station-brew` | station cell (the PRIMARY face), aids, *Brew 1* bonus | **Round 8 swap:** the plain pot = the primary brew-and-SEARCH (pay a recipe, search the beer's stack and choose the tile). |
 | Cellar — Age | `hourglass` | `station-age` | station cell, aids, *Age +2* bonus, Abbey Cellar | Turn aging dice up. **Shared with the Age bonus (fine) and the Abbey Cellar tile crest (give the Abbey its own crest — see §4).** |
 | Harbor — Commission | `ship` | `station-harbor` | station cell, aids | Pay 1 G, place a display Ship, load 1 Ready cask. Distinct from the Ship-tile icon: suggest a crane/quay scene. |
-| **Bourse ±2 (the public line)** | `bourse-pm1` (stand-in) | `bourse-pm2` | the `Staple Rights` Venture face's public chip; the app's stop label | **WANTED (v5.4).** The line was `+2▲` up-only and became **±2** — the market's missing brake. The ± glyph is the new information, so the ±1 art stands in and reads the SIGN right and the number wrong. Brief: the `bourse-pm1` treatment with a **2**. |
-| **Venture “+1 good” faces** | — (real: `goods-1`) | `goods-1` | the `Counting House` owner line + every `gain 1 good` public chip (Counting House L1/L2, Warehouse L1); the printed Wharf board's Market alt chip | **DONE (2026-08-23):** the Counting House wore the plain basket under a text `+1` badge; the numbered icon replaced it and the badge CSS was deleted. A printed face never carries text an icon can say. |
+| **Bourse ±2 (the public line)** | `bourse-pm1` (stand-in) | `bourse-pm2` | the `Staple Rights` Venture face's public chip (v5.5: its only home — the Guild Residence's ±1 chip retired with that face); the app's stop label | **WANTED (v5.4).** The line was `+2▲` up-only and became **±2** — the market's missing brake. The ± glyph is the new information, so the ±1 art stands in and reads the SIGN right and the number wrong. Brief: the `bourse-pm1` treatment with a **2**. |
+| **Venture “+1 good” faces** | — (real: `goods-1`) | `goods-1` | every `gain 1 good` public chip (v5.5: the Mash Tun and Warehouse L1 faces — the Counting House owner line now banks `star-plus1` instead); the printed Wharf board's Market alt chip | **DONE (2026-08-23):** the Counting House wore the plain basket under a text `+1` badge; the numbered icon replaced it and the badge CSS was deleted. A printed face never carries text an icon can say. |
 | Market ALT — Source 1 | — (real: `goods-1`) | `goods-1` | the station face's alt chip | **DONE (round 12b, 2026-08-23):** the basket + a "1" in the standing numeral recipe — the goods-2/3 triplet completes and the alt chip wears it. |
 | Brewhouse ALT — top tile (blind) | — (real: `brew-top`) | `station-brew-top` | the station face's alt chip; the alt-brew UI | **DONE (rounds 7-8):** the pot + tile deck + white down-arrow — the arrow points at the TOP of the stack: take the top tile. The `layers` stand-in is retired. |
 | Cellar ALT — Age 1 | — (real: `age-1`) | `station-age-1` | the station face's alt chip | Exists (`art/icons/station-age-1.png`) — the one-pip age chip. |

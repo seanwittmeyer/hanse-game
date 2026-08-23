@@ -422,16 +422,16 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
     surveyAffordable(p).length===0&&(S.buildDisplay||[]).length===0);
   SLOTS.forEach(function(sx){S.buildings[sx.id]=null;});
   p.grain=4;var g3=p.grain;var h3=p.hand.length;
-  UI.sub='survey';UI.survey={returnTo:'stops'};venturePick('counting',1,false);
+  UI.sub='survey';UI.survey={returnTo:'stops'};venturePick('points',1,false);
   placeVentOn('s1');
   ok('an L1 on OPEN ground pays its 1G \u2699 fee \u2014 one payment, no rent (v5.3)',
     p.grain===g3-1&&vAt('s1')&&vAt('s1').lvl===1&&p.hand.length===h3-1);
   SLOTS.forEach(function(sx){if(!S.buildings[sx.id])S.buildings[sx.id]={b:'maltkiln'};});
   var g4=p.grain,b4=p.bank,h4=p.hand.length;
-  UI.sub='survey';UI.survey={returnTo:'stops'};venturePick('factor',1,false);
+  UI.sub='survey';UI.survey={returnTo:'stops'};venturePick('brew',1,false);
   placeVentOn('s2');
   ok('wharf FULL: the L1 redevelops a Public Work \u2014 the worn tile boxed, ONE payment, no pips (no die stood \u2014 v5.3)',
-    p.grain===g4-1&&p.bank===b4&&vAt('s2')&&vAt('s2').v==='factor'&&p.hand.length===h4-1);
+    p.grain===g4-1&&p.bank===b4&&vAt('s2')&&vAt('s2').v==='brew'&&p.hand.length===h4-1);
   SLOTS.forEach(function(sx){var bb=S.buildings[sx.id];if(bb&&!bb.v)S.buildings[sx.id]=null;});
   var q=S.players[1];q.ai={tier:'journeyman'};var qg=q.grain,qb=q.bank,qh=q.hand.length;
   UI.pendingBenefits=[{pid:1,dest:'london'}];afterSail('stops');
@@ -448,9 +448,9 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   q.ai=null;
 })();
 
-// ---- 20. v5.2 VENTURE DIE-CRAFT: the Rack House (an owner-only stop) \u00b7 the Assay Loft ----
+// ---- 20. v5.5 VENTURE DIE-CRAFT: the Rack House (an owner-only stop) \u00b7 the Assay Loft ----
 (function(){var p=fresh();stops();p.ai=null;
-  S.buildings.s1={v:'rack',lvl:1,owner:0};   // colL cap \u2014 MY venture on my line
+  S.buildings.s1={v:'die',lvl:1,owner:0};   // colL cap \u2014 MY venture on my line (the DIE theme's L1 = the Rack House)
   p.vessels=[{style:'bock',q:5,die:4,act:'age'},{style:'hopped',q:2,die:1,act:'source'},null];p.vslots=3;
   p.cell='A';activateLine('colL');
   var vi=UI.stops.findIndex(function(st){return st.kind==='vact'&&st.slot==='s1';});
@@ -469,16 +469,87 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   S.active=1;var q2=S.players[1];q2.cell='A';q2.placed=true;activateLine('colL');
   ok('a RIVAL activating the line sees NO venture stop (owner-only \u2014 the action budget holds)', !UI.stops.some(function(st){return st.kind==='vact';}));
   S.active=0;stops();
-  p.vessels=[{style:'mumme',q:4,die:1,act:'age'},null,null];p.hops=2;
-  enterAssay('stops');assayPick(0);
-  ok('the Assay Loft certifies for 1H \u2014 ONE maturing cask straight to READY (1\u21924)', p.vessels[0].die===4&&caskReady(p.vessels[0])&&p.hops===1);
+  // v5.5: the Assay Loft certifies the WHOLE cellar for 2H (was 1H, one cask) \u2014 an L2 should feel like one
+  p.vessels=[{style:'mumme',q:4,die:1,act:'age'},{style:'bock',q:5,die:2,act:'age'},{style:'hopped',q:2,die:1,act:'source'}];p.vslots=3;p.hops=2;
+  enterAssay('stops');assayGo();
+  ok('the Assay Loft certifies EVERY maturing cask for 2H (v5.5 \u2014 mumme+bock+hopped all READY)',
+    p.vessels[0].die===4&&p.vessels[1].die===5&&p.vessels[2].die===2&&p.vessels.every(function(c){return caskReady(c);})&&p.hops===0);
   enterAssay('stops');
   ok('nothing maturing \u2192 the Loft refuses', UI.sub!=='assay');
-  p.vessels=[{style:'bock',q:5,die:1,act:'age'},null,null];p.hops=0;
+  p.vessels=[{style:'bock',q:5,die:1,act:'age'},null,null];p.hops=1;
   enterAssay('stops');
-  ok('no hops \u2192 the Loft refuses (its 1H price gates entry)', UI.sub!=='assay');
-  p.hops=1;enterAssay('stops');assayPick(0);
-  ok('1H buys the whole climb (bock 1\u21925 READY)', p.vessels[0].die===5&&p.hops===0);
+  ok('1H is no longer enough \u2014 the Loft\u2019s 2H price gates entry (v5.5)', UI.sub!=='assay');
+  p.hops=2;enterAssay('stops');assayGo();
+  ok('2H buys the whole climb (bock 1\u21925 READY)', p.vessels[0].die===5&&p.hops===0);
+})();
+// ---- 20d. v5.5 FOUR HANDS: the themed pairs \u00b7 the FLIP \u00b7 the new L2 powers ----
+(function(){var p=fresh();stops();p.ai=null;
+  ok('the family is FOUR THEMED tiles \u2014 brew \u00b7 age \u00b7 die \u00b7 points',
+    VENTURE_KEYS.length===4&&['brew','age','die','points'].every(function(k){return VENTURES[k];}));
+  ok('\u2026and each tile pairs an L1 and an L2 of its own theme (one cardboard, one theme)',
+    VENTURES.die.l1.name==='Rack House'&&VENTURES.die.l2.name==='Lagering Cellar'&&
+    VENTURES.brew.l1.name==='Mash Tun'&&VENTURES.brew.l2.name==='Great Copper'&&
+    VENTURES.age.l1.name==='Warehouse'&&VENTURES.age.l2.name==='Assay Loft'&&
+    VENTURES.points.l1.name==='Counting House'&&VENTURES.points.l2.name==='Staple Rights');
+  ok('the retired faces are gone \u2014 no Factor\u2019s Desk, no Guild Residence, no vres/vredeal/vgood/vload',
+    !VENTURE_KEYS.some(function(k){return ['vres','vredeal','vgood','vload'].indexOf(VENTURES[k].l1.kind)>=0||['vres','vredeal','vgood','vload'].indexOf(VENTURES[k].l2.kind)>=0;}));
+  // THE FLIP \u2014 the same cardboard turns over: no hand tile spent, the ground kept
+  p.hand=VENTURE_KEYS.slice();p.grain=9;
+  SLOTS.forEach(function(sx){S.buildings[sx.id]=null;});
+  commitVenture('s1','die',1,0);
+  var hand0=p.hand.length,g0=p.grain;
+  ok('an L1 from hand spends the tile (hand 4\u21923)', hand0===3&&vAt('s1').lvl===1);
+  ok('a standing L1 of yours can be FLIPPED', canVentureFlip(p));
+  ventureFlip('die',false);
+  ok('the FLIP turns the tile in place \u2014 same slot, L2 face up', vAt('s1')&&vAt('s1').v==='die'&&vAt('s1').lvl===2);
+  ok('\u2026and spends NO hand tile (this is what gets four buildings out)', p.hand.length===hand0);
+  ok('\u2026paying the L2 fee', p.grain===g0-(V_FEE_L2.g||0));
+  ok('an L2 can never be flipped again', !canVentureFlip(p));
+  // the OVERBUILD still exists \u2014 a hand tile L2-side-up onto your own L1, that L1 boxed
+  commitVenture('s2','age',1,0);
+  var hand1=p.hand.length;
+  commitVenture('s2','brew',2,0);
+  ok('an OVERBUILD puts a DIFFERENT theme\u2019s L2 on your ground and spends the tile',
+    vAt('s2').v==='brew'&&vAt('s2').lvl===2&&p.hand.length===hand1-1);
+  ok('\u2026and the overbuilt L1 is BOXED \u2014 its theme is gone from the hand too', p.hand.indexOf('age')<0);
+  // the DIAGNOSTIC dump must name a Venture by its FACE \u2014 a Venture has no b.b, so the
+  // building branch printed 'BLDG undefined' for every ring on the wharf (fixed v5.5)
+  var dg=diagText();
+  ok('the diagnostic dump names Ventures by face + level + owner (never \u2018BLDG undefined\u2019)',
+    dg.indexOf('BLDG undefined')<0 && dg.indexOf('VENT Great Copper L2 [')>=0);
+  stops();
+})();
+// ---- 20e. v5.5: the new L2 powers ----
+(function(){var p=fresh();stops();p.ai=null;
+  // LAGERING CELLAR \u2014 a private lift: +1, cap 6, MAY pass quality
+  S.buildings.s1={v:'die',lvl:2,owner:0};
+  p.vessels=[{style:'hopped',q:2,die:2,act:'source'},null,null];p.vslots=3;
+  enterLift('stops');liftPick(0);
+  ok('the LAGERING CELLAR lifts a die +1 PAST its quality (hopped 2\u21923 at Q2)', p.vessels[0].die===3);
+  p.vessels[0].die=6;enterLift('stops');
+  ok('\u2026and refuses at 6 (the cap holds)', UI.sub!=='vlift');
+  stops();
+  // GREAT COPPER \u2014 2 goods THEN a full-search brew
+  S.buildings.s2={v:'brew',lvl:2,owner:0};
+  p.vessels=[null,null,null];p.grain=0;p.hops=0;p.recipes=['gruit','hopped'];
+  p.cell='B';activateLine('colR');
+  var gi=UI.stops.findIndex(function(st){return st.kind==='vact'&&st.slot==='s2';});
+  resolveStop(gi);
+  ok('the GREAT COPPER opens on its goods first', UI.sub==='source'&&UI.src.n===2);
+  srcTake(2,0);
+  ok('\u2026then chains straight into a BREW (the L2 pays twice)', UI.sub==='brew'&&p.grain===2);
+  resume('stops');stops();
+  // WAREHOUSE \u2014 Age 2, then a load anywhere
+  S.buildings.s3={v:'age',lvl:1,owner:0};
+  p.vessels=[{style:'hopped',q:2,die:1,act:'source'},null,null];
+  enterAge(2,'pool','stops',{thenLoad:true});
+  ok('the WAREHOUSE opens Age 2', UI.sub==='age'&&UI.age.pool===2&&UI.age.thenLoad);
+  ageAllot(0);
+  ok('\u2026the cask ripens', p.vessels[0].die===2&&caskReady(p.vessels[0]));
+  stops();
+  // STAPLE RIGHTS at L2 value
+  ok('STAPLE RIGHTS pays L2 value \u2014 '+VSTAR_PTS+'\u2605 per own cask (v5.5: was 1)', VSTAR_PTS===2);
+  ok('the COUNTING HOUSE banks \u2605 on its loads, not a good (v5.5)', VENTURES.points.l1.kind==='vgoodstar'&&VGOODSTAR_PTS===1);
 })();
 (function(){var p=fresh();stops();
   // (the Hop Exchange left with v5.2 \u2014 its pay-to-lift lives on in the Hop Store expansion lot)
@@ -528,11 +599,11 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
     worksStanding()===setupWorksN(S.players.length)&&S.worksBag.length<bag1);
   // a VENTURE never sails
   SLOTS.forEach(function(s){S.buildings[s.id]=null;S.slots[s.id]=null;});
-  S.buildings.s4={v:'warehouse',lvl:1,owner:0};
+  S.buildings.s4={v:'age',lvl:1,owner:0};
   var sh2=ship('s4','skute','bruges',[{owner:0,style:'gruit',q:1,die:1,act:'source'}]);sh2.man=null;
   sailShip('s4',0);
   ok('a VENTURE is NEVER taken by the tide \u2014 the owner\u2019s ground is the permanent thing',
-    S.buildings.s4&&S.buildings.s4.v==='warehouse');
+    S.buildings.s4&&S.buildings.s4.v==='age');
   UI.pendingRecipe=[];UI.pendingMan=[];stops();
   // an empty bag simply leaves open ground (the late-game wharf thins \u2014 no deadlock)
   S.worksBag=[];SLOTS.forEach(function(s){S.buildings[s.id]=null;});
@@ -660,7 +731,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   resolveStop(i);refreshStops();   // (no Ready cask → enterLoad resumed at once; the stop is spent)
   ok('…a USED load stop never returns (each stop once per activation)',
     !UI.stops.some(function(st){return st.kind==='load'&&st.slot==='s1';}));
-  S.players[0].hand=VENTURE_KEYS.slice();commitVenture('s6','rack',1,0);
+  S.players[0].hand=VENTURE_KEYS.slice();commitVenture('s6','die',1,0);
   ok('a Venture raised on the ACTIVE line opens its OWNER\u2019s stop (the living line, v5.2)',
     UI.stops.some(function(st){return st.kind==='vact'&&st.slot==='s6';}));
   ship('s4','cog','bruges');refreshStops();
@@ -1168,11 +1239,11 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('an L1 may open on ANY open slot \u2014 the hand + open ground is the whole gate (v5.3)',
     canVentureL1(p)&&ventureL1Slots(p).length===SLOTS.length);
   S.buildings.s2={b:'tollhouse'};   // furniture
-  S.buildings.s3={v:'rack',lvl:1,owner:1};   // a RIVAL's L1
+  S.buildings.s3={v:'die',lvl:1,owner:1};   // a RIVAL's L1
   ok('while open ground remains, the targets are the OPEN slots alone (no early redevelopment)',
     ventureL1Slots(p).every(function(sx){return !S.buildings[sx.id];})&&ventureL1Slots(p).length===SLOTS.length-2);
   p.grain=5;var h0=p.hand.length;var bank0=p.bank;
-  UI.survey={returnTo:'stops'};UI.sub='survey';venturePick('counting',1,false);
+  UI.survey={returnTo:'stops'};UI.sub='survey';venturePick('points',1,false);
   ok('the L1 pick pays its 1G \u2699 fee and asks for ground', UI.sub==='placevent'&&p.grain===4);
   placeVentOn('s2');
   ok('a slot with a Public Work refuses the L1 while open ground remains', UI.sub==='placevent'&&!vAt('s2'));
@@ -1180,19 +1251,19 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('\u2026and a rival\u2019s Venture refuses it always', UI.sub==='placevent'&&vAt('s3').owner===1);
   placeVentOn('s6');
   ok('the L1 lands on open ground \u2014 the tile leaves the hand (its L2 face forfeit)',
-    vAt('s6')&&vAt('s6').lvl===1&&vAt('s6').owner===0&&p.hand.length===h0-1&&p.hand.indexOf('counting')<0);
-  ok('a Venture carries NO die \u2014 and never reads as a public key', S.buildings.s6.die===undefined&&bKeyAt('s6')===null);
+    vAt('s6')&&vAt('s6').lvl===1&&vAt('s6').owner===0&&p.hand.length===h0-1&&p.hand.indexOf('points')<0);
+  ok('a Venture carries NO die \u2014 and never reads as a public key', vAt('s6')&&S.buildings.s6.die===undefined&&bKeyAt('s6')===null);
   // WHARF FULL \u2192 the furniture becomes ground
   SLOTS.forEach(function(sx){if(!S.buildings[sx.id])S.buildings[sx.id]={b:'maltkiln'};});
   ok('with the wharf FULL, the L1 targets are exactly the PUBLIC WORKS (never anyone\u2019s Venture)',
     ventureL1Slots(p).length>0&&ventureL1Slots(p).every(function(sx){var bb=S.buildings[sx.id];return bb&&!bb.v;}));
   var h1=p.hand.length;var g1=p.grain;
-  UI.survey={returnTo:'stops'};UI.sub='survey';venturePick('factor',1,false);
+  UI.survey={returnTo:'stops'};UI.sub='survey';venturePick('brew',1,false);
   placeVentOn('s3');
   ok('the rival\u2019s tile still refuses', UI.sub==='placevent'&&vAt('s3').owner===1);
   placeVentOn('s1');
   ok('the L1 REDEVELOPS the furniture \u2014 the worn tile boxed, no pips (no die ever stood \u2014 v5.3)',
-    vAt('s1')&&vAt('s1').v==='factor'&&p.hand.length===h1-1&&p.bank===bank0);
+    vAt('s1')&&vAt('s1').v==='brew'&&p.hand.length===h1-1&&p.bank===bank0);
   // a rival can never overbuild a Venture
   S.active=1;var q2=S.players[1];q2.grain=5;
   ok('a rival build can never displace a Venture (no path exists \u2014 the public family is unbuildable)',
@@ -1200,18 +1271,18 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   S.active=0;
   // THE CLIMB
   p.grain=5;var h2=p.hand.length;
-  UI.survey={returnTo:'stops'};UI.sub='survey';venturePick('warehouse',2,false);
+  UI.survey={returnTo:'stops'};UI.sub='survey';venturePick('age',2,false);
   ok('the L2 pick pays its 2G \u2699 fee and targets ONLY your own L1', UI.sub==='placevent'&&p.grain===3);
   placeVentOn('s3');
-  ok('a rival\u2019s L1 refuses the climb', UI.sub==='placevent'&&vAt('s3').v==='rack');
+  ok('a rival\u2019s L1 refuses the climb', UI.sub==='placevent'&&vAt('s3').v==='die');
   placeVentOn('s6');
   ok('THE CLIMB lands: the L2 face stands on the L1\u2019s ground; the spent L1 tile is boxed',
-    vAt('s6')&&vAt('s6').lvl===2&&vAt('s6').v==='warehouse'&&p.hand.length===h2-1);
-  ok('the Guild Residence scores '+VRES_PTS+'\u2605 \u2699 per Venture in play', scorePlayer(p).guild>=VRES_PTS*1);
+    vAt('s6')&&vAt('s6').lvl===2&&vAt('s6').v==='age'&&p.hand.length===h2-1);
+  ok('the Guild Residence\u2019s end-scoring line RETIRED at v5.5 \u2014 the DIE theme\u2019s L2 manipulates a die instead', typeof VRES_PTS==='undefined'&&VENTURES.die.l2.kind==='vlift');
 })();
 // ---- 32c. v5.3 THE PUBLIC LINES: every face serves the wharf; the owner gets both ----
 (function(){var p=fresh();stops();var q=S.players[1];
-  S.buildings.s8={v:'counting',lvl:1,owner:1};   // the RIVAL owns it (s8 rides rowT)
+  S.buildings.s8={v:'age',lvl:1,owner:1};   // the RIVAL owns it (s8 rides rowT) — the AGE L1's public line is +1 good
   p.cell='A';activateLine('rowT');
   ok('a rival\u2019s activation collects the PUBLIC line as a free stop (vpub \u2014 ruled: for everyone)',
     UI.stops.some(function(st){return st.kind==='vpub'&&st.slot==='s8';}));
@@ -1220,9 +1291,9 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   var i=UI.stops.findIndex(function(st){return st.kind==='vpub'&&st.slot==='s8';});
   resolveStop(i);
   if(UI.sub==='source')srcTake(1,0);
-  ok('the Counting House\u2019s public line pays anyone 1 good', p.grain===g0+1);
+  ok('the Warehouse\u2019s public line pays ANYONE 1 good (v5.5 keys)', p.grain===g0+1);
   stops();
-  S.active=1;S.buildings.s3={v:'rack',lvl:1,owner:1};q.cell='A';q.placed=true;
+  S.active=1;S.buildings.s3={v:'die',lvl:1,owner:1};q.cell='A';q.placed=true;
   activateLine('rowT');
   ok('the OWNER\u2019s activation offers BOTH lines (vpub + the ringed vact \u2014 ruled)',
     UI.stops.some(function(st){return st.kind==='vpub'&&st.slot==='s3';})&&UI.stops.some(function(st){return st.kind==='vact'&&st.slot==='s3';}));
@@ -1260,39 +1331,19 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('seats FULL \u2192 the Bergen prize pays 2 goods (1 grain + 1 hop \u2014 the fallback, ruled)',
     p.grain===g0+1&&p.hops===h0+1&&(UI.pendingSpec||[]).length===0);
 })();
-(function(){var p=fresh();stops();p.ai=null;   // COUNTING HOUSE + WAREHOUSE on the load path
-  S.buildings.s4={v:'counting',lvl:1,owner:0};var sh=ship('s4','cog','bruges');
+(function(){var p=fresh();stops();p.ai=null;   // COUNTING HOUSE on the load path (v5.5: it banks \u2605, not a good)
+  S.buildings.s4={v:'points',lvl:1,owner:0};var sh=ship('s4','cog','bruges');
   p.vessels=[{style:'gruit',q:1,die:1,act:'source'},null,null];p.grain=2;p.hops=3;
+  var b0=p.bank||0;
   UI.load={ships:['s4'],returnTo:'stops',loadsLeft:1,cask:0,count:0};UI.sub='load';loadOnto('s4');
-  ok('COUNTING HOUSE: the owner\u2019s load here also gains 1 good (the app hands the scarcer)', p.grain===3);
-  S.active=1;var q2=S.players[1];q2.vessels[0]={style:'gruit',q:1,die:1,act:'source'};var qg=q2.grain;
+  ok('COUNTING HOUSE (v5.5): the owner\u2019s load here banks +'+VGOODSTAR_PTS+'\u2605 \u2014 the POINTS theme\u2019s entry rung',
+    (p.bank||0)===b0+VGOODSTAR_PTS&&p.grain===2);
+  S.active=1;var q2=S.players[1];q2.vessels[0]={style:'gruit',q:1,die:1,act:'source'};var qb=q2.bank||0;
   UI.load={ships:['s4'],returnTo:'stops',loadsLeft:1,cask:0,count:0};UI.sub='load';loadOnto('s4');
-  ok('\u2026a RIVAL\u2019s load here gains NOTHING (private)', q2.grain===qg);
+  ok('\u2026a RIVAL\u2019s load here banks NOTHING (private)', (q2.bank||0)===qb);
   S.active=0;stops();UI.pendingActs=[];UI.pendingRecipe=[];
-  S.buildings.s5={v:'warehouse',lvl:1,owner:0};ship('s5','hulk','bruges');
-  p.vessels=[{style:'gruit',q:1,die:1,act:'source'},null,null];
-  enterLoad(['s5'],'stops',1);
-  ok('WAREHOUSE: the owner\u2019s load at its slot lifts to 2', UI.load&&UI.load.loadsLeft===2);
-  loadSkip();
-  S.active=1;q2.vessels[0]={style:'gruit',q:1,die:1,act:'source'};
-  enterLoad(['s5'],'stops',1);
-  ok('\u2026a rival\u2019s load here stays 1 (private)', UI.load&&UI.load.loadsLeft===1);
-  loadSkip();S.active=0;stops();
 })();
-(function(){var p=fresh();stops();p.ai=null;   // FACTOR'S DESK: the pre-load re-deal at its slot
-  S.buildings.s6={v:'factor',lvl:1,owner:0};
-  var sh=ship('s6','cog','london');sh.man={k:'old',lines:[{die:6,pts:1}]};
-  S.manifestDeck=[{k:'new',lines:[{beer:'gruit',pts:2}]}];
-  p.vessels=[{style:'hopped',q:2,die:2,act:'source'},null,null];
-  p.cell='A';activateLine('colL');
-  var li=UI.stops.findIndex(function(st){return st.kind==='load'&&st.slot==='s6';});
-  resolveStop(li);
-  ok('the Desk offers the re-deal BEFORE the load (owner, this slot)', UI.sub==='vredeal');
-  vreGo(true);
-  ok('the re-deal lands (old under the deck, fresh card on the hull) and the load opens',
-    sh.man.k==='new'&&S.manifestDeck[S.manifestDeck.length-1].k==='old'&&UI.sub==='load');
-  loadSkip();stops();UI.pendingActs=[];
-})();
+// (the Factor's Desk battery retired with the tile at v5.5 \u2014 the Manifest re-deal is gone)
 (function(){var p=fresh();stops();p.ai=null;   // STAPLE HOUSE + STAPLE RIGHTS at the sail
   S.buildings.s5={b:'staple_bergen'};
   var sh=ship('s5','cog','bergen',[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:1,style:'gruit',q:1,die:2,act:'source'}]);
@@ -1315,7 +1366,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('\u2026but the tide still takes it \u2014 every Public Work sails, premium paid or not',
     S.buildings.s2===null);
   UI.pendingBenefits=[];UI.pendingMan=[];stops();
-  S.buildings.s3={v:'factor',lvl:2,owner:1};   // STAPLE RIGHTS (the L2 face)
+  S.buildings.s3={v:'points',lvl:2,owner:1};   // STAPLE RIGHTS (the POINTS theme's L2)
   var sh3=ship('s3','cog','bruges',[{owner:0,style:'gruit',q:1,die:1,act:'source'},{owner:1,style:'gruit',q:1,die:1,act:'source'}]);
   var s10=S.players[1].bankSt||0;
   sailShip('s3',0);
@@ -1324,7 +1375,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   UI.pendingRecipe=[];UI.pendingMan=[];stops();
 })();
 (function(){var p=fresh();stops();p.ai=null;   // BREWERY (L2) as an owner stop \u00b7 CUSTOMS at \u22121
-  S.buildings.s2={v:'rack',lvl:2,owner:0};   // colR cap \u2014 the Brewery face
+  S.buildings.s2={v:'brew',lvl:1,owner:0};   // colR cap \u2014 the Mash Tun (the BREW theme's L1 brews)
   p.grain=9;p.hops=9;p.recipes=['gruit','hopped','broyhan'];p.vessels=[null,null,null];
   S.piles.broyhan=['source','reach'];
   p.cell='B';activateLine('colR');

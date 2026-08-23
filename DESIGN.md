@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v5.4 “The Tide”** — live (`play.html`, KEY `hanse-v54`; designer-ruled 2026-08-23, records `archive/records/V54-THE-TIDE.md` + `V5-DECISIONS.md`). The v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). **v5.4** makes every Public Work ephemeral — the wharf is a tide that washes the furniture away and thins into bare ground for the Ventures. Details: §9; watches: §10. |
+|**Status**     |**v5.5 “Four Hands”** — live (`play.html`, KEY `hanse-v55`; designer-ruled 2026-08-23, records `archive/records/V55-FOUR-HANDS.md` + `V54-THE-TIDE.md` + `V5-DECISIONS.md`). The v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). **v5.4** makes every Public Work ephemeral — the wharf is a tide that washes the furniture away and thins into bare ground for the Ventures. **v5.5** re-derives the Venture hand as **four themed tiles (brew · age · die · points)** and adds the **FLIP** — a standing L1 turns over to its own L2 in place, spending no hand tile — so four tiles can become four buildings that each reach L2. Details: §9; watches: §10. |
 
 ---
 
@@ -85,7 +85,7 @@ expressed through the **dual-role cask die**, the **two building families** and 
 
 ---
 
-## 6. The current architecture (v5.4 “The Tide”)
+## 6. The current architecture (v5.5 “Four Hands”)
 
 Canonical detail in `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -115,12 +115,21 @@ Canonical detail in `RULES.md` / `COMPONENTS.md`; the shape:
   die+1 · Tollhouse toll-bench Bourse ±1 · Customs −1 minimum · Ropewalk cross-quay load ·
   Cooperage +1 berth +1★/load · Weigh House 2 Manifest lines · Staple House ×4 matching-sail
   +2★ ⚙ · Bonded/Victualling ephemerals). **VENTURES** (private, the owner's colour ring,
-  NO die — the only family players build): the identical **hand of 4 dual-use tiles**;
-  **every face prints a PUBLIC line** (age +1 · +1 good · Bourse ±1/±2 — a free stop for
-  whoever activates the line) above the ringed **owner line** (the owner collects both);
-  **the open ground:** an L1 takes any open slot — wharf full → it may replace a Public
-  Work (boxed) — never a rival's tile; an L2 only over your own L1 (the spent L1 boxed);
-  fees grain-only (L1 1 `G` · L2 2 `G` ⚙; London's prize waives).
+  NO die — the only family players build): the identical **hand of 4 dual-use tiles, one
+  per THEME — brew · age · die · points (v5.5)**, each tile carrying its L1 on one face and
+  its own theme's L2 on the other (so "one side facing per theme" is the component, not a
+  rule); **every face prints a PUBLIC line** (age +1/+2 · +1 good · Bourse ±1/±2 — a free
+  stop for whoever activates the line) above the ringed **owner line** (the owner collects
+  both). **THREE WAYS ON (v5.5):** play an **L1** onto any open slot — wharf full → it may
+  replace a Public Work (boxed), never a rival's tile; **FLIP** a standing L1 of yours in
+  place to its own L2, **spending no hand tile** (the engine-building door — four tiles can
+  each reach L2 instead of collapsing into two); or **OVERBUILD** a second hand tile
+  L2-side up onto your own L1 (that L1 boxed), which is how a *different* theme's L2 lands
+  on ground you hold. Fees grain-only (L1 1 `G` · L2 2 `G` ⚙, the FLIP paying the L2 fee;
+  London's prize waives). The pairs: **Mash Tun/Great Copper** (brew top tile → 2 goods + a
+  full brew) · **Warehouse/Assay Loft** (Age 2 + load onto any hull → 2 `H` certifies the
+  whole cellar) · **Rack House/Lagering Cellar** (swap 2 dice → die +1, cap 6) ·
+  **Counting House/Staple Rights** (+1★/load → +2★/own cask sailed).
 - **THE BOURSE** — one track (−1…+3 ⚙), a price marker per in-play beer except Gruit &
   Jopenbier, start 0. Delivery = **die + marker** (floor 0); **bulk rise then score** (a
   landing Ship lifts each beer +1/cask first); every **brew crashes its own beer −1**;
@@ -146,7 +155,7 @@ Canonical detail in `RULES.md` / `COMPONENTS.md`; the shape:
 - **Legible scoring** — deliveries (die + Bourse; **Novgorod +2★/die**) + the bank
   (Manifest claims · Cooperage wharfage · Staple premiums · 1★ bumps — commissions and
   builds bank NOTHING in play) + majorities (parked dice; 4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙)
-  + the Flight ((shipped−1)², min 3) + the printed end-lines (Alderman · Guild Residence).
+  + the Flight ((shipped−1)², min 3) + the printed end-lines (the Alderman).
   Tiebreak: vessel dice, then goods.
 - **The clock — the quality dice alone:** the first **EMPTY TRAY** (a player's last die
   committed — parked, in a vessel, aboard an unfilled hull) sets the final round; dice
@@ -226,6 +235,76 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
+
+### v5.5 “Four Hands” (2026-08-23, designer-ruled — record `archive/records/V55-FOUR-HANDS.md`)
+*"The private venture buildings on the wharf are also implemented in an odd way… I think
+the 4 tiles and placement before was a little too rigid. It works in Great Western Trail
+because you have a pool of 10+ buildings but here there are less slots and less buildings.
+I also wonder if the benefits are good enough."*
+
+**The rigidity was arithmetic, not taste.** Under v5.2–v5.4 an L2 could only be reached by
+spending a *second* hand tile over your own L1 — so four tiles bought **at most two
+buildings**, and the second one cost you a face you had already paid to place. GWT gets away
+with a strict climb because it deals from a pool of ten-plus; here the hand is four and the
+ground is eight slots that the tide keeps churning. The sim agreed: **L2 climbs ran ~0.6–1.3
+per game** against 4–7 L1 placements. The L2 half of the family was, in practice, printed
+and unread.
+
+**The FLIP is the fix, and it costs no new component.** A standing L1 already *is* its own
+L2 — the L2 was always printed on the back of that same cardboard. v5.5 simply stops
+forbidding the obvious move: **pay the L2 fee and turn the tile over in place, spending no
+hand tile.** Overbuild survives for the case it was actually good at — putting a *different*
+theme's L2 on ground you already hold. Three ways on, one component, no new rule to teach
+(the tile teaches it by being two-sided).
+
+**THE FOUR THEMES.** Pairing an L1 with an unrelated L2 was what made the old hand read as a
+grab-bag. Re-derived, each tile is one **theme** with its own L1 and L2 — brew · age · die ·
+points — so "you can only have one side facing per theme" needs no rule at all, and a player
+who wants the *age* engine knows exactly which piece of cardboard to reach for.
+
+| Theme | L1 | L2 | public (L1 · L2) |
+|---|---|---|---|
+| **brew** | **Mash Tun** — BREW the stack's top tile | **Great Copper** — 2 goods **and** a full BREW | +1 good · age +2 |
+| **age** | **Warehouse** — Age 2, then load 1 Ready onto **any** hull | **Assay Loft** — 2 `H`: **every** maturing cask to READY | +1 good · age +1 |
+| **die** | **Rack House** — swap 2 vessel dice | **Lagering Cellar** — a vessel die **+1** (cap 6) | age +1 · Bourse ±1 |
+| **points** | **Counting House** — **+1★** per load here | **Staple Rights** — **+2★** per own cask sailed | Bourse ±1 · Bourse ±2 |
+
+**What retired, and why (the designer's own read, tile by tile).** `Factor's Desk` (re-deal
+a Manifest) — *"I am still not a fan of manifests… so Factor's Desk doesn't feel great"*: a
+power that is only as good as a system under review. `Guild Residence` (2★ per Venture at
+end) — *"players will simply upgrade to it at the end if easy enough to do so. Not a
+strategic move or a contributor to an engine"*: an end-count is a scoring line wearing a
+building's clothes, and under the FLIP it would have been strictly the best last purchase.
+`Brewery` (a full BREW) — a duplicate of the Brewhouse's own primary, so the *brew* theme
+keeps the search at **L2** and gives L1 the blind top tile instead. The old `Warehouse`
+(+1 cask may board) — *"only good if you can utilize that… I don't see a consistent engine
+taking advantage of it without aging being part of it (maybe it is age 2 + load anywhere)"*:
+taken verbatim.
+
+**The buffs make an L2 pay L2 value.** `Staple Rights` **+1★ → +2★** per own cask (*"it
+takes work to upgrade to it as an L2… by the time you have it you need to brew, load and
+ship, so that investment is worth a higher value"*). `Assay Loft` **1 `H` → one cask** becomes
+**2 `H` → EVERY maturing cask** — the same price per cask at two, a genuine engine at four.
+`Counting House` **+1 good → +1★** — the good was worth roughly nothing next to its own
+public line (*"+1 good is not that great, it ends up being +2 with the public benefit"*), and
+★ on a load is the *points* theme doing its own job. `Great Copper` pays **2 goods + the
+search**, so the brew engine funds itself.
+
+**The lane this opens.** The designer named it: *"Swap 2 dice is great, I could build an
+engine that makes level 5 Hopped and Gruit casks — a potential lane that is only possible
+through an engine with Venture buildings."* Assay makes casks READY, Great Copper brews
+them, Lagering Cellar lifts them, Staple Rights makes them premium. That is four L2s that
+chain, and the FLIP is what makes holding all four reachable.
+
+- Engine: `VENTURES` re-keyed to `brew`/`age`/`die`/`points`; new kinds `vbrew2` · `vagel` ·
+  `vlift` · `vgoodstar`; `flipVenture(slot,pid)` + `ventureFlip(key,free)` (paying
+  `V_FEE_L2` — you are buying the upgrade, not the ground); `enterAge(…,ctx.thenLoad)` and
+  `enterSource(…,ctx.thenBrew)` chain the two multi-step faces; `VSTAR_PTS` 1→2,
+  `ASSAY_COST` `{h:2}`, `VRES_PTS` deleted. KEY `hanse-v55`.
+- Gates: verify **380/380** (new §20d themed-pair/FLIP/overbuild battery · §20e the new L2
+  powers) · sim 24×3 **0 crashes / 0 deadlocks** · render smoke ALL PASS · aid ALL FIT.
+  **FLIPS run 2.3–3.7/game** against 0.6–1.0 overbuild climbs — the door the letter opened
+  is the one players use.
 
 ### v5.4 “The Tide” (2026-08-23, designer-ruled off playtest #37)
 *"I want engine building to pay off, I want the bourse more dynamic, I think the public
@@ -533,6 +612,24 @@ record is in git history.
 *Moved here from `RULES.md` §Open (2026-08-23). The designer calls full batteries; these
 are the things to read when one runs — or when a human table sits down.*
 
+**v5.5 “Four Hands” — the Venture family re-derived, every number unplayed:**
+- **Does the FLIP make Ventures too cheap to spread?** Smokes show **FLIPS 2.3–3.7/game**
+  vs overbuild climbs 0.6–1.0 — the intended reversal. But L1 placements also rose (4.1–6.8),
+  so the wharf carries more rings than it did; watch whether the tide still finds bare ground
+  to refill onto, and whether a 4p wharf goes all-Venture by mid-game.
+- **Is overbuild now dead cardboard?** It survives for one job — a *different* theme's L2 on
+  ground you hold. If a human table never once prefers it to a FLIP, the rule is paying rent
+  it doesn't earn and should collapse into the FLIP alone.
+- **`Assay Loft` at 2 `H` → EVERY maturing cask.** The buff is deliberately steep and scales
+  with cellar width; the greedy bots barely reach for it (**assay 0.0/game** in smokes — they
+  don't hold casks long enough to have a cellar to certify), so this number is **unmeasured,
+  not proven safe**. The human table is the instrument here.
+- **`Staple Rights` at +2★.** Staple★/player runs 0.3–0.5 in smokes, so the doubling is not
+  yet visibly moving totals — but the bots also under-pilot the deep lines it rewards.
+- **The chained faces** (`Warehouse` Age 2 → load anywhere; `Great Copper` 2 goods → brew):
+  two-step owner lines are new to the family. Watch them at the table for turn-length drag,
+  the thing the primary/alternate split was meant to avoid.
+
 **v5.4 “The Tide” — the new economy, every number unplayed:**
 - **Does the wharf strip too hard at 4p?** Smokes end with **1.4 works standing / 0.6 in
   the bag** at 4p. That is the intended arc (bare ground for the Ventures) but a wharf with
@@ -546,11 +643,16 @@ are the things to read when one runs — or when a human table sits down.*
   claim it with an L1, or is the refill too fast to matter at the table?
 - **Open 1 Venture at Q2+** — 2 tiles in Hopped's 12. Watch for the opposite failure: too
   many Ventures too early, and the wharf full of rings by round 6.
-- **PACE, the live one.** v5.4 costs ~1 round at 4p (**14.5**, band 96.7%) and drops 2p to
-  **90%** in band. Cause: the public-line goods faucet widened with the Venture population
-  (**31.0 freebies/game at 4p**). Two candidate levers if a human table agrees it runs
-  hot — the **tray size** (the ruled pace dial; the v5.2b sweep already recommended 14) or
-  **thinning `vgold`**, which prints on 3 of 8 Venture faces. Measure before dialing.
+- **PACE, the live one.** v5.4 cost ~1 round at 4p (**14.5**, band 96.7%) and dropped 2p to
+  **90%** in band. **v5.5 re-read (24×3):** 2p **18.8 / 100%** (recovered and then some),
+  3p **15.3 / 95.8%**, 4p **14.8 / 91.7%**. Every out-of-band game is a **short** one
+  (min 11) — nothing runs long. So the watch narrows: the multiplayer counts still finish
+  ~1–2 rounds fast, and the cause is unchanged — the public-line goods faucet scales with
+  the Venture population (**28.2 goods freebies/game at 4p**, and v5.5 puts more rings on
+  the wharf). Two candidate levers if a human table agrees it runs hot: the **tray size**
+  (the ruled pace dial; the v5.2b sweep already recommended 14) or **thinning `vgold`**,
+  which still prints on 2 of 8 Venture faces. Measure before dialing — **no dial was touched
+  in v5.4 or v5.5.**
 
 **v5.3 “The Bourse” — every number unplayed:**
 - **The track ends** (−1…+3): does +3 cap too low under 4p volume? (smoke end-avg +2.1 at
