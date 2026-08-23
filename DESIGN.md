@@ -652,6 +652,40 @@ rather than integrated**, so it gets its own pass later, not a patch now. The na
 connect a claim to something the game already does (the ⚜-to-sell-a-Ready-cask-to-a-brewhall
 thread).
 
+**THE DEPTH READ — the answer, across every tier (2026-08-23).** *"I'd love for there to be
+an equally balanced point return on going all in on 1 or 2 beers instead of trying to brew all
+5."* Measured with the new lane: **there is not, at any skill level.**
+
+| tier | depth win-rate 2p/3p/4p | depth ★ | field ★ |
+|---|---|---|---|
+| trader (N=24) | **11.1% / 0% / 0%** | 38.8 / 36.4 / 41.3 | 61–80 |
+| guildmaster, constrained (N=6) | **50% / 0% / 0%** | — *(pre-breakdown build)* | — |
+| cellarmaster, constrained (N=4) | **0% / 0% / 0%** | 34.0 / 43.0 / 49.7 | 50–86 |
+
+And the contrast that names it: **the same GM seats, free to abandon the lane, reached flight
+4.0 beers in every count, scored ★71.8–74.8 and won 33–75%.** Specialization is not merely
+weaker — **the strongest search available declines it whenever it is allowed to.**
+
+**THE GAP IS NOT THE FLIGHT.** ★ by bucket (trader, deliveries/bank/majorities/flight):
+field `37.6–43.0 / 8.4–12.3 / 12.7–15.3 / 11.3–13.7` · depth `22.0 / 6.8 / 3.2 / 0.0`.
+The Flight is roughly **a third**; the largest bucket is **DELIVERIES, −11…−16★**. And it is
+not "ships fewer casks" — depth brews 6.8–9.0 and ships 5.6–7.5, **par at 2p**. Its casks are
+worth **~3.4★ each against the field's ~5.1★**.
+
+**The mechanism (the finding that should drive the fix):** a seat committed to a quality beer
+**cannot keep three vessels full** — a Q5 cask holds one for several turns — so it backfills
+with the free Gruit (Ready at brew), and **a Gruit die is worth 1★**. *Specializing in quality
+starves the pipeline, and the pipeline refills with the cheapest thing on the board.* The
+levers, bluntest last: **the per-cask value curve** (Gruit 1★ → Bock 5★ is linear while the
+TIME cost is ~1:4 — quality is not paid for the wait) · **the Flight cliff** (worth ~10★, real,
+cannot close 28★ alone) · **vessel count / aging speed** (direct, and dangerous at a pace
+already running 12–14 rounds).
+
+*Instrument caveats, kept honest: samples are small at GM/CM (2–5 seats per lane per count);
+`DEPTH_CAP` leaks — casks brewed before the seat commits can still ship, so some seats reach 3
+styles (visible as `bock+gruit+hopped`), which makes the measured depth seats **less**
+specialized than intended and the gap if anything understated.*
+
 **THE MC TIERS REFUSE TO SPECIALIZE — an instrument finding worth keeping.** The first
 GM/CM lane read came back with depth at **flight 4.0/3.7/2.8 beers** — the cap never bound.
 Cause: `aiMCDecide` picks by **sampled margin**, so a persona tilt is invisible to it; the
