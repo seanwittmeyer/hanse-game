@@ -308,10 +308,9 @@ const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('coins'),VPUB_SH1=LU('bourse-pm1'),VPUB
 // foot carries icons alone. VBIG = one big-icon cell (the .ac size the works print).
 const VBIG=h=>'<span class="ac">'+h+'</span>';
 const VSEP=s=>'<span class="vsep">'+s+'</span>';
-// STAND-INS awaiting generated icons (designer 2026-08-23): the SWAP icon (Rack House — the
-// die rides meanwhile) · the RE-DEAL icon (Factor's Desk — contract meanwhile) · the VENTURE
-// icon (Guild Residence — the lucide home meanwhile) · a goods+1 mark (Counting House — the
-// goods icon wears a +1 badge meanwhile). Each is a one-line swap when its art lands.
+// swap-dice · redeal · venture-build landed 2026-08-23. ONE stand-in remains: a goods+1
+// mark (Counting House — the goods icon wears a +1 badge meanwhile); a one-line swap
+// when its art lands.
 const VGOOD1=VBIG(LU('coins')+'<b class="vbadge">+1</b>');
 const VENTURES=[
   {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, own:VBIG(LU('swap-dice')), txt:'Swap 2 dice', art:'venture-rack-l1.png'},
