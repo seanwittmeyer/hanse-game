@@ -1,318 +1,5 @@
 # Brewhouses of the Hanse — Components (v5.3b “The Bourse”)
 
-> **v5.3 “The Bourse” + the v5.3b toll bench (designer-ruled 2026-08-22 — the third letter;
-> the record: `archive/records/V53-BOURSE.md`):** **(1) THE BOURSE** — one board strip
-> (−1…+3 ⚙) + a **price marker per in-play beer** except Gruit & Jopenbier (start 0); a
-> delivered cask scores **DIE + MARKER** (floor 0); arrivals lift each beer **+1 per cask
-> BEFORE the voyage scores**; every brew slips its beer **−1**; shifts ride Bergen’s prize
-> (±1), the Ventures’ public lines and the **toll bench** (v5.3b — the Tollhouse reprint:
-> a cask loading at its slot lets the loader shift any marker ±1; the −1-for-+3★ stamp
-> face retires). **(2) PUBLIC WORKS start the game** — 3 (2p) / 4 (3–4p) ⚙ random tiles
-> on random slots, the rest to the box; die-less neutral furniture — no deck, no display,
-> no build channel, no investor die (the v5.2 grammar lived one letter). **(3) THE OPEN
-> GROUND** — an L1 Venture takes ANY open slot; wharf full → it may replace a Public Work
-> (boxed); never a rival’s tile; London’s prize = a Venture fee-waived. **(4) Every Venture
-> face prints a PUBLIC line** above the owner’s ringed line.
-
-> **v5.2 “Groundwork” (designer-ruled 2026-08-22 — the two building families; the record:
-> `archive/records/V52-GROUNDWORK.md`):** the building family **SPLITS** on the printed
-> faces. **(1) PUBLIC WORKS (§6a)** print **BROWN** (ruled — green is a player colour):
-> 13 tiles / 9 designs, every face a passive modifier of its own slot; **the investor’s die
-> MATURES at 6** (+6★ · die home · tile demolished — the face’s start value is also its
-> lifespan); the **Staple Houses ×4** enter (one Kontor crest each — a matching sail from
-> this slot pays every cask +2★ ⚙; deal 2 of 4); the **Customs reprints at −1** ⚙ (ruled);
-> the **Ropewalk reprints** as the cross-quay load (ruled). OUT of the box: Granary ·
-> Mission Quay · Racking Hall · Assay House · Abbey Cellar · Hop Exchange · Merchants’
-> Exchange · Rich Berth · Warping Capstan. **(2) VENTURE tiles (§6b) — NEW, 16:** 4
-> dual-use designs × one set per house, **double-sided L1/L2**, the **owner’s colour ring**
-> printed on (the ring IS the ownership mark; no die). The rulebook, print kit, player aid
-> and this manifest reprint together (the v4.13 law).
-
-> **v5.0 “Open Wharf” (designer-ruled 2026-08-18 — three rulings; the record:
-> `archive/records/V5-OPEN-WHARF.md`):** **(1)** the cask supply reads as **searchable
-> STACKS** — same tiles, same counts, same printed mixes (§4); a full Brew searches the
-> stack and chooses the tile, the alternate Brewhouse takes the top tile, and **a delivered
-> cask’s tile returns to the BOTTOM of its stack** (a pour returns the same way). **(2) The
-> Order tiles (15, 2×0.9″) LEAVE THE KIT** — their heir is the **MANIFEST card** (§7b):
-> **12 cards ⚙, 2×1.32″**, each printing **three demand lines** (a named starter · a
-> quality tier · a die minimum · a combo → ★); one rides **every non-Bruges Ship** (dealt
-> as the hull enters the display, returned under the deck at sail; Bruges hulls sail
-> plain). The Destinations board’s Order row becomes the **Manifest deck well**; the player
-> board’s Orders pile zone becomes a printed reminder (claims score at once — nothing
-> rests there); the **Chronicler reprints** (*claim a Manifest demand: +2★ at once* ⚙) and
-> the **Merchants’ Exchange reprints** (*re-manifest up to 2 non-Bruges Ships* ⚙). **(3)
-> The Wharf board’s stations print a PRIMARY and an ALTERNATE action each** (Market 2/1 ·
-> Brewhouse search/top-tile · Cellar Age 3/1 · Harbor commission/Load-1-any ⚙), and the
-> **Ship tiles’ trigger berth prints BOTH boarding gates** — the READY glyph beside the
-> die minimum (“Gate remains — ready and quality”). Player-aid + rulebook reprints ride
-> along. Every ruling that touches a printed face carries this note (the v4.13 lesson).
-
-> **Kit pass 2026-08-18 (presentation, no rules change — three designer rulings):** **(1)
-> “Rules go in the rules page, not in the boards or components”** — the **Tasting tile
-> recuts** to the component grammar (the category name · an entry **gate chip** — the beer
-> glyph for the quality pours, the die for the die-as-poured pours · the tile’s one
-> variable, **1st ★ + a mini self-tile glyph** · the printed bench, now **horizontal** —
-> pour order runs left→right); the **Tastings board strips to data + slots** (the
-> kontor-style header’s foot cells print the shared numbers — pour cost · 2nd 2★ · 3rd 1★ ·
-> majority “—”; the floor’s champion chip is die→crest, icons only; no sentences anywhere)
-> and the judging procedure moves to the **rulebook §19 as a component diagram**. **(2)
-> “The invitations should be cards and look like letters”** — the ⚜ **Invitation is now a
-> CARD** (1.85×2.55″ cardstock, single-sided): a tri-folded letter under the Guild’s red
-> wax seal — *the Guild Tastings* sender line, script rules, ***Invitation***, and the one
-> verb chip (*pour*); it leaves the Guildhall plotter sheet for the cards section. **(3)
-> the **player aid is a LETTER TRI-FOLD of THREE IDENTICAL AIDS** — one 8.5×11 sheet in
-> three tall panels, each panel a COMPLETE double-sided aid (front: the play face; back:
-> End & Score + the two-column icon legend, at the ruled .105″ floor — now the print size);
-> two straight cuts yield three aids, and identical panels register under any duplex flip
-> (4p: print two sheets). Same day: **the whole kit prints at NATIVE scale** (the global SCALE 0.8 →
-> **1.0**, designer: “scale up all of the components by 25%, evenly”) — every printed
-> dimension in this manifest now reads at print size; the Destinations board moves to the
-> Wharf sheet (the Market pair broke 22″), the Specialists + Order strips take their own
-> plotter sheet, and the **Kontor panels’ on-delivery prize prints at its own much larger
-> tier**. Counts unchanged. *Print-proof follow-ups (same day, off the table’s second
-> print):* the tile **bleed retunes to the native scale** (the .bl rules still carried the
-> ×0.8-era .074″ — the 1.5mm bleed band printed empty; now .059″ = a true 1.5mm, the
-> Tasting tile joins the bleed families, its category colour as the band) and the **cask /
-> Order / Tasting interiors gain ~25% more safe margin** between the cut line and their
-> content (the laser-alignment allowance). The **Zerbster pin rewords** — ***Brew a free
-> Gruit + Load any Cask*** (the tray-die parenthetical leaves the face and its recipe card;
-> the free Gruit still takes a tray die — the rule lives in the rulebook). The **Market & Stores
-> board reorganizes** (designer): the **Specialists' display of 4 takes the old recipe
-> shelf** in the main column, and the right column becomes **CASKS & RECIPES** — five tight
-> paired rows seating **every beer's face-up pile ON the board** (Gruit + Hopped · the dealt
-> Q3 + Q4 beers · the Q5 beer + Jopenbier; the mid tiers print by TIER, the deal varies) and
-> the **four export recipe stacks** beside their tiers (Q3 · Q4 · Q5 · Jopenbier). Cask
-> slots cut 2.4×1″, recipe slots 1.85×2.55″ — component-true; the board grows to
-> **17.45×10.8″**.
-
-> **Kit pass 2026-08-17 (presentation, no rules change):** the **Guild Tastings board is
-> REDRAWN to the kit grammar** — a kontor-style art header (`art/kontor-hall.png`; the Hall
-> reads as the fifth destination), the open row as three **component-true 2.5×1.32″
-> parkings** (the Tasting tile drops exactly in; the third badged 3–4p), a **judging diagram
-> built from the real pieces** (the pour → the bench-fills count → the champion’s tour to
-> the four Kontor crests), the **Taproom floor as an open parking field on a plank** (no
-> printed capacity — dice stand free) and the **Tasting-deck + ⚜ supply wells**; the sheet
-> gains the board’s die-cut line. Two missed v4.17b reprints land with it: the **Invitation
-> tile’s** reverse line and the manifest row now read ***start with 2*** (the setup line
-> already did). Counts unchanged.
->
-> **Print-proof reprints (same pass, off the live table’s first physical print):** **(1)**
-> the **Invitation tile’s body row recut to the Order-tile grammar** — *Ready → pour* (the
-> long three-chunk row overflowed the 2″ strip and clipped at both ends; the match
-> requirement moves to the sub line); **(2)** the **recipe cards’ brew band grows .56→.72″
-> with the brew cost at .17″**, held ~1/8″ off the cut edge — a duplex-misalignment safe
-> margin (the table’s print clipped the old edge-hugging row); **(3)** the **Ship tiles’
-> wharf art rides 125% tall, shifted up** — the paintings’ flat cream mats (top + bottom)
-> crop off and the dock scene reaches the tile foot (the shared ship back unchanged; the
-> PNG export bakes the same window).
-
-> **v4.17b (study-ruled 2026-08-15 — three prints off the 1,400-game oracle):** **(1)** the
-> **dark/export/old/master Tasting tiles reprint with a bench of TWO die squares** (the
-> duels — R1: three matching ripe casks never assemble; free/fresh keep three); **(2)** the
-> setup line reads *each player takes **2** ⚜ Invitations* (was 1 — R2); **(3)** the
-> **Tastings board’s footer gains the champion’s-tour line** — *the winning cask’s die
-> parks as presence (face 1) at a Kontor its owner has delivered to* (R3 — the pour stops
-> forfeiting the majority race). No counts change; the six duel tiles and the board reprint.
-
-> **v4.17 (designer-ruled 2026-08-15 — the hall rethink, Plan B):** the Guildhall sheet is
-> **REBUILT**. **CUT:** the shelf board face (menus · identical spaces · the pips line) and
-> the **eased 20-Order set** (hall mode plays the base 15 — one Order economy). **IN:** the
-> **Guild Tastings board** (the contest row — three tile parkings, the third badged 3–4p —
-> over the **Taproom floor** strip and the rules footer) and the **Tasting contest deck: 12
-> tiles** ⚙ (building-cut 2.5×1.32″ — a category + filter line, the prize ladder, and a
-> printed **bench of three 0.42″ die squares**, the third badged 3–4p: free ×3 · fresh ×3 ·
-> dark ×2 · export ×2 · old ×1 · master ×1; 1st ★ = 5/5/7/6/7/9 ⚙). The **18 ⚜ Invitation
-> tiles** reprint their reverse line (*spend to pour · start with 1*); the **Guild Chancery**
-> stands (v4.16b). The setup line adds: *each player takes 1 ⚜ Invitation.* All contest
-> state lives on the tiles and the dice — the once-per-player rule and its bookkeeping are
-> gone with the shelves.
-
-> **v4.16b (designer-ruled 2026-08-14 — the lane study’s print lands):** two Guildhall
-> reprints. **(1) The Guildhall board** adds its end-scoring line — *“at game end, every die
-> on a shelf scores its pips”* (the fifth port; the board’s footer line). **(2) The GUILD
-> CHANCERY tile joins the Guildhall sheet** (a green building, 2.5×1.32″: *Gain 1 ⚜
-> Invitation* · fee 1 `G` · mark start 2 · qty 1) — in hall mode it shuffles into the
-> building deck and is **always dealt** (17 of 21 ⚙; the base box still prints 20, the
-> Chancery rides the expansion sheet). The manifest gains its row. The ⚜ replacement cask
-> tiles from the study stay UNPRINTED (the optional richness dial); no other faces change.
-
-> **v4.16 (designer-called 2026-08-12 — Contracts become Orders; the lane study opens):**
-> **the RENAME reprints every face that says “Contract”** (the v4.13 lesson): the
-> **Destinations board’s row label** (*Open Orders*) · the **player board’s pile zone**
-> (*Orders — claimed ★*) · the **Merchants’ Exchange tile** (*Replace up to 3 open Orders*) ·
-> the **Chronicler tile** (*End: +3★ per claimed Order*) · the **player aid** — and the aid’s
-> delivery line now says ***boarding order*** (the registry’s collision rule). The Order
-> tiles themselves print no word — no change. **In study, not yet printed ⚙:** the Guildhall
-> sheet may gain **⚜ replacement cask tiles** (a *Gain 1 Invitation* load bonus at a printed-mix
-> weight) and the **Guild Chancery** building tile (hall mode, qty 1, fee 1 `G`, mark start 2:
-> *Gain 1 ⚜ Invitation*); the Hall board may add a pips/ladder end-scoring line. Counts land
-> with the lane-study ruling (`HALL-LANE-STUDY-v416.md`).
-
-> **v4.15b (designer-ruled 2026-08-10, same day — the expansion pins simplified):** two
-> expansion cask piles REPRINT their pinned load bonus (the v4.13 lesson — every ruling that
-> touches a printed face gets its COMPONENTS note): the **Gose** tile prints **“Gain 3 goods
-> (any mix)”** and DROPS the Salt-Trade delivery line (the per-Kontor perk is cut — the pinned
-> bonus IS the signature; 2 `G` in → 3 goods out justifies the grain); the **Zerbster** tile
-> prints **“Parti-gyle: a free Gruit (a tray die) · Load 1 more”** as ONE compound load bonus
-> and DROPS the brew-time prompt line (the bonus fires when the cask boards, not when it
-> brews). Duckstein and Jopenbier are unchanged. The two recipe cards reprint the matching
-> bonus text; counts, costs and the draft are untouched.
-
-> **v4.15 (designer-ruled 2026-08-10 — the Hall returns through Contracts):** **into the box,
-> behind a third opt-in toggle** — the **Guildhall board** (1: four shelves top-down —
-> Reliquary die 5+ · Masters’ Shelf 4+ · Guild Table 3+ · Taproom 2+ — each printing its
-> **menu** (★ *once per player* / free actions ⚙) and **identical die spaces** (2–5 by shelf
-> and player count; spaces 4–5 badge their 3+/4+ count gates; NO per-space prize — the
-> anti-jackpot ruling) · **18 ⚜ Invitation tiles** ⚙ (2×0.9″ — earned per Contract claim and
-> per first showing on each shelf; spent to enshrine; returned to the supply) · the
-> **Guildhall Contract set: 20 tiles** ⚙ (the eased 1–3★ schedule — in hall mode it
-> **replaces** the base 15 in the same row of 3). **Reprint note:** the base Contract set is
-> unchanged; the player aid gains the enshrine line when the toggle is on. The enshrined
-> quality die gains a fourth duty — cask · presence · mark · **shelf**.
-
-> **v4.14 (designer-ruled 2026-08-09 — the expansion beers return):** **into the box, behind
-> two opt-in toggles** — **+28 expansion cask tiles** (Gose ×8 ⚙ · Zerbster ×6 · Duckstein ×8 ·
-> Jopenbier ×6; each **pinned** — every tile of a pile prints the same load bonus) and **+4
-> expansion recipe cards per player set** (Gose · Zerbster · Duckstein chip-less/**free** on
-> the `H` = Q−3 formula · Jopenbier **3 `H`**). The kit prints them on their **own sheets** so
-> the base kit cuts clean. **Reprint note (the v4.13 lesson — every ruling that touches a
-> printed face gets its COMPONENTS note):** the Duckstein tile prints **1 aging step** (the
-> old ready-2 could never print — the die floors at 1; its **+1-as-it-boards** die mark is the
-> identity) · the Jopenbier tile prints **start 2 → Ready 6** and drops the old dock-vintage
-> line (cut with the deploy state) · Gose prints its Salt-Trade delivery line · Zerbster its
-> Parti-Gyle line (*a free Gruit — a tray die*). The Trade Roads stays tabled.
-
-> **v4.13 (designer-ruled 2026-08-09 — a PRESENTATION release):** **no component changes, no
-> count changes.** Two fixes to how the kit PROOFS, both on the **Destinations board**: the
-> **Contract row’s three slots are cut component-true (2 × 0.9″) and centred** — they had
-> inherited the building tile’s 2.5 × 1.32″ footprint, so the row measured 7.82″ on a 7.6″
-> board and ran off its edge — and the **Overlay proof now reaches the Kontor panels**, ghosting
-> three 12 mm dice into each **parking field** so the zone can be checked against the piece it
-> is cut for. The **component manifest** (the checklist sheet) is rewritten as a packing list —
-> quantity · a line of theme · **where the piece goes** — replacing the per-entry paragraphs
-> that had overrun the sheet and cut off mid-sentence.
-
-> **v4.12b (designer-ruled 2026-08-09, same day):** the **Cooperage tile reprints at +1★**
-> per cask loaded there (was +2★ — the BUILDING-POWER-STUDY’s mint flag).
-
-> **v4.12 (designer-ruled 2026-08-09 — the buildings & specialists review):** reprints —
-> **cask tiles** (brew joins the Q3+ load-bonus mix: survey/hire/brew all Q3+; each Q3+
-> beer prints ONE brew tile of its six) · the **reach bonus** prints *+1 presence* (free —
-> only the Almoner’s Stall prints the 2 G fee) · **Assay House** (pay 1 `H`: one maturing
-> cask to READY) · **Cooperage** (+1 capacity · on load +2★ to the loader) · **Merchants’
-> Exchange** (replace up to 3 open Contracts) · **Warping Capstan** (move any docked Ship)
-> · the **specialist roster texts** (Cellarman uncapped — his Broyhan starts Ready ·
-> Braumeister “age 1 cask +1” · Scholar/Shipwright “pay no fee” · Innkeeper reworked:
-> *brewing 3+ casks at once, age one +1 at your turn start*, ungated · Chronicler **+3★ per
-> claimed Contract, uncapped, ungated** · Town Crier **+2★ per placed presence die** ·
-> Supercargo reworded). **No specialist prints a requirement.**
-
-> **v4.10 (designer-ruled 2026-08-06 — the Eastern Gate):** **REPRINTS, no count changes** —
-> **Novgorod’s printed minimum returns to `die 3+`** (the export band): the **Destinations
-> board’s Novgorod panel** and every **Novgorod Ship tile’s trigger berth** print **3+**
-> (they had kept the pre-v4.10 `4+`). The **+2★ premium is unchanged** (5–8★ per parked die).
-> *(v4.11’s presence fee left no component of its own; v4.12 scoped it to the Almoner’s
-> Stall — see the v4.12 note above.)*
-
-> **v4.9d (designer-ruled 2026-08-04 — the #30 board talk + the board sketch):** **the
-> player board REPRINTS (7.65×3.85″, same cut)** — it now prints the **★ score seat**, the
-> **supply ledge** (dice · grain · hops tally seats), the **FLIGHT ladder** (beers
-> **shipped** 1–5 → 0/0/4/9/16★ ⚙) and a **Contracts pile zone** beside the seats. Recipe
-> cards sit **beside the board**: COLLECTED on its left until that beer's **first cask loads
-> onto a Ship**, then moved to the COMPLETED pile on its right — the completed cards ARE the
-> Flight record (qualifying on brew was a bug). The **Innkeeper tile** reprints its gate
-> line (*3 distinct beers shipped*); the rulebook/aid Flight lines reprint with it. The
-> board is now a SHARED generator (`components.js playerBoard`) — the app renders the same
-> component with the live tiles seated in its wells.
-
-> **v4.9c (designer-ruled 2026-08-04 — off playtests #29/#30 + the port/flow probes):**
-> **REPRINTS, no count changes** — the four **export recipe cards** reprint their wharf fee
-> on the eased formula **`H` = Q−3 ⚙: Keut/Broyhan chip-less (FREE) · Mumme 1 `H` · Bock
-> 2 `H`** (was 1/1/2/3). The measured cause: the recipe channel blocked 11–19 turns/game,
-> hops binding, Novgorod undelivered in a third of 3p games (*"tough to justify the cost of
-> brewing there if bock isn't in the game"*).
-
-> **v4.9b (designer-ruled 2026-08-04 — the table talk):** the mark’s **START FACE prints
-> on every building tile** ⚙ (a die glyph beside the fee chip — utilities 1 · workhorses 2 ·
-> ship-riders/ephemerals/rare powers 3), the **pool grows to 13 dice/player** (+4 dice to
-> the box ⚙ — the 13th funds the marks), and an **untakeable build prize is forfeit** (the
-> 2-goods fallback leaves the London panel; Bruges/Bergen consolations stand). Reprints:
-> all 20 building tiles (the start-face chip) · the player aid · the London panel.
-
-> **v4.9 (designer-ruled 2026-08-04 — A TRIAL):** **rules-side, no count changes** — **a
-> build stands one of the builder’s 12 quality dice on the tile at face 1** (the mason’s
-> mark): every use by any player turns it up (cap 6); **the pips score at game end**; the
-> die is committed toward the empty-tray clock and returns (pips scored at once) only if
-> the building leaves play. The +3★ builder’s mint is CUT. Reprints: the **player aid**,
-> the **London panel** on the Destinations board (*“a building — your die stands on it”*),
-> the **survey-bonus cask tiles** (the “+3★” chip comes off *Build 1 building*), and the
-> **score-track caption**. The quality dice gain a third duty — cask · presence · mark.
-
-> **v4.8 (designer-ruled 2026-08-04):** **REPRINTS, no count changes** — the **Ship tiles’
-> trigger berths print a PER-HULL commission fee**: Skute **2 `G`** · Cog **1 `G`** · Hulk
-> **chipless (free)** ⚙ — 2/1/0 for 1/2/3 berths (was a flat 1 `G` on every tile). Chipless
-> = free, the buildings’ grammar. The **Wharf board’s Harbor caption**, the **Shipwright
-> tile** (*“the printed fee is waived”*) and the **player aid** reprint with it.
-
-> **v4.7 (designer-ruled 2026-08-02):** **REPRINTS, no count changes** — the **Bergen mat**
-> drops its cap line (the prize is **per cask**, the grammar of all four ports) · the
-> **Grain Factor** chips 2 `G` (was 1) · the **Supercargo** chips 2 `H` (was 1) · the
-> **Town Crier** drops his printed gate · the **Innkeeper** reprints: *“its cask ages +1 at
-> the start of your turn”* · the **lading setup step** gains: *a lading naming an undealt
-> beer returns to the box* (the deck in play is always 14 of the printed 15).
-
-> **v4.6b (designer-ruled 2026-08-02):** the **Bergen mat line is REPRINTED** — the v4.5b
-> “≤1 specialist per ship” was a misread. The mat now reads: **“every house with a cask
-> aboard seats a specialist — max 1 per house per ship”** (pick order = load order). No
-> counts change.
-
-> **v4.6 (designer-ruled 2026-08-02 — off the AGRICOLA study markup, in git history):**
-> the Agricola program. **Into the box:** 8 **GUILD specialist** designs at 1 tile each
-> (Guild Scholar · Innkeeper · Supercargo · Chronicler · Alderman · Town Crier · Chandler ·
-> Shipwright — three print **SEAT-GATES**; two print **end-game ★** lines) · 3 building
-> designs (**Victualling Yard** — the second EPHEMERAL · **Merchants’ Exchange** · **Warping
-> Capstan**). The building box now prints **20 tiles — SETUP DEALS 17** ⚙ (≥1 Kiln + ≥1
-> Mission Quay guaranteed; 3 sit out each game). Specialist decks: the core 5 keep
-> max(2, n−1) copies; the guild 8 are singles.
-
-> **v4.5b (designer-ruled 2026-07-31 — off gatekeeper review #2 + playtest #24):** the #24
-> program. **Out of the box:** the commission ★ mint (rules-side) · automatic aging
-> (rules-side) · the **Brewhouse Annex** · 1 each of Granary / Scrivener’s Hall / Malt Kiln /
-> Cooperage / Customs House. **Into the box:** the **LADING deck (15 order tiles ⚙, row of
-> 3)** · 5 new building designs — **Racking Hall · Assay House ×2 · Hop Exchange · Tollhouse ·
-> Bonded Store** (the ephemeral trial — it sails away with its hull) · the **Braumeister**
-> specialist (5th design) · specialist decks at **max(2, n−1) copies** per design (2p adds a
-> copy). Bergen’s mat gains the line **“≤1 specialist per ship.”**
-
-> **v4.5 (designer-ruled 2026-07-31 — off human playtest #24):** **12 tally dice** per house
-> (was 14 — the box sheds 8 dice), and the end clock reads the **TRAY**: the first house whose
-> tray empties (every die committed — parked or riding) sets the final round.
-
-> **v4.4 (designer-ruled 2026-07-31):** the **commission’s free load returns** — no component
-> change beyond the reprint of the **player aid** and the Wharf board’s Harbor caption (pay
-> 1 `G` · place the hull · bank ★ = berths · **load 1 Ready cask at once**, optional).
->
-> **v4.3 (designer-ruled 2026-07-26 — the third ruling off playtest #23):** the **occupancy
-> toll is CUT** — no component change beyond the reprint of the **player aid** (the toll step
-> is gone; sharing a station costs nothing).
-
-> **v4.2 (designer-ruled 2026-07-26 — the second ruling off playtest #23):** the **fee rides
-> the ITEM** — every acquirable recipe card, specialist tile and building tile prints its own
-> **wharf fee** ⚙ (a chipless building is free; kontor prizes always free; never a fee to USE
-> a building), and **Novgorod’s mat prints value = the die +2★** (the refine prize is out).
->
-> **v4.1 (designer-ruled 2026-07-26, off human playtest #23):** **out of the box — the
-> Sailed-Ships track** (the tally dice are the ONE end clock); Scrivener’s Hall, the Hiring
-> Post and the three acquisition load-bonuses now **print the 1 `G` wharf fee** (paid at the
-> wharf, free at the kontor).
->
-> **v4.0 (designer-ruled 2026-07-21, off the V4-STREAMLINE plan, in git history):** the streamline keystone. **The
-> tally die is the whole cask** — maturation marker, gate, value, presence and clock in one
-> number. **Out of the box:** the Hall board · all 12 Privileges · charter contracts · owner
-> house tokens · cask cubes · the cask tile’s aging face. **Into the box:** the **Skute**
-> (1-berth hull) · the **score track** · single-faced cask tiles printing a **START-DIE** value.
-> The v3.4 manifest is preserved in git history.
-
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (the one clean rules document). Design rationale & history: `DESIGN.md` §9; the live watches: `DESIGN.md` §10.
@@ -345,7 +32,8 @@
 | **The Bourse strip** *(v5.3 NEW)* | 1 | The beer-value track — **−1 · 0 · +1 · +2 · +3** ⚙, one lane; the **price markers** park on it (markers start at 0). Lives beside Market & Stores. |
 | Player boards | 4 | **3 vessel slots + 2 specialist seats — all open from the start** (v45h). The Flight ladder + a printed **Manifest reminder** (v5.0 — claimed demands score at once; the old Orders pile zone is gone). Recipe cards sit beside it. Goods cap 8 printed. |
 | **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per player — the ★ scored in play (delivery ★ = die + Bourse marker · Manifest demands · Cooperage wharfage · Staple premiums · 1★ placed presence) as they land. *(New in v4.0 — the hard line demands a home for scored ★.)* |
-| Market & Stores board *(kit)* | 1 | The displays: Ships 4 · Specialists 4 · the export recipe row — ringed by the score track. *(The building display retired at v5.3 — Public Works stand from setup, Ventures live in hand; the Order row left with v5.0; the Sailed-Ships clock with v4.1.)* |
+| Market & Stores board *(kit)* | 1 | **17.45×10.8″** — the displays: Ships 4 · Specialists 4 in the main column; the right column is **CASKS & RECIPES** (every beer's face-up pile ON the board — Gruit + Hopped · the dealt Q3 + Q4 beers · the Q5 beer + Jopenbier — beside the four export recipe stacks by tier); ringed by the score track. Cask slots 2.4×1″, recipe slots 1.85×2.55″ — component-true. *(The building display retired at v5.3 — Public Works stand from setup, Ventures live in hand.)* |
+| **Player aid** *(kit)* | 3–6 | A **letter TRI-FOLD of three identical double-sided aids** — front: the play face; back: End & Score + the two-column icon legend. Two straight cuts yield three aids; identical panels register under any duplex flip (4p: print two sheets). Rulebook + aid = the complete rules. |
 
 ## 3. Common supply
 
@@ -395,8 +83,8 @@ contract-solid, and its tile prints the off-book line.)*
 Neutral, each bound for a printed Kontor, deck-fed **display of 4**. **Every hull cuts the same
 2.5×3″ tile (v4.9b)** — a stack of full-width 1″ berth wells from the top; the space below a
 Skute's or Cog's berths simply shows the port art (no seats). Berths fill bottom→top; the
-**top berth prints the identity** (Kontor · minimum · the
-**commission fee**) and the last cask covers it — **the ship sails at once**. Commission at the
+**top berth prints the identity** (the Kontor crest · **both boarding gates — the READY
+glyph beside the die minimum** (v5.0) · the **commission fee**) and the last cask covers it — **the ship sails at once**. Commission at the
 Harbor: pay the tile’s **printed fee — 2/1/0 `G` by size ⚙ (v4.8; chipless Hulk = free)**,
 place on a shipless slot, and (v4.4) you may **load 1 Ready cask onto it at
 once** — **no ★ (v4.5b)**: the Ship + the instant load are the whole reward.
@@ -556,7 +244,7 @@ v5.1) · displays: Ships 4 / Specialists 4 · **a Manifest on every non-Bruges h
 wharf seeds: Hulk→Bruges + 1 Ship ·
 worker placed free · first player fixed.
 
-## 10. Box delta vs v3.4
+## 10. Kit deltas (v5-era — every ruling that touches a printed face lands a note here; older deltas live in git history)
 
 **v5.3b kit pass (2026-08-22 — wording/visual REPRINT, no counts, no rules):** the whole
 tile set rewords **icon-first** (icons carry resources/actions; words only where an icon
@@ -610,68 +298,15 @@ boards reprint** (the Orders pile zone → the Manifest reminder) · the **Chron
 **Merchants’ Exchange** tiles reprint (the v5.0 reworks) · player-aid + rulebook reprints.
 Cask counts and mixes unchanged — the stacks are the same tiles, now searched and returned.
 
-**Removed:** the Hall/Three-Coins board · 12 Privilege tiles · ~20 charter contracts · 32 owner
-player tokens · 32 cask cubes · the aging faces of every cask tile · the Trade Roads / Specialty
-Beers / Jopenbier materials (tabled with their toggles).
-**Added:** 6 Skute tiles · the score track + 4 discs · printed start-die faces and covers
-(“2nd beer” / “3rd beer”) on the player boards.
-**v4.1 delta:** removed — the **Sailed-Ships track** (the dice are the one clock).
-**v4.2 delta:** reprinted — recipe cards (the cost panel = the **wharf fee**), specialist tiles
-(fee chips), building tiles (per-tile fee chips; free tiles chipless), the acquisition
-load-bonus verbs (“· its fee”), and the Novgorod mat (**value = die +2★**; refine out).
-**v4.3 delta:** reprinted — the **player aid** (the occupancy-toll step is gone).
-**v4.4 delta:** reprinted — the **player aid** + the Wharf board’s Harbor caption (the
-commission’s free load returns).
-**v4.4c delta:** rules-only — the **specialist display refills at end of turn** (no reprint).
-**v4.5 delta:** −8 quality dice (**12/player**); the end clock reads the **empty tray** (rules +
-player-aid reprint).
-**v4.5b delta:** **+15 Order tiles** (the order row) · building deck reprint (5 new designs
-in, the Annex + 5 duplicate tiles out — still 17) · **+Braumeister** tiles (5th specialist
-design; decks now max(2, n−1) copies) · Harbor caption reprint (no ★) · Bergen mat line
-(“≤1 specialist per ship”) · player-aid reprint (no auto-age; Orders).
-**2026-08-01 letters delta (v45d/e/g/h):** reprinted — **building tiles** (the v45d power
-ladder: fees in GRAIN only · Racking Hall uncapped 3 `G` · Tollhouse **+3★** · Abbey Cellar
-in, one Assay out · Hop Exchange the pay-hops slot action) · **recipe cards** (the fee is the
-formula **`H` = Q−2**, paid at every channel — the Bruges mat drops “free”, v45e) · the
-**Cellarman** tile (a Q3+ export never starts Ready — v45g) · **player boards** (all 3
-vessels + both seats print OPEN — the covers leave the board, v45h) · the **player aid**.
-**v4.6 delta:** **+8 guild specialist tiles** (1 each; three print requirements, two print
-end-game ★ lines) · **+3 building tiles** (Victualling Yard · Merchants’ Exchange · Warping
-Capstan — the building box prints 20, **setup deals 17** ⚙) · player-aid reprint (the Guild
-end-score line · the deal-17 setup step).
-**v4.6b delta:** **Bergen mat reprint** — the prize line corrected to “every player with a
-cask aboard seats a specialist — max 1 per player per ship” (the v4.5b “≤1 per ship” was a
-misread) · player-aid reprint (the Bergen prize row). No counts change.
-**v4.6c delta:** player-aid reprint only — the turn step gains “the line is read LIVE: a
-hull or building landing on a line slot mid-turn opens its stop.” No components change.
-**v4.6d delta:** the **Stevedore tile reprints** — “Whenever you load, load up to 2 casks”
-(was slot-action only). No counts change.
-**v4.7 delta:** reprints only — **Bergen mat** (per-cask prize, cap line cut) · **Grain
-Factor** 2 `G` · **Supercargo** 2 `H` · **Town Crier** (gate cut) · **Innkeeper** (the
-tile’s cask ages +1 at turn start) · **player aid** (the per-cask prize line · the Order
-strip setup step). No counts change; the Order deck still prints 15 (setup returns the
-one undealt-beer order to the box).
-**v4.8 delta:** reprints only — all 24 **Ship tiles** (the trigger berth prints the per-hull
-fee: Skute 2 `G` · Cog 1 `G` · Hulk chipless) · the **Wharf board’s Harbor caption** · the
-**Shipwright tile** · the **player aid**. No counts change.
-**v4.9 delta:** rules + reprints only — the builder’s **+3★ mint is cut**; a build stands a
-**quality die on the tile** (face 1 → grows with use → pips at end). Reprints: player aid ·
-the London panel · the *Build 1 building* cask bonus (chip off) · the score-ring caption.
-No counts change (the 12 dice absorb the new duty).
 
 ## 11. Known gaps ⚙ (the watch list)
 
-1. ~~The **score track** is the one new non-tile component — confirm the strip fits the supply
-   board footprint~~ — **RESOLVED (P4):** the kit prints it as the 50-cell ring wrapping the
-   Market &amp; Stores rim (movers: 1 sourced disc/colour, lap marker at +50).
-2. **Pile mixes** (which load bonuses print at which quality depth) are engine-random top-cards
+1. **Pile mixes** (which load bonuses print at which quality depth) are engine-random top-cards
    today; the physical pile composition wants a printed distribution pass before the next kit.
-3. Cask counts (6/type floor) unchanged — re-read after human pace data (brews/game rose ~1).
-5. **The dice pool (13 ⚙, v4.9b) is THE pace dial** — cut from 14 to 12 off playtest #24
-   (the trigger moved to the **empty tray**: commitment, not parked-out), then raised to 13
-   at v4.9b to fund the mason’s marks; re-read pace at the next human table before dialing
-   `PRES_POOL` again.
-4. ~~printables2 lays out v3.4 sheets~~ — **RESOLVED (P4, 2026-07-21):** the kit prints the v4
-   set (single-faced casks with printed start dice · Skute/Cog/Hulk sheets · the one green
-   building family · 3+2 player boards · the score ring on Market &amp; Stores; the Hall,
-   contracts, privilege and cube sheets are out).
+2. Cask counts (6/type floor) unchanged — re-read after human pace data.
+3. **The dice pool (13 ⚙) is THE pace dial** — and v5.3 freed the building duty from the
+   dice while the v5.2b sweep recommended 14: re-measure pace on the Bourse build before
+   dialing `PRES_POOL` (the pool question lives in `DESIGN.md` §10).
+4. **Art stand-ins** — Broker · Brewer's Mate · Guild Chancery · Ropewalk · Weigh House ·
+   the four Staple crests · the 8 Venture faces: briefed in `art/PROMPTS.md`, not yet
+   generated.

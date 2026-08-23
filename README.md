@@ -17,7 +17,7 @@ Published from `main` via GitHub Pages.
 - **`COMPONENTS.md`** — the single physical manifest: boards, tokens, the tile families, the player board, destinations. `print.html` cuts from it.
 - **`DESIGN.md`** — why the game is the way it is: pillars, the current architecture, the change log, the balance lessons, and the **open watches**.
 - **`STYLE.md`** — the Term Registry: every word printed on a component comes from it.
-- **`AUTOMA.md`** — the AI-opponent plan & status, plus the test harnesses in `playtests/` (rule verification, bulk simulation, the AI ladder).
+- **`AUTOMA.md`** — the AI opponents (the five-tier ladder) and the test harnesses in `playtests/` (rule verification, bulk simulation, the AI ladder).
 - **`CLAUDE.md`** — how to work in this repo (the interlocks; a change is never local).
 - The v5-era decision records live under **`archive/records/`**; everything older is preserved in git history.
 
