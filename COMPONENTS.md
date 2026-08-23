@@ -203,8 +203,8 @@ no tile at the seat, the score track is the record. Twelve cards cover the maxim
 header whose foot cells print the shared numbers (pour 1 ⚜ + a cask · 1st ★+the tile ·
 2nd 2★ · 3rd 1★ · majority —) · the open row — three component-true tile parkings, the
 third badged 3–4p · the **Taproom floor** parking field on a plank, its champion chip
-die→crest · the Tasting-deck and ⚜ Invitation-card wells; the judging procedure lives in
-the rulebook §19) · the **Tasting contest deck: 12 tiles**
+die→crest · the Tasting-deck and ⚜ Invitation-card wells; the rules —
+`RULES.md` §12; the printed rulebook does not yet carry a hall-mode section — watch, DESIGN.md §10) · the **Tasting contest deck: 12 tiles**
 (building-cut 2.5×1.32″, the minimal face — 2026-08-18: the category name · the entry
 **gate chip** (quality pours the beer glyph — *any*/*1–3*/*4+*; die pours the die glyph —
 *4+*/*5+*/*6*) · the tile’s one variable, **1st ★ + the self-tile glyph** · the printed

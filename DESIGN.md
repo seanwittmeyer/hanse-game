@@ -481,7 +481,7 @@ the sharpest lane in the game) · the 2p GM ceiling (30% of skilled 2p games hit
 MAX_ROUND 25) · the 3–4p greedy seat gradient (human table decides) · **Novgorod dead
 25–27% at 2–3p under skill** (the standing fourth-Kontor-at-two thread).
 
-**Standing:** 2p texture (the thinned interaction set) · the Manifest schedule (claim
+**Standing:** **the Tastings' printed home** (the hall rules live only in `RULES.md` §12 — the 4-page rulebook has no hall section and the Tastings board defers to "the rulebook"; COMPONENTS §7c re-pointed 2026-08-23 — the designer picks: a rulebook sheet 5/6, or a rules insert in the expansion) · 2p texture (the thinned interaction set) · the Manifest schedule (claim
 rates, die-6 reachability, Bruges' traffic share) · **the Jopenbier value question**
 (Bock reaches face 6 in one turn for less — what the capstone buys is the sixth Flight
 step, Kiln-independence and 8★ at Novgorod; options recorded: as-is / cheaper brew / a

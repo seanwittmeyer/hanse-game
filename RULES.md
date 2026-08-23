@@ -85,8 +85,8 @@ The turn:
      OWNER's activations only; the hall Chancery is the one slot action. An empty slot
      does nothing — **author it.**
 
-   **The line is read LIVE:** a Ship commissioned or warped onto a line slot mid-turn — or
-   a Venture raised there — opens that slot this same activation (each stop still at most
+   **The line is read LIVE:** a Ship commissioned onto a line slot mid-turn — or a Venture
+   raised there — opens that slot this same activation (each stop still at most
    once; a ship sailing off closes its stop).
 
 ---
