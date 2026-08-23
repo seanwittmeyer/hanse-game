@@ -201,7 +201,7 @@ free.
 | **Ropewalk** | on load here | a load here: **you may also load 1 Ready cask onto a DIFFERENT docked Ship** ⚙ (once per load flow here) | 1 |
 | **Cooperage** | passive · on load | the Ship here: **+1 capacity** (it sails only when that berth is also full) — and each cask loaded here scores its loader **+1★** ⚙ | 1 |
 | **Weigh House** | at sail | **each cask delivered off the Ship here may claim TWO Manifest lines** (each line still once per voyage) | 1 |
-| **Staple House ×4** *(one crest per Kontor)* | at sail | a Ship sailing from this slot **to the printed Kontor**: **every delivered cask banks +2★** ⚙ (*Stapelrecht* — the destination premium) | 4 |
+| **Staple Houses ×4** *(Bruges Hanzehuis · London Steelyard · Bergen Bryggen · Novgorod Peterhof)* | at sail | a Ship sailing from this slot **to the tile's Kontor**: **every delivered cask banks +2★** ⚙ (*Stapelrecht* — the destination premium) | 4 |
 | **Bonded Store** *(ephemeral)* | on load · at sail | the boarding die **+1** (cap 6); **sails with the Ship** (boxed) — every player with a cask aboard gains 2 goods | 1 |
 | **Victualling Yard** *(ephemeral)* | on load · at sail | the boarding cask's **load bonus fires TWICE**; **sails with the Ship** (boxed) | 1 |
 

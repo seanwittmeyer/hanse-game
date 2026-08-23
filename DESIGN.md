@@ -224,6 +224,17 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
 
+### The golden rule — component copy carries no rules (2026-08-23, designer-ruled)
+*"Rules never live in the components… and they don't live on the boards or in the play
+interface."* Landed as `STYLE.md` §4c + the trigger grammar (*On load / On sail / On sail
+to <Kontor> / On line / At end* — the trigger on its own line, the action below; the cask
+tiles are the model). Tooltips compress to *name (family): trigger, effect* — the
+furniture lecture is gone. The **Staple Houses take proper names** (Bruges Hanzehuis ·
+London Steelyard · Bergen Bryggen · Novgorod Peterhof). The **Tastings' printed home is
+RESOLVED**: rules live in `RULES.md` + `rulebook.html` only, and an in-development system
+stays out of the rulebook entirely — the §10 watch closes. Gates: verify 351/351 · smokes
+clean · no KEY bump (copy only).
+
 ### Repo hygiene — `play.html` sheds its version history (2026-08-23, designer-ruled)
 *"We don't track version history in play.html."* The engine file now states the current
 rules only: the 62KB KEY-comment changelog and every per-line version/date tag stripped
@@ -481,7 +492,7 @@ the sharpest lane in the game) · the 2p GM ceiling (30% of skilled 2p games hit
 MAX_ROUND 25) · the 3–4p greedy seat gradient (human table decides) · **Novgorod dead
 25–27% at 2–3p under skill** (the standing fourth-Kontor-at-two thread).
 
-**Standing:** **the Tastings' printed home** (the hall rules live only in `RULES.md` §12 — the 4-page rulebook has no hall section and the Tastings board defers to "the rulebook"; COMPONENTS §7c re-pointed 2026-08-23 — the designer picks: a rulebook sheet 5/6, or a rules insert in the expansion) · 2p texture (the thinned interaction set) · the Manifest schedule (claim
+**Standing:** 2p texture (the thinned interaction set) · the Manifest schedule (claim
 rates, die-6 reachability, Bruges' traffic share) · **the Jopenbier value question**
 (Bock reaches face 6 in one turn for less — what the capstone buys is the sixth Flight
 step, Kiln-independence and 8★ at Novgorod; options recorded: as-is / cheaper brew / a
