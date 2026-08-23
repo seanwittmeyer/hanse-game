@@ -306,20 +306,20 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 // v5.3 wording pass (designer 2026-08-22: icons where possible, words where necessary, never
 // sentences): the PUBLIC line = an icon chip (whoever activates the line); the OWNER line =
 // trigger word + icons. pub is pre-built icon HTML.
-const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('coins'),VPUB_SH1=LU('bourse-pm1'),VPUB_SH2=LU('bourse-pm2');   // ruled 2026-08-23: the public chip is icon-only (no '+1' text, no '▲')
+const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('goods-1'),VPUB_SH1=LU('bourse-pm1'),VPUB_SH2=LU('bourse-pm2');   // ruled 2026-08-23: the public chip is icon-only (no '+1' text, no '▲')
 // the OWNER block speaks the Public Works grammar (ruled 2026-08-23): BIG icons + the fewest
 // words; a face whose trigger is the whole story prints it under the TITLE (trig) and the
 // foot carries icons alone. VBIG = one big-icon cell (the .ac size the works print).
 const VBIG=h=>'<span class="ac">'+h+'</span>';
 const VSEP=s=>'<span class="vsep">'+s+'</span>';
-// swap-dice · redeal · venture-build landed 2026-08-23. ONE stand-in remains: a goods+1
-// mark (Counting House — the goods icon wears a +1 badge meanwhile); a one-line swap
-// when its art lands.
-const VGOOD1=VBIG(LU('coins')+'<b class="vbadge">+1</b>');
+// swap-dice · redeal · venture-build · goods-1 all landed 2026-08-23 — no stand-ins left
+// on the Venture faces. (The Counting House wore the plain basket under a text "+1" badge
+// until the numbered icon existed; a printed face never carries text an icon can say.)
+const VGOOD1=VBIG(LU('goods-1'));
 const VENTURES=[
   {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, own:VBIG(LU('swap-dice')), txt:'Swap 2 dice', art:'venture-rack-l1.png'},
                  l2:{nm:'Brewery',        ic:'flask-conical', pub:VPUB_STEP, own:VBIG(LU('flask-conical')), txt:'Brew', art:'venture-rack-l2.png'}},
-  {k:'counting', l1:{nm:'Counting House', ic:'coins',   pub:VPUB_GOLD, own:VGOOD1, txt:'On load', art:'venture-counting-l1.png'},
+  {k:'counting', l1:{nm:'Counting House', ic:'goods-1', pub:VPUB_GOLD, own:VGOOD1, txt:'On load', art:'venture-counting-l1.png'},
                  l2:{nm:'Assay Loft',     ic:'scale',   pub:VPUB_GOLD, own:VBIG('<b class="vnum">1</b>'+LU('sprout','h'))+VSEP('→')+VBIG(LU('check')), art:'venture-counting-l2.png'}},
   {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', pub:VPUB_SH1, own:VBIG(LU('redeal')), txt:'On load', art:'venture-factor-l1.png'},
                  l2:{nm:'Staple Rights',  ic:'landmark',pub:VPUB_SH2, trig:'On sail', own:VBIG(LU('beer'))+VSEP(':')+VBIG(LU('star-plus1','starmark')), art:'venture-factor-l2.png'}},
@@ -821,7 +821,6 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .vt2 .vt-txt{font-size:.15in;font-weight:600;line-height:1.1;margin-left:.03in;min-width:0}'
 +'.btile .vsep{font-weight:900;font-size:.2in;line-height:1;margin:0;flex:0 0 auto}'
 +'.btile .vnum{font-weight:900;font-size:.24in;line-height:1;margin-right:.015in;text-shadow:0 1px 2px rgba(0,0,0,.7)}'
-+'.btile .vbadge{position:absolute;right:-.02in;bottom:-.01in;font-size:.15in;font-weight:900;line-height:1;text-shadow:0 1px 2px rgba(0,0,0,.8)}'
 +'.btile .vt-pub .ic,.btile .vt-pub img.ai,.btile .vt-pub svg{width:.5in;height:.5in}'
 +'.btile .vt-own{display:inline-flex;align-items:center;gap:.015in}'
 +'.btile .starmark,.itile .starmark{width:.26in!important;height:.26in!important;vertical-align:-.08in}'

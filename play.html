@@ -755,13 +755,13 @@ function pileVerbs(style){const c={};pileList(style).forEach(v=>c[v]=(c[v]||0)+1
 function caskAct(t){return t.act||STYLES[t.style].act;}
 // ONE printed action per station — the station face: ONE big ACTION icon over a top-down scrim,
 // the same four faces as the print board (gain goods · brew · age 3 · commission)
-const STATION_ICON={Market:'goods-3',Brewhouse:'flask-conical',Cellar:'age-3',Harbor:'ship'};   // the numbered goods-3 face is briefed (art/PROMPTS.md); ICON_ART maps it to the plain basket meanwhile
+const STATION_ICON={Market:'goods-3',Brewhouse:'flask-conical',Cellar:'age-3',Harbor:'ship'};   // the numbered goods triplet is real art now (goods-1/2/3)
 // the ALT CHIP on the station face — the primary icon, a slash, then the line-mate's lesser
 // action at ~55% size ([primary] / [alt]). The ARROW icon means take the TOP tile — the ALT
 // wears it ('brew-top': the pot + tile deck + down-arrow); the plain pot is the primary
-// brew-and-SEARCH. Market's Source-1 reuses the goods icon ('coins' — noted in art/ICONS.md
-// for a future pass); the Cellar's Age-1 and the Harbor's any-Ship load ('package-plus') are
-// real icons.
+// brew-and-SEARCH. Every alt chip wears real art now — Market's Source-1 is 'goods-1'
+// (the numbered triplet), the Cellar's Age-1 and the Harbor's any-Ship load
+// ('package-plus') likewise.
 const STATION_ALT_ICON={Market:'goods-1',Brewhouse:'brew-top',Cellar:'age-1',Harbor:'package-plus'};
 const STATION_ALT_TIP={Market:'Alternate — as the line\u2019s other station: Source 1',
   Brewhouse:'Alternate — as the line\u2019s other station: brew the TOP tile of the stack (blind)',
@@ -934,7 +934,7 @@ function bourseFmt(v){return (v>0?'+':'')+v;}
 const VENTURES={
   rack:     {l1:{name:'Rack House',     icon:'repeat',  kind:'vswap',  pub:'vstep', desc:'On line: swap the dice of 2 of your vessel casks'},
              l2:{name:'Brewery',        icon:'flask-conical', kind:'vbrew', pub:'vstep', desc:'On line: you may BREW (search the stack)'}},
-  counting: {l1:{name:'Counting House', icon:'coins',   kind:'vgood',  pub:'vgold', desc:'On load here: +1 good'},
+  counting: {l1:{name:'Counting House', icon:'goods-1', kind:'vgood',  pub:'vgold', desc:'On load here: +1 good'},
              l2:{name:'Assay Loft',     icon:'scale',   kind:'vready', pub:'vgold', desc:'On line: pay 1H — one vessel cask to READY'}},
   factor:   {l1:{name:'Factor’s Desk',  icon:'arrow-right-left', kind:'vredeal', pub:'vshift1', desc:'On load here: re-deal the Ship’s Manifest first'},
              l2:{name:'Staple Rights',  icon:'landmark',kind:'vstar',  pub:'vshift2', desc:'On sail: your casks +1★ each'}},
@@ -962,7 +962,7 @@ function canVentureL1(p){return (p.hand||[]).length>0&&ventureL1Slots(p).length>
 function canVentureL2(p){return (p.hand||[]).length>0&&myL1Slots(p).length>0;}
 const VACT_KINDS={vswap:1,vbrew:1,vready:1};
 const VPUB={vstep:{icon:'hourglass',txt:'Age +1 (one of your casks)'},
-  vgold:{icon:'coins',txt:'Gain 1 good'},
+  vgold:{icon:'goods-1',txt:'Gain 1 good'},
   vshift1:{icon:'bourse-pm1',txt:'Bourse: shift a beer ±1'},
   vshift2:{icon:'bourse-pm2',txt:'Bourse: shift a beer ±2'}};   // ⚙ the public-line vocabulary   // the Venture kinds that fire as owner-only line stops
 function bName(k){return (BUILDINGS[k]||{name:k}).name;}
