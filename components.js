@@ -64,7 +64,7 @@ const CASKS=[
   // PINNED-signature casks, drafted 3-of-7 with the toggle (>=1 base Q4+ guaranteed) ----
   // v4.15b [designer-ruled 2026-08-10 — "keep it simple"]: the signature IS the pinned bonus.
   {nm:'Gose', exp:1,     c:'#6e8b74', q:2, g:2,h:0, n:8, ready:1, pin:{k:'goods3',ai:'coins',act:'Gain 3 goods',q:2}},
-  {nm:'Zerbster', exp:1, c:'#5f7a3c', q:3, g:0,h:3, n:6, ready:1, pin:{k:'zgyle',ai:'package-plus',act:'Brew a free Gruit + Load any Cask',q:3}},
+  {nm:'Zerbster', exp:1, c:'#5f7a3c', q:3, g:0,h:3, n:6, ready:1, pin:{k:'zgyle',ai:'package-plus',act:'Brew free Gruit<br>+ Load a Cask',q:3}},
   {nm:'Duckstein', exp:1,c:'#7a5236', q:2, g:1,h:1, n:8, ready:1, pin:CASK_POOL[3], tag:'smoke-hardy:<br>'+LU('die-plus1')+' as it boards'},   // v4.14: the old ready-2 collapses to 1 (the die floors at 1); the board-lift IS the identity
   // ---- EXPANSION CAPSTONE "Jopenbier" (its OWN toggle) — v4.14: a PLAIN Q6 (the dock-vintage is cut —
   // it rode the deploy state); start 2, FOUR aging steps, the die parks at 6 (8★ at Novgorod) ----
@@ -245,7 +245,7 @@ const RECIPES=[  // EXPORT recipe cards — print in the same double-sided run a
   // EXPANSION "Specialty Beers" (v4.14 "Beer Atlas", opt-in) — the 3 specialty export recipe cards
   // (fees ride the ruled formula H = Q−3: the Q3-and-below are chip-less/FREE; Jopenbier pays 3H)
   {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, exp:1, buy:{}, reach:'Q2 · no hops · load: +3 '+LU('coins')},
-  {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, exp:1, buy:{}, reach:'Q3 · no grain · load: free Gruit + '+LU('package-plus')},
+  {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, exp:1, buy:{}, reach:'Q3 · no grain · load: brew free Gruit + load a cask'},
   {nm:'Duckstein',cc:'#7a5236', L:2, g:1,h:1, exp:1, buy:{}, reach:'Q2 · boards: '+LU('die-plus1')},
   {nm:'Jopenbier',cc:'#5e2433', L:6, g:2,h:4, exp:1, buy:{h:3}, reach:'Q6 capstone · start 2, four steps · off the Bourse — the plain die (8★ Novgorod)'},
 ];
@@ -302,16 +302,27 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 // v5.3 wording pass (designer 2026-08-22: icons where possible, words where necessary, never
 // sentences): the PUBLIC line = an icon chip (whoever activates the line); the OWNER line =
 // trigger word + icons. pub is pre-built icon HTML.
-const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('coins')+'+1',VPUB_SH1=LU('bourse-pm1'),VPUB_SH2=LU('bourse-plus2')+'▲';
+const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('coins'),VPUB_SH1=LU('bourse-pm1'),VPUB_SH2=LU('bourse-plus2');   // ruled 2026-08-23: the public chip is icon-only (no '+1' text, no '▲')
+// the OWNER block speaks the Public Works grammar (ruled 2026-08-23): BIG icons + the fewest
+// words; a face whose trigger is the whole story prints it under the TITLE (trig) and the
+// foot carries icons alone. VBIG = one big-icon cell (the .ac size the works print).
+const VBIG=h=>'<span class="ac">'+h+'</span>';
+const VSEP=s=>'<span class="vsep">'+s+'</span>';
+// STAND-INS awaiting generated icons (designer 2026-08-23): the SWAP icon (Rack House — the
+// die rides meanwhile) · the RE-DEAL icon (Factor's Desk — contract meanwhile) · the VENTURE
+// icon (Guild Residence — the lucide home meanwhile) · a goods+1 mark (Counting House — the
+// goods icon wears a +1 badge meanwhile). Each is a one-line swap when its art lands.
+const VGOOD1=VBIG(LU('coins')+'<b class="vbadge">+1</b>');
 const VENTURES=[
-  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, eff:'On line: '+LU('swap-dice','starmark'), art:'venture-rack-l1.png'},
-                 l2:{nm:'Brewery',        ic:'flask-conical', pub:VPUB_STEP, eff:'On line: '+LU('flask-conical')+' (search)', art:'venture-rack-l2.png'}},
-  {k:'counting', l1:{nm:'Counting House', ic:'coins',   pub:VPUB_GOLD, eff:'On load: +1 '+LU('coins'), art:'venture-counting-l1.png'},
-                 l2:{nm:'Assay Loft',     ic:'scale',   pub:VPUB_GOLD, eff:'On line: 1'+LU('sprout','h')+' → '+LU('check'), art:'venture-counting-l2.png'}},
-  {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', pub:VPUB_SH1, eff:'On load: re-deal '+LU('contract'), art:'venture-factor-l1.png'},
-                 l2:{nm:'Staple Rights',  ic:'landmark',pub:VPUB_SH2, eff:'On sail: your '+LU('beer')+' '+LU('star-plus1','starmark'), art:'venture-factor-l2.png'}},
-  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   pub:VPUB_GOLD, eff:'On load: +1 '+LU('beer'), art:'venture-warehouse-l1.png'},
-                 l2:{nm:'Guild Residence',ic:'home',    pub:VPUB_SH1, eff:'At end: '+LU('star-plus2','starmark')+' × '+LU('home'), art:'venture-warehouse-l2.png'}},
+  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, own:VBIG(LU('swap-dice')), txt:'Swap 2 dice', art:'venture-rack-l1.png'},
+                 l2:{nm:'Brewery',        ic:'flask-conical', pub:VPUB_STEP, own:VBIG(LU('flask-conical')), art:'venture-rack-l2.png'}},
+  {k:'counting', l1:{nm:'Counting House', ic:'coins',   pub:VPUB_GOLD, own:VGOOD1, txt:'On load', art:'venture-counting-l1.png'},
+                 l2:{nm:'Assay Loft',     ic:'scale',   pub:VPUB_GOLD, own:VBIG('<b class="vnum">1</b>'+LU('sprout','h'))+VSEP('→')+VBIG(LU('check')), art:'venture-counting-l2.png'}},
+  {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', pub:VPUB_SH1, own:VBIG(LU('contract')), txt:'On load', art:'venture-factor-l1.png'},
+                 l2:{nm:'Staple Rights',  ic:'landmark',pub:VPUB_SH2, trig:'On sail', own:VBIG(LU('beer'))+VSEP(':')+VBIG(LU('star-plus1','starmark')), art:'venture-factor-l2.png'}},
+  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   pub:VPUB_GOLD, own:VBIG(LU('package-plus')), txt:'On load, load another', art:'venture-warehouse-l1.png'},
+                 l2:{nm:'Guild Residence',ic:'home',    pub:VPUB_SH1, trig:'At end', own:VBIG(LU('star-plus2','starmark'))+VSEP('×')+VBIG(LU('venture-build')), art:'venture-warehouse-l2.png'}},
+
 ];
 const VENT_FOOT='rgba(31,86,122,.78)';   // the owner-only blue (the v2.4.1 privilege colour returns)
 // v5.3 restyle (designer 2026-08-22): a Venture SHARES the building tile's anatomy — the same
@@ -320,13 +331,18 @@ const VENT_FOOT='rgba(31,86,122,.78)';   // the owner-only blue (the v2.4.1 priv
 // the PUBLIC chip (boxed — anyone's activation) then the ringed OWNER line.
 function ventureTile(d,lvl,col){const f=lvl===2?d.l2:d.l1;
   const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
+  // the title column carries an optional TRIGGER line under the name; the L/cost chips
+  // TOP-ALIGN so a wrapped title never re-centres them (ruled 2026-08-23)
+  const tcol='<span class="bt-tcol"><span class="bt-nm'+(f.nm.length>18?' long':'')+'">'+f.nm+'</span>'
+    +(f.trig?'<span class="bt-trig">'+f.trig+'</span>':'')+'</span>';
   return '<div class="btile btW" style="--c:'+(col||VENT_FOOT)+ring+'">'
   +artLayer(f.art||('venture-'+d.k+'-l'+lvl+'.png'))
-  +'<div class="bt-top"><span class="bt-nm'+(f.nm.length>18?' long':'')+'">'+f.nm+'</span>'
+  +'<div class="bt-top vt-top">'+tcol
     +'<span class="bt-ms" title="the level — an L1 takes any open slot (wharf full: replaces a Public Work); an L2 overbuilds your own L1">'+(lvl===2?'L2':'L1')+'</span>'
     +'<span class="bt-cost">'+cost(lvl===2?2:1,0)+'</span></div>'
-  +'<div class="bt-foot"><span class="bt-eff vt-row"><span class="vt-own" title="the OWNER line — the ringed house alone">'+f.eff+'</span>'
-    +'<span class="vt-pub" title="the PUBLIC line — whoever activates a line through this slot">'+f.pub+'</span></span></div>'
+  +'<div class="bt-foot vt2"><span class="vt-own" title="the OWNER line — the ringed house alone">'+(f.own||'')
+    +(f.txt?'<span class="vt-txt">'+f.txt+'</span>':'')+'</span>'
+    +'<span class="vt-pub" title="the PUBLIC line — whoever activates a line through this slot">'+f.pub+'</span></div>'
   +'</div>';}
 // MANIFEST CARD (v5.0) — the demand card riding a non-Bruges hull: THREE demand lines, each
 // a beer/tier chip (the beer glyph) and/or a die chip (the die-as-parked glyph) → the ★. The
@@ -790,6 +806,18 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .bt-ms{flex:0 0 auto;display:inline-flex;align-items:center;margin-right:.02in}'
 +'.btile .vt-row{display:flex;align-items:center;width:100%}'
 +'.btile .vt-pub{display:inline-flex;align-items:center;gap:.02in;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);border-radius:.05in;padding:.015in .05in;margin-left:auto;font-size:.17in}'
++'.btile .vt-top{align-items:flex-start}'
++'.btile .bt-tcol{display:flex;flex-direction:column;gap:.02in;min-width:0;flex:1}'
++'.btile .bt-trig{font-variant:small-caps;font-weight:bold;font-size:.13in;line-height:1;opacity:.95}'
++'.btile .vt2{align-items:center;gap:.05in}'
++'.btile .vt2 .vt-own{display:inline-flex;align-items:center;gap:.02in;min-width:0}'
++'.btile .vt2 .ac{margin:0;position:relative;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center}'
++'.btile .vt2 .ac svg{color:#f4ead0;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}'
++'.btile .vt2 .ac svg.h,.btile .vt2 .ac .h{color:#c4e69c}'
++'.btile .vt2 .vt-txt{font-size:.15in;font-weight:600;line-height:1.1;margin-left:.03in;min-width:0}'
++'.btile .vsep{font-weight:900;font-size:.2in;line-height:1;margin:0 .005in;flex:0 0 auto}'
++'.btile .vnum{font-weight:900;font-size:.24in;line-height:1;margin-right:.015in;text-shadow:0 1px 2px rgba(0,0,0,.7)}'
++'.btile .vbadge{position:absolute;right:-.02in;bottom:-.01in;font-size:.15in;font-weight:900;line-height:1;text-shadow:0 1px 2px rgba(0,0,0,.8)}'
 +'.btile .vt-pub .ic,.btile .vt-pub img.ai,.btile .vt-pub svg{width:.24in;height:.24in}'
 +'.btile .vt-own{display:inline-flex;align-items:center;gap:.015in}'
 +'.btile .starmark,.itile .starmark{width:.26in!important;height:.26in!important;vertical-align:-.08in}'
