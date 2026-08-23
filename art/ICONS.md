@@ -90,6 +90,16 @@
 > Brewhouse pot/`brew-top` · Harbor `ship`/`package-plus` · Cellar `age-3`/`age-1`), so the
 > arrow art still prints.
 
+> **Round 9 (designer, 2026-08-22): the numbered-goods pair matches the AGE recipe.** The
+> goods-2/goods-3 numerals had rendered LARGER, thinner-outlined and shadowless next to the
+> age icons; both re-cut with the exact age treatment — DejaVuSans-Bold at **.42H**, black
+> stroke **.028H**, the soft **drop shadow** (offset .012/.018H, blur .012H, alpha 160),
+> anchor .94W/.97H — validated by re-rendering the age-1 digit over the landed file (mean
+> channel diff < 8). `goods-3.png` LANDS (the Source-3 face swaps off the plain-basket
+> stand-in); `goods-2.png` replaced in place. Same round: the BOURSE tally-board set is
+> REJECTED (rebriefed formal — abacus / banner track / rail-and-slider board) and BONUS-LOAD
+> is rebriefed as a cask on a dock cart with the ship behind; both option rounds are out.
+
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
 > (the tiles already carry full-bleed art). **ADDED: one icon per Kontor** — a city crest
