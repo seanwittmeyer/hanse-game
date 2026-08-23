@@ -883,20 +883,20 @@ const SHIP_DECK_MIX=[          // 24 hulls - 6 Skute / 10 Cog / 8 Hulk, 6 per po
 // modifier of its own slot's traffic — no building adds an action for anyone. (The ms/fee
 // fields below survive as vestigial kit data + dial seams.)
 const BUILDINGS={
-  maltkiln  :{name:'Malt Kiln',        icon:'flame', ms:2,        qty:2, fee:{g:2}, desc:'A cask boarding here: die +1 (past quality, cap 6)'},
-  tollhouse :{name:'Tollhouse',        icon:'ticket', ms:3,       qty:1, fee:{g:1}, desc:'A cask loading here: the loader may shift any Bourse price marker ±1 (the toll bench)'},
-  customs   :{name:'Customs House',    icon:'scroll-text', ms:3,  qty:1, fee:{g:2}, desc:'A cask boarding here needs 1 less than the Kontor’s minimum (floor 1)'},   // ⚙ −1 (floor 1) — London/Bergen open either way; Novgorod at 2+ is the tile's true meaning
-  ropewalk  :{name:'Ropewalk',         icon:'cable', ms:3,        qty:1, fee:{g:2}, desc:'A load here: you may also load 1 Ready cask onto a DIFFERENT docked Ship'},   // ⚙ once per load flow
-  cooperage :{name:'Cooperage',        icon:'package', ms:3,      qty:1, fee:{g:2}, desc:'The Ship here holds +1 berth (sails only when it is also full) · a load here: +1★ to the loader'},
-  weighhouse:{name:'Weigh House',      icon:'weight', ms:3,       qty:1, fee:{g:2}, desc:'Casks delivered off the Ship sailing from here may claim 2 Manifest lines'},
-  staple_bruges  :{name:'Staple House · Bruges',   icon:'landmark', ms:2, qty:1, fee:{g:2}, staple:'bruges',   desc:'Casks delivered off a Ship sailing from here to BRUGES: +2★ each'},   // ⚙ Stapelrecht — the destination premium
-  staple_london  :{name:'Staple House · London',   icon:'landmark', ms:2, qty:1, fee:{g:2}, staple:'london',   desc:'Casks delivered off a Ship sailing from here to LONDON: +2★ each'},
-  staple_bergen  :{name:'Staple House · Bergen',   icon:'landmark', ms:2, qty:1, fee:{g:2}, staple:'bergen',   desc:'Casks delivered off a Ship sailing from here to BERGEN: +2★ each'},
-  staple_novgorod:{name:'Staple House · Novgorod', icon:'landmark', ms:2, qty:1, fee:{g:2}, staple:'novgorod', desc:'Casks delivered off a Ship sailing from here to NOVGOROD: +2★ each'},
-  bonded    :{name:'Bonded Store',     icon:'warehouse', ms:3,    qty:1, fee:{g:2}, eph:true, desc:'A cask boarding here: die +1 · sails with the Ship — every shipper +2 goods'},
-  victual   :{name:'Victualling Yard', icon:'boxes', ms:3,        qty:1, fee:{g:2}, eph:true, desc:'A cask loaded here: its load bonus fires TWICE · sails with the Ship'},
+  maltkiln  :{name:'Malt Kiln',        icon:'flame', ms:2,        qty:2, fee:{g:2}, desc:'On load: die +1 (past quality is fine, cap 6)'},
+  tollhouse :{name:'Tollhouse',        icon:'ticket', ms:3,       qty:1, fee:{g:1}, desc:'On load: adjust 1 Bourse marker ±1'},
+  customs   :{name:'Customs House',    icon:'scroll-text', ms:3,  qty:1, fee:{g:2}, desc:'Kontor minimum −1 here (floor 1)'},   // ⚙ −1 (floor 1) — London/Bergen open either way; Novgorod at 2+ is the tile's true meaning
+  ropewalk  :{name:'Ropewalk',         icon:'cable', ms:3,        qty:1, fee:{g:2}, desc:'On load: also load 1 Ready cask onto a DIFFERENT Ship'},   // ⚙ once per load flow
+  cooperage :{name:'Cooperage',        icon:'package', ms:3,      qty:1, fee:{g:2}, desc:'+1 berth (sails when it is also full) · On load: +1★'},
+  weighhouse:{name:'Weigh House',      icon:'weight', ms:3,       qty:1, fee:{g:2}, desc:'On sail: each delivered cask may claim 2 Manifest lines'},
+  staple_bruges  :{name:'Bruges Hanzehuis',   icon:'landmark', ms:2, qty:1, fee:{g:2}, staple:'bruges',   desc:'On sail to Bruges: +2★ each cask'},   // ⚙ Stapelrecht — the destination premium
+  staple_london  :{name:'London Steelyard',   icon:'landmark', ms:2, qty:1, fee:{g:2}, staple:'london',   desc:'On sail to London: +2★ each cask'},
+  staple_bergen  :{name:'Bergen Bryggen',   icon:'landmark', ms:2, qty:1, fee:{g:2}, staple:'bergen',   desc:'On sail to Bergen: +2★ each cask'},
+  staple_novgorod:{name:'Novgorod Peterhof', icon:'landmark', ms:2, qty:1, fee:{g:2}, staple:'novgorod', desc:'On sail to Novgorod: +2★ each cask'},
+  bonded    :{name:'Bonded Store',     icon:'warehouse', ms:3,    qty:1, fee:{g:2}, eph:true, desc:'On load: die +1 · On sail: leaves — every shipper +2 goods'},
+  victual   :{name:'Victualling Yard', icon:'boxes', ms:3,        qty:1, fee:{g:2}, eph:true, desc:'On load: the bonus fires TWICE · On sail: leaves with the Ship'},
   // ⚙ the INV_BLDG dial — hall mode only (printed on the Guildhall sheet).
-  chancery  :{name:'Guild Chancery',   icon:'mail', ms:2,         qty:1, fee:{g:1}, hall:true, act:'invgain', desc:'Gain 1 ⚜ Invitation'},
+  chancery  :{name:'Guild Chancery',   icon:'mail', ms:2,         qty:1, fee:{g:1}, hall:true, act:'invgain', desc:'On line: gain 1 ⚜ Invitation'},
 };
 let STAPLE_PTS=2;      // ⚙ the Staple House premium per cask (sim hook STAPLE=)
 const STAPLE_DEAL=2;   // ⚙ the four Staple Houses print; TWO join each game, two sit out
@@ -921,14 +921,14 @@ function bourseFmt(v){return (v>0?'+':'')+v;}
 // for WHOEVER activates a line through the slot; the ringed line stays the owner's alone
 // (the owner collects both).
 const VENTURES={
-  rack:     {l1:{name:'Rack House',     icon:'repeat',  kind:'vswap',  pub:'vstep', desc:'Activating this line: you may swap the dice of two of your vessel casks'},
-             l2:{name:'Brewery',        icon:'flask-conical', kind:'vbrew', pub:'vstep', desc:'Activating this line: you may BREW (search the stack)'}},
-  counting: {l1:{name:'Counting House', icon:'coins',   kind:'vgood',  pub:'vgold', desc:'Your loads at this slot: also gain 1 good'},
-             l2:{name:'Assay Loft',     icon:'scale',   kind:'vready', pub:'vgold', desc:'Activating this line: you may pay 1H — one vessel cask to READY'}},
-  factor:   {l1:{name:'Factor’s Desk',  icon:'arrow-right-left', kind:'vredeal', pub:'vshift1', desc:'Before loading the Ship at this slot: you may re-deal its Manifest'},
-             l2:{name:'Staple Rights',  icon:'landmark',kind:'vstar',  pub:'vshift2', desc:'Your casks delivered off Ships sailing from this slot: +1★ each'}},
-  warehouse:{l1:{name:'Warehouse',      icon:'boxes',   kind:'vload',  pub:'vgold', desc:'Your loads at this slot: +1 cask may board'},
-             l2:{name:'Guild Residence',icon:'home',    kind:'vres', pub:'vshift1',   desc:'Game end: 2★ per Venture you have in play'}},
+  rack:     {l1:{name:'Rack House',     icon:'repeat',  kind:'vswap',  pub:'vstep', desc:'On line: swap the dice of 2 of your vessel casks'},
+             l2:{name:'Brewery',        icon:'flask-conical', kind:'vbrew', pub:'vstep', desc:'On line: you may BREW (search the stack)'}},
+  counting: {l1:{name:'Counting House', icon:'coins',   kind:'vgood',  pub:'vgold', desc:'On load here: +1 good'},
+             l2:{name:'Assay Loft',     icon:'scale',   kind:'vready', pub:'vgold', desc:'On line: pay 1H — one vessel cask to READY'}},
+  factor:   {l1:{name:'Factor’s Desk',  icon:'arrow-right-left', kind:'vredeal', pub:'vshift1', desc:'On load here: re-deal the Ship’s Manifest first'},
+             l2:{name:'Staple Rights',  icon:'landmark',kind:'vstar',  pub:'vshift2', desc:'On sail: your casks +1★ each'}},
+  warehouse:{l1:{name:'Warehouse',      icon:'boxes',   kind:'vload',  pub:'vgold', desc:'On load here: +1 cask may board'},
+             l2:{name:'Guild Residence',icon:'home',    kind:'vres', pub:'vshift1',   desc:'At end: 2★ per Venture you have in play'}},
 };
 const VENTURE_KEYS=Object.keys(VENTURES);
 const V_FEE_L1={g:1};   // ⚙ the Venture fees (grain only — the building law); waived as the London prize
@@ -991,7 +991,7 @@ const IMPROVEMENTS={
   braumeister:{name:'Braumeister', art:'a long wooden mash paddle over a copper', desc:'Turn start: age 1 cask +1', cost:{}},   // (the app ages your ripest)
   // ---- the GUILD singles (1 copy each — scarce, first-come) ----
   scholar  :{name:'Guild Scholar', art:'a bundle of sealed recipe scrolls', desc:'Recipes: pay no fee', cost:{}},   // every channel, Bruges included
-  innkeeper:{name:'Innkeeper', art:'a hanging tavern sign over a cellar door', desc:'3+ casks brewing: age one +1 at turn start', cost:{}},
+  innkeeper:{name:'Innkeeper', art:'a hanging tavern sign over a cellar door', desc:'3+ casks in your vessels: age one +1 at turn start', cost:{}},
   supercargo:{name:'Supercargo', art:'a sealed manifest over a rope-bound chest', desc:'A rival sails your cask: gain 1G 1H', cost:{}},
   chronicler:{name:'Chronicler', art:'an open chronicle with a quill', desc:'Claim a Manifest line: +2★', cost:{}},   // ⚙ — the ★ score with the claim
   alderman :{name:'Alderman', art:'a chain of office on a velvet board', desc:'End: +2★ per Kontor with 3+ dice', cost:{}},
@@ -1305,9 +1305,10 @@ const CELLTIP={   // every station reads primary (your worker here) / alternate 
   Harbor:'Harbor · primary: COMMISSION — pay the Ship’s printed fee (Skute 2G · Cog 1G · Hulk free), place it on a slot without a Ship (1 · 2 · 3 berths), then ONE free load from your vessels. Alternate: LOAD 1 Ready cask onto ANY docked Ship.',
 };
 function bldgTip(b){if(!b)return '';
-  if(b.v){const f=vFace(b);const op=S.players[b.owner];   // a Venture face
-    return f.name+' (L'+b.lvl+') · VENTURE — '+(op?op.name:'its owner')+'’s (never overbuilt by a rival) — the ringed line: '+f.desc+' · THE PUBLIC LINE (anyone’s activation): '+(f.pub?VPUB[f.pub].txt:'—');}
-  const def=BUILDINGS[b.b];return def.name+' · PUBLIC WORK — the wharf’s furniture, here since setup: fires on this slot’s traffic, for anyone (no die, no owner; an L1 may redevelop it once the wharf is full) — '+def.desc;}
+  // the golden rule (ruled 2026-08-23): tooltips are reminders, never lessons — name (family): trigger, effect
+  if(b.v){const f=vFace(b);const op=S.players[b.owner];
+    return f.name+' ('+(op?op.name:'its owner')+'’s Venture · L'+b.lvl+'): '+f.desc+(f.pub?' · Public line: '+VPUB[f.pub].txt:'');}
+  const def=BUILDINGS[b.b];return def.name+' (Public Work): '+def.desc;}
 function tileTip(t,slot){
   const b=slot?bAt(slot):null;const btip=b?(' · '+bldgTip(b)):'';
   if(!t)return (b?bldgTip(b)+' · ':'')+'Open slot — commission a Ship here'+(b?'':'; an L1 Venture may open here (the open ground)')+'.';

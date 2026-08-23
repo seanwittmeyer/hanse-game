@@ -108,24 +108,24 @@ const BUILDINGS=[
   // INVESTMENT MATURES (+6★, die home, tile demolished). 13 tiles / 9 designs; deal 11 (2 of
   // the 4 Staples sit out). Retired: Granary · Mission Quay · Racking · Assay · Abbey ·
   // Hop Exchange · Merchants' Exchange (→ the VENTURES) · Rich Berth · Capstan.
-  {k:'maltkiln',  nm:'Malt Kiln',         ms:2, verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, effIc:'die-plus1',  eff:'on load'},
-  {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, effIc:'trending-up', eff:'load: ±1'},   // v5.3b (ruled): the toll bench — the stamp face retired
-  {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'min −1'},   // v5.2 ⚙ ruled: −1 (was −2 — almost broken)
-  {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, art:'building-ropewalk.png', effIc:'package-plus', eff:'load: +1 '+LU('beer')+' → other '+LU('sailboat')},   // v5.2 ⚙ ruled rework
-  {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 berth · load: +1★'},   // v4.12b: the wharfage eases 2→1 ⚙
-  {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, art:'building-weighhouse.png', effIc:'contract',     eff:'sail: ×2 lines'},
+  {k:'maltkiln',  nm:'Malt Kiln',         ms:2, verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, cond:'On load', effIc:'die-plus1',  eff:'die +1'},
+  {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, cond:'On load', effIc:'trending-up', eff:'1 marker ±1'},   // v5.3b (ruled): the toll bench — the stamp face retired
+  {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'Kontor min −1'},   // v5.2 ⚙ ruled: −1 (was −2 — almost broken)
+  {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, art:'building-ropewalk.png', cond:'On load', effIc:'package-plus', eff:'+1 '+LU('beer')+' → other '+LU('sailboat')},   // v5.2 ⚙ ruled rework
+  {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, cond:'+1 berth', eff:'On load: +1★'},   // v4.12b: the wharfage eases 2→1 ⚙
+  {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, art:'building-weighhouse.png', cond:'On sail', effIc:'contract',     eff:'×2 Manifest lines'},
   // v5.2 NEW ⚙ — the STAPLE HOUSES (Stapelrecht): the destination premium, one crest each
-  {k:'staple_bruges',   nm:'Staple House · Bruges',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bruges', art:'building-staple.png', effIc:'kontor-bruges', eff:'sail: '+LU('beer')+' +2★ each'},
-  {k:'staple_london',   nm:'Staple House · London',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'london', art:'building-staple.png', effIc:'kontor-london', eff:'sail: '+LU('beer')+' +2★ each'},
-  {k:'staple_bergen',   nm:'Staple House · Bergen',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bergen', art:'building-staple.png', effIc:'kontor-bergen', eff:'sail: '+LU('beer')+' +2★ each'},
-  {k:'staple_novgorod', nm:'Staple House · Novgorod', ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'novgorod', art:'building-staple.png', effIc:'kontor-novgorod', eff:'sail: '+LU('beer')+' +2★ each'},
-  {k:'bonded',    nm:'Bonded Store',      ms:3, verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, effIc:'die-plus1',  eff:'load · sails away: shippers +2 '+LU('coins')},
-  {k:'victual',   nm:'Victualling Yard',  ms:3, verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, eff:'load: bonus ×2 · sails away'},
+  {k:'staple_bruges',   nm:'Bruges Hanzehuis',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bruges', art:'building-staple.png', cond:'On sail to '+LU('kontor-bruges')+'Bruges', eff:'+2★ each cask'},
+  {k:'staple_london',   nm:'London Steelyard',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'london', art:'building-staple.png', cond:'On sail to '+LU('kontor-london')+'London', eff:'+2★ each cask'},
+  {k:'staple_bergen',   nm:'Bergen Bryggen',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bergen', art:'building-staple.png', cond:'On sail to '+LU('kontor-bergen')+'Bergen', eff:'+2★ each cask'},
+  {k:'staple_novgorod', nm:'Novgorod Peterhof', ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'novgorod', art:'building-staple.png', cond:'On sail to '+LU('kontor-novgorod')+'Novgorod', eff:'+2★ each cask'},
+  {k:'bonded',    nm:'Bonded Store',      ms:3, verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, cond:'On load: '+LU('die-plus1'), eff:'On sail: away · shippers +2 '+LU('coins')},
+  {k:'victual',   nm:'Victualling Yard',  ms:3, verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, cond:'On load: bonus ×2', eff:'On sail: leaves with the Ship'},
   // v4.16b "Guild Ledger" (designer-ruled 2026-08-14, off the lane study): the Guildhall's own
   // building — prints on the GUILDHALL SHEET (hall:1 keeps it off the base 20-tile sheet);
   // in hall mode it is guaranteed into the deal (17 of 21). Anyone who activates it gains an
   // ⚜ Invitation; the traffic turns the builder's mark like any workhorse.
-  {k:'chancery',  nm:'Guild Chancery',    ms:2, verb:'transform', tgt:'act',  ic:'mail',         n:1, g:1, act:'invgain', eff:'Gain 1 ⚜ Invitation', hall:1},
+  {k:'chancery',  nm:'Guild Chancery',    ms:2, verb:'transform', tgt:'act',  ic:'mail',         n:1, g:1, act:'invgain', cond:'On line', eff:'gain 1 ⚜', hall:1},
 ];
 // ---- MANIFESTS (v5.0 "Open Wharf" [designer-ruled 2026-08-18] — the Order tiles RETIRE) ----
 // A Manifest is the demand CARD riding every NON-BRUGES hull: three printed demand lines
@@ -267,15 +267,20 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   // a STANDARD verb prints the same icon chip the casks print — one action grammar across the kit;
   // only the non-standard powers carry text (terse: the rulebook holds the full language)
   const sa=d.act&&STD_ACT[d.act];
-  // round 5: ANY leading icon (a standard verb's chip OR a die-mark via effIc) rides the same
-  // .ac slot at ONE size; the text bottom-aligns beside it and wraps upward when long
   const lead=sa?LU(sa.ai):(d.effIc?LU(d.effIc):null);
-  const eff=lead?'<span class="ac">'+lead+'</span><span class="bt-etext">'+(sa?sa.t:d.eff)+'</span>':d.eff;
+  const txt=sa?sa.t:d.eff;
+  // the trigger grammar, two-column foot (ruled 2026-08-23): the BIG action icon is its own
+  // column (about two text lines tall); the trigger and the action stack beside it. No icon →
+  // the two lines stack full-width. Rules never ride a component.
+  let ft;
+  if(d.cond&&lead) ft='<div class="bt-foot btF2"><span class="ac">'+lead+'</span><span class="bt-2col"><span class="bt-cond">'+d.cond+'</span><span class="bt-etext">'+txt+'</span></span></div>';
+  else if(d.cond)  ft='<div class="bt-foot btFC"><span class="bt-cond">'+d.cond+'</span><span class="bt-eff">'+txt+'</span></div>';
+  else             ft='<div class="bt-foot"><span class="bt-eff'+(lead?' bt-act':'')+'">'+(lead?'<span class="ac">'+lead+'</span><span class="bt-etext">'+txt+'</span>':txt)+'</span></div>';
+  // the title prints BARE (no lucide crest — ruled 2026-08-23) and may wrap to two lines
   return '<div class="btile btW" style="--c:'+foot+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
-  +'<div class="bt-top"><span class="bt-ic">'+LUX(d.ic)+'</span><span class="bt-nm'+(d.nm.length>18?' xlong':d.nm.length>15?' long':'')+'">'+d.nm+'</span>'
-    +msChip+'</div>'   // v5.3: no fee, no start face — furniture prints its name + effect alone
-  +'<div class="bt-foot"><span class="bt-eff'+(lead?' bt-act':'')+'">'+eff+'</span></div>'
+  +'<div class="bt-top"><span class="bt-nm'+(d.nm.length>18?' long':'')+'">'+d.nm+'</span>'+msChip+'</div>'
+  +ft
   +'</div>';}
 // ---- v5.2 PRIVATE VENTURES (ruled 2026-08-22): the GWT family — each house holds an IDENTICAL
 // hand of 4 DUAL-USE tiles (one piece of cardboard = an L1 face OR an L2 face, never both:
@@ -293,14 +298,14 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 // trigger word + icons. pub is pre-built icon HTML.
 const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('coins')+'+1',VPUB_SH1=LU('trending-up')+'±1',VPUB_SH2=LU('trending-up')+'+2▲';
 const VENTURES=[
-  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, eff:'line: ⇄ 2 '+LU('dices'), art:'venture-rack-l1.png'},
-                 l2:{nm:'Brewery',        ic:'flask-conical', pub:VPUB_STEP, eff:'line: '+LU('flask-conical')+' (search)', art:'venture-rack-l2.png'}},
-  {k:'counting', l1:{nm:'Counting House', ic:'coins',   pub:VPUB_GOLD, eff:'load: +1 '+LU('coins'), art:'venture-counting-l1.png'},
-                 l2:{nm:'Assay Loft',     ic:'scale',   pub:VPUB_GOLD, eff:'line: 1'+LU('sprout','h')+' → '+LU('check'), art:'venture-counting-l2.png'}},
-  {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', pub:VPUB_SH1, eff:'load: re-deal '+LU('contract'), art:'venture-factor-l1.png'},
-                 l2:{nm:'Staple Rights',  ic:'landmark',pub:VPUB_SH2, eff:'sail: your '+LU('beer')+' +1★', art:'venture-factor-l2.png'}},
-  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   pub:VPUB_GOLD, eff:'load: +1 '+LU('beer'), art:'venture-warehouse-l1.png'},
-                 l2:{nm:'Guild Residence',ic:'home',    pub:VPUB_SH1, eff:'end: 2★ × '+LU('home'), art:'venture-warehouse-l2.png'}},
+  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, eff:'On line: ⇄ 2 '+LU('dices'), art:'venture-rack-l1.png'},
+                 l2:{nm:'Brewery',        ic:'flask-conical', pub:VPUB_STEP, eff:'On line: '+LU('flask-conical')+' (search)', art:'venture-rack-l2.png'}},
+  {k:'counting', l1:{nm:'Counting House', ic:'coins',   pub:VPUB_GOLD, eff:'On load: +1 '+LU('coins'), art:'venture-counting-l1.png'},
+                 l2:{nm:'Assay Loft',     ic:'scale',   pub:VPUB_GOLD, eff:'On line: 1'+LU('sprout','h')+' → '+LU('check'), art:'venture-counting-l2.png'}},
+  {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', pub:VPUB_SH1, eff:'On load: re-deal '+LU('contract'), art:'venture-factor-l1.png'},
+                 l2:{nm:'Staple Rights',  ic:'landmark',pub:VPUB_SH2, eff:'On sail: your '+LU('beer')+' +1★', art:'venture-factor-l2.png'}},
+  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   pub:VPUB_GOLD, eff:'On load: +1 '+LU('beer'), art:'venture-warehouse-l1.png'},
+                 l2:{nm:'Guild Residence',ic:'home',    pub:VPUB_SH1, eff:'At end: 2★ × '+LU('home'), art:'venture-warehouse-l2.png'}},
 ];
 const VENT_FOOT='rgba(31,86,122,.78)';   // the owner-only blue (the v2.4.1 privilege colour returns)
 // v5.3 restyle (designer 2026-08-22): a Venture SHARES the building tile's anatomy — the same
@@ -311,7 +316,7 @@ function ventureTile(d,lvl,col){const f=lvl===2?d.l2:d.l1;
   const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
   return '<div class="btile btW" style="--c:'+VENT_FOOT+ring+'">'
   +artLayer(f.art||('venture-'+d.k+'-l'+lvl+'.png'))
-  +'<div class="bt-top"><span class="bt-ic">'+LUX(f.ic)+'</span><span class="bt-nm'+(f.nm.length>18?' xlong':f.nm.length>15?' long':'')+'">'+f.nm+'</span>'
+  +'<div class="bt-top"><span class="bt-nm'+(f.nm.length>18?' long':'')+'">'+f.nm+'</span>'
     +'<span class="bt-ms" title="the level — an L1 takes any open slot (wharf full: replaces a Public Work); an L2 overbuilds your own L1">'+(lvl===2?'L2':'L1')+'</span>'
     +'<span class="bt-cost">'+cost(lvl===2?2:1,0)+'</span></div>'
   +'<div class="bt-foot"><span class="bt-eff"><span class="vt-pub" title="the PUBLIC line — whoever activates a line through this slot">'+f.pub+'</span>'
@@ -780,6 +785,16 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .vt-pub{display:inline-flex;align-items:center;gap:.015in;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);border-radius:.045in;padding:.005in .035in;margin-right:.05in}'
 +'.btile .vt-own{display:inline-flex;align-items:center;gap:.015in;border-left:.035in solid var(--oc,rgba(255,255,255,.55));padding-left:.045in}'
 +'.btile .bt-ms img.ai,.btile .bt-ms svg{width:.24in;height:.24in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}'
++'.btile .bt-nm{white-space:normal;overflow:visible;line-height:1.02}'
++'.btile .bt-nm.long{font-size:.16in}'
++'.btile .bt-cond{font-variant:small-caps;font-weight:bold;font-size:.13in;line-height:1;opacity:.95;display:inline-flex;align-items:center;gap:.025in}'
++'.btile .bt-cond img.ai,.btile .bt-cond svg{width:.17in;height:.17in}'
++'.btile .btF2{align-items:center;gap:.06in}'
++'.btile .btF2 .ac{width:.5in;height:.5in;margin:0;flex:0 0 auto}'
++'.btile .btF2 .ac svg,.btile .btF2 .ac .ic{width:.5in;height:.5in}'
++'.btile .bt-2col{display:flex;flex-direction:column;justify-content:center;gap:.025in;min-width:0;flex:1}'
++'.btile .btF2 .bt-etext{padding-bottom:0;font-size:.15in;font-weight:600;line-height:1.1}'
++'.btile .btFC{flex-direction:column;align-items:flex-start;gap:.02in;padding-top:.14in}'
 +'\n/* ===== v4.9d PLAYER BOARD (7.65x3.85in) \u2014 print + live app, one component ===== */'
 +'.pbrd{--pc:#7c2128;width:7.65in;height:3.85in;background:var(--parch,#f3e9d2);color:var(--ink,#2b2018);position:relative;border-radius:.14in;display:flex;flex-direction:column;gap:.07in;padding:.12in .15in;box-sizing:border-box;border:2.5px solid var(--pc);overflow:hidden}'
 +'.pbrd .sn{font-variant:small-caps;font-weight:bold;font-size:.085in;opacity:.62;line-height:1.05}'

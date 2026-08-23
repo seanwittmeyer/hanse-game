@@ -224,6 +224,17 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
 
+### The golden rule — component copy carries no rules (2026-08-23, designer-ruled)
+*"Rules never live in the components… and they don't live on the boards or in the play
+interface."* Landed as `STYLE.md` §4c + the trigger grammar (*On load / On sail / On sail
+to <Kontor> / On line / At end* — the trigger on its own line, the action below; the cask
+tiles are the model). Tooltips compress to *name (family): trigger, effect* — the
+furniture lecture is gone. The **Staple Houses take proper names** (Bruges Hanzehuis ·
+London Steelyard · Bergen Bryggen · Novgorod Peterhof). The **Tastings' printed home is
+RESOLVED**: rules live in `RULES.md` + `rulebook.html` only, and an in-development system
+stays out of the rulebook entirely — the §10 watch closes. Gates: verify 351/351 · smokes
+clean · no KEY bump (copy only).
+
 ### Repo hygiene — `play.html` sheds its version history (2026-08-23, designer-ruled)
 *"We don't track version history in play.html."* The engine file now states the current
 rules only: the 62KB KEY-comment changelog and every per-line version/date tag stripped

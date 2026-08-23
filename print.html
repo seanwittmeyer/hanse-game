@@ -773,7 +773,6 @@ const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HU
 // ventRing survives as a thin pass-through so the pack/mirror call sites stay unchanged.
 const ventRing=(d,lvl,col)=>ventureTile(d,lvl,col);
 
-const BUILD_DISPLAY=4;   // face-up Building display at the Market ⚙ (refills from the shuffled deck)
 // (v2.3: WHARFAGE retired — value = a privilege, owner-only; transform = a work; no delivery payments between players)
 const DEVELOP_PTS=0;     // [ruled v3.3]: a seated flip scores NOTHING (pure Floor-Wild engine); a displaced tile with NO open Floor slot is SIMPLY DISCARDED. The overbuilder still pays the 1G ground rent.
 const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',c:'#4a6b3a'},{nm:'Amber',c:'#b8860b'}];
@@ -784,9 +783,9 @@ const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',
 // parked die scores +2★ (v4.2), its minimum 3+ — the export band (v4.10).
 const DESTS=[
   {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, maj:[4,2,0], role:'The Hub — the on-ramp',        ben:{n:'+1',ic:'scroll-text'}, bnote:'a recipe — pay its fee (H = Q−3)'},
-  {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, maj:[5,3,1], role:'The Steelyard — the engine',   ben:{n:'+1',ic:'home'},  bnote:'a Venture from your hand — the fee waived (v5.3)'},
+  {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, maj:[5,3,1], role:'The Steelyard — the engine',   ben:{n:'+1',ic:'home'},  bnote:'a Venture from your hand — the fee waived'},
   {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, maj:[9,5,2], role:'Bryggen — the crews',          ben:{n:'+1',ic:'wrench'},      bnote:'a specialist, free \u00b7 no seat? 2 goods \u00b7 + bourse \u00b11'},
-  {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, maj:[8,5,2], vb:2, role:'The Long Haul — the climb',    ben:{n:'+2',ic:'star'},   bnote:'no prize — every parked die scores +2★'},   // v4.10: the minimum returned to 3+ (the export band); the panel had kept 4+
+  {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, maj:[8,5,2], vb:2, role:'The Long Haul — the climb',    ben:{n:'+2',ic:'star'},   bnote:'no prize — every delivered die scores +2★'},   // v4.10: the minimum returned to 3+ (the export band); the panel had kept 4+
 ];
 const MAX_ROUND=25;                  // round ceiling ⚙ — top of the 12–25-round target band (v4.1: the DICE are the one clock; the Sailed-Ships track left the kit)
 const PRES_DISCS=13;                 // QUALITY DICE per colour ⚙ (v4.9b: 12 → 13 — the 13th funds the mason's marks; v4.5 had cut 14 → 12) — THE component: maturation marker (start value → quality), gate & value (1–6★), presence at the kontor, and the END CLOCK (the first EMPTY tray — every die committed — sets the final round). Store-bought d6.
@@ -861,7 +860,7 @@ function aid3Panels(){
      '<h5>'+LU('list-ordered')+'Your Turn</h5>'
     +'<div class="step"><span class="sn">1</span><span class="sx"><b>Move</b> to an adjacent station (turn 1: start where you stand)</span></div>'
     +'<div class="step"><span class="sn">2</span><span class="sx"><b>Choose a line</b>: the row or the column</span></div>'
-    +'<div class="step"><span class="sn">3</span><span class="sx"><b>Resolve its stops</b>: any order, all optional \u2014 <b>your station = its PRIMARY</b>, the line\u2019s other station = its <b>ALTERNATE</b>; arrivals open their stop</span></div>'
+    +'<div class="step"><span class="sn">3</span><span class="sx"><b>Resolve the line</b>: any order, all optional \u2014 <b>your station = its PRIMARY</b>, the line\u2019s other station = its <b>ALTERNATE</b>; arrivals open live</span></div>'
     +'<h5>'+LU('dices')+'The Die</h5>'
     +'<div class="dstrip">'
       +AID_CHIP('flask-conical','Brew','start')+AID_ARR
@@ -872,13 +871,13 @@ function aid3Panels(){
     +'</div>'
     +'<div class="ln"><span class="em">No die in the tray</span>: no brew, no presence.</div>'
     +'<h5>'+LU('sail')+'Load &amp; Sail</h5>'
-    +'<div class="ln">\u00b7 <b>Load</b> (a Ship\u2019s slot stop): 1 <b>READY</b> cask from YOUR vessels, die \u2265 the minimum \u2014 both gates, always</div>'
+    +'<div class="ln">\u00b7 <b>Load</b> (a Ship\u2019s slot stop): 1 <b>READY</b> cask from YOUR vessels, its die \u2265 the Ship\u2019s minimum</div>'
     +'<div class="ln">\u00b7 The load bonus fires <b>after</b> any sail it completes \u00b7 <b>Full = sails at once</b> (a Skute on its first load)</div>'
-    +'<div class="ln">\u00b7 Deliver in boarding order: <b>lift the Bourse first</b> (+1/cask per beer), score <b>die + marker</b>, park, prize per cask (else 2 goods \u00b7 an unplayable Venture forfeits), claim 1 <b>Manifest</b> demand</div>'
+    +'<div class="ln">\u00b7 Deliver in boarding order: <b>lift the Bourse first</b> (+1/cask per beer), score <b>die + marker</b>, park, prize per cask, claim 1 <b>Manifest</b> demand</div>'
     +'<h5>'+LU('store')+'The Stations</h5>'
     +'<div class="ln">'+LU('store')+' <b>Market</b>: take 3 \u00b7 alt 1 \u2003 '+LU('age-3')+' <b>Cellar</b>: Age 3 \u00b7 alt 1</div>'
-    +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b>: SEARCH the beer\u2019s stack, choose the tile (price \u22121) \u00b7 alt: the top tile</div>'
-    +'<div class="ln">'+LU('ship')+' <b>Harbor</b>: place a Ship \u2014 fee 2/1/0'+G+' by size \u2014 + 1 free load \u00b7 alt: Load 1, any Ship</div>'
+    +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b>: brew \u2014 the beer\u2019s price \u22121; SEARCH the stack, choose the tile \u00b7 alt: the top tile</div>'
+    +'<div class="ln">'+LU('ship')+' <b>Harbor</b>: place a Ship (fee 2/1/0'+G+') + 1 free load \u00b7 alt: Load 1, any Ship</div>'
     +'<h5>'+LU('landmark')+'The Kontore</h5>'
     +'<table class="kt"><tr><th>Kontor</th><th>Min</th><th>Prize</th><th>Maj.</th></tr>'
     +AID_K('kontor-bruges','Bruges','1+','a recipe, at its fee','4/2/0')
@@ -886,8 +885,8 @@ function aid3Panels(){
     +AID_K('kontor-bergen','Bergen','2+','a Specialist + shift \u00b11 (no seat: 2 goods)','9/5/2')
     +AID_K('kontor-novgorod','Novgorod','3+','die scores +2\u2605','8/5/2')
     +'</table>'
-    +'<div class="dontf"><b>Don\u2019t forget:</b> \u2460 the minimum reads the die AS IT BOARDS (after lifts) \u2461 the Specialist display refills at turn END (Ships: at once; a Manifest rides every non-Bruges hull \u2014 claim ONE line per delivered cask, each line once per voyage)</div>'
-    +'<div class="ln">'+LU('building-2')+' <b>Public Works</b> serve anyone, free \u00b7 '+LU('home')+' <b>Ventures</b>: L1 1'+G+' on open ground (wharf full: replace a Public Work \u2014 never a rival\u2019s) \u00b7 L2 2'+G+' over your own L1 \u00b7 the public line pays whoever activates the line</div>');
+    +'<div class="dontf"><b>Don\u2019t forget:</b> \u2460 the minimum reads the die AS IT BOARDS (after lifts) \u2461 the Specialist display refills at turn END (Ships: at once) \u2462 Manifests ride every non-Bruges hull \u2014 1 claim/cask</div>'
+    +'<div class="ln">'+LU('building-2')+' <b>Public Works</b> serve anyone, free \u00b7 '+LU('home')+' <b>Ventures</b>: L1 1'+G+' on open ground (wharf full: replace a Public Work \u2014 never a rival\u2019s) \u00b7 L2 2'+G+' over your own L1 \u00b7 its public line pays any activation</div>');
   const back=aid3('back','book-open','End, Score &amp; Icons',
      '<h5>'+LU('timer')+'End &amp; Score</h5>'
     +'<div class="ln"><b>First EMPTY tray</b> (your last of 13 dice committed): finish the round. Round 25 backstop.</div>'
@@ -910,12 +909,12 @@ function aid3Panels(){
     +'<h5>'+LU('beer')+'Tiles</h5>'
     +AID_ROW('quality-3','Cask \u00b7 quality','a brewed beer + its grade')
     +AID_ROW('sailboat','Ship','Skute \u00b7 Cog \u00b7 Hulk: 1 \u00b7 2 \u00b7 3 berths')
-    +AID_ROW('building-2','Public Work','brown setup furniture — die-less, passive, serves anyone (v5.3)')
-    +AID_ROW('home','Venture','your colour ring — a public line for all, the ringed line for you; L1 on open ground, L2 over your own L1 (v5.3)')
+    +AID_ROW('building-2','Public Work','brown setup furniture — die-less, passive, serves anyone')
+    +AID_ROW('home','Venture','your colour ring — a public line for all, the ringed line for you')
     +AID_ROW('wrench','Specialist','private, seats at your board')
     +AID_ROW('scroll-text','Recipe','permission to brew a beer')
     +AID_ROW('contract','Manifest','a demand card on a non-Bruges Ship')
-    +AID_ROW('trending-up','The Bourse','a beer’s price marker — a delivery scores die + track (v5.3)')
+    +AID_ROW('trending-up','The Bourse','a beer’s price marker — a delivery scores die + track')
     +'<h5>'+LU('package-plus')+'The 8 Load Bonuses</h5>'
     +AID_ROW('coins','Gain 2 goods','any mix')
     +AID_ROW('age-2','Age +2','two aging steps')
@@ -924,7 +923,7 @@ function aid3Panels(){
     +AID_ROW('scroll-text','Gain 1 recipe','at its fee')
     +AID_ROW('search','Open 1 Venture','at its fee — the normal grounds')
     +AID_ROW('wrench','Gain 1 Specialist','at its fee')
-    +AID_ROW('flask-conical','Brew 1','a normal brew \u2014 the TOP tile (v5.2b)')
+    +AID_ROW('flask-conical','Brew 1','a normal brew \u2014 the TOP tile')
     +'<h5>'+LU('star')+'Scoring Marks</h5>'
     +AID_ROW('star','\u2605','the scoring unit')
     +AID_ROW('trophy','Majority','Kontor ranking by parked dice')
@@ -1144,7 +1143,7 @@ const kMini=d=>{
       +'<div class="kp-cell"><span class="kp-ch">'+LU('landmark')+'majority</span><span class="kp-big">'+d.maj.join('/')+'</span></div>'
     +'</div><div class="kp-note bnote">'+(BNOTE_SHORT[d.nm]||d.bnote)+'</div></div>'
   +'</div>';};
-const BNOTE_SHORT={Bruges:'a recipe — pay its fee (H = Q−3)',London:'a Venture from your hand — the fee waived (v5.3)',Bergen:'a Specialist, free \u2014 no seat? 2 goods \u00b7 + shift the Bourse \u00b11 (v5.3)',Novgorod:'no prize — every parked die scores +2★'};
+const BNOTE_SHORT={Bruges:'a recipe — pay its fee (H = Q−3)',London:'a Venture from your hand — the fee waived',Bergen:'a Specialist, free \u2014 no seat? 2 goods \u00b7 + shift the Bourse \u00b11',Novgorod:'no prize — every delivered die scores +2★'};
 function supplyBoard(){
   const dslot=(fam,ic,smp,lbl)=>'<div class="dslot '+fam+'">'+LU(ic)+(lbl?'<span class="rn">'+lbl+'</span>':'')
     +(OVERLAY&&smp?'<div class="ovl">'+smp+'</div>':'')+'</div>';
@@ -1206,7 +1205,7 @@ function destBoard(){   // ONE board (v5.0): the Kontore 2×2 over the MANIFEST 
 // parkings (the third badged 3–4p; Overlay proofs a free 3-bench + two duels), the TAPROOM
 // FLOOR as an open parking field on a plank (the champion chip = die → crest, icons only;
 // Overlay ghosts 12mm d6), the Tasting-deck well and the ⚜ Invitation-card well. The
-// judging procedure lives in the rulebook (§ The Guild Tastings) and on no printed face.
+// judging procedure lives in RULES.md §12 (and, when the expansion ships, the rulebook) — never on a printed face.
 function hallBoardHtml(){
   const smp=[CONTESTS_P[0],CONTESTS_P[6],CONTESTS_P[8]];   // free (bench 3) · dark + export (duels)
   const slot=i=>'<div class="tslot">'+(i===2?'<span class="tb-badge">3\u20134p</span>':'')
@@ -1397,7 +1396,7 @@ function bourseStrip(){
   const cols=[-1,0,1,2,3];
   let h='<div style="width:100%;height:100%;box-sizing:border-box;background:#f3ead8;border:2px solid #6b5537;border-radius:.1in;padding:.14in .18in;font-family:inherit;display:flex;flex-direction:column">';
   h+='<div style="font-size:.19in;font-weight:bold;letter-spacing:.02em;color:#4a3822">'+LU('trending-up')+' THE BOURSE — the beer-value market</div>';
-  h+='<div style="font-size:.105in;color:#6b5a41;margin:.02in 0 .08in">A delivered cask scores its <b>die + its beer’s marker</b>. A <b>brew</b> slips its beer 1 · every cask <b>landing</b> lifts it 1 (all rises BEFORE the voyage scores) · <b>shifts</b>: Bergen’s prize ±1, the Ventures’ public lines. Gruit &amp; Jopenbier trade off-book. Markers start at 0.</div>';
+  h+='<div style="font-size:.105in;color:#6b5a41;margin:.02in 0 .08in">A delivered cask scores its <b>die + its beer’s marker</b> · Gruit &amp; Jopenbier trade off-book.</div>';
   h+='<div style="flex:1;display:flex;gap:.06in">';
   cols.forEach(v=>{h+='<div style="flex:1;border:1.6px solid '+(v===0?'#6b5537':'#a08a63')+';border-radius:.07in;background:'+(v<0?'#e7d5c9':(v===0?'#efe3c8':'#dfe7d2'))+';display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:.06in">'
     +'<div style="font-size:.24in;font-weight:bold;color:'+(v<0?'#8a3324':(v>0?'#3f6b35':'#4a3822'))+'">'+(v>0?'+':'')+v+'★</div>'
@@ -1569,7 +1568,7 @@ function checklist(pages,famPages){
     +R('Venture tiles','The PRIVATE dual-use tiles (v5.3) — 4 designs, one ringed set per house: an <b>L1</b> takes any open slot (wharf full: replaces a Public Work) or an <b>L2</b> climbs your own L1 (the spent L1 boxed). Each face prints a <b>public line</b> (1 good · Age +1 · a bourse shift — for whoever activates the line) above the <b>owner’s ringed line</b>; the owner gets both. No die; a rival can never overbuild one.',VENTURES.length*4)
     +R('Specialist tiles','The private purple hires, 15 designs (core five ×3 · guild ten ×1 — v5.1). <b>A draw bag → a display of 4</b>; seated on a player board.',impTotal)
     +R('Manifest cards','Three demand lines (beer/tier · die · combo → ★). <b>One rides every non-Bruges Ship</b> — dealt as the hull enters the display, claimed on delivery (each line once per voyage), returned under the deck at sail.','12')
-    +R('The Bourse strip + price markers','The beer-value market (v5.3): one track (−1 … +3), <b>one marker per in-play beer except Gruit &amp; Jopenbier</b> (markers print for all 8 brews; base uses 4). A delivered cask scores <b>die + track</b>; a brew slips its beer 1; every cask landing lifts it 1 (bulk, before the scoring). Shifts: Bergen’s prize ±1 · the Ventures’ public lines.','1 + 8')
+    +R('The Bourse strip + price markers','The beer-value market (v5.3): one track (−1 … +3), <b>one marker per in-play beer except Gruit &amp; Jopenbier</b> (markers print for all 8 brews; base uses 4). A delivered cask scores <b>die + track</b>; a brew slips its beer 1; every cask landing lifts it 1 (bulk, before the scoring). Shifts: Bergen’s prize ±1 · the Ventures’ public lines · a load at the Tollhouse ±1.','1 + 8')
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')
     +R('Recipe cards','Double-sided — permission to brew, and the Flight record when flipped. <b>One set of six beside each player’s board.</b>',6*PLAYERS.length)
@@ -1579,7 +1578,7 @@ function checklist(pages,famPages){
     +R('Grain cubes','Currency and brew input. <b>A general supply.</b>','60')
     +R('Hops cubes','Currency and brew input. <b>A general supply.</b>','40')
     +R('Worker pawns','<b>One per player, on the Wharf’s stations.</b>',PLAYERS.length)
-    +R('Quality dice — 12 mm d6','<b>THE component:</b> the cask, the presence, the mason’s mark and the clock in one. <b>In each player’s tray, public all game.</b>',PRES_DISCS+' ea')
+    +R('Quality dice — 12 mm d6','<b>THE component:</b> the cask, the presence and the clock in one. <b>In each player’s tray, public all game.</b>',PRES_DISCS+' ea')
     +R('Score movers','<b>One disc per colour on the score ring</b> (flip or mark at +50).','1 ea')
     +R('Draw bags','<b>One per hidden supply</b> — Ships · Specialists. (The Public Works draw at setup straight from the box — v5.3.)','2')
     +R('First-player &amp; round markers','Turn order (fixed) and the 25-round backstop.','2')
@@ -1593,9 +1592,8 @@ function checklist(pages,famPages){
     +R('Tasting tiles','The contest deck — the category, its gate chip, the 1st ★ and the printed bench of die spaces.','12')
     +R('Guild Chancery','The Hall’s building (v4.16b): activate → gain 1 ⚜ Invitation. <b>Shuffled into the building deck in hall mode — always dealt.</b>','1')
     +'</table>';
-  h+=T('Tabled with v4.0 <span style="font-weight:normal;text-transform:none;opacity:.7">— not in this kit</span>')
-    +R('The Hall (prestige lane)','Returns as a fifth destination later; the seam is kept in the rules and the engine.','—')
-    +R('The Trade Roads','The Overland expansion awaits its v4 re-derivation.','—')
+  h+=T('Tabled <span style="font-weight:normal;text-transform:none;opacity:.7">— not in this kit</span>')
+    +R('The Trade Roads','The Overland expansion awaits its re-derivation.','—')
     +'</table>';
   h+='</div>';
   h+='<p style="font-size:.092in;color:#5b4a37;border-top:1px solid #c8b48a;padding-top:.05in;margin:.04in 0 0">'

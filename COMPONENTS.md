@@ -118,7 +118,7 @@ lets an L1 Venture **redevelop** one (§6b). The colour is **BROWN** (v5.2, rule
 | **Ropewalk** *(v5.2 rework, ruled)* | 1 | a load here: **also load 1 Ready cask onto a DIFFERENT docked Ship** ⚙ (once per load flow) | 2 `G` | 3 |
 | Cooperage | 1 | the Ship here: **+1 capacity** (sails only when that berth is also full) · **each cask loaded here: its loader +1★** ⚙ | 2 `G` | 3 |
 | **Weigh House** | 1 | **each cask delivered off the Ship here may claim 2 Manifest lines** | 2 `G` | 3 |
-| **Staple House ×4** *(v5.2 NEW — one crest per Kontor)* | 4 | a Ship sailing from here **to the printed Kontor**: **every delivered cask +2★** ⚙ (*Stapelrecht* — the destination premium) | 2 `G` | 2 |
+| **Staple Houses ×4** *(Bruges Hanzehuis · London Steelyard · Bergen Bryggen · Novgorod Peterhof)* | 4 | *On sail to the tile's Kontor:* **every delivered cask +2★** ⚙ (*Stapelrecht* — the destination premium) | 2 `G` | 2 |
 | **Bonded Store** *(ephemeral)* | 1 | a cask loading here: **die +1** (cap 6); **sails with the Ship** (boxed) — every player with a cask aboard gains 2 goods | 2 `G` | 3 |
 | **Victualling Yard** *(ephemeral)* | 1 | a cask loading here: **its load bonus fires TWICE**; **sails with the Ship** (boxed) | 2 `G` | 3 |
 
@@ -203,8 +203,9 @@ no tile at the seat, the score track is the record. Twelve cards cover the maxim
 header whose foot cells print the shared numbers (pour 1 ⚜ + a cask · 1st ★+the tile ·
 2nd 2★ · 3rd 1★ · majority —) · the open row — three component-true tile parkings, the
 third badged 3–4p · the **Taproom floor** parking field on a plank, its champion chip
-die→crest · the Tasting-deck and ⚜ Invitation-card wells; the judging procedure lives in
-the rulebook §19) · the **Tasting contest deck: 12 tiles**
+die→crest · the Tasting-deck and ⚜ Invitation-card wells; the rules —
+`RULES.md` §12; ruled 2026-08-23: the rulebook carries hall mode only when the expansion
+leaves development — rules never ride a board or component) · the **Tasting contest deck: 12 tiles**
 (building-cut 2.5×1.32″, the minimal face — 2026-08-18: the category name · the entry
 **gate chip** (quality pours the beer glyph — *any*/*1–3*/*4+*; die pours the die glyph —
 *4+*/*5+*/*6*) · the tile’s one variable, **1st ★ + the self-tile glyph** · the printed
@@ -245,6 +246,18 @@ wharf seeds: Hulk→Bruges + 1 Ship ·
 worker placed free · first player fixed.
 
 ## 10. Kit deltas (v5-era — every ruling that touches a printed face lands a note here; older deltas live in git history)
+
+**Component-copy ruling (2026-08-23, designer-ruled — REPRINT, no counts, no rules):** THE
+GOLDEN RULE lands in `STYLE.md` §4c — rules never live on components, boards, or in the play
+interface. Every building/Venture face rewords to the **trigger grammar** (*On load · On sail ·
+On sail to <Kontor> · On line · At end* — the trigger on its own line when a face carries more
+than the bare pair; the cask tiles' icon+text pattern is the model). The **four Staple Houses
+take proper names** — Bruges Hanzehuis · London Steelyard · Bergen Bryggen · Novgorod
+Peterhof. App tooltips compress to *name (family): trigger, effect*; the Bourse strip drops
+its rules paragraph (the teaching lives in the rulebook §8). Face anatomy: the BIG action
+icon (≈ two text lines tall) is its own column, the trigger + action stack beside it; titles
+print bare — no lucide crest — sized to fit or wrapped to two lines. The Guild Tastings stay OUT of
+the printed rulebook while in development (`RULES.md` §12 is their one rules home).
 
 **v5.3b kit pass (2026-08-22 — wording/visual REPRINT, no counts, no rules):** the whole
 tile set rewords **icon-first** (icons carry resources/actions; words only where an icon

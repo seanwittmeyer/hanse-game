@@ -41,7 +41,7 @@ governed here.
 | shift | v | Move a price marker (±1, or +2▲ up-only) — Bergen's prize + the Ventures' public lines | trending-up | shifts | Yes | ~~manipulate~~ on components (rules prose may say the market is manipulated) | ○ v5.3 |
 | public line | n | The top line of a Venture face — fires for whoever activates a line through the slot | — | public lines | Yes | — | ○ v5.3 |
 | owner line | n | The ringed private line of a Venture face — the owner alone (the owner collects both lines) | — | — | Yes | ~~private action~~ | ○ v5.3 |
-| Staple House | n | The destination-premium Public Work (×4, one Kontor crest each): a matching sail from its slot pays every cask +2★ ⚙ | landmark | Staple Houses | Yes | ~~Staple~~ alone in rules copy | ○ v5.2 |
+| Staple House | n | The destination-premium Public Work family (×4): a matching sail from its slot pays every cask +2★ ⚙. The four tiles print PROPER NAMES (ruled 2026-08-23): **Bruges Hanzehuis · London Steelyard · Bergen Bryggen · Novgorod Peterhof** — "Staple House" is the family noun in rules copy | landmark | Staple Houses | Yes | ~~Staple~~ alone in rules copy | ○ v5.2 |
 | recipe | n | A card granting permission to brew a beer | scroll-text | recipes | No | — | ● |
 | exports | n | The four dealt-3-of-4 beers (Broyhan · Keut · Mumme · Bock) | — | — | No | — | ● |
 | the Flight | n | Your completed (shipped) recipe cards — moved to the board’s COMPLETED side on that beer’s first load (v4.9d); scores (n−1)² | unlock | — | Yes | — | ● |
@@ -166,13 +166,31 @@ the registry governs what a PLAYER reads.
 | ~~Scrivener's Hall~~ · ~~Hiring Post~~ · ~~Almoner's Stall~~ | — | RETIRED tiles (v5.1 — the shelf turn; acquisition = Kontor prizes + load bonuses; presence placement is FREE and flows only through casks) | — |
 | Ropewalk · Weigh House | n | Public Works: the Ropewalk's cross-quay load (v5.2 — a load here also loads 1 Ready cask onto a DIFFERENT Ship) · the Weigh House's two Manifest lines per cask delivered off the Ship here | ○ provisional |
 | the toll bench | n | The Tollhouse's v5.3b face (prose nickname — the tile still titles *Tollhouse*): a cask loading at its slot lets the LOADER shift any price marker ±1; the stamp (−1 die for +3★) is RETIRED | ○ provisional |
-| trigger shorthands | — | The kit-pass component grammar (2026-08-22, the §4 templating compressed for tiles): `load:` (a cask loads at this slot) · `sail:` (a Ship sails from this slot) · `line:` (fires when a line through this slot is activated) · `end:` (game end) · `turn start:` — icon-first after the colon, never a sentence | ○ provisional |
+| trigger words (tiles) | — | The ruled component grammar (2026-08-23, supersedes the `load:`/`sail:` shorthands): **On load** (a cask loads at this slot) · **On sail** / **On sail to <Kontor>** (a Ship sails from this slot) · **On line** (a line through this slot is activated) · **At end** · **At turn start**. A face with more than a bare trigger+action puts the TRIGGER ON ITS OWN LINE, the action below it — the cask tiles' icon+text pattern is the model. Icon-first after the trigger, never a sentence | ● ruled |
 | Broker · Brewer's Mate | n | The v5.1 Specialist names (your Market alternate is Source 2 · your Brewhouse alternate searches the stack) | ○ provisional |
 | parti-gyle | n/adj | Zerbster’s printed signature (v4.15b): as the cask boards, an optional free Gruit into an open vessel (a tray die), then Load 1 more | ○ provisional (period brewing term — the second runnings) |
 | smoke-hardy | adj | Duckstein’s printed signature: its die turns +1 as it boards (cap 6) | ○ provisional |
 
 *(Designer to lock or rename on the next registry pass; printed copy uses these until then.
 Salt Trade left the printed faces at v4.15b — no entry needed.)*
+
+## §4c. THE GOLDEN RULE (designer-ruled 2026-08-23)
+
+**Rules never live in the components — not the physical tiles, not the web components, not
+the boards, and not the play interface.** Players learn rules from the rulebook and the
+player aid; they do not learn or track rule changes on tiles, boards, or tooltips.
+
+1. **Component copy = name + trigger + effect.** Nothing else: no family lore, no design
+   history, no "how this fits the game." E.g. a tile prints *On load* / *1 marker ±1*; the
+   app tooltip reads *Tollhouse (Public Work): On load, adjust 1 Bourse marker ±1.* — and
+   stops there.
+2. **Boards carry data and slots, never paragraphs.** A track prints its cells and labels;
+   the teaching lives in the rulebook.
+3. **Tooltips are reminders in the same grammar** — one line, plain English, mirroring the
+   printed face; never a lesson.
+4. **A rule that has no printed home yet lives in `RULES.md` only.** In-development systems
+   (e.g. the Guild Tastings) stay OUT of `rulebook.html` until they leave development —
+   rules live in `RULES.md` and `rulebook.html`, nowhere else.
 
 ## §5. Deferred to the next copy pass (logged, not yet applied)
 
