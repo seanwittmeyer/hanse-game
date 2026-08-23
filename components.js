@@ -308,10 +308,9 @@ const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('coins'),VPUB_SH1=LU('bourse-pm1'),VPUB
 // foot carries icons alone. VBIG = one big-icon cell (the .ac size the works print).
 const VBIG=h=>'<span class="ac">'+h+'</span>';
 const VSEP=s=>'<span class="vsep">'+s+'</span>';
-// STAND-INS awaiting generated icons (designer 2026-08-23): the SWAP icon (Rack House — the
-// die rides meanwhile) · the RE-DEAL icon (Factor's Desk — contract meanwhile) · the VENTURE
-// icon (Guild Residence — the lucide home meanwhile) · a goods+1 mark (Counting House — the
-// goods icon wears a +1 badge meanwhile). Each is a one-line swap when its art lands.
+// swap-dice · redeal · venture-build landed 2026-08-23. ONE stand-in remains: a goods+1
+// mark (Counting House — the goods icon wears a +1 badge meanwhile); a one-line swap
+// when its art lands.
 const VGOOD1=VBIG(LU('coins')+'<b class="vbadge">+1</b>');
 const VENTURES=[
   {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, own:VBIG(LU('swap-dice')), txt:'Swap 2 dice', art:'venture-rack-l1.png'},
@@ -320,7 +319,7 @@ const VENTURES=[
                  l2:{nm:'Assay Loft',     ic:'scale',   pub:VPUB_GOLD, own:VBIG('<b class="vnum">1</b>'+LU('sprout','h'))+VSEP('→')+VBIG(LU('check')), art:'venture-counting-l2.png'}},
   {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', pub:VPUB_SH1, own:VBIG(LU('redeal')), txt:'On load', art:'venture-factor-l1.png'},
                  l2:{nm:'Staple Rights',  ic:'landmark',pub:VPUB_SH2, trig:'On sail', own:VBIG(LU('beer'))+VSEP(':')+VBIG(LU('star-plus1','starmark')), art:'venture-factor-l2.png'}},
-  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   pub:VPUB_GOLD, own:VBIG(LU('package-plus')), txt:'On load, load another', art:'venture-warehouse-l1.png'},
+  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   pub:VPUB_GOLD, own:VBIG(LU('package-plus')), txt:'On load,<br>load another', art:'venture-warehouse-l1.png'},
                  l2:{nm:'Guild Residence',ic:'home',    pub:VPUB_SH1, trig:'At end', own:VBIG(LU('star-plus2','starmark'))+VSEP('×')+VBIG(LU('venture-build')), art:'venture-warehouse-l2.png'}},
 
 ];
