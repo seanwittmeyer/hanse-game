@@ -254,7 +254,9 @@ On sail to <Kontor> · On line · At end* — the trigger on its own line when a
 than the bare pair; the cask tiles' icon+text pattern is the model). The **four Staple Houses
 take proper names** — Bruges Hanzehuis · London Steelyard · Bergen Bryggen · Novgorod
 Peterhof. App tooltips compress to *name (family): trigger, effect*; the Bourse strip drops
-its rules paragraph (the teaching lives in the rulebook §8). The Guild Tastings stay OUT of
+its rules paragraph (the teaching lives in the rulebook §8). Face anatomy: the BIG action
+icon (≈ two text lines tall) is its own column, the trigger + action stack beside it; titles
+print bare — no lucide crest — sized to fit or wrapped to two lines. The Guild Tastings stay OUT of
 the printed rulebook while in development (`RULES.md` §12 is their one rules home).
 
 **v5.3b kit pass (2026-08-22 — wording/visual REPRINT, no counts, no rules):** the whole

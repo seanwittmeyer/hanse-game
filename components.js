@@ -267,18 +267,20 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   // a STANDARD verb prints the same icon chip the casks print — one action grammar across the kit;
   // only the non-standard powers carry text (terse: the rulebook holds the full language)
   const sa=d.act&&STD_ACT[d.act];
-  // round 5: ANY leading icon (a standard verb's chip OR a die-mark via effIc) rides the same
-  // .ac slot at ONE size; the text bottom-aligns beside it and wraps upward when long
   const lead=sa?LU(sa.ai):(d.effIc?LU(d.effIc):null);
-  const eff=lead?'<span class="ac">'+lead+'</span><span class="bt-etext">'+(sa?sa.t:d.eff)+'</span>':d.eff;
-  // the trigger grammar (ruled 2026-08-23): the condition on its OWN line, the action below —
-  // the cask tiles' icon+text pattern; rules never ride a component.
-  const condLn=d.cond?'<span class="bt-cond">'+d.cond+'</span>':'';
-  return '<div class="btile btW'+(d.cond?' btC':'')+'" style="--c:'+foot+'">'
+  const txt=sa?sa.t:d.eff;
+  // the trigger grammar, two-column foot (ruled 2026-08-23): the BIG action icon is its own
+  // column (about two text lines tall); the trigger and the action stack beside it. No icon →
+  // the two lines stack full-width. Rules never ride a component.
+  let ft;
+  if(d.cond&&lead) ft='<div class="bt-foot btF2"><span class="ac">'+lead+'</span><span class="bt-2col"><span class="bt-cond">'+d.cond+'</span><span class="bt-etext">'+txt+'</span></span></div>';
+  else if(d.cond)  ft='<div class="bt-foot btFC"><span class="bt-cond">'+d.cond+'</span><span class="bt-eff">'+txt+'</span></div>';
+  else             ft='<div class="bt-foot"><span class="bt-eff'+(lead?' bt-act':'')+'">'+(lead?'<span class="ac">'+lead+'</span><span class="bt-etext">'+txt+'</span>':txt)+'</span></div>';
+  // the title prints BARE (no lucide crest — ruled 2026-08-23) and may wrap to two lines
+  return '<div class="btile btW" style="--c:'+foot+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
-  +'<div class="bt-top"><span class="bt-ic">'+LUX(d.ic)+'</span><span class="bt-nm'+(d.nm.length>18?' xlong':d.nm.length>15?' long':'')+'">'+d.nm+'</span>'
-    +msChip+'</div>'   // v5.3: no fee, no start face — furniture prints its name + effect alone
-  +'<div class="bt-foot">'+condLn+'<span class="bt-eff'+(lead?' bt-act':'')+'">'+eff+'</span></div>'
+  +'<div class="bt-top"><span class="bt-nm'+(d.nm.length>18?' long':'')+'">'+d.nm+'</span>'+msChip+'</div>'
+  +ft
   +'</div>';}
 // ---- v5.2 PRIVATE VENTURES (ruled 2026-08-22): the GWT family — each house holds an IDENTICAL
 // hand of 4 DUAL-USE tiles (one piece of cardboard = an L1 face OR an L2 face, never both:
@@ -314,7 +316,7 @@ function ventureTile(d,lvl,col){const f=lvl===2?d.l2:d.l1;
   const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
   return '<div class="btile btW" style="--c:'+VENT_FOOT+ring+'">'
   +artLayer(f.art||('venture-'+d.k+'-l'+lvl+'.png'))
-  +'<div class="bt-top"><span class="bt-ic">'+LUX(f.ic)+'</span><span class="bt-nm'+(f.nm.length>18?' xlong':f.nm.length>15?' long':'')+'">'+f.nm+'</span>'
+  +'<div class="bt-top"><span class="bt-nm'+(f.nm.length>18?' long':'')+'">'+f.nm+'</span>'
     +'<span class="bt-ms" title="the level — an L1 takes any open slot (wharf full: replaces a Public Work); an L2 overbuilds your own L1">'+(lvl===2?'L2':'L1')+'</span>'
     +'<span class="bt-cost">'+cost(lvl===2?2:1,0)+'</span></div>'
   +'<div class="bt-foot"><span class="bt-eff"><span class="vt-pub" title="the PUBLIC line — whoever activates a line through this slot">'+f.pub+'</span>'
@@ -783,12 +785,16 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .vt-pub{display:inline-flex;align-items:center;gap:.015in;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);border-radius:.045in;padding:.005in .035in;margin-right:.05in}'
 +'.btile .vt-own{display:inline-flex;align-items:center;gap:.015in;border-left:.035in solid var(--oc,rgba(255,255,255,.55));padding-left:.045in}'
 +'.btile .bt-ms img.ai,.btile .bt-ms svg{width:.24in;height:.24in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}'
-+'.btile.btC .bt-foot{flex-direction:column;align-items:flex-start;gap:.01in;padding-top:.14in}'
-+'.btile .bt-cond{font-variant:small-caps;font-weight:bold;font-size:.125in;line-height:1;opacity:.95;display:inline-flex;align-items:center;gap:.02in}'
-+'.btile .bt-cond img.ai,.btile .bt-cond svg{width:.16in;height:.16in}'
-+'.btile.btC .bt-eff.bt-act,.btile.btC .bt-eff{align-items:center}'
-+'.btile.btC .ac{width:.3in;height:.3in;margin:-.04in .02in -.04in 0}'
-+'.btile.btC .ac svg,.btile.btC .ac .ic{width:.3in;height:.3in}'
++'.btile .bt-nm{white-space:normal;overflow:visible;line-height:1.02}'
++'.btile .bt-nm.long{font-size:.16in}'
++'.btile .bt-cond{font-variant:small-caps;font-weight:bold;font-size:.13in;line-height:1;opacity:.95;display:inline-flex;align-items:center;gap:.025in}'
++'.btile .bt-cond img.ai,.btile .bt-cond svg{width:.17in;height:.17in}'
++'.btile .btF2{align-items:center;gap:.06in}'
++'.btile .btF2 .ac{width:.5in;height:.5in;margin:0;flex:0 0 auto}'
++'.btile .btF2 .ac svg,.btile .btF2 .ac .ic{width:.5in;height:.5in}'
++'.btile .bt-2col{display:flex;flex-direction:column;justify-content:center;gap:.025in;min-width:0;flex:1}'
++'.btile .btF2 .bt-etext{padding-bottom:0;font-size:.15in;font-weight:600;line-height:1.1}'
++'.btile .btFC{flex-direction:column;align-items:flex-start;gap:.02in;padding-top:.14in}'
 +'\n/* ===== v4.9d PLAYER BOARD (7.65x3.85in) \u2014 print + live app, one component ===== */'
 +'.pbrd{--pc:#7c2128;width:7.65in;height:3.85in;background:var(--parch,#f3e9d2);color:var(--ink,#2b2018);position:relative;border-radius:.14in;display:flex;flex-direction:column;gap:.07in;padding:.12in .15in;box-sizing:border-box;border:2.5px solid var(--pc);overflow:hidden}'
 +'.pbrd .sn{font-variant:small-caps;font-weight:bold;font-size:.085in;opacity:.62;line-height:1.05}'
