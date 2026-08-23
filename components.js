@@ -116,10 +116,10 @@ const BUILDINGS=[
   {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, cond:'+1 berth', eff:'On load: +1★'},   // v4.12b: the wharfage eases 2→1 ⚙
   {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, art:'building-weighhouse.png', cond:'On sail', effIc:'contract',     eff:'×2 Manifest lines'},
   // v5.2 NEW ⚙ — the STAPLE HOUSES (Stapelrecht): the destination premium, one crest each
-  {k:'staple_bruges',   nm:'Bruges Hanzehuis',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bruges', art:'building-staple.png', cond:'On sail to '+LU('kontor-bruges')+'Bruges', eff:'+2★ each cask'},
-  {k:'staple_london',   nm:'London Steelyard',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'london', art:'building-staple.png', cond:'On sail to '+LU('kontor-london')+'London', eff:'+2★ each cask'},
-  {k:'staple_bergen',   nm:'Bergen Bryggen',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bergen', art:'building-staple.png', cond:'On sail to '+LU('kontor-bergen')+'Bergen', eff:'+2★ each cask'},
-  {k:'staple_novgorod', nm:'Novgorod Peterhof', ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'novgorod', art:'building-staple.png', cond:'On sail to '+LU('kontor-novgorod')+'Novgorod', eff:'+2★ each cask'},
+  {k:'staple_bruges',   nm:'Bruges Hanzehuis',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bruges', art:'building-staple.png', effIc:'kontor-bruges', cond:'On sail to Bruges', eff:'+2★ each cask'},
+  {k:'staple_london',   nm:'London Steelyard',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'london', art:'building-staple.png', effIc:'kontor-london', cond:'On sail to London', eff:'+2★ each cask'},
+  {k:'staple_bergen',   nm:'Bergen Bryggen',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bergen', art:'building-staple.png', effIc:'kontor-bergen', cond:'On sail to Bergen', eff:'+2★ each cask'},
+  {k:'staple_novgorod', nm:'Novgorod Peterhof', ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'novgorod', art:'building-staple.png', effIc:'kontor-novgorod', cond:'On sail to Novgorod', eff:'+2★ each cask'},
   {k:'bonded',    nm:'Bonded Store',      ms:3, verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, cond:'On load: '+LU('die-plus1'), eff:'On sail: away · shippers +2 '+LU('coins')},
   {k:'victual',   nm:'Victualling Yard',  ms:3, verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, cond:'On load: bonus ×2', eff:'On sail: leaves with the Ship'},
   // v4.16b "Guild Ledger" (designer-ruled 2026-08-14, off the lane study): the Guildhall's own
