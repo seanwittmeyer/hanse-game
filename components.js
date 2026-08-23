@@ -822,7 +822,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .vt2 .vt-txt{font-size:.15in;font-weight:600;line-height:1.1;margin-left:.03in;min-width:0}'
 +'.btile .vsep{font-weight:900;font-size:.2in;line-height:1;margin:0;flex:0 0 auto}'
 +'.btile .vnum{font-weight:900;font-size:.24in;line-height:1;margin-right:.015in;text-shadow:0 1px 2px rgba(0,0,0,.7)}'
-+'.btile .vt-pub .ic,.btile .vt-pub img.ai,.btile .vt-pub svg{width:.5in;height:.5in}'
++'.btile .vt-pub .ic,.btile .vt-pub img.ai,.btile .vt-pub svg{width:.55in;height:.55in}'
 +'.btile .vt-own{display:inline-flex;align-items:center;gap:.015in}'
 +'.btile .starmark,.itile .starmark{width:.26in!important;height:.26in!important;vertical-align:-.08in}'
 +'.btile .bt-crest{flex:0 0 auto;margin-right:.05in;display:inline-flex}.btile .bt-crest .ic,.btile .bt-crest img.ai{width:.34in;height:.34in}'
