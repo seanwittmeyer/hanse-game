@@ -50,12 +50,16 @@ var __pourDo=pourDo;pourDo=function(vi,ci){var ct=S&&S.tastings&&(S.tastings.ope
 var __judgeT=judgeTasting;judgeTasting=function(ci){var r=__judgeT(ci);if(__uOn())__U.tilesWon++;return r;};
 var __rackPick=rackPick;rackPick=function(vi){var had=!!UI.rack;var r=__rackPick(vi);if(__uOn()&&had&&!UI.rack)__U.rack++;return r;};
 var __assayPick=assayPick;assayPick=function(vi,dir){var had=!!UI.assay;var r=__assayPick(vi,dir);if(__uOn()&&had&&!UI.assay)__U[(dir===-1)?'assayDown':'assayUp']++;return r;};
-var __loadCommit=loadCommit;loadCommit=function(shipSlot,vi,useOpt){var p=cur();var bk=bKeyAt(shipSlot);
-  var o0=p?(p.bankO||0):0;var c=p&&p.vessels[vi];var lift=(bk==='maltkiln'||bk==='bonded')&&c&&c.die<6&&caskReady(c);
+var __loadCommit=loadCommit;loadCommit=function(shipSlot,vi){var p=cur();var bk=bKeyAt(shipSlot);
+  // v5.3b: the TOLL BENCH — a load here queues the loader's ±1 Bourse shift. (The counter used to
+  // watch bankO, the retired stamp's ★ payout, so it read 0 forever; it now counts the bench firing,
+  // which is what the DESIGN §10 watch asks: does the Tollhouse finally see traffic?)
+  var toll=bk==='tollhouse'&&Object.keys(S.bourse||{}).length>0;
+  var c=p&&p.vessels[vi];var lift=(bk==='maltkiln'||bk==='bonded')&&c&&c.die<6&&caskReady(c);
   var sh0=S.slots[shipSlot];var below=sh0&&c&&bk==='customs'&&boardDie(c,shipSlot)<DEST[sh0.dest].gate;   // boarded only through the Customs relief
   var rw=UI.load&&UI.load.rwFrom;   // v5.2: this IS the Ropewalk's cross-quay load
-  var r=__loadCommit(shipSlot,vi,useOpt);
-  if(__uOn()&&p&&c&&!p.vessels[vi]){if(lift)__U.kilnLift++;if((p.bankO||0)>o0)__U.toll++;
+  var r=__loadCommit(shipSlot,vi);
+  if(__uOn()&&p&&c&&!p.vessels[vi]){if(lift)__U.kilnLift++;if(toll)__U.toll++;
     if(bk==='victual')__U.victual++;if(below)__U.customsBoard++;if(rw)__U.ropeX++;}return r;};
 var __sailShip=sailShip;sailShip=function(slot,creditId){var bonded=bKeyAt(slot)==='bonded';
   var t0=S.slots[slot];var over=t0&&(t0.load||[]).length>SHIP_CAP[t0.ship];   // a Cooperage berth actually used
@@ -240,7 +244,7 @@ let anyErr=0;
     console.log(`the bourse (v5.3): manipulation shifts/game ${fmt(us.bshiftUp+us.bshiftDown)} (▲${fmt(us.bshiftUp)} ▼${fmt(us.bshiftDown)}) · brew crashes ${fmt(us.brewCrash)} · public-line freebies ${fmt(us.vpubGold+us.vpubStep)} (goods ${fmt(us.vpubGold)} · steps ${fmt(us.vpubStep)}) · end track avg ${fmt(avg(ok.map(r=>r.bourseAvg||0)))}`);
     console.log(`public works (v5.3 furniture): seeded/game ${fmt(avg(ok.map(r=>r.furn||0)))} · (builds ${fmt(us.built)} + maturities ${fmt(us.matured)} — both 0 by design) · end pips/player ${fmt(avg(ok.map(r=>r.bldgPips||0)))}`);
     console.log(`ventures (v5.2): L1 placed/game ${fmt(us.ventL1)} · L2 climbs ${fmt(us.ventL2)} · standing at end/player ${fmt(avg(ok.map(r=>r.vents||0)))} · staple★/player ${fmt(avg(ok.map(r=>r.stapleStars||0)))} · factor re-deals ${fmt(us.vre)} · ropewalk cross-loads ${fmt(us.ropeX)}`);
-    console.log(`usage/game: manifest lines ${fmt(us.manifests)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)} · toll ${fmt(us.toll)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · victual loads ${fmt(us.victual)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);
+    console.log(`usage/game: manifest lines ${fmt(us.manifests)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)} · toll bench ${fmt(us.toll)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · victual loads ${fmt(us.victual)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);
     console.log(`shapers/game: chandler ${fmt(us.chandler)} · supercargo ${fmt(us.scargo)} · coop-berth sails ${fmt(us.coopSail)} · customs boards ${fmt(us.customsBoard)}`);
     if(us.pours>0)   // v4.17 TASTINGS dashboard
       console.log(`v4.17 tastings/game: pours ${fmt(us.pours)} · benches convened ${fmt(us.judged)} · door-slams ${fmt(us.slams)} · invites earned ${fmt(us.invE)} / spent ${fmt(us.invS)}`);

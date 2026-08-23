@@ -1679,7 +1679,7 @@ function resolveStop(i){
 // resume / return helpers — clear the sub-flow fields, then route to the right phase
 function resume(rt){
   UI.cell=null;UI.stage=null;UI.tmp=null;
-  UI.age=UI.brew=UI.bverb=UI.src=UI.load=UI.reach=UI.survey=UI.hire=UI.benefit=UI.comm=UI.rgain=UI.rack=UI.assay=UI.loadopt=UI.chswap=UI.vre=UI.bsh=UI.parti=null;
+  UI.age=UI.brew=UI.bverb=UI.src=UI.load=UI.reach=UI.survey=UI.hire=UI.benefit=UI.comm=UI.rgain=UI.rack=UI.assay=UI.chswap=UI.vre=UI.bsh=UI.parti=null;
   if(rt==='benefitcont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}
   if(rt==='actscont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}
   if(rt==='line')UI.sub='line';
@@ -2090,19 +2090,11 @@ function loadPickCask(vi){const L=UI.load;if(!L)return;
 function loadOnto(shipSlot){const p=cur();const L=UI.load;if(!L||L.cask==null)return;
   const vi=L.cask;const c=p.vessels[vi];
   if(!canTake(shipSlot,vi))return;
-  // the Tollhouse's ±1 Bourse shift fires inside loadCommit; no on-load choice point
-  // remains (loadopt stays a dormant seam).
-  loadCommit(shipSlot,vi,false);
+  // a load is a load: every slot effect fires inside loadCommit — the Tollhouse queues its
+  // ±1 Bourse shift, the Kiln lifts the die. Nothing asks the loader a question here.
+  loadCommit(shipSlot,vi);
 }
-function loadOptGo(use){const o=UI.loadopt;if(!o)return;UI.loadopt=null;UI.sub='load';loadCommit(o.shipSlot,o.vi,use);}
-function aiLoadOpt(p,bk,base,slot,c){
-  // (dormant with loadopt) the load options net against THIS hull's MANIFEST
-  const t=S.slots[slot];
-  if(bk==='tollhouse'){if(!(base>1&&(base-1)>=gateNeed(slot)))return false;
-    const dL=aiManBonus(p,t&&t.man,c.style,c.q,base-1)-aiManBonus(p,t&&t.man,c.style,c.q,base);
-    return 2+dL>0;}
-  return false;}
-function loadCommit(shipSlot,vi,useOpt){const p=cur();const L=UI.load;const c=p.vessels[vi];const sh=S.slots[shipSlot];
+function loadCommit(shipSlot,vi){const p=cur();const L=UI.load;const c=p.vessels[vi];const sh=S.slots[shipSlot];
   if(!c||!sh||!L)return;
   snapshot();
   const bk=bKeyAt(shipSlot);
@@ -2470,11 +2462,12 @@ function renderScore(){
       +(vb?' <b>+'+vb+'</b> <span class="note">premium</span>':'')+'</td><td '+R+'><b>'+(d.val||0)+'★</b></td></tr>';});
     if(!dr)dr='<tr><td colspan="4" class="note">no deliveries yet</td></tr>';
   dr+='<tr><td colspan="3"><b>Deliveries</b></td><td '+R+'><b>'+sc.deliv+'★</b></td></tr>';
-  // 2 · the bank — builds / commissions / bumps (the tracked split)
-  const bm=p.bankM||0,bl=p.bankL||0,bo=p.bankO||0,bw=p.bankW||0,bh=p.bankH||0,bp=Math.max(0,(p.bank||0)-bm-bl-bo-bw-bh);
+  // 2 · the bank — Manifest claims · Staple premiums · Cooperage wharfage · Tastings · bumps
+  // (the tracked split; presence is the remainder, so every tracked bucket must subtract here)
+  const bm=p.bankM||0,bl=p.bankL||0,bs=p.bankSt||0,bw=p.bankW||0,bh=p.bankH||0,bp=Math.max(0,(p.bank||0)-bm-bl-bs-bw-bh);
   const br=(bm?'<tr><td>'+LU('building-2')+' Departed buildings</td><td>the die’s pips, scored as it left play</td><td '+R+'><b>'+bm+'★</b></td></tr>':'')
     +'<tr><td>'+LU('contract')+' Manifest demands</td><td>'+(p.manLines||0)+' line'+((p.manLines||0)===1?'':'s')+' claimed'+(hasUpgrade(p,'chronicler')?' · the Chronicler +'+CHRON_MAN+'★ each':'')+'</td><td '+R+'><b>'+bl+'★</b></td></tr>'
-    +(bo?'<tr><td>'+LU('ticket')+' Tollhouse</td><td>+3★ per stamped cask</td><td '+R+'><b>'+bo+'★</b></td></tr>':'')
+    +(bs?'<tr><td>'+LU('landmark')+' Staple premiums</td><td>+'+STAPLE_PTS+'★ per cask off a matching sail · Staple Rights +'+VSTAR_PTS+'★ per own cask</td><td '+R+'><b>'+bs+'★</b></td></tr>':'')
     +(bw?'<tr><td>'+LU('package')+' Cooperage wharfage</td><td>+1★ per cask loaded there</td><td '+R+'><b>'+bw+'★</b></td></tr>':'')
     +(bh?'<tr><td>⚜ Tastings judged</td><td>1st/2nd/3rd ★, scored as each bench convened</td><td '+R+'><b>'+bh+'★</b></td></tr>':'')
     +'<tr><td>'+LU('map-pin')+' Placed presence</td><td>1★ per face-1 die (a Town Crier adds +2★ each)</td><td '+R+'><b>'+bp+'★</b></td></tr>'
@@ -2996,8 +2989,6 @@ function aiStep(){
         if(bp==null)return rackSkip();return rackPick(bp);}
       case 'assay':{const m=maturingInVessels(p).sort((a,b)=>(b.c.q-b.c.die)-(a.c.q-a.c.die));   // 1H buys the WHOLE climb — take the biggest gap
         if(!m.length||!canPay(p,ASSAY_COST))return assaySkip();return assayPick(m[0].i);}
-      case 'loadopt':{const o=UI.loadopt;if(!o)return resume('stops');
-        return loadOptGo(aiLoadOpt(p,o.kind,boardDie(p.vessels[o.vi],o.shipSlot),o.shipSlot,p.vessels[o.vi].style));}
       case 'parti':return (trayDice(p)>2&&openVessel(p)>=0)?partiTake():partiSkip();   // the safety net (brewPick auto-decides for AI seats)
       case 'pour':{const pb=aiPourBest(p);if(!pb)return pourSkip();return aiPourGo(p,pb);}
       case 'tour':{const b=(UI.pendingTour||[])[0];if(!b)return tourPick(null);
@@ -3027,7 +3018,7 @@ function aiStep(){
 let GUILD_MS=250;    // ⚙ ms per Guildmaster decision ('instant' speed caps at 120; harnesses lower it)
 let CELLAR_MS=1200;  // ⚙ ms per Cellarmaster decision
 let GM_MIN=2;        // minimum playouts per option
-const AI_MC_SUBS={move:1,line:1,stops:1,brew:1,load:1,commission:1,placebldg:1,placevent:1,benefit:1,survey:1,hire:1,reach:1,rack:1,assay:1,loadopt:1,bshift:1,vredeal:1};   // the Venture placement + the Factor's re-deal are sampled forks
+const AI_MC_SUBS={move:1,line:1,stops:1,brew:1,load:1,commission:1,placebldg:1,placevent:1,benefit:1,survey:1,hire:1,reach:1,rack:1,assay:1,bshift:1,vredeal:1};   // the Venture placement + the Factor's re-deal are sampled forks
 function aiMCOptions(p){
   const out=[];const push=(label,fn)=>out.push({label,fn});
   switch(UI.sub){
@@ -3074,7 +3065,6 @@ function aiMCOptions(p){
       else m.forEach(o=>{if(o.i!==R.a)push('rack2:'+o.i,()=>rackPick(o.i));});
       push('skip',()=>rackSkip());break;}
     case 'assay':{maturingInVessels(p).forEach(o=>push('assay:'+o.i,()=>assayPick(o.i)));push('skip',()=>assaySkip());break;}
-    case 'loadopt':{push('opt:use',()=>loadOptGo(true));push('opt:pass',()=>loadOptGo(false));break;}
     case 'placevent':{const V=UI.tmp&&UI.tmp.placeVent;if(!V)break;
       if(V.lvl===1)ventureL1Slots(S.players[V.owner]).forEach(sx=>push('von:'+sx.id,()=>placeVentOn(sx.id)));
       else myL1Slots(S.players[V.owner]).forEach(sx=>push('von:'+sx.id,()=>placeVentOn(sx.id)));
@@ -3365,9 +3355,6 @@ function renderBar(){
   else if(U==='assay'){
     prompt=LU('scale')+' <b>Assay Loft</b> — pay '+Hi(1)+': <b>one</b> maturing cask ages straight to <b>READY</b>.';
     acts=p.vessels.map((c,i)=>(c&&c.die<c.q)?btn(LU('beer')+styleShort(c.style)+' '+c.die+' ▲ '+c.q+' READY','assayPick('+i+')','go'):'').filter(x=>x).join('')+btn('Skip','assaySkip()','ghost');}
-  else if(U==='loadopt'){const o=UI.loadopt;const c=p.vessels[o.vi];const base=boardDie(c,o.shipSlot);
-    prompt=LU('ticket')+' <b>Tollhouse</b> — stamp the cask? The die drops <b>'+base+' → '+(base-1)+'</b> and you score <b>+3★</b> at once.';
-    acts=btn('Stamp · die −1, +3★','loadOptGo(true)','go')+btn('Board untaxed','loadOptGo(false)','ghost');}
   else if(U==='placevent'){const V=UI.tmp.placeVent;const f=VENTURES[V.k]['l'+V.lvl];
     prompt=S.players[V.owner].name+' — place the <b>Venture</b> '+LU(f.icon)+' <b>'+f.name+'</b>: '+(V.lvl===1?'click a glowing <b>open slot</b> — or, with the wharf full, a <b>Public Work</b> to redevelop (the worn tile is boxed). Never another player’s Venture.':'click one of <b>your own L1s</b> — the climb lands on its ground (the spent L1 tile is boxed).')+' <span class="note">('+f.desc+'. Private — no die; a rival can never overbuild it. Its public line serves the whole wharf.)</span>';
     acts='';}
@@ -3385,7 +3372,7 @@ function renderBar(){
     prompt=LU('wrench')+' <b>Chandler</b> — swap with the sourcing? (once per turn)';
     acts=(p.grain>=1?btn('⇄ '+Gi(1)+'→'+Hi(1),'chSwapGo(\'gh\')','go'):'')+(p.hops>=1?btn('⇄ '+Hi(1)+'→'+Gi(1),'chSwapGo(\'hg\')','go'):'')+btn('Keep the stores','chSwapGo(null)','ghost');}
   else if(U==='end'){prompt='Line resolved.';acts=btn('End Turn ▸','endTurn()','primary');}
-  const hideEnd=(U==='move'&&!p.placed)||['end','benefit','precipe','bspec','placebldg','placevent','survey','hire','man','brewverb','loadopt','vredeal','bshift','chswap'].includes(U);
+  const hideEnd=(U==='move'&&!p.placed)||['end','benefit','precipe','bspec','placebldg','placevent','survey','hire','man','brewverb','vredeal','bshift','chswap'].includes(U);
   if(!hideEnd)acts+=btn('End Turn ▸','endTurn()','ghost');
   if(undoStack.length)acts+=btn('↶ Undo','doUndo()','ghost');
   document.getElementById('prompt').innerHTML=prompt;

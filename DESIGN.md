@@ -151,8 +151,9 @@ Canonical detail in `RULES.md` / `COMPONENTS.md`; the shape:
   never return, so the runway is public and countable (**13** ⚙; `PRES_POOL` = THE pace
   dial); MAX_ROUND 25 backstop. Sails end nothing. Pace target ~12–25 rounds.
 - **TABLED (seams kept):** the Trade Roads expansion (`registerExpansion` spine intact) ·
-  the v5.2 investor/maturity grammar (`bldgTick`/`bldgDepart` inert) · the Tollhouse stamp
-  choice point (dormant) · the RIDER_SCOPE dial (0 = print).
+  the v5.2 investor/maturity grammar (`bldgTick`/`bldgDepart` inert) · the RIDER_SCOPE dial
+  (0 = print). *(The Tollhouse stamp's `loadopt` choice point was removed whole 2026-08-23 —
+  an orphan seam nothing could reach, carrying live copy for a retired rule.)*
 
 ## 7. The tooling (how we verify)
 
@@ -223,6 +224,28 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
+
+### The stamp's seam leaves the engine (2026-08-23, designer-ruled)
+*"Retired stamp — fix it."* The v5.3b Tollhouse rework retired the stamp face (−1 die for
++3★) but left its **`loadopt` choice point** standing as a "kept seam." It was an orphan —
+nothing ever set `UI.sub='loadopt'` or filled `UI.loadopt`, so the prompt was unreachable —
+yet it still carried **live player-facing copy for a retired rule** (*"stamp the cask? the
+die drops 5 → 4 and you score +3★"*), which is exactly what `STYLE.md` §4c forbids, and a
+score-breakdown row advertising *"Tollhouse +3★ per stamped cask."* Removed whole:
+`loadOptGo` · `aiLoadOpt` · the `aiStep` and `aiMCOptions` cases · the `AI_MC_SUBS` fork ·
+the prompt · the `hideEnd` entry · the dead `useOpt` parameter on `loadCommit` · the
+`bankO` row. **The seam's real value was never the code** — it is in git history, where
+the charter says retired things live.
+- **Two live defects surfaced behind the dead copy.** (1) The score breakdown never gave
+  **Staple premiums** (`bankSt`) a row, so the remainder math folded them into *Placed
+  presence* — a player reading the modal saw their Staple ★ attributed to bumps. It now
+  prints its own line, matching `RULES.md` §11.5. (2) **`sim.js`'s `toll` counter watched
+  `bankO`** — the retired stamp's payout — so it reported **0.00 every game** while the
+  toll bench was firing normally. The §10 watch *"does the Tollhouse finally see
+  traffic?"* was structurally unanswerable. It now counts bench firings.
+- Gates: verify **352/352** (the §20 toll-bench battery gains the seam-is-gone check) ·
+  sim + render smokes clean · **no `KEY` bump** — the removed code was unreachable, so
+  behaviour is byte-identical at the table (the v5.3b repo-hygiene precedent).
 
 ### The golden rule — component copy carries no rules (2026-08-23, designer-ruled)
 *"Rules never live in the components… and they don't live on the boards or in the play
@@ -479,7 +502,10 @@ are the things to read when one runs — or when a human table sits down.*
 - **The runway loosening** (no dice to buildings — pace re-measure vs the pool-14
   question; the retired investor lane's ~4–8★/player redistributes — watch winner totals).
 - **The toll bench** (v5.3b): does the loader's ±1 read at the table, and does the
-  Tollhouse finally see traffic?
+  Tollhouse finally see traffic? **Re-read this one from scratch** — until 2026-08-23 the
+  sim's `toll` counter watched the retired stamp's `bankO` and reported 0.00 every game, so
+  every "the Tollhouse never fires" reading on record is an instrument artifact, not
+  evidence. The counter now counts bench firings.
 
 **Carried from the v5.2b oracle:** the have/have-not gap (0-build seats) · the London
 prize's pull (builds ran 86–94% prize-channel) · Source-3 pace both ways · the Bergen
@@ -548,4 +574,4 @@ robustness/pace oracles only (strategy reads = MC tiers + probes + humans).
 - **The clock** — the first **EMPTY TRAY** (every die committed) sets the final round;
   sails end nothing (`MAX_ROUND` 25 ⚙ the backstop; the 13-die pool ⚙ is THE pace dial).
 - **TABLED (seams kept)** — the Trade Roads · the investor/maturity grammar · the
-  Tollhouse stamp · the RIDER_SCOPE dial.
+  RIDER_SCOPE dial. (The Tollhouse stamp's seam left the engine 2026-08-23.)

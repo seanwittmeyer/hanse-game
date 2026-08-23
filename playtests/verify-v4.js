@@ -492,6 +492,10 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('the TOLLHOUSE is the toll bench: a load here lets the LOADER shift a Bourse marker \u00b11 (the die untouched)',
     t2.load[0].die===2&&Object.keys(S.bourse).some(function(bk2){return S.bourse[bk2]!==0;}));
   ok('\u2026the old stamp is gone \u2014 no \u22121-for-+3\u2605, no bankO', (p.bankO||0)===0);
+  // the stamp's whole choice point retires with it (2026-08-23): no loadopt prompt, no
+  // loadOptGo/aiLoadOpt, no MC fork \u2014 a load asks the loader nothing.
+  ok('\u2026and its choice point is gone \u2014 no loadopt seam anywhere in the engine',
+    typeof loadOptGo==='undefined'&&typeof aiLoadOpt==='undefined'&&!AI_MC_SUBS.loadopt&&!UI.loadopt);
   p.ai=null;stops();UI.pendingActs=[];UI.pendingShift=[];
 })();
 
