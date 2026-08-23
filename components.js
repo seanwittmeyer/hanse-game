@@ -3,15 +3,15 @@
 // print.html (the print kit) and play.html (the app mirrors the kit). Faces are the
 // canon — edit a card HERE, never per-page. Everything lives in one IIFE and is exposed as
 // window.HC; the card CSS injects itself at load (scoped so it cannot restyle a host page).
+//
+// KEEP THIS FILE CLEAN AND LIGHT (designer-ruled 2026-08-22): style/art commentary — prompts,
+// briefs, treatment recipes, round rulings — lives in STYLE.md and art/PROMPTS.md + art/ICONS.md,
+// never here. Comments in this file only mark a PLACEHOLDER awaiting replacement; when the
+// placeholder is filled, the comment comes out.
 (function(){
 'use strict';
-// ---- ILLUSTRATED ICONS (2026-08-03) — the c.1350 sticker set replaces the Lucide glyphs at the
-// one swap point. ICON_ART maps a lucide name (or a VIRTUAL name — contract · age-3 · kontor-<city>)
-// to its art/icons/<file>.png; LU emits the art <img> when mapped, else the lucide <i> as before.
-// LUX is the raw-lucide escape hatch for the crest contexts the designer ruled OUT of the program
-// (building-tile + specialist-tile crests keep their glyphs — the tiles already carry full art).
-// (round 4b, designer: wheat/sprout are NOT mapped — at cost-chip size the art muddies, so
-// grain & hops ride the coloured Lucide glyphs everywhere; the big goods TOKENS keep art via tok())
+// ICON_ART maps a lucide name (or a virtual name) to art/icons/<file>.png; LU emits the art
+// <img> when mapped, else the lucide <i>; LUX forces raw lucide. Rulings & recipes: art/ICONS.md.
 const ICON_ART={coins:'goods',dices:'quality-die',
   'dice-1':'die-1','dice-2':'die-2','dice-3':'die-3','dice-4':'die-4','dice-5':'die-5','dice-6':'die-6',
   star:'star',check:'ready',beer:'cask',sailboat:'ship',landmark:'kontor','building-2':'building',
@@ -19,19 +19,13 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   'flask-conical':'station-brew',hourglass:'station-age',store:'station-market',ship:'station-harbor',
   anchor:'wharf',hammer:'build',contract:'contract','age-3':'station-age-3','kontor-bruges':'kontor-bruges',
   'kontor-london':'kontor-london','kontor-bergen':'kontor-bergen','kontor-novgorod':'kontor-novgorod',
-  // round 2 (2026-08-03): building-2 = the HOUSE (you PLACE a building — the noun; the trowel 'build'
-  // stays the verb via search) · the numbered QUALITY casks (side-lying, wax-sealed, numeral overlaid)
-  // · die-q = the parked-die value (die + ?) · sail = the ship with its forward arrow
   'quality-1':'quality-1','quality-2':'quality-2','quality-3':'quality-3','quality-4':'quality-4',
   'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail','age-1':'station-age-1','age-2':'station-age-2',
-  'goods-2':'goods-2',   // round 5 (2026-08-19): the numbered Source face — the basket + a "2" in the landed numeral treatment
-  'goods-3':'goods',     // v5.2b: Source 3 — STAND-IN (the plain basket) until the numbered '3' lands; brief queued in art/PROMPTS.md
-  'brew-top':'station-brew-top',   // rounds 7-8 (2026-08-19): the ALT Brewhouse — the pot + tile deck + down-arrow = take the TOP tile of the stack (blind); the plain pot stays the primary brew-and-SEARCH
-  // die MODIFIER marks (round 4): the die with its lift/drop printed on it — drops in red
+  'goods-2':'goods-2','goods-3':'goods-3','brew-top':'station-brew-top',
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
 const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const LU=(n,cls)=>ICON_ART[n]?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/icons/'+ICON_ART[n]+'.png" alt="">':LUX(n,cls);
-const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc g">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc h">'+LU('sprout','h')+h+'</span>');return a.join('');};   // the NUMBER rides the goods colour too (designer, round 2)
+const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc g">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc h">'+LU('sprout','h')+h+'</span>');return a.join('');};
 const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · victory-point icon
 
 // v3.0-A "SPECIFIC GAINS" — a cask's slot-action is one of NINE concrete acquisitions, printed on the
@@ -117,9 +111,9 @@ const BUILDINGS=[
   {k:'maltkiln',  nm:'Malt Kiln',         ms:2, verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, effIc:'die-plus1',  eff:'on load'},
   {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, effIc:'trending-up', eff:'load: ±1'},   // v5.3b (ruled): the toll bench — the stamp face retired
   {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'min −1'},   // v5.2 ⚙ ruled: −1 (was −2 — almost broken)
-  {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, art:'building-capstan.png', effIc:'package-plus', eff:'load: +1 '+LU('beer')+' → other '+LU('sailboat')},   // v5.2 ⚙ ruled rework
+  {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, art:'building-ropewalk.png', effIc:'package-plus', eff:'load: +1 '+LU('beer')+' → other '+LU('sailboat')},   // v5.2 ⚙ ruled rework
   {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 berth · load: +1★'},   // v4.12b: the wharfage eases 2→1 ⚙
-  {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, art:'building-gauger.png', effIc:'contract',     eff:'sail: ×2 lines'},
+  {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, art:'building-weighhouse.png', effIc:'contract',     eff:'sail: ×2 lines'},
   // v5.2 NEW ⚙ — the STAPLE HOUSES (Stapelrecht): the destination premium, one crest each
   {k:'staple_bruges',   nm:'Staple House · Bruges',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bruges', art:'building-staple.png', effIc:'kontor-bruges', eff:'sail: '+LU('beer')+' +2★ each'},
   {k:'staple_london',   nm:'Staple House · London',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'london', art:'building-staple.png', effIc:'kontor-london', eff:'sail: '+LU('beer')+' +2★ each'},
@@ -206,42 +200,7 @@ function invitationCard(){return '<div class="invcard">'
 // CELLAR (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
 // v82 "Scarce Improvements": these now form a SHUFFLED DECK of (n−1) copies of each type (n=players) feeding a
 // face-up DISPLAY of 4 at the Cellar (refills from the deck). 3 copies/type covers a 4-player deck (n−1=3).
-// ============================================================================
-// SPECIALIST TILE ART — IMAGE-GENERATION SPEC (for the art agent; v2.6.1)
-// ============================================================================
-// Generate ONE image per Specialist, saved as art/improve-<slug>.jpg (JPEG, not PNG — a flat-field
-// object shot with no transparency needs no alpha channel, and compresses ~8x smaller at quality
-// ~88 with no visible loss; every other art/ family stays .png) where <slug> = the kit's own
-// slug(d.nm) (lowercased, non-alphanumeric runs → a single hyphen — e.g. Coppersmith →
-// improve-coppersmith.jpg, Grain Factor → improve-grain-factor.jpg; NOTE the hyphen — a prior
-// version of this comment said "grainfactor"/"hopgardener" with no hyphen, which does not match
-// what slug() actually emits at runtime; always derive the filename from slug(), not by hand).
-// STYLE (all seven, identical treatment):
-//   • a plain warm BEIGE field (parchment #e9dcc0-ish), edge-to-edge — NO scene, NO border
-//   • ONE object centered — the specialist's trade tool (the art: brief on each row below);
-//     medieval-woodcut / muted-gouache feel, readable at 1 inch print size
-//   • no text, no people, no player-colour hues (the purple foot bar is added by the kit)
-// The card is now SQUARE (2in×2in, matching the Building card): this art sits full-bleed behind a
-// scrim; name on top, effect+cost in the purple foot — so keep the object in the middle 60% of the frame.
-// The briefs (also carried per-row as art:'…'):
-//   coppersmith    → a gleaming copper brew kettle                     (legacy file)
-//   cellarman      → an oak cask racked on a wooden stillage
-//   grain-factor   → a tied burlap sack overflowing with barley
-//   hop-gardener   → a climbing hop bine with cones on a tall pole
-//   stevedore      → a medieval wooden treadwheel harbor crane
-//   braumeister    → a long wooden mash paddle over a copper kettle (v4.5b)
-//   lagerkeeper    → stacked casks dusted with frost and icicles        (legacy file)
-//   quaymaster     → a private wooden jetty with a rope-wound mooring bollard (legacy file)
-// The guild eight (v4.6 — all landed 2026-08-02):
-//   guild-scholar  → a bundle of sealed recipe scrolls (red wax seals)
-//   innkeeper      → a foaming glazed stoneware ale jug with a pewter lid
-//   supercargo     → a sealed ship's manifest across a rope-bound sea chest
-//   chronicler     → an open chronicle with a goose-quill pen (blank pages)
-//   alderman       → a gilded chain of office on a crimson velvet cushion
-//   town-crier     → a polished brass handbell, dark-wood handle
-//   chandler       → a hand balance — barley on one pan, hop cones on the other
-//   shipwright     → a shipwright's adze across a curved oak ship rib
-// ============================================================================
+// Specialist tile art: object shots as art/improve-<slug(nm)>.jpg — the SPEC + briefs live in art/PROMPTS.md.
 const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize — v4.7: EVERY CASK seats its house one, the per-cask grammar of all four ports · the 'Gain 1 specialist' load bonus; the Hiring Post retired v5.1) — never bought · deck of max(2,n−1)/type (v4.5b) · 2 SEATS per house (both open from the start — v45h)
   {ic:'wrench',     nm:'Cellarman', art:'an oak cask racked on a wooden stillage',   act:LU('flask-conical')+' Brew: your '+LU('dices')+' start +1', g:0, h:2, c:'#5b3a8e', n:3},   // v4.12: the v45g cap repealed — his Broyhan starts READY
   {ic:'badge-plus', nm:'Grain Factor', art:'a tied burlap sack overflowing with barley',  act:'Gain '+LU('wheat','g ic')+' → <span class="g">+1'+LU('wheat','g ic')+'</span>', g:2, c:'#5b3a8e', n:3},   // v4.7: 1G→2G (the probe's auto-pick core)
@@ -250,7 +209,6 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'wrench',     nm:'Braumeister', art:'a long wooden mash paddle over a copper kettle', act:'turn start: age 1 '+LU('beer')+' +1', g:1, h:1, c:'#5b3a8e', n:3},   // v4.5b heir of the cut auto-age
   // ---- v4.6 "Guildbook": the 8 GUILD designs — 1 copy each (scarce); three print SEAT GATES
   // (the Agricola prerequisite, read off components: flipped cards · claimed tiles · parked dice).
-  // art: all eight own their object-shot files (the 2026-08-02 art pass; briefs in art/PROMPTS.md).
   {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:LU('scroll-text')+' Recipes: pay no fee', g:2, c:'#5b3a8e', n:1},   // every channel, Bruges included
   {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'turn start: 3+ '+LU('beer')+' → age +1', g:2, c:'#5b3a8e', n:1},   // v4.12 rework — a full house earns the drip
   {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'rival sails your '+LU('beer')+': <span class="g">+1'+LU('wheat','g ic')+'</span><span class="h">+1'+LU('sprout','h ic')+'</span>', h:2, c:'#5b3a8e', n:1},   // v4.7: 1H→2H · v4.12 wording pass
@@ -335,14 +293,14 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 // trigger word + icons. pub is pre-built icon HTML.
 const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('coins')+'+1',VPUB_SH1=LU('trending-up')+'±1',VPUB_SH2=LU('trending-up')+'+2▲';
 const VENTURES=[
-  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, eff:'line: ⇄ 2 '+LU('dices'), art:'building-racking.png'},
-                 l2:{nm:'Brewery',        ic:'flask-conical', pub:VPUB_STEP, eff:'line: '+LU('flask-conical')+' (search)', art:'building-abbey.png'}},
-  {k:'counting', l1:{nm:'Counting House', ic:'coins',   pub:VPUB_GOLD, eff:'load: +1 '+LU('coins'), art:'building-granary.png'},
-                 l2:{nm:'Assay Loft',     ic:'scale',   pub:VPUB_GOLD, eff:'line: 1'+LU('sprout','h')+' → '+LU('check'), art:'building-assay.png'}},
-  {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', pub:VPUB_SH1, eff:'load: re-deal '+LU('contract'), art:'building-exchange.png'},
-                 l2:{nm:'Staple Rights',  ic:'landmark',pub:VPUB_SH2, eff:'sail: your '+LU('beer')+' +1★', art:'building-richberth.png'}},
-  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   pub:VPUB_GOLD, eff:'load: +1 '+LU('beer'), art:'building-hopex.png'},
-                 l2:{nm:'Guild Residence',ic:'home',    pub:VPUB_SH1, eff:'end: 2★ × '+LU('home'), art:'building-missionq.png'}},
+  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, eff:'line: ⇄ 2 '+LU('dices'), art:'venture-rack-l1.png'},
+                 l2:{nm:'Brewery',        ic:'flask-conical', pub:VPUB_STEP, eff:'line: '+LU('flask-conical')+' (search)', art:'venture-rack-l2.png'}},
+  {k:'counting', l1:{nm:'Counting House', ic:'coins',   pub:VPUB_GOLD, eff:'load: +1 '+LU('coins'), art:'venture-counting-l1.png'},
+                 l2:{nm:'Assay Loft',     ic:'scale',   pub:VPUB_GOLD, eff:'line: 1'+LU('sprout','h')+' → '+LU('check'), art:'venture-counting-l2.png'}},
+  {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', pub:VPUB_SH1, eff:'load: re-deal '+LU('contract'), art:'venture-factor-l1.png'},
+                 l2:{nm:'Staple Rights',  ic:'landmark',pub:VPUB_SH2, eff:'sail: your '+LU('beer')+' +1★', art:'venture-factor-l2.png'}},
+  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   pub:VPUB_GOLD, eff:'load: +1 '+LU('beer'), art:'venture-warehouse-l1.png'},
+                 l2:{nm:'Guild Residence',ic:'home',    pub:VPUB_SH1, eff:'end: 2★ × '+LU('home'), art:'venture-warehouse-l2.png'}},
 ];
 const VENT_FOOT='rgba(31,86,122,.78)';   // the owner-only blue (the v2.4.1 privilege colour returns)
 // v5.3 restyle (designer 2026-08-22): a Venture SHARES the building tile's anatomy — the same

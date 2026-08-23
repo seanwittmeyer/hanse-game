@@ -24,8 +24,9 @@ These images sit **behind** the cask cards (2.5″ square) and ship tiles (2.5�
   (Legacy files from retired tiles — staple/burgomstr/connoiss/hansediet/festkeller/reliquary/ch_*/
   gauger/workshop/salthouse/smokekiln/partigyle/hopyard — stay in `art/` as an archive; nothing
   references them. The building card BACK is the generic Wild + ★ "displaced" face — no art.)
-- Specialists (2″ SQUARE cards, object-shot art): `improve-<slug>.jpg` — the canonical spec + the
-  per-tile briefs live in `components.js` (the IMAGE-GENERATION SPEC comment + each row's `art:`).
+- Specialists (2″ SQUARE cards, object-shot art): `improve-<slug>.jpg` — the canonical SPEC lives
+  BELOW ("The specialist object-shot SPEC", moved out of `components.js` 2026-08-22 — components
+  stays clean; each IMPROVE row still carries its one-line `art:` brief as data).
   Live v4.6 set: cellarman · grain-factor · hop-gardener · stevedore · braumeister · guild-scholar ·
   innkeeper · supercargo · chronicler · alderman · town-crier · chandler · shipwright (all own files
   since 2026-08-02; coppersmith/lagerkeeper/quaymaster stay as legacy).
@@ -237,7 +238,7 @@ at .3in); tiles take the painterly single-structure portrait treatment (same wha
 angle/light as the other building faces).*
 
 ### Icons
-1. **bourse.png — NEW, the highest-value icon on the list.** The Bourse has no period
+1. **bourse.png — NEW, the highest-value icon on the list.** *(2026-08-22: the tally-board round REJECTED — “a market establishing prices wouldn’t be a plank with a stick in a hole”; rebriefed FORMAL: an abacus / a banner-mounted track / a fine rail-and-slider price board — options round out.)* The Bourse has no period
    glyph: every price-shift face (the Tollhouse toll bench · the Factor's Desk / Guild
    Residence ±1 chips · the Staple Rights +2▲ chip · the Bourse strip header · the aid
    legend) currently falls back to the lucide `trending-up` arrow — the one modern glyph
@@ -245,28 +246,27 @@ angle/light as the other building faces).*
    a small dark-wood board with a column of drilled holes, a bone peg sitting one hole
    higher, a subtle upward arrowhead worn into the wood. One object; the ±1/+2▲ numerals
    print BESIDE the icon, so the icon carries no number.
-2. **goods-3.png** — the Market's Source-3 primary face (briefed above, v5.2b section;
-   the plain basket still stands in).
-3. **bonus-load.png replacement** — the *Load 1 more* verb (briefed above, 2026-08-09
-   section; still the too-generic package glyph).
+2. **goods-3.png** — **LANDED 2026-08-22** in the corrected AGE-icon numeral recipe (size .42H, stroke .028H, drop shadow — goods-2 re-cut to match); the ICON_ART stand-in flipped.
+3. **bonus-load.png replacement** — REBRIEFED 2026-08-22 (designer): a cask on a dock CART, a ship behind — you can load a cask anywhere; the crane-sling concept retired. Options round out.
 4. *(Optional)* **trigger chips** — `load:` / `sail:` / `line:` print as words today
    (the kit-pass shorthand). Three tiny glyphs (a cask on a hook · a departing sail · a
    two-station bracket) would finish the icon-first grammar; words are acceptable until
    then.
 
 ### Building tiles (Public Works)
-1. **building-ropewalk.png** — briefed above (v5.1 section), never generated; the
-   Capstan portrait stands in and reads WRONG (a different tile in play).
-2. **building-weighhouse.png** — briefed above (v5.1 section), never generated; the
-   gauger portrait stands in.
+1. **building-ropewalk.png** — **LANDED 2026-08-22 (pick C** — the stone-quay gallery**)**; the Capstan stand-in retired.
+2. **building-weighhouse.png** — **LANDED 2026-08-22 (pick E** — the dark-stone Waag**)**; the gauger stand-in retired.
 3. *(Optional)* **Staple House crest variants ×4** (`building-staple-bruges/london/
    bergen/novgorod.png`) — all four share the generic `building-staple.png` today; each
    tile already prints its Kontor crest chip, so one shared portrait is playable. A
    variant set (the same warehouse, the port's banner over the door) would let the four
    read apart at arm's length.
 
-### Venture tiles ×8 — the family has NO art of its own
-Every Venture face borrows a retired tile's portrait. Save as `venture-<k>-l<1|2>.png`;
+### Venture tiles ×8 — ALL EIGHT LANDED 2026-08-22 (the options round's picks)
+Rack House C · Brewery A · Counting House C · Assay Loft A · Factor's Desk C · Staple
+Rights A · Warehouse C · Guild Residence B — saved as `venture-<k>-l<1|2>.png`, the eight
+`art:` fields in `components.js` VENTURES swapped over (mats/letterbox bands cropped at
+landing). The borrowed-portrait era ends. Original briefs kept below for regeneration: Save as `venture-<k>-l<1|2>.png`;
 the eight `art:` fields in `components.js` VENTURES swap over when they land. Portraits
 want a **smaller, private-workshop scale** than the civic Public Works — these are the
 player's own yard:
@@ -288,6 +288,46 @@ player's own yard:
   gable townhouse with the guild chain over the lintel — the VP face, the richest
   portrait of the eight.
 
-### Specialists (v5.1, briefed above, never generated)
-- **improve-broker.jpg** · **improve-brewer-s-mate.jpg** — the two v5.1 guild singles
-  still render art-less (briefs in the v5.1 section above).
+### Specialists — LANDED 2026-08-22
+- **improve-broker.jpg** (pick A — ledger + coin scale on the cloth) · **improve-brewer-s-mate.jpg** (pick E — the young brewer at the tun, the one figure-shot in the object family, designer-ruled).
+
+## The specialist object-shot SPEC (moved verbatim from components.js, 2026-08-22)
+
+```
+// ============================================================================
+// SPECIALIST TILE ART — IMAGE-GENERATION SPEC (for the art agent; v2.6.1)
+// ============================================================================
+// Generate ONE image per Specialist, saved as art/improve-<slug>.jpg (JPEG, not PNG — a flat-field
+// object shot with no transparency needs no alpha channel, and compresses ~8x smaller at quality
+// ~88 with no visible loss; every other art/ family stays .png) where <slug> = the kit's own
+// slug(d.nm) (lowercased, non-alphanumeric runs → a single hyphen — e.g. Coppersmith →
+// improve-coppersmith.jpg, Grain Factor → improve-grain-factor.jpg; NOTE the hyphen — a prior
+// version of this comment said "grainfactor"/"hopgardener" with no hyphen, which does not match
+// what slug() actually emits at runtime; always derive the filename from slug(), not by hand).
+// STYLE (all seven, identical treatment):
+//   • a plain warm BEIGE field (parchment #e9dcc0-ish), edge-to-edge — NO scene, NO border
+//   • ONE object centered — the specialist's trade tool (the art: brief on each row below);
+//     medieval-woodcut / muted-gouache feel, readable at 1 inch print size
+//   • no text, no people, no player-colour hues (the purple foot bar is added by the kit)
+// The card is now SQUARE (2in×2in, matching the Building card): this art sits full-bleed behind a
+// scrim; name on top, effect+cost in the purple foot — so keep the object in the middle 60% of the frame.
+// The briefs (also carried per-row as art:'…'):
+//   coppersmith    → a gleaming copper brew kettle                     (legacy file)
+//   cellarman      → an oak cask racked on a wooden stillage
+//   grain-factor   → a tied burlap sack overflowing with barley
+//   hop-gardener   → a climbing hop bine with cones on a tall pole
+//   stevedore      → a medieval wooden treadwheel harbor crane
+//   braumeister    → a long wooden mash paddle over a copper kettle (v4.5b)
+//   lagerkeeper    → stacked casks dusted with frost and icicles        (legacy file)
+//   quaymaster     → a private wooden jetty with a rope-wound mooring bollard (legacy file)
+// The guild eight (v4.6 — all landed 2026-08-02):
+//   guild-scholar  → a bundle of sealed recipe scrolls (red wax seals)
+//   innkeeper      → a foaming glazed stoneware ale jug with a pewter lid
+//   supercargo     → a sealed ship's manifest across a rope-bound sea chest
+//   chronicler     → an open chronicle with a goose-quill pen (blank pages)
+//   alderman       → a gilded chain of office on a crimson velvet cushion
+//   town-crier     → a polished brass handbell, dark-wood handle
+//   chandler       → a hand balance — barley on one pan, hop cones on the other
+//   shipwright     → a shipwright's adze across a curved oak ship rib
+// ============================================================================
+```
