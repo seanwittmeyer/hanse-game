@@ -952,8 +952,8 @@ function canVentureL2(p){return (p.hand||[]).length>0&&myL1Slots(p).length>0;}
 const VACT_KINDS={vswap:1,vbrew:1,vready:1};
 const VPUB={vstep:{icon:'hourglass',txt:'Age +1 (one of your casks)'},
   vgold:{icon:'coins',txt:'Gain 1 good'},
-  vshift1:{icon:'trending-up',txt:'Bourse: shift a beer ±1'},
-  vshift2:{icon:'trending-up',txt:'Bourse: shift a beer +2 (up)'}};   // ⚙ the public-line vocabulary   // the Venture kinds that fire as owner-only line stops
+  vshift1:{icon:'bourse-pm1',txt:'Bourse: shift a beer ±1'},
+  vshift2:{icon:'bourse-plus2',txt:'Bourse: shift a beer +2 (up)'}};   // ⚙ the public-line vocabulary   // the Venture kinds that fire as owner-only line stops
 function bName(k){return (BUILDINGS[k]||{name:k}).name;}
 function bDesc(k){return (BUILDINGS[k]||{desc:''}).desc;}
 const BUILD_DISPLAY=4;          // DORMANT — the display never fills (the Public Works are setup furniture); the constant survives for the save shape + the tabled Trade Roads
@@ -1592,7 +1592,7 @@ function startGame(){
   S.players.forEach((p,i)=>{p.ai=ais[i];});
   document.getElementById('setup').classList.add('hidden');
   log('Game begins — '+setupN+' brewing houses'+(ais.some(a=>a)?' · AI seats: '+S.players.filter(p=>p.ai).map(p=>p.name+' ('+aiLabel(p)+')').join(', '):'')+'. The export beers this game (3 of '+(EXPANSION?7:4)+'): '+exportLabel()+'.'+(JOPEN?' The <b>Jopenbier</b> capstone is on — always acquirable at its 3H fee.':'')+(HALLEXP?' ⚜ <b>The Guild Tastings</b> convene — every Manifest claim pays an Invitation; the bench filling is the judging.':''));
-  log('Warm start: a Hulk → Bruges + one more Ship dock at the wharf, and '+SLOTS.filter(sx=>S.buildings[sx.id]).length+' '+LU('building-2')+' <b>Public Works</b> stand from setup (die-less furniture — the rest are in the box); every non-Bruges Ship carries a '+LU('contract')+' <b>Manifest</b>; the '+LU('trending-up')+' <b>Bourse</b> opens at 0.');
+  log('Warm start: a Hulk → Bruges + one more Ship dock at the wharf, and '+SLOTS.filter(sx=>S.buildings[sx.id]).length+' '+LU('building-2')+' <b>Public Works</b> stand from setup (die-less furniture — the rest are in the box); every non-Bruges Ship carries a '+LU('contract')+' <b>Manifest</b>; the '+LU('bourse')+' <b>Bourse</b> opens at 0.');
   save();render();maybeRunAI();
 }
 
@@ -3233,7 +3233,7 @@ function renderAid(){
       +row('age-3','Cellar','Age '+CELLAR_POOL+' · alt: '+ALT_AGE)
       +row('ship','Harbor','a Ship + 1 free load · alt: Load 1 any Ship<br>Skute 2G · Cog 1G · Hulk free')+'</div>'
       +row('home','Ventures — your hand of 4','L1 on open ground · L2 over your own L1 · the public line pays whoever visits')
-      +row('trending-up','The Bourse','a delivery scores die + the beer’s marker · brews slip it −1 · landings lift it +1/cask, then score')+'</div>'
+      +row('bourse','The Bourse','a delivery scores die + the beer’s marker · brews slip it −1 · landings lift it +1/cask, then score')+'</div>'
     +'<div class="asec"><b>End &amp; score</b>'
       +row('dices','The first EMPTY tray ends it','your '+PRES_POOL+' dice · round '+MAX_ROUND+' backstop')
       +row('star','Parked pips (+ the bourse) + the bank + majorities','+ the Flight (beers SHIPPED): 3/4/5 → '+FLIGHT_PTS[3]+'/'+FLIGHT_PTS[4]+'/'+FLIGHT_PTS[5]+'★')+'</div>'
@@ -3369,7 +3369,7 @@ function renderBar(){
     prompt=S.players[V.owner].name+' — place the <b>Venture</b> '+LU(f.icon)+' <b>'+f.name+'</b>: '+(V.lvl===1?'click a glowing <b>open slot</b> — or, with the wharf full, a <b>Public Work</b> to redevelop (the worn tile is boxed). Never another player’s Venture.':'click one of <b>your own L1s</b> — the climb lands on its ground (the spent L1 tile is boxed).')+' <span class="note">('+f.desc+'. Private — no die; a rival can never overbuild it. Its public line serves the whole wharf.)</span>';
     acts='';}
   else if(U==='bshift'){const B=UI.bsh;const bp2=S.players[B.pid];
-    prompt=bp2.name+' — '+LU('trending-up')+' <b>the Bourse</b>: shift one beer’s marker '+(B.steps>1?'<b>+'+B.steps+'</b> (up only)':(B.down?'<b>±1</b>':'<b>+1</b>'))+(B.bergen?' <span class="note">(the Bergen prize’s market rider)</span>':'')+'.';
+    prompt=bp2.name+' — '+LU('bourse')+' <b>the Bourse</b>: shift one beer’s marker '+(B.steps>1?'<b>+'+B.steps+'</b> (up only)':(B.down?'<b>±1</b>':'<b>+1</b>'))+(B.bergen?' <span class="note">(the Bergen prize’s market rider)</span>':'')+'.';
     acts=Object.keys(S.bourse||{}).map(bk=>{
       let h='';
       if(S.bourse[bk]<BOURSE_MAX)h+=btn(LU('beer')+styleShort(bk)+' '+bourseFmt(S.bourse[bk])+' ▲','bshiftPick({beer:\''+bk+'\',dir:1})','go');
@@ -3565,7 +3565,7 @@ function renderVoyage(){
     +'<div class="note" style="font-size:.66rem;margin-top:4px">'+LU('sailboat')+' voyages sailed: '+S.sailed+' · round ceiling '+MAX_ROUND+' (backstop)</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game (3 of 4):</b> '+exportLabel()+'.</div>';
   if(Object.keys(S.bourse||{}).length){   // THE BOURSE — one strip, one marker per tracked beer
-    h+='<div class="voybox" style="margin-top:6px">'+LU('trending-up')+' <b>The Bourse</b> <span class="note">(a delivered cask scores its die + its beer’s marker; brews slip it, arrivals lift it)</span>'
+    h+='<div class="voybox" style="margin-top:6px">'+LU('bourse')+' <b>The Bourse</b> <span class="note">(a delivered cask scores its die + its beer’s marker; brews slip it, arrivals lift it)</span>'
       +'<div style="margin-top:4px">'+Object.keys(S.bourse).map(bk=>{const v=S.bourse[bk];
         return '<span style="margin-right:9px;font-weight:bold'+(v>0?';color:var(--green,#2e7d32)':(v<0?';color:var(--red)':''))+'">'+LU('beer')+styleShort(bk)+' '+bourseFmt(v)+'</span>';}).join('')
       +'</div><div class="note" style="font-size:.66rem;margin-top:3px">track '+bourseFmt(BOURSE_MIN)+' … '+bourseFmt(BOURSE_MAX)+' · shifts: Bergen’s prize ±1 · the Ventures’ public lines</div></div>';}

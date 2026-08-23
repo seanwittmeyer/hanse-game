@@ -100,6 +100,15 @@
 > REJECTED (rebriefed formal — abacus / banner track / rail-and-slider board) and BONUS-LOAD
 > is rebriefed as a cask on a dock cart with the ship behind; both option rounds are out.
 
+> **Round 10 (designer picks, 2026-08-22): the BOURSE FAMILY ships (base A) + the cart-only
+> bonus-load (pick A).** The Bourse icon = the guild banner bearing the beer cask; the family
+> derives the marks in the age/goods numeral recipe — `bourse-plus1/-plus2/-pm1` white,
+> `bourse-minus1` RED. Wired at every former trending-arrow site (Tollhouse toll bench ·
+> Venture public lines ±1/+2▲ · the Bourse strip header · the aid legends · the in-app
+> headers) — the last modern glyph on the table retires. `bonus-load.png` is replaced in
+> place by the bold-contour cask-on-cart (no ship — a cask loads anywhere). Same round: the
+> ship-tile header drops its little ship icon and ready check (name · [die] N+ · fee).
+
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
 > (the tiles already carry full-bleed art). **ADDED: one icon per Kontor** — a city crest

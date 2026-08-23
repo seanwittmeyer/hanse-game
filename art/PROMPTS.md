@@ -238,16 +238,14 @@ at .3in); tiles take the painterly single-structure portrait treatment (same wha
 angle/light as the other building faces).*
 
 ### Icons
-1. **bourse.png — NEW, the highest-value icon on the list.** *(2026-08-22: the tally-board round REJECTED — “a market establishing prices wouldn’t be a plank with a stick in a hole”; rebriefed FORMAL: an abacus / a banner-mounted track / a fine rail-and-slider price board — options round out.)* The Bourse has no period
-   glyph: every price-shift face (the Tollhouse toll bench · the Factor's Desk / Guild
-   Residence ±1 chips · the Staple Rights +2▲ chip · the Bourse strip header · the aid
-   legend) currently falls back to the lucide `trending-up` arrow — the one modern glyph
-   left on the table. Brief: a merchant's **tally board with a peg moved up a notch** —
-   a small dark-wood board with a column of drilled holes, a bone peg sitting one hole
-   higher, a subtle upward arrowhead worn into the wood. One object; the ±1/+2▲ numerals
-   print BESIDE the icon, so the icon carries no number.
+1. **bourse.png — LANDED 2026-08-22 as a FAMILY (base A):** the guild BANNER bearing the
+   beer CASK (the tally-board and rail-board rounds are retired concepts), plus the numbered
+   marks in the age/goods numeral recipe — `bourse-plus1` · `bourse-plus2` · `bourse-pm1` ·
+   `bourse-minus1` (RED, the drops-print-red rule). Wired: the Tollhouse toll bench (±1 chip),
+   the Venture public lines (±1 / +2▲), the Bourse strip header, the aid legends and every
+   in-app Bourse header — the lucide trending arrow is fully retired.
 2. **goods-3.png** — **LANDED 2026-08-22** in the corrected AGE-icon numeral recipe (size .42H, stroke .028H, drop shadow — goods-2 re-cut to match); the ICON_ART stand-in flipped.
-3. **bonus-load.png replacement** — REBRIEFED 2026-08-22 (designer): a cask on a dock CART, a ship behind — you can load a cask anywhere; the crane-sling concept retired. Options round out.
+3. **bonus-load.png** — **LANDED 2026-08-22 (cart-only pick A):** the cask on the dock cart, bold woodcut contour, no ship (“you can load a cask anywhere”); same filename, no code change.
 4. *(Optional)* **trigger chips** — `load:` / `sail:` / `line:` print as words today
    (the kit-pass shorthand). Three tiny glyphs (a cask on a hook · a departing sail · a
    two-station bracket) would finish the icon-first grammar; words are acceptable until

@@ -22,6 +22,7 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   'quality-1':'quality-1','quality-2':'quality-2','quality-3':'quality-3','quality-4':'quality-4',
   'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail','age-1':'station-age-1','age-2':'station-age-2',
   'goods-2':'goods-2','goods-3':'goods-3','brew-top':'station-brew-top',
+  bourse:'bourse','bourse-plus1':'bourse-plus1','bourse-plus2':'bourse-plus2','bourse-pm1':'bourse-pm1','bourse-minus1':'bourse-minus1',
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
 const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const LU=(n,cls)=>ICON_ART[n]?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/icons/'+ICON_ART[n]+'.png" alt="">':LUX(n,cls);
@@ -109,7 +110,7 @@ const BUILDINGS=[
   // the 4 Staples sit out). Retired: Granary · Mission Quay · Racking · Assay · Abbey ·
   // Hop Exchange · Merchants' Exchange (→ the VENTURES) · Rich Berth · Capstan.
   {k:'maltkiln',  nm:'Malt Kiln',         ms:2, verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, cond:'On load', effIc:'die-plus1',  eff:'die +1'},
-  {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, cond:'On load', effIc:'trending-up', eff:'1 marker ±1'},   // v5.3b (ruled): the toll bench — the stamp face retired
+  {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, cond:'On load', effIc:'bourse-pm1', eff:'1 marker'},   // v5.3b (ruled): the toll bench — the stamp face retired
   {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'Kontor min −1'},   // v5.2 ⚙ ruled: −1 (was −2 — almost broken)
   {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, art:'building-ropewalk.png', cond:'On load', effIc:'package-plus', eff:'+1 '+LU('beer')+' → other '+LU('sailboat')},   // v5.2 ⚙ ruled rework
   {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, cond:'+1 berth', eff:'On load: +1★'},   // v4.12b: the wharfage eases 2→1 ⚙
@@ -296,7 +297,7 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 // v5.3 wording pass (designer 2026-08-22: icons where possible, words where necessary, never
 // sentences): the PUBLIC line = an icon chip (whoever activates the line); the OWNER line =
 // trigger word + icons. pub is pre-built icon HTML.
-const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('coins')+'+1',VPUB_SH1=LU('trending-up')+'±1',VPUB_SH2=LU('trending-up')+'+2▲';
+const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('coins')+'+1',VPUB_SH1=LU('bourse-pm1'),VPUB_SH2=LU('bourse-plus2')+'▲';
 const VENTURES=[
   {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, eff:'On line: ⇄ 2 '+LU('dices'), art:'venture-rack-l1.png'},
                  l2:{nm:'Brewery',        ic:'flask-conical', pub:VPUB_STEP, eff:'On line: '+LU('flask-conical')+' (search)', art:'venture-rack-l2.png'}},
