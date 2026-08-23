@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — The Rules (v5.3b “The Bourse”)
+# Brewhouses of the Hanse — The Rules (v5.5 “Four Hands”)
 
 *The one rules document. Clean operational rules only — design rationale, decision
 history and open watches live in `DESIGN.md`; the physical manifest in `COMPONENTS.md`;

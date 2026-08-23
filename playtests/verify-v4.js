@@ -519,6 +519,31 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
     dg.indexOf('BLDG undefined')<0 && dg.indexOf('VENT Great Copper L2 [')>=0);
   stops();
 })();
+// ---- 20d-bis. v5.5: EVERY Venture kind must answer stopAvail. A kind that falls through
+// reads as a DEAD STOP \u2014 greyed for the human, skipped by the bot. (v5.5 shipped with
+// vagel/vbrew2/vlift falling through: three of the eight faces were unreachable.) ----
+(function(){
+  var dead=[];
+  VENTURE_KEYS.forEach(function(k){[1,2].forEach(function(lv){
+    var kd=VENTURES[k]['l'+lv].kind;
+    if(!VACT_KINDS[kd])return;   // vgoodstar/vstar ride loads and sails, not line stops
+    var q=fresh();stops();q.ai=null;
+    S.buildings.s1={v:k,lvl:lv,owner:0};
+    // give the seat everything a face could ask for, so only a FALL-THROUGH can fail
+    q.vessels=[{style:'hopped',q:2,die:1,act:'source'},{style:'broyhan',q:3,die:2,act:'load'},null];
+    q.grain=8;q.hops=8;q.recipes=['gruit','hopped'];
+    S.slots.s6={type:'ship',ship:'hulk',dest:'bruges',load:[]};
+    if(!stopAvail({kind:'vact',slot:'s1'}))dead.push(k+':L'+lv+' ('+kd+')');
+  });});
+  ok('every VACT venture kind answers stopAvail \u2014 no face is a dead stop'+(dead.length?(' [dead: '+dead.join(' · ')+']'):''), dead.length===0);
+  // the same for the PUBLIC lines \u2014 vstep2 fell through to a bare true
+  var dpub=[];
+  VENTURE_KEYS.forEach(function(k){[1,2].forEach(function(lv){
+    var pk=VENTURES[k]['l'+lv].pub;if(!pk)return;
+    if(!VPUB[pk])dpub.push(k+':L'+lv+' ('+pk+')');
+  });});
+  ok('every public line has a VPUB entry (icon + text)', dpub.length===0);
+})();
 // ---- 20e. v5.5: the new L2 powers ----
 (function(){var p=fresh();stops();p.ai=null;
   // LAGERING CELLAR \u2014 a private lift: +1, cap 6, MAY pass quality

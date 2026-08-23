@@ -3510,11 +3510,17 @@ function stopAvail(st){const p=cur();
     return true;}
   if(st.kind==='bact'){const b=bAt(st.slot);return !!b&&!b.v&&!!BUILDINGS[b.b].act&&actAvail(p,BUILDINGS[b.b].act);}
   if(st.kind==='vact'){const b=vAt(st.slot);if(!b||b.owner!==p.id)return false;   // the owner-only Venture stop
-    const kd=vKind(b);
-    return kd==='vswap'?actAvail(p,'rack'):kd==='vbrew'?actAvail(p,'brew'):kd==='vready'?actAvail(p,'assay'):false;}
+    const kd=vKind(b);   // EVERY kind answers here — a kind that falls through reads as a dead stop nobody can click
+    if(kd==='vswap')return actAvail(p,'rack');
+    if(kd==='vbrew')return actAvail(p,'brew');
+    if(kd==='vbrew2')return true;                                      // the Great Copper's 2 goods always land; the brew is the second beat
+    if(kd==='vready')return actAvail(p,'assay');
+    if(kd==='vagel')return maturingInVessels(p).length>0||actAvail(p,'load');   // Age 2, THEN a load anywhere — either half opens it
+    if(kd==='vlift')return vesselCasks(p).some(o=>o.c.die<6);
+    return false;}
   if(st.kind==='vpub'){const b=vAt(st.slot);if(!b||!vFace(b).pub)return false;   // the public line — anyone
     const pk=vFace(b).pub;
-    if(pk==='vstep')return maturingInVessels(p).length>0;
+    if(pk==='vstep'||pk==='vstep2')return maturingInVessels(p).length>0;
     if(pk==='vshift1'||pk==='vshift2')return Object.keys(S.bourse||{}).length>0;
     return true;}   // vgold — always takeable
   if(st.kind==='load'){const t=S.slots[st.slot];return !!t&&t.type==='ship'&&readyInVessels(p).some(o=>canTake(st.slot,o.i));}

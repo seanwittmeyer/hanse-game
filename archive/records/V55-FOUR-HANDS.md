@@ -146,28 +146,49 @@ the registry) · `rulebook.html` (the three ways + a per-theme table + the scori
 
 ---
 
-## 5. Gates
+## 5. The dead-stop fix (same day — found on the v5.6 full re-read)
+
+**v5.5 shipped with three of its eight faces unreachable.** `stopAvail`'s `vact` branch was a
+ternary chain written for the OLD kinds and never extended:
+
+```js
+return kd==='vswap'?actAvail(p,'rack'):kd==='vbrew'?actAvail(p,'brew'):kd==='vready'?actAvail(p,'assay'):false;
+```
+
+`vagel` (Warehouse), `vbrew2` (Great Copper) and `vlift` (Lagering Cellar) all fell through to
+**`false`** — the stop rendered greyed for a human and `aiStep`'s `stops` case filters on
+`stopAvail`, so the bots skipped them too. The `vstep2` public line fell through to a bare
+`true` instead of checking for something to age.
+
+**Every kind now answers explicitly**, and **§20d-bis walks the whole family** — every
+`VACT_KINDS` face, both levels, on a seat given everything a face could ask for — so a
+fall-through can never ship again. A companion check asserts every public line has a `VPUB`
+entry.
+
+**The cost of the bug is the numbers.** Every pace figure measured before the fix was taken
+with three of eight faces dead, and is void. Corrected in §6.
+
+---
+
+## 6. Gates
 
 | Gate | Result |
 |---|---|
-| `verify-v4.js` | **380/380 ALL PASS** — new §20d (themed pairs · FLIP · overbuild) and §20e (the new L2 powers) |
-| `sim.js 24` (2–4p, 72 games) | **0 crashes / 0 deadlocks.** Rounds 18.8 / 15.3 / 14.8; band 100% / 95.8% / 91.7% |
+| `verify-v4.js` | **382/382 ALL PASS** — §20d (themed pairs · FLIP · overbuild) · **§20d-bis (the dead-stop walk)** · §20e (the new L2 powers) |
+| `sim.js` (2–4p) | **0 crashes / 0 deadlocks** |
 | `ai-render-smoke.js` | **ALL PASS** (7 configurations, all toggles) |
 | `aid-overflow.js` | **ALL FIT** — 6 aid faces within their cards |
 
-**The FLIP is the move players make:** **2.3–3.7 FLIPS per game** against **0.6–1.0**
-overbuild climbs. The door the letter opened is the one that gets used — and L1 placements
-rose too (4.1 → 6.8 across the counts), so the wharf now carries more rings than it did.
+**The FLIP is the move players make:** **1.9–3.6 FLIPS per game** against **0.7–0.8**
+overbuild climbs. The door the letter opened is the one that gets used, and L1 placements
+rose too (3.8 → 7.0 across the counts).
 
-**Pace, honestly:** every out-of-band game is a **short** one (min 11 rounds) — nothing runs
-long. 2p **recovered** from v5.4's dip (90% → 100% in band, 16.4 → 18.8 rounds); 3p and 4p
-still finish ~1–2 rounds fast (95.8% / 91.7%). The cause is unchanged from the v5.4 watch —
-the public-line goods faucet scales with the Venture population, and v5.5 puts more rings on
-the wharf. **No pace dial was touched.** The levers, if a human table agrees it runs hot,
-stay where §10 records them: the **tray size** (the ruled dial) or **thinning `vgold`** (now
-on 2 of 8 faces). Measure before dialing.
+**PACE — the honest read, taken after the dead-stop fix.** 2p **12.0 rounds, 50% in band** ·
+3p **14.4, 91.7%** · 4p **12.8, 83.3%**. Every out-of-band game is a **short** one (min 9).
+This is not a regression from a bug — it is the family working: the Warehouse, the Great
+Copper and the Lagering Cellar are genuine engine faces, and an engine that fires commits
+dice faster. **No pace dial was touched** — the tray (13 ⚙) is the designer's ruling. §10
+carries the watch and the lever order.
 
-**Known blind spot:** `Assay Loft` at 2 `H` is **unmeasured, not proven safe** — the greedy
-bots reach for it **0.0 times per game** because they never hold a cellar wide enough to be
-worth certifying. That buff is the steepest in the letter and the human table is its only
-real instrument.
+**Known blind spot:** `Assay Loft` at 2 `H` is still **unmeasured** — the greedy bots never
+hold a cellar wide enough to be worth certifying. The human table is its only instrument.

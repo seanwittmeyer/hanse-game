@@ -301,10 +301,20 @@ chain, and the FLIP is what makes holding all four reachable.
   `V_FEE_L2` — you are buying the upgrade, not the ground); `enterAge(…,ctx.thenLoad)` and
   `enterSource(…,ctx.thenBrew)` chain the two multi-step faces; `VSTAR_PTS` 1→2,
   `ASSAY_COST` `{h:2}`, `VRES_PTS` deleted. KEY `hanse-v55`.
-- Gates: verify **380/380** (new §20d themed-pair/FLIP/overbuild battery · §20e the new L2
-  powers) · sim 24×3 **0 crashes / 0 deadlocks** · render smoke ALL PASS · aid ALL FIT.
-  **FLIPS run 2.3–3.7/game** against 0.6–1.0 overbuild climbs — the door the letter opened
-  is the one players use.
+- **The dead-stop fix (same day, found on the v5.6 full re-read).** v5.5 shipped with
+  `stopAvail`'s `vact` branch answering only `vswap`/`vbrew`/`vready`; **`vagel` (Warehouse),
+  `vbrew2` (Great Copper) and `vlift` (Lagering Cellar) fell through to `false`** — three of
+  the eight faces were greyed for the human and skipped by the bot. The `vstep2` public line
+  fell through to a bare `true`. Fixed: every kind answers, and a **§20d-bis battery walks
+  the whole family** so a new face can never ship dead again.
+- Gates: verify **382/382** (§20d themed-pair/FLIP/overbuild · §20d-bis the dead-stop walk ·
+  §20e the new L2 powers) · sim **0 crashes / 0 deadlocks** · render smoke ALL PASS · aid ALL
+  FIT. **FLIPS run 1.9–3.6/game** against 0.7–0.8 overbuild climbs — the door the letter
+  opened is the one players use.
+- **PACE — the numbers reported before the fix are void.** They were measured with three of
+  eight faces dead. Alive, the family is strong and the game runs **FAST**: 2p **12.0 (50%
+  in band)** · 3p **14.4 (91.7%)** · 4p **12.8 (83.3%)**, every miss on the SHORT side. The
+  tray (13 ⚙) is THE dial and it is the designer's ruling — untouched. §10 carries it.
 
 ### v5.4 “The Tide” (2026-08-23, designer-ruled off playtest #37)
 *"I want engine building to pay off, I want the bourse more dynamic, I think the public
@@ -612,8 +622,20 @@ record is in git history.
 *Moved here from `RULES.md` §Open (2026-08-23). The designer calls full batteries; these
 are the things to read when one runs — or when a human table sits down.*
 
+**THE LIVE ONE — PACE, now that the family actually fires:**
+- v5.5 shipped with three of eight Venture faces **dead** (`stopAvail` fell through on
+  `vagel`/`vbrew2`/`vlift`). Fixed on the v5.6 re-read — and the corrected read is that the
+  game runs **FAST**: 2p **12.0 rounds, 50% in band** · 3p **14.4, 91.7%** · 4p **12.8,
+  83.3%**. Every out-of-band game is SHORT (min 9). Cause is structural, not a bug: the
+  Warehouse (Age 2 + a load anywhere), the Great Copper (2 goods + a full brew) and the
+  Lagering Cellar (die +1) are real engine faces, and an engine that fires commits dice
+  faster. **The tray (13 ⚙) is THE dial and it is the designer's ruling — untouched.** The
+  levers, in order of bluntness: tray size · thinning `vgold` (2 of 8 faces) · pricing the
+  chained faces. **Measure at a human table before dialing** — a 12-round game that feels
+  full is not the same problem as one that feels cut short.
+
 **v5.5 “Four Hands” — the Venture family re-derived, every number unplayed:**
-- **Does the FLIP make Ventures too cheap to spread?** Smokes show **FLIPS 2.3–3.7/game**
+- **Does the FLIP make Ventures too cheap to spread?** Smokes show **FLIPS 1.9–3.6/game**
   vs overbuild climbs 0.6–1.0 — the intended reversal. But L1 placements also rose (4.1–6.8),
   so the wharf carries more rings than it did; watch whether the tide still finds bare ground
   to refill onto, and whether a 4p wharf goes all-Venture by mid-game.
