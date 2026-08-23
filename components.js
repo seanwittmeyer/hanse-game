@@ -25,7 +25,7 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   'quality-1':'quality-1','quality-2':'quality-2','quality-3':'quality-3','quality-4':'quality-4',
   'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail','age-1':'station-age-1','age-2':'station-age-2',
   'goods-2':'goods-2',   // round 5 (2026-08-19): the numbered Source face — the basket + a "2" in the landed numeral treatment
-  'goods-3':'goods',     // v5.2b: Source 3 — STAND-IN (the plain basket) until the numbered '3' lands; brief queued in art/PROMPTS.md
+  'goods-3':'goods-3',   // round 9 (2026-08-22): the numbered Source-3 face LANDS — the basket + a "3" in the AGE-icon numeral recipe (size .42H · stroke .028H · the soft drop shadow); goods-2 re-cut to the same recipe
   'brew-top':'station-brew-top',   // rounds 7-8 (2026-08-19): the ALT Brewhouse — the pot + tile deck + down-arrow = take the TOP tile of the stack (blind); the plain pot stays the primary brew-and-SEARCH
   // die MODIFIER marks (round 4): the die with its lift/drop printed on it — drops in red
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
@@ -117,9 +117,9 @@ const BUILDINGS=[
   {k:'maltkiln',  nm:'Malt Kiln',         ms:2, verb:'transform', tgt:'cask', ic:'flame',        n:2, g:2, effIc:'die-plus1',  eff:'on load'},
   {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, effIc:'trending-up', eff:'load: ±1'},   // v5.3b (ruled): the toll bench — the stamp face retired
   {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'min −1'},   // v5.2 ⚙ ruled: −1 (was −2 — almost broken)
-  {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, art:'building-capstan.png', effIc:'package-plus', eff:'load: +1 '+LU('beer')+' → other '+LU('sailboat')},   // v5.2 ⚙ ruled rework
+  {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, art:'building-ropewalk.png', effIc:'package-plus', eff:'load: +1 '+LU('beer')+' → other '+LU('sailboat')},   // v5.2 ⚙ ruled rework
   {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, eff:'+1 berth · load: +1★'},   // v4.12b: the wharfage eases 2→1 ⚙
-  {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, art:'building-gauger.png', effIc:'contract',     eff:'sail: ×2 lines'},
+  {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, art:'building-weighhouse.png', effIc:'contract',     eff:'sail: ×2 lines'},
   // v5.2 NEW ⚙ — the STAPLE HOUSES (Stapelrecht): the destination premium, one crest each
   {k:'staple_bruges',   nm:'Staple House · Bruges',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bruges', art:'building-staple.png', effIc:'kontor-bruges', eff:'sail: '+LU('beer')+' +2★ each'},
   {k:'staple_london',   nm:'Staple House · London',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'london', art:'building-staple.png', effIc:'kontor-london', eff:'sail: '+LU('beer')+' +2★ each'},
@@ -335,14 +335,14 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 // trigger word + icons. pub is pre-built icon HTML.
 const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('coins')+'+1',VPUB_SH1=LU('trending-up')+'±1',VPUB_SH2=LU('trending-up')+'+2▲';
 const VENTURES=[
-  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, eff:'line: ⇄ 2 '+LU('dices'), art:'building-racking.png'},
-                 l2:{nm:'Brewery',        ic:'flask-conical', pub:VPUB_STEP, eff:'line: '+LU('flask-conical')+' (search)', art:'building-abbey.png'}},
-  {k:'counting', l1:{nm:'Counting House', ic:'coins',   pub:VPUB_GOLD, eff:'load: +1 '+LU('coins'), art:'building-granary.png'},
-                 l2:{nm:'Assay Loft',     ic:'scale',   pub:VPUB_GOLD, eff:'line: 1'+LU('sprout','h')+' → '+LU('check'), art:'building-assay.png'}},
-  {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', pub:VPUB_SH1, eff:'load: re-deal '+LU('contract'), art:'building-exchange.png'},
-                 l2:{nm:'Staple Rights',  ic:'landmark',pub:VPUB_SH2, eff:'sail: your '+LU('beer')+' +1★', art:'building-richberth.png'}},
-  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   pub:VPUB_GOLD, eff:'load: +1 '+LU('beer'), art:'building-hopex.png'},
-                 l2:{nm:'Guild Residence',ic:'home',    pub:VPUB_SH1, eff:'end: 2★ × '+LU('home'), art:'building-missionq.png'}},
+  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, eff:'line: ⇄ 2 '+LU('dices'), art:'venture-rack-l1.png'},
+                 l2:{nm:'Brewery',        ic:'flask-conical', pub:VPUB_STEP, eff:'line: '+LU('flask-conical')+' (search)', art:'venture-rack-l2.png'}},
+  {k:'counting', l1:{nm:'Counting House', ic:'coins',   pub:VPUB_GOLD, eff:'load: +1 '+LU('coins'), art:'venture-counting-l1.png'},
+                 l2:{nm:'Assay Loft',     ic:'scale',   pub:VPUB_GOLD, eff:'line: 1'+LU('sprout','h')+' → '+LU('check'), art:'venture-counting-l2.png'}},
+  {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', pub:VPUB_SH1, eff:'load: re-deal '+LU('contract'), art:'venture-factor-l1.png'},
+                 l2:{nm:'Staple Rights',  ic:'landmark',pub:VPUB_SH2, eff:'sail: your '+LU('beer')+' +1★', art:'venture-factor-l2.png'}},
+  {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   pub:VPUB_GOLD, eff:'load: +1 '+LU('beer'), art:'venture-warehouse-l1.png'},
+                 l2:{nm:'Guild Residence',ic:'home',    pub:VPUB_SH1, eff:'end: 2★ × '+LU('home'), art:'venture-warehouse-l2.png'}},
 ];
 const VENT_FOOT='rgba(31,86,122,.78)';   // the owner-only blue (the v2.4.1 privilege colour returns)
 // v5.3 restyle (designer 2026-08-22): a Venture SHARES the building tile's anatomy — the same

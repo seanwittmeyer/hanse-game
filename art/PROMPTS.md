@@ -237,7 +237,7 @@ at .3in); tiles take the painterly single-structure portrait treatment (same wha
 angle/light as the other building faces).*
 
 ### Icons
-1. **bourse.png — NEW, the highest-value icon on the list.** The Bourse has no period
+1. **bourse.png — NEW, the highest-value icon on the list.** *(2026-08-22: the tally-board round REJECTED — “a market establishing prices wouldn’t be a plank with a stick in a hole”; rebriefed FORMAL: an abacus / a banner-mounted track / a fine rail-and-slider price board — options round out.)* The Bourse has no period
    glyph: every price-shift face (the Tollhouse toll bench · the Factor's Desk / Guild
    Residence ±1 chips · the Staple Rights +2▲ chip · the Bourse strip header · the aid
    legend) currently falls back to the lucide `trending-up` arrow — the one modern glyph
@@ -245,28 +245,27 @@ angle/light as the other building faces).*
    a small dark-wood board with a column of drilled holes, a bone peg sitting one hole
    higher, a subtle upward arrowhead worn into the wood. One object; the ±1/+2▲ numerals
    print BESIDE the icon, so the icon carries no number.
-2. **goods-3.png** — the Market's Source-3 primary face (briefed above, v5.2b section;
-   the plain basket still stands in).
-3. **bonus-load.png replacement** — the *Load 1 more* verb (briefed above, 2026-08-09
-   section; still the too-generic package glyph).
+2. **goods-3.png** — **LANDED 2026-08-22** in the corrected AGE-icon numeral recipe (size .42H, stroke .028H, drop shadow — goods-2 re-cut to match); the ICON_ART stand-in flipped.
+3. **bonus-load.png replacement** — REBRIEFED 2026-08-22 (designer): a cask on a dock CART, a ship behind — you can load a cask anywhere; the crane-sling concept retired. Options round out.
 4. *(Optional)* **trigger chips** — `load:` / `sail:` / `line:` print as words today
    (the kit-pass shorthand). Three tiny glyphs (a cask on a hook · a departing sail · a
    two-station bracket) would finish the icon-first grammar; words are acceptable until
    then.
 
 ### Building tiles (Public Works)
-1. **building-ropewalk.png** — briefed above (v5.1 section), never generated; the
-   Capstan portrait stands in and reads WRONG (a different tile in play).
-2. **building-weighhouse.png** — briefed above (v5.1 section), never generated; the
-   gauger portrait stands in.
+1. **building-ropewalk.png** — **LANDED 2026-08-22 (pick C** — the stone-quay gallery**)**; the Capstan stand-in retired.
+2. **building-weighhouse.png** — **LANDED 2026-08-22 (pick E** — the dark-stone Waag**)**; the gauger stand-in retired.
 3. *(Optional)* **Staple House crest variants ×4** (`building-staple-bruges/london/
    bergen/novgorod.png`) — all four share the generic `building-staple.png` today; each
    tile already prints its Kontor crest chip, so one shared portrait is playable. A
    variant set (the same warehouse, the port's banner over the door) would let the four
    read apart at arm's length.
 
-### Venture tiles ×8 — the family has NO art of its own
-Every Venture face borrows a retired tile's portrait. Save as `venture-<k>-l<1|2>.png`;
+### Venture tiles ×8 — ALL EIGHT LANDED 2026-08-22 (the options round's picks)
+Rack House C · Brewery A · Counting House C · Assay Loft A · Factor's Desk C · Staple
+Rights A · Warehouse C · Guild Residence B — saved as `venture-<k>-l<1|2>.png`, the eight
+`art:` fields in `components.js` VENTURES swapped over (mats/letterbox bands cropped at
+landing). The borrowed-portrait era ends. Original briefs kept below for regeneration: Save as `venture-<k>-l<1|2>.png`;
 the eight `art:` fields in `components.js` VENTURES swap over when they land. Portraits
 want a **smaller, private-workshop scale** than the civic Public Works — these are the
 player's own yard:
@@ -288,6 +287,5 @@ player's own yard:
   gable townhouse with the guild chain over the lintel — the VP face, the richest
   portrait of the eight.
 
-### Specialists (v5.1, briefed above, never generated)
-- **improve-broker.jpg** · **improve-brewer-s-mate.jpg** — the two v5.1 guild singles
-  still render art-less (briefs in the v5.1 section above).
+### Specialists — LANDED 2026-08-22
+- **improve-broker.jpg** (pick A — ledger + coin scale on the cloth) · **improve-brewer-s-mate.jpg** (pick E — the young brewer at the tun, the one figure-shot in the object family, designer-ruled).
