@@ -41,7 +41,7 @@ const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the
   // v4.2 "the fee rides the ITEM": the three ACQUISITION bonuses read "· fee" — you pay the
   // chosen item's OWN printed price (recipe card / specialist tile / building tile; chipless
   // buildings are free). The kontor prizes stay free; using a building never adds a fee.
-  {k:'source',  ai:'coins',         act:'Gain 2 goods',             q:2},
+  {k:'source',  ai:'goods-2',       act:'Gain 2 goods',             q:2},
   {k:'age',     ai:'age-2',     act:'Age +2',                   q:2},
   {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},   // TODO(art 2026-08-09, designer): 'Load 1 more' wants its OWN icon — bonus-load reads too generic; brief queued in art/PROMPTS.md
   {k:'reach',   ai:'map-pin',       act:'+1 presence',         q:2},   // always FREE (v5.1 — the priced channel retired with the Almoner's Stall)
@@ -63,7 +63,7 @@ const CASKS=[
   // ---- EXPANSION "Specialty Beers" (v4.14 "Beer Atlas" — re-derived on the v4 spine; opt-in) —
   // PINNED-signature casks, drafted 3-of-7 with the toggle (>=1 base Q4+ guaranteed) ----
   // v4.15b [designer-ruled 2026-08-10 — "keep it simple"]: the signature IS the pinned bonus.
-  {nm:'Gose', exp:1,     c:'#6e8b74', q:2, g:2,h:0, n:8, ready:1, pin:{k:'goods3',ai:'coins',act:'Gain 3 goods',q:2}},
+  {nm:'Gose', exp:1,     c:'#6e8b74', q:2, g:2,h:0, n:8, ready:1, pin:{k:'goods3',ai:'goods-3',act:'Gain 3 goods',q:2}},
   {nm:'Zerbster', exp:1, c:'#5f7a3c', q:3, g:0,h:3, n:6, ready:1, pin:{k:'zgyle',ai:'package-plus',act:'Brew free Gruit<br>+ Load a Cask',q:3}},
   {nm:'Duckstein', exp:1,c:'#7a5236', q:2, g:1,h:1, n:8, ready:1, pin:CASK_POOL[3], tag:'smoke-hardy:<br>'+LU('die-plus1')+' as it boards'},   // v4.14: the old ready-2 collapses to 1 (the die floors at 1); the board-lift IS the identity
   // ---- EXPANSION CAPSTONE "Jopenbier" (its OWN toggle) — v4.14: a PLAIN Q6 (the dock-vintage is cut —
@@ -127,8 +127,8 @@ const BUILDINGS=[
   {k:'staple_london',   nm:'London Steelyard',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'london', art:'building-staple.png', effIc:'star-plus2', cond:'On sail to London', eff:'each cask'},
   {k:'staple_bergen',   nm:'Bergen Bryggen',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bergen', art:'building-staple.png', effIc:'star-plus2', cond:'On sail to Bergen', eff:'each cask'},
   {k:'staple_novgorod', nm:'Novgorod Peterhof', ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'novgorod', art:'building-staple.png', effIc:'star-plus2', cond:'On sail to Novgorod', eff:'each cask'},
-  {k:'bonded',    nm:'Bonded Store',      ms:3, verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, cond:'On load: '+LU('die-plus1'), eff:'On sail: away · shippers +2 '+LU('coins')},
-  {k:'victual',   nm:'Victualling Yard',  ms:3, verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, cond:'On load: bonus ×2', eff:'On sail: leaves with the Ship'},
+  {k:'bonded',    nm:'Bonded Store',      ms:3, verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, cond:'On load: '+LU('die-plus1'), eff:'On sail: shippers '+LU('goods-2')},   // v5.4: the tide takes every tile, so 'it leaves' no longer distinguishes this face — only the payout does
+  {k:'victual',   nm:'Victualling Yard',  ms:3, verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, cond:'On load', eff:'the load bonus fires ×2'},   // v5.4: ditto — the tide is the family rule, not this tile's face
   // v4.16b "Guild Ledger" (designer-ruled 2026-08-14, off the lane study): the Guildhall's own
   // building — prints on the GUILDHALL SHEET (hall:1 keeps it off the base 20-tile sheet);
   // in hall mode it is guaranteed into the deal (17 of 21). Anyone who activates it gains an
@@ -248,7 +248,7 @@ const RECIPES=[  // EXPORT recipe cards — print in the same double-sided run a
   {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{h:2}, reach:'Q5 — the premium climb'},
   // EXPANSION "Specialty Beers" (v4.14 "Beer Atlas", opt-in) — the 3 specialty export recipe cards
   // (fees ride the ruled formula H = Q−3: the Q3-and-below are chip-less/FREE; Jopenbier pays 3H)
-  {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, exp:1, buy:{}, reach:'Q2 · no hops · load: +3 '+LU('coins')},
+  {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, exp:1, buy:{}, reach:'Q2 · no hops · load: '+LU('goods-3')},
   {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, exp:1, buy:{}, reach:'Q3 · no grain · load: brew free Gruit + load a cask'},
   {nm:'Duckstein',cc:'#7a5236', L:2, g:1,h:1, exp:1, buy:{}, reach:'Q2 · boards: '+LU('die-plus1')},
   {nm:'Jopenbier',cc:'#5e2433', L:6, g:2,h:4, exp:1, buy:{h:3}, reach:'Q6 capstone · start 2, four steps · off the Bourse — the plain die (8★ Novgorod)'},
@@ -267,7 +267,7 @@ const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(97,63,32,.78)';   //
 const BLD_FOOT='rgba(58,51,66,.7)';   // legacy fallback   // building card foot/base — dark purple-grey (#3a3342) at 70% opacity so the illustration bleeds ~30% through the foot. Same on front & back.
 // v3.4a at 66% height — the SAME anatomy the 2in card earned (icon+name header · art window ·
 // the colour foot: the effect big, then the target chip + cost row), compressed, never flattened.
-const STD_ACT={source:{ai:'coins',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age +2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};   // v5.1: the 'alms' entry left with the Almoner's Stall
+const STD_ACT={source:{ai:'goods-2',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age +2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};   // v5.1: the 'alms' entry left with the Almoner's Stall
 function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   // v5.3 (ruled): the Public Works are die-less SETUP FURNITURE — no start face, no fee chip
   // (nobody builds or buys them; the fee data survives only as a dial seam). msChip retired.

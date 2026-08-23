@@ -122,8 +122,8 @@ tile, boxed — the family rule since v5.4), and a full wharf lets an L1 Venture
 | Cooperage | 1 | the Ship here: **+1 capacity** (sails only when that berth is also full) · **each cask loaded here: its loader +1★** ⚙ | 2 `G` | 3 |
 | **Weigh House** | 1 | **each cask delivered off the Ship here may claim 2 Manifest lines** | 2 `G` | 3 |
 | **Staple Houses ×4** *(Bruges Hanzehuis · London Steelyard · Bergen Bryggen · Novgorod Peterhof)* | 4 | *On sail to the tile's Kontor:* **every delivered cask +2★** ⚙ (*Stapelrecht* — the destination premium) | 2 `G` | 2 |
-| **Bonded Store** | 1 | a cask loading here: **die +1** (cap 6); as it sails, **every player with a cask aboard gains 2 goods** | 2 `G` | 3 |
-| **Victualling Yard** | 1 | a cask loading here: **its load bonus fires TWICE** | 2 `G` | 3 |
+| **Bonded Store** | 1 | *On load:* the boarding die **+1** (cap 6) · *On sail:* **every player with a cask aboard gains 2 goods** | 2 `G` | 3 |
+| **Victualling Yard** | 1 | *On load:* the boarding cask's **load bonus fires ×2** | 2 `G` | 3 |
 
 *(Retired at v5.2, ruled: Granary · Mission Quay · Racking Hall · Assay House · Abbey Cellar ·
 Hop Exchange · Merchants’ Exchange — their ideas move into the Ventures below — plus the
@@ -263,6 +263,20 @@ glyph stands in — briefed in `art/ICONS.md`). The **cask tiles reprint**: *Ope
 drops to **Q2+**, so **Hopped's 12-tile census now prints 2 of them** (the Q2 pool goes
 5 verbs → 6; the Venture door was starved, not priced shut). The **player aid + rulebook
 reprint** (the tide, the bag, the Q2 verb). Counts otherwise unchanged.
+
+**The numbered-goods icons land (2026-08-23, ruled — REPRINT, no counts, no rules):** the
+art triplet `goods-1` / `goods-2` / `goods-3` exists, so every face that grants a **specific
+number** of goods stops borrowing the generic basket and prints its own numeral. **Cask
+tiles:** *Gain 2 goods* → `goods-2` (Gruit's pin, every Q2+ census, Jopenbier's pin) ·
+Gose's pinned *Gain 3 goods* → `goods-3` (its recipe card too). **Venture faces:** the
+`Counting House` owner line and every *gain 1 good* public chip (Counting House L1/L2,
+Warehouse L1) → `goods-1` — the Counting House had been printing the plain basket under a
+**text “+1” badge**, which a printed face must never do. **Boards & aid:** the Wharf's
+Market alt chip and the aid's *Gain 2 goods* legend row follow. The generic **Goods**
+legend entry keeps the plain basket — it names the category, not an amount. Same pass:
+the **Bonded Store** and **Victualling Yard** faces drop their “it sails away” lines, which
+stopped distinguishing anything once the tide became the family rule — each now prints only
+what is actually its own (the 2-goods payout · the ×2 load bonus).
 
 **Component-copy ruling (2026-08-23, designer-ruled — REPRINT, no counts, no rules):** THE
 GOLDEN RULE lands in `STYLE.md` §4c — rules never live on components, boards, or in the play
