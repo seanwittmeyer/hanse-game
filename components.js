@@ -315,13 +315,13 @@ const VENT_FOOT='rgba(31,86,122,.78)';   // the owner-only blue (the v2.4.1 priv
 // the PUBLIC chip (boxed — anyone's activation) then the ringed OWNER line.
 function ventureTile(d,lvl,col){const f=lvl===2?d.l2:d.l1;
   const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
-  return '<div class="btile btW" style="--c:'+VENT_FOOT+ring+'">'
+  return '<div class="btile btW" style="--c:'+(col||VENT_FOOT)+ring+'">'
   +artLayer(f.art||('venture-'+d.k+'-l'+lvl+'.png'))
   +'<div class="bt-top"><span class="bt-nm'+(f.nm.length>18?' long':'')+'">'+f.nm+'</span>'
     +'<span class="bt-ms" title="the level — an L1 takes any open slot (wharf full: replaces a Public Work); an L2 overbuilds your own L1">'+(lvl===2?'L2':'L1')+'</span>'
     +'<span class="bt-cost">'+cost(lvl===2?2:1,0)+'</span></div>'
-  +'<div class="bt-foot"><span class="bt-eff"><span class="vt-pub" title="the PUBLIC line — whoever activates a line through this slot">'+f.pub+'</span>'
-    +'<span class="vt-own"'+(col?' style="--oc:'+col+'"':'')+' title="the OWNER line — the ringed house alone">'+f.eff+'</span></span></div>'
+  +'<div class="bt-foot"><span class="bt-eff vt-row"><span class="vt-own" title="the OWNER line — the ringed house alone">'+f.eff+'</span>'
+    +'<span class="vt-pub" title="the PUBLIC line — whoever activates a line through this slot">'+f.pub+'</span></span></div>'
   +'</div>';}
 // MANIFEST CARD (v5.0) — the demand card riding a non-Bruges hull: THREE demand lines, each
 // a beer/tier chip (the beer glyph) and/or a die chip (the die-as-parked glyph) → the ★. The
@@ -783,8 +783,10 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.stile .st-ghost svg,.stile .st-ghost .ic{width:.48in;height:.48in}'
 /* v4.9b: the mark's start-face chip on the building top row */
 +'.btile .bt-ms{flex:0 0 auto;display:inline-flex;align-items:center;margin-right:.02in}'
-+'.btile .vt-pub{display:inline-flex;align-items:center;gap:.015in;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);border-radius:.045in;padding:.005in .035in;margin-right:.05in}'
-+'.btile .vt-own{display:inline-flex;align-items:center;gap:.015in;border-left:.035in solid var(--oc,rgba(255,255,255,.55));padding-left:.045in}'
++'.btile .vt-row{display:flex;align-items:center;width:100%}'
++'.btile .vt-pub{display:inline-flex;align-items:center;gap:.02in;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);border-radius:.05in;padding:.015in .05in;margin-left:auto;font-size:.17in}'
++'.btile .vt-pub .ic,.btile .vt-pub img.ai,.btile .vt-pub svg{width:.24in;height:.24in}'
++'.btile .vt-own{display:inline-flex;align-items:center;gap:.015in}'
 +'.btile .bt-ms img.ai,.btile .bt-ms svg{width:.24in;height:.24in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}'
 +'.btile .bt-nm{white-space:normal;overflow:visible;line-height:1.02}'
 +'.btile .bt-nm.long{font-size:.16in}'
