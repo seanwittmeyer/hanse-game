@@ -115,13 +115,13 @@ const BUILDINGS=[
   {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, cond:'On load', effIc:'bourse-pm1', eff:'1 marker'},   // v5.3b (ruled): the toll bench — the stamp face retired
   {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'Kontor min −1'},   // v5.2 ⚙ ruled: −1 (was −2 — almost broken)
   {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, art:'building-ropewalk.png', cond:'On load', effIc:'package-plus', eff:'+1 '+LU('beer')+' → other '+LU('sailboat')},   // v5.2 ⚙ ruled rework
-  {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, cond:'+1 berth', eff:'On load: '+LU('star-plus1','starmark')},   // v4.12b: the wharfage eases 2→1 ⚙
+  {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, effIc:'star-plus1', cond:'+1 berth', eff:'On load'},   // v4.12b: the wharfage eases 2→1 ⚙
   {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, art:'building-weighhouse.png', cond:'On sail', effIc:'contract',     eff:'×2 Manifest lines'},
   // v5.2 NEW ⚙ — the STAPLE HOUSES (Stapelrecht): the destination premium, one crest each
-  {k:'staple_bruges',   nm:'Bruges Hanzehuis',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bruges', art:'building-staple.png', effIc:'kontor-bruges', cond:'On sail to Bruges', eff:LU('star-plus2','starmark')+' each cask'},
-  {k:'staple_london',   nm:'London Steelyard',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'london', art:'building-staple.png', effIc:'kontor-london', cond:'On sail to London', eff:LU('star-plus2')+' each cask'},
-  {k:'staple_bergen',   nm:'Bergen Bryggen',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bergen', art:'building-staple.png', effIc:'kontor-bergen', cond:'On sail to Bergen', eff:LU('star-plus2')+' each cask'},
-  {k:'staple_novgorod', nm:'Novgorod Peterhof', ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'novgorod', art:'building-staple.png', effIc:'kontor-novgorod', cond:'On sail to Novgorod', eff:LU('star-plus2')+' each cask'},
+  {k:'staple_bruges',   nm:'Bruges Hanzehuis',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bruges', art:'building-staple.png', effIc:'star-plus2', cond:'On sail to Bruges', eff:'each cask'},
+  {k:'staple_london',   nm:'London Steelyard',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'london', art:'building-staple.png', effIc:'star-plus2', cond:'On sail to London', eff:'each cask'},
+  {k:'staple_bergen',   nm:'Bergen Bryggen',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bergen', art:'building-staple.png', effIc:'star-plus2', cond:'On sail to Bergen', eff:'each cask'},
+  {k:'staple_novgorod', nm:'Novgorod Peterhof', ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'novgorod', art:'building-staple.png', effIc:'star-plus2', cond:'On sail to Novgorod', eff:'each cask'},
   {k:'bonded',    nm:'Bonded Store',      ms:3, verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, cond:'On load: '+LU('die-plus1'), eff:'On sail: away · shippers +2 '+LU('coins')},
   {k:'victual',   nm:'Victualling Yard',  ms:3, verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, cond:'On load: bonus ×2', eff:'On sail: leaves with the Ship'},
   // v4.16b "Guild Ledger" (designer-ruled 2026-08-14, off the lane study): the Guildhall's own
@@ -279,10 +279,12 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   if(d.cond&&lead) ft='<div class="bt-foot btF2"><span class="ac">'+lead+'</span><span class="bt-2col"><span class="bt-cond">'+d.cond+'</span><span class="bt-etext">'+txt+'</span></span></div>';
   else if(d.cond)  ft='<div class="bt-foot btFC"><span class="bt-cond">'+d.cond+'</span><span class="bt-eff">'+txt+'</span></div>';
   else             ft='<div class="bt-foot"><span class="bt-eff'+(lead?' bt-act':'')+'">'+(lead?'<span class="ac">'+lead+'</span><span class="bt-etext">'+txt+'</span>':txt)+'</span></div>';
-  // the title prints BARE (no lucide crest — ruled 2026-08-23) and may wrap to two lines
+  // the title prints BARE (no lucide crest — ruled 2026-08-23); a staple tile carries its
+  // kontor CREST art left of the title (ruled 2026-08-23, the Ropewalk-pattern pass)
   return '<div class="btile btW" style="--c:'+foot+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
-  +'<div class="bt-top"><span class="bt-nm'+(d.nm.length>18?' long':'')+'">'+d.nm+'</span>'+msChip+'</div>'
+  +'<div class="bt-top">'+(d.staple?'<span class="bt-crest">'+LU('kontor-'+d.staple)+'</span>':'')
+    +'<span class="bt-nm'+(d.nm.length>18?' long':'')+'">'+d.nm+'</span>'+msChip+'</div>'
   +ft
   +'</div>';}
 // ---- v5.2 PRIVATE VENTURES (ruled 2026-08-22): the GWT family — each house holds an IDENTICAL
@@ -790,6 +792,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .vt-pub .ic,.btile .vt-pub img.ai,.btile .vt-pub svg{width:.24in;height:.24in}'
 +'.btile .vt-own{display:inline-flex;align-items:center;gap:.015in}'
 +'.btile .starmark,.itile .starmark{width:.26in!important;height:.26in!important;vertical-align:-.08in}'
++'.btile .bt-crest{flex:0 0 auto;margin-right:.05in;display:inline-flex}.btile .bt-crest .ic,.btile .bt-crest img.ai{width:.34in;height:.34in}'
 +'.btile .bt-ms img.ai,.btile .bt-ms svg{width:.24in;height:.24in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}'
 +'.btile .bt-nm{white-space:normal;overflow:visible;line-height:1.02}'
 +'.btile .bt-nm.long{font-size:.16in}'
