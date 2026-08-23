@@ -652,6 +652,17 @@ rather than integrated**, so it gets its own pass later, not a patch now. The na
 connect a claim to something the game already does (the ⚜-to-sell-a-Ready-cask-to-a-brewhall
 thread).
 
+**THE MC TIERS REFUSE TO SPECIALIZE — an instrument finding worth keeping.** The first
+GM/CM lane read came back with depth at **flight 4.0/3.7/2.8 beers** — the cap never bound.
+Cause: `aiMCDecide` picks by **sampled margin**, so a persona tilt is invisible to it; the
+persona only flavours the rollout policy. Given the option, **the strongest search available
+discovers that opening a third style scores better and takes it.** That is evidence about the
+game, not just the harness — but it also meant the lane was measuring a broad seat wearing a
+depth label. Fixed by CONSTRAINING the MC's brew options (a committed depth seat is offered
+only styles it already ships), so the search must play the strategy in order to price it.
+**Lesson: a persona that only tilts is invisible to a search tier — a lane the MC must respect
+has to remove options, not weight them.**
+
 **THE DEPTH LANE (v5.6, built 2026-08-23) — the oracle's blind spot is closed.** The PATHWAYS
 lanes were majority · lifter · builder · breadth: **a seat for going wide and none for its
 opposite**, so no lane read on record could speak to *"an equally balanced point return on

@@ -3162,7 +3162,13 @@ function aiMCOptions(p){
           if(lo[ci]!==hi[ci])push('pour:'+lo[ci]+'>'+ci,()=>{pourDo(lo[ci],ci);});});}
       push('end',()=>endTurn());break;}
     case 'brew':{const brFree=!!(UI.brew&&UI.brew.free);
-      p.recipes.filter(r=>brFree||canBrew(p,r)).forEach(r=>push('brew:'+r,()=>brewPick(r)));
+      // the DEPTH lane must CONSTRAIN the search, not merely tilt it. The MC picks by sampled
+      // margin, so a persona tilt is invisible here — the search simply discovers that opening
+      // a third style scores better and the lane measures a broad seat wearing a depth label.
+      // Committed depth seats are offered only styles they already ship: the lane PLAYS the
+      // strategy so the oracle can price it.
+      p.recipes.filter(r=>(brFree||canBrew(p,r))&&!(aiDeepCommitted(p)&&!((p.shipped||{})[r])))
+        .forEach(r=>push('brew:'+r,()=>brewPick(r)));
       push('skip',()=>resume(UI.brew?UI.brew.returnTo:'stops'));break;}
     case 'load':{const L=UI.load;if(!L)break;
       if(L.cask==null){readyInVessels(p).forEach(o=>{L.ships.forEach(sid=>{if(canTake(sid,o.i))push('load:'+o.c.style+'@'+sid,()=>{UI.load.cask=o.i;loadOnto(sid);});});});
