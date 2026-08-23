@@ -146,7 +146,9 @@ function __runGame(n,__POFF){
     winSeat:rows[0].p.id,winPersona:(rows[0].p.ai&&rows[0].p.ai.persona)||null,personas:S.players.map(function(q){return (q.ai&&q.ai.persona)||null;}),
     laneSeats:S.players.map(function(q){var sc=scorePlayer(q);
       return {ps:(q.ai&&q.ai.persona)||null,total:sc.total,flight:flightBeers(q),deliv:(q.delivered||[]).length,fl:sc.flight,
-        styles:Object.keys(q.shipped||{}).sort().join('+')};}),
+        styles:Object.keys(q.shipped||{}).sort().join('+'),
+        brews:(q._brews||0),stuck:q.vessels.filter(function(c){return c;}).length,
+        sDel:sc.deliv,sBank:sc.bank,sMaj:sc.maj};}),
     winTotal:rows[0].sc.total,secondTotal:rows[1]?rows[1].sc.total:0,
     bldgPips:S.players.reduce(function(a,p){return a+(scorePlayer(p).bldg||0);},0)/S.players.length,
     stapleStars:S.players.reduce(function(a,p){return a+(p.bankSt||0);},0)/S.players.length,   // v5.2: Staple House + Staple Rights ★
@@ -258,17 +260,21 @@ let anyErr=0;
     if(us.pours>0)   // v4.17 TASTINGS dashboard
       console.log(`v4.17 tastings/game: pours ${fmt(us.pours)} · benches convened ${fmt(us.judged)} · door-slams ${fmt(us.slams)} · invites earned ${fmt(us.invE)} / spent ${fmt(us.invS)}`);
   }
-  if(PERSONAS){const pw={},pn={},pt={},pf={},pd={},pfl={};
+  if(PERSONAS){const pw={},pn={},pt={},pf={},pd={},pfl={},pb={},ps2={},pD={},pB={},pM={};
     ok.forEach(r=>{(r.personas||[]).forEach(ps=>{if(ps)pn[ps]=(pn[ps]||0)+1;});
       if(r.winPersona)pw[r.winPersona]=(pw[r.winPersona]||0)+1;
       (r.laneSeats||[]).forEach(L=>{if(!L.ps)return;
         pt[L.ps]=(pt[L.ps]||0)+L.total;pf[L.ps]=(pf[L.ps]||0)+L.flight;
-        pd[L.ps]=(pd[L.ps]||0)+L.deliv;pfl[L.ps]=(pfl[L.ps]||0)+L.fl;});});
+        pd[L.ps]=(pd[L.ps]||0)+L.deliv;pfl[L.ps]=(pfl[L.ps]||0)+L.fl;
+        pb[L.ps]=(pb[L.ps]||0)+(L.brews||0);ps2[L.ps]=(ps2[L.ps]||0)+(L.stuck||0);
+        pD[L.ps]=(pD[L.ps]||0)+(L.sDel||0);pB[L.ps]=(pB[L.ps]||0)+(L.sBank||0);pM[L.ps]=(pM[L.ps]||0)+(L.sMaj||0);});});
     const lanes=Object.keys(pn);
     const st={};ok.forEach(r=>(r.laneSeats||[]).forEach(L=>{if(L.ps!=='depth')return;st[L.styles||'(none)']=(st[L.styles||'(none)']||0)+1;}));
     const top=Object.keys(st).sort((x,y)=>st[y]-st[x]).slice(0,5);
     console.log('PATHWAYS win-rate by lane: '+lanes.map(k=>k+' '+pct(pw[k]||0,pn[k])).join(' · ')+'  (seats: '+lanes.map(k=>pn[k]).join('/')+')');
     console.log('  per-lane avg: '+lanes.map(k=>k+' \u2605'+fmt((pt[k]||0)/pn[k])+' (flight '+fmt((pf[k]||0)/pn[k])+' beers = '+fmt((pfl[k]||0)/pn[k])+'\u2605 \u00b7 '+fmt((pd[k]||0)/pn[k])+' deliveries)').join(' \u00b7 '));
+    console.log('  \u2605 BREAKDOWN by lane (deliveries \u00b7 bank \u00b7 majorities \u00b7 flight): '+lanes.map(k=>k+' '+fmt((pD[k]||0)/pn[k])+'/'+fmt((pB[k]||0)/pn[k])+'/'+fmt((pM[k]||0)/pn[k])+'/'+fmt((pfl[k]||0)/pn[k])).join('  \u00b7  '));
+    console.log('  throughput: '+lanes.map(k=>k+' '+fmt((pb[k]||0)/pn[k])+' brews \u2192 '+fmt((pd[k]||0)/pn[k])+' shipped ('+fmt((ps2[k]||0)/pn[k])+' stuck in vessels at end)').join(' \u00b7 '));
     if(top.length)console.log('  what DEPTH committed to: '+top.map(k=>k+' \u00d7'+st[k]).join(' \u00b7 '));}
 });
 console.log(anyErr? `\n*** ${anyErr} ERRORS — GATE FAILED ***` : '\nGATE: 0 crashes / 0 deadlocks.');
