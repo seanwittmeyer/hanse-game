@@ -110,7 +110,7 @@ affects each axis in step 2, you don't understand it yet — go back to §2.
 - `DESIGN.md` — pillars, lineage/comps, the **current architecture (§6)**, the **change log (§9)**, the **balance lessons (§8)** and the **open watches (§10)** — the *why* and the live tuning agenda.
 - `COMPONENTS.md` — the single physical manifest: boards · tokens · the tile families · the player board · destinations. **Every ruling that touches a printed face needs its COMPONENTS §10 note or the kit silently drifts** (the v4.13 law).
 - **`components.js`** — the shared CARD component library (card data + face generators + card CSS), used by BOTH `print.html` and `play.html`. **Edit a card face THERE, never per-page.**
-- **The HTML pages:** `index.html` (landing: links + summary) · `rulebook.html` (the printed rulebook — in the box) · `print.html` (**the print kit — the only kit in use**) · `play.html` (the playable reference implementation: DATA → STATE → TURN MACHINE → CELL HANDLERS → SCORING → RENDER). Site nav lives in `nav.js` (one roster, every page).
+- **The HTML pages:** `index.html` (landing: links + summary) · `rulebook.html` (the printed rulebook — in the box) · `print.html` (**the print kit — the only kit in use**) · `play.html` (the playable reference implementation: DATA → STATE → TURN MACHINE → CELL HANDLERS → SCORING → RENDER — **its comments state the current rules only; no version history in the file**, ruled 2026-08-23). Site nav lives in `nav.js` (one roster, every page).
 - `archive/records/` — the **v5-era decision records only**. Everything older — prior builds, v0–v4 records, sim corpora — lives in **git history** (pruned 2026-08-23).
 - `README.md` orients the repo. `AUTOMA.md` describes the AI tiers (current state only).
 

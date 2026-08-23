@@ -224,6 +224,13 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
 
+### Repo hygiene — `play.html` sheds its version history (2026-08-23, designer-ruled)
+*"We don't track version history in play.html."* The engine file now states the current
+rules only: the 62KB KEY-comment changelog and every per-line version/date tag stripped
+from comments and player-facing copy (~80KB lighter). Behavior unchanged — verify
+**351/351** · sim + render smokes clean · no `KEY` bump (doc-text-only). Version history
+lives here (§9), in `archive/records/` and git.
+
 ### v5.3b — the toll bench (2026-08-22, same day — designer-ruled)
 *"One of the public buildings should have a ±1 bourse."* The **Tollhouse reprints as the
 toll bench** — a cask loading at its slot lets the **loader shift any Bourse marker ±1**
