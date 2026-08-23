@@ -24,8 +24,9 @@ These images sit **behind** the cask cards (2.5″ square) and ship tiles (2.5�
   (Legacy files from retired tiles — staple/burgomstr/connoiss/hansediet/festkeller/reliquary/ch_*/
   gauger/workshop/salthouse/smokekiln/partigyle/hopyard — stay in `art/` as an archive; nothing
   references them. The building card BACK is the generic Wild + ★ "displaced" face — no art.)
-- Specialists (2″ SQUARE cards, object-shot art): `improve-<slug>.jpg` — the canonical spec + the
-  per-tile briefs live in `components.js` (the IMAGE-GENERATION SPEC comment + each row's `art:`).
+- Specialists (2″ SQUARE cards, object-shot art): `improve-<slug>.jpg` — the canonical SPEC lives
+  BELOW ("The specialist object-shot SPEC", moved out of `components.js` 2026-08-22 — components
+  stays clean; each IMPROVE row still carries its one-line `art:` brief as data).
   Live v4.6 set: cellarman · grain-factor · hop-gardener · stevedore · braumeister · guild-scholar ·
   innkeeper · supercargo · chronicler · alderman · town-crier · chandler · shipwright (all own files
   since 2026-08-02; coppersmith/lagerkeeper/quaymaster stay as legacy).
@@ -289,3 +290,44 @@ player's own yard:
 
 ### Specialists — LANDED 2026-08-22
 - **improve-broker.jpg** (pick A — ledger + coin scale on the cloth) · **improve-brewer-s-mate.jpg** (pick E — the young brewer at the tun, the one figure-shot in the object family, designer-ruled).
+
+## The specialist object-shot SPEC (moved verbatim from components.js, 2026-08-22)
+
+```
+// ============================================================================
+// SPECIALIST TILE ART — IMAGE-GENERATION SPEC (for the art agent; v2.6.1)
+// ============================================================================
+// Generate ONE image per Specialist, saved as art/improve-<slug>.jpg (JPEG, not PNG — a flat-field
+// object shot with no transparency needs no alpha channel, and compresses ~8x smaller at quality
+// ~88 with no visible loss; every other art/ family stays .png) where <slug> = the kit's own
+// slug(d.nm) (lowercased, non-alphanumeric runs → a single hyphen — e.g. Coppersmith →
+// improve-coppersmith.jpg, Grain Factor → improve-grain-factor.jpg; NOTE the hyphen — a prior
+// version of this comment said "grainfactor"/"hopgardener" with no hyphen, which does not match
+// what slug() actually emits at runtime; always derive the filename from slug(), not by hand).
+// STYLE (all seven, identical treatment):
+//   • a plain warm BEIGE field (parchment #e9dcc0-ish), edge-to-edge — NO scene, NO border
+//   • ONE object centered — the specialist's trade tool (the art: brief on each row below);
+//     medieval-woodcut / muted-gouache feel, readable at 1 inch print size
+//   • no text, no people, no player-colour hues (the purple foot bar is added by the kit)
+// The card is now SQUARE (2in×2in, matching the Building card): this art sits full-bleed behind a
+// scrim; name on top, effect+cost in the purple foot — so keep the object in the middle 60% of the frame.
+// The briefs (also carried per-row as art:'…'):
+//   coppersmith    → a gleaming copper brew kettle                     (legacy file)
+//   cellarman      → an oak cask racked on a wooden stillage
+//   grain-factor   → a tied burlap sack overflowing with barley
+//   hop-gardener   → a climbing hop bine with cones on a tall pole
+//   stevedore      → a medieval wooden treadwheel harbor crane
+//   braumeister    → a long wooden mash paddle over a copper kettle (v4.5b)
+//   lagerkeeper    → stacked casks dusted with frost and icicles        (legacy file)
+//   quaymaster     → a private wooden jetty with a rope-wound mooring bollard (legacy file)
+// The guild eight (v4.6 — all landed 2026-08-02):
+//   guild-scholar  → a bundle of sealed recipe scrolls (red wax seals)
+//   innkeeper      → a foaming glazed stoneware ale jug with a pewter lid
+//   supercargo     → a sealed ship's manifest across a rope-bound sea chest
+//   chronicler     → an open chronicle with a goose-quill pen (blank pages)
+//   alderman       → a gilded chain of office on a crimson velvet cushion
+//   town-crier     → a polished brass handbell, dark-wood handle
+//   chandler       → a hand balance — barley on one pan, hop cones on the other
+//   shipwright     → a shipwright's adze across a curved oak ship rib
+// ============================================================================
+```
