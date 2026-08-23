@@ -101,14 +101,17 @@ Per Kontor: 6 each (Bruges sk1/c3/h2 · London sk2/c2/h2 · Bergen sk1/c3/h2 · 
 
 ### 6a. PUBLIC WORKS (print 13 ⚙ / 9 designs · SETUP STANDS 3–4 at random · BROWN, die-less furniture, 2.5×1.32″)
 
-**Nobody builds them, nobody owns them — they start the game (v5.3, ruled).** Setup
-shuffles all 13, draws **3 (2p) / 4 (3–4p) ⚙** and stands them on random slots; **the rest
-go back to the box**. Every face is a **passive modifier of its own slot’s traffic** (a cask
+**Nobody builds them, nobody owns them — and none of them lasts (v5.4 THE TIDE, ruled).**
+Setup shuffles all 13, draws **3 (2p) / 4 (3–4p) ⚙** onto random slots; **the rest become
+the BAG**. **Every Public Work sails with the Ship at its slot** — boxed, never recycled —
+and the bag re-furnishes the wharf at the END of the turn until it runs dry, so the late
+wharf thins into bare ground (the ground the Ventures inherit; a Venture never sails). Every face is a **passive modifier of its own slot’s traffic** (a cask
 loading here · the Ship docked here · a sail from here); no tile adds an action for anyone,
 and **no die ever stands on one** — no fee, no maturity, no build channel (the v5.2
 investor grammar lived one letter; the printed fee/start-face chips are vestigial until the
-next print run). They leave play two ways: the **ephemerals** sail away, and a full wharf
-lets an L1 Venture **redevelop** one (§6b). The colour is **BROWN** (v5.2, ruled — green is a player colour).
+next print run). They leave play two ways: **the tide** (a sail from their slot takes the
+tile, boxed — the family rule since v5.4), and a full wharf lets an L1 Venture
+**redevelop** one (§6b). The colour is **BROWN** (v5.2, ruled — green is a player colour).
 
 | Public Work | Qty ⚙ | Printed face (icons; prose here) | Fee ⚙ | Die starts ⚙ |
 |---|---|---|---|---|
@@ -119,8 +122,8 @@ lets an L1 Venture **redevelop** one (§6b). The colour is **BROWN** (v5.2, rule
 | Cooperage | 1 | the Ship here: **+1 capacity** (sails only when that berth is also full) · **each cask loaded here: its loader +1★** ⚙ | 2 `G` | 3 |
 | **Weigh House** | 1 | **each cask delivered off the Ship here may claim 2 Manifest lines** | 2 `G` | 3 |
 | **Staple Houses ×4** *(Bruges Hanzehuis · London Steelyard · Bergen Bryggen · Novgorod Peterhof)* | 4 | *On sail to the tile's Kontor:* **every delivered cask +2★** ⚙ (*Stapelrecht* — the destination premium) | 2 `G` | 2 |
-| **Bonded Store** *(ephemeral)* | 1 | a cask loading here: **die +1** (cap 6); **sails with the Ship** (boxed) — every player with a cask aboard gains 2 goods | 2 `G` | 3 |
-| **Victualling Yard** *(ephemeral)* | 1 | a cask loading here: **its load bonus fires TWICE**; **sails with the Ship** (boxed) | 2 `G` | 3 |
+| **Bonded Store** | 1 | a cask loading here: **die +1** (cap 6); as it sails, **every player with a cask aboard gains 2 goods** | 2 `G` | 3 |
+| **Victualling Yard** | 1 | a cask loading here: **its load bonus fires TWICE** | 2 `G` | 3 |
 
 *(Retired at v5.2, ruled: Granary · Mission Quay · Racking Hall · Assay House · Abbey Cellar ·
 Hop Exchange · Merchants’ Exchange — their ideas move into the Ventures below — plus the
@@ -131,7 +134,7 @@ faces as stand-ins; briefs queued in `art/PROMPTS.md`.)*
 
 **The only family players build (v5.3).** A Venture wears the **owner’s colour ring** and
 carries no die. **Every face prints TWO lines (v5.3, ruled):** a **PUBLIC line** on top —
-*gain 1 good · age +1 · Bourse ±1 / +2▲* — a free stop for **whoever** activates a line
+*gain 1 good · age +1 · Bourse ±1 / ±2* — a free stop for **whoever** activates a line
 through the slot, and the **ringed OWNER line** below (the private power; **the owner
 collects both**). Each house starts with the same **hand of 4**; a tile plays **L1-side up
 onto ANY OPEN SLOT** (THE OPEN GROUND, ruled — only with the wharf FULL may it instead
@@ -145,7 +148,7 @@ Ventures commit **no die** — the clock is untouched.
 |---|---|---|---|
 | **Rack House / Brewery** | age +1 · age +1 | *this line:* swap the dice of 2 of your vessel casks (no quality cap) | *this line:* **you may BREW** (full search; normal costs) |
 | **Counting House / Assay Loft** | +1 good · +1 good | *your loads here:* **+1 good** | *this line:* **pay 1 `H` — 1 cask straight to READY** |
-| **Factor’s Desk / Staple Rights** | Bourse ±1 · Bourse +2▲ | *before loading the Ship here:* **re-deal its Manifest** | *your casks sailed from here:* **+1★ each** ⚙ |
+| **Factor’s Desk / Staple Rights** | Bourse ±1 · Bourse ±2 | *before loading the Ship here:* **re-deal its Manifest** | *your casks sailed from here:* **+1★ each** ⚙ |
 | **Warehouse / Guild Residence** | +1 good · Bourse ±1 | *your loads here:* **+1 cask may board** | *game end:* **2★ per Venture in play** ⚙ |
 
 ## 7. Specialist tiles (15 designs — v5.1 · the core 5 × max(2, n−1) + the guild 10 × 1 · 2×2″ purple)
@@ -238,7 +241,8 @@ ladder (v45h: the covers are off — no unlock duty).
 
 3G 2H each · warm Ready Gruit (die 1) in vessel 1 (all 3 vessels + 2 seats open — v45h) · 13
 dice · the **hand of 4 ringed Venture tiles** (v5.2) · **Public Works: draw 3 (2p) / 4 (3–4p)
-of the 13 at random onto random slots — the rest to the box** (v5.3; no deck, no display) ·
+of the 13 at random onto random slots — the rest are the BAG** (v5.4; every tile sails away
+with the Ship at its slot and the bag re-furnishes at end of turn until dry) ·
 **the Bourse strip: one price marker per in-play beer except Gruit & Jopenbier, at 0** (v5.3)
 · **specialist deck 20/20/25 tiles at 2/3/4p** (the core 5 × max(2, n−1) + the guild 10 —
 v5.1) · displays: Ships 4 / Specialists 4 · **a Manifest on every non-Bruges hull** (v5.0) ·
@@ -246,6 +250,19 @@ wharf seeds: Hulk→Bruges + 1 Ship ·
 worker placed free · first player fixed.
 
 ## 10. Kit deltas (v5-era — every ruling that touches a printed face lands a note here; older deltas live in git history)
+
+**v5.4 “The Tide” delta (2026-08-23, ruled — REPRINT + one new bit):** the Public Works
+become a **BAG**, not a setup deal — add a **draw bag** for them (the kit now needs 3 bags:
+Ships · Specialists · Public Works). **Every Public Work reprints without its permanence:**
+the *(ephemeral)* tag leaves the **Bonded Store** and **Victualling Yard** faces (the whole
+family is ephemeral now, so the word stops distinguishing anything) — the Bonded Store's
+face keeps only its **on-sail 2-goods payout**, the Victualling Yard's only its **on-load
+×2**. The **Venture sheet reprints**: `Staple Rights`' public line is **±2** (was +2▲ —
+up-only, the market's missing brake); its icon wants a new **`bourse-pm2`** glyph (the ±1
+glyph stands in — briefed in `art/ICONS.md`). The **cask tiles reprint**: *Open 1 Venture*
+drops to **Q2+**, so **Hopped's 12-tile census now prints 2 of them** (the Q2 pool goes
+5 verbs → 6; the Venture door was starved, not priced shut). The **player aid + rulebook
+reprint** (the tide, the bag, the Q2 verb). Counts otherwise unchanged.
 
 **Component-copy ruling (2026-08-23, designer-ruled — REPRINT, no counts, no rules):** THE
 GOLDEN RULE lands in `STYLE.md` §4c — rules never live on components, boards, or in the play

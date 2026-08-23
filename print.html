@@ -740,7 +740,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v5.3 “The Bourse”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v5.4 “The Tide”</span></h1>
   <span id="hnav"><!-- the shared site nav (nav.js) — one roster for all four pages --></span>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
@@ -876,7 +876,7 @@ function aid3Panels(){
     +'<div class="ln">\u00b7 Deliver in boarding order: <b>lift the Bourse first</b> (+1/cask per beer), score <b>die + marker</b>, park, prize per cask, claim 1 <b>Manifest</b> demand</div>'
     +'<h5>'+LU('store')+'The Stations</h5>'
     +'<div class="ln">'+LU('store')+' <b>Market</b>: take 3 \u00b7 alt 1 \u2003 '+LU('age-3')+' <b>Cellar</b>: Age 3 \u00b7 alt 1</div>'
-    +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b>: brew \u2014 the beer\u2019s price \u22121; SEARCH the stack, choose the tile \u00b7 alt: the top tile</div>'
+    +'<div class="ln">'+LU('flask-conical')+' <b>Brewhouse</b>: brew (its price \u22121) \u00b7 SEARCH the stack \u00b7 alt: top tile</div>'
     +'<div class="ln">'+LU('ship')+' <b>Harbor</b>: place a Ship (fee 2/1/0'+G+') + 1 free load \u00b7 alt: Load 1, any Ship</div>'
     +'<h5>'+LU('landmark')+'The Kontore</h5>'
     +'<table class="kt"><tr><th>Kontor</th><th>Min</th><th>Prize</th><th>Maj.</th></tr>'
@@ -885,8 +885,8 @@ function aid3Panels(){
     +AID_K('kontor-bergen','Bergen','2+','a Specialist + shift \u00b11 (no seat: 2 goods)','9/5/2')
     +AID_K('kontor-novgorod','Novgorod','3+','die scores +2\u2605','8/5/2')
     +'</table>'
-    +'<div class="dontf"><b>Don\u2019t forget:</b> \u2460 the minimum reads the die AS IT BOARDS (after lifts) \u2461 the Specialist display refills at turn END (Ships: at once) \u2462 Manifests ride every non-Bruges hull \u2014 1 claim/cask</div>'
-    +'<div class="ln">'+LU('building-2')+' <b>Public Works</b> serve anyone, free \u00b7 '+LU('home')+' <b>Ventures</b>: L1 1'+G+' on open ground (wharf full: replace a Public Work \u2014 never a rival\u2019s) \u00b7 L2 2'+G+' over your own L1 \u00b7 its public line pays any activation</div>');
+    +'<div class="dontf"><b>Don\u2019t forget:</b> \u2460 the minimum reads the die AS IT BOARDS (after lifts) \u2461 the Specialist display refills at turn END \u2462 Manifests ride every non-Bruges hull \u2014 1 claim/cask</div>'
+    +'<div class="ln">'+LU('building-2')+' <b>Public Works</b> serve anyone, free \u2014 and <b>sail away</b> with their Ship \u00b7 '+LU('home')+' <b>Ventures</b>: L1 1'+G+' on open ground (wharf full: replace a Work, never a rival\u2019s) \u00b7 L2 2'+G+' over your own L1 \u00b7 the public line pays any activation</div>');
   const back=aid3('back','book-open','End, Score &amp; Icons',
      '<h5>'+LU('timer')+'End &amp; Score</h5>'
     +'<div class="ln"><b>First EMPTY tray</b> (your last of 13 dice committed): finish the round. Round 25 backstop.</div>'
@@ -909,7 +909,7 @@ function aid3Panels(){
     +'<h5>'+LU('beer')+'Tiles</h5>'
     +AID_ROW('quality-3','Cask \u00b7 quality','a brewed beer + its grade')
     +AID_ROW('sailboat','Ship','Skute \u00b7 Cog \u00b7 Hulk: 1 \u00b7 2 \u00b7 3 berths')
-    +AID_ROW('building-2','Public Work','brown setup furniture — die-less, passive, serves anyone')
+    +AID_ROW('building-2','Public Work','brown furniture — passive, free, sails away with its Ship')
     +AID_ROW('home','Venture','your colour ring — a public line for all, the ringed line for you')
     +AID_ROW('wrench','Specialist','private, seats at your board')
     +AID_ROW('scroll-text','Recipe','permission to brew a beer')
@@ -921,7 +921,7 @@ function aid3Panels(){
     +AID_ROW('package-plus','Load 1 more','another cask, any eligible Ship')
     +AID_ROW('map-pin','Place 1 presence','a tray die parks at face 1')
     +AID_ROW('scroll-text','Gain 1 recipe','at its fee')
-    +AID_ROW('search','Open 1 Venture','at its fee — the normal grounds')
+    +AID_ROW('search','Open 1 Venture','at its fee — Q2+ tiles carry it')
     +AID_ROW('wrench','Gain 1 Specialist','at its fee')
     +AID_ROW('flask-conical','Brew 1','a normal brew \u2014 the TOP tile')
     +'<h5>'+LU('star')+'Scoring Marks</h5>'
@@ -1482,7 +1482,7 @@ function buildPages(){
   const bldItems=[];
   BUILDINGS.forEach(d=>{if(d.hall)return;for(let i=0;i<cnt(d.n);i++)
     bldItems.push({fam:'Buildings',html:buildingCard(d)});});   // v4.0 SINGLE-FACED: no owner, no WILD flip — displaced tiles are boxed · v4.16b: the Chancery prints on the GUILDHALL sheet
-  packSpaced(pages,'bits','PUBLIC WORKS — SINGLE-FACED, the shared brown family (print 13 — v5.3: DIE-LESS SETUP FURNITURE, never built in play: 3–4 stand at random from setup, the rest to the box · 22″ plotter · 1.5mm bleed · cuts 3mm apart)',[{kind:'bld',items:bldItems}],famPages);
+  packSpaced(pages,'bits','PUBLIC WORKS — SINGLE-FACED, the shared brown family (print 13 — v5.4 THE TIDE: die-less furniture, never built in play. 3–4 stand at random from setup, the rest are the BAG; EVERY tile sails away with the Ship at its slot (boxed) and the bag re-furnishes the wharf at end of turn until it runs dry · 22″ plotter · 1.5mm bleed · cuts 3mm apart)',[{kind:'bld',items:bldItems}],famPages);
   // --- v5.2/v5.3 VENTURE TILES → double-sided (L1 front / L2 back), one ringed set per house ---
   const ventItems=[];const vsets=MODE==='proof'?1:PLAYERS.length;
   for(let s=0;s<vsets;s++)VENTURES.forEach(d=>ventItems.push({fam:'Ventures',
@@ -1552,7 +1552,7 @@ function checklist(pages,famPages){
   // 2026-08-09 [designer]: the manifest is a PACKING LIST, not a lesson — "just some basic
   // details of quantity, any important themes to share, and where they go." Every entry is one
   // short line: what it is · WHERE IT LIVES on the table. The rules live in the rulebook.
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v5.3b “The Bourse”)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v5.4 “The Tide”)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">Counts are tuning placeholders ⚙. The rules live on the <b>player aid</b> and in the rulebook — this page only says what to make, how many, and where it sits on the table.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
@@ -1564,7 +1564,7 @@ function checklist(pages,famPages){
   h+=T('Tiles (mount on chipboard, laser-cut)')
     +R('Cask tiles — the beer supply','The beer itself, brewed never bought. <b>Six face-up stacks on the Market &amp; Stores board\u2019s Casks &amp; Recipes column</b> (the mid tiers vary with the deal) — a full Brew SEARCHES the stack; the alternate takes the top tile; a delivered cask\u2019s tile returns to the bottom (v5.0). '+caskBase.map(d=>d.nm+' ×'+d.n).join(' · ')+'.',sumN(caskBase))
     +R('Ship tiles','Neutral hulls, each bound for a printed Kontor; the tile IS its berths. <b>A draw bag → a display of 4.</b> Skute ×6 · Cog ×10 · Hulk ×8 — six per Kontor.','24')
-    +R('Public Works','The shared BROWN family — <b>the start of the game</b> (v5.3): setup stands <b>3–4 at random</b> on random slots, the rest to the box. Die-less, neutral, passive — every face fires on its own slot’s traffic, for anyone, free; nobody ever builds one. An L1 Venture may redevelop one once the wharf is full.',sumN(BUILDINGS.filter(b=>!b.hall)))
+    +R('Public Works','The shared BROWN family — <b>the tide</b> (v5.4): setup stands <b>3–4 at random</b>, the rest are the <b>bag</b>. Die-less, neutral, passive — every face fires on its own slot’s traffic, for anyone, free; nobody ever builds one. <b>Every tile sails away with the Ship at its slot</b> (boxed, never recycled) and the bag re-furnishes the wharf at end of turn — so the late wharf thins into open ground for the Ventures.',sumN(BUILDINGS.filter(b=>!b.hall)))
     +R('Venture tiles','The PRIVATE dual-use tiles (v5.3) — 4 designs, one ringed set per house: an <b>L1</b> takes any open slot (wharf full: replaces a Public Work) or an <b>L2</b> climbs your own L1 (the spent L1 boxed). Each face prints a <b>public line</b> (1 good · Age +1 · a bourse shift — for whoever activates the line) above the <b>owner’s ringed line</b>; the owner gets both. No die; a rival can never overbuild one.',VENTURES.length*4)
     +R('Specialist tiles','The private purple hires, 15 designs (core five ×3 · guild ten ×1 — v5.1). <b>A draw bag → a display of 4</b>; seated on a player board.',impTotal)
     +R('Manifest cards','Three demand lines (beer/tier · die · combo → ★). <b>One rides every non-Bruges Ship</b> — dealt as the hull enters the display, claimed on delivery (each line once per voyage), returned under the deck at sail.','12')
@@ -1580,7 +1580,7 @@ function checklist(pages,famPages){
     +R('Worker pawns','<b>One per player, on the Wharf’s stations.</b>',PLAYERS.length)
     +R('Quality dice — 12 mm d6','<b>THE component:</b> the cask, the presence and the clock in one. <b>In each player’s tray, public all game.</b>',PRES_DISCS+' ea')
     +R('Score movers','<b>One disc per colour on the score ring</b> (flip or mark at +50).','1 ea')
-    +R('Draw bags','<b>One per hidden supply</b> — Ships · Specialists. (The Public Works draw at setup straight from the box — v5.3.)','2')
+    +R('Draw bags','<b>One per hidden supply</b> — Ships · Specialists · <b>Public Works</b> (v5.4: the Works are a bag now — every tile sails away with the Ship at its slot, and the bag re-furnishes the wharf until it runs dry).','3')
     +R('First-player &amp; round markers','Turn order (fixed) and the 25-round backstop.','2')
     +'</table>';
   h+=T('Expansions <span style="font-weight:normal;text-transform:none;opacity:.7">— opt-in New Game toggles (v4.14–15)</span>')

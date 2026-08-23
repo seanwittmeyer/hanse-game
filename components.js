@@ -22,7 +22,7 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   'quality-1':'quality-1','quality-2':'quality-2','quality-3':'quality-3','quality-4':'quality-4',
   'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail','age-1':'station-age-1','age-2':'station-age-2',
   'goods-1':'goods-1','goods-2':'goods-2','goods-3':'goods-3','brew-top':'station-brew-top',
-  bourse:'bourse','bourse-plus1':'bourse-plus1','bourse-plus2':'bourse-plus2','bourse-pm1':'bourse-pm1','bourse-minus1':'bourse-minus1',
+  bourse:'bourse','bourse-plus1':'bourse-plus1','bourse-plus2':'bourse-plus2','bourse-pm1':'bourse-pm1','bourse-pm2':'bourse-pm1','bourse-minus1':'bourse-minus1',   // bourse-pm2 STAND-IN: the ±1 glyph until its own art lands (art/ICONS.md)
   'star-plus1':'star-plus1','star-plus2':'star-plus2','star-plus3':'star-plus3','star-plus4':'star-plus4',
   'star-minus1':'star-minus1','star-minus2':'star-minus2','star-minus3':'star-minus3',
   'swap-dice':'swap-dice','venture-build':'venture-build',redeal:'redeal',
@@ -46,7 +46,7 @@ const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the
   {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},   // TODO(art 2026-08-09, designer): 'Load 1 more' wants its OWN icon — bonus-load reads too generic; brief queued in art/PROMPTS.md
   {k:'reach',   ai:'map-pin',       act:'+1 presence',         q:2},   // always FREE (v5.1 — the priced channel retired with the Almoner's Stall)
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe',          q:2},
-  {k:'survey',  ai:'venture-build', act:'Open 1 Venture',  q:3},   // v5.3: the Public Works are setup furniture — the verb opens YOUR tile at its fee
+  {k:'survey',  ai:'venture-build', act:'Open 1 Venture',  q:2},   // v5.4: drops to Q2+ (was Q3+) — the Venture door was STARVED, not priced shut; Hopped now prints 2 of these
   {k:'hire',    ai:'wrench',        act:'Gain 1 specialist',      q:3},
   {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:3},   // v4.12: Q3+ (was Q4+)
 ];
@@ -107,6 +107,10 @@ const BUILDINGS=[
   // icon leads (the station action it rides, ON ITS LINE), the effect is icons + the fewest
   // words (the minimal-text constraint). Retired here: Scrivener's Hall · Hiring Post ·
   // the Almoner's Stall (ruled). New: Ropewalk · Weigh House. 19 tiles ⚙ — setup deals 17.
+  // v5.4 "THE TIDE" [designer-ruled 2026-08-23]: EVERY Public Work is ephemeral — a Ship sailing
+  // from its slot takes the tile with it, BOXED. Setup stands 3-4; the rest are the BAG, which
+  // re-furnishes the wharf at end of turn until it runs dry. Nothing overpowered outlives the
+  // voyage it fuels, and the late wharf thins into open ground for the Ventures.
   // v5.2 "GROUNDWORK" [designer-ruled 2026-08-22]: the PUBLIC WORKS — brown (green is a player
   // colour), shared, PASSIVE slot modifiers; the investor's die at the printed face; AT 6 THE
   // INVESTMENT MATURES (+6★, die home, tile demolished). 13 tiles / 9 designs; deal 11 (2 of
@@ -293,7 +297,7 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 // played from hand it lands L1-up; played onto your own L1 it lands L2-up and the spent L1 is
 // boxed). NO mason's die — owner-only (the tile wears the OWNER'S COLOUR RING, printed per
 // house). v5.3 THE OPEN GROUND: an L1 plays onto any open slot — only with the wharf FULL
-// may it replace a Public Work (the die-less setup furniture); an L2 climbs only your own L1.
+// may it replace a Public Work (die-less furniture that the tide takes anyway); an L2 climbs only your own L1.
 // v5.3 (ruled): every face prints TWO lines — a PUBLIC line (simple: 1 good · Age +1 · a
 // bourse shift; fires for WHOEVER activates a line through the slot) above the ringed OWNER
 // line (the private power; the owner gets both).
@@ -302,7 +306,7 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 // v5.3 wording pass (designer 2026-08-22: icons where possible, words where necessary, never
 // sentences): the PUBLIC line = an icon chip (whoever activates the line); the OWNER line =
 // trigger word + icons. pub is pre-built icon HTML.
-const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('coins'),VPUB_SH1=LU('bourse-pm1'),VPUB_SH2=LU('bourse-plus2');   // ruled 2026-08-23: the public chip is icon-only (no '+1' text, no '▲')
+const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('coins'),VPUB_SH1=LU('bourse-pm1'),VPUB_SH2=LU('bourse-pm2');   // ruled 2026-08-23: the public chip is icon-only (no '+1' text, no '▲')
 // the OWNER block speaks the Public Works grammar (ruled 2026-08-23): BIG icons + the fewest
 // words; a face whose trigger is the whole story prints it under the TITLE (trig) and the
 // foot carries icons alone. VBIG = one big-icon cell (the .ac size the works print).

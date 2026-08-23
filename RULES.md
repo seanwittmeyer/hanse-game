@@ -42,7 +42,7 @@ Shared board:
 - The **Ship deck** (Skute 1 · Cog 2 · Hulk 3 berths, each bound for a printed Kontor),
   shuffled; deal a face-up **display of 4** ⚙.
 - **Public Works:** shuffle all 13 tiles, draw **3 (2p) / 4 (3–4p) ⚙** and stand them on
-  **RANDOM slots** — **the rest go back to the box** (die-less, neutral, §5a; no deck, no
+  **RANDOM slots** — **the rest become the BAG** (die-less, neutral, §5a; no deck, no
   display; in hall mode the Guild Chancery is guaranteed among them).
 - **The Bourse:** lay the strip and set **one price marker per in-play beer except Gruit &
   Jopenbier** on **0** (§5c).
@@ -178,18 +178,25 @@ Venture's public line).
 
 ### 5a. Public Works — the shared brown family: the wharf itself
 
-**Nobody builds them, nobody owns them — they start the game.** Setup shuffles all 13
-tiles, draws **3 (2p) / 4 (3–4p) ⚙** and stands them on **random slots**; **the rest go
-back to the box**. A Public Work is die-less **furniture**: every face fires passively on
-its own slot's traffic — whoever's cask, Ship or sail it is — and using one is always
-free.
+**Nobody builds them, nobody owns them — and none of them lasts.** Setup shuffles all 13
+tiles, draws **3 (2p) / 4 (3–4p) ⚙** onto **random slots**; the rest become the **BAG**. A
+Public Work is die-less **furniture**: every face fires passively on its own slot's
+traffic — whoever's cask, Ship or sail it is — and using one is always free.
 
 - **No die, no fee, no maturity, no build channel.**
-- **They leave two ways:** an **ephemeral** sails away with the Ship at its slot; and once
-  the wharf is **full**, an L1 Venture may **redevelop** one (§5b — the worn tile is
-  boxed).
-- **Read the deal:** the 3–4 tiles that came out ARE this game's wharf — no two games run
-  the same economy.
+- **THE TIDE — every Public Work sails.** When a Ship sails from a slot, it takes that
+  slot's Public Work with it. The tile is **boxed: it never comes back.** Whatever the
+  tile was owed it has already paid — the premiums, the lifts and the Manifest doubling
+  all resolve while it still stands, and *then* it goes.
+- **The wharf re-furnishes at the END of the turn:** draw from the bag onto slots with no
+  building until **3 (2p) / 4 (3–4p) ⚙** stand again. The gap therefore stands for the
+  rest of the turn the tile sailed on — everyone sees what burned out, and an **L1 Venture
+  may claim that cleared ground** before the tide fills it (§5b).
+- **The bag runs dry.** Burned tiles never return, so the wharf is rich in furniture early
+  and **thins into bare ground late** — the ground the Ventures inherit. A Venture is
+  never taken by the tide.
+- **Read the deal, but don't marry it:** the tiles standing now ARE this game's wharf, and
+  a tile that runs hot burns out on the very voyage it fuels.
 
 **The box prints 13 tiles / 9 designs ⚙ — setup stands 3–4 at random:**
 
@@ -202,8 +209,8 @@ free.
 | **Cooperage** | passive · on load | the Ship here: **+1 capacity** (it sails only when that berth is also full) — and each cask loaded here scores its loader **+1★** ⚙ | 1 |
 | **Weigh House** | at sail | **each cask delivered off the Ship here may claim TWO Manifest lines** (each line still once per voyage) | 1 |
 | **Staple Houses ×4** *(Bruges Hanzehuis · London Steelyard · Bergen Bryggen · Novgorod Peterhof)* | at sail | a Ship sailing from this slot **to the tile's Kontor**: **every delivered cask banks +2★** ⚙ (*Stapelrecht* — the destination premium) | 4 |
-| **Bonded Store** *(ephemeral)* | on load · at sail | the boarding die **+1** (cap 6); **sails with the Ship** (boxed) — every player with a cask aboard gains 2 goods | 1 |
-| **Victualling Yard** *(ephemeral)* | on load · at sail | the boarding cask's **load bonus fires TWICE**; **sails with the Ship** (boxed) | 1 |
+| **Bonded Store** | on load · at sail | the boarding die **+1** (cap 6); as it sails, **every player with a cask aboard gains 2 goods** | 1 |
+| **Victualling Yard** | on load | the boarding cask's **load bonus fires TWICE** | 1 |
 
 ### 5b. Ventures — your private buildings: the only family you build
 
@@ -211,7 +218,7 @@ Each house starts with an **identical hand of 4 DUAL-USE Venture tiles**, ringed
 owner's colour, **no die**. **Every face prints TWO lines:**
 
 - **The PUBLIC line** (top — simple ⚙: *gain 1 good* · *age +1* · *shift the Bourse ±1 /
-  +2▲*): a **free stop for WHOEVER activates a line through the slot**, once per
+  ±2*): a **free stop for WHOEVER activates a line through the slot**, once per
   activation. Your private house greases the whole wharf.
 - **The OWNER line** (ringed): the private power below — loads, stops and premiums that
   serve the owner alone. **The owner's activation collects both lines.**
@@ -232,7 +239,7 @@ Placement (fees in grain ⚙, **waived as the London prize**):
 |---|---|---|---|
 | **Rack House / Brewery** | age +1 · age +1 | *Activating this line:* **swap the dice of two of your vessel casks** — no quality cap | *Activating this line:* **you may BREW** (a full search of the stack; normal costs) |
 | **Counting House / Assay Loft** | +1 good · +1 good | *Your loads at this slot:* **also gain 1 good** | *Activating this line:* **pay 1 `H` — one vessel cask straight to READY** |
-| **Factor's Desk / Staple Rights** | Bourse ±1 · Bourse +2▲ | *Before loading the Ship at this slot:* **you may re-deal its Manifest** | *Your casks delivered off Ships sailing from this slot:* **+1★ each** ⚙ |
+| **Factor's Desk / Staple Rights** | Bourse ±1 · Bourse ±2 | *Before loading the Ship at this slot:* **you may re-deal its Manifest** | *Your casks delivered off Ships sailing from this slot:* **+1★ each** ⚙ |
 | **Warehouse / Guild Residence** | +1 good · Bourse ±1 | *Your loads at this slot:* **+1 cask may board** | *Game end:* **2★ per Venture you have in play** ⚙ |
 
 ### 5c. THE BOURSE — the beer-value market
@@ -250,7 +257,7 @@ All markers start at **0**.
 - **The brew crash:** every **brew** of a tracked beer slips its marker **−1** (floor
   −1) — new supply softens the price. The wharf's own volume moves the market.
 - **Shifts (never a new action):** **Bergen's prize** moves any marker **±1** per
-  delivered cask (§7); the Ventures' **public lines** print **±1** and **+2▲**; the
+  delivered cask (§7); the Ventures' **public lines** print **±1** and **±2**; the
   **Tollhouse** pays its loader a **±1** (the toll bench).
 
 **One-fire rule:** on a line, the active player may load each slot's ship once, fire each
@@ -285,7 +292,7 @@ once, and fire each of their own Venture stops once — all optional, any order,
   prize (owner's choice, **when gained** — **every cask pays its Kontor's prize**; boarding
   order = pick order), and the cask **may claim ONE demand line of this Ship's Manifest it
   satisfies** (§7b — owner's choice; each line once per voyage). The Ship returns to the
-  bottom of the deck; a Bonded Store or Victualling Yard on the slot sails away with it
+  bottom of the deck; **the slot's Public Work sails away with it, boxed** (§5a — the tide)
   (§5a).
 - Casks are **private until aboard** — there is no loading of rival casks, and nothing on
   the wharf to hijack. The race is for **berths**: topping off a Ship sails *everyone's*
@@ -300,7 +307,7 @@ once, and fire each of their own Venture stops once — all optional, any order,
 | **Load 1 more cask** | onto **any** eligible Ship on the wharf (its bonus fires too) | Q2+ |
 | **Place 1 presence** | a tray die → a Kontor you've delivered to (§7) — **free** (presence flows only through casks) | Q2+ |
 | **Gain 1 recipe** | pay the **card's printed fee** ⚙ — a dealt export | Q2+ |
-| **Open 1 Venture** | a tile from your hand at its fee ⚙ (L1 1 `G` on open ground · L2 2 `G` over your own L1) — the Public Works are never built | Q3+ |
+| **Open 1 Venture** | a tile from your hand at its fee ⚙ (L1 1 `G` on open ground · L2 2 `G` over your own L1) — the Public Works are never built | **Q2+** |
 | **Gain 1 specialist** | pay the **tile's printed fee** ⚙ — from the display (open seat required) | Q3+ |
 | **Brew 1** | pay its cost into an open vessel (tray die) — the **TOP tile** of the stack (only the station's full Brew searches) | Q3+ |
 

@@ -242,7 +242,7 @@ angle/light as the other building faces).*
    beer CASK (the tally-board and rail-board rounds are retired concepts), plus the numbered
    marks in the age/goods numeral recipe — `bourse-plus1` · `bourse-plus2` · `bourse-pm1` ·
    `bourse-minus1` (RED, the drops-print-red rule). Wired: the Tollhouse toll bench (±1 chip),
-   the Venture public lines (±1 / +2▲), the Bourse strip header, the aid legends and every
+   the Venture public lines (±1 / ±2), the Bourse strip header, the aid legends and every
    in-app Bourse header — the lucide trending arrow is fully retired.
 2. **goods-3.png** — **LANDED 2026-08-22** in the corrected AGE-icon numeral recipe (size .42H, stroke .028H, drop shadow — goods-2 re-cut to match); the ICON_ART stand-in flipped.
 3. **bonus-load.png** — **LANDED 2026-08-22 (cart-only pick A):** the cask on the dock cart, bold woodcut contour, no ship (“you can load a cask anywhere”); same filename, no code change.

@@ -29,7 +29,7 @@ governed here.
 | Specialist | n | A private purple tile; 2 seats per player | wrench | Specialists | Yes | ~~improvement~~, ~~upgrade~~ | ● |
 | seat | n | A Specialist space on your player board | — | seats | No | — | ● |
 | building | n | The umbrella noun for both slot families (v5.2): a Public Work or a Venture | building-2 | buildings | No | ~~privilege~~ (retired family) | ● |
-| Public Work | n | The shared brown family (v5.3): die-less setup furniture — 3–4 stand at random from setup; passive on its slot's traffic; never built in play | building-2 | Public Works | Yes | ~~public building~~ | ○ v5.3 |
+| Public Work | n | The shared brown family: die-less furniture — 3–4 stand at random from setup, the rest are the bag; passive on its slot's traffic; never built in play; **every one sails away with the Ship at its slot** (v5.4, the tide) | building-2 | Public Works | Yes | ~~public building~~ | ○ v5.4 |
 | investor | n | RETIRED at v5.3 (the Public Works are die-less setup furniture) — historical: the v5.2 builder whose die ticked on use | — | — | — | — | ✕ v5.3 |
 | matures | v | RETIRED at v5.3 with the investor's die — historical: the v5.2 die-reaches-6 payout | — | — | — | — | ✕ v5.3 |
 | Venture | n | A private dual-use tile (v5.2): owner-only, the owner's colour ring, no die; an L1 face and an L2 face on one tile | home | Ventures | Yes | ~~private building~~ (prose ok, never printed) | ○ v5.2 |
@@ -38,7 +38,7 @@ governed here.
 | the open ground | n | The v5.3 placement rule: an L1 takes any open slot; wharf full → it may replace a Public Work; never another player's L1/L2 | — | — | Yes | — | ○ v5.3 |
 | the Bourse | n | The beer-value market (v5.3): one track (−1…+3 ⚙), a price marker per in-play beer except Gruit & Jopenbier; a delivered cask scores die + marker | trending-up | — | Yes | ~~market~~ (the Market is the station) · ~~beer market~~ in component text | ○ v5.3 |
 | price marker | n | A beer's marker on the Bourse strip | — | price markers | Yes | ~~value marker~~ | ○ v5.3 |
-| shift | v | Move a price marker (±1, or +2▲ up-only) — Bergen's prize + the Ventures' public lines | trending-up | shifts | Yes | ~~manipulate~~ on components (rules prose may say the market is manipulated) | ○ v5.3 |
+| shift | v | Move a price marker (±1 or ±2) — Bergen's prize + the Ventures' public lines | trending-up | shifts | Yes | ~~manipulate~~ on components (rules prose may say the market is manipulated) | ○ v5.3 |
 | public line | n | The top line of a Venture face — fires for whoever activates a line through the slot | — | public lines | Yes | — | ○ v5.3 |
 | owner line | n | The ringed private line of a Venture face — the owner alone (the owner collects both lines) | — | — | Yes | ~~private action~~ | ○ v5.3 |
 | Staple House | n | The destination-premium Public Work family (×4): a matching sail from its slot pays every cask +2★ ⚙. The four tiles print PROPER NAMES (ruled 2026-08-23): **Bruges Hanzehuis · London Steelyard · Bergen Bryggen · Novgorod Peterhof** — "Staple House" is the family noun in rules copy | landmark | Staple Houses | Yes | ~~Staple~~ alone in rules copy | ○ v5.2 |
@@ -165,6 +165,8 @@ the registry governs what a PLAYER reads.
 | ~~rider~~ | — | RETIRED grammar (v5.2 — the rider scope A/B read NULL and the two-family split replaced it; a building modifies its OWN slot's traffic, never a station action) | — |
 | ~~Scrivener's Hall~~ · ~~Hiring Post~~ · ~~Almoner's Stall~~ | — | RETIRED tiles (v5.1 — the shelf turn; acquisition = Kontor prizes + load bonuses; presence placement is FREE and flows only through casks) | — |
 | Ropewalk · Weigh House | n | Public Works: the Ropewalk's cross-quay load (v5.2 — a load here also loads 1 Ready cask onto a DIFFERENT Ship) · the Weigh House's two Manifest lines per cask delivered off the Ship here | ○ provisional |
+| the tide | n | The v5.4 rule that every **Public Work** sails away with the Ship at its slot (boxed, never recycled); the **bag** re-furnishes the wharf at end of turn until it runs dry, so the late wharf thins into open ground. Prose noun — no component prints the word | — | — | Yes | ~~ephemeral~~ (the whole family is ephemeral now — the word no longer distinguishes a tile) | ○ v5.4 |
+| the bag | n | The Public Works supply: the tiles setup did not stand. Draw from it at end of turn to re-furnish the wharf | shopping-bag | — | No | ~~the Works deck~~ (it is a bag, like Ships and Specialists) | ○ v5.4 |
 | the toll bench | n | The Tollhouse's v5.3b face (prose nickname — the tile still titles *Tollhouse*): a cask loading at its slot lets the LOADER shift any price marker ±1; the stamp (−1 die for +3★) is RETIRED | ○ provisional |
 | trigger words (tiles) | — | The ruled component grammar (2026-08-23, supersedes the `load:`/`sail:` shorthands): **On load** (a cask loads at this slot) · **On sail** / **On sail to <Kontor>** (a Ship sails from this slot) · **On line** (a line through this slot is activated) · **At end** · **At turn start**. A face with more than a bare trigger+action puts the TRIGGER ON ITS OWN LINE, the action below it — the cask tiles' icon+text pattern is the model. Icon-first after the trigger, never a sentence | ● ruled |
 | Broker · Brewer's Mate | n | The v5.1 Specialist names (your Market alternate is Source 2 · your Brewhouse alternate searches the stack) | ○ provisional |

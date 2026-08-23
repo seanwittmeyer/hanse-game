@@ -499,6 +499,48 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   p.ai=null;stops();UI.pendingActs=[];UI.pendingShift=[];
 })();
 
+// ---- 20c. v5.4 THE TIDE: every Public Work sails \u00b7 the bag re-furnishes \u00b7 Ventures never go ----
+(function(){
+  // the SETUP shape, read off a raw state (fresh() deliberately wipes the board)
+  {var raw=freshState(3,['P1','P2','P3']);
+   var stood=SLOTS.filter(function(s){var b=raw.buildings[s.id];return b&&!b.v;}).length;
+   ok('setup stands exactly setupWorksN Public Works and BAGS the rest (v5.4)',
+     stood===setupWorksN(3)&&Array.isArray(raw.worksBag)&&raw.worksBag.length>0);
+   ok('\u2026the bag + the standing tiles account for the whole printed box',
+     stood+raw.worksBag.length===BUILDING_KEYS.reduce(function(n,k){
+       return n+((BUILDINGS[k].hall)?0:((BUILDINGS[k].staple)?0:(BUILDINGS[k].qty||1)));},0)+STAPLE_DEAL);}
+  var p=fresh();stops();p.ai=null;
+  // a plain, premium-less Public Work still sails
+  SLOTS.forEach(function(s){S.buildings[s.id]=null;});
+  S.buildings.s5={b:'maltkiln'};
+  var sh=ship('s5','skute','bruges',[{owner:0,style:'gruit',q:1,die:1,act:'source'}]);sh.man=null;
+  UI.pendingMan=[];UI.manResQ=[];UI.pendingRecipe=[];UI.pendingBenefits=[];UI.pendingSpec=[];
+  sailShip('s5',0);
+  ok('THE TIDE: an ordinary Public Work sails with the Ship at its slot (the Kiln burns out)',
+    S.buildings.s5===null);
+  UI.pendingRecipe=[];UI.pendingMan=[];stops();
+  // the gap STANDS for the rest of the turn \u2014 the refill is an end-of-turn beat
+  ok('\u2026the gap stands mid-turn (no instant refill \u2014 the cleared ground is claimable)',
+    S.buildings.s5===null);
+  var bag1=S.worksBag.length;
+  refillWorks();
+  ok('\u2026and the tide re-furnishes at end of turn, back up to the setup count',
+    worksStanding()===setupWorksN(S.players.length)&&S.worksBag.length<bag1);
+  // a VENTURE never sails
+  SLOTS.forEach(function(s){S.buildings[s.id]=null;S.slots[s.id]=null;});
+  S.buildings.s4={v:'warehouse',lvl:1,owner:0};
+  var sh2=ship('s4','skute','bruges',[{owner:0,style:'gruit',q:1,die:1,act:'source'}]);sh2.man=null;
+  sailShip('s4',0);
+  ok('a VENTURE is NEVER taken by the tide \u2014 the owner\u2019s ground is the permanent thing',
+    S.buildings.s4&&S.buildings.s4.v==='warehouse');
+  UI.pendingRecipe=[];UI.pendingMan=[];stops();
+  // an empty bag simply leaves open ground (the late-game wharf thins \u2014 no deadlock)
+  S.worksBag=[];SLOTS.forEach(function(s){S.buildings[s.id]=null;});
+  refillWorks();
+  ok('a DRY bag leaves bare ground \u2014 the late wharf opens for the Ventures (no stall)',
+    worksStanding()===0);
+})();
+
 // ---- 20b. v5.2 ROSTER AUDIT: grain-only fees \u00b7 the box census \u00b7 the portfolio ----
 (function(){var p=fresh();stops();
   ok('every building fee prints in GRAIN only (the v45d law holds)', Object.keys(BUILDINGS).every(function(k){var f=BUILDINGS[k].fee;return !f||!f.h;}));
@@ -581,8 +623,14 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 // ---- 22b. v5.0 CENSUS STACKS: the kit census IS the play supply — and every surface agrees ----
 (function(){
   ok('the census: gruit 16 (pinned Gain-2) · hopped 12 · each export 6', caskCensus('gruit').length===16&&caskCensus('gruit').every(function(v){return v==='source';})&&caskCensus('hopped').length===12&&['broyhan','keut','mumme','bock'].every(function(b){return caskCensus(b).length===6;}));
-  ok('survey/hire/brew ride only Q3+ stacks (the v4.12 pool law, census-shaped)',
-    ['survey','hire','brew'].every(function(v){return caskCensus('hopped').indexOf(v)<0;})&&caskCensus('bock').indexOf('brew')>=0&&caskCensus('broyhan').indexOf('survey')>=0);
+  // v5.4: SURVEY drops to Q2+ — the Venture door was starved (a Q3+ beer prints ~1 of these
+  // in six, so whole games passed with nobody able to build). hire/brew hold the Q3+ line.
+  ok('hire/brew ride only Q3+ stacks (the v4.12 pool law holds for the two heavy verbs)',
+    ['hire','brew'].every(function(v){return caskCensus('hopped').indexOf(v)<0;})&&caskCensus('bock').indexOf('brew')>=0);
+  ok('OPEN 1 VENTURE now rides Q2+ (v5.4): Hopped carries it, Gruit never does (pinned)',
+    caskCensus('hopped').indexOf('survey')>=0&&caskCensus('broyhan').indexOf('survey')>=0&&caskCensus('gruit').indexOf('survey')<0);
+  ok('…and Hopped’s 12 tiles spread the 6-verb Q2 pool evenly (2 survey tiles)',
+    caskCensus('hopped').filter(function(v){return v==='survey';}).length===2);
   ok('the print offsets stagger the export mixes (broyhan ≠ bock openings)', caskCensus('broyhan')[0]!==caskCensus('bock')[0]||caskCensus('broyhan')[1]!==caskCensus('bock')[1]);
   ok('the expansion censuses: gose 8 · zerbster 6 · duckstein 8 · jopenbier 6 — pins throughout',
     caskCensus('gose').length===8&&caskCensus('zerbster').length===6&&caskCensus('duckstein').length===8&&caskCensus('jopenbier').length===6&&caskCensus('gose').every(function(v){return v===STYLES.gose.act;}));
@@ -758,7 +806,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
     if(furn.length!==3){ok('2p setup stands exactly setupWorksN(2)=3 furniture tiles (run '+t+')',false,'got '+furn.length);return;}
     if((S.buildDeck||[]).length||(S.buildDisplay||[]).length){ok('no deck/display survives (run '+t+')',false,'');return;}
     if(!furn.every(function(bb){return !bb.v&&bb.owner===undefined&&bb.die===undefined&&BUILDINGS[bb.b];})){ok('furniture neutral+die-less (run '+t+')',false,'');return;}}
-  ok('setup stands setupWorksN random NEUTRAL Public Works \u2014 no deck, no display, the rest to the box (20 runs, v5.3)', true);
+  ok('setup stands setupWorksN random NEUTRAL Public Works \u2014 no deck, no display, the rest to the BAG (20 runs, v5.4)', true);
   ok('the guild-tile fees stay grain-only in the kit data (a print audit \u2014 the fee chips are vestigial art at v5.3)', ['victual','bonded','weighhouse'].every(function(k){var f=BUILDINGS[k].fee;return f&&f.g&&!f.h;}));
 })();
 
@@ -1249,15 +1297,23 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   S.buildings.s5={b:'staple_bergen'};
   var sh=ship('s5','cog','bergen',[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:1,style:'gruit',q:1,die:2,act:'source'}]);
   sh.man=null;UI.pendingMan=[];UI.manResQ=[];UI.pendingBenefits=[];UI.pendingRecipe=[];UI.pendingSpec=[];
-  var b0=S.players[0].bank;
+  var b0=S.players[0].bank;var bag0=(S.worksBag||[]).length;
   sailShip('s5',0);
   ok('STAPLE HOUSE \u2699: a matching-Kontor sail pays EVERY cask +'+STAPLE_PTS+'\u2605 (die-less furniture \u2014 v5.3)',
     (S.players[0].bankSt||0)===STAPLE_PTS&&(S.players[1].bankSt||0)===STAPLE_PTS);
+  // v5.4 THE TIDE: it pays as it goes \u2014 the premium resolves while the tile still stands,
+  // then the tile sails with the Ship. Boxed: it never returns to the bag.
+  ok('\u2026and THE TIDE takes it \u2014 the Staple House sailed with the Ship (the slot is bare)',
+    S.buildings.s5===null);
+  ok('\u2026BOXED, never recycled \u2014 the bag never takes a burned tile back',
+    (S.worksBag||[]).length===bag0);
   UI.pendingSpec=[];UI.pendingMan=[];stops();
   var sh2=ship('s2','cog','london',[{owner:0,style:'hopped',q:2,die:2,act:'source'}]);sh2.man=null;
-  S.buildings.s2={b:'staple_bergen',owner:1,die:2};var d2=S.buildings.s2.die;
+  S.buildings.s2={b:'staple_bergen'};
   sailShip('s2',0);
-  ok('\u2026a NON-matching Kontor pays nothing (the crest binds the premium)', S.buildings.s2.die===d2&&(S.players[0].bankSt||0)===STAPLE_PTS);
+  ok('\u2026a NON-matching Kontor pays nothing (the crest binds the premium)', (S.players[0].bankSt||0)===STAPLE_PTS);
+  ok('\u2026but the tide still takes it \u2014 every Public Work sails, premium paid or not',
+    S.buildings.s2===null);
   UI.pendingBenefits=[];UI.pendingMan=[];stops();
   S.buildings.s3={v:'factor',lvl:2,owner:1};   // STAPLE RIGHTS (the L2 face)
   var sh3=ship('s3','cog','bruges',[{owner:0,style:'gruit',q:1,die:1,act:'source'},{owner:1,style:'gruit',q:1,die:1,act:'source'}]);

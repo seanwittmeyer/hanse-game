@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v5.3 “The Bourse”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v5.4 “The Tide”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -738,7 +738,10 @@ const CASK_QTY={gruit:16,hopped:12,broyhan:6,keut:6,mumme:6,bock:6,gose:8,zerbst
 const CASK_OFF={broyhan:2,keut:6,mumme:4,bock:3};   // the print offsets — each Q3+ census is its 6-window over the 8-verb pool (one brew tile each)
 function caskCensus(style){const st=STYLES[style];const n=CASK_QTY[style]||6;
   if(st.pin)return Array(n).fill(st.act);
-  const pool=CASK_ACT_POOL.filter(a=>((a!=='survey'&&a!=='hire'&&a!=='brew')||st.q>=3));
+  // v5.4: OPEN 1 VENTURE drops to Q2+ (was Q3+) — the Venture door was starved, not priced
+  // shut: a Q3+ beer prints ~1 survey tile in its six, so whole games passed with nobody
+  // able to build. Hopped (12 tiles, the most-brewed beer) now carries 2. hire/brew stay Q3+.
+  const pool=CASK_ACT_POOL.filter(a=>a==='survey'?st.q>=2:((a!=='hire'&&a!=='brew')||st.q>=3));
   const off=CASK_OFF[style]||0;const out=[];
   for(let i=0;i<n;i++)out.push(pool[(i+off)%pool.length]);
   return out;}
@@ -880,9 +883,13 @@ const SHIP_DECK_MIX=[          // 24 hulls - 6 Skute / 10 Cog / 8 Hulk, 6 per po
   ['skute','novgorod'],['skute','novgorod'],['cog','novgorod'],['cog','novgorod'],['hulk','novgorod'],['hulk','novgorod'],
 ];
 
-// ---- PUBLIC WORKS — the shared brown family: die-less SETUP FURNITURE, the start of the
-// game. setupWorksN random tiles stand from setup on random slots, NEUTRAL; the rest to the
-// box. No deck, no display, no build channel, no fee, no maturity. Every face is a PASSIVE
+// ---- PUBLIC WORKS — the shared brown family: die-less furniture, and THE TIDE (v5.4).
+// setupWorksN tiles stand from setup on random slots, NEUTRAL; the REST GO TO THE BAG.
+// EVERY Public Work is ephemeral: a Ship sailing from its slot takes the tile with it,
+// BOXED — never recycled. At the end of the turn the bag re-furnishes the wharf back up to
+// setupWorksN, so the wharf is rich in furniture early and THINS INTO OPEN GROUND late (the
+// ground the Ventures inherit; a Venture never sails). An overpowered tile burns out on the
+// voyage it fuels. No display, no build channel, no fee, no maturity. Every face is a PASSIVE
 // modifier of its own slot's traffic — no building adds an action for anyone. (The ms/fee
 // fields below survive as vestigial kit data + dial seams.)
 const BUILDINGS={
@@ -896,8 +903,8 @@ const BUILDINGS={
   staple_london  :{name:'London Steelyard',   icon:'landmark', ms:2, qty:1, fee:{g:2}, staple:'london',   desc:'On sail to London: +2★ each cask'},
   staple_bergen  :{name:'Bergen Bryggen',   icon:'landmark', ms:2, qty:1, fee:{g:2}, staple:'bergen',   desc:'On sail to Bergen: +2★ each cask'},
   staple_novgorod:{name:'Novgorod Peterhof', icon:'landmark', ms:2, qty:1, fee:{g:2}, staple:'novgorod', desc:'On sail to Novgorod: +2★ each cask'},
-  bonded    :{name:'Bonded Store',     icon:'warehouse', ms:3,    qty:1, fee:{g:2}, eph:true, desc:'On load: die +1 · On sail: leaves — every shipper +2 goods'},
-  victual   :{name:'Victualling Yard', icon:'boxes', ms:3,        qty:1, fee:{g:2}, eph:true, desc:'On load: the bonus fires TWICE · On sail: leaves with the Ship'},
+  bonded    :{name:'Bonded Store',     icon:'warehouse', ms:3,    qty:1, fee:{g:2}, desc:'On load: die +1 · On sail: every shipper +2 goods'},   // v5.4: the whole family sails now — this face keeps only its EXTRA on-sail payout
+  victual   :{name:'Victualling Yard', icon:'boxes', ms:3,        qty:1, fee:{g:2}, desc:'On load: the bonus fires TWICE'},
   // ⚙ the INV_BLDG dial — hall mode only (printed on the Guildhall sheet).
   chancery  :{name:'Guild Chancery',   icon:'mail', ms:2,         qty:1, fee:{g:1}, hall:true, act:'invgain', desc:'On line: gain 1 ⚜ Invitation'},
 };
@@ -920,7 +927,8 @@ function bourseFmt(v){return (v>0?'+':'')+v;}
 // only by overbuilding your own L1. Kinds: vswap/vbrew/vready fire as OWNER-ONLY stops on the
 // Venture's line; vgood/vload/vredeal/vstar ride the slot's load/sail; vres scores at end.
 // Every face also prints a PUBLIC line — vstep (+1 aging step, your cask) · vgold (gain 1
-// good) · vshift1 (a bourse marker ±1) · vshift2 (a bourse marker +2, up only): a free stop
+// good) · vshift1 (a bourse marker ±1) · vshift2 (a bourse marker ±2 — v5.4 gave the
+// market a brake; it was up-only, the one shift with no counterweight): a free stop
 // for WHOEVER activates a line through the slot; the ringed line stays the owner's alone
 // (the owner collects both).
 const VENTURES={
@@ -956,7 +964,7 @@ const VACT_KINDS={vswap:1,vbrew:1,vready:1};
 const VPUB={vstep:{icon:'hourglass',txt:'Age +1 (one of your casks)'},
   vgold:{icon:'coins',txt:'Gain 1 good'},
   vshift1:{icon:'bourse-pm1',txt:'Bourse: shift a beer ±1'},
-  vshift2:{icon:'bourse-plus2',txt:'Bourse: shift a beer +2 (up)'}};   // ⚙ the public-line vocabulary   // the Venture kinds that fire as owner-only line stops
+  vshift2:{icon:'bourse-pm2',txt:'Bourse: shift a beer ±2'}};   // ⚙ the public-line vocabulary   // the Venture kinds that fire as owner-only line stops
 function bName(k){return (BUILDINGS[k]||{name:k}).name;}
 function bDesc(k){return (BUILDINGS[k]||{desc:''}).desc;}
 const BUILD_DISPLAY=4;          // DORMANT — the display never fills (the Public Works are setup furniture); the constant survives for the save shape + the tabled Trade Roads
@@ -1090,7 +1098,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v53b';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
+const KEY='hanse-v54';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1098,7 +1106,7 @@ const KEY='hanse-v53b';  // the live build's save key — bump it on any rules c
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v5.3b “The Bourse” · '+KEY;
+const APP_VERSION='v5.4 “The Tide” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -1190,7 +1198,8 @@ function freshState(n,names){
    for(let i=0;i<nW&&box.length;i++){const bk=box.shift();
      const open=SLOTS.map(x=>x.id).filter(id=>!st.buildings[id]);
      if(!open.length)break;
-     st.buildings[open[Math.floor(Math.random()*open.length)]]={b:bk};}}
+     st.buildings[open[Math.floor(Math.random()*open.length)]]={b:bk};}
+   st.worksBag=box;}   // v5.4 THE TIDE: what setup didn't stand becomes the BAG — it re-furnishes the wharf as tiles sail away, and it never takes a burned tile back
   st.shipDeck=shuffle(SHIP_DECK_MIX.map(x=>({ship:x[0],dest:x[1]})));
   const bi=st.shipDeck.findIndex(x=>x.ship==='hulk'&&x.dest==='bruges');
   const hb=(bi>=0)?st.shipDeck.splice(bi,1)[0]:{ship:'hulk',dest:'bruges'};
@@ -1595,7 +1604,7 @@ function startGame(){
   S.players.forEach((p,i)=>{p.ai=ais[i];});
   document.getElementById('setup').classList.add('hidden');
   log('Game begins — '+setupN+' brewing houses'+(ais.some(a=>a)?' · AI seats: '+S.players.filter(p=>p.ai).map(p=>p.name+' ('+aiLabel(p)+')').join(', '):'')+'. The export beers this game (3 of '+(EXPANSION?7:4)+'): '+exportLabel()+'.'+(JOPEN?' The <b>Jopenbier</b> capstone is on — always acquirable at its 3H fee.':'')+(HALLEXP?' ⚜ <b>The Guild Tastings</b> convene — every Manifest claim pays an Invitation; the bench filling is the judging.':''));
-  log('Warm start: a Hulk → Bruges + one more Ship dock at the wharf, and '+SLOTS.filter(sx=>S.buildings[sx.id]).length+' '+LU('building-2')+' <b>Public Works</b> stand from setup (die-less furniture — the rest are in the box); every non-Bruges Ship carries a '+LU('contract')+' <b>Manifest</b>; the '+LU('bourse')+' <b>Bourse</b> opens at 0.');
+  log('Warm start: a Hulk → Bruges + one more Ship dock at the wharf, and '+SLOTS.filter(sx=>S.buildings[sx.id]).length+' '+LU('building-2')+' <b>Public Works</b> stand from setup (die-less furniture — the rest wait in the bag; <b>every one sails away with the Ship at its slot</b>, and the bag re-furnishes the wharf until it runs dry); every non-Bruges Ship carries a '+LU('contract')+' <b>Manifest</b>; the '+LU('bourse')+' <b>Bourse</b> opens at 0.');
   save();render();maybeRunAI();
 }
 
@@ -1671,7 +1680,7 @@ function resolveStop(i){
     if(pk==='vgold')return enterSource(1,'stops');
     if(pk==='vstep')return enterAge(1,'pool','stops');
     if(pk==='vshift1')return enterBshift('stops',{steps:1,down:true});
-    if(pk==='vshift2')return enterBshift('stops',{steps:2,down:false});
+    if(pk==='vshift2')return enterBshift('stops',{steps:2,down:true});
     backToStops();return;}
   if(stop.kind==='load'){beginLoadStop(stop.slot,'stops');return;}   // the Factor's Desk offers its re-deal first; enterLoad lifts to 2 for the Stevedore
   backToStops();
@@ -2187,12 +2196,16 @@ function sailShip(slot,creditId){const t=S.slots[slot];
     if(sv&&vKind(sv)==='vstar'){const own=t.load.filter(L=>L.owner===sv.owner).length;
       if(own){const o=S.players[sv.owner];o.bank+=own*VSTAR_PTS;o.bankSt=(o.bankSt||0)+own*VSTAR_PTS;
         log('↳ '+LU('landmark')+' <b>Staple Rights</b> — '+o.name+'’s '+own+' cask'+(own===1?'':'s')+' bank +'+(own*VSTAR_PTS)+'★.');}}}
-  if(bKeyAt(slot)==='bonded'){   // EPHEMERAL: the Bonded Store sails with its ship
-    const paid={};t.load.forEach(L=>{if(!paid[L.owner]){paid[L.owner]=1;gain(S.players[L.owner],1,1);}});
-    bldgDepart(slot);S.buildings[slot]=null;   // (inert seam) the departing tile's die would cash out
-    log('↳ the '+LU('warehouse')+' <b>Bonded Store</b> sails with the Ship (boxed) — every player with a cask aboard gains 2 goods.');}
-  else if(bKeyAt(slot)==='victual'){bldgDepart(slot);S.buildings[slot]=null;   // the Yard is EPHEMERAL too — consumed by the voyage it fed
-    log('↳ the '+LU('boxes')+' <b>Victualling Yard</b> sails with the Ship (boxed) — its stores are spent.');}
+  // THE TIDE (v5.4) — EVERY Public Work sails with the Ship at its slot, BOXED. Read last:
+  // the premiums above (Staple, Weigh House, the load lifts) all resolved while the tile
+  // still stood. An overpowered tile burns out on the voyage it fuelled; a Venture never
+  // sails. The wharf re-furnishes from the bag at the END of the turn (refillWorks).
+  {const dk=bKeyAt(slot);
+   if(dk){
+     if(dk==='bonded'){const paid={};t.load.forEach(L=>{if(!paid[L.owner]){paid[L.owner]=1;gain(S.players[L.owner],1,1);}});
+       log('↳ the '+LU('warehouse')+' <b>Bonded Store</b> breaks bulk as it goes — every player with a cask aboard gains 2 goods.');}
+     bldgDepart(slot);S.buildings[slot]=null;   // (inert seam) the departing tile's die would cash out
+     log('↳ the tide takes the '+LU(BUILDINGS[dk].icon)+' <b>'+bName(dk)+'</b> — it sails with the Ship (boxed, gone for good).');}}
   fire('voyage',{ship:t,slot});
   S.slots[slot]=null;S.sailed++;
   S.shipDeck.push({ship:t.ship,dest:t.dest});
@@ -2242,6 +2255,23 @@ function spendPresDisc(lp,n){lp.presPool=Math.max(0,(lp.presPool||0)-n);checkDic
 // — the hook if the investor's return ever comes back).
 function bldgTick(slot){}
 function bldgDepart(slot){}
+// ---- THE TIDE (v5.4): the wharf re-furnishes ----
+// Public Works standing right now (Ventures don't count — they are never furniture).
+function worksStanding(){return SLOTS.filter(s=>{const b=S.buildings[s.id];return b&&!b.v;}).length;}
+// At the END of the turn the bag tops the wharf back up to its setup count, onto slots with
+// no building. The gap therefore STANDS for the rest of the turn the tile sailed on — you can
+// see what burned out, and an L1 Venture can claim the cleared ground before the tide fills
+// it. Burned tiles never return, so the bag thins and the late wharf opens into bare ground.
+function refillWorks(){if(!S||!S.worksBag)return;
+  const target=setupWorksN(S.players.length);
+  while(worksStanding()<target&&S.worksBag.length){
+    const open=SLOTS.map(s=>s.id).filter(id=>!S.buildings[id]);
+    if(!open.length)break;
+    const bk=S.worksBag.shift();
+    const id=open[Math.floor(Math.random()*open.length)];
+    S.buildings[id]={b:bk};
+    if(!aiSimulating)log('↳ the tide turns — '+LU(BUILDINGS[bk].icon)+' <b>'+bName(bk)+'</b> is raised on '+id+' ('+S.worksBag.length+' left in the bag).');
+  }}
 
 // the end is set the moment a house's TRAY empties — every die COMMITTED (parked, riding a
 // vessel, or aboard an unfilled hull) — not only when the last die PARKS.
@@ -2371,6 +2401,7 @@ function benefitVenture(key,lvl){const b=(UI.pendingBenefits||[])[0];if(!b)retur
 function endTurn(){
   snapshot();checkTriggers();
   refillImpDisplay();   // the specialist display refills at the END of the turn (gaps stand while the turn runs)
+  refillWorks();        // v5.4 THE TIDE — the bag re-furnishes the wharf on the same rhythm
   const wasAI=!!cur().ai;
   const n=S.players.length;S.active=(S.active+1)%n;
   if(S.active===S.first){if(S.ending){gameOver();save();return;}S.turn++;}
@@ -2842,7 +2873,7 @@ function aiVactValue(p,b){const kd=vKind(b);   // the owner's stop, priced by it
 function aiVpubValue(p,b){const pk=vFace(b).pub;if(!pk)return 0;   // the public line's freebie
   if(pk==='vgold')return 0.7;
   if(pk==='vstep')return maturingInVessels(p)>0?0.9:0;
-  return aiShiftPick(p,{steps:pk==='vshift2'?2:1,down:pk!=='vshift2'})?0.8:0.1;}
+  return aiShiftPick(p,{steps:pk==='vshift2'?2:1,down:true})?0.8:0.1;}
 function aiLineScore(p,lk,home){const L=LINES[lk];let v=0;
   const h=home||p.cell;   // the worker's station is PRIMARY; the line's other station fires its ALT
   L.cells.forEach(c=>{v+=aiCellValue(p,c,c!==h,lk);});

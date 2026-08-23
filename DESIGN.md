@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (live build v5.3b “The Bourse” on the v4.0 spine)
+# Brewhouses of the Hanse — Design (live build v5.4 “The Tide” on the v4.0 spine)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**,
 > the **change log**, the **balance lessons** and the **open watches**. Operational rules
@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v5.3b “The Bourse”** — live (`play.html`, KEY `hanse-v53b`; designer-ruled 2026-08-22, records `archive/records/V53-BOURSE.md` + `V5-DECISIONS.md`). The v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). Details: §9; watches: §10. |
+|**Status**     |**v5.4 “The Tide”** — live (`play.html`, KEY `hanse-v54`; designer-ruled 2026-08-23, records `archive/records/V54-THE-TIDE.md` + `V5-DECISIONS.md`). The v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). **v5.4** makes every Public Work ephemeral — the wharf is a tide that washes the furniture away and thins into bare ground for the Ventures. Details: §9; watches: §10. |
 
 ---
 
@@ -85,7 +85,7 @@ expressed through the **dual-role cask die**, the **two building families** and 
 
 ---
 
-## 6. The current architecture (v5.3b “The Bourse”)
+## 6. The current architecture (v5.4 “The Tide”)
 
 Canonical detail in `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -107,14 +107,16 @@ Canonical detail in `RULES.md` / `COMPONENTS.md`; the shape:
   bonus** fires as it boards). Casks are private until aboard — the interaction is the
   **berth race**: topping off a hull sails everyone's cargo on your clock.
 - **TWO building families — every face a modifier of its own slot; no building adds an
-  action.** **PUBLIC WORKS** (brown, die-less **setup furniture**): 3 (2p) / 4 (3–4p) ⚙
-  random tiles stand from setup on random slots, the rest to the box — nobody builds one,
-  nobody owns one, no die, no fee, no maturity; passive on their slot's traffic (Kiln ×2
+  action.** **PUBLIC WORKS** (brown, die-less furniture — and **THE TIDE**, v5.4): 3 (2p) / 4 (3–4p) ⚙
+  stand from setup, the rest are the **bag**; **every one sails away with the Ship at its
+  slot** (boxed, never recycled) and the bag re-furnishes at end of turn until it runs dry —
+  so an overpowered tile burns out on the voyage it fuels and the **late wharf thins into
+  bare ground the Ventures inherit**. Nobody builds one, nobody owns one, no die, no fee; passive on their slot's traffic (Kiln ×2
   die+1 · Tollhouse toll-bench Bourse ±1 · Customs −1 minimum · Ropewalk cross-quay load ·
   Cooperage +1 berth +1★/load · Weigh House 2 Manifest lines · Staple House ×4 matching-sail
   +2★ ⚙ · Bonded/Victualling ephemerals). **VENTURES** (private, the owner's colour ring,
   NO die — the only family players build): the identical **hand of 4 dual-use tiles**;
-  **every face prints a PUBLIC line** (age +1 · +1 good · Bourse ±1/+2▲ — a free stop for
+  **every face prints a PUBLIC line** (age +1 · +1 good · Bourse ±1/±2 — a free stop for
   whoever activates the line) above the ringed **owner line** (the owner collects both);
   **the open ground:** an L1 takes any open slot — wharf full → it may replace a Public
   Work (boxed) — never a rival's tile; an L2 only over your own L1 (the spent L1 boxed);
@@ -224,6 +226,51 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
+
+### v5.4 “The Tide” (2026-08-23, designer-ruled off playtest #37)
+*"I want engine building to pay off, I want the bourse more dynamic, I think the public
+buildings should sail with the ships (that way something overpowered burns out)."*
+Playtest #37 (3p, 12 rounds, 80–43–39) made all three the same problem. The furniture deal
+gave **two Malt Kilns** — which fired on every lift and enabled a Q2 Hopped to clear
+Novgorod's 3+ band for **8★, matching the Q6 capstone** — while **Peterhof and the Weigh
+House never fired once** in twelve rounds, because no hull ever docked on their slots. Half
+the wharf was overpowered and half was scenery, permanently, from setup.
+- **THE TIDE (ruled):** every Public Work is ephemeral. A Ship sailing from a slot takes
+  that slot's tile with it, **boxed, never recycled**; the premiums, lifts and Manifest
+  doubling all resolve while it still stands. The `eph` flag retires as a special case —
+  the Bonded Store and Victualling Yard keep only their *extra* faces. The wharf
+  **re-furnishes from a bag at END of turn** back to the setup count, so the gap stands for
+  the rest of the turn the tile sailed on and **an L1 Venture may claim the cleared
+  ground**. The bag never takes a burned tile back, so the wharf is rich early and **thins
+  into bare ground late** — which is what makes the Ventures the only permanent thing on
+  the board, and the answer to "engine building should pay off."
+- **The Venture door was STARVED, not priced shut (ruled — through existing systems, not a
+  new action).** In #37 a Guildmaster and a Cellarmaster both finished with **full hands**:
+  neither ever hit London, and neither ever drew a cask carrying *Open 1 Venture* — a Q3+
+  verb printing ~1 tile in each export's six. The verb **drops to Q2+**, so **Hopped** (12
+  tiles, the most-brewed beer) now prints **2** of them. This is the §8 reachability lesson
+  applied verbatim: *fix the door, not the prize.*
+- **The market's missing brake (ruled):** `Staple Rights`' public line was **+2▲ up-only**,
+  the one shift in the game with no counterweight — it fired four times in #37 and helped
+  peg **three of four beers at +3** while the one beer nobody shipped sat at −1. It becomes
+  **±2**.
+- Gates: verify **364/364** (a §20c tide battery: the bag, the burn, the end-of-turn
+  refill, the Venture exemption, a dry bag leaving bare ground) · render-smoke ALL PASS ·
+  aid ALL FIT · **sim 30/count: 0 crashes, 0 deadlocks**, pace **16.4 / 15.9 / 14.5** at
+  2/3/4p, band **90% / 100% / 96.7%**.
+- **The arc reads in the data.** Venture L1 placements **3.4 / 5.0 / 6.1** per game with
+  ~1.7 standing per player at end — against **2 in the whole of playtest #37**, where two
+  MC seats built none. The wharf strips as intended: at 4p the tide burns ~5 tiles a game
+  and leaves **0.9 standing**. On the Bourse, 4p down-shifts now **outnumber** up-shifts
+  (**▼8.5 vs ▲7.2**, from ▼6.0/▲8.7 before) and the end-track average fell **2.2 → 0.9**:
+  the ratchet is a market again.
+- **Cost, recorded honestly: pace tightened.** 4p runs **14.5** (was ~15.6) and 2p band
+  compliance slipped to **90%** (min 11). The chain is traceable — more Ventures on the
+  board → more public lines fired → the goods faucet at 4p is now **31.0 freebies/game** →
+  cheaper brewing → dice burn faster. That is the standing §10 "public-line goods faucet"
+  watch, confirmed under a wider Venture population. **No dial was touched**: the tray size
+  is THE pace lever (§8) and moving it is the designer's ruling, not this letter's.
+  KEY `hanse-v54`.
 
 ### The stamp's seam leaves the engine (2026-08-23, designer-ruled)
 *"Retired stamp — fix it."* The v5.3b Tollhouse rework retired the stamp face (−1 die for
@@ -486,6 +533,25 @@ record is in git history.
 *Moved here from `RULES.md` §Open (2026-08-23). The designer calls full batteries; these
 are the things to read when one runs — or when a human table sits down.*
 
+**v5.4 “The Tide” — the new economy, every number unplayed:**
+- **Does the wharf strip too hard at 4p?** Smokes end with **1.4 works standing / 0.6 in
+  the bag** at 4p. That is the intended arc (bare ground for the Ventures) but a wharf with
+  no Kiln late may lock Q2 beers out of Novgorod entirely — watch whether the quality ladder
+  over-corrects.
+- **Bag size vs player count.** 13 tiles serve 2p comfortably (4.6 left) and 4p barely
+  (0.6). Consider a count-scaled bag, or accept that 4p is meant to run the wharf dry.
+- **The Staple Houses now pay once and go.** Watch whether a one-shot destination premium
+  still reads as worth steering toward, or becomes a lottery on where the hull happened to sit.
+- **The cleared-ground window** (the gap holds until end of turn): does anyone actually
+  claim it with an L1, or is the refill too fast to matter at the table?
+- **Open 1 Venture at Q2+** — 2 tiles in Hopped's 12. Watch for the opposite failure: too
+  many Ventures too early, and the wharf full of rings by round 6.
+- **PACE, the live one.** v5.4 costs ~1 round at 4p (**14.5**, band 96.7%) and drops 2p to
+  **90%** in band. Cause: the public-line goods faucet widened with the Venture population
+  (**31.0 freebies/game at 4p**). Two candidate levers if a human table agrees it runs
+  hot — the **tray size** (the ruled pace dial; the v5.2b sweep already recommended 14) or
+  **thinning `vgold`**, which prints on 3 of 8 Venture faces. Measure before dialing.
+
 **v5.3 “The Bourse” — every number unplayed:**
 - **The track ends** (−1…+3): does +3 cap too low under 4p volume? (smoke end-avg +2.1 at
   4p — the market may run hot).
@@ -544,10 +610,11 @@ robustness/pace oracles only (strategy reads = MC tiers + probes + humans).
   ⚙, public — it never turns on its own, and **no die ever stands on a building.**
 - **Cask** — a brewed beer in two states: **maturing** (private vessel) → **delivered**
   (boarded, sailed, parked). Its printed action is a **load bonus**, fired as it boards.
-- **Public Work** — the shared brown family: die-less **setup furniture** (3–4 random
-  tiles stand from setup; the rest boxed). Passive on its own slot's traffic; free to
-  use; nobody builds or owns one. Ephemerals sail away; a full wharf lets an L1
-  redevelop one.
+- **Public Work** — the shared brown family: die-less furniture (3–4 stand from setup;
+  the rest are **the bag**). Passive on its own slot's traffic; free to use; nobody builds
+  or owns one. **The tide takes every one of them** — a Ship sailing from its slot carries
+  the tile off, boxed and never recycled — and the bag re-furnishes the wharf at end of
+  turn until it runs dry. A full wharf also lets an L1 redevelop one.
 - **Venture** — the private family and the only one players build: the identical **hand
   of 4 dual-use tiles** (L1 face / L2 face — one cardboard), ringed in the owner's
   colour, no die. Every face prints a **public line** (for whoever activates the line)
@@ -555,7 +622,8 @@ robustness/pace oracles only (strategy reads = MC tiers + probes + humans).
   Work; never a rival's); L2 only over your own L1.
 - **The Bourse** — the beer-value track (−1…+3 ⚙): one price marker per in-play beer
   except Gruit & Jopenbier. Delivery = die + marker; arrivals lift +1/cask before
-  scoring; brews crash −1; Bergen/public-lines/the toll bench shift it.
+  scoring; brews crash −1; Bergen/public-lines/the toll bench shift it (**±1 and ±2** —
+  v5.4 gave the up-only line its brake).
 - **Manifest** — the demand card riding every non-Bruges Ship: three lines, each
   claimable once per voyage by a delivered cask; the card recycles pristine.
 - **Specialist** — the private seat tile (15 designs ⚙: the core 5 at max(2, n−1) copies

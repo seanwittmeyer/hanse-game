@@ -104,7 +104,7 @@
 > bonus-load (pick A).** The Bourse icon = the guild banner bearing the beer cask; the family
 > derives the marks in the age/goods numeral recipe — `bourse-plus1/-plus2/-pm1` white,
 > `bourse-minus1` RED. Wired at every former trending-arrow site (Tollhouse toll bench ·
-> Venture public lines ±1/+2▲ · the Bourse strip header · the aid legends · the in-app
+> Venture public lines ±1/±2 · the Bourse strip header · the aid legends · the in-app
 > headers) — the last modern glyph on the table retires. `bonus-load.png` is replaced in
 > place by the bold-contour cask-on-cart (no ship — a cask loads anywhere). Same round: the
 > ship-tile header drops its little ship icon and ready check (name · [die] N+ · fee).
@@ -176,6 +176,7 @@ Sources of truth: `components.js` (card faces) · `play.html` (app UI) · `print
 | Brewhouse — Brew (search) | `flask-conical` | `station-brew` | station cell (the PRIMARY face), aids, *Brew 1* bonus | **Round 8 swap:** the plain pot = the primary brew-and-SEARCH (pay a recipe, search the beer's stack and choose the tile). |
 | Cellar — Age | `hourglass` | `station-age` | station cell, aids, *Age +2* bonus, Abbey Cellar | Turn aging dice up. **Shared with the Age bonus (fine) and the Abbey Cellar tile crest (give the Abbey its own crest — see §4).** |
 | Harbor — Commission | `ship` | `station-harbor` | station cell, aids | Pay 1 G, place a display Ship, load 1 Ready cask. Distinct from the Ship-tile icon: suggest a crane/quay scene. |
+| **Bourse ±2 (the public line)** | `bourse-pm1` (stand-in) | `bourse-pm2` | the `Staple Rights` Venture face's public chip; the app's stop label | **WANTED (v5.4).** The line was `+2▲` up-only and became **±2** — the market's missing brake. The ± glyph is the new information, so the ±1 art stands in and reads the SIGN right and the number wrong. Brief: the `bourse-pm1` treatment with a **2**. |
 | Market ALT — Source 1 | — (real: `goods-1`) | `goods-1` | the station face's alt chip | **DONE (round 12b, 2026-08-23):** the basket + a "1" in the standing numeral recipe — the goods-2/3 triplet completes and the alt chip wears it. |
 | Brewhouse ALT — top tile (blind) | — (real: `brew-top`) | `station-brew-top` | the station face's alt chip; the alt-brew UI | **DONE (rounds 7-8):** the pot + tile deck + white down-arrow — the arrow points at the TOP of the stack: take the top tile. The `layers` stand-in is retired. |
 | Cellar ALT — Age 1 | — (real: `age-1`) | `station-age-1` | the station face's alt chip | Exists (`art/icons/station-age-1.png`) — the one-pip age chip. |
