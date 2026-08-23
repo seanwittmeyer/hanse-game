@@ -1,2 +1,0 @@
-PROBE(pre-buff) crane · start · n=400 · P0 win 43.5% · granted 100% · P0 total 50.7 · rounds 12.8
-PROBE(pre-buff) crane · mid · n=400 · P0 win 37.8% · granted 85% · P0 total 50.1 · rounds 13.2

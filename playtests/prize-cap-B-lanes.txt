@@ -1,2 +1,0 @@
-B(per-die) · 4p lane oracle · 200 games
-  lanes: majority 20.5% · lifter 25.5% · builder 23.5% · breadth 30.5%

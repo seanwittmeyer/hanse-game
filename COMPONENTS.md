@@ -1,4 +1,18 @@
-# Brewhouses of the Hanse — Components (v5.2 “Groundwork”)
+# Brewhouses of the Hanse — Components (v5.3b “The Bourse”)
+
+> **v5.3 “The Bourse” + the v5.3b toll bench (designer-ruled 2026-08-22 — the third letter;
+> the record: `archive/records/V53-BOURSE.md`):** **(1) THE BOURSE** — one board strip
+> (−1…+3 ⚙) + a **price marker per in-play beer** except Gruit & Jopenbier (start 0); a
+> delivered cask scores **DIE + MARKER** (floor 0); arrivals lift each beer **+1 per cask
+> BEFORE the voyage scores**; every brew slips its beer **−1**; shifts ride Bergen’s prize
+> (±1), the Ventures’ public lines and the **toll bench** (v5.3b — the Tollhouse reprint:
+> a cask loading at its slot lets the loader shift any marker ±1; the −1-for-+3★ stamp
+> face retires). **(2) PUBLIC WORKS start the game** — 3 (2p) / 4 (3–4p) ⚙ random tiles
+> on random slots, the rest to the box; die-less neutral furniture — no deck, no display,
+> no build channel, no investor die (the v5.2 grammar lived one letter). **(3) THE OPEN
+> GROUND** — an L1 Venture takes ANY open slot; wharf full → it may replace a Public Work
+> (boxed); never a rival’s tile; London’s prize = a Venture fee-waived. **(4) Every Venture
+> face prints a PUBLIC line** above the owner’s ringed line.
 
 > **v5.2 “Groundwork” (designer-ruled 2026-08-22 — the two building families; the record:
 > `archive/records/V52-GROUNDWORK.md`):** the building family **SPLITS** on the printed
@@ -252,7 +266,7 @@
 > aboard seats a specialist — max 1 per house per ship”** (pick order = load order). No
 > counts change.
 
-> **v4.6 (designer-ruled 2026-08-02 — off the `archive/records/AGRICOLA-STUDY.md` markup):**
+> **v4.6 (designer-ruled 2026-08-02 — off the AGRICOLA study markup, in git history):**
 > the Agricola program. **Into the box:** 8 **GUILD specialist** designs at 1 tile each
 > (Guild Scholar · Innkeeper · Supercargo · Chronicler · Alderman · Town Crier · Chandler ·
 > Shipwright — three print **SEAT-GATES**; two print **end-game ★** lines) · 3 building
@@ -292,7 +306,7 @@
 > Post and the three acquisition load-bonuses now **print the 1 `G` wharf fee** (paid at the
 > wharf, free at the kontor).
 >
-> **v4.0 (designer-ruled 2026-07-21, off `archive/records/V4-STREAMLINE.md`):** the streamline keystone. **The
+> **v4.0 (designer-ruled 2026-07-21, off the V4-STREAMLINE plan, in git history):** the streamline keystone. **The
 > tally die is the whole cask** — maturation marker, gate, value, presence and clock in one
 > number. **Out of the box:** the Hall board · all 12 Privileges · charter contracts · owner
 > house tokens · cask cubes · the cask tile’s aging face. **Into the box:** the **Skute**
@@ -301,9 +315,9 @@
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
-> - Operational rules: `RULES.md` (its header states the current version). Design rationale & history: `DESIGN.md` §9; the ruled v4 plan `archive/records/V4-STREAMLINE.md`.
-> - The live build is `play.html` — **v5.3 “The Bourse”** (`KEY hanse-v53`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `print.html` — the only kit in use** (components.js data is v5.1; the sheet layouts are the P4 refresh + the 2026-08-18 native-scale pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - Operational rules: `RULES.md` (the one clean rules document). Design rationale & history: `DESIGN.md` §9; the live watches: `DESIGN.md` §10.
+> - The live build is `play.html` — **v5.3b “The Bourse”** (`KEY hanse-v53b`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `print.html` — the only kit in use** (components.js data is v5.3b; the sheet layouts are the P4 refresh + the 2026-08-18 native-scale pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
 
 ---
 
@@ -330,8 +344,8 @@
 | **Destinations board** | 1 | The four Kontor panels — Bruges · London · Bergen · Novgorod — each printing its **minimum (die N+)**, its **prize** (recipe / building / specialist — Novgorod instead prints **value = the die +2★**), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the scored-★ audit) — plus the **Manifest deck well** (v5.0 — the Order row retired; the demand cards ride the Ships). *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
 | **The Bourse strip** *(v5.3 NEW)* | 1 | The beer-value track — **−1 · 0 · +1 · +2 · +3** ⚙, one lane; the **price markers** park on it (markers start at 0). Lives beside Market & Stores. |
 | Player boards | 4 | **3 vessel slots + 2 specialist seats — all open from the start** (v45h). The Flight ladder + a printed **Manifest reminder** (v5.0 — claimed demands score at once; the old Orders pile zone is gone). Recipe cards sit beside it. Goods cap 8 printed. |
-| **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per player — the ★ scored in play (Manifest demands · Tollhouse stamps · 1★ placed presence · departing buildings’ dice) and delivery ★ as they land. *(New in v4.0 — the hard line demands a home for scored ★.)* |
-| Market & Stores board *(kit)* | 1 | The displays: Ships 4 · buildings 4 · Specialists 4 · the export recipe row — ringed by the score track. *(The Order row of 3 lives on the Destinations board — ruled 2026-08-03; the Sailed-Ships clock left with v4.1.)* |
+| **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per player — the ★ scored in play (delivery ★ = die + Bourse marker · Manifest demands · Cooperage wharfage · Staple premiums · 1★ placed presence) as they land. *(New in v4.0 — the hard line demands a home for scored ★.)* |
+| Market & Stores board *(kit)* | 1 | The displays: Ships 4 · Specialists 4 · the export recipe row — ringed by the score track. *(The building display retired at v5.3 — Public Works stand from setup, Ventures live in hand; the Order row left with v5.0; the Sailed-Ships clock with v4.1.)* |
 
 ## 3. Common supply
 
@@ -416,7 +430,7 @@ lets an L1 Venture **redevelop** one (§6b). The colour is **BROWN** (v5.2, rule
 | **Ropewalk** *(v5.2 rework, ruled)* | 1 | a load here: **also load 1 Ready cask onto a DIFFERENT docked Ship** ⚙ (once per load flow) | 2 `G` | 3 |
 | Cooperage | 1 | the Ship here: **+1 capacity** (sails only when that berth is also full) · **each cask loaded here: its loader +1★** ⚙ | 2 `G` | 3 |
 | **Weigh House** | 1 | **each cask delivered off the Ship here may claim 2 Manifest lines** | 2 `G` | 3 |
-| **Staple House ×4** *(v5.2 NEW — one crest per Kontor)* | 4 | a Ship sailing from here **to the printed Kontor**: **every delivered cask +2★** ⚙ (*Stapelrecht* — the destination premium; the old investor’s die — *Stapelrecht*) | 2 `G` | 2 |
+| **Staple House ×4** *(v5.2 NEW — one crest per Kontor)* | 4 | a Ship sailing from here **to the printed Kontor**: **every delivered cask +2★** ⚙ (*Stapelrecht* — the destination premium) | 2 `G` | 2 |
 | **Bonded Store** *(ephemeral)* | 1 | a cask loading here: **die +1** (cap 6); **sails with the Ship** (boxed) — every player with a cask aboard gains 2 goods | 2 `G` | 3 |
 | **Victualling Yard** *(ephemeral)* | 1 | a cask loading here: **its load bonus fires TWICE**; **sails with the Ship** (boxed) | 2 `G` | 3 |
 

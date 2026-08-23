@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v5.1 “Wharf Hands”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v5.3 “The Bourse”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -568,7 +568,7 @@
       <!-- non-mobile: the two references a seated player reaches for stay OUT of the menu -->
       <span class="barnav">
         <button class="barbtn" onclick="toggleAid()" title="The player aid — the turn, the cask, the Kontore, scoring">📖 Player Aid</button>
-        <a class="barbtn" href="index.html" title="The complete rulebook &amp; component reference">📚 Rules</a>
+        <a class="barbtn" href="rulebook.html" title="The printed rulebook — the complete rules">📚 Rules</a>
       </span>
       <button class="hamb" onclick="toggleMenu()" aria-label="Menu" title="Menu">☰</button>
       <div id="topmenu" class="hidden">
@@ -2508,8 +2508,8 @@ function checkTriggers(){if(S.ending)return;
 // SCORING
 //==================================================================
 function scorePlayer(p){
-  // v5.0: deliveries = the parked dice (d.val frozen at delivery, 1..6) · bank = Manifest
-  // claims + Tollhouse stamps + presence bumps + departed marks · majorities · the Flight (shipped).
+  // v5.3: deliveries = the parked dice (d.val frozen at delivery = die + Bourse) · bank =
+  // Manifest claims + wharfage/premiums + presence bumps · majorities · the Flight (shipped).
   let deliv=0;p.delivered.forEach(d=>deliv+=(d.val||0));
   const bank=(p.bank||0);
   const majOff=EXPANSIONS.some(m=>expOn(m)&&m.replacesMajorities);
@@ -2607,9 +2607,9 @@ function gameOver(){
   aiCancel();
   if(!S.endedAt)S.endedAt=new Date().toISOString();
   const {rows,cmp}=finalRows();const win=rows[0];
-  let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>Player</th><th>Deliveries<br><span class="note">(parked dice)</span></th><th>Scored in play<br><span class="note">(the Bourse rides the deliveries · Manifests · stamps · presence)</span></th><th>Majorities</th><th>Flight</th><th>Guild<br><span class="note">(specialist ★)</span></th>'+(hallOn()?'<th>Tastings<br><span class="note">(sets · standing benches)</span></th>':'')+'<th>Total</th></tr>';
+  let h='<h2>Final Standing</h2><table class="scoretable"><tr><th>Player</th><th>Deliveries<br><span class="note">(parked dice)</span></th><th>Scored in play<br><span class="note">(the Bourse rides the deliveries · Manifests · presence)</span></th><th>Majorities</th><th>Flight</th><th>Guild<br><span class="note">(specialist ★)</span></th>'+(hallOn()?'<th>Tastings<br><span class="note">(sets · standing benches)</span></th>':'')+'<th>Total</th></tr>';
   rows.forEach(r=>{h+='<tr class="'+(cmp(r,win)===0?'win':'')+'"><td><span class="pawn" style="background:'+r.p.color+';display:inline-block;vertical-align:middle"></span> '+r.p.name+(r.p.ai?' <span class="note">('+aiLabel(r.p)+' AI)</span>':'')+'</td><td>'+r.sc.deliv+'</td><td>'+r.sc.bank+'</td><td>'+r.sc.maj+'</td><td>'+(r.sc.flight||'·')+'</td><td>'+(r.sc.guild||'·')+'</td>'+(hallOn()?('<td>'+(r.sc.ext||'·')+'</td>'):'')+'<td><b>'+r.sc.total+'</b></td></tr>';});
-  h+='</table><p class="note">Score = <b>deliveries</b> (each cask’s parked die <b>+ its beer’s Bourse marker</b> — v5.3) + <b>scored in play</b> (claimed Manifest demands · Tollhouse stamps · 1★ per placed presence) + Kontor <b>majorities</b> (by parked dice) + the <b>Flight</b> (distinct beers SHIPPED — the completed cards, '+FLIGHT_MIN+'+ to score) + any <b>Guild</b> ★ printed on seated Specialists (Alderman)'+(hallOn()?' + <b>the Tastings</b> (judged ★ are already scored in play; end: the category sets — 2 distinct +'+TASTE_SETS[2]+'★, 3 +'+TASTE_SETS[3]+'★ — and 1★ per die on an unconvened bench)':'')+'. Tiebreak: the dice in your vessels, then goods.</p>'
+  h+='</table><p class="note">Score = <b>deliveries</b> (each cask’s parked die <b>+ its beer’s Bourse marker</b> — v5.3) + <b>scored in play</b> (claimed Manifest demands · Cooperage wharfage · Staple premiums · 1★ per placed presence) + Kontor <b>majorities</b> (by parked dice) + the <b>Flight</b> (distinct beers SHIPPED — the completed cards, '+FLIGHT_MIN+'+ to score) + any <b>Guild</b> ★ printed on seated Specialists (Alderman)'+(hallOn()?' + <b>the Tastings</b> (judged ★ are already scored in play; end: the category sets — 2 distinct +'+TASTE_SETS[2]+'★, 3 +'+TASTE_SETS[3]+'★ — and 1★ per die on an unconvened bench)':'')+'. Tiebreak: the dice in your vessels, then goods.</p>'
     +'<button onclick="hideOver()">⚓ View the final board</button> <button onclick="openStudio()">⇪ Send to Studio'+(S.studioSent?' ✓':'')+'</button> <button class="primary" onclick="newGame()">New Game</button>';
   document.getElementById('overcard').innerHTML=h;document.getElementById('over').classList.remove('hidden');
 }

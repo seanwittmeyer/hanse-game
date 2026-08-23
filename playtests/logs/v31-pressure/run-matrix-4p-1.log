@@ -1,9 +1,0 @@
-4p-rc-1 ok     rounds 16  winner Cellar3    totals Racer:23 Cellar:29 Cellar2:29 Cellar3:38  -> playtests/logs/v31-pressure/pbp-4p-rc-1.log
-4p-rc-2 ok     rounds 20  winner Cellar2    totals Cellar:17 Cellar2:56 Cellar3:50 Racer:5  -> playtests/logs/v31-pressure/pbp-4p-rc-2.log
-4p-rc-3 ok     rounds 17  winner Cellar     totals Cellar2:28 Cellar3:23 Racer:24 Cellar:30  -> playtests/logs/v31-pressure/pbp-4p-rc-3.log
-4p-rc-4 ok     rounds 13  winner Racer      totals Cellar3:27 Racer:29 Cellar:29 Cellar2:21  -> playtests/logs/v31-pressure/pbp-4p-rc-4.log
-4p-rc-5 ok     rounds 15  winner Cellar2    totals Racer:29 Cellar:28 Cellar2:39 Cellar3:33  -> playtests/logs/v31-pressure/pbp-4p-rc-5.log
-4p-rc-6 ok     rounds 17  winner Cellar3    totals Cellar:28 Cellar2:24 Cellar3:42 Racer:24  -> playtests/logs/v31-pressure/pbp-4p-rc-6.log
-4p-rc-7 ok     rounds 21  winner Cellar3    totals Cellar2:32 Cellar3:54 Racer:22 Cellar:38  -> playtests/logs/v31-pressure/pbp-4p-rc-7.log
-
-7 games (KEY hanse-v31) in 254.8s · errors 0

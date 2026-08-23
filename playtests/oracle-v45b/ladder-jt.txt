@@ -1,4 +1,0 @@
-=== v4.0 AI ladder — 40 games/pair · 2p, seats alternate ===
-  trader > journeyman: 65.0%  (26/40)  avg 48.4 vs 42.9
-
-LADDER GATE: every rung ≥60%, 0 errors.

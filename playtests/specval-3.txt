@@ -1,6 +1,0 @@
-PROBE innkeeper · start · n=400 · P0 win 35.8% · granted 100% · P0 total 49.0 · rounds 12.8
-PROBE innkeeper · mid · n=400 · P0 win 35.3% · granted 77% · P0 total 48.9 · rounds 13.0
-PROBE supercargo · start · n=400 · P0 win 66.0% · granted 100% · P0 total 56.2 · rounds 12.4
-PROBE supercargo · mid · n=400 · P0 win 43.5% · granted 83% · P0 total 50.8 · rounds 12.9
-PROBE chronicler · start · n=400 · P0 win 37.3% · granted 100% · P0 total 50.8 · rounds 13.0
-PROBE chronicler · mid · n=400 · P0 win 42.3% · granted 79% · P0 total 48.8 · rounds 12.9

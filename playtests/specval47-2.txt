@@ -1,4 +1,0 @@
-PROBE towncrier · start · n=400 · P0 win 42.8% · granted 100% · P0 total 51.8 · rounds 12.6
-PROBE towncrier · mid · n=400 · P0 win 37.8% · granted 77% · P0 total 49.7 · rounds 12.6
-PROBE innkeeper · start · n=400 · P0 win 39.3% · granted 100% · P0 total 50.9 · rounds 12.7
-PROBE innkeeper · mid · n=400 · P0 win 37.8% · granted 79% · P0 total 50.4 · rounds 12.5

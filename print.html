@@ -784,7 +784,7 @@ const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',
 // parked die scores +2★ (v4.2), its minimum 3+ — the export band (v4.10).
 const DESTS=[
   {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, maj:[4,2,0], role:'The Hub — the on-ramp',        ben:{n:'+1',ic:'scroll-text'}, bnote:'a recipe — pay its fee (H = Q−3)'},
-  {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, maj:[5,3,1], role:'The Steelyard — the engine',   ben:{n:'+1',ic:'building-2'},  bnote:'a building, placed — your die on it'},
+  {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, maj:[5,3,1], role:'The Steelyard — the engine',   ben:{n:'+1',ic:'home'},  bnote:'a Venture from your hand — the fee waived (v5.3)'},
   {nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', req:2, maj:[9,5,2], role:'Bryggen — the crews',          ben:{n:'+1',ic:'wrench'},      bnote:'a specialist, free \u00b7 no seat? 2 goods \u00b7 + bourse \u00b11'},
   {nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', req:3, maj:[8,5,2], vb:2, role:'The Long Haul — the climb',    ben:{n:'+2',ic:'star'},   bnote:'no prize — every parked die scores +2★'},   // v4.10: the minimum returned to 3+ (the export band); the panel had kept 4+
 ];
@@ -1144,7 +1144,7 @@ const kMini=d=>{
       +'<div class="kp-cell"><span class="kp-ch">'+LU('landmark')+'majority</span><span class="kp-big">'+d.maj.join('/')+'</span></div>'
     +'</div><div class="kp-note bnote">'+(BNOTE_SHORT[d.nm]||d.bnote)+'</div></div>'
   +'</div>';};
-const BNOTE_SHORT={Bruges:'a recipe — pay its fee (H = Q−3)',London:'a building, built at once — your die on it',Bergen:'a Specialist, free \u2014 no seat? 2 goods \u00b7 + shift the Bourse \u00b11 (v5.3)',Novgorod:'no prize — every parked die scores +2★'};
+const BNOTE_SHORT={Bruges:'a recipe — pay its fee (H = Q−3)',London:'a Venture from your hand — the fee waived (v5.3)',Bergen:'a Specialist, free \u2014 no seat? 2 goods \u00b7 + shift the Bourse \u00b11 (v5.3)',Novgorod:'no prize — every parked die scores +2★'};
 function supplyBoard(){
   const dslot=(fam,ic,smp,lbl)=>'<div class="dslot '+fam+'">'+LU(ic)+(lbl?'<span class="rn">'+lbl+'</span>':'')
     +(OVERLAY&&smp?'<div class="ovl">'+smp+'</div>':'')+'</div>';
@@ -1153,13 +1153,13 @@ function supplyBoard(){
   const shelf=(lbl,ic,slots)=>'<div class="shelf-lbl">'+LU(ic)+lbl+'<span class="bag">'+LU('shopping-bag')+'</span></div>'
     +'<div class="shelf">'+slots+'</div>';
   // overlay samples — one real render per family, varied so both tile verbs/colours get proofed
-  const smpBld=['tollhouse','staple_bruges','maltkiln','cooperage'].map(k=>buildingCard(BUILDINGS.find(b=>b.k===k)));   // v5.2: live Public Works proof the display
+  // (v5.3: the BUILDING DISPLAY IS GONE — the Public Works are setup furniture, the rest stay
+  // in the box; the board carries the Ship and Specialist displays + the Casks & Recipes column)
   const smpShip=[shipCard('skute','Bruges'),shipCard('cog','London'),shipCard('hulk','Bergen'),shipCard('cog','Novgorod')];
   const smpImp=[0,1,2,3].map(i=>improveTile(IMPROVE[i]));
   // 2026-08-18 (designer): the SPECIALISTS take the old recipe shelf — the display of 4 rides
   // the main column; the right column becomes CASKS & RECIPES (see brew below).
-  const market=shelf('Buildings — the display of 4 · building one stands your die on it, it serves everyone','building-2',smpBld.map(s=>dslot('b','building-2',s)).join(''))
-    +shelf('Ships — the display of 4 · commission at the Harbor (the printed fee: Skute 2G · Cog 1G · Hulk free · 1 free load)','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''))
+  const market=shelf('Ships — the display of 4 · commission at the Harbor (the printed fee: Skute 2G · Cog 1G · Hulk free · 1 free load)','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''))
     +shelf('Specialists — the display of 4 · earned free','wrench',smpImp.map(s=>dslot('i','wrench',s)).join(''));
   // THE CASKS & RECIPES column (designer, 2026-08-18): every beer's pile ON the board, paired
   // by tier with the export recipe stacks — five tight rows: Gruit+Hopped piles · the dealt
@@ -1396,7 +1396,7 @@ function aidTrifoldSheets(pages){
 function bourseStrip(){
   const cols=[-1,0,1,2,3];
   let h='<div style="width:100%;height:100%;box-sizing:border-box;background:#f3ead8;border:2px solid #6b5537;border-radius:.1in;padding:.14in .18in;font-family:inherit;display:flex;flex-direction:column">';
-  h+='<div style="font-size:.19in;font-weight:bold;letter-spacing:.02em;color:#4a3822">'+LUX('trending-up')+' THE BOURSE — the beer-value market</div>';
+  h+='<div style="font-size:.19in;font-weight:bold;letter-spacing:.02em;color:#4a3822">'+LU('trending-up')+' THE BOURSE — the beer-value market</div>';
   h+='<div style="font-size:.105in;color:#6b5a41;margin:.02in 0 .08in">A delivered cask scores its <b>die + its beer’s marker</b>. A <b>brew</b> slips its beer 1 · every cask <b>landing</b> lifts it 1 (all rises BEFORE the voyage scores) · <b>shifts</b>: Bergen’s prize ±1, the Ventures’ public lines. Gruit &amp; Jopenbier trade off-book. Markers start at 0.</div>';
   h+='<div style="flex:1;display:flex;gap:.06in">';
   cols.forEach(v=>{h+='<div style="flex:1;border:1.6px solid '+(v===0?'#6b5537':'#a08a63')+';border-radius:.07in;background:'+(v<0?'#e7d5c9':(v===0?'#efe3c8':'#dfe7d2'))+';display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:.06in">'
@@ -1410,8 +1410,7 @@ function bourseSheet(pages){
   const w=7.6,h=2.5,x=(PG.w-w)/2,y=0.55;
   pg.items.push({x:x,y:y,w:w,h:h,html:bourseStrip()});
   pg.rrects=[{x:x,y:y,w:w,h:h,r:0.1}];
-  const beers=['Hopped','Broyhan','Keut','Mumme','Bock','Gose','Zerbster','Jopen–—'];
-  const names=['Hopped','Broyhan','Keut','Mumme','Bock','Gose','Zerbster','Duckstein'];
+  const names=['Hopped','Broyhan','Keut','Mumme','Bock','Gose','Zerbster','Duckstein'];   // every trackable brew (Gruit & Jopenbier trade off-book — no marker)
   const D=0.72,gap=0.24;const total=8*D+7*gap;let mx=(PG.w-total)/2,my=y+h+0.5;
   names.forEach((nm,i)=>{const cx=mx+i*(D+gap);
     pg.items.push({x:cx,y:my,w:D,h:D,html:'<div style="width:100%;height:100%;border-radius:50%;background:#efe3c8;border:2px solid #6b5537;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.09in;font-weight:bold;color:#4a3822;box-sizing:border-box;padding:.04in">'+nm+'</div>'});
@@ -1484,7 +1483,12 @@ function buildPages(){
   const bldItems=[];
   BUILDINGS.forEach(d=>{if(d.hall)return;for(let i=0;i<cnt(d.n);i++)
     bldItems.push({fam:'Buildings',html:buildingCard(d)});});   // v4.0 SINGLE-FACED: no owner, no WILD flip — displaced tiles are boxed · v4.16b: the Chancery prints on the GUILDHALL sheet
-  packSpaced(pages,'bits','PUBLIC WORKS — SINGLE-FACED, the shared brown family (print 13 — v5.3: DIE-LESS SETUP FURNITURE, never built in play: 3–4 stand at random from setup, the rest to the box · 22″ plotter · 1.5mm bleed · cuts 3mm apart)');
+  packSpaced(pages,'bits','PUBLIC WORKS — SINGLE-FACED, the shared brown family (print 13 — v5.3: DIE-LESS SETUP FURNITURE, never built in play: 3–4 stand at random from setup, the rest to the box · 22″ plotter · 1.5mm bleed · cuts 3mm apart)',[{kind:'bld',items:bldItems}],famPages);
+  // --- v5.2/v5.3 VENTURE TILES → double-sided (L1 front / L2 back), one ringed set per house ---
+  const ventItems=[];const vsets=MODE==='proof'?1:PLAYERS.length;
+  for(let s=0;s<vsets;s++)VENTURES.forEach(d=>ventItems.push({fam:'Ventures',
+    html:ventRing(d,1,PLAYERS[s].c),back:ventRing(d,2,PLAYERS[s].c)}));
+  packSpaced(pages,'bits','VENTURE tiles — PRIVATE, dual-use (L1 front / L2 back · 4 designs × 1 set per house · the colour ring = the owner) — mount double-sided (v5.3: an L1 takes any OPEN slot — wharf full, it replaces a Public Work; each face prints a PUBLIC line for the whole wharf above the owner’s ringed line)',[{kind:'bld',items:ventItems}],famPages);
   // (the CONTRACT strips print on S1 — the Wharf sheet's open right band, above)
   // (2026-07-19: the UNLOCK-COVER sheet left the kit — sourced, any opaque square, like the tally dice.
   //  v3.4c: the owner frames are RETIRED — little house tokens mark building ownership; store-bought.)
@@ -1549,7 +1553,7 @@ function checklist(pages,famPages){
   // 2026-08-09 [designer]: the manifest is a PACKING LIST, not a lesson — "just some basic
   // details of quantity, any important themes to share, and where they go." Every entry is one
   // short line: what it is · WHERE IT LIVES on the table. The rules live in the rulebook.
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v5.2 “Groundwork”)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v5.3b “The Bourse”)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">Counts are tuning placeholders ⚙. The rules live on the <b>player aid</b> and in the rulebook — this page only says what to make, how many, and where it sits on the table.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
@@ -1577,7 +1581,7 @@ function checklist(pages,famPages){
     +R('Worker pawns','<b>One per player, on the Wharf’s stations.</b>',PLAYERS.length)
     +R('Quality dice — 12 mm d6','<b>THE component:</b> the cask, the presence, the mason’s mark and the clock in one. <b>In each player’s tray, public all game.</b>',PRES_DISCS+' ea')
     +R('Score movers','<b>One disc per colour on the score ring</b> (flip or mark at +50).','1 ea')
-    +R('Draw bags','<b>One per hidden supply</b> — Ships · buildings · Specialists.','3')
+    +R('Draw bags','<b>One per hidden supply</b> — Ships · Specialists. (The Public Works draw at setup straight from the box — v5.3.)','2')
     +R('First-player &amp; round markers','Turn order (fixed) and the 25-round backstop.','2')
     +'</table>';
   h+=T('Expansions <span style="font-weight:normal;text-transform:none;opacity:.7">— opt-in New Game toggles (v4.14–15)</span>')
@@ -1916,4 +1920,4 @@ if(window.HNAV)HNAV.mount('#hnav','print');
 render();
 </script>
 </body>
-</html>packSpaced(pages,'bits','VENTURE tiles — PRIVATE, dual-use (L1 front / L2 back · 4 designs × 1 set per house · the colour ring = the owner) — print DOUBLE-SIDED, flip LEFT↔RIGHT (v5.3: an L1 takes any OPEN slot — wharf full, it replaces a Public Work; each face prints a PUBLIC line for the whole wharf above the owner’s ringed line)
+</html>

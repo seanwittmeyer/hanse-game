@@ -1,6 +1,0 @@
-=== v4.0 render smoke — full AI games through the REAL render layer ===
-  PASS 2p jour+trader — round 13 (dice), 426 renders
-  PASS 3p app/jour/trader — round 12 (dice), 1022 renders
-  PASS 2p GM vs trader — round 13 (dice), 1364 renders
-  PASS 2p CM vs GM — round 25 (ceiling), 1806 renders
-ALL PASS

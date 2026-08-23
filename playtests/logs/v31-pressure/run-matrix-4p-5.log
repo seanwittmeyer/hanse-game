@@ -1,9 +1,0 @@
-4p-mx-1 ok     rounds 22  winner Cellar     totals Cellar:50 Racer:22 Guild:29 TraderP:37  -> playtests/logs/v31-pressure/pbp-4p-mx-1.log
-4p-mx-2 ok     rounds 18  winner Cellar     totals Racer:21 Cellar:62 TraderM:38 Guild:15  -> playtests/logs/v31-pressure/pbp-4p-mx-2.log
-4p-mx-3 ok     rounds 19  winner Cellar     totals Guild:27 TraderV:33 Cellar:61 Racer:9  -> playtests/logs/v31-pressure/pbp-4p-mx-3.log
-4p-mx-4 ok     rounds 20  winner Racer      totals Cellar:42 Racer:44 Cellar2:38 Guild:22  -> playtests/logs/v31-pressure/pbp-4p-mx-4.log
-4p-mx-5 ok     rounds 18  winner TraderP    totals Racer:25 Guild:29 TraderP:38 Cellar:34  -> playtests/logs/v31-pressure/pbp-4p-mx-5.log
-4p-mx-6 ok     rounds 22  winner Cellar     totals TraderM:28 Cellar:31 Racer:22 Guild:21  -> playtests/logs/v31-pressure/pbp-4p-mx-6.log
-4p-mx-7 ok     rounds 19  winner Cellar     totals Guild:28 Cellar:40 Racer:29 TraderV:33  -> playtests/logs/v31-pressure/pbp-4p-mx-7.log
-
-7 games (KEY hanse-v31) in 193.5s · errors 0

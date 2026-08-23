@@ -1,9 +1,0 @@
-2p-rt-1 ok     rounds 15  winner TraderV    totals Racer:35 TraderV:39  -> playtests/logs/v31-pressure/pbp-2p-rt-1.log
-2p-rt-2 ok     rounds 15  winner Racer      totals TraderP:28 Racer:35  -> playtests/logs/v31-pressure/pbp-2p-rt-2.log
-2p-rt-3 ok     rounds 11  winner TraderM    totals Racer:32 TraderM:37  -> playtests/logs/v31-pressure/pbp-2p-rt-3.log
-2p-rt-4 ok     rounds 19  winner TraderV    totals TraderV:59 Racer:20  -> playtests/logs/v31-pressure/pbp-2p-rt-4.log
-2p-rt-5 ok     rounds 15  winner TraderP    totals Racer:25 TraderP:28  -> playtests/logs/v31-pressure/pbp-2p-rt-5.log
-2p-rt-6 ok     rounds 16  winner TraderM    totals TraderM:45 Racer:19  -> playtests/logs/v31-pressure/pbp-2p-rt-6.log
-2p-cc-1 ok     rounds 24  winner Cellar2    totals Cellar:30 Cellar2:48  -> playtests/logs/v31-pressure/pbp-2p-cc-1.log
-
-7 games (KEY hanse-v31) in 31.2s · errors 0

@@ -1,2 +1,0 @@
-A(cap-1)  · 4p lane oracle · 200 games
-  lanes: majority 27.0% · lifter 20.0% · builder 27.0% · breadth 26.0%

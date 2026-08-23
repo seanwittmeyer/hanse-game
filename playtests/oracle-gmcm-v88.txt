@@ -1,9 +1,0 @@
-GM-vs-CM ORACLE — v2.4 (KEY v88) · 5 parallel shards × 10 games · NOGM=1 CMN=10 CELLAR_MS=220 (10-game shards per designer directive)
-
-guildmaster vs cellarmaster cellarmaster wins  90.0%  (guildmaster 10.0%)  avg score guildmaster 17.7 / cellarmaster 39.8  rounds 20.4  clock 90.0%  errors 0
-guildmaster vs cellarmaster cellarmaster wins  70.0%  (guildmaster 30.0%)  avg score guildmaster 25.2 / cellarmaster 34.0  rounds 18.2  clock 100.0%  errors 0
-guildmaster vs cellarmaster cellarmaster wins  60.0%  (guildmaster 40.0%)  avg score guildmaster 29.6 / cellarmaster 36.6  rounds 19.2  clock 100.0%  errors 0
-guildmaster vs cellarmaster cellarmaster wins  90.0%  (guildmaster 10.0%)  avg score guildmaster 23.6 / cellarmaster 35.1  rounds 19.1  clock 100.0%  errors 0
-guildmaster vs cellarmaster cellarmaster wins  60.0%  (guildmaster 40.0%)  avg score guildmaster 25.1 / cellarmaster 37.7  rounds 20.9  clock 100.0%  errors 0
-
-AGGREGATE: CELLARMASTER 37/50 = 74.0% (v87: 74.7 · v86: 73.3) — the top rung holds. errors 0.
