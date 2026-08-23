@@ -110,7 +110,7 @@ several concepts, the *Split?* column says whether the concepts should share the
 or get their own. File-name suggestions use `art/icons/<slug>.png`.
 
 Sources of truth: `components.js` (card faces) · `play.html` (app UI) · `print.html`
-(kit boards/aids) · `index.html` §14 Icon Key. Registry terms per `STYLE.md`.
+(kit boards/aids + the Player Aid legend). Registry terms per `STYLE.md`.
 
 ## 1. The core alphabet (highest reuse — these appear on nearly every surface)
 
@@ -229,8 +229,8 @@ Sources of truth: `components.js` (card faces) · `play.html` (app UI) · `print
   resolve · prize · bag · aid · the tabled hall/traderoads) — plus the two tabled-expansion
   icon sets. Re-open any of these as its own wave if wanted.
 - **Wiring remaining:** `play.html` app-chrome Lucide → art (the card faces already swapped via
-  the shared library) · `index.html` §14 Icon Key + inline glyphs · `learn.html` — pending the
-  designer's print-kit review.
+  the shared library) — pending the designer's print-kit review. *(The index/learn icon
+  passes closed with those pages — retired 2026-08-23.)*
 - **Hard requirements (met):** legible at ~4 mm (QC'd on parchment/dark/sea + 4 mm strips), one
   silhouette per concept, and the four ambiguity splits: **recipe vs Contract** (book vs
   pictogram scroll) · **build drops the magnifier** (trowel-on-bricks) · Granary/Exchange

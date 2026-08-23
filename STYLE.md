@@ -140,9 +140,9 @@ here*.
 15. **~~maturing~~ → aging** (the state adjective; *age* stays the verb; Ready unchanged).
 16. **~~pool~~ → supply / display** (supply = face-down decks + general stock; display =
     a face-up row).
-17. **The index.html rulebook is a snapshot** — no version tags, no change history, no dev
-    pointers; it reads as the only rulebook a new player will ever see. Versions and
-    rationale live in `RULES.md` / `DESIGN.md`.
+17. **The printed rulebook (`rulebook.html`) is a snapshot** — no version tags, no change
+    history, no dev pointers; it reads as the only rulebook a new player will ever see.
+    Versions and rationale live in `DESIGN.md`; the maintained rules master is `RULES.md`.
 
 Dev shorthand (bank, gate, bump, pool, lading, tally, GM/CM…) stays legal in `CLAUDE.md`,
 `DESIGN.md` history, `AUTOMA.md`, `archive/`, code identifiers, and playtest harnesses —

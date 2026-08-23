@@ -37,13 +37,14 @@ Read the complete canon, **in full — no skimming, no sampling**:
 | Read | Role |
 |---|---|
 | `CLAUDE.md` | working process, interlocks, gates, deploy rules |
-| `DESIGN.md` | pillars, current architecture (§6), change log (§9) — the *why* |
-| `RULES.md` | **source of truth** — operational rules |
+| `DESIGN.md` | pillars, current architecture, change log, lessons, **open watches** — the *why* |
+| `RULES.md` | **source of truth** — the ONE rules document (clean operational rules) |
 | `COMPONENTS.md` | **source of truth** — the physical manifest |
-| `index.html` | **source of truth** — the published rulebook + component reference |
+| `STYLE.md` | the Term Registry — every word printed on a component |
+| `rulebook.html` | the **printed rulebook** component (a snapshot of `RULES.md`, player-facing) |
 | `print.html` | **source of truth** — the print-and-play component kit |
 | `play.html` | the **mirror** — the playable reference implementation of the above |
-| `learn.html` | the remaining published surface; keep current |
+| `index.html` | the landing page (links + summary); keep current |
 
 `CLAUDE.md` and `DESIGN.md` carry the progress and context so each session can
 move forward from the last — read them first, then the rest. When surfaces
@@ -53,7 +54,7 @@ surface says the same thing.
 ## 3 · Why holistic, never surgical
 
 The game is **several interconnected systems that all work together** — theme,
-mechanics, components, scoring balance, and five published pages reinforce one
+mechanics, components, scoring balance, and the published pages reinforce one
 another. A change is never local: one number ripples through the docs' tables,
 the tile counts, the pages, and the balance. **It is impossible to make changes
 surgically or in isolation** — missing context causes inconsistencies and

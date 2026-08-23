@@ -1,19 +1,17 @@
 // Brewhouses of the Hanse — THE SITE NAVIGATION, in one place.
-// (2026-08-09, designer: "each of the html pages have some sort of navigation but they are
-// inconsistent. All should have a link to play, rules, learn, and print.")
+// (2026-08-09, designer: consistent navigation on every page; 2026-08-23: the surfaces
+// streamlined — index is the landing page, rulebook.html is the one rules page.)
 //
-// Every page carries the SAME four destinations in the SAME order with the SAME colours; the
+// Every page carries the SAME destinations in the SAME order with the SAME colours; the
 // page you are on renders as a marked, non-clickable chip. Edit the roster HERE, never
-// per-page — the four pages had drifted to four different link sets, which is exactly what a
-// single source prevents. Tiny and dependency-free on purpose: learn.html is a ten-minute
-// primer and must not have to load the 84 KB card library to draw a nav bar.
+// per-page. Tiny and dependency-free on purpose.
 (function(){
 'use strict';
 const PAGES=[
-  {k:'learn',href:'learn.html',ic:'🎓',nm:'Learn',c:'#3d6b7e',tip:'The ten-minute primer — learn to play'},
-  {k:'rules',href:'index.html',ic:'📖',nm:'Rules', c:'#b8860b',tip:'The complete rulebook & component reference'},
-  {k:'play', href:'play.html', ic:'▶', nm:'Play',  c:'#4a6b3a',tip:'Play it — hot-seat, with AI seats'},
-  {k:'print',href:'print.html',ic:'🖨',nm:'Print', c:'#9c3b2e',tip:'The print-and-play kit — cut the prototype'},
+  {k:'home', href:'index.html',   ic:'⚓',nm:'Home',    c:'#3d6b7e',tip:'The landing page — links & summary'},
+  {k:'rules',href:'rulebook.html',ic:'📖',nm:'Rulebook',c:'#b8860b',tip:'The printed rulebook — the complete rules'},
+  {k:'play', href:'play.html',    ic:'▶', nm:'Play',    c:'#4a6b3a',tip:'Play it — hot-seat, with AI seats'},
+  {k:'print',href:'print.html',   ic:'🖨',nm:'Print',   c:'#9c3b2e',tip:'The print-and-play kit — cut the prototype'},
 ];
 // one chip; the current page is a <span> (nothing to click) carrying aria-current
 function chip(p,cur){
