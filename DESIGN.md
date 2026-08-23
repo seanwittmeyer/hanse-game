@@ -622,6 +622,43 @@ record is in git history.
 *Moved here from `RULES.md` §Open (2026-08-23). The designer calls full batteries; these
 are the things to read when one runs — or when a human table sits down.*
 
+**RULED, NOT YET BUILT (designer, 2026-08-23) — the Letter B decisions:**
+- **THE BOURSE = PURE DECAY.** *"When a ship delivers casks to a kontor, each type of beer is
+  moved down the track 1 space. The only time it goes up is with the bourse ±1, +1, or +2
+  actions."* One step per beer TYPE per delivery — never per cask (the Lisboa rule: the event
+  happened, move one). **The brew crash retires.** Up-shifts are **reserved to buildings and
+  private (Venture) actions**.
+- **EVERY PRIZE IS "THE PORT'S THING **OR** ★" — per cask, exclusive, always a choice.** The
+  **2-goods consolation retires**: *"we don't need a fallback as the points are the fallback."*
+  A 2-cask Bergen hull can take the specialist on one and the ★ on the other, both dice
+  parking for the majority.
+- **THE STRIP MOVES ONTO THE DESTINATIONS BOARD** — ONE track, spaces wide enough to hold every
+  beer token; tokens are **colour-matched AND named**. The **Manifest deck well leaves that
+  board** (*"it didn't really fit there anyways"*).
+- **OPEN — the Novgorod collision (raised, not ruled).** With the others able to pay ★, a flat
+  points-prize at 3★ makes **Bergen strictly dominate Novgorod**: same-or-better payout, a
+  lower minimum (2 vs 3), the richest majority (9/5/2), *and* an optional specialist. Novgorod's
+  +2★/die is flat, not per-pip. Resolutions: the others pay **2★** and **Novgorod goes to +3★**
+  (the port that only pays money, and pays the most), or the others pay **1★**. Needs a ruling
+  before the letter is built.
+
+**COMPONENT-STATE VIOLATION — the Manifest claim (designer-confirmed 2026-08-23):** a card
+prints three demand lines, each claimable **once per voyage**, and **nothing physical marks a
+spent line.** With a 3-cask hull the table tracks spent lines in its head — the engine keeps it
+in a UI-only `used[]`. That breaks the hard line (ruled 2026-07-12). Designer verdict: the
+Order tiles had the same disease from the other end (*"we forgot to claim the bonuses much of
+the game"*) and the whole layer — **Orders / Manifests / Invitations — reads as bolted on
+rather than integrated**, so it gets its own pass later, not a patch now. The named direction:
+connect a claim to something the game already does (the ⚜-to-sell-a-Ready-cask-to-a-brewhall
+thread).
+
+**THE DEPTH LANE (v5.6, built 2026-08-23) — the oracle's blind spot is closed.** The PATHWAYS
+lanes were majority · lifter · builder · breadth: **a seat for going wide and none for its
+opposite**, so no lane read on record could speak to *"an equally balanced point return on
+going all in on 1 or 2 beers."* `depth` is breadth's mirror (re-brew and re-ship the same beer;
+prop its own marker; `DEPTH_CAP=2` ⚙ stops it opening a third style, or the free warm Gruit
+drifts it back to breadth and the lane measures nothing). `PTIER=` reads the lanes at any tier.
+
 **THE LIVE ONE — PACE, now that the family actually fires:**
 - v5.5 shipped with three of eight Venture faces **dead** (`stopAvail` fell through on
   `vagel`/`vbrew2`/`vlift`). Fixed on the v5.6 re-read — and the corrected read is that the

@@ -107,7 +107,8 @@ var __commPlace=commPlace;commPlace=function(slot){var d=UI.comm;var sn=(d&&d.id
   if(__uOn()&&sn&&!had&&S.slots[slot]&&S.slots[slot].type==='ship'){
     __U['comm_'+sn.ship]=(__U['comm_'+sn.ship]||0)+1;__U.commG+=(g0-(p?p.grain:0));}   // grain delta inside commPlace = the fee actually paid (Shipwright waivers read 0)
   return r;};
-function __runGame(n){
+function __runGame(n,__POFF){
+  __POFF=__POFF||0;
   __uReset();
   EXPANSION=__EXP;JOPEN=__JOP;HALLEXP=__HALL;OVERLAND=false;   // v4.14/v4.15: the toggles ride env (default off — the base gate is unchanged)
   // v4.17 Tasting dials — override ONLY when the env var is set (a ruled default is never
@@ -130,7 +131,9 @@ function __runGame(n){
   if(__BMIN!=='')BOURSE_MIN=parseInt(__BMIN,10);   // v5.3 ⚙: the Bourse track ends — override ONLY when set
   if(__BMAX!=='')BOURSE_MAX=parseInt(__BMAX,10);
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
-  S.players.forEach(function(p,i){p.ai=__PERSONAS?{tier:'trader',persona:AI_PERSONAS[i%AI_PERSONAS.length]}:{tier:__TIER};p.presPool=PRES_POOL;});
+  // v5.6: the lane roster is now LONGER than a table (5 lanes, 2-4 seats), so a fixed i%len
+  // would never seat the tail lanes. Rotate the offset per game — every lane gets equal seat time.
+  S.players.forEach(function(p,i){p.ai=__PERSONAS?{tier:__PTIER,persona:AI_PERSONAS[(i+__POFF)%AI_PERSONAS.length]}:{tier:__TIER};p.presPool=PRES_POOL;});
   var guard=0;
   while(!S.over){
     aiStep();
@@ -141,6 +144,9 @@ function __runGame(n){
   S.players.forEach(function(p){p.delivered.forEach(function(d){byDest[d.dest]=(byDest[d.dest]||0)+1;});});
   return {round:S.turn,trigger:S.endReason||'?',sailed:S.sailed,
     winSeat:rows[0].p.id,winPersona:(rows[0].p.ai&&rows[0].p.ai.persona)||null,personas:S.players.map(function(q){return (q.ai&&q.ai.persona)||null;}),
+    laneSeats:S.players.map(function(q){var sc=scorePlayer(q);
+      return {ps:(q.ai&&q.ai.persona)||null,total:sc.total,flight:flightBeers(q),deliv:(q.delivered||[]).length,fl:sc.flight,
+        styles:Object.keys(q.shipped||{}).sort().join('+')};}),
     winTotal:rows[0].sc.total,secondTotal:rows[1]?rows[1].sc.total:0,
     bldgPips:S.players.reduce(function(a,p){return a+(scorePlayer(p).bldg||0);},0)/S.players.length,
     stapleStars:S.players.reduce(function(a,p){return a+(p.bankSt||0);},0)/S.players.length,   // v5.2: Staple House + Staple Rights ★
@@ -160,7 +166,7 @@ var __RESULTS={};
   __RESULTS[n]=[];
   for(var g=0;g<__N;g++){
     var r;
-    try{r=__runGame(n);}catch(e){r={error:String(e&&e.stack||e).slice(0,400),round:(typeof S!=='undefined'&&S)?S.turn:0};}
+    try{r=__runGame(n,g);}catch(e){r={error:String(e&&e.stack||e).slice(0,400),round:(typeof S!=='undefined'&&S)?S.turn:0};}
     __RESULTS[n].push(r);
   }
 });
@@ -197,6 +203,7 @@ const ctx = {
   __BMAX:process.env.BMAX!=null?process.env.BMAX:'',
   __POOL:parseInt(process.env.POOL||'0',10),
   __PERSONAS:PERSONAS,
+  __PTIER:process.env.PTIER||'trader',   // v5.6: read the lanes at a chosen tier (PTIER=guildmaster|cellarmaster)
   __GMS:parseInt(process.env.GUILD_MS||'0',10),
   __JIT:parseFloat(process.env.JITTER||'0'),
   __CMS:parseInt(process.env.CELLAR_MS||'0',10),
@@ -251,9 +258,18 @@ let anyErr=0;
     if(us.pours>0)   // v4.17 TASTINGS dashboard
       console.log(`v4.17 tastings/game: pours ${fmt(us.pours)} · benches convened ${fmt(us.judged)} · door-slams ${fmt(us.slams)} · invites earned ${fmt(us.invE)} / spent ${fmt(us.invS)}`);
   }
-  if(PERSONAS){const pw={},pn={};
-    ok.forEach(r=>{(r.personas||[]).forEach(ps=>{if(ps)pn[ps]=(pn[ps]||0)+1;});if(r.winPersona)pw[r.winPersona]=(pw[r.winPersona]||0)+1;});
-    console.log('PATHWAYS win-rate by lane: '+Object.keys(pn).map(k=>k+' '+pct(pw[k]||0,pn[k])).join(' · ')+'  (seats: '+Object.keys(pn).map(k=>pn[k]).join('/')+')');}
+  if(PERSONAS){const pw={},pn={},pt={},pf={},pd={},pfl={};
+    ok.forEach(r=>{(r.personas||[]).forEach(ps=>{if(ps)pn[ps]=(pn[ps]||0)+1;});
+      if(r.winPersona)pw[r.winPersona]=(pw[r.winPersona]||0)+1;
+      (r.laneSeats||[]).forEach(L=>{if(!L.ps)return;
+        pt[L.ps]=(pt[L.ps]||0)+L.total;pf[L.ps]=(pf[L.ps]||0)+L.flight;
+        pd[L.ps]=(pd[L.ps]||0)+L.deliv;pfl[L.ps]=(pfl[L.ps]||0)+L.fl;});});
+    const lanes=Object.keys(pn);
+    const st={};ok.forEach(r=>(r.laneSeats||[]).forEach(L=>{if(L.ps!=='depth')return;st[L.styles||'(none)']=(st[L.styles||'(none)']||0)+1;}));
+    const top=Object.keys(st).sort((x,y)=>st[y]-st[x]).slice(0,5);
+    console.log('PATHWAYS win-rate by lane: '+lanes.map(k=>k+' '+pct(pw[k]||0,pn[k])).join(' · ')+'  (seats: '+lanes.map(k=>pn[k]).join('/')+')');
+    console.log('  per-lane avg: '+lanes.map(k=>k+' \u2605'+fmt((pt[k]||0)/pn[k])+' (flight '+fmt((pf[k]||0)/pn[k])+' beers = '+fmt((pfl[k]||0)/pn[k])+'\u2605 \u00b7 '+fmt((pd[k]||0)/pn[k])+' deliveries)').join(' \u00b7 '));
+    if(top.length)console.log('  what DEPTH committed to: '+top.map(k=>k+' \u00d7'+st[k]).join(' \u00b7 '));}
 });
 console.log(anyErr? `\n*** ${anyErr} ERRORS — GATE FAILED ***` : '\nGATE: 0 crashes / 0 deadlocks.');
 process.exit(anyErr?1:0);
