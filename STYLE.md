@@ -39,8 +39,9 @@ governed here.
 | theme | n | One of the Venture hand's four: **brew · age · die · points** — one tile each, so only one side of a theme is ever facing (v5.5) | — | themes | Yes | ~~suit~~ · ~~track~~ | ○ v5.5 |
 | the Ladder | n | RETIRED at v5.3 (the open ground replaced it) — historical: the v5.2/v5.2b build-order rule | — | — | — | — | ✕ v5.3 |
 | the open ground | n | The v5.3 placement rule: an L1 takes any open slot; wharf full → it may replace a Public Work; never another player's L1/L2 | — | — | Yes | — | ○ v5.3 |
-| the Bourse | n | The beer-value market (v5.3): one track (−1…+3 ⚙), a price marker per in-play beer except Gruit & Jopenbier; a delivered cask scores die + marker | trending-up | — | Yes | ~~market~~ (the Market is the station) · ~~beer market~~ in component text | ○ v5.3 |
-| price marker | n | A beer's marker on the Bourse strip | — | price markers | Yes | ~~value marker~~ | ○ v5.3 |
+| the Bourse | n | The beer-value market: one track (−1…+3 ⚙) **printed on the Destinations board (v5.6)**, a price marker per in-play beer except Gruit & Jopenbier; a delivered cask scores die + marker. **It only falls on its own** | trending-up | — | Yes | ~~market~~ (the Market is the station) · ~~beer market~~ in component text | ○ v5.3 |
+| the glut | n | The v5.6 rule: after a sail resolves, **each beer TYPE that was aboard steps its marker down one** — once per beer, never per cask. Prose noun; no component prints the word | — | — | No | ~~the crash~~ (the retired brew rule) · ~~decay~~ | ○ v5.6 |
+| price marker | n | A beer's marker on the Bourse track. **Colour-matched to its beer and printed with the beer's NAME** (v5.6); every marker starts at the top | — | price markers | Yes | ~~value marker~~ · ~~beer token~~ in rules copy | ○ v5.3 |
 | shift | v | Move a price marker (±1 or ±2) — Bergen's prize + the Ventures' public lines | trending-up | shifts | Yes | ~~manipulate~~ on components (rules prose may say the market is manipulated) | ○ v5.3 |
 | public line | n | The top line of a Venture face — fires for whoever activates a line through the slot | — | public lines | Yes | — | ○ v5.3 |
 | owner line | n | The ringed private line of a Venture face — the owner alone (the owner collects both lines) | — | — | Yes | ~~private action~~ | ○ v5.3 |
@@ -53,7 +54,7 @@ governed here.
 | alternate action | n | The lesser action a station fires as the line's OTHER station (v5.0) | — | — | No | ~~alt~~ (allowed as the chip label only) | ● |
 | Manifest | n | The demand card riding a non-Bruges Ship (v5.0): three **demand lines** (a beer/tier · a die-as-parked · a combo → ★); a delivered cask may claim ONE line it satisfies — each line once per voyage; the card returns under the deck at sail (hall mode: the claim also pays an ⚜ Invitation) | contract | Manifests | Yes | ~~Order~~ (the tile retired at v5.0; lineage ~~lading~~ → ~~Contract~~ → ~~Order~~ → Manifest), ~~goal~~ | ● |
 | presence | n | Your parked dice at a Kontor | map-pin | — | No | ~~bump~~ (the act is "place presence") | ● |
-| prize | n | What a Kontor pays the cask's owner on delivery | — | prizes | No | ~~benefit~~, ~~reward~~ | ● |
+| prize | n | What a Kontor pays the cask's owner on delivery — **always the port's thing OR ★, the owner's choice per cask (v5.6)**. There is no consolation | — | prizes | No | ~~benefit~~, ~~reward~~, ~~fallback~~ (retired at v5.6) | ● |
 | fee | n | The wharf price printed on an acquirable item | — | fees | No | ~~cost~~ (generic ok), ~~price~~ | ● |
 | goods | n | Grain + hops, collectively | coins | — | No | ~~resources~~ | ● |
 | display | n | A face-up row components are taken from (Ships 4 · buildings 4 · Specialists 4) | — | displays | No | ~~pool~~ (face-down decks and general stock = "supply") | ● |

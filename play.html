@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v5.5 “Four Hands”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v5.6 “The Glut”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -660,7 +660,7 @@ const ICONTIP={
   ship:'Harbor — COMMISSION: pay the Ship’s printed fee (Skute 2G · Cog 1G · Hulk free), place it on a slot without a Ship, and you may load 1 Ready cask onto it at once. As the alternate: LOAD 1 Ready cask onto any docked Ship.',
   anchor:'Slot — one of the 8 shared perimeter spaces; seats a building and/or a ship (never casks). Its line-stop fires the building action and/or a load of the ship.',
   sailboat:'Ship — a neutral tile bound for its printed Kontor (Skute 1 · Cog 2 · Hulk 3 berths); load your own Ready casks; it sails the moment it is full.',
-  landmark:'Kontor — a delivery port: boarding needs READY + the minimum (die N+, read as the cask boards) · value = the parked die (Novgorod: +2★ on top) · a prize · a majority.',
+  landmark:'Kontor — a delivery port: boarding needs READY + the minimum (die N+, read as the cask boards) · value = the parked die + its beer’s Bourse marker (Novgorod: +3★ on top) · a prize — the port’s thing OR ★, your choice per cask · a majority.',
   'building-2':'Buildings — TWO families. PUBLIC WORKS (brown): die-less setup furniture — 3–4 stand at random from setup, passive on their slot’s traffic, for anyone, free; nobody builds one. VENTURES (your colour ring): the family you build — a public line for the whole wharf over the owner’s ringed line.',
   'scroll-text':'Recipe — permission to brew a beer. The card sits on the COLLECTED side of your board until that beer’s first cask LOADS onto a Ship — then it moves to the COMPLETED side: the completed cards ARE the Flight. The printed fee (H = Q−3 — Q3s free · Mumme 1H · Bock 2H) applies at EVERY channel — Bruges grants the pick, never the waiver.',
   wrench:'Specialist — a private tile (2 seats): free at Bergen; its printed fee via the hire load bonus. Never two of a kind. The display refills at the END of the turn.',
@@ -775,7 +775,7 @@ const DEST={
   bruges  :{name:'Bruges',  gate:1, maj:[4,2,0], benefit:'recipe',   kontor:true, role:'Hub - the on-ramp: recipe ACCESS with every delivery (pay its H fee)'},
   london  :{name:'London',  gate:2, maj:[5,3,1], benefit:'building', kontor:true, role:'Steelyard - the engine: a free Venture from your hand, placed at once (the fee waived)'},
   bergen  :{name:'Bergen',  gate:2, maj:[9,5,2], benefit:'spec',     kontor:true, role:'Bryggen - the crews & the market: a free Specialist (no seat? 2 goods) + shift any Bourse marker ±1 + THE rich majority'},
-  novgorod:{name:'Novgorod',gate:3, maj:[8,5,2], vbonus:2,           kontor:true, role:'Long Haul - the export run: die 3+ boards (the export band); every delivered die scores +2★ on top (5-8)'},
+  novgorod:{name:'Novgorod',gate:3, maj:[8,5,2], vbonus:3,           kontor:true, role:'Long Haul - the export run: die 3+ boards (the export band); every delivered die scores +3★ on top — the port that only pays money, and pays the most'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
 const DESTS=KONTORE.slice();
@@ -848,8 +848,8 @@ function manPick(li){const b=(UI.pendingMan||[])[0];if(!b)return;const lp=S.play
   UI.pendingMan.shift();const rt=UI.goodsRt||'stops';UI.goodsRt=null;afterSail(rt);maybeRunAI();}
 
 // ---- THE FLIGHT: distinct beers SHIPPED (the cards on the board's COMPLETED side), (beers-1)^2, min 3 ----
-const FLIGHT_MIN=3;
-const FLIGHT_PTS={1:0,2:0,3:4,4:9,5:16,6:25};
+let FLIGHT_MIN=3;                                   // ⚙ sim hook FLIGHT=off zeroes the ladder
+let FLIGHT_PTS={1:0,2:0,3:4,4:9,5:16,6:25};        // ⚙ (n−1)², min 3 — the breadth bonus
 function flightTypes(){const t=['gruit','hopped'].concat((S.exports||[]).slice().sort((a,b)=>STYLES[a].q-STYLES[b].q));
   if(S.jopen)t.push('jopenbier');return t;}   // the capstone is a 6th type when its toggle is on (6 shipped → 25)
 // the Flight counts distinct beers SHIPPED (brewed AND loaded onto a hull) — the recipe card
@@ -1058,14 +1058,32 @@ const CELLAR_POOL=3;   // ⚙ the Cellar primary — aging routes through the Ce
 // loads) are untouched.
 // Market 3/1 · Brewhouse search/top-tile · Cellar Age 3/1 · Harbor commission / Load-1-any.
 let SRC_PRIMARY=3;  // ⚙ the Market's PRIMARY Source — sim hook SRCN
-// THE BOURSE — the beer-value market. ONE track, one marker per tracked beer (every
-// in-play beer EXCEPT Gruit and Jopenbier). A delivered cask scores DIE + TRACK (the die
-// stays the cask — gates/presence/majorities unchanged). BULK RISE THEN SCORE: as a Ship
-// arrives, each tracked beer's marker rises +1 per cask of it aboard, THEN every cask
-// scores at the new value. A BREW of a tracked beer drops its marker 1 (the supply crash).
-// Shifts ride Bergen's prize, the Ventures' public lines and the toll bench — never a new
-// action.
-let BOURSE_MIN=-1,BOURSE_MAX=3;   // ⚙ the track's printed ends (start 0) — sim hooks BMIN/BMAX
+// THE BOURSE — the beer-value market (v5.6 THE GLUT, designer-ruled). ONE track, one marker
+// per tracked beer (every in-play beer EXCEPT Gruit and Jopenbier). A delivered cask scores
+// DIE + TRACK (the die stays the cask — gates/presence/majorities unchanged).
+//
+// THE MARKET ONLY FALLS ON ITS OWN. Every marker STARTS AT THE TOP and walks down:
+//   · a SAIL steps each beer TYPE aboard down ONE — regardless of how many casks of it ride
+//     (the Lisboa rule: the event happened, move one; no counting at the table). The casks
+//     SCORE FIRST, then the market absorbs the shipment.
+//   · the BREW CRASH IS RETIRED — a brew two turns before the sale was noise, not signal.
+//   · the ONLY way up is a SHIFT, and shifts belong to BUILDINGS and PRIVATE (Venture)
+//     ACTIONS — plus Bergen's prize. Holding a price up is an engine you build, not a thing
+//     that happens to you.
+// So: first to market cashes the price and burns it; the neglected beer stays rich; and a
+// specialist who wants to keep selling one beer has to out-pump their own decay.
+let BOURSE_MIN=-1,BOURSE_MAX=3;   // ⚙ the track's printed ends — sim hooks BMIN/BMAX
+let BOURSE_START=3;               // ⚙ every marker opens at the TOP and only decays from there
+// EVERY PRIZE IS "THE PORT'S THING **OR** ★" (v5.6, designer-ruled) — per cask, exclusive, and
+// always a real choice. The 2-goods consolation RETIRES: *"we don't need a fallback as the
+// points are the fallback."* A full seat-bench never punishes you again; it converts Bergen
+// into a points port. A 2-cask Bergen hull can take the specialist on one and the ★ on the
+// other, both dice parking for the majority.
+// Novgorod is the exception that proves it: it offers NO thing, and pays +3★ per delivered die
+// (v5.6: was +2) — enough to stay the richest port per cask even though Bergen has a lower
+// minimum and the richer majority. Without that bump Bergen strictly dominated it.
+const PRIZE_PTS=2;   // ⚙ the ★ a cask may take instead of its port's prize
+const BOURSE_SAIL_STEP=-1;        // ⚙ one step per beer TYPE per sail (never per cask)
 function setupWorksN(n){return n<=2?3:4;}   // ⚙ the Public Works ARE the start of the game — 3 at 2p · 4 at 3p+, the rest to the box
 let ALT_SOURCE=1;   // ⚙ the Market's alternate: Source 1 (primary SRC_PRIMARY) — sim hook ALTSRC
 let ALT_AGE=1;      // ⚙ the Cellar's alternate: Age 1 (primary 3) — sim hook ALTAGE
@@ -1108,7 +1126,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v55';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
+const KEY='hanse-v56';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1116,7 +1134,7 @@ const KEY='hanse-v55';  // the live build's save key — bump it on any rules ch
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v5.5 “Four Hands” · '+KEY;
+const APP_VERSION='v5.6 “The Glut” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -1181,7 +1199,7 @@ function freshState(n,names){
    inGame.forEach(b=>{st.piles[b]=shuffle(caskCensus(b));});
    for(let i=0;i<n;i++)st.piles.gruit.pop();
    // THE BOURSE: one marker per in-play beer except Gruit & Jopenbier, all at 0.
-   st.bourse={};inGame.filter(b=>b!=='gruit'&&b!=='jopenbier').forEach(b=>{st.bourse[b]=0;});}
+   st.bourse={};inGame.filter(b=>b!=='gruit'&&b!=='jopenbier').forEach(b=>{st.bourse[b]=BOURSE_START;});}
   // NO building deck, NO display — the Public Works ARE the start of the game
   // (setupWorksN drawn at random below, placed on random slots, die-less and neutral; the
   // rest to the box). Ventures are the only family players build. buildDeck/buildDisplay
@@ -1818,8 +1836,7 @@ function brewCommit(style,verb){const p=cur();
   p.vessels[vi]={style,q:STYLES[style].q,die,act};p._brews=(p._brews||0)+1;
   log(p.name+' '+LU('flask-conical')+' brews '+LU('beer')+' <b>'+STYLES[style].name+'</b> — a tray die starts at <b>'+die+'</b>'+(die>=STYLES[style].q?' ('+LU('check')+' <b>READY at brew</b>)':' (Ready at '+STYLES[style].q+')')+' · the tile’s load bonus: <b>'+(P_ACT_TXT[act]||act)+'</b>.',true);
   markBrewed(p,style);checkDiceEnd();
-  if(tracked(style)){const d=bourseShift(style,-1);   // a brew floods the market — the marker slips 1 (floor)
-    if(d&&!aiSimulating)log('↳ the bourse: '+LU('beer')+styleShort(style)+' slips to <b>'+bourseFmt(S.bourse[style])+'</b> (new supply).');}
+  // (v5.6: the BREW CRASH is retired — the market moves on the SALE, where the decision is.)
   UI.brew=null;UI.bverb=null;
   resume(rt);   // Zerbster's free Gruit rides its LOAD bonus (zgyle), never a brew-time prompt
 }
@@ -2225,17 +2242,20 @@ function sailShip(slot,creditId){const t=S.slots[slot];
     (UI.manResQ=UI.manResQ||[]).push(grp);manGi=UI.manResQ.length-1;
     S.manifestDeck.push(t.man);t.man=null;
   }
-  // THE BOURSE — BULK RISE THEN SCORE: as the Ship arrives, each tracked beer's
-  // marker rises +1 per cask of it aboard — THEN every cask scores at the NEW value.
-  {const rise={};t.load.forEach(L=>{if(tracked(L.style))rise[L.style]=(rise[L.style]||0)+1;});
-   Object.keys(rise).forEach(b=>{const d=bourseShift(b,rise[b]);
-     if(d)log('↳ the bourse: '+LU('beer')+styleShort(b)+' rises to <b>'+bourseFmt(S.bourse[b])+'</b> ('+rise[b]+' cask'+(rise[b]===1?'':'s')+' land'+(rise[b]===1?'s':'')+').');});}
+  // THE BOURSE (v5.6 THE GLUT) — the casks SCORE at the printed marker (below), and the
+  // market absorbs the shipment AFTERWARDS: ONE step down per beer TYPE aboard, however many
+  // casks of it rode. Deferred until the deliveries resolve so the seller cashes the price
+  // they could read on the board before they loaded.
+  const glut=[];{const seen={};t.load.forEach(L=>{if(tracked(L.style)&&!seen[L.style]){seen[L.style]=1;glut.push(L.style);}});}
   const wh=bKeyAt(slot)==='weighhouse';   // a cask delivered off the Weigh House's Ship may claim TWO lines
   t.load.forEach(L=>{const owner=S.players[L.owner];deliverCask(owner,L,t.dest);grantPrize(owner,t.dest);
     if(manGi!=null){const face=Math.max(1,Math.min(6,L.die||1));const grp=UI.manResQ[manGi];
       if(grp.lines.some(l=>manLineOK(l,L.style,L.q,face))){
         (UI.pendingMan=UI.pendingMan||[]).push({pid:L.owner,style:L.style,q:L.q,die:face,gi:manGi});
         if(wh&&grp.lines.length>1)(UI.pendingMan=UI.pendingMan||[]).push({pid:L.owner,style:L.style,q:L.q,die:face,gi:manGi,second:true,wh:slot});}}});
+  // ...and NOW the glut: one step per beer type, the sale having already been paid.
+  glut.forEach(b=>{const d=bourseShift(b,BOURSE_SAIL_STEP);
+    if(d&&!aiSimulating)log('↳ the '+LU('bourse')+' <b>bourse</b>: the market absorbs the shipment — '+LU('beer')+styleShort(b)+' settles to <b>'+bourseFmt(S.bourse[b])+'</b>.');});
   const paidSC={};t.load.forEach(L=>{const o=S.players[L.owner];   // Supercargo: a hull sailing YOUR cask on a RIVAL's turn pays freight
     if(o&&o.id!==S.active&&hasUpgrade(o,'supercargo')&&!paidSC[o.id]){paidSC[o.id]=1;
       log('↳ '+o.name+'’s '+LU('wrench')+' <b>Supercargo</b> collects the freight — the Ship sailed on a rival’s clock.');gain(o,1,1);}});
@@ -2278,6 +2298,10 @@ function deliverCask(lp,L,dest){
   pileReturn(L.style,L.act);   // the delivered cask's tile returns to its stack (the bottom)
   fire('deliver',{lp,L,dest});
 }
+// take the ★ instead of the port's thing — the universal fallback AND a first-class choice
+function prizeStars(lp,dest,why){
+  lp.bank+=PRIZE_PTS;lp.bankP=(lp.bankP||0)+PRIZE_PTS;
+  if(!aiSimulating)log('↳ '+lp.name+' takes '+DEST[dest].name+'’s prize as <b>+'+PRIZE_PTS+'★</b>'+(why?' <span class="note">('+why+')</span>':'')+'.');}
 function grantPrize(lp,dest){
   const ben=DEST[dest].benefit;
   if(dest==='bergen')(UI.pendingShift=UI.pendingShift||[]).push({pid:lp.id});   // Bergen = the specialist + ADJUST THE MARKET BY 1
@@ -2374,21 +2398,24 @@ function afterSail(rt){
     // the fee (H = Q−3) applies at Bruges too — the prize is the ACCESS, never the waiver
     // (the Guild Scholar's waiver rides recipeFeeFor — his Bruges pick is free)
     const opts=recipeGainable(lp).filter(x=>canPay(lp,recipeFeeFor(lp,x)));
-    if(!opts.length){UI.pendingRecipe.shift();log('↳ '+lp.name+' — no recipe in reach (held, or its H fee unpaid) — the Bruges prize pays 2 goods.');gain(lp,1,1);afterSail(rt);return;}
+    if(!opts.length){UI.pendingRecipe.shift();prizeStars(lp,b.dest,'no recipe in reach');afterSail(rt);return;}
     if(lp.ai){UI.pendingRecipe.shift();const jd=x=>(x==='jopenbier'&&lp.hops<6?3:0);   // greedy tiers don't overreach for the capstone hops-poor
-      const pick=opts.sort((a,b)=>(STYLES[b].q-jd(b))-(STYLES[a].q-jd(a)))[0];pay(lp,recipeFeeFor(lp,pick));lp.recipes.push(pick);
+      const pick=opts.sort((a,b2)=>(STYLES[b2].q-jd(b2))-(STYLES[a].q-jd(a)))[0];
+      if(aiRecipeVal(lp,pick)<PRIZE_PTS){prizeStars(lp,b.dest,'the ★ beat the card');afterSail(rt);return;}   // the ★ is a real option, not a fallback
+      pay(lp,recipeFeeFor(lp,pick));lp.recipes.push(pick);
       log('↳ '+lp.name+' takes the '+LU('scroll-text')+'<b>'+STYLES[pick].name+'</b> recipe (the Bruges prize · '+costStr(recipeFeeFor(lp,pick))+').');afterSail(rt);return;}
     UI.sub='precipe';UI.goodsRt=rt;render();return;}
   if((UI.pendingBenefits||[]).length){const b=UI.pendingBenefits[0];const lp=S.players[b.pid];
     const canPub=(S.buildDisplay||[]).length&&bldgTargets(lp).length&&(!S.presEnd||trayDice(lp)>0);
-    if(!canPub&&!canVentureL1(lp)&&!canVentureL2(lp)&&!canVentureFlip(lp)){   // an untakeable London prize is simply FORFEIT — no goods fallback
-      UI.pendingBenefits.shift();log('↳ '+lp.name+' — the London prize can’t be taken (no Venture playable) — it is forfeit.');afterSail(rt);return;}
+    if(!canPub&&!canVentureL1(lp)&&!canVentureL2(lp)&&!canVentureFlip(lp)){   // v5.6: never forfeit — the ★ is the fallback
+      UI.pendingBenefits.shift();prizeStars(lp,b.dest,'no Venture playable');afterSail(rt);return;}
     if(lp.ai){UI.pendingBenefits.shift();aiBenefitAuto(lp,b.dest);afterSail(rt);return;}
     UI.sub='benefit';UI.benefit={returnTo:rt};render();return;}
   if((UI.pendingSpec||[]).length){const b=UI.pendingSpec[0];const lp=S.players[b.pid];
     const el=hireable(lp);
-    if(!el.length){UI.pendingSpec.shift();log('↳ '+lp.name+' — no specialist to seat (seats full, or none eligible) — the Bergen prize pays <b>2 goods</b> (1 grain + 1 hop — the printed fallback; the seat race is the point).');gain(lp,1,1);afterSail(rt);return;}
-    if(lp.ai){UI.pendingSpec.shift();const k=el.slice().sort((a,b)=>aiSpecVal(lp,b)-aiSpecVal(lp,a))[0];
+    if(!el.length){UI.pendingSpec.shift();prizeStars(lp,b.dest,'no seat to fill');afterSail(rt);return;}
+    if(lp.ai){UI.pendingSpec.shift();const k=el.slice().sort((a,b2)=>aiSpecVal(lp,b2)-aiSpecVal(lp,a))[0];
+      if(aiSpecVal(lp,k)<PRIZE_PTS){prizeStars(lp,b.dest,'the ★ beat the seat');afterSail(rt);return;}   // a thin bench is worth less than the points
       grantUpgrade(lp,k);takeImpFromDisplay(k);log('↳ '+lp.name+' seats the '+LU('wrench')+'<b>'+upName(k)+'</b> (the Bergen prize).');afterSail(rt);return;}
     UI.sub='bspec';UI.goodsRt=rt;render();return;}
   if((UI.pendingShift||[]).length){const b=UI.pendingShift[0];const lp=S.players[b.pid];   // Bergen's market rider — shift any marker ±1
@@ -2423,16 +2450,21 @@ function afterSail(rt){
   resume(rt);
 }
 function precipePick(style){const b=(UI.pendingRecipe||[])[0];if(!b)return;const lp=S.players[b.pid];
-  if(style&&recipeGainable(lp).includes(style)&&canPay(lp,recipeFeeFor(lp,style))){snapshot();
+  snapshot();
+  if(style&&recipeGainable(lp).includes(style)&&canPay(lp,recipeFeeFor(lp,style))){
     pay(lp,recipeFeeFor(lp,style));lp.recipes.push(style);   // the fee applies at Bruges too (Scholar-waived)
     log('↳ '+lp.name+' takes the '+LU('scroll-text')+'<b>'+STYLES[style].name+'</b> recipe (the Bruges prize · '+costStr(recipeFeeFor(lp,style))+').',true);}
+  else prizeStars(lp,b.dest);   // v5.6: declining the card TAKES THE ★ — never nothing
   UI.pendingRecipe.shift();const rt=UI.goodsRt||'stops';UI.goodsRt=null;afterSail(rt);maybeRunAI();}
 function bspecPick(key){const b=(UI.pendingSpec||[])[0];if(!b)return;const lp=S.players[b.pid];
-  if(key&&hireable(lp).includes(key)){snapshot();grantUpgrade(lp,key);takeImpFromDisplay(key);
+  snapshot();
+  if(key&&hireable(lp).includes(key)){grantUpgrade(lp,key);takeImpFromDisplay(key);
     log('↳ '+lp.name+' seats the '+LU('wrench')+'<b>'+upName(key)+'</b> Specialist (the Bergen prize).',true);}
+  else prizeStars(lp,b.dest);   // v5.6: declining the seat TAKES THE ★
   UI.pendingSpec.shift();const rt=UI.goodsRt||'stops';UI.goodsRt=null;afterSail(rt);maybeRunAI();}
 function benefitPick(key){const b=UI.pendingBenefits[0];
   if(!key||!(S.buildDisplay||[]).includes(key)||!bldgTargets(S.players[b.pid]).length){
+    snapshot();prizeStars(S.players[b.pid],b.dest);   // v5.6: declining the Venture TAKES THE ★
     UI.pendingBenefits.shift();const rt=UI.benefit.returnTo;UI.benefit=null;afterSail(rt);maybeRunAI();return;}
   snapshot();takeBuildFromDisplay(key);
   UI.pendingBenefits.shift();const rt=UI.benefit.returnTo;UI.benefit=null;UI.afterRt=rt;
@@ -2553,10 +2585,11 @@ function renderScore(){
   dr+='<tr><td colspan="3"><b>Deliveries</b></td><td '+R+'><b>'+sc.deliv+'★</b></td></tr>';
   // 2 · the bank — Manifest claims · Staple premiums · Cooperage wharfage · Tastings · bumps
   // (the tracked split; presence is the remainder, so every tracked bucket must subtract here)
-  const bm=p.bankM||0,bl=p.bankL||0,bs=p.bankSt||0,bw=p.bankW||0,bh=p.bankH||0,bp=Math.max(0,(p.bank||0)-bm-bl-bs-bw-bh);
+  const bm=p.bankM||0,bl=p.bankL||0,bs=p.bankSt||0,bw=p.bankW||0,bh=p.bankH||0,bz=p.bankP||0,bp=Math.max(0,(p.bank||0)-bm-bl-bs-bw-bh-bz);
   const br=(bm?'<tr><td>'+LU('building-2')+' Departed buildings</td><td>the die’s pips, scored as it left play</td><td '+R+'><b>'+bm+'★</b></td></tr>':'')
     +'<tr><td>'+LU('contract')+' Manifest demands</td><td>'+(p.manLines||0)+' line'+((p.manLines||0)===1?'':'s')+' claimed'+(hasUpgrade(p,'chronicler')?' · the Chronicler +'+CHRON_MAN+'★ each':'')+'</td><td '+R+'><b>'+bl+'★</b></td></tr>'
     +(bs?'<tr><td>'+LU('landmark')+' Staple premiums</td><td>+'+STAPLE_PTS+'★ per cask off a matching sail · Staple Rights +'+VSTAR_PTS+'★ per own cask</td><td '+R+'><b>'+bs+'★</b></td></tr>':'')
+    +(bz?'<tr><td>'+LU('landmark')+' Kontor prizes taken as ★</td><td>+'+PRIZE_PTS+'★ per cask that declined its port’s thing</td><td '+R+'><b>'+bz+'★</b></td></tr>':'')
     +(bw?'<tr><td>'+LU('package')+' Cooperage wharfage</td><td>+1★ per cask loaded there</td><td '+R+'><b>'+bw+'★</b></td></tr>':'')
     +(bh?'<tr><td>⚜ Tastings judged</td><td>1st/2nd/3rd ★, scored as each bench convened</td><td '+R+'><b>'+bh+'★</b></td></tr>':'')
     +'<tr><td>'+LU('map-pin')+' Placed presence</td><td>1★ per face-1 die (a Town Crier adds +2★ each)</td><td '+R+'><b>'+bp+'★</b></td></tr>'
@@ -2888,6 +2921,15 @@ function aiVerbValue(p,act){
   if(act==='assay'){if(!canPay(p,ASSAY_COST))return 0;const m=maturingInVessels(p);if(!m.length)return 0;   // v5.5: 2H certifies EVERY maturing cask
     return 0.8+0.8*m.reduce((t,o)=>t+(o.c.q-o.c.die),0);}
   return 0.2;}
+// price a single recipe against the prize ★ (v5.6) — a card you cannot brew, or a beer you
+// already ship, is worth less than the points. In the same rough ★ units as aiSpecVal.
+function aiRecipeVal(p,st){if(!st||!STYLES[st])return 0;
+  if((p.recipes||[]).includes(st))return 0;
+  let v=1.4+STYLES[st].q*0.5;                       // a higher beer is worth more of the trip
+  if(!((p.shipped||{})[st]))v+=0.35*aiFlightMarg(p)*aiPW(p,'breadth');   // the Flight step it opens
+  if(aiDeep(p))v*=0.3;                               // a committed specialist does not want a new card
+  if(aiLateGame(p))v*=0.4;                           // late, a card cannot pay itself back
+  return v-aiFeeCost(recipeFeeFor(p,st));}
 // specialist values ⚙ — one table for the hire verb and the Bergen prize
 function aiSpecVal(p,k){
   // probe-taught values: base ≈ the measured start-arm lift (fees netted by the callers);
@@ -3340,7 +3382,7 @@ function renderAid(){
   const row=(icon,lead,sub)=>'<div class="arow">'+ic(icon)+'<div class="atx"><b>'+lead+'</b>'+(sub?'<span class="sub">'+sub+'</span>':'')+'</div></div>';
   const stp=(icon,cap)=>'<div class="stp">'+ic(icon)+'<span>'+cap+'</span></div>';
   const ARR='<span class="arr">→</span>';
-  const PRIZE={recipe:'recipe · at fee',building:'Venture · fee waived',spec:'Specialist · free + bourse ±1'};
+  const PRIZE={recipe:'recipe (at fee) or '+PRIZE_PTS+'★',building:'Venture (fee waived) or '+PRIZE_PTS+'★',spec:'Specialist (free) or '+PRIZE_PTS+'★'};
   const dests=KONTORE.map(d=>{const D=DEST[d];
     return '<tr><td class="kcell">'+LU('kontor-'+d,'kc')+'</td><td><b>'+D.name+'</b><span class="sub">min '+D.gate+'+</span></td><td>'+(PRIZE[D.benefit]||('+'+(D.vbonus||0)+'★ per die'))+'</td><td><b>'+D.maj.join('/')+'</b></td></tr>';}).join('');
   document.getElementById('aidcard').innerHTML=
@@ -3361,7 +3403,7 @@ function renderAid(){
       +row('age-3','Cellar','Age '+CELLAR_POOL+' · alt: '+ALT_AGE)
       +row('ship','Harbor','a Ship + 1 free load · alt: Load 1 any Ship<br>Skute 2G · Cog 1G · Hulk free')+'</div>'
       +row('home','Ventures — your hand of 4','L1 on open ground · L2 over your own L1 · the public line pays whoever visits')
-      +row('bourse','The Bourse','a delivery scores die + the beer’s marker · brews slip it −1 · landings lift it +1/cask, then score')+'</div>'
+      +row('bourse','The Bourse','a delivery scores die + the beer’s marker · a sail then steps EACH beer aboard −1 (once per beer, not per cask) · only a shift lifts it')+'</div>'
     +'<div class="asec"><b>End &amp; score</b>'
       +row('dices','The first EMPTY tray ends it','your '+PRES_POOL+' dice · round '+MAX_ROUND+' backstop')
       +row('star','Parked pips (+ the bourse) + the bank + majorities','+ the Flight (beers SHIPPED): 3/4/5 → '+FLIGHT_PTS[3]+'/'+FLIGHT_PTS[4]+'/'+FLIGHT_PTS[5]+'★')+'</div>'
@@ -3479,15 +3521,17 @@ function renderBar(){
     (lp.hand||[]).forEach(k=>{const V=VENTURES[k];
       if(canVentureL1(lp))acts+=btn(LU(V.l1.icon)+V.l1.name+' (L1 · free)','benefitVenture(\''+k+'\',1)','go');
       if(canVentureL2(lp))acts+=btn(LU(V.l2.icon)+V.l2.name+' (L2 · free)','benefitVenture(\''+k+'\',2)','go');});
-    acts+=btn('Skip','benefitPick(null)','ghost');}
+    acts+=btn('★ Take '+PRIZE_PTS+'★ instead','benefitPick(null)','primary');}
   else if(U==='precipe'){const b=UI.pendingRecipe[0];const lp=S.players[b.pid];
     const opts=recipeGainable(lp);
-    prompt=lp.name+' delivered to Bruges — take a '+LU('scroll-text')+' <b>recipe</b> at its printed fee (<b>H = Q−3</b>, Q3s free — Bruges grants the pick, never the waiver).';
+    prompt=lp.name+' delivered to Bruges — take a '+LU('scroll-text')+' <b>recipe</b> at its printed fee (<b>H = Q−3</b>, Q3s free — Bruges grants the pick, never the waiver) <b>OR</b> take the prize as <b>'+PRIZE_PTS+'★</b>.';
     acts=opts.map(st=>{const f=recipeFeeFor(lp,st);const lbl=LU('scroll-text')+STYLES[st].name+' Q'+STYLES[st].q+' · '+costIcons(f);
-      return canPay(lp,f)?btn(lbl,'precipePick(\''+st+'\')','go'):btnOff(lbl,'The printed fee exceeds your goods.');}).join('')+btn('Skip','precipePick(null)','ghost');}
+      return canPay(lp,f)?btn(lbl,'precipePick(\''+st+'\')','go'):btnOff(lbl,'The printed fee exceeds your goods.');}).join('')
+      +btn('★ Take '+PRIZE_PTS+'★ instead','precipePick(null)','primary');}
   else if(U==='bspec'){const b=UI.pendingSpec[0];const lp=S.players[b.pid];
-    prompt=lp.name+' delivered to Bergen — seat a '+LU('wrench')+' <b>specialist</b>, free.';
-    acts=hireable(lp).map(k=>btn(LU('wrench')+upName(k),'bspecPick(\''+k+'\')','go')).join('')+btn('Skip','bspecPick(null)','ghost');}
+    prompt=lp.name+' delivered to Bergen — seat a '+LU('wrench')+' <b>specialist</b>, free <b>OR</b> take the prize as <b>'+PRIZE_PTS+'★</b>.';
+    acts=hireable(lp).map(k=>btn(LU('wrench')+upName(k),'bspecPick(\''+k+'\')','go')).join('')
+      +btn('★ Take '+PRIZE_PTS+'★ instead','bspecPick(null)','primary');}
   else if(U==='man'){const b=UI.pendingMan[0];const lp=S.players[b.pid];
     const m=manMatches(b);
     prompt=lp.name+'’s '+LU('beer')+styleShort(b.style)+' (die '+b.die+') meets the '+LU('contract')+' <b>Manifest</b> — claim ONE demand (its ★ score at once; each line once per voyage):';
@@ -3704,10 +3748,10 @@ function renderVoyage(){
     +'<div class="note" style="font-size:.66rem;margin-top:4px">'+LU('sailboat')+' voyages sailed: '+S.sailed+' · round ceiling '+MAX_ROUND+' (backstop)</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game (3 of 4):</b> '+exportLabel()+'.</div>';
   if(Object.keys(S.bourse||{}).length){   // THE BOURSE — one strip, one marker per tracked beer
-    h+='<div class="voybox" style="margin-top:6px">'+LU('bourse')+' <b>The Bourse</b> <span class="note">(a delivered cask scores its die + its beer’s marker; brews slip it, arrivals lift it)</span>'
+    h+='<div class="voybox" style="margin-top:6px">'+LU('bourse')+' <b>The Bourse</b> <span class="note">(a delivered cask scores its die + its beer’s marker — the market only falls: a sail steps each beer aboard one)</span>'
       +'<div style="margin-top:4px">'+Object.keys(S.bourse).map(bk=>{const v=S.bourse[bk];
         return '<span style="margin-right:9px;font-weight:bold'+(v>0?';color:var(--green,#2e7d32)':(v<0?';color:var(--red)':''))+'">'+LU('beer')+styleShort(bk)+' '+bourseFmt(v)+'</span>';}).join('')
-      +'</div><div class="note" style="font-size:.66rem;margin-top:3px">track '+bourseFmt(BOURSE_MIN)+' … '+bourseFmt(BOURSE_MAX)+' · shifts: Bergen’s prize ±1 · the Ventures’ public lines</div></div>';}
+      +'</div><div class="note" style="font-size:.66rem;margin-top:3px">track '+bourseFmt(BOURSE_MIN)+' … '+bourseFmt(BOURSE_MAX)+' · opens at '+bourseFmt(BOURSE_START)+' · the only way UP is a shift (a building, a Venture’s line, Bergen’s prize)</div></div>';}
   const brews=flightTypes();   // starters + the dealt exports + the Jopenbier pile when its toggle is on
   h+='<div class="note shophead" style="margin-top:6px"><b>'+LU('flask-conical')+' Cask stacks</b>'+gridToggleBtn('piles')+' <span class="note">— a full Brew SEARCHES the stack; the alternate takes the top tile; delivered tiles return to the bottom</span></div>'
     +'<div class="'+shopGridCls('piles')+'">'+brews.map(style=>{const st=STYLES[style];const n=pileList(style).length;const vb=pileVerbs(style);

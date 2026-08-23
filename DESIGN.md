@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v5.5 “Four Hands”** — live (`play.html`, KEY `hanse-v55`; designer-ruled 2026-08-23, records `archive/records/V55-FOUR-HANDS.md` + `V54-THE-TIDE.md` + `V5-DECISIONS.md`). The v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). **v5.4** makes every Public Work ephemeral — the wharf is a tide that washes the furniture away and thins into bare ground for the Ventures. **v5.5** re-derives the Venture hand as **four themed tiles (brew · age · die · points)** and adds the **FLIP** — a standing L1 turns over to its own L2 in place, spending no hand tile — so four tiles can become four buildings that each reach L2. Details: §9; watches: §10. |
+|**Status**     |**v5.6 “The Glut”** — live (`play.html`, KEY `hanse-v56`; designer-ruled 2026-08-23, records `archive/records/V55-FOUR-HANDS.md` + `V54-THE-TIDE.md` + `V5-DECISIONS.md`). The v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). **v5.4** makes every Public Work ephemeral — the wharf is a tide that washes the furniture away and thins into bare ground for the Ventures. **v5.5** re-derives the Venture hand as **four themed tiles (brew · age · die · points)** and adds the **FLIP** — a standing L1 turns over to its own L2 in place, spending no hand tile — so four tiles can become four buildings that each reach L2. **v5.6** turns the Bourse into a **GLUT**: every marker opens at the top and a sail steps each beer aboard down one (never per cask); the only way up is a shift you build. Every **Kontor prize becomes “the thing OR ★”** and the consolation retires. Details: §9; watches: §10. |
 
 ---
 
@@ -85,7 +85,7 @@ expressed through the **dual-role cask die**, the **two building families** and 
 
 ---
 
-## 6. The current architecture (v5.5 “Four Hands”)
+## 6. The current architecture (v5.6 “The Glut”)
 
 Canonical detail in `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -130,12 +130,21 @@ Canonical detail in `RULES.md` / `COMPONENTS.md`; the shape:
   full brew) · **Warehouse/Assay Loft** (Age 2 + load onto any hull → 2 `H` certifies the
   whole cellar) · **Rack House/Lagering Cellar** (swap 2 dice → die +1, cap 6) ·
   **Counting House/Staple Rights** (+1★/load → +2★/own cask sailed).
-- **THE BOURSE** — one track (−1…+3 ⚙), a price marker per in-play beer except Gruit &
-  Jopenbier, start 0. Delivery = **die + marker** (floor 0); **bulk rise then score** (a
-  landing Ship lifts each beer +1/cask first); every **brew crashes its own beer −1**;
-  shifts ride Bergen's prize (±1/cask), the Ventures' public lines and the toll bench —
-  never a new action. The market is the negative-feedback loop pricing the loosened
-  economy: the wharf's own volume moves it.
+- **THE BOURSE — THE GLUT (v5.6).** One track (−1…+3 ⚙) **printed on the Destinations
+  board**, a price marker per in-play beer except Gruit & Jopenbier, **every marker opening
+  at the TOP (+3 ⚙)**. Delivery = **die + marker** (floor 0). **SCORE, THEN THE GLUT:** the
+  casks are paid at the marker printed right now, and *then* **each beer TYPE that was
+  aboard steps down ONE — never per cask** (the Lisboa rule: the event happened, move one;
+  no counting at the table). **The brew crash retires** — a brew two turns before the sale
+  was noise. **The only way UP is a shift**, and shifts belong to buildings and private
+  Venture lines (+ Bergen's prize): holding a price up is an engine you build. Scarcity is
+  where the game starts and every shipment spends it — first to a beer cashes the top, the
+  fourth sells into the crater, and the beer nobody sailed is still worth +3.
+- **EVERY PRIZE IS THE PORT'S THING *OR* ★ (v5.6)** — per cask, the owner's choice, in
+  boarding order; **the 2-goods consolation is gone from the whole game**. A full bench, an
+  empty hand, a shelf of every recipe: none of them punishes you, because the ★ was always
+  on the table. **Novgorod pays +3★** ⚙ (was +2) — it offers no thing to choose against, so
+  it must out-pay every other port's ★ option or Bergen simply dominates it.
 - **Everything is earned, not bought** — recipes (Bruges' prize · the *Gain 1 recipe*
   bonus, at the `H` = Q−3 formula fee, paid at EVERY channel, Bruges included; the Q3s
   free), Ventures (London's prize fee-waived · the *Open 1 Venture* bonus), specialists
@@ -235,6 +244,70 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
+
+### v5.6 “The Glut” (2026-08-23, designer-ruled — record `archive/records/V56-THE-GLUT.md`)
+*"When a ship delivers casks to a kontor, each type of beer is moved down the track 1 space.
+The only time it goes up is with the bourse ±1, +1, or +2 actions. Those should be reserved
+to buildings and most likely private actions."*
+
+**The Lisboa read, decomposed.** The designer brought Lisboa's economy track as the model and
+three lessons came out of it: **one step per EVENT, not per unit** (our old rise was "+1 per
+cask, cap +3" — that is counting at the table); **monotone decay is trivially trackable** (a
+marker that only walks one way needs no sign read); and **the counterweight lives elsewhere
+and grows** — Lisboa's better ships pay more per good, and *we already have that ladder* in
+the die, the Novgorod premium and the Venture L2s.
+
+**What was actually broken.** Three things, and the sim named all three. (1) **The seller
+controlled both ends and they cancelled** — a 3-cask single-beer Hulk pumped its own price +3
+and then sold at the new price, so *the game paid you for monoculture and there was never a
+reason to mix a hull*. (2) **The crash was on the wrong beat** — a brew fired 10–20×/game,
+two to four turns before the sale, by which time someone's arrival had erased it: *the
+dominant force in the market was noise*. (3) **Legibility** — the printed marker was not the
+price you would get; you had to compute the post-arrival number to value a load.
+
+**The ruling.** Markers open at **+3** and only fall. A sail: **score first, then one step
+down per beer TYPE aboard**. The brew crash retires. Up only via shifts, which live on
+buildings and private Venture lines. **The printed marker IS the price** — the legibility fix
+falls out of the mechanic for free.
+
+**Three paths were put up; the designer ruled the middle one and rejected the other two for
+good reasons.** *Path 1* (brew posts up / sale eats down, per cask) was the most textured and
+the least trackable — dropped against the stated preference for something players can track.
+*Path 3* (decay per KONTOR, not per beer) was the one I recommended, and the designer killed
+it with the decisive objection: **"you don't necessarily choose a port destination, that is
+chosen by luck of the draw as ships become available and by other players commissioning
+them… If a kontor is hot and I commission a ship, I'm actually supporting market saturation."**
+*A market you cannot steer is a tax, not a decision.* Kept as the standing lesson.
+
+**And the prizes, which turned out to be the same letter.** The `prize-probe.js` read showed
+**Bergen dead 35.5% of the time — every single one "seats already full"** — while carrying the
+game's richest majority (9/5/2). The port you most want presence at was the port that stopped
+paying first. The designer's fix beat mine: *"we don't need a fallback as the points are the
+fallback."* Every prize becomes **the thing OR ★**, per cask, always a choice — which costs
+**no points at all** where my ★-conversion would have added 8–16★, and dissolves the feel-bad
+at the root (you were never forced to take the thing). The **2-goods consolation retires from
+the whole game**. The designer's own emergent line: *"I may try to get two casks on a boat to
+bergen, one for points and the other for the specialist, with both dice working for the
+majority."*
+
+**Novgorod +2 → +3 ⚙ (raised, then ruled).** With the others able to pay ★, Bergen strictly
+dominated Novgorod — lower minimum (2 vs 3), richer majority, equal payout, *plus* an optional
+specialist. Novgorod's premium is flat, not per-pip, so it could not out-scale. At +3 it
+becomes what the designer named it: **the port that only pays money, and pays the most.**
+
+- Engine: `BOURSE_START=3` · `BOURSE_SAIL_STEP=-1` · the glut deferred until after the delivery
+  loop in `sailShip` (so the seller cashes the printed price) · the `brewCommit` crash deleted ·
+  `PRIZE_PTS=2` + `prizeStars()` wired into all three prize flows, with `aiRecipeVal()` added so
+  the AI can price a card against the points · `DEST.novgorod.vbonus` 2→3 · a `bankP` bucket in
+  the score breakdown. KEY `hanse-v56`.
+- Gates: verify **391/391** (new §20f: one-step-per-TYPE · the mixed hull · the floor · the
+  shift-only rise · the Novgorod collision · London never forfeits · *no path pays the retired
+  consolation*) · sim **0 crashes / 0 deadlocks** · render smoke ALL PASS · aid ALL FIT.
+- First read: glut steps **9.2 / 12.2 / 15.0** per game, markers falling **+3 → 0.5–1.4** by the
+  end, brew crashes **0.0** (retired, confirmed), prizes taken as ★ **2.0–3.5/game**. Pace
+  **15.3 / 15.0 / 13.6** — *better* than v5.5's 12.0/14.4/12.8, because a decaying market makes
+  late deliveries cheaper and the game runs longer. **Watch: winner totals rose to 89/89/78 and
+  margins to 15.7–20.8 — see §10.**
 
 ### v5.5 “Four Hands” (2026-08-23, designer-ruled — record `archive/records/V55-FOUR-HANDS.md`)
 *"The private venture buildings on the wharf are also implemented in an odd way… I think
@@ -621,6 +694,41 @@ record is in git history.
 
 *Moved here from `RULES.md` §Open (2026-08-23). The designer calls full batteries; these
 are the things to read when one runs — or when a human table sits down.*
+
+**v5.6 “The Glut” — BUILT, and two numbers to watch:**
+- **TOTALS AND MARGINS ROSE.** Winner totals **89.3 / 89.5 / 78.3** (were ~71–90) and margins
+  **20.8 / 15.7 / 16.8**. Two causes, both intended-but-unpriced: markers now *open* at +3
+  instead of 0 (early deliveries are worth more), and Novgorod went to +3★. **A 20★ margin at
+  2p is runaway territory** — read it at a human table before dialing. Levers, cheapest first:
+  `BOURSE_START` (3 → 2) · `PRIZE_PTS` (2 → 1) · `BOURSE_MAX`.
+- **A 6-ROUND GAME appeared at 2p** (min 6, band 83.3%). One outlier in twelve, but the clock
+  is the empty tray and a richer early market means dice commit faster. Watch whether it
+  repeats.
+- **Does the shift engine actually beat the decay?** The whole specialist lane now depends on
+  it: shifts run **UP 4.3–5.0 vs DOWN 2.7–5.2** per game against **9.2–15.0 glut steps**. On
+  those numbers the market falls faster than anyone can prop it. If a human table confirms it,
+  the up-shift supply (Venture public lines · the toll bench · Bergen) is under-provisioned.
+- **Is "concentrate and be first" legible at the table?** A 3-cask single-beer hull costs one
+  step; a mixed hull costs one per beer. That is the Bourse saying *concentrate* while the
+  Flight says *spread* — the intended fork. Watch whether players see it.
+
+**THE FLIGHT COUNTERFACTUAL (measured 2026-08-23) — removing it is NOT enough.** *"I do wonder
+if we removed the flight, would depth be more enticing?"* Measured with `FLIGHT=off` (the whole
+ladder zeroed for **everyone**, 20 games × 2/3/4p, on the pre-Glut build):
+
+| | depth ★ | field ★ | gap |
+|---|---|---|---|
+| 2p | 36.4 | 62.5–68.3 | **−28** |
+| 3p | 46.4 | 60.8–73.5 | **−20** |
+| 4p | 48.5 | 55.8–60.6 | **−9** |
+
+With the Flight **fully removed**, depth still loses by 20–28★ at 2p/3p; only at 4p does it
+approach parity. The field loses the ladder too, so the relative gap closes only by what depth
+was *uniquely* missing — and the rest survives: **depth still ships 6.3–7.4 casks against the
+field's 7.0–9.3.** The Flight was masking the delivery gap, not causing it. **The lever is the
+per-cask value curve, not the ladder** (Gruit 1★ → Bock 5★ is linear while the *time* cost is
+roughly 1:4 — quality is not paid for the wait). *Caveat: measured on the pre-Glut build; the
+new market changes the arithmetic and this wants a re-run.*
 
 **RULED, NOT YET BUILT (designer, 2026-08-23) — the Letter B decisions:**
 - **THE BOURSE = PURE DECAY.** *"When a ship delivers casks to a kontor, each type of beer is

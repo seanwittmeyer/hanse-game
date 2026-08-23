@@ -35,7 +35,7 @@ function __uReset(){__U={manifests:0,rack:0,assayUp:0,assayDown:0,toll:0,kilnLif
   victual:0,chandler:0,scargo:0,coopSail:0,customsBoard:0,tideBurn:0,   // v5.4: Public Works taken by the tide (a sail from their slot)
   comm_skute:0,comm_cog:0,comm_hulk:0,commG:0,built:0,bldgTicks:0,built_survey:0,built_prize:0,
   matured:0,ropeX:0,ventL1:0,ventL2:0,vflip:0,   // v5.2/v5.5: Ropewalk cross-quay loads · Venture L1 placements · L2 overbuilds · FLIPS (the same tile turned over)
-  bshiftUp:0,bshiftDown:0,vpubGold:0,vpubStep:0,brewCrash:0,   // v5.3: the bourse — manipulation shifts · public-line freebies · brew crashes
+  bshiftUp:0,bshiftDown:0,vpubGold:0,vpubStep:0,brewCrash:0,glut:0,prizeStars:0,   // v5.3: the bourse — manipulation shifts · public-line freebies · brew crashes
   pours:0,judged:0,slams:0,invE:0,invS:0,tilesWon:0};}   // v4.17 Tastings — pours · benches convened · door-slams · the ⚜ economy   // v4.9: builds + mason-die ticks   // v4.6 + the ship-shapers, instrumented at last (the AGRICOLA-STUDY B4 item) · v4.8: commissions by hull + grain paid (the 2/1/0 A/B)
 var __uOn=function(){return __U&&!aiSimulating;};   // never count MC-playout echoes
 var __manClaim=manClaim;manClaim=function(lp,gi,li){if(__uOn())__U.manifests++;return __manClaim(lp,gi,li);};   // v5.0: Manifest lines claimed
@@ -61,7 +61,10 @@ var __loadCommit=loadCommit;loadCommit=function(shipSlot,vi){var p=cur();var bk=
   var r=__loadCommit(shipSlot,vi);
   if(__uOn()&&p&&c&&!p.vessels[vi]){if(lift)__U.kilnLift++;if(toll)__U.toll++;
     if(bk==='victual')__U.victual++;if(below)__U.customsBoard++;if(rw)__U.ropeX++;}return r;};
+var __prizeStars=prizeStars;prizeStars=function(lp,dest,why){if(__uOn())__U.prizeStars++;return __prizeStars(lp,dest,why);};   // v5.6: prizes taken as ★
 var __sailShip=sailShip;sailShip=function(slot,creditId){var bonded=bKeyAt(slot)==='bonded';
+  var t9=S.slots[slot];var gl={};if(t9)(t9.load||[]).forEach(function(L){if(tracked(L.style))gl[L.style]=1;});
+  if(__uOn())__U.glut+=Object.keys(gl).length;   // v5.6 THE GLUT — one step per beer TYPE per sail
   var burn=!!bKeyAt(slot);   // v5.4 THE TIDE — every Public Work at the slot sails with the Ship
   var t0=S.slots[slot];var over=t0&&(t0.load||[]).length>SHIP_CAP[t0.ship];   // a Cooperage berth actually used
   var sc=0;if(t0){var seen={};(t0.load||[]).forEach(function(L){var o=S.players[L.owner];
@@ -128,6 +131,7 @@ function __runGame(n,__POFF){
   if(__AAGE!=='')ALT_AGE=parseInt(__AAGE,10)||1;
   if(__STPL!=='')STAPLE_PTS=parseInt(__STPL,10)||2;   // v5.2 ⚙: the Staple premium (the +2/+4 A/B) — override ONLY when set
   if(__SRCN!=='')SRC_PRIMARY=parseInt(__SRCN,10)||3;   // v5.2b ⚙: the Market primary (the 2/3 A/B) — override ONLY when set
+  if(__FLIGHT==='off'){FLIGHT_PTS={1:0,2:0,3:0,4:0,5:0,6:0};}   // ⚙ v5.6: the counterfactual — what is DEPTH worth with no breadth bonus at all?
   if(__BMIN!=='')BOURSE_MIN=parseInt(__BMIN,10);   // v5.3 ⚙: the Bourse track ends — override ONLY when set
   if(__BMAX!=='')BOURSE_MAX=parseInt(__BMAX,10);
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
@@ -154,6 +158,7 @@ function __runGame(n,__POFF){
     stapleStars:S.players.reduce(function(a,p){return a+(p.bankSt||0);},0)/S.players.length,   // v5.2: Staple House + Staple Rights ★
     vents:S.players.reduce(function(a,p){return a+venturesInPlay(p);},0)/S.players.length,     // v5.2: Ventures standing at end
     bourseAvg:(function(){var ks=Object.keys(S.bourse||{});return ks.length?ks.reduce(function(a,b){return a+S.bourse[b];},0)/ks.length:0;})(),   // v5.3
+    bourseStart:BOURSE_START,
     furn:SLOTS.filter(function(sx){var b=S.buildings[sx.id];return b&&!b.v;}).length,
     bagLeft:(S.worksBag||[]).length,   // v5.4: what the tide never got to raise
     byDest:byDest,
@@ -201,6 +206,7 @@ const ctx = {
   __ASRC:process.env.ALTSRC!=null?process.env.ALTSRC:'', __AAGE:process.env.ALTAGE!=null?process.env.ALTAGE:'',   // v5.0: the primary/alt dials
   __STPL:process.env.STAPLE!=null?process.env.STAPLE:'',   // v5.2: the Staple premium dial
   __SRCN:process.env.SRCN!=null?process.env.SRCN:'',   // v5.2b: the Market primary dial
+  __FLIGHT:process.env.FLIGHT||'',   // v5.6 ⚙: FLIGHT=off zeroes the Flight ladder (the depth counterfactual)
   __BMIN:process.env.BMIN!=null?process.env.BMIN:'',   // v5.3: the Bourse track ends
   __BMAX:process.env.BMAX!=null?process.env.BMAX:'',
   __POOL:parseInt(process.env.POOL||'0',10),
@@ -223,6 +229,7 @@ try {
 const R = ctx.__RESULTS;
 const fmt=(x,d=1)=>Number(x).toFixed(d);
 const pct=(a,b)=>fmt(100*a/Math.max(1,b),1)+'%';
+const BOURSE_START_R=3;
 console.log('=== hanse v4.1 sim — '+N+' games/count · '+(PERSONAS?'PATHWAYS (trader personas)':('tier '+TIER))+' ===');
 let anyErr=0;
 [2,3,4].forEach(n=>{
@@ -248,11 +255,11 @@ let anyErr=0;
       'victual','chandler','scargo','coopSail','customsBoard',
       'comm_skute','comm_cog','comm_hulk','commG','built','bldgTicks','built_survey','built_prize',
       'matured','ropeX','ventL1','ventL2',
-      'bshiftUp','bshiftDown','vpubGold','vpubStep','brewCrash','vflip',
+      'bshiftUp','bshiftDown','vpubGold','vpubStep','brewCrash','glut','prizeStars','vflip',
       'pours','judged','slams','invE','invS','tilesWon'];
     const us={};uk.forEach(k=>us[k]=avg(ok.map(r=>(r.use&&r.use[k])||0)));
     console.log(`commissions/game: ${fmt(us.comm_skute+us.comm_cog+us.comm_hulk)} — skute ${fmt(us.comm_skute)} · cog ${fmt(us.comm_cog)} · hulk ${fmt(us.comm_hulk)} · grain paid ${fmt(us.commG)}`);
-    console.log(`the bourse (v5.3): manipulation shifts/game ${fmt(us.bshiftUp+us.bshiftDown)} (▲${fmt(us.bshiftUp)} ▼${fmt(us.bshiftDown)}) · brew crashes ${fmt(us.brewCrash)} · public-line freebies ${fmt(us.vpubGold+us.vpubStep)} (goods ${fmt(us.vpubGold)} · steps ${fmt(us.vpubStep)}) · end track avg ${fmt(avg(ok.map(r=>r.bourseAvg||0)))}`);
+    console.log(`the bourse (v5.6 THE GLUT): glut steps/game ${fmt(us.glut)} (one per beer TYPE per sail) · shifts UP ${fmt(us.bshiftUp)} vs DOWN ${fmt(us.bshiftDown)} · opens at ${BOURSE_START_R} → end track avg ${fmt(avg(ok.map(r=>r.bourseAvg||0)))} · prizes taken as ★ ${fmt(us.prizeStars)}/game`);
     console.log(`public works (v5.4 THE TIDE): burned by sails ${fmt(us.tideBurn)}/game · still standing at end ${fmt(avg(ok.map(r=>r.furn||0)))} · bag left ${fmt(avg(ok.map(r=>r.bagLeft||0)))} · (builds ${fmt(us.built)} — 0 by design: nobody builds a Public Work)`);
     console.log(`ventures (v5.5 FOUR HANDS): L1 placed/game ${fmt(us.ventL1)} · L2 climbs ${fmt(us.ventL2)} · standing at end/player ${fmt(avg(ok.map(r=>r.vents||0)))} · staple★/player ${fmt(avg(ok.map(r=>r.stapleStars||0)))} · FLIPS ${fmt(us.vflip)} · ropewalk cross-loads ${fmt(us.ropeX)}`);
     console.log(`usage/game: manifest lines ${fmt(us.manifests)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)} · toll bench ${fmt(us.toll)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · victual loads ${fmt(us.victual)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);

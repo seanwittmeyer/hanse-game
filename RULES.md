@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — The Rules (v5.5 “Four Hands”)
+# Brewhouses of the Hanse — The Rules (v5.6 “The Glut”)
 
 *The one rules document. Clean operational rules only — design rationale, decision
 history and open watches live in `DESIGN.md`; the physical manifest in `COMPONENTS.md`;
@@ -114,7 +114,8 @@ aging, boarding, value, presence and clock in one number:**
   cap 6**; a Customs House lowers the Ship's minimum by 1, floor 1; a Tollhouse lets the
   loader **shift any Bourse marker ±1**).
 - **Delivery:** the die **parks at the Kontor showing its face** — the ★ scored are **the
-  pips + the beer's Bourse marker** (never below 0; the bulk rise lands first, §5c), the
+  pips + the beer's Bourse marker** (never below 0 — the marker **as printed**; the glut
+  lands after the sale, §5c), the
   body is your presence there and a beat of the end clock (§10) — and **the cask's tile
   returns to the bottom of its stack** (the supply breathes).
 
@@ -137,7 +138,7 @@ brew**. A start value never exceeds the quality. Keut's printed perk: its delive
 
 > **The squeeze (state it to players):**
 > - **You can't brew everything** — 3 vessels, the recipe fees, 13 dice for the whole
->   game — and every brew crashes its own beer's price.
+>   game — and every beer you ship spends its own price.
 > - **You can't deliver everywhere** — the hulls in the market decide which ports are
 >   open; berths are shared and race away.
 > - **You can't hold everything** — a Ready cask clogs a vessel until a hull appears;
@@ -252,21 +253,29 @@ OWNER activates a line through them — once per activation, like any stop.
 
 ### 5c. THE BOURSE — the beer-value market
 
-**One shared track — −1 · 0 · +1 · +2 · +3 ⚙ — with a price marker per in-play beer
-except Gruit and Jopenbier** (the commodity floor and the plain capstone trade off-book).
-All markers start at **0**.
+**One shared track — −1 · 0 · +1 · +2 · +3 ⚙ — printed on the Destinations board, with a
+price marker per in-play beer except Gruit and Jopenbier** (the commodity floor and the
+plain capstone trade off-book). **Every marker starts at the TOP (+3 ⚙).**
+
+**THE MARKET ONLY FALLS ON ITS OWN.** Scarcity is where the game begins; every shipment
+spends it.
 
 - **A delivered cask scores its DIE + its beer's MARKER** (never below 0; the Novgorod
-  +2★, Staple premiums and Manifest ★ ride on top). The die itself never moves — gates,
+  +3★, Staple premiums and Manifest ★ ride on top). The die itself never moves — gates,
   presence, majorities and the clock still read the die alone.
-- **BULK RISE, THEN SCORE:** as a Ship arrives, **each tracked beer's marker rises +1 per
-  cask of it aboard** (cap +3) — *then* every cask delivers in boarding order at the new
-  value. A big delivery pumps its own price.
-- **The brew crash:** every **brew** of a tracked beer slips its marker **−1** (floor
-  −1) — new supply softens the price. The wharf's own volume moves the market.
-- **Shifts (never a new action):** **Bergen's prize** moves any marker **±1** per
-  delivered cask (§7); the Ventures' **public lines** print **±1** and **±2**; the
-  **Tollhouse** pays its loader a **±1** (the toll bench).
+- **SCORE, THEN THE GLUT:** every cask aboard delivers **at the marker printed right now** —
+  then, once the sail has resolved, **each beer TYPE that was aboard steps down ONE**
+  (floor −1 ⚙). **One step per beer, however many casks of it rode.** A three-cask hull of
+  one beer costs the market a single step; a mixed hull steps each beer it carried.
+- **You cash the price you could read.** The marker on the board when you load is the
+  marker you are paid — no arithmetic, no arrival bonus to compute.
+- **The only way UP is a SHIFT**, and shifts belong to **buildings and private Venture
+  lines** — the Ventures' **public lines** print **±1** and **±2**, the **Tollhouse** pays
+  its loader a **±1** (the toll bench), and **Bergen's prize** moves any marker **±1**.
+  Holding a price up is an engine you build, not something that happens to you.
+
+> **Read the market before you brew.** First to a beer cashes it at the top; the fourth
+> shipment sells into the crater. The beer nobody has sailed is still worth +3.
 
 **One-fire rule:** on a line, the active player may load each slot's ship once, fire each
 slot action once (the hall Chancery is the only one), collect each Venture's public line
@@ -293,14 +302,14 @@ once, and fire each of their own Venture stops once — all optional, any order,
   COMPLETED side — the Flight record.** The freed vessel is open again. *(The Stevedore
   loads **2** in EVERY load flow. The **commission** includes one such load onto its new
   Ship — §4C.)*
-- **A ship SAILS the moment it is full** — a **Skute sails on its first load.** First the
-  Bourse's **bulk rise** (§5c), then each cask aboard **delivers in boarding order**:
-  score ★ = its die + its beer's marker, park the die at the Kontor, resolve the Kontor's
-  prize (owner's choice, **when gained** — **every cask pays its Kontor's prize**; boarding
-  order = pick order), and the cask **may claim ONE demand line of this Ship's Manifest it
-  satisfies** (§7b — owner's choice; each line once per voyage). The Ship returns to the
-  bottom of the deck; **the slot's Public Work sails away with it, boxed** (§5a — the tide)
-  (§5a).
+- **A ship SAILS the moment it is full** — a **Skute sails on its first load.** Each cask
+  aboard **delivers in boarding order**: score ★ = its die + its beer's marker **as printed**,
+  park the die at the Kontor, take the Kontor's prize (**the port's thing OR 2★** ⚙ — owner's
+  choice, **when gained**; **every cask takes one**; boarding order = pick order), and the cask
+  **may claim ONE demand line of this Ship's Manifest it satisfies** (§7b — owner's choice;
+  each line once per voyage). **Then the glut:** each beer TYPE that was aboard steps its
+  marker down one (§5c). The Ship returns to the bottom of the deck; **the slot's Public Work
+  sails away with it, boxed** (§5a — the tide).
 - Casks are **private until aboard** — there is no loading of rival casks, and nothing on
   the wharf to hijack. The race is for **berths**: topping off a Ship sails *everyone's*
   cargo, on your clock.
@@ -330,18 +339,26 @@ everywhere, the Bruges prize included.** No building ever adds a fee of its own.
 
 | Kontor | Minimum ⚙ | Value | Prize on delivery ⚙ | Majority (1/2/3) ⚙ |
 |---|---|---|---|---|
-| **Bruges** (Hub) | 1 | the die + Bourse | **Gain 1 recipe** — dealt exports, **at its `H` = Q−3 fee — the Q3s free** (the prize is the pick, never the waiver; no affordable pick → 2 goods) | 4 / 2 / 0 |
-| **London** (Steelyard) | 2 | the die + Bourse | **A Venture** — from your hand, **the fee waived** (L1 or L2, the normal grounds); none playable → forfeit | 5 / 3 / 1 |
-| **Bergen** (Bryggen) | 2 | the die + Bourse | **A specialist** (display, free) — **per cask** (load order = pick order); **no seat to fill (full, or none eligible) → 2 goods** (1 `G` + 1 `H`) — **and shift any Bourse marker ±1** | 9 / 5 / 2 (anchor) |
-| **Novgorod** (Peterhof) | **3** (the export band ⚙) | **the die + Bourse, +2★** ⚙ | — (the value premium IS the prize) | 8 / 5 / 2 |
+| **Bruges** (Hub) | 1 | the die + Bourse | **Gain 1 recipe** — dealt exports, at its `H` = Q−3 fee (the Q3s free) — **OR 2★** ⚙ | 4 / 2 / 0 |
+| **London** (Steelyard) | 2 | the die + Bourse | **A Venture** — from your hand, **the fee waived** (L1 · the FLIP · an overbuild) — **OR 2★** ⚙ | 5 / 3 / 1 |
+| **Bergen** (Bryggen) | 2 | the die + Bourse | **A specialist** (display, free) · **OR shift any Bourse marker ±1** · **OR 2★** ⚙ | 9 / 5 / 2 (anchor) |
+| **Novgorod** (Peterhof) | **3** (the export band ⚙) | **the die + Bourse, +3★** ⚙ | — **the port that only pays money, and pays the most** | 8 / 5 / 2 |
+
+**EVERY PRIZE IS THE PORT'S THING *OR* ★ — per cask, your choice, resolved in boarding
+order.** There is **no consolation**: a full specialist bench, a hand with no playable
+Venture, a shelf of every recipe — none of them punishes you any more, because the ★ was
+always on the table. A two-cask hull to Bergen can seat a specialist on one and bank the ★
+on the other, **and both dice park for the majority.**
 
 - **The minimum reads the DIE as it boards** (post-lift) — a Kiln'd Hopped (die 3) makes
   Novgorod; a Kiln'd Gruit (die 2) cannot. One number rules boarding and value alike.
 - **Prizes resolve WHEN GAINED, owner's choice** (a rival tops off a Ship carrying your
   cask → you pick your prize right then). No queues.
 - **Novgorod's premium is printed on the mat**: every *delivered* die there counts **pips
-  +2** — for the score AND the end-game audit. (Minimum 3 means delivered dice show 3–6,
-  so a face-1 die at Novgorod is always placed presence, worth its flat 1★.)
+  +3** ⚙ — for the score AND the end-game audit. It offers no thing to choose against, and
+  its +3 out-pays any other port's ★ option: that is its whole identity, bought with the
+  highest minimum in the game. (Minimum 3 means delivered dice show 3–6, so a face-1 die at
+  Novgorod is always placed presence, worth its flat 1★.)
 - **Presence** = your parked dice there. **Placing presence** is **free — and flows ONLY
   through casks**: the *Place 1 presence* load bonus, Keut's printed perk, and the
   champion's tour (§12). Take a **tray die**, park it at a Kontor you've **already
@@ -471,13 +488,14 @@ A **MAX_ROUND ceiling** (~25 ⚙) backstops a slow table. Pace target **~12–25
 **Scored in play (onto the score track as it happens):**
 
 1. **Deliveries + the Bourse** — ★ = the die **+ the beer's Bourse marker** (never below
-   0), parked at the Kontor; Novgorod +2★ ⚙ on top. The dice on the mats and the markers
-   on the strip are the audit — the Bourse pays at the moment of sale, no memory.
+   0), parked at the Kontor; Novgorod +3★ ⚙ on top. The dice on the mats and the markers
+   on the track are the audit — the Bourse pays at the moment of sale, no memory.
 2. **Manifest demands** — the claimed line's printed ★ (a seated Chronicler adds +2★ per
    claim; the card recycles — the score track is the record).
 3. **Cooperage wharfage** — **+1★** per cask loaded at its slot ⚙.
 4. **Placed presence** — 1★ each (the face-1 die; a seated Town Crier adds +2★ per die).
-5. **Staple premiums** — the Staple House pays **+2★** ⚙ per cask off a matching-Kontor
+5. **Kontor prizes taken as ★** — **+2★** ⚙ for each cask that declined its port's thing.
+6. **Staple premiums** — the Staple House pays **+2★** ⚙ per cask off a matching-Kontor
    sail (any house's casks); **Staple Rights** pays its owner **+2★** ⚙ per own cask off
    its slot. The **Counting House** banks **+1★** ⚙ per cask the owner loads at its slot.
 
@@ -486,13 +504,13 @@ audit trail; no memory required.)*
 
 **End-game:**
 
-6. **Majorities** — at each Kontor, by **parked dice** (Bruges 4/2/0 · London 5/3/1 ·
+7. **Majorities** — at each Kontor, by **parked dice** (Bruges 4/2/0 · London 5/3/1 ·
    Bergen 9/5/2 · Novgorod 8/5/2 ⚙; 2p skips 2nd; ties split).
-7. **The Flight** — distinct beers **SHIPPED** (the completed cards on your board):
+8. **The Flight** — distinct beers **SHIPPED** (the completed cards on your board):
    **(beers−1)², min 3** (3→4 · 4→9 · 5→16 · 6→25 ⚙).
-8. **The Guild** — a seated **Alderman** (+2★ per Kontor with 3+ parked dice ⚙) scores
+9. **The Guild** — a seated **Alderman** (+2★ per Kontor with 3+ parked dice ⚙) scores
    its printed line. The audit is the tiles and dice on the table.
-9. **Tiebreak:** the summed dice in your vessels, then most goods.
+10. **Tiebreak:** the summed dice in your vessels, then most goods.
 
 > **The legible fork:** ship **wide** (majorities + prizes) or ship **lifted** (Kiln-fed
 > dice, the Novgorod bar), **work the Bourse** (contrarian brews · shifts · timed sails)

@@ -156,6 +156,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 // ---- 8. DELIVERY floor & cap; Keut's presence bump spends a tray die and banks 1★ ----
 (function(){var p=fresh();stops();p.ai={tier:'journeyman'};
   p.grain=0;
+  Object.keys(S.bourse).forEach(function(b){S.bourse[b]=0;});   // v5.6: markers open at the TOP — flatten them so this reads the DIE CAP alone
   var b0=p.bank,pool0=p.presPool,pb0=p.presBonus.bruges;
   deliverCask(p,{owner:0,style:'keut',q:3,die:9,act:'load'},'bruges');
   ok('delivery value caps at 6', p.delivered[p.delivered.length-1].val===6);
@@ -172,12 +173,13 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
     p.bank===b0&&trayDice(p)===t0&&p.hand.length===h0-1&&SLOTS.some(function(s){var b=vAt(s.id);return b&&b.owner===0&&b.lvl===1;}));
   UI.pendingSpec=[{pid:0,dest:'bergen'}];afterSail('stops');
   ok('Bergen prize: a specialist seated free', (p.upgrades||[]).length===1);
+  Object.keys(S.bourse).forEach(function(b){S.bourse[b]=0;});   // v5.6: flatten the market — these read the Novgorod PREMIUM
   deliverCask(p,{owner:0,style:'mumme',q:4,die:4,act:'age'},'novgorod');
-  ok('Novgorod banks the die +2 (die 4 → 6★)', p.delivered[p.delivered.length-1].val===6);
+  ok('Novgorod banks the die +3 (die 4 → 7★ — v5.6: the port that only pays money pays the most)', p.delivered[p.delivered.length-1].val===7);
   deliverCask(p,{owner:0,style:'bock',q:5,die:6,act:'age'},'novgorod');
-  ok('the Novgorod premium rides above the die cap (die 6 → 8★)', p.delivered[p.delivered.length-1].val===8);
+  ok('the Novgorod premium rides above the die cap (die 6 → 9★)', p.delivered[p.delivered.length-1].val===9);
   deliverCask(p,{owner:0,style:'broyhan',q:3,die:3,act:'age'},'novgorod');
-  ok('the export-band floor pays 5★ (die 3 +2 — v4.10)', p.delivered[p.delivered.length-1].val===5);
+  ok('the export-band floor pays 6★ (die 3 +3 — v5.6)', p.delivered[p.delivered.length-1].val===6);
   ok('no refine machinery survives', typeof freeAge==='undefined'&&typeof brefinePick==='undefined');
   p.recipes=['gruit','hopped'];p.hops=5;var g9=p.grain;
   UI.pendingRecipe=[{pid:0,dest:'bruges'}];afterSail('stops');
@@ -366,9 +368,9 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
     furn.length===4&&!(S.buildDeck||[]).length&&!(S.buildDisplay||[]).length, 'got '+furn.length);
   ok('…every one NEUTRAL and DIE-LESS (nobody builds them; the rest are in the box)',
     furn.every(function(sx){var b=S.buildings[sx.id];return b&&!b.v&&b.owner===undefined&&b.die===undefined;}));
-  ok('THE BOURSE opens at 0 for every in-play beer except Gruit & Jopenbier (v5.3)',
+  ok('THE BOURSE opens at the TOP ('+BOURSE_START+') for every in-play beer except Gruit & Jopenbier (v5.6 \u2014 it only decays)',
     !!S.bourse&&!('gruit' in S.bourse)&&!('jopenbier' in S.bourse)&&('hopped' in S.bourse)
-    &&S.exports.every(function(b){return S.bourse[b]===0;})&&Object.keys(S.bourse).length===1+S.exports.length);
+    &&S.exports.every(function(b){return S.bourse[b]===BOURSE_START;})&&Object.keys(S.bourse).length===1+S.exports.length);
   ok('a warm-start ship is a Hulk → Bruges', SLOTS.some(function(s){var t=S.slots[s.id];return t&&t.ship==='hulk'&&t.dest==='bruges';}));
   ok('every house opens with a Ready Gruit (die 1) + ALL 3 vessels + 2 seats (v45h)', S.players.every(function(p){return p.vessels[0]&&p.vessels[0].die===1&&p.vslots===3&&p.vessels.length===3&&p.sslots===2;}));
   ok('specialist deck = 5 core × max(2,n−1) + 10 guild ×1 (3p → 20, v5.1 — Broker + Brewer’s Mate join)', S.impDeck.length+S.impDisplay.length===20);
@@ -439,9 +441,10 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   S.exports=['keut','broyhan','mumme'];q.recipes=['gruit','hopped','broyhan','keut'];q.hops=5;var qg2=q.grain,qh2=q.hops;
   UI.pendingRecipe=[{pid:1,dest:'bruges'}];afterSail('stops');
   ok('the Bruges prize PAYS a fee’d recipe — hops only (Mumme 1H, v4.9c)', q.grain===qg2&&q.hops===qh2-1&&q.recipes.length===5);
-  q.recipes=['gruit','hopped','broyhan','keut'];q.hops=0;var qr=q.recipes.length,qg2b=q.grain;
+  q.recipes=['gruit','hopped','broyhan','keut'];q.hops=0;var qr=q.recipes.length,qg2b=q.grain,qb2b=q.bank;
   UI.pendingRecipe=[{pid:1,dest:'bruges'}];afterSail('stops');
-  ok('no affordable recipe at Bruges → the 2-goods consolation (only the 1H Mumme out of reach)', q.recipes.length===qr&&q.grain===qg2b+1&&q.hops===1);
+  ok('v5.6: no affordable recipe at Bruges \u2192 the prize pays '+PRIZE_PTS+'\u2605, NOT goods (the consolation is retired)',
+    q.recipes.length===qr&&q.grain===qg2b&&q.hops===0&&q.bank===qb2b+PRIZE_PTS&&(q.bankP||0)===PRIZE_PTS);
   var qg3=q.grain;S.impDisplay=['cellar','crane','granary','hopgarden'];
   UI.pendingSpec=[{pid:1,dest:'bergen'}];afterSail('stops');
   ok('Bergen prize stays free', q.grain===qg3&&(q.upgrades||[]).length===1);
@@ -518,6 +521,57 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('the diagnostic dump names Ventures by face + level + owner (never \u2018BLDG undefined\u2019)',
     dg.indexOf('BLDG undefined')<0 && dg.indexOf('VENT Great Copper L2 [')>=0);
   stops();
+})();
+// ---- 20f. v5.6 THE GLUT + PRIZE-OR-★ (designer-ruled): the market only falls; every prize
+// is the port's thing OR ★, and the 2-goods consolation is gone from the whole game. ----
+(function(){var p=fresh();stops();p.ai=null;
+  // ONE STEP PER BEER TYPE — not per cask. A 3-cask single-beer hull steps once.
+  S.bourse.hopped=3;
+  var sh=ship('s4','hulk','bruges');
+  sh.load=[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:0,style:'hopped',q:2,die:2,act:'source'},
+           {owner:0,style:'hopped',q:2,die:2,act:'source'}];
+  sailShip('s4',0);
+  ok('a 3-cask single-beer hull steps the market ONCE (3\u21922) \u2014 per TYPE, never per cask', S.bourse.hopped===2);
+})();
+(function(){var p=fresh();stops();p.ai=null;   // a MIXED hull steps each type it carries
+  var ex=S.exports[0];S.bourse.hopped=3;S.bourse[ex]=3;
+  var sh=ship('s4','cog','bruges');
+  sh.load=[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:0,style:ex,q:STYLES[ex].q,die:STYLES[ex].q,act:'source'}];
+  sailShip('s4',0);
+  ok('a MIXED hull steps EACH beer type aboard once (both 3\u21922) \u2014 spread the damage, or concentrate and pay once',
+    S.bourse.hopped===2&&S.bourse[ex]===2);
+})();
+(function(){var p=fresh();stops();p.ai=null;   // the floor holds
+  S.bourse.hopped=BOURSE_MIN;
+  var sh=ship('s4','skute','bruges');sh.load=[{owner:0,style:'hopped',q:2,die:2,act:'source'}];
+  var d0=p.delivered.length;
+  sailShip('s4',0);
+  ok('\u2026and the glut FLOORS at '+BOURSE_MIN+' \u2699 (a flooded beer sells BELOW its die)',
+    S.bourse.hopped===BOURSE_MIN&&p.delivered[d0].val===Math.max(0,2+BOURSE_MIN));
+})();
+(function(){var p=fresh();stops();p.ai=null;   // the ONLY way up is a shift
+  S.bourse.hopped=1;
+  S.buildings.s1={v:'points',lvl:2,owner:0};   // Staple Rights prints the \u00b12 public line
+  ok('the only way UP is a shift \u2014 the Ventures\u2019 public lines still print them', VPUB[VENTURES.points.l2.pub].txt.indexOf('Bourse')>=0);
+  bourseShift('hopped',2);
+  ok('\u2026and a shift lifts (1\u21923, capped at '+BOURSE_MAX+')', S.bourse.hopped===3);
+})();
+(function(){   // NOVGOROD is the port that only pays money, and pays the most
+  ok('v5.6: Novgorod pays +3\u2605 per delivered die', DEST.novgorod.vbonus===3);
+  ok('\u2026enough to out-pay Bergen taking its prize as \u2605 (die+3 > die+'+PRIZE_PTS+') \u2014 the dominance collision is closed',
+    DEST.novgorod.vbonus>PRIZE_PTS);
+  ok('\u2026and Novgorod alone offers no THING to choose against', !DEST.novgorod.benefit);
+})();
+(function(){var p=fresh();stops();p.ai=null;   // LONDON never forfeits any more
+  p.hand=[];SLOTS.forEach(function(sx){S.buildings[sx.id]=null;});
+  var b0=p.bank||0;
+  UI.pendingBenefits=[{pid:0,dest:'london'}];afterSail('stops');
+  ok('v5.6: an unplayable London prize pays '+PRIZE_PTS+'\u2605 \u2014 the FORFEIT is retired',
+    p.bank===b0+PRIZE_PTS&&(p.bankP||0)===PRIZE_PTS);
+})();
+(function(){   // the 2-goods consolation must be gone from the ENGINE, not just from one path
+  var src=(typeof afterSail==='function')?afterSail.toString():'';
+  ok('no prize path pays the retired 2-goods consolation any more', src.indexOf('gain(lp,1,1)')<0);
 })();
 // ---- 20d-bis. v5.5: EVERY Venture kind must answer stopAvail. A kind that falls through
 // reads as a DEAD STOP \u2014 greyed for the human, skipped by the bot. (v5.5 shipped with
@@ -906,34 +960,30 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('the guild-tile fees stay grain-only in the kit data (a print audit \u2014 the fee chips are vestigial art at v5.3)', ['victual','bonded','weighhouse'].every(function(k){var f=BUILDINGS[k].fee;return f&&f.g&&!f.h;}));
 })();
 
-// ---- 28. v5.3 THE BOURSE: die + track \u00b7 bulk rise THEN score \u00b7 the brew crash \u00b7 the shifts ----
+// ---- 28. v5.6 THE GLUT: the market only FALLS \u2014 score, THEN one step per beer TYPE ----
 (function(){var p=fresh();stops();
-  ok('the bourse tracks every in-play beer except Gruit & Jopenbier, all at 0',
-    tracked('hopped')&&!tracked('gruit')&&!tracked('jopenbier')&&Object.keys(S.bourse).every(function(b){return S.bourse[b]===0;}));
-  // the brew crash
+  ok('the bourse tracks every in-play beer except Gruit & Jopenbier, and every marker OPENS AT THE TOP (v5.6)',
+    tracked('hopped')&&!tracked('gruit')&&!tracked('jopenbier')&&Object.keys(S.bourse).every(function(b){return S.bourse[b]===BOURSE_START;}));
+  // THE BREW CRASH IS RETIRED \u2014 a brew must not touch the market at all
   p.recipes=['gruit','hopped'];p.grain=9;p.hops=9;p.vessels=[null,null,null];
+  var b4=S.bourse.hopped;
   UI.sub='brew';UI.brew={returnTo:'stops',free:false,alt:true};brewPick('hopped');
-  ok('a BREW of a tracked beer slips its marker 1 (the supply crash)', S.bourse.hopped===-1);
-  UI.sub='brew';UI.brew={returnTo:'stops',free:false,alt:true};brewPick('hopped');
-  ok('\u2026and the track FLOORS at '+BOURSE_MIN+' \u2699', S.bourse.hopped===BOURSE_MIN);
+  ok('the BREW CRASH is retired \u2014 brewing moves no marker (v5.6)', S.bourse.hopped===b4);
   p.vessels=[null,null,null];p.presPool=13;
   UI.sub='brew';UI.brew={returnTo:'stops',free:false,alt:true};brewPick('gruit');
-  ok('Gruit is UNTRACKED \u2014 no marker, no crash', !('gruit' in S.bourse));
+  ok('Gruit is UNTRACKED \u2014 no marker, ever', !('gruit' in S.bourse));
   stops();UI.pendingActs=[];
 })();
-(function(){var p=fresh();stops();p.ai={tier:'journeyman'};   // BULK RISE THEN SCORE (ruled)
-  S.bourse.hopped=1;
+(function(){var p=fresh();stops();p.ai={tier:'journeyman'};   // SCORE, THEN THE GLUT (v5.6 ruled)
+  S.bourse.hopped=2;
   var sh=ship('s5','cog','bruges');
   sh.load=[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:0,style:'hopped',q:2,die:2,act:'source'}];
   var d0=p.delivered.length;
   sailShip('s5',0);
-  ok('the markers rise FIRST (+1 per cask: 1\u21923), THEN every cask scores die + track (2+3=5\u2605 each \u2014 ruled)',
-    S.bourse.hopped===3&&p.delivered.length===d0+2&&p.delivered[d0].val===5&&p.delivered[d0+1].val===5);
-  var b1=S.bourse.hopped;
-  var sh2=ship('s6','skute','bruges');sh2.load=[{owner:0,style:'hopped',q:2,die:2,act:'source'}];
-  sailShip('s6',0);
-  ok('\u2026and the rise CAPS at +'+BOURSE_MAX+' \u2699 (the cask still scores die+'+BOURSE_MAX+')',
-    S.bourse.hopped===BOURSE_MAX&&p.delivered[p.delivered.length-1].val===2+BOURSE_MAX);
+  ok('BOTH casks score at the PRINTED marker (2+2=4\u2605 each) \u2014 the seller cashes the price they could read',
+    p.delivered.length===d0+2&&p.delivered[d0].val===4&&p.delivered[d0+1].val===4);
+  ok('\u2026and the market then steps ONE for the beer TYPE, not one per cask (2\u21921 on a 2-cask hull)',
+    S.bourse.hopped===1);
   S.bourse.hopped=-1;
   var sh3=ship('s7','skute','novgorod');sh3.load=[{owner:0,style:'hopped',q:2,die:3,act:'source'}];
   sailShip('s7',0);
@@ -1052,8 +1102,8 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   p.vessels[0]={style:'jopenbier',q:6,die:6,act:'source'};
   var sh=ship('s3','skute','novgorod');
   UI={sub:'load',load:{ships:['s3'],returnTo:'stops',loadsLeft:1,cask:0}};loadCommit('s3',0,false);
-  ok('a Ready Jopenbier sails and delivers 8★ at Novgorod (6 + the printed premium)',
-    p.delivered.length===1&&p.delivered[0].val===8);
+  ok('a Ready Jopenbier sails and delivers 9★ at Novgorod (6 + the printed premium — v5.6)',
+    p.delivered.length===1&&p.delivered[0].val===9);
   var p2=fresh();JOPEN=true;S.jopen=true;
   p2.shipped={gruit:1,hopped:1,broyhan:1,keut:1,mumme:1,jopenbier:1};
   ok('the sixth Flight type: 6 distinct beers shipped → 25★', flightScore(p2)===25&&flightTypes().includes('jopenbier'));
@@ -1350,11 +1400,11 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   stops();UI.pendingActs=[];UI.brew=null;UI.bverb=null;
 })();
 (function(){var p=fresh();stops();p.ai=null;   // the Bergen fallback (v5.2b: confirmed + evened)
-  p.upgrades=['cellar','crane'];   // both seats FULL (no goods-faucet specialists — the Grain Factor would inflate the read)
-  var g0=p.grain,h0=p.hops;
+  p.upgrades=['cellar','crane'];   // both seats FULL
+  var g0=p.grain,h0=p.hops,b0=p.bank||0;
   UI.pendingSpec=[{pid:0,dest:'bergen'}];afterSail('stops');
-  ok('seats FULL \u2192 the Bergen prize pays 2 goods (1 grain + 1 hop \u2014 the fallback, ruled)',
-    p.grain===g0+1&&p.hops===h0+1&&(UI.pendingSpec||[]).length===0);
+  ok('v5.6: seats FULL \u2192 Bergen pays '+PRIZE_PTS+'\u2605, not goods \u2014 filling your bench never punishes you again',
+    p.grain===g0&&p.hops===h0&&p.bank===b0+PRIZE_PTS&&(p.bankP||0)===PRIZE_PTS&&(UI.pendingSpec||[]).length===0);
 })();
 (function(){var p=fresh();stops();p.ai=null;   // COUNTING HOUSE on the load path (v5.5: it banks \u2605, not a good)
   S.buildings.s4={v:'points',lvl:1,owner:0};var sh=ship('s4','cog','bruges');

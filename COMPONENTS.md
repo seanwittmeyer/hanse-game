@@ -1,10 +1,10 @@
-# Brewhouses of the Hanse — Components (v5.5 “Four Hands”)
+# Brewhouses of the Hanse — Components (v5.6 “The Glut”)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (the one clean rules document). Design rationale & history: `DESIGN.md` §9; the live watches: `DESIGN.md` §10.
-> - The live build is `play.html` — **v5.5 “Four Hands”** (`KEY hanse-v55`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `print.html` — the only kit in use** (components.js data is v5.5; the sheet layouts are the P4 refresh + the 2026-08-18 native-scale pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - The live build is `play.html` — **v5.6 “The Glut”** (`KEY hanse-v56`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `print.html` — the only kit in use** (components.js data is v5.6; the sheet layouts are the P4 refresh + the 2026-08-18 native-scale pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
 
 ---
 
@@ -28,8 +28,8 @@
 | Board | Qty | Holds |
 |---|---|---|
 | Main board — **the Wharf** | 1 | 2×2 stations, each printing a **PRIMARY and an ALTERNATE action** (v5.0 · v5.2b — Market *Source 3 / 1* · Brewhouse *Brew: search the stack / the top tile* · Cellar *Age 3 / 1* · Harbor *Commission at the Ship’s printed fee + load 1, no ★ / Load 1 onto any docked Ship*), ringed by 8 slots (a building seat + a ship seat each). |
-| **Destinations board** | 1 | The four Kontor panels — Bruges · London · Bergen · Novgorod — each printing its **minimum (die N+)**, its **prize** (recipe / building / specialist — Novgorod instead prints **value = the die +2★**), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the scored-★ audit) — plus the **Manifest deck well** (v5.0 — the Order row retired; the demand cards ride the Ships). *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
-| **The Bourse strip** *(v5.3 NEW)* | 1 | The beer-value track — **−1 · 0 · +1 · +2 · +3** ⚙, one lane; the **price markers** park on it (markers start at 0). Lives beside Market & Stores. |
+| **Destinations board** | 1 | The four Kontor panels — Bruges · London · Bergen · Novgorod — each printing its **minimum (die N+)**, its **prize as a CHOICE** (*the thing **or** 2★* ⚙ — Novgorod instead prints **value = the die +3★** ⚙ and offers no thing), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the scored-★ audit) — **plus THE BOURSE TRACK** (v5.6, ruled: it moved here from its own strip). **The Manifest deck well LEAVES this board** (v5.6 — *"it didn't really fit there anyways"*; the deck sits loose by the ship display). *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
+| **The Bourse track** *(v5.3 · MOVED v5.6)* | — | **Prints ON the Destinations board** (v5.6, ruled — the standalone strip leaves the kit). One lane, **−1 · 0 · +1 · +2 · +3** ⚙, **cells wide enough to hold EVERY beer token at once** (they stack up at +3 on setup and spread as the game runs). |
 | Player boards | 4 | **3 vessel slots + 2 specialist seats — all open from the start** (v45h). The Flight ladder + a printed **Manifest reminder** (v5.0 — claimed demands score at once; the old Orders pile zone is gone). Recipe cards sit beside it. Goods cap 8 printed. |
 | **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per player — the ★ scored in play (delivery ★ = die + Bourse marker · Manifest demands · Cooperage wharfage · Staple premiums · 1★ placed presence) as they land. *(New in v4.0 — the hard line demands a home for scored ★.)* |
 | Market & Stores board *(kit)* | 1 | **17.45×10.8″** — the displays: Ships 4 · Specialists 4 in the main column; the right column is **CASKS & RECIPES** (every beer's face-up pile ON the board — Gruit + Hopped · the dealt Q3 + Q4 beers · the Q5 beer + Jopenbier — beside the four export recipe stacks by tier); ringed by the score track. Cask slots 2.4×1″, recipe slots 1.85×2.55″ — component-true. *(The building display retired at v5.3 — Public Works stand from setup, Ventures live in hand.)* |
@@ -44,7 +44,7 @@
 | **Quality dice** | **52** (13 × 4 colours ⚙) | the cask/presence/clock component — see §1 (v5.3: no die ever stands on a building) |
 | Score discs (movers) | 4 (1/colour) | the score ring (flip/mark at +50) |
 | Worker pawns | 4 (1/colour) | the stations |
-| **Beer price markers** *(v5.3 NEW)* | **8** (1 per brewable beer; a game uses the in-play beers minus Gruit & Jopenbier — 4 in base) | the Bourse strip — a delivered cask scores **die + marker** |
+| **Beer price markers** *(v5.3 · RECUT v5.6)* | **8** (1 per brewable beer; a game uses the in-play beers minus Gruit & Jopenbier — 4 in base) | the Bourse track on the Destinations board — a delivered cask scores **die + marker**. **Each token is COLOUR-MATCHED to its beer AND prints the beer's NAME** (v5.6, ruled — four unlabelled discs on one lane was the legibility failure). **All start at the TOP (+3 ⚙)** and only ever walk down. |
 | +1-berth / minimum markers | — | none: the Kiln turns the die itself; Cooperage/Customs read from the tile |
 
 ## 4. Cask tiles (single-faced, 2.4×1″ ⚙)
@@ -255,13 +255,36 @@ ladder (v45h: the covers are off — no unlock duty).
 dice · the **hand of 4 ringed Venture tiles** (v5.2) · **Public Works: draw 3 (2p) / 4 (3–4p)
 of the 13 at random onto random slots — the rest are the BAG** (v5.4; every tile sails away
 with the Ship at its slot and the bag re-furnishes at end of turn until dry) ·
-**the Bourse strip: one price marker per in-play beer except Gruit & Jopenbier, at 0** (v5.3)
+**the Bourse track (on the Destinations board): one price marker per in-play beer except Gruit & Jopenbier, ALL AT THE TOP (+3 ⚙)** (v5.6)
 · **specialist deck 20/20/25 tiles at 2/3/4p** (the core 5 × max(2, n−1) + the guild 10 —
 v5.1) · displays: Ships 4 / Specialists 4 · **a Manifest on every non-Bruges hull** (v5.0) ·
 wharf seeds: Hulk→Bruges + 1 Ship ·
 worker placed free · first player fixed.
 
 ## 10. Kit deltas (v5-era — every ruling that touches a printed face lands a note here; older deltas live in git history)
+
+**v5.6 “The Glut” delta (2026-08-23, ruled — DESTINATIONS BOARD REPRINT · one component
+LEAVES the kit):**
+
+- **The Bourse strip is deleted as a separate board** and **reprints as a lane on the
+  DESTINATIONS BOARD** (*"The strip we build can simply be added to the destination board"*).
+  One track, **−1 … +3** ⚙, and its **cells must be wide enough to hold every beer token at
+  once** — on setup they all stack at the top and spread as the game runs.
+- **The beer price markers recut:** each token is **colour-matched to its beer AND prints the
+  beer's NAME** (*"Beer tokens match color and have a name on them to make it easy to see"*).
+  Four unlabelled discs on one shared lane was the legibility failure the designer flagged.
+- **The Manifest deck well LEAVES the Destinations board** (*"it didn't really fit there
+  anyways"*) — the deck sits loose beside the ship display. Card count unchanged.
+- **All four Kontor panels reprint.** Each now prints its prize as a **CHOICE** — *the thing
+  **or** 2★* ⚙ — and the **2-goods consolation line is struck everywhere it appeared**
+  (Bruges' *no affordable pick*, Bergen's *no seat to fill*). **Bergen prints three options**:
+  a specialist · a Bourse shift ±1 · 2★. **Novgorod reprints at +3★** ⚙ per delivered die
+  (was +2): without the bump, Bergen taking its prize as ★ strictly dominated it — lower
+  minimum, richer majority, same payout, plus an optional specialist.
+- **The player aid reprints** (the Kontor table's prize column, the Bourse line). **The
+  rulebook reprints** (§the Bourse, §the Kontore, the scoring spine).
+- **No cask, ship, building, Venture or specialist face changes.** No count changes anywhere
+  except the strip leaving.
 
 **v5.5 “Four Hands” delta (2026-08-23, ruled — VENTURE SHEET REPRINT, counts unchanged):**
 the 16 Venture tiles reprint entirely. The four designs **re-derive as themes — brew · age ·

@@ -367,8 +367,9 @@ table.vt2 td:first-child{white-space:nowrap}
           and stand them on <b>random slots</b>. The rest go into a <b>bag</b> &mdash; nobody
           builds one during play, no die ever stands on one, and every one of them eventually
           sails away (&sect;8).</li>
-          <li><b>The Bourse:</b> lay the strip beside the supply and set <b>one price marker
-          per beer in the game except Gruit and Jopenbier</b> on <b>0</b>.</li>
+          <li><b>The Bourse:</b> on the Destinations board&rsquo;s track, set <b>one price marker
+          per beer in the game except Gruit and Jopenbier</b> on <b>+3</b> &mdash; the top of the
+          track. From here the market only falls.</li>
           <li>Shuffle the <b>Specialist deck</b> and deal a <b>display of 4</b>.</li>
           <li>Shuffle the <b>12 Manifest cards</b> into a face-down deck on the Destinations board.
           Deal the top card face-up to <b>every Ship not bound for Bruges</b> as it enters play,
@@ -563,7 +564,7 @@ table.vt2 td:first-child{white-space:nowrap}
           <div class="exs"><b>Slot 2.</b> A <b>Cog</b> bound for Novgorod sits here with 1 berth
             filled. You load the Bock. Its die shows 5, clearing Novgorod&rsquo;s minimum of 3. That
             fills the Cog, so it <b>sails at once</b>.</div>
-          <div class="exs done"><b>Delivery.</b> Score <b>5★</b>, plus Novgorod&rsquo;s <b>+2★</b>.
+          <div class="exs done"><b>Delivery.</b> Score <b>5★</b>, plus Novgorod&rsquo;s <b>+3★</b>.
             The die parks at Novgorod. The Cog&rsquo;s <b>Manifest</b> prints a <i>die 5+</i> line
             worth <b>3★</b>, so you claim it. <b>10★ this turn</b>, and the Bock&rsquo;s load bonus
             fires now, after the sail. The Bock tile returns to the <b>bottom of its stack</b>.</div>
@@ -648,21 +649,30 @@ table.vt2 td:first-child{white-space:nowrap}
           <h3 class="sub">The Bourse &mdash; the price of beer moves</h3>
           <div class="panel plain" style="margin-bottom:4pt">
             <div class="pl"><img class="ic" src="art/icons/contract.png" alt="">Die + track</div>
-            <div style="font-size:7.9pt; line-height:1.34">One shared track, <b>&minus;1 &middot; 0
-            &middot; +1 &middot; +2 &middot; +3</b>, with a <b>price marker per beer</b> except
-            Gruit and Jopenbier (they trade off-book). A delivered cask scores <b>its die + its
+            <div style="font-size:7.9pt; line-height:1.34">One shared track on the Destinations
+            board, <b>&minus;1 &middot; 0 &middot; +1 &middot; +2 &middot; +3</b>, with a
+            <b>price marker per beer</b> except Gruit and Jopenbier (they trade off-book).
+            <b>Every marker starts at the top.</b> A delivered cask scores <b>its die + its
             beer&rsquo;s marker</b>, never below 0.</div>
           </div>
+          <p><b>The market only falls on its own.</b> Beer is scarce when the game opens, and
+          every shipment spends that scarcity.</p>
           <ul class="tight">
-            <li><b>Every brew</b> of a tracked beer slips its marker <b>&minus;1</b> (floor
-            &minus;1): new supply, softer price.</li>
-            <li><b>As a Ship lands</b>, each tracked beer&rsquo;s marker rises <b>+1 per cask of
-            it aboard</b> (cap +3) &mdash; <b>the rises land first, then every cask scores</b>.
-            A big delivery pumps its own price.</li>
-            <li><b>Shifts:</b> Bergen&rsquo;s prize moves any marker <b>&plusmn;1</b>; the
-            Ventures&rsquo; public lines print <b>&plusmn;1</b> and <b>&plusmn;2</b>; a cask loading
-            at the <b>Tollhouse</b> lets its loader shift <b>&plusmn;1</b>.</li>
+            <li><b>Score, then the glut.</b> Every cask aboard delivers at the marker printed
+            <b>right now</b>. Once the sail has resolved, <b>each beer that was aboard steps
+            down one</b> &mdash; <b>once per beer, however many casks of it rode</b>. A
+            three-cask hull of one beer costs a single step; a mixed hull steps each beer it
+            carried.</li>
+            <li><b>You are paid the price you could read.</b> No arrival bonus, nothing to
+            work out &mdash; the marker on the board is the marker you score.</li>
+            <li><b>The only way up is a shift</b>, and shifts come from what you build: the
+            Ventures&rsquo; public lines print <b>&plusmn;1</b> and <b>&plusmn;2</b>, a cask
+            loading at the <b>Tollhouse</b> lets its loader shift <b>&plusmn;1</b>, and
+            Bergen&rsquo;s prize moves any marker <b>&plusmn;1</b>.</li>
           </ul>
+          <div class="note"><span class="nl">Read the market before you brew</span>First to a
+          beer cashes it at the top; the fourth shipment sells into the crater. The beer nobody
+          has sailed is still worth <b>+3</b>.</div>
           <div class="note">
             <span class="nl">At the table</span>Brew what the wharf is <b>not</b> brewing &mdash;
             your own volume crashes your beer &mdash; and time your sails into a risen market.
@@ -724,8 +734,8 @@ table.vt2 td:first-child{white-space:nowrap}
           <div class="kh"><img class="ki" src="art/icons/kontor-bruges.png" alt="">Bruges</div>
           <div class="kb">
             <div class="kmin"><img class="ic" src="art/icons/quality-die.png" alt="">1+</div>
-            <div class="kpr"><b>Gain 1 recipe</b>, paying its printed fee. If you cannot afford any
-              of them, take 2 goods instead.</div>
+            <div class="kpr"><b>Gain 1 recipe</b>, paying its printed fee &mdash; <b>or take
+              2&starf;</b>.</div>
             <div class="kmaj">Majority <b>4 / 2 / 0</b></div>
           </div>
         </div>
@@ -734,7 +744,7 @@ table.vt2 td:first-child{white-space:nowrap}
           <div class="kb">
             <div class="kmin"><img class="ic" src="art/icons/quality-die.png" alt="">2+</div>
             <div class="kpr"><b>Open a Venture</b> from your hand, free &mdash; the fee is waived
-              (L1 or L2, the normal grounds).</div>
+              (play an L1, flip one, or overbuild) &mdash; <b>or take 2&starf;</b>.</div>
             <div class="kmaj">Majority <b>5 / 3 / 1</b></div>
           </div>
         </div>
@@ -742,9 +752,8 @@ table.vt2 td:first-child{white-space:nowrap}
           <div class="kh"><img class="ki" src="art/icons/kontor-bergen.png" alt="">Bergen</div>
           <div class="kb">
             <div class="kmin"><img class="ic" src="art/icons/quality-die.png" alt="">2+</div>
-            <div class="kpr"><b>Seat a Specialist</b> from the display, free (no seat to fill?
-              take <b>2 goods</b>, 1<span class="cube g"></span>+1<span class="cube h"></span>)
-              &mdash; <b>and shift any Bourse marker &plusmn;1</b>.</div>
+            <div class="kpr"><b>Seat a Specialist</b> from the display, free &mdash; <b>or</b>
+              shift any Bourse marker <b>&plusmn;1</b> &mdash; <b>or take 2&starf;</b>.</div>
             <div class="kmaj">Majority <b>9 / 5 / 2</b></div>
           </div>
         </div>
@@ -752,8 +761,9 @@ table.vt2 td:first-child{white-space:nowrap}
           <div class="kh"><img class="ki" src="art/icons/kontor-novgorod.png" alt="">Novgorod</div>
           <div class="kb">
             <div class="kmin"><img class="ic" src="art/icons/quality-die.png" alt="">3+</div>
-            <div class="kpr">No prize. Instead <b>every die delivered here scores +2★</b>, so a
-              delivery is worth 5★ to 8★.</div>
+            <div class="kpr">No prize to choose. Instead <b>every die delivered here scores
+              +3&starf;</b>, so a delivery is worth 6&starf; to 9&starf; &mdash; the port that
+              only pays money, and pays the most.</div>
             <div class="kmaj">Majority <b>8 / 5 / 2</b></div>
           </div>
         </div>
@@ -851,7 +861,7 @@ table.vt2 td:first-child{white-space:nowrap}
           <div class="ledger">
             <div class="lg">Scored in play, as it happens</div>
             <img class="li" src="art/icons/presence.png" alt="">
-            <div><b>Deliveries.</b> ★ equal to the die parked, plus 2★ more at Novgorod.</div>
+            <div><b>Deliveries.</b> ★ equal to the die parked <b>+ its beer&rsquo;s Bourse marker</b>, plus 3★ more at Novgorod.</div>
             <div class="lv">die</div>
             <img class="li" src="art/icons/contract.png" alt="">
             <div><b>Manifest lines</b> you claim (a seated Chronicler adds +2★ each).</div><div class="lv">1&ndash;4★</div>
