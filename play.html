@@ -716,7 +716,7 @@ const SPECIALTY_ROSTER=['gose','zerbster','duckstein'];  // join the draft pool 
 // LOAD BONUSES: the cask's printed action fires AS IT BOARDS a hull (after any sail it completes).
 const CASK_ACT={source:'Gain 2 goods (any mix)',age:'Age +2 (2 steps across your vessels)',
   goods3:'Gain 3 goods (any mix) — Gose’s pinned bonus',
-  zgyle:'Parti-gyle: brew a FREE Gruit into an open vessel (a tray die) · then Load 1 more cask — Zerbster’s pinned bonus',
+  zgyle:'Brew a free Gruit (no goods — a tray die, Ready at 1) + Load a cask — Zerbster’s pinned bonus',
   load:'Load 1 more cask onto any eligible Ship (its bonus fires too)',
   reach:'Place 1 presence - a tray die to a Kontor you have delivered to (1★; free — presence flows only through casks)',
   recipe:'Gain 1 recipe - a dealt export card at its printed fee (H = Q−3 — Q3s free; paid at Bruges too)',
@@ -1336,7 +1336,7 @@ function occToken(t){
 // destination chip + numbered load-order berths; buildings are the value/transform tile. Mirrors printables.html.
 const STYLE_COLOR={gruit:'#8a949c',hopped:'#c2922f',broyhan:'#b06a34',keut:'#9c5f2e',mumme:'#caa12a',bock:'#7c2128',gose:'#6e8b74',zerbster:'#5f7a3c',duckstein:'#7a5236',jopenbier:'#5e2433'};
 const DEST_COLOR={bruges:'#274b5c',london:'#b8860b',bergen:'#4a6b3a',novgorod:'#7c2128'};
-const P_ACT_TXT={source:'+2 goods',age:'Age +2',goods3:'+3 goods',zgyle:'a free Gruit · Load 1 more',load:'Load 1 more',reach:'+1 presence',recipe:'gain 1 recipe',survey:'open 1 Venture',hire:'gain 1 specialist',brew:'Brew 1',rack:'swap 2 casks’ dice (no cap)',assay:'1H → 1 cask Ready',hopex:'pay ≤2H: die +1 each',abbey:'pay 3H: ALL aging → Ready',exchange:'re-manifest up to 2 Ships',capstan:'move any docked Ship',invgain:'+1 ⚜ Invitation'};
+const P_ACT_TXT={source:'+2 goods',age:'Age +2',goods3:'+3 goods',zgyle:'Brew free Gruit + Load a Cask',load:'Load 1 more',reach:'+1 presence',recipe:'gain 1 recipe',survey:'open 1 Venture',hire:'gain 1 specialist',brew:'Brew 1',rack:'swap 2 casks’ dice (no cap)',assay:'1H → 1 cask Ready',hopex:'pay ≤2H: die +1 each',abbey:'pay 3H: ALL aging → Ready',exchange:'re-manifest up to 2 Ships',capstan:'move any docked Ship',invgain:'+1 ⚜ Invitation'};
 function pCost(g,h){let a='';if(g)a+='<span class="pgc">'+LU('wheat','pg')+g+'</span>';if(h)a+='<span class="pgc">'+LU('sprout','ph')+h+'</span>';return a;}
 // ---- the DEMAND DIE: pips = the ★ a cask banks from a value building (a d6, max 5; returns to the pool) ----
 const DIE_PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};   // 3×3 grid, 0-indexed

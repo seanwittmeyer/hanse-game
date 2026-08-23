@@ -63,7 +63,7 @@ const CASKS=[
   // PINNED-signature casks, drafted 3-of-7 with the toggle (>=1 base Q4+ guaranteed) ----
   // v4.15b [designer-ruled 2026-08-10 — "keep it simple"]: the signature IS the pinned bonus.
   {nm:'Gose', exp:1,     c:'#6e8b74', q:2, g:2,h:0, n:8, ready:1, pin:{k:'goods3',ai:'coins',act:'Gain 3 goods',q:2}},
-  {nm:'Zerbster', exp:1, c:'#5f7a3c', q:3, g:0,h:3, n:6, ready:1, pin:{k:'zgyle',ai:'package-plus',act:'Brew a free Gruit + Load any Cask',q:3}},
+  {nm:'Zerbster', exp:1, c:'#5f7a3c', q:3, g:0,h:3, n:6, ready:1, pin:{k:'zgyle',ai:'package-plus',act:'Brew free Gruit<br>+ Load a Cask',q:3}},
   {nm:'Duckstein', exp:1,c:'#7a5236', q:2, g:1,h:1, n:8, ready:1, pin:CASK_POOL[3], tag:'smoke-hardy:<br>'+LU('die-plus1')+' as it boards'},   // v4.14: the old ready-2 collapses to 1 (the die floors at 1); the board-lift IS the identity
   // ---- EXPANSION CAPSTONE "Jopenbier" (its OWN toggle) — v4.14: a PLAIN Q6 (the dock-vintage is cut —
   // it rode the deploy state); start 2, FOUR aging steps, the die parks at 6 (8★ at Novgorod) ----
@@ -244,7 +244,7 @@ const RECIPES=[  // EXPORT recipe cards — print in the same double-sided run a
   // EXPANSION "Specialty Beers" (v4.14 "Beer Atlas", opt-in) — the 3 specialty export recipe cards
   // (fees ride the ruled formula H = Q−3: the Q3-and-below are chip-less/FREE; Jopenbier pays 3H)
   {nm:'Gose',     cc:'#6e8b74', L:2, g:2,h:0, exp:1, buy:{}, reach:'Q2 · no hops · load: +3 '+LU('coins')},
-  {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, exp:1, buy:{}, reach:'Q3 · no grain · load: free Gruit + '+LU('package-plus')},
+  {nm:'Zerbster', cc:'#5f7a3c', L:3, g:0,h:3, exp:1, buy:{}, reach:'Q3 · no grain · load: brew free Gruit + load a cask'},
   {nm:'Duckstein',cc:'#7a5236', L:2, g:1,h:1, exp:1, buy:{}, reach:'Q2 · boards: '+LU('die-plus1')},
   {nm:'Jopenbier',cc:'#5e2433', L:6, g:2,h:4, exp:1, buy:{h:3}, reach:'Q6 capstone · start 2, four steps · off the Bourse — the plain die (8★ Novgorod)'},
 ];
