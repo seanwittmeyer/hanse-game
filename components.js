@@ -23,6 +23,8 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail','age-1':'station-age-1','age-2':'station-age-2',
   'goods-2':'goods-2','goods-3':'goods-3','brew-top':'station-brew-top',
   bourse:'bourse','bourse-plus1':'bourse-plus1','bourse-plus2':'bourse-plus2','bourse-pm1':'bourse-pm1','bourse-minus1':'bourse-minus1',
+  'star-plus1':'star-plus1','star-plus2':'star-plus2','star-plus3':'star-plus3','star-plus4':'star-plus4',
+  'star-minus1':'star-minus1','star-minus2':'star-minus2','star-minus3':'star-minus3',
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
 const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const LU=(n,cls)=>ICON_ART[n]?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/icons/'+ICON_ART[n]+'.png" alt="">':LUX(n,cls);
@@ -113,13 +115,13 @@ const BUILDINGS=[
   {k:'tollhouse', nm:'Tollhouse',         ms:3, verb:'transform', tgt:'cask', ic:'ticket',       n:1, g:1, cond:'On load', effIc:'bourse-pm1', eff:'1 marker'},   // v5.3b (ruled): the toll bench — the stamp face retired
   {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'Kontor min −1'},   // v5.2 ⚙ ruled: −1 (was −2 — almost broken)
   {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, art:'building-ropewalk.png', cond:'On load', effIc:'package-plus', eff:'+1 '+LU('beer')+' → other '+LU('sailboat')},   // v5.2 ⚙ ruled rework
-  {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, cond:'+1 berth', eff:'On load: +1★'},   // v4.12b: the wharfage eases 2→1 ⚙
+  {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, cond:'+1 berth', eff:'On load: '+LU('star-plus1','starmark')},   // v4.12b: the wharfage eases 2→1 ⚙
   {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, art:'building-weighhouse.png', cond:'On sail', effIc:'contract',     eff:'×2 Manifest lines'},
   // v5.2 NEW ⚙ — the STAPLE HOUSES (Stapelrecht): the destination premium, one crest each
-  {k:'staple_bruges',   nm:'Bruges Hanzehuis',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bruges', art:'building-staple.png', effIc:'kontor-bruges', cond:'On sail to Bruges', eff:'+2★ each cask'},
-  {k:'staple_london',   nm:'London Steelyard',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'london', art:'building-staple.png', effIc:'kontor-london', cond:'On sail to London', eff:'+2★ each cask'},
-  {k:'staple_bergen',   nm:'Bergen Bryggen',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bergen', art:'building-staple.png', effIc:'kontor-bergen', cond:'On sail to Bergen', eff:'+2★ each cask'},
-  {k:'staple_novgorod', nm:'Novgorod Peterhof', ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'novgorod', art:'building-staple.png', effIc:'kontor-novgorod', cond:'On sail to Novgorod', eff:'+2★ each cask'},
+  {k:'staple_bruges',   nm:'Bruges Hanzehuis',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bruges', art:'building-staple.png', effIc:'kontor-bruges', cond:'On sail to Bruges', eff:LU('star-plus2','starmark')+' each cask'},
+  {k:'staple_london',   nm:'London Steelyard',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'london', art:'building-staple.png', effIc:'kontor-london', cond:'On sail to London', eff:LU('star-plus2')+' each cask'},
+  {k:'staple_bergen',   nm:'Bergen Bryggen',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bergen', art:'building-staple.png', effIc:'kontor-bergen', cond:'On sail to Bergen', eff:LU('star-plus2')+' each cask'},
+  {k:'staple_novgorod', nm:'Novgorod Peterhof', ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'novgorod', art:'building-staple.png', effIc:'kontor-novgorod', cond:'On sail to Novgorod', eff:LU('star-plus2')+' each cask'},
   {k:'bonded',    nm:'Bonded Store',      ms:3, verb:'transform', tgt:'cask', ic:'warehouse',    n:1, g:2, cond:'On load: '+LU('die-plus1'), eff:'On sail: away · shippers +2 '+LU('coins')},
   {k:'victual',   nm:'Victualling Yard',  ms:3, verb:'transform', tgt:'cask', ic:'boxes',        n:1, g:2, cond:'On load: bonus ×2', eff:'On sail: leaves with the Ship'},
   // v4.16b "Guild Ledger" (designer-ruled 2026-08-14, off the lane study): the Guildhall's own
@@ -213,9 +215,9 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:LU('scroll-text')+' Recipes: pay no fee', g:2, c:'#5b3a8e', n:1},   // every channel, Bruges included
   {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'turn start: 3+ '+LU('beer')+' → age +1', g:2, c:'#5b3a8e', n:1},   // v4.12 rework — a full house earns the drip
   {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'rival sails your '+LU('beer')+': <span class="g">+1'+LU('wheat','g ic')+'</span><span class="h">+1'+LU('sprout','h ic')+'</span>', h:2, c:'#5b3a8e', n:1},   // v4.7: 1H→2H · v4.12 wording pass
-  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:LU('contract')+' Claim a line: <b>+2★</b>', g:1, h:1, c:'#5b3a8e', n:1},   // v5.0 rework ⚙ — no end-record; the ★ bank with the claim
-  {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'end: +2★ per '+LU('landmark')+' with 3+ '+LU('dices'), g:2, c:'#5b3a8e', n:1},
-  {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:LU('map-pin')+' Place presence: +2★', g:1, c:'#5b3a8e', n:1},   // v4.12: +2★ ⚙ per placed die
+  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:LU('contract')+' Claim a line: '+LU('star-plus2','starmark'), g:1, h:1, c:'#5b3a8e', n:1},   // v5.0 rework ⚙ — no end-record; the ★ bank with the claim
+  {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), g:2, c:'#5b3a8e', n:1},
+  {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:LU('map-pin')+' Place presence: '+LU('star-plus2','starmark'), g:1, c:'#5b3a8e', n:1},   // v4.12: +2★ ⚙ per placed die
   {ic:'arrow-right-left', nm:'Chandler', art:'a hand balance — grain on one pan, hop cones on the other', act:LU('store')+' Source: may swap <span class="g">1'+LU('wheat','g ic')+'</span> ↔ <span class="h">1'+LU('sprout','h ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v5.1 rework — the swap rides the Market flow
   {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:LU('ship')+' Commission: pay no fee', h:1, c:'#5b3a8e', n:1},
   // ---- v5.1 "Wharf Hands": the ALT-UPGRADE singles ⚙ — a station superpower each ----
@@ -304,9 +306,9 @@ const VENTURES=[
   {k:'counting', l1:{nm:'Counting House', ic:'coins',   pub:VPUB_GOLD, eff:'On load: +1 '+LU('coins'), art:'venture-counting-l1.png'},
                  l2:{nm:'Assay Loft',     ic:'scale',   pub:VPUB_GOLD, eff:'On line: 1'+LU('sprout','h')+' → '+LU('check'), art:'venture-counting-l2.png'}},
   {k:'factor',   l1:{nm:'Factor’s Desk',  ic:'arrow-right-left', pub:VPUB_SH1, eff:'On load: re-deal '+LU('contract'), art:'venture-factor-l1.png'},
-                 l2:{nm:'Staple Rights',  ic:'landmark',pub:VPUB_SH2, eff:'On sail: your '+LU('beer')+' +1★', art:'venture-factor-l2.png'}},
+                 l2:{nm:'Staple Rights',  ic:'landmark',pub:VPUB_SH2, eff:'On sail: your '+LU('beer')+' '+LU('star-plus1','starmark'), art:'venture-factor-l2.png'}},
   {k:'warehouse',l1:{nm:'Warehouse',      ic:'boxes',   pub:VPUB_GOLD, eff:'On load: +1 '+LU('beer'), art:'venture-warehouse-l1.png'},
-                 l2:{nm:'Guild Residence',ic:'home',    pub:VPUB_SH1, eff:'At end: 2★ × '+LU('home'), art:'venture-warehouse-l2.png'}},
+                 l2:{nm:'Guild Residence',ic:'home',    pub:VPUB_SH1, eff:'At end: '+LU('star-plus2','starmark')+' × '+LU('home'), art:'venture-warehouse-l2.png'}},
 ];
 const VENT_FOOT='rgba(31,86,122,.78)';   // the owner-only blue (the v2.4.1 privilege colour returns)
 // v5.3 restyle (designer 2026-08-22): a Venture SHARES the building tile's anatomy — the same
@@ -787,6 +789,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .vt-pub{display:inline-flex;align-items:center;gap:.02in;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);border-radius:.05in;padding:.015in .05in;margin-left:auto;font-size:.17in}'
 +'.btile .vt-pub .ic,.btile .vt-pub img.ai,.btile .vt-pub svg{width:.24in;height:.24in}'
 +'.btile .vt-own{display:inline-flex;align-items:center;gap:.015in}'
++'.btile .starmark,.itile .starmark{width:.26in!important;height:.26in!important;vertical-align:-.08in}'
 +'.btile .bt-ms img.ai,.btile .bt-ms svg{width:.24in;height:.24in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}'
 +'.btile .bt-nm{white-space:normal;overflow:visible;line-height:1.02}'
 +'.btile .bt-nm.long{font-size:.16in}'

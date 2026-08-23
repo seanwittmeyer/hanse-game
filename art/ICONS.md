@@ -109,6 +109,14 @@
 > place by the bold-contour cask-on-cart (no ship — a cask loads anywhere). Same round: the
 > ship-tile header drops its little ship icon and ready check (name · [die] N+ · fee).
 
+> **Round 11 (designer, 2026-08-23): the numbered STAR family + the house palette.** Seven
+> point-shift marks composite off `star.png` in the standing numeral recipe — `star-plus1..4`
+> white, `star-minus1..3` RED — and replace the +N★ text chips on the tile faces (Cooperage ·
+> the four Staple Houses · Staple Rights · Guild Residence [★+2]×[home] · Chronicler ·
+> Alderman · Town Crier) at a .26in `starmark` size (the .1in-icon lesson applies). Same
+> round: the four house colours (red·blue·green·yellow) are named `--house-*` vars in
+> play.html's styles; the Venture feet wear them.
+
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
 > (the tiles already carry full-bleed art). **ADDED: one icon per Kontor** — a city crest

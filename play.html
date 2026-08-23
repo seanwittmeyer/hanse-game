@@ -11,6 +11,9 @@
     --red:#7c2128; --red2:#9c3b2e; --gold:#b8860b; --gold2:#d8a72a;
     --sea:#274b5c; --sea2:#3d6b7e; --green:#4a6b3a; --line:#c8b48a;
     --grain:#d9b44a; --hops:#6b8e3d; --slate:#6b6256;
+    /* the four house colours (designer-ruled 2026-08-23) — the venture feet, pawns and owner
+       rings read these; the JS COLORS roster mirrors them in seat order red·blue·green·yellow */
+    --house-red:#7c2128; --house-blue:#274b5c; --house-green:#4a6b3a; --house-yellow:#b8860b;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--parch);color:var(--ink);
@@ -643,7 +646,7 @@
 //==================================================================
 // DATA
 //==================================================================
-const COLORS=['#7c2128','#274b5c','#4a6b3a','#b8860b','#5b3a8e'];
+const COLORS=['#7c2128','#274b5c','#4a6b3a','#b8860b','#5b3a8e'];   // seats 1-4 = the :root --house-red/-blue/-green/-yellow styles (5th seat purple, 5p mode)
 const CNAMES=['Sean','Olli','Adaline','Jillian','Guest'];
 
 // ---- ICONS (lucide.dev) ----
