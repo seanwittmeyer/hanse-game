@@ -117,6 +117,15 @@
 > round: the four house colours (red·blue·green·yellow) are named `--house-*` vars in
 > play.html's styles; the Venture feet wear them.
 
+> **Round 12 (designer picks, 2026-08-23): swap-dice · venture-build · redeal.**
+> `swap-dice.png` = two die faces corner-to-corner, the ⇄ struck centre at .55W in the
+> numeral treatment (pick E, mark enlarged) — the Rack House cell. `venture-build.png` =
+> the house + the bold gold coin stack front-right, the commission grammar (pick B) — the
+> Guild Residence ×-cell and the Open-1-Venture bonus. `redeal.png` = the contract scroll
+> + the gemini-drawn white/black refresh cycle at the lower right (pick C), the mark then
+> color-keyed out and re-composited at 1.5× on the clean scroll — the Factor's Desk cell.
+> All three fill the stand-ins named by the v5.3c venture-grammar pass.
+
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
 > (the tiles already carry full-bleed art). **ADDED: one icon per Kontor** — a city crest
