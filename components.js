@@ -25,6 +25,7 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   bourse:'bourse','bourse-plus1':'bourse-plus1','bourse-plus2':'bourse-plus2','bourse-pm1':'bourse-pm1','bourse-minus1':'bourse-minus1',
   'star-plus1':'star-plus1','star-plus2':'star-plus2','star-plus3':'star-plus3','star-plus4':'star-plus4',
   'star-minus1':'star-minus1','star-minus2':'star-minus2','star-minus3':'star-minus3',
+  'swap-dice':'swap-dice','venture-build':'venture-build',
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
 const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const LU=(n,cls)=>ICON_ART[n]?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/icons/'+ICON_ART[n]+'.png" alt="">':LUX(n,cls);
@@ -45,7 +46,7 @@ const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the
   {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},   // TODO(art 2026-08-09, designer): 'Load 1 more' wants its OWN icon — bonus-load reads too generic; brief queued in art/PROMPTS.md
   {k:'reach',   ai:'map-pin',       act:'+1 presence',         q:2},   // always FREE (v5.1 — the priced channel retired with the Almoner's Stall)
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe',          q:2},
-  {k:'survey',  ai:'search',        act:'Open 1 Venture',  q:3},   // v5.3: the Public Works are setup furniture — the verb opens YOUR tile at its fee
+  {k:'survey',  ai:'venture-build', act:'Open 1 Venture',  q:3},   // v5.3: the Public Works are setup furniture — the verb opens YOUR tile at its fee
   {k:'hire',    ai:'wrench',        act:'Gain 1 specialist',      q:3},
   {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:3},   // v4.12: Q3+ (was Q4+)
 ];
@@ -303,7 +304,7 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 // trigger word + icons. pub is pre-built icon HTML.
 const VPUB_STEP=LU('age-1'),VPUB_GOLD=LU('coins')+'+1',VPUB_SH1=LU('bourse-pm1'),VPUB_SH2=LU('bourse-plus2')+'▲';
 const VENTURES=[
-  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, eff:'On line: ⇄ 2 '+LU('dices'), art:'venture-rack-l1.png'},
+  {k:'rack',     l1:{nm:'Rack House',     ic:'repeat',  pub:VPUB_STEP, eff:'On line: '+LU('swap-dice','starmark'), art:'venture-rack-l1.png'},
                  l2:{nm:'Brewery',        ic:'flask-conical', pub:VPUB_STEP, eff:'On line: '+LU('flask-conical')+' (search)', art:'venture-rack-l2.png'}},
   {k:'counting', l1:{nm:'Counting House', ic:'coins',   pub:VPUB_GOLD, eff:'On load: +1 '+LU('coins'), art:'venture-counting-l1.png'},
                  l2:{nm:'Assay Loft',     ic:'scale',   pub:VPUB_GOLD, eff:'On line: 1'+LU('sprout','h')+' → '+LU('check'), art:'venture-counting-l2.png'}},
