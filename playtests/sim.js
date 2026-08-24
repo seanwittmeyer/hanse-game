@@ -5,7 +5,7 @@
 // Usage: node playtests/sim.js [N]      (N games per player count; default 100)
 // Env:   TIER=apprentice|journeyman|trader|guildmaster|cellarmaster (default journeyman)
 //        PERSONAS=1 — the v4 PATHWAYS oracle: trader seats committed round-robin to the four lanes
-//                     (majority · lifter · builder · breadth); per-lane win rates reported
+//                     (majority · lifter · builder · breadth · depth); per-lane win rates reported
 //        POOL=n sweeps the dice pool (THE pace dial) · GUILD_MS/CELLAR_MS lower the MC budgets
 //        ALTSRC=n / ALTAGE=n sweep the v5.0 alternate-station dials (override only when set)
 //        STAPLE=n — the v5.2 Staple House premium ⚙ (override only when set; the +2/+4 A/B)
@@ -31,15 +31,16 @@ if(__JIT>0){['journeyman','trader'].forEach(function(t){AI_TIERS[t].noise=__JIT;
 // own functions (function declarations are reassignable) so the counts are ground truth,
 // not policy inference. Reset per game; averaged in the summary.
 var __U=null;
-function __uReset(){__U={manifests:0,rack:0,assayUp:0,assayDown:0,toll:0,kilnLift:0,bondedSail:0,bmSeat:0,bmTick:0,
+function __uReset(){__U={chron:0,rack:0,assayUp:0,assayDown:0,toll:0,kilnLift:0,bondedSail:0,bmSeat:0,bmTick:0,
   victual:0,chandler:0,scargo:0,coopSail:0,customsBoard:0,tideBurn:0,   // v5.4: Public Works taken by the tide (a sail from their slot)
   comm_skute:0,comm_cog:0,comm_hulk:0,commG:0,built:0,bldgTicks:0,built_survey:0,built_prize:0,
   matured:0,ropeX:0,ventL1:0,ventL2:0,vflip:0,   // v5.2/v5.5: Ropewalk cross-quay loads · Venture L1 placements · L2 overbuilds · FLIPS (the same tile turned over)
   bshiftUp:0,bshiftDown:0,vpubGold:0,vpubStep:0,brewCrash:0,glut:0,prizeStars:0,   // v5.3: the bourse — manipulation shifts · public-line freebies · brew crashes
   pours:0,judged:0,slams:0,invE:0,invS:0,tilesWon:0};}   // v4.17 Tastings — pours · benches convened · door-slams · the ⚜ economy   // v4.9: builds + mason-die ticks   // v4.6 + the ship-shapers, instrumented at last (the AGRICOLA-STUDY B4 item) · v4.8: commissions by hull + grain paid (the 2/1/0 A/B)
 var __uOn=function(){return __U&&!aiSimulating;};   // never count MC-playout echoes
-var __manClaim=manClaim;manClaim=function(lp,gi,li){if(__uOn())__U.manifests++;return __manClaim(lp,gi,li);};   // v5.0: Manifest lines claimed
-var __invGrant=invGrant;invGrant=function(p,src){if(__uOn())__U.invE++;return __invGrant(p,src);};   // v5.0: every ⚜ faucet (Manifest claims · the Chancery · dials)
+var __invGrant=invGrant;invGrant=function(p,src){if(__uOn())__U.invE++;return __invGrant(p,src);};
+var __deliverCask=deliverCask;deliverCask=function(lp,L,dest){var r=__deliverCask(lp,L,dest);   // v5.7: the Chronicler pays per delivery now
+  if(__uOn()&&hasUpgrade(lp,'chronicler'))__U.chron++;return r;};   // v5.0: every ⚜ faucet (Manifest claims · the Chancery · dials)
 // v4.17 TASTINGS counters — pours · benches convened · door-slams · the ⚜ economy
 var __pourDo=pourDo;pourDo=function(vi,ci){var ct=S&&S.tastings&&(S.tastings.open||[])[ci];
   var pre=ct?ct.bench.length:0;var lead=ct?benchLeader(ct):null;var p=cur();
@@ -251,7 +252,7 @@ let anyErr=0;
   console.log(`per-player: brews ${fmt(avg(ok.map(r=>r.brews)))} · deliveries ${fmt(avg(ok.map(r=>r.delivs)))} · bank★ ${fmt(avg(ok.map(r=>r.builds)))}`);
   console.log(`delivery split: ${Object.keys(dd).map(k=>k+' '+pct(dd[k],dsum)).join(' · ')}`);
   { // v45c: the new-systems utilization dashboard (per-game averages)
-    const uk=['manifests','rack','assayUp','assayDown','toll','kilnLift','bondedSail','bmSeat','bmTick','tideBurn',
+    const uk=['chron','rack','assayUp','assayDown','toll','kilnLift','bondedSail','bmSeat','bmTick','tideBurn',
       'victual','chandler','scargo','coopSail','customsBoard',
       'comm_skute','comm_cog','comm_hulk','commG','built','bldgTicks','built_survey','built_prize',
       'matured','ropeX','ventL1','ventL2',
@@ -262,7 +263,7 @@ let anyErr=0;
     console.log(`the bourse (v5.6 THE GLUT): glut steps/game ${fmt(us.glut)} (one per beer TYPE per sail) · shifts UP ${fmt(us.bshiftUp)} vs DOWN ${fmt(us.bshiftDown)} · opens at ${BOURSE_START_R} → end track avg ${fmt(avg(ok.map(r=>r.bourseAvg||0)))} · prizes taken as ★ ${fmt(us.prizeStars)}/game`);
     console.log(`public works (v5.4 THE TIDE): burned by sails ${fmt(us.tideBurn)}/game · still standing at end ${fmt(avg(ok.map(r=>r.furn||0)))} · bag left ${fmt(avg(ok.map(r=>r.bagLeft||0)))} · (builds ${fmt(us.built)} — 0 by design: nobody builds a Public Work)`);
     console.log(`ventures (v5.5 FOUR HANDS): L1 placed/game ${fmt(us.ventL1)} · L2 climbs ${fmt(us.ventL2)} · standing at end/player ${fmt(avg(ok.map(r=>r.vents||0)))} · staple★/player ${fmt(avg(ok.map(r=>r.stapleStars||0)))} · FLIPS ${fmt(us.vflip)} · ropewalk cross-loads ${fmt(us.ropeX)}`);
-    console.log(`usage/game: manifest lines ${fmt(us.manifests)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)} · toll bench ${fmt(us.toll)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · victual loads ${fmt(us.victual)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);
+    console.log(`usage/game: chronicler ★ ${fmt(us.chron)} · rack ${fmt(us.rack)} · assay ${fmt(us.assayUp)} · toll bench ${fmt(us.toll)} · kiln/bonded lift ${fmt(us.kilnLift)} · bonded sail-away ${fmt(us.bondedSail)} · victual loads ${fmt(us.victual)} · braumeister ${fmt(us.bmSeat)} seat / ${fmt(us.bmTick)} ticks`);
     console.log(`shapers/game: chandler ${fmt(us.chandler)} · supercargo ${fmt(us.scargo)} · coop-berth sails ${fmt(us.coopSail)} · customs boards ${fmt(us.customsBoard)}`);
     if(us.pours>0)   // v4.17 TASTINGS dashboard
       console.log(`v4.17 tastings/game: pours ${fmt(us.pours)} · benches convened ${fmt(us.judged)} · door-slams ${fmt(us.slams)} · invites earned ${fmt(us.invE)} / spent ${fmt(us.invS)}`);

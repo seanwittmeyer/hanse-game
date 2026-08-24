@@ -52,7 +52,7 @@ governed here.
 | stack | n | A beer's face-up cask-tile supply (v5.0): a full Brew searches it and chooses the tile; the alternate takes the top tile; a delivered cask's tile returns to the bottom | — | stacks | No | ~~pile~~ (the pre-v5.0 term) | ● |
 | primary action | n | The action a station fires when YOUR worker stands on it (v5.0) | — | — | No | — | ● |
 | alternate action | n | The lesser action a station fires as the line's OTHER station (v5.0) | — | — | No | ~~alt~~ (allowed as the chip label only) | ● |
-| Manifest | n | The demand card riding a non-Bruges Ship (v5.0): three **demand lines** (a beer/tier · a die-as-parked · a combo → ★); a delivered cask may claim ONE line it satisfies — each line once per voyage; the card returns under the deck at sail (hall mode: the claim also pays an ⚜ Invitation) | contract | Manifests | Yes | ~~Order~~ (the tile retired at v5.0; lineage ~~lading~~ → ~~Contract~~ → ~~Order~~ → Manifest), ~~goal~~ | ● |
+| ~~Manifest~~ | n | **RETIRED at v5.7** — the demand card left the kit; the Bourse is the demand layer. Lineage kept: ~~lading~~ → ~~Contract~~ → ~~Order~~ → ~~Manifest~~. *Boarding order* survives as the sequence noun | — | — | — | — | ✕ v5.7 |
 | presence | n | Your parked dice at a Kontor | map-pin | — | No | ~~bump~~ (the act is "place presence") | ● |
 | prize | n | What a Kontor pays the cask's owner on delivery — **always the port's thing OR ★, the owner's choice per cask (v5.6)**. There is no consolation | — | prizes | No | ~~benefit~~, ~~reward~~, ~~fallback~~ (retired at v5.6) | ● |
 | fee | n | The wharf price printed on an acquirable item | — | fees | No | ~~cost~~ (generic ok), ~~price~~ | ● |

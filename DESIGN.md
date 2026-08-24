@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v5.6 “The Glut”** — live (`play.html`, KEY `hanse-v56`; designer-ruled 2026-08-23, records `archive/records/V55-FOUR-HANDS.md` + `V54-THE-TIDE.md` + `V5-DECISIONS.md`). The v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). **v5.4** makes every Public Work ephemeral — the wharf is a tide that washes the furniture away and thins into bare ground for the Ventures. **v5.5** re-derives the Venture hand as **four themed tiles (brew · age · die · points)** and adds the **FLIP** — a standing L1 turns over to its own L2 in place, spending no hand tile — so four tiles can become four buildings that each reach L2. **v5.6** turns the Bourse into a **GLUT**: every marker opens at the top and a sail steps each beer aboard down one (never per cask); the only way up is a shift you build. Every **Kontor prize becomes “the thing OR ★”** and the consolation retires. Details: §9; watches: §10. |
+|**Status**     |**v5.7 “Plain Sail”** — live (`play.html`, KEY `hanse-v57`; designer-ruled 2026-08-23, records `archive/records/V55-FOUR-HANDS.md` + `V54-THE-TIDE.md` + `V5-DECISIONS.md`). The v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). **v5.4** makes every Public Work ephemeral — the wharf is a tide that washes the furniture away and thins into bare ground for the Ventures. **v5.5** re-derives the Venture hand as **four themed tiles (brew · age · die · points)** and adds the **FLIP** — a standing L1 turns over to its own L2 in place, spending no hand tile — so four tiles can become four buildings that each reach L2. **v5.6** turns the Bourse into a **GLUT**: every marker opens at the top and a sail steps each beer aboard down one (never per cask); the only way up is a shift you build. Every **Kontor prize becomes “the thing OR ★”** and the consolation retires. **v5.7** cuts the **Manifests** — the Bourse is the demand layer, so the demand card was a duplicate that also broke the component-state line. Details: §9; watches: §10. |
 
 ---
 
@@ -85,7 +85,7 @@ expressed through the **dual-role cask die**, the **two building families** and 
 
 ---
 
-## 6. The current architecture (v5.6 “The Glut”)
+## 6. The current architecture (v5.7 “Plain Sail”)
 
 Canonical detail in `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -244,6 +244,51 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
+
+### v5.7 “Plain Sail” (2026-08-23, designer-ruled — record `archive/records/V57-PLAIN-SAIL.md`)
+*"Ditch the manifests for now."*
+
+**The letter that didn't feel right, and why.** The original Letter 4 proposed three ways to
+make Manifests into goals — and two of them added *more* Manifest machinery (claim markers, an
+all-lines-satisfied condition) to a layer the designer had already called **bolted on**. The
+letter was trying to fix the card instead of asking what job it was doing.
+
+**Then v5.6 made the question answerable.** Count the systems answering *"what is this cask
+worth?"*: the **die** · the **port premium** · the **Bourse marker** · the **Manifest**. Before
+the Glut the Bourse barely moved (end-track 0.4–1.1, and a ratchet), so the Manifest was the
+only live variable demand in the game. **After the Glut the Bourse opens at +3, every sail
+moves it, and it is printed on a board everyone reads.** The Bourse does the Manifest's job,
+better, publicly, with nothing to remember.
+
+So the Manifest was the **duplicate** — and it was the duplicate that had **no physical claim
+marker** (a confirmed component-state violation: three lines each claimable once per voyage,
+tracked in players' heads), resolved as a **post-sail rebate** rather than a plan, and paid
+roughly **8%** of a winning score. Retired whole; git history holds the cards.
+
+**Two dependencies had to be re-derived** — neither is a free subtraction:
+- **The Weigh House** (its entire face was *"claim 2 Manifest lines"*) becomes **"On sail:
+  this cargo does NOT glut."** It certifies the shipment so the market does not absorb it —
+  the only way to sell without spending the price. Thematically exact for a weigh house, costs
+  no new component, and it lands precisely where §10 said the game was short (up-shifts
+  running 4.3–5.0 against 9.2–15.0 glut steps). It is also the tool the specialist lane needs.
+- **The Chronicler** (+2★ per claim) becomes **+1★ per delivered cask** ⚙. Same job — a
+  scoring specialist paid per shipment — on a trigger that still exists.
+- **Hall mode's ⚜ faucet** re-homes from the claim to the **voyage** (the first cask you
+  deliver on a sail).
+
+- Engine: the whole `MANIFESTS` block, `manDealTo`/`manClaim`/`manMatches`/`manPick`/
+  `manLine*`/`aiManBonus`, the `pendingMan` queue, the `man` prompt and its human-gate/actor
+  entries all removed; `S.manifestDeck` gone from the save shape; `CHRON_PTS` added and paid
+  inside `deliverCask`; the Weigh House's `certified` flag skips the glut in `sailShip`.
+  Kit: `MANIFESTS_P`, `manifestTile`, `manLineFace` and the `.mftile` CSS removed;
+  `print.html` drops the card sheet, the deck well and the checklist row. KEY `hanse-v57`.
+- Gates: verify **378/378** (§21 retired whole; the Weigh House battery re-derived to the
+  certification, plus a check that **no Manifest machinery survives in the engine**) · sim
+  **0 crashes / 0 deadlocks** · aid ALL FIT.
+- Read (20×3): pace **16.4 / 13.7 / 13.1**, winner totals **80.0 / 77.2 / 73.3** — down from
+  v5.6's 89/89/78 by about the 8% the Manifests were paying, exactly as predicted. **Margins
+  stay high (23.3 / 14.4 / 16.4) and the short-game tail widened (min 8–9, band 95/80/70%)** —
+  see §10; the runaway watch is now the live one.
 
 ### v5.6 “The Glut” (2026-08-23, designer-ruled — record `archive/records/V56-THE-GLUT.md`)
 *"When a ship delivers casks to a kontor, each type of beer is moved down the track 1 space.
@@ -694,6 +739,30 @@ record is in git history.
 
 *Moved here from `RULES.md` §Open (2026-08-23). The designer calls full batteries; these
 are the things to read when one runs — or when a human table sits down.*
+
+**THE LIVE ONE — RUNAWAY MARGINS AND THE SHORT-GAME TAIL (v5.7 read, 20×3).** Pace
+**16.4 / 13.7 / 13.1**, band **95 / 80 / 70%** — and **every miss is a SHORT game** (min 8–9).
+Winner totals **80.0 / 77.2 / 73.3** (v5.6 was 89/89/78 — the Manifests were paying about the
+8% predicted). But **margins stay high: 23.3 / 14.4 / 16.4.** A 23★ margin at 2p is the thing
+to read at a table first; two letters in a row have now widened it. Suspects, untested:
+markers opening at +3 front-loads value onto whoever ships first · Novgorod +3★ · prizes as ★
+compounding for a leader. Levers, cheapest first: `BOURSE_START` (3→2) · `PRIZE_PTS` (2→1) ·
+the tray. **Nothing dialed.**
+
+**v5.7 “Plain Sail” — the two re-derivations are unplayed:**
+- **The Weigh House now certifies** (*"this cargo does not glut"*). It is the only way to sell
+  without spending the price, and it is deliberately strong — a Hulk sailing certified banks
+  three casks at the top marker and the market never notices. Watch whether it becomes the
+  must-have tile, and whether the tide taking it away (it sails with the ship, v5.4) is enough
+  of a brake.
+- **The Chronicler pays +1★ per delivered cask.** Flat and safe by design, but the sim shows it
+  seated rarely (0.0–2.0 ★/game). If it stays unseated it wants a sharper face, not a bigger
+  number.
+- **Does the demand layer leave a hole?** That was the whole reason to subtract first: play it
+  and see whether the Ships feel flat. If they do, the queued answer is a **market line on the
+  hull** (*"this beer does not glut" · "+1 to this beer" · "−1 to a beer of your choice"*) —
+  one line, fires at the sail, nothing to track, and it would be the up-shift supply §10 keeps
+  asking for.
 
 **v5.6 “The Glut” — BUILT, and two numbers to watch:**
 - **TOTALS AND MARGINS ROSE.** Winner totals **89.3 / 89.5 / 78.3** (were ~71–90) and margins

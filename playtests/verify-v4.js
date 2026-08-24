@@ -380,9 +380,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   var manOut=0,allNB=true,brPlain=true;
   var scan=function(t){if(!t)return;if(t.dest==='bruges'){if(t.man)brPlain=false;return;}if(t.man)manOut++;else allNB=false;};
   S.shipDisplay.forEach(scan);SLOTS.forEach(function(sl){var t=S.slots[sl.id];if(t&&t.type==='ship')scan(t);});
-  ok('every non-Bruges hull in play carries a Manifest — display AND warm start (v5.0)', allNB&&manOut>0);
-  ok('Bruges hulls sail PLAIN (no Manifest)', brPlain);
-  ok('the Manifest float is the printed 12 (deck + cards riding hulls)', S.manifestDeck.length+manOut===12);
+  ok('v5.7: NO hull carries a demand card any more — Ships are pure logistics', manOut===0&&!S.manifestDeck);
   S=freshState(2,['P1','P2']);
   ok('2p specialist deck: 5×2 + 10 guild singles (20)', S.impDeck.length+S.impDisplay.length===20);
   ok('2p setup stands 3 Public Works (setupWorksN — ruled: 3 or 4)', SLOTS.filter(function(sx){return S.buildings[sx.id];}).length===3);
@@ -664,7 +662,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   SLOTS.forEach(function(s){S.buildings[s.id]=null;});
   S.buildings.s5={b:'maltkiln'};
   var sh=ship('s5','skute','bruges',[{owner:0,style:'gruit',q:1,die:1,act:'source'}]);sh.man=null;
-  UI.pendingMan=[];UI.manResQ=[];UI.pendingRecipe=[];UI.pendingBenefits=[];UI.pendingSpec=[];
+  UI.pendingRecipe=[];UI.pendingBenefits=[];UI.pendingSpec=[];
   sailShip('s5',0);
   ok('THE TIDE: an ordinary Public Work sails with the Ship at its slot (the Kiln burns out)',
     S.buildings.s5===null);
@@ -713,51 +711,8 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   p.ai=null;
 })();
 
-// ---- 21. v5.0 MANIFESTS: the demand card on the hull — ONE line per cask · once per voyage · recycle pristine ----
-(function(){var p=fresh();stops();p.ai=null;
-  var d0=S.manifestDeck.length;
-  var sh=ship('s4','cog','london',[{owner:0,style:'bock',q:5,die:6,act:'age'},{owner:0,style:'gruit',q:1,die:2,act:'source'}]);
-  sh.man={k:'tman',lines:[{beer:'gruit',pts:1},{qmin:3,pts:2},{die:6,pts:3}]};
-  UI.pendingBenefits=[];UI.pendingRecipe=[];UI.pendingSpec=[];UI.pendingMan=[];UI.manResQ=[];
-  var g0=pileList('bock').length,g1=pileList('gruit').length;
-  sailShip('s4',0);
-  ok('the sail recycles the card UNDER the deck, pristine (no used-marks on the component)',
-    S.manifestDeck.length===d0+1&&S.manifestDeck[S.manifestDeck.length-1].k==='tman'&&!S.manifestDeck[S.manifestDeck.length-1].used);
-  ok('each delivered cask that satisfies a line queues ONE claim head, in boarding order',
-    (UI.pendingMan||[]).length===2&&UI.pendingMan[0].style==='bock'&&UI.pendingMan[1].style==='gruit');
-  ok('the delivered tiles return to the BOTTOM of their stacks (v5.0 — the ruled loop)',
-    pileList('bock').length===g0+1&&pileList('gruit').length===g1+1&&pileList('bock')[pileList('bock').length-1]==='age');
-  var m0=manMatches(UI.pendingMan[0]);
-  ok('the bock (Q5 · die 6) matches Q3+ and die-6, never the Gruit line', m0.length===2&&m0.every(function(o){return o.l.beer!=='gruit';}));
-  var b0=p.bank,l0=(p.bankL||0);
-  manClaim(p,UI.pendingMan[0].gi,2);
-  ok('the claim banks the printed ★ at once (+3 · bankL · the line counted)',
-    p.bank===b0+3&&(p.bankL||0)===l0+3&&(p.manLines||0)===1);
-  manClaim(p,UI.pendingMan[0].gi,2);
-  ok('a line pays ONCE PER VOYAGE — the double-claim is refused', p.bank===b0+3);
-  var m1=manMatches(UI.pendingMan[1]);
-  ok('the gruit (die 2) matches only its named line — and the spent line is gone from every head', m1.length===1&&m1[0].i===0);
-  manClaim(p,UI.pendingMan[1].gi,0);
-  ok('the second cask claims a REMAINING line (+1★)', p.bank===b0+4);
-  UI.pendingMan=[];UI.manResQ=[];UI.pendingBenefits=[];stops();
-})();
-(function(){var p=fresh();stops();p.ai=null;   // the deal law + the parked-face read + the Chronicler kick
-  var snB={ship:'cog',dest:'bruges'};manDealTo(S,snB);
-  ok('Bruges hulls are dealt NO Manifest (the prize is the cargo)', !snB.man);
-  var dl=S.manifestDeck.length;var snL={ship:'cog',dest:'london'};manDealTo(S,snL);
-  ok('a non-Bruges hull takes the top card as it enters', !!snL.man&&S.manifestDeck.length===dl-1);
-  var shN=ship('s5','skute','novgorod',[{owner:0,style:'mumme',q:4,die:4,act:'age'}]);
-  shN.man={k:'tnov',lines:[{die:5,pts:3},{die:4,pts:2},{qmax:2,pts:1}]};
-  UI.pendingMan=[];UI.manResQ=[];UI.pendingBenefits=[];UI.pendingRecipe=[];UI.pendingSpec=[];
-  sailShip('s5',0);
-  ok('a die line reads the PARKED face — after lifts, BEFORE Novgorod’s +2 premium (die 4, not 6)',
-    (UI.pendingMan||[]).length===1&&UI.pendingMan[0].die===4&&manMatches(UI.pendingMan[0]).length===1&&manMatches(UI.pendingMan[0])[0].l.die===4);
-  p.upgrades=['chronicler'];p.sslots=2;
-  var b0=p.bank;
-  manClaim(p,UI.pendingMan[0].gi,1);
-  ok('a seated Chronicler adds +'+CHRON_MAN+'★ per Manifest claim (v5.0 rework — at once, no end line)', p.bank===b0+2+CHRON_MAN&&CHRON_MAN===2);
-  UI.pendingMan=[];UI.manResQ=[];stops();
-})();
+// (§21 THE MANIFESTS — battery retired at v5.7 with the layer itself. The Bourse is the
+//  demand now; git history holds the old cards and their checks.)
 
 // ---- 22. v4.7 EVERY CASK: one prize grammar at all four kontors — Bergen per cask ----
 (function(){var p=fresh();stops();p.ai=null;
@@ -784,14 +739,14 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ok('the print offsets stagger the export mixes (broyhan ≠ bock openings)', caskCensus('broyhan')[0]!==caskCensus('bock')[0]||caskCensus('broyhan')[1]!==caskCensus('bock')[1]);
   ok('the expansion censuses: gose 8 · zerbster 6 · duckstein 8 · jopenbier 6 — pins throughout',
     caskCensus('gose').length===8&&caskCensus('zerbster').length===6&&caskCensus('duckstein').length===8&&caskCensus('jopenbier').length===6&&caskCensus('gose').every(function(v){return v===STYLES.gose.act;}));
-  ok('every Manifest line is DEAL-PROOF (starters + tier language only — no export by name)',
+  ok('(retired v5.7) the deal-proofing check went with the Manifest layer', true||
     MANIFESTS.every(function(m){return m.lines.every(function(l){return !l.beer||l.beer==='gruit'||l.beer==='hopped';})}));
   var KIT=window.HC;   // the engine's own HC binding predates the kit load — read the window
   if(KIT&&KIT.CASKS){   // the census-vs-kit drift gate (v4.13's lesson: a ruling that touches a printed face needs its kit note)
     var M={Gruit:'gruit',Hopped:'hopped',Broyhan:'broyhan',Keut:'keut',Mumme:'mumme',Bock:'bock',Gose:'gose',Zerbster:'zerbster',Duckstein:'duckstein',Jopenbier:'jopenbier'};
     var det='';KIT.CASKS.forEach(function(c){var k=M[c.nm];if(k&&CASK_QTY[k]!==c.n)det+=c.nm+' kit '+c.n+' vs engine '+(CASK_QTY[k]||0)+' · ';});
     ok('census-vs-kit: play.html CASK_QTY matches the printed tile counts (components.js)', det==='', det);
-    ok('the Manifest deck prints 12 on both surfaces (engine + kit)', MANIFESTS.length===12&&KIT.MANIFESTS_P.length===12);
+    ok('v5.7: the Manifest deck is gone from BOTH surfaces (engine + kit)', typeof MANIFESTS==='undefined'&&!KIT.MANIFESTS_P);
   } else ok('components.js loaded for the census drift gate', false);
 })();
 
@@ -909,9 +864,9 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 })();
 (function(){var p=fresh();stops();
   p.upgrades=['chronicler','alderman'];p.sslots=2;
-  p.manLines=7;p.presBonus.bruges=3;p.presBonus.bergen=2;
+  p.presBonus.bruges=3;p.presBonus.bergen=2;
   var sc=scorePlayer(p);
-  ok('the Chronicler scores NO end line (v5.0 — he pays +'+CHRON_MAN+'★ per claim IN PLAY); the Alderman stands (+2/kontor≥3)',
+  ok('the Chronicler scores NO end line (v5.7 — he pays +'+CHRON_PTS+'★ per DELIVERY, in play); the Alderman stands (+2/kontor≥3)',
     sc.guild===2&&sc.total===sc.deliv+sc.bank+sc.maj+sc.flight+sc.guild);
   ok('the Chronicler stays UNGATED', specGate({},'chronicler'));
 })();
@@ -989,7 +944,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   sailShip('s7',0);
   ok('a crashed beer under-scores (die 3 at \u22121\u21920 after its own rise \u2192 3\u2605 + the Novgorod +2 = 5)',
     p.delivered[p.delivered.length-1].val===5);
-  UI.pendingActs=[];UI.pendingMan=[];UI.manResQ=[];UI.pendingShift=[];UI.pendingRecipe=[];UI.pendingSpec=[];UI.pendingBenefits=[];stops();
+  UI.pendingActs=[];UI.pendingShift=[];UI.pendingRecipe=[];UI.pendingSpec=[];UI.pendingBenefits=[];stops();
 })();
 (function(){var p=fresh();stops();p.ai={tier:'journeyman'};   // BERGEN: specialist + ADJUST THE MARKET BY 1 (ruled)
   p.vessels=[{style:'hopped',q:2,die:2,act:'source'},null,null];
@@ -1115,12 +1070,12 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 // ---- 30. v4.17 "THE TASTINGS": the contest cycle · pours · judging · the ⚜ economy ----
 (function(){ // toggle OFF: base purity
   var p=fresh();
-  ok('hall OFF: no Tastings state (the base Manifest game is untouched)', !S.tastings&&S.manifestDeck.length>0);
+  ok('hall OFF: no Tastings state', !S.tastings);
   p.vessels[0]={style:'hopped',q:2,die:2,act:'age'};p.invites=5;
   ok('hall OFF: nothing is pourable even with (stray) invites', pourable(p).length===0);
-  var inv0=p.invites;UI.manResQ=[{lines:[{die:1,pts:1}],used:[false]}];manClaim(p,0,0);
-  ok('hall OFF: a Manifest claim pays NO invitation', p.invites===inv0);
-  UI.manResQ=[];
+  var inv0=p.invites||0;var shX=ship('s4','skute','london');
+  shX.load=[{owner:0,style:'hopped',q:2,die:2,act:'source'}];sailShip('s4',0);
+  ok('hall OFF: a delivered voyage pays NO invitation', (p.invites||0)===inv0);
 })();
 (function(){ // hall mode setup: the deck · the open row · the seed · the SAME Manifest game
   HALLEXP=true;var p2=fresh();HALLEXP=false;
@@ -1128,10 +1083,10 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   HALLEXP=true;var p=fresh(3);HALLEXP=false;
   ok('3p: open row 3 · deck 9', S.tastings.open.length===3&&S.tastings.deck.length===9);
   ok('every player starts with START_INV ⚜ (the printed seed)', S.players.every(function(q){return (q.invites||0)===START_INV;}));
-  ok('hall mode leaves the Manifest economy unchanged (the same 12-card deck)', S.manifestDeck.length>0);
-  var inv0=p.invites;UI.manResQ=[{lines:[{die:1,pts:1}],used:[false]}];manClaim(p,0,0);
-  ok('a Manifest claim pays +1 ⚜ in hall mode (source: man — the per-Order ⚜ re-seamed, v5.0)', p.invites===inv0+1&&p.invSrc.man===1);
-  UI.manResQ=[];
+  var inv0=p.invites;var shY=ship('s4','skute','london');
+  shY.load=[{owner:0,style:'hopped',q:2,die:2,act:'source'}];sailShip('s4',0);
+  ok('v5.7: a DELIVERED VOYAGE pays +1 ⚜ in hall mode (source: sail — re-homed off the retired Manifest claim)',
+    p.invites===inv0+1&&p.invSrc.sail===1);
 })();
 (function(){ // the POUR: cost · category law · the committed die
   HALLEXP=true;var p=fresh();HALLEXP=false;
@@ -1422,7 +1377,7 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
 (function(){var p=fresh();stops();p.ai=null;   // STAPLE HOUSE + STAPLE RIGHTS at the sail
   S.buildings.s5={b:'staple_bergen'};
   var sh=ship('s5','cog','bergen',[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:1,style:'gruit',q:1,die:2,act:'source'}]);
-  sh.man=null;UI.pendingMan=[];UI.manResQ=[];UI.pendingBenefits=[];UI.pendingRecipe=[];UI.pendingSpec=[];
+  UI.pendingBenefits=[];UI.pendingRecipe=[];UI.pendingSpec=[];
   var b0=S.players[0].bank;var bag0=(S.worksBag||[]).length;
   sailShip('s5',0);
   ok('STAPLE HOUSE \u2699: a matching-Kontor sail pays EVERY cask +'+STAPLE_PTS+'\u2605 (die-less furniture \u2014 v5.3)',
@@ -1464,18 +1419,32 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
   ship('s3','cog','london');S.buildings.s3={b:'customs'};
   ok('\u2026and London opens its door entirely (2\u22121\u21921 \u2014 any die)', gateNeed('s3')===1);
 })();
-(function(){var p=fresh();stops();p.ai=null;   // WEIGH HOUSE \u2014 a delivered cask may claim TWO lines (kept from v5.1)
-  S.buildings.s4={b:'weighhouse',owner:1,die:3};
-  var sh=ship('s4','cog','london',[{owner:0,style:'bock',q:5,die:6,act:'age'},{owner:0,style:'bock',q:5,die:5,act:'age'}]);
-  sh.man={k:'tw',lines:[{die:5,pts:3},{qmin:4,pts:3},{beer:'gruit',pts:1}]};
-  UI.pendingMan=[];UI.manResQ=[];UI.pendingBenefits=[];UI.pendingRecipe=[];UI.pendingSpec=[];
+(function(){var p=fresh();stops();p.ai=null;   // WEIGH HOUSE (v5.7 re-derived): it CERTIFIES the cargo — a certified shipment does not glut
+  S.buildings.s4={b:'weighhouse'};
+  S.bourse.hopped=3;
+  var sh=ship('s4','cog','bruges',[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:0,style:'hopped',q:2,die:2,act:'source'}]);
+  UI.pendingBenefits=[];UI.pendingRecipe=[];UI.pendingSpec=[];
   sailShip('s4',0);
-  ok('the Weigh House doubles each cask\u2019s claim heads (v5.1)', (UI.pendingMan||[]).length===4&&UI.pendingMan[1].second===true&&UI.pendingMan[1].wh==='s4');
-  var b0=p.bank;
-  manClaim(p,UI.pendingMan[0].gi,0);
-  manClaim(p,UI.pendingMan[1].gi,1);
-  ok('one cask claims TWO lines through the Weigh House (+3+3)', p.bank===b0+6);
-  UI.pendingMan=[];UI.manResQ=[];UI.pendingBenefits=[];stops();
+  ok('v5.7: the WEIGH HOUSE certifies the shipment \u2014 the cargo does NOT glut (3 stays 3)', S.bourse.hopped===3);
+  UI.pendingBenefits=[];stops();
+})();
+(function(){var p=fresh();stops();p.ai=null;   // \u2026and WITHOUT it the same sail gluts normally
+  S.bourse.hopped=3;
+  ship('s4','cog','bruges',[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:0,style:'hopped',q:2,die:2,act:'source'}]);
+  UI.pendingBenefits=[];UI.pendingRecipe=[];UI.pendingSpec=[];
+  sailShip('s4',0);
+  ok('\u2026and an UNcertified sail of the same shape steps the market as usual (3\u21922)', S.bourse.hopped===2);
+  UI.pendingBenefits=[];stops();
+})();
+(function(){var p=fresh();stops();p.ai=null;   // the CHRONICLER re-derives onto the delivery
+  p.upgrades=['chronicler'];p.sslots=2;
+  var b0=p.bank||0;
+  deliverCask(p,{owner:0,style:'hopped',q:2,die:2,act:'source'},'bruges');
+  ok('v5.7: the CHRONICLER pays +'+CHRON_PTS+'\u2605 per DELIVERED CASK (was +2\u2605 per Manifest claim)',
+    (p.bankL||0)===CHRON_PTS&&p.bank>b0);
+})();
+(function(){   // the Manifest layer must be gone from the ENGINE, not just from one path
+  ok('v5.7: no Manifest machinery survives in the engine', typeof MANIFESTS==='undefined'&&typeof manClaim==='undefined'&&typeof manDealTo==='undefined'&&typeof aiManBonus==='undefined');
 })();
 (function(){var p=fresh();stops();p.ai=null;   // CHANDLER \u2014 the swap rides the station Source (kept from v5.1)
   p.upgrades=['chandler'];p.sslots=2;p.chUsed=false;p.grain=2;p.hops=0;

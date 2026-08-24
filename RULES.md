@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — The Rules (v5.6 “The Glut”)
+# Brewhouses of the Hanse — The Rules (v5.7 “Plain Sail”)
 
 *The one rules document. Clean operational rules only — design rationale, decision
 history and open watches live in `DESIGN.md`; the physical manifest in `COMPONENTS.md`;
@@ -48,10 +48,8 @@ Shared board:
   Jopenbier** on **0** (§5c).
 - The **Specialist deck** (5 core designs × max(2, n−1) copies + the 10 guild singles),
   shuffled; deal a **display of 4**.
-- The **Manifest deck** (12 ⚙, §7b), shuffled — a card is dealt face-up to **every
-  non-Bruges Ship as it enters the display**, and it rides the hull to its slot.
-- **Warm start on the slots:** a guaranteed **Hulk → Bruges** + one more dealt ship (a
-  non-Bruges warm hull carries its Manifest) — the Public Works furniture already stands.
+- **Warm start on the slots:** a guaranteed **Hulk → Bruges** + one more dealt ship — the
+  Public Works furniture already stands.
 
 Each player places a worker on any station — **opening placement free.** First player
 fixed all game.
@@ -165,7 +163,7 @@ resolve at full strength on either line; all numbers ⚙).
 tiles come home on delivery. **The search belongs to the station:** the Brewhouse primary
 and the **Great Copper** Venture search the stack; the alternate Brewhouse, the **Mash
 Tun** Venture AND the *Brew 1* load bonus take the **top tile** blind. The alternate Harbor load is the wharf-wide relief
-valve — the demand is still the docked hulls' minimums and Manifests.)*
+valve — the demand is still the docked hulls' minimums and the Bourse.)*
 
 ---
 
@@ -188,8 +186,8 @@ traffic — whoever's cask, Ship or sail it is — and using one is always free.
 - **No die, no fee, no maturity, no build channel.**
 - **THE TIDE — every Public Work sails.** When a Ship sails from a slot, it takes that
   slot's Public Work with it. The tile is **boxed: it never comes back.** Whatever the
-  tile was owed it has already paid — the premiums, the lifts and the Manifest doubling
-  all resolve while it still stands, and *then* it goes.
+  tile was owed it has already paid — the premiums, the lifts and the Weigh House's
+  certification all resolve while it still stands, and *then* it goes.
 - **The wharf re-furnishes at the END of the turn:** draw from the bag onto slots with no
   building until **3 (2p) / 4 (3–4p) ⚙** stand again. The gap therefore stands for the
   rest of the turn the tile sailed on — everyone sees what burned out, and an **L1 Venture
@@ -209,7 +207,7 @@ traffic — whoever's cask, Ship or sail it is — and using one is always free.
 | **Customs House** | passive | **−1 to the Kontor minimum** at this slot ⚙ (floor 1; READY is still required) | 1 |
 | **Ropewalk** | on load here | a load here: **you may also load 1 Ready cask onto a DIFFERENT docked Ship** ⚙ (once per load flow here) | 1 |
 | **Cooperage** | passive · on load | the Ship here: **+1 capacity** (it sails only when that berth is also full) — and each cask loaded here scores its loader **+1★** ⚙ | 1 |
-| **Weigh House** | at sail | **each cask delivered off the Ship here may claim TWO Manifest lines** (each line still once per voyage) | 1 |
+| **Weigh House** | at sail | the Ship here sails **CERTIFIED** — its cargo **does NOT glut** the Bourse (§5c) | 1 |
 | **Staple Houses ×4** *(Bruges Hanzehuis · London Steelyard · Bergen Bryggen · Novgorod Peterhof)* | at sail | a Ship sailing from this slot **to the tile's Kontor**: **every delivered cask banks +2★** ⚙ (*Stapelrecht* — the destination premium) | 4 |
 | **Bonded Store** | on load · at sail | the boarding die **+1** (cap 6); as it sails, **every player with a cask aboard gains 2 goods** | 1 |
 | **Victualling Yard** | on load | the boarding cask's **load bonus fires TWICE** | 1 |
@@ -261,7 +259,7 @@ plain capstone trade off-book). **Every marker starts at the TOP (+3 ⚙).**
 spends it.
 
 - **A delivered cask scores its DIE + its beer's MARKER** (never below 0; the Novgorod
-  +3★, Staple premiums and Manifest ★ ride on top). The die itself never moves — gates,
+  +3★ and the Staple premiums ride on top). The die itself never moves — gates,
   presence, majorities and the clock still read the die alone.
 - **SCORE, THEN THE GLUT:** every cask aboard delivers **at the marker printed right now** —
   then, once the sail has resolved, **each beer TYPE that was aboard steps down ONE**
@@ -269,6 +267,9 @@ spends it.
   one beer costs the market a single step; a mixed hull steps each beer it carried.
 - **You cash the price you could read.** The marker on the board when you load is the
   marker you are paid — no arithmetic, no arrival bonus to compute.
+- **A CERTIFIED cargo does not glut:** a Ship sailing from the **Weigh House's** slot is
+  exempt — its casks score and the market does not absorb them (§5a). The one way to sell
+  without spending the price.
 - **The only way UP is a SHIFT**, and shifts belong to **buildings and private Venture
   lines** — the Ventures' **public lines** print **±1** and **±2**, the **Tollhouse** pays
   its loader a **±1** (the toll bench), and **Bergen's prize** moves any marker **±1**.
@@ -297,8 +298,7 @@ once, and fire each of their own Venture stops once — all optional, any order,
   cask's printed load bonus** (§6b) — **after any sail the load completes** (deliveries
   and prizes resolve first, then the bonus). A load at the **Ropewalk** also loads **1
   Ready cask onto a DIFFERENT docked Ship** (once per flow); your **Counting House** banks
-  **+1★** per load at its slot; a cask delivered off the **Weigh House's** Ship may claim **two**
-  Manifest lines (§5a). **A beer's FIRST load moves its recipe card to the board's
+  **+1★** per load at its slot. **A beer's FIRST load moves its recipe card to the board's
   COMPLETED side — the Flight record.** The freed vessel is open again. *(The Stevedore
   loads **2** in EVERY load flow. The **commission** includes one such load onto its new
   Ship — §4C.)*
@@ -306,8 +306,7 @@ once, and fire each of their own Venture stops once — all optional, any order,
   aboard **delivers in boarding order**: score ★ = its die + its beer's marker **as printed**,
   park the die at the Kontor, take the Kontor's prize (**the port's thing OR 2★** ⚙ — owner's
   choice, **when gained**; **every cask takes one**; boarding order = pick order), and the cask
-  **may claim ONE demand line of this Ship's Manifest it satisfies** (§7b — owner's choice;
-  each line once per voyage). **Then the glut:** each beer TYPE that was aboard steps its
+  **Then the glut:** each beer TYPE that was aboard steps its
   marker down one (§5c). The Ship returns to the bottom of the deck; **the slot's Public Work
   sails away with it, boxed** (§5a — the tide).
 - Casks are **private until aboard** — there is no loading of rival casks, and nothing on
@@ -365,44 +364,11 @@ on the other, **and both dice park for the majority.**
   delivered to** at **face 1** (1★ + majority weight + the clock; a seated Town Crier adds
   +2★ per die). No tray die → no placing presence.
 
-### 7b. Manifests — the demand cards on the Ships
-
-A shuffled **Manifest deck (12 ⚙)** sits by the Destinations board. **Every NON-BRUGES
-Ship carries one** — dealt face-up the moment the hull enters the ship display (the
-warm-start hulls included), riding with it to its slot. **Bruges hulls sail plain** (its
-recipe prize and gate 1+ are the whole invitation). Each card prints **three demand
-lines** — a named starter beer, a quality tier, a die minimum, or a combo — each with a
-printed ★ value:
-
-- **Claim = a qualifying delivery.** When the Ship sails, each delivered cask **may claim
-  ONE line it satisfies** (owner's choice, resolved in boarding order): the ★ **score at
-  once** to the track. **Each line pays once per voyage** — a full Hulk can claim up to
-  three *different* lines; two casks never split one line.
-- **Die lines read the PARKED face** — the die exactly as it parks, after every lift
-  (before Novgorod's +2★ premium and the Bourse marker). **Quality tiers read the cask**
-  (*Q2 or under · Q3+ · Q4+* — tier language, claimable under every deal); **a combo reads
-  tier AND die on the same cask.**
-- **Purely a bonus — never a gate.** Boarding still needs BOTH printed gates: the cask
-  **READY** (die at its quality) AND its die at the Kontor's minimum as it boards. The
-  Customs House lowers only the Kontor minimum, never READY. The Ship's trigger berth
-  prints both.
-- **The card recycles:** as the sail resolves, the card returns **under the deck**,
-  pristine — no tile comes to your seat; the score track is the whole record. The next
-  hull to enter the display draws the next card. *(Twelve cards cover the maximum float —
-  8 slots + a display of 4 — so a non-Bruges hull is never dealt dry.)*
-- **The Manifest is the variable economy** — the demand rides the very hull you race to
-  fill: the same die-5 Bock is worth more on a Ship whose card prints *Q4+ & die 5+ → 4★*.
-  Read the hulls before you brew, lift and load — the Manifest you can satisfy is worth
-  more than the one you cannot.
-
-**The line vocabulary ⚙:** named starters *Gruit → 1★ · Hopped → 2★* · quality tiers
-*Q2-or-under → 1★ · Q3+ → 2★ · Q4+ → 3★* · die *3+ → 1★ · 4+ → 2★ · 5+ → 3★ · 6 → 3★* ·
-combos *Q3+ & die 5+ → 4★ · Q4+ & die 5+ → 4★ · Q4+ & die 6 → 4★ · Q≤2 & die 3+ → 3★*
-(the lifted-fresh line). Each card mixes three.
-
-*(**Hall mode:** every claimed Manifest demand also pays an ⚜ Invitation — §12.)*
-
----
+*(**The Manifests retired at v5.7** — designer-ruled. The demand card was the game's fourth
+answer to *what is this cask worth?*, and v5.6's Bourse does that job better, publicly, with
+nothing to remember. It also broke the component-state line: three lines, each claimable once
+per voyage, with nothing physical marking a spent one. **Ships are pure logistics now** —
+berths, a destination, a minimum. The cards live in git history if the layer ever returns.)*
 
 ## 8. The player board (private) — 3 vessels · 2 seats
 
@@ -443,7 +409,7 @@ at once):**
   maturing cask ages +1** (the Braumeister's tick may stack).
 - **Supercargo** (fee `2H`) — each time a Ship carrying **your** cask sails on a
   **rival's** turn: gain **1 `G` 1 `H`**.
-- **Chronicler** (fee `1G` `1H`) — **claim a Manifest demand: +2★ at once** ⚙.
+- **Chronicler** (fee `1G` `1H`) — **each cask you deliver: +1★** ⚙ (the chronicle records every voyage).
 - **Alderman** (fee `2G`) — **game end: +2★ per Kontor where you have 3+ parked dice** ⚙.
 - **Town Crier** (fee `1G`) — **each presence die you place scores +2★** ⚙ (the die parks
   at face 1 as ever, so a placement banks 3★ total; still one die, one clock beat;
@@ -490,8 +456,7 @@ A **MAX_ROUND ceiling** (~25 ⚙) backstops a slow table. Pace target **~12–25
 1. **Deliveries + the Bourse** — ★ = the die **+ the beer's Bourse marker** (never below
    0), parked at the Kontor; Novgorod +3★ ⚙ on top. The dice on the mats and the markers
    on the track are the audit — the Bourse pays at the moment of sale, no memory.
-2. **Manifest demands** — the claimed line's printed ★ (a seated Chronicler adds +2★ per
-   claim; the card recycles — the score track is the record).
+2. **The Chronicler** — **+1★** ⚙ per cask you deliver, if the specialist is seated.
 3. **Cooperage wharfage** — **+1★** per cask loaded at its slot ⚙.
 4. **Placed presence** — 1★ each (the face-1 die; a seated Town Crier adds +2★ per die).
 5. **Kontor prizes taken as ★** — **+2★** ⚙ for each cask that declined its port's thing.
@@ -521,7 +486,7 @@ audit trail; no memory required.)*
 ## 12. Expansions (opt-in toggles)
 
 *Independent **New Game toggles**, freely mixable. With all off the base game is
-unchanged. Everything else — Kontore, majorities, Manifests, the Flight, the clock,
+unchanged. Everything else — Kontore, majorities, the Bourse, the Flight, the clock,
 scoring — runs as written: the expansions are roster content under the existing grammar.
 Every expansion beer is **pinned**: all its cask tiles print the same load bonus
 (drafting a pinned beer IS the agency — the Gruit rule, generalized). **The Bourse
@@ -551,7 +516,7 @@ it is **always acquirable** at every recipe channel (Bruges' prize · the *Gain 
 bonus) at its printed fee **3 `H`** ⚙ (the formula; the Guild Scholar waives). Brew
 **2 `G` 4 `H`** ⚙; the die starts at **2** and wants **four aging steps** — the longest
 climb in the game (the Cellarman starts it at 3). Ready at **6**: it delivers **6★
-anywhere, 8★ at Novgorod**, qualifies for every die-6 Manifest line, and counts for the
+anywhere, 9★ at Novgorod**, and counts for the
 Flight as a **sixth beer** (6 shipped → **25★** ⚙). Building lifts are void on it (the
 cap is 6). **It trades OFF the Bourse:** no marker — its brews crash nothing, its
 landings lift nothing, and its price never moves; the capstone's 6 is contract-solid.
@@ -562,7 +527,7 @@ landings lift nothing, and its price never moves; the capstone's 6 is contract-s
 
 - **Setup:** shuffle the **Tasting deck (12 ⚙)** and lay out the open row — **2 Tastings
   at 2p · 3 at 3–4p** ⚙. Each player takes **2 ⚜ Invitations** ⚙. **Every claimed
-  Manifest demand also pays an ⚜ Invitation**, and the **Guild Chancery** is guaranteed
+  voyage you deliver a cask on also pays an ⚜ Invitation** (once per sail), and the **Guild Chancery** is guaranteed
   among the setup Public Works (resolve its slot: gain 1 ⚜).
 - **Pour (during your turn, any number):** spend **1 ⚜ + one Ready cask from your vessels
   that matches the Tasting's printed category**. Its die stands on the tile's **next

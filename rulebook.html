@@ -371,9 +371,7 @@ table.vt2 td:first-child{white-space:nowrap}
           per beer in the game except Gruit and Jopenbier</b> on <b>+3</b> &mdash; the top of the
           track. From here the market only falls.</li>
           <li>Shuffle the <b>Specialist deck</b> and deal a <b>display of 4</b>.</li>
-          <li>Shuffle the <b>12 Manifest cards</b> into a face-down deck on the Destinations board.
-          Deal the top card face-up to <b>every Ship not bound for Bruges</b> as it enters play,
-          the display and the warm slots alike. Bruges Ships sail plain.</li>
+
           <li><b>Warm the slots</b>: place 1 Hulk bound for Bruges and 1 more Ship from the deck
           on slots of different lines. These setup pieces belong to nobody.</li>
           <li>Each player puts a worker on <b>any station</b>. Opening placement is free and may
@@ -565,8 +563,7 @@ table.vt2 td:first-child{white-space:nowrap}
             filled. You load the Bock. Its die shows 5, clearing Novgorod&rsquo;s minimum of 3. That
             fills the Cog, so it <b>sails at once</b>.</div>
           <div class="exs done"><b>Delivery.</b> Score <b>5★</b>, plus Novgorod&rsquo;s <b>+3★</b>.
-            The die parks at Novgorod. The Cog&rsquo;s <b>Manifest</b> prints a <i>die 5+</i> line
-            worth <b>3★</b>, so you claim it. <b>10★ this turn</b>, and the Bock&rsquo;s load bonus
+            The die parks at Novgorod. The Bock&rsquo;s beer marker then steps down one — the market absorbs the shipment. <b>3★</b>, so you claim it. <b>10★ this turn</b>, and the Bock&rsquo;s load bonus
             fires now, after the sail. The Bock tile returns to the <b>bottom of its stack</b>.</div>
         </div>
       </div>
@@ -689,7 +686,7 @@ table.vt2 td:first-child{white-space:nowrap}
         <div>
           <p>Ships are <b>neutral</b>. Each is bound for a printed Kontor and prints its minimum.
           They come from a display of 4, and every Ship <b>not bound for Bruges</b> carries a
-          face-up <b>Manifest card</b> from the moment it enters the display.</p>
+</p>
           <table style="margin-bottom:5pt">
             <tr><th>Hull</th><th class="n">Berths</th><th class="n">Fee to commission</th></tr>
             <tr><td><b>Skute</b></td><td class="n">1</td><td class="n">2<span class="cube g"></span></td></tr>
@@ -714,9 +711,9 @@ table.vt2 td:first-child{white-space:nowrap}
             <li><span><b>Score ★ equal to its die.</b></span></li>
             <li><span><b>Park the die</b> at the Kontor, pips showing. It is now your presence there.</span></li>
             <li><span><b>Take the Kontor&rsquo;s prize.</b> Every cask pays its Kontor&rsquo;s prize.</span></li>
-            <li><span>You <b>may claim 1 line of the Ship&rsquo;s Manifest</b> the cask satisfies. Each line pays <b>once per voyage</b>.</span></li>
+            <li style="display:none"><span>(retired v5.7)<!-- Each line pays <b>once per voyage</b>.</span></li>
           </ol>
-          <p>The Ship returns to the bottom of its deck, its Manifest slides <b>under the Manifest deck</b>, and every delivered cask&rsquo;s tile returns to the <b>bottom of its beer&rsquo;s stack</b>.</p>
+          <p>The Ship returns to the bottom of its deck<!-->, and every delivered cask&rsquo;s tile returns to the <b>bottom of its beer&rsquo;s stack</b>.</p>
           <div class="note">
             <span class="nl">The berth race</span>Casks are private until they board, so nobody can
             touch your beer. What rivals take is the <b>berth</b>: topping off a Ship sails
@@ -778,17 +775,16 @@ table.vt2 td:first-child{white-space:nowrap}
           <b>always free</b>.</p>
         </div>
         <div>
-          <h3 class="sub">Manifests</h3>
-          <p>Every <b>non-Bruges</b> Ship carries a <b>Manifest card</b>: three generic demand
-          lines &mdash; a named starter, a quality tier, a die face, or a combo &mdash; each worth
-          <b>1★ to 4★</b>.</p>
-          <p>As the Ship sails, each delivered cask <b>may claim one line it satisfies</b>; the ★
-          score at once. A die line reads the <b>parked face</b>, after lifts and before
-          Novgorod&rsquo;s premium. The card then returns <b>under the deck</b>, pristine.</p>
+<h3 class="sub">The prize is a choice</h3>
+          <p>Every delivered cask takes its Kontor&rsquo;s prize &mdash; <b>the port&rsquo;s thing
+          <i>or</i> 2&starf;</b>, the owner&rsquo;s choice, resolved in boarding order.</p>
+          <p>There is <b>no consolation</b>. A full specialist bench, a hand with no playable
+          Venture, a shelf holding every recipe &mdash; none of them punishes you, because the
+          &starf; was always on the table.</p>
           <div class="note">
-            <span class="nl">At the table</span><b>One line per delivered cask, and each line pays
-            once per voyage.</b> Several casks on one Ship claim in boarding order, so earlier
-            casks pick first. Claiming is always optional.
+            <span class="nl">At the table</span>Two casks on one hull to Bergen can seat a
+            <b>Specialist</b> on one and bank the <b>2&starf;</b> on the other &mdash; and both
+            dice park for the majority.
           </div>
         </div>
       </div>
@@ -864,7 +860,7 @@ table.vt2 td:first-child{white-space:nowrap}
             <div><b>Deliveries.</b> ★ equal to the die parked <b>+ its beer&rsquo;s Bourse marker</b>, plus 3★ more at Novgorod.</div>
             <div class="lv">die</div>
             <img class="li" src="art/icons/contract.png" alt="">
-            <div><b>Manifest lines</b> you claim (a seated Chronicler adds +2★ each).</div><div class="lv">1&ndash;4★</div>
+            <div><b>Kontor prizes</b> taken as &starf; (a seated Chronicler adds +1&starf; per delivered cask).</div><div class="lv">2&starf;</div>
             <img class="li" src="art/icons/presence.png" alt="">
             <div><b>Placed presence</b>, each die.</div><div class="lv">1★</div>
             <img class="li" src="art/icons/building.png" alt="">

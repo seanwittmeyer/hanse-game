@@ -1,10 +1,10 @@
-# Brewhouses of the Hanse — Components (v5.6 “The Glut”)
+# Brewhouses of the Hanse — Components (v5.7 “Plain Sail”)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (the one clean rules document). Design rationale & history: `DESIGN.md` §9; the live watches: `DESIGN.md` §10.
-> - The live build is `play.html` — **v5.6 “The Glut”** (`KEY hanse-v56`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `print.html` — the only kit in use** (components.js data is v5.6; the sheet layouts are the P4 refresh + the 2026-08-18 native-scale pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - The live build is `play.html` — **v5.7 “Plain Sail”** (`KEY hanse-v57`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - **The print kit is `print.html` — the only kit in use** (components.js data is v5.7; the sheet layouts are the P4 refresh + the 2026-08-18 native-scale pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
 
 ---
 
@@ -28,10 +28,10 @@
 | Board | Qty | Holds |
 |---|---|---|
 | Main board — **the Wharf** | 1 | 2×2 stations, each printing a **PRIMARY and an ALTERNATE action** (v5.0 · v5.2b — Market *Source 3 / 1* · Brewhouse *Brew: search the stack / the top tile* · Cellar *Age 3 / 1* · Harbor *Commission at the Ship’s printed fee + load 1, no ★ / Load 1 onto any docked Ship*), ringed by 8 slots (a building seat + a ship seat each). |
-| **Destinations board** | 1 | The four Kontor panels — Bruges · London · Bergen · Novgorod — each printing its **minimum (die N+)**, its **prize as a CHOICE** (*the thing **or** 2★* ⚙ — Novgorod instead prints **value = the die +3★** ⚙ and offers no thing), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the scored-★ audit) — **plus THE BOURSE TRACK** (v5.6, ruled: it moved here from its own strip). **The Manifest deck well LEAVES this board** (v5.6 — *"it didn't really fit there anyways"*; the deck sits loose by the ship display). *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
+| **Destinations board** | 1 | The four Kontor panels — Bruges · London · Bergen · Novgorod — each printing its **minimum (die N+)**, its **prize as a CHOICE** (*the thing **or** 2★* ⚙ — Novgorod instead prints **value = the die +3★** ⚙ and offers no thing), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the scored-★ audit) — **plus THE BOURSE TRACK** (v5.6, ruled: it moved here from its own strip). *(The Manifest deck well left at v5.6 — and the deck itself left the game at v5.7.)* *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
 | **The Bourse track** *(v5.3 · MOVED v5.6)* | — | **Prints ON the Destinations board** (v5.6, ruled — the standalone strip leaves the kit). One lane, **−1 · 0 · +1 · +2 · +3** ⚙, **cells wide enough to hold EVERY beer token at once** (they stack up at +3 on setup and spread as the game runs). |
-| Player boards | 4 | **3 vessel slots + 2 specialist seats — all open from the start** (v45h). The Flight ladder + a printed **Manifest reminder** (v5.0 — claimed demands score at once; the old Orders pile zone is gone). Recipe cards sit beside it. Goods cap 8 printed. |
-| **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per player — the ★ scored in play (delivery ★ = die + Bourse marker · Manifest demands · Cooperage wharfage · Staple premiums · 1★ placed presence) as they land. *(New in v4.0 — the hard line demands a home for scored ★.)* |
+| Player boards | 4 | **3 vessel slots + 2 specialist seats — all open from the start** (v45h). The Flight ladder (the Manifest reminder zone clears at v5.7 with the cards). Recipe cards sit beside it. Goods cap 8 printed. |
+| **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per player — the ★ scored in play (delivery ★ = die + Bourse marker · Kontor prizes taken as ★ · Cooperage wharfage · Staple premiums · 1★ placed presence) as they land. *(New in v4.0 — the hard line demands a home for scored ★.)* |
 | Market & Stores board *(kit)* | 1 | **17.45×10.8″** — the displays: Ships 4 · Specialists 4 in the main column; the right column is **CASKS & RECIPES** (every beer's face-up pile ON the board — Gruit + Hopped · the dealt Q3 + Q4 beers · the Q5 beer + Jopenbier — beside the four export recipe stacks by tier); ringed by the score track. Cask slots 2.4×1″, recipe slots 1.85×2.55″ — component-true. *(The building display retired at v5.3 — Public Works stand from setup, Ventures live in hand.)* |
 | **Player aid** *(kit)* | 3–6 | A **letter TRI-FOLD of three identical double-sided aids** — front: the play face; back: End & Score + the two-column icon legend. Two straight cuts yield three aids; identical panels register under any duplex flip (4p: print two sheets). Rulebook + aid = the complete rules. |
 
@@ -120,7 +120,7 @@ tile, boxed — the family rule since v5.4), and a full wharf lets an L1 Venture
 | **Customs House** | 1 | **−1 to the Kontor minimum** at this slot ⚙ (floor 1 — v5.2, ruled: was −2, “almost broken”) | 2 `G` | 3 |
 | **Ropewalk** *(v5.2 rework, ruled)* | 1 | a load here: **also load 1 Ready cask onto a DIFFERENT docked Ship** ⚙ (once per load flow) | 2 `G` | 3 |
 | Cooperage | 1 | the Ship here: **+1 capacity** (sails only when that berth is also full) · **each cask loaded here: its loader +1★** ⚙ | 2 `G` | 3 |
-| **Weigh House** | 1 | **each cask delivered off the Ship here may claim 2 Manifest lines** | 2 `G` | 3 |
+| **Weigh House** *(v5.7 re-derived)* | 1 | *On sail:* the Ship here sails **CERTIFIED** — its cargo **does not glut** the Bourse | 2 `G` | 3 |
 | **Staple Houses ×4** *(Bruges Hanzehuis · London Steelyard · Bergen Bryggen · Novgorod Peterhof)* | 4 | *On sail to the tile's Kontor:* **every delivered cask +2★** ⚙ (*Stapelrecht* — the destination premium) | 2 `G` | 2 |
 | **Bonded Store** | 1 | *On load:* the boarding die **+1** (cap 6) · *On sail:* **every player with a cask aboard gains 2 goods** | 2 `G` | 3 |
 | **Victualling Yard** | 1 | *On load:* the boarding cask's **load bonus fires ×2** | 2 `G` | 3 |
@@ -185,7 +185,7 @@ at once). **Every face is a STATION SUPERPOWER (v5.1)** — the host-flow icon l
 | **Guild Scholar** *(v4.6)* | **when gaining recipes, pay no fee** — the `H` = Q−3 fee waived at every channel, Bruges included | 2 `G` | — |
 | **Innkeeper** *(v4.12 rework)* | **brewing 3+ casks at once: age one +1 at your turn start** | 2 `G` | — |
 | **Supercargo** *(v4.6)* | a Ship sails **your** cask on a **rival’s** turn: gain **1 `G` 1 `H`** | 2 `H` *(v4.7)* | — |
-| **Chronicler** *(v5.0 rework)* | **claim a Manifest demand: +2★ at once** ⚙ (no end-record — the ★ bank with the claim) | 1 `G` 1 `H` | — |
+| **Chronicler** *(v5.7 rework)* | **each cask you deliver: +1★** ⚙ (no end-record — the ★ score with the delivery) | 1 `G` 1 `H` | — |
 | **Alderman** *(v4.6)* | game end: **+2★ per Kontor with 3+ parked dice** | 2 `G` | — |
 | **Town Crier** *(v4.6)* | **place a presence die: +2★** ⚙ (the die parks at face 1 — 3★ total; v4.12) | 1 `G` | — |
 | **Chandler** *(v5.1 rework)* | **with your STATION Source: may swap 1 `G` ↔ 1 `H`** (once per turn — the swap rides the Market flow) | 1 `G` | — |
@@ -193,24 +193,13 @@ at once). **Every face is a STATION SUPERPOWER (v5.1)** — the host-flow icon l
 | **Broker** *(v5.1 NEW)* | **your Market ALTERNATE is Source 2** (full strength) ⚙ | 1 `G` | — |
 | **Brewer’s Mate** *(v5.1 NEW)* | **your Brewhouse ALTERNATE searches the stack** ⚙ | 1 `H` | — |
 
-## 7b. Manifest cards (12 ⚙ · 2×1.32″ — v5.0, the demand layer; the Order tiles retired)
+## 7b. ~~Manifest cards~~ — RETIRED at v5.7
 
-Each card prints **three demand lines**, each a condition → a printed ★: a **named starter**
-(*Gruit → 1★ · Hopped → 2★*), a **quality tier** (*Q2-or-under → 1★ · Q3+ → 2★ · Q4+ → 3★*
-— tier language, claimable under every deal), a **die minimum read as the die PARKS**
-(*3+ → 1★ · 4+ → 2★ · 5+ → 3★ · 6 → 3★*), or a **combo** — tier AND die on one cask
-(*Q3+ & 5+ → 4★ · Q4+ & 5+ → 4★ · Q4+ & 6 → 4★ · Q≤2 & 3+ → 3★*). The full 12-card mix:
-`V5-OPEN-WHARF.md` §2.
-
-**One card rides every NON-BRUGES Ship** — dealt face-up as the hull enters the ship
-display, docked with it (the card tucks under the hull’s foot on its slot). **Bruges hulls
-sail plain.** When the Ship sails, each delivered cask **may claim ONE line it satisfies**
-(each line once per voyage; the ★ score at once); the card then returns **UNDER the deck** —
-no tile at the seat, the score track is the record. Twelve cards cover the maximum float
-(8 slots + the display of 4): the deck is never dry.
-
-**Hall mode (v4.17/v5.0):** every claimed Manifest demand also pays an **⚜ Invitation**
-(§7c — the per-Order ⚜ moved to the claim).
+**The 12 demand cards leave the kit** (designer-ruled). v5.6's Bourse is the demand layer now
+— public, printed, readable — and the Manifest was the game's fourth answer to *what is this
+cask worth?*. It also broke the component-state hard line: three lines, each claimable once
+per voyage, with **nothing physical marking a spent one**. Ships are pure logistics: berths, a
+destination, a minimum. *(Card faces and data live in git history.)*
 
 ## 7c. The Guild Tastings (expansion, v4.17 ⚙)
 
@@ -257,11 +246,30 @@ of the 13 at random onto random slots — the rest are the BAG** (v5.4; every ti
 with the Ship at its slot and the bag re-furnishes at end of turn until dry) ·
 **the Bourse track (on the Destinations board): one price marker per in-play beer except Gruit & Jopenbier, ALL AT THE TOP (+3 ⚙)** (v5.6)
 · **specialist deck 20/20/25 tiles at 2/3/4p** (the core 5 × max(2, n−1) + the guild 10 —
-v5.1) · displays: Ships 4 / Specialists 4 · **a Manifest on every non-Bruges hull** (v5.0) ·
+v5.1) · displays: Ships 4 / Specialists 4 ·
 wharf seeds: Hulk→Bruges + 1 Ship ·
 worker placed free · first player fixed.
 
 ## 10. Kit deltas (v5-era — every ruling that touches a printed face lands a note here; older deltas live in git history)
+
+**v5.7 “Plain Sail” delta (2026-08-23, ruled — 12 CARDS LEAVE THE KIT):**
+
+- **The 12 Manifest cards are cut.** They were the game's fourth answer to *what is this cask
+  worth?* (die · port premium · Bourse marker · Manifest), and v5.6's Bourse does that job
+  publicly and readably. They also broke the component-state hard line: three lines each
+  claimable once per voyage with **nothing physical marking a spent one**.
+- **Ships reprint without their card foot** — no tuck, no demand strip. A hull is berths, a
+  destination and a minimum.
+- **The Weigh House reprints, re-derived:** *"On sail: this cargo does NOT glut"* (was: each
+  cask may claim 2 Manifest lines). It certifies the shipment, so the market does not absorb
+  it — the one way to sell without spending the price, and the tool the specialist lane wanted.
+- **The Chronicler reprints, re-derived:** *"Deliver a cask: +1★"* ⚙ (was +2★ per Manifest
+  claim). Same job — a scoring specialist paid per shipment — on a trigger that still exists.
+- **The player board reprints** (the Manifest reminder zone clears). **The player aid and the
+  rulebook reprint** (the Manifest rows and §7b go).
+- **Hall mode's ⚜ faucet re-homes** to the **voyage** — the first cask you deliver on a sail
+  pays one (was: every Manifest claim).
+- Counts: **−12 cards.** Nothing else changes.
 
 **v5.6 “The Glut” delta (2026-08-23, ruled — DESTINATIONS BOARD REPRINT · one component
 LEAVES the kit):**

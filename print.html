@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v5.6 “The Glut”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v5.7 “Plain Sail”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -768,7 +768,7 @@
 //==================================================================
 // The CARD COMPONENT LIBRARY (components.js) is the single source of the printed card faces —
 // data + generators + card CSS, shared with play.html (the app mirrors the kit, v3.3).
-const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,VENTURES,ventureTile,MANIFESTS_P,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,manifestTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard}=window.HC;
+const {LU,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,VENTURES,ventureTile,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard}=window.HC;
 // v5.3 restyle: the ring is BAKED into ventureTile (the tile shares the building anatomy);
 // ventRing survives as a thin pass-through so the pack/mirror call sites stay unchanged.
 const ventRing=(d,lvl,col)=>ventureTile(d,lvl,col);
@@ -885,13 +885,13 @@ function aid3Panels(){
     +AID_K('kontor-bergen','Bergen','2+','a Specialist \u00b7 or shift \u00b11 \u00b7 or 2\u2605','9/5/2')
     +AID_K('kontor-novgorod','Novgorod','3+','die scores +3\u2605','8/5/2')
     +'</table>'
-    +'<div class="dontf"><b>Don\u2019t forget:</b> \u2460 the minimum reads the die AS IT BOARDS (after lifts) \u2461 the Specialist display refills at turn END \u2462 Manifests ride every non-Bruges hull \u2014 1 claim/cask</div>'
+    +'<div class="dontf"><b>Don\u2019t forget:</b> \u2460 the minimum reads the die AS IT BOARDS (after lifts) \u2461 the Specialist display refills at turn END \u2462 the Bourse only falls \u2014 a sail steps each beer aboard one</div>'
     +'<div class="ln">'+LU('building-2')+' <b>Public Works</b> serve anyone, free \u2014 and <b>sail away</b> with their Ship \u00b7 '+LU('home')+' <b>Ventures</b>: L1 1'+G+' on open ground \u00b7 2'+G+' to FLIP it or overbuild \u00b7 the public line pays any activation</div>');
   const back=aid3('back','book-open','End, Score &amp; Icons',
      '<h5>'+LU('timer')+'End &amp; Score</h5>'
     +'<div class="ln"><b>First EMPTY tray</b> (your last of 13 dice committed): finish the round. Round 25 backstop.</div>'
     +'<div class="ln">\u00b7 Delivered dice: the parked pips \u00b7 Majorities by parked dice</div>'
-    +'<div class="ln">\u00b7 Scored in play: Manifest demands \u00b7 printed building \u2605 (Cooperage \u00b7 Staples) \u00b7 the Bourse rides every delivery</div>'
+    +'<div class="ln">\u00b7 Scored in play: Kontor prizes taken as \u2605 \u00b7 printed building \u2605 (Cooperage \u00b7 Staples) \u00b7 the Bourse rides every delivery</div>'
     +'<div class="ln">\u00b7 The Flight: distinct beers, (n\u22121)\u00b2, min 3 \u00b7 Guild \u2605: printed end-lines</div>'
     +'<div class="ln">Tiebreak: summed vessel dice, then most goods.</div>'
     +'<div class="leg leg2">'
@@ -913,7 +913,6 @@ function aid3Panels(){
     +AID_ROW('home','Venture','your colour ring — a public line for all, the ringed line for you')
     +AID_ROW('wrench','Specialist','private, seats at your board')
     +AID_ROW('scroll-text','Recipe','permission to brew a beer')
-    +AID_ROW('contract','Manifest','a demand card on a non-Bruges Ship')
     +AID_ROW('bourse','The Bourse','starts at +3, only falls — a sail steps each beer aboard 1; a delivery scores die + track')
     +'<h5>'+LU('package-plus')+'The 8 Load Bonuses</h5>'
     +AID_ROW('goods-2','Gain 2 goods','any mix')
@@ -1190,12 +1189,11 @@ function supplyBoard(){
 function destBoard(){   // ONE board (v5.0): the Kontore 2×2 over the MANIFEST DECK WELL — the Order
   // row RETIRED; the demand cards ride the Ships (dealt as a non-Bruges hull enters the display,
   // returned UNDER the deck at sail). The well is component-true (2×1.32).
-  const mfslot='<div class="dslot l">'+LU('contract')+'<span class="rn">the Manifest deck \u00b7 12</span>'
-    +(OVERLAY?'<div class="ovl">'+manifestTile(MANIFESTS_P[0])+'</div>':'')+'</div>';
+  const mfslot='';   // (the Manifest deck well retired at v5.7)
   return '<div class="destb kboard">'
   +'<div class="disp-h k">'+LU('landmark')+'Kontore</div>'
   +'<div class="kgrid">'+DESTS.map(kMini).join('')+'</div>'
-  +'<div class="disp-h k">'+LU('contract')+'Manifests<span class="sm"> \u2014 a card rides every non-Bruges Ship</span></div>'
+  +'<div class="disp-h k" style="display:none">'+LU('contract')+'<span class="sm"> \u2014 a card rides every non-Bruges Ship</span></div>'
   +'<div class="crow">'+mfslot+'</div></div>';}
 
 // ---- THE GUILD TASTINGS BOARD (v4.17b · recut 2026-08-18, designer-ruled: "rules go in
@@ -1368,7 +1366,7 @@ function wharfBoardSheet(pages){
   (pg.rrects=pg.rrects||[]).push({x:dx,y:dy,w:DW,h:DH,r:0.14});
   return pg;
 }
-const DEST2_NW=7.6,DEST2_NH=9.0;   // the Destinations board: the Kontore 2×2 + the Manifest deck well (v5.0)
+const DEST2_NW=7.6,DEST2_NH=9.0;   // the Destinations board: the Kontore 2×2 + the Bourse lane (v5.0)
 // the MARKET & STORES board + the DESTINATIONS & HALL board — the table pair, on ONE trimmed 22in sheet.
 // (labels stay PLAIN TEXT — every consumer escapes for itself.)
 function supplyBoardSheet(pages){
@@ -1427,8 +1425,7 @@ function buildPages(){
   // (kit pass 2026-08-18, SCALE 1.0: the Specialists + the demand cards LEFT the Wharf sheet's
   // right band — the Destinations board rides there now; they pack their own trimmed sheet)
   const wimps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wimps.push({fam:'Improvements',html:improveTile(d)});});
-  const wmfs=(MODE==='proof'?MANIFESTS_P.slice(0,3):MANIFESTS_P).map(d=>({fam:'Manifests',html:manifestTile(d)}));   // v5.0: the 12-card Manifest deck (the Order strips retired)
-  packSpaced(pages,'bits','Specialist tiles + Manifest cards (single-sided) · 22″ plotter · 1.5mm bleed · cuts 3mm apart',[{kind:'imp',items:wimps},{kind:'mf',items:wmfs}],famPages);
+  packSpaced(pages,'bits','Specialist tiles (single-sided) · 22″ plotter · 1.5mm bleed · cuts 3mm apart',[{kind:'imp',items:wimps}],famPages);   // v5.7: the Manifest cards left the kit
   supplyBoardSheet(pages);   // the Supply & Tracks board — its own sheet
   bourseSheet(pages);        // v5.3: the Bourse strip + the 8 beer price markers
   // (v4.0: the Trade Roads board is TABLED with the expansions — olboard() stays for its return)
@@ -1562,7 +1559,7 @@ function checklist(pages,famPages){
     +'<div class="cols2">';
   h+=T('Boards')
     +R('Main board — the Wharf','The shared action area: 4 stations in a 2×2, ringed by 8 slots. <b>Centre of the table.</b>','1')
-    +R('Destinations board','The 4 Kontor panels + the Manifest deck well. <b>Beside the Wharf, in everyone’s reach</b> — delivered dice park on it all game.','1')
+    +R('Destinations board','The 4 Kontor panels + the Bourse lane. <b>Beside the Wharf, in everyone’s reach</b> — delivered dice park on it all game.','1')
     +R('Market &amp; Stores board','The face-up displays, ringed by the 50-cell score ring. <b>The Destinations board’s table pair.</b>','1')
     +R('Player brewery boards','3 vessel slots + 2 Specialist seats. <b>One in front of each player</b>; their recipe cards splay beside it.',PLAYERS.length)
     +'</table>';
@@ -1572,7 +1569,6 @@ function checklist(pages,famPages){
     +R('Public Works','The shared BROWN family — <b>the tide</b> (v5.4): setup stands <b>3–4 at random</b>, the rest are the <b>bag</b>. Die-less, neutral, passive — every face fires on its own slot’s traffic, for anyone, free; nobody ever builds one. <b>Every tile sails away with the Ship at its slot</b> (boxed, never recycled) and the bag re-furnishes the wharf at end of turn — so the late wharf thins into open ground for the Ventures.',sumN(BUILDINGS.filter(b=>!b.hall)))
     +R('Venture tiles','The PRIVATE dual-use tiles (v5.5) — <b>4 THEMED designs</b> (brew · age · die · points), one ringed set per house; each tile carries its <b>L1</b> on one face and its own theme’s <b>L2</b> on the other. Three ways on: <b>play</b> an L1 onto any open slot (wharf full: replaces a Public Work) · <b>flip</b> a standing L1 of yours over in place to its own L2, no hand tile spent · <b>overbuild</b> a second tile L2-side up on your own L1 (the spent L1 boxed). Each face prints a <b>public line</b> (1 good · Age +1/+2 · a bourse shift — for whoever activates the line) above the <b>owner’s ringed line</b>; the owner gets both. No die; a rival can never overbuild one.',VENTURES.length*4)
     +R('Specialist tiles','The private purple hires, 15 designs (core five ×3 · guild ten ×1 — v5.1). <b>A draw bag → a display of 4</b>; seated on a player board.',impTotal)
-    +R('Manifest cards','Three demand lines (beer/tier · die · combo → ★). <b>One rides every non-Bruges Ship</b> — dealt as the hull enters the display, claimed on delivery (each line once per voyage), returned under the deck at sail.','12')
     +R('The Bourse (a lane on the Destinations board) + price markers','THE GLUT (v5.6): one track (+3 … −1) printed <b>on the Destinations board</b> — the standalone strip left the kit. <b>Every marker starts at +3 and the market only falls.</b> A delivered cask scores <b>die + track</b>; once a sail resolves, <b>each beer TYPE aboard steps down one</b> (never per cask). The <b>only</b> way up is a shift: the Ventures’ public lines ±1/±2 · a load at the Tollhouse ±1 · Bergen’s prize ±1. Markers are <b>colour-matched and named</b>; cells hold every token at once.','8 markers')
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')

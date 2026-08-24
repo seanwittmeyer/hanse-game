@@ -135,26 +135,10 @@ const BUILDINGS=[
   // ⚜ Invitation; the traffic turns the builder's mark like any workhorse.
   {k:'chancery',  nm:'Guild Chancery',    ms:2, verb:'transform', tgt:'act',  ic:'mail',         n:1, g:1, act:'invgain', cond:'On line', eff:'gain 1 ⚜', hall:1},
 ];
-// ---- MANIFESTS (v5.0 "Open Wharf" [designer-ruled 2026-08-18] — the Order tiles RETIRE) ----
-// A Manifest is the demand CARD riding every NON-BRUGES hull: three printed demand lines
-// (beer/tier · die-as-parked · combo → ★). When the Ship sails, each delivered cask may claim
-// ONE line it satisfies (each line once per voyage; the ★ score at once); the card then
-// returns UNDER the deck. 12 cards ⚙ (covers the maximum hull float), 2×1.32in — the building
-// footprint; the card tucks under the hull's foot on its slot. Mirrors play.html MANIFESTS.
-const MANIFESTS_P=[
-  {k:'m1', lines:[{beer:'Hopped',pts:2},{die:4,pts:2},{qmin:4,die:5,pts:4}]},
-  {k:'m2', lines:[{beer:'Gruit',pts:1},{qmin:3,pts:2},{die:6,pts:3}]},
-  {k:'m3', lines:[{qmax:2,pts:1},{die:5,pts:3},{qmin:3,die:5,pts:4}]},
-  {k:'m4', lines:[{die:3,pts:1},{qmin:4,pts:3},{qmax:2,die:3,pts:3}]},
-  {k:'m5', lines:[{beer:'Hopped',pts:2},{die:4,pts:2},{qmin:3,die:5,pts:4}]},
-  {k:'m6', lines:[{beer:'Gruit',pts:1},{qmin:4,pts:3},{die:6,pts:3}]},
-  {k:'m7', lines:[{qmax:2,pts:1},{qmin:3,pts:2},{qmin:4,die:5,pts:4}]},
-  {k:'m8', lines:[{die:3,pts:1},{die:5,pts:3},{qmin:4,die:6,pts:4}]},
-  {k:'m9', lines:[{beer:'Gruit',pts:1},{die:4,pts:2},{qmin:4,pts:3}]},
-  {k:'m10',lines:[{beer:'Hopped',pts:2},{qmin:3,pts:2},{die:5,pts:3}]},
-  {k:'m11',lines:[{qmax:2,pts:1},{die:3,pts:1},{qmin:4,die:5,pts:4}]},
-  {k:'m12',lines:[{qmin:3,pts:2},{die:4,pts:2},{qmin:4,die:6,pts:4}]},
-];
+// (THE MANIFESTS RETIRE at v5.7, designer-ruled — the Bourse is the demand layer now, and
+// the card broke the component-state line: three lines each claimable once per voyage with
+// nothing physical marking a spent one. Removed whole; git history holds the 12 cards.)
+
 // v4.17 "The Tastings" ⚙ — the CONTEST deck (12 tiles): a category filter · a bench of die
 // spaces (2 at 2p · 3 at 3-4p) · the ladder (1st = the printed ★ + THE TILE · 2nd 2★ · 3rd 1★).
 // The bench filling IS the judging: highest die 1st, ties → the earlier pour. Mirrors play.html CONTESTS.
@@ -348,21 +332,9 @@ function ventureTile(d,lvl,col){const f=lvl===2?d.l2:d.l1;
     +(f.txt?'<span class="vt-txt">'+f.txt+'</span>':'')+'</span>'
     +'<span class="vt-pub" title="the PUBLIC line — whoever activates a line through this slot">'+f.pub+'</span></div>'
   +'</div>';}
-// MANIFEST CARD (v5.0) — the demand card riding a non-Bruges hull: THREE demand lines, each
 // a beer/tier chip (the beer glyph) and/or a die chip (the die-as-parked glyph) → the ★. The
 // claim rule (one line per delivered cask · each line once per voyage · ★ at once) lives on
 // the rules page — the card is pure data, the tile grammar of the whole kit.
-function manLineFace(l){const what=[];
-  if(l.beer)what.push('<span class="mf-b">'+LU(QI)+' '+l.beer+'</span>');
-  if(l.qmax)what.push('<span class="mf-b">'+LU(QI)+' Q≤'+l.qmax+'</span>');
-  if(l.qmin)what.push('<span class="mf-b">'+LU(QI)+' Q'+l.qmin+'+</span>');
-  if(l.die)what.push('<span class="mf-d">'+LU('dice-'+l.die)+' '+l.die+(l.die<6?'+':'')+'</span>');
-  return '<div class="mf-line">'+what.join('<span class="mf-and">&amp;</span>')
-    +'<span class="mf-arr">→</span><span class="mf-pts">'+l.pts+' '+LU(VP)+'</span></div>';}
-function manifestTile(d){return '<div class="mftile">'
-  +'<div class="mf-hd">'+LU('contract')+'<span class="mf-nm">Manifest</span><span class="mf-sub">each line once per voyage</span></div>'
-  +'<div class="mf-body">'+d.lines.map(manLineFace).join('')+'</div>'
-  +'</div>';}
 // BUILDING CARD BACK — the flipped/displaced face: when your tile is overbuilt (the builder pays the 1G
 // ground rent) it returns to you FACE-DOWN into an OPEN Floor slot of your one row (none open → boxed) —
 // a Floor WILD stop, pure engine: flips score NOTHING. Same art + title (muted) so it's identifiable.
@@ -751,17 +723,6 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .ac{display:inline-flex;align-items:center;justify-content:center;width:.28in;height:.28in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}'
 +'.btile .ac svg,.btile .ac .ic{width:.16in;height:.16in;color:#23201c;stroke-width:2.1}'
 /* LADING order strip (v4.5b): kontor colour, three rows — where · what→★ · the claim reminder */
-+'.mftile{width:2in;height:1.32in;position:relative;overflow:hidden;color:#f3e9d2;background:#33445a;border:.02in solid #1f2c3c;border-radius:.09in;display:flex;flex-direction:column;padding:.06in .1in;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}'
-+'.mftile .mf-hd{display:flex;align-items:center;gap:.05in;font-variant:small-caps;font-weight:bold;font-size:.15in;line-height:1;border-bottom:.012in solid rgba(243,233,210,.4);padding-bottom:.04in}'
-+'.mftile .mf-hd svg,.mftile .mf-hd .ic{width:.16in;height:.16in;flex:0 0 auto}'
-+'.mftile .mf-sub{margin-left:auto;font-size:.078in;font-weight:normal;opacity:.85}'
-+'.mftile .mf-body{flex:1;display:flex;flex-direction:column;justify-content:space-evenly}'
-+'.mftile .mf-line{display:flex;align-items:center;gap:.06in;font-weight:900;font-size:.14in;line-height:1}'
-+'.mftile .mf-line svg,.mftile .mf-line .ic{width:.15in;height:.15in;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.5))}'
-+'.mftile .mf-b,.mftile .mf-d{display:inline-flex;align-items:center;gap:.03in;font-variant:small-caps}'
-+'.mftile .mf-and{opacity:.85;font-size:.12in}'
-+'.mftile .mf-arr{margin-left:auto;opacity:.85;font-size:.13in}'
-+'.mftile .mf-pts{display:inline-flex;align-items:center;gap:.03in;background:rgba(0,0,0,.32);border-radius:.12in;padding:.02in .07in}'
 /* ILLUSTRATED ICONS — the art <img> tracks the .ic sizing everywhere the CSS pairs "svg,.ic";
    these cover the few svg-only spots + give any unsized site a 1em fallback */
 +'img.ai{width:1em;height:1em;object-fit:contain;vertical-align:-.13em}'
@@ -904,5 +865,5 @@ var HC_CSS4=''
 +'.invcard .iv-verb svg,.invcard .iv-verb .ic,.invcard .iv-verb img.ai{width:.15in;height:.15in}';
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3+HC_CSS4;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,VENTURES,ventureTile,MANIFESTS_P,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,manifestTile,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
+window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,VENTURES,ventureTile,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
 })();
