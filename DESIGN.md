@@ -743,6 +743,75 @@ record is in git history.
 *Moved here from `RULES.md` §Open (2026-08-23). The designer calls full batteries; these
 are the things to read when one runs — or when a human table sits down.*
 
+**THE HIGH-SKILL ORACLE (2026-08-24, 1,850 Monte-Carlo games — 3.0h, 4-core queue at
+concurrency 4, `GUILD_MS=60` / `CELLAR_MS=150`). FOUR RESULTS, TWO OF THEM REVERSALS:**
+
+**1 · THE RUNAWAY IS WORSE AT SKILL, NOT BETTER.** 2p margin **21.1★ (journeyman) → 34.0★
+(guildmaster)**; blowouts >25★ **35% → 59%**. It is not a bot artifact — strong play *exploits*
+it. Every margin number published before this read is a lower bound.
+
+**2 · DEPTH IS NOT DEAD — the greedy read was an ARTIFACT.** The v5.6 finding ("a specialist
+cannot keep three vessels full, so it backfills with free Gruit") was the *bot* failing, not the
+game. At skill the specialist **ships as many casks as anyone**:
+
+| | ships | ★/cask | Flight ★ | lane lift |
+|---|---|---|---|---|
+| depth · journeyman | 4.68 | 1.34 | 0.0 | −35.7 |
+| depth · guildmaster | **7.14** | 3.17 | 0.2 | −17.7 |
+| depth · cellarmaster | **7.18** | 3.19 | 0.0 | −17.8 |
+| breadth · guildmaster | 7.42 | 4.78 | 11.3 | +13.2 |
+
+**The gap is now purely PRICE, not pipeline** — equal volume, casks worth 66% as much, plus the
+whole Flight ladder. And the mechanism is the Bourse: a specialist ships the *same beer* every
+voyage, so **that one marker walks to the floor and stays there** while breadth spreads the glut
+across five. **The Glut punishes specialisation by construction**, and §10's own "up-shifts run
+3:1 short" is why nothing can lift it back. *The lever is the up-shift supply, not the Flight and
+not the vessels.* (Earlier §10 text naming the per-cask value curve and vessel count still holds
+for the value half; the pipeline half is retired.)
+
+**3 · BREADTH IS THE DOMINANT LANE AT EVERY TIER** — lift **+17.3 / +13.2 / +16.7** at
+journeyman / GM / CM. Majority collapses with skill (+13.7 → +11.1 → −1.4); lifter and builder
+sit near par. Only breadth is strongly positive everywhere.
+
+**4 · THE CLOCK IS NOT THE DICE AT A STRONG TABLE.** At journeyman 100% of games end on the
+empty tray. At guildmaster **28% of 2p games end on the MAX_ROUND 25 backstop** (CM 2p 12%;
+3p/4p 4–13%), and games run **4–6 rounds longer** (GM 20.7 / 18.8 / 18.2 · CM 19.6 / 16.2 / 15.3
+vs journeyman 14.7 / 14.5 / 13.7). Skilled seats **hold dice rather than commit them**, so the
+tray never empties. The backstop is load-bearing, which it was never meant to be. **Watch: the
+tray as a clock only works on players who spend it.**
+
+**THE MAJORITY ARMS, TESTED AT GUILDMASTER (225 games each, 2026-08-24).** *"What if London and
+Bergen are both 9/5/2, Bruges is 5/4/2?"* — measured against four alternatives:
+
+| majority table | 2p | 3p | 4p | 2p blowouts | 2p winner ★ |
+|---|---|---|---|---|---|
+| A · current (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2) | 34.0 | 19.4 | 15.3 | 58.7% | 81.1 |
+| B · London+Bergen 9/5/2, Bruges 5/4/2 | 36.4 | 19.1 | 15.0 | 69.4% | 82.8 |
+| C · Bergen down to 5/3/1 | 33.2 | 19.6 | 17.7 | 60.0% | 76.0 |
+| D · current, 2p pays a second place | 30.4 | 20.7 | 15.9 | 46.7% | 86.2 |
+| **E · B + D together** | **25.9** | **16.8** | **12.7** | **45.3%** | 89.5 |
+
+**Re-tiering alone does NOTHING, and the reason is structural: THE MAJORITY DOES NOT STEER THE
+SHIPS.** Quadrupling London's majority (3.8★ → 7.2★ paid) moved London's cargo share **20.0% →
+20.9%**; flattening Bergen moved Bergen's **23.9% → 22.8%**. Destination comes from the supply
+draw and rival commissions, not from choice — so a majority is a **rider on deliveries**, and
+re-weighting a rider on the thing that already decides the game only re-prices the same voyages.
+
+**What DOES work is the PAIR, and only the pair.** At 2p the engine slices the tiers to first
+place only, so *only the first number in each triple is ever read* — 4·5·9·8 = **26★ of pure
+winner-take-all**. D lets second place exist; B makes it worth taking (seconds go 2/3/5/5 →
+4/5/5/5). **Neither half moves the needle alone; together they are the only arm that improves all
+three counts.** *At journeyman E was WORSE than D — the reversal is skill: a strong leader sweeps
+majorities, so the consolation has to be real.* **Nothing dialed — a table read first.**
+*Noise: SE on a 2p margin at 225 games ≈ 3★; A→E (8.1★) is solid, A→D (3.6★) and A→B (2.4★) are
+suggestive only.*
+
+**LADDER AT v5.7 (this oracle):** journeyman > apprentice **82.5%** · trader > journeyman
+**67.5%** · guildmaster > trader **58.3%** (35/60) · cellarmaster > guildmaster **77.8%**. The GM
+rung is **search-budget sensitive** — 68.8% at `GUILD_MS=120`, 58.3% at the `=60` this oracle
+ran. Not a game finding; a reminder that an MC rung's win-rate is a function of its budget, which
+is why `GM_ROLLS` now exists.
+
 **THE LIVE ONE — RUNAWAY MARGINS ARE *THROUGHPUT*, NOT THE MARKET (full oracle, 2026-08-24,
 1,500 games).** Pace **14.66 / 14.50 / 13.68**, band **84 / 88 / 87%**, winner totals
 **78.3 / 78.8 / 71.0**. Margins **22.1 / 15.1 / 12.7** — and the decomposition names the cause:
