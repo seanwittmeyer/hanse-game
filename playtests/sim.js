@@ -155,6 +155,13 @@ function __runGame(n,__POFF){
         brews:(q._brews||0),stuck:q.vessels.filter(function(c){return c;}).length,
         sDel:sc.deliv,sBank:sc.bank,sMaj:sc.maj};}),
     winTotal:rows[0].sc.total,secondTotal:rows[1]?rows[1].sc.total:0,
+    marg:(function(){var a=rows[0],b=rows[1];if(!b)return null;
+      return {d:a.sc.deliv-b.sc.deliv,bk:a.sc.bank-b.sc.bank,mj:a.sc.maj-b.sc.maj,
+        fl:a.sc.flight-b.sc.flight,gu:(a.sc.guild||0)-(b.sc.guild||0),
+        wCask:(a.p.delivered||[]).length,sCask:(b.p.delivered||[]).length,
+        wFl:flightBeers(a.p),sFl:flightBeers(b.p),
+        wVal:(a.p.delivered||[]).length?a.sc.deliv/(a.p.delivered||[]).length:0,
+        sVal:(b.p.delivered||[]).length?b.sc.deliv/(b.p.delivered||[]).length:0};})(),
     bldgPips:S.players.reduce(function(a,p){return a+(scorePlayer(p).bldg||0);},0)/S.players.length,
     stapleStars:S.players.reduce(function(a,p){return a+(p.bankSt||0);},0)/S.players.length,   // v5.2: Staple House + Staple Rights ★
     vents:S.players.reduce(function(a,p){return a+venturesInPlay(p);},0)/S.players.length,     // v5.2: Ventures standing at end
@@ -249,6 +256,21 @@ let anyErr=0;
   console.log(`rounds avg ${fmt(avg(rounds))} (min ${Math.min(...rounds)} max ${Math.max(...rounds)}) · in 12–25 band ${pct(within,ok.length)}`);
   console.log(`triggers: ${Object.keys(trig).map(k=>k+' '+pct(trig[k],ok.length)).join(' · ')} · sailed avg ${fmt(avg(ok.map(r=>r.sailed)))}`);
   console.log(`winner total avg ${fmt(avg(ok.map(r=>r.winTotal)))} · margin avg ${fmt(avg(ok.map(r=>r.winTotal-r.secondTotal)))} · seat wins ${Object.keys(seat).map(s=>'P'+(+s+1)+' '+pct(seat[s],ok.length)).join(' ')}`);
+  if(process.env.MARGINS==='1'){   // raw per-game margins for charting (one JSON line per count)
+    const M=ok.map(r=>r.marg).filter(Boolean);
+    console.log('MARGINDATA '+JSON.stringify({n,margins:M.map(m=>m.d+m.bk+m.mj+m.fl+m.gu),
+      buckets:{deliv:M.map(m=>m.d),bank:M.map(m=>m.bk),maj:M.map(m=>m.mj),flight:M.map(m=>m.fl),guild:M.map(m=>m.gu)},
+      winTotals:ok.map(r=>r.winTotal),secTotals:ok.map(r=>r.secondTotal)}));}
+  { // WHAT IS THE MARGIN MADE OF? winner-minus-second, per scoring bucket — plus the shape
+    // of the distribution (a shifted mean and a fat tail want different fixes).
+    const M=ok.map(r=>r.marg).filter(Boolean);
+    if(M.length){
+      const g=M.map(m=>m.d+m.bk+m.mj+m.fl+m.gu).slice().sort((a,b)=>a-b);
+      const q=f=>g[Math.min(g.length-1,Math.floor(f*g.length))];
+      console.log(`  margin decomposition (winner − 2nd): deliveries ${fmt(avg(M.map(m=>m.d)))} · bank ${fmt(avg(M.map(m=>m.bk)))} · majorities ${fmt(avg(M.map(m=>m.mj)))} · flight ${fmt(avg(M.map(m=>m.fl)))} · guild ${fmt(avg(M.map(m=>m.gu)))}`);
+      console.log(`  margin shape: median ${fmt(q(0.5))} · p75 ${fmt(q(0.75))} · p90 ${fmt(q(0.90))} · max ${fmt(g[g.length-1])} · blowouts (>25★) ${pct(g.filter(x=>x>25).length,g.length)} · close (≤10★) ${pct(g.filter(x=>x<=10).length,g.length)}`);
+      console.log(`  why: winner ships ${fmt(avg(M.map(m=>m.wCask)))} casks @ ${fmt(avg(M.map(m=>m.wVal)))}★ vs 2nd ${fmt(avg(M.map(m=>m.sCask)))} @ ${fmt(avg(M.map(m=>m.sVal)))}★ · flight ${fmt(avg(M.map(m=>m.wFl)))} vs ${fmt(avg(M.map(m=>m.sFl)))} beers`);
+    }}
   console.log(`per-player: brews ${fmt(avg(ok.map(r=>r.brews)))} · deliveries ${fmt(avg(ok.map(r=>r.delivs)))} · bank★ ${fmt(avg(ok.map(r=>r.builds)))}`);
   console.log(`delivery split: ${Object.keys(dd).map(k=>k+' '+pct(dd[k],dsum)).join(' · ')}`);
   { // v45c: the new-systems utilization dashboard (per-game averages)

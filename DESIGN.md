@@ -289,6 +289,9 @@ roughly **8%** of a winning score. Retired whole; git history holds the cards.
   v5.6's 89/89/78 by about the 8% the Manifests were paying, exactly as predicted. **Margins
   stay high (23.3 / 14.4 / 16.4) and the short-game tail widened (min 8–9, band 95/80/70%)** —
   see §10; the runaway watch is now the live one.
+  *Superseded by the full oracle (1,500 games, 2026-08-24): pace **14.7 / 14.5 / 13.7**, band
+  **84 / 88 / 87%**, totals **78.3 / 78.8 / 71.0**, margins **22.1 / 15.1 / 12.7**. The 20-game
+  read's short-game tail was small-sample noise; the margin held, and §10 now names its cause.*
 
 ### v5.6 “The Glut” (2026-08-23, designer-ruled — record `archive/records/V56-THE-GLUT.md`)
 *"When a ship delivers casks to a kontor, each type of beer is moved down the track 1 space.
@@ -740,14 +743,34 @@ record is in git history.
 *Moved here from `RULES.md` §Open (2026-08-23). The designer calls full batteries; these
 are the things to read when one runs — or when a human table sits down.*
 
-**THE LIVE ONE — RUNAWAY MARGINS AND THE SHORT-GAME TAIL (v5.7 read, 20×3).** Pace
-**16.4 / 13.7 / 13.1**, band **95 / 80 / 70%** — and **every miss is a SHORT game** (min 8–9).
-Winner totals **80.0 / 77.2 / 73.3** (v5.6 was 89/89/78 — the Manifests were paying about the
-8% predicted). But **margins stay high: 23.3 / 14.4 / 16.4.** A 23★ margin at 2p is the thing
-to read at a table first; two letters in a row have now widened it. Suspects, untested:
-markers opening at +3 front-loads value onto whoever ships first · Novgorod +3★ · prizes as ★
-compounding for a leader. Levers, cheapest first: `BOURSE_START` (3→2) · `PRIZE_PTS` (2→1) ·
-the tray. **Nothing dialed.**
+**THE LIVE ONE — RUNAWAY MARGINS ARE *THROUGHPUT*, NOT THE MARKET (full oracle, 2026-08-24,
+1,500 games).** Pace **14.66 / 14.50 / 13.68**, band **84 / 88 / 87%**, winner totals
+**78.3 / 78.8 / 71.0**. Margins **22.1 / 15.1 / 12.7** — and the decomposition names the cause:
+
+| winner − 2nd | 2p | 3p | 4p |
+|---|---|---|---|
+| deliveries | **9.8** | **8.4** | **6.0** |
+| majorities | **8.4** | 3.6 | 3.2 |
+| bank | 2.1 | 1.2 | 1.6 |
+| flight | 1.6 | 1.6 | 1.6 |
+| guild | 0.2 | 0.1 | 0.2 |
+
+**The winner's casks are barely worth more than second's — 5.52★ vs 5.18★ (+6%). They ship
++1.3 more of them (+18%).** The gap is *volume*, and majorities then amplify it: at 2p
+`majorityAwards` slices the tiers to first place only, so the four destination majorities are
+**26★ of pure winner-take-all** (4+5+9+8) riding on an 18% cask edge — one extra cask at a port
+flips 9★ with no consolation. 3p/4p pay tier 2 and the margin falls by a third. Shape at 2p:
+median 18.8, p90 44.4, **38% of games blow past 25★**, only 27% land inside 10★; at 4p median
+10.8, 12% blowouts, 51% close.
+
+**This EXONERATES the Bourse and the prizes** — the suspects this watch itself named. If the
+market front-loaded value onto the leader, per-cask value would diverge; it does not (+6%). Bank
+(where prizes-as-★ land) is 2.1★ of a 22★ gap. **`BOURSE_START` and `PRIZE_PTS` come OFF the
+lever list.** The live levers are the ones that touch throughput and the majority cliff:
+2p majority tiers (first-only → pay a second place) · the tray (`POOL`, the pace dial) · the
+berth economy. **Nothing dialed — read it at a table first: a 22★ gap between two players who
+brewed nearly as well is a feel-bad, but a 2p euro is *meant* to be a race, and the sim bots
+never contest a majority deliberately.**
 
 **v5.7 “Plain Sail” — the two re-derivations are unplayed:**
 - **The Weigh House now certifies** (*"this cargo does not glut"*). It is the only way to sell
@@ -765,18 +788,22 @@ the tray. **Nothing dialed.**
   asking for.
 
 **v5.6 “The Glut” — BUILT, and two numbers to watch:**
-- **TOTALS AND MARGINS ROSE.** Winner totals **89.3 / 89.5 / 78.3** (were ~71–90) and margins
-  **20.8 / 15.7 / 16.8**. Two causes, both intended-but-unpriced: markers now *open* at +3
-  instead of 0 (early deliveries are worth more), and Novgorod went to +3★. **A 20★ margin at
-  2p is runaway territory** — read it at a human table before dialing. Levers, cheapest first:
-  `BOURSE_START` (3 → 2) · `PRIZE_PTS` (2 → 1) · `BOURSE_MAX`.
+- **TOTALS AND MARGINS ROSE — and the cause I named here was WRONG (superseded 2026-08-24).**
+  Winner totals **89.3 / 89.5 / 78.3** and margins **20.8 / 15.7 / 16.8** on the v5.6 read. I
+  blamed the +3 open and Novgorod. The 1,500-game decomposition says otherwise: per-cask value
+  is +6% for the winner, cask *count* is +18%. **`BOURSE_START` / `PRIZE_PTS` / `BOURSE_MAX` are
+  not margin levers** — see THE LIVE ONE above.
 - **A 6-ROUND GAME appeared at 2p** (min 6, band 83.3%). One outlier in twelve, but the clock
   is the empty tray and a richer early market means dice commit faster. Watch whether it
   repeats.
-- **Does the shift engine actually beat the decay?** The whole specialist lane now depends on
-  it: shifts run **UP 4.3–5.0 vs DOWN 2.7–5.2** per game against **9.2–15.0 glut steps**. On
-  those numbers the market falls faster than anyone can prop it. If a human table confirms it,
-  the up-shift supply (Venture public lines · the toll bench · Bergen) is under-provisioned.
+- **Does the shift engine beat the decay? NO — measured, 1,500 games (2026-08-24).** Glut steps
+  **8.8 / 12.6 / 16.4** per game against up-shifts of only **3.4 / 4.3 / 5.7**. The track opens
+  at **+3** and ends at **1.4 / 0.7 / 0.4** — at 4p the market finishes on the floor. Decay wins
+  by roughly 3:1, so **holding a price up is not currently a buildable engine**, which is exactly
+  what the depth lane needed. The up-shift supply (Venture public lines · the toll bench ·
+  Bergen's prize) is **under-provisioned by about a factor of two**. This is the first place to
+  look for the depth fix — and the queued *market line on the hull* (v5.7 watch below) would put
+  the supply where every player already looks.
 - **Is "concentrate and be first" legible at the table?** A 3-cask single-beer hull costs one
   step; a mixed hull costs one per beer. That is the Bourse saying *concentrate* while the
   Flight says *spread* — the intended fork. Watch whether players see it.
@@ -799,7 +826,8 @@ per-cask value curve, not the ladder** (Gruit 1★ → Bock 5★ is linear while
 roughly 1:4 — quality is not paid for the wait). *Caveat: measured on the pre-Glut build; the
 new market changes the arithmetic and this wants a re-run.*
 
-**RULED, NOT YET BUILT (designer, 2026-08-23) — the Letter B decisions:**
+**RULED AND BUILT — the Letter B decisions (ruled 2026-08-23; landed v5.6 “The Glut” /
+v5.7 “Plain Sail”). Kept here as the record of what each line was asking for:**
 - **THE BOURSE = PURE DECAY.** *"When a ship delivers casks to a kontor, each type of beer is
   moved down the track 1 space. The only time it goes up is with the bourse ±1, +1, or +2
   actions."* One step per beer TYPE per delivery — never per cask (the Lisboa rule: the event
@@ -812,12 +840,11 @@ new market changes the arithmetic and this wants a re-run.*
 - **THE STRIP MOVES ONTO THE DESTINATIONS BOARD** — ONE track, spaces wide enough to hold every
   beer token; tokens are **colour-matched AND named**. The **Manifest deck well leaves that
   board** (*"it didn't really fit there anyways"*).
-- **OPEN — the Novgorod collision (raised, not ruled).** With the others able to pay ★, a flat
-  points-prize at 3★ makes **Bergen strictly dominate Novgorod**: same-or-better payout, a
-  lower minimum (2 vs 3), the richest majority (9/5/2), *and* an optional specialist. Novgorod's
-  +2★/die is flat, not per-pip. Resolutions: the others pay **2★** and **Novgorod goes to +3★**
-  (the port that only pays money, and pays the most), or the others pay **1★**. Needs a ruling
-  before the letter is built.
+- **The Novgorod collision — RULED (designer, 2026-08-23): the others pay 2★ (`PRIZE_PTS`) and
+  Novgorod goes to +3★/die.** Without it Bergen strictly dominated Novgorod: same-or-better
+  payout, a lower minimum (2 vs 3), the richest majority (9/5/2), *and* an optional specialist.
+  Novgorod is now the port that only pays money — and pays the most. Its +3★ is flat per die,
+  not per-pip; the 2026-08-24 oracle clears it of the margin (bank is 2.1★ of a 22★ gap).
 
 **COMPONENT-STATE VIOLATION — the Manifest claim (designer-confirmed 2026-08-23):** a card
 prints three demand lines, each claimable **once per voyage**, and **nothing physical marks a
@@ -828,6 +855,25 @@ the game"*) and the whole layer — **Orders / Manifests / Invitations — reads
 rather than integrated**, so it gets its own pass later, not a patch now. The named direction:
 connect a claim to something the game already does (the ⚜-to-sell-a-Ready-cask-to-a-brewhall
 thread).
+
+**DEPTH AT SCALE — the greedy-tier confirmation (full oracle, 600 games, 2026-08-24).** The
+v5.7 lane read on the shipped build, `PERSONAS=1` × 200 per count:
+
+| lane | win-rate | ★ |
+|---|---|---|
+| breadth | **53.4%** | 72.4 |
+| majority | 49.7% | 71.5 |
+| lifter | 39.6% | 65.9 |
+| builder | 37.4% | 66.5 |
+| **depth** | **0.4%** | **18.5** |
+
+**Depth wins 1 game in 250.** The Glut did not rescue it, and the reason is now measured
+rather than inferred: **the market falls about 3× faster than anyone can prop it** (the shift
+entry above), so "concentrate and hold your price up" is a plan the component supply cannot
+pay for. Note the same arithmetic at the top of the game: the *winner* out-earns second by only
+**+6% per cask** and **+18% on cask count**. **Value is not what wins — throughput is** — and
+depth is the lane that buys value with throughput. Any fix that does not move that ratio will
+not move depth.
 
 **THE DEPTH READ — the answer, across every tier (2026-08-23).** *"I'd love for there to be
 an equally balanced point return on going all in on 1 or 2 beers instead of trying to brew all
