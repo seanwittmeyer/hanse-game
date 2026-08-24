@@ -1,9 +1,11 @@
 // KONTOR PRIZE SATURATION probe — does a port's prize still PAY late, or has it died?
 // Three of the four prizes have a hard ceiling (recipes ~3 · specialist seats 2 · the Venture
 // hand 4 + 4 flips); Novgorod's +2★/die has none. This instrument wraps grantPrize and counts,
-// per port, how often the prize paid its printed thing vs fell back (2 goods) or forfeited —
-// and the median round it died. Answers the DESIGN.md §10 "bonus-as-identity" watch.
-// Usage: node playtests/prize-probe.js      (20 games x 2/3/4p, journeyman)
+// per port, how often the port's THING was still available to take vs unavailable — and the
+// median round it died. Since v5.6 an unavailable thing is no longer a feel-bad (the 2-goods
+// consolation retired; every prize is the thing OR ★, so ★ is the fallback) — but a port whose
+// thing dies early has lost its IDENTITY, which is what this measures. DESIGN.md §10.
+// Usage: node playtests/prize-probe.js [N]  (default 100 games x 2/3/4p, journeyman)
 // Drives the CANONICAL engine, same harness as sim.js. Output is NOT committed (CLAUDE.md §4).
 'use strict';
 const fs = require('fs');
@@ -37,11 +39,12 @@ for(var g=0;g<20;g++){ for(var n=2;n<=4;n++){
 }}
 function pct(a,b){return b?(100*a/b).toFixed(1)+'%':'-';}
 function med(a){if(!a.length)return '-';a=a.slice().sort(function(x,y){return x-y;});return a[Math.floor(a.length/2)];}
-console.log('=== KONTOR PRIZE SATURATION -- 20 games x 2/3/4p, journeyman ===');
-console.log('BRUGES   recipe:     PAID '+__P.bruges+' ('+pct(__P.bruges,__P.bruges+__P.brugesFall)+')   fell back to 2 goods '+__P.brugesFall+' ('+pct(__P.brugesFall,__P.bruges+__P.brugesFall)+')   median fallback round '+med(__P.fall.bruges));
-console.log('LONDON   Venture:    PAID '+__P.london+' ('+pct(__P.london,__P.london+__P.londonForfeit)+')   FORFEIT (nothing at all) '+__P.londonForfeit+' ('+pct(__P.londonForfeit,__P.london+__P.londonForfeit)+')   median forfeit round '+med(__P.fall.london));
-console.log('BERGEN   specialist: PAID '+__P.bergen+' ('+pct(__P.bergen,__P.bergen+__P.bergenFall)+')   fell back to 2 goods '+__P.bergenFall+' ('+pct(__P.bergenFall,__P.bergen+__P.bergenFall)+')   median fallback round '+med(__P.fall.bergen));
-console.log('NOVGOROD +2*/die:    ALWAYS PAYS '+__P.nov+' (100%)');
+console.log('=== KONTOR PRIZE SATURATION -- ${N} games x 2/3/4p, tier ${TIER} ===');
+console.log('(v5.6: an unavailable thing is not forfeited -- the owner takes '+PRIZE_PTS+'* instead. This reads IDENTITY, not loss.)');
+console.log('BRUGES   recipe:     PAID '+__P.bruges+' ('+pct(__P.bruges,__P.bruges+__P.brugesFall)+')   took * instead '+__P.brugesFall+' ('+pct(__P.brugesFall,__P.bruges+__P.brugesFall)+')   median round it died '+med(__P.fall.bruges));
+console.log('LONDON   Venture:    PAID '+__P.london+' ('+pct(__P.london,__P.london+__P.londonForfeit)+')   took * instead '+__P.londonForfeit+' ('+pct(__P.londonForfeit,__P.london+__P.londonForfeit)+')   median round it died '+med(__P.fall.london));
+console.log('BERGEN   specialist: PAID '+__P.bergen+' ('+pct(__P.bergen,__P.bergen+__P.bergenFall)+')   took * instead '+__P.bergenFall+' ('+pct(__P.bergenFall,__P.bergen+__P.bergenFall)+')   median round it died '+med(__P.fall.bergen));
+console.log('NOVGOROD +3*/die:    NO THING TO DIE -- pays every time '+__P.nov+' (100%)');
 console.log('why it died: seats already full '+__P.seatsFull+'   venture hand empty '+__P.handEmpty+'   every recipe held '+__P.recFull);
 `;
 

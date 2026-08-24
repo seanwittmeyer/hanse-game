@@ -50,7 +50,10 @@ var __pourDo=pourDo;pourDo=function(vi,ci){var ct=S&&S.tastings&&(S.tastings.ope
   return r;};
 var __judgeT=judgeTasting;judgeTasting=function(ci){var r=__judgeT(ci);if(__uOn())__U.tilesWon++;return r;};
 var __rackPick=rackPick;rackPick=function(vi){var had=!!UI.rack;var r=__rackPick(vi);if(__uOn()&&had&&!UI.rack)__U.rack++;return r;};
-var __assayPick=assayPick;assayPick=function(vi,dir){var had=!!UI.assay;var r=__assayPick(vi,dir);if(__uOn()&&had&&!UI.assay)__U[(dir===-1)?'assayDown':'assayUp']++;return r;};
+// v5.5: the Loft certifies the WHOLE cellar, so the vessel picker retired and every caller
+// (bot and button alike) reaches assayGo() directly — wrapping assayPick counted nothing and
+// read 0.0/game forever. Wrap the commit itself.
+var __assayGo=assayGo;assayGo=function(){var had=!!UI.assay;var r=__assayGo();if(__uOn()&&had&&!UI.assay)__U.assayUp++;return r;};
 var __loadCommit=loadCommit;loadCommit=function(shipSlot,vi){var p=cur();var bk=bKeyAt(shipSlot);
   // v5.3b: the TOLL BENCH — a load here queues the loader's ±1 Bourse shift. (The counter used to
   // watch bankO, the retired stamp's ★ payout, so it read 0 forever; it now counts the bench firing,
