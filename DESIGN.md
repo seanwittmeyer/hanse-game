@@ -856,6 +856,13 @@ rather than integrated**, so it gets its own pass later, not a patch now. The na
 connect a claim to something the game already does (the ⚜-to-sell-a-Ready-cask-to-a-brewhall
 thread).
 
+**THE LADDER HOLDS AT v5.7 — every rung, and a sample-size lesson.** journeyman > apprentice
+**85.0%** (40) · trader > journeyman **62.5%** (40) · guildmaster > trader **68.8%** (80) ·
+cellarmaster > guildmaster **87.5%** (16). *The MC rung first read **58.3%** on 24 games and
+tripped the gate; re-run as 4×20 shards it came back 65 / 60 / 70 / 80%.* **A 24-game rung is
+one game wide of the 60% bar — never call an MC rung failed on a single short shard; fan out
+and pool.**
+
 **DEPTH AT SCALE — the greedy-tier confirmation (full oracle, 600 games, 2026-08-24).** The
 v5.7 lane read on the shipped build, `PERSONAS=1` × 200 per count:
 
