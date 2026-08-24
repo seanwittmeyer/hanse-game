@@ -778,6 +778,7 @@ const DEST={
   novgorod:{name:'Novgorod',gate:3, maj:[8,5,2], vbonus:3,           kontor:true, role:'Long Haul - the export run: die 3+ boards (the export band); every delivered die scores +3★ on top — the port that only pays money, and pays the most'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
+let MAJ_TIERS_2P=1;    // ⚙ places a Kontor majority pays at 2p. 1 = winner-take-all (the rule).
 const DESTS=KONTORE.slice();
 // a NAMED Kontor always wears ITS OWN crest — the generic landmark
 // glyph is reserved for "a Kontor" in the abstract (the tooltip vocabulary, the Park step).
@@ -1258,7 +1259,7 @@ function leadersAt(dest){let best=0;S.players.forEach(p=>best=Math.max(best,pres
 function majorityCount(p){return KONTORE.filter(k=>leadersAt(k).some(x=>x.id===p.id)).length;}
 function majorityAwards(dest){
   let tiers=(DEST[dest].maj||[]).slice();
-  if(S.players.length===2)tiers=tiers.slice(0,1);
+  if(S.players.length===2)tiers=tiers.slice(0,MAJ_TIERS_2P);
   if(!tiers.length)return {};
   const pres=S.players.map(p=>({id:p.id,pr:presenceAt(p,dest)})).filter(o=>o.pr>0).sort((a,b)=>b.pr-a.pr);
   const out={};let i=0,rank=0;

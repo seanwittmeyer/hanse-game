@@ -136,6 +136,10 @@ function __runGame(n,__POFF){
   if(__STPL!=='')STAPLE_PTS=parseInt(__STPL,10)||2;   // v5.2 ⚙: the Staple premium (the +2/+4 A/B) — override ONLY when set
   if(__SRCN!=='')SRC_PRIMARY=parseInt(__SRCN,10)||3;   // v5.2b ⚙: the Market primary (the 2/3 A/B) — override ONLY when set
   if(__FLIGHT==='off'){FLIGHT_PTS={1:0,2:0,3:0,4:0,5:0,6:0};}   // ⚙ v5.6: the counterfactual — what is DEPTH worth with no breadth bonus at all?
+  if(__MAJ!==''){__MAJ.split(',').forEach(function(seg){   // ⚙ MAJ=bruges:5/4/2,london:9/5/2 — override ONLY when set
+    var m=seg.split(':');if(!DEST[m[0]]||!m[1])return;
+    DEST[m[0]].maj=m[1].split('/').map(function(v){return parseInt(v,10)||0;});});}
+  if(__MAJTIERS!=='')MAJ_TIERS_2P=parseInt(__MAJTIERS,10)||1;   // ⚙ how many places 2p pays (the engine slices to 1)
   if(__BMIN!=='')BOURSE_MIN=parseInt(__BMIN,10);   // v5.3 ⚙: the Bourse track ends — override ONLY when set
   if(__BMAX!=='')BOURSE_MAX=parseInt(__BMAX,10);
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
@@ -157,6 +161,10 @@ function __runGame(n,__POFF){
         styles:Object.keys(q.shipped||{}).sort().join('+'),
         brews:(q._brews||0),stuck:q.vessels.filter(function(c){return c;}).length,
         sDel:sc.deliv,sBank:sc.bank,sMaj:sc.maj};}),
+    majPort:(function(){var o={};KONTORE.forEach(function(k){var a=majorityAwards(k);
+      var w=rows[0].p.id,b=rows[1]?rows[1].p.id:-1,tot=0;
+      Object.keys(a).forEach(function(id){tot+=a[id];});
+      o[k]={tot:tot,win:a[w]||0,sec:b>=0?(a[b]||0):0};});return o;})(),
     winTotal:rows[0].sc.total,secondTotal:rows[1]?rows[1].sc.total:0,
     marg:(function(){var a=rows[0],b=rows[1];if(!b)return null;
       return {d:a.sc.deliv-b.sc.deliv,bk:a.sc.bank-b.sc.bank,mj:a.sc.maj-b.sc.maj,
@@ -218,6 +226,8 @@ const ctx = {
   __STPL:process.env.STAPLE!=null?process.env.STAPLE:'',   // v5.2: the Staple premium dial
   __SRCN:process.env.SRCN!=null?process.env.SRCN:'',   // v5.2b: the Market primary dial
   __FLIGHT:process.env.FLIGHT||'',   // v5.6 ⚙: FLIGHT=off zeroes the Flight ladder (the depth counterfactual)
+  __MAJ:process.env.MAJ!=null?process.env.MAJ:'',   // ⚙ the majority table, per port
+  __MAJTIERS:process.env.MAJTIERS!=null?process.env.MAJTIERS:'',   // ⚙ places paid at 2p
   __BMIN:process.env.BMIN!=null?process.env.BMIN:'',   // v5.3: the Bourse track ends
   __BMAX:process.env.BMAX!=null?process.env.BMAX:'',
   __POOL:parseInt(process.env.POOL||'0',10),
@@ -273,6 +283,17 @@ let anyErr=0;
       console.log(`  margin decomposition (winner − 2nd): deliveries ${fmt(avg(M.map(m=>m.d)))} · bank ${fmt(avg(M.map(m=>m.bk)))} · majorities ${fmt(avg(M.map(m=>m.mj)))} · flight ${fmt(avg(M.map(m=>m.fl)))} · guild ${fmt(avg(M.map(m=>m.gu)))}`);
       console.log(`  margin shape: median ${fmt(q(0.5))} · p75 ${fmt(q(0.75))} · p90 ${fmt(q(0.90))} · max ${fmt(g[g.length-1])} · blowouts (>25★) ${pct(g.filter(x=>x>25).length,g.length)} · close (≤10★) ${pct(g.filter(x=>x<=10).length,g.length)}`);
       console.log(`  why: winner ships ${fmt(avg(M.map(m=>m.wCask)))} casks @ ${fmt(avg(M.map(m=>m.wVal)))}★ vs 2nd ${fmt(avg(M.map(m=>m.sCask)))} @ ${fmt(avg(M.map(m=>m.sVal)))}★ · flight ${fmt(avg(M.map(m=>m.wFl)))} vs ${fmt(avg(M.map(m=>m.sFl)))} beers`);
+    }}
+  { // WHICH PORT'S MAJORITY PAYS, and to whom — the read that says whether one Kontor carries
+    // the others. tot = ★ the port hands out per game; win/sec = the winner's and runner-up's cut.
+    const P=ok.map(r=>r.majPort).filter(Boolean);
+    if(P.length){
+      const ks=Object.keys(P[0]);
+      console.log('  majority by port: '+ks.map(k=>k+' '+fmt(avg(P.map(x=>x[k].tot)))+
+        ' (win '+fmt(avg(P.map(x=>x[k].win)))+' · 2nd '+fmt(avg(P.map(x=>x[k].sec)))+')').join(' · '));
+      console.log('  majority pool/game '+fmt(avg(P.map(x=>ks.reduce((a,k)=>a+x[k].tot,0))))+
+        ' · to the winner '+fmt(avg(P.map(x=>ks.reduce((a,k)=>a+x[k].win,0))))+
+        ' · to 2nd '+fmt(avg(P.map(x=>ks.reduce((a,k)=>a+x[k].sec,0)))));
     }}
   console.log(`per-player: brews ${fmt(avg(ok.map(r=>r.brews)))} · deliveries ${fmt(avg(ok.map(r=>r.delivs)))} · bank★ ${fmt(avg(ok.map(r=>r.builds)))}`);
   console.log(`delivery split: ${Object.keys(dd).map(k=>k+' '+pct(dd[k],dsum)).join(' · ')}`);
