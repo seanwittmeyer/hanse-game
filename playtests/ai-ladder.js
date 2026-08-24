@@ -1,7 +1,9 @@
 // AI ladder gate — v4.0 "Bright Beer". Adjacent tiers head-to-head at 2p, seats alternating;
 // the gate: every higher tier ≥60% over its neighbour, 0 errors.
 // Usage: node playtests/ai-ladder.js [N-per-pair]        (default 40)
-// Env:   PAIR=trader,guildmaster runs ONE rung · GUILD_MS/CELLAR_MS lower the MC budgets for bulk
+// Env:   PAIR=trader,guildmaster runs ONE rung · GM_ROLLS=n fixes playouts/decision (preferred for
+//        sharded bulk: a wall-clock budget makes strength depend on how many shards are running)
+//        · GUILD_MS/CELLAR_MS lower the MC ms budgets for bulk
 //        (bulk convention: GUILD_MS=120 · CELLAR_MS=400; shard the MC rungs across processes)
 'use strict';
 const fs = require('fs');
@@ -18,6 +20,7 @@ const engine = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]
 
 const driver = `
 render=function(){};save=function(){};log=function(){};snapshot=function(){};
+if(__GMR>0)GM_ROLLS=__GMR;   // ⚙ fixed playouts/decision — shards stay comparable
 if(__GMS>0)GUILD_MS=__GMS;
 if(__CMS>0)CELLAR_MS=__CMS;
 function __duel(loTier,hiTier,hiSeat){
@@ -60,6 +63,7 @@ const localStorage = { getItem:k=>(k in store?store[k]:null), setItem:(k,v)=>{st
 const ctx = { document, localStorage, console, Math, JSON, Date, Set, Map, Array, Object, String, Number, Boolean,
   parseInt, parseFloat, isNaN, alert:noop, setTimeout:noop, clearTimeout:noop, lucide:{createIcons:noop},
   __N:N, __PAIRS:PAIRS,
+  __GMR:parseInt(process.env.GM_ROLLS||'0',10),
   __GMS:parseInt(process.env.GUILD_MS||'0',10),
   __CMS:parseInt(process.env.CELLAR_MS||'0',10) };
 ctx.window = ctx; ctx.globalThis = ctx; ctx.self = ctx;

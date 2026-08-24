@@ -3100,6 +3100,9 @@ function aiStep(){
 let GUILD_MS=250;    // ⚙ ms per Guildmaster decision ('instant' speed caps at 120; harnesses lower it)
 let CELLAR_MS=1200;  // ⚙ ms per Cellarmaster decision
 let GM_MIN=2;        // minimum playouts per option
+let GM_ROLLS=0;      // ⚙ >0 spends a FIXED number of playouts per decision instead of the ms
+                     // budget. A wall-clock budget makes a SHARDED oracle's strength depend on
+                     // how many shards are running; a rollout budget does not. 0 = use the ms.
 const AI_MC_SUBS={move:1,line:1,stops:1,brew:1,load:1,commission:1,placebldg:1,placevent:1,benefit:1,survey:1,hire:1,reach:1,rack:1,assay:1,bshift:1,vlift:1};   // the Venture placement + the Lagering Cellar's target are sampled forks
 function aiMCOptions(p){
   const out=[];const push=(label,fn)=>out.push({label,fn});
@@ -3184,7 +3187,11 @@ function aiMCDecide(p){
   const t0=Date.now();
   const stat=opts.map(o=>({o,n:0,sum:0}));
   try{
+    let rolls=0;
+    const spent=()=>GM_ROLLS?(rolls>=GM_ROLLS):(Date.now()-t0>=budget);
+    const half=()=>GM_ROLLS?(rolls>=GM_ROLLS*0.5):(Date.now()-t0>budget*0.5);
     const playout=(st)=>{
+      rolls++;
       S=JSON.parse(base.S);UI=JSON.parse(base.UI);
       shuffle(S.shipDeck);shuffle(S.buildDeck);shuffle(S.impDeck);   // determinized hidden decks
       S.players.forEach(q=>{q.ai={tier:rollTier,persona:q.id===me?persona:null};});
@@ -3197,10 +3204,10 @@ function aiMCDecide(p){
     let live=stat.slice();
     for(let r=0;r<GM_MIN;r++)live.forEach(playout);   // the floor: every option sampled
     let halved=false;
-    while(Date.now()-t0<budget){
-      if(deep&&!halved&&Date.now()-t0>budget*0.5&&live.length>2){   // sequential halving (CM)
+    while(!spent()){
+      if(deep&&!halved&&half()&&live.length>2){   // sequential halving (CM)
         live.sort((a,b)=>(b.sum/b.n)-(a.sum/a.n));live=live.slice(0,Math.ceil(live.length/2));halved=true;}
-      live.forEach(st=>{if(Date.now()-t0<budget)playout(st);});
+      live.forEach(st=>{if(!spent())playout(st);});
     }
   }finally{
     S=JSON.parse(base.S);UI=JSON.parse(base.UI);

@@ -24,6 +24,7 @@ const driver = `
 //================= HEADLESS RUNNER (appended in-scope) =================
 render=function(){};save=function(){};log=function(){};snapshot=function(){};
 if(__POOL>0)PRES_POOL=__POOL;
+if(__GMR>0)GM_ROLLS=__GMR;   // ⚙ fixed playouts/decision — a sharded oracle stays comparable
 if(__GMS>0)GUILD_MS=__GMS;
 if(__CMS>0)CELLAR_MS=__CMS;
 if(__JIT>0){['journeyman','trader'].forEach(function(t){AI_TIERS[t].noise=__JIT;});}   // JITTER=0.15 — chaos: greedy tiers take a random legal action that often (strategy-variance probe)
@@ -233,6 +234,7 @@ const ctx = {
   __POOL:parseInt(process.env.POOL||'0',10),
   __PERSONAS:PERSONAS,
   __PTIER:process.env.PTIER||'trader',   // v5.6: read the lanes at a chosen tier (PTIER=guildmaster|cellarmaster)
+  __GMR:parseInt(process.env.GM_ROLLS||'0',10),   // ⚙ fixed playouts/decision — contention-independent
   __GMS:parseInt(process.env.GUILD_MS||'0',10),
   __JIT:parseFloat(process.env.JITTER||'0'),
   __CMS:parseInt(process.env.CELLAR_MS||'0',10),
