@@ -778,7 +778,9 @@ const DEST={
   novgorod:{name:'Novgorod',gate:3, maj:[8,5,2], vbonus:3,           kontor:true, role:'Long Haul - the export run: die 3+ boards (the export band); every delivered die scores +3★ on top — the port that only pays money, and pays the most'},
 };
 const KONTORE=['bruges','london','bergen','novgorod'];
-let MAJ_TIERS_2P=1;    // ⚙ places a Kontor majority pays at 2p. 1 = winner-take-all (the rule).
+let MAJ_TIERS_2P=2;    // ⚙ places a Kontor majority pays at 2p (v5.8: 1st AND 2nd — only 3rd is
+                       // skipped). Majorities pay at EVERY count; presence still gates it, so a
+                       // Kontor you never delivered to pays you nothing (majorityAwards drops pr=0).
 const DESTS=KONTORE.slice();
 // a NAMED Kontor always wears ITS OWN crest — the generic landmark
 // glyph is reserved for "a Kontor" in the abstract (the tooltip vocabulary, the Park step).
@@ -1070,7 +1072,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v57';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
+const KEY='hanse-v58';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -2523,7 +2525,7 @@ function renderScore(){
   let mr='';KONTORE.forEach(k=>{const a=majorityAwards(k);const mine=a[p.id]||0;const pr=presenceAt(p,k);
     const lead=pr>0&&leadersAt(k).some(x=>x.id===p.id);
     mr+='<tr><td>'+kIcon(k)+' '+DEST[k].name+'</td><td>'+pr+' parked '+(pr===1?'die':'dice')+(lead?' · <b>leading</b>':'')+'</td><td>'+DEST[k].maj.join('/')+'</td><td '+R+'><b>'+mine+'★</b></td></tr>';});
-  mr+='<tr><td colspan="3"><b>Majorities</b> <span class="note">(end-game; 2p skips 2nd; ties split)</span></td><td '+R+'><b>'+sc.maj+'★</b></td></tr>';
+  mr+='<tr><td colspan="3"><b>Majorities</b> <span class="note">(end-game; 2p skips 3rd; no parked dice here = no score; ties split)</span></td><td '+R+'><b>'+sc.maj+'★</b></td></tr>';
   // 4 · the Flight
   const beers=Object.keys(p.shipped||{}).filter(st=>STYLES[st]);
   const fr='<tr><td>'+(beers.map(st=>styleShort(st)).join(' · ')||'<span class="note">none</span>')+'</td><td>'+beers.length+' distinct — (n−1)², min '+FLIGHT_MIN+' beers</td><td '+R+'><b>'+sc.flight+'★</b></td></tr>';
@@ -3611,7 +3613,7 @@ function renderDests(){
       :'';
     h+='<div class="route '+d+'" data-tip="'+attr(D.name+' · '+D.role)+'">'
       +'<div class="rh"><span class="ric">'+kIcon(d)+'</span>'
-      +'<span class="rmaj" data-tip="'+attr('End-game majority '+D.maj.join('/')+' — by parked dice (2p skips 2nd).')+'">'+D.maj.join('/')+'</span></div>'
+      +'<span class="rmaj" data-tip="'+attr('End-game majority '+D.maj.join('/')+' — by parked dice. No dice parked here, no share of it. '+(S.players.length===2?'2p: 1st and 2nd pay, 3rd is skipped.':'Ties split.'))+'">'+D.maj.join('/')+'</span></div>'
       +'<div class="rh rline"><span class="rn">'+D.name+'</span>'
       +'<span class="rgate" data-tip="'+attr('A cask boards when its DIE (as boarded, after lifts) shows '+D.gate+'+.')+'"><b>'+LU('dices')+D.gate+'+</b></span></div>'
       +'<div class="rh rline"><span data-tip="'+attr('Delivery value = the parked die'+(D.vbonus?' PLUS '+D.vbonus+'★ (printed on the mat — 5–8★ at minimum 3)':' (1–6★)')+'. It parks here as presence.')+'"><b><span class="vstar">★</span> = die'+(D.vbonus?'+'+D.vbonus:'')+'</b></span>'+ben+'</div>'

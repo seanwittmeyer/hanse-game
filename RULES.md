@@ -470,7 +470,10 @@ audit trail; no memory required.)*
 **End-game:**
 
 7. **Majorities** — at each Kontor, by **parked dice** (Bruges 4/2/0 · London 5/3/1 ·
-   Bergen 9/5/2 · Novgorod 8/5/2 ⚙; 2p skips 2nd; ties split).
+   Bergen 9/5/2 · Novgorod 8/5/2 ⚙). **Majorities pay at every player count**; with **2
+   players the 3rd place is skipped** (1st and 2nd both pay). **You must have PARKED
+   DICE at a Kontor to score its majority** — no presence there, no share of it, at any
+   count. Ties split the tied places, rounded down.
 8. **The Flight** — distinct beers **SHIPPED** (the completed cards on your board):
    **(beers−1)², min 3** (3→4 · 4→9 · 5→16 · 6→25 ⚙).
 9. **The Guild** — a seated **Alderman** (+2★ per Kontor with 3+ parked dice ⚙) scores

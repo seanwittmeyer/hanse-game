@@ -3,7 +3,7 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (the one clean rules document). Design rationale & history: `DESIGN.md` §9; the live watches: `DESIGN.md` §10.
-> - The live build is `play.html` — **v5.7 “Plain Sail”** (`KEY hanse-v57`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
+> - The live build is `play.html` — **v5.8 “Pay the Second”** (`KEY hanse-v58`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
 > - **The print kit is `print.html` — the only kit in use** (components.js data is v5.7; the sheet layouts are the P4 refresh + the 2026-08-18 native-scale pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
 
 ---
@@ -407,6 +407,23 @@ boards reprint** (the Orders pile zone → the Manifest reminder) · the **Chron
 **Merchants’ Exchange** tiles reprint (the v5.0 reworks) · player-aid + rulebook reprints.
 Cask counts and mixes unchanged — the stacks are the same tiles, now searched and returned.
 
+
+**v5.8 delta (2026-08-24) — "Pay the Second":** **no new components, three REPRINTS, and one
+long-standing kit error corrected.**
+- **Player aid reprints** — the Majority row now carries the whole rule: *"by parked dice ·
+  none there, none scored · 2p: 1st+2nd"*. The presence gate had been engine-only behaviour
+  since the majorities were introduced — a player could not read it off any component, which
+  is the component-state line (ruled 2026-07-12). It is printed now. Aid ALL FIT re-checked.
+- **Rulebook reprints** — the 2-player sidebar read *"Majorities pay first and third place
+  only"*, which was wrong twice over (the engine paid **first only**, and "first and third"
+  describes nothing). It now reads **first and second**, and the end-game majority line states
+  the presence gate.
+- **Destinations board — KIT ERROR CORRECTED:** the printed short note under Novgorod still
+  read *"every delivered die scores +2★"*. Novgorod went to **+3★** at v5.6 and the long-form
+  note was updated, but the SHORT string is the one that renders. **Any Destinations board
+  proofed between v5.6 and v5.8 prints the wrong Novgorod premium — reprint it.**
+- The tier triples themselves are UNCHANGED on every face (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2), so
+  the boards need no new numbers — only the 2p line and the gate.
 
 ## 11. Known gaps ⚙ (the watch list)
 

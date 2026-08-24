@@ -327,6 +327,40 @@ function stops(){UI={sub:'stops',stops:[],pendingBenefits:[]};}
     S.ending&&S.endReason==='dice'&&trayDice(p)===0&&p.presPool===2);
 })();
 
+// ---- 14pre. v5.8 "PAY THE SECOND": majorities pay at EVERY count, 2p now pays 1st AND 2nd
+// (only 3rd is skipped) — and PRESENCE GATES IT at every count: no parked dice at a Kontor, no
+// share of its majority. The gate was engine-only before v5.8 and is now printed; these lock both.
+(function(){
+  var d=function(dest,n){var a=[];for(var i=0;i<n;i++)a.push({style:'gruit',q:1,dest:dest,val:1});return a;};
+  // 2p — London 5/3/1: the leader takes 5, the trailer now takes 3 (was 0)
+  var p=fresh(2);p.delivered=d('london',3);S.players[1].delivered=d('london',1);
+  var a=majorityAwards('london');
+  ok('v5.8 · 2p majority pays FIRST', a[0]===5);
+  ok('v5.8 · 2p majority now pays SECOND too (was winner-take-all)', a[1]===3);
+  // 2p — third is still skipped: with only two seats there is no third, so prove it off the tier list
+  ok('v5.8 · 2p reads exactly two tiers', MAJ_TIERS_2P===2);
+  // PRESENCE GATE — a seat with nothing parked at the Kontor scores nothing there, at every count
+  fresh(2);S.players[0].delivered=d('bergen',2);S.players[1].delivered=[];
+  var g2=majorityAwards('bergen');
+  ok('the presence gate · 2p: no parked dice at a Kontor = no share of it', g2[0]===9&&g2[1]===undefined);
+  fresh(3);S.players[0].delivered=d('bergen',3);S.players[1].delivered=d('bergen',1);S.players[2].delivered=[];
+  var g3=majorityAwards('bergen');
+  ok('the presence gate · 3p: the absent seat takes 0, it does not inherit 2nd',
+     g3[0]===9&&g3[1]===5&&g3[2]===undefined);
+  fresh(4);S.players[0].delivered=d('novgorod',3);S.players[1].delivered=d('novgorod',2);
+  S.players[2].delivered=[];S.players[3].delivered=[];
+  var g4=majorityAwards('novgorod');
+  ok('the presence gate · 4p: two absent seats take 0, neither inherits 3rd',
+     g4[0]===8&&g4[1]===5&&g4[2]===undefined&&g4[3]===undefined);
+  // a Kontor nobody sailed to pays nobody
+  fresh(3);S.players.forEach(function(q){q.delivered=[];});
+  ok('a Kontor with no parked dice at all pays nobody', Object.keys(majorityAwards('bruges')).length===0);
+  // ties still split the tied places, rounded down
+  fresh(2);S.players[0].delivered=d('london',2);S.players[1].delivered=d('london',2);
+  var t=majorityAwards('london');
+  ok('a 2p tie splits 1st+2nd (5+3=8 → 4 each)', t[0]===4&&t[1]===4);
+})();
+
 // ---- 14. SCORING: deliveries + bank + majorities + flight; vessel-dice tiebreak ----
 (function(){var p=fresh();var q=S.players[1];
   p.delivered=[{style:'hopped',q:2,dest:'london',val:3},{style:'bock',q:5,dest:'london',val:5}];

@@ -780,7 +780,7 @@ const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',
 // start value at brew → aged to its quality → lifted only by buildings at load, cap 6). Gates read
 // the DIE as it boards. Prizes: Bruges a recipe (at its fee) · London a building — the builder's
 // die stands on it (v4.9; the +3★ mint is cut) · Bergen a specialist · Novgorod NO prize: every
-// parked die scores +2★ (v4.2), its minimum 3+ — the export band (v4.10).
+// parked die scores +3★ (v5.6, was +2 at v4.2), its minimum 3+ — the export band (v4.10).
 const DESTS=[
   {nm:'Bruges',  kc:'#274b5c', tint:'#e9eff3', req:1, maj:[4,2,0], role:'The Hub — the on-ramp',        ben:{n:'+1',ic:'scroll-text'}, bnote:'a recipe (pay its fee, H = Q−3) — OR 2★'},
   {nm:'London',  kc:'#b8860b', tint:'#f7efda', req:2, maj:[5,3,1], role:'The Steelyard — the engine',   ben:{n:'+1',ic:'home'},  bnote:'a Venture from your hand, fee waived — OR 2★'},
@@ -925,7 +925,7 @@ function aid3Panels(){
     +AID_ROW('flask-conical','Brew 1','a normal brew \u2014 the TOP tile')
     +'<h5>'+LU('star')+'Scoring Marks</h5>'
     +AID_ROW('star','\u2605','the scoring unit')
-    +AID_ROW('trophy','Majority','Kontor ranking by parked dice')
+    +AID_ROW('trophy','Majority','by parked dice \u00b7 none there, none scored \u00b7 2p: 1st+2nd')
     +AID_ROW('layers','The Flight','distinct beers shipped')
     +AID_ROW('timer','The Clock','the first empty tray')
     +'</div>');
@@ -1129,7 +1129,7 @@ const kMini=d=>{
   // below (Novgorod's v2.9 floor row made it four tiers: <3/3/4/5, too many for a narrow cell at any
   // reasonable chip size); a full-width row gives 4 small chips plenty of room to sit on ONE line, and
   // on-delivery/majority get a wider 2-cell row instead of 3, so nothing here is fighting for space.
-  const valCell='<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU('die-q')+(d.vb?'+'+d.vb:'')+'</span></div>';   // the parked die IS the value — the ?-die (Novgorod prints +2 on top — 5–8★ at minimum 3)
+  const valCell='<div class="kp-cell"><span class="kp-ch">'+LU(VP)+'value</span><span class="kp-big">'+LU('die-q')+(d.vb?'+'+d.vb:'')+'</span></div>';   // the parked die IS the value — the ?-die (Novgorod prints +3 on top — 6–9★ at minimum 3)
   const benCell=d.vb?'':'<div class="kp-cell"><span class="kp-ch">'+LU('gift')+'on delivery</span><span class="kp-big kp-ben">'+d.ben.n+LU(d.ben.ic)+'</span></div>';   // the PRIZE reads first (designer, 2026-08-18): its own much-larger tier   // Novgorod's on-delivery cell is CUT — redundant to its +2 value (designer, round 2)
   // the PARKING field — where delivered dice stand. The Overlay ghosts three 12mm d6 into it,
   // so the proof shows the zone actually seats the component it is cut for (2026-08-09).
@@ -1142,7 +1142,7 @@ const kMini=d=>{
       +'<div class="kp-cell"><span class="kp-ch">'+LU('landmark')+'majority</span><span class="kp-big">'+d.maj.join('/')+'</span></div>'
     +'</div><div class="kp-note bnote">'+(BNOTE_SHORT[d.nm]||d.bnote)+'</div></div>'
   +'</div>';};
-const BNOTE_SHORT={Bruges:'a recipe at its fee \u00b7 OR 2★',London:'a Venture, fee waived \u00b7 OR 2★',Bergen:'a Specialist \u00b7 OR shift the Bourse \u00b11 \u00b7 OR 2★',Novgorod:'no prize — every delivered die scores +2★'};
+const BNOTE_SHORT={Bruges:'a recipe at its fee \u00b7 OR 2★',London:'a Venture, fee waived \u00b7 OR 2★',Bergen:'a Specialist \u00b7 OR shift the Bourse \u00b11 \u00b7 OR 2★',Novgorod:'no prize — every delivered die scores +3★'};
 function supplyBoard(){
   const dslot=(fam,ic,smp,lbl)=>'<div class="dslot '+fam+'">'+LU(ic)+(lbl?'<span class="rn">'+lbl+'</span>':'')
     +(OVERLAY&&smp?'<div class="ovl">'+smp+'</div>':'')+'</div>';

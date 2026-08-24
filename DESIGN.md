@@ -245,6 +245,42 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
 
+### v5.8 “Pay the Second” (2026-08-24, designer-ruled — record `archive/records/V58-PAY-THE-SECOND.md`)
+*"At all player counts, majorities pay out. For 2p, pay our second place. Only pay if
+participated (0 if no dice in that Kontor). I'm surprised 2p didn't do this already."*
+
+- **2p majorities now pay FIRST AND SECOND** (`MAJ_TIERS_2P` 1 → 2 ⚙); only 3rd is skipped.
+  The tier triples are UNCHANGED on every printed face — this is the *number of places paid*,
+  not the numbers.
+- **The presence gate is now PRINTED.** *"No parked dice at a Kontor, no share of its
+  majority"* was always the engine's behaviour (`majorityAwards` drops `pr=0` before ranking)
+  but appeared on **no component and in no document** — a player could not read it off the
+  table. That is the component-state line (ruled 2026-07-12) and it had been quietly broken
+  for as long as majorities have existed. Now on the aid, in the rulebook, and in `RULES.md`.
+- **Two printed-surface errors found by the touch list and corrected:** the rulebook's
+  2-player sidebar read *"Majorities pay first and third place only"* — wrong twice (the
+  engine paid **first only**; "first and third" describes nothing) — and the Destinations
+  board's short note still printed **Novgorod +2★** when v5.6 ruled it to **+3★**. The
+  long-form note had been updated; the short string is the one that renders. **Any board
+  proofed between v5.6 and v5.8 carries the wrong premium** (`COMPONENTS.md` §10).
+- **Why:** the 1,850-game MC oracle showed the 2p runaway is the *winner-take-all majority*,
+  not the market — 26★ (4+5+9+8) decided by an 18% cask edge with no consolation.
+- **DELIVERED, measured on the live build (200 games/count, journeyman):** 2p margin
+  **22.1 → 19.4★**, blowouts >25★ **38.0% → 32.5%**, close games ≤10★ **27.2% → 33.5%**;
+  3p/4p unmoved (14.8 / 12.6 — they already paid a second place), pace and band unchanged
+  (15.3 / 14.6 / 13.7, band 84/89/86%). Winner totals rise **78.3 → 84.3** at 2p: the pool
+  is bigger, not redistributed. **The cleanest signal is the decomposition — the majority's
+  share of the 2p margin more than HALVED, 8.42★ → 3.9★**, and second place now collects
+  15.5★ of a 34.9★ pool where it used to collect ~7 of 22.3. *Note the headline margin fell
+  less than the 250-game arm predicted (that arm read 21.1 → 16.5 against its own baseline);
+  the bucket read is the apples-to-apples one and it is unambiguous.*
+- **Deliberately NOT taken (yet):** the re-tiering that pairs with it (London/Bergen 9/5/2,
+  Bruges 5/4/2). At guildmaster the pair reaches **25.9★** where this half alone reaches 30.4
+  — but that is a second ruling, and the designer took the easy half first.
+- Gates: verify **386/386** (new §14pre battery — the second place, the presence gate at 2/3/4p,
+  a Kontor nobody sailed to, and the tie split) · sim clean · render smoke PASS · aid ALL FIT ·
+  `KEY hanse-v58`.
+
 ### v5.7 “Plain Sail” (2026-08-23, designer-ruled — record `archive/records/V57-PLAIN-SAIL.md`)
 *"Ditch the manifests for now."*
 
@@ -742,6 +778,14 @@ record is in git history.
 
 *Moved here from `RULES.md` §Open (2026-08-23). The designer calls full batteries; these
 are the things to read when one runs — or when a human table sits down.*
+
+**DIALED at v5.8 (2026-08-24): 2p majorities now pay a SECOND PLACE**, and the presence gate
+(*no parked dice at a Kontor, no share of it*) is finally PRINTED rather than engine-only. Live
+read: 2p margin **19.4★** (was 22.1), blowouts **32.5%** (was 38), majority-share of the margin
+**3.9★** (was 8.4). **The runaway is dented, not closed** — deliveries still carry 9–10★ of it,
+and at guildmaster the margin is still ~30★. **The queued second half is the re-tiering**
+(London/Bergen 9/5/2 · Bruges 5/4/2), which at GM takes the pair to 25.9★ where this half alone
+reaches 30.4 — costed at about +3★ of total inflation. Not ruled; read this half at a table first.
 
 **THE HIGH-SKILL ORACLE (2026-08-24, 1,850 Monte-Carlo games — 3.0h, 4-core queue at
 concurrency 4, `GUILD_MS=60` / `CELLAR_MS=150`). FOUR RESULTS, TWO OF THEM REVERSALS:**
