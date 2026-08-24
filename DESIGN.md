@@ -755,8 +755,8 @@ are the things to read when one runs — or when a human table sits down.*
 | flight | 1.6 | 1.6 | 1.6 |
 | guild | 0.2 | 0.1 | 0.2 |
 
-**The winner's casks are barely worth more than second's — 5.52★ vs 5.18★ (+6%). They ship
-+1.3 more of them (+18%).** The gap is *volume*, and majorities then amplify it: at 2p
+**The winner's casks are barely worth more than second's — 5.52★ vs 5.18★ (+6.6%). They ship
++1.3 more of them (+17.9%).** The gap is *volume*, and majorities then amplify it: at 2p
 `majorityAwards` slices the tiers to first place only, so the four destination majorities are
 **26★ of pure winner-take-all** (4+5+9+8) riding on an 18% cask edge — one extra cask at a port
 flips 9★ with no consolation. 3p/4p pay tier 2 and the margin falls by a third. Shape at 2p:
@@ -764,7 +764,7 @@ median 18.8, p90 44.4, **38% of games blow past 25★**, only 27% land inside 10
 10.8, 12% blowouts, 51% close.
 
 **This EXONERATES the Bourse and the prizes** — the suspects this watch itself named. If the
-market front-loaded value onto the leader, per-cask value would diverge; it does not (+6%). Bank
+market front-loaded value onto the leader, per-cask value would diverge; it does not (+6.6%). Bank
 (where prizes-as-★ land) is 2.1★ of a 22★ gap. **`BOURSE_START` and `PRIZE_PTS` come OFF the
 lever list.** The live levers are the ones that touch throughput and the majority cliff:
 2p majority tiers (first-only → pay a second place) · the tray (`POOL`, the pace dial) · the
