@@ -1854,8 +1854,6 @@ function aiShiftPick(p,B){const beers=Object.keys(S.bourse||{});if(!beers.length
     if(v>bv){bv=v;best={beer:b,dir:1};}});
   if(B.down)beers.forEach(b=>{const room=S.bourse[b]-BOURSE_MIN;const v=(riv[b]-mine[b])*Math.min(1,Math.max(0,room));
     if(v>bv){bv=v;best={beer:b,dir:-1};}});
-  if(aiDeep(p)){const hb=aiHouseBeer(p);   // the depth lane works ONE marker: its own house beer
-    if(hb&&S.bourse[hb]<BOURSE_MAX)return {beer:hb,dir:1};}
   if(!best){const r=(p.recipes||[]).filter(x=>tracked(x)&&S.bourse[x]<BOURSE_MAX);
     if(r.length)best={beer:r[0],dir:1};}
   return best;}
@@ -2735,15 +2733,11 @@ const AI_TIERS={
 };
 // v4 PERSONAS (the pathway oracle's lanes): a committed lean the Trader tilts toward —
 // majority (stack parked dice) · lifter (kiln-fed high dice) · builder (raise tiles, London) ·
-// breadth (the Flight; brew every beer) · DEPTH (the specialist: re-brew and re-ship the SAME
-// beer, and work its Bourse marker). sim.js PERSONAS=1 seats them round-robin.
-//
-// DEPTH exists because the oracle had a seat for breadth and none for its opposite — so every
-// lane read on record could say how good going wide is and nothing at all about going deep,
-// which is the open question ("an equally balanced point return on going all in on 1 or 2
-// beers"). It is a MIRROR of breadth: wherever breadth pays for a style you have NOT shipped,
-// depth pays for one you HAVE.
-const AI_PERSONAS=['majority','lifter','builder','breadth','depth'];
+// breadth (the Flight; brew every beer). sim.js PERSONAS=1 seats them round-robin.
+// (A pure-depth lane ran 2026-08-23/24 and retired by ruling: specialisation is not a
+// standalone strategy in this game — if it lives, it is depth PAIRED with the engine lanes.
+// The measurement record lives in DESIGN.md §10.)
+const AI_PERSONAS=['majority','lifter','builder','breadth'];
 const AI_DELAYS={slow:900,normal:450,instant:0};
 const AI_SPEED_KEY='hanse-ai-speed';
 let aiTimer=null,aiActing=false,aiLoopActive=false,aiSimulating=false;
@@ -2762,24 +2756,6 @@ function aiIsTrader(p){return p.ai&&(p.ai.tier==='trader'||p.ai.tier==='guildmas
 // overrides. The CM stays pure search.
 function aiPersona(p){return (p.ai&&p.ai.persona)||((p.ai&&p.ai.tier==='guildmaster'&&S.players.length<4)?'quality':null);}   // the GM's standing 'quality' lane holds at 2–3p; at 4p+ it starves, so the GM reverts to pure search there
 function aiPW(p,lane){return aiPersona(p)===lane?2.2:1;}   // the committed lean's tilt ⚙
-// ---- THE DEPTH LANE (the specialist oracle) ----
-// aiDepthPull is breadth's mirror: it pays for RE-brewing and RE-shipping a beer already in
-// your Flight, so the seat concentrates instead of spreading. Deliberately keyed off
-// p.shipped (the completed recipe cards — the physical record), never a hidden counter.
-const DEPTH_CAP=2;   // ⚙ the lane's commitment — "all in on 1 or 2 beers" (the designer's words)
-function aiDeep(p){return aiPersona(p)==='depth';}
-// once the seat is AT its cap it stops opening new styles — otherwise the free warm Gruit and
-// the starter Hopped drift it back to breadth and the lane measures nothing.
-function aiDeepCommitted(p){return aiDeep(p)&&flightBeers(p)>=DEPTH_CAP;}
-function aiDepthPull(p,style){if(!aiDeep(p)||!style)return 0;
-  const shipped=!!((p.shipped||{})[style]),brewed=!!((p.brewed||{})[style]);
-  if(aiDeepCommitted(p)&&!shipped)return -3.0;   // ⚙ committed: a NEW style is off the plan
-  return (shipped?2.4:0)+(brewed?0.8:0);}   // ⚙ the lane's tilt — re-work what you already sell
-// the beer this seat has committed to (most brewed; ties to the highest quality) — the marker
-// a depth seat props up when it gets a shift
-function aiHouseBeer(p){const b=p.brewed||{};let bk=null,bv=-1;
-  Object.keys(b).forEach(k=>{if(!tracked(k))return;const v=(((p.shipped||{})[k])?2:1)+STYLES[k].q*0.1;
-    if(v>bv){bv=v;bk=k;}});return bk;}
 function aiQual(p){return aiPersona(p)==='quality';}       // the designer lane's checks
 // fee sense: the fee rides the ITEM — net every acquisition value by its printed fee ⚙
 function aiFeeCost(f){return ((f&&f.g)||0)*0.55+((f&&f.h)||0)*0.3;}
@@ -2845,7 +2821,6 @@ function aiRecipeVal(p,st){if(!st||!STYLES[st])return 0;
   if((p.recipes||[]).includes(st))return 0;
   let v=1.4+STYLES[st].q*0.5;                       // a higher beer is worth more of the trip
   if(!((p.shipped||{})[st]))v+=0.35*aiFlightMarg(p)*aiPW(p,'breadth');   // the Flight step it opens
-  if(aiDeep(p))v*=0.3;                               // a committed specialist does not want a new card
   if(aiLateGame(p))v*=0.4;                           // late, a card cannot pay itself back
   return v-aiFeeCost(recipeFeeFor(p,st));}
 // specialist values ⚙ — one table for the hire verb and the Bergen prize
@@ -2876,8 +2851,7 @@ function aiLoadValue(p,sid){const t=S.slots[sid];if(!t||t.type!=='ship')return 0
   readyInVessels(p).forEach(o=>{if(canTake(sid,o.i)){const bd=boardDie(p.vessels[o.i],sid);const d=bd+((DEST[t.dest].vbonus)||0);
     const bk2=bKeyAt(sid);
     let v=1.5+d*0.8*Math.max(aiPW(p,'lifter'),aiQual(p)?1.7:1)+(t.load.length+1>=sailCap(t)?0.8:0)
-      +(((p.shipped||{})[o.c.style])?0:(aiDeepCommitted(p)?0:0.45*aiFlightMarg(p)*aiPW(p,'breadth')))   // the first load of a style IS the Flight step — silent once a depth seat has committed
-      +aiDepthPull(p,o.c.style)*0.4   // ...and the depth lane pays for the REPEAT load instead
+      +(((p.shipped||{})[o.c.style])?0:0.45*aiFlightMarg(p)*aiPW(p,'breadth'))   // the first load of a style IS the Flight step
       +(tracked(o.c.style)?Math.min(BOURSE_MAX,S.bourse[o.c.style]+1)*0.8:0)   // the bourse pays at the sale (the arrival rise counted once)
       +(bk2==='victual'?0.8:0)
       +(bk2==='weighhouse'&&tracked(o.c.style)?1.1:0)   // v5.7: the Weigh House certifies — this cargo does not glut
@@ -2888,8 +2862,7 @@ function aiCellValue(p,c,alt,lk){   // alt = the ALTERNATE fires
   const trader=aiIsTrader(p);
   if(c==='A'){const n=alt?(hasUpgrade(p,'broker')?2:ALT_SOURCE):SRC_PRIMARY;   // the Broker's full alt; the primary is SRC_PRIMARY
     return Math.max(0.2*n,(5-(p.grain+p.hops))*0.35*n);}
-  if(c==='B'){let v=aiVerbValue(p,'brew')+((openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)&&!(p.shipped||{})[r]))?(trader?0.5*aiFlightMarg(p):0.5)*aiPW(p,'breadth'):0)
-      +(aiDeep(p)&&openVessel(p)>=0?Math.max.apply(null,p.recipes.map(r=>canBrew(p,r)?aiDepthPull(p,r):0).concat([0]))*0.5:0);
+  if(c==='B'){let v=aiVerbValue(p,'brew')+((openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)&&!(p.shipped||{})[r]))?(trader?0.5*aiFlightMarg(p):0.5)*aiPW(p,'breadth'):0);
     if(aiLateGame(p)&&!p.recipes.some(r=>canBrew(p,r)&&startDieFor(p,r)>=STYLES[r].q))v*=0.4;   // the trader doesn't start what can't finish
     if(alt&&!hasUpgrade(p,'brewmate'))v*=0.85;   // the alt takes the TOP tile — no search (the Brewer's Mate searches)
     return v;}
@@ -2986,7 +2959,7 @@ function aiStep(){
          // WHEN NEEDED: a low-gate hull one cask from sailing, or the endgame, wants the fast cask.
          const qw=aiQual(p)?0.9:0;
          const closer=qw&&wharfShips().some(sid=>{const t=S.slots[sid];return t&&t.load.length+1>=sailCap(t)&&gateNeed(sid)<=2;});
-         const key=r=>((p.shipped||{})[r]?0:nb*aiPW(p,'breadth'))+aiDepthPull(p,r)+STYLES[r].q*(1+qw)-(late?(STYLES[r].q-startDieFor(p,r))*(1.2+qw):0)
+         const key=r=>((p.shipped||{})[r]?0:nb*aiPW(p,'breadth'))+STYLES[r].q*(1+qw)-(late?(STYLES[r].q-startDieFor(p,r))*(1.2+qw):0)
            +((closer||qw&&late)&&(r==='hopped'||r==='gruit')?2.2:0);
          aff.sort((a,b)=>key(b)-key(a));}
         return brewPick(aff[0]);}
@@ -3022,7 +2995,7 @@ function aiStep(){
         let bk=ks[0],bv=-1e9;ks.forEach(k=>{const v=aiMajSwing(p,k);if(v>bv){bv=v;bk=k;}});
         return reachPick(bk);}
       case 'recipegain':{const nb=aiIsTrader(p)?0.4*aiFlightMarg(p):0.4;
-        const net=st=>STYLES[st].q*(aiQual(p)?1.4:1)+((p.shipped||{})[st]?0:nb*aiPW(p,'breadth'))*(aiDeep(p)?0.25:1)-aiFeeCost(RECIPE_FEE[st]||{})-(st==='jopenbier'&&p.hops<6?2.5:0);
+        const net=st=>STYLES[st].q*(aiQual(p)?1.4:1)+((p.shipped||{})[st]?0:nb*aiPW(p,'breadth'))-aiFeeCost(RECIPE_FEE[st]||{})-(st==='jopenbier'&&p.hops<6?2.5:0);
         const o=recipeAffordable(p).sort((a,b)=>net(b)-net(a));
         return recipeGainPick(o.length?o[0]:null);}
       case 'survey':{const aff=surveyAffordable(p);
@@ -3122,12 +3095,7 @@ function aiMCOptions(p){
           if(lo[ci]!==hi[ci])push('pour:'+lo[ci]+'>'+ci,()=>{pourDo(lo[ci],ci);});});}
       push('end',()=>endTurn());break;}
     case 'brew':{const brFree=!!(UI.brew&&UI.brew.free);
-      // the DEPTH lane must CONSTRAIN the search, not merely tilt it. The MC picks by sampled
-      // margin, so a persona tilt is invisible here — the search simply discovers that opening
-      // a third style scores better and the lane measures a broad seat wearing a depth label.
-      // Committed depth seats are offered only styles they already ship: the lane PLAYS the
-      // strategy so the oracle can price it.
-      p.recipes.filter(r=>(brFree||canBrew(p,r))&&!(aiDeepCommitted(p)&&!((p.shipped||{})[r])))
+      p.recipes.filter(r=>brFree||canBrew(p,r))
         .forEach(r=>push('brew:'+r,()=>brewPick(r)));
       push('skip',()=>resume(UI.brew?UI.brew.returnTo:'stops'));break;}
     case 'load':{const L=UI.load;if(!L)break;

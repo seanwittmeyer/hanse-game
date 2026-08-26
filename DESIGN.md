@@ -813,6 +813,18 @@ across five. **The Glut punishes specialisation by construction**, and §10's ow
 not the vessels.* (Earlier §10 text naming the per-cask value curve and vessel count still holds
 for the value half; the pipeline half is retired.)
 
+**RULED (designer, 2026-08-24): DEPTH RETIRES AS A STANDALONE HEURISTIC LANE.** *"We can ditch
+depth as a heuristic lane. If done well, it likely requires a pairing with another strategic
+lane such as buildings and specialists."* The lane answered its question — pure specialisation
+is **not** a strategy in this game and is not asked to become one; if a specialist line lives,
+it is **depth PAIRED with the engine** (the shift-supply the specialist props its own marker
+with: Venture Bourse lines, the toll bench, Bergen's shift prize, the drip specialists). The
+pure lane and its machinery (`DEPTH_CAP`, the tilt, the MC brew constraint) are out of the
+engine; the roster is **majority · lifter · builder · breadth**. **The seam for its return:** a
+*paired* lane (depth × builder) is only worth building AFTER the up-shift supply question is
+settled — on today's 3:1 shortfall it would measure the same wall. The specialisation watch
+folds into the up-shift-supply watch; it is no longer its own line.
+
 **3 · BREADTH IS THE DOMINANT LANE AT EVERY TIER** — lift **+17.3 / +13.2 / +16.7** at
 journeyman / GM / CM. Majority collapses with skill (+13.7 → +11.1 → −1.4); lifter and builder
 sit near par. Only breadth is strongly positive everywhere.
@@ -1029,7 +1041,9 @@ already running 12–14 rounds).
 styles (visible as `bock+gruit+hopped`), which makes the measured depth seats **less**
 specialized than intended and the gap if anything understated.*
 
-**THE MC TIERS REFUSE TO SPECIALIZE — an instrument finding worth keeping.** The first
+**THE MC TIERS REFUSE TO SPECIALIZE — an instrument finding worth keeping** *(the constraint
+code retired with the lane, 2026-08-24; the lesson below is standing and applies to ANY future
+lane the MC must respect — a paired depth×builder lane included).* The first
 GM/CM lane read came back with depth at **flight 4.0/3.7/2.8 beers** — the cap never bound.
 Cause: `aiMCDecide` picks by **sampled margin**, so a persona tilt is invisible to it; the
 persona only flavours the rollout policy. Given the option, **the strongest search available
@@ -1040,7 +1054,8 @@ only styles it already ships), so the search must play the strategy in order to 
 **Lesson: a persona that only tilts is invisible to a search tier — a lane the MC must respect
 has to remove options, not weight them.**
 
-**THE DEPTH LANE (v5.6, built 2026-08-23) — the oracle's blind spot is closed.** The PATHWAYS
+**THE DEPTH LANE (v5.6, built 2026-08-23 — RETIRED by ruling 2026-08-24, its question
+answered; kept as the record of what it was).** The PATHWAYS
 lanes were majority · lifter · builder · breadth: **a seat for going wide and none for its
 opposite**, so no lane read on record could speak to *"an equally balanced point return on
 going all in on 1 or 2 beers."* `depth` is breadth's mirror (re-brew and re-ship the same beer;

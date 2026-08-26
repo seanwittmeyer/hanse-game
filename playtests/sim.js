@@ -5,7 +5,7 @@
 // Usage: node playtests/sim.js [N]      (N games per player count; default 100)
 // Env:   TIER=apprentice|journeyman|trader|guildmaster|cellarmaster (default journeyman)
 //        PERSONAS=1 — the v4 PATHWAYS oracle: trader seats committed round-robin to the four lanes
-//                     (majority · lifter · builder · breadth · depth); per-lane win rates reported
+//                     (majority · lifter · builder · breadth); per-lane win rates reported
 //        POOL=n sweeps the dice pool (THE pace dial) · GUILD_MS/CELLAR_MS lower the MC budgets
 //        ALTSRC=n / ALTAGE=n sweep the v5.0 alternate-station dials (override only when set)
 //        STAPLE=n — the v5.2 Staple House premium ⚙ (override only when set; the +2/+4 A/B)
@@ -136,7 +136,7 @@ function __runGame(n,__POFF){
   if(__AAGE!=='')ALT_AGE=parseInt(__AAGE,10)||1;
   if(__STPL!=='')STAPLE_PTS=parseInt(__STPL,10)||2;   // v5.2 ⚙: the Staple premium (the +2/+4 A/B) — override ONLY when set
   if(__SRCN!=='')SRC_PRIMARY=parseInt(__SRCN,10)||3;   // v5.2b ⚙: the Market primary (the 2/3 A/B) — override ONLY when set
-  if(__FLIGHT==='off'){FLIGHT_PTS={1:0,2:0,3:0,4:0,5:0,6:0};}   // ⚙ v5.6: the counterfactual — what is DEPTH worth with no breadth bonus at all?
+  if(__FLIGHT==='off'){FLIGHT_PTS={1:0,2:0,3:0,4:0,5:0,6:0};}   // ⚙ v5.6: the counterfactual — zero the whole Flight ladder for everyone
   if(__MAJ!==''){__MAJ.split(',').forEach(function(seg){   // ⚙ MAJ=bruges:5/4/2,london:9/5/2 — override ONLY when set
     var m=seg.split(':');if(!DEST[m[0]]||!m[1])return;
     DEST[m[0]].maj=m[1].split('/').map(function(v){return parseInt(v,10)||0;});});}
@@ -144,7 +144,7 @@ function __runGame(n,__POFF){
   if(__BMIN!=='')BOURSE_MIN=parseInt(__BMIN,10);   // v5.3 ⚙: the Bourse track ends — override ONLY when set
   if(__BMAX!=='')BOURSE_MAX=parseInt(__BMAX,10);
   S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
-  // v5.6: the lane roster is now LONGER than a table (5 lanes, 2-4 seats), so a fixed i%len
+  // v5.6: the lane roster can be LONGER than a table (4 lanes, 2-4 seats), so a fixed i%len
   // would never seat the tail lanes. Rotate the offset per game — every lane gets equal seat time.
   S.players.forEach(function(p,i){p.ai=__PERSONAS?{tier:__PTIER,persona:AI_PERSONAS[(i+__POFF)%AI_PERSONAS.length]}:{tier:__TIER};p.presPool=PRES_POOL;});
   var guard=0;
@@ -226,7 +226,7 @@ const ctx = {
   __ASRC:process.env.ALTSRC!=null?process.env.ALTSRC:'', __AAGE:process.env.ALTAGE!=null?process.env.ALTAGE:'',   // v5.0: the primary/alt dials
   __STPL:process.env.STAPLE!=null?process.env.STAPLE:'',   // v5.2: the Staple premium dial
   __SRCN:process.env.SRCN!=null?process.env.SRCN:'',   // v5.2b: the Market primary dial
-  __FLIGHT:process.env.FLIGHT||'',   // v5.6 ⚙: FLIGHT=off zeroes the Flight ladder (the depth counterfactual)
+  __FLIGHT:process.env.FLIGHT||'',   // v5.6 ⚙: FLIGHT=off zeroes the Flight ladder (a counterfactual hook)
   __MAJ:process.env.MAJ!=null?process.env.MAJ:'',   // ⚙ the majority table, per port
   __MAJTIERS:process.env.MAJTIERS!=null?process.env.MAJTIERS:'',   // ⚙ places paid at 2p
   __BMIN:process.env.BMIN!=null?process.env.BMIN:'',   // v5.3: the Bourse track ends
@@ -325,13 +325,11 @@ let anyErr=0;
         pb[L.ps]=(pb[L.ps]||0)+(L.brews||0);ps2[L.ps]=(ps2[L.ps]||0)+(L.stuck||0);
         pD[L.ps]=(pD[L.ps]||0)+(L.sDel||0);pB[L.ps]=(pB[L.ps]||0)+(L.sBank||0);pM[L.ps]=(pM[L.ps]||0)+(L.sMaj||0);});});
     const lanes=Object.keys(pn);
-    const st={};ok.forEach(r=>(r.laneSeats||[]).forEach(L=>{if(L.ps!=='depth')return;st[L.styles||'(none)']=(st[L.styles||'(none)']||0)+1;}));
-    const top=Object.keys(st).sort((x,y)=>st[y]-st[x]).slice(0,5);
     console.log('PATHWAYS win-rate by lane: '+lanes.map(k=>k+' '+pct(pw[k]||0,pn[k])).join(' · ')+'  (seats: '+lanes.map(k=>pn[k]).join('/')+')');
     console.log('  per-lane avg: '+lanes.map(k=>k+' \u2605'+fmt((pt[k]||0)/pn[k])+' (flight '+fmt((pf[k]||0)/pn[k])+' beers = '+fmt((pfl[k]||0)/pn[k])+'\u2605 \u00b7 '+fmt((pd[k]||0)/pn[k])+' deliveries)').join(' \u00b7 '));
     console.log('  \u2605 BREAKDOWN by lane (deliveries \u00b7 bank \u00b7 majorities \u00b7 flight): '+lanes.map(k=>k+' '+fmt((pD[k]||0)/pn[k])+'/'+fmt((pB[k]||0)/pn[k])+'/'+fmt((pM[k]||0)/pn[k])+'/'+fmt((pfl[k]||0)/pn[k])).join('  \u00b7  '));
     console.log('  throughput: '+lanes.map(k=>k+' '+fmt((pb[k]||0)/pn[k])+' brews \u2192 '+fmt((pd[k]||0)/pn[k])+' shipped ('+fmt((ps2[k]||0)/pn[k])+' stuck in vessels at end)').join(' \u00b7 '));
-    if(top.length)console.log('  what DEPTH committed to: '+top.map(k=>k+' \u00d7'+st[k]).join(' \u00b7 '));}
+    }
 });
 console.log(anyErr? `\n*** ${anyErr} ERRORS — GATE FAILED ***` : '\nGATE: 0 crashes / 0 deadlocks.');
 process.exit(anyErr?1:0);
