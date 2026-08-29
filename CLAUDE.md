@@ -40,6 +40,7 @@ the complete canon **in full — no skimming, no sampling**:
 | Read | Role |
 |---|---|
 | `CLAUDE.md` | this charter — process, interlocks, gates, deploy |
+| `V6-PLAN.md` | **the v6 program** — the ruling, the CONSTITUTION, architecture, phases, open forks (the v6-era read-FIRST after this charter) |
 | `DESIGN.md` | pillars, current architecture, change log, lessons, **open watches** — the *why* |
 | `RULES.md` | **source of truth** — the ONE rules document (clean operational rules) |
 | `COMPONENTS.md` | **source of truth** — the physical manifest |
@@ -67,8 +68,10 @@ Every change set runs this loop, whole, in one turn:
    a number change is always a multi-file edit. A card face edits in **`components.js`**,
    never per-page.
 4. **Land the whole set in one pass** — docs together, then the pages, then the engine.
-5. **Gates:** `node playtests/verify-v4.js` always; a 5–10 game sim smoke if the engine
-   changed; bump the save `KEY` on any rules change (never on doc/kit-text-only work).
+5. **Gates:** the live verify battery always (the v6 instruments land at `V6-PLAN.md`
+   Phase 3; until then `node archive/v5/playtests/verify-v4.js` gates the archived v5
+   build); a 5–10 game sim smoke if the engine changed; bump the save `KEY` on any rules
+   change (never on doc/kit-text-only work).
 6. **Publish to `main` the same turn** (§6).
 
 **Never end a turn with a ruling half-landed.** If you cannot explain how the change
@@ -86,14 +89,25 @@ affects each axis in step 2, you don't understand it yet — go back to §2.
 - **The user plays/reviews the LIVE GitHub Pages site, served from `main` only.** Anything merely committed to the feature branch — or just edited in the working tree — is **invisible to the user.** "Pushed" is not enough; it must be on `main`.
 - **After ANY change the user needs to see or test, publish to `main` in the same turn.** The flow is always: commit on the feature branch → `git push -u origin <branch>` → **fast-forward `main`** (`git push origin <branch>:main`). If you're unsure whether to publish, publish.
 - GitHub Pages (the `deploy-pages.yml` workflow) takes ~1–2 min to rebuild after a push to `main`; the user must **hard-refresh** (Cmd/Ctrl+Shift+R) to beat the cache. A save-`KEY` bump clears any in-progress game (expected after a rules change).
-- **The component-state hard line (ruled 2026-07-12): ALL game state must be carried by physical components** — no rule may require memory, a ledger, or app-side tracking; if no component can hold it, the mechanic is out. `play.html` is the mirror, never a crutch. In `play.html`, essential info is shown INLINE because it is printed on the tile; tooltips may carry only flavor/reminders. Every change must work as cardboard, not just on screen.
+- **The component-state hard line (ruled 2026-07-12): ALL game state must be carried by physical components** — no rule may require memory, a ledger, or app-side tracking; if no component can hold it, the mechanic is out. `play.html` is the mirror, never a crutch. In `play.html`, essential info is shown INLINE because it is printed on the tile; tooltips may carry only flavor/reminders. Every change must work as cardboard, not just on screen. **ELEVATED to the v6 CONSTITUTION (designer-ruled 2026-08-29): every value and state is tracked with components on the board; players never remember states or values and never do complex calculations — the arithmetic ceiling is one die plus one printed marker; actions are easy to learn and easy to execute. Every v6 mechanic passes this gate before any balance question is even asked (`V6-PLAN.md` §1).**
 
 ## 7 · What the game is
 *Brewhouses of the Hanse* — a **2–4p** medieval-Hanseatic brewing euro (c. 1350; a 5p mode runs but isn't balance-tuned), **medium / *Great Western Trail*–*Distilled* weight**. You run a merchant brewing house at **the Wharf** — four stations on a shared 2×2 (Market·Brewhouse·Cellar·Harbor) ringed by 8 slots — where the work runs **Source → Brew → Age → Ship.** Goods are the only currency — no money, no spendable prestige.
 
 **Live build: v5.8 “Pay the Second” (`KEY hanse-v58`, designer-ruled 2026-08-24).** The complete version history and rationale live in **`DESIGN.md` §9** (v5 letters in detail, pre-5.0 as a digest); the live watch-list in **`DESIGN.md` §10**; the consolidated v5 decision record in `archive/records/V5-DECISIONS.md`. Gates at v5.7 (full oracle, 1,500 games, 2026-08-24): verify **378/378** · sim clean (0 crashes / 0 deadlocks) · **ladder every rung PASS** (85 / 63 / 69 / 88%) · render smoke PASS · aid ALL FIT. Pace **14.7 / 14.5 / 13.7** (band 84/88/87%); totals **78/79/71**. **LIVE WATCH — RUNAWAY MARGINS, and SKILL MAKES THEM WORSE:** journeyman 22.1 / 15.1 / 12.7, but **guildmaster 34.0 / 19.4 / 15.3** (2p blowouts 59%). They are THROUGHPUT, not the market: the winner's casks are worth **+6%** but they ship **+18%** more of them, and 2p majorities **now pay a second place** (v5.8 — only 3rd is skipped; the majority's share of the 2p margin more than halved, 8.4★ → 3.9★, and the presence gate *no parked dice, no share* is now PRINTED, not engine-only). Still **19.4★** at 2p and ~30★ at guildmaster — dented, not closed; the queued second half is the re-tiering (London/Bergen 9/5/2 · Bruges 5/4/2). The Bourse and the prizes are **cleared** — `BOURSE_START`/`PRIZE_PTS` are off the lever list. Two v5.7 reversals from the 1,850-game MC oracle (2026-08-24): **DEPTH IS NOT DEAD** — the "cannot keep three vessels full" finding was a greedy-bot artifact; at skill a specialist ships 7.1 casks like everyone else and loses on PRICE (3.17★/cask vs breadth's 4.78 — its one beer's marker lives on the floor), so **the Glut punishes specialisation by construction** (ruled 2026-08-24: depth retires as a standalone oracle lane — viable specialisation would be depth *paired* with buildings/specialists, gated on the up-shift supply). And **the clock is not the dice at a strong table** — 28% of GM 2p games end on the MAX_ROUND backstop because skilled seats hold dice instead of spending them. Read at a table before dialing (`DESIGN.md` §10).
 
-### The spine (internalize this — everything hangs off it)
+**THE V6 PROGRAM (designer-ruled 2026-08-29).** v6 "The Voyage" begins — the
+brew-and-ship double-down: a **sea map** (lanes charted leg by leg · posts · Kontor
+factors), **voyages in transit** with the dice riding the hull and the cargo **priced at
+landing**, a market you work as a verb, **fewer/bigger deliveries through more, faster
+single-verb turns**, and specialists as **placed people** (wharf crew · ship's crew ·
+Kontor agents). The plan, CONSTITUTION (component-state supreme — §6), phases and open
+forks live in **`V6-PLAN.md`** — read it right after this charter. The root docs and
+pages below still describe the live v5.8 game until Phases 2–3 replace them; the
+complete v5.8 game (pages + docs + instruments) is **FROZEN PLAYABLE at `archive/v5/`**
+— never edit that folder. The §8 instruments moved with it.
+
+### The spine (internalize this — everything hangs off it. v5.8 — the LIVE build; v6 re-derives from here per `V6-PLAN.md`)
 - **The Wharf = four stations ringed by 8 slots; move where the board is best (NOT a rondel).** A turn = move to an adjacent station, activate its **row or column**, resolve the stops **in any order, all optional**: the two stations — **the worker’s own fires its PRIMARY, the line’s other its ALTERNATE (v5.0)**: Market Source 3/1 (v5.2b) · Brewhouse Brew-search/top-tile · Cellar Age 3/1 · Harbor Commission (the hull’s printed fee: 2/1/0 G by size)/Load-1-onto-any-docked-Ship — + each slot's **building** and/or a **LOAD of the ship** docked there. Sharing a station costs **nothing**. The line is read **LIVE** — a mid-turn arrival opens its stop this activation.
 - **THE DIE IS THE CASK — the whole game in one component.** Brew sets a tray die to the printed start value (quality − aging steps); aging turns it up to the quality (READY) — **and it NEVER turns on its own**: the Cellar, the Age bonuses, the Venture faces (Rack House swap · Assay Loft · the age+1 public lines), the Cellarman and the Braumeister/Innkeeper drips are the only hands; load-side lifts push past it (cap 6); gates read it as it boards; delivery parks it at the kontor — ★ = **pips + the beer’s Bourse marker**, presence, majority weight and THE clock. 13 dice = the player's whole runway, public; **no die ever stands on a building (v5.3).** No die in the tray → no brew, no presence.
 - **Slots hold a building and/or a ship — never casks.** Casks are PRIVATE until they board; the interaction is the **berth race** (topping off a hull sails everyone's cargo on your clock), the shared building traffic, the displays and the majorities.
@@ -122,7 +136,13 @@ affects each axis in step 2, you don't understand it yet — go back to §2.
 4. **All surfaces** — update `RULES.md` AND the affected docs together; then the pages (the §3 touch list).
 5. **`play.html` is the reference implementation.** After any engine change, **smoke-test headlessly** (below), run `node playtests/verify-v4.js`, and **bump the save `KEY`**.
 
-## 8 · Simulating / smoke-testing the engine — `playtests/sim.js`
+## 8 · Simulating / smoke-testing the engine — the sim harness
+*(2026-08-29: the v5 instruments moved WHOLE to `archive/v5/playtests/`, where their
+relative paths gate the ARCHIVED v5 build; the v6 instruments are rebuilt fresh at
+`V6-PLAN.md` Phase 3. Everything below — the canonical-engine discipline, the fan-out
+rule, outputs-in-chat — carries to v6 unchanged; read the paths as `archive/v5/playtests/`
+until Phase 3 lands a new root `playtests/`.)*
+
 Run: `node playtests/sim.js [N]` (default 100; covers 2–4p, prints per-count summaries — rounds/band, trigger split, seat wins, brews/deliveries/bank, delivery split by port). **It drives the engine's OWN in-page AI** (`aiStep`) — one policy to maintain. **Env hooks:** `TIER=` apprentice|journeyman|trader|guildmaster|cellarmaster · **`PERSONAS=1` = the PATHWAYS lane oracle** (majority · lifter · builder · breadth, per-lane win rates + avg ★/Flight/deliveries; `PTIER=` reads the lanes at any tier; the pure-depth lane RETIRED by ruling 2026-08-24 — specialisation is only ever depth *paired* with the engine, and a paired lane waits on the up-shift supply) · `POOL=n` (THE pace dial) · `GUILD_MS`/`CELLAR_MS` (bulk MC budgets) · the ruled-dial hooks are **override-only-if-set** (a ruled default is never silently forced off). **Sim outputs are NOT committed** (ruled 2026-08-23) — report results in chat / distill into `DESIGN.md`.
 
 **Strategy — drive the *canonical* engine, never a reimplementation.** The harness extracts `play.html`'s `<script>`, appends a bot + runner in the **same lexical scope**, and runs the combined source in a Node `vm` with a stubbed DOM/`localStorage` (the engine's `S`/`UI` are `let`-declared — sharing scope is the only way in). `render`/`log`/`save` are overridden to no-ops for speed. The bot navigates the engine's own UI state machine (`UI.sub`/`UI.stage`), calling the same functions the buttons call, topology-agnostic (reads `CELLROLE`). Game-over: loop until `S.ending && S.active===S.first && UI.sub==='end'`, with a runaway guard.

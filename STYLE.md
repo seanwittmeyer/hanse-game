@@ -198,6 +198,23 @@ player aid; they do not learn or track rule changes on tiles, boards, or tooltip
    (e.g. the Guild Tastings) stay OUT of `rulebook.html` until they leave development —
    rules live in `RULES.md` and `rulebook.html`, nowhere else.
 
+## §4d. The v6 term family (PROVISIONAL — reserved 2026-08-29; locked at the `V6-PLAN.md` Phase 2 registry pass)
+
+*Reserved now so every v6 draft uses ONE vocabulary from the first sketch. Player copy
+does not print these until Phase 2 locks them; the designer renames freely at that pass.*
+
+| Term | POS | Working definition | Collision notes |
+|---|---|---|---|
+| voyage | n | A loaded Ship's passage across the map, departure → landing | **RE-DERIVATION:** the v5 sense (§4.3, "the counter noun for a completed sail") retires with the instant sail; one word, one meaning — Phase 2 confirms |
+| lane | n | A sea route on the map: a chain of legs from the Wharf to a Kontor | — |
+| leg | n | One printed segment of a lane; a Ship at sea stands on exactly one | — |
+| chart | v | Open a closed leg (pay its printed fee); first to chart takes the leg's printed privilege | **NEAR-COLLISION:** ~~charter~~ stays banned as a commission synonym (§2); *chart* is map-opening ONLY and never touches ship acquisition |
+| landing | n | The moment a Ship enters its Kontor space — casks deliver, **priced at the marker printed at landing** | — |
+| post | n | Your marker on a waypoint leg; fires its printed line as your Ships pass | — |
+| factor | n | Your standing piece at a Kontor — destination development; its benefit prints on the Kontor panel | *Grain Factor* (Specialist) keeps its name; context separates crew from standing — Phase 2 re-reads |
+| the current | n | The drift: at the printed cadence ⚙ every Ship at sea advances one leg, together, in one visible sweep | **"the tide" is TAKEN** (§4b, the v5.4 Public Works rule) — the drift is never called the tide |
+| destination | n | The §4.7 reservation ("a future *category* of delivery sites — a trade map") comes due in v6 | Phase 2 rules its exact scope vs the locked *Kontor* |
+
 ## §5. Deferred to the next copy pass (logged, not yet applied)
 
 - Em-dash purge + passive-voice pass over `RULES.md` prose (guide §7/§9) — the rulebook
