@@ -6,8 +6,21 @@ and the open forks. It is the v6-era read-FIRST after `CLAUDE.md`. The complete 
 is frozen playable at `archive/v5/` and is never edited; the root docs and pages continue
 to describe the live v5.8 build until Phases 2–3 replace them.*
 
-**Status: Phase 1 (paper design).** The math returns at Phase 3 — nothing in this plan is
-simulated, and nothing gets dialed before it exists on paper and passes the constitution.
+**Status: Phase 3 TEST BUILD LIVE (2026-08-29, designer-called: "build it — play.html and
+RULES.md, ignore the rest as we test").** `RULES.md` is v6.0; `play.html` runs it (`KEY
+hanse-v60`); a fresh `playtests/` gates it (verify-v6 **51/51** · sim 0 crashes / 0
+deadlocks). The other surfaces (rulebook · print kit · aids · COMPONENTS · DESIGN
+architecture) still describe v5.8 until Phases 2/5. **Fork calls taken for the test build
+(all ⚙, designer re-rules freely):** F1 WORK = station + one flanking load (the line sweep
+retired) · F2 neutral hulls + the current + the SAIL push (1 G ⚙) · F3 the current at the
+round marker, all ships one sweep, nearest-Kontor first · F4 posts/factors are plain house
+markers (6 ⚙; the venture tiles wait boxed for P2) · F5 the map as §2 (Wadden Coast/Skagen
+open · Dover Strait/the Sound closed at 2 G ⚙) · F6 Public Works carried whole with the
+tide (the Weigh House certification rides the hull) · F7 the Flight carried unchanged ⚙ ·
+F8 commissioning stays a Harbor option · F9 the sea renders as an app panel (board form at
+P5) · F10 the 13-die pool kept ⚙, MAX_ROUND 40 ⚙. **First instrument reads and the live
+watches sit in the session log (chat) — the 2p ceiling share and the pool size are the
+first table questions.**
 
 ---
 
