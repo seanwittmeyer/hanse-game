@@ -309,6 +309,85 @@ own yard.*
 ### Specialists — LANDED 2026-08-22
 - **improve-broker.jpg** (pick A — ledger + coin scale on the cloth) · **improve-brewer-s-mate.jpg** (pick E — the young brewer at the tun, the one figure-shot in the object family, designer-ruled).
 
+## v6.3 "The Voyage" — THE GENERATION LIST (2026-08-30, the sea build-out; the open queue in one place)
+
+*Everything v6.0–v6.3 added or re-derived that the kit currently fakes with a stand-in or a
+bare Lucide glyph, ranked. Same treatments as ever: **icons** = the c.1350 sticker set
+(`art/icons/` — one object, warm palette, bold contour, alpha-keyed, readable at .3in;
+recipe in `art/ICONS.md`); **tiles** = the painterly single-structure portrait (the shared
+style block at the top of this file); **specialists** = the object-shot SPEC below.
+Supersedes the v5.5 venture queue: the two WANTED venture portraits (`venture-factor-l1` /
+`venture-warehouse-l2`) are ON HOLD while the Venture family is tabled — do not generate.*
+
+### 1 · The sea-map board (the flagship piece)
+- **seamap.png** — the SEA MAP board background (the print kit's second board; the app's
+  Sea panel can ride a crop). A c.1350 **portolan-style chart of the North & Baltic Seas**:
+  parchment-toned open water with fine rhumb lines and a small compass rose, the home wharf
+  at the LEFT edge, coastlines faint at top and bottom, calm empty water through the middle
+  band (the printed lane tracks, leg cells, post sockets and Kontor caps are overlaid by
+  the kit — so no drawn routes, no place names, NO TEXT anywhere). Muted sea-green/slate
+  over warm parchment; wide **3:2 landscape**, ~1536×1024. The letterbox/mat gotchas apply.
+
+### 2 · Specialist object-shots ×3 (the v6 re-derives — each currently wearing its ancestor's art)
+Per the object-shot SPEC below (2in square, flat beige field, JPEG). On landing, drop the
+`slug:` override on the matching `components.js` IMPROVE row so `slug(nm)` finds the file.
+- **improve-pilot.jpg** — the Pilot *(rides `improve-broker.jpg` today)*: **a weathered
+  seaman at a whipstaff, reading the water** — the family's second figure-shot (the
+  Brewer's-Mate precedent, designer-ruled); cold sea light, one figure, no text.
+- **improve-surveyor.jpg** — the Surveyor *(rides `improve-brewer-s-mate.jpg`)*: **a divider
+  compass open across a small sea chart**, a stick of chart-lead beside it (chart blank —
+  the no-text rule).
+- **improve-wharfinger.jpg** — the Wharfinger *(rides `improve-quaymaster.jpg`)*: **an
+  iron-bound toll chest on a wharf ledger stand**, a few coins on the lid.
+
+### 3 · Establishment tiles ×3 (the v6.1 post upgrades — each borrowing a Public Work's portrait)
+The btile face (2.5×1.32 window) with the sea-green foot; these stand ON WATER — paint the
+structure on a waypoint (a pier, an islet, a skerry) in open sea, colder palette than the
+town buildings, same single-structure rules. On landing, flip the `art:` field on the
+matching `ESTABLISHMENTS` row in `components.js`.
+- **establishment-tollcourt.png** — the Toll Court *(rides `building-tollhouse.png`)*: a
+  small fortified stone toll tower on a rock islet mid-channel, a lowered chain-boom at the
+  water, a toll skiff alongside.
+- **establishment-victpost.png** — the Victualling Post *(rides `building-victual.png`)*: a
+  timber provisioning jetty far from shore, stacked water casks and netted crates being
+  lowered toward a moored cog.
+- **establishment-pilotsrest.png** — the Pilot's Rest *(rides `building-missionq.png`)*: a
+  small lamphouse-inn on a skerry, one lit lantern tower against dusk water, a pilot gig
+  tied below.
+
+### 4 · Icons (the sticker set — `art/icons/`, then wire `ICON_ART` in `components.js`)
+1. **chart.png** — the CHART verb finally gets its glyph (today the raw Lucide compass runs
+   everywhere: the Market's ALT face on the wharf board, the *Chart 1* load-bonus tile,
+   London's prize, the aids). Brief: **a divider compass mid-stride across a curling scrap
+   of sea chart**. Wire: `ICON_ART['compass']='chart'`.
+2. **bourse-pm2.png** — the **±2** mark of the bourse numeral family (the Bergen
+   Kontorhaus's TRADE — live since v6.1; `bourse-pm1` stands in, the ICON_ART comment marks
+   it). Exact same recipe as `bourse-pm1`, the numeral a 2.
+3. **post.png** — the post marker noun (today `map-pin` borrows the PRESENCE icon — two
+   meanings on one glyph). Brief: **a stout timber mooring post driven into open water, a
+   small pennant at its head, wavelets at the base**. Wire post call sites off `map-pin`.
+4. **kontorhaus.png** — the upgraded factor (today a ⌂ text character in the app and on the
+   Kontor panels). Brief: **a narrow stepped-gable trading house, gold-washed roofline** —
+   the sticker treatment's lavender diamond base as the other architecture icons. Also
+   serves as the HOUSE MARKER's Kontorhaus face stamp (the chit is colour-tinted by the kit).
+5. *(Optional)* **current.png** — the drift (legends use Lucide `waves`): three stacked wave
+   crests driving a forward chevron.
+6. *(Optional)* **closure.png** — the closed passage (Lucide `lock` today, on the closure
+   tiles and the map): a heavy chain drawn taut across water between two posts.
+7. *(Optional)* **factor.png** — the seated factor (borrows the kontor crest glyph): a
+   quill over an unrolled trade license with a hanging seal.
+
+### 5 · Closure tiles ×2 *(optional — the dark CSS tile is playable)*
+- **closure-dover.png** · **closure-sound.png** — art behind the dark closure tiles
+  (2.5×1.32 window): a storm-dark NARROW strait between two headlands, a chain-boom or
+  anchored war-cogs barring the channel; near-night palette, one cold light. The two may
+  share one painting if the straits read too alike to matter.
+
+*Wiring summary for the code pass that follows the art: `components.js` — 3 IMPROVE slug
+overrides dropped · 3 ESTABLISHMENTS art fields flipped · `ICON_ART` gains chart/post/
+kontorhaus (+ pm2 swap) · the closure/seamap art hooks land in `closureTile`/the print
+seaBoard when the files exist. No rules change — no KEY bump.*
+
 ## The specialist object-shot SPEC (moved verbatim from components.js, 2026-08-22)
 
 ```
