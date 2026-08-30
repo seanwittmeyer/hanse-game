@@ -22,10 +22,11 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   'quality-1':'quality-1','quality-2':'quality-2','quality-3':'quality-3','quality-4':'quality-4',
   'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail','age-1':'station-age-1','age-2':'station-age-2',
   'goods-1':'goods-1','goods-2':'goods-2','goods-3':'goods-3','brew-top':'station-brew-top',
-  bourse:'bourse','bourse-plus1':'bourse-plus1','bourse-plus2':'bourse-plus2','bourse-pm1':'bourse-pm1','bourse-pm2':'bourse-pm1','bourse-minus1':'bourse-minus1',   // bourse-pm2 STAND-IN: the ±1 glyph until its own art lands (art/ICONS.md)
+  bourse:'bourse','bourse-plus1':'bourse-plus1','bourse-plus2':'bourse-plus2','bourse-pm1':'bourse-pm1','bourse-pm2':'bourse-pm2','bourse-minus1':'bourse-minus1',
   'star-plus1':'star-plus1','star-plus2':'star-plus2','star-plus3':'star-plus3','star-plus4':'star-plus4',
   'star-minus1':'star-minus1','star-minus2':'star-minus2','star-minus3':'star-minus3',
   'swap-dice':'swap-dice','venture-build':'venture-build',redeal:'redeal',
+  compass:'chart',waves:'current',closure:'closure',factor:'factor',kontorhaus:'kontorhaus',post:'post',
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
 const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const LU=(n,cls)=>ICON_ART[n]?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/icons/'+ICON_ART[n]+'.png" alt="">':LUX(n,cls);
@@ -207,11 +208,11 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'Deliver a '+LU('beer')+': '+LU('star-plus1','starmark'), g:1, h:1, c:'#5b3a8e', n:1},   // v5.7 re-derive ⚙ — the chronicle records every voyage (the Manifest claim retired)
   {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), g:2, c:'#5b3a8e', n:1},
   {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:LU('map-pin')+' Place presence: '+LU('star-plus2','starmark'), g:1, c:'#5b3a8e', n:1},   // v4.12: +2★ ⚙ per placed die
-  {ic:'scale',      nm:'Wharfinger', slug:'quaymaster', art:'an iron-bound toll chest on a wharf ledger stand', act:LU('map-pin')+' Your posts’ tolls: <span class="g">+1'+LU('wheat','g ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v6.1 re-derive (was the Chandler's swap) — compounds the Toll Court; PLACEHOLDER art: the freed quaymaster shot
+  {ic:'scale',      nm:'Wharfinger', art:'an iron-bound toll chest on a wharf ledger stand', act:LU('post')+' Your posts’ tolls: <span class="g">+1'+LU('wheat','g ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v6.1 re-derive (was the Chandler's swap) — compounds the Toll Court
   {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:LU('ship')+' Commission: pay no fee', h:1, c:'#5b3a8e', n:1},
   // ---- the SEA singles (v6.0/v6.2 re-derives of the v5.1 alt-upgrade pair) ⚙ ----
-  {ic:'navigation', nm:'Pilot', slug:'broker', art:'a weathered seaman at a whipstaff, reading the water', act:'At turn start: a '+LU('sailboat')+' with your '+LU('beer')+' advances 1', g:1, c:'#5b3a8e', n:1},   // v6.0 re-derive (was the Broker); PLACEHOLDER art: the broker shot
-  {ic:'compass',    nm:'Surveyor', slug:'brewer-s-mate', art:'a divider compass over a sea chart', act:LU('compass')+' Chart: passage &amp; post fees waived', h:1, c:'#5b3a8e', n:1},   // v6.0 re-derive (was the Brewer's Mate); the factor-side fees still apply; PLACEHOLDER art
+  {ic:'navigation', nm:'Pilot', art:'a weathered seaman at a whipstaff, reading the water', act:'At turn start: a '+LU('sailboat')+' with your '+LU('beer')+' advances 1', g:1, c:'#5b3a8e', n:1},   // v6.0 re-derive (was the Broker)
+  {ic:'compass',    nm:'Surveyor', art:'a divider compass over a sea chart', act:LU('compass')+' Chart: passage &amp; post fees waived', h:1, c:'#5b3a8e', n:1},   // v6.0 re-derive (was the Brewer's Mate); the factor-side fees still apply
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
@@ -339,9 +340,9 @@ function ventureTile(d,lvl,col){const f=lvl===2?d.l2:d.l1;
 // The printed 2G chip is the upgrade fee. Mirrors play.html POST_UPGS.
 // (art: stand-ins from freed building shots — briefs queued in art/PROMPTS.md.)
 const ESTABLISHMENTS=[
-  {k:'tollcourt',nm:'Toll Court',       n:2, art:'building-tollhouse.png', cond:'On enter',                    effIc:'goods-2', eff:'the toll'},
-  {k:'victpost', nm:'Victualling Post', n:2, art:'building-victual.png',   cond:'On enter · your '+LU('beer'), eff:'<span class="g">+1'+LU('wheat','g ic')+'</span> <span class="h">+1'+LU('sprout','h ic')+'</span>'},
-  {k:'pilotrest',nm:'Pilot’s Rest',     n:2, art:'building-missionq.png',  cond:'On enter · your '+LU('beer'), effIc:'sail', eff:'+1 leg'},
+  {k:'tollcourt',nm:'Toll Court',       n:2, art:'establishment-tollcourt.png', cond:'On enter',                    effIc:'goods-2', eff:'the toll'},
+  {k:'victpost', nm:'Victualling Post', n:2, art:'establishment-victpost.png',   cond:'On enter · your '+LU('beer'), eff:'<span class="g">+1'+LU('wheat','g ic')+'</span> <span class="h">+1'+LU('sprout','h ic')+'</span>'},
+  {k:'pilotrest',nm:'Pilot’s Rest',     n:2, art:'establishment-pilotsrest.png',  cond:'On enter · your '+LU('beer'), effIc:'sail', eff:'+1 leg'},
 ];
 const EST_FOOT='rgba(47,78,66,.8)';   // sea-green — the waypoint family's own foot colour
 function estTile(d){
@@ -357,7 +358,8 @@ function estTile(d){
 // action (its 2G fee printed here) removes the tile and the charter's post stands free.
 const CLOSURES=[{k:'ds',nm:'Dover Strait'},{k:'sd',nm:'the Sound'}];
 function closureTile(d){return '<div class="cltile">'
-  +'<span class="cl-lock">'+LUX('lock')+'</span>'
+  +artLayer('closure-'+(d.k==='ds'?'dover':'sound')+'.png')+'<div class="cl-wash"></div>'
+  +'<span class="cl-lock">'+LU('closure')+'</span>'
   +'<div class="cl-mid"><div class="cl-nm">'+d.nm+'</div><div class="cl-sub">closed passage</div></div>'
   +'<div class="cl-row"><span class="cl-lbl">chart</span>'+cost(2,0)+'<span class="cl-lbl">· the charter’s post stands free</span></div>'
   +'</div>';}
@@ -823,6 +825,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .vt-own{display:inline-flex;align-items:center;gap:.015in}'
 +'.btile .starmark,.itile .starmark{width:.26in!important;height:.26in!important;vertical-align:-.08in}'
 +'.btile .bt-crest{flex:0 0 auto;margin-right:.05in;display:inline-flex}.btile .bt-crest .ic,.btile .bt-crest img.ai{width:.34in;height:.34in}'
++'.cltile{position:relative;overflow:hidden}.cltile .cl-wash{position:absolute;inset:0;background:rgba(20,26,30,.45)}.cltile>*{position:relative}'
 +'.btile .bt-ms img.ai,.btile .bt-ms svg{width:.24in;height:.24in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}'
 +'.btile .bt-nm{white-space:normal;overflow:visible;line-height:1.02}'
 +'.btile .bt-nm.long{font-size:.16in}'

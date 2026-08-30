@@ -320,7 +320,8 @@ Supersedes the v5.5 venture queue: the two WANTED venture portraits (`venture-fa
 `venture-warehouse-l2`) are ON HOLD while the Venture family is tabled — do not generate.*
 
 ### 1 · The sea-map board (the flagship piece)
-- **seamap.png** — the SEA MAP board background (the print kit's second board; the app's
+- **seamap.png** — **LANDED 2026-08-30 (pick E** — the left-edge wharf-works chart**)**; hooked behind the print seaBoard and the app Sea panel under a parchment/dark wash. The original brief:
+- the SEA MAP board background (the print kit's second board; the app's
   Sea panel can ride a crop). A c.1350 **portolan-style chart of the North & Baltic Seas**:
   parchment-toned open water with fine rhumb lines and a small compass rose, the home wharf
   at the LEFT edge, coastlines faint at top and bottom, calm empty water through the middle
@@ -345,50 +346,55 @@ The btile face (2.5×1.32 window) with the sea-green foot; these stand ON WATER 
 structure on a waypoint (a pier, an islet, a skerry) in open sea, colder palette than the
 town buildings, same single-structure rules. On landing, flip the `art:` field on the
 matching `ESTABLISHMENTS` row in `components.js`.
-- **establishment-tollcourt.png** — the Toll Court *(rides `building-tollhouse.png`)*: a
-  small fortified stone toll tower on a rock islet mid-channel, a lowered chain-boom at the
-  water, a toll skiff alongside.
-- **establishment-victpost.png** — the Victualling Post *(rides `building-victual.png`)*: a
-  timber provisioning jetty far from shore, stacked water casks and netted crates being
-  lowered toward a moored cog.
-- **establishment-pilotsrest.png** — the Pilot's Rest *(rides `building-missionq.png`)*: a
-  small lamphouse-inn on a skerry, one lit lantern tower against dusk water, a pilot gig
-  tied below.
+- **establishment-tollcourt.png** — **LANDED 2026-08-30 (pick C** — the square keep with the chain-boom**)**.
+- **establishment-victpost.png** — **LANDED 2026-08-30 (pick D** — the low deck with the moored cog**)**.
+- **establishment-pilotsrest.png** — **LANDED 2026-08-30 (sunset regen off pick A** — designer-ruled calm, restful weather**)**.
 
 ### 4 · Icons (the sticker set — `art/icons/`, then wire `ICON_ART` in `components.js`)
-1. **chart.png** — the CHART verb finally gets its glyph (today the raw Lucide compass runs
-   everywhere: the Market's ALT face on the wharf board, the *Chart 1* load-bonus tile,
-   London's prize, the aids). Brief: **a divider compass mid-stride across a curling scrap
-   of sea chart**. Wire: `ICON_ART['compass']='chart'`.
-2. **bourse-pm2.png** — the **±2** mark of the bourse numeral family (the Bergen
-   Kontorhaus's TRADE — live since v6.1; `bourse-pm1` stands in, the ICON_ART comment marks
-   it). Exact same recipe as `bourse-pm1`, the numeral a 2.
-3. **post.png** — the post marker noun (today `map-pin` borrows the PRESENCE icon — two
-   meanings on one glyph). Brief: **a stout timber mooring post driven into open water, a
-   small pennant at its head, wavelets at the base**. Wire post call sites off `map-pin`.
-4. **kontorhaus.png** — the upgraded factor (today a ⌂ text character in the app and on the
-   Kontor panels). Brief: **a narrow stepped-gable trading house, gold-washed roofline** —
-   the sticker treatment's lavender diamond base as the other architecture icons. Also
-   serves as the HOUSE MARKER's Kontorhaus face stamp (the chit is colour-tinted by the kit).
-5. *(Optional)* **current.png** — the drift (legends use Lucide `waves`): three stacked wave
-   crests driving a forward chevron.
-6. *(Optional)* **closure.png** — the closed passage (Lucide `lock` today, on the closure
-   tiles and the map): a heavy chain drawn taut across water between two posts.
-7. *(Optional)* **factor.png** — the seated factor (borrows the kontor crest glyph): a
-   quill over an unrolled trade license with a hanging seal.
+1. **chart.png** — **LANDED 2026-08-30 (pick D)**: the divider compass astride the chart scrap; `ICON_ART['compass']='chart'` wired — every compass site swaps.
+2. **bourse-pm2.png** — **LANDED 2026-08-30**: the recipe twin of pm1 (deterministic composite); the ICON_ART stand-in swapped.
+3. **post.png** — **LANDED 2026-08-30 (tent pick B):** the outpost tent on its islet; the post-meaning `map-pin` sites swap (presence keeps `map-pin`).
+4. **kontorhaus.png** — **LANDED 2026-08-30 (pick E** — the blue-grey gable**)**; the app's ⌂ text sites swap to the icon.
+5. **current.png** — **LANDED 2026-08-30 (pick E)**; `ICON_ART['waves']='current'`.
+6. **closure.png** — **LANDED 2026-08-30 (pick C)**; the closure tile + print sea-board lock sites swap (the brewery slot-cover keeps its Lucide lock — different meaning).
+7. **factor.png** — **LANDED 2026-08-30 (pick A)**; mapped as `factor` — call sites swap in the code pass.
 
-### 5 · Closure tiles ×2 *(optional — the dark CSS tile is playable)*
-- **closure-dover.png** · **closure-sound.png** — art behind the dark closure tiles
-  (2.5×1.32 window): a storm-dark NARROW strait between two headlands, a chain-boom or
-  anchored war-cogs barring the channel; near-night palette, one cold light. The two may
-  share one painting if the straits read too alike to matter.
+### 5 · Closure tiles ×2 — GEOGRAPHIC since 2026-08-30 (designer): Dover A (the chalk cliffs, the London run) · Sound A (the red-brick toll castle, the Novgorod run) — each strait its own painting
+- **closure-dover.png** · **closure-sound.png** — REBRIEFED calm by the designer ("closure
+  isn't supposed to be scary and stormy"): an ordinary day, a chain drawn across a quiet
+  strait between settled headlands — administrative, not menacing. The storm-dark brief is
+  retired; the tile carries a dark wash for its printed text.
 
 *Wiring summary for the code pass that follows the art: `components.js` — 3 IMPROVE slug
 overrides dropped · 3 ESTABLISHMENTS art fields flipped · `ICON_ART` gains chart/post/
 kontorhaus (+ pm2 swap) · the closure/seamap art hooks land in `closureTile`/the print
 seaBoard when the files exist. No rules change — no KEY bump.*
 
-## The specialist object-shot SPEC (moved verbatim from components.js, 2026-08-22)
+## THE SPECIALIST PORTRAIT SPEC (designer-ruled 2026-08-30 — supersedes the object-shot spec below)
+
+Every live specialist redraws as a PERSON — the hire, not the tool. One image per design,
+`art/improve-<slug(nm)>.jpg`, replacing the object shots in place:
+- **HALF-BODY portrait** (waist up), ONE medieval person, c. 1350 Hanseatic; period dress
+  and props only (strictly pre-1400).
+- The figure stands at the **LEFT THIRD** of the frame, angled slightly toward the open
+  right; face lit and readable at 2in print size.
+- **Holding/with the trade's signature object** (the old object-shot subject survives as
+  the prop) and a softly painted **workplace scene behind** — secondary, never competing.
+- Aged-manuscript painterly style, muted palette, one deep anchor tone; full-bleed square,
+  no frame/mat/letterbox; the lower quarter calmer and darker (the kit's text bar rides
+  there; the purple foot is added by the kit).
+- No text, no letters. The generation batch: 4 candidates per specialist, designer picks.
+
+**THE PORTRAIT PROGRAM — COMPLETE 2026-08-30 (15/15 landed, every file through the frame
+gate):** Cellarman C · Grain Factor D · Hop Gardener A · Stevedore D · Braumeister C · Guild
+Scholar A · Innkeeper C · Supercargo A · Chronicler D · Alderman B · Town Crier A ·
+Wharfinger B · Shipwright B · Pilot B · Surveyor A (fixed 5.8% mat crop). Grain Factor, Hop
+Gardener and Guild Scholar are second-round regens — the band-making "calmer lower quarter"
+clause is CUT from the spec (it painted the letterbox bands; the kit's own foot bar carries
+text legibility) and the anti-frame block above is the standing language. The object shots
+retire in place, slug-matched — no code change beyond the three dropped v6 slug overrides.
+
+## The specialist object-shot SPEC (RETIRED 2026-08-30 — kept for the archive; moved verbatim from components.js, 2026-08-22)
 
 ```
 // ============================================================================
