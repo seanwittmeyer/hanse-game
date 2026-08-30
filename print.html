@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v6.5 “The Voyage”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v6.5b “The Voyage”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -779,7 +779,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v6.5 “The Voyage”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v6.5b “The Voyage”</span></h1>
   <span id="hnav"><!-- the shared site nav (nav.js) — one roster for all four pages --></span>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
@@ -923,7 +923,7 @@ function aid3Panels(){
     +AID_K('kontor-novgorod','Novgorod','3+','die scores +3★','8/5/2')
     +'</table>'
     +'<div class="dontf"><b>Don’t forget:</b> ① the minimum reads the die AS IT BOARDS (after lifts) ② the market only falls on its own — UP is Trade · the factor’s step · the toll bench · Bergen ③ an upgrade spends NO house marker: a post → an establishment (2'+G+') · a factor → the Kontorhaus (3'+G+', its power printed on the panel)</div>'
-    +'<div class="ln">'+LU('map-pin')+' <b>Posts &amp; factors</b> — your 6 house markers, raised by <b>Chart</b> (at the Market): a post 1'+G+' · a factor 3'+G+' (deliver there first) — any factor unlocks <b>Trade</b> · '+LU('building-2')+' <b>Public Works</b> serve anyone, free — and sail away with their Ship</div>');
+    +'<div class="ln">'+LU('map-pin')+' <b>Posts &amp; factors</b> — your 6 house markers, raised by <b>Chart</b> (at the Harbor): a post 1'+G+' · a factor 3'+G+' (deliver there first) — any factor unlocks <b>Trade</b> · '+LU('building-2')+' <b>Public Works</b> serve anyone, free — and sail away with their Ship</div>');
   const back=aid3('back','book-open','End, Score &amp; Icons',
      '<h5>'+LU('timer')+'End &amp; Score</h5>'
     +'<div class="ln"><b>First EMPTY tray</b> (your last of 13 dice committed): finish the round. Round 40 backstop. Cargo still at sea lands for <b>its dice only</b>.</div>'
@@ -1108,10 +1108,10 @@ function wharfCross(){
   const wharf='<div class="wharf">'
     +'<div></div>'+slot+slot+'<div></div>'
     +slot
-    +station('A','Market','market',['goods-3','compass'],'Source 3 / Chart')
+    +station('A','Market','market',['goods-3','sail'],'Source 3 / Sail')
     +station('B','Brewhouse','brewhouse',['flask-conical','bourse'],'Brew (search) / Trade')
     +slot+slot
-    +station('C','Harbor','harbor',['ship','sail'],'Commission / Sail')
+    +station('C','Harbor','harbor',['ship','compass'],'Commission / Chart')
     +station('D','Cellar','cellar',['age-3','package-plus'],'Age 3 / Load 1 any')
     +slot
     +'<div></div>'+slot+slot+'<div></div>'
@@ -1643,11 +1643,11 @@ function checklist(pages,famPages){
   // 2026-08-09 [designer]: the manifest is a PACKING LIST, not a lesson — "just some basic
   // details of quantity, any important themes to share, and where they go." Every entry is one
   // short line: what it is · WHERE IT LIVES on the table. The rules live in the rulebook.
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v6.5 “The Voyage” · TEST BUILD)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v6.5b “The Voyage” · TEST BUILD)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">Counts are tuning placeholders ⚙. The rules live on the <b>player aid</b> and in the rulebook — this page only says what to make, how many, and where it sits on the table.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
-    +R('Main board — the Wharf','The shared action area: 4 stations in a 2×2, ringed by 8 slots. Each station prints a PRIMARY and an ALTERNATE verb — its OWN lesser counter (Market Source 3/Chart · Brewhouse Brew/Trade · Harbor Commission/Sail · Cellar Age 3/Load-any); a visit works both, plus a load at each of the station’s two adjacent slots. <b>Centre of the table.</b>','1')
+    +R('Main board — the Wharf','The shared action area: 4 stations in a 2×2, ringed by 8 slots. Each station prints a PRIMARY and an ALTERNATE verb — its OWN lesser counter (Market Source 3/Sail · Brewhouse Brew/Trade · Harbor Commission/Chart · Cellar Age 3/Load-any); a visit works both, plus a load at each of the station’s two adjacent slots. <b>Centre of the table.</b>','1')
     +R('THE SEA MAP','The second board (v6.0): four lanes of printed LEGS out of the Wharf — voyages stand on them; post seats print on every leg; the establishment supply stacks on its strip. <b>Between the Wharf and the Destinations board.</b>','1')
     +R('Destinations board','The 4 Kontor panels — minimum, prize, majority, <b>2 factor seats and the printed KONTORHAUS power</b> each — plus the Bourse lane. <b>Delivered dice park on it all game.</b>','1')
     +R('Market &amp; Stores board','The face-up displays (Ships · Specialists · casks &amp; recipes), ringed by the 50-cell score ring.','1')

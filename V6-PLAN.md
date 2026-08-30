@@ -60,7 +60,10 @@ Harbor s6·s7 · Cellar s4·s5) — any order, all optional. The row/column choi
 far-station read, and the pawn-on-half record retire (the face cleans up with them:
 the P/A pair top-left — big/small — and the name bottom-left); each verb now lives at exactly ONE station beside its natural partner
 (Age+Load = the shipping visit · Brew+Trade · Commission+Sail · Source+Chart).
-`KEY hanse-v65` · verify-v6 72/72 · sim clean (0/0; rounds ~24–26 at 2–4p, SAIL/TRADE/
+**v6.5b (designer-ruled 2026-08-30): the sea swap** — Chart and Sail trade seats:
+**Market *Source 3 / SAIL*** (the goods faucet beside the push it funds) · **Harbor
+*Commission / CHART*** (the shipmaster's desk runs the whole sea program — hulls,
+passages, posts, factors, upgrades). `KEY hanse-v65b` · verify-v6 72/72 · sim clean (0/0; rounds ~24–26 at 2–4p, SAIL/TRADE/
 CHART all live — the Phase 4 oracle re-reads pace at skill). **v6.4b:** the station tiles
 split on the diagonal into **row/column worker halves** (the diagonal is the tile's axis —
 PRIMARY large on the line at the outside corner, the ALT nearly as large at the inside;

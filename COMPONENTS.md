@@ -1,18 +1,18 @@
-# Brewhouses of the Hanse — Components (v6.5 “The Voyage” · §0 is the live delta)
+# Brewhouses of the Hanse — Components (v6.5b “The Voyage” · §0 is the live delta)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
-> - Operational rules: `RULES.md` (the one clean rules document, **v6.5**). Design rationale & history: `DESIGN.md` §9; the v6 program: `V6-PLAN.md`.
-> - The live build is `play.html` — **v6.5 “The Voyage”** (`KEY hanse-v65`) — the source of truth on values and behaviour.
-> - **The print kit is `print.html` — the only kit in use, cut to v6.5** (2026-08-31). Printed copy follows the **Term Registry (`STYLE.md`)**.
-> - **READ §0 FIRST.** The v6 program rebuilt the game around the sea; §0 states the v6.5 kit
+> - Operational rules: `RULES.md` (the one clean rules document, **v6.5b**). Design rationale & history: `DESIGN.md` §9; the v6 program: `V6-PLAN.md`.
+> - The live build is `play.html` — **v6.5b “The Voyage”** (`KEY hanse-v65b`) — the source of truth on values and behaviour.
+> - **The print kit is `print.html` — the only kit in use, cut to v6.5b** (2026-08-31). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - **READ §0 FIRST.** The v6 program rebuilt the game around the sea; §0 states the v6.5b kit
 >   truth — what was ADDED, RE-CUT, and TABLED. §§1–17 below still enumerate the v5.8 body in
 >   detail and are superseded where §0 says so; the full section rewrite is the `V6-PLAN.md`
 >   Phase 2/5 docs-and-kit pass.
 
 ---
 
-## 0. THE v6.5 KIT DELTA (2026-08-31 — the truth of the current kit)
+## 0. THE v6.5b KIT DELTA (2026-08-31 — the truth of the current kit)
 
 **ADDED (new components):**
 
@@ -26,9 +26,9 @@
 **RE-CUT (existing components, new faces/data):**
 
 - **The Wharf board** — each station now prints **TWO single verbs — PRIMARY / ALTERNATE**
-  (v6.4, the street model — the ALT is the station's OWN lesser counter): Market *Source 3
-  / Chart* · Brewhouse *Brew (search) / Trade* · Harbor *Commission + 1 load / Sail* ·
-  Cellar *Age 3 / Load 1 any*. **A visit works the station's WHOLE counter (v6.5, the AP
+  (the street model — the ALT is the station's OWN lesser counter; v6.5b swaps the sea
+  pair): Market *Source 3 / Sail* · Brewhouse *Brew (search) / Trade* · Harbor
+  *Commission + 1 load / Chart* · Cellar *Age 3 / Load 1 any*. **A visit works the station's WHOLE counter (v6.5, the AP
   cut — the line retired): its PRIMARY, its ALTERNATE, and a load at each of its two
   flanking slots** (Market s1·s8 · Brewhouse s2·s3 · Harbor s6·s7 · Cellar s4·s5). **The station face
   (v6.5):** the **P/A pair prints at the TOP-LEFT corner — the PRIMARY big, the ALTERNATE

@@ -110,13 +110,13 @@ landing**, a market you work as a verb, **fewer/bigger deliveries through more, 
 single-verb turns**, and specialists as **placed people** (wharf crew · ship's crew ·
 Kontor agents). The plan, CONSTITUTION (component-state supreme — §6), phases and open
 forks live in **`V6-PLAN.md`** — read it right after this charter. **The v6 TEST BUILD is
-LIVE at root — v6.5 “work the station” (`KEY hanse-v65`, designer-ruled 2026-08-30):**
+LIVE at root — v6.5b “work the station” (`KEY hanse-v65b`, designer-ruled 2026-08-30):**
 `play.html` · `RULES.md` · `print.html` · `components.js` · `COMPONENTS.md` §0 are
 v6-current — v6.5 is THE AP CUT: the line retired whole; a turn = MOVE adjacent · work
 the station's OWN counter (**PRIMARY + ALTERNATE**, the v6.4 street-model seats) + a
 LOAD at each of its two flanking slots (s1·s8 / s2·s3 / s6·s7 / s4·s5): Market *Source 3
-/ Chart* · Brewhouse *Brew / Trade* · Harbor *Commission / Sail* · Cellar *Age 3 /
-Load-any*. Still v5.8:
+/ Sail* · Brewhouse *Brew / Trade* · Harbor *Commission / Chart* (v6.5b — the sea swap) ·
+Cellar *Age 3 / Load-any*. Still v5.8:
 `rulebook.html` + the DESIGN architecture (the Phase 2 docs pass). The complete v5.8 game
 (pages + docs + instruments) is **FROZEN PLAYABLE at `archive/v5/`** — never edit that
 folder. The §8 instruments moved with it.

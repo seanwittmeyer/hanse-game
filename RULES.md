@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — The Rules (v6.5 "The Voyage" · TEST BUILD)
+# Brewhouses of the Hanse — The Rules (v6.5b "The Voyage" · TEST BUILD)
 
 *The one rules document. Clean operational rules only — the v6 program and its
 constitution live in `V6-PLAN.md`; design rationale in `DESIGN.md`; the frozen v5.8 game
@@ -101,15 +101,16 @@ Never a menu — the face names both verbs:
 
 | Station | PRIMARY | ALTERNATE (the same visit) |
 |---|---|---|
-| **A · Market** — *the merchant's desk* | **SOURCE 3** — take **3 goods**, any mix | **CHART** — open a passage / raise a post or factor / upgrade one (§6) |
+| **A · Market** — *the merchant's desk* | **SOURCE 3** — take **3 goods**, any mix | **SAIL** — advance **any one Ship at sea** one leg (§5); free with a cask of **yours** aboard, else **1 `G`** ⚙ (the push); a closed passage blocks |
 | **B · Brewhouse** | **BREW** — pay a recipe into an open vessel + a tray die at the printed start value; **search the beer's stack — choose the tile** (its load bonus rides the cask) | **TRADE** — factor-gated: shift any beer's marker **±1** (±2 with the Bergen Kontorhaus) (§7) |
-| **C · Harbor** — *the shipmaster's desk* | **COMMISSION** — pay the Ship's printed fee (Skute 2 `G` · Cog 1 `G` · Hulk free ⚙), place it on a shipless slot, **one free load onto it** | **SAIL** — advance **any one Ship at sea** one leg (§5); free with a cask of **yours** aboard, else **1 `G`** ⚙ (the push); a closed passage blocks |
+| **C · Harbor** — *the shipmaster's desk* | **COMMISSION** — pay the Ship's printed fee (Skute 2 `G` · Cog 1 `G` · Hulk free ⚙), place it on a shipless slot, **one free load onto it** | **CHART** — open a passage / raise a post or factor / upgrade one (§6) |
 | **D · Cellar** | **AGE 3** — turn your aging dice up three steps, split freely | **LOAD 1** Ready cask onto **any** docked Ship — the cellar rolls one out to the quay |
 
-The pairings are the faces themselves — **Market**: Source + Chart (provision, then
-develop the sea) · **Brewhouse**: Brew + Trade (brew, then prop the price) · **Harbor**:
-Commission + Sail (launch a hull, push the fleet) · **Cellar**: Age + Load (ripen the
-stock and roll it out to the quay) — every visit is a working turn.
+The pairings are the faces themselves — **Market**: Source + Sail (provision, and hurry
+the freight the goods just funded) · **Brewhouse**: Brew + Trade (brew, then prop the
+price) · **Harbor**: Commission + Chart (the shipmaster's desk runs the whole sea —
+launch hulls and develop the lanes) · **Cellar**: Age + Load (ripen the stock and roll
+it out to the quay) — every visit is a working turn.
 
 **The CHART action in full:** pay the printed fee to **open a closed passage** (your
 post stands there free — the charter's privilege), **place a post** on an open waypoint
@@ -172,7 +173,7 @@ Specialty-Beers/Jopenbier toggles ride along unchanged.
   Public Work departs with it (the tide — boxed; the Weigh House rides ON the Ship,
   certifying it; the Staple House and Bonded Store pay at departure as printed).
 - **AT SEA.** The Ship advances one leg per **current** (§2) and per **SAIL** (the
-  Harbor's printed ALTERNATE, §3). Its dice ride in public view. A **closed passage**
+  Market's printed ALTERNATE, §3). Its dice ride in public view. A **closed passage**
   ahead halts it until charted.
 - **POST RENT.** When a Ship **enters a waypoint**, each **post** standing there pays
   its owner **1 `G`** ⚙ from the supply (once per Ship per waypoint). An **establishment**
