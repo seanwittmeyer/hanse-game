@@ -25,8 +25,15 @@ the **Bourse price board** now renders on the Destinations panel (the printed tr
 sale value) and the sea map shows **open post/factor seat sockets** and upgraded-marker
 badges. `KEY hanse-v62` · verify-v6 **71/71** · 300-game corpus 0/0; the 2p ceiling share
 eased 60%→42% (the walk commits dice faster); greedy bots under-visit the sea desks (SAIL
-~1/game) — a bot blind spot to re-read at the Phase 4 oracle, not a balance verdict. The other surfaces (rulebook · print kit · aids · COMPONENTS · DESIGN
-architecture) still describe v5.8 until Phases 2/5. **Fork calls taken for the test build
+~1/game) — a bot blind spot to re-read at the Phase 4 oracle, not a balance verdict. **The kit pulled forward (2026-08-30, designer-called: "build out the
+gaps — everything lines up and matches"):** `components.js` re-derived (Pilot · Surveyor ·
+Wharfinger · the Supercargo/Chronicler text · the *Chart 1* load bonus) and grew the v6
+families (establishment tiles · closure tiles · double-sided house markers); `print.html`
+is CUT TO v6.2 — THE SEA MAP board sheet, the Kontor panels print factor seats + the
+Kontorhaus powers, the wharf stations print their short menus, the aid is the
+walk·act·load rewrite, round backstop 40, Ventures/Tastings tabled off the sheets;
+`COMPONENTS.md` carries the §0 v6.2 kit delta. Still v5.8: `rulebook.html` and the DESIGN
+architecture sections (the Phase 2 docs pass). **Fork calls taken for the test build
 (all ⚙, designer re-rules freely):** F1 WORK = station + one flanking load (the line sweep
 retired) · F2 neutral hulls + the current + the SAIL push (1 G ⚙) · F3 the current at the
 round marker, all ships one sweep, nearest-Kontor first · F4 posts/factors are plain house

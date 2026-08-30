@@ -663,7 +663,7 @@ const ICONTIP={
   'building-2':'Buildings — TWO families. PUBLIC WORKS (brown): die-less setup furniture — 3–4 stand at random from setup, passive on their slot’s traffic, for anyone, free; nobody builds one. VENTURES (your colour ring): the family you build — a public line for the whole wharf over the owner’s ringed line.',
   'scroll-text':'Recipe — permission to brew a beer. The card sits on the COLLECTED side of your board until that beer’s first cask LOADS onto a Ship — then it moves to the COMPLETED side: the completed cards ARE the Flight. The printed fee (H = Q−3 — Q3s free · Mumme 1H · Bock 2H) applies at EVERY channel — Bruges grants the pick, never the waiver.',
   wrench:'Specialist — a private tile (2 seats): free at Bergen; its printed fee via the hire load bonus. Never two of a kind. The display refills at the END of the turn.',
-  search:'Open 1 Venture — a tile from your hand at its printed fee: L1 onto any open slot (wharf full: over a Public Work) or L2 over your own L1. Free as London’s prize.',
+  search:'Chart 1 — one Chart action, its fee waived: passage · post · factor · upgrade. Free as London’s prize.',
   'map-pin':'Presence — your parked dice at a Kontor (majority weight + the clock).',
   coins:'Goods.',
   package:'Storage — how many goods you can hold.',
@@ -3882,7 +3882,13 @@ function renderShop(){
      rows+='<div class="note">'+LU('landmark')+' '+(kh?'<b>'+KONTORHAUS[k].name+'</b>':'factor · '+DEST[k].name)+' <span style="opacity:.7">('+(kh?KONTORHAUS[k].desc:'the license + the +1 step')+')</span></div>';}});
    h+='<div style="font-size:.82rem">'+(rows||'<div class="note">(none placed — CHART, at the Market, raises them)</div>')
      +'<div class="note" style="margin-top:3px">markers left: <b>'+markersLeft(p)+'</b>/'+HOUSE_MARKERS+' · CHART: passage '+costStr(CHART_FEE)+' · post '+costStr(POST_FEE)+' · factor '+costStr(FACTOR_FEE)+' · <b>upgrades</b>: post→establishment '+costStr(POST_UPG_FEE)+' · factor→Kontorhaus '+costStr(FACTOR_UPG_FEE)+'</div>'
-     +'<div class="note">establishment tiles left: '+Object.keys(POST_UPGS).map(u=>POST_UPGS[u].name+' <b>'+upgSupplyLeft(u)+'</b>').join(' · ')+'</div></div>';}
+     +'</div>';
+   // the ESTABLISHMENT SUPPLY — the real tiles (components.js), each with its count standing
+   h+='<div class="note shophead" style="margin-top:6px"><b>'+LU('landmark')+' Establishment supply</b> <span class="note">(a post upgrades onto one · '+costStr(POST_UPG_FEE)+' via Chart)</span></div>';
+   h+='<div style="display:flex;gap:6px;flex-wrap:wrap">'+Object.keys(POST_UPGS).map(u=>{const E=POST_UPGS[u];const left=upgSupplyLeft(u);
+     const d=(HC&&HC.ESTABLISHMENTS)?HC.ESTABLISHMENTS.find(e=>e.k===u):null;   // the LIBRARY face is the canon — never rebuild it per-page
+     const face=d?'<div class="mtile" style="aspect-ratio:2.5/1.32'+(left?'':';filter:grayscale(.8);opacity:.45')+'">'+pfit(HC.estTile(d),2.5,1.32)+'</div>':'';
+     return '<div style="flex:1;min-width:120px" data-tip="'+attr(E.name+' — '+E.desc+' · supply left: '+left)+'">'+face+'<div class="note" style="text-align:center">'+E.name+' · <b>'+left+'</b> left</div></div>';}).join('')+'</div>';}
   // THE SPECIALIST DISPLAY — earned free (Bergen’s prize · the hire bonus)
   h+='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Specialist display</b>'+gridToggleBtn('specs')+'</div>';
   h+='<div class="'+shopGridCls('specs')+'">'+(S.impDisplay||[]).map(key=>{const def=IMPROVEMENTS[key];const owned=hasUpgrade(p,key);const gt=specGateTxt(key);

@@ -173,7 +173,7 @@ the registry governs what a PLAYER reads.
 | the bag | n | The Public Works supply: the tiles setup did not stand. Draw from it at end of turn to re-furnish the wharf | shopping-bag | — | No | ~~the Works deck~~ (it is a bag, like Ships and Specialists) | ○ v5.4 |
 | the toll bench | n | The Tollhouse's v5.3b face (prose nickname — the tile still titles *Tollhouse*): a cask loading at its slot lets the LOADER shift any price marker ±1; the stamp (−1 die for +3★) is RETIRED | ○ provisional |
 | trigger words (tiles) | — | The ruled component grammar (2026-08-23, supersedes the `load:`/`sail:` shorthands): **On load** (a cask loads at this slot) · **On sail** / **On sail to <Kontor>** (a Ship sails from this slot) · **On line** (a line through this slot is activated) · **At end** · **At turn start**. A face with more than a bare trigger+action puts the TRIGGER ON ITS OWN LINE, the action below it — the cask tiles' icon+text pattern is the model. Icon-first after the trigger, never a sentence | ● ruled |
-| Broker · Brewer's Mate | n | The v5.1 Specialist names (your Market alternate is Source 2 · your Brewhouse alternate searches the stack) | ○ provisional |
+| ~~Broker~~ · ~~Brewer's Mate~~ | — | RE-DERIVED at v6.0 → **Pilot** · **Surveyor** (§4d) — the v5.1 alternates retired with the line activation | ✕ v6.0 |
 | parti-gyle | n/adj | Zerbster’s printed signature (v4.15b): as the cask boards, an optional free Gruit into an open vessel (a tray die), then Load 1 more | ○ provisional (period brewing term — the second runnings) |
 | smoke-hardy | adj | Duckstein’s printed signature: its die turns +1 as it boards (cap 6) | ○ provisional |
 
@@ -219,6 +219,9 @@ does not print these until Phase 2 locks them; the designer renames freely at th
 | Kontorhaus | n | The factor's upgraded side; its power prints ON the Kontor panel, one per port | **the proper names Hanzehuis/Steelyard/Bryggen/Peterhof are TAKEN** (§4b, the Staple House faces) — the generic *Kontorhaus* on purpose |
 | Wharfinger | n | The tolls Specialist (v6.1 re-derive of the Chandler's swap): your posts' tolls +1 G | *Chandler* retires from the roster with its swap |
 | the walk | n | The v6.2 turn frame: WALK adjacent (mandatory) · ONE printed station action · one flanking load | the v6.0 "verb" frame retires; *Sail/Chart/Trade* survive as printed **station actions** (Market: Source·Chart·Trade · Harbor: Commission·Load-any·Sail) |
+| Pilot | n | The turn-start drip Specialist (v6.0 re-derive of the Broker): a Ship with your cask advances one leg | *Grain Factor*-style crew noun; the art rides the broker stand-in |
+| Surveyor | n | The chart Specialist (v6.0 re-derive of the Brewer's Mate): your passage & post fees waived (factor-side fees stand) | — |
+| On enter | trig | The sea tile trigger (v6.1): a Ship enters this leg — the establishment grammar; a condition follows per §4 (e.g. *On enter · your cask aboard*) | joins the ruled tile-trigger set (§4b) at the Phase 2 lock |
 
 ## §5. Deferred to the next copy pass (logged, not yet applied)
 

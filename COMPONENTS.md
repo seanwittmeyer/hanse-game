@@ -1,10 +1,49 @@
-# Brewhouses of the Hanse — Components (v5.7 “Plain Sail”)
+# Brewhouses of the Hanse — Components (v6.2 “The Voyage” · §0 is the live delta)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
-> - Operational rules: `RULES.md` (the one clean rules document). Design rationale & history: `DESIGN.md` §9; the live watches: `DESIGN.md` §10.
-> - The live build is `play.html` — **v5.8 “Pay the Second”** (`KEY hanse-v58`) — the source of truth on values and behaviour. This doc enumerates the physical pieces that implement it.
-> - **The print kit is `print.html` — the only kit in use** (components.js data is v5.7; the sheet layouts are the P4 refresh + the 2026-08-18 native-scale pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - Operational rules: `RULES.md` (the one clean rules document, **v6.2**). Design rationale & history: `DESIGN.md` §9; the v6 program: `V6-PLAN.md`.
+> - The live build is `play.html` — **v6.2 “The Voyage”** (`KEY hanse-v62`) — the source of truth on values and behaviour.
+> - **The print kit is `print.html` — the only kit in use, cut to v6.2** (2026-08-30). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - **READ §0 FIRST.** The v6 program rebuilt the game around the sea; §0 states the v6.2 kit
+>   truth — what was ADDED, RE-CUT, and TABLED. §§1–17 below still enumerate the v5.8 body in
+>   detail and are superseded where §0 says so; the full section rewrite is the `V6-PLAN.md`
+>   Phase 2/5 docs-and-kit pass.
+
+---
+
+## 0. THE v6.2 KIT DELTA (2026-08-30 — the truth of the current kit)
+
+**ADDED (new components):**
+
+| Component | Qty ⚙ | What it is |
+|---|---|---|
+| **THE SEA MAP board** | 1 | The second board: four **lanes** of printed **legs** out of the Wharf (Wadden Coast → Bruges / + Dover Strait → London · Skagen → Bergen / + the Sound → Novgorod). Each leg is an open **ship field** (a voyage stands on it, dice riding the hull) with **2 printed post seats** (the 2nd opens at 3p ⚙); the establishment supply stacks on its printed strip. |
+| **House markers** | 6 per player | Printed 1″ chits, **double-sided**: the HOUSE side stands as a **post** (waypoint seat) or a **factor** (Kontor seat); the factor's upgrade **flips it to its KONTORHAUS side** (gold-ringed — the power is printed on the Kontor panel). |
+| **Establishment tiles** | 3 designs × 2 | The post upgrades (v6.1), first come: **Toll Court** (*On enter:* the toll is 2 G) · **Victualling Post** (*On enter · your cask aboard:* +1 G +1 H) · **Pilot's Rest** (*On enter · your cask aboard:* +1 leg). 2.5×1.32″, a printed **post socket** on the face; the printed 2 G chip is the upgrade fee. |
+| **Closure tiles** | 2 | **Dover Strait** · **the Sound** — they sit on their legs from setup; a **Chart** (2 G, printed on the tile) removes one and the charter's post stands free. |
+
+**RE-CUT (existing components, new faces/data):**
+
+- **The Wharf board** — each station now prints its **short menu** (v6.2, the walk):
+  Market *Source 3 · Chart · Trade* · Brewhouse *Brew (search)* · Harbor *Commission + 1
+  load · Load 1 any · Sail* · Cellar *Age 3*.
+- **The Destinations board** — every Kontor panel adds **2 factor-seat sockets** and its
+  printed **KONTORHAUS power** (Bruges *+1 G per landing cask* · London *charts free* ·
+  Bergen *TRADE ±2* · Novgorod *+1★ per landing cask*); London's prize re-prints as **a
+  free CHART or 2★**. The Bourse lane copy reads **priced at LANDING**.
+- **Specialists** — three re-derivations: **Pilot** (was the Broker — turn start: a Ship
+  with your cask advances 1) · **Surveyor** (was the Brewer's Mate — Chart: passage & post
+  fees waived) · **Wharfinger** (was the Chandler — your posts' tolls +1 G); the
+  **Supercargo** trigger moves to the off-turn landing; the **Chronicler** reads *Deliver a
+  cask: +1★*. 15 designs, counts unchanged.
+- **Cask tiles** — the *Open 1 Venture* load bonus re-prints as **Chart 1 · fee waived**.
+- **The round backstop** is **40** ⚙ (the aid and checklist re-print; the round marker also
+  turns ≋ **the current** each round).
+
+**TABLED (out of the kit; generators kept for Phase 2):** the **Venture tiles** (the wharf
+hand retired at v6.0 — tiles wait boxed) · the **Guild Tastings** (board, Tasting tiles, ⚜
+Invitations, the Chancery) · the Trade Roads (unchanged).
 
 ---
 

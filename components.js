@@ -46,7 +46,7 @@ const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the
   {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},   // TODO(art 2026-08-09, designer): 'Load 1 more' wants its OWN icon — bonus-load reads too generic; brief queued in art/PROMPTS.md
   {k:'reach',   ai:'map-pin',       act:'+1 presence',         q:2},   // always FREE (v5.1 — the priced channel retired with the Almoner's Stall)
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe',          q:2},
-  {k:'survey',  ai:'venture-build', act:'Open 1 Venture',  q:2},   // v5.4: drops to Q2+ (was Q3+) — the Venture door was STARVED, not priced shut; Hopped now prints 2 of these
+  {k:'survey',  ai:'compass', act:'Chart 1 · fee waived',  q:2},   // v6.0 re-derive (was 'Open 1 Venture'): one Chart action — passage · post · factor · upgrade — its fee waived
   {k:'hire',    ai:'wrench',        act:'Gain 1 specialist',      q:3},
   {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:3},   // v4.12: Q3+ (was Q4+)
 ];
@@ -203,15 +203,15 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   // (the Agricola prerequisite, read off components: flipped cards · claimed tiles · parked dice).
   {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:LU('scroll-text')+' Recipes: pay no fee', g:2, c:'#5b3a8e', n:1},   // every channel, Bruges included
   {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'turn start: 3+ '+LU('beer')+' → age +1', g:2, c:'#5b3a8e', n:1},   // v4.12 rework — a full house earns the drip
-  {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'rival sails your '+LU('beer')+': <span class="g">+1'+LU('wheat','g ic')+'</span><span class="h">+1'+LU('sprout','h ic')+'</span>', h:2, c:'#5b3a8e', n:1},   // v4.7: 1H→2H · v4.12 wording pass
-  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:LU('contract')+' Claim a line: '+LU('star-plus2','starmark'), g:1, h:1, c:'#5b3a8e', n:1},   // v5.0 rework ⚙ — no end-record; the ★ bank with the claim
+  {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'your '+LU('beer')+' lands off-turn: <span class="g">+1'+LU('wheat','g ic')+'</span><span class="h">+1'+LU('sprout','h ic')+'</span>', h:2, c:'#5b3a8e', n:1},   // v6.0 re-derive: the trigger moves to the LANDING (the current included)
+  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'Deliver a '+LU('beer')+': '+LU('star-plus1','starmark'), g:1, h:1, c:'#5b3a8e', n:1},   // v5.7 re-derive ⚙ — the chronicle records every voyage (the Manifest claim retired)
   {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), g:2, c:'#5b3a8e', n:1},
   {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:LU('map-pin')+' Place presence: '+LU('star-plus2','starmark'), g:1, c:'#5b3a8e', n:1},   // v4.12: +2★ ⚙ per placed die
-  {ic:'arrow-right-left', nm:'Chandler', art:'a hand balance — grain on one pan, hop cones on the other', act:LU('store')+' Source: may swap <span class="g">1'+LU('wheat','g ic')+'</span> ↔ <span class="h">1'+LU('sprout','h ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v5.1 rework — the swap rides the Market flow
+  {ic:'scale',      nm:'Wharfinger', slug:'quaymaster', art:'an iron-bound toll chest on a wharf ledger stand', act:LU('map-pin')+' Your posts’ tolls: <span class="g">+1'+LU('wheat','g ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v6.1 re-derive (was the Chandler's swap) — compounds the Toll Court; PLACEHOLDER art: the freed quaymaster shot
   {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:LU('ship')+' Commission: pay no fee', h:1, c:'#5b3a8e', n:1},
-  // ---- v5.1 "Wharf Hands": the ALT-UPGRADE singles ⚙ — a station superpower each ----
-  {ic:'store',      nm:'Broker', art:'a wax-sealed ledger and a coin scale on a market cloth', act:LU('store')+' Your Market ALT: Source 2', g:1, c:'#5b3a8e', n:1},   // v5.1 NEW ⚙
-  {ic:'flask-conical', nm:'Brewer’s Mate', art:'a young brewer hefting a mash rake beside the tun', act:LU('flask-conical')+' Your Brewhouse ALT: search', h:1, c:'#5b3a8e', n:1},   // v5.1 NEW ⚙
+  // ---- the SEA singles (v6.0/v6.2 re-derives of the v5.1 alt-upgrade pair) ⚙ ----
+  {ic:'navigation', nm:'Pilot', slug:'broker', art:'a weathered seaman at a whipstaff, reading the water', act:'At turn start: a '+LU('sailboat')+' with your '+LU('beer')+' advances 1', g:1, c:'#5b3a8e', n:1},   // v6.0 re-derive (was the Broker); PLACEHOLDER art: the broker shot
+  {ic:'compass',    nm:'Surveyor', slug:'brewer-s-mate', art:'a divider compass over a sea chart', act:LU('compass')+' Chart: passage &amp; post fees waived', h:1, c:'#5b3a8e', n:1},   // v6.0 re-derive (was the Brewer's Mate); the factor-side fees still apply; PLACEHOLDER art
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
@@ -331,6 +331,42 @@ function ventureTile(d,lvl,col){const f=lvl===2?d.l2:d.l1;
   +'<div class="bt-foot vt2"><span class="vt-own" title="the OWNER line — the ringed house alone">'+(f.own||'')
     +(f.txt?'<span class="vt-txt">'+f.txt+'</span>':'')+'</span>'
     +'<span class="vt-pub" title="the PUBLIC line — whoever activates a line through this slot">'+f.pub+'</span></div>'
+  +'</div>';}
+// ---- v6.1 ESTABLISHMENTS — the post-upgrade tile family (a scarce supply: 2 of each ⚙).
+// A CHART action flips a standing post of yours ONTO one of these: the marker seats in the
+// printed socket and the tile IS the upgraded state. Waypoint furniture (never the wharf);
+// the btile anatomy, the ruled trigger grammar (On enter ⚙ — the sea trigger, STYLE §4d).
+// The printed 2G chip is the upgrade fee. Mirrors play.html POST_UPGS.
+// (art: stand-ins from freed building shots — briefs queued in art/PROMPTS.md.)
+const ESTABLISHMENTS=[
+  {k:'tollcourt',nm:'Toll Court',       n:2, art:'building-tollhouse.png', cond:'On enter',                    effIc:'goods-2', eff:'the toll'},
+  {k:'victpost', nm:'Victualling Post', n:2, art:'building-victual.png',   cond:'On enter · your '+LU('beer'), eff:'<span class="g">+1'+LU('wheat','g ic')+'</span> <span class="h">+1'+LU('sprout','h ic')+'</span>'},
+  {k:'pilotrest',nm:'Pilot’s Rest',     n:2, art:'building-missionq.png',  cond:'On enter · your '+LU('beer'), effIc:'sail', eff:'+1 leg'},
+];
+const EST_FOOT='rgba(47,78,66,.8)';   // sea-green — the waypoint family's own foot colour
+function estTile(d){
+  const lead=d.effIc?'<span class="ac">'+LU(d.effIc)+'</span>':'';
+  return '<div class="btile btW est" style="--c:'+EST_FOOT+'">'
+  +artLayer(d.art)
+  +'<div class="bt-top"><span class="bt-nm'+(d.nm.length>14?' long':'')+'">'+d.nm+'</span>'
+    +'<span class="bt-cost">'+cost(2,0)+'</span></div>'
+  +'<div class="est-socket" title="your POST seats here — the tile under the marker is the upgraded state"></div>'
+  +'<div class="bt-foot btF2">'+lead+'<span class="bt-2col"><span class="bt-cond">'+d.cond+'</span><span class="bt-etext">'+d.eff+'</span></span></div>'
+  +'</div>';}
+// ---- v6.0 CLOSURE tiles — the two closed passages sit ON the sea map from setup; a CHART
+// action (its 2G fee printed here) removes the tile and the charter's post stands free.
+const CLOSURES=[{k:'ds',nm:'Dover Strait'},{k:'sd',nm:'the Sound'}];
+function closureTile(d){return '<div class="cltile">'
+  +'<span class="cl-lock">'+LUX('lock')+'</span>'
+  +'<div class="cl-mid"><div class="cl-nm">'+d.nm+'</div><div class="cl-sub">closed passage</div></div>'
+  +'<div class="cl-row"><span class="cl-lbl">chart</span>'+cost(2,0)+'<span class="cl-lbl">· the charter’s post stands free</span></div>'
+  +'</div>';}
+// ---- v6.0 HOUSE MARKERS — 6 per player ⚙, double-sided 1in chits: the HOUSE side stands
+// as a post (on a waypoint) or a factor (on a Kontor seat); the KONTORHAUS side is the
+// factor's upgraded state (flip in place — the power is printed on the Kontor panel).
+function houseMarker(c,side){const kh=side==='kontorhaus';
+  return '<div class="hmk'+(kh?' kh':'')+'" style="--c:'+c+'">'
+    +(kh?LUX('landmark')+'<span>Kontorhaus</span>':LUX('home'))
   +'</div>';}
 // a beer/tier chip (the beer glyph) and/or a die chip (the die-as-parked glyph) → the ★. The
 // claim rule (one line per delivered cask · each line once per voyage · ★ at once) lives on
@@ -862,8 +898,27 @@ var HC_CSS4=''
 +'.invcard .iv-seal{width:.76in;height:.76in;border-radius:50%;background:#7c2128;color:#e8c87a;display:flex;align-items:center;justify-content:center;font-size:.46in;line-height:1;text-shadow:0 1px 2px rgba(0,0,0,.5)}'
 +'.invcard .iv-nm{margin-top:.13in;font-variant:small-caps;font-weight:900;font-size:.235in;color:#2b2018;line-height:1}'
 +'.invcard .iv-verb{margin-top:.05in;display:inline-flex;align-items:center;gap:.04in;font-variant:small-caps;font-weight:bold;font-size:.12in;color:#8a6408}'
-+'.invcard .iv-verb svg,.invcard .iv-verb .ic,.invcard .iv-verb img.ai{width:.15in;height:.15in}';
++'.invcard .iv-verb svg,.invcard .iv-verb .ic,.invcard .iv-verb img.ai{width:.15in;height:.15in}'
+/* ---- v6.1 ESTABLISHMENT tile: the btile + a printed post SOCKET (the marker parks on it) */
++'.btile .est-socket{position:absolute;right:.12in;top:.32in;width:.66in;height:.66in;border:2px dashed rgba(255,255,255,.82);border-radius:50%;z-index:2;background:rgba(0,0,0,.16)}'
++'.btile.est .bt-foot{padding-right:.86in}'
++'.btile.est .bt-cond img.ai,.btile.est .bt-cond svg{width:.15in;height:.15in}'
+/* ---- v6.0 CLOSURE tile: a dark strait barred shut; the chart fee is the way through */
++'.cltile{width:2.5in;height:1.32in;box-sizing:border-box;position:relative;border-radius:.09in;background:#1d3440;color:#e8dfc8;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:.09in .12in;text-shadow:0 1px 2px rgba(0,0,0,.6);border:2.5px dashed #7c2128}'
++'.cltile .cl-lock{position:absolute;right:.1in;top:.08in;opacity:.9}.cltile .cl-lock svg,.cltile .cl-lock .ic{width:.3in;height:.3in;color:#c98a8a}'
++'.cltile .cl-mid{display:flex;flex-direction:column;gap:.015in}'
++'.cltile .cl-nm{font-variant:small-caps;font-weight:900;font-size:.2in;line-height:1}'
++'.cltile .cl-sub{font-variant:small-caps;font-weight:bold;font-size:.1in;letter-spacing:.6px;color:#c98a8a}'
++'.cltile .cl-row{display:flex;align-items:center;gap:.05in;font-size:.11in}'
++'.cltile .cl-row .gc{font-size:.14in}.cltile .cl-row .gc svg,.cltile .cl-row .gc .ic{width:.16in;height:.16in}'
++'.cltile .cl-lbl{font-variant:small-caps;font-weight:bold;font-size:.1in;opacity:.9}'
+/* ---- v6.0 HOUSE MARKER: a 1in double-sided chit — house side / KONTORHAUS side (gold-ringed) */
++'.hmk{width:1in;height:1in;box-sizing:border-box;border-radius:.14in;background:var(--c,#7c2128);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.03in;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}'
++'.hmk svg,.hmk .ic{width:.44in;height:.44in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}'
++'.hmk.kh{box-shadow:inset 0 0 0 .05in #c9a227}'
++'.hmk.kh svg,.hmk.kh .ic{width:.36in;height:.36in}'
++'.hmk.kh span{font-variant:small-caps;font-weight:bold;font-size:.088in;letter-spacing:.4px;line-height:1}';
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3+HC_CSS4;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,VENTURES,ventureTile,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard};
+window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,VENTURES,ventureTile,CONTESTS_P,contestTile,invitationCard,IMPROVE,GOODS,CONTRACTS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,coverTile,wtok,recipeCard,contractCard,playerBoard,ESTABLISHMENTS,estTile,CLOSURES,closureTile,houseMarker};
 })();
