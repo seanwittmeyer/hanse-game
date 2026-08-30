@@ -398,7 +398,17 @@
   /* a dark foot gradient lifts the action icon + caption off the scene — an inline SVG ramp,
      not a CSS gradient (CSS gradients seam in the html2canvas export; the kp panels' pattern) */
   .stn>.stn-grad{position:absolute;left:0;right:0;bottom:0;height:54%;width:100%;z-index:0}
-  .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.34in;line-height:1;letter-spacing:.5px;text-shadow:0 1px 3px rgba(0,0,0,.8),0 0 .14in rgba(0,0,0,.55)}
+  .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.34in;line-height:1;letter-spacing:.5px;text-shadow:0 1px 3px rgba(0,0,0,.8),0 0 .14in rgba(0,0,0,.55);position:relative;z-index:2}
+  /* v6.4b the split station: the diagonal + the two half-space marks (the worker stands on its half) */
+  .stn .sdiag{position:absolute;inset:0;z-index:1;pointer-events:none}
+  .stn .sdiag.dTLBR{background:linear-gradient(45deg,transparent calc(50% - .026in),rgba(243,233,210,.72) calc(50% - .01in),rgba(243,233,210,.72) calc(50% + .01in),transparent calc(50% + .026in))}
+  .stn .sdiag.dTRBL{background:linear-gradient(135deg,transparent calc(50% - .026in),rgba(243,233,210,.72) calc(50% - .01in),rgba(243,233,210,.72) calc(50% + .01in),transparent calc(50% + .026in))}
+  .stn .swz{position:absolute;z-index:2;width:.46in;height:.46in;border-radius:50%;background:rgba(20,16,11,.5);border:1.5px solid rgba(243,233,210,.55);display:flex;align-items:center;justify-content:center}
+  .stn .swz img.ai{width:.34in;height:.34in}
+  .stn .swz.tr{top:.12in;right:.12in}
+  .stn .swz.tl{top:.12in;left:.12in}
+  .stn .swz.br{bottom:.12in;right:.12in}
+  .stn .swz.bl{bottom:.12in;left:.12in}
   .stn .stn-foot{display:flex;flex-direction:column;align-items:center;gap:.035in;margin-bottom:.01in}
   .stn .stn-act{display:flex;align-items:center;justify-content:center}
   .stn .stn-act img.ai{width:.95in;height:.95in;filter:drop-shadow(0 2px 5px rgba(0,0,0,.55))}
@@ -1056,8 +1066,15 @@ const STN_GRAD='<svg class="stn-grad" preserveAspectRatio="none" viewBox="0 0 1 
   +'<stop offset="0" stop-color="#14100b" stop-opacity=".74"/><stop offset=".5" stop-color="#14100b" stop-opacity=".4"/>'
   +'<stop offset="1" stop-color="#14100b" stop-opacity="0"/></linearGradient></defs>'
   +'<rect width="1" height="1" fill="url(#stngrad)"/></svg>';   // one shared id — every cell uses the identical ramp
-function station(L,nm,scene,acts,sub){return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
+function station(L,nm,scene,acts,sub){
+  // v6.4b — the tile splits on the diagonal into a ROW half and a COLUMN half; each half
+  // prints its line partner's mark, and the worker STANDS on the half it worked
+  const SP={A:{row:['B','tr'],col:['C','bl']},B:{row:['A','tl'],col:['D','br']},C:{row:['D','br'],col:['A','tl']},D:{row:['C','bl'],col:['B','tr']}};
+  const SICON={A:'goods-3',B:'flask-conical',C:'ship',D:'age-3'};
+  const chips=['row','col'].map(w=>'<span class="swz '+SP[L][w][1]+'">'+LU(SICON[SP[L][w][0]])+'</span>').join('');
+  return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
   +'<img class="stn-scene" src="art/scene-'+scene+'.png" alt="">'+STN_GRAD
+  +'<div class="sdiag '+((L==='A'||L==='D')?'dTLBR':'dTRBL')+'"></div>'+chips
   +'<span class="nm">'+nm+'</span>'
   +'<span class="stn-foot"><span class="stn-act">'+LU(acts[0])
   +acts.slice(1).map(ic=>'<span class="stn-slash">/</span>'+LU(ic,'stn-alt-i')).join('')   // v6.3: PRIMARY / ALTERNATE — the big icon fires for the worker here, the small one across the line

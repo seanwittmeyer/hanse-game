@@ -123,7 +123,22 @@
   .cell.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .cell.C{background:linear-gradient(155deg,#3d6b7e,#244554)}
   .cell.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
-  .cell .wk{position:absolute;top:5cqmin;right:5cqmin;display:flex;gap:2cqmin;flex-wrap:wrap;justify-content:flex-end;align-items:center;max-width:58%}
+  .cell .wk{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);display:flex;gap:2cqmin;flex-wrap:wrap;justify-content:center;align-items:center;max-width:58%;z-index:3}   /* line-less workers stand at the tile's centre */
+  /* v6.4b THE SPLIT STATION — a diagonal divides each tile into a ROW half and a COLUMN half;
+     the worker stands on the half it worked (the standing pawn is the record, as on the table) */
+  .cell .diag{position:absolute;inset:0;z-index:2;pointer-events:none}
+  .cell .diag.dTLBR{background:linear-gradient(45deg,transparent calc(50% - 1.1cqmin),rgba(244,234,208,.6) calc(50% - .4cqmin),rgba(244,234,208,.6) calc(50% + .4cqmin),transparent calc(50% + 1.1cqmin))}
+  .cell .diag.dTRBL{background:linear-gradient(135deg,transparent calc(50% - 1.1cqmin),rgba(244,234,208,.6) calc(50% - .4cqmin),rgba(244,234,208,.6) calc(50% + .4cqmin),transparent calc(50% + 1.1cqmin))}
+  .cell .wz{position:absolute;z-index:4;display:flex;align-items:center;gap:1.5cqmin}
+  .cell .wz .ic,.cell .wz svg{width:9cqmin;height:9cqmin;opacity:.85}
+  .cell .wz img.ai{width:11cqmin;height:11cqmin;opacity:.9;filter:drop-shadow(0 1px 2px rgba(0,0,0,.65))}
+  .cell .wz .pawn{width:12cqmin;height:12cqmin;border-width:1.5cqmin}
+  .cell .wz.tr{top:6cqmin;right:6cqmin}
+  .cell .wz.br{bottom:6cqmin;right:6cqmin}
+  .cell .wz.bl{bottom:6cqmin;left:6cqmin}
+  .cell .wz.lm{left:4cqmin;top:44%}
+  .cell .wedgehit{position:absolute;inset:0;z-index:6;cursor:pointer;background:rgba(216,167,42,.13)}
+  .cell .wedgehit:hover{background:rgba(216,167,42,.3)}
   .pawn{width:15px;height:15px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.4)}
   .cell .wk .pawn{width:13cqmin;height:13cqmin;border-width:1.5cqmin}
   .cell.legal{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite}
@@ -1686,7 +1701,7 @@ function stnActWhy(a){
 function doMove(cell,which){
   const p=cur();if(p.placed&&!ADJ[p.cell].includes(cell))return;
   snapshot();
-  const placing=!p.placed;p.placed=true;p.cell=cell;
+  const placing=!p.placed;p.placed=true;p.cell=cell;p.line=null;   // the pawn steps to the tile's centre until the line is chosen
   log(p.name+(placing?' places their worker at ':' moves to ')+LU(ICON[CELLNAME[cell]])+' <b>'+CELLNAME[cell]+'</b> '+cellGlyph(cell)+'.',true);
   if(which)return chooseLine(which);   // the AI/MC/harness names the line outright
   UI={sub:'line'};render();
@@ -1699,6 +1714,7 @@ function chooseLine(which){
 // + its two cap slots (a LOAD of the Ship docked there). Buildings stay passive — they
 // serve their slot's traffic, never a stop.
 function activateLine(lk){const L=LINES[lk];const p=cur();
+  p.line=lk;   // the worker STANDS on that half of its station — the standing pawn is the record
   log(p.name+' activates '+lineGlyph(lk)+' <b>'+L.label+'</b> '+L.cells.map(c=>LU(ICON[CELLNAME[c]])).join(''),true);
   const stops=[];
   const slotStop=(cid)=>{const t=S.slots[cid];if(t&&t.type==='ship')stops.push({kind:'load',slot:cid});};
@@ -3727,7 +3743,18 @@ function renderGrid(){
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':(boardClick?'onclick="'+boardClick+'"':''))+'>'+inner+'</div>';
   });
   ['A','B','C','D'].forEach(c=>{const act=CELLNAME[c];
-    const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+p.name+'"></span>').join('');
+    const o=cellOfLine(c);
+    const WPOS={A:{row:'tr',col:'bl'},B:{row:'lm',col:'br'},C:{row:'br',col:'lm'},D:{row:'bl',col:'tr'}};   // each half's anchor faces its line partner (B/C top-left is the head's corner — they anchor mid-left)
+    const HITS={A:{row:'0 0,100% 0,100% 100%',col:'0 0,100% 100%,0 100%'},B:{row:'0 0,100% 0,0 100%',col:'100% 0,100% 100%,0 100%'},
+                C:{row:'100% 0,100% 100%,0 100%',col:'0 0,100% 0,0 100%'},D:{row:'0 0,100% 100%,0 100%',col:'0 0,100% 0,100% 100%'}};
+    const wz=which=>{const pn=LINES[o[which]].cells.find(x=>x!==c);
+      const stand=S.players.filter(p=>p.cell===c&&p.line===o[which])
+        .map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+attr(p.name+' — worked the '+(which==='row'?'row':'column')+' with '+CELLNAME[pn])+'"></span>').join('');
+      return '<span class="wz '+WPOS[c][which]+'" data-tip="'+attr('The '+(which==='row'?'ROW':'COLUMN')+' half — a worker stands here when its line runs toward '+CELLNAME[pn]+'.')+'">'+LU(STATION_ICON[CELLNAME[pn]])+stand+'</span>';};
+    const picking=!aiTurn()&&UI.sub==='line'&&cur().placed&&cur().cell===c;
+    const hits=picking?('<div class="wedgehit" style="clip-path:polygon('+HITS[c].row+')" onclick="chooseLine(\'row\')" data-tip="'+attr('Activate the ROW — with '+CELLNAME[LINES[o.row].cells.find(x=>x!==c)])+'"></div>'
+      +'<div class="wedgehit" style="clip-path:polygon('+HITS[c].col+')" onclick="chooseLine(\'col\')" data-tip="'+attr('Activate the COLUMN — with '+CELLNAME[LINES[o.col].cells.find(x=>x!==c)])+'"></div>'):'';
+    const pawns=S.players.filter(p=>p.cell===c&&!p.line).map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+p.name+'"></span>').join('');
     let cls='cell '+c+' c'+c;
     const myStop=!aiTurn()&&UI.sub==='stops'&&(UI.stops||[]).some(st=>st.kind==='cell'&&st.cell===c&&stopAvail(st));
     // at the LINE pick, the FAR station of each line is the click target: across the row = the row, down the column = the column
@@ -3740,6 +3767,7 @@ function renderGrid(){
     const SCN={Market:'market',Brewhouse:'brewhouse',Cellar:'cellar',Harbor:'harbor'}[act];
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
       +'<img class="scn" src="art/scene-'+SCN+'.png" alt=""><div class="scngrad"></div>'
+      +'<div class="diag '+((c==='A'||c==='D')?'dTLBR':'dTRBL')+'"></div>'+wz('row')+wz('col')+hits
       +'<div class="stn">'
       +'<div class="head"><span class="actrow"><span class="bigic" data-tip="'+attr('PRIMARY (your worker here): '+stnActTxt(cur(),STN_P[c]))+'">'+LU(STATION_ICON[act])+'</span><span class="altsep">/</span><span class="altic" data-tip="'+attr('ALTERNATE (read across the line): '+stnActTxt(cur(),STN_A[c]))+'">'+LU(STATION_ALT_ICON[act])+'</span></span></div>'
       +'<div class="nm">'+act+'</div>'
