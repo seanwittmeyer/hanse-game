@@ -119,13 +119,15 @@
   .cell .pos-bl{bottom:4cqmin;left:4cqmin}
   .cell .pos-br{bottom:4cqmin;right:4cqmin}
   .cell .role{font-size:7cqmin;text-transform:uppercase;letter-spacing:1px;opacity:.82}
-  .cell .nm{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;font-variant:small-caps;font-weight:bold;font-size:12cqmin;line-height:1;white-space:nowrap;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.85)}   /* the name stands at the tile's CENTRE, on the diagonal's crossing */
+  .cell .nm{position:absolute;left:50%;transform:translateX(-50%);z-index:3;font-variant:small-caps;font-weight:bold;font-size:12cqmin;line-height:1;white-space:nowrap;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.85)}   /* the name sits on the tile's INSIDE edge — the four names line the wharf's middle seam */
+  .cell.cA .nm,.cell.cB .nm{bottom:6cqmin}
+  .cell.cC .nm,.cell.cD .nm{top:6cqmin}
   /* loop colours: A Market=gold · B Brewhouse=red · C Harbor=sea · D Cellar=green */
   .cell.A{background:linear-gradient(155deg,#cda522,#9c7414);color:#2b2018}
   .cell.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .cell.C{background:linear-gradient(155deg,#3d6b7e,#244554)}
   .cell.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
-  .cell .wk{position:absolute;left:50%;top:66%;transform:translate(-50%,-50%);display:flex;gap:2cqmin;flex-wrap:wrap;justify-content:center;align-items:center;max-width:58%;z-index:3}   /* line-less workers stand just below the centre name */
+  .cell .wk{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:2cqmin;flex-wrap:wrap;justify-content:center;align-items:center;max-width:58%;z-index:3}   /* line-less workers stand at the tile's centre, on the diagonal's crossing */
   /* v6.4b THE SPLIT STATION — a diagonal divides each tile into a ROW half and a COLUMN half;
      the worker stands on the half it worked (the standing pawn is the record, as on the table) */
   .cell .diag{position:absolute;inset:0;z-index:2;pointer-events:none}

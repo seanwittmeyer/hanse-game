@@ -33,8 +33,9 @@
   SPLIT ON THE DIAGONAL into a ROW half and a COLUMN half (v6.4b)** — the diagonal is the
   tile's axis: the **PRIMARY prints LARGE on the line at the OUTSIDE corner**, the
   **ALTERNATE small at the INSIDE corner**, each half's side corner prints the ALTERNATE
-  verb the line's far station serves (the action that half earns), the name stands at the
-  centre — and the worker stands on the half it worked (the pawn's position is
+  verb the line's far station serves (the action that half earns), the name sits on the
+  tile's INSIDE edge — the four names line the wharf's middle seam — and the worker stands
+  on the half it worked (the pawn's position is
   the table's record of the line; no mechanic rides it).
 - **The Destinations board** — every Kontor panel adds **2 factor-seat sockets** and its
   printed **KONTORHAUS power** (Bruges *+1 G per landing cask* · London *charts free* ·

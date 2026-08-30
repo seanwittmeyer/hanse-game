@@ -398,7 +398,7 @@
   /* a dark foot gradient lifts the action icon + caption off the scene — an inline SVG ramp,
      not a CSS gradient (CSS gradients seam in the html2canvas export; the kp panels' pattern) */
   .stn>.stn-grad{position:absolute;left:0;right:0;bottom:0;height:54%;width:100%;z-index:0}
-  .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.34in;line-height:1;letter-spacing:.5px;text-shadow:0 1px 3px rgba(0,0,0,.8),0 0 .14in rgba(0,0,0,.55);position:relative;z-index:2}
+  .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.27in;line-height:1;letter-spacing:.5px;text-shadow:0 1px 3px rgba(0,0,0,.8),0 0 .14in rgba(0,0,0,.55);position:relative;z-index:2}
   /* v6.4b the split station: the diagonal + the two half-space marks (the worker stands on its half) */
   .stn .sdiag{position:absolute;inset:0;z-index:1;pointer-events:none}
   .stn .sdiag.dTLBR{background:linear-gradient(45deg,transparent calc(50% - .026in),rgba(243,233,210,.72) calc(50% - .01in),rgba(243,233,210,.72) calc(50% + .01in),transparent calc(50% + .026in))}
@@ -411,7 +411,9 @@
   .stn .swz.bl{bottom:.12in;left:.12in}
   /* v6.4b corner grammar: PRIMARY large ON the diagonal at the OUTSIDE corner · ALT small at
      the INSIDE corner · the half-marks at the side corners · name + menu at the centre */
-  .stn .stn-mid{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.05in;text-align:center;pointer-events:none}
+  .stn .stn-mid{position:absolute;left:0;right:0;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.04in;text-align:center;pointer-events:none}
+  .stn.A .stn-mid,.stn.B .stn-mid{bottom:.14in}
+  .stn.C .stn-mid,.stn.D .stn-mid{top:.14in}
   .stn .stn-sub{font-style:italic;font-weight:bold;font-size:.17in;line-height:1;text-shadow:0 1px 3px rgba(0,0,0,.9)}
   .stn .spic,.stn .saic{position:absolute;z-index:2;display:inline-flex}
   .stn .spic img.ai{width:.95in;height:.95in;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))}
