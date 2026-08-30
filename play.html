@@ -95,8 +95,8 @@
      board HEIGHT still fits one screen — the wharf never scrolls vertically, only pans left/right;
      boardCross centers the first view on the stations). This override must sit AFTER the base .ag
      rule — same specificity, source order decides. */
-  @media(max-width:760px){.agwrap{overflow-x:auto;overflow-y:hidden;justify-content:flex-start;-webkit-overflow-scrolling:touch;padding:8px 2px}
-    .ag{--cw:calc((max(100cqw,330px) - 3*var(--gap))/5.6)}}   /* the whole board FITS the phone column; a scroll only opens under ~340px */
+  @media(max-width:760px){.agwrap{overflow-x:auto;overflow-y:hidden;justify-content:flex-start;-webkit-overflow-scrolling:touch}
+    .ag{--cw:calc((min(192cqw,700px) - 3*var(--gap))/5.6)}}   /* the board stays BIG on a phone and scrolls sideways — legibility over fit (designer-ruled 2026-08-30) */
   /* explicit square rows make every cell a guaranteed square from the GRID — not from each
      item's own aspect-ratio under size-containment (which mobile Safari collapses). */
   .cell,.slot{min-width:0;min-height:0}
