@@ -31,7 +31,10 @@ The designer's lens, always on:
 - **In the app, components are BIG and prose is small (designer-ruled 2026-08-30).** A
   rendered component fills the width of its container; captions never repeat what the tile
   already prints; fee tables and reminders live on the components and in tooltips, never in
-  paragraph lines beside them.
+  paragraph lines beside them. **And one display grammar:** every tile family renders
+  through the app's EXISTING display pattern (the `shopgrid` cells + the shared ⊞/⊟
+  toggle) — never a one-off layout; a new family means finding the pattern first
+  (designer-ruled 2026-08-31: one-off layouts make the app inconsistent).
 - **The goal is fun.** Reduce the barrier to entry; give players room to explore the theme
   and refine strategy. **Player interaction is built into the core** (shared hulls,
   contestable slots, the berth race, majorities) — protect it.

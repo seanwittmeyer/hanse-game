@@ -324,6 +324,7 @@
   .mtile.sm{width:78px;height:78px}
   .shopgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:6px 0}   /* 2/row = big, legible tiles; .wide (the header toggle) = 4/row compact */
   .shopgrid.wide{grid-template-columns:repeat(4,1fr)}
+  .shopgrid.estgrid.wide{grid-template-columns:1fr}   /* the establishment toggle goes LARGER, not compact */
   .shophead{display:flex;align-items:center;gap:6px}
   .gridtoggle{margin-left:auto;flex:none;font-size:.72rem;line-height:1;padding:2px 8px;background:var(--parch);border:1px solid var(--line);border-radius:5px}
   .shopgrid .mtile{width:100%;height:auto;aspect-ratio:1}
@@ -3836,7 +3837,7 @@ function renderDests(){
 // per-section grid width (2/row big · 4/row compact); a session preference, not game state
 let GRIDWIDE={};
 function toggleGrid(k){GRIDWIDE[k]=!GRIDWIDE[k];render();}
-function gridToggleBtn(k){return '<button class="gridtoggle" data-tip="'+(GRIDWIDE[k]?'Larger tiles (2 per row)':'Compact (4 per row)')+'" onclick="toggleGrid(\''+k+'\')">'+(GRIDWIDE[k]?'⊟':'⊞')+'</button>';}
+function gridToggleBtn(k,tipOn,tipOff){return '<button class="gridtoggle" data-tip="'+(GRIDWIDE[k]?(tipOn||'Larger tiles (2 per row)'):(tipOff||'Compact (4 per row)'))+'" onclick="toggleGrid(\''+k+'\')">'+(GRIDWIDE[k]?'⊟':'⊞')+'</button>';}
 function shopGridCls(k){return 'shopgrid'+(GRIDWIDE[k]?' wide':'');}
 function renderShop(){
   const p=cur();const comm=!aiTurn()&&UI.sub==='commission'&&UI.stage!=='place';
@@ -3858,12 +3859,13 @@ function renderShop(){
      rows+='<div class="note">'+LU('landmark')+' '+(kh?'<b>'+KONTORHAUS[k].name+'</b>':'factor · '+DEST[k].name)+' <span style="opacity:.7">('+(kh?KONTORHAUS[k].desc:'the license + the +1 step')+')</span></div>';}});
    h+='<div style="font-size:.82rem">'+(rows||'<div class="note">none placed — CHART raises them</div>')+'</div>';
    // the ESTABLISHMENT SUPPLY — the real tiles (components.js), each with its count standing
-   // the ESTABLISHMENT SUPPLY — full-width tiles (the component speaks; the caption is the count alone)
-   h+='<div class="note shophead" style="margin-top:6px"><b>'+LU('landmark')+' Establishment supply</b></div>';
-   h+='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px">'+Object.keys(POST_UPGS).map(u=>{const E=POST_UPGS[u];const left=upgSupplyLeft(u);
+   // the ESTABLISHMENT SUPPLY — the panel's ONE display pattern (as the Ship/Specialist
+   // displays): shopgrid cells + the shared toggle; here the toggle is 2 per row <-> 1 per row
+   h+='<div class="note shophead" style="margin-top:6px"><b>'+LU('landmark')+' Establishment supply</b>'+gridToggleBtn('ests','2 per row','One per row (larger)')+'</div>';
+   h+='<div class="'+shopGridCls('ests')+' estgrid">'+Object.keys(POST_UPGS).map(u=>{const E=POST_UPGS[u];const left=upgSupplyLeft(u);
      const d=(HC&&HC.ESTABLISHMENTS)?HC.ESTABLISHMENTS.find(e=>e.k===u):null;   // the LIBRARY face is the canon — never rebuild it per-page
-     const face=d?'<div class="mtile" style="width:100%;height:auto;aspect-ratio:2.5/1.32'+(left?'':';filter:grayscale(.8);opacity:.45')+'">'+pfit(HC.estTile(d),2.5,1.32)+'</div>':'';
-     return '<div data-tip="'+attr(E.name+' — '+E.desc+' · supply left: '+left)+'">'+face+'<div class="note" style="text-align:center"><b>'+left+'</b> left</div></div>';}).join('')+'</div>';}
+     const face=d?'<div class="mtile"'+(left?'':' style="filter:grayscale(.8);opacity:.45"')+'>'+pfit(HC.estTile(d),2.5,1.32)+'</div>':'';
+     return '<div class="shopcell" data-tip="'+attr(E.name+' — '+E.desc+' · supply left: '+left)+'">'+face+'<span class="note"><b>'+left+'</b> left</span></div>';}).join('')+'</div>';}
   // THE SPECIALIST DISPLAY — earned free (Bergen’s prize · the hire bonus)
   h+='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Specialist display</b>'+gridToggleBtn('specs')+'</div>';
   h+='<div class="'+shopGridCls('specs')+'">'+(S.impDisplay||[]).map(key=>{const def=IMPROVEMENTS[key];const owned=hasUpgrade(p,key);const gt=specGateTxt(key);
