@@ -834,6 +834,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .bt-2col{display:flex;flex-direction:column;justify-content:center;gap:.025in;min-width:0;flex:1}'
 +'.btile .btF2 .bt-etext{padding-bottom:0;font-size:.15in;font-weight:600;line-height:1.1}'
 +'.btile .btFC{flex-direction:column;align-items:flex-start;gap:.02in;padding-top:.14in}'
++'.btile .bt-nm,.btile .bt-cond,.btile .bt-eff,.btile .bt-etext{text-align:left}'   // the face owns its alignment — a centering ancestor (the app's board slot) must never restyle a printed component
 +'\n/* ===== v4.9d PLAYER BOARD (7.65x3.85in) \u2014 print + live app, one component ===== */'
 +'.pbrd{--pc:#7c2128;width:7.65in;height:3.85in;background:var(--parch,#f3e9d2);color:var(--ink,#2b2018);position:relative;border-radius:.14in;display:flex;flex-direction:column;gap:.07in;padding:.12in .15in;box-sizing:border-box;border:2.5px solid var(--pc);overflow:hidden}'
 +'.pbrd .sn{font-variant:small-caps;font-weight:bold;font-size:.085in;opacity:.62;line-height:1.05}'
