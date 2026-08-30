@@ -1,18 +1,18 @@
-# Brewhouses of the Hanse — Components (v6.3 “The Voyage” · §0 is the live delta)
+# Brewhouses of the Hanse — Components (v6.4 “The Voyage” · §0 is the live delta)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
-> - Operational rules: `RULES.md` (the one clean rules document, **v6.3**). Design rationale & history: `DESIGN.md` §9; the v6 program: `V6-PLAN.md`.
-> - The live build is `play.html` — **v6.3 “The Voyage”** (`KEY hanse-v63`) — the source of truth on values and behaviour.
-> - **The print kit is `print.html` — the only kit in use, cut to v6.3** (2026-08-30). Printed copy follows the **Term Registry (`STYLE.md`)**.
-> - **READ §0 FIRST.** The v6 program rebuilt the game around the sea; §0 states the v6.3 kit
+> - Operational rules: `RULES.md` (the one clean rules document, **v6.4**). Design rationale & history: `DESIGN.md` §9; the v6 program: `V6-PLAN.md`.
+> - The live build is `play.html` — **v6.4 “The Voyage”** (`KEY hanse-v64`) — the source of truth on values and behaviour.
+> - **The print kit is `print.html` — the only kit in use, cut to v6.4** (2026-08-31). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - **READ §0 FIRST.** The v6 program rebuilt the game around the sea; §0 states the v6.4 kit
 >   truth — what was ADDED, RE-CUT, and TABLED. §§1–17 below still enumerate the v5.8 body in
 >   detail and are superseded where §0 says so; the full section rewrite is the `V6-PLAN.md`
 >   Phase 2/5 docs-and-kit pass.
 
 ---
 
-## 0. THE v6.3 KIT DELTA (2026-08-30 — the truth of the current kit)
+## 0. THE v6.4 KIT DELTA (2026-08-31 — the truth of the current kit)
 
 **ADDED (new components):**
 
@@ -26,10 +26,10 @@
 **RE-CUT (existing components, new faces/data):**
 
 - **The Wharf board** — each station now prints **TWO single verbs — PRIMARY / ALTERNATE**
-  (v6.3, the line): Market *Source 3 / Chart* · Brewhouse *Brew (search) / Trade* · Harbor
-  *Commission + 1 load / Load 1 any* · Cellar *Age 3 / Sail*. The worker's own station
-  fires its PRIMARY; the line's other station its ALTERNATE; the line's two end slots each
-  load.
+  (v6.4, the street model — the ALT is the station's OWN lesser counter): Market *Source 3
+  / Chart* · Brewhouse *Brew (search) / Trade* · Harbor *Commission + 1 load / Sail* ·
+  Cellar *Age 3 / Load 1 any*. The worker's own station fires its PRIMARY; the line's
+  other station its ALTERNATE; the line's two end slots each load.
 - **The Destinations board** — every Kontor panel adds **2 factor-seat sockets** and its
   printed **KONTORHAUS power** (Bruges *+1 G per landing cask* · London *charts free* ·
   Bergen *TRADE ±2* · Novgorod *+1★ per landing cask*); London's prize re-prints as **a

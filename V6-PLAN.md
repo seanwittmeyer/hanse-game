@@ -44,7 +44,16 @@ a cap slot opens its load this activation). Every surface re-cut the same pass (
 §2–3 · the wharf tiles + the aid in `print.html` · `COMPONENTS.md` §0 · the engine + AI +
 verify). `KEY hanse-v63` · verify-v6 **70/70** · sim clean 0/0 · first read: rounds ~21
 (from ~32 under the walk), SAIL ~5.5/game and TRADE ~10.5/game — the alternates get worked
-as ride-alongs on lines chosen for other reasons. Still v5.8: `rulebook.html` and the DESIGN
+as ride-alongs on lines chosen for other reasons. **v6.4 "the street model" (2026-08-31,
+designer-called: "I go to Harbor street — my guy works the main building and picks things
+up at the shops nearby"):** the ALT principle is ruled — **every station's printed
+ALTERNATE is its own lesser counter**, served to the line's visitor (the v5.8 alts always
+were: Source 1 · top-tile · Age 1 · Load-any). The two sea alts re-seat to obey it:
+Harbor *Commission / SAIL* · Cellar *Age 3 / LOAD 1 any* (Market Chart and Brewhouse
+Trade already read as their stations' own counters). Turn shapes after the swap: the
+Harbor row = Commission + Load (up to four boardings with the maiden load and the caps —
+the fewer/bigger pillar at work) · the Cellar row = Age + Sail · the Brewhouse column =
+Brew + Load. `KEY hanse-v64` · verify-v6 71/71 · sim clean. Still v5.8: `rulebook.html` and the DESIGN
 architecture sections (the Phase 2 docs pass). **Fork calls taken for the test build
 (all ⚙, designer re-rules freely):** F1 the LINE (re-ruled v6.3: P/A seats + the cap loads; the one-day v6.2 walk-menu interim
 retired) · F2 neutral hulls + the current + the SAIL push (1 G ⚙) · F3 the current at the

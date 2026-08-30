@@ -110,11 +110,13 @@ landing**, a market you work as a verb, **fewer/bigger deliveries through more, 
 single-verb turns**, and specialists as **placed people** (wharf crew · ship's crew ·
 Kontor agents). The plan, CONSTITUTION (component-state supreme — §6), phases and open
 forks live in **`V6-PLAN.md`** — read it right after this charter. **The v6 TEST BUILD is
-LIVE at root — v6.3 “the line returns” (`KEY hanse-v63`, designer-ruled 2026-08-30):**
+LIVE at root — v6.4 “the street model” (`KEY hanse-v64`, designer-ruled 2026-08-31):**
 `play.html` · `RULES.md` · `print.html` · `components.js` · `COMPONENTS.md` §0 are
-v6-current — v6.3 restores the spine's line turn (MOVE adjacent · row/column · stops, all
-optional) with single-verb PRIMARY/ALTERNATE seats: Market *Source 3 / Chart* · Brewhouse
-*Brew / Trade* · Harbor *Commission / Load-any* · Cellar *Age 3 / Sail*. Still v5.8:
+v6-current — v6.3 restored the spine's line turn (MOVE adjacent · row/column · stops, all
+optional) with single-verb PRIMARY/ALTERNATE seats, and v6.4 re-seated the alternates on
+the designer's street model — **every station's ALT is its OWN lesser counter, served to
+the line's visitor**: Market *Source 3 / Chart* · Brewhouse *Brew / Trade* · Harbor
+*Commission / Sail* · Cellar *Age 3 / Load-any*. Still v5.8:
 `rulebook.html` + the DESIGN architecture (the Phase 2 docs pass). The complete v5.8 game
 (pages + docs + instruments) is **FROZEN PLAYABLE at `archive/v5/`** — never edit that
 folder. The §8 instruments moved with it.

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v6.3 “The Voyage”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v6.4 “The Voyage”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -715,8 +715,8 @@ const ICONTIP={
   beer:'Cask — a brewed beer; its die rides vessel → Ship → Kontor.',
   store:'Market — Source 3 (primary) · Chart (alternate).',
   'flask-conical':'Brewhouse — Brew (primary): pay a recipe, search the stack · Trade (alternate).',
-  hourglass:'Cellar — Age 3 (primary): turn aging dice up · Sail (alternate).',
-  ship:'Harbor — Commission + 1 load (primary) · Load 1 onto any docked Ship (alternate).',
+  hourglass:'Cellar — Age 3 (primary): turn aging dice up · Load 1 (alternate).',
+  ship:'Harbor — Commission + 1 load (primary) · Sail (alternate).',
   anchor:'Slot — one of the 8 perimeter spaces: a building seat and a Ship seat (never casks).',
   sailboat:'Ship — bound for its printed Kontor (Skute 1 · Cog 2 · Hulk 3 berths); full = it departs.',
   landmark:'Kontor — board at Ready + the minimum · land at die + marker · a prize · a majority.',
@@ -810,7 +810,7 @@ function pileVerbs(style){const c={};pileList(style).forEach(v=>c[v]=(c[v]||0)+1
 function caskAct(t){return t.act||STYLES[t.style].act;}
 // the station face: ONE big ACTION icon over a top-down scrim (the print board's faces)
 const STATION_ICON={Market:'goods-3',Brewhouse:'flask-conical',Cellar:'age-3',Harbor:'ship'};   // the PRIMARY icon
-const STATION_ALT_ICON={Market:'compass',Brewhouse:'bourse',Cellar:'sail',Harbor:'package-plus'};   // the ALTERNATE icon (read across the line)
+const STATION_ALT_ICON={Market:'compass',Brewhouse:'bourse',Cellar:'package-plus',Harbor:'sail'};   // the ALTERNATE icon (read across the line)
 
 // ---- DESTINATIONS: the four kontore. Value = THE DIE, everywhere (Novgorod's identity = the
 // raised gate + the 8/5/2 majority + the +2★ premium). Gates read the DIE as it boards (after
@@ -1136,7 +1136,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v63';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
+const KEY='hanse-v64';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1144,7 +1144,7 @@ const KEY='hanse-v63';  // the live build's save key — bump it on any rules ch
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v6.3 “The Voyage” · '+KEY;
+const APP_VERSION='v6.4 “The Voyage” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -1353,8 +1353,8 @@ function lineGlyph(lk){const lit=LINES[lk].cells;return '<span class="lg" data-t
 const CELLTIP={   // v6.3 station reminders — PRIMARY / ALTERNATE, one verb each
   Market:'Market — PRIMARY Source '+SRC_PRIMARY+' · ALT Chart (passage · post · factor · upgrade).',
   Brewhouse:'Brewhouse — PRIMARY Brew (search the stack) · ALT Trade (a seated factor unlocks it).',
-  Cellar:'Cellar — PRIMARY Age '+CELLAR_POOL+', split freely · ALT Sail (advance a ship 1 leg).',
-  Harbor:'Harbor — PRIMARY Commission (the printed fee + 1 load) · ALT Load 1 onto any docked Ship.',
+  Cellar:'Cellar — PRIMARY Age '+CELLAR_POOL+', split freely · ALT Load 1 onto any docked Ship.',
+  Harbor:'Harbor — PRIMARY Commission (the printed fee + 1 load) · ALT Sail (advance a ship 1 leg).',
 };
 function bldgTip(b){if(!b)return '';
   // the golden rule (ruled 2026-08-23): tooltips are reminders, never lessons — name (family): trigger, effect
@@ -1646,11 +1646,13 @@ function startGame(){
 // TURN MACHINE — v6.3 THE LINE RETURNS: move to an ADJACENT station (orthogonal — the
 // diagonal never connects) · choose the ROW or the COLUMN through it · resolve the line's
 // stops in any order, all optional. Each station prints ONE PRIMARY (fired by its own
-// worker) and ONE ALTERNATE (read across the line) — single verbs, never menus:
-// Market Source 3 / Chart · Brewhouse Brew / Trade · Harbor Commission / Load-any · Cellar Age 3 / Sail.
+// worker) and ONE ALTERNATE — ITS OWN LESSER COUNTER, served to the line's visitor (the
+// street model, designer-ruled 2026-08-31: you go to a street, work its main building
+// full, and pick things up at the far shop's counter in passing). Single verbs, never menus:
+// Market Source 3 / Chart · Brewhouse Brew / Trade · Harbor Commission / Sail · Cellar Age 3 / Load-any.
 //==================================================================
 const STN_P={A:'source',B:'brew',C:'comm',D:'age'};
-const STN_A={A:'chart',B:'trade',C:'loadany',D:'sail'};
+const STN_A={A:'chart',B:'trade',C:'sail',D:'loadany'};
 const seatVerb=(c,alt)=>alt?STN_A[c]:STN_P[c];
 function stationActAvail(p,c,a){
   if(a==='source')return true;
@@ -3499,8 +3501,8 @@ function renderAid(){
     +'<div class="asec"><b>Stations</b><div class="astgrid">'
       +row('store','Market','P: Source '+SRC_PRIMARY+' · A: Chart — passage · post · factor · upgrade')
       +row('flask-conical','Brewhouse','P: Brew — search the stack, choose the tile · A: Trade ±1 (±2 with the Bergen Kontorhaus; a seated factor unlocks it)')
-      +row('age-3','Cellar','P: Age '+CELLAR_POOL+', split freely · A: Sail — advance a ship 1 leg (push '+costStr(PUSH_FEE)+' if none of your casks ride)')
-      +row('ship','Harbor','P: Commission (Skute 2G · Cog 1G · Hulk free) + 1 load · A: Load 1 → any docked Ship')+'</div>'
+      +row('age-3','Cellar','P: Age '+CELLAR_POOL+', split freely · A: Load 1 → any docked Ship')
+      +row('ship','Harbor','P: Commission (Skute 2G · Cog 1G · Hulk free) + 1 load · A: Sail — advance a ship 1 leg (push '+costStr(PUSH_FEE)+' if none of your casks ride)')+'</div>'
       +row('post','Posts &amp; factors — your 6 house markers (Chart, at the Market)','a post pays '+POST_RENT_G+'G on every entering ship · a factor = the TRADE license + a +1 step after your landings there')
       +row('landmark','Upgrades — CHART again to deepen a marker','a post flips onto an establishment tile ('+costStr(POST_UPG_FEE)+', supply 2 each): Toll Court 2G tolls · Victualling Post 1G1H when your cask enters · Pilot’s Rest +1 leg when your cask enters · a factor flips to the KONTORHAUS ('+costStr(FACTOR_UPG_FEE)+') — its power is printed on the Kontor’s panel')
       +row('bourse','The Bourse','a LANDING scores die + the marker as printed then · then each beer aboard steps −1 (once per beer) · UP = TRADE, the factor’s step, the toll bench, Bergen')+'</div>'

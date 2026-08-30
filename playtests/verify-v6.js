@@ -1,4 +1,4 @@
-// verify-v6.js — the targeted rule battery for v6 "The Voyage" (v6.3, KEY hanse-v63).
+// verify-v6.js — the targeted rule battery for v6 "The Voyage" (v6.4, KEY hanse-v64).
 // Drives the CANONICAL engine (extracted from play.html, DOM stubbed) with deterministic
 // state surgery per check. Runs in seconds; ALWAYS after an engine change.
 // Usage: node playtests/verify-v6.js
@@ -26,7 +26,7 @@ function ship(slot,kind,dest,load){S.slots[slot]={type:'ship',ship:kind,dest:des
 function cask(pid,style,die){return {owner:pid,style:style,q:STYLES[style].q,die:die,act:'source'};}
 
 // ---- identity & setup ----
-T('KEY is hanse-v63',()=>KEY==='hanse-v63');
+T('KEY is hanse-v64',()=>KEY==='hanse-v64');
 T('MAX_ROUND is 40',()=>MAX_ROUND===40);
 T('setup: sea state fields exist',()=>{mk(2);return Array.isArray(S.sea)&&!!S.posts&&!!S.factors&&!!S.passages;});
 T('setup: Wadden Coast & Skagen open, Dover Strait & the Sound closed',()=>{mk(2);
@@ -42,11 +42,11 @@ T('lanes: Bruges/Bergen 1 waypoint · London/Novgorod 2',()=>
 T('London prize is the chart',()=>DEST.london.benefit==='chart');
 
 // ---- the seats (v6.3: PRIMARY / ALTERNATE, one verb each) ----
-T('the P/A seats: every v6 verb seated, single verbs',()=>
+T('the P/A seats (v6.4 street model): every alt is its own lesser counter',()=>
   STN_P.A==='source'&&STN_A.A==='chart'&&STN_P.B==='brew'&&STN_A.B==='trade'
-  &&STN_P.C==='comm'&&STN_A.C==='loadany'&&STN_P.D==='age'&&STN_A.D==='sail');
+  &&STN_P.C==='comm'&&STN_A.C==='sail'&&STN_P.D==='age'&&STN_A.D==='loadany');
 T('seats: Source always open · Sail/Trade closed on a fresh board',()=>{mk(2);const p=S.players[0];
-  return stationActAvail(p,'A','source')&&!stationActAvail(p,'D','sail')&&!stationActAvail(p,'B','trade');});
+  return stationActAvail(p,'A','source')&&!stationActAvail(p,'C','sail')&&!stationActAvail(p,'B','trade');});
 T('chartOptions: closed passages chartable at 2G · no factor without a delivery',()=>{mk(2);
   const o=chartOptions(S.players[0],false);
   return o.some(x=>x.k==='open'&&x.w==='ds')&&o.some(x=>x.k==='open'&&x.w==='sd')&&!o.some(x=>x.k==='factor');});
@@ -83,13 +83,20 @@ T('TRADE fires as the Brewhouse ALT (the Market row)',()=>{mk(2);const p=S.playe
   doMove('A','row');resolveStopBy('cell','B');const inB=UI.sub==='bshift';
   bshiftPick({beer:bk,dir:1});
   return inB&&S.bourse[bk]===2&&UI.sub==='stops';});
-T('SAIL fires as the Cellar ALT (the Harbor row) with the stops return',()=>{mk(2);const p=S.players[0];
+T('SAIL fires as the Harbor ALT (read from the Cellar row) with the stops return',()=>{mk(2);const p=S.players[0];
   S.passages.ds=true;
   S.sea=[{ship:'cog',dest:'london',load:[cask(0,'hopped',2),cask(0,'hopped',2)],cert:0,pos:0}];
-  p.placed=true;p.cell='A';UI={sub:'move'};
-  doMove('C','row');resolveStopBy('cell','D');const inSail=UI.sub==='sailv'&&UI.sailv.rt==='stops';
+  p.placed=true;p.cell='B';UI={sub:'move'};
+  doMove('D','row');resolveStopBy('cell','C');const inSail=UI.sub==='sailv'&&UI.sailv.rt==='stops';
   sailPick(0);
   return inSail&&S.sea[0].pos===1;});
+T('LOAD-any fires as the Cellar ALT (the Harbor row = commission + the cellar hands you a cask)',()=>{mk(2);const p=S.players[0];
+  ship('s2','cog','bruges');   // a docked Ship OFF the active row — Load-any reaches it
+  p.placed=true;p.cell='A';UI={sub:'move'};
+  doMove('C','row');resolveStopBy('cell','D');const inLoad=UI.sub==='load';
+  loadPickCask(0);if(UI.sub==='load')loadOnto('s2');
+  if(UI.sub==='source')srcSkip();
+  return inLoad&&S.slots.s2.load.length===1;});
 T('CHART fires as the Market ALT (the left column)',()=>{mk(2);const p=S.players[0];
   p.grain=4;p.placed=true;p.cell='A';UI={sub:'move'};
   doMove('C','col');resolveStopBy('cell','A');
