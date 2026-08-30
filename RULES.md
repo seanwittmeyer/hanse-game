@@ -31,7 +31,7 @@ Each player starts with (⚙):
 Shared board:
 
 - **The Wharf** — 4 stations, each flanked by 2 of the 8 slots (§3).
-- **THE SEA MAP** (§5) — the four **lanes** out of the Wharf through the waypoints
+- **THE SEA MAP** (§5) — the four **lanes** out of the Wharf through the **waypoint legs**
   (**Wadden Coast · Dover Strait · Skagen · the Sound**) to the four Kontore. At setup
   the **Wadden Coast and Skagen are open**; **Dover Strait and the Sound are CLOSED**
   (closure tiles on the map; chart fee printed: 2 `G` ⚙ each). Bruges and Bergen are
@@ -73,7 +73,7 @@ TRADE are printed station actions now — where you walk decides what you can do
 stop offers only a handful of choices.)*
 
 **THE CURRENT (the drift):** at the start of the **first player's turn each round**,
-**every Ship at sea advances one space, together, in one sweep** — lane order Bruges →
+**every Ship at sea advances one leg, together, in one sweep** — lane order Bruges →
 London → Bergen → Novgorod, the Ship nearest its Kontor first ⚙. A closed passage halts
 a Ship where it stands. Landings resolve in the sweep's order (§5). Nothing is
 remembered: the round marker is the current's clock, the map is the tracker.
@@ -95,14 +95,14 @@ singles, the two desks carry the sea):
 |---|---|
 | **A · Market** — *the merchant's desk* | **SOURCE** — take **3 goods**, any mix · **CHART** — open a passage / raise a post or factor / upgrade one (§6) · **TRADE** — factor-gated: shift any beer's marker **±1** (±2 with the Bergen Kontorhaus) (§7) |
 | **B · Brewhouse** | **BREW** — pay a recipe into an open vessel + a tray die at the printed start value; **search the beer's stack — choose the tile** (its load bonus rides the cask) |
-| **C · Harbor** — *the shipmaster's desk* | **COMMISSION** — pay the hull's printed fee (Skute 2 `G` · Cog 1 `G` · Hulk free ⚙), place it on a shipless slot, one free load onto it · **LOAD 1** Ready cask onto **any** docked Ship · **SAIL** — advance **any one Ship at sea** one space (§5); free with a cask of **yours** aboard, else **1 `G`** ⚙ (the push); a closed passage blocks |
+| **C · Harbor** — *the shipmaster's desk* | **COMMISSION** — pay the Ship's printed fee (Skute 2 `G` · Cog 1 `G` · Hulk free ⚙), place it on a shipless slot, one free load onto it · **LOAD 1** Ready cask onto **any** docked Ship · **SAIL** — advance **any one Ship at sea** one leg (§5); free with a cask of **yours** aboard, else **1 `G`** ⚙ (the push); a closed passage blocks |
 | **D · Cellar** | **AGE 3** — turn your aging dice up three steps, split freely |
 
 **The CHART action in full:** pay the printed fee to **open a closed passage** (your
 post stands there free — the charter's privilege), **place a post** on an open waypoint
 (1 `G` ⚙, open seat required), **seat a factor** at a Kontor you have delivered to
 (3 `G` ⚙, open seat required) — or **UPGRADE a marker you already have**: a post onto an
-**establishment** tile (2 `G` ⚙) or a factor to the port's **Kontorhaus** (3 `G` ⚙) (§6).
+**establishment** tile (2 `G` ⚙) or a factor to its Kontor's **Kontorhaus** (3 `G` ⚙) (§6).
 
 **The flanking slots:** each station is flanked by two printed slots (A: s1·s8 · B:
 s2·s3 · C: s6·s7 · D: s4·s5). After your station action, you may **load one Ready cask**
@@ -155,20 +155,20 @@ Specialty-Beers/Jopenbier toggles ride along unchanged.
 
 - **DEPARTURE.** A Ship **departs the moment it is full** (a Skute on its first load):
   it leaves its slot and stands on its lane's **first waypoint** at once. The slot's
-  Public Work departs with it (the tide — boxed; the Weigh House rides ON the hull,
+  Public Work departs with it (the tide — boxed; the Weigh House rides ON the Ship,
   certifying it; the Staple House and Bonded Store pay at departure as printed).
-- **AT SEA.** The Ship advances one space per **current** (§2) and per **SAIL** (the
+- **AT SEA.** The Ship advances one leg per **current** (§2) and per **SAIL** (the
   Harbor's action, §3).
   Its dice ride in public view. A **closed passage** ahead halts it until charted.
 - **POST RENT.** When a Ship **enters a waypoint**, each **post** standing there pays
   its owner **1 `G`** ⚙ from the supply (once per Ship per waypoint). An **establishment**
   standing there serves its owner as printed on its tile (§6) — the Pilot's Rest resolves
-  as the Ship enters: it advances **one extra space at once** (a closed passage still
-  blocks; the extra space can be the landing).
+  as the Ship enters: it advances **one extra leg at once** (a closed passage still
+  blocks; the extra leg can be the landing).
 - **LANDING.** Advancing past the last waypoint lands the Ship at its Kontor. Each cask
   aboard **delivers in boarding order**: score **★ = its die + its beer's marker AS
   PRINTED AT LANDING** (floor 0; Novgorod +3★ ⚙ on top), park the die, take the Kontor's
-  prize (**the port's thing OR 2★** ⚙, owner's choice — §8). **Then the glut:** each
+  prize (**the Kontor's thing OR 2★** ⚙, owner's choice — §8). **Then the glut:** each
   beer TYPE that was aboard steps its marker down ONE (never per cask; a **CERTIFIED**
   cargo does not glut). Then any **factor step** (§6). The Ship returns to the deck.
 - **You cash the price on the day you make port** — the marker can move (TRADE, the
@@ -214,10 +214,10 @@ keeps collecting its toll, plus the tile's printed line:
 |---|---|
 | **Toll Court** | Your toll here is **2 `G`** (any entering Ship) |
 | **Victualling Post** | A Ship carrying **your** cask enters here: gain **1 `G` 1 `H`** |
-| **Pilot's Rest** | A Ship carrying **your** cask enters here: it **advances one extra space** at once |
+| **Pilot's Rest** | A Ship carrying **your** cask enters here: it **advances one extra leg** at once |
 
 **A factor → the KONTORHAUS** (fee 3 `G` ⚙): flip your seated factor to its Kontorhaus
-side. It keeps the license and the factor's step, plus **that port's power, printed on
+side. It keeps the license and the factor's step, plus **that Kontor's power, printed on
 the Kontor panel** — four seats, four different engines:
 
 | Kontor | The Kontorhaus power ⚙ |
@@ -249,7 +249,7 @@ factor-gated) ·
 | **Bruges** | 1 | Wadden Coast (open) | **Gain 1 recipe** (its `H` = Q−3 fee; Q3s free) — OR 2★ | 4 / 2 / 0 |
 | **London** | 2 | + Dover Strait (closed) | **A free CHART** — any Chart action (§6, upgrades included), the fee waived — OR 2★ | 5 / 3 / 1 |
 | **Bergen** | 2 | Skagen (open) | **A specialist** (free) · OR **shift any marker ±1** · OR 2★ | 9 / 5 / 2 |
-| **Novgorod** | **3** | + the Sound (closed) | — **+3★ per delivered die** ⚙ (no thing; the port that only pays money) | 8 / 5 / 2 |
+| **Novgorod** | **3** | + the Sound (closed) | — **+3★ per delivered die** ⚙ (no thing; the Kontor that pays only ★) | 8 / 5 / 2 |
 
 Prizes resolve when gained, owner's choice, boarding order — as v5.8. Presence = parked
 dice; placing presence is free and flows only through casks (the load bonus · Keut).
@@ -265,7 +265,7 @@ specialist* bonus at the printed fee). The roster carries from v5.8 with **four
 re-derivations** for the sea (⚙, names provisional):
 
 - **Pilot** *(replaces the Broker)* — at your turn start: **advance one Ship carrying
-  your cask one space** (closures still block). Fee 1 `G` ⚙.
+  your cask one leg** (closures still block). Fee 1 `G` ⚙.
 - **Surveyor** *(replaces the Brewer's Mate)* — **your CHART passage-and-post fees are
   waived, the post upgrade included** (the factor-side fees still apply). Fee 1 `H` ⚙.
 - **Supercargo** *(re-derived)* — each time a Ship carrying **your** cask **lands** on a
