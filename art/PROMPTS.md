@@ -385,6 +385,15 @@ Every live specialist redraws as a PERSON — the hire, not the tool. One image 
   there; the purple foot is added by the kit).
 - No text, no letters. The generation batch: 4 candidates per specialist, designer picks.
 
+**THE PORTRAIT PROGRAM — COMPLETE 2026-08-30 (15/15 landed, every file through the frame
+gate):** Cellarman C · Grain Factor D · Hop Gardener A · Stevedore D · Braumeister C · Guild
+Scholar A · Innkeeper C · Supercargo A · Chronicler D · Alderman B · Town Crier A ·
+Wharfinger B · Shipwright B · Pilot B · Surveyor A (fixed 5.8% mat crop). Grain Factor, Hop
+Gardener and Guild Scholar are second-round regens — the band-making "calmer lower quarter"
+clause is CUT from the spec (it painted the letterbox bands; the kit's own foot bar carries
+text legibility) and the anti-frame block above is the standing language. The object shots
+retire in place, slug-matched — no code change beyond the three dropped v6 slug overrides.
+
 ## The specialist object-shot SPEC (RETIRED 2026-08-30 — kept for the archive; moved verbatim from components.js, 2026-08-22)
 
 ```
