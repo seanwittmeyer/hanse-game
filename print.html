@@ -411,14 +411,14 @@
   /* v6.4b corner grammar: PRIMARY large ON the diagonal at the OUTSIDE corner · ALT small at
      the INSIDE corner · the half-marks at the side corners · name + menu at the centre */
   .stn .stn-mid{position:absolute;left:0;right:0;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.04in;text-align:center;pointer-events:none}
-  .stn.A .stn-mid,.stn.B .stn-mid{bottom:.14in}
-  .stn.C .stn-mid,.stn.D .stn-mid{top:.14in}
+  .stn.A .stn-mid,.stn.B .stn-mid{top:.14in}
+  .stn.C .stn-mid,.stn.D .stn-mid{bottom:.14in}
   .stn .stn-sub{font-style:italic;font-weight:bold;font-size:.17in;line-height:1;text-shadow:0 1px 3px rgba(0,0,0,.9)}
   .stn .spic,.stn .saic{position:absolute;z-index:2;display:inline-flex}
   .stn .spic img.ai{width:.95in;height:.95in;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))}
   .stn .saic img.ai{width:.58in;height:.58in;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
-  .stn .spic.tl{top:.08in;left:.08in} .stn .spic.tr{top:.08in;right:.08in}
-  .stn .spic.bl{bottom:.08in;left:.08in} .stn .spic.br{bottom:.08in;right:.08in}
+  .stn .spic.tl{top:.44in;left:.44in} .stn .spic.tr{top:.44in;right:.44in}
+  .stn .spic.bl{bottom:.44in;left:.44in} .stn .spic.br{bottom:.44in;right:.44in}   /* a step down the line — the title band stays clear */
   .stn .saic.tl{top:.16in;left:.16in} .stn .saic.tr{top:.16in;right:.16in}
   .stn .saic.bl{bottom:.16in;left:.16in} .stn .saic.br{bottom:.16in;right:.16in}
   /* per-station frame colours match the action icons' bases (designer): Market RED · Brewhouse
@@ -1083,7 +1083,7 @@ function station(L,nm,scene,acts,sub){
   +'<svg class="sdiag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line '+((L==='A'||L==='D')?'x1="0" y1="0" x2="100" y2="100"':'x1="100" y1="0" x2="0" y2="100"')+'/></svg>'+chips
   +'<span class="spic '+({A:'tl',B:'tr',C:'bl',D:'br'})[L]+'">'+LU(acts[0])+'</span>'
   +'<span class="saic '+({A:'br',B:'bl',C:'tr',D:'tl'})[L]+'">'+LU(acts[1])+'</span>'
-  +'<div class="stn-mid"><span class="nm">'+nm+'</span><span class="stn-sub">'+sub+'</span></div></div>';}
+  +'<div class="stn-mid"><span class="nm">'+nm+'</span></div></div>';}   // the menu text retires — the P/A icons say it (icons over prose); the aid carries the words
 // printables2: the WHARF is now a CROSS board on its own (the cut follows the plus). 4×4 grid:
 // empty corners · 8 perimeter slots · the 4 stations in the centre 2×2.
 // a rounded-corner PLUS outline (objectBoundingBox 0–1) — used both as the cross board's clip-path and,

@@ -115,13 +115,17 @@
   .cell .pic .ic,.cell .pic svg,.cell .pic img.ai{width:38cqmin;height:38cqmin;stroke-width:1.6;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))}
   .cell .aic .ic,.cell .aic svg,.cell .aic img.ai{width:24cqmin;height:24cqmin;stroke-width:1.8;opacity:.95;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
   .cell .pos-tl{top:4cqmin;left:4cqmin}
+  .cell .pic.pos-tl{top:18cqmin;left:18cqmin}
+  .cell .pic.pos-tr{top:18cqmin;right:18cqmin}
+  .cell .pic.pos-bl{bottom:18cqmin;left:18cqmin}
+  .cell .pic.pos-br{bottom:18cqmin;right:18cqmin}
   .cell .pos-tr{top:4cqmin;right:4cqmin}
   .cell .pos-bl{bottom:4cqmin;left:4cqmin}
   .cell .pos-br{bottom:4cqmin;right:4cqmin}
   .cell .role{font-size:7cqmin;text-transform:uppercase;letter-spacing:1px;opacity:.82}
-  .cell .nm{position:absolute;left:50%;transform:translateX(-50%);z-index:3;font-variant:small-caps;font-weight:bold;font-size:12cqmin;line-height:1;white-space:nowrap;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.85)}   /* the name sits on the tile's INSIDE edge — the four names line the wharf's middle seam */
-  .cell.cA .nm,.cell.cB .nm{bottom:6cqmin}
-  .cell.cC .nm,.cell.cD .nm{top:6cqmin}
+  .cell .nm{position:absolute;left:50%;transform:translateX(-50%);z-index:3;font-variant:small-caps;font-weight:bold;font-size:12cqmin;line-height:1;white-space:nowrap;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.85)}   /* the titles: Market·Brewhouse at the head, Harbor·Cellar at the foot; the PRIMARY slides a step down its line to clear the band */
+  .cell.cA .nm,.cell.cB .nm{top:6cqmin}
+  .cell.cC .nm,.cell.cD .nm{bottom:6cqmin}
   /* loop colours: A Market=gold · B Brewhouse=red · C Harbor=sea · D Cellar=green */
   .cell.A{background:linear-gradient(155deg,#cda522,#9c7414);color:#2b2018}
   .cell.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
