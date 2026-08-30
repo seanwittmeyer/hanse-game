@@ -3845,22 +3845,22 @@ function renderShop(){
     return '<div class="shopcell"><div class="mtile'+(comm&&can?' stopgo':'')+'" style="aspect-ratio:2.5/'+((HC?HC.SHIP_H(sn.ship):3)+0.1)+'"'+(comm&&can?' onclick="commPick('+i+')"':'')+' data-tip="'+attr(SHIP_NAME[sn.ship]+' → '+DEST[sn.dest].name+' ('+SHIP_CAP[sn.ship]+' berth'+(SHIP_CAP[sn.ship]===1?'':'s')+') · commission '+costStr(COMMISSION_COST[sn.ship]||{})+' + one free load · boards READY + die '+DEST[sn.dest].gate+'+')+'">'+pShipFace({ship:sn.ship,dest:sn.dest,load:[]})+'</div>'+(comm?'<button '+(can?'':'disabled')+' onclick="commPick('+i+')">commission · '+costStr(COMMISSION_COST[sn.ship]||{})+'</button>':'')+'</div>';}).join('')+'</div>';
   else h+='<div class="note" style="opacity:.7">'+LU('sailboat')+' ship display empty</div>';
   // v6.0: the Venture hand retired — the build family is the HOUSE MARKERS (posts & factors on the sea)
-  h+='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('map-pin')+' '+p.name+'’s house markers</b></div>';
+  h+='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('post')+' '+p.name+'’s house markers</b>'
+    +'<span style="margin-left:auto;font-weight:bold" data-tip="'+attr('CHART fees — passage '+costStr(CHART_FEE)+' · post '+costStr(POST_FEE)+' · factor '+costStr(FACTOR_FEE)+' · upgrades: post→establishment '+costStr(POST_UPG_FEE)+' · factor→Kontorhaus '+costStr(FACTOR_UPG_FEE))+'">'+markersLeft(p)+'/'+HOUSE_MARKERS+'</span></div>';
   {const used=markersUsed(p);
    let rows='';
    SEA_KEYS.forEach(w=>{if((S.posts[w]||[]).includes(p.id)){const u=postUpgOf(w,p.id);const E=u?POST_UPGS[u]:null;
      rows+='<div class="note">'+LU(E?E.icon:'post')+' '+(E?'<b>'+E.name+'</b>':'post')+' · '+SEA[w].name+' <span style="opacity:.7">('+(E?E.desc:'toll '+postRentFor(w,p.id)+'G per entering ship')+')</span></div>';}});
    KONTORE.forEach(k=>{if(hasFactorAt(p,k)){const kh=hasKontorhaus(p,k);
      rows+='<div class="note">'+LU('landmark')+' '+(kh?'<b>'+KONTORHAUS[k].name+'</b>':'factor · '+DEST[k].name)+' <span style="opacity:.7">('+(kh?KONTORHAUS[k].desc:'the license + the +1 step')+')</span></div>';}});
-   h+='<div style="font-size:.82rem">'+(rows||'<div class="note">(none placed — CHART, at the Market, raises them)</div>')
-     +'<div class="note" style="margin-top:3px">markers left: <b>'+markersLeft(p)+'</b>/'+HOUSE_MARKERS+' · CHART: passage '+costStr(CHART_FEE)+' · post '+costStr(POST_FEE)+' · factor '+costStr(FACTOR_FEE)+' · <b>upgrades</b>: post→establishment '+costStr(POST_UPG_FEE)+' · factor→Kontorhaus '+costStr(FACTOR_UPG_FEE)+'</div>'
-     +'</div>';
+   h+='<div style="font-size:.82rem">'+(rows||'<div class="note">none placed — CHART raises them</div>')+'</div>';
    // the ESTABLISHMENT SUPPLY — the real tiles (components.js), each with its count standing
-   h+='<div class="note shophead" style="margin-top:6px"><b>'+LU('landmark')+' Establishment supply</b> <span class="note">(a post upgrades onto one · '+costStr(POST_UPG_FEE)+' via Chart)</span></div>';
-   h+='<div style="display:flex;gap:6px;flex-wrap:wrap">'+Object.keys(POST_UPGS).map(u=>{const E=POST_UPGS[u];const left=upgSupplyLeft(u);
+   // the ESTABLISHMENT SUPPLY — full-width tiles (the component speaks; the caption is the count alone)
+   h+='<div class="note shophead" style="margin-top:6px"><b>'+LU('landmark')+' Establishment supply</b></div>';
+   h+='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px">'+Object.keys(POST_UPGS).map(u=>{const E=POST_UPGS[u];const left=upgSupplyLeft(u);
      const d=(HC&&HC.ESTABLISHMENTS)?HC.ESTABLISHMENTS.find(e=>e.k===u):null;   // the LIBRARY face is the canon — never rebuild it per-page
-     const face=d?'<div class="mtile" style="aspect-ratio:2.5/1.32'+(left?'':';filter:grayscale(.8);opacity:.45')+'">'+pfit(HC.estTile(d),2.5,1.32)+'</div>':'';
-     return '<div style="flex:1;min-width:120px" data-tip="'+attr(E.name+' — '+E.desc+' · supply left: '+left)+'">'+face+'<div class="note" style="text-align:center">'+E.name+' · <b>'+left+'</b> left</div></div>';}).join('')+'</div>';}
+     const face=d?'<div class="mtile" style="width:100%;height:auto;aspect-ratio:2.5/1.32'+(left?'':';filter:grayscale(.8);opacity:.45')+'">'+pfit(HC.estTile(d),2.5,1.32)+'</div>':'';
+     return '<div data-tip="'+attr(E.name+' — '+E.desc+' · supply left: '+left)+'">'+face+'<div class="note" style="text-align:center"><b>'+left+'</b> left</div></div>';}).join('')+'</div>';}
   // THE SPECIALIST DISPLAY — earned free (Bergen’s prize · the hire bonus)
   h+='<div class="note shophead" style="margin-top:8px;border-top:1px solid var(--line);padding-top:6px"><b>'+LU('wrench')+' Specialist display</b>'+gridToggleBtn('specs')+'</div>';
   h+='<div class="'+shopGridCls('specs')+'">'+(S.impDisplay||[]).map(key=>{const def=IMPROVEMENTS[key];const owned=hasUpgrade(p,key);const gt=specGateTxt(key);
@@ -3914,7 +3914,7 @@ function renderTableaus(){
     // ---- the board, live ----
     const boardHTML=HC?HC.playerBoard({nm:p.name,c:p.color},{
       score:sc.total,dice:trayDice(p)+'/'+(p.presPool||0),grain:p.grain,hops:p.hops,
-      v:vwells,seats:seats,flight:flightBeers(p),man:0}):'';
+      v:vwells,seats:seats,flight:flightBeers(p)}):'';
     // ---- the CARD SPLAYS beside the board (physical table space): bottom bars only ----
     const held=p.recipes.filter(st=>STYLES[st]);
     const doneSt=held.filter(st=>(p.shipped||{})[st]);

@@ -97,10 +97,9 @@
      (z-index:-1) paints BEHIND the .page's white background and never shows (2026-08-18: the
      table's print had white channels between tiles; the art-layer extensions are real elements
      and always painted, which is why the ships looked right while the flat bands vanished). */
-  .bl>.ctile,.bl>.btile,.bl>.stile,.bl>.mftile,.bl>.icard,.bl>.chtile{position:absolute;left:.059in;top:.059in;overflow:visible;border-radius:0;z-index:0}
-  .bl>.ctile::before,.bl>.btile::before,.bl>.stile::before,.bl>.mftile::before,.bl>.icard::before,.bl>.chtile::before{content:"";position:absolute;inset:-.059in;background:var(--c,#33445a);z-index:-1}
-  /* the Manifest card is flat sea-blue — its ::before IS the whole bleed (no art layer to extend);
-     the Tasting tile likewise bleeds its CATEGORY colour (the border's own hue — 2026-08-18) */
+  .bl>.ctile,.bl>.btile,.bl>.stile,.bl>.icard,.bl>.chtile{position:absolute;left:.059in;top:.059in;overflow:visible;border-radius:0;z-index:0}
+  .bl>.ctile::before,.bl>.btile::before,.bl>.stile::before,.bl>.icard::before,.bl>.chtile::before{content:"";position:absolute;inset:-.059in;background:var(--c,#33445a);z-index:-1}
+  /* the Tasting tile bleeds its CATEGORY colour (the border's own hue — 2026-08-18) */
   .bl>.btile>.artbg,.bl>.stile>.artbg,.bl>.stile>.st-wash,.bl>.icard>.artbg{inset:-.059in}
   .bl>.ctile>.ct-art{left:-.059in;top:-.059in;bottom:-.059in}
   .bl>.ctB>.ct-art{left:auto;right:-.059in}
@@ -499,9 +498,6 @@
   .dslot.r.ct{border-color:var(--sea);color:var(--sea)}
   /* the CONTRACT slot is component-true (2×0.9in): it had been inheriting the 2.5×1.32in
      building footprint, so the row of 3 ran 7.82in wide and overflowed the 7.6in board */
-  .dslot.l{width:2in;height:1.32in;border-color:var(--sea);color:var(--sea)}   /* v5.0: the Manifest deck well (2×1.32 — component-true) */
-  .dslot.l .rn{font-variant:small-caps;font-weight:bold;font-size:.1in;opacity:.7}
-  .dslot.l svg,.dslot.l .ic{width:.38in;height:.38in}
   /* (the goods/dice/marker bins moved OFF the board — the loose bits live in a supply tray; the Round
      backstop is rules-side only, untracked on the table) */
   /* ---- Market & Stores interior: the market column · the cellar (Specialists) column · the clock ---- */

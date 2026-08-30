@@ -28,6 +28,10 @@ The designer's lens, always on:
 - **Graphic design is functional.** Fun AND legible. **Icons over prose** — the same verb,
   the same icon, the same word on every surface (`STYLE.md` is the registry). Verbose
   descriptions have no place on components.
+- **In the app, components are BIG and prose is small (designer-ruled 2026-08-30).** A
+  rendered component fills the width of its container; captions never repeat what the tile
+  already prints; fee tables and reminders live on the components and in tooltips, never in
+  paragraph lines beside them.
 - **The goal is fun.** Reduce the barrier to entry; give players room to explore the theme
   and refine strategy. **Player interaction is built into the core** (shared hulls,
   contestable slots, the berth race, majorities) — protect it.

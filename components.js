@@ -122,7 +122,7 @@ const BUILDINGS=[
   {k:'customs',   nm:'Customs House',     ms:3, verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, g:2, eff:'Kontor min −1'},   // v5.2 ⚙ ruled: −1 (was −2 — almost broken)
   {k:'ropewalk',  nm:'Ropewalk',          ms:3, verb:'transform', tgt:'cask', ic:'cable',        n:1, g:2, art:'building-ropewalk.png', cond:'On load', effIc:'package-plus', eff:'+1 '+LU('beer')+' → other '+LU('sailboat')},   // v5.2 ⚙ ruled rework
   {k:'cooperage', nm:'Cooperage',         ms:3, verb:'transform', tgt:'ship', ic:'package',      n:1, g:2, effIc:'star-plus1', cond:'+1 berth', eff:'On load'},   // v4.12b: the wharfage eases 2→1 ⚙
-  {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, art:'building-weighhouse.png', cond:'On sail', effIc:'contract',     eff:'×2 Manifest lines'},
+  {k:'weighhouse',nm:'Weigh House',       ms:3, verb:'transform', tgt:'ship', ic:'weight',       n:1, g:2, art:'building-weighhouse.png', cond:'On sail', effIc:'check',        eff:'this cargo does not glut'},
   // v5.2 NEW ⚙ — the STAPLE HOUSES (Stapelrecht): the destination premium, one crest each
   {k:'staple_bruges',   nm:'Bruges Hanzehuis',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'bruges', art:'building-staple.png', effIc:'star-plus2', cond:'On sail to Bruges', eff:'each cask'},
   {k:'staple_london',   nm:'London Steelyard',   ms:2, verb:'transform', tgt:'ship', ic:'landmark', n:1, g:2, staple:'london', art:'building-staple.png', effIc:'star-plus2', cond:'On sail to London', eff:'each cask'},
@@ -391,8 +391,8 @@ const IMP_FOOT='#4a3a6e';   // Specialist foot/base — PURPLE (the third tile t
 function improveTile(d){const k=d.slug||slug(d.nm);   // v4.6: slug override — three guild tiles ride spare art as stand-ins
   return '<div class="icard" style="--c:'+IMP_FOOT+'">'
   +artLayer('improve-'+k+'.jpg')   // .jpg not .png — a flat-colour-field object shot compresses ~8x smaller as JPEG at no visible quality loss
-  +'<div class="ic-top"><span class="ic-ic">'+LUX(d.ic)+'</span><span class="ic-nm">'+d.nm+'</span></div>'
-  +'<div class="ic-foot"><span class="ic-act">'+d.act+'</span><span class="ic-cost">'+cost(d.g,d.h)+'</span></div>'
+  +'<div class="ic-top"><span class="ic-nm">'+d.nm+'</span><span class="ic-cost">'+cost(d.g,d.h)+'</span></div>'
+  +'<div class="ic-foot"><span class="ic-act">'+d.act+'</span></div>'
   +'</div>';}
 // printables2 v3: a CASK is a double-sided CARD (2×3). FRONT = the buy/age side: Q+name on the top end, brew
 // cost under it, the AGING TRACK in the centre (the card carries its own step count — so the player-board
@@ -495,10 +495,6 @@ function playerBoard(d,live){const L=live||{};
   const FL=[1,2,3,4,5],FP={1:0,2:0,3:4,4:9,5:16};
   const flight='<div class="pbrd-flight"><div class="fl-t">'+LU('layers')+' The Flight — beers <b>shipped</b></div>'
     +'<div class="fl-row">'+FL.map(n=>'<span class="fl-cell'+(L.flight!=null&&L.flight>=n?' on':'')+'"><b>'+n+'</b><span>'+FP[n]+'★</span></span>').join('')+'</div></div>';
-  // v5.0: the Orders pile zone RETIRES (Manifest ★ score at once — nothing rests here);
-  // the zone prints the reminder, and the live app shows the claimed-line tally.
-  const contracts='<div class="pbrd-lads"><span class="sn">Manifests — claimed ★ score at once</span>'
-    +(L.man!=null?'<b class="pbrd-num">'+L.man+'</b><span class="si" style="font-size:.1in">lines claimed</span>':'<span class="si">'+LU('contract')+'</span>')+'</div>';
   return '<div class="pbrd" style="--pc:'+(d.c||'#7c2128')+'">'
     +'<div class="pbrd-id">'
       +'<span class="pbrd-crest">'+LU('beer')+'</span>'
@@ -511,7 +507,7 @@ function playerBoard(d,live){const L=live||{};
     +'</div>'
     +'<div class="pbrd-row">'+vsl(1)+vsl(2)+vsl(3)+'</div>'
     +'<div class="pbrd-row">'+ssl(1)+ssl(2)
-      +'<div class="pbrd-right">'+flight+contracts+'</div>'
+      +'<div class="pbrd-right">'+flight+'</div>'
     +'</div>'
   +'</div>';}
 
@@ -554,7 +550,6 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .icard > *{position:relative;z-index:1}\n\
   .icard > .artbg{z-index:0}\n\
   .icard .ic-top{display:flex;align-items:center;gap:.06in;padding:.15in .17in 0}\n\
-  .icard .ic-ic{flex:0 0 auto} .icard .ic-ic svg,.icard .ic-ic .ic{width:.2in;height:.2in;stroke-width:1.8;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}\n\
   .icard .ic-nm{font-variant:small-caps;font-weight:bold;font-size:.16in;line-height:1.02;flex:1}\n\
   .icard .ic-foot{background:linear-gradient(to top,var(--c) 0%,var(--c) 52%,transparent 100%);\n\
     padding:.26in .17in .15in;display:flex;align-items:flex-end;gap:.06in}\n\
@@ -562,7 +557,7 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .icard .ic-act::first-letter{text-transform:uppercase}\n\
   .icard .ic-act .ic,.icard .ic-act svg{width:.13in;height:.13in;vertical-align:-.02in}\n\
   .icard .ic-act .g{color:#ffe08a} .icard .ic-act .h{color:#c4e69c}\n\
-  .icard .ic-cost{margin-left:auto;font-weight:bold;font-size:.145in;display:inline-flex;align-items:center;flex:0 0 auto}\n\
+  .icard .ic-cost{margin-left:auto;font-weight:bold;font-size:.145in;display:inline-flex;align-items:center;flex:0 0 auto;background:rgba(0,0,0,.34);border-radius:.14in;padding:.025in .07in}\n\
   .icard .ic-cost .gc{gap:.02in} .icard .ic-cost .gc svg,.icard .ic-cost .gc .ic{width:.16in;height:.16in}\n\
   /* ====== printables2: BUILDING CARDS (2″, double-sided) — FRONT full-bleed building art + effect ·\n\
      BACK the generic Wild + developer ★ (displaced face). Nests in the 2.5″ player-colour owner FRAME\n\
