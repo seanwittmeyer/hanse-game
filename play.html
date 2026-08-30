@@ -106,24 +106,26 @@
   .cell .scn{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
   .cell .scngrad{position:absolute;inset:0;z-index:0;background:linear-gradient(to bottom,rgba(18,14,10,.72),rgba(18,14,10,.3) 34%,rgba(18,14,10,0) 55%,rgba(18,14,10,0) 68%,rgba(18,14,10,.62) 100%)}   /* top scrim for the action icon + a foot scrim for the title */
   .cell .stn{color:#f4ead0;text-shadow:0 1px 3px rgba(0,0,0,.8)}
-  .cell .bigic img.ai{filter:drop-shadow(0 2px 4px rgba(0,0,0,.55))}
   .cell .stn{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:7cqmin}
-  .cell .head{display:flex;flex-direction:column;align-items:flex-start;gap:3cqmin}
-  .cell .bigic .ic,.cell .bigic svg{width:34cqmin;height:34cqmin;stroke-width:1.6}
   /* the alt chip — [primary] / [smaller alt] on one row */
-  .cell .actrow{display:flex;align-items:center;gap:2.5cqmin}
-  .cell .altsep{font-size:15cqmin;font-weight:bold;opacity:.7;line-height:1}
-  .cell .altic{display:inline-flex;opacity:.92}
-  .cell .altic .ic,.cell .altic svg{width:26cqmin;height:26cqmin;stroke-width:1.8}
-  .cell .altic img.ai{filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
+  /* v6.4b CORNER GRAMMAR — the diagonal is the tile's axis: the PRIMARY rides it LARGE at
+     the OUTSIDE corner, the ALT small at the INSIDE corner; the half-marks hold the side
+     corners; the name stands at the centre (equal insets keep every icon ON the line) */
+  .cell .pic,.cell .aic{position:absolute;z-index:4;display:inline-flex}
+  .cell .pic .ic,.cell .pic svg,.cell .pic img.ai{width:26cqmin;height:26cqmin;stroke-width:1.6;filter:drop-shadow(0 2px 4px rgba(0,0,0,.6))}
+  .cell .aic .ic,.cell .aic svg,.cell .aic img.ai{width:15cqmin;height:15cqmin;stroke-width:1.8;opacity:.95;filter:drop-shadow(0 1px 3px rgba(0,0,0,.55))}
+  .cell .pos-tl{top:5cqmin;left:5cqmin}
+  .cell .pos-tr{top:5cqmin;right:5cqmin}
+  .cell .pos-bl{bottom:5cqmin;left:5cqmin}
+  .cell .pos-br{bottom:5cqmin;right:5cqmin}
   .cell .role{font-size:7cqmin;text-transform:uppercase;letter-spacing:1px;opacity:.82}
-  .cell .nm{font-variant:small-caps;font-weight:bold;font-size:13cqmin;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;align-self:center;text-align:center}   /* the title sits at the FOOT of the cell (flex space-between), centred like the print board's */
+  .cell .nm{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;font-variant:small-caps;font-weight:bold;font-size:12cqmin;line-height:1;white-space:nowrap;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.85)}   /* the name stands at the tile's CENTRE, on the diagonal's crossing */
   /* loop colours: A Market=gold · B Brewhouse=red · C Harbor=sea · D Cellar=green */
   .cell.A{background:linear-gradient(155deg,#cda522,#9c7414);color:#2b2018}
   .cell.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .cell.C{background:linear-gradient(155deg,#3d6b7e,#244554)}
   .cell.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
-  .cell .wk{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);display:flex;gap:2cqmin;flex-wrap:wrap;justify-content:center;align-items:center;max-width:58%;z-index:3}   /* line-less workers stand at the tile's centre */
+  .cell .wk{position:absolute;left:50%;top:66%;transform:translate(-50%,-50%);display:flex;gap:2cqmin;flex-wrap:wrap;justify-content:center;align-items:center;max-width:58%;z-index:3}   /* line-less workers stand just below the centre name */
   /* v6.4b THE SPLIT STATION — a diagonal divides each tile into a ROW half and a COLUMN half;
      the worker stands on the half it worked (the standing pawn is the record, as on the table) */
   .cell .diag{position:absolute;inset:0;z-index:2;pointer-events:none}
@@ -136,7 +138,6 @@
   .cell .wz.tr{top:6cqmin;right:6cqmin}
   .cell .wz.br{bottom:6cqmin;right:6cqmin}
   .cell .wz.bl{bottom:6cqmin;left:6cqmin}
-  .cell .wz.lm{left:4cqmin;top:44%}
   .cell .wedgehit{position:absolute;inset:0;z-index:6;cursor:pointer;background:rgba(216,167,42,.13)}
   .cell .wedgehit:hover{background:rgba(216,167,42,.3)}
   .pawn{width:15px;height:15px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.4)}
@@ -3744,7 +3745,7 @@ function renderGrid(){
   });
   ['A','B','C','D'].forEach(c=>{const act=CELLNAME[c];
     const o=cellOfLine(c);
-    const WPOS={A:{row:'tr',col:'bl'},B:{row:'lm',col:'br'},C:{row:'br',col:'lm'},D:{row:'bl',col:'tr'}};   // each half's anchor faces its line partner (B/C top-left is the head's corner — they anchor mid-left)
+    const WPOS={A:{row:'tr',col:'bl'},B:{row:'tl',col:'br'},C:{row:'br',col:'tl'},D:{row:'bl',col:'tr'}};   // each half's mark holds its SIDE corner (the wedge's own apex)
     const HITS={A:{row:'0 0,100% 0,100% 100%',col:'0 0,100% 100%,0 100%'},B:{row:'0 0,100% 0,0 100%',col:'100% 0,100% 100%,0 100%'},
                 C:{row:'100% 0,100% 100%,0 100%',col:'0 0,100% 0,0 100%'},D:{row:'0 0,100% 100%,0 100%',col:'0 0,100% 0,100% 100%'}};
     const wz=which=>{const pn=LINES[o[which]].cells.find(x=>x!==c);
@@ -3769,8 +3770,9 @@ function renderGrid(){
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
       +'<img class="scn" src="art/scene-'+SCN+'.png" alt=""><div class="scngrad"></div>'
       +'<div class="diag '+((c==='A'||c==='D')?'dTLBR':'dTRBL')+'"></div>'+wz('row')+wz('col')+hits
+      +'<span class="pic pos-'+({A:'tl',B:'tr',C:'bl',D:'br'})[c]+'" data-tip="'+attr('PRIMARY (your worker here): '+stnActTxt(cur(),STN_P[c]))+'">'+LU(STATION_ICON[act])+'</span>'
+      +'<span class="aic pos-'+({A:'br',B:'bl',C:'tr',D:'tl'})[c]+'" data-tip="'+attr('ALTERNATE (served across the line): '+stnActTxt(cur(),STN_A[c]))+'">'+LU(STATION_ALT_ICON[act])+'</span>'
       +'<div class="stn">'
-      +'<div class="head"><span class="actrow"><span class="bigic" data-tip="'+attr('PRIMARY (your worker here): '+stnActTxt(cur(),STN_P[c]))+'">'+LU(STATION_ICON[act])+'</span><span class="altsep">/</span><span class="altic" data-tip="'+attr('ALTERNATE (read across the line): '+stnActTxt(cur(),STN_A[c]))+'">'+LU(STATION_ALT_ICON[act])+'</span></span></div>'
       +'<div class="nm">'+act+'</div>'
       +'<div class="wk">'+pawns+'</div>'
       +'</div></div>';

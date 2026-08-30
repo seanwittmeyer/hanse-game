@@ -54,8 +54,9 @@ Trade already read as their stations' own counters). Turn shapes after the swap:
 Harbor row = Commission + Load (up to four boardings with the maiden load and the caps —
 the fewer/bigger pillar at work) · the Cellar row = Age + Sail · the Brewhouse column =
 Brew + Load. `KEY hanse-v64` · verify-v6 71/71 · sim clean. **v6.4b:** the station tiles
-split on the diagonal into **row/column worker halves** (each half prints the ALTERNATE
-verb the far station serves — the action the half earns; the standing pawn records the worked line — app board + print board, no mechanic
+split on the diagonal into **row/column worker halves** (the diagonal is the tile's axis —
+PRIMARY large on the line at the outside corner, ALT small at the inside corner; each
+half's side corner prints the ALTERNATE the far station serves — the action it earns; the standing pawn records the worked line — app board + print board, no mechanic
 change; the app also takes half-clicks at the line pick). Still v5.8: `rulebook.html` and the DESIGN
 architecture sections (the Phase 2 docs pass). **Fork calls taken for the test build
 (all ⚙, designer re-rules freely):** F1 the LINE (re-ruled v6.3: P/A seats + the cap loads; the one-day v6.2 walk-menu interim

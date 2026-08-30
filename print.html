@@ -409,12 +409,17 @@
   .stn .swz.tl{top:.12in;left:.12in}
   .stn .swz.br{bottom:.12in;right:.12in}
   .stn .swz.bl{bottom:.12in;left:.12in}
-  .stn .stn-foot{display:flex;flex-direction:column;align-items:center;gap:.035in;margin-bottom:.01in}
-  .stn .stn-act{display:flex;align-items:center;justify-content:center}
-  .stn .stn-act img.ai{width:.95in;height:.95in;filter:drop-shadow(0 2px 5px rgba(0,0,0,.55))}
-  .stn .stn-act img.ai.stn-alt-i{width:.72in;height:.72in}   /* the alt chip at ~75% of the primary, as on the app face */
-  .stn .stn-slash{color:#f2ecdd;font-weight:bold;font-size:.3in;margin:0 .05in;text-shadow:0 1px 3px rgba(0,0,0,.8);align-self:center}
+  /* v6.4b corner grammar: PRIMARY large ON the diagonal at the OUTSIDE corner · ALT small at
+     the INSIDE corner · the half-marks at the side corners · name + menu at the centre */
+  .stn .stn-mid{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.05in;text-align:center;pointer-events:none}
   .stn .stn-sub{font-style:italic;font-weight:bold;font-size:.17in;line-height:1;text-shadow:0 1px 3px rgba(0,0,0,.9)}
+  .stn .spic,.stn .saic{position:absolute;z-index:2;display:inline-flex}
+  .stn .spic img.ai{width:.7in;height:.7in;filter:drop-shadow(0 2px 5px rgba(0,0,0,.6))}
+  .stn .saic img.ai{width:.4in;height:.4in;filter:drop-shadow(0 1px 3px rgba(0,0,0,.55))}
+  .stn .spic.tl{top:.1in;left:.1in} .stn .spic.tr{top:.1in;right:.1in}
+  .stn .spic.bl{bottom:.1in;left:.1in} .stn .spic.br{bottom:.1in;right:.1in}
+  .stn .saic.tl{top:.16in;left:.16in} .stn .saic.tr{top:.16in;right:.16in}
+  .stn .saic.bl{bottom:.16in;left:.16in} .stn .saic.br{bottom:.16in;right:.16in}
   /* per-station frame colours match the action icons' bases (designer): Market RED · Brewhouse
      YELLOW · Harbor BLUE · Cellar GREEN (the gradient is the fallback under the opaque scene) */
   .stn.A{border-color:#b4423a;background:linear-gradient(155deg,#9c3b2e,#7c2128)}
@@ -1075,10 +1080,9 @@ function station(L,nm,scene,acts,sub){
   return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
   +'<img class="stn-scene" src="art/scene-'+scene+'.png" alt="">'+STN_GRAD
   +'<div class="sdiag '+((L==='A'||L==='D')?'dTLBR':'dTRBL')+'"></div>'+chips
-  +'<span class="nm">'+nm+'</span>'
-  +'<span class="stn-foot"><span class="stn-act">'+LU(acts[0])
-  +acts.slice(1).map(ic=>'<span class="stn-slash">/</span>'+LU(ic,'stn-alt-i')).join('')   // v6.3: PRIMARY / ALTERNATE — the big icon fires for the worker here, the small one across the line
-  +'</span><span class="stn-sub">'+sub+'</span></span></div>';}
+  +'<span class="spic '+({A:'tl',B:'tr',C:'bl',D:'br'})[L]+'">'+LU(acts[0])+'</span>'
+  +'<span class="saic '+({A:'br',B:'bl',C:'tr',D:'tl'})[L]+'">'+LU(acts[1])+'</span>'
+  +'<div class="stn-mid"><span class="nm">'+nm+'</span><span class="stn-sub">'+sub+'</span></div></div>';}
 // printables2: the WHARF is now a CROSS board on its own (the cut follows the plus). 4×4 grid:
 // empty corners · 8 perimeter slots · the 4 stations in the centre 2×2.
 // a rounded-corner PLUS outline (objectBoundingBox 0–1) — used both as the cross board's clip-path and,
