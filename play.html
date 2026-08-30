@@ -3689,7 +3689,8 @@ function renderBar(){
   document.getElementById('prompt').innerHTML=prompt;
   document.getElementById('acts').innerHTML=acts;
   document.getElementById('boardnote').innerHTML =
-      (U==='placebldg'||U==='placevent'||(U==='commission'&&UI.stage==='place'))?'Click a glowing slot.':'';
+      (U==='placebldg'||U==='placevent'||(U==='commission'&&UI.stage==='place'))?'Click a glowing slot.':
+      (U==='line'?'Or click the line on the board — its far station, or one of its end slots.':'');
 }
 function renderGrid(){
   const ag=document.getElementById('ag');let h='';
@@ -3700,7 +3701,10 @@ function renderGrid(){
     if(commPlacing||bldgPlacing)cls+=' place';
     let boardClick=null;
     if(!aiTurn()&&!commPlacing&&!bldgPlacing){
-      if(UI.sub==='stops'&&(UI.stops||[]).some(st=>st.kind==='load'&&st.slot===s.id&&stopAvail(st))){cls+=' stopgo';boardClick="resolveStopBy('load','"+s.id+"')";}
+      if(UI.sub==='line'){const o=cellOfLine(cur().cell);   // an end slot picks its line too
+        if(LINES[o.row].caps.includes(s.id)){cls+=' stopgo';boardClick="chooseLine('row')";}
+        else if(LINES[o.col].caps.includes(s.id)){cls+=' stopgo';boardClick="chooseLine('col')";}}
+      else if(UI.sub==='stops'&&(UI.stops||[]).some(st=>st.kind==='load'&&st.slot===s.id&&stopAvail(st))){cls+=' stopgo';boardClick="resolveStopBy('load','"+s.id+"')";}
       else if(UI.sub==='load'&&UI.load&&UI.load.cask!=null){
         if(UI.load.ships.includes(s.id)&&canTake(s.id,UI.load.cask)){cls+=' stopgo';boardClick="loadOnto('"+s.id+"')";}}
     }
@@ -3722,9 +3726,13 @@ function renderGrid(){
     const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+p.name+'"></span>').join('');
     let cls='cell '+c+' c'+c;
     const myStop=!aiTurn()&&UI.sub==='stops'&&(UI.stops||[]).some(st=>st.kind==='cell'&&st.cell===c&&stopAvail(st));
-    const legal=(UI.sub==='move'&&!aiTurn()&&(!cur().placed||ADJ[cur().cell].includes(c)))||myStop;
+    // at the LINE pick, the FAR station of each line is the click target: across the row = the row, down the column = the column
+    let lnPick=null;
+    if(!aiTurn()&&UI.sub==='line'&&c!==cur().cell){const o=cellOfLine(cur().cell);
+      lnPick=LINES[o.row].cells.includes(c)?'row':(LINES[o.col].cells.includes(c)?'col':null);}
+    const legal=(UI.sub==='move'&&!aiTurn()&&(!cur().placed||ADJ[cur().cell].includes(c)))||myStop||!!lnPick;
     if(legal)cls+=' legal';
-    let cellClick=legal?(myStop?("resolveStopBy('cell','"+c+"')"):("doMove('"+c+"')")):null;
+    let cellClick=legal?(myStop?("resolveStopBy('cell','"+c+"')"):(lnPick?("chooseLine('"+lnPick+"')"):("doMove('"+c+"')"))):null;
     const SCN={Market:'market',Brewhouse:'brewhouse',Cellar:'cellar',Harbor:'harbor'}[act];
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
       +'<img class="scn" src="art/scene-'+SCN+'.png" alt=""><div class="scngrad"></div>'
