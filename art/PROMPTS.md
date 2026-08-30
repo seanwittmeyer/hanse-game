@@ -356,26 +356,13 @@ matching `ESTABLISHMENTS` row in `components.js`.
   tied below.
 
 ### 4 · Icons (the sticker set — `art/icons/`, then wire `ICON_ART` in `components.js`)
-1. **chart.png** — the CHART verb finally gets its glyph (today the raw Lucide compass runs
-   everywhere: the Market's ALT face on the wharf board, the *Chart 1* load-bonus tile,
-   London's prize, the aids). Brief: **a divider compass mid-stride across a curling scrap
-   of sea chart**. Wire: `ICON_ART['compass']='chart'`.
-2. **bourse-pm2.png** — the **±2** mark of the bourse numeral family (the Bergen
-   Kontorhaus's TRADE — live since v6.1; `bourse-pm1` stands in, the ICON_ART comment marks
-   it). Exact same recipe as `bourse-pm1`, the numeral a 2.
-3. **post.png** — the post marker noun (today `map-pin` borrows the PRESENCE icon — two
-   meanings on one glyph). Brief: **a stout timber mooring post driven into open water, a
-   small pennant at its head, wavelets at the base**. Wire post call sites off `map-pin`.
-4. **kontorhaus.png** — the upgraded factor (today a ⌂ text character in the app and on the
-   Kontor panels). Brief: **a narrow stepped-gable trading house, gold-washed roofline** —
-   the sticker treatment's lavender diamond base as the other architecture icons. Also
-   serves as the HOUSE MARKER's Kontorhaus face stamp (the chit is colour-tinted by the kit).
-5. *(Optional)* **current.png** — the drift (legends use Lucide `waves`): three stacked wave
-   crests driving a forward chevron.
-6. *(Optional)* **closure.png** — the closed passage (Lucide `lock` today, on the closure
-   tiles and the map): a heavy chain drawn taut across water between two posts.
-7. *(Optional)* **factor.png** — the seated factor (borrows the kontor crest glyph): a
-   quill over an unrolled trade license with a hanging seal.
+1. **chart.png** — **LANDED 2026-08-30 (pick D)**: the divider compass astride the chart scrap; `ICON_ART['compass']='chart'` wired — every compass site swaps.
+2. **bourse-pm2.png** — **LANDED 2026-08-30**: the recipe twin of pm1 (deterministic composite); the ICON_ART stand-in swapped.
+3. **post.png** — REBRIEFED 2026-08-30 (designer): the post is an OUTPOST — a small canvas campaign TENT with a tall pennant flag on a tiny sandy islet; the mooring-post round is retired. Options out.
+4. **kontorhaus.png** — **LANDED 2026-08-30 (pick E** — the blue-grey gable**)**; the app's ⌂ text sites swap to the icon.
+5. **current.png** — **LANDED 2026-08-30 (pick E)**; `ICON_ART['waves']='current'`.
+6. **closure.png** — **LANDED 2026-08-30 (pick C)**; the closure tile + print sea-board lock sites swap (the brewery slot-cover keeps its Lucide lock — different meaning).
+7. **factor.png** — **LANDED 2026-08-30 (pick A)**; mapped as `factor` — call sites swap in the code pass.
 
 ### 5 · Closure tiles ×2 *(optional — the dark CSS tile is playable)*
 - **closure-dover.png** · **closure-sound.png** — art behind the dark closure tiles

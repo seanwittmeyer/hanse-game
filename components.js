@@ -22,10 +22,11 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   'quality-1':'quality-1','quality-2':'quality-2','quality-3':'quality-3','quality-4':'quality-4',
   'quality-5':'quality-5','quality-6':'quality-6','die-q':'die-q',sail:'sail','age-1':'station-age-1','age-2':'station-age-2',
   'goods-1':'goods-1','goods-2':'goods-2','goods-3':'goods-3','brew-top':'station-brew-top',
-  bourse:'bourse','bourse-plus1':'bourse-plus1','bourse-plus2':'bourse-plus2','bourse-pm1':'bourse-pm1','bourse-pm2':'bourse-pm1','bourse-minus1':'bourse-minus1',   // bourse-pm2 STAND-IN: the ±1 glyph until its own art lands (art/ICONS.md)
+  bourse:'bourse','bourse-plus1':'bourse-plus1','bourse-plus2':'bourse-plus2','bourse-pm1':'bourse-pm1','bourse-pm2':'bourse-pm2','bourse-minus1':'bourse-minus1',
   'star-plus1':'star-plus1','star-plus2':'star-plus2','star-plus3':'star-plus3','star-plus4':'star-plus4',
   'star-minus1':'star-minus1','star-minus2':'star-minus2','star-minus3':'star-minus3',
   'swap-dice':'swap-dice','venture-build':'venture-build',redeal:'redeal',
+  compass:'chart',waves:'current',closure:'closure',factor:'factor',kontorhaus:'kontorhaus',
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
 const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const LU=(n,cls)=>ICON_ART[n]?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/icons/'+ICON_ART[n]+'.png" alt="">':LUX(n,cls);
@@ -357,7 +358,7 @@ function estTile(d){
 // action (its 2G fee printed here) removes the tile and the charter's post stands free.
 const CLOSURES=[{k:'ds',nm:'Dover Strait'},{k:'sd',nm:'the Sound'}];
 function closureTile(d){return '<div class="cltile">'
-  +'<span class="cl-lock">'+LUX('lock')+'</span>'
+  +'<span class="cl-lock">'+LU('closure')+'</span>'
   +'<div class="cl-mid"><div class="cl-nm">'+d.nm+'</div><div class="cl-sub">closed passage</div></div>'
   +'<div class="cl-row"><span class="cl-lbl">chart</span>'+cost(2,0)+'<span class="cl-lbl">· the charter’s post stands free</span></div>'
   +'</div>';}

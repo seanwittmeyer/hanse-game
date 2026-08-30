@@ -3557,8 +3557,8 @@ function renderBar(){
     acts=chartOptions(cp,C.free).map(o=>{
       const lbl=o.k==='open'?('Open '+SEA[o.w].name+' · '+costIcons(o.fee)+' (your post stands free)')
         :o.k==='post'?('Post at '+SEA[o.w].name+' · '+costIcons(o.fee))
-        :o.k==='upgpost'?('⌂ Upgrade your post at '+SEA[o.w].name+' · '+costIcons(o.fee))
-        :o.k==='upgfactor'?('⌂ Raise the '+KONTORHAUS[o.w].name+' · '+costIcons(o.fee))
+        :o.k==='upgpost'?(LU('kontorhaus')+' Upgrade your post at '+SEA[o.w].name+' · '+costIcons(o.fee))
+        :o.k==='upgfactor'?(LU('kontorhaus')+' Raise the '+KONTORHAUS[o.w].name+' · '+costIcons(o.fee))
         :('Factor at '+DEST[o.w].name+' · '+costIcons(o.fee));
       return btn(lbl,'chartDo(\''+o.k+'\',\''+o.w+'\')','go');}).join('')
       +btn('Skip','chartSkip()','ghost');}
@@ -3824,7 +3824,7 @@ function renderDests(){
       +'<div class="rh rline"><span data-tip="'+attr('Landing value = the parked die + the beer’s marker AS PRINTED AT LANDING'+(D.vbonus?' PLUS '+D.vbonus+'★ (printed on the mat)':'')+'. It parks here as presence.')+'"><b><span class="vstar">★</span> = die'+(D.vbonus?'+'+D.vbonus:'')+'</b></span>'+ben+'</div>'
       +'<div class="rh rline" style="font-size:.72rem"><span class="note">factor seats:</span> <span>'+(((S.factors[d]||[]).map(pid=>{const kh=(S.factorUpg[d]||[]).includes(pid);
         return '<span class="dsq" style="width:10px;height:10px;background:'+S.players[pid].color+(kh?';outline:2px solid #c9a227':'')+'" data-tip="'+attr(S.players[pid].name+'’s '+(kh?KONTORHAUS[d].name+' — '+KONTORHAUS[d].desc:'factor — the license + the +1 step'))+'"></span>';}).join(''))||'')+((S.factors[d]||[]).length<FACTOR_SEATS?' <span class="note">'+(FACTOR_SEATS-(S.factors[d]||[]).length)+' open · '+costStr(FACTOR_FEE)+'</span>':'')+'</span></div>'
-      +'<div class="rh rline" style="font-size:.68rem"><span class="note" data-tip="'+attr('The Kontorhaus (v6.1) — a seated factor upgrades to it for '+costStr(FACTOR_UPG_FEE)+' via CHART. The power is printed here, per Kontor.')+'">⌂ '+KONTORHAUS[d].desc+'</span></div>'
+      +'<div class="rh rline" style="font-size:.68rem"><span class="note" data-tip="'+attr('The Kontorhaus (v6.1) — a seated factor upgrades to it for '+costStr(FACTOR_UPG_FEE)+' via CHART. The power is printed here, per Kontor.')+'">'+LU('kontorhaus')+' '+KONTORHAUS[d].desc+'</span></div>'
       +'<div class="pres">'+pres+'</div></div>';
   });
   document.getElementById('dests').innerHTML=h;
