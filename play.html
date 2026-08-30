@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v6.2 “The Voyage”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v6.3 “The Voyage”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -62,6 +62,16 @@
   main{margin:0 auto;padding:14px;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;align-items:start}
   main>.maincol{min-width:0}
   @media(max-width:1100px){main{grid-template-columns:1fr}}
+  @media(max-width:760px){
+    main{padding:8px;gap:10px}
+    .panel{padding:9px 8px;border-radius:8px}
+    .panel h3{font-size:1rem}
+    #bar{padding:5px 8px}
+    #bar .who{max-width:38vw;font-size:1.02rem}
+    #bar .acts{gap:5px}
+    #bar .acts button{padding:7px 9px;font-size:.84rem}
+    .shop{max-height:none}
+  }
   /* wide monitors: the sidebar splits in two — the supply (Market) beside the wharf at full height, the rest outboard; the extra column comes out of the main column's flex width */
   @media(min-width:1600px){
     main{grid-template-columns:minmax(0,1fr) auto}
@@ -85,8 +95,8 @@
      board HEIGHT still fits one screen — the wharf never scrolls vertically, only pans left/right;
      boardCross centers the first view on the stations). This override must sit AFTER the base .ag
      rule — same specificity, source order decides. */
-  @media(max-width:760px){.agwrap{overflow-x:auto;overflow-y:hidden;justify-content:flex-start;-webkit-overflow-scrolling:touch}
-    .ag{--cw:calc((min(192cqw,700px) - 3*var(--gap))/5.6)}}
+  @media(max-width:760px){.agwrap{overflow-x:auto;overflow-y:hidden;justify-content:flex-start;-webkit-overflow-scrolling:touch;padding:8px 2px}
+    .ag{--cw:calc((max(100cqw,330px) - 3*var(--gap))/5.6)}}   /* the whole board FITS the phone column; a scroll only opens under ~340px */
   /* explicit square rows make every cell a guaranteed square from the GRID — not from each
      item's own aspect-ratio under size-containment (which mobile Safari collapses). */
   .cell,.slot{min-width:0;min-height:0}
@@ -354,6 +364,46 @@
   /* DESTINATIONS */
   #dests{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
   @media(max-width:600px){#dests{grid-template-columns:1fr 1fr}}
+  /* THE BOURSE BOARD — a full-width strip ABOVE the Kontor cards */
+  .bourseboard{grid-column:1/-1;border:2px solid var(--line);border-radius:10px;padding:6px 9px;background:var(--parch)}
+  .bb-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px}
+  .bb-head b{font-variant:small-caps}
+  .bb-row{display:flex;align-items:center;gap:4px;padding:1px 0}
+  .bb-nm{flex:0 0 84px;display:inline-flex;align-items:center;gap:4px;font-size:.8rem;min-width:0;overflow:hidden}
+  .bb-cell{width:26px;height:19px;flex:none;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:4px;font-size:.72rem;opacity:.4}
+  .bb-cell.on{background:#2b2018;color:#f4ead0;font-weight:bold;opacity:1}
+  @media(max-width:480px){.bb-nm{flex-basis:60px;font-size:.74rem}.bb-cell{width:22px;height:17px}}
+  /* THE SEA BOARD — the map as a component: water-tile legs, the Kontor caps end the lanes */
+  .seamap{display:grid;grid-template-columns:26px minmax(88px,1.1fr) minmax(88px,1.1fr) minmax(96px,1fr);grid-auto-rows:minmax(54px,auto);gap:7px;max-width:880px;margin:0 auto}
+  .sea-wharf{grid-row:1/5;grid-column:1;writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;gap:5px;background:var(--parch2);border:2px solid var(--line);border-radius:8px;font-variant:small-caps;font-weight:bold;letter-spacing:1.5px;color:var(--ink2);font-size:.8rem}
+  .sea-leg{border:2px solid #1d3845;border-radius:8px;background:linear-gradient(160deg,var(--sea2),var(--sea));color:#f4ead0;padding:4px 7px;display:flex;flex-direction:column;gap:2px;min-width:0}
+  .sea-leg .lnm{font-variant:small-caps;font-weight:bold;font-size:.76rem;line-height:1.2;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+  .sea-leg .lk{font-weight:normal;font-size:.68rem;opacity:.95;font-variant:normal}
+  .sea-leg .lposts{display:flex;gap:3px;align-items:center;min-height:13px}
+  .sea-leg .lpost{display:inline-flex;align-items:center;gap:1px}
+  .sea-leg .lpost .ic,.sea-leg .lpost svg{width:.95em;height:.95em}
+  .sea-leg .lships{display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-top:auto}
+  .sea-leg.closed{background:linear-gradient(160deg,#332f3e,#1c1926);border:2px dashed var(--red2)}
+  .seamap .dsq{width:11px;height:11px;margin:0}
+  .seamap .dsq.sock{background:transparent;border:1.5px dashed rgba(244,234,208,.55)}
+  .seamap .dsq.sock.round{border-radius:50%}
+  .seamap .dsq.kh{outline:2px solid #c9a227}
+  .sea-ship{display:inline-flex;align-items:center;gap:3px;background:rgba(0,0,0,.3);border:1px solid rgba(244,234,208,.45);color:#fff;border-radius:6px;padding:1px 6px;font-size:.72rem}
+  .sea-ship .dsq{width:8px;height:8px}
+  .sea-ship .ic,.sea-ship svg{width:.95em;height:.95em}
+  .sea-ship img.ai{width:1.1em;height:1.1em}
+  .sea-k{border-radius:8px;color:var(--parch);padding:4px 8px;display:flex;flex-direction:column;gap:3px;justify-content:center;border:2px solid rgba(0,0,0,.3);min-width:0}
+  .sea-k .knm{display:flex;align-items:center;gap:5px;font-variant:small-caps;font-weight:bold;font-size:.86rem;min-width:0}
+  .sea-k .knm .ic,.sea-k .knm svg{width:1.2em;height:1.2em}
+  .sea-k .knm img.ai{width:1.5em;height:1.5em}
+  .sea-k .kfacs{display:flex;gap:3px;align-items:center;font-size:.72rem}
+  .sea-k .kfacs b{display:inline-flex;align-items:center;gap:1px;margin-right:3px}
+  .sea-k.bruges{background:linear-gradient(160deg,#274b5c,#1d3845)}
+  .sea-k.london{background:linear-gradient(160deg,#b8860b,#8a6408)}
+  .sea-k.bergen{background:linear-gradient(160deg,#4a6b3a,#37502c)}
+  .sea-k.novgorod{background:linear-gradient(160deg,#7c2128,#5a161c)}
+  @media(max-width:520px){.seamap{grid-template-columns:20px minmax(76px,1.1fr) minmax(76px,1.1fr) minmax(82px,1fr);gap:5px}
+    .sea-k .knm{font-size:.76rem}.sea-leg .lnm{font-size:.7rem}}
   .route{border-radius:8px;padding:8px 10px;color:var(--parch);position:relative}
   .route.bruges{background:linear-gradient(160deg,#274b5c,#1d3845)}
   .route.london{background:linear-gradient(160deg,#b8860b,#8a6408)}
@@ -561,6 +611,8 @@
   .dlead{color:var(--gold2);margin-right:2px;font-size:.95rem}
   .dprow{margin-right:8px;white-space:nowrap}
   .osq{width:10px;height:10px;border-radius:2px;display:inline-block;margin:0 3px 0 1px;vertical-align:-1px;border:1px solid rgba(0,0,0,.35);box-sizing:border-box}
+  /* mobile: the Kontor cards wrap their long printed lines instead of painting past the card edge */
+  @media(max-width:600px){.route{min-width:0}.route .rline{flex-wrap:wrap}.route .rline>span{white-space:normal}}
   .hidden{display:none}
 </style>
 </head>
@@ -1552,15 +1604,14 @@ function openSetup(){
 }
 let setupN=3;
 const SETUP_DEF=['human','guildmaster','cellarmaster','trader'];   // seat defaults (added seats default to the Trader)
-const SETUP_OPTS=[['human','Human'],['apprentice','AI · Apprentice (easy)'],['journeyman','AI · Journeyman (standard)'],
-  ['trader','AI · Trader (hard)'],['guildmaster','AI · Guildmaster (expert — plays the designer’s quality line; slower turns)'],
-  ['cellarmaster','AI · Cellarmaster (the arch-nemesis — deep playouts; SLOW turns)']];
+const SETUP_OPTS=[['human','Human'],['apprentice','AI · Apprentice'],['journeyman','AI · Journeyman'],
+  ['trader','AI · Trader'],['guildmaster','AI · Guildmaster'],['cellarmaster','AI · Cellarmaster']];
 function pickCount(n){
   // a count change PRESERVES every seat already set — only the tail is added/removed
   const keep=[];for(let i=0;i<5;i++){const nm=document.getElementById('nm'+i),ai=document.getElementById('ai'+i);
     keep[i]={nm:nm?nm.value:null,ai:ai?ai.value:null};}
   setupN=n;for(let i=2;i<=4;i++)document.getElementById('pc'+i).classList.toggle('primary',i===n);
-  let h='<p class="note">Each seat: a name (optional) and who plays it. AI seats never cheat — the tiers differ only in decision quality.</p>';
+  let h='<p class="note" style="margin:0 0 4px">Each seat: a name and who plays it.</p>';
   for(let i=0;i<n;i++){const sel=(keep[i]&&keep[i].ai!=null)?keep[i].ai:(SETUP_DEF[i]||'trader');
     h+='<div style="margin:4px 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap">'
     +'<span class="pawn" style="background:'+COLORS[i]+';display:inline-block;flex:none"></span>'
@@ -3690,45 +3741,56 @@ function renderBuildings(){
   if(!document.getElementById('bldgref'))return;   // panel removed — buildings live as tiles on the board
   document.getElementById('bldgref').innerHTML='';
 }
-// ---- THE SEA (v6.0): lanes · waypoints · closures · posts · the ships in transit ----
+// ---- THE SEA BOARD (v6.3): the map rendered as the printed component — two forked
+// tracks of water-tile LEGS (posts and ships STAND on them), the Kontor caps ending the
+// lanes. Geometry mirrors print.html's seaBoard: Wharf → Wadden Coast → Bruges / → Dover
+// Strait → London · Wharf → Skagen → Bergen / → the Sound → Novgorod.
 function renderSea(){const el=document.getElementById('sea');if(!el)return;
-  let h='<div class="note" style="margin-bottom:4px">'+LU('compass')+' Voyages in transit — the <b>current</b> moves every ship one leg at the round marker; cargo is <b>priced at landing</b>. The <b>Harbor</b> SAILS · the <b>Market</b> CHARTS — posts (toll '+POST_RENT_G+'G) · factors · upgrades (establishment '+costStr(POST_UPG_FEE)+' · Kontorhaus '+costStr(FACTOR_UPG_FEE)+').</div>';
-  LANE_ORDER.forEach(d=>{
-    h+='<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:5px 2px;border-bottom:1px solid var(--line)">';
-    h+='<span style="flex:0 0 56px" class="note">'+LU('anchor')+' Wharf</span><span class="arr">→</span>';
-    LANES[d].forEach(w=>{
-      const open=passageOpen(w);
-      let posts=(S.posts[w]||[]).map(pid=>{const u=postUpgOf(w,pid);const E=u?POST_UPGS[u]:null;
-        return '<span style="display:inline-flex;align-items:center;gap:1px" data-tip="'+attr(S.players[pid].name+'’s '+(E?E.name+' — '+E.desc:'post')+' · toll '+postRentFor(w,pid)+'G per entering ship')+'"><span class="dsq" style="width:11px;height:11px;background:'+S.players[pid].color+'"></span>'+(E?LU(E.icon):'')+'</span>';}).join('');
-      if(passageOpen(w))for(let k=(S.posts[w]||[]).length;k<postSeatsMax();k++)   // the OPEN seats are printed sockets, not absence
-        posts+='<span class="dsq" style="width:11px;height:11px;background:transparent;border:1.5px dashed #9a8a68;border-radius:2px" data-tip="'+attr('Open post seat — CHART at the Market: '+costStr(POST_FEE)+' · the post collects '+POST_RENT_G+'G from every entering ship')+'"></span>';
-      let ships='';
-      seaShips().forEach((t,i)=>{if(t.dest!==d||LANES[d][t.pos]!==w)return;
-        const clickable=!aiTurn()&&UI.sub==='sailv'&&UI.sailv&&(UI.sailv.opts||[]).includes(i);
-        ships+='<span '+(clickable?'onclick="sailPick('+i+')" class="stopgo" style="cursor:pointer;':'style="')+'display:inline-flex;align-items:center;gap:2px;background:var(--sea2);color:#fff;border-radius:6px;padding:1px 6px;font-size:.72rem" data-tip="'+attr(shipName(t)+' → '+DEST[t.dest].name+' · '+t.load.length+' cask'+(t.load.length===1?'':'s')+(t.cert?' · CERTIFIED (does not glut)':'')+' · next: '+(seaNext(t)==='LAND'?'LANDS':SEA[seaNext(t)].name))+'">'+LU('sailboat')+shipName(t)+' '+(t.load||[]).map(L=>'<span class="dsq" style="width:8px;height:8px;background:'+S.players[L.owner].color+'"></span>').join('')+(t.cert?' ✓':'')+'</span>';});
-      h+='<span style="flex:1;min-width:130px;border:1.5px '+(open?'solid var(--line)':'dashed var(--red)')+';border-radius:7px;padding:3px 6px;background:'+(open?'var(--parch)':'rgba(124,33,40,.08)')+'" data-tip="'+attr(SEA[w].name+(open?'':' — CLOSED: chart it for '+costStr(CHART_FEE)+' (the charter’s post stands free)')+' · post seats '+((S.posts[w]||[]).length)+'/'+postSeatsMax())+'">'
-        +'<span style="font-variant:small-caps;font-weight:bold;font-size:.74rem">'+SEA[w].name+(open?'':' 🔒')+'</span> '+posts+' '+ships+'</span>';
-      h+='<span class="arr">→</span>';});
-    let fac=(S.factors[d]||[]).map(pid=>{const kh=(S.factorUpg[d]||[]).includes(pid);
-      return '<span class="dsq" style="width:11px;height:11px;background:'+S.players[pid].color+(kh?';outline:2px solid #c9a227':'')+'" data-tip="'+attr(S.players[pid].name+'’s '+(kh?KONTORHAUS[d].name+' — '+KONTORHAUS[d].desc:'factor — the trading license + a +1 step after their landings here'))+'"></span>';}).join('');
+  const legCell=(w,area)=>{const open=passageOpen(w);
+    let posts='';
+    (S.posts[w]||[]).forEach(pid=>{const u=postUpgOf(w,pid);const E=u?POST_UPGS[u]:null;
+      posts+='<span class="lpost" data-tip="'+attr(S.players[pid].name+'’s '+(E?E.name+' — '+E.desc:'post')+' · toll '+postRentFor(w,pid)+'G per entering ship')+'"><span class="dsq" style="background:'+S.players[pid].color+'"></span>'+(E?LU(E.icon):'')+'</span>';});
+    if(open)for(let k=(S.posts[w]||[]).length;k<postSeatsMax();k++)
+      posts+='<span class="dsq sock" data-tip="'+attr('Open post seat — CHART at the Market: '+costStr(POST_FEE)+' · the post collects '+POST_RENT_G+'G from every entering ship')+'"></span>';
+    let ships='';
+    seaShips().forEach((t,i)=>{if(LANES[t.dest][t.pos]!==w)return;
+      const clickable=!aiTurn()&&UI.sub==='sailv'&&UI.sailv&&(UI.sailv.opts||[]).includes(i);
+      ships+='<span class="sea-ship'+(clickable?' stopgo':'')+'"'+(clickable?' onclick="sailPick('+i+')" style="cursor:pointer"':'')+' data-tip="'+attr(shipName(t)+' → '+DEST[t.dest].name+' · '+t.load.length+' cask'+(t.load.length===1?'':'s')+(t.cert?' · CERTIFIED (does not glut)':'')+' · next: '+(seaNext(t)==='LAND'?'LANDS':SEA[seaNext(t)].name))+'">'+LU('sailboat')+kIcon(t.dest)+(t.load||[]).map(L=>'<span class="dsq" style="background:'+S.players[L.owner].color+'"></span>').join('')+(t.cert?' ✓':'')+'</span>';});
+    return '<div class="sea-leg'+(open?'':' closed')+'" style="grid-area:'+area+'" data-tip="'+attr(SEA[w].name+(open?'':' — CLOSED: chart it for '+costStr(CHART_FEE)+' (the charter’s post stands free)')+' · post seats '+((S.posts[w]||[]).length)+'/'+postSeatsMax())+'">'
+      +'<span class="lnm">'+SEA[w].name+(open?'':' <span class="lk">🔒 chart '+costStr(CHART_FEE)+'</span>')+'</span>'
+      +'<span class="lposts">'+posts+'</span>'
+      +(ships?'<span class="lships">'+ships+'</span>':'')
+      +'</div>';};
+  const kCell=(d,area)=>{
+    let fac='';
+    (S.factors[d]||[]).forEach(pid=>{const kh=(S.factorUpg[d]||[]).includes(pid);
+      fac+='<span class="dsq'+(kh?' kh':'')+'" style="background:'+S.players[pid].color+'" data-tip="'+attr(S.players[pid].name+'’s '+(kh?KONTORHAUS[d].name+' — '+KONTORHAUS[d].desc:'factor — the trading license + a +1 step after their landings here'))+'"></span>';});
     for(let k=(S.factors[d]||[]).length;k<FACTOR_SEATS;k++)
-      fac+='<span class="dsq" style="width:11px;height:11px;background:transparent;border:1.5px dashed #9a8a68;border-radius:50%" data-tip="'+attr('Open factor seat — deliver here first, then CHART at the Market: '+costStr(FACTOR_FEE))+'"></span>';
-    h+='<span style="flex:0 0 auto;font-variant:small-caps;font-weight:bold">'+kIcon(d)+' '+DEST[d].name+'</span>'+(fac?' '+fac:'');
-    h+='</div>';});
-  el.innerHTML=h;}
+      fac+='<span class="dsq sock round" data-tip="'+attr('Open factor seat — deliver here first, then CHART at the Market: '+costStr(FACTOR_FEE))+'"></span>';
+    return '<div class="sea-k '+d+'" style="grid-area:'+area+'" data-tip="'+attr(DEST[d].name+' · '+DEST[d].role+' · boards at die '+DEST[d].gate+'+')+'">'
+      +'<span class="knm">'+kIcon(d)+' '+DEST[d].name+'</span>'
+      +'<span class="kfacs"><b>'+LU('dices')+DEST[d].gate+'+</b>'+fac+'</span>'
+      +'</div>';};
+  el.innerHTML='<div class="seamap">'
+    +'<div class="sea-wharf" data-tip="'+attr('The Wharf — a full Ship departs onto its lane’s first leg')+'">'+LU('anchor')+'<span>Wharf</span></div>'
+    +legCell('wc','1/2/3/3')+kCell('bruges','1/3/2/5')
+    +legCell('ds','2/3/3/4')+kCell('london','2/4/3/5')
+    +legCell('sk','3/2/5/3')+kCell('bergen','3/3/4/5')
+    +legCell('sd','4/3/5/4')+kCell('novgorod','4/4/5/5')
+    +'</div>'
+    +'<div class="note" style="margin-top:5px;text-align:center">≋ the current: every ship +1 leg at the round marker · cargo is priced at LANDING</div>';}
 function renderDests(){
   let h='';
-  // v6.2 — THE BOURSE BOARD, rendered as the COMPONENT it is (v5.6 law: the track is
-  // printed on the Destinations board; the standing marker IS the price).
+  // THE BOURSE BOARD — the COMPONENT (v5.6 law: the track is printed on the Destinations
+  // board; the standing marker IS the price). A full-width strip ABOVE the Kontor cards.
   {const beers=Object.keys(S.bourse||{});
    if(beers.length){
-     h+='<div style="border:1.5px solid var(--line);border-radius:8px;padding:6px 8px;margin-bottom:8px;background:var(--parch)">';
-     h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;flex-wrap:wrap"><b style="font-variant:small-caps">'+LU('bourse')+' the Bourse</b><span class="note">landing ★ = die + the marker AS PRINTED · each landed beer type then slips −1 (certified cargo excepted)</span></div>';
+     h+='<div class="bourseboard">';
+     h+='<div class="bb-head"><b>'+LU('bourse')+' the Bourse</b><span class="note">landing ★ = die + the marker · then each landed beer −1</span></div>';
      beers.forEach(b=>{
-       h+='<div style="display:flex;align-items:center;gap:5px;padding:1px 0">';
-       h+='<span style="flex:0 0 86px;display:inline-flex;align-items:center;gap:4px;font-size:.8rem">'+LU('beer')+'<b>'+styleShort(b)+'</b></span>';
+       h+='<div class="bb-row"><span class="bb-nm">'+LU('beer')+'<b>'+styleShort(b)+'</b></span>';
        for(let v=BOURSE_MIN;v<=BOURSE_MAX;v++){const on=S.bourse[b]===v;
-         h+='<span style="width:26px;height:18px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:4px;font-size:.72rem;'+(on?'background:#2b2018;color:#f4ead0;font-weight:bold':'opacity:.4')+'"'+(on?' data-tip="'+attr(styleShort(b)+' sells at '+bourseFmt(v)+' right now — UP: Trade · the factor’s step · the toll bench · Bergen; DOWN: only the glut')+'"':'')+'>'+bourseFmt(v)+'</span>';}
+         h+='<span class="bb-cell'+(on?' on':'')+'"'+(on?' data-tip="'+attr(styleShort(b)+' sells at '+bourseFmt(v)+' right now — UP: Trade · the factor’s step · the toll bench · Bergen; DOWN: only the glut')+'"':'')+'>'+bourseFmt(v)+'</span>';}
        h+='</div>';});
      h+='</div>';}}
   KONTORE.forEach(d=>{const D=DEST[d];
@@ -3805,11 +3867,7 @@ function renderVoyage(){
     +'<div style="margin-top:4px">'+S.players.map(p=>'<span style="color:'+p.color+';font-weight:bold">'+p.name+' '+trayDice(p)+'<span class="note">/'+(p.presPool||0)+'</span></span>').join(' · ')+'</div>'
     +'<div class="note" style="font-size:.66rem;margin-top:4px">'+LU('sailboat')+' voyages landed: '+S.sailed+' · at sea now: '+seaShips().length+' · round ceiling '+MAX_ROUND+' (backstop)</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game (3 of 4):</b> '+exportLabel()+'.</div>';
-  if(Object.keys(S.bourse||{}).length){   // THE BOURSE — one strip, one marker per tracked beer
-    h+='<div class="voybox" style="margin-top:6px">'+LU('bourse')+' <b>The Bourse</b> <span class="note">(a landed cask scores its die + its beer’s marker — then the glut: each landed beer type steps −1)</span>'
-      +'<div style="margin-top:4px">'+Object.keys(S.bourse).map(bk=>{const v=S.bourse[bk];
-        return '<span style="margin-right:9px;font-weight:bold'+(v>0?';color:var(--green,#2e7d32)':(v<0?';color:var(--red)':''))+'">'+LU('beer')+styleShort(bk)+' '+bourseFmt(v)+'</span>';}).join('')
-      +'</div><div class="note" style="font-size:.66rem;margin-top:3px">track '+bourseFmt(BOURSE_MIN)+' … '+bourseFmt(BOURSE_MAX)+' · opens at '+bourseFmt(BOURSE_START)+' · the only way UP is a shift (Trade · the factor’s step · the toll bench · Bergen)</div></div>';}
+  // (the Bourse strip that lived here is retired — the BOURSE BOARD above the Kontore is the one price surface)
   const brews=flightTypes();   // starters + the dealt exports + the Jopenbier pile when its toggle is on
   h+='<div class="note shophead" style="margin-top:6px"><b>'+LU('flask-conical')+' Cask stacks</b>'+gridToggleBtn('piles')+' <span class="note">— a full Brew SEARCHES the stack; the alternate takes the top tile; delivered tiles return to the bottom</span></div>'
     +'<div class="'+shopGridCls('piles')+'">'+brews.map(style=>{const st=STYLES[style];const n=pileList(style).length;const vb=pileVerbs(style);
