@@ -398,29 +398,26 @@
   /* a dark foot gradient lifts the action icon + caption off the scene — an inline SVG ramp,
      not a CSS gradient (CSS gradients seam in the html2canvas export; the kp panels' pattern) */
   .stn>.stn-grad{position:absolute;left:0;right:0;bottom:0;height:54%;width:100%;z-index:0}
-  .stn .nm{font-variant:small-caps;font-weight:bold;font-size:.27in;line-height:1;letter-spacing:.5px;text-shadow:0 1px 3px rgba(0,0,0,.8),0 0 .14in rgba(0,0,0,.55);position:relative;z-index:2}
   /* v6.4b the split station: the diagonal + the two half-space marks (the worker stands on its half) */
   .stn .sdiag{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
-  .stn .sdiag line{stroke:rgba(243,233,210,.5);stroke-width:1.1;stroke-dasharray:2.4 3.4;vector-effect:non-scaling-stroke}   /* a subtle stitched hairline, as on the app face */
+  .stn .sdiag .arcline{fill:none;stroke:rgba(243,233,210,.5);stroke-width:1.1;stroke-dasharray:2.4 3.4;vector-effect:non-scaling-stroke}   /* the title's arc — strung between the two icons, as on the app face */
+  .stn .sdiag .arctxt{font-variant:small-caps;font-weight:bold;font-size:13px;letter-spacing:.5px;text-anchor:middle;dominant-baseline:central;fill:#f3e9d2;stroke:rgba(20,14,8,.7);stroke-width:1.2px;paint-order:stroke}
   .stn .swz{position:absolute;z-index:2;width:.46in;height:.46in;border-radius:50%;background:rgba(20,16,11,.5);border:1.5px solid rgba(243,233,210,.55);display:flex;align-items:center;justify-content:center}
   .stn .swz img.ai{width:.34in;height:.34in}
   .stn .swz.tr{top:.12in;right:.12in}
   .stn .swz.tl{top:.12in;left:.12in}
   .stn .swz.br{bottom:.12in;right:.12in}
   .stn .swz.bl{bottom:.12in;left:.12in}
-  /* v6.4b corner grammar: PRIMARY large ON the diagonal at the OUTSIDE corner · ALT small at
-     the INSIDE corner · the half-marks at the side corners · name + menu at the centre */
-  .stn .stn-mid{position:absolute;left:0;right:0;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.04in;text-align:center;pointer-events:none}
-  .stn.A .stn-mid,.stn.B .stn-mid{top:.14in}
-  .stn.C .stn-mid,.stn.D .stn-mid{bottom:.14in}
-  .stn .stn-sub{font-style:italic;font-weight:bold;font-size:.17in;line-height:1;text-shadow:0 1px 3px rgba(0,0,0,.9)}
+  /* corner grammar: PRIMARY large ON the diagonal at the OUTSIDE corner · the ALT (nearly
+     as large) at the INSIDE corner · the half-marks at the side corners · the NAME ARCS
+     between the two icons through the tile's middle */
   .stn .spic,.stn .saic{position:absolute;z-index:2;display:inline-flex}
-  .stn .spic img.ai{width:.95in;height:.95in;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))}
-  .stn .saic img.ai{width:.58in;height:.58in;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
-  .stn .spic.tl{top:.44in;left:.44in} .stn .spic.tr{top:.44in;right:.44in}
-  .stn .spic.bl{bottom:.44in;left:.44in} .stn .spic.br{bottom:.44in;right:.44in}   /* a step down the line — the title band stays clear */
-  .stn .saic.tl{top:.16in;left:.16in} .stn .saic.tr{top:.16in;right:.16in}
-  .stn .saic.bl{bottom:.16in;left:.16in} .stn .saic.br{bottom:.16in;right:.16in}
+  .stn .spic img.ai{width:1.05in;height:1.05in;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))}
+  .stn .saic img.ai{width:.85in;height:.85in;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
+  .stn .spic.tl{top:.1in;left:.1in} .stn .spic.tr{top:.1in;right:.1in}
+  .stn .spic.bl{bottom:.1in;left:.1in} .stn .spic.br{bottom:.1in;right:.1in}
+  .stn .saic.tl{top:.1in;left:.1in} .stn .saic.tr{top:.1in;right:.1in}
+  .stn .saic.bl{bottom:.1in;left:.1in} .stn .saic.br{bottom:.1in;right:.1in}
   /* per-station frame colours match the action icons' bases (designer): Market RED · Brewhouse
      YELLOW · Harbor BLUE · Cellar GREEN (the gradient is the fallback under the opaque scene) */
   .stn.A{border-color:#b4423a;background:linear-gradient(155deg,#9c3b2e,#7c2128)}
@@ -1080,10 +1077,10 @@ function station(L,nm,scene,acts,sub){
   const chips=['row','col'].map(w=>'<span class="swz '+SP[L][w][1]+'">'+LU(SICON[SP[L][w][0]])+'</span>').join('');
   return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
   +'<img class="stn-scene" src="art/scene-'+scene+'.png" alt="">'+STN_GRAD
-  +'<svg class="sdiag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line '+((L==='A'||L==='D')?'x1="0" y1="0" x2="100" y2="100"':'x1="100" y1="0" x2="0" y2="100"')+'/></svg>'+chips
+  +'<svg class="sdiag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path id="sarc'+L+'" class="arcline" d="'+({A:'M18 90Q62 62 90 18',B:'M10 18Q38 62 82 90',C:'M18 10Q62 38 90 82',D:'M10 82Q38 38 82 10'})[L]+'"/><text class="arctxt"><textPath href="#sarc'+L+'" startOffset="50%">'+nm+'</textPath></text></svg>'+chips
   +'<span class="spic '+({A:'tl',B:'tr',C:'bl',D:'br'})[L]+'">'+LU(acts[0])+'</span>'
   +'<span class="saic '+({A:'br',B:'bl',C:'tr',D:'tl'})[L]+'">'+LU(acts[1])+'</span>'
-  +'<div class="stn-mid"><span class="nm">'+nm+'</span></div></div>';}   // the menu text retires — the P/A icons say it (icons over prose); the aid carries the words
+  +'</div>';}   // the name rides the ARC between the icons; the menu text stays retired — the P/A icons say it
 // printables2: the WHARF is now a CROSS board on its own (the cut follows the plus). 4×4 grid:
 // empty corners · 8 perimeter slots · the 4 stations in the centre 2×2.
 // a rounded-corner PLUS outline (objectBoundingBox 0–1) — used both as the cross board's clip-path and,

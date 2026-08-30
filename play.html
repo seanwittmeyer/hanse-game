@@ -108,34 +108,28 @@
   .cell .stn{color:#f4ead0;text-shadow:0 1px 3px rgba(0,0,0,.8)}
   .cell .stn{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:7cqmin}
   /* the alt chip — [primary] / [smaller alt] on one row */
-  /* v6.4b CORNER GRAMMAR — the diagonal is the tile's axis: the PRIMARY rides it LARGE at
-     the OUTSIDE corner, the ALT small at the INSIDE corner; the half-marks hold the side
-     corners; the name stands at the centre (equal insets keep every icon ON the line) */
+  /* CORNER GRAMMAR — the diagonal is the tile's axis: the PRIMARY rides LARGE at the
+     OUTSIDE corner, the ALT (nearly as large) at the INSIDE corner; the half-marks hold
+     the side corners; the NAME ARCS between the two icons through the tile's middle */
   .cell .pic,.cell .aic{position:absolute;z-index:4;display:inline-flex}
-  .cell .pic .ic,.cell .pic svg,.cell .pic img.ai{width:38cqmin;height:38cqmin;stroke-width:1.6;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))}
-  .cell .aic .ic,.cell .aic svg,.cell .aic img.ai{width:24cqmin;height:24cqmin;stroke-width:1.8;opacity:.95;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
+  .cell .pic .ic,.cell .pic svg,.cell .pic img.ai{width:42cqmin;height:42cqmin;stroke-width:1.6;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))}
+  .cell .aic .ic,.cell .aic svg,.cell .aic img.ai{width:34cqmin;height:34cqmin;stroke-width:1.8;opacity:.95;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
   .cell .pos-tl{top:4cqmin;left:4cqmin}
-  .cell .pic.pos-tl{top:18cqmin;left:18cqmin}
-  .cell .pic.pos-tr{top:18cqmin;right:18cqmin}
-  .cell .pic.pos-bl{bottom:18cqmin;left:18cqmin}
-  .cell .pic.pos-br{bottom:18cqmin;right:18cqmin}
   .cell .pos-tr{top:4cqmin;right:4cqmin}
   .cell .pos-bl{bottom:4cqmin;left:4cqmin}
   .cell .pos-br{bottom:4cqmin;right:4cqmin}
   .cell .role{font-size:7cqmin;text-transform:uppercase;letter-spacing:1px;opacity:.82}
-  .cell .nm{position:absolute;left:50%;transform:translateX(-50%);z-index:3;font-variant:small-caps;font-weight:bold;font-size:12cqmin;line-height:1;white-space:nowrap;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.85)}   /* the titles: Market·Brewhouse at the head, Harbor·Cellar at the foot; the PRIMARY slides a step down its line to clear the band */
-  .cell.cA .nm,.cell.cB .nm{top:6cqmin}
-  .cell.cC .nm,.cell.cD .nm{bottom:6cqmin}
   /* loop colours: A Market=gold · B Brewhouse=red · C Harbor=sea · D Cellar=green */
   .cell.A{background:linear-gradient(155deg,#cda522,#9c7414);color:#2b2018}
   .cell.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .cell.C{background:linear-gradient(155deg,#3d6b7e,#244554)}
   .cell.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
-  .cell .wk{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:2cqmin;flex-wrap:wrap;justify-content:center;align-items:center;max-width:58%;z-index:3}   /* line-less workers stand at the tile's centre, on the diagonal's crossing */
+  .cell .wk{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:2cqmin;flex-wrap:wrap;justify-content:center;align-items:center;max-width:58%;z-index:3}   /* line-less workers stand at the tile's centre */
   /* v6.4b THE SPLIT STATION — a diagonal divides each tile into a ROW half and a COLUMN half;
      the worker stands on the half it worked (the standing pawn is the record, as on the table) */
   .cell .diag{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
-  .cell .diag line{stroke:rgba(244,234,208,.42);stroke-width:1.1;stroke-dasharray:2.6 3.6;vector-effect:non-scaling-stroke}   /* a subtle stitched hairline — the halves whisper, the icons speak */
+  .cell .diag .arcline{fill:none;stroke:rgba(244,234,208,.42);stroke-width:1.1;stroke-dasharray:2.6 3.6;vector-effect:non-scaling-stroke}   /* the title's arc — a subtle stitched line strung between the two icons */
+  .cell .diag .arctxt{font-variant:small-caps;font-weight:bold;font-size:13px;letter-spacing:.5px;text-anchor:middle;dominant-baseline:central;fill:#f4ead0;stroke:rgba(20,14,8,.7);stroke-width:1.2px;paint-order:stroke;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}   /* 13 svg units = 13cqmin on the square tile */
   .cell .wz{position:absolute;z-index:4;display:flex;align-items:center;gap:1.5cqmin}
   .cell .wz .ic,.cell .wz svg{width:9cqmin;height:9cqmin;opacity:.85}
   .cell .wz img.ai{width:11cqmin;height:11cqmin;opacity:.9;filter:drop-shadow(0 1px 2px rgba(0,0,0,.65))}
@@ -3753,6 +3747,7 @@ function renderGrid(){
     const WPOS={A:{row:'tr',col:'bl'},B:{row:'tl',col:'br'},C:{row:'br',col:'tl'},D:{row:'bl',col:'tr'}};   // each half's mark holds its SIDE corner (the wedge's own apex)
     const HITS={A:{row:'0 0,100% 0,100% 100%',col:'0 0,100% 100%,0 100%'},B:{row:'0 0,100% 0,0 100%',col:'100% 0,100% 100%,0 100%'},
                 C:{row:'100% 0,100% 100%,0 100%',col:'0 0,100% 0,0 100%'},D:{row:'0 0,100% 100%,0 100%',col:'0 0,100% 0,100% 100%'}};
+    const ARCD={A:'M18 90Q62 62 90 18',B:'M10 18Q38 62 82 90',C:'M18 10Q62 38 90 82',D:'M10 82Q38 38 82 10'};   // the title's arc — the corridor between the two icons, bowed toward the ALT
     const wz=which=>{const pn=LINES[o[which]].cells.find(x=>x!==c);
       const alt=stnActTxt(cur(),STN_A[pn]).split(' — ')[0].split(' (')[0];
       const stand=S.players.filter(p=>p.cell===c&&p.line===o[which])
@@ -3774,11 +3769,10 @@ function renderGrid(){
     const SCN={Market:'market',Brewhouse:'brewhouse',Cellar:'cellar',Harbor:'harbor'}[act];
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
       +'<img class="scn" src="art/scene-'+SCN+'.png" alt=""><div class="scngrad"></div>'
-      +'<svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line '+((c==='A'||c==='D')?'x1="0" y1="0" x2="100" y2="100"':'x1="100" y1="0" x2="0" y2="100"')+'/></svg>'+wz('row')+wz('col')+hits
+      +'<svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path id="arc'+c+'" class="arcline" d="'+ARCD[c]+'"/><text class="arctxt"><textPath href="#arc'+c+'" startOffset="50%">'+act+'</textPath></text></svg>'+wz('row')+wz('col')+hits
       +'<span class="pic pos-'+({A:'tl',B:'tr',C:'bl',D:'br'})[c]+'" data-tip="'+attr('PRIMARY (your worker here): '+stnActTxt(cur(),STN_P[c]))+'">'+LU(STATION_ICON[act])+'</span>'
       +'<span class="aic pos-'+({A:'br',B:'bl',C:'tr',D:'tl'})[c]+'" data-tip="'+attr('ALTERNATE (served across the line): '+stnActTxt(cur(),STN_A[c]))+'">'+LU(STATION_ALT_ICON[act])+'</span>'
       +'<div class="stn">'
-      +'<div class="nm">'+act+'</div>'
       +'<div class="wk">'+pawns+'</div>'
       +'</div></div>';
   });

@@ -32,10 +32,10 @@
   other station its ALTERNATE; the line's two end slots each load. **Each station tile is
   SPLIT ON THE DIAGONAL into a ROW half and a COLUMN half (v6.4b)** — the diagonal is the
   tile's axis: the **PRIMARY prints LARGE on the line at the OUTSIDE corner**, the
-  **ALTERNATE small at the INSIDE corner**, each half's side corner prints the ALTERNATE
-  verb the line's far station serves (the action that half earns), the name sits at the
-  head (Market · Brewhouse) or foot (Harbor · Cellar) with the PRIMARY a step down its
-  line to clear it — and the worker stands on the half it worked (the pawn's position is
+  **ALTERNATE (nearly as large) at the INSIDE corner**, each half's side corner prints the
+  ALTERNATE verb the line's far station serves (the action that half earns), the **name
+  rides a curved ARC through the tile's middle, strung between the two icons** — and the
+  worker stands on the half it worked (the pawn's position is
   the table's record of the line; no mechanic rides it).
 - **The Destinations board** — every Kontor panel adds **2 factor-seat sockets** and its
   printed **KONTORHAUS power** (Bruges *+1 G per landing cask* · London *charts free* ·
