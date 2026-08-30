@@ -139,6 +139,16 @@
 > chips reshuffle across existing art too: `goods-1` · `station-age-1` · `station-age-2` ·
 > `bourse-pm1` · `bourse-pm2` (still standing in on the ±1 glyph — see the table below).
 
+> **Round 13 (designer, 2026-08-30): the kontor crests go CULTURAL and fill their frames.**
+> Colour stays the primary key; the charges now carry each kontor's culture — Bruges the
+> two-arch canal bridge with the swan (pick A) · London the white Tower keep with the red
+> pennant (B) · Bergen the crossed stockfish saltire (A) · Novgorod the white church with
+> the golden onion dome (A) — four silhouettes that read apart before the colour does.
+> Every crest is alpha-trimmed to FILL the frame on its longest axis (the padding ruling —
+> now standard for sticker landings), and `kontor.png` recomposites from the winners. Batch
+> lesson: this run returned grey studio backdrops, so the keyer now samples the actual
+> backdrop colour before flooding (adaptive keyout joins the pipeline).
+
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
 > (the tiles already carry full-bleed art). **ADDED: one icon per Kontor** — a city crest
