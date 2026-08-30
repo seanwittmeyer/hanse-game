@@ -320,7 +320,8 @@ Supersedes the v5.5 venture queue: the two WANTED venture portraits (`venture-fa
 `venture-warehouse-l2`) are ON HOLD while the Venture family is tabled — do not generate.*
 
 ### 1 · The sea-map board (the flagship piece)
-- **seamap.png** — the SEA MAP board background (the print kit's second board; the app's
+- **seamap.png** — **LANDED 2026-08-30 (pick E** — the left-edge wharf-works chart**)**; hooked behind the print seaBoard and the app Sea panel under a parchment/dark wash. The original brief:
+- the SEA MAP board background (the print kit's second board; the app's
   Sea panel can ride a crop). A c.1350 **portolan-style chart of the North & Baltic Seas**:
   parchment-toned open water with fine rhumb lines and a small compass rose, the home wharf
   at the LEFT edge, coastlines faint at top and bottom, calm empty water through the middle
@@ -358,7 +359,7 @@ matching `ESTABLISHMENTS` row in `components.js`.
 ### 4 · Icons (the sticker set — `art/icons/`, then wire `ICON_ART` in `components.js`)
 1. **chart.png** — **LANDED 2026-08-30 (pick D)**: the divider compass astride the chart scrap; `ICON_ART['compass']='chart'` wired — every compass site swaps.
 2. **bourse-pm2.png** — **LANDED 2026-08-30**: the recipe twin of pm1 (deterministic composite); the ICON_ART stand-in swapped.
-3. **post.png** — REBRIEFED 2026-08-30 (designer): the post is an OUTPOST — a small canvas campaign TENT with a tall pennant flag on a tiny sandy islet; the mooring-post round is retired. Options out.
+3. **post.png** — **LANDED 2026-08-30 (tent pick B):** the outpost tent on its islet; the post-meaning `map-pin` sites swap (presence keeps `map-pin`).
 4. **kontorhaus.png** — **LANDED 2026-08-30 (pick E** — the blue-grey gable**)**; the app's ⌂ text sites swap to the icon.
 5. **current.png** — **LANDED 2026-08-30 (pick E)**; `ICON_ART['waves']='current'`.
 6. **closure.png** — **LANDED 2026-08-30 (pick C)**; the closure tile + print sea-board lock sites swap (the brewery slot-cover keeps its Lucide lock — different meaning).

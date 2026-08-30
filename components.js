@@ -26,7 +26,7 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   'star-plus1':'star-plus1','star-plus2':'star-plus2','star-plus3':'star-plus3','star-plus4':'star-plus4',
   'star-minus1':'star-minus1','star-minus2':'star-minus2','star-minus3':'star-minus3',
   'swap-dice':'swap-dice','venture-build':'venture-build',redeal:'redeal',
-  compass:'chart',waves:'current',closure:'closure',factor:'factor',kontorhaus:'kontorhaus',
+  compass:'chart',waves:'current',closure:'closure',factor:'factor',kontorhaus:'kontorhaus',post:'post',
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
 const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const LU=(n,cls)=>ICON_ART[n]?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/icons/'+ICON_ART[n]+'.png" alt="">':LUX(n,cls);
@@ -208,7 +208,7 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'Deliver a '+LU('beer')+': '+LU('star-plus1','starmark'), g:1, h:1, c:'#5b3a8e', n:1},   // v5.7 re-derive ⚙ — the chronicle records every voyage (the Manifest claim retired)
   {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), g:2, c:'#5b3a8e', n:1},
   {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:LU('map-pin')+' Place presence: '+LU('star-plus2','starmark'), g:1, c:'#5b3a8e', n:1},   // v4.12: +2★ ⚙ per placed die
-  {ic:'scale',      nm:'Wharfinger', slug:'quaymaster', art:'an iron-bound toll chest on a wharf ledger stand', act:LU('map-pin')+' Your posts’ tolls: <span class="g">+1'+LU('wheat','g ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v6.1 re-derive (was the Chandler's swap) — compounds the Toll Court; PLACEHOLDER art: the freed quaymaster shot
+  {ic:'scale',      nm:'Wharfinger', slug:'quaymaster', art:'an iron-bound toll chest on a wharf ledger stand', act:LU('post')+' Your posts’ tolls: <span class="g">+1'+LU('wheat','g ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v6.1 re-derive (was the Chandler's swap) — compounds the Toll Court; PLACEHOLDER art: the freed quaymaster shot
   {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:LU('ship')+' Commission: pay no fee', h:1, c:'#5b3a8e', n:1},
   // ---- the SEA singles (v6.0/v6.2 re-derives of the v5.1 alt-upgrade pair) ⚙ ----
   {ic:'navigation', nm:'Pilot', slug:'broker', art:'a weathered seaman at a whipstaff, reading the water', act:'At turn start: a '+LU('sailboat')+' with your '+LU('beer')+' advances 1', g:1, c:'#5b3a8e', n:1},   // v6.0 re-derive (was the Broker); PLACEHOLDER art: the broker shot

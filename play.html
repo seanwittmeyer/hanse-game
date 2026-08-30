@@ -374,7 +374,7 @@
   .bb-cell.on{background:#2b2018;color:#f4ead0;font-weight:bold;opacity:1}
   @media(max-width:480px){.bb-nm{flex-basis:60px;font-size:.74rem}.bb-cell{width:22px;height:17px}}
   /* THE SEA BOARD — the map as a component: water-tile legs, the Kontor caps end the lanes */
-  .seamap{display:grid;grid-template-columns:26px minmax(88px,1.1fr) minmax(88px,1.1fr) minmax(96px,1fr);grid-auto-rows:minmax(54px,auto);gap:7px;max-width:880px;margin:0 auto}
+  .seamap{display:grid;grid-template-columns:26px minmax(88px,1.1fr) minmax(88px,1.1fr) minmax(96px,1fr);grid-auto-rows:minmax(54px,auto);gap:7px;max-width:880px;margin:0 auto;background:linear-gradient(rgba(24,32,36,.55),rgba(24,32,36,.55)),url('art/seamap.png') center/cover;border-radius:10px;padding:8px}
   .sea-wharf{grid-row:1/5;grid-column:1;writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;gap:5px;background:var(--parch2);border:2px solid var(--line);border-radius:8px;font-variant:small-caps;font-weight:bold;letter-spacing:1.5px;color:var(--ink2);font-size:.8rem}
   .sea-leg{border:2px solid #1d3845;border-radius:8px;background:linear-gradient(160deg,var(--sea2),var(--sea));color:#f4ead0;padding:4px 7px;display:flex;flex-direction:column;gap:2px;min-width:0}
   .sea-leg .lnm{font-variant:small-caps;font-weight:bold;font-size:.76rem;line-height:1.2;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
@@ -1792,7 +1792,7 @@ function chartApply(p,o){pay(p,o.fee);
     log(p.name+' '+LU('compass')+' CHARTS <b>'+SEA[o.w].name+'</b> — the passage opens'+(freePost?'; the charter’s <b>post</b> stands there free':'')+'.',true);
     if(freePost)(S.posts[o.w]=S.posts[o.w]||[]).push(p.id);}
   else if(o.k==='post'){(S.posts[o.w]=S.posts[o.w]||[]).push(p.id);
-    log(p.name+' raises a '+LU('map-pin')+' <b>post</b> at <b>'+SEA[o.w].name+'</b> — any Ship entering there pays '+POST_RENT_G+' G.',true);}
+    log(p.name+' raises a '+LU('post')+' <b>post</b> at <b>'+SEA[o.w].name+'</b> — any Ship entering there pays '+POST_RENT_G+' G.',true);}
   else if(o.k==='factor'){(S.factors[o.w]=S.factors[o.w]||[]).push(p.id);
     log(p.name+' seats a '+LU('landmark')+' <b>factor</b> at <b>'+DEST[o.w].name+'</b> — the trading license, and a +1 step after their landings there.',true);}
   else if(o.k==='upgfactor'){(S.factorUpg[o.w]=S.factorUpg[o.w]||[]).push(p.id);   // v6.1 — the factor flips to the Kontorhaus
@@ -2368,7 +2368,7 @@ function seaEnterSpace(t){const w=LANES[t.dest][t.pos];if(!w)return false;
   (S.posts[w]||[]).forEach(pid=>{const o=S.players[pid];if(!o)return;
     const upg=postUpgOf(w,pid);
     gain(o,postRentFor(w,pid),0);
-    if(!aiSimulating)log('↳ '+o.name+'’s '+LU(upg?POST_UPGS[upg].icon:'map-pin')+' '+(upg?'<b>'+POST_UPGS[upg].name+'</b>':'post')+' at '+SEA[w].name+' collects its toll.');
+    if(!aiSimulating)log('↳ '+o.name+'’s '+LU(upg?POST_UPGS[upg].icon:'post')+' '+(upg?'<b>'+POST_UPGS[upg].name+'</b>':'post')+' at '+SEA[w].name+' collects its toll.');
     if(upg&&shipHasCaskOf(t,pid)){
       if(upg==='victpost'){gain(o,1,1);
         if(!aiSimulating)log('↳ the '+LU('package')+' <b>Victualling Post</b> provisions its own — '+o.name+' gains 1 G 1 H.');}
@@ -3499,7 +3499,7 @@ function renderAid(){
       +row('flask-conical','Brewhouse','P: Brew — search the stack, choose the tile · A: Trade ±1 (±2 with the Bergen Kontorhaus; a seated factor unlocks it)')
       +row('age-3','Cellar','P: Age '+CELLAR_POOL+', split freely · A: Sail — advance a ship 1 leg (push '+costStr(PUSH_FEE)+' if none of your casks ride)')
       +row('ship','Harbor','P: Commission (Skute 2G · Cog 1G · Hulk free) + 1 load · A: Load 1 → any docked Ship')+'</div>'
-      +row('map-pin','Posts &amp; factors — your 6 house markers (Chart, at the Market)','a post pays '+POST_RENT_G+'G on every entering ship · a factor = the TRADE license + a +1 step after your landings there')
+      +row('post','Posts &amp; factors — your 6 house markers (Chart, at the Market)','a post pays '+POST_RENT_G+'G on every entering ship · a factor = the TRADE license + a +1 step after your landings there')
       +row('landmark','Upgrades — CHART again to deepen a marker','a post flips onto an establishment tile ('+costStr(POST_UPG_FEE)+', supply 2 each): Toll Court 2G tolls · Victualling Post 1G1H when your cask enters · Pilot’s Rest +1 leg when your cask enters · a factor flips to the KONTORHAUS ('+costStr(FACTOR_UPG_FEE)+') — its power is printed on the Kontor’s panel')
       +row('bourse','The Bourse','a LANDING scores die + the marker as printed then · then each beer aboard steps −1 (once per beer) · UP = TRADE, the factor’s step, the toll bench, Bergen')+'</div>'
     +'<div class="asec"><b>End &amp; score</b>'
@@ -3849,7 +3849,7 @@ function renderShop(){
   {const used=markersUsed(p);
    let rows='';
    SEA_KEYS.forEach(w=>{if((S.posts[w]||[]).includes(p.id)){const u=postUpgOf(w,p.id);const E=u?POST_UPGS[u]:null;
-     rows+='<div class="note">'+LU(E?E.icon:'map-pin')+' '+(E?'<b>'+E.name+'</b>':'post')+' · '+SEA[w].name+' <span style="opacity:.7">('+(E?E.desc:'toll '+postRentFor(w,p.id)+'G per entering ship')+')</span></div>';}});
+     rows+='<div class="note">'+LU(E?E.icon:'post')+' '+(E?'<b>'+E.name+'</b>':'post')+' · '+SEA[w].name+' <span style="opacity:.7">('+(E?E.desc:'toll '+postRentFor(w,p.id)+'G per entering ship')+')</span></div>';}});
    KONTORE.forEach(k=>{if(hasFactorAt(p,k)){const kh=hasKontorhaus(p,k);
      rows+='<div class="note">'+LU('landmark')+' '+(kh?'<b>'+KONTORHAUS[k].name+'</b>':'factor · '+DEST[k].name)+' <span style="opacity:.7">('+(kh?KONTORHAUS[k].desc:'the license + the +1 step')+')</span></div>';}});
    h+='<div style="font-size:.82rem">'+(rows||'<div class="note">(none placed — CHART, at the Market, raises them)</div>')
