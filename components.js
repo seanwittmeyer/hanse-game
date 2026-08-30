@@ -208,11 +208,11 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'Deliver a '+LU('beer')+': '+LU('star-plus1','starmark'), g:1, h:1, c:'#5b3a8e', n:1},   // v5.7 re-derive ⚙ — the chronicle records every voyage (the Manifest claim retired)
   {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), g:2, c:'#5b3a8e', n:1},
   {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:LU('map-pin')+' Place presence: '+LU('star-plus2','starmark'), g:1, c:'#5b3a8e', n:1},   // v4.12: +2★ ⚙ per placed die
-  {ic:'scale',      nm:'Wharfinger', slug:'quaymaster', art:'an iron-bound toll chest on a wharf ledger stand', act:LU('post')+' Your posts’ tolls: <span class="g">+1'+LU('wheat','g ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v6.1 re-derive (was the Chandler's swap) — compounds the Toll Court; PLACEHOLDER art: the freed quaymaster shot
+  {ic:'scale',      nm:'Wharfinger', art:'an iron-bound toll chest on a wharf ledger stand', act:LU('post')+' Your posts’ tolls: <span class="g">+1'+LU('wheat','g ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v6.1 re-derive (was the Chandler's swap) — compounds the Toll Court
   {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:LU('ship')+' Commission: pay no fee', h:1, c:'#5b3a8e', n:1},
   // ---- the SEA singles (v6.0/v6.2 re-derives of the v5.1 alt-upgrade pair) ⚙ ----
-  {ic:'navigation', nm:'Pilot', slug:'broker', art:'a weathered seaman at a whipstaff, reading the water', act:'At turn start: a '+LU('sailboat')+' with your '+LU('beer')+' advances 1', g:1, c:'#5b3a8e', n:1},   // v6.0 re-derive (was the Broker); PLACEHOLDER art: the broker shot
-  {ic:'compass',    nm:'Surveyor', slug:'brewer-s-mate', art:'a divider compass over a sea chart', act:LU('compass')+' Chart: passage &amp; post fees waived', h:1, c:'#5b3a8e', n:1},   // v6.0 re-derive (was the Brewer's Mate); the factor-side fees still apply; PLACEHOLDER art
+  {ic:'navigation', nm:'Pilot', art:'a weathered seaman at a whipstaff, reading the water', act:'At turn start: a '+LU('sailboat')+' with your '+LU('beer')+' advances 1', g:1, c:'#5b3a8e', n:1},   // v6.0 re-derive (was the Broker)
+  {ic:'compass',    nm:'Surveyor', art:'a divider compass over a sea chart', act:LU('compass')+' Chart: passage &amp; post fees waived', h:1, c:'#5b3a8e', n:1},   // v6.0 re-derive (was the Brewer's Mate); the factor-side fees still apply
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
