@@ -359,7 +359,7 @@ matching `ESTABLISHMENTS` row in `components.js`.
 6. **closure.png** — **LANDED 2026-08-30 (pick C)**; the closure tile + print sea-board lock sites swap (the brewery slot-cover keeps its Lucide lock — different meaning).
 7. **factor.png** — **LANDED 2026-08-30 (pick A)**; mapped as `factor` — call sites swap in the code pass.
 
-### 5 · Closure tiles ×2 — LANDED 2026-08-30 (pick E, one painting both straits)
+### 5 · Closure tiles ×2 — GEOGRAPHIC since 2026-08-30 (designer): Dover A (the chalk cliffs, the London run) · Sound A (the red-brick toll castle, the Novgorod run) — each strait its own painting
 - **closure-dover.png** · **closure-sound.png** — REBRIEFED calm by the designer ("closure
   isn't supposed to be scary and stormy"): an ordinary day, a chain drawn across a quiet
   strait between settled headlands — administrative, not menacing. The storm-dark brief is
