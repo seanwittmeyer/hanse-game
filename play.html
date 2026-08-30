@@ -128,7 +128,8 @@
   /* v6.4b THE SPLIT STATION — a diagonal divides each tile into a ROW half and a COLUMN half;
      the worker stands on the half it worked (the standing pawn is the record, as on the table) */
   .cell .diag{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
-  .cell .diag .arcline{fill:none;stroke:rgba(244,234,208,.42);stroke-width:1.1;stroke-dasharray:2.6 3.6;vector-effect:non-scaling-stroke}   /* the title's arc — a subtle stitched line strung between the two icons */
+  .cell .diag line{stroke:rgba(244,234,208,.42);stroke-width:1.1;stroke-dasharray:2.6 3.6;vector-effect:non-scaling-stroke}   /* the straight stitched divider — the wharf's centre out to the tile's outer corner */
+  .cell .diag .arcpath{fill:none;stroke:none}   /* the title's rail — geometry only, never inked */
   .cell .diag .arctxt{font-variant:small-caps;font-weight:bold;font-size:13px;letter-spacing:.5px;text-anchor:middle;dominant-baseline:central;fill:#f4ead0;stroke:rgba(20,14,8,.7);stroke-width:1.2px;paint-order:stroke;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}   /* 13 svg units = 13cqmin on the square tile */
   .cell .wz{position:absolute;z-index:4;display:flex;align-items:center;gap:1.5cqmin}
   .cell .wz .ic,.cell .wz svg{width:9cqmin;height:9cqmin;opacity:.85}
@@ -3769,7 +3770,7 @@ function renderGrid(){
     const SCN={Market:'market',Brewhouse:'brewhouse',Cellar:'cellar',Harbor:'harbor'}[act];
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
       +'<img class="scn" src="art/scene-'+SCN+'.png" alt=""><div class="scngrad"></div>'
-      +'<svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path id="arc'+c+'" class="arcline" d="'+ARCD[c]+'"/><text class="arctxt"><textPath href="#arc'+c+'" startOffset="50%">'+act+'</textPath></text></svg>'+wz('row')+wz('col')+hits
+      +'<svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line '+((c==='A'||c==='D')?'x1="0" y1="0" x2="100" y2="100"':'x1="100" y1="0" x2="0" y2="100"')+'/><path id="arc'+c+'" class="arcpath" d="'+ARCD[c]+'"/><text class="arctxt"><textPath href="#arc'+c+'" startOffset="50%">'+act+'</textPath></text></svg>'+wz('row')+wz('col')+hits
       +'<span class="pic pos-'+({A:'tl',B:'tr',C:'bl',D:'br'})[c]+'" data-tip="'+attr('PRIMARY (your worker here): '+stnActTxt(cur(),STN_P[c]))+'">'+LU(STATION_ICON[act])+'</span>'
       +'<span class="aic pos-'+({A:'br',B:'bl',C:'tr',D:'tl'})[c]+'" data-tip="'+attr('ALTERNATE (served across the line): '+stnActTxt(cur(),STN_A[c]))+'">'+LU(STATION_ALT_ICON[act])+'</span>'
       +'<div class="stn">'
