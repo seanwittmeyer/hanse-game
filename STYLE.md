@@ -80,7 +80,7 @@ governed here.
 | **build** | Place a building tile from the display on a slot; the builder stands a tray die on it at the tile's printed start face (v4.9b — every use turns it up; pips score at game end) | ~~raise~~, ~~place~~ (for buildings), ~~construct~~ |
 | **seat** | Place a Specialist into an open seat | ~~hire~~ (allowed as the load-bonus label only) |
 | **claim** | Take a Manifest demand line your delivered cask satisfies; score its ★ at once (each line once per voyage) | ~~fulfil~~ |
-| **resolve** | Work through your line: its 2 stations + 2 slots — any order, each once, all optional | ~~resolve the stops~~ |
+| **resolve** | Work through your station's stops: its 2 printed actions + its 2 flanking slots — any order, each once, all optional | ~~resolve the stops~~ |
 | **gain / spend / pay** | Per the house guide §4.5 | — |
 | **warp** | Move an empty hull to another shipless slot (Capstan) | ~~move~~ (for ships) |
 | **overbuild** | Build on an occupied slot (one payment; the old tile is boxed) | — |
@@ -101,7 +101,7 @@ here*.
 | Beers | Gruit · Hopped · Broyhan · Keut · Mumme · Bock (by quality, Broyhan before Keut) |
 | Scoring | Delivered dice · Scored in play · Majorities · Buildings (the standing dice) · the Flight · Guild ★ |
 | Ships | Skute · Cog · Hulk |
-| A turn | Move · Choose a line · Resolve the line |
+| A turn | Move · Work the station |
 
 ## §4. Applied decisions
 
@@ -219,6 +219,7 @@ does not print these until Phase 2 locks them; the designer renames freely at th
 | Kontorhaus | n | The factor's upgraded side; its power prints ON the Kontor panel, one per port | **the proper names Hanzehuis/Steelyard/Bryggen/Peterhof are TAKEN** (§4b, the Staple House faces) — the generic *Kontorhaus* on purpose |
 | Wharfinger | n | The tolls Specialist (v6.1 re-derive of the Chandler's swap): your posts' tolls +1 G | *Chandler* retires from the roster with its swap |
 | ~~the walk~~ | — | RETIRED at v6.3 — the turn frame is again the v5 **line activation** (MOVE adjacent · row/column · stops), so *line* (§4) is the word; the stations print **PRIMARY / ALTERNATE** single verbs — each ALT the station's own lesser counter (v6.4: Market Source 3/Chart · Brewhouse Brew/Trade · Harbor Commission/Sail · Cellar Age 3/Load-any) | ✕ v6.3 |
+| ~~the line (turn term)~~ | — | RETIRED at v6.5 — the AP cut: a turn is MOVE adjacent · **work the station** (its OWN PRIMARY + ALTERNATE + a load at each of its two flanking slots, any order, all optional); *line* survives as board-geometry prose only, and the **On line** trigger (§4b) is dormant pending the Phase 2 re-read | ✕ v6.5 |
 | Pilot | n | The turn-start drip Specialist (v6.0 re-derive of the Broker): a Ship with your cask advances one leg | *Grain Factor*-style crew noun; the art rides the broker stand-in |
 | Surveyor | n | The chart Specialist (v6.0 re-derive of the Brewer's Mate): your passage & post fees waived (factor-side fees stand) | — |
 | On enter | trig | The sea tile trigger (v6.1): a Ship enters this leg — the establishment grammar; a condition follows per §4 (e.g. *On enter · your cask aboard*) | joins the ruled tile-trigger set (§4b) at the Phase 2 lock |

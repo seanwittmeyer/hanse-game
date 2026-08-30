@@ -47,7 +47,7 @@ function stampSeats(){
 }
 
 // the whole UI-entry action surface (the buttons' onclick functions + endTurn + undo)
-var GATED=['doMove','chooseLine','resolveStop','backToStops','srcTake','srcSkip','commPick','commPlace','commBack','commSkip',
+var GATED=['doMove','resolveStop','backToStops','srcTake','srcSkip','commPick','commPlace','commBack','commSkip',
   'brewPick','brewVerbPick','brewVerbBack','ageAllot','ageDone','ageSkip','exchangePick','exchangeSkip','capPick','capPlace','capSkip','rackPick','rackSkip',
   'hopexAllot','hopexDone','abbeyGo','assayPick','assaySkip','reachPick','reachSkip','recipeGainPick','surveyPick','placeBldgOn',
   'hirePick','loadPickCask','loadOnto','loadOptGo','loadBack','loadSkip','precipePick','bspecPick','benefitPick','manPick',

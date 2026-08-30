@@ -53,7 +53,15 @@ Harbor *Commission / SAIL* · Cellar *Age 3 / LOAD 1 any* (Market Chart and Brew
 Trade already read as their stations' own counters). Turn shapes after the swap: the
 Harbor row = Commission + Load (up to four boardings with the maiden load and the caps —
 the fewer/bigger pillar at work) · the Cellar row = Age + Sail · the Brewhouse column =
-Brew + Load. `KEY hanse-v64` · verify-v6 71/71 · sim clean. **v6.4b:** the station tiles
+Brew + Load. **v6.5 (designer-ruled 2026-08-30) — THE AP CUT: the line retires whole.**
+A turn = MOVE adjacent · **work the station's OWN counter** — its PRIMARY + its
+ALTERNATE + a LOAD at each of its two flanking slots (Market s1·s8 · Brewhouse s2·s3 ·
+Harbor s6·s7 · Cellar s4·s5) — any order, all optional. The row/column choice, the
+far-station read, and the pawn-on-half record retire (the tile's diagonal survives as
+pure composition); each verb now lives at exactly ONE station beside its natural partner
+(Age+Load = the shipping visit · Brew+Trade · Commission+Sail · Source+Chart).
+`KEY hanse-v65` · verify-v6 72/72 · sim clean (0/0; rounds ~24–26 at 2–4p, SAIL/TRADE/
+CHART all live — the Phase 4 oracle re-reads pace at skill). **v6.4b:** the station tiles
 split on the diagonal into **row/column worker halves** (the diagonal is the tile's axis —
 PRIMARY large on the line at the outside corner, the ALT nearly as large at the inside;
 the name arcs between the two icons through the tile's middle; the halves carry no mark;

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v6.4 “The Voyage”</title>
+<title>Brewhouses of the Hanse — Play (hot-seat) · v6.5 “The Voyage”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -124,20 +124,12 @@
   .cell.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .cell.C{background:linear-gradient(155deg,#3d6b7e,#244554)}
   .cell.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
-  .cell .wk{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:2cqmin;flex-wrap:wrap;justify-content:center;align-items:center;max-width:58%;z-index:3}   /* line-less workers stand at the tile's centre */
-  /* v6.4b THE SPLIT STATION — a diagonal divides each tile into a ROW half and a COLUMN half;
-     the worker stands on the half it worked (the standing pawn is the record, as on the table) */
+  .cell .wk{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:2cqmin;flex-wrap:wrap;justify-content:center;align-items:center;max-width:58%;z-index:3}   /* the workers stand at the tile's centre */
+  /* the diagonal is the tile's AXIS — pure composition: the icons ride it, the title arcs beside it */
   .cell .diag{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
   .cell .diag line{stroke:rgba(244,234,208,.42);stroke-width:1.1;stroke-dasharray:2.6 3.6;vector-effect:non-scaling-stroke}   /* the straight stitched divider — the wharf's centre out to the tile's outer corner */
   .cell .diag .arcpath{fill:none;stroke:none}   /* the title's rail — geometry only, never inked */
   .cell .diag .arctxt{font-variant:small-caps;font-weight:bold;font-size:13px;letter-spacing:.5px;text-anchor:middle;dominant-baseline:central;fill:#f4ead0;stroke:rgba(20,14,8,.7);stroke-width:1.2px;paint-order:stroke;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}   /* 13 svg units = 13cqmin on the square tile */
-  .cell .wz{position:absolute;z-index:4;display:flex;align-items:center;gap:1.5cqmin}
-  .cell .wz .pawn{width:12cqmin;height:12cqmin;border-width:1.5cqmin}
-  .cell .wz.tr{top:6cqmin;right:6cqmin}
-  .cell .wz.br{bottom:6cqmin;right:6cqmin}
-  .cell .wz.bl{bottom:6cqmin;left:6cqmin}
-  .cell .wedgehit{position:absolute;inset:0;z-index:6;cursor:pointer;background:rgba(216,167,42,.13)}
-  .cell .wedgehit:hover{background:rgba(216,167,42,.3)}
   .pawn{width:15px;height:15px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.4)}
   .cell .wk .pawn{width:13cqmin;height:13cqmin;border-width:1.5cqmin}
   .cell.legal{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite}
@@ -743,7 +735,7 @@ const ICONTIP={
   package:'Storage — how many goods you can hold.',
   layers:'The Flight — distinct beers shipped: (n−1)², min 3.',
   check:'Ready — the die has reached the quality; the cask may board.',
-  'user-round':'Worker — move it to an adjacent station each turn, then work its row or column.',
+  'user-round':'Worker — move it to an adjacent station each turn, then work that station: its two printed actions + a load at each adjacent slot.',
   unlock:'The Flight — distinct beers shipped: (n−1)², min 3.',
   dices:'The cask quality die — the cask, the presence and the clock in one; the first EMPTY tray sets the final round.',
 };
@@ -824,7 +816,7 @@ function pileVerbs(style){const c={};pileList(style).forEach(v=>c[v]=(c[v]||0)+1
 function caskAct(t){return t.act||STYLES[t.style].act;}
 // the station face: ONE big ACTION icon over a top-down scrim (the print board's faces)
 const STATION_ICON={Market:'goods-3',Brewhouse:'flask-conical',Cellar:'age-3',Harbor:'ship'};   // the PRIMARY icon
-const STATION_ALT_ICON={Market:'compass',Brewhouse:'bourse',Cellar:'package-plus',Harbor:'sail'};   // the ALTERNATE icon (read across the line)
+const STATION_ALT_ICON={Market:'compass',Brewhouse:'bourse',Cellar:'package-plus',Harbor:'sail'};   // the ALTERNATE icon (the same visit)
 
 // ---- DESTINATIONS: the four kontore. Value = THE DIE, everywhere (Novgorod's identity = the
 // raised gate + the 8/5/2 majority + the +2★ premium). Gates read the DIE as it boards (after
@@ -1069,7 +1061,7 @@ const UP=IMPROVEMENTS;
 function upName(k){return (UP[k]||{name:k}).name;}
 function upDesc(k){return (UP[k]||{desc:''}).desc;}
 
-// ---- THE GRID (unchanged geometry) ----
+// ---- THE GRID (the LINES/SLOTS.line groups survive as setup-balance geometry only — v6.5 removed the line from the turn) ----
 const SLOTS=[
   {id:'s1',line:'colL'},{id:'s2',line:'colR'},{id:'s8',line:'rowT'},{id:'s3',line:'rowT'},
   {id:'s7',line:'rowB'},{id:'s4',line:'rowB'},{id:'s6',line:'colL'},{id:'s5',line:'colR'},
@@ -1084,7 +1076,6 @@ const CELLROLE={A:'Source',B:'Brew',C:'Ship',D:'Age'};
 // v6.0: each station's two FLANKING slots — after the station action, a WORK turn may load
 // at ONE of them (the Harbor's own action already loads wharf-wide).
 const FLANKS={A:['s1','s8'],B:['s2','s3'],C:['s6','s7'],D:['s4','s5']};
-const cellOfLine=(cell)=>({A:{row:'rowT',col:'colL'},B:{row:'rowT',col:'colR'},C:{row:'rowB',col:'colL'},D:{row:'rowB',col:'colR'}})[cell];
 
 // ---- the player board: 3 printed vessel slots + 2 specialist seats ----
 const VSLOTS=3, VSLOTS_START=3;   // ALL floor slots open from the start — the covers are OFF
@@ -1150,7 +1141,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v64';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
+const KEY='hanse-v65';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1158,7 +1149,7 @@ const KEY='hanse-v64';  // the live build's save key — bump it on any rules ch
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v6.4 “The Voyage” · '+KEY;
+const APP_VERSION='v6.5 “The Voyage” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -1361,7 +1352,6 @@ function attr(s){return String(s).replace(/"/g,'&quot;');}
 // mini board-glyphs for the log: a 2×2 of the Wharf with the chosen station / line lit
 function cellGlyph(cell){return '<span class="lg" data-tip="'+attr(CELLNAME[cell])+'">'+['A','B','C','D'].map(c=>'<span class="'+(c===cell?'on':'')+'"></span>').join('')+'</span>';}
 function ownSq(pid){const o=S.players[pid];return '<span class="osq" style="background:'+o.color+'" data-tip="'+attr(o.name+'’s')+'"></span>';}
-function lineGlyph(lk){const lit=LINES[lk].cells;return '<span class="lg" data-tip="'+attr(LINES[lk].label)+'">'+['A','B','C','D'].map(c=>'<span class="'+(lit.includes(c)?'on':'')+'"></span>').join('')+'</span>';}
 
 // ---- tooltips for stations & slots ----
 const CELLTIP={   // v6.3 station reminders — PRIMARY / ALTERNATE, one verb each
@@ -1657,12 +1647,11 @@ function startGame(){
 }
 
 //==================================================================
-// TURN MACHINE — v6.3 THE LINE RETURNS: move to an ADJACENT station (orthogonal — the
-// diagonal never connects) · choose the ROW or the COLUMN through it · resolve the line's
-// stops in any order, all optional. Each station prints ONE PRIMARY (fired by its own
-// worker) and ONE ALTERNATE — ITS OWN LESSER COUNTER, served to the line's visitor (the
-// street model, designer-ruled 2026-08-31: you go to a street, work its main building
-// full, and pick things up at the far shop's counter in passing). Single verbs, never menus:
+// TURN MACHINE — v6.5 WORK THE STATION (the AP cut): move to an ADJACENT station
+// (orthogonal — the diagonal never connects), then work that station's WHOLE counter —
+// its printed PRIMARY, its printed ALTERNATE, and a LOAD at each of its two flanking
+// slots (FLANKS — the two adjacent ports) — in any order, all optional. No line, no
+// row/column choice: one move, one station, two verbs. Single verbs, never menus:
 // Market Source 3 / Chart · Brewhouse Brew / Trade · Harbor Commission / Sail · Cellar Age 3 / Load-any.
 //==================================================================
 const STN_P={A:'source',B:'brew',C:'comm',D:'age'};
@@ -1697,39 +1686,33 @@ function stnActWhy(a){
   if(a==='chart')return 'Nothing chartable right now (fees, seats, markers, or no delivery yet).';
   if(a==='trade')return 'A seated factor (any Kontor) unlocks TRADE.';
   return 'Not available right now.';}
-function doMove(cell,which){
+function doMove(cell){
   const p=cur();if(p.placed&&!ADJ[p.cell].includes(cell))return;
   snapshot();
-  const placing=!p.placed;p.placed=true;p.cell=cell;p.line=null;   // the pawn steps to the tile's centre until the line is chosen
+  const placing=!p.placed;p.placed=true;p.cell=cell;
   log(p.name+(placing?' places their worker at ':' moves to ')+LU(ICON[CELLNAME[cell]])+' <b>'+CELLNAME[cell]+'</b> '+cellGlyph(cell)+'.',true);
-  if(which)return chooseLine(which);   // the AI/MC/harness names the line outright
-  UI={sub:'line'};render();
+  beginStops();
 }
-function chooseLine(which){
-  const p=cur();
-  activateLine(cellOfLine(p.cell)[which]);   // sharing a station costs nothing
-}
-// a line = its two stations (the worker's own fires its PRIMARY, the other its ALTERNATE)
-// + its two cap slots (a LOAD of the Ship docked there). Buildings stay passive — they
+// a visit works the station's WHOLE counter: its PRIMARY, its ALTERNATE, and a LOAD of
+// the Ship docked at each of its two flanking slots. Buildings stay passive — they
 // serve their slot's traffic, never a stop.
-function activateLine(lk){const L=LINES[lk];const p=cur();
-  p.line=lk;   // the worker STANDS on that half of its station — the standing pawn is the record
-  log(p.name+' activates '+lineGlyph(lk)+' <b>'+L.label+'</b> '+L.cells.map(c=>LU(ICON[CELLNAME[c]])).join(''),true);
+function beginStops(){const p=cur();
   const stops=[];
   const slotStop=(cid)=>{const t=S.slots[cid];if(t&&t.type==='ship')stops.push({kind:'load',slot:cid});};
-  slotStop(L.caps[0]);
-  L.cells.forEach(c=>stops.push({kind:'cell',cell:c,alt:c!==p.cell}));
-  slotStop(L.caps[1]);
-  UI={sub:'stops',line:lk,stops,usedStops:[]};
+  slotStop(FLANKS[p.cell][0]);
+  stops.push({kind:'cell',cell:p.cell,alt:false});
+  stops.push({kind:'cell',cell:p.cell,alt:true});
+  slotStop(FLANKS[p.cell][1]);
+  UI={sub:'stops',stops,usedStops:[]};
   render();
 }
-// THE LINE IS READ LIVE — a Ship commissioned onto an active cap mid-turn opens that
-// slot's load stop this activation (a used stop never returns).
+// THE STATION IS READ LIVE — a Ship commissioned onto one of its flanking slots mid-turn
+// opens that slot's load stop this same visit (a used stop never returns).
 function refreshStops(){
-  if(!UI||!UI.line||!UI.stops)return;
-  const L=LINES[UI.line];if(!L)return;
+  if(!UI||!UI.stops)return;
+  const p=cur();if(!p||!p.placed)return;
   const used=UI.usedStops||[];
-  L.caps.forEach(cid=>{const t=S.slots[cid];
+  (FLANKS[p.cell]||[]).forEach(cid=>{const t=S.slots[cid];
     if(t&&t.type==='ship'&&used.indexOf('load:'+cid)<0&&!UI.stops.some(x=>x.kind==='load'&&x.slot===cid))UI.stops.push({kind:'load',slot:cid});});
 }
 function resolveStop(i){
@@ -1740,8 +1723,8 @@ function resolveStop(i){
   if(stop.kind==='load')return beginLoadStop(stop.slot,'stops');
   resume('stops');
 }
-function resolveStopBy(kind,key){const i=(UI.stops||[]).findIndex(x=>x.kind===kind&&(kind==='cell'?x.cell===key:x.slot===key));
-  if(i>=0&&stopAvail(UI.stops[i]))resolveStop(i);}
+function resolveStopBy(kind,key){const i=(UI.stops||[]).findIndex(x=>x.kind===kind&&(kind==='cell'?x.cell===key:x.slot===key)&&stopAvail(x));
+  if(i>=0)resolveStop(i);}   // a station's two seats share the cell key — the first AVAILABLE one fires
 // each seat is ONE verb — the stop's position on the line names it
 function enterCell(cell,alt){const p=cur();const a=seatVerb(cell,alt);
   if(!stationActAvail(p,cell,a)){log('↳ '+CELLNAME[cell]+' — '+stnActWhy(a));return resume('stops');}
@@ -1879,7 +1862,7 @@ function backToStops(){resume('stops');}
 function cellDone(){resume('stops');}
 
 // ---------- MARKET (Source) ----------
-// the STATION Source carries the line's Granary riders (ctx.riders — ticked when the
+// the STATION Source carries the Granary riders (ctx.riders — ticked when the
 // gain fires).
 function enterSource(n,rt,ctx){UI.sub='source';UI.src={n,returnTo:rt,station:!!(ctx&&ctx.station),thenBrew:!!(ctx&&ctx.thenBrew)};render();}
 function srcTake(g,h){snapshot();const p=cur();gain(p,g,h);
@@ -1909,7 +1892,7 @@ function commPlace(slot){const d=UI.comm;if(!d||d.idx==null)return;const p=cur()
   if(hasUpgrade(p,'shipwright')&&(COMMISSION_COST[sn.ship]||{}).g)log('↳ the '+LU('wrench')+' <b>Shipwright</b>’s yard waives the fee.');
   S.shipDisplay.splice(d.idx,1);refillShipDisplay();
   S.slots[slot]={type:'ship',ship:sn.ship,dest:sn.dest,load:[]};
-  refreshStops();   // a hull landing on an active line slot opens that slot's load stop
+  refreshStops();   // a hull landing on a flank of the visited station opens that slot's load stop
   // a commission scores nothing — its reward is the hull + the instant load
   log(p.name+' commissions the '+LU('sailboat')+' <b>'+SHIP_NAME[sn.ship]+'</b> → <b>'+DEST[sn.dest].name+'</b>.'+(sn.ship==='skute'?' <span class="note">(a Skute sails on its first load)</span>':''),true);
   const rt=d.returnTo;UI.comm=null;UI.stage=null;
@@ -2178,7 +2161,7 @@ function venturePick(key,lvl,free){const p=cur();const rt=UI.survey?UI.survey.re
 function flipVenture(slot,pid){const b=vAt(slot);if(!b||b.owner!==pid||b.lvl!==1)return false;
   const p=S.players[pid];const f=VENTURES[b.v].l2;
   b.lvl=2;
-  refreshStops();   // the living line: the new L2's owner stop opens this activation
+  refreshStops();   // the living station: the new L2's owner stop opens this visit (dormant family)
   log(p.name+' turns the '+LU(VENTURES[b.v].l1.icon)+' <b>'+VENTURES[b.v].l1.name+'</b> over — '+LU(f.icon)+' <b>'+f.name+'</b> now stands on '+slot+' <span class="note">(the same tile, flipped: no second piece spent)</span>.',true);
   return true;}
 function ventureFlip(key,free){const p=cur();const rt=UI.survey?UI.survey.returnTo:'stops';
@@ -2202,7 +2185,7 @@ function commitVenture(slot,key,lvl,pid){const p=S.players[pid];
   const old=vAt(slot);const oldPub=(lvl===1)?bKeyAt(slot):null;   // replacing furniture boxes the tile — no die ever stood on it
   const hi=(p.hand||[]).indexOf(key);if(hi>=0)p.hand.splice(hi,1);
   S.buildings[slot]={v:key,lvl,owner:pid};
-  refreshStops();   // the living line: a Venture raised on the active line opens its owner's stop
+  refreshStops();   // the living station: a Venture raised on a flank opens its stop (dormant family)
   const f=VENTURES[key]['l'+lvl];
   log(p.name+(lvl===1?(oldPub?' redevelops the '+LU('building-2')+'<b>'+bName(oldPub)+'</b> (the wharf is full — the worn tile is boxed) — the Venture rises: ':' opens the Venture ')+'':' CLIMBS — overbuilds their own '+(old?('<b>'+VENTURES[old.v].l1.name+'</b>'):'L1')+' with ')+LU(f.icon)+' <b>'+f.name+'</b>'+(lvl===2?' (the spent L1 tile is boxed; an L2 can never be overbuilt)':'')+' — <b>private</b>: it serves '+p.name+' alone, and carries no mason’s die ('+f.desc+').',true);
 }
@@ -2219,7 +2202,7 @@ function commitBldg(slot,key,pid,feePaid){
     pay(np,OVERBUILD_FEE);
     log('↳ the old '+LU('building-2')+bName(old.b)+' is torn down (boxed) — the ground rent is paid.');}}
   S.buildings[slot]=np?{b:key,owner:np.id,die:bldgMs(key)}:{b:key};   // the mark would start at the tile's printed face (setup deals carry none)
-  refreshStops();   // a building raised on an active line slot opens that slot's action stop
+  refreshStops();   // a building raised on a flank of the visited station opens that slot's stop
   if(np){log(np.name+' builds '+LU('building-2')+' <b>'+bName(key)+'</b> — a quality die stands on it at its printed <b>'+bldgMs(key)+'</b> (every use turns it up; the pips score at game end). It serves everyone: '+BUILDINGS[key].desc+'.',true);
     checkDiceEnd();}
   const occ=S.slots[slot];
@@ -3088,10 +3071,10 @@ function aiCommValue(p){const disp=S.shipDisplay||[];
   if(aiLateGame(p))v*=(best?1.3:0.6);   // late: only a commission that SHIPS something pays
   return v;}
 function aiHarborLoadValue(p){let best=0;wharfShips().forEach(sid=>{const v=aiLoadValue(p,sid);if(v>best)best=v;});return best;}
-function aiCellValue(p,c,alt,lk){   // v6.3 — the seat's verb is the price (P at home, A across the line)
+function aiCellValue(p,c,alt){   // the seat's verb is the price (the visited station's P or A)
   const a=seatVerb(c,alt);
   return stationActAvail(p,c,a)?aiStationActValue(p,c,a):0;}
-// one price per printed verb (the line's loads are added by aiLineScore)
+// one price per printed verb (the flank loads are added by aiStationScore)
 function aiStationActValue(p,c,a){
   const trader=aiIsTrader(p);
   if(a==='source'){const n=SRC_PRIMARY;
@@ -3146,17 +3129,15 @@ function aiVpubValue(p,b){const pk=vFace(b).pub;if(!pk)return 0;   // the public
   if(pk==='vstep')return maturingInVessels(p).length?0.9:0;
   if(pk==='vstep2')return maturingInVessels(p).length?1.6:0;
   return aiShiftPick(p,{steps:pk==='vshift2'?2:1,down:true})?0.8:0.1;}
-function aiLineScore(p,lk,home){const L=LINES[lk];let v=0;
-  const h=home||p.cell;   // the worker's station is PRIMARY; the line's other station fires its ALT
-  L.cells.forEach(c=>{v+=aiCellValue(p,c,c!==h,lk);});
-  L.caps.forEach(cid=>{const b=bAt(cid);
+function aiStationScore(p,c){let v=aiCellValue(p,c,false)+aiCellValue(p,c,true);   // the whole counter: P + A
+  (FLANKS[c]||[]).forEach(cid=>{const b=bAt(cid);
     if(b&&!b.v&&BUILDINGS[b.b].act)v+=aiVerbValue(p,BUILDINGS[b.b].act)*0.9;
-    if(b&&b.v&&b.owner===p.id&&VACT_KINDS[vKind(b)])v+=aiVactValue(p,b)*0.9;   // my Venture's stop rides the visit
-    if(b&&b.v)v+=aiVpubValue(p,b)*0.85;   // anyone's line collects the public grease
+    if(b&&b.v&&b.owner===p.id&&VACT_KINDS[vKind(b)])v+=aiVactValue(p,b)*0.9;   // my Venture's stop rides the visit (dormant family)
+    if(b&&b.v)v+=aiVpubValue(p,b)*0.85;
     v+=aiLoadValue(p,cid);});
   return v;}
 function aiStopValue(p,st){
-  if(st.kind==='cell')return aiCellValue(p,st.cell,st.alt,UI.line);
+  if(st.kind==='cell')return aiCellValue(p,st.cell,st.alt);
   if(st.kind==='bact'){const b=bAt(st.slot);return (b&&!b.v)?aiVerbValue(p,BUILDINGS[b.b].act)*0.95:0;}
   if(st.kind==='vact'){const b=vAt(st.slot);return b?aiVactValue(p,b)*0.95:0;}
   if(st.kind==='vpub'){const b=vAt(st.slot);return b?aiVpubValue(p,b):0;}
@@ -3169,19 +3150,15 @@ function aiStep(){
   aiActing=true;
   try{
     switch(UI.sub){
-      case 'move':{   // score the destination AS IF standing there (it becomes the primary)
+      case 'move':{   // score each destination by its whole counter (P + A + the flank loads)
         const cells=(!p.placed)?['A','B','C','D']:ADJ[p.cell];
         if(aiNoisy(p))return doMove(aiRandOf(cells));
-        let bc=cells[0],bv=-1e9;cells.forEach(c=>{const o=cellOfLine(c);
-          const v=Math.max(aiLineScore(p,o.row,c),aiLineScore(p,o.col,c))+Math.random()*0.01;
+        let bc=cells[0],bv=-1e9;cells.forEach(c=>{const v=aiStationScore(p,c)+Math.random()*0.01;
           if(v>bv){bv=v;bc=c;}});
         return doMove(bc);}
-      case 'line':{const o=cellOfLine(p.cell);
-        if(aiNoisy(p))return chooseLine(aiRandOf(['row','col']));
-        return chooseLine(aiLineScore(p,o.row)>=aiLineScore(p,o.col)?'row':'col');}
       case 'stops':{let bi=-1,bv=0.6;
         (UI.stops||[]).forEach((st,i)=>{if(!stopAvail(st))return;const v=aiStopValue(p,st);if(v>bv){bv=v;bi=i;}});
-        if(hallOn()){const pb=aiPourBest(p);   // hall mode: the pour competes with the line's stops
+        if(hallOn()){const pb=aiPourBest(p);   // hall mode: the pour competes with the visit's stops
           if(pb&&pb.v>Math.max(bv,1.0))return aiPourGo(p,pb);}
         if(bi<0)return endTurn();
         if(aiNoisy(p)){const av=(UI.stops||[]).map((st,i)=>stopAvail(st)?i:-1).filter(i=>i>=0);
@@ -3304,13 +3281,12 @@ let GM_MIN=2;        // minimum playouts per option
 let GM_ROLLS=0;      // ⚙ >0 spends a FIXED number of playouts per decision instead of the ms
                      // budget. A wall-clock budget makes a SHARDED oracle's strength depend on
                      // how many shards are running; a rollout budget does not. 0 = use the ms.
-const AI_MC_SUBS={move:1,line:1,stops:1,sailv:1,chart:1,fshift:1,brew:1,load:1,commission:1,placebldg:1,benefit:1,hire:1,reach:1,bshift:1};   // v6.3: the line's three forks + the sea forks are first-class samples
+const AI_MC_SUBS={move:1,stops:1,sailv:1,chart:1,fshift:1,brew:1,load:1,commission:1,placebldg:1,benefit:1,hire:1,reach:1,bshift:1};   // the move, the stops and the sea forks are first-class samples
 function aiMCOptions(p){
   const out=[];const push=(label,fn)=>out.push({label,fn});
   switch(UI.sub){
     case 'move':{const cells=(!p.placed)?['A','B','C','D']:ADJ[p.cell];
       cells.forEach(c=>push('move:'+c,()=>doMove(c)));break;}
-    case 'line':push('row',()=>chooseLine('row'));push('col',()=>chooseLine('col'));break;
     case 'stops':{(UI.stops||[]).forEach((st,i)=>{if(stopAvail(st))push('stop:'+(st.kind==='cell'?st.cell:st.kind+st.slot),()=>resolveStop(i));});
       if(hallOn()){const hi={},lo={};   // two representative pours per open Tasting — the win bid and the fill
         pourable(p).forEach(o=>{const d=p.vessels[o.vi].die;
@@ -3501,9 +3477,9 @@ function renderAid(){
     return '<tr><td class="kcell">'+LU('kontor-'+d,'kc')+'</td><td><b>'+D.name+'</b><span class="sub">min '+D.gate+'+</span></td><td>'+(PRIZE[D.benefit]||('+'+(D.vbonus||0)+'★ per die'))+'</td><td><b>'+D.maj.join('/')+'</b></td></tr>';}).join('');
   document.getElementById('aidcard').innerHTML=
     '<h2>'+ic('beer')+' Player Aid</h2>'
-    +'<div class="asec"><b>Your turn — MOVE · LINE · STOPS</b>'
+    +'<div class="asec"><b>Your turn — MOVE · WORK THE STATION</b>'
       +row('user-round','MOVE to an adjacent station','orthogonal only — the diagonal never connects; sharing costs nothing')
-      +row('layers','Activate its ROW or COLUMN','resolve the stops in any order, all optional: your station’s PRIMARY · the far station’s ALTERNATE · a LOAD at each of the line’s two end slots')+'</div>'
+      +row('layers','Work its whole counter','any order, all optional: its PRIMARY · its ALTERNATE · a LOAD at each of its two adjacent slots')+'</div>'
     +'<div class="asec"><b>The cask</b><div class="alife">'
       +stp('flask-conical','Brew')+ARR+stp('hourglass','Age +1')+ARR+stp('check','Ready')+ARR+stp('sail','Board ≥ min')+ARR+stp('compass','The voyage')+ARR+stp('map-pin','Land = ★')+'</div></div>'
     +'<div class="asec"><b>Depart &amp; land</b>'
@@ -3548,23 +3524,15 @@ function renderBar(){
   let prompt='',acts='';
   const U=UI.sub;
   if(U==='move'){const placing=!p.placed;
-    prompt=placing?'<b>Turn 1:</b> place your worker on any station — then choose its row or column.':'<b>Move</b> to an adjacent station — click it <span class="note">(the diagonal never connects)</span>.';
+    prompt=placing?'<b>Turn 1:</b> place your worker on any station — then work its two actions.':'<b>Move</b> to an adjacent station — click it <span class="note">(the diagonal never connects)</span>.';
     const cells=placing?['A','B','C','D']:ADJ[p.cell];
     acts=cells.map(c=>btn((placing?'⚑ ':'→ ')+LU(ICON[CELLNAME[c]])+' '+CELLNAME[c],'doMove(\''+c+'\')','primary')).join('');}
-  else if(U==='line'){const o=cellOfLine(p.cell);   // v6.3 — the row or the column through the worker's station
-    const sum=lk=>{const L=LINES[lk];
-      const verbs=L.cells.map(c=>stnActTxt(p,seatVerb(c,c!==p.cell)).split(' — ')[0].split(' (')[0]).join(' + ');
-      const ships=L.caps.filter(cid=>{const t=S.slots[cid];return t&&t.type==='ship';}).length;
-      return verbs+(ships?' + '+ships+' load'+(ships===1?'':'s'):'');};
-    prompt='Choose your <b>line</b> — the row or the column through '+CELLNAME[p.cell]+'. <span class="note">(your station works its PRIMARY · the far station its ALTERNATE · the end slots load)</span>';
-    acts=btn(LINES[o.row].label+' <span class="note">· '+sum(o.row)+'</span>','chooseLine(\'row\')','go')
-        +btn(LINES[o.col].label+' <span class="note">· '+sum(o.col)+'</span>','chooseLine(\'col\')','go');}
   else if(U==='stops'){
-    prompt='Resolve the line <b>in any order</b> — '+UI.stops.length+' stop'+(UI.stops.length===1?'':'s')+' left, all optional.';
+    prompt='Work the <b>'+CELLNAME[p.cell]+'</b> — '+UI.stops.length+' stop'+(UI.stops.length===1?'':'s')+' left, any order, all optional.';
     acts=UI.stops.map((st,i)=>stopAvail(st)?btn(stopLabel(st),'resolveStop('+i+')','go')
       :btnOff(stopLabel(st),st.kind==='cell'?stnActWhy(seatVerb(st.cell,st.alt)):'No Ready cask meets this Ship’s minimum.')).join('');
     if(hallOn()&&pourable(p).length)acts+=btn('⚜ Pour — enter a Tasting','enterPour()','primary');
-    if(!UI.stops.length&&!(hallOn()&&pourable(p).length))acts='<span class="note">nothing left on this line</span>';}
+    if(!UI.stops.length&&!(hallOn()&&pourable(p).length))acts='<span class="note">nothing left at this station</span>';}
   else if(U==='sailv'){
     prompt=LU('sailboat')+' <b>SAIL</b> — advance which ship one leg? <span class="note">(free with your cask aboard; otherwise the push: '+costStr(PUSH_FEE)+')</span>';
     acts=(UI.sailv?UI.sailv.opts:[]).map(i=>{const t=S.sea[i];if(!t)return '';
@@ -3701,15 +3669,14 @@ function renderBar(){
       if(S.bourse[bk]<BOURSE_MAX)h+=btn(LU('beer')+styleShort(bk)+' '+bourseFmt(S.bourse[bk])+' ▲','bshiftPick({beer:\''+bk+'\',dir:1})','go');
       if(B.down&&S.bourse[bk]>BOURSE_MIN)h+=btn(LU('beer')+styleShort(bk)+' ▼','bshiftPick({beer:\''+bk+'\',dir:-1})','ghost');
       return h;}).join('')+btn('Skip','bshiftPick(null)','ghost');}
-  else if(U==='end'){prompt='Line resolved.';acts=btn('End Turn ▸','endTurn()','primary');}
-  const hideEnd=(U==='move'&&!p.placed)||['end','benefit','precipe','bspec','placebldg','hire','brewverb','bshift','fshift','chart','upgpick'].includes(U);   // every stop is optional — End Turn stays offered mid-line
+  else if(U==='end'){prompt='The visit is done.';acts=btn('End Turn ▸','endTurn()','primary');}
+  const hideEnd=(U==='move'&&!p.placed)||['end','benefit','precipe','bspec','placebldg','hire','brewverb','bshift','fshift','chart','upgpick'].includes(U);   // every stop is optional — End Turn stays offered mid-visit
   if(!hideEnd)acts+=btn('End Turn ▸','endTurn()','ghost');
   if(undoStack.length)acts+=btn('↶ Undo','doUndo()','ghost');
   document.getElementById('prompt').innerHTML=prompt;
   document.getElementById('acts').innerHTML=acts;
   document.getElementById('boardnote').innerHTML =
-      (U==='placebldg'||U==='placevent'||(U==='commission'&&UI.stage==='place'))?'Click a glowing slot.':
-      (U==='line'?'Or click the line on the board — its far station, or one of its end slots.':'');
+      (U==='placebldg'||U==='placevent'||(U==='commission'&&UI.stage==='place'))?'Click a glowing slot.':'';
 }
 function renderGrid(){
   const ag=document.getElementById('ag');let h='';
@@ -3720,10 +3687,7 @@ function renderGrid(){
     if(commPlacing||bldgPlacing)cls+=' place';
     let boardClick=null;
     if(!aiTurn()&&!commPlacing&&!bldgPlacing){
-      if(UI.sub==='line'){const o=cellOfLine(cur().cell);   // an end slot picks its line too
-        if(LINES[o.row].caps.includes(s.id)){cls+=' stopgo';boardClick="chooseLine('row')";}
-        else if(LINES[o.col].caps.includes(s.id)){cls+=' stopgo';boardClick="chooseLine('col')";}}
-      else if(UI.sub==='stops'&&(UI.stops||[]).some(st=>st.kind==='load'&&st.slot===s.id&&stopAvail(st))){cls+=' stopgo';boardClick="resolveStopBy('load','"+s.id+"')";}
+      if(UI.sub==='stops'&&(UI.stops||[]).some(st=>st.kind==='load'&&st.slot===s.id&&stopAvail(st))){cls+=' stopgo';boardClick="resolveStopBy('load','"+s.id+"')";}
       else if(UI.sub==='load'&&UI.load&&UI.load.cask!=null){
         if(UI.load.ships.includes(s.id)&&canTake(s.id,UI.load.cask)){cls+=' stopgo';boardClick="loadOnto('"+s.id+"')";}}
     }
@@ -3737,39 +3701,24 @@ function renderGrid(){
       const oH='<div class="ohalf'+(t&&!b?' full':'')+'"'+(vert?' style="aspect-ratio:2.5/'+oDep+'"':'')+'>'+(t?pShipFace(t,dirW)
           :'<span class="halfemp" data-tip="'+attr('The Ship seat — commission a Ship here (the Harbor action)')+'">'+LU('sailboat')+'</span>')+'</div>';
       inner=vert?(TKDIR[s.id]==='tk-up'?oH+bH:bH+oH):(bH+oH);}
-    else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Open slot — commission a Ship here, or build here to author the line')+'">'+LU('sailboat')+'</span></span>';
+    else inner='<span class="semp"><span class="sid">'+s.id+'</span><span class="sdep" data-tip="'+attr('Open slot — commission a Ship here; it loads on a visit to its station')+'">'+LU('sailboat')+'</span></span>';
     let click=bldgPlacing?'placeBldgOn':(commPlacing?'commPlace':null);
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':(boardClick?'onclick="'+boardClick+'"':''))+'>'+inner+'</div>';
   });
   ['A','B','C','D'].forEach(c=>{const act=CELLNAME[c];
-    const o=cellOfLine(c);
-    const WPOS={A:{row:'tr',col:'bl'},B:{row:'tl',col:'br'},C:{row:'br',col:'tl'},D:{row:'bl',col:'tr'}};   // each half's mark holds its SIDE corner (the wedge's own apex)
-    const HITS={A:{row:'0 0,100% 0,100% 100%',col:'0 0,100% 100%,0 100%'},B:{row:'0 0,100% 0,0 100%',col:'100% 0,100% 100%,0 100%'},
-                C:{row:'100% 0,100% 100%,0 100%',col:'0 0,100% 0,0 100%'},D:{row:'0 0,100% 100%,0 100%',col:'0 0,100% 0,100% 100%'}};
     const ARCD={A:'M18 90Q62 62 90 18',B:'M10 18Q38 62 82 90',C:'M18 10Q62 38 90 82',D:'M10 82Q38 38 82 10'};   // the title's arc — the corridor between the two icons, bowed toward the ALT
-    const wz=which=>{const pn=LINES[o[which]].cells.find(x=>x!==c);   // the halves carry no mark — the standing pawn alone is the record
-      const stand=S.players.filter(p=>p.cell===c&&p.line===o[which])
-        .map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+attr(p.name+' — worked the '+(which==='row'?'row':'column')+' with '+CELLNAME[pn])+'"></span>').join('');
-      return stand?'<span class="wz '+WPOS[c][which]+'">'+stand+'</span>':'';};
-    const picking=!aiTurn()&&UI.sub==='line'&&cur().placed&&cur().cell===c;
-    const hits=picking?('<div class="wedgehit" style="clip-path:polygon('+HITS[c].row+')" onclick="chooseLine(\'row\')" data-tip="'+attr('Activate the ROW — with '+CELLNAME[LINES[o.row].cells.find(x=>x!==c)])+'"></div>'
-      +'<div class="wedgehit" style="clip-path:polygon('+HITS[c].col+')" onclick="chooseLine(\'col\')" data-tip="'+attr('Activate the COLUMN — with '+CELLNAME[LINES[o.col].cells.find(x=>x!==c)])+'"></div>'):'';
-    const pawns=S.players.filter(p=>p.cell===c&&!p.line).map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+p.name+'"></span>').join('');
+    const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+p.name+'"></span>').join('');
     let cls='cell '+c+' c'+c;
     const myStop=!aiTurn()&&UI.sub==='stops'&&(UI.stops||[]).some(st=>st.kind==='cell'&&st.cell===c&&stopAvail(st));
-    // at the LINE pick, the FAR station of each line is the click target: across the row = the row, down the column = the column
-    let lnPick=null;
-    if(!aiTurn()&&UI.sub==='line'&&c!==cur().cell){const o=cellOfLine(cur().cell);
-      lnPick=LINES[o.row].cells.includes(c)?'row':(LINES[o.col].cells.includes(c)?'col':null);}
-    const legal=(UI.sub==='move'&&!aiTurn()&&(!cur().placed||ADJ[cur().cell].includes(c)))||myStop||!!lnPick;
+    const legal=(UI.sub==='move'&&!aiTurn()&&(!cur().placed||ADJ[cur().cell].includes(c)))||myStop;
     if(legal)cls+=' legal';
-    let cellClick=legal?(myStop?("resolveStopBy('cell','"+c+"')"):(lnPick?("chooseLine('"+lnPick+"')"):("doMove('"+c+"')"))):null;
+    let cellClick=legal?(myStop?("resolveStopBy('cell','"+c+"')"):("doMove('"+c+"')")):null;
     const SCN={Market:'market',Brewhouse:'brewhouse',Cellar:'cellar',Harbor:'harbor'}[act];
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
       +'<img class="scn" src="art/scene-'+SCN+'.png" alt=""><div class="scngrad"></div>'
-      +'<svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line '+((c==='A'||c==='D')?'x1="0" y1="0" x2="100" y2="100"':'x1="100" y1="0" x2="0" y2="100"')+'/><path id="arc'+c+'" class="arcpath" d="'+ARCD[c]+'"/><text class="arctxt"><textPath href="#arc'+c+'" startOffset="50%">'+act+'</textPath></text></svg>'+wz('row')+wz('col')+hits
+      +'<svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line '+((c==='A'||c==='D')?'x1="0" y1="0" x2="100" y2="100"':'x1="100" y1="0" x2="0" y2="100"')+'/><path id="arc'+c+'" class="arcpath" d="'+ARCD[c]+'"/><text class="arctxt"><textPath href="#arc'+c+'" startOffset="50%">'+act+'</textPath></text></svg>'
       +'<span class="pic pos-'+({A:'tl',B:'tr',C:'bl',D:'br'})[c]+'" data-tip="'+attr('PRIMARY (your worker here): '+stnActTxt(cur(),STN_P[c]))+'">'+LU(STATION_ICON[act])+'</span>'
-      +'<span class="aic pos-'+({A:'br',B:'bl',C:'tr',D:'tl'})[c]+'" data-tip="'+attr('ALTERNATE (served across the line): '+stnActTxt(cur(),STN_A[c]))+'">'+LU(STATION_ALT_ICON[act])+'</span>'
+      +'<span class="aic pos-'+({A:'br',B:'bl',C:'tr',D:'tl'})[c]+'" data-tip="'+attr('ALTERNATE (the same visit): '+stnActTxt(cur(),STN_A[c]))+'">'+LU(STATION_ALT_ICON[act])+'</span>'
       +'<div class="stn">'
       +'<div class="wk">'+pawns+'</div>'
       +'</div></div>';

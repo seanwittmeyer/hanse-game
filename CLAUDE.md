@@ -110,18 +110,18 @@ landing**, a market you work as a verb, **fewer/bigger deliveries through more, 
 single-verb turns**, and specialists as **placed people** (wharf crew · ship's crew ·
 Kontor agents). The plan, CONSTITUTION (component-state supreme — §6), phases and open
 forks live in **`V6-PLAN.md`** — read it right after this charter. **The v6 TEST BUILD is
-LIVE at root — v6.4 “the street model” (`KEY hanse-v64`, designer-ruled 2026-08-31):**
+LIVE at root — v6.5 “work the station” (`KEY hanse-v65`, designer-ruled 2026-08-30):**
 `play.html` · `RULES.md` · `print.html` · `components.js` · `COMPONENTS.md` §0 are
-v6-current — v6.3 restored the spine's line turn (MOVE adjacent · row/column · stops, all
-optional) with single-verb PRIMARY/ALTERNATE seats, and v6.4 re-seated the alternates on
-the designer's street model — **every station's ALT is its OWN lesser counter, served to
-the line's visitor**: Market *Source 3 / Chart* · Brewhouse *Brew / Trade* · Harbor
-*Commission / Sail* · Cellar *Age 3 / Load-any*. Still v5.8:
+v6-current — v6.5 is THE AP CUT: the line retired whole; a turn = MOVE adjacent · work
+the station's OWN counter (**PRIMARY + ALTERNATE**, the v6.4 street-model seats) + a
+LOAD at each of its two flanking slots (s1·s8 / s2·s3 / s6·s7 / s4·s5): Market *Source 3
+/ Chart* · Brewhouse *Brew / Trade* · Harbor *Commission / Sail* · Cellar *Age 3 /
+Load-any*. Still v5.8:
 `rulebook.html` + the DESIGN architecture (the Phase 2 docs pass). The complete v5.8 game
 (pages + docs + instruments) is **FROZEN PLAYABLE at `archive/v5/`** — never edit that
 folder. The §8 instruments moved with it.
 
-### The spine (internalize this — everything hangs off it. The v5.8 spine — the frozen reference; v6 re-derives from here per `V6-PLAN.md`, and v6.3 keeps this turn shape with new ALT seats)
+### The spine (internalize this — everything hangs off it. The v5.8 spine — the frozen reference; v6 re-derives from here per `V6-PLAN.md`; v6.5 re-derives the turn itself: no line — a visit works the station's own two verbs + its two flanking slots)
 - **The Wharf = four stations ringed by 8 slots; move where the board is best (NOT a rondel).** A turn = move to an adjacent station, activate its **row or column**, resolve the stops **in any order, all optional**: the two stations — **the worker’s own fires its PRIMARY, the line’s other its ALTERNATE (v5.0)**: Market Source 3/1 (v5.2b) · Brewhouse Brew-search/top-tile · Cellar Age 3/1 · Harbor Commission (the hull’s printed fee: 2/1/0 G by size)/Load-1-onto-any-docked-Ship — + each slot's **building** and/or a **LOAD of the ship** docked there. Sharing a station costs **nothing**. The line is read **LIVE** — a mid-turn arrival opens its stop this activation.
 - **THE DIE IS THE CASK — the whole game in one component.** Brew sets a tray die to the printed start value (quality − aging steps); aging turns it up to the quality (READY) — **and it NEVER turns on its own**: the Cellar, the Age bonuses, the Venture faces (Rack House swap · Assay Loft · the age+1 public lines), the Cellarman and the Braumeister/Innkeeper drips are the only hands; load-side lifts push past it (cap 6); gates read it as it boards; delivery parks it at the kontor — ★ = **pips + the beer’s Bourse marker**, presence, majority weight and THE clock. 13 dice = the player's whole runway, public; **no die ever stands on a building (v5.3).** No die in the tray → no brew, no presence.
 - **Slots hold a building and/or a ship — never casks.** Casks are PRIVATE until they board; the interaction is the **berth race** (topping off a hull sails everyone's cargo on your clock), the shared building traffic, the displays and the majorities.

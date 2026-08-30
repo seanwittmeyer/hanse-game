@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v6.4 “The Voyage”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v6.5 “The Voyage”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -788,7 +788,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v6.4 “The Voyage”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v6.5 “The Voyage”</span></h1>
   <span id="hnav"><!-- the shared site nav (nav.js) — one roster for all four pages --></span>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
@@ -906,8 +906,8 @@ function aid3Panels(){
   const front=aid3('front','beer','Player Aid',
      '<h5>'+LU('list-ordered')+'Your Turn — move · line · stops</h5>'
     +'<div class="step"><span class="sn">1</span><span class="sx"><b>Move</b> to an adjacent station (turn 1: place anywhere) — never the diagonal</span></div>'
-    +'<div class="step"><span class="sn">2</span><span class="sx">Activate its <b>ROW or COLUMN</b> — your station works its <b>PRIMARY</b>, the far station its <b>ALTERNATE</b></span></div>'
-    +'<div class="step"><span class="sn">3</span><span class="sx">Resolve <b>in any order, all optional</b> — + <b>Load 1</b> onto the Ship at each of the line’s two end slots</span></div>'
+    +'<div class="step"><span class="sn">2</span><span class="sx">Work the station — its <b>PRIMARY</b> and its <b>ALTERNATE</b></span></div>'
+    +'<div class="step"><span class="sn">3</span><span class="sx">Resolve <b>in any order, all optional</b> — + <b>Load 1</b> onto the Ship at each of its two adjacent slots</span></div>'
     +'<h5>'+LU('store')+'The Stations — PRIMARY / alternate</h5>'
     +'<div class="ln">'+LU('store')+' <b>Market</b>: Source 3 / <b>Chart</b>   '+LU('flask-conical')+' <b>Brewhouse</b>: Brew (search) / <b>Trade</b></div>'
     +'<div class="ln">'+LU('ship')+' <b>Harbor</b>: Commission (2/1/0'+G+') + 1 load / <b>Sail</b>   '+LU('age-3')+' <b>Cellar</b>: Age 3 / Load 1, any Ship</div>'
@@ -1065,8 +1065,7 @@ const STN_GRAD='<svg class="stn-grad" preserveAspectRatio="none" viewBox="0 0 1 
   +'<stop offset="1" stop-color="#14100b" stop-opacity="0"/></linearGradient></defs>'
   +'<rect width="1" height="1" fill="url(#stngrad)"/></svg>';   // one shared id — every cell uses the identical ramp
 function station(L,nm,scene,acts,sub){
-  // the tile splits on the diagonal into a ROW half and a COLUMN half; the halves carry
-  // no mark — the worker STANDING on its half is the whole record
+  // the diagonal is the tile's AXIS — pure composition: the icons ride it, the title arcs beside it
   return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
   +'<img class="stn-scene" src="art/scene-'+scene+'.png" alt="">'+STN_GRAD
   +'<svg class="sdiag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line '+((L==='A'||L==='D')?'x1="0" y1="0" x2="100" y2="100"':'x1="100" y1="0" x2="0" y2="100"')+'/><path id="sarc'+L+'" class="arcpath" d="'+({A:'M18 90Q62 62 90 18',B:'M10 18Q38 62 82 90',C:'M18 10Q62 38 90 82',D:'M10 82Q38 38 82 10'})[L]+'"/><text class="arctxt"><textPath href="#sarc'+L+'" startOffset="50%">'+nm+'</textPath></text></svg>'
@@ -1655,11 +1654,11 @@ function checklist(pages,famPages){
   // 2026-08-09 [designer]: the manifest is a PACKING LIST, not a lesson — "just some basic
   // details of quantity, any important themes to share, and where they go." Every entry is one
   // short line: what it is · WHERE IT LIVES on the table. The rules live in the rulebook.
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v6.4 “The Voyage” · TEST BUILD)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v6.5 “The Voyage” · TEST BUILD)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">Counts are tuning placeholders ⚙. The rules live on the <b>player aid</b> and in the rulebook — this page only says what to make, how many, and where it sits on the table.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
-    +R('Main board — the Wharf','The shared action area: 4 stations in a 2×2, ringed by 8 slots. Each station prints a PRIMARY and an ALTERNATE verb — its OWN lesser counter (Market Source 3/Chart · Brewhouse Brew/Trade · Harbor Commission/Sail · Cellar Age 3/Load-any); the active line reads the far station’s ALTERNATE. <b>Centre of the table.</b>','1')
+    +R('Main board — the Wharf','The shared action area: 4 stations in a 2×2, ringed by 8 slots. Each station prints a PRIMARY and an ALTERNATE verb — its OWN lesser counter (Market Source 3/Chart · Brewhouse Brew/Trade · Harbor Commission/Sail · Cellar Age 3/Load-any); a visit works both, plus a load at each of the station’s two adjacent slots. <b>Centre of the table.</b>','1')
     +R('THE SEA MAP','The second board (v6.0): four lanes of printed LEGS out of the Wharf — voyages stand on them; post seats print on every leg; the establishment supply stacks on its strip. <b>Between the Wharf and the Destinations board.</b>','1')
     +R('Destinations board','The 4 Kontor panels — minimum, prize, majority, <b>2 factor seats and the printed KONTORHAUS power</b> each — plus the Bourse lane. <b>Delivered dice park on it all game.</b>','1')
     +R('Market &amp; Stores board','The face-up displays (Ships · Specialists · casks &amp; recipes), ringed by the 50-cell score ring.','1')
@@ -1682,7 +1681,7 @@ function checklist(pages,famPages){
     +R('House markers','<b>PRINTED, double-sided (v6.0):</b> 6 per colour — a post on a leg or a factor on a Kontor seat; the factor’s upgrade <b>flips it to its KONTORHAUS side</b>.','6 ea')
     +R('Grain cubes','Currency and brew input. <b>A general supply.</b> (sourced)','60')
     +R('Hops cubes','Currency and brew input. <b>A general supply.</b> (sourced)','40')
-    +R('Worker pawns','<b>One per player, on the Wharf’s stations</b> — the MOVE is the turn: adjacent station, then the row or column. (sourced)',PLAYERS.length)
+    +R('Worker pawns','<b>One per player, on the Wharf’s stations</b> — the MOVE is the turn: adjacent station, then its two printed actions. (sourced)',PLAYERS.length)
     +R('Quality dice — 12 mm d6','<b>THE component:</b> the cask, the presence and the clock in one; it rides the Ship across the map. <b>In each player’s tray, public all game.</b> (sourced)',PRES_DISCS+' ea')
     +R('Score movers','<b>One disc per colour on the score ring</b> (flip or mark at +50). (sourced)','1 ea')
     +R('Draw bags','<b>One per hidden supply</b> — Ships · Specialists · Public Works. (sourced)','3')
