@@ -370,7 +370,22 @@ overrides dropped · 3 ESTABLISHMENTS art fields flipped · `ICON_ART` gains cha
 kontorhaus (+ pm2 swap) · the closure/seamap art hooks land in `closureTile`/the print
 seaBoard when the files exist. No rules change — no KEY bump.*
 
-## The specialist object-shot SPEC (moved verbatim from components.js, 2026-08-22)
+## THE SPECIALIST PORTRAIT SPEC (designer-ruled 2026-08-30 — supersedes the object-shot spec below)
+
+Every live specialist redraws as a PERSON — the hire, not the tool. One image per design,
+`art/improve-<slug(nm)>.jpg`, replacing the object shots in place:
+- **HALF-BODY portrait** (waist up), ONE medieval person, c. 1350 Hanseatic; period dress
+  and props only (strictly pre-1400).
+- The figure stands at the **LEFT THIRD** of the frame, angled slightly toward the open
+  right; face lit and readable at 2in print size.
+- **Holding/with the trade's signature object** (the old object-shot subject survives as
+  the prop) and a softly painted **workplace scene behind** — secondary, never competing.
+- Aged-manuscript painterly style, muted palette, one deep anchor tone; full-bleed square,
+  no frame/mat/letterbox; the lower quarter calmer and darker (the kit's text bar rides
+  there; the purple foot is added by the kit).
+- No text, no letters. The generation batch: 4 candidates per specialist, designer picks.
+
+## The specialist object-shot SPEC (RETIRED 2026-08-30 — kept for the archive; moved verbatim from components.js, 2026-08-22)
 
 ```
 // ============================================================================
