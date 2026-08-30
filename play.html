@@ -132,8 +132,6 @@
   .cell .diag .arcpath{fill:none;stroke:none}   /* the title's rail — geometry only, never inked */
   .cell .diag .arctxt{font-variant:small-caps;font-weight:bold;font-size:13px;letter-spacing:.5px;text-anchor:middle;dominant-baseline:central;fill:#f4ead0;stroke:rgba(20,14,8,.7);stroke-width:1.2px;paint-order:stroke;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}   /* 13 svg units = 13cqmin on the square tile */
   .cell .wz{position:absolute;z-index:4;display:flex;align-items:center;gap:1.5cqmin}
-  .cell .wz .ic,.cell .wz svg{width:9cqmin;height:9cqmin;opacity:.85}
-  .cell .wz img.ai{width:11cqmin;height:11cqmin;opacity:.9;filter:drop-shadow(0 1px 2px rgba(0,0,0,.65))}
   .cell .wz .pawn{width:12cqmin;height:12cqmin;border-width:1.5cqmin}
   .cell .wz.tr{top:6cqmin;right:6cqmin}
   .cell .wz.br{bottom:6cqmin;right:6cqmin}
@@ -3749,11 +3747,10 @@ function renderGrid(){
     const HITS={A:{row:'0 0,100% 0,100% 100%',col:'0 0,100% 100%,0 100%'},B:{row:'0 0,100% 0,0 100%',col:'100% 0,100% 100%,0 100%'},
                 C:{row:'100% 0,100% 100%,0 100%',col:'0 0,100% 0,0 100%'},D:{row:'0 0,100% 100%,0 100%',col:'0 0,100% 0,100% 100%'}};
     const ARCD={A:'M18 90Q62 62 90 18',B:'M10 18Q38 62 82 90',C:'M18 10Q62 38 90 82',D:'M10 82Q38 38 82 10'};   // the title's arc — the corridor between the two icons, bowed toward the ALT
-    const wz=which=>{const pn=LINES[o[which]].cells.find(x=>x!==c);
-      const alt=stnActTxt(cur(),STN_A[pn]).split(' — ')[0].split(' (')[0];
+    const wz=which=>{const pn=LINES[o[which]].cells.find(x=>x!==c);   // the halves carry no mark — the standing pawn alone is the record
       const stand=S.players.filter(p=>p.cell===c&&p.line===o[which])
         .map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+attr(p.name+' — worked the '+(which==='row'?'row':'column')+' with '+CELLNAME[pn])+'"></span>').join('');
-      return '<span class="wz '+WPOS[c][which]+'" data-tip="'+attr('The '+(which==='row'?'ROW':'COLUMN')+' half — the line toward '+CELLNAME[pn]+', whose counter serves '+alt+'.')+'">'+LU(STATION_ALT_ICON[CELLNAME[pn]])+stand+'</span>';};
+      return stand?'<span class="wz '+WPOS[c][which]+'">'+stand+'</span>':'';};
     const picking=!aiTurn()&&UI.sub==='line'&&cur().placed&&cur().cell===c;
     const hits=picking?('<div class="wedgehit" style="clip-path:polygon('+HITS[c].row+')" onclick="chooseLine(\'row\')" data-tip="'+attr('Activate the ROW — with '+CELLNAME[LINES[o.row].cells.find(x=>x!==c)])+'"></div>'
       +'<div class="wedgehit" style="clip-path:polygon('+HITS[c].col+')" onclick="chooseLine(\'col\')" data-tip="'+attr('Activate the COLUMN — with '+CELLNAME[LINES[o.col].cells.find(x=>x!==c)])+'"></div>'):'';

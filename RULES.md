@@ -73,10 +73,9 @@ On your turn:
    - **each end slot** — **load one Ready cask** onto the Ship docked there (§4).
 
 **The worker stands on the half it worked:** each station tile is split on the diagonal
-into a **row half and a column half**, each marked with **the ALTERNATE the line's far
-station serves** — the mark is the action that half earns you. Place
-your worker on the half facing your line — the standing pawn is the whole table's record
-of which line each house worked, until its next move.
+into a **row half and a column half**. Place your worker on the half facing your line —
+the standing pawn is the whole table's record of which line each house worked, until its
+next move.
 
 **The line is read LIVE** — a Ship commissioned onto one of the active line's end slots
 mid-turn opens that slot's load stop this same activation.

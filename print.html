@@ -398,17 +398,11 @@
   /* a dark foot gradient lifts the action icon + caption off the scene — an inline SVG ramp,
      not a CSS gradient (CSS gradients seam in the html2canvas export; the kp panels' pattern) */
   .stn>.stn-grad{position:absolute;left:0;right:0;bottom:0;height:54%;width:100%;z-index:0}
-  /* v6.4b the split station: the diagonal + the two half-space marks (the worker stands on its half) */
+  /* the split station: the straight dashed diagonal divides the halves (no marks — the worker standing on its half is the record) */
   .stn .sdiag{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
   .stn .sdiag line{stroke:rgba(243,233,210,.5);stroke-width:1.1;stroke-dasharray:2.4 3.4;vector-effect:non-scaling-stroke}   /* the straight stitched divider — the wharf's centre out to the outer corner, as on the app face */
   .stn .sdiag .arcpath{fill:none;stroke:none}   /* the title's rail — geometry only, never inked */
   .stn .sdiag .arctxt{font-variant:small-caps;font-weight:bold;font-size:13px;letter-spacing:.5px;text-anchor:middle;dominant-baseline:central;fill:#f3e9d2;stroke:rgba(20,14,8,.7);stroke-width:1.2px;paint-order:stroke}
-  .stn .swz{position:absolute;z-index:2;width:.46in;height:.46in;border-radius:50%;background:rgba(20,16,11,.5);border:1.5px solid rgba(243,233,210,.55);display:flex;align-items:center;justify-content:center}
-  .stn .swz img.ai{width:.34in;height:.34in}
-  .stn .swz.pos-tr{top:.12in;right:.12in}
-  .stn .swz.pos-tl{top:.12in;left:.12in}
-  .stn .swz.pos-br{bottom:.12in;right:.12in}
-  .stn .swz.pos-bl{bottom:.12in;left:.12in}
   /* corner grammar: PRIMARY large ON the diagonal at the OUTSIDE corner · the ALT (nearly
      as large) at the INSIDE corner · the half-marks at the side corners · the NAME ARCS
      between the two icons through the tile's middle */
@@ -1071,14 +1065,11 @@ const STN_GRAD='<svg class="stn-grad" preserveAspectRatio="none" viewBox="0 0 1 
   +'<stop offset="1" stop-color="#14100b" stop-opacity="0"/></linearGradient></defs>'
   +'<rect width="1" height="1" fill="url(#stngrad)"/></svg>';   // one shared id — every cell uses the identical ramp
 function station(L,nm,scene,acts,sub){
-  // v6.4b — the tile splits on the diagonal into a ROW half and a COLUMN half; each half
-  // prints its line partner's mark, and the worker STANDS on the half it worked
-  const SP={A:{row:['B','tr'],col:['C','bl']},B:{row:['A','tl'],col:['D','br']},C:{row:['D','br'],col:['A','tl']},D:{row:['C','bl'],col:['B','tr']}};
-  const SICON={A:'compass',B:'bourse',C:'sail',D:'package-plus'};   // the half prints the ACTION it earns — the partner's ALTERNATE verb
-  const chips=['row','col'].map(w=>'<span class="swz pos-'+SP[L][w][1]+'">'+LU(SICON[SP[L][w][0]])+'</span>').join('');
+  // the tile splits on the diagonal into a ROW half and a COLUMN half; the halves carry
+  // no mark — the worker STANDING on its half is the whole record
   return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
   +'<img class="stn-scene" src="art/scene-'+scene+'.png" alt="">'+STN_GRAD
-  +'<svg class="sdiag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line '+((L==='A'||L==='D')?'x1="0" y1="0" x2="100" y2="100"':'x1="100" y1="0" x2="0" y2="100"')+'/><path id="sarc'+L+'" class="arcpath" d="'+({A:'M18 90Q62 62 90 18',B:'M10 18Q38 62 82 90',C:'M18 10Q62 38 90 82',D:'M10 82Q38 38 82 10'})[L]+'"/><text class="arctxt"><textPath href="#sarc'+L+'" startOffset="50%">'+nm+'</textPath></text></svg>'+chips
+  +'<svg class="sdiag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line '+((L==='A'||L==='D')?'x1="0" y1="0" x2="100" y2="100"':'x1="100" y1="0" x2="0" y2="100"')+'/><path id="sarc'+L+'" class="arcpath" d="'+({A:'M18 90Q62 62 90 18',B:'M10 18Q38 62 82 90',C:'M18 10Q62 38 90 82',D:'M10 82Q38 38 82 10'})[L]+'"/><text class="arctxt"><textPath href="#sarc'+L+'" startOffset="50%">'+nm+'</textPath></text></svg>'
   +'<span class="spic pos-'+({A:'tl',B:'tr',C:'bl',D:'br'})[L]+'">'+LU(acts[0])+'</span>'
   +'<span class="saic pos-'+({A:'br',B:'bl',C:'tr',D:'tl'})[L]+'">'+LU(acts[1])+'</span>'
   +'</div>';}   // the name rides the ARC between the icons; the menu text stays retired — the P/A icons say it
