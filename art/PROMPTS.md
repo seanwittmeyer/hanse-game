@@ -346,15 +346,9 @@ The btile face (2.5×1.32 window) with the sea-green foot; these stand ON WATER 
 structure on a waypoint (a pier, an islet, a skerry) in open sea, colder palette than the
 town buildings, same single-structure rules. On landing, flip the `art:` field on the
 matching `ESTABLISHMENTS` row in `components.js`.
-- **establishment-tollcourt.png** — the Toll Court *(rides `building-tollhouse.png`)*: a
-  small fortified stone toll tower on a rock islet mid-channel, a lowered chain-boom at the
-  water, a toll skiff alongside.
-- **establishment-victpost.png** — the Victualling Post *(rides `building-victual.png`)*: a
-  timber provisioning jetty far from shore, stacked water casks and netted crates being
-  lowered toward a moored cog.
-- **establishment-pilotsrest.png** — the Pilot's Rest *(rides `building-missionq.png`)*: a
-  small lamphouse-inn on a skerry, one lit lantern tower against dusk water, a pilot gig
-  tied below.
+- **establishment-tollcourt.png** — **LANDED 2026-08-30 (pick C** — the square keep with the chain-boom**)**.
+- **establishment-victpost.png** — **LANDED 2026-08-30 (pick D** — the low deck with the moored cog**)**.
+- **establishment-pilotsrest.png** — **LANDED 2026-08-30 (sunset regen off pick A** — designer-ruled calm, restful weather**)**.
 
 ### 4 · Icons (the sticker set — `art/icons/`, then wire `ICON_ART` in `components.js`)
 1. **chart.png** — **LANDED 2026-08-30 (pick D)**: the divider compass astride the chart scrap; `ICON_ART['compass']='chart'` wired — every compass site swaps.
@@ -365,11 +359,11 @@ matching `ESTABLISHMENTS` row in `components.js`.
 6. **closure.png** — **LANDED 2026-08-30 (pick C)**; the closure tile + print sea-board lock sites swap (the brewery slot-cover keeps its Lucide lock — different meaning).
 7. **factor.png** — **LANDED 2026-08-30 (pick A)**; mapped as `factor` — call sites swap in the code pass.
 
-### 5 · Closure tiles ×2 *(optional — the dark CSS tile is playable)*
-- **closure-dover.png** · **closure-sound.png** — art behind the dark closure tiles
-  (2.5×1.32 window): a storm-dark NARROW strait between two headlands, a chain-boom or
-  anchored war-cogs barring the channel; near-night palette, one cold light. The two may
-  share one painting if the straits read too alike to matter.
+### 5 · Closure tiles ×2 — LANDED 2026-08-30 (pick E, one painting both straits)
+- **closure-dover.png** · **closure-sound.png** — REBRIEFED calm by the designer ("closure
+  isn't supposed to be scary and stormy"): an ordinary day, a chain drawn across a quiet
+  strait between settled headlands — administrative, not menacing. The storm-dark brief is
+  retired; the tile carries a dark wash for its printed text.
 
 *Wiring summary for the code pass that follows the art: `components.js` — 3 IMPROVE slug
 overrides dropped · 3 ESTABLISHMENTS art fields flipped · `ICON_ART` gains chart/post/

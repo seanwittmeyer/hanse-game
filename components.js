@@ -342,7 +342,7 @@ function ventureTile(d,lvl,col){const f=lvl===2?d.l2:d.l1;
 const ESTABLISHMENTS=[
   {k:'tollcourt',nm:'Toll Court',       n:2, art:'establishment-tollcourt.png', cond:'On enter',                    effIc:'goods-2', eff:'the toll'},
   {k:'victpost', nm:'Victualling Post', n:2, art:'establishment-victpost.png',   cond:'On enter · your '+LU('beer'), eff:'<span class="g">+1'+LU('wheat','g ic')+'</span> <span class="h">+1'+LU('sprout','h ic')+'</span>'},
-  {k:'pilotrest',nm:'Pilot’s Rest',     n:2, art:'building-missionq.png',  cond:'On enter · your '+LU('beer'), effIc:'sail', eff:'+1 leg'},
+  {k:'pilotrest',nm:'Pilot’s Rest',     n:2, art:'establishment-pilotsrest.png',  cond:'On enter · your '+LU('beer'), effIc:'sail', eff:'+1 leg'},
 ];
 const EST_FOOT='rgba(47,78,66,.8)';   // sea-green — the waypoint family's own foot colour
 function estTile(d){
@@ -358,6 +358,7 @@ function estTile(d){
 // action (its 2G fee printed here) removes the tile and the charter's post stands free.
 const CLOSURES=[{k:'ds',nm:'Dover Strait'},{k:'sd',nm:'the Sound'}];
 function closureTile(d){return '<div class="cltile">'
+  +artLayer('closure-'+(d.k==='ds'?'dover':'sound')+'.png')+'<div class="cl-wash"></div>'
   +'<span class="cl-lock">'+LU('closure')+'</span>'
   +'<div class="cl-mid"><div class="cl-nm">'+d.nm+'</div><div class="cl-sub">closed passage</div></div>'
   +'<div class="cl-row"><span class="cl-lbl">chart</span>'+cost(2,0)+'<span class="cl-lbl">· the charter’s post stands free</span></div>'
@@ -824,6 +825,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .vt-own{display:inline-flex;align-items:center;gap:.015in}'
 +'.btile .starmark,.itile .starmark{width:.26in!important;height:.26in!important;vertical-align:-.08in}'
 +'.btile .bt-crest{flex:0 0 auto;margin-right:.05in;display:inline-flex}.btile .bt-crest .ic,.btile .bt-crest img.ai{width:.34in;height:.34in}'
++'.cltile{position:relative;overflow:hidden}.cltile .cl-wash{position:absolute;inset:0;background:rgba(20,26,30,.45)}.cltile>*{position:relative}'
 +'.btile .bt-ms img.ai,.btile .bt-ms svg{width:.24in;height:.24in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}'
 +'.btile .bt-nm{white-space:normal;overflow:visible;line-height:1.02}'
 +'.btile .bt-nm.long{font-size:.16in}'
