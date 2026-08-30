@@ -107,29 +107,19 @@
   .cell .scngrad{position:absolute;inset:0;z-index:0;background:linear-gradient(to bottom,rgba(18,14,10,.72),rgba(18,14,10,.3) 34%,rgba(18,14,10,0) 55%,rgba(18,14,10,0) 68%,rgba(18,14,10,.62) 100%)}   /* top scrim for the action icon + a foot scrim for the title */
   .cell .stn{color:#f4ead0;text-shadow:0 1px 3px rgba(0,0,0,.8)}
   .cell .stn{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:7cqmin}
-  /* the alt chip — [primary] / [smaller alt] on one row */
-  /* CORNER GRAMMAR — the diagonal is the tile's axis: the PRIMARY rides LARGE at the
-     OUTSIDE corner, the ALT (nearly as large) at the INSIDE corner; the half-marks hold
-     the side corners; the NAME ARCS between the two icons through the tile's middle */
-  .cell .pic,.cell .aic{position:absolute;z-index:4;display:inline-flex}
-  .cell .pic .ic,.cell .pic svg,.cell .pic img.ai{width:42cqmin;height:42cqmin;stroke-width:1.6;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))}
-  .cell .aic .ic,.cell .aic svg,.cell .aic img.ai{width:34cqmin;height:34cqmin;stroke-width:1.8;opacity:.95;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
-  .cell .pos-tl{top:4cqmin;left:4cqmin}
-  .cell .pos-tr{top:4cqmin;right:4cqmin}
-  .cell .pos-bl{bottom:4cqmin;left:4cqmin}
-  .cell .pos-br{bottom:4cqmin;right:4cqmin}
-  .cell .role{font-size:7cqmin;text-transform:uppercase;letter-spacing:1px;opacity:.82}
+  /* the station face — the P/A pair at the TOP-LEFT (PRIMARY big, ALTERNATE beside it
+     smaller — both fire on a visit), the name plain at the BOTTOM-LEFT */
+  .cell .pa{position:absolute;top:5cqmin;left:5cqmin;z-index:4;display:flex;align-items:center;gap:3cqmin}
+  .cell .pic,.cell .aic{display:inline-flex}
+  .cell .pic .ic,.cell .pic svg,.cell .pic img.ai{width:30cqmin;height:30cqmin;stroke-width:1.6;filter:drop-shadow(0 2px 5px rgba(0,0,0,.65))}
+  .cell .aic .ic,.cell .aic svg,.cell .aic img.ai{width:19cqmin;height:19cqmin;stroke-width:1.8;opacity:.95;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
+  .cell .nm{position:absolute;left:6cqmin;bottom:5cqmin;z-index:3;font-variant:small-caps;font-weight:bold;font-size:12cqmin;line-height:1;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,.85)}
   /* loop colours: A Market=gold · B Brewhouse=red · C Harbor=sea · D Cellar=green */
   .cell.A{background:linear-gradient(155deg,#cda522,#9c7414);color:#2b2018}
   .cell.B{background:linear-gradient(155deg,#9c3b2e,#7c2128)}
   .cell.C{background:linear-gradient(155deg,#3d6b7e,#244554)}
   .cell.D{background:linear-gradient(155deg,#5a7e46,#34492a)}
   .cell .wk{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:2cqmin;flex-wrap:wrap;justify-content:center;align-items:center;max-width:58%;z-index:3}   /* the workers stand at the tile's centre */
-  /* the diagonal is the tile's AXIS — pure composition: the icons ride it, the title arcs beside it */
-  .cell .diag{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
-  .cell .diag line{stroke:rgba(244,234,208,.42);stroke-width:1.1;stroke-dasharray:2.6 3.6;vector-effect:non-scaling-stroke}   /* the straight stitched divider — the wharf's centre out to the tile's outer corner */
-  .cell .diag .arcpath{fill:none;stroke:none}   /* the title's rail — geometry only, never inked */
-  .cell .diag .arctxt{font-variant:small-caps;font-weight:bold;font-size:13px;letter-spacing:.5px;text-anchor:middle;dominant-baseline:central;fill:#f4ead0;stroke:rgba(20,14,8,.7);stroke-width:1.2px;paint-order:stroke;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}   /* 13 svg units = 13cqmin on the square tile */
   .pawn{width:15px;height:15px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.4)}
   .cell .wk .pawn{width:13cqmin;height:13cqmin;border-width:1.5cqmin}
   .cell.legal{cursor:pointer;outline:3px solid var(--gold2);outline-offset:2px;animation:pulse 1s infinite}
@@ -3706,7 +3696,6 @@ function renderGrid(){
     h+='<div class="'+cls+'" style="'+style+'" data-tip="'+attr(tileTip(t,s.id))+'" '+(click?'onclick="'+click+'(\''+s.id+'\')"':(boardClick?'onclick="'+boardClick+'"':''))+'>'+inner+'</div>';
   });
   ['A','B','C','D'].forEach(c=>{const act=CELLNAME[c];
-    const ARCD={A:'M18 90Q62 62 90 18',B:'M10 18Q38 62 82 90',C:'M18 10Q62 38 90 82',D:'M10 82Q38 38 82 10'};   // the title's arc — the corridor between the two icons, bowed toward the ALT
     const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+p.name+'"></span>').join('');
     let cls='cell '+c+' c'+c;
     const myStop=!aiTurn()&&UI.sub==='stops'&&(UI.stops||[]).some(st=>st.kind==='cell'&&st.cell===c&&stopAvail(st));
@@ -3716,10 +3705,12 @@ function renderGrid(){
     const SCN={Market:'market',Brewhouse:'brewhouse',Cellar:'cellar',Harbor:'harbor'}[act];
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
       +'<img class="scn" src="art/scene-'+SCN+'.png" alt=""><div class="scngrad"></div>'
-      +'<svg class="diag" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><line '+((c==='A'||c==='D')?'x1="0" y1="0" x2="100" y2="100"':'x1="100" y1="0" x2="0" y2="100"')+'/><path id="arc'+c+'" class="arcpath" d="'+ARCD[c]+'"/><text class="arctxt"><textPath href="#arc'+c+'" startOffset="50%">'+act+'</textPath></text></svg>'
-      +'<span class="pic pos-'+({A:'tl',B:'tr',C:'bl',D:'br'})[c]+'" data-tip="'+attr('PRIMARY (your worker here): '+stnActTxt(cur(),STN_P[c]))+'">'+LU(STATION_ICON[act])+'</span>'
-      +'<span class="aic pos-'+({A:'br',B:'bl',C:'tr',D:'tl'})[c]+'" data-tip="'+attr('ALTERNATE (the same visit): '+stnActTxt(cur(),STN_A[c]))+'">'+LU(STATION_ALT_ICON[act])+'</span>'
+      +'<span class="pa">'
+      +'<span class="pic" data-tip="'+attr('PRIMARY: '+stnActTxt(cur(),STN_P[c]))+'">'+LU(STATION_ICON[act])+'</span>'
+      +'<span class="aic" data-tip="'+attr('ALTERNATE: '+stnActTxt(cur(),STN_A[c]))+'">'+LU(STATION_ALT_ICON[act])+'</span>'
+      +'</span>'
       +'<div class="stn">'
+      +'<div class="nm">'+act+'</div>'
       +'<div class="wk">'+pawns+'</div>'
       +'</div></div>';
   });

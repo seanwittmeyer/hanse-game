@@ -30,11 +30,10 @@
   / Chart* · Brewhouse *Brew (search) / Trade* · Harbor *Commission + 1 load / Sail* ·
   Cellar *Age 3 / Load 1 any*. **A visit works the station's WHOLE counter (v6.5, the AP
   cut — the line retired): its PRIMARY, its ALTERNATE, and a load at each of its two
-  flanking slots** (Market s1·s8 · Brewhouse s2·s3 · Harbor s6·s7 · Cellar s4·s5). **The diagonal is the tile's
-  AXIS — pure composition (the row/column halves retired with the line, v6.5):** the
-  **PRIMARY prints LARGE on the line at the OUTSIDE corner**, the **ALTERNATE (nearly as
-  large) at the INSIDE corner**, the **name rides a curved ARC through the tile's middle,
-  strung between the two icons**; the workers stand at the tile's centre.
+  flanking slots** (Market s1·s8 · Brewhouse s2·s3 · Harbor s6·s7 · Cellar s4·s5). **The station face
+  (v6.5):** the **P/A pair prints at the TOP-LEFT corner — the PRIMARY big, the ALTERNATE
+  beside it smaller** (both fire on a visit) — and the **name sits plain at the
+  BOTTOM-LEFT**; the workers stand at the tile's centre.
 - **The Destinations board** — every Kontor panel adds **2 factor-seat sockets** and its
   printed **KONTORHAUS power** (Bruges *+1 G per landing cask* · London *charts free* ·
   Bergen *TRADE ±2* · Novgorod *+1★ per landing cask*); London's prize re-prints as **a

@@ -57,8 +57,8 @@ Brew + Load. **v6.5 (designer-ruled 2026-08-30) — THE AP CUT: the line retires
 A turn = MOVE adjacent · **work the station's OWN counter** — its PRIMARY + its
 ALTERNATE + a LOAD at each of its two flanking slots (Market s1·s8 · Brewhouse s2·s3 ·
 Harbor s6·s7 · Cellar s4·s5) — any order, all optional. The row/column choice, the
-far-station read, and the pawn-on-half record retire (the tile's diagonal survives as
-pure composition); each verb now lives at exactly ONE station beside its natural partner
+far-station read, and the pawn-on-half record retire (the face cleans up with them:
+the P/A pair top-left — big/small — and the name bottom-left); each verb now lives at exactly ONE station beside its natural partner
 (Age+Load = the shipping visit · Brew+Trade · Commission+Sail · Source+Chart).
 `KEY hanse-v65` · verify-v6 72/72 · sim clean (0/0; rounds ~24–26 at 2–4p, SAIL/TRADE/
 CHART all live — the Phase 4 oracle re-reads pace at skill). **v6.4b:** the station tiles
