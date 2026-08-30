@@ -218,6 +218,7 @@ does not print these until Phase 2 locks them; the designer renames freely at th
 | establishment | n | The post-upgrade tile family (scarce supply, 2 each ⚙): **Toll Court · Victualling Post · Pilot's Rest** — the tile IS the state | — |
 | Kontorhaus | n | The factor's upgraded side; its power prints ON the Kontor panel, one per port | **the proper names Hanzehuis/Steelyard/Bryggen/Peterhof are TAKEN** (§4b, the Staple House faces) — the generic *Kontorhaus* on purpose |
 | Wharfinger | n | The tolls Specialist (v6.1 re-derive of the Chandler's swap): your posts' tolls +1 G | *Chandler* retires from the roster with its swap |
+| the walk | n | The v6.2 turn frame: WALK adjacent (mandatory) · ONE printed station action · one flanking load | the v6.0 "verb" frame retires; *Sail/Chart/Trade* survive as printed **station actions** (Market: Source·Chart·Trade · Harbor: Commission·Load-any·Sail) |
 
 ## §5. Deferred to the next copy pass (logged, not yet applied)
 

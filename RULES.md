@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — The Rules (v6.1 "The Voyage" · TEST BUILD)
+# Brewhouses of the Hanse — The Rules (v6.2 "The Voyage" · TEST BUILD)
 
 *The one rules document. Clean operational rules only — the v6 program and its
 constitution live in `V6-PLAN.md`; design rationale in `DESIGN.md`; the frozen v5.8 game
@@ -58,16 +58,19 @@ Each player places a worker on any station — opening placement free. First pla
 
 ---
 
-## 2. The turn — ONE VERB (the fast turn)
+## 2. The turn — WALK · ACT · LOAD (the fast turn)
 
-On your turn take **exactly one** of the four verbs, then the turn passes:
+On your turn, in order:
 
-| Verb | What it does |
-|---|---|
-| **WORK** | Move your worker to an **adjacent station** (orthogonal; turn 1 places anywhere), fire that station's action (§3), then **you may load at ONE of its two flanking slots** (a docked Ship there — §4). |
-| **SAIL** | Advance **any one Ship at sea** one space along its lane (§5). Free if a cask of **yours** is aboard; otherwise pay **1 `G`** ⚙ (the push). A closed passage blocks. |
-| **CHART** | Pay the printed fee to **open a closed passage** (your post stands there free — the charter's privilege), **place a post** on an open waypoint (1 `G` ⚙, open seat required), **seat a factor** at a Kontor you have delivered to (3 `G` ⚙, open seat required) — or **UPGRADE a marker you already have**: a post onto an **establishment** tile (2 `G` ⚙) or a factor to the port's **Kontorhaus** (3 `G` ⚙) (§6). |
-| **TRADE** | With **at least one factor seated** anywhere: shift any beer's Bourse marker **±1** ⚙ (**±2** with the Bergen Kontorhaus — §6). |
+1. **WALK** — move your worker to an **adjacent station** (orthogonal; turn 1 places
+   anywhere). **The move is the turn** — there is no staying put.
+2. **ACT** — take **ONE** of the actions **printed at that station** (§3) — or none.
+3. **LOAD** — you may load one Ready cask onto the Ship docked at **ONE of your
+   station's two flanking slots** (§4).
+
+*(v6.2: the v6.0 free-floating verb menu is folded into the stations. SAIL, CHART and
+TRADE are printed station actions now — where you walk decides what you can do, and each
+stop offers only a handful of choices.)*
 
 **THE CURRENT (the drift):** at the start of the **first player's turn each round**,
 **every Ship at sea advances one space, together, in one sweep** — lane order Bruges →
@@ -85,15 +88,21 @@ remembered: the round marker is the current's clock, the map is the tracker.
         C ── D            C  Harbor   (Ship)     D  Cellar    (Age)
 ```
 
-Stations print **one action each** (the v5 primary/alternate split retires with the fast
-turn):
+Each station prints its short menu — **you take ONE** (v6.2; the deep stations stay
+singles, the two desks carry the sea):
 
-| Station | Action (⚙) |
+| Station | Printed actions (⚙) |
 |---|---|
-| **A · Market — SOURCE** | take **3 goods**, any mix |
-| **B · Brewhouse — BREW** | pay a recipe into an open vessel + a tray die at the printed start value; **search the beer's stack — choose the tile** (its load bonus rides the cask) |
-| **D · Cellar — AGE 3** | turn your aging dice up three steps, split freely |
-| **C · Harbor** | **COMMISSION** (pay the hull's printed fee — Skute 2 `G` · Cog 1 `G` · Hulk free ⚙ — place it on a shipless slot, then one free load onto it) **OR** **LOAD 1** Ready cask onto **any** docked Ship |
+| **A · Market** — *the merchant's desk* | **SOURCE** — take **3 goods**, any mix · **CHART** — open a passage / raise a post or factor / upgrade one (§6) · **TRADE** — factor-gated: shift any beer's marker **±1** (±2 with the Bergen Kontorhaus) (§7) |
+| **B · Brewhouse** | **BREW** — pay a recipe into an open vessel + a tray die at the printed start value; **search the beer's stack — choose the tile** (its load bonus rides the cask) |
+| **C · Harbor** — *the shipmaster's desk* | **COMMISSION** — pay the hull's printed fee (Skute 2 `G` · Cog 1 `G` · Hulk free ⚙), place it on a shipless slot, one free load onto it · **LOAD 1** Ready cask onto **any** docked Ship · **SAIL** — advance **any one Ship at sea** one space (§5); free with a cask of **yours** aboard, else **1 `G`** ⚙ (the push); a closed passage blocks |
+| **D · Cellar** | **AGE 3** — turn your aging dice up three steps, split freely |
+
+**The CHART action in full:** pay the printed fee to **open a closed passage** (your
+post stands there free — the charter's privilege), **place a post** on an open waypoint
+(1 `G` ⚙, open seat required), **seat a factor** at a Kontor you have delivered to
+(3 `G` ⚙, open seat required) — or **UPGRADE a marker you already have**: a post onto an
+**establishment** tile (2 `G` ⚙) or a factor to the port's **Kontorhaus** (3 `G` ⚙) (§6).
 
 **The flanking slots:** each station is flanked by two printed slots (A: s1·s8 · B:
 s2·s3 · C: s6·s7 · D: s4·s5). After your station action, you may **load one Ready cask**
@@ -148,7 +157,8 @@ Specialty-Beers/Jopenbier toggles ride along unchanged.
   it leaves its slot and stands on its lane's **first waypoint** at once. The slot's
   Public Work departs with it (the tide — boxed; the Weigh House rides ON the hull,
   certifying it; the Staple House and Bonded Store pay at departure as printed).
-- **AT SEA.** The Ship advances one space per **current** (§2) and per **SAIL** verb.
+- **AT SEA.** The Ship advances one space per **current** (§2) and per **SAIL** (the
+  Harbor's action, §3).
   Its dice ride in public view. A **closed passage** ahead halts it until charted.
 - **POST RENT.** When a Ship **enters a waypoint**, each **post** standing there pays
   its owner **1 `G`** ⚙ from the supply (once per Ship per waypoint). An **establishment**
@@ -172,8 +182,9 @@ Specialty-Beers/Jopenbier toggles ride along unchanged.
 
 ## 6. Posts & factors — developing the network
 
-Your 6 house markers ⚙ serve two jobs, both placed with the **CHART** verb (or the
-*Chart 1* load bonus, or **London's prize**):
+Your 6 house markers ⚙ serve two jobs, both placed with the **CHART** action — taken at
+the **Market** (§3), or position-free via the *Chart 1* load bonus and **London's
+prize**:
 
 - **A POST** stands on a waypoint (2 seats per waypoint ⚙ · 1 at 2p ⚙; fee 1 `G` ⚙;
   free when you're the one who **opens** a closed passage). It pays you **1 `G`** ⚙ each
@@ -182,13 +193,15 @@ Your 6 house markers ⚙ serve two jobs, both placed with the **CHART** verb (or
   have **delivered there** before). Two powers, both printed on the panel:
   - **The factor's step:** after **your** Ship lands there and the glut resolves, step
     the marker of **one beer you landed** back **+1** ⚙.
-  - **The trading license:** any seated factor (anywhere) unlocks the **TRADE** verb.
+  - **The trading license:** any seated factor (anywhere) unlocks the **TRADE** action
+    (at the Market, §3).
 
 Posts and factors are never displaced, never lost, and carry no die.
 
 ### The upgrades (v6.1) — deepening a standing marker
 
-Both upgrades are **CHART actions** (the verb, the *Chart 1* bonus, or London's prize).
+Both upgrades are **CHART actions** (at the Market, or the *Chart 1* bonus, or London's
+prize).
 An upgrade spends **no house marker** — the standing marker deepens in place, and the
 flipped/underlaid **tile IS the state**. Each marker upgrades **once**; upgrades are
 never displaced or lost.
@@ -221,7 +234,8 @@ the Kontor panel** — four seats, four different engines:
 One track (−1…+3 ⚙) on the Destinations board, a marker per in-play beer except Gruit &
 Jopenbier, **all opening at the top (+3 ⚙)**. **A landed cask scores die + marker as
 printed at landing** (§5). **The market only falls on its own** — one step per beer type
-per landing. The ways UP are now verbs and posts you build: **TRADE** (±1, factor-gated) ·
+per landing. The ways UP are actions and posts you build: **TRADE** (at the Market; ±1,
+factor-gated) ·
 **the factor's step** (+1 after your landing) · the **Tollhouse** bench (loader ±1) ·
 **Bergen's prize** (±1 per cask, as v5.8) · the **Bergen Kontorhaus** (your TRADE moves
 ±2 — §6). Holding a price up is an engine you build.

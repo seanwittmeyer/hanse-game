@@ -32,13 +32,13 @@ function __vReset(){__V={work:0,sailv:0,chartv:0,tradev:0,depart:0,land:0,legCur
   push:0,open:0,post:0,factor:0,upgpost:0,upgfactor:0,rent:0,endCargo:0,glut:0,shiftUp:0,shiftDown:0,prizeStars:0,
   certLand:0,waitBlocked:0};}
 var __on=function(){return __V&&!aiSimulating;};
-var __doWork=doWork;doWork=function(c){if(__on())__V.work++;return __doWork(c);};
+var __doWork=doWork;doWork=function(c,a){if(__on())__V.work++;return __doWork(c,a);};   // v6.2: (cell, act) — dropping the act would turn every AI turn into a bare walk
 var __sailPick=sailPick;sailPick=function(i){var p=cur();var t=(S.sea||[])[i];
   var push=t&&p&&!shipHasCaskOf(t,p.id);
   var r=__sailPick(i);
   if(__on()){__V.sailv++;if(push)__V.push++;}
   return r;};
-var __enterTradeVerb=enterTradeVerb;enterTradeVerb=function(){if(__on())__V.tradev++;return __enterTradeVerb();};
+var __enterTradeVerb=enterTradeVerb;enterTradeVerb=function(rt){if(__on())__V.tradev++;return __enterTradeVerb(rt);};
 var __chartApply=chartApply;chartApply=function(p,o){if(__on()){__V.chartv++;if(__V[o.k]!=null)__V[o.k]++;}
   return __chartApply(p,o);};
 var __sailShip=sailShip;sailShip=function(slot,cid){if(__on())__V.depart++;return __sailShip(slot,cid);};

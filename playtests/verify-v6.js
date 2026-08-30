@@ -26,7 +26,7 @@ function ship(slot,kind,dest,load){S.slots[slot]={type:'ship',ship:kind,dest:des
 function cask(pid,style,die){return {owner:pid,style:style,q:STYLES[style].q,die:die,act:'source'};}
 
 // ---- identity & setup ----
-T('KEY is hanse-v61',()=>KEY==='hanse-v61');
+T('KEY is hanse-v62',()=>KEY==='hanse-v62');
 T('MAX_ROUND is 40',()=>MAX_ROUND===40);
 T('setup: sea state fields exist',()=>{mk(2);return Array.isArray(S.sea)&&!!S.posts&&!!S.factors&&!!S.passages;});
 T('setup: Wadden Coast & Skagen open, Dover Strait & the Sound closed',()=>{mk(2);
@@ -41,9 +41,12 @@ T('lanes: Bruges/Bergen 1 waypoint · London/Novgorod 2',()=>
   LANES.bruges.length===1&&LANES.bergen.length===1&&LANES.london.length===2&&LANES.novgorod.length===2);
 T('London prize is the chart',()=>DEST.london.benefit==='chart');
 
-// ---- the verb menu ----
-T('verbAvail: WORK always · SAIL/TRADE closed on a fresh board',()=>{mk(2);
-  return verbAvail('work')&&!verbAvail('sail')&&!verbAvail('trade');});
+// ---- the walk (v6.2: stations carry the actions) ----
+T('stations: Source always open · Sail/Trade closed on a fresh board',()=>{mk(2);const p=S.players[0];
+  return stationActAvail(p,'A','source')&&!stationActAvail(p,'C','sail')&&!stationActAvail(p,'A','trade');});
+T('v6.2: the sea actions are printed per station, not floating',()=>
+  STN_ACTS.A.includes('chart')&&STN_ACTS.A.includes('trade')&&STN_ACTS.C.includes('sail')
+  &&!STN_ACTS.B.includes('sail')&&!STN_ACTS.D.includes('chart')&&STN_ACTS.B.length===1&&STN_ACTS.D.length===1);
 T('chartOptions: closed passages chartable at 2G · no factor without a delivery',()=>{mk(2);
   const o=chartOptions(S.players[0],false);
   return o.some(x=>x.k==='open'&&x.w==='ds')&&o.some(x=>x.k==='open'&&x.w==='sd')&&!o.some(x=>x.k==='factor');});
@@ -58,22 +61,56 @@ T('house markers cap the network',()=>{mk(2);const p=S.players[0];
   S.posts.wc=[0];S.posts.sk=[0];S.factors.bruges=[0];S.factors.london=[0];S.factors.bergen=[0];S.factors.novgorod=[0];
   return markersUsed(p)===6&&markersLeft(p)===0&&chartOptions(p,true).every(x=>x.k==='open'||x.k==='upgpost'||x.k==='upgfactor');});   // v6.1: upgrades spend no marker — they stay open at the cap
 
-// ---- WORK ----
-T('WORK: Source 3 fires and the flank offer follows',()=>{mk(2);const p=S.players[0];
-  doWork('A');const inSrc=UI.sub==='source';srcTake(3,0);
+// ---- the walk · act · load ----
+T('the walk: Source 3 fires and the flank offer follows',()=>{mk(2);const p=S.players[0];
+  doWork('A','source');const inSrc=UI.sub==='source';srcTake(3,0);
   return inSrc&&p.grain===6&&(UI.sub==='end'||UI.sub==='flank');});
-T('WORK: a flanking ship opens the flank load',()=>{mk(2);const p=S.players[0];
+T('the walk: a flanking ship opens the flank load',()=>{mk(2);const p=S.players[0];
   ship('s1','cog','bruges');
-  doWork('A');srcTake(0,3);
+  doWork('A','source');srcTake(0,3);
   return UI.sub==='flank'&&UI.flank.slots.includes('s1');});
-T('WORK: adjacency binds after placement',()=>{mk(2);const p=S.players[0];
-  doWork('A');srcTake(1,1);flankSkip&&(UI.sub==='flank'?flankSkip():0);
-  const before=p.cell;doWork('D');   // A→D is diagonal: illegal
+T('the walk: adjacency binds after placement',()=>{mk(2);const p=S.players[0];
+  doWork('A','source');srcTake(1,1);flankSkip&&(UI.sub==='flank'?flankSkip():0);
+  const before=p.cell;doWork('D','age');   // A→D is diagonal: illegal
   return before==='A'&&p.cell==='A';});
 T('Harbor: commission places a hull and offers the maiden load',()=>{mk(2);const p=S.players[0];
   p.placed=true;p.cell='A';S.shipDisplay=[{ship:'hulk',dest:'bruges'}];
-  doWork('C');const h=UI.sub==='harbor';harborPick('comm');commPick(0);commPlace('s3');
+  doWork('C','comm');const h=UI.sub==='commission';commPick(0);commPlace('s3');
   return h&&S.slots.s3&&S.slots.s3.ship==='hulk';});
+T('v6.2: a multi-action station opens its short menu; a pick dispatches',()=>{mk(2);const p=S.players[0];
+  p.grain=4;   // Source AND Chart stand at the Market
+  doWork('A');const menu=UI.sub==='stn';
+  stnPick('source');
+  return menu&&UI.sub==='source';});
+T('v6.2: a deep single (Brewhouse) fires at once',()=>{mk(2);const p=S.players[0];
+  p.placed=true;p.cell='A';
+  doWork('B');
+  return UI.sub==='brew';});
+T('v6.2: a sea action off its station is only the walk',()=>{mk(2);const p=S.players[0];
+  p.placed=true;p.cell='B';S.passages.ds=true;
+  S.sea=[{ship:'cog',dest:'london',load:[cask(0,'hopped',2),cask(0,'hopped',2)],cert:0,pos:0}];
+  doWork('D','sail');   // the Cellar prints no Sail — the walk stands, the ship does not move
+  return p.cell==='D'&&S.sea[0].pos===0&&UI.sub!=='sailv';});
+T('v6.2: SAIL fires from the Harbor and routes home through the flank tail',()=>{mk(2);const p=S.players[0];
+  p.placed=true;p.cell='A';S.passages.ds=true;
+  S.sea=[{ship:'cog',dest:'london',load:[cask(0,'hopped',2),cask(0,'hopped',2)],cert:0,pos:0}];
+  doWork('C','sail');const inSail=UI.sub==='sailv'&&UI.sailv.rt==='workflank';
+  sailPick(0);
+  return inSail&&S.sea[0].pos===1&&(UI.sub==='end'||UI.sub==='flank');});
+T('v6.2: TRADE fires from the Market',()=>{mk(2);const p=S.players[0];
+  p.placed=true;p.cell='B';S.factors.bergen=[0];
+  const bk=Object.keys(S.bourse)[0];S.bourse[bk]=1;
+  doWork('A','trade');const inB=UI.sub==='bshift';
+  bshiftPick({beer:bk,dir:1});
+  return inB&&S.bourse[bk]===2;});
+T('v6.2: CHART fires from the Market with the flank return',()=>{mk(2);const p=S.players[0];
+  p.placed=true;p.cell='C';p.grain=4;
+  doWork('A','chart');
+  return UI.sub==='chart'&&UI.chart.returnTo==='workflank';});
+T('v6.2: the bare walk still offers the flank load',()=>{mk(2);const p=S.players[0];
+  p.placed=true;p.cell='B';ship('s4','cog','bruges');
+  doWork('D',null);   // no action named — the walk alone
+  return p.cell==='D'&&UI.sub==='flank'&&UI.flank.slots.includes('s4');});
 
 // ---- DEPART · the tide · certification ----
 T('a full ship DEPARTS onto its lane and leaves the slot',()=>{mk(2);
@@ -170,9 +207,9 @@ T('a factor needs a prior delivery there',()=>{mk(2);const p=S.players[0];p.grai
   const after=chartOptions(p,false).some(x=>x.k==='factor'&&x.w==='bruges');
   return !before&&after;});
 T('TRADE unlocks with any factor',()=>{mk(2);const p=S.players[0];
-  const before=verbAvail('trade');
+  const before=stationActAvail(p,'A','trade');
   S.factors.bergen=[0];
-  return !before&&verbAvail('trade');});
+  return !before&&stationActAvail(p,'A','trade');});
 T('the Chart-1 load bonus (survey) opens the chart flow, fee waived',()=>{mk(2);const p=S.players[0];
   p.grain=0;p.hops=0;
   fireCaskAct('survey','end');

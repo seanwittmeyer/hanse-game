@@ -15,7 +15,17 @@ a scarce **establishment** tile (Toll Court · Victualling Post · Pilot's Rest,
 2 G ⚙) and a factor flips to the port's **KONTORHAUS** (3 G ⚙; four powers printed per
 panel: Bruges 1 G/cask · London free charts · Bergen TRADE ±2 · Novgorod +1★/cask); the
 Chandler re-derives to the **Wharfinger** (posts' tolls +1 G). `KEY hanse-v61` · verify-v6
-**63/63** · 300-game corpus clean, upgrades in live AI use at every count. The other surfaces (rulebook · print kit · aids · COMPONENTS · DESIGN
+**63/63** · 300-game corpus clean, upgrades in live AI use at every count. **v6.2 "the
+walk is the choice" (2026-08-30, designer-called: bring back the adjacency frame — fewer
+options per turn, GWT-style):** F1 re-ruled — the v6.0 four-verb menu retires; the turn is
+**WALK (adjacent, mandatory) · ONE printed station action · one flanking load**, with the
+sea folded onto the desks (Market: Source · Chart · Trade — Harbor: Commission · Load-any ·
+Sail; Brewhouse/Cellar stay deep singles). The missing components landed the same pass:
+the **Bourse price board** now renders on the Destinations panel (the printed track IS the
+sale value) and the sea map shows **open post/factor seat sockets** and upgraded-marker
+badges. `KEY hanse-v62` · verify-v6 **71/71** · 300-game corpus 0/0; the 2p ceiling share
+eased 60%→42% (the walk commits dice faster); greedy bots under-visit the sea desks (SAIL
+~1/game) — a bot blind spot to re-read at the Phase 4 oracle, not a balance verdict. The other surfaces (rulebook · print kit · aids · COMPONENTS · DESIGN
 architecture) still describe v5.8 until Phases 2/5. **Fork calls taken for the test build
 (all ⚙, designer re-rules freely):** F1 WORK = station + one flanking load (the line sweep
 retired) · F2 neutral hulls + the current + the SAIL push (1 G ⚙) · F3 the current at the
