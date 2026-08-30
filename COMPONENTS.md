@@ -30,8 +30,9 @@
   / Chart* · Brewhouse *Brew (search) / Trade* · Harbor *Commission + 1 load / Sail* ·
   Cellar *Age 3 / Load 1 any*. The worker's own station fires its PRIMARY; the line's
   other station its ALTERNATE; the line's two end slots each load. **Each station tile is
-  SPLIT ON THE DIAGONAL into a ROW half and a COLUMN half (v6.4b)** — each half prints its
-  line partner's mark, and the worker stands on the half it worked (the pawn's position is
+  SPLIT ON THE DIAGONAL into a ROW half and a COLUMN half (v6.4b)** — each half prints the
+  ALTERNATE verb the line's far station serves (the mark is the action that half earns),
+  and the worker stands on the half it worked (the pawn's position is
   the table's record of the line; no mechanic rides it).
 - **The Destinations board** — every Kontor panel adds **2 factor-seat sockets** and its
   printed **KONTORHAUS power** (Bruges *+1 G per landing cask* · London *charts free* ·

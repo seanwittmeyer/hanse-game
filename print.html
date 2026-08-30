@@ -1070,7 +1070,7 @@ function station(L,nm,scene,acts,sub){
   // v6.4b — the tile splits on the diagonal into a ROW half and a COLUMN half; each half
   // prints its line partner's mark, and the worker STANDS on the half it worked
   const SP={A:{row:['B','tr'],col:['C','bl']},B:{row:['A','tl'],col:['D','br']},C:{row:['D','br'],col:['A','tl']},D:{row:['C','bl'],col:['B','tr']}};
-  const SICON={A:'goods-3',B:'flask-conical',C:'ship',D:'age-3'};
+  const SICON={A:'compass',B:'bourse',C:'sail',D:'package-plus'};   // the half prints the ACTION it earns — the partner's ALTERNATE verb
   const chips=['row','col'].map(w=>'<span class="swz '+SP[L][w][1]+'">'+LU(SICON[SP[L][w][0]])+'</span>').join('');
   return '<div class="stn '+L+'" style="grid-area:'+({A:'2/2',B:'2/3',C:'3/2',D:'3/3'})[L]+'">'
   +'<img class="stn-scene" src="art/scene-'+scene+'.png" alt="">'+STN_GRAD

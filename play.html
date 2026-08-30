@@ -3748,9 +3748,10 @@ function renderGrid(){
     const HITS={A:{row:'0 0,100% 0,100% 100%',col:'0 0,100% 100%,0 100%'},B:{row:'0 0,100% 0,0 100%',col:'100% 0,100% 100%,0 100%'},
                 C:{row:'100% 0,100% 100%,0 100%',col:'0 0,100% 0,0 100%'},D:{row:'0 0,100% 100%,0 100%',col:'0 0,100% 0,100% 100%'}};
     const wz=which=>{const pn=LINES[o[which]].cells.find(x=>x!==c);
+      const alt=stnActTxt(cur(),STN_A[pn]).split(' — ')[0].split(' (')[0];
       const stand=S.players.filter(p=>p.cell===c&&p.line===o[which])
         .map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+attr(p.name+' — worked the '+(which==='row'?'row':'column')+' with '+CELLNAME[pn])+'"></span>').join('');
-      return '<span class="wz '+WPOS[c][which]+'" data-tip="'+attr('The '+(which==='row'?'ROW':'COLUMN')+' half — a worker stands here when its line runs toward '+CELLNAME[pn]+'.')+'">'+LU(STATION_ICON[CELLNAME[pn]])+stand+'</span>';};
+      return '<span class="wz '+WPOS[c][which]+'" data-tip="'+attr('The '+(which==='row'?'ROW':'COLUMN')+' half — the line toward '+CELLNAME[pn]+', whose counter serves '+alt+'.')+'">'+LU(STATION_ALT_ICON[CELLNAME[pn]])+stand+'</span>';};
     const picking=!aiTurn()&&UI.sub==='line'&&cur().placed&&cur().cell===c;
     const hits=picking?('<div class="wedgehit" style="clip-path:polygon('+HITS[c].row+')" onclick="chooseLine(\'row\')" data-tip="'+attr('Activate the ROW — with '+CELLNAME[LINES[o.row].cells.find(x=>x!==c)])+'"></div>'
       +'<div class="wedgehit" style="clip-path:polygon('+HITS[c].col+')" onclick="chooseLine(\'col\')" data-tip="'+attr('Activate the COLUMN — with '+CELLNAME[LINES[o.col].cells.find(x=>x!==c)])+'"></div>'):'';
