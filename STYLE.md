@@ -214,6 +214,10 @@ does not print these until Phase 2 locks them; the designer renames freely at th
 | factor | n | Your standing piece at a Kontor — destination development; its benefit prints on the Kontor panel | *Grain Factor* (Specialist) keeps its name; context separates crew from standing — Phase 2 re-reads |
 | the current | n | The drift: at the printed cadence ⚙ every Ship at sea advances one leg, together, in one visible sweep | **"the tide" is TAKEN** (§4b, the v5.4 Public Works rule) — the drift is never called the tide |
 | destination | n | The §4.7 reservation ("a future *category* of delivery sites — a trade map") comes due in v6 | Phase 2 rules its exact scope vs the locked *Kontor* |
+| upgrade | v | Deepen a standing marker via CHART: a post flips onto an establishment tile; a factor flips to the Kontorhaus (v6.1) | never *build/develop* — one verb for the move |
+| establishment | n | The post-upgrade tile family (scarce supply, 2 each ⚙): **Toll Court · Victualling Post · Pilot's Rest** — the tile IS the state | — |
+| Kontorhaus | n | The factor's upgraded side; its power prints ON the Kontor panel, one per port | **the proper names Hanzehuis/Steelyard/Bryggen/Peterhof are TAKEN** (§4b, the Staple House faces) — the generic *Kontorhaus* on purpose |
+| Wharfinger | n | The tolls Specialist (v6.1 re-derive of the Chandler's swap): your posts' tolls +1 G | *Chandler* retires from the roster with its swap |
 
 ## §5. Deferred to the next copy pass (logged, not yet applied)
 

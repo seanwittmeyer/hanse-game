@@ -1,4 +1,4 @@
-// verify-v6.js — the targeted rule battery for v6.0 "The Voyage" (KEY hanse-v60).
+// verify-v6.js — the targeted rule battery for v6 "The Voyage" (v6.1, KEY hanse-v61).
 // Drives the CANONICAL engine (extracted from play.html, DOM stubbed) with deterministic
 // state surgery per check. Runs in seconds; ALWAYS after an engine change.
 // Usage: node playtests/verify-v6.js
@@ -26,7 +26,7 @@ function ship(slot,kind,dest,load){S.slots[slot]={type:'ship',ship:kind,dest:des
 function cask(pid,style,die){return {owner:pid,style:style,q:STYLES[style].q,die:die,act:'source'};}
 
 // ---- identity & setup ----
-T('KEY is hanse-v60',()=>KEY==='hanse-v60');
+T('KEY is hanse-v61',()=>KEY==='hanse-v61');
 T('MAX_ROUND is 40',()=>MAX_ROUND===40);
 T('setup: sea state fields exist',()=>{mk(2);return Array.isArray(S.sea)&&!!S.posts&&!!S.factors&&!!S.passages;});
 T('setup: Wadden Coast & Skagen open, Dover Strait & the Sound closed',()=>{mk(2);
@@ -56,7 +56,7 @@ T('the Surveyor waives passage & post fees',()=>{mk(2);const p=S.players[0];p.up
 T('post seats: 1 at 2p · 2 at 3p',()=>{mk(2);const a=postSeatsMax();mk(3);return a===1&&postSeatsMax()===2;});
 T('house markers cap the network',()=>{mk(2);const p=S.players[0];
   S.posts.wc=[0];S.posts.sk=[0];S.factors.bruges=[0];S.factors.london=[0];S.factors.bergen=[0];S.factors.novgorod=[0];
-  return markersUsed(p)===6&&markersLeft(p)===0&&chartOptions(p,true).every(x=>x.k==='open');});
+  return markersUsed(p)===6&&markersLeft(p)===0&&chartOptions(p,true).every(x=>x.k==='open'||x.k==='upgpost'||x.k==='upgfactor');});   // v6.1: upgrades spend no marker — they stay open at the cap
 
 // ---- WORK ----
 T('WORK: Source 3 fires and the flank offer follows',()=>{mk(2);const p=S.players[0];
@@ -183,6 +183,83 @@ T('London’s prize resolves as a free chart for an AI seat',()=>{mk(2);const p=
   afterSail('end');
   const built=passageOpen('ds')||passageOpen('sd')||SEA_KEYS.some(w=>(S.posts[w]||[]).includes(0))||KONTORE.some(k=>hasFactorAt(p,k));
   return built&&(UI.pendingBenefits||[]).length===0;});
+
+// ---- v6.1 · the deep markers ----
+T('setup: the establishment supply prints 2 of each · the upgrade fields exist',()=>{mk(2);
+  return S.upgSupply.tollcourt===2&&S.upgSupply.victpost===2&&S.upgSupply.pilotrest===2
+    &&!!S.postUpg&&Array.isArray(S.factorUpg.bruges);});
+T('chartOptions: an upgrade offered only over YOUR standing marker',()=>{mk(2);const p=S.players[0];p.grain=9;
+  const none=chartOptions(p,false).some(x=>x.k==='upgpost'||x.k==='upgfactor');
+  S.posts.wc=[1];S.factors.bruges=[1];   // a rival's markers offer you nothing
+  const rival=chartOptions(p,false).some(x=>x.k==='upgpost'||x.k==='upgfactor');
+  S.posts.sk=[0];S.factors.bergen=[0];
+  const o=chartOptions(p,false);
+  return !none&&!rival&&o.some(x=>x.k==='upgpost'&&x.w==='sk')&&o.some(x=>x.k==='upgfactor'&&x.w==='bergen');});
+T('upgrading a post: pays 2G, spends a supply tile, spends NO house marker',()=>{mk(2);const p=S.players[0];
+  p.grain=4;S.posts.wc=[0];
+  UI.chart={returnTo:'end',free:false,pid:0};UI.sub='chart';
+  chartDo('upgpost','wc','tollcourt');
+  return postUpgOf('wc',0)==='tollcourt'&&p.grain===4-POST_UPG_FEE.g&&S.upgSupply.tollcourt===1&&markersUsed(p)===1;});
+T('an upgraded post is not offered again · a dry supply closes the door',()=>{mk(2);const p=S.players[0];p.grain=9;
+  S.posts.wc=[0];S.postUpg={wc:{0:'tollcourt'}};
+  const again=chartOptions(p,false).some(x=>x.k==='upgpost');
+  S.posts.sk=[0];S.upgSupply={tollcourt:0,victpost:0,pilotrest:0};
+  const dry=chartOptions(p,false).some(x=>x.k==='upgpost');
+  return !again&&!dry;});
+T('the Toll Court collects 2G · the Wharfinger adds +1 to every toll',()=>{mk(2);const p2=S.players[1];
+  S.posts.wc=[1];S.postUpg={wc:{1:'tollcourt'}};
+  const g0=p2.grain;ship('s1','cog','bruges',[cask(0,'gruit',1),cask(0,'gruit',1)]);
+  sailShip('s1',0);
+  const court=p2.grain===g0+2;
+  p2.upgrades=['chandler'];const g1=p2.grain;
+  ship('s2','cog','bruges',[cask(0,'gruit',1),cask(0,'gruit',1)]);
+  sailShip('s2',0);
+  return court&&p2.grain===g1+3;});
+T('the Victualling Post provisions ONLY its owner’s cargo (1G 1H)',()=>{mk(2);const p2=S.players[1];
+  S.posts.wc=[1];S.postUpg={wc:{1:'victpost'}};
+  const g0=p2.grain,h0=p2.hops;
+  ship('s1','cog','bruges',[cask(0,'gruit',1),cask(0,'gruit',1)]);sailShip('s1',0);   // no P2 cask: toll only
+  const dry=p2.grain===g0+POST_RENT_G&&p2.hops===h0;
+  const g1=p2.grain,h1=p2.hops;
+  ship('s2','cog','bruges',[cask(1,'gruit',1),cask(0,'gruit',1)]);sailShip('s2',0);   // P2 cask aboard
+  return dry&&p2.grain===g1+POST_RENT_G+1&&p2.hops===h1+1;});
+T('the Pilot’s Rest speeds its owner’s ship one extra space (and can land it)',()=>{mk(2);const p=S.players[0];
+  S.posts.wc=[0];S.postUpg={wc:{0:'pilotrest'}};
+  ship('s1','cog','london',[cask(0,'hopped',2),cask(0,'hopped',2)]);
+  sailShip('s1',0);   // Dover Strait closed: the boost is blocked at the closure
+  const held=S.sea.length===1&&S.sea[0].pos===0;
+  mk(2);const q=S.players[0];
+  S.posts.wc=[0];S.postUpg={wc:{0:'pilotrest'}};
+  ship('s1','skute','bruges',[cask(0,'gruit',1)]);
+  sailShip('s1',0);   // a 1-leg lane: the extra advance IS the landing
+  return held&&S.sea.length===0&&q.delivered.length===1;});
+T('the Kontorhaus at Bruges: +1G per own cask landing',()=>{mk(2);const p=S.players[0];
+  S.factors.bruges=[0];S.factorUpg.bruges=[0];const g0=p.grain;
+  S.sea=[{ship:'cog',dest:'bruges',load:[cask(0,'gruit',1),cask(0,'gruit',1)],cert:0,pos:0}];
+  theCurrent();
+  return p.grain===g0+2;});
+T('the Kontorhaus at Novgorod: +1★ banked per own cask landing',()=>{mk(2);const p=S.players[0];
+  S.passages.sd=true;S.factors.novgorod=[0];S.factorUpg.novgorod=[0];
+  S.sea=[{ship:'cog',dest:'novgorod',load:[cask(0,'bock',5),cask(0,'bock',5)],cert:0,pos:1}];
+  const b0=p.bank;theCurrent();
+  return p.bank===b0+2&&(p.bankKh||0)===2;});
+T('the Kontorhaus at London: every CHART fee waived',()=>{mk(2);const p=S.players[0];
+  p.grain=0;p.hops=0;S.factors.london=[0];S.factorUpg.london=[0];
+  const o=chartOptions(p,false);
+  return o.some(x=>x.k==='open'&&!(x.fee.g||x.fee.h))&&o.some(x=>x.k==='post'&&!(x.fee.g||x.fee.h));});
+T('the Kontorhaus at Bergen: TRADE moves the marker 2 (down too)',()=>{mk(2);const p=S.players[0];
+  S.factors.bergen=[0];S.factorUpg.bergen=[0];
+  const amp=tradeAmp(p);
+  enterTradeVerb();const steps=UI.bsh&&UI.bsh.steps;
+  const bk=Object.keys(S.bourse)[0];S.bourse[bk]=3;
+  bshiftPick({beer:bk,dir:-1});
+  return amp===2&&steps===2&&S.bourse[bk]===1;});
+T('the Surveyor waives the post upgrade but NOT the factor upgrade',()=>{mk(2);const p=S.players[0];
+  p.upgrades=['brewmate'];p.grain=9;
+  S.posts.wc=[0];S.factors.bruges=[0];
+  const o=chartOptions(p,false);
+  const up=o.find(x=>x.k==='upgpost');const uf=o.find(x=>x.k==='upgfactor');
+  return !!up&&!(up.fee.g||up.fee.h)&&!!uf&&uf.fee.g===FACTOR_UPG_FEE.g;});
 
 // ---- the clock ----
 T('dice at sea count as committed (the tray reads them)',()=>{mk(2);const p=S.players[0];

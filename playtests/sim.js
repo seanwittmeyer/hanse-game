@@ -29,7 +29,7 @@ if(__CMS>0)CELLAR_MS=__CMS;
 // ---- v6 VERB & SEA COUNTERS — ground truth via wrapped engine functions, reset per game.
 var __V=null,__inCur=0,__inPilot=0;
 function __vReset(){__V={work:0,sailv:0,chartv:0,tradev:0,depart:0,land:0,legCur:0,legSail:0,legPilot:0,
-  push:0,open:0,post:0,factor:0,rent:0,endCargo:0,glut:0,shiftUp:0,shiftDown:0,prizeStars:0,
+  push:0,open:0,post:0,factor:0,upgpost:0,upgfactor:0,rent:0,endCargo:0,glut:0,shiftUp:0,shiftDown:0,prizeStars:0,
   certLand:0,waitBlocked:0};}
 var __on=function(){return __V&&!aiSimulating;};
 var __doWork=doWork;doWork=function(c){if(__on())__V.work++;return __doWork(c);};
@@ -39,7 +39,7 @@ var __sailPick=sailPick;sailPick=function(i){var p=cur();var t=(S.sea||[])[i];
   if(__on()){__V.sailv++;if(push)__V.push++;}
   return r;};
 var __enterTradeVerb=enterTradeVerb;enterTradeVerb=function(){if(__on())__V.tradev++;return __enterTradeVerb();};
-var __chartApply=chartApply;chartApply=function(p,o){if(__on()){__V.chartv++;__V[o.k==='open'?'open':(o.k==='post'?'post':'factor')]++;}
+var __chartApply=chartApply;chartApply=function(p,o){if(__on()){__V.chartv++;if(__V[o.k]!=null)__V[o.k]++;}
   return __chartApply(p,o);};
 var __sailShip=sailShip;sailShip=function(slot,cid){if(__on())__V.depart++;return __sailShip(slot,cid);};
 var __seaAdvance=seaAdvance;seaAdvance=function(i,cid){var r=__seaAdvance(i,cid);
@@ -176,7 +176,7 @@ let anyErr=0;
   console.log(`delivery split: ${Object.keys(dd).map(k=>k+' '+pct(dd[k],dsum)).join(' · ')}`);
   const us={};ok.forEach(r=>Object.keys(r.V).forEach(k=>us[k]=(us[k]||0)+r.V[k]));
   Object.keys(us).forEach(k=>us[k]/=ok.length);
-  console.log(`VERBS/game: WORK ${fmt(us.work)} · SAIL ${fmt(us.sailv)} (pushes ${fmt(us.push)}) · CHART ${fmt(us.chartv)} (open ${fmt(us.open)} · post ${fmt(us.post)} · factor ${fmt(us.factor)}) · TRADE ${fmt(us.tradev)}`);
+  console.log(`VERBS/game: WORK ${fmt(us.work)} · SAIL ${fmt(us.sailv)} (pushes ${fmt(us.push)}) · CHART ${fmt(us.chartv)} (open ${fmt(us.open)} · post ${fmt(us.post)} · factor ${fmt(us.factor)} · upg post ${fmt(us.upgpost)} / factor ${fmt(us.upgfactor)}) · TRADE ${fmt(us.tradev)}`);
   console.log(`THE SEA/game: departs ${fmt(us.depart)} · landings ${fmt(us.land)} (certified ${fmt(us.certLand)}) · legs — current ${fmt(us.legCur)} · sail ${fmt(us.legSail)} · pilot ${fmt(us.legPilot)} · post rent paid ${fmt(us.rent)} · end-cargo casks ${fmt(us.endCargo)}`);
   console.log(`the bourse: shifts UP ${fmt(us.shiftUp)} vs DOWN ${fmt(us.shiftDown)} · end track avg ${fmt(avg(ok.map(r=>r.bourseAvg)))} · prizes as ★ ${fmt(us.prizeStars)}/game`);
   console.log(`the network at end: passages opened ${fmt(avg(ok.map(r=>r.passOpen)))} of 2 · posts ${fmt(avg(ok.map(r=>r.postsN)))} · factors ${fmt(avg(ok.map(r=>r.factorsN)))}`);

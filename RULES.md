@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — The Rules (v6.0 "The Voyage" · TEST BUILD)
+# Brewhouses of the Hanse — The Rules (v6.1 "The Voyage" · TEST BUILD)
 
 *The one rules document. Clean operational rules only — the v6 program and its
 constitution live in `V6-PLAN.md`; design rationale in `DESIGN.md`; the frozen v5.8 game
@@ -37,7 +37,10 @@ Shared board:
   (closure tiles on the map; chart fee printed: 2 `G` ⚙ each). Bruges and Bergen are
   reachable from the first sail; London and Novgorod wait on a chart.
 - The four **Kontore** (Bruges · London · Bergen · Novgorod), each with **2 factor
-  seats** ⚙ printed on its panel.
+  seats** ⚙ printed on its panel — and its **KONTORHAUS power** printed beside them (§6).
+- **The ESTABLISHMENT supply** beside the map: **3 designs × 2 tiles each ⚙** (Toll
+  Court · Victualling Post · Pilot's Rest) — the post upgrades, first come first served
+  (§6).
 - **Deal 3 of the 4 export beers** (the variable ladder). **Cask tiles** in face-up
   searchable stacks, one per beer (as v5.8: full Brew searches, delivered tiles return
   to the bottom).
@@ -63,8 +66,8 @@ On your turn take **exactly one** of the four verbs, then the turn passes:
 |---|---|
 | **WORK** | Move your worker to an **adjacent station** (orthogonal; turn 1 places anywhere), fire that station's action (§3), then **you may load at ONE of its two flanking slots** (a docked Ship there — §4). |
 | **SAIL** | Advance **any one Ship at sea** one space along its lane (§5). Free if a cask of **yours** is aboard; otherwise pay **1 `G`** ⚙ (the push). A closed passage blocks. |
-| **CHART** | Pay the printed fee to **open a closed passage** (your post stands there free — the charter's privilege), **place a post** on an open waypoint (1 `G` ⚙, open seat required), or **seat a factor** at a Kontor you have delivered to (3 `G` ⚙, open seat required) (§6). |
-| **TRADE** | With **at least one factor seated** anywhere: shift any beer's Bourse marker **±1** ⚙ (§7). |
+| **CHART** | Pay the printed fee to **open a closed passage** (your post stands there free — the charter's privilege), **place a post** on an open waypoint (1 `G` ⚙, open seat required), **seat a factor** at a Kontor you have delivered to (3 `G` ⚙, open seat required) — or **UPGRADE a marker you already have**: a post onto an **establishment** tile (2 `G` ⚙) or a factor to the port's **Kontorhaus** (3 `G` ⚙) (§6). |
+| **TRADE** | With **at least one factor seated** anywhere: shift any beer's Bourse marker **±1** ⚙ (**±2** with the Bergen Kontorhaus — §6). |
 
 **THE CURRENT (the drift):** at the start of the **first player's turn each round**,
 **every Ship at sea advances one space, together, in one sweep** — lane order Bruges →
@@ -148,7 +151,10 @@ Specialty-Beers/Jopenbier toggles ride along unchanged.
 - **AT SEA.** The Ship advances one space per **current** (§2) and per **SAIL** verb.
   Its dice ride in public view. A **closed passage** ahead halts it until charted.
 - **POST RENT.** When a Ship **enters a waypoint**, each **post** standing there pays
-  its owner **1 `G`** ⚙ from the supply (once per Ship per waypoint).
+  its owner **1 `G`** ⚙ from the supply (once per Ship per waypoint). An **establishment**
+  standing there serves its owner as printed on its tile (§6) — the Pilot's Rest resolves
+  as the Ship enters: it advances **one extra space at once** (a closed passage still
+  blocks; the extra space can be the landing).
 - **LANDING.** Advancing past the last waypoint lands the Ship at its Kontor. Each cask
   aboard **delivers in boarding order**: score **★ = its die + its beer's marker AS
   PRINTED AT LANDING** (floor 0; Novgorod +3★ ⚙ on top), park the die, take the Kontor's
@@ -180,6 +186,34 @@ Your 6 house markers ⚙ serve two jobs, both placed with the **CHART** verb (or
 
 Posts and factors are never displaced, never lost, and carry no die.
 
+### The upgrades (v6.1) — deepening a standing marker
+
+Both upgrades are **CHART actions** (the verb, the *Chart 1* bonus, or London's prize).
+An upgrade spends **no house marker** — the standing marker deepens in place, and the
+flipped/underlaid **tile IS the state**. Each marker upgrades **once**; upgrades are
+never displaced or lost.
+
+**A post → an ESTABLISHMENT** (fee 2 `G` ⚙): take any establishment tile from the supply
+(**2 of each design** ⚙ — when they're gone, they're gone) and seat your post on it. It
+keeps collecting its toll, plus the tile's printed line:
+
+| Establishment (qty 2 ⚙) | Printed line |
+|---|---|
+| **Toll Court** | Your toll here is **2 `G`** (any entering Ship) |
+| **Victualling Post** | A Ship carrying **your** cask enters here: gain **1 `G` 1 `H`** |
+| **Pilot's Rest** | A Ship carrying **your** cask enters here: it **advances one extra space** at once |
+
+**A factor → the KONTORHAUS** (fee 3 `G` ⚙): flip your seated factor to its Kontorhaus
+side. It keeps the license and the factor's step, plus **that port's power, printed on
+the Kontor panel** — four seats, four different engines:
+
+| Kontor | The Kontorhaus power ⚙ |
+|---|---|
+| **Bruges** | Your casks landing here: **gain 1 `G` each** |
+| **London** | Your **CHART actions pay no fee** (passages, posts, factors, upgrades) |
+| **Bergen** | Your **TRADE shifts a marker ±2** |
+| **Novgorod** | Your casks landing here: **+1★ each** (banked) |
+
 ---
 
 ## 7. The Bourse — the glut & the trade (v5.6 law + the new supply)
@@ -189,7 +223,8 @@ Jopenbier, **all opening at the top (+3 ⚙)**. **A landed cask scores die + mar
 printed at landing** (§5). **The market only falls on its own** — one step per beer type
 per landing. The ways UP are now verbs and posts you build: **TRADE** (±1, factor-gated) ·
 **the factor's step** (+1 after your landing) · the **Tollhouse** bench (loader ±1) ·
-**Bergen's prize** (±1 per cask, as v5.8). Holding a price up is an engine you build.
+**Bergen's prize** (±1 per cask, as v5.8) · the **Bergen Kontorhaus** (your TRADE moves
+±2 — §6). Holding a price up is an engine you build.
 
 ---
 
@@ -198,7 +233,7 @@ per landing. The ways UP are now verbs and posts you build: **TRADE** (±1, fact
 | Kontor | Minimum ⚙ | Lane | Prize per cask ⚙ | Majority (1/2/3) ⚙ |
 |---|---|---|---|---|
 | **Bruges** | 1 | Wadden Coast (open) | **Gain 1 recipe** (its `H` = Q−3 fee; Q3s free) — OR 2★ | 4 / 2 / 0 |
-| **London** | 2 | + Dover Strait (closed) | **A free CHART** — open a passage / place a post / seat a factor, the fee waived — OR 2★ | 5 / 3 / 1 |
+| **London** | 2 | + Dover Strait (closed) | **A free CHART** — any Chart action (§6, upgrades included), the fee waived — OR 2★ | 5 / 3 / 1 |
 | **Bergen** | 2 | Skagen (open) | **A specialist** (free) · OR **shift any marker ±1** · OR 2★ | 9 / 5 / 2 |
 | **Novgorod** | **3** | + the Sound (closed) | — **+3★ per delivered die** ⚙ (no thing; the port that only pays money) | 8 / 5 / 2 |
 
@@ -212,27 +247,29 @@ share of it**.
 ## 9. The player board & the specialists
 
 3 vessels · 2 seats, as v5.8. Specialists are earned (Bergen's prize free · the *Gain 1
-specialist* bonus at the printed fee). The roster carries from v5.8 with **three
+specialist* bonus at the printed fee). The roster carries from v5.8 with **four
 re-derivations** for the sea (⚙, names provisional):
 
 - **Pilot** *(replaces the Broker)* — at your turn start: **advance one Ship carrying
   your cask one space** (closures still block). Fee 1 `G` ⚙.
 - **Surveyor** *(replaces the Brewer's Mate)* — **your CHART passage-and-post fees are
-  waived** (the factor's fee still applies). Fee 1 `H` ⚙.
+  waived, the post upgrade included** (the factor-side fees still apply). Fee 1 `H` ⚙.
 - **Supercargo** *(re-derived)* — each time a Ship carrying **your** cask **lands** on a
   turn that is not yours (the current included): gain **1 `G` 1 `H`**.
+- **Wharfinger** *(v6.1 — replaces the Chandler's swap)* — **your posts' tolls pay +1
+  `G`** (the Toll Court's 2 `G` becomes 3 `G`). Fee 1 `G` ⚙.
 
 Everyone else — Cellarman, Grain Factor, Hop Gardener, Stevedore, Braumeister, Guild
-Scholar, Innkeeper, Chronicler (+1★/landed cask), Alderman, Town Crier, Chandler,
-Shipwright — is unchanged from v5.8.
+Scholar, Innkeeper, Chronicler (+1★/landed cask), Alderman, Town Crier, Shipwright — is
+unchanged from v5.8.
 
 ---
 
 ## 10. Goods & storage
 
 `G` grain · `H` hops — the only currency. Cap 8 ⚙. The faucets: the Market, the load
-bonuses, **post rent**, prizes. The drains: brews, commissions, recipe/specialist fees,
-**charts, posts, factors, pushes**.
+bonuses, **post rent & the establishments**, prizes. The drains: brews, commissions,
+recipe/specialist fees, **charts, posts, factors, upgrades, pushes**.
 
 ---
 
@@ -247,7 +284,7 @@ rounds than v5.8; pace target ~18–40 rounds ⚙, re-read at Phase 4).
 
 1. **Landings** — die + marker at landing (Novgorod +3★ ⚙), scored as they happen.
 2. **Scored in play** — prizes taken as ★ · Cooperage wharfage · Staple premiums ·
-   Chronicler ★ · placed presence (1★; Town Crier +2★).
+   Chronicler ★ · the Novgorod Kontorhaus ★ · placed presence (1★; Town Crier +2★).
 3. **Majorities** — by parked dice (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙; 2p pays two places).
 4. **The Flight** — distinct beers SHIPPED: (n−1)², min 3 ⚙.
 5. **The Guild** — the Alderman's printed line.

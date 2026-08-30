@@ -9,7 +9,13 @@ to describe the live v5.8 build until Phases 2–3 replace them.*
 **Status: Phase 3 TEST BUILD LIVE (2026-08-29, designer-called: "build it — play.html and
 RULES.md, ignore the rest as we test").** `RULES.md` is v6.0; `play.html` runs it (`KEY
 hanse-v60`); a fresh `playtests/` gates it (verify-v6 **51/51** · sim 0 crashes / 0
-deadlocks). The other surfaces (rulebook · print kit · aids · COMPONENTS · DESIGN
+deadlocks). **v6.1 "the deep markers" (2026-08-30, designer-called: "deepening the markers
+is likely the thing"):** the CHART verb now UPGRADES a standing marker — a post flips onto
+a scarce **establishment** tile (Toll Court · Victualling Post · Pilot's Rest, 2 each ⚙,
+2 G ⚙) and a factor flips to the port's **KONTORHAUS** (3 G ⚙; four powers printed per
+panel: Bruges 1 G/cask · London free charts · Bergen TRADE ±2 · Novgorod +1★/cask); the
+Chandler re-derives to the **Wharfinger** (posts' tolls +1 G). `KEY hanse-v61` · verify-v6
+**63/63** · 300-game corpus clean, upgrades in live AI use at every count. The other surfaces (rulebook · print kit · aids · COMPONENTS · DESIGN
 architecture) still describe v5.8 until Phases 2/5. **Fork calls taken for the test build
 (all ⚙, designer re-rules freely):** F1 WORK = station + one flanking load (the line sweep
 retired) · F2 neutral hulls + the current + the SAIL push (1 G ⚙) · F3 the current at the
