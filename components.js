@@ -340,8 +340,8 @@ function ventureTile(d,lvl,col){const f=lvl===2?d.l2:d.l1;
 // The printed 2G chip is the upgrade fee. Mirrors play.html POST_UPGS.
 // (art: stand-ins from freed building shots — briefs queued in art/PROMPTS.md.)
 const ESTABLISHMENTS=[
-  {k:'tollcourt',nm:'Toll Court',       n:2, art:'building-tollhouse.png', cond:'On enter',                    effIc:'goods-2', eff:'the toll'},
-  {k:'victpost', nm:'Victualling Post', n:2, art:'building-victual.png',   cond:'On enter · your '+LU('beer'), eff:'<span class="g">+1'+LU('wheat','g ic')+'</span> <span class="h">+1'+LU('sprout','h ic')+'</span>'},
+  {k:'tollcourt',nm:'Toll Court',       n:2, art:'establishment-tollcourt.png', cond:'On enter',                    effIc:'goods-2', eff:'the toll'},
+  {k:'victpost', nm:'Victualling Post', n:2, art:'establishment-victpost.png',   cond:'On enter · your '+LU('beer'), eff:'<span class="g">+1'+LU('wheat','g ic')+'</span> <span class="h">+1'+LU('sprout','h ic')+'</span>'},
   {k:'pilotrest',nm:'Pilot’s Rest',     n:2, art:'building-missionq.png',  cond:'On enter · your '+LU('beer'), effIc:'sail', eff:'+1 leg'},
 ];
 const EST_FOOT='rgba(47,78,66,.8)';   // sea-green — the waypoint family's own foot colour
