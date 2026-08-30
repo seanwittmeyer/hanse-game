@@ -32,9 +32,21 @@ families (establishment tiles · closure tiles · double-sided house markers); `
 is CUT TO v6.2 — THE SEA MAP board sheet, the Kontor panels print factor seats + the
 Kontorhaus powers, the wharf stations print their short menus, the aid is the
 walk·act·load rewrite, round backstop 40, Ventures/Tastings tabled off the sheets;
-`COMPONENTS.md` carries the §0 v6.2 kit delta. Still v5.8: `rulebook.html` and the DESIGN
+`COMPONENTS.md` carries the §0 kit delta. **v6.3 "the line returns" (2026-08-30,
+designer-called: back to choose-the-lane — primary/alt and the lane loads; adjacency
+orthogonal, never the diagonal):** F1 re-ruled again — the turn is **MOVE (adjacent) ·
+activate the ROW or COLUMN · resolve the stops in any order, all optional**: the worker's
+station fires its PRIMARY, the line's other station its ALTERNATE, and the line's two end
+slots each LOAD 1 — every seat a single verb, never a menu, and the eight v6 verbs exactly
+fill the eight seats (Market *Source 3 / Chart* · Brewhouse *Brew / Trade* · Harbor
+*Commission / Load-any* · Cellar *Age 3 / Sail*). The line is read LIVE (a commission onto
+a cap slot opens its load this activation). Every surface re-cut the same pass (`RULES.md`
+§2–3 · the wharf tiles + the aid in `print.html` · `COMPONENTS.md` §0 · the engine + AI +
+verify). `KEY hanse-v63` · verify-v6 **70/70** · sim clean 0/0 · first read: rounds ~21
+(from ~32 under the walk), SAIL ~5.5/game and TRADE ~10.5/game — the alternates get worked
+as ride-alongs on lines chosen for other reasons. Still v5.8: `rulebook.html` and the DESIGN
 architecture sections (the Phase 2 docs pass). **Fork calls taken for the test build
-(all ⚙, designer re-rules freely):** F1 WORK = station + one flanking load (the line sweep
+(all ⚙, designer re-rules freely):** F1 the LINE (re-ruled v6.3: P/A seats + the cap loads; the one-day v6.2 walk-menu interim
 retired) · F2 neutral hulls + the current + the SAIL push (1 G ⚙) · F3 the current at the
 round marker, all ships one sweep, nearest-Kontor first · F4 posts/factors are plain house
 markers (6 ⚙; the venture tiles wait boxed for P2) · F5 the map as §2 (Wadden Coast/Skagen

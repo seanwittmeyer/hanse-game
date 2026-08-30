@@ -659,10 +659,10 @@ const ICONTIP={
   wheat:'Grain (G) — a brewing input and the medium of exchange.',
   sprout:'Hops (H) — a brewing input; the beer that travels.',
   beer:'Cask — a brewed beer; its die rides vessel → Ship → Kontor.',
-  store:'Market — one of: Source 3 · Chart · Trade.',
-  'flask-conical':'Brewhouse — Brew: pay a recipe into an open vessel; search the beer’s stack, choose the tile.',
-  hourglass:'Cellar — Age 3: turn aging dice up (a die stops at its quality: Ready).',
-  ship:'Harbor — one of: Commission (the printed fee) + 1 load · Load 1 onto any docked Ship · Sail.',
+  store:'Market — Source 3 (primary) · Chart (alternate).',
+  'flask-conical':'Brewhouse — Brew (primary): pay a recipe, search the stack · Trade (alternate).',
+  hourglass:'Cellar — Age 3 (primary): turn aging dice up · Sail (alternate).',
+  ship:'Harbor — Commission + 1 load (primary) · Load 1 onto any docked Ship (alternate).',
   anchor:'Slot — one of the 8 perimeter spaces: a building seat and a Ship seat (never casks).',
   sailboat:'Ship — bound for its printed Kontor (Skute 1 · Cog 2 · Hulk 3 berths); full = it departs.',
   landmark:'Kontor — board at Ready + the minimum · land at die + marker · a prize · a majority.',
@@ -675,7 +675,7 @@ const ICONTIP={
   package:'Storage — how many goods you can hold.',
   layers:'The Flight — distinct beers shipped: (n−1)², min 3.',
   check:'Ready — the die has reached the quality; the cask may board.',
-  'user-round':'Worker — the walk: move it to an adjacent station each turn.',
+  'user-round':'Worker — move it to an adjacent station each turn, then work its row or column.',
   unlock:'The Flight — distinct beers shipped: (n−1)², min 3.',
   dices:'The cask quality die — the cask, the presence and the clock in one; the first EMPTY tray sets the final round.',
 };
@@ -755,7 +755,8 @@ function pileReturn(style,act){if(!S||!S.piles)return;(S.piles[style]=S.piles[st
 function pileVerbs(style){const c={};pileList(style).forEach(v=>c[v]=(c[v]||0)+1);return c;}   // distinct verbs + counts (the search picker)
 function caskAct(t){return t.act||STYLES[t.style].act;}
 // the station face: ONE big ACTION icon over a top-down scrim (the print board's faces)
-const STATION_ICON={Market:'goods-3',Brewhouse:'flask-conical',Cellar:'age-3',Harbor:'ship'};
+const STATION_ICON={Market:'goods-3',Brewhouse:'flask-conical',Cellar:'age-3',Harbor:'ship'};   // the PRIMARY icon
+const STATION_ALT_ICON={Market:'compass',Brewhouse:'bourse',Cellar:'sail',Harbor:'package-plus'};   // the ALTERNATE icon (read across the line)
 
 // ---- DESTINATIONS: the four kontore. Value = THE DIE, everywhere (Novgorod's identity = the
 // raised gate + the 8/5/2 majority + the +2★ premium). Gates read the DIE as it boards (after
@@ -907,7 +908,7 @@ function bourseShift(beer,d){if(!tracked(beer)||!d)return 0;
   const v0=S.bourse[beer];S.bourse[beer]=Math.max(BOURSE_MIN,Math.min(BOURSE_MAX,v0+d));
   return S.bourse[beer]-v0;}
 function bourseFmt(v){return (v>0?'+':'')+v;}
-// ---- PRIVATE VENTURES — TABLED at v6.0 (the wharf hand retired with the walk; the tiles
+// ---- PRIVATE VENTURES — TABLED at v6.0 (the wharf hand retired; the tiles
 // wait boxed for the Phase 2 re-derivation). The data and flows below are DORMANT: no hand
 // is dealt, no render path reaches them.
 const VENTURES={
@@ -1081,7 +1082,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v62';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
+const KEY='hanse-v63';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1089,7 +1090,7 @@ const KEY='hanse-v62';  // the live build's save key — bump it on any rules ch
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v6.2 “The Voyage” · '+KEY;
+const APP_VERSION='v6.3 “The Voyage” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -1295,11 +1296,11 @@ function ownSq(pid){const o=S.players[pid];return '<span class="osq" style="back
 function lineGlyph(lk){const lit=LINES[lk].cells;return '<span class="lg" data-tip="'+attr(LINES[lk].label)+'">'+['A','B','C','D'].map(c=>'<span class="'+(lit.includes(c)?'on':'')+'"></span>').join('')+'</span>';}
 
 // ---- tooltips for stations & slots ----
-const CELLTIP={   // v6.2 station reminders — walk here, take ONE printed action
-  Market:'Market — one of: Source '+SRC_PRIMARY+' · Chart · Trade.',
-  Brewhouse:'Brewhouse — Brew: pay a recipe into an open vessel; search the beer’s stack, choose the tile.',
-  Cellar:'Cellar — Age '+CELLAR_POOL+': turn your aging dice up, split freely.',
-  Harbor:'Harbor — one of: Commission (the Ship’s printed fee) + 1 load · Load 1 onto any docked Ship · Sail.',
+const CELLTIP={   // v6.3 station reminders — PRIMARY / ALTERNATE, one verb each
+  Market:'Market — PRIMARY Source '+SRC_PRIMARY+' · ALT Chart (passage · post · factor · upgrade).',
+  Brewhouse:'Brewhouse — PRIMARY Brew (search the stack) · ALT Trade (a seated factor unlocks it).',
+  Cellar:'Cellar — PRIMARY Age '+CELLAR_POOL+', split freely · ALT Sail (advance a ship 1 leg).',
+  Harbor:'Harbor — PRIMARY Commission (the printed fee + 1 load) · ALT Load 1 onto any docked Ship.',
 };
 function bldgTip(b){if(!b)return '';
   // the golden rule (ruled 2026-08-23): tooltips are reminders, never lessons — name (family): trigger, effect
@@ -1580,7 +1581,7 @@ function startGame(){
   EXPANSION=!!((document.getElementById('ngexp')||{}).checked);   // the beer toggles — read BEFORE freshState (dealExports keys off them)
   JOPEN=!!((document.getElementById('ngjop')||{}).checked);
   HALLEXP=!!((document.getElementById('ngihall')||{}).checked);   // the Guildhall — read BEFORE freshState (expSetup keys off it)
-  S=freshState(setupN,names);UI={sub:'verb'};activeTab=0;undoStack=[];
+  S=freshState(setupN,names);UI={sub:'move'};activeTab=0;undoStack=[];
   S.players.forEach((p,i)=>{p.ai=ais[i];});
   document.getElementById('setup').classList.add('hidden');
   log('Game begins — '+setupN+' brewing houses'+(ais.some(a=>a)?' · AI seats: '+S.players.filter(p=>p.ai).map(p=>p.name+' ('+aiLabel(p)+')').join(', '):'')+'. The export beers this game (3 of '+(EXPANSION?7:4)+'): '+exportLabel()+'.'+(JOPEN?' The <b>Jopenbier</b> capstone is on — always acquirable at its 3H fee.':'')+(HALLEXP?' ⚜ <b>The Guild Tastings</b> convene — every voyage you deliver on pays an Invitation; the bench filling is the judging.':''));
@@ -1589,11 +1590,15 @@ function startGame(){
 }
 
 //==================================================================
-// TURN MACHINE — v6.2 THE WALK: move adjacent (mandatory) · ONE printed station action
-// (optional) · one flanking load (optional). The sea actions live ON the stations —
-// Market: Source · Chart · Trade — Harbor: Commission · Load-any · Sail.
+// TURN MACHINE — v6.3 THE LINE RETURNS: move to an ADJACENT station (orthogonal — the
+// diagonal never connects) · choose the ROW or the COLUMN through it · resolve the line's
+// stops in any order, all optional. Each station prints ONE PRIMARY (fired by its own
+// worker) and ONE ALTERNATE (read across the line) — single verbs, never menus:
+// Market Source 3 / Chart · Brewhouse Brew / Trade · Harbor Commission / Load-any · Cellar Age 3 / Sail.
 //==================================================================
-const STN_ACTS={A:['source','chart','trade'],B:['brew'],C:['comm','loadany','sail'],D:['age']};
+const STN_P={A:'source',B:'brew',C:'comm',D:'age'};
+const STN_A={A:'chart',B:'trade',C:'loadany',D:'sail'};
+const seatVerb=(c,alt)=>alt?STN_A[c]:STN_P[c];
 function stationActAvail(p,c,a){
   if(a==='source')return true;
   if(a==='brew')return openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r))&&(!S.presEnd||trayDice(p)>0);
@@ -1623,44 +1628,71 @@ function stnActWhy(a){
   if(a==='chart')return 'Nothing chartable right now (fees, seats, markers, or no delivery yet).';
   if(a==='trade')return 'A seated factor (any Kontor) unlocks TRADE.';
   return 'Not available right now.';}
-function doWork(cell,act){
+function doMove(cell,which){
   const p=cur();if(p.placed&&!ADJ[p.cell].includes(cell))return;
   snapshot();
   const placing=!p.placed;p.placed=true;p.cell=cell;
-  log(p.name+(placing?' places their worker at ':' walks to ')+LU(ICON[CELLNAME[cell]])+' <b>'+CELLNAME[cell]+'</b> '+cellGlyph(cell)+'.',true);
-  UI={sub:'station'};
-  if(act!==undefined)return stnGo(act);   // the AI/MC/harness names the action outright (null = the walk alone)
-  const avail=STN_ACTS[cell].filter(a=>stationActAvail(p,cell,a));
-  if(!avail.length)return resume('workflank');   // nothing printed fires — the walk still loads a flank
-  if(avail.length===1)return stnGo(avail[0]);    // a deep single (Brewhouse · Cellar) fires at once
-  UI.sub='stn';UI.stn={cell};render();           // the station's short printed menu
+  log(p.name+(placing?' places their worker at ':' moves to ')+LU(ICON[CELLNAME[cell]])+' <b>'+CELLNAME[cell]+'</b> '+cellGlyph(cell)+'.',true);
+  if(which)return chooseLine(which);   // the AI/MC/harness names the line outright
+  UI={sub:'line'};render();
 }
-function stnGo(act){const p=cur();const cell=p.cell;
-  UI.stn=null;
-  if(!act||!STN_ACTS[cell].includes(act)||!stationActAvail(p,cell,act))return resume('workflank');
-  if(act==='source')return enterSource(SRC_PRIMARY,'workflank',{station:true});
-  if(act==='brew')return enterBrew('workflank',false,false);
-  if(act==='age')return enterAge(CELLAR_POOL,'pool','workflank');
-  if(act==='comm')return enterCommission('workflank');
-  if(act==='loadany')return enterLoad(wharfShips(),'workflank',1);
-  if(act==='sail')return enterSailVerb('workflank');
-  if(act==='chart')return enterChart('workflank',false);
-  if(act==='trade')return enterTradeVerb('workflank');
-  resume('workflank');}
-function stnPick(a){if(UI.sub!=='stn')return;stnGo(a);}
-function stnSkip(){if(UI.sub!=='stn')return;UI.stn=null;resume('workflank');}
-// the WORK verb's tail — one load at ONE of the station's two flanking slots
-function enterFlank(){const p=cur();
-  const slots=(FLANKS[p.cell]||[]).filter(sid=>{const t=S.slots[sid];
-    return t&&t.type==='ship'&&readyInVessels(p).some(o=>canTake(sid,o.i));});
-  if(!slots.length){UI.sub='end';render();return;}
-  if(p.ai){let bs=null,bv=0.4;slots.forEach(sid=>{const v=aiLoadValue(p,sid);if(v>bv){bv=v;bs=sid;}});
-    if(!bs){UI.sub='end';render();return;}
-    return enterLoad([bs],'end',1);}
-  UI.sub='flank';UI.flank={slots};render();}
-function flankPick(sid){const F=UI.flank;if(!F||!F.slots.includes(sid))return;
-  UI.flank=null;enterLoad([sid],'end',1);}
-function flankSkip(){UI.flank=null;UI.sub='end';render();}
+function chooseLine(which){
+  const p=cur();
+  activateLine(cellOfLine(p.cell)[which]);   // sharing a station costs nothing
+}
+// a line = its two stations (the worker's own fires its PRIMARY, the other its ALTERNATE)
+// + its two cap slots (a LOAD of the Ship docked there). Buildings stay passive — they
+// serve their slot's traffic, never a stop.
+function activateLine(lk){const L=LINES[lk];const p=cur();
+  log(p.name+' activates '+lineGlyph(lk)+' <b>'+L.label+'</b> '+L.cells.map(c=>LU(ICON[CELLNAME[c]])).join(''),true);
+  const stops=[];
+  const slotStop=(cid)=>{const t=S.slots[cid];if(t&&t.type==='ship')stops.push({kind:'load',slot:cid});};
+  slotStop(L.caps[0]);
+  L.cells.forEach(c=>stops.push({kind:'cell',cell:c,alt:c!==p.cell}));
+  slotStop(L.caps[1]);
+  UI={sub:'stops',line:lk,stops,usedStops:[]};
+  render();
+}
+// THE LINE IS READ LIVE — a Ship commissioned onto an active cap mid-turn opens that
+// slot's load stop this activation (a used stop never returns).
+function refreshStops(){
+  if(!UI||!UI.line||!UI.stops)return;
+  const L=LINES[UI.line];if(!L)return;
+  const used=UI.usedStops||[];
+  L.caps.forEach(cid=>{const t=S.slots[cid];
+    if(t&&t.type==='ship'&&used.indexOf('load:'+cid)<0&&!UI.stops.some(x=>x.kind==='load'&&x.slot===cid))UI.stops.push({kind:'load',slot:cid});});
+}
+function resolveStop(i){
+  const stop=UI.stops[i];if(!stop)return;
+  snapshot();UI.stops.splice(i,1);
+  (UI.usedStops=UI.usedStops||[]).push(stop.kind==='cell'?'cell:'+stop.cell:stop.kind+':'+stop.slot);
+  if(stop.kind==='cell')return enterCell(stop.cell,stop.alt);
+  if(stop.kind==='load')return beginLoadStop(stop.slot,'stops');
+  resume('stops');
+}
+function resolveStopBy(kind,key){const i=(UI.stops||[]).findIndex(x=>x.kind===kind&&(kind==='cell'?x.cell===key:x.slot===key));
+  if(i>=0&&stopAvail(UI.stops[i]))resolveStop(i);}
+// each seat is ONE verb — the stop's position on the line names it
+function enterCell(cell,alt){const p=cur();const a=seatVerb(cell,alt);
+  if(!stationActAvail(p,cell,a)){log('↳ '+CELLNAME[cell]+' — '+stnActWhy(a));return resume('stops');}
+  if(a==='source')return enterSource(SRC_PRIMARY,'stops',{station:true});
+  if(a==='brew')return enterBrew('stops',false,false);
+  if(a==='age')return enterAge(CELLAR_POOL,'pool','stops');
+  if(a==='comm')return enterCommission('stops');
+  if(a==='loadany')return enterLoad(wharfShips(),'stops',1);
+  if(a==='sail')return enterSailVerb('stops');
+  if(a==='chart')return enterChart('stops',false);
+  if(a==='trade')return enterTradeVerb('stops');
+  resume('stops');
+}
+function stopAvail(st){const p=cur();
+  if(st.kind==='cell')return stationActAvail(p,st.cell,seatVerb(st.cell,st.alt));
+  if(st.kind==='load'){const t=S.slots[st.slot];return !!t&&t.type==='ship'&&readyInVessels(p).some(o=>canTake(st.slot,o.i));}
+  return false;}
+function stopLabel(st){const p=cur();
+  if(st.kind==='cell')return LU(ICON[CELLNAME[st.cell]])+' '+CELLNAME[st.cell]+' · '+stnActTxt(p,seatVerb(st.cell,st.alt));
+  if(st.kind==='load'){const t=S.slots[st.slot];return t?(LU('sailboat')+' Load '+shipName(t)+' → '+DEST[t.dest].name+' ('+t.load.length+'/'+effCap(t)+')'):'(sailed)';}
+  return '';}
 // ---- SAIL (the Harbor's action): advance one ship at sea one leg (the push pays when none of your casks ride) ----
 function enterSailVerb(rt){const p=cur();rt=rt||'end';
   const opts=seaShips().map((t,i)=>({t,i})).filter(o=>!seaBlocked(o.t)&&(shipHasCaskOf(o.t,p.id)||canPay(p,PUSH_FEE)));
@@ -1762,27 +1794,19 @@ function enterTradeVerb(rt){const p=cur();rt=rt||'end';
   enterBshift(rt,{steps:tradeAmp(p),down:true});}
 // v6.1 — the Bergen Kontorhaus doubles the house's TRADE: the marker moves 2, either way
 function tradeAmp(p){return hasKontorhaus(p,'bergen')?2:1;}
-// (v6.0: resolveStop and the stop-sweep retired with the line activation — the four-verb
-// machine above replaces them. The Venture stop grammar left play with the wharf hand.
-// refreshStops survives as a no-op seam: legacy call sites (commission, the dormant
-// venture/building flows) still name it.)
-function refreshStops(){}
 // resume / return helpers — clear the sub-flow fields, then route to the right phase
 function resume(rt){
   UI.cell=null;UI.stage=null;UI.tmp=null;
-  UI.age=UI.brew=UI.bverb=UI.src=UI.load=UI.reach=UI.survey=UI.hire=UI.benefit=UI.comm=UI.rgain=UI.rack=UI.assay=UI.lift=UI.bsh=UI.parti=UI.flank=UI.sailv=UI.chart=null;
+  UI.age=UI.brew=UI.bverb=UI.src=UI.load=UI.reach=UI.survey=UI.hire=UI.benefit=UI.comm=UI.rgain=UI.rack=UI.assay=UI.lift=UI.bsh=UI.parti=UI.sailv=UI.chart=null;
   if(rt==='benefitcont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}
   if(rt==='actscont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}
-  if(rt==='workflank'){enterFlank();return;}   // the WORK verb's tail — one flanking-slot load
-  if(rt==='verb'){UI.sub='verb';render();return;}
-  UI.sub='end';   // 'end' and every legacy tag falls through to the turn's end
+  if(rt==='move'||rt==='verb'){UI.sub='move';render();return;}   // ('verb' is the legacy tag)
+  if(rt==='end'){UI.sub='end';render();return;}
+  UI.sub=(UI.stops&&UI.stops.length)?'stops':'end';   // 'stops' and every legacy tag rejoin the line
   render();
 }
-function backToStops(){resume('end');}
-function cellDone(){resume('end');}
-
-// (v6.0: enterCell retired — doWork dispatches the station's one action directly; the
-// alternate grammar left with the line.)
+function backToStops(){resume('stops');}
+function cellDone(){resume('stops');}
 
 // ---------- MARKET (Source) ----------
 // the STATION Source carries the line's Granary riders (ctx.riders — ticked when the
@@ -2239,7 +2263,7 @@ function loadCommit(shipSlot,vi){const p=cur();const L=UI.load;const c=p.vessels
   const rt=L.returnTo;UI.load=null;afterSail(rt);
 }
 // ROPEWALK: the pending cross-quay load — one Ready cask may board a DIFFERENT docked
-// Ship (once per load flow at the walk).
+// Ship (once per load flow).
 function rwChain(L){if(!L||!L.rwPend)return false;
   const from=L.rwPend;const p=cur();
   const others=wharfShips().filter(sid=>sid!==from);
@@ -2251,7 +2275,7 @@ function rwChain(L){if(!L||!L.rwPend)return false;
 function loadBack(){if(UI.load)UI.load.cask=null;render();}
 function loadSkip(){const L=UI.load;if(!L){resume('stops');return;}
   const rt=L.returnTo;
-  if(L.rwPend&&rwChain(L))return;   // skipping the walk's own berths still offers the cross-quay load
+  if(L.rwPend&&rwChain(L))return;   // skipping the flow's own berths still offers the cross-quay load
   UI.load=null;afterSail(rt);}
 
 // ---------- DEPART · THE CURRENT · LAND (v6.0 THE VOYAGE) ----------
@@ -2552,14 +2576,14 @@ function endTurn(){
   refillWorks();        // THE TIDE — the bag re-furnishes the wharf on the same rhythm
   const wasAI=!!cur().ai;
   const n=S.players.length;S.active=(S.active+1)%n;
-  UI={sub:'verb'};
+  UI={sub:'move'};
   if(S.active===S.first){if(S.ending){gameOver();save();return;}S.turn++;
     theCurrent();}   // v6.0 THE CURRENT — at the round marker every ship at sea advances one leg
   if(wasAI&&!cur().ai)undoStack.length=0;
   braumeisterTick(cur());innkeeperTick(cur());pilotTick(cur());fire('turn',{p:cur()});   // the drips: Braumeister · Innkeeper · the Pilot's headway
   checkDiceEnd();
   save();
-  afterSail('verb');   // resolve any landings' prizes and factor steps, then the verb menu
+  afterSail('move');   // resolve any landings' prizes and factor steps, then the next move
   maybeRunAI();
 }
 // the PILOT's drip (v6.0 — the 'broker' key re-derived): at your turn start, one ship
@@ -2994,23 +3018,20 @@ function aiCommValue(p){const disp=S.shipDisplay||[];
   if(aiLateGame(p))v*=(best?1.3:0.6);   // late: only a commission that SHIPS something pays
   return v;}
 function aiHarborLoadValue(p){let best=0;wharfShips().forEach(sid=>{const v=aiLoadValue(p,sid);if(v>best)best=v;});return best;}
-function aiCellValue(p,c,alt,lk){   // v6.0: one action per station (alt retired; the param stays for signature compat)
+function aiCellValue(p,c,alt,lk){   // v6.3 — the seat's verb is the price (P at home, A across the line)
+  const a=seatVerb(c,alt);
+  return stationActAvail(p,c,a)?aiStationActValue(p,c,a):0;}
+// one price per printed verb (the line's loads are added by aiLineScore)
+function aiStationActValue(p,c,a){
   const trader=aiIsTrader(p);
-  if(c==='A'){const n=SRC_PRIMARY;
+  if(a==='source'){const n=SRC_PRIMARY;
     return Math.max(0.2*n,(5-(p.grain+p.hops))*0.35*n);}
-  if(c==='B'){let v=aiVerbValue(p,'brew')+((openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)&&!(p.shipped||{})[r]))?(trader?0.5*aiFlightMarg(p):0.5)*aiPW(p,'breadth'):0);
-    if(aiLateGame(p)&&!p.recipes.some(r=>canBrew(p,r)&&startDieFor(p,r)>=STYLES[r].q))v*=0.4;   // the trader doesn't start what can't finish
+  if(a==='brew'){let v=aiVerbValue(p,'brew')+((openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r)&&!(p.shipped||{})[r]))?(trader?0.5*aiFlightMarg(p):0.5)*aiPW(p,'breadth'):0);
+    if(aiLateGame(p)&&!p.recipes.some(r=>canBrew(p,r)&&startDieFor(p,r)>=STYLES[r].q))v*=0.4;   // don't start what can't finish
     return v;}
-  if(c==='D'){const m=maturingInVessels(p);
+  if(a==='age'){const m=maturingInVessels(p);
     let v=m.length?((0.4+m.length*0.27)*CELLAR_POOL):0;
     if(trader&&S.ending)v*=0.5;return v;}
-  if(c==='C')return Math.max(aiCommValue(p),aiHarborLoadValue(p)*0.95);
-  return 0;}
-// v6.2 — one price per printed station action (the walk's flank value is added by the caller)
-function aiStationActValue(p,c,a){
-  if(a==='source')return aiCellValue(p,'A');
-  if(a==='brew')return aiCellValue(p,'B');
-  if(a==='age')return aiCellValue(p,'D');
   if(a==='comm')return aiCommValue(p);
   if(a==='loadany')return aiHarborLoadValue(p)*0.95;
   if(a==='sail')return aiSailBest(p).v;
@@ -3078,19 +3099,24 @@ function aiStep(){
   aiActing=true;
   try{
     switch(UI.sub){
-      case 'verb':{   // v6.2 — the walk is the choice: score every (station, printed action) pair
+      case 'move':{   // score the destination AS IF standing there (it becomes the primary)
         const cells=(!p.placed)?['A','B','C','D']:ADJ[p.cell];
-        const opts=[];
-        cells.forEach(c=>{let base=0;(FLANKS[c]||[]).forEach(sid=>{base+=aiLoadValue(p,sid)*0.9;});
-          const acts=STN_ACTS[c].filter(a=>stationActAvail(p,c,a));
-          if(!acts.length)opts.push({c,a:null,v:base+0.1});
-          acts.forEach(a=>opts.push({c,a,v:base+aiStationActValue(p,c,a)}));});
-        if(aiNoisy(p)){const o=aiRandOf(opts);return doWork(o.c,o.a);}
-        let bo=opts[0];opts.forEach(o=>{o.v+=Math.random()*0.01;if(o.v>bo.v)bo=o;});
-        return doWork(bo.c,bo.a);}
-      case 'flank':{const F=UI.flank;if(!F)return resume('end');
-        let bs=null,fb=0.4;F.slots.forEach(sid=>{const v=aiLoadValue(p,sid);if(v>fb){fb=v;bs=sid;}});
-        if(!bs)return flankSkip();return flankPick(bs);}
+        if(aiNoisy(p))return doMove(aiRandOf(cells));
+        let bc=cells[0],bv=-1e9;cells.forEach(c=>{const o=cellOfLine(c);
+          const v=Math.max(aiLineScore(p,o.row,c),aiLineScore(p,o.col,c))+Math.random()*0.01;
+          if(v>bv){bv=v;bc=c;}});
+        return doMove(bc);}
+      case 'line':{const o=cellOfLine(p.cell);
+        if(aiNoisy(p))return chooseLine(aiRandOf(['row','col']));
+        return chooseLine(aiLineScore(p,o.row)>=aiLineScore(p,o.col)?'row':'col');}
+      case 'stops':{let bi=-1,bv=0.6;
+        (UI.stops||[]).forEach((st,i)=>{if(!stopAvail(st))return;const v=aiStopValue(p,st);if(v>bv){bv=v;bi=i;}});
+        if(hallOn()){const pb=aiPourBest(p);   // hall mode: the pour competes with the line's stops
+          if(pb&&pb.v>Math.max(bv,1.0))return aiPourGo(p,pb);}
+        if(bi<0)return endTurn();
+        if(aiNoisy(p)){const av=(UI.stops||[]).map((st,i)=>stopAvail(st)?i:-1).filter(i=>i>=0);
+          if(av.length)return resolveStop(aiRandOf(av));return endTurn();}
+        return resolveStop(bi);}
       case 'sailv':{const b=aiSailBest(p);
         if(b.i<0){const srt=(UI.sailv&&UI.sailv.rt)||'end';UI.sailv=null;return resume(srt);}
         return sailPick(b.i);}
@@ -3208,18 +3234,22 @@ let GM_MIN=2;        // minimum playouts per option
 let GM_ROLLS=0;      // ⚙ >0 spends a FIXED number of playouts per decision instead of the ms
                      // budget. A wall-clock budget makes a SHARDED oracle's strength depend on
                      // how many shards are running; a rollout budget does not. 0 = use the ms.
-const AI_MC_SUBS={verb:1,flank:1,sailv:1,chart:1,fshift:1,brew:1,load:1,commission:1,placebldg:1,benefit:1,hire:1,reach:1,bshift:1};   // v6.2: the walk fork + the sea forks are first-class samples ('harbor' retired with the submenu)
+const AI_MC_SUBS={move:1,line:1,stops:1,sailv:1,chart:1,fshift:1,brew:1,load:1,commission:1,placebldg:1,benefit:1,hire:1,reach:1,bshift:1};   // v6.3: the line's three forks + the sea forks are first-class samples
 function aiMCOptions(p){
   const out=[];const push=(label,fn)=>out.push({label,fn});
   switch(UI.sub){
-    case 'verb':{const cells=(!p.placed)?['A','B','C','D']:ADJ[p.cell];   // v6.2 — every (station, action) pair; the sea flows sample downstream ('sailv'/'chart')
-      cells.forEach(c=>{
-        STN_ACTS[c].filter(a=>stationActAvail(p,c,a)).forEach(a=>push(c+':'+a,()=>doWork(c,a)));
-        push('walk:'+c,()=>doWork(c,null));});
-      break;}
-    case 'flank':{const F=UI.flank;if(!F)break;
-      F.slots.forEach(sid=>push('flank:'+sid,()=>flankPick(sid)));
-      push('skip',()=>flankSkip());break;}
+    case 'move':{const cells=(!p.placed)?['A','B','C','D']:ADJ[p.cell];
+      cells.forEach(c=>push('move:'+c,()=>doMove(c)));break;}
+    case 'line':push('row',()=>chooseLine('row'));push('col',()=>chooseLine('col'));break;
+    case 'stops':{(UI.stops||[]).forEach((st,i)=>{if(stopAvail(st))push('stop:'+(st.kind==='cell'?st.cell:st.kind+st.slot),()=>resolveStop(i));});
+      if(hallOn()){const hi={},lo={};   // two representative pours per open Tasting — the win bid and the fill
+        pourable(p).forEach(o=>{const d=p.vessels[o.vi].die;
+          o.cis.forEach(ci=>{if(!(ci in hi)||d>p.vessels[hi[ci]].die)hi[ci]=o.vi;
+            if(!(ci in lo)||d<p.vessels[lo[ci]].die)lo[ci]=o.vi;});});
+        Object.keys(hi).forEach(ci=>{ci=+ci;
+          push('pour:'+hi[ci]+'>'+ci,()=>{pourDo(hi[ci],ci);});
+          if(lo[ci]!==hi[ci])push('pour:'+lo[ci]+'>'+ci,()=>{pourDo(lo[ci],ci);});});}
+      push('end',()=>endTurn());break;}
     case 'sailv':{(S.sea||[]).forEach((t,i)=>{if(seaBlocked(t))return;
         if(shipHasCaskOf(t,p.id)||canPay(p,PUSH_FEE))push('go:'+i,()=>sailPick(i));});
       push('skip',()=>{const srt=(UI.sailv&&UI.sailv.rt)||'end';UI.sailv=null;resume(srt);});break;}
@@ -3401,10 +3431,9 @@ function renderAid(){
     return '<tr><td class="kcell">'+LU('kontor-'+d,'kc')+'</td><td><b>'+D.name+'</b><span class="sub">min '+D.gate+'+</span></td><td>'+(PRIZE[D.benefit]||('+'+(D.vbonus||0)+'★ per die'))+'</td><td><b>'+D.maj.join('/')+'</b></td></tr>';}).join('');
   document.getElementById('aidcard').innerHTML=
     '<h2>'+ic('beer')+' Player Aid</h2>'
-    +'<div class="asec"><b>Your turn — WALK · ACT · LOAD</b>'
-      +row('anchor','WALK to an adjacent station — the move IS the turn','then take ONE of its printed actions (optional) · then load one flanking slot (optional)')
-      +row('store','Market — the merchant’s desk','Source '+SRC_PRIMARY+' · Chart (passage / post / factor / upgrade) · Trade ±1 (±2 with the Bergen Kontorhaus)')
-      +row('ship','Harbor — the shipmaster’s desk','Commission + 1 load · Load 1 → any docked Ship · Sail — advance a ship (push '+costStr(PUSH_FEE)+' if none of your casks ride)')+'</div>'
+    +'<div class="asec"><b>Your turn — MOVE · LINE · STOPS</b>'
+      +row('user-round','MOVE to an adjacent station','orthogonal only — the diagonal never connects; sharing costs nothing')
+      +row('layers','Activate its ROW or COLUMN','resolve the stops in any order, all optional: your station’s PRIMARY · the far station’s ALTERNATE · a LOAD at each of the line’s two end slots')+'</div>'
     +'<div class="asec"><b>The cask</b><div class="alife">'
       +stp('flask-conical','Brew')+ARR+stp('hourglass','Age +1')+ARR+stp('check','Ready')+ARR+stp('sail','Board ≥ min')+ARR+stp('compass','The voyage')+ARR+stp('map-pin','Land = ★')+'</div></div>'
     +'<div class="asec"><b>Depart &amp; land</b>'
@@ -3415,10 +3444,10 @@ function renderAid(){
       +'<table class="atable"><tr><th></th><th>Kontor</th><th>Prize per cask</th><th>Majority</th></tr>'+dests+'</table>'
       +'<div class="subnote">majorities by parked dice · 2p pays 1st and 2nd · London &amp; Novgorod wait on a chart (Dover Strait · the Sound)</div></div>'
     +'<div class="asec"><b>Stations</b><div class="astgrid">'
-      +row('store','Market','Source '+SRC_PRIMARY+' · Chart · Trade')
-      +row('flask-conical','Brewhouse','Brew — search the stack, choose the tile')
-      +row('age-3','Cellar','Age '+CELLAR_POOL+', split freely')
-      +row('ship','Harbor','Commission (Skute 2G · Cog 1G · Hulk free) + 1 load · Load 1 → any Ship · Sail')+'</div>'
+      +row('store','Market','P: Source '+SRC_PRIMARY+' · A: Chart — passage · post · factor · upgrade')
+      +row('flask-conical','Brewhouse','P: Brew — search the stack, choose the tile · A: Trade ±1 (±2 with the Bergen Kontorhaus; a seated factor unlocks it)')
+      +row('age-3','Cellar','P: Age '+CELLAR_POOL+', split freely · A: Sail — advance a ship 1 leg (push '+costStr(PUSH_FEE)+' if none of your casks ride)')
+      +row('ship','Harbor','P: Commission (Skute 2G · Cog 1G · Hulk free) + 1 load · A: Load 1 → any docked Ship')+'</div>'
       +row('map-pin','Posts &amp; factors — your 6 house markers (Chart, at the Market)','a post pays '+POST_RENT_G+'G on every entering ship · a factor = the TRADE license + a +1 step after your landings there')
       +row('landmark','Upgrades — CHART again to deepen a marker','a post flips onto an establishment tile ('+costStr(POST_UPG_FEE)+', supply 2 each): Toll Court 2G tolls · Victualling Post 1G1H when your cask enters · Pilot’s Rest +1 leg when your cask enters · a factor flips to the KONTORHAUS ('+costStr(FACTOR_UPG_FEE)+') — its power is printed on the Kontor’s panel')
       +row('bourse','The Bourse','a LANDING scores die + the marker as printed then · then each beer aboard steps −1 (once per beer) · UP = TRADE, the factor’s step, the toll bench, Bergen')+'</div>'
@@ -3448,23 +3477,24 @@ function renderBar(){
   }
   let prompt='',acts='';
   const U=UI.sub;
-  if(U==='verb'){const placing=!p.placed;
-    prompt=placing?'<b>Turn 1:</b> place your worker — click a station; its printed actions follow.':'<b>Walk</b> to an adjacent station — then take <b>ONE</b> of its printed actions <span class="note">(+ a flanking load)</span>.';
+  if(U==='move'){const placing=!p.placed;
+    prompt=placing?'<b>Turn 1:</b> place your worker on any station — then choose its row or column.':'<b>Move</b> to an adjacent station — click it <span class="note">(the diagonal never connects)</span>.';
     const cells=placing?['A','B','C','D']:ADJ[p.cell];
-    acts=cells.map(c=>{
-      const avail=STN_ACTS[c].filter(a=>stationActAvail(p,c,a));
-      const sum=avail.length?avail.map(a=>stnActTxt(p,a).split(' — ')[0].split(' (')[0]).join(' · '):'walk only';
-      return btn(LU(ICON[CELLNAME[c]])+' '+CELLNAME[c]+' <span class="note">· '+sum+'</span>','doWork(\''+c+'\')','primary');}).join('');}
-  else if(U==='stn'){const c=p.cell;   // v6.2 — the station's short printed menu (2+ actions open here)
-    prompt=LU(ICON[CELLNAME[c]])+' <b>'+CELLNAME[c]+'</b> — take <b>ONE</b> printed action <span class="note">(a flanking load follows either way)</span>.';
-    acts=STN_ACTS[c].map(a=>{
-      return stationActAvail(p,c,a)?btn(stnActTxt(p,a),'stnPick(\''+a+'\')','go'):btnOff(stnActTxt(p,a),stnActWhy(a));}).join('')
-      +btn('No action — just the walk','stnSkip()','ghost');}
-  else if(U==='flank'){
-    prompt='One <b>flanking load</b> — a Ready cask onto the Ship at one of '+CELLNAME[p.cell]+'’s flanks. <span class="note">(optional)</span>';
-    acts=(UI.flank?UI.flank.slots:[]).map(sid=>{const sh=S.slots[sid];
-      return btn(LU('sailboat')+' Load at '+sid+' — '+shipName(sh)+' → '+DEST[sh.dest].name+' ('+sh.load.length+'/'+effCap(sh)+')','flankPick(\''+sid+'\')','go');}).join('')
-      +btn('Done','flankSkip()','primary');}
+    acts=cells.map(c=>btn((placing?'⚑ ':'→ ')+LU(ICON[CELLNAME[c]])+' '+CELLNAME[c],'doMove(\''+c+'\')','primary')).join('');}
+  else if(U==='line'){const o=cellOfLine(p.cell);   // v6.3 — the row or the column through the worker's station
+    const sum=lk=>{const L=LINES[lk];
+      const verbs=L.cells.map(c=>stnActTxt(p,seatVerb(c,c!==p.cell)).split(' — ')[0].split(' (')[0]).join(' + ');
+      const ships=L.caps.filter(cid=>{const t=S.slots[cid];return t&&t.type==='ship';}).length;
+      return verbs+(ships?' + '+ships+' load'+(ships===1?'':'s'):'');};
+    prompt='Choose your <b>line</b> — the row or the column through '+CELLNAME[p.cell]+'. <span class="note">(your station works its PRIMARY · the far station its ALTERNATE · the end slots load)</span>';
+    acts=btn(LINES[o.row].label+' <span class="note">· '+sum(o.row)+'</span>','chooseLine(\'row\')','go')
+        +btn(LINES[o.col].label+' <span class="note">· '+sum(o.col)+'</span>','chooseLine(\'col\')','go');}
+  else if(U==='stops'){
+    prompt='Resolve the line <b>in any order</b> — '+UI.stops.length+' stop'+(UI.stops.length===1?'':'s')+' left, all optional.';
+    acts=UI.stops.map((st,i)=>stopAvail(st)?btn(stopLabel(st),'resolveStop('+i+')','go')
+      :btnOff(stopLabel(st),st.kind==='cell'?stnActWhy(seatVerb(st.cell,st.alt)):'No Ready cask meets this Ship’s minimum.')).join('');
+    if(hallOn()&&pourable(p).length)acts+=btn('⚜ Pour — enter a Tasting','enterPour()','primary');
+    if(!UI.stops.length&&!(hallOn()&&pourable(p).length))acts='<span class="note">nothing left on this line</span>';}
   else if(U==='sailv'){
     prompt=LU('sailboat')+' <b>SAIL</b> — advance which ship one leg? <span class="note">(free with your cask aboard; otherwise the push: '+costStr(PUSH_FEE)+')</span>';
     acts=(UI.sailv?UI.sailv.opts:[]).map(i=>{const t=S.sea[i];if(!t)return '';
@@ -3602,7 +3632,7 @@ function renderBar(){
       if(B.down&&S.bourse[bk]>BOURSE_MIN)h+=btn(LU('beer')+styleShort(bk)+' ▼','bshiftPick({beer:\''+bk+'\',dir:-1})','ghost');
       return h;}).join('')+btn('Skip','bshiftPick(null)','ghost');}
   else if(U==='end'){prompt='Line resolved.';acts=btn('End Turn ▸','endTurn()','primary');}
-  const hideEnd=['verb','stn','end','benefit','precipe','bspec','placebldg','hire','brewverb','bshift','fshift','chart','upgpick'].includes(U);   // v6.2: the move is the turn — no End Turn from the walk menu
+  const hideEnd=(U==='move'&&!p.placed)||['end','benefit','precipe','bspec','placebldg','hire','brewverb','bshift','fshift','chart','upgpick'].includes(U);   // every stop is optional — End Turn stays offered mid-line
   if(!hideEnd)acts+=btn('End Turn ▸','endTurn()','ghost');
   if(undoStack.length)acts+=btn('↶ Undo','doUndo()','ghost');
   document.getElementById('prompt').innerHTML=prompt;
@@ -3619,7 +3649,7 @@ function renderGrid(){
     if(commPlacing||bldgPlacing)cls+=' place';
     let boardClick=null;
     if(!aiTurn()&&!commPlacing&&!bldgPlacing){
-      if(UI.sub==='flank'&&UI.flank&&UI.flank.slots.includes(s.id)){cls+=' stopgo';boardClick="flankPick('"+s.id+"')";}
+      if(UI.sub==='stops'&&(UI.stops||[]).some(st=>st.kind==='load'&&st.slot===s.id&&stopAvail(st))){cls+=' stopgo';boardClick="resolveStopBy('load','"+s.id+"')";}
       else if(UI.sub==='load'&&UI.load&&UI.load.cask!=null){
         if(UI.load.ships.includes(s.id)&&canTake(s.id,UI.load.cask)){cls+=' stopgo';boardClick="loadOnto('"+s.id+"')";}}
     }
@@ -3640,14 +3670,15 @@ function renderGrid(){
   ['A','B','C','D'].forEach(c=>{const act=CELLNAME[c];
     const pawns=S.players.filter(p=>p.cell===c).map(p=>'<span class="pawn" style="background:'+p.color+'" data-tip="'+p.name+'"></span>').join('');
     let cls='cell '+c+' c'+c;
-    const legal=(UI.sub==='verb'&&!aiTurn()&&(!cur().placed||ADJ[cur().cell].includes(c)));
+    const myStop=!aiTurn()&&UI.sub==='stops'&&(UI.stops||[]).some(st=>st.kind==='cell'&&st.cell===c&&stopAvail(st));
+    const legal=(UI.sub==='move'&&!aiTurn()&&(!cur().placed||ADJ[cur().cell].includes(c)))||myStop;
     if(legal)cls+=' legal';
-    let cellClick=legal?("doWork('"+c+"')"):null;
+    let cellClick=legal?(myStop?("resolveStopBy('cell','"+c+"')"):("doMove('"+c+"')")):null;
     const SCN={Market:'market',Brewhouse:'brewhouse',Cellar:'cellar',Harbor:'harbor'}[act];
     h+='<div class="'+cls+'" data-tip="'+attr(cellTip(c))+'" '+(cellClick?'onclick="'+cellClick+'"':'')+'>'
       +'<img class="scn" src="art/scene-'+SCN+'.png" alt=""><div class="scngrad"></div>'
       +'<div class="stn">'
-      +'<div class="head"><span class="actrow"><span class="bigic">'+LU(STATION_ICON[act])+'</span></span></div>'
+      +'<div class="head"><span class="actrow"><span class="bigic" data-tip="'+attr('PRIMARY (your worker here): '+stnActTxt(cur(),STN_P[c]))+'">'+LU(STATION_ICON[act])+'</span><span class="altsep">/</span><span class="altic" data-tip="'+attr('ALTERNATE (read across the line): '+stnActTxt(cur(),STN_A[c]))+'">'+LU(STATION_ALT_ICON[act])+'</span></span></div>'
       +'<div class="nm">'+act+'</div>'
       +'<div class="wk">'+pawns+'</div>'
       +'</div></div>';
@@ -4388,7 +4419,7 @@ if(typeof window!=='undefined'){window.HANSE={
 (function boot(){
   if(NET)return;   // the ONLINE TABLE: net.js owns boot — state arrives as an INIT over postMessage
   const saved=load();
-  if(saved&&saved.players){S=saved;syncFlagsFromS();UI={sub:'verb'};
+  if(saved&&saved.players){S=saved;syncFlagsFromS();UI={sub:'move'};
     render();log('— resumed saved game —');render();
     if(S.over)gameOver();else maybeRunAI();
   } else {openSetup();}

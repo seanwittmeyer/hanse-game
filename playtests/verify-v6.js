@@ -1,4 +1,4 @@
-// verify-v6.js — the targeted rule battery for v6 "The Voyage" (v6.1, KEY hanse-v61).
+// verify-v6.js — the targeted rule battery for v6 "The Voyage" (v6.3, KEY hanse-v63).
 // Drives the CANONICAL engine (extracted from play.html, DOM stubbed) with deterministic
 // state surgery per check. Runs in seconds; ALWAYS after an engine change.
 // Usage: node playtests/verify-v6.js
@@ -17,7 +17,7 @@ function T(name,fn){try{const r=fn();
   else{__FAIL++;__OUT.push('FAIL  '+name+(r===false?'':' — '+r));}
 }catch(e){__FAIL++;__OUT.push('FAIL  '+name+' — threw: '+(e&&e.message||e));}}
 function mk(n){EXPANSION=false;JOPEN=false;HALLEXP=false;OVERLAND=false;
-  S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub:'verb'};undoStack=[];
+  S=freshState(n||2,['P1','P2','P3','P4'].slice(0,n||2));UI={sub:'move'};undoStack=[];
   S.players.forEach(p=>{p.ai=null;p.presPool=PRES_POOL;});
   // determinism: clear the random warm-start furniture and ships
   SLOTS.forEach(s=>{S.slots[s.id]=null;S.buildings[s.id]=null;});
@@ -26,7 +26,7 @@ function ship(slot,kind,dest,load){S.slots[slot]={type:'ship',ship:kind,dest:des
 function cask(pid,style,die){return {owner:pid,style:style,q:STYLES[style].q,die:die,act:'source'};}
 
 // ---- identity & setup ----
-T('KEY is hanse-v62',()=>KEY==='hanse-v62');
+T('KEY is hanse-v63',()=>KEY==='hanse-v63');
 T('MAX_ROUND is 40',()=>MAX_ROUND===40);
 T('setup: sea state fields exist',()=>{mk(2);return Array.isArray(S.sea)&&!!S.posts&&!!S.factors&&!!S.passages;});
 T('setup: Wadden Coast & Skagen open, Dover Strait & the Sound closed',()=>{mk(2);
@@ -41,12 +41,12 @@ T('lanes: Bruges/Bergen 1 waypoint · London/Novgorod 2',()=>
   LANES.bruges.length===1&&LANES.bergen.length===1&&LANES.london.length===2&&LANES.novgorod.length===2);
 T('London prize is the chart',()=>DEST.london.benefit==='chart');
 
-// ---- the walk (v6.2: stations carry the actions) ----
-T('stations: Source always open · Sail/Trade closed on a fresh board',()=>{mk(2);const p=S.players[0];
-  return stationActAvail(p,'A','source')&&!stationActAvail(p,'C','sail')&&!stationActAvail(p,'A','trade');});
-T('v6.2: the sea actions are printed per station, not floating',()=>
-  STN_ACTS.A.includes('chart')&&STN_ACTS.A.includes('trade')&&STN_ACTS.C.includes('sail')
-  &&!STN_ACTS.B.includes('sail')&&!STN_ACTS.D.includes('chart')&&STN_ACTS.B.length===1&&STN_ACTS.D.length===1);
+// ---- the seats (v6.3: PRIMARY / ALTERNATE, one verb each) ----
+T('the P/A seats: every v6 verb seated, single verbs',()=>
+  STN_P.A==='source'&&STN_A.A==='chart'&&STN_P.B==='brew'&&STN_A.B==='trade'
+  &&STN_P.C==='comm'&&STN_A.C==='loadany'&&STN_P.D==='age'&&STN_A.D==='sail');
+T('seats: Source always open · Sail/Trade closed on a fresh board',()=>{mk(2);const p=S.players[0];
+  return stationActAvail(p,'A','source')&&!stationActAvail(p,'D','sail')&&!stationActAvail(p,'B','trade');});
 T('chartOptions: closed passages chartable at 2G · no factor without a delivery',()=>{mk(2);
   const o=chartOptions(S.players[0],false);
   return o.some(x=>x.k==='open'&&x.w==='ds')&&o.some(x=>x.k==='open'&&x.w==='sd')&&!o.some(x=>x.k==='factor');});
@@ -61,56 +61,61 @@ T('house markers cap the network',()=>{mk(2);const p=S.players[0];
   S.posts.wc=[0];S.posts.sk=[0];S.factors.bruges=[0];S.factors.london=[0];S.factors.bergen=[0];S.factors.novgorod=[0];
   return markersUsed(p)===6&&markersLeft(p)===0&&chartOptions(p,true).every(x=>x.k==='open'||x.k==='upgpost'||x.k==='upgfactor');});   // v6.1: upgrades spend no marker — they stay open at the cap
 
-// ---- the walk · act · load ----
-T('the walk: Source 3 fires and the flank offer follows',()=>{mk(2);const p=S.players[0];
-  doWork('A','source');const inSrc=UI.sub==='source';srcTake(3,0);
-  return inSrc&&p.grain===6&&(UI.sub==='end'||UI.sub==='flank');});
-T('the walk: a flanking ship opens the flank load',()=>{mk(2);const p=S.players[0];
-  ship('s1','cog','bruges');
-  doWork('A','source');srcTake(0,3);
-  return UI.sub==='flank'&&UI.flank.slots.includes('s1');});
-T('the walk: adjacency binds after placement',()=>{mk(2);const p=S.players[0];
-  doWork('A','source');srcTake(1,1);flankSkip&&(UI.sub==='flank'?flankSkip():0);
-  const before=p.cell;doWork('D','age');   // A→D is diagonal: illegal
-  return before==='A'&&p.cell==='A';});
-T('Harbor: commission places a hull and offers the maiden load',()=>{mk(2);const p=S.players[0];
-  p.placed=true;p.cell='A';S.shipDisplay=[{ship:'hulk',dest:'bruges'}];
-  doWork('C','comm');const h=UI.sub==='commission';commPick(0);commPlace('s3');
-  return h&&S.slots.s3&&S.slots.s3.ship==='hulk';});
-T('v6.2: a multi-action station opens its short menu; a pick dispatches',()=>{mk(2);const p=S.players[0];
-  p.grain=4;   // Source AND Chart stand at the Market
-  doWork('A');const menu=UI.sub==='stn';
-  stnPick('source');
-  return menu&&UI.sub==='source';});
-T('v6.2: a deep single (Brewhouse) fires at once',()=>{mk(2);const p=S.players[0];
-  p.placed=true;p.cell='A';
-  doWork('B');
-  return UI.sub==='brew';});
-T('v6.2: a sea action off its station is only the walk',()=>{mk(2);const p=S.players[0];
-  p.placed=true;p.cell='B';S.passages.ds=true;
-  S.sea=[{ship:'cog',dest:'london',load:[cask(0,'hopped',2),cask(0,'hopped',2)],cert:0,pos:0}];
-  doWork('D','sail');   // the Cellar prints no Sail — the walk stands, the ship does not move
-  return p.cell==='D'&&S.sea[0].pos===0&&UI.sub!=='sailv';});
-T('v6.2: SAIL fires from the Harbor and routes home through the flank tail',()=>{mk(2);const p=S.players[0];
-  p.placed=true;p.cell='A';S.passages.ds=true;
-  S.sea=[{ship:'cog',dest:'london',load:[cask(0,'hopped',2),cask(0,'hopped',2)],cert:0,pos:0}];
-  doWork('C','sail');const inSail=UI.sub==='sailv'&&UI.sailv.rt==='workflank';
-  sailPick(0);
-  return inSail&&S.sea[0].pos===1&&(UI.sub==='end'||UI.sub==='flank');});
-T('v6.2: TRADE fires from the Market',()=>{mk(2);const p=S.players[0];
-  p.placed=true;p.cell='B';S.factors.bergen=[0];
-  const bk=Object.keys(S.bourse)[0];S.bourse[bk]=1;
-  doWork('A','trade');const inB=UI.sub==='bshift';
+// ---- move · line · stops ----
+T('the move binds: the diagonal is refused, the neighbour lands',()=>{mk(2);const p=S.players[0];
+  p.placed=true;p.cell='A';UI={sub:'move'};
+  doMove('D');const stay=p.cell==='A';   // A→D never connects
+  doMove('B');return stay&&p.cell==='B'&&UI.sub==='line';});
+T('the line: own P + far A + the cap loads, in board order',()=>{mk(2);const p=S.players[0];
+  ship('s8','cog','bruges');ship('s3','cog','bruges');
+  p.placed=true;p.cell='B';UI={sub:'move'};
+  doMove('A','row');
+  const ks=UI.stops.map(st=>st.kind+':'+(st.cell||st.slot));
+  return UI.sub==='stops'&&ks.join('|')==='load:s8|cell:A|cell:B|load:s3'
+    &&UI.stops[1].alt===false&&UI.stops[2].alt===true;});
+T('Source 3 fires as the Market P and returns to the line',()=>{mk(2);const p=S.players[0];
+  p.placed=true;p.cell='B';UI={sub:'move'};
+  doMove('A','row');resolveStopBy('cell','A');const inSrc=UI.sub==='source';srcTake(3,0);
+  return inSrc&&p.grain===6&&UI.sub==='stops'&&UI.stops.length===1;});
+T('TRADE fires as the Brewhouse ALT (the Market row)',()=>{mk(2);const p=S.players[0];
+  S.factors.bergen=[0];const bk=Object.keys(S.bourse)[0];S.bourse[bk]=1;
+  p.placed=true;p.cell='B';UI={sub:'move'};
+  doMove('A','row');resolveStopBy('cell','B');const inB=UI.sub==='bshift';
   bshiftPick({beer:bk,dir:1});
-  return inB&&S.bourse[bk]===2;});
-T('v6.2: CHART fires from the Market with the flank return',()=>{mk(2);const p=S.players[0];
-  p.placed=true;p.cell='C';p.grain=4;
-  doWork('A','chart');
-  return UI.sub==='chart'&&UI.chart.returnTo==='workflank';});
-T('v6.2: the bare walk still offers the flank load',()=>{mk(2);const p=S.players[0];
-  p.placed=true;p.cell='B';ship('s4','cog','bruges');
-  doWork('D',null);   // no action named — the walk alone
-  return p.cell==='D'&&UI.sub==='flank'&&UI.flank.slots.includes('s4');});
+  return inB&&S.bourse[bk]===2&&UI.sub==='stops';});
+T('SAIL fires as the Cellar ALT (the Harbor row) with the stops return',()=>{mk(2);const p=S.players[0];
+  S.passages.ds=true;
+  S.sea=[{ship:'cog',dest:'london',load:[cask(0,'hopped',2),cask(0,'hopped',2)],cert:0,pos:0}];
+  p.placed=true;p.cell='A';UI={sub:'move'};
+  doMove('C','row');resolveStopBy('cell','D');const inSail=UI.sub==='sailv'&&UI.sailv.rt==='stops';
+  sailPick(0);
+  return inSail&&S.sea[0].pos===1;});
+T('CHART fires as the Market ALT (the left column)',()=>{mk(2);const p=S.players[0];
+  p.grain=4;p.placed=true;p.cell='A';UI={sub:'move'};
+  doMove('C','col');resolveStopBy('cell','A');
+  return UI.sub==='chart'&&UI.chart.returnTo==='stops';});
+T('a station stop off the line does not exist: the Harbor row prints no Chart',()=>{mk(2);const p=S.players[0];
+  p.grain=4;p.placed=true;p.cell='A';UI={sub:'move'};
+  doMove('C','row');   // rowB = C+D: Commission P + Sail A — no Market seat here
+  return !UI.stops.some(st=>st.kind==='cell'&&st.cell==='A');});
+T('THE LIVE LINE: a commission onto a cap opens its load stop',()=>{mk(2);const p=S.players[0];
+  p.grain=6;S.shipDisplay=[{ship:'hulk',dest:'bruges'}];
+  p.placed=true;p.cell='A';UI={sub:'move'};
+  doMove('C','row');const before=UI.stops.some(st=>st.kind==='load');
+  resolveStopBy('cell','C');commPick(0);commPlace('s4');   // s4 is a rowB cap
+  if(UI.sub==='load')loadSkip();   // decline the maiden load
+  return !before&&UI.sub==='stops'&&UI.stops.some(st=>st.kind==='load'&&st.slot==='s4');});
+T('the cap load fires: a Ready cask boards the line-slot Ship',()=>{mk(2);const p=S.players[0];
+  ship('s8','cog','bruges');
+  p.placed=true;p.cell='B';UI={sub:'move'};
+  doMove('A','row');resolveStopBy('load','s8');const inLoad=UI.sub==='load';
+  loadPickCask(0);if(UI.sub==='load')loadOnto('s8');
+  if(UI.sub==='source')srcSkip();   // the warm cask's load bonus, declined
+  return inLoad&&S.slots.s8.load.length===1;});
+T('all optional: End Turn stands mid-line',()=>{mk(2);const p=S.players[0];
+  p.placed=true;p.cell='B';UI={sub:'move'};
+  doMove('A','row');const n=S.active;endTurn();
+  return S.active!==n;});
 
 // ---- DEPART · the tide · certification ----
 T('a full ship DEPARTS onto its lane and leaves the slot',()=>{mk(2);
