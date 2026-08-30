@@ -362,10 +362,10 @@
   .pbhead{display:flex;align-items:center;justify-content:space-between;gap:8px 14px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:6px;margin-bottom:8px}
   .pbhead h3{border:none;margin:0;padding:0}
   /* DESTINATIONS */
-  #dests{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
-  @media(max-width:600px){#dests{grid-template-columns:1fr 1fr}}
+  .kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}   /* the four Kontor cards FILL the panel */
+  @media(max-width:600px){.kgrid{grid-template-columns:1fr 1fr}}
   /* THE BOURSE BOARD — a full-width strip ABOVE the Kontor cards */
-  .bourseboard{grid-column:1/-1;border:2px solid var(--line);border-radius:10px;padding:6px 9px;background:var(--parch)}
+  .bourseboard{border:2px solid var(--line);border-radius:10px;padding:6px 9px;background:var(--parch);margin-bottom:8px}
   .bb-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px}
   .bb-head b{font-variant:small-caps}
   .bb-row{display:flex;align-items:center;gap:4px;padding:1px 0}
@@ -612,7 +612,8 @@
   .dprow{margin-right:8px;white-space:nowrap}
   .osq{width:10px;height:10px;border-radius:2px;display:inline-block;margin:0 3px 0 1px;vertical-align:-1px;border:1px solid rgba(0,0,0,.35);box-sizing:border-box}
   /* mobile: the Kontor cards wrap their long printed lines instead of painting past the card edge */
-  @media(max-width:600px){.route{min-width:0}.route .rline{flex-wrap:wrap}.route .rline>span{white-space:normal}}
+  .route{min-width:0}
+  @media(max-width:600px){.route .rline{flex-wrap:wrap}.route .rline>span{white-space:normal}}
   .hidden{display:none}
 </style>
 </head>
@@ -3801,6 +3802,7 @@ function renderDests(){
          h+='<span class="bb-cell'+(on?' on':'')+'"'+(on?' data-tip="'+attr(styleShort(b)+' sells at '+bourseFmt(v)+' right now — UP: Trade · the factor’s step · the toll bench · Bergen; DOWN: only the glut')+'"':'')+'>'+bourseFmt(v)+'</span>';}
        h+='</div>';});
      h+='</div>';}}
+  h+='<div class="kgrid">';
   KONTORE.forEach(d=>{const D=DEST[d];
     const leaders=leadersAt(d);
     const pres=S.players.map(p=>{
@@ -3827,6 +3829,7 @@ function renderDests(){
       +'<div class="rh rline" style="font-size:.68rem"><span class="note" data-tip="'+attr('The Kontorhaus (v6.1) — a seated factor upgrades to it for '+costStr(FACTOR_UPG_FEE)+' via CHART. The power is printed here, per Kontor.')+'">'+LU('kontorhaus')+' '+KONTORHAUS[d].desc+'</span></div>'
       +'<div class="pres">'+pres+'</div></div>';
   });
+  h+='</div>';
   document.getElementById('dests').innerHTML=h;
 }
 
