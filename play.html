@@ -709,7 +709,7 @@ const ICONTIP={
   sprout:'Hops (H) — a brewing input; the beer that travels.',
   beer:'Cask — a brewed beer; its die rides vessel → Ship → Kontor.',
   store:'Market — Source 3 (primary) · Build a Venture (alternate).',
-  'flask-conical':'Brewhouse — Brew (primary): pay a recipe, search the stack · a second top-tile Brew (alternate).',
+  'flask-conical':'Brewhouse — Brew (primary): pay a recipe, search the stack · the SECOND RUNNINGS (alternate): a second Brew, the top tile as it lies.',
   hourglass:'Cellar — Age 3 (primary): turn aging dice up · Load 1 (alternate).',
   ship:'Harbor — Commission + 1 load (primary) · Sail a docked Ship with your cask now (alternate).',
   anchor:'Slot — one of the 8 perimeter spaces: a building seat and a Ship seat (never casks).',
@@ -1241,6 +1241,10 @@ function freshState(n,names){
    const sh=(si>=0)?st.shipDeck.splice(si,1)[0]:st.shipDeck.shift();
    if(sh)st.slots.s7={type:'ship',ship:sh.ship,dest:sh.dest,load:[]};}
   st.shipDisplay=[];while(st.shipDisplay.length<SHIP_DISPLAY&&st.shipDeck.length)st.shipDisplay.push(st.shipDeck.shift());
+  // the clerk's opening page — every seat baselines at setup, so even a FIRST turn reads
+  // back what rival openings sent you (recapSnap needs the live S; the shape is known here)
+  st.players.forEach(p=>{p._recap={t:1,bank:0,st:0,w:0,l:0,lg:0,pz:0,th:0,
+    g:p.grain,h:p.hops,dn:0,inv:[],rec:p.recipes.length,upg:0,led:{},pb:Object.assign({},p.presBonus)};});
   return st;
 }
 
@@ -1351,7 +1355,7 @@ function ownSq(pid){const o=S.players[pid];return '<span class="osq" style="back
 // ---- tooltips for stations & slots ----
 const CELLTIP={   // v7 station reminders — PRIMARY / ALTERNATE, one verb each
   Market:'Market — PRIMARY Source '+SRC_PRIMARY+' · ALT Build (place or advance a Venture).',
-  Brewhouse:'Brewhouse — PRIMARY Brew (search the stack) · ALT a second Brew (the top tile).',
+  Brewhouse:'Brewhouse — PRIMARY Brew (search the stack) · ALT the second runnings (a second Brew, the top tile as it lies).',
   Cellar:'Cellar — PRIMARY Age '+CELLAR_POOL+', split freely · ALT Load 1 onto any docked Ship.',
   Harbor:'Harbor — PRIMARY Commission (Cog free · Hulk 1G) + 1 load · ALT Sail a docked Ship carrying your cask, now.',
 };
@@ -1669,7 +1673,7 @@ function stationActAvail(p,c,a){
 function stnActTxt(p,a){
   if(a==='source')return 'Source '+SRC_PRIMARY;
   if(a==='brew')return 'Brew (search)';
-  if(a==='brewtop')return 'Brew (the top tile)';
+  if(a==='brewtop')return 'Brew — the second runnings (the top tile)';
   if(a==='age')return 'Age '+CELLAR_POOL;
   if(a==='comm')return 'Commission ('+commFeeStr()+') + 1 load';
   if(a==='loadany')return 'Load 1 · any docked Ship';
@@ -2590,6 +2594,60 @@ function copshiftPick(style){const C=UI.csh;if(!C)return;
   if((UI.pendingCoper||[]).length)UI.pendingCoper.shift();
   UI.csh=null;const rt=UI.goodsRt||'stops';UI.goodsRt=null;afterSail(rt);maybeRunAI();}
 
+// ---------- THE CLERK'S RECAP (designer-called 2026-08-31) ----------
+// At the start of your turn the app reads back everything that came to you BETWEEN your
+// turns — casks of yours landed on rival clocks, the drip ★ (named by their tracked bank
+// buckets), goods, ledger ticks, ⚜ drawn or spent, cards picked at gated prizes. An
+// app-side legibility affordance of the MIRROR: at the table you watched it happen; no
+// component, no rule, no memory demanded — it restates what the log already recorded.
+// Mechanism: a baseline snapshot at YOUR turn's end, diffed at your next turn's start.
+function recapSnap(p){const led={};SLOTS.forEach(s=>{const b=S.buildings[s.id];if(b&&b.v&&b.owner===p.id)led[s.id]={d:(b.die||1),lvl:b.lvl,k:b.v};});
+  return {t:S.turn,bank:p.bank||0,st:p.bankSt||0,w:p.bankW||0,l:p.bankL||0,lg:p.bankLg||0,pz:p.bankP||0,th:p.bankH||0,
+    g:p.grain,h:p.hops,dn:(p.delivered||[]).length,inv:(p.invites||[]).slice(),
+    rec:(p.recipes||[]).length,upg:(p.upgrades||[]).length,led:led,
+    pb:Object.assign({},p.presBonus)};}
+function recapDiff(p){const s0=p._recap;if(!s0)return null;const out=[];
+  // a legitimate between-turns window spans at most one round boundary; an older stamp
+  // means the baseline was frozen (a stale cached build, a pre-feature save) — read nothing
+  if(s0.t==null||S.turn-(s0.t||0)>1)return null;
+  // landings on rival clocks — each new parked die, itemized with its cause and price
+  (p.delivered||[]).slice(s0.dn||0).forEach(d=>{
+    out.push(LU('landmark')+' '+styleShort(d.style)+(d.hall?' ⚜ PRESENTED at ':' landed at ')+'<b>'+DEST[d.dest].name+'</b> <b>+'+(d.val||0)+'★</b>');});
+  const bump=(n,txt)=>{if(n>0)out.push(txt.replace('%n','+'+n));};
+  bump((p.bankSt||0)-(s0.st||0),LU('landmark')+' staple rights <b>%n★</b>');
+  bump((p.bankW||0)-(s0.w||0),LU('package')+' wharfage <b>%n★</b>');
+  bump((p.bankL||0)-(s0.l||0),LU('wrench')+' the Chronicler <b>%n★</b>');
+  bump((p.bankLg||0)-(s0.lg||0),LU('home')+' ledger overflow <b>%n★</b>');
+  bump((p.bankP||0)-(s0.pz||0),LU('landmark')+' prizes taken as <b>%n★</b>');
+  bump((p.bankH||0)-(s0.th||0),'⚜ tastings <b>%n★</b>');
+  {const tracked6=((p.bankSt||0)-(s0.st||0))+((p.bankW||0)-(s0.w||0))+((p.bankL||0)-(s0.l||0))
+    +((p.bankLg||0)-(s0.lg||0))+((p.bankP||0)-(s0.pz||0))+((p.bankH||0)-(s0.th||0));
+   bump(((p.bank||0)-(s0.bank||0))-tracked6,LU('map-pin')+' presence ★ <b>%n★</b>');}
+  {const dg=p.grain-(s0.g||0),dh=p.hops-(s0.h||0);
+   const mixed=(p.recipes||[]).length>(s0.rec||0);   // a prize fee in the window makes the delta a NET
+   if(dg>0||dh>0)out.push(LU('coins')+' goods '+(dg>0?'+'+Gi(dg):'')+((dg>0&&dh>0)?' ':'')+(dh>0?'+'+Hi(dh):'')+(mixed?' <span class="note">(net of the fee below)</span>':''));
+   if(dg<0||dh<0)out.push(LU('coins')+' goods '+(dg<0?'−'+Gi(-dg):'')+((dg<0&&dh<0)?' ':'')+(dh<0?'−'+Hi(-dh):'')+(mixed?' <span class="note">(net — the fee below)</span>':''));}
+  // presence parked WITHOUT ★ still reads (a beer’s printed perk on a rival sail · the tour)
+  KONTORE.forEach(k=>{const d2=(p.presBonus[k]||0)-((s0.pb||{})[k]||0);
+    if(d2>0)out.push(LU('map-pin')+' +'+d2+' parked at <b>'+DEST[k].name+'</b>');});
+  // the LEDGER grounds: a Venture RAISED or ADVANCED between your turns (London's prize
+  // on a rival clock — the largest thing a window can hold) reads back, and every tick
+  SLOTS.forEach(s=>{const b=S.buildings[s.id];if(!(b&&b.v&&b.owner===p.id))return;
+    const was=(s0.led||{})[s.id];
+    if(!was){out.push(LU('home')+' <b>'+vFaceName(b)+'</b> raised on '+s.id+' <span class="note">(a ledger die stands)</span>');return;}
+    if(b.lvl>(was.lvl||1)||b.v!==was.k)out.push(LU('home')+' <b>'+vFaceName(b)+'</b> now stands on '+s.id+' <span class="note">(your L1 advanced)</span>');
+    if((b.die||1)>(was.d||1))out.push(LU('home')+' '+vFaceName(b)+'’s ledger '+(was.d||1)+' → <b>'+(b.die||1)+'</b>');});
+  // the ⚜ hand diffs by CONTENTS — a letter drawn AND an ⚜ spent in one window both read
+  {const nowI=(p.invites||[]).slice(),base=(Array.isArray(s0.inv)?s0.inv:[]).slice();
+   const drawn=[];nowI.forEach(k=>{const ix=base.indexOf(k);if(ix>=0)base.splice(ix,1);else drawn.push(k);});
+   if(drawn.length)out.push(LU('mail')+' <b>+'+drawn.length+'</b> ⚜ invitation'+(drawn.length===1?'':'s')+' <span class="note">('+drawn.map(k=>CONTRACT_BY_K[k]?CONTRACT_BY_K[k].txt:k).join(' · ')+')</span>');
+   if(base.length)out.push(LU('mail')+' <b>−'+base.length+'</b> ⚜ <span class="note">(spent presenting)</span>');}
+  (p.recipes||[]).slice(s0.rec||0).forEach(st=>{if(!STYLES[st])return;
+    const fs=costStr(recipeFeeFor(p,st));
+    out.push(LU('scroll-text')+' the <b>'+STYLES[st].name+'</b> recipe'+(fs!=='free'?' <span class="note">(its '+fs+' fee paid)</span>':''));});
+  (p.upgrades||[]).slice(s0.upg||0).forEach(k=>out.push(LU('wrench')+' the <b>'+upName(k)+'</b> seated'));
+  return out;}
+
 // ---------- end of turn ----------
 function endTurn(){
   snapshot();checkTriggers();
@@ -2597,10 +2655,15 @@ function endTurn(){
   refillContracts();    // v7 — the quay's contract display tops back up to 3
   refillDemand();       // v7 — a retired demand card's well deals fresh
   const wasAI=!!cur().ai;
+  cur()._recap=recapSnap(cur());   // the clerk turns the OUTGOING seat's fresh page — everything after this is "since your last turn"
   const n=S.players.length;S.active=(S.active+1)%n;
   UI={sub:'move'};      // (this clears the one-claim-per-turn flag with the rest of the turn state)
   if(S.active===S.first){if(S.ending){gameOver();save();return;}S.turn++;}
   if(wasAI&&!cur().ai)undoStack.length=0;
+  // THE CLERK'S RECAP — read the incoming seat what came to them between their turns
+  if(!aiSimulating){const np=cur();const R=recapDiff(np);
+    if(R&&R.length){if(!np.ai)UI.recap=R;
+      log('📜 the clerk reads <b>'+np.name+'</b>’s ledger — since their last turn: '+R.join(' · '));}}
   braumeisterTick(cur());innkeeperTick(cur());fire('turn',{p:cur()});   // the drips: Braumeister · Innkeeper
   checkDiceEnd();
   save();
@@ -2793,7 +2856,7 @@ function diagText(){
     if(typeof GUILD_MS!=='undefined')f.push('GUILD_MS='+GUILD_MS);
     try{f.push('aiSpeed='+aiSpeed());}catch(e){}
     L.push('AI runtime: '+f.join('  ·  '));
-    const uiBits={};['stage','load','stops','reach','age','src','brew','build','comm','claimed','pendingClaims','pendingLandings','pendingRecipe','pendingBenefits','pendingSpec','pendingCoper','pendingActs','pendingOlClaim','pendingOlBrew','tmp'].forEach(k=>{if(UI[k]!==undefined)uiBits[k]=UI[k];});
+    const uiBits={};['stage','load','stops','reach','age','src','brew','build','comm','claimed','recap','pendingClaims','pendingLandings','pendingRecipe','pendingBenefits','pendingSpec','pendingCoper','pendingActs','pendingOlClaim','pendingOlBrew','tmp'].forEach(k=>{if(UI[k]!==undefined)uiBits[k]=UI[k];});
     L.push('UI detail: '+safeJson(uiBits));
     L.push('');L.push('--- players ---');
     S.players.forEach(p=>{
@@ -3451,7 +3514,7 @@ function renderAid(){
       +'<div class="subnote">the ladder pays 1st/2nd at game end, by parked dice — every ⚜ spent there climbs it · LANE GATES: London/Novgorod open per player while your dice at Bruges/Bergen OUTNUMBER your dice there</div></div>'
     +'<div class="asec"><b>Stations</b><div class="astgrid">'
       +row('store','Market','P: Source '+SRC_PRIMARY+' · A: BUILD — place a Venture (L1 '+costStr(V_FEE_L1)+' / replace a Work '+costStr(V_FEE_REPLACE)+') or FLIP/overbuild ('+costStr(V_FEE_L2)+')')
-      +row('flask-conical','Brewhouse','P: Brew — search the stack, choose the tile · A: a second Brew (the top tile)')
+      +row('flask-conical','Brewhouse','P: Brew — search the stack, choose the tile · A: the second runnings — a second Brew, the top tile as it lies')
       +row('age-3','Cellar','P: Age '+CELLAR_POOL+', split freely · A: Load 1 → any docked Ship')
       +row('ship','Harbor','P: Commission (Cog free · Hulk 1G · ⚑ flag +1G) + 1 load · A: SAIL a docked Ship with your cask, now')+'</div>'
       +row('home','Ventures — your private buildings, the LEDGER','an L1 stands a tray die at 1; a RIVAL’s use turns it up (cap 6, then +'+LEDGER_OVER_PTS+'★/serve) — the pips score to you at the end · anyone may use the action, on their own casks')
@@ -3484,6 +3547,8 @@ function renderBar(){
   const U=UI.sub;
   if(U==='move'){const placing=!p.placed;
     prompt=placing?'<b>Turn 1:</b> place your worker on any station — then work its two actions.':'<b>Move</b> to an adjacent station — click it <span class="note">(the diagonal never connects)</span>.';
+    if(UI.recap&&UI.recap.length){const R=UI.recap.slice(0,9);const more=UI.recap.length-R.length;
+      prompt='<span style="display:block;margin-bottom:3px;max-height:3.4em;overflow-y:auto">📜 <b>Since your last turn:</b> '+R.join(' · ')+(more>0?' · <span class="note">+'+more+' more (the log)</span>':'')+'</span>'+prompt;}
     const cells=placing?['A','B','C','D']:ADJ[p.cell];
     acts=cells.map(c=>btn((placing?'⚑ ':'→ ')+LU(ICON[CELLNAME[c]])+' '+CELLNAME[c],'doMove(\''+c+'\')','primary')).join('');}
   else if(U==='stops'){
@@ -3532,7 +3597,7 @@ function renderBar(){
     acts=sb+btn('Skip','srcSkip()','ghost');}
   else if(U==='brew'){const B=UI.brew;const brFree=!!(B&&B.free),balt=!!(B&&B.alt);
     prompt=(brFree?'Brew — <b>the guild pays the cost</b>. ':'Brew — pay a recipe into an open vessel. ')
-      +(balt?'<span class="note">The ALTERNATE brew — the cask takes its stack’s <b>TOP tile</b>.</span>'
+      +(balt?'<span class="note">The <b>second runnings</b> — the cask takes its stack’s <b>TOP tile, as it lies</b> (face-up: no choice, full information).</span>'
             :'<span class="note">The full brew <b>searches the beer’s stack</b> — choose the tile; its load bonus rides the cask.</span>');
     acts=p.recipes.map(r=>{const sd=startDieFor(p,r);const n=pileList(r).length;const vb=pileVerbs(r);const dk=Object.keys(vb);
       const top=pileTop(r);
@@ -4392,6 +4457,9 @@ if(typeof window!=='undefined'){window.HANSE={
   if(NET)return;   // the ONLINE TABLE: net.js owns boot — state arrives as an INIT over postMessage
   const saved=load();
   if(saved&&saved.players){S=saved;syncFlagsFromS();UI={sub:'move'};
+    // a mid-game save is written at the exact moment the clerk's recap stands on the
+    // bar — recompute it from the persisted baseline so the resume reads it back too
+    if(!S.over){try{const R=recapDiff(cur());if(R&&R.length&&!cur().ai)UI.recap=R;}catch(e){}}
     render();log('— resumed saved game —');render();
     if(S.over)gameOver();else maybeRunAI();
   } else {openSetup();}

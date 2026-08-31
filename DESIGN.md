@@ -278,8 +278,30 @@ kept owing:
   halls, the empty-hull displacement, the Cog/Hulk fee inversion (Cog free · Hulk 1 `G`
   ⚙), one claim per turn, the refresh prize arm, the demand market line, Novgorod's
   premium stated once — are recorded at `V7-PLAN.md` §10.11.
-- Gates RUN at the build (2026-08-31): `playtests/verify-v7.js` **55/55 PASS** (stable
-  over 10 runs) · `playtests/sim.js` smoke **0 crashes / 0 deadlocks** across 2–4p at
+- **Same-day addenda (designer-called 2026-08-31):** (1) **THE CLERK'S RECAP** — at the
+  start of your turn the app reads back everything that came to you between your turns
+  (casks landed on rival clocks with their ★, the drip ★ named by their tracked bank
+  buckets — staple · wharfage · Chronicler · ledger overflow · prizes · presence —
+  goods, ledger ticks per Venture, ⚜ drawn/spent, cards picked at gated prizes), shown
+  on the turn bar at MOVE and written to the log. An app-side legibility affordance of
+  the MIRROR (§11 Q8): at the table you watched it happen — no component, no rule, no
+  KEY bump; a per-seat baseline snapshot at your turn's end, diffed at your next start.
+  (2) **The Specialist face reprints** (`components.js`): the title moves to the FOOT,
+  just above the action line — the character's head stays clear; the cost pill keeps
+  the top-right corner.
+- The recap ran a **four-lens adversarial review** before landing (state/compat ·
+  arithmetic · charter/UX · coverage holes; every finding independently re-verified
+  against the running engine). Six confirmed findings, all fixed: the boot resume now
+  recomputes the recap (every mid-game save lands exactly at the recap moment); a
+  Venture RAISED or ADVANCED via London's prize on a rival clock reads back (the
+  baseline carries face+level, not just the die); the ⚜ hand diffs by CONTENTS so a
+  letter drawn and an ⚜ spent in one window BOTH read (the drawn card named); prize
+  fees attach to their recipe line and goods deltas label as nets when mixed; the bar
+  block is size-capped (the two-fixed-rows contract); a round-stamped baseline
+  suppresses reads from a stale cached build.
+- Gates RUN at the build (2026-08-31): `playtests/verify-v7.js` **62/62 PASS** (55 at
+  the engine pass + 7 recap checks incl. the review-fix cases; stable over repeated
+  runs) · `playtests/sim.js` smoke **0 crashes / 0 deadlocks** across 2–4p at
   journeyman AND both MC tiers · a full-render smoke (3 AI games through the real
   render layer) clean · rounds landed inside the 10–25 band at every count ·
   `KEY hanse-v70` · MAX_ROUND 22 ⚙. **Sims gate robustness only (the §7 process law) —
@@ -819,6 +841,30 @@ record is in git history.
 
 *Moved here from `RULES.md` §Open (2026-08-23). The designer calls full batteries; these
 are the things to read when one runs — or when a human table sits down.*
+
+**v7 WATCHES (2026-08-31 — the station-verb panel: 3 proposals · 2 sim probes · a judge):**
+
+- **THE DOUBLE KETTLE STANDS, UNPRICED — the fee arm is MEASURED AND SHELVED.** The
+  designer's "second brew costs +1 hop" instinct was probed in three independent
+  ~150–300-game arms: the fee suppresses only ~10–20% of second-kettle use while
+  pushing **2p MAX_ROUND-ceiling endings 27–31% → 39–41%** (the v6-drag disease
+  marker) — a tax that changes little behavior and drags the fragile count's clock.
+  Relocations all failed a law or a probe: Brew-top@Market = a self-funding kettle
+  and MEASURABLY stronger degenerate corridor play (Cellar arrivals 8.0 → 1.0);
+  removal outright = 2p ceiling endings ~50% (the v6 wound re-opened). The seat is
+  already component-throttled (2 open vessels of 3 · 2 recipe payments · tray dice ·
+  the bipartite 2×2). If a price is ever wanted: **+1G throttles, +1H flavors** —
+  either only after a ≥500-game 2p corpus (small-arm seat-skew flags). The alternate
+  is NAMED **the second runnings** (parti-gyle — the Zerbster grammar) and the
+  "blind" wording is corrected: the stacks are face-up; the cost is no CHOICE.
+- **THE STACK, not the seat:** Brewhouse + a flanking Mash Tun/Great Copper on s2/s3
+  = 3–4 brews per visit over docking hulls — watch a Gruit tempo mill at the table;
+  the lever is Venture faces or hull placement, never the station map.
+- **THE COLD CELLAR:** bots run a hot Market⇄Harbor corridor (~47–54% of moves) and
+  visit the Cellar least (~11–14%) — greedy bots under-age by construction, so this
+  is a QUESTION for the table (§11 Q6's added ask), not yet a finding.
+- **2p ceiling endings 27–31%** at baseline: a 13-dice / MAX_ROUND-22 dial question
+  the v5.8 watch already knew (skilled seats hold dice) — never fix it with a brew fee.
 
 **DIALED at v5.8 (2026-08-24): 2p majorities now pay a SECOND PLACE**, and the presence gate
 (*no parked dice at a Kontor, no share of it*) is finally PRINTED rather than engine-only. Live

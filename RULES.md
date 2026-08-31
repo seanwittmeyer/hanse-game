@@ -97,7 +97,7 @@ own lesser counter. A visit works both. Never a menu:
 | Station | PRIMARY | ALTERNATE (the same visit) |
 |---|---|---|
 | **A · Market** — *the merchant's desk* | **SOURCE 3** — take **3 goods**, any mix | **BUILD** — place or advance ONE of your Venture tiles; the fee prints on the face going down (§5) |
-| **B · Brewhouse** — *the double kettle* | **BREW** — pay a recipe into an open vessel + a tray die at the printed start value; **search the beer's stack — choose the tile** | **BREW** again — a second, lesser brew: the stack's **TOP tile**, blind |
+| **B · Brewhouse** — *the double kettle* | **BREW** — pay a recipe into an open vessel + a tray die at the printed start value; **search the beer's stack — choose the tile** | **BREW** — *the second runnings*: the stack's **TOP tile, as it lies** (the stacks are face-up — the cost is no choice, not no information) |
 | **C · Harbor** — *the shipmaster's desk* | **COMMISSION** — pay the Ship's printed fee (Cog free · Hulk 1 `G` ⚙), place it on an eligible slot, **one free load onto it** (§7); you may plant your **private flag** for +1 `G` ⚙ | **SAIL** — **ANY docked Ship carrying 1+ of YOUR casks** sails NOW, even unfull, free ⚙ (a flagged hull sails early only for its owner) |
 | **D · Cellar** | **AGE 3** — turn your aging dice up three steps, split freely | **LOAD 1** Ready cask onto **any** docked Ship |
 

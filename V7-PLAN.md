@@ -631,6 +631,14 @@ v7.0 mitigation; the "threshold defer" dial is recorded).
    tree) or as a toll? Is gateway>far the right shape, or too harsh at Novgorod?
 6. **Pace:** 10–15 turns per seat? Does the double kettle (plus brew Ventures) run
    hot? Is 13 dice / MAX_ROUND 22 right for the new spend channels?
+   *(Panel-probed 2026-08-31 — the station-verb panel: watch the STACK, not the seat —
+   the Brewhouse plus a flanking Mash Tun/Great Copper on s2/s3 is 3–4 brews a visit
+   over docking hulls (a Gruit tempo-mill risk; the lever would be Venture faces or
+   hull placement, never the station map). Bots double-brew ~1.2–1.4/player/game — a
+   floor. 2p already ends on the MAX_ROUND ceiling 27–31% of bot games — a 13-dice/22
+   dial question, NOT kettle heat; a brew fee measurably worsens it. Also ask: **which
+   two stations did you bounce between — did the Cellar ever pull you?** The bots run
+   a hot Market⇄Harbor corridor and a cold Cellar.)*
 7. **The private flag & SAIL-now:** does one flag per player keep the berth race alive
    at 4p? Does the free unfull sail get used for tempo, or does it deflate full-hull
    racing?

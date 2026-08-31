@@ -431,6 +431,68 @@ t('the Flight still counts distinct beers SHIPPED',function(){fresh(2);var p=S.p
   markShipped(p,'gruit');markShipped(p,'hopped');markShipped(p,S.exports[0]);
   eq(flightScore(p),FLIGHT_PTS[3]);});
 
+// ---------- 8b · the clerk's recap ----------
+t('the clerk’s recap: rival-clock gains read back, itemized by cause',function(){fresh(2);
+  var p=S.players[1];
+  p._recap=recapSnap(p);
+  // between-turns events land on seat 1:
+  p.bank+=5;p.bankSt=(p.bankSt||0)+2;p.bankW=(p.bankW||0)+1;      // staple 2 + wharfage 1 + presence 2
+  p.delivered.push({style:'gruit',q:1,dest:'bruges',val:4,mkt:0});
+  p.delivered.push({style:'hopped',q:2,dest:'bergen',val:6,mkt:0,hall:1});
+  var id='s1';clearSlot(id);S.buildings[id]={v:'die',lvl:1,owner:1,die:3};
+  p._recap.led[id]={d:1,lvl:1,k:'die'};
+  (p.invites=p.invites||[]).push('q12a');
+  p.grain+=1;p.hops+=1;
+  var R=recapDiff(p);
+  ok(R&&R.length>=7,'items collected ('+(R?R.length:0)+')');
+  var has=function(s){return R.some(function(x){return x.indexOf(s)>=0;});};
+  ok(has('Bruges'),'the landing named');
+  ok(has('PRESENTED'),'the hall landing named');
+  ok(has('staple'),'staple ★ named');
+  ok(has('wharfage'),'wharfage named');
+  ok(has('presence ★'),'the untracked remainder attributed to presence');
+  ok(has('ledger 1'),'the ledger tick 1 → 3 named');
+  ok(has('invitation'),'the ⚜ named');
+  ok(has('goods'),'the goods named');});
+t('endTurn wires the recap: baseline out · read-back in · silent when nothing came',function(){fresh(2);
+  var p1=S.players[1];p1._recap=recapSnap(p1);
+  p1.bank+=1;   // one presence bump between turns
+  S.active=0;endTurn();
+  eq(S.active,1,'the turn flipped');
+  ok(UI.recap&&UI.recap.length===1,'the incoming human sees the one item');
+  ok(!!S.players[0]._recap,'the outgoing seat re-baselined');
+  endTurn();   // back to seat 0 with nothing new
+  ok(!UI.recap,'a quiet cycle reads nothing');});
+t('setup baselines every seat — a FIRST turn reads back rival-opening gains',function(){fresh(3);
+  S.players.forEach(function(p){ok(!!p._recap,'baseline at setup');});});
+t('the recap reads a Venture RAISED or ADVANCED between turns (the London-prize hole)',function(){fresh(2);
+  var p=S.players[1];p._recap=recapSnap(p);
+  var id='s1';clearSlot(id);S.buildings[id]={v:'brew',lvl:1,owner:1,die:1};   // raised in the window
+  var id2='s2';clearSlot(id2);S.buildings[id2]={v:'die',lvl:1,owner:1,die:2};
+  p._recap.led[id2]={d:2,lvl:1,k:'die'};S.buildings[id2].lvl=2;               // flipped in the window
+  var R=recapDiff(p);var has=function(s){return R.some(function(x){return x.indexOf(s)>=0;});};
+  ok(has('raised on s1'),'the new ground read back');
+  ok(has('now stands on s2'),'the advance read back');});
+t('the ⚜ hand diffs by CONTENTS — a draw and a spend in one window BOTH read',function(){fresh(2);
+  var p=S.players[1];p.invites=['q12a'];p._recap=recapSnap(p);
+  p.invites=['hulka'];   // spent q12a presenting · drew hulka by letter — net 0
+  var R=recapDiff(p);var has=function(s){return R.some(function(x){return x.indexOf(s)>=0;});};
+  ok(has('+1'),'the drawn card reads');
+  ok(has('−1')&&has('spent presenting'),'the spend reads');});
+t('a frozen baseline (stale build / older than one round) reads NOTHING',function(){fresh(2);
+  var p=S.players[1];p._recap=recapSnap(p);p.bank+=3;
+  p._recap.t=S.turn;S.turn+=2;   // two round boundaries — a frozen page
+  ok(!recapDiff(p),'suppressed');
+  delete p._recap.t;             // a pre-stamp baseline
+  ok(!recapDiff(p),'suppressed too');});
+t('a mid-game resume recomputes the recap from the persisted baseline (the boot path)',function(){fresh(2);
+  var p1=S.players[1];p1._recap=recapSnap(p1);p1.bank+=2;
+  S.active=0;endTurn();
+  var shown=UI.recap.slice();
+  S=JSON.parse(JSON.stringify(S));UI={sub:'move'};   // the save/boot round trip
+  var R=recapDiff(cur());
+  eq(R.join('|'),shown.join('|'),'the resume reads the same list');});
+
 // ---------- 9 · the clock ----------
 t('MAX_ROUND is 22 and backstops the end',function(){fresh(2);
   eq(MAX_ROUND,22);

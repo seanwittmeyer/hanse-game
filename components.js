@@ -395,9 +395,9 @@ const IMP_FOOT='#4a3a6e';   // Specialist foot/base — PURPLE (the third tile t
 function improveTile(d){const k=d.slug||slug(d.nm);   // v4.6: slug override — three guild tiles ride spare art as stand-ins
   return '<div class="icard" style="--c:'+IMP_FOOT+'">'
   +artLayer('improve-'+k+'.jpg')   // .jpg not .png — a flat-colour-field object shot compresses ~8x smaller as JPEG at no visible quality loss
-  +'<div class="ic-top"><span class="ic-nm">'+d.nm+'</span><span class="ic-cost">'+cost(d.g,d.h)+'</span></div>'
-  +'<div class="ic-foot"><span class="ic-act">'+d.act+'</span></div>'
-  +'</div>';}
+  +'<div class="ic-top"><span class="ic-cost">'+cost(d.g,d.h)+'</span></div>'
+  +'<div class="ic-foot"><span class="ic-nm">'+d.nm+'</span><span class="ic-act">'+d.act+'</span></div>'
+  +'</div>';}   // designer-ruled 2026-08-31: the title sits at the FOOT, above the action — the character's head stays clear
 // printables2 v3: a CASK is a double-sided CARD (2×3). FRONT = the buy/age side: Q+name on the top end, brew
 // cost under it, the AGING TRACK in the centre (the card carries its own step count — so the player-board
 // maturation track + cellar markers come off the board), and Q+action on the bottom end. BACK = the brewed
@@ -553,10 +553,10 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
     display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}\n\
   .icard > *{position:relative;z-index:1}\n\
   .icard > .artbg{z-index:0}\n\
-  .icard .ic-top{display:flex;align-items:center;gap:.06in;padding:.15in .17in 0}\n\
-  .icard .ic-nm{font-variant:small-caps;font-weight:bold;font-size:.16in;line-height:1.02;flex:1}\n\
-  .icard .ic-foot{background:linear-gradient(to top,var(--c) 0%,var(--c) 52%,transparent 100%);\n\
-    padding:.26in .17in .15in;display:flex;align-items:flex-end;gap:.06in}\n\
+  .icard .ic-top{display:flex;align-items:center;gap:.06in;padding:.12in .14in 0;justify-content:flex-end}\n\
+  .icard .ic-nm{display:block;font-variant:small-caps;font-weight:bold;font-size:.19in;line-height:1.02;margin-bottom:.035in}\n\
+  .icard .ic-foot{background:linear-gradient(to top,var(--c) 0%,var(--c) 42%,transparent 100%);\n\
+    padding:.3in .17in .13in;display:flex;flex-direction:column;align-items:flex-start;gap:0}\n\
   .icard .ic-act{font-size:.115in;line-height:1.18;flex:1}\n\
   .icard .ic-act::first-letter{text-transform:uppercase}\n\
   .icard .ic-act .ic,.icard .ic-act svg{width:.13in;height:.13in;vertical-align:-.02in}\n\

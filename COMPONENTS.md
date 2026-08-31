@@ -25,7 +25,7 @@
 **RE-CUT (existing components, new faces/data):**
 
 - **The Wharf board** — the station pairs re-print: Market **Source 3 / BUILD** ·
-  Brewhouse **Brew (search) / Brew (top tile)** · Harbor **Commission + 1 load / SAIL
+  Brewhouse **Brew (search) / the second runnings (a second Brew — the top tile, as it lies)** · Harbor **Commission + 1 load / SAIL
   (a docked Ship with 1+ of your casks sails now, unfull)** · Cellar **Age 3 / Load 1
   any**. The visit grammar (v6.5, kept): PRIMARY + ALTERNATE + a load at each flanking
   slot **+ each flanking Venture's action**.
@@ -317,7 +317,12 @@ worker placed free · first player fixed.
 ## 10. Kit deltas (every ruling that touches a printed face lands a note here; older deltas live in git history)
 
 **v7.0 “The Guild” delta (2026-08-31, designer-called — the §0 head carries the full kit
-picture; this note records the one SHARED face re-cut this pass):**
+picture; this note records the SHARED face re-cuts this pass):**
+
+- **The Specialist tile reprints (`components.js` — same-day, designer-mocked):** the
+  TITLE moves to the FOOT, seated just above the action line on the gradient scrim —
+  the character portrait's head stays clear; the cost pill alone keeps the top-right
+  corner. Layout only — every printed value and word stands.
 
 - **The Venture tile reprints (`components.js` — the ONE home of the face):** the v5.5
   PUBLIC line leaves the foot with the line itself; the bottom-right square is now the
