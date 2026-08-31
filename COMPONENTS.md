@@ -314,7 +314,22 @@ v5.1) · displays: Ships 4 / Specialists 4 ·
 wharf seeds: Hulk→Bruges + 1 Ship ·
 worker placed free · first player fixed.
 
-## 10. Kit deltas (v5-era — every ruling that touches a printed face lands a note here; older deltas live in git history)
+## 10. Kit deltas (every ruling that touches a printed face lands a note here; older deltas live in git history)
+
+**v7.0 “The Guild” delta (2026-08-31, designer-called — the §0 head carries the full kit
+picture; this note records the one SHARED face re-cut this pass):**
+
+- **The Venture tile reprints (`components.js` — the ONE home of the face):** the v5.5
+  PUBLIC line leaves the foot with the line itself; the bottom-right square is now the
+  printed **LEDGER SEAT** (dashed, die-marked) — the tray die stands there at 1, a
+  rival's use turns it up (cap 6), the pips score to the owner at the end. The L-chip's
+  reminder reprints for the v7 ground fees (open 1 `G` · replace 2 `G` · L2/flip 2 `G`
+  ⚙). The action line is unchanged cardboard — v7 opens it to any visitor (own casks;
+  the tick is the rent), which is a rules fact, not a face fact.
+- The rest of the v7 kit (contract cards 14 · demand cards 12 · the ladder-printed
+  Destinations board · the 18-hull fee-inverted ship deck · the private flags · the
+  cask-tile lift/sail verbs) is specified at **§0** and cuts at the **P5 kit pass**
+  (`V7-PLAN.md`) — `print.html` stays the archived v6.5b kit until then.
 
 **v5.7 “Plain Sail” delta (2026-08-23, ruled — 12 CARDS LEAVE THE KIT):**
 

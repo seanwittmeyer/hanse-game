@@ -278,7 +278,10 @@ kept owing:
   halls, the empty-hull displacement, the Cog/Hulk fee inversion (Cog free · Hulk 1 `G`
   ⚙), one claim per turn, the refresh prize arm, the demand market line, Novgorod's
   premium stated once — are recorded at `V7-PLAN.md` §10.11.
-- Gates: `playtests/verify-v7.js` (fresh battery) · sim smoke 0 crashes / 0 deadlocks ·
+- Gates RUN at the build (2026-08-31): `playtests/verify-v7.js` **55/55 PASS** (stable
+  over 10 runs) · `playtests/sim.js` smoke **0 crashes / 0 deadlocks** across 2–4p at
+  journeyman AND both MC tiers · a full-render smoke (3 AI games through the real
+  render layer) clean · rounds landed inside the 10–25 band at every count ·
   `KEY hanse-v70` · MAX_ROUND 22 ⚙. **Sims gate robustness only (the §7 process law) —
   every number is ⚙ until the human table reads it; the build's question list is
   `V7-PLAN.md` §11.**

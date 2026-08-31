@@ -291,7 +291,7 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 // v5.3 wording pass (designer 2026-08-22: icons where possible, words where necessary, never
 // sentences): the PUBLIC line = an icon chip (whoever activates the line); the OWNER line =
 // trigger word + icons. pub is pre-built icon HTML.
-const VPUB_STEP=LU('age-1'),VPUB_STEP2=LU('age-2'),VPUB_GOLD=LU('goods-1'),VPUB_SH1=LU('bourse-pm1'),VPUB_SH2=LU('bourse-pm2');   // ruled 2026-08-23: the public chip is icon-only (no '+1' text, no '▲')
+// (the v5.5 VPUB public-line chips retired with the line, v7 — the seat square is the LEDGER now)
 // the OWNER block speaks the Public Works grammar (ruled 2026-08-23): BIG icons + the fewest
 // words; a face whose trigger is the whole story prints it under the TITLE (trig) and the
 // foot carries icons alone. VBIG = one big-icon cell (the .ac size the works print).
@@ -303,15 +303,19 @@ const VSEP=s=>'<span class="vsep">'+s+'</span>';
 // L2. A standing L1 may be FLIPPED in place to its own L2 (no second tile spent), which is
 // what lets four tiles become four buildings instead of two.
 // (art: six faces keep their own images; the die-L2 and brew-L1 ride stand-ins — briefed.)
+// v7 re-cut (designer-ruled 2026-08-31): the PUBLIC line retires with the line itself —
+// the bottom-right square is now the LEDGER SEAT (a tray die stands there at 1; a rival's
+// use turns it up, cap 6; the pips score to the owner at game end). The action line is
+// open to ANY visitor, on their own casks — the ledger tick IS the rent.
 const VENTURES=[
-  {k:'brew',   l1:{nm:'Mash Tun',        ic:'flask-conical', pub:VPUB_GOLD,  own:VBIG(LU('brew-top')), txt:'On line', art:'venture-factor-l1.png'},
-               l2:{nm:'Great Copper',    ic:'flask-conical', pub:VPUB_STEP2, trig:'On line', own:VBIG(LU('goods-2'))+VSEP('+')+VBIG(LU('flask-conical')), art:'venture-rack-l2.png'}},
-  {k:'age',    l1:{nm:'Warehouse',       ic:'boxes',   pub:VPUB_GOLD, trig:'On line', own:VBIG(LU('age-2'))+VSEP('+')+VBIG(LU('package-plus')), art:'venture-warehouse-l1.png'},
-               l2:{nm:'Assay Loft',      ic:'scale',   pub:VPUB_STEP, trig:'On line', own:VBIG('<b class="vnum">2</b>'+LU('sprout','h'))+VSEP('→')+VBIG(LU('check')), art:'venture-counting-l2.png'}},
-  {k:'die',    l1:{nm:'Rack House',      ic:'repeat',  pub:VPUB_STEP, own:VBIG(LU('swap-dice')), txt:'Swap 2 dice', art:'venture-rack-l1.png'},
-               l2:{nm:'Lagering Cellar', ic:'snowflake', pub:VPUB_SH1, trig:'On line', own:VBIG(LU('die-plus1')), art:'venture-warehouse-l2.png'}},
-  {k:'points', l1:{nm:'Counting House',  ic:'goods-1', pub:VPUB_SH1, trig:'On load', own:VBIG(LU('star-plus1','starmark')), art:'venture-counting-l1.png'},
-               l2:{nm:'Staple Rights',   ic:'landmark',pub:VPUB_SH2, trig:'On sail', own:VBIG(LU('beer'))+VSEP(':')+VBIG(LU('star-plus2','starmark')), art:'venture-factor-l2.png'}},
+  {k:'brew',   l1:{nm:'Mash Tun',        ic:'flask-conical', own:VBIG(LU('brew-top')), txt:'Brew: the top tile', art:'venture-factor-l1.png'},
+               l2:{nm:'Great Copper',    ic:'flask-conical', own:VBIG(LU('goods-2'))+VSEP('+')+VBIG(LU('flask-conical')), art:'venture-rack-l2.png'}},
+  {k:'age',    l1:{nm:'Warehouse',       ic:'boxes',   own:VBIG(LU('age-2'))+VSEP('+')+VBIG(LU('package-plus')), art:'venture-warehouse-l1.png'},
+               l2:{nm:'Assay Loft',      ic:'scale',   own:VBIG('<b class="vnum">2</b>'+LU('sprout','h'))+VSEP('→')+VBIG(LU('check')), art:'venture-counting-l2.png'}},
+  {k:'die',    l1:{nm:'Rack House',      ic:'repeat',  own:VBIG(LU('swap-dice')), txt:'Swap 2 dice', art:'venture-rack-l1.png'},
+               l2:{nm:'Lagering Cellar', ic:'snowflake', own:VBIG(LU('die-plus1')), art:'venture-warehouse-l2.png'}},
+  {k:'points', l1:{nm:'Counting House',  ic:'goods-1', trig:'On load', own:VBIG(LU('star-plus1','starmark')), art:'venture-counting-l1.png'},
+               l2:{nm:'Staple Rights',   ic:'landmark', trig:'On sail', own:VBIG(LU('beer'))+VSEP(':')+VBIG(LU('star-plus2','starmark')), art:'venture-factor-l2.png'}},
 ];
 const VENT_FOOT='rgba(31,86,122,.78)';   // the owner-only blue (the v2.4.1 privilege colour returns)
 // v5.3 restyle (designer 2026-08-22): a Venture SHARES the building tile's anatomy — the same
@@ -327,11 +331,11 @@ function ventureTile(d,lvl,col){const f=lvl===2?d.l2:d.l1;
   return '<div class="btile btW" style="--c:'+(col||VENT_FOOT)+ring+'">'
   +artLayer(f.art||('venture-'+d.k+'-l'+lvl+'.png'))
   +'<div class="bt-top vt-top">'+tcol
-    +'<span class="bt-ms" title="the level — an L1 takes any open slot (wharf full: replaces a Public Work); an L2 overbuilds your own L1">'+(lvl===2?'L2':'L1')+'</span>'
+    +'<span class="bt-ms" title="the level — an L1 takes open ground (1G) or replaces a Public Work (2G, boxed); an L2 flips or overbuilds your own L1 (2G)">'+(lvl===2?'L2':'L1')+'</span>'
     +'<span class="bt-cost">'+cost(lvl===2?2:1,0)+'</span></div>'
-  +'<div class="bt-foot vt2"><span class="vt-own" title="the OWNER line — the ringed house alone">'+(f.own||'')
+  +'<div class="bt-foot vt2"><span class="vt-own" title="the action line — any visitor may use it, on their OWN casks; a rival’s use turns the ledger die">'+(f.own||'')
     +(f.txt?'<span class="vt-txt">'+f.txt+'</span>':'')+'</span>'
-    +'<span class="vt-pub" title="the PUBLIC line — whoever activates a line through this slot">'+f.pub+'</span></div>'
+    +'<span class="vt-pub vt-led" title="the LEDGER SEAT — a tray die stands here at 1; a rival’s use turns it up (cap 6); its pips score to the owner at game end">'+LU('die-plus1')+'</span></div>'
   +'</div>';}
 // ---- v6.1 ESTABLISHMENTS — the post-upgrade tile family (a scarce supply: 2 of each ⚙).
 // A CHART action flips a standing post of yours ONTO one of these: the marker seats in the
@@ -804,6 +808,8 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .bt-ms{flex:0 0 auto;display:inline-flex;align-items:center;margin-right:.02in}'
 +'.btile .vt-row{display:flex;align-items:center;width:100%}'
 +'.btile .vt-pub{position:absolute;right:-.06in;bottom:-.06in;z-index:3;display:flex;align-items:flex-start;justify-content:flex-start;width:.82in;height:.82in;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.45);border-radius:.09in;padding:.045in 0 0 .045in;margin:0}'
++'.btile .vt-led{border-style:dashed;align-items:center;justify-content:center;padding:0;opacity:.85}'   /* v7 — the LEDGER SEAT: the tray die stands in this square */
++'.btile .vt-led svg,.btile .vt-led .ic,.btile .vt-led img.ai{width:.3in;height:.3in;opacity:.75}'
 +'.btile .vt-top{align-items:flex-start}'
 +'.btile .bt-tcol{display:flex;flex-direction:column;gap:.02in;min-width:0;flex:1}'
 +'.btile .bt-trig{font-variant:small-caps;font-weight:bold;font-size:.13in;line-height:1;opacity:.95}'

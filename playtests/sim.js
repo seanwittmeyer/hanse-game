@@ -1,8 +1,8 @@
-// Headless simulation harness for play.html — v6.0 "The Voyage" (KEY hanse-v60).
+// Headless simulation harness for play.html — v7.0 "The Guild" (KEY hanse-v70).
 // Drives the CANONICAL engine (never a reimplementation): extracts play.html's <script>
 // blocks, stubs the DOM, and runs the engine's OWN AI (aiStep) for every seat.
-// The robustness/pace gate: 0 crashes / 0 deadlocks across 2–4p; pace band 15–40 rounds ⚙
-// (the single-verb turn spins more, smaller rounds than v5).
+// The robustness/pace gate: 0 crashes / 0 deadlocks across 2–4p; pace band 10–25 rounds ⚙
+// (the v7 identity: 10–15 turns/seat; MAX_ROUND 22 backstops).
 // Usage: node playtests/sim.js [N]      (N games per player count; default 100)
 // Env:   TIER=apprentice|journeyman|trader|guildmaster|cellarmaster (default journeyman)
 //        PERSONAS=1 — the PATHWAYS oracle (majority · lifter · builder · breadth; PTIER= reads at any tier)
@@ -26,45 +26,50 @@ if(__POOL>0)PRES_POOL=__POOL;
 if(__GMR>0)GM_ROLLS=__GMR;
 if(__GMS>0)GUILD_MS=__GMS;
 if(__CMS>0)CELLAR_MS=__CMS;
-// ---- v6 VERB & SEA COUNTERS — ground truth via wrapped engine functions, reset per game.
-var __V=null,__inCur=0,__inPilot=0;
-function __vReset(){__V={work:0,sailv:0,chartv:0,tradev:0,depart:0,land:0,legCur:0,legSail:0,legPilot:0,
-  push:0,open:0,post:0,factor:0,upgpost:0,upgfactor:0,rent:0,endCargo:0,glut:0,shiftUp:0,shiftDown:0,prizeStars:0,
-  certLand:0,waitBlocked:0};}
+// ---- v7 VERB & GUILD COUNTERS — ground truth via wrapped engine functions, reset per game.
+var __V=null;
+function __vReset(){__V={work:0,sails:0,sailNow:0,deliver:0,present:0,claims:0,letters:0,
+  builds:0,flips:0,replaces:0,ledgerTicks:0,ledgerOver:0,glut:0,coper:0,prizeStars:0,refreshes:0,
+  flags:0,displace:0};}
 var __on=function(){return __V&&!aiSimulating;};
-var __doMove=doMove;doMove=function(c,w){if(__on())__V.work++;return __doMove(c,w);};   // v6.3: (cell, line) — the move opens the line
-var __sailPick=sailPick;sailPick=function(i){var p=cur();var t=(S.sea||[])[i];
-  var push=t&&p&&!shipHasCaskOf(t,p.id);
-  var r=__sailPick(i);
-  if(__on()){__V.sailv++;if(push)__V.push++;}
+var __doMove=doMove;doMove=function(c){if(__on())__V.work++;return __doMove(c);};
+var __sailShip=sailShip;sailShip=function(slot,cid){var t=S.slots[slot];
+  var full=t&&(t.load||[]).length>=sailCap(t);
+  var r=__sailShip(slot,cid);
+  if(__on()){__V.sails++;if(!full)__V.sailNow++;}
   return r;};
-var __enterTradeVerb=enterTradeVerb;enterTradeVerb=function(rt){if(__on())__V.tradev++;return __enterTradeVerb(rt);};
-var __chartApply=chartApply;chartApply=function(p,o){if(__on()){__V.chartv++;if(__V[o.k]!=null)__V[o.k]++;}
-  return __chartApply(p,o);};
-var __sailShip=sailShip;sailShip=function(slot,cid){if(__on())__V.depart++;return __sailShip(slot,cid);};
-var __seaAdvance=seaAdvance;seaAdvance=function(i,cid){var r=__seaAdvance(i,cid);
-  if(__on()&&r){if(__inCur)__V.legCur++;else if(__inPilot)__V.legPilot++;else __V.legSail++;}
+var __landDeliver=landDeliver;landDeliver=function(lp,L,Lg){if(__on())__V.deliver++;return __landDeliver(lp,L,Lg);};
+var __landPresent=landPresent;landPresent=function(lp,L,Lg){if(__on())__V.present++;return __landPresent(lp,L,Lg);};
+var __claimContract=claimContract;claimContract=function(p,k){if(__on()&&k)__V.claims++;return __claimContract(p,k);};
+var __commitVenture=commitVenture;commitVenture=function(slot,key,lvl,pid){
+  var replacing=(lvl===1)&&!!bKeyAt(slot);
+  var r=__commitVenture(slot,key,lvl,pid);
+  if(__on()){__V.builds++;if(replacing)__V.replaces++;}
   return r;};
-var __theCurrent=theCurrent;theCurrent=function(){__inCur=1;var r=__theCurrent();__inCur=0;return r;};
-var __pilotTick=pilotTick;pilotTick=function(p){__inPilot=1;var r=__pilotTick(p);__inPilot=0;return r;};
-var __landShip=landShip;landShip=function(i,cid){var t=(S.sea||[])[i];var cert=t&&t.cert;
-  var r=__landShip(i,cid);
-  if(__on()){__V.land++;if(cert)__V.certLand++;}
+var __flipVenture=flipVenture;flipVenture=function(slot,pid){var r=__flipVenture(slot,pid);
+  if(__on()&&r)__V.flips++;return r;};
+var __ledgerTick=ledgerTick;ledgerTick=function(slot,by){var b=vAt(slot);var was=b?(b.die||1):0;var capped=b&&(b.die||1)>=6;
+  var r=__ledgerTick(slot,by);
+  if(__on()&&b&&by!==b.owner){if(capped)__V.ledgerOver++;else if((b.die||1)>was)__V.ledgerTicks++;}
   return r;};
-var __seaEnterSpace=seaEnterSpace;seaEnterSpace=function(t){var w=LANES[t.dest][t.pos];
-  if(__on()&&w)__V.rent+=(S.posts[w]||[]).length;
-  return __seaEnterSpace(t);};
 var __bourseShift=bourseShift;bourseShift=function(beer,d){var r=__bourseShift(beer,d);
-  if(__on()&&r){if(d<0)__V.glut+=(d===BOURSE_SAIL_STEP&&__V?1:0);if(r>0)__V.shiftUp++;else __V.shiftDown++;}
+  if(__on()&&r){if(r<0)__V.glut++;else __V.coper++;}
   return r;};
 var __prizeStars=prizeStars;prizeStars=function(lp,dest,why){if(__on())__V.prizeStars++;return __prizeStars(lp,dest,why);};
-var __endCargo=endCargo;endCargo=function(){var n=0;(S.sea||[]).forEach(function(t){n+=(t.load||[]).length;});
-  if(__V)__V.endCargo+=n;return __endCargo();};
+var __prizeRefresh=prizeRefresh;prizeRefresh=function(lp,dest){var r=__prizeRefresh(lp,dest);
+  if(__on()&&r)__V.refreshes++;return r;};
+var __landingClose=landingClose;landingClose=function(Lg){
+  if(__on())__V.letters+=Object.keys(Lg.letter||{}).length;
+  return __landingClose(Lg);};
+var __commPlace=commPlace;commPlace=function(slot){var occ=S.slots[slot];var d=UI.comm;
+  var r=__commPlace(slot);
+  if(__on()&&d&&S.slots[slot]&&S.slots[slot].type==='ship'){if(occ)__V.displace++;if(S.slots[slot].own!=null)__V.flags++;}
+  return r;};
 function __runGame(n,__POFF){
   __POFF=__POFF||0;
   __vReset();
   EXPANSION=__EXP;JOPEN=__JOP;HALLEXP=false;OVERLAND=false;
-  S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'verb'};undoStack=[];
+  S=freshState(n,['P1','P2','P3','P4','P5'].slice(0,n));UI={sub:'move'};undoStack=[];
   S.players.forEach(function(p,i){p.ai=__PERSONAS?{tier:__PTIER,persona:AI_PERSONAS[(i+__POFF)%AI_PERSONAS.length]}:{tier:__TIER};p.presPool=PRES_POOL;});
   var guard=0;
   while(!S.over){
@@ -72,31 +77,31 @@ function __runGame(n,__POFF){
     if(++guard>250000)return {error:'runaway (guard tripped)',round:S.turn,sub:UI.sub};
   }
   var fr=finalRows();var rows=fr.rows;
-  var byDest={bruges:0,london:0,bergen:0,novgorod:0};
-  S.players.forEach(function(p){p.delivered.forEach(function(d){byDest[d.dest]=(byDest[d.dest]||0)+1;});});
-  var pool={};Object.keys(S.passages||{}).forEach(function(w){pool[w]=1;});
+  var byDest={bruges:0,london:0,bergen:0,novgorod:0};var hallN=0;
+  S.players.forEach(function(p){p.delivered.forEach(function(d){byDest[d.dest]=(byDest[d.dest]||0)+1;if(d.hall)hallN++;});});
   return {round:S.turn,trigger:S.endReason||'?',sailed:S.sailed,
     winSeat:rows[0].p.id,
-    personas:S.players.map(function(q){return (q.ai&&q.ai.persona)||null;}),
     laneSeats:S.players.map(function(q){var sc=scorePlayer(q);
       return {ps:(q.ai&&q.ai.persona)||null,total:sc.total,flight:flightBeers(q),deliv:(q.delivered||[]).length};}),
     winTotal:rows[0].sc.total,secondTotal:rows[1]?rows[1].sc.total:0,
     marg:(function(){var a=rows[0],b=rows[1];if(!b)return null;
       return {d:a.sc.deliv-b.sc.deliv,bk:a.sc.bank-b.sc.bank,mj:a.sc.maj-b.sc.maj,
-        fl:a.sc.flight-b.sc.flight,gu:(a.sc.guild||0)-(b.sc.guild||0),
+        fl:a.sc.flight-b.sc.flight,lg:(a.sc.bldg||0)-(b.sc.bldg||0),gu:(a.sc.guild||0)-(b.sc.guild||0),
         wCask:(a.p.delivered||[]).length,sCask:(b.p.delivered||[]).length,
         wVal:(a.p.delivered||[]).length?a.sc.deliv/(a.p.delivered||[]).length:0,
         sVal:(b.p.delivered||[]).length?b.sc.deliv/(b.p.delivered||[]).length:0};})(),
     bourseAvg:(function(){var ks=Object.keys(S.bourse||{});return ks.length?ks.reduce(function(a,b){return a+S.bourse[b];},0)/ks.length:0;})(),
-    passOpen:Object.keys(S.passages||{}).length,
-    postsN:SEA_KEYS.reduce(function(a,w){return a+(S.posts[w]||[]).length;},0),
-    factorsN:KONTORE.reduce(function(a,k){return a+(S.factors[k]||[]).length;},0),
-    atSeaEnd:0,
+    ladderAvg:KONTORE.reduce(function(a,k){return a+ladderStep(k);},0)/4,
+    ventures:SLOTS.reduce(function(a,s){var b=S.buildings[s.id];return a+(b&&b.v?1:0);},0),
+    worksLeft:SLOTS.reduce(function(a,s){var b=S.buildings[s.id];return a+(b&&!b.v?1:0);},0),
+    ledgerPips:S.players.reduce(function(a,p){return a+scorePlayer(p).bldg;},0),
+    hallN:hallN,
     byDest:byDest,
     brews:S.players.reduce(function(a,p){return a+(p._brews||0);},0)/S.players.length,
     delivs:S.players.reduce(function(a,p){return a+p.delivered.length;},0)/S.players.length,
+    invHeld:S.players.reduce(function(a,p){return a+((p.invites||[]).length);},0),
     V:__V,
-    parts:rows.map(function(r){return {deliv:r.sc.deliv,bank:r.sc.bank,maj:r.sc.maj,flight:r.sc.flight,total:r.sc.total};})};
+    parts:rows.map(function(r){return {deliv:r.sc.deliv,bank:r.sc.bank,maj:r.sc.maj,flight:r.sc.flight,ledger:r.sc.bldg,total:r.sc.total};})};
 }
 var __RESULTS={};
 [2,3,4].forEach(function(n){
@@ -147,7 +152,7 @@ try {
 const R = ctx.__RESULTS;
 const fmt=(x,d=1)=>Number(x).toFixed(d);
 const pct=(a,b)=>fmt(100*a/Math.max(1,b),1)+'%';
-console.log('=== hanse v6.0 sim — '+N+' games/count · '+(PERSONAS?'PATHWAYS (trader personas)':('tier '+TIER))+' ===');
+console.log('=== hanse v7.0 sim — '+N+' games/count · '+(PERSONAS?'PATHWAYS (trader personas)':('tier '+TIER))+' ===');
 let anyErr=0;
 [2,3,4].forEach(n=>{
   const arr=R[n]; const errs=arr.filter(r=>r.error); const ok=arr.filter(r=>!r.error);
@@ -156,30 +161,30 @@ let anyErr=0;
   if(!ok.length){console.log(`\n== ${n}p: ALL FAILED ==`);return;}
   const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
   const rounds=ok.map(r=>r.round);
-  const within=ok.filter(r=>r.round>=15&&r.round<=40).length;
+  const within=ok.filter(r=>r.round>=10&&r.round<=25).length;
   const trig={};ok.forEach(r=>trig[r.trigger]=(trig[r.trigger]||0)+1);
   const seat={};ok.forEach(r=>seat[r.winSeat]=(seat[r.winSeat]||0)+1);
   const dd={bruges:0,london:0,bergen:0,novgorod:0};ok.forEach(r=>Object.keys(dd).forEach(k=>dd[k]+=r.byDest[k]||0));
   const dsum=Object.values(dd).reduce((a,b)=>a+b,0)||1;
   console.log(`\n== ${n}p · ${ok.length} ok / ${errs.length} err ==`);
-  console.log(`rounds avg ${fmt(avg(rounds))} (min ${Math.min(...rounds)} max ${Math.max(...rounds)}) · in 15–40 band ${pct(within,ok.length)}`);
-  console.log(`triggers: ${Object.keys(trig).map(k=>k+' '+pct(trig[k],ok.length)).join(' · ')} · voyages landed avg ${fmt(avg(ok.map(r=>r.sailed)))}`);
+  console.log(`rounds avg ${fmt(avg(rounds))} (min ${Math.min(...rounds)} max ${Math.max(...rounds)}) · in 10–25 band ${pct(within,ok.length)}`);
+  console.log(`triggers: ${Object.keys(trig).map(k=>k+' '+pct(trig[k],ok.length)).join(' · ')} · voyages ${fmt(avg(ok.map(r=>r.sailed)))}`);
   console.log(`winner total avg ${fmt(avg(ok.map(r=>r.winTotal)))} · margin avg ${fmt(avg(ok.map(r=>r.winTotal-r.secondTotal)))} · seat wins ${Object.keys(seat).map(s=>'P'+(+s+1)+' '+pct(seat[s],ok.length)).join(' ')}`);
   { const M=ok.map(r=>r.marg).filter(Boolean);
     if(M.length){const m=k=>fmt(avg(M.map(x=>x[k])));
-      console.log(`  margin decomposition (winner − 2nd): deliveries ${m('d')} · bank ${m('bk')} · majorities ${m('mj')} · flight ${m('fl')} · guild ${m('gu')}`);
-      console.log(`  why: winner ships ${fmt(avg(M.map(x=>x.wCask)))} casks @ ${fmt(avg(M.map(x=>x.wVal)))}★ vs 2nd ${fmt(avg(M.map(x=>x.sCask)))} @ ${fmt(avg(M.map(x=>x.sVal)))}★`);
+      console.log(`  margin decomposition (winner − 2nd): deliveries ${m('d')} · bank ${m('bk')} · majorities ${m('mj')} · flight ${m('fl')} · ledgers ${m('lg')} · guild ${m('gu')}`);
+      console.log(`  why: winner lands ${fmt(avg(M.map(x=>x.wCask)))} casks @ ${fmt(avg(M.map(x=>x.wVal)))}★ vs 2nd ${fmt(avg(M.map(x=>x.sCask)))} @ ${fmt(avg(M.map(x=>x.sVal)))}★`);
       const marg=ok.map(r=>r.winTotal-r.secondTotal).sort((a,b)=>a-b);
       const q=f=>marg[Math.min(marg.length-1,Math.floor(f*marg.length))];
       console.log(`  margin shape: median ${q(0.5)} · p90 ${q(0.9)} · blowouts (>25★) ${pct(marg.filter(x=>x>25).length,marg.length)} · close (≤10★) ${pct(marg.filter(x=>x<=10).length,marg.length)}`);}}
-  console.log(`per-player: brews ${fmt(avg(ok.map(r=>r.brews)))} · landings ${fmt(avg(ok.map(r=>r.delivs)))}`);
+  console.log(`per-player: brews ${fmt(avg(ok.map(r=>r.brews)))} · landings ${fmt(avg(ok.map(r=>r.delivs)))} (hall share ${pct(ok.reduce((a,r)=>a+r.hallN,0),ok.reduce((a,r)=>a+r.delivs*n,0))})`);
   console.log(`delivery split: ${Object.keys(dd).map(k=>k+' '+pct(dd[k],dsum)).join(' · ')}`);
   const us={};ok.forEach(r=>Object.keys(r.V).forEach(k=>us[k]=(us[k]||0)+r.V[k]));
   Object.keys(us).forEach(k=>us[k]/=ok.length);
-  console.log(`VERBS/game: WORK ${fmt(us.work)} · SAIL ${fmt(us.sailv)} (pushes ${fmt(us.push)}) · CHART ${fmt(us.chartv)} (open ${fmt(us.open)} · post ${fmt(us.post)} · factor ${fmt(us.factor)} · upg post ${fmt(us.upgpost)} / factor ${fmt(us.upgfactor)}) · TRADE ${fmt(us.tradev)}`);
-  console.log(`THE SEA/game: departs ${fmt(us.depart)} · landings ${fmt(us.land)} (certified ${fmt(us.certLand)}) · legs — current ${fmt(us.legCur)} · sail ${fmt(us.legSail)} · pilot ${fmt(us.legPilot)} · post rent paid ${fmt(us.rent)} · end-cargo casks ${fmt(us.endCargo)}`);
-  console.log(`the bourse: shifts UP ${fmt(us.shiftUp)} vs DOWN ${fmt(us.shiftDown)} · end track avg ${fmt(avg(ok.map(r=>r.bourseAvg)))} · prizes as ★ ${fmt(us.prizeStars)}/game`);
-  console.log(`the network at end: passages opened ${fmt(avg(ok.map(r=>r.passOpen)))} of 2 · posts ${fmt(avg(ok.map(r=>r.postsN)))} · factors ${fmt(avg(ok.map(r=>r.factorsN)))}`);
+  console.log(`VERBS/game: WORK ${fmt(us.work)} · SAILS ${fmt(us.sails)} (early ${fmt(us.sailNow)}) · commissions — flags ${fmt(us.flags)} · displacements ${fmt(us.displace)}`);
+  console.log(`THE GUILD/game: claims ${fmt(us.claims)} · letters ${fmt(us.letters)} · presents ${fmt(us.present)} vs delivers ${fmt(us.deliver)} · ladder avg rung ${fmt(avg(ok.map(r=>r.ladderAvg))+1)} · ⚜ held at end ${fmt(avg(ok.map(r=>r.invHeld)))}`);
+  console.log(`THE LEDGER/game: builds ${fmt(us.builds)} (replacing ${fmt(us.replaces)}) · flips ${fmt(us.flips)} · rival ticks ${fmt(us.ledgerTicks)} (+overflow ${fmt(us.ledgerOver)}) · end pips ${fmt(avg(ok.map(r=>r.ledgerPips)))} · ventures standing ${fmt(avg(ok.map(r=>r.ventures)))} · works left ${fmt(avg(ok.map(r=>r.worksLeft)))}`);
+  console.log(`the market: glut steps ${fmt(us.glut)} · Coper steps ${fmt(us.coper)} · end track avg ${fmt(avg(ok.map(r=>r.bourseAvg)))} · prizes as ★ ${fmt(us.prizeStars)} · refreshes ${fmt(us.refreshes)}`);
   if(PERSONAS){
     const lane={}; ok.forEach(r=>{r.laneSeats.forEach(sr=>{const L=lane[sr.ps]=lane[sr.ps]||{n:0,w:0,tot:0,fl:0,dl:0};
       L.n++;L.tot+=sr.total;L.fl+=sr.flight;L.dl+=sr.deliv;
