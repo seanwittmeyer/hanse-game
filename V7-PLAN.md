@@ -5,8 +5,14 @@ It is written to stand alone: a fresh session reads this and knows where the gam
 the v6 program fell short at a human table, what the designer has ruled for v7, and how we
 work from here. It supersedes `V6-PLAN.md` as direction (that file stays as history).*
 
-**Status: PAPER. Nothing in §4 is built. The v6.5b build stays live at root as the test
-bed until the designer rules otherwise.**
+**Status: TEST BUILD LIVE (2026-08-31, designer-called: "we are going to design a plan
+and build out a new version of the game").** P0 is DONE — the complete v6.5b build is
+frozen playable at `archive/v6/` (the v5.8 pattern) and the root is the v7 workbench.
+§10 below is the P1 MECHANIC SHEET — every directive answered with its component, every
+fork call taken ⚙ (the designer re-rules freely, the v6 test-build precedent). The v7.0
+test build runs at root: `play.html` (`KEY hanse-v70`) · `RULES.md` · `COMPONENTS.md` §0 ·
+`STYLE.md` §4e · a fresh `playtests/verify-v7.js`. The §11 question list is what this
+build asks the human table.**
 
 ---
 
@@ -328,3 +334,305 @@ race the whole table can see (a hot Kontor, a spiking beer, a majority worth mor
 invitation) is running at most moments · you can trace your score to decisions you
 remember making · quick turns, 10–15 meaningful ones each, inside 45–75 minutes · and
 the engine you built is the story you tell afterward.
+
+---
+
+## 10 · THE P1 MECHANIC SHEET (drafted + red-teamed 2026-08-31 — every fork call ⚙, the designer re-rules freely)
+
+*Each directive gets its mechanic, its component answer, and its constitution check. The
+v6 test-build precedent governs: the calls are taken so a build exists to play; every one
+is a dial, none is a ruling. Before anything built, the sheet ran a four-lens adversarial
+review (constitution · deadlock/degenerate play · directive fidelity · rules-lawyer);
+§10.11 records what that pass changed. §11 is the table's question list.*
+
+### 10.0 · The shape in one breath
+
+**v7 = the v5.8 wharf drumbeat + the engine-building core the program kept owing.** The
+sea map, the current, transit, posts, factors, establishments and house markers retire
+whole (the v6 sea ran itself — §1.1). Sailing returns to the **instant, enacted
+resolution**: a full Ship sails and lands at once, on the turn of the player whose load
+(or SAIL) launched it. *(Recorded fork, closing §6.6: transit time and load-vs-landing
+pricing risk retire WITH the map — the table evidence was that automated transit killed
+attention; §11 asks whether the pricing-risk tension is missed.)* The development game
+the sea was carrying re-homes to three places players own and enact: **the VENTURES**
+(D2 — private buildings with usage-ledger dice), **the per-player LANE GATES** (D8/D10 —
+the far Kontore open through your standing at their gateways), and **the KONTOR PANEL**
+(D1/D6/D10 — demand cards, halls, invitation-fed majority ladders). The market goes
+down-only (D7). The turn keeps v6.5's praised shape: MOVE adjacent · work the station's
+whole counter.
+
+### 10.1 · D2 first — THE VENTURES RETURN (the engine-building core, priority one)
+
+The v5.5 themed hand carries whole as cardboard — **4 dual-use tiles per player (brew ·
+age · die · points), L1 face / own-theme L2 face, the FLIP** — re-derived onto a new
+grammar:
+
+- **BUILD is a station verb at last** (the starved-door lesson): the Market's ALTERNATE
+  is **BUILD — place or advance ONE of your Venture tiles; the fee prints on the face
+  going down**, one grammar, never a menu. An L1 from hand goes onto an **open slot
+  (1 `G` ⚙) or REPLACES a Public Work (2 `G` ⚙ — the worn tile boxed; never a rival's
+  Venture)**; your standing L1 **FLIPS** to its own L2 (2 `G` ⚙); a second hand tile
+  **overbuilds** your own L1 with a different theme's L2 (2 `G` ⚙, the L1 boxed). The
+  replace mode is load-bearing: the wharf starts FULL (D3), so building IS how ground
+  opens early — the tide keeps opening more.
+- **THE LEDGER DIE (the D2 ask, verbatim: "dice to track public usage, scoring for the
+  owner").** Building an L1 stands a **tray die** on the tile at face 1 — committed for
+  good (a real clock decision, D4's second spend channel). **Each time the Venture
+  serves a RIVAL — its action used by them, or its printed trigger fired by their
+  traffic — the ledger die turns +1** (cap 6; a rival serve past the cap pays the owner
+  **1★ at once** ⚙, so a busy engine never goes dead). **The owner's own use is free
+  and ticks nothing** — "public usage" means the rivals'. At game end the owner scores
+  the ledger's pips (face 1 untouched = 1★, the founding pip — printed). **One ledger
+  die per ground, for life: it keeps its pips through the FLIP and the overbuild; no
+  second die ever stands on one slot.** *(Amends the v5.3 "no die on a building" law by
+  direct directive; the law survives whole for Public Works.)*
+- **A Venture's action serves the whole table — always on the USING player's own
+  components.** Whoever works the adjacent station may use the flanking Venture, once
+  per visit; a rival's use ticks your ledger. Your building is a toll booth on their
+  street — the interaction pillar kept without the v5 public-line noise (that grammar
+  retires), and placement is the game: build where THEY walk.
+- **The faces (v5.5's, designer-praised, carried):** brew — **Mash Tun** (Brew: the top
+  tile) / **Great Copper** (2 goods + a full search Brew) · age — **Warehouse** (Age 2,
+  then load 1 of your Ready casks onto any eligible Ship) / **Assay Loft** (pay 2 `H`:
+  every one of YOUR maturing casks to READY) · die — **Rack House** (swap the dice of 2
+  of your vessel casks) / **Lagering Cellar** (one of your vessel dice +1, cap 6) ·
+  points — **Counting House** (*trigger:* a rival's load at this slot ticks the ledger;
+  YOUR loads here **+1★** each) / **Staple Rights** (*trigger:* your casks sailed from
+  this slot **+2★** each; a rival's sail from it ticks once).
+- *Constitution:* state = the tile + one die; arithmetic = turn a die one step; a
+  stranger reads the engine's earnings off the standing pips. PASS.
+
+### 10.2 · D3 — the Public Works start in ALL 8 slots, and the bag retires
+
+Setup shuffles the roster and deals **8 tiles onto the 8 slots**. The tide is unchanged
+— a Ship sailing from a slot takes its Work, boxed, gone — but **nothing refills**: the
+wharf starts furnished and strips to bare ground, the ground the Ventures inherit (and
+BUILD's replace mode clears deliberately). Roster ⚙ 12 (deal 8): Malt Kiln ×2 · Customs
+· Ropewalk · Cooperage · Weigh House · Staple Houses ×4 · Bonded Store · Victualling
+Yard. **The Tollhouse retires** ⚙ — its toll-bench face was an up-shift, and D7
+reserves the market's one hand for a specialist.
+
+### 10.3 · D7 — the market goes DOWN ONLY
+
+The Bourse carries v5.6's furniture (one printed track −1…+3 ⚙, a named colour-matched
+marker per in-play beer except Gruit & Jopenbier, all opening at +3 ⚙, a DELIVER = die
++ marker as printed, floor 0, then one step down per beer TYPE delivered). What
+changes: **every up-shift channel retires** — TRADE, the factor's step, the toll bench,
+Bergen's shift-prize arm. The exceptions, exactly two:
+- **the Coper** ⚙ (a new guild specialist — the designer's "maybe specialists can
+  manipulate it"): after the glut of a sail that landed your cask (any turn), step ONE
+  beer you landed back +1;
+- **the Weigh House** (carried): a certified cargo does not glut.
+And the structural counterweights for single-beer play (§6.1): **a PRESENTED cask
+neither reads the marker nor gluts its beer** (§10.5) — the hall is where a committed
+brewer sells outside the market. Recorded as the live §6.1 watch, not a solved
+question.
+
+### 10.4 · D8 + D10a — the sea becomes each player's ladder (per-player lane gates)
+
+The map retires; the geography stays as **four lanes in two branches**: Bruges → London
+(west), Bergen → Novgorod (east). **Bruges and Bergen are open to everyone from setup.
+London and Novgorod open PER PLAYER, and stay a developing track:** you may commission
+toward, or load toward, a far Kontor only **while your parked dice at its gateway
+OUTNUMBER your parked dice at the far Kontor itself** (London ← Bruges · Novgorod ←
+Bergen). Your first London delivery needs one Bruges die; your third needs three — the
+gateway is a standing you keep growing (the designer's "first deliveries free but you
+need to improve them to make additional deliveries", built with zero new components:
+**the two piles of parked dice ARE the tracker**, and anyone reads the gate by
+comparing them). Demand-seat dice count — a die on a hall seat IS a parked die of its
+Kontor.
+
+*(The §7.3 pushback paragraph, recorded once: D8 also sketched keeping posts, making
+factors bigger, and posts-as-private-buildings. This sheet retires all three WITH the
+map they lived on — the table evidence (§1.1) was that sea furniture became untracked
+background income, and every re-derivation of a post is a drip that fires off-turn. The
+asks' jobs re-home enacted: "posts along the way" → the Ventures (standing private
+infrastructure that earns from rivals' traffic, on the board players actually walk);
+"factors should be a bigger factor" → the hall/ladder presence game at the Kontor
+panel; "build/upgrade the Kontore" → the outnumber-gate above + the ladders the table
+pumps. If the designer wants sea furniture back, the fork is open — but it should be
+furniture a player ENACTS, or it will fail §1.1 again.)*
+
+### 10.5 · D10 — the second loop: CONTRACTS → INVITATIONS → the HALLS → the LADDERS
+
+The designer's sketch, built as one physical lifecycle — **one card, four lives**:
+
+1. **In the display it is a CONTRACT** (a goal): a row of 3 ⚙ face-up cards, each
+   printing a LOAD condition ⚙ (a quality band · a die face · a hull size · a
+   destination). **When your load matches a displayed contract, you may claim it — ONE
+   claim per turn** ⚙ (the throughput-leader brake); the display refills at end of
+   turn. Claiming is enacted, on your turn, at the friction point D6 names (loading).
+2. **In your hand it is an ⚜ INVITATION** — face-up in front of you (the race is
+   public) — the admission the halls demand.
+3. **Spent, it is a PRESENTATION**: when your cask lands at a Kontor, instead of
+   DELIVERING you may **PRESENT it — spend 1 ⚜; the cask must match the Kontor's
+   demand card and take an open seat** (2 ⚙ per card; the same player may fill both).
+   A present scores **die + the card's printed bonus ★** — the demand card IS the
+   hall's price; the Bourse stays outside the doors (no marker, no glut, no prize, no
+   Novgorod premium). The die parks ON the seat — presence, majority weight and the
+   lane gates read it like any parked die. No card in the well, or no open seat → no
+   present at that Kontor.
+4. **Its ashes fuel the LADDER (the spark, verbatim):** every ⚜ spent at a Kontor
+   advances that Kontor's printed **MAJORITY LADDER** one step. The ladder's marker IS
+   the majority's current value — the whole table watches a race heat up. The spent
+   card returns to the bottom of the contract deck.
+
+**The demand cards are their own 12-card deck** ⚙ (deal 1 per Kontor at setup; a full
+card retires at once — its dice slide to the parking field — and a fresh card deals at
+end of turn; retired cards to the demand deck's bottom). **The halls do not admit
+Gruit** (the spam brake): the mix ⚙ — **one type card per export beer** (+3★; undealt
+exports' cards to the box — D1's "some beers better", variable per game) · *Q2+* +2★
+×2 · *Q2–3* +3★ ×2 · *Q4+* +4★ ×2 · *die 5+* +5★ ×2. **Every demand card also prints
+a market line ⚙: a matching DELIVER at this Kontor scores +1★** — the shared, ticketless
+race D1 remembers ("we all raced to deliver our Gruits"), while the invited present
+takes the big bonus, the seat and the ladder step.
+
+**The ⚜ faucets:** contracts (the main), and **the first-landing letter** ⚙ (the
+designer "also liked" it): the first time your cask lands at a Kontor, draw 1 contract
+from the deck to hand — resolved after the sail fully resolves.
+
+*Constitution:* every state is a card position or a parked die; the spent-⚜ count
+lives on a printed ladder with one marker; a present pays die + one printed constant.
+PASS.
+
+### 10.6 · D1 + D6 — directional value & majorities worth the friction
+
+- **D1's shared, visible, temporary spikes** are the demand cards (the +1★ market line
+  pays every matching DELIVER; the card leaves when its seats fill) and the four Staple
+  Houses in the works deal (+2★ destination premiums the tide will take).
+- **D6's "friction sets the majority's worth"** is the ladder: majorities open CHEAP ⚙
+  (base 1st/2nd: Bruges 3/1 · London 4/2 · Bergen 5/2 · Novgorod 5/2) and climb one
+  printed step per ⚜ spent there (6 steps ⚙, topping at 9/4 · 10/5 · 11/5 · 11/5 ⚙).
+  **Third place retires** ⚙ — two places pay at every count (the v5.8 2p ruling
+  generalized; the presence gate stays printed: no parked dice, no share). *(Red-team
+  watch, recorded: at 2p a solo pump part-gifts the rival's guaranteed second place,
+  and ladder inflation can amplify a throughput leader — §11 asks; the dials on file
+  are "2p steps raise 1st only" and "a spender who leads the Kontor doesn't advance
+  the ladder".)*
+
+### 10.7 · D9 — ship ownership on the table; the Skute retires
+
+- Deck ⚙ 18: **Cog 2 berths (free) · Hulk 3 berths (1 `G`)** ⚙ — the Skute leaves, and
+  the fee INVERTS from v5.8: with SAIL-now in the game, tonnage is the luxury and the
+  small hull the commodity (red-team: a free 3-berth otherwise strictly dominates).
+  Display of 3 ⚙.
+- **The PRIVATE FLAG** ⚙ (1 per player): commissioning, you may plant your flag —
+  **+1 `G`** ⚙ — and the hull is YOURS: only your casks board it, **only you may
+  SAIL-now it**. The flag returns when it sails. Public hulls stay the berth race; the
+  flag is the "why would I put a ship on a good slot" answer.
+- **The deadlock valves:** the Harbor's ALTERNATE is **SAIL — a docked Ship carrying
+  1+ of YOUR casks sails NOW**, unfull, free ⚙ (never a rival's tempo weapon: no cask
+  of yours aboard, no sail; a flagged hull sails early only for its owner). And **a
+  commission may take a slot holding an EMPTY Ship — the displaced hull returns to the
+  deck** ⚙, so a hull nobody loads can never blockade the wharf. (A full Ship still
+  sails at once.)
+
+### 10.8 · D4/D5 — the clock, the turn, the stations
+
+- **The turn (v6.5's praised shape, kept):** MOVE to an adjacent station (orthogonal;
+  turn 1 places anywhere) · work its PRIMARY + its ALTERNATE + one load at each of its
+  two flanking slots + each flanking Venture's action — any order, all optional, each
+  stop once per visit (a stop is per-slot: used is used, even for a new arrival).
+- **The stations** ⚙: **Market** *Source 3 / Build* · **Brewhouse** *Brew-search /
+  Brew-top-tile* (the double kettle — the second brew access v6.5 lost, restored in
+  one visit) · **Harbor** *Commission / Sail-now* · **Cellar** *Age 3 / Load 1 any*.
+- **The clock, derived on paper (§6.2):** 13 dice ⚙ = ~8–10 brews + 2–4 ledger dice +
+  0–2 presence. Three vessels turn a cask in ~2–3 visits; with the double kettle a
+  committed brewer spends ~1 die/turn — the tray empties in **~11–15 turns**, the §5
+  identity. Pool stays **13 ⚙** (THE pace dial, the designer's), **MAX_ROUND 22 ⚙**
+  backstops just past the band (25–30 was the v6 drag; the backstop must not invite
+  it).
+- **The load bonuses** re-derive per D10's reservation (specialists, buildings and
+  invitations come OFF the cask tiles): the 8-verb pool ⚙ is *Gain 2 goods · Age +2 ·
+  Load 1 more · Place 1 presence · Gain 1 recipe (its fee) · Brew 1 (top tile) ·
+  LIFT (this cask's die +1 as it boards, cap 6) · SAIL (after boarding you may sail
+  this Ship, even unfull)*. The *hire* and *venture* verbs leave the tiles (Bergen's
+  prize and the Build verb are those doors).
+
+### 10.9 · What carries untouched
+
+The die-is-the-cask laws whole · brew costs, recipe fees (`H` = Q−3, every channel),
+searchable census stacks, deal 3-of-4 exports · READY/minimum/lift grammar · the prize
+choice per cask (Bruges recipe · London **one BUILD, fee waived** ⚙ (the CHART prize
+retires with the sea) · Bergen a specialist · each also 2★, or **refresh the Kontor's
+demand card** ⚙ — the dud-card valve; Novgorod's +3★ premium is part of its DELIVER
+line, and it offers no prize at all) · the Flight ((n−1)², min 3, qualifying on the
+LOAD as ever) · goods cap 8 · the specialist grammar (2 seats, earned never bought,
+display 4) with the sea singles (Pilot · Surveyor · Wharfinger) retiring, the
+**Chandler returning** and the **Coper** + **Herald** ⚙ entering · the score ring ·
+Specialty Beers & Jopenbier toggles · the Waterworks Studio ingest.
+
+### 10.10 · The retire ledger (v6 → v7)
+
+The sea map board · voyages in transit · the current · SAIL-as-leg-push · CHART and its
+whole family (passages, posts, factors, establishments, Kontorhaus, closures, house
+markers) · TRADE · the Supercargo's trigger reverts to v5.8's ("a Ship sails your cask
+on a rival's turn") · the Skute · the works bag · the Tollhouse ⚙ · the Guild Tastings
+expansion (superseded by the core halls; components stay boxed in git).
+
+### 10.11 · The red-team record (2026-08-31 — what the adversarial pass changed)
+
+Four lenses (constitution · deadlock · fidelity · rules-lawyer) reviewed the drafted
+sheet before the build; the accepted findings, so the reasoning survives:
+
+1. **BUILD was dead at setup** (all 8 slots furnished, the v5.5 replace clause dropped)
+   → the replace mode returns at a 2 `G` ⚙ premium.
+2. **The ledger die had no home** through FLIP/overbuild → one die per ground for life.
+3. **Self-ticking was farmable** (Counting House + own loops) and D2 says *public*
+   usage → **rival-only ticks**; the cap gained the 1★ overflow ⚙ so busy engines
+   never go dead.
+4. **Gruit could spam the halls** (off-Bourse + die-1 presents) → the halls admit Q2+
+   only; present pays die + bonus (no marker — also the constitution's two-addend fix).
+5. **Empty hulls could blockade slots** (free far-Kontor commissions rivals can't
+   load) → commissioning over an empty hull displaces it to the deck.
+6. **A free 3-berth Hulk strictly dominated the Cog** once SAIL-now landed → fees
+   invert (Cog free · Hulk 1 `G` ⚙).
+7. **The lane gate was a solved checkbox** ("1+ ever") re-creating D8's "didn't cost
+   anything" → the OUTNUMBER gate (gateway pile > far pile), a developing track.
+8. **Contract claims scaled with load throughput** (the v5.8 runaway's own axis) → one
+   claim per turn ⚙.
+9. **A mismatched demand card froze a hall all game** → the prize choice gained the
+   refresh arm ⚙; the deck mix went always-live + type cards (which also lands D1's
+   "some beers better").
+10. **Demand cards paid only ticket-holders** (not D1's table-wide race) → the +1★
+    matching-DELIVER market line ⚙.
+11. **Novgorod's +3★ was stated three ways** → it is the DELIVER line's premium, once;
+    Novgorod prints no prize; presents never pay it.
+12. A dozen rules-lawyer holes (maiden load = a LOAD in every respect · Venture
+    actions act on the user's own components · seat dice are parked dice · letter
+    timing after the sail · London's prize = any one BUILD · used stops stay used ·
+    glut counts DELIVERED casks per type · warm hulls dock at s6·s7 ⚙ · ⚜ hands face
+    up · LAND is the umbrella verb, DELIVER and PRESENT the resolutions) → printed in
+    `RULES.md` v7.0 directly.
+
+Deferred with dials on file (not built): the 2p ladder-pump subsidy · ladder-as-
+runaway-amplifier · a die sink inside the hall loop (D4's "into the second loop") ·
+per-source score-drip legibility · off-turn landings on shared hulls (the flag is the
+v7.0 mitigation; the "threshold defer" dial is recorded).
+
+---
+
+## 11 · The question list this build asks the table (§7.1 — ask after every game)
+
+1. **Attention/ownership:** with transit gone, does every landing feel enacted? Does a
+   rival topping off a shared hull carrying your cask still read as the berth race
+   (good) or as theft of your moment (the v6 disease, back)? Would you want the
+   "resolve my cask at my turn start" defer instead?
+2. **The engine core:** do the Ventures + ledger dice FEEL like engine building — is
+   "one more tick" in your mind between rival turns? Is rival-only ticking legible?
+   Is 4 tiles the right hand?
+3. **The second loop:** contracts → ⚜ → present → ladder — is the lifecycle legible in
+   one teach? Does the ladder make a majority race the table talks about — and does it
+   crown the leader instead (the recorded 2p dials)?
+4. **The market:** does down-only + the demand market line give the timing decision v6
+   lacked? Is the Coper/certify/present trio enough of a counterweight for a committed
+   brewer (§6.1)? Do you miss the load-now/price-later risk transit carried (§6.6)?
+5. **The lane gates:** does the OUTNUMBER gate read as building your standing (a tech
+   tree) or as a toll? Is gateway>far the right shape, or too harsh at Novgorod?
+6. **Pace:** 10–15 turns per seat? Does the double kettle (plus brew Ventures) run
+   hot? Is 13 dice / MAX_ROUND 22 right for the new spend channels?
+7. **The private flag & SAIL-now:** does one flag per player keep the berth race alive
+   at 4p? Does the free unfull sail get used for tempo, or does it deflate full-hull
+   racing?
+8. **Score legibility:** at game end, can every player trace their total unaided —
+   including the in-play drips (wharfage, staple, Chronicler)?

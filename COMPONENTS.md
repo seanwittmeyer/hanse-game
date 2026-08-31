@@ -1,55 +1,74 @@
-# Brewhouses of the Hanse — Components (v6.5b “The Voyage” · §0 is the live delta)
+# Brewhouses of the Hanse — Components (v7.0 “The Guild” · §0 is the live delta)
 
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
-> - Operational rules: `RULES.md` (the one clean rules document, **v6.5b**). Design rationale & history: `DESIGN.md` §9; the v6 program: `V6-PLAN.md`.
-> - The live build is `play.html` — **v6.5b “The Voyage”** (`KEY hanse-v65b`) — the source of truth on values and behaviour.
-> - **The print kit is `print.html` — the only kit in use, cut to v6.5b** (2026-08-31). Printed copy follows the **Term Registry (`STYLE.md`)**.
-> - **READ §0 FIRST.** The v6 program rebuilt the game around the sea; §0 states the v6.5b kit
->   truth — what was ADDED, RE-CUT, and TABLED. §§1–17 below still enumerate the v5.8 body in
->   detail and are superseded where §0 says so; the full section rewrite is the `V6-PLAN.md`
->   Phase 2/5 docs-and-kit pass.
+> - Operational rules: `RULES.md` (the one clean rules document, **v7.0**). Design rationale & history: `DESIGN.md` §9; the v7 program + mechanic sheet: `V7-PLAN.md`.
+> - The live build is `play.html` — **v7.0 “The Guild”** (`KEY hanse-v70`) — the source of truth on values and behaviour.
+> - **The print kit (`print.html`) still cuts the ARCHIVED v6.5b build** — the v7 kit lands at the `V7-PLAN.md` P5 pass, after the numbers settle. Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - **READ §0 FIRST.** §0 states the v7.0 kit truth — what was ADDED, RE-CUT, and RETIRED.
+>   §§1–17 below still enumerate the v5.8 body in detail and are superseded where §0 says
+>   so; the full section rewrite is the P5 docs-and-kit pass.
 
 ---
 
-## 0. THE v6.5b KIT DELTA (2026-08-31 — the truth of the current kit)
+## 0. THE v7.0 KIT DELTA (2026-08-31 — the truth of the current build)
 
 **ADDED (new components):**
 
 | Component | Qty ⚙ | What it is |
 |---|---|---|
-| **THE SEA MAP board** | 1 | The second board: four **lanes** of printed **legs** out of the Wharf (Wadden Coast → Bruges / + Dover Strait → London · Skagen → Bergen / + the Sound → Novgorod). Each leg is an open **ship field** (a voyage stands on it, dice riding the hull) with **2 printed post seats** (the 2nd opens at 3p ⚙); the establishment supply stacks on its printed strip. |
-| **House markers** | 6 per player | Printed 1″ chits, **double-sided**: the HOUSE side stands as a **post** (waypoint seat) or a **factor** (Kontor seat); the factor's upgrade **flips it to its KONTORHAUS side** (gold-ringed — the power is printed on the Kontor panel). |
-| **Establishment tiles** | 3 designs × 2 | The post upgrades (v6.1), first come: **Toll Court** (*On enter:* the toll is 2 G) · **Victualling Post** (*On enter · your cask aboard:* +1 G +1 H) · **Pilot's Rest** (*On enter · your cask aboard:* +1 leg). 2.5×1.32″, a printed **post socket** on the face; the printed 2 G chip is the upgrade fee. |
-| **Closure tiles** | 2 | **Dover Strait** · **the Sound** — they sit on their legs from setup; a **Chart** (2 G, printed on the tile) removes one and the charter's post stands free. |
+| **Contract cards (⚜)** | 14 | One card, four lives: in the display (of 3) it is a **CONTRACT** printing a LOAD condition (*Q1–2 · Q3 · Q4+ · die 4+ · onto a Hulk · bound for <Kontor>*); claimed by a matching load (**one claim per turn** ⚙) it is an **⚜ INVITATION** kept face-up; **spent to PRESENT** at a hall it advances that Kontor's majority ladder; then it recycles under the deck. 1.85×2.55″ card. |
+| **Demand cards** | 12 | Their own deck — the halls' variable demand, one face-up in each Kontor's well. Face: a requirement (*a TYPE card per export beer +3★ (undealt → box) · Q2+ +2★ ×2 · Q2–3 +3★ ×2 · Q4+ +4★ ×2 · die 5+ +5★ ×2* ⚙ — **the halls never admit Gruit**) + the **market line** (*a matching DELIVER here: +1★* ⚙) + **2 printed die seats** — a PRESENTED cask's die parks on a seat (it IS a parked die of the Kontor); both full → the card retires (dice slide to the field) and a fresh one deals at end of turn. 2.5×1.32″ tile. |
+| **Majority ladder markers** | 4 | One per Kontor panel, on the printed **6-step ladder** of 1st/2nd payouts (Bruges 3/1→9/4 · London 4/2→10/5 · Bergen & Novgorod 5/2→11/5 ⚙). Every ⚜ spent at the Kontor advances its marker. |
+| **Private flags** | 1 per player | Planted at commission (+1 `G` ⚙): the hull is yours alone. Returns when the Ship sails. |
 
 **RE-CUT (existing components, new faces/data):**
 
-- **The Wharf board** — each station now prints **TWO single verbs — PRIMARY / ALTERNATE**
-  (the street model — the ALT is the station's OWN lesser counter; v6.5b swaps the sea
-  pair): Market *Source 3 / Sail* · Brewhouse *Brew (search) / Trade* · Harbor
-  *Commission + 1 load / Chart* · Cellar *Age 3 / Load 1 any*. **A visit works the station's WHOLE counter (v6.5, the AP
-  cut — the line retired): its PRIMARY, its ALTERNATE, and a load at each of its two
-  flanking slots** (Market s1·s8 · Brewhouse s2·s3 · Harbor s6·s7 · Cellar s4·s5). **The station face
-  (v6.5):** the **P/A pair prints at the TOP-LEFT corner — the PRIMARY big, the ALTERNATE
-  beside it smaller** (both fire on a visit) — and the **name sits plain at the
-  BOTTOM-LEFT**; the workers stand at the tile's centre.
-- **The Destinations board** — every Kontor panel adds **2 factor-seat sockets** and its
-  printed **KONTORHAUS power** (Bruges *+1 G per landing cask* · London *charts free* ·
-  Bergen *TRADE ±2* · Novgorod *+1★ per landing cask*); London's prize re-prints as **a
-  free CHART or 2★**. The Bourse lane copy reads **priced at LANDING**.
-- **Specialists** — three re-derivations: **Pilot** (was the Broker — turn start: a Ship
-  with your cask advances 1) · **Surveyor** (was the Brewer's Mate — Chart: passage & post
-  fees waived) · **Wharfinger** (was the Chandler — your posts' tolls +1 G); the
-  **Supercargo** trigger moves to the off-turn landing; the **Chronicler** reads *Deliver a
-  cask: +1★*. 15 designs, counts unchanged.
-- **Cask tiles** — the *Open 1 Venture* load bonus re-prints as **Chart 1 · fee waived**.
-- **The round backstop** is **40** ⚙ (the aid and checklist re-print; the round marker also
-  turns ≋ **the current** each round).
+- **The Wharf board** — the station pairs re-print: Market **Source 3 / BUILD** ·
+  Brewhouse **Brew (search) / Brew (top tile)** · Harbor **Commission + 1 load / SAIL
+  (a docked Ship with 1+ of your casks sails now, unfull)** · Cellar **Age 3 / Load 1
+  any**. The visit grammar (v6.5, kept): PRIMARY + ALTERNATE + a load at each flanking
+  slot **+ each flanking Venture's action**.
+- **The Venture tiles RETURN** (the v5.5 cardboard unchanged: 4 themed dual-use designs
+  × 4 house-ringed sets, 2.5×1.32″, L1/L2 faces, the FLIP) — **re-derived onto the
+  LEDGER grammar**: an L1 stands a tray die at face 1 (**one die per ground for life**
+  — it rides the FLIP and the overbuild); a RIVAL's use or trigger turns it (cap 6;
+  past the cap each rival serve pays the owner 1★ ⚙); the owner's own use is free and
+  ticks nothing; the pips score to the owner at end. **The v5.3 public lines come OFF
+  the faces** — the whole action serves any visitor, on the user's own components. The
+  points faces re-print: Counting House *a rival's load here ticks; your loads +1★* ·
+  Staple Rights *your casks sailed from here +2★ each; a rival's sail ticks once*. An
+  L1 plays onto open ground (1 `G` ⚙) or **replaces a Public Work (2 `G` ⚙, the tile
+  boxed)**.
+- **The Destinations board** — every Kontor panel re-prints: the **demand well**, the
+  **majority ladder** (replacing the fixed 4/2/0-style triples — third place retires;
+  two places pay at every count), the **lane gate line** (London: *your Bruges dice
+  must OUTNUMBER your London dice* · Novgorod: *Bergen > Novgorod*), the
+  **first-landing letter** line (*your first landing here: draw 1 contract*), the
+  prize line's **refresh-the-demand arm** ⚙, and London's prize as **one BUILD, fee
+  waived — or 2★**. Novgorod prints its +3★ premium on the DELIVER line and no prize.
+  Factor sockets and Kontorhaus powers leave.
+- **Public Works** — **deal 8 of the 12-tile roster onto all 8 slots at setup; the bag
+  retires** (nothing refills — the tide and the Ventures' replace-builds strip the
+  wharf for good). The **Tollhouse retires** ⚙ (roster 12: Kiln ×2 · Customs ·
+  Ropewalk · Cooperage · Weigh House · Staple ×4 · Bonded · Victualling).
+- **Ship deck 18** ⚙ — **the Skute retires and the fee INVERTS**: Cog ×10 (**free**) ·
+  Hulk ×8 (**1 `G`**), display of **3**; a commission may displace an EMPTY docked
+  hull to the deck.
+- **Cask tiles** — the load-bonus pool re-prints: *Chart 1* → **SAIL** (sail this Ship
+  now, unfull) and *Gain 1 specialist* → **LIFT** (this cask's die +1 as it boards, cap
+  6). Specialists, buildings and ⚜ never print on cask tiles.
+- **Specialists** — the sea singles (Pilot · Surveyor · Wharfinger) retire; the
+  **Chandler returns** (station Source: swap 1 `G` ↔ 1 `H`); the **Supercargo** reverts
+  to the v5.8 trigger; NEW ⚙: the **Coper** (after your landing: step one landed beer
+  +1 — the market's only hand) and the **Herald** (each contract claim: +1 `G` 1 `H`).
+  15 designs.
+- **The round backstop** is **22** ⚙; the pace target ~10–15 turns per seat.
 
-**TABLED (out of the kit; generators kept for Phase 2):** the **Venture tiles** (the wharf
-hand retired at v6.0 — tiles wait boxed) · the **Guild Tastings** (board, Tasting tiles, ⚜
-Invitations, the Chancery) · the Trade Roads (unchanged).
+**RETIRED (v6 → v7):** the SEA MAP board · house markers · establishment tiles ·
+closure tiles (the whole v6 sea family — frozen at `archive/v6/`) · the works BAG · the
+Tollhouse ⚙ · the Skute · the Guild Tastings expansion (the halls are core; its board,
+tiles and Chancery stay in git history).
 
 ---
 

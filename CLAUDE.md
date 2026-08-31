@@ -104,22 +104,44 @@ affects each axis in step 2, you don't understand it yet — go back to §2.
 
 **The frozen v5.8 reference: “Pay the Second” (`KEY hanse-v58`, designer-ruled 2026-08-24 — live at `archive/v5/`).** The complete version history and rationale live in **`DESIGN.md` §9** (v5 letters in detail, pre-5.0 as a digest); the live watch-list in **`DESIGN.md` §10**; the consolidated v5 decision record in `archive/records/V5-DECISIONS.md`. Gates at v5.7 (full oracle, 1,500 games, 2026-08-24): verify **378/378** · sim clean (0 crashes / 0 deadlocks) · **ladder every rung PASS** (85 / 63 / 69 / 88%) · render smoke PASS · aid ALL FIT. Pace **14.7 / 14.5 / 13.7** (band 84/88/87%); totals **78/79/71**. **LIVE WATCH — RUNAWAY MARGINS, and SKILL MAKES THEM WORSE:** journeyman 22.1 / 15.1 / 12.7, but **guildmaster 34.0 / 19.4 / 15.3** (2p blowouts 59%). They are THROUGHPUT, not the market: the winner's casks are worth **+6%** but they ship **+18%** more of them, and 2p majorities **now pay a second place** (v5.8 — only 3rd is skipped; the majority's share of the 2p margin more than halved, 8.4★ → 3.9★, and the presence gate *no parked dice, no share* is now PRINTED, not engine-only). Still **19.4★** at 2p and ~30★ at guildmaster — dented, not closed; the queued second half is the re-tiering (London/Bergen 9/5/2 · Bruges 5/4/2). The Bourse and the prizes are **cleared** — `BOURSE_START`/`PRIZE_PTS` are off the lever list. Two v5.7 reversals from the 1,850-game MC oracle (2026-08-24): **DEPTH IS NOT DEAD** — the "cannot keep three vessels full" finding was a greedy-bot artifact; at skill a specialist ships 7.1 casks like everyone else and loses on PRICE (3.17★/cask vs breadth's 4.78 — its one beer's marker lives on the floor), so **the Glut punishes specialisation by construction** (ruled 2026-08-24: depth retires as a standalone oracle lane — viable specialisation would be depth *paired* with buildings/specialists, gated on the up-shift supply). And **the clock is not the dice at a strong table** — 28% of GM 2p games end on the MAX_ROUND backstop because skilled seats hold dice instead of spending them. Read at a table before dialing (`DESIGN.md` §10).
 
-**THE V7 PROGRAM OPENS (designer-ruled 2026-08-31) — read `V7-PLAN.md` FIRST.** The
+**THE V7 PROGRAM RUNS (designer-ruled 2026-08-31) — read `V7-PLAN.md` FIRST.** The
 v6.5b human playtest ruled the v6 build a regression in feel (the sea ran itself, no
 engine-building core, the clock dragged, scores illegible); v7 re-derives from the ten
-directives recorded there. v6.5b stays live at root as the test bed until the designer
-rules the P0 freeze. The v6 paragraph below stands as history:
+directives recorded there. **P0 is DONE — the complete v6.5b build is FROZEN PLAYABLE at
+`archive/v6/` (never edit it), and the v7.0 “The Guild” TEST BUILD is LIVE at root**
+(`KEY hanse-v70`, 2026-08-31): `play.html` · `RULES.md` · `COMPONENTS.md` §0 ·
+`STYLE.md` §4e · `playtests/verify-v7.js` are v7-current; `print.html` and
+`rulebook.html` still cut/describe the archived builds until the P5 kit pass. The v7
+shape in one breath: the v6.5 turn kept (MOVE adjacent · work the station: P + A + the
+flank loads **+ each flanking Venture**) · stations Market *Source 3 / Build* ·
+Brewhouse *Brew-search / Brew-top* · Harbor *Commission / Sail-now* · Cellar *Age 3 /
+Load-any* · **the VENTURES return on the LEDGER grammar** (an L1 stands a tray die at 1, one die per
+ground for life; a RIVAL's use ticks it, cap 6 then 1★/serve ⚙; the owner uses free;
+pips to the owner at end; an L1 takes open ground 1G or replaces a Public Work 2G ⚙) ·
+**instant enacted sailing** (the sea map, current, posts, factors, house markers all
+retired) · **per-player lane gates** (open while your gateway dice OUTNUMBER your far
+dice: London ← Bruges · Novgorod ← Bergen) · **contracts → ⚜ invitations → PRESENT at
+the Kontor halls → the majority LADDERS** (a present = die + the demand card's bonus,
+off the Bourse; every ⚜ spent makes that majority richer; third place retired; two
+places pay at every count; one claim per turn ⚙; the halls never admit Gruit) · **the
+market only falls** (the Coper ⚙ is its one hand; certified cargo doesn't glut;
+presents sell outside it; a matching DELIVER takes the demand's +1★ market line ⚙) ·
+all 8 Public Works dealt at setup, no bag, Tollhouse retired ⚙ · **Cog free · Hulk 1G**
+⚙ + the **private flag** (+1G ⚙; a commission may displace an EMPTY hull) · SAIL-now
+(any docked hull with 1+ of YOUR casks, free ⚙) · 13 dice ⚙ · MAX_ROUND 22 ⚙ · target
+10–15 turns/seat. The full sheet + the red-team record: `V7-PLAN.md` §10. The v6
+paragraph below stands as history:
 
-**THE V6 PROGRAM (designer-ruled 2026-08-29).** v6 "The Voyage" begins — the
+**THE V6 PROGRAM (designer-ruled 2026-08-29 — HISTORY; its build is frozen at
+`archive/v6/`).** v6 "The Voyage" began — the
 brew-and-ship double-down: a **sea map** (lanes charted leg by leg · posts · Kontor
 factors), **voyages in transit** with the dice riding the hull and the cargo **priced at
 landing**, a market you work as a verb, **fewer/bigger deliveries through more, faster
 single-verb turns**, and specialists as **placed people** (wharf crew · ship's crew ·
 Kontor agents). The plan, CONSTITUTION (component-state supreme — §6), phases and open
-forks live in **`V6-PLAN.md`** — read it right after this charter. **The v6 TEST BUILD is
-LIVE at root — v6.5b “work the station” (`KEY hanse-v65b`, designer-ruled 2026-08-30):**
-`play.html` · `RULES.md` · `print.html` · `components.js` · `COMPONENTS.md` §0 are
-v6-current — v6.5 is THE AP CUT: the line retired whole; a turn = MOVE adjacent · work
+forks live in **`V6-PLAN.md`**. **Its final TEST BUILD — v6.5b “work the station” (`KEY
+hanse-v65b`, designer-ruled 2026-08-30) — is frozen at `archive/v6/`** — v6.5 was THE AP
+CUT: the line retired whole; a turn = MOVE adjacent · work
 the station's OWN counter (**PRIMARY + ALTERNATE**, the v6.4 street-model seats) + a
 LOAD at each of its two flanking slots (s1·s8 / s2·s3 / s6·s7 / s4·s5): Market *Source 3
 / Sail* · Brewhouse *Brew / Trade* · Harbor *Commission / Chart* (v6.5b — the sea swap) ·
@@ -128,7 +150,7 @@ Cellar *Age 3 / Load-any*. Still v5.8:
 (pages + docs + instruments) is **FROZEN PLAYABLE at `archive/v5/`** — never edit that
 folder. The §8 instruments moved with it.
 
-### The spine (internalize this — everything hangs off it. The v5.8 spine — the frozen reference; v6 re-derives from here per `V6-PLAN.md`; v6.5 re-derives the turn itself: no line — a visit works the station's own two verbs + its two flanking slots)
+### The spine (internalize this — everything hangs off it. The v5.8 spine — the frozen reference; **v7 re-derives from here per `V7-PLAN.md` §10**, keeping the v6.5 turn: no line — a visit works the station's own two verbs + its two flanking slots + each flanking Venture)
 - **The Wharf = four stations ringed by 8 slots; move where the board is best (NOT a rondel).** A turn = move to an adjacent station, activate its **row or column**, resolve the stops **in any order, all optional**: the two stations — **the worker’s own fires its PRIMARY, the line’s other its ALTERNATE (v5.0)**: Market Source 3/1 (v5.2b) · Brewhouse Brew-search/top-tile · Cellar Age 3/1 · Harbor Commission (the hull’s printed fee: 2/1/0 G by size)/Load-1-onto-any-docked-Ship — + each slot's **building** and/or a **LOAD of the ship** docked there. Sharing a station costs **nothing**. The line is read **LIVE** — a mid-turn arrival opens its stop this activation.
 - **THE DIE IS THE CASK — the whole game in one component.** Brew sets a tray die to the printed start value (quality − aging steps); aging turns it up to the quality (READY) — **and it NEVER turns on its own**: the Cellar, the Age bonuses, the Venture faces (Rack House swap · Assay Loft · the age+1 public lines), the Cellarman and the Braumeister/Innkeeper drips are the only hands; load-side lifts push past it (cap 6); gates read it as it boards; delivery parks it at the kontor — ★ = **pips + the beer’s Bourse marker**, presence, majority weight and THE clock. 13 dice = the player's whole runway, public; **no die ever stands on a building (v5.3).** No die in the tray → no brew, no presence.
 - **Slots hold a building and/or a ship — never casks.** Casks are PRIVATE until they board; the interaction is the **berth race** (topping off a hull sails everyone's cargo on your clock), the shared building traffic, the displays and the majorities.

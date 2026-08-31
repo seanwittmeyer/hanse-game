@@ -224,6 +224,32 @@ does not print these until Phase 2 locks them; the designer renames freely at th
 | Surveyor | n | The chart Specialist (v6.0 re-derive of the Brewer's Mate): your passage & post fees waived (factor-side fees stand) | — |
 | On enter | trig | The sea tile trigger (v6.1): a Ship enters this leg — the establishment grammar; a condition follows per §4 (e.g. *On enter · your cask aboard*) | joins the ruled tile-trigger set (§4b) at the Phase 2 lock |
 
+## §4e. The v7 term family (PROVISIONAL — reserved 2026-08-31; locked at the v7 registry lock)
+
+*Reserved so every v7 surface uses ONE vocabulary from the first build. The designer
+renames freely. The §4d v6 sea family (voyage · lane-as-map · leg · chart · landing ·
+post · factor · the current · establishment · Kontorhaus · On enter · Pilot · Surveyor ·
+Wharfinger) is RETIRED with the sea map — historical, never printed again.*
+
+| Term | POS | Working definition | Collision notes |
+|---|---|---|---|
+| Venture | n | RE-DERIVED (v7): the private family returns — the themed hand of 4 dual-use tiles (v5.5 cardboard), now carrying the owner's **ledger die** | the v5.2–v5.5 entries above describe the retired grammar; the FLIP and theme entries carry |
+| ledger die | n | The tray die standing on a Venture at face 1 (one die per ground, for life — it rides the FLIP and the overbuild); **each time the Venture serves a RIVAL it turns +1** (cap 6; past the cap a rival serve pays the owner 1★ ⚙); the owner's own use ticks nothing; its pips score to the owner at game end | amends the v5.3 "no die on a building" law for Ventures ONLY (designer-directed, D2); Public Works stay die-less |
+| build | v | RE-DERIVED (v7): the Market's ALTERNATE — place or advance ONE of your Venture tiles (an L1 onto open ground or replacing a Public Work · the FLIP · the overbuild); the fee prints on the face going down | the v4.9 investor sense in §2 is historical |
+| lane gate | n | The per-player unlock of a far Kontor: open **while your parked dice at the branch's gateway OUTNUMBER your parked dice at the far Kontor** (London ← Bruges · Novgorod ← Bergen) | *chart* (v) stays retired; nothing is charted in v7 |
+| LAND | v | The umbrella event: a sailed cask arrives at its Kontor and resolves as a DELIVER or a PRESENT — rules keyed to "land" fire either way (the Chronicler · the first-landing letter · presence eligibility) | splits the old ~~deliver~~ overload; §2's *deliver* entry narrows to resolution A |
+| present | v | Resolve a landed cask at the Kontor's hall: spend 1 ⚜ + match the demand card + take an open seat — score **die + the card's bonus** (no marker, no glut, no premium, no prize); the die parks ON the seat (a parked die of the Kontor); the ladder advances | ~~pour~~ (the Tastings verb) retires with the expansion |
+| contract | n | A display card printing a LOAD condition; CLAIMED by a matching load (one claim per turn ⚙). Lineage: ~~lading~~ → ~~Contract~~ → ~~Order~~ → ~~Manifest~~ (all retired) → **contract returns** (v7) | the demand layer is the Bourse + demand cards, never the contract |
+| claim / draw | v | **CLAIM** = take a matching contract from the DISPLAY on a load (the Herald pays on claims); **DRAW** = take the contract deck's top card (the first-landing letter) | two verbs, never mixed |
+| Invitation (⚜) | n | A claimed or drawn contract, kept face-up — the guild's admission, spent to PRESENT | carries the §4b ⚜ identity; the Tastings expansion that minted it retires |
+| demand card | n | The face-up card in a Kontor's well (its own 12-card deck ⚙; never Gruit): a requirement + a hall bonus ★ + the market line (*a matching DELIVER here +1★* ⚙) + 2 die seats; full → it retires, a fresh one deals at end of turn | — |
+| majority ladder | n | The Kontor panel's printed 6-step track of 1st/2nd payouts; **every ⚜ spent there advances its marker** | ~~the Ladder~~ (v5.2 build-order rule) stays retired — "majority ladder", always qualified |
+| private flag | n | Your one flag marker: planted at commission (+1 `G` ⚙), it makes the hull yours alone (your casks, your early sail); it returns when the Ship sails | — |
+| sail | v | RE-DERIVED (v7): a Ship sails — full (automatic) or early via the Harbor's ALTERNATE (any docked Ship with 1+ of YOUR casks; a flagged hull only by its owner). One verb, one meaning again; the v6 leg-advance sense retires | ~~depart~~ (v6) retires |
+| the tide | n | CARRIES (v5.4): every Public Work departs with the Ship that sails from its slot — but v7 retires **the bag**: nothing refills; the wharf strips to open ground | — |
+| Coper | n | The market's one hand (specialist ⚙): after your landing resolves, step ONE beer you landed +1 | period beer-trader; designer to confirm the name |
+| Herald | n | The contracts specialist ⚙: each claim pays 1 `G` 1 `H` | — |
+
 ## §5. Deferred to the next copy pass (logged, not yet applied)
 
 - Em-dash purge + passive-voice pass over `RULES.md` prose (guide §7/§9) — the rulebook

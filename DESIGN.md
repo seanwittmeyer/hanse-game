@@ -245,6 +245,44 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
 
+### v7.0 “The Guild” (2026-08-31, designer-called: “design a plan and build out a new version” — the plan and sheet live in `V7-PLAN.md`)
+The v6 program (“The Voyage” — sea map, transit, the current, posts/factors) was ruled a
+**regression in feel** at the 2026-08-31 human table (`V7-PLAN.md` §1: the sea ran
+itself, no engine-building core, payoffs resolved off-turn, scores illegible). **P0:**
+the complete v6.5b build froze playable at `archive/v6/`. **v7 re-derives from the TEN
+DIRECTIVES** (`V7-PLAN.md` §4), keeping the praised v6.5 turn shape (MOVE adjacent ·
+work the station) and the v5.8 wharf spine, and building the engine core the program
+kept owing:
+- **The VENTURES return** (the v5.5 themed cardboard whole) on the **LEDGER grammar**:
+  BUILD is the Market's ALTERNATE at last (the starved-door lesson); an L1 stands a
+  tray die at face 1 (one die per ground, for life) — **a RIVAL's use ticks it (cap 6,
+  then 1★ per serve ⚙); the owner uses it free; the pips score to the owner at end**.
+  A Venture's action serves the whole table, always on the user's own components; an
+  L1 takes open ground (1 `G` ⚙) or replaces a Public Work (2 `G` ⚙).
+- **The sea retires whole; sailing is instant and enacted again.** The development game
+  re-homes to **per-player lane gates** (London ← your die parked at Bruges · Novgorod
+  ← Bergen — your parked dice ARE the unlock) and the Kontor panel.
+- **The second loop: contracts → ⚜ invitations → PRESENT at the halls → the majority
+  LADDERS.** One card, four lives; every ⚜ spent at a Kontor makes its majority richer
+  — the friction of loading sets the majorities' worth (D6), and the race is a marker
+  the whole table watches.
+- **The market goes DOWN ONLY** (D7): every up-shift retires except the Coper
+  specialist ⚙; certification and presenting are the structural ways to sell without
+  spending the price.
+- **All 8 Public Works stand at setup, the bag retires** (D3) · **the Skute retires;
+  the private flag and SAIL-now arrive** (D9) · the Brewhouse becomes the double kettle
+  · load bonuses re-pool (LIFT · SAIL in; hire · venture-gain off the tiles, D10).
+- The drafted sheet ran a **four-lens adversarial red team** before the build
+  (constitution · deadlock · fidelity · rules-lawyer); the eleven accepted findings —
+  the replace-build, the rival-only ledger, the outnumber lane gate, the Gruit-proof
+  halls, the empty-hull displacement, the Cog/Hulk fee inversion (Cog free · Hulk 1 `G`
+  ⚙), one claim per turn, the refresh prize arm, the demand market line, Novgorod's
+  premium stated once — are recorded at `V7-PLAN.md` §10.11.
+- Gates: `playtests/verify-v7.js` (fresh battery) · sim smoke 0 crashes / 0 deadlocks ·
+  `KEY hanse-v70` · MAX_ROUND 22 ⚙. **Sims gate robustness only (the §7 process law) —
+  every number is ⚙ until the human table reads it; the build's question list is
+  `V7-PLAN.md` §11.**
+
 ### v5.8 “Pay the Second” (2026-08-24, designer-ruled — record `archive/records/V58-PAY-THE-SECOND.md`)
 *"At all player counts, majorities pay out. For 2p, pay our second place. Only pay if
 participated (0 if no dice in that Kontor). I'm surprised 2p didn't do this already."*
