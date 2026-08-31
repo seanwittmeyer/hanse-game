@@ -109,9 +109,11 @@ v6.5b human playtest ruled the v6 build a regression in feel (the sea ran itself
 engine-building core, the clock dragged, scores illegible); v7 re-derives from the ten
 directives recorded there. **P0 is DONE — the complete v6.5b build is FROZEN PLAYABLE at
 `archive/v6/` (never edit it), and the v7.0 “The Guild” TEST BUILD is LIVE at root**
-(`KEY hanse-v70a`, 2026-08-31): `play.html` · `RULES.md` · `COMPONENTS.md` §0 ·
-`STYLE.md` §4e · `playtests/verify-v7.js` are v7-current; `print.html` and
-`rulebook.html` still cut/describe the archived builds until the P5 kit pass. The v7
+(`KEY hanse-v70a`, 2026-08-31): `play.html` · `RULES.md` · `COMPONENTS.md` §0/§10 ·
+`STYLE.md` §4e · `playtests/verify-v7.js` · **`print.html` (the P5 kit pass landed
+2026-08-31 — the full §0 kit cuts: contracts ⚜ · demands · the ladder board · deck 18 ·
+the Ventures return · flags/ladder markers · the v7 aid)** are v7-current;
+`rulebook.html` still describes the archived build until its own pass. The v7
 shape in one breath: the v6.5 turn kept (MOVE adjacent · work the station: P + A + the
 flank loads **+ each flanking Venture**) · stations Market *Source 3 / Build* ·
 Brewhouse *Brew / the second kettle (a 2nd full brew, +1H ⚙ — EVERY brew searches, v7.0a)* · Harbor *Commission / Sail-now* · Cellar *Age 3 /

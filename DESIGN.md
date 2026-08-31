@@ -278,6 +278,14 @@ are confusing to players."*
 - Gates: `verify-v7.js` **66/66** (4 new: the surcharge paid · the +1H availability
   read · search-everywhere · the hire/fee retirement) · sim smoke 0 crashes /
   0 deadlocks 2–4p · render smoke clean · **KEY bump** `hanse-v70` → `hanse-v70a`.
+- **The P5 print pass landed the same day** (kit-only — no rules change, no KEY move):
+  `print.html` re-cut whole from the archived v6.5b kit to this build per
+  `COMPONENTS.md` §0/§10 — new shared faces in `components.js` (the ⚜ contract letter ·
+  the demand tile · ladder markers · flags), the sea/Tastings/house-marker families
+  pruned, and one live drift closed (the app's hull tiles had still printed the v6
+  Skute-era fees; the shared `HULL` re-cut fixed app and kit in one edit — the
+  §2-charter's argument for wide passes, in one line). Gates: verify 66/66 · headless
+  render smokes of BOTH pages clean · the aid fit-measured to its panel (0 overflow).
 
 ### v7.0 “The Guild” (2026-08-31, designer-called: “design a plan and build out a new version” — the plan and sheet live in `V7-PLAN.md`)
 The v6 program (“The Voyage” — sea map, transit, the current, posts/factors) was ruled a

@@ -4,7 +4,7 @@
 >
 > - Operational rules: `RULES.md` (the one clean rules document, **v7.0**). Design rationale & history: `DESIGN.md` §9; the v7 program + mechanic sheet: `V7-PLAN.md`.
 > - The live build is `play.html` — **v7.0a “The Guild”** (`KEY hanse-v70a`) — the source of truth on values and behaviour.
-> - **The print kit (`print.html`) still cuts the ARCHIVED v6.5b build** — the v7 kit lands at the `V7-PLAN.md` P5 pass, after the numbers settle. Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - **The print kit (`print.html`) cuts THIS v7.0a build** (the P5 kit pass landed 2026-08-31; `rulebook.html` still describes the archived v5.8 build until its own pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
 > - **READ §0 FIRST.** §0 states the v7.0 kit truth — what was ADDED, RE-CUT, and RETIRED.
 >   §§1–17 below still enumerate the v5.8 body in detail and are superseded where §0 says
 >   so; the full section rewrite is the P5 docs-and-kit pass.
@@ -338,10 +338,26 @@ picture; this note records the SHARED face re-cuts this pass):**
   reminder reprints for the v7 ground fees (open 1 `G` · replace 2 `G` · L2/flip 2 `G`
   ⚙). The action line is unchanged cardboard — v7 opens it to any visitor (own casks;
   the tick is the rent), which is a rules fact, not a face fact.
-- The rest of the v7 kit (contract cards 14 · demand cards 12 · the ladder-printed
-  Destinations board · the 18-hull fee-inverted ship deck · the private flags · the
-  cask-tile lift/sail verbs) is specified at **§0** and cuts at the **P5 kit pass**
-  (`V7-PLAN.md`) — `print.html` stays the archived v6.5b kit until then.
+- **THE P5 KIT PASS LANDED (2026-08-31, this build):** `print.html` cuts the full §0
+  kit — **contract cards ×14** (the tri-folded Guild letter: the claim condition + the
+  ⚜ Invitation identity; uniform letter back, cardstock) · **demand cards ×12**
+  (2.5×1.32″ parchment tile: requirement · the ⚜ PRESENT bonus · the +1★ market line ·
+  2 die seats; uniform back, plotter double-sided) · the **Destinations board re-cut**
+  (each panel: the printed **6-rung ladder** with its dashed marker seat · the
+  lane-gate line · the first-landing letter line · the **demand well**; the factor
+  sockets and Kontorhaus lines left) · the **Wharf station faces** (Source 3/BUILD ·
+  Brew/the second kettle · Commission/SAIL-now · Age 3/Load-any) · the **ship deck 18**
+  (Cog ×10 free · Hulk ×8 1 `G`, display 3; the Skute sheet retired) · the **Venture
+  sheet returns** (4 designs × 4 house rings, L1 front / its own L2 back — the FLIP is
+  the cardboard) · **majority ladder markers ×4** + **private flags 1/player** on the
+  token sheets · the works sheet at the **12-roster, deal 8, no bag** · the v7 player
+  aid (tri-fold, fit-gated) · the v7 checklist and PNG-export manifest. RETIRED from
+  the kit whole: the sea map sheet · establishments · closures · house markers · the
+  Tastings remnants (`components.js` pruned the same day — the generators live in git
+  history). Shared-data re-cuts in `components.js`: `HULL` Cog 0/Hulk 1 `G` (the app's
+  hull tiles had still printed the v6 fees — drift caught and closed) · `SHIP_DECK` 18
+  · `CASK_POOL` prints the v7 verbs (**LIFT** die+1 · **SAIL** now) in the engine's
+  census order · the works roster drops the Tollhouse ⚙ and the Chancery.
 
 **v5.7 “Plain Sail” delta (2026-08-23, ruled — 12 CARDS LEAVE THE KIT):**
 

@@ -394,6 +394,42 @@ clause is CUT from the spec (it painted the letterbox bands; the kit's own foot 
 text legibility) and the anti-frame block above is the standing language. The object shots
 retire in place, slug-matched — no code change beyond the three dropped v6 slug overrides.
 
+## THE v7.0a KIT ART QUEUE (2026-08-31 — the P5 print pass landed; these are the open briefs)
+
+**A · Specialist portraits (3)** — the standing HALF-BODY portrait spec above governs
+(one c. 1350 figure at the left third, trade prop in hand, soft workplace behind, aged-
+manuscript painterly, no text, full-bleed square ≥1024²; 4 candidates each, designer picks):
+
+| File | Subject (the prop is the retired object-shot brief) |
+|---|---|
+| `improve-coper.jpg` | **the Coper** — a sharp-eyed beer jobber at a quay-side barge counter, a whisk of hops flying from a pole above (the ale-stake); casks and a slate of falling prices behind. *(stand-in in use: `improve-broker.jpg`; drop the `slug:'broker'` override in `components.js` when this lands)* |
+| `improve-herald.jpg` | **the Herald** — a guild messenger with a brass letter-horn slung across the chest, a sealed ⚜ contract book open in hand; the Kontor gate behind. *(stand-in: `improve-quaymaster.jpg`; drop `slug:'quaymaster'` when this lands)* |
+| `improve-chandler.jpg` | **the Chandler** — a chandlery keeper at the counter, a hand balance held up (barley on one pan, hop cones on the other); rope coils and tallow behind. *(the current file is the RETIRED object shot — a portrait-program regen, replacing in place)* |
+
+**B · Venture tile faces (5)** — the tile art window is 2.5×1.32in behind a scrim with a
+colour foot; medieval-Hanseatic building/interior scenes matching the six landed
+`venture-*.png` faces (muted gouache, no text, no people prominent, ≥1024px wide). Save
+under the DEFAULT names below and delete the matching `art:` override rows in
+`components.js` VENTURES:
+
+| File | Face | Subject |
+|---|---|---|
+| `venture-brew-l1.png` | Mash Tun (L1) | a steaming wooden mash tun in a low brewhouse, mash rake resting across it *(stand-in: `venture-factor-l1.png`)* |
+| `venture-brew-l2.png` | Great Copper (L2) | a great riveted copper kettle over a roaring firebox, twin spouts *(stand-in: `venture-rack-l2.png`)* |
+| `venture-age-l2.png` | Assay Loft (L2) | a timber loft room, casks under an assayer's scale and candle, sample tankards in a row *(stand-in: `venture-counting-l2.png`)* |
+| `venture-die-l2.png` | Lagering Cellar (L2) | a deep frost-rimed cellar vault, casks racked into the dark, ice blocks *(stand-in: `venture-warehouse-l2.png`)* |
+| `venture-points-l2.png` | Staple Rights (L2) | a crested staple-hall gate with the toll beam raised, bales stamped with the guild mark *(stand-in: `venture-factor-l2.png`)* |
+
+**C · Illustrated icon (1)** — the ⚜ contract/invitation glyph, `art/icons/mail.png`:
+a small folded letter under a red wax ⚜ seal, the kit's sticker-icon treatment
+(transparent PNG, ~15%/side sticker margin, reads at .14in — see `art/ICONS.md` for the
+family recipe). Every surface currently falls back to the plain lucide envelope for
+`LU('mail')`; the registry wants the sealed letter.
+
+**D · Nice-to-have (no code waiting on them):** a parchment-texture wash for the ⚜
+contract card and the demand tile (both currently pure CSS parchment — acceptable in
+print; a texture would lift them to the rest of the kit).
+
 ## The specialist object-shot SPEC (RETIRED 2026-08-30 — kept for the archive; moved verbatim from components.js, 2026-08-22)
 
 ```
