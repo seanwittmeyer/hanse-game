@@ -47,7 +47,8 @@ the complete canon **in full — no skimming, no sampling**:
 | Read | Role |
 |---|---|
 | `CLAUDE.md` | this charter — process, interlocks, gates, deploy |
-| `V6-PLAN.md` | **the v6 program** — the ruling, the CONSTITUTION, architecture, phases, open forks (the v6-era read-FIRST after this charter) |
+| `V7-PLAN.md` | **THE V7 PROGRAM — reflection + plan (the read-FIRST after this charter, designer-ruled 2026-08-31):** the v6.5b human-playtest post-mortem, the TEN DIRECTIVES, the process law (the human table is the top oracle; no component is ever background), phases |
+| `V6-PLAN.md` | the v6 program — now HISTORY; the CONSTITUTION it carries (component-state supremacy) stays law and is restated in `V7-PLAN.md` |
 | `DESIGN.md` | pillars, current architecture, change log, lessons, **open watches** — the *why* |
 | `RULES.md` | **source of truth** — the ONE rules document (clean operational rules) |
 | `COMPONENTS.md` | **source of truth** — the physical manifest |
@@ -102,6 +103,12 @@ affects each axis in step 2, you don't understand it yet — go back to §2.
 *Brewhouses of the Hanse* — a **2–4p** medieval-Hanseatic brewing euro (c. 1350; a 5p mode runs but isn't balance-tuned), **medium / *Great Western Trail*–*Distilled* weight**. You run a merchant brewing house at **the Wharf** — four stations on a shared 2×2 (Market·Brewhouse·Cellar·Harbor) ringed by 8 slots — where the work runs **Source → Brew → Age → Ship.** Goods are the only currency — no money, no spendable prestige.
 
 **The frozen v5.8 reference: “Pay the Second” (`KEY hanse-v58`, designer-ruled 2026-08-24 — live at `archive/v5/`).** The complete version history and rationale live in **`DESIGN.md` §9** (v5 letters in detail, pre-5.0 as a digest); the live watch-list in **`DESIGN.md` §10**; the consolidated v5 decision record in `archive/records/V5-DECISIONS.md`. Gates at v5.7 (full oracle, 1,500 games, 2026-08-24): verify **378/378** · sim clean (0 crashes / 0 deadlocks) · **ladder every rung PASS** (85 / 63 / 69 / 88%) · render smoke PASS · aid ALL FIT. Pace **14.7 / 14.5 / 13.7** (band 84/88/87%); totals **78/79/71**. **LIVE WATCH — RUNAWAY MARGINS, and SKILL MAKES THEM WORSE:** journeyman 22.1 / 15.1 / 12.7, but **guildmaster 34.0 / 19.4 / 15.3** (2p blowouts 59%). They are THROUGHPUT, not the market: the winner's casks are worth **+6%** but they ship **+18%** more of them, and 2p majorities **now pay a second place** (v5.8 — only 3rd is skipped; the majority's share of the 2p margin more than halved, 8.4★ → 3.9★, and the presence gate *no parked dice, no share* is now PRINTED, not engine-only). Still **19.4★** at 2p and ~30★ at guildmaster — dented, not closed; the queued second half is the re-tiering (London/Bergen 9/5/2 · Bruges 5/4/2). The Bourse and the prizes are **cleared** — `BOURSE_START`/`PRIZE_PTS` are off the lever list. Two v5.7 reversals from the 1,850-game MC oracle (2026-08-24): **DEPTH IS NOT DEAD** — the "cannot keep three vessels full" finding was a greedy-bot artifact; at skill a specialist ships 7.1 casks like everyone else and loses on PRICE (3.17★/cask vs breadth's 4.78 — its one beer's marker lives on the floor), so **the Glut punishes specialisation by construction** (ruled 2026-08-24: depth retires as a standalone oracle lane — viable specialisation would be depth *paired* with buildings/specialists, gated on the up-shift supply). And **the clock is not the dice at a strong table** — 28% of GM 2p games end on the MAX_ROUND backstop because skilled seats hold dice instead of spending them. Read at a table before dialing (`DESIGN.md` §10).
+
+**THE V7 PROGRAM OPENS (designer-ruled 2026-08-31) — read `V7-PLAN.md` FIRST.** The
+v6.5b human playtest ruled the v6 build a regression in feel (the sea ran itself, no
+engine-building core, the clock dragged, scores illegible); v7 re-derives from the ten
+directives recorded there. v6.5b stays live at root as the test bed until the designer
+rules the P0 freeze. The v6 paragraph below stands as history:
 
 **THE V6 PROGRAM (designer-ruled 2026-08-29).** v6 "The Voyage" begins — the
 brew-and-ship double-down: a **sea map** (lanes charted leg by leg · posts · Kontor
