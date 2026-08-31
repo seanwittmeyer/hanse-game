@@ -109,12 +109,12 @@ v6.5b human playtest ruled the v6 build a regression in feel (the sea ran itself
 engine-building core, the clock dragged, scores illegible); v7 re-derives from the ten
 directives recorded there. **P0 is DONE — the complete v6.5b build is FROZEN PLAYABLE at
 `archive/v6/` (never edit it), and the v7.0 “The Guild” TEST BUILD is LIVE at root**
-(`KEY hanse-v70`, 2026-08-31): `play.html` · `RULES.md` · `COMPONENTS.md` §0 ·
+(`KEY hanse-v70a`, 2026-08-31): `play.html` · `RULES.md` · `COMPONENTS.md` §0 ·
 `STYLE.md` §4e · `playtests/verify-v7.js` are v7-current; `print.html` and
 `rulebook.html` still cut/describe the archived builds until the P5 kit pass. The v7
 shape in one breath: the v6.5 turn kept (MOVE adjacent · work the station: P + A + the
 flank loads **+ each flanking Venture**) · stations Market *Source 3 / Build* ·
-Brewhouse *Brew-search / Brew-top* · Harbor *Commission / Sail-now* · Cellar *Age 3 /
+Brewhouse *Brew / the second kettle (a 2nd full brew, +1H ⚙ — EVERY brew searches, v7.0a)* · Harbor *Commission / Sail-now* · Cellar *Age 3 /
 Load-any* · **the VENTURES return on the LEDGER grammar** (an L1 stands a tray die at 1, one die per
 ground for life; a RIVAL's use ticks it, cap 6 then 1★/serve ⚙; the owner uses free;
 pips to the owner at end; an L1 takes open ground 1G or replaces a Public Work 2G ⚙) ·

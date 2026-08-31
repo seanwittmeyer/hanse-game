@@ -3,7 +3,7 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (the one clean rules document, **v7.0**). Design rationale & history: `DESIGN.md` §9; the v7 program + mechanic sheet: `V7-PLAN.md`.
-> - The live build is `play.html` — **v7.0 “The Guild”** (`KEY hanse-v70`) — the source of truth on values and behaviour.
+> - The live build is `play.html` — **v7.0a “The Guild”** (`KEY hanse-v70a`) — the source of truth on values and behaviour.
 > - **The print kit (`print.html`) still cuts the ARCHIVED v6.5b build** — the v7 kit lands at the `V7-PLAN.md` P5 pass, after the numbers settle. Printed copy follows the **Term Registry (`STYLE.md`)**.
 > - **READ §0 FIRST.** §0 states the v7.0 kit truth — what was ADDED, RE-CUT, and RETIRED.
 >   §§1–17 below still enumerate the v5.8 body in detail and are superseded where §0 says
@@ -25,7 +25,7 @@
 **RE-CUT (existing components, new faces/data):**
 
 - **The Wharf board** — the station pairs re-print: Market **Source 3 / BUILD** ·
-  Brewhouse **Brew (search) / the second runnings (a second Brew — the top tile, as it lies)** · Harbor **Commission + 1 load / SAIL
+  Brewhouse **Brew (search) / the second kettle (a second full Brew · +1 `H` ⚙)** · Harbor **Commission + 1 load / SAIL
   (a docked Ship with 1+ of your casks sails now, unfull)** · Cellar **Age 3 / Load 1
   any**. The visit grammar (v6.5, kept): PRIMARY + ALTERNATE + a load at each flanking
   slot **+ each flanking Venture's action**.
@@ -323,6 +323,13 @@ picture; this note records the SHARED face re-cuts this pass):**
   TITLE moves to the FOOT, seated just above the action line on the gradient scrim —
   the character portrait's head stays clear; the cost pill alone keeps the top-right
   corner. Layout only — every printed value and word stands.
+- **v7.0a (designer-ruled, same day — `KEY hanse-v70a`):** the Brewhouse's ALTERNATE
+  reprints as **the second kettle** — a second FULL brew (search, choose) at **the
+  recipe's cost + 1 `H`** ⚙, the fee printed on the seat; the top-tile draw retires
+  from every channel (one brew grammar — the cask tiles' *Brew 1* bonus and the **Mash
+  Tun** L1 face reprint as full brews). **The Specialist FEE PILL retires from the
+  tile face** (`components.js`) — Bergen's free prize is the one channel, so a printed
+  fee was pure conditional noise (the archived kits carried it; the P5 pass re-cuts).
 
 - **The Venture tile reprints (`components.js` — the ONE home of the face):** the v5.5
   PUBLIC line leaves the foot with the line itself; the bottom-right square is now the

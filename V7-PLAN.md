@@ -10,7 +10,7 @@ and build out a new version of the game").** P0 is DONE — the complete v6.5b b
 frozen playable at `archive/v6/` (the v5.8 pattern) and the root is the v7 workbench.
 §10 below is the P1 MECHANIC SHEET — every directive answered with its component, every
 fork call taken ⚙ (the designer re-rules freely, the v6 test-build precedent). The v7.0
-test build runs at root: `play.html` (`KEY hanse-v70`) · `RULES.md` · `COMPONENTS.md` §0 ·
+test build runs at root: `play.html` (`KEY hanse-v70a`) · `RULES.md` · `COMPONENTS.md` §0 ·
 `STYLE.md` §4e · a fresh `playtests/verify-v7.js`. The §11 question list is what this
 build asks the human table.**
 
@@ -314,7 +314,7 @@ sketch of the second loop, recorded whole:
   builds until the designer signs the sheet.
 - **P2 — DOCS:** `RULES.md` v7.0 · `COMPONENTS.md` manifest · `STYLE.md` registry pass
   (contracts, invitations, halls, the market's new grammar).
-- **P3 — ENGINE:** `play.html` v7 (`KEY hanse-v70`) + a fresh verify battery + sim
+- **P3 — ENGINE:** `play.html` v7 (`KEY hanse-v70a`) + a fresh verify battery + sim
   re-pointed at the new counters (contracts earned, invitations spent, hall
   presentations, per-player unlocks, building usage dice).
 - **P4 — THE TABLE LOOP:** short human playtests EARLY and often, each against the §7.2
@@ -533,9 +533,12 @@ PASS.
   turn 1 places anywhere) · work its PRIMARY + its ALTERNATE + one load at each of its
   two flanking slots + each flanking Venture's action — any order, all optional, each
   stop once per visit (a stop is per-slot: used is used, even for a new arrival).
-- **The stations** ⚙: **Market** *Source 3 / Build* · **Brewhouse** *Brew-search /
-  Brew-top-tile* (the double kettle — the second brew access v6.5 lost, restored in
-  one visit) · **Harbor** *Commission / Sail-now* · **Cellar** *Age 3 / Load 1 any*.
+- **The stations** ⚙: **Market** *Source 3 / Build* · **Brewhouse** *Brew / the
+  second kettle* (the double kettle — the second brew access v6.5 lost, restored in
+  one visit; **v7.0a, designer-ruled same day: BOTH brews are full searches — the
+  top-tile draw retires everywhere as a conditional rule — and the second kettle
+  prints +1 `H` ⚙ on its seat**) · **Harbor** *Commission / Sail-now* · **Cellar**
+  *Age 3 / Load 1 any*.
 - **The clock, derived on paper (§6.2):** 13 dice ⚙ = ~8–10 brews + 2–4 ledger dice +
   0–2 presence. Three vessels turn a cask in ~2–3 visits; with the double kettle a
   committed brewer spends ~1 die/turn — the tray empties in **~11–15 turns**, the §5
@@ -544,10 +547,12 @@ PASS.
   it).
 - **The load bonuses** re-derive per D10's reservation (specialists, buildings and
   invitations come OFF the cask tiles): the 8-verb pool ⚙ is *Gain 2 goods · Age +2 ·
-  Load 1 more · Place 1 presence · Gain 1 recipe (its fee) · Brew 1 (top tile) ·
-  LIFT (this cask's die +1 as it boards, cap 6) · SAIL (after boarding you may sail
-  this Ship, even unfull)*. The *hire* and *venture* verbs leave the tiles (Bergen's
-  prize and the Build verb are those doors).
+  Load 1 more · Place 1 presence · Gain 1 recipe (its fee) · Brew 1 (a full brew,
+  v7.0a) · LIFT (this cask's die +1 as it boards, cap 6) · SAIL (after boarding you
+  may sail this Ship, even unfull)*. The *hire* and *venture* verbs leave the tiles
+  (Bergen's prize and the Build verb are those doors — and v7.0a strips the printed
+  specialist fees whole: a fee with no live channel was the free-here-pay-there
+  conditionality the designer ruled out).
 
 ### 10.9 · What carries untouched
 

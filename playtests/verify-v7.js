@@ -30,7 +30,7 @@ function mkCask(style,die,act){var st=STYLES[style];return {style:style,q:st.q,d
 function mkLg(dest,cert){return {dest:dest,cert:cert?1:0,queue:[],glut:{},letter:{},landed:{}};}
 
 // ---------- 0 · identity & setup ----------
-t('KEY is hanse-v70',function(){eq(KEY,'hanse-v70');});
+t('KEY is hanse-v70a',function(){eq(KEY,'hanse-v70a');});
 t('setup: all 8 slots furnished, no bag, warm hulls at s6/s7',function(){fresh(3);
   var works=0;SLOTS.forEach(function(s){var b=S.buildings[s.id];if(b&&!b.v)works++;});
   eq(works,8,'works standing');
@@ -492,6 +492,36 @@ t('a mid-game resume recomputes the recap from the persisted baseline (the boot 
   S=JSON.parse(JSON.stringify(S));UI={sub:'move'};   // the save/boot round trip
   var R=recapDiff(cur());
   eq(R.join('|'),shown.join('|'),'the resume reads the same list');});
+
+// ---------- 8c · the second kettle & the one brew grammar (v7.0a) ----------
+t('the SECOND KETTLE: the Brewhouse alternate adds +1H to the recipe’s cost',function(){fresh(2);var p=cur();
+  p.recipes=['gruit'];p.grain=3;p.hops=3;p.vessels=[null,null,null];
+  UI.sub='brew';UI.brew={returnTo:'end',free:false,sur:1};
+  var g0=p.grain,h0=p.hops;
+  brewPick('gruit');
+  // gruit's stack may be multi-verb → the search picker opens; commit through it
+  if(UI.sub==='brewverb')brewVerbPick(Object.keys(pileVerbs('gruit'))[0]);
+  eq(g0-p.grain,1,'the recipe’s 1G');
+  eq(h0-p.hops,1,'+1H — the kettle’s surcharge');
+  ok(p.vessels.some(function(c){return c&&c.style==='gruit';}),'the cask stands');});
+t('the second kettle’s availability reads the +1H (a hopless house cannot fire it)',function(){fresh(2);var p=cur();
+  p.recipes=['gruit'];p.grain=3;p.hops=0;p.vessels=[null,null,null];
+  ok(stationActAvail(p,'B','brew'),'the free kettle brews');
+  ok(!stationActAvail(p,'B','brewtop'),'the second kettle needs the hop');
+  p.hops=1;ok(stationActAvail(p,'B','brewtop'),'one hop opens it');});
+t('EVERY brew searches — the load-bonus and the Mash Tun offer the tile choice too',function(){fresh(2);var p=cur();
+  p.recipes=['gruit'];p.grain=5;p.hops=5;p.vessels=[null,null,null];
+  S.piles.gruit=['source','age','load'];   // a multi-verb stack forces the search picker
+  UI.sub='brew';UI.brew={returnTo:'end',free:false,sur:0};
+  brewPick('gruit');
+  eq(UI.sub,'brewverb','the search picker opened (no top-tile channel anywhere)');
+  brewVerbPick('age');
+  var c=p.vessels.filter(function(x){return x;}).pop();
+  eq(c.act,'age','the CHOSEN tile rides the cask');});
+t('the HIRE channel and SPEC_FEE are retired — Bergen’s free prize is the one door',function(){
+  ok(typeof enterHire==='undefined','enterHire gone');
+  ok(typeof SPEC_FEE==='undefined','SPEC_FEE gone');
+  ok(typeof hireable==='function','the Bergen eligibility read survives');});
 
 // ---------- 9 · the clock ----------
 t('MAX_ROUND is 22 and backstops the end',function(){fresh(2);

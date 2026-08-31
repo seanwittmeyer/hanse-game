@@ -245,6 +245,40 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
 
+### v7.0a “The Second Kettle” (2026-08-31, designer-ruled — `KEY hanse-v70a`)
+
+*"Allow two brews in one visit to the brewhouse station, simply increase the cost of the
+second by 1 hop… I'd also simplify so brew always allows search… these conditional rules
+(free here, pay there for the specialists for example, or top of deck vs search there)
+are confusing to players."*
+
+- **ONE BREW GRAMMAR — every brew is a full search.** The top-tile draw retires from
+  every channel it lived on: the Brewhouse's alternate, the cask tiles' *Brew 1* load
+  bonus, and the Mash Tun L1 (all reprint as full brews — search the stack, choose the
+  tile, pay the recipe's cost). The search/top split was exactly the free-here-lesser-
+  there conditionality the ruling strips.
+- **THE SECOND KETTLE ⚙:** the Brewhouse's alternate seat prints **+1 `H`** on top of
+  the recipe's cost — a second full brew per visit, priced. (The one-day "second
+  runnings" name retired with the top-tile draw it described; *the double kettle*
+  stays the station's nickname.)
+- **THE SPECIALIST FEES RETIRE WHOLE** (`SPEC_FEE`, the tile's fee pill, the vestigial
+  hire flow): Bergen's free prize is the ONE channel, so a printed fee was conditional
+  noise. The recipe fee stands — it is UNIFORM (`H` = Q−3 at every channel, Bruges
+  included), which is the simple kind.
+- **The ruling overrides the station-verb panel's recommendation, eyes open** (the
+  panel had said: keep, unpriced — §10). The A/B on the AS-RULED build (225 games/count
+  ×2 arms, journeyman, 0 crashes): rounds, brews, winner totals and margins all
+  ~flat — the fee barely changes bot behavior — but **ceiling-endings rise 2p
+  28.9%→37.8% · 3p 17.3%→23.1% · 4p 7.6%→13.3%** (dice commit a beat slower, so more
+  bot games reach the round-22 backstop; the same drift the panel measured on the old
+  form). Caveats both ways: greedy bots can't VALUE the search the fee now buys (a
+  human's second kettle chooses its tile), and the v5.8 watch already knew skilled 2p
+  seats hold dice. **The human table reads it** (§11 Q6); the dial if 2p drags: the
+  fee ⚙ (off, or +1G), or the 13-dice/MAX_ROUND pair — never a re-map (§10).
+- Gates: `verify-v7.js` **66/66** (4 new: the surcharge paid · the +1H availability
+  read · search-everywhere · the hire/fee retirement) · sim smoke 0 crashes /
+  0 deadlocks 2–4p · render smoke clean · **KEY bump** `hanse-v70` → `hanse-v70a`.
+
 ### v7.0 “The Guild” (2026-08-31, designer-called: “design a plan and build out a new version” — the plan and sheet live in `V7-PLAN.md`)
 The v6 program (“The Voyage” — sea map, transit, the current, posts/factors) was ruled a
 **regression in feel** at the 2026-08-31 human table (`V7-PLAN.md` §1: the sea ran
@@ -844,19 +878,21 @@ are the things to read when one runs — or when a human table sits down.*
 
 **v7 WATCHES (2026-08-31 — the station-verb panel: 3 proposals · 2 sim probes · a judge):**
 
-- **THE DOUBLE KETTLE STANDS, UNPRICED — the fee arm is MEASURED AND SHELVED.** The
-  designer's "second brew costs +1 hop" instinct was probed in three independent
-  ~150–300-game arms: the fee suppresses only ~10–20% of second-kettle use while
-  pushing **2p MAX_ROUND-ceiling endings 27–31% → 39–41%** (the v6-drag disease
-  marker) — a tax that changes little behavior and drags the fragile count's clock.
-  Relocations all failed a law or a probe: Brew-top@Market = a self-funding kettle
-  and MEASURABLY stronger degenerate corridor play (Cellar arrivals 8.0 → 1.0);
-  removal outright = 2p ceiling endings ~50% (the v6 wound re-opened). The seat is
-  already component-throttled (2 open vessels of 3 · 2 recipe payments · tray dice ·
-  the bipartite 2×2). If a price is ever wanted: **+1G throttles, +1H flavors** —
-  either only after a ≥500-game 2p corpus (small-arm seat-skew flags). The alternate
-  is NAMED **the second runnings** (parti-gyle — the Zerbster grammar) and the
-  "blind" wording is corrected: the stacks are face-up; the cost is no CHOICE.
+- **THE SECOND KETTLE (v7.0a — the designer RULED past the panel, eyes open).** The
+  station-verb panel had recommended keeping the double kettle unpriced: in three
+  independent ~150–300-game arms a +1H fee on the *top-tile* alternate suppressed only
+  ~10–20% of second-kettle use while pushing **2p MAX_ROUND-ceiling endings 27–31% →
+  39–41%** (the v6-drag marker). The designer weighed that and ruled the fee IN — as
+  part of a SIMPLIFICATION the panel never tested: **every brew is now a full search**
+  (the top-tile draw and its free-here/lesser-there conditionality retire everywhere),
+  so the +1H buys a real brew, not a lesser one. The relocation findings stand un-
+  overruled (Brew-top@Market = the self-funding kettle and measurably stronger
+  degenerate corridor play; removal outright = ~50% 2p ceiling endings). **THE WATCH:
+  the 2p ceiling-ending share under the as-ruled build** — the A/B against v7.0 is in
+  the §9 v7.0a entry; if a human 2p table drags, the panel's read says look HERE
+  first, and the dial is the fee (⚙, off or +1G), never a re-map. The panel's
+  relocation and stack watches (below) carry unchanged. *(The one-day "second
+  runnings" name retired with the top-tile draw it described.)*
 - **THE STACK, not the seat:** Brewhouse + a flanking Mash Tun/Great Copper on s2/s3
   = 3–4 brews per visit over docking hulls — watch a Gruit tempo mill at the table;
   the lever is Venture faces or hull placement, never the station map.

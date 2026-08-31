@@ -97,7 +97,7 @@ own lesser counter. A visit works both. Never a menu:
 | Station | PRIMARY | ALTERNATE (the same visit) |
 |---|---|---|
 | **A · Market** — *the merchant's desk* | **SOURCE 3** — take **3 goods**, any mix | **BUILD** — place or advance ONE of your Venture tiles; the fee prints on the face going down (§5) |
-| **B · Brewhouse** — *the double kettle* | **BREW** — pay a recipe into an open vessel + a tray die at the printed start value; **search the beer's stack — choose the tile** | **BREW** — *the second runnings*: the stack's **TOP tile, as it lies** (the stacks are face-up — the cost is no choice, not no information) |
+| **B · Brewhouse** — *the double kettle* | **BREW** — pay a recipe into an open vessel + a tray die at the printed start value; **search the beer's stack — choose the tile** | **BREW** — *the second kettle*: a second full brew (search, choose), at **the recipe's cost + 1 `H`** ⚙ |
 | **C · Harbor** — *the shipmaster's desk* | **COMMISSION** — pay the Ship's printed fee (Cog free · Hulk 1 `G` ⚙), place it on an eligible slot, **one free load onto it** (§7); you may plant your **private flag** for +1 `G` ⚙ | **SAIL** — **ANY docked Ship carrying 1+ of YOUR casks** sails NOW, even unfull, free ⚙ (a flagged hull sails early only for its owner) |
 | **D · Cellar** | **AGE 3** — turn your aging dice up three steps, split freely | **LOAD 1** Ready cask onto **any** docked Ship |
 
@@ -143,7 +143,7 @@ at every channel) carry from v5.8 unchanged.
 
 **The eight load bonuses (v7 pool ⚙):** *Gain 2 goods · Age +2 · Load 1 more (onto any
 eligible docked Ship — a normal load; its cask's bonus fires too) · Place 1 presence ·
-Gain 1 recipe (its printed fee) · Brew 1 (the top tile) · **LIFT** (this cask's die +1,
+Gain 1 recipe (its printed fee) · Brew 1 (a full brew — search, at its cost) · **LIFT** (this cask's die +1,
 cap 6 — applied **as it boards**, before the minimum reads) · **SAIL** (after boarding,
 you may sail this Ship now, even unfull)*. A bonus fires as its cask boards (after any
 sail it completes; LIFT alone applies at boarding). Specialists, buildings and
@@ -188,7 +188,7 @@ components** (their vessels, their dice, their goods).
 
 | Theme | L1 | L2 |
 |---|---|---|
-| **brew** | **Mash Tun** — BREW: the stack's TOP tile (your recipe, your cost) | **Great Copper** — gain 2 goods AND BREW (full search) |
+| **brew** | **Mash Tun** — BREW: a full brew (your recipe, your cost) | **Great Copper** — gain 2 goods AND BREW |
 | **age** | **Warehouse** — Age 2 (your casks), then load 1 of your Ready casks onto ANY eligible docked Ship | **Assay Loft** — pay 2 `H`: EVERY one of your maturing casks straight to READY |
 | **die** | **Rack House** — swap the dice of 2 of your vessel casks | **Lagering Cellar** — one of your vessel casks' die +1 (cap 6, past its quality) |
 | **points** | **Counting House** — *trigger:* a rival's load at this slot ticks the ledger; **your** loads here **+1★** each | **Staple Rights** — *trigger:* your casks sailed from this slot **+2★** each; a rival's sail from this slot ticks the ledger once |

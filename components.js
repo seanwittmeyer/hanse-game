@@ -205,14 +205,14 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'graduation-cap', nm:'Guild Scholar', art:'a bundle of sealed recipe scrolls', act:LU('scroll-text')+' Recipes: pay no fee', g:2, c:'#5b3a8e', n:1},   // every channel, Bruges included
   {ic:'bed',        nm:'Innkeeper', art:'a foaming glazed stoneware ale jug', act:'turn start: 3+ '+LU('beer')+' → age +1', g:2, c:'#5b3a8e', n:1},   // v4.12 rework — a full house earns the drip
   {ic:'luggage',    nm:'Supercargo', art:'a sealed manifest over a rope-bound chest', act:'your '+LU('beer')+' lands off-turn: <span class="g">+1'+LU('wheat','g ic')+'</span><span class="h">+1'+LU('sprout','h ic')+'</span>', h:2, c:'#5b3a8e', n:1},   // v6.0 re-derive: the trigger moves to the LANDING (the current included)
-  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'Deliver a '+LU('beer')+': '+LU('star-plus1','starmark'), g:1, h:1, c:'#5b3a8e', n:1},   // v5.7 re-derive ⚙ — the chronicle records every voyage (the Manifest claim retired)
+  {ic:'book-open',  nm:'Chronicler', art:'an open chronicle with a quill', act:'Land a '+LU('beer')+': '+LU('star-plus1','starmark'), g:1, h:1, c:'#5b3a8e', n:1},   // v7 ⚙ — pays on every LANDING, delivered or presented
   {ic:'gavel',      nm:'Alderman', art:'a chain of office on a velvet cushion', act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), g:2, c:'#5b3a8e', n:1},
   {ic:'megaphone',  nm:'Town Crier', art:'a brass handbell', act:LU('map-pin')+' Place presence: '+LU('star-plus2','starmark'), g:1, c:'#5b3a8e', n:1},   // v4.12: +2★ ⚙ per placed die
-  {ic:'scale',      nm:'Wharfinger', art:'an iron-bound toll chest on a wharf ledger stand', act:LU('post')+' Your posts’ tolls: <span class="g">+1'+LU('wheat','g ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v6.1 re-derive (was the Chandler's swap) — compounds the Toll Court
+  {ic:'scale',      nm:'Chandler', art:'a chandlery counter of tallow and rope', act:LU('store')+' Source: may swap 1'+LU('wheat','g ic')+' ↔ 1'+LU('sprout','h ic'), g:1, c:'#5b3a8e', n:1},   // v7 — the v5.1 swap returns (the Wharfinger retired with the sea)
   {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:LU('ship')+' Commission: pay no fee', h:1, c:'#5b3a8e', n:1},
-  // ---- the SEA singles (v6.0/v6.2 re-derives of the v5.1 alt-upgrade pair) ⚙ ----
-  {ic:'navigation', nm:'Pilot', art:'a weathered seaman at a whipstaff, reading the water', act:'At turn start: a '+LU('sailboat')+' with your '+LU('beer')+' advances 1', g:1, c:'#5b3a8e', n:1},   // v6.0 re-derive (was the Broker)
-  {ic:'compass',    nm:'Surveyor', art:'a divider compass over a sea chart', act:LU('compass')+' Chart: passage &amp; post fees waived', h:1, c:'#5b3a8e', n:1},   // v6.0 re-derive (was the Brewer's Mate); the factor-side fees still apply
+  // ---- the v7 GUILD singles ⚙ (stand-in art via slug — finals briefed in art/PROMPTS.md) ----
+  {ic:'trending-up',nm:'Coper', slug:'broker', art:'a beer-barge counter flying a whisk of hops', act:'After your glut: 1 landed '+LU('beer')+' +1', g:1, h:1, c:'#5b3a8e', n:1},   // v7 — the down-only market's one hand
+  {ic:'mail',       nm:'Herald', slug:'quaymaster', art:'a guild letter-horn over a contract book', act:LU('mail')+' Claim: <span class="g">+1'+LU('wheat','g ic')+'</span><span class="h">+1'+LU('sprout','h ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v7 — contracts build on more
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // v0.16 — the scarce CHARTER CONTRACT (a CARD): start 2/house, buy more at the Market (1 G), spend 1 + a
@@ -308,7 +308,7 @@ const VSEP=s=>'<span class="vsep">'+s+'</span>';
 // use turns it up, cap 6; the pips score to the owner at game end). The action line is
 // open to ANY visitor, on their own casks — the ledger tick IS the rent.
 const VENTURES=[
-  {k:'brew',   l1:{nm:'Mash Tun',        ic:'flask-conical', own:VBIG(LU('brew-top')), txt:'Brew: the top tile', art:'venture-factor-l1.png'},
+  {k:'brew',   l1:{nm:'Mash Tun',        ic:'flask-conical', own:VBIG(LU('flask-conical')), txt:'Brew — full cost', art:'venture-factor-l1.png'},
                l2:{nm:'Great Copper',    ic:'flask-conical', own:VBIG(LU('goods-2'))+VSEP('+')+VBIG(LU('flask-conical')), art:'venture-rack-l2.png'}},
   {k:'age',    l1:{nm:'Warehouse',       ic:'boxes',   own:VBIG(LU('age-2'))+VSEP('+')+VBIG(LU('package-plus')), art:'venture-warehouse-l1.png'},
                l2:{nm:'Assay Loft',      ic:'scale',   own:VBIG('<b class="vnum">2</b>'+LU('sprout','h'))+VSEP('→')+VBIG(LU('check')), art:'venture-counting-l2.png'}},
@@ -395,9 +395,9 @@ const IMP_FOOT='#4a3a6e';   // Specialist foot/base — PURPLE (the third tile t
 function improveTile(d){const k=d.slug||slug(d.nm);   // v4.6: slug override — three guild tiles ride spare art as stand-ins
   return '<div class="icard" style="--c:'+IMP_FOOT+'">'
   +artLayer('improve-'+k+'.jpg')   // .jpg not .png — a flat-colour-field object shot compresses ~8x smaller as JPEG at no visible quality loss
-  +'<div class="ic-top"><span class="ic-cost">'+cost(d.g,d.h)+'</span></div>'
   +'<div class="ic-foot"><span class="ic-nm">'+d.nm+'</span><span class="ic-act">'+d.act+'</span></div>'
-  +'</div>';}   // designer-ruled 2026-08-31: the title sits at the FOOT, above the action — the character's head stays clear
+  +'</div>';}   // designer-ruled 2026-08-31: the title sits at the FOOT, above the action (the head stays clear);
+                // v7.0a same day: the FEE PILL retires — specialists are Bergen's free prize, the one channel (the g/h data stays inert for the archived kits)
 // printables2 v3: a CASK is a double-sided CARD (2×3). FRONT = the buy/age side: Q+name on the top end, brew
 // cost under it, the AGING TRACK in the centre (the card carries its own step count — so the player-board
 // maturation track + cellar markers come off the board), and Q+action on the bottom end. BACK = the brewed
@@ -555,7 +555,7 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .icard > .artbg{z-index:0}\n\
   .icard .ic-top{display:flex;align-items:center;gap:.06in;padding:.12in .14in 0;justify-content:flex-end}\n\
   .icard .ic-nm{display:block;font-variant:small-caps;font-weight:bold;font-size:.19in;line-height:1.02;margin-bottom:.035in}\n\
-  .icard .ic-foot{background:linear-gradient(to top,var(--c) 0%,var(--c) 42%,transparent 100%);\n\
+  .icard .ic-foot{margin-top:auto;background:linear-gradient(to top,var(--c) 0%,var(--c) 42%,transparent 100%);\n\
     padding:.3in .17in .13in;display:flex;flex-direction:column;align-items:flex-start;gap:0}\n\
   .icard .ic-act{font-size:.115in;line-height:1.18;flex:1}\n\
   .icard .ic-act::first-letter{text-transform:uppercase}\n\
