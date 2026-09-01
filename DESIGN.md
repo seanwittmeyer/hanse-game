@@ -278,6 +278,15 @@ are confusing to players."*
 - Gates: `verify-v7.js` **66/66** (4 new: the surcharge paid · the +1H availability
   read · search-everywhere · the hire/fee retirement) · sim smoke 0 crashes /
   0 deadlocks 2–4p · render smoke clean · **KEY bump** `hanse-v70` → `hanse-v70a`.
+- **The P5 rulebook pass landed the same day** (doc-only — no rules change, no KEY
+  move): `rulebook.html` re-derived whole from `RULES.md` v7.0a — the same 4-page
+  letter frame and teaching voice, every section re-cut to the v7 truth (the six-stop
+  visit · the second kettle · the ledger · the lane gates · DELIVER vs PRESENT · the
+  contract's four lives · the ladders · deal-8-no-bag · the down-only Bourse · round
+  22), fit-gated per page headlessly (0 overflow) and audited by a 12-domain
+  adversarial drift pass against `RULES.md`/the engine. Two RULES.md alignments fell
+  out of the pass: the stale "kit/rulebook still archived" intro line, and the
+  refresh-the-demand arm now states the engine's no-seated-dice gate.
 - **The P5 print pass landed the same day** (kit-only — no rules change, no KEY move):
   `print.html` re-cut whole from the archived v6.5b kit to this build per
   `COMPONENTS.md` §0/§10 — new shared faces in `components.js` (the ⚜ contract letter ·

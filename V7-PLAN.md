@@ -320,11 +320,12 @@ sketch of the second loop, recorded whole:
 - **P4 — THE TABLE LOOP:** short human playtests EARLY and often, each against the §7.2
   feel metrics; sims run alongside for robustness only. The oracle/ladder rebuild serves
   the table, not the other way around.
-- **P5 — KIT:** print + rulebook + aids after the numbers settle. **The print half
-  LANDED 2026-08-31** — `print.html` + `components.js` cut the full `COMPONENTS.md` §0
-  kit (contracts ⚜ · demand cards · the ladder-printed Destinations board · ship deck
-  18 · the Venture sheet · flags + ladder markers · the v7 tri-fold aid + checklist);
-  `rulebook.html` remains the archived cut until its own pass.
+- **P5 — KIT:** print + rulebook + aids after the numbers settle. **LANDED WHOLE
+  2026-08-31** — `print.html` + `components.js` cut the full `COMPONENTS.md` §0 kit
+  (contracts ⚜ · demand cards · the ladder-printed Destinations board · ship deck 18 ·
+  the Venture sheet · flags + ladder markers · the v7 tri-fold aid + checklist), and
+  `rulebook.html` re-derived whole from `RULES.md` the same day (4 pages, fit-gated,
+  audited against the rules by a 12-domain adversarial pass).
 
 ---
 

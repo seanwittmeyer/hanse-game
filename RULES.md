@@ -4,8 +4,8 @@
 its mechanic sheet and its red-team record live in `V7-PLAN.md`; design rationale in
 `DESIGN.md`; the frozen v5.8 game at `archive/v5/` and the frozen v6.5b test build at
 `archive/v6/`. Numbers marked ⚙ are tunable placeholders. This is the v7.0 TEST BUILD:
-`play.html`, this document, `COMPONENTS.md` §0 and `STYLE.md` §4e are current; the print
-kit and the rulebook still describe the archived builds until the numbers settle.*
+`play.html`, this document, `COMPONENTS.md` §0, `STYLE.md` §4e, the print kit
+(`print.html`) and the rulebook (`rulebook.html`) are all current.*
 
 **2–4 players · c. 1350 · you run a merchant brewing house of the Hanseatic League.**
 Goods are the only currency — no money, no spendable prestige. The work runs **Source →
@@ -19,7 +19,7 @@ guild's halls pay the brewer who arrives invited. The winner is the player with 
 
 Each player starts with (⚙):
 
-- **3 `G` (grain), 2 `H` (hops)** — storage cap 8 ⚙.
+- **3 `G` (grain), 2 `H` (hops)** — storage cap **8 of each good** ⚙.
 - The **Gruit** and **Hopped** recipe cards (COLLECTED side; a card completes on that
   beer's first **load**). More recipes are earned (§9).
 - A **player board**: 3 vessel slots · 2 specialist seats, all open.
@@ -57,7 +57,9 @@ Shared board:
 - Warm start: a **Hulk → Bruges** docks at **s6** and the deck's next **Bruges- or
   Bergen-bound** Ship at **s7** ⚙.
 
-Each player places a worker on any station — opening placement free. First player fixed.
+Workers start OFF the board — each seat's first turn PLACES its worker on any station
+(§2), in turn order, so later seats read the opening wharf before choosing. First
+player fixed.
 
 ---
 
@@ -269,7 +271,8 @@ Kontor's **prize** — one of:
 - **the port's thing** (below);
 - **2★** ⚙;
 - **refresh the demand** ⚙ — the well's card goes under the demand deck and a fresh
-  one deals at once (the dud-card valve).
+  one deals at once (the dud-card valve; only while **no die sits on the card** — a
+  seated card is spoken for).
 Novgorod prints **no prize line at all** — its premium is the whole payment.
 
 | Kontor | Minimum ⚙ | Lane | The port's thing ⚙ | Ladder base (1st/2nd) ⚙ |
@@ -339,7 +342,7 @@ bought. The v6 sea singles (Pilot · Surveyor · Wharfinger) retire; the roster 
 
 ## 13. Goods & storage
 
-`G` grain · `H` hops — the only currency. Cap 8 ⚙. Faucets: the Market, load bonuses,
+`G` grain · `H` hops — the only currency. Cap **8 of each** ⚙. Faucets: the Market, load bonuses,
 prizes, the Bonded Store, the Herald. Drains: brews, commissions & flags, Venture fees,
 recipe fees.
 

@@ -4,7 +4,7 @@
 >
 > - Operational rules: `RULES.md` (the one clean rules document, **v7.0**). Design rationale & history: `DESIGN.md` §9; the v7 program + mechanic sheet: `V7-PLAN.md`.
 > - The live build is `play.html` — **v7.0a “The Guild”** (`KEY hanse-v70a`) — the source of truth on values and behaviour.
-> - **The print kit (`print.html`) cuts THIS v7.0a build** (the P5 kit pass landed 2026-08-31; `rulebook.html` still describes the archived v5.8 build until its own pass). Printed copy follows the **Term Registry (`STYLE.md`)**.
+> - **The print kit (`print.html`) AND the rulebook (`rulebook.html`) cut/describe THIS v7.0a build** (the P5 kit + rulebook passes, 2026-08-31). Printed copy follows the **Term Registry (`STYLE.md`)**.
 > - **READ §0 FIRST.** §0 states the v7.0 kit truth — what was ADDED, RE-CUT, and RETIRED.
 >   §§1–17 below still enumerate the v5.8 body in detail and are superseded where §0 says
 >   so; the full section rewrite is the P5 docs-and-kit pass.
@@ -74,7 +74,7 @@ tiles and Chancery stay in git history).
 
 ## 1. Conventions
 
-- **Goods:** `G` = grain, `H` = hops — the only currency. Storage cap 8 ⚙.
+- **Goods:** `G` = grain, `H` = hops — the only currency. Storage cap **8 of each** ⚙ (the per-good reading is the engine's, stated at the v7 rulebook pass).
 - **A line** = two stations + the two slots beside them. A slot holds **a building (bottom)
   and/or a ship (top)** — never casks (there is no deploy).
 - **The die is the cask:** set at brew to the printed start value (= quality − aging steps),
@@ -331,6 +331,9 @@ picture; this note records the SHARED face re-cuts this pass):**
   tile face** (`components.js`) — Bergen's free prize is the one channel, so a printed
   fee was pure conditional noise (the archived kits carried it; the P5 pass re-cuts).
 
+- **The player-board supply note reprints** (`components.js`, the v7 rulebook pass):
+  “goods max 8” → “goods max 8 **each**” — the per-good cap is the engine's reading and
+  now the stated one (§1 Conventions).
 - **The Venture tile reprints (`components.js` — the ONE home of the face):** the v5.5
   PUBLIC line leaves the foot with the line itself; the bottom-right square is now the
   printed **LEDGER SEAT** (dashed, die-marked) — the tray die stands there at 1, a

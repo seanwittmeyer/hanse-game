@@ -458,7 +458,7 @@ function playerBoard(d,live){const L=live||{};
       +'<span class="pbrd-supply"><span class="pbrd-sup" title="quality dice \u2014 tray/pool">'+LU('dices')+seatBox(L.dice)+'</span>'
         +'<span class="pbrd-sup pbg" title="grain">'+LU('wheat')+seatBox(L.grain)+'</span>'
         +'<span class="pbrd-sup pbh" title="hops">'+LU('sprout')+seatBox(L.hops)+'</span>'
-        +'<span class="pbrd-note">start Gruit+Hopped \u00b7 13 dice \u00b7 goods max 8</span></span>'
+        +'<span class="pbrd-note">start Gruit+Hopped \u00b7 13 dice \u00b7 goods max 8 each</span></span>'
     +'</div>'
     +'<div class="pbrd-row">'+vsl(1)+vsl(2)+vsl(3)+'</div>'
     +'<div class="pbrd-row">'+ssl(1)+ssl(2)
