@@ -10,7 +10,7 @@ and build out a new version of the game").** P0 is DONE — the complete v6.5b b
 frozen playable at `archive/v6/` (the v5.8 pattern) and the root is the v7 workbench.
 §10 below is the P1 MECHANIC SHEET — every directive answered with its component, every
 fork call taken ⚙ (the designer re-rules freely, the v6 test-build precedent). The v7.0
-test build runs at root: `play.html` (`KEY hanse-v70a`) · `RULES.md` · `COMPONENTS.md` §0 ·
+test build runs at root: `play.html` (`KEY hanse-v70b`) · `RULES.md` · `COMPONENTS.md` §0 ·
 `STYLE.md` §4e · a fresh `playtests/verify-v7.js`. The §11 question list is what this
 build asks the human table.**
 
@@ -320,11 +320,12 @@ sketch of the second loop, recorded whole:
 - **P4 — THE TABLE LOOP:** short human playtests EARLY and often, each against the §7.2
   feel metrics; sims run alongside for robustness only. The oracle/ladder rebuild serves
   the table, not the other way around.
-- **P5 — KIT:** print + rulebook + aids after the numbers settle. **The print half
-  LANDED 2026-08-31** — `print.html` + `components.js` cut the full `COMPONENTS.md` §0
-  kit (contracts ⚜ · demand cards · the ladder-printed Destinations board · ship deck
-  18 · the Venture sheet · flags + ladder markers · the v7 tri-fold aid + checklist);
-  `rulebook.html` remains the archived cut until its own pass.
+- **P5 — KIT:** print + rulebook + aids after the numbers settle. **LANDED WHOLE
+  2026-08-31** — `print.html` + `components.js` cut the full `COMPONENTS.md` §0 kit
+  (contracts ⚜ · demand cards · the ladder-printed Destinations board · ship deck 18 ·
+  the Venture sheet · flags + ladder markers · the v7 tri-fold aid + checklist), and
+  `rulebook.html` re-derived whole from `RULES.md` the same day (4 pages, fit-gated,
+  audited against the rules by a 12-domain adversarial pass).
 
 ---
 
@@ -537,7 +538,9 @@ PASS.
   turn 1 places anywhere) · work its PRIMARY + its ALTERNATE + one load at each of its
   two flanking slots + each flanking Venture's action — any order, all optional, each
   stop once per visit (a stop is per-slot: used is used, even for a new arrival).
-- **The stations** ⚙: **Market** *Source 3 / Build* · **Brewhouse** *Brew / the
+- **The stations** ⚙: **Market** *Source 3 / Source 1* (**v7.0b, designer-ruled
+  2026-09-01: BUILD leaves the counter** — building is limited to delivery prizes and
+  cask bonuses; the Market's ALTERNATE reverts to the lesser counter) · **Brewhouse** *Brew / the
   second kettle* (the double kettle — the second brew access v6.5 lost, restored in
   one visit; **v7.0a, designer-ruled same day: BOTH brews are full searches — the
   top-tile draw retires everywhere as a conditional rule — and the second kettle
@@ -552,11 +555,14 @@ PASS.
 - **The load bonuses** re-derive per D10's reservation (specialists, buildings and
   invitations come OFF the cask tiles): the 8-verb pool ⚙ is *Gain 2 goods · Age +2 ·
   Load 1 more · Place 1 presence · Gain 1 recipe (its fee) · Brew 1 (a full brew,
-  v7.0a) · LIFT (this cask's die +1 as it boards, cap 6) · SAIL (after boarding you
-  may sail this Ship, even unfull)*. The *hire* and *venture* verbs leave the tiles
-  (Bergen's prize and the Build verb are those doors — and v7.0a strips the printed
-  specialist fees whole: a fee with no live channel was the free-here-pay-there
-  conditionality the designer ruled out).
+  v7.0a) · LIFT (this cask's die +1 as it boards, cap 6) · BUILD (place or advance
+  ONE of your Ventures, its printed fee — v7.0b: it takes the SAIL seat; sail-early
+  keeps its one home at the Harbor's ALTERNATE)*. The *hire* and *venture* verbs left
+  the tiles at v7.0 (Bergen's prize and the build door are those channels — and v7.0a
+  strips the printed specialist fees whole: a fee with no live channel was the
+  free-here-pay-there conditionality the designer ruled out); **v7.0b returns *build*
+  to the tiles as the door itself** — with London's prize the only two ways a Venture
+  reaches ground.
 
 ### 10.9 · What carries untouched
 

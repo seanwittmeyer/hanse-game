@@ -1,4 +1,4 @@
-// Brewhouses of the Hanse — the shared CARD COMPONENT LIBRARY (v7.0a kit).
+// Brewhouses of the Hanse — the shared CARD COMPONENT LIBRARY (v7.0b kit).
 // Single source of the printed card faces: data + generators + card CSS, used by BOTH
 // print.html (the print kit) and play.html (the app mirrors the kit). Faces are the
 // canon — edit a card HERE, never per-page. Everything lives in one IIFE and is exposed as
@@ -48,7 +48,7 @@ const CASK_POOL=[   // v4.0: the cask action is a LOAD BONUS — it fires as the
   {k:'reach',   ai:'map-pin',       act:'+1 presence',         q:2},   // always FREE (v5.1 — the priced channel retired with the Almoner's Stall)
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe',          q:2},
   {k:'lift',    ai:'die-plus1',   act:'Die +1 as it boards',      q:2},   // v7 D10 — LIFT: cap 6, before the minimum reads
-  {k:'sailb',   ai:'sail',         act:'Sail this Ship now',       q:2},   // v7 D10 — SAIL: after boarding, even unfull
+  {k:'build',   ai:'hammer',       act:'Build 1 Venture · its fee',q:2},   // v7.0b — BUILD: the cask bonus is a Venture door (the other is London's prize)
   {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:3},   // v4.12: Q3+ (was Q4+)
 ];
 const poolFor=q=>CASK_POOL.filter(a=>q>=a.q);   // the printed mix per quality tier
@@ -458,7 +458,7 @@ function playerBoard(d,live){const L=live||{};
       +'<span class="pbrd-supply"><span class="pbrd-sup" title="quality dice \u2014 tray/pool">'+LU('dices')+seatBox(L.dice)+'</span>'
         +'<span class="pbrd-sup pbg" title="grain">'+LU('wheat')+seatBox(L.grain)+'</span>'
         +'<span class="pbrd-sup pbh" title="hops">'+LU('sprout')+seatBox(L.hops)+'</span>'
-        +'<span class="pbrd-note">start Gruit+Hopped \u00b7 13 dice \u00b7 goods max 8</span></span>'
+        +'<span class="pbrd-note">start Gruit+Hopped \u00b7 13 dice \u00b7 goods max 8 each</span></span>'
     +'</div>'
     +'<div class="pbrd-row">'+vsl(1)+vsl(2)+vsl(3)+'</div>'
     +'<div class="pbrd-row">'+ssl(1)+ssl(2)

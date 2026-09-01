@@ -1,11 +1,11 @@
-# Brewhouses of the Hanse — The Rules (v7.0 "The Guild" · TEST BUILD)
+# Brewhouses of the Hanse — The Rules (v7.0b "The Guild" · TEST BUILD)
 
 *The one rules document. Clean operational rules only — the v7 program, its reflection,
 its mechanic sheet and its red-team record live in `V7-PLAN.md`; design rationale in
 `DESIGN.md`; the frozen v5.8 game at `archive/v5/` and the frozen v6.5b test build at
-`archive/v6/`. Numbers marked ⚙ are tunable placeholders. This is the v7.0 TEST BUILD:
-`play.html`, this document, `COMPONENTS.md` §0 and `STYLE.md` §4e are current; the print
-kit and the rulebook still describe the archived builds until the numbers settle.*
+`archive/v6/`. Numbers marked ⚙ are tunable placeholders. This is the v7.0b TEST BUILD:
+`play.html`, this document, `COMPONENTS.md` §0, `STYLE.md` §4e, the print kit
+(`print.html`) and the rulebook (`rulebook.html`) are all current.*
 
 **2–4 players · c. 1350 · you run a merchant brewing house of the Hanseatic League.**
 Goods are the only currency — no money, no spendable prestige. The work runs **Source →
@@ -19,7 +19,7 @@ guild's halls pay the brewer who arrives invited. The winner is the player with 
 
 Each player starts with (⚙):
 
-- **3 `G` (grain), 2 `H` (hops)** — storage cap 8 ⚙.
+- **3 `G` (grain), 2 `H` (hops)** — storage cap **8 of each good** ⚙.
 - The **Gruit** and **Hopped** recipe cards (COLLECTED side; a card completes on that
   beer's first **load**). More recipes are earned (§9).
 - A **player board**: 3 vessel slots · 2 specialist seats, all open.
@@ -57,7 +57,9 @@ Shared board:
 - Warm start: a **Hulk → Bruges** docks at **s6** and the deck's next **Bruges- or
   Bergen-bound** Ship at **s7** ⚙.
 
-Each player places a worker on any station — opening placement free. First player fixed.
+Workers start OFF the board — each seat's first turn PLACES its worker on any station
+(§2), in turn order, so later seats read the opening wharf before choosing. First
+player fixed.
 
 ---
 
@@ -96,7 +98,7 @@ own lesser counter. A visit works both. Never a menu:
 
 | Station | PRIMARY | ALTERNATE (the same visit) |
 |---|---|---|
-| **A · Market** — *the merchant's desk* | **SOURCE 3** — take **3 goods**, any mix | **BUILD** — place or advance ONE of your Venture tiles; the fee prints on the face going down (§5) |
+| **A · Market** — *the merchant's desk* | **SOURCE 3** — take **3 goods**, any mix | **SOURCE 1** — take **1 more good** ⚙, the lesser counter |
 | **B · Brewhouse** — *the double kettle* | **BREW** — pay a recipe into an open vessel + a tray die at the printed start value; **search the beer's stack — choose the tile** | **BREW** — *the second kettle*: a second full brew (search, choose), at **the recipe's cost + 1 `H`** ⚙ |
 | **C · Harbor** — *the shipmaster's desk* | **COMMISSION** — pay the Ship's printed fee (Cog free · Hulk 1 `G` ⚙), place it on an eligible slot, **one free load onto it** (§7); you may plant your **private flag** for +1 `G` ⚙ | **SAIL** — **ANY docked Ship carrying 1+ of YOUR casks** sails NOW, even unfull, free ⚙ (a flagged hull sails early only for its owner) |
 | **D · Cellar** | **AGE 3** — turn your aging dice up three steps, split freely | **LOAD 1** Ready cask onto **any** docked Ship |
@@ -144,10 +146,11 @@ at every channel) carry from v5.8 unchanged.
 **The eight load bonuses (v7 pool ⚙):** *Gain 2 goods · Age +2 · Load 1 more (onto any
 eligible docked Ship — a normal load; its cask's bonus fires too) · Place 1 presence ·
 Gain 1 recipe (its printed fee) · Brew 1 (a full brew — search, at its cost) · **LIFT** (this cask's die +1,
-cap 6 — applied **as it boards**, before the minimum reads) · **SAIL** (after boarding,
-you may sail this Ship now, even unfull)*. A bonus fires as its cask boards (after any
-sail it completes; LIFT alone applies at boarding). Specialists, buildings and
-invitations never print on cask tiles.
+cap 6 — applied **as it boards**, before the minimum reads) · **BUILD** (place or advance
+ONE of your Venture tiles, at the fee printed on the face going down — one of the two
+Venture doors, §5)*. A bonus fires as its cask boards (after any sail it completes;
+LIFT alone applies at boarding). Specialists, buildings and invitations never print on
+cask tiles.
 
 **Contracts ride the load (§10):** after your cask boards, if the load matches a
 contract in the display **and you have not yet claimed one this turn** ⚙, you may
@@ -159,8 +162,9 @@ fires.
 ## 5. The Ventures — the engine you build
 
 The only buildings players build. Your hand of **4 themed dual-use tiles** (brew · age ·
-die · points; L1 one face, the same theme's L2 the other) enters via the Market's
-**BUILD** verb or **London's prize** (§9). **BUILD = place or advance ONE of your
+die · points; L1 one face, the same theme's L2 the other) enters by **exactly two
+doors**: a cask's **BUILD load bonus** (§4 — at the printed fee) or **London's prize**
+(§9 — the fee waived). No station sells a build. **BUILD = place or advance ONE of your
 Venture tiles; the fee prints on the face going down:**
 
 - **PLAY an L1** onto an **open slot (1 `G` ⚙)** — or onto a slot with a **Public Work,
@@ -269,7 +273,8 @@ Kontor's **prize** — one of:
 - **the port's thing** (below);
 - **2★** ⚙;
 - **refresh the demand** ⚙ — the well's card goes under the demand deck and a fresh
-  one deals at once (the dud-card valve).
+  one deals at once (the dud-card valve; only while **no die sits on the card** — a
+  seated card is spoken for).
 Novgorod prints **no prize line at all** — its premium is the whole payment.
 
 | Kontor | Minimum ⚙ | Lane | The port's thing ⚙ | Ladder base (1st/2nd) ⚙ |
@@ -339,7 +344,7 @@ bought. The v6 sea singles (Pilot · Surveyor · Wharfinger) retire; the roster 
 
 ## 13. Goods & storage
 
-`G` grain · `H` hops — the only currency. Cap 8 ⚙. Faucets: the Market, load bonuses,
+`G` grain · `H` hops — the only currency. Cap **8 of each** ⚙. Faucets: the Market, load bonuses,
 prizes, the Bonded Store, the Herald. Drains: brews, commissions & flags, Venture fees,
 recipe fees.
 

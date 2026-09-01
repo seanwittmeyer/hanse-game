@@ -708,7 +708,7 @@ const ICONTIP={
   wheat:'Grain (G) — a brewing input and the medium of exchange.',
   sprout:'Hops (H) — a brewing input; the beer that travels.',
   beer:'Cask — a brewed beer; its die rides vessel → Ship → Kontor.',
-  store:'Market — Source 3 (primary) · Build a Venture (alternate).',
+  store:'Market — Source 3 (primary) · Source 1 (alternate).',
   'flask-conical':'Brewhouse — Brew (primary): pay a recipe, search the stack · the SECOND KETTLE (alternate): a second full Brew at +1H.',
   hourglass:'Cellar — Age 3 (primary): turn aging dice up · Load 1 (alternate).',
   ship:'Harbor — Commission + 1 load (primary) · Sail a docked Ship with your cask now (alternate).',
@@ -776,11 +776,11 @@ const CASK_ACT={source:'Gain 2 goods, any mix',age:'Age +2, split freely',
   reach:'Place 1 presence — a tray die parks at a Kontor you have landed at',
   recipe:'Gain 1 recipe — at its printed fee (H = Q−3, Q3s free)',
   lift:'LIFT — this cask’s die +1 as it boards (cap 6, before the minimum reads)',
-  sailb:'SAIL — after boarding, you may sail this Ship now, even unfull',
+  build:'BUILD — place or advance one of your Ventures, at its printed fee',
   brew:'Brew 1 cask — a full brew (search the stack), at its cost',
   invgain:'Gain 1 ⚜ Invitation ⚙'};
-const CASK_ACT_POOL=['source','age','load','reach','recipe','lift','sailb','brew'];   // the eight v7 load bonuses; brew Q3+ (hire/venture verbs left the tiles — D10)
-const CASK_ACT_ICON={source:'goods-2',age:'hourglass',load:'package-plus',reach:'map-pin',recipe:'scroll-text',lift:'die-plus1',sailb:'sail',brew:'flask-conical',goods3:'goods-3',zgyle:'package-plus',invgain:'mail'};
+const CASK_ACT_POOL=['source','age','load','reach','recipe','lift','build','brew'];   // the eight v7 load bonuses; brew Q3+ · build at its printed fee (v7.0b — the cask bonus and London's prize are the ONLY Venture doors)
+const CASK_ACT_ICON={source:'goods-2',age:'hourglass',load:'package-plus',reach:'map-pin',recipe:'scroll-text',lift:'die-plus1',build:'hammer',brew:'flask-conical',goods3:'goods-3',zgyle:'package-plus',invgain:'mail'};
 // THE PILES ARE REAL, SEARCHABLE STACKS: each beer's ordered face-up tile stack (the kit's
 // census), shuffled at setup. EVERY brew searches and chooses (v7.0a — one grammar at
 // every channel). A delivered cask's tile returns to the bottom; an empty stack =
@@ -805,7 +805,7 @@ function pileVerbs(style){const c={};pileList(style).forEach(v=>c[v]=(c[v]||0)+1
 function caskAct(t){return t.act||STYLES[t.style].act;}
 // the station face: ONE big ACTION icon over a top-down scrim (the print board's faces)
 const STATION_ICON={Market:'goods-3',Brewhouse:'flask-conical',Cellar:'age-3',Harbor:'ship'};   // the PRIMARY icon
-const STATION_ALT_ICON={Market:'hammer',Brewhouse:'brew-top',Cellar:'package-plus',Harbor:'sail'};   // the ALTERNATE icon (the same visit)
+const STATION_ALT_ICON={Market:'goods-1',Brewhouse:'brew-top',Cellar:'package-plus',Harbor:'sail'};   // the ALTERNATE icon (the same visit)
 
 // ---- DESTINATIONS: the four kontore. Value = THE DIE, everywhere (Novgorod's identity = the
 // raised gate + the 8/5/2 majority + the +2★ premium). Gates read the DIE as it boards (after
@@ -1103,7 +1103,7 @@ const PRIZE_PTS=2;   // ⚙ the ★ a cask may take instead of its port's prize
 const CHRON_PTS=1;   // ⚙ v5.7: the Chronicler, per delivered cask (was +2★ per Manifest claim)
 const BOURSE_SAIL_STEP=-1;        // ⚙ one step per beer TYPE per sail (never per cask)
 function setupWorksN(n){return 8;}   // ⚙ v7 (D3): ALL 8 slots start furnished — the rest of the roster to the box; NOTHING refills
-let ALT_SOURCE=1;   // ⚙ dormant v5 dial seam — sim hook ALTSRC
+let ALT_SOURCE=1;   // ⚙ the Market's ALTERNATE Source (v7.0b — the lesser counter returns; BUILD left the station) — sim hook ALTSRC
 let ALT_AGE=1;      // ⚙ dormant v5 dial seam — sim hook ALTAGE
 let ALT_LOADS=1;    // ⚙ loads per flow (the Stevedore lifts every load flow to 2)
 const START_GOODS={g:3,h:2};
@@ -1144,7 +1144,7 @@ function fire(seam,ctx){for(const m of EXPANSIONS){if(expOn(m)&&m.on&&m.on[seam]
 function collect(fn){let s=0;for(const m of EXPANSIONS){if(expOn(m)){const v=fn(m);if(v)s+=v;}}return s;}          // sum a numeric modifier across modules
 function expSetup(st){for(const m of EXPANSIONS){if(m.setup)m.setup(st);}}             // init module state on a fresh game (keys off the toggle GLOBALS — runs before S is assigned)
 function expRender(){for(const m of EXPANSIONS){if(expOn(m)&&m.render)m.render();}}    // each module injects/refreshes its own panel
-const KEY='hanse-v70a';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
+const KEY='hanse-v70b';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves. Version history: DESIGN.md §9 + archive/records/ + git.
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1152,7 +1152,7 @@ const KEY='hanse-v70a';  // the live build's save key — bump it on any rules c
 const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
 const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
 const STUDIO_KEY_LS='playtest_api_key';
-const APP_VERSION='v7.0a “The Guild” · '+KEY;
+const APP_VERSION='v7.0b “The Guild” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
   return 'pt-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);}
@@ -1355,7 +1355,7 @@ function ownSq(pid){const o=S.players[pid];return '<span class="osq" style="back
 
 // ---- tooltips for stations & slots ----
 const CELLTIP={   // v7 station reminders — PRIMARY / ALTERNATE, one verb each
-  Market:'Market — PRIMARY Source '+SRC_PRIMARY+' · ALT Build (place or advance a Venture).',
+  Market:'Market — PRIMARY Source '+SRC_PRIMARY+' · ALT Source '+ALT_SOURCE+'.',
   Brewhouse:'Brewhouse — PRIMARY Brew (search the stack) · ALT the second kettle (a second full Brew, +1H).',
   Cellar:'Cellar — PRIMARY Age '+CELLAR_POOL+', split freely · ALT Load 1 onto any docked Ship.',
   Harbor:'Harbor — PRIMARY Commission (Cog free · Hulk 1G) + 1 load · ALT Sail a docked Ship carrying your cask, now.',
@@ -1388,7 +1388,7 @@ function occToken(t){
 // destination chip + numbered load-order berths; buildings are the value/transform tile. Mirrors printables.html.
 const STYLE_COLOR={gruit:'#8a949c',hopped:'#c2922f',broyhan:'#b06a34',keut:'#9c5f2e',mumme:'#caa12a',bock:'#7c2128',gose:'#6e8b74',zerbster:'#5f7a3c',duckstein:'#7a5236',jopenbier:'#5e2433'};
 const DEST_COLOR={bruges:'#274b5c',london:'#b8860b',bergen:'#4a6b3a',novgorod:'#7c2128'};
-const P_ACT_TXT={source:'+2 goods',age:'Age +2',goods3:'+3 goods',zgyle:'free Gruit + Load 1 more',load:'Load 1 more',reach:'+1 presence',recipe:'Gain 1 recipe',lift:'LIFT — die +1 as it boards',sailb:'SAIL — may sail this Ship now',brew:'Brew 1 (search)',rack:'swap 2 dice',assay:'2H → the cellar Ready',invgain:'+1 ⚜ Invitation'};
+const P_ACT_TXT={source:'+2 goods',age:'Age +2',goods3:'+3 goods',zgyle:'free Gruit + Load 1 more',load:'Load 1 more',reach:'+1 presence',recipe:'Gain 1 recipe',lift:'LIFT — die +1 as it boards',build:'Build 1 · its fee',brew:'Brew 1 (search)',rack:'swap 2 dice',assay:'2H → the cellar Ready',invgain:'+1 ⚜ Invitation'};
 function pCost(g,h){let a='';if(g)a+='<span class="pgc">'+LU('wheat','pg')+g+'</span>';if(h)a+='<span class="pgc">'+LU('sprout','ph')+h+'</span>';return a;}
 // ---- the DEMAND DIE: pips = the ★ a cask banks from a value building (a d6, max 5; returns to the pool) ----
 const DIE_PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};   // 3×3 grid, 0-indexed
@@ -1654,33 +1654,32 @@ function startGame(){
 // its printed PRIMARY, its printed ALTERNATE, and a LOAD at each of its two flanking
 // slots (FLANKS — the two adjacent ports) — in any order, all optional. No line, no
 // row/column choice: one move, one station, two verbs. Single verbs, never menus:
-// Market Source 3 / Sail · Brewhouse Brew / Trade · Harbor Commission / Chart · Cellar Age 3 / Load-any.
+// Market Source 3 / Source 1 · Brewhouse Brew / the second kettle · Harbor Commission / Sail-now · Cellar Age 3 / Load-any.
 //==================================================================
 const STN_P={A:'source',B:'brew',C:'comm',D:'age'};
-const STN_A={A:'build',B:'brewtop',C:'sailnow',D:'loadany'};   // v7: Build at the Market · the SECOND KETTLE (a 2nd full brew, +1H ⚙) · Sail-now at the Harbor
+const STN_A={A:'source1',B:'brewtop',C:'sailnow',D:'loadany'};   // v7.0b: Source 1 at the Market (BUILD left the counter — London's prize + the cask bonus are the only doors) · the SECOND KETTLE (a 2nd full brew, +1H ⚙) · Sail-now at the Harbor
 const seatVerb=(c,alt)=>alt?STN_A[c]:STN_P[c];
 function sailNowShips(p){return wharfShips().filter(sid=>{const t=S.slots[sid];
   return t&&t.type==='ship'&&(t.load||[]).length>0&&shipHasCaskOf(t,p.id)&&(t.own==null||t.own===p.id);});}
 function commSlots(){return SLOTS.filter(s=>{const t=S.slots[s.id];return !t||(t.type==='ship'&&!(t.load||[]).length);});}   // v7: an EMPTY hull may be displaced back to the deck
 function stationActAvail(p,c,a){
-  if(a==='source')return true;
+  if(a==='source'||a==='source1')return true;
   if(a==='brew')return openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r))&&(!S.presEnd||trayDice(p)>0);
   if(a==='brewtop')return openVessel(p)>=0&&p.recipes.some(r=>canBrewAt(p,r,1))&&(!S.presEnd||trayDice(p)>0);   // the second kettle: affordable AT +1H
   if(a==='age')return maturingInVessels(p).length>0;
   if(a==='comm')return (S.shipDisplay||[]).some(sn=>canPay(p,commCostFor(p,sn.ship))&&laneOpenFor(p,sn.dest))&&commSlots().length>0;
   if(a==='loadany')return wharfShips().some(sid=>readyInVessels(p).some(o=>canTake(sid,o.i)));
   if(a==='sailnow')return sailNowShips(p).length>0;
-  if(a==='build')return buildOptions(p).length>0;
   return false;}
 function stnActTxt(p,a){
   if(a==='source')return 'Source '+SRC_PRIMARY;
+  if(a==='source1')return 'Source '+ALT_SOURCE;
   if(a==='brew')return 'Brew (search)';
   if(a==='brewtop')return 'Brew — the second kettle (+1H)';
   if(a==='age')return 'Age '+CELLAR_POOL;
   if(a==='comm')return 'Commission ('+commFeeStr()+') + 1 load';
   if(a==='loadany')return 'Load 1 · any docked Ship';
   if(a==='sailnow')return 'Sail — a Ship with your cask sails now';
-  if(a==='build')return 'Build — place or advance a Venture';
   return a;}
 function stnActWhy(a){
   if(a==='brew')return 'Needs an open vessel, an affordable recipe, and a tray die.';
@@ -1689,7 +1688,6 @@ function stnActWhy(a){
   if(a==='comm')return 'No affordable Ship whose lane is open for you, or no slot to take.';
   if(a==='loadany')return 'No Ready cask fits a docked Ship (the minimum, the lane, or the flag).';
   if(a==='sailnow')return 'No docked Ship carries a cask of yours (a flagged hull sails only for its owner).';
-  if(a==='build')return 'No playable Venture: an L1 needs ground + its fee + a tray die; a FLIP/overbuild needs your standing L1 + the fee.';
   return 'Not available right now.';}
 function doMove(cell){
   const p=cur();if(p.placed&&!ADJ[p.cell].includes(cell))return;
@@ -1739,13 +1737,13 @@ function resolveStopBy(kind,key){const i=(UI.stops||[]).findIndex(x=>x.kind===ki
 function enterCell(cell,alt){const p=cur();const a=seatVerb(cell,alt);
   if(!stationActAvail(p,cell,a)){log('↳ '+CELLNAME[cell]+' — '+stnActWhy(a));return resume('stops');}
   if(a==='source')return enterSource(SRC_PRIMARY,'stops',{station:true});
+  if(a==='source1')return enterSource(ALT_SOURCE,'stops',{station:true});
   if(a==='brew')return enterBrew('stops',false,false);
   if(a==='brewtop')return enterBrew('stops',false,1);
   if(a==='age')return enterAge(CELLAR_POOL,'pool','stops');
   if(a==='comm')return enterCommission('stops');
   if(a==='loadany')return enterLoad(wharfShips(),'stops',1);
   if(a==='sailnow')return enterSailNow('stops');
-  if(a==='build')return enterBuild('stops',false);
   resume('stops');
 }
 function stopAvail(st){const p=cur();
@@ -1796,14 +1794,8 @@ function sailNowPick(sid){const p=cur();const t=S.slots[sid];
   sailShip(sid,p.id);
   afterSail(rt);maybeRunAI();}
 function sailNowSkip(){const rt=(UI.sailn&&UI.sailn.returnTo)||'stops';UI.sailn=null;resume(rt);maybeRunAI();}
-// the SAIL load bonus's question (human): sail the just-boarded ship now?
-function sailbGo(yes){const B=UI.sailb;if(!B)return;const rt=B.returnTo;UI.sailb=null;
-  const t=S.slots[B.slot];
-  if(yes&&t&&t.type==='ship'&&(t.load||[]).length){snapshot();
-    log(cur().name+' takes the cask’s '+LU('sail')+' bonus — the '+shipName(t)+' sails at once.',true);
-    sailShip(B.slot,S.active);}
-  afterSail(rt);maybeRunAI();}
-// ---- BUILD (the Market's ALTERNATE, v7): place or advance ONE of your Venture tiles —
+// ---- BUILD (v7.0b — TWO doors only: London's prize, fee waived · the cask's BUILD
+// load bonus, its printed fee): place or advance ONE of your Venture tiles —
 // the fee prints on the face going down. An L1 takes open ground (V_FEE_L1) or replaces
 // a Public Work (V_FEE_REPLACE, the worn tile boxed) and stands a TRAY die (the ledger);
 // a FLIP or an overbuild advances your standing L1 (V_FEE_L2; the ledger die rides).
@@ -1821,7 +1813,7 @@ function buildSkip(){const B=UI.build;const rt=B?B.returnTo:'stops';UI.build=nul
 // resume / return helpers — clear the sub-flow fields, then route to the right phase
 function resume(rt){
   UI.cell=null;UI.stage=null;UI.tmp=null;
-  UI.age=UI.brew=UI.bverb=UI.src=UI.load=UI.reach=UI.comm=UI.rgain=UI.rack=UI.assay=UI.lift=UI.parti=UI.sailn=UI.build=UI.sailb=UI.csh=null;
+  UI.age=UI.brew=UI.bverb=UI.src=UI.load=UI.reach=UI.comm=UI.rgain=UI.rack=UI.assay=UI.lift=UI.parti=UI.sailn=UI.build=UI.csh=null;
   if(rt==='benefitcont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}
   if(rt==='actscont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r);return;}
   if(rt==='move'||rt==='verb'){UI.sub='move';render();return;}   // ('verb' is the legacy tag)
@@ -1994,13 +1986,7 @@ function fireCaskAct(act,rt){const p=cur();
     if(hallOn()){invGrant(p,rt==='actscont'?'cask':'bldg');
       if(!aiSimulating)log('↳ the guild extends an ⚜ <b>Invitation</b>.');}
     resume(rt);}
-  else if(act==='sailb'){const slot=UI.actSlot;UI.actSlot=null;   // the SAIL bonus — the ship it boarded, if still docked
-    const t=slot?S.slots[slot]:null;
-    if(t&&t.type==='ship'&&(t.load||[]).length&&shipHasCaskOf(t,p.id)&&(t.own==null||t.own===p.id)){
-      if(p.ai){if(aiSailNowVal(p,slot)>0){log('↳ the tide serves — '+p.name+' sails the '+shipName(t)+' at once.');sailShip(slot,p.id);}
-        afterSail(rt);return;}
-      UI.sub='sailbq';UI.sailb={slot,returnTo:rt};render();return;}
-    resume(rt);}
+  else if(act==='build')enterBuild(rt,false);   // the BUILD bonus — the standard build flow, the printed fee (v7.0b)
   else if(act==='lift'){resume(rt);}   // LIFT resolved at boarding (boardDie) — nothing fires here
   else if(act==='recipe')enterRecipeGain(rt);
   else if(act==='brew')enterBrew(rt,false,0);   // v7.0a: EVERY brew searches — one grammar at every channel
@@ -2544,7 +2530,7 @@ function afterSail(rt){
       tourPark(lp,bk);afterSail(rt);return;}
     UI.sub='tour';UI.goodsRt=rt;render();return;}
   if((UI.pendingActs||[]).length){const a=UI.pendingActs.shift();
-    if(a.pid===S.active){UI.afterRt=rt;UI.actSlot=a.slot||null;
+    if(a.pid===S.active){UI.afterRt=rt;
       log('↳ the load bonus — '+LU('beer')+styleShort(a.style)+'’s '+LU(CASK_ACT_ICON[a.act]||'')+' <b>'+(P_ACT_TXT[a.act]||a.act)+'</b>.');
       fireCaskAct(a.act,'actscont');return;}
     afterSail(rt);return;}
@@ -3043,7 +3029,9 @@ function aiVerbValue(p,act){
     const qpull=aiQual(p)?Math.max.apply(null,o.map(st=>STYLES[st].q))*0.35:0;   // quality EARLY — the high recipe is worth the trip
     return Math.max(0.4,base*aiPW(p,'breadth')+qpull-c)*(aiLateGame(p)?0.3:1);}
   if(act==='lift')return 1.2*Math.max(aiPW(p,'lifter'),1);   // v7 — +1 pip at boarding (value AND the gates)
-  if(act==='sailb')return 0.7+aiClockPush(p)*0.6;            // v7 — the early sail is tempo, priced at the fire
+  if(act==='build'){let best=0;buildOptions(p).forEach(o=>{   // v7.0b — the bonus opens the build flow; price the best play net of its fee
+    const v=aiVentureVal(p,o.key,o.k==='l1'?1:2)-aiFeeCost(o.k==='l1'?V_FEE_L1:V_FEE_L2);
+    if(v>best)best=v;});return best*0.8;}
   if(act==='brew')return (openVessel(p)>=0&&p.recipes.some(r=>canBrew(p,r))&&(!S.presEnd||trayDice(p)>0))?(3+0.12*trayDice(p)):0;   // ⚙ tray pressure: a fat tray wants committing (the v6 clock)
   if(act==='rack'){const m=vesselCasks(p);if(m.length<2)return 0;   // any two, uncapped — the launder engine
     let best=0;m.forEach(o1=>m.forEach(o2=>{if(o1.i===o2.i)return;
@@ -3120,10 +3108,7 @@ function aiStationActValue(p,c,a){
   if(a==='brewtop')return Math.max(0,aiVerbValue(p,'brew')-aiFeeCost({h:1}));   // v7.0a — the second kettle: a full brew, net its +1H
   if(a==='sailnow'){let best=0;sailNowShips(p).forEach(sid=>{const v=aiSailNowVal(p,sid);if(v>best)best=v;});
     return best>0?0.6+best*0.25:0;}
-  if(a==='build'){let best=0;buildOptions(p).forEach(o=>{   // v7 — the Market's BUILD, net of the fee
-    const v=aiVentureVal(p,o.key,o.k==='l1'?1:2)-aiFeeCost(o.k==='l1'?V_FEE_L1:V_FEE_L2);
-    if(v>best)best=v;});
-    return best;}
+  if(a==='source1')return Math.max(0.2*ALT_SOURCE,(5-(p.grain+p.hops))*0.35*ALT_SOURCE);   // v7.0b — the lesser counter
   return 0;}
 function aiVactValue(p,b){const kd=vKind(b);   // the owner's stop, priced by its verb
   if(kd==='vswap')return aiVerbValue(p,'rack');
@@ -3252,8 +3237,6 @@ function aiStep(){
       case 'sailnow':{const o=sailNowShips(p);if(!o.length)return sailNowSkip();
         let bs=o[0],sv=-1e9;o.forEach(sid=>{const v=aiSailNowVal(p,sid);if(v>sv){sv=v;bs=sid;}});
         return sv>0?sailNowPick(bs):sailNowSkip();}
-      case 'sailbq':{const B=UI.sailb;if(!B)return sailbGo(false);
-        return sailbGo(aiSailNowVal(p,B.slot)>0);}
       case 'rack':{const R=UI.rack;if(!R)return resume('stops');
         const m=vesselCasks(p);if(m.length<2)return rackSkip();
         let ba=null,bb=null,bv2=0.5;
@@ -3508,11 +3491,11 @@ function renderAid(){
       +'<table class="atable"><tr><th></th><th>Kontor</th><th>Prize per cask</th><th>Ladder now</th></tr>'+dests+'</table>'
       +'<div class="subnote">the ladder pays 1st/2nd at game end, by parked dice — every ⚜ spent there climbs it · LANE GATES: London/Novgorod open per player while your dice at Bruges/Bergen OUTNUMBER your dice there</div></div>'
     +'<div class="asec"><b>Stations</b><div class="astgrid">'
-      +row('store','Market','P: Source '+SRC_PRIMARY+' · A: BUILD — place a Venture (L1 '+costStr(V_FEE_L1)+' / replace a Work '+costStr(V_FEE_REPLACE)+') or FLIP/overbuild ('+costStr(V_FEE_L2)+')')
+      +row('store','Market','P: Source '+SRC_PRIMARY+', any mix · A: Source '+ALT_SOURCE)
       +row('flask-conical','Brewhouse','P: Brew — search the stack, choose the tile · A: the second kettle — a second full Brew, +1H')
       +row('age-3','Cellar','P: Age '+CELLAR_POOL+', split freely · A: Load 1 → any docked Ship')
       +row('ship','Harbor','P: Commission (Cog free · Hulk 1G · ⚑ flag +1G) + 1 load · A: SAIL a docked Ship with your cask, now')+'</div>'
-      +row('home','Ventures — your private buildings, the LEDGER','an L1 stands a tray die at 1; a RIVAL’s use turns it up (cap 6, then +'+LEDGER_OVER_PTS+'★/serve) — the pips score to you at the end · anyone may use the action, on their own casks')
+      +row('home','Ventures — your private buildings, the LEDGER','BUILD only by London’s prize (free) or a cask’s BUILD load bonus — L1 '+costStr(V_FEE_L1)+' / replace a Work '+costStr(V_FEE_REPLACE)+' / FLIP or overbuild '+costStr(V_FEE_L2)+' · an L1 stands a tray die at 1; a RIVAL’s use turns it up (cap 6, then +'+LEDGER_OVER_PTS+'★/serve) — the pips score to you at the end · anyone may use the action, on their own casks')
       +row('bourse','The Bourse — DOWN ONLY','DELIVER ★ = die + the marker as printed · then each delivered beer −1 (certified cargo and hall presents skip it) · UP: only the Coper’s step')+'</div>'
     +'<div class="asec"><b>End &amp; score</b>'
       +row('dices','The first EMPTY tray ends it','your '+PRES_POOL+' dice — brews, presence and ledgers all spend them · round '+MAX_ROUND+' backstop')
@@ -3557,9 +3540,6 @@ function renderBar(){
     acts=o.map(sid=>{const t=S.slots[sid];if(!t)return '';
       return btn(LU('sailboat')+' '+shipName(t)+' → '+DEST[t.dest].name+' ('+t.load.length+'/'+effCap(t)+')'+(t.own!=null?' ⚑':''),'sailNowPick(\''+sid+'\')','go');}).filter(x=>x).join('')
       +btn('Skip','sailNowSkip()','ghost');}
-  else if(U==='sailbq'){const B=UI.sailb;const t=B?S.slots[B.slot]:null;
-    prompt='The cask’s '+LU('sail')+' <b>SAIL bonus</b> — sail the '+(t?shipName(t)+' → '+DEST[t.dest].name+' ('+t.load.length+'/'+effCap(t)+')':'Ship')+' at once?';
-    acts=btn(LU('sail')+' Sail it now','sailbGo(true)','go')+btn('Let it wait','sailbGo(false)','ghost');}
   else if(U==='landc'){const Lg=(UI.pendingLandings||[])[0];const L=Lg&&(Lg.queue||[])[0];
     if(L){const lp2=S.players[L.owner];const face=Math.max(1,Math.min(6,L.die||1));
       const vb=(DEST[Lg.dest]&&DEST[Lg.dest].vbonus)||0;const mkt=tracked(L.style)?S.bourse[L.style]:0;
@@ -3629,7 +3609,7 @@ function renderBar(){
     acts=opts.map(st=>{const f=recipeFeeFor(p,st);const lbl=LU('scroll-text')+STYLES[st].name+' Q'+STYLES[st].q+' · '+costIcons(f);
       return canPay(p,f)?btn(lbl,'recipeGainPick(\''+st+'\')','go'):btnOff(lbl,'The printed fee exceeds your goods.');}).join('')+btn('Skip','recipeGainPick(null)','ghost');}
   else if(U==='build'){const B=UI.build;const bp3=B?S.players[B.pid]:p;const free=!!(B&&B.free);
-    prompt=LU('hammer')+' <b>BUILD</b>'+(B&&B.prize?' — <b>the London prize</b>, the fee waived':'')+' — place or advance ONE of your Ventures. <span class="note">An L1 takes open ground ('+costStr(V_FEE_L1)+') or replaces a Public Work ('+costStr(V_FEE_REPLACE)+', the worn tile boxed) and stands a tray die — the LEDGER; a FLIP/overbuild ('+costStr(V_FEE_L2)+') advances your standing L1, the die riding.</span>';
+    prompt=LU('hammer')+' <b>BUILD</b>'+(B&&B.prize?' — <b>the London prize</b>, the fee waived':' — the cask’s load bonus')+' — place or advance ONE of your Ventures. <span class="note">An L1 takes open ground ('+costStr(V_FEE_L1)+') or replaces a Public Work ('+costStr(V_FEE_REPLACE)+', the worn tile boxed) and stands a tray die — the LEDGER; a FLIP/overbuild ('+costStr(V_FEE_L2)+') advances your standing L1, the die riding.</span>';
     acts='';
     // 1 · FLIP a standing L1 of yours to its own L2 — the same tile, the same ledger die
     myL1Slots(bp3).forEach(sx=>{const b=vAt(sx.id);const V=VENTURES[b.v];
@@ -3669,7 +3649,7 @@ function renderBar(){
     prompt=S.players[V.owner].name+' — place the <b>Venture</b> '+LU(f.icon)+' <b>'+f.name+'</b>: '+(V.lvl===1?'click a glowing slot — <b>open ground</b> ('+costStr(V_FEE_L1)+') or a <b>Public Work</b> to replace ('+costStr(V_FEE_REPLACE)+', the worn tile boxed). Never another player’s Venture. <span class="note">A tray die stands on it at 1 — the LEDGER.</span>':'click one of <b>your own L1s</b> of another theme — the <b>overbuild</b> lands on its ground and boxes that L1 (the ledger die rides). <span class="note">(A FLIP would have kept the same tile — no second piece spent.)</span>')+' <span class="note">('+f.desc+'. Private ground — a rival may USE it, ticking your ledger, but never overbuild it.)</span>';
     acts='';}
   else if(U==='end'){prompt='The visit is done.';acts=btn('End Turn ▸','endTurn()','primary');}
-  const hideEnd=(U==='move'&&!p.placed)||['end','precipe','bspec','placebldg','brewverb','landc','cpick','copshift','sailbq'].includes(U)
+  const hideEnd=(U==='move'&&!p.placed)||['end','precipe','bspec','placebldg','brewverb','landc','cpick','copshift'].includes(U)
     ||(U==='build'&&UI.build&&UI.build.prize)||(U==='placevent'&&UI.tmp&&UI.tmp.placeVent&&UI.tmp.placeVent.free);   // every stop is optional — End Turn stays offered mid-visit; a pending PRIZE or landing choice is not the active turn's to end
   if(!hideEnd)acts+=btn('End Turn ▸','endTurn()','ghost');
   if(undoStack.length)acts+=btn('↶ Undo','doUndo()','ghost');

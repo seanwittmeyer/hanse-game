@@ -30,7 +30,7 @@ function mkCask(style,die,act){var st=STYLES[style];return {style:style,q:st.q,d
 function mkLg(dest,cert){return {dest:dest,cert:cert?1:0,queue:[],glut:{},letter:{},landed:{}};}
 
 // ---------- 0 · identity & setup ----------
-t('KEY is hanse-v70a',function(){eq(KEY,'hanse-v70a');});
+t('KEY is hanse-v70b',function(){eq(KEY,'hanse-v70b');});
 t('setup: all 8 slots furnished, no bag, warm hulls at s6/s7',function(){fresh(3);
   var works=0;SLOTS.forEach(function(s){var b=S.buildings[s.id];if(b&&!b.v)works++;});
   eq(works,8,'works standing');
@@ -522,6 +522,32 @@ t('the HIRE channel and SPEC_FEE are retired — Bergen’s free prize is the on
   ok(typeof enterHire==='undefined','enterHire gone');
   ok(typeof SPEC_FEE==='undefined','SPEC_FEE gone');
   ok(typeof hireable==='function','the Bergen eligibility read survives');});
+
+// ---------- 8d · v7.0b — BUILD leaves the counter ----------
+t('v7.0b: the Market ALT is Source 1 — BUILD is off the stations',function(){fresh(2);var p=cur();
+  eq(STN_A.A,'source1');
+  ok(stationActAvail(p,'A','source1'),'always available');
+  ok(!Object.keys(STN_A).some(function(c){return STN_A[c]==='build';}),'no station seats build');
+  p.placed=true;p.cell='A';UI={sub:'stops',stops:[],usedStops:[]};
+  enterCell('A',true);
+  eq(UI.sub,'source','the source picker opened');
+  eq(UI.src.n,ALT_SOURCE,'the lesser counter');});
+t('v7.0b: BUILD holds the pool seat SAIL held; the sail bonus is gone',function(){
+  eq(CASK_ACT_POOL[6],'build','seat 7 of 8');
+  ok(CASK_ACT_POOL.indexOf('sailb')<0,'sailb out of the pool');
+  ok(!!CASK_ACT.build&&!CASK_ACT.sailb,'the text follows');
+  ok(typeof sailbGo==='undefined','the sailbq flow is gone');});
+t('v7.0b: the BUILD bonus opens the PRICED build flow (never the waiver)',function(){fresh(2);var p=cur();
+  UI={sub:'move'};
+  fireCaskAct('build','end');
+  eq(UI.sub,'build','the build flow opened');
+  ok(UI.build&&UI.build.free===false,'at the printed fee');
+  buildSkip();
+  eq(UI.sub,'end','skip routes home');
+  // nothing playable → it resumes quietly
+  p.hand=[];p.grain=0;p.hops=0;UI={sub:'move'};
+  fireCaskAct('build','end');
+  eq(UI.sub,'end','no playable build resumes');});
 
 // ---------- 9 · the clock ----------
 t('MAX_ROUND is 22 and backstops the end',function(){fresh(2);
