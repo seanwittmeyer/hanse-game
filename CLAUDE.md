@@ -109,14 +109,16 @@ v6.5b human playtest ruled the v6 build a regression in feel (the sea ran itself
 engine-building core, the clock dragged, scores illegible); v7 re-derives from the ten
 directives recorded there. **P0 is DONE — the complete v6.5b build is FROZEN PLAYABLE at
 `archive/v6/` (never edit it), and the v7.0 “The Guild” TEST BUILD is LIVE at root**
-(`KEY hanse-v70a`, 2026-08-31): `play.html` · `RULES.md` · `COMPONENTS.md` §0/§10 ·
+(`KEY hanse-v70b`, 2026-09-01): `play.html` · `RULES.md` · `COMPONENTS.md` §0/§10 ·
 `STYLE.md` §4e · `playtests/verify-v7.js` · **`print.html` (the P5 kit pass landed
 2026-08-31 — the full §0 kit cuts: contracts ⚜ · demands · the ladder board · deck 18 ·
 the Ventures return · flags/ladder markers · the v7 aid)** · **`rulebook.html` (the
 rulebook pass, same day — the 4-page teaching book re-derived whole from `RULES.md`,
-fit-gated per page)** are v7-current — EVERY root surface now states the v7.0a build. The v7
+fit-gated per page)** are v7-current — EVERY root surface now states the v7.0b build. The v7
 shape in one breath: the v6.5 turn kept (MOVE adjacent · work the station: P + A + the
-flank loads **+ each flanking Venture**) · stations Market *Source 3 / Build* ·
+flank loads **+ each flanking Venture**) · stations Market *Source 3 / Source 1* (v7.0b
+— BUILD left the counter: it is EARNED, London's prize + the cask's BUILD load bonus,
+the ONLY two Venture doors) ·
 Brewhouse *Brew / the second kettle (a 2nd full brew, +1H ⚙ — EVERY brew searches, v7.0a)* · Harbor *Commission / Sail-now* · Cellar *Age 3 /
 Load-any* · **the VENTURES return on the LEDGER grammar** (an L1 stands a tray die at 1, one die per
 ground for life; a RIVAL's use ticks it, cap 6 then 1★/serve ⚙; the owner uses free;

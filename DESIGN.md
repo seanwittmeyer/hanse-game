@@ -245,6 +245,33 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
 
+### v7.0b “Build Leaves the Counter” (2026-09-01, designer-ruled — `KEY hanse-v70b`)
+
+*"Build can't be the market alt action. That is an action limited to delivery prizes
+and cask bonuses."*
+
+- **BUILD is not a station verb.** The Market's ALTERNATE reverts to **Source 1** ⚙
+  (the v5.0 lesser-counter lineage; the dormant `ALT_SOURCE` dial wakes). Building is
+  **earned**: the only two Venture doors are **London's prize** (the fee waived — the
+  v5.6 prize grammar) and a cask's **BUILD load bonus** (at the printed face fee) —
+  which restores the v5.8 channel law: *everything is earned; the wharf's counters
+  sell nothing.*
+- **BUILD takes the SAIL seat in the 8-verb pool** (seat 7; offsets and censuses
+  stand — each Q3+ beer's SAIL tiles reprint as BUILD tiles). Sail-early keeps its
+  ONE home at the Harbor's ALTERNATE, per the v7.0a one-verb-one-home law; the SAIL
+  bonus, its picker and its AI seat retire from the engine whole.
+- **Why the SAIL seat and not another:** the seat's lineage is the door verb — *Open 1
+  Venture* (v5) → *Chart 1* (v6) → SAIL (v7.0) — and SAIL was the pool's only verb
+  that duplicated a standing station ALTERNATE.
+- Surfaces: `play.html` (STN_A · the pool · fireCaskAct's build case · the sailbq
+  flow retired · AI verb/station values · the aid, tips and bar copy) ·
+  `components.js` `CASK_POOL` · `print.html` (wharf cross · both aid faces · the
+  checklist) · `rulebook.html` §5/§6/§8 · `RULES.md` §3/§4/§5 · `COMPONENTS.md`
+  §0/§10 · `STYLE.md` §4e · `CLAUDE.md`/`V7-PLAN.md` §10.
+- Gates: `verify-v7.js` **69/69** (3 new: the Market-ALT read · the pool seat · the
+  bonus opens the priced build flow) · sim smoke 0 crashes / 0 deadlocks 2–4p ·
+  render smoke clean · **KEY bump** `hanse-v70a` → `hanse-v70b`.
+
 ### v7.0a “The Second Kettle” (2026-08-31, designer-ruled — `KEY hanse-v70a`)
 
 *"Allow two brews in one visit to the brewhouse station, simply increase the cost of the

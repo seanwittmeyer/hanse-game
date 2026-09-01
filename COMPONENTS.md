@@ -24,7 +24,7 @@
 
 **RE-CUT (existing components, new faces/data):**
 
-- **The Wharf board** — the station pairs re-print: Market **Source 3 / BUILD** ·
+- **The Wharf board** — the station pairs re-print: Market **Source 3 / Source 1** (v7.0b — BUILD left the counter) ·
   Brewhouse **Brew (search) / the second kettle (a second full Brew · +1 `H` ⚙)** · Harbor **Commission + 1 load / SAIL
   (a docked Ship with 1+ of your casks sails now, unfull)** · Cellar **Age 3 / Load 1
   any**. The visit grammar (v6.5, kept): PRIMARY + ALTERNATE + a load at each flanking
@@ -55,9 +55,10 @@
 - **Ship deck 18** ⚙ — **the Skute retires and the fee INVERTS**: Cog ×10 (**free**) ·
   Hulk ×8 (**1 `G`**), display of **3**; a commission may displace an EMPTY docked
   hull to the deck.
-- **Cask tiles** — the load-bonus pool re-prints: *Chart 1* → **SAIL** (sail this Ship
-  now, unfull) and *Gain 1 specialist* → **LIFT** (this cask's die +1 as it boards, cap
-  6). Specialists, buildings and ⚜ never print on cask tiles.
+- **Cask tiles** — the load-bonus pool re-prints: *Chart 1* → **BUILD** (place or
+  advance ONE of your Ventures, at its printed fee — with London's prize, one of the
+  only two Venture doors, v7.0b) and *Gain 1 specialist* → **LIFT** (this cask's die +1
+  as it boards, cap 6). Specialists, buildings and ⚜ never print on cask tiles.
 - **Specialists** — the sea singles (Pilot · Surveyor · Wharfinger) retire; the
   **Chandler returns** (station Source: swap 1 `G` ↔ 1 `H`); the **Supercargo** reverts
   to the v5.8 trigger; NEW ⚙: the **Coper** (after your landing: step one landed beer
@@ -316,6 +317,19 @@ worker placed free · first player fixed.
 
 ## 10. Kit deltas (every ruling that touches a printed face lands a note here; older deltas live in git history)
 
+**v7.0b “Build leaves the counter” delta (2026-09-01, designer-ruled — `KEY hanse-v70b`):**
+
+- **The Wharf board reprints the Market's ALTERNATE seat: BUILD → Source 1** (the
+  `goods-1` face). Building is not a station verb — it is **earned**: the only two
+  Venture doors are **London's prize** (the fee waived) and a cask's **BUILD load
+  bonus** (at the printed face fee). The build fee glossary moves to the aid's Venture
+  row and the aid front's Build footer line.
+- **The cask tiles reprint the SAIL bonus seat as BUILD** (pool seat 7 of 8; the
+  per-beer offsets and counts stand, so each Q3+ census swaps its SAIL tiles for BUILD
+  tiles). Sail-early keeps its ONE home: the Harbor's ALTERNATE. Kit surfaces: the
+  cask sheets (`components.js` `CASK_POOL`) · the aid back's 8-bonus legend · the aid
+  front's stations line · the wharf cross · the checklist wharf row.
+
 **v7.0 “The Guild” delta (2026-08-31, designer-called — the §0 head carries the full kit
 picture; this note records the SHARED face re-cuts this pass):**
 
@@ -348,7 +362,7 @@ picture; this note records the SHARED face re-cuts this pass):**
   2 die seats; uniform back, plotter double-sided) · the **Destinations board re-cut**
   (each panel: the printed **6-rung ladder** with its dashed marker seat · the
   lane-gate line · the first-landing letter line · the **demand well**; the factor
-  sockets and Kontorhaus lines left) · the **Wharf station faces** (Source 3/BUILD ·
+  sockets and Kontorhaus lines left) · the **Wharf station faces** (Source 3/Source 1 ·
   Brew/the second kettle · Commission/SAIL-now · Age 3/Load-any) · the **ship deck 18**
   (Cog ×10 free · Hulk ×8 1 `G`, display 3; the Skute sheet retired) · the **Venture
   sheet returns** (4 designs × 4 house rings, L1 front / its own L2 back — the FLIP is
@@ -359,7 +373,7 @@ picture; this note records the SHARED face re-cuts this pass):**
   Tastings remnants (`components.js` pruned the same day — the generators live in git
   history). Shared-data re-cuts in `components.js`: `HULL` Cog 0/Hulk 1 `G` (the app's
   hull tiles had still printed the v6 fees — drift caught and closed) · `SHIP_DECK` 18
-  · `CASK_POOL` prints the v7 verbs (**LIFT** die+1 · **SAIL** now) in the engine's
+  · `CASK_POOL` prints the v7 verbs (**LIFT** die+1 · **BUILD** at its fee) in the engine's
   census order · the works roster drops the Tollhouse ⚙ and the Chancery.
 
 **v5.7 “Plain Sail” delta (2026-08-23, ruled — 12 CARDS LEAVE THE KIT):**

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Print &amp; Play · v7.0a “The Guild”</title>
+<title>Brewhouses of the Hanse — Print &amp; Play · v7.0b “The Guild”</title>
 <style>
   :root{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--parch2:#e9dcc0;--line:#333;--gold:#b8860b;
     --sea:#274b5c;--green:#4a6b3a;--red:#7c2128;--violet:#5b3a8e;--vp:#b8860b;}
@@ -717,7 +717,7 @@
 
 
 <div class="bar no-print" id="bar">
-  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v7.0a “The Guild”</span></h1>
+  <h1>Brewhouses of the Hanse<span class="bsub">Print &amp; Play · v7.0b “The Guild”</span></h1>
   <span id="hnav"><!-- the shared site nav (nav.js) — one roster for all four pages --></span>
   <select id="vsel" class="bsel" onchange="setView(this.value)" title="View">
     <option value="all">All sheets</option>
@@ -833,7 +833,7 @@ function aid3(face,ic,title,body){return '<div class="aid a3 '+face+'">'
 function aid3Panels(){
   // ONE COMPLETE AID PER PANEL (designer, 2026-08-18): the sheet carries THREE IDENTICAL
   // aids — two cuts → three double-sided player aids. FRONT = the whole play face; BACK =
-  // End & Score + the icon legend (two columns). v7.0a content — fit-trimmed to the panel.
+  // End & Score + the icon legend (two columns). v7.0b content — fit-trimmed to the panel.
   const G=LU('wheat','gi'), H=LU('sprout','hi');
   const front=aid3('front','beer','Player Aid',
      '<h5>'+LU('list-ordered')+'Your Turn — move · work the station</h5>'
@@ -841,7 +841,7 @@ function aid3Panels(){
     +'<div class="step"><span class="sn">2</span><span class="sx">Work it — its <b>PRIMARY</b> and its <b>ALTERNATE</b></span></div>'
     +'<div class="step"><span class="sn">3</span><span class="sx">+ <b>Load 1</b> at each flanking slot + <b>each flanking Venture’s action</b> — any order, all optional</span></div>'
     +'<h5>'+LU('store')+'The Stations — PRIMARY / alternate</h5>'
-    +'<div class="ln">'+LU('store')+' <b>Market</b>: Source 3 / <b>Build</b>   '+LU('flask-conical')+' <b>Brewhouse</b>: Brew / <b>the second kettle</b> — a 2nd full brew, +1'+H+' (every brew searches)</div>'
+    +'<div class="ln">'+LU('store')+' <b>Market</b>: Source 3 / <b>Source 1</b>   '+LU('flask-conical')+' <b>Brewhouse</b>: Brew / <b>the second kettle</b> — a 2nd full brew, +1'+H+' (every brew searches)</div>'
     +'<div class="ln">'+LU('ship')+' <b>Harbor</b>: Commission (Cog free · Hulk 1'+G+' · +1 load · flag +1'+G+') / <b>Sail-now</b>   '+LU('age-3')+' <b>Cellar</b>: Age 3 / Load 1, any Ship</div>'
     +'<h5>'+LU('dices')+'The Die</h5>'
     +'<div class="dstrip">'
@@ -865,7 +865,7 @@ function aid3Panels(){
     +AID_K('kontor-novgorod','Novgorod','3+','die scores +3★','5/2→11/5')
     +'</table>'
     +'<div class="dontf"><b>Don’t forget:</b> ① the minimum reads the die AS IT BOARDS (after lifts) ② the lane gates — London opens while your Bruges dice OUTNUMBER your London dice (Novgorod: Bergen &gt; Novgorod) ③ the market only falls — the Coper is its one hand ④ a rival’s use of your Venture ticks its ledger (cap 6)</div>'
-    +'<div class="ln">'+LU('hammer')+' <b>Build</b> — an L1: open ground 1'+G+' · replace a Public Work 2'+G+' (boxed) · FLIP / overbuild to L2 2'+G+'</div>');
+    +'<div class="ln">'+LU('hammer')+' <b>Build</b> — only London’s prize (free) or a cask’s BUILD bonus: L1 open 1'+G+' · replace a Work 2'+G+' (boxed) · FLIP/overbuild 2'+G+'</div>');
   const back=aid3('back','book-open','End, Score &amp; Icons',
      '<h5>'+LU('timer')+'End &amp; Score</h5>'
     +'<div class="ln"><b>First EMPTY tray</b> (your last of 13 dice committed): finish the round. Round '+MAX_ROUND+' backstop.</div>'
@@ -898,7 +898,7 @@ function aid3Panels(){
     +AID_ROW('map-pin','Place 1 presence','a tray die parks at 1')
     +AID_ROW('scroll-text','Gain 1 recipe','at its fee')
     +AID_ROW('die-plus1','LIFT','this die +1 as it boards (cap 6)')
-    +AID_ROW('sail','SAIL','sail this Ship now, even unfull')
+    +AID_ROW('hammer','BUILD 1','a Venture · its fee')
     +AID_ROW('flask-conical','Brew 1','a full brew, at its cost')
     +'<h5>'+LU('star')+'Scoring Marks</h5>'
     +AID_ROW('trophy','Majority','the ladder rung, by parked dice')
@@ -1043,7 +1043,7 @@ function wharfCross(){
   const wharf='<div class="wharf">'
     +'<div></div>'+slot+slot+'<div></div>'
     +slot
-    +station('A','Market','market',['goods-3','hammer'],'Source 3 / Build')
+    +station('A','Market','market',['goods-3','goods-1'],'Source 3 / Source 1')
     +station('B','Brewhouse','brewhouse',['flask-conical','brew-top'],'Brew / the second kettle +1H')
     +slot+slot
     +station('C','Harbor','harbor',['ship','sail'],'Commission / Sail-now')
@@ -1400,7 +1400,7 @@ function buildPages(){
     const fam=meta[i++].fam;(famPages[fam]=famPages[fam]||new Set()).add(pages.indexOf(fp));}));}
 
   // --- CASK TILES → their own 22″ plotter sheet pair (fronts + mirrored backs) ---
-  // Gruit all-Source (pinned); Q2+ cycle their quality's GATED pool (brew Q3+; LIFT and SAIL print at every quality — v7 D10) — the printed mix IS the brew-draw; the per-beer offsets guarantee each Q3+ beer ONE brew tile
+  // Gruit all-Source (pinned); Q2+ cycle their quality's GATED pool (brew Q3+; LIFT and BUILD print at every quality — v7.0b) — the printed mix IS the brew-draw; the per-beer offsets guarantee each Q3+ beer ONE brew tile
   const caskItems=[];
   CASKS.filter(d=>!d.exp).forEach(d=>{const pool=d.pin?[d.pin]:poolFor(d.q);   // the base beers; the pool mix IS the brew-draw
     for(let i=0;i<cnt(d.n);i++){const act=pool[(i+(d.off||0))%pool.length];
@@ -1499,11 +1499,11 @@ function checklist(pages,famPages){
   const T=title=>'<table><tr><th></th><th>'+title+'</th><th>qty</th></tr>';
   // 2026-08-09 [designer]: the manifest is a PACKING LIST, not a lesson — one short line each:
   // what it is · WHERE IT LIVES on the table. The rules live in the rulebook.
-  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v7.0a “The Guild” · TEST BUILD)</span></h2>'
+  let h='<div class="check"><h2>What’s in the box — component manifest <span style="font-weight:normal;opacity:.6">(v7.0b “The Guild” · TEST BUILD)</span></h2>'
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">Counts are tuning placeholders ⚙. The rules live on the <b>player aid</b> and in the rulebook — this page only says what to make, how many, and where it sits on the table.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
-    +R('Main board — the Wharf','The shared action area: 4 stations in a 2×2, ringed by 8 slots. Each station prints its PRIMARY and ALTERNATE verb (Market Source 3/<b>Build</b> · Brewhouse Brew/<b>the second kettle</b> +1H · Harbor Commission/<b>Sail-now</b> · Cellar Age 3/Load-any); a visit works both, plus a load at each flanking slot and each flanking Venture’s action. <b>Centre of the table.</b>','1')
+    +R('Main board — the Wharf','The shared action area: 4 stations in a 2×2, ringed by 8 slots. Each station prints its PRIMARY and ALTERNATE verb (Market Source 3/<b>Source 1</b> · Brewhouse Brew/<b>the second kettle</b> +1H · Harbor Commission/<b>Sail-now</b> · Cellar Age 3/Load-any); a visit works both, plus a load at each flanking slot and each flanking Venture’s action. <b>Centre of the table.</b>','1')
     +R('Destinations board','The 4 Kontor panels — minimum · prize · the <b>6-rung majority LADDER</b> · the lane-gate line · the first-landing letter line · the <b>DEMAND WELL</b> each. <b>Delivered dice park on it all game.</b>','1')
     +R('Market &amp; Stores board','The face-up displays (Ships 3 · Specialists 4 · <b>Contracts ⚜ 3</b> + the two decks · casks &amp; recipes), ringed by the 50-cell score ring.','1')
     +R('The Bourse lane + price markers','One track (+3 … −1) — every marker starts at +3 and <b>only falls</b>; the Coper is the one hand up. Markers colour-matched and named.','8 markers')
