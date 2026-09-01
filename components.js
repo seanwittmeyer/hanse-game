@@ -26,7 +26,7 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   'star-plus1':'star-plus1','star-plus2':'star-plus2','star-plus3':'star-plus3','star-plus4':'star-plus4',
   'star-minus1':'star-minus1','star-minus2':'star-minus2','star-minus3':'star-minus3',
   'swap-dice':'swap-dice','venture-build':'venture-build',redeal:'redeal',
-  compass:'chart',waves:'current',closure:'closure',factor:'factor',kontorhaus:'kontorhaus',post:'post',
+  compass:'chart',waves:'current',closure:'closure',factor:'factor',kontorhaus:'kontorhaus',post:'post',mail:'mail',
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
 const LUX=(n,cls)=>'<i data-lucide="'+n+'"'+(cls?' class="'+cls+'"':' class="ic"')+'></i>';
 const LU=(n,cls)=>ICON_ART[n]?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/icons/'+ICON_ART[n]+'.png" alt="">':LUX(n,cls);
@@ -160,8 +160,8 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · v4.0: EARNED free (Bergen's prize �
   {ic:'scale',      nm:'Chandler', art:'a chandlery counter of tallow and rope', act:LU('store')+' Source: may swap 1'+LU('wheat','g ic')+' ↔ 1'+LU('sprout','h ic'), g:1, c:'#5b3a8e', n:1},   // v7 — the v5.1 swap returns (the Wharfinger retired with the sea)
   {ic:'hammer',     nm:'Shipwright', art:'a shipwright’s adze on a curved hull rib', act:LU('ship')+' Commission: pay no fee', h:1, c:'#5b3a8e', n:1},
   // ---- the v7 GUILD singles ⚙ (stand-in art via slug — finals briefed in art/PROMPTS.md) ----
-  {ic:'trending-up',nm:'Coper', slug:'broker', art:'a beer-barge counter flying a whisk of hops', act:'After your glut: 1 landed '+LU('beer')+' +1', g:1, h:1, c:'#5b3a8e', n:1},   // v7 — the down-only market's one hand
-  {ic:'mail',       nm:'Herald', slug:'quaymaster', art:'a guild letter-horn over a contract book', act:LU('mail')+' Claim: <span class="g">+1'+LU('wheat','g ic')+'</span><span class="h">+1'+LU('sprout','h ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v7 — contracts build on more
+  {ic:'trending-up',nm:'Coper', art:'a beer-barge counter flying a whisk of hops', act:'After your glut: 1 landed '+LU('beer')+' +1', g:1, h:1, c:'#5b3a8e', n:1},   // v7 — the down-only market's one hand
+  {ic:'mail',       nm:'Herald', art:'a guild letter-horn over a contract book', act:LU('mail')+' Claim: <span class="g">+1'+LU('wheat','g ic')+'</span><span class="h">+1'+LU('sprout','h ic')+'</span>', g:1, c:'#5b3a8e', n:1},   // v7 — contracts build on more
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 // ---- v7 CONTRACTS (⚜) — ONE CARD, FOUR LIVES (D5): in the display it is a CONTRACT
@@ -296,14 +296,14 @@ const VSEP=s=>'<span class="vsep">'+s+'</span>';
 // use turns it up, cap 6; the pips score to the owner at game end). The action line is
 // open to ANY visitor, on their own casks — the ledger tick IS the rent.
 const VENTURES=[
-  {k:'brew',   l1:{nm:'Mash Tun',        ic:'flask-conical', own:VBIG(LU('flask-conical')), txt:'Brew — full cost', art:'venture-factor-l1.png'},
-               l2:{nm:'Great Copper',    ic:'flask-conical', own:VBIG(LU('goods-2'))+VSEP('+')+VBIG(LU('flask-conical')), art:'venture-rack-l2.png'}},
+  {k:'brew',   l1:{nm:'Mash Tun',        ic:'flask-conical', own:VBIG(LU('flask-conical')), txt:'Brew — full cost'},
+               l2:{nm:'Great Copper',    ic:'flask-conical', own:VBIG(LU('goods-2'))+VSEP('+')+VBIG(LU('flask-conical'))}},
   {k:'age',    l1:{nm:'Warehouse',       ic:'boxes',   own:VBIG(LU('age-2'))+VSEP('+')+VBIG(LU('package-plus')), art:'venture-warehouse-l1.png'},
-               l2:{nm:'Assay Loft',      ic:'scale',   own:VBIG('<b class="vnum">2</b>'+LU('sprout','h'))+VSEP('→')+VBIG(LU('check')), art:'venture-counting-l2.png'}},
+               l2:{nm:'Assay Loft',      ic:'scale',   own:VBIG('<b class="vnum">2</b>'+LU('sprout','h'))+VSEP('→')+VBIG(LU('check'))}},
   {k:'die',    l1:{nm:'Rack House',      ic:'repeat',  own:VBIG(LU('swap-dice')), txt:'Swap 2 dice', art:'venture-rack-l1.png'},
-               l2:{nm:'Lagering Cellar', ic:'snowflake', own:VBIG(LU('die-plus1')), art:'venture-warehouse-l2.png'}},
+               l2:{nm:'Lagering Cellar', ic:'snowflake', own:VBIG(LU('die-plus1'))}},
   {k:'points', l1:{nm:'Counting House',  ic:'goods-1', trig:'On load', own:VBIG(LU('star-plus1','starmark')), art:'venture-counting-l1.png'},
-               l2:{nm:'Staple Rights',   ic:'landmark', trig:'On sail', own:VBIG(LU('beer'))+VSEP(':')+VBIG(LU('star-plus2','starmark')), art:'venture-factor-l2.png'}},
+               l2:{nm:'Staple Rights',   ic:'landmark', trig:'On sail', own:VBIG(LU('beer'))+VSEP(':')+VBIG(LU('star-plus2','starmark'))}},
 ];
 const VENT_FOOT='rgba(31,86,122,.78)';   // the owner-only blue (the v2.4.1 privilege colour returns)
 // v5.3 restyle (designer 2026-08-22): a Venture SHARES the building tile's anatomy — the same

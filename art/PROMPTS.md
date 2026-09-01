@@ -394,7 +394,13 @@ clause is CUT from the spec (it painted the letterbox bands; the kit's own foot 
 text legibility) and the anti-frame block above is the standing language. The object shots
 retire in place, slug-matched — no code change beyond the three dropped v6 slug overrides.
 
-## THE v7.0a KIT ART QUEUE (2026-08-31 — the P5 print pass landed; these are the open briefs)
+## THE v7.0a KIT ART QUEUE — LANDED 2026-08-31 (all three groups; D deferred, no code waits)
+Picks: **Coper A · Herald B · Chandler B** (the slug overrides dropped; Chandler replaced in
+place) · **Mash Tun B · Great Copper B · Assay Loft B · Lagering Cellar C · Staple Rights C**
+(the five `art:` override rows deleted — the default `venture-<k>-l<lvl>.png` names resolve) ·
+**mail C** (the fleur-de-lis letter; `ICON_ART['mail']` maps — the lucide envelope retires;
+candidate B self-disqualified by writing literal lorem-ipsum on the envelope). Every landing
+through the deframe gate. The original briefs below stand as the record:
 
 **A · Specialist portraits (3)** — the standing HALF-BODY portrait spec above governs
 (one c. 1350 figure at the left third, trade prop in hand, soft workplace behind, aged-
