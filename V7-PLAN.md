@@ -659,3 +659,25 @@ v7.0 mitigation; the "threshold defer" dial is recorded).
    racing?
 8. **Score legibility:** at game end, can every player trace their total unaided —
    including the in-play drips (wharfage, staple, Chronicler)?
+
+---
+
+## 12 · The first oracle read (2026-09-02 — standing review #4)
+
+Before any table: a **30-game 2p corpus** through the canonical engine (20 Cellarmaster
+mirrors · 10 Cellarmaster vs Guildmaster · fixed rollout budgets · every turn recorded),
+**two blind analyses** of it (rules + engine + a neutral brief only), and the gatekeeper
+review built on both — **`archive/records/GATEKEEPER-v70b.md`**. The corpus and the
+analyses stay out of the repo (charter §4); the review's appendix carries the numbers.
+
+**Verdict: PASS-FOR-NOW on the right chassis.** The loop, the tide, the berth race, the
+falling market and score legibility all landed (every seat total re-derived from
+components). The v7 systems are inert under search: 314 ⚜ earned / 14 spent, 111 of 120
+ladders at rung 1, the contract deck dry in 16 games, 0 flags in 181 commissions, Great
+Copper 29 of 30 L2s, 21 of 30 games on the round-22 backstop with 27% of dice unspent,
+pace 20.8 turns a seat. The review's §8 is the queue; **item 1 (price the hall: a present
+keeps the prize, the rung belongs to the spender) is the one thing**, item 2 (the dice as
+the clock, `PRES_POOL` 13→10 first) rides the same table. Read the §7 process law before
+acting on any of it: the corpus is bots at 2p, the search tier idles 30% of its turns
+(instrument AND game — the review says which reading each claim rests on), and the §11
+questions above are what the table answers.

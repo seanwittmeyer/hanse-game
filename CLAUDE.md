@@ -134,7 +134,7 @@ presents sell outside it; a matching DELIVER takes the demand's +1★ market lin
 all 8 Public Works dealt at setup, no bag, Tollhouse retired ⚙ · **Cog free · Hulk 1G**
 ⚙ + the **private flag** (+1G ⚙; a commission may displace an EMPTY hull) · SAIL-now
 (any docked hull with 1+ of YOUR casks, free ⚙) · 13 dice ⚙ · MAX_ROUND 22 ⚙ · target
-10–15 turns/seat. The full sheet + the red-team record: `V7-PLAN.md` §10. The v6
+10–15 turns/seat. The full sheet + the red-team record: `V7-PLAN.md` §10. **The first oracle read of v7.0b (2026-09-02 — a 30-game 2p search-tier corpus, two blind analyses, standing review #4): `archive/records/GATEKEEPER-v70b.md` — verdict PASS-FOR-NOW on the right chassis; the hall is priced dead (314 ⚜ earned, 14 spent), the dice are not the clock (21/30 ceiling endings), one Venture face is the engine; its §8 is the queue.** The v6
 paragraph below stands as history:
 
 **THE V6 PROGRAM (designer-ruled 2026-08-29 — HISTORY; its build is frozen at

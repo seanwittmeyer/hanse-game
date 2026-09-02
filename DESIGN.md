@@ -922,6 +922,7 @@ are the things to read when one runs — or when a human table sits down.*
 
 **v7 WATCHES (2026-08-31 — the station-verb panel: 3 proposals · 2 sim probes · a judge):**
 
+- **THE FIRST ORACLE READ (2026-09-02 — `archive/records/GATEKEEPER-v70b.md`, standing review #4; 30 search-tier 2p games + two blind analyses).** The watch above was right and the number is worse: under the Cellarmaster **21 of 30 2p games end on the ceiling** (the greedy read was 27–31%) with 27% of the dice never spent and deferral reading as free to the search. The two new watches it opens: **the hall price** (PRESENT never beat DELIVER in 100+ matched landings — 314 ⚜ earned, 14 spent, 111/120 ladders frozen, the 14-card contract deck dry in 16 games) and **the one-tile engine** (Great Copper 29 of 30 L2s, 57 of 113 Venture actions through London's per-cask waived prize, the ledger ≈4% of the score). Its §8 queue is the agenda; the §9 table questions gate every reading.
 - **THE SECOND KETTLE (v7.0a — the designer RULED past the panel, eyes open).** The
   station-verb panel had recommended keeping the double kettle unpriced: in three
   independent ~150–300-game arms a +1H fee on the *top-tile* alternate suppressed only
