@@ -48,6 +48,7 @@ the complete canon **in full — no skimming, no sampling**:
 |---|---|
 | `CLAUDE.md` | this charter — process, interlocks, gates, deploy |
 | `V7-PLAN.md` | **THE V7 PROGRAM — reflection + plan (the read-FIRST after this charter, designer-ruled 2026-08-31):** the v6.5b human-playtest post-mortem, the TEN DIRECTIVES, the process law (the human table is the top oracle; no component is ever background), phases |
+| `V8-PLAN.md` | **THE V8 PROGRAM — OPENED 2026-09-04 (read right after `V7-PLAN.md`):** the designer's ruling verbatim, the loop that failed, what stays, the recommended two-loop core assembled from five blind variants and three adversarial reviews, **THE FORKS (§7) awaiting the designer's rulings**, the paper phases — no engine change until its P3; v7.0b stays the live build at root |
 | `V6-PLAN.md` | the v6 program — now HISTORY; the CONSTITUTION it carries (component-state supremacy) stays law and is restated in `V7-PLAN.md` |
 | `DESIGN.md` | pillars, current architecture, change log, lessons, **open watches** — the *why* |
 | `RULES.md` | **source of truth** — the ONE rules document (clean operational rules) |
@@ -134,7 +135,7 @@ presents sell outside it; a matching DELIVER takes the demand's +1★ market lin
 all 8 Public Works dealt at setup, no bag, Tollhouse retired ⚙ · **Cog free · Hulk 1G**
 ⚙ + the **private flag** (+1G ⚙; a commission may displace an EMPTY hull) · SAIL-now
 (any docked hull with 1+ of YOUR casks, free ⚙) · 13 dice ⚙ · MAX_ROUND 22 ⚙ · target
-10–15 turns/seat. The full sheet + the red-team record: `V7-PLAN.md` §10. **The first oracle read of v7.0b (2026-09-02 — a 30-game 2p search-tier corpus, two blind analyses, standing review #4): `archive/records/GATEKEEPER-v70b.md` — verdict PASS-FOR-NOW on the right chassis; the hall is priced dead (314 ⚜ earned, 14 spent), the dice are not the clock (21/30 ceiling endings), one Venture face is the engine; its §8 is the queue.** The v6
+10–15 turns/seat. The full sheet + the red-team record: `V7-PLAN.md` §10. **The first oracle read of v7.0b (2026-09-02 — a 30-game 2p search-tier corpus, two blind analyses, standing review #4): `archive/records/GATEKEEPER-v70b.md` — verdict PASS-FOR-NOW on the right chassis; the hall is priced dead (314 ⚜ earned, 14 spent), the dice are not the clock (21/30 ceiling endings), one Venture face is the engine; its §8 is the queue.** **THE V8 PROGRAM OPENED the same week (designer-ruled 2026-09-04): `V8-PLAN.md` — "a good brewer AND a good merchant": a new game on the kept turn grammar (two loops in tension on one 10-die tray that empties from both ends · buildings essential · owned lanes and Kontor seats · the Bruges bench · quality bands). PAPER PHASE: its §7 forks await the designer's rulings; then P1 the mechanic sheet, P2 the designer's own paper table, and only then P3 the mirror. No simulation before the table.** The v6
 paragraph below stands as history:
 
 **THE V6 PROGRAM (designer-ruled 2026-08-29 — HISTORY; its build is frozen at
