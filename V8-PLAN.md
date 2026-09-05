@@ -210,7 +210,7 @@ it is **shared**: free loads, any player with a cask aboard may sail it at their
 commissioner chooses the ground; no peg, no flag. The maiden load means no hull is ever empty.
 
 **Setup:** workers start off the board; the first move is to any station. In REVERSE turn order,
-each player stands one tray die free on any open post 1 (**the starter post** ⚙): every seat
+each player stands one tray die free in their own seat on any leg's post 1 (**the starter post**, F14 ruled 2026-09-04: a post of your choosing): every seat
 begins with a lane, a die beyond Bruges, and a die at sea from turn zero. Start 3 `G` 2 `H`,
 1 ⚜, Gruit + Hopped, the warm Ready Gruit; 10 dice.
 
@@ -245,20 +245,50 @@ your best dice. No ★ beyond the bench, and one ⚜ to sit there with.
   waived)* — the brewer's cask that pays the merchant's loop. Presence, BUILD and CHART leave the
   tiles; Gruit's tile is blank ⚙.
 
-### 6.3 The MERCHANT loop — the Destinations board re-cut
+### 6.3 The MERCHANT loop — THE SEA BOARD (F1 ruled 2026-09-04: a new board)
 
-Each far Kontor panel (London · Bergen · Novgorod) prints, top to bottom: **the lane** (post 1 ·
-post 2) · **YOUR MINIMUM** · **the market track** 0…+3 with one marker, a printed base cell, and
-**two numbers in every cell (Q1–3 | Q4+)** · **two seats** (Warehouse · Kontorhaus) with their ⚜
-price, the floor mark beside the track, and the majority pair · the minimum · the parking field
-(tile under die) · the letter line · the landing order.
+One new board, double-sided by player count. It prints **the Wharf** at the centre (the 2×2 in
+miniature, the cart road leaving the Cellar side, the two lanes leaving the Harbor side), **the
+cart road to Bruges**, **two lanes of legs** — west **W1 the Wadden Coast · W2 the Dover Strait →
+London**; east **E1 the Skagerrak → Bergen · E2 the Sound → Novgorod** — and **the four Kontor
+panels**. Map and lanes are the same thing; the board gives ownership and every destination a
+printed home (`archive/records/` will carry the mock; the page "The Sea Board" is the first cut).
+
+**Three kinds of piece at sea (the designer's question, answered):**
+- **A POST is a die only** — your die in **your own seat** on a leg (one seat per colour on every
+  leg: **posts never block**, everyone may hold every leg; the die is the owner, the pips the
+  return). Post 1 costs no goods; post 2 its printed fee and admits Hulks; post 2 prints an ⚜ for
+  the first player to fill it.
+- **A KONTOR BUILDING is a tile of yours + a die** — the Warehouse, then the Kontorhaus, in the
+  Kontor's **two sockets, first come** — the only exclusivity at sea, and the race worth having.
+  Opened with ⚜ + a die while your cask lands there (§ F8).
+- **A WHARF TILE is a building only, no die** (kettle · store · cold store) — goods on the wharf.
+
+**Who benefits (F2 ruled 2026-09-04: option A):** two layers, both printed. *Public:* a Kontor
+building raises that Kontor's marker and its majority pair for EVERY delivery there. *Private:*
+the builder's die turns +1 each time a RIVAL's cask lands there, and a post die turns +1 each
+time ANY Ship sails its leg — you open the destination for the table and are paid in pips as the
+table uses it. *Yours alone:* **YOUR MINIMUM** is a count of your own colour on that Kontor's lane
+and panel — posts, buildings and parked casks; Novgorod counts both east legs. **There is no
+separate tracker: the count is the tracker.** More posts and buildings of yours at a Kontor
+admit lower dice there, so the same investment that raises the market widens what you may sell
+into it. The Flight pays breadth across beers; the majorities pay breadth across Kontore; ten
+dice make both hard.
+
+**Side A (2p):** two seats per leg, a bench of six, the yard stops at six. **Side B (3–4p):** four
+seats, the bench of eight, the full yard. Two building sockets per Kontor on both sides.
+
+Each far Kontor panel prints, top to bottom: the name and minimum · **YOUR MINIMUM** · the market
+track 0…+3 with one marker and a printed base cell · the two building sockets with their ⚜ price,
+the floor mark and the majority pair · the parking field (tile under die) · the letter line and
+the landing order.
 
 | Printed socket ⚙ | Cost | Die | Turns +1 (cap 6; pips at the end) | For everyone |
 |---|---|---|---|---|
-| **Post 1** | 0 goods (the die) | a tray die, face 1, at the Harbor | **any Ship sails this lane** | the lane OPENS (Cogs) |
-| **Post 2** | Bergen 1 `G` · London 1 `G` · Novgorod 1 `G` 1 `H` | as post 1 | any Ship sails this lane; **owner: your cask landing here +1** ⚙ (A's sea lift) | **Hulks** may sail here |
-| **Warehouse seat** | **1 ⚜** + a tray die, while landing here | face 1 | **a rival's cask lands here** | marker **+1**; the floor is **1**; majority pair L1 |
-| **Kontorhaus seat** (needs the Warehouse) | **2 ⚜** + a tray die, while landing here | face 1 | a rival's cask lands here | marker **+1**; majority pair L2 |
+| **Post 1** (your seat on leg 1) | 0 goods (the die) | a tray die, face 1, at the Harbor | **any Ship sails this lane** | the lane OPENS (Cogs) |
+| **Post 2** (your seat on leg 2) | Bergen 1 `G` · London 1 `G` · Novgorod 1 `G` 1 `H` | as post 1; the first to fill it takes the printed ⚜ | any Ship sails this lane; **owner: your cask landing here +1** ⚙ (A's sea lift) | **Hulks** may sail here |
+| **Warehouse** (a tile of yours + a die, socket 1) | **1 ⚜** + a tray die, while landing here | face 1 | **a rival's cask lands here** | marker **+1**; the floor is **1**; majority pair L1 |
+| **Kontorhaus** (a tile of yours + a die, socket 2; needs the Warehouse) | **2 ⚜** + a tray die, while landing here | face 1 | a rival's cask lands here | marker **+1**; majority pair L2 |
 
 - **OPEN (off the stations):** when a Ship lands, each player with a cask aboard — in boarding
   order — may open ONE seat there before their first cask delivers: the ⚜ spent, the die stood,
@@ -357,7 +387,7 @@ is goods and a Flight beer; a socket die is at least its founding pip.
 
 ## 7 · THE FORKS (the designer rules each; ★ = the recommendation)
 
-**Ruled 2026-09-04, on reading the first cut: no formal tray.** Which end a die comes from adds
+**Ruled 2026-09-04 (second reading): F1 a sea board · F2 YOUR MINIMUM · F14 a starter post of your choosing; posts never block, the Kontor buildings do.** **Ruled 2026-09-04, on reading the first cut: no formal tray.** Which end a die comes from adds
 nothing; the dice come from one place. What matters is how much each die earns at its
 destination on the boards — that is the tension in action. The two-ended tray, its ⚜ milestones
 and its strip are out of the plan; the runway is the v7 tray, and the split is read off the
@@ -365,8 +395,8 @@ boards in your colour.
 
 | # | Fork | Options | ★ and why |
 |---|---|---|---|
-| F1 | The sea's shape | (a) a lane of 2 posts on each far panel · (b) the v6 map with legs and 4 post faces (A) · (c) Kontor seats only (B) | (a): ownership without a second board; the map is a later print option |
-| F2 | Route access | (a) YOUR MINIMUM by your dice there, no rent (B) · (b) own-or-rent, 1 good to the post-1 owner (E) · (c) strict own passage (A) | (a): no transfer; the same count as the recipe card; a brewer's best dice always sail |
+| F1 | The sea's shape | **RULED 2026-09-04: a new sea board** — the v6 geography as owned legs; map and lanes are one thing; the mock is the page "The Sea Board" | ruled |
+| F2 | Route access | **RULED 2026-09-04: (a) YOUR MINIMUM** — your own dice on the lane and at the Kontor set what may board; the count is the tracker; a building's marker step is public, its ticks private | ruled |
 | F3 | Hull ownership | (a) the ground owns the hull (C) · (b) a commissioner's peg + freight (D/E) · (c) free hulls, investors board (B) | (a): no new component; wharf tiles gain a second job |
 | F4 | The hall | (a) the rising bench with quality bands (B + red team) · (b) demand cards (A/D/E) · (c) falling quality benches (C) | (a): the bench is the ladder, no deck, the race heats |
 | F5 | Aging | (a) the calendar, +1 at turn start (D) · (b) Cellar AGE by visit (E) | (a): time passes whether you visit or not; the Cellar becomes the door; the corpus's idle Cellar visits vanish |
@@ -378,7 +408,7 @@ boards in your colour.
 | F11 | Public Works | (a) keep 12; deal 6 at 2–3p, 4 at 4p; the tide · (b) retire (D) | (a): the tide is a keep |
 | F12 | Bruges by cart | (a) cart only · (b) hulls + a packet (B) | (a): Bruges is special because it is the road |
 | F13 | SAIL | (a) off the stations: owner at turn end, shared by any cask-holder · (b) a Harbor verb | (a) |
-| F14 | The starter post | (a) one free post-1 die per seat at setup · (b) a clean start | (a): every seat has a die at sea on turn 0 |
+| F14 | The starter post | **RULED 2026-09-04: one free die in your own seat on any post 1** · posts never block (one seat per colour); the Kontor buildings' two sockets are the only exclusivity; side A / side B by count | ruled |
 | F15 | The wharf hand | (a) 3 tiles kettle · store · cold store · (b) 4 licensed producers (D) | (a) |
 | F16 | Quality bands | (a) two numbers per market cell + bands on the bench, the tile under the die · (b) die-only cells | (a): without it a lifted Keut equals a Bock and Bock dies again |
 | F17 | The ⚜ cap | (a) 2 · (b) 3 · (c) a refused ⚜ banks 1★ | (a) first; (c) if letters are refused on big landings |
