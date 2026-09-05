@@ -236,8 +236,7 @@ your best dice. No ★ beyond the bench, and one ⚜ to sit there with.
   Q3–4 may brew · L2 Great Copper: Q5 may brew, and its owner BREWs twice a visit) · **STORE** (L1
   Hop Garden: +1 `H` when you work its station · L2 Maltings: +1 `G` +1 `H`) · **COLD STORE** (L1:
   one aging cask of yours +1 step as you work its station · L2 Lagering Cellar: one Ready cask +1
-  past its quality, cap 6). **Fees L1 1 `G` 1 `H` · FLIP 1 `G` 1 `H`** ⚙. A tile's slot also decides
-  which docked hulls are yours (§6.1).
+  past its quality, cap 6). **Fees L1 1 `G` 1 `H` · FLIP 1 `G` 1 `H`** ⚙.
 - **The cask and its die:** unchanged law (set at brew, aged to Ready, lifted to 6, read as it
   boards, parked at landing). **The cask tile parks under the die** at the Kontor, on the bench
   and in the yard: the beer's identity stands with its die (the quality band, the Flight), and
