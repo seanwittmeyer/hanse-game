@@ -165,7 +165,7 @@ the tension is the DESTINATION, read off the boards in your colour). A cask beyo
 opened there, and falls one step per landing sail to the floor. Whether a cask may board at all is
 read off **your own dice at that Kontor**: none, and only a 5 boards; three, and a Hopped boards.
 Mumme and Bock cannot be taken without dice of yours standing beyond Bruges. Bruges is the road:
-Gruit sells into a goods row that falls as it fills; any Q2+ beer is enshrined in the hall with an
+Gruit sells at the yard for a fixed 3 goods; any Q2+ beer is enshrined in the hall with an
 invitation, on a bench whose places rise in price and admission. **Every invitation is a fork in
 the hand:** a present at Bruges, or a seat opened at a far Kontor while your cask lands there.
 
@@ -279,7 +279,7 @@ admit lower dice there, so the same investment that raises the market widens wha
 into it. The Flight pays breadth across beers; the majorities pay breadth across Kontore; ten
 dice make both hard.
 
-**Side A (2p):** two seats per leg, a bench of six, the yard stops at six. **Side B (3–4p):** four
+**Side A (2p):** two seats per leg, a bench of six. **Side B (3–4p):** four
 seats, the bench of eight, the full yard. Two building sockets per Kontor on both sides.
 
 Each far Kontor panel prints, top to bottom: the name and minimum · **YOUR MINIMUM** · the market
@@ -316,16 +316,17 @@ the landing order.
   London Kontorhaus covered, the bench at 8; 4p — all open, the bench at 8. Public Works: deal 6
   at 2–3p, 4 at 4p ⚙ (open ground scales with the hands that want it).
 
-### 6.4 Bruges — the road, the goods row, the bench
+### 6.4 Bruges — the road, the yard, the bench
 
 Reached by the cart only (the Market's CART 1). No route, no track, no minimum, no letter. Two
 doors, and the cart always resolves (the bench if legal and chosen, else the yard). **Either door
 pays the Bruges prize: the landing cask may take ONE recipe at its printed fee and requirement
 (§6.2).** The doors:
-- **THE YARD — a falling goods row** ⚙: `3G1H · 2G1H · 2G1H · 2G · 2G · 1G1H · 1G · 1G · 1G · 1G`
-  (2p: a stop after space 6). Park the die (tile under it) on the next open space, take what it
-  prints. Any Ready cask may; only Gruit should. Gruit's only door. The die is Bruges presence,
-  no majority weight, a Flight beer. A full row buys nothing more.
+- **THE YARD — a fixed price (F7 ruled 2026-09-04):** any Ready cask landing here → **3 goods** ⚙,
+  any mix; park the die (tile under it) in the yard field. Only Gruit should. Gruit's only door.
+  The die is Bruges presence, no majority weight, a Flight beer. Gruit costs 1 `G` to brew and
+  sells for 3: easy, fast and cheap — a distraction good enough to compete for a die, never the
+  points generator. No row, no fall: it is not the central beer.
 - **THE BENCH — 8 places** ⚙ (2p: 6), filled left to right; each prints a **quality band** and a
   **bonus**, alternating so the low door closes late ⚙: `Q2+ +2 · Q2+ +2 · Q3+ +3 · Q2+ +2 · Q3+
   +3 · Q4+ +4 · Q3+ +3 · Q5 +5`. PRESENT a Q2+ cask: spend 1 ⚜, take the NEXT open place if the
@@ -385,7 +386,7 @@ is goods and a Flight beer; a socket die is at least its founding pip.
 | ships a public good | open hulls, nothing owned; the commissioner is paid by the act — destination, slot, the maiden load, INVEST unlocked |
 | buildings optional | the kettle is the only Q3+ door; a tile's slot owns its hull; seats are the only far value |
 | the London double-build spike | Kontor prizes retired; the best die is 9–11★ |
-| Gruit the hidden currency | the cart only; a falling row; no majority weight; a blank tile |
+| Gruit the hidden currency | the cart only; a fixed 3 goods; no majority weight; a blank tile; each Gruit is a tenth of the runway |
 | the hall priced dead | die + a bench bonus of 2–5 against die + a cell of 0–3; ⚜ with two sinks |
 | the dice not the clock | 10 dice; two visible sinks; the merchant's dice cost no goods |
 | the ledger 4% | posts tick per sail on their lane, seats per rival landing, every die from face 1 |
@@ -393,7 +394,7 @@ is goods and a Flight beer; a socket die is at least its founding pip.
 
 ## 7 · THE FORKS (the designer rules each; ★ = the recommendation)
 
-**Ruled 2026-09-04 (fourth reading): F9 recipes are earned — the Bruges prize and the cask tile, never a station (the Market's ALT is the CART) · F5 reaffirmed: no automatic aging, a specialist may bring it back.** **Ruled 2026-09-04 (third reading): F3 nobody owns a hull, a Harbor visit commissions when it can and INVEST follows · F5 the explicit AGE action · F13 ships sail when full, no verb.** **Ruled 2026-09-04 (second reading): F1 a sea board · F2 YOUR MINIMUM · F14 a starter post of your choosing; posts never block, the Kontor buildings do.** **Ruled 2026-09-04, on reading the first cut: no formal tray.** Which end a die comes from adds
+**Ruled 2026-09-04 (fifth reading): F7 Gruit is fixed — 1 `G` to brew, 3 goods at the yard; not the central beer, so no row and no fall.** **Ruled 2026-09-04 (fourth reading): F9 recipes are earned — the Bruges prize and the cask tile, never a station (the Market's ALT is the CART) · F5 reaffirmed: no automatic aging, a specialist may bring it back.** **Ruled 2026-09-04 (third reading): F3 nobody owns a hull, a Harbor visit commissions when it can and INVEST follows · F5 the explicit AGE action · F13 ships sail when full, no verb.** **Ruled 2026-09-04 (second reading): F1 a sea board · F2 YOUR MINIMUM · F14 a starter post of your choosing; posts never block, the Kontor buildings do.** **Ruled 2026-09-04, on reading the first cut: no formal tray.** Which end a die comes from adds
 nothing; the dice come from one place. What matters is how much each die earns at its
 destination on the boards — that is the tension in action. The two-ended tray, its ⚜ milestones
 and its strip are out of the plan; the runway is the v7 tray, and the split is read off the
@@ -407,7 +408,7 @@ boards in your colour.
 | F4 | The hall | (a) the rising bench with quality bands (B + red team) · (b) demand cards (A/D/E) · (c) falling quality benches (C) | (a): the bench is the ladder, no deck, the race heats |
 | F5 | Aging | **RULED 2026-09-04: the explicit AGE action** at the Cellar, the *Age* cask bonus and the Cold Store — upkeep, never goods; no calendar routine; automatic aging may return as a specialist's line | ruled |
 | F6 | Socket dice | (a) all at face 1, each ticking on its printed event · (b) fixed coupons + rent (E) | (a): one grammar |
-| F7 | Gruit's price | (a) the falling goods row (D) · (b) flat 3 goods | (a): the brake on the Gruit farm |
+| F7 | Gruit's price | **RULED 2026-09-04: fixed** — 1 `G` to brew, 3 goods at the yard; no row, no fall. Gruit is a means to an end, a distraction good enough to compete for a die | ruled |
 | F8 | Opening a seat | (a) ⚜ + a die at a landing, by anyone (D) · (b) goods + a die at the Harbor (E) · (c) the second seat owner-only (red team) | (a): requirement 9 verbatim; the ⚜ is a fork in the hand; the second seat's private prize is small so the snipe is dead |
 | F9 | Recipes | **RULED 2026-09-04: earned, never bought at a station** — the Bruges prize (either door) and the *Gain 1 recipe* cask tile, at a hops fee; the far-dice requirement stays printed on Mumme and Bock ⚙; the search-brew is the competition for the tile | ruled |
 | F10 | Specialists | (a) retire to an expansion seam (5/5) · (b) keep 2 seats | (a): their jobs are buildings and sockets now |
