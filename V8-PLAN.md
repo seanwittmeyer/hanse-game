@@ -153,7 +153,7 @@ retired · MAX_ROUND 16–18. The forks are where they split (§7).
 
 **The brewer's row and the merchant's row.** The top of the 2×2 is the brewer's (Market: source
 and learn · Brewhouse: brew and build); the bottom is the merchant's (Harbor: commission and
-invest · Cellar: the cellar door — load and cart). The clock is the v7 clock, unchanged: ten dice instead of thirteen, the first empty tray ends
+invest · Cellar: age and load, the cart included). The clock is the v7 clock, unchanged: ten dice instead of thirteen, the first empty tray ends
 the game. **What is new is that every die now has TWO destinations that compete** — a cask parked
 in a Kontor field, on a bench place or in the yard, or a **post** on a lane or a **seat** in a
 Kontor that decides what the casks are worth — and that the merchant's destination costs no goods,
@@ -186,28 +186,29 @@ majority share without a cask of its own parked there.
 |---|---|---|
 | **A · Market** — the merchant's desk | **SOURCE 2** ⚙ — take 2 goods, any mix (designer-ruled 2026-09-04: no per-visit hop cap — goods are hard enough to get; hops pinch by price, not by cap) | **LEARN** — take 1 recipe card from the display at its printed fee, if its printed requirement reads true |
 | **B · Brewhouse** — the kettle | **BREW** — pay a recipe into an open vessel; a tray die at the printed start value; search the beer's stack, choose the tile. The station's kettle brews Q1–2; **Q3–4 need a Mash Tun standing on the wharf, Q5 a Great Copper** (yours free; a rival's: 1 good to its owner, one brew) | **BUILD** — place or FLIP one of your wharf tiles on ANY open slot at its printed fee **+1 `G`** ⚙ (the valve; a flanking stop builds at the plain fee) |
-| **C · Harbor** — the shipmaster's desk | **COMMISSION** — take a hull from the display (Cog free · Hulk 1 `G` ⚙; a Hulk only toward a lane whose post 2 is filled), dock it on any shipless slot, **load 1 Ready cask onto it now** (a commission needs a Ready cask) | **INVEST** — stand a tray die at face 1 on the lowest open post of any lane; post 1 costs **no goods** ⚙ (the die is the price), post 2 its printed fee |
-| **D · Cellar** — the cellar door | **LOAD 1** — one Ready cask onto any docked Ship | **CART 1** — one Ready cask to Bruges, resolved at once (§6.4); no cask-tile bonus fires on the cart ⚙ |
+| **C · Harbor** — the shipmaster's desk | **COMMISSION** — take a hull from the display (Cog free · Hulk 1 `G` ⚙; a Hulk only toward a lane whose post 2 is filled) and dock it on any shipless slot, or over an EMPTY docked hull, which returns to the deck ⚙. **A Harbor visit must commission when it can** (F3 ruled 2026-09-04: ships keep coming). Then, if you hold a Ready cask, **load 1 onto it free — the maiden load**: first aboard lands first, before the glut, and opens a seat first | **INVEST** — stand a tray die at face 1 in your own seat on the lowest open post of any lane; post 1 costs no goods, post 2 its printed fee. **INVEST is open only after this visit's commission** ⚙ — bring a ship, stand a post |
+| **D · Cellar** | **AGE 3** — turn your aging dice up three steps, split freely (F5 ruled 2026-09-04: aging is a visit and a cask bonus — upkeep, never goods) | **LOAD 1** — one Ready cask onto any docked Ship, **or onto the cart to Bruges** (resolved at once, §6.4; no cask-tile bonus fires on the cart ⚙) |
 
-**Aging is the calendar ⚙ (fork F5):** at the start of your turn, before MOVE, every aging die in
-your vessels turns +1 and stops at its quality (READY). No verb, no good; a forgotten turn
-under-ages only the forgetter. The Cold Store tile (below) is the one way to hurry.
+**Aging is upkeep (F5 ruled 2026-09-04):** the Cellar's AGE, the *Age +1* cask bonus and the Cold
+Store tile are the only hands that turn a die; no good is ever spent on a step. Time passes only
+when you tend it — one less thing to track, and a reason to visit the Cellar.
 
-**Sailing needs no verb:** a full Ship sails at once. At the **end of your turn** you may also sail
-any docked Ship **you own** with 1+ cask aboard, or any **shared** Ship carrying a cask of yours —
-unfull, free.
+**A Ship sails when full, and only then (F13 ruled 2026-09-04):** no SAIL verb, no early sail;
+premature sailing, if it ever returns, is a specialist's line. At the end of the game every docked
+Ship sails and its casks land at their die only ⚙.
 
-**A flanking stop**, each once: **LOAD 1** Ready cask onto the Ship docked there (a rival's private
-hull: **1 good to its owner**, the freight — the only transfer a load ever makes; a payee at the
-cap: the excess to the supply); and **BUILD** a wharf tile from hand onto that slot at its fee
+**A flanking stop**, each once: **LOAD 1** Ready cask onto the Ship docked there (every hull is open to every player — no
+freight, no fee); and **BUILD** a wharf tile from hand onto that slot at its fee
 (replacing a Public Work +1 `G`, the Work boxed) or **FLIP** your L1 there to its L2. Wharf tiles
 are passive: they fire when their station is worked (the kettle licenses BREW from anywhere on the
 wharf). The Public Work at the slot fires on the load as today.
 
-**The ground owns the hull.** A Ship docked on a slot holding YOUR wharf tile is **yours**: riders
-pay you the freight, only you sail it early, nobody displaces it. On a Public Work or open ground
-it is **shared**: free loads, any player with a cask aboard may sail it at their turn end. The
-commissioner chooses the ground; no peg, no flag. The maiden load means no hull is ever empty.
+**Nobody owns a hull (F3 ruled 2026-09-04).** Every docked Ship is open to every player: the berth
+race is the interaction, as it always was, and nothing is tracked. **The commissioner's return is
+printed into the act:** the choice of destination and slot (the Kiln, the Cooperage), the maiden
+load (first aboard, first to land, first to open a seat), and the Harbor's INVEST, which only a
+commission unlocks. A ship on the wharf benefits the table; commissioning it benefits the
+commissioner first.
 
 **Setup:** workers start off the board; the first move is to any station. In REVERSE turn order,
 each player stands one tray die free in their own seat on any leg's post 1 (**the starter post**, F14 ruled 2026-09-04: a post of your choosing): every seat
@@ -220,7 +221,7 @@ your best dice. No ★ beyond the bench, and one ⚜ to sit there with.
 ### 6.2 The BREWER loop
 
 - **Sourcing:** SOURCE 2, any mix; start 3 `G` 2 `H`; cap 8 ⚙. Faucets: the Bruges goods
-  row · your Hop Garden/Maltings · freight and kettle fees paid by rivals · the *Gain 2 goods* tile.
+  row · your Hop Garden/Maltings · kettle fees paid by rivals · the *Gain 2 goods* tile.
   **The walk sets the budget:** a split seat sees each station every fourth turn, so 3–4 Market
   visits in 14 turns = 6–8 goods + 5 start + two carts (~5) + a store tile (~3) ≈ **20 goods**,
   against ~24 wanted (six casks ~13 · two tiles ~4 · two recipes ~4 · a post 2 ~1–2 · a Hulk 1).
@@ -314,7 +315,7 @@ the landing order.
 
 ### 6.4 Bruges — the road, the goods row, the bench
 
-Reached by the cart only (the Cellar's CART 1). No route, no track, no minimum, no letter. Two
+Reached by the cart only (the Cellar's LOAD 1 may send a Ready cask by cart). No route, no track, no minimum, no letter. Two
 doors, and the cart always resolves (the bench if legal and chosen, else the yard):
 - **THE YARD — a falling goods row** ⚙: `3G1H · 2G1H · 2G1H · 2G · 2G · 1G1H · 1G · 1G · 1G · 1G`
   (2p: a stop after space 6). Park the die (tile under it) on the next open space, take what it
@@ -374,9 +375,9 @@ is goods and a Flight beer; a socket die is at least its founding pip.
 |---|---|
 | the loop closes on four verbs | Q3+ needs a kettle; every far ★ needs standing; the bench needs an ⚜ |
 | goods free | SOURCE 2; a ~4-good gap on the ring walk; hops the pinch by price (recipes, brews and tiles priced in `H`) |
-| aging paid in goods | the calendar; the Cold Store hurries one cask |
+| aging paid in goods | retired; AGE is a visit, a cask bonus or the Cold Store — upkeep, never goods |
 | recipes too easy / Bock too hard | LEARN priced in hops with far-dice requirements; the Bock stack 12 goods; Q4+ reads a higher cell and the bench's top places |
-| ships a public good | the ground owns the hull; freight to the owner; the maiden load |
+| ships a public good | open hulls, nothing owned; the commissioner is paid by the act — destination, slot, the maiden load, INVEST unlocked |
 | buildings optional | the kettle is the only Q3+ door; a tile's slot owns its hull; seats are the only far value |
 | the London double-build spike | Kontor prizes retired; the best die is 9–11★ |
 | Gruit the hidden currency | the cart only; a falling row; no majority weight; a blank tile |
@@ -387,7 +388,7 @@ is goods and a Flight beer; a socket die is at least its founding pip.
 
 ## 7 · THE FORKS (the designer rules each; ★ = the recommendation)
 
-**Ruled 2026-09-04 (second reading): F1 a sea board · F2 YOUR MINIMUM · F14 a starter post of your choosing; posts never block, the Kontor buildings do.** **Ruled 2026-09-04, on reading the first cut: no formal tray.** Which end a die comes from adds
+**Ruled 2026-09-04 (third reading): F3 nobody owns a hull, a Harbor visit commissions when it can and INVEST follows · F5 the explicit AGE action · F13 ships sail when full, no verb.** **Ruled 2026-09-04 (second reading): F1 a sea board · F2 YOUR MINIMUM · F14 a starter post of your choosing; posts never block, the Kontor buildings do.** **Ruled 2026-09-04, on reading the first cut: no formal tray.** Which end a die comes from adds
 nothing; the dice come from one place. What matters is how much each die earns at its
 destination on the boards — that is the tension in action. The two-ended tray, its ⚜ milestones
 and its strip are out of the plan; the runway is the v7 tray, and the split is read off the
@@ -397,9 +398,9 @@ boards in your colour.
 |---|---|---|---|
 | F1 | The sea's shape | **RULED 2026-09-04: a new sea board** — the v6 geography as owned legs; map and lanes are one thing; the mock is the page "The Sea Board" | ruled |
 | F2 | Route access | **RULED 2026-09-04: (a) YOUR MINIMUM** — your own dice on the lane and at the Kontor set what may board; the count is the tracker; a building's marker step is public, its ticks private | ruled |
-| F3 | Hull ownership | (a) the ground owns the hull (C) · (b) a commissioner's peg + freight (D/E) · (c) free hulls, investors board (B) | (a): no new component; wharf tiles gain a second job |
+| F3 | Hull ownership | **RULED 2026-09-04: nobody owns a hull.** Every Ship is open; nothing tracked. The commissioner is paid by the act: destination, slot, the maiden load, and INVEST — which a Harbor visit unlocks only by commissioning | ruled |
 | F4 | The hall | (a) the rising bench with quality bands (B + red team) · (b) demand cards (A/D/E) · (c) falling quality benches (C) | (a): the bench is the ladder, no deck, the race heats |
-| F5 | Aging | (a) the calendar, +1 at turn start (D) · (b) Cellar AGE by visit (E) | (a): time passes whether you visit or not; the Cellar becomes the door; the corpus's idle Cellar visits vanish |
+| F5 | Aging | **RULED 2026-09-04: the explicit AGE action** at the Cellar, the *Age* cask bonus and the Cold Store — upkeep, never goods; no calendar routine | ruled |
 | F6 | Socket dice | (a) all at face 1, each ticking on its printed event · (b) fixed coupons + rent (E) | (a): one grammar |
 | F7 | Gruit's price | (a) the falling goods row (D) · (b) flat 3 goods | (a): the brake on the Gruit farm |
 | F8 | Opening a seat | (a) ⚜ + a die at a landing, by anyone (D) · (b) goods + a die at the Harbor (E) · (c) the second seat owner-only (red team) | (a): requirement 9 verbatim; the ⚜ is a fork in the hand; the second seat's private prize is small so the snipe is dead |
@@ -407,7 +408,7 @@ boards in your colour.
 | F10 | Specialists | (a) retire to an expansion seam (5/5) · (b) keep 2 seats | (a): their jobs are buildings and sockets now |
 | F11 | Public Works | (a) keep 12; deal 6 at 2–3p, 4 at 4p; the tide · (b) retire (D) | (a): the tide is a keep |
 | F12 | Bruges by cart | (a) cart only · (b) hulls + a packet (B) | (a): Bruges is special because it is the road |
-| F13 | SAIL | (a) off the stations: owner at turn end, shared by any cask-holder · (b) a Harbor verb | (a) |
+| F13 | SAIL | **RULED 2026-09-04: a Ship sails when full, and only then.** No SAIL verb; premature sailing at most a specialist's line later; docked cargo lands at die only at the end | ruled |
 | F14 | The starter post | **RULED 2026-09-04: one free die in your own seat on any post 1** · posts never block (one seat per colour); the Kontor buildings' two sockets are the only exclusivity; side A / side B by count | ruled |
 | F15 | The wharf hand | (a) 3 tiles kettle · store · cold store · (b) 4 licensed producers (D) | (a) |
 | F16 | Quality bands | (a) two numbers per market cell + bands on the bench, the tile under the die · (b) die-only cells | (a): without it a lifted Keut equals a Bock and Bock dies again |
