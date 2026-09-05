@@ -153,8 +153,12 @@ retired · MAX_ROUND 16–18. The forks are where they split (§7).
 
 **The brewer's row and the merchant's row.** The top of the 2×2 is the brewer's (Market: source
 and learn · Brewhouse: brew and build); the bottom is the merchant's (Harbor: commission and
-invest · Cellar: the cellar door — load and cart). Ten quality dice, and every one ends somewhere public: a cask parked in a Kontor field, on a
-bench place or in the yard — or a **post** on a lane or a **seat** in a Kontor. The tray is only
+invest · Cellar: the cellar door — load and cart). The clock is the v7 clock, unchanged: ten dice instead of thirteen, the first empty tray ends
+the game. **What is new is that every die now has TWO destinations that compete** — a cask parked
+in a Kontor field, on a bench place or in the yard, or a **post** on a lane or a **seat** in a
+Kontor that decides what the casks are worth — and that the merchant's destination costs no goods,
+so the dice can actually run out (in v7.0b they did not: 21 of 30 games hit the round ceiling with
+27% of the dice unspent). The tray is only
 the runway (designer-ruled 2026-09-04: no formal two-ended tray — the dice come from one place;
 the tension is the DESTINATION, read off the boards in your colour). A cask beyond Bruges is worth
 **its die + the Kontor's market cell for its quality band**; the marker rises only when a seat is
