@@ -139,7 +139,7 @@ specialists, the contract and demand decks, the private flag, the per-beer Bours
 | **A · The Owned Sea** | the v6 map returns, owned: passage dice on legs, post tiles sliding under them, three Kontorhaus levels that set each port's marker, floor and Hulk admission | the deeper post's owner line — *your cask landing here +1* (the sea lift) | a second board; four post faces; 2p ticks on one rival |
 | **B · The Kontor Boards** | no sea; each Kontor a socket row where your tile + die is route, ledger, majority weight and clock at once | **YOUR MINIMUM** — your dice at a Kontor set the quality that may board there; seats at face 1 ticking per rival landing; the rising bench | 16 Kontor tiles + 8 brew tiles; a funnelled one-socket brewer |
 | **C · Buildings Are the Actions** | thin station verbs; every strong verb on a flank-bound Venture; tolls for rival use | **the ground owns the hull** — a Ship on your tile is private, on public ground shared | a post at +1★ may not be worth a die |
-| **D · The Lisboa Transposition** | licences on private buildings; civic works opened with invitations at a landing; the market's floor is the civic dice | **the two-ended tray** (brews leave left, investments right, ⚜ under R2/R4) · **⚜ open the Kontor seats** · the falling Bruges goods row · aging by the calendar | a turn-start routine; two decks |
+| **D · The Lisboa Transposition** | licences on private buildings; civic works opened with invitations at a landing; the market's floor is the civic dice | **⚜ open the Kontor seats** · the falling Bruges goods row · aging by the calendar | a turn-start routine; two decks |
 | **E · The Economist** | map-agnostic budget: 6 casks · 3 bonds · 1 spare; a die worth 2–9★ bounded by quality + one marker | the **priced recipe ladder** whose top rungs need dice beyond Bruges; SOURCE 2 and the ~8-good gap; the mandatory maiden load | keeps the specialists and both decks |
 
 All five converged, independently, on: a building as the only door to Q3+ beer · one value marker
@@ -153,9 +153,10 @@ retired · MAX_ROUND 16–18. The forks are where they split (§7).
 
 **The brewer's row and the merchant's row.** The top of the 2×2 is the brewer's (Market: source
 and learn · Brewhouse: brew and build); the bottom is the merchant's (Harbor: commission and
-invest · Cellar: the cellar door — load and cart). Ten quality dice sit in one printed row on the
-player board: a die brewed leaves from the LEFT and becomes a cask; a die invested leaves from the
-RIGHT and becomes a **post** on a lane or a **seat** in a Kontor. A cask beyond Bruges is worth
+invest · Cellar: the cellar door — load and cart). Ten quality dice, and every one ends somewhere public: a cask parked in a Kontor field, on a
+bench place or in the yard — or a **post** on a lane or a **seat** in a Kontor. The tray is only
+the runway (designer-ruled 2026-09-04: no formal two-ended tray — the dice come from one place;
+the tension is the DESTINATION, read off the boards in your colour). A cask beyond Bruges is worth
 **its die + the Kontor's market cell for its quality band**; the marker rises only when a seat is
 opened there, and falls one step per landing sail to the floor. Whether a cask may board at all is
 read off **your own dice at that Kontor**: none, and only a 5 boards; three, and a Hopped boards.
@@ -180,8 +181,8 @@ majority share without a cask of its own parked there.
 | Station | PRIMARY | ALTERNATE |
 |---|---|---|
 | **A · Market** — the merchant's desk | **SOURCE 2** ⚙ — take 2 grain, or 1 grain + 1 hop (at most one hop a visit ⚙: hops are the pinch) | **LEARN** — take 1 recipe card from the display at its printed fee, if its printed requirement reads true |
-| **B · Brewhouse** — the kettle | **BREW** — pay a recipe into an open vessel; a LEFT-end die at the printed start value; search the beer's stack, choose the tile. The station's kettle brews Q1–2; **Q3–4 need a Mash Tun standing on the wharf, Q5 a Great Copper** (yours free; a rival's: 1 good to its owner, one brew) | **BUILD** — place or FLIP one of your wharf tiles on ANY open slot at its printed fee **+1 `G`** ⚙ (the valve; a flanking stop builds at the plain fee) |
-| **C · Harbor** — the shipmaster's desk | **COMMISSION** — take a hull from the display (Cog free · Hulk 1 `G` ⚙; a Hulk only toward a lane whose post 2 is filled), dock it on any shipless slot, **load 1 Ready cask onto it now** (a commission needs a Ready cask) | **INVEST** — stand a RIGHT-end die at face 1 on the lowest open post of any lane; post 1 costs **no goods** ⚙ (the die is the price), post 2 its printed fee |
+| **B · Brewhouse** — the kettle | **BREW** — pay a recipe into an open vessel; a tray die at the printed start value; search the beer's stack, choose the tile. The station's kettle brews Q1–2; **Q3–4 need a Mash Tun standing on the wharf, Q5 a Great Copper** (yours free; a rival's: 1 good to its owner, one brew) | **BUILD** — place or FLIP one of your wharf tiles on ANY open slot at its printed fee **+1 `G`** ⚙ (the valve; a flanking stop builds at the plain fee) |
+| **C · Harbor** — the shipmaster's desk | **COMMISSION** — take a hull from the display (Cog free · Hulk 1 `G` ⚙; a Hulk only toward a lane whose post 2 is filled), dock it on any shipless slot, **load 1 Ready cask onto it now** (a commission needs a Ready cask) | **INVEST** — stand a tray die at face 1 on the lowest open post of any lane; post 1 costs **no goods** ⚙ (the die is the price), post 2 its printed fee |
 | **D · Cellar** — the cellar door | **LOAD 1** — one Ready cask onto any docked Ship | **CART 1** — one Ready cask to Bruges, resolved at once (§6.4); no cask-tile bonus fires on the cart ⚙ |
 
 **Aging is the calendar ⚙ (fork F5):** at the start of your turn, before MOVE, every aging die in
@@ -205,8 +206,8 @@ it is **shared**: free loads, any player with a cask aboard may sail it at their
 commissioner chooses the ground; no peg, no flag. The maiden load means no hull is ever empty.
 
 **Setup:** workers start off the board; the first move is to any station. In REVERSE turn order,
-each player stands one RIGHT-end die free on any open post 1 (**the starter post** ⚙): every seat
-begins with a lane, a die beyond Bruges, and a right end that reads as normal. Start 3 `G` 2 `H`,
+each player stands one tray die free on any open post 1 (**the starter post** ⚙): every seat
+begins with a lane, a die beyond Bruges, and a die at sea from turn zero. Start 3 `G` 2 `H`,
 1 ⚜, Gruit + Hopped, the warm Ready Gruit; 10 dice.
 
 **What the four verbs alone give you:** Gruit, Hopped, the cart, a Cog you can board only with
@@ -236,7 +237,7 @@ your best dice. No ★ beyond the bench, and one ⚜ to sit there with.
   boards, parked at landing). **The cask tile parks under the die** at the Kontor, on the bench
   and in the yard: the beer's identity stands with its die (the quality band, the Flight), and
   each beer's stack is its supply for the game ⚙. Load-bonus pool ⚙ (7): *Gain 2 goods · Age +1 ·
-  Load 1 more · LIFT · Brew 1 · Gain 1 recipe · POST (stand a RIGHT-end die on any open post, fee
+  Load 1 more · LIFT · Brew 1 · Gain 1 recipe · POST (stand a tray die on any open post, fee
   waived)* — the brewer's cask that pays the merchant's loop. Presence, BUILD and CHART leave the
   tiles; Gruit's tile is blank ⚙.
 
@@ -250,10 +251,10 @@ price, the floor mark beside the track, and the majority pair · the minimum · 
 
 | Printed socket ⚙ | Cost | Die | Turns +1 (cap 6; pips at the end) | For everyone |
 |---|---|---|---|---|
-| **Post 1** | 0 goods (the die) | RIGHT-end, face 1, at the Harbor | **any Ship sails this lane** | the lane OPENS (Cogs) |
+| **Post 1** | 0 goods (the die) | a tray die, face 1, at the Harbor | **any Ship sails this lane** | the lane OPENS (Cogs) |
 | **Post 2** | Bergen 1 `G` · London 1 `G` · Novgorod 1 `G` 1 `H` | as post 1 | any Ship sails this lane; **owner: your cask landing here +1** ⚙ (A's sea lift) | **Hulks** may sail here |
-| **Warehouse seat** | **1 ⚜** + a RIGHT-end die, while landing here | face 1 | **a rival's cask lands here** | marker **+1**; the floor is **1**; majority pair L1 |
-| **Kontorhaus seat** (needs the Warehouse) | **2 ⚜** + a RIGHT-end die, while landing here | face 1 | a rival's cask lands here | marker **+1**; majority pair L2 |
+| **Warehouse seat** | **1 ⚜** + a tray die, while landing here | face 1 | **a rival's cask lands here** | marker **+1**; the floor is **1**; majority pair L1 |
+| **Kontorhaus seat** (needs the Warehouse) | **2 ⚜** + a tray die, while landing here | face 1 | a rival's cask lands here | marker **+1**; majority pair L2 |
 
 - **OPEN (off the stations):** when a Ship lands, each player with a cask aboard — in boarding
   order — may open ONE seat there before their first cask delivers: the ⚜ spent, the die stood,
@@ -297,19 +298,21 @@ doors, and the cart always resolves (the bench if legal and chosen, else the yar
 
 Tokens, 12 ⚙. **Start with 1. Hand cap 2**, face-up; a third earned is refused (dial: cap 3).
 Faucets, printed where they fire: **the letter** — your first landing at each far Kontor (read off
-the field; none at Bruges) · **the tray milestones** — the ◄⚜ arrows with the anchor icon under
-the 2nd and 4th RIGHT-end wells, firing only when a die leaves that well to the RIGHT. **Two
+the field; none at Bruges) · **the post-2 letter** — each lane's post 2 prints an ⚜: whoever fills it takes it (the die
+covers the icon; a race read off the board). **Two
 sinks:** PRESENT at the bench (the brewer's capstone) or OPEN a seat while landing (the merchant's
 standing). 3–5 earned, 2–4 spent a seat ⚙. *(Dial if ⚜ run short: a contract display of 2 claimed
 on a Q3+ / die 4+ / Hulk load.)*
 
 ### 6.6 The dice budget and the clock
 
-**The tray is one printed row of 10 wells** across the top of the player board: a kettle at the
-left cap, an anchor at the right, ◄⚜ under R2 and R4, the hourglass line. Sinks: **BREW (left)** ·
-**INVEST a post / OPEN a seat / the POST tile (right)**. Nothing else takes a die; LEARN and BUILD
-take goods. Anyone reads a rival's split across the table: left empties = casks in play, right
-empties = dice at sea, the gap = runway.
+**The tray is the runway only** — the v7 tray: ten dice, public, never returning. There is no
+formal two-ended tray (designer-ruled 2026-09-04): which end a die leaves from adds nothing,
+because the dice come from one place. **The split is read off the boards:** your dice on posts
+and seats are the merchant's; in vessels, aboard hulls, in fields, on the bench and in the yard
+the brewer's — every die ends somewhere public in your colour, and getting the most from each
+die's destination is the tension in action. Sinks: **BREW** · **INVEST a post** · **OPEN a
+seat** · the **POST** tile. Nothing else takes a die; LEARN and BUILD take goods.
 
 A typical competent seat ⚙: **6 casks · 3 bonds · 1 spare** (the starter post is one of the
 three). 8·2·0 is the brewer-only line; 3·5·2 the merchant-only line; both lose to the split.
@@ -350,6 +353,12 @@ is goods and a Flight beer; a socket die is at least its founding pip.
 
 ## 7 · THE FORKS (the designer rules each; ★ = the recommendation)
 
+**Ruled 2026-09-04, on reading the first cut: no formal tray.** Which end a die comes from adds
+nothing; the dice come from one place. What matters is how much each die earns at its
+destination on the boards — that is the tension in action. The two-ended tray, its ⚜ milestones
+and its strip are out of the plan; the runway is the v7 tray, and the split is read off the
+boards in your colour.
+
 | # | Fork | Options | ★ and why |
 |---|---|---|---|
 | F1 | The sea's shape | (a) a lane of 2 posts on each far panel · (b) the v6 map with legs and 4 post faces (A) · (c) Kontor seats only (B) | (a): ownership without a second board; the map is a later print option |
@@ -365,7 +374,7 @@ is goods and a Flight beer; a socket die is at least its founding pip.
 | F11 | Public Works | (a) keep 12; deal 6 at 2–3p, 4 at 4p; the tide · (b) retire (D) | (a): the tide is a keep |
 | F12 | Bruges by cart | (a) cart only · (b) hulls + a packet (B) | (a): Bruges is special because it is the road |
 | F13 | SAIL | (a) off the stations: owner at turn end, shared by any cask-holder · (b) a Harbor verb | (a) |
-| F14 | The starter post | (a) one free post-1 die per seat at setup · (b) a clean start | (a): every seat learns the right end on turn 0 |
+| F14 | The starter post | (a) one free post-1 die per seat at setup · (b) a clean start | (a): every seat has a die at sea on turn 0 |
 | F15 | The wharf hand | (a) 3 tiles kettle · store · cold store · (b) 4 licensed producers (D) | (a) |
 | F16 | Quality bands | (a) two numbers per market cell + bands on the bench, the tile under the die · (b) die-only cells | (a): without it a lifted Keut equals a Bock and Bock dies again |
 | F17 | The ⚜ cap | (a) 2 · (b) 3 · (c) a refused ⚜ banks 1★ | (a) first; (c) if letters are refused on big landings |
@@ -374,7 +383,7 @@ is goods and a Flight beer; a socket die is at least its founding pip.
 
 - **The teach pass** (19 rules after the teach; nine need an example, six of them "who pays a good
   to whom"): one transfer per load, never two; nothing paid to a neutral die (the League post is
-  gone); a free starter post so the right end reads as normal; the Kontorhaus "first guest" ⚜
+  gone); a free starter post so every seat has a die at sea from turn zero; the Kontorhaus "first guest" ⚜
   dropped (a memory state); eleven print lines the panels need (freight on the hull, *needs POST 2*,
   the floor marks, ties, the end-cargo line, "if you cannot present, the yard"); the weekend cut
   list (§10) and the ten table questions (§11).
@@ -410,9 +419,7 @@ is goods and a Flight beer; a socket die is at least its founding pip.
 ## 10 · The paper cut list (a weekend, from the v7.0b kit)
 
 **Re-print:** the Destinations board (three far panels + Bruges, as §6.3–6.4 print them; two letter
-sheets tiled — the one component that cannot be annotated) · four tray strips (10 wells, the
-kettle/anchor caps, ◄⚜ under R2 and R4, the hourglass line; card on foamcore with the wells
-punched) · four player aids (the turn, the four verb pairs, the fee table, a WHO-PAYS-WHOM table
+sheets tiled — the one component that cannot be annotated) · four player aids (the turn, the four verb pairs, the fee table, a WHO-PAYS-WHOM table
 with three lines, the end) · sixteen export recipe cards (fees + the two requirement icons) · four
 station labels over the Wharf board's verb boxes.
 
@@ -430,7 +437,7 @@ Bourse markers; deal 6 of the 12 Public Works.
 
 ## 11 · Ten questions for the first table (ask after game one)
 
-1. Which end of the tray did you take from first, and when did you first take from the other end?
+1. Where did your first die go, and when did a die of yours first go the other way — a post after casks, or a cask after posts?
 2. Name every good you paid to another player, and who to — which payments were forgotten, and did the payee catch them?
 3. Did you ever hold a recipe you could not brew? For how many turns, and what unblocked it?
 4. What was your best single die worth, and did you know it when you brewed it?
@@ -438,5 +445,5 @@ Bourse markers; deal 6 of the 12 Public Works.
 6. When the marker fell after a rival's landing, did you feel it — a verb you time, or a tax you notice at scoring?
 7. Did any Ship sit unfull for more than three rounds, and who finally sailed it?
 8. Did anyone cart a Q3+ cask to the yard, and why — no ⚜, a band, no standing, or the clock?
-9. On the last round, what did the tray tell you about the rival's plan that the board did not?
+9. On the last round, what did the rival's dice on the boards — posts and seats against casks — tell you about their plan?
 10. If you could stand one more die anywhere on the board right now, where — and what did you do with that die instead?
