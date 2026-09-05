@@ -116,8 +116,7 @@ two places · scoring off standing components · the Term Registry and the mirro
 **RETIRED or RE-OPENED by the ruling:** the loop closing on four verbs · free goods · aging paid in
 goods · recipes as a Bruges freebie · ships as a paid public good · buildings as an optional layer ·
 13 dice · Gruit as a scoring cask anywhere · the hall priced below the market · the London prize as
-the build door · the +3 flat premium as the only directional value · (by five of five variants) the
-specialists, the contract and demand decks, the private flag, the per-beer Bourse.
+the build door · the +3 flat premium as the only directional value · (by five of five variants) the contract and demand decks, the private flag, the per-beer Bourse. **The specialists were proposed for retirement by all five variants and the designer overruled it (F10): they stay.**
 
 ## 4 · The ruling as ten tests (a paper design passes all ten)
 
@@ -241,6 +240,11 @@ your best dice. No ★ beyond the bench, and one ⚜ to sit there with.
   Hop Garden: +1 `H` when you work its station · L2 Maltings: +1 `G` +1 `H`) · **COLD STORE** (L1:
   one aging cask of yours +1 step as you work its station · L2 Lagering Cellar: one Ready cask +1
   past its quality, cap 6). **Fees L1 1 `G` 1 `H` · FLIP 1 `G` 1 `H`** ⚙.
+- **Specialists (F10 ruled 2026-09-04: they stay):** 2 seats on the player board; the door is
+  **Bergen's prize** — a cask of yours landing at Bergen may seat one specialist from the display
+  of 4, free ⚙ (level up through buildings AND specialists). The roster is re-cut in P1 from the
+  v7 fifteen: the jobs the board now does retire (Coper, Herald, Shipwright, Supercargo); the two
+  the rulings named join (automatic aging, F5 · an unfull sail, F13); the core five carry.
 - **The cask and its die:** unchanged law (set at brew, aged to Ready, lifted to 6, read as it
   boards, parked at landing). **The cask tile parks under the die** at the Kontor, on the bench
   and in the yard: the beer's identity stands with its die (the quality band, the Flight), and
@@ -337,7 +341,7 @@ pays the Bruges prize: the landing cask may take ONE recipe at its printed fee a
 
 ### 6.5 Invitations ⚜ — earned, capped, two sinks
 
-Tokens, 12 ⚙. **Start with 1. Hand cap 2**, face-up; a third earned is refused (dial: cap 3).
+Tokens, 16 ⚙. **Start with 1. No hand cap** (F17 ruled 2026-09-04: hard to earn is limit enough); held face-up.
 Faucets, printed where they fire: **the letter** — your first landing at each far Kontor (read off
 the field; none at Bruges) · **the post-2 letter** — each lane's post 2 prints an ⚜: whoever fills it takes it (the die
 covers the icon; a race read off the board). **Two
@@ -394,7 +398,7 @@ is goods and a Flight beer; a socket die is at least its founding pip.
 
 ## 7 · THE FORKS (the designer rules each; ★ = the recommendation)
 
-**Ruled 2026-09-04 (fifth reading): F7 Gruit is fixed — 1 `G` to brew, 3 goods at the yard; not the central beer, so no row and no fall.** **Ruled 2026-09-04 (fourth reading): F9 recipes are earned — the Bruges prize and the cask tile, never a station (the Market's ALT is the CART) · F5 reaffirmed: no automatic aging, a specialist may bring it back.** **Ruled 2026-09-04 (third reading): F3 nobody owns a hull, a Harbor visit commissions when it can and INVEST follows · F5 the explicit AGE action · F13 ships sail when full, no verb.** **Ruled 2026-09-04 (second reading): F1 a sea board · F2 YOUR MINIMUM · F14 a starter post of your choosing; posts never block, the Kontor buildings do.** **Ruled 2026-09-04, on reading the first cut: no formal tray.** Which end a die comes from adds
+**Ruled 2026-09-04 (sixth reading): F4 the bench, provisionally · F10 specialists STAY · F11 Public Works stay and get a real pass · F12 cart only · F17 no invitation cap.** **Ruled 2026-09-04 (fifth reading): F7 Gruit is fixed — 1 `G` to brew, 3 goods at the yard; not the central beer, so no row and no fall.** **Ruled 2026-09-04 (fourth reading): F9 recipes are earned — the Bruges prize and the cask tile, never a station (the Market's ALT is the CART) · F5 reaffirmed: no automatic aging, a specialist may bring it back.** **Ruled 2026-09-04 (third reading): F3 nobody owns a hull, a Harbor visit commissions when it can and INVEST follows · F5 the explicit AGE action · F13 ships sail when full, no verb.** **Ruled 2026-09-04 (second reading): F1 a sea board · F2 YOUR MINIMUM · F14 a starter post of your choosing; posts never block, the Kontor buildings do.** **Ruled 2026-09-04, on reading the first cut: no formal tray.** Which end a die comes from adds
 nothing; the dice come from one place. What matters is how much each die earns at its
 destination on the boards — that is the tension in action. The two-ended tray, its ⚜ milestones
 and its strip are out of the plan; the runway is the v7 tray, and the split is read off the
@@ -405,20 +409,20 @@ boards in your colour.
 | F1 | The sea's shape | **RULED 2026-09-04: a new sea board** — the v6 geography as owned legs; map and lanes are one thing; the mock is the page "The Sea Board" | ruled |
 | F2 | Route access | **RULED 2026-09-04: (a) YOUR MINIMUM** — your own dice on the lane and at the Kontor set what may board; the count is the tracker; a building's marker step is public, its ticks private | ruled |
 | F3 | Hull ownership | **RULED 2026-09-04: nobody owns a hull.** Every Ship is open; nothing tracked. The commissioner is paid by the act: destination, slot, the maiden load, and INVEST — which a Harbor visit unlocks only by commissioning | ruled |
-| F4 | The hall | (a) the rising bench with quality bands (B + red team) · (b) demand cards (A/D/E) · (c) falling quality benches (C) | (a): the bench is the ladder, no deck, the race heats |
+| F4 | The hall | **RULED 2026-09-04 (provisional): the rising bench** — fine for the first table; the designer wants a few alternative paths explored later (demand cards, benches by quality) | ruled |
 | F5 | Aging | **RULED 2026-09-04: the explicit AGE action** at the Cellar, the *Age* cask bonus and the Cold Store — upkeep, never goods; no calendar routine; automatic aging may return as a specialist's line | ruled |
 | F6 | Socket dice | (a) all at face 1, each ticking on its printed event · (b) fixed coupons + rent (E) | (a): one grammar |
 | F7 | Gruit's price | **RULED 2026-09-04: fixed** — 1 `G` to brew, 3 goods at the yard; no row, no fall. Gruit is a means to an end, a distraction good enough to compete for a die | ruled |
 | F8 | Opening a seat | (a) ⚜ + a die at a landing, by anyone (D) · (b) goods + a die at the Harbor (E) · (c) the second seat owner-only (red team) | (a): requirement 9 verbatim; the ⚜ is a fork in the hand; the second seat's private prize is small so the snipe is dead |
 | F9 | Recipes | **RULED 2026-09-04: earned, never bought at a station** — the Bruges prize (either door) and the *Gain 1 recipe* cask tile, at a hops fee; the far-dice requirement stays printed on Mumme and Bock ⚙; the search-brew is the competition for the tile | ruled |
-| F10 | Specialists | (a) retire to an expansion seam (5/5) · (b) keep 2 seats | (a): their jobs are buildings and sockets now |
-| F11 | Public Works | (a) keep 12; deal 6 at 2–3p, 4 at 4p; the tide · (b) retire (D) | (a): the tide is a keep |
-| F12 | Bruges by cart | (a) cart only · (b) hulls + a packet (B) | (a): Bruges is special because it is the road |
+| F10 | Specialists | **RULED 2026-09-04: they STAY** — level up your operation through buildings AND specialists; players love asymmetric powers. Two seats; the door is Bergen's prize ⚙; the roster is re-cut in P1 (the jobs the board now does retire; automatic aging and the unfull sail join) | ruled |
+| F11 | Public Works | **RULED 2026-09-04: keep** — done right they make the start of the game fun, and they have not been done right since v1/v2: the roster gets a real design pass in P1 (each Work must be worth walking to); deal 6 at 2–3p, 4 at 4p; the tide | ruled |
+| F12 | Bruges by cart | **RULED 2026-09-04: cart only** — that is how it would have been anyway; it justifies Gruit's destination; the hall gives big returns on your best beers by invitation, without a trading network | ruled |
 | F13 | SAIL | **RULED 2026-09-04: a Ship sails when full, and only then.** No SAIL verb; premature sailing at most a specialist's line later; docked cargo lands at die only at the end | ruled |
 | F14 | The starter post | **RULED 2026-09-04: one free die in your own seat on any post 1** · posts never block (one seat per colour); the Kontor buildings' two sockets are the only exclusivity; side A / side B by count | ruled |
 | F15 | The wharf hand | (a) 3 tiles kettle · store · cold store · (b) 4 licensed producers (D) | (a) |
 | F16 | Quality bands | (a) two numbers per market cell + bands on the bench, the tile under the die · (b) die-only cells | (a): without it a lifted Keut equals a Bock and Bock dies again |
-| F17 | The ⚜ cap | (a) 2 · (b) 3 · (c) a refused ⚜ banks 1★ | (a) first; (c) if letters are refused on big landings |
+| F17 | The ⚜ cap | **RULED 2026-09-04: no cap** — invitations are hard to earn; that friction is the limit | ruled |
 
 ## 8 · What the reviews changed (three adversarial passes on the first synthesis)
 
@@ -446,7 +450,8 @@ boards in your colour.
 - **P1 — the mechanic sheet.** `RULES.md` re-derived whole as the v8 rules (paper; no engine), the
   registry pass in `STYLE.md` (new nouns: post · seat · place · bench · the yard · the cart · Cold
   Store · Hop Garden; new verbs: INVEST · OPEN · CART · POST), `COMPONENTS.md` §0 as the v8
-  kit delta. A second red-team pass on the ruled sheet. Docs only; the v7.0b build stays live at
+  kit delta. **The Public Works roster re-designed** (F11: each Work worth walking to) and **the
+  specialist roster re-cut** (F10). A second red-team pass on the ruled sheet. Docs only; the v7.0b build stays live at
   root until P3.
 - **P2 — the paper table (the top oracle).** The §10 cut list built in a weekend; the designer's own
   2p table, then 3p; the §11 questions asked after every game; the rulings that fall out recorded
@@ -473,8 +478,9 @@ Ship tiles (the Bruges Cogs and two Hulks pulled; *needs POST 2* on the Hulks).
 bench and the two London sockets · 12 ⚜ (the contract cards face-down) · socket dice are the tray
 dice themselves (10 of each colour; three boxed).
 
-**Leave in the box:** the demand cards, the ladder markers, the flags, the specialists, the other
-Bourse markers; deal 6 of the 12 Public Works.
+**Leave in the box:** the demand cards, the ladder markers, the flags, the other
+Bourse markers; deal 6 of the 12 Public Works. Specialists: the core five plus two hand-written seats (automatic
+aging · an unfull sail) until the P1 roster.
 
 ## 11 · Ten questions for the first table (ask after game one)
 
