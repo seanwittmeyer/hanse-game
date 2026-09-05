@@ -180,7 +180,7 @@ majority share without a cask of its own parked there.
 
 | Station | PRIMARY | ALTERNATE |
 |---|---|---|
-| **A · Market** — the merchant's desk | **SOURCE 2** ⚙ — take 2 grain, or 1 grain + 1 hop (at most one hop a visit ⚙: hops are the pinch) | **LEARN** — take 1 recipe card from the display at its printed fee, if its printed requirement reads true |
+| **A · Market** — the merchant's desk | **SOURCE 2** ⚙ — take 2 goods, any mix (designer-ruled 2026-09-04: no per-visit hop cap — goods are hard enough to get; hops pinch by price, not by cap) | **LEARN** — take 1 recipe card from the display at its printed fee, if its printed requirement reads true |
 | **B · Brewhouse** — the kettle | **BREW** — pay a recipe into an open vessel; a tray die at the printed start value; search the beer's stack, choose the tile. The station's kettle brews Q1–2; **Q3–4 need a Mash Tun standing on the wharf, Q5 a Great Copper** (yours free; a rival's: 1 good to its owner, one brew) | **BUILD** — place or FLIP one of your wharf tiles on ANY open slot at its printed fee **+1 `G`** ⚙ (the valve; a flanking stop builds at the plain fee) |
 | **C · Harbor** — the shipmaster's desk | **COMMISSION** — take a hull from the display (Cog free · Hulk 1 `G` ⚙; a Hulk only toward a lane whose post 2 is filled), dock it on any shipless slot, **load 1 Ready cask onto it now** (a commission needs a Ready cask) | **INVEST** — stand a tray die at face 1 on the lowest open post of any lane; post 1 costs **no goods** ⚙ (the die is the price), post 2 its printed fee |
 | **D · Cellar** — the cellar door | **LOAD 1** — one Ready cask onto any docked Ship | **CART 1** — one Ready cask to Bruges, resolved at once (§6.4); no cask-tile bonus fires on the cart ⚙ |
@@ -215,7 +215,7 @@ your best dice. No ★ beyond the bench, and one ⚜ to sit there with.
 
 ### 6.2 The BREWER loop
 
-- **Sourcing:** SOURCE 2 (one hop at most); start 3 `G` 2 `H`; cap 8 ⚙. Faucets: the Bruges goods
+- **Sourcing:** SOURCE 2, any mix; start 3 `G` 2 `H`; cap 8 ⚙. Faucets: the Bruges goods
   row · your Hop Garden/Maltings · freight and kettle fees paid by rivals · the *Gain 2 goods* tile.
   **The walk sets the budget:** a split seat sees each station every fourth turn, so 3–4 Market
   visits in 14 turns = 6–8 goods + 5 start + two carts (~5) + a store tile (~3) ≈ **20 goods**,
@@ -339,7 +339,7 @@ is goods and a Flight beer; a socket die is at least its founding pip.
 | v7.0b | v8 |
 |---|---|
 | the loop closes on four verbs | Q3+ needs a kettle; every far ★ needs standing; the bench needs an ⚜ |
-| goods free | SOURCE 2 with one hop; a ~4-good gap on the ring walk; hops the pinch |
+| goods free | SOURCE 2; a ~4-good gap on the ring walk; hops the pinch by price (recipes, brews and tiles priced in `H`) |
 | aging paid in goods | the calendar; the Cold Store hurries one cask |
 | recipes too easy / Bock too hard | LEARN priced in hops with far-dice requirements; the Bock stack 12 goods; Q4+ reads a higher cell and the bench's top places |
 | ships a public good | the ground owns the hull; freight to the owner; the maiden load |
@@ -394,7 +394,7 @@ boards in your colour.
 - **The red team** (the seat ladder was a prisoner's dilemma; the marker was quality-blind; goods
   not dice were the clock): the second seat's private prize made small so nobody waits; **two
   numbers in every market cell and bands on the bench, the tile parked under the die**; post 1 for
-  no goods so the tray empties; one hop a visit so hops are scarcer than grain; the cart fires no
+  no goods so the tray empties; (its one-hop-a-visit cap was overruled by the designer on 2026-09-04 — goods are hard enough to get); the cart fires no
   tile bonus and Gruit's tile is blank; seat weight needs a parked cask; TICK replaced by POST; the
   budget re-derived from the four-corner walk; seventeen rulings on holes (§6 carries them).
 
