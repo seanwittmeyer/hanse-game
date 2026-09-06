@@ -980,14 +980,19 @@ cross-checked. That work is §13.
 
 ## 13 · THE IMPLEMENTATION PLAN — v8 from the whole review (2026-09-06)
 
-***AMENDMENTS PENDING (the designer, 2026-09-06, on reading the plan — recorded verbatim in
-§12.10):** Kontor buildings are TILES from a set, ownership marked by the builder's die (the die
-is the delivery modifier and scores pips) · wharf tiles carry PRINTED values, no dice on the
-wharf · per-port quality minimums return: London 2 · Bergen 3 · Novgorod 4 · a wild Ship's port
-is named by the FIRST cask loaded · Gruit takes a tile (every one "Gain 2 goods", no search) ·
-the LIFT cask bonus goes; lifts live only on wharf buildings; the cap is Q+1 so 6 is the top ·
-posts cost an action and a die · the prefix tree from Hamburg and the public lane are ruled.
-§13.1 M1, M4 and the Gruit line of §13.9 are overturned by these; the re-cut waits for the go.*
+***THE GO (the designer, 2026-09-06 — §12.10 and §12.11 verbatim).** The rulings below amend
+§13 and are the law the build follows; where §13's body still reads the older call, §12.11's
+reading wins: Kontor buildings are TILES from each player's own set, placed in a slot and marked
+with the builder's die (the die is the delivery modifier, climbs +1 on ANY landing there, scores
+its pips) · wharf tiles carry PRINTED points (2 on tier 1, 4 on tier 2), no dice · every Kontor's
+minimum is Q2 for now (the beer's printed quality) · a wild Ship's port is named by the FIRST cask
+loaded (a chit on the hull) · Gruit takes a tile (all "Gain 2 goods", no search), its bonus fires
+on the CART, and the yard is a TRACK of three zones whose prize shrinks as it fills (best: a recipe
+or 2 goods · good: a recipe at its fee or 1 good · ok: 1 good) · the CART moves to the Cellar's
+alternate and LOAD 1 to the Market's (the designer's own wondering, adopted as a dial) · the LIFT
+cask bonus goes, lifts live only on wharf buildings, six is the top face · posts cost an action and
+a die · the prefix tree · a lane anyone unlocked is open to all · v7 is NOT archived ("it was a
+bust"); the root build is replaced in place. The rules are composed in `RULES.md` v8.0 from this.*
 
 *How this section was made. Two sub-agents each read `CLAUDE.md`, this file (§1 and §12 as law over
 §6–§11), the reviewed page "Brewer & Merchant", `RULES.md` (v7.0b), `play.html`, `components.js`,
@@ -1797,3 +1802,71 @@ building die climbing on any landing (q2), no Hulk gate (q9).
   are the only lifts.
 - **A lane once opened with anyone's posts is open to all.** §13.7 q1 ruled public.
 - **Comments come here, never on the artifact.** The page is re-cut after the go.
+
+### 12.11 The go (2026-09-06), verbatim
+
+> Kontor buildings start in your player supply.
+>
+> Yes, tier two require more work to upgrade so they are worth more. We can discuss what this
+> looks like but right now, make them worth 2 points for the front and 4 on the back.
+>
+> Gruit's gain 2 goods was gained on load. Maybe we switch things up. Make it gain 2 goods on
+> cart and you put your gruit die in Bruges. Bruges has a track, You gain the prize on the track.
+> At first, you can choose a recipe or an extra 2 goods. As the track progresses, the benefit
+> reduces. So early gruit is more option. I think it can be 3 zones for the benefits - best,
+> good, ok. This makes the gain 2 vs cart gruit more interesting as well. At first, if it's gain
+> 2 va gain3, why bother brewing gruit. It also makes me wonder if the cart action should be on
+> Cellar station instead since it's pretty much the same action as source early.
+>
+> Right. Minimum beer to a Kontor is the Kontor quality. Minimum ready value is printed on the
+> cask tiles, no change on either of these from before.
+>
+> Remember, brewing gruit is still a thing. You still gain the tile, use the die, and deliver it.
+> The difference is there is no search because they all have the same bonus and you cart
+> instead of load.
+>
+> No need to archive v7. It was a bust. Read the docs before building.
+>
+> I'm reading the artifact but it has open questions we already addressed.
+>
+> Your cask can sail a lane as long as anyone has unlocked it. This addresses the finicky rule
+> of only some of the casks can go, etc.
+>
+> Building dice increment one for any ship landing regardless of ownership landing.
+>
+> No dice on wharf buildings. Just points printed on the tiles.
+>
+> Per port min should all be the same right now, plus 2.
+>
+> The tree is fine.
+>
+> Ok. That's it. Update the plan then compose the rules, build out play.html updating
+> components and other elements as needed following style.md, then report back when done. Once
+> all of that is done, I'll give you the next instructions.
+
+**The reading, as built:**
+
+- **Kontor buildings: each player's own set.** Three tiles per player ⚙ (Warehouse · Kontorhaus
+  · Guildhouse), each with a different landing effect, each usable once, at any far Kontor whose
+  branch you hold; placed in a slot and marked with a supply die at 1. The die adds its face to
+  every landing of yours there, climbs +1 on any landing there, scores its pips. One per player
+  per Kontor. Twelve tiles in the box.
+- **Wharf tiles print points: 2 (tier 1) · 4 (tier 2).** No dice on the wharf. Scored at the
+  end per standing tile.
+- **Gruit and the yard.** Gruit's tile prints *Gain 2 goods* and fires on the CART (every cask
+  bonus fires on the cart as on a load). The yard is a track of places in three zones; the
+  carted die parks on the next place and takes the zone's prize: BEST (places 1–3 ⚙): a recipe
+  at no fee OR 2 goods · GOOD (4–6): a recipe at its fee OR 1 good · OK (7+): 1 good. Any beer
+  may go to the yard; Gruit may go nowhere else. The yard's three fixed goods (F7) are replaced
+  by the tile's two plus the zone's prize.
+- **The cart moves to the Cellar** (AGE 3 / CART 1) and **LOAD 1 to the Market** (SOURCE 2 /
+  LOAD 1), a dial `CART_STATION`: the designer's reason is that source and cart were the same
+  early choice at one station.
+- **Minimums: Q2 at every far Kontor** (the beer's printed quality); the cask's Ready value
+  prints on its tile as before.
+- **Gruit brews as before**: a die, a vessel, Ready on brew, a tile without a search, then the
+  cart.
+- **No archive.** The root build is replaced in place; the v7 instruments are replaced by the v8
+  ones.
+- **Lanes public · building dice tick on any landing · the tree · no dice on the wharf**:
+  confirmed as read.
