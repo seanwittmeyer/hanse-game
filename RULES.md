@@ -2,7 +2,7 @@
 
 *The one rules document. Clean operational rules only — the v8 program, the designer's review
 and the implementation plan live in `V8-PLAN.md`; design rationale in `DESIGN.md`. Numbers
-marked ⚙ are tunable placeholders. This is the v8.0 TEST BUILD: `play.html` (`KEY hanse-v80a`),
+marked ⚙ are tunable placeholders. This is the v8.0 TEST BUILD: `play.html` (`KEY hanse-v80b`),
 this document, `COMPONENTS.md` §0, `STYLE.md` §4f, `rulebook.html` and the print kit
 (`print.html`) are current.*
 
@@ -23,7 +23,7 @@ Each player starts with (⚙):
 - **11 quality dice: 10 in the personal supply, 1 the starter post** (below). A die leaves the
   supply as a cask (BREW), a post (POST) or a Kontor building (BUILD) and never returns. The
   first **EMPTY supply sets the final round** (§14).
-- The **hand of 4 private building tiles** ringed in your colour, one per station, tier 1 face
+- The **hand of 4 private building tiles** ringed in your colour — four designs, tier 1 face
   up (§12).
 - The **set of 3 Kontor building tiles** in your colour — Warehouse · Kontorhaus · Guildhouse
   (§8).
@@ -32,7 +32,8 @@ Each player starts with (⚙):
 Shared board:
 
 - **The Wharf** — 4 stations ringed by 8 slots (§3). **Public Works: shuffle the roster and
-  deal 6 (2–3p) / 4 (4p) ⚙ onto random slots**; the rest go to the box. Nothing refills a slot.
+  deal 4 ⚙ onto random slots** at every player count — four slots stand open from the start;
+  the rest go to the box. Nothing refills a slot.
 - **The sea board** — side A (2p) / side B (3–4p): Hamburg at the centre, the cart road to
   Bruges, the five **segments** (§8), each printing one **post seat per colour**; the three far
   **Kontor panels** (London · Bergen · Novgorod), each printing its **building slots** (2 on
@@ -85,7 +86,7 @@ slot's load if it has not been used.
 | Station | PRIMARY | ALTERNATE (the same visit) |
 |---|---|---|
 | **A · Market** | **SOURCE 2** ⚙ — take 2 goods, any mix | **LOAD 1** Ready cask onto **any** docked Ship (§7) |
-| **B · Brewhouse** | **BREW** — pay a recipe's goods; a supply die into an open vessel at the beer's printed start value; **a Q2+ Brew searches the beer's stack and chooses the tile** (§5) | **BUILD, the wharf** — place a private building from your hand onto an open slot, or a Public Work's slot, flanking its station, or FLIP your standing tier 1, at its fee (§12) |
+| **B · Brewhouse** | **BREW** — pay a recipe's goods; a supply die into an open vessel at the beer's printed start value; **a Q2+ Brew searches the beer's stack and chooses the tile** (§5) | **BUILD, the wharf** — place a private building from your hand onto any VACANT slot, or FLIP your standing tier 1, at its fee (§12) |
 | **C · Harbor** | **COMMISSION — *must*, when it can** — take a Ship from the display at its fee (**Cog free · Hulk 1 `G`** ⚙), dock it on a shipless slot or over an EMPTY docked Ship (which returns to the deck); the display refills at once. **Then POST**: stand a supply die at face 1 on **the lowest segment of that Ship's lane where you hold no post** (a wild Ship: any lane; a lane you hold whole: no post). If you hold a Ready cask you may load it onto the new Ship now, free — **the maiden load, a LOAD in every respect** (§7), taken after the post. | **BUILD, a Kontor** — at a far Kontor where **your own post stands on every segment of its branch**, place one of your Kontor building tiles in an open slot and stand a supply die on it at face 1 (§8) — **or RAISE**: turn one die of yours at sea +1 (cap 6) |
 | **D · Cellar** | **AGE 3** — turn your aging dice up three steps, split freely | **CART 1** — send one Ready cask of yours to Bruges by road, resolved at once at the yard or the hall (§10) |
 
@@ -283,24 +284,26 @@ every dealt recipe (§12). Holding every recipe, a bonus recipe simply pays noth
 ## 12. The private buildings — the wharf engine
 
 The four stations are the base: a little of everything for everyone. **Your private buildings
-are strictly better and build on each other.** Your hand holds **4 tiles, one per station**,
-tier 1 on one face and tier 2 on the other. **A tile stands only on a slot flanking its station
-and fires only when YOU work that station** (a flanking stop, §2); rivals never use it; the
-tide never takes it; a docked Ship may stand above it; **no die stands on it**. **At most one
-private building of yours per station.**
+are strictly better and build on each other.** Your hand holds **4 tiles** — four designs,
+tier 1 on one face and tier 2 on the other. **A tile stands on ANY vacant slot of the 8 — you
+choose — and fires ON VISIT: whenever YOU work the station that slot flanks** (a flanking stop,
+§2). Its slot picks its station, not its name: a Cold Store beside the Market fires on your
+Market visits. Rivals never use it; the tide never takes it; a docked Ship may stand above it;
+**no die stands on it**. No limit per station — two of your tiles may flank one station.
 
 **Three doors, one verb — BUILD:** the Brewhouse's ALTERNATE · a cask's *BUILD* bonus ·
-London's prize. **Tier 1** is placed from hand onto an open flanking slot for **1 `G` 1 `H`** ⚙,
-or onto a Public Work's slot, replacing it, for **+1 `G`** ⚙ (the Work boxed); never onto a
-rival's tile. **Tier 2 is the FLIP**: your standing tier 1 turns over in place for **2 `G` 1
-`H`** ⚙; it requires the tier 1 and nothing else. Every tier 2 contains its tier 1.
+London's prize. **Tier 1** is placed from hand onto a **vacant slot** — no building on it; a
+docked Ship above is fine — for **1 `G` 1 `H`** ⚙; **never onto a Public Work, never onto a
+rival's tile** (a full wharf has no ground until the tide clears a slot). **Tier 2 is the FLIP**:
+your standing tier 1 turns over in place for **2 `G` 1 `H`** ⚙; it requires the tier 1 and
+nothing else. Every tier 2 contains its tier 1.
 
 **Each tile prints its points: tier 1 = 2★, tier 2 = 4★** ⚙, scored at the end while it stands.
 
-| Station | Tier 1 (fires when you work it) | Tier 2, the FLIP |
+| Design | Tier 1 (fires on visit) | Tier 2, the FLIP |
 |---|---|---|
 | **Market** | **Granary** — +1 `G` +1 `H` | **Kaufhaus** — +2 goods, any mix, AND your CART carries 2 casks |
-| **Brewhouse** | **Scriptorium** — recipes cost you no fee, at every door | **Brewers' Guildhall** — you hold every dealt recipe, AND you may BREW twice this visit |
+| **Brewhouse** | **Scriptorium** — recipes cost you no fee, at every door | **Brewers' Guildhall** — you hold every dealt recipe, AND on visit: BREW once (a full brew, with its search) |
 | **Cellar** | **Cold Store** — AGE +2 more (Age 5) | **Lagering Cellar** — AGE +2 more AND one Ready cask of yours +1 (cap quality + 1) |
 | **Harbor** | **Counting House** — RAISE one die of yours at sea +1 (cap 6) | **Shipping Office** — RAISE +1 AND POST once more (no second commission) |
 

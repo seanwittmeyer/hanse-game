@@ -1,4 +1,4 @@
-// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80a). Seconds, always.
+// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80b). Seconds, always.
 // Drives the CANONICAL engine: extracts play.html's <script>, appends this driver in the
 // SAME lexical scope (S/UI are lets), runs in a Node vm with a stubbed DOM.
 // Usage: node playtests/verify-v8.js
@@ -35,7 +35,7 @@ function loadInto(p,slot,vi){UI.load={ships:[slot],returnTo:'end',loadsLeft:1,ca
 function visit(p,cell){p.placed=true;p.cell=cell;beginStops();}
 
 // ---------- 0 · identity & setup ----------
-t('KEY is hanse-v80a',function(){eq(KEY,'hanse-v80a');});
+t('KEY is hanse-v80b',function(){eq(KEY,'hanse-v80b');});
 t('setup: supply 10 per seat, the starter phase in REVERSE turn order, phase starter',function(){
   S=freshState(3,['P1','P2','P3']);
   S.players.forEach(function(p){eq(p.supply,SUPPLY_DICE,'supply');eq(p.invites,START_INV,'⚜ start');eq(p.hand.slice().sort(),['A','B','C','D'],'the hand');eq(p.ktiles.slice().sort(),['guildhouse','kontorhaus','warehouse'],'the set');});
@@ -306,7 +306,7 @@ t('Bergen: a free seat from the display or nothing; the specialist bonus is a se
 t('London: any build, the fee waived, the die still spent — a post, a Kontor building, a wharf tile or FLIP',function(){fresh(2);var p=S.players[0];p.grain=0;p.hops=0;
   var opts=buildMenuOptions(p,true,true);ok(opts.indexOf('post')>=0&&opts.indexOf('kbuild')>=0&&opts.indexOf('priv')>=0,'all three arms');
   UI={sub:'move'};UI.afterRt='end';enterBuildMenu('benefitcont',true,0,true);eq(UI.sub,'buildmenu');
-  bmPick('priv');eq(UI.sub,'pbuild');pbuildPick('place','A');eq(UI.sub,'placepriv');placePrivOn('s1');
+  bmPick('priv');eq(UI.sub,'pbuild');pbuildPick('place','A');eq(UI.sub,'placepriv');clearSlot('s1');placePrivOn('s1');
   ok(privAt('s1')&&privAt('s1').p==='A','built for free');eq(p.grain,0);eq(p.supply,SUPPLY_DICE,'no die for a wharf tile');
   UI={sub:'move'};UI.afterRt='end';enterBuildMenu('benefitcont',true,0,true);bmPick('post');eq(UI.sub,'post');postPick(UI.post.segs[0]);eq(p.supply,SUPPLY_DICE-1,'the die still spent');});
 t('Novgorod: a RAISE — one die of yours at sea +1 (cap 6); the prompt spans posts and building dice',function(){fresh(2);var p=S.players[0];
@@ -321,29 +321,39 @@ t('the recipe bonus grants at its printed fee: Broyhan 1H · Keut 1G · Mumme 1G
   clearSlot('s2');S.buildings.s2={p:'B',tier:1,owner:0};eq(recipeFeeFor(p,S.exports[1]),{},'the Scriptorium waives');});
 
 // ---------- 11 · the private ladder ----------
-t('a tier 1 builds only on a slot flanking its station (1G1H; over a Work +1G, the Work boxed; never over a rival); the hand tile leaves',function(){fresh(2);var p=cur();p.grain=5;p.hops=5;
+t('a tier 1 builds on ANY vacant slot (1G1H) — a docked Ship above is fine; never on a Public Work, never on a rival\\'s tile; the hand tile leaves',function(){fresh(2);var p=cur();p.grain=5;p.hops=5;
+  clearWharf();S.buildings.s4={b:'maltkiln'};S.buildings.s5={p:'A',tier:1,owner:1};putShip('s6','cog','bergen',[]);
   var o=pbuildOptions(p,false).find(function(x){return x.k==='place'&&x.station==='D';});
-  ok(o&&o.slots.every(function(s){return FLANKS.D.indexOf(s)>=0;}),'the Cellar\\'s flanks only');
-  clearSlot('s4');S.buildings.s4={b:'maltkiln'};clearSlot('s5');
-  eq(privFee('s5',false),T1_FEE);eq(privFee('s4',false),{g:2,h:1},'over a Work +1G');
-  UI.pb={returnTo:'end',free:false,pid:0,station:'D'};UI.sub='placepriv';placePrivOn('s4');
-  var b=privAt('s4');ok(b&&b.p==='D'&&b.tier===1&&b.owner===0,'the Cold Store stands');eq(p.grain,3);eq(p.hops,4,'2G1H paid');
-  ok(p.hand.indexOf('D')<0,'the hand tile left');ok(!bKeyAt('s4'),'the Work boxed');
-  var q=S.players[1];q.grain=5;q.hops=5;eq(privSlots(q,'D'),['s5'],'a rival\\'s tile is not ground');});
-t('tier 2 is the FLIP of your own tier 1 (2G1H), in place; one private building per player per station; no die',function(){fresh(2);var p=cur();p.grain=5;p.hops=5;
-  clearSlot('s1');S.buildings.s1={p:'A',tier:1,owner:0};p.hand=['B','C','D'];
-  ok(!pbuildOptions(p,false).some(function(x){return x.k==='place'&&x.station==='A';}),'one per station');
+  eq(o&&o.slots.slice().sort(),['s1','s2','s3','s6','s7','s8'],'every vacant slot, flank or not; the Ship\\'s slot too');
+  eq(privFee('s6',false),T1_FEE);eq(privFee('s3',false),T1_FEE,'one fee everywhere');
+  UI.pb={returnTo:'end',free:false,pid:0,station:'D'};UI.sub='placepriv';placePrivOn('s3');
+  var b=privAt('s3');ok(b&&b.p==='D'&&b.tier===1&&b.owner===0,'the Cold Store stands on a Brewhouse flank');eq(p.grain,4);eq(p.hops,4,'1G1H paid');
+  ok(p.hand.indexOf('D')<0,'the hand tile left');
+  UI.pb={returnTo:'end',free:false,pid:0,station:'C'};UI.sub='placepriv';placePrivOn('s4');eq(bKeyAt('s4'),'maltkiln','never over a Work');
+  UI.pb={returnTo:'end',free:false,pid:0,station:'C'};UI.sub='placepriv';placePrivOn('s5');eq(privAt('s5').owner,1,'never over a rival');
+  eq(privSlots(S.players[1],'D').slice().sort(),['s1','s2','s6','s7','s8'],'a rival reads the same ground');
+  SLOTS.forEach(function(sx){if(!bAt(sx.id))S.buildings[sx.id]={b:'maltkiln'};});
+  ok(!pbuildOptions(p,false).some(function(x){return x.k==='place';}),'a full wharf: nothing to place');});
+t('tier 2 is the FLIP of your own tier 1 (2G1H), in place; no per-station cap — two of your tiles may flank one station; no die',function(){fresh(2);var p=cur();p.grain=5;p.hops=5;
+  clearWharf();S.buildings.s1={p:'A',tier:1,owner:0};p.hand=['B','C','D'];
+  ok(pbuildOptions(p,false).some(function(x){return x.k==='place'&&x.station==='B'&&x.slots.indexOf('s8')>=0;}),'the Market\\'s other flank is open ground');
+  UI.pb={returnTo:'end',free:false,pid:0,station:'B'};UI.sub='placepriv';placePrivOn('s8');ok(privAt('s8')&&privAt('s8').p==='B','two tiles flank the Market');eq(p.grain,4);eq(p.hops,4);
   UI.pb={returnTo:'end',free:false,pid:0,station:null};UI.sub='pbuild';pbuildPick('flip','A');
-  eq(privAt('s1').tier,2,'flipped');eq(p.grain,3);eq(p.hops,4,'2G1H');eq(p.supply,SUPPLY_DICE,'no die');
+  eq(privAt('s1').tier,2,'flipped');eq(p.grain,2);eq(p.hops,3,'2G1H');eq(p.supply,SUPPLY_DICE,'no die');
   ok(!pbuildOptions(p,true).some(function(x){return x.k==='flip'&&x.station==='A';}),'no second flip');});
-t('the private stop fires for its OWNER only: Granary 1G1H · Cold Store Age +2 · Counting House RAISE · Shipping Office RAISE + POST; the Guildhall brews twice and grants every recipe; the Scriptorium is passive',function(){fresh(2);var p=cur(),q=S.players[1];
+t('the private stop fires for its OWNER only, at the station its slot flanks: Granary 1G1H · Cold Store Age +2 · Shipping Office RAISE + POST; the Guildhall BREWS once on the visit and grants every recipe; the Scriptorium is passive',function(){fresh(2);var p=cur(),q=S.players[1];p.grain=5;p.hops=5;
   clearSlot('s1');S.buildings.s1={p:'A',tier:1,owner:0};
   visit(p,'A');ok(UI.stops.some(function(x){return x.kind==='pact'&&x.slot==='s1';}),'the owner\\'s stop');
   S.active=1;visit(q,'A');ok(!UI.stops.some(function(x){return x.kind==='pact';}),'a rival sees no stop');S.active=0;
   var g0=p.grain;UI={sub:'stops',stops:[],usedStops:[]};enterPact('s1','end');eq(p.grain,g0+1,'the Granary');
-  clearSlot('s4');S.buildings.s4={p:'D',tier:1,owner:0};p.vessels[0]=mkCask('mumme',1);enterPact('s4','end');eq(UI.sub,'age');eq(UI.age.pool,2,'Age +2');ageSkip();
+  clearSlot('s8');S.buildings.s8={p:'D',tier:1,owner:0};p.vessels[0]=mkCask('mumme',1);
+  visit(p,'A');ok(UI.stops.some(function(x){return x.kind==='pact'&&x.slot==='s8';}),'the Cold Store fires at the Market it flanks');
+  UI={sub:'stops',stops:[],usedStops:[]};enterPact('s8','end');eq(UI.sub,'age');eq(UI.age.pool,2,'Age +2');ageSkip();
   clearSlot('s6');S.buildings.s6={p:'C',tier:2,owner:0};enterPact('s6','end');eq(UI.sub,'raise','the Shipping Office raises');raisePick(0);eq(UI.sub,'post','then posts once more');postSkip();
-  clearSlot('s2');S.buildings.s2={p:'B',tier:2,owner:0};visit(p,'B');eq(UI.stops.filter(function(x){return x.kind==='cell'&&x.cell==='B'&&!x.alt;}).length,2,'the Guildhall\\'s second brew');
+  clearSlot('s2');S.buildings.s2={p:'B',tier:2,owner:0};visit(p,'B');
+  eq(UI.stops.filter(function(x){return x.kind==='cell'&&x.cell==='B'&&!x.alt;}).length,1,'one Brew cell stop');
+  ok(UI.stops.some(function(x){return x.kind==='pact'&&x.slot==='s2';}),'the Guildhall\\'s stop');
+  UI={sub:'stops',stops:[],usedStops:[]};enterPact('s2','end');eq(UI.sub,'brew','the Guildhall opens a full brew');
   ok(S.exports.every(function(st){return hasRecipe(p,st);}),'every dealt recipe');eq(recipeGainable(p).length,0,'nothing to gain');
   S.buildings.s2={p:'B',tier:1,owner:0};ok(!pactKind(privAt('s2')),'the Scriptorium is passive');});
 t('the cart carries 2 with a Kaufhaus OR the Carter — they do not stack',function(){fresh(2);var p=cur();
