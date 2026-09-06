@@ -7,10 +7,10 @@ canon until ruled. Read after `CLAUDE.md`; it supersedes `V7-PLAN.md` as the pro
 the moment the designer rules §7 (until then v7.0b stays the live build at root).*
 
 ***REVIEW IN PROGRESS (2026-09-06).** The designer's review of the first plan is arriving in
-batches. Batches 1 and 2 are recorded verbatim in **§12** with their readings; they correct the
+batches. All three batches are recorded verbatim in **§12** with their readings; they correct the
 premise in §0/§2 and overturn parts of §6 and §7 (route access, the quality gate, scoring,
-ships, invitations, the word "tray"). Batch 3 (the teach and the reference) is still to come.
-Nothing in §6–§11 is re-cut until it lands — read §12 before relying on any of them.*
+ships, invitations, the kettle, the word "tray"). The review is COMPLETE (2026-09-06); the
+re-cut of the plan from all of it is §13 — read §12 and §13 before relying on §6–§11.*
 
 ---
 
@@ -516,9 +516,10 @@ aging · an unfull sail) until the P1 roster.
 
 *Recorded the day it arrived. The designer's instruction with it: "Process and document the
 notes but don't go all in on anything until I share the rest of my review." So this section
-records, reads and flags; the re-cut of §6–§11 and of the page "Brewer & Merchant" waits for
-the last batch (the teach and the reference). Batch 2 is §12.6–§12.7; §12.3 and §12.4 are
-kept current across batches. Where a note overturns a ruling in §7, the §7 row still shows the old ruling until
+records, reads and flags; the re-cut of §6–§11 and of the page "Brewer & Merchant" waited for
+the last batch. Batch 2 is §12.6–§12.7, batch 3 (the last) is §12.8–§12.9; §12.3 and §12.4
+are kept current across batches. The review closed 2026-09-06 with the instruction to build
+the implementation plan for the rules and `play.html` from all of it — that plan is §13. Where a note overturns a ruling in §7, the §7 row still shows the old ruling until
 the re-cut; §12.3 is the authoritative status table meanwhile.*
 
 ### 12.1 The review, verbatim
@@ -699,19 +700,24 @@ assistant did, five times over, in §5 and §7.
 | The market track, cells, floor, glut per landing (§6.3) | **overturned** | score = cask die + the player's Kontor modifier |
 | F16 quality bands, two-number cells | **overturned (batch 2)** | the QUALITY COUNT: the quality you may ship to a Kontor = the number of your dice on posts and Kontor buildings (5 → Bock); per-Kontor or global is the one open reading |
 | Ships Kontor-bound, 2/3 berths | stands | plus WILD ships (new, unfinished) |
-| F3 nobody owns a hull, commission when able | stands | not mentioned in batch 1 |
+| F3 nobody owns a hull, commission when able | **confirmed (batch 3)** | commissioning is REQUIRED on a Harbor visit; the commission lets you post on THAT ship's destination lane ("elegant"); the Harbor needs an alternate that makes it a must-visit |
 | F4 the bench (the hall) | stands, provisional | "display my best brews at the guild" |
 | Invitations from letters + post 2 (§6.5) | **overturned** | only from delivering beer to Kontors (batch 1); they are the HALL's key and the third scoring path, built to compete with the Kontor majorities (batch 2); rate open |
 | F17 no cap | stands | |
 | F5 aging | confirmed | |
 | F7 Gruit | confirmed | |
-| F9 recipes earned (Bruges prize + cask tile) | **confirmed (batch 2)** | "good as they are": not easy, never impossible; the search-brew is the general missing-piece door (build · recipe · specialist · …) and a relief valve; the far-dice requirement on Mumme/Bock folds into the quality count |
+| F9 recipes earned (Bruges prize + cask tile) | **confirmed (batch 2), narrowed (batch 3)** | the Bruges prize pays only at the YARD (a cask that does not enter the hall); the *gain recipe* tile stays; a private wharf building may make recipes cheaper or grant them all; the far-dice requirement folds into the quality count |
 | F10 specialists stay | confirmed, strengthened | asymmetric powers wanted; sim tools must capture them |
 | F11 Public Works | **confirmed (batch 2)** | early chaos for replayability, early wins, a push down a lane; the roster is designed only AFTER the core is settled |
-| F12 cart only, F13 sails full | stand | not mentioned in batches 1–2 |
+| F12 cart only | stands | |
+| F13 sails full | stands, end-game amended (batch 3) | at the end, dice on docked Ships score pips only — no sail, no bonus; brews in vessels score nothing |
 | F14 the starter post | **confirmed (batch 2), amended** | "something to try"; the starter die is an ELEVENTH die, not one of the ten; the "seat" wording goes |
-| F6 socket dice, F8 opening a building, F15 the wharf hand | open | F8 now reads "which prerequisite opens a Kontor building" — batch 2 makes invitations the hall's key, so an ⚜ is probably NOT it |
-| §6.7 scoring skeleton, §10 cut list, §11 questions | **re-cut pending** | after batch 2 |
+| F6 socket dice | open | a post die climbs 1→6 (batch 1); the trigger is the re-cut's to propose |
+| F8 opening a Kontor building | **re-cut (batch 3)** | a die from the supply + the full chain of posts; the Harbor's ALTERNATE is the recommended door (§12.9) |
+| F15 the wharf hand (Kettle · Store · Cold Store) | **overturned (batch 3)** | no kettle, no licence: recipes limit the brewer, the quality count limits the merchant; the wharf buildings are a GWT-style private-building engine instead (§12.9) |
+| §6.7 scoring skeleton, §10 cut list, §11 questions | **re-cut in §13** | |
+| London's prize | **ruled (batch 3)** | a building or a post |
+| Kontor buildings | **confirmed (batch 3)** | simple: they raise the value of the owner's brews delivered there; more later |
 
 ### 12.4 Questions still open before the re-cut (kept current; ✔ = answered by a later batch)
 
@@ -763,6 +769,14 @@ assistant did, five times over, in §5 and §7.
     prize as the specialist door, or join it?
 15. **Kontor building cost.** With invitations as the hall's key, what opens a building slot:
     goods, a die alone (the chain being the prerequisite), or something else?
+    *(batch 3: a die, on the chain; the Harbor's alternate is the recommended door — §12.9.)*
+16. **The Harbor's alternate.** Batch 3 asks for one "that makes it a space you need to go
+    to". Recommendation in §12.9: BUILD a Kontor building there. Ruling wanted.
+17. **The private-building engine.** Batch 3 replaces the kettle hand with a GWT-style ladder
+    of private buildings on the wharf slots, strictly better than the stations and building
+    on each other. The ladder itself is designed in §13; the designer rules the faces.
+18. **Novgorod's prize.** Bruges' yard pays a recipe, Bergen a specialist, London a building
+    or a post (batch 3). Novgorod is unnamed; §13 proposes one.
 
 ### 12.5 Process lesson, to land in the charter with batch 2
 
@@ -854,3 +868,89 @@ destination, Bruges included; and the starter die counts, so the count opens at 
 can be carted to Bruges from the first turn. The reason given for global is the dice budget:
 with eleven dice, a per-lane count could never reach 4 or 5. The rule as it now stands, one
 sentence: *the quality you may deliver anywhere = the number of your dice standing at sea.*
+
+### 12.8 Batch 3 (2026-09-06), verbatim — the last
+
+> I like how the commission ship action allows you to build a post on a lane for that ship's
+> destination. This is an elegant solution. I want to make sure that commissioning a ship is
+> required when the harbor is visited. We want to make sure that players are commissioning
+> ships. It should be something that you need to do and if everyone is doing it, the wharf is
+> full of options of destinations. I think the harbor station should have an alternate action
+> that makes it a space you need to go to.
+>
+> The use of kettle/mash tun is confusing and I worry it's unnecessary complexity for little
+> gain. We already have recipes as the resource required to unlock better brews and posts
+> required to unlock sensitizations for them. The private buildings can extend this by making
+> them cheaper (once built you immediately have all recipes) but I don't want to make it too
+> difficult.
+>
+> Kontor buildings are simple they increase the value of brews delivered there for the player
+> who owns them. I think we can expand them further with other actions but let's start here.
+>
+> Recipes are available only to beers delivered to Bruges that don't go into the hall.
+>
+> At the end of the game, the dice on docked ships are only worth the pips value, no sailing
+> or bonuses. No value for brews in your vessels.
+>
+> London's price is building buildings or posts.
+>
+> One note on buildings - these are intended to help implement the engine building element
+> of the game. I really like how great western trail works with buildings. You know the base
+> buildings which give you a little bit of everything but the private buildings are strictly
+> better and they build on each other. As we build out the slots on the wharf, I want to feel
+> like I can build an engine to scale up with my operations to cut corners or skip ahead.
+>
+> As I mentioned before, I don't like the need to build a kettle. You already have your brew
+> house board. The recipes are enough to limit your capabilities.
+>
+> Ok that's all for my review. Process all of these batches of my review thoroughly (have two
+> sub agents read through the artifact, play.html, the previous rules, and my review content
+> then dive in) and prepare a plan for building out the rules and play.html combine the two
+> agents to check your work. I want to have a comprehensive plan to implement v8. Build the
+> plan revised from all of my feedback.
+
+### 12.9 The reading of batch 3
+
+**The Harbor.** Commissioning is REQUIRED whenever the Harbor is visited and a Ship can be
+docked, so the wharf stays full of destinations. The commission is what lets you post: the
+post goes on the lane of THAT Ship's destination, which the designer calls elegant — it is
+kept as the merchant's opening move. The Harbor then needs an ALTERNATE that makes it a
+place you must go to. Recommendation: **BUILD a Kontor building** there (a die from your
+supply onto a building slot of a Kontor whose chain of posts you hold), so both merchant sinks
+live at the Harbor and the station is the merchant's desk the way the Brewhouse is the
+brewer's. Alternatives considered for §13: hire a specialist from the display; charter a wild
+Ship. Ruling wanted (§12.4 q16).
+
+**No kettle, no licence.** The Mash Tun / Great Copper gate is retired. The brewer is limited
+by RECIPES (earned at the yard or on a cask tile) and the merchant by the QUALITY COUNT
+(dice at sea). A private wharf building may make recipes cheaper, up to "once built you hold
+every recipe". Not difficult, not layered.
+
+**Kontor buildings, plainly.** A Kontor building raises the value of the owner's brews
+delivered there: the landing scores the cask die plus the building die. That is all for now;
+other actions may hang off them later.
+
+**Recipes at the yard only.** The Bruges prize pays a recipe only to a cask that goes to the
+yard, never to one that enters the hall. The cart's two doors are therefore: the yard (three
+goods + a recipe, Gruit's only door) or the hall (an invitation, points). The *gain recipe*
+cask tile stays as the second door.
+
+**The end.** Every die on a docked Ship scores its pips and nothing else: no final sail, no
+Kontor building die, no bonus. Brews still in vessels score nothing. This is a clean
+end-trigger rule with no last-round sail to adjudicate.
+
+**London's prize: a building or a post.** A cask landing at London lets you stand a die on a
+post or a Kontor building slot you are eligible for (fee waived, the die still spent). With
+Bruges (the yard: a recipe), Bergen (a specialist) and now London, three of the four prizes
+are named; Novgorod's is proposed in §13.
+
+**The wharf engine, Great Western Trail's way.** The four stations are the base buildings: a
+little of everything for everyone. Private buildings on the slots are strictly better and
+build on each other; as the slots fill, a player's engine scales their operation, cuts
+corners and skips ahead. No kettle in it. §13 designs the ladder: each private building
+upgrades the verb of the station it flanks, and the higher tiers require the lower.
+
+**The instruction.** The review is complete. The plan for building out the rules and
+`play.html` is to be prepared from all three batches, with two independent sub-agents
+reading the page, the engine, the previous rules and the review, then combined and
+cross-checked. That work is §13.
