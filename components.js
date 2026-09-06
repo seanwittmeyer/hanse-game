@@ -25,6 +25,7 @@ const ICON_ART={coins:'goods',dices:'quality-die',
   bourse:'bourse','bourse-plus1':'bourse-plus1','bourse-plus2':'bourse-plus2','bourse-pm1':'bourse-pm1','bourse-pm2':'bourse-pm2','bourse-minus1':'bourse-minus1',
   'star-plus1':'star-plus1','star-plus2':'star-plus2','star-plus3':'star-plus3','star-plus4':'star-plus4',
   'star-minus1':'star-minus1','star-minus2':'star-minus2','star-minus3':'star-minus3',
+  'star-1':'star-1','star-2':'star-2','star-3':'star-3','star-4':'star-4','star-5':'star-5','star-6':'star-6',
   'swap-dice':'swap-dice','venture-build':'venture-build',redeal:'redeal',
   compass:'chart',waves:'current',closure:'closure',factor:'factor',kontorhaus:'kontorhaus',post:'post',mail:'mail',
   'die-plus1':'die-plus1','die-plus2':'die-plus2','die-plus3':'die-plus3','die-minus1':'die-minus1'};
