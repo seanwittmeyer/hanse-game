@@ -515,9 +515,15 @@ landing, save under the exact filename and delete the matching `art:` / `slug:` 
 | `kontor-tile-guildhouse.png` | **Guildhouse** | a guild's meeting house at a far Kontor: a timber hall with a bell turret and a carved guild sign | `building-hansediet.png` |
 
 ### 4 · Icons (the sticker set — `art/icons/`, then wire `ICON_ART` in `components.js`)
-1. **`cart.png`** — the CART verb (the Cellar's ALTERNATE face on the Wharf board, the Carter, the Kaufhaus line, the aid): a two-wheeled cart with a single cask aboard on a road, shafts forward — distinct from `bonus-load.png` (the cask on the DOCK cart, which means "load"). Map as `ICON_ART['truck']='cart'`; every truck site swaps.
-2. **`hall.png`** — the hall (the Bruges panel, the aid, the Guildmaster): a tasting cup under a small laurel, the guild of brewmasters' mark. Map as `ICON_ART['crown']='hall'`.
-3. *(Optional)* **`station-harbor.png` re-cut** — the commission is FREE for a Cog now; the coin stack on the current icon reads as a purchase. A hull on the stocks with a post die beside it would say "commission, then post".
+1. **`cart.png` — LANDED by ruling (2026-09-06):** the road-cart candidates collided with the
+   landed cask-on-cart, so the former load art (`bonus-load.png`) **is** the cart — copied to
+   `cart.png`, `truck:'cart'` mapped (the Cellar's ALTERNATE, the Carter, the Kaufhaus line, the aid).
+2. **`hall.png` — LANDED (pick D, 2026-09-06):** the tasting cup under the arched laurel,
+   the brewmasters' guild mark; `crown:'hall'` mapped (the Bruges panel, the aid, the Guildmaster).
+3. **`bonus-load.png` re-cut — the OPEN pick:** LOAD becomes **the medieval treadwheel harbor
+   crane** lifting a cask (designer-ruled 2026-09-06 — cart and load may not share art). The
+   winner replaces `bonus-load.png` IN PLACE so every `package-plus` load site updates; candidates out.
+4. *(Optional)* **`station-harbor.png` re-cut** — the commission is FREE for a Cog now; the coin stack on the current icon reads as a purchase. A hull on the stocks with a post die beside it would say "commission, then post".
 
 ### 5 · Boards (both playable as they stand)
 - **The sea board** rides `seamap.png` (the portolan chart, Hamburg's wharf works at the left edge) under parchment panels — playable as is. *(Optional)* a v8-specific chart: the same portolan grammar with the North Sea on the left half and the Baltic on the right, the Sound and the Skagerrak suggested as straits, no lettering.

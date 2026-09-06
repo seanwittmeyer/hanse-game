@@ -155,6 +155,15 @@
 > `die-1..6` / `quality-1..6`). Keys `star-1`…`star-6` in `ICON_ART`; render validated
 > pixel-identical against the landed `star-plus1.png` before landing.
 
+> **Round 15 (designer, 2026-09-06): the CART/LOAD split + the hall mark.** The v8 road-cart
+> candidates collided with the landed cask-on-cart — ruled: the former load art
+> (`bonus-load.png`) **is** the CART (copied to `cart.png`, `truck:'cart'` mapped; the road-cart
+> candidates discarded), and **LOAD gets a NEW icon — the medieval treadwheel harbor crane**
+> lifting a cask, which will replace `bonus-load.png` IN PLACE when its pick lands (every
+> `package-plus` load site updates automatically; candidates out). Same round: **`hall.png`
+> lands (pick D)** — the tasting cup under the arched laurel, the brewmasters' guild mark —
+> `crown:'hall'` mapped (the Bruges hall panel · the aid · the Guildmaster).
+
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
 > (the tiles already carry full-bleed art). **ADDED: one icon per Kontor** — a city crest
