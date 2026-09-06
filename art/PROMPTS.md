@@ -476,3 +476,53 @@ print; a texture would lift them to the rest of the kit).
 //   shipwright     → a shipwright's adze across a curved oak ship rib
 // ============================================================================
 ```
+
+## THE v8.0 KIT ART QUEUE (2026-09-06 — the "Brewer & Merchant" kit pass; the open queue in one place)
+
+*Everything the v8.0 kit currently fakes with a stand-in or a bare Lucide glyph, ranked. Same
+treatments as ever: **icons** = the c.1350 sticker set (`art/icons/` — one object, warm palette,
+bold contour, alpha-keyed, readable at .3in; recipe in `art/ICONS.md`); **tiles** = the painterly
+single-structure portrait (the shared style block at the top of this file, every gotcha applies);
+**specialists** = THE SPECIALIST PORTRAIT SPEC above (half-body, the trade prop, no text). On
+landing, save under the exact filename and delete the matching `art:` / `slug:` stand-in row in
+`components.js` (each is marked PLACEHOLDER); no rules change — no KEY bump.*
+
+### 1 · Specialist portraits ×5 (the v8 hires — each wearing a retired specialist's portrait today)
+| File | Subject (the prop is the trade's signature) | Stand-in in use |
+|---|---|---|
+| `improve-shipmaster.jpg` | **the Shipmaster** — a weathered master at a cog's stern rail, one hand on the tiller, a furled sail behind; he sails a hull unfull | `improve-shipwright.jpg` (`slug:'shipwright'`) |
+| `improve-agent.jpg` | **the Agent** — the house's man at a far Kontor: a clerk in a foreign counting-room doorway, a sealed letter of credit in hand, a strange skyline behind | `improve-supercargo.jpg` (`slug:'supercargo'`) |
+| `improve-lodesman.jpg` | **the Lodesman** — the pilot of the lead line: a seaman hauling a wet sounding-lead on its line over the bow, the coast a grey band behind; the count reads +1 | `improve-coper.jpg` (`slug:'coper'`) |
+| `improve-carter.jpg` | **the Carter** — a carter on the Bruges road beside a two-wheeled cart loaded with a cask, a draught horse's head at the frame edge | `improve-herald.jpg` (`slug:'herald'`) |
+| `improve-guildmaster.jpg` | **the Guildmaster** — the master of the brewmasters' guild at the hall's high table, a gilded tasting cup raised, the guild's banner behind | `improve-guild-scholar.jpg` (`slug:'guild-scholar'`) |
+
+### 2 · Private building faces ×4 (the wharf engine — 2.5×1.32in window behind the scrim; four of the eight faces ride existing portraits)
+| File | Face | Subject | Stand-in in use |
+|---|---|---|---|
+| `private-kaufhaus.png` | **Kaufhaus** (Market, tier 2) | a stepped-gable brick merchants' hall with an arcaded ground floor, bales and a laden cart at its door | `building-exchange.png` |
+| `private-guildhall.png` | **Brewers' Guildhall** (Brewhouse, tier 2) | the guild's own brewhouse: a great hall with a copper through the open door and the guild's mark over the gate | `venture-brew-l2.png` (the Great Copper) |
+| `private-coldstore.png` | **Cold Store** (Cellar, tier 1) | a stone ice-house half sunk into a bank, straw-packed ice blocks at its low door, casks waiting in the shade | `building-abbey.png` |
+| `private-shipping.png` | **Shipping Office** (Harbor, tier 2) | a quayside office with a wide window on the harbour, a chart pinned inside, a signal post and flag by the door | `venture-factor-l1.png` |
+
+*Riding existing art, no regen wanted: Granary → `building-granary.png` · Scriptorium →
+`building-scriveners.png` · Counting House → `venture-counting-l1.png` · Lagering Cellar →
+`venture-die-l2.png`.*
+
+### 3 · Kontor building tiles ×2 (1.32in square, the die seat top-right; the Warehouse rides `venture-warehouse-l1.png`)
+| File | Tile | Subject | Stand-in in use |
+|---|---|---|---|
+| `kontor-tile-kontorhaus.png` | **Kontorhaus** | the League's own house in a foreign port: a fortified gabled trading house behind a low wall, the Hanse banner over its gate | `building-staple.png` |
+| `kontor-tile-guildhouse.png` | **Guildhouse** | a guild's meeting house at a far Kontor: a timber hall with a bell turret and a carved guild sign | `building-hansediet.png` |
+
+### 4 · Icons (the sticker set — `art/icons/`, then wire `ICON_ART` in `components.js`)
+1. **`cart.png`** — the CART verb (the Cellar's ALTERNATE face on the Wharf board, the Carter, the Kaufhaus line, the aid): a two-wheeled cart with a single cask aboard on a road, shafts forward — distinct from `bonus-load.png` (the cask on the DOCK cart, which means "load"). Map as `ICON_ART['truck']='cart'`; every truck site swaps.
+2. **`hall.png`** — the hall (the Bruges panel, the aid, the Guildmaster): a tasting cup under a small laurel, the guild of brewmasters' mark. Map as `ICON_ART['crown']='hall'`.
+3. *(Optional)* **`station-harbor.png` re-cut** — the commission is FREE for a Cog now; the coin stack on the current icon reads as a purchase. A hull on the stocks with a post die beside it would say "commission, then post".
+
+### 5 · Boards (both playable as they stand)
+- **The sea board** rides `seamap.png` (the portolan chart, Hamburg's wharf works at the left edge) under parchment panels — playable as is. *(Optional)* a v8-specific chart: the same portolan grammar with the North Sea on the left half and the Baltic on the right, the Sound and the Skagerrak suggested as straits, no lettering.
+- **The Wharf board** is unchanged (`wharf-board.png`).
+
+### 6 · Nothing wanted
+The wild Ship face rides `ship-back.png` (a cog at sea — the unnamed hull); the ⚜ token and the
+three Kontor chits print their glyph and crest; the hall die is a plain d6.

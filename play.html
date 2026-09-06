@@ -3091,7 +3091,8 @@ function renderTableaus(){
     }
     const boardHTML=HC?HC.playerBoard({nm:p.name,c:p.color},{
       score:sc.total,dice:p.supply+'/'+SUPPLY_DICE,grain:p.grain,hops:p.hops,
-      v:vwells,seats:seats,flight:flightBeers(p)}):'';
+      v:vwells,seats:seats,flight:flightBeers(p),
+      supply:'<span class="supdie" style="gap:.05in;justify-content:center">'+Array(p.supply).fill(0).map(()=>dieFace(1,'',p.color,p.name+'’s supply die')).join('')+'</span>'}):'';
     const held=p.recipes.filter(st=>STYLES[st]);
     const rcCard=(st)=>{const d=HC_RCP[styleShort(st).toLowerCase()];if(!d)return '';
       return '<div class="pbsp-card" data-tip="'+attr(STYLES[st].name+' — Q'+STYLES[st].q+' · brew '+costStr(STYLES[st].in)+' · die starts at '+startDieFor(p,st)+(canShipQ(p,STYLES[st].q,null)?' · your count ships it':' · your count cannot ship it yet'))+'"><div class="pbsp-in">'+HC.recipeCard(d,false)+'</div></div>';};

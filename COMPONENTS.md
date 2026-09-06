@@ -4,7 +4,7 @@
 >
 > - Operational rules: `RULES.md` (the one clean rules document, **v8.0**). Design rationale & history: `DESIGN.md` §9; the v8 program, the designer's review and the implementation plan: `V8-PLAN.md` §12–§13.
 > - The live build is `play.html` — **v8.0 “Brewer & Merchant”** (`KEY hanse-v80a`) — the source of truth on values and behaviour.
-> - `print.html` and `rulebook.html` are re-derived at the v8 kit pass; until then they describe the v7.0b build and are marked so.
+> - `print.html` (the v8.0 kit, cut 2026-09-06) and `rulebook.html` (the v8.0 book) are current; the art the new faces still lack is queued in `art/PROMPTS.md` (the v8.0 kit art queue).
 > - **READ §0 FIRST.** §0 states the v8.0 kit truth — what was ADDED, RE-CUT, and RETIRED. §§1–17 below still enumerate the v5.8/v7 body in detail and are superseded where §0 says so; the full section rewrite is the kit pass.
 
 ---
@@ -17,9 +17,9 @@
 |---|---|---|---|
 | The Wharf board | 1 | 1 | re-printed station faces: Market *Source 2 / Load 1* · Brewhouse *Brew / Build* · Harbor *Commission (must) + Post / Build a Kontor · Raise* · Cellar *Age 3 / Cart 1* |
 | The Destinations board | 1 | 0 | **RETIRED** |
-| **The sea board** | 0 | 1, double-sided | **NEW** — Hamburg (the Wharf) at the centre · the cart road to Bruges · five segments (W1 the Wadden Coast · W2 the Dover Strait → London; E1 the Skagerrak → Bergen; E1 · E2 the Sound → Novgorod), each printing **one post seat per colour** (side A: 2 seats · side B: 4) · three far Kontor panels (the minimum Q2 · **building slots** 2 on A / 3 on B, the third for 4p · the majority pair · the field · the prize line) · the Bruges panel (**the yard track**: BEST 1–3 · GOOD 4–6 · OK 7+, side A 1–2 / 3–4 / 5+ · **the hall**: 8 places on B / 6 on A, the first three printing 2 · 2 · 1 goods · **the hall die's seat**) |
+| **The sea board** | 0 | 1, double-sided (12.6 × 10.7 in) | **NEW** — Hamburg (the Wharf) at the western edge, over the chart · the cart road to Bruges · five segments (W1 the Wadden Coast · W2 the Dover Strait → London; E1 the Skagerrak → Bergen; E1 · E2 the Sound → Novgorod), each printing **one post seat per colour** (side A: 2 seats · side B: 4) · three far Kontor panels (the minimum Q2 · **building slots** 2 on A / 3 on B, the third for 4p · the majority pair · the field · the prize line) · the Bruges panel (**the yard track**: BEST 1–3 · GOOD 4–6 · OK 7+, side A 1–2 / 3–4 / 5+ · **the hall**: 8 places on B / 6 on A, the first three printing 2 · 2 · 1 goods · **the hall die's seat**) |
 | Market & Stores board | 1 | 1 | the Bourse lane struck; displays: Ships 3 · Specialists 4 · recipes; the score ring |
-| Player boards | 4 | 4 | re-printed: 3 vessels · 2 seats · the **personal supply** space · a rack for the hand of 4 private tiles and the set of 3 Kontor building tiles; no tray graphic |
+| Player boards | 4 | 4 | re-printed: 3 vessels · 2 seats · the **personal supply well** (the ten dice) · the Flight; the hand of 4 private tiles and the set of 3 Kontor building tiles lie beside the board (the recipe splay's pattern); no tray graphic |
 | Quality dice | 52 | **44** (11 × 4) | ten in the supply + the starter post; the same dice are casks, posts and Kontor building markers |
 | **The hall die** | 0 | 1, neutral | **NEW** — stands on the Bruges panel at 2; +1 per present |
 | Private building tiles | 16 Ventures | **16** (4 designs × 4 colours, tier 1 / tier 2) | re-faced: Granary / Kaufhaus · Scriptorium / Brewers' Guildhall · Cold Store / Lagering Cellar · Counting House / Shipping Office; **printed points 2 / 4**; no ledger seat, no die |
@@ -33,15 +33,15 @@
 | **⚜ invitation tokens** | 0 | 16 | **NEW** (wooden, or the contract backs); no cap, no ceiling |
 | Contract cards · demand cards · majority ladder markers · private flags · Bourse price markers | 14 · 12 · 4 · 4 · 8 | 0 | **RETIRED** |
 | Workers · score discs · goods tokens | as now | as now | kept |
-| Player aids | 3–6 | 3–6 | re-printed at the kit pass: the turn · the four verb pairs · the three load conditions · the count · the end |
+| Player aids | 3–6 | 3–6 | re-printed (the letter tri-fold, three identical panels): the turn · the four verb pairs · the die · the sea and the count · the Kontore · Bruges · the end and the score · the icon legend · the eight bonuses |
 
 **Headline:** one new board, one neutral die, twelve small Kontor building tiles, sixteen
 tokens, three chits, eight fewer dice, four decks and trackers gone.
 
 **THE RULINGS THAT TOUCH A PRINTED FACE (the v4.13 law — every one lands here):**
 
-- **The dice are a personal supply** (no tray): the player board prints the supply space and
-  the line *11 dice · 10 here · 1 at sea*.
+- **The dice are a personal supply** (no tray): the player board prints the supply well and
+  the line *11 dice · 10 in the supply · 1 the starter post*.
 - **The sea board prints every home for ownership and every destination**: post seats per
   colour on every segment; building slots with a die seat and a tile seat at every far
   Kontor; the minimum Q2 on every far panel; the yard track's three zones and their prizes;

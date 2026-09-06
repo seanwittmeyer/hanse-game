@@ -171,20 +171,20 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 const VBIG=h=>'<span class="ac">'+h+'</span>';
 const VSEP=s=>'<span class="vsep">'+s+'</span>';
 const PRIVATES=[
-  {k:'A', station:'Market',    t1:{nm:'Granary',            ic:'wheat',         pts:2, own:VBIG(LU('goods-1'))+VSEP('+')+VBIG(LU('sprout','h'))},
-                               t2:{nm:'Kaufhaus',           ic:'store',         pts:4, own:VBIG(LU('goods-2'))+VSEP('·')+VBIG(LU('truck')), txt:'CART 2'}},
-  {k:'B', station:'Brewhouse', t1:{nm:'Scriptorium',        ic:'scroll-text',   pts:2, own:VBIG(LU('scroll-text')), txt:'recipes: no fee'},
-                               t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe · BREW ×2'}},
-  {k:'C', station:'Harbor',    t1:{nm:'Counting House',     ic:'goods-1',       pts:2, own:VBIG(LU('die-plus1')), txt:'RAISE'},
-                               t2:{nm:'Shipping Office',    ic:'post',          pts:4, own:VBIG(LU('die-plus1'))+VSEP('·')+VBIG(LU('post')), txt:'RAISE · POST'}},
-  {k:'D', station:'Cellar',    t1:{nm:'Cold Store',         ic:'snowflake',     pts:2, own:VBIG(LU('age-2'))},
-                               t2:{nm:'Lagering Cellar',    ic:'snowflake',     pts:4, own:VBIG(LU('age-2'))+VSEP('·')+VBIG(LU('die-plus1')), txt:'lift, cap Q+1'}},
+  {k:'A', station:'Market',    t1:{nm:'Granary',            ic:'wheat',         pts:2, art:'building-granary.png',   own:VBIG(LU('goods-1'))+VSEP('+')+VBIG(LU('sprout','h'))},
+                               t2:{nm:'Kaufhaus',           ic:'store',         pts:4, art:'building-exchange.png',  own:VBIG(LU('goods-2'))+VSEP('·')+VBIG(LU('truck')), txt:'CART 2'}},   // PLACEHOLDER art: the merchants' exchange stands in for the Kaufhaus (brief: art/PROMPTS.md)
+  {k:'B', station:'Brewhouse', t1:{nm:'Scriptorium',        ic:'scroll-text',   pts:2, art:'building-scriveners.png',own:VBIG(LU('scroll-text')), txt:'recipes: no fee'},
+                               t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, art:'venture-brew-l2.png',    own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe · BREW ×2'}},   // PLACEHOLDER art: the Great Copper stands in for the Guildhall
+  {k:'C', station:'Harbor',    t1:{nm:'Counting House',     ic:'goods-1',       pts:2, art:'venture-counting-l1.png',own:VBIG(LU('die-plus1')), txt:'RAISE'},
+                               t2:{nm:'Shipping Office',    ic:'post',          pts:4, art:'venture-factor-l1.png',  own:VBIG(LU('die-plus1'))+VSEP('·')+VBIG(LU('post')), txt:'RAISE · POST'}},   // PLACEHOLDER art: the quayside desk stands in for the Shipping Office
+  {k:'D', station:'Cellar',    t1:{nm:'Cold Store',         ic:'snowflake',     pts:2, art:'building-abbey.png',     own:VBIG(LU('age-2'))},   // PLACEHOLDER art: the abbey cellar stands in for the Cold Store
+                               t2:{nm:'Lagering Cellar',    ic:'snowflake',     pts:4, art:'venture-die-l2.png',     own:VBIG(LU('age-2'))+VSEP('·')+VBIG(LU('die-plus1')), txt:'lift, cap Q+1'}},
 ];
 function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
   const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
   const tcol='<span class="bt-tcol"><span class="bt-nm'+(f.nm.length>18?' long':'')+'">'+f.nm+'</span><span class="bt-trig">'+d.station+'</span></span>';
   return '<div class="btile btW" style="--c:'+(col||PRIV_FOOT)+ring+'">'
-  +artLayer('venture-'+({A:'brew',B:'brew',C:'points',D:'age'})[d.k]+'-l'+tier+'.png')
+  +artLayer(f.art||('venture-'+({A:'brew',B:'brew',C:'points',D:'age'})[d.k]+'-l'+tier+'.png'))
   +'<div class="bt-top vt-top">'+tcol
     +'<span class="bt-ms" title="tier '+tier+' — '+(tier===2?'the FLIP of tier 1':'from the hand')+'">T'+tier+'</span>'
     +'<span class="bt-cost">'+cost(tier===2?2:1,1)+'</span></div>'
@@ -202,13 +202,15 @@ const KBUILDINGS=[
 ];
 function kontorBuildingTile(d,col){const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
   return '<div class="btile btW kbt" style="--c:'+(col||PRIV_FOOT)+ring+';width:1.32in;height:1.32in">'
-  +artLayer('building-'+({warehouse:'bonded',kontorhaus:'staple',guildhouse:'customs'})[d.k]+'.png')
+  +artLayer(({warehouse:'venture-warehouse-l1.png',kontorhaus:'building-staple.png',guildhouse:'building-hansediet.png'})[d.k])   // PLACEHOLDER art: the staple hall and the assembly hall stand in for the Kontorhaus and the Guildhouse (briefs: art/PROMPTS.md)
   +'<div class="bt-top"><span class="bt-nm'+(d.nm.length>10?' long':'')+'">'+d.nm+'</span></div>'
   +'<div class="bt-foot btFC"><span class="bt-cond">'+d.txt+'</span><span class="bt-eff">'+d.line+'</span></div>'
   +'<div class="kb-seat" title="the die seat — a supply die stands here at 1: the delivery modifier; +1 on any landing here; its pips score at the end">'+LU('dice-1')+'</div>'
   +'</div>';}
 // ---- the ⚜ INVITATION token — earned one per cask landed at a far Kontor, spent at the hall
 function inviteToken(){return '<div class="invtok" title="⚜ Invitation — one per cask landed at a far Kontor; spend it to present at the hall">\u269c</div>';}
+// ---- the KONTOR CHIT — one per far Kontor; the first cask loaded onto a wild Ship sets it on the hull
+function kontorChit(k){return '<div class="kchit" style="--c:'+(KONTOR_C[k]||'#6f6253')+'" title="the Kontor chit — names a wild Ship\u2019s Kontor">'+LU('kontor-'+k)+'<span>'+k.charAt(0).toUpperCase()+k.slice(1)+'</span></div>';}
 // a beer/tier chip (the beer glyph) and/or a die chip (the die-as-parked glyph) → the ★. The
 // claim rule (one line per delivered cask · each line once per voyage · ★ at once) lives on
 // the rules page — the card is pure data, the tile grammar of the whole kit.
@@ -341,7 +343,9 @@ function playerBoard(d,live){const L=live||{};
     +'</div>'
     +'<div class="pbrd-row">'+vsl(1)+vsl(2)+vsl(3)+'</div>'
     +'<div class="pbrd-row">'+ssl(1)+ssl(2)
-      +'<div class="pbrd-right">'+flight+'</div>'
+      +'<div class="pbrd-right">'+flight
+        +'<div class="pbrd-supwell"><span class="sn">'+LU('dices')+' the personal supply \u2014 10 dice</span>'+(L.supply||'<span class="si">'+LU('dices')+LU('dices')+LU('dices')+'</span>')+'</div>'
+      +'</div>'
     +'</div>'
   +'</div>';}
 
@@ -692,6 +696,10 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.pbrd-lads .sn{position:absolute;top:.045in;left:0;right:0;text-align:center}'
 +'.pbrd-lads .si{opacity:.3;margin:auto}.pbrd-lads .si svg,.pbrd-lads .si .ic,.pbrd-lads .si img.ai{width:.26in;height:.26in}'
 +'.pbrd-lad{display:inline-flex;align-items:center;gap:.03in;font-size:.1in;font-weight:bold;background:var(--pc);color:#fff;border-radius:.09in;padding:.02in .06in;z-index:1}'
++'.pbrd-supwell{position:relative;flex:1;min-height:.9in;border:1.7px dashed var(--pc);border-radius:.07in;background:rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;padding:.16in .06in .05in}'
++'.pbrd-supwell .sn{position:absolute;top:.04in;left:0;right:0;text-align:center;display:flex;align-items:center;justify-content:center;gap:.03in}'
++'.pbrd-supwell .sn img.ai,.pbrd-supwell .sn .ic{width:.14in;height:.14in}'
++'.pbrd-supwell .si{display:flex;gap:.08in;opacity:.3}.pbrd-supwell .si img.ai,.pbrd-supwell .si .ic{width:.32in;height:.32in}'
 +'.pbrd-lad img.ai,.pbrd-lad .ic,.pbrd-lad svg{width:.13in;height:.13in;flex:0 0 auto}';   // a claimed Order wears its Kontor's crest
 var HC_CSS4=''
 /* the ⚜ CONTRACT card — a tri-folded letter under the Guild's wax seal (2026-08-17 look, v7 recut) */
@@ -747,8 +755,10 @@ var HC_CSS4=''
 +'.btile.kbt .bt-nm{font-size:.15in}.btile.kbt .kb-seat{position:absolute;right:.06in;top:.3in;width:.42in;height:.42in;border:2px dashed rgba(255,255,255,.85);border-radius:.06in;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.2)}'
 +'.btile.kbt .kb-seat img.ai,.btile.kbt .kb-seat svg{width:.3in;height:.3in;opacity:.7}'
 +'.stile .st-chit{display:inline-flex;align-items:center;gap:.04in;border:2px dashed rgba(255,255,255,.8);border-radius:.05in;padding:.01in .05in}'
-+'.invtok{width:.75in;height:.75in;border-radius:50%;background:#7c2128;color:#e8c87a;display:flex;align-items:center;justify-content:center;font-size:.42in;line-height:1;box-shadow:inset 0 0 0 .04in #571a20;text-shadow:0 1px 2px rgba(0,0,0,.5)}';
++'.invtok{width:.75in;height:.75in;border-radius:50%;background:#7c2128;color:#e8c87a;display:flex;align-items:center;justify-content:center;font-size:.42in;line-height:1;box-shadow:inset 0 0 0 .04in #571a20;text-shadow:0 1px 2px rgba(0,0,0,.5)}'
++'.kchit{width:.75in;height:.75in;border-radius:50%;background:var(--c,#6f6253);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;line-height:1;box-shadow:inset 0 0 0 .04in rgba(0,0,0,.35);text-shadow:0 1px 2px rgba(0,0,0,.5)}'
++'.kchit img.ai,.kchit .ic{width:.42in;height:.42in;margin-bottom:-.03in}.kchit span{font-variant:small-caps;font-weight:bold;font-size:.09in}';
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3+HC_CSS4;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,PRIVATES,privateTile,KBUILDINGS,kontorBuildingTile,inviteToken,IMPROVE,GOODS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,coverTile,wtok,recipeCard,playerBoard,KONTOR_C};
+window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,PRIVATES,privateTile,KBUILDINGS,kontorBuildingTile,inviteToken,kontorChit,IMPROVE,GOODS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,coverTile,wtok,recipeCard,playerBoard,KONTOR_C};
 })();

@@ -277,7 +277,13 @@ Bruges; invitations only from far landings; a Great Western Trail private-buildi
 printed points and no dice; wild Ships; no kettle, no Bourse, no contracts, no demands, no
 ladders, no flags. The implementation plan (§13) was merged from two lenses and cross-checked
 (43 corrections). v7 is not archived: "it was a bust." The rules: `RULES.md` v8.0. The engine:
-`play.html` (the phases of §13.6). The kit and the rulebook: the next pass.
+`play.html` (the phases of §13.6). The rulebook and the kit landed the same day: `rulebook.html`
+re-derived whole (four pages, fit-gated) and `print.html` cut as the v8.0 kit — the sea board on
+its own double-sided sheet over the portolan chart (side B front, side A back), the Wharf's
+re-printed station faces, the Market board without its contract shelf, the private tiles (tier 1
+front / tier 2 back, printed ★), the twelve Kontor building tiles, the ⚜ tokens and the three
+chits, the wild hulls, the eight-verb cask stacks, the ten specialists, the v8 tri-fold aid and
+the manifest. The faces that still ride stand-in art are queued in `art/PROMPTS.md`.
 
 ### v7.0b “Build Leaves the Counter” (2026-09-01, designer-ruled — `KEY hanse-v70b`)
 

@@ -3,8 +3,8 @@
 *The one rules document. Clean operational rules only — the v8 program, the designer's review
 and the implementation plan live in `V8-PLAN.md`; design rationale in `DESIGN.md`. Numbers
 marked ⚙ are tunable placeholders. This is the v8.0 TEST BUILD: `play.html` (`KEY hanse-v80a`),
-this document, `COMPONENTS.md` §0 and `STYLE.md` §4f are current; `print.html` and
-`rulebook.html` are re-derived at the kit pass.*
+this document, `COMPONENTS.md` §0, `STYLE.md` §4f, `rulebook.html` and the print kit
+(`print.html`) are current.*
 
 **2–4 players · c. 1350 · Hamburg. You run a merchant brewing house of the Hanseatic League.**
 Goods are the only currency — no money, no spendable prestige. You must be a brewer AND a
