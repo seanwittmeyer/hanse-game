@@ -165,8 +165,8 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   +ft
   +'</div>';}
 // ---- THE PRIVATE BUILDINGS — the wharf engine: a hand of 4 double-sided tiles per house,
-// one per station (tier 1 one face, tier 2 the FLIP); it stands on a slot flanking its
-// station and fires only when its owner works that station; no die; PRINTED ★ (2 / 4).
+// four designs (tier 1 one face, tier 2 the FLIP); a tile stands on ANY VACANT slot and
+// fires ON VISIT — when its owner works the station that slot flanks; no die; PRINTED ★ (2 / 4).
 // The kit prints 4 designs × 4 house-ringed copies = 16 tiles, 2.5×1.32in.
 const VBIG=h=>'<span class="ac">'+h+'</span>';
 const VSEP=s=>'<span class="vsep">'+s+'</span>';
@@ -182,7 +182,7 @@ const PRIVATES=[
 ];
 function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
   const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
-  const tcol='<span class="bt-tcol"><span class="bt-nm'+(f.nm.length>18?' long':'')+'">'+f.nm+'</span><span class="bt-trig">'+d.station+'</span></span>';
+  const tcol='<span class="bt-tcol"><span class="bt-nm'+(f.nm.length>18?' long':'')+'">'+f.nm+'</span><span class="bt-trig">On visit</span></span>';
   return '<div class="btile btW" style="--c:'+(col||PRIV_FOOT)+ring+'">'
   +artLayer(f.art||('venture-'+({A:'brew',B:'brew',C:'points',D:'age'})[d.k]+'-l'+tier+'.png'))
   +'<div class="bt-top vt-top">'+tcol

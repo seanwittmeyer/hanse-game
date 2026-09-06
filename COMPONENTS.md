@@ -3,7 +3,7 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (the one clean rules document, **v8.0**). Design rationale & history: `DESIGN.md` §9; the v8 program, the designer's review and the implementation plan: `V8-PLAN.md` §12–§13.
-> - The live build is `play.html` — **v8.0 “Brewer & Merchant”** (`KEY hanse-v80a`) — the source of truth on values and behaviour.
+> - The live build is `play.html` — **v8.0 “Brewer & Merchant”** (`KEY hanse-v80b`) — the source of truth on values and behaviour.
 > - `print.html` (the v8.0 kit, cut 2026-09-06) and `rulebook.html` (the v8.0 book) are current; the art the new faces still lack is queued in `art/PROMPTS.md` (the v8.0 kit art queue).
 > - **READ §0 FIRST.** §0 states the v8.0 kit truth — what was ADDED, RE-CUT, and RETIRED. §§1–17 below still enumerate the v5.8/v7 body in detail and are superseded where §0 says so; the full section rewrite is the kit pass.
 
@@ -22,10 +22,10 @@
 | Player boards | 4 | 4 | re-printed: 3 vessels · 2 seats · the **personal supply well** (the ten dice) · the Flight; the hand of 4 private tiles and the set of 3 Kontor building tiles lie beside the board (the recipe splay's pattern); no tray graphic |
 | Quality dice | 52 | **44** (11 × 4) | ten in the supply + the starter post; the same dice are casks, posts and Kontor building markers |
 | **The hall die** | 0 | 1, neutral | **NEW** — stands on the Bruges panel at 2; +1 per present |
-| Private building tiles | 16 Ventures | **16** (4 designs × 4 colours, tier 1 / tier 2) | re-faced: Granary / Kaufhaus · Scriptorium / Brewers' Guildhall · Cold Store / Lagering Cellar · Counting House / Shipping Office; **printed points 2 / 4**; no ledger seat, no die |
+| Private building tiles | 16 Ventures | **16** (4 designs × 4 colours, tier 1 / tier 2) | re-faced: Granary / Kaufhaus · Scriptorium / Brewers' Guildhall · Cold Store / Lagering Cellar · Counting House / Shipping Office; **printed points 2 / 4**; the trigger *On visit* (it fires when its owner works the station its slot flanks); **built on any VACANT slot, never over a Public Work** (designer-ruled 2026-09-06); no ledger seat, no die |
 | **Kontor building tiles** | 0 | **12** (3 designs × 4 colours) | **NEW** — Warehouse (on your landing: +1 `G` 1 `H`) · Kontorhaus (+1 ⚜ more) · Guildhouse (RAISE one die of yours at sea +1); placed in a Kontor slot, marked with the builder's die |
 | **Kontor chits** | 0 | 3 | **NEW** — a wild Ship's named Kontor, set on the hull by the first load |
-| Public Works | 12 | 12 (7 as filler: Malt Kiln ×2 · Customs House · Ropewalk · Cooperage · Bonded Store · Victualling Yard) | the Weigh House and the four Staple Houses sit out; deal 6 at 2–3p / 4 at 4p; the roster pass comes after the core |
+| Public Works | 12 | 12 (7 as filler: Malt Kiln ×2 · Customs House · Ropewalk · Cooperage · Bonded Store · Victualling Yard) | the Weigh House and the four Staple Houses sit out; **deal 4 at every player count** ⚙ (four slots open from the start, designer-ruled 2026-09-06); the roster pass comes after the core |
 | Ship tiles | 18 | **18** (per far Kontor Cog ×3 · Hulk ×2; wild Cog ×2 · Hulk ×1) | re-faced: no Bruges hulls; the wild face prints a dashed Kontor seat; Cog free · Hulk 1 `G` |
 | Cask tiles | 52 | 52 | re-printed on the eight-verb pool (source · age · load · brew · recipe · specialist · build · post); Gruit's sixteen all print *Gain 2 goods* |
 | Recipe cards | 24 | 24 | fees only (Broyhan 1 `H` · Keut 1 `G` · Mumme 1 `G` 1 `H` · Bock 1 `G` 2 `H`); no kettle line, no far-dice icons |
@@ -48,8 +48,9 @@ tokens, three chits, eight fewer dice, four decks and trackers gone.
   the hall's places and the hall die's seat; the cart road; Hamburg.
 - **The Kontor building tiles print name + trigger + effect** (*On your landing here:* …) and
   a die seat for the builder's die (the modifier · the pips).
-- **The private building tiles print their points** (2 on tier 1, 4 on tier 2) beside the
-  station they flank and their line; the ledger seat is struck.
+- **The private building tiles print their points** (2 on tier 1, 4 on tier 2), the trigger
+  *On visit* and their line; no station name — a tile stands on any vacant slot and fires
+  when its owner works the station that slot flanks; the ledger seat is struck.
 - **The Ship tiles print the Kontor or the wild seat**, the berths and the fee; the Kontor
   minimum leaves the hull (it prints on the panel).
 - **The cask tiles print the eight verbs**; LIFT leaves the pool.

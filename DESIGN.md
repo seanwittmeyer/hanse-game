@@ -263,6 +263,32 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
 
+### v8.0b — the free ground (2026-09-06, designer-ruled — `KEY hanse-v80b`)
+
+The designer's first read of the v8.0 build ruled four things about the wharf's private
+buildings, and asked for the app to show its choices. **(1) A private tile is not tied to a
+station**: it stands on ANY of the 8 slots the player chooses and fires *On visit* — when its
+owner works the station that slot flanks. The slot picks the station, not the tile's name (a
+Cold Store beside the Market fires on Market visits); the one-per-station cap goes with it, so
+two of your tiles may flank one station. **(2) Vacant ground only**: a tile never replaces a
+Public Work (the +1 `G` replace door and its engine seam `REPLACE_EXTRA` are retired); a full
+wharf has no ground until the tide clears a slot — the tide is now the only thing that opens
+ground, which makes the sail a build event too. **(3) Four Public Works at every count** ⚙
+(was 6 at 2–3p): four slots open from the start, so the first BUILD has ground on turn one
+instead of waiting on the first sail. **(4) The Guildhall re-faced**: with the tile unbound
+from the Brewhouse, "brew twice this visit" had no station to hang on; its line is now *On
+visit: BREW once (a full brew, with its search)* — the same engine door as the station's
+PRIMARY, fired wherever the tile stands, which is strictly the more flexible line. **The
+app (`play.html`)**: every choice now glows on the board — the hand tiles and the standing
+tier 1 when a BUILD opens, the vacant slots at placement, the Kontor set at a Kontor build,
+the recipe cards in a brew, the display's specialists, the stacks in a search, the dice at a
+RAISE, the yard and hall rows at a cart — and clicking the glowing piece is the same call the
+button makes; the hand tiles are tappable at any time and flip to show their tier 2 face
+(a view, never a rule). Surfaces: `RULES.md` §1/§3/§12 · `rulebook.html` §5/§8 ·
+`COMPONENTS.md` §0 · `STYLE.md` §4f (*On visit* joins the trigger set) · `components.js`
+(the tile prints *On visit*, no station name) · `print.html` (aid + checklist + sheet label)
+· `verify-v8.js` (57/57, group 11 rewritten).
+
 ### v8.0 “Brewer & Merchant” (2026-09-06, designer-ruled — `KEY hanse-v80a`)
 
 *"We are essentially making a new game."* The v7.0b oracle read and the designer's three-batch
