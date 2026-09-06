@@ -1003,6 +1003,18 @@ scratchpad); this section is their merge, and each then checked the merge agains
 (§13.1 records the disagreements and the call). Every ⚙ is a placeholder with its rationale. **This
 section supersedes §6–§11.** No engine change has been made; this is the plan for making it.*
 
+***AMENDED AFTER THE GO — v8.0b “the free ground” (the designer, 2026-09-06, on the first
+read of the built mirror).** Four rulings supersede the §13.2 §12 text and the number sheet below,
+and stand in `RULES.md` §12: (1) a private tile is NOT tied to a station — it stands on ANY of the
+8 slots the player chooses and fires *On visit*, when its owner works the station that slot
+flanks (the slot picks the station, not the tile's name; no per-station cap); (2) vacant ground
+only — never over a Public Work, never a rival's tile (the +1 `G` replace door is retired; the
+tide is the only thing that opens ground); (3) four Public Works at every player count ⚙ (was
+6 / 4); (4) the Brewers' Guildhall's line is *On visit: Brew once (a full brew, with its search)*,
+not "brew twice this visit". The same read asked the app to glow every choice on the board and
+let the hand tiles be tapped over (a view, never a rule), and ruled the casing law (`STYLE.md`
+§4c rule 4: nothing prints in all caps). Record: `DESIGN.md` §9 (v8.0b).*
+
 ### 13.0 The game in one breath
 
 Eleven dice: ten in your **personal supply**, one standing at sea as your **starter post**. A die

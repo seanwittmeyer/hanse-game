@@ -193,7 +193,7 @@ folder. The §8 instruments moved with it.
 
 ## 8 · Simulating / smoke-testing the engine — the sim harness
 *(2026-09-06: the v8 root instruments are LIVE — `playtests/verify-v8.js` (the rule
-battery, 55 checks in 15 groups, seconds) and `playtests/sim.js` (the v8 usage counters,
+battery, 57 checks in 15 groups, seconds) and `playtests/sim.js` (the v8 usage counters,
 USAGE printed before VALUE; `PERSONAS=1` runs the seven committed lanes). The v5/v6
 instruments live whole in `archive/v5/playtests/` and `archive/v6/playtests/`, gating
 those archived builds by their own relative paths. Everything below — the

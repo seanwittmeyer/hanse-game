@@ -300,12 +300,12 @@ nothing else. Every tier 2 contains its tier 1.
 
 **Each tile prints its points: tier 1 = 2★, tier 2 = 4★** ⚙, scored at the end while it stands.
 
-| Design | Tier 1 (fires on visit) | Tier 2, the Flip |
-|---|---|---|
-| **Market** | **Granary** — +1 `G` +1 `H` | **Kaufhaus** — +2 goods, any mix, and your Cart carries 2 casks |
-| **Brewhouse** | **Scriptorium** — recipes cost you no fee, at every door | **Brewers' Guildhall** — you hold every dealt recipe, and on visit: Brew once (a full brew, with its search) |
-| **Cellar** | **Cold Store** — Age +2 more (Age 5) | **Lagering Cellar** — Age +2 more and one Ready cask of yours +1 (cap quality + 1) |
-| **Harbor** | **Counting House** — Raise one die of yours at sea +1 (cap 6) | **Shipping Office** — Raise +1 and Post once more (no second commission) |
+| Tier 1 (fires on visit) | Tier 2, the Flip |
+|---|---|
+| **Granary** — +1 `G` +1 `H` | **Kaufhaus** — +2 goods, any mix, and your Cart carries 2 casks |
+| **Scriptorium** — recipes cost you no fee, at every door | **Brewers' Guildhall** — you hold every dealt recipe, and on visit: Brew once (a full brew, with its search) |
+| **Cold Store** — Age +2 more (Age 5) | **Lagering Cellar** — Age +2 more and one Ready cask of yours +1 (cap quality + 1) |
+| **Counting House** — Raise one die of yours at sea +1 (cap 6) | **Shipping Office** — Raise +1 and Post once more (no second commission) |
 
 ---
 

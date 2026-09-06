@@ -824,7 +824,7 @@ function scoreRingHtml(NW,NH,T){
 //     family's native footprint, so the printed card drops exactly in; each refills from its draw bag.
 //   · THE clock is the quality dice: 11 per player — the first EMPTY personal supply sets the final
 //     round. The Round backstop is rules-side only; the loose bits — goods · ⚜ tokens · chits — live
-//     in a supply tray beside the board.
+//     in a general supply beside the board.
 //   · SCORE wraps the outer edge as the 50-cell ring (see scoreRingCells) — banked constantly, it belongs
 //     on the rim where every seat can reach it without leaning over the displays.
 //   · The OVERLAY bar toggle ghosts a sample component into every slot (native size, 50% opacity) to proof
@@ -908,7 +908,7 @@ function supplyBoard(){
   const smpImp=[0,1,2,3].map(i=>improveTile(IMPROVE[i]));
   const market=shelf('Ships — the display of 3 · commission at the Harbor (Cog free · Hulk 1G) · then Post on its lane','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''))
     +shelf('Specialists — the display of 4 · Bergen’s prize or the Gain 1 specialist bonus seats one, free','wrench',smpImp.map(s=>dslot('i','wrench',s)).join(''))
-    +'<div class="mbox supply-note"><h4>'+LU('dices')+'The supply tray</h4><div class="b">The quality dice (11 per colour) stay by each player; the hall die stands on the sea board. Goods · ⚜ invitation tokens · the 3 Kontor chits · score discs: a general supply beside this board.</div></div>';
+    +'<div class="mbox supply-note"><h4>'+LU('dices')+'The dice and the bits</h4><div class="b">The quality dice (11 per colour) stay by each player; the hall die stands on the sea board. Goods · ⚜ invitation tokens · the 3 Kontor chits · score discs: a general supply beside this board.</div></div>';
   // THE CASKS & RECIPES column: the six stacks (Gruit · Hopped · the Q3 pair · the Q4 · the Q5 —
   // the 3-of-4 deal leaves one export in the box, so the slots print the TIER) and the four
   // export recipe stacks. Cask slots cut 2.4×1 · recipe slots 1.85×2.55 — true.
