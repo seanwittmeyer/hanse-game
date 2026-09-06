@@ -6,6 +6,12 @@ placeholder with a one-line rationale. The designer rules the forks in §7; noth
 canon until ruled. Read after `CLAUDE.md`; it supersedes `V7-PLAN.md` as the program document
 the moment the designer rules §7 (until then v7.0b stays the live build at root).*
 
+***REVIEW IN PROGRESS (2026-09-06).** The designer's review of the first plan is arriving in
+batches. Batch 1 is recorded verbatim in **§12** with its reading; it corrects the premise in
+§0/§2 and overturns parts of §6 and §7 (route access, scoring, ships, invitations, the word
+"tray"). Nothing in §6–§11 is re-cut until the rest of the review lands — read §12 before
+relying on any of them.*
+
 ---
 
 ## 0 · Why this document exists
@@ -21,6 +27,15 @@ and hardened by three adversarial reviews (§6), lists the forks the designer mu
 records what the reviews changed (§8), and sets the phases (§9), the paper cut list (§10) and the
 first-table questions (§11). The variants and reviews themselves are session material, not repo
 canon; this document carries everything the next session needs.
+
+**Premise correction (designer, 2026-09-06 — §12.1):** the paragraph above states the symptoms
+the oracle measured, not the disease. v7's job was to BREAK the tight overlap between the wharf
+station actions and the core loop (source · brew · age · ship); it did not, so walking the loop
+literally is playing the game, everything else is loosely added on, and what results is an
+efficiency game dressed as an engine builder — it lacks soul, and its exciting-looking
+decisions are neither interesting nor challenging. Free goods did not make goods irrelevant;
+they made goods the ONLY resource, which is what made play linear. v8's purpose is DEPTH, and
+the recorded failure mode of the assistant is that its optimizing instinct cancels depth.
 
 ## 1 · The designer's ruling (2026-09-04, verbatim)
 
@@ -494,3 +509,237 @@ aging · an unfull sail) until the P1 roster.
 8. Did anyone cart a Q3+ cask to the yard, and why — no ⚜, a band, no standing, or the clock?
 9. On the last round, what did the rival's dice on the boards — posts and seats against casks — tell you about their plan?
 10. If you could stand one more die anywhere on the board right now, where — and what did you do with that die instead?
+
+---
+
+## 12 · The designer's review of the first plan — batch 1 (2026-09-06)
+
+*Recorded the day it arrived. The designer's instruction with it: "Process and document the
+notes but don't go all in on anything until I share the rest of my review." So this section
+records, reads and flags; the re-cut of §6–§11 and of the page "Brewer & Merchant" waits for
+batch 2. Where a note overturns a ruling in §7, the §7 row still shows the old ruling until
+the re-cut; §12.3 is the authoritative status table meanwhile.*
+
+### 12.1 The review, verbatim
+
+> Your premise at the top of the doc isn't right. It to be pedantic but you will overindex on
+> things like this so it's important to cover it. 7 failed because it was supposed to break the
+> tight overlap between the wharf station actions and the core loop of source, brew, age, and
+> ship. All you need to do is walk that loop literally and you are playing the game. Everything
+> else is just loosely added on but doesn't contribute to the game in meaningful ways resulting
+> in a simulation engine building game that is actually just an efficiency game. It lacks soul
+> as a result and the decisions that seem exciting are actually uninteresting and not
+> challenging. Goods being free actually means being the only resource in the game, which makes
+> game play linear. I'll touch on the other statements below but the big thing here is the game
+> lacks soul and the v7 explorations were intended to address that. Instead of meaningful
+> change, we actually regressed significantly which resulted in this exercise. I want to add
+> depth to the game and your tendency to optimize cancelled out progress. I'm going to walk you
+> through feedback for the entire document in one go. Consider it all as we develop the plan.
+>
+> Forks.
+>
+> There is no tray. The dice sit in a pile as a personal supply next to the player board. You
+> can stop using that term. Personal supply is fine. No ruling required, just drop the
+> formality of where the dice come from. This is a board game played on a table with friends
+> in person, not an app.
+>
+> The dice as the clock is nothing new, neither is having multiple destinations for them. We
+> are just balancing out the game and making the sea as a destination more impactful in the
+> game. You only have so many dice, find balance between casks, buildings, and the sea to
+> maximize their values and win.
+>
+> Route access. Your minimum is a weird way to document this. The deal is straightforward. The
+> sea is a board which has lanes towards each of the Kontor destinations. Players must build
+> posts to unlock these shipping lanes and those who build out the tree from Hamburg (where we
+> are presumably) to any given Kontor become eligible to build the Kontor buildings. Anyone can
+> unlock a segment of a shipping lane and when they do by building a post, the die deployed
+> there increases in value from 1 up to a total of 6. All dice on the sea board are scored at
+> the end of the game, one point per pip. Multiple players may place posts on the same line but
+> only one may build in each Kontor building slot, and they must have built the full chain of
+> posts to do so.
+>
+> Ships. Hulls are either 2 or 3 with a combination for each Kontor. I want to add a set of
+> wild ships which the destination is set by the last player to load it, following quality
+> rules. This needs to be addressed further but we will get there.
+>
+> The hall is good for now, we will explore it further later but the gist is that I have this
+> local opportunity to display my best brews at the guild of brewmasters. This would be by
+> invitation only and you only get invitations by brewing beer and delivering them to Kontors.
+>
+> Aging is just an action taken by your worker at the cellar and some cask bonuses. No auto
+> aging except with specialists.
+>
+> Gruit is simple. It's a lucrative distraction you use to get ahead. Goods are tight and it's
+> a quick and easy way to get them at the cost of a die. Necessary but worth it as long as you
+> don't brew it too much.
+>
+> Kontor buildings require a die. The die sets the value modifier for the player for their
+> brews delivered there. We are simplifying the scoring of beers because humans are not
+> calculators or software when sitting and playing a board game. The cask die is at most
+> 1+ready quality (plus 1 die is an action modifier we have in places) plus the Kontor
+> modifier. That's it. Kontor buildings address that value die. Maybe other elements in the
+> game too to beef up the strategic lane.
+>
+> The Lisboa comment was misinterpreted. This is important. I like Lisboa because of how
+> interconnected the game systems and mechanics are in that board game. You build ships using
+> one resource and open public buildings with another. This means getting value out of a shop
+> requires the resource to build it plus the resource to open the public buildings which gives
+> it value for scoring. Shops serve a second purpose of generating goods, a secondary currency
+> for other actions so diversifying shops is good to ensure you have all types of goods but the
+> scoring of shops is based on public buildings and majorities of each type of shop (good)
+> which promotes going all in on a particular type. Public buildings are associated with a row
+> or column and are limited in number so there is a race to ensure a public building is set to
+> score your types of buildings. You use the same type of action to build a shop or open a
+> public building but the requirements send you off on other paths to prepare the
+> prerequisites. I love the interplay here. I want more of this kind of depth in brewmasters.
+> It was not a comment on production vs civic works but an attempt to push us towards a way of
+> thinking about game systems and theory as we design our game.
+>
+> That all said, recipes, invitations, and buildings are those prerequisites to these core
+> actions of brew, taste in the hall, and engine build as a way to get ahead.
+>
+> Specialists are not necessary but they are a way to bring in asymmetric player powers.
+> People love these in games and I want them here. They can be powerfully enough to push you to
+> try a given strategy or help you scratch an itch or shortcut parts of the game which is fun
+> when you can get the most out of them. We can consider them later but it's something fun
+> that adds depth. We need to make sure our simulation tools are designed to capture this
+> depth or they will always push you to simplify (which is what you suggest).
+>
+> That is all for this batch. Process and document the notes but don't go all in on anything
+> until I share the rest of my review.
+
+### 12.2 The reading, note by note
+
+**The premise.** §0 and §2 described what the oracle measured (free goods, an inert hall,
+optional buildings, a round-counter clock). The disease is one level up: the station actions
+and the core loop are the same four verbs, so the loop is walkable without a single decision
+that is not an efficiency decision. Depth is the target, not tightness. Free goods are not a
+missing sink; they made goods the only resource and the play linear. **The assistant's
+recorded failure mode: optimizing cancels depth** — every simplification the reviews and the
+sims recommended (retire the specialists, one marker, one count) pulled toward the efficiency
+game the designer is trying to leave. This goes to the charter with batch 2 (§12.5).
+
+**No tray — the personal supply.** The dice sit in a pile beside the player board. The word
+"tray" is retired from every surface at the re-cut (21 uses in this document, the page, the
+teach). No ruling; a wording. The game is played at a table, and the plan must read like one.
+
+**The dice and their destinations.** Nothing new to announce: the dice were always the clock
+and always had destinations. v8 balances the destinations and makes the sea a destination that
+matters. The designer's own sentence is the thesis, and replaces §6.0's: *"You only have so
+many dice, find balance between casks, buildings, and the sea to maximize their values and
+win."* Note the THREE destinations — casks · buildings · the sea. Buildings take dice; the
+Kontor buildings certainly (below), and whether the wharf tiles do again is a batch-2
+question (§12.4).
+
+**Route access — the post chain replaces YOUR MINIMUM.** The rule as the designer states it:
+- The sea board has lanes from Hamburg (the Wharf's home — `DESIGN.md` already calls Hamburg
+  "the brewhouse of the Hanse") toward each Kontor. A lane is a chain of segments.
+- A player unlocks a segment by building a POST there: a die of theirs, placed at 1, that
+  turns up toward 6 (the trigger is a batch-2 question). Anyone may post on any segment;
+  several players may hold posts on the same segment or line.
+- Every die on the sea board scores one point per pip at the end of the game.
+- A player who has built the FULL chain of posts from Hamburg to a Kontor becomes eligible to
+  build in that Kontor's building slots; one builder per slot.
+- No per-player quality count, no printed 0→5+ row, no "seat". The count that gated cargo is
+  gone; what a chain of posts earns is eligibility, pips and (per the next note) a value die.
+
+**Ships.** Hulls of 2 or 3 berths, a combination for each Kontor (the deck stays Kontor-bound,
+mixed sizes per Kontor). NEW: a set of WILD ships whose destination is set by the last player
+to load them, "following quality rules" — which quality rules survive is a batch-2 question,
+since YOUR MINIMUM is gone (a printed per-Kontor minimum quality is the obvious candidate).
+The designer flags this as unfinished.
+
+**The hall.** Stands for now: a local guild of brewmasters where you display your best brews,
+by invitation only. **Invitations come only from brewing beer and delivering it to Kontors.**
+That overturns the post-2 invitation and narrows the letter: the faucet is delivery, full
+stop. Rate (per landing, per first landing per Kontor, per Ship) is a batch-2 question.
+
+**Aging.** Confirmed as ruled: the Cellar action and cask bonuses; no automatic aging except
+by a specialist.
+
+**Gruit.** Confirmed as ruled: a lucrative distraction, goods for a die, worth it in
+moderation.
+
+**Kontor buildings and the SIMPLIFIED SCORE.** A Kontor building requires a die, and that die
+IS the player's value modifier for their own brews delivered there. The score of a delivered
+cask is: **the cask die (Ready quality, at most +1 from a lift) + the player's Kontor
+modifier. That's it.** No market track, no cells, no bands, no per-landing glut, no demand
+line, no premium: humans are not calculators. The public marker and the floor from §6.3 are
+overturned unless batch 2 restores something of them; the building's die is private value,
+and "other elements" may join it to beef up the strategic lane (open).
+
+**Lisboa, re-read.** The reference was to SYSTEM INTERLOCK, not to a production/civic split.
+The pattern the designer wants more of: one resource builds the thing, a second resource opens
+the thing that makes it score; the built thing also yields a secondary currency, so
+diversifying is good, while scoring by majority per type pushes toward going all in; the
+scoring pieces are few and tied to a row or column, so there is a race for them; and the same
+action type serves both builds while the prerequisites send you down other paths to prepare.
+**The mapping the designer gives: recipes, invitations and buildings are the prerequisites to
+the core actions of brew, taste in the hall, and engine build.** The plan's job is to make
+each core action need a prerequisite earned somewhere else, and to have the prerequisites
+pull in different directions.
+
+**Specialists.** Asymmetric player powers, wanted: strong enough to push a strategy, scratch
+an itch or shortcut a part of the game. Considered later, and the simulation tools must be
+built to capture that depth or they will keep recommending simplification — which the
+assistant did, five times over, in §5 and §7.
+
+### 12.3 Status of the plan after batch 1
+
+| Plan element (§) | Status | Note |
+|---|---|---|
+| The premise (§0, §2 lede, §4's framing) | **corrected** | §0 carries the correction; §2/§4 re-written at the re-cut |
+| §6.0 thesis | **replaced** | by the designer's sentence: balance casks, buildings and the sea |
+| The turn (MOVE · P + A · flanks) | stands | kept by the ruling of 2026-09-04 |
+| "The tray" | **retired word** | "personal supply"; 21 uses to change |
+| F2 YOUR MINIMUM (§6.3, the panel rows, the recipe requirement) | **overturned** | the post chain: posts unlock segments, a full chain earns building eligibility |
+| Posts: a die at 1 → 6, 1★/pip, several players per segment | stands, restated | the tick trigger open |
+| Kontor building sockets, one builder each | stands | prerequisite: the full chain |
+| The market track, cells, floor, glut per landing (§6.3) | **overturned** | score = cask die + the player's Kontor modifier |
+| F16 quality bands, two-number cells | **moot** | no cells; whether a printed per-Kontor minimum quality exists is open |
+| Ships Kontor-bound, 2/3 berths | stands | plus WILD ships (new, unfinished) |
+| F3 nobody owns a hull, commission when able | stands | not mentioned in batch 1 |
+| F4 the bench (the hall) | stands, provisional | "display my best brews at the guild" |
+| Invitations from letters + post 2 (§6.5) | **overturned** | only from delivering beer to Kontors; rate open |
+| F17 no cap | stands | |
+| F5 aging | confirmed | |
+| F7 Gruit | confirmed | |
+| F9 recipes earned (Bruges prize + cask tile) | stands | the far-dice requirement on Mumme/Bock must be re-read against the post chain |
+| F10 specialists stay | confirmed, strengthened | asymmetric powers wanted; sim tools must capture them |
+| F11 Public Works, F12 cart only, F13 sails full, F14 starter post | stand | not mentioned in batch 1; F14's "seat" wording goes |
+| F6 socket dice, F8 opening a building, F15 the wharf hand | open | F8 now reads "which prerequisite opens a Kontor building" |
+| §6.7 scoring skeleton, §10 cut list, §11 questions | **re-cut pending** | after batch 2 |
+
+### 12.4 Questions batch 2 needs to settle before the re-cut
+
+1. **Lane openness.** Once every segment of a lane holds at least one post (anyone's), may every
+   player's Ships sail it, or only players holding a post on each segment? The text reads as
+   public once unlocked; confirm.
+2. **The post tick.** What turns a post die from 1 toward 6: any Ship sailing its segment (the
+   current recommendation), the owner's own landings, or a build action?
+3. **Segments per lane** on the board: the mock has two to London, one to Bergen, one more to
+   Novgorod. Keep, or set by the chain-length the designer wants for each Kontor?
+4. **Delivering without a building.** A cask landing at a Kontor where you hold no building
+   scores its die alone? And is the Kontor modifier one die per player per Kontor, or per slot?
+5. **The modifier die's value.** Set at 1 and raised by a later action, or ticking on use like
+   a post, or set by the number of posts in the chain? Does it also score 1★/pip at the end
+   ("all dice on the sea board")?
+6. **Wild ships:** which "quality rules" — a printed minimum quality per Kontor, the beer's
+   printed destinations, or something else?
+7. **Invitation rate:** one per landing, one per first landing at each Kontor, or per Ship?
+   Does a Bruges yard landing count as "delivering to a Kontor"?
+8. **Majorities at the Kontore** by parked casks: unchanged, or folded into the building die?
+9. **Do wharf buildings take a die** ("casks, buildings, and the sea")? If yes, the v7 ledger
+   grammar returns in some form and the personal supply feeds three destinations, not two.
+10. **Hamburg** printed as the home port on the sea board? (Theme already says so.)
+
+### 12.5 Process lesson, to land in the charter with batch 2
+
+Proposed `CLAUDE.md` §1 line, beside THE OVERRIDE: **"THE SECOND OVERRIDE — optimizing cancels
+depth (designer-ruled 2026-09-06). The instinct that pulls every review toward fewer parts,
+one marker, one count, no asymmetry produced v7's efficiency game and killed its soul. Depth is
+the target: interlocking prerequisites (Lisboa), asymmetric powers, a sea worth a die. A
+simulation or review that recommends simplification must first show it is not measuring
+depth away; the sim tools are built to capture asymmetry and interlock or they are not used
+as judges."* The `AUTOMA.md`/`playtests` consequence: the v8 bots and the persona lanes must
+represent the specialists and the prerequisite chains before any corpus is read.
