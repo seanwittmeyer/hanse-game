@@ -745,7 +745,9 @@
 //==================================================================
 // The CARD COMPONENT LIBRARY (components.js) is the single source of the printed card faces —
 // data + generators + card CSS, shared with play.html (the app mirrors the kit, v3.3).
-const {LU,LUX,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,VENTURES,ventureTile,IMPROVE,GOODS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,coverTile,wtok,recipeCard,playerBoard,CONTRACTS7,contractCard,contractBack,DEMANDS7,demandCard,demandBack,KONTOR_C,ladderMarker,flagToken}=window.HC;
+const {LU,LUX,cost,ART_ON,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,IMPROVE,GOODS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,coverTile,wtok,recipeCard,playerBoard,KONTOR_C,PRIVATES,privateTile,KBUILDINGS,kontorBuildingTile,inviteToken}=window.HC;
+// v8: the kit pass is pending — the retired v7 families (Ventures · contracts · demands · ladder markers · flags) resolve to empty so the page keeps loading; the v8 faces (private tiles · Kontor building tiles · ⚜ tokens · wild hulls · the sea board) are cut at the kit pass.
+const VENTURES=[],ventureTile=()=>'',CONTRACTS7=[],contractCard=()=>'',contractBack=()=>'',DEMANDS7=[],demandCard=()=>'',demandBack=()=>'',ladderMarker=()=>'',flagToken=()=>'';
 // v5.3 restyle: the ring is BAKED into ventureTile (the tile shares the building anatomy);
 // ventRing survives as a thin pass-through so the pack/mirror call sites stay unchanged.
 const ventRing=(d,lvl,col)=>ventureTile(d,lvl,col);
