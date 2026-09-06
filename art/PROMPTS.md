@@ -534,10 +534,17 @@ went through the deframe + band gates (frames auto-trimmed on roughly half). The
 3. **`bonus-load.png` re-cut — the OPEN pick:** LOAD becomes **the medieval treadwheel harbor
    crane** lifting a cask (designer-ruled 2026-09-06 — cart and load may not share art). The
    winner replaces `bonus-load.png` IN PLACE so every `package-plus` load site updates; candidates out.
-4. *(Optional)* **`station-harbor.png` re-cut** — the commission is FREE for a Cog now; the coin stack on the current icon reads as a purchase. A hull on the stocks with a post die beside it would say "commission, then post".
+4. **`station-harbor.png` re-cut — LANDED (pick B, 2026-09-06):** the hull on launch stocks
+   with the bone post die beside it — "commission, then post"; the coin stack retires (a Cog
+   commissions free). Replaced in place; every `LU('ship')` site swapped.
 
-### 5 · Boards (both playable as they stand)
-- **The sea board** rides `seamap.png` (the portolan chart, Hamburg's wharf works at the left edge) under parchment panels — playable as is. *(Optional)* a v8-specific chart: the same portolan grammar with the North Sea on the left half and the Baltic on the right, the Sound and the Skagerrak suggested as straits, no lettering.
+### 5 · Boards
+- **The sea board** rides `seamap.png` — **the v8 chart LANDED (pick C, 2026-09-06)**: the
+  wordless two-seas portolan (a sea per half, the peninsula between, the straits suggested),
+  replaced in place under both surfaces (the print sheet's `sb-art`, the app's `.seamap`
+  wash). The v7 chart (Hamburg's wharf works at the left edge) lives in git history. Gotcha
+  re-proved on this pass: name a strait and the model letters it — describe the geography
+  namelessly (see `ICONS.md` Round 16).
 - **The Wharf board** is unchanged (`wharf-board.png`).
 
 ### 6 · Nothing wanted
