@@ -1150,8 +1150,8 @@ function supplyBoard(){
   // Q3+Q4 beers' piles · their recipe stacks · the Q5 beer + Jopenbier piles · their stacks.
   // The mid-tier beers vary per game (the 3-of-4 deal / 3-of-7 with Specialty Beers), so the
   // slots print the TIER, not a name. Cask slots cut 2.4×1 · recipe slots 1.85×2.55 — true.
-  const ck=nm=>{const d=CASKS.find(c=>c.nm===nm);return caskCardBack(d,d.pin||poolFor(d.q)[0]);};
-  const rc=nm=>recipeCard(RECIPES.find(r=>r.nm===nm)||STARTERS.find(r=>r.nm===nm));
+  const ck=nm=>{const d=CASKS.find(c=>c.nm===nm);return d?caskCardBack(d,d.pin||poolFor(d.q)[0]):'';};   // a beer no longer in the box prints an empty slot until the kit pass
+  const rc=nm=>{const r=RECIPES.find(r=>r.nm===nm)||STARTERS.find(r=>r.nm===nm);return r?recipeCard(r):'';};
   const brow=slots=>'<div class="brew-row">'+slots+'</div>';
   const brew=brow(dslot('c','beer',ck('Gruit'),'Gruit')+dslot('c','beer',ck('Hopped'),'Hopped'))
     +brow(dslot('c','quality-3',ck('Broyhan'),'the Q3 beer')+dslot('c','quality-4',ck('Mumme'),'the Q4 beer'))

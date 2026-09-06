@@ -361,11 +361,6 @@
   /* DESTINATIONS */
   .kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}   /* the four Kontor cards FILL the panel */
   @media(max-width:600px){.kgrid{grid-template-columns:1fr 1fr}}
-  /* THE BOURSE BOARD — a full-width strip ABOVE the Kontor cards */
-  .bourseboard{border:2px solid var(--line);border-radius:10px;padding:6px 9px;background:var(--parch);margin-bottom:8px}
-  .bb-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px}
-  .bb-head b{font-variant:small-caps}
-  .bb-row{display:flex;align-items:center;gap:4px;padding:1px 0}
   .bb-nm{flex:0 0 84px;display:inline-flex;align-items:center;gap:4px;font-size:.8rem;min-width:0;overflow:hidden}
   .bb-cell{width:26px;height:19px;flex:none;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:4px;font-size:.72rem;opacity:.4}
   .bb-cell.on{background:#2b2018;color:#f4ead0;font-weight:bold;opacity:1}
@@ -601,11 +596,6 @@
   .qpd b,.rgate b{margin-left:3px}
   /* brewery recipe cards */
   .rcard{display:inline-flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:7px;padding:4px 9px;background:var(--parch);margin:3px 5px 0 0;font-size:.74rem;box-shadow:0 1px 3px rgba(0,0,0,.12);vertical-align:top}
-  /* the MANIFEST strip on a hull tile — the demand card's three lines, inline at the foot */
-  .shipman{position:absolute;left:.06in;right:.06in;bottom:.05in;z-index:3;background:rgba(243,233,210,.93);
-    border:1px solid #8a6408;border-radius:.04in;padding:.025in .05in;font-size:.105in;line-height:1.28;
-    color:#2b2018;font-weight:bold;text-align:left;white-space:nowrap;overflow:hidden}
-  .shipman .ic{width:.11in;height:.11in}
   .rcard .rcn{font-weight:bold;font-variant:small-caps;white-space:nowrap}
   /* destinations: data row + delivery squares */
   /* the Hall SHELF BOARD — four quality-gated shelves; a space = an icon (open) or a claim cube */
@@ -618,7 +608,6 @@
   .hsp.taken{border-style:solid;border-color:rgba(0,0,0,.4)}
   .hsp.off{opacity:.25;border-style:dotted}
   .rmaj{font-weight:bold;font-size:.95rem;letter-spacing:.5px}
-  .rmaj.off{text-decoration:line-through;opacity:.4;font-weight:normal}   /* The Trade Roads replaces majorities — show the printed number struck-through */
   .route .ric .ic,.route .ric svg{width:1.25em;height:1.25em}
   .route .ric img.ai{width:1.7em;height:1.7em}   /* the Kontor's OWN crest — the art earns the room (2026-08-09) */
   .tag img.ai{width:1.15em;height:1.15em;vertical-align:-.2em;margin-right:2px}
@@ -980,7 +969,7 @@ function snapshot(){if(!S||aiActing)return;undoStack.push({S:JSON.stringify(S),U
 function doUndo(){if(!undoStack.length)return;const u=undoStack.pop();S=JSON.parse(u.S);UI=JSON.parse(u.UI);activeTab=u.tab;save();render();maybeRunAI();}
 
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function dealExports(){return shuffle(EXPORT_ROSTER.slice()).slice(0,3);}   // 3 of the 4 exports (the ladder's shape varies)
+function dealExports(){return shuffle(EXPORT_ROSTER.slice()).slice(0,3);}   // 3 of the 4 exports are dealt; the fourth's cards and tiles stay in the box
 function exportLabel(){return (S.exports||[]).slice().sort((a,b)=>STYLES[a].q-STYLES[b].q)
   .map(k=>'Q'+STYLES[k].q+' '+STYLES[k].name).join(' · ');}
 function buildWorksDeck(){const all=[];BUILDING_KEYS.forEach(k=>{for(let i=0;i<(BUILDINGS[k].qty||1);i++)all.push(k);});return shuffle(all);}

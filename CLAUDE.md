@@ -88,8 +88,8 @@ Every change set runs this loop, whole, in one turn:
    a number change is always a multi-file edit. A card face edits in **`components.js`**,
    never per-page.
 4. **Land the whole set in one pass** — docs together, then the pages, then the engine.
-5. **Gates:** the live verify battery always — **`node playtests/verify-v7.js`** gates
-   the root v7 build (the archived builds keep their own batteries in their folders);
+5. **Gates:** the live verify battery always — **`node playtests/verify-v8.js`** gates
+   the root v8 build (the archived builds keep their own batteries in their folders);
    a 5–10 game sim smoke (`node playtests/sim.js 3`) if the engine changed; bump the
    save `KEY` on any rules change (never on doc/kit-text-only work).
 6. **Publish to `main` the same turn** (§6).
@@ -116,18 +116,13 @@ affects each axis in step 2, you don't understand it yet — go back to §2.
 
 **The frozen v5.8 reference: “Pay the Second” (`KEY hanse-v58`, designer-ruled 2026-08-24 — live at `archive/v5/`).** The complete version history and rationale live in **`DESIGN.md` §9** (v5 letters in detail, pre-5.0 as a digest); the live watch-list in **`DESIGN.md` §10**; the consolidated v5 decision record in `archive/records/V5-DECISIONS.md`. Gates at v5.7 (full oracle, 1,500 games, 2026-08-24): verify **378/378** · sim clean (0 crashes / 0 deadlocks) · **ladder every rung PASS** (85 / 63 / 69 / 88%) · render smoke PASS · aid ALL FIT. Pace **14.7 / 14.5 / 13.7** (band 84/88/87%); totals **78/79/71**. **LIVE WATCH — RUNAWAY MARGINS, and SKILL MAKES THEM WORSE:** journeyman 22.1 / 15.1 / 12.7, but **guildmaster 34.0 / 19.4 / 15.3** (2p blowouts 59%). They are THROUGHPUT, not the market: the winner's casks are worth **+6%** but they ship **+18%** more of them, and 2p majorities **now pay a second place** (v5.8 — only 3rd is skipped; the majority's share of the 2p margin more than halved, 8.4★ → 3.9★, and the presence gate *no parked dice, no share* is now PRINTED, not engine-only). Still **19.4★** at 2p and ~30★ at guildmaster — dented, not closed; the queued second half is the re-tiering (London/Bergen 9/5/2 · Bruges 5/4/2). The Bourse and the prizes are **cleared** — `BOURSE_START`/`PRIZE_PTS` are off the lever list. Two v5.7 reversals from the 1,850-game MC oracle (2026-08-24): **DEPTH IS NOT DEAD** — the "cannot keep three vessels full" finding was a greedy-bot artifact; at skill a specialist ships 7.1 casks like everyone else and loses on PRICE (3.17★/cask vs breadth's 4.78 — its one beer's marker lives on the floor), so **the Glut punishes specialisation by construction** (ruled 2026-08-24: depth retires as a standalone oracle lane — viable specialisation would be depth *paired* with buildings/specialists, gated on the up-shift supply). And **the clock is not the dice at a strong table** — 28% of GM 2p games end on the MAX_ROUND backstop because skilled seats hold dice instead of spending them. Read at a table before dialing (`DESIGN.md` §10).
 
-**THE V7 PROGRAM RUNS (designer-ruled 2026-08-31) — read `V7-PLAN.md` FIRST.** The
-v6.5b human playtest ruled the v6 build a regression in feel (the sea ran itself, no
-engine-building core, the clock dragged, scores illegible); v7 re-derives from the ten
-directives recorded there. **P0 is DONE — the complete v6.5b build is FROZEN PLAYABLE at
-`archive/v6/` (never edit it), and the v7.0 “The Guild” TEST BUILD is LIVE at root**
-(`KEY hanse-v70b`, 2026-09-01): `play.html` · `RULES.md` · `COMPONENTS.md` §0/§10 ·
-`STYLE.md` §4e · `playtests/verify-v7.js` · **`print.html` (the P5 kit pass landed
-2026-08-31 — the full §0 kit cuts: contracts ⚜ · demands · the ladder board · deck 18 ·
-the Ventures return · flags/ladder markers · the v7 aid)** · **`rulebook.html` (the
-rulebook pass, same day — the 4-page teaching book re-derived whole from `RULES.md`,
-fit-gated per page)** are v7-current — EVERY root surface now states the v7.0b build. The v7
-shape in one breath: the v6.5 turn kept (MOVE adjacent · work the station: P + A + the
+**THE V7 PROGRAM (designer-ruled 2026-08-31 — HISTORY since the v8 go of 2026-09-06; `V7-PLAN.md`
+keeps its record).** The v6.5b human playtest ruled the v6 build a regression in feel (the sea
+ran itself, no engine-building core, the clock dragged, scores illegible); v7 re-derived from
+the ten directives recorded there. The complete v6.5b build is FROZEN PLAYABLE at `archive/v6/`
+(never edit it). **The v7.0b “The Guild” test build (`KEY hanse-v70b`, 2026-09-01) was ruled a
+bust and is NOT archived — v8 overwrote it at root; its record is git history and
+`archive/records/GATEKEEPER-v70b.md`.** The v7 shape in one breath, kept as history: the v6.5 turn kept (MOVE adjacent · work the station: P + A + the
 flank loads **+ each flanking Venture**) · stations Market *Source 3 / Source 1* (v7.0b
 — BUILD left the counter: it is EARNED, London's prize + the cask's BUILD load bonus,
 the ONLY two Venture doors) ·
@@ -194,11 +189,12 @@ folder. The §8 instruments moved with it.
 2. **The Wharf & the lean** — does it keep the Source→Brew→Age→Ship flow legible, and does it shift the volume-vs-prestige lean? That's the heart; keep it medium-weight (interesting choices, not mental burden).
 3. **Components/tiles** — does it change counts, tile families, costs, or the type/destination ladders (`COMPONENTS.md`)?
 4. **All surfaces** — update `RULES.md` AND the affected docs together; then the pages (the §3 touch list).
-5. **`play.html` is the reference implementation.** After any engine change, **smoke-test headlessly** (below), run `node playtests/verify-v7.js`, and **bump the save `KEY`**.
+5. **`play.html` is the reference implementation.** After any engine change, **smoke-test headlessly** (below), run `node playtests/verify-v8.js`, and **bump the save `KEY`**.
 
 ## 8 · Simulating / smoke-testing the engine — the sim harness
-*(2026-08-31: the v7 root instruments are LIVE — `playtests/verify-v7.js` (the rule
-battery, 55 checks, seconds) and `playtests/sim.js` (the v7 counters). The v5/v6
+*(2026-09-06: the v8 root instruments are LIVE — `playtests/verify-v8.js` (the rule
+battery, 55 checks in 15 groups, seconds) and `playtests/sim.js` (the v8 usage counters,
+USAGE printed before VALUE; `PERSONAS=1` runs the seven committed lanes). The v5/v6
 instruments live whole in `archive/v5/playtests/` and `archive/v6/playtests/`, gating
 those archived builds by their own relative paths. Everything below — the
 canonical-engine discipline, the fan-out rule, outputs-in-chat — is standing law.)*
@@ -209,10 +205,10 @@ Run: `node playtests/sim.js [N]` (default 100; covers 2–4p, prints per-count s
 
 **What it measures / the bar:** **0 crashes and 0 deadlocks** across 2–4p (the hard gate), rounds & % in the 10–25 band, end-trigger split (~100% clock), winner totals/margins/ties, seat win-rates, the deliver-vs-present split, the claim/ladder/ledger rates, and the delivery splits by port.
 
-**The other instruments:** `verify-v7.js` (the rule battery — seconds, always). The v5-era probe fleet (strategy/flow/prize probes · `ai-ladder.js` · `ai-render-smoke.js` · `aid-overflow.js` · the net shims) lives at `archive/v5/playtests/` — v7 re-derives each fresh WHEN the designer calls the full validation, never before (`V7-PLAN.md` phases). `play.html` carries all five AI seats (`AUTOMA.md`; the MC pair clones (S,UI), determinizes the decks, rolls out with the greedy tiers).
+**The other instruments:** `verify-v8.js` (the rule battery — seconds, always). The v5-era probe fleet (strategy/flow/prize probes · `ai-ladder.js` · `ai-render-smoke.js` · `aid-overflow.js` · the net shims) lives at `archive/v5/playtests/` — v7 re-derives each fresh WHEN the designer calls the full validation, never before (`V7-PLAN.md` phases). `play.html` carries all five AI seats (`AUTOMA.md`; the MC pair clones (S,UI), determinizes the decks, rolls out with the greedy tiers).
 
 **Bulk-run discipline (standing, ruled 2026-07-12): FAN OUT, never serialize.** Big corpora/ladders are embarrassingly parallel — shard, launch every shard at once in the background, sync the analysis afterward. Oversubscription squeezes every seat equally, so within-corpus comparisons stay fair; keep contention uniform and let analyzers tolerate partial corpora.
 
-**Re-run checklist after an engine change (designer-ruled 2026-07-13 — LIGHT by default):** (1) bump the `KEY`; (2) `node playtests/verify-v7.js` (always); (3) **if a sim feels necessary, 5–10 games TOTAL** (e.g. `node playtests/sim.js 3`) — crash-free is the bar. **Do NOT run a full battery per change — the designer says when a full validation runs.** When asked, the full v7 gates re-derive from the v5 fleet (`archive/v5/playtests/`) per `V7-PLAN.md` — results reported in chat, distilled into `DESIGN.md` §10.
+**Re-run checklist after an engine change (designer-ruled 2026-07-13 — LIGHT by default):** (1) bump the `KEY`; (2) `node playtests/verify-v8.js` (always); (3) **if a sim feels necessary, 5–10 games TOTAL** (e.g. `node playtests/sim.js 3`) — crash-free is the bar. **Do NOT run a full battery per change — the designer says when a full validation runs.** When asked, the full v7 gates re-derive from the v5 fleet (`archive/v5/playtests/`) per `V7-PLAN.md` — results reported in chat, distilled into `DESIGN.md` §10.
 
 **Known bot blind spots:** the greedy tiers are a robustness/pace oracle, not a strategy judge — they under-value long holds, never race the clock deliberately, and under-pilot deep lines. **Do not conclude anything about lane balance from them**; the persona/MC reads and the human table govern. **Lesson kept (v0.15): correct *friction* with a *structure* lever, not the *value* lever.**
