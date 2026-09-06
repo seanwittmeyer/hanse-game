@@ -149,6 +149,12 @@
 > lesson: this run returned grey studio backdrops, so the keyer now samples the actual
 > backdrop colour before flooding (adaptive keyout joins the pipeline).
 
+> **Round 14 (designer, 2026-09-06): the plain-value STAR family.** `star-1..6` composite
+> off `star.png` in the standing numeral recipe — the single glyph, no sign, white — the
+> ★-value marks for the v8 kit (a star that reads "N★" outright, the same grammar as
+> `die-1..6` / `quality-1..6`). Keys `star-1`…`star-6` in `ICON_ART`; render validated
+> pixel-identical against the landed `star-plus1.png` before landing.
+
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
 > (the tiles already carry full-bleed art). **ADDED: one icon per Kontor** — a city crest
