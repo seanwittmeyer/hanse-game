@@ -10,7 +10,8 @@ the moment the designer rules §7 (until then v7.0b stays the live build at root
 batches. All three batches are recorded verbatim in **§12** with their readings; they correct the
 premise in §0/§2 and overturn parts of §6 and §7 (route access, the quality gate, scoring,
 ships, invitations, the kettle, the word "tray"). The review is COMPLETE (2026-09-06); the
-re-cut of the plan from all of it is §13 — read §12 and §13 before relying on §6–§11.*
+re-cut of the plan from all of it is **§13 — THE IMPLEMENTATION PLAN**, which supersedes §6–§11
+in full. Read §12 and §13; §6–§11 stand only as the record of the first cut.*
 
 ---
 
@@ -162,6 +163,10 @@ their pips · Bruges as the goods door plus a hall with a capped invitation hand
 retired · MAX_ROUND 16–18. The forks are where they split (§7).
 
 ## 6 · THE RECOMMENDED CORE (v3 — after the comparator, the teach pass and the red team)
+
+*SUPERSEDED 2026-09-06 by §13 (the designer's review, §12, overturned the quality gate, the
+market track, the kettle, the invitation faucets, the word "tray" and more). Kept as the record of
+the first cut; do not build from it.*
 
 ### 6.0 The thesis
 
@@ -412,6 +417,9 @@ is goods and a Flight beer; a socket die is at least its founding pip.
 | ownership never on the table | tiles own hulls; dice stand in posts and seats; standing sets the minimum |
 
 ## 7 · THE FORKS (the designer rules each; ★ = the recommendation)
+
+*SUPERSEDED 2026-09-06 by §12.3 (the status of every fork after the review) and §13.7 (the rulings
+still needed). The rows below show the rulings as they stood on 2026-09-04.*
 
 **Ruled 2026-09-04 (sixth reading): F4 the bench, provisionally · F10 specialists STAY · F11 Public Works stay and get a real pass · F12 cart only · F17 no invitation cap.** **Ruled 2026-09-04 (fifth reading): F7 Gruit is fixed — 1 `G` to brew, 3 goods at the yard; not the central beer, so no row and no fall.** **Ruled 2026-09-04 (fourth reading): F9 recipes are earned — the Bruges prize and the cask tile, never a station (the Market's ALT is the CART) · F5 reaffirmed: no automatic aging, a specialist may bring it back.** **Ruled 2026-09-04 (third reading): F3 nobody owns a hull, a Harbor visit commissions when it can and INVEST follows · F5 the explicit AGE action · F13 ships sail when full, no verb.** **Ruled 2026-09-04 (second reading): F1 a sea board · F2 YOUR MINIMUM · F14 a starter post of your choosing; posts never block, the Kontor buildings do.** **Ruled 2026-09-04, on reading the first cut: no formal tray.** Which end a die comes from adds
 nothing; the dice come from one place. What matters is how much each die earns at its
@@ -967,3 +975,682 @@ the whole branch; the building slots are the only exclusivity.
 `play.html` is to be prepared from all three batches, with two independent sub-agents
 reading the page, the engine, the previous rules and the review, then combined and
 cross-checked. That work is §13.
+
+---
+
+## 13 · THE IMPLEMENTATION PLAN — v8 from the whole review (2026-09-06)
+
+*How this section was made. Two sub-agents each read `CLAUDE.md`, this file (§1 and §12 as law over
+§6–§11), the reviewed page "Brewer & Merchant", `RULES.md` (v7.0b), `play.html`, `components.js`,
+`playtests/verify-v7.js`, `playtests/sim.js`, `STYLE.md` and `COMPONENTS.md`. One took the RULES
+lens (the sheet, the teach, the deltas), one the ENGINE lens (the state model, the handlers, the
+render, the AI, the battery, the build order). Their reports are session material (the
+scratchpad); this section is their merge, and each then checked the merge against its own report
+(§13.1 records the disagreements and the call). Every ⚙ is a placeholder with its rationale. **This
+section supersedes §6–§11.** No engine change has been made; this is the plan for making it.*
+
+### 13.0 The game in one breath
+
+Eleven dice: ten in your **personal supply**, one standing at sea as your **starter post**. A die
+leaves the supply as a **cask** (BREW), a **post** (a die on a segment of a lane) or a **Kontor
+building** (a die in a Kontor's slot), and never returns; the first empty supply ends the game.
+**The quality count**: the quality of beer you may deliver anywhere = the number of your dice
+standing at sea. A landing scores **two dice**: the cask's and your building's at that Kontor.
+Posts and building dice climb as the sea is used and score their pips at the end. Bruges is
+reached by cart only: **the yard** pays goods and a recipe, **the hall** pays cask die + the hall
+die for an invitation, and invitations come only from landing beer at the far Kontore. The Harbor
+must commission a Ship, which lets you post on that Ship's lane, or build at a Kontor whose branch
+you hold. The wharf's **private buildings** are a Great Western Trail engine: strictly better than
+the stations, tier 2 on tier 1, owner-only, goods only. No kettle, no market track, no bands, no
+tray. Humans are not calculators.
+
+### 13.1 The merge — where the two lenses disagreed, and the call
+
+| # | Question | Rules lens | Engine lens | The call, and why |
+|---|---|---|---|---|
+| M1 | What a Kontor building IS | the die alone, in a printed slot | a tile of yours + a die (12 tiles) | **The die is the building.** The colour is the owner, the face the value, the pips the return; batch 3 says simple. A tile is a later seam if "other actions" hang off buildings. |
+| M2 | What turns a building die | +1 after each of your OWN landings there, plus a RAISE arm | +1 on each RIVAL landing there | **+1 on ANY landing there** (own or rival), cap 6. One grammar for every die at sea: it climbs as its place is used (§1: "you get a benefit as it is used"; the designer: "consistency is a great thing"). Own-only and rival-only are dials. The Harbor's RAISE arm stays. |
+| M3 | Where a new post goes | the lowest segment of the lane you do not hold (a prefix from Hamburg) | any open segment of the lane | **The prefix.** "Build out the tree from Hamburg"; a chain is then always "one more segment"; nothing to remember. |
+| M4 | Printed per-port die minimums | keep v7's (2+/2+/3+) as the port's gate on the DIE, so the wild Ship's "quality rules" bind | none; the count is the only gate | **None.** Batch 2: quality "as simple as possible"; one gate per thing. A wild Ship's namer picks any open Kontor; every cask aboard already passed the count at its load. The minimums return only if the table finds Novgorod without an identity (its depth, pair and prize give it one). |
+| M5 | The hall's payout | **the HALL DIE**: cask die + a neutral die starting at 2, +1 per present, cap 6; places park and weigh | printed rising places 2,2,3,3,4,4,5,5 | **The hall die.** Literally two dice, one component, the same climb-as-used grammar, and a race in the open: every present raises the next. The printed bench is the dial if the table wants a fixed ladder. |
+| M6 | Post fees | none: the die is the price | the far segment 1 `G` | **None.** The designer's own reason for the global count is the dice budget; the merchant's dice cost no goods so the supply empties (the clock). Goods bind the brewer and the wharf engine; the Hulk's 1 `G` stays. |
+| M7 | Ships in the deck | 18: per Kontor Cog ×3 · Hulk ×2, wild Cog ×2 · Hulk ×1 | 16 | **18** (the v7 tile count re-faced; three wild hulls). |
+| M8 | Kontor building slots | 2 on side A, 3 on side B; one per player per Kontor | 2 everywhere | **Side A prints 2, side B prints 3 with the third marked "4p"**: two players share two, three race for two, four race for three. One per player per Kontor. |
+| M9 | The lift cap | quality + 1 | 6 | **Quality + 1.** Batch 1 verbatim: "the cask die is at most 1 + ready quality". |
+| M10 | The Hulk | loads only toward a Kontor where a building die stands (anyone's) | no gate | **No gate for the first table** (one rule fewer; the count and the chain already make the sea an investment); the building gate is the dial if Hulks run free (§13.7). |
+| M11 | Tiebreak | vessel dice, then goods | the quality count, then goods | **The count, then goods.** Vessels are worth nothing at the end (batch 3). |
+| M12 | Public Works filler | v7 roster minus the Weigh House | also minus the four Staple Houses and the Cooperage's ★ | **Both cuts.** A landing is two dice and nothing else, so no Work may add ★ to a cask; the Customs House is re-faced "your count reads +1 for a Ship at this slot". Seven tiles stand as filler until the Works pass. |
+| M13 | London's prize | any BUILD, fee waived (a post, a Kontor building, a wharf tile or FLIP) | a post or a Kontor building | **Any build.** Batch 3: "building buildings or posts"; the die is still spent for a post or a Kontor die. |
+| M14 | Recipe fees | Broyhan 1H · Keut 1G · Mumme 1G1H · Bock 1G2H | v7's H = Q−3 | **The rules lens's fees** (on the page the designer called "good as they are"; hops are the pinch). |
+
+Everything else the two lenses agreed on: the sailing gate is public (a lane is open once every
+segment holds anyone's post; still the designer's call, §13.7 q1) · the post tick is any Ship
+sailing through · no die on a wharf building · Gruit never boards a Ship · one ⚜ per cask of yours
+landed at a far Kontor, none from Bruges, start with none · the Flight counts beers LANDED (3/6/10)
+· Novgorod's prize turns one die of yours at sea +1 · the end scores docked dice at pips and
+vessels at nothing · the Harbor's ALTERNATE is BUILD at a Kontor.
+
+### 13.2 THE RULES SHEET — v8.0, the draft the mirror is built from
+
+*In the register of `RULES.md`: operational, numbered, no history. ⚙ marks a placeholder; the
+rationale is in brackets or in the number sheet (§13.2.16).*
+
+**2–4 players · c. 1350 · Hamburg.** You run a merchant brewing house of the Hanse. Goods are the
+only currency. You must be a brewer AND a merchant: the work runs Source → Brew → Age → Ship, and
+nothing sails without your dice at sea. Most ★ when the dice run out wins.
+
+#### 1 · Components and setup
+
+Each player: **3 `G` · 2 `H`** (storage cap 8 each) · the **Gruit** and **Hopped** recipe cards ·
+a **player board** (3 vessels · 2 specialist seats · the personal supply space · a rack for the
+hand) · **11 quality dice**: **10 in the personal supply, 1 the starter post** · a **warm Ready
+Gruit** in vessel 1, its die from the supply ⚙ [teaches the cart on turn one; the supply opens at 9;
+a table dial] · **the hand of 4 private building tiles**, one per station, tier 1 up (§12) ·
+**0 ⚜**.
+
+Shared: **the Wharf** (4 stations, 8 slots; §4) with **Public Works dealt onto random slots, 6 at
+2–3p / 4 at 4p** ⚙ (the rest to the box; nothing refills) · **the sea board**, side A (2p) / side B
+(3–4p): Hamburg at the centre, the cart road to Bruges, the five **segments** (§8) each printing
+one **post seat per colour**, the three far **Kontor panels** each printing its **building slots**
+(2 on A; 3 on B, the third marked 4p ⚙), its **majority pair**, its **field** and its **prize**,
+and the **Bruges panel** printing **the yard field**, **the hall** (6 places on A, 8 on B ⚙) and
+**the hall die's seat** · **the hall die** (neutral) on its seat at **2** ⚙ · **recipes**: deal 3
+of the 4 export beers, 4 copies each ⚙ [nobody is locked out of a dealt beer] · **cask tiles** in
+face-up searchable stacks per in-play beer · **the Ship deck** (18: per far Kontor Cog ×3 · Hulk
+×2; wild Cog ×2 · Hulk ×1 ⚙), display of 3 · **the Specialist deck**, display of 4 · **16 ⚜
+tokens** ⚙ · score discs on the ring.
+
+**The starter post.** In REVERSE turn order each player stands their eleventh die at **face 1 in
+their own seat on the FIRST segment of either lane** (W1 or E1). Every seat begins with one die at
+sea and a quality count of 1. Workers start off the board; each seat's first turn places its
+worker on any station.
+
+#### 2 · The personal supply and the end
+
+Your unspent dice sit in a pile beside your board. **A die leaves the supply only as a cask
+(BREW), a post (POST) or a Kontor building (BUILD), and never returns.** Every die of yours is
+therefore public: in the supply, a vessel, aboard a Ship, a Kontor field, the yard, a hall place, a
+post seat or a building slot.
+
+**The first EMPTY supply sets the final round**: finish the round, then score (§15). MAX_ROUND
+18 ⚙ backstops [10–15 turns a seat; posts cost no goods, so the supply empties even when the
+goods are gone].
+
+#### 3 · The turn: MOVE, then WORK THE STATION
+
+1. **MOVE** your worker to an **adjacent** station (orthogonal; never stay; turn one places
+   anywhere). Sharing costs nothing.
+2. **WORK THE STATION**, its stops in any order, each at most once, all optional except the one
+   printed **must**: its **PRIMARY** · its **ALTERNATE** · **each of its two flanking slots**
+   (LOAD one Ready cask onto the Ship docked there, §7; and **your own private building** standing
+   there fires, §12). The station is read live: a Ship commissioned onto a flanking slot this
+   visit opens that slot's load.
+
+#### 4 · The Wharf: four stations, eight slots
+
+```
+   A Market ── B Brewhouse       slots: Market s1·s8 · Brewhouse s2·s3
+      │            │                    Harbor s6·s7 · Cellar s4·s5
+   C Harbor ── D Cellar
+```
+
+| Station | PRIMARY | ALTERNATE (same visit) |
+|---|---|---|
+| **A · Market** | **SOURCE 2** ⚙: 2 goods, any mix [goods must bind] | **CART 1**: one Ready cask of yours to Bruges by road, resolved at once at the yard or the hall (§10). No cask bonus fires on the cart. |
+| **B · Brewhouse** | **BREW**: pay a recipe's goods; a supply die into an open vessel at the beer's start value; **search the beer's stack and choose the tile** (§5) | **BUILD, the wharf**: place a private building from your hand onto an open slot flanking its station, or FLIP your standing tier 1, at its fee (§12) |
+| **C · Harbor** | **COMMISSION — must, when it can**: a Ship from the display at its fee (**Cog free · Hulk 1 `G`** ⚙) onto a shipless slot or over an EMPTY docked Ship (which returns to the deck); the display refills. **Then POST**: a supply die at face 1 on **the lowest segment of that Ship's lane where you hold no post** (a wild Ship: any lane; a lane you hold whole: no post). If you hold a Ready cask you may load it now, free (the maiden load). | **BUILD, a Kontor**: where **your own post stands on every segment of its branch**, a supply die at face 1 into an open building slot (one per player per Kontor) — **or RAISE**: turn one of your standing building dice +1 (cap 6) (§8) |
+| **D · Cellar** | **AGE 3**: turn your aging dice up three steps, split freely | **LOAD 1** Ready cask onto **any** docked Ship |
+
+"When it can" = a Ship is on display, a slot is free or an EMPTY hull can be displaced, and you can
+pay one of the hulls shown. Otherwise the commission lapses for that visit.
+
+**A slot holds one building (below: a Public Work or a private building) and/or one Ship (above);
+never casks.**
+
+#### 5 · The cask and the die · brewing · the search
+
+**The die is the cask.** BREW sets a supply die to the printed start value; aging turns it up to
+the quality (**Ready**); a lift may push it to **quality + 1 at most** ⚙; it is read as it boards;
+it parks at landing.
+
+| Beer | Q | Brew | Start · steps | Tiles |
+|---|---|---|---|---|
+| Gruit | 1 | `G` | 1 · 0 | 16, blank |
+| Hopped | 2 | `G H` | 1 · 1 | 12 |
+| Broyhan | 3 | `G H H` | 2 · 1 | 6 |
+| Keut | 3 | `G G H` | 1 · 2 | 6 |
+| Mumme | 4 | `G H H H` | 1 · 3 | 6 |
+| Bock | 5 | `G G H H H` | 2 · 3 | 6 |
+
+**The search.** Every BREW of a Q2+ beer searches that beer's stack and takes ONE tile; the tile
+rides under the die. **Its bonus fires once, as the cask boards a Ship.** The nine bonuses ⚙
+[batch 2: the missing piece may be a build, a recipe, a specialist, and so on]: *Gain 2 goods ·
+Age +2 · Load 1 more · LIFT (this die +1 as it boards, cap Q+1) · Brew 1 (a full brew at its
+cost, with its search) · Gain 1 recipe (from the display at its fee) · Gain 1 specialist (from
+the display into an open seat) · BUILD (one build you are eligible for: a wharf tile at its fee,
+or a Kontor building die) · POST (a supply die on the next segment of any lane, no commission).*
+Each export's six tiles print six different bonuses; Hopped's twelve print all nine over two
+windows; **Gruit's are blank** (Gruit never boards). A landed tile stays under its die; an empty
+stack means that beer cannot brew now.
+
+#### 6 · Aging
+
+A die turns up only when something turns it: the Cellar's AGE 3, a cask's *Age +2*, your Cold
+Store (§12), the Braumeister (§14). No good is ever spent on a step. No automatic aging.
+
+#### 7 · Ships · loading · the berth race · sailing
+
+**Cog 2 berths · Hulk 3.** Each Ship is bound for a printed far Kontor or is **WILD**. No Ship goes
+to Bruges. **Nobody owns a hull**; anyone may load any docked Ship.
+
+**LOAD** (a flanking stop · the Cellar's LOAD 1 · *Load 1 more* · the Stevedore): one Ready cask
+from YOUR vessels onto a docked Ship, if all of: (1) **the quality count**: the beer's printed Q
+≤ the number of your dice at sea (§8); (2) **the lane is open**: every segment of the Ship's
+Kontor's branch holds at least one post, anyone's ⚙ [§13.7 q1]; a wild Ship needs some open lane;
+(3) **not Gruit** (the cart only). Casks are private until they board: the interaction is the
+**berth race** (topping off a hull sails everyone's cargo on your clock).
+
+**A WILD Ship**: the player whose cask FILLS it **names its Kontor** at once, any far Kontor whose
+lane is open; a Kontor chit goes on the hull.
+
+**A full Ship SAILS AT ONCE.** No SAIL verb (the Shipmaster excepted, §14). On sailing: the slot's
+Public Work departs with it (the tide, boxed) · **every post on every segment of its lane turns
++1** (cap 6) · each cask aboard **LANDS in boarding order** (§9) · the hull returns to the deck.
+
+#### 8 · The sea board: segments, posts, the chain, the buildings, the count
+
+| Branch | Segments from Hamburg | Kontor |
+|---|---|---|
+| West | W1 the Wadden Coast → W2 the Dover Strait | London |
+| East | E1 the Skagerrak | Bergen |
+| East, beyond | E1 the Skagerrak → E2 the Sound | Novgorod |
+
+⚙ [the mock's tree; a merchant holding every segment counts 5 and ships Bock with no building;
+Bergen is the beginner's port]. Each segment prints **one post seat per colour**: posts never
+block; every player may hold every segment.
+
+- **A POST is a die of yours at face 1 in your seat on a segment.** It costs the die and nothing
+  else ⚙. It enters by the commission's POST (§4), the *POST* tile, the Shipping Office, or
+  London's prize. **Your posts grow from Hamburg**: a new post takes the lowest segment of its
+  lane you do not yet hold.
+- **A post turns +1 each time any Ship sails through its segment** (cap 6).
+- **A segment is unlocked while any post stands on it; a lane is open while every segment of its
+  branch is unlocked** ⚙ [§13.7 q1].
+- **A KONTOR BUILDING is a die of yours at face 1 in one of the Kontor's building slots.** You
+  may found one only where **your own post stands on every segment of that Kontor's branch**
+  (Novgorod: E1 and E2). **One builder per slot; one building per player per Kontor.** It enters
+  by the Harbor's BUILD, the *BUILD* tile, or London's prize.
+- **A building die turns +1 each time any cask lands at that Kontor** (cap 6) and each time you
+  RAISE it (the Harbor's BUILD arm, Novgorod's prize, the Counting House).
+- **THE QUALITY COUNT: the quality you may deliver anywhere = the number of your dice standing at
+  sea** (posts + building dice, the starter post included). Count 1 carts a Gruit; 2 ships a
+  Hopped; 5 a Bock. Read at the LOAD and at the CART, against the beer's printed Q. No tracker:
+  the dice are the count.
+- **Every die at sea scores 1★ per pip at the end** (§15).
+
+#### 9 · Landing · the prizes
+
+When your cask LANDS at a far Kontor, in boarding order: (1) **score cask die + your building die
+there** (no building: the cask die alone); nothing else. (2) **Park the die in the field, tile
+under it.** (3) **Every building die at that Kontor +1** (cap 6). (4) **Take 1 ⚜** ⚙. (5) **Take
+the Kontor's prize.**
+
+| Kontor | Branch | Prize ⚙ | Pair ⚙ |
+|---|---|---|---|
+| **London** | W1 · W2 | **one BUILD of any kind**, the goods fee waived, the die still spent | 5 / 2 |
+| **Bergen** | E1 | **a specialist** from the display into an open seat, free | 5 / 2 |
+| **Novgorod** | E1 · E2 | **turn one die of yours at sea +1** (cap 6) | 7 / 3 |
+| **Bruges** (the cart) | the road | **the yard: one recipe** at its fee; the hall: none | 4 / 2 by hall dice |
+
+#### 10 · Bruges: the cart, the yard, the hall, invitations
+
+**THE CART** (the Market's ALTERNATE) sends one Ready cask of yours to Bruges, count permitting
+(a Gruit needs 1). No Ship, no lane, no ⚜ earned, no bonus fired. Two doors:
+
+- **THE YARD**: any beer. **Take 3 goods, any mix** ⚙; park the die in the yard field, tile under
+  it (a Flight beer; no majority weight); **then take one recipe from the display at its fee**.
+  **Gruit's only door.**
+- **THE HALL** (the guild of brewmasters): **a Q2+ cask and 1 ⚜.** Spend the ⚜; **score cask
+  die + the hall die**; park your die on the next open place; **then the hall die turns +1** (cap
+  6). No recipe. Gruit never. Hall full: the yard.
+
+**Invitations ⚜**: tokens, no cap. **The only faucet: 1 ⚜ per cask of yours landing at a far
+Kontor** ⚙. **The only sink: the hall.** The hall's places are the Bruges majority (§15).
+
+#### 11 · Recipes
+
+Start with Gruit and Hopped. Exports are earned, never bought at a station: **the yard** or the
+***Gain 1 recipe* tile**, at the card's fee: **Broyhan 1 `H` · Keut 1 `G` · Mumme 1 `G` 1 `H` ·
+Bock 1 `G` 2 `H`** ⚙. Nothing else prints on a card. The Scriptorium waives the fee; the Brewers'
+Guildhall grants every recipe (§12). Holding every recipe, you simply take another tile.
+
+#### 12 · The private buildings: the wharf engine
+
+The four stations are the base: a little of everything for everyone. **Your private buildings
+are strictly better and build on each other.** Your hand holds **4 tiles, one per station**, tier
+1 on one face, tier 2 on the other. **A tile stands only on a slot flanking its station and
+fires only when YOU work that station** (a flanking stop); rivals never use it; the tide never
+takes it; **no die stands on it.**
+
+**Three doors, one verb**: the Brewhouse's ALTERNATE · a cask's *BUILD* tile · London's prize.
+**Tier 1**: from hand onto an open flanking slot for **1 `G` 1 `H`** ⚙, or onto a Public Work,
+replacing it, for **+1 `G`** ⚙ (the Work boxed); never onto a rival's tile. **Tier 2 is the
+FLIP**: your standing tier 1 turns over in place for **2 `G` 1 `H`** ⚙; it requires the tier 1 and
+nothing else. Every tier 2 contains its tier 1.
+
+| Station | Tier 1 (fires when you work it) | Tier 2, the FLIP ⚙ | The corner it cuts |
+|---|---|---|---|
+| **Market** | **Granary**: +1 `G` +1 `H` | **Kaufhaus**: +2 goods, any mix, AND your CART carries 2 casks | goods every visit; two Bruges landings at once |
+| **Brewhouse** | **Scriptorium**: recipes cost you no fee, at every door | **Brewers' Guildhall**: you hold **every recipe**, AND you may BREW twice this visit | the recipe ladder for goods; the second brew |
+| **Cellar** | **Cold Store**: AGE +2 more (Age 5) | **Lagering Cellar**: Age +2 more AND one cask of yours +1 as it boards (cap Q+1), once a visit | aging in one visit; the lift you own |
+| **Harbor** | **Counting House**: RAISE one die of yours at sea +1 (cap 6) | **Shipping Office**: RAISE +1 AND **POST once more** (no second commission) | pips now; the count faster |
+
+#### 13 · Public Works (filler until the roster pass, which comes after the core)
+
+Shared, die-less, passive on their slot's traffic, free for whoever's traffic it is; **every one
+departs with the Ship that sails from its slot** (the tide). Deal 6 / 4. The filler ⚙: *Malt Kiln
+×2 (a loading die +1, cap Q+1) · Customs House (your count reads +1 for a Ship at this slot) ·
+Ropewalk (a load here may also load onto another Ship) · Cooperage (+1 berth) · Bonded Store (the
+boarding die +1; on sail every shipper +2 goods) · Victualling Yard (the bonus fires twice)*. Out
+until the pass: the Weigh House (no glut) and the four Staple Houses (no ★ beyond two dice).
+
+#### 14 · Specialists (two seats; the door: Bergen's prize or the *Gain 1 specialist* tile)
+
+Asymmetric powers, each pushing a lane; a sketch of ten singles for the P1 pass ⚙: **Braumeister**
+(turn start: age one cask +1; the one automatic-aging door) · **Shipmaster** (working the Harbor,
+sail one docked Ship carrying a cask of yours unfull) · **Cellarman** (your brew starts +1) ·
+**Stevedore** (each load: up to 2) · **Agent** (a rival's landing where you hold a building:
+that die +1 more) · **Lodesman** (your count reads +1) · **Carter** (your cart carries 2; the
+yard pays you 4) · **Guildmaster** (each present +2★) · **Chronicler** (each landing +1★) ·
+**Alderman** (end: +2★ per Kontor with 3+ dice of yours parked). Retired: Coper, Herald,
+Shipwright, Guild Scholar, Town Crier.
+
+#### 15 · End of the game and the final score
+
+When the round after the first empty supply is complete: (1) landings and presents were scored
+as they happened; (2) **pips at sea**: every post and building die of yours; (3) **docked
+Ships**: every die of yours aboard, its pips only, nothing sails, nothing parks; (4) **majorities**
+at each far Kontor by dice in the field, at Bruges by dice on hall places, the printed pair to the
+two leaders, no dice no share, ties split; (5) **the Flight**: distinct beers LANDED (tiles under
+your dice at the Kontore, the yard, the hall): **3 → 3★ · 4 → 6★ · 5 → 10★** ⚙; (6) specialist end
+lines. **Vessels score nothing.** Tiebreak: the quality count, then goods.
+
+#### 16 · The number sheet
+
+| Number | Value ⚙ | Rationale |
+|---|---|---|
+| Dice | 11 = 10 + the starter | ruled |
+| SOURCE · goods cap · start | 2 · 8 · 3G 2H, 0 ⚜, a warm Gruit | goods bind; the hall is earned; the cart taught on turn one |
+| The yard | 3 goods + a recipe at its fee | ruled |
+| The hall die | starts 2, +1 per present, cap 6 | two dice; rises with the table |
+| Hall places | 6 (A) / 8 (B) | 16 ⚜ in the box |
+| ⚜ faucet | 1 per cask landed at a far Kontor | a declaration per brew |
+| Segments | W1 W2 · E1 · E1 E2 | count 5 at full sea |
+| Building slots | 2 (A) / 3 (B, the third at 4p); one per player per Kontor | one short of the table at 3–4p |
+| Post die | 1, +1 per sail through, cap 6, no fee | §1; the supply empties |
+| Building die | 1, +1 per landing there, +1 per RAISE, cap 6 | one grammar for every sea die |
+| Ships | 18 (5 per Kontor + 3 wild), display 3, Cog free, Hulk 1G | the wharf stays full |
+| Recipe fees | Broyhan 1H · Keut 1G · Mumme 1G1H · Bock 1G2H | "good as they are" |
+| Tier fees | T1 1G1H · FLIP 2G1H · replace a Work +1G | goods bind the engine |
+| Lift cap | Q + 1 | ruled |
+| Cask pool | 9 verbs; exports 6, Hopped 12, Gruit 16 blank | the general door |
+| Public Works | deal 6 / 4 | F11 |
+| Pairs | London 5/2 · Bergen 5/2 · Novgorod 7/3 · Bruges 4/2 | v7's rungs 2–3 |
+| The Flight | 3/4/5 → 3/6/10 | breadth vs all-in |
+| MAX_ROUND | 18 | must never fire |
+
+### 13.3 The teach (twelve sentences)
+
+1. You are a Hanseatic brewer in Hamburg in 1350; beer you cannot carry is worth nothing, so you are a merchant too, and the player who does both best wins.
+2. Your eleven dice are your whole game: one already stands at sea as your starter post, ten wait in your personal supply, and every die you spend becomes a cask, a post on a lane or a Kontor building and never comes back; when anyone's supply is empty we finish the round and score.
+3. Each turn move your worker to a neighbouring station and work it: its big action, its small action, and the two slots beside it, where you may load a Ready cask onto the Ship docked there and where your own private building fires.
+4. The Market gives two goods or carts one Ready cask to Bruges; the Brewhouse brews or builds on the wharf; the Harbor must commission a Ship and then lets you post a die on that Ship's lane, or builds at a Kontor; the Cellar ages three steps or loads one cask onto any Ship.
+5. To brew, pay the recipe, set a die in a vessel at the beer's start, and search that beer's stack for the tile you want: its bonus fires once, when the cask boards a Ship, and it can be goods, aging, a load, a lift, a brew, a recipe, a specialist, a build or a post.
+6. The die is the cask: it climbs only when you age it, and at the beer's quality it is Ready.
+7. The sea is a tree of segments from Hamburg: a post is a die of yours on one, it climbs every time a Ship sails through, when every segment of a branch has someone's post the lane is open to everyone, and when every segment has YOUR post you may build at that Kontor: a die in a slot, one builder per slot.
+8. Count your dice at sea: that is the quality you may deliver anywhere, so a Gruit goes to Bruges from turn one, a Hopped needs two, a Bock needs five; you must be a merchant to sell better beer.
+9. Ships hold two or three casks and sail the moment they are full; anyone may load any Ship; a wild Ship goes where the player who fills it says; each cask that lands scores its own die plus your building die at that Kontor, parks in the field, and pays you an invitation and the Kontor's prize.
+10. Bruges is reached by cart only: the yard pays three goods and a recipe for any cask and is Gruit's only door, or with an invitation a Q2+ cask enters the hall and scores its die plus the hall die, which then climbs.
+11. Your four private buildings each upgrade one station and each flips to a stronger face: more goods, free recipes then all recipes, faster aging and a lift, extra pips and posts.
+12. At the end add the pips of every die of yours at sea and on docked Ships, the majorities at each Kontor by parked casks and at Bruges by hall dice, and the Flight for three or more different beers landed; the landings and the hall were scored as they happened.
+
+### 13.4 The deltas
+
+**`RULES.md`, section by section:** head rewritten (the count and the sea in the summary) · §1
+Setup rewritten (11 dice, no tray, the starter post, the sea board A/B, 0 ⚜, the hand of 4 private
+tiles, Works 6/4, the deck 18 with wild hulls and no Bruges hulls, no contracts/demands/Bourse/
+ladders, the hall die) · §2 The turn kept, the flank clause re-cut ("your own private building
+fires") · §3 The Wharf rewritten (the station table above) · §4 The cask kept with the lift cap
+Q+1 and the nine-verb pool · §5 Ventures → **§12 The private buildings** · §6 The lanes → **§8
+The sea board** · §7 Ships rewritten (the three load conditions, wild Ships, the post tick) · §8
+The Bourse retired · §9 The Kontore rewritten (two dice; the prize table) · §10 Contracts → **§10
+Bruges** and **Invitations** · §11 Ladders → **Majorities** (fixed pairs) · §12 Specialists
+rewritten · §13 Goods kept · §14 The end rewritten · §15 Scoring rewritten · §16 Expansions
+re-read (the specialty beers ride the count; Jopenbier Q6 needs count 6).
+
+**`STYLE.md` registry — register:** personal supply · Hamburg · the sea board · lane (re-derived:
+the branch to one Kontor) · segment (supersedes *leg*) · branch · post / POST (re-derived) ·
+unlocked / open · the chain · Kontor building (a die in a slot) · building slot · RAISE · the
+quality count · wild Ship · the cart / CART · the yard · the hall (re-derived) · the hall die ·
+place · present (re-derived: Bruges only) · Invitation (re-derived) · private building
+(supersedes *Venture*) · tier 1 / tier 2 · BUILD (re-derived: three doors) · Granary · Kaufhaus ·
+Scriptorium · Brewers' Guildhall · Cold Store · Lagering Cellar · Counting House · Shipping
+Office · Shipmaster · Agent · Lodesman · Carter · Guildmaster · the Flight (re-derived: landed).
+**Retire:** tray · kettle · the second kettle · Mash Tun · Great Copper · YOUR MINIMUM · socket ·
+seat (Kontor sense; the specialist seat stays) · market cell · quality band · market track/marker
+· the Bourse · price marker · shift · the glut · Venture · ledger die · overbuild · theme · L1/L2
+as labels · lane gate · contract · claim · demand card · demand well · majority ladder · ladder
+marker · private flag · SAIL (as a verb) · presence placement · Coper · Herald · Shipwright ·
+Guild Scholar · Town Crier · Assay Loft · Rack House · Staple Rights · Warehouse (v5.5) · Weigh
+House (until the pass) · Skute · the bag · the first-landing letter · INVEST · OPEN · leg ·
+Kontorhaus (the tile sense) · bench.
+
+**`COMPONENTS.md` — the box:**
+
+| Component | v7.0b | v8 ⚙ | State |
+|---|---|---|---|
+| The Wharf board | 1 | 1 | re-printed station faces |
+| The Destinations board | 1 | 0 | **retired** |
+| **The sea board** | 0 | 1, double-sided | **new**: Hamburg, the road, 5 segments (2 seats per colour on A, 4 on B), 3 far panels (2/3 slots · pair · field · prize), the Bruges panel (yard field · 6/8 places · the hall die seat) |
+| Market & Stores board | 1 | 1 | the Bourse lane struck; displays Ships 3 · specialists 4 · recipes; the ring |
+| Player boards | 4 | 4 | 3 vessels · 2 seats · the supply space · a rack; no tray |
+| Quality dice | 52 | **44** (11 × 4) | the same dice are casks, posts, buildings |
+| **The hall die** | 0 | 1, neutral | **new** |
+| Private building tiles | 16 Ventures | **16** (4 × 4 colours, T1/T2) | re-faced; the ledger seat struck |
+| Kontor building tiles | 0 | 0 | the die is the building |
+| Public Works | 12 | 12 (7 as filler) | roster pass after the core |
+| Ship tiles | 18 | **18** (5 per Kontor + 3 wild) | re-faced; no Bruges hulls |
+| Cask tiles | 52 | 52 | the nine-verb pool; Gruit blank |
+| Recipe cards | 24 | 24 | fees only; no far-dice icons |
+| Specialist tiles | 15 | ~10 | roster pass in P1 |
+| Contracts · demands · ladder markers · flags · Bourse markers | 14 · 12 · 4 · 4 · 8 | 0 | **retired** |
+| **⚜ tokens** | 0 | 16 | **new** (the contract backs or wooden) |
+| Workers · score discs · goods · aids | as now | as now | aids re-printed |
+
+Headline: one new board, one neutral die, sixteen tokens, eight fewer dice, four decks and
+trackers out, no new tile family.
+
+### 13.5 THE ENGINE PLAN — `play.html`, `components.js`, the battery, the harness
+
+#### 13.5.1 Keep · change · retire · new
+
+**Keep verbatim:** the shell, CSS (the dormant v6 `.seamap` grid at lines 373–403 is the sea
+board's display pattern), nav, Studio, diag, undo, save/load (`KEY` → `hanse-v80a`), the boot ·
+MOVE adjacency and the stop machine (`doMove` · `beginStops` · `refreshStops` · `resolveStop` ·
+`stopAvail` · `resume`) · the search-brew (`enterBrew` · `brewPick` · `brewverb` · `brewCommit` ·
+the piles) · the Cellar (`enterAge` · `ageAllot` · `loadany`) · the ship-deck grammar (`SHIP_CAP`
+· `COMMISSION_COST` · display 3 · `commSlots` with EMPTY-hull displacement · `refillShipDisplay` ·
+the maiden load) · the tide in `sailShip` · the Public Works as filler (`BUILDINGS`, `boardDie`,
+Ropewalk, Cooperage's berth, Bonded, Victualling) · specialists (`IMPROVEMENTS`, `hireable`,
+`grantUpgrade`, the Bergen prize, the drips) · the render grammar (`shopgrid` + ⊞/⊟, `pfit`,
+`fitCards`, the wharf grid, `HC.playerBoard`) · the MC pair, `humanGate`, `actorSeat`,
+`maybeRunAI`, the tiers, the harness discipline.
+
+**Change:** the Harbor handler (mandatory commission; `commPlace` → `enterPost` on that lane; ALT
+`kbuild`/raise) · the Market ALT `source1` → `cart` · the Brewhouse ALT `brewtop` → `pbuild` ·
+`canTake` (Ready · Q ≤ `qualityCount` · lane open · not Gruit · berth free) · `landDeliver` (face
++ own building die; park; tick every building there; +⚜; prize) · `checkDiceEnd` on `p.supply` ·
+`scorePlayer` buckets · `gameOver` (docked pips) · the Flight re-keyed on LANDING · the recap
+diffs · `diagText` · `studioPayload` keys · `SRC_PRIMARY` 2.
+
+**Retire whole:** the Bourse (`tracked/bourseVal/bourseShift`, `S.bourse`, the glut, the Coper) ·
+contracts and demands (`CONTRACTS7`, `DEMANDS7`, `claimContract`, `cpick`, `landPresent`,
+`landCanPresent`, `refillContracts/Demand`) · the ladders (`LADDERS`, `S.ladder`, `ladder*`) · the
+flag (`FLAG_FEE`, `flagOut`, `commFlagOK`, `t.own`) · the Ventures and the ledger (`VENTURES`,
+`ledgerTick`, `vAt`…, `enterVact`, rack/assay; the FLIP grammar is RE-USED for the private tiers)
+· the second kettle (`brewtop`, `sur`) · SAIL-now · presence placement (`addPresence`, `reach`,
+the tour, `bonusPres`) · prize-as-★ (`PRIZE_PTS`, `prizeStars`), the Novgorod premium (`vbonus`),
+the demand line · the outnumber gate (`laneOpenFor` as written, `DEST.gateway/gate`) ·
+`trayDice/diceInFlight/presPool/spendPresDisc` · the Guild Tastings and Trade Roads blocks and
+the specialty/Jopenbier wiring (git keeps them; the expansion spine stays as a seam) · the dormant
+`commitBldg` family.
+
+**New:** the sea state and its reads · the eleven-dice supply and the starter phase · the
+Harbor's post and Kontor build · wild Ships · the yard/hall split · invitations from landings ·
+the private ladder · the prizes (London any-build, Novgorod raise) · the scoring.
+
+#### 13.5.2 The state model
+
+```
+// constants (⚙ unless "ruled")
+SUPPLY_DICE 10 (ruled) · STARTER_DIE 1 (ruled, counts)
+SEGMENTS { w1 'the Wadden Coast', w2 'the Dover Strait', e1 'the Skagerrak', e2 'the Sound' }
+LANES { london:['w1','w2'], bergen:['e1'], novgorod:['e1','e2'] } · FAR = [london,bergen,novgorod]
+KONTOR_SLOTS {A:2, B:3 (third at 4p)} · POST_ORDER 'prefix' · POST_TICK 'any-sail' · BLDG_TICK 'any-landing'
+LANE_MODE 'public' (dial 'own') · GRUIT_SEA false · SRC_PRIMARY 2 · CART_GOODS 3
+HALL_DIE_START 2 · HALL_PLACES {A:6, B:8} · HALL_MIN_Q 2 · INV_PER_LANDING 1 · START_INV 0
+MAJ_PAIR { london:[5,2], bergen:[5,2], novgorod:[7,3], bruges:[4,2] } · FLIGHT 3/6/10 on landed · MAX_ROUND 18
+SHIP_DECK_MIX 18 (per Kontor cog×3 hulk×2; wild cog×2 hulk×1) · COMMISSION_COST {cog:{}, hulk:{g:1}} · MAIDEN_LOAD 1
+CASK_ACT_POOL [source, age, load, lift, brew, recipe, build, post, spec] · LIFT_CAP 'q+1'
+PRIVATES { granary/kaufhaus (A) · scriptorium/guildhall (B) · coldstore/lagering (D) · counting/shipping (C) } · T1_FEE {g:1,h:1} · FLIP_FEE {g:2,h:1} · REPLACE_FEE +1G
+WORKS_DEAL {2:6, 3:6, 4:4} · NOV_PRIZE 'raise' · PILE_RETURN false (the tile parks under the die)
+
+S = { players, turn, active, first, ending, endReason, over, log, exports, piles, phase:'starter'|'play', starterQueue,
+      slots{ sid → null | {type:'ship', ship, dest:'london'|'bergen'|'novgorod'|'wild', load:[cask]} },
+      buildings{ sid → null | {b:key} | {p:key, tier, owner} },
+      sea:{ posts:{ w1:{pid→face}, w2, e1, e2 }, kontor:{ london:{slots:[null|{pid,face}]}, bergen, novgorod } },
+      hall:{ die:2, places:[null|{pid,style,q,face}] }, yard:[{pid,style,q,face}],
+      shipDeck, shipDisplay, impDeck, impDisplay, sailed, sessionId, endedAt, studioSent, schema }
+P = { id, name, color, ai, grain, hops, storage, cell, placed, supply:10, vessels[3], recipes[], upgrades[], invites:0,
+      delivered:[{style,q,dest,val,face,bdie,hall?,yard?}], landed{}, bank, _recap }
+
+// derived, never stored
+qualityCount(p) = posts of p + building dice of p (GLOBAL; the starter counts)
+canShipQ(p,q)   = q <= qualityCount(p)
+hasChain(p,k)   = LANES[k].every(seg => S.sea.posts[seg][p.id] != null)     // your OWN die on every segment
+segUnlocked(seg)= Object.keys(S.sea.posts[seg]).length > 0
+laneOpenFor(p,k)= k==='bruges' ? false : LANE_MODE==='own' ? hasChain(p,k) : LANES[k].every(segUnlocked)
+nextPostSeg(p,k)= LANES[k].find(seg => S.sea.posts[seg][p.id] == null)    // the prefix rule
+bldgDie(p,k)    = (S.sea.kontor[k].slots.find(s => s && s.pid===p.id) || {}).face || 0
+canKBuild(p,k)  = hasChain(p,k) && !bldgAt(p,k) && an open slot && p.supply>0
+canTake(p,c,sid)= ship at sid && berth free && caskReady(c) && c.style!=='gruit' && canShipQ(p,c.q)
+                  && (ship.dest==='wild' ? FAR.some(k=>laneOpenFor(p,k)) : laneOpenFor(p,ship.dest))
+landingValue(p,c,k) = clamp(c.die, 1, q+1) + bldgDie(p,k)
+hallValue(c)    = clamp(c.die, 1, q+1) + S.hall.die
+mustCommission(p) = at the Harbor && display non-empty && (a shipless slot or an EMPTY hull) && some hull affordable
+endTrigger()    = S.players.some(p => p.supply <= 0)
+seaPips(p) · dockedPips(p) · parkedAt(p,k) (the field only)
+```
+
+**The component-state invariants, asserted by the battery:** (1) the eleven-dice identity holds
+after every mutation: `supply + vessels + aboard + posts + building dice + delivered = 11`; (2) the
+count, the chain, lane openness, the majority, the Flight and the end trigger are functions of
+the pieces, never cached; (3) a die's face is its whole record; (4) `p.invites` is a count with
+no history; (5) a landing's value is frozen at landing and equals face + building die; (6) every
+`UI.pending*` queue is empty before `endTurn` completes.
+
+#### 13.5.3 The turn machine and the handlers
+
+- **Setup and the starter phase.** `freshState`: `p.supply=10`, the warm Gruit from the supply,
+  `S.sea` empty, the hall die at 2, the Works dealt, the deck 18 shuffled, no warm hull.
+  `UI.sub='starter'`: in reverse order each seat picks W1 or E1 (`starterPick(seg)` stands the
+  eleventh die at 1 without touching the supply); then `S.phase='play'`.
+- **Market.** PRIMARY `enterSource(2)`. ALTERNATE `cart`: pick a Ready cask with `canShipQ` →
+  `cartdoor`: **YARD** (always) → `yardLand` (park in `S.yard`, `enterSource(3)`, then the recipe
+  prize through the pending pipeline) · **HALL** (`invites>0 && q>=2 && an open place`) →
+  `hallPresent` (−1 ⚜, score `hallValue`, park on the next place, `S.hall.die++`).
+- **Brewhouse.** PRIMARY kept; `brewCommit` calls `spendDie`; the pool is nine verbs.
+  ALTERNATE `pbuild` (below). `fireCaskAct` v8: `source`→2 goods · `age`→`enterAge(2)` · `load` ·
+  `lift` (boarding) · `brew` · `recipe`→`enterRecipeGain` · `build`→`enterPBuild` or `kbuild` ·
+  `post`→`enterPost(ALL_LANES, free)` · `spec`→`enterSpecGain`.
+- **Harbor.** `beginStops` marks the commission stop `must:true` when `mustCommission(p)`;
+  `endTurn` refuses while a `must` stop is still available; `aiStep` resolves it first.
+  `commPick` → `commPlace(slot)`: pay, displace an EMPTY hull, dock (`dest` may be `'wild'`),
+  `refreshStops`, then `enterPost(lanesOf(dest))` with `postTargets` = the prefix segment of each
+  lane (`nextPostSeg`), `postSkip` allowed; then the maiden load. ALTERNATE `kbuild`: pick a Kontor
+  from `kbuildTargets(p)` → `spendDie`, a slot `{pid, face:1}`; or `raise`: pick one of your
+  building dice → +1.
+- **Cellar.** Kept.
+- **Loading, wild Ships, sailing, landing.** `canTake` as above; `boardDie` keeps the Kiln/Bonded/
+  LIFT lifts under the Q+1 cap. When a hull fills: a printed Kontor → `sailShip` at once; wild →
+  `UI.sub='wilddest'` (the open lanes; no skip) → `wildPick(k)` sets `sh.dest`, then `sailShip`
+  (the suspended `loadCommit` tail becomes `loadAfterCommit`). `sailShip`: the tide · Bonded ·
+  the post ticks on every segment of the lane · hull to the deck · `pendingLandings`.
+  `landDeliver`: `val=face+bldgDie`; park; tick every building die at that Kontor; +⚜; prize.
+  `afterSail` order: landings (inline, no choice) → the yard's recipe → Bergen's seat → London's
+  build → Novgorod's raise → `pendingActs` → `resume`.
+- **The prizes.** Bruges (the yard only): `precipe`. Bergen: `bspec`. London: `lprize` = a post
+  (any lane, the prefix rule, free) · a Kontor die (`kbuildTargets`) · a wharf tile or FLIP (fee
+  waived) · decline. Novgorod: `nprize` = raise one die of yours at sea.
+- **The private ladder.** `PRIVATES` as data (station · tier · req · fee · kind); `enterPBuild`
+  → pick a key → `placepriv` (a glowing flank slot) → `commitPrivate` (over a Work +1G, the Work
+  boxed; a tier 2 only on your own tier 1 of that station); the owner-only `pact` stop in
+  `beginStops`, dispatching by kind (`enterSource(1G1H)` · the Kaufhaus's cart 2 · the
+  Scriptorium/Guildhall as passive reads in `recipeGainable`/`hasRecipe`/the brew count · the
+  Cold Store's `enterAge(2)` · the Lagering lift · the Counting House's raise · the Shipping
+  Office's `enterPost`).
+- **The end.** `spendDie` → `checkDiceEnd` → `S.ending`; `endTurn` finishes the round; `gameOver`
+  scores `deliv + hall + sea + docked + maj + flight + guild + bank`; vessels 0; tiebreak the
+  count, then goods.
+- **The `UI.sub` roster:** `starter · move · stops · source · cart · cartdoor · brew · brewverb ·
+  age · load · wilddest · commission (stage place) · post · kbuild · raise · pbuild · placepriv ·
+  pact · recipegain · specgain · precipe · bspec · lprize · nprize · end`. Retired: `parti ·
+  placebldg · reach · build · placevent · sailnow · rack · assay · landc · cpick · copshift · tour
+  · pour`.
+
+#### 13.5.4 Render (the existing grammar only: components big, prose small)
+
+- **The Sea panel** replaces `renderDests`: the dormant `.seamap` grid — Hamburg's cap, the segment
+  cells (name, one seat square per colour, a filled seat = `dieFace` in the colour; glowing when
+  a legal post target), the Kontor caps (crest, pair, prize icon, the building slots as die seats,
+  the field's parked casks as value chips); the panel header carries one chip per player:
+  `ownSq + qualityCount` ("your dice at sea = the quality you may deliver"), a mirror of a count
+  made by eye. **Bruges** as a fourth row: the road, the yard's parked casks, the hall as a
+  `shopgrid` strip of places with the hall die BIG at its head. The ⊞/⊟ toggle switches compact and
+  wide.
+- **The wharf grid**: `pBldgFace` gains the private branch (`HC.privateTile`, the owner ring, no
+  ledger seat); a wild hull prints a dashed destination seat, the Kontor chit overlays it once
+  named; station alt icons `A:cart · B:build · C:kontorhaus · D:package-plus`.
+- **The Harbor dialogs**: `commission` (kept) → `post` (the legal prefix segments glow) ·
+  `kbuild`/`raise` (the eligible caps glow) · `wilddest` (the open caps glow, no skip) ·
+  `cartdoor` (two buttons: THE YARD · +3 goods · a recipe / THE HALL · ⚜ · die + hall die).
+- **The sidebar**: the ship display (wild included) · the specialist display · an Invitations
+  line per player · the Clock reads `p.supply` as a pile of die glyphs "/10" · the player board
+  gets the supply seat and the ⚜ count; the delivered tags mark yard/hall.
+- **`components.js`**: `CASK_POOL` to nine verbs (Gruit blank) · recipes with fees only ·
+  `SHIP_DEST` + Wild (a dashed seat, no gate chip) · `SHIP_DECK` 18 · `BUILDINGS` filler (Customs
+  re-faced; Weigh House, Staples behind `v8:false`) · `VENTURES/ventureTile` → `PRIVATES/privateTile`
+  (the `btile` anatomy, T1/T2 chip, no ledger seat) · NEW `seaBoard(side)` (the print face) · NEW
+  `inviteToken` · `playerBoard` (11 dice, the supply seat, the Flight 3/6/10) · `IMPROVE` re-cut.
+  `print.html` and `rulebook.html` inherit every face and every number from `HC` or restate each
+  once.
+
+#### 13.5.5 The AI seats, and the sim built to capture depth (THE OVERRIDE)
+
+- **What `aiStep` learns:** `aiStarterPick` (E1 by default; the merchant persona W1) ·
+  `aiPostValue(p,seg,free)` = expected pips + the count gain (a held recipe's Q = count + 1 → +3 ⚙)
+  + the chain gain (+2 ⚙ toward an open slot) + lane-opening value − the die's cask value ·
+  `aiCountTarget` (never brew a die you cannot ship within two visits) · `aiCommValue` prices
+  the whole act (berths + its best post + the maiden load; a wild hull the max over lanes) ·
+  `aiKBuildValue` (own landings expected × (1 + ticks) + pips + the count) · `aiCartDoor` (the hall
+  when `face + hall die` beats 3 goods and the recipe need; a Gruit always the yard) ·
+  `aiWildPick` (Σ landing value + majority swing + prize) · `aiPBuildValue` (uplift per visit ×
+  visits left − fee) · the nine verbs in `aiVerbValue` · `aiLondonPick`, Novgorod's raise on the
+  busiest lane's lowest post · `aiLateGame` on `min supply ≤ 3`.
+- **The MC pair:** `AI_MC_SUBS` += `starter post kbuild raise cart cartdoor wilddest pbuild
+  placepriv lprize nprize`; `aiMCOptions` enumerates every legal target; the rollout policy is the
+  trader; `scorePlayer` stays the value function.
+- **Personas built to capture depth:** `brewer · merchant · hall · majority · builder ·
+  specialist · breadth`, plus `MIX=1` (one persona per seat at random per game). **The law: no
+  system may be judged dead unless a persona committed to it ran in the corpus, and every report
+  prints USAGE before VALUE** (per verb, tile, specialist, building and prize: fired per seat,
+  then the committed lane's win rate). A recommendation to cut a part must cite the committed lane.
+
+#### 13.5.6 The battery (`playtests/verify-v8.js`, ~75 checks in 15 groups) and the sim counters
+
+0 identity and setup (KEY · supply 10 · the starter phase in reverse order · Works dealt, no bag
+· deck 18 with 3 wild, no Bruges hull · the hall die at 2 · no contract/demand/ladder/bourse
+fields) · 1 the supply and the end (`spendDie` on brew/post/kbuild · the eleven-dice identity
+after every verb · `checkDiceEnd` at 0 · MAX_ROUND 18 · no verb at supply 0) · 2 the quality count
+(global · the starter counts · Hopped 2, Bock 5 · the same read at every port and the cart ·
+`canTake` refuses above the count · a building raises it) · 3 the chain (your OWN die on every
+segment · Novgorod needs E1 and E2 · two players may each hold a chain · one builder per slot ·
+one per player per Kontor) · 4 the mandatory commission (`must` when possible · `endTurn`
+refuses · no must when the display is empty or every slot holds a loaded hull or no hull is
+affordable · the AI resolves it first · EMPTY-hull displacement) · 5 the post (only that Ship's
+lane · the prefix segment · a wild hull offers every lane · a full chain offers none · no fee ·
+the tile and London's prize offer every lane · the maiden load after the post) · 6 lanes, loading,
+wild, sailing (public/own modes · a wild berth needs an open lane · `wilddest` on the last load ·
+no SAIL-now · the post tick on every segment sailed · the tide · Gruit never boards) · 7 landing
+(face + own building die · no building → face · every building there ticks · no premium/market/
+demand/★ · boarding order · the tile parks) · 8 Bruges (the cart's doors · the yard's 3 goods and
+recipe · the hall's ⚜, next place, face + hall die, the die climbs, no recipe · Gruit never
+presents · yard and hall carry no field weight · no bonus on the cart) · 9 invitations (1 per far
+landing · none from Bruges · a count, no cap) · 10 prizes (Bergen a seat · London any build ·
+Novgorod a raise · the recipe tile at its fee) · 11 the private ladder (flank slots only · over a
+Work +1G · never over a rival · tier 2 on your own tier 1 · one per player per station ·
+owner-only stops · the Guildhall's recipe read · no die) · 12 the end (docked dice at face only
+· vessels 0 · every sea die's pips · fixed pairs, the presence gate, ties split · the Flight on
+landed · the buckets · the tiebreak) · 13 Gruit, aging, no kettle (1G, Ready at brew, blank tile,
+the yard only · no die turns by itself · brew needs only recipe, goods, a vessel and a die · the
+second kettle is gone) · 14 the retired symbols are undefined · 15 the AI never stalls (every
+`UI.sub` has a case · a 3-seat game runs to `S.over` · the human-gate heads).
+
+**Sim counters:** commissions (must-forced share) · posts per seat and segment · Kontor builds
+and raises · chains completed · the count at the end · casks stranded by the count · sails, wild
+sails by port · landings by Kontor · the landing value split (face vs building die) · post and
+building ticks · sea pips' share of the score · docked dice at the end · ⚜ earned/spent/held ·
+hall presents (by place, by Q) vs Kontor landings · yard casks (Gruit vs Q2+) · recipes by door ·
+private builds per key and the tier-2 rate · Works fired · specialists seated and the win rate of
+seats holding each · search-brew verb picks · end trigger (supply vs backstop) · rounds and the
+10–15 band · the margin by bucket · the PERSONAS/MIX lane report, USAGE before VALUE.
+
+### 13.6 THE BUILD ORDER
+
+Each phase is one commit on the feature branch, gated, then fast-forwarded to `main` the same
+turn. The battery is `verify-v8.js` from phase 1; the v7 build and its instruments are frozen at
+`archive/v7/` in phase 0. Sizes are lines of `play.html` touched/new.
+
+| # | Commit | Content | Gate | Size | Risk |
+|---|---|---|---|---|---|
+| 0 | **Freeze v7.0b** | copy the root build + `verify-v7.js` + `sim.js` to `archive/v7/`; `V7-PLAN.md` closes with the pointer | the v7 battery green from its own folder | copy | none |
+| 1 | **The docs first** | `RULES.md` v8.0 from §13.2 · `COMPONENTS.md` §0 · `STYLE.md` §4 registry · `DESIGN.md` §6/§9/§10 · `AUTOMA.md` | every number states once; the registry has no orphan | docs | drift between the sheet and the engine: the engine's constants are copied from the sheet, never invented |
+| 2 | **The supply, the sea data, the end** | `KEY hanse-v80a`; `SUPPLY_DICE`, `p.supply`, `spendDie`, `checkDiceEnd`; `SEGMENTS/LANES/FAR`, `S.sea`, `S.hall`, `S.yard`; the derived reads; the starter phase; DELETE every retired system with its call sites (render, diag, recap, AI); `landDeliver` two dice + ⚜; `scorePlayer` v8; `gameOver` docked pips | groups 0–2, 7, 12, 14 green; `sim.js 3` crash-free with `post/kbuild/cart` stubbed to skip | −1500 / +350 | the biggest diff; a surviving call site throws at load: open the page in a browser before pushing |
+| 3 | **The sea board render** | `renderSea` on `.seamap`, the caps, the count chips, Bruges (yard + hall strip + the hall die); `renderVoyage` supply pile; `renderShop` minus contracts; `renderTableaus`; the aid | group 0 green; a visual check at desktop and phone width | +260 / −180 | fit on phone |
+| 4 | **The Harbor** | `must` stops and `endTurn`'s refusal; `enterPost/postPick/postSkip` after `commPlace` (the prefix rule); `kbuild`/`raise` as the ALT; the post and building ticks; the prompts and the glowing map | groups 3–5, 6 (ticks) green; `sim.js 3` | +320 / −90 | the `must` rule vs "all stops optional": the End Turn button and the AI both read `mustStopsLeft()`; a stuck bot shows as a runaway |
+| 5 | **Loading under the count, wild Ships** | `canTake` v8; `wilddest` (the suspended `loadCommit` tail → `loadAfterCommit`); the deck 18 with wild; `shipCard('Wild')`; `boardDie` under Q+1 | group 6 green; `sim.js 3` | +160 / −60 | the mid-load prompt inside a Stevedore double load; save/load mid-`wilddest` |
+| 6 | **Bruges** | `cart/cartdoor/yardLand/hallPresent`, the hall die, `INV_PER_LANDING`, `precipe` yard-only, the Flight on landed | groups 8–9 green; `sim.js 3` | +220 / −40 | the yard's prize on the active seat's own turn: route through `afterSail` as today |
+| 7 | **The private ladder** | `PRIVATES`, `pbuild/placepriv/commitPrivate`, the `pact` stops, `privateTile`, the Scriptorium/Guildhall reads, the Kaufhaus cart 2, the Lagering lift, the Counting House raise, the Shipping Office post | group 11 green; `sim.js 3` | +280 (+60 components.js) | flank-only ground vs the Works: a 4p table can lock a station's two slots early; the counter "private builds per station" reads it |
+| 8 | **Prizes, specialists, Works filler** | `lprize/nprize`, the `spec`/`post`/`build` tiles, the roster re-cut, Customs re-faced, Weigh House and Staples out, `WORKS_DEAL` | groups 10, 13 green; `sim.js 3` | +150 / −80 | low |
+| 9 | **The AI seats** | the value functions above, the new `aiStep` cases, `AI_MC_SUBS` + `aiMCOptions`, the seven personas, the human-gate heads | group 15 green; `sim.js 5` crash-free at 2–4p | +420 / −150 | the largest judgement surface; greedy first, MC options second; the deadlock guard must never trip |
+| 10 | **The battery and the harness, whole** | all 15 groups; the sim counters; `MIX=1`; the USAGE-before-VALUE report | all green; `sim.js 10`: 0 crashes, 0 deadlocks | +450 / +120 | none to rules |
+| 11 | **The kit and the book** | `print.html` (the sea board sheet A/B, 18 Ships, 52 casks, 16 private tiles, 16 ⚜, the filler Works, the v8 aid), `rulebook.html` re-derived from `RULES.md` v8.0, `index.html`, `nav.js` | the fit check per page; the render smoke | print +300; rulebook whole | the kit and the engine must state the same numbers: each read from `HC` or restated once |
+
+Playable hot-seat after phase 4; every verb after phase 8; the mirror complete after phase 11.
+Total ≈ −2100 / +2600 lines in `play.html` (≈4900 after), +150 in `components.js`, two new harness
+files. Every phase lands on `main` the same turn it passes its gate.
+
+### 13.7 The rulings still needed (ranked by what each unblocks; the default the build ships)
+
+1. **Sailing an unlocked lane.** Once every segment holds anyone's post, may every player load
+   toward that Kontor (**default**), or only players holding their own post on every segment?
+   Decides whether a brewer-only seat can sell at all and what wild Ships mean.
+2. **The building die's climb.** +1 on any landing there plus RAISE (**default**), own landings
+   only, or rival landings only.
+3. **Do the wharf's private buildings take a die?** **Default no**: goods bind the wharf, dice
+   bind the sea.
+4. **Per-port die minimums.** None (**default**); v7's 2+/2+/3+ if Novgorod needs an identity.
+5. **The tree.** Five segments, E1 shared (**default**), or one more in the east.
+6. **The hall's payout.** The hall die from 2 (**default**) or a printed rising bench; and whether
+   die + 2 to die + 6 is the "easy benefit" that competes with a 5/2 or 7/3 pair.
+7. **The invitation rate.** One per cask landed at a far Kontor, none from Bruges, start with
+   none (**default**); per landing Ship; per first landing per Kontor.
+8. **Building slots.** 2 on A, 3 on B with the third at 4p, one per player per Kontor (**default**).
+9. **The Hulk.** No gate (**default**), or only toward a Kontor where a building stands.
+10. **The prizes' reach.** London any build with the fee waived (**default**) or posts and Kontor
+    dice only; Novgorod's raise (**default**), or 2 goods, or an ⚜.
+
+Held for the table, not the designer: the warm Gruit, Works 6/4, the private faces and fees as
+drafted, the specialist roster, the Flight's 3/6/10, MAX_ROUND 18.
+
+### 13.8 Process: what this plan changes in the charter
+
+- **The second override lands in `CLAUDE.md` §1** (§12.5 verbatim): optimizing cancels depth; the
+  sims are built to capture asymmetry and interlock or they are not judges; USAGE before VALUE.
+- **The phases law is re-cut**: the designer asked for the plan to build the rules AND the mirror,
+  so the sequence is **the docs (phase 1) → the mirror (phases 2–11) → the designer's own table on
+  the mirror or the kit → the oracle read**, never a corpus before a human table. "Paper first,
+  no engine change until P3" (§9) is superseded by this section; the mirror IS the paper for a
+  designer who plays it.
+- **The page "Brewer & Merchant" is re-cut whole from §13** the same day, and `CLAUDE.md` §7 and
+  `DESIGN.md` §10 state the ruled game in one paragraph each.
