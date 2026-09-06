@@ -980,6 +980,15 @@ cross-checked. That work is §13.
 
 ## 13 · THE IMPLEMENTATION PLAN — v8 from the whole review (2026-09-06)
 
+***AMENDMENTS PENDING (the designer, 2026-09-06, on reading the plan — recorded verbatim in
+§12.10):** Kontor buildings are TILES from a set, ownership marked by the builder's die (the die
+is the delivery modifier and scores pips) · wharf tiles carry PRINTED values, no dice on the
+wharf · per-port quality minimums return: London 2 · Bergen 3 · Novgorod 4 · a wild Ship's port
+is named by the FIRST cask loaded · Gruit takes a tile (every one "Gain 2 goods", no search) ·
+the LIFT cask bonus goes; lifts live only on wharf buildings; the cap is Q+1 so 6 is the top ·
+posts cost an action and a die · the prefix tree from Hamburg and the public lane are ruled.
+§13.1 M1, M4 and the Gruit line of §13.9 are overturned by these; the re-cut waits for the go.*
+
 *How this section was made. Two sub-agents each read `CLAUDE.md`, this file (§1 and §12 as law over
 §6–§11), the reviewed page "Brewer & Merchant", `RULES.md` (v7.0b), `play.html`, `components.js`,
 `playtests/verify-v7.js`, `playtests/sim.js`, `STYLE.md` and `COMPONENTS.md`. One took the RULES
@@ -1711,3 +1720,80 @@ restores the starter phase · the hall die is neutral in every count · no ⚜ c
 phase ships minimal AI cases · the building tick lands in phase 2. **Kept against the rules
 lens's objection, as the designer's questions** (§13.7): no printed per-port minimums (q4), the
 building die climbing on any landing (q2), no Hulk gate (q9).
+
+### 12.10 The designer on the merge calls (2026-09-06, on reading §13), verbatim
+
+> Kontor buildings are tiles and ownership is marked with the builder's die. I would live to
+> have a whole set of Kontor buildings to make the deliveries more interesting and variable.
+>
+> Building dice are one of two things. I think Kontor buildings are dice that mark a delivery
+> modifier. They can be worth points at the end for consistency. The wharf buildings can have
+> dice or they can simply be tiles which are worth face value. You upgrade/replace them to make
+> them worth more. I think we make the wharf tiles have printed values on them instead since
+> dice is a tight race. For posts, dice increase as ships pass them regardless of who has casks
+> loaded on the ships.
+>
+> Tree of posts grows from Hamburg kind of like a tech tree. No blocking between players but the
+> string of posts always starts at Hamburg. You can do it all so you pick a lane.
+>
+> Each Kontor still has quality minimums. 2 for London, 3 for Bergen, 4 for Novgorod. This is an
+> adjustment. It shifts the building bonus into the most accessible port and motivates upgrades
+> to higher quality brews.
+>
+> Yea, wild ship is chosen by the first loaded cask so we need a way to track this. It may be
+> finicky.
+>
+> The hall gains value as the collection of brews grows - I like this. Maybe the first brews
+> also give an action/resource prize. They still require invitations.
+>
+> Post costs an action to put it there and a die, no goods.
+>
+> Gruit takes a cask tile and a die but there is no search because they all have the gain 2
+> goods bonus. Gruit must also be brewed in a vessel but there is no aging as it is ready on
+> brew. No change from the previous versions.
+>
+> Lift cap is +1, that means die lift bonuses only happen in the wharf buildings. This means the
+> highest die value is 6 (bock plus 1, how about that? Perfect for a D6).
+>
+> A lane once opened with anyone's posts is open to all.
+>
+> I don't make comments on the artifact, just here. Let me read the plan and then I'll give you
+> the go. Capture the comments here while I read the plan.
+
+**The reading, and what each changes in §13 (applied at the go):**
+
+- **Kontor buildings are tiles, from a SET, marked with the builder's die.** M1 overturned. A
+  building is a tile placed in a Kontor's slot with the builder's die on it; the die is the
+  delivery modifier (cask die + your die there) and scores its pips at the end. The set is a
+  roster of Kontor building tiles with varied effects on deliveries there, a design pass of its
+  own (like the Works roster). The engine: `S.sea.kontor[k].slots[i] = {tile, pid, face}`; a
+  Kontor-building deck and display; `kontorBuildingTile` returns to `components.js`; the box
+  gains the set. Open: dealt to the slots at setup (a fixed market per game) or drawn from a
+  display when you build; and the roster's effects.
+- **Wharf tiles carry printed values; no dice on the wharf.** §13.7 q3 ruled no, and more: a
+  private building prints a value (worth "face value"), raised by the FLIP or a replacement.
+  Read as ★ at the end per standing tile (tier 1 low, tier 2 higher) beside its verb; the
+  numbers are the designer's. `PRIVATES[key].pts` and a `wharf` scoring bucket.
+- **Posts climb on any sail, regardless of whose casks.** M2's post half confirmed; the prefix
+  tree from Hamburg confirmed (M3); "you can do it all so you pick a lane".
+- **Per-port quality minimums return: London 2 · Bergen 3 · Novgorod 4.** M4 overturned, with
+  new numbers (v7 was 2/2/3). London is the accessible port and the place a building bonus is
+  worth most; Bergen wants an export; Novgorod wants a Mumme or a Bock. Read against the beer's
+  printed Q like the count (the die is the dial). `KONTOR_MIN {london:2, bergen:3, novgorod:4}`
+  in `canTake` and in `wildDests`; printed on the panels and the Ship tiles.
+- **A wild Ship's port is named by the FIRST cask loaded.** The Kontor chit goes on the hull at
+  the first load; every later load reads it like a printed hull. Finicky at the table; the chit
+  is the tracker. `loadCommit` on an empty wild hull opens `wilddest` before the load resolves.
+- **The hall die stands; the first places may print a small prize** (an action or a resource)
+  beside the die's climb; invitations still required. `HALL_PLACES[i].prize` as a seam.
+- **A post costs an action and a die, no goods.** M6 confirmed.
+- **Gruit takes a tile and a die, no search; every Gruit tile prints Gain 2 goods; brewed in a
+  vessel, Ready on brew.** The §13.9 "Gruit takes no tile" is overturned: Gruit's sixteen tiles
+  return (cask tiles 52), the stack is uniform so there is no search. Open: whether the tile's
+  Gain 2 goods fires at the yard (then a Gruit pays 3 + 2 goods for one grain) or the yard's
+  three goods is the payoff and the tile rides only as the Flight's record.
+- **The LIFT cask bonus goes; lifts live only on wharf buildings; the cap is Q+1, so 6 is the
+  top face.** `CASK_ACT_POOL` drops `lift` (eight verbs); the Lagering Cellar and the Malt Kiln
+  are the only lifts.
+- **A lane once opened with anyone's posts is open to all.** §13.7 q1 ruled public.
+- **Comments come here, never on the artifact.** The page is re-cut after the go.
