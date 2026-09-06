@@ -71,7 +71,7 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 
 ## Harnesses & gates
 
-- **`playtests/verify-v8.js`** — the rule battery (~45 checks in 15 groups): identity and
+- **`playtests/verify-v8.js`** — the rule battery (57 checks in 15 groups): identity and
   setup · the supply and the end · the quality count · the chain and the buildings · the
   mandatory commission · the post · lanes, loading, wild Ships, sailing · landing = two dice ·
   Bruges · invitations · the prizes · the private ladder · the end and the score · Gruit,

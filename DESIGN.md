@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (live build v5.4 “The Tide” on the v4.0 spine)
+# Brewhouses of the Hanse — Design (live build v8.0b “Brewer & Merchant”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**,
 > the **change log**, the **balance lessons** and the **open watches**. Operational rules
@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v5.7 “Plain Sail”** — live (`play.html`, KEY `hanse-v57`; designer-ruled 2026-08-23, records `archive/records/V55-FOUR-HANDS.md` + `V54-THE-TIDE.md` + `V5-DECISIONS.md`). The v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). **v5.4** makes every Public Work ephemeral — the wharf is a tide that washes the furniture away and thins into bare ground for the Ventures. **v5.5** re-derives the Venture hand as **four themed tiles (brew · age · die · points)** and adds the **FLIP** — a standing L1 turns over to its own L2 in place, spending no hand tile — so four tiles can become four buildings that each reach L2. **v5.6** turns the Bourse into a **GLUT**: every marker opens at the top and a sail steps each beer aboard down one (never per cask); the only way up is a shift you build. Every **Kontor prize becomes “the thing OR ★”** and the consolation retires. **v5.7** cuts the **Manifests** — the Bourse is the demand layer, so the demand card was a duplicate that also broke the component-state line. Details: §9; watches: §10. |
+|**Status**     |**v8.0b “Brewer & Merchant”** — live (`play.html`, KEY `hanse-v80b`; designer-ruled 2026-09-06 — the shape in §6, the derivation in `V8-PLAN.md` §12–§13, the log in §9; the designer's own table is next, then the oracle read — never a corpus before a human table). *The v5 line, kept as history:* **v5.7 “Plain Sail”** was the last v5 build (records `archive/records/V55-FOUR-HANDS.md` + `V54-THE-TIDE.md` + `V5-DECISIONS.md`); the v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). **v5.4** makes every Public Work ephemeral — the wharf is a tide that washes the furniture away and thins into bare ground for the Ventures. **v5.5** re-derives the Venture hand as **four themed tiles (brew · age · die · points)** and adds the **FLIP** — a standing L1 turns over to its own L2 in place, spending no hand tile — so four tiles can become four buildings that each reach L2. **v5.6** turns the Bourse into a **GLUT**: every marker opens at the top and a sail steps each beer aboard down one (never per cask); the only way up is a shift you build. Every **Kontor prize becomes “the thing OR ★”** and the consolation retires. **v5.7** cuts the **Manifests** — the Bourse is the demand layer, so the demand card was a duplicate that also broke the component-state line. Details: §9; watches: §10. |
 
 ---
 
@@ -195,16 +195,18 @@ Canonical detail in `RULES.md` / `COMPONENTS.md`; the shape:
 
 ## 7. The tooling (how we verify)
 
-- **`playtests/verify-v4.js`** — the targeted rule battery (§-per-system; 351 checks at
-  v5.3b). Runs in seconds; **always** after an engine change.
+- **`playtests/verify-v8.js`** — the v8 rule battery (57 checks in 15 groups). Runs in
+  seconds; **always** after an engine change. The v5/v6 batteries live with their frozen
+  builds under `archive/v5/playtests/` and `archive/v6/playtests/`.
 - **`playtests/sim.js [N]`** — drives the *canonical* `play.html` engine headlessly
   (extracts the script, runs it in a Node `vm`, appends a bot in-scope — the engine's own
   in-page AI). The **robustness/pace gate**: 0 crashes / 0 deadlocks across 2–4p, pace in
   the 12–25 band. Env hooks: `TIER=` · `PERSONAS=1` (the PATHWAYS lane oracle) · `POOL=` ·
   dial hooks (override-only-if-set — a ruled default is never silently forced off).
-- **`playtests/strategy-probe.js`** — the skilled-play oracle instrument (GM/CM corpora,
-  openings, timing, lane reads). **`playtests/flow-probe.js`** — the turn-level
-  economy/decision oracle.
+- **The v5-era probe fleet** (`strategy-probe.js` · `flow-probe.js` · the prize probes ·
+  `ai-ladder.js` · `ai-render-smoke.js` · `aid-overflow.js`) lives at
+  `archive/v5/playtests/`; the v8 equivalents re-derive when the designer calls the full
+  validation, after the human table.
 - **AI seats** (`AUTOMA.md`): Apprentice / Journeyman / Trader (greedy — robustness/pace
   oracles only) + **Guildmaster** (flat MC; defaults to the designer's 'quality' persona
   at 2–3p) / **Cellarmaster** (deep MC — pure search). Gates: `ai-ladder.js` (every rung
@@ -287,7 +289,15 @@ button makes; the hand tiles are tappable at any time and flip to show their tie
 (a view, never a rule). Surfaces: `RULES.md` §1/§3/§12 · `rulebook.html` §5/§8 ·
 `COMPONENTS.md` §0 · `STYLE.md` §4f (*On visit* joins the trigger set) · `components.js`
 (the tile prints *On visit*, no station name) · `print.html` (aid + checklist + sheet label)
-· `verify-v8.js` (57/57, group 11 rewritten).
+· `verify-v8.js` (57/57, group 11 rewritten). **Same day, the casing rule (STYLE.md §4c
+rule 4, designer-ruled): nothing prints in all caps** — action names Title Case wherever they
+name the action, states sentence case, emphasis bold — landed on every player-facing surface
+(the rules master, the rulebook, the aid, the faces, the app), and the full re-read that followed
+closed the drift the surgical passes had left: the rulebook's "when you work its station", the
+private-building tables still labelled by station (the designs are Granary · Scriptorium · Cold
+Store · Counting House, not Market · Brewhouse · Cellar · Harbor), the engine's dead
+second-brew remnant, the retired word *tray* on the Market & Stores board, and the docs' stale
+instrument names and counts.
 
 ### v8.0 “Brewer & Merchant” (2026-09-06, designer-ruled — `KEY hanse-v80a`)
 
