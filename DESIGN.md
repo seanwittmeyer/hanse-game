@@ -85,7 +85,25 @@ expressed through the **dual-role cask die**, the **two building families** and 
 
 ---
 
-## 6. The current architecture (v5.7 “Plain Sail”)
+## 6. The current architecture (v8.0 “Brewer & Merchant” — the shape; the v5.7 body below stands as history)
+
+**v8.0 in one breath (2026-09-06 — `RULES.md` is canonical; the derivation is `V8-PLAN.md`
+§12–§13):** eleven dice, ten in the *personal supply* and one standing at sea as the *starter
+post*; a die leaves the supply as a cask (BREW), a post (a die on a segment of a lane, +1 per
+Ship sailing through) or a Kontor building (a tile of yours in a Kontor's slot, marked with a
+die that is the delivery modifier and climbs +1 per landing there), and never returns; the
+first empty supply ends the game. **The quality count**: the quality you may deliver anywhere =
+the number of your dice at sea. **A landing scores two dice**: the cask's + your building die
+there. Ships 2/3 berths per Kontor plus wild hulls named by the first load; nobody owns a hull;
+sails when full; the Harbor must commission and the commission lets you post on that lane;
+its alternate builds or raises at a Kontor. Bruges by cart only: the yard track (a recipe or
+goods, shrinking as it fills; Gruit's only door) or the hall (an ⚜ + a Q2+ cask: cask die +
+the hall die). ⚜ come only from far landings. The wharf's private buildings are a Great
+Western Trail engine: four tiles per player, tier 2 on tier 1 by the FLIP, printed points 2/4,
+no die. No kettle, no market track, no bands. The end: pips at sea + docked dice at pips +
+standing tiles + fixed majority pairs + the Flight on beers landed.
+
+*The v5.7 architecture, as it stood (history):*
 
 Canonical detail in `RULES.md` / `COMPONENTS.md`; the shape:
 
@@ -244,6 +262,22 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
+
+### v8.0 “Brewer & Merchant” (2026-09-06, designer-ruled — `KEY hanse-v80a`)
+
+*"We are essentially making a new game."* The v7.0b oracle read and the designer's three-batch
+review (`V8-PLAN.md` §12) ruled that v7 never broke the overlap between the station actions
+and the core loop, that free goods made goods the only resource, and that the optimizer's
+instinct had cancelled depth (THE SECOND OVERRIDE, `CLAUDE.md` §1). v8 re-derives the game on
+the kept turn: eleven dice and the personal supply; a new sea board where posts unlock
+segments for everyone and your own chain from Hamburg opens a Kontor's building slots; Kontor
+building tiles marked with a die that modifies every landing of yours there; the quality count
+as the one gate; two-dice landings; the cart at the Cellar, the yard track and the hall die at
+Bruges; invitations only from far landings; a Great Western Trail private-building engine with
+printed points and no dice; wild Ships; no kettle, no Bourse, no contracts, no demands, no
+ladders, no flags. The implementation plan (§13) was merged from two lenses and cross-checked
+(43 corrections). v7 is not archived: "it was a bust." The rules: `RULES.md` v8.0. The engine:
+`play.html` (the phases of §13.6). The kit and the rulebook: the next pass.
 
 ### v7.0b “Build Leaves the Counter” (2026-09-01, designer-ruled — `KEY hanse-v70b`)
 

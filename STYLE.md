@@ -251,6 +251,59 @@ Wharfinger) is RETIRED with the sea map — historical, never printed again.*
 | Coper | n | The market's one hand (specialist ⚙): after your landing resolves, step ONE beer you landed +1 | period beer-trader; designer to confirm the name |
 | Herald | n | The contracts specialist ⚙: each claim pays 1 `G` 1 `H` | — |
 
+## §4f. The v8 term family (PROVISIONAL — reserved 2026-09-06 at the v8.0 build; locked at the v8 registry pass)
+
+*Reserved so every v8 surface uses ONE vocabulary from the first build. The designer renames
+freely. The §4e v7 family entries below that name a retired grammar (the ledger die · lane gate
+· contract · claim/draw · demand card · majority ladder · private flag · the second kettle ·
+Coper · Herald) are RETIRED with v7 — historical, never printed again.*
+
+| Term | POS | Working definition | Collision notes |
+|---|---|---|---|
+| personal supply | n | Your unspent quality dice, a pile beside your player board; the first EMPTY supply sets the final round | supersedes ~~tray~~ (§1), which retires from every surface |
+| Hamburg | n | The home port; the root of the sea board's tree; where the Wharf stands | theme only until printed on the sea board |
+| the sea board | n | The board printing Hamburg, the cart road, the five segments and the four Kontor panels; side A (2p) / side B (3–4p) | replaces the ~~Destinations board~~ (§1), retired |
+| lane | n | RE-DERIVED: the branch of segments from Hamburg to one Kontor | the §4d map sense returns in this form |
+| segment | n | One printed step of a lane; prints one post seat per colour | supersedes ~~leg~~ (§4d) |
+| branch | n | The segments a Kontor's lane runs through, Hamburg to the Kontor (Novgorod's includes E1) | — |
+| post | n | RE-DERIVED: a die of yours at face 1 in your seat on a segment; +1 each time any Ship sails through; scores its pips | the §4d marker sense retires |
+| POST | v | Stand a supply die as a post on the lowest segment of a lane you do not yet hold (the commission's post · the cask bonus · the Shipping Office · London's prize) | — |
+| unlocked / open | adj | A segment is unlocked while any post stands on it; a lane is open while every segment of its branch is unlocked — open to every player | — |
+| the chain | n | Your own posts on every segment of a branch; the prerequisite for a Kontor building there | — |
+| Kontor building | n | One of your three Kontor building tiles (Warehouse · Kontorhaus · Guildhouse) placed in a Kontor's slot and marked with a supply die at face 1; the die is the delivery modifier (+1 per landing there) and scores its pips | *Kontorhaus* re-derives from §4d as a TILE name; *Warehouse* returns re-faced |
+| building slot | n | A far Kontor panel's printed space for one Kontor building; one builder per slot; one per player per Kontor | ~~socket~~ · ~~seat~~ (Kontor sense) retire; *seat* stays for specialists and post seats |
+| RAISE | v | Turn one die of yours at sea +1 (cap 6): the Harbor's second arm, Novgorod's prize, the Counting House, the Shipping Office, the Guildhouse | ~~raise~~ was banned as a build synonym (§2); it is now its own verb, never a build |
+| the quality count | n | The number of your dice standing at sea (posts + building dice, the starter post included): the quality you may deliver anywhere | ~~YOUR MINIMUM~~ retires |
+| minimum | n | RE-DERIVED: a far Kontor's printed quality floor (Q2), read against the beer's printed quality as the cask boards | the §1 die-floor sense retires |
+| wild Ship | n | A Ship with no printed Kontor; the FIRST cask loaded names its Kontor with a chit | — |
+| Kontor chit | n | The token that names a wild Ship's Kontor, set on the hull by the first load | — |
+| the cart / CART | n / v | The Cellar's ALTERNATE: one Ready cask of yours to Bruges by road; its cask bonus fires as it is carted | — |
+| the yard | n | Bruges' goods door: a track of places in three zones (BEST · GOOD · OK); the carted die parks on the next place and takes the zone's prize; Gruit's only door | — |
+| the hall | n | RE-DERIVED: Bruges' guild of brewmasters; a Q2+ cask and 1 ⚜; cask die + the hall die; the die parks on the next place | the §4b Tastings sense is retired |
+| the hall die | n | The neutral die on the Bruges panel, starting at 2, +1 per present, cap 6; in no count, no pips | — |
+| place | n | One of the hall's or the yard's printed die spaces | ~~bench~~ retires |
+| present | v | RE-DERIVED: enter the hall (1 ⚜ + a Q2+ cask); at Bruges only, by cart | — |
+| Invitation (⚜) | n | RE-DERIVED: a token, earned 1 per cask of yours landing at a far Kontor (+1 with a Kontorhaus), spent to present; no cap | — |
+| private building | n | The family players build on the wharf: a tile of yours flanking its station, tier 1 / tier 2 (the FLIP), owner-only, no die, printed points 2 / 4 | supersedes ~~Venture~~ |
+| tier 1 / tier 2 | n | A private building tile's two faces (replaces ~~L1 / L2~~ as the printed label; the FLIP carries) | — |
+| BUILD | v | RE-DERIVED: one build you are eligible for — a private building or a FLIP on the wharf, or a Kontor building at a Kontor whose chain you hold; three doors: the Brewhouse's ALT (wharf) · the Harbor's ALT (Kontor) · the cask bonus · London's prize | the §4e v7 sense retires |
+| Granary · Kaufhaus · Scriptorium · Brewers' Guildhall · Cold Store · Lagering Cellar · Counting House · Shipping Office | n | The eight private building faces | *Cold Store*, *Lagering Cellar*, *Counting House* return re-faced |
+| Warehouse · Kontorhaus · Guildhouse | n | The three Kontor building tiles | — |
+| Shipmaster · Agent · Lodesman · Carter · Guildmaster | n | The new specialists (§13 of the rules) | *Agent* avoids the §4d *factor* collision |
+| the tide | n | KEPT: every Public Work departs with the Ship at its slot; a private building never | — |
+| LAND | v | KEPT, narrowed: a sailed cask arrives at its Kontor and scores cask die + your building die there | — |
+| the Flight | n | RE-DERIVED: distinct beers LANDED (tiles under your dice at the Kontore, the yard and the hall), 3/6/10 | — |
+| lift | v | KEPT, narrowed: a wharf building turns a die past its quality, cap quality + 1 | the LIFT cask bonus retires |
+
+**Retired at v8 (never printed again):** tray · the second kettle · kettle · Mash Tun · Great
+Copper (as licences) · YOUR MINIMUM · socket · market cell · quality band · market track /
+price marker · the Bourse · shift · the glut · Venture · ledger die · overbuild · theme · L1 / L2
+· the open ground · lane gate · contract · claim / draw · demand card · demand well · majority
+ladder · ladder marker · private flag · SAIL (as a station verb) · presence placement · Place 1
+presence · Coper · Herald · Shipwright · Guild Scholar · Town Crier · Supercargo · Innkeeper ·
+Assay Loft · Rack House · Staple Rights · Weigh House (until the pass) · Skute · the bag · the
+first-landing letter · INVEST · OPEN · leg · factor · establishment · bench.
+
 ## §5. Deferred to the next copy pass (logged, not yet applied)
 
 - Em-dash purge + passive-voice pass over `RULES.md` prose (guide §7/§9) — the rulebook
