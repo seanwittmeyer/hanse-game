@@ -102,13 +102,13 @@ const BUILDINGS=[
 // Specialist tile art: object shots as art/improve-<slug(nm)>.jpg — the SPEC + briefs live in art/PROMPTS.md.
 const IMPROVE=[   // SPECIALISTS = PURPLE · earned free (Bergen's prize · the Gain 1 specialist bonus) · ten singles ⚙ · 2 seats per house
   {ic:'wrench',      nm:'Braumeister', act:'turn start: age 1 '+LU('beer')+' +1', c:'#5b3a8e', n:1},
-  {ic:'sailboat',    nm:'Shipmaster',  act:LU('ship')+' Harbor: sail 1 '+LU('sailboat')+' with your '+LU('beer')+' unfull', c:'#5b3a8e', n:1, slug:'shipwright'},
+  {ic:'sailboat',    nm:'Shipmaster',  act:LU('ship')+' Harbor: sail 1 '+LU('sailboat')+' with your '+LU('beer')+' unfull', c:'#5b3a8e', n:1},
   {ic:'wrench',      nm:'Cellarman',   act:LU('flask-conical')+' Brew: your '+LU('dices')+' start +1', c:'#5b3a8e', n:1},
   {ic:'package-plus',nm:'Stevedore',   act:LU('package-plus')+' Load: up to 2 '+LU('beer'), c:'#5b3a8e', n:1},
-  {ic:'landmark',    nm:'Agent',       act:'a rival lands at your '+LU('kontorhaus')+': that die +1 more', c:'#5b3a8e', n:1, slug:'supercargo'},
-  {ic:'compass',     nm:'Lodesman',    act:'your quality count reads +1', c:'#5b3a8e', n:1, slug:'coper'},
-  {ic:'truck',       nm:'Carter',      act:LU('truck')+' Cart 2 · the yard’s goods +1', c:'#5b3a8e', n:1, slug:'herald'},
-  {ic:'crown',       nm:'Guildmaster', act:'each present at the hall: '+LU('star-plus2','starmark'), c:'#5b3a8e', n:1, slug:'guild-scholar'},
+  {ic:'landmark',    nm:'Agent',       act:'a rival lands at your '+LU('kontorhaus')+': that die +1 more', c:'#5b3a8e', n:1},
+  {ic:'compass',     nm:'Lodesman',    act:'your quality count reads +1', c:'#5b3a8e', n:1},
+  {ic:'truck',       nm:'Carter',      act:LU('truck')+' Cart 2 · the yard’s goods +1', c:'#5b3a8e', n:1},
+  {ic:'crown',       nm:'Guildmaster', act:'each present at the hall: '+LU('star-plus2','starmark'), c:'#5b3a8e', n:1},
   {ic:'book-open',   nm:'Chronicler',  act:'land a '+LU('beer')+': '+LU('star-plus1','starmark'), c:'#5b3a8e', n:1},
   {ic:'gavel',       nm:'Alderman',    act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), c:'#5b3a8e', n:1},
 ];
@@ -173,12 +173,12 @@ const VBIG=h=>'<span class="ac">'+h+'</span>';
 const VSEP=s=>'<span class="vsep">'+s+'</span>';
 const PRIVATES=[
   {k:'A', station:'Market',    t1:{nm:'Granary',            ic:'wheat',         pts:2, art:'building-granary.png',   own:VBIG(LU('goods-1'))+VSEP('+')+VBIG(LU('sprout','h'))},
-                               t2:{nm:'Kaufhaus',           ic:'store',         pts:4, art:'building-exchange.png',  own:VBIG(LU('goods-2'))+VSEP('·')+VBIG(LU('truck')), txt:'Cart 2'}},   // PLACEHOLDER art: the merchants' exchange stands in for the Kaufhaus (brief: art/PROMPTS.md)
+                               t2:{nm:'Kaufhaus',           ic:'store',         pts:4, art:'private-kaufhaus.png',  own:VBIG(LU('goods-2'))+VSEP('·')+VBIG(LU('truck')), txt:'Cart 2'}},
   {k:'B', station:'Brewhouse', t1:{nm:'Scriptorium',        ic:'scroll-text',   pts:2, art:'building-scriveners.png',own:VBIG(LU('scroll-text')), txt:'recipes: no fee'},
-                               t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, art:'venture-brew-l2.png',    own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe · Brew'}},   // PLACEHOLDER art: the Great Copper stands in for the Guildhall
+                               t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, art:'private-guildhall.png',    own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe · Brew'}},
   {k:'C', station:'Harbor',    t1:{nm:'Counting House',     ic:'goods-1',       pts:2, art:'venture-counting-l1.png',own:VBIG(LU('die-plus1')), txt:'Raise'},
-                               t2:{nm:'Shipping Office',    ic:'post',          pts:4, art:'venture-factor-l1.png',  own:VBIG(LU('die-plus1'))+VSEP('·')+VBIG(LU('post')), txt:'Raise · Post'}},   // PLACEHOLDER art: the quayside desk stands in for the Shipping Office
-  {k:'D', station:'Cellar',    t1:{nm:'Cold Store',         ic:'snowflake',     pts:2, art:'building-abbey.png',     own:VBIG(LU('age-2'))},   // PLACEHOLDER art: the abbey cellar stands in for the Cold Store
+                               t2:{nm:'Shipping Office',    ic:'post',          pts:4, art:'private-shipping.png',  own:VBIG(LU('die-plus1'))+VSEP('·')+VBIG(LU('post')), txt:'Raise · Post'}},
+  {k:'D', station:'Cellar',    t1:{nm:'Cold Store',         ic:'snowflake',     pts:2, art:'private-coldstore.png',     own:VBIG(LU('age-2'))},
                                t2:{nm:'Lagering Cellar',    ic:'snowflake',     pts:4, art:'venture-die-l2.png',     own:VBIG(LU('age-2'))+VSEP('·')+VBIG(LU('die-plus1')), txt:'lift, cap Q+1'}},
 ];
 function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
@@ -203,7 +203,7 @@ const KBUILDINGS=[
 ];
 function kontorBuildingTile(d,col){const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
   return '<div class="btile btW kbt" style="--c:'+(col||PRIV_FOOT)+ring+';width:1.32in;height:1.32in">'
-  +artLayer(({warehouse:'venture-warehouse-l1.png',kontorhaus:'building-staple.png',guildhouse:'building-hansediet.png'})[d.k])   // PLACEHOLDER art: the staple hall and the assembly hall stand in for the Kontorhaus and the Guildhouse (briefs: art/PROMPTS.md)
+  +artLayer(({warehouse:'venture-warehouse-l1.png',kontorhaus:'kontor-tile-kontorhaus.png',guildhouse:'kontor-tile-guildhouse.png'})[d.k])
   +'<div class="bt-top"><span class="bt-nm'+(d.nm.length>10?' long':'')+'">'+d.nm+'</span></div>'
   +'<div class="bt-foot btFC"><span class="bt-cond">'+d.txt+'</span><span class="bt-eff">'+d.line+'</span></div>'
   +'<div class="kb-seat" title="the die seat — a supply die stands here at 1: the delivery modifier; +1 on any landing here; its pips score at the end">'+LU('dice-1')+'</div>'
@@ -230,7 +230,7 @@ function buildingBack(d){   // the FLOOR side: it only says WILD
 // as the casks/ships/buildings. Card bg = the same purple as the foot, so any html2canvas foot-edge hairline
 // is purple-on-purple.
 const IMP_FOOT='#4a3a6e';   // Specialist foot/base — PURPLE (the third tile type, v2.4.1; was Cellar-green)
-function improveTile(d){const k=d.slug||slug(d.nm);   // v4.6: slug override — three guild tiles ride spare art as stand-ins
+function improveTile(d){const k=d.slug||slug(d.nm);
   return '<div class="icard" style="--c:'+IMP_FOOT+'">'
   +artLayer('improve-'+k+'.jpg')   // .jpg not .png — a flat-colour-field object shot compresses ~8x smaller as JPEG at no visible quality loss
   +'<div class="ic-foot"><span class="ic-nm">'+d.nm+'</span><span class="ic-act">'+d.act+'</span></div>'

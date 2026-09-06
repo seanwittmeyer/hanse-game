@@ -477,15 +477,26 @@ print; a texture would lift them to the rest of the kit).
 // ============================================================================
 ```
 
-## THE v8.0 KIT ART QUEUE (2026-09-06 — the "Brewer & Merchant" kit pass; the open queue in one place)
+## THE v8.0 KIT ART QUEUE — LANDED 2026-09-06 (all four groups the same day; only the optionals stay open)
 
-*Everything the v8.0 kit currently fakes with a stand-in or a bare Lucide glyph, ranked. Same
+*Everything the v8.0 kit faked with a stand-in or a bare Lucide glyph, ranked. Same
 treatments as ever: **icons** = the c.1350 sticker set (`art/icons/` — one object, warm palette,
 bold contour, alpha-keyed, readable at .3in; recipe in `art/ICONS.md`); **tiles** = the painterly
 single-structure portrait (the shared style block at the top of this file, every gotcha applies);
 **specialists** = THE SPECIALIST PORTRAIT SPEC above (half-body, the trade prop, no text). On
 landing, save under the exact filename and delete the matching `art:` / `slug:` stand-in row in
-`components.js` (each is marked PLACEHOLDER); no rules change — no KEY bump.*
+`components.js` (each was marked PLACEHOLDER); no rules change — no KEY bump.*
+
+**LANDED (designer picks, 2026-09-06):** Shipmaster **A** · Agent **C** · Lodesman **D** ·
+Carter **B** · Guildmaster **A** (the five `slug:` stand-ins dropped — `slug(nm)` resolves) ·
+Kaufhaus **D** · Guildhall **B** · Cold Store **B** · Shipping Office **C** (the four private
+`art:` rows re-pointed) · Kontorhaus **B** · Guildhouse **B** (the artLayer stand-ins
+re-pointed) · **load = crane B** replacing `bonus-load.png` in place · **hall D** + the cart
+ruling (`ICONS.md` Round 15). Batch notes: Shipmaster A/B were tiller-only regens — the first
+pair painted a ship's WHEEL (not invented until c. 1700; the tiller-only clause is now standing
+language for ship subjects); carter-D shipped a gilt frame (fixed 6% crop); every painted render
+went through the deframe + band gates (frames auto-trimmed on roughly half). The optionals
+(§4 item 4, §5's v8 chart, the parchment wash) stay open; nothing waits on them.
 
 ### 1 · Specialist portraits ×5 (the v8 hires — each wearing a retired specialist's portrait today)
 | File | Subject (the prop is the trade's signature) | Stand-in in use |

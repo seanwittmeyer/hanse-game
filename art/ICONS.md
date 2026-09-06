@@ -162,7 +162,10 @@
 > lifting a cask, which will replace `bonus-load.png` IN PLACE when its pick lands (every
 > `package-plus` load site updates automatically; candidates out). Same round: **`hall.png`
 > lands (pick D)** — the tasting cup under the arched laurel, the brewmasters' guild mark —
-> `crown:'hall'` mapped (the Bruges hall panel · the aid · the Guildmaster).
+> `crown:'hall'` mapped (the Bruges hall panel · the aid · the Guildmaster). **The crane landed
+> the same day (pick B):** the open-wheel treadwheel crane lifting a cask replaced
+> `bonus-load.png` in place — every `package-plus` load site swapped at once, and cart/load
+> read apart at every size.
 
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
