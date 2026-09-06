@@ -19,6 +19,17 @@ AI's values. A "minimal" one-file change is not conservative here — it is **dr
 is invisible until it costs a printed prototype or a table argument, and it wastes more
 time than the full pass ever would. When in doubt, widen the pass.
 
+**THE SECOND OVERRIDE — optimizing cancels depth (designer-ruled 2026-09-06).** The instinct
+that pulls every review toward fewer parts, one marker, one count, no asymmetry produced v7's
+efficiency game and killed its soul. **Depth is the target**: interlocking prerequisites (the
+Lisboa pattern — one resource builds the thing, another opens what makes it score, the same verb
+with different prerequisites sends players down different paths), asymmetric player powers, a
+sea worth a die. A simulation or review that recommends simplification must first show it is not
+measuring depth away: **the sim tools are built to capture asymmetry and interlock (committed
+persona lanes; USAGE printed before VALUE; no part judged dead unless a lane committed to it ran)
+or they are not used as judges.** The human table is the top oracle and humans are not
+calculators — but "simple to play" is never "fewer systems".
+
 The designer's lens, always on:
 
 - **Everything lives on a component.** Every value, datum, track, and mechanic must be
@@ -48,7 +59,7 @@ the complete canon **in full — no skimming, no sampling**:
 |---|---|
 | `CLAUDE.md` | this charter — process, interlocks, gates, deploy |
 | `V7-PLAN.md` | **THE V7 PROGRAM — reflection + plan (the read-FIRST after this charter, designer-ruled 2026-08-31):** the v6.5b human-playtest post-mortem, the TEN DIRECTIVES, the process law (the human table is the top oracle; no component is ever background), phases |
-| `V8-PLAN.md` | **THE V8 PROGRAM — OPENED 2026-09-04 (read right after `V7-PLAN.md`):** the designer's ruling verbatim, the loop that failed, what stays, the recommended two-loop core assembled from five blind variants and three adversarial reviews, **THE FORKS (§7) awaiting the designer's rulings**, the paper phases — no engine change until its P3; v7.0b stays the live build at root |
+| `V8-PLAN.md` | **THE V8 PROGRAM (read right after `V7-PLAN.md`):** §1 the designer's ruling verbatim · **§12 the designer's three-batch review verbatim with its readings (the premise corrected: v7 never broke the station-actions/core-loop overlap; depth is the target)** · **§13 THE IMPLEMENTATION PLAN (2026-09-06) — the ruled game in one breath, the v8.0 rules sheet, the teach, the deltas, the engine plan, the 12-phase build order, the ten rulings still needed.** §6–§11 are the superseded first cut. v7.0b stays the live build at root until §13's phase 2 lands |
 | `V6-PLAN.md` | the v6 program — now HISTORY; the CONSTITUTION it carries (component-state supremacy) stays law and is restated in `V7-PLAN.md` |
 | `DESIGN.md` | pillars, current architecture, change log, lessons, **open watches** — the *why* |
 | `RULES.md` | **source of truth** — the ONE rules document (clean operational rules) |
@@ -135,7 +146,7 @@ presents sell outside it; a matching DELIVER takes the demand's +1★ market lin
 all 8 Public Works dealt at setup, no bag, Tollhouse retired ⚙ · **Cog free · Hulk 1G**
 ⚙ + the **private flag** (+1G ⚙; a commission may displace an EMPTY hull) · SAIL-now
 (any docked hull with 1+ of YOUR casks, free ⚙) · 13 dice ⚙ · MAX_ROUND 22 ⚙ · target
-10–15 turns/seat. The full sheet + the red-team record: `V7-PLAN.md` §10. **The first oracle read of v7.0b (2026-09-02 — a 30-game 2p search-tier corpus, two blind analyses, standing review #4): `archive/records/GATEKEEPER-v70b.md` — verdict PASS-FOR-NOW on the right chassis; the hall is priced dead (314 ⚜ earned, 14 spent), the dice are not the clock (21/30 ceiling endings), one Venture face is the engine; its §8 is the queue.** **THE V8 PROGRAM OPENED the same week (designer-ruled 2026-09-04): `V8-PLAN.md` — "a good brewer AND a good merchant": a new game on the kept turn grammar (two loops in tension over ten dice whose every destination is public · buildings essential · owned lanes and Kontor seats · the Bruges bench · quality bands). PAPER PHASE: its §7 forks await the designer's rulings; then P1 the mechanic sheet, P2 the designer's own paper table, and only then P3 the mirror. No simulation before the table.** The v6
+10–15 turns/seat. The full sheet + the red-team record: `V7-PLAN.md` §10. **The first oracle read of v7.0b (2026-09-02 — a 30-game 2p search-tier corpus, two blind analyses, standing review #4): `archive/records/GATEKEEPER-v70b.md` — verdict PASS-FOR-NOW on the right chassis; the hall is priced dead (314 ⚜ earned, 14 spent), the dice are not the clock (21/30 ceiling endings), one Venture face is the engine; its §8 is the queue.** **THE V8 PROGRAM (designer-ruled 2026-09-04; the review complete and the plan built 2026-09-06): `V8-PLAN.md` §12–§13 — "a good brewer AND a good merchant."** The ruled game in one breath: **eleven dice** (ten in the *personal supply*, one standing at sea as the *starter post*); a die leaves the supply as a **cask** (BREW), a **post** (a die on a *segment* of a lane, climbing +1 per Ship sailing through, no fee) or a **Kontor building** (a die in a Kontor's slot, founded only where your OWN post stands on every segment of its branch from Hamburg; +1 per landing there), and never returns; **the first empty supply ends the game**. **THE QUALITY COUNT: the quality you may deliver anywhere = the number of your dice standing at sea** (global, the starter counts: a Gruit carts to Bruges on turn one, a Bock needs five). **A landing scores two dice**: the cask's + your building die there; nothing else (no market track, no bands, no premium). Ships 2/3 berths per Kontor + **wild** hulls named by the last loader; nobody owns a hull; sails when full; **the Harbor must commission** and the commission lets you POST on that Ship's lane; its ALTERNATE builds or RAISES at a Kontor. **Bruges by cart only**: *the yard* (3 goods + the only recipe prize; Gruit's only door) or *the hall* (an ⚜ + a Q2+ cask: cask die + **the hall die**, which climbs); **⚜ come only from landing beer at a far Kontor**, no cap. Recipes earned (the yard, the *Gain 1 recipe* tile); the search-brew is the general door to any missing piece (build · recipe · specialist · post …). **No kettle.** Aging = the Cellar + cask bonuses. Gruit fixed (1G → 3 goods). **The wharf's private buildings are a Great Western Trail engine**: four tiles per player, one per station, tier 2 on tier 1 by the FLIP, strictly better, owner-only, goods only, no die. Public Works stay (roster pass after the core); specialists stay as asymmetric powers (Bergen's prize). The end: pips at sea + docked dice at pips + fixed majority pairs + the Flight on beers landed; vessels nothing. **The build**: `V8-PLAN.md` §13.6 — freeze v7 at `archive/v7/` → the docs → the mirror (KEY `hanse-v80a`) → the designer's own table → the oracle read; never a corpus before a human table.** The v6
 paragraph below stands as history:
 
 **THE V6 PROGRAM (designer-ruled 2026-08-29 — HISTORY; its build is frozen at
