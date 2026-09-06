@@ -194,7 +194,14 @@ player aid; they do not learn or track rule changes on tiles, boards, or tooltip
    the teaching lives in the rulebook.
 3. **Tooltips are reminders in the same grammar** — one line, plain English, mirroring the
    printed face; never a lesson.
-4. **A rule that has no printed home yet lives in `RULES.md` only.** In-development systems
+4. **Nothing prints in all caps (designer-ruled 2026-09-06).** An action name is Title Case
+   wherever it names the action — *Build · Brew · Post · Raise · Cart · Flip · Load · Commission
+   · Source · Age · Present · Move* — matching *Source 2 / Load 1 / Age 3* on the boards; a
+   state is sentence case (*Ready* keeps its capital as a term; *empty · wild · vacant* do not);
+   emphasis is **bold**, never capitals; a heading may set title-case text in small caps
+   (CSS), never `text-transform: uppercase`. The same casing on every surface — the rules
+   master, the rulebook, the aid, the faces, the app's prompts, buttons and log.
+5. **A rule that has no printed home yet lives in `RULES.md` only.** In-development systems
    (e.g. the Guild Tastings) stay OUT of `rulebook.html` until they leave development —
    rules live in `RULES.md` and `rulebook.html`, nowhere else.
 

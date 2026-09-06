@@ -45,8 +45,8 @@ const CASK_POOL=[   // the cask bonus fires once, as the cask boards a Ship or i
   {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:2},
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe · its fee',  q:2},
   {k:'spec',    ai:'wrench',        act:'Gain 1 specialist',        q:2},
-  {k:'build',   ai:'hammer',        act:'BUILD · its fee',          q:2},
-  {k:'post',    ai:'post',          act:'POST · a supply die',      q:2},
+  {k:'build',   ai:'hammer',        act:'Build · its fee',          q:2},
+  {k:'post',    ai:'post',          act:'Post · a supply die',      q:2},
 ];
 const poolFor=q=>CASK_POOL.filter(a=>q>=a.q);   // the printed mix per quality tier
 // cask supply — fixed global counts (COMPONENTS §5; the scarce high-Q exports are intentional). Gruit PINNED to Source; Q2+ draw at brew (steerable).
@@ -83,7 +83,7 @@ const SHIP_DECK=[   // ⚙ 18 hulls — per far Kontor Cog ×3 · Hulk ×2; wild
 // art: — the five new works ride interim stand-in art (the cut tiles' freed files + ship art) until
 // their own images are generated; briefs are queued in art/PROMPTS.md.
 const DIE=n=>'<span class="diech">'+LU('dice-'+n)+'</span>';
-const BTGT={cask:{ic:'beer',lbl:'a CASK docked here'},ship:{ic:'sailboat',lbl:'a SHIP docked here'}};
+const BTGT={cask:{ic:'beer',lbl:'a cask docked here'},ship:{ic:'sailboat',lbl:'a Ship docked here'}};
 const BUILDINGS=[
   // THE PUBLIC WORKS — the filler roster ⚙ (the roster pass comes after the core): shared,
   // die-less, passive on their slot's traffic; the tide takes every one with its Ship.
@@ -106,7 +106,7 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · earned free (Bergen's prize · the 
   {ic:'package-plus',nm:'Stevedore',   act:LU('package-plus')+' Load: up to 2 '+LU('beer'), c:'#5b3a8e', n:1},
   {ic:'landmark',    nm:'Agent',       act:'a rival lands at your '+LU('kontorhaus')+': that die +1 more', c:'#5b3a8e', n:1, slug:'supercargo'},
   {ic:'compass',     nm:'Lodesman',    act:'your quality count reads +1', c:'#5b3a8e', n:1, slug:'coper'},
-  {ic:'truck',       nm:'Carter',      act:LU('truck')+' CART 2 · the yard’s goods +1', c:'#5b3a8e', n:1, slug:'herald'},
+  {ic:'truck',       nm:'Carter',      act:LU('truck')+' Cart 2 · the yard’s goods +1', c:'#5b3a8e', n:1, slug:'herald'},
   {ic:'crown',       nm:'Guildmaster', act:'each present at the hall: '+LU('star-plus2','starmark'), c:'#5b3a8e', n:1, slug:'guild-scholar'},
   {ic:'book-open',   nm:'Chronicler',  act:'land a '+LU('beer')+': '+LU('star-plus1','starmark'), c:'#5b3a8e', n:1},
   {ic:'gavel',       nm:'Alderman',    act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), c:'#5b3a8e', n:1},
@@ -172,11 +172,11 @@ const VBIG=h=>'<span class="ac">'+h+'</span>';
 const VSEP=s=>'<span class="vsep">'+s+'</span>';
 const PRIVATES=[
   {k:'A', station:'Market',    t1:{nm:'Granary',            ic:'wheat',         pts:2, art:'building-granary.png',   own:VBIG(LU('goods-1'))+VSEP('+')+VBIG(LU('sprout','h'))},
-                               t2:{nm:'Kaufhaus',           ic:'store',         pts:4, art:'building-exchange.png',  own:VBIG(LU('goods-2'))+VSEP('·')+VBIG(LU('truck')), txt:'CART 2'}},   // PLACEHOLDER art: the merchants' exchange stands in for the Kaufhaus (brief: art/PROMPTS.md)
+                               t2:{nm:'Kaufhaus',           ic:'store',         pts:4, art:'building-exchange.png',  own:VBIG(LU('goods-2'))+VSEP('·')+VBIG(LU('truck')), txt:'Cart 2'}},   // PLACEHOLDER art: the merchants' exchange stands in for the Kaufhaus (brief: art/PROMPTS.md)
   {k:'B', station:'Brewhouse', t1:{nm:'Scriptorium',        ic:'scroll-text',   pts:2, art:'building-scriveners.png',own:VBIG(LU('scroll-text')), txt:'recipes: no fee'},
-                               t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, art:'venture-brew-l2.png',    own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe · BREW ×2'}},   // PLACEHOLDER art: the Great Copper stands in for the Guildhall
-  {k:'C', station:'Harbor',    t1:{nm:'Counting House',     ic:'goods-1',       pts:2, art:'venture-counting-l1.png',own:VBIG(LU('die-plus1')), txt:'RAISE'},
-                               t2:{nm:'Shipping Office',    ic:'post',          pts:4, art:'venture-factor-l1.png',  own:VBIG(LU('die-plus1'))+VSEP('·')+VBIG(LU('post')), txt:'RAISE · POST'}},   // PLACEHOLDER art: the quayside desk stands in for the Shipping Office
+                               t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, art:'venture-brew-l2.png',    own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe · Brew'}},   // PLACEHOLDER art: the Great Copper stands in for the Guildhall
+  {k:'C', station:'Harbor',    t1:{nm:'Counting House',     ic:'goods-1',       pts:2, art:'venture-counting-l1.png',own:VBIG(LU('die-plus1')), txt:'Raise'},
+                               t2:{nm:'Shipping Office',    ic:'post',          pts:4, art:'venture-factor-l1.png',  own:VBIG(LU('die-plus1'))+VSEP('·')+VBIG(LU('post')), txt:'Raise · Post'}},   // PLACEHOLDER art: the quayside desk stands in for the Shipping Office
   {k:'D', station:'Cellar',    t1:{nm:'Cold Store',         ic:'snowflake',     pts:2, art:'building-abbey.png',     own:VBIG(LU('age-2'))},   // PLACEHOLDER art: the abbey cellar stands in for the Cold Store
                                t2:{nm:'Lagering Cellar',    ic:'snowflake',     pts:4, art:'venture-die-l2.png',     own:VBIG(LU('age-2'))+VSEP('·')+VBIG(LU('die-plus1')), txt:'lift, cap Q+1'}},
 ];
@@ -186,7 +186,7 @@ function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
   return '<div class="btile btW" style="--c:'+(col||PRIV_FOOT)+ring+'">'
   +artLayer(f.art||('venture-'+({A:'brew',B:'brew',C:'points',D:'age'})[d.k]+'-l'+tier+'.png'))
   +'<div class="bt-top vt-top">'+tcol
-    +'<span class="bt-ms" title="tier '+tier+' — '+(tier===2?'the FLIP of tier 1':'from the hand')+'">T'+tier+'</span>'
+    +'<span class="bt-ms" title="tier '+tier+' — '+(tier===2?'the Flip of tier 1':'from the hand')+'">T'+tier+'</span>'
     +'<span class="bt-cost">'+cost(tier===2?2:1,1)+'</span></div>'
   +'<div class="bt-foot vt2"><span class="vt-own" title="the line — fires when its owner works this station">'+(f.own||'')
     +(f.txt?'<span class="vt-txt">'+f.txt+'</span>':'')+'</span>'
@@ -198,7 +198,7 @@ function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
 const KBUILDINGS=[
   {k:'warehouse',  nm:'Warehouse',  ic:'warehouse',  line:VBIG(LU('goods-1'))+VSEP('+')+VBIG(LU('sprout','h')), txt:'on your landing'},
   {k:'kontorhaus', nm:'Kontorhaus', ic:'kontorhaus', line:VBIG(LU('mail')), txt:'+1 ⚜ on your landing'},
-  {k:'guildhouse', nm:'Guildhouse', ic:'landmark',   line:VBIG(LU('die-plus1')), txt:'RAISE on your landing'},
+  {k:'guildhouse', nm:'Guildhouse', ic:'landmark',   line:VBIG(LU('die-plus1')), txt:'Raise on your landing'},
 ];
 function kontorBuildingTile(d,col){const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
   return '<div class="btile btW kbt" style="--c:'+(col||PRIV_FOOT)+ring+';width:1.32in;height:1.32in">'
@@ -220,7 +220,7 @@ function kontorChit(k){return '<div class="kchit" style="--c:'+(KONTOR_C[k]||'#6
 function buildingBack(d){   // the FLOOR side: it only says WILD
   return '<div class="btile btF" style="--c:'+BLD_FOOT+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
-  +'<div class="bt-wild"><span class="bt-circ">'+LU('sparkles')+'</span><b>WILD</b></div>'
+  +'<div class="bt-wild"><span class="bt-circ">'+LU('sparkles')+'</span><b>Wild</b></div>'
   +'<div class="bt-sub">a Floor slot &middot; none open &rarr; discard</div>'
   +'</div>';}
 // SPECIALIST CARD (v10) — now a SQUARE 2in×2in card, matching the Building card's footprint (was a half-height
@@ -272,8 +272,8 @@ function caskCardBack(d,act){const start=Math.max(1,d.q-(d.ready||0));
   // name (READY), and the load bonus sits at the FOOT. The start/ready text line is cut.
   return '<div class="ctile ctB" style="--c:'+d.c+'">'
     +'<div class="ct-art"><img src="'+ART_DIR+'cask-'+d.nm.toLowerCase()+'.png" alt=""></div>'
-    +'<div class="ct-seat" data-die-seat title="set your quality die to THIS face at brew — aging turns it up to '+d.q+' (READY); at delivery it parks at the Kontor">'+LU('dice-'+start)+'</div>'
-    +'<div class="ct-main"><div class="ct-hd2"><span class="ct-q2" title="READY at quality '+d.q+'">'+LU('quality-'+d.q)+'</span><span class="ct-nm2">'+d.nm+'</span></div>'
+    +'<div class="ct-seat" data-die-seat title="set your quality die to this face at brew — aging turns it up to '+d.q+' (Ready); at delivery it parks at the Kontor">'+LU('dice-'+start)+'</div>'
+    +'<div class="ct-main"><div class="ct-hd2"><span class="ct-q2" title="Ready at quality '+d.q+'">'+LU('quality-'+d.q)+'</span><span class="ct-nm2">'+d.nm+'</span></div>'
       +'<span class="ct-act2"><span class="ac">'+LU(act.ai)+'</span><span class="t">'+act.act+'</span></span></div>'
   +'</div>';}
 // printables2 v4: a SHIP is a full-bleed 2.5″ CARD (was a small tile) — the destination's CITY is the
@@ -288,7 +288,7 @@ const SHIP_H=hull=>3;   // v4.9b UI pass [designer-ruled]: EVERY hull prints the
 function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm]||SHIP_DEST.Wild;
   const fee=HULL[hull].fee;
   let rows='<div class="st-trig">'
-    +'<div class="st-toprow"><span class="st-k">'+(d.wild?'<span class="st-chit" title="the chit seat — the first cask loaded names this Ship\'s Kontor and sets its chit here">'+LU('landmark')+' WILD</span>':destNm)+'</span>'
+    +'<div class="st-toprow"><span class="st-k">'+(d.wild?'<span class="st-chit" title="the chit seat — the first cask loaded names this Ship\'s Kontor and sets its chit here">'+LU('landmark')+' Wild</span>':destNm)+'</span>'
       +'<span class="st-meta">'+(fee?'<span class="st-cost">'+cost(fee,0)+'</span>':'')+'</span></div>'
     +'<div class="st-seat st-tseat" title="the trigger berth — the last cask loads here and the ship sails at once"><span class="st-num">'+cap+'</span><span class="st-go">'+LU(QI)+'<b class="amp">&amp;</b>'+LU('sail')+'</span></div>'
   +'</div>';
@@ -310,7 +310,7 @@ function disc(c,ic){return '<div class="disc" style="--c:'+c+'">'+LU(ic||'circle
 // card, marks ownership; no token = neutral. Store-bought monopoly-style houses, nothing to cut.)
 // UNLOCK COVER (ONE ROW) — a player-colour blank on Floor slots 3–7; each new distinct beer
 // BREWED (from the 2nd) or the Coppersmith removes the next one.
-function coverTile(c,w){return '<div class="cover" style="--c:'+c+';width:'+w+'in;height:'+w+'in">'+LU('lock')+'<span>locked —<br>a NEW distinct brew<br>(or the Coppersmith)<br>opens this slot</span></div>';}
+function coverTile(c,w){return '<div class="cover" style="--c:'+c+';width:'+w+'in;height:'+w+'in">'+LU('lock')+'<span>locked —<br>a new distinct brew<br>(or the Coppersmith)<br>opens this slot</span></div>';}
 function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?'<span>'+d.nm+'</span>':'')+'</div>';}
 
 
