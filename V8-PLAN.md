@@ -7,10 +7,10 @@ canon until ruled. Read after `CLAUDE.md`; it supersedes `V7-PLAN.md` as the pro
 the moment the designer rules §7 (until then v7.0b stays the live build at root).*
 
 ***REVIEW IN PROGRESS (2026-09-06).** The designer's review of the first plan is arriving in
-batches. Batch 1 is recorded verbatim in **§12** with its reading; it corrects the premise in
-§0/§2 and overturns parts of §6 and §7 (route access, scoring, ships, invitations, the word
-"tray"). Nothing in §6–§11 is re-cut until the rest of the review lands — read §12 before
-relying on any of them.*
+batches. Batches 1 and 2 are recorded verbatim in **§12** with their readings; they correct the
+premise in §0/§2 and overturn parts of §6 and §7 (route access, the quality gate, scoring,
+ships, invitations, the word "tray"). Batch 3 (the teach and the reference) is still to come.
+Nothing in §6–§11 is re-cut until it lands — read §12 before relying on any of them.*
 
 ---
 
@@ -517,7 +517,8 @@ aging · an unfull sail) until the P1 roster.
 *Recorded the day it arrived. The designer's instruction with it: "Process and document the
 notes but don't go all in on anything until I share the rest of my review." So this section
 records, reads and flags; the re-cut of §6–§11 and of the page "Brewer & Merchant" waits for
-batch 2. Where a note overturns a ruling in §7, the §7 row still shows the old ruling until
+the last batch (the teach and the reference). Batch 2 is §12.6–§12.7; §12.3 and §12.4 are
+kept current across batches. Where a note overturns a ruling in §7, the §7 row still shows the old ruling until
 the re-cut; §12.3 is the authoritative status table meanwhile.*
 
 ### 12.1 The review, verbatim
@@ -696,21 +697,23 @@ assistant did, five times over, in §5 and §7.
 | Posts: a die at 1 → 6, 1★/pip, several players per segment | stands, restated | the tick trigger open |
 | Kontor building sockets, one builder each | stands | prerequisite: the full chain |
 | The market track, cells, floor, glut per landing (§6.3) | **overturned** | score = cask die + the player's Kontor modifier |
-| F16 quality bands, two-number cells | **moot** | no cells; whether a printed per-Kontor minimum quality exists is open |
+| F16 quality bands, two-number cells | **overturned (batch 2)** | the QUALITY COUNT: the quality you may ship to a Kontor = the number of your dice on posts and Kontor buildings (5 → Bock); per-Kontor or global is the one open reading |
 | Ships Kontor-bound, 2/3 berths | stands | plus WILD ships (new, unfinished) |
 | F3 nobody owns a hull, commission when able | stands | not mentioned in batch 1 |
 | F4 the bench (the hall) | stands, provisional | "display my best brews at the guild" |
-| Invitations from letters + post 2 (§6.5) | **overturned** | only from delivering beer to Kontors; rate open |
+| Invitations from letters + post 2 (§6.5) | **overturned** | only from delivering beer to Kontors (batch 1); they are the HALL's key and the third scoring path, built to compete with the Kontor majorities (batch 2); rate open |
 | F17 no cap | stands | |
 | F5 aging | confirmed | |
 | F7 Gruit | confirmed | |
-| F9 recipes earned (Bruges prize + cask tile) | stands | the far-dice requirement on Mumme/Bock must be re-read against the post chain |
+| F9 recipes earned (Bruges prize + cask tile) | **confirmed (batch 2)** | "good as they are": not easy, never impossible; the search-brew is the general missing-piece door (build · recipe · specialist · …) and a relief valve; the far-dice requirement on Mumme/Bock folds into the quality count |
 | F10 specialists stay | confirmed, strengthened | asymmetric powers wanted; sim tools must capture them |
-| F11 Public Works, F12 cart only, F13 sails full, F14 starter post | stand | not mentioned in batch 1; F14's "seat" wording goes |
-| F6 socket dice, F8 opening a building, F15 the wharf hand | open | F8 now reads "which prerequisite opens a Kontor building" |
+| F11 Public Works | **confirmed (batch 2)** | early chaos for replayability, early wins, a push down a lane; the roster is designed only AFTER the core is settled |
+| F12 cart only, F13 sails full | stand | not mentioned in batches 1–2 |
+| F14 the starter post | **confirmed (batch 2), amended** | "something to try"; the starter die is an ELEVENTH die, not one of the ten; the "seat" wording goes |
+| F6 socket dice, F8 opening a building, F15 the wharf hand | open | F8 now reads "which prerequisite opens a Kontor building" — batch 2 makes invitations the hall's key, so an ⚜ is probably NOT it |
 | §6.7 scoring skeleton, §10 cut list, §11 questions | **re-cut pending** | after batch 2 |
 
-### 12.4 Questions batch 2 needs to settle before the re-cut
+### 12.4 Questions still open before the re-cut (kept current; ✔ = answered by a later batch)
 
 1. **Lane openness.** Once every segment of a lane holds at least one post (anyone's), may every
    player's Ships sail it, or only players holding a post on each segment? The text reads as
@@ -721,17 +724,39 @@ assistant did, five times over, in §5 and §7.
    Novgorod. Keep, or set by the chain-length the designer wants for each Kontor?
 4. **Delivering without a building.** A cask landing at a Kontor where you hold no building
    scores its die alone? And is the Kontor modifier one die per player per Kontor, or per slot?
+   *(batch 2 fixes the shape: the score is two dice added, the cask's and your building's;
+   with no building, presumably the cask die alone — confirm.)*
 5. **The modifier die's value.** Set at 1 and raised by a later action, or ticking on use like
    a post, or set by the number of posts in the chain? Does it also score 1★/pip at the end
    ("all dice on the sea board")?
-6. **Wild ships:** which "quality rules" — a printed minimum quality per Kontor, the beer's
-   printed destinations, or something else?
+6. **Wild ships:** which "quality rules" — ✔ batch 2: the QUALITY COUNT (the last loader's
+   count of dice on posts and Kontor buildings sets what may ride, and they name the port).
+   Left: whether the count is read per destination or across the whole sea board (below).
 7. **Invitation rate:** one per landing, one per first landing at each Kontor, or per Ship?
-   Does a Bruges yard landing count as "delivering to a Kontor"?
+   Does a Bruges yard landing count as "delivering to a Kontor"? *(batch 2: an ⚜ is "a formal
+   declaration of Kontor brews" — so per Kontor delivery, and never from Bruges; the rate is
+   still the dial.)*
 8. **Majorities at the Kontore** by parked casks: unchanged, or folded into the building die?
 9. **Do wharf buildings take a die** ("casks, buildings, and the sea")? If yes, the v7 ledger
    grammar returns in some form and the personal supply feeds three destinations, not two.
 10. **Hamburg** printed as the home port on the sea board? (Theme already says so.)
+11. **The quality count: per Kontor or global?** "The quality you can ship to a Kontor is equal
+    to the number of dice you have on posts and Kontor buildings." Read A (global): count every
+    die of yours at sea, one number for every port — teaches once, five at sea ships Bock
+    anywhere the lane is open. Read B (per lane): count only the dice on that Kontor's chain
+    and in its building slots — ties the merchant to a destination, three ports need three
+    investments. Batch 1's chain (eligibility per Kontor) and batch 2's sentence (one count)
+    fit either. The re-cut needs one.
+12. **Does the starter (eleventh) die count** toward the quality count? If yes, Hopped (Q2)
+    needs one more die at sea from the first turn; if no, nothing sails before the first INVEST.
+13. **The hall's payout.** "As simple as adding two dice": the cask die + the place's printed
+    bonus, or the cask die + a second die of some kind? And what an "easy benefit" is in
+    numbers, so the hall really competes with a Kontor majority.
+14. **The search-brew's menu.** Batch 2 names build · gain recipe · gain specialist as the
+    missing pieces a cask tile may carry. Does *gain specialist* on a tile replace Bergen's
+    prize as the specialist door, or join it?
+15. **Kontor building cost.** With invitations as the hall's key, what opens a building slot:
+    goods, a die alone (the chain being the prerequisite), or something else?
 
 ### 12.5 Process lesson, to land in the charter with batch 2
 
@@ -743,3 +768,76 @@ simulation or review that recommends simplification must first show it is not me
 depth away; the sim tools are built to capture asymmetry and interlock or they are not used
 as judges."* The `AUTOMA.md`/`playtests` consequence: the v8 bots and the persona lanes must
 represent the specialists and the prerequisite chains before any corpus is read.
+
+### 12.6 Batch 2 (2026-09-06), verbatim
+
+> Recipes are good as they are. They don't need to be easy to get but can't be impossible. Our
+> current solution of brew + search is actually a great solution because it allows a player to
+> do what they are already doing (brewing which is essential in the game) but also get that
+> missing piece they are missing. This can be build, gain recipe, gain specialist, etc. It also
+> means players don't have to gain a recipe if they have them all. Nice balance as a relief
+> valve.
+>
+> Public works are something I like because it adds some chaos to the beginning of the game to
+> make it more replayable. You don't know what the starting buildings will be or what little
+> combos will be waiting for early moves. This makes the game fun because it helps give players
+> early wins as well as push players down a strategic lane. We probably want to iron out the
+> details of the core game before we dream up what these should be.
+>
+> The starter die is fine, something to try. It probably wants to be number 11.
+>
+> Quality band is something I don't understand. I mentioned before that I want scoring as
+> simple as adding two dice. That's it. For quality, I think it needs to be as simple as
+> possible. For example, quality you can ship to a Kontor is equal to the number of dice you
+> have on posts and Kontor buildings. You have 5? You can deliver bocks. You must be a merchant
+> to deliver better beers.
+>
+> Invitations are intended to be a formal declaration of Kontor brews as a way to access the
+> hall in Bruges. You want to tap and taste your finest brews but the hall is invite only. Get
+> invites to get brews out for an easy benefit. It provides a third pathway for points. I want
+> it to compete with the majorities in the Kontors or be a strategy when the Kontors won't be
+> your source of points.
+>
+> Ok, that's batch two. Next up is my review in the teach and reference.
+
+### 12.7 The reading of batch 2
+
+**Recipes — F9 confirmed, and the search-brew promoted.** The brew-and-search is kept as THE
+general door to a missing piece, not a recipe door only: a cask tile may carry *build*, *gain
+recipe*, *gain specialist* and the like. Brewing is what every player does anyway, so the
+search is a decision inside an essential action, and it is self-limiting — a player who holds
+every recipe simply takes another tile. Recipes stay not-easy and never impossible: the
+Bruges prize and the tile, at a fee. The "dice beyond Bruges" requirement printed on Mumme and
+Bock is no longer a separate rule: the quality count (below) already says who may SHIP a
+Mumme or a Bock; whether the recipe itself should also be gated is for the re-cut to decide,
+and the simpler answer is no.
+
+**Public Works — F11 confirmed, sequenced.** Their purpose is stated: chaos at the opening,
+replayability, an early win, a nudge into a lane. Their roster is designed only after the core
+is settled — so the P1 "Works pass" moves behind the core sheet, and the paper table's first
+games may run with the v7 roster as filler or with none.
+
+**The starter die — F14 confirmed, as an eleventh die.** Ten in the personal supply, one
+already standing at sea from setup. Component count: 11 dice per colour, 44 in the box. It is
+"something to try": a paper-table dial, not a law.
+
+**The quality gate — the QUALITY COUNT replaces every band and every cell.** Quality you may
+ship to a Kontor = the number of your dice standing on posts and Kontor buildings. Five dice
+at sea ships Bock; two ships Hopped; a pure brewer ships nothing above Gruit, and Gruit only
+goes to Bruges. This is the whole "you must be a merchant to deliver better beers" in one
+count, with no printed ladder, no band on a tile, no two-number cell. It is close to what F2
+tried to say and far simpler: count up, not "lowest die admitted". The one reading to settle
+is per-Kontor versus global (§12.4 q11). Scoring is likewise two dice added: the cask die and
+your building die at that Kontor.
+
+**Invitations — the hall's key, the third path.** An invitation is a formal declaration of a
+Kontor brew: you earn it by delivering to a Kontor, you spend it to tap and taste your finest
+brew at the Bruges hall for an easy benefit. The hall is the third scoring pathway beside
+Kontor landings and Kontor majorities, and must be sized to compete with the majorities — or
+to be the plan when the Kontors will not be your points. Consequences for the re-cut: the
+hall's payout is simple and generous; invitations are not the currency that opens Kontor
+buildings (F8 re-opens on goods or the die alone); the bench-by-bands design of F4 must be
+re-read against "as simple as adding two dice".
+
+**What batch 2 closes from §12.4:** q6 (the wild ships follow the quality count), most of q7
+(an ⚜ is per Kontor delivery, never from Bruges). **What it opens:** q11–q15.
